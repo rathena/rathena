@@ -31,7 +31,7 @@ Other Ppl
 Date		Added
 ======
 11/05
-	* Added easter and xmas event npcs.  Added custom blackjack npc.
+	* Added easter and xmas event npcs.  Added custom blackjack npc.[kobra_k88]
 11/02
 	* Added unofficial nguild castles.  Updated stats for Stone Shooter, Wooden Golem, Hyegun,
 	  Civil Servant, Dancing Dragon, Baby Garm, and Increase Soil mobs in mob db.  Drops are still
