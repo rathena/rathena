@@ -3,7 +3,7 @@
 #include <string.h>
 #include "showmsg.h"
 
-char tmp_output[1024] = "\0";
+char tmp_output[1024] = {"\0"};
 
 int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 	/* 
