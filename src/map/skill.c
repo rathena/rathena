@@ -3975,9 +3975,10 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case RG_STRIPSHIELD:		/* ストリップシールド */
 	case RG_STRIPARMOR:			/* ストリップアーマー */
 	case RG_STRIPHELM:			/* ストリップヘルム */
+	case ST_FULLSTRIP:	// Celest
 	{
 		struct status_change *tsc_data = battle_get_sc_data(bl);
-		int scid, equip, strip_fix;
+		int scid, equip, strip_fix, strip_num = 0;
 		scid = SkillStatusChangeTable[skillid];
 		switch (skillid) {
 			case RG_STRIPWEAPON:
@@ -3991,6 +3992,10 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				break;
 			case RG_STRIPHELM:
 				equip = EQP_HELM;
+				break;
+			case ST_FULLSTRIP:
+				equip = EQP_WEAPON | EQP_SHIELD | EQP_ARMOR | EQP_HELM;
+				strip_num = 3;
 				break;
 			default:
 				return 1;
@@ -4009,8 +4014,9 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		if (dstsd) {
 			for (i=0;i<MAX_INVENTORY;i++) {
 				if (dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & equip){
-					pc_unequipitem(dstsd,i,0);
-					break;
+					pc_unequipitem(dstsd,i,3);
+					if ((--strip_num) <= 0)
+						break;
 				}
 			}
 			if (i == MAX_INVENTORY)
@@ -4021,49 +4027,6 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		skill_status_change_start(bl,scid,skilllv,0,0,0,strip_time,0 );
 		break;
 	}
-
-	// Full Strip [Celest]
-	case ST_FULLSTRIP:
-		{
-			struct status_change *tsc_data = battle_get_sc_data(bl);
-			int c=0, i, j, strip_fix;
-			int striplist[2][4] = { { 0, 0, 0, 0 },
-				{ 0x0002, 0x0020, 0x0010, 0x0100 } };
-
-			strip_fix = battle_get_dex(src) - battle_get_dex(bl);
-			if(strip_fix < 0)
-				strip_fix=0;
-			strip_per = 5+2*skilllv+strip_fix/5;
-			strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
-			for (i=0; i<4; i++) {
-				if(tsc_data && tsc_data[SC_CP_WEAPON + i].timer != -1)
-					break;
-				if(rand()%100 < strip_per) {
-					striplist[0][i] = 1;
-					c++;
-				}
-			}
-
-			if (c > 0) {
-				clif_skill_nodamage(src,bl,skillid,skilllv,1);
-				for (j=0; j<4 && c > 0; j++) {
-					if (striplist[0][j]) {
-						skill_status_change_start(bl,SC_STRIPWEAPON + i,skilllv,0,0,0,strip_time,0 );
-						if(dstsd){
-							for(i=0;i<MAX_INVENTORY;i++){
-								if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & striplist[1][j]){
-									pc_unequipitem(dstsd,i,3);
-									--c;
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		break;
-
 
 	/* PotionPitcher */
 	case AM_POTIONPITCHER:		/* ポ?ションピッチャ? */
@@ -4135,38 +4098,15 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		}
 		break;
 	case AM_CP_WEAPON:
-		{
-			struct status_change *tsc_data = battle_get_sc_data(bl);
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(tsc_data && tsc_data[SC_STRIPWEAPON].timer != -1)
-				skill_status_change_end(bl, SC_STRIPWEAPON, -1 );
-			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
-		}
-		break;
 	case AM_CP_SHIELD:
-		{
-			struct status_change *tsc_data = battle_get_sc_data(bl);
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(tsc_data && tsc_data[SC_STRIPSHIELD].timer != -1)
-				skill_status_change_end(bl, SC_STRIPSHIELD, -1 );
-			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
-		}
-		break;
 	case AM_CP_ARMOR:
-		{
-			struct status_change *tsc_data = battle_get_sc_data(bl);
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(tsc_data && tsc_data[SC_STRIPARMOR].timer != -1)
-				skill_status_change_end(bl, SC_STRIPARMOR, -1 );
-			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
-		}
-		break;
 	case AM_CP_HELM:
 		{
+			int scid = SC_STRIPWEAPON + (skillid - AM_CP_WEAPON);
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(tsc_data && tsc_data[SC_STRIPHELM].timer != -1)
-				skill_status_change_end(bl, SC_STRIPHELM, -1 );
+			if(tsc_data && tsc_data[scid].timer != -1)
+				skill_status_change_end(bl, SC_STRIPWEAPON, -1 );
 			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		}
 		break;
@@ -4654,12 +4594,18 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case CR_SLIMPITCHER:
 		{
 			if (sd && flag&1) {
+				struct block_list tbl;
 				int hp = sd->potion_hp * (100 + pc_checkskill(sd,CR_SLIMPITCHER)*10 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
 				hp = hp * (100 + (battle_get_vit(bl)<<1))/100;
-				if (dstsd)
+				if (dstsd) {
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
-				clif_skill_nodamage(src,bl,skillid,skilllv,1);
-				battle_heal(src,bl,hp,0,0);
+				}
+				tbl.id = 0;
+				tbl.m = src->m;
+				tbl.x = src->x;
+				tbl.y = src->y;
+				clif_skill_nodamage(&tbl,bl,AL_HEAL,hp,1);
+				battle_heal(NULL,bl,hp,0,0);
 			}
 		}
 		break;
@@ -5160,23 +5106,23 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case CR_SLIMPITCHER:
 		{
 			if (sd) {
-				int x = skilllv%11 - 1;
-				int i = pc_search_inventory(sd,skill_db[skillid].itemid[x]);
-				if(i < 0 || skill_db[skillid].itemid[x] <= 0 || sd->inventory_data[i] == NULL ||
-					sd->status.inventory[i].amount < skill_db[skillid].amount[x]) {
+				int i = skilllv%11 - 1;
+				int j = pc_search_inventory(sd,skill_db[skillid].itemid[i]);
+				if(j < 0 || skill_db[skillid].itemid[i] <= 0 || sd->inventory_data[j] == NULL ||
+					sd->status.inventory[j].amount < skill_db[skillid].amount[i]) {
 					clif_skill_fail(sd,skillid,0,0);
-					map_freeblock_unlock();
 					return 1;
 				}
 				sd->state.potionpitcher_flag = 1;
 				sd->potion_hp = 0;
-				run_script(sd->inventory_data[i]->use_script,0,sd->bl.id,0);
-				pc_delitem(sd,i,skill_db[skillid].amount[x],0);
+				run_script(sd->inventory_data[j]->use_script,0,sd->bl.id,0);
+				pc_delitem(sd,j,skill_db[skillid].amount[i],0);
 				sd->state.potionpitcher_flag = 0;
+				clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 				if(sd->potion_hp > 0) {
 					map_foreachinarea(skill_area_sub,
 						src->m,x-3,y-3,x+3,y+3,0,
-						src,skillid,skilllv,tick,flag|BCT_ALL|1,
+						src,skillid,skilllv,tick,flag|BCT_PARTY|1,
 						skill_castend_nodamage_id);
 				}
 			}
@@ -7380,7 +7326,8 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			continue;
 		if(skill == WZ_FIREPILLAR && lv<=5)
 			continue; // no gemstones for 1-5 [Celest]
-		if(skill == AM_POTIONPITCHER && i != x)
+		if((skill == AM_POTIONPITCHER ||
+			skill == CR_SLIMPITCHER) && i != x)
 			continue;
 
 		index[i] = pc_search_inventory(sd,itemid[i]);

@@ -10626,14 +10626,15 @@ static int clif_parse(int fd) {
 		}
 
 		// check if version is accepted
-		if (packet_ver <= 9 ||	// reject any client versions older than 6sept04
-			(packet_ver == 10 && (battle_config.packet_ver_flag &	1) == 0) ||
-			(packet_ver == 11 && (battle_config.packet_ver_flag &	2) == 0) ||
-			(packet_ver == 12 && (battle_config.packet_ver_flag &	4) == 0) ||
-			(packet_ver == 13 && (battle_config.packet_ver_flag &	8) == 0) ||
-			(packet_ver == 14 && (battle_config.packet_ver_flag &	16) == 0) ||
-			(packet_ver == 15 && (battle_config.packet_ver_flag &	32) == 0) ||
-			(packet_ver == 16 && (battle_config.packet_ver_flag &	64) == 0) ||
+		if (packet_ver <= 5 ||	// reject really old client versions
+			(packet_ver <= 9 && (battle_config.packet_ver_flag &	1) == 0) ||	// older than 6sept04
+			(packet_ver == 10 && (battle_config.packet_ver_flag &	2) == 0) ||
+			(packet_ver == 11 && (battle_config.packet_ver_flag &	4) == 0) ||
+			(packet_ver == 12 && (battle_config.packet_ver_flag &	8) == 0) ||
+			(packet_ver == 13 && (battle_config.packet_ver_flag &	16) == 0) ||
+			(packet_ver == 14 && (battle_config.packet_ver_flag &	32) == 0) ||
+			(packet_ver == 15 && (battle_config.packet_ver_flag &	64) == 0) ||
+			(packet_ver == 16 && (battle_config.packet_ver_flag &	128) == 0) ||
 			packet_ver > MAX_PACKET_VER ||	// no packet version support yet
 			// identified version, but unknown client?
 			(!sd && packet_db[packet_ver][cmd].func != clif_parse_WantToConnection)) {

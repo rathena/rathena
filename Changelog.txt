@@ -1,5 +1,18 @@
 Date	Added
 
+01/25
+        * Fixed TXT compile problems with libGC [celest]
+        * Added "Clients older than 2004-09-06aSakray" option to packet_ver_flag in
+          battle_athena, just in case server owners still prefer the older clients.
+          With so many changes to Sakray over the past months its much better upgrading
+          to the newer clients (November or higher recommended) available ;P [celest]
+        * Merged Full Strip into jA's tidier stripping skills code -- also fixes
+          a typo that was causing Full Strip to do the reverse effect instead,
+          and the skill not updating the target's status after successfully unequipping
+          items [celest]
+        * Tidy up the 4 chemical protection skills into one code block [celest]
+        * Corrected Slim Pitcher's code -- sorry, i missed a few things ^^; [celest]
+
 01/24
         * Fixed a typo in Provoke that was causing crashes [celest]
         * Fixed another compile warning in src/char/char.c
