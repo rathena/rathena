@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/11/30 8:26:49 PM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/12/1 11:59:43 PM Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -1151,7 +1151,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			struct status_change *sc_data = battle_get_sc_data(bl);
 			if(sc_data) {
 				sc_data[SC_FREEZE].val3++;
-				if(sc_data[SC_FREEZE].val3 >= 3 && rand()%100 < skilllv*sc_def_mdef/100)
+				if(sc_data[SC_FREEZE].val3 >= 3 && rand()%1000 < skilllv*sc_def_mdef/100)
 					skill_status_change_start(bl,SC_FREEZE,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 			}
 		}
@@ -2485,6 +2485,11 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 				}
 				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,
 					0x0500|dist  );
+				if (bl->type == BL_MOB && skillid == AS_GRIMTOOTH) {
+					struct status_change *sc_data = battle_get_sc_data(bl);
+					if (sc_data && sc_data[SC_SLOWDOWN].timer == -1)
+						skill_status_change_start(bl,SC_SLOWDOWN,0,0,0,0,1000,0);
+				}
 			}
 		}else{
 			int ar=1;
@@ -2499,9 +2504,8 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 			else if(skillid==NPC_SPLASHATTACK)	/* スプラッシュアタックは範?7*7 */
 				ar=3;
 
-			// meteor assault cast effect (not sure how else to properly add it =p) [Celest]
 			if (skillid == ASC_METEORASSAULT)
-				clif_specialeffect(&sd->bl,409, 1);
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			
 			skill_area_temp[1]=bl->id;
 			skill_area_temp[2]=x;
@@ -2515,11 +2519,6 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 				skill_castend_damage_id);
 			if (skillid == SM_MAGNUM)	// fire element for 10 seconds
 				skill_status_change_start(src,SC_FLAMELAUNCHER,0,0,0,0,10000,0);
-		}
-		if (bl->type == BL_MOB && skillid == AS_GRIMTOOTH) {
-			struct status_change *sc_data = battle_get_sc_data(bl);
-			if (sc_data && sc_data[SC_SLOWDOWN].timer == -1)
-				skill_status_change_start(bl,SC_SLOWDOWN,0,0,0,0,1000,0);
 		}
 		break;
 
@@ -2721,6 +2720,27 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,0 );
 		break;
 
+	// Celest
+	case PF_SOULBURN:
+		{
+			int per = skilllv < 5 ? 20+ skilllv*10 : 60;
+			if (rand()%100 < per) {
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				if (skilllv == 5)
+					skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,0 );
+				if (bl->type == BL_PC)
+					((struct map_session_data *)bl)->status.sp = 0;
+			} else {
+				clif_skill_nodamage(src,src,skillid,skilllv,1);
+				if (skilllv == 5)
+					skill_attack(BF_MAGIC,src,src,src,skillid,skilllv,tick,0 );
+				sd->status.sp = 0;
+				clif_updatestatus(sd,SP_SP);
+			}
+			skill_status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0, (skilllv < 5 ? 10000: 15000),0 );
+		}
+		break;
+
 	case NPC_SELFDESTRUCTION:	/* 自爆 */
 	case NPC_SELFDESTRUCTION2:	/* 自爆2 */
 			if(flag&1){
@@ -2783,6 +2803,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		break;
 
 	default:
+		printf("Unknown skill used:%d\n",skillid);
 		map_freeblock_unlock();
 		return 1;
 	}
@@ -3538,7 +3559,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		{
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			int sc=SkillStatusChangeTable[skillid];
-			clif_skill_nodamage(src,bl,skillid,-1,1);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if( tsc_data ){
 				if( tsc_data[sc].timer==-1 )
 				/* 付加する */
@@ -4421,7 +4442,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		if((double)battle_get_max_hp(bl)*2/3 < battle_get_hp(bl)) //HPが2/3以上?っていたら失敗
 			return 1;
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,skillid,src->id,0,skill_get_time(skillid,skilllv),0 );
+		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,skillid,src->id,skill_get_time(skillid,skilllv),1000,0 );
 		break;
 
 	case PF_MINDBREAKER:		/* プロボック */
@@ -4459,6 +4480,35 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					range = battle_get_range(src) - (range + 1);
 				mob_target((struct mob_data *)bl,src,range);
 			}
+		}
+		break;
+
+	case PF_SOULCHANGE:
+		{
+			int sp1 = 0, sp2 = 0;
+			if (sd) {
+				if (dstsd) {
+					sp1 = sd->status.sp > dstsd->status.max_sp ? dstsd->status.max_sp : sd->status.sp;
+					sp2 = dstsd->status.sp > sd->status.max_sp ? sd->status.max_sp : dstsd->status.sp;
+					sd->status.sp = sp2;
+					dstsd->status.sp = sp1;
+					clif_heal(sd->fd,SP_SP,sp2);
+					clif_heal(dstsd->fd,SP_SP,sp1);
+				} else if (dstmd) {
+					if (dstmd->state.soul_change_flag) {
+						clif_skill_fail(sd,skillid,0,0);
+						map_freeblock_unlock();
+						return 0;
+					}
+					sp2 = sd->status.max_sp * 3 /100;
+					if (sd->status.sp + sp2 > sd->status.max_sp)
+						sp2 = sd->status.max_sp - sd->status.sp;
+					sd->status.sp += sp2;
+					clif_heal(sd->fd,SP_SP,sp2);
+					dstmd->state.soul_change_flag = 1;
+				}
+			}
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
 		break;
 
@@ -4617,6 +4667,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			}
 		}
 		break;
+
 	default:
 		printf("Unknown skill used:%d\n",skillid);
 		map_freeblock_unlock();
@@ -9068,6 +9119,20 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 			sc_data[type].timer=add_timer(	/* タイマ?再設定 */
 				1000+tick, skill_status_change_timer,
+				bl->id, data);
+				return 0;
+		}
+		break;
+
+	case SC_SPLASHER:
+		if (sc_data[type].val4 % 1000 == 0) {
+			char timer[2];
+			sprintf (timer, "%d", sc_data[type].val4/1000);
+			clif_message(bl, timer);
+		}			
+		if((sc_data[type].val4 -= 500) > 0) {
+			sc_data[type].timer = add_timer(
+				500 + tick, skill_status_change_timer,
 				bl->id, data);
 				return 0;
 		}

@@ -398,6 +398,7 @@ struct mob_data {
 		unsigned change_walk_target : 1;
 		unsigned walk_easy : 1;
 		unsigned special_mob_ai : 3;
+		unsigned soul_change_flag : 1; // Celest
 	} state;
 	int timer;
 	short to_x,to_y;

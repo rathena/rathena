@@ -1,6 +1,11 @@
 Date	Added
 12/1
 	- Changed #define MAX_PET_DB to 300, it's easier for people adding new pets like this. [Nas]
+        * Skill Updates [celest]
+          - Updated Poison React
+          - Added Soul Change, Soul Burn
+          - Added a somewhat crude timer for Venom splasher
+          - Added a fix for Guild Skills causing crashes by Sara, thanks!
 
 11/30
         * Fixed client crash when disguised characters die [celest]

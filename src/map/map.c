@@ -986,7 +986,7 @@ int map_quit(struct map_session_data *sd) {
 		sd->status.hp = 100;
 
 	skill_status_change_clear(&sd->bl,1);	// ステータス異常を解除する
-	skill_clear_unitgroup(&sd->bl);	// スキルユニットグループの削除
+//	skill_clear_unitgroup(&sd->bl);	// スキルユニットグループの削除
 	skill_cleartimerskill(&sd->bl);
 	pc_stop_walking(sd,0);
 	pc_stopattack(sd);
@@ -995,6 +995,7 @@ int map_quit(struct map_session_data *sd) {
 	skill_gangsterparadise(sd,0);
 
 	pc_calcstatus(sd,4);
+	skill_clear_unitgroup(&sd->bl);	// [Sara-chan]
 
 	clif_clearchar_area(&sd->bl,2);
 

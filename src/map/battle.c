@@ -4008,6 +4008,7 @@ struct Damage battle_calc_magic_attack(
 	struct Damage md;
 	int aflag;
 	int normalmagic_flag=1;
+	int matk_flag = 1;
 	int ele=0,race=7,t_ele=0,t_race=7,t_mode = 0,cardfix,t_class,i;
 	struct map_session_data *sd=NULL,*tsd=NULL;
 	struct mob_data *tmd = NULL;
@@ -4165,15 +4166,26 @@ struct Damage battle_calc_magic_attack(
 					printf("battle_calc_magic_attack(): napalmvulcan enemy count=0 !\n");
 			}
 			break;
+		case PF_SOULBURN: // Celest
+			if (target->type != BL_PC || skill_lv < 5) {
+				memset(&md,0,sizeof(md));
+				return md;
+			} else if (target->type == BL_PC) {
+				damage = ((struct map_session_data *)target)->status.sp * 2;
+				matk_flag = 0; // don't consider matk and matk2
+			}				
+			break;
 		}
 	}
 
 	if(normalmagic_flag){	// 一般魔法ダメージ計算
 		int imdef_flag=0;
-		if(matk1>matk2)
-			damage= matk2+rand()%(matk1-matk2+1);
-		else
-			damage= matk2;
+		if (matk_flag) {
+			if(matk1>matk2)
+				damage= matk2+rand()%(matk1-matk2+1);
+			else
+				damage= matk2;
+		}
 		if(sd) {
 			if(sd->ignore_mdef_ele & (1<<t_ele) || sd->ignore_mdef_race & (1<<t_race))
 				imdef_flag = 1;
