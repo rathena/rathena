@@ -552,7 +552,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			continue;
 
 		if(sd->inventory_data[index]) {
-			sd->current_item = sd->inventory_data[index];
 			if(sd->inventory_data[index]->type == 4) {
 				if(sd->status.inventory[index].card[0]!=0x00ff && sd->status.inventory[index].card[0]!=0x00fe && sd->status.inventory[index].card[0]!=(short)0xff00) {
 					int j;
@@ -577,7 +576,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 					}
 				}
 			}
-			sd->current_item = NULL;
 		}
 	}
 	wele = sd->atk_ele;

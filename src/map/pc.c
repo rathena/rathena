@@ -1584,10 +1584,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->hp_gain_value += val;
 		break;
 	case SP_DAMAGE_WHEN_UNEQUIP:
-		if(!sd->state.lr_flag && sd->current_item) {
+		if(!sd->state.lr_flag) {
 			int i;
 			for (i=0; i<11; i++) {
-				if (sd->current_item->equip & equip_pos[i]) {
+				if (sd->inventory_data[current_equip_item_index]->equip & equip_pos[i]) {
 					sd->unequip_damage[i] += val;
 					break;
 				}

@@ -179,6 +179,8 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 };
 extern int SkillStatusChangeTable[];
 
+extern int current_equip_item_index;
+
 // パラメータ所得系 battle.c より移動
 int status_get_class(struct block_list *bl);
 int status_get_dir(struct block_list *bl);

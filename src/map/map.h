@@ -297,7 +297,6 @@ struct map_session_data {
 	short hp_loss_value, hp_loss_type;
 	int addrace2[6],addrace2_[6];
 	int subsize[3];
-	struct item_data *current_item;
 	short unequip_damage[11];
 	int itemid;
 	int itemhealrate[6];

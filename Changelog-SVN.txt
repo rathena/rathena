@@ -1,6 +1,8 @@
 Date	Added
 
 03/19
+        * Added getrefine() for 3/15's card patch -- returns the refined number
+          of the current item [celest]
         * Fixed day and night settings not ignored even if they are set to 0,
           my bad ^^; [celest]
 

@@ -311,6 +311,7 @@ int buildin_isday(struct script_state *st); // [celest]
 int buildin_isequipped(struct script_state *st); // [celest]
 int buildin_isequippedcnt(struct script_state *st); // [celest]
 int buildin_cardscnt(struct script_state *st); // [Lupus]
+int buildin_getrefine(struct script_state *st); // [celest]
 int buildin_getusersname(struct script_state *st); //jA commands added [Lupus]
 int buildin_dispbottom(struct script_state *st);
 int buildin_recovery(struct script_state *st);
@@ -558,6 +559,7 @@ struct {
 	{buildin_isequipped,"isequipped","i*"}, // check whether another item/card has been equipped [Celest]
 	{buildin_isequippedcnt,"isequippedcnt","i*"}, // check how many items/cards are being equipped [Celest]
 	{buildin_cardscnt,"cardscnt","i*"}, // check how many items/cards are being equipped in the same arm [Lupus]
+	{buildin_getrefine,"getrefine",""}, // returns the refined number of the current item, or an item with index specified [celest]
 #ifdef PCRE_SUPPORT
         {buildin_defpattern, "defpattern", "iss"}, // Define pattern to listen for [MouseJstr]
         {buildin_activatepset, "activatepset", "i"}, // Activate a pattern set [MouseJstr]
@@ -7010,6 +7012,19 @@ int buildin_cardscnt(struct script_state *st)
 	}
 	push_val(st->stack,C_INT,ret);
 //	push_val(st->stack,C_INT,current_equip_item_index);
+	return 0;
+}
+
+/*=======================================================
+ * Returns the refined number of the current item, or an
+ * item with inventory index specified
+ *-------------------------------------------------------
+ */
+int buildin_getrefine(struct script_state *st)
+{
+	struct map_session_data *sd;
+	if ((sd = script_rid2sd(st))!= NULL)
+		push_val(st->stack, C_INT, sd->status.inventory[current_equip_item_index].refine);
 	return 0;
 }
 
