@@ -392,7 +392,7 @@ int npc_event_do_clock(int tid,unsigned int tick,int id,int data)
 	time_t timer;
 	struct tm *t;
 	char buf[64];
-        char *day;
+        char *day="";
 	int c=0;
 	
 	time(&timer);

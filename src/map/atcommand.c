@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include <math.h>
 
+
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -53,6 +54,8 @@ ATCOMMAND_FUNC(whomap);
 ATCOMMAND_FUNC(whomap2);
 ATCOMMAND_FUNC(whomap3);
 ATCOMMAND_FUNC(whogm); // by Yor
+ATCOMMAND_FUNC(whozeny); // [Valaris]
+ATCOMMAND_FUNC(happyhappyjoyjoy); // [Valaris]
 ATCOMMAND_FUNC(save);
 ATCOMMAND_FUNC(load);
 ATCOMMAND_FUNC(speed);
@@ -466,7 +469,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri
 	{ AtCommand_Mute,		        "@mute",	        99, atcommand_mute }, // [celest]
 	{ AtCommand_Mute,		        "@red",	            99, atcommand_mute }, // [celest]
-
+	{ AtCommand_WhoZeny,			"@whozeny",		20, atcommand_whozeny }, // [Valaris]
+	{ AtCommand_HappyHappyJoyJoy,			"@happyhappyjoyjoy",		40, atcommand_happyhappyjoyjoy }, // [Valaris]
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
 	{ AtCommand_ListMail,			"@listmail",		 1, atcommand_listmail }, // [Valaris]
@@ -1591,6 +1595,91 @@ int atcommand_whogm(
 	else {
 		sprintf(output, msg_table[152], count); // %d GMs found.
 		clif_displaymessage(fd, output);
+	}
+
+	return 0;
+}
+
+int compare (const void * a, const void * b)
+{
+  return ( *(int*)b - *(int*)a );
+}
+
+int atcommand_whozeny(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char output[200];
+	struct map_session_data *pl_sd;
+	int i, j, count,c;
+	char match_text[100];
+	char player_name[24];
+	int zeny[clif_countusers()];
+	char counted[clif_countusers()];
+
+	memset(output, '\0', sizeof(output));
+	memset(match_text, '\0', sizeof(match_text));
+	memset(player_name, '\0', sizeof(player_name));
+
+	if (sscanf(message, "%99[^\n]", match_text) < 1)
+		strcpy(match_text, "");
+	for (j = 0; match_text[j]; j++)
+		match_text[j] = tolower(match_text[j]);
+
+	count = 0;
+	for (i = 0; i < fd_max; i++) {
+		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+				memcpy(player_name, pl_sd->status.name, 24);
+				for (j = 0; player_name[j]; j++)
+					player_name[j] = tolower(player_name[j]);
+				if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
+					zeny[count]=pl_sd->status.zeny;
+					count++;
+				}
+		}
+	}
+
+	qsort(zeny, count, sizeof(int), compare);
+	for (c = 0; c < count && c < 50; c++) {
+		if(!zeny[c])
+			continue;
+		for (i = 0; i < fd_max; i++) {
+			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && !counted[i] && zeny[c]) {
+				if(pl_sd->status.zeny==zeny[c]) {
+					sprintf(output, "Name: %s | Zeny: %d", pl_sd->status.name, pl_sd->status.zeny);
+					clif_displaymessage(fd, output);
+					zeny[c]=0;
+					counted[i]=1;
+				}
+			}
+		}
+	}
+
+	if (count == 0)
+		clif_displaymessage(fd, msg_table[28]); // No player found.
+	else if (count == 1)
+		clif_displaymessage(fd, msg_table[29]); // 1 player found.
+	else {
+		sprintf(output, msg_table[30], count); // %d players found.
+		clif_displaymessage(fd, output);
+	}
+
+	return 0;
+}
+
+int atcommand_happyhappyjoyjoy(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+
+	struct map_session_data *pl_sd;
+	int i,e;
+
+	for (i = 0; i < fd_max; i++) {
+		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+			e=rand()%40;	
+			clif_emotion(&pl_sd->bl,e);
+		}
 	}
 
 	return 0;

@@ -1,5 +1,10 @@
 Date	Added
-11/20   
+11/20
+	* Initialized "day" variable in npc.c. [Valaris]
+	* Added @whozeny. Shows list of top 50 online players and their zeny sorted from highest to lowest. [Valaris]
+	* Added @happyhappyjoyjoy. Makes all players on server do a random emote. [Valaris]
+	* Removed -funroll-loops from compile. (Do not re-add!) [Valaris]
+	* Skill updates [celest]
 	* Added check for max vending_max_value when reading config [kobra_k88]
 	* Skill updates [celest]
           - Napalm vulcan, Enchant Deadly Poison, Slow Poison (based on jAthena 1066)
