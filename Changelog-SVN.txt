@@ -1,6 +1,7 @@
 Date	Added
 
 02/23
+        * Fixed a bad typo in status.c's StatusChangeTable [celest]
         * Corrected Spiral Pierce's hits in the skill_db [celest]
         * Moved /common/*.o into a obj folder when compiling [celest]
         * Updated core and map server to jA 1094~1115 [celest]

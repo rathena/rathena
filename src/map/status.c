@@ -36,7 +36,7 @@ int SkillStatusChangeTable[]={	/* status.hのenumのSC_***とあわせること */
 	-1,-1,-1,
 	SC_FREEZE,			/* フロストダイバ? */
 	SC_STONE,			/* スト?ンカ?ス */
-	-1,-1,-1,
+	-1,-1,
 /* 20- */
 	-1,-1,-1,-1,
 	SC_RUWACH,			/* ルアフ */
