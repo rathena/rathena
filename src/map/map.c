@@ -2597,6 +2597,7 @@ void do_final(void) {
     for (i = 0; i < fd_max; i++)
         delete_session(i);
 
+#if 0
     map_removenpc();
 
 //    do_final_timer(); (we used timer_final() instead)
@@ -2623,6 +2624,7 @@ void do_final(void) {
 		if(map[i].block_mob_count) free(map[i].block_mob_count);
 	}
 */
+#endif
 
 #ifndef TXT_ONLY
     map_sql_close();
