@@ -1,4 +1,7 @@
 Date	Added
+11/07
+	* Fixed compiling error in Map Server in which @repairall was using old broken system [Shinigami]
+
 11/06
 	- Fixed wrong coords for payon guild flags (it has the old map coords), fixed some weapon effects in item_db,
 	 updated the mob_db (90%+ done), added EP 5-9 mobs to mob_branch.txt and EP 6 cards to item_cardalbum.txt[shadowlady]
