@@ -1299,7 +1299,7 @@
 4260,Wootan_Shooter_Card,Wootan Shooter Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bDef,1; bonus2 bResEff,Eff_Confusion,2000; } //OK
 4261,Wootan_Fighter_Card,Wootan Fighter Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bDef,1; bonus2 bResEff,Eff_Bleeding,2000; } //OK
 4262,Taoist_Hermit_Card,Taoist Hermit Card,6,20,0,10,,,,,,,,,,,{},{}
-4263,Incantation_Samurai_Card,Incantation Samurai Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bIgnoreDefMob,0; bonus2 bHPLossRate,300,10; bonus bDamageWhenUnequip,1000; } //??OK
+4263,Incantation_Samurai_Card,Incantation Samurai Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bIgnoreDefMob,0; bonus2 bHPLossRate,300,10000; bonus bDamageWhenUnequip,1000; } //??OK
 4264,Wind_Ghost_Card,Wind Ghost Card,6,20,0,10,,,,,,,136,,,,{},{ if(getskilllv(84)==10) goto JT_10; bonus3 bAutoSpell,84,3,1; JT_10: bonus3 bAutoSpell,66,10,1; } //??OK
 4265,Li_Me_Mang_Ryang_Card,Li Me Mang Ryang Card,6,20,0,10,,,,,,,,,,,{},{}
 4266,Eclipse_Card,Eclipse Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bVit,1; if(isequipped(4006)) bonus bFlee,18; } //OK

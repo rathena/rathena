@@ -1584,8 +1584,15 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->hp_gain_value += val;
 		break;
 	case SP_DAMAGE_WHEN_UNEQUIP:
-		if(!sd->state.lr_flag)
-			sd->unequip_damage += val;
+		if(!sd->state.lr_flag && sd->current_item) {
+			int i;
+			for (i=0; i<11; i++) {
+				if (sd->current_item->equip & equip_pos[i]) {
+					sd->unequip_damage[i] += val;
+					break;
+				}
+			}
+		}
 		break;
 	default:
 		if(battle_config.error_log)
@@ -6069,6 +6076,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
  */
 int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 {
+	short dmg = 0;
 	nullpo_retr(0, sd);
 
 // -- moonsoul	(if player is berserk then cannot unequip)
@@ -6083,8 +6091,13 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	if(sd->status.inventory[n].equip){
 		int i;
 		for(i=0;i<11;i++) {
-			if(sd->status.inventory[n].equip & equip_pos[i])
+			if(sd->status.inventory[n].equip & equip_pos[i]) {
 				sd->equip_index[i] = -1;
+				if(sd->unequip_damage[i] > 0) {
+					dmg += sd->unequip_damage[i];
+					sd->unequip_damage[i] = 0;
+				}
+			}
 		}
 		if(sd->status.inventory[n].equip & 0x0002) {
 			sd->weapontype1 = 0;
@@ -6130,17 +6143,17 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	} else {
 		clif_unequipitemack(sd,n,0,0);
 	}
-	if (sd->unequip_damage > 0) {
-		short dmg = sd->unequip_damage;
-		if (dmg > sd->status.hp)
-			dmg = sd->status.hp;
-		pc_heal(sd,-dmg,0);
-	}
 
 	if(flag&1) {
 		status_calc_pc(sd,0);
 		if(sd->sc_count && sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 			status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
+	}
+
+	if (dmg > 0) {
+		if (dmg > sd->status.hp)
+			dmg = sd->status.hp;
+		pc_heal(sd,-dmg,0);
 	}
 
 	return 0;
@@ -7226,10 +7239,6 @@ int do_init_pc(void) {
 	{
 		int day_duration = battle_config.day_duration;
 		int night_duration = battle_config.night_duration;
-		if (day_duration < 60000)
-			day_duration = 60000;
-		if (night_duration < 60000)
-			night_duration = 60000;
 		if (battle_config.night_at_start == 0) {
 			night_flag = 0; // 0=day, 1=night [Yor]
 			day_timer_tid = add_timer_interval(gettick() + day_duration + night_duration, map_day_timer, 0, 0, day_duration + night_duration);

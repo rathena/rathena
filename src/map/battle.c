@@ -4478,11 +4478,11 @@ void battle_validate_conf() {
 		battle_config.night_at_start = 0;
 	else if (battle_config.night_at_start > 1) // added by [Yor]
 		battle_config.night_at_start = 1;
-	if (battle_config.day_duration < 0) // added by [Yor]
-		battle_config.day_duration = 0;
-	if (battle_config.night_duration < 0) // added by [Yor]
-		battle_config.night_duration = 0;
-
+	if (battle_config.day_duration < 60000) // added by [Yor]
+		battle_config.day_duration = 60000;
+	if (battle_config.night_duration < 60000) // added by [Yor]
+		battle_config.night_duration = 60000;
+	
 	if (battle_config.ban_spoof_namer < 0) // added by [Yor]
 		battle_config.ban_spoof_namer = 0;
 	else if (battle_config.ban_spoof_namer > 32767)

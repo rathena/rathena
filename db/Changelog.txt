@@ -6,6 +6,8 @@
 	Skill databases == celest working on them i believe.
 
 03/18
+        * Fixed Incantation Samurai card reducing HP too quickly - the time should
+          be in milliseconds ^^; [celest]
 	* Added ~86 new cards. Fixed, optimized [Lupus]
 		Thanks to Indiona,Landarma. Gosh, I had to fix some bugz ^_-
 03/16

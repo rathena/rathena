@@ -521,7 +521,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	memset(sd->addrace2_,0,sizeof(sd->addrace2_));
 	sd->hp_gain_value = sd->sp_drain_type = 0;
 	memset(sd->subsize,0,sizeof(sd->subsize));
-	sd->unequip_damage = 0;
+	memset(sd->unequip_damage,0,sizeof(sd->unequip_damage));
 
 	if(!sd->disguiseflag && sd->disguise) {
 		sd->disguise=0;
@@ -552,6 +552,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			continue;
 
 		if(sd->inventory_data[index]) {
+			sd->current_item = sd->inventory_data[index];
 			if(sd->inventory_data[index]->type == 4) {
 				if(sd->status.inventory[index].card[0]!=0x00ff && sd->status.inventory[index].card[0]!=0x00fe && sd->status.inventory[index].card[0]!=(short)0xff00) {
 					int j;
@@ -576,6 +577,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 					}
 				}
 			}
+			sd->current_item = NULL;
 		}
 	}
 	wele = sd->atk_ele;
