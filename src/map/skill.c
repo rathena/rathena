@@ -4407,7 +4407,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			}
 		}
 		break;
-	case GD_REGENERATION:		
+	case GD_REGENERATION:
 		{
 			struct guild *g = NULL;
 			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
@@ -4430,7 +4430,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				for(i = 0; i < g->max_member; i++) {
 					if ((dstsd = g->member[i].sd) != NULL && sd->bl.m == dstsd->bl.m) {
 						hp = dstsd->status.max_hp*0.9;
-						sp = dstsd->status.sp + hp < dstsd->status.max_sp ? hp : dstsd->status.max_sp - dstsd->status.sp;
+						sp = dstsd->status.sp + hp <= dstsd->status.max_sp ? hp : dstsd->status.max_sp - dstsd->status.sp;
 						clif_skill_nodamage(src,bl,AL_HEAL,hp,1);
 						battle_heal(NULL,bl,hp,sp,0);
 					}
@@ -9798,19 +9798,15 @@ int skill_check_cloaking(struct block_list *bl)
 			skill_status_change_end(bl, SC_CLOAKING, -1);
 			*battle_get_option(bl)&=~4;	/* ”O‚Ì‚½‚ß‚Ì?— */
 		}
-		else if (bl->type == BL_PC) {
+		else if (bl->type == BL_PC && sd->sc_data[SC_CLOAKING].val3 != 130) {
 			sd->sc_data[SC_CLOAKING].val3 = 130;
-			//sd->speed = sd->speed * sd->sc_data[SC_CLOAKING].val3 /100;
-			//clif_updatestatus(sd,SP_SPEED);
-			pc_calcstatus (sd,0); // better way than calling this everytime?
+			pc_calcspeed (sd);
 		}
 	}
 	else {
-		if (bl->type == BL_PC) {
+		if (bl->type == BL_PC && sd->sc_data[SC_CLOAKING].val3 != 103) {
 			sd->sc_data[SC_CLOAKING].val3 = 103;
-			//sd->speed = sd->speed * sd->sc_data[SC_CLOAKING].val3 /100;
-			//clif_updatestatus(sd,SP_SPEED);
-			pc_calcstatus (sd,0);
+			pc_calcspeed (sd);
 		}
 	}
 	return end;

@@ -14,6 +14,8 @@ Date	Added
             since it's already fully implemented.
           - Added a bit more restrictions to Call Partner and Emergency Recall and
             updated mapflag for sec_pri.gat
+          - Added pc_calcspeed and updated Cloaking so it won't need to recalculate
+            the player's entire status everytime there is movement.
 
 11/22
 	* (TXT)Stripped some code off read_gm_accounts() and made with it addGM() [MC Cameri]

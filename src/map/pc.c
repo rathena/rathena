@@ -2092,6 +2092,98 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 }
 
 /*==========================================
+ * For quick calculating [Celest]
+ *------------------------------------------
+ */
+int pc_calcspeed (struct map_session_data *sd)
+{
+	int b_speed, skill;
+	struct pc_base_job s_class;
+
+	nullpo_retr(0, sd);
+
+	s_class = pc_calc_base_job(sd->status.class);
+
+	b_speed = sd->speed;
+	sd->speed = DEFAULT_WALK_SPEED ;
+	sd->speed_rate = 100;
+	sd->speed_add_rate = 100;
+	if(sd->speed_add_rate != 100)
+		sd->speed_rate += sd->speed_add_rate - 100;
+	if(sd->aspd_add_rate != 100)
+		sd->aspd_rate += sd->aspd_add_rate - 100;
+
+	if(sd->sc_count){
+		if(sd->sc_data[SC_INCREASEAGI].timer!=-1 && sd->sc_data[SC_QUAGMIRE].timer == -1 && sd->sc_data[SC_DONTFORGETME].timer == -1){	// 速度?加
+			sd->speed -= sd->speed *25/100;
+		}
+		if(sd->sc_data[SC_DECREASEAGI].timer!=-1) {
+			sd->speed = sd->speed *125/100;
+		}
+		if(sd->sc_data[SC_CLOAKING].timer!=-1) {
+			sd->speed = sd->speed * (sd->sc_data[SC_CLOAKING].val3-sd->sc_data[SC_CLOAKING].val1*3) /100;
+		}
+		if(sd->sc_data[SC_CHASEWALK].timer!=-1) {
+			sd->speed = sd->speed * sd->sc_data[SC_CHASEWALK].val3 /100;
+		}
+		if(sd->sc_data[SC_QUAGMIRE].timer!=-1){
+			sd->speed = sd->speed*3/2;
+		}
+		if(sd->sc_data[SC_WINDWALK].timer!=-1) {
+			sd->speed -= sd->speed *(sd->sc_data[SC_WINDWALK].val1*2)/100;
+		}
+		if(sd->sc_data[SC_CARTBOOST].timer!=-1) {
+			sd->speed -= (DEFAULT_WALK_SPEED * 20)/100;
+		}
+		if(sd->sc_data[SC_BERSERK].timer!=-1) {
+			sd->speed -= sd->speed *25/100;
+		}
+		if(sd->sc_data[SC_WEDDING].timer!=-1) {
+			sd->speed = 2*DEFAULT_WALK_SPEED;
+		}
+		if(sd->sc_data[SC_DONTFORGETME].timer!=-1){
+			sd->speed= sd->speed*(100+sd->sc_data[SC_DONTFORGETME].val1*2 + sd->sc_data[SC_DONTFORGETME].val2 + (sd->sc_data[SC_DONTFORGETME].val3&0xffff))/100;
+		}
+		if(sd->sc_data[SC_STEELBODY].timer!=-1){
+			sd->speed = (sd->speed * 125) / 100;
+		}
+		if(sd->sc_data[SC_DEFENDER].timer != -1) {
+			sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
+		}
+		if( sd->sc_data[SC_DANCING].timer!=-1 ){
+			sd->speed*=4;
+		}
+		if(sd->sc_data[SC_CURSE].timer!=-1)
+			sd->speed += 450;
+	}
+
+	if(sd->status.option&2 && (skill = pc_checkskill(sd,RG_TUNNELDRIVE))>0 )
+		sd->speed += (1.2*DEFAULT_WALK_SPEED - skill*9);
+	if (pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)
+		sd->speed += (10-skill) * (DEFAULT_WALK_SPEED * 0.1);
+	else if (pc_isriding(sd)) {
+		sd->speed -= (0.25 * DEFAULT_WALK_SPEED);
+	}
+	if((skill=pc_checkskill(sd,TF_MISS))>0)
+		if(s_class.job==12)
+			sd->speed -= sd->speed *(skill*1.5)/100;
+
+	if(sd->speed_rate != 100)
+		sd->speed = sd->speed*sd->speed_rate/100;
+	if(sd->speed < 1) sd->speed = 1;
+	
+	if(sd->skilltimer != -1 && (skill = pc_checkskill(sd,SA_FREECAST)) > 0) {
+		sd->prev_speed = sd->speed;
+		sd->speed = sd->speed*(175 - skill*5)/100;
+	}
+
+	if(b_speed != sd->speed)
+		clif_updatestatus(sd,SP_SPEED);
+
+	return 0;
+}
+
+/*==========================================
  * ? 備品による能力等のボ?ナス設定
  *------------------------------------------
  */

@@ -77,6 +77,7 @@ int pc_dropitem(struct map_session_data*,int,int);
 int pc_checkweighticon(struct map_session_data *sd);
 
 int pc_calcstatus(struct map_session_data*,int);
+int pc_calcspeed(struct map_session_data*); // [Celest]
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);
 int pc_bonus3(struct map_session_data *sd,int,int,int,int);
