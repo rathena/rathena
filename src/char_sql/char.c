@@ -706,7 +706,10 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	memset(p, 0, sizeof(struct mmo_charstatus));
 
 	p->char_id = char_id;
-	printf("Loaded: ");
+	
+	#ifdef DEBUG
+	printf("Loading Char [%d]... ",char_id);
+	#endif
 	//`char`( `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`, //9
 	//`str`,`agi`,`vit`,`int`,`dex`,`luk`, //15
 	//`max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point`, //21
@@ -715,19 +718,11 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	//`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`)
 	//splite 2 parts. cause veeeery long SQL syntax
 
-	sprintf(tmp_sql, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
-		"`str`,`agi`,`vit`,`int`,`dex`,`luk`, `max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id);
+	sprintf(tmp_sql, "SELECT * FROM `%s` WHERE `char_id` = '%d'",char_db, char_id);
 
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
-	}
+	sql_query(tmp_sql,"mmo_char_fromsql");
 
-	sql_res = mysql_store_result(&mysql_handle);
-
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res);
-
-		p->char_id = char_id;
+	if ((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
 		p->account_id = atoi(sql_row[1]);
 		p->char_num = atoi(sql_row[2]);
 		strcpy(p->name, sql_row[3]);
@@ -749,51 +744,43 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 		p->sp = atoi(sql_row[19]);
 		p->status_point = atoi(sql_row[20]);
 		p->skill_point = atoi(sql_row[21]);
-		//free mysql result.
-		mysql_free_result(sql_res);
-	} else
-		printf("char1 - failed\n");	//Error?! ERRRRRR WHAT THAT SAY!?
-	printf("(\033[1;32m%d\033[0m)\033[1;32m%s\033[0m\t[",p->char_id,p->name);
-	printf("char1 ");
-
-	sprintf(tmp_sql, "SELECT `option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`hair`,`hair_color`,"
-		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,"
-		"`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (select `char2`)- %s\n", mysql_error(&mysql_handle));
-	}
-
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res);
-
-
-		p->option = atoi(sql_row[0]);	p->karma = atoi(sql_row[1]);	p->manner = atoi(sql_row[2]);
-			p->party_id = atoi(sql_row[3]);	p->guild_id = atoi(sql_row[4]);	p->pet_id = atoi(sql_row[5]);
-
-		p->hair = atoi(sql_row[6]);	p->hair_color = atoi(sql_row[7]);	p->clothes_color = atoi(sql_row[8]);
-		p->weapon = atoi(sql_row[9]);	p->shield = atoi(sql_row[10]);
-		p->head_top = atoi(sql_row[11]);	p->head_mid = atoi(sql_row[12]);	p->head_bottom = atoi(sql_row[13]);
-		strcpy(p->last_point.map,sql_row[14]); p->last_point.x = atoi(sql_row[15]);	p->last_point.y = atoi(sql_row[16]);
-		strcpy(p->save_point.map,sql_row[17]); p->save_point.x = atoi(sql_row[18]);	p->save_point.y = atoi(sql_row[19]);
-		p->partner_id = atoi(sql_row[20]);
+		p->option = atoi(sql_row[22]);
+        p->karma = atoi(sql_row[23]);
+        p->manner = atoi(sql_row[24]);
+        p->party_id = atoi(sql_row[25]);
+        p->guild_id = atoi(sql_row[26]);
+        p->pet_id = atoi(sql_row[27]);
+		p->hair = atoi(sql_row[28]);
+        p->hair_color = atoi(sql_row[29]);
+        p->clothes_color = atoi(sql_row[30]);
+        p->weapon = atoi(sql_row[31]);
+        p->shield = atoi(sql_row[32]);
+		p->head_top = atoi(sql_row[33]);
+        p->head_mid = atoi(sql_row[34]);
+        p->head_bottom = atoi(sql_row[35]);
+		strcpy(p->last_point.map,sql_row[36]);
+        p->last_point.x = atoi(sql_row[37]);
+        p->last_point.y = atoi(sql_row[38]);
+        strcpy(p->save_point.map,sql_row[39]);
+        p->save_point.x = atoi(sql_row[40]);
+        p->save_point.y = atoi(sql_row[41]);
+		p->partner_id = atoi(sql_row[42]);
 
 		//free mysql result.
 		mysql_free_result(sql_res);
-	} else
-		printf("char2 - failed\n");	//Error?! ERRRRRR WHAT THAT SAY!?
-
-	printf("char2 ");
+#ifdef DEBUG
+        printf("Loading of char [%d] Completed!\n",char_id);
+	} else {
+		printf("Loading of char [%d] FAILED!\n",char_id);	//Error?! ERRRRRR WHAT THAT SAY!?
+#endif
+    }
 
 	//read memo data
 	//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
 	sprintf(tmp_sql, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`='%d'",memo_db, char_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (select `memo`)- %s\n", mysql_error(&mysql_handle));
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-
-	if (sql_res) {
+	sql_query(tmp_sql,"mmo_char_fromsql");
+	
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
 		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++){
 			strcpy (p->memo_point[i].map,sql_row[0]);
 			p->memo_point[i].x=atoi(sql_row[1]);
@@ -802,87 +789,82 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 		}
 		mysql_free_result(sql_res);
 	}
-	printf("memo ");
+#ifdef DEBUG
+	printf("Char [%s] - Memo Loaded\n",p->name);
+#endif
 
 	//read inventory
 	//`inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
-	sprintf(tmp_sql, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`"
-		"FROM `%s` WHERE `char_id`='%d'",inventory_db, char_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (select `inventory`)- %s\n", mysql_error(&mysql_handle));
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
+	sprintf(tmp_sql, "SELECT * FROM `%s` WHERE `char_id`='%d'",inventory_db, char_id);
+	sql_query(tmp_sql,"mmo_char_fromsql");
+	
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
 		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++){
-			p->inventory[i].id = atoi(sql_row[0]);
-			p->inventory[i].nameid = atoi(sql_row[1]);
-			p->inventory[i].amount = atoi(sql_row[2]);
-			p->inventory[i].equip = atoi(sql_row[3]);
-			p->inventory[i].identify = atoi(sql_row[4]);
-			p->inventory[i].refine = atoi(sql_row[5]);
-			p->inventory[i].attribute = atoi(sql_row[6]);
-			p->inventory[i].card[0] = atoi(sql_row[7]);
-			p->inventory[i].card[1] = atoi(sql_row[8]);
-			p->inventory[i].card[2] = atoi(sql_row[9]);
-			p->inventory[i].card[3] = atoi(sql_row[10]);
+			p->inventory[i].id = atoi(sql_row[1]);
+			p->inventory[i].nameid = atoi(sql_row[2]);
+			p->inventory[i].amount = atoi(sql_row[3]);
+			p->inventory[i].equip = atoi(sql_row[4]);
+			p->inventory[i].identify = atoi(sql_row[5]);
+			p->inventory[i].refine = atoi(sql_row[6]);
+			p->inventory[i].attribute = atoi(sql_row[7]);
+			p->inventory[i].card[0] = atoi(sql_row[8]);
+			p->inventory[i].card[1] = atoi(sql_row[9]);
+			p->inventory[i].card[2] = atoi(sql_row[10]);
+			p->inventory[i].card[3] = atoi(sql_row[11]);
 		}
 		mysql_free_result(sql_res);
 	}
-	printf("inventory ");
-
+#ifdef DEBUG
+	printf("Char [%s] - Inventory Loaded\n",p->name);
+#endif
 
 	//read cart.
 	//`cart_inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
-	sprintf(tmp_sql, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`"
-		"FROM `%s` WHERE `char_id`='%d'",cart_db, char_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (select `cart_inventory`)- %s\n", mysql_error(&mysql_handle));
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
+	sprintf(tmp_sql, "SELECT * FROM `%s` WHERE `char_id`='%d'",cart_db, char_id);
+	sql_query(tmp_sql,"mmo_char_fromsql");
+	
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
 		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++){
-			p->cart[i].id = atoi(sql_row[0]);
-			p->cart[i].nameid = atoi(sql_row[1]);
-			p->cart[i].amount = atoi(sql_row[2]);
-			p->cart[i].equip = atoi(sql_row[3]);
-			p->cart[i].identify = atoi(sql_row[4]);
-			p->cart[i].refine = atoi(sql_row[5]);
-			p->cart[i].attribute = atoi(sql_row[6]);
-			p->cart[i].card[0] = atoi(sql_row[7]);
-			p->cart[i].card[1] = atoi(sql_row[8]);
-			p->cart[i].card[2] = atoi(sql_row[9]);
-			p->cart[i].card[3] = atoi(sql_row[10]);
+			p->cart[i].id = atoi(sql_row[1]);
+			p->cart[i].nameid = atoi(sql_row[2]);
+			p->cart[i].amount = atoi(sql_row[3]);
+			p->cart[i].equip = atoi(sql_row[4]);
+			p->cart[i].identify = atoi(sql_row[5]);
+			p->cart[i].refine = atoi(sql_row[6]);
+			p->cart[i].attribute = atoi(sql_row[7]);
+			p->cart[i].card[0] = atoi(sql_row[8]);
+			p->cart[i].card[1] = atoi(sql_row[9]);
+			p->cart[i].card[2] = atoi(sql_row[10]);
+			p->cart[i].card[3] = atoi(sql_row[11]);
 		}
 		mysql_free_result(sql_res);
 	}
-	printf("cart ");
+#ifdef DEBUG
+	printf("Char [%s] - Cart Inventory Loaded\n",p->name);
+#endif
 
 	//read skill
 	//`skill` (`char_id`, `id`, `lv`)
 	sprintf(tmp_sql, "SELECT `id`, `lv` FROM `%s` WHERE `char_id`='%d'",skill_db, char_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (select `skill`)- %s\n", mysql_error(&mysql_handle));
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
+	sql_query(tmp_sql,"mmo_char_fromsql");
+	
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
 		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++){
-			n = atoi(sql_row[0]);
-			p->skill[n].id = n; //memory!? shit!.
+			p->skill[n].id = atoi(sql_row[0]);
 			p->skill[n].lv = atoi(sql_row[1]);
 		}
 		mysql_free_result(sql_res);
 	}
-	printf("skill ");
+#ifdef DEBUG
+	printf("Char [%s] - Skills Loaded\n",p->name);
+#endif
 
 	//global_reg
 	//`global_reg_value` (`char_id`, `str`, `value`)
 	sprintf(tmp_sql, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, char_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (select `global_reg_value`)- %s\n", mysql_error(&mysql_handle));
-	}
-	i = 0;
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
+	sql_query(tmp_sql,"mmo_char_fromsql");
+
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
 		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++){
 			strcpy (p->global_reg[i].str, sql_row[0]);
 			p->global_reg[i].value = atoi (sql_row[1]);
@@ -890,17 +872,18 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 		mysql_free_result(sql_res);
 	}
 	p->global_reg_num=i;
+#ifdef DEBUG
+	printf("Char [%s] - Global Reg Loaded\n",p->name);
+#endif
 
 	if (online) {
 		sprintf(tmp_sql, "UPDATE `%s` SET `online`='%d' WHERE `char_id`='%d'",char_db,online,char_id);
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			printf("DB server Error (set char online)- %s\n", mysql_error(&mysql_handle));
-		}
+		sql_query(tmp_sql,"mmo_char_fromsql");
 	}
+#ifdef DEBUG
+	printf("Char [%d][%s] - Loading Complete\n",char_id,p->name);
+#endif
 
-	printf("global_reg]\n");	//ok. all data load successfuly!
-
-	//printf("char cloade");
 
 	return 1;
 }

@@ -1,4 +1,7 @@
 Date	Added
+12/08
+	* Started optimizing char-server [Wizputer]
+
 12/07
 	* Optimized login-server some more [Wizputer]
 	* Added new tables, data-types not finished [Wizputer]
