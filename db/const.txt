@@ -248,3 +248,11 @@ SC_SpeedPot1	38
 SC_SpeedPot2	39
 SC_ATKPot	185
 SC_MATKPot	186
+SC_EncPoison	6
+SC_Holy		17
+SC_Flame	90
+SC_Frost	91
+SC_Lightning	92
+SC_Seismic	93
+SC_Bleeding	124
+SC_BlockSkill	194
