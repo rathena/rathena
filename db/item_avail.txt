@@ -1,5 +1,4 @@
 // item id,sprite id
 // Client will use sprite ID to display particular item.
 // If 0 is used then item will be disabled.
-2237,2241	//Bandit_Beard",2240 BEARD
-2240,2241
+2240,2241 //Beard - Grampa Beard

@@ -5,6 +5,10 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/29
+        * Corrected Bloody Axe's weight - 400 > 4000 [celest]
+        * Removed Bandit's Beard from item_avail.txt [celest]
+
 12/28
         * Removed Roguemaster's Bow adding steal chance, thanks Draco [celest]
 

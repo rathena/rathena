@@ -572,7 +572,7 @@
 1360,Two_handed_Axe,Two-handed Axe,4,55000,0,2500,185,,1,1,279714,2,34,3,30,7,{},{}
 1361,Two_handed_Axe_,Two-handed Axe,4,55000,0,2500,185,,1,2,279714,2,34,3,30,7,{},{}
 1362,Two_handed_Axe__,Two-handed Axe,4,55000,0,2500,185,,1,0,279714,2,34,3,30,7,{},{}
-1363,Blood_Axe,Bloody Axe,4,20,0,400,170,,1,0,279714,2,34,4,44,7,{},{ bonus bStr,10; bonus bSpeedRate,25; }
+1363,Blood_Axe,Bloody Axe,4,20,0,4000,170,,1,0,279714,2,34,4,44,7,{},{ bonus bStr,10; bonus bSpeedRate,25; }
 1364,Great_Axe,Great Axe,4,20,0,1800,187,,1,0,279714,2,34,4,44,7,{},{ bonus2 bAddEff,Eff_Stan,1500; }
 1365,Sabbath,Sabbath,4,20,0,2300,120,,1,0,279714,2,34,4,44,7,{},{ bonus2 bWeaponComaRace,6,50; bonus bAtkEle,7; },
 1366,Light_Epsilon,Light Epsilon,4,20,0,2300,180,,1,0,279714,2,34,4,44,7,{},{ bonus bAtkEle,6; skill 28,3; bonus2 bAddRace,6,3; }
