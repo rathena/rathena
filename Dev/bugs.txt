@@ -216,3 +216,7 @@ Progress:	0%
 Problem:	Lord Kaho Horns supposedly disappear when equipped.
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Berzebub, etc cards don't decrease aftercast delays
+Assigned:	N/A
+Progress:	0%
