@@ -1,4 +1,7 @@
 Date	Added
+11/30
+	* "Beautified" sql login-server [Wizputer]
+
 11/28
         * Updated packet_ver_flag's default value, thanks to iscandium
         * Updated Finger Offensive, thanks to orn

@@ -1,7 +1,12 @@
 # $Id: Makefile 158 2004-10-01 03:45:15Z PoW $
 
 CC = gcc -pipe
+
+ifdef DEBUG
+PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT -DDEBUG
+else
 PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT
+endif
 #PACKETDEF = -DPACKETVER=5 -DNEW_006b
 #PACKETDEF = -DPACKETVER=4 -DNEW_006b
 #PACKETDEF = -DPACKETVER=3 -DNEW_006b
@@ -92,6 +97,9 @@ sql:
 	$(MAKE) CC="$(CC)" OPT="$(OPT)" SQLFLAG=1 $@
 endif
 
+debug-sql:
+	$(MAKE) CC="$(CC)" OPT="$(OPT)" DEBUG=1 sql
+
 clean: src/common/GNUmakefile src/login/GNUmakefile src/char/GNUmakefile src/map/GNUmakefile src/ladmin/GNUmakefile src/txt-converter/login/GNUmakefile src/txt-converter/char/GNUmakefile
 	cd src ; cd common ; $(MAKE) $(MKDEF) $@ ; cd ..
 	cd src ; cd login ; $(MAKE) $(MKDEF) $@ ; cd ..
@@ -105,7 +113,7 @@ clean: src/common/GNUmakefile src/login/GNUmakefile src/char/GNUmakefile src/map
 
 tools:
 	cd tool && $(MAKE) $(MKDEF) && cd ..
-	$(CC) -o setupwizard setupwizard.c	
+	$(CC) -o setupwizard setupwizard.c
 
 src/common/GNUmakefile: src/common/Makefile
 	sed -e 's/$$>/$$^/' src/common/Makefile > src/common/GNUmakefile
