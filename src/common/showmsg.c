@@ -21,11 +21,9 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 		case MSG_STATUS: //Bright Green (To inform about good things)
 			strcpy(prefix,CL_GREEN"[Status]"CL_RESET":");
 			break;
-/*	//Do we really need this now? [MC Cameri]
 		case MSG_SQL: //Bright Violet (For dumping out anything related with SQL)
 			strcpy(prefix,CL_MAGENTA"[SQL]"CL_RESET":");
 			break;
-*/
 		case MSG_INFORMATION: //Bright White (Variable information)
 			strcpy(prefix,CL_WHITE"[Info]"CL_RESET":");
 			break;
@@ -49,18 +47,18 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 			return 1;
 	}
 	if (!(flag == MSG_DEBUG && !SHOW_DEBUG_MSG)) {
-	output = (char*)malloc(sizeof(char)*(strlen(prefix)+strlen(string)+2)); // +2: space and a \0
-	if (output == NULL) {
-		return 1;
-//		exit(1); // Kill server? Deadly
-	}
-	
-	strcpy(output,prefix);
-	strcat(output," ");
-	strcat(output,string);
-	printf(output);
-	fflush(stdout);
-	free(output);
+		output = (char*)malloc(sizeof(char)*(strlen(prefix)+strlen(string)+2)); // prefix+string+two chars(space and \0)
+		if (output == NULL) {
+			return 1;
+//			exit(1); // Kill server? Deadly
+		}
+
+		strcpy(output,prefix);
+		strcat(output," ");
+		strcat(output,string);
+		printf(output);
+		fflush(stdout);
+		free(output);
 	}
 /*
 	if ((core_config.debug_output_level > -1) && (flag >= core_config.debug_output_level)) {

@@ -2325,7 +2325,8 @@ int sql_config_read(char *cfgName)
 
 	fp=fopen(cfgName,"r");
 	if(fp==NULL){
-		printf("file not found: %s\n",cfgName);
+		snprintf(tmp_output,sizeof(tmp_output),"File not found: '%s'.\n",cfgName);
+		ShowError(tmp_output);
 		return 1;
 	}
 	while(fgets(line,1020,fp)){
@@ -2355,19 +2356,19 @@ int sql_config_read(char *cfgName)
 		//Map Server SQL DB
 		} else if(strcmpi(w1,"map_server_ip")==0){
 			strcpy(map_server_ip, w2);
-			printf ("set map_server_ip : %s\n",w2);
+//			printf ("set map_server_ip : %s\n",w2);
 		} else if(strcmpi(w1,"map_server_port")==0){
 			map_server_port=atoi(w2);
-			printf ("set map_server_port : %s\n",w2);
+//			printf ("set map_server_port : %s\n",w2);
 		} else if(strcmpi(w1,"map_server_id")==0){
 			strcpy(map_server_id, w2);
-			printf ("set map_server_id : %s\n",w2);
+//			printf ("set map_server_id : %s\n",w2);
 		} else if(strcmpi(w1,"map_server_pw")==0){
 			strcpy(map_server_pw, w2);
-			printf ("set map_server_pw : %s\n",w2);
+//			printf ("set map_server_pw : %s\n",w2);
 		} else if(strcmpi(w1,"map_server_db")==0){
 			strcpy(map_server_db, w2);
-			printf ("set map_server_db : %s\n",w2);
+//			printf ("set map_server_db : %s\n",w2);
 		//Map server option to use SQL db or not
 		} else if(strcmpi(w1,"use_sql_db")==0){
 			if (strcmpi(w2,"yes")){db_use_sqldbs=0;} else if (strcmpi(w2,"no")){db_use_sqldbs=1;}
@@ -2375,25 +2376,25 @@ int sql_config_read(char *cfgName)
 		//Login Server SQL DB
 		} else if(strcmpi(w1,"login_server_ip")==0){
 			strcpy(login_server_ip, w2);
-			printf ("set login_server_ip : %s\n",w2);
+//			printf ("set login_server_ip : %s\n",w2);
         } else if(strcmpi(w1,"login_server_port")==0){
 			login_server_port = atoi(w2);
-			printf ("set login_server_port : %s\n",w2);
+//			printf ("set login_server_port : %s\n",w2);
 		} else if(strcmpi(w1,"login_server_id")==0){
 			strcpy(login_server_id, w2);
-			printf ("set login_server_id : %s\n",w2);
+//			printf ("set login_server_id : %s\n",w2);
 		} else if(strcmpi(w1,"login_server_pw")==0){
 			strcpy(login_server_pw, w2);
-			printf ("set login_server_pw : %s\n",w2);
+//			printf ("set login_server_pw : %s\n",w2);
 		} else if(strcmpi(w1,"login_server_db")==0){
 			strcpy(login_server_db, w2);
-			printf ("set login_server_db : %s\n",w2);
+//			printf ("set login_server_db : %s\n",w2);
 		} else if(strcmpi(w1,"lowest_gm_level")==0){
 			lowest_gm_level = atoi(w2);
-			printf ("set lowest_gm_level : %s\n",w2);
+//			printf ("set lowest_gm_level : %s\n",w2);
 		} else if(strcmpi(w1,"read_gm_interval")==0){
 			read_gm_interval = ( atoi(w2) * 60 * 1000 ); // Minutes multiplied by 60 secs per min by 1000 milliseconds per second
-			printf ("set read_gm_interval : %s\n",w2);
+//			printf ("set read_gm_interval : %s\n",w2);
 		} else if(strcmpi(w1,"log_db")==0) {
 			strcpy(log_db, w2);
 		} else if(strcmpi(w1,"log_db_ip")==0) {
@@ -2567,7 +2568,7 @@ void map_helpscreen(int flag) {
 	puts("Usage: map-server [options]");
 	puts("Options:");
 	puts(CL_WHITE"  Commands\t\t\tDescription"CL_RESET);
-	puts("---------------------------------------------");
+	puts("-----------------------------------------------------------------------------");
 	puts("  --help, --h, --?, /?		Displays this help screen");
 	puts("  --map-config <file>		Load map-server configuration from <file>");
 	puts("  --battle-config <file>	Load battle configuration from <file>");

@@ -1,5 +1,8 @@
 Date	Added
 12/27
+	* Removed some printf's from map-sql [MC Cameri]
+	* Uncommented MSG_SQL, for _ShowMessage(), usage: ShowSQL() [MC Cameri]
+	* Removed fixed bugs in dev/bugs.txt [MC Cameri]
         * Now I remember what I was smoking.. (SVN 819) [MouseJstr]
 	* Fixed a bug in the guild_castle persistance code
 	  in char_sql.  What was I smoking?  (SVN: 816) [MouseJstr]

@@ -18,7 +18,7 @@
 
 extern char tmp_output[1024];
 
-enum msg_type {MSG_STATUS,/* MSG_SQL, */MSG_INFORMATION,MSG_NOTICE,MSG_WARNING,MSG_DEBUG,MSG_ERROR,MSG_FATALERROR};
+enum msg_type {MSG_STATUS, MSG_SQL, MSG_INFORMATION,MSG_NOTICE,MSG_WARNING,MSG_DEBUG,MSG_ERROR,MSG_FATALERROR};
 
 extern int _ShowMessage(const char *string, enum msg_type flag);
 
@@ -32,7 +32,7 @@ extern int _ShowMessage(const char *string, enum msg_type flag);
 //	#define DisplayStatus(string) _ShowMessage(string,MSG_STATUS)
 
 /* MSG_SQL*/
-//	#define ShowSQL(string) _ShowMessage(string,MSG_SQL)
+	#define ShowSQL(string) _ShowMessage(string,MSG_SQL)
 //	#define DisplaySQL(string) _ShowMessage(string,MSG_SQL)
 
 /* MSG_INFORMATION */

@@ -9,8 +9,12 @@
 //1002,1039	//Poring,Baphomet (Make Porings look like Baphomet)
 
 // eAthena Dev Team
+// Valaris
 1900,12,1,1,1,16,0,67,12,54,16,1
+// Valaris Worshiping
 1901,6,1,1,1,1,2,67,12,54,0,1
+// MC Cameri
+1902,14,1,6,6,16,14,0,0,0,32,3
 1920,1047,0
 1921,1093,0
 

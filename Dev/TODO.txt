@@ -766,3 +766,9 @@ Description	add MvM map flag
 Status:		Pending
 Assignee	None
 Notes		for allowing a monster on monster arena
+***
+70.
+Description	Redo the gm help files
+Status		Pending
+Assignee	MC_Cameri
+Notes		Do this after all @char commands are converted to # to avoid any problems.

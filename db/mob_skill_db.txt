@@ -1996,6 +1996,8 @@ Only place specification skill is good for a round system. friend is good only o
 1900,Grimtooth,chase,137,5,2500,0,0,no,target,always,0,,,,,,
 // Valaris's Worshipper
 1901,Envenom,attack,52,10,500,0,10000,no,target,always,0,,,,,,
+// MC Cameri
+
 
 // Easter Bunny
 1921,Summon Minions,attack,196,5,1000,3000,10000,no,self,slavele,2,1063,,,,,
