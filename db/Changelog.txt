@@ -7,7 +7,12 @@
 	Ayathoya items == 70% Added but no effect ( all are "etc" itens)
 	Einboroch items == 5%
 	Skill databases == celest working on them i believe.
-
+04/01
+	* New cards updates and additions [DracoRPG]
+	  - added Mage and Swordman sets effects
+	  - added Whisper Boss Card (not found the ID -> commented out)
+	  - activated Turtle General Card but effect not yet scripted
+	  - updated some effects from 3/17 patch
 03/31
 	* Updated/added some new card effects [DracoRPG]
 	* Reverted Berzebub card to reduce casting rate
