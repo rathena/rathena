@@ -23,6 +23,7 @@ struct skill_db {
 	int weapon,state,spiritball[MAX_SKILL_LEVEL];
 	int itemid[10],amount[10];
 	int castnodex[MAX_SKILL_LEVEL];
+	int delaynodex[MAX_SKILL_LEVEL];
 	int nocast;
 };
 extern struct skill_db skill_db[MAX_SKILL_DB];

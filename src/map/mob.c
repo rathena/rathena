@@ -4205,7 +4205,10 @@ static int mob_readskilldb(void)
 					ms->state=state[j].id;
 			}
 			ms->skill_id=atoi(sp[3]);
-			ms->skill_lv=atoi(sp[4]);
+			j=atoi(sp[4]);
+			if (j<=0 || j>MAX_SKILL_DB)
+				continue;
+			ms->skill_lv=j;
 			ms->permillage=atoi(sp[5]);
 			ms->casttime=atoi(sp[6]);
 			ms->delay=atoi(sp[7]);

@@ -854,6 +854,11 @@ int	skill_get_castnodex( int id ,int lv ){
 	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].castnodex[lv-1];
 }
+int	skill_get_delaynodex( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
+	return (lv <= 0) ? 0:skill_db[id].delaynodex[lv-1];
+}
 int	skill_get_nocast ( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
 	if ((id > MAX_SKILL) || (id < 0)) return 0;
@@ -7390,23 +7395,23 @@ int skill_check_condition(struct map_session_data *sd,int type)
  */
 int skill_castfix( struct block_list *bl, int time )
 {
-	struct map_session_data *sd;
+	struct map_session_data *sd = NULL;
 	struct mob_data *md; // [Valaris]
 	struct status_change *sc_data;
 	int dex;
 	int castrate=100;
-	int skill,lv,castnodex;
+	int skill,lv;
 
 	nullpo_retr(0, bl);
 
 	if(bl->type==BL_MOB){ // Crash fix [Valaris]
-		md=(struct mob_data*)bl;
+		nullpo_retr(0, md=(struct mob_data*)bl);
 		skill = md->skillid;
 		lv = md->skilllv;
 	}
 
 	else { 
-	sd=(struct map_session_data*)bl;
+		nullpo_retr(0, sd=(struct map_session_data*)bl);
 		skill = sd->skillid;
 		lv = sd->skilllv;
 	}
@@ -7419,8 +7424,6 @@ int skill_castfix( struct block_list *bl, int time )
 	if (skill > MAX_SKILL_DB || skill < 0)
 	    return 0;
 
-	castnodex=skill_get_castnodex(skill, lv);
-
 	/* ÉTÉtÉâÉMÉEÉÄ */
 	if(sc_data && sc_data[SC_SUFFRAGIUM].timer!=-1 )
 		time=time*(100-sc_data[SC_SUFFRAGIUM].val1*15)/100;
@@ -7428,12 +7431,14 @@ int skill_castfix( struct block_list *bl, int time )
 
 	if(time==0)
 		return 0;
-	if(castnodex > 0 && bl->type==BL_PC)
-		castrate=((struct map_session_data *)bl)->castrate;
-	else if (castnodex <= 0 && bl->type==BL_PC) {
-		castrate=((struct map_session_data *)bl)->castrate;
-		time=time*castrate*(battle_config.castrate_dex_scale - dex)/(battle_config.castrate_dex_scale * 100);
-		time=time*battle_config.cast_rate/100;
+	if (sd) {
+		if(skill_get_castnodex(skill, lv) > 0)
+			castrate=((struct map_session_data *)bl)->castrate;
+		else {
+			castrate=((struct map_session_data *)bl)->castrate;
+			time=time*castrate*(battle_config.castrate_dex_scale - dex)/(battle_config.castrate_dex_scale * 100);
+			time=time*battle_config.cast_rate/100;
+		}
 	}
 
 	/* ÉuÉâÉMÇÃéç */
@@ -7450,15 +7455,24 @@ int skill_castfix( struct block_list *bl, int time )
 int skill_delayfix( struct block_list *bl, int time )
 {
 	struct status_change *sc_data;
-
+	struct map_session_data *sd = NULL;
+	int skill,lv = 0;
+	
 	nullpo_retr(0, bl);
 
-	sc_data = battle_get_sc_data(bl);
-/*	if(time<=0)
-		return ( battle_get_adelay(bl) / 2 );*/
+	if(bl->type==BL_PC){
+		nullpo_retr(0, sd=(struct map_session_data*)bl);
+		skill = sd->skillid;
+		lv = sd->skilllv;
+	}
 
-	if(bl->type == BL_PC) {
-		if( battle_config.delay_dependon_dex )	/* dexÇÃâeãøÇåvéZÇ∑ÇÈ */
+	if(lv <= 0) return 0;
+
+	sc_data = battle_get_sc_data(bl);
+
+	if(sd) {
+		if(battle_config.delay_dependon_dex &&	/* dexÇÃâeãøÇåvéZÇ∑ÇÈ */
+			skill_get_delaynodex(skill, lv) > 0)
 			time=time*(battle_config.castrate_dex_scale - battle_get_dex(bl))/battle_config.castrate_dex_scale;
 		time=time*battle_config.delay_rate/100;
 	}
@@ -11646,7 +11660,7 @@ int skill_readdb(void)
 		i=atoi(split[0]);
 		if (i>=10000 && i<10015) // for guild skills [Celest]
 			i -= 9500;
-		else if(i<0 || i>MAX_SKILL_DB)
+		else if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
 /*		printf("skill id=%d\n",i); */
@@ -11721,7 +11735,7 @@ int skill_readdb(void)
 		i=atoi(split[0]);
 		if (i>=10000 && i<10015) // for guild skills [Celest]
 			i -= 9500;
-		else if(i<0 || i>MAX_SKILL_DB)
+		else if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
 		memset(split2,0,sizeof(split2));
@@ -11863,7 +11877,7 @@ int skill_readdb(void)
 		i=atoi(split[0]);
 		if (i>=10000 && i<10015) // for guild skills [Celest]
 			i -= 9500;
-		else if(i<0 || i>MAX_SKILL_DB)
+		else if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
 		memset(split2,0,sizeof(split2));
@@ -12030,10 +12044,10 @@ int skill_readdb(void)
 	}
 	while(fgets(line,1020,fp)){
 		char *split[50], *split2[MAX_SKILL_LEVEL];
-		memset(split,0,sizeof(split));
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		for(j=0,p=line;j<2 && p;j++){
+		memset(split,0,sizeof(split));
+		for(j=0,p=line;j<3 && p;j++){
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
@@ -12042,9 +12056,9 @@ int skill_readdb(void)
 		i=atoi(split[0]);
 		if (i>=10000 && i<10015) // for guild skills [Celest]
 			i -= 9500;
-		else if(i<0 || i>MAX_SKILL_DB)
+		else if(i<=0 || i>MAX_SKILL_DB)
 			continue;
-
+		
 		memset(split2,0,sizeof(split2));
 		for(j=0,p=split[1];j<MAX_SKILL_LEVEL && p;j++){
 			split2[j]=p;
@@ -12053,6 +12067,17 @@ int skill_readdb(void)
 		}
 		for(k=0;k<MAX_SKILL_LEVEL;k++)
 			skill_db[i].castnodex[k]=(split2[k])? atoi(split2[k]):atoi(split2[0]);
+
+		if (!split[2])
+			continue;
+		memset(split2,0,sizeof(split2));
+		for(j=0,p=split[2];j<MAX_SKILL_LEVEL && p;j++){
+			split2[j]=p;
+			p=strchr(p,':');
+			if(p) *p++=0;
+		}
+		for(k=0;k<MAX_SKILL_LEVEL;k++)
+			skill_db[i].delaynodex[k]=(split2[k])? atoi(split2[k]):atoi(split2[0]);
 	}
 	fclose(fp);
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/skill_castnodex_db.txt");
@@ -12079,7 +12104,7 @@ int skill_readdb(void)
 		i=atoi(split[0]);
 		if (i>=10000 && i<10015) // for guild skills [Celest]
 			i -= 9500;
-		else if(i<0 || i>MAX_SKILL_DB)
+		else if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 		skill_db[i].nocast=atoi(split[1]);
 		k++;

@@ -1,5 +1,13 @@
 Date	Added
 01/02
+        * Reduced MAX_SKILL_LEVEL to 10 to save a bit of memory and speed [celest]
+        * Tidied up parts in skill_castfix a bit [celest]
+        * Fixed map-server crashing if an empty line was added in any of the skill-xx
+          db files [celest]
+        * Updated skill_castnodex reading - An *optional* 3rd value can be added to set
+          whether a skill's delay time can be affected by dex [celest]
+          Example: 46,1,1 - double strafe's delay is not affected by dex
+                   46,1,0:0:0:0:1 - only level 5 double strafe is not affected by dex
 	* More atempts at memory leak fixes [Codemaster] [SVN 890]
         * Updated weapon breaking rates, thanks to DracoRPG [celest]
         * Optimized enchanting skills success rates calculation, thanks to Wallex
