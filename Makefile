@@ -3,10 +3,12 @@
 CC = gcc -pipe
 # CC = gcc -pipe -x c++
 # CC = gcc -pipe -DGCOLLECT
+# CC = gcc -pipe -DDMALLOC -DDMALLOC_FUNC_CHECK
 # CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
 
 # GCLIB = -lgc
 GCLIB =
+# GCLIB = -ldmalloc
 
 PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT
 #PACKETDEF = -DPACKETVER=5 -DNEW_006b
