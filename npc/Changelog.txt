@@ -10,7 +10,10 @@ Darkchild
 Lupus
 	* looking for exploits, optimization, bugs hunt
 	* Lolz - 100%
-
+Aria
+	* Devnpc
+	* Correct typos/mistakes
+	* Update stuff
 kobra_k88
 	* Optimize WoE
 Shinigami
