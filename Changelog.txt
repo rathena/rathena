@@ -1,5 +1,7 @@
 Date	Added
 12/29
+	* Removed @giveitem since #item it's the one that does this and added some of it's support to #item [MC Cameri]
+	  -#item <item_name> <item_count> <charname|all|everyone>
 	* Uncommented out import in charcommand_athena.conf, there is
           need to have it commented (all the others ones are
           uncommented) [Ajarn]

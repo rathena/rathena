@@ -208,7 +208,6 @@ ACMD_FUNC(gmotd); // Added by MC Cameri, created by davidsiaw
 ACMD_FUNC(misceffect); // by MC Cameri
 ACMD_FUNC(mobsearch);
 ACMD_FUNC(cleanmap);
-ACMD_FUNC(giveitem);
 
 #ifndef TXT_ONLY
 ACMD_FUNC(checkmail); // [Valaris]
@@ -458,7 +457,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Send,				"@send",			60, atcommand_send },
 	{ AtCommand_SetBattleFlag,		"@setbattleflag",	60, atcommand_setbattleflag },
 	{ AtCommand_UnMute,				"@unmute",			60, atcommand_unmute }, // [Valaris]
-	{ AtCommand_Clearweather,         "@clearweather",   99, atcommand_clearweather }, // Dexity 
+	{ AtCommand_Clearweather,		"@clearweather",	99, atcommand_clearweather }, // Dexity 
 	{ AtCommand_UpTime,				"@uptime",			 0, atcommand_uptime }, // by MC Cameri
 //	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri
 	{ AtCommand_Mute,				"@mute",			99, atcommand_mute }, // [celest]
@@ -470,9 +469,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Identify,	   	    "@identify",		40, atcommand_identify }, // by MC Cameri
 	{ AtCommand_Gmotd,				"@gmotd",			 0, atcommand_gmotd }, // Added by MC Cameri, created by davidsiaw
 	{ AtCommand_MiscEffect,			"@misceffect",		50, atcommand_misceffect }, // by MC Cameri
-	{ AtCommand_MobSearch,				"@mobsearch",		0, atcommand_mobsearch },
-	{ AtCommand_CleanMap,				"@cleanmap",		0, atcommand_cleanmap },
-	{ AtCommand_GiveItem,				"@giveitem",		0, atcommand_giveitem },
+	{ AtCommand_MobSearch,			"@mobsearch",		 0, atcommand_mobsearch },
+	{ AtCommand_CleanMap,			"@cleanmap",		 0, atcommand_cleanmap },
 
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
@@ -7583,90 +7581,6 @@ atcommand_cleanmap(
 					  sd->bl.x+AREA_SIZE*2,sd->bl.y+AREA_SIZE*2,
 					  BL_ITEM,sd,&i);
 	clif_displaymessage(fd, "All dropped items have been cleaned up.");
-	return 0;
-}
-/*==========================================
- * Give Item
- * @giveitem (item_id or item_name) amount charname
- *------------------------------------------
- */
-static void 
-atcommand_giveitem_sub(struct map_session_data *sd,struct item_data *item_data,int number)
-{
-	int flag = 0;
-	int loop = 1, get_count = number,i;
-	struct item item_tmp;
-
-	if(sd && item_data){
-		if (item_data->type == 4 || item_data->type == 5 ||
-			item_data->type == 7 || item_data->type == 8) {
-			loop = number;
-			get_count = 1;
-		}
-		for (i = 0; i < loop; i++) {
-			memset(&item_tmp, 0, sizeof(item_tmp));
-			item_tmp.nameid = item_data->nameid;
-			item_tmp.identify = 1;
-			if ((flag = pc_additem((struct map_session_data*)sd,
-					&item_tmp, get_count)))
-				clif_additem((struct map_session_data*)sd, 0, 0, flag);
-		}
-	}
-}
-int
-atcommand_giveitem(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	struct map_session_data *pl_sd = NULL;
-	struct item_data *item_data;
-	char item_name[100];
-	char character[100];
-	char output[100];
-	int number,i,item_id;
-
-	if (!message || !*message)
-		return -1;
-
-	if (sscanf(message, "%99s %d %99[^\n]", item_name, &number, character) < 3)
-		return -1;
-
-	if (number <= 0)
-		number = 1;
-
-	if ((item_id = atoi(item_name)) > 0) {
-		if (battle_config.item_check) {
-			item_id =
-				(((item_data = itemdb_exists(item_id)) &&
-				 itemdb_available(item_id)) ? item_id : 0);
-		} else {
-			item_data = itemdb_search(item_id);
-		}
-	} else if ((item_data = itemdb_searchname(item_name)) != NULL) {
-		item_id = (!battle_config.item_check ||
-			itemdb_available(item_data->nameid)) ? item_data->nameid : 0;
-	}
-	if(item_id == 0)
-		return -1;
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) { //該当名のキャラが存在する
-		atcommand_giveitem_sub(pl_sd,item_data,number);
-		snprintf(output, sizeof output, "You got %s %d.",item_name,number);
-		clif_displaymessage(pl_sd->fd, output);
-		snprintf(output, sizeof output, "%s received %s %d.",pl_sd->status.name,item_name,number);
-		clif_displaymessage(fd, output);
-	}
-	else if(strcmp(character,"ALL")==0){			// 名前がALLなら、接続者全員へ
-		for (i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data)){
-				atcommand_giveitem_sub(pl_sd,item_data,number);
-				snprintf(output, sizeof output, "You got %s %d.", item_name,number);
-				clif_displaymessage(pl_sd->fd, output);
-			}
-		}
-		snprintf(output, sizeof output, "%s received %s %d.","Everyone",item_name,number);
-		clif_displaymessage(fd, output);
-	}
 	return 0;
 }
 

@@ -991,6 +991,29 @@ charcommand_storagelist(
 	return 0;
 }
 
+static void 
+charcommand_giveitem_sub(struct map_session_data *sd,struct item_data *item_data,int number)
+{
+	int flag = 0;
+	int loop = 1, get_count = number,i;
+	struct item item_tmp;
+
+	if(sd && item_data){
+		if (item_data->type == 4 || item_data->type == 5 ||
+			item_data->type == 7 || item_data->type == 8) {
+			loop = number;
+			get_count = 1;
+		}
+		for (i = 0; i < loop; i++) {
+			memset(&item_tmp, 0, sizeof(item_tmp));
+			item_tmp.nameid = item_data->nameid;
+			item_tmp.identify = 1;
+			if ((flag = pc_additem((struct map_session_data*)sd,
+					&item_tmp, get_count)))
+				clif_additem((struct map_session_data*)sd, 0, 0, flag);
+		}
+	}
+}
 /*==========================================
  * #item command (usage: #item <name/id_of_item> <quantity> <player>)
  * by MC Cameri
@@ -1056,6 +1079,16 @@ int charcommand_item(
 				clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
 				return -1;
 			}
+		} else if(strncasecmp(character,"all")==0 || strncasecmp(character,"everyone")==0){			// –¼‘O‚ªALL‚È‚çAÚ‘±Ò‘Sˆõ‚Ö
+			for (i = 0; i < fd_max; i++) {
+				if (session[i] && (pl_sd = session[i]->session_data)){
+					atcommand_giveitem_sub(pl_sd,item_data,number);
+					snprintf(output, sizeof output, "You got %s %d.", item_name,number);
+					clif_displaymessage(pl_sd->fd, output);
+				}
+			}
+			snprintf(output, sizeof output, "%s received %s %d.","Everyone",item_name,number);
+			clif_displaymessage(fd, output);
 		} else {
 			clif_displaymessage(fd, msg_table[3]); // Character not found.
 			return -1;
