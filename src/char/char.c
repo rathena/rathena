@@ -1731,7 +1731,6 @@ int parse_tologin(int fd) {
 		case 0x2718:
 			if (RFIFOREST(fd) < 2)
 				return 0;
-			// do whatever it's supposed to do here?
 			RFIFOSKIP(fd,2);
 			break;
 
@@ -2142,6 +2141,14 @@ int parse_frommap(int fd) {
 //		printf("parse_frommap: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
 
 		switch(RFIFOW(fd,0)) {
+
+		// map-server alive packet
+		case 0x2718:
+			if (RFIFOREST(fd) < 2)
+				return 0;
+			RFIFOSKIP(fd,2);
+			break;
+
 		// request from map-server to reload GM accounts. Transmission to login-server (by Yor)
 		case 0x2af7:
 			if (login_fd > 0) { // don't send request if no login-server
