@@ -225,4 +225,5 @@ Problem:	Some clients that are able to log into eAthena servers properly are not
 		I believe Celest may have accidentially "broken" a few things when she was attempting to create new packet
 		compatibility and removed old ones.
 Assigned:	Celest
-Progress:	0%	
+Progress:	0%
+		Celest: What version was the client using?
