@@ -2604,11 +2604,11 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				drop_rate = 1;
 			if(battle_config.drops_by_luk>0 && sd && md) drop_rate+=(sd->status.luk*battle_config.drops_by_luk)/100;	// drops affected by luk [Valaris]
 			if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class_].lv - sd->status.base_level >= 20)) drop_rate = (int) (drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
-			if(drop_rate <= rand()%10000+1) { //if rate == 0, then it doesn't drop (from Freya)
-				drop_ore = i; //we rmember an empty slot to put there ORE DISCOVERY drop later.
+			if(drop_rate < rand() % 10000 + 1) { //fixed 0.01% impossible drops bug [Lupus]
+				drop_ore = i; //we remember an empty slot to put there ORE DISCOVERY drop later.
 				continue;
 			}
-			drop_items++; //we cound if there were any drops
+			drop_items++; //we count if there were any drops
 
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
 			ditem->nameid = mob_db[md->class_].dropitem[i].nameid;
@@ -2630,7 +2630,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			ditem->nameid = itemdb_searchrandomid(6);
 			if (drop_ore<0) i=8; //we have only 10 slots in LOG, there's a check to not overflow (9th item usually a card, so we use 8th slot)
 			log_item[i] = ditem->nameid; //it's for logging only
-			drop_items++; //we cound if there were any drops
+			drop_items++; //we count if there were any drops
 			ditem->amount = 1;
 			ditem->m = md->bl.m;
 			ditem->x = md->bl.x;
