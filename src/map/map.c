@@ -1035,6 +1035,10 @@ int map_quit(struct map_session_data *sd) {
 	chrif_save(sd);
 	storage_storage_save(sd);
 
+	//double connect bug fix by Valaris
+	if(sd->alive_timer) 
+		delete_timer(sd->alive_timer,pc_alive_timer);
+
 	if( sd->npc_stackbuf && sd->npc_stackbuf != NULL)
 		free( sd->npc_stackbuf );
 

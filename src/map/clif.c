@@ -3543,6 +3543,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
  * NPC•\Ž¦
  *------------------------------------------
  */
+//fixed by Valaris
 void clif_getareachar_npc(struct map_session_data* sd,struct npc_data* nd)
 	int len;
 	nullpo_retv(sd);
@@ -3560,6 +3561,7 @@ void clif_getareachar_npc(struct map_session_data* sd,struct npc_data* nd)
 		clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
 	}
 }
+
 /*==========================================
  * ˆÚ“®’âŽ~
  *------------------------------------------
@@ -7424,6 +7426,12 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 		sd->client_tick = RFIFOL(fd,2);
 		break;
 	}
+
+	//double connection bug fix by Valaris
+	if(sd->alive_timer) 
+		delete_timer(sd->alive_timer,pc_alive_timer);
+	sd->alive_timer=add_timer(gettick()+60*1000,pc_alive_timer,sd->bl.id,0);
+
 	sd->server_tick = gettick();
 	clif_servertick(sd);
 }
