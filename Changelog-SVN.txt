@@ -2,6 +2,7 @@
 Date	Added
 
 04/03
+	* Fixed some variable declarations in SQL login.c causing compilation errors [veider]
 	* Added NetBSD support into Makefile (Still lots of warrnings during compilation [veider]
 	* Finished Valkyrie. Now it correctly works. Valhallana reborns players to High Novices. [Lupus]
 	  (added missed kRO condition: to reborn, player shouldn't have money nor items(equipment) )

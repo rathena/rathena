@@ -155,9 +155,9 @@ struct dbt *online_db;
 //-----------------------------------------------------
 
 void add_online_user(int account_id) {
+    int *p;
     if(register_users_online <= 0)
 	return;
-    int *p;
     p = (int*)aMalloc(sizeof(int));
     if (p == NULL) {
 		printf("add_online_user: memory allocation failure (malloc)!\n");
@@ -168,9 +168,9 @@ void add_online_user(int account_id) {
 }
 
 int is_user_online(int account_id) {
+    int *p;
     if(register_users_online <= 0)
 	return 0;
-    int *p;
 
 	p = (int*)numdb_search(online_db, account_id);
 	if (p == NULL)
@@ -180,9 +180,9 @@ int is_user_online(int account_id) {
 }
 
 void remove_online_user(int account_id) {
+    int *p;
     if(register_users_online <= 0)
 	return;
-    int *p;
     p = (int*)numdb_erase(online_db,account_id);
     aFree(p);
 }
