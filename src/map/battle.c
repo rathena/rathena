@@ -2365,6 +2365,19 @@ static struct Damage battle_calc_pc_weapon_attack(
 				}
 				t_def = def2*8/10;
 				vitbonusmax = (t_vit/20)*(t_vit/20)-1;
+				if (tmd) {
+					if(t_mode & 0x20) {
+						if(sd->ignore_def_mob & 2)
+							idef_flag = 1;
+						if(sd->ignore_def_mob_ & 2)
+							idef_flag_ = 1;
+					} else {
+						if(sd->ignore_def_mob & 1)
+							idef_flag = 1;
+						if(sd->ignore_def_mob_ & 1)
+							idef_flag_ = 1;
+					}
+				}
 				if(sd->ignore_def_ele & (1<<t_ele) || sd->ignore_def_race & (1<<t_race))
 					idef_flag = 1;
 				if(sd->ignore_def_ele_ & (1<<t_ele) || sd->ignore_def_race_ & (1<<t_race))
@@ -3598,19 +3611,22 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				if(skilllv < 1) skilllv = 1;
 				sp = skill_get_sp(tsd->autospell2_id,skilllv)*2/3;
 				if(tsd->status.sp >= sp) {
+					struct block_list *tbl;
+					if (tsd->autospell2_type == 0) tbl = target;
+					else tbl = src;
 					if((i=skill_get_inf(tsd->autospell2_id) == 2) || i == 32)
-						f = skill_castend_pos2(target,src->x,src->y,tsd->autospell2_id,skilllv,tick,flag);
+						f = skill_castend_pos2(target,tbl->x,tbl->y,tsd->autospell2_id,skilllv,tick,flag);
 					else {
 						switch( skill_get_nk(tsd->autospell2_id) ) {
 							case 0:	case 2:
-								f = skill_castend_damage_id(target,src,tsd->autospell2_id,skilllv,tick,flag);
+								f = skill_castend_damage_id(target,tbl,tsd->autospell2_id,skilllv,tick,flag);
 								break;
 							case 1:/* Žx‰‡Œn */
-								if((tsd->autospell2_id==AL_HEAL || (tsd->autospell2_id==ALL_RESURRECTION && src->type != BL_PC)) &&
-									battle_check_undead(status_get_race(src),status_get_elem_type(src)))
-									f = skill_castend_damage_id(target,src,tsd->autospell2_id,skilllv,tick,flag);
+								if((tsd->autospell2_id==AL_HEAL || (tsd->autospell2_id==ALL_RESURRECTION && tbl->type != BL_PC)) &&
+									battle_check_undead(status_get_race(tbl),status_get_elem_type(tbl)))
+									f = skill_castend_damage_id(target,tbl,tsd->autospell2_id,skilllv,tick,flag);
 								else
-									f = skill_castend_nodamage_id(target,src,tsd->autospell2_id,skilllv,tick,flag);
+									f = skill_castend_nodamage_id(target,tbl,tsd->autospell2_id,skilllv,tick,flag);
 								break;
 						}
 					}

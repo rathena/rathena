@@ -89,6 +89,7 @@ int pc_checkweighticon(struct map_session_data *sd);
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);
 int pc_bonus3(struct map_session_data *sd,int,int,int,int);
+int pc_bonus4(struct map_session_data *sd,int,int,int,int,int);
 int pc_skill(struct map_session_data*,int,int,int);
 
 void pc_blockskill_start (struct map_session_data*,int,int);	// [celest]

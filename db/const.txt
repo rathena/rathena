@@ -242,6 +242,9 @@ bAutoSpellWhenHit	2017
 bSkillAtk	2018
 bUnstripable	2019
 bAddDamageByClass	2020
+bSPGainValue	2021
+bIgnoreDefMob	2022
+bHPLossRate	2023
 
 
 Eff_Stone	0
@@ -253,6 +256,7 @@ Eff_Curse	5
 Eff_Silence	6
 Eff_Confusion	7
 Eff_Blind	8
+Eff_Bleeding	9
 
 SC_Stone	128
 SC_Freeze	129
@@ -263,6 +267,7 @@ SC_Curse	133
 SC_Silence	134
 SC_Confusion	135
 SC_Blind	136
+SC_Bleeding	137
 SC_SpeedPot0	37
 SC_SpeedPot1	38
 SC_SpeedPot2	39
@@ -276,5 +281,3 @@ SC_Flame	90
 SC_Frost	91
 SC_Lightning	92
 SC_Seismic	93
-SC_Bleeding	124
-SC_BlockSkill	194

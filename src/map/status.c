@@ -276,6 +276,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	memset(sd->add_mdef_classrate,0,sizeof(sd->add_mdef_classrate));
 	memset(sd->add_damage_classid2,0,sizeof(sd->add_damage_classid2));
 	memset(sd->add_damage_classrate2,0,sizeof(sd->add_damage_classrate2));
+	sd->sp_gain_value = 0;
+	sd->ignore_def_mob = sd->ignore_def_mob_ = 0;
+	sd->hp_loss_rate = sd->hp_loss_value = sd->hp_loss_type = 0;
 
 	if(!sd->disguiseflag && sd->disguise) {
 		sd->disguise=0;

@@ -1,6 +1,10 @@
 Date	Added
 
 02/16
+        * Added 3 more of the new card effects -- check item_bonus.txt [celest]
+
+        * Added 'bonus4' to support the new card effects that might need up to 4
+          parameters [celest]
         * Set 'killerrid' and do PCKillEvent before calling PCDieEvent, thanks to
           mrmagoo for pointing it out [celest]
 
@@ -11,12 +15,12 @@ Date	Added
           - event_requires_trigger: whether or not a 'set [EventName],1;' has to be
                      defined first for the event to be activated
 
-        * Added 10 of the new card effects on the 2/15's patch (still untested and
+        * Added 8 of the new card effects on the 2/15's patch (still untested and
           not yet added to the item_db)
           - Refer to doc/item_bonus.txt for description
 
         * Minor rewrites on self and enemy weapon/armor breaking during battle [celest]
-        * Added missing code for 'bBreakWeaponRate' and 'bBreakWeaponRate' effects
+        * Added missing code for 'bBreakWeaponRate' and 'bBreakArmorRate' effects
           [celest]
         * Added missing code for 'bAddStealRate' effect [celest]
         * Removed redundant 'infinite_autospell' in map_session_data [celest]

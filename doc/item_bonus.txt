@@ -144,9 +144,14 @@ bonus bCritAtkRate,n;			Increase critical damage by +n%
 bonus bNoRegen,n;			Stops regeneration for n.
                                         n: 1=HP, 2=SP
 bonus bUnstripable,n;			Armor cannot be taken off via Strip skills
+bonus bSPGainValue,n;			When killing a monster by physical attack
+                                        gain n amount of sp
+bonus bIgnoreDefMob,n;			Ignore monster's DEF when attacking.
+                                        n:0=All normal monsters, except Bosses
+                                          1=All monsters
 
 bonus2 bCriticalAddRace,n,x;		Increase critical + n vs. enemies of type x
-
+bonus2 bHPLossRate,n,x;			Lose n amount of hp every x amount of time
 bonus2 bAddEffWhenHit,n,x;		n% chance to cause x state to the enemy when
                                         being hit by physical close range damage
 bonus2 bSkillAtk,n,x;			Increase damage of skill n by x%

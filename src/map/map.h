@@ -278,14 +278,17 @@ struct map_session_data {
 	//--- 02/15's new card effects [celest]
 	int crit_atk_rate;
 	int critaddrace[12];
-	int no_regen;
+	short no_regen;
 	int addeff3[10];
-	short autospell2_id,autospell2_lv,autospell2_rate;
+	short autospell2_id,autospell2_lv,autospell2_rate,autospell2_type;
 	int skillatk[2];
 	unsigned short unstripable_equip;
-	short add_damage_classid2[10];
+	short add_damage_classid2[10],add_damage_class_count2;
 	int add_damage_classrate2[10];
-	int add_damage_class_count2;
+	short sp_gain_value;
+	short ignore_def_mob, ignore_def_mob_;
+	int hp_loss_tick, hp_loss_rate;
+	short hp_loss_value, hp_loss_type;
 
 	short spiritball, spiritball_old;
 	int spirit_timer[MAX_SKILL_LEVEL];
@@ -626,8 +629,8 @@ enum {
 	SP_UNBREAKABLE_SHIELD, SP_LONG_ATK_RATE, // 2011-2012
 
 	SP_CRIT_ATK_RATE, SP_CRITICAL_ADDRACE, SP_NO_REGEN, SP_ADDEFF_WHENHIT, SP_AUTOSPELL_WHENHIT, // 2013-2017
-	SP_SKILL_ATK, SP_UNSTRIPABLE, // 2018-2019
-	SP_ADD_DAMAGE_BY_CLASS // 2020-2022
+	SP_SKILL_ATK, SP_UNSTRIPABLE, SP_ADD_DAMAGE_BY_CLASS, // 2018-2020
+	SP_SP_GAIN_VALUE, SP_IGNORE_DEF_MOB, SP_HP_LOSS_RATE // 2021-2023
 };
 
 enum {

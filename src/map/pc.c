@@ -1575,6 +1575,16 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->unstripable_equip |= EQP_ARMOR;
 		break;
+	case SP_SP_GAIN_VALUE:
+		if(!sd->state.lr_flag)
+			sd->sp_gain_value += val;
+		break;
+	case SP_IGNORE_DEF_MOB:	// 0:normal monsters only, 1:affects boss monsters as well
+		if(!sd->state.lr_flag)
+			sd->ignore_def_mob |= 1<<val;
+		else if(sd->state.lr_flag == 1)
+			sd->ignore_def_mob_ |= 1<<val;
+		break;
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus: unknown type %d %d !\n",type,val);
@@ -1823,6 +1833,13 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			}			
 		}
 		break;
+	case SP_HP_LOSS_RATE:
+		if(sd->state.lr_flag != 2) {
+			sd->hp_loss_value = type2;
+			sd->hp_loss_rate = val;
+		}
+		break;
+
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
@@ -1865,11 +1882,32 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->autospell2_id = type2;
 			sd->autospell2_lv = type3;
 			sd->autospell2_rate = val;
+			sd->autospell2_type = 1;	// enemy
 		}
 		break;
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus3: unknown type %d %d %d %d!\n",type,type2,type3,val);
+		break;
+	}
+
+	return 0;
+}
+
+int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4,int val)
+{
+	switch(type){
+	case SP_AUTOSPELL_WHENHIT:
+		if(sd->state.lr_flag != 2){
+			sd->autospell2_id = type2;
+			sd->autospell2_lv = type3;
+			sd->autospell2_rate = type4;
+			sd->autospell2_type = val;	// 0: self, 1: enemy
+		}
+		break;
+	default:
+		if(battle_config.error_log)
+			printf("pc_bonus4: unknown type %d %d %d %d %d!\n",type,type2,type3,type4,val);
 		break;
 	}
 
@@ -6513,7 +6551,7 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 	return 0;
 }
 
-static int pc_spirit_heal_hp(struct map_session_data *sd,int level)
+static int pc_spirit_heal_hp(struct map_session_data *sd)
 {
 	int bonus_hp,interval = battle_config.natural_heal_skill_interval;
 
@@ -6553,7 +6591,7 @@ static int pc_spirit_heal_hp(struct map_session_data *sd,int level)
 
 	return 0;
 }
-static int pc_spirit_heal_sp(struct map_session_data *sd,int level)
+static int pc_spirit_heal_sp(struct map_session_data *sd)
 {
 	int bonus_sp,interval = battle_config.natural_heal_skill_interval;
 
@@ -6594,6 +6632,30 @@ static int pc_spirit_heal_sp(struct map_session_data *sd,int level)
 	return 0;
 }
 
+static int pc_bleeding (struct map_session_data *sd)
+{
+	int interval, hp;
+
+	nullpo_retr(0, sd);
+	interval = sd->hp_loss_rate;
+	hp = sd->hp_loss_value;
+
+	sd->hp_loss_tick += natural_heal_diff_tick;
+	if(sd->hp_loss_tick >= interval) {
+		while(sd->hp_loss_tick >= interval) {
+			sd->hp_loss_tick -= interval;
+			if (sd->status.hp < hp)
+				hp = sd->status.hp;
+			if (sd->hp_loss_type == 0) {
+				pc_heal(sd,-hp,0);
+			} else if (sd->hp_loss_type == 1) {
+			}
+			sd->hp_loss_tick = 0;
+		}
+	}
+	return 0;
+}
+
 /*==========================================
  * HP/SP 自然回復 各クライアント
  *------------------------------------------
@@ -6601,15 +6663,17 @@ static int pc_spirit_heal_sp(struct map_session_data *sd,int level)
 
 static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 	int skill;
+	int tick;
 
 	nullpo_retr(0, sd);
+	tick = va_arg(ap,int);
 
 // -- moonsoul (if conditions below altered to disallow natural healing if under berserk status)
 	if ((battle_config.natural_heal_weight_rate > 100 || sd->weight*100/sd->max_weight < battle_config.natural_heal_weight_rate) &&
 		!pc_isdead(sd) &&
 		!pc_ishiding(sd) &&
 	//-- cannot regen for 5 minutes after using Berserk --- [Celest]
-		DIFF_TICK (gettick(), sd->canregen_tick)>=0 &&
+		DIFF_TICK (tick, sd->canregen_tick)>=0 &&
 		(sd->sc_data && !(sd->sc_data[SC_POISON].timer != -1 && sd->sc_data[SC_SLOWPOISON].timer == -1) &&
 		sd->sc_data[SC_BERSERK].timer == -1 )) {
 		pc_natural_heal_hp(sd);
@@ -6617,20 +6681,25 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 			sd->sc_data[SC_DANCING].timer == -1 && //ダンス?態ではSPが回復しない
 			sd->sc_data[SC_BERSERK].timer == -1 )   //バ?サ?ク?態ではSPが回復しない
 			pc_natural_heal_sp(sd);
-		sd->canregen_tick = gettick();
+		sd->canregen_tick = tick;
 	} else {
 		sd->hp_sub = sd->inchealhptick = 0;
 		sd->sp_sub = sd->inchealsptick = 0;
 	}
 	if((skill = pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0 && !pc_ishiding(sd) &&
 		sd->sc_data[SC_POISON].timer == -1 && sd->sc_data[SC_BERSERK].timer == -1){
-		pc_spirit_heal_hp(sd,skill);
-		pc_spirit_heal_sp(sd,skill);
+		pc_spirit_heal_hp(sd);
+		pc_spirit_heal_sp(sd);
 	}
 	else {
 		sd->inchealspirithptick = 0;
 		sd->inchealspiritsptick = 0;
 	}
+	if (sd->hp_loss_value > 0)
+		pc_bleeding(sd);
+	else
+		sd->hp_loss_tick = 0;
+
 	return 0;
 }
 
@@ -6642,7 +6711,7 @@ int pc_natural_heal(int tid,unsigned int tick,int id,int data)
 {
 	natural_heal_tick = tick;
 	natural_heal_diff_tick = DIFF_TICK(natural_heal_tick,natural_heal_prev_tick);
-	clif_foreachclient(pc_natural_heal_sub);
+	clif_foreachclient(pc_natural_heal_sub, tick);
 
 	natural_heal_prev_tick = tick;
 	return 0;
