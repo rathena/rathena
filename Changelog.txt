@@ -1,5 +1,6 @@
 Date	Added
 12/22
+	* Fixed a bug in resnametable from local directories [MouseJstr]
 	* Fixed a bug in grfio_read causing memory corruptions [MouseJstr]
         * Rearranged how guild messages, gm messages, and party messages
           are moved back and forth between the inter server and the
