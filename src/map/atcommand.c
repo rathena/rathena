@@ -229,6 +229,10 @@ ATCOMMAND_FUNC(refreshonline); // [Valaris]
 
 ATCOMMAND_FUNC(skilltree); // by MouseJstr
 
+ATCOMMAND_FUNC(marry); // by MouseJstr
+ATCOMMAND_FUNC(divorce); // by MouseJstr
+ATCOMMAND_FUNC(rings); // by MouseJstr
+
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
  *------------------------------------------
@@ -475,6 +479,9 @@ static AtCommandInfo atcommand_info[] = {
 
 #endif /* TXT_ONLY */
 	{ AtCommand_SkillTree,		"@skilltree",	40, atcommand_skilltree }, // [MouseJstr]
+	{ AtCommand_Marry,		"@marry",	40, atcommand_marry }, // [MouseJstr]
+	{ AtCommand_Divorce,		"@divorce",	40, atcommand_divorce }, // [MouseJstr]
+	{ AtCommand_Rings,		"@rings",	40, atcommand_rings }, // [MouseJstr]
 
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
@@ -7395,6 +7402,97 @@ atcommand_skilltree(const int fd, struct map_session_data* sd,
     clif_displaymessage(fd, output);
   }
             
+  return 0;
+}
+
+/*==========================================
+ * @marry by [MouseJstr]
+ *
+ * Marry two players
+ *------------------------------------------
+ */
+int
+atcommand_marry(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+  struct map_session_data *pl_sd1 = NULL;
+  struct map_session_data *pl_sd2 = NULL;
+  char player1[255], player2[255];
+
+  nullpo_retr(-1, sd);
+
+  if (!message || !*message)
+    return -1;
+
+  if (sscanf(message, "%[^,],%[^\r\n]", player1, player2) != 2) {
+    clif_displaymessage(fd, "usage: @marry <player1> <player2>.");
+    return -1;
+  }
+
+  if((pl_sd1=map_nick2sd((char *) player1)) == NULL) {
+    sprintf(player2, "Cannot find player %s online", player1);
+    clif_displaymessage(fd, player2);
+    return -1;
+  }
+
+  if((pl_sd2=map_nick2sd((char *) player2)) == NULL) {
+    sprintf(player1, "Cannot find player %s online", player2);
+    clif_displaymessage(fd, player1);
+    return -1;
+  }
+
+  return pc_marriage(pl_sd1, pl_sd2);
+}
+
+/*==========================================
+ * @divorce by [MouseJstr]
+ *
+ * divorce two players
+ *------------------------------------------
+ */
+int
+atcommand_divorce(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+  struct map_session_data *pl_sd = NULL;
+
+  nullpo_retr(-1, sd);
+
+  if (!message || !*message)
+    return -1;
+
+  if((pl_sd=map_nick2sd((char *) message)) != NULL)
+    return pc_divorce(pl_sd);
+
+  return 0;
+}
+
+/*==========================================
+ * @rings by [MouseJstr]
+ *
+ * Give two players rings
+ *------------------------------------------
+ */
+int
+atcommand_rings(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+  struct item item_tmp;
+  int get_count, flag;
+  
+  memset(&item_tmp, 0, sizeof(item_tmp));
+
+  item_tmp.nameid = 2634;
+  item_tmp.identify = 1;
+
+  if ((flag = pc_additem((struct map_session_data*)sd, &item_tmp, 1)))
+    clif_additem((struct map_session_data*)sd, 0, 0, flag);
+
+  item_tmp.nameid = 2635;
+  item_tmp.identify = 1;
+  if ((flag = pc_additem((struct map_session_data*)sd, &item_tmp, get_count)))
+    clif_additem((struct map_session_data*)sd, 0, 0, flag);
+
   return 0;
 }
 

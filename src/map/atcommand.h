@@ -212,6 +212,9 @@ enum AtCommandType {
 	// SQL-only commands end
 #endif
 	AtCommand_SkillTree, // by MouseJstr
+	AtCommand_Marry, // by MouseJstr
+	AtCommand_Divorce, // by MouseJstr
+	AtCommand_Rings, // by MouseJstr
 	
 	// end
 	AtCommand_Unknown,
