@@ -9950,8 +9950,8 @@ int skill_status_change_clear(struct block_list *bl, int type)
 /* クロ?キング?査（周りに移動不可能地?があるか） */
 int skill_check_cloaking(struct block_list *bl) 
 {
-	static int dx[]={-1, 0, 1,-1, 1,-1, 0, 1};
-	static int dy[]={-1,-1,-1, 0, 0, 1, 1, 1};
+	static int dx[]={ 0, 1, 0, -1, -1,  1, 1, -1}; //optimized by Lupus
+	static int dy[]={-1, 0, 1,  0, -1, -1, 1,  1};
 	int end=1,i;
 
 	//missing sd [Found by Celest, commited by Aria]
@@ -9965,7 +9965,10 @@ int skill_check_cloaking(struct block_list *bl)
 		return 0;
 	for(i=0;i<sizeof(dx)/sizeof(dx[0]);i++){
 		int c=map_getcell(bl->m,bl->x+dx[i],bl->y+dy[i]);
-		if(c==1 || c==5) end=0;
+		if(c==1 || c==5) {
+			end=0;
+			break;
+		}
 	}
 	if(end){
 		if ((bl->type == BL_PC && pc_checkskill(sd,AS_CLOAKING)<3) || bl->type == BL_MOB) {
@@ -9988,9 +9991,9 @@ int skill_check_cloaking(struct block_list *bl)
 
 int skill_type_cloaking(struct block_list *bl)
 {
-	static int dx[]={-1, 0, 1,-1, 1,-1, 0, 1};
-	static int dy[]={-1,-1,-1, 0, 0, 1, 1, 1};
-	int end=1,i;
+	static int dx[]={ 0, 1, 0, -1, -1,  1, 1, -1}; //optimized by Lupus
+	static int dy[]={-1, 0, 1,  0, -1, -1, 1,  1};
+	int i;
 
 	nullpo_retr(0, bl);
 	if(bl->type == BL_PC && battle_config.pc_cloak_check_type&1)
@@ -10000,9 +10003,10 @@ int skill_type_cloaking(struct block_list *bl)
 	for(i=0; i<sizeof(dx)/sizeof(dx[0]); i++)
 	{
 		int c=map_getcell(bl->m,bl->x+dx[i],bl->y+dy[i]);
-		if(c==1 || c==5) end=0;
+		if(c==1 || c==5)
+			return 0;
 	}
-	return end;
+	return 1;
 }
 
 /*
