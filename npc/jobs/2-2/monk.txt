@@ -1,22 +1,24 @@
 //===== eAthena Script ======================================= 
 //= Monk Job Quest
 //===== By: ==================================================
-//= Dino9021
+//= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1+
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= Monk Job Quests for Athena 2004.12.30
 //===== Additional Comments: ================================= 
 // 1.1 Fixed missing '";'. Now it's loading fine [Lupus]
+// 1.1+ Edited/Translated 5% [Celest]
 //============================================================ 
 
-prt_monk.gat,55,249,4	script	Master	139,0,5,{
-	mes "[SiFu]";
-	mes "Who are you?! How dare you enter this holy training place without my permission!!";
+prt_monk.gat,55,249,4	script	Tohobu the Guarding Monk	139,0,5,{
+	mes "[Tohobu]";
+	mes "Who are you?!";
+	mes "How dare you enter this holy training place without my permission!!";
 	next;
-	mes "[SiFu]";
+	mes "[Tohobu]";
 	mes "Get Out!!";
 	close;
 }
@@ -27,98 +29,110 @@ prt_monk.gat,59,247,4	script	Master	120,{
 	goto L_START;
 
 IsMonk:
-	mes "[SiFu]";
-	mes "You are not welcome to ^00FF00St. Capitolina Abbey^000000.";
-	mes "However, welcome traveler, please don't disturb the Monks in training even you are a Monk!";
+	mes "[Tohobu]";
+	mes "Your presence is not really welcomed at the ^00FF00St. Capitolina Abbey^000000.";
+	mes "However, welcome traveler, please do not disturb the Monks in training,";
+	mes "Even if you are a Monk!";
 	close;
 
 L_START:
-	mes "[SiFu]";
-	mes "Hmmm...? What do want for me?";
-	mes "Before you entering the training area, you should tell me your Name , Base Level and  Job Level.";
+	mes "[Tohobu]";
+	mes "Hmmm...? What do you want from me?";
+	mes "Before entering the Training Area,";
+	mes "You shall have to first tell me your Name, Base Level and Job Level.";
 	next;
-	mes "[SiFu]";
-	mes "Come! What's your name?";
+	mes "[Tohobu]";
+	mes "Come! What is your name?";
 	next;
 	menu "Ignore him.",-,"Tell him.",L_MENU_1;
 
-		mes "[SiFu]";
+		mes "[Tohobu]";
 		mes "You are so impolite! Get out!";
 		warp "prt_fild03.gat",357,256;
 		end;
 L_MENU_1:
-	mes "[SiFu]";
-	mes "So... Your name is " + strcharinfo(0) + " Right?!";
+	mes "[Tohobu]";
+	mes "So... Your name is " + strcharinfo(0) + " Right?";
+	mes "...I believe it is pronounced that way.";
 	mes "Let's see... Job Level is " + joblevel;
 	next;
-	mes "[SiFu]";
-	mes "Okay! What do you want? " + strcharinfo(0) + " ?";
+	mes "[Tohobu]";
+	mes "Okay! Why have you come to see me, " + strcharinfo(0) + " ?";
 	next;
-	menu "I want to see how Monks train theirself.",L_MENU_1_0,"I want to be a Monk.",L_MENU_1_1,"I want to take a rest here.",L_MENU_1_2;
+	menu "I would like to see how Monks train themselves.",L_MENU_1_0,"I want to be a Monk.",L_MENU_1_1,"I would like to rest here.",L_MENU_1_2;
 
 	L_MENU_1_0:	
-		mes "[SiFu]";
-		mes "Oh! I see. Okay, I hope you'll learn something from us.";
-		mes "Maybe you will want to be a Monk.";
+		mes "[Tohobu]";
+		mes "Oh! I see.";
+		mes "Okay, I hope you'll learn something from our training,";
+		mes "Perhaps it might aid you in becoming a worthy Monk.";
 		set JOB_MONK_Q, 1;
 		close;
 
 	L_MENU_1_1:
 		if(Class != 4 && Class != 4005) goto IsNot4;
 		if(joblevel >= 40 ) goto SkillPointChk;
-			mes "[SiFu]";
+			mes "[Tohobu]";
 			mes "Your Job Level is not high enough to be a Monk.";
 			mes "Come back when your Job Level higher then 40.";
 			next;
-			mes "[SiFu]";
-			mes "Don't be rush, there are so much to learn before you become a Monk.";
-			mes "Come back when you ready!";
+			mes "[Tohobu]";
+			mes "No need to be hasty, there is so much to learn on this world,";
+			mes "Come back when you have met the requirements... Haha!";
 			close;
 
 		SkillPointChk:
 
 			if(skillpoint == 0) goto L_GO;
-			mes "[SiFu]";
-			mes "Well... Seems you have the ability to be a Monk, but I think there is some skill needed you havn't learn.";
-			mes "Come back when you learn all the skills.";
+			mes "[Tohobu]";
+			mes "Well... It seems that you have the ability to be a Monk,";
+			mes "But I believe there are skill needed you have yet to learn.";
+			mes "Come back when you have learnt all the skills.";
 			close;
 
 		IsNot4:
-			mes "[SiFu]";
+			mes "[Tohobu]";
 			mes "Oh! Are you kidding?";
 			close;
 
 		HighMonk:
-			mes "[SiFu]";
-			mes "Wow! You are a High Acolyte! Aren't you?";
-			mes "Sorry! I can't let you become a Monk!";
-			mes "Please go see the Champion, That is what you should be!";
+			mes "[Tohobu]";
+			mes "Wow! You are a High Acolyte, aren't you?";
+			mes "I am sorry, but I can't let you become a Monk!";
+			mes "Please seek out the Champion, that is what you should be!";
 			set JOB_MONK_Q, 0;
 			close;
 
 		L_GO:
 			if (Class == 4005) goto HighMonk;
-			mes "[SiFu]";
+			mes "[Tohobu]";
 			mes "Well... Seems you have the ability to be a Monk.";
 			mes "Very well then... Go to Wuhai the Elder, He will guide you.";
 			set JOB_MONK_Q, 2;
 			close;
 
 	L_MENU_1_2:
-		mes "[SiFu]";
-		mes "This is not a good place to rest, traveler. However, you do look very tird and need some rest.";
-		mes "Go ahead! Rest here! But don't disturb the Monks in training, please.";
+		mes "[Tohobu]";
+		mes "Alright, you do look tired from your travels...";
+		mes "Perhaps it would be good to rest awhile.";
+		mes "Go ahead and rest at the Abbey before leaving!";
+		next;
+		mes "[Tohobu]";
+		mes "Persevering in order to gain more strength";
+		mes "Is the way of life of the Monks.";
+		mes "I hope that seeing our practises will";
+		mes "At least bring you some inner peace.";
 		close;
 Part1:
-	mes "[SiFu]";
-	mes "Well? Did you change your mind after look around here?";
+	mes "[Tohobu]";
+	mes "Well? Have you changed your mind after looking around here?";
 	next;
 	menu "Nope.",L_MENU_1_0,"I want to be a Monk",L_MENU_1_1,"I need more rest.",L_MENU_1_2;
 
 Part2:
-	mes "[SiFu]";
+	mes "[Tohobu]";
 	mes "Hello there! You should go to Wuhai the Elder, He will guide you.";
-	mes "He is in the Holy Palace, SouthEast from here";
+	mes "He is in the Monastery Hall, South East from here";
 	close;
 }
 
@@ -135,45 +149,55 @@ monk_in.gat,99,58,4	script	Elder Wuhai	60,{
 IsOther:
 	mes "[Elder Wuhai]";
 	mes "May you find God in the Mother Nature!!";
-	mes "Welcome traveler! What do want for me?";
+	mes "Welcome traveler, why do you seek me?";
 	close;
 
 L_START:
 	mes "[Elder Wuhai]";
-	mes "Hmmm... You are the one wants to be a Monk, right?";
+	mes "Hmmm... You are the youth who wants to be a Monk, right?";
 	next;
 	menu "Yes.",L_MENU_1,"No.",-;
 		mes "[Elder Wuhai]";
 		mes "Hmmm...? Aren't you?";
-		mes "Maybe I'm getting older, I couldn't be wrong when I was young...";
+		mes "Maybe I'm getting older, I would've guessed if so.";
 		mes "Very well then... You may go, young man.";
 		close;
 L_MENU_1:
 	mes "[Elder Wuhai]";
-	mes "Oh! I'm so happy that young man know us Monks.";
-	mes "Welcome! My child!";
+	mes "Oh! So young men these days still remember us Monks...";
+	mes "Welcome, my child!";
 	next;
 	mes "[Elder Wuhai]";
-	mes "What? You want to be a Monk? Ohhhh.... I'm so glad to heare that!";
-	mes "But, You need to know something before you become a Monk.";
+	mes "So you want to be a Monk! I'm glad to hear that!";
+	mes "But first, before you can become one,";
+	mes "There are a few things you need to know.";
 	next;
 	mes "[Elder Wuhai]";
-	mes "To be a Monk, We should train ourself to be stronger then ever in order to help the weaker.";
-	mes "And protect the world peace.";
+	mes "As Monks, we undergo strict training";
+	mes "While protecting world peace.";
+	next;
+	mes "[Elder Wuhai]";	
+	mes "The strength is for giving aid to the weak in need,";
+	mes "And to protect them from harm.";
 	next;
 	mes "[Elder Wuhai]";
-	mes "Never the less, control our emotion is a very important thing, too.";
+	mes "Last but not least, control our emotions,";
+	mes "More importantly, never be too proud of yourself,";
+	mes "And be blinded by success,";
 	next;
 	mes "[Elder Wuhai]";
-	mes "It would be very tough and painful when crossing those quest.";
-	mes "You cann't become a Monk if you cann't get over it.";
+	mes "It coukd be tough, even painful,";
+	mes "While undergoing this process.";
+	mes "Let's see if you're enduring enough,";
+	mes "You cannot become a Monk if you can't even bear this.";
 	next;
 	mes "[Elder Wuhai]";
-	mes "OKay, then let's start the test.";
-	mes "See if you really have the ability to become a Monk.";
+	mes "OKay, let's start the test to see";
+	mes "If you really have the ability to become a Monk.";
 	next;
 	mes "[Elder Wuhai]";
-	mes "First of all, we'll see if you have the ability doing something by yourself.";
+	mes "Firstly, here's a small exam";
+	mes "To test your will to become one of us.";
 	next;
 //~	if(joblevel == 50) goto IsJOB50;
 
@@ -241,11 +265,12 @@ L_Collect:
 		if(@collect_tmp != 1) goto L_CollectS;
 		close;
 L_CollectS:
-	mes "For testing your ability doing something by yourself, you should collect those things by yourself";
+	mes "[Elder Wuhai]";
+	mes "To test your will, you will have to collect these items by yourself";
 	next;
 	mes "[Elder Wuhai]";
-	mes "Come back to me when you have all the things.";
-	mes "Now go, May God be with you.";
+	mes "Come back to me when you have all of them.";
+	mes "Now go, May God's blessings be with you.";
 	close;
 
 //~IsJOB50:
@@ -273,8 +298,8 @@ Part1:
 	if(JOB_MONK_C == 6 && countitem(943) >= 5 && countitem(935) >= 20 && countitem(912) >= 5) goto L_CollectS2_6;
 
 		mes "[Elder Wuhai]";
-		mes "Hmm... Are you ready or not?";
-		mes "I'll tell what you should bring again.";
+		mes "Hmm... Still not ready yet?";
+		mes "Let me tell what you should bring again,";
 		mes "Listen carefully!";
 		next;
 		set @collect_tmp, 1;
@@ -313,135 +338,158 @@ Part1:
 	
 	L_CollectS2_E:
 		mes "[Elder Wuhai]";
-		mes "Oh! you bring every thing I said!";
+		mes "Oh! You've brought all of them!";
 		mes "Well done!";
-		mes "I think God will agree with me.";
+		mes "Your will in becoming in Monk is witnessable!";
 		next;
 		mes "[Elder Wuhai]";
-		mes "The next step, there is a Monk named Wutao want to see you.";
-		mes "He is in the Monk Grave North from here.";
+		mes "Let's see... there is a Monk named";
+		mes "Ah... Wutao who wants to see you.";
+		mes "He will be in the Ancestral Graveyard North from here.";
 		set JOB_MONK_Q, 4;
 		set JOB_MONK_C, 0;
 		close;
 
 Part2:
 	mes "[Elder Wuhai]";
-	mes "Your next step is to find Wutao and answer his questions.";
-	mes "He is in the Monk Grave North from here.";
+	mes "Next... should be questions regarding your job changing?";
+	mes "Go find master Wutao,";
+	mes "He will be in the Ancestral Graveyard North from here.";
 	close;
 Part3:
 	mes "[Elder Wuhai]";
-	mes "Concentrate!";
-	mes "Try to do your best in the quest!";
+	mes "Hmm? You're still taking the test...?";
+	mes "Try to do your best in it then!";
 	close;
 Part4:
 	mes "[Elder Wuhai]";
-	mes "What? Didn't you have that Magic Posion?";
-	mes "Then...Quickly drink the Magic Posion seems like a Green Posion!";
-	mes "Otherwise, I can't get your inter power out.";
+	mes "What? You haven't drunk that Magic Potion?";
+	mes "Then... Hurry up and finish the Green-ish potion!";
+	mes "Otherwise, you will never be able to achieve";
+	mes "The spiritual energy level of Monks!";
 	set JOB_MONK_Q, 11;
 	close;
 Part5:
 	mes "[Elder Wuhai]";
-	mes "We have done all steps. Your blood, your mind, your soul.";
-	mes "Even your inter power has been come out by drink the Magic Posion.";
+	mes "We have done all steps... Your blood, your mind, your soul,";
+	mes "Is enough for you to become a Monk.";
+	mes "Even your spiritual energy has increased after drinking the Magic Potion.";
 	next;
 	mes "[Elder Wuhai]";
-	mes "Let's begin the final step.";
-	mes "I'll ask you some question, you should answer me by sware.";
+	mes "Good... you will now be sworn in by oath";
+	mes "In which afterwards the job changing will be complete.";
 	next;
 	mes "[Elder Wuhai]";
-	mes "Will you give the rest of your life to serving God?";
+	mes "Are you willing to dedicate the rest of your life to serving God?";
 	next;
 	menu "Yes.",L_MONK_Q_2,"No.",-;
 
 		mes "[Elder Wuhai]";
 		mes "......What?......";
 		mes "Aren't you ready to become a Monk?";
-		mes "You want more quest, more train and more question?";
+		mes "Perhaps you want to run around a bit more,";
+		mes "And shed some more sweat";
+		mes "To become more prepared?";
 		next;
 		mes "[Elder Wuhai]";
-		mes "Come back when tou are ready.";
-		mes "I don't want to make a bad Monk.";
+		mes "Consider carefully before coming back!";
+		mes "I do not want to make a bad Monk.";
 		close;
 L_MONK_Q_2:
 	mes "[Elder Wuhai]";
-	mes "Will you use your power for your own good?";
+	mes "Will you use the powers given to you for your own good?";
 	next;
 	menu "Yes.",-,"No.",L_MONK_Q_3;
 
 		mes "[Elder Wuhai]";
-		mes "...NO NO NO NO NO !! Our training is not for any return!";
-		mes "How could a Monk who care world peace so much do things so selfish?!";
+		mes "...NO NO NO NO NO !! Our training is not for any self benefits!";
+		mes "How could one who protects world peace abuse this advantage";
+		mes "For their own selfish means?!";
 		next;
 		mes "[Elder Wuhai]";
-		mes "Go and think the porpose you want to be a Monk.";
-		mes "That kind of thought will lead you into the dark side and lost your ability.";
+		mes "Go and think over the true purpose of a Monk.";
+		mes "Thoughts like that will only make you greedier for power";
+		mes "The corruption of your soul will only lead to loss of your ability.";
 		close;
 
 L_MONK_Q_3:
 	mes "[Elder Wuhai]";
-	mes "When you are judging those who oppose God, will you hesitate in punishing them?";
+	mes "When judging those who have opposed the will of God,";
+	mes "Will you hesitate in punishing them?";
 	next;
 	menu "No.",L_MONK_Q_4,"Yes.",-;
 
 		mes "[Elder Wuhai]";
-		mes "What's a Monk you think?";
-		mes "No matter who hurt the weaker, they are trash! they don't desire to living in this world!";
+		mes "What do you think Monks are?";
+		mes "No matter who they are,";
+		mes "People who harm the weak are like trash!";
+		mes "They do not have the right to live on this world!";
 		next;
 		mes "[Elder Wuhai]";
-		mes "Go and learn to hate the people do bad things on nature";
-		mes "Come back when you hesitate in punishing who oppose God.";
+		mes "Perhaps you should go to people who deny morals in this world,";
+		mes "Come back again when you've learnt how to hate.";
 		mes "Then you will know what to do.";
 		close;
 
 L_MONK_Q_4:
 	mes "[Elder Wuhai]";
-	mes "Will you help to eradicate those who oppose God, and are you willing to sacrifice yourself?";
+	mes "Will you help to eradicate those who oppose God,";
+	mes "And to sacrifice yourself for the better of others?";
 	next;
 	menu "Yes",L_MONK_Q_5,"No",-;
 
 		mes "[Elder Wuhai]";
 		mes "Oh...nonononono....";
-		mes "It is a great thing that if sacrifice oneself can benifitied one's partner and eradicate more people who oppose God.";
+		mes "If sacrificing oneself would be beneficial to your peers,";
+		mes "And that more enemies can be rid of,";
+		mes "That would be a great and worthy thing to do!";
 		next;
 		mes "[Elder Wuhai]";
-		mes "How to explan sacrify? Come back when you figure out.";
-		mes "Sacrify is a simple but difficute movement.";
+		mes "What does Sacrifice means? Come back when you've figured it out.";
+		mes "Ah.. Sacrifice can be so simple, yet so difficult!";
 		close;
 
 L_MONK_Q_5:
 	mes "[Elder Wuhai]";
-	mes "Will you drag a lot of monsters behind you, and help other people fight?";
+	mes "Will you train monsters behind you to help others in battle?";
 	next;
 	menu "Yes",-,"No",L_MONK_Q_6;
 
 		mes "[Elder Wuhai]";
-		mes "That is not right! Do such things is both danger yourself and others.";
-		mes "You think you are helping them but in fact you are killing them.";
+		mes "That is not right! Training mobs around";
+		mes "Doesn't only apply to all others";
+		mes "...";
+		// he's not making any sense =P
+		mes "Instead it is an act that violates the rights of other Monks";
 		next;
 		mes "[Elder Wuhai]";
-		mes "Even you learn the skill 'Steel Body' you still shouldn't drag a lot of monsters behind you, and help other people fight.";
-		mes "Use the skill only when you meet a strong monster or face a dangerous situation.";
+		mes "Even when you've learnt the skill 'Steel Body'";
+		mes "It is only meant to be used in emergency, or when you meet a strong adversary.";
+		mes "But not in such a situation!";
 		next;
 		mes "[Elder Wuhai]";
-		mes "What is the real things a Monk should do?";
-		mes "Come back when you figure out.";
+		mes "It might feel that you're helping them,";
+		mes "But you are only commiting acts of unjust!";
+		mes "What is the true way of a Monk?";
+		mes "Come back when you have thought it over.";
 		close;
 
 L_MONK_Q_6:
 	mes "[Elder Wuhai]";
-	mes "Will you spam?";
+	// mes "Will you spam?";
+	// "will you spam" is just so... un-monkly. ^^;
+	mes "In villages or wilderness, will you say the same words towards others repeatedly?";
 	next;
 	menu "Yes",-,"No",L_MONK_Q_7;
 
 		mes "[Elder Wuhai]";
-		mes "No! If you do so, you would only annoying people but make them expect you.";
+		mes "No! If you do so, not just Monks, even the common people,";
+		mes "No matter how loudly you've yelled no one will bother about you!";
 		next;
 		mes "[Elder Wuhai]";
-		mes "Even you want to tell them the words said by God.";
+		mes "It is the same even if you only wanted to spread the words of God.";
 		mes "Think of your behavior. What's right and wrong?";
-		mes "Though I want to exam you again, but this time, you just go and think.";
+		mes "Although I would rather test you again, but I'll let you go this time.";
 		close;
 L_MONK_Q_7:
 	mes "[Elder Wuhai]";
@@ -450,19 +498,21 @@ L_MONK_Q_7:
 	menu "Yes",L_MONK_Q_8,"No",-;
 
 		mes "[Elder Wuhai]";
-		mes "You can not be a Monk in this kind of will!";
-		mes "Death is temp! It is meaningful to give our lifies for the world peace.";
+		mes "You cannot be a Monk with this kind of will!";
+		mes "As its said, Death is only temporary, Ever if we have to give our lives";
+		mes "to protect world peace, it would at least be a meaningful action!";
 		next;
 		mes "[Elder Wuhai]";
-		mes "Those who oppose God will die, those who listen to God will live.";
+		mes "Those who oppose God will be condemned,";
+		mes "While those who listen to God will live.";
 		mes "What is life and death to you?";
 		mes "Ponder that well.";
 		close;
 
 L_MONK_Q_8:
-	mes "Lastly, promise to keep to what you have answered.";
+	mes "Lastly, make an oath to swear you will keep to what you have answered.";
 	next;
-	menu "I promise.",L_MONK_Q_9,"I refuse.",-;
+	menu "I swear.",L_MONK_Q_9,"I refuse.",-;
 
 		mes "[Elder Wuhai]";
 		mes "......";
@@ -481,8 +531,9 @@ L_MONK_Q_8:
 
 L_MONK_Q_9:
 	mes "[Elder Wuhai]";
-	mes "Well then, we finish the promise";
-	mes "Come closer, you are now ny brother!";
+	mes "Well then, we have completed the oaths";
+	mes "Gather closer now, you are already my brother!";
+//---- Progress bar ----//
 	next;
 	mes "[Elder Wuhai]";
 	mes "Your promise has transmited to all Monks throught ypur heart and my heart.";
