@@ -2875,53 +2875,40 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *bl)
 //
 //
 /*==========================================
- * PCをマップから離脱する
+ * PCの位置設定
  *------------------------------------------
  */
+int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrtype)
+{
+	char mapname[24];
+	int m=0,disguise=0;
 
-int pc_remove_map(struct map_session_data *sd,int clrtype) {
 	nullpo_retr(0, sd);
 
-	// map 上に登録されていない
-	if(!sd->bl.prev)
-		return 1;
-
-	// チャットから出る
-	if(sd->chatID)
+	if(sd->chatID)	// チャットから出る
 		chat_leavechat(sd);
-
-	// 取引を中断する
-	if(sd->trade_partner)
+	if(sd->trade_partner)	// 取引を中?する
 		trade_tradecancel(sd);
-
-	// 倉庫を開いてるなら保存する
 	if(sd->state.storage_flag)
 		storage_guild_storage_quit(sd,0);
 	else
-		storage_storage_quit(sd);
+		storage_storage_quit(sd);	// 倉庫を開いてるなら保存する
 
-	// パーティ勧誘を拒否する
-	if(sd->party_invite>0)
+	if(sd->party_invite>0)	// パ?ティ?誘を拒否する
 		party_reply_invite(sd,sd->party_invite_account,0);
-
-	// ギルド勧誘を拒否する
-	if(sd->guild_invite>0)
+	if(sd->guild_invite>0)	// ギルド?誘を拒否する
 		guild_reply_invite(sd,sd->guild_invite,0);
-
-	// ギルド同盟勧誘を拒否する
-	if(sd->guild_alliance>0)
+	if(sd->guild_alliance>0)	// ギルド同盟?誘を拒否する
 		guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
 
-	// check if we've been authenticated [celest]
-	//if (sd->state.auth) {
-		pc_stop_walking(sd,0);		// 歩行中断
-		pc_stopattack(sd);			// 攻撃中断
-		pc_delinvincibletimer(sd);	// 無敵タイマー削除
-	//}
+	skill_castcancel(&sd->bl,0);	// 詠唱中?
+	pc_stop_walking(sd,0);		// ?行中?
+	pc_stopattack(sd);			// 攻?中?
 
-	// ブレードストップを終わらせる
-	if(sd->sc_data[SC_BLADESTOP].timer!=-1)
-		status_change_end(&sd->bl,SC_BLADESTOP,-1);
+	if(pc_issit(sd)) {
+		pc_setstand(sd);
+		skill_gangsterparadise(sd,0);
+	}
 
 	if (sd->sc_count) {
 		if(sd->sc_data[SC_TRICKDEAD].timer != -1)
@@ -2943,41 +2930,17 @@ int pc_remove_map(struct map_session_data *sd,int clrtype) {
 		}
 	}
 
-	// check if we've been authenticated [celest]
-	//if (sd->state.auth)
-		skill_castcancel(&sd->bl,0);			// 詠唱中断
-	skill_gangsterparadise(sd,0);			// ギャングスターパラダイス削除
-	skill_unit_move(&sd->bl,gettick(),0);	// スキルユニットから離脱
-	skill_cleartimerskill(&sd->bl);			// タイマースキルクリア
-	skill_clear_unitgroup(&sd->bl);			// スキルユニットグループの削除
-
-	clif_clearchar_area(&sd->bl,clrtype&0xffff);
-	map_delblock(&sd->bl);
-	return 0;
-}
-
-/*==========================================
- * PCの位置設定
- *------------------------------------------
- */
-int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrtype)
-{
-	char mapname[24];
-	int m=0,disguise=0;
-
-	nullpo_retr(0, sd);
-
-	if(pc_issit(sd)) {
-		pc_setstand(sd);
-		skill_gangsterparadise(sd,0);
-	}
-
 	if(sd->status.option&2)
 		status_change_end(&sd->bl, SC_HIDING, -1);
 	if(sd->status.option&4)
 		status_change_end(&sd->bl, SC_CLOAKING, -1);
 	if(sd->status.option&16384)
 		status_change_end(&sd->bl, SC_CHASEWALK, -1);
+
+	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
+		pet_stopattack(sd->pd);
+		pet_changestate(sd->pd,MS_IDLE,0);
+	}
 
 	if(sd->disguise) { // clear disguises when warping [Valaris]
 		clif_clearchar(&sd->bl, 9);
@@ -2994,9 +2957,14 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 	m=map_mapname2mapid(mapname);
 
 	if(m<0){
-		//if(sd->mapname[0]){
+		if(sd->mapname[0]){
 			int ip,port;
 			if(map_mapname2ipport(mapname,&ip,&port)==0){
+				skill_stop_dancing(&sd->bl,1);
+				skill_unit_move(&sd->bl,gettick(),0);
+				clif_clearchar_area(&sd->bl,clrtype&0xffff);
+				skill_gangsterparadise(sd,0);
+				map_delblock(&sd->bl);
 				if(sd->status.pet_id > 0 && sd->pd) {
 					if(sd->pd->bl.m != m && sd->pet.intimate <= 0) {
 						pet_remove_map(sd);
@@ -3014,15 +2982,6 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 						map_delblock(&sd->pd->bl);
 					}
 				}
-				
-				party_send_logout(sd);					// パーティのログアウトメッセージ送信
-				guild_send_memberinfoshort(sd,0);		// ギルドのログアウトメッセージ送信
-				status_change_clear(&sd->bl,1);	// ステータス異常を解除する
-				skill_stop_dancing(&sd->bl,1);			// ダンス/演奏中断
-				pc_cleareventtimer(sd);					// イベントタイマを破棄する
-				pc_delspiritball(sd,sd->spiritball,1);	// 気功削除
-				pc_remove_map(sd,clrtype);
-
 				memcpy(sd->mapname,mapname,24);
 				sd->bl.x=x;
 				sd->bl.y=y;
@@ -3036,7 +2995,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 				chrif_changemapserver(sd, mapname, x, y, ip, port);
 				return 0;
 			}
-		//}
+		}
 #if 0
 		clif_authfail_fd(sd->fd,0);	// cancel
 		clif_setwaitclose(sd->fd);
@@ -3057,17 +3016,12 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 		} while(map_getcell(m,x,y,CELL_CHKNOPASS));
 	}
 
-	if(m == sd->bl.m) {
-		// 同じマップなのでダンスユニット引き継ぎ
-		sd->to_x = x;
-		sd->to_y = y;
-		skill_stop_dancing(&sd->bl, 2); //移動先にユニットを移動するかどうかの判断もする
-	} else {
-		// 違うマップなのでダンスユニット削除
-		skill_stop_dancing(&sd->bl, 1);
-	}
-	if(sd->bl.prev != NULL){
-		pc_remove_map(sd,clrtype);
+	if(sd->mapname[0] && sd->bl.prev != NULL){
+		skill_unit_move(&sd->bl,gettick(),0);
+		clif_clearchar_area(&sd->bl,clrtype&0xffff);
+		skill_gangsterparadise(sd,0);
+		map_delblock(&sd->bl);
+		// pet
 		if(sd->status.pet_id > 0 && sd->pd) {
 			if(sd->pd->bl.m != m && sd->pet.intimate <= 0) {
 				pet_remove_map(sd);
@@ -3077,6 +3031,9 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 				sd->petDB = NULL;
 				if(battle_config.pet_status_support)
 					status_calc_pc(sd,2);
+				pc_makesavestatus(sd);
+				chrif_save(sd);
+				storage_storage_save(sd);
 			}
 			else if(sd->pet.intimate > 0) {
 				pet_stopattack(sd->pd);
@@ -3093,8 +3050,13 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 
 	memcpy(sd->mapname,mapname,24);
 	sd->bl.m = m;
-	sd->bl.x = x;
-	sd->bl.y = y;
+	sd->to_x = x;
+	sd->to_y = y;
+
+	// moved and changed dance effect stopping
+
+	sd->bl.x =  x;
+	sd->bl.y =  y;
 
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
 		sd->pd->bl.m = m;
@@ -3236,7 +3198,7 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 	int moveblock;
 	int x,y,dx,dy;
 
-        sd=map_id2sd(id);
+	sd = map_id2sd(id);
 #ifndef _WIN32
 	nullpo_retr_f(0, sd, "id=%d", id);
 #endif

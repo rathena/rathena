@@ -2,6 +2,7 @@
 Date	Added
 
 03/31
+	* Reverted the pc_remove_map() change temporarily
 	* Added back up old files in 'save' before saving new data -- also fixes
 	  'Access denied' errors when saving in TXT
 
