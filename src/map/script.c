@@ -274,6 +274,7 @@ int buildin_petloot(struct script_state *st); // pet looting [Valaris]
 int buildin_petheal(struct script_state *st); // pet healing [Valaris]
 int buildin_petmag(struct script_state *st); // pet magnificat [Valaris]
 int buildin_petskillattack(struct script_state *st); // pet skill attacks [Valaris]
+int buildin_skilleffect(struct script_state *st); // skill effects [Celest]
 int buildin_npcskilleffect(struct script_state *st); // skill effects for npcs [Valaris]
 int buildin_specialeffect(struct script_state *st); // special effect script [Valaris]
 int buildin_specialeffect2(struct script_state *st); // special effect script [Valaris]
@@ -292,6 +293,8 @@ int buildin_getmapxy(struct script_state *st);  //get map position for player/np
 int buildin_checkoption1(struct script_state *st); // [celest]
 int buildin_checkoption2(struct script_state *st); // [celest]
 int buildin_guildgetexp(struct script_state *st); // [celest]
+int buildin_skilluseid(struct script_state *st); // originally by Qamera [celest]
+int buildin_skillusepos(struct script_state *st); // originally by Qamera [celest]
 
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
@@ -481,6 +484,7 @@ struct {
 	{buildin_petheal,"petheal","iii"}, // [Valaris]
 	{buildin_petmag,"petmag","iiii"}, // [Valaris]
 	{buildin_petskillattack,"petskillattack","iiii"}, // [Valaris]
+	{buildin_skilleffect,"skilleffect","ii"}, // skill effect [Celest]
 	{buildin_npcskilleffect,"npcskilleffect","iiii"}, // npc skill effect [Valaris]
 	{buildin_specialeffect,"specialeffect","i"}, // npc skill effect [Valaris]
 	{buildin_specialeffect2,"specialeffect2","i"}, // skill effect on players[Valaris]
@@ -504,6 +508,9 @@ struct {
 	{buildin_checkoption1,"checkoption1","i"},
 	{buildin_checkoption2,"checkoption2","i"},
 	{buildin_guildgetexp,"guildgetexp","i"},
+	{buildin_skilluseid,"skilluseid","ii"}, // originally by Qamera [Celest]
+	{buildin_skilluseid,"doskill","ii"}, // since a lot of scripts would already use 'doskill'...
+	{buildin_skillusepos,"skillusepos","iiii"}, // [Celest]
 	{NULL,NULL,NULL},
 };
 int buildin_message(struct script_state *st); // [MouseJstr]
@@ -2323,7 +2330,8 @@ int buildin_getitem(struct script_state *st)
 			return 0;
 		if((flag = pc_additem(sd,&item_tmp,amount))) {
 			clif_additem(sd,0,0,flag);
-			map_addflooritem(&item_tmp,amount,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
+			if(!pc_candrop(sd,nameid))
+				map_addflooritem(&item_tmp,amount,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 		}
 	}
 
@@ -5827,6 +5835,24 @@ int buildin_petskillattack(struct script_state *st)
 
 	return 0;
 }
+
+/*==========================================
+ * Scripted skill effects [Celest]
+ *------------------------------------------
+ */
+int buildin_skilleffect(struct script_state *st)
+{
+	struct map_session_data *sd;
+	
+	int skillid=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	int skilllv=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	sd=script_rid2sd(st);
+	
+	clif_skill_nodamage(&sd->bl,&sd->bl,skillid,skilllv,1);
+
+	return 0;
+}
+
 /*==========================================
  * NPC skill effects [Valaris]
  *------------------------------------------
@@ -6284,6 +6310,42 @@ int buildin_getmapxy(struct script_state *st){
         return 0;
 }
 
+/*=====================================================
+ * Allows players to use a skill - by Qamera
+ *-----------------------------------------------------
+ */
+int buildin_skilluseid (struct script_state *st)
+{
+   int skid,sklv;
+   struct map_session_data *sd;
+
+   skid=conv_num(st,& (st->stack->stack_data[st->start+2]));
+   sklv=conv_num(st,& (st->stack->stack_data[st->start+3]));
+   sd=script_rid2sd(st);
+   skill_use_id(sd,sd->status.account_id,skid,sklv);
+
+   return 0;
+}
+
+/*=====================================================
+ * Allows players to use a skill on a position [Celest]
+ *-----------------------------------------------------
+ */
+int buildin_skillusepos(struct script_state *st)
+{
+   int skid,sklv,x,y;
+   struct map_session_data *sd;
+
+   skid=conv_num(st,& (st->stack->stack_data[st->start+2]));
+   sklv=conv_num(st,& (st->stack->stack_data[st->start+3]));
+   x=conv_num(st,& (st->stack->stack_data[st->start+4]));
+   y=conv_num(st,& (st->stack->stack_data[st->start+5]));
+
+   sd=script_rid2sd(st);
+   skill_use_pos(sd,x,y,skid,sklv);
+
+   return 0;
+}
 
 //
 // Às•”main

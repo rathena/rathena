@@ -134,7 +134,7 @@
 661,Sky_Apron,Soft Apron,2,20,0,50,,,,,10477567,2,,,,,{ pet 1275; },{}
 
 // Newer Items
-662,Horse_Crest,Crest of the Horse,2,0,0,30,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 29,5,"Increase Agility Level 5"; },{}
+662,Horse_Crest,Crest of the Horse,2,0,0,30,0,0,0,0,10477567,2,0,0,0,0,{ skilleffect 29,5; sc_start SC_SpeedUp0,240000,0; },{}
 664,Gift_Box_,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 665,Gift_Box__,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 666,Gift_Box___,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
@@ -1721,3 +1721,17 @@
 12001,Heal_3,Heal Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,3,"Heal Level 3"; },{}
 12002,Heal_5,Heal Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,5,"Heal Level 5"; },{}
 12003,Teleport_1,Teleport Level 1,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 26,1,"Teleport Level 1"; },{}
+
+// Arrow Quivers
+12004,Arrow_Quiver,Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1750,500; },{}
+12005,Iron_Arrow_Quiver,Iron Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1770,500; },{}
+12006,Steel_Arrow_Quiver,Steel Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1753,500; },{}
+12007,Oridecon_Arrow_Quiver,Oridecon Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1765,500; },{}
+12008,Fire_Arrow_Quiver,Fire Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1752,500; },{}
+12009,Silver_Arrow_Quiver,Silver Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1751,500; },{}
+12010,Arrow_of_Wind_Quiver,Arrow of Wind Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1755,500; },{}
+12011,Stone_Arrow_Quiver,Stone Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1756,500; },{}
+12012,Crystal_Arrow_Quiver,Crystal Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1754,500; },{}
+12013,Shadow_Arrow_Quiver,Shadow Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1767,500; },{}
+12014,Immaterial_Arrow_Quiver,Immaterial Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1757,500; },{}
+12015,Rusty_Arrow_Quiver,Rusty Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1762,500; },{} 

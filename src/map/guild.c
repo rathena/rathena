@@ -1191,10 +1191,17 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 	int flag,const char *name1,const char *name2)
 {
 	struct guild *g[2];
-	int guild_id[2]={guild_id1,guild_id2};
-	const char *guild_name[2]={name1,name2};
-	struct map_session_data *sd[2]={map_id2sd(account_id1),map_id2sd(account_id2)};
+	int guild_id[2];
+	const char *guild_name[2];
+	struct map_session_data *sd[2];
 	int j,i;
+	
+	guild_id[0] = guild_id1;
+	guild_id[1] = guild_id2;
+	guild_name[0] = name1;
+	guild_name[1] = name2;
+	sd[0] = map_id2sd(account_id1);
+	sd[1] = map_id2sd(account_id2);
 
 	g[0]=guild_search(guild_id1);
 	g[1]=guild_search(guild_id2);

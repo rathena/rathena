@@ -313,10 +313,9 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 
 	SC_SPIDERWEB		=180,		/* スパイダ?ウェッブ */
 	SC_MEMORIZE			=181,		/* メモライズ */
-//	SC_DPOISON			=182,		/* 猛毒 */
-
-//	SC_EDP				=183,		/* エフェクトが判明したら移動 */
-
+	SC_DPOISON			=182,		/* 猛毒 */
+	SC_EDP				=183,		/* エフェクトが判明したら移動 */
+	SC_SACRIFICE		=184,		/* サクリファイス */
 	SC_WEDDING			=187,	//結婚用(結婚衣裳になって?くのが?いとか)
 	SC_NOCHAT			=188,	//赤エモ?態
 	SC_SPLASHER			=189,	/* ベナムスプラッシャ? */
@@ -326,25 +325,27 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 // Used by English Team
 	SC_BROKNARMOR		=32,
 	SC_BROKNWEAPON		=33,
+	SC_SPEEDUP0			=41, // for skill speedup
+	SC_SPEEDUP1			=42, // for skill speedup
 	SC_SLOWDOWN			=45, // for skill slowdown
 	SC_AUTOBERSERK		=46,
 	SC_SIGHTTRASHER		=73,
 //	SC_BASILICA			=125, // 125 is the same id as joint break
 	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]
-	SC_EDP				=114, // 
+//	SC_EDP				=114, // 
 	SC_MARIONETTE2		=122, // Marionette target
 	SC_ENSEMBLE			=159,
 	SC_FOGWALL			=178,
 	SC_GOSPEL			=179,
-	SC_LANDPROTECTOR	=182,
-	SC_ADAPTATION		=183,
-	SC_CHASEWALK		=184,
 	SC_ATKPOT			=185,	// [Valaris]
 	SC_MATKPOT			=186,	// [Valaris]
 	SC_MINDBREAKER		=191,
 	SC_SPELLBREAKER		=192,
-	SC_DPOISON			=193, /* 猛毒 */
+	SC_LANDPROTECTOR	=193,
+//	SC_DPOISON			=193, /* 猛毒 */
 	SC_BLOCKSKILL		=194, // for disallowing the use of a skill for a time period
+	SC_ADAPTATION		=195,
+	SC_CHASEWALK		=196,
 /*	SC_LEADERSHIP		=196, // temporarily disabled - they're too buggy =/
 	SC_GLORYWOUNDS		=197,
 	SC_SOULCOLD			=198,

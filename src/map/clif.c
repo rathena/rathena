@@ -2387,6 +2387,8 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_HP:
 		WFIFOL(fd,4)=sd->status.hp;
+		if(battle_config.disp_hpmeter)
+			clif_hpmeter(sd);
 		break;
 	case SP_SP:
 		WFIFOL(fd,4)=sd->status.sp;
@@ -5771,6 +5773,46 @@ int clif_party_hp(struct party *p,struct map_session_data *sd)
 	clif_send(buf,packet_len_table[0x106],&sd->bl,PARTY_AREA_WOS);
 //	if(battle_config.etc_log)
 //		printf("clif_party_hp %d\n",sd->status.account_id);
+	return 0;
+}
+/*==========================================
+ * GM‚ÖêŠ‚ÆHP’Ê’m
+ *------------------------------------------
+ */
+int clif_hpmeter(struct map_session_data *sd)
+{
+	struct map_session_data *md;
+	unsigned char buf[16];
+	unsigned char buf2[16];
+	int i;
+	
+	nullpo_retr(0, sd);
+
+	WBUFW(buf,0)=0x107;
+	WBUFL(buf,2)=sd->bl.id;
+	WBUFW(buf,6)=sd->bl.x;
+	WBUFW(buf,8)=sd->bl.y;
+
+	for(i=0;i<fd_max;i++){
+		if(session[i] && (md=session[i]->session_data) && md->state.auth &&
+			md->bl.m == sd->bl.m && pc_isGM(md) && sd != md){
+			memcpy(WFIFOP(i,0),buf,packet_len_table[0x107]);
+			WFIFOSET(i,packet_len_table[0x107]);
+		}
+	}
+	
+	WBUFW(buf2,0)=0x106;
+	WBUFL(buf2,2)=sd->status.account_id;
+	WBUFW(buf2,6)=(sd->status.hp > 0x7fff)? 0x7fff:sd->status.hp;
+	WBUFW(buf2,8)=(sd->status.max_hp > 0x7fff)? 0x7fff:sd->status.max_hp;
+	for(i=0;i<fd_max;i++){
+		if(session[i] && (md=session[i]->session_data) && md->state.auth &&
+			md->bl.m == md->bl.m && pc_isGM(md) && sd != md){
+			memcpy(WFIFOP(i,0),buf2,packet_len_table[0x106]);
+			WFIFOSET(i,packet_len_table[0x106]);
+		}
+	}
+	
 	return 0;
 }
 /*==========================================

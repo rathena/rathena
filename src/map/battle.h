@@ -212,6 +212,11 @@ extern struct Battle_Config {
 	int natural_heal_skill_interval;
 	int natural_heal_weight_rate;
 	int item_name_override_grffile;
+	int indoors_override_grffile;	// [Celest]
+	int skill_sp_override_grffile;	// [Celest]
+	int cardillust_read_grffile;
+	int item_equip_override_grffile;
+	int item_slots_override_grffile;
 	int arrow_decrement;
 	int max_aspd;
 	int max_hp;
@@ -253,7 +258,6 @@ extern struct Battle_Config {
 	int mob_changetarget_byskill;
 	int pc_attack_direction_change;
 	int monster_attack_direction_change;
-	int pc_undead_nofreeze;
 	int pc_land_skill_limit;
 	int monster_land_skill_limit;
 	int party_skill_penalty;
@@ -314,6 +318,14 @@ extern struct Battle_Config {
 	int castle_defense_rate;
 	int riding_weight;
 	int backstab_bow_penalty;
+	int hp_rate;
+	int sp_rate;
+	int gm_can_drop_lv;
+	int disp_hpmeter;
+	int bone_drop;
+	int item_rate_details,item_rate_1,item_rate_10,item_rate_100,item_rate_1000;	//ドロップレート詳細
+	int item_rate_1_min,item_rate_10_min,item_rate_100_min,item_rate_1000_min;	//ドロップレート詳細min
+	int item_rate_1_max,item_rate_10_max,item_rate_100_max,item_rate_1000_max;	//ドロップレート詳細max
 
 	int night_at_start; // added by [Yor]
 	int day_duration; // added by [Yor]

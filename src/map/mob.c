@@ -37,6 +37,8 @@
 
 struct mob_db mob_db[2001];
 
+#define CLASSCHANGE_BOSS_NUM 21
+
 /*==========================================
  * Local prototype declaration   (only required thing)
  *------------------------------------------
@@ -2093,7 +2095,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	int mvp_damage,max_hp;
 	unsigned int tick = gettick();
 	struct map_session_data *mvp_sd = NULL, *second_sd = NULL,*third_sd = NULL;
-	double dmg_rate,tdmg,temp;
+	double tdmg,temp;
 	struct item item;
 	int ret;
 	int drop_rate;
@@ -2348,12 +2350,12 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		}
 	}
 
-        // [MouseJstr]
-        if((map[md->bl.m].flag.pvp == 0) || (battle_config.pvp_exp == 1)) {
+	// [MouseJstr]
+	if((map[md->bl.m].flag.pvp == 0) || (battle_config.pvp_exp == 1)) {
 
-	if((double)max_hp < tdmg)
+/*	if((double)max_hp < tdmg)
 		dmg_rate = ((double)max_hp) / tdmg;
-	else dmg_rate = 1;
+	else dmg_rate = 1;*/
 
 	// 経験値の分配
 	for(i=0;i<DAMAGELOG_SIZE;i++){
@@ -2363,7 +2365,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		if(tmpsd[i]==NULL || tmpsd[i]->bl.m != md->bl.m)
 			continue;
 /* jAthena's exp formula
-		per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./((double)max_hp) * dmg_rate;
+	//	per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./((double)max_hp) * dmg_rate;
+		per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./tdmg;
 		temp = ((double)mob_db[md->class].base_exp * (double)battle_config.base_exp_rate / 100. * per);
 		base_exp = (temp > 2147483647.)? 0x7fffffff:(int)temp;
 		if(mob_db[md->class].base_exp > 0 && base_exp < 1) base_exp = 1;
@@ -2891,7 +2894,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int flag)
 
 	if(value[0]<=1000 || value[0]>MAX_MOB_DB)	// 値が異常なら召喚を止める
 		return 0;
-	while(count < 5 && value[count] > 1000 && value[count] <= 2000) count++;
+	while(count < 21 && value[count] > 1000 && value[count] <= 2000) count++;
 	if(count < 1) return 0;
 
 	for(k=0;k<count;k++) {
@@ -3884,7 +3887,46 @@ static int mob_readdb(void)
 					ratemin = battle_config.item_drop_common_min;
 					ratemax = battle_config.item_drop_common_max;
 				}
-				rate = (rate / 100) * atoi(str[30+i*2]);
+				if (battle_config.item_rate_details == 1) {	//ドロップレート詳細項目が1の時 レート=x/100倍
+					if (rate < 10)
+						rate = rate * battle_config.item_rate_1/100;
+					else if (rate >= 10 && rate < 100)
+						rate = rate * battle_config.item_rate_10/100;
+					else if (rate >= 100 && rate < 1000)
+						rate = rate * battle_config.item_rate_100/100;
+					else rate = rate * battle_config.item_rate_1000/100;
+				}
+				else if (battle_config.item_rate_details == 2) {	//ドロップレート詳細項目が2の時　レート=x/100倍 min max 指定
+					if (rate >= 1 && rate < 10) {
+						if (rate * battle_config.item_rate_1/100 < battle_config.item_rate_1_min)
+							rate = battle_config.item_rate_1_min;
+						else if (rate * battle_config.item_rate_1/100 > battle_config.item_rate_1_max)
+							rate = battle_config.item_rate_1_max;
+						else rate = rate * battle_config.item_rate_1/100;
+					}
+					else if (rate >= 10 && rate < 100) {
+						if (rate * battle_config.item_rate_10/100 < battle_config.item_rate_10_min)
+							rate = battle_config.item_rate_10_min;
+						else if (rate * battle_config.item_rate_10/100 > battle_config.item_rate_10_max)
+							rate = battle_config.item_rate_10_max;
+						else rate = rate * battle_config.item_rate_10/100;
+					}
+					else if (rate >= 100 && rate < 1000) {
+						if (rate * battle_config.item_rate_100/100 < battle_config.item_rate_100_min)
+							rate = battle_config.item_rate_100_min;
+						else if (rate * battle_config.item_rate_100/100 > battle_config.item_rate_100_max)
+							rate = battle_config.item_rate_100_max;
+						else rate = rate * battle_config.item_rate_100/100;
+					}
+					else if (rate >= 1000) {
+						if (rate * battle_config.item_rate_1000/100 < battle_config.item_rate_1000_min)
+							rate = battle_config.item_rate_1000_min;
+						else if (rate * battle_config.item_rate_1000/100 > battle_config.item_rate_1000_max)
+							rate = battle_config.item_rate_1000_max;
+						else rate = rate * battle_config.item_rate_1000/100;
+					}
+				}
+				rate = rate * atoi(str[30+i*2])/100;
 				rate = (rate < ratemin)? ratemin: (rate > ratemax)? ratemax: rate;
 				mob_db[class].dropitem[i].p = rate;
 			}

@@ -1,5 +1,30 @@
 Date	Added
 12/21
+        * Finished updating most of the map-server to 1082... i'll leave the more
+          technical ones for the other devs ^^; [celest]
+        * Added other new battle_athena options from jA 1082 ... descriptions not
+          translated yet [celest]
+        * Removed my own additions for skill delays using aspd and added jA's code [celest]
+        * Adapted skill_range_leniency to jA's code - should be more stable [celest]
+        * Fixed drop rates only limited to multiples of 100's - thanks to jathena
+          for pointing it out [celest]
+        * Added missing code for castle_defense_rate [celest]
+        * Removed pc_undead_nofreeze - no code for it [celest]
+        * Updated unrefineable items table - thanks to jathena [celest]
+        * Added 3 new script commands: [celest]
+          - skilleffect : shows a skill effect on the player
+          - doskill/skilluseid (originally by Qamera) : casts a skill on the player
+          - skillusepos : casts a skill on a position
+        * Added SC_SpeedUp0 [celest]
+        * Merged itemdb_read for SQL and TXT [celest]
+        * Moved itemdb_read_itemslottable in itemdb.c for better readability [celest]
+        * Removed itemdb_read_cardillustnametable limited to TXT only [celest]
+        * Added reading itemslotcounttable.txt from the GRF to auto set number of slots 
+          per item [celest]
+        * Added a display message when reading itemslottable from the GRF [celest]
+        * Added options in battle_athena.conf to enable/disable reading the GRF for
+          indoorrswtable.txt, leveluseskillspamount.txt, num2cardillustnametable.txt, 
+          itemslottable.txt & itemslotcounttable.txt [celest]
 	* Removed conf/npcs_list.txt, and placed it in npc/npcs_athena.conf
 
 12/20

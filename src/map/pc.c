@@ -588,6 +588,52 @@ int pc_isequip(struct map_session_data *sd,int n)
 	return 1;
 }
 
+//装備破壊
+int pc_break_equip(struct map_session_data *sd, unsigned short where)
+{
+	struct item_data* item;
+	int i;
+	int sc;
+	char output[255];	
+
+	if(sd == NULL)
+		return -1;
+	if(sd->unbreakable_equip & where)
+		return 0;
+	switch (where) {
+		case EQP_WEAPON:
+			sc = SC_CP_WEAPON;
+			break;
+		case EQP_ARMOR:
+			sc = SC_CP_ARMOR;
+			break;
+		case EQP_SHIELD:
+			sc = SC_CP_SHIELD;
+			break;
+		case EQP_HELM:
+			sc = SC_CP_HELM;
+			break;
+		default:
+			return 0;
+	}
+	if( sd->sc_data && sd->sc_data[sc].timer != -1 )
+		return 0;
+
+	for (i=0;i<MAX_INVENTORY;i++) {
+		if (sd->status.inventory[i].equip & where) {
+			item=sd->inventory_data[i];
+			sd->status.inventory[i].attribute = 1;
+			pc_unequipitem(sd,i,0);
+			break;
+		}
+	}
+	sprintf(output, "%s has broken.",item->jname);
+	clif_emotion(&sd->bl,23);
+	clif_displaymessage(sd->fd, output);
+	clif_equiplist(sd);
+	return 0;
+}
+
 /*==========================================
  * Weapon Breaking [Valaris]
  *------------------------------------------
@@ -1230,8 +1276,8 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	sd->matk1 =0;
 	sd->matk2 =0;
 	sd->speed = DEFAULT_WALK_SPEED ;
-	sd->hprate=100;
-	sd->sprate=100;
+	sd->hprate=battle_config.hp_rate;
+	sd->sprate=battle_config.sp_rate;
 	sd->castrate=100;
 	sd->dsprate=100;
 	sd->base_atk=0;
@@ -1254,6 +1300,8 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 	memset(sd->weapon_coma_ele,0,sizeof(sd->weapon_coma_ele));
 	memset(sd->weapon_coma_race,0,sizeof(sd->weapon_coma_race));
+	memset(sd->weapon_atk,0,sizeof(sd->weapon_atk));
+	memset(sd->weapon_atk_rate,0,sizeof(sd->weapon_atk_rate));
 
 	sd->watk_ = 0;			//二刀流用(?)
 	sd->watk_2 = 0;
@@ -1307,6 +1355,9 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	sd->short_weapon_damage_return = sd->long_weapon_damage_return = 0;
 	sd->magic_damage_return = 0; //AppleGirl Was Here
 	sd->random_attack_increase_add = sd->random_attack_increase_per = 0;
+	sd->hp_drain_value = sd->hp_drain_value_ = sd->sp_drain_value = sd->sp_drain_value_ = 0;
+	sd->unbreakable_equip = 0;
+
 
 	if(!sd->disguiseflag && sd->disguise) {
 		sd->disguise=0;
@@ -1549,6 +1600,10 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			if(sd->sc_data[SC_CHASEWALK].val4)
 				sd->paramb[0] += (1<<(sd->sc_data[SC_CHASEWALK].val1-1)); // increases strength after 10 seconds
 		}
+		if(sd->sc_data[SC_SLOWDOWN].timer!=-1)
+			sd->speed = sd->speed*150/100;
+		if(sd->sc_data[SC_SPEEDUP0].timer!=-1)
+			sd->speed -= sd->speed*25/100;
 		if(sd->sc_data[SC_BLESSING].timer!=-1){	// ブレッシング
 			sd->paramb[0]+= sd->sc_data[SC_BLESSING].val1;
 			sd->paramb[3]+= sd->sc_data[SC_BLESSING].val1;
@@ -2210,6 +2265,10 @@ int pc_calcspeed (struct map_session_data *sd)
 		}
 		if(sd->sc_data[SC_CURSE].timer!=-1)
 			sd->speed += 450;
+		if(sd->sc_data[SC_SLOWDOWN].timer!=-1)
+			sd->speed = sd->speed*150/100;
+		if(sd->sc_data[SC_SPEEDUP0].timer!=-1)
+			sd->speed -= sd->speed*25/100;
 	}
 
 	if(sd->status.option&2 && (skill = pc_checkskill(sd,RG_TUNNELDRIVE))>0 )
@@ -2546,6 +2605,22 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->special_state.infinite_endure = 1;
 		break;
+	case SP_UNBREAKABLE_WEAPON:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_WEAPON;
+		break;
+	case SP_UNBREAKABLE_ARMOR:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_ARMOR;
+		break;
+	case SP_UNBREAKABLE_HELM:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_HELM;
+		break;
+	case SP_UNBREAKABLE_SHIELD:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_SHIELD;
+		break;
 	case SP_SPLASH_RANGE:
 		if(sd->state.lr_flag != 2 && sd->splash_range < val)
 			sd->splash_range = val;
@@ -2836,6 +2911,14 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->random_attack_increase_add = type2;
 			sd->random_attack_increase_per += val;
 		}	
+		break;
+	case SP_WEAPON_ATK:
+		if(sd->state.lr_flag != 2)
+			sd->weapon_atk[type2]+=val;
+		break;
+	case SP_WEAPON_ATK_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->weapon_atk_rate[type2]+=val;
 		break;
 	default:
 		if(battle_config.error_log)
@@ -3203,7 +3286,8 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	    sd->status.inventory[n].amount < amount ||
 	    sd->trade_partner != 0 || sd->vender_id != 0 ||
 	    sd->status.inventory[n].amount <= 0 ||
-		itemdb_isdropable(sd->status.inventory[n].nameid) == 0) // Celest
+		itemdb_isdropable(sd->status.inventory[n].nameid) == 0 || // Celest
+		pc_candrop(sd,sd->status.inventory[n].nameid))
 		return 1;
 	map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, NULL, NULL, NULL, 0);
 	pc_delitem(sd, n, amount, 0);
@@ -3278,6 +3362,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	nameid = sd->status.inventory[n].nameid;
 
 	if(item == NULL)
+		return 0;
+	if(item->type != 0 && item->type != 2)
 		return 0;
 	if((nameid == 605) && map[sd->bl.m].flag.gvg)
 		return 0;
@@ -3432,6 +3518,10 @@ int pc_putitemtocart(struct map_session_data *sd,int idx,int amount) {
 	nullpo_retr(0, sd);
 	nullpo_retr(0, item_data = &sd->status.inventory[idx]);
 
+	if(itemdb_isdropable(sd->status.inventory[idx].nameid) == 0)
+		return 1;
+	if(pc_candrop(sd,sd->status.inventory[idx].nameid)==1)
+		return 1;
 	if (item_data->nameid==0 || item_data->amount<amount || sd->vender_id)
 		return 1;
 	if (pc_cart_additem(sd,item_data,amount) == 0)
@@ -3836,6 +3926,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 					intif_save_petdata(sd->status.account_id,&sd->pet);
 				chrif_save(sd);
 				storage_storage_save(sd);
+				storage_delete(sd->status.account_id);
 				chrif_changemapserver(sd, mapname, x, y, ip, port);
 				return 0;
 			}
@@ -4174,6 +4265,8 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 			i = 1;
 		sd->walktimer=add_timer(tick+i,pc_walk,id,sd->walkpath.path_pos);
 	}
+	if(battle_config.disp_hpmeter)
+		clif_hpmeter(sd);
 
 	return 0;
 }
@@ -5498,6 +5591,18 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	clif_updatestatus(sd,SP_HP);
 	pc_calcstatus(sd,0);
 
+	if(battle_config.bone_drop==2
+		|| (battle_config.bone_drop==1 && map[sd->bl.m].flag.pvp)){	// ドクロドロップ
+		struct item item_tmp;
+		memset(&item_tmp,0,sizeof(item_tmp));
+		item_tmp.nameid=7005;
+		item_tmp.identify=1;
+		item_tmp.card[0]=0x00fe;
+		item_tmp.card[1]=0;
+		*((unsigned long *)(&item_tmp.card[2]))=sd->char_id;	/* キャラID */
+		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
+	}
+
 	// activate Steel body if a super novice dies at 99+% exp [celest]
 	if (s_class.job == 23) {
 		if ((i=pc_nextbaseexp(sd))<=0)
@@ -6283,6 +6388,18 @@ int pc_setriding(struct map_session_data *sd)
 			sd->status.class=sd->view_class=4022;
 	}
 
+	return 0;
+}
+
+/*==========================================
+ * アイテムドロップ可不可判定
+ *------------------------------------------
+ */
+int pc_candrop(struct map_session_data *sd,int item_id)
+{
+	int level;
+	if((level=pc_isGM(sd))>0 && level < battle_config.gm_can_drop_lv) // search only once [Celest]
+		return 1;
 	return 0;
 }
 

@@ -40,6 +40,9 @@ static int itemdb_read_sqldb(void);
 static int itemdb_read_randomitem();
 static int itemdb_read_itemavail(void);
 static int itemdb_read_itemnametable(void);
+static int itemdb_read_itemslottable(void);
+static int itemdb_read_itemslotcounttable(void);
+static int itemdb_read_cardillustnametable(void);
 static int itemdb_read_noequip(void);
 static int itemdb_read_norefine(void);
 void itemdb_reload(void);
@@ -99,14 +102,15 @@ int itemdb_searchrandomid(int flags)
 	struct {
 		int nameid,count;
 		struct random_item_data *list;
-	} data[] ={
-		{ 0,0,NULL },
-		{ blue_box_default	,blue_box_count		,blue_box	 },
-		{ violet_box_default,violet_box_count	,violet_box	 },
-		{ card_album_default,card_album_count	,card_album	 },
-		{ gift_box_default	,gift_box_count		,gift_box	 },
-		{ scroll_default	,scroll_count		,scroll		 },
-	};
+	} data[6];
+
+	// for BCC32 compile error
+	data[0].nameid = 0;						data[0].count = 0; 					data[0].list = NULL;
+	data[1].nameid = blue_box_default;		data[1].count = blue_box_count;		data[1].list = blue_box;
+	data[2].nameid = violet_box_default;	data[2].count = violet_box_count;	data[2].list = violet_box;
+	data[3].nameid = card_album_default;	data[3].count = card_album_count;	data[3].list = card_album;
+	data[4].nameid = gift_box_default;		data[4].count = gift_box_count;		data[4].list = gift_box;
+	data[5].nameid = scroll_default;		data[5].count = scroll_count;		data[5].list = scroll;
 
 	if(flags>=1 && flags<=5){
 		nameid=data[flags].nameid;
@@ -239,67 +243,40 @@ int itemdb_isdropable(int nameid)
 	return 1;
 }
 
-//
-// 初期化
-//
-/*==========================================
- *
- *------------------------------------------
- */
-static int itemdb_read_itemslottable(void)
-{
-	char *buf,*p;
-	int s;
-
-	buf=grfio_read("data\\itemslottable.txt");
-	if(buf==NULL)
-		return -1;
-	s=grfio_size("data\\itemslottable.txt");
-	buf[s]=0;
-	for(p=buf;p-buf<s;){
-		int nameid,equip;
-		sscanf(p,"%d#%d#",&nameid,&equip);
-		itemdb_search(nameid)->equip=equip;
-		p=strchr(p,10);
-		if(!p) break;
-		p++;
-		p=strchr(p,10);
-		if(!p) break;
-		p++;
-	}
-	free(buf);
-
-	return 0;
-}
-
-#ifndef TXT_ONLY
 /*====================================
  * Removed item_value_db, don't re-add
  *------------------------------------
  */
 static void itemdb_read(void)
 {
-	itemdb_read_itemslottable();
-
-	if (db_use_sqldbs)
-	{
-		itemdb_read_sqldb();
-    }
-    else
-    {
+	#ifndef TXT_ONLY
+		if (db_use_sqldbs)
+		{
+			itemdb_read_sqldb();
+		}
+		else
+		{
+			itemdb_readdb();
+		}
+	/* not TXT_ONLY */
+	#else
 		itemdb_readdb();
-    }
+	#endif /* TXT_ONLY */
 
 	itemdb_read_randomitem();
 	itemdb_read_itemavail();
 	itemdb_read_noequip();
 	itemdb_read_norefine();
-
-	if (!battle_config.item_name_override_grffile)
+	if (battle_config.cardillust_read_grffile)
+		itemdb_read_cardillustnametable();
+	if (battle_config.item_equip_override_grffile)
+		itemdb_read_itemslottable();
+	if (battle_config.item_slots_override_grffile)
+		itemdb_read_itemslotcounttable();
+	if (battle_config.item_name_override_grffile)
 		itemdb_read_itemnametable();
 }
 
-#endif /* not TXT_ONLY */
 /*==========================================
  * アイテムデータベースの読み込み
  *------------------------------------------
@@ -559,7 +536,7 @@ static int itemdb_read_itemnametable(void)
 
 	return 0;
 }
-#ifdef TXT_ONLY
+
 /*==========================================
  * カードイラストのリソース名前テーブルを読み込む
  *------------------------------------------
@@ -595,7 +572,74 @@ static int itemdb_read_cardillustnametable(void)
 
 	return 0;
 }
-#endif /* TXT_ONLY */
+
+//
+// 初期化
+//
+/*==========================================
+ *
+ *------------------------------------------
+ */
+static int itemdb_read_itemslottable(void)
+{
+	char *buf,*p;
+	int s;
+
+	buf=grfio_read("data\\itemslottable.txt");
+	if(buf==NULL)
+		return -1;
+	s=grfio_size("data\\itemslottable.txt");
+	buf[s]=0;
+	for(p=buf;p-buf<s;){
+		int nameid,equip;
+		sscanf(p,"%d#%d#",&nameid,&equip);
+		itemdb_search(nameid)->equip=equip;
+		p=strchr(p,10);
+		if(!p) break;
+		p++;
+		p=strchr(p,10);
+		if(!p) break;
+		p++;
+	}
+	free(buf);
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\itemslottable.txt");
+	ShowStatus(tmp_output);
+
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+static int itemdb_read_itemslotcounttable(void)
+{
+	char *buf,*p;
+	int s;
+
+	buf=grfio_read("data\\itemslotcounttable.txt");
+	if(buf==NULL)
+		return -1;
+	s=grfio_size("data\\itemslotcounttable.txt");
+	buf[s]=0;
+	for(p=buf;p-buf<s;){
+		int nameid,slot;
+		sscanf(p,"%d#%d#",&nameid,&slot);
+		itemdb_search(nameid)->slot=slot;
+		p=strchr(p,10);
+		if(!p) break;
+		p++;
+		p=strchr(p,10);
+		if(!p) break;
+		p++;
+	}
+	free(buf);
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\itemslotcounttable.txt");
+	ShowStatus(tmp_output);
+
+	return 0;
+}
+
 /*==========================================
  * 装備制限ファイル読み出し
  *------------------------------------------
@@ -650,8 +694,18 @@ static int itemdb_read_norefine(void)
 	struct item_data *id;
 	// To-do: let it read from a text file later
 	int cant_refine[] = {
-		0, 1243, 1530, 2110, 2112, 2264, 2298, 2352, 2410, 2413,
-		2414, 2509, 2510, 5008, 5046, 5049, 5050, 5053, 5055, 5098
+		1243, 1530, 2110, 2112, 2201, 2202, 2203, 2204, 2205, 2210,
+		2212, 2218, 2219, 2237, 2238, 2239, 2240, 2241, 2242, 2243,
+		2250, 2253, 2260, 2262, 2263, 2264, 2265, 2266, 2267, 2268,
+		2269, 2270, 2271, 2276, 2278, 2279, 2281, 2282, 2286, 2288,
+		2289, 2290, 2291, 2292, 2293, 2295, 2296, 2297, 2298, 2352,
+		2410, 2413, 2414, 2509, 2510, 2601, 2602, 2603, 2604, 2605,
+		2607, 2608, 2609, 2610, 2611, 2612, 2613, 2614, 2615, 2616,
+		2617, 2618, 2619, 2620, 2621, 2622, 2623, 2624, 2625, 2626,
+		2627, 2628, 2629, 2630, 2631, 2634, 2635, 2636, 2637, 2638,
+		2639, 2640, 5004, 5005, 5006, 5008, 5014, 5015, 5037, 5039,
+		5040, 5043, 5046, 5049, 5050, 5051, 5053, 5054, 5055, 5058,
+		5068, 5074, 5085, 5086, 5087, 5088, 5089, 5090, 5096, 5098, 0
 	};
 
 	for (i=0; i < (int)(sizeof(cant_refine) / sizeof(cant_refine[0])); i++) {
@@ -885,24 +939,6 @@ void itemdebugtxt()
 	fclose(dfp);
 }
 */
-#ifdef TXT_ONLY
-/*====================================
- * Removed item_value_db, don't re-add
- *------------------------------------
- */
-static void itemdb_read(void)
-{
-	itemdb_read_itemslottable();
-	itemdb_readdb();
-	itemdb_read_randomitem();
-	itemdb_read_itemavail();
-	itemdb_read_noequip();
-	itemdb_read_norefine();
-	itemdb_read_cardillustnametable();
-	if (!battle_config.item_name_override_grffile)
-		itemdb_read_itemnametable();
-}
-#endif /* TXT_ONLY */
 /*==========================================
  *
  *------------------------------------------

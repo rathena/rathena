@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/21
+        * Added the new Quivers, updated Horse Crest [celest]
 12/20
         * removed extra {},,,,,,, from each tailing [Lupus]
         * Corrected job requirements for some garments [celest]

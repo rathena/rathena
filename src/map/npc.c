@@ -2303,7 +2303,8 @@ int do_init_npc(void)
 	char c = '-';
 
 	// indoorrswtable.txt and etcinfo.txt [Celest]
-	npc_read_indoors();
+	if (battle_config.indoors_override_grffile)
+		npc_read_indoors();
 	//npc_read_weather();
 
 	ev_db=strdb_init(24);

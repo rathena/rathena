@@ -163,6 +163,7 @@ struct map_session_data {
 	struct mmo_charstatus status;
 	struct item_data *inventory_data[MAX_INVENTORY];
 	short equip_index[11];
+	unsigned short unbreakable_equip;
 	int weight,max_weight;
 	int cart_weight,cart_max_weight,cart_num,cart_max_num;
 	char mapname[24];
@@ -237,6 +238,7 @@ struct map_session_data {
 	int watk_,watk_2,atkmods_[3],addele_[10],addrace_[12],addsize_[3];	//二刀流のために追加
 	int atk_ele_,star_,overrefine_;				//二刀流のために追加
 	int base_atk,atk_rate;
+	int weapon_atk[16],weapon_atk_rate[16];
 	int arrow_atk,arrow_ele,arrow_cri,arrow_hit,arrow_range;
 	int arrow_addele[10],arrow_addrace[12],arrow_addsize[3],arrow_addeff[10],arrow_addeff2[10];
 	int nhealhp,nhealsp,nshealhp,nshealsp,nsshealhp,nsshealsp;
@@ -487,6 +489,14 @@ enum { NONE_ATTACKABLE,ATTACKABLE };
 
 enum { ATK_LUCKY=1,ATK_FLEE,ATK_DEF};	// 囲まれペナルティ計算用
 
+// 装備コード
+enum {
+	EQP_WEAPON		= 0x0002,		// 右手
+	EQP_ARMOR		= 0x0010,		// 体
+	EQP_SHIELD		= 0x0020,		// 左手
+	EQP_HELM		= 0x0100,		// 頭上段
+};
+
 struct map_data {
 	char name[24];
 	unsigned char *gat;	// NULLなら下のmap_data_other_serverとして扱う
@@ -592,10 +602,12 @@ enum {
 	SP_MAGIC_DAMAGE_RETURN,SP_RANDOM_ATTACK_INCREASE,SP_ALL_STATS,SP_AGI_VIT,SP_AGI_DEX_STR,SP_PERFECT_HIDE, // 1071-1076
 	SP_DISGUISE,SP_CLASSCHANGE, // 1077-1078
 	SP_HP_DRAIN_VALUE,SP_SP_DRAIN_VALUE, // 1079-1080
+	SP_WEAPON_ATK,SP_WEAPON_ATK_RATE, // 1081-1082
 
 	SP_RESTART_FULL_RECORVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
-	SP_NO_CASTCANCEL2,SP_INFINITE_ENDURE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
-	SP_LONG_ATK_RATE // 2011 - celest
+	SP_NO_CASTCANCEL2,SP_INFINITE_ENDURE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, 
+	SP_UNBREAKABLE_SHIELD, // 2006-2011
+	SP_LONG_ATK_RATE // 2012 - celest
 };
 
 enum {

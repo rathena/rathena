@@ -162,7 +162,8 @@ int pc_divorce(struct map_session_data *sd);
 struct map_session_data *pc_get_partner(struct map_session_data *sd);
 int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);
-
+int pc_break_equip(struct map_session_data *sd, unsigned short where);
+int pc_candrop(struct map_session_data *sd,int item_id);
 
 struct pc_base_job{
 	int job; //E‹ÆA‚½‚¾‚µ“]¶E‚â—{qE‚Ìê‡‚ÍŒ³‚ÌE‹Æ‚ğ•Ô‚·(”pƒvƒŠ¨ƒvƒŠ)
