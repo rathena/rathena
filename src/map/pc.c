@@ -183,7 +183,9 @@ static int pc_spiritball_timer(int tid,unsigned int tick,int id,int data) {
 	}
 
 	sd->spiritball--;
-	memcpy( &sd->spirit_timer[0], &sd->spirit_timer[1], sizeof(sd->spirit_timer[0]) * sd->spiritball );
+	// I leave this here as bad example [Shinomori]
+	//memcpy( &sd->spirit_timer[0], &sd->spirit_timer[1], sizeof(sd->spirit_timer[0]) * sd->spiritball );
+	memmove( sd->spirit_timer+0, sd->spirit_timer+1, (sd->spiritball)*sizeof(int) );
 	sd->spirit_timer[sd->spiritball]=-1;
 
 	clif_spiritball(sd);
@@ -202,7 +204,10 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max) {
 	if(sd->spiritball >= max) {
 		if(sd->spirit_timer[0] != -1)
 			delete_timer(sd->spirit_timer[0],pc_spiritball_timer);
-		memcpy( &sd->spirit_timer[0], &sd->spirit_timer[1], sizeof(sd->spirit_timer[0]) * (sd->spiritball - 1));
+		// I leave this here as bad example [Shinomori]
+		//memcpy( &sd->spirit_timer[0], &sd->spirit_timer[1], sizeof(sd->spirit_timer[0]) * (sd->spiritball - 1));
+		memmove( sd->spirit_timer+0, sd->spirit_timer+1, (sd->spiritball - 1)*sizeof(int) );
+		//sd->spirit_timer[sd->spiritball-1] = -1; // intentionally, but will be overwritten
 	} else
 		sd->spiritball++;
 
@@ -3007,14 +3012,14 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 	sd->inchealspiritsptick = 0;
 
 	sd->walkpath.path_half ^= 1;
-	if(sd->walkpath.path_half==0){ // ƒ}ƒX–Ú’†S‚Ö“r…
+	if(sd->walkpath.path_half==0){ // ƒ}ƒX–Ú’†S‚Ö“r
 		sd->walkpath.path_pos++;
 
 		if(sd->state.change_walk_target){
 			pc_walktoxy_sub(sd);
 			return 0;
 		}
-	} else { // ƒ}ƒX–Ú‹«ŠE‚Ö“r…
+	} else { // ƒ}ƒX–Ú‹«ŠE‚Ö“r
 		if(sd->walkpath.path[sd->walkpath.path_pos]>=8)
 			return 1;
 
