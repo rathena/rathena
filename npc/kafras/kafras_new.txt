@@ -50,3 +50,4 @@ niflheim.gat,190,180,5	script	Kafra	791,{
 	M_Save:
 		savepoint "niflheim.gat",192,182;
 		callfunc "F_KafEnd",1,1;
+}
