@@ -1,5 +1,6 @@
 Date	Added
 12/26
+        * Added a proper #define for MAX_VENDING (SVN: 802) [MouseJstr]
 	* Fixed crash associated with vending more then 12 items
 	  which walked on memory.. corrupting the pet data 	
 	  structure (SVN: 801) [MouseJstr]
