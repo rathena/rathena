@@ -1,6 +1,10 @@
 Date	Added
 
 03/13
+        * Added PvP/GvG check for Tiger Knuckle fist [celest]
+        * Fixed Pressure reducing the target's SP twice, thanks to deepin [celest]
+        * Fixed SQL logging not checking if its supposed to use SQL or TXT logs, thanks
+          to Alex14 [celest]
         * Fixed 23 new cards (some effects chances were divided by 100, some cards had no bonuses
 	  due to misplaced arguments, usage BONUS instead of BONUS2, etc) [Lupus]
 

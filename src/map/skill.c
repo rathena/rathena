@@ -2194,7 +2194,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 			sp = tsd->status.max_sp * 10 * skilllv / 100;
 			if (sp > tsd->status.sp) sp = tsd->status.sp;
 			tsd->status.sp -= sp;
-			pc_heal(tsd,0,-sp);
+			clif_updatestatus(tsd,SP_SP);
 		}
 		break;
 	case NPC_DARKBREATH:
@@ -2269,11 +2269,20 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		}
 		break;
 	case MO_COMBOFINISH:	/* –Ò—´Œ */
-	case CH_TIGERFIST:		/* •šŒÕŒ */
 	case CH_CHAINCRUSH:		/* ˜A’Œ•ö? */
 	case CH_PALMSTRIKE:		/* –ÒŒÕd”hR */
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
+	
+	case CH_TIGERFIST:		/* •šŒÕŒ */
+		if (bl->type == BL_PC && !(map[bl->m].flag.gvg || map[bl->m].flag.pvp)) {
+			map_freeblock_unlock();
+			return 1;
+		}
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+
+
 	case MO_EXTREMITYFIST:	/* ˆ¢C—…”e–PŒ */
 		{
 			struct status_change *sc_data = status_get_sc_data(src);
