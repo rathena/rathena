@@ -10,8 +10,11 @@
 
 
 04/05
+	* Some items fixes [DracoRPG]
+	  - added missing "Neko Mimi" hat #5099, thanks to Neko2
+	  - fixed Wedding Rings item types, thank to nimrod
 	* Removed Evil Wings drops from Mini Demon,Deviruchi,Archangeling and put it into Deviling [Lupus]
-	  according to kRO "evil wings" are dropped by Deviling only
+	  according to kRO "Evil Wings" are dropped by Deviling only
 	  Deviling items drop chances aren't correct yet
 	* Fixed skill tree entries for Vulcan Arrow, and Throw Arrow for gypsies,
 	  thanks to Hekate
