@@ -8,6 +8,7 @@
 11/26	* Fixed Abrakadabra (3 Yellow Gemstones -> Yellow Gemstones 2).
 	  And of course it would still use 1 Yellow even if you have Mistress Card, etc. [Lupus]
 	  TODO: Abrakadabra should also summon Monsters and even MVP by chance...
+	* Lowered max level of Oridecon Research skill from 10 to 5 [Lupus]
 
 11/25   * Added element effects to const.txt. [celest]
           Usage example: sc_start SC_Frost,30000,0;
