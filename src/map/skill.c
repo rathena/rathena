@@ -917,7 +917,8 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
 
-	if(skilllv <= 0) return 0;
+	//if(skilllv <= 0) return 0;
+	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
 	if(src->type==BL_PC){
 		nullpo_retr(0, sd=(struct map_session_data *)src);

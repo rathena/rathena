@@ -601,9 +601,9 @@ static int mob_attack(struct mob_data *md,unsigned int tick,int data)
 		return 0;
 	}
 	if(tsd && !(mode&0x20) && (tsd->sc_data[SC_TRICKDEAD].timer != -1 ||
-		 ((pc_ishiding(tsd) || tsd->state.gangsterparadise) && race!=4 && race!=6) ) ) {
+		 ((pc_ishiding(tsd) || tsd->state.gangsterparadise) && !((race == 4 || race == 6) && !tsd->perfect_hiding) ) ) ) {
 		md->target_id=0;
-		md->state.targettype = NONE_ATTACKABLE;
+		md->state.targettype = NONE_ATTACKABLE;		
 		return 0;
 	}
 
@@ -1240,12 +1240,12 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 		{
 			if(mode&0x20 ||
 				(tsd->sc_data[SC_TRICKDEAD].timer == -1 &&
-				((!pc_ishiding(tsd) && !tsd->state.gangsterparadise) || race==4 || race==6))){	// –WŠQ‚ª‚È‚¢‚©”»’è
+				((!pc_ishiding(tsd) && !tsd->state.gangsterparadise) || ((race == 4 || race == 6) && !tsd->perfect_hiding) ))){	// –WŠQ‚ª‚È‚¢‚©”»’è
 				if( mob_can_reach(smd,bl,12) && 		// “’B‰Â”\«”»’è
 					rand()%1000<1000/(++(*pcc)) ){	// ”ÍˆÍ“àPC‚Å“™Šm—¦‚É‚·‚é
 					smd->target_id=tsd->bl.id;
 					smd->state.targettype = ATTACKABLE;
-					smd->min_chase=13;
+					smd->min_chase=13;					
 				}
 			}
 		}
@@ -1428,7 +1428,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			race=mob_db[md->class].race;
 			if(mode&0x20 ||
 				(sd->sc_data[SC_TRICKDEAD].timer == -1 &&
-				( (!pc_ishiding(sd) && !sd->state.gangsterparadise) || race==4 || race==6) ) ){	// –WŠQ‚ª‚È‚¢‚©”»’è
+				( (!pc_ishiding(sd) && !sd->state.gangsterparadise) || ((race == 4 || race == 6) && !sd->perfect_hiding) ) ) ){	// –WŠQ‚ª‚È‚¢‚©”»’è
 
 				md->target_id=sd->bl.id;
 				md->state.targettype = ATTACKABLE;
@@ -1641,7 +1641,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			if(tsd || tmd) {
 				if(tbl->m != md->bl.m || tbl->prev == NULL || (dist=distance(md->bl.x,md->bl.y,tbl->x,tbl->y))>=md->min_chase)
 					mob_unlocktarget(md,tick);	// •Êƒ}ƒbƒv‚©A‹ŠEŠO
-				else if( tsd && !(mode&0x20) && (tsd->sc_data[SC_TRICKDEAD].timer != -1 || ((pc_ishiding(tsd) || tsd->state.gangsterparadise) && race!=4 && race!=6)) )
+				else if( tsd && !(mode&0x20) && (tsd->sc_data[SC_TRICKDEAD].timer != -1 || ((pc_ishiding(tsd) || tsd->state.gangsterparadise) && !((race == 4 || race == 6) && !tsd->perfect_hiding) )) )
 					mob_unlocktarget(md,tick);	// ƒXƒLƒ‹‚È‚Ç‚É‚æ‚éô“G–WŠQ
 				else if(!battle_check_range(&md->bl,tbl,mob_db[md->class].range)){
 					// UŒ‚”ÍˆÍŠO‚È‚Ì‚ÅˆÚ“®

@@ -4,6 +4,8 @@ Date	Added
 	* Fixed 2 bugs in DELITEM script command. [Lupus]
 	  - added deleting priority: If you have some items with the same ID and want to delete some of them, then
 	    at first it'll delete common items then, if necessary, delete the rest items but upgraded/named/with cards. [Lupus]
+        * Added checks for Perfect hiding [celest]
+        * Modified level 0 skill check to allow auto blitz beat and steal. [celest]
 
 11/15
 	* Added a Database Changelog.txt File, use it for any changes inside the db folder. [shadowlady]
