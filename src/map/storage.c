@@ -134,6 +134,8 @@ int storage_additem(struct map_session_data *sd,struct storage *stor,struct item
 	nullpo_retr(1, stor);
 	nullpo_retr(1, item_data);
 
+	stor->dirty = 1;
+
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
 	nullpo_retr(1, data = itemdb_search(item_data->nameid));
@@ -172,7 +174,6 @@ int storage_additem(struct map_session_data *sd,struct storage *stor,struct item
 			return 1;
 	}
 
-	stor->dirty = 1;
 	return 0;
 }
 /*==========================================

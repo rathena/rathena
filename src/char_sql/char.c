@@ -329,6 +329,12 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	cp = numdb_search(char_db_,char_id);
 
+	if (cp == NULL) {
+		cp = (struct mmo_charstatus *) malloc(sizeof(struct mmo_charstatus));
+    		memset(cp, 0, sizeof(struct mmo_charstatus));
+		numdb_insert(char_db_, char_id,cp);
+	}
+
 	save_flag = p->char_id;
 	printf("(\033[1;32m%d\033[0m) %s \trequest save char data - ",char_id,char_dat[0].name);
 
