@@ -135,16 +135,34 @@ int npc_event_dequeue(struct map_session_data *sd)
 
 	sd->npc_id=0;
 	if (sd->eventqueue[0][0]) {	// キューのイベント処理
-		char *name=(char *)aCallocA(50,sizeof(char));
-		int i;
+		size_t ev;
 
-		memcpy(name,sd->eventqueue[0],50);
-		for(i=MAX_EVENTQUEUE-2;i>=0;i--)
-			memcpy(sd->eventqueue[i],sd->eventqueue[i+1],50);
-		add_timer(gettick()+100,npc_event_timer,sd->bl.id,(int)name);
+		// find an empty place in eventtimer list
+		for(ev=0;ev<MAX_EVENTTIMER;ev++)
+			if( sd->eventtimer[ev]==-1 )
+				break;
+		if(ev<MAX_EVENTTIMER)
+		{	// generate and insert the timer
+			int i;
+			// copy the first event name
+			char *name=(char *)aMalloc(50*sizeof(char));
+			memcpy(name,sd->eventqueue[0],50);
+			// shift queued events down by one
+			for(i=1;i<MAX_EVENTQUEUE;i++)
+				memcpy(sd->eventqueue[i-1],sd->eventqueue[i],50);
+			// clear the last event
+			sd->eventqueue[MAX_EVENTQUEUE-1][0]=0; 
+			// add the timer
+			sd->eventtimer[ev]=add_timer(gettick()+100,pc_eventtimer,sd->bl.id,(int)name);//!!todo!!
+
+		}else
+			ShowMessage("npc_event_dequeue: event timer is full !\n");
 	}
 	return 0;
 }
+
+
+
 
 int npc_delete(struct npc_data *nd)
 {

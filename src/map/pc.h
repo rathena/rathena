@@ -199,6 +199,8 @@ int pc_delinvincibletimer(struct map_session_data *sd);
 int pc_addspiritball(struct map_session_data *sd,int,int);
 int pc_delspiritball(struct map_session_data *sd,int,int);
 
+int pc_eventtimer(int tid,unsigned long tick,int id,int data); // for npc_dequeue 
+
 int do_init_pc(void);
 
 enum {ADDITEM_EXIST,ADDITEM_NEW,ADDITEM_OVERAMOUNT};
