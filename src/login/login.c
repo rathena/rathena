@@ -3828,12 +3828,16 @@ void do_final(void) {
 
 	if(auth_dat) free(auth_dat);
 	if(gm_account_db) free(gm_account_db);
+	if(access_ladmin_allow) free(access_ladmin_allow);
+	if(access_allow) free(access_allow);
+	if(access_deny) free(access_deny);
 	for (i = 0; i < MAX_SERVERS; i++) {
 		if ((fd = server_fd[i]) >= 0) {
 			server_fd[i] = -1;
 			memset(&server[i], 0, sizeof(struct mmo_char_server));
 			close(fd);
 			delete_session(fd);
+			if(session[fd]->session_data) free(session[fd]->session_data);
 		}
 	}
 	close(login_fd);
