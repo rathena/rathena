@@ -1577,6 +1577,7 @@ int login_config_read(const char *cfgName){
 	int i;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
+	struct hostent *h = NULL;
 
 	fp=fopen(cfgName,"r");
 

@@ -3364,6 +3364,7 @@ int login_lan_config_read(const char *lancfgName) {
 int login_config_read(const char *cfgName) {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
+	struct hostent *h = NULL;
 
 	if ((fp = fopen(cfgName, "r")) == NULL) {
 		printf("Configuration file (%s) not found.\n", cfgName);
