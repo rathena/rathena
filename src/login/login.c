@@ -2576,7 +2576,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 8 || RFIFOREST(fd) < (8 + RFIFOL(fd,4)))
 				return 0;
 			WFIFOW(fd,0) = 0x794f;
-			WFIFOW(fd,2) = 0xFFFFFFFF; // WTF???
+			WFIFOW(fd,2) = 0xFFFF; // WTF???
 			if (RFIFOL(fd,4) < 1) {
 				login_log("'ladmin': Receiving a message for broadcast, but message is void (ip: %s)" RETCODE,
 				          ip);
