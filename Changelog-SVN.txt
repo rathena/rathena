@@ -1,7 +1,7 @@
 Date	Added
 
-
 03/23
+	* Fixed some compile errors, sorry xP [celest]
 	* Corrected potion creation success chances, thanks to Avaj and DracoRPG
 	* Removed some unused potion creation code, thanks to DracoRPG
 	* Updated Joint Beat's effect, thanks to DracoRPG
@@ -29,7 +29,7 @@ Date	Added
 
 03/21
         * Moved /tool and /webserver to under /src and added 'make tools' and 'make
-          web-server' [celest]
+          webserver' [celest]
         * Removed ladmin compiling from 'make sql' [celest]
 
 03/20

@@ -8753,7 +8753,7 @@ int skill_produce_mix( struct map_session_data *sd,
 		if(skill_produce_db[idx].req_skill==AM_PHARMACY) {
 			make_per = pc_checkskill(sd,AM_LEARNINGPOTION)*100
 				+ pc_checkskill(sd,AM_PHARMACY)*300 + sd->status.job_level*20
-				+ sd->status.paramc[4]*10+sd->status.paramc[5]*10;
+				+ sd->paramc[4]*10+sd->paramc[5]*10;
 
 			if(nameid >= 501 && nameid <= 505) // Normal potions
 				make_per += 2000 + pc_checkskill(sd,AM_POTIONPITCHER)*100;

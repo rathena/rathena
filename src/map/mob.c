@@ -4350,21 +4350,6 @@ static int mob_readdb_race(void)
 	return 0;
 }
 
-void mob_reload(void)
-{
-#ifndef TXT_ONLY
-    if(db_use_sqldbs)
-        mob_read_sqldb();
-    else
-#endif /* TXT_ONLY */
-	mob_readdb();
-
-	mob_readdb_mobavail();
-	mob_read_randommonster();
-	mob_readskilldb();
-	mob_readdb_race();
-}
-
 #ifndef TXT_ONLY
 /*==========================================
  * SQL reading
@@ -4526,8 +4511,23 @@ static int mob_read_sqldb(void)
 	}
 	return 0;
 }
-
 #endif /* not TXT_ONLY */
+
+void mob_reload(void)
+{
+#ifndef TXT_ONLY
+    if(db_use_sqldbs)
+        mob_read_sqldb();
+    else
+#endif /* TXT_ONLY */
+	mob_readdb();
+
+	mob_readdb_mobavail();
+	mob_read_randommonster();
+	mob_readskilldb();
+	mob_readdb_race();
+}
+
 /*==========================================
  * Circumference initialization of mob
  *------------------------------------------
