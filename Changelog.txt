@@ -1,6 +1,17 @@
 Date	Added
 
 01/31
+        * Added Karma and Manner to const.txt
+          -- To change a player's alignment to more Good/Evil in scripting for example,
+             use:
+                 set Karma, Karma + <number here>;
+
+             In older exe's (11-08 or older) you can actually check your karma in the
+             character alignment screen (alt-A)
+             The rest is up to your scripting creativity ^^
+
+        * Delete players' ID from id_db when kicking everyone from the map-server due
+          to char disconnection -- Fixes an odd crash with lazy mob AI [celest]
 	* Added at(@) command @autoloot, which turns autoloot on or off for the
 	  player who uses it [Upa-Kun]
 01/29

@@ -4748,6 +4748,12 @@ int pc_readparam(struct map_session_data *sd,int type)
 	case SP_LUK:
 		val= sd->status.luk;
 		break;
+	case SP_KARMA:	// celest
+		val = sd->status.karma;
+		break;
+	case SP_MANNER:
+		val = sd->status.manner;
+		break;
 	case SP_FAME:
 		val= sd->fame;
 		break;
@@ -4876,6 +4882,12 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_LUK:
 		sd->status.luk = val;
+		break;
+	case SP_KARMA:
+		sd->status.karma = val;
+		break;
+	case SP_MANNER:
+		sd->status.manner = val;
 		break;
 	case SP_FAME:
 		sd->fame = val;
