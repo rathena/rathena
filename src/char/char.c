@@ -1345,8 +1345,9 @@ void create_online_files(void) {
 			if (players == 0) {
 				fprintf(fp2, "    <p>No user is online.</p>\n");
 				fprintf(fp, "No user is online.\n");
-			// no display if only 1 player
 			} else if (players == 1) {
+				fprintf(fp2, "    <p>%d user is online.</p>\n", players);
+				fprintf(fp, "%d user is online.\n", players);
 			} else {
 				fprintf(fp2, "    <p>%d users are online.</p>\n", players);
 				fprintf(fp, "%d users are online.\n", players);

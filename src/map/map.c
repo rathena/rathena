@@ -1446,10 +1446,16 @@ int map_quit(struct map_session_data *sd) {
 
 	if(!sd->state.waitingdisconnect) {
 		if (sd->state.event_disconnect) {
-			struct npc_data *npc;
-			if ((npc = npc_name2id(script_config.logout_event_name))) {
-				run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLogoutNPC
-				sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.logout_event_name);
+			if (script_config.event_script_type == 0) {
+				struct npc_data *npc;
+				if ((npc = npc_name2id(script_config.logout_event_name))) {
+					run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLogoutNPC
+					sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.logout_event_name);
+					ShowStatus(tmp_output);
+				}
+			} else {
+				sprintf (tmp_output, "%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
+					npc_event_doall_id(script_config.logout_event_name, sd->bl.id), script_config.logout_event_name);
 				ShowStatus(tmp_output);
 			}
 		}
@@ -1601,6 +1607,18 @@ char * map_charid2nick(int id) {
 	return p->nick;
 }
 
+struct map_session_data * map_charid2sd(int id) {
+	int i;
+	struct map_session_data *sd;
+
+	if (id <= 0) return 0;
+
+	for(i = 0; i < fd_max; i++)
+		if (session[i] && (sd = (struct map_session_data*)session[i]->session_data) && sd->status.char_id == id)
+			return sd;
+
+	return NULL;
+}
 
 /*==========================================
  * Search session data from a nick name

@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.3
+//= 1.31
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //=   arg(3): y1 coordinate for warp to treasure room
 //=   arg(4): guild script suffix for kafra, gaurdian scripts etc.
 //===== Additional Comments: =================================
+//= v1.31: Added support for Emsolute Develop [celest]
 //= v1.2: All Guild manager scripts use this function. Optimized
 //= Comerce and Defense investment. [kobra_k88]
 //= v1.2a Function now returns to script that called it.
@@ -116,6 +117,8 @@ L_Start:
 			set Zeny,Zeny-@eco_invest;
 			SetCastleData getarg(1)+".gat",4,@TriggerE+1;
 			SetCastleData getarg(1)+".gat",2,@Economy+1;
+			// if we learnt Emsolute Develop there's a chance to get +1 investment again
+			if (getgdskilllv(@GID,10014) > 0) && rand(100)>50) set @Economy, @Economy + 1;
 			mes "[ "+getarg(0)+" ]";
 			mes "You have invested successfully.";
 			return 0;
@@ -172,6 +175,8 @@ L_Start:
 			SetCastleData getarg(1)+".gat",3,@Defence+1;
 			// set new hp values for guardians
 			set @Defence, @Defence + 1;
+			// if we learnt Emsolute Develop there's a chance to get +1 investment again
+			if (getgdskilllv(@GID,10014) > 0) && rand(100)>50) set @Defence, @Defence + 1;
 			set @AGuardian, 28634 + (@Defence*2000);
 			set @KGuardian, 30214 + (@Defence*2000);
 			set @SGuardian, 15670 + (@Defence*2000);

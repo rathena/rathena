@@ -765,6 +765,7 @@ void map_addchariddb(int charid,char *name);
 void map_delchariddb(int charid);
 int map_reqchariddb(struct map_session_data * sd,int charid);
 char * map_charid2nick(int);
+struct map_session_data * map_charid2sd(int);
 
 struct map_session_data * map_id2sd(int);
 struct block_list * map_id2bl(int);

@@ -1693,9 +1693,9 @@ static int skill_check_unit_range2_sub( struct block_list *bl,va_list ap )
 	return 0;
 }
 
-int skill_check_unit_range2(int m,int x,int y,int skillid, int skilllv)
+int skill_check_unit_range2(struct block_list *bl, int m,int x,int y,int skillid, int skilllv)
 {
-	int c = 0, range;
+	int c = 0, range, type;
 	
 	switch (skillid) {	// to be expanded later
 	case WZ_ICEWALL:
@@ -1714,8 +1714,15 @@ int skill_check_unit_range2(int m,int x,int y,int skillid, int skilllv)
 		break;
 	}
 
-	map_foreachinarea(skill_check_unit_range2_sub,m,
-			x-range,y-range,x+range,y+range,0,&c,skillid);
+	// if the caster is a monster/NPC, only check for players
+	// otherwise just check everything
+	if (bl->type == BL_PC)
+		type = 0;
+	else type = BL_PC;
+
+	map_foreachinarea(skill_check_unit_range2_sub, m,
+		x - range, y - range, x + range, y + range,
+		type, &c, skillid);
 
 	return c;
 }
@@ -6000,7 +6007,7 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 				break;*/
 	if (battle_config.pc_skill_nofootset &&
 			skill_get_unit_flag(sd->skillid)&UF_NOFOOTSET &&
-			skill_check_unit_range2(sd->bl.m,sd->skillx,sd->skilly,sd->skillid,sd->skilllv)) {
+			skill_check_unit_range2(&sd->bl,sd->bl.m,sd->skillx,sd->skilly,sd->skillid,sd->skilllv)) {
 		clif_skill_fail(sd,sd->skillid,0,0);
 		sd->canact_tick = tick;
 		sd->canmove_tick = tick;
@@ -7022,7 +7029,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 				clif_skill_fail(sd,sd->skillid,0,0);
 				return 0;
 			}
-			if (skill_check_unit_range2(sd->bl.m,sd->bl.x,sd->bl.y,sd->skillid,sd->skilllv)) {
+			if (skill_check_unit_range2(&sd->bl,sd->bl.m,sd->bl.x,sd->bl.y,sd->skillid,sd->skilllv)) {
 				clif_skill_fail(sd,sd->skillid,0,0);
 				return 0;
 			}

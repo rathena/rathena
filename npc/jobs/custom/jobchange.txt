@@ -22,7 +22,7 @@ mes "Sup? I'm the insanely cool and uber cute jobchanger thingy for eAthena! Fir
 next;
 menu "First Class",LFirstClass,"Second Class (2-1)",LSecondClass,"Alternate Second Class (2-2)",LSecondClass2,"Novice High",LNovice2,"Advance First Class",Llevelcheck,"Advance Second Class",Llevelcheck,"Super Novice",LSuperNovice;
 LNovice2:
-	if ((readparam(11) >= 99)  && (readparam(55) >= 50) || (readparam(19) > 20)) goto Lchange;
+	if ((readparam(11) >= 99) && (readparam(55) >= 50) || ((readparam(19) > 20) && (readparam(19) != 23)) goto Lchange;
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Ummmm, excuse me... o.O...";
 	mes "Hey! You don't MEET the class requirements...";

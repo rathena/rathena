@@ -35,6 +35,10 @@ Other Ppl
 Date		Added
 ======
 
+03/24
+	* Added support for Emsolute Develop in the guild manager script [celest]
+	* Fixed the custom jobchanger allowing Super Novices to change to high novice,
+	  thanks to CavaCava
 03/23
 	* WOE 1.3 Now you can't install Guardians during WOE [Lupus]
 	* Set only Storage/Cancel to Kafra in Niflheim. [Lupus]

@@ -1,5 +1,22 @@
 Date	Added
 
+03/24
+	* Added 'map_charid2id' [celest]
+	* Changed monster damage logging to save char ID's for the most time -- also
+	  fixes an exp bug, thanks to Super Novice / Ezhik [celest]
+	* Implemented 'event_script_type' -- no changes at '0', at '1' script events
+	  will work according to Qamera's original mod
+	  For more info please refer to his thread:
+	  http://www.eathena.deltaanime.net/board/index.php?showtopic=13305&hl=
+	* Set Emsolute Develop as a learnable skill [celest]
+	* Updated 'require_glory_guild' [celest]
+	  - the skill is only acquirable if this is set to 'yes', otherwise it will not
+	    appear in the guild skill tree. Default is changed to 'no'.
+	* Allow monsters to cast skills near themselves even when monster_nofootset
+	  is set to 'yes' -- they're only not allowed to cast near players [celest]
+	* Print number of online users in online.txt/.html even if there's only 1 user
+	  online [celest]
+
 03/23
         * Adjusted my trade fix [1280: MouseJstr]
         * Fixed possible memory corruption in storage if number of guilds

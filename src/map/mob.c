@@ -2248,7 +2248,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	if(!(type&2)) {
 		if(sd!=NULL){
 			for(i=0,minpos=0,mindmg=0x7fffffff;i<DAMAGELOG_SIZE;i++){
-				if(md->dmglog[i].id==sd->bl.id)
+				//if(md->dmglog[i].id==sd->bl.id)
+				if(md->dmglog[i].id==sd->status.char_id)
 					break;
 				if(md->dmglog[i].id==0){
 					minpos=i;
@@ -2262,7 +2263,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			if(i<DAMAGELOG_SIZE)
 				md->dmglog[i].dmg+=damage;
 			else {
-				md->dmglog[minpos].id=sd->bl.id;
+				//md->dmglog[minpos].id=sd->bl.id;
+				md->dmglog[minpos].id=sd->status.char_id;
 				md->dmglog[minpos].dmg=damage;
 			}
 
@@ -2273,7 +2275,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			struct pet_data *pd = (struct pet_data *)src;
 			nullpo_retr(0, pd);
 			for(i=0,minpos=0,mindmg=0x7fffffff;i<DAMAGELOG_SIZE;i++){
-				if(md->dmglog[i].id==pd->msd->bl.id)
+				//if(md->dmglog[i].id==pd->msd->bl.id)
+				if(md->dmglog[i].id==pd->msd->status.char_id)
 					break;
 				if(md->dmglog[i].id==0){
 					minpos=i;
@@ -2287,7 +2290,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			if(i<DAMAGELOG_SIZE)
 				md->dmglog[i].dmg+=(damage*battle_config.pet_attack_exp_rate)/100;
 			else {
-				md->dmglog[minpos].id=pd->msd->bl.id;
+				//md->dmglog[minpos].id=pd->msd->bl.id;
+				md->dmglog[minpos].id=pd->msd->status.char_id;
 				md->dmglog[minpos].dmg=(damage*battle_config.pet_attack_exp_rate)/100;
 			}
 		}
@@ -2454,7 +2458,12 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	for(i=0,count=0,mvp_damage=0;i<DAMAGELOG_SIZE;i++){
 		if(md->dmglog[i].id==0)
 			continue;
-		tmpsd[i] = map_id2sd(md->dmglog[i].id);
+		// Will this slow things down too much?
+		tmpsd[i] = map_charid2sd(md->dmglog[i].id);
+		// try finding again
+		if(tmpsd[i] == NULL)
+			tmpsd[i] = map_id2sd(md->dmglog[i].id);
+		// if we still can't find the player
 		if(tmpsd[i] == NULL)
 			continue;
 		count++;
@@ -3289,13 +3298,13 @@ int mobskill_castend_pos( int tid, unsigned int tick, int id,int data )
 	}
 
 	if (!battle_config.monster_skill_reiteration &&
-			skill_get_unit_flag(md->skillid)&UF_NOREITERATION &&
-			skill_check_unit_range(md->bl.m,md->skillx,md->skilly,md->skillid,md->skilllv))
+			skill_get_unit_flag (md->skillid) & UF_NOREITERATION &&
+			skill_check_unit_range (md->bl.m, md->skillx, md->skilly, md->skillid, md->skilllv))
 		return 0;
 
 	if(battle_config.monster_skill_nofootset &&
-			skill_get_unit_flag(md->skillid)&UF_NOFOOTSET &&
-			skill_check_unit_range2(md->bl.m,md->skillx,md->skilly,md->skillid,md->skilllv))
+			skill_get_unit_flag (md->skillid) & UF_NOFOOTSET &&
+			skill_check_unit_range2(&md->bl, md->bl.m, md->skillx, md->skilly, md->skillid, md->skilllv))
 		return 0;
 
 

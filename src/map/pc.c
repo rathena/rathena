@@ -840,7 +840,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 		sprintf(tmp_output,"Character '"CL_WHITE"%s"CL_RESET"' logged in. (Account ID: '"CL_WHITE"%d"CL_RESET"').\n", sd->status.name, sd->status.account_id);
 	ShowInfo(tmp_output);
 
-	{
+	if (script_config.event_script_type == 0) {
 		struct npc_data *npc;
 		//printf("pc: OnPCLogin event done. (%d events)\n", npc_event_doall("OnPCLogin") );
 		if ((npc = npc_name2id(script_config.login_event_name))) {
@@ -848,7 +848,12 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 			sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.login_event_name);
 			ShowStatus(tmp_output);
 		}
+	} else {
+		sprintf (tmp_output, "%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
+			npc_event_doall_id(script_config.login_event_name, sd->bl.id), script_config.login_event_name);
+		ShowStatus(tmp_output);
 	}
+
 	// Send friends list
 	clif_friends_list_send(sd);
 
@@ -4645,10 +4650,16 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 			if (sd->state.event_death)
 				pc_setglobalreg(sd,"killerrid",(ssd->status.account_id));
 			if (ssd->state.event_kill) {
-				struct npc_data *npc;
-				if ((npc = npc_name2id(script_config.kill_event_name))) {
-					run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCKillNPC
-					sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.kill_event_name);
+				if (script_config.event_script_type == 0) {
+					struct npc_data *npc;
+					if ((npc = npc_name2id(script_config.kill_event_name))) {
+						run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCKillNPC
+						sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.kill_event_name);
+						ShowStatus(tmp_output);
+					}
+				} else {
+					sprintf (tmp_output, "%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
+						npc_event_doall_id(script_config.kill_event_name, sd->bl.id), script_config.kill_event_name);
 					ShowStatus(tmp_output);
 				}
 			}
@@ -4656,10 +4667,16 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	}
 
 	if (sd->state.event_death) {
-		struct npc_data *npc;
-		if ((npc = npc_name2id(script_config.die_event_name))) {
-			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCDeathNPC
-			sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.die_event_name);
+		if (script_config.event_script_type == 0) {
+			struct npc_data *npc;
+			if ((npc = npc_name2id(script_config.die_event_name))) {
+				run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCDeathNPC
+				sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.die_event_name);
+				ShowStatus(tmp_output);
+			}
+		} else {
+			sprintf (tmp_output, "%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
+				npc_event_doall_id(script_config.die_event_name, sd->bl.id), script_config.die_event_name);
 			ShowStatus(tmp_output);
 		}
 	}

@@ -6704,14 +6704,18 @@ int clif_guild_skillinfo(struct map_session_data *sd)
 					case GD_KAFRACONTACT:
 					case GD_GUARDIANRESEARCH:
 					case GD_GUARDUP:
+					case GD_DEVELOPMENT:
 						up = guild_checkskill(g,GD_APPROVAL) > 0;
 						break;
 					case GD_LEADERSHIP:
 						//Glory skill requirements -- Pretty sure correct [Sara]
-						up = guild_checkskill(g,GD_GLORYGUILD) > 0;
+						up = (battle_config.require_glory_guild) ?
+							guild_checkskill(g,GD_GLORYGUILD) > 0 : 1;
+						// what skill does it need now that glory guild was removed? [celest]
 						break;
 					case GD_GLORYWOUNDS:
-						up = guild_checkskill(g,GD_GLORYGUILD) > 0;
+						up = (battle_config.require_glory_guild) ?
+							guild_checkskill(g,GD_GLORYGUILD) > 0 : 1;
 						break;
 					case GD_SOULCOLD:
 						up = guild_checkskill(g,GD_GLORYWOUNDS) > 0;
@@ -6734,8 +6738,8 @@ int clif_guild_skillinfo(struct map_session_data *sd)
 						up = guild_checkskill(g,GD_GUARDIANRESEARCH) > 0 &&
 							guild_checkskill(g,GD_REGENERATION) > 0;
 						break;
-					case GD_DEVELOPMENT:
-						up = 0;
+					case GD_GLORYGUILD:
+						up = (battle_config.require_glory_guild) ? 1 : 0;
 						break;
 					default:
 						up = 1;

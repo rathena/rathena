@@ -4415,7 +4415,7 @@ void battle_set_defaults() {
 	battle_config.area_size = 14;
 	battle_config.exp_calc_type = 1;
 	battle_config.min_skill_delay_limit = 100;
-	battle_config.require_glory_guild = 1;
+	battle_config.require_glory_guild = 0;
 
 //SQL-only options start
 #ifndef TXT_ONLY

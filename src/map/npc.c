@@ -311,62 +311,6 @@ int npc_event_export(void *key,void *data,va_list ap)
 	return 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*==========================================
  * 全てのNPCのOn*イベント実行
  *------------------------------------------
@@ -376,16 +320,17 @@ int npc_event_doall_sub(void *key,void *data,va_list ap)
 	char *p=(char *)key;
 	struct event_data *ev;
 	int *c;
+	int rid;
 	const char *name;
 
 	nullpo_retr(0, ev=(struct event_data *)data);
 	nullpo_retr(0, ap);
 	nullpo_retr(0, c=va_arg(ap,int *));
-
 	name=va_arg(ap,const char *);
+	rid=va_arg(ap, int);
 
 	if( (p=strchr(p,':')) && p && strcmpi(name,p)==0 ){
-		run_script(ev->nd->u.scr.script,ev->pos,0,ev->nd->bl.id);
+		run_script(ev->nd->u.scr.script,ev->pos,rid,ev->nd->bl.id);
 		(*c)++;
 	}
 
@@ -397,7 +342,16 @@ int npc_event_doall(const char *name)
 	char buf[64]="::";
 
 	strncpy(buf+2,name,62);
-	strdb_foreach(ev_db,npc_event_doall_sub,&c,buf);
+	strdb_foreach(ev_db,npc_event_doall_sub,&c,buf,0);
+	return c;
+}
+int npc_event_doall_id(const char *name, int rid)
+{
+	int c=0;
+	char buf[64]="::";
+
+	strncpy(buf+2,name,62);
+	strdb_foreach(ev_db,npc_event_doall_sub,&c,buf,rid);
 	return c;
 }
 
