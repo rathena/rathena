@@ -3545,6 +3545,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
  */
 //fixed by Valaris
 void clif_getareachar_npc(struct map_session_data* sd,struct npc_data* nd)
+{
 	int len;
 	nullpo_retv(sd);
 	nullpo_retv(nd);
