@@ -229,7 +229,7 @@ Lcreator:
 	jobchange 42;
 	close;
 //High Wizard & Professor
-Lmagehigh:
+Lhighmage:
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Nice, now you can finally wield the power of ^2200DFM^7600F9A^AF00FBN^DA00DFA^000000, your spiritual energy!!!";
 	cutin "kafra_01",255;
