@@ -1,6 +1,9 @@
 
 #include <stdio.h>
+#include <errno.h>
+#include <string.h>
 #include "lock.h"
+#include "showmsg.h"
 
 // 書き込みファイルの保護処理
 // （書き込みが終わるまで、旧ファイルを保管しておく）
@@ -28,7 +31,10 @@ int lock_fclose(FILE *fp,const char* filename,int *info) {
 		sprintf(newfile,"%s_%04d.tmp",filename,*info);
 		remove(filename);
 		// このタイミングで落ちると最悪。
-		rename(newfile,filename);
+		if (rename(newfile,filename) != 0) {
+			sprintf(tmp_output,"%s - '"CL_WHITE"%s"CL_RESET"'\n", strerror(errno), newfile);
+			ShowError(tmp_output);
+		}
 		return ret;
 	} else {
 		return 1;
