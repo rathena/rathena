@@ -2,6 +2,7 @@
 Date	Added
 
 03/31
+        * Fixed memory corruption associated with afm files [SVN 1363: MouseJstr]
         * More pedantic g++ fixes so that it builds without any and
           all warnings [SVN 1362: MouseJstr]
         * Removed some #include's causing warnings on some platforms

@@ -2395,7 +2395,7 @@ static int map_readafm(int m,char *fn) {
 	size_t size;
 
 	char afm_line[65535];
-	int afm_size[1];
+	int afm_size[2];
 	FILE *afm_file;
 	char *str;
 
