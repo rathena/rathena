@@ -1271,7 +1271,7 @@
 4238,Owl_Baron_Card,Owl Baron Card,6,20,0,10,,,,,,,,,,,{},{}
 4239,Iron_Fist_Card,Iron Fist Card,6,20,0,10,,,,,,,,,,,{},{}
 4240,Arclouze_Card,Arclouze Card,6,20,0,10,,,,,,,,,,,{},{}
-4241,Arcangeling_Card,Arcangeling Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bMaxHP,300; if(readparam(bLuk)>77) bonus bHPrecovRate,100; if(readparam(bLuk)>77) bonus bSPrecovRate,100; }
+4241,Archangeling_Card,Archangeling Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bMaxHP,300; if(readparam(bLuk)>77) bonus bHPrecovRate,100; if(readparam(bLuk)>77) bonus bSPrecovRate,100; }
 4242,Apocalipse_Card,Apocalipse Card,6,20,0,10,,,,,,,,,,,{},{}
 4243,Antonio_Card,Antonio Card,6,20,0,10,,,,,,,,,,,{},{}
 4244,Alarm_Card,Alarm Card,6,20,0,10,,,,,,,,,,,{},{}

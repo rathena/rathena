@@ -231,7 +231,7 @@
 //4238,Owl Baron Card,10000
 //4239,Iron Fist Card,10000
 //4240,Arclouze Card,10000
-4241,Arcangeling Card,10000
+4241,Archangeling Card,10000
 //4242,Apocalipse Card,10000
 //4243,Antonio Card,10000
 //4244,Alarm Card,10000
@@ -278,7 +278,7 @@
 //4287,Kapha Card,10000
 //4288,Carat Card,10000
 //4289,Caterpillar Card,10000
-4290,Cat o' Nine Tail Card,10000
+4290,Cat'o'Nine Tail Card,10000
 4291,Kobold Leader Card,10000
 4292,Kobold Archer Card,10000
 4293,Cookie Card,10000
