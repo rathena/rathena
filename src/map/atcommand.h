@@ -54,6 +54,8 @@ enum AtCommandType {
 	AtCommand_Go,
 	AtCommand_Spawn,
 	AtCommand_Monster,
+	AtCommand_MonsterSmall,
+	AtCommand_MonsterBig,
 	AtCommand_KillMonster,
 	AtCommand_KillMonster2,
 	AtCommand_Refine,

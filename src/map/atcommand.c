@@ -80,6 +80,8 @@ ATCOMMAND_FUNC(gvgon);
 ATCOMMAND_FUNC(model);
 ATCOMMAND_FUNC(go);
 ATCOMMAND_FUNC(monster);
+ATCOMMAND_FUNC(monstersmall);
+ATCOMMAND_FUNC(monsterbig);
 ATCOMMAND_FUNC(spawn);
 ATCOMMAND_FUNC(killmonster);
 ATCOMMAND_FUNC(killmonster2);
@@ -289,6 +291,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Spawn,				"@spawn",			50, atcommand_spawn },
 //	{ AtCommand_Spawn,				"@summon",			50, atcommand_spawn },
 	{ AtCommand_Monster,			"@monster2",		50, atcommand_monster },
+	{ AtCommand_MonsterSmall,               "@monstersmall",         50, atcommand_monstersmall },
+	{ AtCommand_MonsterBig,               "@monsterbig",         50, atcommand_monsterbig },
 	{ AtCommand_KillMonster,		"@killmonster",		60, atcommand_killmonster },
 	{ AtCommand_KillMonster2,		"@killmonster2",	40, atcommand_killmonster2 },
 	{ AtCommand_Refine,				"@refine",			60, atcommand_refine },
@@ -2946,6 +2950,160 @@ int atcommand_spawn(
 		clif_displaymessage(fd, msg_table[40]); // Invalid monster ID or name.
 		return -1;
 	}
+
+	return 0;
+}
+// small monster spawning [Valaris]
+int atcommand_monstersmall(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message) {
+	char name[100] = "";
+	char monster[100] = "";
+	int mob_id = 0;
+	int number = 0;
+	int x = 0;
+	int y = 0;
+	int count;
+	int i;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, "Give a monster name/id please.");
+		return 0;
+	}
+
+	if (sscanf(message, "\"%[^\"]\" %99s %d %d %d", name, monster, &number, &x, &y) < 2 &&
+	    sscanf(message, "%99s \"%[^\"]\" %d %d %d", monster, name, &number, &x, &y) < 2 &&
+	    sscanf(message, "%99s %d %99s %d %d", monster, &number, name, &x, &y) < 1) {
+		clif_displaymessage(fd, "Give a monster name/id please.");
+		return 0;
+	}
+
+	// If monster identifier/name argument is a name
+	if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
+		mob_id = atoi(monster);
+
+	if (mob_id == 0) {
+		clif_displaymessage(fd, "Monster name hasn't been found.");
+		return 0;
+	}
+
+	if (mob_id == 1288) {
+		clif_displaymessage(fd, "Cannot spawn emperium.");
+		return 0;
+	}
+
+	if (mob_id > 2000) {
+		clif_displaymessage(fd, "Invalid monster ID"); // Invalid Monster ID.
+		return 0;
+	}
+
+	if (number <= 0)
+		number = 1;
+
+	if (strlen(name) < 1)
+		strcpy(name, "--ja--");
+
+	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
+	if (battle_config.atc_spawn_quantity_limit >= 1 && number > battle_config.atc_spawn_quantity_limit)
+		number = battle_config.atc_spawn_quantity_limit;
+
+	count = 0;
+	for (i = 0; i < number; i++) {
+		int mx, my;
+		if (x <= 0)
+			mx = sd->bl.x + (rand() % 11 - 5);
+		else
+			mx = x;
+		if (y <= 0)
+			my = sd->bl.y + (rand() % 11 - 5);
+		else
+			my = y;
+		count += (mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id+2000, 1, "") != 0) ? 1 : 0;
+	}
+
+	if (count != 0)
+		clif_displaymessage(fd, msg_table[39]); // Monster Summoned!!
+	else
+		clif_displaymessage(fd, msg_table[40]); // Invalid Monster ID.
+
+	return 0;
+}
+// big monster spawning [Valaris]
+int atcommand_monsterbig(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message) {
+	char name[100] = "";
+	char monster[100] = "";
+	int mob_id = 0;
+	int number = 0;
+	int x = 0;
+	int y = 0;
+	int count;
+	int i;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, "Give a monster name/id please.");
+		return 0;
+	}
+
+	if (sscanf(message, "\"%[^\"]\" %99s %d %d %d", name, monster, &number, &x, &y) < 2 &&
+	    sscanf(message, "%99s \"%[^\"]\" %d %d %d", monster, name, &number, &x, &y) < 2 &&
+	    sscanf(message, "%99s %d %99s %d %d", monster, &number, name, &x, &y) < 1) {
+		clif_displaymessage(fd, "Give a monster name/id please.");
+		return 0;
+	}
+
+	// If monster identifier/name argument is a name
+	if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
+		mob_id = atoi(monster);
+
+	if (mob_id == 0) {
+		clif_displaymessage(fd, "Monster name hasn't been found.");
+		return 0;
+	}
+
+	if (mob_id == 1288) {
+		clif_displaymessage(fd, "Cannot spawn emperium.");
+		return 0;
+	}
+
+	if (mob_id > 2000) {
+		clif_displaymessage(fd, "Invalid monster ID"); // Invalid Monster ID.
+		return 0;
+	}
+
+	if (number <= 0)
+		number = 1;
+
+	if (strlen(name) < 1)
+		strcpy(name, "--ja--");
+
+	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
+	if (battle_config.atc_spawn_quantity_limit >= 1 && number > battle_config.atc_spawn_quantity_limit)
+		number = battle_config.atc_spawn_quantity_limit;
+
+	count = 0;
+	for (i = 0; i < number; i++) {
+		int mx, my;
+		if (x <= 0)
+			mx = sd->bl.x + (rand() % 11 - 5);
+		else
+			mx = x;
+		if (y <= 0)
+			my = sd->bl.y + (rand() % 11 - 5);
+		else
+			my = y;
+		count += (mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id+4000, 1, "") != 0) ? 1 : 0;
+	}
+
+	if (count != 0)
+		clif_displaymessage(fd, msg_table[39]); // Monster Summoned!!
+	else
+		clif_displaymessage(fd, msg_table[40]); // Invalid Monster ID.
 
 	return 0;
 }

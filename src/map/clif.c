@@ -1363,6 +1363,11 @@ int clif_spawnmob(struct mob_data *md)
 	if (mob_get_equip(md->class) > 0) // mob equipment [Valaris]
 		clif_mob_equip(md,mob_get_equip(md->class));
 
+	if(md->size==2) // tiny/big mobs [Valaris]
+		clif_specialeffect(&md->bl,423,0);
+	else if(md->size==1)
+		clif_specialeffect(&md->bl,421,0);
+
 	return 0;
 }
 
@@ -3570,6 +3575,11 @@ int clif_movemob(struct mob_data *md)
 	if(mob_get_equip(md->class) > 0) // mob equipment [Valaris]
 		clif_mob_equip(md,mob_get_equip(md->class));
 
+	if(md->size==2) // tiny/big mobs [Valaris]
+		clif_specialeffect(&md->bl,423,0);
+	else if(md->size==1)
+		clif_specialeffect(&md->bl,421,0);
+
 	return 0;
 }
 
@@ -3720,6 +3730,13 @@ void clif_getareachar_mob(struct map_session_data* sd,struct mob_data* md)
 
 	if(mob_get_equip(md->class) > 0) // mob equipment [Valaris]
 		clif_mob_equip(md,mob_get_equip(md->class));
+
+	if(md->size==2) // tiny/big mobs [Valaris]
+		clif_specialeffect(&md->bl,423,0);
+	else if(md->size==1)
+		clif_specialeffect(&md->bl,421,0);
+	
+
 }
 
 /*==========================================
