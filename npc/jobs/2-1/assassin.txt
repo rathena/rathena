@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena RC4
 //===== Description: ========================================= 
@@ -12,12 +12,13 @@
 //===== Additional Comments: ================================= 
 //= v1.0 Used some dialogue from the aegis Assassin script translated By: Pgro Team (OwNaGe)
 //= Also converted the booby traps from the aegis script.[kobra_k88]
-//=v1.1 Made adjustments to ontouch npcs to work with the new "ontouch" functionality.
+//= v1.1 Made adjustments to ontouch npcs to work with the new "ontouch" functionality.
 //= Fixed some duplicate npc names.  Added missing waitingroom triggers.
 //= Fixed warp in "TimerSin", was supposed to be an areawarp.
 //= For some reason sometimes the "Nameless One" would have message windows
 //= without controls.  Changed the doevent that triggers him to an
 //= addtimer and that seemed make the prob. go away[kobra_k88]
+//= 1.2 Fixed WRONG skillpoint check! [Lupus]
 //============================================================ 
 
 
@@ -147,7 +148,7 @@ L_Failed2:
 	end;
 
 L_Change:
-	if (skpoint > 0) goto L_SkPoints;
+	if (skillpoint > 0) goto L_SkPoints;
 	if(countitem(1008) < 1) goto L_NoNecklace;
 	mes "Ah... the Necklace of Oblivion..... that means that the Guild Master has accepted you into the Assassin clan.";
 	next;

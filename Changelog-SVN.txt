@@ -1,5 +1,16 @@
 
 Date	Added
+
+04/03
+	* Finished Valkyrie. Now it correctly works. Valhallana reborns players to High Novices. [Lupus]
+	  (added missed kRO condition: to reborn, player shouldn't have money nor items(equipment) )
+	  Then Valhallana warps just reborn players to the home city of their main job.
+	  On Job Level 10 of High Novice they can get 1st Advanced Job from correct 1-1 job quests NPC.
+	  They'll get there all learnt skill quests.
+	  On reaching 45 Job Level they may visit Valkyrie and get 2-2-1 / 2-1-1 class (3rd Job)
+	  from a correct NPC.
+	* Fixed SKILL POINTS exploit in Assassin Job Quest [Lupus]
+
 04/02
 	* Added bonuses bUnstripable[Weapon|Armor|Helm|Shield]
 	  instead of just bUnstripable that worked only for armor [DracoRPG]

@@ -3,19 +3,21 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.0 
+//= 1.1
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena 1.0 +
 //===== Description: ========================================= 
 //= <Description> 
 //===== Additional Comments: ================================= 
 //= Fully working
+//= v1.1 Added instant job change for High Novice [Lupus]
 //============================================================ 
 
 
 // == Guild NPCs == 
 // -- Mahnsoo --
 alberta_in.gat,53,43,6	script	Chief Mahnsoo	86,{
+	callfunc "F_ToHigh",29,"Merchant High",34,"White Smith",153,154,155,0,"Chief Mahnsoo";
 	mes "[Chief Mahnsoo]";
 	if(Class==Job_Novice && job_merchant_q3 == 4) goto L_MakeMerc;
 	if(Class==Job_Novice && job_merchant_q3 == 3) goto L_GiveRecpt;

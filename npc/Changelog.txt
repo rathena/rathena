@@ -10,10 +10,6 @@ Darkchild
 Lupus
 	* looking for exploits, optimization, bugs hunt
 	* Adding new cards, checking/adding mobs/items
-Aria
-	* Devnpc
-	* Correct typos/mistakes
-	* Update stuff
 kobra_k88
 	* Optimize WoE
 Shinigami
@@ -36,6 +32,16 @@ Other Ppl
 
 Date		Added
 ======
+
+04/03
+	* Finished Valkyrie. Now it correctly works. Valhallana reborns players to High Novices. [Lupus]
+	  (added missed kRO condition: to reborn, player shouldn't have money nor items(equipment) )
+	  Then Valhallana warps just reborn players to the home city of their main job.
+	  On Job Level 10 of High Novice they can get 1st Advanced Job from correct 1-1 job quests NPC.
+	  They'll get there all learnt skill quests.
+	  On reaching 45 Job Level they may visit Valkyrie and get 2-2-1 / 2-1-1 class (3rd Job)
+	  from a correct NPC.
+	* Fixed SKILL POINTS exploit in Assassin Job Quest [Lupus]
 
 03/31
 	* Payon : new NPCs scripted as far as I could and old ones updated (all from iRO) [DracoRPG]

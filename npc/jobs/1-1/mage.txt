@@ -3,19 +3,21 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena 1.0 +
 //===== Description: ========================================= 
 //= <Description> 
 //===== Additional Comments: ================================= 
 //= Fully working
 //= 1.1 Fixed input ingridients bug [Lupus]
+//= v1.2 Added instant job change for High Novice [Lupus]
 //============================================================ 
 
 
 // -- Expert Mage -- 
 geffen_in.gat,164,124,4	script	Expert Mage	123,{
+	callfunc "F_ToHigh",26,"High Mage",33,"High Wizard",157,0,0,0,"Expert Mage";
 	if(Class==Job_Novice && job_magician_q >= 1) goto L_BeMage;
 
 	mes "[Expert Mage]";
