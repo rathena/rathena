@@ -7744,6 +7744,10 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	case WE_MALE:
 	case WE_FEMALE:
 		{
+			if(skill_num == WE_MALE && sd->status.hp <= ((15*sd->status.max_hp)/100))	// Requires more than 15% of Max HP for WE_MALE
+				return 0;
+			if(skill_num == WE_FEMALE && sd->status.sp <= ((15*sd->status.max_sp)/100))	// Requires more than 15% of Max SP for WE_FEMALE
+				return 0;
 			struct map_session_data *p_sd = NULL;
 			if((p_sd = pc_get_partner(sd)) == NULL)
 				return 0;

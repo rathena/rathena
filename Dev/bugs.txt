@@ -47,12 +47,13 @@ Progress:	75%
 Problem:        Chars with ' in their name.. is legal.. and messes up sql
 Assigned:       N/A
 Progress:       0%
+Information:	http://dev.mysql.com/doc/mysql/en/mysql_real_escape_string.html
 
 	DB server Error - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'n' Sniff')' at line 1    Scratch 'n' Sniff
 
 Problem:	PETS can attack Guardians, so players go to enemy castles before WOE and KILL all their Guards with PETS... LoL!
-Assigned:       N/A
-Progress:       0%
+Assigned:       Codemaster
+Progress:       100% - Make sure you test this for me :)
 
 Problem:	mob_aval clone bug crashes client
 Assigned:       N/A
@@ -167,8 +168,8 @@ Progress:	0%
 
 IMPORTANT: = NEVERENDING SOURCE OF SP/HP
 Problem:	Wedding skills fully donate SP/HP even when the donor has 1 SP / HP (when player has low amount of Max SP/HP)
-Assigned:	N/A
-Progress:	0%
+Assigned:	Codemaster
+Progress:	100% - should be fixed. Checks for 15% of HP for males, 15% of SP for females.
 
 Problem:	Exp Party Sharing Bug.
 		i.g. Hunter + Merchant are in the same party. M. is sitting. Hunter is killing some Seals. M. doesn't get EXP.

@@ -1,4 +1,8 @@
 Date	Added
+01/09
+	* Don't allow Pets to attack Guardians outside of WoE [Codemaster] [SVN 940]
+	* Require 15% of HP or more for WE_MALE skill [Codemaster] [SVN 940]
+	* Require 15% of SP or more for WE_FEMALE skill [Codemaster] [SVN 940]
 01/07
         * Upon changing to high novice 100 stat points should be given, not 88 [celest]
         * Give high novices First Aid and Trick Dead upon job changing [celest]
