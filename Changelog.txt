@@ -1,7 +1,7 @@
 Date	Added
 11/15
 	* Added small and big mob sprite spawning. [Valaris]
-	  -Added @monstersmall and @monstersmall commands.
+	  -Added @monstersmall and @monsterbig commands.
 	  -For using in scripts, use id +2000 for small and id +4000 for big.
 	   (Example: 3002 for small poring and 5002 for big poring)
 	* Added mobs_level_up option. [Valaris]
