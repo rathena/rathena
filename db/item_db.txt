@@ -134,7 +134,7 @@
 661,Sky_Apron,Soft Apron,2,20,0,50,,,,,10477567,2,,,,,{ pet 1275; },{}
 
 // Newer Items
-662,Horse_Crest,Crest of the Horse,2,2,0,30,0,0,0,0,10477567,2,0,0,0,0,{ skilleffect 29,5; sc_start SC_SpeedUp0,240000,0; },{}
+662,Horse_Crest,Crest of the Horse,2,2,3000,30,0,0,0,0,10477567,2,0,0,0,0,{ skilleffect 29,5; sc_start SC_SpeedUp0,240000,0; },{}
 664,Gift_Box_,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 665,Gift_Box__,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 666,Gift_Box___,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
@@ -142,7 +142,7 @@
 668,Angpow,Angpow,0,1,0,2,,,,,10477567,2,,,,,{ set Zeny,Zeny+rand(100,10000); },{}
 669,Rice_Cake_Soup,Rice Cake Soup,2,20,0,100,,,,,,,,,,,{},{}
 670,Gold_Coin_Pouch,Gold Coin Pouch,2,20,0,400,,,,,,,,,,,{},{}
-671,Gold_Coin,Gold Coin,2,20,0,40,,,,,,,,,,,{},{}
+671,Gold_Coin,Gold Coin,2,20,0,40,,,,,10477567,2,,,,,{ set Zeny,Zeny+rand(100,1000); },{}
 672,Copper_Coin_Pouch,Copper Coin Pouch,2,20,0,400,,,,,,,,,,,{},{}
 673,Copper_Coin,Copper Coin,2,20,0,40,,,,,,,,,,,{},{}
 674,Mysterious_Ore_Coin,Mysterious Ore Coin,2,20,0,40,,,,,0,3,,,,,{},{}
@@ -159,21 +159,21 @@
 685,Ramadan,Ramadan,2,20,10,300,,,,,0,3,,,,,{},{}
 
 // Scrolls
-686,Earth_Spike_3,Earth Spike Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 90,3,"Earth Spike Level 3"; },{}
-687,Earth_Spike_5,Earth Spike Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 90,5,"Earth Spike Level 5"; },{}
-688,Cold_Bolt_3,Cold Bolt Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 14,3,"Cold Bolt Level 3"; },{}
-689,Cold_Bolt_5,Cold Bolt Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 14,5,"Cold Bolt Level 5"; },{}
-690,Fire_Bolt_3,Fire Bolt Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 19,3,"Fire Bolt Level 3"; },{}
-691,Fire_Bolt_5,Fire Bolt Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 19,5,"Fire bolt Level 5"; },{}
-692,Lightning_Bolt_3,Lightning Bolt Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 20,3,"Lightning Bolt Level 3"; },{}
-693,Lightning_Bolt_5,Lightning Bolt Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 20,5,"Lightning Bolt Level 5"; },{}
-694,Soul_Strike_3,Soul Strike Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 13,3,"Soul Strike Level 3"; },{}
-695,Soul_Strike_5,Soul Strike Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 13,5,"Soul Strike Level 5"; },{}
-696,Fire_Ball_1,Fire Ball Level 1,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 17,1,"Fire Ball Level 1"; },{}
-697,Fire_Ball_5,Fire Ball Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 17,5,"Fire Ball Level 5"; },{}
-698,Fire_Wall_1,Fire Wall Level 1,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 18,1,"Fire Wall Level 1"; },{}
-699,Fire_Wall_5,Fire Wall Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 18,5,"Fire Wall Level 5"; },{}
-700,Frost_Diver_1,Frost Diver Level 1,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 15,1,"Frost Diver Level 1"; },{}
+686,Earth_Spike_3,Earth Spike Level 3,2,650,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 90,3,"Earth Spike Level 3"; },{}
+687,Earth_Spike_5,Earth Spike Level 5,2,1300,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 90,5,"Earth Spike Level 5"; },{}
+688,Cold_Bolt_3,Cold Bolt Level 3,2,500,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 14,3,"Cold Bolt Level 3"; },{}
+689,Cold_Bolt_5,Cold Bolt Level 5,2,1000,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 14,5,"Cold Bolt Level 5"; },{}
+690,Fire_Bolt_3,Fire Bolt Level 3,2,500,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 19,3,"Fire Bolt Level 3"; },{}
+691,Fire_Bolt_5,Fire Bolt Level 5,2,1000,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 19,5,"Fire bolt Level 5"; },{}
+692,Lightning_Bolt_3,Lightning Bolt Level 3,2,500,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 20,3,"Lightning Bolt Level 3"; },{}
+693,Lightning_Bolt_5,Lightning Bolt Level 5,2,1000,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 20,5,"Lightning Bolt Level 5"; },{}
+694,Soul_Strike_3,Soul Strike Level 3,2,500,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 13,3,"Soul Strike Level 3"; },{}
+695,Soul_Strike_5,Soul Strike Level 5,2,1000,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 13,5,"Soul Strike Level 5"; },{}
+696,Fire_Ball_1,Fire Ball Level 1,2,500,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 17,1,"Fire Ball Level 1"; },{}
+697,Fire_Ball_5,Fire Ball Level 5,2,1000,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 17,5,"Fire Ball Level 5"; },{}
+698,Fire_Wall_1,Fire Wall Level 1,2,350,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 18,1,"Fire Wall Level 1"; },{}
+699,Fire_Wall_5,Fire Wall Level 5,2,700,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 18,5,"Fire Wall Level 5"; },{}
+700,Frost_Diver_1,Frost Diver Level 1,2,350,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 15,1,"Frost Diver Level 1"; },{}
 
 701,Ora_Ora,Ora Ora,3,55000,0,200,,,,,,,,,,,{},{}
 702,Animal_Gore,Animal Gore,3,2,0,100,,,,,,,,,,,{},{}
@@ -1719,10 +1719,10 @@
 11020,Louyang_History_Book,Louyang History Book,3,20,0,0,,,,,,,,,,,{},{}
 
 // More Scrolls
-12000,Frost_Diver_5,Frost Diver Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 15,5,"Frost Diver Level 5"; },{}
-12001,Heal_3,Heal Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,3,"Heal Level 3"; },{}
-12002,Heal_5,Heal Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,5,"Heal Level 5"; },{}
-12003,Teleport_1,Teleport Level 1,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 26,1,"Teleport Level 1"; },{}
+12000,Frost_Diver_5,Frost Diver Level 5,2,700,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 15,5,"Frost Diver Level 5"; },{}
+12001,Heal_3,Heal Level 3,2,1000,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,3,"Heal Level 3"; },{}
+12002,Heal_5,Heal Level 5,2,2000,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,5,"Heal Level 5"; },{}
+12003,Teleport_1,Teleport Level 1,2,100,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 26,1,"Teleport Level 1"; },{}
 
 // Arrow Quivers
 12004,Arrow_Quiver,Arrow Quiver,2,500,,250,,,,,10477567,2,,,,,{ getitem 1750,500; },{}

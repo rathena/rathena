@@ -1,7 +1,7 @@
 // Valkyrie Replacement after kRO.
 // The Jobquest from kRO on how to advance to a Reborn class.
 // Made by: Nana
-// 1.01 bugfixex by Lupus
+// 1.0.2 bugfixex by Lupus
 
 
 // -== Warp's needed! ==-
@@ -44,15 +44,15 @@ L_Start:
 	mes "[Book of Ymir]";
 	mes "And only after then, the decended ones will aprove you to the highest obedience.. Into the warmth of Valkyrie, you will be welcomed by the gods themself.";
 	next;
-	mes "[Book og Ymir]";
+	mes "[Book of Ymir]";
 	mes "*As you close the book a strange ray of light sourounds you and you suddently feel light. Everything around you fades away and all you can see left is white before you pass out.*";
 	warp "valkyrie",48,9;
-	set valkyrie_Q,0;
 	close;
 }
 
 // -== The Librarian that watches the "Book of Ymir" ==-
 yuno_in02.gat,91,176,5	script	Librarian	754,{
+	if (valkyrie_Q>0) goto L_DONE;
 	if(readparam(19) >= 7) goto L_Pay;
 	mes "[Librarian]";
 	mes "Have a look around, but dont touch the book. Only a few chosen one can read its wise words.";
@@ -87,6 +87,13 @@ accurate_z:
 	mes "You didnt bring me the accurate number of zeny i wanted. Bring me back only 1,285,000 zeny!";
 	mes "Not more, nor less.";
 	close;
+
+L_DONE:
+	mes "[Librarian]";
+	mes "Why? You have already paid me.";
+	mes "Now go and look for the Book of Ymir.";
+	close;
+
 }
 
 // -== The Heart of Ymir ==-

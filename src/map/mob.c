@@ -237,12 +237,13 @@ int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
 			x=rand()%(x1-x0+1)+x0;
 			y=rand()%(y1-y0+1)+y0;
 		} while (map_getcell(m,x,y,CELL_CHKNOPASS) && (++j)<max);
+		// freya }while( ( (c=map_getcell(m,x,y))==1 || c==5)&& (++j)<max );
 		if(j>=max){
-			if(lx>=0){	// ŒŸõ‚É¸”s‚µ‚½‚Ì‚ÅˆÈ‘O‚É•¦‚¢‚½êŠ‚ğg‚¤
+			if(lx>=0){	// Since reference went wrong, the place which boiled before is used.
 				x=lx;
 				y=ly;
 			}else
-				return 0;	// Å‰‚É•¦‚­êŠ‚ÌŒŸõ‚ğ¸”s‚µ‚½‚Ì‚Å‚â‚ß‚é
+				return 0;	// Since reference of the place which boils first went wrong, it stops.
 		}
 		if(x==0||y==0) printf("xory=0, x=%d,y=%d,x0=%d,y0=%d\n",x,y,x0,y0);
 		id=mob_once_spawn(sd,mapname,x,y,mobname,class_,1,event);
