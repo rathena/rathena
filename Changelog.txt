@@ -1,5 +1,6 @@
 Date	Added
 11/14
+	* Initialized password variable in login.c. [Valaris]
 	* Added zeny_from_mobs option. [Valaris]
 	* Corrected the file type attribute on most of the files in three which fixes the
 	  newline issues between linux and dos [MouseJstr]

@@ -3059,7 +3059,7 @@ int parse_login(int fd) {
 			} else {
 				struct login_session_data *ld = session[fd]->session_data;
 				if (RFIFOW(fd,2) == 0) {	// non encrypted password
-					unsigned char* password;
+					unsigned char* password="";
 					memcpy(password, RFIFOP(fd,4), 24);
 					password[24] = '\0';
 					remove_control_chars(password);
