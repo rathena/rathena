@@ -3119,3 +3119,290 @@
 2004-11-28 14:15:13.227: Request for connection (non encryption mode) of genosonic (ip: 127.0.0.1).
 2004-11-28 14:15:13.227: Authentification accepted (account: genosonic (id: 2000004), ip: 127.0.0.1)
 2004-11-28 14:15:14.248: Char-server 'eAthena': authentification of the account 2000004 accepted (ip: 127.0.0.1).
+
+2004-11-29 16:55:36.156: The login-server starting...
+2004-11-29 16:55:36.343: The configuration of the server is set:
+2004-11-29 16:55:36.343: - with a remote administration with the DEFAULT password.
+2004-11-29 16:55:36.343: - to accept any IP for remote administration
+2004-11-29 16:55:36.343: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-11-29 16:55:36.343: - to create GM with level '60' when @gm is used.
+2004-11-29 16:55:36.343: - to ALLOW new users (with _F/_M).
+2004-11-29 16:55:36.344: - with port: 6900.
+2004-11-29 16:55:36.344: - with the accounts file name: 'save/account.txt'.
+2004-11-29 16:55:36.344: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-11-29 16:55:36.344: - to check GM accounts file modifications every 15 seconds.
+2004-11-29 16:55:36.344: - to save password in plain text.
+2004-11-29 16:55:36.344: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-11-29 16:55:36.344: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-11-29 16:55:36.344: - to NOT display normal parse packets on console.
+2004-11-29 16:55:36.344: - to NOT display administration parse packets on console.
+2004-11-29 16:55:36.344: - to NOT display char-server parse packets on console.
+2004-11-29 16:55:36.344: - with no minimum level for connection.
+2004-11-29 16:55:36.345: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-11-29 16:55:36.345: - to create new accounts with an unlimited time.
+2004-11-29 16:55:36.345: - with control of players IP between login-server and char-server.
+2004-11-29 16:55:36.345: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-11-29 16:55:36.383: The LAN configuration of the server is set:
+2004-11-29 16:55:36.383: - with LAN IP of char-server: 127.0.0.1.
+2004-11-29 16:55:36.383: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-11-29 16:55:36.426: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-11-29 16:55:36.427: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-11-29 16:55:36.428: The login-server is ready (Server is listening on the port 6900).
+2004-11-29 16:55:39.863: Connection request of the char-server 'eAthena' @ 127.0.0.1:6121 (ip: 127.0.0.1)
+2004-11-29 16:55:39.863: Authentification accepted (account: s1 (id: 0), ip: 127.0.0.1)
+2004-11-29 16:55:39.864: Connection of the char-server 'eAthena' accepted (account: s1, pass: p1, ip: 127.0.0.1)
+2004-11-29 17:02:22.947: Request for connection (non encryption mode) of cameri (ip: 127.0.0.1).
+2004-11-29 17:02:22.947: Authentification accepted (account: cameri (id: 2000002), ip: 127.0.0.1)
+2004-11-29 17:02:28.635: Char-server 'eAthena': authentification of the account 2000002 accepted (ip: 127.0.0.1).
+2004-11-29 17:05:36.670: Char-server 'eAthena' has disconnected (ip: 127.0.0.1).
+2004-11-29 17:05:37.048: ----End of login-server (normal end with closing of all files).
+
+2004-12-04 12:14:45.701: The login-server starting...
+2004-12-04 12:14:45.809: The configuration of the server is set:
+2004-12-04 12:14:45.809: - with a remote administration with the DEFAULT password.
+2004-12-04 12:14:45.809: - to accept any IP for remote administration
+2004-12-04 12:14:45.809: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-12-04 12:14:45.809: - to create GM with level '60' when @gm is used.
+2004-12-04 12:14:45.809: - to ALLOW new users (with _F/_M).
+2004-12-04 12:14:45.810: - with port: 6900.
+2004-12-04 12:14:45.810: - with the accounts file name: 'save/account.txt'.
+2004-12-04 12:14:45.810: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-12-04 12:14:45.810: - to check GM accounts file modifications every 15 seconds.
+2004-12-04 12:14:45.810: - to save password in plain text.
+2004-12-04 12:14:45.810: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-12-04 12:14:45.810: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-12-04 12:14:45.810: - to NOT display normal parse packets on console.
+2004-12-04 12:14:45.810: - to NOT display administration parse packets on console.
+2004-12-04 12:14:45.810: - to NOT display char-server parse packets on console.
+2004-12-04 12:14:45.810: - with no minimum level for connection.
+2004-12-04 12:14:45.810: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-12-04 12:14:45.811: - to create new accounts with an unlimited time.
+2004-12-04 12:14:45.811: - with control of players IP between login-server and char-server.
+2004-12-04 12:14:45.811: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-12-04 12:14:45.820: The LAN configuration of the server is set:
+2004-12-04 12:14:45.821: - with LAN IP of char-server: 127.0.0.1.
+2004-12-04 12:14:45.821: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-12-04 12:14:45.861: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-12-04 12:14:45.863: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-12-04 12:14:45.864: The login-server is ready (Server is listening on the port 6900).
+2004-12-04 12:16:50.673: ----End of login-server (normal end with closing of all files).
+
+2004-12-04 12:30:11.405: The login-server starting...
+2004-12-04 12:30:11.405: The configuration of the server is set:
+2004-12-04 12:30:11.405: - with a remote administration with the DEFAULT password.
+2004-12-04 12:30:11.405: - to accept any IP for remote administration
+2004-12-04 12:30:11.406: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-12-04 12:30:11.406: - to create GM with level '60' when @gm is used.
+2004-12-04 12:30:11.406: - to ALLOW new users (with _F/_M).
+2004-12-04 12:30:11.406: - with port: 6900.
+2004-12-04 12:30:11.406: - with the accounts file name: 'save/account.txt'.
+2004-12-04 12:30:11.406: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-12-04 12:30:11.406: - to check GM accounts file modifications every 15 seconds.
+2004-12-04 12:30:11.406: - to save password in plain text.
+2004-12-04 12:30:11.406: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-12-04 12:30:11.406: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-12-04 12:30:11.406: - to NOT display normal parse packets on console.
+2004-12-04 12:30:11.406: - to NOT display administration parse packets on console.
+2004-12-04 12:30:11.407: - to NOT display char-server parse packets on console.
+2004-12-04 12:30:11.407: - with no minimum level for connection.
+2004-12-04 12:30:11.407: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-12-04 12:30:11.407: - to create new accounts with an unlimited time.
+2004-12-04 12:30:11.407: - with control of players IP between login-server and char-server.
+2004-12-04 12:30:11.407: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-12-04 12:30:11.408: The LAN configuration of the server is set:
+2004-12-04 12:30:11.408: - with LAN IP of char-server: 127.0.0.1.
+2004-12-04 12:30:11.408: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-12-04 12:30:11.410: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-12-04 12:30:11.411: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-12-04 12:30:11.412: The login-server is ready (Server is listening on the port 6900).
+
+2004-12-04 22:27:16.546: The login-server starting...
+2004-12-04 22:27:16.546: The configuration of the server is set:
+2004-12-04 22:27:16.546: - with a remote administration with the DEFAULT password.
+2004-12-04 22:27:16.546: - to accept any IP for remote administration
+2004-12-04 22:27:16.546: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-12-04 22:27:16.546: - to create GM with level '60' when @gm is used.
+2004-12-04 22:27:16.546: - to ALLOW new users (with _F/_M).
+2004-12-04 22:27:16.546: - with port: 6900.
+2004-12-04 22:27:16.546: - with the accounts file name: 'save/account.txt'.
+2004-12-04 22:27:16.546: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-12-04 22:27:16.546: - to check GM accounts file modifications every 15 seconds.
+2004-12-04 22:27:16.546: - to save password in plain text.
+2004-12-04 22:27:16.546: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-12-04 22:27:16.546: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-12-04 22:27:16.547: - to NOT display normal parse packets on console.
+2004-12-04 22:27:16.547: - to NOT display administration parse packets on console.
+2004-12-04 22:27:16.547: - to NOT display char-server parse packets on console.
+2004-12-04 22:27:16.547: - with no minimum level for connection.
+2004-12-04 22:27:16.547: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-12-04 22:27:16.547: - to create new accounts with an unlimited time.
+2004-12-04 22:27:16.547: - with control of players IP between login-server and char-server.
+2004-12-04 22:27:16.547: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-12-04 22:27:16.556: The LAN configuration of the server is set:
+2004-12-04 22:27:16.556: - with LAN IP of char-server: 127.0.0.1.
+2004-12-04 22:27:16.556: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-12-04 22:27:16.569: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-12-04 22:27:16.570: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-12-04 22:27:16.571: The login-server is ready (Server is listening on the port 6900).
+2004-12-04 22:27:17.003: Connection request of the char-server 'eAthena' @ 127.0.0.1:6121 (ip: 127.0.0.1)
+2004-12-04 22:27:17.003: Authentification accepted (account: s1 (id: 0), ip: 127.0.0.1)
+2004-12-04 22:27:17.011: Connection of the char-server 'eAthena' accepted (account: s1, pass: p1, ip: 127.0.0.1)
+2004-12-04 22:27:37.996: Request for connection (non encryption mode) of cameri (ip: 127.0.0.1).
+2004-12-04 22:27:37.997: Authentification accepted (account: cameri (id: 2000002), ip: 127.0.0.1)
+2004-12-04 22:27:38.574: Char-server 'eAthena': authentification of the account 2000002 accepted (ip: 127.0.0.1).
+
+2004-12-04 22:29:13.406: The login-server starting...
+2004-12-04 22:29:13.406: The configuration of the server is set:
+2004-12-04 22:29:13.406: - with a remote administration with the DEFAULT password.
+2004-12-04 22:29:13.406: - to accept any IP for remote administration
+2004-12-04 22:29:13.406: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-12-04 22:29:13.406: - to create GM with level '60' when @gm is used.
+2004-12-04 22:29:13.406: - to ALLOW new users (with _F/_M).
+2004-12-04 22:29:13.406: - with port: 6900.
+2004-12-04 22:29:13.406: - with the accounts file name: 'save/account.txt'.
+2004-12-04 22:29:13.406: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-12-04 22:29:13.406: - to check GM accounts file modifications every 15 seconds.
+2004-12-04 22:29:13.406: - to save password in plain text.
+2004-12-04 22:29:13.406: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-12-04 22:29:13.406: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-12-04 22:29:13.406: - to NOT display normal parse packets on console.
+2004-12-04 22:29:13.407: - to NOT display administration parse packets on console.
+2004-12-04 22:29:13.407: - to NOT display char-server parse packets on console.
+2004-12-04 22:29:13.407: - with no minimum level for connection.
+2004-12-04 22:29:13.407: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-12-04 22:29:13.407: - to create new accounts with an unlimited time.
+2004-12-04 22:29:13.407: - with control of players IP between login-server and char-server.
+2004-12-04 22:29:13.407: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-12-04 22:29:13.408: The LAN configuration of the server is set:
+2004-12-04 22:29:13.408: - with LAN IP of char-server: 127.0.0.1.
+2004-12-04 22:29:13.408: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-12-04 22:29:13.411: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-12-04 22:29:13.411: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-12-04 22:29:13.412: The login-server is ready (Server is listening on the port 6900).
+2004-12-04 22:29:14.146: ----End of login-server (normal end with closing of all files).
+
+2004-12-04 22:29:15.953: The login-server starting...
+2004-12-04 22:29:15.953: The configuration of the server is set:
+2004-12-04 22:29:15.953: - with a remote administration with the DEFAULT password.
+2004-12-04 22:29:15.953: - to accept any IP for remote administration
+2004-12-04 22:29:15.953: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-12-04 22:29:15.953: - to create GM with level '60' when @gm is used.
+2004-12-04 22:29:15.953: - to ALLOW new users (with _F/_M).
+2004-12-04 22:29:15.953: - with port: 6900.
+2004-12-04 22:29:15.953: - with the accounts file name: 'save/account.txt'.
+2004-12-04 22:29:15.953: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-12-04 22:29:15.953: - to check GM accounts file modifications every 15 seconds.
+2004-12-04 22:29:15.954: - to save password in plain text.
+2004-12-04 22:29:15.954: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-12-04 22:29:15.954: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-12-04 22:29:15.954: - to NOT display normal parse packets on console.
+2004-12-04 22:29:15.954: - to NOT display administration parse packets on console.
+2004-12-04 22:29:15.954: - to NOT display char-server parse packets on console.
+2004-12-04 22:29:15.954: - with no minimum level for connection.
+2004-12-04 22:29:15.954: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-12-04 22:29:15.954: - to create new accounts with an unlimited time.
+2004-12-04 22:29:15.954: - with control of players IP between login-server and char-server.
+2004-12-04 22:29:15.955: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-12-04 22:29:15.958: The LAN configuration of the server is set:
+2004-12-04 22:29:15.958: - with LAN IP of char-server: 127.0.0.1.
+2004-12-04 22:29:15.958: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-12-04 22:29:15.961: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-12-04 22:29:15.961: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-12-04 22:29:15.962: The login-server is ready (Server is listening on the port 6900).
+2004-12-04 22:29:20.986: Connection request of the char-server 'eAthena' @ 127.0.0.1:6121 (ip: 127.0.0.1)
+2004-12-04 22:29:20.986: Authentification accepted (account: s1 (id: 0), ip: 127.0.0.1)
+2004-12-04 22:29:20.988: Connection of the char-server 'eAthena' accepted (account: s1, pass: p1, ip: 127.0.0.1)
+
+2004-12-04 22:29:34.843: The login-server starting...
+2004-12-04 22:29:34.843: The configuration of the server is set:
+2004-12-04 22:29:34.843: - with a remote administration with the DEFAULT password.
+2004-12-04 22:29:34.843: - to accept any IP for remote administration
+2004-12-04 22:29:34.843: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-12-04 22:29:34.843: - to create GM with level '60' when @gm is used.
+2004-12-04 22:29:34.843: - to ALLOW new users (with _F/_M).
+2004-12-04 22:29:34.843: - with port: 6900.
+2004-12-04 22:29:34.844: - with the accounts file name: 'save/account.txt'.
+2004-12-04 22:29:34.844: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-12-04 22:29:34.844: - to check GM accounts file modifications every 15 seconds.
+2004-12-04 22:29:34.844: - to save password in plain text.
+2004-12-04 22:29:34.844: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-12-04 22:29:34.844: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-12-04 22:29:34.844: - to NOT display normal parse packets on console.
+2004-12-04 22:29:34.844: - to NOT display administration parse packets on console.
+2004-12-04 22:29:34.844: - to NOT display char-server parse packets on console.
+2004-12-04 22:29:34.844: - with no minimum level for connection.
+2004-12-04 22:29:34.844: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-12-04 22:29:34.845: - to create new accounts with an unlimited time.
+2004-12-04 22:29:34.845: - with control of players IP between login-server and char-server.
+2004-12-04 22:29:34.845: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-12-04 22:29:34.846: The LAN configuration of the server is set:
+2004-12-04 22:29:34.846: - with LAN IP of char-server: 127.0.0.1.
+2004-12-04 22:29:34.846: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-12-04 22:29:34.848: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-12-04 22:29:34.849: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-12-04 22:29:34.849: The login-server is ready (Server is listening on the port 6900).
+2004-12-04 22:29:40.980: Connection request of the char-server 'eAthena' @ 127.0.0.1:6121 (ip: 127.0.0.1)
+2004-12-04 22:29:40.980: Authentification accepted (account: s1 (id: 0), ip: 127.0.0.1)
+2004-12-04 22:29:40.983: Connection of the char-server 'eAthena' accepted (account: s1, pass: p1, ip: 127.0.0.1)
+
+2004-12-04 22:31:44.796: The login-server starting...
+2004-12-04 22:31:44.796: The configuration of the server is set:
+2004-12-04 22:31:44.796: - with a remote administration with the DEFAULT password.
+2004-12-04 22:31:44.796: - to accept any IP for remote administration
+2004-12-04 22:31:44.796: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-12-04 22:31:44.796: - to create GM with level '60' when @gm is used.
+2004-12-04 22:31:44.796: - to ALLOW new users (with _F/_M).
+2004-12-04 22:31:44.796: - with port: 6900.
+2004-12-04 22:31:44.797: - with the accounts file name: 'save/account.txt'.
+2004-12-04 22:31:44.797: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-12-04 22:31:44.797: - to check GM accounts file modifications every 15 seconds.
+2004-12-04 22:31:44.797: - to save password in plain text.
+2004-12-04 22:31:44.797: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-12-04 22:31:44.797: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-12-04 22:31:44.797: - to NOT display normal parse packets on console.
+2004-12-04 22:31:44.797: - to NOT display administration parse packets on console.
+2004-12-04 22:31:44.797: - to NOT display char-server parse packets on console.
+2004-12-04 22:31:44.797: - with no minimum level for connection.
+2004-12-04 22:31:44.797: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-12-04 22:31:44.797: - to create new accounts with an unlimited time.
+2004-12-04 22:31:44.798: - with control of players IP between login-server and char-server.
+2004-12-04 22:31:44.798: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-12-04 22:31:44.799: The LAN configuration of the server is set:
+2004-12-04 22:31:44.799: - with LAN IP of char-server: 127.0.0.1.
+2004-12-04 22:31:44.799: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-12-04 22:31:44.805: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-12-04 22:31:44.806: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-12-04 22:31:44.806: The login-server is ready (Server is listening on the port 6900).
+2004-12-04 22:32:11.169: ----End of login-server (normal end with closing of all files).
+
+2004-12-04 22:32:23.937: The login-server starting...
+2004-12-04 22:32:23.937: The configuration of the server is set:
+2004-12-04 22:32:23.937: - with a remote administration with the DEFAULT password.
+2004-12-04 22:32:23.937: - to accept any IP for remote administration
+2004-12-04 22:32:23.937: - with the DEFAULT 'To GM become' password (gm_pass).
+2004-12-04 22:32:23.937: - to create GM with level '60' when @gm is used.
+2004-12-04 22:32:23.937: - to ALLOW new users (with _F/_M).
+2004-12-04 22:32:23.937: - with port: 6900.
+2004-12-04 22:32:23.937: - with the accounts file name: 'save/account.txt'.
+2004-12-04 22:32:23.937: - with the GM accounts file name: 'conf/GM_account.txt'.
+2004-12-04 22:32:23.937: - to check GM accounts file modifications every 15 seconds.
+2004-12-04 22:32:23.937: - to save password in plain text.
+2004-12-04 22:32:23.937: - with the unknown packets file name: 'log/login_unknown_packets.log'.
+2004-12-04 22:32:23.937: - to SAVE only unkown packets sending by a char-server or a remote administration.
+2004-12-04 22:32:23.938: - to NOT display normal parse packets on console.
+2004-12-04 22:32:23.938: - to NOT display administration parse packets on console.
+2004-12-04 22:32:23.938: - to NOT display char-server parse packets on console.
+2004-12-04 22:32:23.938: - with no minimum level for connection.
+2004-12-04 22:32:23.938: - to refuse adjustment (with timeadd ladmin) on an unlimited account. You must use timeset (ladmin command) before.
+2004-12-04 22:32:23.938: - to create new accounts with an unlimited time.
+2004-12-04 22:32:23.938: - with control of players IP between login-server and char-server.
+2004-12-04 22:32:23.938: - with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP.
+2004-12-04 22:32:23.939: The LAN configuration of the server is set:
+2004-12-04 22:32:23.940: - with LAN IP of char-server: 127.0.0.1.
+2004-12-04 22:32:23.940: - with the sub-network of the char-server: 127.0.0.1/255.255.255.255.
+2004-12-04 22:32:23.945: 10 accounts read in save/account.txt, of which is no GM account and 5 server accounts ('S').
+2004-12-04 22:32:23.945: read_gm_account: file 'conf/GM_account.txt' read (5 GM accounts found).
+2004-12-04 22:32:23.946: The login-server is ready (Server is listening on the port 6900).
+2004-12-04 22:32:27.779: Connection request of the char-server 'eAthena' @ 127.0.0.1:6121 (ip: 127.0.0.1)
+2004-12-04 22:32:27.779: Authentification accepted (account: s1 (id: 0), ip: 127.0.0.1)
+2004-12-04 22:32:27.781: Connection of the char-server 'eAthena' accepted (account: s1, pass: p1, ip: 127.0.0.1)

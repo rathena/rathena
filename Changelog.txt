@@ -1,5 +1,9 @@
 Date	Added
 12/5
+	* Added nullpo's to all atcommand's functions, phew... [MC Cameri]
+	  Note: I point out that MouseJstr has added some @commands that start with char which
+	  havent been finished, they are just there but don't do anything.
+	* Removed mapbug.txt and corresponding function in map.c (realized it's pointless) [MC Cameri]
         * Added allow_atcommand_when_mute - Change this to set whether muted players
           can use gm commands [celest]
         * Temporarily leaving the changing guild emblems requiring Glory of Guild 

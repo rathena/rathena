@@ -951,6 +951,8 @@ int atcommand_rurap(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+
+	nullpo_retr(-1, sd);
 	char map_name[100];
 	char character[100];
 	int x = 0, y = 0;
@@ -1016,6 +1018,7 @@ int atcommand_rura(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char map_name[100];
 	int x = 0, y = 0;
 	int m;
@@ -1067,6 +1070,7 @@ int atcommand_where(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	char output[200];
 	struct map_session_data *pl_sd = NULL;
@@ -1102,6 +1106,7 @@ int atcommand_jumpto(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	char output[200];
 	struct map_session_data *pl_sd = NULL;
@@ -1147,6 +1152,7 @@ int atcommand_jump(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 	int x = 0, y = 0;
 
@@ -1186,6 +1192,7 @@ int atcommand_who(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 	struct map_session_data *pl_sd;
 	int i, j, count;
@@ -1243,6 +1250,7 @@ int atcommand_who2(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 	struct map_session_data *pl_sd;
 	int i, j, count;
@@ -1300,6 +1308,7 @@ int atcommand_who3(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char temp0[100];
 	char temp1[100];
 	char output[200];
@@ -1431,6 +1440,7 @@ int atcommand_whomap2(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 	struct map_session_data *pl_sd;
 	int i, count;
@@ -1489,6 +1499,7 @@ int atcommand_whomap3(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char temp0[100];
 	char temp1[100];
 	char output[200];
@@ -1563,6 +1574,7 @@ int atcommand_whogm(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char temp0[100];
 	char temp1[100];
 	char output[200];
@@ -1635,6 +1647,7 @@ int atcommand_whozeny(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 	struct map_session_data *pl_sd;
 	int i, j, count,c;
@@ -1702,7 +1715,7 @@ int atcommand_happyhappyjoyjoy(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i,e;
 
@@ -1726,6 +1739,7 @@ int atcommand_save(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	pc_setsavepoint(sd, sd->mapname, sd->bl.x, sd->bl.y);
 	if (sd->status.pet_id > 0 && sd->pd)
 		intif_save_petdata(sd->status.account_id, &sd->pet);
@@ -1745,6 +1759,7 @@ int atcommand_load(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int m;
 
 	m = map_mapname2mapid(sd->status.save_point.map);
@@ -1771,6 +1786,7 @@ int atcommand_speed(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 	int speed;
 
@@ -1806,6 +1822,7 @@ int atcommand_storage(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	storage_storageopen(sd);
 
 	return 0;
@@ -1819,6 +1836,7 @@ int atcommand_guildstorage(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (sd->status.guild_id > 0)
 		storage_guild_storageopen(sd);
 
@@ -1833,6 +1851,7 @@ int atcommand_option(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int param1 = 0, param2 = 0, param3 = 0;
 
 	if (!message || !*message || sscanf(message, "%d %d %d", &param1, &param2, &param3) < 1 || param1 < 0 || param2 < 0 || param3 < 0) {
@@ -1894,6 +1913,7 @@ int atcommand_hide(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (sd->status.option & OPTION_HIDE) {
 		sd->status.option &= ~OPTION_HIDE;
 		clif_displaymessage(fd, msg_table[10]); // Invisible: Off
@@ -1914,6 +1934,7 @@ int atcommand_jobchange(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int job = 0, upper = -1;
 
 	if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1) {
@@ -1976,6 +1997,7 @@ int atcommand_die(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	clif_specialeffect(&sd->bl,450,1);
 	pc_damage(NULL, sd, sd->status.hp + 1);
 	clif_displaymessage(fd, msg_table[13]); // A pity! You've died.
@@ -1991,6 +2013,7 @@ int atcommand_kill(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data *pl_sd;
 
@@ -2025,6 +2048,7 @@ int atcommand_alive(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (pc_isdead(sd)) {
 	sd->status.hp = sd->status.max_hp;
 	sd->status.sp = sd->status.max_sp;
@@ -2050,6 +2074,7 @@ int atcommand_kami(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 
 	memset(output, '\0', sizeof(output));
@@ -2073,6 +2098,7 @@ int atcommand_heal(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int hp = 0, sp = 0; // [Valaris] thanks to fov
 
 	sscanf(message, "%d %d", &hp, &sp);
@@ -2120,6 +2146,7 @@ int atcommand_item(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char item_name[100];
 	int number = 0, item_id, flag;
 	struct item item_tmp;
@@ -2183,6 +2210,7 @@ int atcommand_item2(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct item item_tmp;
 	struct item_data *item_data;
 	char item_name[100];
@@ -2257,6 +2285,7 @@ int atcommand_itemreset(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i;
 
 	for (i = 0; i < MAX_INVENTORY; i++) {
@@ -2276,6 +2305,7 @@ int atcommand_itemcheck(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	pc_checkitem(sd);
 
 	return 0;
@@ -2289,6 +2319,7 @@ int atcommand_baselevelup(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int level, i;
 
 	if (!message || !*message || (level = atoi(message)) == 0) {
@@ -2345,6 +2376,7 @@ int atcommand_joblevelup(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int up_level = 50, level;
 
 	if (!message || !*message || (level = atoi(message)) == 0) {
@@ -2403,6 +2435,7 @@ int atcommand_help(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char buf[2048], w1[2048], w2[2048];
 	int i, gm_level;
 	FILE* fp;
@@ -2443,6 +2476,7 @@ int atcommand_gm(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char password[100];
 
 	memset(password, '\0', sizeof(password));
@@ -2469,6 +2503,7 @@ int atcommand_pvpoff(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 
@@ -2508,6 +2543,7 @@ int atcommand_pvpon(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 
@@ -2547,6 +2583,7 @@ int atcommand_gvgoff(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (map[sd->bl.m].flag.gvg) {
 		map[sd->bl.m].flag.gvg = 0;
 		clif_send0199(sd->bl.m, 0);
@@ -2567,6 +2604,7 @@ int atcommand_gvgon(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (!map[sd->bl.m].flag.gvg) {
 		map[sd->bl.m].flag.gvg = 1;
 		clif_send0199(sd->bl.m, 3);
@@ -2587,6 +2625,7 @@ int atcommand_model(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int hair_style = 0, hair_color = 0, cloth_color = 0;
 	char output[200];
 
@@ -2627,6 +2666,7 @@ int atcommand_model(
  */
 int atcommand_dye(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int cloth_color = 0;
 	char output[200];
 
@@ -2662,6 +2702,7 @@ int
 atcommand_chardye(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	return 0;
 }
 
@@ -2671,6 +2712,7 @@ atcommand_chardye(const int fd, struct map_session_data* sd,
  */
 int atcommand_hair_style(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int hair_style = 0;
 	char output[200];
 
@@ -2706,7 +2748,8 @@ int
 atcommand_charhairstyle(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-        return 0;
+	nullpo_retr(-1, sd);
+    return 0;
 }
 
 /*==========================================
@@ -2715,6 +2758,7 @@ atcommand_charhairstyle(const int fd, struct map_session_data* sd,
  */
 int atcommand_hair_color(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int hair_color = 0;
 	char output[200];
 
@@ -2750,7 +2794,8 @@ int
 atcommand_charhaircolor(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-        return 0;
+	nullpo_retr(-1, sd);
+    return 0;
 }
 
 /*==========================================
@@ -2761,6 +2806,7 @@ int atcommand_go(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i;
 	int town;
 	char map_name[100];
@@ -2921,6 +2967,7 @@ int atcommand_monster(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char name[100];
 	char monster[100];
 	char output[200];
@@ -3011,6 +3058,7 @@ int atcommand_monster(
 int atcommand_spawn(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message) {
+	nullpo_retr(-1, sd);
 	char name[100];
 	char monster[100];
 	char output[200];
@@ -3098,6 +3146,7 @@ int atcommand_spawn(
 int atcommand_monstersmall(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message) {
+	nullpo_retr(-1, sd);
 	char name[100] = "";
 	char monster[100] = "";
 	int mob_id = 0;
@@ -3175,6 +3224,7 @@ int atcommand_monstersmall(
 int atcommand_monsterbig(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message) {
+	nullpo_retr(-1, sd);
 	char name[100] = "";
 	char monster[100] = "";
 	int mob_id = 0;
@@ -3257,6 +3307,7 @@ void atcommand_killmonster_sub(
 	const int fd, struct map_session_data* sd, const char* message,
 	const int drop)
 {
+	if (!sd) return;
 	int map_id;
 	char map_name[100];
 
@@ -3286,6 +3337,7 @@ int atcommand_killmonster(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	if (!sd) return 0;
 	atcommand_killmonster_sub(fd, sd, message, 1);
 
 	return 0;
@@ -3299,6 +3351,7 @@ int atcommand_killmonster2(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	if (!sd) return 0;
 	atcommand_killmonster_sub(fd, sd, message, 0);
 
 	return 0;
@@ -3312,6 +3365,7 @@ int atcommand_refine(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i, position = 0, refine = 0, current_position, final_refine;
 	int count;
 	char output[200];
@@ -3374,6 +3428,7 @@ int atcommand_produce(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char item_name[100];
 	int item_id, attribute = 0, star = 0;
 	int flag = 0;
@@ -3433,6 +3488,7 @@ int atcommand_produce(
  *------------------------------------------
  */
 void atcommand_memo_sub(struct map_session_data* sd) {
+	if (!sd) return;
 	int i;
 	char output[200];
 
@@ -3458,6 +3514,7 @@ int atcommand_memo(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int position = 0;
 	char output[200];
 
@@ -3501,6 +3558,7 @@ int atcommand_gat(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 	int y;
 
@@ -3528,6 +3586,7 @@ int atcommand_packet(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int x = 0, y = 0;
 
 	if (!message || !*message || sscanf(message, "%d %d", &x, &y) < 2) {
@@ -3548,6 +3607,7 @@ int atcommand_statuspoint(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int point, new_status_point;
 
 	if (!message || !*message || (point = atoi(message)) == 0) {
@@ -3584,6 +3644,7 @@ int atcommand_skillpoint(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int point, new_skill_point;
 
 	if (!message || !*message || (point = atoi(message)) == 0) {
@@ -3620,6 +3681,7 @@ int atcommand_zeny(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int zeny, new_zeny;
 
 	if (!message || !*message || (zeny = atoi(message)) == 0) {
@@ -3656,6 +3718,7 @@ int atcommand_param(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i, index, value = 0, new_value;
 	const char* param[] = { "@str", "@agi", "@vit", "@int", "@dex", "@luk", NULL };
 	short* status[] = {
@@ -3717,6 +3780,7 @@ int atcommand_stat_all(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int index, count, value = 0, new_value;
 	short* status[] = {
 		&sd->status.str,  &sd->status.agi, &sd->status.vit,
@@ -3765,6 +3829,7 @@ int atcommand_guildlevelup(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int level = 0;
 	short added_level;
 	struct guild *guild_info;
@@ -3808,6 +3873,7 @@ int atcommand_makeegg(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct item_data *item_data;
 	int id, pet_id;
 
@@ -3847,6 +3913,7 @@ int atcommand_hatch(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (sd->status.pet_id <= 0)
 		clif_sendegg(sd);
 	else {
@@ -3865,6 +3932,7 @@ int atcommand_petfriendly(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int friendly;
 	int t;
 
@@ -3913,6 +3981,7 @@ int atcommand_pethungry(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int hungry;
 
 	if (!message || !*message || (hungry = atoi(message)) < 0) {
@@ -3950,6 +4019,7 @@ int atcommand_petrename(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (sd->status.pet_id > 0 && sd->pd) {
 		if (sd->pet.rename_flag != 0) {
 			sd->pet.rename_flag = 0;
@@ -3977,6 +4047,7 @@ atcommand_recall(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	char output[200];
 	struct map_session_data *pl_sd = NULL;
@@ -4027,6 +4098,7 @@ int atcommand_revive(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data *pl_sd;
 
@@ -4067,6 +4139,7 @@ int atcommand_char_change_sex(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 
 	memset(character, '\0', sizeof(character));
@@ -4100,6 +4173,7 @@ int atcommand_char_block(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 
 	memset(character, '\0', sizeof(character));
@@ -4144,6 +4218,7 @@ int atcommand_char_ban(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char modif[100], character[100];
 	char * modif_p;
 	int year, month, day, hour, minute, second, value;
@@ -4221,6 +4296,7 @@ int atcommand_char_unblock(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 
 	memset(character, '\0', sizeof(character));
@@ -4254,6 +4330,7 @@ int atcommand_char_unban(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 
 	memset(character, '\0', sizeof(character));
@@ -4287,6 +4364,7 @@ int atcommand_night(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 
@@ -4322,6 +4400,7 @@ int atcommand_day(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 
@@ -4350,6 +4429,7 @@ int atcommand_doom(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 	clif_specialeffect(&sd->bl,450,2);
@@ -4373,6 +4453,7 @@ int atcommand_doommap(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 	clif_specialeffect(&sd->bl,450,3);
@@ -4417,6 +4498,7 @@ int atcommand_raise(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i;
 
 	for (i = 0; i < fd_max; i++) {
@@ -4436,6 +4518,7 @@ int atcommand_raisemap(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 
@@ -4456,6 +4539,7 @@ int atcommand_character_baselevel(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	char character[100];
 	int level = 0, i;
@@ -4527,6 +4611,7 @@ int atcommand_character_joblevel(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	char character[100];
 	int max_level = 50, level = 0;
@@ -4603,6 +4688,7 @@ int atcommand_kick(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	char character[100];
 
@@ -4636,6 +4722,7 @@ int atcommand_kickall(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 
@@ -4660,6 +4747,7 @@ int atcommand_allskill(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	pc_allskillup(sd); // all skills
 	sd->status.skill_point = 0; // 0 skill points
 	clif_updatestatus(sd, SP_SKILLPOINT); // update
@@ -4676,6 +4764,7 @@ int atcommand_questskill(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int skill_id;
 
 	if (!message || !*message || (skill_id = atoi(message)) < 0) {
@@ -4712,6 +4801,7 @@ int atcommand_charquestskill(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data *pl_sd;
 	int skill_id = 0;
@@ -4757,6 +4847,7 @@ int atcommand_lostskill(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int skill_id;
 
 	if (!message || !*message || (skill_id = atoi(message)) < 0) {
@@ -4795,6 +4886,7 @@ int atcommand_charlostskill(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data *pl_sd;
 	int skill_id = 0;
@@ -4842,6 +4934,7 @@ int atcommand_spiritball(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int number;
 
 	if (!message || !*message || (number = atoi(message)) < 0) {
@@ -4882,6 +4975,7 @@ int atcommand_party(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char party[100];
 
 	memset(party, '\0', sizeof(party));
@@ -4904,6 +4998,7 @@ int atcommand_guild(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char guild[100];
 	int prev;
 
@@ -4930,6 +5025,7 @@ int atcommand_agitstart(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (agit_flag == 1) {
 		clif_displaymessage(fd, msg_table[73]); // Already it has started siege warfare.
 		return -1;
@@ -4950,6 +5046,7 @@ int atcommand_agitend(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (agit_flag == 0) {
 		clif_displaymessage(fd, msg_table[75]); // Siege warfare hasn't started yet.
 		return -1;
@@ -4970,6 +5067,7 @@ int atcommand_mapexit(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 
@@ -4994,6 +5092,7 @@ int atcommand_idsearch(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char item_name[100];
 	char output[200];
 	int i, match;
@@ -5031,6 +5130,7 @@ int atcommand_charskreset(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	char output[200];
 	struct map_session_data *pl_sd;
@@ -5068,6 +5168,7 @@ int atcommand_charstreset(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	char output[200];
 	struct map_session_data *pl_sd;
@@ -5105,6 +5206,7 @@ int atcommand_charmodel(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int hair_style = 0, hair_color = 0, cloth_color = 0;
 	struct map_session_data *pl_sd;
 	char character[100];
@@ -5156,6 +5258,7 @@ int atcommand_charskpoint(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	char character[100];
 	int new_skill_point;
@@ -5201,6 +5304,7 @@ int atcommand_charstpoint(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	char character[100];
 	int new_status_point;
@@ -5246,6 +5350,7 @@ int atcommand_charzeny(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	char character[100];
 	int zeny = 0, new_zeny;
@@ -5290,6 +5395,7 @@ int atcommand_recallall(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 	int count;
@@ -5330,6 +5436,7 @@ int atcommand_guildrecall(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int i;
 	char guild_name[100];
@@ -5385,6 +5492,7 @@ int atcommand_partyrecall(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i;
 	struct map_session_data *pl_sd;
 	char party_name[100];
@@ -5440,6 +5548,7 @@ int atcommand_reloaditemdb(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	itemdb_reload();
 	clif_displaymessage(fd, msg_table[97]); // Item database reloaded.
 
@@ -5454,6 +5563,7 @@ int atcommand_reloadmobdb(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	mob_reload();
 	clif_displaymessage(fd, msg_table[98]); // Monster database reloaded.
 
@@ -5468,6 +5578,7 @@ int atcommand_reloadskilldb(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	skill_reload();
 	clif_displaymessage(fd, msg_table[99]); // Skill database reloaded.
 
@@ -5486,6 +5597,7 @@ int atcommand_reloadscript(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 #ifndef TXT_ONLY
 	atcommand_broadcast( fd, sd, "@broadcast", "eAthena SQL Server is Rehashing..." );
 	atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
@@ -5512,6 +5624,7 @@ int atcommand_reloadgmdb( // by [Yor]
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	chrif_reloadGMdb();
 
 	clif_displaymessage(fd, msg_table[101]); // Login-server asked to reload GM accounts and their level.
@@ -5532,6 +5645,7 @@ int atcommand_mapinfo(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	struct npc_data *nd = NULL;
 	struct chat_data *cd = NULL;
@@ -5669,6 +5783,7 @@ int atcommand_mount_peco(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (sd->disguise > 0) { // temporary prevention of crash caused by peco + disguise, will look into a better solution [Valaris]
 		clif_displaymessage(fd, msg_table[212]); // Cannot mount a Peco while in disguise.
 		return -1;
@@ -5714,6 +5829,7 @@ int atcommand_char_mount_peco(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data *pl_sd;
 
@@ -5774,6 +5890,7 @@ int atcommand_guildspy(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char guild_name[100];
 	char output[200];
 	struct guild *g;
@@ -5813,6 +5930,7 @@ int atcommand_partyspy(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char party_name[100];
 	char output[200];
 	struct party *p;
@@ -5852,6 +5970,7 @@ int atcommand_repairall(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int count, i;
 
 	count = 0;
@@ -5880,6 +5999,7 @@ int atcommand_nuke(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data *pl_sd;
 
@@ -5914,6 +6034,7 @@ int atcommand_nuke(
 int atcommand_enablenpc(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char NPCname[100];
 
 	memset(NPCname, '\0', sizeof(NPCname));
@@ -5941,6 +6062,7 @@ int atcommand_enablenpc(const int fd, struct map_session_data* sd,
 int atcommand_disablenpc(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char NPCname[100];
 
 	memset(NPCname, '\0', sizeof(NPCname));
@@ -6011,6 +6133,7 @@ char * txt_time(unsigned int duration) {
 int atcommand_servertime(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct TimerData * timer_data;
 	struct TimerData * timer_data2;
 	time_t time_server;  // variable for number of seconds (used with time() function)
@@ -6087,6 +6210,7 @@ int atcommand_servertime(const int fd, struct map_session_data* sd,
 int atcommand_chardelitem(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	char character[100];
 	char item_name[100];
@@ -6155,6 +6279,7 @@ int atcommand_jail(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data *pl_sd;
 	int x, y;
@@ -6207,6 +6332,7 @@ int atcommand_unjail(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data *pl_sd;
 
@@ -6250,6 +6376,7 @@ int atcommand_disguise(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int mob_id = 0;
 
 	if (!message || !*message) {
@@ -6288,6 +6415,7 @@ int atcommand_undisguise(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if (sd->disguise) {
 		clif_clearchar(&sd->bl, 9);
 		sd->disguise = 0;
@@ -6309,6 +6437,7 @@ int atcommand_broadcast(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 
 	memset(output, '\0', sizeof(output));
@@ -6332,6 +6461,7 @@ int atcommand_localbroadcast(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 
 	memset(output, '\0', sizeof(output));
@@ -6356,6 +6486,7 @@ int atcommand_chardisguise(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int mob_id;
 	char character[100];
 	char mob_name[100];
@@ -6410,6 +6541,7 @@ int atcommand_charundisguise(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	struct map_session_data* pl_sd;
 
@@ -6451,6 +6583,7 @@ int atcommand_email(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char actual_email[100];
 	char new_email[100];
 
@@ -6490,6 +6623,7 @@ int atcommand_effect(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	int type = 0, flag = 0, i;
 
@@ -6522,6 +6656,7 @@ atcommand_character_item_list(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	struct item_data *item_data, *item_temp;
 	int i, j, equip, count, counter, counter2;
@@ -6635,6 +6770,7 @@ atcommand_character_storage_list(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct storage *stor;
 	struct map_session_data *pl_sd;
 	struct item_data *item_data, *item_temp;
@@ -6719,6 +6855,7 @@ atcommand_character_cart_list(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd;
 	struct item_data *item_data, *item_temp;
 	int i, j, count, counter, counter2;
@@ -6798,6 +6935,7 @@ atcommand_killer(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	sd->special_state.killer = !sd->special_state.killer;
 
 	if(sd->special_state.killer)
@@ -6818,6 +6956,7 @@ atcommand_killable(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	sd->special_state.killable = !sd->special_state.killable;
 
 	if(sd->special_state.killable)
@@ -6838,6 +6977,7 @@ atcommand_charkillable(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd = NULL;
 
 	if (!message || !*message)
@@ -6867,6 +7007,7 @@ atcommand_skillon(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	map[sd->bl.m].flag.noskill = 0;
 	clif_displaymessage(fd, msg_table[244]);
 	return 0;
@@ -6882,6 +7023,7 @@ atcommand_skilloff(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	map[sd->bl.m].flag.noskill = 1;
 	clif_displaymessage(fd, msg_table[243]);
 	return 0;
@@ -6897,6 +7039,7 @@ int
 atcommand_npcmove(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char character[100];
 	int x = 0, y = 0;
 	struct npc_data *nd = 0;
@@ -6933,6 +7076,7 @@ int
 atcommand_addwarp(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char w1[64], w3[64], w4[64];
 	char map[30], output[200];
 	int x,y,ret;
@@ -6966,6 +7110,7 @@ int
 atcommand_follow(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd = NULL;
 
 	if (!message || !*message)
@@ -6988,6 +7133,7 @@ int
 atcommand_chareffect(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd = NULL;
 	char target[255];
 	int type = 0;
@@ -7015,6 +7161,7 @@ int
 atcommand_dropall(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i;
 	for (i = 0; i < MAX_INVENTORY; i++) {
 	if (sd->status.inventory[i].amount) {
@@ -7036,6 +7183,7 @@ int
 atcommand_chardropall(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i;
 	struct map_session_data *pl_sd = NULL;
 
@@ -7068,6 +7216,7 @@ int
 atcommand_storeall(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i;
 	if (storage_storageopen(sd) == 1) {
 		clif_displaymessage(fd, "run this command again..");
@@ -7095,6 +7244,7 @@ int
 atcommand_charstoreall(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int i;
 	struct map_session_data *pl_sd = NULL;
 
@@ -7135,6 +7285,7 @@ int
 atcommand_skillid(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
         int skillen = 0, idx = 0;
 	if (!message || !*message)
 		return -1;
@@ -7161,6 +7312,7 @@ int
 atcommand_useskill(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd = NULL;
 	int skillnum;
 	int skilllv;
@@ -7197,6 +7349,7 @@ int
 atcommand_skilltree(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
   struct map_session_data *pl_sd = NULL;
   int skillnum, skillidx = -1;
   int meets = 1, j, c=0, s=0;
@@ -7278,6 +7431,7 @@ atcommand_rain(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int effno = 0;
 	effno = 161;
 	nullpo_retr(-1, sd);
@@ -7297,6 +7451,7 @@ atcommand_snow(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int effno = 0;
 	effno = 162;
 	nullpo_retr(-1, sd);
@@ -7317,6 +7472,7 @@ atcommand_sakura(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int effno = 0;
 	effno = 163;
 	nullpo_retr(-1, sd);
@@ -7337,6 +7493,7 @@ atcommand_fog(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int effno = 0;
 	effno = 233;
 	nullpo_retr(-1, sd);
@@ -7358,6 +7515,7 @@ atcommand_leaves(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int effno = 0;
 	effno = 333;
 	nullpo_retr(-1, sd);
@@ -7377,6 +7535,7 @@ atcommand_summon(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char name[100];
 	int mob_id = 0;
 	int x = 0;
@@ -7428,6 +7587,7 @@ atcommand_adjcmdlvl(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
     int i, newlev;
     char cmd[100];
 
@@ -7461,6 +7621,7 @@ atcommand_adjgmlvl(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
     int newlev;
     char user[100];
     struct map_session_data *pl_sd;
@@ -7493,6 +7654,7 @@ atcommand_trade(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
     struct map_session_data *pl_sd = NULL;
 
     if (!message || !*message)
@@ -7514,6 +7676,7 @@ atcommand_setbattleflag(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char flag[128], value[128];
 
 	if (!message || !*message || sscanf(message, "%s %s", flag, value) != 2) {
@@ -7538,6 +7701,7 @@ int atcommand_unmute(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd = NULL;
 	if (!message || !*message)
         	return -1;
@@ -7564,6 +7728,7 @@ atcommand_uptime(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char output[200];
 	long seconds = 0, day = 24*60*60, hour = 60*60,
 		minute = 60, days = 0, hours = 0, minutes = 0;
@@ -7592,6 +7757,7 @@ atcommand_changesex(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	chrif_changesex(sd->status.account_id, ((sd->status.sex+1)%2));
 	return 0;
 }
@@ -7604,6 +7770,7 @@ int atcommand_mute(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	struct map_session_data *pl_sd = NULL;
 	char character[100];
 	int manner;
@@ -7634,7 +7801,7 @@ int atcommand_refresh(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-
+	nullpo_retr(-1, sd);
 	nullpo_retr(-1, sd);
 	pc_setpos(sd, sd->mapname, sd->bl.x, sd->bl.y, 3);
 	return 0;
@@ -7649,6 +7816,7 @@ int
 atcommand_petid(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char searchtext[100];
 	char temp0[100];
 	char temp1[100];
@@ -7723,6 +7891,7 @@ atcommand_gmotd(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 		char buf[256];
 		FILE *fp;
 		if(	(fp = fopen(motd_txt, "r"))!=NULL){
@@ -7745,6 +7914,7 @@ int atcommand_misceffect(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	int effect = 0;
 	nullpo_retr(-1, sd);
 	if (!message || !*message)
@@ -7765,7 +7935,8 @@ int atcommand_misceffect(
 int atcommand_listmail(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
-{
+{ 
+	nullpo_retr(-1, sd);
 	if(!battle_config.mail_system)
 		return 0;
 
@@ -7784,6 +7955,7 @@ int atcommand_readmail(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	if(!battle_config.mail_system)
 		return 0;
 
@@ -7806,6 +7978,7 @@ int atcommand_sendmail(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	nullpo_retr(-1, sd);
 	char name[24],text[80];
 
 	if(!battle_config.mail_system)

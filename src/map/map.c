@@ -2224,17 +2224,6 @@ void map_versionscreen(int flag) {
 	if (flag) exit(1);
 }
 
-void map_displaybug(int flag) {
-	FILE *fp;
-	char line[1024];
-	if ((fp=fopen("mapbug.txt","r"))!=NULL) {
-		while(fgets(line,1023,fp)) printf(line);
-		fclose(fp);
-	} //don't show anything if file doesnt exist
-    // this is only here when develing
-	if (flag) exit(1);
-}
-
 /*======================================================
  * Map-Server Init and Command-line Arguments [Valaris]
  *------------------------------------------------------
@@ -2255,7 +2244,6 @@ int do_init(int argc, char *argv[]) {
 	unsigned char *SCRIPT_CONF_NAME = "conf/script_athena.conf";
 	unsigned char *MSG_CONF_NAME = "conf/msg_athena.conf";
 	unsigned char *GRF_PATH_FILENAME = "conf/grf-files.txt";
-	map_displaybug(0);
 	srand(gettick());
 
 	for (i = 1; i < argc ; i++) {
