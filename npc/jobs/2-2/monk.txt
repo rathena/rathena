@@ -245,7 +245,7 @@ L_CollectS:
 	next;
 	mes "[Elder Wuhai]";
 	mes "Come back to me when you have all the things.";
-	mes "Now go, May God be with you.
+	mes "Now go, May God be with you.";
 	close;
 
 //~IsJOB50:
@@ -358,7 +358,7 @@ Part5:
 		mes "[Elder Wuhai]";
 		mes "......What?......";
 		mes "Aren't you ready to become a Monk?";
-		mes "You want more quest, more train and more question?
+		mes "You want more quest, more train and more question?";
 		next;
 		mes "[Elder Wuhai]";
 		mes "Come back when tou are ready.";
@@ -814,7 +814,7 @@ L_MONK_Q1_8:
 		"Lest ye descend to the Nine Golden Springs.",L_MONK_QUEST_END,
 		"So flies he westward.",L_MONK_QUEST_END,
 		"There shall be successes and failures,",L_MONK_QUEST_END,
-		"For such is the eternal law.",L_MONK_QUEST_END,
+		"For such is the eternal law.",L_MONK_QUEST_END;
 
 L_MONK_Q2_1:
 
@@ -1574,12 +1574,12 @@ L_DONE:
 	delitem 1070, countitem(1070);
 	next;
 	mes "[XuanWu]";
-	mes "Now go to [Daowen], he is in the deep of the building.
+	mes "Now go to [Daowen], he is in the deep of the building.";
 	close;
 Part2:
 	mes "[XuanWu]";
 	mes "Are you testing my patient??";
-	mes "Now go to [Daowen], he is in the deep of the building.
+	mes "Now go to [Daowen], he is in the deep of the building.";
 	close;
 }
 job_monk.gat,191,172,4	script	job_monk_warp	45,1,1,{
