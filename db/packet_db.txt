@@ -5,10 +5,7 @@
 // EX: You have client 628 and it goes up to 1021,
 // delete or comment (use //) till your client is last.
 
-// Version of packet database
-packet_db_ver: 16
-
-
+packet_ver: 5
 0x0064,55
 0x0065,17
 0x0066,3
@@ -441,6 +438,7 @@ packet_db_ver: 16
 //jRO‚Í‚±‚±‚Ü‚Å
 
 //2004-07-06kRO
+packet_ver: 6
 0x0072,22,wanttoconnection,5:9:13:17:21
 0x0085,8,walktoxy,5
 0x00a7,13,useitem,5:9
@@ -449,6 +447,7 @@ packet_db_ver: 16
 0x0190,95,useskilltopos,4:9:11:13:15
 
 //2004-07-13kRO
+packet_ver: 7
 0x0072,39,wanttoconnection,12:22:30:34:38
 0x0085,9,walktoxy,6
 0x009b,13,changedir,5:12
@@ -459,6 +458,7 @@ packet_db_ver: 16
 0x0190,99,useskilltopos,7:9:15:17:19
 
 //2004-07-26kRO
+packet_ver: 8
 0x0072,14,dropitem,5:12
 0x007e,33,wanttoconnection,12:18:24:28:32
 0x0085,20,useskilltoid,7:12:16
@@ -478,6 +478,7 @@ packet_db_ver: 16
 0x0193,9,actionrequest,3:8
 
 //2004-08-09kRO
+packet_ver: 9
 0x0072,17,dropitem,8:15
 //9, +12, +7, +4, +4
 0x007e,37,wanttoconnection,9:21:28:32:36
@@ -508,6 +509,7 @@ packet_db_ver: 16
 0x0210,22
 
 //2004-09-06aSakexe
+packet_ver: 10
 //0x0072,20,useitem,9:20
 0x007e,19,movetokafra,3:15
 0x0085,23,actionrequest,9:22
@@ -528,6 +530,7 @@ packet_db_ver: 16
 0x0193,17,movefromkafra,3:13
 
 //2004-09-21aSakexe by Sara
+packet_ver: 11
 0x0072,18,useitem,10:14
 0x007e,25,movetokafra,6:21
 0x0085,9,actionrequest,3:8
@@ -545,6 +548,7 @@ packet_db_ver: 16
 0x0193,12,movefromkafra,4:8
 
 //2004-10-11aSakexe by Sara
+packet_ver: 12
 0x0072,17,useitem,6:13
 0x007e,16,movetokafra,5:12
 0x0089,6,walktoxy,3
@@ -561,6 +565,7 @@ packet_db_ver: 16
 0x0193,26,movefromkafra,10:22
 
 //2004-10-25aSakexe by Sara
+packet_ver: 13
 0x0072,13,useitem,5:9
 0x007e,13,movetokafra,6:9
 0x0085,15,actionrequest,4:14
@@ -577,12 +582,14 @@ packet_db_ver: 16
 0x0193,22,movefromkafra,12:18
 
 //2004-11-01aSakexe by Sara
+packet_ver: 14
 0x0215,6
 0x0143,23,npcamountinput,2:6
 0x0145,19
 //0x01f9,6,adopt,5
 
 //2004-12-06aSakexe
+packet_ver: 15
 0x0190,15,useitem,3:11
 0x0094,14,movetokafra,4:10
 0x009f,18,actionrequest,6:17
@@ -606,6 +613,7 @@ packet_db_ver: 16
 0x0223,8
 
 //2005-01-10bSakexe by Sara
+packet_ver: 16
 0x009b,32,wanttoconnection,3:12:23:27:31
 0x0089,9,ticksend,5
 0x00a7,13,walktoxy,10
@@ -623,3 +631,5 @@ packet_db_ver: 16
 0x0072,26,useskilltoid,8:16:22
 0x007e,114,useskilltopos,9:18:22:32:34
 0x00a2,11,solvecharname,7
+
+packet_ver: 17

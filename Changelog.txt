@@ -1,10 +1,23 @@
 Date	Added
 01/13
+        * Updated packet_db.txt loading to support reading into multiple packet
+          versions [celest]
+        * Removed packet_db_ver defining in packet_db.txt -- it'll determine itself
+          based on MAX_PACKET_VER [celest]
+        * Integrated packet size and function DB's into 1 packet_db [celest]
+        * Added MAX_PACKET_VER -- maximum versions supported by eA, including the
+          packet_db -- and changed packet size and function DB's to use it [celest]
+        * When sending 'Game exe not latest version' packet don't close the session 
+          immediately so it will still be delivered [celest]
+        * Added map-server display if an unidentified client was rejected --
+          also fixes the 'empty string sent to _showmessage' [celest]
 	* Added a bug - Celest, LOOK AT THIS BUG ASAP. [Codemaster]
         * Tided up/fixed some mobs [Lupus]
+
 01/12
         * Implemented Vending Log [Lupus]
 	  TODO: use log option to log only important deals (much money, rare items, etc)
+
 01/11
         * Added Shinomori's changes to npc event timers (I never realised it, thanks
           ^^; ) [celest]

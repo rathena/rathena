@@ -56,9 +56,7 @@
 int packet_db_ver = -1;	// the packet version used by packet_db
 int packet_db_connect_cmd = 0xF5;	// the default packet used for connecting to the server
 
-int *packet_db_size;
-void (**packet_db_parse_func)();
-short packet_db_pos[MAX_PACKET_DB][20];
+struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
 
 static const int packet_len_table[MAX_PACKET_DB] = {
    10,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -114,9 +112,6 @@ static const int packet_len_table[MAX_PACKET_DB] = {
     0,  0,   0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,   0,  0
 };
-
-// size list for each packet version after packet version 4.
-static int packet_size_table[12][MAX_PACKET_DB]; //fixed by Lupus
 
 // local define
 enum {
@@ -272,7 +267,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 			printf("         Please correct your code.\n");
 			// don't send to not move the pointer of the packet for next sessions in the loop
 		} else {
-			if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+			if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 				memcpy(WFIFOP(sd->fd,0), buf, len);
 				WFIFOSET(sd->fd,len);
 			}
@@ -302,7 +297,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 	case ALL_CLIENT: // 全クライアントに送信
 		for(i = 0; i < fd_max; i++) {
 			if (session[i] && (sd = session[i]->session_data) != NULL && sd->state.auth) {
-				if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 					memcpy(WFIFOP(i,0), buf, len);
 					WFIFOSET(i,len);
 				}
@@ -312,7 +307,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 	case ALL_SAMEMAP: // 同じマップの全クライアントに送信
 		for(i = 0; i < fd_max; i++) {
 			if (session[i] && (sd = session[i]->session_data) != NULL && sd->state.auth && sd->bl.m == bl->m) {
-				if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 					memcpy(WFIFOP(i,0), buf, len);
 					WFIFOSET(i,len);
 				}
@@ -341,7 +336,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 		for(i = 0; i < cd->users; i++) {
 			if (type == CHAT_WOS && cd->usersd[i] == (struct map_session_data*)bl)
 				continue;
-			if (packet_size_table[cd->usersd[i]->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+			if (packet_db[cd->usersd[i]->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 				if (cd->usersd[i]->fd >=0 && session[cd->usersd[i]->fd]) // Added check to see if session exists [PoW]
 					memcpy(WFIFOP(cd->usersd[i]->fd,0), buf, len);
 				WFIFOSET(cd->usersd[i]->fd,len);
@@ -382,7 +377,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 					    (sd->bl.x < x0 || sd->bl.y < y0 ||
 					     sd->bl.x > x1 || sd->bl.y > y1))
 						continue;
-					if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 						memcpy(WFIFOP(sd->fd,0), buf, len);
 						WFIFOSET(sd->fd,len);
 					}
@@ -394,7 +389,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 			for (i = 0; i < fd_max; i++){
 				if (session[i] && (sd = session[i]->session_data) != NULL && sd->state.auth) {
 					if (sd->partyspy == p->party_id) {
-						if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+						if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 							memcpy(WFIFOP(sd->fd,0), buf, len);
 							WFIFOSET(sd->fd,len);
 						}
@@ -405,7 +400,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 		break;
 	case SELF:
 		sd = (struct map_session_data *)bl;
-		if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+		if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 			memcpy(WFIFOP(sd->fd,0), buf, len);
 			WFIFOSET(sd->fd,len);
 		}
@@ -435,7 +430,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 				if ((sd = g->member[i].sd) != NULL) {
 					if (type == GUILD_WOS && sd->bl.id == bl->id)
 						continue;
-					if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 						memcpy(WFIFOP(sd->fd,0), buf, len);
 						WFIFOSET(sd->fd,len);
 					}
@@ -444,7 +439,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 			for (i = 0; i < fd_max; i++){
 				if (session[i] && (sd = session[i]->session_data) != NULL && sd->state.auth) {
 					if (sd->guildspy == g->guild_id) {
-						if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+						if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 							memcpy(WFIFOP(sd->fd,0), buf, len);
 							WFIFOSET(sd->fd,len);
 						}
@@ -472,7 +467,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 					    (sd->bl.x < x0 || sd->bl.y < y0 ||
 					     sd->bl.x > x1 || sd->bl.y > y1))
 						continue;
-					if (packet_size_table[sd->packet_ver-5][RBUFW(buf,0)]) { // packet must exist for the client version
+					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 						memcpy(WFIFOP(sd->fd,0), buf, len);
 						WFIFOSET(sd->fd,len);
 					}
@@ -7297,7 +7292,7 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 	// packet DB
 	if (RFIFOW(fd,0) == packet_db_connect_cmd) {
 		//printf("Received bytes %d with packet 0x72.\n", RFIFOREST(fd));
-		account_id = RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][0]);
+		account_id = RFIFOL(fd,packet_db[packet_db_ver][packet_db_connect_cmd].pos[0]);
 	// 0x72
 	} else if (RFIFOW(fd,0) == 0x72) {
 		//printf("Received bytes %d with packet 0x72.\n", RFIFOREST(fd));
@@ -7343,10 +7338,10 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 		// 0x72
 		if (RFIFOW(fd,0) == packet_db_connect_cmd) {
 			sd->packet_ver = packet_db_ver; // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-			pc_setnewpc(sd, account_id, RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][1]),
-				RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][2]),
-				RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][3]),
-				RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][4]), fd);
+			pc_setnewpc(sd, account_id, RFIFOL(fd,packet_db[packet_db_ver][packet_db_connect_cmd].pos[1]),
+				RFIFOL(fd,packet_db[packet_db_ver][packet_db_connect_cmd].pos[2]),
+				RFIFOL(fd,packet_db[packet_db_ver][packet_db_connect_cmd].pos[3]),
+				RFIFOL(fd,packet_db[packet_db_ver][packet_db_connect_cmd].pos[4]), fd);
 		} else if (RFIFOW(fd,0) == 0x72) {
 			if (RFIFOREST(fd) >= 39 && (RFIFOB(fd,38) == 0 || RFIFOB(fd,38) == 1)) { // 00 = Female, 01 = Male
 				sd->packet_ver = 7; // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
@@ -7564,36 +7559,40 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 	nullpo_retv(sd);
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 8:
-		sd->client_tick = RFIFOL(fd,6);
-		break;
-	case 9:
-		sd->client_tick = RFIFOL(fd,9);
-		break;
-	case 10:
-		sd->client_tick = RFIFOL(fd,7);
-		break;
-	case 11:
-		sd->client_tick = RFIFOL(fd,10);
-		break;
-	case 12:
-		sd->client_tick = RFIFOL(fd,6);
-		break;
-	case 13:
-	case 14:
-		sd->client_tick = RFIFOL(fd,5);
-		break;
-	case 15:
-		sd->client_tick = RFIFOL(fd,3);
-		break;
-	case 16:
-		sd->client_tick = RFIFOL(fd,5);
-		break;
-
-	default: // old version by default (and version 6 + 7)
-		sd->client_tick = RFIFOL(fd,2);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		sd->client_tick=RFIFOL(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0]);
+	} else {	
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 8:
+			sd->client_tick = RFIFOL(fd,6);
+			break;
+		case 9:
+			sd->client_tick = RFIFOL(fd,9);
+			break;
+		case 10:
+			sd->client_tick = RFIFOL(fd,7);
+			break;
+		case 11:
+			sd->client_tick = RFIFOL(fd,10);
+			break;
+		case 12:
+			sd->client_tick = RFIFOL(fd,6);
+			break;
+		case 13:
+		case 14:
+			sd->client_tick = RFIFOL(fd,5);
+			break;
+		case 15:
+			sd->client_tick = RFIFOL(fd,3);
+			break;
+		case 16:
+			sd->client_tick = RFIFOL(fd,5);
+			break;
+		
+		default: // old version by default (and version 6 + 7)
+			sd->client_tick = RFIFOL(fd,2);
+			break;
+		}
 	}
 
 	sd->server_tick = gettick();
@@ -7606,7 +7605,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
  */
 void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 	int x, y;
-
+	
 	nullpo_retv(sd);
 
 	if (pc_isdead(sd)) {
@@ -7644,52 +7643,58 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 
 	pc_stopattack(sd);
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 6:
-		x = RFIFOB(fd,5) * 4 + (RFIFOB(fd,6) >> 6);
-		y = ((RFIFOB(fd,6) & 0x3f) << 4) + (RFIFOB(fd,7) >> 4);
-		break;
-	case 7:
-		x = RFIFOB(fd,6) * 4 + (RFIFOB(fd,7) >> 6);
-		y = ((RFIFOB(fd,7) & 0x3f) << 4) + (RFIFOB(fd,8) >> 4);
-		break;
-	case 8:
-		x = RFIFOB(fd,3) * 4 + (RFIFOB(fd,4) >> 6);
-		y = ((RFIFOB(fd,4) & 0x3f) << 4) + (RFIFOB(fd,5) >> 4);
-		break;
-	case 9:
-		x = RFIFOB(fd,12) * 4 + (RFIFOB(fd,13) >> 6);
-		y = ((RFIFOB(fd,13) & 0x3f) << 4) + (RFIFOB(fd,14) >> 4);
-		break;
-	case 10:
-		x = RFIFOB(fd,6) * 4 + (RFIFOB(fd,7) >> 6);
-		y = ((RFIFOB(fd,7) & 0x3f) << 4) + (RFIFOB(fd,8) >> 4);
-		break;
-	case 11:
-		x = RFIFOB(fd,11) * 4 + (RFIFOB(fd,12) >> 6);
-		y = ((RFIFOB(fd,12) & 0x3f) << 4) + (RFIFOB(fd,13) >> 4);
-		break;
-	case 12:
-		x = RFIFOB(fd,3) * 4 + (RFIFOB(fd,4) >> 6);
-		y = ((RFIFOB(fd,4) & 0x3f) << 4) + (RFIFOB(fd,5) >> 4);
-		break;
-	case 13:
-	case 14:
-		x = RFIFOB(fd,3) * 4 + (RFIFOB(fd,4) >> 6);
-		y = ((RFIFOB(fd,4) & 0x3f) << 4) + (RFIFOB(fd,5) >> 4);
-		break;
-	case 15:
-		x = RFIFOB(fd,4) * 4 + (RFIFOB(fd,5) >> 6);
-		y = ((RFIFOB(fd,5) & 0x3f) << 4) + (RFIFOB(fd,6) >> 4);
-		break;
-	case 16:
-		x = RFIFOB(fd,10) * 4 + (RFIFOB(fd,11) >> 6);
-		y = ((RFIFOB(fd,11) & 0x3f) << 4) + (RFIFOB(fd,12) >> 4);
-		break;
-	default: // old version by default
-		x = RFIFOB(fd,2) * 4 + (RFIFOB(fd,3) >> 6);
-		y = ((RFIFOB(fd,3) & 0x3f) << 4) + (RFIFOB(fd,4) >> 4);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		int cmd = RFIFOW(fd,0);
+		x = RFIFOB(fd,packet_db[packet_db_ver][cmd].pos[0]) * 4 + (RFIFOB(fd,packet_db[packet_db_ver][cmd].pos[0] + 1) >> 6);
+		y = ((RFIFOB(fd,packet_db[packet_db_ver][cmd].pos[0]+1) & 0x3f) << 4) + (RFIFOB(fd,packet_db[packet_db_ver][cmd].pos[0] + 2) >> 4);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 6:
+			x = RFIFOB(fd,5) * 4 + (RFIFOB(fd,6) >> 6);
+			y = ((RFIFOB(fd,6) & 0x3f) << 4) + (RFIFOB(fd,7) >> 4);
+			break;
+		case 7:
+			x = RFIFOB(fd,6) * 4 + (RFIFOB(fd,7) >> 6);
+			y = ((RFIFOB(fd,7) & 0x3f) << 4) + (RFIFOB(fd,8) >> 4);
+			break;
+		case 8:
+			x = RFIFOB(fd,3) * 4 + (RFIFOB(fd,4) >> 6);
+			y = ((RFIFOB(fd,4) & 0x3f) << 4) + (RFIFOB(fd,5) >> 4);
+			break;
+		case 9:
+			x = RFIFOB(fd,12) * 4 + (RFIFOB(fd,13) >> 6);
+			y = ((RFIFOB(fd,13) & 0x3f) << 4) + (RFIFOB(fd,14) >> 4);
+			break;
+		case 10:
+			x = RFIFOB(fd,6) * 4 + (RFIFOB(fd,7) >> 6);
+			y = ((RFIFOB(fd,7) & 0x3f) << 4) + (RFIFOB(fd,8) >> 4);
+			break;
+		case 11:
+			x = RFIFOB(fd,11) * 4 + (RFIFOB(fd,12) >> 6);
+			y = ((RFIFOB(fd,12) & 0x3f) << 4) + (RFIFOB(fd,13) >> 4);
+			break;
+		case 12:
+			x = RFIFOB(fd,3) * 4 + (RFIFOB(fd,4) >> 6);
+			y = ((RFIFOB(fd,4) & 0x3f) << 4) + (RFIFOB(fd,5) >> 4);
+			break;
+		case 13:
+		case 14:
+			x = RFIFOB(fd,3) * 4 + (RFIFOB(fd,4) >> 6);
+			y = ((RFIFOB(fd,4) & 0x3f) << 4) + (RFIFOB(fd,5) >> 4);
+			break;
+		case 15:
+			x = RFIFOB(fd,4) * 4 + (RFIFOB(fd,5) >> 6);
+			y = ((RFIFOB(fd,5) & 0x3f) << 4) + (RFIFOB(fd,6) >> 4);
+			break;
+		case 16:
+			x = RFIFOB(fd,10) * 4 + (RFIFOB(fd,11) >> 6);
+			y = ((RFIFOB(fd,11) & 0x3f) << 4) + (RFIFOB(fd,12) >> 4);
+			break;
+		default: // old version by default
+			x = RFIFOB(fd,2) * 4 + (RFIFOB(fd,3) >> 6);
+			y = ((RFIFOB(fd,3) & 0x3f) << 4) + (RFIFOB(fd,4) >> 4);
+			break;
+		}
 	}
 	pc_walktoxy(sd, x, y);
 
@@ -7734,35 +7739,39 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 	struct block_list *bl;
 	int account_id;
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 8:
-		account_id = RFIFOL(fd,11);
-		break;
-	case 9:
-		account_id = RFIFOL(fd,8);
-		break;
-	case 10:
-		account_id = RFIFOL(fd,10);
-		break;
-	case 11:
-		account_id = RFIFOL(fd,6);
-		break;
-	case 12:
-		account_id = RFIFOL(fd,11);
-		break;
-	case 13:
-	case 14:
-		account_id = RFIFOL(fd,6);
-		break;
-	case 15:
-		account_id = RFIFOL(fd,9);
-		break;
-	case 16:
-		account_id = RFIFOL(fd,4);
-		break;
-	default: // old version by default (+ packet version 6 and 7)
-		account_id = RFIFOL(fd,2);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		account_id = RFIFOL(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 8:
+			account_id = RFIFOL(fd,11);
+			break;
+		case 9:
+			account_id = RFIFOL(fd,8);
+			break;
+		case 10:
+			account_id = RFIFOL(fd,10);
+			break;
+		case 11:
+			account_id = RFIFOL(fd,6);
+			break;
+		case 12:
+			account_id = RFIFOL(fd,11);
+			break;
+		case 13:
+		case 14:
+			account_id = RFIFOL(fd,6);
+			break;
+		case 15:
+			account_id = RFIFOL(fd,9);
+			break;
+		case 16:
+			account_id = RFIFOL(fd,4);
+			break;
+		default: // old version by default (+ packet version 6 and 7)
+			account_id = RFIFOL(fd,2);
+			break;
+		}
 	}
 	bl = map_id2bl(account_id);
 	if (bl == NULL)
@@ -8020,49 +8029,54 @@ void clif_parse_ChangeDir(int fd, struct map_session_data *sd) {
 
 	nullpo_retv(sd);
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 7:
-		headdir = RFIFOW(fd,5);
-		dir = RFIFOB(fd,12);
-		break;
-	case 8:
-		headdir = RFIFOW(fd,5);
-		dir = RFIFOB(fd,12);
-		break;
-	case 9:
-		headdir = RFIFOW(fd,7);
-		dir = RFIFOB(fd,11);
-		break;
-	case 10:
-		headdir = RFIFOW(fd,4);
-		dir = RFIFOB(fd,9);
-		break;
-	case 11:
-		headdir = RFIFOW(fd,8);
-		dir = RFIFOB(fd,17);
-		break;
-	case 12:
-		headdir = RFIFOW(fd,5);
-		dir = RFIFOB(fd,12);
-		break;
-	case 13:
-	case 14:
-		headdir = RFIFOW(fd,6);
-		dir = RFIFOB(fd,14);
-		break;
-	case 15:
-		headdir = RFIFOW(fd,3);
-		dir = RFIFOB(fd,7);
-		break;
-	case 16:
-		headdir = RFIFOW(fd,12);
-		dir = RFIFOB(fd,22);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		headdir = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0]);
+		dir = RFIFOB(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[1]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 7:
+			headdir = RFIFOW(fd,5);
+			dir = RFIFOB(fd,12);
+			break;
+		case 8:
+			headdir = RFIFOW(fd,5);
+			dir = RFIFOB(fd,12);
+			break;
+		case 9:
+			headdir = RFIFOW(fd,7);
+			dir = RFIFOB(fd,11);
+			break;
+		case 10:
+			headdir = RFIFOW(fd,4);
+			dir = RFIFOB(fd,9);
+			break;
+		case 11:
+			headdir = RFIFOW(fd,8);
+			dir = RFIFOB(fd,17);
+			break;
+		case 12:
+			headdir = RFIFOW(fd,5);
+			dir = RFIFOB(fd,12);
+			break;
+		case 13:
+		case 14:
+			headdir = RFIFOW(fd,6);
+			dir = RFIFOB(fd,14);
+			break;
+		case 15:
+			headdir = RFIFOW(fd,3);
+			dir = RFIFOB(fd,7);
+			break;
+		case 16:
+			headdir = RFIFOW(fd,12);
+			dir = RFIFOB(fd,22);
+			break;
 
-	default: // old version by default (and packet version 6)
-		headdir = RFIFOW(fd,2);
-		dir = RFIFOB(fd,4);
-		break;
+		default: // old version by default (and packet version 6)
+			headdir = RFIFOW(fd,2);
+			dir = RFIFOB(fd,4);
+			break;
+		}
 	}
 
 	pc_setdir(sd, dir, headdir);
@@ -8129,45 +8143,50 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 	pc_stop_walking(sd, 0);
 	pc_stopattack(sd);
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 8:
-		target_id = RFIFOL(fd,3);
-		action_type = RFIFOB(fd,8);
-		break;
-	case 9:
-		target_id = RFIFOL(fd,7);
-		action_type = RFIFOB(fd,17);
-		break;
-	case 10:
-		target_id = RFIFOL(fd,9);
-		action_type = RFIFOB(fd,22);
-		break;
-	case 11:
-		target_id = RFIFOL(fd,3);
-		action_type = RFIFOB(fd,8);
-		break;
-	case 12:
-		target_id = RFIFOL(fd,3);
-		action_type = RFIFOB(fd,8);
-		break;
-	case 13:
-	case 14:
-		target_id = RFIFOL(fd,4);
-		action_type = RFIFOB(fd,14);
-		break;
-	case 15:
-		target_id = RFIFOL(fd,6);
-		action_type = RFIFOB(fd,17);
-		break;
-	case 16:
-		target_id = RFIFOL(fd,9);
-		action_type = RFIFOB(fd,19);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		target_id = RFIFOL(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0]);
+		action_type = RFIFOB(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[1]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 8:
+			target_id = RFIFOL(fd,3);
+			action_type = RFIFOB(fd,8);
+			break;
+		case 9:
+			target_id = RFIFOL(fd,7);
+			action_type = RFIFOB(fd,17);
+			break;
+		case 10:
+			target_id = RFIFOL(fd,9);
+			action_type = RFIFOB(fd,22);
+			break;
+		case 11:
+			target_id = RFIFOL(fd,3);
+			action_type = RFIFOB(fd,8);
+			break;
+		case 12:
+			target_id = RFIFOL(fd,3);
+			action_type = RFIFOB(fd,8);
+			break;
+		case 13:
+		case 14:
+			target_id = RFIFOL(fd,4);
+			action_type = RFIFOB(fd,14);
+			break;
+		case 15:
+			target_id = RFIFOL(fd,6);
+			action_type = RFIFOB(fd,17);
+			break;
+		case 16:
+			target_id = RFIFOL(fd,9);
+			action_type = RFIFOB(fd,19);
+			break;
 
-	default: // old version by default (and packet version 6 and 7)
-		target_id = RFIFOL(fd,2);
-		action_type = RFIFOB(fd,6);
-		break;
+		default: // old version by default (and packet version 6 and 7)
+			target_id = RFIFOL(fd,2);
+			action_type = RFIFOB(fd,6);
+			break;
+		}
 	}
 
 	switch(action_type) {
@@ -8332,38 +8351,42 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd) {
 
 	nullpo_retv(sd);
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 7:
-		map_object_id = RFIFOL(fd,6);
-		break;
-	case 8:
-		map_object_id = RFIFOL(fd,6);
-		break;
-	case 9:
-		map_object_id = RFIFOL(fd,9);
-		break;
-	case 10:
-		map_object_id = RFIFOL(fd,7);
-		break;
-	case 11:
-		map_object_id = RFIFOL(fd,10);
-		break;
-	case 12:
-		map_object_id = RFIFOL(fd,6);
-		break;
-	case 13:
-	case 14:
-		map_object_id = RFIFOL(fd,5);
-		break;
-	case 15:
-		map_object_id = RFIFOL(fd,3);
-		break;
-	case 16:
-		map_object_id = RFIFOL(fd,5);
-		break;
-	default: // old version by default (and packet version 6)
-		map_object_id = RFIFOL(fd,2);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		map_object_id = RFIFOL(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 7:
+			map_object_id = RFIFOL(fd,6);
+			break;
+		case 8:
+			map_object_id = RFIFOL(fd,6);
+			break;
+		case 9:
+			map_object_id = RFIFOL(fd,9);
+			break;
+		case 10:
+			map_object_id = RFIFOL(fd,7);
+			break;
+		case 11:
+			map_object_id = RFIFOL(fd,10);
+			break;
+		case 12:
+			map_object_id = RFIFOL(fd,6);
+			break;
+		case 13:
+		case 14:
+			map_object_id = RFIFOL(fd,5);
+			break;
+		case 15:
+			map_object_id = RFIFOL(fd,3);
+			break;
+		case 16:
+			map_object_id = RFIFOL(fd,5);
+			break;
+		default: // old version by default (and packet version 6)
+			map_object_id = RFIFOL(fd,2);
+			break;
+		}
 	}
 	fitem = (struct flooritem_data*)map_id2bl(map_object_id);
 
@@ -8404,44 +8427,49 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd) {
 		sd->sc_data[SC_BERSERK].timer != -1)) ) //バーサーク
 		return;
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 8:
-		item_index = RFIFOW(fd,5) - 2;
-		item_amount = RFIFOW(fd,12);
-		break;
-	case 9:
-		item_index = RFIFOW(fd,8) - 2;
-		item_amount = RFIFOW(fd,15);
-		break;
-	case 10:
-		item_index = RFIFOW(fd,6) - 2;
-		item_amount = RFIFOW(fd,15);
-		break;
-	case 11:
-		item_index = RFIFOW(fd,12) - 2;
-		item_amount = RFIFOW(fd,17);
-		break;
-	case 12:
-		item_index = RFIFOW(fd,5) - 2;
-		item_amount = RFIFOW(fd,12);
-		break;
-	case 13:
-	case 14:
-		item_index = RFIFOW(fd,6) - 2;
-		item_amount = RFIFOW(fd,10);
-		break;
-	case 15:
-		item_index = RFIFOW(fd,4) - 2;
-		item_amount = RFIFOW(fd,10);
-		break;
-	case 16:
-		item_index = RFIFOW(fd,15) - 2;
-		item_amount = RFIFOW(fd,18);
-		break;
-	default: // old version by default (+ packet version 6 and 7)
-		item_index = RFIFOW(fd,2) - 2;
-		item_amount = RFIFOW(fd,4);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		item_index = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0])-2;
+		item_amount = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[1]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 8:
+			item_index = RFIFOW(fd,5) - 2;
+			item_amount = RFIFOW(fd,12);
+			break;
+		case 9:
+			item_index = RFIFOW(fd,8) - 2;
+			item_amount = RFIFOW(fd,15);
+			break;
+		case 10:
+			item_index = RFIFOW(fd,6) - 2;
+			item_amount = RFIFOW(fd,15);
+			break;
+		case 11:
+			item_index = RFIFOW(fd,12) - 2;
+			item_amount = RFIFOW(fd,17);
+			break;
+		case 12:
+			item_index = RFIFOW(fd,5) - 2;
+			item_amount = RFIFOW(fd,12);
+			break;
+		case 13:
+		case 14:
+			item_index = RFIFOW(fd,6) - 2;
+			item_amount = RFIFOW(fd,10);
+			break;
+		case 15:
+			item_index = RFIFOW(fd,4) - 2;
+			item_amount = RFIFOW(fd,10);
+			break;
+		case 16:
+			item_index = RFIFOW(fd,15) - 2;
+			item_amount = RFIFOW(fd,18);
+			break;
+		default: // old version by default (+ packet version 6 and 7)
+			item_index = RFIFOW(fd,2) - 2;
+			item_amount = RFIFOW(fd,4);
+			break;
+		}
 	}
 
 	pc_dropitem(sd, item_index, item_amount);
@@ -8468,41 +8496,45 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 	if (sd->invincible_timer != -1)
 		pc_delinvincibletimer(sd);
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 6:
-		pc_useitem(sd,RFIFOW(fd,5)-2);
-		break;
-	case 7:
-		pc_useitem(sd,RFIFOW(fd,6)-2);
-		break;
-	case 8:
-		pc_useitem(sd,RFIFOW(fd,6)-2);
-		break;
-	case 9:
-		pc_useitem(sd,RFIFOW(fd,9)-2);
-		break;
-	case 10:
-		pc_useitem(sd,RFIFOW(fd,7)-2);
-		break;
-	case 11:
-		pc_useitem(sd,RFIFOW(fd,10)-2);
-		break;
-	case 12:
-		pc_useitem(sd,RFIFOW(fd,6)-2);
-		break;
-	case 13:
-	case 14:
-		pc_useitem(sd,RFIFOW(fd,5)-2);
-		break;
-	case 15:
-		pc_useitem(sd,RFIFOW(fd,3)-2);
-		break;
-	case 16:
-		pc_useitem(sd,RFIFOW(fd,5)-2);
-		break;
-	default: // old version by default
-		pc_useitem(sd,RFIFOW(fd,2)-2);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		pc_useitem(sd,RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0])-2);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 6:
+			pc_useitem(sd,RFIFOW(fd,5)-2);
+			break;
+		case 7:
+			pc_useitem(sd,RFIFOW(fd,6)-2);
+			break;
+		case 8:
+			pc_useitem(sd,RFIFOW(fd,6)-2);
+			break;
+		case 9:
+			pc_useitem(sd,RFIFOW(fd,9)-2);
+			break;
+		case 10:
+			pc_useitem(sd,RFIFOW(fd,7)-2);
+			break;
+		case 11:
+			pc_useitem(sd,RFIFOW(fd,10)-2);
+			break;
+		case 12:
+			pc_useitem(sd,RFIFOW(fd,6)-2);
+			break;
+		case 13:
+		case 14:
+			pc_useitem(sd,RFIFOW(fd,5)-2);
+			break;
+		case 15:
+			pc_useitem(sd,RFIFOW(fd,3)-2);
+			break;
+		case 16:
+			pc_useitem(sd,RFIFOW(fd,5)-2);
+			break;
+		default: // old version by default
+			pc_useitem(sd,RFIFOW(fd,2)-2);
+			break;
+		}
 	}
 }
 
@@ -8847,63 +8879,69 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if (sd->chatID || sd->npc_id != 0 || sd->vender_id != 0)
 		return;
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 6:
-		skilllv = RFIFOW(fd,4);
-		skillnum = RFIFOW(fd,9);
-		target_id = RFIFOL(fd,11);
-		break;
-	case 7:
-		skilllv = RFIFOW(fd,7);
-		skillnum = RFIFOW(fd,9);
-		target_id = RFIFOL(fd,15);
-		break;
-	case 8:
-		skilllv = RFIFOW(fd,7);
-		skillnum = RFIFOW(fd,12);
-		target_id = RFIFOL(fd,16);
-		break;
-	case 9:
-		skilllv = RFIFOW(fd,11);
-		skillnum = RFIFOW(fd,18);
-		target_id = RFIFOL(fd,22);
-		break;
-	case 10:
-		skilllv = RFIFOW(fd,9);
-		skillnum = RFIFOW(fd,15);
-		target_id = RFIFOL(fd,18);
-		break;
-	case 11:
-		skilllv = RFIFOW(fd,4);
-		skillnum = RFIFOW(fd,7);
-		target_id = RFIFOL(fd,10);
-		break;
-	case 12:
-		skilllv = RFIFOW(fd,7);
-		skillnum = RFIFOW(fd,12);
-		target_id = RFIFOL(fd,16);
-		break;
-	case 13:
-	case 14:
-		skilllv = RFIFOW(fd,4);
-		skillnum = RFIFOW(fd,10);
-		target_id = RFIFOL(fd,22);
-		break;
-	case 15:
-		skilllv = RFIFOW(fd,8);
-		skillnum = RFIFOW(fd,12);
-		target_id = RFIFOL(fd,18);
-		break;
-	case 16:
-		skilllv = RFIFOW(fd,8);
-		skillnum = RFIFOW(fd,16);
-		target_id = RFIFOL(fd,22);
-		break;
-	default: // old version by default
-		skilllv = RFIFOW(fd,2);
-		skillnum = RFIFOW(fd,4);
-		target_id = RFIFOL(fd,6);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		skilllv = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0]);
+		skillnum = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[1]);
+		target_id = RFIFOL(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[2]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 6:
+			skilllv = RFIFOW(fd,4);
+			skillnum = RFIFOW(fd,9);
+			target_id = RFIFOL(fd,11);
+			break;
+		case 7:
+			skilllv = RFIFOW(fd,7);
+			skillnum = RFIFOW(fd,9);
+			target_id = RFIFOL(fd,15);
+			break;
+		case 8:
+			skilllv = RFIFOW(fd,7);
+			skillnum = RFIFOW(fd,12);
+			target_id = RFIFOL(fd,16);
+			break;
+		case 9:
+			skilllv = RFIFOW(fd,11);
+			skillnum = RFIFOW(fd,18);
+			target_id = RFIFOL(fd,22);
+			break;
+		case 10:
+			skilllv = RFIFOW(fd,9);
+			skillnum = RFIFOW(fd,15);
+			target_id = RFIFOL(fd,18);
+			break;
+		case 11:
+			skilllv = RFIFOW(fd,4);
+			skillnum = RFIFOW(fd,7);
+			target_id = RFIFOL(fd,10);
+			break;
+		case 12:
+			skilllv = RFIFOW(fd,7);
+			skillnum = RFIFOW(fd,12);
+			target_id = RFIFOL(fd,16);
+			break;
+		case 13:
+		case 14:
+			skilllv = RFIFOW(fd,4);
+			skillnum = RFIFOW(fd,10);
+			target_id = RFIFOL(fd,22);
+			break;
+		case 15:
+			skilllv = RFIFOW(fd,8);
+			skillnum = RFIFOW(fd,12);
+			target_id = RFIFOL(fd,18);
+			break;
+		case 16:
+			skilllv = RFIFOW(fd,8);
+			skillnum = RFIFOW(fd,16);
+			target_id = RFIFOL(fd,22);
+			break;
+		default: // old version by default
+			skilllv = RFIFOW(fd,2);
+			skillnum = RFIFOW(fd,4);
+			target_id = RFIFOL(fd,6);
+			break;
+		}
 	}
 
 	if (skillnotok(skillnum, sd))
@@ -8974,96 +9012,103 @@ void clif_parse_UseSkillToPos(int fd, struct map_session_data *sd) {
 	if(sd->chatID) return;
 
 	skillmoreinfo = -1;
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 6:
-		skilllv = RFIFOW(fd,4);
-		skillnum = RFIFOW(fd,9);
-		x = RFIFOW(fd,11);
-		y = RFIFOW(fd,13);
-		if (RFIFOW(fd,0) == 0x190)
-			skillmoreinfo = 15;
-		break;
-	case 7:
-		skilllv = RFIFOW(fd,7);
-		skillnum = RFIFOW(fd,9);
-		x = RFIFOW(fd,15);
-		y = RFIFOW(fd,17);
-		if (RFIFOW(fd,0) == 0x190)
-			skillmoreinfo = 19;
-		break;
-	case 8:
-		skilllv = RFIFOW(fd,3);
-		skillnum = RFIFOW(fd,6);
-		x = RFIFOW(fd,17);
-		y = RFIFOW(fd,21);
-		if (RFIFOW(fd,0) == 0x0a2)
-			skillmoreinfo = 23;
-		break;
-	case 9:
-		skilllv = RFIFOW(fd,5);
-		skillnum = RFIFOW(fd,15);
-		x = RFIFOW(fd,29);
-		y = RFIFOW(fd,38);
-		if (RFIFOW(fd,0) == 0x0a2)
-			skillmoreinfo = 40;
-		break;
-	case 10:
-		skilllv = RFIFOW(fd,10);
-		skillnum = RFIFOW(fd,14);
-		x = RFIFOW(fd,18);
-		y = RFIFOW(fd,23);
-		if (RFIFOW(fd,0) == 0x08c)
-			skillmoreinfo = 25;
-		break;
-	case 11:
-		skilllv = RFIFOW(fd,6); // 16? to check.
-		skillnum = RFIFOW(fd,20);
-		x = RFIFOW(fd,23);
-		y = RFIFOW(fd,27);
-		if (RFIFOW(fd,0) == 0x08c)
-			skillmoreinfo = 29;
-		break;
-	case 12:
-		skilllv = RFIFOW(fd,3); // 2? to check.
-		skillnum = RFIFOW(fd,6);
-		x = RFIFOW(fd,17);
-		y = RFIFOW(fd,21);
-		if (RFIFOW(fd,0) == 0x08c)
-			skillmoreinfo = 23;
-		break;
-	case 13:
-	case 14:
-		skilllv = RFIFOW(fd,6);
-		skillnum = RFIFOW(fd,9);
-		x = RFIFOW(fd,23);
-		y = RFIFOW(fd,26);
-		if (RFIFOW(fd,0) == 0x08c)
-			skillmoreinfo = 28;
-		break;
-	case 15:
-		skilllv = RFIFOW(fd,4);
-		skillnum = RFIFOW(fd,9);
-		x = RFIFOW(fd,22);
-		y = RFIFOW(fd,28);
-		if (RFIFOW(fd,0) == 0x113)
-			skillmoreinfo = 30;
-		break;
-	case 16:
-		skilllv = RFIFOW(fd,9);
-		skillnum = RFIFOW(fd,18);
-		x = RFIFOW(fd,22);
-		y = RFIFOW(fd,32);
-		if (RFIFOW(fd,0) == 0x07e)
-			skillmoreinfo = 34;
-		break;
-	default: // old version by default
-		skilllv = RFIFOW(fd,2);
-		skillnum = RFIFOW(fd,4);
-		x = RFIFOW(fd,6);
-		y = RFIFOW(fd,8);
-		if (RFIFOW(fd,0) == 0x190)
-			skillmoreinfo = 10;
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		skilllv = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0]);
+		skillnum = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[1]);
+		x = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[2]);
+		y = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[3]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 6:
+			skilllv = RFIFOW(fd,4);
+			skillnum = RFIFOW(fd,9);
+			x = RFIFOW(fd,11);
+			y = RFIFOW(fd,13);
+			if (RFIFOW(fd,0) == 0x190)
+				skillmoreinfo = 15;
+			break;
+		case 7:
+			skilllv = RFIFOW(fd,7);
+			skillnum = RFIFOW(fd,9);
+			x = RFIFOW(fd,15);
+			y = RFIFOW(fd,17);
+			if (RFIFOW(fd,0) == 0x190)
+				skillmoreinfo = 19;
+			break;
+		case 8:
+			skilllv = RFIFOW(fd,3);
+			skillnum = RFIFOW(fd,6);
+			x = RFIFOW(fd,17);
+			y = RFIFOW(fd,21);
+			if (RFIFOW(fd,0) == 0x0a2)
+				skillmoreinfo = 23;
+			break;
+		case 9:
+			skilllv = RFIFOW(fd,5);
+			skillnum = RFIFOW(fd,15);
+			x = RFIFOW(fd,29);
+			y = RFIFOW(fd,38);
+			if (RFIFOW(fd,0) == 0x0a2)
+				skillmoreinfo = 40;
+			break;
+		case 10:
+			skilllv = RFIFOW(fd,10);
+			skillnum = RFIFOW(fd,14);
+			x = RFIFOW(fd,18);
+			y = RFIFOW(fd,23);
+			if (RFIFOW(fd,0) == 0x08c)
+				skillmoreinfo = 25;
+			break;
+		case 11:
+			skilllv = RFIFOW(fd,6); // 16? to check.
+			skillnum = RFIFOW(fd,20);
+			x = RFIFOW(fd,23);
+			y = RFIFOW(fd,27);
+			if (RFIFOW(fd,0) == 0x08c)
+				skillmoreinfo = 29;
+			break;
+		case 12:
+			skilllv = RFIFOW(fd,3); // 2? to check.
+			skillnum = RFIFOW(fd,6);
+			x = RFIFOW(fd,17);
+			y = RFIFOW(fd,21);
+			if (RFIFOW(fd,0) == 0x08c)
+				skillmoreinfo = 23;
+			break;
+		case 13:
+		case 14:
+			skilllv = RFIFOW(fd,6);
+			skillnum = RFIFOW(fd,9);
+			x = RFIFOW(fd,23);
+			y = RFIFOW(fd,26);
+			if (RFIFOW(fd,0) == 0x08c)
+				skillmoreinfo = 28;
+			break;
+		case 15:
+			skilllv = RFIFOW(fd,4);
+			skillnum = RFIFOW(fd,9);
+			x = RFIFOW(fd,22);
+			y = RFIFOW(fd,28);
+			if (RFIFOW(fd,0) == 0x113)
+				skillmoreinfo = 30;
+			break;
+		case 16:
+			skilllv = RFIFOW(fd,9);
+			skillnum = RFIFOW(fd,18);
+			x = RFIFOW(fd,22);
+			y = RFIFOW(fd,32);
+			if (RFIFOW(fd,0) == 0x07e)
+				skillmoreinfo = 34;
+			break;
+		default: // old version by default
+			skilllv = RFIFOW(fd,2);
+			skillnum = RFIFOW(fd,4);
+			x = RFIFOW(fd,6);
+			y = RFIFOW(fd,8);
+			if (RFIFOW(fd,0) == 0x190)
+				skillmoreinfo = 10;
+			break;
+		}
 	}
 
 	if (skillnotok(skillnum, sd))
@@ -9270,35 +9315,39 @@ void clif_parse_InsertCard(int fd,struct map_session_data *sd)
 void clif_parse_SolveCharName(int fd, struct map_session_data *sd) {
 	int char_id;
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 8:
-		char_id = RFIFOL(fd,8);
-		break;
-	case 9:
-		char_id = RFIFOL(fd,7);
-		break;
-	case 10:
-		char_id = RFIFOL(fd,10);
-		break;
-	case 11:
-		char_id = RFIFOL(fd,6);
-		break;
-	case 12:
-		char_id = RFIFOL(fd,8);
-		break;
-	case 13:
-	case 14:
-		char_id = RFIFOL(fd,12);
-		break;
-	case 15:
-		char_id = RFIFOL(fd,10);
-		break;
-	case 16:
-		char_id = RFIFOL(fd,7);
-		break;
-	default: // old version by default (+ packet version 6 and 7)
-		char_id = RFIFOL(fd,2);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		char_id = RFIFOL(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 8:
+			char_id = RFIFOL(fd,8);
+			break;
+		case 9:
+			char_id = RFIFOL(fd,7);
+			break;
+		case 10:
+			char_id = RFIFOL(fd,10);
+			break;
+		case 11:
+			char_id = RFIFOL(fd,6);
+			break;
+		case 12:
+			char_id = RFIFOL(fd,8);
+			break;
+		case 13:
+		case 14:
+			char_id = RFIFOL(fd,12);
+			break;
+		case 15:
+			char_id = RFIFOL(fd,10);
+			break;
+		case 16:
+			char_id = RFIFOL(fd,7);
+			break;
+		default: // old version by default (+ packet version 6 and 7)
+			char_id = RFIFOL(fd,2);
+			break;
+		}
 	}
 	clif_solved_charname(sd, char_id);
 }
@@ -9354,44 +9403,49 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd) {
 	if (sd->npc_id != 0 || sd->vender_id != 0)
 		return;
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 8:
-		item_index = RFIFOW(fd,5) - 2;
-		item_amount = RFIFOL(fd,12);
-		break;
-	case 9:
-		item_index = RFIFOW(fd,5) - 2;
-		item_amount = RFIFOL(fd,19);
-		break;
-	case 10:
-		item_index = RFIFOW(fd,3) - 2;
-		item_amount = RFIFOL(fd,15);
-		break;
-	case 11:
-		item_index = RFIFOW(fd,6) - 2;
-		item_amount = RFIFOL(fd,21);
-		break;
-	case 12:
-		item_index = RFIFOW(fd,5) - 2;
-		item_amount = RFIFOL(fd,12);
-		break;
-	case 13:
-	case 14:
-		item_index = RFIFOW(fd,6) - 2;
-		item_amount = RFIFOL(fd,9);
-		break;
-	case 15:
-		item_index = RFIFOW(fd,4) - 2;
-		item_amount = RFIFOL(fd,10);
-		break;
-	case 16:
-		item_index = RFIFOW(fd,10) - 2;
-		item_amount = RFIFOL(fd,16);
-		break;
-	default: // old version by default (+ packet version 6 and 7)
-		item_index = RFIFOW(fd,2) - 2;
-		item_amount = RFIFOL(fd,4);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		item_index = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0])-2;
+		item_amount = RFIFOL(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[1]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 8:
+			item_index = RFIFOW(fd,5) - 2;
+			item_amount = RFIFOL(fd,12);
+			break;
+		case 9:
+			item_index = RFIFOW(fd,5) - 2;
+			item_amount = RFIFOL(fd,19);
+			break;
+		case 10:
+			item_index = RFIFOW(fd,3) - 2;
+			item_amount = RFIFOL(fd,15);
+			break;
+		case 11:
+			item_index = RFIFOW(fd,6) - 2;
+			item_amount = RFIFOL(fd,21);
+			break;
+		case 12:
+			item_index = RFIFOW(fd,5) - 2;
+			item_amount = RFIFOL(fd,12);
+			break;
+		case 13:
+		case 14:
+			item_index = RFIFOW(fd,6) - 2;
+			item_amount = RFIFOL(fd,9);
+			break;
+		case 15:
+			item_index = RFIFOW(fd,4) - 2;
+			item_amount = RFIFOL(fd,10);
+			break;
+		case 16:
+			item_index = RFIFOW(fd,10) - 2;
+			item_amount = RFIFOL(fd,16);
+			break;
+		default: // old version by default (+ packet version 6 and 7)
+			item_index = RFIFOW(fd,2) - 2;
+			item_amount = RFIFOL(fd,4);
+			break;
+		}
 	}
 
 	if (item_index < 0 || item_index >= MAX_INVENTORY)
@@ -9415,44 +9469,49 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd) {
 
 	nullpo_retv(sd);
 
-	switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-	case 8:
-		item_index = RFIFOW(fd,10) - 1;
-		item_amount = RFIFOL(fd,22);
-		break;
-	case 9:
-		item_index = RFIFOW(fd,11) - 1;
-		item_amount = RFIFOL(fd,22);
-		break;
-	case 10:
-		item_index = RFIFOW(fd,3) - 1;
-		item_amount = RFIFOL(fd,13);
-		break;
-	case 11:
-		item_index = RFIFOW(fd,4) - 1;
-		item_amount = RFIFOL(fd,8);
-		break;
-	case 12:
-		item_index = RFIFOW(fd,10) - 1;
-		item_amount = RFIFOL(fd,22);
-		break;
-	case 13:
-	case 14:
-		item_index = RFIFOW(fd,12) - 1;
-		item_amount = RFIFOL(fd,18);
-		break;
-	case 15:
-		item_index = RFIFOW(fd,4) - 1;
-		item_amount = RFIFOL(fd,17);
-		break;
-	case 16:
-		item_index = RFIFOW(fd,11) - 1;
-		item_amount = RFIFOL(fd,17);
-		break;
-	default: // old version by default (+ packet version 6 and 7)
-		item_index = RFIFOW(fd,2) - 1;
-		item_amount = RFIFOL(fd,4);
-		break;
+	if (sd->packet_ver == packet_db_ver) {
+		item_index = RFIFOW(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[0])-1;
+		item_amount = RFIFOL(fd,packet_db[packet_db_ver][RFIFOW(fd,0)].pos[1]);
+	} else {
+		switch (sd->packet_ver) { // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+		case 8:
+			item_index = RFIFOW(fd,10) - 1;
+			item_amount = RFIFOL(fd,22);
+			break;
+		case 9:
+			item_index = RFIFOW(fd,11) - 1;
+			item_amount = RFIFOL(fd,22);
+			break;
+		case 10:
+			item_index = RFIFOW(fd,3) - 1;
+			item_amount = RFIFOL(fd,13);
+			break;
+		case 11:
+			item_index = RFIFOW(fd,4) - 1;
+			item_amount = RFIFOL(fd,8);
+			break;
+		case 12:
+			item_index = RFIFOW(fd,10) - 1;
+			item_amount = RFIFOL(fd,22);
+			break;
+		case 13:
+		case 14:
+			item_index = RFIFOW(fd,12) - 1;
+			item_amount = RFIFOL(fd,18);
+			break;
+		case 15:
+			item_index = RFIFOW(fd,4) - 1;
+			item_amount = RFIFOL(fd,17);
+			break;
+		case 16:
+			item_index = RFIFOW(fd,11) - 1;
+			item_amount = RFIFOL(fd,17);
+			break;
+		default: // old version by default (+ packet version 6 and 7)
+			item_index = RFIFOW(fd,2) - 1;
+			item_amount = RFIFOL(fd,4);
+			break;
+		}
 	}
 
 	if (sd->npc_id != 0 || sd->vender_id != 0)
@@ -10308,7 +10367,7 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
 
 	printf("packet debug 0x%4X\n",cmd);
 	printf("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-	for(i=0;i<packet_db_size[cmd];i++){
+	for(i=0;i<packet_db[sd->packet_ver][cmd].len;i++){
 		if((i&15)==0)
 			printf("\n%04X ",i);
 		printf("%02X ",RFIFOB(fd,i));
@@ -10317,8 +10376,7 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
 }
 
 // functions list
-static void (*clif_parse_func_table[10][MAX_PACKET_DB])() = {
-	{
+static void (*clif_parse_func_table[MAX_PACKET_DB])() = {
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -10420,15 +10478,6 @@ static void (*clif_parse_func_table[10][MAX_PACKET_DB])() = {
 #if 0
 	case 0xd3: clif_parse_IgnoreList
 #endif
-	},
-	{NULL},
-	{NULL},
-	{NULL},
-	{NULL},
-	{NULL},
-	{NULL},
-	{NULL},
-	{NULL}
 };
 
 /*==========================================
@@ -10456,6 +10505,9 @@ static int clif_parse(int fd) {
 //				clif_quitsave(fd, sd);
 			map_deliddb(&sd->bl); // account_id has been included in the DB before auth answer [Yor]
 //			sd = 0;
+		} else {
+			unsigned char *ip = (unsigned char *) &session[fd]->client_addr.sin_addr;
+			sprintf(tmp_output,"Player not identified with IP '"CL_WHITE"%d.%d.%d.%d"CL_RESET"' logged off.\n", ip[0],ip[1],ip[2],ip[3]);
 		}
 		ShowInfo(tmp_output);
 		close(fd);
@@ -10503,8 +10555,8 @@ static int clif_parse(int fd) {
 	else {
 		// packet DB		
 		if (cmd == packet_db_connect_cmd) {
-			if (RFIFOREST(fd) >= packet_db_size[cmd] &&
-				(RFIFOB(fd,packet_db_pos[cmd][4]) == 0 || RFIFOB(fd,packet_db_pos[cmd][4]) == 1)) {// 00 = Female, 01 = Male
+			if (RFIFOREST(fd) >= packet_db[packet_db_ver][cmd].len &&
+				(RFIFOB(fd,packet_db[packet_db_ver][cmd].pos[4]) == 0 || RFIFOB(fd,packet_db[packet_db_ver][cmd].pos[4]) == 1)) {// 00 = Female, 01 = Male
 				packet_ver = packet_db_ver;
 			}
 		// 0x72
@@ -10550,6 +10602,7 @@ static int clif_parse(int fd) {
 		} else {
 			// unknown client? leave packet ver as 0 so it'll disconnect anyway
 		}
+
 		// check if version is accepted
 		if (packet_ver <= 9 ||	// reject any client versions older than 6sept04
 			(packet_ver == 10 && (battle_config.packet_ver_flag &	1) == 0) ||
@@ -10559,18 +10612,17 @@ static int clif_parse(int fd) {
 			(packet_ver == 14 && (battle_config.packet_ver_flag &	16) == 0) ||
 			(packet_ver == 15 && (battle_config.packet_ver_flag &	32) == 0) ||
 			(packet_ver == 16 && (battle_config.packet_ver_flag &	64) == 0) ||
-			packet_ver > 16) {	// no support yet
+			packet_ver > MAX_PACKET_VER) {	// no support yet
 			WFIFOW(fd,0) = 0x6a;
 			WFIFOB(fd,2) = 5; // 05 = Game's EXE is not the latest version
 			WFIFOSET(fd,23);
-			close(fd);
-			session[fd]->eof = 1;
+			clif_setwaitclose(fd);
 			return 0;
 		}
 	}
 
 	// ゲーム用以外パケットか、認証を終える前に0072以外が来たら、切断する
-	if (cmd >= MAX_PACKET_DB || packet_size_table[packet_ver-5][cmd] == 0) {	// if packet is not inside these values: session is incorrect?? or auth packet is unknown
+	if (cmd >= MAX_PACKET_DB || packet_db[packet_ver][cmd].len == 0) {	// if packet is not inside these values: session is incorrect?? or auth packet is unknown
 		if (!fd)
 			return 0;
 		close(fd);
@@ -10580,7 +10632,7 @@ static int clif_parse(int fd) {
 	}
 
 	// パケット長を計算
-	packet_len = packet_size_table[packet_ver-5][cmd];
+	packet_len = packet_db[packet_ver][cmd].len;
 	if (packet_len == -1) {
 		if (RFIFOREST(fd) < 4)
 			return 0; // 可変長パケットで長さの所までデータが来てない
@@ -10596,12 +10648,9 @@ static int clif_parse(int fd) {
 
 	if (sd && sd->state.auth == 1 && sd->state.waitingdisconnect == 1) { // 切断待ちの場合パケットを処理しない
 
-	} else if (packet_ver < 8 && clif_parse_func_table[0][cmd]) { // packet version 5-6-7 use same functions, but size are different
+	} else if (packet_db[packet_ver][cmd].func) { // packet version 5-6-7 use same functions, but size are different
 		// パケット処理
-		clif_parse_func_table[0][cmd](fd, sd);
-	} else if (packet_ver >= 8 && clif_parse_func_table[packet_ver - 7][cmd]) {
-		// パケット処理
-		clif_parse_func_table[packet_ver - 7][cmd](fd, sd);
+		packet_db[packet_ver][cmd].func(fd, sd);
 	} else {
 		// 不明なパケット
 		if (battle_config.error_log) {
@@ -10669,7 +10718,7 @@ static int packetdb_readdb(void)
 	FILE *fp;
 	char line[1024];
 	int ln=0;
-	int cmd,j;
+	int cmd,j,packet_ver = 0;
 	char *str[32],*p,*str2[32],*p2;
 
 	struct {
@@ -10794,96 +10843,74 @@ static int packetdb_readdb(void)
 		{NULL,NULL}
 	};
 
-//	memset(packet_db,0,sizeof(packet_db));
-	memset(packet_db_pos,0,sizeof(packet_db_pos));
-	
 	if( (fp=fopen("db/packet_db.txt","r"))==NULL ){
-		printf("can't read db/packet_db.txt\n");		
+		printf("can't read db/packet_db.txt\n");
 		return 1;
 	}
 
-	{
-		char w1[1024],w2[1024];
-		while(fgets(line,1020,fp)){
-			if(line[0]=='/' && line[1]=='/')
-				continue;
-			if (sscanf(line,"%[^:]: %[^\r\n]",w1,w2) != 2)
-				continue;
-			if(strcmpi(w1,"packet_db_ver")==0) {
-				packet_db_ver = atoi(w2);
-				break;	// stop reading config and load the rest of the file
-			}
+	packet_db_ver = MAX_PACKET_VER;
+	
+	while(fgets(line,1020,fp)){
+		if(line[0]=='/' && line[1]=='/')
+			continue;
+		if (sscanf(line,"packet_ver: %d",&packet_ver) == 1) {
+			memcpy(&packet_db[packet_ver], &packet_db[packet_ver - 1], sizeof(packet_db[0]));	// copy into new version and continue
+			// i hope this isn't the wrong way to do things ^^;
+			continue;
 		}
-	}
-	if (packet_db_ver > 7) {	// minimum packet version allowed
-		// check if packet db version is higher than allowed
-		if (packet_db_ver > (j= 6 + sizeof(clif_parse_func_table)/sizeof(clif_parse_func_table[0])))
-			packet_db_ver = j;
-		
-		packet_db_size = packet_size_table[packet_db_ver - 5];
-		packet_db_parse_func = clif_parse_func_table[packet_db_ver - 7];
+		memset(str,0,sizeof(str));
 
-		while(fgets(line,1020,fp)){
-			if(line[0]=='/' && line[1]=='/')
-				continue;
-			memset(str,0,sizeof(str));
-			for(j=0,p=line;j<4 && p;j++){
-				str[j]=p;
-				p=strchr(p,',');
-				if(p) *p++=0;
-			}
-			if(str[0]==NULL)
-				continue;
+		for(j=0,p=line;j<4 && p;j++){
+			str[j]=p;
+			p=strchr(p,',');
+			if(p) *p++=0;
+		}
+		if(str[0]==NULL)
+			continue;
+		cmd=strtol(str[0],(char **)NULL,0);
+		if(cmd<=0 || cmd>=MAX_PACKET_DB)
+			continue;
+		if(str[1]==NULL){
+			sprintf(tmp_output, "packet_db: packet len error\n");
+			ShowError(tmp_output);
+			continue;
+		}
+		packet_db[packet_ver][cmd].len = atoi(str[1]);
 
-			cmd=strtol(str[0],(char **)NULL,0);
-			if(cmd<=0 || cmd>=MAX_PACKET_DB)
-				continue;
-
-			if(str[1]==NULL){
-				sprintf(tmp_output, "packet_db: packet len error\n");
-				ShowError(tmp_output);
-				continue;
-			}
-			packet_db_size[cmd] = atoi(str[1]);
-
-			if(str[2]==NULL){
-				ln++;
-				continue;
-			}
-			for(j=0;j<sizeof(clif_parse_func)/sizeof(clif_parse_func[0]);j++){
-				if(clif_parse_func[j].name != NULL &&
-					strcmp(str[2],clif_parse_func[j].name)==0){
-					packet_db_parse_func[cmd] = clif_parse_func[j].func;
-					break;
-				}
-			}
-			// set the identifying cmd for the packet_db version
-			if (strcmp(str[2],"wanttoconnection")==0){
-				packet_db_connect_cmd = cmd;
-			}
-			if(str[3]==NULL){
-				sprintf(tmp_output, "packet_db: packet error\n");
-				ShowError(tmp_output);
-				exit(1);
-			}
-			for(j=0,p2=str[3];p2;j++){
-				str2[j]=p2;
-				p2=strchr(p2,':');
-				if(p2) *p2++=0;
-				packet_db_pos[cmd][j]=atoi(str2[j]);
-			}
-
+		if(str[2]==NULL){
 			ln++;
-//			if(packet_size_table[packet_db_ver - 5][cmd] > 2 /* && packet_db[cmd].pos[0] == 0 */)
-//				printf("packet_db: %d 0x%x %d %s %p | %p\n",ln,cmd,packet_db_size[cmd],str[2],packet_db_parse_func[cmd],clif_parse_func_table[packet_db_ver - 7][cmd]);
+			continue;
 		}
-	} else {	// old packet version - just use predefined values
-		packet_db_size = packet_size_table[0];
-		packet_db_parse_func = clif_parse_func_table[0];
-		packet_db_connect_cmd = 0x72;
+		for(j=0;j<sizeof(clif_parse_func)/sizeof(clif_parse_func[0]);j++){
+			if(clif_parse_func[j].name != NULL &&
+				strcmp(str[2],clif_parse_func[j].name)==0){
+					packet_db[packet_ver][cmd].func = clif_parse_func[j].func;
+					break;
+			}
+		}
+		// set the identifying cmd for the packet_db version
+		if (strcmp(str[2],"wanttoconnection")==0){
+			packet_db_connect_cmd = cmd;
+		}
+		if(str[3]==NULL){
+			sprintf(tmp_output, "packet_db: packet error\n");
+			ShowError(tmp_output);
+			exit(1);
+		}
+		for(j=0,p2=str[3];p2;j++){
+			str2[j]=p2;
+			p2=strchr(p2,':');
+			if(p2) *p2++=0;
+			packet_db[packet_ver][cmd].pos[j]=atoi(str2[j]);
+		}
+
+		ln++;
+//		if(packet_db[packet_db_ver][cmd].len > 2 /* && packet_db[cmd].pos[0] == 0 */)
+//			printf("packet_db ver %d: %d 0x%x %d %s %p\n",packet_ver,ln,cmd,packet_db[packet_ver][cmd].len,str[2],packet_db[packet_ver][cmd].func);
 	}
+	
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/packet_db.txt");
+	sprintf(tmp_output,"Done reading packet version '"CL_WHITE"%d"CL_RESET"' in '"CL_WHITE"%s"CL_RESET"'.\n", packet_db_ver, "db/packet_db.txt");
 	ShowStatus(tmp_output);
 	return 0;
 
@@ -10894,276 +10921,316 @@ static int packetdb_readdb(void)
  *------------------------------------------
  */
 int do_init_clif(void) {
-#ifndef __WIN32
 	int i;
-#endif
 
-	// functions of packet version 5-6-7 are same, but size are different
-	// init packet function calls for packet ver 8
-	memcpy(clif_parse_func_table[1], clif_parse_func_table[0], sizeof(clif_parse_func_table[0]));
-	clif_parse_func_table[1][0x072] = clif_parse_DropItem;
-	clif_parse_func_table[1][0x07e] = clif_parse_WantToConnection;
-	clif_parse_func_table[1][0x085] = clif_parse_UseSkillToId;
-	clif_parse_func_table[1][0x089] = clif_parse_GetCharNameRequest;
-	clif_parse_func_table[1][0x08c] = clif_parse_UseSkillToPos;
-	clif_parse_func_table[1][0x094] = clif_parse_TakeItem;
-	clif_parse_func_table[1][0x09b] = clif_parse_WalkToXY;
-	clif_parse_func_table[1][0x09f] = clif_parse_ChangeDir;
-	clif_parse_func_table[1][0x0a2] = clif_parse_UseSkillToPos;
-	clif_parse_func_table[1][0x0a7] = clif_parse_SolveCharName;
-	clif_parse_func_table[1][0x0f3] = clif_parse_GlobalMessage;
-	clif_parse_func_table[1][0x0f5] = clif_parse_UseItem;
-	clif_parse_func_table[1][0x0f7] = clif_parse_TickSend;
-	clif_parse_func_table[1][0x113] = clif_parse_MoveToKafra;
-	clif_parse_func_table[1][0x116] = clif_parse_CloseKafra;
-	clif_parse_func_table[1][0x190] = clif_parse_MoveFromKafra;
-	clif_parse_func_table[1][0x193] = clif_parse_ActionRequest;
-	// init packet function calls for packet ver 9 (same function of packet version 8, but size are different)
-	memcpy(clif_parse_func_table[2], clif_parse_func_table[1], sizeof(clif_parse_func_table[0]));
-	// init packet function calls for packet ver 10
-	memcpy(clif_parse_func_table[3], clif_parse_func_table[2], sizeof(clif_parse_func_table[0]));
-	clif_parse_func_table[3][0x072] = clif_parse_UseItem;
-	clif_parse_func_table[3][0x07e] = clif_parse_MoveToKafra;
-	clif_parse_func_table[3][0x085] = clif_parse_ActionRequest;
-	clif_parse_func_table[3][0x089] = clif_parse_WalkToXY;
-	clif_parse_func_table[3][0x08c] = clif_parse_UseSkillToPos;
-	clif_parse_func_table[3][0x094] = clif_parse_DropItem;
-	clif_parse_func_table[3][0x09b] = clif_parse_GetCharNameRequest;
-	clif_parse_func_table[3][0x09f] = clif_parse_GlobalMessage;
-	clif_parse_func_table[3][0x0a2] = clif_parse_SolveCharName;
-	clif_parse_func_table[3][0x0a7] = clif_parse_UseSkillToPos;
-	clif_parse_func_table[3][0x0f3] = clif_parse_ChangeDir;
-	clif_parse_func_table[3][0x0f5] = clif_parse_WantToConnection;
-	clif_parse_func_table[3][0x0f7] = clif_parse_CloseKafra;
-	clif_parse_func_table[3][0x113] = clif_parse_TakeItem;
-	clif_parse_func_table[3][0x116] = clif_parse_TickSend;
-	clif_parse_func_table[3][0x190] = clif_parse_UseSkillToId;
-	clif_parse_func_table[3][0x193] = clif_parse_MoveFromKafra;
-	// init packet function calls for packet ver 11 (same function of packet version 10, but size are different)
-	memcpy(clif_parse_func_table[4], clif_parse_func_table[3], sizeof(clif_parse_func_table[0]));
-	// init packet function calls for packet ver 12 (same function of packet version 11, but size are different)
-	memcpy(clif_parse_func_table[5], clif_parse_func_table[4], sizeof(clif_parse_func_table[0]));
-	// init packet function calls for packet ver 13 (same function of packet version 12, but size are different)
-	memcpy(clif_parse_func_table[6], clif_parse_func_table[5], sizeof(clif_parse_func_table[0]));
-	// init packet function calls for packet ver 14 (same function of packet version 13, but size are different)
-	memcpy(clif_parse_func_table[7], clif_parse_func_table[6], sizeof(clif_parse_func_table[0]));
-	// Init packet function calls for packet ver 15
-	memcpy(clif_parse_func_table[8], clif_parse_func_table[7], sizeof(clif_parse_func_table[0]));
-	clif_parse_func_table[8][0x072] = clif_parse_UseSkillToId;
-	clif_parse_func_table[8][0x07e] = clif_parse_UseSkillToPos;
-	clif_parse_func_table[8][0x089] = clif_parse_TickSend;
-	clif_parse_func_table[8][0x085] = clif_parse_GlobalMessage;
-	clif_parse_func_table[8][0x08c] = clif_parse_GetCharNameRequest;
-	clif_parse_func_table[8][0x094] = clif_parse_MoveToKafra;
-	clif_parse_func_table[8][0x09b] = clif_parse_CloseKafra;
-	clif_parse_func_table[8][0x09f] = clif_parse_ActionRequest;
-	clif_parse_func_table[8][0x0a2] = clif_parse_TakeItem;
-	clif_parse_func_table[8][0x0a7] = clif_parse_WalkToXY;
-	clif_parse_func_table[8][0x0f3] = clif_parse_ChangeDir;
-	clif_parse_func_table[8][0x0f5] = clif_parse_WantToConnection;
-	clif_parse_func_table[8][0x0f7] = clif_parse_SolveCharName;
-	clif_parse_func_table[8][0x113] = clif_parse_UseSkillToPos;
-	clif_parse_func_table[8][0x116] = clif_parse_DropItem;
-	clif_parse_func_table[8][0x190] = clif_parse_UseItem;
-	clif_parse_func_table[8][0x193] = clif_parse_MoveFromKafra;
-	// Init packet function calls for packet ver 16 (packet db)
-	memcpy(clif_parse_func_table[9], clif_parse_func_table[8], sizeof(clif_parse_func_table[0]));
+	memset(packet_db,0,sizeof(packet_db));
 
 	// size of packet version 5 (old)
-	memcpy(&packet_size_table[0], &packet_len_table, sizeof(packet_len_table));
+	for(i=0;i<sizeof(packet_len_table)/sizeof(packet_len_table[0]);i++){
+		packet_db[0][i].len = packet_len_table[i];
+	}
+	// packet functions of version 5 (old)
+	for(i=0;i<sizeof(clif_parse_func_table)/sizeof(clif_parse_func_table[0]);i++){
+		packet_db[0][i].func = clif_parse_func_table[i];
+	}
+
+	// using hardcoded packet values isn't necessary with packet_db now,
+	// but... just in case, i'll leave it to initialise for now ^^;
+	// init packet version 5 and lower
+	memcpy(&packet_db[1], &packet_db[0], sizeof(packet_db[0]));
+	memcpy(&packet_db[2], &packet_db[1], sizeof(packet_db[0]));
+	memcpy(&packet_db[3], &packet_db[2], sizeof(packet_db[0]));
+	memcpy(&packet_db[4], &packet_db[3], sizeof(packet_db[0]));
+	memcpy(&packet_db[5], &packet_db[4], sizeof(packet_db[0]));
+
+#ifndef PREFER_PACKET_DB
+	// functions of packet version 5-6-7 are same, but size are different
 	// size of packet version 6 (7july04)
-	memcpy(&packet_size_table[1], &packet_size_table[0], sizeof(packet_len_table));
-	packet_size_table[1][0x072] = 22;
-	packet_size_table[1][0x085] = 8;
-	packet_size_table[1][0x0a7] = 13;
-	packet_size_table[1][0x113] = 15;
-	packet_size_table[1][0x116] = 15;
-	packet_size_table[1][0x190] = 95;
+	memcpy(&packet_db[6], &packet_db[5], sizeof(packet_db[0]));
+	packet_db[6][0x072].len = 22;
+	packet_db[6][0x085].len = 8;
+	packet_db[6][0x0a7].len = 13;
+	packet_db[6][0x113].len = 15;
+	packet_db[6][0x116].len = 15;
+	packet_db[6][0x190].len = 95;
 	// size of packet version 7 (13july04)
-	memcpy(&packet_size_table[2], &packet_size_table[1], sizeof(packet_len_table));
-	packet_size_table[2][0x072] = 39;
-	packet_size_table[2][0x085] = 9;
-	packet_size_table[2][0x09b] = 13;
-	packet_size_table[2][0x09f] = 10;
-	packet_size_table[2][0x0a7] = 17;
-	packet_size_table[2][0x113] = 19;
-	packet_size_table[2][0x116] = 19;
-	packet_size_table[2][0x190] = 99;
+	memcpy(&packet_db[7], &packet_db[6], sizeof(packet_db[0]));
+	packet_db[7][0x072].len = 39;
+	packet_db[7][0x085].len = 9;
+	packet_db[7][0x09b].len = 13;
+	packet_db[7][0x09f].len = 10;
+	packet_db[7][0x0a7].len = 17;
+	packet_db[7][0x113].len = 19;
+	packet_db[7][0x116].len = 19;
+	packet_db[7][0x190].len = 99;
+	// init packet function calls for packet ver 8
+	memcpy(packet_db[8], packet_db[7], sizeof(packet_db[0]));
+	packet_db[8][0x072].func = clif_parse_DropItem;
+	packet_db[8][0x07e].func = clif_parse_WantToConnection;
+	packet_db[8][0x085].func = clif_parse_UseSkillToId;
+	packet_db[8][0x089].func = clif_parse_GetCharNameRequest;
+	packet_db[8][0x08c].func = clif_parse_UseSkillToPos;
+	packet_db[8][0x094].func = clif_parse_TakeItem;
+	packet_db[8][0x09b].func = clif_parse_WalkToXY;
+	packet_db[8][0x09f].func = clif_parse_ChangeDir;
+	packet_db[8][0x0a2].func = clif_parse_UseSkillToPos;
+	packet_db[8][0x0a7].func = clif_parse_SolveCharName;
+	packet_db[8][0x0f3].func = clif_parse_GlobalMessage;
+	packet_db[8][0x0f5].func = clif_parse_UseItem;
+	packet_db[8][0x0f7].func = clif_parse_TickSend;
+	packet_db[8][0x113].func = clif_parse_MoveToKafra;
+	packet_db[8][0x116].func = clif_parse_CloseKafra;
+	packet_db[8][0x190].func = clif_parse_MoveFromKafra;
+	packet_db[8][0x193].func = clif_parse_ActionRequest;
 	// size of packet version 8 (26july04)
-	memcpy(&packet_size_table[3], &packet_size_table[2], sizeof(packet_len_table));
-	packet_size_table[3][0x072] = 14;
-	packet_size_table[3][0x07e] = 33;
-	packet_size_table[3][0x085] = 20;
-	packet_size_table[3][0x089] = 15;
-	packet_size_table[3][0x08c] = 23;
-	packet_size_table[3][0x094] = 10;
-	packet_size_table[3][0x09b] = 6;
-	packet_size_table[3][0x09f] = 13;
-	packet_size_table[3][0x0a2] = 103;
-	packet_size_table[3][0x0a7] = 12;
-	packet_size_table[3][0x0f3] = -1;
-	packet_size_table[3][0x0f5] = 17;
-	packet_size_table[3][0x0f7] = 10;
-	packet_size_table[3][0x113] = 16;
-	packet_size_table[3][0x116] = 2;
-	packet_size_table[3][0x190] = 26;
-	packet_size_table[3][0x193] = 9;
+	packet_db[8][0x072].len = 14;
+	packet_db[8][0x07e].len = 33;
+	packet_db[8][0x085].len = 20;
+	packet_db[8][0x089].len = 15;
+	packet_db[8][0x08c].len = 23;
+	packet_db[8][0x094].len = 10;
+	packet_db[8][0x09b].len = 6;
+	packet_db[8][0x09f].len = 13;
+	packet_db[8][0x0a2].len = 103;
+	packet_db[8][0x0a7].len = 12;
+	packet_db[8][0x0f3].len = -1;
+	packet_db[8][0x0f5].len = 17;
+	packet_db[8][0x0f7].len = 10;
+	packet_db[8][0x113].len = 16;
+	packet_db[8][0x116].len = 2;
+	packet_db[8][0x190].len = 26;
+	packet_db[8][0x193].len = 9;
+	// init packet function calls for packet ver 9 (same function of packet version 8, but size are different)
+	memcpy(packet_db[9], packet_db[8], sizeof(packet_db[0]));
 	// size of packet version 9 (9aug04/16aug04/17aug04)
-	memcpy(&packet_size_table[4], &packet_size_table[3], sizeof(packet_len_table));
-	packet_size_table[4][0x072] = 17;
-	packet_size_table[4][0x07e] = 37;
-	packet_size_table[4][0x085] = 26;
-	packet_size_table[4][0x089] = 12;
-	packet_size_table[4][0x08c] = 40;
-	packet_size_table[4][0x094] = 13;
-	packet_size_table[4][0x09b] = 15;
-	packet_size_table[4][0x09f] = 12;
-	packet_size_table[4][0x0a2] = 120;
-	packet_size_table[4][0x0a7] = 11;
-//	packet_size_table[4][0x0f3] = -1;
-	packet_size_table[4][0x0f5] = 24;
-	packet_size_table[4][0x0f7] = 13;
-	packet_size_table[4][0x113] = 23;
-//	packet_size_table[4][0x116] = 2;
-	packet_size_table[4][0x190] = 26;
-	packet_size_table[4][0x193] = 18;
+	packet_db[9][0x072].len = 17;
+	packet_db[9][0x07e].len = 37;
+	packet_db[9][0x085].len = 26;
+	packet_db[9][0x089].len = 12;
+	packet_db[9][0x08c].len = 40;
+	packet_db[9][0x094].len = 13;
+	packet_db[9][0x09b].len = 15;
+	packet_db[9][0x09f].len = 12;
+	packet_db[9][0x0a2].len = 120;
+	packet_db[9][0x0a7].len = 11;
+//	packet_db[9][0x0f3].len = -1;
+	packet_db[9][0x0f5].len = 24;
+	packet_db[9][0x0f7].len = 13;
+	packet_db[9][0x113].len = 23;
+//	packet_db[9][0x116].len = 2;
+	packet_db[9][0x190].len = 26;
+	packet_db[9][0x193].len = 18;
 	// new packet
-	packet_size_table[4][0x20f] = 10;
-	packet_size_table[4][0x210] = 22;
-	packet_size_table[4][0x212] = 26;
-	packet_size_table[4][0x213] = 26;
-	packet_size_table[4][0x214] = 42;
+	packet_db[9][0x20f].len = 10;
+	packet_db[9][0x210].len = 22;
+	packet_db[9][0x212].len = 26;
+	packet_db[9][0x213].len = 26;
+	packet_db[9][0x214].len = 42;
+	// init packet function calls for packet ver 10
+	memcpy(packet_db[10], packet_db[9], sizeof(packet_db[0]));
+	packet_db[10][0x072].func = clif_parse_UseItem;
+	packet_db[10][0x07e].func = clif_parse_MoveToKafra;
+	packet_db[10][0x085].func = clif_parse_ActionRequest;
+	packet_db[10][0x089].func = clif_parse_WalkToXY;
+	packet_db[10][0x08c].func = clif_parse_UseSkillToPos;
+	packet_db[10][0x094].func = clif_parse_DropItem;
+	packet_db[10][0x09b].func = clif_parse_GetCharNameRequest;
+	packet_db[10][0x09f].func = clif_parse_GlobalMessage;
+	packet_db[10][0x0a2].func = clif_parse_SolveCharName;
+	packet_db[10][0x0a7].func = clif_parse_UseSkillToPos;
+	packet_db[10][0x0f3].func = clif_parse_ChangeDir;
+	packet_db[10][0x0f5].func = clif_parse_WantToConnection;
+	packet_db[10][0x0f7].func = clif_parse_CloseKafra;
+	packet_db[10][0x113].func = clif_parse_TakeItem;
+	packet_db[10][0x116].func = clif_parse_TickSend;
+	packet_db[10][0x190].func = clif_parse_UseSkillToId;
+	packet_db[10][0x193].func = clif_parse_MoveFromKafra;
 	// size of packet version 10 (6sept04)
-	memcpy(&packet_size_table[5], &packet_size_table[4], sizeof(packet_len_table));
-	packet_size_table[5][0x072] = 20;
-	packet_size_table[5][0x07e] = 19;
-	packet_size_table[5][0x085] = 23;
-	packet_size_table[5][0x089] = 9;
-	packet_size_table[5][0x08c] = 105;
-	packet_size_table[5][0x094] = 17;
-	packet_size_table[5][0x09b] = 14;
-	packet_size_table[5][0x09f] = -1;
-	packet_size_table[5][0x0a2] = 14;
-	packet_size_table[5][0x0a7] = 25;
-	packet_size_table[5][0x0f3] = 10;
-	packet_size_table[5][0x0f5] = 34;
-	packet_size_table[5][0x0f7] = 2;
-	packet_size_table[5][0x113] = 11;
-	packet_size_table[5][0x116] = 11;
-	packet_size_table[5][0x190] = 22;
-	packet_size_table[5][0x193] = 17;
+	packet_db[10][0x072].len = 20;
+	packet_db[10][0x07e].len = 19;
+	packet_db[10][0x085].len = 23;
+	packet_db[10][0x089].len = 9;
+	packet_db[10][0x08c].len = 105;
+	packet_db[10][0x094].len = 17;
+	packet_db[10][0x09b].len = 14;
+	packet_db[10][0x09f].len = -1;
+	packet_db[10][0x0a2].len = 14;
+	packet_db[10][0x0a7].len = 25;
+	packet_db[10][0x0f3].len = 10;
+	packet_db[10][0x0f5].len = 34;
+	packet_db[10][0x0f7].len = 2;
+	packet_db[10][0x113].len = 11;
+	packet_db[10][0x116].len = 11;
+	packet_db[10][0x190].len = 22;
+	packet_db[10][0x193].len = 17;
+	// init packet function calls for packet ver 11 (same function of packet version 10, but size are different)
+	memcpy(packet_db[11], packet_db[10], sizeof(packet_db[0]));
 	// size of packet version 11 (21sept04)
-	memcpy(&packet_size_table[6], &packet_size_table[5], sizeof(packet_len_table));
-	packet_size_table[6][0x072] = 18;
-	packet_size_table[6][0x07e] = 25;
-	packet_size_table[6][0x085] = 9;
-	packet_size_table[6][0x089] = 14;
-	packet_size_table[6][0x08c] = 109;
-	packet_size_table[6][0x094] = 19;
-	packet_size_table[6][0x09b] = 10;
-//	packet_size_table[6][0x09f] = -1;
-	packet_size_table[6][0x0a2] = 10;
-	packet_size_table[6][0x0a7] = 29;
-	packet_size_table[6][0x0f3] = 18;
-	packet_size_table[6][0x0f5] = 32;
-//	packet_size_table[6][0x0f7] = 2;
-	packet_size_table[6][0x113] = 14;
-	packet_size_table[6][0x116] = 14;
-	packet_size_table[6][0x190] = 14;
-	packet_size_table[6][0x193] = 12;
+	packet_db[11][0x072].len = 18;
+	packet_db[11][0x07e].len = 25;
+	packet_db[11][0x085].len = 9;
+	packet_db[11][0x089].len = 14;
+	packet_db[11][0x08c].len = 109;
+	packet_db[11][0x094].len = 19;
+	packet_db[11][0x09b].len = 10;
+//	packet_db[11][0x09f].len = -1;
+	packet_db[11][0x0a2].len = 10;
+	packet_db[11][0x0a7].len = 29;
+	packet_db[11][0x0f3].len = 18;
+	packet_db[11][0x0f5].len = 32;
+//	packet_db[11][0x0f7].len = 2;
+	packet_db[11][0x113].len = 14;
+	packet_db[11][0x116].len = 14;
+	packet_db[11][0x190].len = 14;
+	packet_db[11][0x193].len = 12;
+	// init packet function calls for packet ver 12 (same function of packet version 11, but size are different)
+	memcpy(packet_db[12], packet_db[11], sizeof(packet_db[0]));
 	// size of packet version 12 (18oct04)
-	memcpy(&packet_size_table[7], &packet_size_table[6], sizeof(packet_len_table));
-	packet_size_table[7][0x072] = 17;
-	packet_size_table[7][0x07e] = 16;
-//	packet_size_table[7][0x085] = 9;
-	packet_size_table[7][0x089] = 6;
-	packet_size_table[7][0x08c] = 103;
-	packet_size_table[7][0x094] = 14;
-	packet_size_table[7][0x09b] = 15;
-//	packet_size_table[7][0x09f] = -1;
-	packet_size_table[7][0x0a2] = 12;
-	packet_size_table[7][0x0a7] = 23;
-	packet_size_table[7][0x0f3] = 13;
-	packet_size_table[7][0x0f5] = 33;
-//	packet_size_table[7][0x0f7] = 2;
-	packet_size_table[7][0x113] = 10;
-	packet_size_table[7][0x116] = 10;
-	packet_size_table[7][0x190] = 20;
-	packet_size_table[7][0x193] = 26;
+	packet_db[12][0x072].len = 17;
+	packet_db[12][0x07e].len = 16;
+//	packet_db[12][0x085].len = 9;
+	packet_db[12][0x089].len = 6;
+	packet_db[12][0x08c].len = 103;
+	packet_db[12][0x094].len = 14;
+	packet_db[12][0x09b].len = 15;
+//	packet_db[12][0x09f].len = -1;
+	packet_db[12][0x0a2].len = 12;
+	packet_db[12][0x0a7].len = 23;
+	packet_db[12][0x0f3].len = 13;
+	packet_db[12][0x0f5].len = 33;
+//	packet_db[12][0x0f7].len = 2;
+	packet_db[12][0x113].len = 10;
+	packet_db[12][0x116].len = 10;
+	packet_db[12][0x190].len = 20;
+	packet_db[12][0x193].len = 26;
+	// init packet function calls for packet ver 13 (same function of packet version 12, but size are different)
+	memcpy(packet_db[13], packet_db[12], sizeof(packet_db[0]));
 	// size of packet version 13 (25oct04)
-	memcpy(&packet_size_table[8], &packet_size_table[7], sizeof(packet_len_table));
-	packet_size_table[8][0x072] = 13;
-	packet_size_table[8][0x07e] = 13;
-	packet_size_table[8][0x085] = 15;
-//	packet_size_table[8][0x089] = 6;
-	packet_size_table[8][0x08c] = 108;
-	packet_size_table[8][0x094] = 12;
-	packet_size_table[8][0x09b] = 10;
-//	packet_size_table[8][0x09f] = -1;
-	packet_size_table[8][0x0a2] = 16;
-	packet_size_table[8][0x0a7] = 28;
-	packet_size_table[8][0x0f3] = 15;
-	packet_size_table[8][0x0f5] = 29;
-//	packet_size_table[8][0x0f7] = 2;
-	packet_size_table[8][0x113] = 9;
-	packet_size_table[8][0x116] = 9;
-	packet_size_table[8][0x190] = 26;
-	packet_size_table[8][0x193] = 22;
+	packet_db[13][0x072].len = 13;
+	packet_db[13][0x07e].len = 13;
+	packet_db[13][0x085].len = 15;
+//	packet_db[13][0x089].len = 6;
+	packet_db[13][0x08c].len = 108;
+	packet_db[13][0x094].len = 12;
+	packet_db[13][0x09b].len = 10;
+//	packet_db[13][0x09f].len = -1;
+	packet_db[13][0x0a2].len = 16;
+	packet_db[13][0x0a7].len = 28;
+	packet_db[13][0x0f3].len = 15;
+	packet_db[13][0x0f5].len = 29;
+//	packet_db[13][0x0f7].len = 2;
+	packet_db[13][0x113].len = 9;
+	packet_db[13][0x116].len = 9;
+	packet_db[13][0x190].len = 26;
+	packet_db[13][0x193].len = 22;
+	// init packet function calls for packet ver 14 (same function of packet version 13, but size are different)
+	memcpy(packet_db[14], packet_db[13], sizeof(packet_db[0]));
 	// size of packet version 14 - Added by nsstrunks (1nov04)
-	memcpy(&packet_size_table[9], &packet_size_table[8], sizeof(packet_len_table));
-	packet_size_table[9][0x072] = 13;
-	packet_size_table[9][0x07e] = 13;
-	packet_size_table[9][0x085] = 15;
-	packet_size_table[9][0x089] = 6;
-	packet_size_table[9][0x08c] = 108;
-	packet_size_table[9][0x094] = 12;
-	packet_size_table[9][0x09b] = 10;
-	packet_size_table[9][0x09f] = -1;
-	packet_size_table[9][0x0a2] = 16;
-	packet_size_table[9][0x0a7] = 28;
-	packet_size_table[9][0x0f3] = 15;
-	packet_size_table[9][0x0f5] = 29;
-	packet_size_table[9][0x113] = 9;
-	packet_size_table[9][0x116] = 9;
-	packet_size_table[9][0x190] = 26;
-	packet_size_table[9][0x193] = 22;
-	packet_size_table[9][0x215] = 6;
-	packet_size_table[9][0x216] = 6;
-	packet_size_table[9][0x217] = 2;
-	packet_size_table[9][0x218] = 2;
-	packet_size_table[9][0x219] = 282;
-	packet_size_table[9][0x21a] = 282;
-	packet_size_table[9][0x21b] = 10;
-	packet_size_table[9][0x21c] = 10;
+	packet_db[14][0x072].len = 13;
+	packet_db[14][0x07e].len = 13;
+	packet_db[14][0x085].len = 15;
+	packet_db[14][0x089].len = 6;
+	packet_db[14][0x08c].len = 108;
+	packet_db[14][0x094].len = 12;
+	packet_db[14][0x09b].len = 10;
+	packet_db[14][0x09f].len = -1;
+	packet_db[14][0x0a2].len = 16;
+	packet_db[14][0x0a7].len = 28;
+	packet_db[14][0x0f3].len = 15;
+	packet_db[14][0x0f5].len = 29;
+	packet_db[14][0x113].len = 9;
+	packet_db[14][0x116].len = 9;
+	packet_db[14][0x190].len = 26;
+	packet_db[14][0x193].len = 22;
+	packet_db[14][0x215].len = 6;
+	packet_db[14][0x216].len = 6;
+	packet_db[14][0x217].len = 2;
+	packet_db[14][0x218].len = 2;
+	packet_db[14][0x219].len = 282;
+	packet_db[14][0x21a].len = 282;
+	packet_db[14][0x21b].len = 10;
+	packet_db[14][0x21c].len = 10;
+	// Init packet function calls for packet ver 15
+	memcpy(packet_db[15], packet_db[14], sizeof(packet_db[0]));
+	packet_db[15][0x072].func = clif_parse_UseSkillToId;
+	packet_db[15][0x07e].func = clif_parse_UseSkillToPos;
+	packet_db[15][0x089].func = clif_parse_TickSend;
+	packet_db[15][0x085].func = clif_parse_GlobalMessage;
+	packet_db[15][0x08c].func = clif_parse_GetCharNameRequest;
+	packet_db[15][0x094].func = clif_parse_MoveToKafra;
+	packet_db[15][0x09b].func = clif_parse_CloseKafra;
+	packet_db[15][0x09f].func = clif_parse_ActionRequest;
+	packet_db[15][0x0a2].func = clif_parse_TakeItem;
+	packet_db[15][0x0a7].func = clif_parse_WalkToXY;
+	packet_db[15][0x0f3].func = clif_parse_ChangeDir;
+	packet_db[15][0x0f5].func = clif_parse_WantToConnection;
+	packet_db[15][0x0f7].func = clif_parse_SolveCharName;
+	packet_db[15][0x113].func = clif_parse_UseSkillToPos;
+	packet_db[15][0x116].func = clif_parse_DropItem;
+	packet_db[15][0x190].func = clif_parse_UseItem;
+	packet_db[15][0x193].func = clif_parse_MoveFromKafra;
 	// Size of packet version 15 - Added by nsstrunks (6dec04)
-	memcpy(&packet_size_table[10], &packet_size_table[9], sizeof(packet_len_table));
-	packet_size_table[10][0x072] = 22;
-	packet_size_table[10][0x07e] = 30;
-	packet_size_table[10][0x094] = 14;
-	packet_size_table[10][0x09f] = 18;
-	packet_size_table[10][0x085] = -1;
-	packet_size_table[10][0x08c] = 13;
-	packet_size_table[10][0x089] = 7;
-	packet_size_table[10][0x09b] = 2;
-	packet_size_table[10][0x0a2] = 7;
-	packet_size_table[10][0x0a7] = 7;
-	packet_size_table[10][0x0f3] = 8;
-	packet_size_table[10][0x0f5] = 29;
-	packet_size_table[10][0x0f7] = 14;
-	packet_size_table[10][0x113] = 110;
-	packet_size_table[10][0x116] = 12;
-	packet_size_table[10][0x190] = 15;
-	packet_size_table[10][0x193] = 21;
-	packet_size_table[10][0x21b] = 6;
-	packet_size_table[10][0x222] = 6;
-	packet_size_table[10][0x221] = -1;
-	packet_size_table[10][0x223] = 8;
-
-	// Size of packet version 16 (packet db)
-	memcpy(&packet_size_table[11], &packet_size_table[10], sizeof(packet_len_table));
-
-	packet_db_size = packet_size_table[0];
-	packet_db_parse_func = clif_parse_func_table[0];
+	packet_db[15][0x072].len = 22;
+	packet_db[15][0x07e].len = 30;
+	packet_db[15][0x094].len = 14;
+	packet_db[15][0x09f].len = 18;
+	packet_db[15][0x085].len = -1;
+	packet_db[15][0x08c].len = 13;
+	packet_db[15][0x089].len = 7;
+	packet_db[15][0x09b].len = 2;
+	packet_db[15][0x0a2].len = 7;
+	packet_db[15][0x0a7].len = 7;
+	packet_db[15][0x0f3].len = 8;
+	packet_db[15][0x0f5].len = 29;
+	packet_db[15][0x0f7].len = 14;
+	packet_db[15][0x113].len = 110;
+	packet_db[15][0x116].len = 12;
+	packet_db[15][0x190].len = 15;
+	packet_db[15][0x193].len = 21;
+	packet_db[15][0x21b].len = 6;
+	packet_db[15][0x222].len = 6;
+	packet_db[15][0x221].len = -1;
+	packet_db[15][0x223].len = 8;
+	// Init packet function calls for packet ver 16
+	memcpy(packet_db[16], packet_db[15], sizeof(packet_db[0]));
+	packet_db[16][0x072].func = clif_parse_UseSkillToId;
+	packet_db[16][0x07e].func = clif_parse_UseSkillToPos;
+	packet_db[16][0x089].func = clif_parse_TickSend;
+	packet_db[16][0x0f3].func = clif_parse_GlobalMessage;
+	packet_db[16][0x08c].func = clif_parse_GetCharNameRequest;
+	packet_db[16][0x094].func = clif_parse_MoveToKafra;
+	packet_db[16][0x193].func = clif_parse_CloseKafra;
+	packet_db[16][0x190].func = clif_parse_ActionRequest;
+	packet_db[16][0x0f5].func = clif_parse_TakeItem;
+	packet_db[16][0x0a7].func = clif_parse_WalkToXY;
+	packet_db[16][0x085].func = clif_parse_ChangeDir;
+	packet_db[16][0x09b].func = clif_parse_WantToConnection;
+	packet_db[16][0x0a2].func = clif_parse_SolveCharName;
+	packet_db[16][0x113].func = clif_parse_UseSkillToPos;
+	packet_db[16][0x116].func = clif_parse_DropItem;
+	packet_db[16][0x09f].func = clif_parse_UseItem;
+	packet_db[16][0x0f7].func = clif_parse_MoveFromKafra;
+	// Size of packet version 16 [10jan05]
+	packet_db[16][0x072].len = 26;
+	packet_db[16][0x07e].len = 114;
+	packet_db[16][0x089].len = 9;
+	packet_db[16][0x0f3].len = -1;
+	packet_db[16][0x08c].len = 8;
+	packet_db[16][0x094].len = 20;
+	packet_db[16][0x193].len = 2;
+	packet_db[16][0x190].len = 20;
+	packet_db[16][0x0f5].len = 9;
+	packet_db[16][0x0a7].len = 13;
+	packet_db[16][0x085].len = 23;
+	packet_db[16][0x09b].len = 32;
+	packet_db[16][0x0a2].len = 11;
+	packet_db[16][0x113].len = 34;
+	packet_db[16][0x116].len = 20;
+	packet_db[16][0x09f].len = 17;
+	packet_db[16][0x0f7].len = 21;
+	// Init packet function calls for packet ver 17 (packet db)
+	memcpy(packet_db[17], packet_db[16], sizeof(packet_db[0]));
+#endif
 
 	packetdb_readdb();
 	

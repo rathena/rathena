@@ -13,7 +13,8 @@ typedef unsigned int in_addr_t;
 
 #include "map.h"
 
-#define MAX_PACKET_DB			0x224
+#define MAX_PACKET_DB		0x224
+#define MAX_PACKET_VER		17
 
 extern int packet_db_ver;
 struct packet_db {
@@ -21,6 +22,7 @@ struct packet_db {
 	void (*func)();
 	short pos[20];
 };
+extern struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
 
 void clif_setip(char*);
 void clif_setport(int);
