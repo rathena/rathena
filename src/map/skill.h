@@ -84,6 +84,7 @@ int skill_get_unit_id(int id,int flag);
 int	skill_get_inf2( int id );
 int	skill_get_maxcount( int id );
 int	skill_get_blewcount( int id ,int lv );
+int	skill_tree_get_max( int id, int b_class );	// Celest
 
 // スキルの使用
 int skill_use_id( struct map_session_data *sd, int target_id,

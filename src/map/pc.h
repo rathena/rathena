@@ -165,6 +165,16 @@ struct pc_base_job{
 };
 
 struct pc_base_job pc_calc_base_job(int b_class);//“]¶‚â—{qE‚ÌŒ³‚ÌE‹Æ‚ğ•Ô‚·
+int pc_calc_base_job2(int b_class);	// Celest
+int pc_calc_upper(int b_class);
+
+struct {
+	int id;
+	int max;
+	struct {
+		short id,lv;
+	} need[6];
+} skill_tree[3][MAX_PC_CLASS][100];	// Celest
 
 int pc_read_gm_account(int fd);
 int pc_setinvincibletimer(struct map_session_data *sd,int);

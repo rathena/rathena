@@ -53,13 +53,14 @@ static int aspd_base[MAX_PC_CLASS][20];
 static char job_bonus[3][MAX_PC_CLASS][MAX_LEVEL];
 static int exp_table[14][MAX_LEVEL];
 static char statp[255][7];
-static struct {
+
+/*static struct {
 	int id;
 	int max;
 	struct {
 		short id,lv;
 	} need[6];
-} skill_tree[3][MAX_PC_CLASS][100];
+} skill_tree[3][MAX_PC_CLASS][100];*/ // moved to pc.h
 
 static int atkmods[3][20];	// •ŠíATKƒTƒCƒYC³(size_fix.txt)
 static int refinebonus[5][3];	// ¸˜Bƒ{[ƒiƒXƒe[ƒuƒ‹(refine_db.txt)
@@ -903,13 +904,16 @@ int pc_calc_skilltree(struct map_session_data *sd)
 
 	s_class = pc_calc_base_job(sd->status.class);
 	c = s_class.job;
-	s = (s_class.upper==1) ? 1 : 0 ; //“]¶ˆÈŠO‚Í’Êí‚ÌƒXƒLƒ‹H
+	//s = (s_class.upper==1) ? 1 : 0 ; //“]¶ˆÈŠO‚Í’Êí‚ÌƒXƒLƒ‹H
+	s = s_class.upper;
 
-	if((battle_config.skillup_limit) && ((c >= 0 && c < 23) || (c >= 4001 && c < 4023) || (c >= 4023 && c < 4045))) {
+	//if((battle_config.skillup_limit) && ((c >= 0 && c < 23) || (c >= 4001 && c < 4023) || (c >= 4023 && c < 4045))) {
+	if (battle_config.skillup_limit && c >= 0 && c < 23) {
 		int skill_point = pc_calc_skillpoint(sd);
 		if(skill_point < 9)
 			c = 0;
-		else if((sd->status.skill_point >= sd->status.job_level && skill_point < 58) && ((c > 6 && c < 23) || (c > 4007 && c < 4023) || (c > 4029 && c < 4045))) {
+		//else if((sd->status.skill_point >= sd->status.job_level && skill_point < 58) && ((c > 6 && c < 23) || (c > 4007 && c < 4023) || (c > 4029 && c < 4045))) {
+		else if ((sd->status.skill_point >= sd->status.job_level && skill_point < 58) && (c > 6 && c < 23)) {
 			switch(c) {
 				case 7:
 				case 14:
@@ -936,7 +940,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				case 17:
 					c = 6;
 					break;
-				case 4008:
+				/*case 4008:
 				case 4015:
 					c = 4002;
 					break;
@@ -985,8 +989,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				case 4035:
 				case 4043:
 					c = 4029;
-					break;
-
+					break;*/
 			}
 		}
 	}
@@ -1052,7 +1055,7 @@ int pc_checkweighticon(struct map_session_data *sd)
 		flag=1;
 	if(sd->weight*10 >= sd->max_weight*9)
 		flag=2;
-
+	
 	if(flag==1){
 		if(sd->sc_data[SC_WEIGHT50].timer==-1)
 			skill_status_change_start(&sd->bl,SC_WEIGHT50,0,0,0,0,0,0);
@@ -1600,8 +1603,11 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	bl=sd->status.base_level;
 
 	sd->status.max_hp += (3500 + bl*hp_coefficient2[s_class.job] + hp_sigma_val[s_class.job][(bl > 0)? bl-1:0])/100 * (100 + sd->paramc[2])/100 + (sd->parame[2] - sd->paramcard[2]);
-        if (s_class.upper==1) // [MouseJstr]
-                sd->status.max_hp = sd->status.max_hp * 130/100;
+		if (s_class.upper==1) // [MouseJstr]
+			sd->status.max_hp = sd->status.max_hp * 130/100;
+		else if (s_class.upper==2)
+			sd->status.max_hp = sd->status.max_hp * 70/100;
+		
 	if(sd->hprate!=100)
 		sd->status.max_hp = sd->status.max_hp*sd->hprate/100;
 
@@ -1623,8 +1629,10 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 
 	// Å‘åSPŒvZ
 	sd->status.max_sp += ((sp_coefficient[s_class.job] * bl) + 1000)/100 * (100 + sd->paramc[3])/100 + (sd->parame[3] - sd->paramcard[3]);
-        if (s_class.upper==1) // [MouseJstr]
-                sd->status.max_sp = sd->status.max_sp * 130/100;
+		if (s_class.upper==1) // [MouseJstr]
+			sd->status.max_sp = sd->status.max_sp * 130/100;
+		else if (s_class.upper==2)
+			sd->status.max_sp = sd->status.max_sp * 70/100;
 	if(sd->sprate!=100)
 		sd->status.max_sp = sd->status.max_sp*sd->sprate/100;
 
@@ -4006,14 +4014,18 @@ struct pc_base_job pc_calc_base_job(int b_class)
 {
 	struct pc_base_job bj;
 	//“]¶‚â—{q‚Ìê‡‚ÌŒ³‚ÌE‹Æ‚ğZo‚·‚é
-	if(b_class < MAX_PC_CLASS){ //’Êí
+	//if(b_class < MAX_PC_CLASS){ //’Êí
+	if(b_class < 4001){
 		bj.job = b_class;
 		bj.upper = 0;
 	}else if(b_class >= 4001 && b_class < 4023){ //“]¶E
+		// Athena almost never uses this... well, used this. :3
 		bj.job = b_class - 4001;
 		bj.upper = 1;
-	}else if(b_class == 23 + 4023 -1){ //—{qƒXƒpƒmƒr
-		bj.job = b_class - (4023 - 1);
+	//}else if(b_class == 23 + 4023 -1){ //—{qƒXƒpƒmƒr
+	}else if(b_class == 4045){ // super baby
+		//bj.job = b_class - (4023 - 1);
+		bj.job = 23;
 		bj.upper = 2;
 	}else{ //—{qƒXƒpƒmƒrˆÈŠO‚Ì—{q
 		bj.job = b_class - 4023;
@@ -4033,6 +4045,30 @@ struct pc_base_job pc_calc_base_job(int b_class)
 	}
 	
 	return bj;
+}
+
+/*==========================================
+ * For quick calculating [Celest]
+ *------------------------------------------
+ */
+int pc_calc_base_job2 (int b_class)
+{
+	if(b_class < 4001)
+		return b_class;
+	else if(b_class >= 4001 && b_class < 4023)
+		return b_class - 4001;
+	else if(b_class == 4045)
+		return 23;
+	return b_class - 4023;	
+}
+
+int pc_calc_upper(int b_class)
+{
+	if(b_class < 4001)
+		return 0;
+	else if(b_class >= 4001 && b_class < 4023)
+		return 1;
+	return 2;
 }
 
 /*==========================================
@@ -4510,8 +4546,10 @@ int pc_need_status_point(struct map_session_data *sd,int type)
 int pc_statusup(struct map_session_data *sd,int type)
 {
 	int need,val = 0;
-
+		
 	nullpo_retr(0, sd);
+
+	int max = (pc_calc_upper(sd->status.class)==2) ? 80 : battle_config.max_parameter;
 
 	need=pc_need_status_point(sd,type);
 	if(type<SP_STR || type>SP_LUK || need<0 || need>sd->status.status_point){
@@ -4520,42 +4558,42 @@ int pc_statusup(struct map_session_data *sd,int type)
 	}
 	switch(type){
 	case SP_STR:
-		if(sd->status.str >= battle_config.max_parameter) {
+		if(sd->status.str >= max) {
 			clif_statusupack(sd,type,0,0);
 			return 1;
 		}
 		val= ++sd->status.str;
 		break;
 	case SP_AGI:
-		if(sd->status.agi >= battle_config.max_parameter) {
+		if(sd->status.agi >= max) {
 			clif_statusupack(sd,type,0,0);
 			return 1;
 		}
 		val= ++sd->status.agi;
 		break;
 	case SP_VIT:
-		if(sd->status.vit >= battle_config.max_parameter) {
+		if(sd->status.vit >= max) {
 			clif_statusupack(sd,type,0,0);
 			return 1;
 		}
 		val= ++sd->status.vit;
 		break;
 	case SP_INT:
-		if(sd->status.int_ >= battle_config.max_parameter) {
+		if(sd->status.int_ >= max) {
 			clif_statusupack(sd,type,0,0);
 			return 1;
 		}
 		val= ++sd->status.int_;
 		break;
 	case SP_DEX:
-		if(sd->status.dex >= battle_config.max_parameter) {
+		if(sd->status.dex >= max) {
 			clif_statusupack(sd,type,0,0);
 			return 1;
 		}
 		val= ++sd->status.dex;
 		break;
 	case SP_LUK:
-		if(sd->status.luk >= battle_config.max_parameter) {
+		if(sd->status.luk >= max) {
 			clif_statusupack(sd,type,0,0);
 			return 1;
 		}
@@ -4665,7 +4703,8 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 
 	if( sd->status.skill_point>0 &&
 		sd->status.skill[skill_num].id!=0 &&
-		sd->status.skill[skill_num].lv < skill_get_max(skill_num) )
+		//sd->status.skill[skill_num].lv < skill_get_max(skill_num) ) - celest
+		sd->status.skill[skill_num].lv < skill_tree_get_max(skill_num, sd->status.class) )
 	{
 		sd->status.skill[skill_num].lv++;
 		sd->status.skill_point--;
@@ -4717,7 +4756,8 @@ int pc_allskillup(struct map_session_data *sd)
 	else {
 		for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
 			if(sd->status.skill[id].id==0 && (!(skill_get_inf2(id)&0x01) || battle_config.quest_skill_learn) )
-				sd->status.skill[id].lv=skill_get_max(id);
+				// sd->status.skill[id].lv=skill_get_max(id);
+				sd->status.skill[id].lv=skill_tree_get_max(id, sd->status.class);	// celest
 		}
 	}
 	pc_calcstatus(sd,0);
@@ -6562,7 +6602,7 @@ int pc_ismarried(struct map_session_data *sd)
  */
 int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd)
 {
-	if(sd == NULL || dstsd == NULL || sd->status.partner_id > 0 || dstsd->status.partner_id > 0)
+	if(sd == NULL || dstsd == NULL || sd->status.partner_id > 0 || dstsd->status.partner_id > 0 || pc_calc_upper(sd->status.class)==2)
 		return -1;
 	sd->status.partner_id=dstsd->status.char_id;
 	dstsd->status.partner_id=sd->status.char_id;
@@ -7168,7 +7208,8 @@ void pc_setstand(struct map_session_data *sd){
  */
 int pc_readdb(void)
 {
-	int i,j,k;
+	int i,j,k,u;
+	struct pc_base_job s_class;
 	FILE *fp;
 	char line[1024],*p;
 
@@ -7300,6 +7341,7 @@ int pc_readdb(void)
 		printf("can't read db/skill_tree.txt\n");
 		return 1;
 	}
+
 	while(fgets(line, sizeof(line)-1, fp)){
 		char *split[50];
 		if(line[0]=='/' && line[1]=='/')
@@ -7311,17 +7353,24 @@ int pc_readdb(void)
 		}
 		if(j<13)
 			continue;
-		i=atoi(split[0]);
-		for(j=0;skill_tree[0][i][j].id;j++);
-		skill_tree[0][i][j].id=atoi(split[1]);
-		skill_tree[0][i][j].max=atoi(split[2]);
-		skill_tree[2][i][j].id=atoi(split[1]); //—{qE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Åb’è
-		skill_tree[2][i][j].max=atoi(split[2]); //—{qE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Åb’è
+		//i=atoi(split[0]);
+		s_class = pc_calc_base_job(atoi(split[0]));
+		i = s_class.job;
+		u = s_class.upper;
+		//printf ("i = %d, u = %d\n",i,u);
+		for(j=0;skill_tree[u][i][j].id;j++);
+		skill_tree[u][i][j].id=atoi(split[1]);
+		skill_tree[u][i][j].max=atoi(split[2]);
+
+		//not required - Celest
+		//skill_tree[2][i][j].id=atoi(split[1]); //—{qE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Åb’è
+		//skill_tree[2][i][j].max=atoi(split[2]); //—{qE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Åb’è
+
 		for(k=0;k<5;k++){
-			skill_tree[0][i][j].need[k].id=atoi(split[k*2+3]);
-			skill_tree[0][i][j].need[k].lv=atoi(split[k*2+4]);
-			skill_tree[2][i][j].need[k].id=atoi(split[k*2+3]); //—{qE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Åb’è
-			skill_tree[2][i][j].need[k].lv=atoi(split[k*2+4]); //—{qE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Åb’è
+			skill_tree[u][i][j].need[k].id=atoi(split[k*2+3]);
+			skill_tree[u][i][j].need[k].lv=atoi(split[k*2+4]);
+			//skill_tree[2][i][j].need[k].id=atoi(split[k*2+3]); //—{qE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Åb’è
+			//skill_tree[2][i][j].need[k].lv=atoi(split[k*2+4]); //—{qE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Åb’è
 		}
 	}
 	fclose(fp);

@@ -674,11 +674,21 @@ Notes:		1. Skills
 		* This means, when you adopt a child character, DO IT CAREFULLY. For the entire history of your character, you can only, and I mean ONLY get one child character. 
 
 		- The Child Adoption system now changes as following, so please make note of this:
-		* The adopted child cannot raise any stat to beyond 80.
-		* The adopted child will have 70% of MaxHP and MaxSP of normal characters.
-		* The adopted child cannot marry.
+		* The adopted child cannot raise any stat to beyond 80. - Done [Celest]
+		* The adopted child will have 70% of MaxHP and MaxSP of normal characters. - Done [Celest]
+		* The adopted child cannot marry. - Done [Celest]
 		* "Mom, Dad, I love you" skill will only last 2 minutes instead of 5.
 		* The parents must be both LV 70 or above in order to adopt.
 		* The parents must be both LV 70 or above in order to share EXP as family.
 		* "Mom, Dad, I love you" skill will now take 10% of MaxSP instead of taking 1 SP.
 		- The wedding skills will now depend on percentage of MaxHP/MaxSP. 
+
+********
+58.
+Description:	Super novices max job level is now 99
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		http://forums.emperium.org/viewtopic.php?t=44856

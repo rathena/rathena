@@ -12,6 +12,9 @@ Date	Added
 	  -Skill estimation will show monsters current level (instead of reading from db).
 	  -Will display level 99 aura if and when a monster hits level 99.
 	  -They will not go higher than level 99.
+        * Fixed maximum skill levels not following skill tree [celest]
+        * Updated HP/SP for baby classes [celest]
+        * Corrected pc_calc_base_job [celest]
 
 11/14
 	* Made the Advance jobchangers to kRO standars with the following;

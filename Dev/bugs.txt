@@ -63,8 +63,8 @@ Assigned:	N/A
 Progess:	0%
 
 Problem:	The skill tree's max skill lvl is not read/used.
-Assigned:	N/A
-Progess:	0%
+Assigned:	Celest
+Progess:	~100% (Notes: Maybe there's a less messy way? xP)
 
 Problem:	Char server and Map server crash when you recall some one.
 Assigned:	N/A

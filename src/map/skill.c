@@ -736,7 +736,7 @@ int	skill_get_hit( int id ){ return skill_db[id].hit; }
 int	skill_get_inf( int id ){ return skill_db[id].inf; }
 int	skill_get_pl( int id ){ return skill_db[id].pl; }
 int	skill_get_nk( int id ){ return skill_db[id].nk; }
-int	skill_get_max( int id ){ return skill_db[id].max; }
+int skill_get_max( int id ){ return skill_db[id].max; }
 int skill_get_range( int id , int lv ){ return (lv <= 0) ? 0:skill_db[id].range[lv-1]; }
 int	skill_get_hp( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].hp[lv-1]; }
 int	skill_get_sp( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].sp[lv-1]; }
@@ -753,6 +753,11 @@ int	skill_get_maxcount( int id ){ return skill_db[id].maxcount; }
 int	skill_get_blewcount( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].blewcount[lv-1]; }
 int	skill_get_mhp( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].mhp[lv-1]; }
 int	skill_get_castnodex( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].castnodex[lv-1]; }
+
+int skill_tree_get_max(int id, int b_class){
+	struct pc_base_job s_class = pc_calc_base_job(b_class);
+	return skill_tree[s_class.upper][s_class.job][id].max;
+}
 
 /* プロトタイプ */
 struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,int skilllv,int x,int y,int flag);
@@ -2711,8 +2716,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				heal=0;	/* ?金蟲カ?ド（ヒ?ル量０） */
 			if (sd){
 				s_class = pc_calc_base_job(sd->status.class);
-			if((skill=pc_checkskill(sd,HP_MEDITATIO))>0) // メディテイティオ
-				heal += heal*(skill*2/100);
+				if((skill=pc_checkskill(sd,HP_MEDITATIO))>0) // メディテイティオ
+					heal += heal*(skill*2/100);
 				if(sd && dstsd && sd->status.partner_id == dstsd->status.char_id && s_class.job == 23 && sd->status.sex == 0) //自分も?象もPC、?象が自分のパ?トナ?、自分がスパノビ、自分が♀なら
 					heal = heal*2;	//スパノビの嫁が旦那にヒ?ルすると2倍になる
 			}

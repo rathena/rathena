@@ -4738,6 +4738,7 @@ int atcommand_character_joblevel(
 			if (pl_s_class.job == 0)
 				max_level -= 40;
 			if ((pl_s_class.job == 23) || (pl_s_class.upper == 1 && pl_s_class.type == 2)) //ƒXƒpƒmƒr‚Æ“]¶E‚ÍJobƒŒƒxƒ‹‚ÌÅ‚‚ª70
+			// To-do: super novices has max level 99 - celest
 				max_level += 20;
 
 			if (level > 0) {
