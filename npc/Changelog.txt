@@ -34,6 +34,8 @@ Date		Added
 ======
 
 04/04
+	* Changed "set @TEMP,rand(0);" to set "@TEMP,0;" in the Payon Fortune Teller script [DracoRPG]
+	  We'll have to get all the fortunes, but they are more than 200...
 	* Finished Payon's Gemstone Exchanger, thanks to Dino9021 [DracoRPG]
 	* Added Deviling in the "Poring Island" map pay_fild04, 2 hours respawn [Lupus]
 04/03

@@ -951,7 +951,7 @@ payon_in03.gat,117,128,4	script	Fortune Teller	704,{
 	mes "[Lhimetorra]";
 	mes "Future... the card that sees the future is beginning to speak...... Prepare yourself...";
 	next;
-	set @TEMP,rand(0);
+	set @TEMP,0;
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "Jack says you may be frustrated in the future.";
 	if(@TEMP == 0) mes "He says to overcome the frustration, it is necessary to think of happy thoughts.";
@@ -973,7 +973,7 @@ payon_in03.gat,117,128,4	script	Fortune Teller	704,{
 	mes "form of cards... so listen";
 	mes "carefully-!";
 	next;
-	set @TEMP,rand(0);
+	set @TEMP,0;
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "The pirate is warning you of your beauty. Don't show off your beauty too much. Pirates are very jealous of aparence, as well.";
 	next;
