@@ -602,8 +602,8 @@ int mmo_auth_init(void) {
 					printf("\033[1;31mmmo_auth_init: ******Error: account name already exists.\n");
 					printf("               account name '%s' -> new account not read.\n", userid); // 2 lines, account name can be long.
 					printf("               Account saved in log file.\033[0m\n");
-					login_log("mmmo_auth_init: ******Error: an account has an identical id to another." RETCODE);
-					login_log("               account id #%d -> new account not read (saved in next line):" RETCODE, account_id);
+					login_log("mmmo_auth_init: ******Error: an account has an identical name to another." RETCODE);
+					login_log("               account name '%s' -> new account not read (saved in next line):" RETCODE, userid);
 					login_log("%s", line);
 					break;
 				}

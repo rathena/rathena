@@ -1,6 +1,7 @@
 Date	Added
 
 03/09
+        * Fixed a typo in TXT login server logging, thanks to Skyer / eAthenaC [celest]
         * Added HP and SP rate underflow checking [celest]
         * Added stop auto attacking if no arrows were equipped [celest]
 	* Added new script command: 'cardscnt'. It returns N of inserted cards in the same weapon. [Lupus]
