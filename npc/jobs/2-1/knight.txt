@@ -1504,8 +1504,7 @@ OnTimerWarp:
 
 
 //<------------------------------------------------------------------------------------------ Sir Grey (Final Test) ------------------------------------------------------------------------------------------------------>\\
-prt_in.gat,87,90,3	script	Sir Grey	119,
-{
+prt_in.gat,87,90,3	script	Sir Grey	119,{
 	mes "[Sir Grey]";
 	if (class == Job_Knight) goto L_Knight;
 	if (class == Job_Novice) goto L_Novice;
@@ -1854,5 +1853,4 @@ M_Menu:
 
 	M_End:
 		close;
-		
 }

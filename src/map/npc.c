@@ -1605,7 +1605,12 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		// 引数の個数チェック
 		if (sscanf(w1,"%[^,],%d,%d,%d",mapname,&x,&y,&dir) != 4 ||
 		   ( strcmp(w2,"script")==0 && strchr(w4,',')==NULL) ) {
-			printf("bad script line : %s\n",w3);
+			if (strlen(current_file)) {
+			printf("\n");
+			sprintf(tmp_output,"Bad script on line '"CL_WHITE"%s"CL_RESET"' fro"
+				"m file '"CL_WHITE"%s"CL_RESET"'.\n",w3,current_file);
+			ShowError(tmp_output);
+			}
 			return 1;
 		}
 		m = map_mapname2mapid(mapname);
@@ -2411,7 +2416,7 @@ int do_init_npc(void)
 	add_timer_func_list(npc_event_timer,"npc_event_timer");
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
-
+	memset(current_file,'\0',sizeof(current_file));
 	//exit(1);
 
 	return 0;

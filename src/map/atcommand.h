@@ -115,7 +115,7 @@ enum AtCommandType {
 	AtCommand_CharModel, 
 	AtCommand_CharSKPoint,
 	AtCommand_CharSTPoint, 
-	AtCommand_CharZeny,
+//	AtCommand_CharZeny, //now #zeny
 	AtCommand_RecallAll,
 	AtCommand_ReloadItemDB,
 	AtCommand_ReloadMobDB,

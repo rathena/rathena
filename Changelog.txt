@@ -1,5 +1,6 @@
 Date	Added
 12/21
+	* Added #zeny, removed @charzeny [MC Cameri]
 	* Since conf/maps_list.txt was removed, added conf/maps_athena.conf [Ajarn]
 	* Fixed a few NPCs that were giving curly errors. It seems to be caused by a bug that the NPCs' last line isn't read or something [Codemaster]
 	* Fixed a tiny compile warning in npc.c [Codemaster]

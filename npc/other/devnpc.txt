@@ -234,9 +234,8 @@ Lquote1:
 	npctalk "... That did not look right";
 	break;
 Lquote2:
-	npc
-
-Lquote2:
+	npctalk "????";
+	break;
 
 Lquote3:
 	npctalk "OMGITSJEEBUS!#!@%!";

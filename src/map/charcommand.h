@@ -17,6 +17,7 @@ enum CharCommandType {
 	CharCommandStorageList,
 	CharCommandItem, // by MC Cameri
 	CharCommandWarp,
+	CharCommandZeny,
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */

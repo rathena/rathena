@@ -48,6 +48,7 @@ CCMD_FUNC(effect);
 CCMD_FUNC(storagelist);
 CCMD_FUNC(item);
 CCMD_FUNC(warp);
+CCMD_FUNC(zeny);
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -84,6 +85,7 @@ static CharCommandInfo charcommand_info[] = {
 	{ CharCommandWarp,					"#warp",					60, charcommand_warp },
 	{ CharCommandWarp,					"#rura",					60, charcommand_warp },
 	{ CharCommandWarp,					"#rura+",					60, charcommand_warp },
+	{ CharCommandZeny,					"#zeny",					60, charcommand_zeny },
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -1122,6 +1124,51 @@ int charcommand_warp(
 			}
 		} else {
 			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			return -1;
+		}
+	} else {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * #zeny <charname>
+ *------------------------------------------
+ */
+int charcommand_zeny(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd;
+	char character[100];
+	int zeny = 0, new_zeny;
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%d %99[^\n]", &zeny, character) < 2 || zeny == 0) {
+		clif_displaymessage(fd, "Please, enter a number and a player name (usage: #zeny <zeny> <name>).");
+		return -1;
+	}
+
+	if ((pl_sd = map_nick2sd(character)) != NULL) {
+		new_zeny = pl_sd->status.zeny + zeny;
+		if (zeny > 0 && (zeny > MAX_ZENY || new_zeny > MAX_ZENY)) // fix positiv overflow
+			new_zeny = MAX_ZENY;
+		else if (zeny < 0 && (zeny < -MAX_ZENY || new_zeny < 0)) // fix negativ overflow
+			new_zeny = 0;
+		if (new_zeny != pl_sd->status.zeny) {
+			pl_sd->status.zeny = new_zeny;
+			clif_updatestatus(pl_sd, SP_ZENY);
+			clif_displaymessage(fd, msg_table[211]); // Character's number of zenys changed!
+		} else {
+			if (zeny < 0)
+				clif_displaymessage(fd, msg_table[41]); // Impossible to decrease the number/value.
+			else
+				clif_displaymessage(fd, msg_table[149]); // Impossible to increase the number/value.
 			return -1;
 		}
 	} else {
