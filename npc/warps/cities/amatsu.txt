@@ -4,7 +4,7 @@
 //= Athena (1.0)
 //= Nana (1.1)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
@@ -37,7 +37,8 @@ ama_in02.gat,65,38,0	warp	warp1974	1,1,ama_in02.gat,195,41
 ama_test.gat,50,16,0	warp	warp8003	1,1,ama_fild01.gat,174,330
 ama_test.gat,50,44,0	warp	warp8004	1,1,ama_test.gat,50,82
 ama_test.gat,50,79,0	warp	warp8005	1,1,ama_test.gat,50,41
-ama_test.gat,50,90,0	warp	warp8006	1,1,ama_dun01.gat,228,9
+//disabled due to amatsu dungeon quest
+//ama_test.gat,50,90,0	warp	warp8006	1,1,ama_dun01.gat,228,9
 amatsu.gat,133,148,0	warp	warp1989	1,1,ama_in01.gat,88,22
 amatsu.gat,168,180,0	warp	warp1964	1,1,ama_in01.gat,34,99
 amatsu.gat,216,116,0	warp	warp1968	1,1,ama_in01.gat,162,25
