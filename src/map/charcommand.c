@@ -46,6 +46,7 @@ CCMD_FUNC(spiritball);
 CCMD_FUNC(itemlist);
 CCMD_FUNC(effect);
 CCMD_FUNC(storagelist);
+CCMD_FUNC(item);
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -78,6 +79,7 @@ static CharCommandInfo charcommand_info[] = {
 	{ CharCommandItemList,				"#itemlist",				40,	charcommand_itemlist },
 	{ CharCommandEffect,				"#effect",					40, charcommand_effect },
 	{ CharCommandStorageList,			"#storagelist",				40, charcommand_storagelist },
+	{ CharCommandItem,					"#item",					60, charcommand_item },
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -977,6 +979,83 @@ charcommand_storagelist(
 		}
 	} else {
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * #item command (usage: #item <name/id_of_item> <quantity> <player>)
+ * by MC Cameri
+ *------------------------------------------
+ */
+int charcommand_item(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char item_name[100];
+	char character[100];
+	struct map_session_data *pl_sd;
+	int number = 0, item_id, flag;
+	struct item item_tmp;
+	struct item_data *item_data;
+	int get_count, i, pet_id;
+	nullpo_retr(-1, sd);
+
+	memset(item_name, '\0', sizeof(item_name));
+
+	if (!message || !*message || sscanf(message, "%99s %d %99[^\n]", item_name, &number, character) < 3) {
+		clif_displaymessage(fd, "Please, enter an item name/id (usage: #item <item name or ID> <quantity> <char name>).");
+		return -1;
+	}
+
+	if (number <= 0)
+		number = 1;
+
+	item_id = 0;
+	if ((item_data = itemdb_searchname(item_name)) != NULL ||
+	    (item_data = itemdb_exists(atoi(item_name))) != NULL)
+		item_id = item_data->nameid;
+
+	if (item_id >= 500) {
+		get_count = number;
+		// check pet egg
+		pet_id = search_petDB_index(item_id, PET_EGG);
+		if (item_data->type == 4 || item_data->type == 5 ||
+			item_data->type == 7 || item_data->type == 8) {
+			get_count = 1;
+		}
+		if ((pl_sd = map_nick2sd(character)) != NULL) {
+			if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can look items only lower or same level
+				for (i = 0; i < number; i += get_count) {
+					// if pet egg
+					if (pet_id >= 0) {
+						sd->catch_target_class = pet_db[pet_id].class;
+						intif_create_pet(sd->status.account_id, sd->status.char_id,
+						                 pet_db[pet_id].class, mob_db[pet_db[pet_id].class].lv,
+						                 pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate,
+						                 100, 0, 1, pet_db[pet_id].jname);
+					// if not pet egg
+					} else {
+						memset(&item_tmp, 0, sizeof(item_tmp));
+						item_tmp.nameid = item_id;
+						item_tmp.identify = 1;
+						if ((flag = pc_additem((struct map_session_data*)sd, &item_tmp, get_count)))
+							clif_additem((struct map_session_data*)sd, 0, 0, flag);
+					}
+				}
+				clif_displaymessage(fd, msg_table[18]); // Item created.
+			} else {
+				clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+				return -1;
+			}
+		} else {
+			clif_displaymessage(fd, msg_table[3]); // Character not found.
+			return -1;
+		}
+	} else {
+		clif_displaymessage(fd, msg_table[19]); // Invalid item ID or name.
 		return -1;
 	}
 
