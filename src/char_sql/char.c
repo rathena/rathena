@@ -2417,6 +2417,9 @@ int parse_char(int fd) {
 			if (RFIFOREST(fd) < 3)
 				return 0;
 
+                        if (sd == NULL)
+                          return 0;
+
 			sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d'",char_db, sd->account_id, RFIFOB(fd, 2));
 			if (mysql_query(&mysql_handle, tmp_sql)) {
 				printf("DB server Error - %s\n", mysql_error(&mysql_handle));

@@ -1,6 +1,8 @@
 Date	Added
 
-01/24 
+01/24
+        * Fixed a crash in char_sql/char.c where people were selecting
+          chars before requesting connections [SVN 983] [MouseJstr]
         * some G++ compile tweaks and got through several files in the
         map server - [SVN 976]   [MouseJstr]
 
