@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/11/25 4:02:35 PM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/11/26 5:46:59 PM Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -3718,7 +3718,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				map_freeblock_unlock();
 				return 1;
 			}
-			clif_item_repair_list(sd);			
+			clif_item_repair_list(sd);
 		}
 		break;
 
@@ -3876,22 +3876,38 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		}
 		break;
 
+	// Full Strip [Celest]
 	case ST_FULLSTRIP:
 		{
 			struct status_change *tsc_data = battle_get_sc_data(bl);
-			
-			if(tsc_data && tsc_data[SC_CP_HELM].timer != -1)
-				break;
+			int c=0, i, j;
+			int striplist[2][4] = { { 0, 0, 0, 0 },
+				{ 0x0002, 0x0020, 0x0010, 0x0100 } };
+
 			strip_per = 5+2*skilllv+strip_fix/5;
 			strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
-			if(rand()%100 < strip_per){
+			for (i=0; i<4; i++) {
+				if(tsc_data && tsc_data[SC_CP_WEAPON + i].timer != -1)
+					break;
+				if(rand()%100 < strip_per) {
+					striplist[0][i] = 1;
+					c++;
+				}
+			}
+
+			if (c > 0) {
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
-				skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
-				if(dstsd){
-					for(i=0;i<MAX_INVENTORY;i++){
-						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0100){
-							pc_unequipitem(dstsd,i,0,BF_SKILL);
-							break;
+				for (j=0; j<4 && c > 0; j++) {
+					if (striplist[0][j]) {
+						skill_status_change_start(bl,SC_STRIPWEAPON + i,skilllv,0,0,0,strip_time,0 );
+						if(dstsd){
+							for(i=0;i<MAX_INVENTORY;i++){
+								if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & striplist[1][j]){
+									pc_unequipitem(dstsd,i,0,BF_SKILL);
+									--c;
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -3972,46 +3988,46 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case AM_CP_WEAPON:
 		{
 			struct status_change *tsc_data = battle_get_sc_data(bl);
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(tsc_data && tsc_data[SC_STRIPWEAPON].timer != -1)
-			skill_status_change_end(bl, SC_STRIPWEAPON, -1 );
-		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+				skill_status_change_end(bl, SC_STRIPWEAPON, -1 );
+			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		}
 		break;
 	case AM_CP_SHIELD:
 		{
 			struct status_change *tsc_data = battle_get_sc_data(bl);
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(tsc_data && tsc_data[SC_STRIPSHIELD].timer != -1)
-			skill_status_change_end(bl, SC_STRIPSHIELD, -1 );
-		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+				skill_status_change_end(bl, SC_STRIPSHIELD, -1 );
+			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		}
 		break;
 	case AM_CP_ARMOR:
 		{
 			struct status_change *tsc_data = battle_get_sc_data(bl);
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(tsc_data && tsc_data[SC_STRIPARMOR].timer != -1)
-			skill_status_change_end(bl, SC_STRIPARMOR, -1 );
-		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+				skill_status_change_end(bl, SC_STRIPARMOR, -1 );
+			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		}
 		break;
 	case AM_CP_HELM:
 		{
 			struct status_change *tsc_data = battle_get_sc_data(bl);
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(tsc_data && tsc_data[SC_STRIPHELM].timer != -1)
-			skill_status_change_end(bl, SC_STRIPHELM, -1 );
-		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+				skill_status_change_end(bl, SC_STRIPHELM, -1 );
+			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		}
 		break;
 
 	case SA_DISPELL:			/* ディスペル */
 		{
 			int i;
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage )
-			break;
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage )
+				break;
 			for(i=0;i<136;i++){
 				if(i==SC_RIDING || i== SC_FALCON || i==SC_HALLUCINATION || i==SC_WEIGHT50
 					|| i==SC_WEIGHT90 || i==SC_STRIPWEAPON || i==SC_STRIPSHIELD || i==SC_STRIPARMOR
@@ -4421,7 +4437,13 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		}
 		break;
 
-	// Slim Pitcher [Celest]
+	// Weapon Refining [Celest]
+	case WS_WEAPONREFINE:
+		if(sd)
+			clif_item_refine_list(sd);
+		break;
+
+	// Slim Pitcher
 	case CR_SLIMPITCHER:
 		{
 			if (sd && flag&1) {
@@ -4431,6 +4453,20 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 				battle_heal(src,bl,hp,0,0);
+			}
+		}
+		break;
+	// Full Chemical Protection
+	case CR_FULLPROTECTION:
+		{
+			int i, skilltime;
+			struct status_change *tsc_data = battle_get_sc_data(bl);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			skilltime = skill_get_time(skillid,skilllv);
+			for (i=0; i<4; i++) {
+				if(tsc_data && tsc_data[SC_STRIPWEAPON + i].timer != -1)
+					skill_status_change_end(bl, SC_STRIPWEAPON + i, -1 );
+				skill_status_change_start(bl,SC_CP_WEAPON + i,skilllv,0,0,0,skilltime,0 );
 			}
 		}
 		break;

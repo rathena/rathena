@@ -5031,6 +5031,33 @@ int clif_item_repair_list(struct map_session_data *sd)
 }
 
 /*==========================================
+ * Weapon Refining [Celest]
+ *------------------------------------------
+ */
+int clif_item_refine_list(struct map_session_data *sd)
+{
+	int i,c;
+	int fd;
+
+	nullpo_retr(0, sd);
+
+	fd=sd->fd;
+
+	WFIFOW(fd,0)=0x177; // temporarily use same packet as clif_item_identify
+	for(i=c=0;i<MAX_INVENTORY;i++){
+		if(sd->status.inventory[i].nameid > 0 && itemdb_type(sd->status.inventory[i].nameid)==4){
+			WFIFOW(fd,c*2+4)=i+2;
+			c++;
+		}
+	}
+	if(c > 0) {
+		WFIFOW(fd,2)=c*2+4;
+		WFIFOSET(fd,WFIFOW(fd,2));
+	}
+	return 0;
+}
+
+/*==========================================
  * アイテムによる一時的なスキル効果
  *------------------------------------------
  */

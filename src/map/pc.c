@@ -1,4 +1,4 @@
-// $Id: pc.c 101 2004-11-25 4:02:51 PM Celestia $
+// $Id: pc.c 101 2004-11-26 5:47:29 PM Celestia $
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -2733,23 +2733,14 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 	case SP_HP_DRAIN_VALUE:
-
 		if(!sd->state.lr_flag) {
-
 			sd->hp_drain_rate += type2;
-
 			sd->hp_drain_value += val;
-
 		}
-
 		else if(sd->state.lr_flag == 1) {
-
 			sd->hp_drain_rate_ += type2;
-
 			sd->hp_drain_value_ += val;
-
 		}
-
 		break;
 	case SP_SP_DRAIN_RATE:
 		if(!sd->state.lr_flag) {
@@ -2762,21 +2753,13 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 	case SP_SP_DRAIN_VALUE:
-
 		if(!sd->state.lr_flag) {
-
 			sd->sp_drain_rate += type2;
-
 			sd->sp_drain_value += val;
-
 		}
-
 		else if(sd->state.lr_flag == 1) {
-
 			sd->sp_drain_rate_ += type2;
-
 			sd->sp_drain_value_ += val;
-
 		}
 
 		break;
@@ -3448,9 +3431,10 @@ int pc_item_identify(struct map_session_data *sd,int idx)
 	nullpo_retr(0, sd);
 
 	// Celest
-	if (sd->skillid == BS_REPAIRWEAPON) {
+	if (sd->skillid == BS_REPAIRWEAPON)
 		return pc_item_repair (sd, idx);
-	}
+	else if (sd->skillid == WS_WEAPONREFINE)
+		return pc_item_refine (sd, idx);
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(sd->status.inventory[idx].nameid > 0 && sd->status.inventory[idx].identify == 0 ){
@@ -3485,6 +3469,81 @@ int pc_item_repair(struct map_session_data *sd,int idx)
 			clif_produceeffect(sd, 0, sd->status.inventory[idx].nameid);
 			clif_misceffect(&sd->bl, 3);
 			clif_displaymessage(sd->fd,"Item has been repaired.");
+		}
+	}
+
+	return !flag;
+}
+
+/*==========================================
+ * Weapon Refining [Celest]
+ *------------------------------------------
+ */
+int pc_item_refine(struct map_session_data *sd,int idx)
+{
+	int flag = 1, i = 0, count = 0, ep = 0, per, refine;
+	int material[5] = { 0, 1010, 1011, 984, 984 };
+	
+	nullpo_retr(0, sd);
+	struct item *item = &sd->status.inventory[idx];
+
+	if(idx >= 0 && idx < MAX_INVENTORY) {
+		if(item->nameid > 0 && itemdb_type(item->nameid)==4) {
+			// if it's no longer refineable
+			if (item->refine == 10) {
+				clif_skill_fail(sd,sd->skillid,0,0);
+				return 0;
+			}
+			refine = item->refine + sd->skilllv > 10
+				? 10 - item->refine : sd->skilllv;
+			for (i=0; i < MAX_INVENTORY; i++)
+				if(sd->status.inventory[i].nameid == material [itemdb_wlv (item->nameid)])
+					count += sd->status.inventory[i].amount;
+			if (count < refine ) {
+				clif_skill_fail(sd,sd->skillid,0,0);
+				return 0;
+			}
+			per = percentrefinery [itemdb_wlv (item->nameid)][item->refine + refine - 1];
+			//per += pc_checkskill(sd,BS_WEAPONRESEARCH);
+			per *= (75 + sd->status.job_level/2)/100;
+			
+			if (per > rand() % 100) {
+				flag = 0;
+				item->refine += refine;
+
+				for (i=0; i < MAX_INVENTORY; i++)
+					if(sd->status.inventory[i].nameid == material [itemdb_wlv (item->nameid)]) {
+						if (sd->status.inventory[i].amount >= refine) {
+							pc_delitem(sd,i,refine,0);
+							break;
+						} else {
+							refine -= sd->status.inventory[i].amount;
+							pc_delitem(sd,i,sd->status.inventory[i].amount,0);
+						}
+					}
+
+				if(item->equip) {
+					ep = item->equip;
+					pc_unequipitem(sd,idx,0, BF_NORMAL);
+				}
+				clif_refine(sd->fd,sd,0,idx,item->refine);
+				clif_delitem(sd,idx,1);				
+				clif_additem(sd,idx,1,0);
+				if (ep)
+					pc_equipitem(sd,idx,ep);
+				clif_misceffect(&sd->bl,3);
+			}
+			else {
+				clif_delitem(sd,i,refine);
+				item->refine = 0;
+				if(item->equip)
+					pc_unequipitem(sd,idx,0, BF_NORMAL);
+				clif_refine(sd->fd,sd,1,idx,item->refine);
+				pc_delitem(sd,idx,1,0);
+				clif_misceffect(&sd->bl,2);
+
+				clif_emotion(&sd->bl, 23);
+			}
 		}
 	}
 

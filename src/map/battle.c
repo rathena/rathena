@@ -3562,21 +3562,13 @@ static struct Damage battle_calc_pc_weapon_attack(
 	}
 
 	// 状態異常中のダメージ追加でクリティカルにも有効なスキル
-
 	if (sc_data) {
-
 		// エンチャントデッドリーポイズン
-
 		if(sc_data[SC_EDP].timer != -1) {
-
 			damage += damage * (150 + sc_data[SC_EDP].val1 * 50) / 100;
-
 			damage2 += damage2 * (150 + sc_data[SC_EDP].val1 * 50) / 100;
-
 			no_cardfix = 1;
-
 		}
-
 	}
 
 	// 精錬ダメージの追加
@@ -4500,9 +4492,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	}
 
 	if(battle_check_target(src,target,BCT_ENEMY) <= 0 &&
-
 				!battle_check_range(src,target,0))
-
 		return 0;	// 攻撃対象外
 
 	race = battle_get_race(target);

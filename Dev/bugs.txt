@@ -81,7 +81,8 @@ Progess:	0%
 
 Problem:	@job/#job turns you into 2-2-1 and not into any other jobs
 Assigned:	N/a
-Progess:	0%
+Progess:	0% (Notes by Celest: Actually, check here ^_- 
+http://eathena.deltaanime.net/forum/viewtopic.php?p=79951#79951)
 
 Problem:	@disguise has no death sprite so the client crashes when you die, a solution would be that upon death before the sprites change you're undisguised.
 Assigned:	N/a

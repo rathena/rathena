@@ -1,4 +1,7 @@
 Date	Added
+11/26   
+        * Finished Full Strip, Weapon Refine, Slim Pitcher and Full Protection. [celest]
+
 11/25
 	* Added @skilltree to help GM's answer skill tree questions [MouseJstr]
 	* Update Spider Web; I believe you cannot use it on yourself now. [Codemaster]

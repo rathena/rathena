@@ -1,4 +1,4 @@
-// $Id: skill.h,v 1.5 2004/09/25 05:32:19 MouseJstr Exp $
+// $Id: skill.h,v 1.5 2004/11/26 5:47:12 PM Celestia Exp $
 #ifndef _SKILL_H_
 #define _SKILL_H_
 
@@ -734,6 +734,7 @@ enum {
 	WE_CALLPARTNER,
 
 	NPC_SELFDESTRUCTION2 = 331,
+	ITM_TOMAHAWK = 337,
 	NPC_DARKCROSS = 338,
 
 	LK_AURABLADE = 355,
@@ -855,13 +856,12 @@ enum {
 	SL_SKE,
 	SL_SKA,
 	
-	// Will assign skill id's later [Celest]
-	ST_PRESERVE,
+	ST_PRESERVE = 475,
 	ST_FULLSTRIP,
 	WS_WEAPONREFINE,
 	CR_SLIMPITCHER,
 	CR_FULLPROTECTION,
-	ITM_TOMAHAWK,
+	
 
 //	moved to common/mmo.h
 /*	GD_APPROVAL=10000,

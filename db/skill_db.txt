@@ -508,6 +508,12 @@
 471,0,0,0,0,0,0,0,no,0,0,0,none,0	//SL_SKE##
 472,0,0,0,0,0,0,0,no,0,0,0,none,0	//SL_SKA##
 
+475,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//ST_PRESERVE##
+476,1,6,1,0,1,5,1,yes,0,0,0,weapon,0	//ST_FULLSTRIP##
+477,0,6,4,0,1,10,1,no,0,0,0,weapon,0	//WS_WEAPONREFINE##
+478,3,6,2,0,1,10,1,no,0,0,0,none,0	//CR_SLIMPITCHER##
+479,1,6,16,0,1,5,1,yes,0,0,0,weapon,0	//CR_FULLPROTECTION##
+
 //id,range,hit,inf,pl,nk,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count
 10000,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_APPROVAL#맫딮긎깑긤뤂봃#
 10001,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_KAFRACONTRACT#긇긵깋뚖뾭#
@@ -525,9 +531,5 @@
 10013,0,0,4,0,1,1,0,no,0,0,0,none,0	//GD_EMERGENCYCALL##
 10014,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_DEVELOPMENT##
 
-// ST_PRESERVE#프리저브#
-// ST_FULLSTRIP#풀_스트립#
-// WS_WEAPONREFINE#무기제련#
-// CR_SLIMPITCHER#슬림_피쳐#
-// CR_FULLPROTECTION#풀_케미칼프로텍션#
-// ITM_TOMAHAWK#토마호크_던지기#
+
+// ITM_TOMAHAWK#토마호크_던지기# 337
