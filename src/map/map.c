@@ -2191,10 +2191,10 @@ void do_final(void) {
 #endif /* not TXT_ONLY */
 }
 
-void map_helpscreen() {
+void map_helpscreen(int flag) {
 	puts("Usage: map-server [options]");
 	puts("Options:");
-	puts("  --help, --h, -h, /?		Displays this help screen");
+	puts("  --help, --h, --?, /?		Displays this help screen");
 	puts("  --map-config <file>		Load map-server configuration from <file>");
 	puts("  --battle-config <file>	Load battle configuration from <file>");
 	puts("  --atcommand-config <file>	Load atcommand configuration from <file>");
@@ -2208,19 +2208,30 @@ void map_helpscreen() {
 	puts("				(SQL Only)");
 	puts("  --version, --v, -v, /v	Displays the server's version");
 	puts("\n");
-	exit(1);
+	if (flag) exit(1);
 }
 
-void map_versionscreen() {
-	printf("\033[1;29meAthena version %d.%02d.%02d, Athena Mod version %d\033[0;0m\n",
+void map_versionscreen(int flag) {
+	printf("\033[1;29m" "eAthena version %d.%02d.%02d, Athena Mod version %d" "\033[0;0m\n",
 		ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION,
 		ATHENA_MOD_VERSION);
-	puts("\033[1;32mWebsite/Forum:\033[0;0m	http://eathena.deltaanime.net/");
-	puts("\033[1;32mDownload URL:\033[0;0m	http://eathena.systeminplace.net/");
-	puts("\033[1;32mIRC Channel:\033[0;0m	irc://irc.deltaanime.net/#athena");
+	puts("\033[1;32m" "Website/Forum:" "\033[0;0m" "\thttp://eathena.deltaanime.net/");
+	puts("\033[1;32m" "Download URL:" "\033[0;0m" "\thttp://eathena.systeminplace.net/");
+	puts("\033[1;32m" "IRC Channel:" "\033[0;0m" "\tirc://irc.deltaanime.net/#athena");
 	puts("\nOpen \033[1;29mreadme.html\033[0;0m for more information.");
 	if (ATHENA_RELEASE_FLAG) ShowNotice("This version is not for release.\n");
-	exit(1);
+	if (flag) exit(1);
+}
+
+void map_displaybug(int flag) {
+	FILE *fp;
+	char line[1024];
+	if ((fp=fopen("mapbug.txt","r"))!=NULL) {
+		while(fgets(line,1023,fp)) printf(line);
+		fclose(fp);
+	} //don't show anything if file doesnt exist
+    // this is only here when develing
+	if (flag) exit(1);
 }
 
 /*======================================================
@@ -2243,15 +2254,15 @@ int do_init(int argc, char *argv[]) {
 	unsigned char *SCRIPT_CONF_NAME = "conf/script_athena.conf";
 	unsigned char *MSG_CONF_NAME = "conf/msg_athena.conf";
 	unsigned char *GRF_PATH_FILENAME = "conf/grf-files.txt";
-
+	map_displaybug(0);
 	srand(gettick());
 
 	for (i = 1; i < argc ; i++) {
 
 		if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--?") == 0 || strcmp(argv[i], "/?") == 0)
-			map_helpscreen();
+			map_helpscreen(1);
 		if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "/v") == 0)
-			map_versionscreen();
+			map_versionscreen(1);
 		else if (strcmp(argv[i], "--map_config") == 0 || strcmp(argv[i], "--map-config") == 0)
 			MAP_CONF_NAME=argv[i+1];
 		else if (strcmp(argv[i],"--battle_config") == 0 || strcmp(argv[i],"--battle-config") == 0)

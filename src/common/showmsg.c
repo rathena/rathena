@@ -51,7 +51,7 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 //		abort(); // Kill server? Deadly
 	}
 	strcpy(output,prefix);
-	strcpy(output," ");
+	strcat(output," ");
 	strcat(output,string);
 	printf(output);
 	fflush(stdout);

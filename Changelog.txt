@@ -1,5 +1,14 @@
 Date	Added
 11/29
+	* Added mapbug.txt which is displayed in map-server, displays
+	  the last bug or w/e fixed for the map-server [MC Cameri]
+	  -You may change it whenever you want
+	  -It will only show if mapbug.txt exists
+	  -This file must not be included in releases
+	* Made some changes in map_versionscreen() to make it easier to
+	  read/change in the source [MC Cameri]
+	* Fixed a typo in _ShowMessage() removing the message caption. [MC Cameri]
+	* Fixed typo in map_helpscreen() showing -h instead of --?. [MC Cameri]
         * Added more sc_data checks in skill.c and pc.c [celest]
         * Updated Quagmire, Enchant Deadly Poison, Fog Wall [celest]
 
