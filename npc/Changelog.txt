@@ -31,7 +31,7 @@ Other Ppl
 Date		Added
 ======
 11/11
-	* - Fixed Jobchanger.txt [shadowlady]
+	* - Fixed Jobchanger.txt and supernovice.txt [shadowlady]
 11/10
 	* - Fixed a bug on counteragent_mixture and quest_yuno(need to revise alchemist quest) [shadow]
 
