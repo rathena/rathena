@@ -1193,7 +1193,7 @@
 4160,Firelock_Soldier_Card,Firelock Soldier Card,6,20,0,10,,,,,,,,,,,{},{}
 4161,Grand_Peco_Card,Grand Peco Card,6,20,0,10,,,,,,,,,,,{},{}
 4162,Grizzly_Card,Grizzly Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDef,2; if(isequipped(4074)) bonus2 bAddEffWhenHit,Eff_Blind,30; }
-4163,Gryphon_Card,Gryphon Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bFlee,2; bonus bCritical,7; if (callfunc("Is_Sword_Class")!=0) bonus3 bAutoSpell,62,5,10; }
+4163,Gryphon_Card,Gryphon Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bFlee,2; bonus bCritical,7; if (callfunc("Is_Sword_Class")!=0) bonus3 bAutoSpell,62,5,1; }
 4164,Gullinbursti_Card,Gullinbursti Card,6,20,0,10,,,,,,,,,,,{},{}
 4165,Gig_Card,Gig Card,6,20,0,10,,,,,,,,,,,{},{}
 4166,Nightmare_Terror_Card,Nightmare Terror Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDef,2; }
