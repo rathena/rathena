@@ -16,6 +16,7 @@
 #include "storage.h"
 #include "intif.h"
 #include "atcommand.h"
+#include "log.h"
 
 /*==========================================
  * æˆø—v¿‚ğ‘Šè‚É‘—‚é
@@ -33,15 +34,15 @@ void trade_traderequest(struct map_session_data *sd, int target_id) {
 				return;
 			}
 		}
-		if(pc_isGM(sd) && pc_isGM(sd) < battle_config.gm_can_drop_lv) {
+		if(pc_isGM(sd) && pc_isGM(target_sd) < battle_config.gm_can_drop_lv) {
 			clif_displaymessage(sd->fd, msg_txt(246));
 			trade_tradecancel(sd); // GM is not allowed to trade
 		} else if ((target_sd->trade_partner != 0) || (sd->trade_partner != 0)) {
 			trade_tradecancel(sd); // person is in another trade
 		} else {
-			if (sd->bl.m != target_sd->bl.m ||
+			if (!pc_isGM(sd) && (sd->bl.m != target_sd->bl.m ||
 			    (sd->bl.x - target_sd->bl.x <= -5 || sd->bl.x - target_sd->bl.x >= 5) ||
-			    (sd->bl.y - target_sd->bl.y <= -5 || sd->bl.y - target_sd->bl.y >= 5)) {
+			    (sd->bl.y - target_sd->bl.y <= -5 || sd->bl.y - target_sd->bl.y >= 5))) {
 				clif_tradestart(sd, 0); // too far
 			} else if (sd != target_sd) {
 				target_sd->trade_partner = sd->status.account_id;
@@ -328,6 +329,7 @@ void trade_tradecommit(struct map_session_data *sd) {
 
 							if (sd->status.inventory[n].amount < sd->deal_item_amount[trade_i])
 								sd->deal_item_amount[trade_i] = sd->status.inventory[n].amount;
+                                                        log_trade(sd, target_sd, n, sd->deal_item_amount[trade_i]);
 
 							flag = pc_additem(target_sd, &sd->status.inventory[n], sd->deal_item_amount[trade_i]);
 							if (flag == 0)
@@ -336,6 +338,7 @@ void trade_tradecommit(struct map_session_data *sd) {
 								clif_additem(sd, n, sd->deal_item_amount[trade_i], 0);
 							sd->deal_item_index[trade_i] = 0;
 							sd->deal_item_amount[trade_i] = 0;
+                                                        
 						}
 						if (target_sd->deal_item_amount[trade_i] != 0) {
 							int n = target_sd->deal_item_index[trade_i] - 2;
@@ -343,6 +346,7 @@ void trade_tradecommit(struct map_session_data *sd) {
 							if (target_sd->status.inventory[n].amount < target_sd->deal_item_amount[trade_i])
 								target_sd->deal_item_amount[trade_i] = target_sd->status.inventory[n].amount;
 
+                                                        log_trade(target_sd, sd, n, target_sd->deal_item_amount[trade_i]);
 							flag = pc_additem(sd, &target_sd->status.inventory[n], target_sd->deal_item_amount[trade_i]);
 							if (flag == 0)
 								pc_delitem(target_sd, n, target_sd->deal_item_amount[trade_i], 1);

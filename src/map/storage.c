@@ -233,11 +233,12 @@ int storage_storageadd(struct map_session_data *sd,int index,int amount)
 
 	if( (stor->storage_amount <= MAX_STORAGE) && (stor->storage_status == 1) ) { // storage not full & storage open
 		if(index>=0 && index<MAX_INVENTORY) { // valid index
-			if( (amount <= sd->status.inventory[index].amount) && (amount > 0) ) { //valid amount
-				if(storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
-				// remove item from inventory
-					pc_delitem(sd,index,amount,0);
-			} // valid amount
+                  if( (amount <= sd->status.inventory[index].amount) && (amount > 0) ) { //valid amount
+//                    log_tostorage(sd, index, 0);
+                    if(storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
+                      // remove item from inventory
+                      pc_delitem(sd,index,amount,0);
+                  } // valid amount
 		}// valid index
 	}// storage not full & storage open
 
@@ -263,6 +264,7 @@ int storage_storageget(struct map_session_data *sd,int index,int amount)
 					storage_delitem(sd,stor,index,amount);
 				else
 					clif_additem(sd,0,0,flag);
+//                                log_fromstorage(sd, index, 0);
 			} // valid amount
 		}// valid index
 	}// storage open
@@ -510,6 +512,7 @@ int storage_guild_storageadd(struct map_session_data *sd,int index,int amount)
 		if( (stor->storage_amount <= MAX_GUILD_STORAGE) && (stor->storage_status == 1) ) { // storage not full & storage open
 			if(index>=0 && index<MAX_INVENTORY) { // valid index
 				if( (amount <= sd->status.inventory[index].amount) && (amount > 0) ) { //valid amount
+//                                        log_tostorage(sd, index, 1);
 					if(guild_storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
 					// remove item from inventory
 						pc_delitem(sd,index,amount,0);
@@ -536,6 +539,7 @@ int storage_guild_storageget(struct map_session_data *sd,int index,int amount)
 						guild_storage_delitem(sd,stor,index,amount);
 					else
 						clif_additem(sd,0,0,flag);
+//                                        log_fromstorage(sd, index, 1);
 				} // valid amount
 			}// valid index
 		}// storage open
