@@ -18,10 +18,6 @@ Date	Added
 	  prep for unleasing it on the sql using public [MouseJstr]
 	* Fixed some SQL queries crashing char server [davidsiaw]
 	* Added several PID GM commands, thanks to Dino9021 [nsstrunks]
-
-12/18
-=======
->>>>>>> .r637
 	* Storage was merging items incorrectly [Mousejstr]
 	* eliminated a uninitialized var when using afm maps [MouseJstr]
 	* Added concept of dirty storage to reduce saves/load
