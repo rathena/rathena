@@ -6,4 +6,4 @@
 9026,720	//Alice_Egg,Aquamarine
 9027,723	//Zherlthsh_Egg,Ruby
 2237,2240	//Bandit_Beard",2240 BEARD
-5054,5096	//Assassin_Mask,Assassin_Mask_
+
