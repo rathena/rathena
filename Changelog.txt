@@ -1,5 +1,15 @@
 Date	Added
 12/22
+        * Rearranged how guild messages, gm messages, and party messages
+          are moved back and forth between the inter server and the
+          map server.. eliminating unneeded round trips to eliminate
+          lag on a loaded char-server.  [MouseJstr]
+
+            src\char_sql\int_party.c src\char_sql\int_guild.c
+            src\char_sql\inter.c src\map\atcommand.c src\map\guild.c
+            src\map\intif.c src\map\party.c src\char\int_guild.c
+            src\char\inter.c src\char\int_party.c 
+
 	* Reverted npc.c back to before jA 1081. This fixes warp portals missing and other npc bugs [Ajarn]
 	* Added conditional SHOW_DEBUG_MSG for displaying ShowDebug()'s output, it was missing before [MC Cameri]
 	* Added #zeny, removed @charzeny [MC Cameri]

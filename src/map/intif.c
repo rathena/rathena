@@ -130,6 +130,9 @@ int intif_GMmessage(char* mes,int len,int flag)
 	memcpy(WFIFOP(inter_fd,lp), mes, len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 
+        // Send to the local players
+        clif_GMmessage(NULL, mes, len, 0);
+
 	return 0;
 }
 
@@ -482,6 +485,7 @@ int intif_guild_message(int guild_id,int account_id,char *mes,int len)
 	WFIFOL(inter_fd,8)=account_id;
 	memcpy(WFIFOP(inter_fd,12),mes,len);
 	WFIFOSET(inter_fd,len+12);
+
 	return 0;
 }
 // ギルド競合チェック要求

@@ -802,6 +802,8 @@ int guild_send_message(struct map_session_data *sd,char *mes,int len)
 	if(sd->status.guild_id==0)
 		return 0;
 	intif_guild_message(sd->status.guild_id,sd->status.account_id,mes,len);
+	guild_recv_message(sd->status.guild_id,sd->status.account_id,mes,len);
+
 	return 0;
 }
 // ƒMƒ‹ƒh‰ï˜bóM

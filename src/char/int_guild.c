@@ -786,7 +786,7 @@ int mapif_guild_broken(int guild_id, int flag) {
 }
 
 // ギルド内発言
-int mapif_guild_message(int guild_id, int account_id, char *mes, int len) {
+int mapif_guild_message(int guild_id, int account_id, char *mes, int len, int sfd) {
 	unsigned char buf[len+12];
 
 	WBUFW(buf,0) = 0x3837;
@@ -794,7 +794,7 @@ int mapif_guild_message(int guild_id, int account_id, char *mes, int len) {
 	WBUFL(buf,4) = guild_id;
 	WBUFL(buf,8) = account_id;
 	memcpy(WBUFP(buf,12), mes, len);
-	mapif_sendall(buf, len + 12);
+	mapif_sendallwos(sfd, buf, len + 12);
 
 	return 0;
 }
@@ -1152,7 +1152,7 @@ int mapif_parse_BreakGuild(int fd, int guild_id) {
 
 // ギルドメッセージ送信
 int mapif_parse_GuildMessage(int fd, int guild_id, int account_id, char *mes, int len) {
-	return mapif_guild_message(guild_id, account_id, mes, len);
+	return mapif_guild_message(guild_id, account_id, mes, len, fd);
 }
 
 // ギルド基本データ変更要求

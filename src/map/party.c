@@ -481,6 +481,7 @@ int party_send_message(struct map_session_data *sd,char *mes,int len)
 	if(sd->status.party_id==0)
 		return 0;
 	intif_party_message(sd->status.party_id,sd->status.account_id,mes,len);
+        party_recv_message(sd->status.party_id,sd->status.account_id,mes,len);
 	return 0;
 }
 

@@ -272,13 +272,13 @@ int inter_mapif_init(int fd) {
 // sended packets to map-server
 
 // GMメッセージ送信
-int mapif_GMmessage(unsigned char *mes, int len) {
+int mapif_GMmessage(unsigned char *mes, int len, int sfd) {
 	unsigned char buf[len];
 
 	WBUFW(buf,0) = 0x3800;
 	WBUFW(buf,2) = len;
 	memcpy(WBUFP(buf,4), mes, len - 4);
-	mapif_sendall(buf, len);
+	mapif_sendallwos(sfd, buf, len);
 //	printf("inter server: GM:%d %s\n", len, mes);
 
 	return 0;
@@ -383,7 +383,7 @@ int check_ttl_wisdata() {
 
 // GMメッセージ送信
 int mapif_parse_GMmessage(int fd) {
-	mapif_GMmessage(RFIFOP(fd,4), RFIFOW(fd,2));
+	mapif_GMmessage(RFIFOP(fd,4), RFIFOW(fd,2), fd);
 
 	return 0;
 }

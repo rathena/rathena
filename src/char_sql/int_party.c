@@ -435,7 +435,7 @@ int mapif_party_broken(int party_id,int flag)
 	return 0;
 }
 // パーティ内発言
-int mapif_party_message(int party_id,int account_id,char *mes,int len)
+int mapif_party_message(int party_id,int account_id,char *mes,int len, int sfd)
 {
 	unsigned char buf[512];
 	WBUFW(buf,0)=0x3827;
@@ -443,7 +443,7 @@ int mapif_party_message(int party_id,int account_id,char *mes,int len)
 	WBUFL(buf,4)=party_id;
 	WBUFL(buf,8)=account_id;
 	memcpy(WBUFP(buf,12),mes,len);
-	mapif_sendall(buf,len+12);
+	mapif_sendallwos(sfd, buf,len+12);
 	return 0;
 }
 
@@ -711,7 +711,7 @@ int mapif_parse_BreakParty(int fd,int party_id)
 // パーティメッセージ送信
 int mapif_parse_PartyMessage(int fd,int party_id,int account_id,char *mes,int len)
 {
-	return mapif_party_message(party_id,account_id,mes,len);
+	return mapif_party_message(party_id,account_id,mes,len, fd);
 }
 // パーティチェック要求
 int mapif_parse_PartyCheck(int fd,int party_id,int account_id,char *nick)

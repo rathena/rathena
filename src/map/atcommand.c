@@ -136,11 +136,7 @@ ACMD_FUNC(agitend);
 ACMD_FUNC(reloaditemdb);
 ACMD_FUNC(reloadmobdb);
 ACMD_FUNC(reloadskilldb);
-#ifndef TXT_ONLY
-ACMD_FUNC(rehash);// by Fr3DBr
-#else /* TXT_ONLY */
 ACMD_FUNC(reloadscript);
-#endif /* TXT_ONLY */
 ACMD_FUNC(reloadgmdb); // by Yor
 ACMD_FUNC(mapexit);
 ACMD_FUNC(idsearch);
@@ -369,11 +365,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ReloadItemDB,		"@reloaditemdb",	99, atcommand_reloaditemdb }, // admin command
 	{ AtCommand_ReloadMobDB,		"@reloadmobdb",		99, atcommand_reloadmobdb }, // admin command
 	{ AtCommand_ReloadSkillDB,		"@reloadskilldb",	99, atcommand_reloadskilldb }, // admin command
-#ifndef TXT_ONLY
-	{ AtCommand_Rehash,				"@rehash",			99, atcommand_rehash }, // admin command
-#else /* TXT_ONLY */
 	{ AtCommand_ReloadScript,		"@reloadscript",	99, atcommand_reloadscript }, // admin command
-#endif /* TXT_ONLY */
 	{ AtCommand_ReloadGMDB,			"@reloadgmdb",		99, atcommand_reloadgmdb }, // admin command
 	{ AtCommand_CharModel,			"@charmodel",		50, atcommand_charmodel },
 	{ AtCommand_CharSKPoint,		"@charskpoint",		60, atcommand_charskpoint },
@@ -812,7 +804,6 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap) {
 	return 0;
 }
 
-#ifndef TXT_ONLY
 static int atkillnpc_sub(struct block_list *bl, va_list ap)
 {
         int flag = va_arg(ap,int);
@@ -842,7 +833,6 @@ void rehash( const int fd, struct map_session_data* sd )
         }
 }
 
-#endif /* not TXT_ONLY */
 /*==========================================
  * Read Message Data
  *------------------------------------------
@@ -5590,23 +5580,17 @@ int atcommand_reloadskilldb(
  *
  *------------------------------------------
  */
-#ifndef TXT_ONLY
-int atcommand_rehash(
-#else /* TXT_ONLY */
 int atcommand_reloadscript(
-#endif /* TXT_ONLY */
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-#ifndef TXT_ONLY
 	atcommand_broadcast( fd, sd, "@broadcast", "eAthena SQL Server is Rehashing..." );
 	atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
 	
         rehash( fd, sd );
 
 	atcommand_broadcast( fd, sd, "@broadcast", "Reloading NPCs..." );
-#endif /* not TXT_ONLY */
 	do_init_npc();
 	do_init_script();
 
