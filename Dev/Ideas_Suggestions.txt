@@ -55,7 +55,31 @@ I (Ajarn) have loads of ideas. I might as well put them here. If no one does the
 6) We need another file for item_db.txt to keep there your custom items
    We already have the same thing is for mobs (mob_db2.txt)
 	Why don't we use it?
+	
+7) New way to store/calculate EXP. Log of the idea:
 
+Ancyker: exp
+Ancyker: the way its stored
+Ancyker: needs changed
+Ancyker: currently it stores base level and exp
+Ancyker: this is crap
+Ancyker: it should store base level, and exp towards next level
+Ancyker: so say u just level to level 5
+Ancyker: ur level would be 5, and exp 0
+Ancyker: u kill a poring
+Ancyker: they give i beleive 10 exp
+Ancyker: so now it would be 5 level, 10 exp
+Ancyker: when u hit the marker, u gain a level
+Ancyker: thats how the exp is stored in the fsking database
+Ancyker: exp towards next level
+Ancyker: not total exp
+Ancyker: the problem with athena
+Ancyker: it doesnt follow its own damn rules
+Ancyker: it does a database one way
+Ancyker: then totally changes it when it loads it
+Ancyker: pick a damn method already
+
+I (Ajarn) agree with him. It would make things so much easier server side too.
 
 
 How to implement those ideas:
