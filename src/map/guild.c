@@ -54,9 +54,21 @@ int guild_skill_get_inf(int id) { // Modified for new skills [Sara]
 int guild_skill_get_sp(int id,int lv){ return 0; }
 int guild_skill_get_range(int id){ return 0; }
 int guild_skill_get_max(int id) { // Modified for new skills [Sara]
-	if(id==GD_EXTENSION) return 10;
-	else if(id==GD_REGENERATION) return 3;
-	else return 1;
+	switch (id) {
+	case GD_GUARDUP:
+		return 3;
+	case GD_EXTENSION:
+		return 10;
+	case GD_LEADERSHIP:
+	case GD_GLORYWOUNDS:
+	case GD_SOULCOLD:
+	case GD_HAWKEYES:
+		return 5;
+	case GD_REGENERATION:
+		return 3;
+	default:
+		return 1;
+	}
 }
 
 // ギルドスキルがあるか確認
