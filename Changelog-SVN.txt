@@ -2,6 +2,13 @@
 Date	Added
 
 03/31
+        * Fixed memory corruption during shutdown via the script_buf
+          [SVN 1370: MouseJstr]
+        * Added some useful filename info to the script parser so that
+          it is easier to figure out what is going on [SVN 1370:
+          MouseJstr]
+        * updated the visual studio projects a little bit [SVN 1370:
+          MouseJstr] 
         * fixed memory corruption in mapif_guild_info:int_guild.c
           [SVN 1367: MouseJstr]
 	* Fixed common/lock.c (problem with unistd.h include) [Codemaster]

@@ -52,7 +52,7 @@
 			(t)=conv_num(st,&(st->stack->stack_data[st->start+(n)]));
 
 enum { LABEL_NEXTLINE=1,LABEL_START };
-static unsigned char * script_buf;
+static unsigned char * script_buf = NULL;
 static int script_pos,script_size;
 
 char *str_buf;
@@ -65,7 +65,7 @@ static struct str_data_struct {
 	int (*func)(struct script_state *);
 	int val;
 	int next;
-} *str_data;
+} *str_data = NULL;
 int str_num=LABEL_START,str_data_size;
 int str_hash[16];
 
@@ -7813,8 +7813,8 @@ int do_final_script()
 {
 	if(mapreg_dirty>=0)
 		script_save_mapreg();
-	if(script_buf)
-		aFree(script_buf);
+//	if(script_buf)
+//		aFree(script_buf);
 
 	if(mapreg_db)
 		numdb_final(mapreg_db,mapreg_db_final);

@@ -29,7 +29,10 @@
 #include "memwatch.h"
 #endif
 
-
+#ifdef _WIN32
+#undef isspace
+#define isspace(x)  (x == ' ' || x == '\t')
+#endif
 
 struct npc_src_list {
 	struct npc_src_list * next;
@@ -1708,11 +1711,11 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		char srcname[128];
 		struct npc_data *nd2;
 		if( sscanf(w2,"duplicate(%[^)])",srcname)!=1 ){
-			printf("bad duplicate name! : %s",w2);
+			printf("bad duplicate name (in %s)! : %s",current_file, w2);
 			return 0;
 		}
 		if( (nd2=npc_name2id(srcname))==NULL ){
-			printf("bad duplicate name! (not exist) : %s\n",srcname);
+			printf("bad duplicate name (in %s)! (not exist) : %s\n", current_file, srcname);
 			return 0;
 		}
 		script=(unsigned char *)nd2->u.scr.script;
