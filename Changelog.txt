@@ -1,4 +1,7 @@
 Date	Added
+12/24
+	* Added Dev/GDB_reports.txt, take a look in it devs [Ajarn]
+
 12/23
 	* Fixed some bugs in the clif.c changes (SVN 766 to SVN 767) [MouseJstr]
 	* Added ayo monsters to @disguise
