@@ -867,7 +867,8 @@ geffen_in.gat,77,169,2	script	Bank Manager	109,{
 		close;
 }
 
-payon_in01.gat,68,64,7	script	Bank Manager	109,{
+//Fixed location for new payon
+payon.gat,155,97,4	script	Bank Manager	109,{
 	set @tInterestRate, 2; //no decimals
 	set @tMaxAccZeny, 1000000000; //max zeny allowed in ^FF7F01Bank Account^000000 1,000,000,000=1 billion
 	set @tMaxZeny, 1000000000; //max zeny that a player can carry
