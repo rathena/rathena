@@ -174,7 +174,8 @@ enum {	// struct map_session_data ‚Ì status_change‚Ì”Ô?ƒe?ƒuƒ‹
 	SC_LANDPROTECTOR	=193,
 	SC_ADAPTATION		=194,
 	SC_CHASEWALK		=195,
-	SC_REGENERATION		=196,	
+	SC_REGENERATION		=196,
+	SC_GUILDAURA		=199
 };
 extern int SkillStatusChangeTable[];
 

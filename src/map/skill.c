@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/02/24 10:28:24 PM Celestia $
+// $Id: skill.c,v 1.8 2004/02/27 5:34:51 PM Celestia $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -672,10 +672,6 @@ struct skill_unit_layout *skill_get_unit_layout(int skillid,int skilllv,struct b
 	return &skill_unit_layout[0];
 }
 
-//	case GD_LEADERSHIP:		return 0xc1;
-//	case GD_GLORYWOUNDS:	return 0xc2;
-//	case GD_SOULCOLD:		return 0xc3;
-//	case GD_HAWKEYES:		return 0xc4;
 //	0x89,0x8a,0x8b 表示無し
 //	0x9a 炎?性の詠唱みたいなエフェクト
 //	0x9b 水?性の詠唱みたいなエフェクト
@@ -1711,6 +1707,42 @@ int skill_check_unit_range2(int m,int x,int y,int skillid, int skilllv)
 			x-range,y-range,x+range,y+range,0,&c,skillid);
 
 	return c;
+}
+
+int skill_guildaura_sub (struct block_list *bl,va_list ap)
+{
+	struct map_session_data *sd;
+	struct guild *g;
+	int gid, id;
+	int flag = 0;
+	
+	nullpo_retr(0, sd=(struct map_session_data *)bl);
+
+	nullpo_retr(0, ap);
+	id = va_arg(ap,int);
+	gid = va_arg(ap,int);
+	if (sd->status.guild_id != gid)
+		return 0;
+	
+	g = va_arg(ap,struct guild *);
+	if (guild_checkskill(g, GD_LEADERSHIP)>0) flag |= 1<<0;
+	if (guild_checkskill(g, GD_GLORYWOUNDS)>0) flag |= 1<<1;
+	if (guild_checkskill(g, GD_SOULCOLD)>0) flag |= 1<<2;
+	if (guild_checkskill(g, GD_HAWKEYES)>0) flag |= 1<<3;
+	if (guild_checkskill(g, GD_CHARISMA)>0) flag |= 1<<4;
+
+	if (flag > 0) {
+		if (sd->sc_count && sd->sc_data[SC_GUILDAURA].timer != -1) {
+			if (sd->sc_data[SC_GUILDAURA].val4 != flag) {
+				sd->sc_data[SC_GUILDAURA].val4 = flag;
+				status_calc_pc (sd, 0);
+			}
+			return 0;
+		}
+		status_change_start(&sd->bl, SC_GUILDAURA,1,id,0,flag,0,0 );
+	}
+
+	return 0;
 }
 
 /*=========================================================================
@@ -5142,15 +5174,6 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case RG_GRAFFITI:			/* Graffiti */
 		count=1;	// Leave this at 1 [Valaris]
 		break;
-
-	case GD_LEADERSHIP:
-	case GD_GLORYWOUNDS:
-	case GD_SOULCOLD:
-	case GD_HAWKEYES:
-		range=2;
-		target=BCT_ALL;
-		limit=300000;
-		break;
 	}
 
 	nullpo_retr(NULL, group=skill_initunitgroup(src,(count > 0 ? count : layout->count),
@@ -5211,28 +5234,6 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			unit->limit=limit;
 			unit->range=range;
 
-			// [celest]
-			if (sc_data && src->type == BL_PC) {
-				struct map_session_data *sd = (struct map_session_data *)src;
-				if (sd) {
-					// attach the unit's id to the caster
-					switch (skillid) {
-					case GD_LEADERSHIP:							
-						sd->state.leadership_flag = (int)group;
-						break;
-					case GD_GLORYWOUNDS:
-						sd->state.glorywounds_flag = (int)group;
-						break;
-					case GD_SOULCOLD:
-						sd->state.soulcold_flag = (int)unit;
-						break;
-					case GD_HAWKEYES:
-						sd->state.hawkeyes_flag = (int)unit;
-						break;
-					}
-				}
-			}
-			
 			if (range==0 && active_flag)
 				map_foreachinarea(skill_unit_effect,unit->bl.m
 					,unit->bl.x,unit->bl.y,unit->bl.x,unit->bl.y
@@ -5376,56 +5377,6 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
 				(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 		skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
-		break;
-
-	// New guild skills [Celest]
-	case 0xc1: // GD_LEADERSHIP
-		{
-			struct map_session_data *sd, *tsd;
-			tsd=(struct map_session_data *)ss;
-			if (tsd && (sd=(struct map_session_data *)bl) &&
-				sd->status.guild_id == tsd->status.guild_id &&
-				sd != tsd) {
-					sd->state.leadership_flag = (int)src;
-					status_calc_pc (sd, 0);
-				}
-		}
-		break;
-	case 0xc2: // GD_GLORYWOUNDS
-		{
-			struct map_session_data *sd, *tsd;
-			tsd=(struct map_session_data *)ss;
-			if (tsd && (sd=(struct map_session_data *)bl) &&
-				sd->status.guild_id == tsd->status.guild_id &&
-				sd != tsd) {
-					sd->state.glorywounds_flag = (int)src;
-					status_calc_pc (sd, 0);
-				}
-		}
-		break;
-	case 0xc3: // GD_SOULCOLD
-		{
-			struct map_session_data *sd, *tsd;
-			tsd=(struct map_session_data *)ss;
-			if (tsd && (sd=(struct map_session_data *)bl) &&
-				sd->status.guild_id == tsd->status.guild_id &&
-				sd != tsd) {
-					sd->state.soulcold_flag = (int)src;
-					status_calc_pc (sd, 0);
-				}
-		}
-		break;
-	case 0xc4: // GD_HAWKEYES
-		{
-			struct map_session_data *sd, *tsd;
-			tsd=(struct map_session_data *)ss;
-			if (tsd && (sd=(struct map_session_data *)bl) &&
-				sd->status.guild_id == tsd->status.guild_id &&
-				sd != tsd) {
-					sd->state.hawkeyes_flag = (int)src;
-					status_calc_pc (sd, 0);
-				}
-		}
 		break;
 
 	case 0xb2:				/* あなたを_?いたいです */
@@ -5783,35 +5734,7 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 			sg->limit = DIFF_TICK(tick,sg->tick)+1000;
 			break;
 		}
-	// New guild skills [Celest]
-	case 0xc1: // GD_LEADERSHIP
-		{
-			struct map_session_data *sd;
-			if (bl->type == BL_PC && (sd=(struct map_session_data *)bl) && sd->state.leadership_flag > 0)
-				sd->state.leadership_flag = 0;
-		}
-		break;
-	case 0xc2: // GD_GLORYWOUNDS
-		{
-			struct map_session_data *sd;
-			if (bl->type == BL_PC && (sd=(struct map_session_data *)bl) && sd->state.glorywounds_flag > 0)
-				sd->state.glorywounds_flag = 0;
-		}
-		break;
-	case 0xc3: // GD_SOULCOLD
-		{
-			struct map_session_data *sd;
-			if (bl->type == BL_PC && (sd=(struct map_session_data *)bl) && sd->state.soulcold_flag > 0)
-				sd->state.soulcold_flag = 0;
-		}
-		break;
-	case 0xc4: // GD_HAWKEYES
-		{
-			struct map_session_data *sd;
-			if (bl->type == BL_PC && (sd=(struct map_session_data *)bl) && sd->state.hawkeyes_flag > 0)
-				sd->state.hawkeyes_flag = 0;
-		}
-		break;
+
 /*	default:
 		if(battle_config.error_log)
 			printf("skill_unit_onout: Unknown skill unit id=%d block=%d\n",sg->unit_id,bl->id);
@@ -5902,38 +5825,6 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 				return 0;
 
 			pc_setpos(p_sd,map[src->bl.m].name,src->bl.x,src->bl.y,3);
-		}
-		break;
-	case 0xc1: // GD_LEADERSHIP
-		{
-			struct map_session_data *sd;
-			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
-				sd->state.leadership_flag = 0;
-			}
-		}
-		break;
-	case 0xc2: // GD_GLORYWOUNDS
-		{
-			struct map_session_data *sd;
-			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
-				sd->state.glorywounds_flag = 0;
-			}
-		}
-		break;
-	case 0xc3: // GD_SOULCOLD
-		{
-			struct map_session_data *sd;
-			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
-				sd->state.soulcold_flag = 0;
-			}
-		}
-		break;
-	case 0xc4: // GD_HAWKEYES
-		{
-			struct map_session_data *sd;
-			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
-				sd->state.hawkeyes_flag = 0;
-			}
 		}
 		break;
 	}

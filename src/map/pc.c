@@ -3227,24 +3227,6 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 		if(moveblock) map_addblock(&sd->bl);
 		skill_unit_move(&sd->bl,tick,1);
 
-	#if 0
-		if (sd->status.guild_id > 0) {
-			struct skill_unit *su;
-			if (sd->sc_data[SC_LEADERSHIP].val4 && (su=(struct skill_unit *)sd->sc_data[SC_LEADERSHIP].val4)) {
-				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
-			}
-			if (sd->sc_data[SC_GLORYWOUNDS].val4 && (su=(struct skill_unit *)sd->sc_data[SC_GLORYWOUNDS].val4)) {
-				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
-			}
-			if (sd->sc_data[SC_SOULCOLD].val4 && (su=(struct skill_unit *)sd->sc_data[SC_SOULCOLD].val4)) {
-				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
-			}
-			if (sd->sc_data[SC_HAWKEYES].val4 && (su=(struct skill_unit *)sd->sc_data[SC_HAWKEYES].val4)) {
-				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
-			}
-		}
-	#endif
-
 		map_foreachinmovearea(clif_pcinsight,sd->bl.m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,0,sd);
 		sd->walktimer = -1;
 
@@ -3349,25 +3331,12 @@ int pc_walktoxy(struct map_session_data *sd,int x,int y)
 		pc_walktoxy_sub(sd);
 	}
 
-	if (sd->sc_data && sd->status.guild_id > 0) {
-		struct skill_unit *su;
-		struct skill_unit_group *sg;
-		if (sd->state.leadership_flag && (su=(struct skill_unit *)sd->state.leadership_flag) &&
-			(sg=su->group) && sg->src_id == sd->bl.id) {
-			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
-		}
-		if (sd->state.glorywounds_flag && (su=(struct skill_unit *)sd->state.glorywounds_flag) &&
-			(sg=su->group) && sg->src_id == sd->bl.id) {
-			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
-		}
-		if (sd->state.soulcold_flag && (su=(struct skill_unit *)sd->state.soulcold_flag) &&
-			(sg=su->group) && sg->src_id == sd->bl.id) {
-			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
-		}
-		if (sd->state.hawkeyes_flag && (su=(struct skill_unit *)sd->state.hawkeyes_flag) &&
-			(sg=su->group) && sg->src_id == sd->bl.id) {
-			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
-		}
+	if (sd->state.gmaster_flag > 0) {
+		struct guild *g = (struct guild *)sd->state.gmaster_flag;
+		if (g)
+			map_foreachinarea (skill_guildaura_sub, sd->bl.m,
+				sd->bl.x-2, sd->bl.y-2, sd->bl.x+2, sd->bl.y+2, BL_PC,
+				sd->bl.id, sd->status.guild_id, g);
 	}
 
 	return 0;
@@ -4573,12 +4542,14 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 
 	// ? ‚¢‚Ä‚¢‚½‚ç‘«‚ðŽ~‚ß‚é
 	if (sd->sc_data) {
-		if (sd->sc_data[SC_ENDURE].timer == -1 && sd->sc_data[SC_BERSERK].timer == -1 && !sd->special_state.infinite_endure)
-			pc_stop_walking(sd,3);
-		else if(sd->sc_data[SC_ENDURE].timer != -1 && (src != NULL && src->type==BL_MOB) && (--sd->sc_data[SC_ENDURE].val2) <= 0)
-			status_change_end(&sd->bl, SC_ENDURE, -1);
-	} else
-		pc_stop_walking(sd,3);
+		if (sd->sc_data[SC_BERSERK].timer != -1 ||
+			sd->special_state.infinite_endure)
+			;	// do nothing
+		else if (sd->sc_data[SC_ENDURE].timer != -1 && (src != NULL && src->type == BL_MOB) && !map[sd->bl.m].flag.gvg) {
+			if ((--sd->sc_data[SC_ENDURE].val2) < 0) 
+				status_change_end(&sd->bl, SC_ENDURE, -1);
+		} else pc_stop_walking(sd,3);
+	}
 
 	// ‰‰‘t/ƒ_ƒ“ƒX‚Ì’†?
 	if(damage > sd->status.max_hp>>2)
@@ -4643,17 +4614,19 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	status_calc_pc(sd,0);
 
 	if (src && src->type == BL_PC) {
-		if (sd->state.event_death)
-			pc_setglobalreg(sd,"killerrid",((struct map_session_data *)src)->status.account_id);
-
-		if (((struct map_session_data *)src)->state.event_kill) {
-			struct npc_data *npc;
-			if ((npc = npc_name2id(script_config.kill_event_name))) {
-				run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCKillNPC
-				sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.kill_event_name);
-				ShowStatus(tmp_output);
+		struct map_session_data *ssd = (struct map_session_data *)src;
+		if (ssd) {
+			if (sd->state.event_death)
+				pc_setglobalreg(sd,"killerrid",(ssd->status.account_id));
+			if (ssd->state.event_kill) {
+				struct npc_data *npc;
+				if ((npc = npc_name2id(script_config.kill_event_name))) {
+					run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCKillNPC
+					sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.kill_event_name);
+					ShowStatus(tmp_output);
+				}
 			}
-		}	
+		}
 	}
 
 	if (sd->state.event_death) {

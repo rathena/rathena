@@ -530,6 +530,12 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		pc_setpos(sd, sd->mapname, sd->bl.x, sd->bl.y, 3);
 	}
 
+	if (sd->status.guild_id > 0) {
+		struct guild *g = guild_search(sd->status.guild_id);
+		if (g && strcmp(sd->status.name,g->master)==0)
+			sd->state.gmaster_flag = (int)g;
+	}
+
 	for(i=0;i<10;i++) {
 		index = sd->equip_index[i];
 		if(index < 0)
@@ -708,40 +714,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->paramb[3] += (skill+1)*0.5;
 	}
 
-	// New guild skills - Celest
-	if (sd->status.guild_id > 0 && !(first&4)) {
-		struct guild *g;
-		if ((g = guild_search(sd->status.guild_id)) && strcmp(sd->status.name,g->master)==0) {
-			if (!sd->state.leadership_flag && guild_checkskill(g, GD_LEADERSHIP)>0) {
-				skill_unitsetting(&sd->bl,GD_LEADERSHIP,1,sd->bl.x,sd->bl.y,0);
-			}
-			if (!sd->state.glorywounds_flag && guild_checkskill(g, GD_GLORYWOUNDS)>0) {
-				skill_unitsetting(&sd->bl,GD_GLORYWOUNDS,1,sd->bl.x,sd->bl.y,0);
-			}
-			if (!sd->state.soulcold_flag && guild_checkskill(g, GD_SOULCOLD)>0) {
-				skill_unitsetting(&sd->bl,GD_SOULCOLD,1,sd->bl.x,sd->bl.y,0);
-			}
-			if (!sd->state.hawkeyes_flag && guild_checkskill(g, GD_HAWKEYES)>0) {
-				skill_unitsetting(&sd->bl,GD_HAWKEYES,1,sd->bl.x,sd->bl.y,0);
-			}
-		}
-		else if (g) {
-			if (sd->sc_count && sd->sc_data[SC_BATTLEORDERS].timer != -1) {
-				sd->paramb[0]+= 5;
-				sd->paramb[3]+= 5;
-				sd->paramb[4]+= 5;
-			}
-			if (sd->state.leadership_flag)
-				sd->paramb[0] += 2;
-			if (sd->state.glorywounds_flag)
-				sd->paramb[2] += 2;
-			if (sd->state.soulcold_flag)
-				sd->paramb[1] += 2;
-			if (sd->state.hawkeyes_flag)
-				sd->paramb[4] += 2;
-		}
-	}
-
 	// ステ?タス?化による基本パラメ?タ補正
 	if(sd->sc_count){
 		if(sd->sc_data[SC_CONCENTRATE].timer!=-1 && sd->sc_data[SC_QUAGMIRE].timer == -1){	// 集中力向上
@@ -826,6 +798,22 @@ int status_calc_pc(struct map_session_data* sd,int first)
 				sd->paramb[4]+= 2;
 				sd->paramb[5]+= 2;
 			}
+		}
+		// New guild skills - Celest
+		if (sd->sc_data[SC_BATTLEORDERS].timer != -1) {
+			sd->paramb[0]+= 5;
+			sd->paramb[3]+= 5;
+			sd->paramb[4]+= 5;
+		}
+		if (sd->sc_data[SC_GUILDAURA].timer != -1) {
+			if (sd->sc_data[SC_GUILDAURA].val4 & 1<<0)
+				sd->paramb[0] += 2;
+			if (sd->sc_data[SC_GUILDAURA].val4 & 1<<1)
+				sd->paramb[2] += 2;
+			if (sd->sc_data[SC_GUILDAURA].val4 & 1<<2)
+				sd->paramb[1] += 2;
+			if (sd->sc_data[SC_GUILDAURA].val4 & 1<<3)
+				sd->paramb[4] += 2;				
 		}
 	}
 
@@ -1353,6 +1341,13 @@ int status_calc_pc(struct map_session_data* sd,int first)
 						aspd_rate += 75;
 						break;
 				}
+			}
+		}
+		// custom stats, since there's no info on how much it actually gives ^^; [Celest]
+		if (sd->sc_data[SC_GUILDAURA].timer != -1) {
+			if (sd->sc_data[SC_GUILDAURA].val4 & 1<<4) {
+				sd->hit += 10;
+				sd->flee += 10;
 			}
 		}
 	}
@@ -3789,6 +3784,11 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			calc_flag = 1;
 			break;
 
+		case SC_GUILDAURA:
+			calc_flag = 1;
+			tick = 1000;
+			break;
+
 		default:
 			if(battle_config.error_log)
 				printf("UnknownStatusChange [%d]\n", type);
@@ -4019,12 +4019,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_EDP:
 			case SC_SLOWDOWN:
 			case SC_SPEEDUP0:
-/*			case SC_LEADERSHIP:
-			case SC_GLORYWOUNDS:
-			case SC_SOULCOLD:
-			case SC_HAWKEYES:*/
 			case SC_BATTLEORDERS:
 			case SC_REGENERATION:
+			case SC_GUILDAURA:
 				calc_flag = 1;
 				break;
 			case SC_AUTOBERSERK:
@@ -4666,17 +4663,6 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		break;
 
-/*	case SC_LEADERSHIP:
-	case SC_GLORYWOUNDS:
-	case SC_SOULCOLD:
-	case SC_HAWKEYES:
-		if (sd) {
-			sc_data[type].timer = add_timer(
-				1000+tick, status_change_timer,
-				bl->id, data);
-		}
-		break;*/
-
 	// Celest
 	case SC_CONFUSION:
 		{
@@ -4850,6 +4836,17 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 			if (sd && calc_flag)
 				status_calc_pc (sd, 0);
+		}
+		break;
+
+	case SC_GUILDAURA:
+		{
+			struct block_list *tbl = map_id2bl(sc_data[type].val2);
+			if (tbl && battle_check_range(bl, tbl, 2))
+				sc_data[type].timer = add_timer(
+					1000 + tick, status_change_timer,
+					bl->id, data);
+					return 0;			
 		}
 		break;
 	}

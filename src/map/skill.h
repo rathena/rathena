@@ -153,6 +153,9 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int
 struct skill_unit_group *skill_check_dancing( struct block_list *src );
 void skill_stop_dancing(struct block_list *src, int flag);
 
+// Guild skills [celest]
+int skill_guildaura_sub (struct block_list *bl,va_list ap);
+
 // ‰r¥ƒLƒƒƒ“ƒZƒ‹
 int skill_castcancel(struct block_list *bl,int type);
 

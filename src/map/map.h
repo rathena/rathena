@@ -139,10 +139,7 @@ struct map_session_data {
 		unsigned potionpitcher_flag : 1;
 		unsigned storage_flag : 1;
 		unsigned snovice_flag : 4;
-		int leadership_flag;
-		int glorywounds_flag;
-		int soulcold_flag;
-		int hawkeyes_flag;
+		int gmaster_flag;
 		// originally by Qamera, adapted by celest
 		unsigned event_death : 1;
 		unsigned event_kill : 1;
@@ -653,6 +650,8 @@ enum {
 #define CELL_MASK		0x0f
 #define CELL_NPC		0x80	// NPCセル
 #define CELL_BASILICA	0x40	// BASILICAセル
+#define CELL_MOONLIT	0x100
+#define CELL_REGEN		0x200
 /*
  * map_getcell()で使用されるフラグ
  */

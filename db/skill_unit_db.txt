@@ -72,7 +72,3 @@
 369,0xb3,    ,  3, 0,  -1,all,   0x000,0	//PA_GOSPEL#ゴスペル
 404,0xb6,    , -1, 0,  -1,all,   0x000,0	//PF_FOGWALL#フォグウォール
 405,0xb7,    ,  0, 1,1000,enemy, 0x006,0	//PF_SPIDERWEB#スパイダーウェッブ
-10006,0xc1,  ,  0, 2,  -1,all,   0x000,0	//GD_LEADERSHIP
-10007,0xc2,  ,  0, 2,  -1,all,   0x000,0	//GD_GLORYWOUNDS
-10008,0xc3,  ,  0, 2,  -1,all,   0x000,0	//GD_SOULCOLD
-10009,0xc4,  ,  0, 2,  -1,all,   0x000,0	//GD_HAWKEYES

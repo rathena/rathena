@@ -2235,16 +2235,16 @@ static struct Damage battle_calc_pc_weapon_attack(
 				sd->state.arrow_atk = 1;
 				break;
 			case CH_TIGERFIST:	// 伏虎拳
-				damage = damage*(100+ 20*skill_lv)/100;
-				damage2 = damage2*(100+ 20*skill_lv)/100;
+				damage = damage*(40+ 100*skill_lv)/100;
+				damage2 = damage*(40+ 100*skill_lv)/100;
 				break;
 			case CH_CHAINCRUSH:	// 連柱崩撃
-				damage = damage*(100+ 60*skill_lv)/100;
-				damage2 = damage2*(100+ 60*skill_lv)/100;
+				damage = damage*(400+ 100*skill_lv)/100;
+				damage2 = damage*(400+ 100*skill_lv)/100;
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
-				damage = damage*(50+ 100*skill_lv)/100;
-				damage2 = damage2*(50+ 100*skill_lv)/100;
+				damage = damage*(200+ 100*skill_lv)/100;
+				damage2 = damage*(200+ 100*skill_lv)/100;
 				break;
 			case LK_SPIRALPIERCE:			/* スパイラルピアース */
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
