@@ -13,7 +13,7 @@ sqlobj:
 COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o
 LIBS = -lz -lm
 
-map-server: txtobj/map.o txtobj/chrif.o txtobj/clif.o txtobj/pc.o txtobj/npc.o txtobj/chat.o txtobj/path.o txtobj/itemdb.o txtobj/mob.o txtobj/script.o txtobj/storage.o txtobj/skill.o txtobj/atcommand.o txtobj/battle.o txtobj/intif.o txtobj/trade.o txtobj/party.o txtobj/vending.o txtobj/guild.o txtobj/pet.o $(COMMON_OBJ)
+map-server: txtobj/map.o txtobj/chrif.o txtobj/clif.o txtobj/pc.o txtobj/npc.o txtobj/chat.o txtobj/path.o txtobj/itemdb.o txtobj/mob.o txtobj/script.o txtobj/storage.o txtobj/skill.o txtobj/atcommand.o txtobj/battle.o txtobj/intif.o txtobj/trade.o txtobj/party.o txtobj/vending.o txtobj/guild.o txtobj/pet.o txtobj/log.o $(COMMON_OBJ)
 	$(CC) -o ../../$@ $^ $(LIBS)
 
 map-server_sql: sqlobj/map.o sqlobj/chrif.o sqlobj/clif.o sqlobj/pc.o sqlobj/npc.o sqlobj/chat.o sqlobj/path.o sqlobj/itemdb.o sqlobj/mob.o sqlobj/script.o sqlobj/storage.o sqlobj/skill.o sqlobj/atcommand.o sqlobj/battle.o sqlobj/intif.o sqlobj/trade.o sqlobj/party.o sqlobj/vending.o sqlobj/guild.o sqlobj/pet.o sqlobj/mail.o sqlobj/log.o $(COMMON_OBJ)
@@ -37,7 +37,7 @@ txtobj/mob.o: mob.c map.h clif.h intif.h pc.h mob.h skill.h battle.h npc.h itemd
 txtobj/script.o: script.c itemdb.h map.h pc.h mob.h clif.h intif.h npc.h script.h storage.h skill.h pet.h battle.h ../common/timer.h ../common/socket.h ../common/db.h ../common/mmo.h ../common/lock.h ../common/showmsg.h
 txtobj/storage.o: storage.c itemdb.h pc.h clif.h intif.h storage.h guild.h ../common/mmo.h ../common/db.h ../common/showmsg.h
 txtobj/skill.o: skill.c skill.h map.h clif.h pc.h mob.h battle.h itemdb.h script.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
-txtobj/atcommand.o: atcommand.c atcommand.h itemdb.h pc.h map.h skill.h clif.h mob.h intif.h battle.h storage.h guild.h pet.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
+txtobj/atcommand.o: atcommand.c atcommand.h itemdb.h pc.h map.h skill.h clif.h mob.h intif.h battle.h storage.h guild.h pet.h log.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 txtobj/battle.o: battle.c battle.h skill.h map.h mob.h pc.h pet.h guild.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 txtobj/intif.o: intif.c intif.h chrif.h clif.h party.h guild.h storage.h map.h battle.h pet.h ../common/socket.h ../common/mmo.h ../common/showmsg.h
 txtobj/trade.o: trade.c trade.h clif.h itemdb.h map.h pc.h npc.h ../common/mmo.h ../common/showmsg.h
@@ -58,7 +58,7 @@ sqlobj/mob.o: mob.c map.h clif.h intif.h pc.h mob.h skill.h battle.h npc.h itemd
 sqlobj/script.o: script.c itemdb.h map.h pc.h mob.h clif.h intif.h npc.h script.h storage.h skill.h pet.h battle.h log.h ../common/timer.h ../common/socket.h ../common/db.h ../common/mmo.h ../common/lock.h ../common/showmsg.h
 sqlobj/storage.o: storage.c itemdb.h pc.h clif.h intif.h storage.h guild.h ../common/mmo.h ../common/db.h ../common/showmsg.h
 sqlobj/skill.o: skill.c skill.h map.h clif.h pc.h mob.h battle.h itemdb.h script.h log.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
-sqlobj/atcommand.o: atcommand.c atcommand.h itemdb.h pc.h map.h skill.h clif.h mob.h intif.h battle.h storage.h guild.h pet.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
+sqlobj/atcommand.o: atcommand.c atcommand.h itemdb.h pc.h map.h skill.h clif.h mob.h intif.h battle.h storage.h guild.h pet.h log.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 sqlobj/battle.o: battle.c battle.h skill.h map.h mob.h pc.h pet.h guild.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 sqlobj/intif.o: intif.c intif.h chrif.h clif.h party.h guild.h storage.h map.h battle.h pet.h ../common/socket.h ../common/mmo.h ../common/showmsg.h
 sqlobj/trade.o: trade.c trade.h clif.h itemdb.h map.h pc.h npc.h log.h ../common/mmo.h ../common/showmsg.h

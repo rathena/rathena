@@ -5,10 +5,11 @@
 #include <ctype.h>
 #include <math.h>
 
-#include "socket.h"
-#include "timer.h"
-#include "nullpo.h"
+#include "../common/socket.h"
+#include "../common/timer.h"
+#include "../common/nullpo.h"
 
+#include "log.h"
 #include "clif.h"
 #include "chrif.h"
 #include "intif.h"
@@ -672,6 +673,9 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 				clif_displaymessage(fd, output);
 			}
 		}
+
+		if((log_config.gm) && (info.level >= log_config.gm))
+			log_atcommand(sd, message);
 
 		return info.type;
 	}
