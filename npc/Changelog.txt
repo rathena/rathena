@@ -30,6 +30,9 @@ Other Ppl
 
 Date		Added
 ======
+11/08
+	* - Temporary corrected an expliot in refine.txt.  Need to check sources to fully fix bug [Shinigami]
+
 11/07
 	* - Fixed platinum_skill.txt, now advanced classes get quest skills.
 	  - Fixed a bug on novice.txt . [shadow]
