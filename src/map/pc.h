@@ -166,6 +166,7 @@ int pc_calc_pvprank_timer(int tid,unsigned int tick,int id,int data);
 int pc_ismarried(struct map_session_data *sd);
 int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd);
 int pc_divorce(struct map_session_data *sd);
+int pc_adoption(struct map_session_data *sd,struct map_session_data *dstsd,struct map_session_data *jasd);
 struct map_session_data *pc_get_partner(struct map_session_data *sd);
 int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);

@@ -360,6 +360,9 @@ struct map_session_data {
 
 	unsigned char change_level; // [celest]
 	int autoloot; //by Upa-Kun
+	unsigned nodelay :1;
+	unsigned noexp :1;
+	unsigned detach :1;
 
 #ifndef TXT_ONLY
 	int mail_counter;	// mail counter for mail system [Valaris]

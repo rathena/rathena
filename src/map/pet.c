@@ -1587,10 +1587,11 @@ int read_petdb()
 {
 	FILE *fp;
 	char line[1024];
-	int i;
+	int nameid,i;
 	int j=0;
 	int lines;
 	char *filename[]={"db/pet_db.txt","db/pet_db2.txt"};
+	char *str[32],*p,*np;
 	
 	memset(pet_db,0,sizeof(pet_db));
 	for(i=0;i<2;i++){
@@ -1604,8 +1605,6 @@ int read_petdb()
 		lines = 0;
 		while(fgets(line,1020,fp)){
 			lines++;
-			int nameid,i;
-			char *str[32],*p,*np;
 
 			if(line[0] == '/' && line[1] == '/')
 				continue;

@@ -415,7 +415,8 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	    (p->clothes_color != cp->clothes_color) || (p->weapon != cp->weapon) ||
 	    (p->shield != cp->shield) || (p->head_top != cp->head_top) ||
 	    (p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom) ||
-	    (p->partner_id != cp->partner_id)) {
+	    (p->partner_id != cp->partner_id) || (p->father != cp->father) ||
+	    (p->mother != cp->mother) || (p->child != cp->child)) {
 
 //}//---------------------------test count------------------------------
 	//check party_exist
@@ -457,7 +458,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		"`str`='%d',`agi`='%d',`vit`='%d',`int`='%d',`dex`='%d',`luk`='%d',"
 		"`option`='%d',`karma`='%d',`manner`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',"
 		"`hair`='%d',`hair_color`='%d',`clothes_color`='%d',`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
-		"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d',`partner_id`='%d' WHERE  `account_id`='%d' AND `char_id` = '%d'",
+		"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d',`partner_id`='%d', `father`='%d', `mother`='%d', `child`='%d' WHERE  `account_id`='%d' AND `char_id` = '%d'",
 		char_db, p->class_, p->base_level, p->job_level,
 		p->base_exp, p->job_exp, p->zeny,
 		p->max_hp, p->hp, p->max_sp, p->sp, p->status_point, p->skill_point,
@@ -466,7 +467,8 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		p->hair, p->hair_color, p->clothes_color,
 		p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 		p->last_point.map, p->last_point.x, p->last_point.y,
-		p->save_point.map, p->save_point.x, p->save_point.y, p->partner_id, p->account_id, p->char_id
+		p->save_point.map, p->save_point.x, p->save_point.y, p->partner_id, p->father, p->mother,
+		p->child, p->account_id, p->char_id
 	);
 
 	if(mysql_query(&mysql_handle, tmp_sql)) {
@@ -799,7 +801,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 	sprintf(tmp_sql, "SELECT `option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`hair`,`hair_color`,"
 		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,"
-		"`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
+		"`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id`, `father`, `mother`, `child` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `char2`)- %s\n", mysql_error(&mysql_handle));
 	}
@@ -817,7 +819,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 		p->head_top = atoi(sql_row[11]);	p->head_mid = atoi(sql_row[12]);	p->head_bottom = atoi(sql_row[13]);
 		strcpy(p->last_point.map,sql_row[14]); p->last_point.x = atoi(sql_row[15]);	p->last_point.y = atoi(sql_row[16]);
 		strcpy(p->save_point.map,sql_row[17]); p->save_point.x = atoi(sql_row[18]);	p->save_point.y = atoi(sql_row[19]);
-		p->partner_id = atoi(sql_row[20]);
+		p->partner_id = atoi(sql_row[20]); p->father = atoi(sql_row[21]); p->mother = atoi(sql_row[22]); p->child = atoi(sql_row[23]);
 
 		//free mysql result.
 		mysql_free_result(sql_res);
@@ -3564,3 +3566,61 @@ int debug_mysql_query(char *file, int line, void *mysql, const char *q) {
 #endif
         return mysql_query((MYSQL *) mysql, q);
 }
+
+int char_child(int parent_id, int child_id) {
+        int tmp_id = 0;
+        sprintf (tmp_sql, "SELECT `child` FROM `%s` WHERE `char_id` = '%d'", char_db, parent_id);
+        if (mysql_query (&mysql_handle, tmp_sql)) {
+                printf ("DB server Error (select `char2`)- %s\n", mysql_error (&mysql_handle));
+        }
+        sql_res = mysql_store_result (&mysql_handle);
+        if (sql_res) {
+                sql_row = mysql_fetch_row (sql_res);
+                tmp_id = atoi (sql_row[0]);
+                mysql_free_result (sql_res);
+        }
+        else
+                printf("CHAR: child Failed!\n");
+        if ( tmp_id == child_id )
+                return 1;
+        else
+                return 0;
+}
+
+int char_married(int pl1,int pl2) {
+        int tmp_id = 0;
+        sprintf (tmp_sql, "SELECT `partner_id` FROM `%s` WHERE `char_id` = '%d'", char_db, pl1);
+        if (mysql_query (&mysql_handle, tmp_sql)) {
+                printf ("DB server Error (select `char2`)- %s\n", mysql_error (&mysql_handle));
+        }
+        sql_res = mysql_store_result (&mysql_handle);
+        if (sql_res) {
+                sql_row = mysql_fetch_row (sql_res);
+                tmp_id = atoi (sql_row[0]);
+                mysql_free_result (sql_res);
+        }
+        else
+                printf("CHAR: married Failed!\n");
+        if ( tmp_id == pl2 )
+                return 1;
+        else
+                return 0;
+}
+
+int char_nick2id (char *name) {
+        int char_id = 0;
+        sprintf (tmp_sql, "SELECT `char_id` FROM `%s` WHERE `name` = '%s'", char_db, name);
+        if (mysql_query (&mysql_handle, tmp_sql)) {
+                printf ("DB server Error (select `char2`)- %s\n", mysql_error (&mysql_handle));
+        }
+        sql_res = mysql_store_result (&mysql_handle);
+        if (sql_res) {
+                sql_row = mysql_fetch_row (sql_res);
+                char_id = atoi (sql_row[0]);
+                mysql_free_result (sql_res);
+        }
+        else
+                printf ("CHAR: nick2id Failed!\n");
+        return char_id;
+}
+

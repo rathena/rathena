@@ -6980,6 +6980,7 @@ int buildin_cardscnt(struct script_state *st)
 	struct map_session_data *sd;
 	int i, k, id = 1;
 	int ret = 0;
+	int index, type;
 
 	sd = script_rid2sd(st);
 	
@@ -6988,7 +6989,6 @@ int buildin_cardscnt(struct script_state *st)
 		if (id <= 0)
 			continue;
 		
-		int index, type;
 		index = current_equip_item_index; //we get CURRENT WEAPON inventory index from status.c [Lupus]
 		if(index < 0) continue;
 

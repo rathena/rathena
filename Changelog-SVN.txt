@@ -1,5 +1,15 @@
 Date	Added
 
+03/29	* Added three fields to mmo_charstatus - father/mother/child
+	  needed for adoption system [veider]
+	* Added adoption support to charserver SQL version [veider]
+	* Added atcommand_adopt - create a family of three [veider]
+	* Added to char_commands showexp/showdelay so that
+	  players could remove some messages [veider]
+	* Added percent to "Experience Gained" message [veider]
+	* Added adoption system support to party_check_exp_share()
+	  so that parents can share exp with child [veider]
+
 03/28
 	* Fixed Auto Berserk activating by itself when changing maps [celest]
 	* Re-fixed the SQL syntax crash in logging [celest]

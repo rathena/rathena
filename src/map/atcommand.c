@@ -260,6 +260,7 @@ ACMD_FUNC(undisguiseall);
 ACMD_FUNC(disguiseall);
 ACMD_FUNC(changelook);
 ACMD_FUNC(mobinfo);	//by Lupus
+ACMD_FUNC(adopt); // by Veider
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -541,6 +542,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_MobInfo,		"@mobinfo",	1,	atcommand_mobinfo }, // [Lupus]
 	{ AtCommand_MobInfo,		"@monsterinfo",	1,	atcommand_mobinfo }, // [Lupus]
 	{ AtCommand_MobInfo,		"@mi",	1,	atcommand_mobinfo }, // [Lupus]
+        { AtCommand_Adopt,              "@adopt",       40, atcommand_adopt }, // [Veider]
+	
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
 };
@@ -9069,3 +9072,62 @@ int atcommand_mobinfo(
 
 	return 0;
 }
+
+/*==========================================
+ * @adopt by [Veider]
+ *
+ * adopt a novice
+ *------------------------------------------
+ */
+int
+atcommand_adopt(const int fd, struct map_session_data* sd,
+const char* command, const char* message)
+{
+        struct map_session_data *pl_sd1 = NULL;
+        struct map_session_data *pl_sd2 = NULL;
+        struct map_session_data *pl_sd3 = NULL;
+        char player1[255], player2[255], player3[255];
+
+        nullpo_retr(-1, sd);
+
+        if (!message || !*message)
+                return -1;
+
+        if (sscanf(message, "%[^,],%[^,],%[^\r\n]", player1, player2, player3) != 3) {
+                clif_displaymessage(fd, "usage: @adopt <player1> <player2> <player3>.");
+                return -1;
+        }
+
+        printf("Adopting: --%s--%s--%s--\n",player1,player2,player3);
+
+        if((pl_sd1=map_nick2sd((char *) player1)) == NULL) {
+                sprintf(player2, "Cannot find player %s online", player1);
+                clif_displaymessage(fd, player2);
+                return -1;
+        }
+
+        if((pl_sd2=map_nick2sd((char *) player2)) == NULL) {
+                sprintf(player1, "Cannot find player %s online", player2);
+                clif_displaymessage(fd, player1);
+                return -1;
+	}
+ 
+       if((pl_sd3=map_nick2sd((char *) player3)) == NULL) {
+                sprintf(player1, "Cannot find player %s online", player3);
+                clif_displaymessage(fd, player1);
+                return -1;
+        }
+
+        if((pl_sd1->status.base_level < 70) || (pl_sd2->status.base_level < 70)){
+                clif_displaymessage(fd, "They are too young to be parents!");
+                return -1;
+        }
+
+        if (pc_adoption(pl_sd1, pl_sd2, pl_sd3) == 0) {
+                clif_displaymessage(fd, "They are family.. wish them luck");
+                return 0;
+        }
+        else
+                return -1;
+}
+

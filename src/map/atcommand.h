@@ -241,6 +241,7 @@ enum AtCommandType {
 	AtCommand_ChangeLook,
 	AtCommand_AutoLoot, //by Upa-Kun
 	AtCommand_MobInfo, //by Lupus
+        AtCommand_Adopt, // by Veider
 
 	// end
 	AtCommand_Unknown,

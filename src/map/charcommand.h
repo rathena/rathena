@@ -18,6 +18,8 @@ enum CharCommandType {
 	CharCommandItem, // by MC Cameri
 	CharCommandWarp,
 	CharCommandZeny,
+	CharCommandShowDelay,
+	CharCommandShowExp,
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */

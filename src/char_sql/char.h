@@ -45,6 +45,10 @@ int mapif_sendall(unsigned char *buf,unsigned int len);
 int mapif_sendallwos(int fd,unsigned char *buf,unsigned int len);
 int mapif_send(int fd,unsigned char *buf,unsigned int len);
 
+int char_nick2id (char *name);
+int char_married(int pl1,int pl2);
+int char_child(int parent_id, int child_id);
+
 extern int autosave_interval;
 extern char db_path[];
 extern char char_db[256];

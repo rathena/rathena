@@ -51,6 +51,8 @@ CCMD_FUNC(storagelist);
 CCMD_FUNC(item);
 CCMD_FUNC(warp);
 CCMD_FUNC(zeny);
+CCMD_FUNC(showexp);
+CCMD_FUNC(showdelay);
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -88,6 +90,9 @@ static CharCommandInfo charcommand_info[] = {
 	{ CharCommandWarp,					"#rura",					60, charcommand_warp },
 	{ CharCommandWarp,					"#rura+",					60, charcommand_warp },
 	{ CharCommandZeny,					"#zeny",					60, charcommand_zeny },
+	{ CharCommandShowExp,					"#showexp", 					0, charcommand_showexp},
+	{ CharCommandShowDelay,					"#showdelay",					0, charcommand_showdelay},
+
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -1213,3 +1218,40 @@ int charcommand_zeny(
 
 	return 0;
 }
+
+/*===================================
+ * Remove some messages
+ *-----------------------------------
+ */
+int charcommand_showexp(
+       const int fd, struct map_session_data* sd,
+       const char* command, const char* message)
+{
+       if (sd->noexp) {
+               sd->noexp = 0;
+               clif_displaymessage(fd, "Gained exp is now shown");
+               return 0;
+       }
+       else {
+               sd->noexp = 1;
+               clif_displaymessage(fd, "Gained exp is now NOT shown");
+               return 0;
+       }
+}
+
+int charcommand_showdelay(
+       const int fd, struct map_session_data* sd,
+       const char* command, const char* message)
+{
+       if (sd->nodelay) {
+               sd->nodelay = 0;
+               clif_displaymessage(fd, "Skill delay failure is now shown");
+               return 0;
+       }
+       else {
+               sd->nodelay = 1;
+               clif_displaymessage(fd, "Skill delay failure is NOT now shown");
+               return 0;
+       }
+}
+

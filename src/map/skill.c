@@ -1909,7 +1909,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 
 			case BA_FROSTJOKE:			/* Š¦‚¢ƒWƒ‡?ƒN */
 			case DC_SCREAM:				/* ƒXƒNƒŠ?ƒ€ */
-				range=15;		//Ž‹ŠE‘S?
+				range=battle_config.area_size;		//Ž‹ŠE‘S?
 				map_foreachinarea(skill_frostjoke_scream,src->m,src->x-range,src->y-range,
 					src->x+range,src->y+range,0,src,skl->skill_id,skl->skill_lv,tick);
 				break;
@@ -5205,7 +5205,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case DC_DONTFORGETME:		/* Ž„‚ð–Y‚ê‚È‚¢‚Åc */
 		if(src->type == BL_PC)
 			val1 = (pc_checkskill((struct map_session_data *)src,DC_DANCINGLESSON)+1)>>1;
-		val2 = ((status_get_str(src)/20)&0xffff)<<16;
+		val2 = ((status_get_dex(src)/20)&0xffff)<<16;
 		val2 |= (status_get_agi(src)/10)&0xffff;
 		break;
 	case BA_POEMBRAGI:			/* ƒuƒ‰ƒM‚ÌŽ */

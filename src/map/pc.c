@@ -47,6 +47,8 @@
 static int exp_table[14][MAX_LEVEL];
 static short statp[MAX_LEVEL];
 
+extern char msg_table[1000][256];
+
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[3][25][MAX_SKILL_TREE];
 // timer for night.day implementation
@@ -1153,6 +1155,7 @@ int pc_checkweighticon(struct map_session_data *sd)
  */
 int pc_bonus(struct map_session_data *sd,int type,int val)
 {
+	int i;
 	nullpo_retr(0, sd);
 
 	switch(type){
@@ -1588,7 +1591,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_DAMAGE_WHEN_UNEQUIP:
 		if(!sd->state.lr_flag) {
-			int i;
 			for (i=0; i<11; i++) {
 				if (sd->inventory_data[current_equip_item_index]->equip & equip_pos[i]) {
 					sd->unequip_losehp[i] += val;
@@ -1599,7 +1601,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_LOSESP_WHEN_UNEQUIP:
 		if(!sd->state.lr_flag) {
-			int i;
 			for (i=0; i<11; i++) {
 				if (sd->inventory_data[current_equip_item_index]->equip & equip_pos[i]) {
 					sd->unequip_losesp[i] += val;
@@ -3968,6 +3969,8 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 int pc_gainexp(struct map_session_data *sd,int base_exp,int job_exp)
 {
 	char output[256];
+	float nextbp=0, nextjp=0;
+	int nextb=0, nextj=0;
 	nullpo_retr(0, sd);
 
 	if(sd->bl.prev == NULL || pc_isdead(sd))
@@ -3992,6 +3995,12 @@ int pc_gainexp(struct map_session_data *sd,int base_exp,int job_exp)
 		if (base_exp < 0)
 			base_exp = 0;
 	}
+	nextb = pc_nextbaseexp(sd);
+	nextj = pc_nextjobexp(sd);
+	if (nextb > 0)
+		nextbp = (float) base_exp / (float) nextb;
+	if (nextj > 0)
+		nextjp = (float) job_exp / (float) nextj;
 
 	sd->status.base_exp += base_exp;
 	if(sd->status.base_exp < 0)
@@ -4014,9 +4023,9 @@ int pc_gainexp(struct map_session_data *sd,int base_exp,int job_exp)
 
 	clif_updatestatus(sd,SP_JOBEXP);
 
-	if(battle_config.disp_experience){
+	if(battle_config.disp_experience && !sd->noexp){
 		sprintf(output,
-			"Experienced Gained Base:%d Job:%d",base_exp,job_exp);
+			"Experienced Gained Base:%d (%.2f%%) Job:%d (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
 
@@ -7300,3 +7309,29 @@ int do_init_pc(void) {
 
 	return 0;
 }
+
+/*==========================================
+ * sd - father dstsd - mother jasd - child
+ */
+int pc_adoption(struct map_session_data *sd,struct map_session_data *dstsd, struct map_session_data *jasd)
+{       
+        int j;          
+        if(sd == NULL || dstsd == NULL || jasd == NULL || sd->status.partner_id <= 0 || dstsd->status.partner_id <= 0 || sd->status.partner_id != dstsd->status.char_id || dstsd->status.partner_id != sd->status.char_id || sd->status.child > 0 || dstsd->status.child || jasd->status.father > 0 || jasd->status.mother > 0)
+                return -1;
+        jasd->status.father=sd->status.char_id;
+        jasd->status.mother=dstsd->status.char_id;
+        sd->status.child=jasd->status.char_id;
+        dstsd->status.child=jasd->status.char_id;
+        for (j=0; j < MAX_INVENTORY; j++) {
+                if(jasd->status.inventory[j].nameid>0 && jasd->status.inventory[j].equip!=0)
+                        pc_unequipitem(jasd, j, 3);
+        }
+        if (pc_jobchange(jasd, 4023, 0) == 0)
+                clif_displaymessage(jasd->fd, msg_table[12]); // Your job has been changed.
+        else {
+                clif_displaymessage(jasd->fd, msg_table[155]); // Impossible to change your job.
+                return -1;
+        }
+        return 0;
+}
+
