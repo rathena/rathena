@@ -62,9 +62,24 @@ int do_init_storage(void) // map.c::do_init()‚©‚çŒÄ‚Î‚ê‚é
 	guild_storage_db=numdb_init();
 	return 1;
 }
-
-void do_final_storage(void) // map.c::do_final()‚©‚çŒÄ‚Î‚ê‚é
+static int guild_storage_db_final(void *key,void *data,va_list ap)
 {
+	struct guild_storage *gstor=data;
+	free(gstor);
+	return 0;
+}
+static int storage_db_final(void *key,void *data,va_list ap)
+{
+	struct storage *stor=data;
+	free(stor);
+	return 0;
+}
+void do_final_storage(void) // by [MC Cameri]
+{
+	if (storage_db)
+		numdb_final(storage_db,storage_db_final);
+	if (guild_storage_db)
+		numdb_final(guild_storage_db,guild_storage_db_final);
 }
 
 struct storage *account2storage(int account_id)

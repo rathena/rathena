@@ -1233,7 +1233,7 @@ void map_removenpc(void) {
         }
     }
 
-    sprintf(tmp_output,"Successfully removed and freed from memory '"CL_WHITE"%d"CL_RESET"' NPCs.\n",n);
+	sprintf(tmp_output,"Successfully removed and freed from memory '"CL_WHITE"%d"CL_RESET"' NPCs.\n",n);
 	ShowStatus(tmp_output);
 }
 
@@ -1899,7 +1899,7 @@ static int map_readmap(int m,char *fn, char *alias, int *map_cache, int maxmap) 
 	char progress[21] = "                    ";
 
 	//printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
-	if (map_num) { //avoid map-server crashing if there are 0 maps
+	if (maxmap) { //avoid map-server crashing if there are 0 maps
 		char c = '-';
 		static int lasti = -1;
 		static int last_time = -1;
@@ -2079,7 +2079,9 @@ int map_addmap(char *mapname) {
 	}
 
 	if (map_num >= MAX_MAP_PER_SERVER - 1) {
-		printf("too many map\n");
+		snprintf(tmp_output,sizeof(tmp_output),"Could not add map '"
+		CL_WHITE"%s"CL_RESET"', the limit of maps has been reached.\n",mapname);
+		ShowError(tmp_output);
 		return 1;
 	}
 	memcpy(map[map_num].name, mapname, 24);
@@ -2416,45 +2418,32 @@ int sql_config_read(char *cfgName)
 		//Map Server SQL DB
 		} else if(strcmpi(w1,"map_server_ip")==0){
 			strcpy(map_server_ip, w2);
-//			printf ("set map_server_ip : %s\n",w2);
 		} else if(strcmpi(w1,"map_server_port")==0){
 			map_server_port=atoi(w2);
-//			printf ("set map_server_port : %s\n",w2);
 		} else if(strcmpi(w1,"map_server_id")==0){
 			strcpy(map_server_id, w2);
-//			printf ("set map_server_id : %s\n",w2);
 		} else if(strcmpi(w1,"map_server_pw")==0){
 			strcpy(map_server_pw, w2);
-//			printf ("set map_server_pw : %s\n",w2);
 		} else if(strcmpi(w1,"map_server_db")==0){
 			strcpy(map_server_db, w2);
-//			printf ("set map_server_db : %s\n",w2);
-		//Map server option to use SQL db or not
 		} else if(strcmpi(w1,"use_sql_db")==0){
 			if (strcmpi(w2,"yes")){db_use_sqldbs=0;} else if (strcmpi(w2,"no")){db_use_sqldbs=1;}
 			printf ("Using SQL dbs: %s\n",w2);
 		//Login Server SQL DB
 		} else if(strcmpi(w1,"login_server_ip")==0){
 			strcpy(login_server_ip, w2);
-//			printf ("set login_server_ip : %s\n",w2);
         } else if(strcmpi(w1,"login_server_port")==0){
 			login_server_port = atoi(w2);
-//			printf ("set login_server_port : %s\n",w2);
 		} else if(strcmpi(w1,"login_server_id")==0){
 			strcpy(login_server_id, w2);
-//			printf ("set login_server_id : %s\n",w2);
 		} else if(strcmpi(w1,"login_server_pw")==0){
 			strcpy(login_server_pw, w2);
-//			printf ("set login_server_pw : %s\n",w2);
 		} else if(strcmpi(w1,"login_server_db")==0){
 			strcpy(login_server_db, w2);
-//			printf ("set login_server_db : %s\n",w2);
 		} else if(strcmpi(w1,"lowest_gm_level")==0){
 			lowest_gm_level = atoi(w2);
-//			printf ("set lowest_gm_level : %s\n",w2);
 		} else if(strcmpi(w1,"read_gm_interval")==0){
 			read_gm_interval = ( atoi(w2) * 60 * 1000 ); // Minutes multiplied by 60 secs per min by 1000 milliseconds per second
-//			printf ("set read_gm_interval : %s\n",w2);
 		} else if(strcmpi(w1,"log_db")==0) {
 			strcpy(log_db, w2);
 		} else if(strcmpi(w1,"log_db_ip")==0) {
@@ -2544,8 +2533,9 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 
 int id_db_final(void *k,void *d,va_list ap)
 {
+printf
 	struct mob_data *id;
-	nullpo_retr(0, id=d);
+//	nullpo_retr(0, id=d);
 	if(id->lootitem)
 		free(id->lootitem);
 	if(id)
@@ -2597,11 +2587,11 @@ static int cleanup_sub(struct block_list *bl, va_list ap) {
  */
 void do_final(void) {
     int map_id, i;
-	ShowStatus("Terminating.\n");
-    for (map_id = 0; map_id < map_num;map_id++) {
-	if(map[map_id].m)
-		map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, 0, 0);
-    }
+	ShowStatus("Terminating...\n");
+
+    for (map_id = 0; map_id < map_num;map_id++)
+		if(map[map_id].m)
+			map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, 0, 0);
 
 #ifndef TXT_ONLY
     chrif_char_reset_offline();
@@ -2613,37 +2603,43 @@ void do_final(void) {
         delete_session(i);
 
     map_removenpc();
-    //do_final_timer(); (we used timer_final() instead)
-    timer_final();
 
+//    do_final_timer(); (we used timer_final() instead)
+    timer_final();
     numdb_final(id_db, id_db_final);
     strdb_final(map_db, map_db_final);
     strdb_final(nick_db, nick_db_final);
     numdb_final(charid_db, charid_db_final);
 
-	for(i=0;i<=map_num;i++){
+
+	do_final_script();
+	do_final_itemdb();
+	do_final_storage();
+	do_final_guild();
+/*
+	for(i=0;i<map_num;i++){
 		if(map[i].gat) {	
 			free(map[i].gat);
-			map[i].gat=NULL;
+			map[i].gat=NULL; //isn't it NULL already o_O?
 		}
 		if(map[i].block) free(map[i].block);
 		if(map[i].block_mob) free(map[i].block_mob);
 		if(map[i].block_count) free(map[i].block_count);
 		if(map[i].block_mob_count) free(map[i].block_mob_count);
 	}
-
-	do_final_script();
-	do_final_itemdb();
-	do_final_storage();
-	do_final_guild();
+*/
 
 #ifndef TXT_ONLY
     map_sql_close();
 #endif /* not TXT_ONLY */
-	ShowStatus("Successfully terminated.");
+	ShowStatus("Successfully terminated.\n");
 }
 
-void map_helpscreen(int flag) {
+/*======================================================
+ * Map-Server Version Screen [MC Cameri]
+ *------------------------------------------------------
+ */
+void map_helpscreen(int flag) { // by MC Cameri
 	puts("Usage: map-server [options]");
 	puts("Options:");
 	puts(CL_WHITE"  Commands\t\t\tDescription"CL_RESET);
@@ -2665,14 +2661,18 @@ void map_helpscreen(int flag) {
 	if (flag) exit(1);
 }
 
+/*======================================================
+ * Map-Server Version Screen [MC Cameri]
+ *------------------------------------------------------
+ */
 void map_versionscreen(int flag) {
 	printf("CL_WHITE" "eAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n",
 		ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION,
 		ATHENA_MOD_VERSION);
-	puts(CL_GREEN "Website/Forum:" "CL_RESET" "\thttp://eathena.deltaanime.net/");
-	puts(CL_GREEN "Download URL:" "CL_RESET" "\thttp://eathena.systeminplace.net/");
-	puts(CL_GREEN "IRC Channel:" "CL_RESET" "\tirc://irc.deltaanime.net/#athena");
-	puts("\nOpen "CL_WHITE"readme.html"CL_RESET" for more information.");
+	puts(CL_GREEN "Website/Forum:" CL_RESET "\thttp://eathena.deltaanime.net/");
+	puts(CL_GREEN "Download URL:" CL_RESET "\thttp://eathena.systeminplace.net/");
+	puts(CL_GREEN "IRC Channel:" CL_RESET "\tirc://irc.deltaanime.net/#athena");
+	puts("\nOpen " CL_WHITE "readme.html" CL_RESET " for more information.");
 	if (ATHENA_RELEASE_FLAG) ShowNotice("This version is not for release.\n");
 	if (flag) exit(1);
 }

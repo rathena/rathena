@@ -1,5 +1,8 @@
 Date	Added
 01/05
+	* Fixed some typos in map_versionscreen() [MC Cameri]
+	* Removed loop freeing in map-server's do_final(), it was causing seg faults [MC Cameri]
+	* Finished do_storage_final() in map-server's do_final(), it was there but doing nothing [MC Cameri]
 	* Fixed Celest's typo making all vended items cost 0 zeny [Codemaster] [SVN 919]
         * If a vending item was priced at 0 it'll be auto changed to 1million [celest]
         * Fixed TXT logging - log_athena.conf reading was kind of messed up [celest]
@@ -57,7 +60,7 @@ Date	Added
           (you were right! ^^; )  (SVN 891) [celest]
         * Modified Spiral Pierce and Breaker to type ranged (SVN 891) [celest]
 
-01/01
+01/01/05
 	* Attempted to fix a memory leak [Codemaster] - tell me if it works XD (NPC/Mob memory leak in npc_parse_mob(...)) [SVN 886]
 	* Added a char config that allows GMs that have a certain level or above to 
 	  bypass the server's user limit [Codemaster]
