@@ -383,7 +383,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
-	// 服の色は色?弊害が多いので保存?象にはしない
+	// 秒ﾌ色は色?弊害が多いので保存?象にはしない
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color=0;
 
@@ -413,7 +413,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 }
 
 /*==========================================
- * 接?時の初期化
+ * 接?暫ﾌ初期化
  *------------------------------------------
  */
 int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int login_id1, int client_tick, int sex, int fd) {
@@ -960,24 +960,44 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			sd->status.skill[i].id=i;
 		}
 	}else{
-		// 通常の計算
-		do{
-			flag=0;
-			for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
-				int j,f=1;
-				if(!battle_config.skillfree) {
-					for(j=0;j<5;j++) {
-						if( skill_tree[s][c][i].need[j].id &&
-							pc_checkskill(sd,skill_tree[s][c][i].need[j].id) < skill_tree[s][c][i].need[j].lv)
-							f=0;
-					}
-				}
-				if(f && sd->status.skill[id].id==0 ){
-					sd->status.skill[id].id=id;
-					flag=1;
-				}
-			}
-		}while(flag);
+            do {
+                flag=0;
+                for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
+                    if(skill_get_inf2(id))
+                        continue;
+                    int j,f=1;
+                    if(!battle_config.skillfree) {
+                        for(j=0;j<5;j++) {
+                            if( skill_tree[s][c][i].need[j].id &&
+                                pc_checkskill(sd,skill_tree[s][c][i].need[j].id) <
+                                skill_tree[s][c][i].need[j].lv)
+                                f=0;
+                        }
+                    }
+                    if(f && sd->status.skill[id].id==0 ){
+                        sd->status.skill[id].id=id;
+                        flag=1;
+                    }
+                }
+                for(i=0;(id=skill_tree[s][s_class.job][i].id)>0;i++){
+                    if(!skill_get_inf2(id))
+                        continue;
+                    int j,f=1;
+                    if(!battle_config.skillfree) {
+                        for(j=0;j<5;j++) {
+                            if( skill_tree[s][s_class.job][i].need[j].id &&
+                                pc_checkskill(sd,skill_tree[s][s_class.job][i].need[j].id) <
+                                skill_tree[s][s_class.job][i].need[j].lv)
+                                f=0;
+                        }
+                    }
+                    if(f && sd->status.skill[id].id==0 ){
+                        sd->status.skill[id].id=id;
+                        flag=1;
+                    }
+                }
+
+            } while(flag);
 	}
 //	if(battle_config.etc_log)
 //		printf("calc skill_tree\n");
@@ -1113,7 +1133,7 @@ int pc_checkweighticon(struct map_session_data *sd)
 
 /*==========================================
  * パラメ?タ計算
- * first==0の時、計算?象のパラメ?タが呼び出し前から
+ * first==0の斬A計算?象のパラメ?タが呼び出し前から
  * ? 化した場合自動でsendするが、
  * 能動的に?化させたパラメ?タは自前でsendするように
  *------------------------------------------
@@ -1893,7 +1913,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->sc_data[i=SC_SPEEDPOTION1].timer!=-1 ||
 			sd->sc_data[i=SC_SPEEDPOTION0].timer!=-1)	// ? 速ポ?ション
 			aspd_rate -= sd->sc_data[i].val2;
-		if(sd->sc_data[SC_WINDWALK].timer!=-1 && sd->sc_data[SC_INCREASEAGI].timer==-1)	//ウィンドウォ?ク時はLv*2%減算
+		if(sd->sc_data[SC_WINDWALK].timer!=-1 && sd->sc_data[SC_INCREASEAGI].timer==-1)	//ウィンドウォ?ク暫ﾍLv*2%減算
 			sd->speed -= sd->speed *(sd->sc_data[SC_WINDWALK].val1*2)/100;
 		if(sd->sc_data[SC_CARTBOOST].timer!=-1)	// カ?トブ?スト
 		sd->speed -= (DEFAULT_WALK_SPEED * 20)/100;
@@ -2985,7 +3005,7 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
 }
 
 /*==========================================
- * アイテムを買った時に、新しいアイテム欄を使うか、
+ * アイテムを買った暫ﾉ、新しいアイテム欄を使うか、
  * 3万個制限にかかるか確認
  *------------------------------------------
  */
@@ -4001,7 +4021,7 @@ int pc_can_reach(struct map_session_data *sd,int x,int y)
 // ? 行物
 //
 /*==========================================
- * 次の1?にかかる時間を計算
+ * 次の1?にかかる史ﾔを計算
  *------------------------------------------
  */
 static int calc_next_walk_step(struct map_session_data *sd)
@@ -4043,14 +4063,14 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 	sd->inchealspiritsptick = 0;
 
 	sd->walkpath.path_half ^= 1;
-	if(sd->walkpath.path_half==0){ // マス目中心へ到着
+	if(sd->walkpath.path_half==0){ // マス目中心へ途�
 		sd->walkpath.path_pos++;
 
 		if(sd->state.change_walk_target){
 			pc_walktoxy_sub(sd);
 			return 0;
 		}
-	} else { // マス目境界へ到着
+	} else { // マス目境界へ途�
 		if(sd->walkpath.path[sd->walkpath.path_pos]>=8)
 			return 1;
 
@@ -4198,7 +4218,7 @@ int pc_walktoxy(struct map_session_data *sd,int x,int y)
 	sd->to_y=y;
 
 	if(sd->walktimer != -1 && sd->state.change_walk_target==0){
-		// 現在?いている最中の目的地?更なのでマス目の中心に?た時に
+		// 現在?いている最中の目的地?更なのでマス目の中心に?た暫ﾉ
 		// timer??からpc_walktoxy_subを呼ぶようにする
 		sd->state.change_walk_target=1;
 	} else {
@@ -6392,7 +6412,7 @@ int pc_setglobalreg(struct map_session_data *sd,char *reg,int val)
 
 	nullpo_retr(0, sd);
 
-	//PC_DIE_COUNTERがスクリプトなどで?更された時の?理
+	//PC_DIE_COUNTERがスクリプトなどで?更された暫ﾌ?理
 	if(strcmp(reg,"PC_DIE_COUNTER") == 0 && sd->die_counter != val){
 		sd->die_counter = val;
 		pc_calcstatus(sd,0);
@@ -7090,7 +7110,7 @@ int pc_ismarried(struct map_session_data *sd)
 		return 0;
 }
 /*==========================================
- * sdがdstsdと結婚(dstsd→sdの結婚?理も同時に行う)
+ * sdがdstsdと結婚(dstsd→sdの結婚?理も同暫ﾉ行う)
  *------------------------------------------
  */
 int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd)
@@ -7103,7 +7123,7 @@ int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd)
 }
 
 /*==========================================
- * sdが離婚(相手はsd->status.partner_idに依る)(相手も同時に離婚?結婚指輪自動?奪)
+ * sdが離婚(相手はsd->status.partner_idに依る)(相手も同暫ﾉ離婚?結婚指輪自動?奪)
  *------------------------------------------
  */
 int pc_divorce(struct map_session_data *sd)
