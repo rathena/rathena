@@ -1677,6 +1677,36 @@ int parse_fromchar(int fd) {
 				RFIFOSKIP(fd,6);
 			}
 			return 0;
+		case 0x3000: //change sex for chrif_changesex()
+			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
+				return 0;
+			{
+				int acc, sex, i = 0;
+				acc = RFIFOL(fd,4);
+				sex = RFIFOB(fd,8);
+				if (sex != 0 && sex != 1)
+					sex = 0;
+				for(i = 0; i < auth_num; i++) {
+					if (auth_dat[i].account_id == acc) {
+						unsigned char buf[16];
+						login_log("Char-server '%s': Sex change (account: %d, new sex %c, ip: %s)." RETCODE,
+						          server[id].name, acc, (sex == 2) ? 'S' : (sex ? 'M' : 'F'), ip);
+						auth_fifo[i].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentification)
+						auth_dat[i].sex = sex;
+						WBUFW(buf,0) = 0x2723;
+						WBUFL(buf,2) = acc;
+						WBUFB(buf,6) = sex;
+						charif_sendallwos(-1, buf, 7);
+						break;
+					}
+				}
+				if (i == auth_num) {
+					login_log("Char-server '%s': Error of Sex change (account: %d not found, suggested sex %c, ip: %s)." RETCODE,
+					          server[id].name, acc, (sex == 2) ? 'S' : (sex ? 'M' : 'F'), ip);
+				}
+				RFIFOSKIP(fd,RFIFOW(fd,2));
+			}
+			return 0;
 
 		default:
 			{

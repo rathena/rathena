@@ -419,11 +419,11 @@ int chrif_char_ask_name(int id, char * character_name, short operation_type, int
  *------------------------------------------
  */
 int chrif_changesex(int id, int sex) {
-	WFIFOW(char_fd,0) = 0x2b0c;
+	WFIFOW(char_fd,0) = 0x3000;
 	WFIFOW(char_fd,2) = 9;
 	WFIFOL(char_fd,4) = id;
 	WFIFOB(char_fd,8) = sex;
-	printf("chrif : sended 0x2b0c\n");
+	printf("chrif : sent 0x3000(changesex)\n");
 	WFIFOSET(char_fd,9);
 	return 0;
 }
