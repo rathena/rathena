@@ -1,5 +1,6 @@
 Date	Added
 12/15
+        * Removed unused var in src/map/map.c:107 [MouseJstr]
         * fix compile error in text converters [MouseJstr]
         * Skill Updates [celest]
           - Corrected traps to last longer in GvG

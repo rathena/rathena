@@ -104,8 +104,6 @@ static int online_timer(int,unsigned int,int,int);
 int CHECK_INTERVAL = 3600000; // [Valaris]
 int check_online_timer=0; // [Valaris]
 
-static int pos = 0;
-
 #endif /* not TXT_ONLY */
 
 #define USE_AFM
