@@ -1,5 +1,6 @@
 Date	Added
 11/21
+	* Re-Fixed Trade/Vending exploit [Lupus]
 	* Fixed @whozeny. [Valaris]
 	* Added rest of mapflags to const.txt. [Valaris]
 	* Closed AFM files after reading, this fixed the improper char-server session #. [Valaris]

@@ -96,8 +96,10 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount)
 					sd->deal_zeny = amount;
 					clif_tradeadditem(sd, target_sd, 0, amount);
 				} else {
-					trade_tradecancel(sd);
-					return;
+					if (amount != 0) {
+						trade_tradecancel(sd);
+						return;
+					}
 				}
 			}
 		} else if (amount > 0 && amount <= sd->status.inventory[index-2].amount) {
@@ -127,7 +129,6 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount)
 		}
 	}
 }
-
 
 /*==========================================
  * ƒAƒCƒeƒ€’Ç‰ÁŠ®—¹(ok‰Ÿ‚µ)
