@@ -38,10 +38,6 @@ Problem:	When servers restart sometime the gm lvls in sql get reset back to 0
 Assigned:	Wizputer
 Progess:	0%
 
-Problem:	When athena is run in linux it creates core files which takes 300 megs.
-Assigned:	N/A (it's not a bug, those core files are createt on every server crash)
-Progess:	0%
-
 Problem:	Wierd login-server bug on sql, it displays that the server is full when map-server crashes, has something to do with anti double login feature?
 Assigned:	N/A
 Progress:	0%
@@ -51,8 +47,11 @@ Assigned:	N/A
 Progress:	0%
 
 Problem:	~40+ players connected.. and soon can't re-connect, they can enter password, but never see "select character" screen.
-Assigned:	N/A
-Progress:	0%
+Assigned:	MouseJstr
+Progress:	75%
+
+                In many cases, this is due to horrible performance
+                under MySQL
 
 Problem:        Chars with ' in their name.. is legal.. and messes up sql
 Assigned:       N/A
@@ -98,8 +97,8 @@ Notes:          It works differently now, you have to use it once to *allow* it 
                 activate, and once again to stop it from activating. ^^; [Celest]
 
 Problem:	Due to the Guilds CACHE we see some went-offline members as online ones. It is very confusing. You don't know who's really on.
-Assigned:	N/A
-Progress:	0%
+Assigned:	MouseJstr
+Progress:	100%
 
 Problem:	Guilds BUG (it isn't related to the scripts, because noone change them recently)
 		When some guild SEIZE any castle, then Castle N 1 becomes their own, too (not M 0, but M 1)
@@ -109,6 +108,8 @@ Progress:	100%
 Problem:	Storage BUGS! Items doubles/clones again any kinds of items! (due to "latest storage fix")
 Assigned:	N/A
 Progress:	0%
+
+                Only happens during crashes.. 
 
 Problem:	status.weapon can be 16... which causes the accesses outside
 	        the bounds of the array
