@@ -1,6 +1,6 @@
 Date	Added
 12/4
-	* Fixed a change associated with NPC_BARRIER [MouseJstr]
+	* Fixed a crash associated with NPC_BARRIER [MouseJstr]
 	* Renamed flush_fifos_at_exit to flush_fifos [MouseJstr]
 	* call check_connect_char_server() on char_server disconnect [MouseJstr]
 	* stale skill groups were crashing server [MouseJstr]
