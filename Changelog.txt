@@ -1,5 +1,13 @@
 Date	Added
 11/10	
+	* Added, Fixed & Updated ALOT of skills:	[Codemaster]
+		- Fire Pillar, Backstab, Grimtooth, Poison React, Falcon Assalt,
+		Skin Tempering, Hilt Binding, Frost Nova, TEMPORARY fix for Create Deadly Poison,
+		Enchant Deadly Poison, Endure, Sacrifice, Spider Web, Memorize,
+		Hyper Spirit Sphere, Palm Strike, Sword Reject, Pressure, Magic Crasher,
+		Amplify Magic Power, Napalm Vulcan, True Sight, Wind Walk, Aura Blade,
+		Concentration, Cart Boost, Magic Power
+		- Thanks goes to Celest, Midas, and DracoRPG!
 	* char/char.c & char_sql/char.c: Fixed start_armor and start_weapon - thanks to AppleGirl [Codemaster]
 	* Added packetver 6 flag to makefile. [Valaris]
 
