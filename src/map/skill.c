@@ -4237,14 +4237,14 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 
 	case WE_CALLPARTNER:			/* ‚ ‚È‚½‚É?‚¢‚½‚¢ */
 		if(sd && dstsd){
-			if(map[sd->bl.m].flag.nomemo){
-				clif_skill_teleportmessage(sd,1);
-				return 0;
-			}
 			if((dstsd = pc_get_partner(sd)) == NULL){
 				clif_skill_fail(sd,skillid,0,0);
 				return 0;
 			}
+			if(map[sd->bl.m].flag.nomemo || map[sd->bl.m].flag.nowarpto || map[dstsd->bl.m].flag.nowarp){
+				clif_skill_teleportmessage(sd,1);
+				return 0;
+			}			
 			skill_unitsetting(src,skillid,skilllv,sd->bl.x,sd->bl.y,0);
 		}
 		break;
@@ -4450,7 +4450,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				for(i = 0; i < g->max_member; i++, j++) {
 					if (j>8) j=0;
 					if ((dstsd = g->member[i].sd) != NULL && sd != dstsd &&
-						!map[sd->bl.m].flag.nowarpto && !map[sd->bl.m].flag.nowarp) {
+						!map[sd->bl.m].flag.nowarpto && !map[dstsd->bl.m].flag.nowarp) {
 						clif_skill_nodamage(src,bl,skillid,skilllv,1);
 						pc_setpos(dstsd, sd->mapname, sd->bl.x+dx[j], sd->bl.y+dy[j], 2);
 					}

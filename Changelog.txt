@@ -12,6 +12,8 @@ Date	Added
           - Corrected Assassin Cross' dual wield
           - Changed player_cloak_check_type to yes by default and edited description
             since it's already fully implemented.
+          - Added a bit more restrictions to Call Partner and Emergency Recall and
+            updated mapflag for sec_pri.gat
 
 11/22
 	* (TXT)Stripped some code off read_gm_accounts() and made with it addGM() [MC Cameri]

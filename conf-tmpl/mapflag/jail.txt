@@ -29,6 +29,8 @@ sec_pri.gat	mapflag	nosave	SavePoint
 // No Teleport ===========================
 sec_pri.gat	mapflag	noteleport
 
+// No Warp ===============================
+sec_pri.gat	mapflag	nowarp
 
 // Bloody Jail ===========================
 //Uncomment following maps to let your prisoners fight with other prisoners
