@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/12/7 9:42:00 PM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/12/9 8:14:18 PM Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -920,6 +920,7 @@ int skill_get_unit_id(int id,int flag)
 	case WZ_FROSTNOVA:		return 0x86;			/* フロストノヴァ */
 	case WZ_STORMGUST:		return 0x86;				/* スト?ムガスト(とりあえずLoVと同じで?理) */
 	case CR_GRANDCROSS:		return 0x86;				/* グランドクロス */
+	case NPC_DARKGRANDCROSS:	return 0x86;			/*闇グランドクロス*/
 	case WZ_FIREPILLAR:		return (flag==0)?0x87:0x88;	/* ファイア?ピラ? */
 	case HT_TALKIEBOX:		return 0x99;	/* ト?キ?ボックス */
 	case WZ_ICEWALL:		return 0x8d;				/* アイスウォ?ル */
@@ -1186,6 +1187,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 		break;
 
 	case CR_GRANDCROSS:		/* グランドクロス */
+	case NPC_DARKGRANDCROSS:	/*闇グランドクロス*/
 		{
 			int race = battle_get_race(bl);
 			if( (battle_check_undead(race,battle_get_elem_type(bl)) || race == 6) && rand()%100 < 100000*sc_def_int/100)	//?制付?だが完全耐性には無?
@@ -1520,7 +1522,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	struct status_change *sc_data;
 	int type,lv,damage;
 
-	if(skilllv <= 0) return 0;
+	if(skillid > 0 && skilllv <= 0) return 0;
 
 	rdamage = 0;
 	nullpo_retr(0, src);
@@ -1606,7 +1608,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if(damage <= 0 || damage < dmg.div_) //吹き飛ばし判定？※
 		dmg.blewcount = 0;
 
-	if(skillid == CR_GRANDCROSS) {//グランドクロス
+	if(skillid == CR_GRANDCROSS||skillid == NPC_DARKGRANDCROSS) {//グランドクロス
 		if(battle_config.gx_disptype) dsrc = src;	// 敵ダメ?ジ白文字表示
 		if( src == bl) type = 4;	// 反動はダメ?ジモ?ションなし
 	}
@@ -1983,7 +1985,8 @@ int skill_check_unit_range2(int m,int x,int y,int range)
 /* ?象の?をカウントする。（skill_area_temp[0]を初期化しておくこと） */
 int skill_area_sub_count(struct block_list *src,struct block_list *target,int skillid,int skilllv,unsigned int tick,int flag)
 {
-	if(skilllv <= 0) return 0;
+	//if(skilllv <= 0) return 0;
+	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 	if(skill_area_temp[0] < 0xffff)
 		skill_area_temp[0]++;
 	return 0;
@@ -2252,7 +2255,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	struct status_change *sc_data = battle_get_sc_data(src);
 	int i;
 
-	if(skilllv <= 0) return 0;
+	if(skillid > 0 && skilllv <= 0) return 0;
 
 	nullpo_retr(1, src);
 	nullpo_retr(1, bl);
@@ -2262,7 +2265,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	if(sd && pc_isdead(sd))
 		return 1;
 
-	if((skillid == WZ_SIGHTRASHER || skillid == CR_GRANDCROSS) && src != bl)
+	if((skillid == WZ_SIGHTRASHER || skillid == CR_GRANDCROSS || skillid == NPC_DARKGRANDCROSS) && src != bl)
 		bl = src;
 	if(bl->prev == NULL)
 		return 1;
@@ -2577,14 +2580,16 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 
 	/* 魔法系スキル */
 	case MG_SOULSTRIKE:			/* ソウルストライク */
-	case MG_COLDBOLT:			/* コ?ルドボルト */
-	case MG_FIREBOLT:			/* ファイア?ボルト */
+	case NPC_DARKSOULSTRIKE:		/*闇ソウルストライク*/
+	case MG_COLDBOLT:			/* コールドボルト */
+	case MG_FIREBOLT:			/* ファイアーボルト */
 	case MG_LIGHTNINGBOLT:		/* ライトニングボルト */
-	case WZ_EARTHSPIKE:			/* ア?ススパイク */
-	case AL_HEAL:				/* ヒ?ル */
-	case AL_HOLYLIGHT:			/* ホ?リ?ライト */
-	case MG_FROSTDIVER:			/* フロストダイバ? */
-	case WZ_JUPITEL:			/* ユピテルサンダ? */
+	case WZ_EARTHSPIKE:			/* アーススパイク */
+	case AL_HEAL:				/* ヒール */
+	case AL_HOLYLIGHT:			/* ホーリーライト */
+	case MG_FROSTDIVER:			/* フロストダイバー */
+	case WZ_JUPITEL:			/* ユピテルサンダー */
+	case NPC_DARKJUPITEL:			/*闇ユピテル*/
 	case NPC_MAGICALATTACK:		/* MOB:魔法打?攻? */
 	case PR_ASPERSIO:			/* アスペルシオ */
 //	case HW_NAPALMVULCAN:		/* ナパームバルカン */
@@ -2705,6 +2710,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		break;
 
 	case CR_GRANDCROSS:			/* グランドクロス */
+	case NPC_DARKGRANDCROSS:		/*闇グランドクロス*/
 		/* スキルユニット配置 */
 		skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 		if(sd)
@@ -2832,7 +2838,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				,1157,1159,1190,1272,1312,1373,1492};
 	int poringclass[]={1002};
 
-	if(skilllv <= 0) return 0;
+	//if(skilllv <= 0) return 0;
+	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 
 	nullpo_retr(1, src);
 	nullpo_retr(1, bl);
@@ -4327,9 +4334,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 
 	case NPC_SUMMONSLAVE:		/* 手下召喚 */
 	case NPC_SUMMONMONSTER:		/* MOB召喚 */
-		if(md && !md->master_id){
+		if(md)
 			mob_summonslave(md,mob_db[md->class].skill[md->skillidx].val,skilllv,(skillid==NPC_SUMMONSLAVE)?1:0);
-		}
 		break;
 
 	case NPC_TRANSFORMATION:
@@ -4850,7 +4856,8 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	struct map_session_data *sd=NULL;
 	int i,tmpx = 0,tmpy = 0, x1 = 0, y1 = 0;
 
-	if(skilllv <= 0) return 0;
+	//if(skilllv <= 0) return 0;
+	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 
 	nullpo_retr(0, src);
 
@@ -4893,8 +4900,12 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case HT_DETECTING:				/* ディテクティング */
 		{
 			const int range=7;
+			if(src->x!=x)
+				x+=(src->x-x>0)?-range:range;
+			if(src->y!=y)
+				y+=(src->y-y>0)?-range:range;
 			map_foreachinarea( skill_status_change_timer_sub,
-				src->m, src->x-range, src->y-range, src->x+range,src->y+range,0,
+				src->m, x-range, y-range, x+range,y+range,0,
 				src,SC_SIGHT,tick);
 		}
 		break;
@@ -4914,6 +4925,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case PR_SANCTUARY:			/* サンクチュアリ */
 	case PR_MAGNUS:				/* マグヌスエクソシズム */
 	case CR_GRANDCROSS:			/* グランドクロス */
+	case NPC_DARKGRANDCROSS:		/*闇グランドクロス*/
 	case HT_SKIDTRAP:			/* スキッドトラップ */
 	case HT_LANDMINE:			/* ランドマイン */
 	case HT_ANKLESNARE:			/* アンクルスネア */
@@ -5331,6 +5343,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		break;
 
 	case CR_GRANDCROSS:			/* グランドクロス */
+	case NPC_DARKGRANDCROSS:		/*闇グランドクロス*/
 		count=29;
 		limit=1000;
 		interval=300;
@@ -5641,6 +5654,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			break;
 
 		case CR_GRANDCROSS:		/* グランドクロス */
+		case NPC_DARKGRANDCROSS:		/*闇グランドクロス*/
 			{
 				static const int dx[]={
 					0, 0, -1,0,1, -2,-1,0,1,2, -4,-3,-2,-1,0,1,2,3,4, -2,-1,0,1,2, -1,0,1, 0, 0, };
@@ -6786,7 +6800,8 @@ static int skill_check_condition_use_sub(struct block_list *bl,va_list ap)
 	ss_class = pc_calc_base_job(ssd->status.class);
 	skillid=ssd->skillid;
 	skilllv=ssd->skilllv;
-	if(skilllv <= 0) return 0;
+	//if(skilllv <= 0) return 0;
+	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 	switch(skillid){
 	case PR_BENEDICTIO:				/* 聖?降福 */
 		if(sd != ssd && (s_class.job == 4 || s_class.job == 8 || s_class.job == 15) &&
@@ -8284,7 +8299,8 @@ int skill_attack_area(struct block_list *bl,va_list ap)
 		return 0;
 	skillid=va_arg(ap,int);
 	skilllv=va_arg(ap,int);
-	if(skilllv <= 0) return 0;
+	//if(skilllv <= 0) return 0;
+	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 	tick=va_arg(ap,unsigned int);
 	flag=va_arg(ap,int);
 	type=va_arg(ap,int);
@@ -8818,6 +8834,7 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 	if(sc_data[type].timer != tid) {
 		if(battle_config.error_log)
 			printf("skill_status_change_timer %d != %d\n",tid,sc_data[type].timer);
+		return 0;
 	}
 
 	switch(type){	/* 特殊な?理になる場合 */
@@ -9096,7 +9113,7 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_MEMORIZE:	/* メモライズ */
 	case SC_BROKNWEAPON:
 	case SC_BROKNARMOR:
-		if(sc_data[type].timer==tid)
+//		if(sc_data[type].timer==tid)
 			sc_data[type].timer=add_timer( 1000*600+tick,skill_status_change_timer, bl->id, data );
 		return 0;
 
@@ -9373,7 +9390,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			type != SC_SPEEDPOTION0 && type != SC_SPEEDPOTION1 && type != SC_SPEEDPOTION2
 						 && type != SC_ATKPOT && type != SC_MATKPOT) // added atk and matk potions [Valaris]
 			return 0;
-		if(type >=SC_STAN && type <= SC_BLIND)
+		if ((type >=SC_STAN && type <= SC_BLIND) || type == SC_DPOISON)
 			return 0;/* ?ぎ足しができない?態異常である時は?態異常を行わない */
 		if(type == SC_GRAFFITI){	//異常中にもう一度?態異常になった時に解除してから再度かかる
 			skill_status_change_end(bl,type,-1);
@@ -9941,11 +9958,11 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_BERSERK:
 			calc_flag=1;
 			break;
+*/
 		case SC_ASSUMPTIO:
 			if(sc_data[SC_KYRIE].timer!=-1 )
 				skill_status_change_end(bl,SC_KYRIE,-1);
 				break;
-*/
 		case SC_WINDWALK:		/* ウインドウォ?ク */
 			calc_flag = 1;
 			val2 = (val1 / 2); //Flee上昇率

@@ -1948,8 +1948,90 @@ int atcommand_jobchange(
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1) {
-		clif_displaymessage(fd, "Please, enter job ID (usage: @job/@jobchange <job ID>).");
-		return -1;
+
+		int i, found = 0;
+		const struct { char name[16]; int id; } jobs[] = {
+			{ "novice",		0 },
+			{ "swordsman",	1 },
+			{ "mage",		2 },
+			{ "archer",		3 },
+			{ "acolyte",	4 },
+			{ "merchant",	5 },
+			{ "thief",		6 },
+			{ "knight",		7 },
+			{ "priest",		8 },
+			{ "priestess",	8 },
+			{ "wizard",		9 },
+			{ "blacksmith",	10 },
+			{ "hunter",		11 },
+			{ "assassin",	12 },
+			{ "crusader",	14 },
+			{ "monk",		15 },
+			{ "sage",		16 },
+			{ "rogue",		17 },
+			{ "alchemist",	18 },
+			{ "bard",		19 },
+			{ "dancer",		20 },
+			{ "super novice",	23 },
+			{ "supernovice",	23 },
+			{ "high novice",	4001 },
+			{ "swordsman high",	4002 },
+			{ "mage high",		4003 },
+			{ "archer high",	4004 },
+			{ "acolyte high",	4005 },
+			{ "merchant high",	4006 },
+			{ "thief high",		4007 },
+			{ "lord knight",	4008 },
+			{ "high priest",	4009 },
+			{ "high priestess",	4009 },
+			{ "high wizard",	4010 },
+			{ "whitesmith",		4011 },
+			{ "sniper",		4012 },
+			{ "assassin cross",	4013 },
+			{ "paladin",	4015 },
+			{ "champion",	4016 },
+			{ "professor",	4017 },
+			{ "stalker",	4018 },
+			{ "creator",	4019 },
+			{ "clown",		4020 },
+			{ "gypsy",		4021 },
+			{ "baby novice",	4023 },
+			{ "baby swordsman",	4024 },
+			{ "baby mage",		4025 },
+			{ "baby archer",	4026 },
+			{ "baby acolyte",	4027 },
+			{ "baby merchant",	4028 },
+			{ "baby thief",		4029 },
+			{ "baby knight",	4030 },
+			{ "baby priest",	4031 },
+			{ "baby priestess",	4031 },
+			{ "baby wizard",	4032 },
+			{ "baby blacksmith",4033 },
+			{ "baby hunter",	4034 },
+			{ "baby assassin",	4035 },
+			{ "baby crusader",	4037 },
+			{ "baby monk",		4038 },
+			{ "baby sage",		4039 },
+			{ "baby rogue",		4040 },
+			{ "baby alchemist",	4041 },
+			{ "baby bard",		4042 },
+			{ "baby dancer",	4043 },
+			{ "super baby",		4045 },
+		};
+
+		for (i=0; i < (int)(sizeof(jobs) / sizeof(jobs[0])); i++) {
+			if (strncmpi(message, jobs[i].name, 16) == 0) {
+				job = jobs[i].id;
+				upper = 0;
+				found = 1;
+				break;
+			}
+		}
+
+		if (!found) {
+			clif_displaymessage(fd, "Please, enter job ID (usage: @job/@jobchange <job ID>).");
+			return -1;
+		}
 	}
 
 	if (job == 37 ||job == 45)

@@ -1,6 +1,14 @@
 Date	Added
 12/9
 	* Adjusted some messages in @marry [MouseJstr]
+        * Skill Updates [celest]
+          - Fixed Auto Spell not working
+          - Fixed skill level check causing Baphomet card not to work at all (possibly
+            other problems too)
+          - Added some new monster skills based on jA mod 1077
+        * Changed @job to accept text job names - For example: @job wizard, @job high
+          priestess, @job super baby [celest]
+
 12/8
 	* Fixed @rings [MouseJstr]
         * Added @marry, @divorce, and @rings [MouseJstr]

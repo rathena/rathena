@@ -1128,7 +1128,7 @@
 4126,Minorous_Card,Minorous Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddSize,2,15; bonus bBaseAtk,5; }
 4127,Nightmare_Card,Nightmare Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bResEff,Eff_Sleep,10000; bonus bAgi,1; }
 4128,Golden_Bug_Card,Golden Bug Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bNoMagicDamage,0; bonus bUseSPrate,100; }
-4129,Baphomet__Card,Baphomet  Card,6,20,,10,,,,,,,4,,,,{},{ bonus bHit,-10; bonus bSplashRange,10; }
+4129,Baphomet__Card,Baphomet Jr Card,6,20,,10,,,,,,,4,,,,{},{bonus bAgi,3; bonus bCritical,1; }}
 4130,Scorpion_King_Card,Scorpion King Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEle,9,20; }
 4131,Moonlight_Flower_Card,Moonlight Flower Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bSpeedRate,25; }
 4132,Mistress_Card,Mistress Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bNoGemStone,0; bonus bUseSPrate,25; }
