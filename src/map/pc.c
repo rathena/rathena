@@ -381,6 +381,7 @@ static int pc_walktoxy_sub(struct map_session_data *);
  */
 int pc_makesavestatus(struct map_session_data *sd)
 {
+        int i;
 	nullpo_retr(0, sd);
 
 	// 秒ﾌ色は色?弊害が多いので保存?象にはしない
@@ -409,6 +410,18 @@ int pc_makesavestatus(struct map_session_data *sd)
 	//マナ?ポイントがプラスだった場合0に
 	if(battle_config.muting_players && sd->status.manner > 0)
 		sd->status.manner = 0;
+
+	// Make sure all the skills are in the correct condition
+	// before persisting to the backend.. [MouseJstr]
+	for(i=0;i<MAX_SKILL;i++){
+	  if(sd->status.skill[i].flag == 13){
+	    sd->status.skill[i].id=0;
+	    sd->status.skill[i].lv=0;
+	    sd->status.skill[i].flag=0;
+	  } else if ((sd->status.skill[i].lv != 0) && (sd->status.skill[i].id == 0)) 
+	    sd->status.skill[i].id = i;
+	}
+
 	return 0;
 }
 
@@ -984,7 +997,8 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	c = pc_calc_skilltree_normalize_job(c, sd);
 
 	for(i=0;i<MAX_SKILL;i++){
-		if (sd->status.skill[i].flag != 13) sd->status.skill[i].id=0;
+		if (sd->status.skill[i].flag != 13)   
+		        sd->status.skill[i].id=0;
 		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){	// cardスキルなら、
 			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;	// 本?のlvに
 			sd->status.skill[i].flag=0;	// flagは0にしておく
@@ -1018,6 +1032,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
                                 pc_checkskill(sd,skill_tree[s][c][i].need[j].id) <
                                 skill_tree[s][c][i].need[j].lv)
                                 f=0;
+				break;
                         }
                     }
                     if(f && sd->status.skill[id].id==0 ){
@@ -1025,24 +1040,6 @@ int pc_calc_skilltree(struct map_session_data *sd)
                         flag=1;
                     }
                 }
-                for(i=0;(id=skill_tree[s][s_class.job][i].id)>0;i++){
-                    int j,f=1;
-                    if(!skill_get_inf2(id))
-                        continue;
-                    if(!battle_config.skillfree) {
-                        for(j=0;j<5;j++) {
-                            if( skill_tree[s][s_class.job][i].need[j].id &&
-                                pc_checkskill(sd,skill_tree[s][s_class.job][i].need[j].id) <
-                                skill_tree[s][s_class.job][i].need[j].lv)
-                                f=0;
-                        }
-                    }
-                    if(f && sd->status.skill[id].id==0 ){
-                        sd->status.skill[id].id=id;
-                        flag=1;
-                    }
-                }
-
             } while(flag);
 	}
 //	if(battle_config.etc_log)
@@ -1087,6 +1084,7 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 				case 17:
 					c = 6;
 					break;
+#if 0
 				case 4008:
 				case 4014:
 				case 4015:
@@ -1141,6 +1139,7 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 				case 4043:
 					c = 4029;
 					break;
+#endif
 			}
 		}
 	}
@@ -5475,7 +5474,8 @@ int pc_resetskill(struct map_session_data* sd)
 	nullpo_retr(0, sd);
 
 	for(i=1;i<MAX_SKILL;i++){
-		if( (skill = pc_checkskill(sd,i)) > 0) {
+	        skill =  ( i >= 10000 ) ? pc_checkskill(sd,i) : sd->status.skill[i].lv;
+		if( skill > 0) {
 			if(!(skill_get_inf2(i)&0x01) || battle_config.quest_skill_learn) {
 				if(!sd->status.skill[i].flag)
 					sd->status.skill_point += skill;
@@ -5487,9 +5487,9 @@ int pc_resetskill(struct map_session_data* sd)
 			else if(battle_config.quest_skill_reset)
 				sd->status.skill[i].lv = 0;
 			sd->status.skill[i].flag = 0;
-		}
-		else
+		} else {
 			sd->status.skill[i].lv = 0;
+		}
 	}
 	clif_updatestatus(sd,SP_SKILLPOINT);
 	clif_skillinfoblock(sd);

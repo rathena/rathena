@@ -1,5 +1,20 @@
 Date	Added
 12/21
+	* Fixed skill LK_HEADCRUSH, LK_JOINTBEAT to work on both on 
+	  and off peco's for lord knights (fixed typo in
+	  skill_tree.txt) [MouseJstr]
+	* removed LK_SPIRALPIERCE from lord knights not on peco's[MouseJstr]
+	* Moved the code from map_quit to pc_makesavestatus that
+	  "adjusts" the skill tree before persisting to the character
+	  server [MouseJstr]
+	* made pc_makesavestatus() properly persist skills that are 
+          unavailable but not forgotten (example, spiral pierce).  You can now
+	  get spiral pierce,  get off your peco, log out, log in, and
+	  get back on your peco and still have not lost the skill
+	  points you invested.  This also solves the problems of when
+	  the skill tree gets changed, players loosing the points. [MouseJstr]
+	* Made pc_resetskill() properly reset skills that are
+          currently not visible due to skilltree changes [MouseJstr]
         * Finished updating most of the map-server to 1082... i'll leave the more
           technical ones for the other devs ^^; [celest]
         * Added other new battle_athena options from jA 1082 ... descriptions not

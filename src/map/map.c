@@ -1023,21 +1023,16 @@ int map_quit(struct map_session_data *sd) {
 
 	if(pc_isdead(sd))
 		pc_setrestartvalue(sd,2);
+
 	pc_makesavestatus(sd);
-	//クロ?ンスキルで?えたスキルは消す
-	for(i=0;i<MAX_SKILL;i++){
-		if(sd->status.skill[i].flag == 13){
-			sd->status.skill[i].id=0;
-			sd->status.skill[i].lv=0;
-			sd->status.skill[i].flag=0;
-		}
-	}
 	chrif_save(sd);
 	storage_storage_save(sd);
 
 	//double connect bug fix by Valaris
-	if(sd->alive_timer) 
+	if(sd->alive_timer) {
 		delete_timer(sd->alive_timer,pc_alive_timer);
+		sd->alive_timer = NULL;
+	}
 
 	if( sd->npc_stackbuf && sd->npc_stackbuf != NULL)
 		free( sd->npc_stackbuf );

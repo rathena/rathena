@@ -3334,7 +3334,7 @@ int do_init(int argc, char **argv){
 #undef mysql_query
 
 int debug_mysql_query(char *file, int line, void *mysql, const char *q) {
-//        printf("sql: %s:%d# %s\n", file, line, q);
+  //        printf("sql: %s:%d# %s\n", file, line, q);
         return mysql_query((MYSQL *) mysql, q);
 }
 
