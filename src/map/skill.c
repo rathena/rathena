@@ -11725,7 +11725,7 @@ int skill_readdb(void)
 		skill_db[i].amount[9]=atoi(split[29]);
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_cast_db.txt");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_require_db.txt");
 	ShowStatus(tmp_output);
 
 	/* キャスティングデ?タベ?ス */
