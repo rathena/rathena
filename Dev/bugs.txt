@@ -82,3 +82,7 @@ Note:           Isn't sanctuary supposed to be able to heal the emperium? [celes
 Problem:	AFM Maps not loading coords correctly, players appearing outside boundaries of the maps.
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Wierd login-server bug on sql, it displays that the server is full when map-server crashes.
+Assigned:	N/A
+Progress:	0%
