@@ -7485,7 +7485,7 @@ atcommand_rings(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
   struct item item_tmp;
-  int get_count, flag;
+  int flag;
   
   memset(&item_tmp, 0, sizeof(item_tmp));
 
@@ -7497,7 +7497,7 @@ atcommand_rings(const int fd, struct map_session_data* sd,
 
   item_tmp.nameid = 2635;
   item_tmp.identify = 1;
-  if ((flag = pc_additem((struct map_session_data*)sd, &item_tmp, get_count)))
+  if ((flag = pc_additem((struct map_session_data*)sd, &item_tmp, 1)))
     clif_additem((struct map_session_data*)sd, 0, 0, flag);
 
   clif_displaymessage(fd, "You have rings!  Give them to the lovers.");

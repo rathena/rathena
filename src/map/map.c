@@ -309,7 +309,8 @@ int map_delblock(struct block_list *bl)
 
 	if(bl->type==BL_PC)
 		map[bl->m].users--;
-	if(bl->next) bl->next->prev = bl->prev;
+	if(bl->next) 
+		bl->next->prev = bl->prev;
 	if(bl->prev==&bl_head){
 		// リストの頭なので、map[]のblock_listを更新する
 		if(bl->type==BL_MOB){

@@ -1,5 +1,6 @@
 Date	Added
 12/8
+	* Fixed @rings [MouseJstr]
         * Added @marry, @divorce, and @rings [MouseJstr]
         * fixed @revive [MouseJstr]
         * Added option to turn off login server logging [celest]
