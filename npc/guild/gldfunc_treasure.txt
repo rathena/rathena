@@ -36,9 +36,8 @@
 
 
 //================================================
-// Treasure Spawning Script
+// Treasure Spawning Function
 //================================================
-
 function	script	F_GldTreas	{
 	
 	if(getarg(10) == 1) goto TreasureSpawn;

@@ -1,10 +1,9 @@
 //===== eAthena Script =======================================
 //= War of Emperium Managers for N Guild Castles
 //===== By: ==================================================
-//= jAthena - kalen (1.0)
-//= 1.1 by Akaru, ho|yAnge|X, and Valaris
+//= kobra_k88
 //===== Current Version: =====================================
-//= 1.2
+//= 1.0
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -26,7 +25,7 @@ nguild_alde.gat,218,175,0	script	Frolo	55,{
 	if(@GDnum==15) guardian "nguild_alde.gat",62,204,"Knight Guardian",1286,1,"Guardian_N01::OnGuardianDied",5;
 	if(@GDnum==16) guardian "nguild_alde.gat",113,100,"Knight Guardian",1286,1,"Guardian_N01::OnGuardianDied",6;
 	if(@GDnum==17) guardian "nguild_alde.gat",211,174,"Knight Guardian",1286,1,"Guardian_N01::OnGuardianDied",7;
-	mes "[Arl Fredo]";
+	mes "[Frolo]";
 	mes "Guardian has been installed, the guardian will protect our guild base against enemies.";
 	close;
 }
@@ -44,7 +43,7 @@ nguild_gef.gat,40,48,5	script	Leiber	55,{
 	if(@GDnum==15) guardian "nguild_gef.gat",51,192,"Knight Guardian",1286,1,"Guardian_N02::OnGuardianDied",5; 
 	if(@GDnum==16) guardian "nguild_gef.gat",49,67,"Knight Guardian",1286,1,"Guardian_N02::OnGuardianDied",6; 
 	if(@GDnum==17) guardian "nguild_gef.gat",181,14,"Knight Guardian",1286,1,"Guardian_N02::OnGuardianDied",7;
-	mes "[ Gnaucher ]";
+	mes "[Leiber]";
 	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
 	close;
 }
@@ -62,7 +61,7 @@ nguild_pay.gat,120,58,4	script	Dundar	55,{
 	if(@GDnum==15) guardian "nguild_pay.gat",214,53,"Knight Guardian",1286,1,"Guardian_N03::OnGuardianDied",5; 
 	if(@GDnum==16) guardian "nguild_pay.gat",69,26,"Knight Guardian",1286,1,"Guardian_N03::OnGuardianDied",6; 
 	if(@GDnum==17) guardian "nguild_pay.gat",23,141,"Knight Guardian",1286,1,"Guardian_N03::OnGuardianDied",7;
-	mes "[ Grunday ]";
+	mes "[Dundar]";
 	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
 	close;
 }
@@ -80,7 +79,7 @@ nguild_prt.gat,112,181,0	script	Thefton	55,{
 	if(@GDnum==15) guardian "nguild_prt.gat",58,59,"Knight Guardian",1286,1,"Guardian_N04::OnGuardianDied",5; 
 	if(@GDnum==16) guardian "nguild_prt.gat",112,200,"Knight Guardian",1286,1,"Guardian_N04::OnGuardianDied",6; 
 	if(@GDnum==17) guardian "nguild_prt.gat",101,194,"Knight Guardian",1286,1,"Guardian_N04::OnGuardianDied",7;
-	mes "[ Abrai ]";
+	mes "[Thefton]";
 	mes "Guardian has been installed, the guardian will protect our guild base against enemies.";
 	close;
 }

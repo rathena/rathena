@@ -1,11 +1,9 @@
 //===== eAthena Script =======================================
 //= War of Emperium - nguild guardians script
 //===== By: ==================================================
-//= holyAngelX (1.0)
-//= 1.1 by joedukk
-//= 1.2 by Akaru and Valaris
+//= kobra_k88
 //===== Current Version: =====================================
-//= 1.2a
+//= 1.0
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================

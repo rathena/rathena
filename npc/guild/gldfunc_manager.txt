@@ -25,6 +25,8 @@
 //= Added disablenpc line to surrender castle option to remove kafra
 //= upon surrender.[kobra_k88]
 //= v1.2b U can't surrender the base during WOE [Lupus]
+//= v1.2c Fixed issue of guardians hp not increasing upon defense
+//= investment.[kobra_k88]
 //============================================================
 
 
@@ -167,6 +169,23 @@ L_Start:
 			set Zeny,Zeny-@def_invest;
 			SetCastleData getarg(1)+".gat",5,@TriggerD+1;
 			SetCastleData getarg(1)+".gat",3,@Defence+1;
+			// set new hp values for guardians
+			set @Defence, @Defence + 1;
+			set @AGuardian, 28634 + (@Defence*2000);
+			set @KGuardian, 30214 + (@Defence*2000);
+			set @SGuardian, 15670 + (@Defence*2000);
+			//set @AGuardian,strmobinfo(4,1285) + (@Defence*2000);
+			//set @KGuardian,strmobinfo(4,1286) + (@Defence*2000);
+			//set @SGuardian,strmobinfo(4,1287) + (@Defence*2000);
+			if (GetCastleData(getarg(1)+".gat",10) == 1) SetCastleData getarg(1)+".gat",18,@SGuardian;
+			if (GetCastleData(getarg(1)+".gat",11) == 1) SetCastleData getarg(1)+".gat",19,@SGuardian;
+			if (GetCastleData(getarg(1)+".gat",12) == 1) SetCastleData getarg(1)+".gat",20,@SGuardian;
+			if (GetCastleData(getarg(1)+".gat",13) == 1) SetCastleData getarg(1)+".gat",21,@AGuardian;
+			if (GetCastleData(getarg(1)+".gat",14) == 1) SetCastleData getarg(1)+".gat",22,@AGuardian;
+			if (GetCastleData(getarg(1)+".gat",15) == 1) SetCastleData getarg(1)+".gat",23,@KGuardian;
+			if (GetCastleData(getarg(1)+".gat",16) == 1) SetCastleData getarg(1)+".gat",24,@KGuardian;
+			if (GetCastleData(getarg(1)+".gat",17) == 1) SetCastleData getarg(1)+".gat",25,@KGuardian;
+
 			mes "[ "+getarg(0)+" ]";
 			mes "You have invested successfully.";
 			return 0;
@@ -195,9 +214,12 @@ L_Start:
 		set @Guardian5,guardianinfo(5);
 		set @Guardian6,guardianinfo(6);
 		set @Guardian7,guardianinfo(7);
-		set @SGuardian,strmobinfo(4,1287)+2000*@Defence;
-		set @AGuardian,strmobinfo(4,1286)+2000*@Defence;
-		set @KGuardian,strmobinfo(4,1285)+2000*@Defence;
+		set @AGuardian, 28634 + (@Defence*2000);
+		set @KGuardian, 30214 + (@Defence*2000);
+		set @SGuardian, 15670 + (@Defence*2000);
+		//set @AGuardian,strmobinfo(4,1285) + (@Defence*2000);
+		//set @KGuardian,strmobinfo(4,1286) + (@Defence*2000);
+		//set @SGuardian,strmobinfo(4,1287) + (@Defence*2000);
 
 		mes "[ "+getarg(0)+" ]";
 		mes "Would you like to install a guardian? Guardians will protect the guild base from enemies.";
@@ -234,19 +256,19 @@ L_Start:
 		L4_4:
 			if (GetCastleData(getarg(1)+".gat",13) == 1) goto L_GotGuard;
 			set @GDnum,13;
-			set @GDnum2,21;			
+			set @GDnum2,21;
 			set @GuardianHP,@AGuardian;
 			goto L4_9;
 		L4_5:
 			if (GetCastleData(getarg(1)+".gat",14) == 1) goto L_GotGuard;
 			set @GDnum,14;
-			set @GDnum2,22;			
-			set @GuardianHP,@AGuardian;			
+			set @GDnum2,22;
+			set @GuardianHP,@AGuardian;
 			goto L4_9;
 		L4_6:
 			if (GetCastleData(getarg(1)+".gat",15) == 1) goto L_GotGuard;
 			set @GDnum,15;
-			set @GDnum2,23;		
+			set @GDnum2,23;
 			set @GuardianHP,@KGuardian;
 			goto L4_9;
 		L4_7:
@@ -258,7 +280,7 @@ L_Start:
 		L4_8:
 			if (GetCastleData(getarg(1)+".gat",17) == 1) goto L_GotGuard;
 			set @GDnum,17;
-			set @GDnum2,25;			
+			set @GDnum2,25;
 			set @GuardianHP,@KGuardian;
 		L4_9:
 			mes "[ "+getarg(0)+" ]";
@@ -384,13 +406,8 @@ L_Start:
 	//=======
 		mes "[ "+getarg(0)+" ]";
 		emotion 19;
-		if(agitcheck(0) == 0) goto L_No_WOE;
-		mes "Master.... don't you know that we can't give up this guild base during the War Of Emperium?!!";
-		close;
-		return 0;
-	L_No_WOE:
+		if(agitcheck(0) != 0) goto sL_CantSur;
 		mes "Master.... Do you really want to give up this guild base?? It is not worth it master!!! Please reconsider, master!!";
-
 		next;
 		menu "Surrender Guild Base",-, "Cancel",sM_SurEnd;
 
@@ -405,6 +422,7 @@ L_Start:
 				mes "Oh well..";
 				next;
 				disablenpc "Kafra Service#"+getarg(4);
+				//killmonster getarg(1)+".gat", "Guardian_" +getarg(4)+ "::OnGuardianDied";
 				set @i, 0;
 			L_Loop:
 				set @i, @i + 1;
@@ -414,11 +432,16 @@ L_Start:
 				Announce "[" + GetGuildName(@GID) + "] has surrendered the Guild Castle [" + GetCastleName(getarg(1)+".gat") + "]",0;
 				MapRespawnGuildID getarg(1)+".gat",GetCastleData(getarg(1)+".gat",1),7;
 				return 0;
+
 		sM_SurEnd:
 			mes "[ "+getarg(0)+" ]";
 			mes "I knew it master!! Please, don't scare me like that again.";
 			emotion 33;
 			return 0;
+
+		sL_CantSur:
+			mes "Master.... don't you know that we can't give up this guild base during the War Of Emperium?!!";
+			close;
 
 	//==========================
 	M_End:

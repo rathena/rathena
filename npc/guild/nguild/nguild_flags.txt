@@ -1,10 +1,9 @@
 //===== eAthena Script =======================================
 //= War of Emperium N Guild Flags
 //===== By: ==================================================
-//= jAthena - kalen (1.0)
-//= 1.1 by Akaru, ho|yAnge|X, and Valaris
+//= kobra_k88
 //===== Current Version: =====================================
-//= 1.2
+//= 1.0
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -15,7 +14,7 @@
 
 
 //============================================================================//
-// 					Castle 1
+// 			Castle 1
 //============================================================================//
 n_castle.gat,110,96,1	script	NGuild Aldebaran#a1-1::NGuildAlde	722,{
 	callfunc "F_Flags","Al De Baran","nguild_alde",218,170;
@@ -46,7 +45,7 @@ nguild_alde.gat,210,150,4	duplicate(NGuildAlde)	NGuild Aldebaran#a1-20	722
 
 
 //============================================================================//
-// 					Castle 2
+// 			Castle 2
 //============================================================================//
 n_castle.gat,110,109,3	script	NGuild Geffen#g1-1::NGuildGef	722,{
 	callfunc "F_Flags","Geffen","nguild_gef",83,47;
@@ -68,7 +67,7 @@ nguild_gef.gat,64,16,4	duplicate(NGuildGef)	NGuild Geffen#g1-12	722
 
 
 //============================================================================//
-// 					Castle 3
+// 			Castle 3
 //============================================================================//
 n_castle.gat,94,109,5	script	NGuild Payon#f1-1::NGuildPay	722,{
 	callfunc "F_Flags","Payon","nguild_pay",87,29;
@@ -90,7 +89,7 @@ nguild_pay.gat,212,108,4	duplicate(NGuildPay)	NGuild Payon#f1-11	722
 
 
 //=============================================================================//
-// 					Castle 4
+// 			Castle 4
 //=============================================================================//
 n_castle.gat,94,96,7	script	NGuild Prontera#p1-1::NGuildPrt	722,{
 	callfunc "F_Flags","Prontera","nguild_prt",97,174;

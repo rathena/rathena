@@ -23,9 +23,7 @@ OnRecvCastlePy01:
 	set $@bxPy01, $boxNumPy01;
 	callfunc "F_GldTreas","payg_cas01","Py01",$boxNumPy01,$@bxPy01,$@boxIdPy01,1344,286,4,295,13,1;
 	end;
-OnClock1200:
-	callfunc "F_GldTreas","payg_cas01","Py01",$boxNumPy01,$@bxPy01,$@boxIdPy01,1344,286,4,295,13,0;
-	end;
+
 OnDied:
 	mapannounce "payg_cas01.gat","Treasure Chest Broken Open",17;
 	set $boxNumPy01, $boxNumPy01 -1;
@@ -48,9 +46,7 @@ OnRecvCastlePy02:
 	set $@bxPy02, $boxNumPy02;
 	callfunc "F_GldTreas","payg_cas02","Py02",$boxNumPy02,$@bxPy02,$@boxIdPy02,1346,140,140,148,149,1;
 	end;
-OnClock1200:
-	callfunc "F_GldTreas","payg_cas02","Py02",$boxNumPy02,$@bxPy02,$@boxIdPy02,1346,140,140,148,149,0;
-	end;
+
 OnDied:
 	mapannounce "payg_cas02.gat","Treasure Chest Broken Open",17;
 	set $boxNumPy02, $boxNumPy02 -1;
@@ -73,9 +69,7 @@ OnRecvCastlePy03:
 	set $@bxPy03, $boxNumPy03;
 	callfunc "F_GldTreas","payg_cas03","Py03",$boxNumPy03,$@bxPy03,$@boxIdPy03,1348,154,164,162,173,1;
 	end;
-OnClock1200:
-	callfunc "F_GldTreas","payg_cas03","Py03",$boxNumPy03,$@bxPy03,$@boxIdPy03,1348,154,164,162,173,0;
-	end;
+
 OnDied:
 	mapannounce "payg_cas03.gat","Treasure Chest Broken Open",17;
 	set $boxNumPy03, $boxNumPy03 -1;
@@ -98,9 +92,7 @@ OnRecvCastlePy04:
 	set $@bxPy04, $boxNumPy04;
 	callfunc "F_GldTreas","payg_cas04","Py04",$boxNumPy04,$@bxPy04,$@boxIdPy04,1350,142,44,151,51,1;
 	end;
-OnClock1200:
-	callfunc "F_GldTreas","payg_cas04","Py04",$boxNumPy04,$@bxPy04,$@boxIdPy04,1350,142,44,151,51,0;
-	end;
+
 OnDied:
 	mapannounce "payg_cas04.gat","Treasure Chest Broken Open",17;
 	set $boxNumPy04, $boxNumPy04 -1;
@@ -123,9 +115,7 @@ OnRecvCastlePy05:
 	set $@bxPy05, $boxNumPy05;
 	callfunc "F_GldTreas","payg_cas05","Py05",$boxNumPy05,$@bxPy05,$@boxIdPy05,1352,152,128,160,135,1;
 	end;
-OnClock1200:
-	callfunc "F_GldTreas","payg_cas05","Py05",$boxNumPy05,$@bxPy05,$@boxIdPy05,1352,152,128,160,135,0;
-	end;
+
 OnDied:
 	mapannounce "payg_cas05.gat","Treasure Chest Broken Open",17;
 	set $boxNumPy05, $boxNumPy05 -1;

@@ -49,32 +49,38 @@ function	script	F_ClearJobVar	{
 //=======================================================
 
 //------------------------------------------------------
-//returns 1 if the player is either Aco,Monk or Priest, 0 otherwise
+// returns 1 if the player is either Aco,Monk,Priest,Aco High,High Priest,
+// Champion, 0 otherwise
 function	script	Is_Holy_Class	{
 	return ( Class==Job_Acolyte || Class==Job_Priest || Class==Job_Monk || Class==4005 || Class==4009 || Class==4016 );
 }
 //------------------------------------------------------
-//returns 1 if the player is either Archer,Hunter,Bard,Dancer, 0 otherwise
+// returns 1 if the player is either Archer,Hunter,Bard,Dancer,Archer High,Sniper,
+// Clown,Gypsy, 0 otherwise
 function	script	Is_Bow_Class	{
 	return ( Class==Job_Archer || Class==Job_Hunter || Class==Job_Bard || Class==Job_Dancer || Class==4004 || Class==4012 || Class==4020 || Class==4021);
 }
 //------------------------------------------------------
-//returns 1 if the player is either Mage,Wizard,Sage, 0 otherwise
+// returns 1 if the player is either Mage,Wizard,Sage,Mage High,High Wizard,
+// Professor, 0 otherwise
 function	script	Is_Magic_Class	{
 	return ( Class==Job_Mage || Class==Job_Wizard || Class==Job_Sage || Class==4003 || Class==4010 || Class==4017 );
 }
 //----------------------------------------------------
-//returns 1 if the player is either Merchant,Blacksmith,Alchemist, 0 otherwise
+// returns 1 if the player is either Merc,Blacksmith,Alchemist,Merc High,
+// Whitesmith,Creator, 0 otherwise
 function	script	Is_Merc_Class	{
 	return ( Class==Job_Merchant || Class==Job_Blacksmith || Class==Job_Alchem || Class==4006 || Class==4011 || Class==4019 );
 }
 //------------------------------------------------------
-//returns 1 if the player is either Thief,Assassin,Rogue, 0 otherwise
+// returns 1 if the player is either Thief,Assassin,Rogue,Thief High, Assassin Cross
+// Stalker, 0 otherwise
 function	script	Is_Thief_Class	{
 	return ( Class==Job_Thief || Class==Job_Assassin || Class==Job_Rogue || Class==4007 || Class==4013 || Class==4018 );
 }
 //-----------------------------------------------------
-//returns 1 if the player is either Swordsman,Knight,Crusader, 0 otherwise
+// returns 1 if the player is either Swordy,Knight,Crusader,Swordy High,
+// Lord Knight,Paladin, 0 otherwise
 function	script	Is_Sword_Class	{
 	return ( Class==Job_Swordman || Class==Job_Knight || Class==Job_Knight2 || Class==Job_Crusader || Class==Job_Crusader2 || Class==4002 || Class==4008 || Class==4014 || Class==4015 || Class==4022 );
 }

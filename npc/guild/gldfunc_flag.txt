@@ -49,7 +49,7 @@ L_Startg2:
 	mes "[ Ringing Voice ]";
 	mes "Brave one... would you return to your honorable be?";
 	next;
-	menu "Go back to your Guild Castle.",M_Enter,"Cancel.",-;
+	menu "Return.",M_Enter,"Cancel.",-;
 	return;
 
 	M_Enter:

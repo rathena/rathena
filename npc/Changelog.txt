@@ -37,6 +37,9 @@ Date		Added
 ======
 11/17
 	* Fixed valkyrie.txt (wrong condition check, temp var->perm vars) but it still has no exit for common players [Lupus]
+	* - Fixed guardians hp not updating when investment in defense is made.
+	  - Moved treasure spawn times to ev_agit_event.txt.
+	  - Changes to headers and comments in various scripts.[kobra_k88]
 11/16
 	* - grandpa_pharmacist.txt: Added subfunction for potion making as well as zeny/input
 		exploit safeguards. Used Lupus's "loopless" technique.

@@ -20,7 +20,7 @@ xmas_in.gat,100,96,4	script	Father Christmas::Santa2	718,{
 	mes "[Santa Claus]";
 	if(event_xmas == 1) goto L_Start;
 	mes "Merry Christmas! I have a gift for you! Ho Ho Ho!";
-	getitem 644,1;
+	getitem 664,1;
 	set event_xmas,1;
 	close;
 
@@ -77,7 +77,7 @@ L_Start:
 		mes "fake Santas.  Keep it up!";
 		next;
 		delitem 7034,3;
-		getitem 644,1;
+		getitem 664,1;
 		mes "[Santa Claus]";
 		mes "There's your reward.";
 		mes "If you get 3 more, I'll give you another.";

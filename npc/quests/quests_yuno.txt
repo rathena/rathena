@@ -1,20 +1,19 @@
 //===== eAthena Script ======================================= 
 //= Quests NPCs located in Yuno City
 //===== By: ================================================== 
-//= DiaDz (v1.0)
+//= eAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
-//=
+//= Help the bros and get some rubies or gold. This quest is
+//= also used in part of the Alchemist job quest.
 //===== Additional Comments: ================================= 
 //= v1.1 Re-did the text and re-organized the script.  Corrected some items. [kobra_k88]
 //= v1.2 Added part to Bro's for alchemist quest [Darkchild]
 //= 1.3 fixed that part of Alch Job Quest. [Lupus]
 //============================================================ 
-
-
 
 
 //===========================================================================
@@ -24,7 +23,7 @@ yuno_in01.gat,103,158,4	script	Bain	98,
 	
 OnStart:
 	mes @name$;
-	if (sleiphnir_q == 1) goto L_Check;
+	if(bros_q == 1) goto L_Check;
 	mes "We are going to invent a doll that can talk and communicate! Well, at least that's what I'm trying to do....";
 	mes "The idea came from an old tale about a doll that acted like a real person.";
 	next;
@@ -44,7 +43,7 @@ OnStart:
 		mes "Really? Such benevolence is rare in this day and age.  We would be grateful for you assisstance.";
 		mes "Here are the items that we will be needing.......";
 		callsub sF_List;
-		set sleiphnir_q, 1;
+		set bros_q, 1;
 		close;
 
 	M_End:
@@ -57,6 +56,24 @@ L_Check:
 	(countitem(757) < 3) || (countitem(756) < 3) || (Zeny < 2000)) goto L_NotEnuf;
 	mes "Thank you very much! You found all of the items I needed.  We could not have completed this project without your help";
 	next;
+	mes @name$;
+	mes "Okay, let's try this out!";
+	mes "Hold on for just a second!";
+	next;
+	mes "-Vrrrmrmrmrmrmrmrrmrmrmmrmrmrmrmmm";
+	next;
+	mes "-Pakakakakakakakakakakakakakak";
+	next;
+	mes "-Shakakakakakakakakakakaakakak";
+	next;
+	mes @name$;
+	mes "AHHH it is a success!";
+	mes "I don't know if we can do anything else, but this time we have created";
+	set @wowitem,rand(2);
+	if(@wowitem == 0) mes "5 Ruby!";
+	if(@wowitem == 0) getitem 723,5;
+	if(@wowitem == 1) mes "3 Gold!";
+	if(@wowitem == 1) getitem 969,3;
 	delitem 974,1;
 	delitem 612,5;
 	delitem 7068,5;
@@ -65,45 +82,21 @@ L_Check:
 	delitem 757,3;
 	delitem 756,3;
 	set Zeny, Zeny-2000;
+	if(ALCH_Q == 6) set ALCH_Q2, 2;	//for Alchemist Job Quest
+	set bros_q, 0;
+	next;
 	mes @name$;
-
-	L_Alchemist:
-		mes "Okay, let's try this out!";
-		mes "Hold on for just a second!";
-		next;
-		mes "-Vrrrmrmrmrmrmrmrrmrmrmmrmrmrmrmmm";
-		next;
-		mes "-Pakakakakakakakakakakakakakak";
-		next;
-		mes "-Shakakakakakakakakakakaakakak";
-		next;
-		mes @name$;
-		mes "AHHH it is a success!";
-		mes "I don't know if we can do anything else, but this time we have created";
-		set @wowitem,rand(2);
-		if(@wowitem == 0) mes "5 Ruby!";
-		if(@wowitem == 0) getitem 723,5;
-		if(@wowitem == 1) mes "3 Gold!";
-		if(@wowitem == 1) getitem 969,3;
-		next;
-		//if u take Alchemist Job Quest then
-		if(ALCH_Q == 6) set ALCH_Q2, 2;
-		mes @name$;
-		mes "Now that we know that it works,";
-		mes "I don't have any need for this.";
-		mes "Why don't you take it? Oh,";
-		mes "and if you find anymore parts,";
-		mes "bring them to me again. Heheheheh.";
-		next;
-		mes @name$;
-		mes "Thank for helping me out.";
-		mes "You have my eternal gratitude.";
-		mes "I wish you luck in your journeys!";
-		next;
-		mes "And here is something for you, to show you how much we appreciate your help.";
-		getitem 2410, 1;
-		set sleiphnir_q, 0;
-		close;
+	mes "Now that we know that it works,";
+	mes "I don't have any need for this.";
+	mes "Why don't you take it? Oh,";
+	mes "and if you find anymore parts,";
+	mes "bring them to me again. Heheheheh.";
+	next;
+	mes @name$;
+	mes "Thanks for helping me out.";
+	mes "You have my eternal gratitude.";
+	mes "I wish you luck in your journeys!";
+	close;
 
 	L_NotEnuf:
 		mes "In case you forgot, these are the items that we will need.  I suggest you write them down......";

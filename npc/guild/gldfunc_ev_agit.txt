@@ -141,9 +141,9 @@ function	script	F_AgitBreak	{
 
 // Function for OnAgitEnd ======================================
 function	script	F_AgitEnd	{
-//	if (GetCastleData(getarg(0)+".gat",1) == 0) return;
+	GvgOff getarg(0)+".gat";
+//	if (GetCastleData(getarg(0)+".gat",1) == 0) return;	//enable this line to allow take over of non captured castles after woe ends
 	MapRespawnGuildID getarg(0)+".gat",GetCastleData(getarg(0)+".gat",1),4;
 	KillMonster getarg(0)+".gat","Agit_"+getarg(1)+"::OnAgitBreak";
-	GvgOff getarg(0)+".gat";
 	end;
 }
