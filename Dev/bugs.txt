@@ -129,3 +129,8 @@ Progress:       0%
 Problem:	hunter spamming traps crashes server
 Assigned:       N/A
 Progress:       0%
+
+Problem:	PETS can attack Guardians, so players go to enemy castles before WOE and KILL all their Guards with PETS...
+Assigned:       N/A
+Progress:       0%
+
