@@ -25,17 +25,8 @@ Assigned:	N/A
 Progess:	0%
 Note by Cameri:	This is not a bug, it's something that has to do with the client...
 
-Problem:	With 1025 client, some NPC sprites look different (i.e. Black Jack's NPC sprite)
-Assigned:	N/A
-Progess:	0%
-Note by Cameri:	This is not a bug, it's something that also has to do with the client...
-
 Problem:	Joker card 4139 lets anyone to steal money / zeny. Just like he's a thief. It shoul;d be revised - success rates lowered and "steal item" disabled
 Assigned:	N/A
-Progess:	0%
-
-Problem:	When servers restart sometime the gm lvls in sql get reset back to 0
-Assigned:	Wizputer
 Progess:	0%
 
 Problem:	Wierd login-server bug on sql, it displays that the server is full when map-server crashes, has something to do with anti double login feature?
@@ -171,5 +162,9 @@ Progress:	-
 Notes:          Gravity disabled that some time ago ;P
 
 Problem:	There are many empty entries of newly created characters in Char DB Table (missing names)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Wedding skills fully donate SP/HP from thin air (even when the donor has 1 SP / HP)
 Assigned:	N/A
 Progress:	0%
