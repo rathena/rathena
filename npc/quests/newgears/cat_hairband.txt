@@ -4,7 +4,7 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.2 Fixed wrong labels, added missing text,
 //=	fixed zeny amount [Lupus]
 //= 1.3 Fixed possible exploit [Lupus]
+//= 1.4 Soft Feather -> Fluff
 //============================================================
 
 
@@ -31,11 +32,11 @@ payon_in03.gat,110,160,4	script	KoneKone	819,{
  next;
  menu "Please make me this item.",-,"What are the materials needed?",M_REQ,"Bye.",M_EXIT;
 
- If ((countitem(2213) < 1) || (countitem(7063) < 200) || (countitem(983) < 1) || (Zeny < 10000)) GOTO L_NOITEM;//Items: Kitty Band, Soft Feather, Black Dyestuff,
+ If ((countitem(2213) < 1) || (countitem(914) < 200) || (countitem(983) < 1) || (Zeny < 10000)) GOTO L_NOITEM;//Items: Kitty Band, Fluff, Black Dyestuff,
  mes "[KoneKone]";
  mes "Wow! thankies! I will now take your items!";
  delitem 2213,1;//Items: Kitty Band,
- delitem 7063,200;//Items: Soft Feather,
+ delitem 914,200;//Items: Fluff,
  delitem 983,1;//Items: Black Dyestuff,
  set Zeny,Zeny-10000;
  next;
@@ -58,7 +59,7 @@ M_REQ:
  next;
  mes "[KoneKone]";
  mes "1 Kitty Band,";
- mes "200 Soft Feathers,";
+ mes "200 Fluff,";
  mes "Some Black Dye,";
  mes "And of course 10,000z for labour costs.";
  next;
