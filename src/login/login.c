@@ -3867,7 +3867,8 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 //--------------------------------------
 void do_final(void) {
 	int i, fd;
-
+	printf("Terminating...\n");
+	fflush(stdout);
 	mmo_auth_sync();
 
 	if(auth_dat) free(auth_dat);
@@ -3881,7 +3882,7 @@ void do_final(void) {
 			memset(&server[i], 0, sizeof(struct mmo_char_server));
 			close(fd);
 			delete_session(fd);
-			if(session[fd]->session_data) free(session[fd]->session_data);
+			if(session[fd]) free(session[fd]);
 		}
 	}
 	close(login_fd);
@@ -3891,6 +3892,7 @@ void do_final(void) {
 
 	if(log_fp)
 		fclose(log_fp);
+	printf("Finished.\n");
 }
 
 //------------------------------

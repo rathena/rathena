@@ -1,5 +1,6 @@
 Date	Added
 12/5
+	* Fixed bug in which login-txt was crashing in do_final() due to some free's [MC Cameri]
 	* Added nullpo's to all atcommand's functions, phew... [MC Cameri]
 	  Note: I point out that MouseJstr has added some @commands that start with char which
 	  havent been finished, they are just there but don't do anything.

@@ -71,8 +71,8 @@ Assigned:	N/A
 Progress:	0%
 
 Problem:	Login-Txt is now crashing when you close it using ^C, Ctrl+C(on windows), it only does that if login was connected with char-server.
-Assigned:	N/A
-Progress:	0
+Assigned:	MC Cameri
+Progress:	100%
 
 Problem:	Storm Gust doesn't freeze mobs / players
 Assigned:	N/A
