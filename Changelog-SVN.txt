@@ -1,6 +1,11 @@
 Date	Added
 
 03/14
+        * Fixed @marry and @divorce. Also added Wedding music+confetti effect to @marry [Lupus]
+		- @marry Player1,Player2
+		(don't miss the COMMA ',' betwin the names)
+		- @divorce Player
+		(in @divorce use any name from the couple)
         * Added auto convert advanced job and baby class sprite ID's in mob_avail.txt
           to correct format [celest]
         * Added SC_Speedup cannot be stacked with Increase Agility [celest]

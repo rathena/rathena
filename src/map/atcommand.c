@@ -7235,7 +7235,7 @@ atcommand_useskill(const int fd, struct map_session_data* sd,
 
 	if (!message || !*message)
 		return -1;
-	if(sscanf(message, "%d %d %s", &skillnum, &skilllv, target) != 3) {
+	if(sscanf(message, "%d %d %99[^\n]", &skillnum, &skilllv, target) != 3) {
 		clif_displaymessage(fd, "Usage: @useskill <skillnum> <skillv> <target>");
 		return -1;
 	}
@@ -7337,7 +7337,7 @@ atcommand_skilltree(const int fd, struct map_session_data* sd,
 }
 
 /*==========================================
- * @marry by [MouseJstr]
+ * @marry by [MouseJstr], fixed by Lupus
  *
  * Marry two players
  *------------------------------------------
@@ -7352,37 +7352,35 @@ atcommand_marry(const int fd, struct map_session_data* sd,
 
   nullpo_retr(-1, sd);
 
-  if (!message || !*message)
-    return -1;
-
-  if (sscanf(message, "%[^,],%[^\r\n]", player1, player2) != 2) {
-    clif_displaymessage(fd, "usage: @marry <player1> <player2>.");
+  if (!message || !*message || sscanf(message, "%[^,],%[^\r\n]", player1, player2) != 2) {
+    clif_displaymessage(fd, "Usage: @marry <player1>,<player2>.");
     return -1;
   }
 
   if((pl_sd1=map_nick2sd((char *) player1)) == NULL) {
-    sprintf(player2, "Cannot find player %s online", player1);
+    sprintf(player2, "Cannot find player '%s' online", player1);
     clif_displaymessage(fd, player2);
     return -1;
   }
 
   if((pl_sd2=map_nick2sd((char *) player2)) == NULL) {
-    sprintf(player1, "Cannot find player %s online", player2);
+    sprintf(player1, "Cannot find player '%s' online", player2);
     clif_displaymessage(fd, player1);
     return -1;
   }
 
   if (pc_marriage(pl_sd1, pl_sd2) == 0) {
-    clif_displaymessage(fd, "They are married.. wish them well");
-    return 0;
-  } else
-    return -1;
+	clif_displaymessage(fd, "They are married.. wish them well");
+	clif_wedding_effect(&sd->bl);	//wedding effect and music [Lupus]
+	return 0;
+  }
+  return -1;
 }
 
 /*==========================================
- * @divorce by [MouseJstr]
+ * @divorce by [MouseJstr], fixed by [Lupus]
  *
- * divorce two players
+ * divorce two players 
  *------------------------------------------
  */
 int
@@ -7390,19 +7388,29 @@ atcommand_divorce(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
   struct map_session_data *pl_sd = NULL;
+  char player[255], output[255];
 
   nullpo_retr(-1, sd);
 
-  if (!message || !*message)
+  if (!message || !*message || sscanf(message, "%[^\r\n]", player) != 1) {
+    clif_displaymessage(fd, "Usage: @divorce <player>.");
     return -1;
+  }
 
-  if((pl_sd=map_nick2sd((char *) message)) != NULL) {
-    return pc_divorce(pl_sd);
-    clif_displaymessage(fd, "They are now divorced.");
-  } else
-    clif_displaymessage(fd, "The divorce has failed.. talk to the judge..");
-
-  return 0;
+  if((pl_sd=map_nick2sd((char *) player)) != NULL) {
+	if (pc_divorce(pl_sd) != 0) {
+		sprintf(output, "The divorce has failed.. Cannot find player '%s' or his(her) partner online.", player);
+		clif_displaymessage(fd, output);
+		return -1;
+	} else {
+		sprintf(output, "'%s' and his(her) partner are now divorced.", player);
+		clif_displaymessage(fd, output);
+		return 0;
+	}
+  }
+  sprintf(output, "Cannot find player '%s' online", player);
+  clif_displaymessage(fd, output);
+  return -1;
 }
 
 /*==========================================
@@ -7478,7 +7486,7 @@ atcommand_grind(const int fd, struct map_session_data* sd,
 	if (!message || !*message)
 		return -1;
 	if(sscanf(message, "%s", target) != 1) {
-		clif_displaymessage(fd, "Usage: @grind  <target>");
+		clif_displaymessage(fd, "Usage: @grind <target>");
 		return -1;
 	}
 	if((pl_sd=map_nick2sd(target)) == NULL)
@@ -7752,7 +7760,7 @@ atcommand_mobsearch(
 
 	nullpo_retr(-1, sd);
 
-	if (sscanf(message, "%99s", mob_name) < 0)
+	if (sscanf(message, "%99[^\n]", mob_name) < 0)
 		return -1;
 
 	if ((mob_id = atoi(mob_name)) == 0)
@@ -7946,7 +7954,7 @@ atcommand_adjcmdlvl(
 	nullpo_retr(-1, sd);
 
     if (!message || !*message || sscanf(message, "%d %s", &newlev, cmd) != 2) {
-        clif_displaymessage(fd, "usage: @adjcmdlvl <lvl> <command>.");
+        clif_displaymessage(fd, "Usage: @adjcmdlvl <lvl> <command>.");
         return -1;
     }
 
@@ -7981,7 +7989,7 @@ atcommand_adjgmlvl(
 	nullpo_retr(-1, sd);
 
     if (!message || !*message || sscanf(message, "%d %[^\r\n]", &newlev, user) != 2) {
-        clif_displaymessage(fd, "usage: @adjgmlvl <lvl> <user>.");
+        clif_displaymessage(fd, "Usage: @adjgmlvl <lvl> <user>.");
         return -1;
     }
 
@@ -8034,7 +8042,7 @@ atcommand_setbattleflag(
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%s %s", flag, value) != 2) {
-        	clif_displaymessage(fd, "usage: @setbattleflag <flag> <value>.");
+        	clif_displaymessage(fd, "Usage: @setbattleflag <flag> <value>.");
         	return -1;
     	}
 
@@ -8132,7 +8140,7 @@ int atcommand_mute(
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %99[^\n]", &manner, character) < 1) {
-		clif_displaymessage(fd, "usage: @mute <time> <character name>.");
+		clif_displaymessage(fd, "Usage: @mute <time> <character name>.");
 		return -1;
 	}
 
