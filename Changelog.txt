@@ -1,5 +1,6 @@
 Date	Added
 12/24
+	* Upped windwalk to lv 10 in skill_tree [MouseJstr]
 	* Fixed a scripting crash (SVN: 781) [MouseJstr]
 	* removed @changesex and @charchangesex until we can
 	  fix it properly [MouseJstr]
