@@ -3694,6 +3694,11 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 		}
 	}
 
+	if(sd->status.weapon == 11 && sd->equip_index[10] < 0) {
+		clif_arrow_fail(sd,0);
+		return 0;
+	}
+
 	dist = distance(sd->bl.x,sd->bl.y,bl->x,bl->y);
 	range = sd->attackrange;
 	if(sd->status.weapon != 11) range++;

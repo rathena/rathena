@@ -1,6 +1,8 @@
 Date	Added
 
 03/09
+        * Added HP and SP rate underflow checking [celest]
+        * Added stop auto attacking if no arrows were equipped [celest]
 	* Added new script command: 'cardscnt'. It returns N of inserted cards in the same weapon. [Lupus]
 	  Now I can start fixing CARDS COMBO exploits. And it's possible to fix old cards power abuse, too.
 		e.g. Assassins can equip 2 4-slot weapons and have HUGE card bonuses.

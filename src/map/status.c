@@ -943,6 +943,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		else if (s_class.upper==2)
 			sd->status.max_hp = sd->status.max_hp * 70/100;
 
+	if (sd->hprate <= 0)
+		sd->hprate = 1;
 	if(sd->hprate!=100)
 		sd->status.max_hp = sd->status.max_hp*sd->hprate/100;
 
@@ -968,6 +970,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->status.max_sp = sd->status.max_sp * 130/100;
 		else if (s_class.upper==2)
 			sd->status.max_sp = sd->status.max_sp * 70/100;
+	if (sd->sprate <= 0)
+		sd->sprate = 1;
 	if(sd->sprate!=100)
 		sd->status.max_sp = sd->status.max_sp*sd->sprate/100;
 
