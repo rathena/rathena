@@ -422,7 +422,7 @@ L_Start:
 				mes "Oh well..";
 				next;
 				disablenpc "Kafra Service#"+getarg(4);
-				//killmonster getarg(1)+".gat", "Guardian_" +getarg(4)+ "::OnGuardianDied";
+				killmonster getarg(1)+".gat", "Guardian_" +getarg(4)+ "::OnGuardianDied";
 				set @i, 0;
 			L_Loop:
 				set @i, @i + 1;
