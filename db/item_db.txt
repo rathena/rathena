@@ -66,10 +66,10 @@
 563,Double_Growing_Swiss_Pong_Tyu_,Unknown Item,0,20,0,150,,,,,10477567,3,,,,,{ itemheal rand(100,200),0; },{}
 564,Meat_Dumpling,Meat Dumpling,0,20,0,30,,,,,0,2,,,,,{ itemheal rand(175,234),0; },{}
 565,Vita_500_Bottle,Vita 500,0,2000,0,30,,,,,10477567,2,,,,,{ itemheal 500,0; },{}
-566,Tom_Yum_Goong,Tom_Yum_Goong,0,20,150,0,,,,,10477567,2,,,,,{ itemheal rand(100,200),0; },{}
+566,Tom_Yum_Goong,Tom Yum Goong,0,20,150,0,,,,,10477567,2,,,,,{ itemheal rand(100,200),0; },{}
 567,Prawn,Prawn,0,20,40,0,,,,,10477567,3,,,,,{ itemheal rand(50,100),0; },{}
 568,Lemon,Lemon,0,20,40,0,,,,,0,3,,,,,{},{}
-569,Novice's_Red_Potion,Novices Red Potion,0,50,0,70,,,,,10477567,2,,,,,{ itemheal rand(55,74),0; },{}
+569,Novice's_Red_Potion,Novices Red Potion,0,50,0,70,,,,,10477567,2,,,,,{ itemheal rand(45,64),0; },{}
 
 // Usable Items
 //===================================================================
@@ -134,7 +134,7 @@
 661,Sky_Apron,Soft Apron,2,20,0,50,,,,,10477567,2,,,,,{ pet 1275; },{}
 
 // Newer Items
-662,Horse_Crest,Crest of the Horse,2,0,0,30,0,0,0,0,10477567,2,0,0,0,0,{ skilleffect 29,5; sc_start SC_SpeedUp0,240000,0; },{}
+662,Horse_Crest,Crest of the Horse,2,2,0,30,0,0,0,0,10477567,2,0,0,0,0,{ skilleffect 29,5; sc_start SC_SpeedUp0,240000,0; },{}
 664,Gift_Box_,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 665,Gift_Box__,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 666,Gift_Box___,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
@@ -152,7 +152,7 @@
 678,Deadly_Poison_Bottle,Deadly Poison Bottle,2,20,0,100,,,,,10477567,2,,,,,{ if(Class!=4013) goto Not_ASC; sc_start SC_Poison,600000,0; sc_start SC_SpeedPot0,30,0; end; Not_ASC: percentheal -100,0; },{}
 679,Recall_Pills,Recall Pills,2,20,0,300,,,,,0,3,,,,,{},{}
 680,Carnation,Carnation,2,20,0,1000,,,,,0,3,,,,,{},{}
-681,Wedding_Photo_Album,Wedding_Photo_Album,2,20,0,10,,,,,0,3,,,,,{},{}
+681,Wedding_Photo_Album,Wedding Photo Album,2,20,0,10,,,,,0,3,,,,,{},{}
 682,Realgar_Wine,Realgar Wine,2,20,0,50,,,,,10477567,2,,,,,{ sc_start SC_ATKPOT,30,30; },{}
 683,Exorcize_Herb,Exorcize Herb,2,20,0,50,,,,,10477567,2,,,,,{ sc_start SC_MATKPOT,30,30; },{}
 684,Durian,Durian,2,20,0,10,,,,,0,3,,,,,{},{}
@@ -1723,15 +1723,15 @@
 12003,Teleport_1,Teleport Level 1,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 26,1,"Teleport Level 1"; },{}
 
 // Arrow Quivers
-12004,Arrow_Quiver,Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1750,500; },{}
-12005,Iron_Arrow_Quiver,Iron Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1770,500; },{}
-12006,Steel_Arrow_Quiver,Steel Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1753,500; },{}
-12007,Oridecon_Arrow_Quiver,Oridecon Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1765,500; },{}
-12008,Fire_Arrow_Quiver,Fire Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1752,500; },{}
-12009,Silver_Arrow_Quiver,Silver Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1751,500; },{}
-12010,Arrow_of_Wind_Quiver,Arrow of Wind Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1755,500; },{}
-12011,Stone_Arrow_Quiver,Stone Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1756,500; },{}
-12012,Crystal_Arrow_Quiver,Crystal Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1754,500; },{}
-12013,Shadow_Arrow_Quiver,Shadow Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1767,500; },{}
-12014,Immaterial_Arrow_Quiver,Immaterial Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1757,500; },{}
-12015,Rusty_Arrow_Quiver,Rusty Arrow Quiver,2,,,250,,,,,10477567,2,,,,,{ getitem 1762,500; },{} 
+12004,Arrow_Quiver,Arrow Quiver,2,500,,250,,,,,10477567,2,,,,,{ getitem 1750,500; },{}
+12005,Iron_Arrow_Quiver,Iron Arrow Quiver,2,1000,,250,,,,,10477567,2,,,,,{ getitem 1770,500; },{}
+12006,Steel_Arrow_Quiver,Steel Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1753,500; },{}
+12007,Oridecon_Arrow_Quiver,Oridecon Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1765,500; },{}
+12008,Fire_Arrow_Quiver,Fire Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1752,500; },{}
+12009,Silver_Arrow_Quiver,Silver Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1751,500; },{}
+12010,Arrow_of_Wind_Quiver,Arrow of Wind Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1755,500; },{}
+12011,Stone_Arrow_Quiver,Stone Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1756,500; },{}
+12012,Crystal_Arrow_Quiver,Crystal Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1754,500; },{}
+12013,Shadow_Arrow_Quiver,Shadow Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1767,500; },{}
+12014,Immaterial_Arrow_Quiver,Immaterial Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1757,500; },{}
+12015,Rusty_Arrow_Quiver,Rusty Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1762,500; },{}

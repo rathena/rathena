@@ -6,6 +6,9 @@
 	Skill databases == celest working on them i believe.
 
 12/21
+        * Added prices to the Quiers ( = 500* arrow price), fixed few item names
+	  (removed '_' from jNAME column), fixed HP amount in Novices Red Potion [Lupus]
+12/21
         * Added the new Quivers, updated Horse Crest [celest]
 12/20
         * removed extra {},,,,,,, from each tailing [Lupus]
