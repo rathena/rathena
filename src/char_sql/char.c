@@ -3062,7 +3062,7 @@ int do_init(int argc, char **argv){
           	strcpy(char_ip_str, buf);
 
           if (ptr[0] == 192 && ptr[1] == 168)  
-            printf("Firewall detected.. edit lan_support.conf and char_athena.conf");
+            printf("Firewall detected.. edit lan_support.conf and char_athena.conf\n");
         } 
 
 	login_ip = inet_addr(login_ip_str);
