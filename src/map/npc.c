@@ -2282,8 +2282,8 @@ int do_init_npc(void)
 			}
 		}
 		fclose(fp);
-		printf("\rLoading NPCs [%d]: %-54s",npc_id-START_NPC_NUM,nsl->name);
-		fflush(stdout);
+//		printf("\rLoading NPCs [%d]: %-54s",npc_id-START_NPC_NUM,nsl->name);
+//		fflush(stdout);
 	}
 	printf("\rNPCs Loaded: %d [Warps:%d Shops:%d Scripts:%d Mobs:%d]\n",
 		npc_id-START_NPC_NUM,npc_warp,npc_shop,npc_script,npc_mob);

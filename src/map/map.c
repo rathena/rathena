@@ -1480,8 +1480,8 @@ static int map_readafm(int m,char *fn) {
 	afm_file = fopen(fn, "r");
 	if (afm_file != NULL) {
 			
-		printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
-		fflush(stdout);
+//		printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
+//		fflush(stdout);
 
 		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
 		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
@@ -1569,8 +1569,8 @@ static int map_readmap(int m,char *fn, char *alias) {
 	if(gat==NULL)
 		return -1;
 
-	printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
-	fflush(stdout);
+//	printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
+//	fflush(stdout);
 
 	map[m].m=m;
 	xs=map[m].xs=*(int*)(gat+6);

@@ -1639,7 +1639,7 @@ int atcommand_whozeny(
 	char match_text[100];
 	char player_name[24];
 	int zeny[clif_countusers()];
-	char counted[clif_countusers()];
+	int counted[clif_countusers()];
 
 	memset(output, '\0', sizeof(output));
 	memset(match_text, '\0', sizeof(match_text));
@@ -1658,6 +1658,7 @@ int atcommand_whozeny(
 					player_name[j] = tolower(player_name[j]);
 				if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
 					zeny[count]=pl_sd->status.zeny;
+					counted[i]=0;
 					count++;
 				}
 		}
@@ -1668,7 +1669,9 @@ int atcommand_whozeny(
 		if(!zeny[c])
 			continue;
 		for (i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && !counted[i] && zeny[c]) {
+			if(!zeny[c])
+				continue;
+			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && zeny[c] && counted[i]==0) {
 				if(pl_sd->status.zeny==zeny[c]) {
 					sprintf(output, "Name: %s | Zeny: %d", pl_sd->status.name, pl_sd->status.zeny);
 					clif_displaymessage(fd, output);
