@@ -22,7 +22,8 @@ Date	Added
           technical ones for the other devs ^^; [celest]
         * Added other new battle_athena options from jA 1082 ... descriptions not
           translated yet [celest]
-        * Removed my own additions for skill delays using aspd and added jA's code [celest]
+        * Removed my own additions for skill delays using aspd and added jA's code
+          (-removed-) [celest]
         * Adapted skill_range_leniency to jA's code - should be more stable [celest]
         * Fixed drop rates only limited to multiples of 100's - thanks to jathena
           for pointing it out [celest]

@@ -7414,9 +7414,8 @@ int skill_delayfix( struct block_list *bl, int time )
 	nullpo_retr(0, bl);
 
 	sc_data = battle_get_sc_data(bl);
-	if(time<=0)
-		return ( battle_get_adelay(bl) / 2 );
-
+/*	if(time<=0)
+		return ( battle_get_adelay(bl) / 2 );*/
 
 	if(bl->type == BL_PC) {
 		if( battle_config.delay_dependon_dex )	/* dex‚Ì‰e‹¿‚ðŒvŽZ‚·‚é */
@@ -7751,6 +7750,11 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	if( casttime<=0 )	/* ‰r¥‚Ì–³‚¢‚à‚Ì‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚ê‚È‚¢ */
 		sd->state.skillcastcancel=0;
 
+	// instant cast attack skills depend on aspd as delay [celest]
+	if (delay <= 0 && skill_db[skill_num].skill_type == BF_WEAPON) {
+		delay = (battle_get_adelay (&sd->bl)/2) * battle_config.delay_rate / 100;
+	}
+
 	sd->skilltarget	= target_id;
 /*	sd->cast_target_bl	= bl; */
 	sd->skillx		= 0;
@@ -7892,6 +7896,11 @@ int skill_use_pos( struct map_session_data *sd,
 	if( casttime<=0 )	/* ‰r¥‚Ì–³‚¢‚à‚Ì‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚ê‚È‚¢ */
 		sd->state.skillcastcancel=0;
 
+	// instant cast attack skills depend on aspd as delay [celest]
+	if (delay <= 0 && skill_db[skill_num].skill_type == BF_WEAPON) {
+		delay = (battle_get_adelay (&sd->bl)/2) * battle_config.delay_rate / 100;
+	}
+	
 	sd->skilltarget	= 0;
 /*	sd->cast_target_bl	= NULL; */
 	tick=gettick();
