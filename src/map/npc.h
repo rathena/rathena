@@ -42,7 +42,7 @@ void npc_delsrcfile(char *);
 int do_final_npc(void);
 int do_init_npc(void);
 int npc_event_do_oninit(void);
-int npc_do_ontimer(int,struct map_session_data *,int);
+int npc_do_ontimer(int,int);
 
 int npc_event_doall(const char *name);
 int npc_event_do(const char *name);

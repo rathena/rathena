@@ -5524,9 +5524,9 @@ int buildin_cmdothernpc(struct script_state *st)	// Added by RoVeRT
 int buildin_inittimer(struct script_state *st)	// Added by RoVeRT
 {
 //	struct npc_data *nd=(struct npc_data*)map_id2bl(st->oid);
-
 //	nd->lastaction=nd->timer=gettick();
-	npc_do_ontimer(st->oid, map_id2sd(st->rid), 1);
+
+	npc_do_ontimer(st->oid, 1);
 
 	return 0;
 }
@@ -5534,9 +5534,9 @@ int buildin_inittimer(struct script_state *st)	// Added by RoVeRT
 int buildin_stoptimer(struct script_state *st)	// Added by RoVeRT
 {
 //	struct npc_data *nd=(struct npc_data*)map_id2bl(st->oid);
-
 //	nd->lastaction=nd->timer=-1;
-	npc_do_ontimer(st->oid, map_id2sd(st->rid), 0);
+
+	npc_do_ontimer(st->oid, 0);
 
 	return 0;
 }

@@ -499,33 +499,33 @@ int npc_cleareventtimer(struct npc_data *nd)
 
 int npc_do_ontimer_sub(void *key,void *data,va_list ap)
 {
-	char *p=(char *)key;
-	struct event_data *ev=(struct event_data *)data;
-	int *c=va_arg(ap,int *);
+	char *p = (char *)key;
+	struct event_data *ev = (struct event_data *)data;
+	int *c = va_arg(ap,int *);
 //	struct map_session_data *sd=va_arg(ap,struct map_session_data *);
-	int option=va_arg(ap,int);
-	int tick=0;
+	int option = va_arg(ap,int);
+	int tick = 0;
 	char temp[10];
 	char event[50];
 
-	if(ev->nd->bl.id==(int)*c && (p=strchr(p,':')) && p && strnicmp("::OnTimer",p,8)==0 ){
-		sscanf(&p[9],"%s",temp);
-		tick=atoi(temp);
+	if(ev->nd->bl.id == (int)*c && (p = strchr(p,':')) && strnicmp("::OnTimer",p,8) == 0){
+		sscanf(&p[9], "%s", temp);
+		tick = atoi(temp);
 
-		strcpy( event, ev->nd->name);
-		strcat( event, p);
+		strcpy(event, ev->nd->name);
+		strcat(event, p);
 
 		if (option!=0) {
-			npc_addeventtimer(ev->nd,tick,event);
+			npc_addeventtimer(ev->nd, tick, event);
 		} else {
-			npc_deleventtimer(ev->nd,event);
+			npc_deleventtimer(ev->nd, event);
 		}
 	}
 	return 0;
 }
-int npc_do_ontimer(int npc_id, struct map_session_data *sd, int option)
+int npc_do_ontimer(int npc_id, int option)
 {
-	strdb_foreach(ev_db,npc_do_ontimer_sub,&npc_id,sd,option);
+	strdb_foreach(ev_db, npc_do_ontimer_sub, &npc_id, option);
 	return 0;
 }
 /*==========================================

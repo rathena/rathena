@@ -2,6 +2,7 @@
 Date	Added
 
 03/31
+	* Fixed a bug with InitTimer/StopTimer, thanks to ilpalazzo-sama
 	* Set 'undead_detect_type' to 0 by default, thanks to Dino9021
 	* Fixed Enchant Poison / Deadly Poison having too high poisoning chance
 	* Reverted the pc_remove_map() change temporarily
