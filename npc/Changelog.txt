@@ -35,6 +35,8 @@ Other Ppl
 Date		Added
 ======
 2/1
+        * Added missing Spore Doll to the Kaho Horns NPC (God... this was reported
+          months ago)
         * The 'Lothar' NPC was asking for the wrong items, corrected thanks to Death's Mage
 01/01/05
 	* Fixed some respawn delays of MVP/Miniboss monsters. Redo Umbala/Niflheim fields, added missing mobs, corrected

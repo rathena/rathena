@@ -26,6 +26,7 @@ geffen.gat,115,107,5	script	Lord Kaho's Servant	61,{
         mes "1 Rocker Doll - a Rocker drop";
 	mes "1 Apez Fanitem Doll - a Yoyo drop";
 	mes "1 Racoon Doll - a Smokie drop";
+	mes "1 Spore Doll - a Spore drop";
 	next;
 	mes "Finally, i worked hard to make these horns for my master with all the mentioned items above...";
 	mes "Please include 5 million zeny for my efforts."; 
