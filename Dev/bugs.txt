@@ -159,3 +159,12 @@ Problem:	SVN 8XX. Firewall Spell doesn't hold mobs. They get all the damage and
 			walk trough the wall. (even at the level of 10th)
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Chase walk skill slightly messed up. You see yourself as invisible, but other players
+		can still see you
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Potion Pitcher skill should be able to target yourself.
+Assigned:	N/A
+Progress:	0%
