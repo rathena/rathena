@@ -1,5 +1,10 @@
 Date	Added
 11/10	
+	* Updated Sprout (Item #7193), Thin Trunk (Item #7186),
+		Huge Leaf (Item #7198), and Rante Whip (Items #1956, #1957)
+		- thanks to cheng - [Codemaster]
+	* Updated Parasite (Mob #1500) Drops - thanks to cheng [Codemaster]
+	* Updated Soft Grass Leaf (Item #7194) - thanks to cheng [Codemaster]
 	* Added, Fixed & Updated ALOT of skills:	[Codemaster]
 		- Fire Pillar, Backstab, Grimtooth, Poison React, Falcon Assalt,
 		Skin Tempering, Hilt Binding, Frost Nova, TEMPORARY fix for Create Deadly Poison,
