@@ -2,12 +2,14 @@
 
 	==== progress ====
 	
-	Ayathoya mobs == 5% Added but using poring stats ( ? )
-	Einboroch mobs == 0%
-	Ayathoya items == 70% Added but no effect ( all are "etc" itens)
-	Einboroch items == 5%
+	Ayothaya mobs == 90% All have correct stats now ?
+	Einbroch mobs == 5% Added but using poring stats
+	Ayothaya items == 70% Added but no effect ( all are "etc" itens)
+	Einbroch items == 5%
 	Skill databases == celest working on them i believe.
 
+04/03
+	* Doppelganger Card gives only 10% ASPD bonus (from Aegis) [DracoRPG]
 04/02
 	* More new cards and fixes [DracoRPG]
 	  - added Acolyte, Archer and Merchant sets effects

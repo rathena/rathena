@@ -1176,7 +1176,7 @@
 4139,Joker_Card,Joker Card,6,20,0,10,,,,,,,136,,,,{},{ skill 50,1; }
 4140,Knight_Of_Abyss_Card,Knight Of Abyss Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace,10,25; }
 4141,Evil_Druid_Card,Evil Druid Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDefEle,9; bonus bInt,1; bonus bDef,1; }
-4142,Doppelganger_Card,Doppelganger Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAspdRate,15; }
+4142,Doppelganger_Card,Doppelganger Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAspdRate,10; }
 4143,Orc_Hero_Card,Orc Hero Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bVit,3; bonus2 bResEff,Eff_Stan,10000; }
 4144,Osiris_Card,Osiris Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bRestartFullRecover,0; }
 4145,Berzebub_Card,Berzebub Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bCastrate,-30; bonus bMaxSPrate,-15; bonus bMaxHPrate,-5; }	// bCastrate in description, but bDelayrate in Aegis?
@@ -1886,8 +1886,8 @@
 11006,Payon_History_Book,Payon History Book,3,20,0,0,,,,,,,,,,,{},{}
 11007,History_Book,Unknown Item,3,20,0,0,,,,,,,,,,,{},{}
 11009,History_Book,Unknown Item,3,20,0,0,,,,,,,,,,,{},{}
-11010,Archer_Village_History_Book,Unknown Item,3,20,0,0,,,,,,,,,,,{},{}
-11011,Lutie_History_Book,Luite History Book,3,20,0,0,,,,,,,,,,,{},{}
+11010,Archer_Village_History_Book,Archer Village History Book,3,20,0,0,,,,,,,,,,,{},{}
+11011,Lutie_History_Book,Lutie History Book,3,20,0,0,,,,,,,,,,,{},{}
 11012,Jawaii_History_Book,Jawaii History Book,3,20,0,0,,,,,,,,,,,{},{}
 11013,Gonryun_History_Book,Gonryun History Book,3,20,0,0,,,,,,,,,,,{},{}
 11014,Mjolnir_History_Book,Mjolnir History Book,3,20,0,0,,,,,,,,,,,{},{}
