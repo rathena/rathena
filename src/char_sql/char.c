@@ -622,24 +622,41 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	// Friends list
 	// account_id, friend_id0, name0, ...
+	#if 0
+		tmp_p += sprintf(tmp_p, "REPLACE INTO `%s` (`id`, `account_id`",friend_db);
 
-	tmp_p += sprintf(tmp_p, "REPLACE INTO `%s` (`id`, `account_id`",friend_db);
+		diff = 0;
 
-	diff = 0;
+		for (i=0;i<20;i++)
+			tmp_p += sprintf(tmp_p, ", `friend_id%d`, `name%d`", i, i);
 
-	for (i=0;i<20;i++)
-		tmp_p += sprintf(tmp_p, ", `friend_id%d`, `name%d`", i, i);
+		tmp_p += sprintf(tmp_p, ") VALUES (NULL, '%d'", char_id);
 
-	tmp_p += sprintf(tmp_p, ") VALUES (NULL, '%d'", char_id);
+		for (i=0;i<20;i++) {
+			tmp_p += sprintf(tmp_p, ", '%d', '%s'", p->friend_id[i], p->friend_name[i]);
+			if ((p->friend_id[i] != cp->friend_id[i]) ||
+				strcmp(p->friend_name[i], cp->friend_name[i]))
+			  diff = 1;
+		}
 
-	for (i=0;i<20;i++) {
-		tmp_p += sprintf(tmp_p, ", '%d', '%s'", p->friend_id[i], p->friend_name[i]);
-		if ((p->friend_id[i] != cp->friend_id[i]) ||
-		    strcmp(p->friend_name[i], cp->friend_name[i]))
-		  diff = 1;
-	}
+		tmp_p += sprintf(tmp_p, ")");
+	#else	// [Dino9021]
+		tmp_p += sprintf(tmp_p, "UPDATE `%s` SET ",friend_db);
 
-	tmp_p += sprintf(tmp_p, ")");
+		diff = 0;
+		
+		for (i=0;i<20;i++) {
+			if (i>0)
+				tmp_p += sprintf(tmp_p, ", ");
+
+			tmp_p += sprintf(tmp_p, "`friend_id%d`='%d', `name%d`='%s'", i, p->friend_id[i], i, p->friend_name[i]);
+
+			if ((p->friend_id[i] != cp->friend_id[i]) || strcmp(p->friend_name[i], cp->friend_name[i]))
+				diff = 1;
+		}
+
+		tmp_p += sprintf(tmp_p, " where account_id='%d';", char_id);
+	#endif
 
 	if (diff)
 	  mysql_query(&mysql_handle, tmp_sql);

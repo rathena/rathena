@@ -3997,13 +3997,13 @@ int status_change_end( struct block_list* bl , int type,int tid )
  */
 int status_change_timer(int tid, unsigned int tick, int id, int data)
 {
-	int type=data;
+	int type = data;
 	struct block_list *bl;
 	struct map_session_data *sd=NULL;
 	struct status_change *sc_data;
 	//short *sc_count; //使ってない？
 
-	nullpo_retr(0, bl=map_id2bl(id));
+	nullpo_retr_f(0, bl=map_id2bl(id), "id=%d data=%d",id,data);
 	nullpo_retr(0, sc_data=status_get_sc_data(bl));
 
 	if(bl->type==BL_PC)
@@ -4104,8 +4104,10 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_WATERBALL:	/* ウォ?タ?ボ?ル */
 		{
 			struct block_list *target=map_id2bl(sc_data[type].val2);
-			nullpo_retb(target);
-			nullpo_retb(target->prev);
+			if (!target || !target->prev)
+				break;	// target has been killed in previous hits, no need to raise an alarm ^^;
+			// nullpo_retb(target);
+			// nullpo_retb(target->prev);
 			skill_attack(BF_MAGIC,bl,bl,target,WZ_WATERBALL,sc_data[type].val1,tick,0);
 			if((--sc_data[type].val3)>0) {
 				sc_data[type].timer=add_timer( 150+tick,status_change_timer, bl->id, data );
@@ -4139,8 +4141,10 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				break;*/
 			nullpo_retb(unit);
 			nullpo_retb(unit->group);
-			nullpo_retr(0, src=map_id2bl(unit->group->src_id));
+			nullpo_retb(src=map_id2bl(unit->group->src_id));
 			skill_attack(BF_MISC,src,&unit->bl,bl,unit->group->skill_id,sc_data[type].val1,tick,0);
+			if( (bl->type==BL_MOB) && (MS_DEAD==((struct mob_data *)bl)->state.state) )
+				break;
 			sc_data[type].timer=add_timer(skill_get_time2(unit->group->skill_id,unit->group->skill_lv)+tick,
 				status_change_timer, bl->id, data );
 			return 0;

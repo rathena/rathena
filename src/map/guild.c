@@ -581,17 +581,18 @@ int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 	if( (g=guild_search(guild_id))==NULL )
 		return 0;
 
-	if((sd==NULL || sd->guild_invite==0) && flag==0){
+	if(sd==NULL || sd->guild_invite==0){
 		// ƒLƒƒƒ‰‘¤‚É“o˜^‚Å‚«‚È‚©‚Á‚½‚½‚ß’E‘Þ—v‹‚ðo‚·
-		if(battle_config.error_log)
-			printf("guild: member added error %d is not online\n",account_id);
- 		intif_guild_leave(guild_id,account_id,char_id,0,"**“o˜^Ž¸”s**");
+		if (flag == 0) {
+			if(battle_config.error_log)
+				printf("guild: member added error %d is not online\n",account_id);
+ 			intif_guild_leave(guild_id,account_id,char_id,0,"**“o˜^Ž¸”s**");
+		}
 		return 0;
 	}
-	sd->guild_invite=0;
-	sd->guild_invite_account=0;
-
-	sd2=map_id2sd(sd->guild_invite_account);
+	sd2 = map_id2sd(sd->guild_invite_account);
+	sd->guild_invite = 0;
+	sd->guild_invite_account = 0;
 
 	if(flag==1){	// Ž¸”s
 		if( sd2!=NULL )

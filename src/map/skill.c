@@ -2823,7 +2823,8 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 					clif_updatestatus(sd,SP_SP);
 				}				
 			}
-			pc_blockskill_start (sd, skillid, (skilllv < 5 ? 10000: 15000));
+			if (sd)
+				pc_blockskill_start (sd, skillid, (skilllv < 5 ? 10000: 15000));
 		}
 		break;
 
@@ -3305,7 +3306,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case SM_ENDURE:			/* インデュア */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
-		pc_blockskill_start (sd, skillid, 10000);
+		if (sd)
+			pc_blockskill_start (sd, skillid, 10000);
 		break;
 
 	case SM_AUTOBERSERK:	// Celest
@@ -5039,7 +5041,8 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 			pc_movepos(sd,x,y);
 		}else if( src->type==BL_MOB )
 			mob_warp((struct mob_data *)src,-1,x,y,0);
-		pc_blockskill_start (sd, MO_EXTREMITYFIST, 2000);
+		if (sd)
+			pc_blockskill_start (sd, MO_EXTREMITYFIST, 2000);
 		break;
 	case AM_CANNIBALIZE:	// バイオプラント
 		if(sd){
@@ -7718,10 +7721,12 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	case WE_FEMALE:
 		{
 			struct map_session_data *p_sd = pc_get_partner(sd);
-			nullpo_retr (0, p_sd)
+			if (p_sd == NULL)	// it's possible to get null if we're not married ^^;
+				return 0;
+			// nullpo_retr (0, p_sd)
 			if(skill_num == WE_MALE && sd->status.hp <= ((15*sd->status.max_hp)/100))	// Requires more than 15% of Max HP for WE_MALE
 				return 0;
-			if(skill_num == WE_FEMALE && sd->status.sp <= ((15*sd->status.max_sp)/100))	// Requires more than 15% of Max SP for WE_FEMALE
+			else if(skill_num == WE_FEMALE && sd->status.sp <= ((15*sd->status.max_sp)/100))	// Requires more than 15% of Max SP for WE_FEMALE
 				return 0;
 			target_id = p_sd->bl.id;
 			//rangeをもう1回?査
