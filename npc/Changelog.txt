@@ -32,7 +32,8 @@ Date		Added
 ======
 11/08
 	* - Temporary corrected an expliot in refine.txt.  Need to check sources to fully fix bug [Shinigami]
-	* - Fixed 2 bugs on jobchanger.txt , not being able to change to Creator and Clown  [shadow] 
+	* - Fixed 2 bugs on jobchanger.txt , not being able to change to Creator and Clown 
+	    Added new Ayothana Mob listing, correct IDs, but need correct amount and respawn time. [shadow] 
 11/07
 	* - Fixed platinum_skill.txt, now advanced classes get quest skills.
 	  - Fixed a bug on novice.txt . [shadow]
