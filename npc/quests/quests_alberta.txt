@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //===== Additional Comments: ================================= 
 //= Fully working
 //= 1.1 Fixed Spore Doll exploit [Lupus], 1.2 Gramp's Tiger skin label bug
+//= 1.3 Fixed item ID 7031 -> 7013
 //============================================================ 
 
 
@@ -468,7 +469,7 @@ alberta.gat,120,53,3	script	Zic	51,
 	M_3:
 		mes "[Zic]";
 		mes "Are you sure you want a simple item like this? Oh well... To make a Heart Hairpin I will need:";	//5041
-		mes "- ^5555FF1200 Coral Reefs^000000.";	//7031
+		mes "- ^5555FF1200 Coral Reefs^000000.";	//7013
 		emotion 20;
 		next;
 		mes "[Zic]";
@@ -477,14 +478,14 @@ alberta.gat,120,53,3	script	Zic	51,
 		menu "Sure.",sM_3a, "No thanks.",M_End;
 
 		sM_3a:
-			if (countitem(7031)<1200) goto sL_NotEnuf;
+			if (countitem(7013)<1200) goto sL_NotEnuf;
 			mes "[Zic]";
 			mes "Please wait while I make your Hear Hairpin......";
 			next;
 			mes "[Zic]";
 			mes "There you are, one Heart Hairpin.  Enjoy.";
 			getitem 5041, 1;
-			delitem 7031, 1200;
+			delitem 7013, 1200;
 			close;
 
 		sL_NotEnuf:
