@@ -1,6 +1,7 @@
 Date	Added
 
 02/22
+	* Cleaned up some compiler warnings [SVN 1158: MouseJstr]
 	* Added perl regular expression support.. look at src/map/npc_chat.c
 	  for all the dirt on the new features.  To build it, you have
 	  to enable the PCRE_SUPPORT #define and you also have to

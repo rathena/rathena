@@ -8,7 +8,9 @@
 #define WARP_DEBUG_CLASS 722
 #define INVISIBLE_CLASS 32767
 
+#ifdef PCRE_SUPPORT
 void npc_chat_finalize(struct npc_data *nd);
+#endif
 int npc_chat_sub(struct block_list *bl, va_list ap);
 int npc_event_dequeue(struct map_session_data *sd);
 int npc_event_timer(int tid,unsigned int tick,int id,int data);

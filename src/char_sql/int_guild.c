@@ -505,6 +505,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	return g;
 }
 
+#if 0
 static int _set_guild_castle(void *key, void *data, va_list ap) {
     int castle_id = va_arg(ap, int);
     int guild_id = va_arg(ap, int);
@@ -516,7 +517,7 @@ static int _set_guild_castle(void *key, void *data, va_list ap) {
         g->castle_id = castle_id;
     return 0;
 }
-
+#endif
 
 // Save guild_castle to sql
 int inter_guildcastle_tosql(struct guild_castle *gc){
