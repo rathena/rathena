@@ -102,3 +102,12 @@ Progress:	0%
 Problem:	~40+ players connected.. and soon can't re-connect, they can enter password, but never see "select character" screen.
 Assigned:	N/A
 Progress:	0%
+
+Problem:        Chars with ' in their name.. is legal.. and messes up sql
+Assigned:       N/A
+Progress:       0%
+
+   DB server Error - You have an error in your SQL syntax; check the manual that co
+   rresponds to your MySQL server version for the right syntax to use near 'n' Sniff')' at line 1
+    Scratch 'n' Sniff
+
