@@ -1,6 +1,7 @@
 Date	Added
 
 12/20
+	* CFixed wedding NPC halting after server reboot/crash (shadowlady put in comments but didn't add to code) [Aria]
         * Added reading leveluseskillspamount.txt from the GRF to auto set sp used for each skill [celest]
         * Added reading indoorrswtable.txt from the GRF to auto set 'indoor' mapflags
           [celest]
