@@ -250,6 +250,10 @@ bHPGainValue	2025
 bSubSize	2026
 bDamageWhenUnequip	2027
 bAddItemHealRate	2028
+bLoseSPWhenUnequip	2029
+bExpAddRace	2030
+bSPGainRace	2031
+bSPSubRace2	2032
 
 
 Eff_Stone	0

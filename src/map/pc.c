@@ -1588,7 +1588,18 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			int i;
 			for (i=0; i<11; i++) {
 				if (sd->inventory_data[current_equip_item_index]->equip & equip_pos[i]) {
-					sd->unequip_damage[i] += val;
+					sd->unequip_losehp[i] += val;
+					break;
+				}
+			}
+		}
+		break;
+	case SP_LOSESP_WHEN_UNEQUIP:
+		if(!sd->state.lr_flag) {
+			int i;
+			for (i=0; i<11; i++) {
+				if (sd->inventory_data[current_equip_item_index]->equip & equip_pos[i]) {
+					sd->unequip_losesp[i] += val;
 					break;
 				}
 			}
@@ -1861,9 +1872,21 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->subsize[type2]+=val;
 		break;
+	case SP_SUBRACE2:
+		if(sd->state.lr_flag != 2)
+			sd->subrace2[type2]+=val;
+		break;
 	case SP_ADD_ITEM_HEAL_RATE:
 		if(sd->state.lr_flag != 2)
 			sd->itemhealrate[type2 - 1] += val;
+		break;
+	case SP_EXP_ADDRACE:
+		if(sd->state.lr_flag != 2)
+			sd->expaddrace[type2]+=val;
+		break;
+	case SP_SP_GAIN_RACE:
+		if(sd->state.lr_flag != 2)
+			sd->sp_gain_race[type2]+=val;
 		break;
 
 	default:
@@ -6076,7 +6099,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
  */
 int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 {
-	short dmg = 0;
+	short hp = 0, sp = 0;
 	nullpo_retr(0, sd);
 
 // -- moonsoul	(if player is berserk then cannot unequip)
@@ -6093,9 +6116,13 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		for(i=0;i<11;i++) {
 			if(sd->status.inventory[n].equip & equip_pos[i]) {
 				sd->equip_index[i] = -1;
-				if(sd->unequip_damage[i] > 0) {
-					dmg += sd->unequip_damage[i];
-					sd->unequip_damage[i] = 0;
+				if(sd->unequip_losehp[i] > 0) {
+					hp += sd->unequip_losehp[i];
+					sd->unequip_losehp[i] = 0;
+				}
+				if(sd->unequip_losesp[i] > 0) {
+					sp += sd->unequip_losesp[i];
+					sd->unequip_losesp[i] = 0;
 				}
 			}
 		}
@@ -6150,10 +6177,12 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 			status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 	}
 
-	if (dmg > 0) {
-		if (dmg > sd->status.hp)
-			dmg = sd->status.hp;
-		pc_heal(sd,-dmg,0);
+	if (hp > 0 || sp > 0) {
+		if (hp > sd->status.hp)
+			hp = sd->status.hp;
+		if (sp > sd->status.sp)
+			sp = sd->status.sp;
+		pc_heal(sd,-hp,-sp);
 	}
 
 	return 0;

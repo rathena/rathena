@@ -42,6 +42,7 @@ fd_set readfds;
 int fd_max;
 time_t tick_;
 time_t stall_time_ = 60;
+int ip_rules = 1;
 
 int rfifo_size = 65536;
 int wfifo_size = 65536;
@@ -49,6 +50,8 @@ int wfifo_size = 65536;
 #ifndef TCP_FRAME_LEN
 #define TCP_FRAME_LEN 1053
 #endif
+
+#define CONVIP(ip) ip&0xFF,(ip>>8)&0xFF,(ip>>16)&0xFF,ip>>24
 
 struct socket_data *session[FD_SETSIZE];
 
@@ -197,7 +200,7 @@ static int connect_client(int listen_fd)
 	if(fd==-1) {
 		perror("accept");
 		return -1;
-	} else if (!connect_check(*(unsigned int*)(&client_address.sin_addr))) {
+	} else if (ip_rules && !connect_check(*(unsigned int*)(&client_address.sin_addr))) {
 		close(fd);
 		return -1;
 	} else
@@ -554,7 +557,7 @@ static struct _access_control *access_deny;
 static int access_order=ACO_DENY_ALLOW;
 static int access_allownum=0;
 static int access_denynum=0;
-static int access_debug;
+static int access_debug=0;
 static int ddos_count     = 10;
 static int ddos_interval  = 3000;
 static int ddos_autoreset = 600*1000;
@@ -576,8 +579,8 @@ static int connect_check_(unsigned int ip);
 static int connect_check(unsigned int ip) {
 	int result = connect_check_(ip);
 	if(access_debug) {
-		printf("connect_check: connection from %08x %s\n",
-			ip,result ? "allowed" : "denied");
+		printf("connect_check: Connection from %d.%d.%d.%d %s\n",
+			CONVIP(ip),result ? "allowed." : "denied!");
 	}
 	return result;
 }
@@ -591,8 +594,10 @@ static int connect_check_(unsigned int ip) {
 	for(i = 0;i < access_allownum; i++) {
 		if((ip & access_allow[i].mask) == (access_allow[i].ip & access_allow[i].mask)) {
 			if(access_debug) {
-				printf("connect_check: match allow list from:%08x ip:%08x mask:%08x\n",
-					ip,access_allow[i].ip,access_allow[i].mask);
+				printf("connect_check: Found match from allow list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
+					CONVIP(ip),
+					CONVIP(access_allow[i].ip),
+					CONVIP(access_allow[i].mask));
 			}
 			is_allowip = 1;
 			break;
@@ -601,8 +606,10 @@ static int connect_check_(unsigned int ip) {
 	for(i = 0;i < access_denynum; i++) {
 		if((ip & access_deny[i].mask) == (access_deny[i].ip & access_deny[i].mask)) {
 			if(access_debug) {
-				printf("connect_check: match deny list  from:%08x ip:%08x mask:%08x\n",
-					ip,access_deny[i].ip,access_deny[i].mask);
+				printf("connect_check: Found match from deny list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
+					CONVIP(ip),
+					CONVIP(access_deny[i].ip),
+					CONVIP(access_deny[i].mask));
 			}
 			is_denyip = 1;
 			break;
@@ -655,8 +662,8 @@ static int connect_check_(unsigned int ip) {
 				if(hist->count++ >= ddos_count) {
 					// ddos UŒ‚‚ðŒŸo
 					hist->status = 1;
-					printf("connect_check: ddos attack detected (%d.%d.%d.%d)\n",
-						ip & 0xFF,(ip >> 8) & 0xFF,(ip >> 16) & 0xFF,ip >> 24);
+					printf("connect_check: DDOS Attack detected from %d.%d.%d.%d!\n",
+						CONVIP(ip));
 					return (connect_ok == 2 ? 1 : 0);
 				} else {
 					return connect_ok;
@@ -715,7 +722,7 @@ static int connect_check_clear(int tid,unsigned int tick,int id,int data) {
 		}
 	}
 	if(access_debug) {
-		printf("connect_check_clear: clear = %d list = %d\n",clear,list);
+		printf("connect_check_clear: Cleared %d of %d from IP list.\n", clear, clear+list);
 	}
 	return list;
 }
@@ -729,7 +736,7 @@ int access_ipmask(const char *str,struct _access_control* acc)
 		mask = 0;
 	} else {
 		if( sscanf(str,"%d.%d.%d.%d%n",&a0,&a1,&a2,&a3,&i)!=4 || i==0) {
-			printf("access_ipmask: unknown format %s\n",str);
+			printf("access_ipmask: Unknown format %s!\n",str);
 			return 0;
 		}
 		ip = (a3 << 24) | (a2 << 16) | (a1 << 8) | a0;
@@ -746,7 +753,8 @@ int access_ipmask(const char *str,struct _access_control* acc)
 		}
 	}
 	if(access_debug) {
-		printf("access_ipmask: ip:%08x mask:%08x %s\n",ip,mask,str);
+		printf("access_ipmask: Loaded IP:%d.%d.%d.%d mask:%d.%d.%d.%d\n",
+			CONVIP(ip), CONVIP(mask));
 	}
 	acc->ip   = ip;
 	acc->mask = mask;
@@ -771,11 +779,17 @@ int socket_config_read(const char *cfgName) {
 			continue;
 		if(strcmpi(w1,"stall_time")==0){
 			stall_time_ = atoi(w2);
+		} else if(strcmpi(w1,"enable_ip_rules")==0){
+			if(strcmpi(w2,"yes")==0)
+				ip_rules = 1;
+			else if(strcmpi(w2,"no")==0)
+				ip_rules = 0;
+			else ip_rules = atoi(w2);
 		} else if(strcmpi(w1,"order")==0){
 			access_order=atoi(w2);
 			if(strcmpi(w2,"deny,allow")==0) access_order=ACO_DENY_ALLOW;
 			if(strcmpi(w2,"allow,deny")==0) access_order=ACO_ALLOW_DENY;
-			if(strcmpi(w2,"mutual-failture")==0) access_order=ACO_MUTUAL_FAILTURE;
+			if(strcmpi(w2,"mutual-failure")==0) access_order=ACO_MUTUAL_FAILTURE;
 		} else if(strcmpi(w1,"allow")==0){
 			access_allow = aRealloc(access_allow,(access_allownum+1)*sizeof(struct _access_control));
 			if(access_ipmask(w2,&access_allow[access_allownum])) {
@@ -793,7 +807,11 @@ int socket_config_read(const char *cfgName) {
 		} else if(!strcmpi(w1,"ddos_autoreset")){
 			ddos_autoreset = atoi(w2);
 		} else if(!strcmpi(w1,"debug")){
-			access_debug = atoi(w2);
+			if(strcmpi(w2,"yes")==0)
+				access_debug = 1;
+			else if(strcmpi(w2,"no")==0)
+				access_debug = 0;
+			else access_debug = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0)
 			socket_config_read(w2);
 	}

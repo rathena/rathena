@@ -521,7 +521,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	memset(sd->addrace2_,0,sizeof(sd->addrace2_));
 	sd->hp_gain_value = sd->sp_drain_type = 0;
 	memset(sd->subsize,0,sizeof(sd->subsize));
-	memset(sd->unequip_damage,0,sizeof(sd->unequip_damage));
+	memset(sd->unequip_losehp,0,sizeof(sd->unequip_losehp));
+	memset(sd->unequip_losesp,0,sizeof(sd->unequip_losesp));
+	memset(sd->subrace2,0,sizeof(sd->subrace2));
+	memset(sd->expaddrace,0,sizeof(sd->expaddrace));
+	memset(sd->sp_gain_race,0,sizeof(sd->sp_gain_race));
 
 	if(!sd->disguiseflag && sd->disguise) {
 		sd->disguise=0;

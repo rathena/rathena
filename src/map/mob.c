@@ -2198,10 +2198,12 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	struct item item;
 	int ret;
 	int drop_rate;
+	int race;
 	
 	nullpo_retr(0, md); //srcはNULLで呼ばれる場合もあるので、他でチェック
 
 	max_hp = status_get_max_hp(&md->bl);
+	race = status_get_race(&md->bl);
 
 	if(src && src->type == BL_PC) {
 		sd = (struct map_session_data *)src;
@@ -2425,6 +2427,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			sp += (status_get_lv(&md->bl))*(65+15*i)/100;
 		}
 		sp += sd->sp_gain_value;
+		sp += sd->sp_gain_race[race];
 		hp += sd->hp_gain_value;
 		if (sp > 0) {
 			if(sd->status.sp + sp > sd->status.max_sp)
@@ -2512,21 +2515,24 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			if(job_exp < 1) job_exp = 1;
 		}
 
-		if(sd && battle_config.pk_mode && (mob_db[md->class_].lv - sd->status.base_level >= 20)) {
-			base_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
-		}
-		if(sd && battle_config.pk_mode && (mob_db[md->class_].lv - sd->status.base_level >= 20)) {
-			job_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
+		if(sd) {
+			int rate;
+			if ((rate = sd->expaddrace[race]) > 0) {
+				base_exp = (100+rate)*base_exp/100;
+				job_exp = (100+rate)*job_exp/100;
+			}
+			if (battle_config.pk_mode && (mob_db[md->class_].lv - sd->status.base_level >= 20)) {
+				base_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]		
+				job_exp*=1.15;
+			}			
 		}
 		if(md->master_id) {
-			master = map_id2bl(md->master_id);
-		}
-		if((master && status_get_mode(master)&0x20) ||	// check if its master is a boss (MVP's and minibosses)
-			(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1)) { // for summoned creatures [Valaris]
-			base_exp = 0;
-			job_exp = 0;
-		}
-		else {
+			if(((master = map_id2bl(md->master_id)) && status_get_mode(master)&0x20) ||	// check if its master is a boss (MVP's and minibosses)
+				(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1)) { // for summoned creatures [Valaris]
+				base_exp = 0;
+				job_exp = 0;
+			}
+		} else {
 			if(battle_config.zeny_from_mobs) {
 				if(md->level > 0) zeny=(md->level+rand()%md->level)*per/256; // zeny calculation moblv + random moblv [Valaris]
 				if(mob_db[md->class_].mexp > 0)
@@ -2639,7 +2645,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		if(sd && sd->state.attack_type == BF_WEAPON) {
 			for(i=0;i<sd->monster_drop_item_count;i++) {
 				struct delay_item_drop *ditem;
-				int race = status_get_race(&md->bl);
 				if(sd->monster_drop_itemid[i] <= 0)
 					continue;
 				if(sd->monster_drop_race[i] & (1<<race) ||

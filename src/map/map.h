@@ -297,9 +297,14 @@ struct map_session_data {
 	short hp_loss_value, hp_loss_type;
 	int addrace2[6],addrace2_[6];
 	int subsize[3];
-	short unequip_damage[11];
+	short unequip_losehp[11];
+	short unequip_losesp[11];
 	int itemid;
 	int itemhealrate[6];
+	//--- 03/15's new card effects
+	int expaddrace[6];
+	int subrace2[6];
+	short sp_gain_race[6];
 
 	short spiritball, spiritball_old;
 	int spirit_timer[MAX_SKILL_LEVEL];
@@ -647,7 +652,8 @@ enum {
 	SP_CRIT_ATK_RATE, SP_CRITICAL_ADDRACE, SP_NO_REGEN, SP_ADDEFF_WHENHIT, SP_AUTOSPELL_WHENHIT, // 2013-2017
 	SP_SKILL_ATK, SP_UNSTRIPABLE, SP_ADD_DAMAGE_BY_CLASS, // 2018-2020
 	SP_SP_GAIN_VALUE, SP_IGNORE_DEF_MOB, SP_HP_LOSS_RATE, SP_ADDRACE2, SP_HP_GAIN_VALUE, // 2021-2025
-	SP_SUBSIZE, SP_DAMAGE_WHEN_UNEQUIP, SP_ADD_ITEM_HEAL_RATE	// 2026-2028
+	SP_SUBSIZE, SP_DAMAGE_WHEN_UNEQUIP, SP_ADD_ITEM_HEAL_RATE, SP_LOSESP_WHEN_UNEQUIP, SP_EXP_ADDRACE,	// 2026-2030
+	SP_SP_GAIN_RACE, SP_SUBRACE2,
 };
 
 enum {

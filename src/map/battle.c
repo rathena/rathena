@@ -1063,7 +1063,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 	struct Damage wd;
 	int damage,damage2=0,type,div_,blewcount=skill_get_blewcount(skill_num,skill_lv);
 	int flag,skill,ac_flag = 0,dmg_lv = 0;
-	int t_mode=0,t_race=0,t_size=1,s_race=0,s_ele=0,s_size=0;
+	int t_mode=0,t_race=0,t_size=1,s_race=0,s_ele=0,s_size=0,s_race2=0;
 	struct status_change *sc_data,*t_sc_data;
 	short *sc_count;
 	short *option, *opt1, *opt2;
@@ -1085,6 +1085,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 	option = status_get_option(src);
 	opt1 = status_get_opt1(src);
 	opt2 = status_get_opt2(src);
+	s_race2 = status_get_race2(src);
 
 	// ターゲット
 	if(target->type == BL_PC)
@@ -1504,6 +1505,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 		cardfix=cardfix*(100-tsd->subele[s_ele])/100;	// 属 性によるダメージ耐性
 		cardfix=cardfix*(100-tsd->subrace[s_race])/100;	// 種族によるダメージ耐性
 		cardfix=cardfix*(100-tsd->subsize[s_size])/100;
+		cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;	// 種族によるダメージ耐性
 		if(mob_db[md->class_].mode & 0x20)
 			cardfix=cardfix*(100-tsd->subrace[10])/100;
 		else
@@ -2857,7 +2859,7 @@ struct Damage battle_calc_magic_attack(
 	int aflag;
 	int normalmagic_flag=1;
 	int matk_flag = 1;
-	int ele=0,race=7,size=1,t_ele=0,t_race=7,t_mode = 0,cardfix,t_class,i;
+	int ele=0,race=7,size=1,race2=7,t_ele=0,t_race=7,t_mode = 0,cardfix,t_class,i;
 	struct map_session_data *sd=NULL,*tsd=NULL;
 	struct mob_data *tmd = NULL;
 
@@ -2879,6 +2881,7 @@ struct Damage battle_calc_magic_attack(
 	ele = skill_get_pl(skill_num);
 	race = status_get_race(bl);
 	size = status_get_size(bl);
+	race2 = status_get_race2(bl);
 	t_ele = status_get_elem_type(target);
 	t_race = status_get_race(target);
 	t_mode = status_get_mode(target);
@@ -3091,6 +3094,7 @@ struct Damage battle_calc_magic_attack(
 		cardfix=cardfix*(100-tsd->subrace[race])/100;	// 種族によるダメージ耐性
 		cardfix=cardfix*(100-tsd->subsize[size])/100;
 		cardfix=cardfix*(100-tsd->magic_subrace[race])/100;
+		cardfix=cardfix*(100-tsd->subrace2[race2])/100;	// 種族によるダメージ耐性
 		if(status_get_mode(bl) & 0x20)
 			cardfix=cardfix*(100-tsd->magic_subrace[10])/100;
 		else
@@ -3166,7 +3170,7 @@ struct Damage  battle_calc_misc_attack(
 	int int_=status_get_int(bl);
 //	int luk=status_get_luk(bl);
 	int dex=status_get_dex(bl);
-	int skill,ele,race,size,cardfix;
+	int skill,ele,race,size,cardfix,race2;
 	struct map_session_data *sd=NULL,*tsd=NULL;
 	int damage=0,div_=1,blewcount=skill_get_blewcount(skill_num,skill_lv);
 	struct Damage md;
@@ -3270,6 +3274,7 @@ struct Damage  battle_calc_misc_attack(
 	ele = skill_get_pl(skill_num);
 	race = status_get_race(bl);
 	size = status_get_size(bl);
+	race2 = status_get_race(bl);
 
 	if(damagefix){
 		if(damage<1 && skill_num != NPC_DARKBREATH)
@@ -3281,6 +3286,7 @@ struct Damage  battle_calc_misc_attack(
 			cardfix=cardfix*(100-tsd->subrace[race])/100;	// 種族によるダメージ耐性
 			cardfix=cardfix*(100-tsd->subsize[size])/100;
 			cardfix=cardfix*(100-tsd->misc_def_rate)/100;
+			cardfix=cardfix*(100-tsd->subrace2[race2])/100;
 			damage=damage*cardfix/100;
 		}
 		if (sd && skill_num > 0 && sd->skillatk[0] == skill_num)

@@ -192,3 +192,13 @@ bonus4 bAutoSpellWhenHit,x,y,n,i;	n% chance to cast skill x of level y when
 bonus2 bAddItemHealRate,n,x;		Increases HP recovered by n type items by x%
                                         n:1=potions 2=herbs 3=fruits 4=meat 5=candy
                                           6=juice 7=sashimi
+
+//---- 3/15 new card effects ----
+
+bonus bLoseSPWhenUnequip.n;		Lose n SP when the item is unequipped
+
+bonus2 bExpAddRace,n,x;			Increase exp gained by n% vs. enemies of type x
+bonus2 bSPGainRace,n,x;			When killing a monster of type x by physical
+                                        attack gain n amount of sp
+bonus2 bSPSubRace2,n,x;			Damage x% reduction from enemies of race n
+                                        (Check db/mob_race2_db.txt)
