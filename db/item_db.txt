@@ -1248,7 +1248,7 @@
 4215,Blazer_Card,Blazer Card,6,20,0,10,,,,,,,,,,,{},{}
 4216,Sasquatch_Card,Sasquatch Card,6,20,0,10,,,,,,,,,,,{},{}
 4217,Enchanted_Peach_Tree_Card,Enchanted Peach Tree Card,6,20,0,10,,,,,,,,,,,{},{}
-4218,Succubus_Card,Succubus Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bVit,-3; bonus bMaxHP,1000; bonus bHPrecovRate,-20; }
+4218,Succubus_Card,Succubus Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bVit,-3; bonus bMaxHP,1000; bonus bHPrecovRate,-20; if(!isequipped(4268)) end; bonus bVit,7; bonus bHPrecovRate,50; }
 4219,Sage_Worm_Card,Sage Worm Card,6,20,0,10,,,,,,,,,,,{},{}
 4220,Solider_Card,Solider Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDef,2; bonus bMdef,2; }
 4221,Skeleton_General_Card,Skeleton General Card,6,20,0,10,,,,,,,,,,,{},{}
@@ -1271,7 +1271,7 @@
 4238,Owl_Baron_Card,Owl Baron Card,6,20,0,10,,,,,,,,,,,{},{}
 4239,Iron_Fist_Card,Iron Fist Card,6,20,0,10,,,,,,,,,,,{},{}
 4240,Arclouze_Card,Arclouze Card,6,20,0,10,,,,,,,,,,,{},{}
-4241,Arc_Angeling_Card,Arc Angeling Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bMaxHP,300; if(readparam(bLuk)>77) bonus bHPrecovRate,100; if(readparam(bLuk)>77) bonus bSPrecovRate,100; }
+4241,Arcangeling_Card,Arcangeling Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bMaxHP,300; if(readparam(bLuk)>77) bonus bHPrecovRate,100; if(readparam(bLuk)>77) bonus bSPrecovRate,100; }
 4242,Apocalipse_Card,Apocalipse Card,6,20,0,10,,,,,,,,,,,{},{}
 4243,Antonio_Card,Antonio Card,6,20,0,10,,,,,,,,,,,{},{}
 4244,Alarm_Card,Alarm Card,6,20,0,10,,,,,,,,,,,{},{}
@@ -1298,7 +1298,7 @@
 4265,Li_Me_Mang_Ryang_Card,Li Me Mang Ryang Card,6,20,0,10,,,,,,,,,,,{},{}
 4266,Eclipse_Card,Eclipse Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bVit,1; if(isequipped(4006)) bonus bFlee,18; }
 4267,Explosion_Card,Explosion Card,6,20,0,10,,,,,,,,,,,{},{}
-4268,Incubus_Card,Incubus Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bInt,-3; bonus bMaxSP,150; bonus bSPrecovRate,-20; } //Missing : Succubus + Incubus combo because I dunno wether combo effects stack or replace non-combo ones
+4268,Incubus_Card,Incubus Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bInt,-3; bonus bMaxSP,150; if(!isequipped(4218)) end; bonus bInt,6; bonus bSPrecovRate,50; }
 4269,Injustice_Card,Injustice Card,6,20,0,10,,,,,,,,,,,{},{}
 4270,Giant_Spider_Card,Giant Spider Card,6,20,0,10,,,,,,,,,,,{},{}
 4271,Giant_Hornet_Card,Giant Hornet Card,6,20,0,10,,,,,,,,,,,{},{}

@@ -226,12 +226,12 @@
 //4232,Hermit Plant Card,10000
 4233,Baby Leopard Card,10000
 //4234,Anolian Card,10000
-//4235,Anubis 2 Card,10000
+//4235,Cookie Xmas Card,10000
 //4237,Owl Duke Card,10000
 //4238,Owl Baron Card,10000
 //4239,Iron Fist Card,10000
 //4240,Arclouze Card,10000
-4241,Arc Angeling Card,10000
+4241,Arcangeling Card,10000
 //4242,Apocalipse Card,10000
 //4243,Antonio Card,10000
 //4244,Alarm Card,10000
@@ -315,4 +315,4 @@
 4328,Hyegun Card,10000
 //4329,Phendark Card,10000
 //4331,Heater Card,10000
-4332,Cookie Xmas Card,10000
+

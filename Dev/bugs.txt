@@ -287,3 +287,10 @@ Progress:	0%
 Problem:	[ATCommands] GMs teleportings to non-existing maps crash the server
 Assigned:	N/A
 Progress:	0%
+
+Problem:	[script.c] script command DOEVENT now doesn't work...
+		so Knight JOB Quest is unpassable now, Monks Job Quest is too easy (traps don't work)
+		probably more bugs...
+		I (Lupus) have script-wise solution. But it isn't good! 8((( DOEVENT used to work fine!
+Assigned:	N/A
+Progress:	0%
