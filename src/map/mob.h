@@ -3,6 +3,7 @@
 #define _MOB_H_
 
 #define MAX_RANDOMMONSTER 3
+#define MAX_MOB_RACE_DB 6
 
 struct mob_skill {
 	short state;
@@ -26,6 +27,7 @@ struct mob_db {
 	int str,agi,vit,int_,dex,luk;
 	int range,range2,range3;
 	int size,race,element,mode;
+	short race2;	// celest
 	int speed,adelay,amotion,dmotion;
 	int mexp,mexpper;
 	struct { int nameid,p; } dropitem[10]; //8 -> 10 Lupus

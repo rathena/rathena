@@ -1,7 +1,18 @@
 Date	Added
 
 02/18
+        * Added bAddRace2 -- check item_bonus.txt [celest]
+        * Added mob_race2_db.txt -- contains 'main races' of certain monsters [celest]
+        * Updated description for backup_txt in char_athena.conf a bit [celest]
+        * Set read_map_from_cache to 2 (enable compression), and map_cache_file back to
+          saving in /db instead of /save, as suggested by Poki#3 [celest]
+        * Updated description for auto_counter_type, and set plaer_auto_counter_type
+          to 0 by default, as suggested by Poki#3 [celest]
+        * Use the event names from script_athena.conf to check whenever a player event
+          trigger is being read/set [celest]
+        * Removed an unused save/bank.txt [celest]
 	* Added some new cards effects. (check DB\changelog.txt) [Lupus]
+
 02/17
 	* Now all mobs have 10 drops slots. the last one is used for Cards Drops [Lupus]
 	  Don't forget to update your SQL files (Drop Log: logs.sql and db_tables.sql

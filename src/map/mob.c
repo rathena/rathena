@@ -35,7 +35,6 @@
 #define MAX_MOB_DB 2000		/* Change this to increase the table size in your mob_db to accomodate
 								numbers more than 2000 for mobs if you want to (and know what you're doing).
 								Be sure to note that 4001 to 4047 are for advanced classes. */
-
 struct mob_db mob_db[2001];
 
 #define CLASSCHANGE_BOSS_NUM 21
@@ -4318,6 +4317,57 @@ static int mob_readskilldb(void)
 	}
 	return 0;
 }
+/*==========================================
+ * db/mob_race_db.txt reading
+ *------------------------------------------
+ */
+static int mob_readdb_race(void)
+{
+	FILE *fp;
+	char line[1024];
+	int race,j,k;
+	char *str[20],*p,*np;
+
+	if( (fp=fopen("db/mob_race2_db.txt","r"))==NULL ){
+		printf("can't read db/mob_race2_db.txt\n");
+		return -1;
+	}
+	
+	while(fgets(line,1020,fp)){
+		if(line[0]=='/' && line[1]=='/')
+			continue;
+		memset(str,0,sizeof(str));
+
+		for(j=0,p=line;j<12;j++){
+			if((np=strchr(p,','))!=NULL){
+				str[j]=p;
+				*np=0;
+				p=np+1;
+			} else
+				str[j]=p;
+		}
+		if(str[0]==NULL)
+			continue;
+
+		race=atoi(str[0]);
+		if (race < 0 || race >= MAX_MOB_RACE_DB)
+			continue;
+
+		for (j=1; j<20; j++) {
+			if (!str[j])
+				break;
+			k=atoi(str[j]);
+			if (k < 1000 || k > MAX_MOB_DB)
+				continue;
+			mob_db[k].race2 = race;
+			//mob_race_db[race][j] = k;
+		}
+	}
+	fclose(fp);
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/mob_race2_db.txt");
+	ShowStatus(tmp_output);
+	return 0;
+}
 
 void mob_reload(void)
 {
@@ -4495,6 +4545,7 @@ int do_init_mob(void)
 	mob_readdb_mobavail();
 	mob_read_randommonster();
 	mob_readskilldb();
+	mob_readdb_race();
 
 	add_timer_func_list(mob_timer,"mob_timer");
 	add_timer_func_list(mob_delayspawn,"mob_delayspawn");

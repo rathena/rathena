@@ -245,6 +245,7 @@ bAddDamageByClass	2020
 bSPGainValue	2021
 bIgnoreDefMob	2022
 bHPLossRate	2023
+bAddRace2	2024
 
 
 Eff_Stone	0

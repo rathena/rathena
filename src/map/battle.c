@@ -1617,6 +1617,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	int damage,damage2,damage3=0,damage4=0,type,div_,blewcount=skill_get_blewcount(skill_num,skill_lv);
 	int flag,skill,dmg_lv = 0;
 	int t_mode=0,t_race=0,t_size=1,s_race=7,s_ele=0;
+	int t_race2=0;
 	struct status_change *sc_data,*t_sc_data;
 	short *sc_count;
 	short *option, *opt1, *opt2;
@@ -1644,6 +1645,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	option=status_get_option(src); //鷹とかペコとかカートとか
 	opt1=status_get_opt1(src); //石化、凍結、スタン、睡眠、暗闇
 	opt2=status_get_opt2(src); //毒、呪い、沈黙、暗闇？
+	t_race2=status_get_race2(target);
 
 	if(skill_num != CR_GRANDCROSS) //グランドクロスでないなら
 		sd->state.attack_type = BF_WEAPON; //攻撃タイプは武器攻撃
@@ -2517,17 +2519,20 @@ static struct Damage battle_calc_pc_weapon_attack(
 			cardfix=cardfix*(100+sd->addrace[t_race])/100;	// 種族によるダメージ修正
 			cardfix=cardfix*(100+sd->addele[t_ele])/100;	// 属性によるダメージ修正
 			cardfix=cardfix*(100+sd->addsize[t_size])/100;	// サイズによるダメージ修正
+			cardfix=cardfix*(100+sd->addrace2[t_race2])/100;
 		}
 		else {
 			cardfix=cardfix*(100+sd->addrace[t_race]+sd->addrace_[t_race])/100;	// 種族によるダメージ修正(左手による追加あり)
 			cardfix=cardfix*(100+sd->addele[t_ele]+sd->addele_[t_ele])/100;	// 属性によるダメージ修正(左手による追加あり)
 			cardfix=cardfix*(100+sd->addsize[t_size]+sd->addsize_[t_size])/100;	// サイズによるダメージ修正(左手による追加あり)
+			cardfix=cardfix*(100+sd->addrace2[t_race2]+sd->addrace2_[t_race2])/100;
 		}
 	}
 	else { //弓矢
 		cardfix=cardfix*(100+sd->addrace[t_race]+sd->arrow_addrace[t_race])/100;	// 種族によるダメージ修正(弓矢による追加あり)
 		cardfix=cardfix*(100+sd->addele[t_ele]+sd->arrow_addele[t_ele])/100;	// 属性によるダメージ修正(弓矢による追加あり)
 		cardfix=cardfix*(100+sd->addsize[t_size]+sd->arrow_addsize[t_size])/100;	// サイズによるダメージ修正(弓矢による追加あり)
+		cardfix=cardfix*(100+sd->addrace2[t_race2])/100;
 	}
 	if(t_mode & 0x20) { //ボス
 		if(!sd->state.arrow_atk) { //弓矢攻撃以外なら
@@ -2567,6 +2572,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 		cardfix=cardfix*(100+sd->addrace_[t_race])/100;	// 種族によるダメージ修正左手
 		cardfix=cardfix*(100+sd->addele_[t_ele])/100;	// 属 性によるダメージ修正左手
 		cardfix=cardfix*(100+sd->addsize_[t_size])/100;	// サイズによるダメージ修正左手
+		cardfix=cardfix*(100+sd->addrace2_[t_race2])/100;
 		if(t_mode & 0x20) //ボス
 			cardfix=cardfix*(100+sd->addrace_[10])/100; //ボスモンスターに追加ダメージ左手
 		else
@@ -2580,8 +2586,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 		}
 	}
 	if(!no_cardfix)
-
 		damage2=damage2*cardfix/100;
+
 //カード補正による左手ダメージ増加
 //カードによるダメージ増加処理(左手)ここまで
 
@@ -2629,13 +2635,13 @@ static struct Damage battle_calc_pc_weapon_attack(
 		}
 		if(t_sc_data[SC_ASSUMPTIO].timer != -1){ //アスムプティオ
 			if(!map[target->m].flag.pvp){
-			damage=damage/3;
-			damage2=damage2/3;
-		}else{
-			damage=damage/2;
-			damage2=damage2/2;
+				damage=damage/3;
+				damage2=damage2/3;
+			}else{
+				damage=damage/2;
+				damage2=damage2/2;
+			}
 		}
-	}
 	}
 //対象にステータス異常がある場合のダメージ減算処理ここまで
 

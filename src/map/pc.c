@@ -809,9 +809,9 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 
 	// Automated script events
 	if (script_config.event_requires_trigger) {
-		sd->state.event_death = pc_readglobalreg(sd,"PCDieEvent");
-		sd->state.event_kill = pc_readglobalreg(sd,"PCKillEvent");
-		sd->state.event_disconnect = pc_readglobalreg(sd,"PCLogoffEvent");
+		sd->state.event_death = pc_readglobalreg(sd, script_config.die_event_name);
+		sd->state.event_kill = pc_readglobalreg(sd, script_config.kill_event_name);
+		sd->state.event_disconnect = pc_readglobalreg(sd, script_config.logout_event_name);
 	// if script triggers are not required
 	} else {
 		sd->state.event_death = 1;
@@ -1838,6 +1838,14 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->hp_loss_value = type2;
 			sd->hp_loss_rate = val;
 		}
+		break;
+	case SP_ADDRACE2:
+		if (type2 > 0 && type2 < MAX_MOB_RACE_DB)
+			break;
+		if(sd->state.lr_flag != 2)
+			sd->addrace2[type2] += val;
+		else
+			sd->addrace2_[type2] += val;
 		break;
 
 	default:
@@ -5560,11 +5568,11 @@ int pc_setglobalreg(struct map_session_data *sd,char *reg,int val)
 	if(strcmp(reg,"PC_DIE_COUNTER") == 0 && sd->die_counter != val){
 		sd->die_counter = val;
 		status_calc_pc(sd,0);
-	} else if(strcmp(reg,"PCDieEvent") == 0){
+	} else if(strcmp(reg,script_config.die_event_name) == 0){
 		sd->state.event_death = val;
-	} else if(strcmp(reg,"PCKillEvent") == 0){
+	} else if(strcmp(reg,script_config.kill_event_name) == 0){
 		sd->state.event_kill = val;
-	} else if(strcmp(reg,"PCLogoutEvent") == 0){
+	} else if(strcmp(reg,script_config.logout_event_name) == 0){
 		sd->state.event_disconnect = val;
 	}
 

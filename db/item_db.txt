@@ -1185,7 +1185,7 @@
 4152,Galapago_Card,Galapago Card,6,20,0,10,,,,,,,,,,,{},{}
 4153,Crab_Card,Crab Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,5; bonus2 bAddDamageClass,1266,30; bonus2 bAddEle,4,30; if(isequipped(4247,4273)) bonus3 bAddMonsterDropItem,544,5,3000; }
 4154,Dumpling_Child_Card,Dumpling Child Card,6,20,0,10,,,,,,,,,,,{},{}
-4155,Goblin_Leader_Card,Goblin Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddDamageClass,1122,30; bonus2 bAddDamageClass,1123,30; bonus2 bAddDamageClass,1124,30; bonus2 bAddDamageClass,1125,30; bonus2 bAddDamageClass,1126,30; bAddDamageClass,1245,30; bAddDamageClass,1258,30; bAddDamageClass,1280,30; bAddDamageClass,1299,30; bAddDamageClass,1308,30; }
+4155,Goblin_Leader_Card,Goblin Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace2,1,30; }
 4156,Goblin_Steamrider_Card,Goblin Steamrider Card,6,20,0,10,,,,,,,2,,,,{},{}
 4157,Goblin_Archer_Card,Goblin Archer Card,6,20,0,10,,,,,,,2,,,,{},{}
 4158,Sky_Deleter_Card,Sky Deleter Card,6,20,0,10,,,,,,,16,,,,{},{}

@@ -6,6 +6,8 @@
 	Skill databases == celest working on them i believe.
 
 02/18
+        * Changed Goblin Leader Card to using bAddRace2 -- each player can only save
+          10 AddDamageClass, so this would save some space for other cards ^^ [celest]
 	* Started adding new cards effects. Also big thanks to Landarma [Lupus]
 
 02/17

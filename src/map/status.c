@@ -510,6 +510,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->sp_gain_value = 0;
 	sd->ignore_def_mob = sd->ignore_def_mob_ = 0;
 	sd->hp_loss_rate = sd->hp_loss_value = sd->hp_loss_type = 0;
+	memset(sd->addrace2,0,sizeof(sd->addrace2));
+	memset(sd->addrace2_,0,sizeof(sd->addrace2_));
 
 	if(!sd->disguiseflag && sd->disguise) {
 		sd->disguise=0;
@@ -2809,6 +2811,16 @@ int status_get_mexp(struct block_list *bl)
 		return mob_db[((struct mob_data *)bl)->class_].mexp;
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
 		return mob_db[((struct pet_data *)bl)->class_].mexp;
+	else
+		return 0;
+}
+int status_get_race2(struct block_list *bl)
+{
+	nullpo_retr(0, bl);
+	if(bl->type == BL_MOB && (struct mob_data *)bl)
+		return mob_db[((struct mob_data *)bl)->class_].race2;
+	else if(bl->type==BL_PET && (struct pet_data *)bl)
+		return mob_db[((struct pet_data *)bl)->class_].race2;
 	else
 		return 0;
 }
