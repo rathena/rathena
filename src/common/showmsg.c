@@ -1,25 +1,22 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 #include "showmsg.h"
-#include "malloc.h"
 
 char tmp_output[1024] = {"\0"};
 
 #undef ShowMessage
 
+// by MC Cameri
 int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
-{ // by MC Cameri
-	/* 
-		_ShowMessage MUST be used instead of printf as of 10/24/2004.
-		Return: 0 = Successful, 1 = Failed.
-	*/
+{
+	// _ShowMessage MUST be used instead of printf as of 10/24/2004.
+	// Return: 0 = Successful, 1 = Failed.
 //	int ret = 0;
+//	char *output;
 	char prefix[40];
-	char *output;
 	
-	if (strlen(string) <= 0) {
+	if (!string || strlen(string) <= 0) {
 		printf("Empty string passed to _ShowMessage().\n");
 		return 1;
 	}
@@ -49,11 +46,12 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 			strcpy(prefix,CL_RED"[Fatal Error]"CL_RESET":");
 			break;
 		default:
-                        printf("In function _ShowMessage() -> Invalid flag passed.\n");
+			printf("In function _ShowMessage() -> Invalid flag passed.\n");
 			return 1;
 	}
 	if (!(flag == MSG_DEBUG && !SHOW_DEBUG_MSG)) {
-		output = (char*)aMalloc(sizeof(char)*(strlen(prefix)+strlen(string)+2)); // prefix+string+two chars(space and \0)
+
+/*		output = (char*)aMalloc(sizeof(char)*(strlen(prefix)+strlen(string)+2)); // prefix+string+two chars(space and \0)
 		if (output == NULL) {
 			return 1;
 //			exit(1); // Kill server? Deadly
@@ -64,7 +62,11 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		strcat(output,string);
 		vprintf(output, ap);
 		fflush(stdout);
-		aFree(output);
+		aFree(output);*/
+
+		printf ("%s ", prefix);
+		vprintf (string, ap);
+		fflush (stdout);
 	}
 
 	va_end(ap);
@@ -86,7 +88,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 	return 0;
 }
 
-int _ShowMessage(enum msg_type flag, const char *string, ...) 
+int _ShowMessage(enum msg_type flag, const char *string, ...)
 {
   	va_list ap;
 	
