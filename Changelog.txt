@@ -1,5 +1,7 @@
 Date	Added
 12/2
+	* Changed all LOGS inserts to INSERT DELAYED (MySQL has this feature and cache unimportant queries, then 
+	  executes them at once together = 10x faster) [Lupus]
         * Skill Updates [celest]
           - Modified Weapon Refine - should only +1 every time.
           - Updated Berserk, Chase Walk, Slim Pitcher

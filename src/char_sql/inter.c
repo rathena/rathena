@@ -241,7 +241,7 @@ int inter_log(char *fmt,...)
 	va_start(ap,fmt);
 
 	vsprintf(str,fmt,ap);
-	sprintf(tmp_sql,"INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')",interlog_db, jstrescapecpy(temp_str,str));
+	sprintf(tmp_sql,"INSERT DELAYED INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')",interlog_db, jstrescapecpy(temp_str,str));
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (insert `interlog`)- %s\n", mysql_error(&mysql_handle) );
 	}	

@@ -244,11 +244,11 @@ int mail_send(struct map_session_data *sd, char *name, char *message, int flag)
 
 	        while ((mail_row = mysql_fetch_row(mail_res))) {
 			if(strcmp(name,"*")==0) {
-				sprintf(tmp_msql, "INSERT INTO `%s` (`to_account_id`,`from_account_id`,`from_char_name`,`message`,`priority`)"
+				sprintf(tmp_msql, "INSERT DELAYED INTO `%s` (`to_account_id`,`from_account_id`,`from_char_name`,`message`,`priority`)"
 					" VALUES ('%d', '%d', '%s', '%s', '%d')",mail_db, atoi(mail_row[0]), sd->status.account_id, sd->status.name, message, flag);			
 			}
 			else {
-				sprintf(tmp_msql, "INSERT INTO `%s` (`to_account_id`,`to_char_name`,`from_account_id`,`from_char_name`,`message`,`priority`)"
+				sprintf(tmp_msql, "INSERT DELAYED INTO `%s` (`to_account_id`,`to_char_name`,`from_account_id`,`from_char_name`,`message`,`priority`)"
 					" VALUES ('%d', '%s', '%d', '%s', '%s', '%d')",mail_db, atoi(mail_row[0]), mail_row[1], sd->status.account_id, sd->status.name, message, flag);
 				if(pc_isGM(sd) < 80)
 					sd->mail_counter=5;
