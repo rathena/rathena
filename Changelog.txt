@@ -1,5 +1,7 @@
 Date	Added
 12/28
+	* Fix double timer_delete caused by pc_alive_timer (SVN 848)
+	  [MouseJstr]
 	* Fixed typo in npcs_athena.conf (mc_cameri verses mc_Cameri),
 	  thanks Mellow972 for pointing that out (SVN 845) [MouseJstr]
         * Reduced weapon breaking chance for Overthrust, thanks Draco - i almost
