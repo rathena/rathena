@@ -1423,6 +1423,11 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	if( (skill=pc_checkskill(sd,AC_OWL))>0 )	// ふくろうの目
 		sd->paramb[4] += skill;
 
+	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0) {   // Hilt binding gives +1 str +4 atk
+		sd->paramb[4] ++;
+		sd->base_atk += 4;
+	}
+
 	// ステータス変化による基本パラメータ補正
 	if(sd->sc_count){
 		if(sd->sc_data[SC_CONCENTRATE].timer!=-1 && sd->sc_data[SC_QUAGMIRE].timer == -1){	// 集中力向上
@@ -1576,7 +1581,10 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		sd->subele[6] += skill*5;
 	}
 	if((skill=pc_checkskill(sd,BS_SKINTEMPER))>0)
-		sd->subele[3] += skill*4;
+	{
+		sd->subele[0] += skill;
+		sd->subele[3] += skill*5;
+	}
 
 	bl=sd->status.base_level;
 
@@ -1741,8 +1749,8 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		}
 
 		if(sd->sc_data[SC_MAGICPOWER].timer!=-1){ //魔法力増幅
-			sd->matk1 = sd->matk1*(100+2*sd->sc_data[SC_MAGICPOWER].val1)/100;
-			sd->matk2 = sd->matk2*(100+2*sd->sc_data[SC_MAGICPOWER].val1)/100;
+			sd->matk1 = sd->matk1*(100+5*sd->sc_data[SC_MAGICPOWER].val1)/100;
+			sd->matk2 = sd->matk2*(100+5*sd->sc_data[SC_MAGICPOWER].val1)/100;
 		}
 		if(sd->sc_data[SC_ATKPOT].timer!=-1)
 			sd->watk += sd->sc_data[SC_ATKPOT].val1;
@@ -4891,6 +4899,9 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	// 歩 いていたら足を止める
 	if(sd->sc_data[SC_ENDURE].timer == -1 && !sd->special_state.infinite_endure)
 		pc_stop_walking(sd,3);
+	else if(sd->sc_data[SC_ENDURE].timer != -1 && src->type==BL_MOB)   // [Celest]
+		if((--sd->sc_data[SC_ENDURE].val2) <= 0)
+			skill_status_change_end(&sd->bl, SC_ENDURE, -1);
 	// 演奏/ダンスの中断
 	if(damage > sd->status.max_hp>>2)
 		skill_stop_dancing(&sd->bl,0);
