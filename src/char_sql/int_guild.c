@@ -41,7 +41,7 @@ int guild_break_sub(void *key,void *data,va_list ap);
 
 #define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
 
-int _erase_guild(void *key, void *data, va_list ap) {
+static int _erase_guild(void *key, void *data, va_list ap) {
     int guild = va_arg(ap, int);
     struct guild_castle * castle = (struct guild_castle *) data;
     if (castle->guild_id == guild) {
@@ -504,6 +504,18 @@ struct guild * inter_guild_fromsql(int guild_id)
 	return g;
 }
 
+static int _set_guild_castle(void *key, void *data, va_list ap) {
+    int castle_id = va_arg(ap, int);
+    int guild_id = va_arg(ap, int);
+    struct guild * g = (struct guild *) data;
+
+    if (g->castle_id == castle_id)
+        g->castle_id = -1;
+    if (g->guild_id == guild_id)
+        g->castle_id = castle_id;
+}
+
+
 // Save guild_castle to sql
 int inter_guildcastle_tosql(struct guild_castle *gc)
 {
@@ -551,6 +563,8 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
 		return 0;
 	}
+
+        db_foreach(guild_db_, _set_guild_castle, gc->castle_id,gc->guild_id);
 	
 	return 0;
 }
@@ -1231,7 +1245,7 @@ int mapif_parse_GuildLeave(int fd,int guild_id,int account_id,int char_id,int fl
 					mapif_guild_info(-1,g);// まだ人がいるのでデータ送信
 				/*
 				else
-					inter_guild_save();	// 解散したので一応セーブ
+					inter_guild_save();	// 解散したので一営Zーブ
 				return 0;*/
 			}
 		}
