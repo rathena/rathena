@@ -5,6 +5,7 @@ Date	Added
           - Updated Berserk, Chase Walk, Slim Pitcher
           - Added skill_range_leniency
         * Added check for clif.c in case the server didn't realise we've died [celest]
+        * Added a fix for @npcmove by JohnC and Fredzilla
 
 12/1
 	- Make it build against gcc 2.95 [MouseJstr]

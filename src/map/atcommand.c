@@ -6896,27 +6896,26 @@ atcommand_npcmove(const int fd, struct map_session_data* sd,
 	int x = 0, y = 0;
 	struct npc_data *nd = 0;
 	
-	if( sd == NULL )
-		return -1;
+	nullpo_retr(-1, sd);	
 
 	if (!message || !*message)
 		return -1;
 
 	memset(character, '\0', sizeof character);
 
-	if (sscanf(message, "%d %d %99[^\n]", &x, &y, character) < 4)
+	if (sscanf(message, "%d %d %99[^\n]", &x, &y, character) < 3) {
+		clif_displaymessage(fd, "Usage: @npcmove <X> <Y> <npc_name>");
 		return -1;
+	}
 
-        nd=npc_name2id(character);
-        if (nd==NULL)
-	     return -1;
+	nullpo_retr(-1, (nd = npc_name2id(character)));
 
-        npc_enable(character, 0);
-        nd->bl.x = x;
-        nd->bl.y = y;
-        npc_enable(character, 1);
+	npc_enable(character, 0);
+	nd->bl.x = x;
+	nd->bl.y = y;
+	npc_enable(character, 1);
 
-   return 0;
+	return 0;
 }
 
 /*==========================================
