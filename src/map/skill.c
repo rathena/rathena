@@ -5573,7 +5573,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case GD_HAWKEYES:
 		range=2;
 		target=BCT_ALL;
-		limit=60000;
+		limit=300000;
 		break;
 
 	default:
@@ -5828,16 +5828,32 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 						sc_data[SC_BASILICA].val4 = (int)unit;
 					break;
 				case GD_LEADERSHIP:
-					sc_data[SC_LEADERSHIP].val4 = (int)unit;
+					{
+						struct map_session_data *sd = (struct map_session_data *)src;
+						if (sd)
+							sd->state.leadership_flag = (int)unit;
+					}
 					break;
 				case GD_GLORYWOUNDS:
-					sc_data[SC_GLORYWOUNDS].val4 = (int)unit;
+					{
+						struct map_session_data *sd = (struct map_session_data *)src;
+						if (sd)
+							sd->state.glorywounds_flag = (int)unit;
+					}
 					break;
 				case GD_SOULCOLD:
-					sc_data[SC_SOULCOLD].val4 = (int)unit;
+					{
+						struct map_session_data *sd = (struct map_session_data *)src;
+						if (sd)
+							sd->state.soulcold_flag = (int)unit;
+					}
 					break;
 				case GD_HAWKEYES:
-					sc_data[SC_HAWKEYES].val4 = (int)unit;
+					{
+						struct map_session_data *sd = (struct map_session_data *)src;
+						if (sd)
+							sd->state.hawkeyes_flag = (int)unit;
+					}
 					break;
 				}
 			}
@@ -6234,8 +6250,10 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			struct map_session_data *sd;
 			if (srcsd && bl->type == BL_PC && (sd=(struct map_session_data *)bl) &&
 				sd->status.guild_id == srcsd->status.guild_id &&
-				sd->sc_data[SC_LEADERSHIP].timer == -1 && !sd->sc_data[SC_LEADERSHIP].val4)
-				skill_status_change_start(bl,SC_LEADERSHIP,1,0,0,0,0,0 );
+				sd != srcsd) {
+					sd->state.leadership_flag = (int)src;
+					pc_calcstatus (sd, 0);
+				}
 		}
 		break;
 	case 0xc2: // GD_GLORYWOUNDS
@@ -6243,8 +6261,10 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			struct map_session_data *sd;
 			if (srcsd && bl->type == BL_PC && (sd=(struct map_session_data *)bl) &&
 				sd->status.guild_id == srcsd->status.guild_id &&
-				sd->sc_data[SC_GLORYWOUNDS].timer == -1 && !sd->sc_data[SC_GLORYWOUNDS].val4)
-				skill_status_change_start(bl,SC_GLORYWOUNDS,1,0,0,0,0,0 );
+				sd != srcsd) {
+					sd->state.glorywounds_flag = (int)src;
+					pc_calcstatus (sd, 0);
+				}
 		}
 		break;
 	case 0xc3: // GD_SOULCOLD
@@ -6252,8 +6272,10 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			struct map_session_data *sd;
 			if (srcsd && bl->type == BL_PC && (sd=(struct map_session_data *)bl) &&
 				sd->status.guild_id == srcsd->status.guild_id &&
-				sd->sc_data[SC_SOULCOLD].timer == -1 && !sd->sc_data[SC_SOULCOLD].val4)
-				skill_status_change_start(bl,SC_SOULCOLD,1,0,0,0,0,0 );
+				sd != srcsd) {
+					sd->state.soulcold_flag = (int)src;
+					pc_calcstatus (sd, 0);
+				}
 		}
 		break;
 	case 0xc4: // GD_HAWKEYES
@@ -6261,8 +6283,10 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			struct map_session_data *sd;
 			if (srcsd && bl->type == BL_PC && (sd=(struct map_session_data *)bl) &&
 				sd->status.guild_id == srcsd->status.guild_id &&
-				sd->sc_data[SC_HAWKEYES].timer == -1 && !sd->sc_data[SC_HAWKEYES].val4)
-				skill_status_change_start(bl,SC_HAWKEYES,1,0,0,0,0,0 );
+				sd != srcsd) {
+					sd->state.hawkeyes_flag = (int)src;
+					pc_calcstatus (sd, 0);
+				}
 		}
 		break;
 
@@ -6404,30 +6428,30 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 		// New guild skills [Celest]
 	case 0xc1: // GD_LEADERSHIP
 		{
-			struct status_change *sc_data=battle_get_sc_data(bl);
-			if (sc_data && sc_data[SC_LEADERSHIP].timer != -1)
-				skill_status_change_end(bl,SC_LEADERSHIP,-1);
+			struct map_session_data *sd;
+			if (bl->type == BL_PC && (sd=(struct map_session_data *)bl) && sd->state.leadership_flag > 0)
+				sd->state.leadership_flag = 0;
 		}
 		break;
 	case 0xc2: // GD_GLORYWOUNDS
 		{
-			struct status_change *sc_data=battle_get_sc_data(bl);
-			if (sc_data && sc_data[SC_GLORYWOUNDS].timer != -1)
-				skill_status_change_end(bl,SC_GLORYWOUNDS,-1);
+			struct map_session_data *sd;
+			if (bl->type == BL_PC && (sd=(struct map_session_data *)bl) && sd->state.glorywounds_flag > 0)
+				sd->state.glorywounds_flag = 0;
 		}
 		break;
 	case 0xc3: // GD_SOULCOLD
 		{
-			struct status_change *sc_data=battle_get_sc_data(bl);
-			if (sc_data && sc_data[SC_SOULCOLD].timer != -1)
-				skill_status_change_end(bl,SC_SOULCOLD,-1);
+			struct map_session_data *sd;
+			if (bl->type == BL_PC && (sd=(struct map_session_data *)bl) && sd->state.soulcold_flag > 0)
+				sd->state.soulcold_flag = 0;
 		}
 		break;
 	case 0xc4: // GD_HAWKEYES
 		{
-			struct status_change *sc_data=battle_get_sc_data(bl);
-			if (sc_data && sc_data[SC_HAWKEYES].timer != -1)
-				skill_status_change_end(bl,SC_HAWKEYES,-1);
+			struct map_session_data *sd;
+			if (bl->type == BL_PC && (sd=(struct map_session_data *)bl) && sd->state.hawkeyes_flag > 0)
+				sd->state.hawkeyes_flag = 0;			
 		}
 		break;
 
@@ -6546,15 +6570,15 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 		{
 			struct map_session_data *sd;
 			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
-				sd->sc_data[SC_LEADERSHIP].val4 = 0;
-			}				
+				sd->state.leadership_flag = 0;
+			}
 		}
 		break;
 	case 0xc2: // GD_GLORYWOUNDS
 		{
 			struct map_session_data *sd;
 			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
-				sd->sc_data[SC_GLORYWOUNDS].val4 = 0;
+				sd->state.glorywounds_flag = 0;
 			}				
 		}
 		break;
@@ -6562,7 +6586,7 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 		{
 			struct map_session_data *sd;
 			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
-				sd->sc_data[SC_SOULCOLD].val4 = 0;
+				sd->state.soulcold_flag = 0;
 			}				
 		}
 		break;
@@ -6570,7 +6594,7 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 		{
 			struct map_session_data *sd;
 			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
-				sd->sc_data[SC_HAWKEYES].val4 = 0;
+				sd->state.hawkeyes_flag = 0;
 			}
 		}
 		break;
@@ -6975,6 +6999,8 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	skill = sd->skillid;
 	lv = sd->skilllv;
 	if(lv <= 0) return 0;
+	// for the guild skills [celest]
+	if (skill >= 10000 && skill < 10015) skill-= 9500;
 	hp=skill_get_hp(skill, lv);	/* Á”ïHP */
 	sp=skill_get_sp(skill, lv);	/* Á”ïSP */
 	if((sd->skillid_old == BD_ENCORE) && skill==sd->skillid_dance)
@@ -8655,10 +8681,10 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			case SC_MARIONETTE:
 			case SC_MARIONETTE2:
 			case SC_SLOWDOWN:
-			case SC_LEADERSHIP:
+/*			case SC_LEADERSHIP:
 			case SC_GLORYWOUNDS:
 			case SC_SOULCOLD:
-			case SC_HAWKEYES:
+			case SC_HAWKEYES:*/
 			case SC_BATTLEORDERS:
 			case SC_REGENERATION:
 				calc_flag = 1;
@@ -9306,7 +9332,7 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		break;
 
-	case SC_LEADERSHIP:
+/*	case SC_LEADERSHIP:
 	case SC_GLORYWOUNDS:
 	case SC_SOULCOLD:
 	case SC_HAWKEYES:
@@ -9315,7 +9341,7 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 				1000+tick, skill_status_change_timer,
 				bl->id, data);
 		}
-		break;
+		break;*/
 	
 	// Celest
 	case SC_CONFUSION:
@@ -10124,14 +10150,14 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			calc_flag = 1;
 			break;
 
-		case SC_LEADERSHIP:
+/*		case SC_LEADERSHIP:
 		case SC_GLORYWOUNDS:
 		case SC_SOULCOLD:
 		case SC_HAWKEYES:
 			tick = 1000;
 			calc_flag = 1;
 			//val4 = 1;
-			break;
+			break;*/
 
 		case SC_REGENERATION:
 			val1 = 2;
@@ -11285,21 +11311,26 @@ int skill_produce_mix( struct map_session_data *sd,
 	/* Šm—¦”»’è */
 	equip = itemdb_isequip(nameid);
 	if(!equip) {
+// Corrected rates [DracoRPG] --------------------------//
 		if(skill_produce_db[idx].req_skill==AM_PHARMACY) {
-			if((nameid >= 501 && nameid <= 506) || (nameid >= 545 && nameid <= 547) || nameid == 525)
-				make_per = 2000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_POTIONPITCHER)*100;
-			else if(nameid == 970)
-				make_per = 1500 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;
-			else if(nameid == 7135)
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_DEMONSTRATION)*100;
-			else if(nameid == 7136)
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_ACIDTERROR)*100;
-			else if(nameid == 7137)
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_CANNIBALIZE)*100;
-			else if(nameid == 7138)
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_SPHEREMINE)*100;
-			else if(nameid == 7139)
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_CP_WEAPON)*100 +
+			if(nameid >= 501 && nameid <= 505) // Normal potions
+				make_per = 2000 + sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_POTIONPITCHER)*100;
+			if(nameid >= 605 && nameid <= 606) // Anodyne & Aloevera (not sure of the formula, I put the same base value as normal pots but without the Aid Potion bonus since they are not throwable pots ^^)
+				make_per = 2000 + sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;
+			else if(nameid >= 545 && nameid <= 547) // Concentrated potions
+				make_per = sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;
+			else if(nameid == 970) // Alcohol
+				make_per = 1000 + sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;
+			else if(nameid == 7135) // Bottle Grenade
+				make_per = 500 + sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_DEMONSTRATION)*100;
+			else if(nameid == 7136) // Acid Bottle
+				make_per = 500 + sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_ACIDTERROR)*100;
+			else if(nameid == 7137) // Plant Bottle
+				make_per = 500 + sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_CANNIBALIZE)*100;
+			else if(nameid == 7138) // Marine Sphere Bottle
+				make_per = 500 + sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_SPHEREMINE)*100;
+			else if(nameid == 7139) // Glistening Coat
+				make_per = 500 + sd->status.job_level*20 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300 + pc_checkskill(sd,AM_CP_WEAPON)*100 +
 					pc_checkskill(sd,AM_CP_SHIELD)*100 + pc_checkskill(sd,AM_CP_ARMOR)*100 + pc_checkskill(sd,AM_CP_HELM)*100;
 			else
 				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;
@@ -11308,26 +11339,22 @@ int skill_produce_mix( struct map_session_data *sd,
 			//make_per = 20 + (20*sd->paramc[4])/50 + (20*sd->paramc[5])/100;
 		} else {
 			if(nameid == 998)
-				make_per = 2000 + sd->status.base_level*30 + sd->paramc[4]*20 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*600;
-			else if(nameid == 985)
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[4]*20 + sd->paramc[5]*10 + (pc_checkskill(sd,skill_produce_db[idx].req_skill)-1)*500;
+				make_per = 1500 + sd->status.job_level*35 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*600;
 			else
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[4]*20 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*500;
+				make_per = 1000 + sd->status.job_level*35 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*500;
 		}
 	}
-	else {
-		int add_per;
-		if(pc_search_inventory(sd,989) >= 0) add_per = 750;
-		else if(pc_search_inventory(sd,988) >= 0) add_per = 500;
-		else if(pc_search_inventory(sd,987) >= 0) add_per = 250;
-		else if(pc_search_inventory(sd,986) >= 0) add_per = 0;
-		else add_per = -500;
-		if(ele) add_per -= 500;
-		add_per -= sc*500;
-		wlv = itemdb_wlv(nameid);
-		make_per = ((250 + sd->status.base_level*15 + sd->paramc[4]*10 + sd->paramc[5]*5 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*500 +
-			add_per) * (100 - (wlv - 1)*20))/100 + pc_checkskill(sd,BS_WEAPONRESEARCH)*100 + ((wlv >= 3)? pc_checkskill(sd,BS_ORIDEOCON)*100 : 0);
+	else { // Corrected rates [DracoRPG]
+		int add_per=0;
+		if(pc_search_inventory(sd,989) >= 0) add_per = 400;
+		else if(pc_search_inventory(sd,988) >= 0) add_per = 300;
+		else if(pc_search_inventory(sd,987) >= 0) add_per = 200;
+		else if(pc_search_inventory(sd,986) >= 0) add_per = 100;
+			wlv = itemdb_wlv(nameid);
+			make_per = 1500 + sd->status.job_level*35 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*1000 + pc_checkskill(sd,BS_WEAPONRESEARCH)*100 +
+				((wlv >= 3)? pc_checkskill(sd,BS_ORIDEOCON)*100 : 0) + add_per - (ele? 2500:0) - sc*((4-wlv)*500) - wlv*1000;
 	}
+// -----------------------------------------------------//
 
 	if(make_per < 1) make_per = 1;
 

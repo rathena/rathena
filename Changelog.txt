@@ -1,4 +1,14 @@
 Date	Added
+12/16
+        * Updated Forging and Potion making formulas by DracoRPG [celest]
+        * Changes to the guild skills
+          - Dropped using sc_data and use flag values instead
+          - Changed moving guild skill units to once every 'move request' only instead
+            of every movement - should reduce server load abit
+          - Corrected crash when checking its skill requirements
+        * Initialise 'canregen' when logging into map - forgot to add this earlier,
+          sorry ^^; [celest]
+
 12/15
 	* Fixed more compile errors gcc 2.95 [MouseJstr]
         * Removed log files from svn... they will be created when

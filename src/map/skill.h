@@ -344,10 +344,10 @@ enum {	// struct map_session_data ‚Ì status_change‚Ì”Ô?ƒe?ƒuƒ‹
 	SC_SPELLBREAKER		=192,
 	SC_DPOISON			=193, /* –Ò“Å */
 	SC_BLOCKSKILL		=194, // for disallowing the use of a skill for a time period
-	SC_LEADERSHIP		=196,
+/*	SC_LEADERSHIP		=196, // temporarily disabled - they're too buggy =/
 	SC_GLORYWOUNDS		=197,
 	SC_SOULCOLD			=198,
-	SC_HAWKEYES			=199,
+	SC_HAWKEYES			=199,*/
 	SC_BATTLEORDERS		=200,
 	SC_REGENERATION		=201,
 	SC_PRESERVE         =202,

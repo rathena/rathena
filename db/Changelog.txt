@@ -5,6 +5,10 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/15   * Updated Steel Body, Thunderstorm, Investigate and Magic Crasher, thanks
+          to midas
+        * Removed elunium and oridecon from produce_db, thanks to Draco
+
 12/14   * Changed 'Parasite' to non-moving [celest]
 
 12/12   * Removed unuseable skills from skill_tree.txt [celest]

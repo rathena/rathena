@@ -138,6 +138,10 @@ struct map_session_data {
 		unsigned potionpitcher_flag : 1;
 		unsigned storage_flag : 1;
 		unsigned snovice_flag : 4;
+		int leadership_flag;
+		int glorywounds_flag;
+		int soulcold_flag;
+		int hawkeyes_flag;
 	} state;
 	struct {
 		unsigned killer : 1;

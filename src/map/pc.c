@@ -709,6 +709,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd->inchealspiritsptick = 0;
 	sd->canact_tick = tick;
 	sd->canmove_tick = tick;
+	sd->canregen_tick = tick;
 	sd->attackabletime = tick;
 
 	sd->doridori_counter = 0;
@@ -1477,37 +1478,33 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	if (sd->status.guild_id > 0) {
 		struct guild *g;
 		if ((g = guild_search(sd->status.guild_id)) && strcmp(sd->status.name,g->master)==0) {
-			if (!sd->sc_data[SC_LEADERSHIP].val4 && guild_checkskill(g, GD_LEADERSHIP)>0) {
-				//skill_status_change_start(&sd->bl,SC_LEADERSHIP,1,0,0,0,0,0 );
+			if (!sd->state.leadership_flag && guild_checkskill(g, GD_LEADERSHIP)>0) {
 				skill_unitsetting(&sd->bl,GD_LEADERSHIP,1,sd->bl.x,sd->bl.y,0);
 			}
-			if (!sd->sc_data[SC_GLORYWOUNDS].val4 && guild_checkskill(g, GD_GLORYWOUNDS)>0) {
-				//skill_status_change_start(&sd->bl,SC_GLORYWOUNDS,1,0,0,0,0,0 );
+			if (!sd->state.glorywounds_flag && guild_checkskill(g, GD_GLORYWOUNDS)>0) {
 				skill_unitsetting(&sd->bl,GD_GLORYWOUNDS,1,sd->bl.x,sd->bl.y,0);
 			}
-			if (!sd->sc_data[SC_SOULCOLD].val4 && guild_checkskill(g, GD_SOULCOLD)>0) {
-				//skill_status_change_start(&sd->bl,SC_SOULCOLD,1,0,0,0,0,0 );
+			if (!sd->state.soulcold_flag && guild_checkskill(g, GD_SOULCOLD)>0) {
 				skill_unitsetting(&sd->bl,GD_SOULCOLD,1,sd->bl.x,sd->bl.y,0);
 			}
-			if (!sd->sc_data[SC_HAWKEYES].val4 && guild_checkskill(g, GD_HAWKEYES)>0) {
-				//skill_status_change_start(&sd->bl,SC_HAWKEYES,1,0,0,0,0,0 );
+			if (!sd->state.hawkeyes_flag && guild_checkskill(g, GD_HAWKEYES)>0) {
 				skill_unitsetting(&sd->bl,GD_HAWKEYES,1,sd->bl.x,sd->bl.y,0);
 			}
 		}
-		else if (sd->sc_count) {
-			if (sd->sc_data[SC_LEADERSHIP].timer != -1)
-				sd->paramb[0] += 2;
-			if (sd->sc_data[SC_GLORYWOUNDS].timer != -1)
-				sd->paramb[2] += 2;
-			if (sd->sc_data[SC_SOULCOLD].timer != -1)
-				sd->paramb[1] += 2;
-			if (sd->sc_data[SC_HAWKEYES].timer != -1)
-				sd->paramb[4] += 2;
-			if (sd->sc_data[SC_BATTLEORDERS].timer != -1) {
+		else if (g) {
+			if (sd->sc_count && sd->sc_data[SC_BATTLEORDERS].timer != -1) {
 				sd->paramb[0]+= 5;
 				sd->paramb[3]+= 5;
 				sd->paramb[4]+= 5;
 			}
+			if (sd->state.leadership_flag)
+				sd->paramb[0] += 2;
+			if (sd->state.glorywounds_flag)
+				sd->paramb[2] += 2;
+			if (sd->state.soulcold_flag)
+				sd->paramb[1] += 2;
+			if (sd->state.hawkeyes_flag)
+				sd->paramb[4] += 2;
 		}
 	}
 
@@ -4207,17 +4204,26 @@ int pc_walktoxy(struct map_session_data *sd,int x,int y)
 
 	if (sd->sc_data && sd->status.guild_id > 0) {
 		struct skill_unit *su;
-		if (sd->sc_data[SC_LEADERSHIP].val4 && (su=(struct skill_unit *)sd->sc_data[SC_LEADERSHIP].val4)) {
-			skill_unit_move_unit_group(su->group,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
+		struct skill_unit_group *sg;
+		//if (sd->sc_data[SC_LEADERSHIP].val4 && (su=(struct skill_unit *)sd->sc_data[SC_LEADERSHIP].val4)) {
+		if (sd->state.leadership_flag && (su=(struct skill_unit *)sd->state.leadership_flag) && 
+			(sg=su->group) && sg->src_id == sd->bl.id) {
+			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
 		}
-		if (sd->sc_data[SC_GLORYWOUNDS].val4 && (su=(struct skill_unit *)sd->sc_data[SC_GLORYWOUNDS].val4)) {
-			skill_unit_move_unit_group(su->group,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
+		//if (sd->sc_data[SC_GLORYWOUNDS].val4 && (su=(struct skill_unit *)sd->sc_data[SC_GLORYWOUNDS].val4)) {
+		if (sd->state.glorywounds_flag && (su=(struct skill_unit *)sd->state.glorywounds_flag) && 
+			(sg=su->group) && sg->src_id == sd->bl.id) {
+			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
 		}
-		if (sd->sc_data[SC_SOULCOLD].val4 && (su=(struct skill_unit *)sd->sc_data[SC_SOULCOLD].val4)) {
-			skill_unit_move_unit_group(su->group,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
+		//if (sd->sc_data[SC_SOULCOLD].val4 && (su=(struct skill_unit *)sd->sc_data[SC_SOULCOLD].val4)) {
+		if (sd->state.soulcold_flag && (su=(struct skill_unit *)sd->state.soulcold_flag) && 
+			(sg=su->group) && sg->src_id == sd->bl.id) {
+			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
 		}
-		if (sd->sc_data[SC_HAWKEYES].val4 && (su=(struct skill_unit *)sd->sc_data[SC_HAWKEYES].val4)) {
-			skill_unit_move_unit_group(su->group,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
+		//if (sd->sc_data[SC_HAWKEYES].val4 && (su=(struct skill_unit *)sd->sc_data[SC_HAWKEYES].val4)) {
+		if (sd->state.hawkeyes_flag && (su=(struct skill_unit *)sd->state.hawkeyes_flag) && 
+			(sg=su->group) && sg->src_id == sd->bl.id) {
+			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
 		}
 	}
 
