@@ -1,4 +1,6 @@
 Date	Added
+11/28
+	* Added a fix for gettimeofday() for WIN32 [Codemaster]
 11/27
 	* Fixed a few map crashes when char-server crashes [Wizputer]
 	* Added fix of 0x2aff and 0x2af8 flooding [Wizputer - thanks Toster] 
