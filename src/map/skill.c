@@ -9394,6 +9394,7 @@ int skill_readdb(void)
 		printf("can't read db/skill_unit_db.txt\n");
 		return 1;
 	}
+        k = 0;
 	while (fgets(line,1020,fp)) {
 		char *split[50];
 		if (line[0]=='/' && line[1]=='/')

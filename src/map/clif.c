@@ -10871,7 +10871,7 @@ static int packetdb_readdb(void)
 	char line[1024];
 	int ln=0;
 	int cmd,j,k,packet_ver;
-	char *str[32],*p,*str2[32],*p2,w1[24],w2[24];
+	char *str[64],*p,*str2[64],*p2,w1[64],w2[64];
 
 	struct {
 		void (*func)(int, struct map_session_data *);

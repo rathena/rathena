@@ -1,3 +1,4 @@
+#ifndef TXT_ONLY
 // Mail System for eAthena SQL
 // Created by Valaris
 // moved all strings to msg_athena.conf [Lupus]
@@ -333,3 +334,4 @@ int do_init_mail(void)
 	return 0;
 }
 
+#endif

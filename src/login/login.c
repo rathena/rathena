@@ -2841,6 +2841,8 @@ int parse_login(int fd) {
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
 
+        memset(&account, 0, sizeof(account));
+
 	if (session[fd]->eof) {
 		close(fd);
 		delete_session(fd);

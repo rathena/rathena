@@ -281,7 +281,7 @@ int mapif_party_noinfo(int fd, int party_id) {
 
 // パ?ティ情報まとめ送り
 int mapif_party_info(int fd, struct party *p) {
-	unsigned char buf[4 + sizeof(struct party)];
+	unsigned char buf[2048];
 
 	WBUFW(buf,0) = 0x3821;
 	memcpy(buf + 4, p, sizeof(struct party));
@@ -368,7 +368,7 @@ int mapif_party_broken(int party_id, int flag) {
 
 // パ?ティ??言
 int mapif_party_message(int party_id, int account_id, char *mes, int len, int sfd) {
-	unsigned char buf[len+12];
+	unsigned char buf[2048];
 
 	WBUFW(buf,0) = 0x3827;
 	WBUFW(buf,2) = len + 12;

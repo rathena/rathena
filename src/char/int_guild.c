@@ -731,7 +731,7 @@ int mapif_guild_noinfo(int fd, int guild_id) {
 
 // ƒMƒ‹ƒhî•ñ‚Ü‚Æ‚ß‘—‚è
 int mapif_guild_info(int fd, struct guild *g) {
-	unsigned char buf[4 + sizeof(struct guild)];
+	unsigned char buf[2048];
 
 	WBUFW(buf,0) = 0x3831;
 	memcpy(buf + 4, g, sizeof(struct guild));
@@ -805,7 +805,7 @@ int mapif_guild_broken(int guild_id, int flag) {
 
 // ƒMƒ‹ƒh“à”­Œ¾
 int mapif_guild_message(int guild_id, int account_id, char *mes, int len, int sfd) {
-	unsigned char buf[len+12];
+	unsigned char buf[2048];
 
 	WBUFW(buf,0) = 0x3837;
 	WBUFW(buf,2) = len + 12;
@@ -832,7 +832,7 @@ int mapif_guild_basicinfochanged(int guild_id, int type, const void *data, int l
 
 // ƒMƒ‹ƒhƒƒ“ƒoî•ñ•ÏX’Ê’m
 int mapif_guild_memberinfochanged(int guild_id, int account_id, int char_id, int type, const void *data, int len) {
-	unsigned char buf[len + 18];
+	unsigned char buf[4096];
 
 	WBUFW(buf, 0) = 0x383a;
 	WBUFW(buf, 2) = len + 18;
@@ -878,7 +878,7 @@ int mapif_guild_alliance(int guild_id1, int guild_id2, int account_id1, int acco
 
 // ƒMƒ‹ƒh–ğE•ÏX’Ê’m
 int mapif_guild_position(struct guild *g, int idx) {
-	unsigned char buf[sizeof(struct guild_position) + 12];
+	unsigned char buf[2048];
 
 	WBUFW(buf,0) = 0x383b;
 	WBUFW(buf,2) = sizeof(struct guild_position) + 12;

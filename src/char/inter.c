@@ -296,7 +296,7 @@ int inter_mapif_init(int fd) {
 
 // GMメッセージ送信
 int mapif_GMmessage(unsigned char *mes, int len, int sfd) {
-	unsigned char buf[len];
+	unsigned char buf[2048];
 
 	WBUFW(buf,0) = 0x3800;
 	WBUFW(buf,2) = len;
@@ -309,7 +309,7 @@ int mapif_GMmessage(unsigned char *mes, int len, int sfd) {
 
 // Wisp/page transmission to all map-server
 int mapif_wis_message(struct WisData *wd) {
-	unsigned char buf[56 + wd->len];
+	unsigned char buf[2048];
 
 	WBUFW(buf, 0) = 0x3801;
 	WBUFW(buf, 2) = 56 + wd->len;
@@ -337,7 +337,7 @@ int mapif_wis_end(struct WisData *wd, int flag) {
 
 // アカウント変数送信
 int mapif_account_reg(int fd, unsigned char *src) {
-	unsigned char buf[WBUFW(src,2)];
+	unsigned char buf[2048];
 
 	memcpy(WBUFP(buf,0),src,WBUFW(src,2));
 	WBUFW(buf, 0) = 0x3804;
@@ -489,7 +489,7 @@ int mapif_parse_WisReply(int fd) {
 
 // Received wisp message from map-server for ALL gm (just copy the message and resends it to ALL map-servers)
 int mapif_parse_WisToGM(int fd) {
-	unsigned char buf[RFIFOW(fd,2)]; // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
+	unsigned char buf[2048]; // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
 
 	memcpy(WBUFP(buf,0), RFIFOP(fd,0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3803;

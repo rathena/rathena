@@ -2,19 +2,26 @@
 // original : char2.c 2003/03/14 11:58:35 Rev.1.5
 
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef _WIN32
+#include <winsock.h>
+typedef long in_addr_t;
+#else
+#include <sys/socket.h>
 #include <netinet/in.h>
-#include <sys/time.h>
-#include <time.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 #include <sys/ioctl.h>
+#include <sys/time.h>
 #include <unistd.h>
+#endif
+
+#include <time.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h>
-#include <arpa/inet.h>
-#include <netdb.h>
 #include <stdarg.h>
 
 #include "../common/strlib.h"
@@ -1073,7 +1080,7 @@ void create_online_files(void) {
 	char temp[256];      // to prepare what we must display
 	time_t time_server;  // for number of seconds
 	struct tm *datetime; // variable for time in structure ->tm_mday, ->tm_sec, ...
-	int id[online_players_max];
+	int id[4096];
 
 	// don't return here if we display nothing, because server[j].users is updated in the first loop.
 
@@ -1822,7 +1829,7 @@ int parse_tologin(int fd) {
 					char_log("'ladmin': Receiving a message for broadcast, but no map-server is online." RETCODE);
 				else {
 					unsigned char buf[128];
-					char message[RFIFOL(fd,4) + 1]; // +1 to add a null terminated if not exist in the packet
+					char message[4096]; // +1 to add a null terminated if not exist in the packet
 					int lp;
 					char *p;
 					memset(message, '\0', sizeof(message));
