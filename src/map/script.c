@@ -299,6 +299,7 @@ int buildin_guildgetexp(struct script_state *st); // [celest]
 int buildin_skilluseid(struct script_state *st); // originally by Qamera [celest]
 int buildin_skillusepos(struct script_state *st); // originally by Qamera [celest]
 int buildin_logmes(struct script_state *st); // [Lupus]
+int buildin_summon(struct script_state *st); // [celest]
 
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
@@ -469,9 +470,9 @@ struct {
 	{buildin_failedremovecards,"failedremovecards","ii"},
 	{buildin_marriage,"marriage","s"},
 	{buildin_wedding_effect,"wedding",""},
-	{buildin_divorce,"divorce",""},
-	{buildin_ispartneron,"ispartneron",""},
-	{buildin_getpartnerid,"getpartnerid",""},
+	{buildin_divorce,"divorce","*"},
+	{buildin_ispartneron,"ispartneron","*"},
+	{buildin_getpartnerid,"getpartnerid","*"},
 	{buildin_warppartner,"warppartner","sii"},
 	{buildin_getitemname,"getitemname","i"},
 	{buildin_makepet,"makepet","i"},
@@ -519,6 +520,7 @@ struct {
 	{buildin_skilluseid,"doskill","ii"}, // since a lot of scripts would already use 'doskill'...
 	{buildin_skillusepos,"skillusepos","iiii"}, // [Celest]
 	{buildin_logmes,"logmes","s"}, //this command actls as MES but prints info into LOG file either SQL/TXT [Lupus]
+	{buildin_summon,"summon","si*"}, // summons a slave monster [Celest]
 	{NULL,NULL,NULL},
 };
 int buildin_message(struct script_state *st); // [MouseJstr]
@@ -6423,6 +6425,35 @@ int buildin_logmes(struct script_state *st)
 	if (log_config.npc <= 0 ) return 0;
 	conv_str(st,& (st->stack->stack_data[st->start+2]));
 	log_npc(script_rid2sd(st),st->stack->stack_data[st->start+2].u.str);
+	return 0;
+}
+
+int buildin_summon(struct script_state *st)
+{
+	int class, id;
+	char *str,*event="";
+	struct map_session_data *sd;
+	struct mob_data *md;
+
+	sd=script_rid2sd(st);
+	if (sd) {
+		int tick = gettick();
+		str	=conv_str(st,& (st->stack->stack_data[st->start+2]));
+		class=conv_num(st,& (st->stack->stack_data[st->start+3]));
+		if( st->end>st->start+4 )
+			event=conv_str(st,& (st->stack->stack_data[st->start+4]));
+
+		id=mob_once_spawn(sd, "this", 0, 0, str,class,1,event);
+		if((md=(struct mob_data *)map_id2bl(id))){
+			md->master_id=sd->bl.id;
+			md->state.special_mob_ai=1;
+			md->mode=mob_db[md->class_].mode|0x04;
+			md->deletetimer=add_timer(tick+60000,mob_timer_delete,id,0);
+			clif_misceffect2(&md->bl,344);
+		}
+		clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
+	}
+
 	return 0;
 }
 

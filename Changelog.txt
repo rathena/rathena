@@ -1,5 +1,15 @@
 Date	Added
 01/07
+        * Added 'summon' script command. Syntax:
+
+          	summon <monster name>,<monster id>[,<event>];
+
+          Example: 'summon "Poring", 1002, "OnPoringKilled"; 'will summon (note:
+                   not *spawn*) 1 poring that'll help its master for 1 minute,
+                   and activate the "OnPoringKilled" event when killed.
+                   'summon "--ja--",-1;' will summon a random monster.
+
+        * Added Wallex's fix for the wedding script functions [celest]
         * Added the below-mentioned alive packet to SQL's char and login [celest]
         * Enabled login server 'anti-freeze' by default as a temporary solution
           to char-login disconnection [celest]
