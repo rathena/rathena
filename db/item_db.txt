@@ -1185,14 +1185,14 @@
 4152,Galapago_Card,Galapago Card,6,20,0,10,,,,,,,,,,,{},{}
 4153,Crab_Card,Crab Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,5; bonus2 bAddDamageClass,1266,30; bonus2 bAddEle,4,30; if(isequipped(4247,4273)) bonus3 bAddMonsterDropItem,544,5,3000; }
 4154,Dumpling_Child_Card,Dumpling Child Card,6,20,0,10,,,,,,,,,,,{},{}
-4155,Goblin_Leader_Card,Goblin Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddDamageClass,1122,30; bonus2 bAddDamageClass,1123,30; bonus2 bAddDamageClass,1124,30; bonus2 bAddDamageClass,1125,30; bonus2 bAddDamageClass,1126,30; }
+4155,Goblin_Leader_Card,Goblin Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddDamageClass,1122,30; bonus2 bAddDamageClass,1123,30; bonus2 bAddDamageClass,1124,30; bonus2 bAddDamageClass,1125,30; bonus2 bAddDamageClass,1126,30; bAddDamageClass,1245,30; bAddDamageClass,1258,30; bAddDamageClass,1280,30; bAddDamageClass,1299,30; bAddDamageClass,1308,30; }
 4156,Goblin_Steamrider_Card,Goblin Steamrider Card,6,20,0,10,,,,,,,2,,,,{},{}
 4157,Goblin_Archer_Card,Goblin Archer Card,6,20,0,10,,,,,,,2,,,,{},{}
 4158,Sky_Deleter_Card,Sky Deleter Card,6,20,0,10,,,,,,,16,,,,{},{}
 4159,Nine_Tail_Card,Nine Tail Card,6,20,0,10,,,,,,,,,,,{},{}
 4160,Firelock_Soldier_Card,Firelock Soldier Card,6,20,0,10,,,,,,,,,,,{},{}
 4161,Grand_Peco_Card,Grand Peco Card,6,20,0,10,,,,,,,,,,,{},{}
-4162,Grizzly_Card,Grizzly Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDef,2; if(isequipped(4074)) bonus4 bAutoSpellWhenHit,177,1,30,1; }
+4162,Grizzly_Card,Grizzly Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDef,2; if(isequipped(4074)) bonus2 bAddEffWhenHit,Eff_Blind,30; }
 4163,Gryphon_Card,Gryphon Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bFlee,2; bonus bCritical,7; if (callfunc("Is_Sword_Class")!=0) bonus3 bAutoSpell,62,5,10; }
 4164,Gullinbursti_Card,Gullinbursti Card,6,20,0,10,,,,,,,,,,,{},{}
 4165,Gig_Card,Gig Card,6,20,0,10,,,,,,,,,,,{},{}
