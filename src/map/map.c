@@ -2899,9 +2899,8 @@ int inter_config_read(char *cfgName)
 		//support the import command, just like any other config
 		if(strcmpi(w1,"import")==0){
 			inter_config_read(w2);
-		}
 	#ifndef TXT_ONLY
-		else if(strcmpi(w1,"item_db_db")==0){
+		} else if(strcmpi(w1,"item_db_db")==0){
 			strcpy(item_db_db,w2);
 		} else if(strcmpi(w1,"mob_db_db")==0){
 			strcpy(mob_db_db,w2);

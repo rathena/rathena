@@ -1,6 +1,7 @@
 Date	Added
 
 03/17
+        * Re-fixed compile error in map.c -- sorry ^^; [celest]
         * trade.c fixed possibility of STORAGE+TRADE spooffing dupe [Lupus]
 	  Now, on accepting trade your active Storage window closes. (Either Common or Guils Storage)
 		thanx to Sergey for the exploit test and report
