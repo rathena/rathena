@@ -20,10 +20,10 @@
 yuno_in01.gat,103,158,4	script	Bain	98,
 {
 	set @name$, "[Bain]";
-	if (sleiphnir_q == 1) goto L_Check;
 	
 OnStart:
 	mes @name$;
+	if (sleiphnir_q == 1) goto L_Check;
 	mes "We are going to invent a doll that can talk and communicate! Well, at least that's what I'm trying to do....";
 	mes "The idea came from an old tale about a doll that acted like a real person.";
 	next;
