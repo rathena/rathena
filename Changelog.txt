@@ -1,7 +1,7 @@
 Date	Added
 12/6
         * Updated Chase Walk [celest]
-        * Added 'checkoption2' and 'checkoption3' script functions - Refer to
+        * Added 'checkoption1' and 'checkoption2' script functions - Refer to
           /npc/sample/npc_testchkoption.txt for similiar examples [celest]
 
 12/5

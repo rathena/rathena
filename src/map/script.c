@@ -289,9 +289,8 @@ int buildin_npcspeed(struct script_state *st); // [Valaris]
 int buildin_npcwalkto(struct script_state *st); // [Valaris]
 int buildin_npcstop(struct script_state *st); // [Valaris]
 int buildin_getmapxy(struct script_state *st);  //get map position for player/npc/pet/mob by Lorky [Lupus]
+int buildin_checkoption1(struct script_state *st); // [celest]
 int buildin_checkoption2(struct script_state *st); // [celest]
-int buildin_checkoption3(struct script_state *st); // [celest]
-
 
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
@@ -501,8 +500,8 @@ struct {
 	{buildin_npcwalkto,"npcwalkto","ii"}, // [Valaris]
 	{buildin_npcstop,"npcstop",""}, // [Valaris]
 	{buildin_getmapxy,"getmapxy","siii*"},	//by Lorky [Lupus]
-	{buildin_checkoption2,"checkoption2","i"},
-	{buildin_checkoption3,"checkoption3","i"},
+	{buildin_checkoption1,"checkoption1","i"},
+	{buildin_checkoption2,"checkoption2","i"},	
 	{NULL,NULL,NULL},
 };
 int buildin_message(struct script_state *st); // [MouseJstr]
@@ -3307,7 +3306,7 @@ int buildin_checkoption(struct script_state *st)
  *
  *------------------------------------------
  */
-int buildin_checkoption2(struct script_state *st)
+int buildin_checkoption1(struct script_state *st)
 {
 	int type;
 	struct map_session_data *sd;
@@ -3315,7 +3314,7 @@ int buildin_checkoption2(struct script_state *st)
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	sd=script_rid2sd(st);
 
-	if(sd->opt2 & type){
+	if(sd->opt1 & type){
 		push_val(st->stack,C_INT,1);
 	} else {
 		push_val(st->stack,C_INT,0);
@@ -3327,7 +3326,7 @@ int buildin_checkoption2(struct script_state *st)
  *
  *------------------------------------------
  */
-int buildin_checkoption3(struct script_state *st)
+int buildin_checkoption2(struct script_state *st)
 {
 	int type;
 	struct map_session_data *sd;
@@ -3335,7 +3334,7 @@ int buildin_checkoption3(struct script_state *st)
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	sd=script_rid2sd(st);
 
-	if(sd->opt3 & type){
+	if(sd->opt2 & type){
 		push_val(st->stack,C_INT,1);
 	} else {
 		push_val(st->stack,C_INT,0);
