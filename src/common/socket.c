@@ -45,18 +45,19 @@ time_t tick_;
 time_t stall_time_ = 60;
 int ip_rules = 1;
 
-#define UPNP
+// #define UPNP
+
 #ifdef UPNP
-	#if defined(CYGWIN) || defined(_WIN32)
-		DLL upnp_dll;
-		int (*upnp_init)();
-		int (*upnp_final)();
-		int (*firewall_addport)(char *desc, int port);
-		int (*upnp_addport)(char *desc, char *ip, int port);
-		extern char server_type[24];
-	#else
-		#error This doesnt work with non-Windows yet
-	#endif
+#if defined(CYGWIN) || defined(_WIN32)
+DLL upnp_dll;
+int (*upnp_init)();
+int (*upnp_final)();
+int (*firewall_addport)(char *desc, int port);
+int (*upnp_addport)(char *desc, char *ip, int port);
+extern char server_type[24];
+#else
+#error This doesnt work with non-Windows yet
+#endif
 #endif
 
 int rfifo_size = 65536;
