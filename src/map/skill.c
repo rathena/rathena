@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/12/3 7:53:42 PM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/12/7 9:42:00 PM Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -3693,19 +3693,32 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		break;
 
 	case MG_STONECURSE:			/* スト?ンカ?ス */
-		if (bl->type==BL_MOB && battle_get_mode(bl)&0x20) {
-			clif_skill_fail(sd,sd->skillid,0,0);
-			break;
+		{
+			// Level 6-10 doesn't consume a red gem if it fails [celest]
+			int i, gem_flag = 1;
+			if (bl->type==BL_MOB && battle_get_mode(bl)&0x20) {
+				clif_skill_fail(sd,sd->skillid,0,0);
+				break;
+			}
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage )
+				break;
+			if( rand()%100 < skilllv*4+20 && !battle_check_undead(battle_get_race(bl),battle_get_elem_type(bl)))
+				skill_status_change_start(bl,SC_STONE,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
+			else if(sd) {
+				if (skilllv > 5) gem_flag = 0;
+				clif_skill_fail(sd,skillid,0,0);
+			}
+			if (dstmd)
+				mob_target(dstmd,src,skill_get_range(skillid,skilllv));
+			if (sd && gem_flag) {
+				if ((i=pc_search_inventory(sd, skill_db[skillid].itemid[0])) < 0 ) {
+					clif_skill_fail(sd,sd->skillid,0,0);
+					break;
+				}
+				pc_delitem(sd, i, skill_db[skillid].amount[0], 0);
+			}
 		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage )
-			break;
-		if( rand()%100 < skilllv*4+20 && !battle_check_undead(battle_get_race(bl),battle_get_elem_type(bl)))
-			skill_status_change_start(bl,SC_STONE,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
-		else if(sd)
-			clif_skill_fail(sd,skillid,0,0);
-		if (dstmd)
-			mob_target(dstmd,src,skill_get_range(skillid,skilllv));
 		break;
 
 	case NV_FIRSTAID:			/* ?急手? */
@@ -7204,7 +7217,9 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	if(!(type&1))
 		return 1;
 
-	if(skill != AM_POTIONPITCHER) {
+	if(skill != AM_POTIONPITCHER && 
+		skill != CR_SLIMPITCHER &&
+		skill != MG_STONECURSE) {
 		if(skill == AL_WARP && !(type&2))
 			return 1;
 		for(i=0;i<10;i++) {
@@ -8659,6 +8674,16 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			case SC_CURSE:
 				calc_flag = 1;
 				break;
+
+			// celest
+			case SC_CONFUSION:
+				{
+					struct map_session_data *sd=NULL;
+					if(bl->type == BL_PC && (sd=(struct map_session_data *)bl)){				
+						sd->next_walktime = -1;
+					}
+				}
+				break;
 		}
 
 		if(bl->type==BL_PC && type<SC_SENDMAX)
@@ -9195,9 +9220,31 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 				bl->id, data);
 		}
 		break;
-	}
-
 	
+	// Celest
+	case SC_CONFUSION:
+		{
+			int i = 3000;
+			//struct mob_data *md;
+			if (sd) {
+				pc_randomwalk (sd, gettick());
+				sd->next_walktime = tick + (i=1000 + rand()%1000);
+			} /*else if (bl->type==BL_MOB && (md=(struct mob_data *)bl) && md->mode&1 && mob_can_move(md)) {
+				md->state.state=MS_WALK;
+				if( DIFF_TICK(md->next_walktime,tick) > + 7000 &&
+					(md->walkpath.path_len==0 || md->walkpath.path_pos>=md->walkpath.path_len) )
+					md->next_walktime = tick + 3000*rand()%2000;
+				mob_randomwalk(md,tick);
+			}*/
+			if ((sc_data[type].val2 -= 1000) > 0) {
+				sc_data[type].timer = add_timer(
+					i + tick, skill_status_change_timer,
+					bl->id, data);
+					return 0;
+			}
+		}
+		break;
+	}	
 
 	return skill_status_change_end( bl,type,tid );
 }
@@ -9750,6 +9797,14 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			if(!(flag&2)) {
 				int sc_def = 100 - battle_get_vit(bl);
 				tick = tick * sc_def / 100;
+			}
+			break;
+		case SC_CONFUSION:
+			val2 = tick;
+			tick = 100;
+			clif_emotion(bl,1);
+			if (sd) {
+				pc_stop_walking (sd, 0);
 			}
 			break;
 		case SC_BLIND:				/* 暗? */

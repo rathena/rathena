@@ -7462,7 +7462,8 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 	     sd->sc_data[SC_TRICKDEAD].timer !=-1 || //死んだふり
 	     sd->sc_data[SC_BLADESTOP].timer !=-1 || //白刃取り
 	     sd->sc_data[SC_SPIDERWEB].timer !=-1 || //スパイダーウェッブ
-	     (sd->sc_data[SC_DANCING].timer !=-1 && sd->sc_data[SC_DANCING].val4)) //合奏スキル演奏中は動けない
+	     (sd->sc_data[SC_DANCING].timer !=-1 && sd->sc_data[SC_DANCING].val4) || //合奏スキル演奏中は動けない
+		 sd->sc_data[SC_CONFUSION].timer !=-1)
 		return;
 	if ((sd->status.option & 2) && pc_checkskill(sd, RG_TUNNELDRIVE) <= 0)
 		return;
@@ -8192,7 +8193,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 		clif_clearchar_area(&sd->bl, 1);
 		return;
 	}
-	if (sd->npc_id!=0 || sd->vender_id != 0 || sd->opt1 > 0 ||
+	if (sd->npc_id!=0 || sd->vender_id != 0 || (sd->opt1 > 0 && sd->opt1 != 6) ||
 	    (sd->sc_data && (sd->sc_data[SC_TRICKDEAD].timer != -1 || //死んだふり
 	     sd->sc_data[SC_BLADESTOP].timer != -1 || //白刃取り
 		sd->sc_data[SC_BERSERK].timer!=-1 ||	//バーサーク

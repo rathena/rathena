@@ -72,12 +72,12 @@ enum {
 };
 
 enum {
-	MSS_IDLE,	// ‘Ò‹@
-	MSS_WALK,	// ˆÚ“®
-	MSS_ATTACK,	// UŒ‚
-	MSS_DEAD,	// €–S
-	MSS_LOOT,	// ƒ‹[ƒg
-	MSS_CHASE,	// “ËŒ‚
+	MSS_IDLE,	// ?@
+	MSS_WALK,	// ?
+	MSS_ATTACK,	// U
+	MSS_DEAD,	// S
+	MSS_LOOT,	// [g
+	MSS_CHASE,	// ?
 };
 
 int mobdb_searchname(const char *str);
@@ -93,6 +93,8 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,	// Spawning Gu
 
 
 int mob_walktoxy(struct mob_data *md,int x,int y,int easy);
+//int mob_randomwalk(struct mob_data *md,int tick);
+//int mob_can_move(struct mob_data *md);
 
 int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_stop_walking(struct mob_data *md,int type);

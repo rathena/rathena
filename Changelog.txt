@@ -3,8 +3,13 @@ Date	Added
         * Skill Updates [celest]
           - Arrow Shower, Double Strafing, Charge Arrow, Throw Arrow, Sharp Shooting,
             Arrow Vulcan, and Musical Strike now take arrows when used
+          - Level 6-10 Stone Curse will not consume a red gem now when it fails
+          - Players should be able to use items when they're stoned but not yet
+            completely petrified
         * Added 'guildgetexp' script command [celest]
         * Added bLongAtkRate item effect [celest]
+        * Implemented Confusion (50%) - still need more info on how monsters act
+          when they're confused [celest]
 
 12/6
 	* Fixed file props for new npcs [MouseJstr]

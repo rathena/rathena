@@ -685,6 +685,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd->head_dir = 0;
 	sd->state.auth = 1;
 	sd->walktimer = -1;
+	sd->next_walktime = -1;
 	sd->attacktimer = -1;
 	sd->followtimer = -1; // [MouseJstr]
 	sd->skilltimer = -1;
@@ -4208,6 +4209,40 @@ int pc_stop_walking(struct map_session_data *sd,int type)
 			sd->canmove_tick = tick + delay;
 	}
 
+	return 0;
+}
+
+/*==========================================
+ * Random walk
+ *------------------------------------------
+ */
+int pc_randomwalk(struct map_session_data *sd,int tick)
+{
+	const int retrycount = 20;
+	nullpo_retr(0, sd);
+	
+	if(DIFF_TICK(sd->next_walktime,tick)<0){
+		int i,x,y,c,d;
+		d = rand()%7+5;
+		for(i=0;i<retrycount;i++){	// Search of a movable place
+			int r=rand();
+			x=sd->bl.x+r%(d*2+1)-d;
+			y=sd->bl.y+r/(d*2+1)%(d*2+1)-d;
+			if((c=map_getcell(sd->bl.m,x,y))!=1 && c!=5 && pc_walktoxy(sd,x,y)==0){
+				break;
+			}
+		}
+		// Working on this part later [celest]
+		/*for(i=c=0;i<sd->walkpath.path_len;i++){	// The next walk start time is calculated.
+			if(sd->walkpath.path[i]&1)
+				c+=sd->speed*14/10;
+			else
+				c+=sd->speed;
+		}
+		sd->next_walktime = (d=tick+rand()%3000+c);
+		return d;*/
+		return 1;
+	}
 	return 0;
 }
 

@@ -169,6 +169,7 @@ struct map_session_data {
 	unsigned int client_tick,server_tick;
 	struct walkpath_data walkpath;
 	int walktimer;
+	int next_walktime;
 	int npc_id,areanpc_id,npc_shopid;
 	int npc_pos;
 	int npc_menu;
