@@ -32,6 +32,8 @@ Other Ppl
 
 Date		Added
 ======
+12/12	* Added Town Inn's counting in my npc/other/mc_cameri/warper.txt [MC Cameri]
+
 12/11	* Fixed memory consumption in npc/other/mc_cameri/warper.txt [MC Cameri]
 
 12/10

@@ -1208,7 +1208,9 @@ void map_removenpc(void) {
             }
         }
     }
-    printf("%d NPCs removed.\n",n);
+	
+    sprintf(tmp_output,"Successfully removed and freed from memory '\033[1;29m%d\033[0;0m' NPCs.\n",n);
+	ShowStatus(tmp_output);
 }
 
 /*==========================================
@@ -2181,16 +2183,14 @@ static int cleanup_sub(struct block_list *bl, va_list ap) {
  */
 void do_final(void) {
     int map_id, i;
-
+	ShowStatus("Terminating.\n");
     for (map_id = 0; map_id < map_num;map_id++) {
 	if(map[map_id].m)
 		map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, 0, 0);
     }
-
 #ifndef TXT_ONLY
     chrif_char_reset_offline();
 #endif
-
     for (i = 0; i < fd_max; i++) 
         delete_session(i);
 
@@ -2209,14 +2209,16 @@ void do_final(void) {
 		if(map[i].block_count) free(map[i].block_count);
 		if(map[i].block_mob_count) free(map[i].block_mob_count);
 	}
+
 	do_final_script();
 	do_final_itemdb();
 	do_final_storage();
-        do_final_guild();
+	do_final_guild();
 
 #ifndef TXT_ONLY
     map_sql_close();
 #endif /* not TXT_ONLY */
+	ShowStatus("Successfully terminated.");
 }
 
 void map_helpscreen(int flag) {
@@ -2418,7 +2420,9 @@ int do_init(int argc, char *argv[]) {
 	if (imalive_on)
 		add_timer_interval(gettick()+10, imalive_timer,0,0,imalive_time*1000);
 
-	printf("The map-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", map_port);
+	sprintf(tmp_output,"Server is '\033[1;32mready\033[0m' and listening on port '\033[1;29m%d\033[0;0m'.\n\n", map_port);
+	ShowStatus(tmp_output);
+
 	ticks = gettick();
 	
 

@@ -24,7 +24,22 @@
 	set @reset$,"^000000";
 
 //	towns
-	set @towns, getmapusers("alberta.gat") + getmapusers("aldebaran.gat") + getmapusers("amatsu.gat") + getmapusers("comodo.gat") + getmapusers("gonryun.gat") + getmapusers("geffen.gat") + getmapusers("izlude.gat") + getmapusers("xmas.gat") + getmapusers("morocc.gat") + getmapusers("niflheim.gat") + getmapusers("payon.gat") + getmapusers("prontera.gat") + getmapusers("yuno.gat") + getmapusers("umbala.gat") + getmapusers("valkyrie.gat") + getmapusers("louyang.gat");
+	set @towns, getmapusers("alberta.gat") + getmapusers("aldebaran.gat")
+	+ getmapusers("amatsu.gat") + getmapusers("comodo.gat") + getmapusers("gonryun.gat")
+	+ getmapusers("geffen.gat") + getmapusers("izlude.gat") + getmapusers("xmas.gat")
+	+ getmapusers("morocc.gat") + getmapusers("niflheim.gat") + getmapusers("payon.gat")
+	+ getmapusers("prontera.gat") + getmapusers("yuno.gat") + getmapusers("umbala.gat")
+	+ getmapusers("valkyrie.gat") + getmapusers("louyang.gat");
+//	town inns
+	set @towns, @towns + getmapusers("alberta_in.gat") + getmapusers("aldeba_in.gat")
+	+ getmapusers("geffen_in.gat") + getmapusers("izlude_in.gat") + getmapusers("morocc_in.gat")
+	+ getmapusers("prt_in.gat") + getmapusers("xmas_in.gat") + getmapusers("cmd_in01.gat")
+	+ getmapusers("cmd_in02.gat") + getmapusers("yuno_in01.gat") + getmapusers("yuno_in02.gat")
+	+ getmapusers("yuno_in03.gat") + getmapusers("yuno_in04.gat") + getmapusers("yuno_in05.gat")
+	+ getmapusers("ama_in01.gat") + getmapusers("ama_in02.gat") + getmapusers("gon_in.gat")
+	+ getmapusers("um_in.gat") + getmapusers("nif_in.gat") + getmapusers("lou_in01.gat")
+	+ getmapusers("lou_in02.gat") + getmapusers("payon_in01.gat") + getmapusers("payon_in02.gat")
+	+ getmapusers("payon_in03.gat");
 //	dungeons
 	set @anthell, getmapusers("anthell01.gat") + getmapusers("anthell02.gat");
 	set @beach, getmapusers("beach_dun.gat") + getmapusers("beach_dun2.gat") + getmapusers("beach_dun3.gat");
@@ -56,22 +71,28 @@
 	next;
 	menu "Towns [" + @red$ + @towns + @reset$ + "]",town,"Dungeons [" + @red$ + @dungeons + @reset$ +"]",dungeon;
 town:
-	menu	"Alberta [" + @red$ + getmapusers("alberta.gat") + @reset$ + "]",walberta,
-		"Aldebaran [" + @red$ + getmapusers("aldebaran.gat") + @reset$ + "]",waldebaran,
-		"Amatsu [" + @red$ + getmapusers("amatsu.gat") + @reset$ + "]",wamatsu,
-		"Comodo [" + @red$ + getmapusers("comodo.gat") + @reset$ + "]",wcomodo,
-		"Gonryun [" + @red$ + getmapusers("gonryun.gat") + @reset$ + "]",wgonryun,
-		"Geffen [" + @red$ + getmapusers("geffen.gat") + @reset$ + "]",wgeffen,
-		"Izlude [" + @red$ + getmapusers("izlude.gat") + @reset$ + "]",wizlude,
-		"Lutie [" + @red$ + getmapusers("xmas.gat") + @reset$ + "]",wxmas,
-		"Morroc [" + @red$ + getmapusers("morocc.gat") + @reset$ + "]",wmorroc,
-		"Niflheim [" + @red$ + getmapusers("niflheim.gat") + @reset$ + "]",wniflheim,
-		"Payon [" + @red$ + getmapusers("payon.gat") + @reset$ + "]",wpayon,
-		"Prontera [" + @red$ + getmapusers("prontera.gat") + @reset$ + "]",wprontera,
-		"Yuno [" + @red$ + getmapusers("yuno.gat") + @reset$ + "]",wyuno,
-		"Umbala [" + @red$ + getmapusers("umbala.gat") + @reset$ + "]",wumbala,
+//	+ getmapusers("prt_in.gat") + getmapusers("xmas_in.gat") + getmapusers("cmd_in01.gat")
+//	+ getmapusers("cmd_in02.gat") + getmapusers("yuno_in01.gat") + getmapusers("yuno_in02.gat")
+//	+ getmapusers("yuno_in03.gat") + getmapusers("yuno_in04.gat") + getmapusers("yuno_in05.gat")
+//	+ getmapusers("ama_in01.gat") + getmapusers("ama_in02.gat") + getmapusers("gon_in.gat")
+//	+ getmapusers("um_in.gat") + getmapusers("nif_in.gat") + getmapusers("lou_in01.gat")
+//	+ getmapusers("lou_in02.gat");
+	menu	"Alberta [" + @red$ + (getmapusers("alberta.gat")+getmapusers("alberta_in.gat")) + @reset$ + "]",walberta,
+		"Aldebaran [" + @red$ + (getmapusers("aldebaran.gat")+ getmapusers("aldeba_in.gat")) + @reset$ + "]",waldebaran,
+		"Amatsu [" + @red$ + (getmapusers("amatsu.gat")+getmapusers("ama_in02.gat")) + @reset$ + "]",wamatsu,
+		"Comodo [" + @red$ + (getmapusers("comodo.gat")+getmapusers("cmd_in01.gat")+getmapusers("cmd_in02.gat")) + @reset$ + "]",wcomodo,
+		"Gonryun [" + @red$ + (getmapusers("gonryun.gat")+getmapusers("gon_in.gat")) + @reset$ + "]",wgonryun,
+		"Geffen [" + @red$ + (getmapusers("geffen.gat")+getmapusers("geffen_in.gat")) + @reset$ + "]",wgeffen,
+		"Izlude [" + @red$ + (getmapusers("izlude.gat")+getmapusers("izlude_in.gat")) + @reset$ + "]",wizlude,
+		"Lutie [" + @red$ + (getmapusers("xmas.gat")+getmapusers("xmas_in.gat")) + @reset$ + "]",wxmas,
+		"Morroc [" + @red$ + (getmapusers("morocc.gat")+getmapusers("morocc_in.gat")) + @reset$ + "]",wmorroc,
+		"Niflheim [" + @red$ + (getmapusers("niflheim.gat")+getmapusers("nif_in.gat")) + @reset$ + "]",wniflheim,
+		"Payon [" + @red$ + (getmapusers("payon.gat")+getmapusers("payon_in01.gat")+getmapusers("payon_in02.gat")+getmapusers("payon_in03.gat")) + @reset$ + "]",wpayon,
+		"Prontera [" + @red$ + (getmapusers("prontera.gat")+getmapusers("prt_in.gat")) + @reset$ + "]",wprontera,
+		"Yuno [" + @red$ + (getmapusers("yuno.gat")+getmapusers("yuno_in01.gat")+getmapusers("yuno_in02.gat")+getmapusers("yuno_in03.gat")+getmapusers("yuno_in04.gat")+getmapusers("yuno_in05.gat")) + @reset$ + "]",wyuno,
+		"Umbala [" + @red$ + (getmapusers("umbala.gat")+getmapusers("um_in.gat")) + @reset$ + "]",wumbala,
 		"Valkyrie [" + @red$ + getmapusers("valkyrie.gat") + @reset$ + "]",wvalk,
-		"Louyang [" + @red$ + getmapusers("louyang.gat") + @reset$ + "]",wlouyang;
+		"Louyang [" + @red$ + (getmapusers("louyang.gat")+getmapusers("lou_in01.gat")+getmapusers("lou_in02.gat")) + @reset$ + "]",wlouyang;
 dungeon:
 	menu	"Amatsu Dungeon [" + @red$ + @ama + @reset$ + "]",ama,
 		"Gonryun Dungeon [" + @red$ + @gon + @reset$ + "]",gon,

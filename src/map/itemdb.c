@@ -12,6 +12,7 @@
 #include "itemdb.h"
 #include "script.h"
 #include "pc.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -383,7 +384,8 @@ static int itemdb_readdb(void)
 			id->equip_script = parse_script(p,lines);
 		}
 		fclose(fp);
-		printf("read %s done (count=%d)\n",filename[i],ln);
+		sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,filename[i]);
+		ShowStatus(tmp_output);
 	}
 	return 0;
 }
@@ -458,7 +460,8 @@ static int itemdb_read_randomitem()
 			ln++;
 		}
 		fclose(fp);
-		printf("read %s done (count=%d)\n",fn,*pc);
+		sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",*pc,fn);
+		ShowStatus(tmp_output);
 	}
 
 	return 0;
@@ -507,7 +510,8 @@ static int itemdb_read_itemavail(void)
 		ln++;
 	}
 	fclose(fp);
-	printf("read db/item_avail.txt done (count=%d)\n",ln);
+	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,"db/item_avail.txt");
+	ShowStatus(tmp_output);
 	return 0;
 }
 
@@ -774,8 +778,8 @@ static int itemdb_read_sqldb(void)
 			{
 				printf("Database server error (retrieving rows from %s): %s\n", item_db_db, mysql_error(&mmysql_handle));
 			}
-
-			printf("read %s done (count = %lu)\n", item_db_db, (unsigned long) mysql_num_rows(sql_res));
+			sprintf(tmp_output,"Done reading '\033[1;29m%lu\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",(unsigned long) mysql_num_rows(sql_res),item_db_db);
+			ShowStatus(tmp_output);
 		}
 		else
 		{

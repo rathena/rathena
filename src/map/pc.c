@@ -7706,7 +7706,8 @@ int pc_readdb(void)
 			break;
 	}
 	fclose(fp);
-	printf("read db/exp.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/exp.txt");
+	ShowStatus(tmp_output);
 
 	// JOB補正?値１
 	fp=fopen("db/job_db1.txt","r");
@@ -7740,7 +7741,8 @@ int pc_readdb(void)
 			break;
 	}
 	fclose(fp);
-	printf("read db/job_db1.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/job_db1.txt");
+	ShowStatus(tmp_output);
 
 	// JOBボ?ナス
 	fp=fopen("db/job_db2.txt","r");
@@ -7768,7 +7770,8 @@ int pc_readdb(void)
 			break;
 	}
 	fclose(fp);
-	printf("read db/job_db2.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/job_db2.txt");
+	ShowStatus(tmp_output);
 
 	// JOBボ?ナス2 ?生職用
 	fp=fopen("db/job_db2-2.txt","r");
@@ -7833,7 +7836,8 @@ int pc_readdb(void)
 		}
 	}
 	fclose(fp);
-	printf("read db/skill_tree.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_tree.txt");
+	ShowStatus(tmp_output);
 
 	// ?性修正テ?ブル
 	for(i=0;i<4;i++)
@@ -7879,7 +7883,8 @@ int pc_readdb(void)
 		}
 	}
 	fclose(fp);
-	printf("read db/attr_fix.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/attr_fix.txt");
+	ShowStatus(tmp_output);
 
 	// サイズ補正テ?ブル
 	for(i=0;i<3;i++)
@@ -7908,7 +7913,8 @@ int pc_readdb(void)
 		i++;
 	}
 	fclose(fp);
-	printf("read db/size_fix.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/size_fix.txt");
+	ShowStatus(tmp_output);
 
 	// 精?デ?タテ?ブル
 	for(i=0;i<5;i++){
@@ -7944,7 +7950,8 @@ int pc_readdb(void)
 		i++;
 	}
 	fclose(fp); //Lupus. close this file!!!
-	printf("read db/refine_db.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/refine_db.txt");
+	ShowStatus(tmp_output);
 
 	return 0;
 }
@@ -7985,7 +7992,9 @@ static void pc_statpointdb(void)
 	buf_stat = (char *) malloc (end + 1);
 	l = fread(buf_stat,1,end,stp);
 	fclose(stp);
-	printf("read db/statpoint.txt done (size=%d)\n",l);
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/statpoint.txt");
+	ShowStatus(tmp_output);
+//	printf("read db/statpoint.txt done (size=%d)\n",l);
 
 	for(i=0;i<255;i++) {
             j=0;

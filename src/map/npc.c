@@ -21,6 +21,7 @@
 #include "pet.h"
 #include "battle.h"
 #include "skill.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -433,8 +434,10 @@ int npc_event_do_clock(int tid,unsigned int tick,int id,int data)
  */
 int npc_event_do_oninit(void)
 {
-	int c = npc_event_doall("OnInit");
-	printf("npc: OnInit Event done. (%d npc)\n",c);
+//	int c = npc_event_doall("OnInit");
+	sprintf(tmp_output,"Event '\033[1;29mOnInit\033[0;0m' executed with '\033[1"
+		";29m%d\033[0;0m' NPCs.\n",npc_event_doall("OnInit"));
+	ShowStatus(tmp_output);
 
 	add_timer_interval(gettick()+100,
 		npc_event_do_clock,0,0,1000);

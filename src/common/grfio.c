@@ -30,6 +30,7 @@
 #include "utils.h"
 #include "grfio.h"
 #include "mmo.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -923,7 +924,8 @@ void grfio_init(char *fname)
 		}
 
 		fclose(data_conf);
-		printf("read %s done\n",fname);
+		sprintf(tmp_output,"Done reading GRF File: '\033[1;29m%s\033[0;0m'.\n",fname);
+		ShowStatus(tmp_output);
 	} // end of reading grf-files.txt
 
 	hashinit();	// hash table initialization

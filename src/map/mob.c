@@ -21,6 +21,7 @@
 #include "party.h"
 #include "npc.h"
 #include "log.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -3889,7 +3890,8 @@ static int mob_readdb(void)
 			mob_db[class].clothes_color=0; //Add for player monster dye - Valaris
 		}
 		fclose(fp);
-		printf("read %s done\n",filename[i]);
+		sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n",filename[i]);
+		ShowStatus(tmp_output);
 	}
 	return 0;
 }
@@ -4001,7 +4003,8 @@ static int mob_read_randommonster(void)
 				mob_db[class].summonper[i]=per;
 		}
 		fclose(fp);
-		printf("read %s done\n",mobfile[i]);
+		sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n",mobfile[i]);
+		ShowStatus(tmp_output);
 	}
 	return 0;
 }
@@ -4153,7 +4156,8 @@ static int mob_readskilldb(void)
 			mob_db[mob_id].maxskill=i+1;
 		}
 		fclose(fp);
-		printf("read %s done\n",filename[x]);
+		sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n",filename[x]);
+		ShowStatus(tmp_output);
 	}
 	return 0;
 }
@@ -4308,7 +4312,8 @@ static int mob_read_sqldb(void)
 			mob_db[class].head_buttom=0;
 		}
 		mysql_free_result(sql_res);
-		printf("read %s done (count=%d)\n",mob_db_db,ln);
+		sprintf(tmp_output,"Done reading '\033[1;29m%lu\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,mob_db_db);
+		ShowStatus(tmp_output);
 	}
 	return 0;
 }

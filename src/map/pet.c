@@ -20,6 +20,7 @@
 #include "npc.h"
 #include "script.h"
 #include "skill.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -1622,7 +1623,8 @@ int read_petdb()
 			j++;
 		}
 		fclose(fp);
-		printf("read %s done (count=%d)\n",filename[i],j);
+		sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' pets in '\033[1;29m%s\033[0;0m'.\n",j,filename[i]);
+		ShowStatus(tmp_output);
 	}
 	return 0;
 }

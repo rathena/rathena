@@ -11668,7 +11668,8 @@ int skill_readdb(void)
 			skill_db[i].upkeep_time2[k]=(split2[k])? atoi(split2[k]):atoi(split2[0]);
 	}
 	fclose(fp);
-	printf("read db/skill_cast_db.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_cast_db.txt");
+	ShowStatus(tmp_output);
 
 	/* 製造系スキルデ?タベ?ス */
 	memset(skill_produce_db,0,sizeof(skill_produce_db));
@@ -11711,7 +11712,8 @@ int skill_readdb(void)
 				break;
 		}
 		fclose(fp);
-		printf("read %s done (count=%d)\n",filename[m],k);
+		sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",k,filename[m]);
+		ShowStatus(tmp_output);
 	}
 
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
@@ -11749,7 +11751,8 @@ int skill_readdb(void)
 			break;
 	}
 	fclose(fp);
-	printf("read db/create_arrow_db.txt done (count=%d)\n",k);
+	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",k,"db/create_arrow_db.txt");
+	ShowStatus(tmp_output);
 
 	memset(skill_abra_db,0,sizeof(skill_abra_db));
 	fp=fopen("db/abra_db.txt","r");
@@ -11782,7 +11785,8 @@ int skill_readdb(void)
 			break;
 	}
 	fclose(fp);
-	printf("read db/abra_db.txt done (count=%d)\n",k);
+	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",k,"db/abra_db.txt");
+	ShowStatus(tmp_output);
 
 	fp=fopen("db/skill_castnodex_db.txt","r");
 	if(fp==NULL){
@@ -11816,7 +11820,8 @@ int skill_readdb(void)
 			skill_db[i].castnodex[k]=(split2[k])? atoi(split2[k]):atoi(split2[0]);
 	}
 	fclose(fp);
-	printf("read db/skill_castnodex_db.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_castnodex_db.txt");
+	ShowStatus(tmp_output);
 
 	fp=fopen("db/skill_nocast_db.txt","r");
 	if(fp==NULL){
@@ -11845,7 +11850,8 @@ int skill_readdb(void)
 		k++;
 	}
 	fclose(fp);
-	printf("read db/skill_nocast_db done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_nocast_db");
+	ShowStatus(tmp_output);
 
 	return 0;
 }

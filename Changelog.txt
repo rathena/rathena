@@ -1,10 +1,11 @@
 Date	Added
 12/13
+	* Replaced many printf's in map-server with _ShowMessage().
 	* Skill timers for skills with id's higher then 450 were
 	  corrupting memory [MouseJstr]
 	* Increased max skills to 650 from 450 fixing MANY crashes [MouseJstr]
 	* Creating Guild events were reading beyond supplied guild names ,
-	  causing crashes [MouseJstr
+	  causing crashes [MouseJstr]
 	* trades were derefing -2 into the inventory table sometimes [MouseJstr]
 	* Not having a arrow in your inventory but having a bow
 	  could cause it to set sd->status.inventory[-1].equip=32768
