@@ -258,7 +258,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			struct skill_unit *unit;
 			unit = map_find_skill_unit_oncell(bl->m,bl->x,bl->y,MG_SAFETYWALL);
 			if (unit) {
-				if ((--unit->group->val2)<=0)
+				if (unit->group && (--unit->group->val2)<=0)
 					skill_delunit(unit);
 				damage=0;
 			} else {

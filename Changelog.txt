@@ -1,5 +1,10 @@
 Date	Added
 
+01/29
+        * Added a crash check to Safety Wall, thanks to LebrEf[TaVu] / Freya for
+          pointing it out [celest]
+        * Added some optimisations in clif_parse_MapMove, by Ilpalazzo-sama [celest]
+
 01/28
         * Fixed a typo that was causing /in to always report failure even when the
           name was removed from the ignore list [celest]
@@ -22,7 +27,8 @@ Date	Added
         * Kick all characters when the char server disconnects from the map
           server [celest]
         * Added @changelook command for spriters to test view ID's [celest]
-        * Added a check to Pneuma to prevent crashing [celest]
+        * Added a check to Pneuma to prevent crashing, thanks to LebrEf[TaVu]/Freya for
+          pointing it out [celest] [celest]
         * Tweaked garbage collection code after feedback from users
         [SVN 1002: MouseJstr]
 	* Fixed TRADE exploits (it cures proxy hack / vending+trade hack) thanks to Freya [Lupus]

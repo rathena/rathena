@@ -8000,17 +8000,19 @@ int clif_message(struct block_list *bl, char* msg)
  */
 void clif_parse_MapMove(int fd, struct map_session_data *sd) {
 // /m /mapmove (as @rura GM command)
-	char output[100];
+	char output[30]; // 17+4+4=26, 30 max.
 	char map_name[17];
 
 	nullpo_retv(sd);
 
-	memset(output, '\0', sizeof(output));
-	memset(map_name, '\0', sizeof(map_name));
+//	not needed at all as far as sprintf is used	// [Ilpalazzo-sama]
+//	memset(output, '\0', sizeof(output));
+//	not needed -- map_name[16]='\0'; will do
+//	memset(map_name, '\0', sizeof(map_name));
 
-	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
-	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_MapMove))) {
+	if (battle_config.atc_gmonly == 0 || (pc_isGM(sd) >= get_atcommand_level(AtCommand_MapMove))) {
 		memcpy(map_name, RFIFOP(fd,2), 16);
+		map_name[16]='\0';
 		sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
 		atcommand_rura(fd, sd, "@rura", output);
 	}
