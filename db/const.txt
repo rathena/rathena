@@ -213,6 +213,8 @@ bAgiDexStr		1075
 bPerfectHide		1076
 bDisguise		1077
 bClassChange	1078
+bHPDrainValue	1079
+bSPDrainValue	1080
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
@@ -222,6 +224,10 @@ bNoWeaponDamage	2004
 bNoGemStone	2005
 bNoCastCancel2	2006
 bInfiniteEndure	2007
+bUnbreakableWeapon	2008
+bUnbreakableArmor	2009
+bUnbreakableHelm	2010
+bLongAtkRate	2011
 
 
 Eff_Stone	0

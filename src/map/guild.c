@@ -952,6 +952,30 @@ int guild_payexp(struct map_session_data *sd,int exp)
 	return exp2;
 }
 
+// Celest
+int guild_getexp(struct map_session_data *sd,int exp)
+{
+	struct guild *g;
+	struct guild_expcache *c;
+
+	nullpo_retr(0, sd);
+
+	if(sd->status.guild_id==0 || (g=guild_search(sd->status.guild_id))==NULL )
+		return 0;
+	
+	if( (c=numdb_search(guild_expcache_db,sd->status.char_id))==NULL ){
+		c=(struct guild_expcache *)aCalloc(1,sizeof(struct guild_expcache));
+		c->guild_id=sd->status.guild_id;
+		c->account_id=sd->status.account_id;
+		c->char_id=sd->status.char_id;
+		c->exp=exp;
+		numdb_insert(guild_expcache_db,c->char_id,c);
+	}else{
+		c->exp+=exp;
+	}
+	return exp;
+}
+
 // スキルポイント割り振り
 int guild_skillup(struct map_session_data *sd,int skill_num,int flag)
 {

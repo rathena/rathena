@@ -1,4 +1,11 @@
 Date	Added
+12/7
+        * Skill Updates [celest]
+          - Arrow Shower, Double Strafing, Charge Arrow, Throw Arrow, Sharp Shooting,
+            Arrow Vulcan, and Musical Strike now take arrows when used
+        * Added 'guildgetexp' script command [celest]
+        * Added bLongAtkRate item effect [celest]
+
 12/6
 	* Fixed file props for new npcs [MouseJstr]
 	* Fixed weddings.txt as per Fress_Boy [MouseJstr]

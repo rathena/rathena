@@ -6843,6 +6843,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 {
 	int i,hp,sp,hp_rate,sp_rate,zeny,weapon,state,spiritball,skill,lv,mhp;
 	int	index[10],itemid[10],amount[10];
+	int arrow_flag = 0;
 
 	nullpo_retr(0, sd);
 
@@ -7059,6 +7060,20 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			}
 		}
 		break;
+	// skills require arrows as of 12/07 [celest]
+	case AC_DOUBLE:
+	case AC_SHOWER:
+	case AC_CHARGEARROW:
+	case BA_MUSICALSTRIKE:
+	case DC_THROWARROW:
+	case SN_SHARPSHOOTING:
+	case CG_ARROWVULCAN:
+		if(sd->equip_index[10] <= 0) {
+			clif_arrow_fail(sd,0);
+			return 0;
+		}
+		arrow_flag = 1;
+		break;
 	}
 
 	if(!(type&2)){
@@ -7196,6 +7211,8 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			if(index[i] >= 0)
 				pc_delitem(sd,index[i],amount[i],0);		// ƒAƒCƒeƒ€Á”ï
 		}
+		if (arrow_flag && battle_config.arrow_decrement)
+			pc_delitem(sd,sd->equip_index[10],1,0);
 	}
 
 	if(type&2)

@@ -291,6 +291,7 @@ int buildin_npcstop(struct script_state *st); // [Valaris]
 int buildin_getmapxy(struct script_state *st);  //get map position for player/npc/pet/mob by Lorky [Lupus]
 int buildin_checkoption1(struct script_state *st); // [celest]
 int buildin_checkoption2(struct script_state *st); // [celest]
+int buildin_guildgetexp(struct script_state *st); // [celest]
 
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
@@ -501,7 +502,8 @@ struct {
 	{buildin_npcstop,"npcstop",""}, // [Valaris]
 	{buildin_getmapxy,"getmapxy","siii*"},	//by Lorky [Lupus]
 	{buildin_checkoption1,"checkoption1","i"},
-	{buildin_checkoption2,"checkoption2","i"},	
+	{buildin_checkoption2,"checkoption2","i"},
+	{buildin_guildgetexp,"guildgetexp","i"},
 	{NULL,NULL,NULL},
 };
 int buildin_message(struct script_state *st); // [MouseJstr]
@@ -3676,6 +3678,24 @@ int buildin_getexp(struct script_state *st)
 		return 0;
 	if(sd)
 		pc_gainexp(sd,base,job);
+
+	return 0;
+}
+
+/*==========================================
+ * Gain guild exp [Celest]
+ *------------------------------------------
+ */
+int buildin_guildgetexp(struct script_state *st)
+{
+	struct map_session_data *sd = script_rid2sd(st);
+	int exp;
+
+	exp = conv_num(st,& (st->stack->stack_data[st->start+2]));
+	if(exp < 0)
+		return 0;
+	if(sd && sd->status.guild_id > 0)
+		guild_getexp (sd, exp);
 
 	return 0;
 }

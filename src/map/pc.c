@@ -2587,6 +2587,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->classchange=val;
 		}
 		break;
+	case SP_LONG_ATK_RATE:
+		if(sd->status.weapon == 11 && sd->state.lr_flag != 2)
+			sd->atk_rate += val;
+		break;
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus: unknown type %d %d !\n",type,val);
