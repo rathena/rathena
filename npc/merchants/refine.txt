@@ -19,6 +19,7 @@
 //= Corrected zeny subtraction thx to jpnmania77.[kobra_k88]
 //= 1.3a Temporary corrected an expliot.  Need to check sources 
 //= to fully fix bug [Shinigami]
+//= Fixed repairman prices [shadowlady]
 //============================================================
 
 
@@ -722,6 +723,7 @@ morocc_in.gat,71,40,2	script	Repairman	99,{
 //= Equipment Repair Function
 //============================================================
 function	script	repairmain	{
+	set @repairprice,5000;
 	mes "[" + @name$ + "]";
 	mes "I am the Repair Smith and I can repair any Arms you want.";
 	mes "Tell me which Equipment you want to repair.";
@@ -744,121 +746,121 @@ function	script	repairmain	{
 	REPAIR1:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(1);
 			goto L_CLOSE;
 	REPAIR2:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(2);
 			goto L_CLOSE;
 	REPAIR3:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(3);
 			goto L_CLOSE;
 	REPAIR4:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(4);
 			goto L_CLOSE;
 	REPAIR5:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(5);
 			goto L_CLOSE;
 	REPAIR6:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(6);
 			goto L_CLOSE;
 	REPAIR7:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(7);
 			goto L_CLOSE;
 	REPAIR8:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(8);
 			goto L_CLOSE;
 	REPAIR9:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(9);
 			goto L_CLOSE;
 	REPAIR10:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and 10,000 Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < 10000) goto L_CANCEL_1;
+		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
 			delitem 999,1;
-			set Zeny,Zeny-10000;
+			set Zeny,Zeny-@repairprice;
 			repair(10);
 			goto L_CLOSE;
 
