@@ -4351,7 +4351,7 @@ static int mob_read_sqldb(void)
 	sql_res = mysql_store_result(&mmysql_handle);
 	if (sql_res) {
 		while((sql_row = mysql_fetch_row(sql_res))){
-            sprintf(line,"%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+            sprintf(line,"%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         sql_row[0],sql_row[1],sql_row[2],sql_row[3],sql_row[4],
                         sql_row[5],sql_row[6],sql_row[7],sql_row[8],sql_row[9],
                         sql_row[10],sql_row[11],sql_row[12],sql_row[13],sql_row[14],
@@ -4363,9 +4363,9 @@ static int mob_read_sqldb(void)
                         sql_row[40],sql_row[41],sql_row[42],sql_row[43],sql_row[44],
                         sql_row[45],sql_row[46],sql_row[47],sql_row[48],sql_row[49],
                         sql_row[50],sql_row[51],sql_row[52],sql_row[53],sql_row[54],
-			sql_row[55],sql_row[56],sql_row[57],sql_row[58],sql_row[59]);
+			sql_row[55],sql_row[56]);
 
-			for(i=0,p=line;i<60;i++){
+			for(i=0,p=line;i<57;i++){
 				if((np=strchr(p,','))!=NULL){
 					str[i]=p;
 					*np=0;
