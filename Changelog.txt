@@ -1,6 +1,7 @@
 Date	Added
 
 11/05
+	* Revised and fixed all comodo,yuno,amatsu,gonryun,umbala mobs and drops. Also fixed mvp and woe mobs too [Shadowlady]
 	* Fixed crash from guild skill point allocation, there seems to be a problem with guilds loading still. [Valaris]
 	* Fixed committed typo in map_athena.conf, remove aria's dev npc (was giving errors preventing server startup). [Valaris]
 
