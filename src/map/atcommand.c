@@ -5,7 +5,6 @@
 #include <ctype.h>
 #include <math.h>
 
-
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -364,7 +363,6 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ReloadScript,		"@reloadscript",	99, atcommand_reloadscript }, // admin command
 #endif /* TXT_ONLY */
 	{ AtCommand_ReloadGMDB,			"@reloadgmdb",		99, atcommand_reloadgmdb }, // admin command
-	{ AtCommand_CharReset,			"@charreset",		60, atcommand_charreset },
 	{ AtCommand_CharModel,			"@charmodel",		50, atcommand_charmodel },
 	{ AtCommand_CharSKPoint,		"@charskpoint",		60, atcommand_charskpoint },
 	{ AtCommand_CharSTPoint,		"@charstpoint",		60, atcommand_charstpoint },
@@ -480,6 +478,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_SendMail,			"@sendmail",		 1, atcommand_sendmail }, // [Valaris]
 	{ AtCommand_SendPriorityMail,	"@sendprioritymail",80, atcommand_sendmail }, // [Valaris]
 	{ AtCommand_RefreshOnline,		"@refreshonline",	99, atcommand_refreshonline }, // [Valaris]
+
 #endif /* TXT_ONLY */
 
 // add new commands before this line
@@ -5076,44 +5075,6 @@ int atcommand_charstreset(
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset stats points only lower or same gm level
 			pc_resetstate(pl_sd);
 			sprintf(output, msg_table[207], character); // '%s' stats points reseted!
-			clif_displaymessage(fd, output);
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
-	}
-
-	return 0;
-}
-
-/*==========================================
- * Character Reset
- *------------------------------------------
- */
-int atcommand_charreset(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	char character[100];
-	char output[200];
-	struct map_session_data *pl_sd;
-
-	memset(character, '\0', sizeof(character));
-	memset(output, '\0', sizeof(output));
-
-	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: @charreset <charname>).");
-		return -1;
-	}
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset a character only for lower or same GM level
-			pc_resetstate(pl_sd);
-			pc_resetskill(pl_sd);
-			sprintf(output, msg_table[208], character); // '%s' skill and stats points reseted!
 			clif_displaymessage(fd, output);
 		} else {
 			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.

@@ -41,6 +41,7 @@ CCMD_FUNC(stats);
 CCMD_FUNC(option);
 CCMD_FUNC(save);
 CCMD_FUNC(stats_all);
+CCMD_FUNC(reset);
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -66,6 +67,7 @@ static CharCommandInfo charcommand_info[] = {
 	{ CharCommandPetFriendly,			"#petfriendly",				50, charcommand_petfriendly },
 	{ CharCommandStats,					"#stats",					40, charcommand_stats },
 	{ CharCommandOption,				"#option",					60, charcommand_option },
+	{ CharCommandReset,					"#reset",					60, charcommand_reset },
 	{ CharCommandSave,					"#save",					60, charcommand_save },
 	{ CharCommandStatsAll,				"#statsall",				40, charcommand_stats_all },
 
@@ -495,6 +497,44 @@ int charcommand_stats(
 }
 
 /*==========================================
+ * Character Reset
+ *------------------------------------------
+ */
+int charcommand_reset(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[100];
+	char output[200];
+	struct map_session_data *pl_sd;
+
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+
+	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #reset <charname>).");
+		return -1;
+	}
+
+	if ((pl_sd = map_nick2sd(character)) != NULL) {
+		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset a character only for lower or same GM level
+			pc_resetstate(pl_sd);
+			pc_resetskill(pl_sd);
+			sprintf(output, msg_table[208], character); // '%s' skill and stats points reseted!
+			clif_displaymessage(fd, output);
+		} else {
+			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			return -1;
+		}
+	} else {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
  *
  *------------------------------------------
  */
@@ -660,3 +700,4 @@ int charcommand_stats_all(const int fd, struct map_session_data* sd, const char*
 
 	return 0;
 }
+

@@ -1,5 +1,6 @@
 Date	Added
 11/24
+	* @charreset #reset [MC Cameri]
 	* @charstatsall is now #statsall [MC Cameri]
 	* @charsave is now #save [MC Cameri]
 	* Updated most of jA's 1067; battle.c and skill.c might need more updates! [Codemaster]

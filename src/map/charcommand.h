@@ -6,6 +6,7 @@ enum CharCommandType {
 	CharCommandJobChange,
 	CharCommandPetRename,
 	CharCommandPetFriendly,
+	CharCommandReset,
 	CharCommandStats,
 	CharCommandOption,
 	CharCommandSave,

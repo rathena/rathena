@@ -82,7 +82,7 @@ enum AtCommandType {
 	AtCommand_Recall,
 //	AtCommand_CharacterJob,  // Now #jobchange
 	AtCommand_Revive,
-	AtCommand_CharacterStats,
+//	AtCommand_CharacterStats, // Now #stats
 	AtCommand_CharacterStatsAll,
 //	AtCommand_CharacterOption, // Now #option
 //	AtCommand_CharacterSave, // Now #save
@@ -111,7 +111,6 @@ enum AtCommandType {
 	AtCommand_IDSearch,
 	AtCommand_CharSkReset,
 	AtCommand_CharStReset,
-	AtCommand_CharReset,
 	//by chbrules
 	AtCommand_CharModel, 
 	AtCommand_CharSKPoint,
@@ -250,7 +249,9 @@ int atcommand_config_read(const char *cfgName);
 int msg_config_read(const char *cfgName);
 
 char *str_lower(char *str);
+
 char * job_name(int class);
+int e_mail_check(unsigned char *email);
 
 #endif
 
