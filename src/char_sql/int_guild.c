@@ -53,7 +53,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	// 16 `guild_expulsion` (`guild_id`,`name`,`mes`,`acc`,`account_id`,`rsv1`,`rsv2`,`rsv3`) 
 	// 32 `guild_skill` (`guild_id`,`id`,`lv`)
 	
-	char t_name[100],t_master[24],t_mes1[60],t_mes2[120],t_member[24],t_position[24],t_alliance[24];  // temporay storage for str convertion;
+	char t_name[100],t_master[24],t_mes1[60],t_mes2[240],t_member[24],t_position[24],t_alliance[24];  // temporay storage for str convertion;
 	char t_ename[24],t_emes[40];
 	char emblem_data[4096];
 	int i=0;

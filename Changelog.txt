@@ -1,5 +1,7 @@
 Date	Added
 12/14
+	* src/char_sql/int_guild.c:56 - t_mes2 was not big enough causing
+	  stack overrun's, corruptions, and crashes [MouseJstr]
 	* common/mmo.h: changed base_level and job_level to unsigned int to increase max levels [Codemaster]
 	* char/char.c: added a NULL check for the file in parse_friend_txt [Codemaster]
 	* map/atcommand.c/.h: added @clearweather (thanks to Dexity) [Codemaster]
