@@ -2291,8 +2291,42 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case ASC_BREAKER:		// -- moonsoul (special damage for ASC_BREAKER skill)
 				if(sd){
 					// calculate physical part of damage
+#ifndef TWILIGHT
 					damage = damage * skill_lv;
 					damage2 = damage2 * skill_lv;
+#else /* TWILIGHT */
+					damage = damage * skill_lv * 0.5; //Halved by Krel
+					damage2 = damage2 * skill_lv * 0.5; //Halved by Krel
+					// element modifier added right after this
+
+					// calculate magic part of damage
+					damage3 = skill_lv * status_get_int(src) * 5 * 0.5; //Krel
+					// ignores magic defense now [Celest]
+					/*if(sd->ignore_mdef_ele & (1<<t_ele) || sd->ignore_mdef_race & (1<<t_race))
+						imdef_flag = 1;
+					if(t_mode & 0x20) {
+						if(sd->ignore_mdef_race & (1<<10))
+							imdef_flag = 1;
+					}
+					else {
+						if(sd->ignore_mdef_race & (1<<11))
+							imdef_flag = 1;
+					}
+					if(!imdef_flag){
+						if(battle_config.magic_defense_type) {
+							damage3 = damage3 - (mdef1 * battle_config.magic_defense_type) - mdef2;
+						}
+						else{
+							damage3 = (damage3*(100-mdef1))/100 - mdef2;
+						}
+					}
+
+					if(damage3<1)
+						damage3=1;
+
+					damage3=battle_attr_fix(damage2,s_ele_, status_get_element(target) );*/
+
+#endif /* TWILIGHT */
 					flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				}
 				break;

@@ -146,6 +146,8 @@ int guild_storage_fromsql(int guild_id, struct guild_storage *p){
 			p->storage[i].card[2]= atoi(sql_row[9]);
 			p->storage[i].card[3]= atoi(sql_row[10]);
 			p->storage_amount = ++i;
+			if (i >= MAX_GUILD_STORAGE)
+				break;
 		}
 		mysql_free_result(sql_res);
 	}

@@ -815,8 +815,12 @@ static int mob_walktoxy_sub(struct mob_data *md)
 
 	nullpo_retr(0, md);
 
+	memset(&wpd, 0, sizeof(wpd));
+
 	if(path_search(&wpd,md->bl.m,md->bl.x,md->bl.y,md->to_x,md->to_y,md->state.walk_easy))
 		return 1;
+	if (wpd.path[0] >= 8)
+		return 1;	
 	x = md->bl.x+dirx[wpd.path[0]];
 	y = md->bl.y+diry[wpd.path[0]];
 	if (map_getcell(md->bl.m,x,y,CELL_CHKBASILICA) && !(status_get_mode(&md->bl)&0x20)) {

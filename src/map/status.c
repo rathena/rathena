@@ -3124,7 +3124,11 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_ENDURE:				/* ƒCƒ“ƒfƒ…ƒA */
 			if(tick <= 0) tick = 1000 * 60;
 			calc_flag = 1; // for updating mdef
+#ifdef TWILIGHT
+			val2 = 40; // [Celest]
+#else
 			val2 = 7; // [Celest]
+#endif
 			break;
 		case SC_AUTOBERSERK:
 			{

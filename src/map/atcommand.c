@@ -5195,6 +5195,8 @@ int atcommand_mapexit(
 		}
 	}
 	clif_GM_kick(sd, sd, 0);
+	
+	flush_fifos();
 
 	runflag = 0;
 

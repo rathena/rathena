@@ -1,6 +1,16 @@
 Date	Added
 
 03/23
+        * Fixed possible memory corruption in storage if number of guilds
+          in database exceeds the max server can support [1278 : MouseJstr]
+        * Fixed @mapexit to properly flush the fifo's before shutting
+          server down to help insure all the char data is properly flushed
+          [1278: MouseJstr]
+        * Fixed trade exploit/crash from invalid data being sent
+          [1278: MouseJstr]
+        * Possible use of uninitialized data used during mob walk 
+          calculation resulting in radical mob movement or crash
+          [1278: MouseJstr]
 	* Fixed some --addrace variables' sizes [celest]
 	* Added' require_glory_guild' - sets whether changing guild emblems require
 	  the Glory of Guild skill [celest]
