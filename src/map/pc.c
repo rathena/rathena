@@ -1517,10 +1517,12 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		if(sd->sc_data[SC_LOUD].timer!=-1 && sd->sc_data[SC_QUAGMIRE].timer == -1)	// ラウドボイス
 			sd->paramb[0]+= 4;
 		if(sd->sc_data[SC_QUAGMIRE].timer!=-1){	// クァグマイア
-			int agib = (sd->status.agi+sd->paramb[1]+sd->parame[1])*(sd->sc_data[SC_QUAGMIRE].val1*10)/100;
-			int dexb = (sd->status.dex+sd->paramb[4]+sd->parame[4])*(sd->sc_data[SC_QUAGMIRE].val1*10)/100;
-			sd->paramb[1]-= agib > 50 ? 50 : agib;
-			sd->paramb[4]-= dexb > 50 ? 50 : dexb;
+			//int agib = (sd->status.agi+sd->paramb[1]+sd->parame[1])*(sd->sc_data[SC_QUAGMIRE].val1*10)/100;
+			//int dexb = (sd->status.dex+sd->paramb[4]+sd->parame[4])*(sd->sc_data[SC_QUAGMIRE].val1*10)/100;
+			//sd->paramb[1]-= agib > 50 ? 50 : agib;
+			//sd->paramb[4]-= dexb > 50 ? 50 : dexb;
+			sd->paramb[1]-= sd->sc_data[SC_QUAGMIRE].val1*5;
+			sd->paramb[4]-= sd->sc_data[SC_QUAGMIRE].val1*5;
 			sd->speed = sd->speed*3/2;
 		}
 		if(sd->sc_data[SC_TRUESIGHT].timer!=-1){	// トゥル?サイト

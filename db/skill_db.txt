@@ -91,7 +91,7 @@
 89,8,6,2,1,1,10,1,yes,0,0,0,magic,2	//WZ_STORMGUST#スト??ガスト#
 90,8,8,1,2,0,5,1:2:3:4:5,yes,0,0,0,magic,0	//WZ_EARTHSPIKE#ア?ススパイク#
 91,8,8,2,2,0,5,1:2:3:4:5,yes,0,0,0,magic,0	//WZ_HEAVENDRIVE#ヘヴンズドライブ#
-92,8,6,2,2,1,5,1,yes,0,0,3,magic,0	//WZ_QUAGMIRE#ク?グ?イア#
+92,8,6,2,2,1,5,1,yes,0,128,3,magic,0	//WZ_QUAGMIRE#ク?グ?イア#
 93,8,6,1,0,1,1,1,yes,0,0,0,magic,0	//WZ_ESTIMATION#モンス??情報#
 94,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//BS_IRON#鉄製造#
 95,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//BS_STEEL#?鉄製造#
@@ -438,7 +438,7 @@
 401,0,6,4,0,1,1,1,yes,0,0,0,weapon,0	//CH_SOULCOLLECT#狂気功#
 402,8,6,1,0,1,10,1,no,0,0,0,none,0	//PF_MINDBREAKER#?インドブレ?カ?#
 403,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//PF_MEMORIZE#メモライズ#
-404,3,6,2,2,1,5,1,yes,0,128,1,magic,0	//PF_FOGWALL#フォグウォ?ル#
+404,3,6,2,2,1,5,1,yes,0,256,1,magic,0	//PF_FOGWALL#フォグウォ?ル#
 405,3,6,2,0,1,5,1,no,0,128,2,misc,0	//PF_SPIDERWEB#スパイ??ウェッブ#
 406,-1,6,1,0,2,10,1,no,33,0,0,weapon,0	//ASC_METEORASSAULT#メテオアサルト#
 407,0,6,4,0,1,10,0,no,0,0,0,none,0	//ASC_CDP#デッドリ??イズン製造#

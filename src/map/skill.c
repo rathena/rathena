@@ -1270,7 +1270,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			skill_status_change_start(bl,SC_AUTOCOUNTER,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 	case PF_FOGWALL:		/* ホ?リ?クロス */
-		if( rand()%100 < 3*skilllv*sc_def_int/100 )
+		if(src!=bl && rand()%100 < 3*skilllv*sc_def_int/100 )
 			skill_status_change_start(bl,SC_BLIND,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 	case LK_HEADCRUSH:				/* ヘッドクラッシュ */
@@ -5965,7 +5965,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	case 0xae:	/* 幸運のキス */
 	case 0xaf:	/* サ?ビスフォ?ユ? */
 	case 0xb4:
-	case 0xb6:				/* フォグウォ?ル */
+//	case 0xb6:				/* フォグウォ?ル */
 		{
 			struct skill_unit *unit2;
 			struct status_change *sc_data=battle_get_sc_data(bl);
@@ -6001,6 +6001,28 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 						skill_status_change_start(bl,type,sg->skill_lv,(sg->val1)>>16,(sg->val1)&0xffff,
 							(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 					ts->tick-=sg->interval;
+				}
+			}
+		} break;
+
+	case 0xb6:				/* フォグウォ?ル */
+		{
+			struct skill_unit *unit2;
+			struct status_change *sc_data=battle_get_sc_data(bl);
+			int type=SkillStatusChangeTable[sg->skill_id];
+			if(sc_data) {
+				if (sc_data[type].timer==-1) {
+					skill_status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
+						(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
+					skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
+				}
+				else if( (unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
+					if( unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 ) {
+						skill_status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
+							(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
+						skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
+					}
+//					ts->tick-=sg->interval;
 				}
 			}
 		} break;
@@ -6168,7 +6190,7 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 					sc_data[SC_BLIND].timer = add_timer(
 						gettick() + 30000, skill_status_change_timer, bl->id, 0);
 			}
-			sg->limit=DIFF_TICK(tick,sg->tick)+1000;
+			//sg->limit=DIFF_TICK(tick,sg->tick)+1000;
 		}
 		break;
 	case 0x9a:	/* ボルケ?ノ */

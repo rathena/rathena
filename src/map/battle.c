@@ -257,8 +257,9 @@ int battle_get_agi(struct block_list *bl)
 
 		if(sc_data[SC_QUAGMIRE].timer!=-1 ) {	// クァグマイア
 			//agi >>= 1;
-			int agib = agi*(sc_data[SC_QUAGMIRE].val1*10)/100;
-			agi -= agib > 50 ? 50 : agib;
+			//int agib = agi*(sc_data[SC_QUAGMIRE].val1*10)/100;
+			//agi -= agib > 50 ? 50 : agib;
+			agi -= (bl->type == BL_PC) ? sc_data[SC_QUAGMIRE].val1*5 : sc_data[SC_QUAGMIRE].val1*10;
 		}
 		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
 			agi += 5;
@@ -367,8 +368,9 @@ int battle_get_dex(struct block_list *bl)
 
 		if(sc_data[SC_QUAGMIRE].timer!=-1 )	{ // クァグマイア
 			// dex >>= 1;
-			int dexb = dex*(sc_data[SC_QUAGMIRE].val1*10)/100;
-			dex -= dexb > 50 ? 50 : dexb;
+			//int dexb = dex*(sc_data[SC_QUAGMIRE].val1*10)/100;
+			//dex -= dexb > 50 ? 50 : dexb;
+			dex -= (bl->type == BL_PC) ? sc_data[SC_QUAGMIRE].val1*5 : sc_data[SC_QUAGMIRE].val1*10;
 		}
 		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
 			dex += 5;
@@ -556,9 +558,7 @@ int battle_get_baseatk(struct block_list *bl)
 		if(sc_data[SC_CURSE].timer!=-1 ) //呪われていたら
 			batk -= batk*25/100; //base_atkが25%減少
 		if(sc_data[SC_CONCENTRATION].timer!=-1 && bl->type != BL_PC) //コンセントレーション
-			batk += batk*(5*sc_data[SC_CONCENTRATION].val1)/100;
-		if(sc_data[SC_EDP].timer != -1) // [Celest]
-			batk += batk*(50+50*sc_data[SC_EDP].val1)/100;
+			batk += batk*(5*sc_data[SC_CONCENTRATION].val1)/100;		
 	}
 	if(batk < 1) batk = 1; //base_atkは最低でも1
 	return batk;
@@ -3553,7 +3553,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	// 状態異常中のダメージ追加でクリティカルにも有効なスキル
 	if (sc_data) {
 		// エンチャントデッドリーポイズン
-		if(sc_data[SC_EDP].timer != -1) {
+		if(sc_data[SC_EDP].timer != -1 && skill_num != ASC_BREAKER && skill_num != ASC_METEORASSAULT) {
 			damage += damage * (150 + sc_data[SC_EDP].val1 * 50) / 100;
 			damage2 += damage2 * (150 + sc_data[SC_EDP].val1 * 50) / 100;
 			no_cardfix = 1;
