@@ -200,6 +200,8 @@ struct map_session_data {
         int followtimer; // [MouseJstr]
         int followtarget;
 
+	time_t emotionlasttime; // to limit flood with emotion packets
+
 	short attackrange,attackrange_;
 	int skilltimer;
 	int skilltarget;

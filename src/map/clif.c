@@ -8163,10 +8163,20 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd) {
 	nullpo_retv(sd);
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2) {
+		if (RFIFOB(fd,2) == 34) {// prevent use of the mute emote [Valaris]
+			clif_skill_fail(sd, 1, 0, 1);
+			return;
+		}
+		// fix flood of emotion icon (ro-proxy): flood only the hacker player
+		if (sd->emotionlasttime >= time(NULL)) {
+			sd->emotionlasttime = time(NULL) + 2; // not more than 1 every 2 seconds (normal client is every 3-4 seconds)
+			clif_skill_fail(sd, 1, 0, 1);
+			return;
+		}
+		sd->emotionlasttime = time(NULL) + 2; // not more than 1 every 2 seconds (normal client is every 3-4 seconds)
+
 		WBUFW(buf,0) = 0xc0;
 		WBUFL(buf,2) = sd->bl.id;
-		if(RFIFOB(fd,2)==34) // prevent use of the mute emote [Valaris]
-			return;
 		WBUFB(buf,6) = RFIFOB(fd,2);
 		clif_send(buf, packet_len_table[0xc0], &sd->bl, AREA);
 	} else
