@@ -114,40 +114,37 @@ int mob_spawn_dataset(struct mob_data *md,const char *mobname,int class_)
  * The MOB appearance for one time (for scripts)
  *------------------------------------------
  */
-int mob_once_spawn(struct map_session_data *sd,char *mapname,
-	int x,int y,const char *mobname,int class_,int amount,const char *event)
+int mob_once_spawn (struct map_session_data *sd, char *mapname,
+	int x, int y, const char *mobname, int class_, int amount, const char *event)
 {
-	struct mob_data *md=NULL;
-	int m,count,lv=255,r=class_;
+	struct mob_data *md = NULL;
+	int m, count, lv = 255;
 	int i, j;
 	
-	if( sd )
-		lv=sd->status.base_level;
+	if(sd) lv = sd->status.base_level;
 
-	if( sd && strcmp(mapname,"this")==0)
-		m=sd->bl.m;
+	if(sd && strcmp(mapname,"this")==0)
+		m = sd->bl.m;
 	else
-		m=map_mapname2mapid(mapname);
+		m = map_mapname2mapid(mapname);
 
-	if(m<0 || amount<=0 || (class_>=0 && class_<=1000) || class_>MAX_MOB_DB)	// 値が異常なら召喚を止める
+	if (m < 0 || amount <= 0 || (class_ >= 0 && class_ <= 1000) || class_ > MAX_MOB_DB + 4000)	// 値が異常なら召喚を止める
 		return 0;
 
-	if(class_<0){	// ランダムに召喚
+	if (class_ < 0) {	// ランダムに召喚
 		int k;
 		i = 0;
 		j = -class_-1;
-		if(j>=0 && j<MAX_RANDOMMONSTER){
-			do{
-				class_=rand()%1000+1001;
-				k=rand()%1000000;
-			}while((mob_db[class_].max_hp <= 0 || mob_db[class_].summonper[j] <= k ||
-				 (lv<mob_db[class_].lv && battle_config.random_monster_checklv)) && (i++) < 2000);
-			if(i>=2000){
-				class_=mob_db[0].summonper[j];
-			}
-		}else{
+		if(j >= 0 && j < MAX_RANDOMMONSTER) {
+			do {
+				class_ = rand() % 1000 + 1001;
+				k = rand() % 1000000;
+			} while ((mob_db[class_].max_hp <= 0 || mob_db[class_].summonper[j] <= k ||
+				 (battle_config.random_monster_checklv && lv < mob_db[class_].lv)) && (i++) < 2000);
+			if(i >= 2000)
+				class_ = mob_db[0].summonper[j];
+		} else 
 			return 0;
-		}
 //		if(battle_config.etc_log)
 //			printf("mobclass=%d try=%d\n",class_,i);
 	}
@@ -166,62 +163,59 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 		do {
 			x = rand() % (map[m].xs - 2) + 1;
 			y = rand() % (map[m].ys - 2) + 1;
-		} while ((i=map_getcell(m, x, y, CELL_CHKNOPASS)) && j++ < 64);
+		} while ((i = map_getcell(m, x, y, CELL_CHKNOPASS)) && j++ < 64);
 		if (i) { // not solved?
 			x = 0;
 			y = 0;
 		}
 	}
 
+	for (count = 0; count < amount; count++) {
+		md = (struct mob_data *)aCalloc(1,sizeof(struct mob_data));
+		memset (md, '\0', sizeof *md);
 
-	for(count=0;count<amount;count++){
-		md=(struct mob_data *)aCalloc(1,sizeof(struct mob_data));
-		memset(md, '\0', sizeof *md);
-
-		if(class_>4000) { // large/tiny mobs [Valaris]
-			md->size=2;
-			class_-=4000;
-		}
-		else if(class_>MAX_MOB_DB) {
-			md->size=1;
-			class_-=MAX_MOB_DB;
+		if (class_ > MAX_MOB_DB + 2000) { // large/tiny mobs [Valaris]
+			md->size = 2;
+			class_ -= (MAX_MOB_DB + 2000);
+		} else if (class_ > MAX_MOB_DB) {
+			md->size = 1;
+			class_ -= MAX_MOB_DB;
 		}
 
-		if(mob_db[class_].mode&0x02)
-			md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
+		if(mob_db[class_].mode & 0x02)
+			md->lootitem = (struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 		else
-			md->lootitem=NULL;
+			md->lootitem = NULL;
 
-		mob_spawn_dataset(md,mobname,class_);
-		md->bl.m=m;
-		md->bl.x=x;
-		md->bl.y=y;
-		if(r<0&&battle_config.dead_branch_active) md->mode=0x1+0x4+0x80; //移動してアクティブで反撃する
-		md->m =m;
-		md->x0=x;
-		md->y0=y;
-		md->xs=0;
-		md->ys=0;
-		md->spawndelay1=-1;	// 一度のみフラグ
-		md->spawndelay2=-1;	// 一度のみフラグ
+		mob_spawn_dataset (md, mobname, class_);
+		md->bl.m = m;
+		md->bl.x = x;
+		md->bl.y = y;
+		if (class_ < 0 && battle_config.dead_branch_active)
+			md->mode = 0x1 + 0x4 + 0x80; //移動してアクティブで反撃する
+		md->m = m;
+		md->x0 = x;
+		md->y0 = y;
+		md->xs = 0;
+		md->ys = 0;
+		md->spawndelay1 = -1;	// 一度のみフラグ
+		md->spawndelay2 = -1;	// 一度のみフラグ
 
-		memcpy(md->npc_event,event,strlen(event));
+		memcpy(md->npc_event, event, strlen(event));
 
-		md->bl.type=BL_MOB;
-		map_addiddb(&md->bl);
-		mob_spawn(md->bl.id);
+		md->bl.type = BL_MOB;
+		map_addiddb (&md->bl);
+		mob_spawn (md->bl.id);
 
-		if(class_==1288) {	// emperium hp based on defense level [Valaris]
-			struct guild_castle *gc=guild_mapname2gc(map[md->bl.m].name);
+		if(class_ == 1288) {	// emperium hp based on defense level [Valaris]
+			struct guild_castle *gc = guild_mapname2gc(map[md->bl.m].name);
 			if(gc)	{
-				mob_db[class_].max_hp+=2000*gc->defense;
-				md->hp=mob_db[class_].max_hp;
+				mob_db[class_].max_hp += 2000 * gc->defense;
+				md->hp = mob_db[class_].max_hp;
 			}
 		}	// end addition [Valaris]
-
-
 	}
-	return (amount>0)?md->bl.id:0;
+	return (amount > 0) ? md->bl.id : 0;
 }
 /*==========================================
  * The MOB appearance for one time (& area specification for scripts)

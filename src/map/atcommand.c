@@ -830,9 +830,16 @@ AtCommandType atcommand(struct map_session_data* sd, const int level, const char
  */
 static int atkillmonster_sub(struct block_list *bl, va_list ap) {
 	struct mob_data *md;
+	int flag;
+	
+	nullpo_retr(0, ap);
 	nullpo_retr(0, md=(struct mob_data *)bl);
+	flag = va_arg(ap, int);
 
-	mob_damage(NULL, md, md->hp, 2);
+	if (flag)
+		mob_damage(NULL, md, md->hp, 2);
+	else
+		mob_delete(md);
 	
 	return 0;
 }
