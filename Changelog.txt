@@ -1,10 +1,6 @@
-NOTE: Something after SVN 829 screwed up clif packet processing for older
-      clients..  I am looking into it now
-
-    --mouse
-
 Date	Added
 12/28
+	* Fixed clif.c errors that prevent old clients from being used. [nsstrunks]
 	* Fixed @jobchange to not default to upper (SVN 837) [MouseJstr]
 	* Fixed a compile error in @mobsearch (SVN 836) [MouseJstr]
 12/27
