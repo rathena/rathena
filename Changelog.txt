@@ -1,4 +1,7 @@
 Date	Added
+12/27
+	* Changed the *_override_grffile to no by default, because many were having issues with it [Ajarn]
+
 12/26
 	* Fixed ANOTHER pet crash (double free) (SVN: 804) [MouseJstr]
         * Added a proper #define for MAX_VENDING (SVN: 802) [MouseJstr]
