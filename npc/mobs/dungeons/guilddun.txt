@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -15,7 +15,7 @@ gld_dun01.gat,0,0,0,0	monster	Skeleton General	1290,10,0,0,0
 gld_dun01.gat,0,0,0,0	monster	Gajomart	1309,10,0,0,0
 gld_dun01.gat,0,0,0,0	monster	Am Mut	1301,10,0,0,0
 gld_dun01.gat,0,0,0,0	monster	Cat'o'Nine Tails	1307,3,1200000,0,0
-gld_dun01.gat,0,0,0,0	monster	Vagabond Wolf	1092,1,14400000,7200000,1
+gld_dun01.gat,0,0,0,0	monster	Vagabond Wolf	1092,1,14400000,14400000,1
 gld_dun01.gat,0,0,0,0	monster	Eddga	1115,1,28800000,28800000,1
 
 //(gld_dun02.gat)*

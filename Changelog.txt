@@ -3,6 +3,9 @@ $LastChangedDate: 2004-12-30 00:22:54 -0500 (Thu, 30 Dec 2004)$
 SVN: $Rev$
 
 Date	Added
+01/01/05
+	* Fixed some respawn delays of MVP/Miniboss monsters. Redo Umbala/Niflheim fields, added missing mobs, corrected
+	  monsters quantity. In Niflheim fixed wrong Lord of Death monster ID. [Lupus]
 12/30
         * Added ispartneron, getpartnerid, and warppartner script
           commands to properly support jawaii NPC's (SVN 880) [MouseJstr]

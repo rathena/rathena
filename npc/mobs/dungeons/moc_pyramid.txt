@@ -35,7 +35,7 @@ moc_pryd04.gat,0,0,0,0	monster	Mimic	1191,15,600000,300000,1
 moc_pryd04.gat,0,0,0,0	monster	Isis	1029,50,150000,75000,0
 moc_pryd04.gat,0,0,0,0	monster	Mummy	1041,40,0,0,0
 moc_pryd04.gat,0,0,0,0	monster	Matyr	1146,20,0,0,0
-moc_pryd04.gat,0,0,0,0	monster	Osiris	1038,1,3600000,7200000,0
+moc_pryd04.gat,0,0,0,0	monster	Osiris	1038,1,3600000,3600000,0
 
 //(moc_pryd05.gat)*
 moc_pryd05.gat,0,0,0,0	monster	Minorous	1149,60,0,0,0
@@ -47,4 +47,4 @@ moc_pryd06.gat,100,90,80,50	monster	Ancient Mummy	1297,20,0,0,0
 moc_pryd06.gat,0,0,0,0	monster	Arclouse	1194,20,0,0,0
 moc_pryd06.gat,100,90,80,50	monster	Mimic	1191,20,0,0,0
 moc_pryd06.gat,0,0,0,0	monster	Verit	1032,10,0,0,0
-moc_pryd06.gat,101,119,0,0	monster	Amon Ra	1511,1,3600000,7200000,0
+moc_pryd06.gat,101,119,0,0	monster	Amon Ra	1511,1,3600000,3600000,0
