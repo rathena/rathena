@@ -1715,7 +1715,7 @@ int map_readallmap(void) {
 
 	free(waterlist);
 	printf("\r");
-	snprintf(tmp_output,sizeof(tmp_output),"Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps.%50s\n",map_num,"");
+	snprintf(tmp_output,sizeof(tmp_output),"Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps.%30s\n",map_num,"");
 	ShowInfo(tmp_output);
 	if (maps_removed) {
 		snprintf(tmp_output,sizeof(tmp_output),"Maps Removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);

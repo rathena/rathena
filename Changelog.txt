@@ -32,7 +32,6 @@ Date	Added
           rollback -  fix by Freya [celest]
         * Removed 'type' paramater from pc_unequipitem to use 'flag' instead[celest]
         * Moved unequip checking code from clif.c to pc.c [celest]
->>>>>>> .r565
 	* Replaced many printf's in map-server with _ShowMessage(). [MC Cameri]
 	* Skill timers for skills with id's higher then 450 were
 	  corrupting memory [MouseJstr]
