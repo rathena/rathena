@@ -36,6 +36,7 @@ Date		Added
 ======
 
 11/20
+	* Reduced walking speed for davidsiaw's Dev NPC. [MC Cameri]
 	* Fixed some typos in MC Cameri's Dev NPC, walking speed, etc. [MC Cameri]
 	* Fixed spawns on umbala fields, Fixed spawn point of Amon Ra in morroc pyramids B2 [shadow]
 11/21

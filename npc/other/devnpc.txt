@@ -148,7 +148,7 @@ OnInit:
 
 // Davidsiaw =========================================================>\\
 payon.gat,182,104,4	script	Davidsiaw	1002,{
- 	npcspeed 50;
+ 	npcspeed 150;
 	mes "[Davidsiaw]";
 	mes "omghi";
 	close;
