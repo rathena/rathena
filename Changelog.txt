@@ -1,6 +1,8 @@
 Date	Added
 11/13
+	* Removed compile warnings in intif.c. [Valaris]
 	* Fixed chrif_changesex and @changesex, now uses packet 0x3000. [MC Cameri]
+
 11/12
 	* added folder: /save-tmpl, removed folder /save
 	* battle_athena.conf: Updated Packet Version Flags.

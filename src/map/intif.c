@@ -617,7 +617,7 @@ int intif_displaymessage(int account_id, char* mes)
 int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 	struct map_session_data* sd;
 	int id=RFIFOL(fd,4);
-	int i,j=0;
+	int i=0; //,j=0;
 
 //	if(battle_config.etc_log)
 //		printf("intif_parse_wismessage: %d %s %s %s\n",id,RFIFOP(fd,6),RFIFOP(fd,30),RFIFOP(fd,54) );
