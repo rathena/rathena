@@ -1,5 +1,6 @@
 Date	Added
 11/09
+	* chat.c: Fixed multiple joins in a single chat - thanks to Alex14 and CHaNGeTe. [Codemaster]
 	* clif.c: Fixed sitting. [spira]
 	* -  Fixed item 657 Job ID , 11/09 patch updates to item_db, Correct stats for item 5097
 	  - Added Unbreakable funcions to item_db armors/shields/garments/footgear [shadow]
