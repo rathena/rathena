@@ -1187,7 +1187,7 @@
 4149,Gargoyle_Card,Gargoyle Card,6,20,0,10,,,,,,,136,,,,{},{} //missing getitemonkill?? (item not implemented)
 4150,Goat_Card,Goat Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDef,2; bonus bMdef,5+5*(getrefine>=6); } //OK
 4151,Gajomart_Card,Gajomart Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubRace,3,-20; } //missing increaseexponracekill??
-4152,Galapago_Card,Galapago Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bItemHealRate,ListItems or kind & bRandomDrop,Item1,Chance,Item2,Chance,etc
+4152,Galapago_Card,Galapago Card,6,20,0,10,,,,,,,136,,,,{},{ bonus2 bAddItemHealRate,6,50; bonus3 bAddMonsterDropItem,531,4,3300; bonus3 bAddMonsterDropItem,532,4,3300; bonus3 bAddMonsterDropItem,534,4,3300; } //??
 4153,Crab_Card,Crab Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,5; bonus2 bAddDamageClass,1266,30; bonus2 bAddEle,4,30; if(cardscnt(4247)&&cardscnt(4273)) bonus3 bAddMonsterDropItem,544,5,3000; } //OK
 4154,Dumpling_Child_Card,Dumpling Child Card,6,20,0,10,,,,,,,,,,,{},{}
 4155,Goblin_Leader_Card,Goblin Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace2,1,30; } //OK
@@ -1228,7 +1228,7 @@
 4190,Wraith_Card,Wraith Card,6,20,0,10,,,,,,,136,,,,{},{} //missing getitemonkill?? (item not implemented)
 4191,Loli_Ruri_Card,Loli Ruri Card,6,20,0,10,,,,,,,16,,,,{},{ bonus4 bAutoSpellWhenHit,28,3,5,0; } //OK
 4192,Rotar_Zairo_Card,Rotar Zairo Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,5,7; } //OK
-4193,Lude_Card,Lude Card,6,20,0,10,,,,,,,136,,,,{},{ if(Class==Job_Novice||Class==Job_SuperNovice||Class==4001) bonus3 bAutoSpellWhenHit,8,1,20; if(isequipped(4294)) bonus bMaxHP,300; } //??OK
+4193,Lude_Card,Lude Card,6,20,0,10,,,,,,,136,,,,{},{ if(Class==Job_Novice||Class==Job_Super_Novice||Class==4001) bonus3 bAutoSpellWhenHit,8,1,20; if(isequipped(4294)) bonus bMaxHP,300; } //??OK
 4194,Rybio_Card,Rybio Card,6,20,0,10,,,,,,,16,,,,{},{ if(readparam(bDex)<=77) bonus2 bAddEffWhenHit,Eff_Stan,1000; if(readparam(bDex)>77) bonus2 bAddEffWhenHit,Eff_Stan,3000; } //??OK
 4195,Leaf_Cat_Card,Leaf Cat Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bSubEle,1,10; } //missing getitemonracekill??
 4196,Marin_Card,Marin Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bRandomDrop,Item1,Chance,Item2,Chance,etc
@@ -1262,7 +1262,7 @@
 4224,Stem_Worm_Card,Stem Worm Card,6,20,0,10,,,,,,,136,,,,{},{} //missing getitemonkill?? (item not implemented)
 4225,Stone_Shooter_Card,Stone Shooter Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,10; bonus bHit,10; } //OK
 4226,Sting_Card,Sting Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bDef,2; if(getrefine>8) bonus bMdef,5; } //OK
-4227,Spring_Rabbit_Card,Spring Rabbit Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bItemHealRate,ListOfHealingItems & bRandomDrop,Item1,Chance,Item2,Chance,etc
+4227,Spring_Rabbit_Card,Spring Rabbit Card,6,20,0,10,,,,,,,136,,,,{},{ bonus2 bAddItemHealRate,5,50; bonus3 bAddMonsterDropItem,517,2,5000; bonus3 bAddMonsterDropItem,528,2,5000; } //??
 4228,Sleeper_Card,Sleeper Card,6,20,0,10,,,,,,,136,,,,{},{} //missing getitemonkill?? (item not implemented)
 4229,Clock_Tower_Manager_Card,Clock Tower Manager Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bInt,1; bonus bDelayrate,-5; if(!isequipped(4244,4299,4313)) end; bonus bDef,3; bonus bMdef,3; } //??OK
 4230,Shinobi_Card,Shinobi Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bAgi,1; bonus4 bAutoSpellWhenHit,135,5,1,0; } //??OK
@@ -1331,7 +1331,7 @@
 4291,Kobold_Leader_Card,Kobold Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace2,2,30; } //OK
 4292,Kobold_Archer_Card,Kobold Archer Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,3,7; } //OK
 4293,Cookie_Card,Cookie Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bLuk,2; bonus2 bSkillAtk,156,10; } //OK
-4294,Quve_Card,Quve Card,6,20,0,10,,,,,,,136,,,,{},{ if((Class==Job_Novice)||(Class==Job_SuperNovice)) bonus4 bAutoSpellWhenHit,29,1,20,0; if(isequipped(4193)) bonus bMaxSP,60; } //??OK
+4294,Quve_Card,Quve Card,6,20,0,10,,,,,,,136,,,,{},{ if((Class==Job_Novice)||(Class==Job_Super_Novice)) bonus4 bAutoSpellWhenHit,29,1,20,0; if(isequipped(4193)) bonus bMaxSP,60; } //??OK
 4295,Kraben_Card,Kraben Card,6,20,0,10,,,,,,,16,,,,{},{ bonus2 bAddEffWhenHit,Eff_Blind,2000; } //??OK
 4296,Cramp_Card,Cramp Card,6,20,0,10,,,,,,,769,,,,{},{ if(isequipped(4028)) bonus bStr,3; } //missing getzenybychance??
 4297,Cruiser_Card,Cruiser Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,2,7; } //OK
@@ -1363,7 +1363,7 @@
 4323,Garm_Baby_Card,Garm Baby Card,6,20,0,10,,,,,,,2,,,,{},{ if(isequipped(4324)) goto GARM; bonus3 bAutoSpell,15,3,1; end; GARM: bonus3 bAutoSpell,15,3,2; } //??OK
 4324,Garm_Card,Garm Card,6,20,0,10,,,,,,,16,,,,{},{ bonus2 bAddEffWhenHit,Eff_Freeze,5000; } //OK
 4325,Harpy_Card,Harpy Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bSubEle,0,15; bonus2 bSkillAtk,11,5; } //??OK
-4326,Sea_Otter_Card,Sea Otter Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bItemHealRate,ListItems or kind & bRandomDrop,Item1,Chance,Item2,Chance,etc
+4326,Sea_Otter_Card,Sea Otter Card,6,20,0,10,,,,,,,136,,,,{},{ bonus2 bAddItemHealRate,7,50; bonus3 bAddMonsterDropItem,544,5,5000; bonus3 bAddMonsterDropItem,551,5,5000; } //??
 4327,Bloody_Butterfly_Card,Bloody Butterfly Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bCastrate,30; bonus bNoCastCancel2,0; bonus2 bSkillAtk,18,5; } //??OK
 4328,Hyegun_Card,Hyegun Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bFlee,15; bonus bCritical,1; if(isequipped(4090,4212)) bonus bAllStats,1; } //??OK
 4329,Phendark_Card,Phendark Card,6,20,0,10,,,,,,,2,,,,{},{} //missing recoversponracekill?? 

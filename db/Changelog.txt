@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/29
+	* Added effedcts to Spring Rabbit, Galapago, Sea Otter Cards [Lupus]
+	  It seems that item heal rate doesn't work yet
 03/27
 	* Re-Updated MOB DB with correct file now 8) [Lupus]
 	* Added all released cards into monsters drops and OCA [Lupus]
