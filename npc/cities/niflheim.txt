@@ -4,7 +4,7 @@
 //= Fyrien, Dizzy, PKGINGO
 //= Official NPCs translated and re-edited by Celest
 //===== Current Version: ===================================== 
-//= 1.05
+//= 1.06
 //===== Compatible With: ===================================== 
 //= Any eAthena Version; Niflheim Required
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.04-1.05 fixed several bugs with missing CLOSE button, wrong var name
 //=	in Piano Keys quest
 //=     fixed zeny/item, exploit in Sairin, some optimizations [Lupus]
+//= 1.06 some typos in some variables fixed (thx 2 Dr.Evil) [Lupus]
 //=
 //=  TODO: remove any save points from Niflheim (from Kafra)
 //=        remove or commetn Warpers (they make Niflheim Piano Quest meaningless)
@@ -504,21 +505,21 @@ L_end:
 
 nif_in.gat,115,181,5	script	#4	111,3,3{
 	mes "- You see a huge old piano -";
-	if if (nif_q_done==0) mes "- with a few keys missing  -";
-	if if (nif_q_done==1) mes "- with one key missing -";
+	if (nif_q_done==0) mes "- with a few keys missing  -";
+	if (nif_q_done==1) mes "- with one key missing -";
 	if (nif_q_done==0 && countitem(7184) > 5) goto L_event;//Items: Piano Key,
 	close;
 
 L_event:
 	delitem 7184,6;//Items: Piano Key,
-	set nif_quest_done, 1;
+	set nif_q_done, 1;
 	//clear auxiliary vars now
 	set nif_quest1, 0;
 	set nif_quest2, 0;
 	set nif_quest3, 0;
 	set nif_quest4, 0;
 	set nif_quest5, 0;
-	set nif_random,0; //clear garbage
+	set nif_random,0; //clear garbage from the previous version of the script
 	set nif_random1,0; //clear garbage
 	mes "- You slide the 6 piano keys one -";
 	mes "- by one into the missing slots  -";
