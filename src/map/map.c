@@ -1570,8 +1570,8 @@ static int map_readmap(int m,char *fn, char *alias) {
 	if(gat==NULL)
 		return -1;
 
-//	printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
-//	fflush(stdout);
+	printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
+	fflush(stdout);
 
 	map[m].m=m;
 	xs=map[m].xs=*(int*)(gat+6);
@@ -2054,25 +2054,6 @@ int sql_config_read(char *cfgName)
 	return 0;
 }
 
-// sql online status checking [Valaris]
-void char_offline(struct map_session_data *sd)
-{
-	if(sd && sd->status.char_id) {
-		sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, sd->status.char_id);
-	        if(mysql_query(&mmysql_handle, tmp_sql) ) {
-			printf("DB server Error (update online `%s`)- %s\n", char_db, mysql_error(&mmysql_handle) );
-	        }
-	}
-}
-
-void do_reset_online(void)
-{
-	sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
-	if(mysql_query(&mmysql_handle, tmp_sql) ) {
-		printf("DB server Error (reset_online `%s`)- %s\n", char_db, mysql_error(&mmysql_handle) );
-	}
-}
-
 int online_timer(int tid,unsigned int tick,int id,int data)
 {
 	if(check_online_timer != tid)
@@ -2090,16 +2071,13 @@ void char_online_check(void)
 	int i;
 	struct map_session_data *sd=NULL;
 
-	do_reset_online();
+	chrif_char_reset_offline();
 
 	for(i=0;i<fd_max;i++){
 		if (session[i] && (sd = session[i]->session_data) && sd && sd->state.auth && 
 		 !(battle_config.hide_GM_session && pc_isGM(sd)))
 			if(sd->status.char_id) {
-				sprintf(tmp_sql,"UPDATE `%s` SET `online`='1' WHERE `char_id`='%d'", char_db, sd->status.char_id);
-			        if(mysql_query(&mmysql_handle, tmp_sql) ) {
-					printf("DB server Error (update online `%s`)- %s\n", char_db, mysql_error(&mmysql_handle) );
-				}
+				 chrif_char_online(sd);
 			}
 	}
 
@@ -2199,7 +2177,7 @@ void do_final(void) {
 	do_final_storage();
         do_final_guild();
 #ifndef TXT_ONLY
-	do_reset_online();
+	chrif_char_reset_offline();
     map_sql_close();
 #endif /* not TXT_ONLY */
 }

@@ -1,5 +1,6 @@
 Date	Added
 11/27
+	* Fixed online system, online column works and prevent double login at the login server [Wizputer]
 	* Fixed some compile time errors associated with showmsg [MouseJstr]
 	* Added get_svn_revision() in core.c [MC Cameri]
 	  -Only if you have the file .svn\entries, it will show the revision # at runtime.

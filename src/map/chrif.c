@@ -904,10 +904,44 @@ int chrif_char_offline(struct map_session_data *sd)
 
 	WFIFOW(char_fd,0) = 0x2b17;
 	WFIFOL(char_fd,2) = sd->status.char_id;
-	WFIFOSET(char_fd,6);
+	WFIFOL(char_fd,6) = sd->status.account_id;
+	WFIFOSET(char_fd,10);
 
 	return 0;
 }
+
+/*=========================================
+ * Tell char-server to reset all chars offline [Wizputer]
+ *-----------------------------------------
+ */
+int chrif_char_reset_offline(void) {
+	if (char_fd < 0)
+		return -1;
+
+	WFIFOW(char_fd,0) = 0x2b18;
+	WFIFOSET(char_fd,2);
+
+	return 0;
+}
+
+/*=========================================
+ * Tell char-server charcter is online [Wizputer]
+ *-----------------------------------------
+ */
+
+int chrif_char_online(struct map_session_data *sd) 
+{
+	if (char_fd < 0)
+		return -1;
+
+	WFIFOW(char_fd,0) = 0x2b19;
+	WFIFOL(char_fd,2) = sd->status.char_id;
+	WFIFOL(char_fd,6) = sd->status.account_id;
+	WFIFOSET(char_fd,10);
+
+	return 0;
+}
+
 
 /*==========================================
  *

@@ -149,6 +149,64 @@ int GM_num = 0;
 
 int console = 0;
 
+//-------------------------------------------------
+// Set Character online/offline [Wizputer]
+//-------------------------------------------------
+
+void set_char_online(int char_id, int account_id) {
+    if ( char_id != 99 ) {
+        sprintf(tmp_sql, "UPDATE `%s` SET `online`='1' WHERE `char_id`='%d'",char_db,char_id);
+		if (mysql_query(&mysql_handle, tmp_sql)) {
+			printf("DB server Error (set char online)- %s\n", mysql_error(&mysql_handle));
+		}
+    }		
+    
+    WFIFOW(login_fd,0) = 0x272b;
+	WFIFOL(login_fd,2) = account_id;
+	WFIFOSET(login_fd,6);
+        
+}
+
+void set_all_offline(void) {
+	sprintf(tmp_sql, "SELECT `account_id` FROM `%s` WHERE `online` = '1'",char_db);
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
+	}
+		
+	sql_res = mysql_store_result(&mysql_handle);
+	if (sql_res) {
+	    while((sql_row = mysql_fetch_row(sql_res))) {
+	        if ( login_fd > 0 ) {
+	            WFIFOW(login_fd,0) = 0x272c;
+	            WFIFOL(login_fd,2) = atol(sql_row[0]);
+	            WFIFOSET(login_fd,6);
+            }
+       }
+    } 
+            
+    sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
+	}
+	
+	mysql_free_result(sql_res);
+}
+
+void set_char_offline(int char_id, int account_id) {
+    if ( char_id == 99 )
+        sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `account_id`='%d'", char_db, account_id);
+    else
+	    sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, char_id);
+	    
+	if (mysql_query(&mysql_handle, tmp_sql))
+		printf("DB server Error (update online `%s`)- %s\n", char_db, mysql_error(&mysql_handle));
+
+   WFIFOW(login_fd,0) = 0x272c;
+   WFIFOL(login_fd,2) = account_id;
+   WFIFOSET(login_fd,6);
+
+}       
+
 //-----------------------------------------------------
 // Function to suppress control characters in a string.
 //-----------------------------------------------------
@@ -853,10 +911,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	p->global_reg_num=i;
 
 	if (online) {
-		sprintf(tmp_sql, "UPDATE `%s` SET `online`='%d' WHERE `char_id`='%d'",char_db,online,char_id);
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			printf("DB server Error (set char online)- %s\n", mysql_error(&mysql_handle));
-		}
+		set_char_online(char_id,p->account_id);
 	}
 
 	printf("global_reg]\n");	//ok. all data load successfuly!
@@ -912,10 +967,7 @@ int mmo_char_sql_init(void) {
 	} else
 		printf("set char_id_count: %d.......\n",char_id_count);
 
-	sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (reset_online `%s`)- %s\n", char_db, mysql_error(&mysql_handle));
-	}
+    set_all_offline();
 	printf("init end.......\n");
 
 	return 0;
@@ -1085,6 +1137,8 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 
 	printf("mmo_char_send006b start.. (account:%d)\n",sd->account_id);
 //	printf("offset -> %d...\n",offset);
+
+    set_char_online(99,sd->account_id);
 
 	//search char.
 	sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d'",char_db, sd->account_id);
@@ -1896,11 +1950,23 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 6 )
 				return 0;
 			//printf("Setting %d char offline\n",RFIFOL(fd,2));
-			sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, RFIFOL(fd,2));
-			if (mysql_query(&mysql_handle, tmp_sql))
-				printf("DB server Error (update online `%s`)- %s\n", char_db, mysql_error(&mysql_handle));
-			RFIFOSKIP(fd,6);
+			set_char_offline(RFIFOL(fd,2),RFIFOL(fd,6));
+			RFIFOSKIP(fd,10);
 			break;
+		// Reset all chars to offline [Wizputer]
+		case 0x2b18:
+		    set_all_offline();
+			RFIFOSKIP(fd,2);
+			break;
+		// Character set online [Wizputer]
+		case 0x2b19:
+			if (RFIFOREST(fd) < 6 )
+				return 0;
+			//printf("Setting %d char online\n",RFIFOL(fd,2));
+			set_char_online(RFIFOL(fd,2),RFIFOL(fd,6));
+			RFIFOSKIP(fd,10);
+			break;
+		          
 		default:
 			// inter server - packet
 			{
@@ -1980,17 +2046,18 @@ int parse_char(int fd) {
 	struct char_session_data *sd;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 
-	if(login_fd < 0)
+	sd = session[fd]->session_data;
+	
+    if(login_fd < 0)
 		session[fd]->eof = 1;
 	if(session[fd]->eof) {
 		if (fd == login_fd)
 			login_fd = -1;
+		set_char_offline(99,sd->account_id);
 		close(fd);
 		delete_session(fd);
 		return 0;
 	}
-
-	sd = session[fd]->session_data;
 
 	while(RFIFOREST(fd) >= 2) {
 		cmd = RFIFOW(fd,0);
@@ -2108,7 +2175,7 @@ int parse_char(int fd) {
 			sql_row = mysql_fetch_row(sql_res);
 
 			if (sql_row)
-				mmo_char_fromsql(atoi(sql_row[0]), char_dat, 0);
+				mmo_char_fromsql(atoi(sql_row[0]), char_dat, 1);
 			else {
 				mysql_free_result(sql_res);
 				RFIFOSKIP(fd, 3);
@@ -2693,10 +2760,7 @@ void do_final(void) {
 		sleep (0);
 	}while (save_flag != 0);
 
-	sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
-	}
+	set_all_offline();
 
 	sprintf(tmp_sql,"DELETE FROM `ragsrvinfo");
 	if (mysql_query(&mysql_handle, tmp_sql)) {

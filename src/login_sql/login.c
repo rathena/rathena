@@ -137,6 +137,39 @@ int auth_fifo_pos = 0;
 
 static char md5key[20], md5keylen = 16;
 
+struct dbt *online_db;
+
+//-----------------------------------------------------
+// Online User Database [Wizputer]
+//-----------------------------------------------------
+
+void add_online_user(int account_id) {
+    int *p;
+    p = malloc(sizeof(int));
+    if (p == NULL) {
+		printf("add_online_user: memory allocation failure (malloc)!\n");
+		exit(0);
+	}
+	p = &account_id;
+    numdb_insert(online_db, account_id, p);
+}
+
+int is_user_online(int account_id) {
+    int *p;
+
+	p = numdb_search(online_db, account_id);
+	if (p == NULL)
+		return 0;
+	printf("Acccount %d\n",*p);
+	return 1;
+}
+
+void remove_online_user(int account_id) {
+    int *p;
+    p = numdb_erase(online_db,account_id);
+    free(p);
+}
+
 //-----------------------------------------------------
 // check user level
 //-----------------------------------------------------
@@ -528,6 +561,11 @@ int mmo_auth( struct mmo_account* account , int fd){
 		return 2; // 2 = This ID is expired
 	}
 
+    if ( is_user_online(atol(sql_row[0])) ) {
+        printf("User [%s] is already online - Rejected.\n",sql_row[1]);
+	    return 3; // Rejected
+    }
+        
 	account->account_id = atoi(sql_row[0]);
 	account->login_id1 = rand();
 	account->login_id2 = rand();
@@ -988,6 +1026,20 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,6);
 			}
 			return 0;
+			
+    case 0x272b:    // Set account_id to online [Wizputer]
+        if (RFIFOREST(fd) < 6)
+            return 0;
+        add_online_user(RFIFOL(fd,2));
+        RFIFOSKIP(fd,6);
+        break;
+    
+    case 0x272c:   // Set account_id to offline [Wizputer]
+        if (RFIFOREST(fd) < 6)
+            return 0;
+        remove_online_user(RFIFOL(fd,2));
+        RFIFOSKIP(fd,6);
+        break;
 			
 	default:
 		printf("login: unknown packet %x! (from char).\n", RFIFOW(fd,0));
@@ -1755,6 +1807,10 @@ int do_init(int argc,char **argv){
 		set_defaultconsoleparse(parse_console);
 		start_console();
 	}
+	
+	// Online user database init
+    free(online_db);
+	online_db = numdb_init();
 	
 	printf("The login-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", login_port);
 
