@@ -294,11 +294,18 @@ int do_timer(unsigned int tick) {
 void timer_final() {
 	struct timer_func_list* tfl = tfl_root, *tfl2;
 
+//	while (tfl) {
+//		tfl2 = tfl;
+//		aFree(tfl->name);
+//		aFree(tfl);
+//		tfl = tfl2->next; // access on already freed memory
+//	}
+
 	while (tfl) {
-		tfl2 = tfl;
-		aFree(tfl->name);
+		tfl2 = tfl->next;	// copy next pointer
+		aFree(tfl->name);	// free structures
 		aFree(tfl);
-		tfl = tfl2->next;
+		tfl = tfl2;			// use copied pointer for next cycle
 	}
 	
 	if (timer_data) aFree(timer_data);
