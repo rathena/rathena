@@ -153,6 +153,7 @@ enum {
 
 static char map_ip_str[16];
 static in_addr_t map_ip;
+static in_addr_t bind_ip = INADDR_ANY;
 static int map_port = 5121;
 int map_fd;
 char talkie_mes[80];
@@ -165,6 +166,11 @@ void clif_setip(char *ip)
 {
 	memcpy(map_ip_str, ip, 16);
 	map_ip = inet_addr(map_ip_str);
+}
+
+void clif_setbindip(char *ip)
+{
+	bind_ip = inet_addr(ip);
 }
 
 /*==========================================
@@ -11357,14 +11363,14 @@ int do_init_clif(void) {
 	set_defaultparse(clif_parse);
 #ifdef __WIN32
 	//if (!make_listen_port(map_port)) {
-	if (!make_listen_bind(map_ip,map_port)) {
+	if (!make_listen_bind(bind_ip,map_port)) {
 		printf("cant bind game port\n");
 		exit(1);
 	}
 #else
 	for(i = 0; i < 10; i++) {
 		//if (make_listen_port(map_port))
-		if (make_listen_bind(map_ip,map_port))
+		if (make_listen_bind(bind_ip,map_port))
 			break;
 		sleep(20);
 	}

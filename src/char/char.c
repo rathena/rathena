@@ -54,6 +54,8 @@ in_addr_t login_ip;
 int login_port = 6900;
 int char_ip_set_ = 0;
 char char_ip_str[16];
+int bind_ip_set_ = 0;
+char bind_ip_str[16];
 in_addr_t char_ip;
 int char_port = 6121;
 int char_maintenance;
@@ -3219,6 +3221,14 @@ int char_config_read(const char *cfgName) {
 				sprintf(char_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 			} else
 				memcpy(char_ip_str, w2, 16);
+		} else if (strcmpi(w1, "bind_ip") == 0) {
+			bind_ip_set_ = 1;
+			h = gethostbyname(w2);
+			if (h != NULL) {
+				printf("Character server binding IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+				sprintf(bind_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+			} else
+				memcpy(bind_ip_str, w2, 16);
 		} else if (strcmpi(w1, "char_port") == 0) {
 			char_port = atoi(w2);
 		} else if (strcmpi(w1, "char_maintenance") == 0) {
@@ -3436,8 +3446,10 @@ int do_init(int argc, char **argv) {
 	set_termfunc(do_final);
 	set_defaultparse(parse_char);
 
-	//char_fd = make_listen_port(char_port);
-	char_fd = make_listen_bind(char_ip,char_port);
+        if (bind_ip_set_)
+            char_fd = make_listen_bind(inet_addr(bind_ip_str),char_port);
+        else
+            char_fd = make_listen_bind(INADDR_ANY,char_port);
 
 	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
 	add_timer_func_list(send_users_tologin, "send_users_tologin");

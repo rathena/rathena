@@ -82,8 +82,8 @@ void Gettimeofday(struct timeval *timenow)
 int account_id_count = START_ACCOUNT_NUM;
 int server_num;
 int new_account_flag = 0;
-char login_ip_str[16];
-in_addr_t login_ip;
+char bind_ip_str[16];
+in_addr_t bind_ip;
 int login_port = 6900;
 char lan_char_ip[128]; // Lan char ip added by kashy
 int subnetmaski[4]; // Subnetmask added by kashy
@@ -1580,6 +1580,8 @@ int login_config_read(const char *cfgName){
 	FILE *fp;
 	struct hostent *h = NULL;
 
+        bind_ip_str[0] = '\0';
+
 	fp=fopen(cfgName,"r");
 
 	if(fp==NULL){
@@ -1594,15 +1596,14 @@ int login_config_read(const char *cfgName){
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
 		if(i!=2)
 			continue;
-
-		else if (strcmpi(w1, "login_ip") == 0) {
+		else if (strcmpi(w1, "bind_ip") == 0) {
 			//login_ip_set_ = 1;
 			h = gethostbyname (w2);
 			if (h != NULL) {
 				printf("Login server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-				sprintf(login_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+				sprintf(bind_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 			} else
-				memcpy(login_ip_str,w2,16);
+				memcpy(bind_ip_str,w2,16);
 		} else if(strcmpi(w1,"login_port")==0){
 			login_port=atoi(w2);
 			printf ("set login_port : %s\n",w2);
@@ -1816,10 +1817,13 @@ int do_init(int argc,char **argv){
 	printf ("set max servers complete\n");
 	//server port open & binding
 
-	login_ip = inet_addr(login_ip_str);
+        if (bind_ip_str[0] != '\0')
+            bind_ip = inet_addr(bind_ip_str);
+        else
+            bind_ip = INADDR_ANY;
 
 	//login_fd=make_listen_port(login_port);
-	login_fd=make_listen_bind(login_ip,login_port);
+	login_fd=make_listen_bind(bind_ip,login_port);
 
 	//Auth start
 	printf ("Running mmo_auth_sqldb_init()\n");

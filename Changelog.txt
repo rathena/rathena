@@ -1,6 +1,11 @@
 Date	Added
 
 02/05
+        * Changed interface binding to use a bind_ip instead of using
+          the login_ip, char_ip, or map_ip.  This lets you still be
+          able to set your WAN IP seperate from what interface you
+          wish to bind to.  Also, the default is back to binding to
+          all interfaces on the machine.  [1045: MouseJstr]
         * optimizing OnTouch event name generation [Shinomori]
         * fixing Celests Sharp Shooting [Shinomori]
         * Updated Sharp Shooting AoE code, thanks to Neodis / k-Athena [celest]

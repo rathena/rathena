@@ -55,8 +55,8 @@ void Gettimeofday(struct timeval *timenow)
 int account_id_count = START_ACCOUNT_NUM;
 int server_num;
 int new_account_flag = 0;
-char login_ip_str[16];
-in_addr_t login_ip;
+char bind_ip_str[16];
+in_addr_t bind_ip;
 int login_port = 6900;
 char lan_char_ip[16];
 int subneti[4];
@@ -3367,6 +3367,8 @@ int login_config_read(const char *cfgName) {
 	FILE *fp;
 	struct hostent *h = NULL;
 
+        bind_ip_str[0] = '\0';
+
 	if ((fp = fopen(cfgName, "r")) == NULL) {
 		printf("Configuration file (%s) not found.\n", cfgName);
 		return 1;
@@ -3421,14 +3423,14 @@ int login_config_read(const char *cfgName) {
 				level_new_gm = atoi(w2);
 			} else if (strcmpi(w1, "new_account") == 0) {
 				new_account_flag = config_switch(w2);
-			} else if (strcmpi(w1, "login_ip") == 0) {
-				//login_ip_set_ = 1;
+			} else if (strcmpi(w1, "bind_ip") == 0) {
+				//bind_ip_set_ = 1;
 				h = gethostbyname (w2);
 				if (h != NULL) {
 					printf("Login server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-					sprintf(login_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+					sprintf(bind_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 				} else
-					memcpy(login_ip_str,w2,16);
+					memcpy(bind_ip_str,w2,16);
 			} else if (strcmpi(w1, "login_port") == 0) {
 				login_port = atoi(w2);
 			} else if (strcmpi(w1, "account_filename") == 0) {
@@ -3955,9 +3957,14 @@ int do_init(int argc, char **argv) {
 	read_gm_account();
 //	set_termfunc(mmo_auth_sync);
 	set_defaultparse(parse_login);
-	login_ip = inet_addr(login_ip_str);
+
+        if (bind_ip_str[0] != '\0')
+            bind_ip = inet_addr(bind_ip_str);
+        else
+            bind_ip = INADDR_ANY;
+
 	//login_fd = make_listen_port(login_port);
-	login_fd = make_listen_bind(login_ip,login_port);
+	login_fd = make_listen_bind(bind_ip,login_port);
 
 	if(anti_freeze_enable > 0) {
 		add_timer_func_list(char_anti_freeze_system, "char_anti_freeze_system");
