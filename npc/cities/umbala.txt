@@ -6,7 +6,7 @@
 //= Muad Dib (1.2)
 //= Darkchild (1.3) 
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any eAthena Version; RO Episode XX
 //===== Description: =========================================
@@ -26,7 +26,8 @@
 //= 1.0 - Done By jAthena (dunno Who)
 //= 1.1 - Translated by Fusion Dev Team
 //= 1.2 - Fixed Something by Muad Dib
-//= 1.2 - Fixed up For eA by Darkchild
+//= 1.3 - Fixed up For eA by Darkchild
+//= 1.4 fixed some wrong item names [Lupus]
 //============================================================
 
 
@@ -723,10 +724,10 @@ LStart2:
 		mes "I intend to teach.";
 		next;
 		mes "[Karukatan]";
-		mes "I need ^3377FF10x Oily Paper^000000, and ^3377FF5x Smooth Paper^000000.";
+		mes "I need ^3377FF10x Oiled Paper^000000, and ^3377FF5x String Paper^000000.";
 		mes "I also need something to write with.";
 		mes "of course.";
-		mes "For that, ^3377FF1x India Ink^000000 and ^3377FF1x Bird Feather^000000";
+		mes "For that, ^3377FF1x Squid Ink^000000 and ^3377FF1x Feather of Birds^000000";
 		mes "will do nicely.";
 		next;
 		mes "[Karukatan]";
@@ -773,10 +774,10 @@ LStart3:
 	mes "teach you the language?  You need to gather";
 	next;
 	mes "[Karukatan]";
-	mes "^3377FF10x Oily Paper^000000,";
-	mes "^3377FF5x Smooth Paper^000000,";
-	mes "^3377FF1x India Ink^000000, and";
-	mes "^3377FF1x Bird Feather^000000.";
+	mes "^3377FF10x Oiled Paper^000000,";
+	mes "^3377FF5x String Paper^000000,";
+	mes "^3377FF1x Squid Ink^000000, and";
+	mes "^3377FF1x Feather of Bird^000000.";
 	mes "Once you have gathered those, I can teach";
 	mes "you Utan tribal language.";
 	close;
@@ -1008,7 +1009,7 @@ L1:
 		mes "[Putsuchiritan]";
 		if (@umchange[1]==947) mes "The horn begins to vibrate.";
 		if (@umchange[1]==904) mes "The tail begins to vibrate.";
-		if ((@umchange[1]==1013) && (@umchange[1]==946)) mes "The skin begins to vibrate.";
+		if ((@umchange[1]==1013) && (@umchange[1]==946)) mes "The shell begins to vibrate.";
 //End Possible Conversion
 		mes "I will now chant a holy mantra.";
 		mes "Imagine the number in your mind";
@@ -1056,7 +1057,7 @@ L1_2e:
 	mes "Water...You need that which is";
 	mes "saturated with water.  Explore";
 	mes "the area around here and find";
-	mes "^3377FF20x Katashimuri Skin^000000 for the ritual.";
+	mes "^3377FF20x Snails Shell^000000 for the ritual.";
 	goto L1_empty;
 L1_3e:
 	mes "[Putsuchiritan]";
@@ -1071,7 +1072,7 @@ L1_4e:
 	mes "Wind...You need that which";
 	mes "has an easy camaraderie with";
 	mes "the sky itself.";
-	mes "You need ^3377FF25x Radiant Pelt^000000";
+	mes "You need ^3377FF25x Rainbow Shell^000000";
 	mes "to complete the ritual.";
 L1_empty:
 	next;
