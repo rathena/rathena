@@ -2534,7 +2534,15 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 	return 0;
 }
 
-int id_db_final(void *k,void *d,va_list ap){ return 0; }
+int id_db_final(void *k,void *d,va_list ap)
+{
+	struct mob_data *id;
+	nullpo_retr(0, id=d);
+	if(id->lootitem)
+		free(id->lootitem);
+	free(id);
+	return 0;
+}
 int map_db_final(void *k,void *d,va_list ap){ return 0; }
 int nick_db_final(void *k,void *d,va_list ap){ return 0; }
 int charid_db_final(void *k,void *d,va_list ap){ return 0; }

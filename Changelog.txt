@@ -1,5 +1,6 @@
 Date	Added
 01/01
+	* Attempted to fix a memory leak [Codemaster] - tell me if it works XD (NPC/Mob memory leak in npc_parse_mob(...))
 	* Added a char config that allows GMs that have a certain level or above to 
 	  bypass the server's user limit [Codemaster]
 	* Changed some create arrow outputs for new kRO 12/21/04 patch [Aria]
