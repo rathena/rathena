@@ -997,8 +997,8 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	c = pc_calc_skilltree_normalize_job(c, sd);
 
 	for(i=0;i<MAX_SKILL;i++){
-                if(skill_get_inf2(i))
-                        continue;
+//                if(skill_get_inf2(i) & 0x01)
+//                        continue;
 		if (sd->status.skill[i].flag != 13)   
 		        sd->status.skill[i].id=0;
 		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){	// cardƒXƒLƒ‹‚È‚çA

@@ -7139,7 +7139,7 @@ atcommand_skilltree(const int fd, struct map_session_data* sd,
 	  tbl, pc_checkskill(pl_sd, 1));
   clif_displaymessage(fd, output);
 
-  for (j = 0; j < MAX_SKILL; j++) {
+  for (j = 0; skill_tree[s][c][j].id != 0; j++) {
     if (skill_tree[s][c][j].id == skillnum) {
       skillidx = j;
       break;

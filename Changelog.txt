@@ -1,5 +1,9 @@
 Date	Added
 12/24
+	* @skilltree was looking outside of the particular class
+	  of the char to see if they could do a skill [MouseJstr]
+	* Fixed a calc_skill_tree bug where too many skills were
+	  visible [MouseJstr]
 	* Added Dev/GDB_reports.txt, take a look in it devs [Ajarn]
         * Corrected description for player_skill_nofootset and monster_skill_nofootset
           in battle_athena.conf [celest]
