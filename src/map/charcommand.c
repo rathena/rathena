@@ -903,7 +903,7 @@ charcommand_effect(const int fd, struct map_session_data* sd,
  *------------------------------------------
  */
 int
-charcommand_storage_list(
+charcommand_storagelist(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
