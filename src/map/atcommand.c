@@ -104,7 +104,6 @@ ATCOMMAND_FUNC(hatch);
 ATCOMMAND_FUNC(petfriendly);
 ATCOMMAND_FUNC(pethungry);
 ATCOMMAND_FUNC(petrename);
-ATCOMMAND_FUNC(charpetrename); // by Yor
 ATCOMMAND_FUNC(recall);
 ATCOMMAND_FUNC(recallall);
 ATCOMMAND_FUNC(revive);
@@ -327,9 +326,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_PetRename,			"@petrename",		 1, atcommand_petrename },
 	{ AtCommand_Recall,				"@recall",			60, atcommand_recall }, // + /recall
 	{ AtCommand_Revive,				"@revive",			60, atcommand_revive },
-	{ AtCommand_CharacterStats,		"@charstats",		40, atcommand_character_stats },
 	{ AtCommand_CharacterStatsAll,	"@charstatsall",	40, atcommand_character_stats_all },
-	{ AtCommand_CharacterOption,	"@charoption",		60, atcommand_character_option },
 	{ AtCommand_CharacterSave,		"@charsave",		60, atcommand_character_save },
 	{ AtCommand_Night,				"@night",			80, atcommand_night },
 	{ AtCommand_Day,				"@day",				80, atcommand_day },
@@ -4062,64 +4059,6 @@ int atcommand_revive(
  *
  *------------------------------------------
  */
-int atcommand_character_stats(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	char character[100];
-	char job_jobname[100];
-	char output[200];
-	struct map_session_data *pl_sd;
-	int i;
-
-	memset(character, '\0', sizeof(character));
-	memset(job_jobname, '\0', sizeof(job_jobname));
-	memset(output, '\0', sizeof(output));
-
-	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: @charstats <char name>).");
-		return -1;
-	}
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		struct {
-			const char* format;
-			int value;
-		} output_table[] = {
-			{ "Base Level - %d", pl_sd->status.base_level },
-			{ job_jobname, pl_sd->status.job_level },
-			{ "Hp - %d",    pl_sd->status.hp },
-			{ "MaxHp - %d", pl_sd->status.max_hp },
-			{ "Sp - %d",    pl_sd->status.sp },
-			{ "MaxSp - %d", pl_sd->status.max_sp },
-			{ "Str - %3d",  pl_sd->status.str },
-			{ "Agi - %3d",  pl_sd->status.agi },
-			{ "Vit - %3d",  pl_sd->status.vit },
-			{ "Int - %3d",  pl_sd->status.int_ },
-			{ "Dex - %3d",  pl_sd->status.dex },
-			{ "Luk - %3d",  pl_sd->status.luk },
-			{ "Zeny - %d",  pl_sd->status.zeny },
-			{ NULL, 0 }
-		};
-		sprintf(job_jobname, "Job - %s %s", job_name(pl_sd->status.class), "(level %d)");
-		sprintf(output, msg_table[53], pl_sd->status.name); // '%s' stats:
-		clif_displaymessage(fd, output);
-		for (i = 0; output_table[i].format != NULL; i++) {
-			sprintf(output, output_table[i].format, output_table[i].value);
-			clif_displaymessage(fd, output);
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
-	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
 //** Character Stats All by fritz
 int atcommand_character_stats_all(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
@@ -4156,75 +4095,6 @@ int atcommand_character_stats_all(const int fd, struct map_session_data* sd, con
 	else {
 		sprintf(output, msg_table[30], count); // %d players found.
 		clif_displaymessage(fd, output);
-	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int atcommand_character_option(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	char character[100];
-	int opt1 = 0, opt2 = 0, opt3 = 0;
-	struct map_session_data* pl_sd;
-
-	memset(character, '\0', sizeof(character));
-
-	if (!message || !*message || sscanf(message, "%d %d %d %99[^\n]", &opt1, &opt2, &opt3, character) < 4 || opt1 < 0 || opt2 < 0 || opt3 < 0) {
-		clif_displaymessage(fd, "Please, enter valid options and a player name (usage: @charoption <param1> <param2> <param3> <charname>).");
-		return -1;
-	}
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change option only to lower or same level
-			pl_sd->opt1 = opt1;
-			pl_sd->opt2 = opt2;
-			pl_sd->status.option = opt3;
-			// fix pecopeco display
-			if (pl_sd->status.class == 13 || pl_sd->status.class == 21 || pl_sd->status.class == 4014 || pl_sd->status.class == 4022) {
-				if (!pc_isriding(pl_sd)) { // pl_sd have the new value...
-					if (pl_sd->status.class == 13)
-						pl_sd->status.class = pl_sd->view_class = 7;
-					else if (pl_sd->status.class == 21)
-						pl_sd->status.class = pl_sd->view_class = 14;
-					else if (pl_sd->status.class == 4014)
-						pl_sd->status.class = pl_sd->view_class = 4008;
-					else if (pl_sd->status.class == 4022)
-						pl_sd->status.class = pl_sd->view_class = 4015;
-				}
-			} else {
-				if (pc_isriding(pl_sd)) { // pl_sd have the new value...
-					if (pl_sd->disguise > 0) { // temporary prevention of crash caused by peco + disguise, will look into a better solution [Valaris] (code added by [Yor])
-						pl_sd->status.option &= ~0x0020;
-					} else {
-						if (pl_sd->status.class == 7)
-							pl_sd->status.class = pl_sd->view_class = 13;
-						else if (pl_sd->status.class == 14)
-							pl_sd->status.class = pl_sd->view_class = 21;
-						else if (pl_sd->status.class == 4008)
-							pl_sd->status.class = pl_sd->view_class = 4014;
-						else if (pl_sd->status.class == 4015)
-							pl_sd->status.class = pl_sd->view_class = 4022;
-						else
-							pl_sd->status.option &= ~0x0020;
-					}
-				}
-			}
-			clif_changeoption(&pl_sd->bl);
-			pc_calcstatus(pl_sd, 0);
-			clif_displaymessage(fd, msg_table[58]); // Character's options changed.
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
 	}
 
 	return 0;

@@ -78,13 +78,13 @@ enum AtCommandType {
 	AtCommand_PetFriendly,
 	AtCommand_PetHungry,
 	AtCommand_PetRename,
-	AtCommand_CharPetRename, // by Yor
+//	AtCommand_CharPetRename, // by Yor, Now #petrename
 	AtCommand_Recall,
 //	AtCommand_CharacterJob,  // Now #jobchange
 	AtCommand_Revive,
 	AtCommand_CharacterStats,
 	AtCommand_CharacterStatsAll,
-	AtCommand_CharacterOption,
+//	AtCommand_CharacterOption, // Now #option
 	AtCommand_CharacterSave,
 	AtCommand_CharacterLoad,
 	AtCommand_Night,
@@ -250,6 +250,7 @@ int atcommand_config_read(const char *cfgName);
 int msg_config_read(const char *cfgName);
 
 char *str_lower(char *str);
+char * job_name(int class);
 
 #endif
 
