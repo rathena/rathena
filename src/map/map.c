@@ -3070,8 +3070,6 @@ int log_sql_init(void){
 
 int online_timer (int tid,unsigned int tick,int id,int data)
 {
-	if(check_online_timer != tid)
-		return 0;
 	char_online_check();
 	return 0;
 }
