@@ -2298,7 +2298,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			mobskill_use_id(md,&md->bl,skillidx);//©”š‰r¥ŠJn
 			md->state.special_mob_ai++;
 		}
-		if (md->master_id==src->id)
+		if (src && md->master_id==src->id)
 			md->target_dir=map_calc_dir(src,md->bl.x,md->bl.y)+1;
 	}
 

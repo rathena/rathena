@@ -720,8 +720,14 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd = map_id2sd(id);
 	nullpo_retr(1, sd);
 
+	// check if double login occured
+	if(sd->new_fd){
+		// 2重login状態だったので、両方落す
+		clif_authfail_fd(sd->fd,2);	// same id
+		clif_authfail_fd(sd->new_fd,8);	// same id
+		return 1;
+	}
 	sd->login_id2 = login_id2;
-
 	memcpy(&sd->status, st, sizeof(*st));
 
 	if (sd->status.sex != sd->sex) {
@@ -944,6 +950,13 @@ int pc_authfail(int id) {
 	sd = map_id2sd(id);
 	if (sd == NULL)
 		return 1;
+
+	if(sd->new_fd){
+		// 2重login状態だったので、新しい接続のみ落す
+		clif_authfail_fd(sd->new_fd,0);
+		sd->new_fd=0;
+		return 0;
+	}
 
 	clif_authfail_fd(sd->fd, 0);
 

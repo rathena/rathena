@@ -5325,7 +5325,8 @@ static const struct {
 	{ "motd_type",              &battle_config.motd_type}, // [celest]
 	{ "allow_atcommand_when_mute",			&battle_config.allow_atcommand_when_mute}, // [celest]
 	{ "finding_ore_rate",       &battle_config.finding_ore_rate}, // [celest]
-	{ "exp_calc_type",       &battle_config.exp_calc_type}, // [celest]
+	{ "exp_calc_type",          &battle_config.exp_calc_type}, // [celest]
+	{ "double_login_system",    &battle_config.double_login_system}, // [celest]
 
 //SQL-only options start
 #ifndef TXT_ONLY 
@@ -5586,6 +5587,7 @@ void battle_set_defaults() {
 	battle_config.castrate_dex_scale = 150;
 	battle_config.area_size = 14;
 	battle_config.exp_calc_type = 1;
+	battle_config.double_login_system = 0;
 
 //SQL-only options start
 #ifndef TXT_ONLY 
@@ -5722,6 +5724,9 @@ void battle_validate_conf() {
 
 	if (battle_config.vending_max_value > 10000000 || battle_config.vending_max_value<=0) // Lupus & Kobra_k88
 		battle_config.vending_max_value = 10000000;
+
+	if (battle_config.double_login_system < 0)
+		battle_config.double_login_system = 0;
 
 }
 
