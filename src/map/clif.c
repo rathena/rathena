@@ -7772,7 +7772,7 @@ int clif_message(struct block_list *bl, char* msg)
 	WBUFL(buf, 4) = bl->id;
 	memcpy(WBUFP(buf, 8), msg, msg_len);
 
-	clif_send(buf, WBUFW(buf,2), bl, AREA);
+	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);	// by Gengar
 
 	return 0;
 }

@@ -33,6 +33,7 @@ struct item_data {
 		unsigned no_equip : 3;
 		unsigned no_drop : 1;
 		unsigned no_use : 1;
+		unsigned no_refine : 1;	// [celest]
 	} flag;
 	int view_id;
 };

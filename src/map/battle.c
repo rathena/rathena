@@ -1608,6 +1608,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		  ((src->type==BL_PC && ((struct map_session_data *)src)->status.weapon == (1 || 2 || 3)) || src->type==BL_MOB )){
 			if(rand()%100 < (15*sc_data[SC_REJECTSWORD].val1)){ //反射確率は15*Lv
 				damage = damage*50/100;
+				clif_damage(bl,src,gettick(),0,0,damage,0,0,0);
 				battle_damage(bl,src,damage,0);
 				//ダメージを与えたのは良いんだが、ここからどうして表示するんだかわかんねぇ
 				//エフェクトもこれでいいのかわかんねぇ
@@ -2048,6 +2049,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 				damage2 = damage2*(100+ 20*skill_lv)/100;
 				break;
 			case AM_ACIDTERROR:	// アシッドテラー
+				hitrate = 1000000;
 				damage = damage*(100+ 40*skill_lv)/100;
 				damage2 = damage2*(100+ 40*skill_lv)/100;
 				break;
@@ -2542,6 +2544,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 				damage2 = damage2*(100+ 20*skill_lv)/100;
 				break;
 			case AM_ACIDTERROR:	// アシッドテラー
+				hitrate = 1000000;
 				damage = damage*(100+ 40*skill_lv)/100;
 				damage2 = damage2*(100+ 40*skill_lv)/100;
 				break;
@@ -3326,6 +3329,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 				damage2 = damage2*(100+ 20*skill_lv)/100;
 				break;
 			case AM_ACIDTERROR:	// アシッドテラー
+				hitrate = 1000000;
 				damage = damage*(100+ 40*skill_lv)/100;
 				damage2 = damage2*(100+ 40*skill_lv)/100;
 				break;

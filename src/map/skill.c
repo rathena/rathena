@@ -5435,7 +5435,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case BA_WHISTLE:			/* 口笛 */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_NOENEMY;
 		if(src->type == BL_PC)
 			val1 = (pc_checkskill((struct map_session_data *)src,BA_MUSICALLESSON)+1)>>1;
@@ -5445,7 +5445,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case DC_HUMMING:			/* ハミング */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_NOENEMY;
 		if(src->type == BL_PC)
 			val1 = (pc_checkskill((struct map_session_data *)src,DC_DANCINGLESSON)+1)>>1;
@@ -5456,14 +5456,14 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case DC_UGLYDANCE:			/* 自分勝手なダンス */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_ENEMY;
 		break;
 
 	case DC_DONTFORGETME:		/* 私を忘れないで… */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_ENEMY;
 		if(src->type == BL_PC)
 			val1 = (pc_checkskill((struct map_session_data *)src,DC_DANCINGLESSON)+1)>>1;
@@ -5473,7 +5473,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case BA_POEMBRAGI:			/* ブラギの詩 */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_NOENEMY;
 		if(src->type == BL_PC)
 			val1 = pc_checkskill((struct map_session_data *)src,BA_MUSICALLESSON);
@@ -5483,7 +5483,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case BA_APPLEIDUN:			/* イドゥンの林檎 */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_NOENEMY;
 		if(src->type == BL_PC)
 			val1 = ((pc_checkskill((struct map_session_data *)src,BA_MUSICALLESSON))&0xffff)<<16;
@@ -5495,7 +5495,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case DC_SERVICEFORYOU:		/* サ?ビスフォ?ユ? */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_PARTY;
 		if(src->type == BL_PC)
 			val1 = (pc_checkskill((struct map_session_data *)src,DC_DANCINGLESSON)+1)>>1;
@@ -5504,7 +5504,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case BA_ASSASSINCROSS:		/* 夕陽のアサシンクロス */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_NOENEMY;
 		if(src->type == BL_PC)
 			val1 = (pc_checkskill((struct map_session_data *)src,BA_MUSICALLESSON)+1)>>1;
@@ -5513,7 +5513,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case DC_FORTUNEKISS:		/* 幸運のキス */
 		count=49;
 		limit=skill_get_time(skillid,skilllv);
-		range=5;
+		range=3;
 		target=BCT_NOENEMY;
 		if(src->type == BL_PC)
 			val1 = (pc_checkskill((struct map_session_data *)src,DC_DANCINGLESSON)+1)>>1;

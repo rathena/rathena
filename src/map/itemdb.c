@@ -41,6 +41,7 @@ static int itemdb_read_randomitem();
 static int itemdb_read_itemavail(void);
 static int itemdb_read_itemnametable(void);
 static int itemdb_read_noequip(void);
+static int itemdb_read_norefine(void);
 void itemdb_reload(void);
 
 /*==========================================
@@ -292,6 +293,7 @@ static void itemdb_read(void)
 	itemdb_read_randomitem();
 	itemdb_read_itemavail();
 	itemdb_read_noequip();
+	itemdb_read_norefine();
 
 	if (!battle_config.item_name_override_grffile)
 		itemdb_read_itemnametable();
@@ -637,6 +639,31 @@ static int itemdb_read_noequip(void)
 	ShowStatus(tmp_output);
 	return 0;
 }
+
+/*================================================
+ * Whether the item can be refined or not [Celest]
+ *------------------------------------------------
+ */
+static int itemdb_read_norefine(void)
+{
+	int i, nameid;
+	struct item_data *id;
+	// To-do: let it read from a text file later
+	int cant_refine[] = {
+		0, 1243, 1530, 2110, 2112, 2264, 2298, 2352, 2410, 2413,
+		2414, 2509, 2510, 5008, 5046, 5049, 5050, 5053, 5055, 5098
+	};
+
+	for (i=0; i < (int)(sizeof(cant_refine) / sizeof(cant_refine[0])); i++) {
+		nameid = cant_refine[i];
+		if(nameid<=0 || nameid>=20000 || !(id=itemdb_exists(nameid)))
+			continue;
+		id->flag.no_refine = 1;
+	}
+
+	return 1;
+}
+
 #ifndef TXT_ONLY
 
 /*======================================
@@ -870,6 +897,7 @@ static void itemdb_read(void)
 	itemdb_read_randomitem();
 	itemdb_read_itemavail();
 	itemdb_read_noequip();
+	itemdb_read_norefine();
 	itemdb_read_cardillustnametable();
 	if (!battle_config.item_name_override_grffile)
 		itemdb_read_itemnametable();

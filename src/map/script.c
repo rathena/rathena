@@ -2921,10 +2921,13 @@ int buildin_getequipisenableref(struct script_state *st)
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	sd=script_rid2sd(st);
 	i=pc_checkequip(sd,equip[num-1]);
-	if(i >= 0 && num<7 && sd->inventory_data[i] && (num!=1 
+	if(i >= 0 && num<7 && sd->inventory_data[i] && !sd->inventory_data[i]->flag.no_refine)
+			// replaced by Celest
+			/*(num!=1 
 				 || sd->inventory_data[i]->def > 1
 	             || (sd->inventory_data[i]->def==1 && sd->inventory_data[i]->equip_script==NULL)
-	             || (sd->inventory_data[i]->def<=0 && sd->inventory_data[i]->equip_script!=NULL)))
+	             || (sd->inventory_data[i]->def<=0 && sd->inventory_data[i]->equip_script!=NULL)))*/
+
 	{
 		push_val(st->stack,C_INT,1);
 	} else {
@@ -6983,7 +6986,25 @@ int script_config_read(char *cfgName)
 		if(strcmpi(w1,"refine_posword")==0) {
 			set_posword(w2);
 		}
-		if(strcmpi(w1,"import")==0){
+		else if(strcmpi(w1,"warn_func_no_comma")==0) {
+			script_config.warn_func_no_comma = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"warn_cmd_no_comma")==0) {
+			script_config.warn_cmd_no_comma = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"warn_func_mismatch_paramnum")==0) {
+			script_config.warn_func_mismatch_paramnum = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"warn_cmd_mismatch_paramnum")==0) {
+			script_config.warn_cmd_mismatch_paramnum = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"check_cmdcount")==0) {
+			script_config.check_cmdcount = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"check_gotocount")==0) {
+			script_config.check_gotocount = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"import")==0){
 			script_config_read(w2);
 		}
 	}

@@ -1,5 +1,13 @@
 Date	Added
 
+12/20
+        * Updated Acid Terror - should never miss [celest]
+        * updated Sword Reject - should display reflected damage properly now [celest]
+        * Updated Double Strafe - should only work with bows [celest]
+        * Replaced checking whether items can be refined or not with a new function [celest]
+        * Added Gengar's fix for npctalk outputting to chat [celest]
+        * Allowed some values in script_config to be customised in script_athena.conf [celest]
+
 12/19
 	* Added -DFASTCHAR to char_sql for testing performance work
 	  before I merge it into the main running code [MouseJstr]
