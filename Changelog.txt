@@ -1,5 +1,8 @@
 Date	Added
 01/13
+        * Corrected a typo preventing Plagiarism to work, thanks to orn [celest]
+        * Fixed Berzebub card and other 'reduce cast delays' equipment not working
+          [celest]
         * Updated packet_db.txt loading to support reading into multiple packet
           versions [celest]
         * Removed packet_db_ver defining in packet_db.txt -- it'll determine itself

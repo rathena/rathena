@@ -1790,11 +1790,12 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		if(rand()%100 < rate)
 			skill_addtimerskill(src,tick + 800,bl->id,0,0,skillid,skilllv,0,flag);
 	}
-	if(damage > 0 && dmg.flag&BF_SKILL && bl->type==BL_PC && pc_checkskill((struct map_session_data *)bl,RG_PLAGIARISM) && sc_data[SC_PRESERVE].timer != -1){
+	if(damage > 0 && dmg.flag&BF_SKILL && bl->type==BL_PC && pc_checkskill((struct map_session_data *)bl,RG_PLAGIARISM) && sc_data[SC_PRESERVE].timer == -1){
 		struct map_session_data *tsd = (struct map_session_data *)bl;
 		nullpo_retr(0, tsd);
-		if(!tsd->status.skill[skillid].id && !tsd->status.skill[skillid].id
-			&& !(skillid > NPC_PIERCINGATT && skillid < NPC_SUMMONMONSTER) ){
+		if(!tsd->status.skill[skillid].id && !tsd->status.skill[skillid].lv
+			&& !(skillid > NPC_PIERCINGATT && skillid < NPC_SUMMONMONSTER)
+			&& !(skillid > NPC_SELFDESTRUCTION2 && skillid < NPC_UNDEADATTACK)){
 			//?‚É?‚ñ‚Å‚¢‚éƒXƒLƒ‹‚ª‚ ‚ê‚ÎŠY?ƒXƒLƒ‹‚ğÁ‚·
 			if (tsd->cloneskill_id && tsd->cloneskill_lv && tsd->status.skill[tsd->cloneskill_id].flag==13){
 				tsd->status.skill[tsd->cloneskill_id].id=0;
@@ -7474,9 +7475,9 @@ int skill_delayfix( struct block_list *bl, int time )
 
 		if(battle_config.delay_dependon_dex &&	/* dex‚Ì‰e‹¿‚ğŒvZ‚·‚é */
 			!skill_get_delaynodex(skill, lv))	// if skill casttime is allowed to be reduced by dex
-			time=time*delayrate*(battle_config.castrate_dex_scale - battle_get_dex(bl))/(battle_config.castrate_dex_scale * 100);
+			time=time*(battle_config.castrate_dex_scale - battle_get_dex(bl))/(battle_config.castrate_dex_scale);
 
-		time=time*battle_config.delay_rate/100;
+		time=time*delayrate*battle_config.delay_rate/10000;
 	}
 
 	/* ƒuƒ‰ƒM‚Ì */
