@@ -1,5 +1,7 @@
 Date	Added
 11/15
+	* Added addtoskill script command for (levels can stack on top of existing levels). [Valaris]
+	  Use same usage as skill script command.
 	* Added -ffast-math argument to makefile to increase performance, thanks to kashy. [Valaris]
 	* Added small and big mob sprite spawning. [Valaris]
 	  -Added @monstersmall and @monsterbig commands.

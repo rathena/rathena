@@ -156,6 +156,7 @@ int buildin_bonus(struct script_state *st);
 int buildin_bonus2(struct script_state *st);
 int buildin_bonus3(struct script_state *st);
 int buildin_skill(struct script_state *st);
+int buildin_addtoskill(struct script_state *st); // [Valaris]
 int buildin_guildskill(struct script_state *st);
 int buildin_getskilllv(struct script_state *st);
 int buildin_getgdskilllv(struct script_state *st);
@@ -363,6 +364,7 @@ struct {
 	{buildin_bonus2,"bonus2","iii"},
 	{buildin_bonus3,"bonus3","iiii"},
 	{buildin_skill,"skill","ii*"},
+	{buildin_addtoskill,"addtoskill","ii*"}, // [Valaris]
 	{buildin_guildskill,"guildskill","ii"},
 	{buildin_getskilllv,"getskilllv","i"},
 	{buildin_getgdskilllv,"getgdskilllv","ii"},
@@ -3149,6 +3151,23 @@ int buildin_skill(struct script_state *st)
 
 	return 0;
 }
+
+// add x levels of skill (stackable) [Valaris]
+int buildin_addtoskill(struct script_state *st)
+{
+	int id,level,flag=2;
+	struct map_session_data *sd;
+
+	id=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	level=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	if( st->end>st->start+4 )
+		flag=conv_num(st,&(st->stack->stack_data[st->start+4]) );
+	sd=script_rid2sd(st);
+	pc_skill(sd,id,level,flag);
+
+	return 0;
+}
+
 /*==========================================
  * ƒMƒ‹ƒhƒXƒLƒ‹æ“¾
  *------------------------------------------
