@@ -5849,7 +5849,7 @@ int pc_deleventtimer(struct map_session_data *sd,const char *name)
 				delete_timer(sd->eventtimer[i],pc_eventtimer);
 				sd->eventtimer[i]=-1;
 				sd->eventcount--;
-				free(p);
+				aFree(p);
 				break;
 			}
 		}
@@ -5895,7 +5895,7 @@ int pc_cleareventtimer(struct map_session_data *sd)
 			char *p = (char *)(get_timer(sd->eventtimer[i])->data);
 			delete_timer(sd->eventtimer[i],pc_eventtimer);
 			sd->eventtimer[i]=-1;
-			free(p);
+			aFree(p);
 		}
 
 	return 0;

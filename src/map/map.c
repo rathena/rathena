@@ -1544,14 +1544,14 @@ int map_quit(struct map_session_data *sd) {
 		void *p = numdb_search(charid_db,sd->status.char_id);
 		if(p) {
 			numdb_erase(charid_db,sd->status.char_id);
-			free(p);
+			aFree(p);
 		}
 	}
 	strdb_erase(nick_db,sd->status.name);
 	numdb_erase(charid_db,sd->status.char_id);
 	numdb_erase(id_db,sd->bl.id);
-	free(sd->reg);
-	free(sd->regstr);
+	aFree(sd->reg);
+	aFree(sd->regstr);
 
 	return 0;
 }
@@ -1953,7 +1953,7 @@ int map_setipport(char *name,unsigned long ip,int port) {
 			} else {
 				// 読み込んでいるので置き換える
 				md = mdos->map;
-				free(mdos);
+				aFree(mdos);
 				strdb_insert(map_db,md->name,md);
 			}
 		} else {
@@ -1973,7 +1973,7 @@ int map_eraseallipport_sub(void *key,void *data,va_list va) {
 	struct map_data_other_server *mdos = (struct map_data_other_server*)data;
 	if(mdos->gat == NULL && mdos->map == NULL) {
 		strdb_erase(map_db,key);
-		free(mdos);
+		aFree(mdos);
 	}
 	return 0;
 }
@@ -2005,7 +2005,7 @@ int map_eraseipport(char *name,unsigned long ip,int port)
 					return 1; // 呼び出し元で chrif_sendmap() をする
 				} else {
 					strdb_erase(map_db,name);
-					free(mdos);
+					aFree(mdos);
 				}
 //				if(battle_config.etc_log)
 //					printf("erase map %s %d.%d.%d.%d:%d\n",name,p[0],p[1],p[2],p[3],port);
@@ -2179,7 +2179,7 @@ int map_cache_read(struct map_data *m)
 					return 1;
 				} else {
 					// なぜかファイル後半が欠けてるので読み直し
-					m->xs = 0; m->ys = 0; m->gat = NULL; free(m->gat);
+					m->xs = 0; m->ys = 0; m->gat = NULL; aFree(m->gat);
 					return 0;
 				}
 			} else if(map_cache.map[i].compressed == 1) {
@@ -2195,19 +2195,19 @@ int map_cache_read(struct map_data *m)
 				if(fread(buf,1,size_compress,map_cache.fp) != size_compress) {
 					// なぜかファイル後半が欠けてるので読み直し
 					printf("fread error\n");
-					free(m->gat); m->xs = 0; m->ys = 0; m->gat = NULL;
-					free(buf);
+					aFree(m->gat); m->xs = 0; m->ys = 0; m->gat = NULL;
+					aFree(buf);
 					return 0;
 				}
 				dest_len = m->xs * m->ys;
 				decode_zip(m->gat,&dest_len,buf,size_compress);
 				if(dest_len != map_cache.map[i].xs * map_cache.map[i].ys) {
 					// 正常に解凍が出来てない
-					free(m->gat); m->xs = 0; m->ys = 0; m->gat = NULL;
-					free(buf);
+					aFree(m->gat); m->xs = 0; m->ys = 0; m->gat = NULL;
+					aFree(buf);
 					return 0;
 				}
-				free(buf);
+				aFree(buf);
 				return 1;
 			}
 		}
@@ -2262,7 +2262,7 @@ static int map_cache_write(struct map_data *m)
 			map_cache.map[i].water_height = map_waterheight(m->name);
 			map_cache.dirty = 1;
 			if(map_read_flag == 2) {
-				free(write_buf);
+				aFree(write_buf);
 			}
 			return 0;
 		}
@@ -2293,7 +2293,7 @@ static int map_cache_write(struct map_data *m)
 			map_cache.head.filesize += len_new;
 			map_cache.dirty = 1;
 			if(map_read_flag == 2) {
-				free(write_buf);
+				aFree(write_buf);
 			}
 			return 0;
 		}

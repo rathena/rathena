@@ -364,12 +364,12 @@ void db_free_unlock(struct dbt *table) {
 		for(i = 0; i < table->free_count ; i++) {
 			db_rebalance_erase(table->free_list[i].z,table->free_list[i].root);
 			if(table->cmp == strdb_cmp) {
-				free(table->free_list[i].z->key);
+				aFree(table->free_list[i].z->key);
 			}
 #ifdef MALLOC_DBN
 			free_dbn(table->free_list[i].z);
 #else
-			free(table->free_list[i].z);
+			aFree(table->free_list[i].z);
 #endif
 			table->item_count--;
 		}
@@ -406,7 +406,7 @@ struct dbn* db_insert(struct dbt *table,void* key,void* data)
 				} else {
 					table->free_count--;
 					if(table->cmp == strdb_cmp) {
-						free(p->key);
+						aFree(p->key);
 					}
 				}
 			}
@@ -593,7 +593,7 @@ void db_final(struct dbt *table,int (*func)(void*,void*,va_list),...)
 		}
 	}
 	db_free_unlock(table);
-	free(table->free_list);
+	aFree(table->free_list);
 	aFree(table);
 	va_end(ap);
 }

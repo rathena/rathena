@@ -1889,7 +1889,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 				ev2 = strdb_search(ev_db,buf);
 				if(ev2 != NULL) {
 					printf("npc_parse_script : duplicate event %s\n",buf);
-					free(ev2);
+					aFree(ev2);
 				}
 				strdb_insert(ev_db,buf,ev);
 			}

@@ -8565,7 +8565,7 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int
 				&unit1->bl,tick,1);
 		}
 	}
-	free(m_flag);
+	aFree(m_flag);
 	return 0;
 }
 

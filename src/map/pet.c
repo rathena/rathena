@@ -1682,7 +1682,7 @@ int do_final_pet(void) {
 	int i;
 	for(i = 0;i < MAX_PET_DB; i++) {
 		if(pet_db[i].script) {
-			free(pet_db[i].script);
+			aFree(pet_db[i].script);
 		}
 	}
 	return 0;

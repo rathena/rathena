@@ -131,7 +131,7 @@ static void sig_dump(int sn)
 			fprintf(fp,"End of stack trace\n");
 
 			fclose(fp);
-			free(stack);
+			aFree(stack);
 		}
 	#endif
 	// When pass the signal to the system's default handler

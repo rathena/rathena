@@ -6333,7 +6333,7 @@ int buildin_select(struct script_state *st)
 			strcat(buf,":");
 		}
 		clif_scriptmenu(script_rid2sd(st),st->oid,buf);
-		free(buf);
+		aFree(buf);
 	} else if(sd->npc_menu==0xff){	// cansel
 		sd->state.menu_or_input=0;
 		st->state=END;

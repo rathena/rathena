@@ -29,6 +29,8 @@ extern struct Log_Config {
 	int branch, drop, mvpdrop, present, produce, refine, trade, vend, zeny, gm, npc;
 	char log_branch[32], log_drop[32], log_mvpdrop[32], log_present[32], log_produce[32], log_refine[32], log_trade[32], log_vend[32], log_gm[32], log_npc[32];
 	char log_branch_db[32], log_drop_db[32], log_mvpdrop_db[32], log_present_db[32], log_produce_db[32], log_refine_db[32], log_trade_db[32], log_vend_db[32], log_gm_db[32], log_npc_db[32];
+	int uptime;
+	char log_uptime[32];
 } log_config;
 
 #endif
