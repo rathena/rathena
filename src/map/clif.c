@@ -8053,7 +8053,8 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd) {
 //	not needed -- map_name[16]='\0'; will do
 //	memset(map_name, '\0', sizeof(map_name));
 
-	if (battle_config.atc_gmonly != 0 || (pc_isGM(sd) >= get_atcommand_level(AtCommand_MapMove))) {
+	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
+	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_MapMove))) {
 		memcpy(map_name, RFIFOP(fd,2), 16);
 		map_name[16]='\0';
 		sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
@@ -9440,15 +9441,14 @@ void clif_parse_SolveCharName(int fd, struct map_session_data *sd) {
 void clif_parse_ResetChar(int fd, struct map_session_data *sd) {
 	nullpo_retv(sd);
 
-	if (battle_config.atc_gmonly == 0 || pc_isGM(sd)) {
+	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
+		pc_isGM(sd) >= get_atcommand_level(AtCommand_ResetState)) {
 		switch(RFIFOW(fd,2)){
 		case 0:
-			if (pc_isGM(sd) >= get_atcommand_level(AtCommand_ResetState))
-				pc_resetstate(sd);
+			pc_resetstate(sd);
 			break;
 		case 1:
-			if (pc_isGM(sd) >= get_atcommand_level(AtCommand_ResetState))
-				pc_resetskill(sd);
+			pc_resetskill(sd);
 			break;
 		}
 	}
@@ -9720,13 +9720,12 @@ void clif_parse_PartyChangeOption(int fd, struct map_session_data *sd) {
  */
 void clif_parse_PartyMessage(int fd, struct map_session_data *sd) {
 	nullpo_retv(sd);
-	if (is_charcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != CharCommand_None)
-		return;
-	if (is_atcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != AtCommand_None)
-		return;
-	if(sd->sc_data &&
+
+	if (is_charcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != CharCommand_None ||
+		is_atcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != AtCommand_None ||
+		(sd->sc_data && 
 		(sd->sc_data[SC_BERSERK].timer!=-1 ||	//バーサーク時は会話も不可
-		sd->sc_data[SC_NOCHAT].timer!=-1))		//チャット禁止
+		sd->sc_data[SC_NOCHAT].timer!=-1)))		//チャット禁止
 		return;
 
 	party_send_message(sd, (char*)RFIFOP(fd,4), RFIFOW(fd,2)-4);
@@ -9931,13 +9930,12 @@ void clif_parse_GuildExplusion(int fd,struct map_session_data *sd) {
  */
 void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
 	nullpo_retv(sd);
-	if (is_charcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != CharCommand_None)
-		return;
-	if (is_atcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != AtCommand_None)
-		return;
-	if(sd->sc_data &&
+
+	if (is_charcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != CharCommand_None ||
+		is_atcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != AtCommand_None ||
+		(sd->sc_data &&
 		(sd->sc_data[SC_BERSERK].timer!=-1 ||	//バーサーク時は会話も不可
-		sd->sc_data[SC_NOCHAT].timer!=-1))		//チャット禁止
+		sd->sc_data[SC_NOCHAT].timer!=-1)))		//チャット禁止
 		return;
 
 	guild_send_message(sd, (char*)RFIFOP(fd,4), RFIFOW(fd,2)-4);

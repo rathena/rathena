@@ -3901,7 +3901,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct status_change *tsc_data = status_get_sc_data(bl);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(tsc_data && tsc_data[scid].timer != -1)
-				status_change_end(bl, SC_STRIPWEAPON, -1 );
+				status_change_end(bl, scid, -1 );
 			status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		}
 		break;

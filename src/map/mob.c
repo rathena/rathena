@@ -121,8 +121,8 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 {
 	struct mob_data *md=NULL;
 	int m,count,lv=255,r=class_;
-	int c,j=0;
-
+	int i, j;
+	
 	if( sd )
 		lv=sd->status.base_level;
 
@@ -135,8 +135,8 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 		return 0;
 
 	if(class_<0){	// ƒ‰ƒ“ƒ_ƒ€‚É¢Š«
-		int i=0;
-		int j=-class_-1;
+		i = 0;
+		j = -class_-1;
 		int k;
 		if(j>=0 && j<MAX_RANDOMMONSTER){
 			do{
@@ -157,18 +157,19 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 		if (x <= 0 || y <= 0) {
 			if (x <= 0) x = sd->bl.x + rand() % 3 - 1;
 			if (y <= 0) y = sd->bl.y + rand() % 3 - 1;
-			if ((c = map_getcell(m, x, y)) == 1 || c == 5) {
+			if (map_getcell(m, x, y, CELL_CHKNOPASS)) {
 				x = sd->bl.x;
 				y = sd->bl.y;
 			}
 		}
 	} else if (x <= 0 || y <= 0) {
+		i = j = 0;
 		printf("mob_once_spawn: %i at %s x:%i y:%i\n ??\n",class_,map[m].name,x,y); //got idea from Freya [Lupus]
 		do {
 			x = rand() % (map[m].xs - 2) + 1;
 			y = rand() % (map[m].ys - 2) + 1;
-		} while (((c = map_getcell(m, x, y)) == 1 || c == 5) && j++ < 64);
-		if (c == 1 || c == 5) { // not solved?
+		} while ((i=map_getcell(m, x, y, CELL_CHKNOPASS)) && j++ < 64);
+		if (i) { // not solved?
 			x = 0;
 			y = 0;
 		}

@@ -489,6 +489,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_CleanMap,			"@cleanmap",		 0, atcommand_cleanmap },
 	{ AtCommand_NpcTalk,			"@npctalk",			 0,	atcommand_npctalk },
 	{ AtCommand_PetTalk,			"@pettalk",			 0,	atcommand_pettalk },
+	{ AtCommand_ResetState,			"/reset",			40,	NULL },
 
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]

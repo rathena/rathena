@@ -1,5 +1,11 @@
 Date	Added
 
+03/01
+        * Fixed /resetstate /resetskill being unuseable at all [celest]
+        * Fixed /mm /mapmove being useable by all players [celest]
+        * Fixed some compile errors in mob_once_spawn [celest]
+        * Corrected a typo in Chemical Protection skills, thanks to holyfork [celest]
+
 02/28
         * Fixed SQL Castle saving bugs [Lupus]
         * Corrected Tiger Fist, Chain Crush, and Palm Push Strike damage, thanks to
