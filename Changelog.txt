@@ -1,6 +1,8 @@
 Date	Added
 11/09
 	* - Added Unbreakable funcions to item_db armors/shields/garments/footgear. [shadow]
+	* Defined SO_REUSEPORT to allow the servers to re-use ports if server crashes [Wizputer]
+
 11/08
 	* Added new script command: getMapXY(MapName$,MaxX,MapY,type,[CharName$]) by Lorky [Lupus]
 	  Get position for char/npc/pet/mob objects.
