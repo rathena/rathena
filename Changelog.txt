@@ -6,6 +6,13 @@ Date	Added
 	* Changed Suilds Extention Skill to +6 people per level. [Lupus]
 	  (tested it for 2 weeks! or a big server)
 	* Added a fix for gettimeofday() for WIN32 [Codemaster]
+        * skill Updates:
+          - Updated Slow Poison, modified checks for skill_unit_onplace abit. [celest]
+          - Updated Finger Offensive, thanks to orn  [celest]
+        * Updated packet_ver_flag's default value, thanks to iscandium  [celest]
+        * Added warning if motd.txt was not found  [celest]
+          (Turn on error_log in battle_athena.conf to enable it)
+
 11/27
 	* Fixed a few map crashes when char-server crashes [Wizputer]
 	* Added fix of 0x2aff and 0x2af8 flooding [Wizputer - thanks Toster] 

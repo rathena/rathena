@@ -31,6 +31,7 @@
 #include "nullpo.h"
 #include "atcommand.h"
 #include "log.h"
+#include "showmsg.h"
 
 #ifndef TXT_ONLY // mail system [Valaris]
 #include "mail.h"
@@ -840,6 +841,10 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 				clif_displaymessage(sd->fd, buf);
 			}
 			fclose(fp);
+		}
+		else if(battle_config.error_log) {
+			sprintf(buf, "%s not found\n", motd_txt);
+			ShowWarning (buf);
 		}
 	}
 
@@ -5947,10 +5952,15 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		return 1;
 
 	// check if we are changing from 1st to 2nd job
-	if (s_class.job > 0 && s_class.job < 7 && job >= 7 && job <= 21)
-		sd->change_level = sd->status.job_level;
-	else
-		sd->change_level = 0;
+	if (job >= 7 && job <= 21) {
+		if (s_class.job > 0 && s_class.job < 7)
+			sd->change_level = sd->status.job_level;
+		else
+			sd->change_level = 40;
+	}
+ 	else
+ 		sd->change_level = 0;
+
 	pc_setglobalreg (sd, "jobchange_level", sd->change_level);		
 	
 	sd->status.class = sd->view_class = b_class;
@@ -7341,7 +7351,7 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 	if ((battle_config.natural_heal_weight_rate > 100 || sd->weight*100/sd->max_weight < battle_config.natural_heal_weight_rate) &&
 		!pc_isdead(sd) && 
 		!pc_ishiding(sd) && 
-		sd->sc_data[SC_POISON].timer == -1 &&
+		!(sd->sc_data[SC_POISON].timer != -1 && sd->sc_data[SC_SLOWPOISON].timer == -1) &&
 		sd->sc_data[SC_BERSERK].timer == -1 ) {
 		pc_natural_heal_hp(sd);
 		if( sd->sc_data && sd->sc_data[SC_EXTREMITYFIST].timer == -1 &&	//ˆ¢C—…?‘Ô‚Å‚ÍSP‚ª‰ñ•œ‚µ‚È‚¢
