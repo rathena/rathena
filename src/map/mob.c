@@ -121,6 +121,7 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 {
 	struct mob_data *md=NULL;
 	int m,count,lv=255,r=class_;
+	int c,j=0;
 
 	if( sd )
 		lv=sd->status.base_level;
@@ -152,13 +153,27 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 //		if(battle_config.etc_log)
 //			printf("mobclass=%d try=%d\n",class_,i);
 	}
-
-	if(sd){
-		if(x<=0) x=sd->bl.x;
-		if(y<=0) y=sd->bl.y;
-	}else if(x<=0 || y<=0){
+	if (sd) { //even if the coords were wrong, spawn mob anyways (but look for most suitable coords first) Got from Freya [Lupus]
+		if (x <= 0 || y <= 0) {
+			if (x <= 0) x = sd->bl.x + rand() % 3 - 1;
+			if (y <= 0) y = sd->bl.y + rand() % 3 - 1;
+			if ((c = map_getcell(m, x, y)) == 1 || c == 5) {
+				x = sd->bl.x;
+				y = sd->bl.y;
+			}
+		}
+	} else if (x <= 0 || y <= 0) {
 		printf("mob_once_spawn: %i at %s x:%i y:%i\n ??\n",class_,map[m].name,x,y); //got idea from Freya [Lupus]
+		do {
+			x = rand() % (map[m].xs - 2) + 1;
+			y = rand() % (map[m].ys - 2) + 1;
+		} while (((c = map_getcell(m, x, y)) == 1 || c == 5) && j++ < 64);
+		if (c == 1 || c == 5) { // not solved?
+			x = 0;
+			y = 0;
+		}
 	}
+
 
 	for(count=0;count<amount;count++){
 		md=(struct mob_data *)aCalloc(1,sizeof(struct mob_data));
