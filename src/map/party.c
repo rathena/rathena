@@ -589,7 +589,7 @@ int party_exp_share(struct party *p,int map,int base_exp,int job_exp,int zeny)
 	if(c==0)
 		return 0;
 	for(i=0;i<MAX_PARTY;i++)
-		if((sd=p->member[i].sd)!=NULL && sd->bl.m==map) {
+		if((sd=p->member[i].sd)!=NULL && sd->bl.m==map && session[sd->fd] != NULL) {
 #ifdef TWILIGHT
 			pc_gainexp(sd,base_exp,job_exp);
 #else
