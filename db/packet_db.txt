@@ -1,6 +1,13 @@
-//The packet database allows you to add support for new clients, because packets change every release.
-//This only allows 1 type of client at a time, make sure your client is the last one in the list
-//EX: You have client 628 and it goes up to 1021, delete or comment (use //) till your client is last.
+// The packet database allows you to add support for new clients,
+// because packets change every release. 
+// This only allows 1 type of client at a time, make sure your
+// client is the last one in the list
+// EX: You have client 628 and it goes up to 1021,
+// delete or comment (use //) till your client is last.
+
+// Version of packet database
+packet_db_ver: 16
+
 
 0x0064,55
 0x0065,17
@@ -574,3 +581,26 @@
 0x0143,23,npcamountinput,2:6
 0x0145,19
 //0x01f9,6,adopt,5
+
+//2004-12-06aSakexe
+0x0190,15,useitem,3:11
+0x0094,14,movetokafra,4:10
+0x009f,18,actionrequest,6:17
+0x00a7,7,walktoxy,4
+0x007e,30,useskilltopos,4:9:22:28
+0x0116,12,dropitem,4:10
+0x008c,13,getcharnamerequest,9
+0x0085,-1,globalmessage,2:4
+0x00f7,14,solvecharname,10
+0x0113,110,useskilltopos,4:9:22:28:30
+0x00f3,8,changedir,3:7
+0x00f5,29,wanttoconnection,3:10:20:24:28
+0x00a2,7,takeitem,3
+0x0089,7,ticksend,3
+0x0072,22,useskilltoid,8:12:18
+0x0193,21,movefromkafra,4:17
+0x009b,2,closekafra,0
+0x0222,6
+0x0221,-1
+0x021d,6
+0x0223,8

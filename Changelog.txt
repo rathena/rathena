@@ -1,5 +1,6 @@
 Date	Added
 01/10
+        * Start adding packet DB reading [celest]
         * Added 'max_eventtimer_length' (default is 32) to script_athena.conf. [celest]
           Some event timers with names longer than 24 could cause the server to close
           itself, change this if you need support for even longer names

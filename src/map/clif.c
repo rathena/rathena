@@ -52,8 +52,11 @@
 #endif
 
 #define STATE_BLIND 0x10
+#define MAX_PACKET_DB 0x224
 
-static const int packet_len_table[0x224] = {
+int packet_db_ver = -1;
+
+static const int packet_len_table[MAX_PACKET_DB] = {
    10,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -109,7 +112,7 @@ static const int packet_len_table[0x224] = {
 };
 
 // size list for each packet version after packet version 4.
-static int packet_size_table[11][0x224];
+static int packet_size_table[11][MAX_PACKET_DB];
 
 // local define
 enum {
@@ -8645,7 +8648,7 @@ void clif_parse_TradeOk(int fd,struct map_session_data *sd)
  * 取引キャンセル
  *------------------------------------------
  */
-void clif_parse_TradeCansel(int fd,struct map_session_data *sd)
+void clif_parse_TradeCancel(int fd,struct map_session_data *sd)
 {
 	trade_tradecancel(sd);
 }
@@ -9528,7 +9531,7 @@ void clif_parse_GuildCheckMaster(int fd, struct map_session_data *sd) {
  * ギルド情報要求
  *------------------------------------------
  */
-void clif_parse_GuildReqeustInfo(int fd, struct map_session_data *sd) {
+void clif_parse_GuildRequestInfo(int fd, struct map_session_data *sd) {
 	switch(RFIFOL(fd,2)){
 	case 0:	// ギルド基本情報、同盟敵対情報
 		clif_guild_basicinfo(sd);
@@ -10148,8 +10151,28 @@ void clif_parse_GMkillall(int fd,struct map_session_data *sd)
 	return;
 }
 
+/*==========================================
+ * パケットデバッグ
+ *------------------------------------------
+ */
+void clif_parse_debug(int fd,struct map_session_data *sd)
+{
+	int i, cmd;
+
+	cmd = RFIFOW(fd,0);
+
+	printf("packet debug 0x%4X\n",cmd);
+	printf("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
+	for(i=0;i<packet_size_table[packet_db_ver - 5][cmd];i++){
+		if((i&15)==0)
+			printf("\n%04X ",i);
+		printf("%02X ",RFIFOB(fd,i));
+	}
+	printf("\n");
+}
+
 // functions list
-static void (*clif_parse_func_table[9][0x220])() = {
+static void (*clif_parse_func_table[10][MAX_PACKET_DB])() = {
 	{
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -10186,7 +10209,7 @@ static void (*clif_parse_func_table[9][0x220])() = {
 	NULL, clif_parse_ChatAddMember, NULL, NULL, NULL, NULL, clif_parse_ChatRoomStatusChange, NULL,
 	// e0
 	clif_parse_ChangeChatOwner, NULL, clif_parse_KickFromChat, clif_parse_ChatLeave, clif_parse_TradeRequest, NULL, clif_parse_TradeAck, NULL,
-	clif_parse_TradeAddItem, NULL, NULL, clif_parse_TradeOk, NULL, clif_parse_TradeCansel, NULL, clif_parse_TradeCommit,
+	clif_parse_TradeAddItem, NULL, NULL, clif_parse_TradeOk, NULL, clif_parse_TradeCancel, NULL, clif_parse_TradeCommit,
 	// f0
 	NULL, NULL, NULL, clif_parse_MoveToKafra, NULL, clif_parse_MoveFromKafra, NULL, clif_parse_CloseKafra,
 	NULL, clif_parse_CreateParty, NULL, NULL, clif_parse_PartyInvite, NULL, NULL, clif_parse_ReplyPartyInvite,
@@ -10206,7 +10229,7 @@ static void (*clif_parse_func_table[9][0x220])() = {
 
 	// 140
 	clif_parse_MapMove, NULL, NULL, clif_parse_NpcAmountInput, NULL, NULL, clif_parse_NpcCloseClicked, NULL,
-	NULL, clif_parse_GMReqNoChat, NULL, NULL, NULL, clif_parse_GuildCheckMaster, NULL, clif_parse_GuildReqeustInfo,
+	NULL, clif_parse_GMReqNoChat, NULL, NULL, NULL, clif_parse_GuildCheckMaster, NULL, clif_parse_GuildRequestInfo,
 	// 150
 	NULL, clif_parse_GuildRequestEmblem, NULL, clif_parse_GuildChangeEmblem, NULL, clif_parse_GuildChangeMemberPosition, NULL, NULL,
 	NULL, clif_parse_GuildLeave, NULL, clif_parse_GuildExplusion, NULL, clif_parse_GuildBreak, NULL, NULL,
@@ -10384,7 +10407,7 @@ static int clif_parse(int fd) {
 
 	// ゲーム用以外パケットか、認証を終える前に0072以外が来たら、切断する
 	if (packet_ver < 5 || packet_ver > 13 || // if packet is not inside these values: session is incorrect?? or auth packet is unknown
-	    cmd >= 0x220 || packet_size_table[packet_ver-5][cmd] == 0) {
+	    cmd >= MAX_PACKET_DB || packet_size_table[packet_ver-5][cmd] == 0) {
 		if (!fd)
 			return 0;
 		session[fd]->eof = 1;
@@ -10473,6 +10496,220 @@ static int clif_parse(int fd) {
 }
 
 /*==========================================
+ * パケットデータベース読み込み
+ *------------------------------------------
+ */
+static int packetdb_readdb(void)
+{
+	FILE *fp;
+	char line[1024];
+	int ln=0;
+	int cmd,j;
+	char *str[32],*p,*str2[32],*p2;
+
+	struct {
+		void (*func)();
+		char *name;
+	} clif_parse_func[]={
+		{clif_parse_WantToConnection,"wanttoconnection"},
+		{clif_parse_LoadEndAck,"loadendack"},
+		{clif_parse_TickSend,"ticksend"},
+		{clif_parse_WalkToXY,"walktoxy"},
+		{clif_parse_QuitGame,"quitgame"},
+		{clif_parse_GetCharNameRequest,"getcharnamerequest"},
+		{clif_parse_GlobalMessage,"globalmessage"},
+		{clif_parse_MapMove,"mapmove"},
+		{clif_parse_ChangeDir,"changedir"},
+		{clif_parse_Emotion,"emotion"},
+		{clif_parse_HowManyConnections,"howmanyconnections"},
+		{clif_parse_ActionRequest,"actionrequest"},
+		{clif_parse_Restart,"restart"},
+		{clif_parse_Wis,"wis"},
+		{clif_parse_GMmessage,"gmmessage"},
+		{clif_parse_TakeItem,"takeitem"},
+		{clif_parse_DropItem,"dropitem"},
+		{clif_parse_UseItem,"useitem"},
+		{clif_parse_EquipItem,"equipitem"},
+		{clif_parse_UnequipItem,"unequipitem"},
+		{clif_parse_NpcClicked,"npcclicked"},
+		{clif_parse_NpcBuySellSelected,"npcbuysellselected"},
+		{clif_parse_NpcBuyListSend,"npcbuylistsend"},
+		{clif_parse_NpcSellListSend,"npcselllistsend"},
+		{clif_parse_CreateChatRoom,"createchatroom"},
+		{clif_parse_ChatAddMember,"chataddmember"},
+		{clif_parse_ChatRoomStatusChange,"chatroomstatuschange"},
+		{clif_parse_ChangeChatOwner,"changechatowner"},
+		{clif_parse_KickFromChat,"kickfromchat"},
+		{clif_parse_ChatLeave,"chatleave"},
+		{clif_parse_TradeRequest,"traderequest"},
+		{clif_parse_TradeAck,"tradeack"},
+		{clif_parse_TradeAddItem,"tradeadditem"},
+		{clif_parse_TradeOk,"tradeok"},
+		{clif_parse_TradeCancel,"tradecancel"},
+		{clif_parse_TradeCommit,"tradecommit"},
+		{clif_parse_StopAttack,"stopattack"},
+		{clif_parse_PutItemToCart,"putitemtocart"},
+		{clif_parse_GetItemFromCart,"getitemfromcart"},
+		{clif_parse_RemoveOption,"removeoption"},
+		{clif_parse_ChangeCart,"changecart"},
+		{clif_parse_StatusUp,"statusup"},
+		{clif_parse_SkillUp,"skillup"},
+		{clif_parse_UseSkillToId,"useskilltoid"},
+		{clif_parse_UseSkillToPos,"useskilltopos"},
+		{clif_parse_UseSkillMap,"useskillmap"},
+		{clif_parse_RequestMemo,"requestmemo"},
+		{clif_parse_ProduceMix,"producemix"},
+		{clif_parse_NpcSelectMenu,"npcselectmenu"},
+		{clif_parse_NpcNextClicked,"npcnextclicked"},
+		{clif_parse_NpcAmountInput,"npcamountinput"},
+		{clif_parse_NpcStringInput,"npcstringinput"},
+		{clif_parse_NpcCloseClicked,"npccloseclicked"},
+		{clif_parse_ItemIdentify,"itemidentify"},
+		{clif_parse_SelectArrow,"selectarrow"},
+		{clif_parse_AutoSpell,"autospell"},
+		{clif_parse_UseCard,"usecard"},
+		{clif_parse_InsertCard,"insertcard"},
+		{clif_parse_SolveCharName,"solvecharname"},
+		{clif_parse_ResetChar,"resetchar"},
+		{clif_parse_LGMmessage,"lgmmessage"},
+		{clif_parse_MoveToKafra,"movetokafra"},
+		{clif_parse_MoveFromKafra,"movefromkafra"},
+		{clif_parse_MoveToKafraFromCart,"movetokafrafromcart"},
+		{clif_parse_MoveFromKafraToCart,"movefromkafratocart"},
+		{clif_parse_CloseKafra,"closekafra"},
+		{clif_parse_CreateParty,"createparty"},
+		{clif_parse_CreateParty2,"createparty2"},
+		{clif_parse_PartyInvite,"partyinvite"},
+		{clif_parse_ReplyPartyInvite,"replypartyinvite"},
+		{clif_parse_LeaveParty,"leaveparty"},
+		{clif_parse_RemovePartyMember,"removepartymember"},
+		{clif_parse_PartyChangeOption,"partychangeoption"},
+		{clif_parse_PartyMessage,"partymessage"},
+		{clif_parse_CloseVending,"closevending"},
+		{clif_parse_VendingListReq,"vendinglistreq"},
+		{clif_parse_PurchaseReq,"purchasereq"},
+		{clif_parse_OpenVending,"openvending"},
+		{clif_parse_CreateGuild,"createguild"},
+		{clif_parse_GuildCheckMaster,"guildcheckmaster"},
+		{clif_parse_GuildRequestInfo,"guildrequestinfo"},
+		{clif_parse_GuildChangePositionInfo,"guildchangepositioninfo"},
+		{clif_parse_GuildChangeMemberPosition,"guildchangememberposition"},
+		{clif_parse_GuildRequestEmblem,"guildrequestemblem"},
+		{clif_parse_GuildChangeEmblem,"guildchangeemblem"},
+		{clif_parse_GuildChangeNotice,"guildchangenotice"},
+		{clif_parse_GuildInvite,"guildinvite"},
+		{clif_parse_GuildReplyInvite,"guildreplyinvite"},
+		{clif_parse_GuildLeave,"guildleave"},
+		{clif_parse_GuildExplusion,"guildexplusion"},
+		{clif_parse_GuildMessage,"guildmessage"},
+		{clif_parse_GuildRequestAlliance,"guildrequestalliance"},
+		{clif_parse_GuildReplyAlliance,"guildreplyalliance"},
+		{clif_parse_GuildDelAlliance,"guilddelalliance"},
+		{clif_parse_GuildOpposition,"guildopposition"},
+		{clif_parse_GuildBreak,"guildbreak"},
+		{clif_parse_PetMenu,"petmenu"},
+		{clif_parse_CatchPet,"catchpet"},
+		{clif_parse_SelectEgg,"selectegg"},
+		{clif_parse_SendEmotion,"sendemotion"},
+		{clif_parse_ChangePetName,"changepetname"},
+		{clif_parse_GMKick,"gmkick"},
+		{clif_parse_GMHide,"gmhide"},
+		{clif_parse_GMReqNoChat,"gmreqnochat"},
+		{clif_parse_GMReqNoChatCount,"gmreqnochatcount"},
+		{clif_parse_sn_doridori,"sndoridori"},
+		{clif_parse_sn_explosionspirits,"snexplosionspirits"},
+//		{clif_parse_wisexin,"wisexin"},
+//		{clif_parse_wisexlist,"wisexlist"},
+//		{clif_parse_wisall,"wisall"},
+		{clif_parse_GMkillall,"killall"},
+		{clif_parse_GM_Monster_Item,"summon"},
+		{clif_parse_Shift,"shift"},
+		{clif_parse_debug,"debug"},
+
+		{NULL,NULL}
+	};
+
+//	memset(packet_db,0,sizeof(packet_db));
+
+	if( (fp=fopen("db/packet_db.txt","r"))==NULL ){
+		printf("can't read db/packet_db.txt\n");		
+		return 1;
+	}
+
+	{
+		char w1[1024],w2[1024];
+		while(fgets(line,1020,fp)){
+			if(line[0]=='/' && line[1]=='/')
+				continue;
+			if (sscanf(line,"%[^:]: %[^\r\n]",w1,w2) != 2)
+				continue;
+			if(strcmpi(w1,"packet_db_ver")==0) {
+				packet_db_ver = atoi(w2);
+				printf ("packet db version = %d\n", packet_db_ver);
+				break;	// stop reading config and load the rest of the file
+			}
+		}
+	}
+	while(fgets(line,1020,fp)){
+		if (packet_db_ver <= 7)	// minimum packet version allowed
+			break;
+		if(line[0]=='/' && line[1]=='/')
+			continue;
+		memset(str,0,sizeof(str));
+		for(j=0,p=line;j<4 && p;j++){
+			str[j]=p;
+			p=strchr(p,',');
+			if(p) *p++=0;
+		}
+		if(str[0]==NULL)
+			continue;
+
+		cmd=strtol(str[0],(char **)NULL,0);
+		if(cmd<=0 || cmd>=MAX_PACKET_DB)
+			continue;
+
+		if(str[1]==NULL){
+			sprintf(tmp_output, "packet_db: packet len error\n");
+			ShowError(tmp_output);
+			continue;
+		}
+		packet_size_table[packet_db_ver - 5][cmd] = atoi(str[1]);
+
+		if(str[2]==NULL){
+			ln++;
+			continue;
+		}
+		for(j=0;j<sizeof(clif_parse_func)/sizeof(clif_parse_func[0]);j++){
+			if(clif_parse_func[j].name != NULL &&
+				strcmp(str[2],clif_parse_func[j].name)==0){
+				clif_parse_func_table[packet_db_ver - 7][cmd] = clif_parse_func[j].func;
+				break;
+			}
+		}
+		if(str[3]==NULL){
+			sprintf(tmp_output, "packet_db: packet error\n");
+			ShowError(tmp_output);
+			exit(1);
+		}
+		for(j=0,p2=str[3];p2;j++){
+			str2[j]=p2;
+			p2=strchr(p2,':');
+			if(p2) *p2++=0;
+//			packet_db[cmd].pos[j]=atoi(str2[j]);	// since this isn't implemented yet
+		}
+
+		ln++;
+//		if(packet_size_table[packet_db_ver - 5][cmd] > 2 /* && packet_db[cmd].pos[0] == 0 */)
+//			printf("packet_db: %d 0x%x %d %s %p\n",ln,cmd,packet_size_table[packet_db_ver - 5][cmd],str[2],clif_parse_func_table[packet_db_ver - 7][cmd]);
+	}
+	fclose(fp);
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/packet_db.txt");
+	ShowStatus(tmp_output);
+	return 0;
+
+}
+
+/*==========================================
  *
  *------------------------------------------
  */
@@ -10549,10 +10786,12 @@ int do_init_clif(void) {
 	clif_parse_func_table[8][0x116] = clif_parse_DropItem;
 	clif_parse_func_table[8][0x190] = clif_parse_UseItem;
 	clif_parse_func_table[8][0x193] = clif_parse_MoveFromKafra;
+	// Init packet function calls for packet ver 16 (packet db)
+	memcpy(clif_parse_func_table[9], clif_parse_func_table[8], sizeof(clif_parse_func_table[0]));
 
-	// size of packet version 5
+	// size of packet version 5 (old)
 	memcpy(&packet_size_table[0], &packet_len_table, sizeof(packet_len_table));
-	// size of packet version 6
+	// size of packet version 6 (7july04)
 	memcpy(&packet_size_table[1], &packet_size_table[0], sizeof(packet_len_table));
 	packet_size_table[1][0x072] = 22;
 	packet_size_table[1][0x085] = 8;
@@ -10560,7 +10799,7 @@ int do_init_clif(void) {
 	packet_size_table[1][0x113] = 15;
 	packet_size_table[1][0x116] = 15;
 	packet_size_table[1][0x190] = 95;
-	// size of packet version 7
+	// size of packet version 7 (13july04)
 	memcpy(&packet_size_table[2], &packet_size_table[1], sizeof(packet_len_table));
 	packet_size_table[2][0x072] = 39;
 	packet_size_table[2][0x085] = 9;
@@ -10570,7 +10809,7 @@ int do_init_clif(void) {
 	packet_size_table[2][0x113] = 19;
 	packet_size_table[2][0x116] = 19;
 	packet_size_table[2][0x190] = 99;
-	// size of packet version 8
+	// size of packet version 8 (26july04)
 	memcpy(&packet_size_table[3], &packet_size_table[2], sizeof(packet_len_table));
 	packet_size_table[3][0x072] = 14;
 	packet_size_table[3][0x07e] = 33;
@@ -10589,7 +10828,7 @@ int do_init_clif(void) {
 	packet_size_table[3][0x116] = 2;
 	packet_size_table[3][0x190] = 26;
 	packet_size_table[3][0x193] = 9;
-	// size of packet version 9
+	// size of packet version 9 (9aug04/16aug04/17aug04)
 	memcpy(&packet_size_table[4], &packet_size_table[3], sizeof(packet_len_table));
 	packet_size_table[4][0x072] = 17;
 	packet_size_table[4][0x07e] = 37;
@@ -10614,7 +10853,7 @@ int do_init_clif(void) {
 	packet_size_table[4][0x212] = 26;
 	packet_size_table[4][0x213] = 26;
 	packet_size_table[4][0x214] = 42;
-	// size of packet version 10
+	// size of packet version 10 (6sept04)
 	memcpy(&packet_size_table[5], &packet_size_table[4], sizeof(packet_len_table));
 	packet_size_table[5][0x072] = 20;
 	packet_size_table[5][0x07e] = 19;
@@ -10633,7 +10872,7 @@ int do_init_clif(void) {
 	packet_size_table[5][0x116] = 11;
 	packet_size_table[5][0x190] = 22;
 	packet_size_table[5][0x193] = 17;
-	// size of packet version 11
+	// size of packet version 11 (21sept04)
 	memcpy(&packet_size_table[6], &packet_size_table[5], sizeof(packet_len_table));
 	packet_size_table[6][0x072] = 18;
 	packet_size_table[6][0x07e] = 25;
@@ -10652,7 +10891,7 @@ int do_init_clif(void) {
 	packet_size_table[6][0x116] = 14;
 	packet_size_table[6][0x190] = 14;
 	packet_size_table[6][0x193] = 12;
-	// size of packet version 12
+	// size of packet version 12 (18oct04)
 	memcpy(&packet_size_table[7], &packet_size_table[6], sizeof(packet_len_table));
 	packet_size_table[7][0x072] = 17;
 	packet_size_table[7][0x07e] = 16;
@@ -10671,7 +10910,7 @@ int do_init_clif(void) {
 	packet_size_table[7][0x116] = 10;
 	packet_size_table[7][0x190] = 20;
 	packet_size_table[7][0x193] = 26;
-	// size of packet version 13
+	// size of packet version 13 (25oct04)
 	memcpy(&packet_size_table[8], &packet_size_table[7], sizeof(packet_len_table));
 	packet_size_table[8][0x072] = 13;
 	packet_size_table[8][0x07e] = 13;
@@ -10690,7 +10929,7 @@ int do_init_clif(void) {
 	packet_size_table[8][0x116] = 9;
 	packet_size_table[8][0x190] = 26;
 	packet_size_table[8][0x193] = 22;
-	// size of packet version 14 - Added by nsstrunks
+	// size of packet version 14 - Added by nsstrunks (1nov04)
 	memcpy(&packet_size_table[9], &packet_size_table[8], sizeof(packet_len_table));
 	packet_size_table[9][0x072] = 13;
 	packet_size_table[9][0x07e] = 13;
@@ -10716,7 +10955,7 @@ int do_init_clif(void) {
 	packet_size_table[9][0x21a] = 282;
 	packet_size_table[9][0x21b] = 10;
 	packet_size_table[9][0x21c] = 10;
-	// Size of packet version 15 - Added by nsstrunks
+	// Size of packet version 15 - Added by nsstrunks (6dec04)
 	memcpy(&packet_size_table[10], &packet_size_table[9], sizeof(packet_len_table));
 	packet_size_table[10][0x072] = 22;
 	packet_size_table[10][0x07e] = 30;
@@ -10740,6 +10979,11 @@ int do_init_clif(void) {
 	packet_size_table[10][0x221] = -1;
 	packet_size_table[10][0x223] = 8;
 
+	// Size of packet version 16 (packet db)
+	memcpy(&packet_size_table[11], &packet_size_table[10], sizeof(packet_len_table));
+
+	packetdb_readdb();
+	
 	set_defaultparse(clif_parse);
 #ifdef __WIN32
 	if (!make_listen_port(map_port)) {

@@ -13,6 +13,8 @@ typedef unsigned int in_addr_t;
 
 #include "map.h"
 
+extern int packet_db_ver;
+
 void clif_setip(char*);
 void clif_setport(int);
 
