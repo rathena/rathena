@@ -1,4 +1,7 @@
 Date	Added
+11/29
+        * Added more sc_data checks in skill.c and pc.c [celest]
+
 11/28
 	* Fixed a crash in login_sql/login.c [MouseJstr]
 	* made common/socket.c more crash resistant [MouseJstr]

@@ -1142,7 +1142,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			struct status_change *sc_data = battle_get_sc_data(bl);
 			if(sc_data) {
 				sc_data[SC_FREEZE].val3++;
-				if(sc_data[SC_FREEZE].val3 >= 3)
+				if(sc_data[SC_FREEZE].val3 >= 3 && rand()%100 < skilllv*sc_def_mdef/100)
 					skill_status_change_start(bl,SC_FREEZE,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 			}
 		}
@@ -2331,7 +2331,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		{
 			struct status_change *sc_data = battle_get_sc_data(src);
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-			if(sc_data[SC_BLADESTOP].timer != -1)
+			if(sc_data && sc_data[SC_BLADESTOP].timer != -1)
 				skill_status_change_end(src,SC_BLADESTOP,-1);
 		}
 		break;
@@ -4988,7 +4988,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 	if( sd->opt1>0 || sd->status.option&2 )
 		return 0;
 	//スキルが使えない?態異常中
-	if(sd->sc_data){
+	if(sd->sc_count){
 		if( sd->sc_data[SC_DIVINA].timer!=-1 ||
 			sd->sc_data[SC_ROKISWEIL].timer!=-1 ||
 			sd->sc_data[SC_AUTOCOUNTER].timer != -1 ||
@@ -5773,12 +5773,14 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			struct skill_unit *unit2;
 			struct status_change *sc_data=battle_get_sc_data(bl);
 			int type=SC_PNEUMA;
-			if(sc_data && sc_data[type].timer==-1)
-				skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
-			else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
-				if(DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+			if(sc_data) {
+				if (sc_data[type].timer==-1)
 					skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
-				ts->tick-=sg->interval;
+				else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
+					if(DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+						skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
+					ts->tick-=sg->interval;
+				}
 			}
 		}
 		break;
@@ -5787,12 +5789,14 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			struct skill_unit *unit2;
 			struct status_change *sc_data=battle_get_sc_data(bl);
 			int type=SC_SAFETYWALL;
-			if(sc_data && sc_data[type].timer==-1)
-				skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
-			else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
-				if(sg->val1 < unit2->group->val1 )
+			if(sc_data) {
+				if (sc_data[type].timer==-1)
 					skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
-				ts->tick-=sg->interval;
+				else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
+					if(sg->val1 < unit2->group->val1 )
+						skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
+					ts->tick-=sg->interval;
+				}
 			}
 		}
 		break;
@@ -5909,10 +5913,11 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 
 	case 0x8e:	/* クァグマイア */
 		{
-			int type=SkillStatusChangeTable[sg->skill_id];
+			struct status_change *sc_data=battle_get_sc_data(bl);
+			int type=SkillStatusChangeTable[sg->skill_id];			
 			if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage )
 				break;
-			if( battle_get_sc_data(bl)[type].timer==-1 )
+			if(sc_data && sc_data[type].timer==-1)
 				skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 		}
 		break;
@@ -5920,7 +5925,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		{
 			struct status_change *sc_data=battle_get_sc_data(bl);
 			int type=SkillStatusChangeTable[sg->skill_id];
-			if( sc_data && sc_data[type].timer==-1 )
+			if(sc_data && sc_data[type].timer==-1 )
 				skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 		}
 		break;
@@ -5931,12 +5936,14 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			struct skill_unit *unit2;
 			struct status_change *sc_data=battle_get_sc_data(bl);
 			int type=SkillStatusChangeTable[sg->skill_id];
-			if(sc_data && sc_data[type].timer==-1)
-				skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
-			else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
-				if( DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+			if(sc_data) {
+				if (sc_data[type].timer==-1)
 					skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
-				ts->tick-=sg->interval;
+				else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
+					if( DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+						skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
+					ts->tick-=sg->interval;
+				}
 			}
 		} break;
 
@@ -5985,14 +5992,16 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			int type=SkillStatusChangeTable[sg->skill_id];
 			if(sg->src_id == bl->id)
 				break;
-			if( sc_data && sc_data[type].timer==-1)
-				skill_status_change_start(bl,type,sg->skill_lv,(sg->val1)>>16,(sg->val1)&0xffff,
-					(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
-			else if((unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
-				if( DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+			if(sc_data) {
+				if (sc_data[type].timer==-1)
 					skill_status_change_start(bl,type,sg->skill_lv,(sg->val1)>>16,(sg->val1)&0xffff,
 						(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
-				ts->tick-=sg->interval;
+				else if((unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
+					if( DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+						skill_status_change_start(bl,type,sg->skill_lv,(sg->val1)>>16,(sg->val1)&0xffff,
+							(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
+					ts->tick-=sg->interval;
+				}
 			}
 		} break;
 
@@ -6769,7 +6778,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		clif_skill_fail(sd,sd->skillid,0,0);
 		return 0;
 	}
-	if(sd->sc_data){
+	if(sd->sc_count){
 		if( sd->sc_data[SC_DIVINA].timer!=-1 ||
 			sd->sc_data[SC_ROKISWEIL].timer!=-1 ||
 			(sd->sc_data[SC_AUTOCOUNTER].timer != -1 && sd->skillid != KN_AUTOCOUNTER) ||
@@ -7154,14 +7163,16 @@ int skill_castfix( struct block_list *bl, int time )
 	}
 
 	/* サフラギウム */
-	if(sc_data && sc_data[SC_SUFFRAGIUM].timer!=-1 ){
-		time=time*(100-sc_data[SC_SUFFRAGIUM].val1*15)/100;
-		skill_status_change_end( bl, SC_SUFFRAGIUM, -1);
+	if(sc_data) {
+		if ( sc_data[SC_SUFFRAGIUM].timer!=-1 ){
+			time=time*(100-sc_data[SC_SUFFRAGIUM].val1*15)/100;
+			skill_status_change_end( bl, SC_SUFFRAGIUM, -1);
+		}
+		/* ブラギの詩 */
+		if( sc_data[SC_POEMBRAGI].timer!=-1 )
+			time=time*(100-(sc_data[SC_POEMBRAGI].val1*3+sc_data[SC_POEMBRAGI].val2
+					+(sc_data[SC_POEMBRAGI].val3>>16)))/100;
 	}
-	/* ブラギの詩 */
-	if(sc_data && sc_data[SC_POEMBRAGI].timer!=-1 )
-		time=time*(100-(sc_data[SC_POEMBRAGI].val1*3+sc_data[SC_POEMBRAGI].val2
-				+(sc_data[SC_POEMBRAGI].val3>>16)))/100;
 
 	return (time>0)?time:0;
 }
@@ -7226,7 +7237,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	/* 沈?や異常（ただし、グリムなどの判定をする） */
 	if( sd->opt1>0 )
 		return 0;
-	if(sd->sc_data){
+	if(sc_data){
 		if(sc_data[SC_CHASEWALK].timer != -1) return 0;
 		if(sc_data[SC_VOLCANO].timer != -1){
 			if(skill_num==WZ_ICEWALL) return 0;
@@ -7234,12 +7245,12 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		if(sc_data[SC_ROKISWEIL].timer!=-1){
 			if(skill_num==BD_ADAPTATION) return 0;
 		}
-		if( sd->sc_data[SC_DIVINA].timer!=-1 ||
-			sd->sc_data[SC_ROKISWEIL].timer!=-1 ||
-			(sd->sc_data[SC_AUTOCOUNTER].timer != -1 && sd->skillid != KN_AUTOCOUNTER) ||
-			sd->sc_data[SC_STEELBODY].timer != -1 ||
-			sd->sc_data[SC_BERSERK].timer != -1  ||
-			(sd->sc_data[SC_MARIONETTE].timer != -1 && sd->skillid != CG_MARIONETTE)){
+		if(sc_data[SC_DIVINA].timer!=-1 ||
+			sc_data[SC_ROKISWEIL].timer!=-1 ||
+			(sc_data[SC_AUTOCOUNTER].timer != -1 && sd->skillid != KN_AUTOCOUNTER) ||
+			sc_data[SC_STEELBODY].timer != -1 ||
+			sc_data[SC_BERSERK].timer != -1  ||
+			(sc_data[SC_MARIONETTE].timer != -1 && sd->skillid != CG_MARIONETTE)){
 			return 0;	/* ?態異常や沈?など */
 		}
 
@@ -7253,8 +7264,8 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 			if(lv==5 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE && skill_num!=MO_CHAINCOMBO && skill_num!=MO_EXTREMITYFIST) return 0;
 		}
 
-		if (sd->sc_data[SC_BLOCKSKILL].timer!=-1)
-			if (skill_num == sd->sc_data[SC_BLOCKSKILL].val3)
+		if (sc_data[SC_BLOCKSKILL].timer!=-1)
+			if (skill_num == sc_data[SC_BLOCKSKILL].val3)
 				return 0;
 
 		if (sc_data[SC_BASILICA].timer != -1) { // Disallow all other skills in Basilica [celest]
@@ -7270,7 +7281,17 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 				else
 					return 0;
 			}
-		}		
+		}
+		/* 演奏/ダンス中 */
+		if(sc_data[SC_DANCING].timer!=-1 ){
+	//		if(battle_config.pc_skill_log)
+	//			printf("dancing! %d\n",skill_num);
+			if( sc_data[SC_DANCING].val4 && skill_num!=BD_ADAPTATION ) //合奏中はアドリブ以外不可
+				return 0;
+			if(skill_num!=BD_ADAPTATION && skill_num!=BA_MUSICALSTRIKE && skill_num!=DC_THROWARROW){
+				return 0;
+			}
+		}
 	}
 
 	if(sd->status.option&4 && skill_num==TF_HIDING)
@@ -7291,18 +7312,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		case ST_CHASEWALK:
 		return 0;
 		}
-	}*/
-
-	/* 演奏/ダンス中 */
-	if( sc_data && sc_data[SC_DANCING].timer!=-1 ){
-//		if(battle_config.pc_skill_log)
-//			printf("dancing! %d\n",skill_num);
-		if( sc_data[SC_DANCING].val4 && skill_num!=BD_ADAPTATION ) //合奏中はアドリブ以外不可
-			return 0;
-		if(skill_num!=BD_ADAPTATION && skill_num!=BA_MUSICALSTRIKE && skill_num!=DC_THROWARROW){
-			return 0;
-		}
-	}
+	}*/	
 
 	if(skill_get_inf2(skill_num)&0x200 && sd->bl.id == target_id)
 		return 0;
@@ -7573,10 +7583,10 @@ int skill_use_pos( struct map_session_data *sd,
 			sc_data[SC_STEELBODY].timer != -1 ||
 			sc_data[SC_DANCING].timer!=-1 ||
 			sc_data[SC_BERSERK].timer != -1  ||
-			sd->sc_data[SC_MARIONETTE].timer != -1)
+			sc_data[SC_MARIONETTE].timer != -1)
 			return 0;	/* ?態異常や沈?など */
 
-		if (sd->sc_data[SC_BLOCKSKILL].timer!=-1)
+		if (sc_data[SC_BLOCKSKILL].timer!=-1)
 			if (skill_num == sd->sc_data[SC_BLOCKSKILL].val3)
 				return 0;
 
@@ -8333,7 +8343,8 @@ int skill_status_change_timer_sub(struct block_list *bl, va_list ap )
 			skill_status_change_end( bl, SC_CLOAKING, -1);
 			if(battle_check_target( src,bl, BCT_ENEMY ) > 0) {
 				struct status_change *sc_data = battle_get_sc_data(bl);
-				skill_attack(BF_MAGIC,src,src,bl,AL_RUWACH,sc_data[type].val1,tick,0);
+				if (sc_data)
+					skill_attack(BF_MAGIC,src,src,bl,AL_RUWACH,sc_data[type].val1,tick,0);
 			}
 		}
 		break;
@@ -10071,9 +10082,9 @@ void skill_stop_dancing(struct block_list *src, int flag)
 	struct skill_unit_group* group;
 
 	nullpo_retv(src);
+	nullpo_retv(sc_data = battle_get_sc_data(src));
 
-	sc_data=battle_get_sc_data(src);
-	if(sc_data && sc_data[SC_DANCING].timer != -1) {
+	if(sc_data[SC_DANCING].timer != -1) {
 		group=(struct skill_unit_group *)sc_data[SC_DANCING].val2; //ダンスのスキルユニットIDはval2に入ってる
 		if(group && src->type==BL_PC && sc_data && sc_data[SC_DANCING].val4){ //合奏中?
 			struct map_session_data* dsd=map_id2sd(sc_data[SC_DANCING].val4); //相方のsd取得

@@ -597,7 +597,7 @@ int pc_breakweapon(struct map_session_data *sd)
 		return -1;
 	if(sd->unbreakable>=rand()%100)
 		return 0;
-	if(sd->sc_data && sd->sc_data[SC_CP_WEAPON].timer != -1)
+	if(sd->sc_count && sd->sc_data[SC_CP_WEAPON].timer != -1)
 		return 0;
 
 	for(i=0;i<MAX_INVENTORY;i++){
@@ -629,7 +629,7 @@ int pc_breakarmor(struct map_session_data *sd)
 		return -1;
 	if(sd->unbreakable>=rand()%100)
 		return 0;
-	if(sd->sc_data && sd->sc_data[SC_CP_ARMOR].timer != -1)
+	if(sd->sc_count && sd->sc_data[SC_CP_ARMOR].timer != -1)
 		return 0;
 
 	for(i=0;i<MAX_INVENTORY;i++){
@@ -1469,7 +1469,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 				skill_unitsetting(&sd->bl,GD_HAWKEYES,1,sd->bl.x,sd->bl.y,0);
 			}
 		}
-		else {
+		else if (sd->sc_count) {
 			if (sd->sc_data[SC_LEADERSHIP].timer != -1)
 				sd->paramb[0] += 2;
 			if (sd->sc_data[SC_GLORYWOUNDS].timer != -1)
@@ -1682,7 +1682,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	if(sd->hprate!=100)
 		sd->status.max_hp = sd->status.max_hp*sd->hprate/100;
 
-	if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1){	// バ?サ?ク
+	if(sd->sc_count && sd->sc_data[SC_BERSERK].timer!=-1){	// バ?サ?ク
 		sd->status.max_hp = sd->status.max_hp * 3;
 		// sd->status.hp = sd->status.hp * 3;
 		if(sd->status.max_hp > battle_config.max_hp) // removed negative max hp bug by Valaris
@@ -3599,9 +3599,11 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		int i,skill,rate,itemid,flag, count;
 		struct mob_data *md;
 		md=(struct mob_data *)bl;
-		if(!md->state.steal_flag && mob_db[md->class].mexp <= 0 && !(mob_db[md->class].mode&0x20) && md->sc_data[SC_STONE].timer == -1 && md->sc_data[SC_FREEZE].timer == -1 &&
+		if(!md->state.steal_flag && mob_db[md->class].mexp <= 0 && !(mob_db[md->class].mode&0x20) &&
 			(!(md->class>1324 && md->class<1364))) // prevent stealing from treasure boxes [Valaris]
 		{
+			if (md->sc_data && (md->sc_data[SC_STONE].timer != -1 || md->sc_data[SC_FREEZE].timer != -1))
+				return 0;
 			skill = battle_config.skill_steal_type == 1
 				? (sd->paramc[4] - mob_db[md->class].dex)/2 + pc_checkskill(sd,TF_STEAL)*6 + 10
 				: sd->paramc[4] - mob_db[md->class].dex + pc_checkskill(sd,TF_STEAL)*3 + 10;
@@ -3659,7 +3661,9 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *bl)
 	if(sd != NULL && bl != NULL && bl->type == BL_MOB) {
 		int rate,skill;
 		struct mob_data *md=(struct mob_data *)bl;
-		if(md && !md->state.steal_coin_flag && md->sc_data && md->sc_data[SC_STONE].timer == -1 && md->sc_data[SC_FREEZE].timer == -1) {
+		if(md && !md->state.steal_coin_flag) {
+			if (md->sc_data && (md->sc_data[SC_STONE].timer != -1 || md->sc_data[SC_FREEZE].timer != -1))
+				return 0;
 			skill = pc_checkskill(sd,RG_STEALCOIN)*10;
 			rate = skill + (sd->status.base_level - mob_db[md->class].lv)*3 + sd->paramc[4]*2 + sd->paramc[5]*2;
 			if(rand()%1000 < rate) {
@@ -3711,18 +3715,21 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 		skill_gangsterparadise(sd,0);
 	}
 
-	if(sd->sc_data[SC_TRICKDEAD].timer != -1)
-		skill_status_change_end(&sd->bl, SC_TRICKDEAD, -1);
+	if (sd->sc_count) {
+		if(sd->sc_data[SC_TRICKDEAD].timer != -1)
+			skill_status_change_end(&sd->bl, SC_TRICKDEAD, -1);
+		if(sd->sc_data[SC_BLADESTOP].timer!=-1)
+			skill_status_change_end(&sd->bl,SC_BLADESTOP,-1);
+		if(sd->sc_data[SC_DANCING].timer!=-1) // clear dance effect when warping [Valaris]
+			skill_stop_dancing(&sd->bl,0);
+	}
+	
 	if(sd->status.option&2)
 		skill_status_change_end(&sd->bl, SC_HIDING, -1);
 	if(sd->status.option&4)
 		skill_status_change_end(&sd->bl, SC_CLOAKING, -1);
 	if(sd->status.option&16386)
 		skill_status_change_end(&sd->bl, SC_CHASEWALK, -1);
-	if(sd->sc_data[SC_BLADESTOP].timer!=-1)
-		skill_status_change_end(&sd->bl,SC_BLADESTOP,-1);
-	if(sd->sc_data[SC_DANCING].timer!=-1) // clear dance effect when warping [Valaris]
-		skill_stop_dancing(&sd->bl,0);
 
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
 		pet_stopattack(sd->pd);
@@ -4281,9 +4288,7 @@ int pc_checkskill(struct map_session_data *sd,int skill_id)
 int pc_checkallowskill(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
-
-	if( sd->sc_data == NULL )
-		return 0;
+	nullpo_retr(0, sd->sc_data);
 
 	if(!(skill_get_weapontype(KN_TWOHANDQUICKEN)&(1<<sd->status.weapon)) && sd->sc_data[SC_TWOHANDQUICKEN].timer!=-1) {	// 2HQ
 		skill_status_change_end(&sd->bl,SC_TWOHANDQUICKEN,-1);	// 2HQを解除
@@ -4452,10 +4457,12 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 	if( sd->opt1>0 || sd->status.option&2 || sd->status.option&16384)	// 異常などで攻?できない
 		return 0;
 
-	if(sd->sc_data[SC_AUTOCOUNTER].timer != -1)
-		return 0;
-	if(sd->sc_data[SC_BLADESTOP].timer != -1)
-		return 0;
+	if (sd->sc_count) {
+		if(sd->sc_data[SC_AUTOCOUNTER].timer != -1)
+			return 0;
+		if(sd->sc_data[SC_BLADESTOP].timer != -1)
+			return 0;
+	}	
 
 	//if((opt = battle_get_option(bl)) != NULL && *opt&0x46)
 	if((opt = battle_get_option(bl)) != NULL && *opt&0x42)
@@ -5749,7 +5756,7 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 			sp = 0;
 	}
 
-	if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中は回復させないらしい
+	if(sd->sc_count && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中は回復させないらしい
 		return 0;
 
 	if(hp+sd->status.hp>sd->status.max_hp)
@@ -5790,7 +5797,7 @@ int pc_itemheal(struct map_session_data *sd,int hp,int sp)
 
 	nullpo_retr(0, sd);
 
-	if(sd->sc_data && sd->sc_data[SC_GOSPEL].timer!=-1) //バ?サ?ク中は回復させないらしい
+	if(sd->sc_count && sd->sc_data[SC_GOSPEL].timer!=-1) //バ?サ?ク中は回復させないらしい
 		return 0;
 
 	if(sd->state.potionpitcher_flag) {
@@ -6579,7 +6586,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 
 // -- moonsoul (if player is berserk then cannot equip)
 //
-	if(sd->sc_data[SC_BERSERK].timer!=-1){
+	if(sd->sc_count && sd->sc_data[SC_BERSERK].timer!=-1){
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
@@ -6691,14 +6698,16 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 			skill_status_change_start(&sd->bl,SC_ENDURE,10,1,0,0,0,0);
 	}
 	else {
-		if(sd->sc_data[SC_ENDURE].timer != -1 && sd->sc_data[SC_ENDURE].val2)
+		if(sd->sc_count && sd->sc_data[SC_ENDURE].timer != -1 && sd->sc_data[SC_ENDURE].val2)
 			skill_status_change_end(&sd->bl,SC_ENDURE,-1);
 	}
 
-	if(sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
-		skill_status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
-	if(sd->sc_data[SC_DANCING].timer!=-1 && (sd->status.weapon != 13 && sd->status.weapon !=14))
-		skill_stop_dancing(&sd->bl,0);
+	if(sd->sc_count) {
+		if (sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
+			skill_status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
+		if(sd->sc_data[SC_DANCING].timer!=-1 && (sd->status.weapon != 13 && sd->status.weapon !=14))
+			skill_stop_dancing(&sd->bl,0);
+	}
 
 	return 0;
 }
@@ -6713,7 +6722,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int type, int flag)
 
 // -- moonsoul	(if player is berserk then cannot unequip)
 //
-	if(!flag && sd->sc_data[SC_BERSERK].timer!=-1){
+	if(!flag && sd->sc_count && sd->sc_data[SC_BERSERK].timer!=-1){
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
 	}
@@ -6752,8 +6761,8 @@ int pc_unequipitem(struct map_session_data *sd,int n,int type, int flag)
 		if(sd->status.inventory[n].equip & 0x0040)
 			clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-		if(sd->sc_data[SC_BROKNWEAPON].timer != -1 && sd->status.inventory[n].equip & 0x0002 &&
-		sd->status.inventory[i].attribute==1)
+		if(sd->sc_count && sd->sc_data[SC_BROKNWEAPON].timer != -1 && sd->status.inventory[n].equip & 0x0002 &&
+			sd->status.inventory[i].attribute==1)
 			skill_status_change_end(&sd->bl,SC_BROKNWEAPON,-1);
 
 		clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
@@ -6767,7 +6776,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int type, int flag)
 	}
 	if(!type) {
 		pc_calcstatus(sd,0);
-		if(sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
+		if(sd->sc_count && sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 			skill_status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 	}
 
@@ -7098,7 +7107,7 @@ static int pc_natural_heal_hp(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
-	if (sd->sc_data[SC_TRICKDEAD].timer != -1)		// Modified by RoVeRT
+	if (sd->sc_count && sd->sc_data[SC_TRICKDEAD].timer != -1)		// Modified by RoVeRT
 		return 0;
 
 	if(pc_checkoverhp(sd)) {
@@ -7111,11 +7120,11 @@ static int pc_natural_heal_hp(struct map_session_data *sd)
 
 	if(sd->walktimer == -1) {
 		inc_num = pc_hpheal(sd);
-		if( sd->sc_data[SC_TENSIONRELAX].timer!=-1 ){	// テンションリラックス
+		if(sd->sc_data[SC_TENSIONRELAX].timer!=-1 ){	// テンションリラックス
 			sd->hp_sub += 2*inc_num;
 			sd->inchealhptick += 3*natural_heal_diff_tick;
-		}else{
-		sd->hp_sub += inc_num;
+		} else {
+			sd->hp_sub += inc_num;
 			sd->inchealhptick += natural_heal_diff_tick;
 		}
 	}
@@ -7168,7 +7177,7 @@ static int pc_natural_heal_hp(struct map_session_data *sd)
 
 	return 0;
 
-	if(sd->sc_data[SC_APPLEIDUN].timer!=-1) { // Apple of Idun
+	if(sd->sc_count && sd->sc_data[SC_APPLEIDUN].timer!=-1) { // Apple of Idun
 		if(sd->inchealhptick >= 6000 && sd->status.hp < sd->status.max_hp) {
 			bonus = skill*20;
 			while(sd->inchealhptick >= 6000) {
@@ -7196,8 +7205,8 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
-	if (sd->sc_data[SC_TRICKDEAD].timer != -1 ||	// Modified by RoVeRT
-		sd->sc_data[SC_BERSERK].timer != -1)
+	if (sd->sc_count && (sd->sc_data[SC_TRICKDEAD].timer != -1 ||	// Modified by RoVeRT
+		sd->sc_data[SC_BERSERK].timer != -1))
 		return 0;
 
 	if(pc_checkoversp(sd)) {
@@ -7208,7 +7217,7 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 	bsp=sd->status.sp;
 
 	inc_num = pc_spheal(sd);
-	if(sd->sc_data[SC_EXPLOSIONSPIRITS].timer == -1)
+	if(sd->sc_count && sd->sc_data[SC_EXPLOSIONSPIRITS].timer == -1)
 		sd->sp_sub += inc_num;
 	if(sd->walktimer == -1)
 		sd->inchealsptick += natural_heal_diff_tick;
@@ -7562,7 +7571,7 @@ int map_night_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
 void pc_setstand(struct map_session_data *sd){
 	nullpo_retv(sd);
 
-	if(sd->sc_data && sd->sc_data[SC_TENSIONRELAX].timer!=-1)
+	if(sd->sc_count && sd->sc_data[SC_TENSIONRELAX].timer!=-1)
 		skill_status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
 
 	sd->state.dead_sit = 0;
