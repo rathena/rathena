@@ -1,12 +1,13 @@
 Date	Added
-12/11	* Warps Update : Added ayothaya warps in ./npc/warps/ and in map_athena.conf [Nana]
+11/12
+	* battle_athena.conf: Updated Packet Version Flags.
+	* !!!Fixed Mobs Attacking!!!: Thanks for MagicalTux and Yor, I fixed the mobs attacking by using one of their files. [Codemaster]
+	* Warps Update : Added ayothaya warps in ./npc/warps/ and in map_athena.conf [Nana]
 11/11
 	* Skill Updates : (Need to revise skill_cast_db.txt for new updates)
 		( Sharp Shooting, Sword Reject, Chain Crush Combo, Tiger Knuckle Fist,
 		Head Crush, Arrow Vulcan, HP COnversion) Thanks to DracoRPG. 
 		Fixed Devotion use requeriments. Thanks to Orn.	[shadow]
-11/10	
-=======
 11/11
 	* Corrected minor typo in item_db, and removed/commented out dupe items.[kobra_k88]
 
