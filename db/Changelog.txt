@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+11/22
+	* Slim Potions requires empty test tube, not empty potion bottle *fixed* [shadow]
+
 11/21
 	* added bClassChange to const.txt and added bClassChange,50; to azoth (.5% chance to transform monster into another.) [Valaris]
 	* added mob stats: 1027,Raptice [Lupus]
