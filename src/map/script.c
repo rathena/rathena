@@ -5466,14 +5466,18 @@ int buildin_strmobinfo(struct script_state *st)
 	if(num==1) {
 		char *buf;
 		buf=aCalloc(24, 1);
-		buf=mob_db[class].name;
+//		buf=mob_db[class].name;
+// for string assignments you would need to go for c++ [Shinomori]
+		strcpy(buf,mob_db[class].name);
 		push_str(st->stack,C_STR,buf);
 		return 0;
 	}
 	else if(num==2)	{
 		char *buf;
 		buf=aCalloc(24, 1);
-		buf=mob_db[class].jname;
+//		buf=mob_db[class].jname;
+// for string assignments you would need to go for c++ [Shinomori]
+		strcpy(buf,mob_db[class].jname);
 		push_str(st->stack,C_STR,buf);
 		return 0;
 	}

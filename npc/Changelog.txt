@@ -35,6 +35,8 @@ Other Ppl
 Date		Added
 ======
 12/29
+        * Added gvg mapflags to the guild dungeons, and removed 4 items from 
+          item_avail.txt, thanks Poki [celest]
 	* Translated npc/sample/npc_extend_shop.txt [MC Cameri]
 	* Translated npc/sample/bank_test.txt [MC Cameri]
         * Fixed respawn delay of Toad and Golden Thief Bug (it was the actual_delay/2). Mob placement files should be revised again [Lupus]

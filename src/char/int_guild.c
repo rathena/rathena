@@ -1111,8 +1111,10 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd, int guild_id, int account_id,
 		if (g->member[i].online)
 			g->connect_member++;
 	}
-	// •½‹ÏƒŒƒxƒ‹
-	g->average_lv = alv / c;
+	
+	if (c)
+		// •½‹ÏƒŒƒxƒ‹
+		g->average_lv = alv / c;
 
 	return 0;
 }

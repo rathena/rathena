@@ -1294,8 +1294,10 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 		if( g->member[i].online )
 			g->connect_member++;
 	}
-	// •½‹ÏƒŒƒxƒ‹
-	g->average_lv=alv/c;
+
+	if (c)
+		// •½‹ÏƒŒƒxƒ‹
+		g->average_lv=alv/c;
 
 	sprintf(tmp_sql, "UPDATE `%s` SET `connect_member`=%d,`average_lv`=%d WHERE `guild_id`='%d'", guild_db,  g->connect_member, g->average_lv,  g->guild_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) 

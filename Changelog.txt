@@ -1,5 +1,9 @@
 Date	Added
 12/29
+        * Changed int_guild.c so it will calculate average guild level only if > 0
+          members are found - prevent divide by zero crashes (why would an empty guild
+          be requested to update its' member info in the first place?) [celest]
+        * Added Shinomori's fixes for string copying in script.c [celest]
 	* Removed @giveitem since #item it's the one that does this and added some of it's support to #item [MC Cameri]
 	  -#item <item_name> <item_count> <charname|all|everyone>
 	* Uncommented out import in charcommand_athena.conf, there is
