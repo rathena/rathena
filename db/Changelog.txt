@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+11/21	* added mob stats: 1027,Raptice [Lupus]
+
 11/20   - Added deadly poison bottle to produce_db.txt [celest]
         - Edited ASC_CDP in skill_require_db.txt
         - Edited ASC_EDP in skill_cast_db.txt
