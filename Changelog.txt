@@ -1,6 +1,8 @@
 Date	Added
-12/27
+12/28
+	* Fixed @jobchange to not default to upper (SVN 837) [MouseJstr]
 	* Fixed a compile error in @mobsearch (SVN 836) [MouseJstr]
+12/27
         * Updated 1206's packet fuctions in clif.c [celest]
         * Updated the new guild skills - cannot be reused within 5 minutes of 
           activating it [celest]

@@ -1952,7 +1952,7 @@ int atcommand_jobchange(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int job = 0, upper = -1;
+	int job = 0, upper = 0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1) {
