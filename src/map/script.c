@@ -78,14 +78,8 @@ struct dbt* script_get_userfunc_db(){ if(!userfunc_db) userfunc_db=strdb_init(50
 int scriptlabel_final(void *k,void *d,va_list ap){ return 0; }
 static char pos[11][100] = {"頭","体","左手","右手","ローブ","靴","アクセサリー1","アクセサリー2","頭2","頭3","装着していない"};
 
-static struct Script_Config {
-	int warn_func_no_comma;
-	int warn_cmd_no_comma;
-	int warn_func_mismatch_paramnum;
-	int warn_cmd_mismatch_paramnum;
-	int check_cmdcount;
-	int check_gotocount;
-} script_config;
+struct Script_Config script_config;
+
 static int parse_cmd_if=0;
 static int parse_cmd;
 
@@ -7210,6 +7204,7 @@ int script_config_read(char *cfgName)
 	script_config.warn_cmd_mismatch_paramnum=1;
 	script_config.check_cmdcount=8192;
 	script_config.check_gotocount=512;
+	script_config.max_eventtimer_len=32;
 
 	fp=fopen(cfgName,"r");
 	if(fp==NULL){
@@ -7242,6 +7237,9 @@ int script_config_read(char *cfgName)
 		}
 		else if(strcmpi(w1,"check_gotocount")==0) {
 			script_config.check_gotocount = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"max_eventtimer_length")==0) {
+			script_config.max_eventtimer_len = battle_config_switch(w2);
 		}
 		else if(strcmpi(w1,"import")==0){
 			script_config_read(w2);

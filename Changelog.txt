@@ -1,5 +1,10 @@
 Date	Added
 01/10
+        * Added 'max_eventtimer_length' (default is 32) to script_athena.conf. [celest]
+          Some event timers with names longer than 24 could cause the server to close
+          itself, change this if you need support for even longer names
+        * Removed PCLoginEvent requiring 'PCLoginEvent' for the player to be set to 1
+          first to be activated. [celest]
         * Added Shinomori and orn's fix for the skill tree to only check the first
           required skill in the DB and skipping the rest [celest]
         * Modified 'wedding' script command to work with "OnTimer" scripts even without

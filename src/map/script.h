@@ -2,6 +2,16 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+extern struct Script_Config {
+	int warn_func_no_comma;
+	int warn_cmd_no_comma;
+	int warn_func_mismatch_paramnum;
+	int warn_cmd_mismatch_paramnum;
+	int check_cmdcount;
+	int check_gotocount;
+	int max_eventtimer_len;
+} script_config;
+
 struct script_data {
 	int type;
 	union {

@@ -876,8 +876,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd->state.event_death = pc_readglobalreg(sd,"PCDieEvent");
 	sd->state.event_kill = pc_readglobalreg(sd,"PCKillEvent");
 	sd->state.event_disconnect = pc_readglobalreg(sd,"PCLogoffEvent");
-	sd->state.event_onconnect = pc_readglobalreg(sd,"PCLoginEvent");
-	
+		
 	if (night_flag == 1 && !map[sd->bl.m].flag.indoors) {
 		char tmpstr[1024];
 		strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
@@ -898,7 +897,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 		sprintf(tmp_output,"Character '"CL_WHITE"%s"CL_RESET"' logged in. (Account ID: '"CL_WHITE"%d"CL_RESET"').\n", sd->status.name, sd->status.account_id);
 	ShowInfo(tmp_output);
 
-	if (sd->state.event_onconnect) {
+	{
 		struct npc_data *npc;
 		//printf("pc: OnPCLogin event done. (%d events)\n", npc_event_doall("OnPCLogin") );
 		if ((npc = npc_name2id("PCLoginEvent"))) {
@@ -6581,8 +6580,6 @@ int pc_setglobalreg(struct map_session_data *sd,char *reg,int val)
 		sd->state.event_kill = val;
 	} else if(strcmp(reg,"PCLogoutEvent") == 0){
 		sd->state.event_disconnect = val;
-	} else if(strcmp(reg,"PCLoginEvent") == 0){
-		sd->state.event_onconnect = val;
 	}
 
 	if(val==0){
@@ -6794,14 +6791,14 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 
 	nullpo_retr(0, sd);
 
-	Assert(strlen(name) < 24);
+	Assert(strlen(name) < script_config.max_eventtimer_len);
 
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i]==-1 )
 			break;
 	if(i<MAX_EVENTTIMER){
-		char *evname=(char *)aCalloc(24,sizeof(char));
-		memcpy(evname,name,24);
+		char *evname=(char *)aCalloc(script_config.max_eventtimer_len,sizeof(char));
+		memcpy(evname,name,script_config.max_eventtimer_len);
 		sd->eventtimer[i]=add_timer(gettick()+tick,
 			pc_eventtimer,sd->bl.id,(int)evname);
 		sd->eventcount++;
