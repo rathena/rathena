@@ -25,6 +25,7 @@ MAKE = make
 endif
 
 OPT = -g -O2 -ffast-math
+# OPT += -DDUMPSTACK -rdynamic
 
 ifeq ($(findstring CYGWIN,$(PLATFORM)), CYGWIN)
 OS_TYPE = -DCYGWIN

@@ -1,6 +1,17 @@
 Date	Added
 
 02/04
+        * Added experimental code to generate a stack dump when it segfaults, thanks
+          to Ser [celest]
+          - does not work with Cygwin, as it does not have glibc
+          - to enable, edit the Makefile and remove the # on the line:
+
+                # OPT += -DDUMPSTACK -rdynamic
+
+          - What it does: everytime eA crashes it'll generate a file "stackdump_
+            <number>.txt" in your save folder with a backtrace, which you can
+            examine and send to a dev to be fixed.
+
         * Some more tidying up in status_get_ functions [celest]
 
 02/03
