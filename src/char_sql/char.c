@@ -1560,6 +1560,7 @@ int parse_frommap(int fd) {
 				printf("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
 				       id, j, p[0], p[1], p[2], p[3], server[id].port);
 				printf("Map-server %d loading complete.\n", id);
+				set_all_offline();
 			}
 			WFIFOW(fd,0) = 0x2afb;
 			WFIFOB(fd,2) = 0;
