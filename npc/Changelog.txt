@@ -35,8 +35,8 @@ Other Ppl
 Date		Added
 ======
 11/22
-	* Now wedding merchant sells tuxedos for 43k, implemented a easier way to change prices of weddings. [shadow]
-
+	* - Now wedding merchant sells tuxedos for 43k, implemented a easier way to change prices of weddings.
+	  - Fixed wrong label calling on jobchange.txt  [shadow]
 11/20
 	* Reduced walking speed for davidsiaw's Dev NPC. [MC Cameri]
 	* Fixed some typos in MC Cameri's Dev NPC, walking speed, etc. [MC Cameri]
