@@ -10662,7 +10662,7 @@ static int clif_parse(int fd) {
 		}
 
 		// check if version is accepted
-		if (packet_ver <= 5 ||	// reject really old client versions
+		if (packet_ver < 5 ||	// reject really old client versions
 			(packet_ver <= 9 && (battle_config.packet_ver_flag &	1) == 0) ||	// older than 6sept04
 			(packet_ver == 10 && (battle_config.packet_ver_flag &	2) == 0) ||
 			(packet_ver == 11 && (battle_config.packet_ver_flag &	4) == 0) ||

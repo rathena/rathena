@@ -439,7 +439,7 @@
 379,5,6,1,0,0,10,1,no,0,0,0,weapon,0	//ASC_BREAKER#?ウルブレ?カ?#
 380,0,6,4,0,1,10,1,no,0,0,0,weapon,0	//SN_SIGHT#トゥル?サイト#
 381,9,8,1,0,0,5,1:2:3:4:5,yes,0,0,0,misc,0	//SN_FALCONASSAULT#フ?ルコンアサルト#
-382,9,8,1,0,0,5,1,no,0,0,0,weapon,0	//SN_SHARPSHOOTING#シャ?プシュ?ティング#
+382,14,8,1,0,0,5,1,no,0,0,0,weapon,0	//SN_SHARPSHOOTING#シャ?プシュ?ティング#
 383,0,6,4,0,1,10,1,yes,0,0,0,magic,0	//SN_WINDWALK#ウインドウォ?ク#
 384,0,0,4,0,1,10,1,yes,0,0,0,magic,0	//WS_MELTDOWN#メルト?ウン#
 385,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//WS_CREATECOIN#クリエイトコイン#

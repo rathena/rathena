@@ -1793,14 +1793,14 @@ static struct Damage battle_calc_pc_weapon_attack(
 				cri <<= 1;
 		}
 
-		if(skill_num == SN_SHARPSHOOTING && rand()%100 < 50)
+		if(skill_num == SN_SHARPSHOOTING)
 			cri += 200;
 	}
 
 	if(tsd && tsd->critical_def)
 		cri = cri * (100-tsd->critical_def) / 100;
 
-	if(da == 0 && (skill_num==0 || skill_num == KN_AUTOCOUNTER || skill_num == SN_SHARPSHOOTING) && skill_lv >= 0 && //ダブルアタックが発動していない
+	if(da == 0 && (skill_num==0 || skill_num == KN_AUTOCOUNTER || skill_num == SN_SHARPSHOOTING) && //ダブルアタックが発動していない
 		(rand() % 1000) < cri)	// 判定（スキルの場合は無視）
 	{
 		damage += atkmax;

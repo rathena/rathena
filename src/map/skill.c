@@ -33,8 +33,8 @@
 #endif
 
 #define SKILLUNITTIMER_INVERVAL	100
-
 #define STATE_BLIND 0x10
+#define swap(x,y) { int t; t = x; x = y; y = t; }
 
 /* スキル番?＝＞ステ?タス異常番??換テ?ブル */
 int SkillStatusChangeTable[]={	/* skill.hのenumのSC_***とあわせること */
@@ -1673,6 +1673,9 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case NPC_SELFDESTRUCTION:
 	case NPC_SELFDESTRUCTION2:
 		break;
+	case SN_SHARPSHOOTING:
+		clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,0,0,0);
+		break;
 	default:
 		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, (skillid==0)? 5:type );
 	}
@@ -2284,13 +2287,52 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	case LK_JOINTBEAT:	/* ジョイントビ?ト */
 //	case PA_PRESSURE:	/* プレッシャ? */
 //	case PA_SACRIFICE:	/* サクリファイス */
-	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
+//	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
 	case CG_ARROWVULCAN:			/* アロ?バルカン */
 	case ASC_BREAKER:				/* ソウルブレ?カ? */
 	case HW_MAGICCRASHER:		/* マジッククラッシャ? */
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
+
+	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
+		{
+			int dx, dy, wx = 0, wy = 0;
+			int weight, num = 0;
+			int x1 = src->x, y1 = src->y;
+			int x0 = bl->x, y0 = bl->y;
+
+			dx = (x1 - x0);
+			if (dx < 0) {
+				swap(x0, x1);
+				swap(y0, y1);
+				dx = -dx;
+			}
+			dy = (y1 - y0);
+			weight = dx > abs(dy) ? dx : abs(y1 - y0);
+			while ((x0 != x1 || y0 != y1) && num < skill_get_range(skillid)) {
+				wx += dx;
+				wy += dy;
+				if (wx >= weight) {
+					wx -= weight; x0 ++;
+				}
+				if (wy >= weight) {
+					wy -= weight; y0 ++;
+				} else if (wy < 0) {
+					wy += weight; y0 --;
+				}
+				if (x0 == x1) {
+					if (dy > 0) { y0++; }
+					else { y0--; }
+				}
+				map_foreachinarea (skill_attack_area,src->m,x0,y0,x0,y0,0,
+						BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+				num++;	// make sure it doesn't run infinitely
+			}
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		}
+		break;
+
 	case PA_PRESSURE:	/* プレッシャ? */
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (rand()%100 < 50)

@@ -1,5 +1,17 @@
 Date	Added
 
+02/05
+        * Updated Sharp Shooting AoE code, thanks to Neodis / k-Athena [celest]
+          - Update: Adapt jA's path_search algorithm and removed the need of struct
+            'dev' in map_session_data
+          - Update: Increase range to 14
+        * Tidied up explicit typecasts in status_get_max_hp, thanks to Ilpalazzo-sama
+          [celest]
+        * Non-MVP / miniboss summoned monsters should give exp, my mistake ^^; [celest]
+          Note:- minibosses are considered a 'Boss' as well, not just MVP's
+        * Fixed a typo that was preventing packet version 5 clients (628sak) from
+          logging in (it was supposed to only block those with 4 or below) [celest]
+
 02/04
         * Fixed more compile signed/unsigned errors [SVN 1040: MouseJstr]
 	* TXT convertors now read the import command in inter_athena.conf

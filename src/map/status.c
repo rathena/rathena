@@ -1383,16 +1383,22 @@ int status_get_hp(struct block_list *bl)
 int status_get_max_hp(struct block_list *bl)
 {
 	nullpo_retr(1, bl);
+
 	if(bl->type==BL_PC && ((struct map_session_data *)bl))
 		return ((struct map_session_data *)bl)->status.max_hp;
 	else {
-		struct status_change *sc_data=status_get_sc_data(bl);
-		int max_hp=1;
-		if(bl->type==BL_MOB && ((struct mob_data*)bl)) {
-			max_hp = mob_db[((struct mob_data*)bl)->class_].max_hp;
+		struct status_change *sc_data;		
+		int max_hp = 1;
+
+		if(bl->type == BL_MOB) {
+			struct mob_data *md;
+			nullpo_retr(1, md = (struct mob_data *)bl);
+			max_hp = mob_db[md->class_].max_hp;
+
 			if(battle_config.mobs_level_up) // mobs leveling up increase [Valaris]
-				max_hp+=(((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv)*status_get_vit(bl);
-			if(mob_db[((struct mob_data*)bl)->class_].mexp > 0) {
+				max_hp += (md->level - mob_db[md->class_].lv) * status_get_vit(bl);
+
+			if(mob_db[md->class_].mexp > 0) {
 				if(battle_config.mvp_hp_rate != 100)
 					max_hp = (max_hp * battle_config.mvp_hp_rate)/100;
 			}
@@ -1401,9 +1407,12 @@ int status_get_max_hp(struct block_list *bl)
 					max_hp = (max_hp * battle_config.monster_hp_rate)/100;
 			}
 		}
-		else if(bl->type==BL_PET && ((struct pet_data*)bl)) {
-			max_hp = mob_db[((struct pet_data*)bl)->class_].max_hp;
-			if(mob_db[((struct pet_data*)bl)->class_].mexp > 0) {
+		else if(bl->type == BL_PET) {
+			struct pet_data *pd;
+			nullpo_retr(1, pd = (struct pet_data*)bl);
+			max_hp = mob_db[pd->class_].max_hp;
+
+			if(mob_db[pd->class_].mexp > 0) {
 				if(battle_config.mvp_hp_rate != 100)
 					max_hp = (max_hp * battle_config.mvp_hp_rate)/100;
 			}
@@ -1412,11 +1421,13 @@ int status_get_max_hp(struct block_list *bl)
 					max_hp = (max_hp * battle_config.monster_hp_rate)/100;
 			}
 		}
+
+		sc_data = status_get_sc_data(bl);
 		if(sc_data) {
-			if(sc_data[SC_APPLEIDUN].timer!=-1)
-				max_hp += ((5+sc_data[SC_APPLEIDUN].val1*2+((sc_data[SC_APPLEIDUN].val2+1)>>1)
-						+sc_data[SC_APPLEIDUN].val3/10) * max_hp)/100;
-			if(sc_data[SC_GOSPEL].timer!=-1 &&
+			if(sc_data[SC_APPLEIDUN].timer != -1)
+				max_hp += ((5 + sc_data[SC_APPLEIDUN].val1 * 2 + ((sc_data[SC_APPLEIDUN].val2 + 1) >> 1)
+					+ sc_data[SC_APPLEIDUN].val3 / 10) * max_hp)/100;
+			if(sc_data[SC_GOSPEL].timer != -1 &&
 				sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
 				sc_data[SC_GOSPEL].val3 == 4)
 				max_hp += max_hp * 25 / 100;
@@ -2108,36 +2119,39 @@ int status_get_mdef(struct block_list *bl)
  */
 int status_get_def2(struct block_list *bl)
 {
-	struct status_change *sc_data;
-	int def2=1;
-
+	int def2 = 1;
 	nullpo_retr(1, bl);
-	sc_data=status_get_sc_data(bl);
+	
 	if(bl->type==BL_PC)
-		def2 = ((struct map_session_data *)bl)->def2;
-	else if(bl->type==BL_MOB)
-		def2 = mob_db[((struct mob_data *)bl)->class_].vit;
-	else if(bl->type==BL_PET)
-		def2 = mob_db[((struct pet_data *)bl)->class_].vit;
+		return ((struct map_session_data *)bl)->def2;
+	else {
+		struct status_change *sc_data;
 
-	if(bl->type != BL_PC && sc_data) {
-		if( sc_data[SC_ANGELUS].timer!=-1)
-			def2 = def2*(110+5*sc_data[SC_ANGELUS].val1)/100;
-		if( sc_data[SC_PROVOKE].timer!=-1)
-			def2 = (def2*(100 - 6*sc_data[SC_PROVOKE].val1)+50)/100;
-		if(sc_data[SC_POISON].timer!=-1)
-			def2 = def2*75/100;
-		//コンセントレーション時は減算
-		if( sc_data[SC_CONCENTRATION].timer!=-1)
-			def2 = def2*(100 - 5*sc_data[SC_CONCENTRATION].val1)/100;
+		if(bl->type==BL_MOB)
+			def2 = mob_db[((struct mob_data *)bl)->class_].vit;
+		else if(bl->type==BL_PET)
+			def2 = mob_db[((struct pet_data *)bl)->class_].vit;
 
-		if(sc_data[SC_GOSPEL].timer!=-1) {
-			if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
-				sc_data[SC_GOSPEL].val3 == 11)
-				def2 += def2*25/100;
-			else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
-				sc_data[SC_GOSPEL].val3 == 5)
-				def2 = 0;
+		sc_data = status_get_sc_data(bl);
+		if(sc_data) {
+			if(sc_data[SC_ANGELUS].timer != -1)
+				def2 = def2*(110+5*sc_data[SC_ANGELUS].val1)/100;
+			if(sc_data[SC_PROVOKE].timer!=-1)
+				def2 = (def2*(100 - 6*sc_data[SC_PROVOKE].val1)+50)/100;
+			if(sc_data[SC_POISON].timer!=-1)
+				def2 = def2*75/100;
+			//コンセントレーション時は減算
+			if( sc_data[SC_CONCENTRATION].timer!=-1)
+				def2 = def2*(100 - 5*sc_data[SC_CONCENTRATION].val1)/100;
+
+			if(sc_data[SC_GOSPEL].timer!=-1) {
+				if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+					sc_data[SC_GOSPEL].val3 == 11)
+					def2 += def2*25/100;
+				else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+					sc_data[SC_GOSPEL].val3 == 5)
+					def2 = 0;
+			}
 		}
 	}
 	if(def2 < 1) def2 = 1;
@@ -2150,20 +2164,22 @@ int status_get_def2(struct block_list *bl)
  */
 int status_get_mdef2(struct block_list *bl)
 {
-	int mdef2=0;
-	struct status_change *sc_data=status_get_sc_data(bl);
-
+	int mdef2 = 0;
 	nullpo_retr(0, bl);
-	if(bl->type==BL_MOB)
-		mdef2 = mob_db[((struct mob_data *)bl)->class_].int_ + (mob_db[((struct mob_data *)bl)->class_].vit>>1);
-	else if(bl->type==BL_PC)
-		mdef2 = ((struct map_session_data *)bl)->mdef2 + (((struct map_session_data *)bl)->paramc[2]>>1);
-	else if(bl->type==BL_PET)
-		mdef2 = mob_db[((struct pet_data *)bl)->class_].int_ + (mob_db[((struct pet_data *)bl)->class_].vit>>1);
-	if(sc_data) {
-			if( sc_data[SC_MINDBREAKER].timer!=-1 && bl->type != BL_PC)
+
+	if(bl->type == BL_PC)
+		return ((struct map_session_data *)bl)->mdef2 + (((struct map_session_data *)bl)->paramc[2]>>1);
+	else {
+		struct status_change *sc_data = status_get_sc_data(bl);
+		if(bl->type == BL_MOB)
+			mdef2 = mob_db[((struct mob_data *)bl)->class_].int_ + (mob_db[((struct mob_data *)bl)->class_].vit>>1);
+		else if(bl->type == BL_PET)
+			mdef2 = mob_db[((struct pet_data *)bl)->class_].int_ + (mob_db[((struct pet_data *)bl)->class_].vit>>1);
+		if(sc_data) {
+			if(sc_data[SC_MINDBREAKER].timer!=-1)
 				mdef2 -= (mdef2*6*sc_data[SC_MINDBREAKER].val1)/100;
 		}
+	}
 	if(mdef2 < 0) mdef2 = 0;
 		return mdef2;
 }

@@ -2158,6 +2158,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	int mvp_damage,max_hp;
 	unsigned int tick = gettick();
 	struct map_session_data *mvp_sd = NULL, *second_sd = NULL,*third_sd = NULL;
+	struct block_list *master = NULL;
 	double tdmg,temp;
 	struct item item;
 	int ret;
@@ -2470,7 +2471,11 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		if(sd && battle_config.pk_mode && (mob_db[md->class_].lv - sd->status.base_level >= 20)) {
 			job_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
 		}
-		if(md->master_id || (md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1)) { // for summoned creatures [Valaris]
+		if(md->master_id) {
+			master = map_id2bl(md->master_id);
+		}
+		if((master && status_get_mode(master)&0x20) ||	// check if its master is a boss (MVP's and minibosses)
+			(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1)) { // for summoned creatures [Valaris]
 			base_exp = 0;
 			job_exp = 0;
 		}
@@ -2530,7 +2535,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			struct delay_item_drop *ditem;
 			int drop_rate;
 
-			if(md->master_id || (md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1))	// Added [Valaris]
+			if((master && status_get_mode(master)&0x20) ||	// check if its master is a boss (MVP's and minibosses)
+				(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1))	// Added [Valaris]
 				break;	// End
 
 			if(mob_db[md->class_].dropitem[i].nameid <= 0)
