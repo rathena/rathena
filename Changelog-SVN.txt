@@ -1,6 +1,8 @@
 Date	Added
 
 02/16
+	* Char SQL: Fixed the Whisper chat on splittet mapservers (i think now all features work!) [Sirius]
+
         * Added 3 more of the new card effects -- check item_bonus.txt [celest]
 
         * Added 'bonus4' to support the new card effects that might need up to 4

@@ -431,7 +431,7 @@ int mapif_parse_WisRequest(int fd) {
 		printf("inter: Wis message doesn't exist.\n");
 		return 0;
 	}
-	sprintf (tmp_sql, "SELECT `name` FROM `%s` WHERE `char_id`='%d'",char_db, (int) RFIFOP(fd,28));
+	sprintf (tmp_sql, "SELECT `name` FROM `%s` WHERE `name`='%s'",char_db, RFIFOP(fd,28));
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
 	}
@@ -474,7 +474,12 @@ int mapif_parse_WisRequest(int fd) {
 			mapif_wis_message(wd);
 		}
 	}
-
+	
+	//Freeing ... O.o 
+	if(sql_res){
+		mysql_free_result(sql_res);
+	}
+	
 	return 0;
 }
 
