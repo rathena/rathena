@@ -2219,11 +2219,13 @@ void ev_release(struct dbn *db, int which)
  */
 int do_init_npc(void)
 {
-	ShowStatus("Loading NPCs...\n");
 	struct npc_src_list *nsl;
 	FILE *fp;
 	char line[1024];
 	int m,lines;
+	time_t last_time = time(0);
+	int busy = 0;
+	char c = '-';
 
 	ev_db=strdb_init(24);
 	npcname_db=strdb_init(24);
@@ -2295,6 +2297,19 @@ int do_init_npc(void)
 			}
 		}
 		fclose(fp);
+		printf("\r");
+		ShowStatus("Loading NPCs... Working: ");
+		if (last_time != time(0)) {
+			last_time = time(0);
+			switch(busy) {
+				case 0: c='\\'; busy++; break;
+				case 1: c='|'; busy++; break;
+				case 2: c='/'; busy++; break;
+				case 3: c='-'; busy=0;
+			}
+		}
+		printf("[%c]",c);
+		fflush(stdout);
 //		printf("\rLoading NPCs [%d]: %-54s",npc_id-START_NPC_NUM,nsl->name);
 //		fflush(stdout);
 	}
