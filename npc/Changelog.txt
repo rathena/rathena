@@ -36,12 +36,12 @@ Other Ppl
 Date		Added
 ======
 11/15
-	* - Fixed xmas.txt X-mas event, now you get a gift box when yuo first talk to Santa. [shadow]
+	* - Fixed xmas.txt X-mas event, now you get a gift box when you first talk to Santa.
+	  - Same script again...Fixed the spawns, its 1 antonio per map, and it was using only santa poring IDs. [shadow]
 
-11/14	
-	* - Added the total new set of Advance Jobchangers after kRO description and screenshots. [Nana]
 11/14
-	* - Fixed niflheim kafra. [shadow]
+	 - Fixed niflheim kafra. [shadow]
+	 - Added the total new set of Advance Jobchangers after kRO description and screenshots. [Nana]
 
 11/13
 	* - Translated and Fixed momotaro.txt event [shadow]
