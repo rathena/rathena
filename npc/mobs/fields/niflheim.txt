@@ -3,40 +3,40 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
-//= 1.1 commented the town mobs
+//= 1.2 updated [shadow]
 //============================================================
 
 //niflheim
-//niflheim.gat,0,0,0,0	monster	Lord Of Death	1373,1,3600000,1800000,1
-//niflheim.gat,0,0,0,0	monster	Gibbet	1503,10,0,0,0
-//niflheim.gat,0,0,0,0	monster	Dullahan	1504,10,0,0,0
-//niflheim.gat,0,0,0,0	monster	Loli Ruri	1505,8,0,0,0
-//niflheim.gat,0,0,0,0	monster	Disguise	1506,15,0,0,0
-//niflheim.gat,0,0,0,0	monster	Bloody Murderer	1507,2,0,0,0
-//niflheim.gat,0,0,0,0	monster	Quve	1508,10,0,0,0
-//niflheim.gat,0,0,0,0	monster	Lude	1509,20,0,0,0
-//niflheim.gat,0,0,0,0	monster	Hylozoist	1510,8,0,0,0
+niflheim.gat,0,0,0,0	monster	Lord Of Death	5373,1,15600000,78000000,1
+niflheim.gat,0,0,0,0	monster	Gibbet	1503,10,2400000,1200000,0
+niflheim.gat,0,0,0,0	monster	Dullahan	1504,5,3600000,1800000,0
+niflheim.gat,0,0,0,0	monster	Quve	1508,20,60000,30000,0
+niflheim.gat,0,0,0,0	monster	Lude	1509,20,60000,30000,0
+niflheim.gat,0,0,0,0	monster	Hylozoist	1510,8,120000,60000,0
 
 //nif_fild01)?
 nif_fild01.gat,0,0,0,0	monster	Gibbet	1503,10,0,0,0
-nif_fild01.gat,0,0,0,0	monster	Dullahan	1504,10,0,0,0
 nif_fild01.gat,0,0,0,0	monster	Loli Ruri	1505,8,0,0,0
-nif_fild01.gat,0,0,0,0	monster	Disguise	1506,15,0,0,0
-nif_fild01.gat,0,0,0,0	monster	Bloody Murderer	1507,2,0,0,0
-nif_fild01.gat,0,0,0,0	monster	Quve	1508,10,0,0,0
-nif_fild01.gat,0,0,0,0	monster	Lude	1509,20,0,0,0
-nif_fild01.gat,0,0,0,0	monster	Hylozoist	1510,8,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Disguise	1506,20,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Disguise	1506,30,600000,300000,0
+nif_fild01.gat,0,0,0,0	monster	Quve	1508,30,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Dullahan	1504,13,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Dullahan	1504,7,3600000,1800000,0
 
 //nif_fild02)?
 nif_fild02.gat,0,0,0,0	monster	Gibbet	1503,10,0,0,0
-nif_fild02.gat,0,0,0,0	monster	Dullahan	1504,10,0,0,0
-nif_fild02.gat,0,0,0,0	monster	Loli Ruri	1505,8,0,0,0
-nif_fild02.gat,0,0,0,0	monster	Disguise	1506,15,0,0,0
-nif_fild02.gat,0,0,0,0	monster	Bloody Murderer	1507,2,0,0,0
-nif_fild02.gat,0,0,0,0	monster	Quve	1508,10,0,0,0
-nif_fild02.gat,0,0,0,0	monster	Lude	1509,20,0,0,0
-nif_fild02.gat,0,0,0,0	monster	Hylozoist	1510,8,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Gibbet	1503,5,600000,300000,0
+nif_fild02.gat,0,0,0,0	monster	Gibbet	1503,5,2400000,1200000,0
+nif_fild02.gat,0,0,0,0	monster	Dullahan	1504,5,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Dullahan	1504,5,1200000,600000,0
+nif_fild02.gat,0,0,0,0	monster	Loli Ruri	1505,19,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Loli Ruri	1505,2,3600000,1800000,0
+nif_fild02.gat,0,0,0,0	monster	Bloody Murderer	1507,7,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Bloody Murderer	1507,4,2400000,1200000,0
+nif_fild02.gat,0,0,0,0	monster	Lude	1509,10,720000,360000,0
+nif_fild02.gat,0,0,0,0	monster	Hylozoist	1510,6,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Hylozoist	1510,4,2400000,1200000,0
