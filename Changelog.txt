@@ -1,5 +1,6 @@
 Date	Added
 01/05
+        * If a vending item was priced at 0 it'll be auto changed to 1million [celest]
         * Fixed TXT logging - log_athena.conf reading was kind of messed up [celest]
         * Added a simplified version of Qamera's OnConnect: OnDisconnect: OnDeath: 
           NPC events mod, (All credits go to him.) except adapted based on eA's current

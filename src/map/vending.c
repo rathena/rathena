@@ -145,7 +145,10 @@ void vending_openvending(struct map_session_data *sd,int len,char *message,int f
 			sd->vending[i].index = *(short*)(p+8*i)-2;
 			sd->vending[i].amount = *(short*)(p+2+8*i);
 			sd->vending[i].value = *(int*)(p+4+8*i);
-			if(sd->vending[i].value>battle_config.vending_max_value)sd->vending[i].value=battle_config.vending_max_value;
+			if(sd->vending[i].value > battle_config.vending_max_value)
+				sd->vending[i].value=battle_config.vending_max_value;
+			else if(sd->vending[i].value = 0)
+				sd->vending[i].value = 1000000;	// auto set to 1 million [celest]
 			// カート内のアイテム数と販売するアイテム数に相違があったら中止
 			if(pc_cartitem_amount(sd, sd->vending[i].index, sd->vending[i].amount) < 0 || sd->vending[i].value < 0) { // fixes by Valaris and fritz
 				clif_skill_fail(sd, MC_VENDING, 0, 0);
