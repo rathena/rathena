@@ -9,6 +9,7 @@
 	Skill databases == celest working on them i believe.
 
 03/31
+	* Updated/added some new card effects [DracoRPG]
 	* Reverted Berzebub card to reduce casting rate
 	* Corrected some item effects, thanks to digigp and htm
 	* Updated some cards effects from 3/25 patch [DracoRPG]

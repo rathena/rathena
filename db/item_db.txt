@@ -1217,7 +1217,7 @@
 4169,Dark_Illusion_Card,Dark Illusion Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bMaxHPrate,-10; bonus bMaxSPrate,-10; if(isequipped(4168)) goto D_LORD; bonus bDelayrate,-10; end; D_LORD: bonus bDelayrate,-20; } //??OK
 4170,Dark_Frame_Card,Dark Frame Card,6,20,0,10,,,,,,,16,,,,{},{ bonus2 bAddEffWhenHit,Eff_Stone,2000; } //??OK
 4171,Dark_Priest_Card,Dark Priest Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bSPDrainRate,3,10,1; if(BaseJob==Job_Sage) bonus bSPGainValue,1; } //? Now it just drains 10% SP by 3% chance.
-4172,The_Paper_Card,The Paper Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,15; if(BaseJob==Job_Assassin) bonus bCritical,4; } //??OK
+4172,The_Paper_Card,The Paper Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,20; bonus3 bSPDrainValue,100,-1,0; } //??OK
 4173,Demon_Pungus_Card,Demon Pungus Card,6,20,0,10,,,,,,,16,,,,{},{ bonus2 bAddEffWhenHit,Eff_Sleep,2000; } //??OK
 4174,Deviling_Card,Deviling Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bSubEle,1,-50; bonus2 bSubEle,2,-50; bonus2 bSubEle,3,-50; bonus2 bSubEle,4,-50; bonus2 bSubEle,0,50; } //??OK
 4175,Poisonous_Toad_Card,Poisonous Toad Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,52,1,2; } //OK
@@ -1255,7 +1255,7 @@
 4207,Mysteltainn_Card,Mysteltainn Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubSize,0,25; bonus bDef,1; } //OK
 4208,Miyabi_Ningyo_Card,Miyabi Ningyo Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bMaxSPrate,10; bonus2 bSkillAtk,15,5; } //OK
 4209,Violy_Card,Violy Card,6,20,0,10,,,,,,,136,,,,{},{ if(getskilllv(318)==5) goto FJ_5; bonus3 bAutoSpell,318,1,1; end; FJ_5: bonus3 bAutoSpell,318,5,1; } //??OK
-4210,Wanderer_Card,Wanderer Card,6,20,0,10,,,,,,,4,,,,{},{ bonus3 bAutoSpell,219,1,1; if(callfunc("Is_Thief_Class")) bonus bFlee,20; } //??OK
+4210,Wanderer_Card,Wanderer Card,6,20,0,10,,,,,,,4,,,,{},{ if(callfunc("Is_Thief_Class")) bonus bFlee,20; bonus3 bAutoSpell,219,1,1; } //??OK
 4211,Vocal_Card,Vocal Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bMdef,3; if(isequipped(4021)) bonus bFlee,18; } //OK
 4212,Bongun_Card,Bongun Card,6,20,0,10,,,,,,,136,,,,{},{ bonus3 bAutoSpell,5,1,1; bonus2 bAddDamageByClass,1026,100; } //??OK
 4213,Brilight_Card,Brilight Card,6,20,0,10,,,,,,,16,,,,{},{ bonus2 bAddEffWhenHit,Eff_Silence,2000; } //??OK
@@ -1281,7 +1281,7 @@
 4233,Baby_Leopard_Card,Baby Leopard Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bLuk,3; if(!callfunc("Is_Merc_Class")) end; bonus bUnbreakableArmor,0; bonus bUnstrippable,0; } //??OK
 4234,Anolian_Card,Anolian Card,6,20,0,10,,,,,,,16,,,,{},{ if(getskilllv(45)==10) goto IC_10; bonus4 bAutoSpellWhenHit,45,1,1,0; end; IC_10: bonus4 bAutoSpellWhenHit,45,10,1,0; } //??OK
 4235,Cookie_Xmas_Card,Cookie Xmas Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubRace,8,-20; } //missing increaseexponracekill??
-4236,Amon_Ra_Card,Amon Ra Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bAllStats,1; bonus bDef,1; bonus bMdef,1; bonus4 bAutoSpellWhenHit,73,10,1+(readparam(bInt)>=99),0; } //??OK  (X>=Y) returns 0 or 1
+4236,Amon_Ra_Card,Amon Ra Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bAllStats,1; bonus4 bAutoSpellWhenHit,73,10,1+(readparam(bInt)>=99),0; } //??OK  (X>=Y) returns 0 or 1
 4237,Owl_Duke_Card,Owl Duke Card,6,20,0,10,,,,,,,136,,,,{},{ bonus3 bAutoSpell,66,3,1; if(isequipped(4238)) bonus3 bAutoSpell,20,5,1; } //??OK
 4238,Owl_Baron_Card,Owl Baron Card,6,20,0,10,,,,,,,136,,,,{},{ bonus3 bAutoSpell,78,1,1; } //??OK
 4239,Iron_Fist_Card,Iron Fist Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubRace,0,-20; } //missing increaseexponracekill??
@@ -1291,7 +1291,7 @@
 4243,Antonio_Card,Antonio Card,6,20,0,10,,,,,,,16,,,,{},{ bonus4 bAutoSpellWhenHit,26,1,1,0; } //??OK
 4244,Alarm_Card,Alarm Card,6,20,0,10,,,,,,,64,,,,{},{ bonus4 bAutoSpellWhenHit,10,1,1,0; bonus bMaxHP,300; bonus bVit,1; } //??OK
 4245,Am_Mut_Card,Am Mut Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubRace,7,-20; } //missing increaseexponracekill??
-4246,Assulter_Card,Assulter Card,6,20,0,10,,,,,,,2,,,,{},{}
+4246,Assulter_Card,Assulter Card,6,20,0,10,,,,,,,2,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,7,7; },{}
 4247,Aster_Card,Aster Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,5; bonus2 bAddDamageClass,1074,30; } //OK
 4248,Ancient_Mummy_Card,Ancient Mummy Card,6,20,0,10,,,,,,,32,,,,{},{ bonus4 bAutoSpellWhenHit,32,5,1,0; }
 4249,Ancient_Worm_Card,Ancient Worm Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubRace,6,-20; } //missing increaseexponracekill??
@@ -1308,7 +1308,7 @@
 4260,Wootan_Shooter_Card,Wootan Shooter Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bDef,1; bonus2 bResEff,Eff_Confusion,2000; } //OK
 4261,Wootan_Fighter_Card,Wootan Fighter Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bDef,1; bonus2 bResEff,Eff_Bleeding,2000; } //OK
 4262,Taoist_Hermit_Card,Taoist Hermit Card,6,20,0,10,,,,,,,,,,,{},{}
-4263,Incantation_Samurai_Card,Incantation Samurai Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bIgnoreDefMob,0; bonus2 bHPLossRate,300,10000; bonus bDamageWhenUnequip,1000; } //??OK
+4263,Incantation_Samurai_Card,Incantation Samurai Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bIgnoreDefMob,0; bonus bNoRegen,1; bonus2 bHPLossRate,666,10000; bonus bDamageWhenUnequip,999; } //??OK
 4264,Wind_Ghost_Card,Wind Ghost Card,6,20,0,10,,,,,,,136,,,,{},{ if(getskilllv(84)==10) goto JT_10; bonus3 bAutoSpell,84,3,1; end; JT_10: bonus3 bAutoSpell,66,10,1; } //??OK
 4265,Li_Me_Mang_Ryang_Card,Li Me Mang Ryang Card,6,20,0,10,,,,,,,,,,,{},{}
 4266,Eclipse_Card,Eclipse Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bVit,1; if(isequipped(4006)) bonus bFlee,18; } //OK
@@ -1364,7 +1364,7 @@
 4314,Penomena_Card,Penomena Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubRace,0,30; } //OK
 4315,Pest_Card,Pest Card,6,20,0,10,,,,,,,16,,,,{},{ if(readparam(bInt)<=77) bonus2 bAddEffWhenHit,Eff_Stone,1000; if(readparam(bInt)>77) bonus2 bAddEffWhenHit,Eff_Stone,3000; } //??OK
 4316,False_Angel_Card,False Angel Card,6,20,0,10,,,,,,,2,,,,{},{} //missing recoversponracekill??
-4317,Mobster_Card,Mobster Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,20; bonus3 bSPDrainValue,100,-1,0; } //??OK
+4317,Mobster_Card,Mobster Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,15; if(callfunc("Is_Thief_Class")) bonus bCritical,4; } //??OK
 4318,Stormy_Knight_Card,Stormy Knight Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,89,1,2; bonus2 bAddEffWhenHit,Eff_Freeze,2000; } //??OK
 4319,Freezer_Card,Freezer Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bMaxHP,300; if(getrefine>7) bonus2 bSkillAtk,5,10; }
 4320,Bloody_Knight_Card,Bloody Knight Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,83,1,2; } //OK
