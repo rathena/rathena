@@ -85,7 +85,7 @@ enum AtCommandType {
 	AtCommand_CharacterStats,
 	AtCommand_CharacterStatsAll,
 //	AtCommand_CharacterOption, // Now #option
-	AtCommand_CharacterSave,
+//	AtCommand_CharacterSave, // Now #save
 	AtCommand_CharacterLoad,
 	AtCommand_Night,
 	AtCommand_Day,

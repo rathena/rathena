@@ -8,6 +8,8 @@ enum CharCommandType {
 	CharCommandPetFriendly,
 	CharCommandStats,
 	CharCommandOption,
+	CharCommandSave,
+	CharCommandStatsAll,
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */

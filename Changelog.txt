@@ -1,5 +1,7 @@
 Date	Added
 11/24
+	* @charstatsall is now #statsall [MC Cameri]
+	* @charsave is now #save [MC Cameri]
 	* Updated most of jA's 1067; battle.c and skill.c might need more updates! [Codemaster]
 	* Fixed char-txt crashing when closing, Codemaster free()'s. [MC Cameri]
         * Skill Updates: - Updated guild skills (60%) [celest]

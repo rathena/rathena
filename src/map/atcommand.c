@@ -107,9 +107,7 @@ ATCOMMAND_FUNC(petrename);
 ATCOMMAND_FUNC(recall);
 ATCOMMAND_FUNC(recallall);
 ATCOMMAND_FUNC(revive);
-ATCOMMAND_FUNC(character_stats);
 ATCOMMAND_FUNC(character_stats_all);
-ATCOMMAND_FUNC(character_option);
 ATCOMMAND_FUNC(character_save);
 ATCOMMAND_FUNC(night);
 ATCOMMAND_FUNC(day);
@@ -326,8 +324,6 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_PetRename,			"@petrename",		 1, atcommand_petrename },
 	{ AtCommand_Recall,				"@recall",			60, atcommand_recall }, // + /recall
 	{ AtCommand_Revive,				"@revive",			60, atcommand_revive },
-	{ AtCommand_CharacterStatsAll,	"@charstatsall",	40, atcommand_character_stats_all },
-	{ AtCommand_CharacterSave,		"@charsave",		60, atcommand_character_save },
 	{ AtCommand_Night,				"@night",			80, atcommand_night },
 	{ AtCommand_Day,				"@day",				80, atcommand_day },
 	{ AtCommand_Doom,				"@doom",			80, atcommand_doom },
@@ -4056,51 +4052,6 @@ int atcommand_revive(
 }
 
 /*==========================================
- *
- *------------------------------------------
- */
-//** Character Stats All by fritz
-int atcommand_character_stats_all(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	char output[1024], gmlevel[1024];
-	int i;
-	int count;
-	struct map_session_data *pl_sd;
-
-	memset(output, '\0', sizeof(output));
-	memset(gmlevel, '\0', sizeof(gmlevel));
-
-	count = 0;
-	for(i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
-
-			if (pc_isGM(pl_sd) > 0)
-				sprintf(gmlevel, "| GM Lvl: %d", pc_isGM(pl_sd));
-			else
-				sprintf(gmlevel, " ");
-
-			sprintf(output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d) | HP: %d/%d | SP: %d/%d", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class), pl_sd->status.job_level, pl_sd->status.hp, pl_sd->status.max_hp, pl_sd->status.sp, pl_sd->status.max_sp);
-			clif_displaymessage(fd, output);
-			sprintf(output, "STR: %d | AGI: %d | VIT: %d | INT: %d | DEX: %d | LUK: %d | Zeny: %d %s", pl_sd->status.str, pl_sd->status.agi, pl_sd->status.vit, pl_sd->status.int_, pl_sd->status.dex, pl_sd->status.luk, pl_sd->status.zeny, gmlevel);
-			clif_displaymessage(fd, output);
-			clif_displaymessage(fd, "--------");
-			count++;
-		}
-	}
-
-	if (count == 0)
-		clif_displaymessage(fd, msg_table[28]); // No player found.
-	else if (count == 1)
-		clif_displaymessage(fd, msg_table[29]); // 1 player found.
-	else {
-		sprintf(output, msg_table[30], count); // %d players found.
-		clif_displaymessage(fd, output);
-	}
-
-	return 0;
-}
-
-/*==========================================
  * charchangesex command (usage: charchangesex <player_name>)
  *------------------------------------------
  */
@@ -4315,57 +4266,6 @@ int atcommand_char_unban(
 		// send answer to login server via char-server
 		chrif_char_ask_name(sd->status.account_id, character, 4, 0, 0, 0, 0, 0, 0); // type: 4 - unban
 		clif_displaymessage(fd, msg_table[88]); // Character name sends to char-server to ask it.
-	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int atcommand_character_save(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	char map_name[100];
-	char character[100];
-	struct map_session_data* pl_sd;
-	int x = 0, y = 0;
-	int m;
-
-	memset(map_name, '\0', sizeof(map_name));
-	memset(character, '\0', sizeof(character));
-
-	if (!message || !*message || sscanf(message, "%99s %d %d %99[^\n]", map_name, &x, &y, character) < 4 || x < 0 || y < 0) {
-		clif_displaymessage(fd, "Please, enter a valid save point and a player name (usage: @charsave <map> <x> <y> <charname>).");
-		return -1;
-	}
-
-	if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < 13) // 16 - 4 (.gat)
-		strcat(map_name, ".gat");
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change save point only to lower or same gm level
-			m = map_mapname2mapid(map_name);
-			if (m < 0) {
-				clif_displaymessage(fd, msg_table[1]); // Map not found.
-				return -1;
-			} else {
-				if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-					clif_displaymessage(fd, "You are not authorised to set this map as a save map.");
-					return -1;
-				}
-				pc_setsavepoint(pl_sd, map_name, x, y);
-				clif_displaymessage(fd, msg_table[57]); // Character's respawn point changed.
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
 	}
 
 	return 0;
