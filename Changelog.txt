@@ -1,4 +1,7 @@
 Date	Added
+11/10	
+	* Added packetver 6 flag to makefile. [Valaris]
+
 11/09
 	* chat.c: Fixed multiple joins in a single chat - thanks to Alex14 and CHaNGeTe. [Codemaster]
 	* clif.c: Fixed sitting. [spira]
