@@ -1,11 +1,8 @@
 //===== eAthena Script ======================================= 
 //= Payon City
 //===== By: ================================================== 
-//= Muad Dib (1.0)
-//= Darkchild (1.1)
-//= Muad Dib (1.2)
-//= Darkchild (1.3)
-//= DracoRPG (1.5)
+//= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
+//= Darkchild (1.3) DracoRPG (1.5)
 //===== Current Version: ===================================== 
 //= 1.5b
 //===== Compatible With: ===================================== 
@@ -17,6 +14,7 @@
 //= 1.4 - Corrected a few typos
 //= 1.5 - Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
 //= 1.5b - Used Dino9021's script for the Gemstone exchanger [DracoRPG]
+//= 1.5b1 fixed Gemstone Exchanger NPC [Lupus]
 //============================================================ 
 
 payon.gat,190,115,0	script	Lady	90,{
@@ -745,7 +743,7 @@ mes "change them to Gemstones";
 mes "of a different color.";
 next;
 
-menu "Blue Gemstones into Red ones!",L_BlueToRed,"Red Gemstones into Yellow ones!",L_RedToYellow,"Yellow Gemstones into Blue ones!",L_YellowToBlue;
+menu "Blue Gemstones into Red ones!",L_BlueToRed,"Red Gemstones into Yellow ones!",L_RedToYellow,"Yellow Gemstones into Blue ones!",L_YellowToBlue,"Cancel",L_Cancel;
 
 L_BlueToRed:
  set @SourceGemstones$,"Blue";
@@ -775,7 +773,7 @@ L_BeginExchange:
  mes "You're kidding me, right?";
  mes "I can't give you "+@TargetGemstones$+" Gemstones";
  mes "if you don't give me at least";
- mes "2 "+"+@SourceGemstones$+"+" Gemstones!";
+ mes "2 "+@SourceGemstones$+" Gemstones!";
  close;
 
 L_ExchangeOK:
