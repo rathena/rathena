@@ -2,7 +2,7 @@
 #ifndef _PET_H_
 #define _PET_H_
 
-#define MAX_PET_DB	100
+#define MAX_PET_DB	300
 #define PETLOOT_SIZE	20 // [Valaris]
 
 struct pet_db {
