@@ -35,6 +35,8 @@ Other Ppl
 Date		Added
 ======
 12/29
+        * Added Dino9021's monk job quest script - still need checking before adding to
+          scripts list [celest]
         * Added gvg mapflags to the guild dungeons, and removed 4 items from 
           item_avail.txt, thanks Poki [celest]
 	* Translated npc/sample/npc_extend_shop.txt [MC Cameri]

@@ -1,0 +1,1870 @@
+//===== eAthena Script ======================================= 
+//= Monk Job Quest
+//===== By: ==================================================
+//= Dino9021
+//===== Current Version: ===================================== 
+//= n/a
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= Monk Job Quests for Athena 2004.12.30
+//===== Additional Comments: ================================= 
+// n/a
+//============================================================ 
+
+prt_monk.gat,55,249,4	script	Master	139,0,5,{
+	mes "[SiFu]";
+	mes "Who are you?! How dare you enter this holy training place without my permission!!";
+	next;
+	mes "[SiFu]";
+	mes "Get Out!!";
+	close;
+}
+prt_monk.gat,59,247,4	script	Master	120,{
+	if(JOB_MONK_Q == 1 ) goto Part1;
+	if(JOB_MONK_Q == 2 ) goto Part2;
+	if(Class == 15 || Class == 4016) goto IsMonk;
+	goto L_START;
+
+IsMonk:
+	mes "[SiFu]";
+	mes "You are not welcome to ^00FF00St. Capitolina Abbey^000000.";
+	mes "However, welcome traveler, please don't disturb the Monks in training even you are a Monk!";
+	close;
+
+L_START:
+	mes "[SiFu]";
+	mes "Hmmm...? What do want for me?";
+	mes "Before you entering the training area, you should tell me your Name , Base Level and  Job Level.";
+	next;
+	mes "[SiFu]";
+	mes "Come! What's your name?";
+	next;
+	menu "Ignore him.",-,"Tell him.",L_MENU_1;
+
+		mes "[SiFu]";
+		mes "You are so impolite! Get out!";
+		warp "prt_fild03.gat",357,256;
+		end;
+L_MENU_1:
+	mes "[SiFu]";
+	mes "So... Your name is " + strcharinfo(0) + " Right?!";
+	mes "Let's see... Job Level is " + joblevel;
+	next;
+	mes "[SiFu]";
+	mes "Okay! What do you want? " + strcharinfo(0) + " ?";
+	next;
+	menu "I want to see how Monks train theirself.",L_MENU_1_0,"I want to be a Monk.",L_MENU_1_1,"I want to take a rest here.",L_MENU_1_2;
+
+	L_MENU_1_0:	
+		mes "[SiFu]";
+		mes "Oh! I see. Okay, I hope you'll learn something from us.";
+		mes "Maybe you will want to be a Monk.";
+		set JOB_MONK_Q, 1;
+		close;
+
+	L_MENU_1_1:
+		if(Class != 4 && Class != 4005) goto IsNot4;
+		if(joblevel >= 40 ) goto SkillPointChk;
+			mes "[SiFu]";
+			mes "Your Job Level is not high enough to be a Monk.";
+			mes "Come back when your Job Level higher then 40.";
+			next;
+			mes "[SiFu]";
+			mes "Don't be rush, there are so much to learn before you become a Monk.";
+			mes "Come back when you ready!";
+			close;
+
+		SkillPointChk:
+
+			if(skillpoint == 0) goto L_GO;
+			mes "[SiFu]";
+			mes "Well... Seems you have the ability to be a Monk, but I think there is some skill needed you havn't learn.";
+			mes "Come back when you learn all the skills.";
+			close;
+
+		IsNot4:
+			mes "[SiFu]";
+			mes "Oh! Are you kidding?";
+			close;
+
+		HighMonk:
+			mes "[SiFu]";
+			mes "Wow! You are a High Acolyte! Aren't you?";
+			mes "Sorry! I can't let you become a Monk!";
+			mes "Please go see the Champion, That is what you should be!";
+			set JOB_MONK_Q, 0;
+			close;
+
+		L_GO:
+			if (Class == 4005) goto HighMonk;
+			mes "[SiFu]";
+			mes "Well... Seems you have the ability to be a Monk.";
+			mes "Very well then... Go to Wuhai the Elder, He will guide you.";
+			set JOB_MONK_Q, 2;
+			close;
+
+	L_MENU_1_2:
+		mes "[SiFu]";
+		mes "This is not a good place to rest, traveler. However, you do look very tird and need some rest.";
+		mes "Go ahead! Rest here! But don't disturb the Monks in training, please.";
+		close;
+Part1:
+	mes "[SiFu]";
+	mes "Well? Did you change your mind after look around here?";
+	next;
+	menu "Nope.",L_MENU_1_0,"I want to be a Monk",L_MENU_1_1,"I need more rest.",L_MENU_1_2;
+
+Part2:
+	mes "[SiFu]";
+	mes "Hello there! You should go to Wuhai the Elder, He will guide you.";
+	mes "He is in the Holy Palace, SouthEast from here";
+	close;
+}
+
+monk_in.gat,99,58,4	script	Elder Wuhai	60,{
+	if(JOB_MONK_Q == 2 ) goto L_START;
+	if(JOB_MONK_Q == 3 ) goto Part1;
+	if(JOB_MONK_Q == 4 ) goto Part2;
+	if(JOB_MONK_Q >= 5 && JOB_MONK < 10) goto Part3;
+	if(JOB_MONK_Q >= 10 && countitem(506) > 0) goto Part4;
+	if(JOB_MONK_Q == 11 && countitem(506) == 0) goto Part5;
+	if(Class == 15 || Class == 4016) goto Part6;
+	if(Class == 4 || Class == 4005) goto Part7;
+		goto IsOther;
+IsOther:
+	mes "[Elder Wuhai]";
+	mes "May you find God in the Mother Nature!!";
+	mes "Welcome traveler! What do want for me?";
+	close;
+
+L_START:
+	mes "[Elder Wuhai]";
+	mes "Hmmm... You are the one wants to be a Monk, right?";
+	next;
+	menu "Yes.",L_MENU_1,"No.",-;
+		mes "[Elder Wuhai]";
+		mes "Hmmm...? Aren't you?";
+		mes "Maybe I'm getting older, I couldn't be wrong when I was young...";
+		mes "Very well then... You may go, young man.";
+		close;
+L_MENU_1:
+	mes "[Elder Wuhai]";
+	mes "Oh! I'm so happy that young man know us Monks.";
+	mes "Welcome! My child!";
+	next;
+	mes "[Elder Wuhai]";
+	mes "What? You want to be a Monk? Ohhhh.... I'm so glad to heare that!";
+	mes "But, You need to know something before you become a Monk.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "To be a Monk, We should train ourself to be stronger then ever in order to help the weaker.";
+	mes "And protect the world peace.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Never the less, control our emotion is a very important thing, too.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "It would be very tough and painful when crossing those quest.";
+	mes "You cann't become a Monk if you cann't get over it.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "OKay, then let's start the test.";
+	mes "See if you really have the ability to become a Monk.
+	next;
+	mes "[Elder Wuhai]";
+	mes "First of all, we'll see if you have the ability doing something by yourself.";
+	next;
+//~	if(joblevel == 50) goto IsJOB50;
+
+	set JOB_MONK_Q, 3;
+	set JOB_MONK_C,rand(1,6);
+L_Collect:
+	if(JOB_MONK_C == 1 ) goto L_Collect1;
+	if(JOB_MONK_C == 2 ) goto L_Collect2;
+	if(JOB_MONK_C == 3 ) goto L_Collect3;
+	if(JOB_MONK_C == 4 ) goto L_Collect4;
+	if(JOB_MONK_C == 5 ) goto L_Collect5;
+	if(JOB_MONK_C == 6 ) goto L_Collect6;
+
+	L_Collect1:
+		mes "[Elder Wuhai]";
+		mes "Please bring these items";
+		mes "Tooth of Bat - 10";
+		mes "Bears Footskin - 5";
+		mes "Poison Spore - 20";
+		if(@collect_tmp != 1) goto L_CollectS;
+		close;
+
+	L_Collect2:
+		mes "[Elder Wuhai]";
+		mes "Please bring these items";
+		mes "Porcupine Quill - 5";
+		mes "Cobweb - 20";
+		mes "Grasshopper's Leg - 10";
+		if(@collect_tmp != 1) goto L_CollectS;
+		close;
+
+	L_Collect3:
+		mes "[Elder Wuhai]";
+		mes "Please bring these items";
+		mes "Stem - 30";
+		mes "Jellopy - 5";
+		mes "Worm Peeling -10";
+		if(@collect_tmp != 1) goto L_CollectS;
+		close;
+
+	L_Collect4:
+		mes "[Elder Wuhai]";
+		mes "Please bring these items";
+		mes "Sticky Mucus - 5";
+		mes "Earthworm Peeling - 10";
+		mes "Green Herb - 20";
+		if(@collect_tmp != 1) goto L_CollectS;
+		close;
+
+	L_Collect5:
+		mes "[Elder Wuhai]";
+		mes "Please bring these items";
+		mes "Yoyo Tail - 20";
+		mes "Iron Ore - 5";
+		mes "Blue Herb - 3";
+		if(@collect_tmp != 1) goto L_CollectS;
+		close;
+
+	L_Collect6:
+		mes "[Elder Wuhai]";
+		mes "Please bring these items";
+		mes "Solid Shell - 5";
+		mes "Shell - 20";
+		mes "Zargon - 5";
+		if(@collect_tmp != 1) goto L_CollectS;
+		close;
+L_CollectS:
+	mes "For testing your ability doing something by yourself, you should collect those things by yourself";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Come back to me when you have all the things.";
+	mes "Now go, May God be with you.
+	close;
+
+//~IsJOB50:
+//~	mes "[Elder Wuhai]";
+//~	mes "However, I see that your Job Level is " +joblevel +" .";
+//~	mes "That could prove your ability.";
+//~	next;
+//~	mes "[Elder Wuhai]";
+//~	mes "Well done!";
+//~	mes "I think God will agree with me.";
+//~	next;
+//~	mes "[Elder Wuhai]";
+//~	mes "The next step, there is a Monk named Wutao want to see you.";
+//~	mes "He is in the Monk Grave North from here.";
+//~	set JOB_MONK_Q, 4;
+//~	close;
+
+Part1:
+//~	if(joblevel == 50) goto IsJOB50;
+	if(JOB_MONK_C == 1 && countitem(913) >= 10 && countitem(948) >= 5 && countitem(7033) >= 20) goto L_CollectS2_1;
+	if(JOB_MONK_C == 2 && countitem(1027) >= 5 && countitem(1025) >= 20 && countitem(940) >= 10) goto L_CollectS2_2;
+	if(JOB_MONK_C == 3 && countitem(905) >= 30 && countitem(909) >= 5 && countitem(955) >= 10) goto L_CollectS2_3;
+	if(JOB_MONK_C == 4 && countitem(938) >= 5 && countitem(1055) >= 10 && countitem(511) >= 20) goto L_CollectS2_4;
+	if(JOB_MONK_C == 5 && countitem(942) >= 20 && countitem(1002) >= 5 && countitem(510) >= 3) goto L_CollectS2_5;
+	if(JOB_MONK_C == 6 && countitem(943) >= 5 && countitem(935) >= 20 && countitem(912) >= 5) goto L_CollectS2_6;
+
+		mes "[Elder Wuhai]";
+		mes "Hmm... Are you ready or not?";
+		mes "I'll tell what you should bring again.";
+		mes "Listen carefully!";
+		next;
+		set @collect_tmp, 1;
+		goto L_Collect;
+
+		L_CollectS2_1:
+			delitem 913, 10;
+			delitem 948, 5;
+			delitem 7033, 20;
+			goto L_CollectS2_E;
+		L_CollectS2_2:
+			delitem 1027, 5;
+			delitem 1025, 20;
+			delitem 940, 10;
+			goto L_CollectS2_E;
+		L_CollectS2_3:
+			delitem 7012, 30;
+			delitem 909, 5;
+			delitem 955, 10;
+			goto L_CollectS2_E;
+		L_CollectS2_4:
+			delitem 938, 5;
+			delitem 1055, 10;
+			delitem 511, 20;
+			goto L_CollectS2_E;
+		L_CollectS2_5:
+			delitem 942, 20;
+			delitem 1002, 5;
+			delitem 510, 3;
+			goto L_CollectS2_E;
+		L_CollectS2_6:
+			delitem 943, 5;
+			delitem 935, 20;
+			delitem 912, 5;
+			goto L_CollectS2_E;
+	
+	L_CollectS2_E:
+		mes "[Elder Wuhai]";
+		mes "Oh! you bring every thing I said!";
+		mes "Well done!";
+		mes "I think God will agree with me.";
+		next;
+		mes "[Elder Wuhai]";
+		mes "The next step, there is a Monk named Wutao want to see you.";
+		mes "He is in the Monk Grave North from here.";
+		set JOB_MONK_Q, 4;
+		set JOB_MONK_C, 0;
+		close;
+
+Part2:
+	mes "[Elder Wuhai]";
+	mes "Your next step is to find Wutao and answer his questions.";
+	mes "He is in the Monk Grave North from here.";
+	close;
+Part3:
+	mes "[Elder Wuhai]";
+	mes "Concentrate!";
+	mes "Try to do your best in the quest!";
+	close;
+Part4:
+	mes "[Elder Wuhai]";
+	mes "What? Didn't you have that Magic Posion?";
+	mes "Then...Quickly drink the Magic Posion seems like a Green Posion!";
+	mes "Otherwise, I can't get your inter power out.";
+	set JOB_MONK_Q, 11;
+	close;
+Part5:
+	mes "[Elder Wuhai]";
+	mes "We have done all steps. Your blood, your mind, your soul.";
+	mes "Even your inter power has been come out by drink the Magic Posion.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Let's begin the final step.";
+	mes "I'll ask you some question, you should answer me by sware.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Will you give the rest of your life to serving God?";
+	next;
+	menu "Yes.",L_MONK_Q_2,"No.",-;
+
+		mes "[Elder Wuhai]";
+		mes "......What?......";
+		mes "Aren't you ready to become a Monk?";
+		mes "You want more quest, more train and more question?
+		next;
+		mes "[Elder Wuhai]";
+		mes "Come back when tou are ready.";
+		mes "I don't want to make a bad Monk.";
+		close;
+L_MONK_Q_2:
+	mes "[Elder Wuhai]";
+	mes "Will you use your power for your own good?";
+	next;
+	menu "Yes.",-,"No.",L_MONK_Q_3;
+
+		mes "[Elder Wuhai]";
+		mes "...NO NO NO NO NO !! Our training is not for any return!";
+		mes "How could a Monk who care world peace so much do things so selfish?!";
+		next;
+		mes "[Elder Wuhai]";
+		mes "Go and think the porpose you want to be a Monk.";
+		mes "That kind of thought will lead you into the dark side and lost your ability.";
+		close;
+
+L_MONK_Q_3:
+	mes "[Elder Wuhai]";
+	mes "When you are judging those who oppose God, will you hesitate in punishing them?";
+	next;
+	menu "No.",L_MONK_Q_4,"Yes.",-;
+
+		mes "[Elder Wuhai]";
+		mes "What's a Monk you think?";
+		mes "No matter who hurt the weaker, they are trash! they don't desire to living in this world!";
+		next;
+		mes "[Elder Wuhai]";
+		mes "Go and learn to hate the people do bad things on nature";
+		mes "Come back when you hesitate in punishing who oppose God.";
+		mes "Then you will know what to do.";
+		close;
+
+L_MONK_Q_4:
+	mes "[Elder Wuhai]";
+	mes "Will you help to eradicate those who oppose God, and are you willing to sacrifice yourself?";
+	next;
+	menu "Yes",L_MONK_Q_5,"No",-;
+
+		mes "[Elder Wuhai]";
+		mes "Oh...nonononono....";
+		mes "It is a great thing that if sacrifice oneself can benifitied one's partner and eradicate more people who oppose God.";
+		next;
+		mes "[Elder Wuhai]";
+		mes "How to explan sacrify? Come back when you figure out.";
+		mes "Sacrify is a simple but difficute movement.";
+		close;
+
+L_MONK_Q_5:
+	mes "[Elder Wuhai]";
+	mes "Will you drag a lot of monsters behind you, and help other people fight?";
+	next;
+	menu "Yes",-,"No",L_MONK_Q_6;
+
+		mes "[Elder Wuhai]";
+		mes "That is not right! Do such things is both danger yourself and others.";
+		mes "You think you are helping them but in fact you are killing them.";
+		next;
+		mes "[Elder Wuhai]";
+		mes "Even you learn the skill 'Steel Body' you still shouldn't drag a lot of monsters behind you, and help other people fight.";
+		mes "Use the skill only when you meet a strong monster or face a dangerous situation.";
+		next;
+		mes "[Elder Wuhai]";
+		mes "What is the real things a Monk should do?";
+		mes "Come back when you figure out.";
+		close;
+
+L_MONK_Q_6:
+	mes "[Elder Wuhai]";
+	mes "Will you spam?";
+	next;
+	menu "Yes",-,"No",L_MONK_Q_7;
+
+		mes "[Elder Wuhai]";
+		mes "No! If you do so, you would only annoying people but make them expect you.";
+		next;
+		mes "[Elder Wuhai]";
+		mes "Even you want to tell them the words said by God.";
+		mes "Think of your behavior. What's right and wrong?";
+		mes "Though I want to exam you again, but this time, you just go and think.";
+		close;
+L_MONK_Q_7:
+	mes "[Elder Wuhai]";
+	mes "Do you feel as if you're a messenger of God, and are willing to die for God?";
+	next;
+	menu "Yes",L_MONK_Q_8,"No",-;
+
+		mes "[Elder Wuhai]";
+		mes "You can not be a Monk in this kind of will!";
+		mes "Death is temp! It is meaningful to give our lifies for the world peace.";
+		next;
+		mes "[Elder Wuhai]";
+		mes "Those who oppose God will die, those who listen to God will live.";
+		mes "What is life and death to you?";
+		mes "Ponder that well.";
+		close;
+
+L_MONK_Q_8:
+	mes "Lastly, promise to keep to what you have answered.";
+	next;
+	menu "I promise.",L_MONK_Q_9,"I refuse.",-;
+
+		mes "[Elder Wuhai]";
+		mes "......";
+		next;
+		mes "[Elder Wuhai]";
+		mes "It seems like... you don't have enough training...";
+		mes "I can't let you become a Monk.";
+		next;
+		mes "[Elder Wuhai]";
+		mes "It is better for you to train more.";
+		mes "Come back when you ready.";
+		next;
+		mes "[Elder Wuhai]";
+		mes "May God be with you.";
+		close;
+
+L_MONK_Q_9:
+	mes "[Elder Wuhai]";
+	mes "Well then, we finish the promise";
+	mes "Come closer, you are now ny brother!";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Your promise has transmited to all Monks throught ypur heart and my heart.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Now, let's begin the ceremony!";
+	next;
+	mes "[Elder Wuhai]";
+	mes "I'll acupuncture your 365 acupuncture points and open up your 1129 arteries and veins";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Ahhhhhhhhh......";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Wuuu... Huuuuuu¡K";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "- He take a deeply breath -";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "- And begining to acupuncture -";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Ahhhh--- Dadadadadada!!!";
+	next;
+	mes "[Elder Wuhai]";
+	mes "DaBaDaBaDadadadaKaBonTatatata!!!";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Ahhhh--- Dadadadadada!!!";
+	next;
+	mes "[Elder Wuhai]";
+	mes "WaLaChuOhhhhhhh!!!";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Wuuu... Huuuuuu¡K";
+	next;
+	mes "[Elder Wuhai]";
+	mes "WowHoooo... Okay, you are now a Monk!";
+	setoption 0;
+	jobchange 15;
+	callfunc "F_ClearJobVar";
+	next;
+	mes "[Elder Wuhai]";
+	mes "(Caught!) (Caught!)";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Am I old...? I feel so tired... (-sigh-)";
+	mes "I could clamb mountains after this before.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Very well... You are now a Monk...";
+	mes "Welcome to be one of us.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Bou never forget your promise.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Keep it in your mind, and train yourself.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Now go...";
+	mes "Here is a gift from us to congratulate you.";
+	if(joblevel <= 49) getitem 1801, 1;
+	if(joblevel == 50) getitem 1804, 1;
+	close;
+Part6:
+	mes "[Elder Wuhai]";
+	mes "May you find God in Mother Nature!";
+	mes "Welcome dear! What can I do for you?";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Is everything alright?";
+	mes "How the training?";
+	next;
+	mes "[Elder Wuhai]";
+	mes "If you don't have a strong body, you may not be able to help people when they needs you.";
+	mes "If you are weak, the Evil will come to you and leads you go into the dark side.";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Never forget it! You are the one protect weakers and world peace!";
+	mes "You should always mind the Evil. Don't let them leads you go into the dark side.";
+	close;
+
+Part7:
+	mes "[Elder Wuhai]";
+	mes "May you find God in Mother Nature!";
+	mes "Welcome dear! What can I do for you?";
+	next;
+	mes "[Elder Wuhai]";
+	mes "Oh! You are an Acolyte....";
+	mes "If you want to pray, go to Prontera Sanctuary!";
+	mes "This is the Monk training area, not for you to pray.";
+	mes "Go and find other places to stay if you are not willing to be a Monk.";
+	close;
+}
+
+prt_monk.gat,251,255,4	script	Wutao	79,{
+	if(JOB_MONK_Q == 4 ) goto L_START;
+	if(JOB_MONK_Q == 5 ) goto Part1;
+	if(JOB_MONK_Q == 6 ) goto Part2;
+	if(JOB_MONK_Q > 6 ) goto Part3;
+	goto IsOther;
+
+IsOther:
+	mes "[Wutao]";
+	mes "We are Monks!";
+	mes "We have unlimited power!";
+	mes "We have unlimited wise!";
+	mes "We use our power and wise to protect the world peace!";
+	next;
+	mes "[Wutao]";
+	mes "So...";
+	mes "Are you my enemy?";
+	mes "You block my way!!!!";
+	next;
+	mes "[Wutao]";
+	mes "If someone block me!! I'll fight!!";
+	mes "TaAhhhhhh!!!";
+	next;
+	mes "[Wutao]";
+	mes "HuHaaaaaaaa!!!";
+	next;
+	mes "[Wutao]";
+	mes "don;t be afraid, go yourway!";
+	close;
+
+L_START:
+	mes "[Wutao]";
+	mes "What can I do for you?";
+	mes "Do you want to talk about God?";
+	next;
+	mes "[Wutao]";
+	mes "Oh! you are proceeding the Monk Quest!";
+	mes "The spirits you have is like a Monk.";
+	next;
+	mes "[Wutao]";
+	mes "Seems your arteries and veins has been open.";
+	mes "You must be the one coming from Elder Wuhai, right?";
+	mes "Very well...";
+	next;
+	mes "[Wutao]";
+	mes "Let me introduce you something about the spirits of Monks and some simple rules that Monks should obey.";
+	mes "Then I'll help modifing your mental status, make your body ready for the next test.";
+	next;
+	mes "[Wutao]";
+	mes "Now, remember what I say and repeat again.";
+	mes "Clear your mind... Are you ready?";
+	next;
+	menu "Yes",L_MENU_1,"No",-;
+		mes "[Wutao]";
+		mes "Come back when you ready!";
+		close;
+L_MENU_1:
+	mes "[Wutao]";
+	mes "All right, let's begin.";
+	next;
+	set @JOB_MONK_C2, rand(1,4);
+L_Again:
+	if(@JOB_MONK_C2 == 1) goto L_ROOT_1;
+	if(@JOB_MONK_C2 == 2) goto L_ROOT_2;
+	if(@JOB_MONK_C2 == 3) goto L_ROOT_3;
+
+	L_ROOT_1:
+		set @monk_str0$,"Supported by dragon and phoenix,";
+		set @monk_str1$,"So flies he westward.";
+		set @monk_str2$,"But the phoenix shall fall to the earth.";
+		set @monk_str3$,"And the dragon shall soar to the sky;";
+		set @monk_str4$,"There shall be successes and failures,";
+		set @monk_str5$,"For such is the eternal law.";
+		set @monk_str6$,"See that ye act when occasion offers,";
+		set @monk_str7$,"Lest ye descend to the Nine Golden Springs.'";
+		goto L_MES;
+	L_ROOT_2:
+		set @monk_str0$,"He boasted not a handsome face,";
+		set @monk_str1$,"Nor was his body blessed with grace.";
+		set @monk_str2$,"His words streamed like a waterfall,";
+		set @monk_str3$,"He read a book and knew it all.";
+		set @monk_str4$,"Shu's glories could he well rehearse,";
+		set @monk_str5$,"His lore embraced the universe.";
+		set @monk_str6$,"Or text or note of scholiast";
+		set @monk_str7$,"Once read, his memory held fast.";
+		goto L_MES;
+	L_ROOT_3:
+		set @monk_str0$,"Seek ye a noble one? Then take ye the way of Jieliang,";
+		set @monk_str1$,"Watch ye how all people revere Guan Yu,";
+		set @monk_str2$,"Each excelling others to honor him,";
+		set @monk_str3$,"Him, one of the three brothers of the Peach Garden Oath,";
+		set @monk_str4$,"Who have won sacrifices, as emperor and king.";
+		set @monk_str5$,"Incomparable their aura spreads through the world;";
+		set @monk_str6$,"They are resplendent as the great lights of the firmament;";
+		set @monk_str7$,"Temples to our Lord Guan Yu abound, no village lacks one,";
+		set @monk_str8$,"Their venerable trees at sundown are the resting places for birds.";
+		goto L_MES;
+L_MES:
+	mes "[Wutao]";
+	mes "Listen carefully!";
+	next;
+	mes "[Wutao]";
+	mes @monk_str0$;
+	next;
+	mes "[Wutao]";
+	mes @monk_str1$;
+	next;
+	mes "[Wutao]";
+	mes @monk_str2$;
+	next;
+	mes "[Wutao]";
+	mes @monk_str3$;
+	next;
+	mes "[Wutao]";
+	mes @monk_str4$;
+	next;
+	mes "[Wutao]";
+	mes @monk_str5$;
+	next;
+	mes "[Wutao]";
+	mes @monk_str6$;
+	next;
+	mes "[Wutao]";
+	mes @monk_str7$;
+	if(@JOB_MONK_C2 < 3) goto L_MES_1;
+	next;
+	mes "[Wutao]";
+	mes @monk_str8$;
+
+L_MES_1:
+	next;
+	mes "[Wutao]";
+	mes "Now, " + strcharinfo(0) + ", it's your turn.";
+	next;
+	set @monk_q, 0;
+	if(@JOB_MONK_C2 == 1) goto L_MONK_Q1_1;
+	if(@JOB_MONK_C2 == 2) goto L_MONK_Q2_1;
+	if(@JOB_MONK_C2 == 3) goto L_MONK_Q3_1;
+
+L_MONK_Q1_1:
+
+	menu "And the dragon shall soar to the sky;",L_MONK_Q1_2,
+		"But the phoenix shall fall to the earth.",L_MONK_Q1_2,
+		"For such is the eternal law.",L_MONK_Q1_2,
+		"See that ye act when occasion offers,",L_MONK_Q1_2,
+		"There shall be successes and failures,",L_MONK_Q1_2,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_Q1_2,
+		"Supported by dragon and phoenix,",-,
+		"So flies he westward.",L_MONK_Q1_2;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q1_2:
+
+	menu "But the phoenix shall fall to the earth.",L_MONK_Q1_3,
+		"See that ye act when occasion offers,",L_MONK_Q1_3,
+		"Supported by dragon and phoenix,",L_MONK_Q1_3,
+		"There shall be successes and failures,",L_MONK_Q1_3,
+		"So flies he westward.",-,
+		"And the dragon shall soar to the sky;",L_MONK_Q1_3,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_Q1_3,
+		"For such is the eternal law.",L_MONK_Q1_3;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q1_3:
+
+	menu "There shall be successes and failures,",L_MONK_Q1_4,
+		"But the phoenix shall fall to the earth.",-,
+		"And the dragon shall soar to the sky;",L_MONK_Q1_4,
+		"So flies he westward.",L_MONK_Q1_4,
+		"For such is the eternal law.",L_MONK_Q1_4,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_Q1_4,
+		"See that ye act when occasion offers,",L_MONK_Q1_4,
+		"Supported by dragon and phoenix,",L_MONK_Q1_4;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q1_4:
+
+	menu "And the dragon shall soar to the sky;",-,
+		"Supported by dragon and phoenix,",L_MONK_Q1_5,
+		"But the phoenix shall fall to the earth.",L_MONK_Q1_5,
+		"So flies he westward.",L_MONK_Q1_5,
+		"For such is the eternal law.",L_MONK_Q1_5,
+		"There shall be successes and failures,",L_MONK_Q1_5,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_Q1_5,
+		"See that ye act when occasion offers,",L_MONK_Q1_5;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q1_5:
+
+	menu "For such is the eternal law.",L_MONK_Q1_6,
+		"And the dragon shall soar to the sky;",L_MONK_Q1_6,
+		"So flies he westward.",L_MONK_Q1_6,
+		"Supported by dragon and phoenix,",L_MONK_Q1_6,
+		"But the phoenix shall fall to the earth.",L_MONK_Q1_6,
+		"See that ye act when occasion offers,",L_MONK_Q1_6,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_Q1_6,
+		"There shall be successes and failures,",-;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q1_6:
+
+	menu "Supported by dragon and phoenix,",L_MONK_Q1_7,
+		"So flies he westward.",L_MONK_Q1_7,
+		"For such is the eternal law.",-,
+		"But the phoenix shall fall to the earth.",L_MONK_Q1_7,
+		"There shall be successes and failures,",L_MONK_Q1_7,
+		"And the dragon shall soar to the sky;",L_MONK_Q1_7,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_Q1_7,
+		"See that ye act when occasion offers,",L_MONK_Q1_7;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q1_7:
+
+	menu "So flies he westward.",L_MONK_Q1_8,
+		"Supported by dragon and phoenix,",L_MONK_Q1_8,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_Q1_8,
+		"See that ye act when occasion offers,",L_MONK_Q1_8,
+		"There shall be successes and failures,",L_MONK_Q1_8,
+		"For such is the eternal law.",L_MONK_Q1_8,
+		"But the phoenix shall fall to the earth.",L_MONK_Q1_8,
+		"And the dragon shall soar to the sky;",L_MONK_Q1_8,
+		"See that ye act when occasion offers,",-;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q1_8:
+
+	menu "Supported by dragon and phoenix,",L_MONK_QUEST_END,
+		"See that ye act when occasion offers,",L_MONK_QUEST_END,
+		"But the phoenix shall fall to the earth.",L_MONK_QUEST_END,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_QUEST_1_2,
+		"And the dragon shall soar to the sky;",L_MONK_QUEST_END,
+		"Lest ye descend to the Nine Golden Springs.",L_MONK_QUEST_END,
+		"So flies he westward.",L_MONK_QUEST_END,
+		"There shall be successes and failures,",L_MONK_QUEST_END,
+		"For such is the eternal law.",L_MONK_QUEST_END,
+
+L_MONK_Q2_1:
+
+	menu "Nor was his body blessed with grace.",L_MONK_Q2_2,
+		"He read a book and knew it all.",L_MONK_Q2_2,
+		"His words streamed like a waterfall,",L_MONK_Q2_2,
+		"He boasted not a handsome face,",-,
+		"Shu's glories could he well rehearse,",L_MONK_Q2_2,
+		"Once read, his memory held fast.",L_MONK_Q2_2,
+		"His lore embraced the universe.",L_MONK_Q2_2,
+		"Or text or note of scholiast",L_MONK_Q2_2;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q2_2:
+
+	menu "His lore embraced the universe.",L_MONK_Q2_3,
+		"He boasted not a handsome face,",L_MONK_Q2_3,
+		"His words streamed like a waterfall,",L_MONK_Q2_3,
+		"He read a book and knew it all.",L_MONK_Q2_3,
+		"Or text or note of scholiast",L_MONK_Q2_3,
+		"Once read, his memory held fast.",L_MONK_Q2_3,
+		"Shu's glories could he well rehearse,",L_MONK_Q2_3,
+		"Nor was his body blessed with grace.",-;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q2_3:
+
+	menu "His words streamed like a waterfall,",-,
+		"His lore embraced the universe.",L_MONK_Q2_4,
+		"He read a book and knew it all.",L_MONK_Q2_4,
+		"Shu's glories could he well rehearse,",L_MONK_Q2_4,
+		"Nor was his body blessed with grace.",L_MONK_Q2_4,
+		"Or text or note of scholiast",L_MONK_Q2_4,
+		"He boasted not a handsome face,",L_MONK_Q2_4,
+		"Once read, his memory held fast.",L_MONK_Q2_4;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q2_4:
+
+	menu "Nor was his body blessed with grace.",L_MONK_Q2_5,
+		"Once read, his memory held fast.",L_MONK_Q2_5,
+		"Shu's glories could he well rehearse,",L_MONK_Q2_5,
+		"Or text or note of scholiast",L_MONK_Q2_5,
+		"He boasted not a handsome face,",L_MONK_Q2_5,
+		"He read a book and knew it all.",-,
+		"His lore embraced the universe.",L_MONK_Q2_5,
+		"His words streamed like a waterfall,",L_MONK_Q2_5;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q2_5:
+
+	menu "Once read, his memory held fast.",L_MONK_Q2_6,
+		"Or text or note of scholiast",L_MONK_Q2_6,
+		"He read a book and knew it all.",L_MONK_Q2_6,
+		"His words streamed like a waterfall,",L_MONK_Q2_6,
+		"Nor was his body blessed with grace.",L_MONK_Q2_6,
+		"He boasted not a handsome face,",L_MONK_Q2_6,
+		"His lore embraced the universe.",L_MONK_Q2_6,
+		"Shu's glories could he well rehearse,",-;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q2_6:
+
+	menu "Or text or note of scholiast",L_MONK_Q2_7,
+		"He read a book and knew it all.",L_MONK_Q2_7,
+		"Shu's glories could he well rehearse,",L_MONK_Q2_7,
+		"His words streamed like a waterfall,",L_MONK_Q2_7,
+		"His lore embraced the universe.",-,
+		"He boasted not a handsome face,",L_MONK_Q2_7,
+		"Nor was his body blessed with grace.",L_MONK_Q2_7,
+		"Once read, his memory held fast.",L_MONK_Q2_7;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q2_7:
+
+	menu "Nor was his body blessed with grace.",L_MONK_Q2_8,
+		"Or text or note of scholiast",-,
+		"His words streamed like a waterfall,",L_MONK_Q2_8,
+		"Once read, his memory held fast.",L_MONK_Q2_8,
+		"He boasted not a handsome face,",L_MONK_Q2_8,
+		"He read a book and knew it all.",L_MONK_Q2_8,
+		"Shu's glories could he well rehearse,",L_MONK_Q2_8,
+		"His lore embraced the universe.",L_MONK_Q2_8;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q2_8:
+
+	menu "He boasted not a handsome face,",L_MONK_QUEST_END,
+		"Nor was his body blessed with grace.",L_MONK_QUEST_END,
+		"Shu's glories could he well rehearse,",L_MONK_QUEST_END,
+		"Or text or note of scholiast",L_MONK_QUEST_END,
+		"His lore embraced the universe.",L_MONK_QUEST_END,
+		"He read a book and knew it all.",L_MONK_QUEST_END,
+		"His words streamed like a waterfall,",L_MONK_QUEST_END,
+		"Once read, his memory held fast.",L_MONK_QUEST_1_2;
+
+L_MONK_Q3_1:
+
+	menu "Watch ye how all people revere Guan Yu,",L_MONK_Q3_2,
+		"Seek ye a noble one? Then take ye the way of Jieliang,",-,
+		"Temples to our Lord Guan Yu abound, no village lacks one,",L_MONK_Q3_2,
+		"Each excelling others to honor him,",L_MONK_Q3_2,
+		"Their venerable trees at sundown are the resting places for birds.",L_MONK_Q3_2,
+		"Incomparable their aura spreads through the world;",L_MONK_Q3_2,
+		"They are resplendent as the great lights of the firmament;",L_MONK_Q3_2,
+		"Who have won sacrifices, as emperor and king.",L_MONK_Q3_2,
+		"Him, one of the three brothers of the Peach Garden Oath,",L_MONK_Q3_2;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q3_2:
+
+	menu "Each excelling others to honor him,",L_MONK_Q3_3,
+		"Temples to our Lord Guan Yu abound, no village lacks one,",L_MONK_Q3_3,
+		"Seek ye a noble one? Then take ye the way of Jieliang,",L_MONK_Q3_3,
+		"Incomparable their aura spreads through the world;",L_MONK_Q3_3,
+		"Their venerable trees at sundown are the resting places for birds.",L_MONK_Q3_3,
+		"Who have won sacrifices, as emperor and king.",L_MONK_Q3_3,
+		"Watch ye how all people revere Guan Yu,",-,
+		"Him, one of the three brothers of the Peach Garden Oath,",L_MONK_Q3_3,
+		"They are resplendent as the great lights of the firmament;",L_MONK_Q3_3;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q3_3:
+
+	menu "They are resplendent as the great lights of the firmament;",L_MONK_Q3_4,
+		"Seek ye a noble one? Then take ye the way of Jieliang,",L_MONK_Q3_4,
+		"Each excelling others to honor him,",-,
+		"Watch ye how all people revere Guan Yu,",L_MONK_Q3_4,
+		"Who have won sacrifices, as emperor and king.",L_MONK_Q3_4,
+		"Him, one of the three brothers of the Peach Garden Oath,",L_MONK_Q3_4,
+		"Incomparable their aura spreads through the world;",L_MONK_Q3_4,
+		"Temples to our Lord Guan Yu abound, no village lacks one,",L_MONK_Q3_4,
+		"Their venerable trees at sundown are the resting places for birds.",L_MONK_Q3_4;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q3_4:
+
+	menu "Seek ye a noble one? Then take ye the way of Jieliang,",L_MONK_Q3_5,
+		"Each excelling others to honor him,",L_MONK_Q3_5,
+		"Incomparable their aura spreads through the world;",L_MONK_Q3_5,
+		"Temples to our Lord Guan Yu abound, no village lacks one,",L_MONK_Q3_5,
+		"Him, one of the three brothers of the Peach Garden Oath,",-,
+		"Their venerable trees at sundown are the resting places for birds.",L_MONK_Q3_5,
+		"They are resplendent as the great lights of the firmament;",L_MONK_Q3_5,
+		"Who have won sacrifices, as emperor and king.",L_MONK_Q3_5,
+		"Watch ye how all people revere Guan Yu,",L_MONK_Q3_5;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q3_5:
+
+	menu "They are resplendent as the great lights of the firmament;",L_MONK_Q3_6,
+		"Temples to our Lord Guan Yu abound, no village lacks one,",L_MONK_Q3_6,
+		"Their venerable trees at sundown are the resting places for birds.",L_MONK_Q3_6,
+		"Who have won sacrifices, as emperor and king.",-,
+		"Watch ye how all people revere Guan Yu,",L_MONK_Q3_6,
+		"Seek ye a noble one? Then take ye the way of Jieliang,",L_MONK_Q3_6,
+		"Incomparable their aura spreads through the world;",L_MONK_Q3_6,
+		"Him, one of the three brothers of the Peach Garden Oath,",L_MONK_Q3_6,
+		"Each excelling others to honor him,",L_MONK_Q3_6;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q3_6:
+
+	menu "Him, one of the three brothers of the Peach Garden Oath,",L_MONK_Q3_7,
+		"Their venerable trees at sundown are the resting places for birds.",L_MONK_Q3_7,
+		"Watch ye how all people revere Guan Yu,",L_MONK_Q3_7,
+		"Temples to our Lord Guan Yu abound, no village lacks one,",L_MONK_Q3_7,
+		"Seek ye a noble one? Then take ye the way of Jieliang,",L_MONK_Q3_7,
+		"Incomparable their aura spreads through the world;",-,
+		"Each excelling others to honor him,",L_MONK_Q3_7,
+		"They are resplendent as the great lights of the firmament;",L_MONK_Q3_7,
+		"Who have won sacrifices, as emperor and king.",L_MONK_Q3_7;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q3_7:
+
+	menu "Seek ye a noble one? Then take ye the way of Jieliang,",L_MONK_Q3_8,
+		"Their venerable trees at sundown are the resting places for birds.",L_MONK_Q3_8,
+		"They are resplendent as the great lights of the firmament;",-,
+		"Watch ye how all people revere Guan Yu,",L_MONK_Q3_8,
+		"Each excelling others to honor him,",L_MONK_Q3_8,
+		"Him, one of the three brothers of the Peach Garden Oath,",L_MONK_Q3_8,
+		"Who have won sacrifices, as emperor and king.",L_MONK_Q3_8,
+		"Incomparable their aura spreads through the world;",L_MONK_Q3_8,
+		"Temples to our Lord Guan Yu abound, no village lacks one,",L_MONK_Q3_8;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q3_8:
+
+	menu "Temples to our Lord Guan Yu abound, no village lacks one,",-,
+		"Incomparable their aura spreads through the world;",L_MONK_Q3_9,
+		"Their venerable trees at sundown are the resting places for birds.",L_MONK_Q3_9,
+		"They are resplendent as the great lights of the firmament;",L_MONK_Q3_9,
+		"Who have won sacrifices, as emperor and king.",L_MONK_Q3_9,
+		"Him, one of the three brothers of the Peach Garden Oath,",L_MONK_Q3_9,
+		"Watch ye how all people revere Guan Yu,",L_MONK_Q3_9,
+		"Each excelling others to honor him,",L_MONK_Q3_9,
+		"Seek ye a noble one? Then take ye the way of Jieliang,",L_MONK_Q3_9;
+
+		set @monk_q, @monk_q + 1;
+L_MONK_Q3_9:
+
+	menu "Him, one of the three brothers of the Peach Garden Oath,",L_MONK_QUEST_END,
+		"Each excelling others to honor him,",L_MONK_QUEST_END,
+		"Watch ye how all people revere Guan Yu,",L_MONK_QUEST_END,
+		"Who have won sacrifices, as emperor and king.",L_MONK_QUEST_END,
+		"Incomparable their aura spreads through the world;",L_MONK_QUEST_END,
+		"Seek ye a noble one? Then take ye the way of Jieliang,",L_MONK_QUEST_END,
+		"They are resplendent as the great lights of the firmament;",L_MONK_QUEST_END,
+		"Temples to our Lord Guan Yu abound, no village lacks one,",L_MONK_QUEST_END,
+		"Their venerable trees at sundown are the resting places for birds.",-;
+
+L_MONK_QUEST_1_2:
+		set @monk_q, @monk_q + 1;
+L_MONK_QUEST_END:
+
+	if(@monk_q != 10) goto L_C2_FAIL;
+
+L_C2_DONE:
+	set @monk_q, 0;
+	next;
+	mes "[Wutao]";
+	mes "Hmmm...";
+	next;
+	mes "[Wutao]";
+	mes "...Well Done!! It's perfect!";
+	next;
+	mes "[Wutao]";
+	mes "However, don't be happy too early. There is much long way to go before you become a Monk.";
+	next;
+	mes "[Wutao]";
+	mes "DaAhaaaa...";
+	next;
+	mes "[Wutao]";
+	mes "ShuKeeee.....";
+	next;
+	mes "[Wutao]";
+	mes "SouKouuuuu....";
+	next;
+	mes "[Wutao]";
+	mes "PaYennnn....";
+	next;
+	mes "[Wutao]";
+	mes "As I promised, your mental status is now running like a Monk do.";
+	next;
+	mes "[Wutao]";
+	mes "Now go, seek ^000080Fuhai^000000 for further guidance.";
+	set JOB_MONK_Q, 6;
+	close;
+
+L_C2_FAIL:
+	mes "[" + strcharinfo(0) + "]";
+	mes "Well...? How was that? ";
+	next;
+	mes "[Wutao]";
+	mes "Hmmm...";
+	next;
+	mes "[Wutao]";
+	mes "HeNmmm...";	
+	next;
+	mes "[Wutao]";
+	mes "How was that? It's bad! You didn't memorize it all!";
+	next;
+	mes "[Wutao]";
+	mes "You should doult yourself. Are you really have the ability to be a Monk?";
+	mes "...It's really....";
+	next;
+	mes "[Wutao]";
+	mes "Well...That's fine, do you want to try it again?";
+	next;
+	mes "[Wutao]";	
+	mes "Of course! Since you did not pass this test, you can't take the next test.";
+	set JOB_MONK_Q, 5;
+	close;
+
+Part1:
+	mes "[Wutao]";
+	mes "Very well. Let's try it again.";
+	next;
+	goto L_Again;
+
+Part2:
+	mes "[Wutao]";
+	mes "What? You forget whom you should seek for?";
+	next;
+	mes "[Wutao]";
+	mes "......You are so.......";
+	next;
+	mes "[Wutao]";
+	mes "...Are you testing my patient?";
+	next;
+	mes "[Wutao]";
+	mes "...Okay, I'll tell you again...";
+	mes "Go and seek ^000080Fuhai^000000 for further guidance.";
+	close;
+Part3:
+	mes "[Wutao]";
+	mes "May God be with you.";
+	close;
+}
+
+prt_monk.gat,57,179,4	script	Fuhai	110,{
+
+	if(@Choice_mission == 1 ) goto Part1;
+	if(@Choice_mission == 2 ) goto Part2;
+	if(JOB_MONK_Q == 6 ) goto L_START;
+	goto IsOther;
+IsOther:
+	mes "[Fuhai]";
+	mes "HaAhhhhh....!!!";
+	next;
+	mes "- Seems like he is thinking something -";
+	close;
+
+L_START:
+	mes "[Fuhai]";
+	mes "...";
+	next;
+	mes "[Fuhai]";
+	mes "......";
+	next;
+	mes "[Fuhai]";
+	mes ".........";
+	next;
+	mes "[Fuhai]";
+	mes "............";
+	next;
+	menu "Hello there?",-;
+
+		mes "[Fuhai]";
+		mes "...what...WHAT?";
+		mes "How dare you interupt my training!";
+		mes "If it is not very important...";
+		next;
+		mes "[Fuhai]";
+		mes "......";
+		mes "I can't tell...if you can see the son tomorrow...";
+		next;
+		mes "[Fuhai]";
+		mes "Why are you here?";
+		mes "Explain!";
+		next;
+		menu "Some one named [Wutao] send me here.",L_MENU_1,"Well...Nothing...",-;
+			
+			mes "[Fuhai]";
+			mes "......";
+			mes "...How about dig a grave for yourself?";
+			close;
+	L_MENU_1:
+		mes "[Fuhai]";
+		mes "Hmmm...It's that so?";
+		mes "That's...";
+		next;
+		mes "[Fuhai]";
+		mes "Oh...Your mental status...";
+		mes "Ha! Very well...";
+		next;
+		mes "[Fuhai]";
+		mes "However, what did you learn from [Wutao] ?";
+		next;
+		menu "Hmmm...Well...It's...",-,
+			"I repeat what he said, and he send me here.",L_MENU_1_1,
+			"He test my mental status and send me here.",-;
+
+			mes "[Fuhai]";
+			mes "Foolish!";
+			mes "Don't bother me! Go away!";
+			close;
+	L_MENU_1_1:
+		mes "[Fuhai]";
+		mes "Well...Then?";
+		mes "Did he do anything for you?";
+		next;
+		menu "Ah...It's...I can't tell...",-,
+			"Check my body",L_MENU_1_1_1,
+			"Tell me some rules to obey",L_MENU_1_1_1,
+			"modify my mental status",L_MENU_1_1_2;
+
+			mes "[Fuhai]";
+			mes "Foolish!";
+			mes "Don't bother me! Go away!";
+			close;
+	L_MENU_1_1_1:
+		mes "[Fuhai]";
+		mes "That's quite true, but not the point.";
+		mes "Think! Use your brain!";
+		close;
+
+	L_MENU_1_1_2:
+		set JOB_MONK_Q, 7;
+		mes "[Fuhai]";
+		mes "Very well, at least you know what had been change in your body";
+		mes "Now, let's begin the next test.";
+		next;
+		mes "[Fuhai]";
+		mes "I'll give you a chance to choose what kind of test you want to take.";
+		mes "Now, make your own choise.";
+		next;
+		menu "Mushroom Collecting",L_ROOT_1,"Marathon",L_ROOT_2;
+
+	L_ROOT_1:
+		mes "[Fuhai]";
+		mes "Mushroom Collecting? Good choice!";
+		mes "That would make you appreciate the extremity of patient, realize the meaning God give you the great willpower.";
+		mes "Now go, do some prepares. Come back when you ready.";
+		set @Choice_mission, 1;
+		close;
+	L_ROOT_2:
+		mes "[Fuhai]";
+		mes "Marathon? Good choice!";
+		mes "That would make you appreciate the extremity of willpower, realize the meaning God give you the great patient.";
+		mes "Now go, do some prepares. Come back when you ready.";
+		set @Choice_mission, 2;
+		close;
+Part1:
+	mes "[Fuhai]";
+	mes "Are you ready?";
+	mes "Acturily, you don't need to prepare anything if you believe in yourself";
+	next;
+	mes "[Fuhai]";
+	mes "Mushroom Collecting is your choice.";
+	mes "It's a test for yourself.";
+	next;
+	mes "[Fuhai]";
+	mes "Now, go to the building located in the center of this training area.";
+	next;
+	mes "[Fuhai]";
+	mes "You will pass the test when you collect enough mushrooms we think.";
+	mes "Now, what are waitting for? Go ahead!";
+	close;
+Part2:
+	mes "[Fuhai]";
+	mes "Are you ready?";
+	mes "Acturily, you don't need to prepare anything if you believe in yourself";
+	next;
+	mes "[Fuhai]";
+	mes "Marathon is your choice.";
+	mes "It's a test for yourself.";
+	next;
+	mes "[Fuhai]";
+	mes "Now, go to the building located in the center of this training area.";
+	next;
+	mes "[Fuhai]";
+	mes "You will pass the test when you run enough circles we think.";
+	mes "Now, what are waitting for? Go ahead!";
+	close;
+
+}
+
+prt_monk.gat,199,169,4	script	Guard	746,{
+	if(JOB_MONK_Q == 7) goto L_START;
+	if(JOB_MONK_Q > 6) goto Part1;
+	goto IsOther;
+IsOther:
+	mes "[Guard ChaoLi]";
+	mes "This is...";
+	mes "Monk Training Area";
+	next;
+	mes "[Guard ChaoLi]";
+	mes "Please be quiet in this area.";
+	close;
+
+L_START:
+	mes "[Guard ChaoLi]";
+	mes "This is...";
+	mes "Monk Training Area";
+	next;
+	mes "[Guard ChaoLi]";
+	mes strcharinfo(0) + " ... Right?!";
+	next;
+	mes "[Guard ChaoLi]";
+	mes "Go ahead! Quickly!";
+	mes "There is another test waitting for you!";
+	close;
+
+Part1:
+	mes "[Guard ChaoLi]";
+	mes "Please be quiet in this area.";
+	close;
+}
+
+monk_test.gat,329,61,4	script	Bashu	753,{
+	if(JOB_MONK_Q == 7) goto L_START;
+	if(JOB_MONK_Q == 8) goto IsOther;
+	goto IsOther;
+IsOther:
+	mes "[Bashu]";
+	mes "Welcome to ^00FF00St. Capitolina Abbey^000000, the Monk Training Area.";
+	mes "May the light shine on your path.";
+	mes "You can find Monk Daowen who judge the grades of Monk training when you go inside";
+	next;
+	mes "[Bashu]";
+	mes "Never the less, don't touch anything inside and be quiet in front of Monk Daowen.";
+	next;
+	mes "[Bashu]";
+	mes "Then, may you have a happy conversation time with God.";
+	close;
+L_START:
+	mes "[Bashu]";
+	mes "Please select a test.";
+	next;
+	if(@Choice_mission == 0) goto L_MISSC;
+	if(@Choice_mission == 2) goto L_MISS2;
+	mes "[Bashu]";
+	mes "As I know, you choose the Mushroom Collecting as your test.";
+	goto L_MISSC;
+L_MISS2:
+	mes "[Bashu]";
+	mes "As I know, you choose the Marathon as your test.";
+L_MISSC:
+	mes "However, if you cannot complete it, you may switch to the other whenever you feel like it.";
+	next;
+	menu "Monk's patient - Mushroom Collecting",-,
+		"Monk's willpower - Marathon",L_MENU_1;
+
+	mes "[Bashu]";
+	mes "The test you choose is Monk's patient - Mushroom Collecting";
+	next;
+	warp "job_monk.gat",225,179;
+	end;
+
+L_MENU_1:
+	mes "[Bashu]";
+	mes "The test you choose is Monk's willpower - Marathon";	
+	next;
+	warp "monk_test.gat",387,345;
+	end;
+}
+
+monk_test.gat,387,347,4	script	Musha	110,{
+	mes "[Musha]";
+	mes "Wel...Welcome...!";
+	mes "This...This is the area testing the pa...patient of whom want to be a Monk.";
+	next;
+	mes "[Musha]";
+	mes "You should just...just run!";
+	mes "Before we told you to stop.";
+	mes "Run...Run! " + strcharinfo(0) + "! Run!";
+	next;
+	mes "[Musha]";
+	mes "Just Run!! Run Quickly!!";
+	next;
+	mes "[Musha]";
+	mes "One Day, I'll become a Monk!";
+	mes "I.....will......Become...a......MONK!!!";
+	next;
+	mes "[Musha]";
+	mes "Do...Do you...want to give......giveup? or...con...continue?";
+	mes "Giveup?";
+	next;
+	menu "I want to giveup!",-,"I want to run!!",L_MENU_1;
+
+		announce "Musha: " + strcharinfo(0) + " has give...giveup the test...! Giveup the Marathon test... No...No patient.....HaHaHaHa!!!...",8;
+		mes "[Musha]";
+		mes strcharinfo(0) + "...give...giveup the test...";
+		mes "Giveup the Marathon test...";
+		mes "No...No patient.....HaHaHaHa!!!...";
+		next;
+		warp "prt_monk.gat",196,168;
+		end;
+L_MENU_1:
+	next;
+	mes "[Musha]";
+	mes "Before we give you an order to stop....";
+	mes "Run...Run! " + strcharinfo(0) + "! Run!";
+	if(@runtimes == 0) set @runtimes, rand(8,10);
+	close;
+}
+
+monk_test.gat,390,387,0	script	monk_warp	45,1,1,{
+	set @run, @run + 1;
+	if(@run == (@runtimes-1)) mapannounce "monk_test.gat","Musha: cheer up! The next circle is the last!",8;
+	if(@run == @runtimes) goto L_DONE;
+	warp "monk_test.gat",388,348;
+	end;
+L_DONE:
+	mapannounce "monk_test.gat","Musha: Con....Congratulations!!" + strcharinfo(0)+ " Pass!! Please go to [Daowen], he is in the deep of the building.",8;
+	set JOB_MONK_Q, 8;
+	warp "prt_monk.gat",196,168;
+	end;
+
+}
+monk_test.gat,0,0,0	script	monk_traps	-1,{
+	mapannounce "monk_test.gat","trap: " + strcharinfo(0)+ " , you fall into a trap! Now we warp you to the start place.",8;
+	warp "monk_test.gat",388,348;
+	end;
+}
+//---------------------
+monk_test.gat,386,164,0	script	monk1-1	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,386,165,0	script	monk1-2	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,387,164,0	script	monk1-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,387,165,0	script	monk1-4	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,388,164,0	script	monk1-5	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,388,165,0	script	monk1-6	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,389,164,0	script	monk1-7	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,389,165,0	script	monk1-8	139,0,0,{doevent "monk_traps";end;}
+//---------------------
+monk_test.gat,386,42,0	script	monk2-1	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,386,43,0	script	monk2-2	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,387,42,0	script	monk2-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,387,43,0	script	monk2-4	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,388,42,0	script	monk2-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,388,43,0	script	monk2-4	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,389,42,0	script	monk2-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,389,43,0	script	monk2-4	139,0,0,{doevent "monk_traps";end;}
+//---------------------
+monk_test.gat,184,11,0	script	monk3-1	139,0,3,{doevent "monk_traps";end;}
+monk_test.gat,185,11,0	script	monk3-2	139,0,3,{doevent "monk_traps";end;}
+monk_test.gat,186,11,0	script	monk3-3	139,0,3,{doevent "monk_traps";end;}
+monk_test.gat,187,11,0	script	monk3-4	139,0,3,{doevent "monk_traps";end;}
+//---------------------
+monk_test.gat,70,10,0	script	monk4-1	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,70,11,0	script	monk4-2	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,70,12,0	script	monk4-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,70,13,0	script	monk4-4	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,71,10,0	script	monk4-5	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,71,11,0	script	monk4-6	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,71,12,0	script	monk4-7	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,71,13,0	script	monk4-8	139,0,0,{doevent "monk_traps";end;}
+//---------------------
+monk_test.gat,8,30,0	script	monk5-1	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,8,31,0	script	monk5-2	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,9,30,0	script	monk5-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,9,31,0	script	monk5-4	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,10,30,0	script	monk5-5	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,10,31,0	script	monk5-6	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,11,30,0	script	monk5-7	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,11,31,0	script	monk5-8	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,12,30,0	script	monk5-9	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,12,31,0	script	monk5-10	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,13,30,0	script	monk5-11	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,13,31,0	script	monk5-12	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,14,30,0	script	monk5-13	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,14,31,0	script	monk5-14	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,15,30,0	script	monk5-15	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,15,31,0	script	monk5-16	139,0,0,{doevent "monk_traps";end;}
+//---------------------
+monk_test.gat,10,158,0	script	monk6-1	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,10,159,0	script	monk6-2	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,11,158,0	script	monk6-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,11,159,0	script	monk6-4	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,12,158,0	script	monk6-5	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,12,159,0	script	monk6-6	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,13,158,0	script	monk6-7	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,13,159,0	script	monk6-8	139,0,0,{doevent "monk_traps";end;}
+//---------------------
+monk_test.gat,38,386,0	script	monk7-1	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,38,387,0	script	monk7-2	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,38,388,0	script	monk7-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,38,389,0	script	monk7-4	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,39,386,0	script	monk7-5	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,39,387,0	script	monk7-6	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,39,388,0	script	monk7-7	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,39,389,0	script	monk7-8	139,0,0,{doevent "monk_traps";end;}
+//---------------------
+monk_test.gat,82,390,0	script	monk8-1	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,82,391,0	script	monk8-2	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,83,390,0	script	monk8-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,83,391,0	script	monk8-4	139,0,0,{doevent "monk_traps";end;}
+//---------------------
+monk_test.gat,82,384,0	script	monk8-1	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,82,385,0	script	monk8-2	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,83,384,0	script	monk8-3	139,0,0,{doevent "monk_traps";end;}
+monk_test.gat,83,385,0	script	monk8-4	139,0,0,{doevent "monk_traps";end;}
+//---------------------
+prt_monk.gat,225,179,4	script	XuanWu 	89,{
+	mes "[XuanWu]";
+	mes "To see the growing of crop, I deeply appreciate from the grace of God.";
+	next;
+	mes "[XuanWu]";
+	mes "Never the less, see those crop grown by the strong Monks.";
+	mes "I think it's the most beautiful picture!";
+	next;
+	mes "[XuanWu]";
+	mes "Frankly speeking, grower is the greatest people in the world.";
+	mes "The Blue Potion you drink must be made of God's will and by the grower.";
+	next;
+	mes "[XuanWu]";
+	mes "We chould always be grateful.";
+	next;
+	mes "[XuanWu]";
+	mes "God give you everything, even the grower.";
+	next;
+	mes "[XuanWu]";
+	mes "The grower is the root of world. That's quite true.";
+	close;
+}
+job_monk.gat,225,179,4	script	XuanWu	89,{
+
+	if(JOB_MONK_Q == 8 ) goto Part2;
+	if(@mission_start == 1 ) goto Part1;
+
+	mes "[XuanWu]";
+	mes "Welcome! I'm in charge here with the Mushroom Collecting.";
+	mes "My Name is XuanWu";
+	next;
+	mes "[XuanWu]";
+	mes "From now, you should take it for granted that all the suffering is training.";
+	mes "Understand?";
+	next;
+	mes "[XuanWu]";
+	mes "For Monks lives, we should always offer our efforts as a tribute";
+	mes "Grow crop is also a kind of training.";
+	next;
+	mes "[XuanWu]";
+	mes "We think it is the best way to realize the will of God.";
+	mes "Therefore, we had started growing some kind of mushrooms that smell foul";
+	next;
+	mes "[XuanWu]";
+	mes "All you have to do is destory those mushrooms and bring some thing to prove.";
+	mes "What's the thing I mean? The ^ff0000Orange GooeyMushroom and Orange Net Mushroom^000000";
+	next;
+	mes "[XuanWu]";
+	mes "If you want to increase your internal organs and become a Monk, go and destory it.";
+	mes "Bring as many as you can, I won't tell you the amount I need.";
+	mes "Now go!";
+	next;
+	mes "[XuanWu]";
+	mes "Or...You want to giveup?";
+	next;
+	menu "Start Mushroom Collecting",L_MENU_1,"I'll giveup",L_MENU_2;
+
+L_MENU_2:
+		mapannounce "monk_test.gat","XuanWu: ......Another one without willpower...",8;
+		mes "[XuanWu]";
+		mes "Another one without willpower...";
+		set @mission_start, 0;
+		getitem 1069, 1;
+		delitem 1069, 1;
+		next;
+		warp "prt_monk.gat",196,168;
+		end;		
+L_MENU_1:
+	mes "[XuanWu]";
+	mes "Then what are you waitting for? Go Go Go !!";
+	set @mission_start, 1;
+	close;
+
+Part1:
+	if(countitem(1069) >= 30 && countitem(1070) >0 ) goto L_DONE;
+	if(countitem(1070) >= 30 && countitem(1069) >0 ) goto L_DONE;
+	mes "[XuanWu]";
+	mes "Hmmm... Is that all you can do? I don't think it's enough.";
+	next;
+	mes "[XuanWu]";
+	mes "Or...You want to giveup?";
+	next;
+	menu "Continue Mushroom Collecting",-,"I'll giveup",L_MENU_2;
+		close;
+L_DONE:
+	set JOB_MONK_Q, 8;
+	mes "[XuanWu]";
+	mes "Well... I think you can do it better...";
+	mes "However, I should say you pass the test.";
+	set @mission_start, 0;
+	delitem 1069, countitem(1069);
+	delitem 1070, countitem(1070);
+	next;
+	mes "[XuanWu]";
+	mes "Now go to [Daowen], he is in the deep of the building.
+	close;
+Part2:
+	mes "[XuanWu]";
+	mes "Are you testing my patient??";
+	mes "Now go to [Daowen], he is in the deep of the building.
+	close;
+}
+job_monk.gat,191,172,4	script	job_monk_warp	45,1,1,{
+	warp "monk_test.gat",329,57;
+	end;
+}
+
+job_monk.gat,199,169,4	script	Guard ChaoLi 	746,{
+	mes "[Guard ChaoLi]";
+	mes "Silence! In test area!";
+	close;
+}
+
+monk_test.gat,319,139,4	script	Daowen	52,{
+	if(JOB_MONK_Q == 8) goto L_START;
+	if(JOB_MONK_Q == 9) goto Part1;
+	if(JOB_MONK_Q == 10) goto Part2;
+		goto IsOther;
+IsOther:
+	mes "[Daowen]";
+	mes "Go throught it quietly...";
+	mes "HuWuWuuuu......";
+	next;
+	mes "[Daowen]";
+	mes "This is St. Capitolina Abbey. If anything goes wrong, all we have done might become nothing.";
+	next;
+	mes "[Daowen]";
+	mes "Leave! If you don't want to die, don't bother me.";
+	close;
+L_START:
+	mes "[Daowen]";
+	mes "Oh! Finally!";
+	mes "This is the last test, and I am I'm in charge here";
+	mes "My name is 'Daowen'";
+	next;
+	mes "[Daowen]";
+	mes "Well... What should I say?";
+	mes "Who block the way? Fight him/her!";
+	next;
+	mes "[Daowen]";
+	mes "Fight! Slash! When you lost and some enemy block your way!";
+	mes "Tell them the will of God!";
+	next;
+	mes "[Daowen]";
+	mes "Don't compare with the weak priest!";
+	mes "We are always strong Monks";
+	next;
+	mes "[Daowen]";
+	mes "We are different from the weak priest that always run away!";
+	next;
+	mes "[Daowen]";
+	mes "Now! Grasp your fist! Go and fight!";
+	next;
+	mes "[Daowen]";
+	mes "Do your best!";
+	mes "HaHaHaHaHa.....!!";
+	next;
+	warp "monk_test",88,73;
+	end;
+
+Part1:
+	mes "[Daowen]";
+	mes "Well done!! HaHaHaHa....!!";
+	mes "I knew you can do it!";
+	mes "I'll give you a special potion that can increase your power";
+	next;
+	getitem 506, 1;
+	mes "[Daowen]";
+	mes "Drink it, and your internal organs will increase enough to be a Monk.";
+	mes "Okay...Then, Go to Wuhai - the first one you meet here.";
+	set JOB_MONK_Q, 10;
+	close;
+Part2:
+	mes "[Daowen]";
+	mes "Go to Wuhai - the first one you meet here.";
+	close;
+}
+
+monk_test.gat,88,91,4	script	Test Assistant	52,{
+	mes "[Test Assistant]";
+	mes "Are you ready for training of evil disperse?";
+	next;
+	mes "[Test Assistant]";
+	mes "The test area is a maze with walls invisable.";
+	mes "The exiting point is on the opposite side of the starting point.";
+	next;
+	mes "[Test Assistant]";
+	mes "Of course, there will be some monster spawn in the maze. You'll have to fight with them.";
+	mes "Good lucy! May God be with you.";
+	next;
+	if(getareausers("monk_test.gat",126,161,165,199) > 0) goto L_WAIT;
+	killmonster "monk_test.gat","monk_mob1";
+	enablenpc "monk_mob1_1";
+	enablenpc "monk_mob1_2";
+	enablenpc "monk_mob1_3";
+	enablenpc "monk_mob1_3";
+	warp "monk_test.gat",127,179;
+	end;
+L_WAIT:
+	mes "[Test Assistant]";
+	mes "There is someone taking the test. Please wait a minute.";
+	close;
+}
+monk_test.gat,129,180,4	script	monk_mob1_1	139,0,19,{
+	monster "monk_test.gat",130,183,"--ja--",1015,1,"monk_mob1";
+	monster "monk_test.gat",130,177,"--ja--",1015,1,"monk_mob1";
+//~	disablenpc "monk_mob1_1";
+	end;
+}
+monk_test.gat,133,180,4	script	monk_mob1_2	139,0,19,{
+	monster "monk_test.gat",134,183,"--ja--",1015,1,"monk_mob1";
+	monster "monk_test.gat",134,177,"--ja--",1015,1,"monk_mob1";
+//~	disablenpc "monk_mob1_2";
+	end;
+}
+monk_test.gat,145,180,4	script	monk_mob1_3	139,0,19,{
+	monster "monk_test.gat",145,180,"--ja--",1041,1,"monk_mob1";
+//~	disablenpc "monk_mob1_3";
+	end;
+}
+monk_test.gat,155,180,4	script	monk_mob1_4	139,0,19,{
+	monster "monk_test.gat",157,183,"--ja--",1015,1,"monk_mob1";
+	monster "monk_test.gat",157,177,"--ja--",1015,1,"monk_mob1";
+//~	disablenpc "monk_mob1_4";
+	end;
+}
+monk_test.gat,165,179,4	script	monk_mob3_warp	45,1,1,{
+	set JOB_MONK_Q, 9;
+	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Pass!! Please go to [Daowen], he is in the deep of the building.",8;
+	killmonster "monk_test.gat","monk_mob1";
+	warp "monk_test.gat",317,142;
+	end;
+}
+
+monk_test.gat,1,1,1	script	monk_mob1	-1,{
+		end;
+}
+
+monk_test.gat,95,85,4	script	Test Assistant	79,{
+	mes "[Test Assistant]";
+	mes "Are you ready for training of evil disperse?";
+	next;
+	mes "[Test Assistant]";
+	mes "The test area is a maze with walls invisable.";
+	mes "The exiting point is on the opposite side of the starting point.";
+	next;
+	mes "[Test Assistant]";
+	mes "Of course, there will be some monster spawn in the maze. You'll have to fight with them.";
+	mes "Good lucy! May God be with you.";
+	next;
+	if(getareausers("monk_test.gat",126,262,165,300) > 0) goto L_WAIT;
+	killmonster "monk_test.gat","monk_mob2";
+	enablenpc "monk_mob2_1";
+	enablenpc "monk_mob2_2";
+	enablenpc "monk_mob2_3";
+	enablenpc "monk_mob2_4";
+	warp "monk_test.gat",127,278;
+	end;
+
+L_WAIT:
+	mes "[Test Assistant]";
+	mes "There is someone taking the test. Please wait a minute.";
+	close;
+
+}
+monk_test.gat,129,281,4	script	monk_mob2_1	139,0,19,{
+	monster "monk_test.gat",130,278,"--ja--",1015,1,"monk_mob2";
+	monster "monk_test.gat",130,284,"--ja--",1015,1,"monk_mob2";
+//~	disablenpc "monk_mob2_1";
+	end;
+}
+monk_test.gat,136,281,4	script	monk_mob2_2	139,0,19,{
+	monster "monk_test.gat",139,278,"--ja--",1015,1,"monk_mob2";
+	monster "monk_test.gat",139,284,"--ja--",1015,1,"monk_mob2";
+//~	disablenpc "monk_mob2_2";
+	end;
+}
+monk_test.gat,144,281,4	script	monk_mob2_3	139,0,19,{
+	monster "monk_test.gat",145,281,"--ja--",1041,1,"monk_mob2";
+//~	disablenpc "monk_mob2_3";
+	end;
+}
+monk_test.gat,153,281,4	script	monk_mob2_4	139,0,19,{
+	monster "monk_test.gat",155,278,"--ja--",1015,1,"monk_mob2";
+	monster "monk_test.gat",155,284,"--ja--",1015,1,"monk_mob2";
+//~	disablenpc "monk_mob2_4";
+	end;
+}
+monk_test.gat,165,278,4	script	monk_mob2_warp	45,1,1,{
+	set JOB_MONK_Q, 9;
+	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Pass!! Please go to [Daowen], he is in the deep of the building.",8;
+	killmonster "monk_test.gat","monk_mob2";
+	warp "monk_test.gat",317,142;
+	end;
+}
+
+monk_test.gat,1,1,1	script	monk_mob2	-1,{
+		end;
+}
+
+monk_test.gat,82,85,4	script	Test Assistant	95,{
+	mes "[Test Assistant]";
+	mes "Are you ready for training of evil disperse?";
+	next;
+	mes "[Test Assistant]";
+	mes "The test area is a maze with walls invisable.";
+	mes "The exiting point is on the opposite side of the starting point.";
+	next;
+	mes "[Test Assistant]";
+	mes "Of course, there will be some monster spawn in the maze. You'll have to fight with them.";
+	mes "Good lucy! May God be with you.";
+	next;
+	if(getareausers("monk_test.gat",233,262,269,300) > 0) goto L_WAIT;
+	killmonster "monk_test.gat","monk_mob3";
+	enablenpc "monk_mob3_1";
+	enablenpc "monk_mob3_2";
+	enablenpc "monk_mob3_3";
+	enablenpc "monk_mob3_4";
+	warp "monk_test.gat",231,279;
+	end;
+
+L_WAIT:
+	mes "[Test Assistant]";
+	mes "There is someone taking the test. Please wait a minute.";
+	close;
+}
+
+monk_test.gat,234,281,4	script	monk_mob3_1	139,0,19,{
+	monster "monk_test.gat",235,277,"--ja--",1015,1,"monk_mob3";
+	monster "monk_test.gat",235,284,"--ja--",1015,1,"monk_mob3";
+//~	disablenpc "monk_mob3_1";
+	end;
+}
+monk_test.gat,239,281,4	script	monk_mob3_2	139,0,19,{
+	monster "monk_test.gat",240,277,"--ja--",1015,1,"monk_mob3";
+	monster "monk_test.gat",240,284,"--ja--",1015,1,"monk_mob3";
+//~	disablenpc "monk_mob3_2";
+	end;
+}
+monk_test.gat,248,281,4	script	monk_mob3_3	139,0,19,{
+	monster "monk_test.gat",249,281,"--ja--",1041,1,"monk_mob3";
+//~	disablenpc "monk_mob3_3";
+	end;
+}
+monk_test.gat,260,281,4	script	monk_mob3_4	139,0,19,{
+	monster "monk_test.gat",261,277,"--ja--",1015,1,"monk_mob3";
+	monster "monk_test.gat",261,284,"--ja--",1015,1,"monk_mob3";
+//~	disablenpc "monk_mob3_4";
+	end;
+}
+monk_test.gat,269,279,4	script	monk_mob3_warp	45,1,1,{
+	set JOB_MONK_Q, 9;
+	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Pass!! Please go to [Daowen], he is in the deep of the building.",8;
+	killmonster "monk_test.gat","monk_mob3";
+	warp "monk_test.gat",317,142;
+	end;
+}
+
+monk_test.gat,1,1,1	script	monk_mob3	-1,{
+		end;
+}
+
+
+
+//==============================================================================
+// Monsters of Mushroom Collecting
+//==============================================================================
+job_monk.gat,0,0,0,0	monster	Thief Mushroom	1182,170,0,0,0
+job_monk.gat,0,0,0,0	monster	Thief Bug Larva	1051,120,0,0,0
+
+//==============================================================================
+// warps
+//==============================================================================
+prt_monk.gat,192,172,0	warp	monk15	1,1,monk_test.gat,329,50
+monk_test.gat,329,47,0	warp	monk16	1,1,prt_monk.gat,193,166
+monk_test.gat,329,76,0	warp	monk17	1,1,monk_test.gat,259,118
+monk_test.gat,259,115,0	warp	monk18	1,1,monk_test.gat,329,71
+monk_test.gat,272,125,0	warp	monk19	1,1,monk_test.gat,301,127
+monk_test.gat,298,127,0	warp	monk20	1,1,monk_test.gat,268,125
+
+//==============================================================================
+// mapflag
+//==============================================================================
+monk_test.gat	mapflag	nomemo	dummy
+monk_test.gat	mapflag	noteleport	dummy
+monk_test.gat	mapflag	nosave	SavePoint
+monk_test.gat	mapflag	nopenalty	dummy
+monk_test.gat	mapflag	nobranch	dummy
