@@ -1,7 +1,7 @@
 Date	Added
 
 03/29
-        * Added CIA-bot to the #athena channel.. [MouseJstr]
+        * Added CIA-bot to the #athena channel [MouseJstr]
 	* Some tidying up in mail.c [celest]
 	* Added an invalid pointer check in clif_displaymessage [celest]
 	* Added sql upgrade file in sql-files for svn1315's update [celest]
