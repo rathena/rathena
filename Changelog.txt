@@ -1,8 +1,15 @@
 Date	Added
 11/11
+	* Skill Updates : (Need to revise skill_cast_db.txt for new updates)
+		( Sharp Shooting, Sword Reject, Chain Crush Combo, Tiger Knuckle Fist,
+		Head Crush, Arrow Vulcan, HP COnversion) Thanks to DracoRPG. [shadow]
+11/10	
+=======
+11/11
 	* Corrected minor typo in item_db, and removed/commented out dupe items.[kobra_k88]
 
 11/10
+
 	* Updated Sprout (Item #7193), Thin Trunk (Item #7186),
 		Huge Leaf (Item #7198), and Rante Whip (Items #1956, #1957)
 		- thanks to cheng - [Codemaster]
