@@ -3785,10 +3785,33 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return -1;
 		}
 	}
-	// Mob‚Åmaster_id‚ª‚ ‚Á‚Äspecial_mob_ai‚È‚çA¢Š«Žå‚ð‹‚ß‚é
+	
 	if( src->type==BL_MOB ){
 		struct mob_data *md=(struct mob_data *)src;
-		if(md && md->master_id>0){
+		nullpo_retr (-1, md);
+
+		if(target->type == BL_PC) {
+			struct map_session_data *sd = (struct map_session_data *)target;
+			nullpo_retr (-1, sd);
+
+			if(md->class_ >= 1285 && md->class_ <= 1287){
+				struct guild_castle *gc = guild_mapname2gc (map[target->m].name);
+				if(gc && agit_flag==0)	// Guardians will not attack during non-woe time [Valaris]
+					return 1;  // end addition [Valaris]
+				if(gc && sd->status.guild_id > 0) {
+					struct guild *g=guild_search(sd->status.guild_id);	// don't attack guild members [Valaris]
+					if(g && g->guild_id == gc->guild_id)
+						return 1;
+					if(g && guild_isallied(g,gc))
+						return 1;
+				}
+			}
+			// option to have monsters ignore GMs [Valaris]
+			if (battle_config.monsters_ignore_gm > 0 && pc_isGM(sd) >= battle_config.monsters_ignore_gm)
+				return 1;
+		}
+		// Mob‚Åmaster_id‚ª‚ ‚Á‚Äspecial_mob_ai‚È‚çA¢Š«Žå‚ð‹‚ß‚é
+		if(md->master_id>0){
 			if(md->master_id==target->id)	// Žå‚È‚çm’è
 				return 1;
 			if(md->state.special_mob_ai){

@@ -1122,38 +1122,6 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range)
 	dx=abs(bl->x - md->bl.x);
 	dy=abs(bl->y - md->bl.y);
 
-	//=========== guildcastle guardian no search start===========
-	//when players are the guild castle member not attack them !
-	if(md->class_ >= 1285 && md->class_ <= 1287){
-		struct map_session_data *sd;
-		struct guild *g=NULL;
-		struct guild_castle *gc=guild_mapname2gc(map[bl->m].name);
-
-		if(gc && agit_flag==0)	// Guardians will not attack during non-woe time [Valaris]
-			return 0;  // end addition [Valaris]
-
-		if(bl && bl->type == BL_PC){
-			nullpo_retr(0, sd=(struct map_session_data *)bl);
-			if(!gc)
-				return 0;
-			if(gc && sd && sd->status.guild_id) {
-			g=guild_search(sd->status.guild_id);	// don't attack guild members [Valaris]
-				if(g && g->guild_id == gc->guild_id)
-						return 0;
-				if(g && gc && guild_isallied(g,gc))
-						return 0;
-
-			}
-		}
-	}
-	//========== guildcastle guardian no search eof==============
-
-	if(bl && bl->type == BL_PC && battle_config.monsters_ignore_gm) {	 // option to have monsters ignore GMs [Valaris]
-		struct map_session_data *sd;
-		if((sd=(struct map_session_data *)bl) != NULL && pc_isGM(sd) >= battle_config.monsters_ignore_gm)
-			return 0;
-  	}
-
 	if( md->bl.m != bl->m)	// 違うャbプ
 		return 0;
 
@@ -1162,6 +1130,35 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range)
 
 	if( md->bl.x==bl->x && md->bl.y==bl->y )	// 同じマス
 		return 1;
+
+	//=========== guildcastle guardian no search start===========
+	//when players are the guild castle member not attack them !
+	/*if(md->class_ >= 1285 && md->class_ <= 1287){
+		struct map_session_data *sd;
+		struct guild *g=NULL;
+		struct guild_castle *gc=guild_mapname2gc(map[bl->m].name);
+
+		if(gc && agit_flag==0)	// Guardians will not attack during non-woe time [Valaris]
+			return 0;  // end addition [Valaris]
+
+		if(gc && bl->type == BL_PC){
+			nullpo_retr(0, sd=(struct map_session_data *)bl);
+			if(gc && sd->status.guild_id > 0) {
+				g=guild_search(sd->status.guild_id);	// don't attack guild members [Valaris]
+				if(g && g->guild_id == gc->guild_id)
+						return 0;
+				if(g && gc && guild_isallied(g,gc))
+						return 0;
+			}
+		}
+	}*/
+	//========== guildcastle guardian no search eof==============
+
+	/*if(bl->type == BL_PC && battle_config.monsters_ignore_gm) {	 // option to have monsters ignore GMs [Valaris]
+		struct map_session_data *sd;
+		if((sd=(struct map_session_data *)bl) != NULL && pc_isGM(sd) >= battle_config.monsters_ignore_gm)
+			return 0;
+  	}*/
 
 	// Obstacle judging
 	wpd.path_len=0;
@@ -2885,6 +2882,9 @@ int mob_heal(struct mob_data *md,int heal)
 		}
 	}	// end addition [Valaris]
 
+	if (battle_config.show_mob_hp)
+		clif_update_mobhp(md);
+
 	return 0;
 }
 
@@ -3267,14 +3267,9 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 int mobskill_castend_pos( int tid, unsigned int tick, int id,int data )
 {
 	struct mob_data* md=NULL;
-	struct block_list *bl;
 	int range,maxcount;
 
-	//mobskill_castend_id同様詠唱したMobが詠唱完了時にもういないというのはありそうなのでnullpoから除外
-	if((bl=map_id2bl(id))==NULL)
-		return 0;
-
-	nullpo_retr(0, md=(struct mob_data *)bl);
+	nullpo_retr(0, md=(struct mob_data *)map_id2bl(id));
 
 	if( md->bl.type!=BL_MOB || md->bl.prev==NULL )
 		return 0;
@@ -3374,10 +3369,8 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 	if(md->option&2 && skill_id!=TF_HIDING && skill_id!=AS_GRIMTOOTH && skill_id!=RG_BACKSTAP && skill_id!=RG_RAID)
 		return 0;
 
-	if(map[md->bl.m].flag.gvg && (skill_id == SM_ENDURE || skill_id == AL_TELEPORT || skill_id == AL_WARP ||
-		skill_id == WZ_ICEWALL || skill_id == TF_BACKSLIDING))
+	if(map[md->bl.m].flag.gvg && skill_db[skill_id].nocast & 4)
 		return 0;
-
 	if(skill_get_inf2(skill_id)&0x200 && md->bl.id == target->id)
 		return 0;
 
@@ -3423,8 +3416,9 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 			md->bl.id, target->id, 0,0, skill_id,casttime);
 
 		// 詠唱反応モンスター
-/*		if( target->type==BL_MOB && mob_db[(md2=(struct mob_data *)target)->class_].mode&0x10 &&
-			md2->state.state!=MS_ATTACK){
+		// future homunculus support?
+/*		if(md->master_id && target->type==BL_MOB && (md2=(struct mob_data *)target) &&
+			mob_db[md2->class_].mode&0x10 && md2->state.state!=MS_ATTACK){
 				md2->target_id=md->bl.id;
 				md->state.targettype = ATTACKABLE;
 				md2->min_chase=13;
