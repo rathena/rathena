@@ -2740,6 +2740,11 @@ int atcommand_go(
 	char output[200];
 	int m;
 
+	if(map[sd->bl.m].flag.nogo) {
+		clif_displaymessage(sd->fd,"You can not use @go on this map.");
+		return 0;
+	}
+
 	struct { char map[16]; int x,   y; } data[] = {
 	       { "prontera.gat", 156, 191  },	//	 0=Prontera
 	       { "morocc.gat",   156,  93  },	//	 1=Morroc

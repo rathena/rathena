@@ -517,6 +517,7 @@ struct map_data {
 		unsigned leaves : 1; // [Valaris]
 		unsigned rain : 1; // [Valaris]
 		unsigned indoors : 1; // celest
+		unsigned nogo : 1; // [Valaris]
 	} flag;
 	struct point save;
 	struct npc_data *npc[MAX_NPC_PER_MAP];

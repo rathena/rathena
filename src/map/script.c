@@ -4585,7 +4585,7 @@ int buildin_isloggedin(struct script_state *st)
  *------------------------------------------
  */
 enum { MF_NOMEMO,MF_NOTELEPORT,MF_NOSAVE,MF_NOBRANCH,MF_NOPENALTY,MF_NOZENYPENALTY,MF_PVP,MF_PVP_NOPARTY,MF_PVP_NOGUILD,MF_GVG,MF_GVG_NOPARTY,MF_NOTRADE,MF_NOSKILL, MF_NOWARP,MF_NOPVP,MF_NOICEWALL,
-	MF_SNOW, MF_FOG, MF_SAKURA, MF_LEAVES, MF_RAIN, MF_INDOORS };
+	MF_SNOW, MF_FOG, MF_SAKURA, MF_LEAVES, MF_RAIN, MF_INDOORS, MF_NOGO };
 
 int buildin_setmapflagnosave(struct script_state *st)
 {
@@ -4674,6 +4674,9 @@ int buildin_setmapflag(struct script_state *st)
 			case MF_INDOORS: // celest
 				map[m].flag.indoors=1;
 				break;
+			case MF_NOGO: // celest
+				map[m].flag.nogo=1;
+				break;
 		}
 	}
 
@@ -4746,6 +4749,9 @@ int buildin_removemapflag(struct script_state *st)
 				break;
 			case MF_INDOORS: // celest
 				map[m].flag.indoors=0;
+				break;
+			case MF_NOGO: // celest
+				map[m].flag.nogo=0;
 				break;
 		}
 	}

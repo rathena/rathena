@@ -1,5 +1,6 @@
 Date	Added
 11/20
+	* Added "nogo" mapflag to prevent the use of @go on a specified map. [Valaris]
 	* Fixed small/big monster spawning crashing (mixed up the merge). [Valaris]
 	* Fixed crash with upgrading TXT and having more than 256 accounts. [Valaris]
 	* TXT upgrades will convert broken flag to attribute column. [Valaris]
