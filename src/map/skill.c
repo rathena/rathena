@@ -973,8 +973,8 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			if((skill*15 + 55) + (skill2 = pc_checkskill(sd,TF_STEAL))*10 > rand()%1000) {
 				if(pc_steal_item(sd,bl))
 					clif_skill_nodamage(src,bl,TF_STEAL,skill2,1);
-				else
-					clif_skill_fail(sd,skillid,0,0);
+				//else
+				//	clif_skill_fail(sd,skillid,0,0); // it's annoying! =p [Celest]
 			}
 		break;
 
@@ -4700,6 +4700,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	int i,count=1,limit=10000,val1=0,val2=0;
 	int target=BCT_ENEMY,interval=1000,range=0;
 	int dir=0,aoe_diameter=0;	// -- aoe_diameter (moonsoul) added for sage Area Of Effect skills
+	struct status_change *sc_data = battle_get_sc_data(src);	// for firewall and fogwall - celest
 
 	nullpo_retr(0, src);
 
@@ -4720,8 +4721,12 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		if(dir&1) count=5;
 		else count=3;
 		limit=skill_get_time(skillid,skilllv);
-		if (((struct map_session_data *)src)->sc_data[SC_VIOLENTGALE].timer!=-1)
-			limit *= 1.5;
+		if(sc_data) {
+			if (sc_data[SC_VIOLENTGALE].timer!=-1) limit *= 1.5;
+		}
+		// check for sc_data first - Celest
+		// if (((struct map_session_data *)src)->sc_data[SC_VIOLENTGALE].timer!=-1)
+		//	limit *= 1.5;
 		val2=4+skilllv;
 		interval=1;
 		break;
@@ -5006,8 +5011,9 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case PF_FOGWALL:	/* フォグウォ?ル */
 		count=15;
 		limit=skill_get_time(skillid,skilllv);
-		if (((struct map_session_data *)src)->sc_data[SC_DELUGE].timer!=-1)
-			limit *= 2;
+		if(sc_data) {
+			if (sc_data[SC_DELUGE].timer!=-1) limit *= 2;
+		}		
 		break;
 	case RG_GRAFFITI:			/* Graffiti */
 		count=1;	// Leave this at 1 [Valaris]
@@ -8525,11 +8531,11 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			return 0;/* ?ぎ足しができない?態異常である時は?態異常を行わない */
 		if(type == SC_GRAFFITI){	//異常中にもう一度?態異常になった時に解除してから再度かかる
 			skill_status_change_end(bl,type,-1);
-		}else{
-		(*sc_count)--;
-		delete_timer(sc_data[type].timer, skill_status_change_timer);
-		sc_data[type].timer = -1;
-	}
+		} else {
+			(*sc_count)--;
+			delete_timer(sc_data[type].timer, skill_status_change_timer);
+			sc_data[type].timer = -1;
+		}
 	}
 
 	switch(type){	/* 異常の種類ごとの?理 */
@@ -8566,9 +8572,17 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 				skill_status_change_end(bl,SC_WINDWALK,-1);
 			break;
 		case SC_DECREASEAGI:		/* 速度減少 */
+			if (bl->type == BL_PC)	// Celest
+				tick>>=1;				
 			calc_flag = 1;
 			if(sc_data[SC_INCREASEAGI].timer!=-1 )
 				skill_status_change_end(bl,SC_INCREASEAGI,-1);
+			if(sc_data[SC_ADRENALINE].timer!=-1 )
+				skill_status_change_end(bl,SC_ADRENALINE,-1);
+			if(sc_data[SC_SPEARSQUICKEN].timer!=-1 )
+				skill_status_change_end(bl,SC_SPEARSQUICKEN,-1);
+			if(sc_data[SC_TWOHANDQUICKEN].timer!=-1 )
+				skill_status_change_end(bl,SC_TWOHANDQUICKEN,-1);
 			break;
 		case SC_SIGNUMCRUCIS:		/* シグナムクルシス */
 			calc_flag = 1;
@@ -8582,10 +8596,14 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 				return 0;
 			break;
 		case SC_TWOHANDQUICKEN:		/* 2HQ */
+			if(sc_data[SC_DECREASEAGI].timer!=-1)
+				return 0;
 			*opt3 |= 1;
 			calc_flag = 1;
 			break;
 		case SC_ADRENALINE:			/* アドレナリンラッシュ */
+			if(sc_data[SC_DECREASEAGI].timer!=-1)
+				return 0;
 			calc_flag = 1;
 			break;
 		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
@@ -9253,7 +9271,7 @@ int skill_check_cloaking(struct block_list *bl)
 	if(bl->type == BL_PC && 
 		(battle_config.pc_cloak_check_type&1 || pc_checkskill(sd,AS_CLOAKING)>2))
 		return 0;
-	if(bl->type == BL_MOB && battle_config.monster_cloak_check_type&1)
+	else if(bl->type == BL_MOB && battle_config.monster_cloak_check_type&1)
 		return 0;
 	for(i=0;i<sizeof(dx)/sizeof(dx[0]);i++){
 		int c=map_getcell(bl->m,bl->x+dx[i],bl->y+dy[i]);
@@ -9275,7 +9293,7 @@ int skill_type_cloaking(struct block_list *bl)
 	nullpo_retr(0, bl);
 	if(bl->type == BL_PC && battle_config.pc_cloak_check_type&1)
 		return 0;
-	if(bl->type == BL_MOB && battle_config.monster_cloak_check_type&1)
+	else if(bl->type == BL_MOB && battle_config.monster_cloak_check_type&1)
 		return 0;
 	for(i=0; i<sizeof(dx)/sizeof(dx[0]); i++)
 	{

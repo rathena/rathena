@@ -5113,7 +5113,10 @@ static const struct {
 	{ "muting_players",                   &battle_config.muting_players}, // added by [Apple]
 	{ "zeny_from_mobs",			&battle_config.zeny_from_mobs}, // [Valaris]
 	{ "mobs_level_up",			&battle_config.mobs_level_up}, // [Valaris]
-	{ "pk_min_level",            &battle_config.pk_min_level}, // [celest]
+	{ "pk_min_level",           &battle_config.pk_min_level}, // [celest]
+	{ "skill_steal_type",       &battle_config.skill_steal_type}, // [celest]
+	{ "skill_steal_rate",       &battle_config.skill_steal_rate}, // [celest]
+
 //SQL-only options start
 #ifndef TXT_ONLY 
 	{ "mail_system",		&battle_config.mail_system	}, // added by [Valaris]
@@ -5336,6 +5339,8 @@ void battle_set_defaults() {
 	battle_config.zeny_from_mobs = 0;
 	battle_config.mobs_level_up = 0;
 	battle_config.pk_min_level = 55;
+	battle_config.skill_steal_type = 1;
+	battle_config.skill_steal_rate = 100;
 
 	battle_config.castrate_dex_scale = 150;
 

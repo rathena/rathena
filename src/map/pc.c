@@ -3309,7 +3309,9 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		if(!md->state.steal_flag && mob_db[md->class].mexp <= 0 && !(mob_db[md->class].mode&0x20) && md->sc_data[SC_STONE].timer == -1 && md->sc_data[SC_FREEZE].timer == -1 &&
 			(!(md->class>1324 && md->class<1364))) // prevent stealing from treasure boxes [Valaris]
 		{
-			skill = sd->paramc[4] - mob_db[md->class].dex + pc_checkskill(sd,TF_STEAL)*3 + 10;
+			skill = battle_config.skill_steal_type == 1
+				? (sd->paramc[4] - mob_db[md->class].dex)/2 + pc_checkskill(sd,TF_STEAL)*6 + 10
+				: sd->paramc[4] - mob_db[md->class].dex + pc_checkskill(sd,TF_STEAL)*3 + 10;
 
 			if(0 < skill)
 			{
