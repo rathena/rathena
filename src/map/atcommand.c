@@ -209,6 +209,7 @@ ATCOMMAND_FUNC(send); // by davidsiaw
 ATCOMMAND_FUNC(setbattleflag); // by MouseJstr
 ATCOMMAND_FUNC(unmute); // [Valaris]
 ATCOMMAND_FUNC(uptime); // by MC Cameri
+ATCOMMAND_FUNC(changesex); // by MC Cameri
 
 #ifndef TXT_ONLY
 ATCOMMAND_FUNC(checkmail); // [Valaris]
@@ -456,6 +457,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_SetBattleFlag,		"@setbattleflag",	60, atcommand_setbattleflag },
 	{ AtCommand_UnMute,				"@unmute",			60, atcommand_unmute }, // [Valaris]
 	{ AtCommand_UpTime,				"@uptime",			 0, atcommand_uptime }, // by MC Cameri
+	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri
 
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
@@ -5923,8 +5925,8 @@ int atcommand_repairall(
 
 	count = 0;
 	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->status.inventory[i].nameid && sd->status.inventory[i].attribute == 1) {
-			sd->status.inventory[i].attribute = 0;
+		if (sd->status.inventory[i].nameid && sd->status.inventory[i].broken == 1) {
+			sd->status.inventory[i].broken = 0;
 			clif_produceeffect(sd, 0, sd->status.inventory[i].nameid);
 			count++;
 		}
@@ -7561,6 +7563,45 @@ atcommand_uptime(
 	
     snprintf(output, sizeof(output), msg_table[245], days, hours, minutes, seconds);
 	clif_displaymessage(fd,output);
+	return 0;
+}
+
+/*==========================================
+ * @changesex <sex>
+ * => Changes one's sex. Argument sex can be
+ * 0 or 1, m or f, male or female.
+ *------------------------------------------
+ */
+int
+atcommand_changesex(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+
+//	char sex[200], output[200];
+	int isex = (sd->status.sex+1)%2;
+/*
+	if (!message || !*message)
+		return -1;
+	memset(sex, '\0', sizeof(sex));
+	if(sscanf(message, "%99[^\n]", sex) < 1)
+		return -1;
+	str_lower(sex);
+	if (strcmp(sex,"0") == 0 || strcmp(sex,"f") == 0 || strcmp(sex,"female") == 0) {
+		isex = 0;
+	} else if (strcmp(sex,"1") == 0 || strcmp(sex,"m") == 0 || strcmp(sex,"male") == 0) {
+		isex = 1;
+	} else {
+		clif_displaymessage(fd,msg_table[456]);
+		return 0;
+	}
+*/
+//	if (isex != sd->sex) {
+		chrif_changesex(sd->status.account_id, isex);
+//	} else {
+//		sprintf(output,msg_table[460],(isex == 0)?"female":"male");
+//		clif_displaymessage(fd,output);
+//	}
 	return 0;
 }
 

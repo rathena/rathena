@@ -1,5 +1,6 @@
 Date	Added
 11/06
+	* atcommand.c/.h,chrif.c/.h, added @changesex. [MC Cameri]
 	* mob.c & clif.c: Added & Modified a few parts dealing with monsters and guilds [Codemaster]
 	* mob.c: Re-did a few parts according to jA's 1057 version. [Codemaster]
 11/05

@@ -415,6 +415,20 @@ int chrif_char_ask_name(int id, char * character_name, short operation_type, int
 }
 
 /*==========================================
+ * 性別変化要求
+ *------------------------------------------
+ */
+int chrif_changesex(int id, int sex) {
+	WFIFOW(char_fd,0) = 0x2b0c;
+	WFIFOW(char_fd,2) = 9;
+	WFIFOL(char_fd,4) = id;
+	WFIFOB(char_fd,8) = sex;
+	printf("chrif : sended 0x2b0c\n");
+	WFIFOSET(char_fd,9);
+	return 0;
+}
+
+/*==========================================
  * Answer after a request about a character name to do some operations (by Yor)
  * Used to answer of chrif_char_ask_name.
  * type of operation:
@@ -885,9 +899,7 @@ int chrif_parse(int fd)
 
 	// only char-server can have an access to here.
 	// so, if it isn't the char-server, we disconnect the session (fd != char_fd).
-	if(fd != char_fd)
-		session[fd]->eof = 1;
-	if(session[fd]->eof) {
+	if (fd != char_fd || session[fd]->eof) {
 		if (fd == char_fd) {
 			printf("Map-server can't connect to char-server (connection #%d).\n", fd);
 			char_fd = -1;
@@ -907,7 +919,6 @@ int chrif_parse(int fd)
 			if (r == 1) continue;	// intifで処理した
 			if (r == 2) return 0;	// intifで処理したが、データが足りない
 
-			close(fd);	// intifで処理できなかった
 			session[fd]->eof = 1;
 			return 0;
 		}

@@ -191,7 +191,8 @@ enum AtCommandType {
 	AtCommand_Send,
 	AtCommand_SetBattleFlag,
 	AtCommand_UnMute,
-	AtCommand_UpTime,	
+	AtCommand_UpTime,
+	AtCommand_ChangeSex,	
 	// SQL-only commands start
 #ifndef TXT_ONLY 
 	AtCommand_CheckMail, // [Valaris]
