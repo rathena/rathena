@@ -29,6 +29,7 @@ void Gettimeofday(struct timeval *timenow)
 #include <sys/time.h>
 #include <sys/ioctl.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 #include <unistd.h>
 #endif
 #endif
