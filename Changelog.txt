@@ -1,5 +1,6 @@
 Date	Added
 11/28
+	* Fix some file props [MouseJstr]
 	* Added map_versionscreen(), displayed when --version flag is passed on command-line. [MC Cameri]
 	* Finished map_helpscreen(), displayed when --help flag passed on command-line. [MC Cameri]
 	* Changed Suilds Extention Skill to +6 people per level. [Lupus]
