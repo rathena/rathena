@@ -829,15 +829,11 @@ AtCommandType atcommand(struct map_session_data* sd, const int level, const char
  *------------------------------------------
  */
 static int atkillmonster_sub(struct block_list *bl, va_list ap) {
-	int flag = va_arg(ap, int);
+	struct mob_data *md;
+	nullpo_retr(0, md=(struct mob_data *)bl);
 
-	nullpo_retr(0, bl);
-
-	if (flag)
-		mob_damage(NULL, (struct mob_data *)bl, ((struct mob_data *)bl)->hp, 2);
-	else
-		mob_delete((struct mob_data *)bl);
-
+	mob_damage(NULL, md, md->hp, 2);
+	
 	return 0;
 }
 /*==========================================
@@ -892,34 +888,6 @@ static int atcommand_cleanmap_sub(struct block_list *bl,va_list ap)
 	map_delobject(fitem->bl.id);
 
 	return 0;
-}
-static int atkillnpc_sub(struct block_list *bl, va_list ap)
-{
-        int flag = va_arg(ap,int);
-
-        nullpo_retr(0, bl);
-
-        npc_delete((struct npc_data *)bl);
-
-        flag = 0;
-
-        return 0;
-}
-
-void rehash( const int fd, struct map_session_data* sd )
-{
-        int map_id = 0;
-
-        int LOADED_MAPS = map_num;
-
-        for (map_id = 0; map_id < LOADED_MAPS;map_id++) {
-
-            if (map_id > LOADED_MAPS)
-                break;
-
-            map_foreachinarea(atkillmonster_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, BL_MOB, 0);
-            map_foreachinarea(atkillnpc_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, BL_NPC, 0);
-        }
 }
 
 /*==========================================
@@ -1078,11 +1046,11 @@ int atcommand_rura(
 	if (x > 0 && x < 400 && y > 0 && y < 400) {
 		m = map_mapname2mapid(map_name);
 		if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, "You are not authorised to warp you to this map.");
+			clif_displaymessage(fd, msg_table[247]);
 			return -1;
 		}
 		if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+			clif_displaymessage(fd, msg_table[248]);
 			return -1;
 		}
 		if (pc_setpos(sd, map_name, x, y, 3) == 0)
@@ -1161,11 +1129,11 @@ int atcommand_jumpto(
 
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
+			clif_displaymessage(fd, msg_table[247]);
 			return -1;
 		}
 		if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+			clif_displaymessage(fd, msg_table[248]);
 			return -1;
 		}
 		pc_setpos(sd, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y, 3);
@@ -1201,12 +1169,8 @@ int atcommand_jump(
 	if (y <= 0)
 		y = rand() % 399 + 1;
 	if (x > 0 && x < 400 && y > 0 && y < 400) {
-		if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, "You are not authorised to warp you to your actual map.");
-			return -1;
-		}
-		if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+		if (sd->bl.m >= 0 && (map[sd->bl.m].flag.nowarp || map[sd->bl.m].flag.nowarpto) && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+			clif_displaymessage(fd, msg_table[248]);
 			return -1;
 		}
 		pc_setpos(sd, sd->mapname, x, y, 3);
@@ -1815,11 +1779,11 @@ int atcommand_load(
 
 	m = map_mapname2mapid(sd->status.save_point.map);
 	if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-		clif_displaymessage(fd, "You are not authorised to warp you to your save map.");
+		clif_displaymessage(fd, msg_table[249]);
 		return -1;
 	}
 	if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-		clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+		clif_displaymessage(fd, msg_table[248]);
 		return -1;
 	}
 
@@ -1878,12 +1842,12 @@ int atcommand_storage(
 	nullpo_retr(-1, sd);
 
 	if (sd->state.storage_flag == 1) {
-		clif_displaymessage(fd, "You have opened your guild storage. Close it before.");
+		clif_displaymessage(fd, msg_table[250]);
 		return -1;
 	}
 
 	if ((stor = account2storage2(sd->status.account_id)) != NULL && stor->storage_status == 1) {
-		clif_displaymessage(fd, "You have already opened your storage.");
+		clif_displaymessage(fd, msg_table[250]);
 		return -1;
 	}
 
@@ -1906,16 +1870,16 @@ int atcommand_guildstorage(
 
 	if (sd->status.guild_id > 0) {
 		if (sd->state.storage_flag == 1) {
-			clif_displaymessage(fd, "You have already opened your guild storage.");
+			clif_displaymessage(fd, msg_table[251]);
 			return -1;
 		}
 		if ((stor = account2storage2(sd->status.account_id)) != NULL && stor->storage_status == 1) {
-			clif_displaymessage(fd, "Your storage is opened. Close it before.");
+			clif_displaymessage(fd, msg_table[251]);
 			return -1;
 		}
 		storage_guild_storageopen(sd);
 	} else {
-		clif_displaymessage(fd, "You are not in a guild.");
+		clif_displaymessage(fd, msg_table[252]);
 		return -1;
 	}
 
@@ -3066,11 +3030,11 @@ int atcommand_go(
 			if (sd->status.memo_point[-town-1].map[0]) {
 				m = map_mapname2mapid(sd->status.memo_point[-town-1].map);
 				if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-					clif_displaymessage(fd, "You are not authorised to warp you to this memo map.");
+					clif_displaymessage(fd, msg_table[247]);
 					return -1;
 				}
 				if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-					clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+					clif_displaymessage(fd, msg_table[248]);
 					return -1;
 				}
 				if (pc_setpos(sd, sd->status.memo_point[-town-1].map, sd->status.memo_point[-town-1].x, sd->status.memo_point[-town-1].y, 3) == 0) {
@@ -3087,11 +3051,11 @@ int atcommand_go(
 		} else if (town >= 0 && town < (int)(sizeof(data) / sizeof(data[0]))) {
 			m = map_mapname2mapid((char *)data[town].map);
 			if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-				clif_displaymessage(fd, "You are not authorised to warp you to this destination map.");
+				clif_displaymessage(fd, msg_table[247]);
 				return -1;
 			}
 			if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-				clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+				clif_displaymessage(fd, msg_table[248]);
 				return -1;
 			}
 			if (pc_setpos(sd, (char *)data[town].map, data[town].x, data[town].y, 3) == 0) {
@@ -3675,7 +3639,7 @@ int atcommand_memo(
 	else {
 		if (position >= MIN_PORTAL_MEMO && position <= MAX_PORTAL_MEMO) {
 			if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-				clif_displaymessage(fd, "You are not authorised to memo this map.");
+				clif_displaymessage(fd, msg_table[253]);
 				return -1;
 			}
 			if (sd->status.memo_point[position].map[0]) {
@@ -5697,15 +5661,24 @@ int atcommand_reloadskilldb(
  *
  *------------------------------------------
  */
+void rehash(void)
+{
+	int map_id;
+
+	for (map_id = 0; map_id < map_num; map_id++) {
+		map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, BL_MOB);
+		map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, BL_NPC);
+	}
+}
 int atcommand_reloadscript(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	atcommand_broadcast( fd, sd, "@broadcast", "eAthena SQL Server is Rehashing..." );
+	atcommand_broadcast( fd, sd, "@broadcast", "eAthena Server is Rehashing..." );
 	atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
 
-        rehash( fd, sd );
+	rehash();
 
 	atcommand_broadcast( fd, sd, "@broadcast", "Reloading NPCs..." );
 	do_init_npc();
@@ -8376,11 +8349,11 @@ int atcommand_jumptoid(
    {
       if ((pl_sd = session[session_id]->session_data) != NULL) {
          if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-            clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
+            clif_displaymessage(fd, msg_table[247]);
             return -1;
          }
          if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-            clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+            clif_displaymessage(fd, msg_table[248]);
             return -1;
          }
          pc_setpos(sd, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y, 3);
@@ -8431,11 +8404,11 @@ int atcommand_jumptoid2(
    {
       if ((pl_sd = session[session_id]->session_data) != NULL) {
          if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-            clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
+            clif_displaymessage(fd, msg_table[247]);
             return -1;
          }
          if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-            clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+            clif_displaymessage(fd, msg_table[248]);
             return -1;
          }
          pc_setpos(sd, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y, 3);
@@ -8486,11 +8459,11 @@ int atcommand_recallid(
       if ((pl_sd = session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level
             if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-               clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
+               clif_displaymessage(fd, msg_table[247]);
                return -1;
             }
             if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-               clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+               clif_displaymessage(fd, msg_table[248]);
                return -1;
             }
             pc_setpos(pl_sd, sd->mapname, sd->bl.x, sd->bl.y, 2);
@@ -8545,11 +8518,11 @@ int atcommand_recallid2(
       if ((pl_sd = session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level
             if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-               clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
-               return -1;
+				clif_displaymessage(fd, msg_table[247]);
+				return -1;
             }
             if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-               clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+               clif_displaymessage(fd, msg_table[248]);
                return -1;
             }
             pc_setpos(pl_sd, sd->mapname, sd->bl.x, sd->bl.y, 2);

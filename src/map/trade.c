@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../common/nullpo.h"
 #include "clif.h"
 #include "itemdb.h"
 #include "map.h"
@@ -15,8 +16,6 @@
 #include "storage.h"
 #include "intif.h"
 #include "atcommand.h"
-
-#include "nullpo.h"
 
 /*==========================================
  * Žæˆø—v¿‚ð‘ŠŽè‚É‘—‚é
@@ -34,7 +33,10 @@ void trade_traderequest(struct map_session_data *sd, int target_id) {
 				return;
 			}
 		}
-		if ((target_sd->trade_partner != 0) || (sd->trade_partner != 0)) {
+		if(pc_isGM(sd) && pc_isGM(sd) < battle_config.gm_can_drop_lv) {
+			clif_displaymessage(sd->fd, msg_txt(246));
+			trade_tradecancel(sd); // GM is not allowed to trade
+		} else if ((target_sd->trade_partner != 0) || (sd->trade_partner != 0)) {
 			trade_tradecancel(sd); // person is in another trade
 		} else {
 			if (sd->bl.m != target_sd->bl.m ||

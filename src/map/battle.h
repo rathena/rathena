@@ -131,7 +131,6 @@ extern struct Battle_Config {
 	int skillup_limit;
 	int wp_rate;
 	int pp_rate;
-	int cdp_rate;
 	int monster_active_enable;
 	int monster_damage_delay_rate;
 	int monster_loot_type;
@@ -232,7 +231,6 @@ extern struct Battle_Config {
 //	int pet_lootitem; // removed [Valaris]
 //	int pet_weight; // removed [Valaris]
 	int show_steal_in_same_party;
-	int enable_upper_class;
 	int pet_attack_attr_none;
 	int mob_attack_attr_none;
 	int mob_ghostring_fix;
@@ -273,7 +271,6 @@ extern struct Battle_Config {
 	int skill_removetrap_type;
 	int disp_experience;
 	int castle_defense_rate;
-	int riding_weight;
 	int backstab_bow_penalty;
 	int hp_rate;
 	int sp_rate;
@@ -309,7 +306,6 @@ extern struct Battle_Config {
 	int skill_steal_type; // [celest]
 	int skill_steal_rate; // [celest]
 	int night_darkness_level; // [celest]
-	int skill_range_leniency; // [celest]
 	int motd_type; // [celest]
 	int allow_atcommand_when_mute; // [celest]
 	int finding_ore_rate; // orn

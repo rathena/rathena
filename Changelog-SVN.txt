@@ -2,6 +2,25 @@ Date	Added
 
 03/22
 	* Fixed Alchemist's CANNIBALIZE, now it summons correct # of plants. With their real HP [Lupus]
+	* Updated @reloadmobdb, @reloadskilldb, @reloaditemdb [celest]
+	* Some tidying up in @reloadscript (more work needed) [celest]
+	* Moved some gm command messages to msg_athena.conf [celest]
+	* Removed skill_range_leniency [celest]
+	* Removed enable_upper_class [celest]
+	* Removed riding_weight [celest]
+        * Added signal handler for SIGPIPE [celest]
+	* Updated Frost Joke to affect everyone else in PvP/GvG, thanks to veider
+	* Corrected Detect Trap range to be based on level, thanks to veider
+	* Updated Tunnel Drive's movement speed, thanks to veider
+	* Removed cdp_rate, suggested by leinsirk10
+	* Fixed a typo in Acid Terror, thanks to leinsirk10
+	* Fixed some typos/memory leak in script cleaning up, thanks to leinsirk10
+	* Added gm_can_drop_lv limitations for trading and opening storage, thanks to
+          Dino9021
+	* Changed shop_exp's calculation to use 0.01% increments, suggested by tcdiem
+        * Refixed "--en/ja--" usage in 'monster' script not working properly, thanks
+          to sbilly
+
 03/21
         * Moved /tool and /webserver to under /src and added 'make tools' and 'make
           web-server' [celest]
@@ -86,8 +105,6 @@ Date	Added
 		- Should be made as an option of battle_athena.conf
 
 03/11
-        * Fixed "--en/ja--" usage in 'monster' script not working properly, thanks
-          to sbilly [celest]
         * Speedup player autosaving -- don't save guild castle data at the same time,
           thanks to Alex14 [celest]
         * Optimised guild castle saving when autosaving player data, thanks to Yor /

@@ -3120,7 +3120,7 @@ int map_db_final(void *k,void *d,va_list ap)
 }
 int nick_db_final(void *k,void *d,va_list ap){ return 0; }
 int charid_db_final(void *k,void *d,va_list ap){ return 0; }
-static int cleanup_sub(struct block_list *bl, va_list ap) {
+int cleanup_sub(struct block_list *bl, va_list ap) {
 	nullpo_retr(0, bl);
 
         switch(bl->type) {

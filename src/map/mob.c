@@ -4352,14 +4352,17 @@ static int mob_readdb_race(void)
 
 void mob_reload(void)
 {
-	/*
+#ifndef TXT_ONLY
+    if(db_use_sqldbs)
+        mob_read_sqldb();
+    else
+#endif /* TXT_ONLY */
+	mob_readdb();
 
-	<empty monster database>
-	mob_read();
-
-	*/
-
-	do_init_mob();
+	mob_readdb_mobavail();
+	mob_read_randommonster();
+	mob_readskilldb();
+	mob_readdb_race();
 }
 
 #ifndef TXT_ONLY

@@ -7833,11 +7833,11 @@ int do_final_script()
 	if (script_config.die_event_name)
 		aFree(script_config.die_event_name);
 	if (script_config.kill_event_name)
-		aFree(script_config.die_event_name);
+		aFree(script_config.kill_event_name);
 	if (script_config.login_event_name)
-		aFree(script_config.die_event_name);
+		aFree(script_config.login_event_name);
 	if (script_config.logout_event_name)
-		aFree(script_config.die_event_name);
+		aFree(script_config.logout_event_name);
 
 	return 0;
 }

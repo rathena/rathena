@@ -181,7 +181,7 @@ L_Juice:
 }
 
 // Juicer Marx Hansen ---------------------------------------------------------
-payon_in01.gat,5,48,7	script	Juicer Marx Hansen	86,{
+payon_in03.gat,188,146,5	script	Juicer Marx Hansen	86,{
 	mes "[Juicer Marx Hansen]";
 	if(MARIANNE == 1) goto L_Juice;
 	mes "Welcome to my shop. What brings you here?";

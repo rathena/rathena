@@ -929,13 +929,7 @@ static int itemdb_final(void *key,void *data,va_list ap)
 
 void itemdb_reload(void)
 {
-	/*
-
-	<empty item databases>
-	itemdb_read();
-
-	*/
-
+	numdb_final(item_db,itemdb_final);
 	do_init_itemdb();
 }
 

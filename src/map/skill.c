@@ -4812,7 +4812,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 
 	case HT_DETECTING:				/* ディテクティング */
 		{
-			const int range=7;
+			int range=skilllv*2+1;
 			if(src->x!=x)
 				x+=(src->x-x>0)?-range:range;
 			if(src->y!=y)
@@ -6915,14 +6915,13 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 			range = status_get_range(&sd->bl) - (range + 1);
 		// be lenient if the skill was cast before we have moved to the correct position [Celest]
 		if (sd->walktimer != -1)
-			range += battle_config.skill_range_leniency;
+			range++;
 		else check_range_flag = 1;
 		if(!battle_check_range(&sd->bl,bl,range)) {
-			if (check_range_flag && battle_check_range(&sd->bl,bl,range + battle_config.skill_range_leniency)) {
-				int dir, mask[8][2] = {{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1}};
-				dir = map_calc_dir(&sd->bl,bl->x,bl->y);
-				pc_walktoxy (sd, sd->bl.x + mask[dir][0] * battle_config.skill_range_leniency,
-					sd->bl.y + mask[dir][1] * battle_config.skill_range_leniency);
+			if (check_range_flag && battle_check_range(&sd->bl,bl,range + 1)) {
+				int mask[8][2] = {{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1}};
+				int dir = map_calc_dir(&sd->bl,bl->x,bl->y);
+				pc_walktoxy (sd, sd->bl.x + mask[dir][0], sd->bl.y + mask[dir][1]);
 			} else
 				return 0;
 		}
@@ -7177,14 +7176,13 @@ int skill_use_pos( struct map_session_data *sd,
 			range = status_get_range(&sd->bl) - (range + 1);
 		// be lenient if the skill was cast before we have moved to the correct position [Celest]
 		if (sd->walktimer != -1)
-			range += battle_config.skill_range_leniency;
+			range ++;
 		else check_range_flag = 1;
 		if(!battle_check_range(&sd->bl,&bl,range)) {
-			if (check_range_flag && battle_check_range(&sd->bl,&bl,range + battle_config.skill_range_leniency)) {
-				int dir, mask[8][2] = {{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1}};
-				dir = map_calc_dir(&sd->bl,bl.x,bl.y);
-				pc_walktoxy (sd, sd->bl.x + mask[dir][0] * battle_config.skill_range_leniency,
-					sd->bl.y + mask[dir][1] * battle_config.skill_range_leniency);
+			if (check_range_flag && battle_check_range(&sd->bl,&bl,range + 1)) {
+				int mask[8][2] = {{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1}};
+				int dir = map_calc_dir(&sd->bl,bl.x,bl.y);
+				pc_walktoxy (sd, sd->bl.x + mask[dir][0], sd->bl.y + mask[dir][1]);
 			} else
 				return 0;
 		}
@@ -7656,12 +7654,16 @@ int skill_frostjoke_scream(struct block_list *bl,va_list ap)
 	if(src == bl)//自分には?かない
 		return 0;
 
-	if(battle_check_target(src,bl,BCT_ENEMY) > 0)
+	if (map[src->m].flag.gvg || map[src->m].flag.pvp)
 		skill_additional_effect(src,bl,skillnum,skilllv,BF_MISC,tick);
-	else if(battle_check_target(src,bl,BCT_PARTY) > 0) {
-		if(rand()%100 < 10)//PTメンバにも低確率でかかる(とりあえず10%)
+	// we freeze everybody except of ourselfes on pvp/gvg [veider]
+	else {
+		if(battle_check_target(src,bl,BCT_ENEMY) > 0)
+			skill_additional_effect(src,bl,skillnum,skilllv,BF_MISC,tick);
+		else if(battle_check_target(src,bl,BCT_PARTY) > 0 && rand()%100 < 10)
 			skill_additional_effect(src,bl,skillnum,skilllv,BF_MISC,tick);
 	}
+	// so on non-pvp/gvg we are just freezing as freezed before
 
 	return 0;
 }
@@ -8373,8 +8375,9 @@ int skill_unit_timer_sub( struct block_list *bl, va_list ap )
 
 	if(!unit->alive)
 		return 0;
+	group=unit->group;
 
-	nullpo_retr(0, group=unit->group);
+	nullpo_retr(0, group);
 	range = unit->range;
 
 	/* onplace_timerイベント呼び出し */
@@ -8772,40 +8775,32 @@ int skill_produce_mix( struct map_session_data *sd,
 				make_per += 500 + pc_checkskill(sd,AM_CP_WEAPON)*100 + pc_checkskill(sd,AM_CP_SHIELD)*100 +
 					pc_checkskill(sd,AM_CP_ARMOR)*100 + pc_checkskill(sd,AM_CP_HELM)*100;
 			else
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;
+				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;			
 		} else if (skill_produce_db[idx].req_skill == ASC_CDP) {
-			make_per = 2000 + 40*sd->paramc[4] + 20*sd->paramc[5];
-			//make_per = 20 + (20*sd->paramc[4])/50 + (20*sd->paramc[5])/100;
+			make_per = 2000 + 40*sd->paramc[4] + 20*sd->paramc[5];			
 		} else {
 			if(nameid == 998)
 				make_per = 1500 + sd->status.job_level*35 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*600;
 			else
 				make_per = 1000 + sd->status.job_level*35 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*500;
 		}
-	}
-	else { // Corrected rates [DracoRPG]
+		if(battle_config.pp_rate != 100)
+			make_per = make_per * battle_config.pp_rate / 100;
+	} else { // Corrected rates [DracoRPG]
 		int add_per=0;
 		if(pc_search_inventory(sd,989) >= 0) add_per = 400;
 		else if(pc_search_inventory(sd,988) >= 0) add_per = 300;
 		else if(pc_search_inventory(sd,987) >= 0) add_per = 200;
 		else if(pc_search_inventory(sd,986) >= 0) add_per = 100;
-			wlv = itemdb_wlv(nameid);
-			make_per = 1500 + sd->status.job_level*35 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*1000 + pc_checkskill(sd,BS_WEAPONRESEARCH)*100 +
-				((wlv >= 3)? pc_checkskill(sd,BS_ORIDEOCON)*100 : 0) + add_per - (ele? 2500:0) - sc*((4-wlv)*500) - wlv*1000;
+		wlv = itemdb_wlv(nameid);
+		make_per = 1500 + sd->status.job_level*35 + sd->paramc[4]*10 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*1000 + pc_checkskill(sd,BS_WEAPONRESEARCH)*100 +
+			((wlv >= 3)? pc_checkskill(sd,BS_ORIDEOCON)*100 : 0) + add_per - (ele? 2500:0) - sc*((4-wlv)*500) - wlv*1000;
+		if(battle_config.wp_rate != 100)	/* 確率補正 */
+			make_per = make_per * battle_config.wp_rate / 100;
 	}
 // -----------------------------------------------------//
 
 	if(make_per < 1) make_per = 1;
-
-	if(skill_produce_db[idx].req_skill==AM_PHARMACY ||
-		skill_produce_db[idx].req_skill==ASC_CDP) {
-		if( battle_config.pp_rate!=100 )
-			make_per=make_per*battle_config.pp_rate/100;
-	}
-	else {
-		if( battle_config.wp_rate!=100 )	/* 確率補正 */
-			make_per=make_per*battle_config.wp_rate/100;
-	}
 
 //	if(battle_config.etc_log)
 //		printf("make rate = %d\n",make_per);
@@ -9556,14 +9551,9 @@ static int skill_read_skillspamount(void)
 
 void skill_reload(void)
 {
-	/*
-
-	<empty skill database>
-	<?>
-
-	*/
-
-	do_init_skill();
+	skill_readdb();
+	if (battle_config.skill_sp_override_grffile)
+		skill_read_skillspamount();
 }
 
 /*==========================================

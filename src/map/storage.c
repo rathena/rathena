@@ -3,15 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "db.h"
+#include "../common/db.h"
+#include "../common/nullpo.h"
+#include "../common/malloc.h"
+
 #include "itemdb.h"
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
 #include "storage.h"
 #include "guild.h"
-#include "nullpo.h"
-#include "malloc.h"
+#include "battle.h"
+#include "atcommand.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -124,6 +127,10 @@ int storage_storageopen(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
+	if(pc_isGM(sd) && pc_isGM(sd) < battle_config.gm_can_drop_lv) {
+		clif_displaymessage(sd->fd, msg_txt(246));
+		return 1;
+	}
 	if((stor = numdb_search(storage_db,sd->status.account_id)) != NULL) {
 		if (stor->storage_status == 0) {
 			stor->storage_status = 1;
@@ -132,7 +139,7 @@ int storage_storageopen(struct map_session_data *sd)
 			clif_storageequiplist(sd,stor);
 			clif_updatestorageamount(sd,stor);
 			return 0;
-		}	
+		}
 	} else
 		intif_request_storage(sd->status.account_id);
 

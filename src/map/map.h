@@ -791,6 +791,8 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count);
 
 int map_who(int fd);
 
+int cleanup_sub(struct block_list *bl, va_list ap);
+
 void map_helpscreen(); // [Valaris]
 int map_delmap(char *mapname);
 

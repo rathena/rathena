@@ -978,13 +978,11 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			if(i==331) continue;
 			sd->status.skill[i].id=i;
 		}
-		if(battle_config.enable_upper_class){ //conf‚Å–³?‚Å‚È‚¯‚ê‚Î?‚Ý?‚Þ
-			for(i=355;i<411;i++)
-				sd->status.skill[i].id=i;
-			for(i=475;i<480;i++)
-				sd->status.skill[i].id=i;
-		}
-	}else{
+		for(i=355;i<411;i++)
+			sd->status.skill[i].id=i;
+		for(i=475;i<480;i++)
+			sd->status.skill[i].id=i;
+	} else {
             do {
                 flag=0;
                 for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
@@ -3611,10 +3609,6 @@ struct pc_base_job pc_calc_base_job(int b_class)
 		bj.upper = 2;
 	}
 
-	if(battle_config.enable_upper_class==0){ //conf‚Å–³?‚É‚È‚Á‚Ä‚¢‚½‚çupper=0
-		bj.upper = 0;
-	}
-
 	if(bj.job == 0){
 		bj.type = 0;
 	}else if(bj.job < 7){
@@ -4355,12 +4349,10 @@ int pc_allskillup(struct map_session_data *sd)
 			if(i==331) continue;
 			sd->status.skill[i].lv=skill_get_max(i);
 		}
-		if(battle_config.enable_upper_class){ //conf‚Å–³?‚Å‚È‚¯‚ê‚Î?‚Ý?‚Þ
-			for(i=355;i<411;i++)
-				sd->status.skill[i].lv=skill_get_max(i);
-			for(i=475;i<480;i++)
-				sd->status.skill[i].lv=skill_get_max(i);
-		}
+		for(i=355;i<411;i++)
+			sd->status.skill[i].lv=skill_get_max(i);
+		for(i=475;i<480;i++)
+			sd->status.skill[i].lv=skill_get_max(i);
 	}
 	else {
 		for(i=0;(id=skill_tree[s][c][i].id)>0;i++){

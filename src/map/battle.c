@@ -1441,7 +1441,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 		if( skill_num!=NPC_CRITICALSLASH ){
 			// 対 象の防御力によるダメージの減少
 			// ディバインプロテクション（ここでいいのかな？）
-			if ( skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST && skill_num != KN_AUTOCOUNTER && skill_num != KN_AUTOCOUNTER && def1 < 1000000) {	//DEF, VIT無視
+			if ( skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST && skill_num != KN_AUTOCOUNTER && skill_num != AM_ACIDTERROR && def1 < 1000000) {	//DEF, VIT無視
 				int t_def;
 				target_count = 1 + battle_counttargeted(target,src,battle_config.vit_penalty_count_lv);
 				if(battle_config.vit_penalty_type > 0) {
@@ -3958,7 +3958,6 @@ static const struct {
 	{ "player_skillup_limit",              &battle_config.skillup_limit			},
 	{ "weapon_produce_rate",               &battle_config.wp_rate					},
 	{ "potion_produce_rate",               &battle_config.pp_rate					},
-	{ "deadly_potion_produce_rate",	       &battle_config.cdp_rate					},
 	{ "monster_active_enable",             &battle_config.monster_active_enable	},
 	{ "monster_damage_delay_rate",         &battle_config.monster_damage_delay_rate},
 	{ "monster_loot_type",                 &battle_config.monster_loot_type		},
@@ -4058,7 +4057,6 @@ static const struct {
 	{ "dead_branch_active",                &battle_config.dead_branch_active			},
 	{ "vending_max_value",                 &battle_config.vending_max_value		},
 	{ "show_steal_in_same_party",          &battle_config.show_steal_in_same_party		},
-	{ "enable_upper_class",                &battle_config.enable_upper_class		},
 	{ "pet_attack_attr_none",              &battle_config.pet_attack_attr_none		},
 	{ "mob_attack_attr_none",              &battle_config.mob_attack_attr_none		},
 	{ "mob_ghostring_fix",                 &battle_config.mob_ghostring_fix		},
@@ -4075,7 +4073,6 @@ static const struct {
 	{ "skill_removetrap_type",             &battle_config.skill_removetrap_type	},
 	{ "disp_experience",                   &battle_config.disp_experience			},
 	{ "castle_defense_rate",               &battle_config.castle_defense_rate		},
-	{ "riding_weight",                     &battle_config.riding_weight		},
 	{ "hp_rate",					       &battle_config.hp_rate					},
 	{ "sp_rate",					       &battle_config.sp_rate					},
 	{ "gm_can_drop_lv",				       &battle_config.gm_can_drop_lv			},
@@ -4131,7 +4128,6 @@ static const struct {
 	{ "skill_steal_type",       &battle_config.skill_steal_type}, // [celest]
 	{ "skill_steal_rate",       &battle_config.skill_steal_rate}, // [celest]
 	{ "night_darkness_level",   &battle_config.night_darkness_level}, // [celest]
-	{ "skill_range_leniency",   &battle_config.skill_range_leniency}, // [celest]
 	{ "motd_type",              &battle_config.motd_type}, // [celest]
 	{ "allow_atcommand_when_mute",			&battle_config.allow_atcommand_when_mute}, // [celest]
 	{ "finding_ore_rate",       &battle_config.finding_ore_rate}, // [celest]
@@ -4208,7 +4204,6 @@ void battle_set_defaults() {
 	battle_config.skillup_limit = 0;
 	battle_config.wp_rate=100;
 	battle_config.pp_rate=100;
-	battle_config.cdp_rate=100;
 	battle_config.monster_active_enable=1;
 	battle_config.monster_damage_delay_rate=100;
 	battle_config.monster_loot_type=0;
@@ -4308,7 +4303,6 @@ void battle_set_defaults() {
 	battle_config.dead_branch_active = 0;
 	battle_config.vending_max_value = 10000000;
 	battle_config.show_steal_in_same_party = 0;
-	battle_config.enable_upper_class = 0;
 	battle_config.pet_attack_attr_none = 0;
 	battle_config.pc_attack_attr_none = 0;
 	battle_config.mob_attack_attr_none = 1;
@@ -4325,7 +4319,6 @@ void battle_set_defaults() {
 	battle_config.skill_removetrap_type = 0;
 	battle_config.disp_experience = 0;
 	battle_config.castle_defense_rate = 100;
-	battle_config.riding_weight = 0;
 	battle_config.hp_rate = 100;
 	battle_config.sp_rate = 100;
 	battle_config.gm_can_drop_lv = 0;
@@ -4380,7 +4373,6 @@ void battle_set_defaults() {
 	battle_config.skill_steal_type = 1;
 	battle_config.skill_steal_rate = 100;
 	battle_config.night_darkness_level = 9;
-	battle_config.skill_range_leniency = 1;
 	battle_config.motd_type = 0;
 	battle_config.allow_atcommand_when_mute = 0;
 	battle_config.finding_ore_rate = 100;
@@ -4510,9 +4502,6 @@ void battle_validate_conf() {
 
 	if (battle_config.night_darkness_level > 10) // Celest
 		battle_config.night_darkness_level = 10;
-
-	if (battle_config.skill_range_leniency < 0) // Celest
-		battle_config.skill_range_leniency = 0;
 
 	if (battle_config.motd_type < 0)
 		battle_config.motd_type = 0;

@@ -76,7 +76,11 @@ sigfunc *compat_signal(int signo, sigfunc *func)
  *	CORE : Signal Sub Function
  *--------------------------------------
  */
-
+// for handling certain signals ourselves, like SIGPIPE
+static void sig_ignore(int sn) {
+	printf ("Broken pipe found... closing socket\n");	// set to eof in socket.c
+	return;	// does nothing here
+}
 static void sig_proc(int sn)
 {
 	int i;
@@ -137,8 +141,7 @@ void sig_dump(int sn)
 		fprintf(fp, "Exception: %s \n", strsignal(sn));
 		fflush (fp);
 
-
-	#ifdef CYGWIN		
+	#ifdef CYGWIN
 		cygwin_stackdump ();
 	#else
 		fprintf(fp, "Stack trace:\n");
@@ -153,7 +156,7 @@ void sig_dump(int sn)
 
 		printf ("Done.\n");
 		fflush(stdout);
-		fclose(fp);		
+		fclose(fp);
 	}
 	// Pass the signal to the system's default handler
 	compat_signal(sn, SIG_DFL);
@@ -289,7 +292,7 @@ int main(int argc,char **argv)
 	Net_Init();
 	do_socket();
 	
-	compat_signal(SIGPIPE,SIG_IGN);
+	compat_signal(SIGPIPE, sig_ignore);
 	compat_signal(SIGTERM,sig_proc);
 	compat_signal(SIGINT,sig_proc);
 

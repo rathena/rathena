@@ -71,10 +71,10 @@
 568,Lemon,Lemon,0,20,0,20,,,,,0,3,,,,,{},{}
 569,Novice's_Red_Potion,Novices Red Potion,0,50,0,70,,,,,10477567,2,,,,,{ itemheal rand(45,64),0; },{}
 // st.Valentine's Day Items
-570,Fortune_Candy,Fortune Candy,0,10,0,30,,,,,10477567,2,,,,{ itemheal rand(45,64),0; },{}
-571,Fortune_Candy_Cane,Fortune Candy Cane,0,20,0,40,,,,,10477567,2,,,,{ itemheal rand(105,144),0; },{}
-572,Fortune_Cookie,Fortune Cookie,0,15,0,30,,,,,10477567,2,,,,{ itemheal rand(45,64),0; },{}
-573,Chocolate_Drink,Chocolate Drink,0,20,0,150,,,,,10477567,2,,,,{ itemheal rand(105,144),0; },{}
+570,Fortune_Candy,Fortune Candy,0,10,0,30,,,,,10477567,2,,,,,{ itemheal rand(45,64),0; },{}
+571,Fortune_Candy_Cane,Fortune Candy Cane,0,20,0,40,,,,,10477567,2,,,,,{ itemheal rand(105,144),0; },{}
+572,Fortune_Cookie,Fortune Cookie,0,15,0,30,,,,,10477567,2,,,,,{ itemheal rand(45,64),0; },{}
+573,Chocolate_Drink,Chocolate Drink,0,20,0,150,,,,,10477567,2,,,,,{ itemheal rand(105,144),0; },{}
 574,Egg,Egg,0,0,,30,,,,,10477567,2,,,,,{ itemheal rand(16,21),0; },{}
 
 // Usable Items
@@ -1781,17 +1781,17 @@
 7303,Rice_Bag,Rice Straw Bag,3,20,0,800,,,,,,,,,,,{},{}
 
 // 2005
-7304,Witchs_Spellbook,Witch's Spellbook,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7305,Unknown_item,Authority of 9 worlds,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7306,Piece_of_Soul,Piece of Soul,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7307,Whisper_of_Soul,Whisper of Soul,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7308,Witchs_Potion,Witch's Potion,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7309,Crows_Wing,Crow's Wing,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7310,Peco_Coupon,Pecopeco Free Coupon,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7311,Airship_Coupon,Airship Free Coupon,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7312,Jubile,Jubilaeum,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7313,Witch\'s_Voucher,Witch's Voucher,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7314,The_Sign,The Sign,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7304,Witchs_Spellbook,Witch's Spellbook,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7305,Unknown_item,Authority of 9 worlds,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7306,Piece_of_Soul,Piece of Soul,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7307,Whisper_of_Soul,Whisper of Soul,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7308,Witchs_Potion,Witch's Potion,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7309,Crows_Wing,Crow's Wing,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7310,Peco_Coupon,Pecopeco Free Coupon,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7311,Airship_Coupon,Airship Free Coupon,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7312,Jubile,Jubilaeum,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7313,Witch\'s_Voucher,Witch's Voucher,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7314,The_Sign,The Sign,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
 
 7315,Black_Quartz_Piece,Piece of Black Quartz,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
 7316,Insect_Long_leg,Insect's Long Leg,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
