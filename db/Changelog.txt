@@ -6,6 +6,7 @@
 	Skill databases == celest working on them i believe.
 
 03/27
+	* Re-Updated MOB DB with correct file now 8) [Lupus]
 	* Added all released cards into monsters drops and OCA [Lupus]
 	* Minor Items, Monsters fixes [Lupus]
 03/26
