@@ -250,7 +250,14 @@ Problem:	Speed hack and other proxy-like hacks
 Assigned:	N/A
 Progress:	0%
 
-Problem:	@addwarp crashes the server
+Problem:	ATCommand @addwarp crashes the server
+Assigned:	N/A
+Progress:	0%
+
+Problem:	If a char has been saved with non-existing map name
+		then the server crashes on entering the game.
+		the wrong names e.g. prontera.gat.gat
+		could be generated on times when map server is disconnected with char server.
 Assigned:	N/A
 Progress:	0%
 
@@ -268,3 +275,21 @@ Problem:	New Guilds Active Skills Abuse. You call 1st skill, then call 2nd and N
 Assigned:	N/A
 Progress:	0%
 
+Problem:	Wedding TELEPORT skills now work on maps where TELEPORT was disabled
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Guilds Skill - Emergency Call doesn't work in castles (it somehow useless)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Guilds Skill - GD_EVELOPMENT (Extend_Guild)
+		has different description in korean desc table (some numbersm etc)
+		so it's different from the current implementation (Celest, plz check)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	'Adrenaline Rush' has to work with any weapon again (for whole party)
+		according to the kRO Sak patch on 21/12
+Assigned:	N/A
+Progress:	0%
