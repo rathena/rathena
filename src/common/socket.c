@@ -29,9 +29,10 @@ typedef int socklen_t;
 #include <fcntl.h>
 #include <string.h>
 
-#include "mmo.h"	// [Valaris] thanks to fov
 #include "socket.h"
-#include "utils.h"
+#include "../common/mmo.h"	// [Valaris] thanks to fov
+#include "../common/timer.h"
+#include "../common/utils.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -54,11 +55,9 @@ struct socket_data *session[FD_SETSIZE];
 static int null_parse(int fd);
 static int (*default_func_parse)(int) = null_parse;
 
-// fdが不正な時に代わりに読み書きするバッファ
-unsigned char socket_dummy[SOCKET_DUMMY_SIZE];
-
 static int null_console_parse(char *buf);
 static int (*default_console_parse)(char*) = null_console_parse;
+static int connect_check(unsigned int ip);
 
 /*======================================
  *	CORE : Set function
@@ -195,16 +194,20 @@ static int connect_client(int listen_fd)
 
 	setsocketopts(fd);
 
-	if(fd==-1)
+	if(fd==-1) {
 		perror("accept");
-	else
+		return -1;
+	} else if (!connect_check(*(unsigned int*)(&client_address.sin_addr))) {
+		close(fd);
+		return -1;
+	} else
 		FD_SET(fd,&readfds);
 
 #ifdef _WIN32
-        {
-	  	unsigned long val = 1;
-  		ioctlsocket(fd, FIONBIO, &val);
-        }
+	{
+		unsigned long val = 1;
+		ioctlsocket(fd, FIONBIO, &val);
+	}
 #else
 	result = fcntl(fd, F_SETFL, O_NONBLOCK);
 #endif
@@ -415,7 +418,7 @@ int make_connection(long ip,int port)
 
 int delete_session(int fd)
 {
-	if(fd<0 || fd>=FD_SETSIZE)
+	if(fd<=0 || fd>=FD_SETSIZE)
 		return -1;
 	FD_CLR(fd,&readfds);
 	if(session[fd]){
@@ -533,9 +536,269 @@ int do_parsepacket(void)
 	return 0;
 }
 
-void do_socket(void)
+/* DDoS 攻撃対策 */
+
+enum {
+	ACO_DENY_ALLOW=0,
+	ACO_ALLOW_DENY,
+	ACO_MUTUAL_FAILTURE,
+};
+
+struct _access_control {
+	unsigned int ip;
+	unsigned int mask;
+};
+
+static struct _access_control *access_allow;
+static struct _access_control *access_deny;
+static int access_order=ACO_DENY_ALLOW;
+static int access_allownum=0;
+static int access_denynum=0;
+static int access_debug;
+static int ddos_count     = 10;
+static int ddos_interval  = 3000;
+static int ddos_autoreset = 600*1000;
+
+struct _connect_history {
+	struct _connect_history *next;
+	struct _connect_history *prev;
+	int    status;
+	int    count;
+	unsigned int ip;
+	unsigned int tick;
+};
+static struct _connect_history *connect_history[0x10000];
+static int connect_check_(unsigned int ip);
+
+// 接続できるかどうかの確認
+//   false : 接続OK
+//   true  : 接続NG
+static int connect_check(unsigned int ip) {
+	int result = connect_check_(ip);
+	if(access_debug) {
+		printf("connect_check: connection from %08x %s\n",
+			ip,result ? "allowed" : "denied");
+	}
+	return result;
+}
+	
+static int connect_check_(unsigned int ip) {
+	struct _connect_history *hist     = connect_history[ip & 0xFFFF];
+	struct _connect_history *hist_new;
+	int    i,is_allowip = 0,is_denyip = 0,connect_ok = 0;
+
+	// allow , deny リストに入っているか確認
+	for(i = 0;i < access_allownum; i++) {
+		if((ip & access_allow[i].mask) == (access_allow[i].ip & access_allow[i].mask)) {
+			if(access_debug) {
+				printf("connect_check: match allow list from:%08x ip:%08x mask:%08x\n",
+					ip,access_allow[i].ip,access_allow[i].mask);
+			}
+			is_allowip = 1;
+			break;
+		}
+	}
+	for(i = 0;i < access_denynum; i++) {
+		if((ip & access_deny[i].mask) == (access_deny[i].ip & access_deny[i].mask)) {
+			if(access_debug) {
+				printf("connect_check: match deny list  from:%08x ip:%08x mask:%08x\n",
+					ip,access_deny[i].ip,access_deny[i].mask);
+			}
+			is_denyip = 1;
+			break;
+		}
+	}
+	// コネクト出来るかどうか確認
+	// connect_ok
+	//   0 : 無条件に拒否
+	//   1 : 田代砲チェックの結果次第
+	//   2 : 無条件に許可
+	switch(access_order) {
+	case ACO_DENY_ALLOW:
+	default:
+		if(is_allowip) {
+			connect_ok = 2;
+		} else if(is_denyip) {
+			connect_ok = 0;
+		} else {
+			connect_ok = 1;
+		}
+		break;
+	case ACO_ALLOW_DENY:
+		if(is_denyip) {
+			connect_ok = 0;
+		} else if(is_allowip) {
+			connect_ok = 2;
+		} else {
+			connect_ok = 1;
+		}
+		break;
+	case ACO_MUTUAL_FAILTURE:
+		if(is_allowip) {
+			connect_ok = 2;
+		} else {
+			connect_ok = 0;
+		}
+		break;
+	}
+
+	// 接続履歴を調べる
+	while(hist) {
+		if(ip == hist->ip) {
+			// 同じIP発見
+			if(hist->status) {
+				// ban フラグが立ってる
+				return (connect_ok == 2 ? 1 : 0);
+			} else if(DIFF_TICK(gettick(),hist->tick) < ddos_interval) {
+				// ddos_interval秒以内にリクエスト有り
+				hist->tick = gettick();
+				if(hist->count++ >= ddos_count) {
+					// ddos 攻撃を検出
+					hist->status = 1;
+					printf("connect_check: ddos attack detected (%d.%d.%d.%d)\n",
+						ip & 0xFF,(ip >> 8) & 0xFF,(ip >> 16) & 0xFF,ip >> 24);
+					return (connect_ok == 2 ? 1 : 0);
+				} else {
+					return connect_ok;
+				}
+			} else {
+				// ddos_interval秒以内にリクエスト無いのでタイマークリア
+				hist->tick  = gettick();
+				hist->count = 0;
+				return connect_ok;
+			}
+		}
+		hist = hist->next;
+	}
+	// IPリストに無いので新規作成
+	hist_new = aCalloc(1,sizeof(struct _connect_history));
+	hist_new->ip   = ip;
+	hist_new->tick = gettick();
+	if(connect_history[ip & 0xFFFF] != NULL) {
+		hist = connect_history[ip & 0xFFFF];
+		hist->prev = hist_new;
+		hist_new->next = hist;
+	}
+	connect_history[ip & 0xFFFF] = hist_new;
+	return connect_ok;
+}
+
+static int connect_check_clear(int tid,unsigned int tick,int id,int data) {
+	int i;
+	int clear = 0;
+	int list  = 0;
+	struct _connect_history *hist , *hist2;
+	for(i = 0;i < 0x10000 ; i++) {
+		hist = connect_history[i];
+		while(hist) {
+			if(
+				(DIFF_TICK(tick,hist->tick) > ddos_interval * 3 && !hist->status) ||
+				(DIFF_TICK(tick,hist->tick) > ddos_autoreset && hist->status)
+			) {
+				// clear data
+				hist2 = hist->next;
+				if(hist->prev) {
+					hist->prev->next = hist->next;
+				} else {
+					connect_history[i] = hist->next;
+				}
+				if(hist->next) {
+					hist->next->prev = hist->prev;
+				}
+				aFree(hist);
+				hist = hist2;
+				clear++;
+			} else {
+				hist = hist->next;
+				list++;
+			}
+		}
+	}
+	if(access_debug) {
+		printf("connect_check_clear: clear = %d list = %d\n",clear,list);
+	}
+	return list;
+}
+
+// IPマスクチェック
+int access_ipmask(const char *str,struct _access_control* acc)
 {
-	FD_ZERO(&readfds);
+	unsigned int mask=0,i=0,m,ip, a0,a1,a2,a3;
+	if( !strcmp(str,"all") ) {
+		ip   = 0;
+		mask = 0;
+	} else {
+		if( sscanf(str,"%d.%d.%d.%d%n",&a0,&a1,&a2,&a3,&i)!=4 || i==0) {
+			printf("access_ipmask: unknown format %s\n",str);
+			return 0;
+		}
+		ip = (a3 << 24) | (a2 << 16) | (a1 << 8) | a0;
+
+		if(sscanf(str+i,"/%d.%d.%d.%d",&a0,&a1,&a2,&a3)==4 ){
+			mask = (a3 << 24) | (a2 << 16) | (a1 << 8) | a0;
+		} else if(sscanf(str+i,"/%d",&m) == 1) {
+			for(i=0;i<m;i++) {
+				mask = (mask >> 1) | 0x80000000;
+			}
+			mask = ntohl(mask);
+		} else {
+			mask = 0xFFFFFFFF;
+		}
+	}
+	if(access_debug) {
+		printf("access_ipmask: ip:%08x mask:%08x %s\n",ip,mask,str);
+	}
+	acc->ip   = ip;
+	acc->mask = mask;
+	return 1;
+}
+
+int socket_config_read(const char *cfgName) {
+	int i;
+	char line[1024],w1[1024],w2[1024];
+	FILE *fp;
+
+	fp=fopen(cfgName, "r");
+	if(fp==NULL){
+		printf("File not found: %s\n", cfgName);
+		return 1;
+	}
+	while(fgets(line,1020,fp)){
+		if(line[0] == '/' && line[1] == '/')
+			continue;
+		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
+		if(i!=2)
+			continue;
+		if(strcmpi(w1,"stall_time")==0){
+			stall_time_ = atoi(w2);
+		} else if(strcmpi(w1,"order")==0){
+			access_order=atoi(w2);
+			if(strcmpi(w2,"deny,allow")==0) access_order=ACO_DENY_ALLOW;
+			if(strcmpi(w2,"allow,deny")==0) access_order=ACO_ALLOW_DENY;
+			if(strcmpi(w2,"mutual-failture")==0) access_order=ACO_MUTUAL_FAILTURE;
+		} else if(strcmpi(w1,"allow")==0){
+			access_allow = aRealloc(access_allow,(access_allownum+1)*sizeof(struct _access_control));
+			if(access_ipmask(w2,&access_allow[access_allownum])) {
+				access_allownum++;
+			}
+		} else if(strcmpi(w1,"deny")==0){
+			access_deny = aRealloc(access_deny,(access_denynum+1)*sizeof(struct _access_control));
+			if(access_ipmask(w2,&access_deny[access_denynum])) {
+				access_denynum++;
+			}
+		} else if(!strcmpi(w1,"ddos_interval")){
+			ddos_interval = atoi(w2);
+		} else if(!strcmpi(w1,"ddos_count")){
+			ddos_count = atoi(w2);
+		} else if(!strcmpi(w1,"ddos_autoreset")){
+			ddos_autoreset = atoi(w2);
+		} else if(!strcmpi(w1,"debug")){
+			access_debug = atoi(w2);
+		} else if (strcmpi(w1, "import") == 0)
+			socket_config_read(w2);
+	}
+	fclose(fp);
+	return 0;
 }
 
 int RFIFOSKIP(int fd,int len)
@@ -637,4 +900,54 @@ int  Net_Init(void)
 #endif
 
   return(0);
+}
+
+void do_final_socket(void)
+{
+	int i;
+	struct _connect_history *hist , *hist2;
+	for(i=0; i<fd_max; i++) {
+		if(session[i]) {
+			delete_session(i);
+		}
+	}
+	for(i=0; i<0x10000; i++) {
+		hist = connect_history[i];
+		while(hist) {
+			hist2 = hist->next;
+			aFree(hist);
+			hist = hist2;
+		}
+	}
+	if (access_allow)
+		aFree(access_allow);
+	if (access_deny)
+		aFree(access_deny);
+
+	// session[0] のダミーデータを削除
+	if (session[0]) {
+		aFree(session[0]->rdata);
+		aFree(session[0]->wdata);
+		aFree(session[0]);
+	}
+}
+
+void do_socket(void)
+{
+	char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
+
+	FD_ZERO(&readfds);
+
+	atexit(do_final_socket);
+	socket_config_read(SOCKET_CONF_FILENAME);
+
+	// session[0] にダミーデータを確保する
+	CREATE(session[0], struct socket_data, 1);
+	CREATE_A(session[0]->rdata, unsigned char, rfifo_size);
+	CREATE_A(session[0]->wdata, unsigned char, wfifo_size);
+	session[0]->max_rdata   = rfifo_size;
+	session[0]->max_wdata   = wfifo_size;
+
+	// とりあえず５分ごとに不要なデータを削除する
+	add_timer_interval(gettick()+1000,connect_check_clear,0,0,300*1000);
 }

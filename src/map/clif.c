@@ -973,7 +973,7 @@ int clif_mob_equip(struct mob_data *md, int nameid) {
  */
 static int clif_mob0078(struct mob_data *md, unsigned char *buf)
 {
-	int level;
+	int level, i;
 
 	memset(buf,0,packet_len_table[0x78]);
 
@@ -986,7 +986,7 @@ static int clif_mob0078(struct mob_data *md, unsigned char *buf)
 	WBUFW(buf,10)=md->opt2;
 	WBUFW(buf,12)=md->option;
 	WBUFW(buf,14)=mob_get_viewclass(md->class_);
-	if((mob_get_viewclass(md->class_) <= 23) || (mob_get_viewclass(md->class_) == 812) || (mob_get_viewclass(md->class_) >= 4001)) {
+	if((i=mob_get_viewclass(md->class_)) <= 23 || i == 812 || i >= 4001) {
 		WBUFW(buf,12)|=mob_db[md->class_].option;
 		WBUFW(buf,16)=mob_get_hair(md->class_);
 		WBUFW(buf,18)=mob_get_weapon(md->class_);
@@ -1360,7 +1360,7 @@ int clif_spawnmob(struct mob_data *md)
 
 	nullpo_retr(0, md);
 
-	if (mob_get_viewclass(md->class_) > 23 ) {
+	if (mob_get_viewclass(md->class_) > 23) {
 		memset(buf,0,packet_len_table[0x7c]);
 
 		WBUFW(buf,0)=0x7c;

@@ -1,5 +1,10 @@
 Date	Added
 
+03/16
+        * Updated jA's dummy socket to mod1137 [celest]
+        * Added jA's ddos protection system -- check packet_athena.conf [celest]
+        * Moved stall_time's reading from inter_athena.conf to packet_athena.conf
+
 03/15
         * Fixed a compile warning in pc.c [celest]
         * Updated Soul Breaker's damage display, by DracoRPG [celest]

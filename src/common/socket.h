@@ -22,18 +22,14 @@ extern time_t stall_time_;
 
 // define declaration
 
-// fdが不正な時に代わりに読み書きするバッファ
-#define SOCKET_DUMMY_SIZE 32768
-extern unsigned char socket_dummy[SOCKET_DUMMY_SIZE];
-
-#define RFIFOSPACE(fd) (fd <= 0 ? SOCKET_DUMMY_SIZE : session[fd]->max_rdata-session[fd]->rdata_size)
-#define RFIFOP(fd,pos) (fd <= 0 ? socket_dummy : session[fd]->rdata+session[fd]->rdata_pos+(pos))
+#define RFIFOSPACE(fd) (session[fd]->max_rdata-session[fd]->rdata_size)
+#define RFIFOP(fd,pos) (session[fd]->rdata+session[fd]->rdata_pos+(pos))
 // use function instead of macro.
 #define RFIFOB(fd,pos) (*(unsigned char*)RFIFOP(fd,pos))
 #define RFIFOW(fd,pos) (*(unsigned short*)RFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(unsigned int*)RFIFOP(fd,pos))
-#define RFIFOREST(fd)  (fd <= 0 ? 0 : session[fd]->rdata_size-session[fd]->rdata_pos)
-#define RFIFOFLUSH(fd) (fd <= 0 ? 0 : memmove(session[fd]->rdata,RFIFOP(fd,0),RFIFOREST(fd)),session[fd]->rdata_size=RFIFOREST(fd),session[fd]->rdata_pos=0)
+#define RFIFOREST(fd)  (session[fd]->rdata_size-session[fd]->rdata_pos)
+#define RFIFOFLUSH(fd) (memmove(session[fd]->rdata,RFIFOP(fd,0),RFIFOREST(fd)),session[fd]->rdata_size=RFIFOREST(fd),session[fd]->rdata_pos=0)
 //#define RFIFOSKIP(fd,len) ((session[fd]->rdata_size-session[fd]->rdata_pos-(len)<0) ? (fprintf(stderr,"too many skip\n"),exit(1)) : (session[fd]->rdata_pos+=(len)))
 
 #define RBUFP(p,pos) (((unsigned char*)(p))+(pos))
@@ -41,8 +37,8 @@ extern unsigned char socket_dummy[SOCKET_DUMMY_SIZE];
 #define RBUFW(p,pos) (*(unsigned short*)RBUFP((p),(pos)))
 #define RBUFL(p,pos) (*(unsigned int*)RBUFP((p),(pos)))
 
-#define WFIFOSPACE(fd) (fd <= 0 ? SOCKET_DUMMY_SIZE : session[fd]->max_wdata-session[fd]->wdata_size)
-#define WFIFOP(fd,pos) (fd <= 0 ? socket_dummy : session[fd]->wdata+session[fd]->wdata_size+(pos))
+#define WFIFOSPACE(fd) (session[fd]->max_wdata-session[fd]->wdata_size)
+#define WFIFOP(fd,pos) (session[fd]->wdata+session[fd]->wdata_size+(pos))
 #define WFIFOB(fd,pos) (*(unsigned char*)WFIFOP(fd,pos))
 #define WFIFOW(fd,pos) (*(unsigned short*)WFIFOP(fd,pos))
 #define WFIFOL(fd,pos) (*(unsigned int*)WFIFOP(fd,pos))

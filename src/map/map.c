@@ -2896,8 +2896,10 @@ int inter_config_read(char *cfgName)
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
 		if(i!=2)
 			continue;
-		if(strcmpi(w1,"stall_time")==0){
-			stall_time_ = atoi(w2);
+		//support the import command, just like any other config
+		if(strcmpi(w1,"import")==0){
+			inter_config_read(w2);
+		}
 	#ifndef TXT_ONLY
 		} else if(strcmpi(w1,"item_db_db")==0){
 			strcpy(item_db_db,w2);
@@ -2959,9 +2961,6 @@ int inter_config_read(char *cfgName)
 		} else if(strcmpi(w1,"log_db_port")==0) {
 			log_db_port = atoi(w2);
 	#endif
-		//support the import command, just like any other config
-		} else if(strcmpi(w1,"import")==0){
-			inter_config_read(w2);
 		}
 	}
 	fclose(fp);
