@@ -25,6 +25,11 @@ MAKE = gmake
 else
 MAKE = make
 endif
+ifeq ($(findstring NetBSD,$(PLATFORM)), NetBSD)
+MAKE = gmake
+else
+MAKE = make
+endif
 
 OPT = -g -O2 -ffast-math -Wall -Wno-sign-compare
 # OPT += -DDUMPSTACK -rdynamic

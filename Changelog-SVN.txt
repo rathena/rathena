@@ -2,6 +2,7 @@
 Date	Added
 
 04/03
+	* Added NetBSD support into Makefile (Still lots of warrnings during compilation [veider]
 	* Finished Valkyrie. Now it correctly works. Valhallana reborns players to High Novices. [Lupus]
 	  (added missed kRO condition: to reborn, player shouldn't have money nor items(equipment) )
 	  Then Valhallana warps just reborn players to the home city of their main job.
