@@ -7,6 +7,9 @@
 #include "memwatch.h"
 #endif
 
+// 独自メモリマネージャを使用する場合、次のコメントを外してください。
+// #define USE_MEMMGR
+
 #if !defined(DMALLOC) && !defined(GCOLLECT) && !defined(BCHECK) && !defined(USE_MEMMGR)
 
 void* aMalloc_( size_t size, const char *file, int line, const char *func )
@@ -88,10 +91,6 @@ void aFree_( void *p, const char *file, int line, const char *func )
 #else
 	free(p);
 #endif
-}
-
-int do_init_memmgr(const char* file) {
-	return 0;
 }
 
 #elif defined(GCOLLECT)

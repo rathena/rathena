@@ -75,6 +75,10 @@
 
 #endif
 
-int do_init_memmgr(const char* file);
+#ifndef USE_MEMMGR
+	#define do_init_memmgr(file)
+#else
+	int do_init_memmgr(const char* file);
+#endif
 
 #endif

@@ -286,10 +286,8 @@ int main(int argc,char **argv)
 	int next;
 
 	display_title();
-#ifdef USE_MEMMGR
 	// call this first so it'll be finalised last
 	do_init_memmgr(argv[0]); // ˆê”ÔÅ‰‚ÉÀs‚·‚é•K—v‚ª‚ ‚é
-#endif
 
 	sscanf(argv[0], "./%24[^\n]", server_type);	// map/char/login?
 	atexit(log_uptime);
