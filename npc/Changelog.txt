@@ -36,6 +36,8 @@ Other Ppl
 
 Date		Added
 ======
+12/21
+        * Corrected script errors in devnpc.txt [celest]
 	
 12/20	
 	* Addded npcs_athena.conf, OA style [MC Cameri]
