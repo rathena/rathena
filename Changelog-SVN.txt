@@ -1,5 +1,13 @@
 Date	Added
 
+02/19
+        * Added bSubSize, bHPGainValue, and bDamageWhenUnequip [celest]
+        * Updated bSPDrainValue/Rate to accept a 'type' [celest]
+        * Set baby class players' size to 0(small) [celest]
+        * Fixed item_db2.txt reading printing wrong number of entries read [celest]
+        * Fixed @allskill not giving the newer stalker, whitesmith and creator skills
+          [celest]
+
 02/18
         * Fixed a bug with statpoint.txt reading and giving too much stat points,
           thanks to Benz / eAthenaC [celest]

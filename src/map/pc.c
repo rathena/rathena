@@ -980,6 +980,8 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		if(battle_config.enable_upper_class){ //conf‚Å–³?‚Å‚È‚¯‚ê‚Î?‚Ý?‚Þ
 			for(i=355;i<411;i++)
 				sd->status.skill[i].id=i;
+			for(i=475;i<480;i++)
+				sd->status.skill[i].id=i;
 		}
 	}else{
             do {
@@ -1585,6 +1587,14 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		else if(sd->state.lr_flag == 1)
 			sd->ignore_def_mob_ |= 1<<val;
 		break;
+	case SP_HP_GAIN_VALUE:
+		if(!sd->state.lr_flag)
+			sd->hp_gain_value += val;
+		break;
+	case SP_DAMAGE_WHEN_UNEQUIP:
+		if(!sd->state.lr_flag)
+			sd->unequip_damage += val;
+		break;
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus: unknown type %d %d !\n",type,val);
@@ -1764,8 +1774,9 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		else if(sd->state.lr_flag == 1) {
 			sd->sp_drain_rate_ += type2;
-			sd->sp_drain_per_ += val;
+			sd->sp_drain_per_ += val;			
 		}
+		sd->sp_drain_type = 0;
 		break;
 	case SP_SP_DRAIN_VALUE:
 		if(!sd->state.lr_flag) {
@@ -1776,7 +1787,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->sp_drain_rate_ += type2;
 			sd->sp_drain_value_ += val;
 		}
-
+		sd->sp_drain_type = 0;
 		break;
 	case SP_WEAPON_COMA_ELE:
 		if(sd->state.lr_flag != 2)
@@ -1847,6 +1858,10 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else
 			sd->addrace2_[type2] += val;
 		break;
+	case SP_SUBSIZE:
+		if(sd->state.lr_flag != 2)
+			sd->subsize[type2]+=val;
+		break;
 
 	default:
 		if(battle_config.error_log)
@@ -1900,6 +1915,27 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->hp_loss_type = val;
 		}
 		break;
+	case SP_SP_DRAIN_RATE:
+		if(!sd->state.lr_flag) {
+			sd->sp_drain_rate += type2;
+			sd->sp_drain_per += type3;			
+		}
+		else if(sd->state.lr_flag == 1) {
+			sd->sp_drain_rate_ += type2;
+			sd->sp_drain_per_ += type3;
+		}
+		sd->sp_drain_type = val;
+		break;
+	case SP_SP_DRAIN_VALUE:
+		if(!sd->state.lr_flag) {
+			sd->sp_drain_rate += type2;
+			sd->sp_drain_value += type3;
+		}
+		else if(sd->state.lr_flag == 1) {
+			sd->sp_drain_rate_ += type2;
+			sd->sp_drain_value_ += type3;
+		}
+		sd->sp_drain_type = val;
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus3: unknown type %d %d %d %d!\n",type,type2,type3,val);
@@ -4306,6 +4342,8 @@ int pc_allskillup(struct map_session_data *sd)
 		if(battle_config.enable_upper_class){ //conf‚Å–³?‚Å‚È‚¯‚ê‚Î?‚Ý?‚Þ
 			for(i=355;i<411;i++)
 				sd->status.skill[i].id=i;
+			for(i=475;i<480;i++)
+				sd->status.skill[i].id=i;
 		}
 	}
 	else {
@@ -6067,6 +6105,13 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	} else {
 		clif_unequipitemack(sd,n,0,0);
 	}
+	if (sd->unequip_damage > 0) {
+		short dmg = sd->unequip_damage;
+		if (dmg > sd->status.hp)
+			dmg = sd->status.hp;
+		pc_heal(sd,-dmg,0);
+	}
+
 	if(flag&1) {
 		status_calc_pc(sd,0);
 		if(sd->sc_count && sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))

@@ -246,6 +246,9 @@ bSPGainValue	2021
 bIgnoreDefMob	2022
 bHPLossRate	2023
 bAddRace2	2024
+bHPGainValue	2025
+bSubSize	2026
+bDamageWhenUnequip	2027
 
 
 Eff_Stone	0

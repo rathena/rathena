@@ -1058,7 +1058,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 	struct Damage wd;
 	int damage,damage2=0,type,div_,blewcount=skill_get_blewcount(skill_num,skill_lv);
 	int flag,skill,ac_flag = 0,dmg_lv = 0;
-	int t_mode=0,t_race=0,t_size=1,s_race=0,s_ele=0;
+	int t_mode=0,t_race=0,t_size=1,s_race=0,s_ele=0,s_size=0;
 	struct status_change *sc_data,*t_sc_data;
 	short *sc_count;
 	short *option, *opt1, *opt2;
@@ -1074,6 +1074,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 
 	s_race = status_get_race(src);
 	s_ele = status_get_attack_element(src);
+	s_size = status_get_size(src);
 	sc_data = status_get_sc_data(src);
 	sc_count = status_get_sc_count(src);
 	option = status_get_option(src);
@@ -1498,6 +1499,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 		int cardfix=100,i;
 		cardfix=cardfix*(100-tsd->subele[s_ele])/100;	// 属 性によるダメージ耐性
 		cardfix=cardfix*(100-tsd->subrace[s_race])/100;	// 種族によるダメージ耐性
+		cardfix=cardfix*(100-tsd->subsize[s_size])/100;
 		if(mob_db[md->class_].mode & 0x20)
 			cardfix=cardfix*(100-tsd->subrace[10])/100;
 		else
@@ -1616,7 +1618,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	struct Damage wd;
 	int damage,damage2,damage3=0,damage4=0,type,div_,blewcount=skill_get_blewcount(skill_num,skill_lv);
 	int flag,skill,dmg_lv = 0;
-	int t_mode=0,t_race=0,t_size=1,s_race=7,s_ele=0;
+	int t_mode=0,t_race=0,t_size=1,s_race=7,s_ele=0,s_size=1;
 	int t_race2=0;
 	struct status_change *sc_data,*t_sc_data;
 	short *sc_count;
@@ -1640,6 +1642,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	s_race=status_get_race(src); //種族
 	s_ele=status_get_attack_element(src); //属性
 	s_ele_=status_get_attack_element2(src); //左手属性
+	s_size=status_get_size(src);
 	sc_data=status_get_sc_data(src); //ステータス異常
 	sc_count=status_get_sc_count(src); //ステータス異常の数
 	option=status_get_option(src); //鷹とかペコとかカートとか
@@ -2602,6 +2605,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 		cardfix=100;
 		cardfix=cardfix*(100-tsd->subrace[s_race])/100;	// 種族によるダメージ耐性
 		cardfix=cardfix*(100-tsd->subele[s_ele])/100;	// 属性によるダメージ耐性
+		cardfix=cardfix*(100-tsd->subsize[s_size])/100;
 		if(status_get_mode(src) & 0x20)
 			cardfix=cardfix*(100-tsd->subrace[10])/100; //ボスからの攻撃はダメージ減少
 		else
@@ -2904,7 +2908,7 @@ struct Damage battle_calc_magic_attack(
 	int aflag;
 	int normalmagic_flag=1;
 	int matk_flag = 1;
-	int ele=0,race=7,t_ele=0,t_race=7,t_mode = 0,cardfix,t_class,i;
+	int ele=0,race=7,size=1,t_ele=0,t_race=7,t_mode = 0,cardfix,t_class,i;
 	struct map_session_data *sd=NULL,*tsd=NULL;
 	struct mob_data *tmd = NULL;
 
@@ -2925,6 +2929,7 @@ struct Damage battle_calc_magic_attack(
 	matk2=status_get_matk2(bl);
 	ele = skill_get_pl(skill_num);
 	race = status_get_race(bl);
+	size = status_get_size(bl);
 	t_ele = status_get_elem_type(target);
 	t_race = status_get_race(target);
 	t_mode = status_get_mode(target);
@@ -3131,6 +3136,7 @@ struct Damage battle_calc_magic_attack(
 		cardfix=100;
 		cardfix=cardfix*(100-tsd->subele[ele])/100;	// 属 性によるダメージ耐性
 		cardfix=cardfix*(100-tsd->subrace[race])/100;	// 種族によるダメージ耐性
+		cardfix=cardfix*(100-tsd->subsize[size])/100;
 		cardfix=cardfix*(100-tsd->magic_subrace[race])/100;
 		if(status_get_mode(bl) & 0x20)
 			cardfix=cardfix*(100-tsd->magic_subrace[10])/100;
@@ -3207,7 +3213,7 @@ struct Damage  battle_calc_misc_attack(
 	int int_=status_get_int(bl);
 //	int luk=status_get_luk(bl);
 	int dex=status_get_dex(bl);
-	int skill,ele,race,cardfix;
+	int skill,ele,race,size,cardfix;
 	struct map_session_data *sd=NULL,*tsd=NULL;
 	int damage=0,div_=1,blewcount=skill_get_blewcount(skill_num,skill_lv);
 	struct Damage md;
@@ -3311,6 +3317,7 @@ struct Damage  battle_calc_misc_attack(
 
 	ele = skill_get_pl(skill_num);
 	race = status_get_race(bl);
+	size = status_get_size(bl);
 
 	if(damagefix){
 		if(damage<1 && skill_num != NPC_DARKBREATH)
@@ -3320,6 +3327,7 @@ struct Damage  battle_calc_misc_attack(
 			cardfix=100;
 			cardfix=cardfix*(100-tsd->subele[ele])/100;	// 属性によるダメージ耐性
 			cardfix=cardfix*(100-tsd->subrace[race])/100;	// 種族によるダメージ耐性
+			cardfix=cardfix*(100-tsd->subsize[size])/100;
 			cardfix=cardfix*(100-tsd->misc_def_rate)/100;
 			damage=damage*cardfix/100;
 		}
@@ -3605,6 +3613,8 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				}
 
 				if (hp || sp) pc_heal(sd, hp, sp);
+				if (sd->sp_drain_type && target->type == BL_PC)
+					battle_heal(NULL,target,0,-sp,0);
 			}
 		}
 		if (target->type == BL_PC) {

@@ -2384,17 +2384,24 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	
 	if(sd) {
-		int sp = 0;
+		int sp = 0, hp = 0;
 		if (sd->state.attack_type == BF_MAGIC && (i=pc_checkskill(sd,HW_SOULDRAIN))>0){	/* ソウルドレイン */
 			clif_skill_nodamage(src,&md->bl,HW_SOULDRAIN,i,1);
 			sp += (status_get_lv(&md->bl))*(65+15*i)/100;
 		}
 		sp += sd->sp_gain_value;
+		hp += sd->hp_gain_value;
 		if (sp > 0) {
 			if(sd->status.sp + sp > sd->status.max_sp)
 				sp = sd->status.max_sp - sd->status.sp;
 			sd->status.sp += sp;
 			clif_heal(sd->fd,SP_SP,sp);
+		}
+		if (hp > 0) {
+			if(sd->status.hp + hp > sd->status.max_hp)
+				hp = sd->status.max_hp - sd->status.hp;
+			sd->status.hp += hp;
+			clif_heal(sd->fd,SP_HP,hp);
 		}
 	}
 

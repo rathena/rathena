@@ -512,6 +512,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->hp_loss_rate = sd->hp_loss_value = sd->hp_loss_type = 0;
 	memset(sd->addrace2,0,sizeof(sd->addrace2));
 	memset(sd->addrace2_,0,sizeof(sd->addrace2_));
+	sd->hp_gain_value = sd->sp_drain_type = 0;
+	memset(sd->subsize,0,sizeof(sd->subsize));
+	sd->unequip_damage = 0;
 
 	if(!sd->disguiseflag && sd->disguise) {
 		sd->disguise=0;
@@ -2786,11 +2789,16 @@ int status_get_size(struct block_list *bl)
 	nullpo_retr(1, bl);
 	if(bl->type==BL_MOB && (struct mob_data *)bl)
 		return mob_db[((struct mob_data *)bl)->class_].size;
-	else if(bl->type==BL_PC && (struct map_session_data *)bl)
-		return 1;
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
 		return mob_db[((struct pet_data *)bl)->class_].size;
-	else
+	else if(bl->type==BL_PC) {
+		struct map_session_data *sd = (struct map_session_data *)bl;
+		//if (pc_isriding(sd))	// fact or rumour?
+		//	return 2;
+		if (pc_calc_upper(sd->status.class_) == 2)
+			return 0;
+		return 1;
+	} else
 		return 1;
 }
 int status_get_mode(struct block_list *bl)

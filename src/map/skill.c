@@ -1588,7 +1588,10 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			if(sd->sp_drain_rate_ > 0 && sp < 1) sp = 1;
 			else if(sd->sp_drain_rate_ < 0 && sp > -1) sp = -1;
 		}
-		if(hp || sp) pc_heal(sd,hp,sp);
+		if(hp || sp)
+			pc_heal(sd,hp,sp);
+		if (sd->sp_drain_type && bl->type == BL_PC)
+			battle_heal(NULL,bl,0,-sp,0);
 	}
 
 	if((skillid || flag) && rdamage > 0)
