@@ -180,7 +180,8 @@ struct party* search_partyname(char *str) {
 
 // EXP公平分配できるかチェック
 int party_check_exp_share(struct party *p) {
-	int i;
+	int i, dudes=0;
+	int pl1=0,pl2=0,pl3=0;
 	int maxlv = 0, minlv = 0x7fffffff;
 
 	for(i = 0; i < MAX_PARTY; i++) {
@@ -190,10 +191,23 @@ int party_check_exp_share(struct party *p) {
 				minlv = lv;
 			if (maxlv < lv)
 				maxlv = lv;
+			if( lv >= 70 ) dudes+=1000;
+				dudes++;
 		}
 	}
-
-	return (maxlv == 0 || maxlv-minlv <= party_share_level);
+	if((dudes/1000 >= 2) && (dudes%1000 == 3) && (!strcmp(p->member[0].map,p->member[1].map)) && (!strcmp(p->member[1].map,p->member[2].map))) {
+                pl1=search_character_index(p->member[0].name);
+                pl2=search_character_index(p->member[1].name);
+                pl3=search_character_index(p->member[2].name);
+                printf("PARTY: group of 3 Id1 %d lv %d name %s Id2 %d lv %d name %s Id3 %d lv %d name %s\n",pl1,p->member[0].lv,p->member[0].name,pl2,p->member[1].lv,p->member[1].name,pl3,p->member[2].lv,p->member[2].name);
+                if (char_married(pl1,pl2) && char_child(pl1,pl3))
+                        return 1;
+                if (char_married(pl1,pl3) && char_child(pl1,pl2))
+                        return 1;
+                if (char_married(pl2,pl3) && char_child(pl2,pl1))
+                        return 1;
+        }
+        return (maxlv==0 || maxlv-minlv<=party_share_level);
 }
 
 // パ?ティが空かどうかチェック

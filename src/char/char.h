@@ -24,6 +24,9 @@ int mapif_sendall(unsigned char *buf, unsigned int len);
 int mapif_sendallwos(int fd,unsigned char *buf, unsigned int len);
 int mapif_send(int fd,unsigned char *buf, unsigned int len);
 
+int char_married(int pl1,int pl2);
+int char_child(int parent_id, int child_id);
+
 int char_log(char *fmt, ...);
 
 extern int autosave_interval;

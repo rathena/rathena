@@ -263,7 +263,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p) {
 
 	str_p += sprintf(str_p, "%d\t%d,%d\t%s\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 	  "\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
-	  "\t%s,%d,%d\t%s,%d,%d,%d\t",
+	  "\t%s,%d,%d\t%s,%d,%d,%d,%d,%d,%d\t",
 	  p->char_id, p->account_id, p->char_num, p->name, //
 	  p->class_, p->base_level, p->job_level,
 	  p->base_exp, p->job_exp, p->zeny,
@@ -276,7 +276,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p) {
 	  p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 	  p->last_point.map, p->last_point.x, p->last_point.y, //
 	  p->save_point.map, p->save_point.x, p->save_point.y,
-	  p->partner_id);
+	  p->partner_id,p->father,p->mother,p->child);
 	for(i = 0; i < 10; i++)
 		if (p->memo_point[i].map[0]) {
 			str_p += sprintf(str_p, "%s,%d,%d", p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
@@ -325,8 +325,28 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p) {
 
 	// initilialise character
 	memset(p, '\0', sizeof(struct mmo_charstatus));
-
-	// If it's not char structure of version 1008 and after
+	
+	// If it's not char structure of version 1363 and after
+	if ((set = sscanf(str, "%d\t%d,%d\t%[^\t]\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+	   "\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
+	   "\t%[^,],%d,%d\t%[^,],%d,%d,%d,%d,%d,%d%n",
+	   &tmp_int[0], &tmp_int[1], &tmp_int[2], p->name, //
+	   &tmp_int[3], &tmp_int[4], &tmp_int[5],
+           &tmp_int[6], &tmp_int[7], &tmp_int[8],
+           &tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
+           &tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
+           &tmp_int[19], &tmp_int[20],
+           &tmp_int[21], &tmp_int[22], &tmp_int[23], //
+           &tmp_int[24], &tmp_int[25], &tmp_int[26],
+           &tmp_int[27], &tmp_int[28], &tmp_int[29],
+           &tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
+           p->last_point.map, &tmp_int[35], &tmp_int[36], //
+           p->save_point.map, &tmp_int[37], &tmp_int[38], &tmp_int[39], 
+	   &tmp_int[40], &tmp_int[41], &tmp_int[42], &next)) != 46) {
+		tmp_int[40] = 0; // father
+		tmp_int[41] = 0; // mother
+		tmp_int[42] = 0; // child
+	// If it's not char structure of version 1008 and before 1363
 	if ((set = sscanf(str, "%d\t%d,%d\t%[^\t]\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 	   "\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 	   "\t%[^,],%d,%d\t%[^,],%d,%d,%d%n",
@@ -385,9 +405,14 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p) {
 		}
 	// Char structure of version 1008+
 	} else {
+		set+=3;
 		//printf("char: new char data ver.3\n");
 	}
-	if (set != 43)
+	// Char structture of version 1363+
+	} else {
+		//printf("char: new char data ver.4\n");
+	}
+	if (set != 46)
 		return 0;
 
 	p->char_id = tmp_int[0];
@@ -430,6 +455,9 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p) {
 	p->save_point.x = tmp_int[37];
 	p->save_point.y = tmp_int[38];
 	p->partner_id = tmp_int[39];
+	p->father = tmp_int[40];
+	p->mother = tmp_int[41];
+	p->child = tmp_int[42];
 
 	// Some checks
 	for(i = 0; i < char_num; i++) {
@@ -3565,4 +3593,20 @@ int do_init(int argc, char **argv) {
 	printf("The char-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", char_port);
 
 	return 0;
+}
+
+int char_married(int pl1,int pl2) {
+	if (char_dat[pl1].char_id == char_dat[pl2].partner_id && char_dat[pl2].char_id == char_dat[pl1].partner_id)
+		return 1;
+	else 
+		return 0;
+}
+
+int char_child(int parent_id, int child_id) {
+	if (char_dat[parent_id].child == char_dat[child_id].char_id && 
+	((char_dat[parent_id].char_id == char_dat[child_id].father) || 
+	(char_dat[parent_id].char_id == char_dat[child_id].mother)))
+		return 1;
+	else
+		return 0;
 }
