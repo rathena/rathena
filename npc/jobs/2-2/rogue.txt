@@ -898,8 +898,7 @@ in_rogue.gat,252,320,0	script	rogue_mob13	139,0,8,{
 //================================================
 // End Warp
 //================================================
-in_rogue.gat,370,320,0	script	rogue04	45,1,1,
-{
+in_rogue.gat,370,320,0	script	rogue04	45,1,1,{
 	set ROGUE_Q, 5;
 	killmonsterall "in_rogue.gat";
 	warp "in_rogue.gat",378,113;
