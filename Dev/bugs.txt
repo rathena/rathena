@@ -74,8 +74,8 @@ Progress:       0%
 	DB server Error - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'n' Sniff')' at line 1    Scratch 'n' Sniff
 
 Problem:        Spiral Pierce can cause loss of Skill Points
-Assigned:       N/A
-Progress:       0%
+Assigned:       MouseJstr
+Progress:       100%
 
     If you have a skill but due to a job change (or admin update), the
     skill tree changes and you no longer can get to that skill, you
