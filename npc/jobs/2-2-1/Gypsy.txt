@@ -1,89 +1,110 @@
-//Made by Evera/Lorri
+// Advance Class jobchanger after kRO Normals.
+// Checks if the player have any questskills, cart\falcon, level and such.
+// Made by Nana.
+
+// -== Gypsy ==-
 valkyrie.gat,53,56,4	script	Gypsy	101,{
-if (sex==1) goto Lmale;
-if (readparam(12) != 0) goto Lskpt;
-if ((BaseLevel >= 99) && (readparam(19) == 20) && (readparam(55) >= 50)) goto Lnovice;
-if ((readparam(19) == 24) && (joblevel >= 10)) goto Larcher;
-if ((readparam(19) == 27) && (joblevel >= 40)) goto Lgypsy2;
-if ((readparam(19) == 27) && (joblevel < 40)) goto Lgypsy3;
-if (readparam(19) == 44) goto Lomg;
+	if(readparam(21) < 1) goto L_Male;
+	if(getskilllv(147) > 0) set @qsk,1;
+	if(getskilllv(148) > 0) set @qsk1,1;
+	if(checkfalcon(0) > 0) goto L_Falcon;
+	if(checkcart(0) > 0) goto L_Cart;
+	if(readparam(12) > 0) goto Skill_Points;
+	if(readparam(19) >= 4008) goto L_Advance;
+	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
+	if((readparam(19) == 4004) && (readparam(55) >= 45)) goto L_HARC;
+	if(readparam(19) < 7) goto L_Class;
+	if(readparam(19) == 4001) goto L_Class1;
+	if(readparam(19) == 4004) goto L_Class;
+	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
+	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
+	mes "[Gypsy]";
+	mes "Hi there...";
+	close;
 
-Lnovice:
-mes "[Gypsy]";
-mes "Hey you there! Are you a dancer?";
-mes "There's a secret I wanna tell you.. You can get even more dances if you become a Gypsy! So do you wanna be a gypsy?";
-menu 
-"Yes",Lyes,"No way, you crazy?",Lcancel;
-Lyes:
-		mes "Hmm...?";
-		next;
-		mes "Alright, do you know the requirements? You have to be strong and adept at battling and dancing.";
-		mes "Level 99 and Job Level 50!";
-		mes "You have to be a dancer ofcourse";
-		mes "You sure you want to become a gypsy? You'll go back to a 1/1 novice...";
-		menu "Yes",Lnyes,"No",Lano;	
-			
-Lmale:
-		mes "[Gypsy]";
-		mes "Shoo! Boys!";
-		close;
-							
-Lnyes:
-if (readparam(12) != 0) goto Lskpt;
-		mes "Come back in 10 job levels then. Good luck!";
-		jobchange 24;// Job: Job_Novice_High
-		resetlvl(1);
-		close;
-					
-Larcher:
-		mes "[Gypsy]";
-		mes "You can almost dance!";
-		mes "Change into a high archer?";
-		menu "Yes",Layes,"No",Lano;
-				
-Layes:
-if (readparam(12) != 0) goto Lskpt;
-		mes "Hurry up and get 40 job levels!";
-		jobchange 27;// Job: Job_Archer_High
-		close;
-					
+L_Change:
+	mes "[Gypsy]";
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of Gypsy,";
+	mes "I wish you good fortune in the near future!";
+	jobchange 24;
+	resetlvl(1);
+	close;
 
-					
-Lgypsy2:
-		mes "I will now dance a magical dance for you.";
-		mes "One last chance, do you truly want to become a gypsy?";
-		menu "..Yes",Lcyes,"Not yet...",Lano;
-				
-Lcyes:
-if (readparam(12) != 0) goto Lskpt;
-		mes "Congratulations! You are now a gypsy";
-		jobchange 44;// Job: Job_Gypsy
-		next;
-		mes "[Gypsy]";
-		mes "Don't outdo yourself";
-		close;
-							
-Lskpt:
-		mes "[Gypsy]";
-		mes "You need to use those skillpoints up first.";
-		close;
-				
-Lgypsy3:
-		mes "[Gypsy]";
-		mes "Doesn't look like you're sufficient for the job";
-		close;				
+L_Cart:
+	mes "[Gypsy]";
+	mes "Please un-equip that cart before continuing.";
+	close;
 
-Lano:
-		mes "Well, goodbye!";
-		close;
+L_Class1:
+	mes "[Gypsy]";
+	mes "You're not ready to become an High Archer yet.";
+	close;
 
-Lcancel:
-		mes "[Gypsy]";
-		mes "Well bye then..";
-		close;
+L_Class:
+	mes "[Gypsy]";
+	mes "You've come far to get here. unfortunately, you're not ready to become an Gypsy yet.";
+	close;
 
-Lomg:
-		mes "[Gypsy]";
-		mes "Wait.. Haven't I seen you before?";
-		close;	
+L_Levels:
+	mes "[Gypsy]";
+	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an Gypsy";
+	close;
+
+L_HNov:
+	mes "[Gypsy]";
+	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
+	mes "Must great fortune follow you!";
+	jobchange 27;
+	next;
+	mes "[Gypsy]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
+	next;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	if(@qsk3 > 0) goto qsk3;
+	next;
+qsk:
+	skill 147,1,0;
+	set @qsk,0;
+	if(@qsk1 > 0) goto qsk1;
+	goto L_HNov_2;
+qsk1:
+	skill 148,1,0;
+	set @qsk1,0;
+	if(@qsk > 0) goto qsk;
+	goto L_HNov_2;
+
+L_HNov_2:
+	mes "[Gypsy]";
+	mes "Now when the formalities are fixed, I congratulate you on your Advancement to High Archer";
+	close;
+L_HARC:
+	mes "[Gypsy]";
+	mes "Congratulations!";
+	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an Gypsy!";
+	jobchange 44;
+	close;
+
+Skill_Points:
+	mes "[Gypsy]";
+	mes "Please use all of your skillpoints before proceeding.";
+	close;
+
+L_Advance:
+	mes "[Gypsy]";
+	mes "Hey there! You are already an Reborn. You cannot reach any higher";
+	mes "*whistles*";
+	close;
+
+L_Falcon:
+	mes "[Gypsy]";
+	mes "Please take your Falcon off before proceeding "+strcharinfo(0)+".";
+	close;
+
+L_Male:
+	mes "[Gypsy]";
+	mes "Only females can become a Gypsy.";
+	close;
 }

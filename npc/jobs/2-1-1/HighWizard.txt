@@ -1,60 +1,88 @@
-//High Wizard Made by Evera/Lorri
+// Advance Class jobchanger after kRO Normals.
+// Checks if the player have any questskills, cart\falcon, level and such.
+// Made by Nana.
+
+// -== High Wizard ==-
 valkyrie.gat,44,47,6	script	High Wizard	735,{
-	if ((readparam(11) >= 99) && (readparam(19) == 9) && (readparam(55) >= 50)) goto Lnovice;
-	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
-	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
-	if ((readparam(19) == 4003) && (readparam(55) >= 40)) goto Lh2;
-	if ((readparam(19) == 4003) && (readparam(55) < 40)) goto LCem;
-	if (readparam(19) == 4010) goto Lcrazy;
-	if (readparam(12) != 0) goto Lskpt;
+	if(getskilllv(157) > 0) set @qsk,1;
+	if(checkcart(0) > 0) goto L_Cart;
+	if(readparam(12) > 0) goto Skill_Points;
+	if(readparam(19) >= 4008) goto L_Advance;
+	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
+	if((readparam(19) == 4003) && (readparam(55) >= 45)) goto L_HMAG;
+	if(readparam(19) < 7) goto L_Class;
+	if(readparam(19) == 4001) goto L_Class1;
+	if(readparam(19) == 4003) goto L_Class;
+	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
+	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
 	mes "[High Wizard]";
-	mes "Hello";
-	mes "The magic surrounds you.";
+	mes "Hi there...";
 	close;
-Lnovice:
+
+L_Change:
 	mes "[High Wizard]";
-	mes "Hey you! It appears that your intelligence is very high. Would you like to become a high wizard like me?";
-	mes "There is a catch though, you have to go back through novice and mage.";
-	mes "You wanna do it?";
-	menu "Yes",Lnovice2,"No",Lcancel;
-Lnovice2:
-	mes "We shall start the ceremony....";
-	next;
-	jobchange 24;// Job: Job_Novice_High
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of High Wizard,";
+	mes "I wish you good fortune in the near future!";
+	jobchange 24;
 	resetlvl(1);
 	close;
-Lh1:
+
+L_Cart:
 	mes "[High Wizard]";
-	mes "Ready to become a high mage?";
-	menu "Yes",Lh12,"No",Lcancel;
-Lh12:
+	mes "Please un-equip that cart before continuing.";
+	close;
+
+L_Class1:
 	mes "[High Wizard]";
-	mes "The magic enchants and suppresses you.";
+	mes "You're not ready to become an High Mage yet.";
+	close;
+
+L_Class:
+	mes "[High Wizard]";
+	mes "You've come far to get here. unfortunately, you're not ready to become an High Wizard yet.";
+	close;
+
+L_Levels:
+	mes "[High Wizard]";
+	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an High Wizard";
+	close;
+
+L_HNov:
+	mes "[High Wizard]";
+	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
+	mes "Must great fortune follow you!";
+	jobchange 26;
 	next;
-	jobchange 26;// Job: Job_Mage_High
+	mes "[High Wizard]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
+	next;
+	if(@qsk > 0) goto qsk;
+	next;
+qsk:
+	skill 157,1,0;
+	set @qsk,0;
+	goto L_HNov_2;
+
+L_HNov_2:
+	mes "[High Wizard]";
+	mes "Now when the formalities are fixed, I congratulate you on your Advancement to High Mage";
 	close;
-Lh2:
+L_HMAG:
 	mes "[High Wizard]";
-	mes "The magic grows strong in you. You appear ready. Will you become a high wizard?";
-	menu "Yes",Lh22,"No",Lcancel;
-Lh22:
-	mes "[High Wizard]";
-	mes "The magic enchants and suppresses you.";
-	jobchange 33;// Job: Job_High_Wizard
+	mes "Congratulations!";
+	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an High Wizard!";
+	jobchange 33;
 	close;
-Lcrazy:
+
+Skill_Points:
 	mes "[High Wizard]";
-	mes "I cannot bestow you with more of my magic.";
+	mes "Please use all of your skillpoints before proceeding.";
 	close;
-Lskpt:
+
+L_Advance:
 	mes "[High Wizard]";
-	mes "Use your skillpoints first";
-	close;
-LCem:
-	mes "[High Wizard]";
-	mes "You're not ready to go to the next level";
-	close;	
-Lcancel:
-	mes "Bye";
+	mes "Hey there! You are already an Reborn. You cannot reach any higher";
+	mes "*whistles*";
 	close;
 }

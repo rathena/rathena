@@ -1,61 +1,106 @@
-//Creator Made by Evera/Lorri 1.1
+// Advance Class jobchanger after kRO Normals.
+// Checks if the player have any questskills, cart\falcon, level and such.
+// Made by Nana.
 
+// -== Creator ==-
 valkyrie.gat,53,50,6	script	Creator	122,{
-	if (readparam(12) != 0) goto Lskpt;
-	if ((readparam(11) >= 99) && (readparam(19) == 18) && (readparam(55) >= 50)) goto Lnovice;
-	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
-	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
-	if ((readparam(19) == 4006) && (readparam(55) >= 40)) goto Lh2;
-	if ((readparam(19) == 4006) && (readparam(55) < 40)) goto LCem;
-	if (readparam(19) == 4019) goto Lcrazy;
+	if(getskilllv(153) > 0) set @qsk,1;
+	if(getskilllv(154) > 0) set @qsk1,1;
+	if(getskilllv(155) > 0) set @qsk2,1;
+	if(checkcart(0) > 0) goto L_Cart;
+	if(readparam(12) > 0) goto Skill_Points;
+	if(readparam(19) >= 4008) goto L_Advance;
+	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
+	if((readparam(19) == 4007) && (readparam(55) >= 45)) goto L_HMERC;
+	if(readparam(19) < 7) goto L_Class;
+	if(readparam(19) == 4001) goto L_Class1;
+	if(readparam(19) == 4007) goto L_Class;
+	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
+	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
 	mes "[Creator]";
-	mes "Hello";
-	mes "Sorry, no potions for sale.";
+	mes "Hi there...";
 	close;
-Lnovice:
+
+L_Change:
 	mes "[Creator]";
-	mes "Hm. You seem to have extensive knowledge in chemistry. Would you like to become a creator?";
-	mes "There is a catch though, you have to go back through novice and merchant.";
-	mes "You wanna do it?";
-	menu "Yes",Lnovice2,"No",Lcancel;
-Lnovice2:
-	mes "We shall start the ceremony....";
-	next;
-	jobchange 24;// Job: Job_Novice_High
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of Creator,";
+	mes "I wish you good fortune in the near future!";
+	jobchange 24;
 	resetlvl(1);
 	close;
-Lh1:
+
+L_Cart:
 	mes "[Creator]";
-	mes "Ready to become a high merchant?";
-	menu "Yes",Lh12,"No",Lcancel;
-Lh12:
+	mes "Please un-equip that cart before continuing.";
+	close;
+
+L_Class1:
 	mes "[Creator]";
-	mes "Here, take this potion.";
+	mes "You're not ready to become an High Merchant yet.";
+	close;
+
+L_Class:
+	mes "[Creator]";
+	mes "You've come far to get here. unfortunately, you're not ready to become an Creator yet.";
+	close;
+
+L_Levels:
+	mes "[Creator]";
+	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an Creator";
+	close;
+
+L_HNov:
+	mes "[Creator]";
+	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
+	mes "Must great fortune follow you!";
+	jobchange 29;
 	next;
-	jobchange 29;// Job: Job_Merchant_High
+	mes "[Creator]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
+	next;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	next;
+qsk:
+	skill 153,1,0;
+	set @qsk,0;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	goto L_HNov_2;
+qsk1:
+	skill 154,1,0;
+	set @qsk1,0;
+	if(@qsk > 0) goto qsk;
+	if(@qsk2 > 0) goto qsk2;
+	goto L_HNov_2;
+qsk2:
+	skill 155,1,0;
+	set @qsk2,0;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	goto L_HNov_2;
+
+L_HNov_2:
+	mes "[Creator]";
+	mes "Now when the formalities are fixed, I congratulate you on your Advancement to High Merchant";
 	close;
-Lh2:
+L_HMERC:
 	mes "[Creator]";
-	mes "You knowledge unbounds you. Will you become a professor?";
-	menu "Yes",Lh22,"No",Lcancel;
-Lh22:
-	mes "[Creator]";
-	mes "Here, take this potion.";
-	jobchange Job_Creator; //42
+	mes "Congratulations!";
+	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an Creator!";
+	jobchange 42;
 	close;
-Lcrazy:
+
+Skill_Points:
 	mes "[Creator]";
-	mes "Hm. You look like me.";
+	mes "Please use all of your skillpoints before proceeding.";
 	close;
-Lskpt:
+
+L_Advance:
 	mes "[Creator]";
-	mes "Use your skillpoints first";
-	close;
-LCem:
-	mes "[Creator]";
-	mes "You're not ready to go to the next level";
-	close;	
-Lcancel:
-	mes "Bye";
+	mes "Hey there! You are already an Reborn. You cannot reach any higher";
+	mes "*whistles*";
 	close;
 }

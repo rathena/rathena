@@ -1,61 +1,88 @@
-//High Priest Made by Evera/Lorri
+// Advance Class jobchanger after kRO Normals.
+// Checks if the player have any questskills, cart\falcon, level and such.
+// Made by Nana.
+
+// -== High Priest ==-
 valkyrie.gat,44,42,6	script	High Priest	60,{
-	if ((readparam(11) >= 99) && (readparam(19) == 8) && (readparam(55) >= 50)) goto Lnovice;
-	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
-	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
-	if ((readparam(19) == 4005) && (readparam(55) >= 40)) goto Lh2;
-	if ((readparam(19) == 4005) && (readparam(55) < 40)) goto LCem;
-	if (readparam(19) == 4009) goto Lcrazy;
-	if (readparam(12) != 0) goto Lskpt;
+	if(getskilllv(156) > 0) set @qsk;
+	if(checkcart(0) > 0) goto L_Cart;
+	if(readparam(12) > 0) goto Skill_Points;
+	if(readparam(19) >= 4008) goto L_Advance;
+	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
+	if((readparam(19) == 4005) && (readparam(55) >= 45)) goto L_HACO;
+	if(readparam(19) < 7) goto L_Class;
+	if(readparam(19) == 4001) goto L_Class1;
+	if(readparam(19) == 4005) goto L_Class;
+	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
+	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
 	mes "[High Priest]";
-	mes "Hello";
-	mes "God bless you.";
+	mes "Hi there...";
 	close;
-Lnovice:
+
+L_Change:
 	mes "[High Priest]";
-	mes "Hi! I'm a little different from you, have you noticed?";
-	mes "If you devote yourself entirely you can be just like me.";
-	mes "There is a catch though, you have to go back through novice and acolyte.";
-	mes "You wanna do it?";
-	menu "Yes",Lnovice2,"No",Lcancel;
-Lnovice2:
-	mes "We shall start the ceremony....";
-	next;
-	jobchange 24;// Job: Job_Novice_High
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of High Priest,";
+	mes "I wish you good fortune in the near future!";
+	jobchange 24;
 	resetlvl(1);
 	close;
-Lh1:
+
+L_Cart:
 	mes "[High Priest]";
-	mes "Ready to become a high acolyte?";
-	menu "Yes",Lh12,"No",Lcancel;
-Lh12:
+	mes "Please un-equip that cart before continuing.";
+	close;
+
+L_Class1:
 	mes "[High Priest]";
-	mes "God please bestow this enlightened soul with a drip of your mighty power.";
+	mes "You're not ready to become an Acolyte High yet...";
+	close;
+
+L_Class:
+	mes "[High Priest]";
+	mes "You've come far to get here. unfortunately, you're not ready to become an High Priest yet.";
+	close;
+
+L_Levels:
+	mes "[High Priest]";
+	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an High Priest";
+	close;
+
+L_HNov:
+	mes "[High Priest]";
+	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
+	mes "Must great fortune follow you!";
+	jobchange 28;
 	next;
-	jobchange 28;// Job: Job_Acolyte_High
+	mes "[High Priest]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
+	next;
+	if(@qsk > 0) goto qsk;
+	next;
+qsk:
+	skill 156,1,0;
+	set @qsk,0;
+	goto L_HNov_2;
+
+L_HNov_2:
+	mes "[High Priest]";
+	mes "Now when the formalities are fixed, I congratulate you on your Advancement to Acolyte High";
 	close;
-Lh2:
+L_HACO:
 	mes "[High Priest]";
-	mes "Your holy power grows stronger. Will you become a high priest?";
-	menu "Yes",Lh22,"No",Lcancel;
-Lh22:
-	mes "[High Priest]";
-	mes "God please bestow this enlightened soul with a drip of your mighty power.";
-	jobchange 32;// Job: Job_High_Priest
+	mes "Congratulations!";
+	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an High Priest!";
+	jobchange 32;
 	close;
-Lcrazy:
+
+Skill_Points:
 	mes "[High Priest]";
-	mes "Nice day isn't it?";
+	mes "Please use all of your skillpoints before proceeding.";
 	close;
-Lskpt:
+
+L_Advance:
 	mes "[High Priest]";
-	mes "Use your skillpoints first";
-	close;
-LCem:
-	mes "[High Priest]";
-	mes "You're not ready to go to the next level";
-	close;	
-Lcancel:
-	mes "Bye";
+	mes "Hey there! You are already an Reborn. You cannot reach any higher";
+	mes "*whistles*";
 	close;
 }

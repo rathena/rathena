@@ -1,59 +1,118 @@
-//Stalker Made by Evera/Lorri
+// Advance Class jobchanger after kRO Normals.
+// Checks if the player have any questskills, cart\falcon, level and such.
+// Made by Nana.
+
+// -== Stalker ==-
 valkyrie.gat,53,58,4	script	Stalker	747,{
-	if (readparam(12) != 0) goto Lskpt;
-	if ((readparam(11) >= 99) && (Class == 18) && (JobLevel >= 50)) goto Lnovice;
-	if ((Class == 4001) && (readparam(55) >= 10)) goto Lh1;
-	if ((Class == 4001) && (readparam(55) < 10)) goto LCem;
-	if ((Class == 4007) && (readparam(55) >= 40)) goto Lh2;
-	if ((Class == 4007) && (readparam(55) < 40)) goto LCem;
-	if (Class == 4018) goto Lcrazy;
+	if(getskilllv(149) > 0) set @qsk,1;
+	if(getskilllv(150) > 0) set @qsk1,1;
+	if(getskilllv(151) > 0) set @qsk2,1;
+	if(getskilllv(152) > 0) set @qsk3,1;
+	if(checkcart(0) > 0) goto L_Cart;
+	if(readparam(12) > 0) goto Skill_Points;
+	if(readparam(19) >= 4008) goto L_Advance;
+	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
+	if((readparam(19) == 4007) && (readparam(55) >= 45)) goto L_HTHF;
+	if(readparam(19) < 7) goto L_Class;
+	if(readparam(19) == 4001) goto L_Class1;
+	if(readparam(19) == 4007) goto L_Class;
+	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
+	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
 	mes "[Stalker]";
-	mes "...";
+	mes "Hi there...";
 	close;
-Lnovice:
+
+L_Change:
 	mes "[Stalker]";
-	mes "Hm. You seem like a person that would be interested. Would you want to become a stalker?";
-	mes "There is a catch though, you have to go back through novice and theif.";
-	mes "You wanna do it?";
-	menu "Yes",Lnovice2,"No",Lcancel;
-Lnovice2:
-	mes "We shall start the ceremony....";
-	next;
-	jobchange 24;// Job: Job_Novice_High
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of Stalker,";
+	mes "I wish you good fortune in the near future!";
+	jobchange 24;
 	resetlvl(1);
 	close;
-Lh1:
+
+L_Cart:
 	mes "[Stalker]";
-	mes "Ready to become a theif?";
-	menu "Yes",Lh12,"No",Lcancel;
-Lh12:
+	mes "Please un-equip that cart before continuing.";
+	close;
+
+L_Class1:
 	mes "[Stalker]";
-	mes "Hmf.";
+	mes "You're not ready to become an High thief yet.";
+	close;
+
+L_Class:
+	mes "[Stalker]";
+	mes "You've come far to get here. unfortunately, you're not ready to become an Stalker yet.";
+	close;
+
+L_Levels:
+	mes "[Stalker]";
+	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an Stalker";
+	close;
+
+L_HNov:
+	mes "[Stalker]";
+	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
+	mes "Must great fortune follow you!";
+	jobchange 30;
 	next;
-	jobchange 30;// Job: Job_Thief_High
+	mes "[Stalker]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
+	next;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	if(@qsk3 > 0) goto qsk3;
+	next;
+qsk:
+	skill 149,1,0;
+	set @qsk,0;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	if(@qsk3 > 0) goto qsk3;
+	goto L_HNov_2;
+qsk1:
+	skill 150,1,0;
+	set @qsk1,0;
+	if(@qsk > 0) goto qsk;
+	if(@qsk2 > 0) goto qsk2;
+	if(@qsk3 > 0) goto qsk3;
+	goto L_HNov_2;
+qsk2:
+	skill 151,1,0;
+	set @qsk2,0;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk3 > 0) goto qsk3;
+	goto L_HNov_2;
+qsk3:
+	skill 152,1,0;
+	set @qsk3,0;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	goto L_HNov_2;
+
+L_HNov_2:
+	mes "[Stalker]";
+	mes "Now when the formalities are fixed, I congratulate you on your Advancement to High Thief";
 	close;
-Lh2:
+L_HTHF:
 	mes "[Stalker]";
-	mes "Hm. You're ready. Become a stalker?";
-	menu "Yes",Lh22,"No",Lcancel;
-Lh22:
-	mes "[Stalker]";
-	mes "Hmf.";
-	jobchange 41;// Job: Job_Stalker
+	mes "Congratulations!";
+	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an Stalker!";
+	jobchange 41;
 	close;
-Lcrazy:
+
+Skill_Points:
 	mes "[Stalker]";
-	mes "I'm done with you.";
+	mes "Please use all of your skillpoints before proceeding.";
 	close;
-Lskpt:
+
+L_Advance:
 	mes "[Stalker]";
-	mes "Use your skillpoints first";
-	close;
-LCem:
-	mes "[Stalker]";
-	mes "You're not ready to go to the next level";
-	close;	
-Lcancel:
-	mes "Bye";
+	mes "Hey there! You are already an Reborn. You cannot reach any higher";
+	mes "*whistles*";
 	close;
 }

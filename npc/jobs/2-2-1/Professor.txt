@@ -1,61 +1,88 @@
-//Professor Made by Evera/Lorri
-//Fixed by PoW
+// Advance Class jobchanger after kRO Normals.
+// Checks if the player have any questskills, cart\falcon, level and such.
+// Made by Nana.
+
+// -== Professor ==-
 valkyrie.gat,53,47,4	script	Professor	743,{
-	if (readparam(12) != 0) goto Lskpt;
-	if ((readparam(11) >= 99) && (readparam(19) == 16) && (readparam(55) >= 50)) goto Lnovice;
-	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
-	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
-	if ((readparam(19) == 4003) && (readparam(55) >= 40)) goto Lh2;
-	if ((readparam(19) == 4003) && (readparam(55) < 40)) goto LCem;
-	if (readparam(19) == 4017) goto Lcrazy;
+	if(getskilllv(157) > 0) set @qsk,1;
+	if(checkcart(0) > 0) goto L_Cart;
+	if(readparam(12) > 0) goto Skill_Points;
+	if(readparam(19) >= 4008) goto L_Advance;
+	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
+	if((readparam(19) == 4003) && (readparam(55) >= 45)) goto L_HMAG;
+	if(readparam(19) < 7) goto L_Class;
+	if(readparam(19) == 4001) goto L_Class1;
+	if(readparam(19) == 4003) goto L_Class;
+	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
+	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
 	mes "[Professor]";
-	mes "Hello";
-	mes "Knowledge is the key.";
+	mes "Hi there...";
 	close;
-Lnovice:
+
+L_Change:
 	mes "[Professor]";
-	mes "You seem smart. Hm. Do you wish to persue your dream of knowledge and become a professor like me?";
-	mes "There is a catch though, you have to go back through novice and mage.";
-	mes "You wanna do it?";
-	menu "Yes",Lnovice2,"No",Lcancel;
-Lnovice2:
-	mes "We shall start the ceremony....";
-	next;
-	jobchange 24;// Job: Job_Novice_High
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of Professor,";
+	mes "I wish you good fortune in the near future!";
+	jobchange 24;
 	resetlvl(1);
 	close;
-Lh1:
+
+L_Cart:
 	mes "[Professor]";
-	mes "Ready to become a high mage?";
-	menu "Yes",Lh12,"No",Lcancel;
-Lh12:
+	mes "Please un-equip that cart before continuing.";
+	close;
+
+L_Class1:
 	mes "[Professor]";
-	mes "Read this book, you'll be enchanted by its magic";
+	mes "You're not ready to become an High Mage yet.";
+	close;
+
+L_Class:
+	mes "[Professor]";
+	mes "You've come far to get here. unfortunately, you're not ready to become an Professor yet.";
+	close;
+
+L_Levels:
+	mes "[Professor]";
+	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an Professor";
+	close;
+
+L_HNov:
+	mes "[Professor]";
+	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
+	mes "Must great fortune follow you!";
+	jobchange 26;
 	next;
-	jobchange 26;// Job: Job_Mage_High
+	mes "[Professor]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
+	next;
+	if(@qsk > 0) goto qsk;
+	next;
+qsk:
+	skill 157,1,0;
+	set @qsk,0;
+	goto L_HNov_2;
+
+L_HNov_2:
+	mes "[Professor]";
+	mes "Now when the formalities are fixed, I congratulate you on your Advancement to High Mage";
 	close;
-Lh2:
+L_HMAG:
 	mes "[Professor]";
-	mes "It appears as your intelligence quota surpasses mine. Will you become a professor";
-	menu "Yes",Lh22,"No",Lcancel;
-Lh22:
-	mes "[Professor]";
-	mes "Read this book, you'll be enchanted by its magic";
-	jobchange 40;// Job: Job_Professor
+	mes "Congratulations!";
+	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an Professor!";
+	jobchange 40;
 	close;
-Lcrazy:
+
+Skill_Points:
 	mes "[Professor]";
-	mes "Your intelligence will surpass many other unfortunate souls who have not found truth in a book.";
+	mes "Please use all of your skillpoints before proceeding.";
 	close;
-Lskpt:
+
+L_Advance:
 	mes "[Professor]";
-	mes "Use your skillpoints first";
-	close;
-LCem:
-	mes "[Professor]";
-	mes "You're not ready to go to the next level";
-	close;	
-Lcancel:
-	mes "Bye";
+	mes "Hey there! You are already an Reborn. You cannot reach any higher";
+	mes "*whistles*";
 	close;
 }

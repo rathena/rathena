@@ -1,64 +1,104 @@
-//Sniper Made by Evera/Lorri
+// Advance Class jobchanger after kRO Normals.
+// Checks if the player have any questskills, cart\falcon, level and such.
+// Made by Nana.
+
+// -== Sniper ==-
 valkyrie.gat,44,55,6	script	Sniper	727,{
-	if ((readparam(11) >= 99) && (Class == 11) && (JobLevel >= 50)) goto Lnovice;
-	if ((Class == 4001) && (readparam(55) >= 10)) goto Lharcher;
-	if ((Class == 4001) && (readparam(55) < 10)) goto LCem;
-	if ((Class == 4004) && (readparam(55) >= 40)) goto Lhsni;
-	if ((Class == 4004) && (readparam(55) < 40)) goto LCem;
-	if (Class == 4012) goto Lcrazy;
+	if(getskilllv(147) > 0) set @qsk,1;
+	if(getskilllv(148) > 0) set @qsk1,1;
+	if(checkfalcon(0) > 0) goto L_Falcon;
+	if(checkcart(0) > 0) goto L_Cart;
+	if(readparam(12) > 0) goto Skill_Points;
+	if(readparam(19) >= 4008) goto L_Advance;
+	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
+	if((readparam(19) == 4004) && (readparam(55) >= 45)) goto L_HARC;
+	if(readparam(19) < 7) goto L_Class;
+	if(readparam(19) == 4001) goto L_Class1;
+	if(readparam(19) == 4004) goto L_Class;
+	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
+	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
 	mes "[Sniper]";
-	mes "Who are you?";
-	mes "Only the archer class can become a Sniper...";
-	mes "Meet all the requirements first.";
+	mes "Hi there...";
 	close;
-Lnovice:
+
+L_Change:
 	mes "[Sniper]";
-	mes "Now, here's the deal. I change you into a High Novice.";
-	mes "You come back to become a Sniper, then become a sniper.";
-	mes "You wanna do it?";
-	menu "Yes",Lnovice2,"No",Lcancel;
-Lnovice2:
-	if (readparam(12) != 0) goto Lskpt;
-	mes "By the tip of my arrow.. The distance it moves...";
-	next;
-	jobchange 24;// Job: Job_Novice_High
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of Sniper,";
+	mes "I wish you good fortune in the near future!";
+	jobchange 24;
 	resetlvl(1);
 	close;
-Lharcher:
+
+L_Cart:
 	mes "[Sniper]";
-	mes "Wanna become a High Arhcer?";
-	menu "Yes",Lhtheif2,"No",Lcancel;
-Lhtheif2:
-	if (readparam(12) != 0) goto Lskpt;
+	mes "Please un-equip that cart before continuing.";
+	close;
+
+L_Class1:
 	mes "[Sniper]";
-	mes "By the tip of my arrow.. The distance it moves...";
+	mes "You're not ready to become an High Archer yet.";
+	close;
+
+L_Class:
+	mes "[Sniper]";
+	mes "You've come far to get here. unfortunately, you're not ready to become an Sniper yet.";
+	close;
+
+L_Levels:
+	mes "[Sniper]";
+	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an Sniper";
+	close;
+
+L_HNov:
+	mes "[Sniper]";
+	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
+	mes "Must great fortune follow you!";
+	jobchange 27;
 	next;
-	jobchange 27;// Job: Job_Archer_High
+	mes "[Sniper]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
+	next;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	if(@qsk3 > 0) goto qsk3;
+	next;
+qsk:
+	skill 147,1,0;
+	set @qsk,0;
+	if(@qsk1 > 0) goto qsk1;
+	goto L_HNov_2;
+qsk1:
+	skill 148,1,0;
+	set @qsk1,0;
+	if(@qsk > 0) goto qsk;
+	goto L_HNov_2;
+
+L_HNov_2:
+	mes "[Sniper]";
+	mes "Now when the formalities are fixed, I congratulate you on your Advancement to High Archer";
 	close;
-Lhsni:
+L_HARC:
 	mes "[Sniper]";
-	mes "Ready to become a sniper, like me??";
-	menu "Yes",Lhsni2,"No",Lcancel;
-Lhsni2:
-	if (readparam(12) != 0) goto Lskpt;
-	mes "[Sniper]";
-	mes "By the tip of my arrow.. The distance it moves...";
-	jobchange 35;// Job: Job_Sniper
+	mes "Congratulations!";
+	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an Sniper!";
+	jobchange 35;
 	close;
-Lcrazy:
+
+Skill_Points:
 	mes "[Sniper]";
-	mes "You're already a Sniper!";
-	mes "How are you doing?";
+	mes "Please use all of your skillpoints before proceeding.";
 	close;
-Lskpt:
+
+L_Advance:
 	mes "[Sniper]";
-	mes "Please finish up your skillpoints first";
+	mes "Hey there! You are already an Reborn. You cannot reach any higher";
+	mes "*whistles*";
 	close;
-LCem:
+
+L_Falcon:
 	mes "[Sniper]";
-	mes "Please train your arrows to move faster.";
-	close;	
-Lcancel:
-	mes "Bye";
+	mes "Please take your Falcon off before proceeding "+strcharinfo(0)+".";
 	close;
 }
