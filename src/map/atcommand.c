@@ -1081,8 +1081,6 @@ int atcommand_where(
 	if(strncmp(sd->status.name,character,24)==0)
 		return -1;
 
-	intif_where(sd->status.account_id,character);
-
 	if ((pl_sd = map_nick2sd(character)) == NULL) {
 		snprintf(output, sizeof output, "%s %d %d",
 			sd->mapname, sd->bl.x, sd->bl.y);
@@ -1121,7 +1119,6 @@ int atcommand_jumpto(
 	if(strncmp(sd->status.name,character,24)==0) //Yourself mate? Tsk tsk tsk.
 		return -1;
 
-	intif_jumpto(sd->status.account_id,character);
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 			clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
@@ -4028,8 +4025,6 @@ atcommand_recall(
 		return -1;
 	if(strncmp(sd->status.name,character,24)==0)
 		return -1;
-
-	intif_charmovereq(sd,character,1);
 
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level

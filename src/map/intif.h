@@ -53,8 +53,4 @@ int intif_request_petdata(int account_id, int char_id, int pet_id);
 int intif_save_petdata(int account_id, struct s_pet *p);
 int intif_delete_petdata(int pet_id);
 
-int intif_jumpto(int account_id,char *name);
-int intif_where(int account_id,char *name);
-int intif_charmovereq(struct map_session_data *sd,char *name,int flag);
-
 #endif

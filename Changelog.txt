@@ -1,5 +1,6 @@
 Date	Added
 11/21
+	* Removed japanese interserver packets, should fix various problems (jumpto, where, charposreq). [Valaris]
 	* Added Yor's trade exploit bug fix. Added 2 skills bugs in the bugs.txt [Lupus]
 	* Added charcommand.c/.h for the following reasons: [MC Cameri]
 	  - Less congestion in atcommand.c

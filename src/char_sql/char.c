@@ -1901,17 +1901,6 @@ int parse_frommap(int fd) {
 				printf("DB server Error (update online `%s`)- %s\n", char_db, mysql_error(&mysql_handle));
 			RFIFOSKIP(fd,6);
 			break;
-
-		case 0x3090:
-			{
-				int r = inter_parse_frommap(fd);
-				if (r == 1) break;		// processed
-				if (r == 2) return 0;	// need more packet
-			}
-
-			printf("parse_frommap: unsupported packet %x! \n", RFIFOW(fd,0));
-			break;
-
 		default:
 			// inter server - packet
 			{
