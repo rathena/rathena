@@ -416,7 +416,7 @@ char* grfio_resnametable(char* fname, char *lfname)
 
 	fp = fopen(restable,"rb");
 	if(fp==NULL) {
-		printf("%s not found\n",restable);
+		printf("%s not found (grfio_resnametable)\n",restable);
 		exit(1);	// 1:not found error
 	}
 
@@ -446,12 +446,14 @@ int grfio_size(char *fname)
 		char lfname[256],rname[256],*p;
 		FILELIST lentry;
 		struct stat st;
-
-		//printf("%s\t",fname);
-		sprintf(rname,"%s",grfio_resnametable(fname,lfname));
-		//printf("%s\n",rname);
-		sprintf(lfname,"%s%s",data_dir,rname);
-		//printf("%s\n",lfname);
+		
+	    if(strcmp(data_dir, "") != 0) {
+            //printf("%s\t",fname);
+            sprintf(rname,"%s",grfio_resnametable(fname,lfname));
+            //printf("%s\n",rname);
+            sprintf(lfname,"%s%s",data_dir,rname);
+            //printf("%s\n",lfname);
+        }    
 
 		for(p=&lfname[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix
 
@@ -461,7 +463,7 @@ int grfio_size(char *fname)
 			lentry.gentry = 0;	// 0:LocalFile
 			entry = filelist_modify(&lentry);
 		} else if (entry==NULL) {
-			printf("%s not found\n", fname);
+			printf("%s not found (grfio_size)\n", fname);
 			//exit(1);
          	return -1;
 		}
@@ -516,7 +518,7 @@ void* grfio_reads(char *fname, int *size)
 			if (entry!=NULL && entry->gentry<0) {
 				entry->gentry = -entry->gentry;	// local file checked
 			} else {
-				printf("%s not found\n", fname);
+				printf("%s not found (grfio_reads)\n", fname);
 				//goto errret;
 				free(buf2);
 				return NULL;
@@ -532,7 +534,7 @@ void* grfio_reads(char *fname, int *size)
 		gfname = gentry_table[entry->gentry-1];
 		in = fopen(gfname,"rb");
 		if(in==NULL) {
-			printf("%s not found\n",gfname);
+			printf("%s not found (grfio_reads)\n",gfname);
 			//goto errret;
 			free(buf);
 			return NULL;
@@ -611,7 +613,7 @@ static int grfio_entryread(char *gfname,int gentry)
 
 	fp = fopen(gfname,"rb");
 	if(fp==NULL) {
-		printf("%s not found\n",gfname);
+		printf("%s not found (grfio_entryread)\n",gfname);
 		return 1;	// 1:not found error
 	}
 
@@ -901,7 +903,7 @@ void grfio_init(char *fname)
 {
 	FILE *data_conf;
 	char line[1024], w1[1024], w2[1024];
-	int result = 0, result2 = 0, result3 = 0;
+	int result = 0, result2 = 0, result3 = 0, result4 = 0;
 
 	data_conf = fopen(fname, "r");
 
@@ -941,7 +943,10 @@ void grfio_init(char *fname)
 	if (strcmp(adata_file, "") != 0)		// If data directive exists in grf-files.txt (i.e. adata_file is not equal to "")
 		result3 = grfio_add(adata_file);	// Alpha version data file
 
-	if (result != 0 && result2 != 0 && result3 != 0) {
+	if (strcmp(data_dir, "") == 0)		    // Id data_dir doesn't exist
+		result4 = 1;	                    // Data directory
+
+	if (result != 0 && result2 != 0 && result3 != 0 && result4 != 0) {
 		printf("not grf file readed exit!!\n");
 		exit(1);	// It ends, if a resource cannot read one.
 	}
