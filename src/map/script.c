@@ -1862,13 +1862,15 @@ int buildin_input(struct script_state *st)
 			}
 		}else{
 
-			//commented by Lupus (check Value Number Input fix in clif.c)
-			//** Fix by fritz :X keeps people from abusing old input bugs
-			if(sd->npc_amount < 0) //** If input amount is less then 0
-			{
-				clif_tradecancelled(sd);	// added "Deal has been cancelled" message by Valaris
-				buildin_close(st); //** close
-			}
+			// commented by Lupus (check Value Number Input fix in clif.c)
+			// readded by Yor: set ammount to 0 instead of cancel trade.
+			// ** Fix by fritz :X keeps people from abusing old input bugs
+			if (sd->npc_amount < 0) { //** If input amount is less then 0
+//				clif_tradecancelled(sd); // added "Deal has been cancelled" message by Valaris
+//				buildin_close(st); // ** close
+				sd->npc_amount = 0;
+			} else if (sd->npc_amount > battle_config.vending_max_value) // new fix by Yor
+				sd->npc_amount = battle_config.vending_max_value;
 
 			// ”’l
 			if(st->end>st->start+2){ // ˆø”1ŒÂ
@@ -1886,7 +1888,6 @@ int buildin_input(struct script_state *st)
 	}
 	return 0;
 }
-
 
 /*==========================================
  *
