@@ -1,15 +1,37 @@
 //////////////////////////////////////////////////////////
-//             Wedding Script Alpha (v1.0)              //
-//                    Feat - DiaDz (Basic Updates By AG)//
+//             Wedding Script Alpha (v1.4)              //
 //////////////////////////////////////////////////////////
 //
-// Progress: Finished? (Ehm... can anything more be done to it?)
-// Original Concepts by AppleGirl and Evera/Lorri.
-// 
-//////////////////////////////////////////////////////////
-// PROPERTY OF eATHENA! OTHER ATHENAS DON'T TOUCH THIS! //
-//////////////////////////////////////////////////////////
-//
+//=====eAthena Script====================================
+// Wedding Script
+//=====By================================================
+// AppleGirl and Evera(version 1.0)
+//=====Current Version===================================
+// 1.4
+//=====Compatible With:==================================
+// Any eAthena Version; RO Episode 6+
+//=====Description=======================================
+// Fully working wedding script for all kind of weddings
+//=====Additional Comments:==============================
+// Tested and debugged by whocares (maybe 1-2 bugs left)(version 1.1)
+//======= Version 1.2 By ShadowLady =====================
+// Same Sex Weddings.
+// Now the script(npcs) tell the players how they must perform exactly.
+//======= Version 1.3 By ShadowLady =====================
+// You might need to update the wedding rings in item_db
+// Same for the tux/dress, so all classes and lvs can use it ^^
+// And check if they are wearing the tux/dress and not only have it on the inventory.
+//======= Version 1.4 By ShadowLady =====================
+// Added some code ideas. Thanks to Jbain for help me debbuging
+// Added @outfit variable, to check if you already bought a tux/dress
+// No need to buy a tuxedo/dress everytime you register anymore, unless you divorce
+// Fixed some of that bugged timers (*stares whocares*) Now it is exactly 5 minutes and not 2
+// Fixed "part" of the divorce npc. The code is bugged by itself -_- Need both chars to be online yet.
+////======= Version 1.45 By ShadowLady =====================
+// Fixed some minor bugs. Same-sex is disabled by default now.
+// Change $progress variable to $@progress, so it dont screw up the ceremony on a server crash.
+// Added a Special GM Menu to enable/disable same-sex weddings and reset most variables.
+//=======================================================
 // Variable Notes:
 //
 // event_wedding - 1 signifies marriage
@@ -22,37 +44,41 @@
 // $name2$ - Insert name for groom
 // $get_ring - Check so you can't get ring twice
 // $reason$ - Objection to wedding
-
+// @outfit - Check if the char already got a dress or tuxedo from the npc
 // Tristan
 prt_church.gat,99,125,4	script	Tristan the Third	108,{
-	if(sex == 1 && $groom$ == strcharinfo(0) && $progress != 3) goto ceremony;
-	if(@register == 0) goto reg;
-	if(sex == 0 && $bride$ == strcharinfo(0)) goto ceremony2;
-	menu "Here To Attend",wed,"Here for another reason",other;
-ceremony:
-	if($progress == 1) goto needbride;
+	if($groom$ == strcharinfo(0) && $progress != 3) goto L_GroomCeremony;
+	if(@register == 0) goto L_GroomNeedToRegister;
+	if($bride$ == strcharinfo(0)) goto L_BrideCeremony;
+	menu "Here To Attend",L_Wedding,"Here for another reason",L_OtherReason;
+L_GroomCeremony:
+	if(@register == 0) goto L_GroomNeedToRegister;
+	if($progress == 1) goto L_BrideNeedToRegister;
+	if($progress == 0) goto L_Wedding;
+	if(countitem(2613) < 1) goto L_NeedRing;//Items: Diamond_Ring,
+	if((getequipid(2) != 2338) && (getequipid(2) != 7170)) goto L_Attire;
 	mes "[Tristan the Third]";
 	mes "Everything is ready, it's your call now...";
 	next;
-	menu "Preform Wedding.",-,"Cancel Wedding.",weddie;
+	menu "Perform Wedding.",-,"Cancel Wedding.",L_CancelWedding;
 	set $progress,3;
 	mes "[Tristan the Third]";
-	mes "Well all you have to do now is the easy part input your groom's name, remember to spell it correctly.";
-	input $name$;
+	mes "Well all you have to do now is the easy part input your bride's name, remember to spell it correctly.";
+	input $name2$;
 	next;
-	if($name2$ != $bride$) goto inprog;
+	if($name2$ != $bride$) goto L_WrongBrideName;
+	deltimer "a13";
 	marriage $name2$;
-	next;
 	mes "[Tristan the Third]";
 	mes "Please tell your wife to speak to me, and then we will start exchanging rings";
-	if(countitem(2613) < 1) goto needring;
-	delitem 2613,1;
-	getitem 2635,1;
+	delitem 2613,1;//Items: Diamond_Ring,
+	getitem 2635,1;//Items: Wedding_Ring_F,
 	set @get_ring,1;
 	next;
 	mes "[Tristan the Third]";
 	mes "Will you and your bride please move onto the stand. I will now preform the Wedding Ceremony!";
 	set event_wedding,1;
+	deltimer "weddinglimit1";
 	deltimer "weddinglimit2";
 	announce "The Wedding of "+$groom$+" and "+$bride$+", will now be held at Prontera Church.",5;
 	addtimer 50000,"a1";
@@ -68,21 +94,25 @@ ceremony:
 	addtimer 100000,"a11";
 	addtimer 105000,"a12";
 	close;
-ceremony2:
+L_BrideCeremony:
+	if(countitem(2613) < 1) goto L_NeedRing;//Items: Diamond_Ring,
+	if((getequipid(2) != 2338) && (getequipid(2) != 7170)) goto L_Attire;
 	mes "[Tristan the Third]";
 	mes "Well all you have to do now is the easy part input your groom's name, remember to spell it correctly.";
 	input $name$;
 	next;
-	if($name$ != $groom$) goto inprog;
+	if($name$ != $groom$) goto L_WrongGroomName;
+	deltimer "a13";
+	deltimer "weddinglimit1";
+	deltimer "weddinglimit2";
 	marriage $name$;
-	if(countitem(2613) < 1) goto needring;
-	delitem 2613,1;
-	getitem 2634,1;
+	delitem 2613,1;//Items: Diamond_Ring,
+	getitem 2634,1;//Items: Wedding_Ring_M,
 	set @get_ring,1;
 	close;
-weddie:
+L_CancelWedding:
 	mes "[Tristan the Third]";
-	mes "The wedding has been cancelled.";
+	mes "The wedding has been cancelled by "+strcharinfo(0)+".";
 	set $progress,0;
 	set $groom$,"null";
 	set $bride$,"null";
@@ -101,26 +131,27 @@ weddie:
 	deltimer "a10";
 	deltimer "a11";
 	deltimer "a12";
+	deltimer "a13";
 	close;	
-reg:
+L_GroomNeedToRegister:
 	mes "[Tristan the Third]";
 	mes "Hello, please register with Mary if you want me to perform a marriage for you.";
 	close;
-wed:	
-	if(event_wedding != 1) goto guest;
+L_Wedding:
+	if(event_wedding != 1) goto L_Guest;
 	mes "[Tristan the Third]";
 	mes "Hello again "+strcharinfo(0)+", I hope wish for the best of luck in your life.";
 	close;
-needbride:
+L_BrideNeedToRegister:
 	mes "[Tristan the Third]";
 	mes "I'm sorry, I cannot start the ceremony if the bride has not registered yet.";
 	close;
-other:
-	if(@get_ring == 1) goto wed;
+L_OtherReason:
+	if(@get_ring == 1) goto L_Wedding;
 	mes "[Tristan the Third]";
 	mes "Do you have a reason why these two should not be bonded in holy matrimony?";
 	next;
-	menu "Yes I Do.",-,"No",no;
+	menu "Yes I Do.",-,"No",L_NoReason;
 	areaannounce "prt_church.gat",0,0,350,350,"Ladies and Gentlemen,"+strcharinfo(0)+" has an objection to this marriage",0;
 	mes "[Tristan the Third]";
 	mes "Please enter your reason, for this action.";
@@ -149,33 +180,45 @@ other:
 	deltimer "a12";
 	mes "The wedding has been called off.";
 	close;
-no:
-	if($groom$ == strcharinfo(0)) goto inprog;
+L_NoReason:
+	if($groom$ == strcharinfo(0)) goto L_InProgress;
+	if($bride$ == strcharinfo(0)) goto L_InProgress;
 	mes "[Tristan the Third]";
 	mes "Please have a seat than and let me continue the wedding.";	
 	close;
-guest:
+L_Guest:
 	mes "[Tristan the Third]";
 	mes "Enjoy the cerimony.";
 	mes "But I must continue the cerimony, so lets talk after.";
 	close;
-inprog:
+L_InProgress:
 	mes "[Tristan the Third]";
 	mes "Your wedding is in progress, please try talking with me later.";
 	close;
-needring:
-	mes "[Tristan the Third]";
-	mes "You need a diamond ring";
-	close;
-tux:
+L_WrongBrideName:
 	mes "[Mary Happy]";
+	mes "How come you forgot your wife name!? Sorry come back later when you know who you want to marry.";
+	close;
+L_WrongGroomName:
+	mes "[Mary Happy]";
+	mes "How come you forgot your husband name!? Sorry come back later when you know who you want to marry.";
+	close;
+L_NeedRing:
+	mes "[Tristan the Third]";
+	mes "You need a Diamond Ring in order to perform the wedding.";
+	close;
+L_Attire:
+	if(sex == 1) goto L_NeedTuxedo;
+	if(sex == 0) goto L_NeedDress;
+	close;
+L_NeedTuxedo:
+	mes "[Tristan the Third]";
 	mes "You need a Tuxedo before we can continue the ceremony.";
 	close;
-dress:
-	mes "[Mary Happy]";
+L_NeedDress:
+	mes "[Tristan the Third]";
 	mes "Oh my is it your wedding day?";
-	mes "Well sorry to break it to you, you need a wedding dress";
-	mes "and Wedding Veil to get married.";
+	mes "Well sorry to break it to you, you need a wedding dress to get married.";
 	close;
 }
 
@@ -185,8 +228,52 @@ prt_church.gat,95,100,4	script	Mary	71,{
 	mes "Getting married bring a lot of joy.";
 	mes "By any chance, you you want to get engaged with someone?";
 	next;
-	menu "Explain the principles of Marrige",Lprinciples,"How does the marrige system work.",Lsystem,"I want to get married with someone.",Lmarried,"I live solo forever!",Lsolo;
-Lprinciples:
+	menu "Explain the principles of Marrige",L_Principles,"How does the marrige system work.",L_WeddingSystem,"I want to get married with someone.",L_Marry,"I live solo forever!",L_LiveSolo,"Special Menu",L_GmMenu;
+L_GmMenu:
+	set @gmlevel,getgmlevel(50);
+	if(@gmlevel < 50) goto L_NotGM;
+	mes "Hello "+strcharinfo(0)+" How i can serve you?";
+	menu "Enable Same-Sex Weddings",L_EnableSameSex,"Disable Same-Sex Weddings",L_DisableSameSex,"Reset the Variables",L_ResetVariables,"Just Checking...",L_Bye;
+L_NotGM:
+	mes "You cant have access to this special menu "+strcharinfo(0)+";
+	mes "Only GMs can change the ceremony options.";
+	close;
+L_EnableSameSex:
+	set $samesex,1;
+	mes "Same-Sex Weddings are enabled now!";
+	close;
+L_EnableSameSex:
+	set $samesex,0;
+	mes "Same-Sex Weddings are disabled now!";
+	close;
+L_ResetVariables:
+	set $@progress,0;
+	set $groom$,"null";
+	set $bride$,"null";
+	set $name$,"null";
+	set $name2$,"null";
+	set @register,0;
+	set event_wedding,0;
+	set @get_ring,0;
+	set @outfit,0;
+	deltimer "weddinglimit1";
+	deltimer "weddinglimit2";
+	deltimer "a1";
+	deltimer "a2";
+	deltimer "a3";
+	deltimer "a4";
+	deltimer "a5";
+	deltimer "a6";
+	deltimer "a7";
+	deltimer "a8";
+	deltimer "a9";
+	deltimer "a10";
+	deltimer "a11";
+	deltimer "a12";
+	deltimer "a13";
+	mes "All variables are reseted and timers off!";
+	close;
+L_Principles:
 	mes "[Mary Happy]";
 	mes "His Majesty King Tristan III of the Rune Midgard Kingdom will be officiating this wedding, with the intent of blessing all the people through his noble message.";
 	next;
@@ -200,13 +287,13 @@ Lprinciples:
 	mes "The two who are united in marriage must be with the other forever until the day they leave this world.";
 	next;
 	mes "[Mary Happy]";
-	mes "Also, males only with females, and females only with males can be wed.  Although there may be those who desire a homosexual or bestial marriage... it is not approved.";
+	mes "Also, males only with females, and females only with males can be wed.  Although there may be those who desire a homosexual or bestial marriage... it is approved.";
 	next;
 	mes "[Mary Happy]";
 	mes "If there is a significant other whom you want to spend the rest of your life with, then don't be shy to propose.";
 	mes "Wishing for many blessings upon couples who wish to live happily ever after..";
 	close;
-Lsystem:
+L_WeddingSystem:
 	mes "[Mary Happy]";
 	mes "First make sure both players a registered to get married.";
 	mes "Obviously, you must know each other to get married?";
@@ -215,13 +302,13 @@ Lsystem:
 	next;
 	mes "[Mary Happy]";
 	mes "You must go to Thristan the Third,";
-	mes "and the male must talk to him first.";
-	mes "And you must tell him the girl";
+	mes "and the Groom must talk to him first.";
+	mes "And you must tell him the Bride";
 	mes "you wish to get married with.";
 	mes "Be sure to tell him exactly who you want to marry.";
 	next;
 	mes "[Mary Happy]";
-	mes "After the male has spoken, next the female must talk.";
+	mes "After the Groom has spoken, next the Bride must talk.";
 	mes "Then when both of you have spoken each others names,";
 	mes "Thristan the third will read out both of your names.";
 	next;
@@ -252,7 +339,6 @@ Lsystem:
 	mes "Send a message to each other";
 	mes "then in the private message window press up";
 	next;
-//o_O who removed this part? we use a diff system now (re-enabled)
 	mes "[Mary Happy]";
 	mes "Then it will show the other persons name.";
 	mes "If you press ctrl + C that name will be saved.";
@@ -270,119 +356,202 @@ Lsystem:
 	mes "If you ever decide to get married.";
 	mes "Remember to register.";
 	close;
-Lmarried:
+L_Marry:
 	mes "[Mary Happy]";
 	mes "If you wish to get married you must first register.";
-	mes "Male is ^FF00FF30,000^000000 zeny and female is ^FF00FF20,000^000000 zeny";
+	mes "Male is ^FF00FF120,000^000000 zeny and female is ^FF00FF100,000^000000 zeny";
+	if((countitem(2338) > 0) || (countitem(7170) > 0) || (@outfit == 1)) mes "But only ^FF00FF60,000^000000 zeny for male and ^FF00FF50,000^000000 zeny for female if you already have registered before";
 	mes "Both male and female must have registered,";
-	mes "and both must have paid fees,";
-	mes "and the female must have a wedding veil.";
+	mes "and both must have paid fees, have Diamond Rings and be on same party!";
+	mes "The Bride will get a Wedding Dress, while the Groom will get a Chinese Tuxedo";
 	next;
 	mes "[Mary Happy]";
 	mes "If both people have paid and meet recquirements";
 	mes "you are able to get married strait away.";
+	mes "One must be the Groom and the other the Bride.";
 	mes "Do you wish to register to get married?";
-	menu "I Want To Register To Be Married.",-,"I'm Fine, Thanks Anyways.",bye;
-	if(baselevel < 45) goto lvl;
-	if(event_wedding == 1) goto wed;
-	if(@register >= 1) goto regd;
-	if($progress >= 2) goto inprog;
-	if(sex == 0) goto female;
+	if($SameSex == 1)	menu "I'm gonna be the Groom",-,"I,m gonna be the Bride",L_BrideRegister,"Never mind",L_Bye;
+	if(event_wedding == 1) goto L_Married;
+	if(@register >= 1) goto L_AlreadyRegistered;
+	if($progress >= 2) goto L_InProgress;
+	if(($samesex == 0) && (sex == 0)) goto L_BrideRegister;
+	if((countitem(2338) > 0) || (countitem(7170) > 0) || (@outfit == 1)) goto L_GroomRegister2;
 	mes "[Mary Happy]";
-	mes "No problem sir, please fill out your name here.";
-	mes "And I'll need to collect a 1,300,000z fee for your wedding and suit rental.";
+	if(sex == 1) mes "No problem sir, please fill out your name here.";
+	if(sex == 0) mes "No problem miss, please fill out your name here.";
+	mes "And I'll need to collect a 120,000z fee for your wedding fees and outfit.";
 	next;
 	mes "[Mary Happy]";
 	mes "Now You Must Insert The Your Bride's Name";
 	input $name$;
 	next;
-	if(zeny < 1300000) goto needz;
+	if(zeny < 120000) goto L_NeedZeny1;
 	set $groom$,strcharinfo(0);
 	set @register,1;
-	set zeny,zeny-1300000;
+	set zeny,zeny-120000;
 	set $progress,1;
+	if(sex == 1) getitem 7170,1;
+	if(sex == 0) getitem 2338,1;
+	set @outfit,1;
 	mes "[Mary Happy]";
 	mes "You are now registered "+strcharinfo(0)+", I wish you the best of luck with your marriage.";
-	addtimer 60000,"weddinglimit1";
+	addtimer 300000,"weddinglimit1";
+	areaannounce "prt_church.gat",0,0,350,350,strcharinfo(0)+" has registered for the wedding.",0;
 	next;
-	mes "Please hurry to the altar.  We have to be ready for another wedding in 5 minutes.";	
+	mes "Please hurry to the altar. We have to be ready for another wedding in 5 minutes.";	
 	deltimer "a13";
 	addtimer 300000,"a13";
 	close;
-female:
-	if ($name$ != strcharinfo(0)) goto notbride;
-	if($progress != 1) goto needgroom;
+L_BrideRegister:
+	if ($name$ != strcharinfo(0)) goto L_NotBride;
+	if($groom$ == strcharinfo(0)) goto L_CantMarryYourself;
+	if($progress != 1) goto L_GroomNotRegistered;
+	if(@register >= 1) goto L_AlreadyRegistered;
+	if((countitem(2338) > 0) || (countitem(7170) > 0) || (@outfit == 1)) goto L_BrideRegister2;
 	mes "[Mary Happy]";
-	mes "No problem miss, please fill out your name here.";
-	mes "And I'll need to collect a 1,200,000z fee for your wedding and dress rental.";
+	if(sex == 1) mes "No problem sir, please fill out your name here.";
+	if(sex == 0) mes "No problem mis, please fill out your name here.";
+	mes "And I'll need to collect a 100,000z fee for your wedding fees and outfit.";
 	next;
-	if(zeny < 1200000) goto needz2;
-	if($name2$ != $groom$) goto inprog;
-	set $bride$,strcharinfo(0);
-	set @register,1;
-	set zeny,zeny-1200000;
-	set $progress,2;
-	set event_wedding,1;
+	if(zeny < 100000) goto L_NeedZeny2;
 	mes "[Mary Happy]";
 	mes "Now You Must Insert The Your Groom's Name";
 	input $name2$;
+	if($name2$ != $groom$) goto L_WrongName;
+	set $bride$,strcharinfo(0);
+	set @register,1;
+	set zeny,zeny-100000;
+	set $progress,2;
+	set event_wedding,1;
+	if(sex == 1) getitem 7170,1;
+	if(sex == 0) getitem 2338,1;
+	set @outfit,1;
+	deltimer "weddinglimit1";
+	addtimer 300000,"weddinglimit2";
 	next;
 	mes "[Mary Happy]";
 	mes "You are now registered "+strcharinfo(0)+", I wish you the best of luck with your wedding.";
-	deltimer "weddinglimit1";
-	addtimer 120000,"weddinglimit2";
+	areaannounce "prt_church.gat",0,0,350,350,strcharinfo(0)+" has registered for the wedding.",0;
 	next;
-	mes "Please hurry to the altar.  We have to be ready for another wedding in 5 minutes.";
+	mes "Please hurry to the altar. We have to be ready for another wedding in 5 minutes.";
 	deltimer "a13";
 	addtimer 300000,"a13";
 	close;
-needz:
-	set @zleft,1300000-zeny;
+
+L_GroomRegister2:
+	mes "[Mary Happy]";
+	if(sex == 1) mes "No problem sir, please fill out your name here.";
+	if(sex == 0) mes "No problem mis, please fill out your name here.";
+	mes "And I'll need to collect a 60,000z fee for your wedding fees.";
+	next;
+	mes "[Mary Happy]";
+	mes "Now You Must Insert The Your Bride's Name";
+	input $name$;
+	next;
+	if(zeny < 60000) goto L_NeedZeny3;
+	set $groom$,strcharinfo(0);
+	set @register,1;
+	set zeny,zeny-60000;
+	set $progress,1;
+	mes "[Mary Happy]";
+	mes "You are now registered "+strcharinfo(0)+", I wish you the best of luck with your marriage.";
+	addtimer 300000,"weddinglimit1";
+	areaannounce "prt_church.gat",0,0,350,350,strcharinfo(0)+" has registered for the wedding.",0;
+	next;
+	mes "Please hurry to the altar. We have to be ready for another wedding in 5 minutes.";	
+	deltimer "a13";
+	addtimer 300000,"a13";
+	close;
+L_BrideRegister2:
+	mes "[Mary Happy]";
+	if(sex == 1) mes "No problem sir, please fill out your name here.";
+	if(sex == 0) mes "No problem mis, please fill out your name here.";
+	mes "And I'll need to collect a 50,000z fee for your wedding fees.";
+	next;
+	if(zeny < 50000) goto L_NeedZeny4;
+	mes "[Mary Happy]";
+	mes "Now You Must Insert The Your Groom's Name";
+	input $name2$;
+	if($name2$ != $groom$) goto L_WrongName;
+	set $bride$,strcharinfo(0);
+	set @register,1;
+	set zeny,zeny-50000;
+	set $progress,2;
+	set event_wedding,1;
+	deltimer "weddinglimit1";
+	addtimer 300000,"weddinglimit2";
+	next;
+	mes "[Mary Happy]";
+	mes "You are now registered "+strcharinfo(0)+", I wish you the best of luck with your wedding.";
+	areaannounce "prt_church.gat",0,0,350,350,strcharinfo(0)+" has registered for the wedding.",0;
+	next;
+	mes "Please hurry to the altar. We have to be ready for another wedding in 5 minutes.";
+	deltimer "a13";
+	addtimer 300000,"a13";
+	close;
+
+L_NeedZeny1:
+	set @zleft,120000-zeny;
 	mes "[Mary Happy]";
 	mes "I'm terribly sorry, I am unable to register you. You seem to be "+@zleft+"z short.";
 	set @zleft,0;
 	close;
-needz2:
-	set @zleft,1200000-zeny;
+L_NeedZeny2:
+	set @zleft,100000-zeny;
 	mes "[Mary Happy]";
 	mes "I'm terribly sorry, I am unable to register you. You seem to be "+@zleft+"z short.";
 	set @zleft,0;
 	close;
-regd:
+L_NeedZeny3:
+	set @zleft,60000-zeny;
+	mes "[Mary Happy]";
+	mes "I'm terribly sorry, I am unable to register you. You seem to be "+@zleft+"z short.";
+	set @zleft,0;
+	close;
+L_NeedZeny4:
+	set @zleft,50000-zeny;
+	mes "[Mary Happy]";
+	mes "I'm terribly sorry, I am unable to register you. You seem to be "+@zleft+"z short.";
+	set @zleft,0;
+	close;
+L_AlreadyRegistered:
 	mes "[Mary Happy]";
 	mes "You can't register a second time silly.";
 	close;
-	
-bye:
+
+L_Bye:
 	mes "[Mary Happy]";
 	mes "Alrighty then, come back soon!";
 	close;
 
-inprog:
+L_InProgress:
 	mes "[Mary Happy]";
 	mes "I cannot accept registrations while a wedding is in progress, try again later.";
 	close;
-	
-needgroom:
+L_WrongName:
+	mes "[Mary Happy]";
+	mes "No one have registered with that name. Sorry.";
+	close;
+L_GroomNotRegistered:
 	mes "[Mary Happy]";
 	mes "The groom must register first in order to initiate the wedding.";
 	close;
 	
-wed:
+L_Married:
 	mes "[Mary Happy]";
 	mes "Hello again "+strcharinfo(0)+", I hope wish for the best of luck in your life.";
 	close;
-Lsolo:
+L_LiveSolo:
 	mes "[Mary Happy]";
 	mes "Well live a happy bachelors life";
 	close;
-notbride:
+L_NotBride:
 	mes "[Mary Happy]";
 	mes "You're not the bride";
 	close;
-lvl:
+L_YouCantMarryYourself:
 	mes "[Mary Happy]";
-	mes "Im sorry rules and regulations state that you must be base level 45 or higher.";
+	mes "What the hell you trying to do? Marry yourself?O_O";
 	close;
 }
 
@@ -391,45 +560,49 @@ prt_church.gat,95,95,4	script	Mary	71,{
 	mes "Getting divorce can bring a lot of sorrow.";
 	mes "By any chance, you you want to get divorced?";
 	next;
-	menu "I came to get a divorce",divorce_,"What do I need for a divorce",system;
-divorce_:
-	if(divorcee > 0) goto divorce__;
-	
+	menu "I came to get a divorce",L_FirstDivorce,"What do I need for a divorce",L_DivorceSystem;
+L_FirstDivorce:
+	if(divorce > 0) goto L_AlreadyDivorced;
 	mes "[Mary Sad]";
 	mes "So you came for a divorce, i have been divorced 2 times myself.";
 	mes "Life will continue whoever said you need a partner was wrong.";
+	mes "Dont forget that you and your partner must be online!";
 	next;
-	menu "Are you sure",-,"No i'm not ready",No;
-
+	menu "Are you sure",-,"No i'm not ready",L_No;
 	mes "[Mary Sad]";
 	mes "You have made your choice,";
 	mes "now you must live with it.";
 	next;
+	mes "You have been divorced!";
 	set event_wedding,0;
-	set divorcee,1;
+	set divorce,1;
+	set @register,0;
 	divorce;
 	close;
-divorce__:
+L_AlreadyDivorced:
 	mes "[Mary Sad]";
 	mes "So you came for another divorce,wow you must be trying to find true love.";
 	mes "Dont worry about it, it's not you, it's their fault.";
 	next;
-	menu "Are you sure",-,"No i'm not ready",No;
+	menu "Are you sure",-,"No i'm not ready",L_No;
 	mes "[Mary Sad]";
 	mes "You have made your choice,";
 	mes "now you must live with it.";
 	next;
+	mes "You have been divorced again!";
 	set event_wedding,0;
-	set divorcee,2;
+	set divorce,2;
+	set @register,0;
 	divorce;
 	close;
-No:
+L_No:
 	mes "[Mary Sad]";
-	mes "You should always be sure about what step you take in life";
+	mes "You should always be sure about what step you take in life.";
 	close;
-system:
+L_DivorceSystem:
 	mes "[Mary Sad]";
-	mes "Underconstruction";
+	mes "You just need to wish to not be married again and i will perform the divorce.";
+	mes "Both you and your partner must be online.";
 	close;
 }
 prt_church.gat,99,124,0	script	weddinglimit1	-1,{
@@ -503,10 +676,10 @@ prt_church.gat,99,124,0	script	a8	-1,{
 areaannounce "prt_church.gat",0,0,350,350,"We here will now join these two mortal entities, and create an immortal love.",0;
 }
 prt_church.gat,99,124,0	script	a9	-1,{
-areaannounce "prt_church.gat",0,0,350,350,$groom$+", do you you wish to take "+$bride$+" as your lawfully wedded wife?",0;
+areaannounce "prt_church.gat",0,0,350,350,$groom$+", do you you wish to take "+$bride$+" as your lawfully beloved wife?",0;
 }
 prt_church.gat,99,124,0	script	a10	-1,{
-areaannounce "prt_church.gat",0,0,350,350,"And do you "+$bride$+", wish to take "+$groom$+" as your lawfully wedded husband?",0;
+areaannounce "prt_church.gat",0,0,350,350,"And do you "+$bride$+", wish to take "+$groom$+" as your lawfully beloved husband?",0;
 }
 prt_church.gat,99,124,0	script	a11	-1,{
 areaannounce "prt_church.gat",0,0,350,350,"And so be it, by the powers vested in me...",0;
@@ -520,7 +693,7 @@ areaannounce "prt_church.gat",0,0,350,350,"I pronouce you Husband and Wife, you 
 	set $name$,"null";
 	set $name2$,"null";	
 }
-prt_church.gat,99,124,0 script	a13	-1,{
+prt_church.gat,99,124,0	script	a13	-1,{
 
 areaannounce "prt_church.gat",0,0,350,350,"The wedding has been cancelled.",0;
 	set $progress,0;
@@ -532,7 +705,3 @@ areaannounce "prt_church.gat",0,0,350,350,"The wedding has been cancelled.",0;
 	set event_wedding,0;
 	set @get_ring,0;
 }
-
-//////////////////////////////////////////////////////////
-// PROPERTY OF eATHENA! OTHER ATHENAS DON'T TOUCH THIS! //
-//////////////////////////////////////////////////////////
