@@ -1,6 +1,7 @@
 Date	Added
 11/06
-	- Fixed wrong coords for payon guild flags (it has the old map coords) [shadowlady]
+	- Fixed wrong coords for payon guild flags (it has the old map coords), fixed some weapon effects in item_db,
+	 updated the mob_db (90%+ done), added EP 5-9 mobs to mob_branch.txt and EP 6 cards to item_cardalbum.txt[shadowlady]
 	* atcommand.c/.h,chrif.c/.h, added @changesex. [MC Cameri]
 	* mob.c & clif.c: Added & Modified a few parts dealing with monsters and guilds [Codemaster]
 	* mob.c: Re-did a few parts according to jA's 1057 version. [Codemaster]
