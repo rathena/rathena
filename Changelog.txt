@@ -7,11 +7,13 @@ Date	Added
 	* Attempted to fix the mob bug (still haven't :( ). Still updated mob.c/clif.c/chrif.c according to jA 1057. [Codemaster]
 	* Fixed item_cardalbum.txt: Removed extra column which mad all albums empty [Lupus]
 11/07
+	- Fixed a few npcs will start implementing new ones soon, have alot on paper, need to type them up. [Nasedo]
 	* clif.c: Added a few things from jAthena 1057 [Codemaster]
 	* Corrected some typos in item_db. Items 1143 and 1719 need to be re-checked.[kobra_k88]
 	* Fixed compiling error in Map Server in which @repairall was using old broken system [Shinigami]
 
 11/06
+	- Added missing items in item_db.txt and reorganised it.[Nasedo]
 	- Fixed wrong coords for payon guild flags (it has the old map coords), fixed some weapon effects in item_db,
 	 updated the mob_db (90%+ done), added EP 5-9 mobs to mob_branch.txt and EP 6 cards to item_cardalbum.txt[shadowlady]
 	* atcommand.c/.h,chrif.c/.h, added @changesex. [MC Cameri]
