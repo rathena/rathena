@@ -227,3 +227,15 @@ Progress:	0%
 Problem:	Fire Pillar doesn't consume GEMS!
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Friends List doesn't save / load again. It used to work 2 months ago.
+		Let's use Freya's Friends solution (faster, better)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Problems with View ID od wearable Items / Weapons
+		e.g.
+		You put off Goggles, but see them on the character even after relogin
+		You can see both Knife + Shield in a hand
+Assigned:	N/A
+Progress:	0%
