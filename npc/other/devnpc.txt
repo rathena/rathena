@@ -198,7 +198,7 @@ OnInit:
         break;
 }
 
-//Aria
+//Aria\\
 Aria
 prontera.gat,156,179,4	script	Aria	805,{
  	npcspeed 150;

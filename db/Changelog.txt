@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/18
+	* Lord Knight's Concentration can now be used with any weapon [Aria]
+	* Changed few God-items to fit kRO 12/7/04 Patch [Aria]
 11/27	* Fixed some drain rates, fixed Balmung, Mjolnir, fixed all maces (for right jobs) [shadow]
 
 11/26	* Fixed Abrakadabra (3 Yellow Gemstones -> Yellow Gemstones 2).
