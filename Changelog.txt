@@ -1,5 +1,8 @@
 Date	Added
 11/22
+        * Added skill names for kRO 11/23's new skills [celest]
+          - Preserve, Full Strip, Weapon Refine, Slim Pitcher, Full Chemical Protection,
+            (Throw) Tomahawk
 	* timer.c static int timer_heap_max=0; //fix by Shinomori from eA forums
 	  ititialize static var!!!
 	* Added the old effect list # into effect_list.txt of spira's. [shadow]

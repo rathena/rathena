@@ -6,6 +6,7 @@
 	Skill databases == celest working on them i believe.
 
 11/22
+        * Adding 11/23 kRO's new skills [celest]
 	* Slim Potions requires empty test tube, not empty potion bottle *fixed* [shadow]
 
 11/21
