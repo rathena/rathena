@@ -1673,6 +1673,7 @@ int map_readallmap(void) {
 		char *p;
 		strncpy(afm_name, map[i].name, strlen(map[i].name) - 4);
 		strcat(afm_name, ".afm");
+		map[i].alias = NULL;
 
 		sprintf(fn,"%s\\%s",afm_dir,afm_name);
 		for(p=&fn[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix

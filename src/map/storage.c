@@ -142,7 +142,10 @@ int storage_additem(struct map_session_data *sd,struct storage *stor,struct item
 	if(!itemdb_isequip2(data)){
 		// 装備品ではないので、既所有品なら個数のみ変化させる
 		for(i=0;i<MAX_STORAGE;i++){
-			if(stor->storage[i].nameid == item_data->nameid &&
+			if( stor->storage[i].nameid == item_data->nameid &&
+				stor->storage[i].identify == item_data->identify &&
+				stor->storage[i].refine == item_data->refine &&
+				stor->storage[i].attribute == item_data->attribute &&
 				stor->storage[i].card[0] == item_data->card[0] && stor->storage[i].card[1] == item_data->card[1] &&
 				stor->storage[i].card[2] == item_data->card[2] && stor->storage[i].card[3] == item_data->card[3]){
 				if(stor->storage[i].amount+amount > MAX_AMOUNT)

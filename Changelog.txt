@@ -1,5 +1,7 @@
 Date	Added
 12/18
+	* Storage was merging items incorrectly [Mousejstr]
+	* eliminated a uninitialized var when using afm maps [MouseJstr]
 	* Added concept of dirty storage to reduce saves/load
 	  to the char server (do a clean build!) [MouseJstr]
 	* Eliminated storage_storageopen2 as unused [MouseJstr]
