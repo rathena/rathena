@@ -13,9 +13,10 @@
 #define START_ACCOUNT_NUM 2000000
 #define END_ACCOUNT_NUM 100000000
 
+int login_port;
 struct mmo_account {
 	char* userid;
-	char* passwd;
+	char passwd[33];
 	int passwdenc;
 
 	long account_id;
@@ -27,7 +28,7 @@ struct mmo_account {
 };
 
 struct mmo_char_server {
-	char name[20];
+	char name[21];
 	long ip;
 	short port;
 	int users;
@@ -35,4 +36,6 @@ struct mmo_char_server {
 	int new;
 };
 
+struct mmo_char_server server[MAX_SERVERS];
+int server_fd[MAX_SERVERS];
 #endif

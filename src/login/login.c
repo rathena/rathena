@@ -16,6 +16,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <stdarg.h>
 
 #include "../common/core.h"
 #include "../common/socket.h"
@@ -25,6 +26,7 @@
 #include "../common/version.h"
 #include "../common/db.h"
 #include "../common/lock.h"
+#include "../common/malloc.h"
 
 #ifdef PASSWORDENC
 #include "md5calc.h"
@@ -45,6 +47,7 @@ int subnetmaski[4];
 char account_filename[1024] = "save/account.txt";
 char GM_account_filename[1024] = "conf/GM_account.txt";
 char login_log_filename[1024] = "log/login.log";
+FILE *log_fp = NULL;
 char login_log_unknown_packets_filename[1024] = "log/login_unknown_packets.log";
 char date_format[32] = "%Y-%m-%d %H:%M:%S";
 int save_unknown_packets = 0;
@@ -105,7 +108,7 @@ int auth_fifo_pos = 0;
 
 struct auth_dat {
 	int account_id, sex;
-	char userid[24], pass[24], lastlogin[24];
+	char userid[24], pass[33], lastlogin[24]; // 33 for 32 + NULL terminated
 	int logincount;
 	int state; // packet 0x006a value + 1 (0: compte OK)
 	char email[40]; // e-mail (by default: a@a.com)
@@ -116,7 +119,7 @@ struct auth_dat {
 	char memo[255]; // a memo field
 	int account_reg2_num;
 	struct global_reg account_reg2[ACCOUNT_REG2_NUM];
-} *auth_dat;
+} *auth_dat = NULL;
 
 int auth_num = 0, auth_max = 0;
 
@@ -131,10 +134,19 @@ int auth_before_save_file = 0; // Counter. First save when 1st char-server do co
 
 int admin_state = 0;
 char admin_pass[24] = "";
+int GM_num;
+int GM_max=256;
 char gm_pass[64] = "";
 int level_new_gm = 60;
 
-static struct dbt *gm_account_db;
+struct gm_account *gm_account_db;
+
+int dynamic_pass_failure_ban = 1;
+int dynamic_pass_failure_ban_time = 5;
+int dynamic_pass_failure_ban_how_many = 3;
+int dynamic_pass_failure_ban_how_long = 1;
+
+int use_md5_passwds = 0;
 
 int console = 0;
 
@@ -142,27 +154,28 @@ int console = 0;
 // Writing function of logs file
 //------------------------------
 int login_log(char *fmt, ...) {
-	FILE *logfp;
 	va_list ap;
 	struct timeval tv;
 	char tmpstr[2048];
 
-	va_start(ap, fmt);
+	if(!log_fp)
+		log_fp = fopen(login_log_filename, "a");
 
-	logfp = fopen(login_log_filename, "a");
-	if (logfp) {
+	log_fp = fopen(login_log_filename, "a");
+	if (log_fp) {
 		if (fmt[0] == '\0') // jump a line if no message
-			fprintf(logfp, RETCODE);
+			fprintf(log_fp, RETCODE);
 		else {
+			va_start(ap, fmt);
 			gettimeofday(&tv, NULL);
 			strftime(tmpstr, 24, date_format, localtime(&(tv.tv_sec)));
 			sprintf(tmpstr + strlen(tmpstr), ".%03d: %s", (int)tv.tv_usec / 1000, fmt);
-			vfprintf(logfp, tmpstr, ap);
+			vfprintf(log_fp, tmpstr, ap);
+			va_end(ap);
 		}
-		fclose(logfp);
+		fflush(log_fp); // under cygwin or windows, if software is stopped, data are not written in the file -> fflush at every line
 	}
 
-	va_end(ap);
 	return 0;
 }
 
@@ -171,12 +184,11 @@ int login_log(char *fmt, ...) {
 // and returns its level (or 0 if it isn't a GM account or if not found)
 //----------------------------------------------------------------------
 int isGM(int account_id) {
-	struct gm_account *p;
-
-	p = numdb_search(gm_account_db, account_id);
-	if (p == NULL)
-		return 0;
-	return p->level;
+	int i;
+	for(i=0; i < GM_num; i++)
+		if(gm_account_db[i].account_id == account_id)
+			return gm_account_db[i].level;
+	return 0;
 }
 
 //-------------------------------------------------------
@@ -184,14 +196,15 @@ int isGM(int account_id) {
 //-------------------------------------------------------
 int read_gm_account() {
 	char line[512];
-	struct gm_account *p;
 	FILE *fp;
-	int c = 0;
-	int GM_level;
+	int account_id, level;
+	int i, line_counter;
 	struct stat file_stat;
 
-	free(gm_account_db);
-	gm_account_db = numdb_init();
+	if(gm_account_db) free(gm_account_db);
+	GM_num = 0;
+	if(GM_max < 0)	GM_max = 256;
+	gm_account_db = (struct gm_account*)aCalloc(GM_max, sizeof(struct gm_account));
 
 	// get last modify time/date
 	if (stat(GM_account_filename, &file_stat))
@@ -206,48 +219,54 @@ int read_gm_account() {
 		login_log("                 Actually, there is no GM accounts on the server." RETCODE);
 		return 1;
 	}
+
+	line_counter = 0;
 	// limited to 4000, because we send information to char-servers (more than 4000 GM accounts???)
 	// int (id) + int (level) = 8 bytes * 4000 = 32k (limit of packets in windows)
-	while(fgets(line, sizeof(line)-1, fp) && c < 4000) {
+	while(fgets(line, sizeof(line)-1, fp) && GM_num < 4000) {
+		line_counter++;
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
-		p = calloc(sizeof(struct gm_account), 1);
-		if (p == NULL) {
-			printf("read_gm_account: memory allocation failure (malloc)!\n");
-			exit(0);
-		}
-		if (sscanf(line, "%d %d", &p->account_id, &p->level) != 2 && sscanf(line, "%d: %d", &p->account_id, &p->level) != 2)
-			printf("read_gm_account: file [%s], invalid 'id_acount level' format.\n", GM_account_filename);
-		else if (p->level <= 0)
-			printf("read_gm_account: file [%s] %dth account (invalid level [0 or negative]: %d).\n", GM_account_filename, c+1, p->level);
+		if (sscanf(line, "%d %d", &account_id, &level) != 2 && sscanf(line, "%d: %d", &account_id, &level) != 2)
+			printf("read_gm_account: file [%s], invalid 'id_acount level' format (line #%d).\n", GM_account_filename, line_counter);
+		else if (level <= 0)
+			printf("read_gm_account: file [%s] %dth account (line #%d) (invalid level [0 or negative]: %d).\n", GM_account_filename, GM_num+1, line_counter, level);
 		else {
-			if (p->level > 99) {
-				printf("read_gm_account: file [%s] %dth account (invalid level, but corrected: %d->99).\n", GM_account_filename, c+1, p->level);
-				p->level = 99;
+			if (level > 99) {
+				printf("read_gm_account: file [%s] %dth account (invalid level, but corrected: %d->99).\n", GM_account_filename, GM_num+1, level);
+				level = 99;
 			}
-			if ((GM_level = isGM(p->account_id)) > 0) { // if it's not a new account
-				if (GM_level == p->level)
-					printf("read_gm_account: GM account %d defined twice (same level: %d).\n", p->account_id, p->level);
-				else
-					printf("read_gm_account: GM account %d defined twice (levels: %d and %d).\n", p->account_id, GM_level, p->level);
-			}
-			if (GM_level != p->level) { // if new account or new level
-				numdb_insert(gm_account_db, p->account_id, p);
-				//printf("GM account:%d, level: %d->%d\n", p->account_id, GM_level, p->level);
-				if (GM_level == 0) { // if new account
-					c++;
-					if (c >= 4000) {
-						printf("***WARNING: 4000 GM accounts found. Next GM accounts are not readed.\n");
-						login_log("***WARNING: 4000 GM accounts found. Next GM accounts are not readed." RETCODE);
+			for(i = 0; i < GM_num; i++)
+				if (gm_account_db[i].account_id == account_id) {
+					if (gm_account_db[i].level == level)
+						printf("read_gm_account: GM account %d defined twice (same level: %d).\n", account_id, level);
+					else {
+						printf("read_gm_account: GM account %d defined twice (levels: %d and %d).\n", account_id, gm_account_db[i].level, level);
+						gm_account_db[i].level = level;
 					}
+					break;
+				}
+			// if new account
+			if (i == GM_num) {
+				if (GM_num >= GM_max) {
+					GM_max += 256;
+					gm_account_db = realloc(gm_account_db, sizeof(struct gm_account) * GM_max);
+					memset(gm_account_db + (GM_max - 256), 0, sizeof(struct gm_account) * 256);
+				}
+				gm_account_db[GM_num].account_id = account_id;
+				gm_account_db[GM_num].level = level;
+				GM_num++;
+				if (GM_num >= 4000) {
+					printf("***WARNING: 4000 GM accounts found. Next GM accounts are not readed.\n");
+					login_log("***WARNING: 4000 GM accounts found. Next GM accounts are not readed." RETCODE);
 				}
 			}
 		}
 	}
 	fclose(fp);
 
-	printf("read_gm_account: file '%s' readed (%d GM accounts found).\n", GM_account_filename, c);
-	login_log("read_gm_account: file '%s' readed (%d GM accounts found)." RETCODE, GM_account_filename, c);
+	printf("read_gm_account: file '%s' readed (%d GM accounts found).\n", GM_account_filename, GM_num);
+	login_log("read_gm_account: file '%s' readed (%d GM accounts found)." RETCODE, GM_account_filename, GM_num);
 
 	return 0;
 }
@@ -286,7 +305,8 @@ int check_ipmask(unsigned int ip, const unsigned char *str) {
 int check_ip(unsigned int ip) {
 	int i;
 	unsigned char *p = (unsigned char *)&ip;
-	char buf[32];
+	char buf[16];
+	char * access_ip;
 	enum { ACF_DEF, ACF_ALLOW, ACF_DENY } flag = ACF_DEF;
 
 	if (access_allownum == 0 && access_denynum == 0)
@@ -304,21 +324,20 @@ int check_ip(unsigned int ip) {
 	sprintf(buf, "%d.%d.%d.%d.", p[0], p[1], p[2], p[3]);
 
 	for(i = 0; i < access_allownum; i++) {
-		const char *p = access_allow + i * ACO_STRSIZE;
-		if (memcmp(p, buf, strlen(p)) == 0 || check_ipmask(ip, p)) {
-			flag = ACF_ALLOW;
-			if (access_order == ACO_ALLOW_DENY)
+		access_ip = access_allow + i * ACO_STRSIZE;
+		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, access_ip)) {
+			if(access_order == ACO_ALLOW_DENY)
 				return 1; // With 'allow, deny' (deny if not allow), allow has priority
+			flag = ACF_ALLOW;
 			break;
 		}
 	}
 
 	for(i = 0; i < access_denynum; i++) {
-		const char *p = access_deny + i * ACO_STRSIZE;
-		if (memcmp(p, buf, strlen(p)) == 0 || check_ipmask(ip, p)) {
-			flag = ACF_DENY;
+		access_ip = access_deny + i * ACO_STRSIZE;
+		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, access_ip)) {
+			//flag = ACF_DENY; // not necessary to define flag
 			return 0; // At this point, if it's 'deny', we refuse connection.
-			break;
 		}
 	}
 
@@ -335,7 +354,8 @@ int check_ip(unsigned int ip) {
 int check_ladminip(unsigned int ip) {
 	int i;
 	unsigned char *p = (unsigned char *)&ip;
-	char buf[32];
+	char buf[16];
+	char * access_ip;
 
 	if (access_ladmin_allownum == 0)
 		return 1; // When there is no restriction, all IP are authorised.
@@ -352,8 +372,8 @@ int check_ladminip(unsigned int ip) {
 	sprintf(buf, "%d.%d.%d.%d.", p[0], p[1], p[2], p[3]);
 
 	for(i = 0; i < access_ladmin_allownum; i++) {
-		const char *p = access_ladmin_allow + i * ACO_STRSIZE;
-		if (memcmp(p, buf, strlen(p)) == 0 || check_ipmask(ip, p)) {
+		access_ip = access_ladmin_allow + i * ACO_STRSIZE;
+		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, access_ip)) {
 			return 1;
 		}
 	}
@@ -402,12 +422,9 @@ int e_mail_check(unsigned char *email) {
 	    strstr(last_arobas, "..") != NULL)
 		return 0;
 
-	for(ch = 1; ch < 32; ch++) {
-		if (strchr(last_arobas, ch) != NULL) {
+	for(ch = 1; ch < 32; ch++)
+		if (strchr(last_arobas, ch) != NULL)
 			return 0;
-			break;
-		}
-	}
 
 	if (strchr(last_arobas, ' ') != NULL ||
 	    strchr(last_arobas, ';') != NULL)
@@ -484,11 +501,10 @@ int mmo_auth_init(void) {
 	int GM_count = 0;
 	int server_count = 0;
 
-	auth_dat = calloc(sizeof(struct auth_dat) * 256, 1);
 	auth_max = 256;
+	auth_dat = (struct auth_dat*)aCalloc(auth_max, sizeof(struct auth_dat));
 
-	fp = fopen(account_filename, "r");
-	if (fp == NULL) {
+	if ((fp = fopen(account_filename, "r")) == NULL) {
 		// no account file -> no account -> no login, including char-server (ERROR)
 		printf("\033[1;31mmmo_auth_init: Accounts file [%s] not found.\033[0m\n", account_filename);
 		return 0;
@@ -498,7 +514,18 @@ int mmo_auth_init(void) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		line[sizeof(line)-1] = '\0';
+		// remove carriage return if exist
+		while(line[0] != '\0' && (line[strlen(line)-1] == '\n' || line[strlen(line)-1] == '\r'))
+			line[strlen(line)-1] = '\0';
 		p = line;
+
+		memset(userid, 0, sizeof(userid));
+		memset(pass, 0, sizeof(pass));
+		memset(lastlogin, 0, sizeof(lastlogin));
+		memset(email, 0, sizeof(email));
+		memset(error_message, 0, sizeof(error_message));
+		memset(last_ip, 0, sizeof(last_ip));
+		memset(memo, 0, sizeof(memo));
 
 		// database version reading (v2)
 		if (((i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%d\t"
@@ -795,14 +822,16 @@ int mmo_auth_init(void) {
 void mmo_auth_sync(void) {
 	FILE *fp;
 	int i, j, k, lock;
+	int account_id;
 	int id[auth_num];
 	char line[65536];
 
 	// Sorting before save
 	for(i = 0; i < auth_num; i++) {
 		id[i] = i;
+		account_id = auth_dat[i].account_id;
 		for(j = 0; j < i; j++) {
-			if (auth_dat[i].account_id < auth_dat[id[j]].account_id) {
+			if (account_id < auth_dat[id[j]].account_id) {
 				for(k = i; k > j; k--)
 					id[k] = id[k-1];
 				id[j] = i; // id[i]
@@ -812,9 +841,9 @@ void mmo_auth_sync(void) {
 	}
 
 	// Data save
-	fp = lock_fopen(account_filename, &lock);
-	if (fp == NULL)
+	if ((fp = lock_fopen(account_filename, &lock)) == NULL)
 		return;
+
 	fprintf(fp, "// Accounts file: here are saved all information about the accounts.\n");
 	fprintf(fp, "// Structure: ID, account name, password, last login time, sex, # of logins, state, email, error message for state 7, validity time, last (accepted) login ip, memo field, ban timestamp, repeated(register text, register value)\n");
 	fprintf(fp, "// Some explanations:\n");
@@ -872,10 +901,9 @@ int check_auth_sync(int tid, unsigned int tick, int id, int data) {
 // Packet send to all char-servers, except one (wos: without our self)
 //--------------------------------------------------------------------
 int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
-	int i, c;
+	int i, c, fd;
 
 	for(i = 0, c = 0; i < MAX_SERVERS; i++) {
-		int fd;
 		if ((fd = server_fd[i]) >= 0 && fd != sfd) {
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd, len);
@@ -890,17 +918,16 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 //-----------------------------------------------------
 void send_GM_accounts() {
 	int i;
-	char buf[32000];
-	int GM_value;
+	char buf[32767];
 	int len;
 
 	len = 4;
 	WBUFW(buf,0) = 0x2732;
-	for(i = 0; i < auth_num; i++)
+	for(i = 0; i < GM_num; i++)
 		// send only existing accounts. We can not create a GM account when server is online.
-		if ((GM_value = isGM(auth_dat[i].account_id)) > 0) {
-			WBUFL(buf,len) = auth_dat[i].account_id;
-			WBUFB(buf,len+4) = (unsigned char)GM_value;
+		if (gm_account_db[i].level > 0) {
+			WBUFL(buf,len) = gm_account_db[i].account_id;
+			WBUFB(buf,len+4) = (unsigned char)gm_account_db[i].level;
 			len += 5;
 		}
 	WBUFW(buf,2) = len;
@@ -945,6 +972,7 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email) {
 	if (auth_num >= auth_max) {
 		auth_max += 256;
 		auth_dat = realloc(auth_dat, sizeof(struct auth_dat) * auth_max);
+		memset(auth_dat, 0, sizeof(struct auth_dat) * auth_max);
 	}
 
 	memset(&auth_dat[i], '\0', sizeof(struct auth_dat));
@@ -957,7 +985,7 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email) {
 	strncpy(auth_dat[i].userid, account->userid, 24);
 	auth_dat[i].userid[23] = '\0';
 
-	strncpy(auth_dat[i].pass, account->passwd, 24);
+	strncpy(auth_dat[i].pass, account->passwd, 32);
 	auth_dat[i].pass[23] = '\0';
 
 	memcpy(auth_dat[i].lastlogin, "-", 2);
@@ -1009,9 +1037,14 @@ int mmo_auth(struct mmo_account* account, int fd) {
 	struct timeval tv;
 	char tmpstr[256];
 	int len, newaccount = 0;
+#ifdef PASSWORDENC
+	struct login_session_data *ld;
+#endif
+	int encpasswdok;
 	char md5str[64], md5bin[32];
 	char ip[16];
 	unsigned char *sin_addr = (unsigned char *)&session[fd]->client_addr.sin_addr;
+	char user_password[256];
 
 	sprintf(ip, "%d.%d.%d.%d", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
 
@@ -1040,15 +1073,18 @@ int mmo_auth(struct mmo_account* account, int fd) {
 	}
 
 	if (i != auth_num) {
-		int encpasswdok = 0;
-		struct login_session_data *ld;
 		if (newaccount) {
 			login_log("Attempt of creation of an already existant account (account: %s_%c, pass: %s, received pass: %s, ip: %s)" RETCODE,
 			          account->userid, account->userid[len+1], auth_dat[i].pass, account->passwd, ip);
 			return 1; // 1 = Incorrect Password
 		}
-		ld = session[fd]->session_data;
+		if(use_md5_passwds)
+			MD5_String(account->passwd, user_password);
+		else
+			memcpy(user_password, account->passwd, 25);
+		encpasswdok = 0;
 #ifdef PASSWORDENC
+		ld = session[fd]->session_data;
 		if (account->passwdenc > 0) {
 			int j = account->passwdenc;
 			if (!ld) {
@@ -1059,11 +1095,9 @@ int mmo_auth(struct mmo_account* account, int fd) {
 				j = 1;
 			do {
 				if (j == 1) {
-					strncpy(md5str, ld->md5key, sizeof(ld->md5key)); // 20
-					strcat(md5str, auth_dat[i].pass); // 24
+					sprintf(md5str, "%s%s", ld->md5key, auth_dat[i].pass); // 20 + 24
 				} else if (j == 2) {
-					strncpy(md5str, auth_dat[i].pass, sizeof(auth_dat[i].pass)); // 24
-					strcat(md5str, ld->md5key); // 20
+					sprintf(md5str, "%s%s", auth_dat[i].pass, ld->md5key); // 24 + 20
 				} else
 					md5str[0] = '\0';
 				md5str[sizeof(md5str)-1] = '\0'; // 64
@@ -1112,10 +1146,8 @@ int mmo_auth(struct mmo_account* account, int fd) {
 			case 9:   // 8 = No MSG (actually, all states after 9 except 99 are No MSG, use only this)
 			case 100: // 99 = This ID has been totally erased
 				return auth_dat[i].state - 1;
-				break;
 			default:
 				return 99; // 99 = ID has been totally erased
-				break;
 			}
 		}
 
@@ -1189,6 +1221,10 @@ int char_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
 				login_log("Char-server anti-freeze system: char-server #%d '%s' is freezed -> disconnection." RETCODE,
 				          i, server[i].name);
 				session[server_fd[i]]->eof = 1;
+			} else {
+				// send alive packet to check connection
+				WFIFOW(server_fd[i],0) = 0x2718;
+				WFIFOSET(server_fd[i],2);
 			}
 		}
 	}
@@ -1203,6 +1239,7 @@ int parse_fromchar(int fd) {
 	int i, j, id;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 	char ip[16];
+	int acc;
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
 
@@ -1307,11 +1344,11 @@ int parse_fromchar(int fd) {
 			break;
 
 		// we receive a e-mail creation of an account with a default e-mail (no answer)
-		case 0x2715: {
-			int acc;
-			char email[40];
+		case 0x2715: 
 			if (RFIFOREST(fd) < 46)
 				return 0;
+		{
+			char email[40];
 			acc = RFIFOL(fd,2); // speed up
 			memcpy(email, RFIFOP(fd,6), 40);
 			email[39] = '\0';
@@ -1335,11 +1372,11 @@ int parse_fromchar(int fd) {
 					login_log("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - account doesn't exist or e-mail of account isn't default e-mail (account: %d, ip: %s)." RETCODE,
 					          server[id].name, acc, ip);
 			}
+		}
 			RFIFOSKIP(fd,46);
 			break;
 
 		// We receive an e-mail/limited time request, because a player comes back from a map-server to the char-server
-			}
 		case 0x2716:
 			if (RFIFOREST(fd) < 6)
 				return 0;
@@ -1356,10 +1393,9 @@ int parse_fromchar(int fd) {
 					break;
 				}
 			}
-			if (i == auth_num) {
+			if (i == auth_num)
 				login_log("Char-server '%s': e-mail of the account %d NOT found (ip: %s)." RETCODE,
 				          server[id].name, RFIFOL(fd,2), ip);
-			}
 			RFIFOSKIP(fd,6);
 			break;
 
@@ -1367,7 +1403,6 @@ int parse_fromchar(int fd) {
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 			  {
-				int acc;
 				unsigned char buf[10];
 				FILE *fp;
 				acc = RFIFOL(fd,4);
@@ -1424,7 +1459,6 @@ int parse_fromchar(int fd) {
 			if (RFIFOREST(fd) < 86)
 				return 0;
 		  {
-			int acc;
 			char actual_email[40], new_email[40];
 			acc = RFIFOL(fd,2);
 			memcpy(actual_email, RFIFOP(fd,6), 40);
@@ -1510,7 +1544,6 @@ int parse_fromchar(int fd) {
 			if (RFIFOREST(fd) < 18)
 				return 0;
 			{
-				int acc;
 				acc = RFIFOL(fd,2);
 				for(i = 0; i < auth_num; i++) {
 					if (auth_dat[i].account_id == acc) {
@@ -1564,10 +1597,9 @@ int parse_fromchar(int fd) {
 						break;
 					}
 				}
-				if (i == auth_num) {
+				if (i == auth_num)
 					login_log("Char-server '%s': Error of ban request (account: %d not found, ip: %s)." RETCODE,
 					          server[id].name, acc, ip);
-				}
 				RFIFOSKIP(fd,18);
 			}
 			return 0;
@@ -1576,7 +1608,7 @@ int parse_fromchar(int fd) {
 			if (RFIFOREST(fd) < 6)
 				return 0;
 			{
-				int acc, sex;
+				int sex;
 				acc = RFIFOL(fd,2);
 				for(i = 0; i < auth_num; i++) {
 //					printf("%d,", auth_dat[i].account_id);
@@ -1606,10 +1638,9 @@ int parse_fromchar(int fd) {
 						break;
 					}
 				}
-				if (i == auth_num) {
+				if (i == auth_num)
 					login_log("Char-server '%s': Error of sex change (account: %d not found, sex would be reversed, ip: %s)." RETCODE,
 					          server[id].name, acc, ip);
-				}
 				RFIFOSKIP(fd,6);
 			}
 			return 0;
@@ -1618,7 +1649,7 @@ int parse_fromchar(int fd) {
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 			{
-				int acc, p;
+				int p;
 				acc = RFIFOL(fd,4);
 				for(i = 0; i < auth_num; i++) {
 					if (auth_dat[i].account_id == acc) {
@@ -1655,7 +1686,6 @@ int parse_fromchar(int fd) {
 			if (RFIFOREST(fd) < 6)
 				return 0;
 			{
-				int acc;
 				acc = RFIFOL(fd,2);
 				for(i = 0; i < auth_num; i++) {
 					if (auth_dat[i].account_id == acc) {
@@ -1670,10 +1700,9 @@ int parse_fromchar(int fd) {
 						break;
 					}
 				}
-				if (i == auth_num) {
+				if (i == auth_num)
 					login_log("Char-server '%s': Error of UnBan request (account: %d not found, ip: %s)." RETCODE,
 					          server[id].name, acc, ip);
-				}
 				RFIFOSKIP(fd,6);
 			}
 			return 0;
@@ -1681,7 +1710,7 @@ int parse_fromchar(int fd) {
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 			{
-				int acc, sex, i = 0;
+				int sex, i = 0;
 				acc = RFIFOL(fd,4);
 				sex = RFIFOB(fd,8);
 				if (sex != 0 && sex != 1)
@@ -1859,7 +1888,8 @@ int parse_admin(int fd) {
 			{
 				struct mmo_account ma;
 				ma.userid = RFIFOP(fd, 2);
-				ma.passwd = RFIFOP(fd, 26);
+				memcpy(ma.passwd, RFIFOP(fd, 26), 24);
+				ma.passwd[24] = '\0';
 				memcpy(ma.lastlogin, "-", 2);
 				ma.sex = RFIFOB(fd,50);
 				WFIFOW(fd,0) = 0x7931;
@@ -2056,16 +2086,16 @@ int parse_admin(int fd) {
 			remove_control_chars(account_name);
 			i = search_account_index(account_name);
 			if (i != -1) {
+				char pass[25];
 				memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
-				if (strcmp(auth_dat[i].pass, RFIFOP(fd,26)) == 0) {
+				memcpy(pass, RFIFOP(fd,26), 24);
+				pass[24] = '\0';
+				remove_control_chars(pass);
+				if (strcmp(auth_dat[i].pass, pass) == 0) {
 					WFIFOL(fd,2) = auth_dat[i].account_id;
 					login_log("'ladmin': Check of password OK (account: %s, password: %s, ip: %s)" RETCODE,
 					          auth_dat[i].userid, auth_dat[i].pass, ip);
 				} else {
-					char pass[24];
-					memcpy(pass, RFIFOP(fd,26), 24);
-					pass[23] = '\0';
-					remove_control_chars(pass);
 					login_log("'ladmin': Failure of password check (account: %s, proposed pass: %s, ip: %s)" RETCODE,
 					          auth_dat[i].userid, pass, ip);
 				}
@@ -2789,28 +2819,30 @@ int parse_login(int fd) {
 			account.userid = RFIFOP(fd,6);
 			account.userid[23] = '\0';
 			remove_control_chars(account.userid);
-			account.passwd = RFIFOP(fd,30);
 			if (RFIFOW(fd,0) == 0x64) {
-				account.passwd[23] = '\0';
-				remove_control_chars(account.passwd);
+				memcpy(account.passwd, RFIFOP(fd,30), 24);
+				account.passwd[24] = '\0';
+			} else {
+				memcpy(account.passwd, RFIFOP(fd,30), 32);
+				account.passwd[32] = '\0';
 			}
+			remove_control_chars(account.passwd);
 #ifdef PASSWORDENC
 			account.passwdenc = (RFIFOW(fd,0) == 0x64) ? 0 : PASSWORDENC;
 #else
 			account.passwdenc = 0;
 #endif
 
-			if (RFIFOW(fd,0) == 0x64) {
+			if (RFIFOW(fd,0) == 0x64)
 				login_log("Request for connection (non encryption mode) of %s (ip: %s)." RETCODE, account.userid, ip);
-			} else {
+			else
 				login_log("Request for connection (encryption mode) of %s (ip: %s)." RETCODE, account.userid, ip);
-			}
 
 			if (!check_ip(session[fd]->client_addr.sin_addr.s_addr)) {
 				login_log("Connection refused: IP isn't authorised (deny/allow, ip: %s)." RETCODE, ip);
 				WFIFOW(fd,0) = 0x6a;
-				WFIFOB(fd,2) = 0x03;
-				WFIFOSET(fd,3);
+				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
+				WFIFOSET(fd,23);
 				RFIFOSKIP(fd,(RFIFOW(fd,0) == 0x64) ? 55 : 47);
 				break;
 			}
@@ -2904,23 +2936,21 @@ int parse_login(int fd) {
 					session[fd]->eof = 1;
 					return 0;
 				}
-				ld = session[fd]->session_data = calloc(sizeof(*ld), 1);
+				ld = session[fd]->session_data = (struct login_session_data*)aCalloc(1, sizeof(struct login_session_data));
 				if (!ld) {
 					printf("login: Request for md5 key: memory allocation failure (malloc)!\n");
 					session[fd]->eof = 1;
 					return 0;
 				}
-				if (RFIFOW(fd,0) == 0x01db) {
+				if (RFIFOW(fd,0) == 0x01db)
 					login_log("Sending request of the coding key (ip: %s)" RETCODE, ip);
-				} else {
+				else
 					login_log("'ladmin': Sending request of the coding key (ip: %s)" RETCODE, ip);
-				}
 				// Creation of the coding key
 				memset(ld->md5key, '\0', sizeof(ld->md5key));
 				ld->md5keylen = rand() % 4 + 12;
 				for(i = 0; i < ld->md5keylen; i++)
 					ld->md5key[i] = rand() % 255 + 1;
-
 				RFIFOSKIP(fd,2);
 				WFIFOW(fd,0) = 0x01dc;
 				WFIFOW(fd,2) = 4 + ld->md5keylen;
@@ -2938,8 +2968,8 @@ int parse_login(int fd) {
 				account.userid = RFIFOP(fd,2);
 				account.userid[23] = '\0';
 				remove_control_chars(account.userid);
-				account.passwd = RFIFOP(fd,26);
-				account.passwd[23] = '\0';
+				memcpy(account.passwd, RFIFOP(fd,26), 24);
+				account.passwd[24] = '\0';
 				remove_control_chars(account.passwd);
 				account.passwdenc = 0;
 				server_name = RFIFOP(fd,60);
@@ -2980,8 +3010,18 @@ int parse_login(int fd) {
 					WFIFOW(fd,2) = len;
 					WFIFOSET(fd,len);
 				} else {
-					login_log("Connexion of the char-server '%s' REFUSED (account: %s, pass: %s, ip: %s)" RETCODE,
-					          server_name, account.userid, account.passwd, ip);
+					if (server_fd[account.account_id] != -1) {
+						printf("Connection of the char-server '%s' REFUSED - already connected (account: %ld-%s, pass: %s, ip: %s)\n",
+					        server_name, account.account_id, account.userid, account.passwd, ip);
+						printf("You must probably wait that the freeze system detect the disconnection.\n");
+						login_log("Connexion of the char-server '%s' REFUSED - already connected (account: %ld-%s, pass: %s, ip: %s)" RETCODE,
+					          server_name, account.account_id, account.userid, account.passwd, ip);
+						login_log("You must probably wait that the freeze system detect the disconnection." RETCODE);
+					} else {
+						printf("Connection of the char-server '%s' REFUSED (account: %s, pass: %s, ip: %s).\n", server_name, account.userid, account.passwd, ip);
+						login_log("Connexion of the char-server '%s' REFUSED (account: %s, pass: %s, ip: %s)" RETCODE,
+					          	server_name, account.userid, account.passwd, ip);
+					}
 					WFIFOW(fd,0) = 0x2711;
 					WFIFOB(fd,2) = 3;
 					WFIFOSET(fd,3);
@@ -3020,8 +3060,8 @@ int parse_login(int fd) {
 				struct login_session_data *ld = session[fd]->session_data;
 				if (RFIFOW(fd,2) == 0) {	// non encrypted password
 					unsigned char* password;
-					password = RFIFOP(fd,4);
-					password[23] = '\0';
+					memcpy(password, RFIFOP(fd,4), 24);
+					password[24] = '\0';
 					remove_control_chars(password);
 					// If remote administration is enabled and password sent by client matches password read from login server configuration file
 					if ((admin_state == 1) && (strcmp(password, admin_pass) == 0)) {
@@ -3039,11 +3079,9 @@ int parse_login(int fd) {
 					else {
 						char md5str[64] = "", md5bin[32];
 						if (RFIFOW(fd,2) == 1) {
-							strncpy(md5str, ld->md5key, sizeof(ld->md5key)); // 20
-							strcat(md5str, admin_pass); // 24
+							sprintf(md5str, "%s%s", ld->md5key, admin_pass); // 20 24
 						} else if (RFIFOW(fd,2) == 2) {
-							strncpy(md5str, admin_pass, sizeof(admin_pass)); // 24
-							strcat(md5str, ld->md5key); // 20
+							sprintf(md5str, "%s%s", admin_pass, ld->md5key); // 24 20
 						}
 						MD5_String2binary(md5str, md5bin);
 						// If remote administration is enabled and password hash sent by client matches hash of password read from login server configuration file
@@ -3112,28 +3150,35 @@ int parse_login(int fd) {
 	return 0;
 }
 
+//-----------------------
 // Console Command Parser [Wizputer]
+//-----------------------
 int parse_console(char *buf) {
-    char *type,*command;
+	char command[256];
+
+	memset(command,0,sizeof(command));
     
-    type = (char *)malloc(64);
-    command = (char *)malloc(64);
+	sscanf(buf, "%[^\n]", command);
     
-    memset(type,0,64);
-    memset(command,0,64);
-    
-    printf("Console: %s\n",buf);
-    
-    if ( sscanf(buf, "%[^:]:%[^\n]", type , command ) < 2 )
-        sscanf(buf,"%[^\n]",type);
-    
-    printf("Type of command: %s || Command: %s \n",type,command);
-    
-    free(buf);
-    free(type);
-    free(command);
-    
-    return 0;
+	login_log("Console command :%s" RETCODE, command);
+
+	if(strcmpi("shutdown", command) == 0 ||
+	    strcmpi("exit", command) == 0 ||
+	    strcmpi("quit", command) == 0 ||
+	    strcmpi("end", command) == 0)
+		exit(0);
+	else if(strcmpi("alive", command) == 0 ||
+	         strcmpi("status", command) == 0)
+		printf("\033[0;36mConsole: \033[0m\033[1mI'm Alive.\033[0m\n");
+	else if(strcmpi("help", command) == 0) {
+		printf("\033[32mHelp of commands:\033[0m\n");
+		printf("  To shutdown the server:\n");
+		printf("  'shutdown|exit|qui|end'\n");
+		printf("  To know if server is alive:\n");
+		printf("  'alive|status'\n");
+	}
+
+	return 0;
 }
 
 
@@ -3182,12 +3227,14 @@ int login_lan_config_read(const char *lancfgName) {
 			continue;
 
 		line[sizeof(line)-1] = '\0';
+		memset(w2, 0, sizeof(w2));
 		if (sscanf(line,"%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
 
 		remove_control_chars(w1);
 		remove_control_chars(w2);
 		if (strcmpi(w1, "lan_char_ip") == 0) { // Read Char-Server Lan IP Address
+			memset(lan_char_ip, 0, sizeof(lan_char_ip));
 			h = gethostbyname(w2);
 			if (h != NULL) {
 				sprintf(lan_char_ip, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
@@ -3253,8 +3300,7 @@ int login_config_read(const char *cfgName) {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 
-	fp = fopen(cfgName, "r");
-	if (fp == NULL) {
+	if ((fp = fopen(cfgName, "r")) == NULL) {
 		printf("Configuration file (%s) not found.\n", cfgName);
 		return 1;
 	}
@@ -3265,6 +3311,7 @@ int login_config_read(const char *cfgName) {
 			continue;
 
 		line[sizeof(line)-1] = '\0';
+		memset(w2, 0, sizeof(w2));
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
 			remove_control_chars(w1);
 			remove_control_chars(w2);
@@ -3272,11 +3319,12 @@ int login_config_read(const char *cfgName) {
 			if (strcmpi(w1, "admin_state") == 0) {
 				admin_state = config_switch(w2);
 			} else if (strcmpi(w1, "admin_pass") == 0) {
+				memset(admin_pass, 0, sizeof(admin_pass));
 				strncpy(admin_pass, w2, sizeof(admin_pass));
 				admin_pass[sizeof(admin_pass)-1] = '\0';
 			} else if (strcmpi(w1, "ladminallowip") == 0) {
 				if (strcmpi(w2, "clear") == 0) {
-					if (access_ladmin_allow)
+					if (access_ladmin_allow) 
 						free(access_ladmin_allow);
 					access_ladmin_allow = NULL;
 					access_ladmin_allownum = 0;
@@ -3286,19 +3334,20 @@ int login_config_read(const char *cfgName) {
 						if (access_ladmin_allow)
 							free(access_ladmin_allow);
 						// set to all
-						access_ladmin_allow = calloc(ACO_STRSIZE, 1);
+						access_ladmin_allow = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
 						access_ladmin_allownum = 1;
 						access_ladmin_allow[0] = '\0';
 					} else if (w2[0] && !(access_ladmin_allownum == 1 && access_ladmin_allow[0] == '\0')) { // don't add IP if already 'all'
 						if (access_ladmin_allow)
 							access_ladmin_allow = realloc(access_ladmin_allow, (access_ladmin_allownum+1) * ACO_STRSIZE);
 						else
-							access_ladmin_allow = calloc(ACO_STRSIZE, 1);
+							access_ladmin_allow = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
 						strncpy(access_ladmin_allow + (access_ladmin_allownum++) * ACO_STRSIZE, w2, ACO_STRSIZE);
 						access_ladmin_allow[access_ladmin_allownum * ACO_STRSIZE - 1] = '\0';
 					}
 				}
 			} else if (strcmpi(w1, "gm_pass") == 0) {
+				memset(gm_pass, 0, sizeof(gm_pass));
 				strncpy(gm_pass, w2, sizeof(gm_pass));
 				gm_pass[sizeof(gm_pass)-1] = '\0';
 			} else if (strcmpi(w1, "level_new_gm") == 0) {
@@ -3308,17 +3357,23 @@ int login_config_read(const char *cfgName) {
 			} else if (strcmpi(w1, "login_port") == 0) {
 				login_port = atoi(w2);
 			} else if (strcmpi(w1, "account_filename") == 0) {
+				memset(account_filename, 0, sizeof(account_filename));
 				strncpy(account_filename, w2, sizeof(account_filename));
 				account_filename[sizeof(account_filename)-1] = '\0';
 			} else if (strcmpi(w1, "gm_account_filename") == 0) {
+				memset(GM_account_filename, 0, sizeof(GM_account_filename));
 				strncpy(GM_account_filename, w2, sizeof(GM_account_filename));
 				GM_account_filename[sizeof(GM_account_filename)-1] = '\0';
 			} else if (strcmpi(w1, "gm_account_filename_check_timer") == 0) {
 				gm_account_filename_check_timer = atoi(w2);
+			} else if (strcmpi(w1, "use_MD5_passwords") == 0) {
+				use_md5_passwds = config_switch(w2);
 			} else if (strcmpi(w1, "login_log_filename") == 0) {
+				memset(login_log_filename, 0, sizeof(login_log_filename));
 				strncpy(login_log_filename, w2, sizeof(login_log_filename));
 				login_log_filename[sizeof(login_log_filename)-1] = '\0';
 			} else if (strcmpi(w1, "login_log_unknown_packets_filename") == 0) {
+				memset(login_log_unknown_packets_filename, 0, sizeof(login_log_unknown_packets_filename));
 				strncpy(login_log_unknown_packets_filename, w2, sizeof(login_log_unknown_packets_filename));
 				login_log_unknown_packets_filename[sizeof(login_log_unknown_packets_filename)-1] = '\0';
 			} else if (strcmpi(w1, "save_unknown_packets") == 0) {
@@ -3330,6 +3385,7 @@ int login_config_read(const char *cfgName) {
 			} else if (strcmpi(w1, "display_parse_fromchar") == 0) {
 				display_parse_fromchar = config_switch(w2); // 0: no, 1: yes (without packet 0x2714), 2: all packets
 			} else if (strcmpi(w1, "date_format") == 0) { // note: never have more than 19 char for the date!
+				memset(date_format, 0, sizeof(date_format));
 				switch (atoi(w2)) {
 				case 0:
 					strcpy(date_format, "%d-%m-%Y %H:%M:%S"); // 31-12-2004 23:59:59
@@ -3372,14 +3428,14 @@ int login_config_read(const char *cfgName) {
 						if (access_allow)
 							free(access_allow);
 						// set to all
-						access_allow = calloc(ACO_STRSIZE, 1);
+						access_allow = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
 						access_allownum = 1;
 						access_allow[0] = '\0';
 					} else if (w2[0] && !(access_allownum == 1 && access_allow[0] == '\0')) { // don't add IP if already 'all'
 						if (access_allow)
 							access_allow = realloc(access_allow, (access_allownum+1) * ACO_STRSIZE);
 						else
-							access_allow = calloc(ACO_STRSIZE, 1);
+							access_allow = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
 						strncpy(access_allow + (access_allownum++) * ACO_STRSIZE, w2, ACO_STRSIZE);
 						access_allow[access_allownum * ACO_STRSIZE - 1] = '\0';
 					}
@@ -3396,18 +3452,28 @@ int login_config_read(const char *cfgName) {
 						if (access_deny)
 							free(access_deny);
 						// set to all
-						access_deny = calloc(ACO_STRSIZE, 1);
+						access_deny = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
 						access_denynum = 1;
 						access_deny[0] = '\0';
 					} else if (w2[0] && !(access_denynum == 1 && access_deny[0] == '\0')) { // don't add IP if already 'all'
 						if (access_deny)
 							access_deny = realloc(access_deny, (access_denynum+1) * ACO_STRSIZE);
 						else
-							access_deny = calloc(ACO_STRSIZE, 1);
+							access_deny = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
 						strncpy(access_deny + (access_denynum++) * ACO_STRSIZE, w2, ACO_STRSIZE);
 						access_deny[access_denynum * ACO_STRSIZE - 1] = '\0';
 					}
 				}
+			// dynamic password error ban
+			} else if (strcmpi(w1, "dynamic_pass_failure_ban") == 0) {
+				dynamic_pass_failure_ban = config_switch(w2);
+			} else if (strcmpi(w1, "dynamic_pass_failure_ban_time") == 0) {
+				dynamic_pass_failure_ban_time = atoi(w2);
+			} else if (strcmpi(w1, "dynamic_pass_failure_ban_how_many") == 0) {
+				dynamic_pass_failure_ban_how_many = atoi(w2);
+			} else if (strcmpi(w1, "dynamic_pass_failure_ban_how_long") == 0) {
+				dynamic_pass_failure_ban_how_long = atoi(w2);
+			// Anti-Freeze
 			} else if(strcmpi(w1,"anti_freeze_enable")==0){
 				anti_freeze_enable = config_switch(w2);
 			} else if (strcmpi(w1, "anti_freeze_interval") == 0) {
@@ -3561,6 +3627,24 @@ void display_conf_warnings(void) {
 		}
 	}
 
+	if (dynamic_pass_failure_ban != 0) {
+		if (dynamic_pass_failure_ban_time < 1) {
+			printf("***WARNING: Invalid value for dynamic_pass_failure_ban_time (%d) parameter\n", dynamic_pass_failure_ban_time);
+			printf("            -> set to 5 (5 minutes to look number of invalid passwords.\n");
+			dynamic_pass_failure_ban_time = 5;
+		}
+		if (dynamic_pass_failure_ban_how_many < 1) {
+			printf("***WARNING: Invalid value for dynamic_pass_failure_ban_how_many (%d) parameter\n", dynamic_pass_failure_ban_how_many);
+			printf("            -> set to 3 (3 invalid passwords before to temporarily ban.\n");
+			dynamic_pass_failure_ban_how_many = 3;
+		}
+		if (dynamic_pass_failure_ban_how_long < 1) {
+			printf("***WARNING: Invalid value for dynamic_pass_failure_ban_how_long (%d) parameter\n", dynamic_pass_failure_ban_how_long);
+			printf("            -> set to 1 (1 minute of temporarily ban.\n");
+			dynamic_pass_failure_ban_how_long = 1;
+		}
+	}
+
 	return;
 }
 
@@ -3615,6 +3699,11 @@ void save_config_in_log(void) {
 		login_log("- to NOT check GM accounts file modifications." RETCODE);
 	else
 		login_log("- to check GM accounts file modifications every %d seconds." RETCODE, gm_account_filename_check_timer);
+
+	if (use_md5_passwds == 0)
+		login_log("- to save password in plain text." RETCODE);
+	else
+		login_log("- to save password with MD5 encrypting." RETCODE);
 
 	// not necessary to log the 'login_log_filename', we are inside :)
 
@@ -3698,6 +3787,15 @@ void save_config_in_log(void) {
 			for(i = 0; i < access_denynum; i++)
 				login_log("    %s" RETCODE, (char *)(access_deny + i * ACO_STRSIZE));
 		}
+
+		// dynamic password error ban
+		if (dynamic_pass_failure_ban == 0)
+			login_log("- with NO dynamic password error ban." RETCODE);
+		else {
+			printf("- with a dynamic password error ban:" RETCODE);
+			printf("  After %d invalid password in %d minutes" RETCODE, dynamic_pass_failure_ban_how_many, dynamic_pass_failure_ban_time);
+			printf("  IP is banned for %d minutes" RETCODE, dynamic_pass_failure_ban_how_long);
+		}
 	}
 }
 
@@ -3728,15 +3826,23 @@ void do_final(void) {
 
 	mmo_auth_sync();
 
-	free(auth_dat);
-	free(gm_account_db);
+	if(auth_dat) free(auth_dat);
+	if(gm_account_db) free(gm_account_db);
 	for (i = 0; i < MAX_SERVERS; i++) {
-		if ((fd = server_fd[i]) >= 0)
+		if ((fd = server_fd[i]) >= 0) {
+			server_fd[i] = -1;
+			memset(&server[i], 0, sizeof(struct mmo_char_server));
+			close(fd);
 			delete_session(fd);
+		}
 	}
+	close(login_fd);
 	delete_session(login_fd);
 
 	login_log("----End of login-server (normal end with closing of all files)." RETCODE);
+
+	if(log_fp)
+		fclose(log_fp);
 }
 
 //------------------------------
@@ -3758,22 +3864,22 @@ int do_init(int argc, char **argv) {
 	for(i = 0; i < MAX_SERVERS; i++)
 		server_fd[i] = -1;
 
-	gm_account_db = numdb_init();
-
+	//gm_account_db = numdb_init();
+	gm_account_db = NULL;
+	GM_num = 0;
+	GM_max = 0;
 	read_gm_account();
 	mmo_auth_init();
-	set_termfunc(mmo_auth_sync);
+//	set_termfunc(mmo_auth_sync);
 	set_defaultparse(parse_login);
 	login_fd = make_listen_port(login_port);
 	
-	add_timer_func_list(check_auth_sync, "check_auth_sync");
-
-	i = add_timer_interval(gettick() + 60000, check_auth_sync, 0, 0, 60000); // every 60 sec we check if we must save accounts file (only if necessary to save)
-
 	if(anti_freeze_enable > 0) {
 		add_timer_func_list(char_anti_freeze_system, "char_anti_freeze_system");
 		i = add_timer_interval(gettick() + 1000, char_anti_freeze_system, 0, 0, ANTI_FREEZE_INTERVAL * 1000);
 	}
+	add_timer_func_list(check_auth_sync, "check_auth_sync");
+	i = add_timer_interval(gettick() + 60000, check_auth_sync, 0, 0, 60000); // every 60 sec we check if we must save accounts file (only if necessary to save)
 
 	// add timer to check GM accounts file modification
 	j = gm_account_filename_check_timer;
@@ -3791,17 +3897,15 @@ int do_init(int argc, char **argv) {
 	add_timer_func_list(check_GM_file, "check_GM_file");
 	i = add_timer_interval(gettick() + j * 1000, check_GM_file, 0, 0, j * 1000); // every x sec we check if gm file has been changed
 
-	if ( console ) {
-	    set_defaultconsoleparse(parse_console);
+	if(console) {
+		set_defaultconsoleparse(parse_console);
 	   	start_console();
 	}
 	
 	login_log("The login-server is ready (Server is listening on the port %d)." RETCODE, login_port);
-
 	printf("The login-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", login_port);
 
 	atexit(do_final);
+
 	return 0;
 }
-
-
