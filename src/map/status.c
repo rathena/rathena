@@ -1034,7 +1034,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	//Fleeã¸
 	if( (skill=pc_checkskill(sd,TF_MISS))>0 ){	// ‰ñ”ð—¦?‰Á
-		sd->flee += skill*(sd->status.class_==12 || sd->status.class_==17 || sd->status.class_==4013 || sd->status.class_==4018 ? 4 : 3);
+		sd->flee += skill*((sd->status.class_==12 || sd->status.class_==17 || sd->status.class_==4013 || sd->status.class_==4018) ? 4 : 3);
 		if((sd->status.class_==12 || sd->status.class_==4013) && (sd->sc_count && sd->sc_data[SC_CLOAKING].timer==-1))
 			sd->speed -= (short)(skill*1.5/100 * DEFAULT_WALK_SPEED);
 	}
@@ -1539,7 +1539,7 @@ int status_calc_speed (struct map_session_data *sd)
 	}
 
 	if(sd->status.option&2 && (skill = pc_checkskill(sd,RG_TUNNELDRIVE))>0 )
-		sd->speed += (1.2*DEFAULT_WALK_SPEED - skill*9);
+		sd->speed += (100-16*skill)*DEFAULT_WALK_SPEED/100;
 	if (pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)
 		sd->speed += (10-skill) * (DEFAULT_WALK_SPEED * 0.1);
 	else if (pc_isriding(sd)) {

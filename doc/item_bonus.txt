@@ -1,4 +1,4 @@
-﻿//eAthena Items Scripting Manual
+//eAthena Items Scripting Manual
 
 skill n,x;	skill n of level x
 
@@ -45,11 +45,11 @@ bonus bDoubleRate,n;		attack probability n% (with weapon disregard just high one
 bonus bDoubleAddRate,n;		Double attack probability + n% (weapon disregard)
 bonus bPerfectHitRate,n;	On-target impact attack probability n% (just high ones application)
 bonus bPerfectHitAddRate,n;	On-target impact attack probability +n%
-bonus bGetZenyNum,n;		When pushing down the monster with physical attack, rand () ゼニ of %n+1 is obtained, (as for n just high ones application)
-bonus bAddGetZenyNum,n;		When pushing down the monster with physical attack, rand () ゼニ of %n+1 is obtained, (n is done +)
-bonus bCriticalDef,n;		Critical 喰 and others the trap it is, probability + n%
-bonus bNearAtkDef,n;		The damage of short-range attack n% reduction (magic and the trap, the 鷹 is excluded)
-bonus bLongAtkDef,n;		damage of stand off attack n% reduction (magic and the trap, the 鷹 is excluded)
+bonus bGetZenyNum,n;		When pushing down the monster with physical attack, rand () ?? of %n+1 is obtained, (as for n just high ones application)
+bonus bAddGetZenyNum,n;		When pushing down the monster with physical attack, rand () ?? of %n+1 is obtained, (n is done +)
+bonus bCriticalDef,n;		Critical ? and others the trap it is, probability + n%
+bonus bNearAtkDef,n;		The damage of short-range attack n% reduction (magic and the trap, the ? is excluded)
+bonus bLongAtkDef,n;		damage of stand off attack n% reduction (magic and the trap, the ? is excluded)
 bonus bMagicAtkDef		the damage of magical attack n% reduction
 bonus bMiscAtkDef		MISC attack (the trap and ?) the damage n% reduction
 
@@ -121,7 +121,7 @@ bonus2 bMagicSubRace,n,x;		Magical damage x% reduction from n race
 						0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
 bonus2 bAddEle,n,x;			In n attribute the damage addition of x%
 						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
-bonus2 bMagicAddEle,n,x;			In n attribute the damage addition of x% (only magical attack) 
+bonus2 bMagicAddEle,n,x 			In n attribute the damage addition of x% (only magical attack) 
 						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
 bonus2 bSubEle,n,x;			Damage x% reduction from n attribute
 						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
@@ -176,7 +176,7 @@ bonus3 bAutoSpellWhenHit,x,y,n;		n% chance to cast skill x of level y when
 bonus3 bSPDrainRate,n,x,y;		When attacking there is a n% chance to either
                                         gain SP equivalent to x% of damage dealt, OR
                                         drain the amount of sp from the enemy.
-                                        y:0=gain sp  1:drain enemy sp
+                                        y:0=gain sp  1:drain enemy sp
 bonus3 bSPDrainValue,n,x,y;		When attacking there is a n% chance to either
                                         gain x SP, OR drain the amount of sp from the
                                         enemy. y:0=gain sp  1:drain enemy sp
@@ -195,7 +195,7 @@ bonus2 bAddItemHealRate,n,x;		Increases HP recovered by n type items by x%
 
 //---- 3/15 new card effects ----
 
-bonus bLoseSPWhenUnequip.n;		Lose n SP when the item is unequipped
+bonus bLoseSPWhenUnequip,n;		Lose n SP when the item is unequipped
 
 bonus2 bExpAddRace,n,x;			Increase exp gained by n% vs. enemies of type x
 bonus2 bSPGainRace,n,x;			When killing a monster of type x by physical

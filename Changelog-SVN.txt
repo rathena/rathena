@@ -1,8 +1,13 @@
 Date	Added
 
 03/27
+	* Added missing parenthesis in my Improve Dodge code, not giving +4/lv to proper jobs [DracoRPG]
 	* Added all released cards into monsters drops and Old Card Album [Lupus]
 03/25
+	* Fixed a typo in my fix for Stalk / Tunnel Drive increasing instead of decreasing speed, sorry [DracoRPG]
+	* Rewrote a little bit Improve Dodge [DracoRPG]
+	   - The speed bonus does not effect when Cloaked
+	   - Assassins & Rogues get +4 Flee/lv, but all other jobs can get +3/lv if they have the skill (not only Thiefs & Super Novices)
 	* Some minor changes to Sacrifice in battle.c [celest]
 	* Set the Emperium to be immune to Sacrifice [celest]
 	* Set the Emperium to be have max status effects immunity [celest]
@@ -10,12 +15,10 @@ Date	Added
 	  set to 'no' [celest]
 	* Fixed @monsterbig/@monstersmall not working [celest]
 	* Fixed @killmonster2 not working [celest]
-	* Fixed a typo in my fix for Stalk / Tunnel Drive increasing instead of decreasing speed, sorry [DracoRPG]
-	* Rewrote a little bit Improve Dodge [DracoRPG]
-	   - The speed bonus does not effect when Cloaked
-	   - Assassins & Rogues get +4 Flee/lv, but all other jobs can get +3/lv if they have the skill (not only Thiefs & Super Novices)
 
 03/24
+	* Updated obj_del to delete all GNUMakeFile and .o files + compiled exes [DracoRPG]
+	* Fixed a typo in Stalk / Tunnel Drive speed calculation [DracoRPG]
 	* Added some mapflags for new towns [Lupus]
 	* Added timer.c optimization / timers sort fix. 'no freezing mobs anymore' Thanx 2 Yor/Freya [Lupus]
 	* Added 'map_charid2id' [celest]
@@ -33,8 +36,6 @@ Date	Added
 	  is set to 'yes' -- they're only not allowed to cast near players [celest]
 	* Print number of online users in online.txt/.html even if there's only 1 user
 	  online [celest]
-	* Updated obj_del to delete all GNUMakeFile and .o files + compiled exes [DracoRPG]
-	* Fixed a typo in Stalk / Tunnel Drive speed calculation [DracoRPG]
 
 03/23
         * Adjusted my trade fix [1280: MouseJstr]
