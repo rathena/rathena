@@ -1675,11 +1675,11 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		}
 		if(curly_count > 0) {
 			printf("\n");
-			snprintf(tmp_output,sizeof(tmp_output),"Script skipped. Missing rig"
+			snprintf(tmp_output,sizeof(tmp_output),"Missing rig"
 				"ht curly brace at line '"CL_WHITE"%d"CL_RESET"' of file \n\t'"
 				CL_WHITE"%s"CL_RESET"'.\n",*lines,current_file);
 			ShowWarning(tmp_output);
-			script=NULL;
+			//script=NULL;	// Let's load it anyway I guess :p
 			//exit(1); //Wtf? We do we exit?
 		} else {
 			// printf("Ok line %d\n",*lines);
@@ -2370,8 +2370,8 @@ int do_init_npc(void)
 			} else if (strcmpi(w2,"script")==0 && count > 3) {
 				if( strcmpi(w1,"function")==0 ){
 					npc_parse_function(w1,w2,w3,w4,line+w4pos,fp,&lines);
-				}else{
-				npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines);
+				} else {
+					npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines);
 				}
 			} else if ( (i=0,sscanf(w2,"duplicate%n",&i), (i>0 && w2[i]=='(')) && count > 3) {
 				npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines);
