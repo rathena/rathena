@@ -53,7 +53,7 @@
 
 #define STATE_BLIND 0x10
 
-static const int packet_len_table[0x220] = {
+static const int packet_len_table[0x224] = {
    10,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -61,19 +61,19 @@ static const int packet_len_table[0x220] = {
 //#0x0040
     0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0, 55, 17,  3, 37,  46, -1, 23, -1,  3,108,  3,  2,
+    0,  0,  0,  0, 55, 17,  3, 37,  46, -1, 23, -1,  3,108,  3,  2, 
 #if PACKETVER < 2
     3, 28, 19, 11,  3, -1,  9,  5,  52, 51, 56, 58, 41,  2,  6,  6,
 #else	// 78-7b 亀島以降 lv99エフェクト用
     3, 28, 19, 11,  3, -1,  9,  5,  54, 53, 58, 60, 41,  2,  6,  6,
 #endif
 //#0x0080
-    7,  3,  2,  2,  2,  5, 16, 12,  10,  7, 29, 23, -1, -1, -1,  0, // 0x8b unknown... size 2 or 23?
+    7,  3,  2,  2,  2,  5, 16, 12,  10,  7, 29,  2, -1, -1, -1,  0, // 0x8b changed to 2 (was 23)
     7, 22, 28,  2,  6, 30, -1, -1,   3, -1, -1,  5,  9, 17, 17,  6,
    23,  6,  6, -1, -1, -1, -1,  8,   7,  6,  7,  4,  7,  0, -1,  6,
     8,  8,  3,  3, -1,  6,  6, -1,   7,  6,  2,  5,  6, 44,  5,  3,
 //#0x00C0
-    7,  2,  6,  8,  6,  7, -1, -1,  -1, -1,  3,  3,  6,  6,  2, 27,
+    7,  2,  6,  8,  6,  7, -1, -1,  -1, -1,  3,  3,  6,  3,  2, 27, // 0xcd change to 3 (was 6)
     3,  4,  4,  2, -1, -1,  3, -1,   6, 14,  3, -1, 28, 29, -1, -1,
    30, 30, 26,  2,  6, 26,  3,  3,   8, 19,  5,  2,  3,  2,  2,  2,
     3,  2,  6,  8, 21,  8,  8,  2,   2, 26,  3, -1,  6, 27, 30, 10,
@@ -103,12 +103,13 @@ static const int packet_len_table[0x220] = {
    30,  8, 34, 14,  2,  6, 26,  2,  28, 81,  6, 10, 26,  2, -1, -1,
    -1, -1, 20, 10, 32,  9, 34, 14,   2,  6, 48, 56, -1,  4,  5, 10,
 //#0x200
-   26, -1,  26, 10, 18, 26, 11, 34,  14, 36, 10, 19,  0, -1, 24,  0,
+   26, -1,  26, 10, 18, 26, 11, 34,  14, 36, 10, 0,  0, -1, 24,  0, // 0x20c change to 0 (was 19)
     0,  0,   0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,   0,  0
 };
 
 // size list for each packet version after packet version 4.
-static int packet_size_table[9][0x220];
+static int packet_size_table[11][0x224];
 
 // local define
 enum {
@@ -10084,7 +10085,7 @@ void clif_parse_GMkillall(int fd,struct map_session_data *sd)
 }
 
 // functions list
-static void (*clif_parse_func_table[7][0x220])() = {
+static void (*clif_parse_func_table[9][0x220])() = {
 	{
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -10463,6 +10464,10 @@ int do_init_clif(void) {
 	memcpy(clif_parse_func_table[5], clif_parse_func_table[4], sizeof(clif_parse_func_table[0]));
 	// init packet function calls for packet ver 13 (same function of packet version 12, but size are different)
 	memcpy(clif_parse_func_table[6], clif_parse_func_table[5], sizeof(clif_parse_func_table[0]));
+	// init packet function calls for packet ver 14 (same function of packet version 13, but size are different)
+	memcpy(clif_parse_func_table[7], clif_parse_func_table[6], sizeof(clif_parse_func_table[0]));
+	// Init packet function calls for packet ver 15 (same function of packet version 14, but size are different)
+	memcpy(clif_parse_func_table[8], clif_parse_func_table[7], sizeof(clif_parse_func_table[0]));
 
 	// size of packet version 5
 	memcpy(&packet_size_table[0], &packet_len_table, sizeof(packet_len_table));
@@ -10604,6 +10609,55 @@ int do_init_clif(void) {
 	packet_size_table[8][0x116] = 9;
 	packet_size_table[8][0x190] = 26;
 	packet_size_table[8][0x193] = 22;
+	// size of packet version 14 - Added by nsstrunks
+	memcpy(&packet_size_table[9], &packet_size_table[8], sizeof(packet_len_table));
+	packet_size_table[9][0x072] = 13;
+	packet_size_table[9][0x07e] = 13;
+	packet_size_table[9][0x085] = 15;
+	packet_size_table[9][0x089] = 6;
+	packet_size_table[9][0x08c] = 108;
+	packet_size_table[9][0x094] = 12;
+	packet_size_table[9][0x09b] = 10;
+	packet_size_table[9][0x09f] = -1;
+	packet_size_table[9][0x0a2] = 16;
+	packet_size_table[9][0x0a7] = 28;
+	packet_size_table[9][0x0f3] = 15;
+	packet_size_table[9][0x0f5] = 29;
+	packet_size_table[9][0x113] = 9;
+	packet_size_table[9][0x116] = 9;
+	packet_size_table[9][0x190] = 26;
+	packet_size_table[9][0x193] = 22;
+	packet_size_table[9][0x215] = 6;
+	packet_size_table[9][0x216] = 6;
+	packet_size_table[9][0x217] = 2;
+	packet_size_table[9][0x218] = 2;
+	packet_size_table[9][0x219] = 282;
+	packet_size_table[9][0x21a] = 282;
+	packet_size_table[9][0x21b] = 10;
+	packet_size_table[9][0x21c] = 10;
+	// Size of packet version 15 - Added by nsstrunks
+	memcpy(&packet_size_table[10], &packet_size_table[9], sizeof(packet_len_table));
+	packet_size_table[10][0x072] = 22;
+	packet_size_table[10][0x07e] = 30;
+	packet_size_table[10][0x094] = 14;
+	packet_size_table[10][0x09f] = 18;
+	packet_size_table[10][0x085] = -1;
+	packet_size_table[10][0x08c] = 13;
+	packet_size_table[10][0x089] = 7;
+	packet_size_table[10][0x09b] = 2;
+	packet_size_table[10][0x0a2] = 7;
+	packet_size_table[10][0x0a7] = 7;
+	packet_size_table[10][0x0f3] = 8;
+	packet_size_table[10][0x0f5] = 29;
+	packet_size_table[10][0x0f7] = 14;
+	packet_size_table[10][0x113] = 110;
+	packet_size_table[10][0x116] = 12;
+	packet_size_table[10][0x190] = 15;
+	packet_size_table[10][0x193] = 21;
+	packet_size_table[10][0x21b] = 6;
+	packet_size_table[10][0x222] = 6;
+	packet_size_table[10][0x221] = -1;
+	packet_size_table[10][0x223] = 8;
 
 	set_defaultparse(clif_parse);
 #ifdef __WIN32

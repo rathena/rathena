@@ -6376,7 +6376,7 @@ int atcommand_disguise(
 	if ((mob_id >=  46 && mob_id <= 125) || (mob_id >= 700 && mob_id <= 718) || // NPC
 	    (mob_id >= 721 && mob_id <= 755) || (mob_id >= 757 && mob_id <= 811) || // NPC
 	    (mob_id >= 813 && mob_id <= 834) || // NPC
-	    (mob_id > 1000 && mob_id < 1521)) { // monsters
+	    (mob_id > 1000 && mob_id < 1582)) { // monsters
 		if (pc_isriding(sd)) { // temporary prevention of crash caused by peco + disguise, will look into a better solution [Valaris]
 			clif_displaymessage(fd, msg_table[227]); // Cannot wear disguise while riding a Peco.
 			return -1;
