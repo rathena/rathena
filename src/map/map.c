@@ -999,8 +999,6 @@ if you want to keep this that way then check and swap x0,y0 with x1,y1
 	//////////////////////////////////////////////////////////////
 	// linear equation for finding a single line between (x0,y0)->(x1,y1)
 	// independent of the given xy-values
-	double deltax = (x1-x0);
-	double deltay = (y1-y0);
 	double dx = 0.0;
 	double dy = 0.0;
 	int bx=-1;	// initialize block coords to some impossible value
@@ -1022,8 +1020,8 @@ if you want to keep this that way then check and swap x0,y0 with x1,y1
 	// go along the index
 	for(t=0; t<=tmax; t++)
 	{	// xy-values of the line including start and end point
-		int x = (int)floor(deltax * (double)t +0.5)+x0;
-		int y = (int)floor(deltay * (double)t +0.5)+y0;
+		int x = (int)floor(dx * (double)t +0.5)+x0;
+		int y = (int)floor(dy * (double)t +0.5)+y0;
 
 		// check the block index of the calculated xy
 		if( (bx!=x/BLOCK_SIZE) || (by!=y/BLOCK_SIZE) )
