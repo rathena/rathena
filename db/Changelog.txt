@@ -8,8 +8,6 @@
 	Einboroch items == 5%
 	Skill databases == celest working on them i believe.
 04/01
-	* Added 6 sec Delay after Pressure [Lupus]
-		http://www.ragnainfo.net/forums/viewtopic.php?t=28669&postdays=0&postorder=asc&start=15	  
 	* New cards updates and additions [DracoRPG]
 	  - added Mage and Swordman sets effects
 	  - added Whisper Boss Card (not found the ID -> commented out)
