@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= ?sprite
+//===== eAthena Script =======================================
 //= Burning Blood Bandana Quest
 //===== By: ================================================== 
 //= Halca (1.0)
@@ -14,7 +14,7 @@
 //============================================================
 
 
-yuno.gat,301,188,6	Genbolt	826,{
+yuno.gat,301,188,6	script	Genbolt	826,{
  mes "[Genbolt]";
  mes "Why, don't you think looking badass is most important?";
  mes "After all, we all have to fend for ourselves in this world!";

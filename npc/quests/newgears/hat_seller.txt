@@ -15,7 +15,7 @@
 //=	added missing delitem, fixed names, item amount [Lupus]
 //============================================================
 
-xmas_in.gat,123,131,4	script	Hat Seller	806,{
+xmas_in.gat,36,25,4	script	Hat Seller	806,{
  mes "[Hat Seller]";
  mes "What hat would you like information on?";
  mes "I can make all the hats I mention here";

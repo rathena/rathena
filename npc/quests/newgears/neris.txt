@@ -28,6 +28,7 @@ M_LGB:
  mes "[Neris]";
  mes "Looks pretty cute when you wear it.";
  mes "So... what can I do for you?";
+ next;
  menu "Make me Golden Bells!",-,"What do I need to make it?",M_REQL,"Nothing, thanks.",M_EXIT;
 
  if ((countitem(10016) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO L_NOITEM;//Items: Golden Bell, Emperium, Gold,

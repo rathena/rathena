@@ -17,10 +17,10 @@
 xmas.gat,152,176,3	script	Bora	826,{
  mes "[Bora]";
  mes "Don't bears have such a cute expression on their faces?";
- mes "And I bet you wouldn't mind one of those vute expressions yourself!";
+ mes "And I bet you wouldn't mind one of those cute expressions yourself!";
  next;
  mes "[Bora]";
- mes "Well, I can make you one!";
+ mes "Well, I can make you a Bear Hat!";
  next;
  menu "Yes, make me one now!",-,"What are the requirements?",M_REQ,"No, thanks.",M_EXIT;
 
