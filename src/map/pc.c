@@ -60,7 +60,7 @@ static char statp[255][7];
 	struct {
 		short id,lv;
 	} need[6];
-} skill_tree[3][MAX_PC_CLASS][100];*/ // moved to pc.h
+} skill_tree[3][MAX_PC_CLASS][100];*/ // moved to pc.h - celest
 
 static int atkmods[3][20];	// 武器ATKサイズ修正(size_fix.txt)
 static int refinebonus[5][3];	// 精錬ボーナステーブル(refine_db.txt)
@@ -1472,12 +1472,23 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->paramb[5]+= 5;
 		}
 		if(sd->sc_data[SC_MARIONETTE].timer!=-1){
-			sd->paramb[0]-= (sd->status.str+sd->paramb[0]+sd->parame[0])/2;
-			sd->paramb[1]-= (sd->status.agi+sd->paramb[1]+sd->parame[1])/2;
-			sd->paramb[2]-= (sd->status.vit+sd->paramb[2]+sd->parame[2])/2;
-			sd->paramb[3]-= (sd->status.int_+sd->paramb[3]+sd->parame[3])/2;
-			sd->paramb[4]-= (sd->status.dex+sd->paramb[4]+sd->parame[4])/2;
-			sd->paramb[5]-= (sd->status.luk+sd->paramb[5]+sd->parame[5])/2;			
+			sd->paramb[0]-= sd->status.str/2;	// bonuses not included
+			sd->paramb[1]-= sd->status.agi/2;
+			sd->paramb[2]-= sd->status.vit/2;
+			sd->paramb[3]-= sd->status.int_/2;
+			sd->paramb[4]-= sd->status.dex/2;
+			sd->paramb[5]-= sd->status.luk/2;
+		}
+		else if(sd->sc_data[SC_MARIONETTE2].timer!=-1){
+			struct map_session_data *psd = (struct map_session_data *)map_id2bl(sd->sc_data[SC_MARIONETTE2].val3);
+			if (psd) {	// if partner is found
+				sd->paramb[0] += sd->status.str+psd->status.str/2 > 99 ? 99-sd->status.str : psd->status.str/2;
+				sd->paramb[1] += sd->status.agi+psd->status.agi/2 > 99 ? 99-sd->status.agi : psd->status.agi/2;
+				sd->paramb[2] += sd->status.vit+psd->status.vit/2 > 99 ? 99-sd->status.vit : psd->status.vit/2;
+				sd->paramb[3] += sd->status.int_+psd->status.int_/2 > 99 ? 99-sd->status.int_ : psd->status.int_/2;
+				sd->paramb[4] += sd->status.dex+psd->status.dex/2 > 99 ? 99-sd->status.dex : psd->status.dex/2;
+				sd->paramb[5] += sd->status.luk+psd->status.luk/2 > 99 ? 99-sd->status.luk : psd->status.luk/2;
+			}
 		}
 	}
 
@@ -1613,7 +1624,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 
 	if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1){	// バーサーク
 		sd->status.max_hp = sd->status.max_hp * 3;
-		sd->status.hp = sd->status.hp * 3;
+		// sd->status.hp = sd->status.hp * 3;
 		if(sd->status.max_hp > battle_config.max_hp) // removed negative max hp bug by Valaris
 		sd->status.max_hp = battle_config.max_hp;
 		if(sd->status.hp > battle_config.max_hp) // removed negative max hp bug by Valaris
@@ -1909,6 +1920,11 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		if(sd->sc_data[SC_DELUGE].timer!=-1)	// エンチャントポイズン(属性はbattle.cで)
 			sd->addeff[0]+=sd->sc_data[SC_DELUGE].val2;//% of granting
 		*/
+		if(sd->sc_data[SC_BERSERK].timer!=-1) {	//All Def/MDef reduced to 0 while in Berserk [DracoRPG]
+			sd->def = sd->def2 = 0;
+			sd->mdef = sd->mdef2 = 0;
+			 sd->flee -= sd->flee*50/100;
+		}
 		if(sd->sc_data[SC_KEEPING].timer!=-1)
 			sd->def = 100;
 		if(sd->sc_data[SC_BARRIER].timer!=-1)
@@ -3073,6 +3089,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		if(sd->status.inventory[n].nameid <= 0 ||
 			sd->status.inventory[n].amount <= 0 ||
 			sd->sc_data[SC_BERSERK].timer!=-1 ||
+			sd->sc_data[SC_MARIONETTE].timer!=-1 ||
 			!pc_isUseitem(sd,n) ) {
 			clif_useitemack(sd,n,0,0);
 			return 1;
@@ -5563,6 +5580,7 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
  * 職変更
  * 引数	job 職業 0～23
  *		upper 通常 0, 転生 1, 養子 2, そのまま -1
+ * Rewrote to make it tidider [Celest]
  *------------------------------------------
  */
 int pc_jobchange(struct map_session_data *sd,int job, int upper)
@@ -5570,36 +5588,32 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	int i;
 	int b_class = 0;
 	//転生や養子の場合の元の職業を算出する
-	struct pc_base_job s_class = pc_calc_base_job(sd->status.class);
+	//struct pc_base_job s_class = pc_calc_base_job(sd->status.class);
 	
 	nullpo_retr(0, sd);
 
-	if((job > 23) && (job < 68))
-		job += 3977;
-
-	if((job > 69) && (job < 4000))
-		return 1;
+	if (upper < 0 || upper > 2) //現在転生かどうかを判断する
+		upper = pc_calc_upper (sd->status.class);
 	
-	if(upper < 0) //現在転生かどうかを判断する
-		upper = s_class.upper;
-
-	if(upper == 0){ //通常職ならjobそのまんま
-		b_class = job;
-	}else if(upper == 1){
-		if(job == 23){ //転生にスパノビは存在しないのでお断り
+	b_class = job;	//通常職ならjobそのまんま
+	if (job < 23) {
+		if (upper == 1)
+			b_class += 4001;
+		else if (upper == 2)	//養子に結婚はないけどどうせ次で蹴られるからいいや
+			b_class += 4023;
+	} else if (job == 23)	{
+		if (upper == 1)	//転生にスパノビは存在しないのでお断り
 			return 1;
-		}else{
-			b_class = job + 4001;
-		}
-	}else if(upper == 2){ //養子に結婚はないけどどうせ次で蹴られるからいいや
-		b_class = (job==23)?job + 4022:job + 4023;
-	}else{
+		else if (upper == 2)
+			b_class += 4022;
+	} else if (job > 23 && job < 69) {
+		b_class += 3977;
+	} else if ((job >= 69 && job < 4001) || (job > 4045))
 		return 1;
-	}
 
 	if((sd->status.sex == 0 && job == 19) || (sd->status.sex == 1 && job == 20) ||
 		(sd->status.sex == 0 && job == 4020) || (sd->status.sex == 1 && job == 4021) ||
-	   job ==22 || sd->status.class == b_class) //♀はバードになれない、♂はダンサーになれない、結婚衣裳もお断り
+		job == 22 || sd->status.class == b_class) //♀はバードになれない、♂はダンサーになれない、結婚衣裳もお断り
 		return 1;
 	
 	sd->status.class = sd->view_class = b_class;
@@ -6980,14 +6994,13 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 	if ((battle_config.natural_heal_weight_rate > 100 || sd->weight*100/sd->max_weight < battle_config.natural_heal_weight_rate) &&
 		!pc_isdead(sd) && 
 		!pc_ishiding(sd) && 
-		sd->sc_data[SC_POISON].timer == -1
-	  ) {
+		sd->sc_data[SC_POISON].timer == -1 &&
+		sd->sc_data[SC_BERSERK].timer == -1 ) {
 		pc_natural_heal_hp(sd);
 		if( sd->sc_data && sd->sc_data[SC_EXTREMITYFIST].timer == -1 &&	//阿修羅状態ではSPが回復しない
 			sd->sc_data[SC_DANCING].timer == -1 && //ダンス状態ではSPが回復しない
-			sd->sc_data[SC_BERSERK].timer == -1    //バーサーク状態ではSPが回復しない
-		)
-				pc_natural_heal_sp(sd);
+			sd->sc_data[SC_BERSERK].timer == -1 )   //バーサーク状態ではSPが回復しない
+			pc_natural_heal_sp(sd);
 	} else {
 		sd->hp_sub = sd->inchealhptick = 0;
 		sd->sp_sub = sd->inchealsptick = 0;
@@ -7357,11 +7370,10 @@ int pc_readdb(void)
 		s_class = pc_calc_base_job(atoi(split[0]));
 		i = s_class.job;
 		u = s_class.upper;
-		//printf ("i = %d, u = %d\n",i,u);
 		for(j=0;skill_tree[u][i][j].id;j++);
 		skill_tree[u][i][j].id=atoi(split[1]);
 		skill_tree[u][i][j].max=atoi(split[2]);
-
+		
 		//not required - Celest
 		//skill_tree[2][i][j].id=atoi(split[1]); //養子職は良く分からないので暫定
 		//skill_tree[2][i][j].max=atoi(split[2]); //養子職は良く分からないので暫定

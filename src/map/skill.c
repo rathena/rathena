@@ -756,7 +756,10 @@ int	skill_get_castnodex( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].cas
 
 int skill_tree_get_max(int id, int b_class){
 	struct pc_base_job s_class = pc_calc_base_job(b_class);
-	return skill_tree[s_class.upper][s_class.job][id].max;
+	int i, skillid;
+	for(i=0;(skillid=skill_tree[s_class.upper][s_class.job][i].id)>0;i++)
+		if (id == skillid) return skill_tree[s_class.upper][s_class.job][i].max;
+	return skill_get_max (id);
 }
 
 /* プロトタイプ */
@@ -2917,7 +2920,6 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case PR_SUFFRAGIUM:		/* サフラギウム */
 	case PR_BENEDICTIO:		/* 聖?降福 */
 	case CR_PROVIDENCE:		/* プロヴィデンス */
-	//case CG_MARIONETTE:	// moved - Celest
 		if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage ){
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}else{
@@ -2928,7 +2930,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 
 	case CG_MARIONETTE:		/* マリオネットコントロ?ル */
 		if(sd && dstsd){
-			struct status_change *tsc_data = battle_get_sc_data(src);
+			struct status_change *sc_data = battle_get_sc_data(src);
+			struct status_change *tsc_data = battle_get_sc_data(bl);
 			int sc = SkillStatusChangeTable[skillid];
 			int sc2 = SC_MARIONETTE2;
 			
@@ -2940,14 +2943,20 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				map_freeblock_unlock();
 				return 1;
 			}
-			if(tsc_data){
-				if(tsc_data[sc].timer == -1) {
+			if(sc_data && tsc_data){
+				if(sc_data[sc].timer == -1 && tsc_data[sc2].timer == -1) {
 					skill_status_change_start (src,sc,skilllv,0,bl->id,0,skill_get_time(skillid,skilllv),0);
 					skill_status_change_start (bl,sc2,skilllv,0,src->id,0,skill_get_time(skillid,skilllv),0);
 				}
-				else {
+				else if (sc_data[sc].timer != -1 && tsc_data[sc2].timer != -1 &&
+				sc_data[sc].val3 == bl->id && tsc_data[sc2].val3 == src->id) {
 					skill_status_change_end(src, sc, -1);
 					skill_status_change_end(bl, sc2, -1);
+				}
+				else {
+					clif_skill_fail(sd,skillid,0,0);
+					map_freeblock_unlock();
+					return 1;
 				}
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			}
@@ -3017,7 +3026,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case LK_AURABLADE:		/* オ?ラブレ?ド */
 	case LK_PARRYING:		/* パリイング */
 	case LK_CONCENTRATION:	/* コンセントレ?ション */
-	case LK_BERSERK:		/* バ?サ?ク */
+//	case LK_BERSERK:		/* バ?サ?ク */
 	case HP_ASSUMPTIO:		/*  */
 	case WS_CARTBOOST:		/* カ?トブ?スト */
 	case SN_SIGHT:			/* トゥル?サイト */
@@ -3048,6 +3057,11 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		pc_setsit(sd);
 		clif_sitting(sd);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+		break;
+	case LK_BERSERK:		/* バ?サ?ク */
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+		sd->status.hp = sd->status.max_hp * 3;
 		break;
 	case MC_CHANGECART:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -6726,7 +6740,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		case AL_WARP:
 		case WZ_ICEWALL:
 		case TF_BACKSLIDING:
-		case LK_BERSERK:
+		//case LK_BERSERK: // now usable in WoE - celest
 		case HP_BASILICA:
 		case ST_CHASEWALK:
 		return 0;
@@ -7832,6 +7846,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			case SC_BERSERK:			/* バ?サ?ク */
 				calc_flag = 1;
 				clif_status_change(bl,SC_INCREASEAGI,0);	/* アイコン消去 */
+				skill_status_change_end(bl,SC_ENDURE,-1);
 				break;
 			case SC_DEVOTION:		/* ディボ?ション */
 				{
@@ -7985,6 +8000,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			*opt3 &= ~128;
 			break;
 		case SC_MARIONETTE:		/* マリオネットコントロ?ル */
+		case SC_MARIONETTE2:
 			*opt3 &= ~1024;
 			break;
 		case SC_ASSUMPTIO:		/* アスムプティオ */
@@ -8331,11 +8347,11 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 	case SC_BERSERK:		/* バ?サ?ク */
 		if(sd){		/* HPが100以上なら?? */
-			if( (sd->status.hp - sd->status.hp/100) > 100 ){
-				sd->status.hp -= sd->status.hp/100;
+			if( (sd->status.hp - sd->status.hp/100) > 100 ){	// 5% every 10 seconds [DracoRPG]
+				sd->status.hp -= sd->status.hp*5/100;
 				clif_updatestatus(sd,SP_HP);
-				sc_data[type].timer=add_timer(	/* タイマ?再設定 */
-					15000+tick, skill_status_change_timer,
+				sc_data[type].timer = add_timer(	/* タイマ?再設定 */
+					10000+tick, skill_status_change_timer,
 					bl->id, data);
 				return 0;
 			}
@@ -9045,6 +9061,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 				sd->status.sp = 0;
 				clif_updatestatus(sd,SP_SP);
 				clif_status_change(bl,SC_INCREASEAGI,1);	/* アイコン表示 */
+				skill_status_change_start(bl,SC_ENDURE,10,0,0,0,tick,0 );	// celest
 			}
 			*opt3 |= 128;
 			tick = 1000;

@@ -21,6 +21,10 @@ Date	Added
         * Fixed maximum skill levels not following skill tree [celest]
         * Updated HP/SP for baby classes [celest]
         * Corrected pc_calc_base_job [celest]
+        * Skill updates [celest]
+         - Marionette Control (70%), Berserk (thanks to DracoRPG)
+        * Modified pc_jobchange code to work with new pc_calc_base_job [celest]
+        * Corrected skill_tree_get_max, sorry >.< [celest]
 
 11/14
 	* Made the Advance jobchangers to kRO standars with the following;
