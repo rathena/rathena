@@ -1,6 +1,7 @@
 Date	Added
 
 11/04
+	* Added sara-chan's packet db with support for 11-1 [Valaris]
 	* [alot of files >_<]: Changed connecting a bit, from oA source; it connected easier/better in my opinion so... [Codemaster]
 	* map/skill.c: Added a few checks for level 0 skills being used. [Codemaster]
 
