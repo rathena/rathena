@@ -34,6 +34,11 @@ Other Ppl
 
 Date		Added
 ======
+12/27
+	* Reverted gldfunc_dunsw.txt back. Some people report RC5 bugs, which have been fixed some months ago.
+	  Next time always CHECK and READ the code, before implementing some stupid "fixes" from the forums 8) Peace [Lupus]
+	  PS I'm reverting more guild files soon, to make them show the flags.
+
 12/24
 	* Fixed Whitesmith.txt, was on top of another npc [Ajarn]
 
