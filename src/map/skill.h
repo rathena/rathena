@@ -31,7 +31,7 @@ struct skill_name_db {
         char *name; // search strings
         char *desc; // description that shows up for search's
 };
-extern struct skill_name_db skill_names[];
+extern const struct skill_name_db skill_names[];
 
 // アイテム作成デ?タベ?ス
 struct skill_produce_db {

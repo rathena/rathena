@@ -913,6 +913,56 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	//s = (s_class.upper==1) ? 1 : 0 ; //?生以外は通常のスキル？
 	s = s_class.upper;
 
+	c = pc_calc_skilltree_normalize_job(c, sd);
+
+	for(i=0;i<MAX_SKILL;i++){
+		if (sd->status.skill[i].flag != 13) sd->status.skill[i].id=0;
+		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){	// cardスキルなら、
+			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;	// 本?のlvに
+			sd->status.skill[i].flag=0;	// flagは0にしておく
+		}
+	}
+
+	if (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill){
+		// 全てのスキル
+		for(i=1;i<158;i++)
+			sd->status.skill[i].id=i;
+		for(i=210;i<291;i++)
+			sd->status.skill[i].id=i;
+		for(i=304;i<337;i++){
+			if(i==331) continue;
+			sd->status.skill[i].id=i;
+		}
+		if(battle_config.enable_upper_class){ //confで無?でなければ?み?む
+		for(i=355;i<MAX_SKILL;i++)
+			sd->status.skill[i].id=i;
+		}
+	}else{
+		// 通常の計算
+		do{
+			flag=0;
+			for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
+				int j,f=1;
+				if(!battle_config.skillfree) {
+					for(j=0;j<5;j++) {
+						if( skill_tree[s][c][i].need[j].id &&
+							pc_checkskill(sd,skill_tree[s][c][i].need[j].id) < skill_tree[s][c][i].need[j].lv)
+							f=0;
+					}
+				}
+				if(f && sd->status.skill[id].id==0 ){
+					sd->status.skill[id].id=id;
+					flag=1;
+				}
+			}
+		}while(flag);
+	}
+//	if(battle_config.etc_log)
+//		printf("calc skill_tree\n");
+	return 0;
+}
+
+int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 	//if((battle_config.skillup_limit) && ((c >= 0 && c < 23) || (c >= 4001 && c < 4023) || (c >= 4023 && c < 4045))) {
 	if (battle_config.skillup_limit && c >= 0 && c < 23) {
 		int skill_point = pc_calc_skillpoint(sd);
@@ -1000,52 +1050,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			}
 		}
 	}
-
-	for(i=0;i<MAX_SKILL;i++){
-		if (sd->status.skill[i].flag != 13) sd->status.skill[i].id=0;
-		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){	// cardスキルなら、
-			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;	// 本?のlvに
-			sd->status.skill[i].flag=0;	// flagは0にしておく
-		}
-	}
-
-	if (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill){
-		// 全てのスキル
-		for(i=1;i<158;i++)
-			sd->status.skill[i].id=i;
-		for(i=210;i<291;i++)
-			sd->status.skill[i].id=i;
-		for(i=304;i<337;i++){
-			if(i==331) continue;
-			sd->status.skill[i].id=i;
-		}
-		if(battle_config.enable_upper_class){ //confで無?でなければ?み?む
-		for(i=355;i<MAX_SKILL;i++)
-			sd->status.skill[i].id=i;
-		}
-	}else{
-		// 通常の計算
-		do{
-			flag=0;
-			for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
-				int j,f=1;
-				if(!battle_config.skillfree) {
-					for(j=0;j<5;j++) {
-						if( skill_tree[s][c][i].need[j].id &&
-							pc_checkskill(sd,skill_tree[s][c][i].need[j].id) < skill_tree[s][c][i].need[j].lv)
-							f=0;
-					}
-				}
-				if(f && sd->status.skill[id].id==0 ){
-					sd->status.skill[id].id=id;
-					flag=1;
-				}
-			}
-		}while(flag);
-	}
-//	if(battle_config.etc_log)
-//		printf("calc skill_tree\n");
-	return 0;
+	return c;
 }
 
 /*==========================================

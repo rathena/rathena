@@ -230,6 +230,8 @@ ATCOMMAND_FUNC(sound); // [Valaris]
 ATCOMMAND_FUNC(refreshonline); // [Valaris]
 #endif /* TXT_ONLY */
 
+ATCOMMAND_FUNC(skilltree); // by MouseJstr
+
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
  *------------------------------------------
@@ -480,6 +482,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_RefreshOnline,		"@refreshonline",	99, atcommand_refreshonline }, // [Valaris]
 
 #endif /* TXT_ONLY */
+	{ AtCommand_SkillTree,		"@skilltree",	40, atcommand_skilltree }, // [MouseJstr]
 
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
@@ -7142,6 +7145,7 @@ atcommand_skillid(const int fd, struct map_session_data* sd,
         }
         return 0;
 }
+
 /*==========================================
  * @useskill by [MouseJstr]
  *
@@ -7177,6 +7181,88 @@ atcommand_useskill(const int fd, struct map_session_data* sd,
 
 	return 0;
 }
+
+/*==========================================
+ * @skilltree by [MouseJstr]
+ *
+ * prints the skill tree for a player required to get to a skill
+ *------------------------------------------
+ */
+int
+atcommand_skilltree(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+  struct map_session_data *pl_sd = NULL;
+  int skillnum, skillidx = -1;
+  int meets = 1, j, c=0, s=0;
+  struct pc_base_job s_class;
+  char target[255], *tbl;
+  char output[255];
+
+  if (!message || !*message)
+    return -1;
+
+  if(sscanf(message, "%d %[^\r\n]", &skillnum, target) != 2) {
+    clif_displaymessage(fd, "Usage: @skilltree <skillnum> <target>");
+    return -1;
+  }
+  if((pl_sd=map_nick2sd(target)) == NULL) 
+    return -1;
+
+  s_class = pc_calc_base_job(pl_sd->status.class);
+  c = s_class.job;
+  s = s_class.upper;
+
+  c = pc_calc_skilltree_normalize_job(c, pl_sd);
+
+  tbl = job_name(c);
+
+  sprintf(output, "Player is using %s %s skill tree (%d basic points)",  
+	  s_class.upper ? "upper" : "lower", 
+	  tbl, pc_checkskill(pl_sd, 1));
+  clif_displaymessage(fd, output);
+
+  for (j = 0; j < MAX_SKILL; j++) {
+    if (skill_tree[s][c][j].id == skillnum) {
+      skillidx = j;
+      break;
+    }
+  }
+ 
+  if (skillidx == -1) {
+    sprintf(output, "I do not believe the player can use that skill");
+    clif_displaymessage(fd, output);
+    return 0;
+  }
+
+  struct skill_tree_entry *ent = &skill_tree[s][c][skillidx];
+
+  for(j=0;j<5;j++) 
+    if( ent->need[j].id &&
+	pc_checkskill(sd,ent->need[j].id) < ent->need[j].lv) 
+      {
+	int idx = 0;
+	char *desc;
+        while (skill_names[idx].id != 0 && skill_names[idx].id != ent->need[j].id) 
+		idx++;
+	if (skill_names[idx].id == 0)
+		desc = "Unknown skill";
+	else
+		desc = skill_names[idx].desc;
+	sprintf(output, "player requires level %d of skill %s",  
+		ent->need[j].lv,  desc);
+	clif_displaymessage(fd, output);
+	meets = 0;
+      }
+
+  if (meets == 1) {
+    sprintf(output, "I believe the player meets all the requirements for that skill");
+    clif_displaymessage(fd, output);
+  }
+            
+  return 0;
+}
+
 /*==========================================
  * It is made to rain.
  *------------------------------------------

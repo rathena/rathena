@@ -214,6 +214,7 @@ enum AtCommandType {
 	AtCommand_RefreshOnline, // [Valaris]
 	// SQL-only commands end
 #endif
+	AtCommand_SkillTree, // by MouseJstr
 	
 	// end
 	AtCommand_Unknown,

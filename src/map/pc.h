@@ -44,6 +44,8 @@ int pc_checkskill(struct map_session_data *sd,int skill_id);
 int pc_checkallowskill(struct map_session_data *sd);
 int pc_checkequip(struct map_session_data *sd,int pos);
 
+int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd);
+
 int pc_checkoverhp(struct map_session_data*);
 int pc_checkoversp(struct map_session_data*);
 
@@ -170,7 +172,7 @@ struct pc_base_job pc_calc_base_job(int b_class);//“]¶‚â—{qE‚ÌŒ³‚ÌE‹Æ‚ğ•Ô‚·
 int pc_calc_base_job2(int b_class);	// Celest
 int pc_calc_upper(int b_class);
 
-struct {
+struct skill_tree_entry {
 	int id;
 	int max;
 	struct {

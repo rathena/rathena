@@ -264,7 +264,7 @@ int SkillStatusChangeTable[]={	/* skill.h‚Ìenum‚ÌSC_***‚Æ‚ ‚í‚¹‚é‚±‚Æ */
 	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 };
 
-struct skill_name_db skill_names[] = {
+const struct skill_name_db skill_names[] = {
  { AC_CHARGEARROW, "CHARGEARROW", "Charge_Arrow" } ,
  { AC_CONCENTRATION, "CONCENTRATION", "Improve_Concentration" } ,
  { AC_DOUBLE, "DOUBLE", "Double_Strafe" } ,
