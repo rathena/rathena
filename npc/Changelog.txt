@@ -30,6 +30,8 @@ Other Ppl
 
 Date		Added
 ======
+11/30   * Added Lutie shops
+
 11/28	* Added missing Niflheim monsters [shadow]
 
 11/27	* Added some Lou Yang NPC's [Mass Zero]
