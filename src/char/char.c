@@ -1958,7 +1958,16 @@ int parse_tologin(int fd) {
 			RFIFOSKIP(fd,RFIFOW(fd,2));
 			break;
 
+		// login-server alive packet
+		case 0x2718:
+			if (RFIFOREST(fd) < 2)
+				return 0;
+			// do whatever it's supposed to do here
+			RFIFOSKIP(fd,2);
+			break;
+
 		default:
+			printf("parse_tologin: unknown packet %x! \n", RFIFOW(fd,0));
 			session[fd]->eof = 1;
 			return 0;
 		}
