@@ -490,13 +490,13 @@ int inter_guild_init() {
 
 int castle_db_final (void *k, void *data, va_list ap)
 {
-	struct guild_castle *gc = data;
+	struct guild_castle *gc = (struct guild_castle *) data;
 	if (gc) aFree(gc);
 	return 0;
 }
 int guild_db_final (void *k, void *data, va_list ap)
 {
-	struct guild *g = data;
+	struct guild *g = (struct guild *) data;
 	if (g) aFree(g);
 	return 0;
 }

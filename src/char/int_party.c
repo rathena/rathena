@@ -118,7 +118,7 @@ int inter_party_init() {
 }
 
 int party_db_final (void *k, void *data, va_list ap) {
-	struct party *p = data;
+	struct party *p = (struct party *) data;
 	if (p) aFree(p);
 	return 0;
 }

@@ -110,7 +110,7 @@ int inter_pet_init()
 }
 
 int pet_db_final (void *k, void *data, va_list ap) {
-	struct s_pet *p = data;
+	struct s_pet *p = (struct s_pet *) data;
 	if (p) aFree(p);
 	return 0;
 }

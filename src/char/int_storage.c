@@ -292,12 +292,12 @@ int inter_storage_init()
 }
 
 int storage_db_final (void *k, void *data, va_list ap) {
-	struct storage *p = data;
+	struct storage *p = (struct storage *) data;
 	if (p) aFree(p);
 	return 0;
 }
 int guild_storage_db_final (void *k, void *data, va_list ap) {
-	struct guild_storage *p = data;
+	struct guild_storage *p = (struct guild_storage *) data;
 	if (p) aFree(p);
 	return 0;
 }

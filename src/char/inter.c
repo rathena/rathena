@@ -263,12 +263,12 @@ int inter_init(const char *file) {
 
 // finalize
 int accreg_db_final (void *k, void *data, va_list ap) {	
-	struct accreg *p = data;
+	struct accreg *p = (struct accreg *) data;
 	if (p) aFree(p);
 	return 0;
 }
 int wis_db_final (void *k, void *data, va_list ap) {
-	struct WisData *p = data;
+	struct WisData *p = (struct WisData *) data;
 	if (p) aFree(p);
 	return 0;
 }

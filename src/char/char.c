@@ -840,7 +840,7 @@ int make_new_char(int fd, unsigned char *dat) {
 
 	// remove control characters from the name
 	dat[23] = '\0';
-	if (remove_control_chars((char*)dat)) {
+	if (remove_control_chars((unsigned char *)(char*)dat)) {
 		char_log("Make new char error (control char received in the name): (connection #%d, account: %d)." RETCODE,
 		         fd, sd->account_id);
 		return -1;
@@ -1828,7 +1828,7 @@ int parse_tologin(int fd) {
 					memset(message, '\0', sizeof(message));
 					memcpy(message, RFIFOP(fd,8), RFIFOL(fd,4));
 					message[sizeof(message)-1] = '\0';
-					remove_control_chars(message);
+					remove_control_chars((unsigned char *)message);
 					// remove all first spaces
 					p = message;
 					while(p[0] == ' ')
@@ -3190,8 +3190,8 @@ int lan_config_read(const char *lancfgName) {
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
 
-		remove_control_chars(w1);
-		remove_control_chars(w2);
+		remove_control_chars((unsigned char *)w1);
+		remove_control_chars((unsigned char *)w2);
 		if (strcmpi(w1, "lan_map_ip") == 0) { // Read map-server Lan IP Address
 			h = gethostbyname(w2);
 			if (h != NULL) {
@@ -3262,8 +3262,8 @@ int char_config_read(const char *cfgName) {
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
 
-		remove_control_chars(w1);
-		remove_control_chars(w2);
+		remove_control_chars((unsigned char *)w1);
+		remove_control_chars((unsigned char *)w2);
 		if (strcmpi(w1, "userid") == 0) {
 			memcpy(userid, w2, 24);
 		} else if (strcmpi(w1, "passwd") == 0) {
