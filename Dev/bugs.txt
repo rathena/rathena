@@ -140,3 +140,6 @@ Problem:	When you change JOB, you don't lose skills in DB. It means if you were 
 Assigned:	N/A
 Progress:	0%
 
+Problem:	Due to the Guilds CACHE we see some went-offline members as online ones. It is very confusing. You don't know who's really on.
+Assigned:	N/A
+Progress:	0%
