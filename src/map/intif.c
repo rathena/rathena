@@ -473,8 +473,8 @@ int intif_guild_skillup(int guild_id,int skill_num,int account_id,int flag)
 	WFIFOL(inter_fd, 2)=guild_id;
 	WFIFOL(inter_fd, 6)=skill_num;
 	WFIFOL(inter_fd,10)=account_id;
-	WFIFOL(inter_fd,14)=flag;
-	WFIFOSET(inter_fd,18);
+	//WFIFOL(inter_fd,14)=flag;
+	WFIFOSET(inter_fd,14);
 	return 0;
 }
 // ƒMƒ‹ƒh“¯–¿/“G‘Î—v‹

@@ -3182,7 +3182,7 @@ int buildin_getskilllv(struct script_state *st)
  * skill_id = 10000 : GD_APPROVAL                      
  *            10001 : GD_KAFRACONTACT                  
  *            10002 : GD_GUARDIANRESEARCH              
- *            10003 : GD_CHARISMA                      
+ *            10003 : GD_GUARDUP                      
  *            10004 : GD_EXTENSION                     
  *------------------------------------------
  */

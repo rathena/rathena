@@ -690,7 +690,7 @@ int guild_calcinfo(struct guild *g)
 	struct guild before=*g;
 
 	// スキルIDの設定
-	for(i=0;i<20;i++)
+	for(i=0;i<MAX_GUILDSKILL;i++)
 		g->skill[i].id=i+10000;
 
 	// ギルドレベル
@@ -1046,7 +1046,7 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 	g->max_member=16;
 	g->average_lv=master->lv;
 	g->castle_id=-1;
-	for(i=0;i<20;i++)
+	for(i=0;i<MAX_GUILDSKILL;i++)
 		g->skill[i].id=i+10000;
 	
 	// Save to sql
@@ -1088,6 +1088,7 @@ int mapif_parse_GuildAddMember(int fd,int guild_id,struct guild_member *m)
 {
 	struct guild *g=guild_pt;
 	int i;
+
 	inter_guild_fromsql(guild_id,g);
 	
 	if(g==NULL||g->guild_id<=0){
@@ -1114,6 +1115,7 @@ int mapif_parse_GuildAddMember(int fd,int guild_id,struct guild_member *m)
 int mapif_parse_GuildLeave(int fd,int guild_id,int account_id,int char_id,int flag,const char *mes)
 {
 	struct guild *g=guild_pt;
+
 	inter_guild_fromsql(guild_id,g);
 	
 	if(g!=NULL&&g->guild_id>0){
@@ -1174,6 +1176,10 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 	// Could speed up by manipulating only guild_member
 	struct guild * g=guild_pt;
 	int i,alv,c;
+
+
+
+
 	
 	if(g==NULL||g->guild_id<=0)
 		return 0;
@@ -1213,6 +1219,9 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 	if(g==NULL)
 		return 0;
 	inter_guild_fromsql(guild_id,g);
+
+
+
 	
 	// Delete guild from sql
 	//printf("- Delete guild %d from guild\n",guild_id);
@@ -1279,6 +1288,10 @@ int mapif_parse_GuildBasicInfoChange(int fd,int guild_id,
 	struct guild * g=guild_pt;
 //	int dd=*((int *)data);
 	short dw=*((short *)data);
+
+
+
+
 	
 	if(g==NULL||g->guild_id<=0)
 		return 0;
@@ -1310,6 +1323,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 	// Could make some improvement in speed, because only change guild_member
 	int i;
 	struct guild * g=guild_pt;
+
 	inter_guild_fromsql(guild_id,g);
 	//printf("GuildMemberInfoChange %s \n",(type==GMI_EXP)?"GMI_EXP":"OTHER");
 	
@@ -1350,6 +1364,7 @@ int mapif_parse_GuildPosition(int fd,int guild_id,int idx,struct guild_position 
 {
 	// Could make some improvement in speed, because only change guild_position
 	struct guild * g=guild_pt;
+
 	inter_guild_fromsql(guild_id,g);	
 
 	if(g==NULL || idx<0 || idx>=MAX_GUILDPOSITION){
@@ -1432,6 +1447,7 @@ int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,
 int mapif_parse_GuildNotice(int fd,int guild_id,const char *mes1,const char *mes2)
 {
 	struct guild *g=guild_pt;
+
 	inter_guild_fromsql(guild_id,g);
 	
 	if(g==NULL||g->guild_id<=0)
@@ -1445,6 +1461,7 @@ int mapif_parse_GuildNotice(int fd,int guild_id,const char *mes1,const char *mes
 int mapif_parse_GuildEmblem(int fd,int len,int guild_id,int dummy,const char *data)
 {
 	struct guild * g=guild_pt;
+
 	inter_guild_fromsql(guild_id,g);
 	
 	if(g==NULL||g->guild_id<=0)

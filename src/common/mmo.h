@@ -41,7 +41,7 @@
 #define MAX_GUILDPOSITION 20	// increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
 #define MAX_GUILDEXPLUSION 32
 #define MAX_GUILDALLIANCE 16
-#define MAX_GUILDSKILL	20 // increased max guild skills because of new skills [Sara-chan]
+#define MAX_GUILDSKILL	15 // increased max guild skills because of new skills [Sara-chan]
 #define MAX_GUILDCASTLE 24	// increased to include novice castles [Valaris]
 #define MAX_GUILDLEVEL 50
 
