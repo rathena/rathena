@@ -2466,7 +2466,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			int itemid[17] = { 714, 756, 757, 969, 984, 985, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1002 };
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
 			ditem->nameid = itemid[rand()%17];
-			log_item[i] = ditem->nameid;
+			// log_item[i] = ditem->nameid;
 			ditem->amount = 1;
 			ditem->m = md->bl.m;
 			ditem->x = md->bl.x;
