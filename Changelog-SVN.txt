@@ -2,6 +2,7 @@
 Date	Added
 
 04/04
+        * Fix showmsg for Visual Studio [MouseJstr]
 	* Update base code for the UPNP plugin loading [celest]
 	* Removed anti-freeze system for login and char -- Shinomori's update would
 	  be enough to keep inter connections alive [celest]
