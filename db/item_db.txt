@@ -701,7 +701,7 @@
 1611,Arc_Wand_,Arc Wand,4,45000,,400,60,,1,2,99092,2,2,3,24,10,{},{ bonus bInt,3; bonus bMatkRate,15; },
 1612,Arc_Wand__,Arc Wand,4,45000,,400,60,,1,0,99092,2,2,3,24,10,{},{ bonus bInt,3; bonus bMatkRate,15; },
 
-1613,Mighty_Staff,Mighty Staff,4,20,,700,130,,1,0,99092,2,2,3,24,10,{},{ bonus bStr,10; bonus bMatkRate,15; },
+1613,Mighty_Staff,Mighty Staff,4,20,,700,130,,1,0,99092,2,2,3,24,10,{},{ bonus bStr,10; bonus bMatkRate,15; bonus2 bSpDrainRate,10000,-2; },
 1614,Blessed_Wand,Wand of Occult,4,20,,700,75,,1,0,99092,2,2,3,24,10,{},{ bonus bInt,3; bonus bMatkRate,15; },
 1615,Bone_Wand,Bone Wand,4,20,,700,40,,1,0,99092,2,2,3,24,10,{},{ bonus bInt,4; bonus bAtkEle,9; bonus bMatkRate,15; }
 
