@@ -1,7 +1,7 @@
 Date	Added
 12/28
         * When restarting the char-server,  reset the online status
-          of all characters and guild-members (SVN 949) [MouseJstr]
+          of all characters and guild-members (SVN 849) [MouseJstr]
 	* Fix double timer_delete caused by pc_alive_timer (SVN 848)
 	  [MouseJstr]
 	* Fixed typo in npcs_athena.conf (mc_cameri verses mc_Cameri),
