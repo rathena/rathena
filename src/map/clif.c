@@ -115,7 +115,7 @@ static const int packet_len_table[MAX_PACKET_DB] = {
 };
 
 // size list for each packet version after packet version 4.
-static int packet_size_table[11][MAX_PACKET_DB];
+static int packet_size_table[12][MAX_PACKET_DB]; //fixed by Lupus
 
 // local define
 enum {
