@@ -1720,3 +1720,6 @@
 12001,Heal_3,Heal Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,3,"Heal Level 3"; },{}
 12002,Heal_5,Heal Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,5,"Heal Level 5"; },{}
 12003,Teleport_1,Teleport Level 1,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 26,1,"Teleport Level 1"; },{}
+
+// I found a missing item
+569,Missing_Item,Item 569,3,20,0,10,,,,,,,,,,,{},{}
