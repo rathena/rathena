@@ -305,12 +305,6 @@ Problem:	Rogues Skill "back stab" works without PREPARING arrows.
 Assigned:	Celest
 Progress:	100%
 
-Problem:	Party EXP share bug
-		When one member enter, re-enter the server sometimes it happens you
-		can share EXP with memebers of ANY LEVEL.
-Assigned:	N/A
-Progress:	0%
-
 Problem:	Skill Delays Bug (Hunters)
 		When you use a skill then Equip Another kind of arrows,
 		you can immediately cast another SKILL. (Bind skills on hot keys and... u get a killing machine)
@@ -367,7 +361,7 @@ Problem:	ABRAKADABRA (HOCUS POCUS)
 Assigned:	N/A
 Progress:	0%
 
-Problem:	Arrows Dupe
+Problem:	Arrows Dupe (or random amount change)
 		You should prepare/remove arrows while trade. And have both - names and unnamed arrows ^_-
 Assigned:	N/A
 Progress:	0%
@@ -389,8 +383,18 @@ Problem:	ICE WALL
 Assigned:	N/A
 Progress:	0%
 
-Problem:	Castles Again!
+Problem:	SQL Castles Again!
 		The casltes data isn't being saved at all.
 		During WOE everything acts like it was at the previous Castles save bug time.
+Assigned:	Lupus
+Progress:	100%
+
+Problem:	Party EXP share bug
+		1. Create a party
+		2. Invite a member
+		3. Kick him out the party
+		4. Invite him again.
+		Now he can get His 100% EXP + 100% Yours EXP (in the party window you look like you're off )
+			* SQL parties have been fixed in Freya (but the whole file int_party.c has been rewritten there)
 Assigned:	N/A
 Progress:	0%

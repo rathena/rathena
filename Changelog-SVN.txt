@@ -1,5 +1,7 @@
 Date	Added
 
+04/02
+	* Fixed SQL Guild Castle Saving (now fully working, tested on 100 players during WOE) [Lupus]
 03/02
 	* Fixed SQL Guild Castle Saving (partial, yet it doesn't clear GuildID when you abandon a castle) [Lupus]
 	  + added 2 fixes by POW (Mac Guild Position fix, Max Guild Members fix)
