@@ -119,7 +119,7 @@
 644,Gift_Box,Gift Box,2,2,,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 645,Concentration_Potion,Concentration Potion,2,800,,100,,,,,10477567,2,,,,,{ sc_start SC_SpeedPot0,1800,0; },{}
 656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,8904431,2,,,40,,{ sc_start SC_SpeedPot1,1800,0; },{}
-657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,411302,2,,,85,,{ sc_start SC_SpeedPot2,1800,0; },{}
+657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,410786,2,,,85,,{ sc_start SC_SpeedPot2,1800,0; },{}
 658,Tribal_Solidarity,Tribal Solidarity,3,1000,,500,,,,,,,,,,,{},{}
 659,Her_Heart,Her Heart,2,500,,50,,,,,10477567,2,,,,,{ pet 1188; },{},,
 660,Forbidden_Red_Candle,Red Candle,2,20,,50,,,,,10477567,2,,,,,{ pet 1200; },{},,
