@@ -1593,7 +1593,7 @@ int login_config_read(const char *cfgName){
 		if(i!=2)
 			continue;
 
-		} else if (strcmpi(w1, "login_ip") == 0) {
+		else if (strcmpi(w1, "login_ip") == 0) {
 			//login_ip_set_ = 1;
 			h = gethostbyname (w2);
 			if (h != NULL) {
