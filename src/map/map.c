@@ -1608,7 +1608,7 @@ static int map_readmap(int m,char *fn, char *alias) {
  */
 int map_readallmap(void) {
 	int i,maps_removed=0;
-	char fn[256]="";
+	char fn[256];
 	FILE *afm_file;
 
 	// 先に全部のャbプの存在を確認
@@ -1616,39 +1616,39 @@ int map_readallmap(void) {
 		char afm_name[256] = "";
 		strncpy(afm_name, map[i].name, strlen(map[i].name) - 4);
 		strcat(afm_name, ".afm");
-		
+
 		sprintf(fn,"%s\\%s",afm_dir,afm_name);
 		afm_file = fopen(fn, "r");
-		if (afm_file != NULL) {			
+		if (afm_file != NULL) {
 			map_readafm(i,fn);
-    		}
+			fclose(afm_file);
+		}
 		else if(strstr(map[i].name,".gat")!=NULL) {
-                      char *p = strstr(map[i].name, ">"); // [MouseJstr]
-                      if (p != NULL) {
-                         char alias[64];
-                         *p = '\0';
-                         strcpy(alias, map[i].name);
-                         strcpy(map[i].name, p + 1);
-                         sprintf(fn,"data\\%s",map[i].name);
-                         if(grfio_size(fn) == -1 || map_readmap(i,fn, alias) == -1) {
-                            map_delmap(map[i].name);
-                            maps_removed++;
-                         }
-                      } else {
-                         sprintf(fn,"data\\%s",map[i].name);
-                         if(grfio_size(fn) == -1 || map_readmap(i,fn, NULL) == -1) {
-                            map_delmap(map[i].name);
-                            maps_removed++;
-                         }
-                      }
-	    }
-	    if (afm_file != NULL) 
-		fclose(afm_file);
+			char *p = strstr(map[i].name, ">"); // [MouseJstr]
+			if (p != NULL) {
+				char alias[64];
+				*p = '\0';
+				strcpy(alias, map[i].name);
+				strcpy(map[i].name, p + 1);
+				sprintf(fn,"data\\%s",map[i].name);
+				if(map_readmap(i,fn, alias) == -1) {
+					map_delmap(map[i].name);
+					maps_removed++;
+				}
+			} else {
+				sprintf(fn,"data\\%s",map[i].name);
+				if(map_readmap(i,fn, NULL) == -1) {
+					map_delmap(map[i].name);
+					maps_removed++;
+				}
+			}
+		}
 	}
 
 	free(waterlist);
 	printf("\rMaps Loaded: %d %60s\n",map_num,"");
 	printf("\rMaps Removed: %d \n",maps_removed);
+
 	return 0;
 }
 
