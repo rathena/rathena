@@ -252,7 +252,9 @@ int SkillStatusChangeTable[]={	/* status.hのenumのSC_***とあわせること */
 	SC_MEMORIZE,
 	SC_FOGWALL,
 	SC_SPIDERWEB,
-	-1,-1,-1,-1,
+	-1,-1,
+	SC_BABY,
+	-1,
 /* 410- */
 	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 };
@@ -3003,7 +3005,8 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	struct status_change* sc_data;
 	short *sc_count, *option, *opt1, *opt2, *opt3;
 	int opt_flag = 0, calc_flag = 0,updateflag = 0, save_flag = 0, race, mode, elem, undead_flag;
-	int scdef=0;
+	int scdef = 0;
+	int type2 = type;
 
 	nullpo_retr(0, bl);
 	if(bl->type == BL_SKILL)
@@ -3213,7 +3216,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_ENCPOISON:			/* エンチャントポイズン */
 			calc_flag = 1;
 			val2=(((val1 - 1) / 2) + 3)*100;	/* 毒付?確率 */
-			skill_encchant_eremental_end(bl,SC_ENCPOISON);
+			skill_enchant_elemental_end(bl,SC_ENCPOISON);
 			break;
 		case SC_EDP:	// [Celest]
 			val2 = val1 + 2;			/* 猛毒付?確率(%) */
@@ -3226,7 +3229,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			calc_flag = 1;
 			break;
 		case SC_ASPERSIO:			/* アスペルシオ */
-			skill_encchant_eremental_end(bl,SC_ASPERSIO);
+			skill_enchant_elemental_end(bl,SC_ASPERSIO);
 			break;
 		case SC_SUFFRAGIUM:			/* サフラギム */
 		case SC_BENEDICTIO:			/* 聖? */
@@ -3289,16 +3292,16 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			val2 = 5;
 			break;
 		case SC_FLAMELAUNCHER:		/* フレ?ムランチャ? */
-			skill_encchant_eremental_end(bl,SC_FLAMELAUNCHER);
+			skill_enchant_elemental_end(bl,SC_FLAMELAUNCHER);
 			break;
 		case SC_FROSTWEAPON:		/* フロストウェポン */
-			skill_encchant_eremental_end(bl,SC_FROSTWEAPON);
+			skill_enchant_elemental_end(bl,SC_FROSTWEAPON);
 			break;
 		case SC_LIGHTNINGLOADER:	/* ライトニングロ?ダ? */
-			skill_encchant_eremental_end(bl,SC_LIGHTNINGLOADER);
+			skill_enchant_elemental_end(bl,SC_LIGHTNINGLOADER);
 			break;
 		case SC_SEISMICWEAPON:		/* サイズミックウェポン */
-			skill_encchant_eremental_end(bl,SC_SEISMICWEAPON);
+			skill_enchant_elemental_end(bl,SC_SEISMICWEAPON);
 			break;
 		case SC_DEVOTION:			/* ディボ?ション */
 			calc_flag = 1;
@@ -3835,6 +3838,10 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			tick = 1000;
 			break;
 
+		case SC_BABY:
+			type2 = _SC_BABY;
+			break;
+
 		default:
 			if(battle_config.error_log)
 				printf("UnknownStatusChange [%d]\n", type);
@@ -3842,8 +3849,8 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	}
 
 	if(bl->type==BL_PC &&
-		(type<SC_SENDMAX || type==SC_PRESERVE || type==SC_BATTLEORDERS))
-		clif_status_change(bl,type,1);	/* アイコン表示 */
+		(type<SC_SENDMAX || type==SC_PRESERVE || type==SC_BATTLEORDERS || type==SC_BABY))
+		clif_status_change(bl,type2,1);	/* アイコン表示 */
 
 	/* optionの?更 */
 	switch(type){
@@ -3982,6 +3989,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	struct status_change* sc_data;
 	int opt_flag=0, calc_flag = 0;
 	short *sc_count, *option, *opt1, *opt2, *opt3;
+	int type2 = type;
 
 	nullpo_retr(0, bl);
 	if(bl->type!=BL_PC && bl->type!=BL_MOB) {
@@ -4173,11 +4181,15 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					calc_flag = 1;
 				}
 				break;
+
+			case SC_BABY:
+				type2 = _SC_BABY;
+				break;
 			}
 
 		if(bl->type==BL_PC &&
-			(type<SC_SENDMAX || type==SC_PRESERVE || type==SC_BATTLEORDERS))
-			clif_status_change(bl,type,0);	/* アイコン消去 */
+			(type<SC_SENDMAX || type==SC_PRESERVE || type==SC_BATTLEORDERS || type==SC_BABY))
+			clif_status_change(bl,type2,0);	/* アイコン消去 */
 
 		switch(type){	/* 正常に?るときなにか?理が必要 */
 		case SC_STONE:

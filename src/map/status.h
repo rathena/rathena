@@ -147,6 +147,8 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_FORTUNE			=176,
 	SC_SERVICE4U		=177,
 	SC_SPIDERWEB		=180,		/* スパイダ?ウェッブ */
+// <-- 181 = unknown status
+// <-- 182 = unknown status
 	SC_SACRIFICE		=184,		/* サクリファイス */
 	SC_WEDDING			=187,	//結婚用(結婚衣裳になって?くのが?いとか)
 	SC_NOCHAT			=188,	//赤エモ?態
@@ -175,7 +177,11 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_ADAPTATION		=194,
 	SC_CHASEWALK		=195,
 	SC_REGENERATION		=196,
-	SC_GUILDAURA		=199
+	SC_GUILDAURA		=199,
+	SC_BABY				=200,
+
+// Icons
+	_SC_BABY			=200
 };
 extern int SkillStatusChangeTable[];
 

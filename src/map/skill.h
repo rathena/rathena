@@ -175,7 +175,7 @@ void skill_devotion_end(struct map_session_data *md,struct map_session_data *sd,
 int skill_check_cloaking(struct block_list *bl);
 
 // ステ?タス異常
-int skill_encchant_eremental_end(struct block_list *bl, int type);
+int skill_enchant_elemental_end(struct block_list *bl, int type);
 int skillnotok(int skillid, struct map_session_data *sd);
 
 // アイテム作成

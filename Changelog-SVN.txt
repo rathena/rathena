@@ -1,5 +1,8 @@
 
 Date	Added
+04/02
+	* Added the 3 baby skills WE_BABY, CALLBABY and CALLPARENT [celest]
+	* Some tidying up in skill.c [celest]
 
 04/01
 	* Updated ShowMessage functions to use vprintf [celest]

@@ -4723,7 +4723,8 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		}
 
 	if(battle_config.death_penalty_type>0) { // changed penalty options, added death by player if pk_mode [Valaris]
-		if(sd->status.class_ != 0 && !map[sd->bl.m].flag.nopenalty && !map[sd->bl.m].flag.gvg){ // only novices will recieve no penalty
+		if(sd->status.class_ != 0 && !map[sd->bl.m].flag.nopenalty && !map[sd->bl.m].flag.gvg &&	// only novices will recieve no penalty
+			!(sd->sc_count && sd->sc_data[SC_BABY].timer!=-1)) {
 			if(battle_config.death_penalty_type==1 && battle_config.death_penalty_base > 0)
 				sd->status.base_exp -= (int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
 				if(battle_config.pk_mode && src && src->type==BL_PC)
@@ -6190,7 +6191,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		if(flag&1)
 			pc_checkallowskill(sd);
 		if(sd->weapontype1 == 0 && sd->weapontype2 == 0)
-			skill_encchant_eremental_end(&sd->bl,-1);  //•Ší‚¿¾‚¦‚Í–³?Œ‚Å?«•t?‰ğœ
+			skill_enchant_elemental_end(&sd->bl,-1);  //•Ší‚¿¾‚¦‚Í–³?Œ‚Å?«•t?‰ğœ
 	} else {
 		clif_unequipitemack(sd,n,0,0);
 	}
@@ -6441,25 +6442,78 @@ int pc_divorce(struct map_session_data *sd)
 }
 
 /*==========================================
+ * sd - father dstsd - mother jasd - child
+ */
+int pc_adoption(struct map_session_data *sd,struct map_session_data *dstsd, struct map_session_data *jasd)
+{       
+        int j;          
+        if(sd == NULL || dstsd == NULL || jasd == NULL || sd->status.partner_id <= 0 || dstsd->status.partner_id <= 0 || sd->status.partner_id != dstsd->status.char_id || dstsd->status.partner_id != sd->status.char_id || sd->status.child > 0 || dstsd->status.child || jasd->status.father > 0 || jasd->status.mother > 0)
+                return -1;
+        jasd->status.father=sd->status.char_id;
+        jasd->status.mother=dstsd->status.char_id;
+        sd->status.child=jasd->status.char_id;
+        dstsd->status.child=jasd->status.char_id;
+        for (j=0; j < MAX_INVENTORY; j++) {
+                if(jasd->status.inventory[j].nameid>0 && jasd->status.inventory[j].equip!=0)
+                        pc_unequipitem(jasd, j, 3);
+        }
+        if (pc_jobchange(jasd, 4023, 0) == 0)
+                clif_displaymessage(jasd->fd, msg_table[12]); // Your job has been changed.
+        else {
+                clif_displaymessage(jasd->fd, msg_table[155]); // Impossible to change your job.
+                return -1;
+        }
+        return 0;
+}
+
+/*==========================================
  * sd‚Ì‘Š•û‚Ìmap_session_data‚ğ•Ô‚·
  *------------------------------------------
  */
 struct map_session_data *pc_get_partner(struct map_session_data *sd)
 {
-	struct map_session_data *p_sd = NULL;
-	char *nick;
-	if(sd == NULL || !pc_ismarried(sd))
-		return NULL;
+	//struct map_session_data *p_sd = NULL;
+	//char *nick;
+	//if(sd == NULL || !pc_ismarried(sd))
+	//	return NULL;
+	//nick=map_charid2nick(sd->status.partner_id);
+	//if (nick==NULL)
+	//	return NULL;
+	//if((p_sd=map_nick2sd(nick)) == NULL )
+	//	return NULL;
 
-	nick=map_charid2nick(sd->status.partner_id);
+	if (sd && pc_ismarried(sd))
+		// charid2sd returns NULL if not found
+		return map_charid2sd(sd->status.partner_id);
 
-	if (nick==NULL)
-		return NULL;
+	return NULL;
+}
 
-	if((p_sd=map_nick2sd(nick)) == NULL )
-		return NULL;
+struct map_session_data *pc_get_father (struct map_session_data *sd)
+{
+	if (sd && pc_calc_upper(sd->status.class_) == 2 && sd->status.father > 0)
+		// charid2sd returns NULL if not found
+		return map_charid2sd(sd->status.father);
 
-	return p_sd;
+	return NULL;
+}
+
+struct map_session_data *pc_get_mother (struct map_session_data *sd)
+{
+	if (sd && pc_calc_upper(sd->status.class_) == 2 && sd->status.mother > 0)
+		// charid2sd returns NULL if not found
+		return map_charid2sd(sd->status.mother);
+
+	return NULL;
+}
+
+struct map_session_data *pc_get_child (struct map_session_data *sd)
+{
+	if (sd && pc_ismarried(sd) && sd->status.child > 0)
+		// charid2sd returns NULL if not found
+		return map_charid2sd(sd->status.child);
+
+	return NULL;
 }
 
 //
@@ -7270,29 +7324,3 @@ int do_init_pc(void) {
 
 	return 0;
 }
-
-/*==========================================
- * sd - father dstsd - mother jasd - child
- */
-int pc_adoption(struct map_session_data *sd,struct map_session_data *dstsd, struct map_session_data *jasd)
-{       
-        int j;          
-        if(sd == NULL || dstsd == NULL || jasd == NULL || sd->status.partner_id <= 0 || dstsd->status.partner_id <= 0 || sd->status.partner_id != dstsd->status.char_id || dstsd->status.partner_id != sd->status.char_id || sd->status.child > 0 || dstsd->status.child || jasd->status.father > 0 || jasd->status.mother > 0)
-                return -1;
-        jasd->status.father=sd->status.char_id;
-        jasd->status.mother=dstsd->status.char_id;
-        sd->status.child=jasd->status.char_id;
-        dstsd->status.child=jasd->status.char_id;
-        for (j=0; j < MAX_INVENTORY; j++) {
-                if(jasd->status.inventory[j].nameid>0 && jasd->status.inventory[j].equip!=0)
-                        pc_unequipitem(jasd, j, 3);
-        }
-        if (pc_jobchange(jasd, 4023, 0) == 0)
-                clif_displaymessage(jasd->fd, msg_table[12]); // Your job has been changed.
-        else {
-                clif_displaymessage(jasd->fd, msg_table[155]); // Impossible to change your job.
-                return -1;
-        }
-        return 0;
-}
-
