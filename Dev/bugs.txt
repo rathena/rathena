@@ -5,6 +5,7 @@ Progess:	0%
 Problem:	2-2-1 classes are regarded as Novicies by the game server. NPCs aren't taking them as thier jobs but if you the the NPC to do something for a novice class it works with the 2-2-1 like renters. Also if some one becomes high novice, if they use jobra they can become first jobs like a swordsman.
 Assigned:	N/A
 Progess:	0%
+Ideas:		Codemaster - I believe that they register them as normal classes, but sets Upper as 1, so you can do things such as if(Upper == 1)
 
 Problem:	Stats nor skills don't downgrade when your level gets reverted due to exp loss.
 Assigned:	N/A
@@ -12,7 +13,7 @@ Progess:	0%
 
 Problem:	You can hit yourself with your own spider web.
 Assigned:	N/A
-Progess:	0%
+Progess:	90% - should be fixed, but please test!
 
 Problem:	Pre skill requirements for new skills are wrong it makes you use 49 skills points before you can get the newer skills.
 Assigned:	Celest
