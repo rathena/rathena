@@ -172,7 +172,7 @@ static int can_place(struct map_data *m,int x,int y,int flag)
 
 	if(map_getcellp(m,x,y,CELL_CHKPASS))
 		return 1;
-	else if((flag&0x10000)&&map_getcellp(m,x,y,CELL_CHKHIGH))
+	else if((flag&0x10000)&&map_getcellp(m,x,y,CELL_CHKGROUND))
 		return 1;
 	return 0;
 }
@@ -239,6 +239,59 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 		y0+=dy;
 	}
 	return (x0<<16)|y0;
+}
+
+/*==========================================
+ *  êÀËå×îÍô?ª¬Ê¦Òöª«ªÉª¦ª«ªòÚ÷ª¹
+ *------------------------------------------
+ */
+#define swap(x,y) { int t; t = x; x = y; y = t; }
+int path_search_long(int m,int x0,int y0,int x1,int y1)
+{
+	int dx, dy;
+	int wx = 0, wy = 0;
+	int weight;
+	struct map_data *md;
+
+	if (!map[m].gat)
+		return 0;
+	md = &map[m];
+
+	dx = (x1 - x0);
+	if (dx < 0) {
+		swap(x0, x1);
+		swap(y0, y1);
+		dx = -dx;
+	}
+	dy = (y1 - y0);
+
+	if (map_getcellp(md,x1,y1,CELL_CHKWALL))
+		return 0;
+
+	if (dx > abs(dy))
+		weight = dx;
+	else
+		weight = abs(y1 - y0);
+
+	while (x0 != x1 && y0 != y1) {
+		if (map_getcellp(md,x0,y0,CELL_CHKWALL))
+			return 0;
+		wx += dx;
+		wy += dy;
+		if (wx >= weight) {
+			wx -= weight;
+			x0 ++;
+		}
+		if (wy >= weight) {
+			wy -= weight;
+			y0 ++;
+		} else if (wy < 0) {
+			wy += weight;
+			y0 --;
+		}
+	}
+
+	return 1;
 }
 
 /*==========================================

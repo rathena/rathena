@@ -151,13 +151,10 @@ struct charid2nick {
 	int req_id;
 };
 
+// «Ş«Ã«×«­«ã«Ã«·«å××éÄ«Õ«é«°(map_athana.conf?ªÎread_map_from_cacheªÇò¦ïÒ)
+// 0:××éÄª·ªÊª¤ 1:Şª?õêÜÁğí 2:?õêÜÁğí
 int  map_read_flag = READ_FROM_GAT;
-// ƒ}ƒbƒvƒLƒƒƒbƒVƒ…—˜—pƒtƒ‰ƒO,‚Ç‚Á‚¿‚ğg‚¤‚©‚Ímap_athana.conf“à‚Ìread_map_from_bitmap‚Åw’è
-// 0‚È‚ç‚Î—˜—p‚µ‚È‚¢A1‚¾‚Æ”ñˆ³k•Û‘¶A2‚¾‚Æˆ³k‚µ‚Ä•Û‘¶
-int map_getcell(int,int x,int y,CELL_CHK cellchk);
-int map_getcellp(struct map_data* m,int x,int y,CELL_CHK cellchk);
-
-char map_bitmap_filename[256]="db/map.info";//ƒrƒbƒgƒ}ƒbƒvƒtƒ@ƒCƒ‹‚ÌƒfƒtƒHƒ‹ƒgƒpƒX
+char map_cache_file[256]="db/map.info"; // «Ş«Ã«×«­«ã«Ã«·«å«Õ«¡«¤«ëÙ£
 
 char motd_txt[256] = "conf/motd.txt";
 char help_txt[256] = "conf/help.txt";
@@ -398,7 +395,32 @@ int map_count_oncell(int m, int x, int y) {
 	if(!count) count = 1;
 	return count;
 }
+/*
+ * «»«ëß¾ªÎõÌôøªËÌ¸ªÄª±ª¿«¹«­«ë«æ«Ë«Ã«ÈªòÚ÷ª¹
+ */
+struct skill_unit *map_find_skill_unit_oncell(int m,int x,int y,int skill_id)
+{
+	int bx,by;
+	struct block_list *bl;
+	int i,c;
+	struct skill_unit *unit;
 
+	if (x < 0 || y < 0 || (x >= map[m].xs) || (y >= map[m].ys))
+		return NULL;
+	bx = x/BLOCK_SIZE;
+	by = y/BLOCK_SIZE;
+
+	bl = map[m].block[bx+by*map[m].bxs];
+	c = map[m].block_count[bx+by*map[m].bxs];
+	for(i=0;i<c && bl;i++,bl=bl->next){
+		if (bl->x != x || bl->y != y || bl->type != BL_SKILL)
+			continue;
+		unit = (struct skill_unit *) bl;
+		if (unit->alive && unit->group->skill_id == skill_id)
+			return unit;
+	}
+	return NULL;
+}
 
 /*==========================================
  * map m (x0,y0)-(x1,y1)?‚Ì‘Sobj‚É?‚µ‚Ä
@@ -1355,15 +1377,16 @@ int map_calc_dir( struct block_list *src,int x,int y) {
  *------------------------------------------
  */
 
-int map_getcell(int m,int x,int y,CELL_CHK cellchk)
+int map_getcell(int m,int x,int y,cell_t cellchk)
 {
 	return (m < 0 || m > MAX_MAP_PER_SERVER) ? 0 : map_getcellp(&map[m],x,y,cellchk);
 }
 
-int map_getcellp(struct map_data* m,int x,int y,CELL_CHK cellchk)
+int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 {
 	int j;
 	nullpo_ret(m);
+
 	if(x<0 || x>=m->xs-1 || y<0 || y>=m->ys-1)
 	{
 		if(cellchk==CELL_CHKNOPASS) return 1;
@@ -1373,55 +1396,40 @@ int map_getcellp(struct map_data* m,int x,int y,CELL_CHK cellchk)
 
 	switch(cellchk)
 	{
-		case CELL_CHKTOUCH:
-			if(m->gat[j]&0x80) return 1;return 0;
-		case CELL_CHKWATER:
-			if(m->gat[j]==3) return 1;return 0;
-		case CELL_CHKHIGH:
-			if(m->gat[j]==5) return 1;return 0;
 		case CELL_CHKPASS:
-			if(m->gat[j]!=1&&m->gat[j]!=5) return 1; return 0;
+			return (m->gat[j] != 1 && m->gat[j] != 5);
 		case CELL_CHKNOPASS:
-			if(m->gat[j]==1||m->gat[j]==5) return 1; return 0;
-		case CELL_CHKTYPE:
+			return (m->gat[j] == 1 || m->gat[j] == 5);
+		case CELL_CHKWALL:
+			return (m->gat[j] == 1);
+		case CELL_CHKNPC:
+			return (m->gat[j]&0x80);
+		case CELL_CHKWATER:
+			return (m->gat[j] == 3);
+		case CELL_CHKGROUND:
+			return (m->gat[j] == 5);
+		case CELL_GETTYPE:
 			return m->gat[j];
-		default: return 0;
-	}
-	return 0;
+		default:
+			return 0;
+	}	
 }
 
 /*==========================================
  * (m,x,y)‚Ìó‘Ô‚ğİ’è‚·‚é
  *------------------------------------------
  */
-int map_setcell(int m,int x,int y,CELL_SET cellset)
+void map_setcell(int m,int x,int y,int cell)
 {
-	int i,j;
-
+	int j;
 	if(x<0 || x>=map[m].xs || y<0 || y>=map[m].ys)
-		return 0;
+		return;
 	j=x+y*map[m].xs;
-	switch(cellset)
-	{
-	case CELL_SETTOUCH:
-		return map[m].gat[j]|=0x80;
-		break;
-	case CELL_SETWATER://3
-		i=3;break;
-	case CELL_SETPASS://0
-		i=0;break;
-	case CELL_SETNOPASS://gat_fileused[0](READ_FROM_BITMAP)‚©1(READ_FROM_GAT)
-		i=1;break;
-	case CELL_SETHIGH://5
-		i=5;break;
-	case CELL_SETNOHIGH://5
-		i=5;break;
-	default:
-		return 0;
-	}
-	map[m].gat[j]=i;
 
-	return 1;
+	if (cell == CELL_SETNPC)
+		map[m].gat[j] |= 0x80;
+	else
+		map[m].gat[j] = cell;
 }
 
 /*==========================================
@@ -1510,10 +1518,10 @@ static void map_readwater(char *watertxt) {
 *===========================================*/
 
 // ƒ}ƒbƒvƒLƒƒƒbƒVƒ…‚ÌÅ‘å’l
-#define MAX_CAHCE_MAX 768
+#define MAX_MAP_CACHE 768
 
 //Šeƒ}ƒbƒv‚²‚Æ‚ÌÅ¬ŒÀî•ñ‚ğ“ü‚ê‚é‚à‚ÌAREAD_FROM_BITMAP—p
-struct MAP_CACHE_INFO {
+struct map_cache_info {
 	char fn[32];//ƒtƒ@ƒCƒ‹–¼
 	int xs,ys; //•‚Æ‚‚³
 	int water_height;
@@ -1522,17 +1530,15 @@ struct MAP_CACHE_INFO {
 	int compressed_len; // zilb’Ê‚¹‚é‚æ‚¤‚É‚·‚éˆ×‚Ì—\–ñ
 }; // 56 byte
 
-struct MAP_CACHE_HEAD {
-	int sizeof_header;
-	int sizeof_map;
-	// ã‚Ì‚Q‚Â‰ü•Ï•s‰Â
-	int nmaps; // ƒ}ƒbƒv‚ÌŒÂ”
-	int filesize;
-};
-
-struct map_cache_ {
-	struct MAP_CACHE_HEAD head;
-	struct MAP_CACHE_INFO *map;
+struct {
+	struct map_cache_head {
+		int sizeof_header;
+		int sizeof_map;
+		// ã‚Ì‚Q‚Â‰ü•Ï•s‰Â
+		int nmaps; // ƒ}ƒbƒv‚ÌŒÂ”
+		int filesize;
+	} head;
+	struct map_cache_info *map;
 	FILE *fp;
 	int dirty;
 } map_cache;
@@ -1542,41 +1548,41 @@ static void map_cache_close(void);
 static int map_cache_read(struct map_data *m);
 static int map_cache_write(struct map_data *m);
 
-static int map_cache_open(char *fn) {
+static int map_cache_open(char *fn)
+{
 	atexit(map_cache_close);
 	if(map_cache.fp) {
 		map_cache_close();
 	}
 	map_cache.fp = fopen(fn,"r+b");
 	if(map_cache.fp) {
-		fread(&map_cache.head,1,sizeof(struct MAP_CACHE_HEAD),map_cache.fp);
+		fread(&map_cache.head,1,sizeof(struct map_cache_head),map_cache.fp);
 		fseek(map_cache.fp,0,SEEK_END);
 		if(
-			map_cache.head.sizeof_header == sizeof(struct MAP_CACHE_HEAD) &&
-			map_cache.head.sizeof_map    == sizeof(struct MAP_CACHE_INFO) &&
+			map_cache.head.sizeof_header == sizeof(struct map_cache_head) &&
+			map_cache.head.sizeof_map    == sizeof(struct map_cache_info) &&
+			map_cache.head.nmaps         == MAX_MAP_CACHE &&
 			map_cache.head.filesize      == ftell(map_cache.fp)
 		) {
 			// ƒLƒƒƒbƒVƒ…“Ç‚İ‚İ¬Œ÷
-			map_cache.map = (struct MAP_CACHE_INFO*)aMallocA(sizeof(struct MAP_CACHE_INFO) * map_cache.head.nmaps);
-			fseek(map_cache.fp,sizeof(struct MAP_CACHE_HEAD),SEEK_SET);
-			fread(map_cache.map,sizeof(struct MAP_CACHE_INFO),map_cache.head.nmaps,map_cache.fp);
+			map_cache.map = aMalloc(sizeof(struct map_cache_info) * map_cache.head.nmaps);
+			fseek(map_cache.fp,sizeof(struct map_cache_head),SEEK_SET);
+			fread(map_cache.map,sizeof(struct map_cache_info),map_cache.head.nmaps,map_cache.fp);
 			return 1;
 		}
 		fclose(map_cache.fp);
-	} else if (map_read_flag == READ_FROM_BITMAP || map_read_flag == READ_FROM_BITMAP_COMPRESSED)
-		++map_read_flag;	// set to CREATE flag
-
+	}
 	// “Ç‚İ‚İ‚É¸”s‚µ‚½‚Ì‚ÅV‹K‚Éì¬‚·‚é
 	map_cache.fp = fopen(fn,"wb");
 	if(map_cache.fp) {
-		memset(&map_cache.head,0,sizeof(struct MAP_CACHE_HEAD));
-		map_cache.map = (struct MAP_CACHE_INFO*)aCallocA(sizeof(struct MAP_CACHE_INFO),MAX_CAHCE_MAX);
-		map_cache.head.nmaps         = MAX_CAHCE_MAX;
-		map_cache.head.sizeof_header = sizeof(struct MAP_CACHE_HEAD);
-		map_cache.head.sizeof_map    = sizeof(struct MAP_CACHE_INFO);
+		memset(&map_cache.head,0,sizeof(struct map_cache_head));
+		map_cache.map   = aCalloc(sizeof(struct map_cache_info),MAX_MAP_CACHE);
+		map_cache.head.nmaps         = MAX_MAP_CACHE;
+		map_cache.head.sizeof_header = sizeof(struct map_cache_head);
+		map_cache.head.sizeof_map    = sizeof(struct map_cache_info);
 
-		map_cache.head.filesize  = sizeof(struct MAP_CACHE_HEAD);
-		map_cache.head.filesize += sizeof(struct MAP_CACHE_INFO) * map_cache.head.nmaps;
+		map_cache.head.filesize  = sizeof(struct map_cache_head);
+		map_cache.head.filesize += sizeof(struct map_cache_info) * map_cache.head.nmaps;
 
 		map_cache.dirty = 1;
 		return 1;
@@ -1584,20 +1590,22 @@ static int map_cache_open(char *fn) {
 	return 0;
 }
 
-static void map_cache_close(void) {
+static void map_cache_close(void)
+{
 	if(!map_cache.fp) { return; }
 	if(map_cache.dirty) {
 		fseek(map_cache.fp,0,SEEK_SET);
-		fwrite(&map_cache.head,1,sizeof(struct MAP_CACHE_HEAD),map_cache.fp);
-		fwrite(map_cache.map,map_cache.head.nmaps,sizeof(struct MAP_CACHE_INFO),map_cache.fp);
+		fwrite(&map_cache.head,1,sizeof(struct map_cache_head),map_cache.fp);
+		fwrite(map_cache.map,map_cache.head.nmaps,sizeof(struct map_cache_info),map_cache.fp);
 	}
 	fclose(map_cache.fp);
-	aFree(map_cache.map);
+	free(map_cache.map);
 	map_cache.fp = NULL;
 	return;
 }
 
-int map_cache_read(struct map_data *m) {
+int map_cache_read(struct map_data *m)
+{
 	int i;
 	if(!map_cache.fp) { return 0; }
 	for(i = 0;i < map_cache.head.nmaps ; i++) {
@@ -1610,14 +1618,14 @@ int map_cache_read(struct map_data *m) {
 				int size = map_cache.map[i].xs * map_cache.map[i].ys;
 				m->xs = map_cache.map[i].xs;
 				m->ys = map_cache.map[i].ys;
-				m->gat = (unsigned char *)aCallocA(m->xs * m->ys,sizeof(unsigned char));
+				m->gat = (unsigned char *)aCalloc(m->xs * m->ys,sizeof(unsigned char));
 				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
 				if(fread(m->gat,1,size,map_cache.fp) == size) {
 					// ¬Œ÷
 					return 1;
 				} else {
 					// ‚È‚º‚©ƒtƒ@ƒCƒ‹Œã”¼‚ªŒ‡‚¯‚Ä‚é‚Ì‚Å“Ç‚İ’¼‚µ
-					m->xs = 0; m->ys = 0; m->gat = NULL; aFree(m->gat);
+					m->xs = 0; m->ys = 0; m->gat = NULL; free(m->gat);
 					return 0;
 				}
 			} else if(map_cache.map[i].compressed == 1) {
@@ -1627,14 +1635,14 @@ int map_cache_read(struct map_data *m) {
 				int size_compress = map_cache.map[i].compressed_len;
 				m->xs = map_cache.map[i].xs;
 				m->ys = map_cache.map[i].ys;
-				m->gat = (unsigned char *)aMallocA(m->xs * m->ys * sizeof(unsigned char));
-				buf = (unsigned char*)aMallocA(size_compress);
+				m->gat = (unsigned char *)aMalloc(m->xs * m->ys * sizeof(unsigned char));
+				buf = (unsigned char*)aMalloc(size_compress);
 				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
 				if(fread(buf,1,size_compress,map_cache.fp) != size_compress) {
 					// ‚È‚º‚©ƒtƒ@ƒCƒ‹Œã”¼‚ªŒ‡‚¯‚Ä‚é‚Ì‚Å“Ç‚İ’¼‚µ
 					printf("fread error\n");
 					m->xs = 0; m->ys = 0; m->gat = NULL;
-					aFree(m->gat); aFree(buf);
+					free(m->gat); free(buf);
 					return 0;
 				}
 				dest_len = m->xs * m->ys;
@@ -1642,10 +1650,10 @@ int map_cache_read(struct map_data *m) {
 				if(dest_len != map_cache.map[i].xs * map_cache.map[i].ys) {
 					// ³í‚É‰ğ“€‚ªo—ˆ‚Ä‚È‚¢
 					m->xs = 0; m->ys = 0; m->gat = NULL;
-					aFree(m->gat); aFree(buf);
+					free(m->gat); free(buf);
 					return 0;
 				}
-				aFree(buf);
+				free(buf);
 				return 1;
 			}
 		}
@@ -1653,10 +1661,11 @@ int map_cache_read(struct map_data *m) {
 	return 0;
 }
 
-static int map_cache_write(struct map_data *m) {
+static int map_cache_write(struct map_data *m)
+{
 	int i;
-	unsigned long len_new, len_old;
-	unsigned char *write_buf;
+	unsigned long len_new , len_old;
+	char *write_buf;
 	if(!map_cache.fp) { return 0; }
 	for(i = 0;i < map_cache.head.nmaps ; i++) {
 		if(!strcmp(m->name,map_cache.map[i].fn)) {
@@ -1669,10 +1678,10 @@ static int map_cache_write(struct map_data *m) {
 				// ƒTƒ|[ƒg‚³‚ê‚Ä‚È‚¢Œ`®‚È‚Ì‚Å’·‚³‚O
 				len_old = 0;
 			}
-			if(map_read_flag >= READ_FROM_BITMAP_COMPRESSED) {
+			if(map_read_flag == 2) {
 				// ˆ³k•Û‘¶
 				// ‚³‚·‚ª‚É‚Q”{‚É–c‚ê‚é–‚Í‚È‚¢‚Æ‚¢‚¤–‚Å
-				write_buf = (unsigned char*)aMallocA(m->xs * m->ys * 2);
+				write_buf = aMalloc(m->xs * m->ys * 2);
 				len_new = m->xs * m->ys * 2;
 				encode_zip(write_buf,&len_new,m->gat,m->xs * m->ys);
 				map_cache.map[i].compressed     = 1;
@@ -1681,7 +1690,7 @@ static int map_cache_write(struct map_data *m) {
 				len_new = m->xs * m->ys;
 				write_buf = m->gat;
 				map_cache.map[i].compressed     = 0;
-				map_cache.map[i].compressed_len = 0;
+				map_cache.map[i].compressed_len = 0;	
 			}
 			if(len_new <= len_old) {
 				// ƒTƒCƒY‚ª“¯‚¶‚©¬‚³‚­‚È‚Á‚½‚Ì‚ÅêŠ‚Í•Ï‚í‚ç‚È‚¢
@@ -1698,8 +1707,8 @@ static int map_cache_write(struct map_data *m) {
 			map_cache.map[i].ys  = m->ys;
 			map_cache.map[i].water_height = map_waterheight(m->name);
 			map_cache.dirty = 1;
-			if(map_read_flag >= READ_FROM_BITMAP_COMPRESSED) {
-				aFree(write_buf);
+			if(map_read_flag == 2) {
+				free(write_buf);
 			}
 			return 0;
 		}
@@ -1708,8 +1717,8 @@ static int map_cache_write(struct map_data *m) {
 	for(i = 0;i < map_cache.head.nmaps ; i++) {
 		if(map_cache.map[i].fn[0] == 0) {
 			// V‚µ‚¢êŠ‚É“o˜^
-			if(map_read_flag >= READ_FROM_BITMAP_COMPRESSED) {
-				write_buf = (unsigned char*)aMallocA(m->xs * m->ys * 2);
+			if(map_read_flag == 2) {
+				write_buf = aMalloc(m->xs * m->ys * 2);
 				len_new = m->xs * m->ys * 2;
 				encode_zip(write_buf,&len_new,m->gat,m->xs * m->ys);
 				map_cache.map[i].compressed     = 1;
@@ -1729,8 +1738,8 @@ static int map_cache_write(struct map_data *m) {
 			map_cache.map[i].water_height = map_waterheight(m->name);
 			map_cache.head.filesize += len_new;
 			map_cache.dirty = 1;
-			if(map_read_flag >= READ_FROM_BITMAP_COMPRESSED) {
-				aFree(write_buf);
+			if(map_read_flag == 2) {
+				free(write_buf);
 			}
 			return 0;
 		}
@@ -1998,7 +2007,7 @@ int map_readallmap(void) {
 
 	// ƒ}ƒbƒvƒLƒƒƒbƒVƒ…‚ğŠJ‚­
 	if(map_read_flag >= READ_FROM_BITMAP) {
-		map_cache_open(map_bitmap_filename);
+		map_cache_open(map_cache_file);
 	}
 
 	sprintf(tmp_output, "Loading Maps%s...\n",
@@ -2270,15 +2279,15 @@ int map_config_read(char *cfgName) {
 				strcpy(help_txt, w2);
 			} else if (strcmpi(w1, "mapreg_txt") == 0) {
 				strcpy(mapreg_txt, w2);
-			}else if(strcmpi(w1,"read_map_from_bitmap")==0){
+			}else if(strcmpi(w1,"read_map_from_cache")==0){
 				if (atoi(w2) == 2)
 					map_read_flag = READ_FROM_BITMAP_COMPRESSED;
 				else if (atoi(w2) == 1)
 					map_read_flag = READ_FROM_BITMAP;
 				else
 					map_read_flag = READ_FROM_GAT;
-			}else if(strcmpi(w1,"map_bitmap_path")==0){
-				strncpy(map_bitmap_filename,w2,255);
+			}else if(strcmpi(w1,"map_cache_file")==0){
+				strncpy(map_cache_file,w2,255);
 			} else if (strcmpi(w1, "import") == 0) {
 				map_config_read(w2);
 			} else if (strcmpi(w1, "console") == 0) {

@@ -110,9 +110,10 @@ int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	int count,int skillid,int skilllv,int unit_id);
 int skill_delunitgroup(struct skill_unit_group *group);
-struct skill_unit_group_tickset *skill_unitgrouptickset_search(
-	struct block_list *bl,int group_id);
-int skill_unitgrouptickset_delete(struct block_list *bl,int group_id);
+
+struct skill_unit_group_tickset *skill_unitgrouptickset_search(struct block_list *bl,struct skill_unit_group *sg);
+int skill_unitgrouptickset_delete(struct block_list *bl,struct skill_unit_group *sg);
+
 int skill_clear_unitgroup(struct block_list *src);
 
 int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,

@@ -91,6 +91,7 @@ static int gettick_count;
 unsigned int gettick_nocache(void)
 {
 #ifdef _WIN32
+	gettick_count = 256;	// [Shinomori]
 	return gettick_cache = GetTickCount();
 #else
 	struct timeval tval;

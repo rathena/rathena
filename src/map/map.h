@@ -100,7 +100,7 @@ struct skill_unit_group {
 };
 struct skill_unit_group_tickset {
 	unsigned int tick;
-	int group_id;
+	int id;
 };
 struct skill_timerskill {
 	int timer;
@@ -505,15 +505,10 @@ enum {
 	EQP_HELM		= 0x0100,		// “ªã’i
 };
 
-#define MAX_CELL_TYPE 7 //¡‚Å‚ÍƒZƒ‹‚Ìƒ^ƒCƒv‚Í”š“I‚É6‚ªÅ‘å‚È‚Ì‚Å7‚É‚µ‚½A
-			//MAX_CELL_TYPE+1‚Íƒ[ƒvƒ|ƒCƒ“ƒg‚È‚Ç‚Ìƒ^ƒbƒ`Œn‚É
-
 struct map_data {
 	char name[24];
 	unsigned char *gat;	// NULL‚È‚ç‰º‚Ìmap_data_other_server‚Æ‚µ‚Äˆµ‚¤
 	char *alias; // [MouseJstr]
-	int *gat_fileused[MAX_CELL_TYPE+1+1]; //‚à‚µƒrƒbƒgƒ}ƒbƒv‚ğg‚¤‚È‚ç‚±‚¿‚ç‚ğg‚¤A
-						//ã‚Ìgat‚ÍƒLƒƒƒXƒg‚³‚ê‚Ägat_fileused[0]‚Éw‚·
 	struct block_list **block;
 	struct block_list **block_mob;
 	int *block_count,*block_mob_count;
@@ -567,8 +562,6 @@ struct map_data_other_server {
 	unsigned long ip;
 	unsigned int port;
 };
-#define read_gat(m,x,y) (map_getcell(m,x,y,CELL_CHKTYPE))  //ƒrƒbƒgƒ}ƒbƒvg‚¤ê‡Œ‹\CPU‚É•‰’S‚©‚©‚é‚Ì‚ÅAÁ‹É“I‚Ég‚¨‚¤
-#define read_gatp(m,x,y) (map_getcellp(m,x,y,CELL_CHKTYPE)) //“¯ã
 
 struct flooritem_data {
 	struct block_list bl;
@@ -627,24 +620,20 @@ enum {
 	LOOK_BASE,LOOK_HAIR,LOOK_WEAPON,LOOK_HEAD_BOTTOM,LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HAIR_COLOR,LOOK_CLOTHES_COLOR,LOOK_SHIELD,LOOK_SHOES
 };
 
-/*-------CELL_CHK*----------------
- * CELL_CHKPASS: ƒZƒ‹‚Í0,3,6‚Ì‚Ç‚Á‚¿‚©‚Ìê‡‚Í1‚ğ•Ô‚·AˆÈŠO‚Í0
- * CELL_CHKNOPASS: ƒZƒ‹‚Í1A5‚Ì‚Ç‚Á‚¿‚©‚Ìê‡‚Í1‚ğ•Ô‚·AˆÈŠO‚Í0
- * CELL_CHKWATER: ƒZƒ‹‚Í3‚Ìê‡‚Í1‚ğ•Ô‚·AˆÈŠO‚Í0
- * CELL_CHKHIGHF ƒZƒ‹‚Í5‚Ìê‡‚Í1‚ğ•Ô‚·AˆÈŠO‚Í0
- * CHELL_CHKTOUCHFƒZƒ‹‚Íƒ^ƒbƒ`Œn‚Ìê‡‚Í1‚ğ•Ô‚·AˆÈŠO‚Í0
- * CELL_CHKTYPEF ƒZƒ‹‚Ìƒ^ƒCƒv‚ğ’m‚è‚½‚¢ê‡‚Í1‚ğ•Ô‚·AˆÈŠO‚Í0
-*/
-typedef enum {
-	CELL_CHKPASS,CELL_CHKNOPASS,CELL_CHKWATER=3,CELL_CHKHIGH=5,CELL_CHKTOUCH,CELL_CHKTYPE
-} CELL_CHK;
-
-/*-------CELL_SET*---------------
- * ‚Ù‚Æ‚ñ‚Ç‚Íã‚Æ‘Î‰Aİ’è—p
+/*
+ * map_getcell()ªÇŞÅéÄªµªìªë«Õ«é«°
  */
-typedef enum {
-	CELL_SETPASS,CELL_SETNOPASS,CELL_SETWATER=3,CELL_SETHIGH=5,CELL_SETNOHIGH,CELL_SETTOUCH
-} CELL_SET;
+typedef enum { 
+	CELL_CHKWALL=1,		// Ûú(«»«ë«¿«¤«×1)
+	CELL_CHKWATER=3,	// â©íŞ(«»«ë«¿«¤«×3)
+	CELL_CHKGROUND=5,	// ò¢Øüî¡úªÚª(«»«ë«¿«¤«×5)
+	CELL_CHKNPC=0x80,	// «¿«Ã«Á«¿«¤«×ªÎNPC(«»«ë«¿«¤«×0x80«Õ«é«°)
+	CELL_CHKPASS,		// ÷×Î¦Ê¦Òö(«»«ë«¿«¤«×1,5ì¤èâ)
+	CELL_CHKNOPASS,		// ÷×Î¦ÜôÊ¦(«»«ë«¿«¤«×1,5)
+	CELL_GETTYPE		// «»«ë«¿«¤«×ªòÚ÷ª¹
+} cell_t;
+// map_setcell()ªÇŞÅéÄªµªìªë«Õ«é«°
+#define CELL_SETNPC	0x80	// «¿«Ã«Á«¿«¤«×ªÎNPCªò«»«Ã«È
 
 struct chat_data {
 	struct block_list bl;
@@ -667,11 +656,11 @@ extern int autosave_interval;
 extern int agit_flag;
 extern int night_flag; // 0=day, 1=night [Yor]
 
-//------bitmapg—p‚Ægrfƒtƒ@ƒCƒ‹g—p—¼•û‘Î‰‚Å‚«‚é‚½‚ß‚É’Ç‰ÁA‚Ü‚½A
-//ƒZƒ‹‚Ìæ“¾‚âİ’è‚Í—ñ‹“Œ^CELL_CHK*‚ÆCELL_SET*‚ğg‚Á‚½•û‚ªˆÓ}‚ª‚í‚©‚è‚â‚·‚¢‚Ì‚Å•ÏX‚µ‚Ä‚İ‚½
-int map_getcell(int,int,int,CELL_CHK);
-int map_getcellp(struct map_data*,int,int,CELL_CHK);
-extern int map_read_flag;	//ƒZƒ‹î•ñ‚Ìƒ\[ƒX”»’èƒtƒ‰ƒOA0‚È‚çgrfƒtƒ@ƒCƒ‹A1‚È‚çƒrƒbƒgƒ}ƒbƒvƒtƒ@ƒCƒ‹
+// gat?Ö§
+int map_getcell(int,int,int,cell_t);
+int map_getcellp(struct map_data*,int,int,cell_t);
+void map_setcell(int,int,int,int);
+extern int map_read_flag; // 0: grf«Õ«¡«¤«ë 1: «­«ã«Ã«·«å 2: «­«ã«Ã«·«å(?õê)
 enum {
 	READ_FROM_GAT, READ_FROM_AFM,
 	READ_FROM_BITMAP, CREATE_BITMAP,
@@ -702,6 +691,7 @@ void map_foreachinmovearea(int (*)(struct block_list*,va_list),int,int,int,int,i
 int map_countnearpc(int,int,int);
 //blockŠÖ˜A‚É’Ç‰Á
 int map_count_oncell(int m,int x,int y);
+struct skill_unit *map_find_skill_unit_oncell(int m,int x,int y,int skill_id);
 // ˆê“IobjectŠÖ˜A
 int map_addobject(struct block_list *);
 int map_delobject(int);
@@ -737,15 +727,13 @@ void map_addnickdb(struct map_session_data *);
 struct map_session_data * map_nick2sd(char*);
 int compare_item(struct item *a, struct item *b);
 
-// gatŠÖ˜A
-int map_setcell(int,int,int,CELL_SET);
-
 // ‚»‚Ì‘¼
 int map_check_dir(int s_dir,int t_dir);
 int map_calc_dir( struct block_list *src,int x,int y);
 
 // path.c‚æ‚è
 int path_search(struct walkpath_data*,int,int,int,int,int,int);
+int path_search_long(int m,int x0,int y0,int x1,int y1);
 int path_blownpos(int m,int x0,int y0,int dx,int dy,int count);
 
 int map_who(int fd);

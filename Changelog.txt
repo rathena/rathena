@@ -1,6 +1,17 @@
 Date	Added
 
 01/26
+        * Fixed a bug in gettick cache when compiling in Windows, thanks to Shinomori
+          (jA 1094) [celest]
+        * Added updates from jA 1092 [celest]
+          - Changed "read_map_from_bitmap" to "read_map_from_cache",
+            "map_bitmap_path" to "map_cache_file" in map_athena
+          - Fixed item effects not showing when only one was used
+          - Fixed a bug in Safety Wall
+          - Allow only either Storm Gust or Lord of Vermillion to cause damage if
+            stacked together
+          - Added path_search_long, map_find_skill_unit_oncell
+
         * Added status_get_sc_def for calculating resistance against status
           abnormalities [celest]
         * Added status.c and status.h of jA 1091 update and moved some functions into

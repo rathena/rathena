@@ -2302,10 +2302,9 @@ int pc_useitem(struct map_session_data *sd,int n)
 		if(sd->inventory_data[n])
 			run_script(sd->inventory_data[n]->use_script,0,sd->bl.id,0);
 
-		pc_delitem(sd,n,1,1);
 		amount = sd->status.inventory[n].amount;
-
-		clif_useitemack(sd,n,amount,1);
+		clif_useitemack(sd,n,amount-1,1);
+		pc_delitem(sd,n,1,1);
 	}
 
 	return 0;
@@ -3131,7 +3130,7 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 
 		skill_unit_move(&sd->bl,tick,1);	// スキルユニットの?査
 
-		if(map_getcell(sd->bl.m,x,y,CELL_CHKTOUCH))
+		if(map_getcell(sd->bl.m,x,y,CELL_CHKNPC))
 			npc_touch_areanpc(sd,sd->bl.m,x,y);
 		else
 			sd->areanpc_id=0;
@@ -3328,7 +3327,7 @@ int pc_movepos(struct map_session_data *sd,int dst_x,int dst_y)
 
 	skill_unit_move(&sd->bl,gettick(),dist+7);	// スキルユニットの?査
 
-	if(map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKTOUCH))
+	if(map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	else
 		sd->areanpc_id=0;

@@ -252,14 +252,18 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	sc_count=status_get_sc_count(bl);
 
 	if(sc_count!=NULL && *sc_count>0){
-
-		if(sc_data[SC_SAFETYWALL].timer!=-1 && damage>0 && flag&BF_WEAPON && flag&BF_SHORT && skill_num != NPC_GUIDEDATTACK){
+		if (sc_data[SC_SAFETYWALL].timer!=-1 && damage>0 && flag&BF_WEAPON &&
+			flag&BF_SHORT && skill_num != NPC_GUIDEDATTACK) {
 			// セーフティウォール
-			struct skill_unit *unit=(struct skill_unit*)sc_data[SC_SAFETYWALL].val2;
-			if( unit && unit->alive && (--unit->group->val2)<=0 )
-				skill_delunit(unit);
-			skill_unit_move(bl,gettick(),1);	// 重ね掛けチェック
-			damage=0;
+			struct skill_unit *unit;
+			unit = map_find_skill_unit_oncell(bl->m,bl->x,bl->y,MG_SAFETYWALL);
+			if (unit) {
+				if ((--unit->group->val2)<=0)
+					skill_delunit(unit);
+				damage=0;
+			} else {
+				status_change_end(bl,SC_SAFETYWALL,-1);
+			}
 		}
 		if(sc_data[SC_PNEUMA].timer!=-1 && damage>0 && ((flag&BF_WEAPON && flag&BF_LONG && skill_num != NPC_GUIDEDATTACK) ||
 			(flag&BF_MISC && (skill_num ==  HT_BLITZBEAT || skill_num == SN_FALCONASSAULT)))){ // [DracoRPG]
@@ -3792,7 +3796,6 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 {
 
 	int dx,dy;
-	struct walkpath_data wpd;
 	int arange;
 
 	nullpo_retr(0, src);
@@ -3815,16 +3818,7 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 //		return 1;
 
 	// 障害物判定
-	wpd.path_len=0;
-	wpd.path_pos=0;
-	wpd.path_half=0;
-	if(path_search(&wpd,src->m,src->x,src->y,bl->x,bl->y,0x10001)!=-1)
-		return 1;
-
-	dx=(dx>0)?1:((dx<0)?-1:0);
-	dy=(dy>0)?1:((dy<0)?-1:0);
-	return (path_search(&wpd,src->m,src->x+dx,src->y+dy,
-		bl->x-dx,bl->y-dy,0x10001)!=-1)?1:0;
+	return path_search_long(src->m,src->x,src->y,bl->x,bl->y);
 }
 
 /*==========================================
