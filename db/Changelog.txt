@@ -9,6 +9,8 @@
 	Skill databases == celest working on them i believe.
 
 
+04/06
+	* Added Einbrook monsters and drops, thanx to Landarma [Lupus]
 04/05
 	* Some items fixes [DracoRPG]
 	  - added missing "Neko Mimi" hat #5099, thanks to Neko2
