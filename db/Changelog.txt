@@ -6,6 +6,13 @@
 	Skill databases == celest working on them i believe.
 
 03/19
+	* changed all cards to 'getrefine' function [Lupus]
+	* used 'cardscnt' instead of 'isequipped' in Crab Card.
+		  It's a weapon compunding card. So it used to give up to
+		  6 bonuses! on Assassin with 4 4-slotted weapons.
+		  Now it lets you get up to 2x bonuses per hand.
+		  Should be fixed more. already got idea 8)
+		All the similar cards should be fixed in the same way.
         * Fixed missing END; in new cards, some optimizatons [Lupus]
 03/18
         * Updated item prices for Niflheim drops [celest]
