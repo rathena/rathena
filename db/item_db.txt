@@ -1696,6 +1696,31 @@
 7282,Quiz_Participation_Certificate_3,QP Certificate 3,3,20,,10,,,,,,,,,,,{},{}
 7283,Quiz_Participation_Certificate_4,QP Certificate 4,3,20,,10,,,,,,,,,,,{},{}
 7284,Quiz_Participation_Certificate_5,QP Certificate 5,3,20,,10,,,,,,,,,,,{},{}
+
+// 11/09 Updates
+7285,Sacred_Wool_Charm,Sacred_Wool_Charm,3,,10,0,,,,,,,,,,,{},{},,
+7286,Red_Chili,Red_Chili,3,,10,0,,,,,,,,,,,{},{},,
+566,Tom_Yum_Goong,Tom_Yum_Goong,0,,150,0,,,,,,,,,,,{},{},,
+567,Prawn,Prawn,0,,40,0,,,,,,,,,,,{},{},,
+568,Lemon,Lemon,0,,40,0,,,,,,,,,,,{},{},,
+7287,Sacred_Wool_Charm_2,Sacred_Wool_Charm_2,3,,10,0,,,,,,,,,,,{},{},,
+7288,Engagement_Ring,Engagement_Ring,3,,10,0,,,,,,,,,,,{},{},,
+7289,Olivite,Olivite,3,,100,0,,,,,,,,,,,{},{},,
+7290,Gold_Mica,Gold_Mica,3,,100,0,,,,,,,,,,,{},{},,
+7291,Agate,Agate,3,,100,0,,,,,,,,,,,{},{},,
+7292,White_Mica,White_Mica,3,,100,0,,,,,,,,,,,{},{},,
+7293,Rose_Quartz,Rose_Quartz,3,,100,0,,,,,,,,,,,{},{},,
+7294,Turquoise,Turquoise,3,,100,0,,,,,,,,,,,{},{},,
+7295,Citrine,Citrine,3,,100,0,,,,,,,,,,,{},{},,
+7296,Augite,Augite,3,,100,0,,,,,,,,,,,{},{},,
+7297,Black_Mica,Black_Mica,3,,100,0,,,,,,,,,,,{},{},,
+7298,Leaf_Cloth,Leaf_Cloth,3,,10,0,,,,,,,,,,,{},{},,
+7299,Bamboo_Basket,Bamboo_Basket,3,,10,0,,,,,,,,,,,{},{},,
+7300,Jeweled_Ore,Jeweled_Ore,3,,10,0,,,,,,,,,,,{},{},,
+7301,Knife_Decoration,Knife_Decoration,3,,10,0,,,,,,,,,,,{},{},,
+7302,Krathong,Krathong,3,,10,0,,,,,,,,,,,{},{},,
+685,Ramadan,Ramadan,2,,10,0,,,,,,,,,,,{},{},,
+
 7500,THG_Membership,THG Membership,3,20,,10,,,,,,,,,,,{},{}
 7501,Token_Bag,Token Bag,3,20,,10,,,,,,,,,,,{},{}
 
