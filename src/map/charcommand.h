@@ -5,6 +5,7 @@ enum CharCommandType {
 	CharCommand_None = -1,
 	CharCommandJobChange,
 	CharCommandPetRename,
+	CharCommandPetFriendly,
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */

@@ -1103,7 +1103,7 @@ int atcommand_jumpto(
 	char character[100];
 	char output[200];
 	struct map_session_data *pl_sd = NULL;
-	
+
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
