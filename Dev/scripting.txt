@@ -1,0 +1,10 @@
+Post any NPCs/DBs that need to be done or Fixed Here.
+Format is:
+
+Description	- A description of the task
+Type		- Whether DB, NPC or Both
+Status		- The status of the task. The possible values are Pending and Completed
+Assignee	- The nickname of the person whom is assigned the task
+Notes		- Miscellaneous notes concerning the task
+
+--------------------------
