@@ -1,7 +1,7 @@
 
 CC = gcc -pipe
 # CC = gcc -pipe -DPCRE_SUPPORT
-# CC = g++
+# CC = g++ --pipe
 # CC = gcc -pipe -DGCOLLECT
 # CC = gcc -pipe -DDMALLOC -DDMALLOC_FUNC_CHECK
 # CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
@@ -26,15 +26,15 @@ else
 MAKE = make
 endif
 
-OPT = -g -O2 -ffast-math
+OPT = -g -O2 -ffast-math -Wall -Wno-sign-compare
 # OPT += -DDUMPSTACK -rdynamic
 
 ifeq ($(findstring CYGWIN,$(PLATFORM)), CYGWIN)
 OS_TYPE = -DCYGWIN
-CFLAGS =  $(OPT) -Wall -DFD_SETSIZE=4096 -I../common $(PACKETDEF) $(OS_TYPE)
+CFLAGS =  $(OPT) -DFD_SETSIZE=4096 -I../common $(PACKETDEF) $(OS_TYPE)
 else
 OS_TYPE =
-CFLAGS =  $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
+CFLAGS =  $(OPT) -I../common $(PACKETDEF) $(OS_TYPE)
 # CFLAGS = -DTWILIGHT  $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
 endif
 

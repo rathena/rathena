@@ -2503,9 +2503,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			per=(double)md->dmglog[i].dmg*256*(9+(double)((count > 6)? 6:count))/10/(double)max_hp;
 			if(per>512) per=512;
 			if(per<1) per=1;
-			base_exp=mob_db[md->class_].base_exp*per/256;
+			base_exp=(int) (mob_db[md->class_].base_exp*per/256);
 			if(base_exp < 1) base_exp = 1;
-			job_exp=mob_db[md->class_].job_exp*per/256;
+			job_exp=(int) (mob_db[md->class_].job_exp*per/256);
 			if(job_exp < 1) job_exp = 1;
 		}
 		else {
@@ -2513,9 +2513,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			per=(double)md->dmglog[i].dmg*256*(9+(double)((count > 6)? 6:count))/10/tdmg;
 			if(per>512) per=512;
 			if(per<1) per=1;
-			base_exp=mob_db[md->class_].base_exp*per/256;
+			base_exp=(int) (mob_db[md->class_].base_exp*per/256);
 			if(base_exp < 1) base_exp = 1;
-			job_exp=mob_db[md->class_].job_exp*per/256;
+			job_exp=(int) (mob_db[md->class_].job_exp*per/256);
 			if(job_exp < 1) job_exp = 1;
 		}
 
@@ -2526,8 +2526,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				job_exp = (100+rate)*job_exp/100;
 			}
 			if (battle_config.pk_mode && (mob_db[md->class_].lv - sd->status.base_level >= 20)) {
-				base_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]		
-				job_exp*=1.15;
+				base_exp = (int) (base_exp *1.15); // pk_mode additional exp if monster >20 levels [Valaris]		
+				job_exp = (int) (job_exp * 1.15);
 			}			
 		}
 		if(md->master_id) {
@@ -2538,13 +2538,13 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			}
 		} else {
 			if(battle_config.zeny_from_mobs) {
-				if(md->level > 0) zeny=(md->level+rand()%md->level)*per/256; // zeny calculation moblv + random moblv [Valaris]
+				if(md->level > 0) zeny=(int) ((md->level+rand()%md->level)*per/256); // zeny calculation moblv + random moblv [Valaris]
 				if(mob_db[md->class_].mexp > 0)
 					zeny*=rand()%250;
 			}
 			if(battle_config.mobs_level_up && md->level > mob_db[md->class_].lv) { // [Valaris]
-				job_exp+=((md->level-mob_db[md->class_].lv)*mob_db[md->class_].job_exp*.03)*per/256;
-				base_exp+=((md->level-mob_db[md->class_].lv)*mob_db[md->class_].base_exp*.03)*per/256;
+				job_exp+=(int) (((md->level-mob_db[md->class_].lv)*mob_db[md->class_].job_exp*.03)*per/256);
+				base_exp+=(int) (((md->level-mob_db[md->class_].lv)*mob_db[md->class_].base_exp*.03)*per/256);
 			}
 		}
 
@@ -2603,7 +2603,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			if(drop_rate <= 0 && !battle_config.drop_rate0item)
 				drop_rate = 1;
 			if(battle_config.drops_by_luk>0 && sd && md) drop_rate+=(sd->status.luk*battle_config.drops_by_luk)/100;	// drops affected by luk [Valaris]
-			if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class_].lv - sd->status.base_level >= 20)) drop_rate*=1.25; // pk_mode increase drops if 20 level difference [Valaris]
+			if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class_].lv - sd->status.base_level >= 20)) drop_rate = (int) (drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 			if(drop_rate <= rand()%10000+1) { //if rate == 0, then it doesn't drop (from Freya)
 				drop_ore = i; //we rmember an empty slot to put there ORE DISCOVERY drop later.
 				continue;

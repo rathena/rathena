@@ -1954,7 +1954,7 @@ int parse_admin(int fd) {
 				memcpy(ma.lastlogin, "-", 2);
 				ma.sex = RFIFOB(fd,50);
 				WFIFOW(fd,0) = 0x7931;
-				WFIFOL(fd,2) = -1; // WTF? usigned being set to a -1???
+				WFIFOL(fd,2) = 0xffffffff;
 				memcpy(WFIFOP(fd,6), RFIFOP(fd,2), 24);
 				if (strlen(ma.userid) > 23 || strlen(ma.passwd) > 23) {
 					login_log("'ladmin': Attempt to create an invalid account (account or pass is too long, ip: %s)" RETCODE,
@@ -2000,7 +2000,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 26)
 				return 0;
 			WFIFOW(fd,0) = 0x7933;
-			WFIFOL(fd,2) = -1; // WTF? an unsigned being set to -1
+			WFIFOL(fd,2) = 0xFFFFFFFF;
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);
@@ -2036,7 +2036,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 50)
 				return 0;
 			WFIFOW(fd,0) = 0x7935;
-			WFIFOL(fd,2) = -1; /// WTF??? an unsigned being set to a -1
+			WFIFOL(fd,2) = 0xFFFFFFFF; /// WTF??? an unsigned being set to a -1
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);
@@ -2066,7 +2066,7 @@ int parse_admin(int fd) {
 				char error_message[20];
 				int statut;
 				WFIFOW(fd,0) = 0x7937;
-				WFIFOL(fd,2) = -1; // WTF???
+				WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars((unsigned char *)account_name);
@@ -2141,7 +2141,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 50)
 				return 0;
 			WFIFOW(fd,0) = 0x793b;
-			WFIFOL(fd,2) = -1; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);
@@ -2173,7 +2173,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 27)
 				return 0;
 			WFIFOW(fd,0) = 0x793d;
-			WFIFOL(fd,2) = -1; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);
@@ -2225,7 +2225,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 27)
 				return 0;
 			WFIFOW(fd,0) = 0x793f;
-			WFIFOL(fd,2) = -1; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);
@@ -2315,7 +2315,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 66)
 				return 0;
 			WFIFOW(fd,0) = 0x7941;
-			WFIFOL(fd,2) = -1; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);
@@ -2350,7 +2350,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 28 || RFIFOREST(fd) < (28 + RFIFOW(fd,26)))
 				return 0;
 			WFIFOW(fd,0) = 0x7943;
-			WFIFOL(fd,2) = -1; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);
@@ -2385,7 +2385,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 26)
 				return 0;
 			WFIFOW(fd,0) = 0x7945;
-			WFIFOL(fd,2) = -1; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);
@@ -2434,7 +2434,7 @@ int parse_admin(int fd) {
 				time_t timestamp;
 				char tmpstr[2048];
 				WFIFOW(fd,0) = 0x7949;
-				WFIFOL(fd,2) = -1; // WTF???
+				WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars((unsigned char *)account_name);
@@ -2466,7 +2466,7 @@ int parse_admin(int fd) {
 				time_t timestamp;
 				char tmpstr[2048];
 				WFIFOW(fd,0) = 0x794b;
-				WFIFOL(fd,2) = -1; // WTF???
+				WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars((unsigned char *)account_name);
@@ -2514,7 +2514,7 @@ int parse_admin(int fd) {
 				struct tm *tmtime;
 				char tmpstr[2048];
 				WFIFOW(fd,0) = 0x794d;
-				WFIFOL(fd,2) = -1; // WTF???
+				WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars((unsigned char *)account_name);
@@ -2576,7 +2576,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 8 || RFIFOREST(fd) < (8 + RFIFOL(fd,4)))
 				return 0;
 			WFIFOW(fd,0) = 0x794f;
-			WFIFOW(fd,2) = -1; // WTF???
+			WFIFOW(fd,2) = 0xFFFFFFFF; // WTF???
 			if (RFIFOL(fd,4) < 1) {
 				login_log("'ladmin': Receiving a message for broadcast, but message is void (ip: %s)" RETCODE,
 				          ip);
@@ -2621,7 +2621,7 @@ int parse_admin(int fd) {
 				char tmpstr[2048];
 				char tmpstr2[2048];
 				WFIFOW(fd,0) = 0x7951;
-				WFIFOL(fd,2) = -1; // WTF???
+				WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars((unsigned char *)account_name);
@@ -2675,7 +2675,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 26)
 				return 0;
 			WFIFOW(fd,0) = 0x7953;
-			WFIFOL(fd,2) = -1; // WTF???
+			WFIFOL(fd,2) = 0xFFFFFFFF; // WTF???
 			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars((unsigned char *)account_name);

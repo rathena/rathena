@@ -2,6 +2,8 @@
 Date	Added
 
 03/31
+        * More pedantic g++ fixes so that it builds without any and
+          all warnings [SVN 1362: MouseJstr]
         * Removed some #include's causing warnings on some platforms
           [SVN 1360: MouseJstr]
 	* Fixed a bug with InitTimer/StopTimer, thanks to ilpalazzo-sama

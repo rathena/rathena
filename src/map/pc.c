@@ -4719,28 +4719,28 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	if(battle_config.death_penalty_type>0) { // changed penalty options, added death by player if pk_mode [Valaris]
 		if(sd->status.class_ != 0 && !map[sd->bl.m].flag.nopenalty && !map[sd->bl.m].flag.gvg){ // only novices will recieve no penalty
 			if(battle_config.death_penalty_type==1 && battle_config.death_penalty_base > 0)
-				sd->status.base_exp -= (double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000;
+				sd->status.base_exp -= (int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
 				if(battle_config.pk_mode && src && src->type==BL_PC)
-					sd->status.base_exp -= (double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000;
+					sd->status.base_exp -= (int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
 			else if(battle_config.death_penalty_type==2 && battle_config.death_penalty_base > 0) {
 				if(pc_nextbaseexp(sd) > 0)
-					sd->status.base_exp -= (double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000;
+					sd->status.base_exp -= (int) ((double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000);
 					if(battle_config.pk_mode && src && src->type==BL_PC)
-						sd->status.base_exp -= (double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000;
+						sd->status.base_exp -= (int) ((double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000);
 			}
 			if(sd->status.base_exp < 0)
 				sd->status.base_exp = 0;
 			clif_updatestatus(sd,SP_BASEEXP);
 
 			if(battle_config.death_penalty_type==1 && battle_config.death_penalty_job > 0)
-				sd->status.job_exp -= (double)pc_nextjobexp(sd) * (double)battle_config.death_penalty_job/10000;
+				sd->status.job_exp -= (int) ((double)pc_nextjobexp(sd) * (double)battle_config.death_penalty_job/10000);
 					if(battle_config.pk_mode && src && src->type==BL_PC)
-					sd->status.job_exp -= (double)pc_nextjobexp(sd) * (double)battle_config.death_penalty_job/10000;
+					sd->status.job_exp -= (int) ((double)pc_nextjobexp(sd) * (double)battle_config.death_penalty_job/10000);
 			else if(battle_config.death_penalty_type==2 && battle_config.death_penalty_job > 0) {
 				if(pc_nextjobexp(sd) > 0)
-					sd->status.job_exp -= (double)sd->status.job_exp * (double)battle_config.death_penalty_job/10000;
+					sd->status.job_exp -= (int) ((double)sd->status.job_exp * (double)battle_config.death_penalty_job/10000);
 					if(battle_config.pk_mode && src && src->type==BL_PC)
-						sd->status.job_exp -= (double)sd->status.job_exp * (double)battle_config.death_penalty_job/10000;
+						sd->status.job_exp -= (int) ((double)sd->status.job_exp * (double)battle_config.death_penalty_job/10000);
 			}
 			if(sd->status.job_exp < 0)
 				sd->status.job_exp = 0;
@@ -4757,7 +4757,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		if(md && md->state.state!=MS_DEAD && md->level < 99) {
 			clif_misceffect(&md->bl,0);
 			md->level++;
-			md->hp+=sd->status.max_hp*.1;
+			md->hp+=(int) (sd->status.max_hp*.1);
 		}
 	}
 

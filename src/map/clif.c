@@ -4861,7 +4861,7 @@ int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 		WBUFL(buf,2) = sd->bl.id;
 		if(sd->status.option&0x46)
 		// WTF? a -1 to an unsigned value...
-			WBUFL(buf,6) = -1;
+			WBUFL(buf,6) = 0xFFFFFFFF;
 		else
 			if(pvprank<=0)
 				pc_calc_pvprank(sd);

@@ -719,7 +719,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->base_atk += 4;
 	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0 ){ // Dragonology increases +1 int every 2 levels
-		sd->paramb[3] += (skill+1)*0.5;
+		sd->paramb[3] += (int) ((skill+1)*0.5);
 	}
 
 	// ステ?タス?化による基本パラメ?タ補正
@@ -924,9 +924,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->speed += (100-16*skill)*DEFAULT_WALK_SPEED/100;
 		//sd->speed += (1.2*DEFAULT_WALK_SPEED - skill*9);		
 	if (pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)	// カ?トによる速度低下
-		sd->speed += (10-skill) * (DEFAULT_WALK_SPEED * 0.1);
+		sd->speed += (short) ((10-skill) * (DEFAULT_WALK_SPEED * 0.1));
 	else if (pc_isriding(sd)) {	// ペコペコ?りによる速度?加
-		sd->speed -= (0.25 * DEFAULT_WALK_SPEED);
+		sd->speed -= (short) ((0.25 * DEFAULT_WALK_SPEED));
 		sd->max_weight += 10000;
 	}
 	if((skill=pc_checkskill(sd,CR_TRUST))>0) { // フェイス
@@ -938,7 +938,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->subele[3] += skill*5;
 	}
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 )
-		aspd_rate -= skill*0.5;
+		aspd_rate -= (int) (skill*0.5);
 
 	bl=sd->status.base_level;
 
@@ -1251,7 +1251,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->addeff[4] += sd->sc_data[SC_ENCPOISON].val2;
 
 		if( sd->sc_data[SC_DANCING].timer!=-1 ){		// 演奏/ダンス使用中
-			sd->speed = (double)sd->speed * (6.- 0.4 * pc_checkskill(sd, ((s_class.job == 19) ? BA_MUSICALLESSON : DC_DANCINGLESSON)));
+			sd->speed = (short) ((double)sd->speed * (6.- 0.4 * pc_checkskill(sd, ((s_class.job == 19) ? BA_MUSICALLESSON : DC_DANCINGLESSON))));
 			//sd->speed*=4;
 			sd->nhealsp = 0;
 			sd->nshealsp = 0;
@@ -1528,7 +1528,7 @@ int status_calc_speed (struct map_session_data *sd)
 			//sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
 		}
 		if( sd->sc_data[SC_DANCING].timer!=-1 ){
-			sd->speed = (double)sd->speed * (6.- 0.4 * pc_checkskill(sd, ((s_class.job == 19) ? BA_MUSICALLESSON : DC_DANCINGLESSON)));
+			sd->speed = (int) ((double)sd->speed * (6.- 0.4 * pc_checkskill(sd, ((s_class.job == 19) ? BA_MUSICALLESSON : DC_DANCINGLESSON))));
 		}
 		if(sd->sc_data[SC_CURSE].timer!=-1)
 			sd->speed += 450;
@@ -1541,13 +1541,13 @@ int status_calc_speed (struct map_session_data *sd)
 	if(sd->status.option&2 && (skill = pc_checkskill(sd,RG_TUNNELDRIVE))>0 )
 		sd->speed += (100-16*skill)*DEFAULT_WALK_SPEED/100;
 	if (pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)
-		sd->speed += (10-skill) * (DEFAULT_WALK_SPEED * 0.1);
+		sd->speed += (short) ((10-skill) * (DEFAULT_WALK_SPEED * 0.1));
 	else if (pc_isriding(sd)) {
-		sd->speed -= (0.25 * DEFAULT_WALK_SPEED);
+		sd->speed -= (short) ((0.25 * DEFAULT_WALK_SPEED));
 	}
 	if((skill=pc_checkskill(sd,TF_MISS))>0)
 		if(s_class.job==12)
-			sd->speed -= sd->speed *(skill*1.5)/100;
+			sd->speed -= (short) (sd->speed *(skill*1.5)/100);
 
 	if(sd->speed_rate != 100)
 		sd->speed = sd->speed*sd->speed_rate/100;
