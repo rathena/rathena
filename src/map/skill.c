@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/11/26 5:46:59 PM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/11/26 7:12:23 PM Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -859,6 +859,19 @@ int skillnotok(int skillid, struct map_session_data *sd) {
            return 0;
      if (pc_isGM(sd) >= 20)
            return 0;  // gm's can do anything damn thing they want
+
+	// Check skill restrictions [Celest]
+	if(!map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.gvg && skill_db[skillid].nocast & 1)
+		return 1;
+	if(map[sd->bl.m].flag.pvp && skill_db[skillid].nocast & 2)
+		return 1;
+	if(map[sd->bl.m].flag.gvg && skill_db[skillid].nocast & 4)
+		return 1;
+	if (agit_flag && skill_db[skillid].nocast & 8)
+		return 1;
+	if (battle_config.pk_mode && !map[sd->bl.m].flag.nopvp && skill_db[skillid].nocast & 16)
+		return 1;
+
      switch (skillid) {
        case AL_WARP:
        case AL_TELEPORT:
@@ -7262,7 +7275,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	if(sd->status.option&2 && skill_num!=TF_HIDING && skill_num!=AS_GRIMTOOTH && skill_num!=RG_BACKSTAP && skill_num!=RG_RAID )
 		return 0;
 
-	if(map[sd->bl.m].flag.gvg){ //GvGで使用できないスキル
+	/*if(map[sd->bl.m].flag.gvg){ //GvGで使用できないスキル
 		switch(skill_num){
 		case SM_ENDURE:
 		case AL_TELEPORT:
@@ -7275,7 +7288,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		case ST_CHASEWALK:
 		return 0;
 		}
-	}
+	}*/
 
 	/* 演奏/ダンス中 */
 	if( sc_data && sc_data[SC_DANCING].timer!=-1 ){
@@ -7538,12 +7551,12 @@ int skill_use_pos( struct map_session_data *sd,
 	if(pc_isdead(sd))
 		return 0;
 
-        if (skillnotok(skill_num, sd)) // [MoueJstr]
-                return 0;
+	if (skillnotok(skill_num, sd)) // [MoueJstr]
+		return 0;
 
 	if(skill_num==WZ_ICEWALL && map[sd->bl.m].flag.noicewall && !map[sd->bl.m].flag.pvp)  { // noicewall flag [Valaris]
 		clif_skill_fail(sd,sd->skillid,0,0);
-	return 0;
+		return 0;
 	}
 
 	sc_data=sd->sc_data;
@@ -7583,11 +7596,11 @@ int skill_use_pos( struct map_session_data *sd,
 	if(sd->status.option&2)
 		return 0;
 
-	if(map[sd->bl.m].flag.gvg &&
+/*	if(map[sd->bl.m].flag.gvg &&
 		(skill_num == SM_ENDURE || skill_num == AL_TELEPORT ||
 		skill_num == AL_WARP || skill_num == WZ_ICEWALL || 
 		skill_num == TF_BACKSLIDING))
-		return 0;
+		return 0;*/
 
 	sd->skillid = skill_num;
 	sd->skilllv = skill_lv;
@@ -11516,7 +11529,9 @@ int skill_readdb(void)
 		}
 
 		i=atoi(split[0]);
-		if(i<0 || i>MAX_SKILL_DB)
+		if (i>=10000 && i<10015) // for guild skills [Celest]
+			i -= 9500;
+		else if(i<0 || i>MAX_SKILL_DB)
 			continue;
 
 		memset(split2,0,sizeof(split2));
@@ -11530,6 +11545,33 @@ int skill_readdb(void)
 	}
 	fclose(fp);
 	printf("read db/skill_castnodex_db.txt done\n");
+
+	fp=fopen("db/skill_nocast_db.txt","r");
+	if(fp==NULL){
+		printf("can't read db/skill_nocast_db.txt\n");
+		return 1;
+	}
+	k=0;
+	while(fgets(line,1020,fp)){
+		char *split[16];
+		if(line[0]=='/' && line[1]=='/')
+			continue;
+		memset(split,0,sizeof(split));
+		for(j=0,p=line;j<2 && p;j++){
+			split[j]=p;
+			p=strchr(p,',');
+			if(p) *p++=0;
+		}
+		if(split[0]==NULL)
+			continue;
+		i=atoi(split[0]);
+		if(i < 0 || i > MAX_SKILL_DB)
+			continue;
+		skill_db[i].nocast=atoi(split[1]);
+		k++;
+	}
+	fclose(fp);
+	printf("read db/skill_nocast_db done\n");
 
 	return 0;
 }
