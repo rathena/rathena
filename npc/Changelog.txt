@@ -35,6 +35,7 @@ Other Ppl
 Date		Added
 ======
 11/18
+	* Fixed typos on izlude.txt [shadow]
 	* Added custom WOE warper (now you can get to Novice Castles from Prontera) [Lupus]
 	* Prontera.txt (Sewers) anti-novice exploit fix. should be added to any quests/banks where u once get free items/zeny [Lupus]
 11/17
