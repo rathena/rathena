@@ -864,7 +864,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case MO_INVESTIGATE:	// ”­ ™¤
 				if(def1 < 1000000)
-					damage = damage*(100+ 75*skill_lv)/100 * (def1 + def2)/100;
+					damage = damage*(100+ 75*skill_lv)/100 * (def1 + def2)/50;
 				hitrate = 1000000;
 				s_ele = 0;
 				break;
@@ -1366,7 +1366,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case MO_INVESTIGATE:	// ”­ ™¤
 				if(def1 < 1000000)
-					damage = damage*(100+ 75*skill_lv)/100 * (def1 + def2)/100;
+					damage = damage*(100+ 75*skill_lv)/100 * (def1 + def2)/50;
 				hitrate = 1000000;
 				s_ele = 0;
 				break;
@@ -2173,8 +2173,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 				break;
 			case MO_INVESTIGATE:	// ”­ ™¤
 				if(def1 < 1000000) {
-					damage = damage*(100+ 75*skill_lv)/100 * (def1 + def2)/100;
-					damage2 = damage2*(100+ 75*skill_lv)/100 * (def1 + def2)/100;
+					damage = damage*(100+ 75*skill_lv)/100 * (def1 + def2)/50;
+					damage2 = damage2*(100+ 75*skill_lv)/100 * (def1 + def2)/50;
 				}
 				hitrate = 1000000;
 				s_ele = 0;

@@ -1,5 +1,13 @@
 Date	Added
 
+02/15
+        * Corrected Investigate's damage calculation, thanks to matthias [celest]
+        * Generate the remaining entries of the stat point DB if the number of
+          entries in db/statuspoints.txt is less than MAX_LEVEL, or statuspoints.txt
+          was not found [celest]
+        * Try to spawn the player at a default map ("prontera.gat") when logging in if
+          the save point map was not found [celest]
+
 02/13
         * added an @autoloot switch that Upa-kun has forgotten [Shinomori]
         * changed pet_skillattack_timer and corrected the poison spore attack

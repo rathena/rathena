@@ -766,6 +766,12 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 			sprintf(buf, "Last_point_map %s not found\n", sd->status.last_point.map);
 			ShowError (buf);
 		}
+		// try warping to a default map instead
+		if (pc_setpos(sd, "prontera.gat", 273, 354, 0) != 0) {
+			// if we fail again
+			clif_authfail_fd(sd->fd, 0);
+			return 1;
+		}
 	}
 
 	// pet
@@ -6861,22 +6867,29 @@ int pc_readdb(void)
 
 	// ƒXƒLƒ‹ƒcƒŠ?
 	memset(statp,0,sizeof(statp));
-	fp=fopen("db/statpoint.txt","r");
-	if(fp==NULL){
-		printf("can't read db/statpoint.txt\n");
-		return 1;
-	}
 	i=0;
-	while(fgets(line, sizeof(line)-1, fp)){
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		if ((j=atoi(line))<0)
-			j=0;
-		statp[i]=j;
-		i++;
+	j=45;	// base points
+	fp=fopen("db/statpoint.txt","r");
+	if(fp == NULL){
+		sprintf(tmp_output,"Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n","db/statpoint.txt");
+		//return 1;
+	} else {
+		while(fgets(line, sizeof(line)-1, fp)){
+			if(line[0]=='/' && line[1]=='/')
+				continue;
+			if ((j=atoi(line))<0)
+				j=0;
+			statp[i]=j;			
+			i++;
+		}
+		fclose(fp);
+		sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/statpoint.txt");
 	}
-	fclose(fp);
-	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/statpoint.txt");
+	// generate the remaining parts of the db if necessary
+	for (; i < MAX_LEVEL; i++) {
+		j += (i+15)/5;
+		statp[i] = j;		
+	}
 	ShowStatus(tmp_output);
 
 	return 0;
