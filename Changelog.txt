@@ -1,5 +1,6 @@
 Date	Added
 11/07
+	* clif.c: Added a few things from jAthena 1057 [Codemaster]
 	* Corrected some typos in item_db. Items 1143 and 1719 need to be re-checked.[kobra_k88]
 	* Fixed compiling error in Map Server in which @repairall was using old broken system [Shinigami]
 
