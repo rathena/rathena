@@ -1,6 +1,7 @@
 Date	Added
 
 02/23
+	* New Cards: Some fixes, revisions, additions [Lupus]
         * Fixed char server crash when sending wisp with a "'" in the names [celest]
         * Fixed Backstab not checking for and consuming arrows [celest]
         * Fixed another bad typo causing @allskill to not add points into advanced job
@@ -27,7 +28,7 @@ Date	Added
 
 02/22
 	* Revised New Cards, added missing effects, fixed bugs [Lupus]
-	  ~20 cards to check left 8) But in 22 Feb some new cards have been announced T__T'
+	  ~20 cards to check left 8) But on 22 Feb some new cards have been announced T__T'
 	* Cleaned up some compiler warnings [SVN 1158: MouseJstr]
 	* Added perl regular expression support.. look at src/map/npc_chat.c
 	  for all the dirt on the new features.  To build it, you have

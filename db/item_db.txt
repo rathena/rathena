@@ -1183,7 +1183,7 @@
 4149,Gargoyle_Card,Gargoyle Card,6,20,0,10,,,,,,,,,,,{},{}
 4150,Goat_Card,Goat Card,6,20,0,10,,,,,,,,,,,{},{}
 4151,Gajomart_Card,Gajomart Card,6,20,0,10,,,,,,,,,,,{},{}
-4152,Galapago_Card,Galapago Card,6,20,0,10,,,,,,,,,,,{},{}
+4152,Galapago_Card,Galapago Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bItemHealRate,ListItems or kind & bRandomDrop,Item1,Chance,Item2,Chance,etc
 4153,Crab_Card,Crab Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,5; bonus2 bAddDamageClass,1266,30; bonus2 bAddEle,4,30; if(isequipped(4247,4273)) bonus3 bAddMonsterDropItem,544,5,3000; } //OK
 4154,Dumpling_Child_Card,Dumpling Child Card,6,20,0,10,,,,,,,,,,,{},{}
 4155,Goblin_Leader_Card,Goblin Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace2,1,30; } //OK
@@ -1229,7 +1229,7 @@
 4195,Leaf_Cat_Card,Leaf Cat Card,6,20,0,10,,,,,,,,,,,{},{}
 4196,Marin_Card,Marin Card,6,20,0,10,,,,,,,,,,,{},{}
 4197,Mastering_Card,Mastering Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bLuk,1; if(isequipped(4001)) bonus bFlee,18; } //OK
-4198,Maya_Purple_Card,Maya Purple Card,6,20,0,10,,,,,,,,,,,{},{}
+4198,Maya_Purple_Card,Maya Purple Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bIntravision (always see Cloaked & Hidden)
 4199,Merman_Card,Merman Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bHPrecovRate,10; bonus bSPrecovRate,10; } //OK
 4200,Megalith_Card,Megalith Card,6,20,0,10,,,,,,,,,,,{},{}
 4201,Majoruros_Card,Majoruros Card,6,20,0,10,,,,,,,,,,,{},{}
@@ -1238,12 +1238,12 @@
 4204,Mini_Demon_Card,Mini Demon Card,6,20,0,10,,,,,,,,,,,{},{}
 4205,Mimic_Card,Mimic Card,6,20,0,10,,,,,,,,,,,{},{}
 4206,Myst_Case_Card,Mystcase Card,6,20,0,10,,,,,,,,,,,{},{}
-4207,Mysteltainn_Card,Mysteltainn Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubSize,30,1; } //OK
+4207,Mysteltainn_Card,Mysteltainn Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubSize,30,0; } //OK
 4208,Miyabi_Ningyo_Card,Miyabi Ningyo Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bMaxSPrate,10; bonus2 bSkillAtk,15,5; } //OK
 4209,Violy_Card,Violy Card,6,20,0,10,,,,,,,,,,,{},{}
 4210,Wanderer_Card,Wanderer Card,6,20,0,10,,,,,,,4,,,,{},{ bonus3 bAutoSpell,219,1,1; if(callfunc("Is_Thief_Class")) bonus bFlee,20; } //??OK
 4211,Vocal_Card,Vocal Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bMdef,3; if(isequipped(4021)) bonus bFlee,18; } //OK
-4212,Bon_Gun_Card,Bon Gun Card,6,20,0,10,,,,,,,136,,,,{},{ bonus3 bAutoSpell,5,1,1; bonus2 bAddDamageByClass,1026,100; } //??OK
+4212,Bongun_Card,Bongun Card,6,20,0,10,,,,,,,136,,,,{},{ bonus3 bAutoSpell,5,1,1; bonus2 bAddDamageByClass,1026,100; } //??OK
 4213,Brilight_Card,Brilight Card,6,20,0,10,,,,,,,,,,,{},{}
 4214,Bloody_Murderer_Card,Bloody Murderer Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,7,4; } //OK
 4215,Blazer_Card,Blazer Card,6,20,0,10,,,,,,,,,,,{},{}
@@ -1258,7 +1258,7 @@
 4224,Stem_Worm_Card,Stem Worm Card,6,20,0,10,,,,,,,,,,,{},{}
 4225,Stone_Shooter_Card,Stone Shooter Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,10; bonus bHit,10; } //OK
 4226,Sting_Card,Sting Card,6,20,0,10,,,,,,,,,,,{},{}
-4227,Spring_Rabbit_Card,Spring Rabbit Card,6,20,0,10,,,,,,,,,,,{},{}
+4227,Spring_Rabbit_Card,Spring Rabbit Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bItemHealRate,ListOfHealingItems & bRandomDrop,Item1,Chance,Item2,Chance,etc
 4228,Sleeper_Card,Sleeper Card,6,20,0,10,,,,,,,,,,,{},{}
 4229,Clock_Tower_Manager_Card,Clock Tower Manager Card,6,20,0,10,,,,,,,,,,,{},{}
 4230,Shinobi_Card,Shinobi Card,6,20,0,10,,,,,,,,,,,{},{}
@@ -1284,8 +1284,8 @@
 4250,Executioner_Card,Executioner Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubSize,30,2; } //OK
 4251,Elder_Card,Elder Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace2,5,40; } //OK
 4252,Alligator_Card,Alligator Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bLongAtkDef,5; } //OK
-4253,Alice_Card,Alice Card,6,20,0,10,,,,,,,,,,,{},{ bonus2 bSubRace,10,40; bonus2 bSubRace,11,-40; } //?? I have no info about this cards effect
-4254,Tirfing_Card,Tirfing Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubSize,30,0; } //OK
+4253,Alice_Card,Alice Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubRace,10,40; bonus2 bSubRace,11,-40; } //??OK
+4254,Tirfing_Card,Tirfing Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubSize,30,1; } //OK
 4255,Orc_Lady_Card,Orc Lady Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace2,3,30; } //OK
 4256,Orc_Archer_Card,Orc Archer Card,6,20,0,10,,,,,,,,,,,{},{}
 4257,Wild_Rose_Card,Wild Rose Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bAgi,1; if(callfunc("Is_Thief_Class")) bonus bFlee2,5; } //OK
@@ -1312,26 +1312,26 @@
 4278,Gibbet_Card,Gibbet Card,6,20,0,10,,,,,,,,,,,{},{}
 4279,Earth_Deleter_Card,Earth Deleter Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bNoRegen,2; bonus bSPGainValue,15; } //??OK
 4280,Geographer_Card,Geographer Card,6,20,0,10,,,,,,,,,,,{},{}
-4281,Zipper_Bear_Card,Zipper Bear Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,30; if(callfunc("Is_Merc_Class")) bonus bUnbreakableWeapon,0; } // Missing : bonus bSPGainValueWhenAttack,-1; if(callfunc("Is_Merc_Class")) bonus bUnstrippableWeapon,0;
+4281,Zipper_Bear_Card,Zipper Bear Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtk,30; bonus3 bSPDrainValue,100,-1,0; if(!callfunc("Is_Merc_Class")) end; bonus bUnbreakableWeapon,0; bonus bUnstrippable,0; } //??OK
 4282,Tengu_Card,Tengu Card,6,20,0,10,,,,,,,,,,,{},{}
-4283,Greatest_General_Card,Greatest General Card,6,20,0,10,,,,,,,,,,,{},{}
-4284,Chepet_Card,Chepet Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,28,5,5; }
-4285,Choco_Card,Choco Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bFlee2,5; bonus bFlee,10; }
-4286,Karakasa_Card,Karakasa Card,6,20,0,10,,,,,,,16,,,,{},{ if(readparam(bStr)<=77) bonus2 bAddEffWhenHit,10,Eff_Confusion; if(readparam(bStr)>77) bonus2 bAddEffWhenHit,30,Eff_Confusion; }
+//4283,Removed_Card,Greatest General Card,6,20,0,10,,,,,,,,,,,{},{}
+4284,Chepet_Card,Chepet Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,28,5,5; } //??OK
+4285,Choco_Card,Choco Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bFlee2,5; bonus bFlee,10; } //OK
+4286,Karakasa_Card,Karakasa Card,6,20,0,10,,,,,,,16,,,,{},{ if(readparam(bStr)<=77) bonus2 bAddEffWhenHit,10,Eff_Confusion; if(readparam(bStr)>77) bonus2 bAddEffWhenHit,30,Eff_Confusion; } //??OK
 4287,Kapha_Card,Kapha Card,6,20,0,10,,,,,,,,,,,{},{}
 4288,Carat_Card,Carat Card,6,20,0,10,,,,,,,,,,,{},{}
 4289,Caterpillar_Card,Caterpillar Card,6,20,0,10,,,,,,,,,,,{},{}
-4290,Cat_o'_Nine_Tail_Card,Cat o' Nine Tail Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bMdef,3; bonus bMagicDamageReturn,5; }
-4291,Kobold_Leader_Card,Kobold Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace2,2,30; }
-4292,Kobold_Archer_Card,Kobold Archer Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,7,3; }
-4293,Cookie_Card,Cookie Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bLuk,2; bonus2 bSkillAtk,156,10; }
-4294,Quve_Card,Quve Card,6,20,0,10,,,,,,,136,,,,{},{ if((Class==Job_Novice)||(Class==Job_Super_Novice)) bonus4 bAutoSpellWhenHit,29,1,20,0; if(isequipped(4193)) bonus bMaxSP,60; }
+4290,Cat_o'_Nine_Tail_Card,Cat o' Nine Tail Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bMdef,3; bonus bMagicDamageReturn,5; } //OK
+4291,Kobold_Leader_Card,Kobold Leader Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace2,2,30; } //OK
+4292,Kobold_Archer_Card,Kobold Archer Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,7,3; } //OK
+4293,Cookie_Card,Cookie Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bLuk,2; bonus2 bSkillAtk,156,10; } //OK
+4294,Quve_Card,Quve Card,6,20,0,10,,,,,,,136,,,,{},{ if((Class==Job_Novice)||(Class==Job_Super_Novice)) bonus4 bAutoSpellWhenHit,29,1,20,0; if(isequipped(4193)) bonus bMaxSP,60; } //??OK
 4295,Kraben_Card,Kraben Card,6,20,0,10,,,,,,,,,,,{},{}
 4296,Cramp_Card,Cramp Card,6,20,0,10,,,,,,,,,,,{},{}
-4297,Cruiser_Card,Cruiser Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,7,2; }
+4297,Cruiser_Card,Cruiser Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,7,2; } //OK
 4298,Creamy_Fear_Card,Creamy Fear Card,6,20,0,10,,,,,,,,,,,{},{}
 4299,Clock_Card,Clock Card,6,20,0,10,,,,,,,,,,,{},{}
-4300,Chimera_Card,Chimera Card,6,20,0,10,,,,,,,16,,,,{},{ if(BaseJob!=Job_Assassin) bonus2 bAddEffWhenHit,10,Eff_Poison; if(BaseJob==Job_Assassin) bonus2 bAddEffWhenHit,30,Eff_Poison; }
+4300,Chimera_Card,Chimera Card,6,20,0,10,,,,,,,16,,,,{},{ if(BaseJob!=Job_Assassin) bonus2 bAddEffWhenHit,10,Eff_Poison; if(BaseJob==Job_Assassin) bonus2 bAddEffWhenHit,30,Eff_Poison; } //??OK
 4301,Killer_Mantis_Card,Killer Mantis Card,6,20,0,10,,,,,,,,,,,{},{}
 4302,Tao_Gunka_Card,Tao Gunka Card,6,20,0,10,,,,,,,,,,,{},{}
 4304,Tamruan_Card,Tamruan Card,6,20,0,10,,,,,,,,,,,{},{}
@@ -1339,29 +1339,29 @@
 4306,Toad_Card,Toad Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bFlee2,1; if(isequipped(4014)) bonus bFlee,18; } //OK
 4307,Beetle_King_Card,Beetle King Card,6,20,0,10,,,,,,,,,,,{},{}
 4308,Tri_Joint_Card,Tri Joint Card,6,20,0,10,,,,,,,,,,,{},{}
-4309,Parasite_Card,Parasite Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bDef,1; bonus2 bSubEle,0,5; }
-4310,Panzer_Goblin_Card,Panzer Goblin Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,7,6; }
-4311,Permeter_Card,Permeter Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bSubEle,7,15; bonus2 bSubEle,9,15; }
+4309,Parasite_Card,Parasite Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bDef,1; bonus2 bSubEle,0,5; } //OK
+4310,Panzer_Goblin_Card,Panzer Goblin Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,7,6; } //OK
+4311,Permeter_Card,Permeter Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bSubEle,7,15; bonus2 bSubEle,9,15; } //OK
 4312,Seal_Card,Seal Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bFlee,3; bonus bHit,10; if(!callfunc("Is_Holy_Class")) end; bonus2 bCriticalAddRace,9,1; bonus2 bCriticalAddRace,9,6; } //??OK
 4313,Punk_Card,Punk Card,6,20,0,10,,,,,,,,,,,{},{}
-4314,Penomena_Card,Penomena Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubRace,0,30; }
-4315,Pest_Card,Pest Card,6,20,0,10,,,,,,,16,,,,{},{ if(readparam(bInt)<=77) bonus2 bAddEffWhenHit,10,Eff_Stone; if(readparam(bInt)>77) bonus2 bAddEffWhenHit,30,Eff_Stone; }
+4314,Penomena_Card,Penomena Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubRace,0,30; } //OK
+4315,Pest_Card,Pest Card,6,20,0,10,,,,,,,16,,,,{},{ if(readparam(bInt)<=77) bonus2 bAddEffWhenHit,10,Eff_Stone; if(readparam(bInt)>77) bonus2 bAddEffWhenHit,30,Eff_Stone; } //??OK
 4316,False_Angel_Card,False Angel Card,6,20,0,10,,,,,,,,,,,{},{}
-4317,Mobster_Card,Mobster Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,20; } // Missing : bonus bSPGainValueWhenAttack,-1;
-4318,Stormy_Knight_Card,Stormy Knight Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,89,1,1; bonus2 bAddEffWhenHit,20,Eff_Freeze; }
+4317,Mobster_Card,Mobster Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bCritAtkRate,20; bonus3 bSPDrainValue,100,-1,0; } //??OK
+4318,Stormy_Knight_Card,Stormy Knight Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,89,1,2; bonus2 bAddEffWhenHit,20,Eff_Freeze; } //??OK
 4319,Freezer_Card,Freezer Card,6,20,0,10,,,,,,,,,,,{},{}
-4320,Bloody_Knight_Card,Bloody Knight Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,83,1,1; }
+4320,Bloody_Knight_Card,Bloody Knight Card,6,20,0,10,,,,,,,2,,,,{},{ bonus3 bAutoSpell,83,1,2; } //OK
 4321,Heirozoist_Card,Heirozoist Card,6,20,0,10,,,,,,,,,,,{},{}
 4322,High_Orc_Card,High Orc Card,6,20,0,10,,,,,,,,,,,{},{}
 4323,Garm_Baby_Card,Garm Baby Card,6,20,0,10,,,,,,,,,,,{},{}
-4324,Garm_Card,Garm Card,6,20,0,10,,,,,,,16,,,,{},{ bonus2 bAddEffWhenHit,50,Eff_Freeze; }
-4325,Harpy_Card,Harpy Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bSubEle,0,15; bonus2 bSkillAtk,11,5; }
-4326,Sea_Otter_Card,Sea Otter Card,6,20,0,10,,,,,,,,,,,{},{}
-4327,Bloody_Butterfly_Card,Bloody Butterfly Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bCastrate,30; bonus bNoCastCancel2,0; bonus2 bSkillAtk,18,5; }
-4328,Hyegun_Card,Hyegun Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bFlee,15; bonus bCritical,1; } //OK
+4324,Garm_Card,Garm Card,6,20,0,10,,,,,,,16,,,,{},{ bonus2 bAddEffWhenHit,50,Eff_Freeze; } //OK
+4325,Harpy_Card,Harpy Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bSubEle,0,15; bonus2 bSkillAtk,11,5; } //??OK
+4326,Sea_Otter_Card,Sea Otter Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bItemHealRate,ListItems or kind & bRandomDrop,Item1,Chance,Item2,Chance,etc
+4327,Bloody_Butterfly_Card,Bloody Butterfly Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bCastrate,30; bonus bNoCastCancel2,0; bonus2 bSkillAtk,18,5; } //??OK
+4328,Hyegun_Card,Hyegun Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bFlee,15; bonus bCritical,1; if(isequipped(4090,4212)) bonus bAllStats,1; } //??OK
 4329,Phendark_Card,Phendark Card,6,20,0,10,,,,,,,,,,,{},{}
 4330,Evil_Snake_Lord_Card,Evil Snake Lord Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bInt,3; bonus2 bResEff, Eff_Blind,10000; bonus2 bResEff, Eff_Curse,10000; } //OK
-4331,Heater_Card,Heater Card,6,20,0,10,,,,,,,,,,,{},{ bonus bCritical,3; if(callfunc("Is_Sword_Class")) bonus bFlee2,3; }
+4331,Heater_Card,Heater Card,6,20,0,10,,,,,,,,,,,{},{ bonus bCritical,3; if(callfunc("Is_Sword_Class")) bonus bFlee2,3; } //OK
 
 // Extra Headgears
 //===================================================================

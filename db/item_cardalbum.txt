@@ -203,7 +203,7 @@
 //4209,Violy Card,10000
 4210,Wanderer Card,10000
 4211,Vocal Card,10000
-4212,Bon Gun Card,10000
+4212,Bongun Card,10000
 //4213,Brilight Card,10000
 4214,Bloody Murderer Card,10000
 //4215,Blazer Card,10000
@@ -243,7 +243,7 @@
 4250,Executioner Card,10000
 4251,Elder Card,10000
 4252,Alligator Card,10000
-//4253,Alice Card,10000
+4253,Alice Card,10000
 4254,Tirfing Card,10000
 4255,Orc Lady Card,10000
 //4256,Orc Archer Card,10000

@@ -5,6 +5,14 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+02/23
+	* New Cards: Some fixes, revisions, additions [Lupus]
+	  According to the latest news:
+	  Fixed Tirfing, Mysteltainn (swapped enemy sizes of the cards bonuses)
+	  Added bonus: Munak+Bongun+Hyegun Cards -> +1 Allstats
+	  Added Alice Card placement. (also added it for Spring Rabbit, Galapago, Otter) And put Alice Card into OCA 
+		can't add new effects for 22 Fed Update Cards yet.
+	  All the cards by 22Feb have been revised, but not all tested.
 02/21
 	* Added new item: Takius' Blindfold. thanks to Landarma [Lupus]
 	* Revised New Cards, added missing effects, fixed bugs [Lupus]
