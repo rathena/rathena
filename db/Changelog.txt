@@ -6,6 +6,7 @@
 	Skill databases == celest working on them i believe.
 
 12/20
+        * removed extra {},,,,,,, from each tailing [Lupus]
         * Corrected job requirements for some garments [celest]
         * Corrected skill tree requirements for 3 Peco Lord knight skills [celest]
         * Updated item 569 -> it's a Red potion given to novices if they pass the
