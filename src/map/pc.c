@@ -1087,7 +1087,7 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 				case 17:
 					c = 6;
 					break;
-// #if 0
+#if 0
 				case 4008:
 				case 4014:
 				case 4015:
@@ -1142,7 +1142,7 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 				case 4043:
 					c = 4029;
 					break;
-// #endif
+#endif
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 Date	Added
 12/22
+	* Eliminated skill tree mapping since we have entries
+	  for all the classes in the skill_tree.txt files  [MouseJstr]
         * Added finding_ore_rate to battle_athena.conf, thanks to orn [celest]
 	* Changed how party exp is passed out to eliminate players
 	  current in a chat window or those who havn't moved or attacked
