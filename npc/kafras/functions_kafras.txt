@@ -89,8 +89,8 @@ function	script	F_KafStor	{
 	set Zeny, Zeny-@fee;
 	set RESRVPTS, RESRVPTS + (@fee/5);
 	openstorage;
-	callfunc "F_KafEnd",getarg(0),0;
-	end;
+	cutin "", 255;
+	close;
 
 	sL_JbLvl:
 		mes "[Kafra]";
@@ -102,8 +102,8 @@ function	script	F_KafStor	{
 		return;
 L_Guild:
 	if(guildopenstorage(0) == 1) goto L_InUse;
-	callfunc "F_KafEnd",0,0;
-	end;
+	cutin "", 255;
+	close;
 
 	L_InUse:
 		mes "[Kafra]";
@@ -166,6 +166,9 @@ function	script	F_KafTele	{
 		if (@wrpD$[@num] == "Comodo Pharos Lighthouse") warp "cmd_fild07.gat", 127, 134;
 		if (@wrpD$[@num] == "Orc Dungeon") warp "gef_fild10.gat", 52, 326;
 		if (@wrpD$[@num] == "Umbala") warp "umbala.gat", 130, 130;
+		close2;		// this part safegaurds against errors/typos
+		set zeny, zeny + @wrpP[@num];
+		cutin "", 255;
 		end;
 
 		sL_CantTele:
