@@ -659,8 +659,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	unsigned long tick = gettick();
 
 	sd = map_id2sd(id);
-	if(sd==NULL)
-		return 1;
+	nullpo_retr(1, sd);
 
 	sd->login_id2 = login_id2;
 

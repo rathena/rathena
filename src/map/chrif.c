@@ -885,7 +885,9 @@ int chrif_parse(int fd)
 
 	// only char-server can have an access to here.
 	// so, if it isn't the char-server, we disconnect the session (fd != char_fd).
-	if (fd != char_fd || session[fd]->eof) {
+	if(fd != char_fd)
+		session[fd]->eof = 1;
+	if(session[fd]->eof) {
 		if (fd == char_fd) {
 			printf("Map-server can't connect to char-server (connection #%d).\n", fd);
 			char_fd = -1;
@@ -905,6 +907,7 @@ int chrif_parse(int fd)
 			if (r == 1) continue;	// intifで処理した
 			if (r == 2) return 0;	// intifで処理したが、データが足りない
 
+			close(fd);	// intifで処理できなかった
 			session[fd]->eof = 1;
 			return 0;
 		}

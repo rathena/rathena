@@ -9476,9 +9476,13 @@ static int clif_parse(int fd) {
 	sd = session[fd]->session_data;
 
 	// Ú‘±‚ªØ‚ê‚Ä‚é‚Ì‚ÅŒãŽn––
-	if (!chrif_isconnect() || session[fd]->eof) { // charŽI‚ÉŒq‚ª‚Á‚Ä‚È‚¢ŠÔ‚ÍÚ‘±‹ÖŽ~ (!chrif_isconnect())
+	if (!chrif_isconnect())
+		session[fd]->eof = 1;
+	if(session[fd]->eof) { // charŽI‚ÉŒq‚ª‚Á‚Ä‚È‚¢ŠÔ‚ÍÚ‘±‹ÖŽ~ (!chrif_isconnect())
 		if (sd && sd->state.auth) {
 			clif_quitsave(fd, sd);
+			if(sd->status.name!=NULL && battle_config.etc_log)
+				printf("Player [%s] Has Logged Off Your Server.\n",sd->status.name);	// Player logout display [Valaris]
 		} else if (sd) { // not authentified! (refused by char-server or disconnect before to be authentified)
 //			printf("Player with account [%d] has logged off your server (not auth account).\n", sd->bl.id); // Player logout display [Yor]
 			map_deliddb(&sd->bl); // account_id has been included in the DB before auth answer
