@@ -5,9 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
-2/1
+01/01
         * Included Mages and Wizards to be able to use berserk potions [celest]
-
+	* Changed some create arrow outputs for new kRO 12/21/04 patch [Aria]
 12/29
         * Corrected Bloody Axe's weight - 400 > 4000 [celest]
         * Removed Bandit's Beard from item_avail.txt [celest]
