@@ -8028,7 +8028,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd) {
 //	not needed -- map_name[16]='\0'; will do
 //	memset(map_name, '\0', sizeof(map_name));
 
-	if (battle_config.atc_gmonly == 0 || (pc_isGM(sd) >= get_atcommand_level(AtCommand_MapMove))) {
+	if (battle_config.atc_gmonly != 0 || (pc_isGM(sd) >= get_atcommand_level(AtCommand_MapMove))) {
 		memcpy(map_name, RFIFOP(fd,2), 16);
 		map_name[16]='\0';
 		sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));

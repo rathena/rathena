@@ -519,55 +519,48 @@ static int _set_guild_castle(void *key, void *data, va_list ap) {
 
 
 // Save guild_castle to sql
-int inter_guildcastle_tosql(struct guild_castle *gc)
-{
-        struct guild_castle *gcopy;
-	// `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
+int inter_guildcastle_tosql(struct guild_castle *gc){
 
-	if (gc==NULL) return 0;
-	//printf("Save to guild_castle\n");
+	if(gc->castle_id == 0 || gc->guild_id == 0){
+		return 0;
+	}
+	printf("[Guild Castle]: Save..");
 
-	gcopy = (struct guild_castle*)numdb_search(castle_db_,gc->castle_id);
-	if (gcopy == NULL) {
-	  gcopy = (struct guild_castle*)aMalloc(sizeof(struct guild_castle));
-	  numdb_insert(castle_db_, gc->castle_id, gcopy);
-	} else {
-            if ((gc->guild_id  == gcopy->guild_id ) && (  gc->economy  == gcopy->economy ) && ( gc->defense  == gcopy->defense ) && ( gc->triggerE  == gcopy->triggerE ) && ( gc->triggerD  == gcopy->triggerD ) && ( gc->nextTime  == gcopy->nextTime ) && ( gc->payTime  == gcopy->payTime ) && ( gc->createTime  == gcopy->createTime ) && ( gc->visibleC  == gcopy->visibleC ) && ( gc->visibleG0  == gcopy->visibleG0 ) && ( gc->visibleG1  == gcopy->visibleG1 ) && ( gc->visibleG2  == gcopy->visibleG2 ) && ( gc->visibleG3  == gcopy->visibleG3 ) && ( gc->visibleG4  == gcopy->visibleG4 ) && ( gc->visibleG5  == gcopy->visibleG5 ) && ( gc->visibleG6  == gcopy->visibleG6 ) && ( gc->visibleG7  == gcopy->visibleG7 ) && ( gc->Ghp0  == gcopy->Ghp0 ) && ( gc->Ghp1  == gcopy->Ghp1 ) && ( gc->Ghp2  == gcopy->Ghp2 ) && ( gc->Ghp3  == gcopy->Ghp3 ) && ( gc->Ghp4  == gcopy->Ghp4 ) && ( gc->Ghp5  == gcopy->Ghp5 ) && ( gc->Ghp6  == gcopy->Ghp6 ) && ( gc->Ghp7 == gcopy->Ghp7 ))
-            return 0;
-        }
-
-	memcpy(gcopy, gc, sizeof(struct guild_castle));
-
-	sprintf(tmp_sql,"REPLACE INTO `%s` "
-		"(`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
-		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
-		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7`)"
-		"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
-		guild_castle_db, gc->castle_id, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime,
-		gc->createTime, gc->visibleC, gc->visibleG0, gc->visibleG1, gc->visibleG2, gc->visibleG3, gc->visibleG4, gc->visibleG5,
-		gc->visibleG6, gc->visibleG7, gc->Ghp0, gc->Ghp1, gc->Ghp2, gc->Ghp3, gc->Ghp4, gc->Ghp5, gc->Ghp6, gc->Ghp7);
-	//printf(" %s\n",tmp_sql);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
+	sprintf(tmp_sql, "SELECT `castle_id` FROM `%s` WHERE `castle_id` = '%d'", guild_castle_db, gc->castle_id);
+	if(mysql_query(&mysql_handle, tmp_sql)){
+		//fail ://
+		printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
 		return 0;
 	}
 
-	sprintf(tmp_sql,"UPDATE `%s` SET `castle_id`='-1' WHERE `castle_id`='%d'",guild_db, gc->castle_id);
-	//printf(" %s\n",tmp_sql);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
+	sql_res = mysql_store_result(&mysql_handle);
+	if(sql_res){
+		if(mysql_num_rows(sql_res) != 0){
+			//okay .. guild is existable
+			mysql_free_result(sql_res);
+			sprintf(tmp_sql, "UPDATE `%s` SET `guild_id` = '%d', `economy` = '%d', `defense` = '%d', `triggerE` = '%d', `triggerD` = '%d', `nextTime` = '%d', `payTime` = '%d', `createTime` = '%d', `visibleC` = '%d', `visibleG0` = '%d', `visibleG1` = '%d', `visibleG2` = '%d', `visibleG3` = '%d', `visibleG4` = '%d', `visibleG5` = '%d', `visibleG6` = '%d', `visibleG7` = '%d', `gHP0` = '%d', `gHP1` = '%d', `gHP2` = '%d', `gHP3` = '%d', `gHP4` = '%d', `gHP5` = '%d', `gHP6` = '%d', `gHP7` = '%d' WHERE `castle_id` = '%d'", guild_castle_db, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC, gc->visibleG0, gc->visibleG1, gc->visibleG2, gc->visibleG3, gc->visibleG4, gc->visibleG5,	gc->visibleG6, gc->visibleG7, gc->Ghp0, gc->Ghp1, gc->Ghp2, gc->Ghp3, gc->Ghp4, gc->Ghp5, gc->Ghp6, gc->Ghp7, gc->castle_id);
+			if(mysql_query(&mysql_handle, tmp_sql)){
+				printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
+				return 0;
+			}else{
+				printf(" done(U). (Castle: %d)\n", gc->castle_id);
+				return 1;
+			}
+		}else{
+			//not exists  insert ..
+                         sprintf(tmp_sql,"INSERT INTO `%s` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`, `gHP0`, `gHP1`, `gHP2`, `gHP3`, `gHP4`, `gHP5`, `gHP6`, `gHP7`) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')", guild_castle_db, gc->castle_id, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC, gc->visibleG0, gc->visibleG1, gc->visibleG2, gc->visibleG3, gc->visibleG4, gc->visibleG5, gc->visibleG6, gc->visibleG7, gc->Ghp0, gc->Ghp1, gc->Ghp2, gc->Ghp3, gc->Ghp4, gc->Ghp5, gc->Ghp6, gc->Ghp7);
+			if(mysql_query(&mysql_handle, tmp_sql)){
+				printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
+				return 0;
+			}else{
+				printf(" done(I). (Castle: %d)\n", gc->castle_id);
+				return 1;
+			}
+		}
+	}else{
+		printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
 		return 0;
 	}
-
-	sprintf(tmp_sql,"UPDATE `%s` SET `castle_id`='%d' WHERE `guild_id`='%d'",guild_db, gc->castle_id,gc->guild_id);
-	//printf(" %s\n",tmp_sql);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
-		return 0;
-	}
-
-        db_foreach(guild_db_, _set_guild_castle, gc->castle_id,gc->guild_id);
-
 	return 0;
 }
 // Read guild_castle from sql

@@ -1,6 +1,8 @@
 Date	Added
 
 02/20
+	* Char SQL: Rewrote/Fixed the castle save function, now the sql version saves castles! [Sirius]
+	* Fixed the /mm /mapmove command access bug [Sirius]
         * Added skill requirements for the new guild skills [celest]
         * Allow Emergency Recall to be cast in guild castles even if nowarp and
           nowarpto mapflags are enabled [celest]
