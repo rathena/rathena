@@ -1,5 +1,7 @@
 Date	Added
 12/5
+	* removed stubbed out unfinished atcommands as per Cameri [MouseJstr]
+	* Fixed nullpo's for gcc 2.95 [MouseJstr]
 	* Fixed bug in which login-txt was crashing in do_final() due to some free's [MC Cameri]
 	* Added nullpo's to all atcommand's functions, phew... [MC Cameri]
 	  Note: I point out that MouseJstr has added some @commands that start with char which

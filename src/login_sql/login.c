@@ -576,7 +576,9 @@ int mmo_auth( struct mmo_account* account , int fd){
 
     if ( is_user_online(atol(sql_row[0])) ) {
         printf("User [%s] is already online - Rejected.\n",sql_row[1]);
-	    return 3; // Rejected
+#ifndef TWILIGHT
+	return 3; // Rejected
+#endif
     }
         
 	account->account_id = atoi(sql_row[0]);

@@ -169,9 +169,6 @@ enum AtCommandType {
 	AtCommand_Killable, // by MouseJstr
 	AtCommand_CharKillable, // by MouseJstr
 	AtCommand_Chareffect, // by MouseJstr
-	AtCommand_Chardye, // by MouseJstr
-	AtCommand_Charhairstyle, // by MouseJstr
-	AtCommand_Charhaircolor, // by MouseJstr
 	AtCommand_Dropall, // by MouseJstr
 	AtCommand_Chardropall, // by MouseJstr
 	AtCommand_Storeall, // by MouseJstr
