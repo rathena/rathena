@@ -41,6 +41,15 @@ int guild_break_sub(void *key,void *data,va_list ap);
 
 #define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
 
+int _erase_guild(void *key, void *data, va_list ap) {
+    int guild = va_arg(ap, int);
+    struct guild_castle * castle = (struct guild_castle *) data;
+    if (castle->guild_id == guild) {
+        free(castle);
+        db_erase(castle_db_, key);
+    }
+}
+
 // Save guild into sql
 int inter_guild_tosql(struct guild *g,int flag)
 {
@@ -153,6 +162,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 			if(mysql_query(&mysql_handle, tmp_sql) ) {
 				printf("DB server Error (delete `guild_castle`)- %s\n", mysql_error(&mysql_handle) );
 			}			
+                        db_foreach(_guild_castle_, _erase_guild, g->guild_id);
 		}
 	}
 
@@ -505,12 +515,6 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 	if (gcopy == NULL) {
 	  gcopy = (struct guild_castle *) malloc(sizeof(struct guild_castle));
 	  numdb_insert(castle_db_, gc->castle_id, gcopy);
-	} else {
-	  if ((gcopy->castle_id == gc->castle_id) &&
-	      (strcmp(gcopy->map_name, gc->map_name) == 0) &&
-	      (strcmp(gcopy->castle_event, gc->castle_event) == 0) &&
-	      (memcmp(&gcopy->guild_id, &gc->guild_id, &gc->GID7 - &gc->guild_id) == 0))
-	    return 0;
 	}
 
 	memcpy(gcopy, gc, sizeof(struct guild_castle));
@@ -1030,6 +1034,7 @@ int mapif_guild_castle_datasave(int castle_id,int index,int value)      // <Agit
 
 int mapif_guild_castle_alldataload(int fd) {
 	struct guild_castle* gc = guildcastle_pt;
+        struct guild_castle *gcopy;
 	int i, len = 4;
 
 	WFIFOW(fd,0) = 0x3842;
@@ -1068,6 +1073,14 @@ int mapif_guild_castle_alldataload(int fd) {
 			gc->Ghp6 = atoi(sql_row[24]);
 			gc->Ghp7 = atoi(sql_row[25]);
 			memcpy(WFIFOP(fd,len), gc, sizeof(struct guild_castle));
+
+                        gcopy = numdb_search(castle_db_,gc->castle_id);
+                        if (gcopy == NULL) {
+                            gcopy = (struct guild_castle *) malloc(sizeof(struct guild_castle));
+                            numdb_insert(castle_db_, gc->castle_id, gcopy);
+                        }
+                        memcpy(gcopy, gc, sizeof(struct guild_castle));
+
 			len += sizeof(struct guild_castle);
 		}
 	}
@@ -1319,6 +1332,8 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (delete `guild_position`)- %s\n", mysql_error(&mysql_handle) );
 	}
+
+        db_foreach(_guild_castle_, _erase_guild, guild_id);
 	
 	//printf("- Update guild %d of char\n",guild_id);
 	sprintf(tmp_sql, "UPDATE `%s` SET `guild_id`='0' WHERE `guild_id`='%d'",char_db, guild_id);
