@@ -35,6 +35,9 @@ Other Ppl
 
 Date		Added
 ======
+11/16
+	* - Fixed Npc Position on Lutie( warper.txt and warper2.txt). [shadow]
+
 11/15
 	* - Fixed xmas.txt X-mas event, now you get a gift box when you first talk to Santa.
 	  - Same script again...Fixed the spawns, its 1 antonio per map, and it was using only santa poring IDs. [shadow]
