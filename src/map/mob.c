@@ -2350,21 +2350,30 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		if(per>512) per=512;
 		if(per<1) per=1;
 		base_exp=mob_db[md->class].base_exp*per/256;
+
 		if(base_exp < 1) base_exp = 1;
 		if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class].lv - sd->status.base_level >= 20)) {
 			base_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
 		}
-		if(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1) base_exp = 0;	// Added [Valaris]
 		job_exp=mob_db[md->class].job_exp*per/256;
 		if(job_exp < 1) job_exp = 1;
 		if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class].lv - sd->status.base_level >= 20)) {
 			job_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
 		}
-		if(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1) job_exp = 0;	// Added [Valaris]
-		else if(battle_config.zeny_from_mobs) { 
-			if(md->level > 0) zeny=(md->level+rand()%md->level)*per/256; // zeny calculation moblv + random moblv [Valaris]
-			if(mob_db[md->class].mexp > 0)
-				zeny*=rand()%250;
+		if(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1) { // for summoned creatures [Valaris]
+			base_exp = 0;
+			job_exp = 0;
+		}
+		else {
+			if(battle_config.zeny_from_mobs) { 
+				if(md->level > 0) zeny=(md->level+rand()%md->level)*per/256; // zeny calculation moblv + random moblv [Valaris]
+				if(mob_db[md->class].mexp > 0)
+					zeny*=rand()%250;
+			}
+			if(battle_config.mobs_level_up && md->level > mob_db[md->class].lv) { // [Valaris]
+				job_exp+=((md->level-mob_db[md->class].lv)*mob_db[md->class].job_exp*.03)*per/256;
+				base_exp+=((md->level-mob_db[md->class].lv)*mob_db[md->class].base_exp*.03)*per/256;
+			}
 		}
 		
 		if((pid=tmpsd[i]->status.party_id)>0){	// パーティに入っている

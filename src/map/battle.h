@@ -332,6 +332,7 @@ extern struct Battle_Config {
 	int area_size; // added by [MouseJstr]
 
 	int zeny_from_mobs; // [Valaris]
+	int mobs_level_up; // [Valaris]
 
 #ifndef TXT_ONLY /* SQL-only options */
 	int mail_system; // [Valaris]

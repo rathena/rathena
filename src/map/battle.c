@@ -98,7 +98,7 @@ int battle_get_lv(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
 	if(bl->type==BL_MOB && (struct mob_data *)bl)
-		return mob_db[((struct mob_data *)bl)->class].lv;
+		return ((struct mob_data *)bl)->level;
 	else if(bl->type==BL_PC && (struct map_session_data *)bl)
 		return ((struct map_session_data *)bl)->status.base_level;
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
@@ -153,6 +153,8 @@ int battle_get_max_hp(struct block_list *bl)
 		int max_hp=1;
 		if(bl->type==BL_MOB && ((struct mob_data*)bl)) {
 			max_hp = mob_db[((struct mob_data*)bl)->class].max_hp;
+			if(battle_config.mobs_level_up) // mobs leveling up increase [Valaris]
+				max_hp+=(((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class].lv)*battle_get_vit(bl);
 			if(mob_db[((struct mob_data*)bl)->class].mexp > 0) {
 				if(battle_config.mvp_hp_rate != 100)
 					max_hp = (max_hp * battle_config.mvp_hp_rate)/100;
@@ -195,8 +197,11 @@ int battle_get_str(struct block_list *bl)
 
 	nullpo_retr(0, bl);
 	sc_data=battle_get_sc_data(bl);
-	if(bl->type==BL_MOB && ((struct mob_data *)bl))
+	if(bl->type==BL_MOB && ((struct mob_data *)bl)) {
 		str = mob_db[((struct mob_data *)bl)->class].str;
+		if(battle_config.mobs_level_up) // mobs leveling up increase [Valaris]
+			str+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class].lv;
+	}
 	else if(bl->type==BL_PC && ((struct map_session_data *)bl))
 		return ((struct map_session_data *)bl)->paramc[0];
 	else if(bl->type==BL_PET && ((struct pet_data *)bl))
@@ -229,8 +234,11 @@ int battle_get_agi(struct block_list *bl)
 
 	nullpo_retr(0, bl);
 	sc_data=battle_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl)
+	if(bl->type==BL_MOB && (struct mob_data *)bl) {
 		agi=mob_db[((struct mob_data *)bl)->class].agi;
+		if(battle_config.mobs_level_up) // increase of mobs leveling up [Valaris]
+			agi+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class].lv;
+	}
 	else if(bl->type==BL_PC && (struct map_session_data *)bl)
 		agi=((struct map_session_data *)bl)->paramc[1];
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
@@ -270,8 +278,11 @@ int battle_get_vit(struct block_list *bl)
 
 	nullpo_retr(0, bl);
 	sc_data=battle_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl)
+	if(bl->type==BL_MOB && (struct mob_data *)bl) {
 		vit=mob_db[((struct mob_data *)bl)->class].vit;
+		if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+			vit+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class].lv;
+	}
 	else if(bl->type==BL_PC && (struct map_session_data *)bl)
 		vit=((struct map_session_data *)bl)->paramc[2];
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
@@ -298,8 +309,11 @@ int battle_get_int(struct block_list *bl)
 
 	nullpo_retr(0, bl);
 	sc_data=battle_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl)
+	if(bl->type==BL_MOB && (struct mob_data *)bl){
 		int_=mob_db[((struct mob_data *)bl)->class].int_;
+		if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+			int_+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class].lv;
+	}
 	else if(bl->type==BL_PC && (struct map_session_data *)bl)
 		int_=((struct map_session_data *)bl)->paramc[3];
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
@@ -331,8 +345,11 @@ int battle_get_dex(struct block_list *bl)
 
 	nullpo_retr(0, bl);
 	sc_data=battle_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl)
+	if(bl->type==BL_MOB && (struct mob_data *)bl) {
 		dex=mob_db[((struct mob_data *)bl)->class].dex;
+		if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+			dex+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class].lv;
+	}
 	else if(bl->type==BL_PC && (struct map_session_data *)bl)
 		dex=((struct map_session_data *)bl)->paramc[4];
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
@@ -371,8 +388,11 @@ int battle_get_luk(struct block_list *bl)
 
 	nullpo_retr(0, bl);
 	sc_data=battle_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl)
+	if(bl->type==BL_MOB && (struct mob_data *)bl) {
 		luk=mob_db[((struct mob_data *)bl)->class].luk;
+		if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+			luk+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class].lv;
+	}
 	else if(bl->type==BL_PC && (struct map_session_data *)bl)
 		luk=((struct map_session_data *)bl)->paramc[5];
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
@@ -876,9 +896,11 @@ int battle_get_speed(struct block_list *bl)
 	else {
 		struct status_change *sc_data=battle_get_sc_data(bl);
 		int speed = 1000;
-		if(bl->type==BL_MOB && (struct mob_data *)bl)
-//			speed = mob_db[((struct mob_data *)bl)->class].speed;
+		if(bl->type==BL_MOB && (struct mob_data *)bl) {
 			speed = ((struct mob_data *)bl)->speed;
+			if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+				speed-=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class].lv;
+		}
 		else if(bl->type==BL_PET && (struct pet_data *)bl)
 			speed = ((struct pet_data *)bl)->msd->petDB->speed;
 
@@ -5087,6 +5109,7 @@ static const struct {
 	{ "area_size",                         &battle_config.area_size	}, // added by [MouseJstr]
 	{ "muting_players",                   &battle_config.muting_players}, // added by [Apple]
 	{ "zeny_from_mobs",			&battle_config.zeny_from_mobs}, // [Valaris]
+	{ "mobs_level_up",			&battle_config.mobs_level_up}, // [Valaris]
 //SQL-only options start
 #ifndef TXT_ONLY 
 	{ "mail_system",		&battle_config.mail_system	}, // added by [Valaris]
@@ -5307,6 +5330,7 @@ void battle_set_defaults() {
 	battle_config.min_cloth_color = 0;
 	battle_config.max_cloth_color = 4;
 	battle_config.zeny_from_mobs = 0;
+	battle_config.mobs_level_up = 0;
 
 	battle_config.castrate_dex_scale = 150;
 

@@ -1,4 +1,14 @@
 Date	Added
+11/15
+	* Added mobs_level_up option. [Valaris]
+	  -Everytime a monster kills a play their level will increase and show levelup animation.
+	  -Their 6 main stats and speed will increase as they level.
+	  -They will recover 10% of the max hp of the player it kills.
+	  -Player will gain extra exp based on how much stronger a monster is than normal.
+	  -Skill estimation will show monsters current level (instead of reading from db).
+	  -Will display level 99 aura if and when a monster hits level 99.
+	  -They will not go higher than level 99.
+
 11/14
 	* Made the Advance jobchangers to kRO standars with the following;
 	 - Checks if you are level 99/50 and 2nd class OR above.

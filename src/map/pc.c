@@ -2648,6 +2648,11 @@ int pc_skill(struct map_session_data *sd,int id,int level,int flag)
 		pc_calcstatus(sd,0);
 		clif_skillinfoblock(sd);
 	}
+	else if(flag==2 && (sd->status.skill[id].id == id || level == 0)){	// クエスト所得ならここで条件を確認して送信する
+		sd->status.skill[id].lv+=level;
+		pc_calcstatus(sd,0);
+		clif_skillinfoblock(sd);
+	}
 	else if(sd->status.skill[id].lv < level){	// 覚えられるがlvが小さいなら
 		if(sd->status.skill[id].id==id)
 			sd->status.skill[id].flag=sd->status.skill[id].lv+2;	// lvを記憶
@@ -5014,6 +5019,20 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 			clif_updatestatus(sd,SP_JOBEXP);
 		}
 	}
+	// monster level up [Valaris]
+	if(battle_config.mobs_level_up && src && src->type==BL_MOB) {
+		struct mob_data *md=(struct mob_data *)src;
+		if(md && md->target_id != 0 && md->target_id==sd->bl.id) { // reset target id when player dies
+			md->target_id=0;
+			mob_changestate(md,MS_WALK,0);
+		}
+		if(md && md->state.state!=MS_DEAD && md->level < 99) {
+			clif_misceffect(&md->bl,0);
+			md->level++;
+			md->hp+=sd->status.max_hp*.1;
+		}
+	}
+
 	//ナイトメアモードアイテムドロップ
 	if(map[sd->bl.m].flag.pvp_nightmaredrop){ // Moved this outside so it works when PVP isnt enabled and during pk mode [Ancyker]
 		for(j=0;j<MAX_DROP_PER_MAP;j++){

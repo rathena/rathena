@@ -4578,7 +4578,7 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 
 	WBUFW(buf, 0)=0x18c;
 	WBUFW(buf, 2)=mob_get_viewclass(md->class);
-	WBUFW(buf, 4)=mob_db[md->class].lv;
+	WBUFW(buf, 4)=md->level;
 	WBUFW(buf, 6)=mob_db[md->class].size;
 	WBUFL(buf, 8)=md->hp;
 	WBUFW(buf,12)=battle_get_def2(&md->bl);
