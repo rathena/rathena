@@ -4239,6 +4239,12 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct skill_unit *su=NULL;
 			if((bl->type==BL_SKILL) && (su=(struct skill_unit *)bl) && (su->group) ){
 				switch(su->group->unit_id){
+					case 0x91:	// ankle snare
+						if (su->group->val2 != 0)
+							// if it is already trapping something don't spring it,
+							// remove trap should be used instead
+							break;
+						// otherwise fallthrough to below
 					case 0x8f:	/* ブラストマイン */
 					case 0x90:	/* スキッドトラップ */
 					case 0x93:	/* ランドマイン */
@@ -4490,7 +4496,9 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			int j = 0;
 			struct guild *g = NULL;
 			// Only usable during WoE
-			if (!agit_flag) {
+			if (!agit_flag ||
+				(sd && map[sd->bl.m].flag.nowarpto &&	// if not allowed to warp to the map
+				guild_mapname2gc(sd->mapname) == NULL)) {	// and it's not a castle...
 				clif_skill_fail(sd,skillid,0,0);
 				map_freeblock_unlock();
 				return 0;
@@ -4500,8 +4508,10 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				strcmp(sd->status.name,g->master)==0) {
 				for(i = 0; i < g->max_member; i++, j++) {
 					if (j>8) j=0;
-					if ((dstsd = g->member[i].sd) != NULL && sd != dstsd &&
-						!map[sd->bl.m].flag.nowarpto && !map[dstsd->bl.m].flag.nowarp) {
+					if ((dstsd = g->member[i].sd) != NULL && sd != dstsd) {
+						 if (map[dstsd->bl.m].flag.nowarp &&
+							 guild_mapname2gc(sd->mapname) == NULL)
+							 continue;
 						clif_skill_nodamage(src,bl,skillid,skilllv,1);
 						if(map_getcell(sd->bl.m,sd->bl.x+dx[j],sd->bl.y+dy[j],CELL_CHKNOPASS))
 							dx[j] = dy[j] = 0;
@@ -6325,7 +6335,7 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 		{
 			struct map_session_data *sd = NULL;
 			struct map_session_data *p_sd = NULL;
-			if((sd = (struct map_session_data *)(map_id2bl(sg->src_id))) == NULL)
+			if((sd = map_id2sd(sg->src_id)) == NULL)
 				return 0;
 			if((p_sd = pc_get_partner(sd)) == NULL)
 				return 0;

@@ -265,7 +265,9 @@ Progress:	0%
 Problem:	'Adrenaline Rush' has to work with any weapon again (for whole party)
 		according to the kRO Sak patch on 21/12
 Assigned:	N/A
-Progress:	0%
+Progress:	N/A
+Notes:          "Fixed Adrenaline Rush skill working for all weapon types again."
+                I think it was supposed to not work with all weapons ^^;
 
 Problem:	[Urgent!] Server doesn't save Variables (#global and global)
 		If you exit the client with Alt-F4 or lose connection to the server.

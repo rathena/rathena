@@ -5713,10 +5713,17 @@ int buildin_petskillbonus(struct script_state *st)
 	duration=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	timer=conv_num(st,& (st->stack->stack_data[st->start+5]));
 
-	pd->skillbonusduration=-1;
-	pd->skillbonustimer=-1;
+	// initialise bonuses
+	pd->skillbonustype=type;
+	pd->skillbonusval=val;
+	pd->skillduration=duration*1000;
+	pd->skilltimer=timer*1000;
 
-	pet_skill_bonus(sd,pd,type,val,duration,timer,0);
+	if (pd->state.skillbonus == -1)
+		pd->state.skillbonus=0;	// waiting state
+
+	// wait for timer to start
+	pd->skillbonustimer=add_timer(gettick()+pd->skilltimer,pet_skill_bonus_timer,sd->bl.id,0);
 
 	return 0;
 }

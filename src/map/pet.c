@@ -596,14 +596,14 @@ int pet_remove_map(struct map_session_data *sd)
 
 		struct pet_data *pd=sd->pd; // [Valaris]
 		if(pd->skillbonustimer!=-1) pd->skillbonustimer=-1;
-		if(pd->skillbonusduration!=-1) pd->skillbonusduration=-1;
-		if(pd->skilltype !=-1) pd->skilltype=-1;
-		if(pd->skillval !=-1) pd->skillval=-1;
+		pd->skilltype=0;
+		pd->skillval=0;
 		if(pd->skilltimer!=-1) pd->skilltimer=-1;
-		if(pd->skillduration!=-1) pd->skillduration=-1;
-		if(pd->skillbonustype!=-1) pd->skillbonustype=-1;
-		if(pd->skillbonusval!=-1) pd->skillbonusval=-1;
-		if(sd->perfect_hiding==1) sd->perfect_hiding=0;	// end additions		
+		pd->state.skillbonus=-1;
+		pd->skillduration=0;
+		pd->skillbonustype=0;
+		pd->skillbonusval=0;
+		if(sd->perfect_hiding==1) sd->perfect_hiding=0;	// end additions
 
 		pet_changestate(sd->pd,MS_IDLE,0);
 		if(sd->pet_hungry_timer != -1)
@@ -737,8 +737,12 @@ int pet_data_init(struct map_session_data *sd)
 	pd->move_fail_count = 0;
 	pd->next_walktime = pd->attackabletime = pd->last_thinktime = gettick();
 	pd->msd = sd;
-
+	
 	map_addiddb(&pd->bl);
+
+	// initialise
+	pd->state.skillbonus = -1;
+	run_script(pet_db[i].script,0,sd->bl.id,0);
 
 	if(sd->pet_hungry_timer != -1)
 		pet_hungry_timer_delete(sd);
@@ -1407,29 +1411,13 @@ int pet_delay_item_drop2(int tid,unsigned int tick,int id,int data)
  * pet bonus giving skills [Valaris]
  *------------------------------------------
  */ 
-
-int pet_skill_bonus(struct map_session_data *sd,struct pet_data *pd,int type,int val,int duration,int timer,int data)
-{
-	if(pd==NULL || sd==NULL)
-		return 1;
-
-	pd->skillbonustype=type;
-	pd->skillbonusval=val;
-	pd->skillduration=duration;
-	pd->skilltimer=timer;
-
-	pd->skillbonustimer=add_timer(gettick()+pd->skilltimer*1000,pet_skill_bonus_timer,sd->bl.id,0);
-
-	return 0;
-
-}
-
 int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 {
-	struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
+	struct map_session_data *sd=map_id2sd(id);
 	struct pet_data *pd;
+	int timer = 0;
 	
-	if(sd==NULL || sd->bl.type!=BL_PC)
+	if(sd==NULL)
 		return 1;
 	
 	pd=sd->pd;
@@ -1440,38 +1428,26 @@ int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 	if(pd->skillbonustimer != tid)
 		return 0;
 
-	pd->skillbonustimer=-1;
+	// determine the time for the next timer
+	if (pd->state.skillbonus == 0) {
+		// pet bonuses are not active at the moment, so,
+		pd->state.skillbonus = 1;
+		timer = pd->skillduration;	// the duration for pet bonuses to be in effect
+	} else if (pd->state.skillbonus == 1) {
+		// pet bonuses are already active, so,
+		pd->state.skillbonus = 0;
+		timer = pd->skilltimer;	// the duration which pet bonuses will be reactivated again
+	}
+
+	if (pd->state.skillbonus == 1 && sd->petDB)
+		run_script(sd->petDB->script,0,sd->bl.id,0);
+
+	// add/remove our bonuses, which will be handled by sd->petbonus[]
+	status_calc_pc(sd, 0);
+
+	// wait for the next timer
+	if (timer) pd->skillbonustimer=add_timer(gettick()+timer,pet_skill_bonus_timer,sd->bl.id,0);
 	
-	pc_bonus(sd,pd->skillbonustype,pd->skillbonusval);
-	if(pd->skillbonustype < 56) clif_updatestatus(sd,pd->skillbonustype);
-	pd->skillbonusduration=add_timer(gettick()+pd->skillduration*1000,pet_skill_bonus_duration,sd->bl.id,0);
-	
-	return 0;
-}
-
-int pet_skill_bonus_duration(int tid,unsigned int tick,int id,int data)
-{
-	struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
-	struct pet_data *pd;
-
-	if(sd==NULL || sd->bl.type!=BL_PC)
-		return 1;
-
-	pd=sd->pd;
-
-	if(pd==NULL || pd->bl.type!=BL_PET)
-		return 1;
-
-	if(pd->skillbonusduration != tid)
-		return 0;
-
-	pd->skillbonusduration=-1;
-
-	pc_bonus(sd,pd->skillbonustype,-pd->skillbonusval);
-	if(pd->skillbonustype < 56) clif_updatestatus(sd,pd->skillbonustype);
-
-	pet_skill_bonus(sd,pd,pd->skillbonustype,pd->skillbonusval,pd->skillduration,pd->skilltimer,0);
-
 	return 0;
 }
 
@@ -1693,7 +1669,6 @@ int do_init_pet(void)
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");
 	add_timer_func_list(pet_skill_bonus_timer,"pet_skill_bonus_timer"); // [Valaris]
-	add_timer_func_list(pet_skill_bonus_duration,"pet_skill_bonus_duration"); // [Valaris]
 	add_timer_func_list(pet_recovery_timer,"pet_recovery_timer"); // [Valaris]
 	add_timer_func_list(pet_mag_timer,"pet_mag_timer"); // [Valaris]
 	add_timer_func_list(pet_heal_timer,"pet_heal_timer"); // [Valaris]

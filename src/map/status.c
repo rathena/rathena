@@ -571,8 +571,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(sd->status.pet_id > 0) {
 		struct pet_data *pd=sd->pd;
 		if((pd && battle_config.pet_status_support==1) && (battle_config.pet_equip_required==0 || (battle_config.pet_equip_required && pd->equip > 0))) {
-			if(sd->status.pet_id > 0 && sd->petDB && sd->pet.intimate > 0)
-				run_script(sd->petDB->script,0,sd->bl.id,0);
+			if(sd->status.pet_id > 0 && sd->petDB && sd->pet.intimate > 0 &&
+				pd->state.skillbonus == 1) {
+				pc_bonus(sd,pd->skillbonustype,pd->skillbonusval);
+//				run_script(sd->petDB->script,0,sd->bl.id,0);
+			}
 			pele = sd->atk_ele;
 			pdef_ele = sd->def_ele;
 			sd->atk_ele = sd->def_ele = 0;
@@ -2832,6 +2835,16 @@ int status_get_race2(struct block_list *bl)
 	else
 		return 0;
 }
+int status_isdead(struct block_list *bl)
+{
+	nullpo_retr(0, bl);
+	if(bl->type == BL_MOB && (struct mob_data *)bl)
+		return ((struct mob_data *)bl)->state.state == MS_DEAD;
+	else if(bl->type==BL_PC && (struct map_session_data *)bl)
+		return pc_isdead((struct map_session_data *)bl);
+	else
+		return 0;
+}
 
 // StatusChangeŒn‚ÌŠ“¾
 struct status_change *status_get_sc_data(struct block_list *bl)
@@ -2971,6 +2984,9 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	nullpo_retr(0, bl);
 	if(bl->type == BL_SKILL)
 		return 0;
+	if(bl->type == BL_MOB)
+		if (status_isdead(bl)) return 0;
+
 	nullpo_retr(0, sc_data=status_get_sc_data(bl));
 	nullpo_retr(0, sc_count=status_get_sc_count(bl));
 	nullpo_retr(0, option=status_get_option(bl));
@@ -3025,7 +3041,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			}
 		}
 	}
-	else if(bl->type == BL_MOB) {
+	else if(bl->type == BL_MOB) {		
 	}
 	else {
 		if(battle_config.error_log)

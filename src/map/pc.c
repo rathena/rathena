@@ -747,7 +747,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 
 	// ƒXƒLƒ‹ƒ†ƒjƒbƒg?ŒW‚Ì‰Šú‰»
 	memset(sd->skillunit, 0, sizeof(sd->skillunit));
-	memset(sd->skillunittick, 0, sizeof(sd->skillunittick));
+	memset(sd->skillunittick, 0, sizeof(sd->skillunittick));	
 
 	// ƒp?ƒeƒB??ŒW‚Ì‰Šú‰»
 	sd->party_sended = 0;
@@ -989,23 +989,25 @@ int pc_calc_skilltree(struct map_session_data *sd)
                 for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
                     int j,f=1;
                     if(!battle_config.skillfree) {
-                        for(j=0;j<5;j++) {
-                            if( skill_tree[s][c][i].need[j].id &&
-                                pc_checkskill(sd,skill_tree[s][c][i].need[j].id) <
-                                skill_tree[s][c][i].need[j].lv) {
-                                f=0;
+						for(j=0;j<5;j++) {
+							if( skill_tree[s][c][i].need[j].id &&
+								pc_checkskill(sd,skill_tree[s][c][i].need[j].id) <
+								skill_tree[s][c][i].need[j].lv) {
+								f=0;
 								break;
 							}
-                        }
-						if (id >= 2 && id <= 53 && pc_checkskill(sd, NV_BASIC) < 9)
+						}
+						if (sd->status.job_level < skill_tree[s][c][i].joblv)
 							f=0;
-                    }
-                    if(f && sd->status.skill[id].id==0 ){
-                        sd->status.skill[id].id=id;
-                        flag=1;
-                    }
-                }
-            } while(flag);
+						if (id >= 2 && id <= 53 && pc_checkskill(sd, NV_BASIC) < 9)
+							f=0;						
+					}
+					if(f && sd->status.skill[id].id==0 ){
+						sd->status.skill[id].id=id;
+						flag=1;
+					}
+				}
+			} while(flag);
 	}
 //	if(battle_config.etc_log)
 //		printf("calc skill_tree\n");
@@ -1493,20 +1495,12 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->parame[SP_INT-SP_STR]+=val;
 			sd->parame[SP_DEX-SP_STR]+=val;
 			sd->parame[SP_LUK-SP_STR]+=val;
-			clif_updatestatus(sd,13);
-			clif_updatestatus(sd,14);
-			clif_updatestatus(sd,15);
-			clif_updatestatus(sd,16);
-			clif_updatestatus(sd,17);
-			clif_updatestatus(sd,18);
 		}
 		break;
 	case SP_AGI_VIT:	// [Valaris]
 		if(sd->state.lr_flag!=2) {
 			sd->parame[SP_AGI-SP_STR]+=val;
 			sd->parame[SP_VIT-SP_STR]+=val;
-			clif_updatestatus(sd,14);
-			clif_updatestatus(sd,15);
 		}
 		break;
 	case SP_AGI_DEX_STR:	// [Valaris]
@@ -1514,9 +1508,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->parame[SP_AGI-SP_STR]+=val;
 			sd->parame[SP_DEX-SP_STR]+=val;
 			sd->parame[SP_STR-SP_STR]+=val;
-			clif_updatestatus(sd,14);
-			clif_updatestatus(sd,17);
-			clif_updatestatus(sd,13);
 		}
 		break;
 	case SP_PERFECT_HIDE: // [Valaris]
@@ -7024,16 +7015,20 @@ int pc_readdb(void)
 
 	while(fgets(line, sizeof(line)-1, fp)){
 		char *split[50];
+		int f=0, m=3;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		for(j=0,p=line;j<13 && p;j++){
+		for(j=0,p=line;j<14 && p;j++){
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
 		if(j<13)
 			continue;
-		//i=atoi(split[0]);
+		if (j == 14) {
+			f=1;	// MinJobLvl has been added
+			m++;
+		}
 		s_class = pc_calc_base_job(atoi(split[0]));
 		i = s_class.job;
 		u = s_class.upper;
@@ -7045,16 +7040,11 @@ int pc_readdb(void)
 			continue;
 		skill_tree[u][i][j].id=atoi(split[1]);
 		skill_tree[u][i][j].max=atoi(split[2]);
-
-		//not required - Celest
-		//skill_tree[2][i][j].id=atoi(split[1]); //—{ŽqE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚ÅŽb’è
-		//skill_tree[2][i][j].max=atoi(split[2]); //—{ŽqE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚ÅŽb’è
+		if (f) skill_tree[u][i][j].joblv=atoi(split[3]);
 
 		for(k=0;k<5;k++){
-			skill_tree[u][i][j].need[k].id=atoi(split[k*2+3]);
-			skill_tree[u][i][j].need[k].lv=atoi(split[k*2+4]);
-			//skill_tree[2][i][j].need[k].id=atoi(split[k*2+3]); //—{ŽqE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚ÅŽb’è
-			//skill_tree[2][i][j].need[k].lv=atoi(split[k*2+4]); //—{ŽqE‚Í—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚ÅŽb’è
+			skill_tree[u][i][j].need[k].id=atoi(split[k*2+m]);
+			skill_tree[u][i][j].need[k].lv=atoi(split[k*2+m+1]);
 		}
 	}
 	fclose(fp);

@@ -485,6 +485,7 @@ struct pet_data {
 		unsigned state : 8 ;
 		unsigned skillstate : 8 ;
 		unsigned change_walk_target : 1 ;
+		short skillbonus;
 	} state;
 	int timer;
 	short to_x,to_y;
@@ -495,7 +496,8 @@ struct pet_data {
 	int move_fail_count;
 	unsigned int attackabletime,next_walktime,last_thinktime;
 	int skilltype,skillval,skilltimer,skillduration; // [Valaris]
-	int skillbonustype,skillbonusval,skillbonustimer,skillbonusduration; // [Valaris]
+	//int skillbonustype,skillbonusval,skillbonustimer,skillbonusduration; // [Valaris]
+	int skillbonustype,skillbonusval,skillbonustimer;
 	struct item *lootitem;
 	short loot; // [Valaris]
 	short lootmax; // [Valaris]

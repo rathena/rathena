@@ -6680,35 +6680,47 @@ int clif_guild_skillinfo(struct map_session_data *sd)
 			memset(WFIFOP(fd,c*37+18),0,24);
 			if(g->skill[i].lv < guild_skill_get_max(id)) {
 				//Kafra and Guardian changed to require Approval [Sara]
-				if (g->skill[i].id == GD_KAFRACONTACT && guild_checkskill(g,GD_APPROVAL) <= 0)
-					up = 0;
-				else if (g->skill[i].id == GD_GUARDIANRESEARCH && guild_checkskill(g,GD_APPROVAL) <= 0)
-					up = 0;
-				//Glory skill requirements -- Pretty sure correct [Sara]
-				else if (g->skill[i].id == GD_LEADERSHIP && guild_checkskill(g,GD_GLORYGUILD) <= 0)
-					up = 0;
-				else if (g->skill[i].id == GD_GLORYWOUNDS && guild_checkskill(g,GD_GLORYGUILD) <= 0)
-					up = 0;
-				else if (g->skill[i].id == GD_SOULCOLD && guild_checkskill(g,GD_GLORYWOUNDS) <= 0)
-					up = 0;
-				else if (g->skill[i].id == GD_HAWKEYES && guild_checkskill(g,GD_LEADERSHIP) <= 0)
-					up = 0;
-				//Activated skill requirements -- Just guesses [Sara]
-				else if (g->skill[i].id == GD_BATTLEORDER && guild_checkskill(g,GD_APPROVAL) <= 0)
-					up = 0;
-				else if (g->skill[i].id == GD_REGENERATION && guild_checkskill(g,GD_APPROVAL) <= 0)
-					up = 0;
-				else if (g->skill[i].id == GD_RESTORE && guild_checkskill(g,GD_REGENERATION) <= 0)
-					up = 0;
-				else if (g->skill[i].id == GD_EMERGENCYCALL && guild_checkskill(g,GD_APPROVAL) <= 0)
-					up = 0;
-				if (g->skill[i].id == GD_GUARDUP && guild_checkskill(g,GD_GUARDIANRESEARCH) <= 0)
-					up = 0;
-				//Unadded yet? Has extension description in kRO tables
-				else if (g->skill[i].id == GD_DEVELOPMENT)
-					up = 0;
-				else
-					up = 1;
+				switch (g->skill[i].id)
+				{
+					case GD_KAFRACONTACT:
+					case GD_GUARDIANRESEARCH:
+					case GD_GUARDUP:
+						up = guild_checkskill(g,GD_APPROVAL) > 0;
+						break;
+					case GD_LEADERSHIP:
+						//Glory skill requirements -- Pretty sure correct [Sara]
+						up = guild_checkskill(g,GD_GLORYGUILD) > 0;
+						break;
+					case GD_GLORYWOUNDS:
+						up = guild_checkskill(g,GD_GLORYGUILD) > 0;
+						break;
+					case GD_SOULCOLD:
+						up = guild_checkskill(g,GD_GLORYWOUNDS) > 0;
+						break;
+					case GD_HAWKEYES:
+						up = guild_checkskill(g,GD_LEADERSHIP) > 0;
+						break;
+					case GD_BATTLEORDER:
+						up = guild_checkskill(g,GD_APPROVAL) > 0 &&
+							guild_checkskill(g,GD_EXTENSION) >= 2;
+						break;
+					case GD_REGENERATION:
+						up = guild_checkskill(g,GD_EXTENSION) >= 5 &&
+							guild_checkskill(g,GD_BATTLEORDER) > 0;
+						break;
+					case GD_RESTORE:
+						up = guild_checkskill(g,GD_REGENERATION) >= 2;
+						break;
+					case GD_EMERGENCYCALL:
+						up = guild_checkskill(g,GD_GUARDIANRESEARCH) > 0 &&
+							guild_checkskill(g,GD_REGENERATION) > 0;
+						break;
+					case GD_DEVELOPMENT:
+						up = 0;
+						break;
+					default:
+						up = 1;
+				}
 			}
 			else {
 				up = 0;

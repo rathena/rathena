@@ -55,9 +55,7 @@ int pet_food(struct map_session_data *sd);
 int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd);
 int pet_delay_item_drop2(int tid,unsigned int tick,int id,int data);
 int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap);
-int pet_skill_bonus(struct map_session_data *sd,struct pet_data *pd,int type,int val,int duration,int timer,int data); 
 int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
-int pet_skill_bonus_duration(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_recovery_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_mag_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_heal_timer(int tid,unsigned int tick,int id,int data); // [Valaris]

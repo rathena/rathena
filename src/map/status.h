@@ -256,6 +256,8 @@ int status_get_atk_(struct block_list *bl);
 int status_get_atk_2(struct block_list *bl);
 int status_get_atk2(struct block_list *bl);
 
+int status_isdead(struct block_list *bl);
+
 int status_get_sc_def(struct block_list *bl, int type);
 #define status_get_sc_def_mdef(bl)	(status_get_sc_def(bl, SP_MDEF1))
 #define status_get_sc_def_vit(bl)	(status_get_sc_def(bl, SP_DEF2))

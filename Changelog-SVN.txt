@@ -1,5 +1,19 @@
 Date	Added
 
+02/20
+        * Added skill requirements for the new guild skills [celest]
+        * Allow Emergency Recall to be cast in guild castles even if nowarp and
+          nowarpto mapflags are enabled [celest]
+        * Add 'minimum job level required' for skill_tree reading [celest]
+          - Berserk now requires job level 50
+        * Added Spring Trap to be able to trigger ankle snare traps that aren't
+          activated yet [celest]
+        * Added a fix in guild.c by Mellowz [celest]
+        * Some rewrites on the pet skill bonuses system -- also fixes pet bonuses
+          not effecting stats as they should [celest]
+        * Check whether a monster is still alive before starting a status change
+          -- also fixes the status_change_timer nullpo errors with grimtooth [celest]
+
 02/19
         * Added bSubSize, bHPGainValue, and bDamageWhenUnequip [celest]
         * Updated bSPDrainValue/Rate to accept a 'type' [celest]

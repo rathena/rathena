@@ -185,6 +185,7 @@ int pc_calc_upper(int b_class);
 struct skill_tree_entry {
 	short id;
 	unsigned char max;
+	unsigned char joblv;
 	struct {
 		short id;
 		unsigned char lv;

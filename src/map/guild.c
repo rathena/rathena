@@ -696,10 +696,12 @@ int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
 				g->member[i].sd=NULL;
 			}
 	}
-	if(sd!=NULL && sd->status.guild_id==guild_id){
-		sd->status.guild_id=0;
-		sd->guild_emblem_id=0;
-		sd->guild_sended=0;
+	if(sd!=NULL) {
+		if (sd->status.guild_id==guild_id){
+			sd->status.guild_id=0;
+			sd->guild_emblem_id=0;
+			sd->guild_sended=0;
+		}
 	}
 
 	// メンバーリストを全員に再通知
