@@ -19,7 +19,7 @@ um_fild01.gat,0,0,0,0	monster	Harpy	1376,2,0,0,0
 
 //(um_fild02.gat)?
 um_fild02.gat,0,0,0,0	monster	Dustiness	1114,20,0,0,0
-um_fild02.gat,0,0,0,0	monster	Kind of Beetle	1494,30,0,0,0
+um_fild02.gat,0,0,0,0	monster	King of Beetle	1494,30,0,0,0
 um_fild02.gat,0,0,0,0	monster	Wooden Fighter	1499,42,0,0,0
 um_fild02.gat,0,0,0,0	monster	Wooden Shooter	1498,44,0,0,0
 
@@ -31,8 +31,8 @@ um_fild03.gat,0,0,0,0	monster	Dragon Tail	1321,25,0,0,0
 um_fild03.gat,0,0,0,0	monster	Gryphon	1447,1,150000,150000,0
 
 //(um_fild04.gat)?
-um_fild04.gat,0,0,0,0	monster	Stainer	1174,25,0,0,0
-um_fild04.gat,0,0,0,0	monster	Kind of Beetle	1494,20,0,0,0
-um_fild04.gat,0,0,0,0	monster	Wooden Shooter	1498,20,0,0,0
-um_fild04.gat,0,0,0,0	monster	Wooden Fighter	1499,30,0,0,0
-um_fild04.gat,0,0,0,0	monster	Choco	1214,1,0,0,0
+um_fild04.gat,0,0,0,0	monster	Stainer	1174,30,0,0,0
+um_fild04.gat,0,0,0,0	monster	King of Beetle	1494,30,0,0,0
+um_fild04.gat,0,0,0,0	monster	Wooden Shooter	1498,29,0,0,0
+um_fild04.gat,0,0,0,0	monster	Wooden Fighter	1499,10,0,0,0
+um_fild04.gat,0,0,0,0	monster	Choco	1214,11,0,0,0
