@@ -1,6 +1,8 @@
 Date	Added
 
 03/01
+        * Effects from dancer/bard skills will stay for 20 seconds after leaving the
+          skill area [celest]
         * Fixed /resetstate /resetskill being unuseable at all [celest]
         * Fixed /mm /mapmove being useable by all players [celest]
         * Fixed some compile errors in mob_once_spawn [celest]

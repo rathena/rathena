@@ -3279,31 +3279,29 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		break;
 	case MO_ABSORBSPIRITS:	// ?奪
 		i=0;
-		if(sd && dstsd) {
-			if(sd == dstsd || map[sd->bl.m].flag.pvp || map[sd->bl.m].flag.gvg) {
+		if(dstsd) {
+			if((sd && sd == dstsd) || map[src->m].flag.pvp || map[src->m].flag.gvg) {
 				if(dstsd->spiritball > 0) {
 					clif_skill_nodamage(src,bl,skillid,skilllv,1);
 					i = dstsd->spiritball * 7;
 					pc_delspiritball(dstsd,dstsd->spiritball,0);
 					if(i > 0x7FFF)
 						i = 0x7FFF;
-					if(sd->status.sp + i > sd->status.max_sp)
+					if(sd && sd->status.sp + i > sd->status.max_sp)
 						i = sd->status.max_sp - sd->status.sp;
-					}
+				}
 			}
-		}else if(sd && dstmd){ //?象がモンスタ?の場合
+		} else if (dstmd){ //?象がモンスタ?の場合
 			//20%の確率で?象のLv*2のSPを回復する。成功したときはタ?ゲット(σ?Д?)σ????!!
 			if(rand()%100<20){
 				i=2*mob_db[dstmd->class_].lv;
 				mob_target(dstmd,src,0);
 			}
 		}
-		if(i){
-						sd->status.sp += i;
-					clif_heal(sd->fd,SP_SP,i);
-				}
-				else
-					clif_skill_nodamage(src,bl,skillid,skilllv,0);
+		if(i && sd){
+			sd->status.sp += i;
+			clif_heal(sd->fd,SP_SP,i);
+		} else clif_skill_nodamage(src,bl,skillid,skilllv,0);
 		break;
 
 	case AC_MAKINGARROW:			/* 矢作成 */
@@ -5688,11 +5686,17 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 	case 0x9e:	/* 子守唄 */
 	case 0x9f:	/* ニヨルドの宴 */
 	case 0xa0:	/* 永遠の混沌 */
-	case 0xa1:	/* ?太鼓の響き */
-	case 0xa2:	/* ニ?ベルングの指輪 */
+	case 0xa1:	/* 戦太鼓の響き */
+	case 0xa2:	/* ニーベルングの指輪 */
 	case 0xa3:	/* ロキの叫び */
 	case 0xa4:	/* 深淵の中に */
-	case 0xa5:	/* 不死身のジ?クフリ?ド */
+	case 0xa5:	/* 不死身のジークフリード */
+	case 0xad:	/* 私を忘れないで… */
+		if (sc_data[type].timer!=-1 && sc_data[type].val4==(int)src) {
+			status_change_end(bl,type,-1);
+		}
+		break;	
+
 	case 0xa6:	/* 不協和音 */
 	case 0xa7:	/* 口笛 */
 	case 0xa8:	/* 夕陽のアサシンクロス */
@@ -5700,13 +5704,10 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 	case 0xaa:	/* イドゥンの林檎 */
 	case 0xab:	/* 自分勝手なダンス */
 	case 0xac:	/* ハミング */
-	case 0xad:	/* 私を忘れないで… */
 	case 0xae:	/* 幸運のキス */
 	case 0xaf:	/* サ?ビスフォ?ユ? */
-		if (sc_data[type].timer!=-1 && sc_data[type].val4==(int)src) {
-			status_change_end(bl,type,-1);
-		}
-		break;
+		status_change_start(bl,SkillStatusChangeTable[sg->skill_id],sg->skill_lv,0,0,0,20000,0 );
+		break;		
 
 	case 0xb4:	// Basilica
 		if (sc_data[type].timer!=-1 && sc_data[type].val4==(int)sg) {
