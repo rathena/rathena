@@ -760,3 +760,9 @@ Description	add no_mob_drops as a map flag
 Status:		Pending
 Assignee	None
 Notes		so that mobs don't drop shit in pvp arena's
+***
+69.
+Description	add MvM map flag
+Status:		Pending
+Assignee	None
+Notes		for allowing a monster on monster arena
