@@ -37,6 +37,7 @@ Other Ppl
 Date		Added
 ======
 12/22
+	* Added Arrow Quivers to the scrolls_arrows.txt and removed some rare arrows from the shop [Lupus]
 	* Corrected a typo in other/pvp.txt [Ajarn]
 
 12/21
