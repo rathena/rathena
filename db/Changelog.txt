@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/21
+        * Corrected exp table entries for Super Novice, thanks to Dino9021 [celest]
+
 03/19
 	* changed all cards to 'getrefine' function [Lupus]
 	* used 'cardscnt' instead of 'isequipped' in Crab Card.
