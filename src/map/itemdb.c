@@ -764,7 +764,7 @@ static int itemdb_read_sqldb(void)
 
 				// Insert a new row into the item database
 
-				/*id = calloc(sizeof(struct item_data), 1);
+				/*id = aCalloc(sizeof(struct item_data), 1);
 
 				if (id == NULL)
 				{

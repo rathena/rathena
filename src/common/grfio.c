@@ -31,6 +31,7 @@
 #include "grfio.h"
 #include "mmo.h"
 #include "showmsg.h"
+#include "malloc.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -350,7 +351,7 @@ static FILELIST* filelist_add(FILELIST *entry)
 	}
 
 	if (filelist_entrys>=filelist_maxentry) {
-		FILELIST *new_filelist = (FILELIST*)realloc(
+		FILELIST *new_filelist = (FILELIST*)aRealloc(
 			(void*)filelist, (filelist_maxentry+FILELIST_ADDS)*sizeof(FILELIST) );
 		if (new_filelist != NULL) {
 			filelist = new_filelist;
@@ -395,7 +396,7 @@ static void filelist_adjust(void)
 {
 	if (filelist!=NULL) {
 		if (filelist_maxentry>filelist_entrys) {
-			FILELIST *new_filelist = (FILELIST*)realloc(
+			FILELIST *new_filelist = (FILELIST*)aRealloc(
 				(void*)filelist,filelist_entrys*sizeof(FILELIST) );
 			if (new_filelist != NULL) {
 				filelist = new_filelist;
@@ -857,7 +858,7 @@ int grfio_add(char *fname)
 //	ShowStatus(tmp_output);
 
 	if (gentry_entrys>=gentry_maxentry) {
-		char **new_gentry = (char**)realloc(
+		char **new_gentry = (char**)aRealloc(
 			(void*)gentry_table,(gentry_maxentry+GENTRY_ADDS)*sizeof(char*) );
 		if (new_gentry!=NULL) {
 			int lop;

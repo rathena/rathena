@@ -31,6 +31,7 @@
 #include "guild.h"
 #include "pet.h"
 #include "nullpo.h"
+#include "malloc.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -691,7 +692,7 @@ int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B
 	struct map_session_data *pl_sd;
 	char Wisp_name[24];
         char mbuf[255];
-	char *message = ((RFIFOW(fd,2) - 30) >= sizeof(mbuf)) ? (char *) malloc((RFIFOW(fd,2) - 30)) : mbuf;
+	char *message = ((RFIFOW(fd,2) - 30) >= sizeof(mbuf)) ? (char *) aMalloc((RFIFOW(fd,2) - 30)) : mbuf;
 
 	min_gm_level = (int)RFIFOW(fd,28);
 	memcpy(Wisp_name, RFIFOP(fd,4), 24);

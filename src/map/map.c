@@ -1769,7 +1769,7 @@ static int map_readafm(int m,char *fn) {
 		map[m].m = m;
 		xs = map[m].xs = afm_size[0];
 		ys = map[m].ys = afm_size[1];
-		map[m].gat = calloc(s = map[m].xs * map[m].ys, 1);
+		map[m].gat = aCalloc(s = map[m].xs * map[m].ys, 1);
 
 		if(map[m].gat==NULL){
 			printf("out of memory : map_readmap gat\n");
@@ -1792,14 +1792,14 @@ static int map_readafm(int m,char *fn) {
 		map[m].bxs=(xs+BLOCK_SIZE-1)/BLOCK_SIZE;
 		map[m].bys=(ys+BLOCK_SIZE-1)/BLOCK_SIZE;
 		size = map[m].bxs * map[m].bys * sizeof(struct block_list*);
-		map[m].block = calloc(size, 1);
+		map[m].block = aCalloc(size, 1);
 
 		if(map[m].block == NULL){
 			printf("out of memory : map_readmap block\n");
 			exit(1);
 		}
 
-		map[m].block_mob = calloc(size, 1);
+		map[m].block_mob = aCalloc(size, 1);
 		if (map[m].block_mob == NULL) {
 			printf("out of memory : map_readmap block_mob\n");
 			exit(1);
@@ -1807,14 +1807,14 @@ static int map_readafm(int m,char *fn) {
 
 		size = map[m].bxs*map[m].bys*sizeof(int);
 
-		map[m].block_count = calloc(size, 1);
+		map[m].block_count = aCalloc(size, 1);
 		if(map[m].block_count==NULL){
 			printf("out of memory : map_readmap block\n");
 			exit(1);
 		}
 		memset(map[m].block_count,0,size);
 
-		map[m].block_mob_count=calloc(size, 1);
+		map[m].block_mob_count=aCalloc(size, 1);
 		if(map[m].block_mob_count==NULL){
 			printf("out of memory : map_readmap block_mob\n");
 			exit(1);
@@ -2067,15 +2067,15 @@ int parse_console(char *buf) {
     int m, n;
     struct map_session_data *sd;
 
-    sd = calloc(sizeof(*sd), 1);
+    sd = aCalloc(sizeof(*sd), 1);
 
     sd->fd = 0;
     strcpy( sd->status.name , "console");
 
-    type = (char *)malloc(64);
-    command = (char *)malloc(64);
-    map = (char *)malloc(64);
-    buf2 = (char *)malloc(72);
+    type = (char *)aMalloc(64);
+    command = (char *)aMalloc(64);
+    map = (char *)aMalloc(64);
+    buf2 = (char *)aMalloc(72);
 
     memset(type,0,64);
     memset(command,0,64);

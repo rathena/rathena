@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include "malloc.h"
 
 void dump(unsigned char *buffer, int num)
 {
@@ -142,7 +143,7 @@ int StringBuf_Printf(struct StringBuf *sbuf,const char *fmt,...)
 		/* Else try again with more space. */
 		sbuf->max_ *= 2; // twice the old size
 		off = sbuf->ptr_ - sbuf->buf_;
-		sbuf->buf_ = (char *) realloc(sbuf->buf_, sbuf->max_ + 1);
+		sbuf->buf_ = (char *) aRealloc(sbuf->buf_, sbuf->max_ + 1);
 		sbuf->ptr_ = sbuf->buf_ + off;
 	}
 }
@@ -156,7 +157,7 @@ int StringBuf_Append(struct StringBuf *buf1,const struct StringBuf *buf2)
 	if (size2 >= buf1_avail)  {
 		int off = buf1->ptr_ - buf1->buf_;
 		buf1->max_ += size2;
-		buf1->buf_ = (char *) realloc(buf1->buf_, buf1->max_ + 1);
+		buf1->buf_ = (char *) aRealloc(buf1->buf_, buf1->max_ + 1);
 		buf1->ptr_ = buf1->buf_ + off;
 	}
 

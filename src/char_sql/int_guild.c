@@ -13,6 +13,7 @@
 #include "mmo.h"
 #include "socket.h"
 #include "db.h"
+#include "malloc.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -332,7 +333,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	if (g != NULL)
 		return g;
 	
-	g = (struct guild *) malloc(sizeof(struct guild));
+	g = (struct guild *) aMalloc(sizeof(struct guild));
 	memset(g,0,sizeof(struct guild));
 	
 //	printf("Retrieve guild information from sql ......\n");
@@ -528,7 +529,7 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 
 	gcopy = numdb_search(castle_db_,gc->castle_id);
 	if (gcopy == NULL) {
-	  gcopy = (struct guild_castle *) malloc(sizeof(struct guild_castle));
+	  gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
 	  numdb_insert(castle_db_, gc->castle_id, gcopy);
 	} else {
             if ((gc->guild_id  == gcopy->guild_id ) && (  gc->economy  == gcopy->economy ) && ( gc->defense  == gcopy->defense ) && ( gc->triggerE  == gcopy->triggerE ) && ( gc->triggerD  == gcopy->triggerD ) && ( gc->nextTime  == gcopy->nextTime ) && ( gc->payTime  == gcopy->payTime ) && ( gc->createTime  == gcopy->createTime ) && ( gc->visibleC  == gcopy->visibleC ) && ( gc->visibleG0  == gcopy->visibleG0 ) && ( gc->visibleG1  == gcopy->visibleG1 ) && ( gc->visibleG2  == gcopy->visibleG2 ) && ( gc->visibleG3  == gcopy->visibleG3 ) && ( gc->visibleG4  == gcopy->visibleG4 ) && ( gc->visibleG5  == gcopy->visibleG5 ) && ( gc->visibleG6  == gcopy->visibleG6 ) && ( gc->visibleG7  == gcopy->visibleG7 ) && ( gc->Ghp0  == gcopy->Ghp0 ) && ( gc->Ghp1  == gcopy->Ghp1 ) && ( gc->Ghp2  == gcopy->Ghp2 ) && ( gc->Ghp3  == gcopy->Ghp3 ) && ( gc->Ghp4  == gcopy->Ghp4 ) && ( gc->Ghp5  == gcopy->Ghp5 ) && ( gc->Ghp6  == gcopy->Ghp6 ) && ( gc->Ghp7 == gcopy->Ghp7 ))
@@ -578,7 +579,7 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 
 	gcopy = numdb_search(castle_db_,gc->castle_id);
 	if (gcopy == NULL) {
-	  gcopy = (struct guild_castle *) malloc(sizeof(struct guild_castle));
+	  gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
 	  numdb_insert(castle_db_, gc->castle_id, gcopy);
 	} else {
 	  memcpy(gc, gcopy, sizeof(struct guild_castle));
@@ -678,9 +679,9 @@ int inter_guild_sql_init()
         guild_castleinfoevent_db_=numdb_init();
 	
 	printf("interserver guild memory initialize.... (%d byte)\n",sizeof(struct guild));
-	guild_pt = calloc(sizeof(struct guild), 1);
-	guild_pt2= calloc(sizeof(struct guild), 1);
-	guildcastle_pt=calloc(sizeof(struct guild_castle), 1);
+	guild_pt = aCalloc(sizeof(struct guild), 1);
+	guild_pt2= aCalloc(sizeof(struct guild), 1);
+	guildcastle_pt=aCalloc(sizeof(struct guild_castle), 1);
 	
 	inter_guild_readdb(); // Read exp
 	
@@ -1096,7 +1097,7 @@ int mapif_guild_castle_alldataload(int fd) {
 
                         gcopy = numdb_search(castle_db_,gc->castle_id);
                         if (gcopy == NULL) {
-                            gcopy = (struct guild_castle *) malloc(sizeof(struct guild_castle));
+                            gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
                             numdb_insert(castle_db_, gc->castle_id, gcopy);
                         }
                         memcpy(gcopy, gc, sizeof(struct guild_castle));

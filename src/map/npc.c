@@ -245,8 +245,8 @@ int npc_event_export(void *key,void *data,va_list ap)
 		char *buf;
 		char *p=strchr(lname,':');
 		// エクスポートされる
-		ev=calloc(sizeof(struct event_data), 1);
-		buf=calloc(50, 1);
+		ev=aCalloc(sizeof(struct event_data), 1);
+		buf=aCalloc(50, 1);
 		if (ev==NULL || buf==NULL) {
 			printf("npc_event_export: out of memory !\n");
 			exit(1);
@@ -460,7 +460,7 @@ int npc_addeventtimer(struct npc_data *nd,int tick,const char *name)
 		if( nd->eventtimer[i]==-1 )
 			break;
 	if(i<MAX_EVENTTIMER){
-		char *evname=malloc(24);
+		char *evname=aMalloc(24);
 		if(evname==NULL){
 			printf("npc_addeventtimer: out of memory !\n");exit(1);
 		}
@@ -546,8 +546,8 @@ int npc_timerevent_import(void *key,void *data,va_list ap)
 		// タイマーイベント
 		struct npc_timerevent_list *te=nd->u.scr.timer_event;
 		int j,i=nd->u.scr.timeramount;
-		if(te==NULL) te=malloc(sizeof(struct npc_timerevent_list));
-		else te=realloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
+		if(te==NULL) te=aMalloc(sizeof(struct npc_timerevent_list));
+		else te=aRealloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
 		if(te==NULL){
 			printf("npc_timerevent_import: out of memory !\n");
 			exit(1);
@@ -1777,7 +1777,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 	}else{
 		// duplicate
 
-//		nd->u.scr.label_list=malloc(sizeof(struct npc_label_list)*label_dupnum);
+//		nd->u.scr.label_list=aMalloc(sizeof(struct npc_label_list)*label_dupnum);
 //		memcpy(nd->u.scr.label_list,label_dup,sizeof(struct npc_label_list)*label_dupnum);
 
 		nd->u.scr.label_list=label_dup;	// ラベルデータ共有

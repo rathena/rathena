@@ -40,6 +40,7 @@ void Gettimeofday(struct timeval *timenow)
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h>
+#include "malloc.h"
 
 //add include for DBMS(mysql)
 #include <mysql.h>
@@ -160,7 +161,7 @@ struct dbt *online_db;
 
 void add_online_user(int account_id) {
     int *p;
-    p = malloc(sizeof(int));
+    p = aMalloc(sizeof(int));
     if (p == NULL) {
 		printf("add_online_user: memory allocation failure (malloc)!\n");
 		exit(0);
@@ -1462,8 +1463,8 @@ int parse_login(int fd) {
 int parse_console(char *buf) {
     char *type,*command;
 
-    type = (char *)malloc(64);
-    command = (char *)malloc(64);
+    type = (char *)aMalloc(64);
+    command = (char *)aMalloc(64);
 
     memset(type,0,64);
     memset(command,0,64);

@@ -126,7 +126,7 @@ int pc_set_gm_level(int account_id, int level) {
     }
 
     GM_num++;
-    gm_account = realloc(gm_account, sizeof(struct gm_account) * GM_num);
+    gm_account = aRealloc(gm_account, sizeof(struct gm_account) * GM_num);
     gm_account[GM_num - 1].account_id = account_id;
     gm_account[GM_num - 1].level = level;
     return 0;
@@ -6430,7 +6430,7 @@ int pc_setreg(struct map_session_data *sd,int reg,int val)
 		}
 	}
 	sd->reg_num++;
-	sd->reg = realloc(sd->reg, sizeof(*(sd->reg)) * sd->reg_num);
+	sd->reg = aRealloc(sd->reg, sizeof(*(sd->reg)) * sd->reg_num);
 	if (sd->reg == NULL){
 		printf("out of memory : pc_setreg\n");
 		exit(1);
@@ -6481,7 +6481,7 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 			return 0;
 		}
 	sd->regstr_num++;
-	sd->regstr = realloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
+	sd->regstr = aRealloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
 	if(sd->regstr==NULL){
 		printf("out of memory : pc_setreg\n");
 		exit(1);
@@ -7750,7 +7750,7 @@ int pc_read_gm_account(int fd)
 		free(gm_account);
 	GM_num = 0;
 #ifdef TXT_ONLY
-	gm_account = calloc(sizeof(struct gm_account) * ((RFIFOW(fd,2) - 4) / 5), 1);
+	gm_account = aCalloc(sizeof(struct gm_account) * ((RFIFOW(fd,2) - 4) / 5), 1);
 	for (i = 4; i < RFIFOW(fd,2); i = i + 5) {
 		gm_account[GM_num].account_id = RFIFOL(fd,i);
 		gm_account[GM_num].level = (int)RFIFOB(fd,i+4);
@@ -7764,7 +7764,7 @@ int pc_read_gm_account(int fd)
 	}
 	lsql_res = mysql_store_result(&lmysql_handle);
 	if (lsql_res) {
-	    gm_account = calloc(sizeof(struct gm_account) * mysql_num_rows(lsql_res), 1);
+	    gm_account = aCalloc(sizeof(struct gm_account) * mysql_num_rows(lsql_res), 1);
 	    while ((lsql_row = mysql_fetch_row(lsql_res))) {
 	        gm_account[GM_num].account_id = atoi(lsql_row[0]);
 		    gm_account[GM_num].level = atoi(lsql_row[1]);

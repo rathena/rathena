@@ -5598,7 +5598,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	group->range=range;
 	if(skillid==HT_TALKIEBOX ||
 	   skillid==RG_GRAFFITI){
-		group->valstr=calloc(80, 1);
+		group->valstr=aCalloc(80, 1);
 		if(group->valstr==NULL){
 			printf("skill_castend_map: out of memory !\n");
 			exit(1);
@@ -6547,7 +6547,7 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 					src->bl.x,src->bl.y,1);
 			if(group == NULL)
 				return 0;
-			group->valstr=calloc(24, 1);
+			group->valstr=aCalloc(24, 1);
 			if(group->valstr==NULL){
 				printf("skill_unit_onlimit: out of memory !\n");
 				exit(1);
@@ -11204,9 +11204,9 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int
 			int i,j, *r_flag, *s_flag, *m_flag;
 			struct skill_unit *unit1;
 			struct skill_unit *unit2;
-                        r_flag = (int *) malloc(sizeof(int) * group->unit_count);
-                        s_flag = (int *) malloc(sizeof(int) * group->unit_count);
-                        m_flag = (int *) malloc(sizeof(int) * group->unit_count);
+                        r_flag = (int *) aMalloc(sizeof(int) * group->unit_count);
+                        s_flag = (int *) aMalloc(sizeof(int) * group->unit_count);
+                        m_flag = (int *) aMalloc(sizeof(int) * group->unit_count);
 			memset(r_flag,0, sizeof(int) * group->unit_count);// ?承フラグ
 			memset(s_flag,0, sizeof(int) * group->unit_count);// ?承フラグ
 			memset(m_flag,0, sizeof(int) * group->unit_count);// ?承フラグ

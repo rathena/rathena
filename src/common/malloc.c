@@ -42,3 +42,9 @@ void* aRealloc_( void *p, size_t size, const char *file, int line, const char *f
 	}
 	return ret;
 }
+
+void * _bcalloc(size_t size, size_t cnt) {
+	void *ret = malloc(size * cnt);
+	memset(ret, 0, size * cnt);
+	return ret;
+}

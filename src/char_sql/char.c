@@ -38,6 +38,7 @@
 #include "itemdb.h"
 #include "inter.h"
 #include "db.h"
+#include "malloc.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -266,7 +267,7 @@ void read_gm_account(void) {
 	}
 	lsql_res = mysql_store_result(&lmysql_handle);
 	if (lsql_res) {
-		gm_account = calloc(sizeof(struct gm_account) * mysql_num_rows(lsql_res), 1);
+		gm_account = aCalloc(sizeof(struct gm_account) * mysql_num_rows(lsql_res), 1);
 		while ((lsql_row = mysql_fetch_row(lsql_res))) {
 			gm_account[GM_num].account_id = atoi(lsql_row[0]);
 			gm_account[GM_num].level = atoi(lsql_row[1]);
@@ -330,7 +331,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	cp = numdb_search(char_db_,char_id);
 
 	if (cp == NULL) {
-		cp = (struct mmo_charstatus *) malloc(sizeof(struct mmo_charstatus));
+		cp = (struct mmo_charstatus *) aMalloc(sizeof(struct mmo_charstatus));
     		memset(cp, 0, sizeof(struct mmo_charstatus));
 		numdb_insert(char_db_, char_id,cp);
 	}
@@ -1130,7 +1131,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 	printf("char data load success]\n");	//ok. all data load successfuly!
 
-	cp = (struct mmo_charstatus *) malloc(sizeof(struct mmo_charstatus));
+	cp = (struct mmo_charstatus *) aMalloc(sizeof(struct mmo_charstatus));
     	memcpy(cp, p, sizeof(struct mmo_charstatus));
 	numdb_insert(char_db_, char_id,cp);
 
@@ -2804,8 +2805,8 @@ int parse_char(int fd) {
 int parse_console(char *buf) {
     char *type,*command;
 
-    type = (char *)malloc(64);
-    command = (char *)malloc(64);
+    type = (char *)aMalloc(64);
+    command = (char *)aMalloc(64);
 
     memset(type,0,64);
     memset(command,0,64);

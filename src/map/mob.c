@@ -286,7 +286,7 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
 
 	for(count=0;count<amount;count++){
 		struct guild_castle *gc;
-		md=calloc(sizeof(struct mob_data), 1);
+		md=aCalloc(sizeof(struct mob_data), 1);
 		if(md==NULL){
 			printf("mob_spawn_guardian: out of memory !\n");
 			exit(1);

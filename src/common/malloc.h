@@ -3,6 +3,21 @@
 
 #include <stdlib.h>
 
+#if defined(GCOLLECT)
+
+#include "gc.h"
+#define aMalloc(n) GC_MALLOC(n)
+#define aCalloc(m,n) _bcalloc(m,n)
+#define aRealloc(p,n) GC_REALLOC(p,n)
+
+extern void * _bcalloc(size_t, size_t);
+
+#elif defined(BCHECK)
+#define aMalloc(n) malloc(n)
+#define aCalloc(m,n) calloc(m,n)
+#define aRealloc(p,n) realloc(p,n)
+#else
+
 #if __STDC_VERSION__ < 199901L
 # if __GNUC__ >= 2
 #  define __func__ __FUNCTION__
@@ -21,5 +36,6 @@ void* aRealloc_( void *p, size_t size, const char *file, int line, const char *f
 #define aCalloc(m,n) aCalloc_(m,n,ALC_MARK)
 #define aRealloc(p,n) aRealloc_(p,n,ALC_MARK)
 
+#endif
 
 #endif

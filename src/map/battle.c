@@ -5416,11 +5416,11 @@ void battle_set_defaults() {
 	battle_config.natural_heal_skill_interval=10000;
 	battle_config.natural_heal_weight_rate=50;
 	battle_config.item_name_override_grffile=1;
-	battle_config.item_equip_override_grffile=1;	// [Celest]
-	battle_config.item_slots_override_grffile=1;	// [Celest]
-	battle_config.indoors_override_grffile=1;	// [Celest]
-	battle_config.skill_sp_override_grffile=1;	// [Celest]
-	battle_config.cardillust_read_grffile=1;	// [Celest]	
+	battle_config.item_equip_override_grffile=0;	// [Celest]
+	battle_config.item_slots_override_grffile=0;	// [Celest]
+	battle_config.indoors_override_grffile=0;	// [Celest]
+	battle_config.skill_sp_override_grffile=0;	// [Celest]
+	battle_config.cardillust_read_grffile=0;	// [Celest]	
 	battle_config.arrow_decrement=1;
 	battle_config.max_aspd = 199;
 	battle_config.max_hp = 32500;

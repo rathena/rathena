@@ -5465,14 +5465,14 @@ int buildin_strmobinfo(struct script_state *st)
 
 	if(num==1) {
 		char *buf;
-		buf=calloc(24, 1);
+		buf=aCalloc(24, 1);
 		buf=mob_db[class].name;
 		push_str(st->stack,C_STR,buf);
 		return 0;
 	}
 	else if(num==2)	{
 		char *buf;
-		buf=calloc(24, 1);
+		buf=aCalloc(24, 1);
 		buf=mob_db[class].jname;
 		push_str(st->stack,C_STR,buf);
 		return 0;
@@ -6137,7 +6137,7 @@ int buildin_getsavepoint(struct script_state *st)
         sd=script_rid2sd(st);
 
         type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-        mapname=calloc(24, 1);
+        mapname=aCalloc(24, 1);
 
         x=sd->status.save_point.x;
         y=sd->status.save_point.y;
@@ -6206,7 +6206,7 @@ int buildin_getmapxy(struct script_state *st){
 
 //??????????? >>>  Possible needly check function parameters on C_STR,C_INT,C_INT <<< ???????????//
 	type=conv_num(st,& (st->stack->stack_data[st->start+5]));
-	mapname=calloc(24, 1);
+	mapname=aCalloc(24, 1);
 
         switch (type){
             case 0:                                             //Get Character Position
