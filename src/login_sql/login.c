@@ -347,8 +347,8 @@ int mmo_auth( struct mmo_account* account , int fd){
 	//login {0-account_id/1-userid/2-user_pass/3-lastlogin/4-logincount/5-sex/6-connect_untl/7-last_ip/8-ban_until/9-state}
 
 	sql_query(tmpsql,"mmo_auth");
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res) {
+
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
 		if(!(sql_row = mysql_fetch_row(sql_res))) {
 		    #ifdef DEBUG
 			printf ("Auth failed: No Account Time: [%s] Username: [%s] Password: [%s]\n", tmpstr, account->userid, account->passwd);
