@@ -1587,7 +1587,7 @@ int read_petdb()
 {
 	FILE *fp;
 	char line[1024];
-	int nameid,i;
+	int nameid,i,k; 
 	int j=0;
 	int lines;
 	char *filename[]={"db/pet_db.txt","db/pet_db2.txt"};
@@ -1604,18 +1604,19 @@ int read_petdb()
 		}
 		lines = 0;
 		while(fgets(line,1020,fp)){
+			
 			lines++;
 
 			if(line[0] == '/' && line[1] == '/')
 				continue;
 
-			for(i=0,p=line;i<20;i++){
+			for(k=0,p=line;k<20;k++){
 				if((np=strchr(p,','))!=NULL){
-					str[i]=p;
+					str[k]=p;
 					*np=0;
 					p=np+1;
 				} else {
-					str[i]=p;
+					str[k]=p;
 					p+=strlen(p);
 				}
 			}
