@@ -103,3 +103,5 @@ Progress:	0%
 	Gain 50
 	Repeat
 
+	Lupus: heh i fixid similiar bug in DELITEM script command. i think it's the same bug in other function
+	so i'm in charge 
