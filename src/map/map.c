@@ -1704,6 +1704,7 @@ int map_readallmap(void) {
 			if(map_readmap(i,fn, p) == -1) {
 				map_delmap(map[i].name);
 				maps_removed++;
+				i--;
 			} else {
 				if (last_time != time(0)) {
 					last_time = time(0);
