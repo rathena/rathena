@@ -2,12 +2,12 @@
 // original code from athena
 // SQL conversion by Jioh L. Jung
 //
-#include "char.h"
-#include "../common/strlib.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "char.h"
+#include "../common/strlib.h"
 
 struct s_pet *pet_pt;
 static int pet_newid = 100;

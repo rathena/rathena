@@ -3,12 +3,12 @@
 // SQL conversion by hack
 //
 
-#include "char.h"
-#include "../common/strlib.h"
-#include "socket.h"	
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "char.h"
+#include "../common/strlib.h"
+#include "socket.h"	
 
 static struct party *party_pt;
 static int party_newid=100;

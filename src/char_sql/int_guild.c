@@ -4,6 +4,10 @@
 //
 
 
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "char.h"
 #include "../common/strlib.h"
 #include "int_storage.h"
@@ -14,10 +18,6 @@
 #include "socket.h"
 #include "db.h"
 #include "malloc.h"
-
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 static struct dbt *guild_db_;
 static struct dbt *castle_db_;

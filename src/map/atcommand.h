@@ -217,6 +217,9 @@ enum AtCommandType {
 	AtCommand_Grind, // by MouseJstr
 	AtCommand_Grind2, // by MouseJstr
 
+	AtCommand_DMStart, // by MouseJstr
+	AtCommand_DMTick, // by MouseJstr
+
 	AtCommand_JumpToId, // by Dino9021
 	AtCommand_JumpToId2, // by Dino9021
 	AtCommand_RecallId, // by Dino9021

@@ -230,6 +230,11 @@ ACMD_FUNC(rings); // by MouseJstr
 ACMD_FUNC(grind); // by MouseJstr
 ACMD_FUNC(grind2); // by MouseJstr
 
+#ifdef DMALLOC
+ACMD_FUNC(dmstart); // by MouseJstr
+ACMD_FUNC(dmtick); // by MouseJstr
+#endif
+
 ACMD_FUNC(jumptoid); // by Dino9021
 ACMD_FUNC(jumptoid2); // by Dino9021
 ACMD_FUNC(recallid); // by Dino9021
@@ -489,6 +494,11 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Rings,		"@rings",	40, atcommand_rings }, // [MouseJstr]
 	{ AtCommand_Grind,		"@grind",	99, atcommand_grind }, // [MouseJstr]
 	{ AtCommand_Grind2,		"@grind2",	99, atcommand_grind2 }, // [MouseJstr]
+
+#ifdef DMALLOC
+	{ AtCommand_DMStart,		"@dmstart",	99, atcommand_dmstart }, // [MouseJstr]
+	{ AtCommand_DMTick,		"@dmtick",	99, atcommand_dmtick }, // [MouseJstr]
+#endif
 
 	{ AtCommand_JumpToId,       "@jumptoid",  20, atcommand_jumptoid }, // [Dino9021]
 	{ AtCommand_JumpToId,       "@warptoid",  20, atcommand_jumptoid }, // [Dino9021]
@@ -7328,6 +7338,31 @@ atcommand_rings(const int fd, struct map_session_data* sd,
 
   return 0;
 }
+
+#ifdef DMALLOC
+unsigned long dmark_;
+int
+atcommand_dmstart(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+  dmark_ = dmalloc_mark();
+
+  clif_displaymessage(fd, "debug mark set");
+
+  return 0;
+}
+
+int
+atcommand_dmtick(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+  dmalloc_log_changed ( dmark_, 1, 0, 1 ) ;
+  dmark_ = dmalloc_mark();
+  clif_displaymessage(fd, "malloc changes logged");
+
+  return 0;
+}
+#endif
 
 /*==========================================
  * @grind by [MouseJstr]

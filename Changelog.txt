@@ -1,5 +1,8 @@
 Date	Added
 12/29
+	* Another -1 alive_timer fix (SVN 866) [MouseJstr]
+	* Added @dmstart and @dmtick for debugging malloc tests [MouseJstr]
+	* Fix some more compile errors on different platforms [MouseJstr]
 	* Fixing a crash if you change the name of a pet you don't have (SVN 863) [MouseJstr]
 	* Eliminated src/common/malloc.c when not needed [MouseJstr]
 	* Some code cleanup in prep for new debugging malloc (SVN 861) [MouseJstr]

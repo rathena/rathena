@@ -2,10 +2,11 @@
 // original code from athena
 // SQL conversion by Jioh L. Jung
 //
-#include "char.h"
-#include "itemdb.h"
 #include <string.h>
 #include <stdlib.h>
+
+#include "char.h"
+#include "itemdb.h"
 
 #define STORAGE_MEMINC	16
 
