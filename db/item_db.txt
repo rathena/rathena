@@ -1276,20 +1276,20 @@
 5060,Pointy_Cap,Pointy Cap,5,20,0,300,,3,,0,10477567,2,256,,0,144,{},{ bonus bLuk,1; }
 5061,Flower_Hairpin,Flower Hairpin,5,20,0,100,,1,,0,10477567,2,256,,0,145,{},{}
 5062,Straw_Hat,Straw Hat,5,20,0,200,,3,,0,10477567,2,256,,50,146,{},{ bonus bAgi,1; }
-5063,Bandaid,Bandaid,5,20,0,100,,1,,0,10477567,2,256,,0,147,{},{}
+5063,Bandage,Bandage,5,20,0,100,,1,,0,10477567,2,256,,0,147,{},{}
 5064,Transformation_Leaf,Transformation Leaf,5,20,0,100,,1,,0,10477567,2,256,,0,148,{},{}
 5065,Fresh_Blueish_Fish,Fresh Blueish Fish,5,20,0,500,,2,,0,10477567,2,256,,50,149,{},{ bonus2 bAddRace,5,10; }
 5066,Horns_Of_Succubus,Horns of Succubus,5,20,0,800,,4,,0,10477567,2,256,,70,150,{},{ bonus bInt,1; bonus bMdef,10; }
 5067,Sombrero,Sombrero,5,20,0,350,,4,,0,10477567,2,256,,0,151,{},{ bonus bAgi,1; }
 5068,Ears_of_Demon,Ears Of Demon,5,20,0,100,,1,,0,10477567,2,512,,70,152,{},{ bonus bStr,1; }
 5069,Fox_Mask,Fox Mask,5,20,0,300,,1,,0,10477567,2,256,,0,153,{},{ bonus bAgi,1; bonus bLuk,1; }
-5070,Bandage,Bandage,5,20,0,100,,1,,0,10477567,2,256,,0,154,{},{ bonus bStr,2; }
+5070,Burning_Blood_Bandana,Burning Blood Bandana,5,20,0,100,,1,,0,10477567,2,256,,0,154,{},{ bonus bStr,2; }
 5071,Indian_Headband,Indian Headband,5,20,0,200,,1,,0,10477567,2,256,,0,155,{},{ bonus bDex,1; }
 5072,Horns_Of_Incubus,Horns Of Incubus,5,20,0,800,,4,,0,10477567,2,256,,70,156,{},{ bonus bAgi,1; bonus bMdef,10; }
-5073,Campus_Hat,Campus Hat,5,20,0,700,,2,,0,10477567,2,256,,0,157,{},{ bonus bDex,2; }
+5073,Posture_Fix_Hat,Posture Fix Hat,5,20,0,700,,2,,0,10477567,2,256,,0,157,{},{ bonus bDex,2; }
 5074,Ears_of_Angel,Ears of Angel,5,20,0,100,,1,,0,10477567,2,512,,70,158,{},{ bonus bStr,1; }
 5075,Cowboy_Hat,Cowboy Hat,5,20,0,500,,4,,0,10477567,2,256,,0,159,{},{}
-5076,Furry_Hat,Furry Hat,5,20,0,350,,2,,0,10477567,2,256,,0,160,{},{ bonus bLuk,1; }
+5076,Wool_Hat,Wool Hat,5,20,0,350,,2,,0,10477567,2,256,,0,160,{},{ bonus bLuk,1; }
 5077,Tulip_Hairpin,Tulip Hairpin,5,20,0,100,,1,,0,10477567,2,256,,0,161,{},{}
 5078,Sea_Otter_Hat,Sea Otter Hat,5,20,0,800,,3,,0,10477567,2,256,,50,162,{},{ bonus bVit,1; }
 5079,X_Hairpin,X Hairpin,5,20,0,100,,1,,0,10477567,2,256,,0,163,{},{}
@@ -1299,12 +1299,12 @@
 5083,Back_Ribbon,Back Ribbon,5,20,0,200,,1,,0,10477567,0,256,,45,167,{},{ bonus bMdef,10; }
 5084,Lazy_Raccoon_Hat,Lazy Racoon Hat,5,20,0,500,,1,,0,10477567,2,256,,0,168,{},{ bonus2 bResEff,Eff_Sleep,2000; }
 5085,Small_Twin_Ribbons,Small Twin Ribbons,5,20,0,100,,1,,0,10477567,0,512,,45,169,{},{}
-5086,Sad_Mask,Sad Mask,5,20,0,100,,2,,0,10477567,2,513,,0,170,{},{ bonus2 bResEff,Eff_Blind,5000; }
+5086,Alarm_Mask,Alarm Mask¡5,20,0,100,,2,,0,10477567,2,513,,0,170,{},{ bonus2 bResEff,Eff_Blind,5000; }
 5087,Expressionless_Mask,Expressionless Mask,5,20,0,100,,1,,0,10477567,2,513,,0,171,{},{}
 5088,Surprised_Mask,Surprised Mask,5,20,0,100,,1,,0,10477567,2,513,,0,172,{},{}
 5089,Annoyed_Mask,Annoyed Mask,5,20,0,100,,1,,0,10477567,2,513,,0,173,{},{}
-5090,Mask_of_the_Goblin_Leader,Mask of The Goblin Leader,5,20,0,100,,2,,0,10477567,2,513,,0,174,{},{}
-5091,Big_Golden_Bell,Big Golden Bell,5,20,0,200,,2,,0,10477567,2,768,,35,175,{},{}
+5090,Goblin_Leader_Mask,Goblin Leader Mask,5,20,0,100,,2,,0,10477567,2,513,,0,174,{},{}
+5091,Golden_Bells,Golden Bells,5,20,0,200,,2,,0,10477567,2,768,,35,175,{},{}
 5092,Nun_Hat,Nun Hat,5,20,0,300,,5,,0,33024,0,768,,65,176,{},{}
 5093,Nun_Hat_,Nun Hat,5,20,0,300,,5,,0,33024,0,768,,65,177,{},{ bonus bMaxSP,100; }
 5094,Orc_Hero_Helm,Orc Hero Helm,5,20,0,900,,5,,0,10477567,2,768,,55,178,{},{ bonus bStr,2; bonus bVit,1; }
@@ -1424,7 +1424,7 @@
 7108,Piece_of_Shield,Broken Shield,3,20,0,10,,,,,,,,,,,{},{}
 7109,Shining_Spear_Blade,Shiny Spear Tip,3,20,0,10,,,,,,,,,,,{},{}
 7110,Broken_Sword,Broken Sword,3,588,0,10,,,,,,,,,,,{},{}
-7111,Slick_Paper,String Paper,3,706,0,10,,,,,,,,,,,{},{}
+7111,Slick_Paper,Slick Paper,3,706,0,10,,,,,,,,,,,{},{}
 7112,Sharp_Paper,Transparent Paper,3,906,0,10,,,,,,,,,,,{},{}
 7113,Broken_Symbol_of_Pharaoh,Broken Symbol of Pharaoh,3,20,0,10,,,,,,,,,,,{},{}
 7114,Masque_of_Tutankhamen,Sphinx Mask,3,20,0,10,,,,,,,,,,,{},{}
@@ -1474,7 +1474,7 @@
 7158,Broken_Liquor_Bottle,Broken Liquor Bottle,3,160,0,10,,,,,,,,,,,{},{}
 7159,Demon's_Nose,Demon's Nose,3,400,0,10,,,,,,,,,,,{},{}
 7160,Passport_From_King,Passport From King,3,20,0,10,,,,,,,,,,,{},{}
-7161,Skin_of_the_Black_Bear,Skin of the Black Bear,3,384,0,10,,,,,,,,,,,{},{}
+7161,Bear_Skin,Bear Skin,3,384,0,10,,,,,,,,,,,{},{}
 7162,Piece_of_Cloud,Piece of Cloud,3,390,0,10,,,,,,,,,,,{},{}
 7163,Hard_Antennae,Hard Antennae,3,570,0,10,,,,,,,,,,,{},{}
 7164,Very_Hard_Peach,Very Hard Peach,3,400,0,10,,,,,,,,,,,{},{}
