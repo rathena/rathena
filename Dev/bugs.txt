@@ -123,3 +123,6 @@ Progress:       0%
     Knight, get spiral pierce, get off the peco, log off, log in, and
     get back on the peco.  You will not have Spiral Pierce anymore and
     you will have lost the skill points
+
+ blacksmith hammerfall on the new_1-1.gat's bridge crashes server
+ hunter spamming traps crashes server

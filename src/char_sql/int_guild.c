@@ -46,6 +46,9 @@ int mapif_guild_basicinfochanged(int guild_id,int type,const void *data,int len)
 int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(void *key,void *data,va_list ap);
 
+#ifdef FASTCHAR
+#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
+#endif /* FASTCHAR */
 
 // Save guild into sql
 int inter_guild_tosql(struct guild *g,int flag)
@@ -65,7 +68,11 @@ int inter_guild_tosql(struct guild *g,int flag)
 	
 	if (g->guild_id<=0) return -1;
 	
+#ifndef FASTCHAR
 	printf("(\033[1;35m%d\033[0m)  Request save guild - ",g->guild_id);
+#else /* FASTCHAR */
+	printf("(\033[1;35m%d\033[0m)  Request save guild -(flag 0x%x) ",g->guild_id, flag);
+#endif /* FASTCHAR */
 	
 	jstrescapecpy(t_name, g->name);
 	
@@ -199,6 +206,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	}
 	
 	if (flag&2||guild_member==0){
+#ifndef FASTCHAR
 		//printf("- Insert guild %d to guild_member\n",g->guild_id);
 		for(i=0;i<g->max_member;i++){
 			if (g->member[i].account_id>0){
@@ -226,6 +234,48 @@ int inter_guild_tosql(struct guild *g,int flag)
 				}
 			}
 		}
+#else /* FASTCHAR */
+	  struct StringBuf sbuf;
+	  struct StringBuf sbuf2;
+	  int first = 1;
+	  StringBuf_Init(&sbuf2);
+	  StringBuf_Init(&sbuf);
+
+	  StringBuf_Printf(&sbuf,"REPLACE `%s` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`rsv1`,`rsv2`,`name`) VALUES \n", guild_member_db);
+
+	  StringBuf_Printf(&sbuf2, "UPDATE `%s` SET `guild_id`='%d' WHERE  `char_id` IN (",char_db, g->guild_id);
+
+	  //printf("- Insert guild %d to guild_member\n",g->guild_id);
+	  for(i=0;i<g->max_member;i++){
+	    if (g->member[i].account_id>0){
+	      struct guild_member *m = &g->member[i];
+	      if (first == 0) {
+		StringBuf_Printf(&sbuf , ", ");
+		StringBuf_Printf(&sbuf2, ", ");
+	      } else
+		first = 0;
+	      StringBuf_Printf(&sbuf, "('%d','%d','%d','%d','%d', '%d','%d','%d','%d','%d','%d','%d','%d','%d','%s')\n",
+			       g->guild_id,
+			       m->account_id,m->char_id,
+			       m->hair,m->hair_color,m->gender,
+			       m->class,m->lv,m->exp,m->exp_payper,m->online,m->position,
+			       0,0,
+			       jstrescapecpy(t_member,m->name));
+
+	      StringBuf_Printf(&sbuf2, "'%d'", m->char_id);
+	    }
+	  }
+	  StringBuf_Printf(&sbuf2,")");
+
+	  if(mysql_query(&mysql_handle, StringBuf_Value(&sbuf))) 
+	    printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
+
+	  if(mysql_query(&mysql_handle, StringBuf_Value(&sbuf2))) 
+	    printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
+
+	  StringBuf_Destroy(&sbuf2);
+	  StringBuf_Destroy(&sbuf);
+#endif /* FASTCHAR */
 	}
 	
 	if (flag&4||guild_member==0){
@@ -520,18 +570,42 @@ struct guild * inter_guild_fromsql(int guild_id)
 // Save guild_castle to sql
 int inter_guildcastle_tosql(struct guild_castle *gc)
 {
+#ifdef FASTCHAR
+        struct guild_castle *gcopy;
+#endif /* FASTCHAR */
 	// `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
 	
 	if (gc==NULL) return 0;
 	//printf("Save to guild_castle\n");
+#ifndef FASTCHAR
 	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `castle_id`='%d'",guild_castle_db, gc->castle_id);
 	//printf(" %s\n",tmp_sql);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
 		return 0;
+#else /* FASTCHAR */
+
+	gcopy = numdb_search(castle_db_,gc->castle_id);
+	if (gcopy == NULL) {
+	  gcopy = (struct guild_castle *) malloc(sizeof(struct guild_castle));
+	  numdb_insert(castle_db_, gc->castle_id, gcopy);
+	} else {
+	  if ((gcopy->castle_id == gc->castle_id) &&
+	      (strcmp(gcopy->map_name, gc->map_name) == 0) &&
+	      (strcmp(gcopy->castle_event, gc->castle_event) == 0) &&
+	      (memcmp(&gcopy->guild_id, &gc->guild_id, &gc->GID7 - &gc->guild_id) == 0))
+	    return 0;
+#endif /* FASTCHAR */
 	}
+#ifndef FASTCHAR
 	
 	sprintf(tmp_sql,"INSERT INTO `%s` "
+#else /* FASTCHAR */
+
+	memcpy(gcopy, gc, sizeof(struct guild_castle));
+
+	sprintf(tmp_sql,"REPLACE INTO `%s` "
+#endif /* FASTCHAR */
 		"(`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
 		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
 		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7`)"
@@ -564,9 +638,26 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 // Read guild_castle from sql
 int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 {
+#ifndef FASTCHAR
 	
+#else /* FASTCHAR */
+
+        struct guild_castle *gcopy;
+#endif /* FASTCHAR */
 	if (gc==NULL) return 0;
 	//printf("Read from guild_castle\n");
+#ifdef FASTCHAR
+
+	gcopy = numdb_search(castle_db_,gc->castle_id);
+	if (gcopy == NULL) {
+	  gcopy = (struct guild_castle *) malloc(sizeof(struct guild_castle));
+	  numdb_insert(castle_db_, gc->castle_id, gcopy);
+	} else {
+	  memcpy(gc, gcopy, sizeof(struct guild_castle));
+	  return 0;
+	}
+
+#endif /* FASTCHAR */
 	memset(gc,0,sizeof(struct guild_castle));
 	gc->castle_id=castle_id;
 	if (castle_id==-1) return 0;
@@ -616,6 +707,11 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 
 	}
 	mysql_free_result(sql_res) ; //resource free
+#ifdef FASTCHAR
+
+	memcpy(gcopy, gc, sizeof(struct guild_castle));
+
+#endif /* FASTCHAR */
 	return 0;
 }
 

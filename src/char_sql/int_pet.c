@@ -12,6 +12,11 @@
 struct s_pet *pet_pt;
 static int pet_newid = 100;
 
+#ifdef FASTCHAR
+#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
+
+
+#endif /* FASTCHAR */
 
 //---------------------------------------------------------
 int inter_pet_tosql(int pet_id, struct s_pet *p) {

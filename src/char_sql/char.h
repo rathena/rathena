@@ -73,6 +73,10 @@ extern char login_db_account_id[32];
 
 extern int lowest_gm_level;
 
+#ifdef FASTCHAR
+extern int debug_mysql_query(char *file, int line, void *mysql, const char *q);
+
+#endif /* FASTCHAR */
 #endif
 
 #include "inter.h"

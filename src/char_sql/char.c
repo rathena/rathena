@@ -37,11 +37,18 @@
 #include "strlib.h"
 #include "itemdb.h"
 #include "inter.h"
+#ifdef FASTCHAR
+#include "db.h"
+#endif /* FASTCHAR */
 
 #ifdef MEMWATCH
 #include "memwatch.h"
 #endif
 
+#ifdef FASTCHAR
+static struct dbt *char_db_;
+
+#endif /* FASTCHAR */
 char char_db[256] = "char";
 char cart_db[256] = "cart_inventory";
 char inventory_db[256] = "inventory";
@@ -150,6 +157,11 @@ int GM_num = 0;
 
 int console = 0;
 
+#ifdef FASTCHAR
+#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
+
+
+#endif /* FASTCHAR */
 //-------------------------------------------------
 // Set Character online/offline [Wizputer]
 //-------------------------------------------------
@@ -285,22 +297,55 @@ void insert_friends(int char_id_count){
 	}
 }
 
+#ifdef FASTCHAR
+int compare_item(struct item *a, struct item *b) {
+  return (
+	  (a->id == b->id) &&
+	  (a->nameid == b->nameid) &&
+	  (a->amount == b->amount) &&
+	  (a->equip == b->equip) &&
+	  (a->identify == b->identify) &&
+	  (a->refine == b->refine) &&
+	  (a->attribute == b->attribute) &&
+	  (a->card[0] == b->card[0]) &&
+	  (a->card[1] == b->card[1]) &&
+	  (a->card[2] == b->card[2]) &&
+	  (a->card[3] == b->card[3]));
+}
+
+#endif /* FASTCHAR */
 //=====================================================================================================
 int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	int i=0,party_exist,guild_exist;
 	int eqcount=1;
 	int noteqcount=1;
+#ifdef FASTCHAR
+	int diff = 0;
+#endif /* FASTCHAR */
 	char temp_str[1024];
 	char *tmp_p = tmp_sql;
+#ifndef FASTCHAR
 
+#else /* FASTCHAR */
+	struct mmo_charstatus *cp;
+#endif /* FASTCHAR */
 	struct itemtemp mapitem;
+#ifdef FASTCHAR
+
+#endif /* FASTCHAR */
 	if (char_id!=p->char_id) return 0;
 
+#ifdef FASTCHAR
+	cp = numdb_search(char_db_,char_id);
+
+#endif /* FASTCHAR */
 	save_flag = p->char_id;
 	printf("(\033[1;32m%d\033[0m) %s \trequest save char data - ",char_id,char_dat[0].name);
 
+#ifndef FASTCHAR
 
 
+#endif /* not FASTCHAR */
 //for(testcount=1;testcount<50;testcount++){//---------------------------test count--------------------
 //	printf("test count : %d\n", testcount);
 //	eqcount=1;
@@ -310,8 +355,16 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 //-----------------------------------------------------------------------------------------------------
 
 //=========================================map  inventory data > memory ===============================
+#ifdef FASTCHAR
+	diff = 0;
+
+#endif /* FASTCHAR */
 	//map inventory data
 	for(i=0;i<MAX_INVENTORY;i++){
+#ifdef FASTCHAR
+	        if (!compare_item(&p->inventory[i], &cp->inventory[i]))
+		        diff = 1;
+#endif /* FASTCHAR */
 		if(p->inventory[i].nameid>0){
 			if(itemdb_isequip(p->inventory[i].nameid)==1){
 				mapitem.equip[eqcount].flag=0;
@@ -345,15 +398,30 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 			}
 		}
 	}
+#ifdef FASTCHAR
+
+#endif /* FASTCHAR */
 	//printf("- Save item data to MySQL!\n");
+#ifndef FASTCHAR
 	memitemdata_to_sql(mapitem, eqcount, noteqcount, p->char_id,TABLE_INVENTORY);
+#else /* FASTCHAR */
+	if (diff)
+	      memitemdata_to_sql(mapitem, eqcount, noteqcount, p->char_id,TABLE_INVENTORY);
+#endif /* FASTCHAR */
 
 //=========================================map  cart data > memory ====================================
 	eqcount=1;
 	noteqcount=1;
+#ifdef FASTCHAR
+	diff = 0;
+#endif /* FASTCHAR */
 
 	//map cart data
 	for(i=0;i<MAX_CART;i++){
+#ifdef FASTCHAR
+	        if (!compare_item(&p->cart[i], &cp->cart[i]))
+		        diff = 1;
+#endif /* FASTCHAR */
 		if(p->cart[i].nameid>0){
 			if(itemdb_isequip(p->cart[i].nameid)==1){
 				mapitem.equip[eqcount].flag=0;
@@ -389,10 +457,34 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	}
 
 	//printf("- Save cart data to MySQL!\n");
+#ifndef FASTCHAR
 	memitemdata_to_sql(mapitem, eqcount, noteqcount, p->char_id,TABLE_CART);
+#else /* FASTCHAR */
+	if (diff)
+	    memitemdata_to_sql(mapitem, eqcount, noteqcount, p->char_id,TABLE_CART);
+#endif /* FASTCHAR */
 
 //=====================================================================================================
 
+#ifdef FASTCHAR
+	if ((p->base_exp != cp->base_exp) || (p->class != cp->class) || 
+	    (p->base_level != cp->base_level) || (p->job_level != cp->job_level) ||
+	    (p->job_exp != cp->job_exp) || (p->zeny != cp->zeny) ||
+	    (p->last_point.x != cp->last_point.x) || (p->last_point.y != cp->last_point.y) ||
+	    (p->max_hp != cp->max_hp) || (p->hp != cp->hp) ||
+	    (p->max_sp != cp->max_sp) || (p->sp != cp->sp) ||
+	    (p->status_point != cp->status_point) || (p->skill_point != cp->skill_point) ||
+	    (p->str != cp->str) || (p->agi != cp->agi) || (p->vit != cp->vit) ||
+	    (p->int_ != cp->int_) || (p->dex != cp->dex) || (p->luk != cp->luk) ||
+	    (p->option != cp->option) || (p->karma != cp->karma) || (p->manner != cp->manner) ||
+	    (p->party_id != cp->party_id) || (p->guild_id != cp->guild_id) ||
+	    (p->pet_id != cp->pet_id) || (p->hair != cp->hair) || (p->hair_color != cp->hair_color) ||
+	    (p->clothes_color != cp->clothes_color) || (p->weapon != cp->weapon) ||
+	    (p->shield != cp->shield) || (p->head_top != cp->head_top) ||
+	    (p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom) ||
+	    (p->partner_id != cp->partner_id)) {
+	
+#endif /* FASTCHAR */
 //}//---------------------------test count------------------------------
 	//check party_exist
 	party_exist=0;
@@ -449,6 +541,20 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 			printf("DB server Error (update `char`)- %s\n", mysql_error(&mysql_handle));
 	}
 
+#ifdef FASTCHAR
+	}
+
+	diff = 0;
+
+	for(i=0;i<10;i++){
+	  if((strcmp(p->memo_point[i].map,cp->memo_point[i].map) == 0) && (p->memo_point[i].x == cp->memo_point[i].x) && (p->memo_point[i].y == cp->memo_point[i].y))
+	    continue;
+	  diff = 1;
+	  break;
+	}
+
+	if (diff) {
+#endif /* FASTCHAR */
 	//printf("- Save memo data to MySQL!\n");
 	//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
 	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",memo_db, p->char_id);
@@ -465,7 +571,21 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 				printf("DB server Error (insert `memo`)- %s\n", mysql_error(&mysql_handle));
 		}
 	}
+#ifdef FASTCHAR
+	}
+#endif /* FASTCHAR */
 
+#ifdef FASTCHAR
+	diff = 0;
+	for(i=0;i<MAX_SKILL;i++)
+	  if((p->skill[i].id != cp->skill[i].id) || (p->skill[i].lv != cp->skill[i].lv) ||
+	     (p->skill[i].flag != cp->skill[i].flag)) {
+	    diff = 1;
+	    break;
+	  }
+
+	if (diff) {
+#endif /* FASTCHAR */
 	//printf("- Save skill data to MySQL!\n");
 	//`skill` (`char_id`, `id`, `lv`)
 	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",skill_db, p->char_id);
@@ -477,7 +597,11 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	for(i=0;i<MAX_SKILL;i++){
 		if(p->skill[i].id){
 			if (p->skill[i].id && p->skill[i].flag!=1) {
+#ifndef FASTCHAR
 				sprintf(tmp_sql,"INSERT delayed INTO `%s`(`char_id`, `id`, `lv`) VALUES ('%d', '%d','%d')",
+#else /* FASTCHAR */
+				sprintf(tmp_sql,"INSERT INTO `%s`(`char_id`, `id`, `lv`) VALUES ('%d', '%d','%d')",
+#endif /* FASTCHAR */
 					skill_db, char_id, p->skill[i].id, (p->skill[i].flag==0)?p->skill[i].lv:p->skill[i].flag-2);
 				if(mysql_query(&mysql_handle, tmp_sql)) {
 					printf("DB server Error (insert `skill`)- %s\n", mysql_error(&mysql_handle));
@@ -485,8 +609,27 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 			}
 		}
 	}
+#ifdef FASTCHAR
+	}
+#endif /* FASTCHAR */
 
+#ifndef FASTCHAR
 
+#else /* FASTCHAR */
+	diff = 0;
+	for(i=0;i<p->global_reg_num;i++) {
+	  if ((p->global_reg[i].str == NULL) && (cp->global_reg[i].str == NULL))
+	    continue;
+	  if (((p->global_reg[i].str == NULL) != (cp->global_reg[i].str == NULL)) ||
+	      (p->global_reg[i].value != cp->global_reg[i].value) ||
+	      strcmp(p->global_reg[i].str, cp->global_reg[i].str) != 0) {
+	    diff = 1;
+	    break;
+	  }
+	}
+	
+	if (diff) {
+#endif /* FASTCHAR */
 	//printf("- Save global_reg_value data to MySQL!\n");
 	//`global_reg_value` (`char_id`, `str`, `value`)
 	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, p->char_id);
@@ -506,26 +649,54 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 			}
 		}
 	}
+#ifdef FASTCHAR
+	}
+#endif /* FASTCHAR */
 
 	// Friends list 
 	// account_id, friend_id0, name0, ...
 	
 	tmp_p += sprintf(tmp_p, "REPLACE INTO `%s` (`id`, `account_id`",friend_db);
 
+#ifdef FASTCHAR
+	diff = 0;
+
+#endif /* FASTCHAR */
 	for (i=0;i<20;i++)
 		tmp_p += sprintf(tmp_p, ", `friend_id%d`, `name%d`", i, i);
 
 	tmp_p += sprintf(tmp_p, ") VALUES (NULL, '%d'", char_id);
+#ifndef FASTCHAR
 
 	for (i=0;i<20;i++)
+#else /* FASTCHAR */
+	
+	for (i=0;i<20;i++) {
+#endif /* FASTCHAR */
 		tmp_p += sprintf(tmp_p, ", '%d', '%s'", p->friend_id[i], p->friend_name[i]);
+#ifdef FASTCHAR
+		if ((p->friend_id[i] != cp->friend_id[i]) ||
+		    strcmp(p->friend_name[i], cp->friend_name[i]))
+		  diff = 1;
+	}
+#endif /* FASTCHAR */
 
 	tmp_p += sprintf(tmp_p, ")");
+#ifndef FASTCHAR
 	mysql_query(&mysql_handle, tmp_sql);
+#else /* FASTCHAR */
+
+	if (diff) 
+	  mysql_query(&mysql_handle, tmp_sql);
+#endif /* FASTCHAR */
 
 	printf("saving char is done.\n");
 	save_flag = 0;
 
+#ifdef FASTCHAR
+	memcpy(cp, p, sizeof(struct mmo_charstatus));
+
+#endif /* FASTCHAR */
 	return 0;
 }
 
@@ -759,12 +930,22 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 //		printf("=================================================================================\n");
 //
 	}
+#ifdef FASTCHAR
+
+#endif /* FASTCHAR */
 	return 0;
 }
 //=====================================================================================================
 int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	int i, n;
 	char *tmp_p = tmp_sql;
+#ifdef FASTCHAR
+	struct mmo_charstatus *cp;
+
+	cp = numdb_search(char_db_,char_id);
+	if (cp != NULL)
+	  free(cp);
+#endif /* FASTCHAR */
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 
@@ -1006,12 +1187,22 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 	printf("char data load success]\n");	//ok. all data load successfuly!
 
+#ifdef FASTCHAR
+	cp = (struct mmo_charstatus *) malloc(sizeof(struct mmo_charstatus));
+    	memcpy(cp, p, sizeof(struct mmo_charstatus));
+	numdb_insert(char_db_, char_id,cp);
+
+#endif /* FASTCHAR */
 	return 1;
 }
 //==========================================================================================================
 int mmo_char_sql_init(void) {
 	int i;
 
+#ifdef FASTCHAR
+        char_db_=numdb_init();
+
+#endif /* FASTCHAR */
 	printf("init start.......\n");
 	// memory initialize
 	// no need to set twice size in this routine. but some cause segmentation error. :P
@@ -3205,4 +3396,13 @@ int do_init(int argc, char **argv){
 	return 0;
 }
 
+#ifdef FASTCHAR
+
+#undef mysql_query
+
+int debug_mysql_query(char *file, int line, void *mysql, const char *q) {
+        printf("sql: %s:%d# %s\n", file, line, q);
+        return mysql_query((MYSQL *) mysql, q);
+}
+#endif /* FASTCHAR */
 

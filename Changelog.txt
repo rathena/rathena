@@ -1,6 +1,8 @@
 Date	Added
 
 12/19
+	* Added -DFASTCHAR to char_sql for testing performance work
+	  before I merge it into the main running code [MouseJstr]
 	* Added ShowDebug(), Debug(), DisplayDebug(), printDebug(), CL_DEBUG, MSG_DEBUG to _ShowMessage() [MC Cameri]
 	* Replaced many \033[x;xm with their corresponding CL_xx constants [MC Cameri]
 	* Separated NPCs and Maps from map_athena.conf into npcs_list.txt and maps_list.conf [MC Cameri]

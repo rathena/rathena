@@ -17,6 +17,10 @@ int mapif_party_broken(int party_id,int flag);
 int party_check_empty(struct party *p);
 int mapif_parse_PartyLeave(int fd,int party_id,int account_id);
 
+#ifdef FASTCHAR
+#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
+
+#endif /* FASTCHAR */
 // Save party to mysql
 int inter_party_tosql(int party_id,struct party *p)
 {
