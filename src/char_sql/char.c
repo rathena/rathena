@@ -460,7 +460,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 //}//---------------------------test count------------------------------
 	//check party_exist
 	party_exist=0;
-	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `party_id` = '%d'",party_db, p->party_id);
+	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `party_id` = '%d'",party_db, p->party_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 	}
@@ -471,7 +471,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	//check guild_exist
 	guild_exist=0;
-	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `guild_id` = '%d'",guild_db, p->guild_id);
+	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `guild_id` = '%d'",guild_db, p->guild_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 	}
@@ -675,7 +675,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 	//=======================================mysql database data > memory===============================================
 
 	sprintf(tmp_sql, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3` "
-		"FROM `%s` WHERE `%s`='%d'",tablename ,selectoption ,char_id);
+		"FROM `%s` WHERE `%s`='%d'",tablename ,selectoption ,char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `%s` to Memory)- %s\n",tablename ,mysql_error(&mysql_handle));
 	}
@@ -898,7 +898,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	//splite 2 parts. cause veeeery long SQL syntax
 
 	sprintf(tmp_sql, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
-		"`str`,`agi`,`vit`,`int`,`dex`,`luk`, `max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id);
+		"`str`,`agi`,`vit`,`int`,`dex`,`luk`, `max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
 
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
@@ -940,7 +940,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 	sprintf(tmp_sql, "SELECT `option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`hair`,`hair_color`,"
 		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,"
-		"`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id);
+		"`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `char2`)- %s\n", mysql_error(&mysql_handle));
 	}
@@ -975,7 +975,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 	//read memo data
 	//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
-	sprintf(tmp_sql, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`='%d'",memo_db, char_id);
+	sprintf(tmp_sql, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`='%d'",memo_db, char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `memo`)- %s\n", mysql_error(&mysql_handle));
 	}
@@ -995,7 +995,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	//read inventory
 	//`inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
 	sprintf(tmp_sql, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`"
-		"FROM `%s` WHERE `char_id`='%d'",inventory_db, char_id);
+		"FROM `%s` WHERE `char_id`='%d'",inventory_db, char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `inventory`)- %s\n", mysql_error(&mysql_handle));
 	}
@@ -1022,7 +1022,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	//read cart.
 	//`cart_inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
 	sprintf(tmp_sql, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`"
-		"FROM `%s` WHERE `char_id`='%d'",cart_db, char_id);
+		"FROM `%s` WHERE `char_id`='%d'",cart_db, char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `cart_inventory`)- %s\n", mysql_error(&mysql_handle));
 	}
@@ -1047,7 +1047,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 	//read skill
 	//`skill` (`char_id`, `id`, `lv`)
-	sprintf(tmp_sql, "SELECT `id`, `lv` FROM `%s` WHERE `char_id`='%d'",skill_db, char_id);
+	sprintf(tmp_sql, "SELECT `id`, `lv` FROM `%s` WHERE `char_id`='%d'",skill_db, char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `skill`)- %s\n", mysql_error(&mysql_handle));
 	}
@@ -1064,7 +1064,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 	//global_reg
 	//`global_reg_value` (`char_id`, `str`, `value`)
-	sprintf(tmp_sql, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, char_id);
+	sprintf(tmp_sql, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `global_reg_value`)- %s\n", mysql_error(&mysql_handle));
 	}
@@ -1091,7 +1091,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	for(i=0;i<20;i++)
 		tmp_p += sprintf(tmp_p, ", `friend_id%d`, `name%d`", i, i);
 
-	tmp_p += sprintf(tmp_p, " FROM `%s` WHERE `account_id`='%d' ", friend_db, char_id);
+	tmp_p += sprintf(tmp_p, " FROM `%s` WHERE `account_id`='%d' ", friend_db, char_id); // TBR
 
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (select `friends list`)- %s\n", mysql_error(&mysql_handle));
@@ -1878,7 +1878,7 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 			//check account
-			sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",char_db, RFIFOL(fd,4),RFIFOL(fd,8));
+			sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",char_db, RFIFOL(fd,4),RFIFOL(fd,8)); // TBR
 			if (mysql_query(&mysql_handle, tmp_sql)) {
 				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 			}

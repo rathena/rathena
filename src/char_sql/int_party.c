@@ -41,7 +41,7 @@ int inter_party_tosql(int party_id,struct party *p)
 	}
 	
 	// Check if party exists	
-	sprintf(tmp_sql,"SELECT count(*) FROM `%s` WHERE `party_id`='%d'",party_db, party_id);
+	sprintf(tmp_sql,"SELECT count(*) FROM `%s` WHERE `party_id`='%d'",party_db, party_id); // TBR
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
 		return 0;
@@ -56,8 +56,8 @@ int inter_party_tosql(int party_id,struct party *p)
 
 	if (party_exist >0){
 		// Check members in party
-		sprintf(tmp_sql,"SELECT count(*) FROM `%s` WHERE `party_id`='%d'",char_db, party_id);
-		if(mysql_query(&mysql_handle, tmp_sql) ) {
+		sprintf(tmp_sql,"SELECT count(*) FROM `%s` WHERE `party_id`='%d'",char_db, party_id); // TBR
+		if(mysql_query(&mysql_handle, tmp_sql) ) { 
 			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
 			return 0;
 		}
@@ -151,7 +151,7 @@ int inter_party_fromsql(int party_id,struct party *p)
 	
 	memset(p, 0, sizeof(struct party));
 	
-	sprintf(tmp_sql,"SELECT `party_id`, `name`,`exp`,`item`, `leader_id` FROM `%s` WHERE `party_id`='%d'",party_db, party_id);
+	sprintf(tmp_sql,"SELECT `party_id`, `name`,`exp`,`item`, `leader_id` FROM `%s` WHERE `party_id`='%d'",party_db, party_id); // TBR
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (select `party`)- %s\n", mysql_error(&mysql_handle) );
 		return 0;
@@ -175,7 +175,7 @@ int inter_party_fromsql(int party_id,struct party *p)
 	mysql_free_result(sql_res);
 	
 	// Load members
-	sprintf(tmp_sql,"SELECT `account_id`, `name`,`base_level`,`last_map`,`online` FROM `%s` WHERE `party_id`='%d'",char_db, party_id);
+	sprintf(tmp_sql,"SELECT `account_id`, `name`,`base_level`,`last_map`,`online` FROM `%s` WHERE `party_id`='%d'",char_db, party_id); // TBR
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (select `party`)- %s\n", mysql_error(&mysql_handle) );
 		return 0;
