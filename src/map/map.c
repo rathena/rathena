@@ -1882,7 +1882,7 @@ static int map_readafm(int m,char *fn) {
 /*==========================================
  * ƒ}ƒbƒv1–‡“Ç‚İ‚İ
  * ===================================================*/
-static int map_readmap(int m,char *fn, char *alias, int *map_cache) {
+static int map_readmap(int m,char *fn, char *alias, int *map_cache, int maxmap) {
 	unsigned char *gat="";
 	size_t size;
 	
@@ -1892,14 +1892,28 @@ static int map_readmap(int m,char *fn, char *alias, int *map_cache) {
 
 	//printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
 	if (map_num) { //avoid map-server crashing if there are 0 maps
-		printf("\r");
-		ShowStatus("Progress: ");
-		i=m*20/420;
-		printf("[");
-		for (e=0;e<i;e++) progress[e] = '#';
-		printf(progress);
-		printf("] Working: [");
-		fflush(stdout);
+		char c;
+		static int lasti = -1;
+		static int last_time = -1;
+		i=m*20/maxmap;
+		if ((i != lasti) || (last_time != time(0))) {
+			lasti = i;
+			printf("\r");
+			ShowStatus("Progress: ");
+			printf("[");
+			for (e=0;e<i;e++) progress[e] = '#';
+			printf(progress);
+			printf("] Working: [");
+			last_time = time(0);
+			switch(last_time % 4) {
+				case 0: c='\\'; break;
+				case 1: c='|'; break;
+				case 2: c='/'; break;
+				case 3: c='-'; break;
+			}
+			printf("%c]",c);
+			fflush(stdout);
+		}
 	}
 
 	if(map_cache_read(&map[m])) {
@@ -1970,9 +1984,6 @@ static int map_readmap(int m,char *fn, char *alias, int *map_cache) {
 int map_readallmap(void) {
 	int i,maps_removed=0;
 	char fn[256];
-	char c = '-';
-	time_t last_time = time(0);
-	int busy = 0;
 #ifdef USE_AFM
 	FILE *afm_file;
 #endif
@@ -2024,23 +2035,11 @@ int map_readallmap(void) {
 				map[i].alias = NULL;
 
 			sprintf(fn,"data\\%s",map[i].name);
-			if(map_readmap(i,fn, p, &map_cache) == -1) {
+			if(map_readmap(i,fn, p, &map_cache, map_num) == -1) {
 				map_delmap(map[i].name);
 				maps_removed++;
 				i--;
-			} else {
-				if (last_time != time(0)) {
-					last_time = time(0);
-					switch(busy) {
-						case 0: c='\\'; busy++; break;
-						case 1: c='|'; busy++; break;
-						case 2: c='/'; busy++; break;
-						case 3: c='-'; busy=0;
-					}
-				}
-				printf("%c]",c);
-				fflush(stdout);
-			}
+			} 
 		}
 	}
 

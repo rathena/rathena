@@ -1,5 +1,6 @@
 Date	Added
 12/27
+	* Modified the map progress bar to reduce updates (SVN 829) [MouseJstr]
         * Updated map cache system from jA 1087 - change read_map_from_bitmap to 2 to
           enable zlib compression [celest]
 	* don't delete alive_timers of -1  (SVN 823) [MouseJstr]
