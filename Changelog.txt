@@ -1,4 +1,7 @@
 Date	Added
+12/22
+        * Added ignore the new skill delays when chaining monk combos [celest]
+
 12/21
 	* Added #zeny, removed @charzeny [MC Cameri]
 	* Since conf/maps_list.txt was removed, added conf/maps_athena.conf [Ajarn]
