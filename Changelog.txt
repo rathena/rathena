@@ -8,6 +8,8 @@ Date	Added
         * Skill Updates: [celest]
           - Updated guild skills (60%)
           - updated Weapon Repair and Aura Blade by DracoRPG
+          - modified Weapon Repair to use Identify's packet, should show a list of
+            repairable items now
 
 11/23
 	* Fixed script loading small/large monsters. [Valaris]

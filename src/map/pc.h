@@ -86,6 +86,7 @@ int pc_skill(struct map_session_data*,int,int,int);
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
 int pc_item_identify(struct map_session_data *sd,int idx);
+int pc_item_repair(struct map_session_data *sd,int idx); // [Celest]
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl);
 int pc_steal_coin(struct map_session_data *sd,struct block_list *bl);
 

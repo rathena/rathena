@@ -1,4 +1,4 @@
-// $Id: pc.c 101 2004-11-24 10:52:07 Celestia $
+// $Id: pc.c 101 2004-11-25 4:02:51 PM Celestia $
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -3442,6 +3442,11 @@ int pc_item_identify(struct map_session_data *sd,int idx)
 
 	nullpo_retr(0, sd);
 
+	// Celest
+	if (sd->skillid == BS_REPAIRWEAPON) {
+		return pc_item_repair (sd, idx);
+	}
+
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(sd->status.inventory[idx].nameid > 0 && sd->status.inventory[idx].identify == 0 ){
 			flag=0;
@@ -3451,6 +3456,32 @@ int pc_item_identify(struct map_session_data *sd,int idx)
 	}
 	else
 		clif_item_identified(sd,idx,flag);
+
+	return !flag;
+}
+
+/*==========================================
+ * Weapon Repair [Celest]
+ *------------------------------------------
+ */
+int pc_item_repair(struct map_session_data *sd,int idx)
+{
+	int flag=1;
+
+	nullpo_retr(0, sd);
+
+	if(idx >= 0 && idx < MAX_INVENTORY) {
+		if(sd->status.inventory[idx].nameid > 0 && sd->status.inventory[idx].attribute == 1 ) {
+			flag=0;
+			sd->status.inventory[idx].attribute=0;
+			//Temporary Weapon Repair code [DracoRPG]
+			pc_delitem(sd, pc_search_inventory(sd, 999), 1, 0);
+			clif_equiplist(sd);
+			clif_produceeffect(sd, 0, sd->status.inventory[idx].nameid);
+			clif_misceffect(&sd->bl, 3);
+			clif_displaymessage(sd->fd,"Item has been repaired.");
+		}
+	}
 
 	return !flag;
 }

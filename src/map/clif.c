@@ -5016,7 +5016,7 @@ int clif_item_repair_list(struct map_session_data *sd)
 
 	fd=sd->fd;
 
-	WFIFOW(fd,0)=0x0;
+	WFIFOW(fd,0)=0x177; // temporarily use same packet as clif_item_identify
 	for(i=c=0;i<MAX_INVENTORY;i++){
 		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].attribute==1){
 			WFIFOW(fd,c*2+4)=i+2;
