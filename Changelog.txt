@@ -1,5 +1,6 @@
 Date	Added
 11/20
+	* Fixed small/big monster spawning crashing (mixed up the merge). [Valaris]
 	* Fixed crash with upgrading TXT and having more than 256 accounts. [Valaris]
 	* TXT upgrades will convert broken flag to attribute column. [Valaris]
 	* Prevent use of emotion packet to display red mute emote. [Valaris]

@@ -156,10 +156,6 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 	for(count=0;count<amount;count++){
 		md=(struct mob_data *)aCalloc(1,sizeof(struct mob_data));
 		memset(md, '\0', sizeof *md);
-		if(mob_db[class].mode&0x02)
-			md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
-		else
-			md->lootitem=NULL;
 
 		if(class>4000) { // large/tiny mobs [Valaris]
 			md->size=2;
@@ -169,6 +165,11 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 			md->size=1;
 			class-=2000;
 		}
+
+		if(mob_db[class].mode&0x02)
+			md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
+		else
+			md->lootitem=NULL;
 
 		mob_spawn_dataset(md,mobname,class);
 		md->bl.m=m;
