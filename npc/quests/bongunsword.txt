@@ -37,8 +37,7 @@ mes "Hmm, it seems as if you need something. What would that be?";
 		close;
 
     ExEnd:
-        mes "[Old Smith]";
+	mes "[Old Smith]";
 	mes "...ah well, go out and live life young one. Time never stops!";
         close;
-close;    }
 }
