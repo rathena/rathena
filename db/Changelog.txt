@@ -5,6 +5,11 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/22
+	* skill CANNIBALIZE: fixed its upkeep time [Lupus]
+        * Added Rafflesia into Dead Branch monsters list, removen all MVPs from there [Lupus]
+	  DBs never supposed to call MVPs!!! Only Sages Hocus Pocus could make
+	  a MVP from Alchemyst's Floras. (eA Hocus implementation doesn't support it yet)
 03/21
         * Corrected exp table entries for Super Novice, thanks to Dino9021 [celest]
 

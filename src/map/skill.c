@@ -4921,21 +4921,32 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 		break;
 	case AM_CANNIBALIZE:	// バイオプラント
 		if(sd){
-			int mx,my,id=0;
+			int mx,my,amount=6-skilllv,id=0;
 			int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
 
 			struct mob_data *md;
 
-			mx = x;// + (rand()%10 - 5);
-			my = y;// + (rand()%10 - 5);
+			for (i=0; i<amount; i++) { //Amount: 1 lev = 1 mob, 2=2, 3, 4, 5 [Lupus]
+				mx = x;
+				my = y;
+				while  (i && mx == x ) {
+					mx += (rand()%(1+amount) - (1+amount)/2);
+				}
+				while  (i && my == y) {
+					my += (rand()%(1+amount) - (1+amount)/2);
+				}
+				id=mob_once_spawn(sd,"this",mx,my,"--ja--", summons[skilllv-1] ,1,"");
 
-			id=mob_once_spawn(sd,"this",mx,my,"--ja--", summons[skilllv-1] ,1,"");
-			if( (md=(struct mob_data *)map_id2bl(id)) !=NULL ){
-				md->master_id=sd->bl.id;
-				md->hp=2210+skilllv*200;
-				md->state.special_mob_ai=1;
-				md->deletetimer=add_timer(gettick()+skill_get_time(skillid,skilllv),mob_timer_delete,id,0);
+				if( (md=(struct mob_data *)map_id2bl(id)) !=NULL ){
+					md->master_id=sd->bl.id;
+					//md->hp=2210+skilllv*200; commented out, we use REAL hp of the mobs [Lupus]
+					md->state.special_mob_ai=1;
+					md->deletetimer=add_timer(gettick()+skill_get_time(skillid,skilllv),mob_timer_delete,id,0);
+				}
 			}
+			//block skill
+			//i can't check if the summoned mobs are dead.. to be able summon next... so i just disable skill [Lupus]
+			pc_blockskill_start (sd, AM_CANNIBALIZE, skill_get_time(skillid,skilllv));
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 		}
 		break;

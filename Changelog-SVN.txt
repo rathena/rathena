@@ -1,5 +1,7 @@
 Date	Added
 
+03/22
+	* Fixed Alchemist's CANNIBALIZE, now it summons correct # of plants. With their real HP [Lupus]
 03/21
         * Moved /tool and /webserver to under /src and added 'make tools' and 'make
           web-server' [celest]
