@@ -5433,8 +5433,12 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	pc_calcstatus(sd,0);
 
 	// activate Steel body if a super novice dies at 99+% exp [celest]
-	if (s_class.job == 23 && (i=sd->status.base_exp*1000/pc_nextbaseexp(sd))>=990 && i<=1000)
-		sd->state.snovice_flag = 4;
+	if (s_class.job == 23) {
+		if ((i=pc_nextbaseexp(sd))<=0)
+			i=sd->status.base_exp;
+		if ((j=sd->status.base_exp*1000/i)>=990 && j<=1000)
+			sd->state.snovice_flag = 4;
+	}
 
 	for(i=0;i<5;i++)
 		if(sd->dev.val1[i]){
