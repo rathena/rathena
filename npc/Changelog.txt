@@ -35,6 +35,10 @@ Other Ppl
 Date		Added
 ======
 
+03/18
+        * Reduced label name length in heal_payment.txt [celest]
+        * Added Sara-chan's Einbroch/Einbech city warps [celest]
+
 03/17
         * Fixed more typos in /cities/payon.txt, thanks to TheUltimateEnd [celest]
 

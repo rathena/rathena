@@ -1642,7 +1642,7 @@
 7166,Soft_Silk_Fabric,Soft Silk Fabric,3,1200,0,10,,,,,,,,,,,{},{}
 7167,Strange_Piece_of_Iron,Strange Piece of Iron,3,430,0,10,,,,,,,,,,,{},{}
 7168,Big_Wing_of_Butterfly,Big Wing of Butterfly,3,614,0,10,,,,,,,,,,,{},{}
-7169,Tae_Guk_Tablet,Tae Guk Tablet,3,20,0,10,,,,,,,,,,,{},{}
+7169,Tae_Guk_Tablet,Tae Guk Tablet,3,280,0,10,,,,,,,,,,,{},{}
 7170,Tuxedo,Tuxedo,5,43000,0,10,,0,,0,10477566,1,16,,0,0,{},{ changebase 22; }
 7171,Skin_of_Panther,Skin of Panther,3,282,0,10,,,,,,,,,,,{},{}
 7172,Claw_of_Panther,Claw of Panther,3,290,0,10,,,,,,,,,,,{},{}
@@ -1659,46 +1659,46 @@
 7183,Letter_of_Younger_Sister,Letter of Younger Sister,3,20,0,10,,,,,,,,,,,{},{}
 7184,Piano_Key,Piano Key,3,20,0,10,,,,,,,,,,,{},{}
 7185,Quiz_Participation_Ticket,Quiz Participation Ticket,3,20,0,10,,,,,,,,,,,{},{}
-7186,Thin_Trunk,Thin Trunk,3,20,0,10,,,,,,,,,,,{},{}
-7187,Festival_Mask,Festival Mask,3,20,0,10,,,,,,,,,,,{},{}
-7188,Brown_Root,Brown_Root,3,20,0,10,,,,,,,,,,,{},{}
-7189,Wooden_Heart,Wooden Heart,3,20,0,10,,,,,,,,,,,{},{}
-7190,Hard_Back_Shell,Hard Back Shell,3,20,0,10,,,,,,,,,,,{},{}
+7186,Thin_Trunk,Thin Trunk,3,218,0,10,,,,,,,,,,,{},{}
+7187,Festival_Mask,Festival Mask,3,100,0,10,,,,,,,,,,,{},{}
+7188,Brown_Root,Brown_Root,3,560,0,10,,,,,,,,,,,{},{}
+7189,Wooden_Heart,Wooden Heart,3,680,0,10,,,,,,,,,,,{},{}
+7190,Hard_Back_Shell,Hard Back Shell,3,140,0,10,,,,,,,,,,,{},{}
 7191,Paper_Lantern,Paper Lantern,3,20,0,10,,,,,,,,,,,{},{}
-7192,Pin_Wheel,Pin Wheel,3,20,0,10,,,,,,,,,,,{},{}
-7193,Sprout,Sprout,3,20,0,10,,,,,,,,,,,{},{}
-7194,Soft_Grass_Leaf,Soft Grass Leaf,3,20,0,10,,,,,,,,,,,{},{}
-7195,Slingshot,Slingshot,3,20,0,10,,,,,,,,,,,{},{}
-7196,Shoulder_Guard,Shoulder Guard,3,20,0,10,,,,,,,,,,,{},{}
-7197,Durable_Vine,Durable Vine,3,20,0,10,,,,,,,,,,,{},{}
-7198,Huge_Leaf,Huge Leaf,3,20,0,10,,,,,,,,,,,{},{}
+7192,Pin_Wheel,Pin Wheel,3,160,0,10,,,,,,,,,,,{},{}
+7193,Sprout,Sprout,3,230,0,10,,,,,,,,,,,{},{}
+7194,Soft_Grass_Leaf,Soft Grass Leaf,3,400,0,10,,,,,,,,,,,{},{}
+7195,Slingshot,Slingshot,3,210,0,10,,,,,,,,,,,{},{}
+7196,Shoulder_Guard,Shoulder Guard,3,230,0,10,,,,,,,,,,,{},{}
+7197,Durable_Vine,Durable Vine,3,500,0,10,,,,,,,,,,,{},{}
+7198,Huge_Leaf,Huge Leaf,3,610,0,10,,,,,,,,,,,{},{}
 7199,Hieroglyphic,Hieroglyphic,3,20,0,10,,,,,,,,,,,{},{}
-7200,Elastic_Band,Elastic Band,3,20,0,10,,,,,,,,,,,{},{}
-7201,Log,Log,3,20,0,10,,,,,,,,,,,{},{}
-7202,Insect_Pinchers,Insect Pinchers,3,20,0,10,,,,,,,,,,,{},{}
-7203,Healthy_Branch,Healthy Branch,3,20,0,10,,,,,,,,,,,{},{}
+7200,Elastic_Band,Elastic Band,3,380,0,10,,,,,,,,,,,{},{}
+7201,Log,Log,3,250,0,10,,,,,,,,,,,{},{}
+7202,Insect_Pinchers,Insect Pinchers,3,290,0,10,,,,,,,,,,,{},{}
+7203,Healthy_Branch,Healthy Branch,3,190,0,10,,,,,,,,,,,{},{}
 7204,Gun_Powder,Gun Powder,3,20,0,10,,,,,,,,,,,{},{}
-7205,Black_Piece_of_Cloth,Black Piece of Cloth,3,20,0,10,,,,,,,,,,,{},{}
-7206,Cat_Doll,Black Cat Doll,3,20,0,10,,,,,,,,,,,{},{}
-7207,Old_Mantle,Old Mantle,3,20,0,10,,,,,,,,,,,{},{}
-7208,Rusted_Knife,Rusted Knife,3,20,0,10,,,,,,,,,,,{},{}
-7209,Dullahan's_Helm,Dullahan's Helm,3,20,0,10,,,,,,,,,,,{},{}
-7210,Piece_of_Dullahan's_Armor,Dullahan's Armor Piece,3,20,0,10,,,,,,,,,,,{},{}
-7211,Rosetta_Stone_Fragment,Rosetta Stone Fragment,3,20,0,10,,,,,,,,,,,{},{}
-7212,Hanging_Doll,Hanging Doll,3,20,0,10,,,,,,,,,,,{},{}
-7213,Pin_Cusion,Pin Cusion,3,20,0,10,,,,,,,,,,,{},{}
-7214,Bat_Cage,Bat Cage,3,20,0,10,,,,,,,,,,,{},{}
-7215,Broken_Needle,Broken Needle,3,20,0,10,,,,,,,,,,,{},{}
-7216,Red_Scarf,Red Scarf,3,20,0,10,,,,,,,,,,,{},{}
-7217,Spool_of_Thread,Spool of Thread,3,20,0,10,,,,,,,,,,,{},{}
-7218,Rotted_Rope,Rotted Rope,3,20,0,10,,,,,,,,,,,{},{}
-7219,Striped_Socks,Striped Socks,3,20,0,10,,,,,,,,,,,{},{}
-7220,Ectoplasm,Ectoplasm,3,20,0,10,,,,,,,,,,,{},{}
-7221,Chains,Chains,3,20,0,10,,,,,,,,,,,{},{}
-7222,Old_Tree_Branch,Old Tree Branch,3,20,0,10,,,,,,,,,,,{},{}
-7223,Ruined_Self_Portrait,Ruined Self Portrait,3,20,0,10,,,,,,,,,,,{},{}
+7205,Black_Piece_of_Cloth,Black Piece of Cloth,3,526,0,10,,,,,,,,,,,{},{}
+7206,Cat_Doll,Black Cat Doll,3,1440,0,10,,,,,,,,,,,{},{}
+7207,Old_Mantle,Old Mantle,3,1050,0,10,,,,,,,,,,,{},{}
+7208,Rusted_Knife,Rusted Knife,3,1780,0,10,,,,,,,,,,,{},{}
+7209,Dullahan's_Helm,Dullahan's Helm,3,1350,0,10,,,,,,,,,,,{},{}
+7210,Piece_of_Dullahan's_Armor,Dullahan's Armor Piece,3,750,0,10,,,,,,,,,,,{},{}
+7211,Rosetta_Stone_Fragment,Rosetta Stone Fragment,3,2600,0,10,,,,,,,,,,,{},{}
+7212,Hanging_Doll,Hanging Doll,3,1020,0,10,,,,,,,,,,,{},{}
+7213,Pin_Cusion,Pin Cusion,3,832,0,10,,,,,,,,,,,{},{}
+7214,Bat_Cage,Bat Cage,3,880,0,10,,,,,,,,,,,{},{}
+7215,Broken_Needle,Broken Needle,3,690,0,10,,,,,,,,,,,{},{}
+7216,Red_Scarf,Red Scarf,3,660,0,10,,,,,,,,,,,{},{}
+7217,Spool_of_Thread,Spool of Thread,3,424,0,10,,,,,,,,,,,{},{}
+7218,Rotted_Rope,Rotted Rope,3,390,0,10,,,,,,,,,,,{},{}
+7219,Striped_Socks,Striped Socks,3,920,0,10,,,,,,,,,,,{},{}
+7220,Ectoplasm,Ectoplasm,3,332,0,10,,,,,,,,,,,{},{}
+7221,Chains,Chains,3,740,0,10,,,,,,,,,,,{},{}
+7222,Old_Tree_Branch,Old Tree Branch,3,468,0,10,,,,,,,,,,,{},{}
+7223,Ruined_Self_Portrait,Ruined Self Portrait,3,2032,0,10,,,,,,,,,,,{},{}
 7224,Philosophers_Stone,Philosopher's Stone,3,20,0,10,,,,,,,,,,,{},{}
-7225,Silk_Lantern,Silk Lantern,3,20,0,10,,,,,,,,,,,{},{}
+7225,Silk_Lantern,Silk Lantern,3,486,0,10,,,,,,,,,,,{},{}
 7226,Hallucination_Pill,Hallucination Pill,3,20,0,10,,,,,,,,,,,{},{}
 7227,TCG_Card,TCG Card,3,20,0,10,,,,,,,,,,,{},{}
 7228,Gold_Nugget,Gold Nugget,3,20,0,300,,,,,,,,,,,{},{}
@@ -1729,7 +1729,7 @@
 7250,Spirit_of_Glory,Spirit of Glory,3,20,0,10,,,,,,,,,,,{},{}
 7251,Spirit_of_Victory,Spirit of Victory,3,20,0,10,,,,,,,,,,,{},{}
 
-//Gonryun Items
+//Louyang Items
 //===================================================================
 7252,Chinese_Medicine,Chinese Medicine,3,20,0,10,,,,,,,,,,,{},{}
 7253,Golden_Flag,Golden Flag,3,20,0,10,,,,,,,,,,,{},{}

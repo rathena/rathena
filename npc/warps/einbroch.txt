@@ -1,0 +1,111 @@
+//Einbroch and Einbech warps by Sara - Semi-final 2
+//Einbroch Field <-> Juno Field
+yuno_fild04.gat,251,21,0	warp	ein001	1,1,ein_fild06.gat,252,363
+ein_fild06.gat,252,365,0	warp	ein001a	1,1,yuno_fild04.gat,251,23
+yuno_fild07.gat,73,219,0	warp	ein002	1,1,ein_fild06.gat,338,170
+ein_fild06.gat,340,170,0	warp	ein002a	1,1,yuno_fild07.gat,75,219
+yuno_fild07.gat,56,76,0	warp	ein003	1,1,ein_fild06.gat,354,94
+ein_fild06.gat,356,94,0	warp	ein003a	1,1,yuno_fild07.gat,58,76
+yuno_fild11.gat,28,266,0	warp	ein004	1,1,ein_fild07.gat,380,263
+ein_fild07.gat,382,263,0	warp	ein004a	1,1,yuno_fild11.gat,30,266
+
+//Einbroch Field
+ein_fild06.gat,135,35,0	warp	ein005	1,1,ein_fild07.gat,147,360
+ein_fild07.gat,145,362,0	warp	ein005a	1,1,ein_fild07.gat,135,37
+ein_fild07.gat,191,42,0	warp	ein006	1,1,ein_fild10.gat,194,370
+ein_fild10.gat,194,372,0	warp	ein006a	1,1,ein_fild07.gat,191,44
+ein_fild10.gat,24,331,0	warp	ein007	1,1,ein_fild09.gat,327,346
+ein_fild09.gat,329,346,0	warp	ein007a	1,1,ein_fild10.gat,26,331
+ein_fild09.gat,34,132,0	warp	ein008	1,1,ein_fild08.gat,361,128
+ein_fild08.gat,363,128,0	warp	ein008a	1,1,ein_fild09.gat,36,132
+
+//Einbroch Field <-> Einbroch and Einbech
+ein_fild08.gat,164,381,0	warp	ein009	1,1,einbroch.gat,150,26
+einbroch.gat,150,24,0	warp	ein009a	1,1,ein_fild08.gat,164,379
+ein_fild09.gat,70,353,0	warp	ein010	1,1,einbech.gat,62,31
+einbech.gat,62,29,0	warp	ein010a	1,1,ein_fild09.gat,72,353
+
+//Dungeon Warps
+einbech.gat,139,253,0	warp	ein011	1,1,ein_dun01.gat,22,17
+ein_dun01.gat,22,15,0	warp	ein011a	1,1,einbech.gat,139,251
+ein_dun01.gat,262,256,0	warp	ein012	1,1,ein_dun02.gat,292,290
+ein_dun02.gat,292,292,0	warp	ein012a	1,1,ein_dun01.gat,262,258
+
+//Inside Warps
+ein_in01.gat,13,213,0	warp	ein013	1,1,einbroch.gat,131,80
+einbroch.gat,133,80,0	warp	ein013a	1,1,ein_in01.gat,15,213
+ein_in01.gat,110,267,0	warp	ein014	1,1,einbroch.gat,204,120
+einbroch.gat,202,120,0	warp	ein014a	1,1,ein_in01.gat,108,267
+ein_in01.gat,110,236,0	warp	ein015	1,1,einbroch.gat,204,100
+einbroch.gat,202,100,0	warp	ein015a	1,1,ein_in01.gat,108,236
+ein_in01.gat,80,199,0	warp	ein016	1,1,einbroch.gat,178,71
+einbroch.gat,178,73,0	warp	ein016a	1,1,ein_in01.gat,80,201
+ein_in01.gat,195,224,0	warp	ein017	1,1,einbroch.gat,255,200
+einbroch.gat,257,200,0	warp	ein017a	1,1,ein_in01.gat,197,224
+ein_in01.gat,211,232,0	warp	ein018	1,1,ein_in01.gat,273,232
+ein_in01.gat,271,232,0	warp	ein018a	1,1,ein_in01.gat,209,232
+ein_in01.gat,211,216,0	warp	ein019	1,1,ein_in01.gat,273,218
+ein_in01.gat,271,218,0	warp	ein019a	1,1,ein_in01.gat,209,216
+ein_in01.gat,181,277,0	warp	ein020	1,1,ein_in01.gat,281,224
+ein_in01.gat,283,224,0	warp	ein020a	1,1,ein_in01.gat,179,277
+ein_in01.gat,232,273,0	warp	ein021	1,1,ein_in01.gat,274,244
+ein_in01.gat,274,246,0	warp	ein021a	1,1,ein_in01.gat,232,275
+ein_in01.gat,273,273,0	warp	ein022	1,1,ein_in01.gat,264,244
+ein_in01.gat,264,246,0	warp	ein022a	1,1,ein_in01.gat,273,275
+ein_in01.gat,232,176,0	warp	ein023	1,1,ein_in01.gat,264,205
+ein_in01.gat,264,203,0	warp	ein023a	1,1,ein_in01.gat,232,174
+ein_in01.gat,274,176,0	warp	ein024	1,1,ein_in01.gat,274,205
+ein_in01.gat,274,203,0	warp	ein024a	1,1,ein_in01.gat,274,174
+
+//House with couches
+//- Bottom-left doorway
+//ein_in01.gat,11,147,0	warp	ein025	1,1,mapname.gat,x,y
+//mapname.gat,x,y,0	warp	ein025a	1,1,ein_in01.gat,13,147
+//- Top-right doorway
+//ein_in01.gat,26,131,0	warp	ein026	1,1,mapname.gat,x,y
+//mapname.gat,x,y,0	warp	ein026a	1,1,ein_in01.gat,26,133
+
+ein_in01.gat,145,152,0	warp	ein027	1,1,einbech.gat,253,110
+einbech.gat,255,110,0	warp	ein027a	1,1,ein_in01.gat,147,152
+ein_in01.gat,39,85,0	warp	ein028	1,1,ein_in01.gat,37,36
+ein_in01.gat,39,36,0	warp	ein028a	1,1,ein_in01.gat,37,85
+ein_in01.gat,14,13,0	warp	ein029	1,1,einbroch.gat,255,109
+einbroch.gat,255,107,0	warp	ein029a	1,1,ein_in01.gat,14,15
+
+//2 floor laboratory-ish house
+//- Left Exit
+//ein_in01.gat,103,95,0	warp	ein030	1,1,mapname.gat,x,y
+//mapname.gat,x,y,0	warp	ein030a	1,1,ein_in01.gat,105,95
+//- Right Exit
+//ein_in01.gat,120,77,0	warp	ein031	1,1,mapname.gat,x,y
+//mapname.gat,x,y,0	warp	ein031a	1,1,ein_in01.gat,120,79
+//- Elevator
+ein_in01.gat,126,88,0	warp	ein032	1,1,ein_in01.gat,100,140
+ein_in01.gat,100,142,0	warp	ein032a	1,1,ein_in01.gat,126,86
+
+//House
+//- Bottom-left doorway
+//ein_in01.gat,187,98,0	warp	ein033	1,1,mapname.gat,x,y
+//mapname.gat,x,y,0	warp	ein033a	1,1,ein_in01.gat,189,98
+//- Top-right doorway
+//ein_in01.gat,204,81,0	warp	ein034	1,1,mapname.gat,x,y
+//mapname.gat,x,y,0	warp	ein034a	1,1,ein_in01.gat,204,83
+
+ein_in01.gat,265,105,0	warp	ein035	1,1,einbech.gat,143,112
+einbech.gat,145,112,0	warp	ein035a	1,1,ein_in01.gat,267,105
+ein_in01.gat,288,89,0	warp	ein036	1,1,einbech.gat,155,106
+einbech.gat,153,106,0	warp	ein036a	1,1,ein_in01.gat,286,89
+ein_in01.gat,108,13,0	warp	ein037	1,1,einbroch.gat,217,212
+einbroch.gat,217,214,0	warp	ein037a	1,1,ein_in01.gat,108,15
+ein_in01.gat,200,32,0	warp	ein038	1,1,einbech.gat,170,144
+einbech.gat,170,146,0	warp	ein038a	1,1,ein_in01.gat,200,30
+ein_in01.gat,189,37,0	warp	ein039	1,1,einbech.gat,177,136
+einbech.gat,177,138,0	warp	ein039a	1,1,ein_in01.gat,189,35
+ein_in01.gat,288,25,0	warp	ein040	1,1,einbroch.gat,52,52
+einbroch.gat,50,52,0	warp	ein040a	1,1,ein_in01.gat,286,25
+airport.gat,125,14,0	warp	ein041	1,1,airport.gat,19,20
+airport.gat,19,18,0	warp	ein041a	1,1,airport.gat,123,14
+airport.gat,160,14,0	warp	ein042	1,1,airport.gat,48,20
+airport.gat,48,18,0	warp	ein042a	1,1,airport.gat,162,14
+einbroch.gat,64,208,0	warp	ein043	1,1,airport.gat,143,15
+airport.gat,143,13,0	warp	ein043a	1,1,einbroch.gat,64,206

@@ -1143,17 +1143,19 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 		// check individual stat value
 		for(i = 24; i <= 29; i++) {
 			if (dat[i] < 1 || dat[i] > 9) {
-                        printf("fail (aid: %d), stats error(bot cheat?!)\n", sd->account_id);
+				printf("fail (aid: %d), stats error(bot cheat?!)\n", sd->account_id);
         		return -2;
 			}
 		}
 
-		// char.log to charlog
-		sprintf(tmp_sql,"INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
-			"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			charlog_db,"make new char error", sd->account_id, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
-		//query
-		mysql_query(&mysql_handle, tmp_sql);
+		if (log_char) {
+			// char.log to charlog
+			sprintf(tmp_sql,"INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+				"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+				charlog_db,"make new char error", sd->account_id, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
+			//query
+			mysql_query(&mysql_handle, tmp_sql);
+		}
 		//printf("make new char error %d-%d %s %d, %d, %d, %d, %d, %d %d, %d" RETCODE,
 		//	fd, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
 		
@@ -1161,13 +1163,15 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 		return -2;
 	}
 
-	// char.log to charlog
-	sprintf(tmp_sql,"INSERT INTO `%s`(`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
-		"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-		charlog_db,"make new char", sd->account_id, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
-	//query
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("fail(log error), SQL error: %s\n", mysql_error(&mysql_handle));
+	if (log_char) {
+		// char.log to charlog
+		sprintf(tmp_sql,"INSERT INTO `%s`(`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+			"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+			charlog_db,"make new char", sd->account_id, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
+		//query
+		if (mysql_query(&mysql_handle, tmp_sql)) {
+			printf("fail(log error), SQL error: %s\n", mysql_error(&mysql_handle));
+		}
 	}
 	//printf("make new char %d-%d %s %d, %d, %d, %d, %d, %d - %d, %d" RETCODE,
 	//	fd, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
@@ -2534,11 +2538,13 @@ int parse_char(int fd) {
 				break;
 			}
 
-			sprintf(tmp_sql,"INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')",
-				charlog_db, sd->account_id, RFIFOB(fd, 2), char_dat[0].name);
-			//query
-			if(mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
+			if (log_char) {
+				sprintf(tmp_sql,"INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')",
+					charlog_db, sd->account_id, RFIFOB(fd, 2), char_dat[0].name);
+				//query
+				if(mysql_query(&mysql_handle, tmp_sql)) {
+					printf("DB server Error - %s\n", mysql_error(&mysql_handle));
+				}
 			}
 			printf("(\033[1;64m%d\033[0m) char selected (\033[1;32m%d\033[0m) \033[1;32m%s\033[0m" RETCODE, sd->account_id, RFIFOB(fd, 2), char_dat[0].name);
 

@@ -6,6 +6,8 @@
 	Skill databases == celest working on them i believe.
 
 03/18
+        * Updated item prices for Niflheim drops [celest]
+        * Updated some Ayothaya mob stats [celest]
         * Fixed Incantation Samurai card reducing HP too quickly - the time should
           be in milliseconds ^^; [celest]
 	* Added ~86 new cards. Fixed, optimized [Lupus]

@@ -1,6 +1,9 @@
 Date	Added
 
 03/18
+        * Don't log SQL char actions if log_char is not enabled in char_athena.conf
+          [celest]
+        * Updated shop_exp's calculation to give more exp, thanks to tcdiem [celest]
         * Fixed the bDamageWhenUnequip effect dealing damage when unequipping unrelated
           items [celest]
         * Fixed compile errors in SQL char.c [celest]

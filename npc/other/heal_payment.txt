@@ -42,7 +42,7 @@ prontera.gat,150,184,5	script	Healring#h2-1::Healring	1002,{
 		mes "Booiing Boooing: BoooiiinnnG (or healing and regeneration: "+(@tempHp+@tempSp)+" z)?";
 		mes "BOINNG: Booing (I use zenys for a good cause: my medicines and my Poring Food)!";
 		next;
-		menu "Only healings ("+@tempHp+"z)",HEALINGS,"Only a regeneration ("+@tempSp+"z)",REGENERATION,"Healings with regeneration ("+(@tempHp+@tempSp)+"z)",HEALINGS_AND_REGENERATION,"Nothing, thanks",CANCEL;
+		menu "Only healings ("+@tempHp+"z)",HEALINGS,"Only a regeneration ("+@tempSp+"z)",REGENERATION,"Healings with regeneration ("+(@tempHp+@tempSp)+"z)",HEALINGS_AND_REGEN,"Nothing, thanks",CANCEL;
 
 	ONLY_REGENERATION:
 		mes "[Healring]";
@@ -63,7 +63,7 @@ prontera.gat,150,184,5	script	Healring#h2-1::Healring	1002,{
 		heal 0,30000;
 		goto FIN;
 
-	HEALINGS_AND_REGENERATION:
+	HEALINGS_AND_REGEN:
 		if (Zeny < (@tempHp+@tempSp)) goto NO_ZENYS;
 		set Zeny, Zeny-(@tempHp+@tempSp);
 		heal 30000,30000;
