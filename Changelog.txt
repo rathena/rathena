@@ -1,5 +1,6 @@
 Date	Added
 12/15
+        * fix compile error in text converters [MouseJstr]
         * Skill Updates [celest]
           - Corrected traps to last longer in GvG
           - Some minor changes to Hiding, Cloaking and Chasewalk to prevent it from
