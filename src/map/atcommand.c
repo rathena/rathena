@@ -7981,82 +7981,6 @@ int atcommand_misceffect(
 	return 0;
 }
 
-#ifndef TXT_ONLY  /* Begin SQL-Only commands */
-
-/*==========================================
- * Mail System commands by [Valaris]
- *------------------------------------------
- */
-int atcommand_listmail(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{ 
-	if(!battle_config.mail_system)
-		return 0;
-
-	nullpo_retr(-1, sd);
-
-	if(strlen(command)==12)
-		mail_check(sd,3);
-	else if(strlen(command)==9)
-		mail_check(sd,2);
-	else 
-		mail_check(sd,1);
-	return 0;
-}
-
-int atcommand_readmail(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	if(!battle_config.mail_system)
-		return 0;
-
-	nullpo_retr(-1, sd);
-
-	if (!message || !*message) {
-		clif_displaymessage(sd->fd,"You must specify a message number.");
-		return 0;
-	}
-
-	if(strlen(command)==11)
-		mail_delete(sd,atoi(message));
-	else
-		mail_read(sd,atoi(message));
-
-	return 0;
-}
-
-int atcommand_sendmail(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	char name[24],text[80];
-
-	if(!battle_config.mail_system)
-		return 0;
-
-	nullpo_retr(-1, sd);
-
-	if (!message || !*message) {
-		clif_displaymessage(sd->fd,"You must specify a recipient and a message.");
-		return 0;
-	}
-
-	if ((sscanf(message, "\"%[^\"]\" %79[^\n]", name, text) < 2) &&
-		(sscanf(message, "%23s %79[^\n]", name, text) < 2)) {
-		clif_displaymessage(sd->fd,"You must specify a recipient and a message.");
-		return 0;
-	}
-
-	if(strlen(command)==17)
-		mail_send(sd,name,text,1);
-	else 
-		mail_send(sd,name,text,0);
-
-	return 0;
-}
-
 int charid2sessionid(int charid)
 {
    int i;
@@ -8691,6 +8615,82 @@ atcommand_charkillableid2(
    }
    //printf("Session_id = %d, aid = %d\n",session_id,aid);
    return 0;
+}
+
+#ifndef TXT_ONLY  /* Begin SQL-Only commands */
+
+/*==========================================
+ * Mail System commands by [Valaris]
+ *------------------------------------------
+ */
+int atcommand_listmail(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{ 
+	if(!battle_config.mail_system)
+		return 0;
+
+	nullpo_retr(-1, sd);
+
+	if(strlen(command)==12)
+		mail_check(sd,3);
+	else if(strlen(command)==9)
+		mail_check(sd,2);
+	else 
+		mail_check(sd,1);
+	return 0;
+}
+
+int atcommand_readmail(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	if(!battle_config.mail_system)
+		return 0;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		clif_displaymessage(sd->fd,"You must specify a message number.");
+		return 0;
+	}
+
+	if(strlen(command)==11)
+		mail_delete(sd,atoi(message));
+	else
+		mail_read(sd,atoi(message));
+
+	return 0;
+}
+
+int atcommand_sendmail(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char name[24],text[80];
+
+	if(!battle_config.mail_system)
+		return 0;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		clif_displaymessage(sd->fd,"You must specify a recipient and a message.");
+		return 0;
+	}
+
+	if ((sscanf(message, "\"%[^\"]\" %79[^\n]", name, text) < 2) &&
+		(sscanf(message, "%23s %79[^\n]", name, text) < 2)) {
+		clif_displaymessage(sd->fd,"You must specify a recipient and a message.");
+		return 0;
+	}
+
+	if(strlen(command)==17)
+		mail_send(sd,name,text,1);
+	else 
+		mail_send(sd,name,text,0);
+
+	return 0;
 }
 
 /*==========================================
