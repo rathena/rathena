@@ -15,7 +15,7 @@
 
 //===== Al De Baran Warps =====================================
 aldebaran.gat,118,63,0	warp	ald01	1,1,aldeba_in.gat,211,117
-aldebaran.gat,138,34,0	warp	ald001	2,2,mjolnir_12.gat,199,375
+aldebaran.gat,139,34,0	warp	ald001	3,2,mjolnir_12.gat,199,375
 aldebaran.gat,197,70,0	warp	ald02	1,1,aldeba_in.gat,94,41
 aldebaran.gat,225,54,0	warp	ald03	1,1,aldeba_in.gat,149,120
 aldebaran.gat,233,105,0	warp	ald04	1,1,aldeba_in.gat,157,190

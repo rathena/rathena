@@ -84,3 +84,8 @@ Progress:	0%
 Problem:	MVP cast spells w/o showing "prepare cast line"
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Line 130 in item_db.txt is giving error.
+Note:		This is the whole line: 658,Tribal_Solidarity,Tribal Solidarity,2,1000,0,500,,,,,10477567,2,,,,,{ guildgetexp rand(1,10000); },{}
+Assigned:	N/A
+Progress:	0%
