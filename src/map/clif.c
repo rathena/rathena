@@ -1147,14 +1147,14 @@ static int clif_mob0078(struct mob_data *md, unsigned char *buf)
 		WBUFB(buf,45)=mob_get_sex(md->class);
 	}
 
-	if (md->class >= 1285 && md->class <= 1287) {	// Added guardian emblems [Valaris]
+	if (md->class >= 1285 && md->class <= 1287 && md->guild_id) {	// Added guardian emblems [Valaris]
 		struct guild *g;
 		struct guild_castle *gc=guild_mapname2gc(map[md->bl.m].name);
 		if (gc && gc->guild_id > 0) {
 			g=guild_search(gc->guild_id);
 			if (g) {
-				WBUFL(buf,26)=gc->guild_id;
 				WBUFL(buf,22)=g->emblem_id;
+				WBUFL(buf,26)=gc->guild_id;
 			}
 		}
 	}	// End addition
@@ -1201,7 +1201,7 @@ static int clif_mob007b(struct mob_data *md, unsigned char *buf) {
 	} else
 		WBUFL(buf,22)=gettick();
 
-		if(md->class >= 1285 && md->class <= 1287)	{	// Added guardian emblems [Valaris]
+		if(md->class >= 1285 && md->class <= 1287 && md->guild_id)	{	// Added guardian emblems [Valaris]
 			struct guild *g;
 			struct guild_castle *gc=guild_mapname2gc(map[md->bl.m].name);
 			if(gc && gc->guild_id > 0){
@@ -7551,7 +7551,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd, int cmd)
 			nullpo_retv(md);
 
 			memcpy(WFIFOP(fd,6), md->name, 24);
-			if (md->class >= 1285 && md->class <= 1288) {
+			if (md->class >= 1285 && md->class <= 1288 && md->guild_id) {
 				struct guild *g;
 				struct guild_castle *gc = guild_mapname2gc(map[md->bl.m].name);
 				if (gc && gc->guild_id > 0 && (g = guild_search(gc->guild_id)) != NULL) {

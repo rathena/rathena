@@ -1078,9 +1078,9 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range)
 			nullpo_retr(0, sd=(struct map_session_data *)bl);
 			if(!gc)
 				return 0;
-			if(gc && sd && sd->status.guild_id && sd->status.guild_id>0) {
+			if(gc && sd && sd->status.guild_id) {
 			g=guild_search(sd->status.guild_id);	// don't attack guild members [Valaris]
-				if(g && g->guild_id > 0 && g->guild_id == gc->guild_id)
+				if(g && g->guild_id == gc->guild_id)
 						return 0;
 				if(g && gc && guild_isallied(g,gc))
 						return 0;
