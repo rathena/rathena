@@ -1698,7 +1698,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 		weapon = sd->weapontype2;
 	switch(weapon)
 	{
-		case 0x01:	// ’ZŒ• (Updated By AppleGirl)
+		case 0x01:	// ’ZŒ• Knife
 		case 0x02:	// 1HS
 		{
 			// Œ•C—û(+4 ` +40) •ÐŽèŒ• ’ZŒ•ŠÜ‚Þ
@@ -1716,16 +1716,6 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			break;
 		}
 		case 0x04:	// 1HL
-		{
-			// ‘„C—û(+4 ` +40,+5 ` +50) ‘„
-			if((skill = pc_checkskill(sd,KN_SPEARMASTERY)) > 0) {
-				if(!pc_isriding(sd))
-					damage += (skill * 4);	// ƒyƒR‚Éæ‚Á‚Ä‚È‚¢
-				else
-					damage += (skill * 5);	// ƒyƒR‚Éæ‚Á‚Ä‚é
-			}
-			break;
-		}
 		case 0x05:	// 2HL
 		{
 			// ‘„C—û(+4 ` +40,+5 ` +50) ‘„
@@ -1737,13 +1727,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x06:	// •ÐŽè•€
-		{
-			if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0) {
-				damage += (skill * 3);
-			}
-			break;
-		}
+		case 0x06: // •ÐŽè•€
 		case 0x07: // Axe by Tato
 		{
 			if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0) {
@@ -1765,7 +1749,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			break;
 		case 0x0b:	// ‹|
 			break;
-		case 0x00:	// ‘fŽè
+		case 0x00:	// ‘fŽè Bare Hands
 		case 0x0c:	// Knuckles
 		{
 			// “SŒ(+3 ` +30) ‘fŽè,ƒiƒbƒNƒ‹
@@ -3241,8 +3225,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 				break;
 			case MC_CARTREVOLUTION:	// ƒJ[ƒgƒŒƒ{ƒŠƒ…[ƒVƒ‡ƒ“
 				if(sd->cart_max_weight > 0 && sd->cart_weight > 0) {
-					damage = (damage*(150 + pc_checkskill(sd,BS_WEAPONRESEARCH) + (sd->cart_weight*100/sd->cart_max_weight) ) )/100;
-					damage2 = (damage2*(150 + pc_checkskill(sd,BS_WEAPONRESEARCH) + (sd->cart_weight*100/sd->cart_max_weight) ) )/100;
+					damage = ( damage*(150 + sd->cart_weight/80) )/100;	//fixed CARTREV damage [Lupus]
+					damage2 = ( damage2*(150 + sd->cart_weight/80) )/100;
+					//damage = (damage*(150 + pc_checkskill(sd,BS_WEAPONRESEARCH) + (sd->cart_weight*100/sd->cart_max_weight) ) )/100;
+					//damage2 = (damage2*(150 + pc_checkskill(sd,BS_WEAPONRESEARCH) + (sd->cart_weight*100/sd->cart_max_weight) ) )/100;
 				}
 				else {
 					damage = (damage*150)/100;
@@ -3982,8 +3968,8 @@ struct Damage battle_calc_weapon_attack(
 			}
 			if(sd->sc_data[SC_OVERTHRUST].timer!=-1)
 				breakrate+=20*sd->sc_data[SC_OVERTHRUST].val1;
-			if(wd.type==0x0a)
-				breakrate*=2;
+			//if(wd.type==0x0a) //removed! because CRITS don't affect on breaking chance [Lupus]
+			//	breakrate*=2;
 			if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
 				if(pc_breakweapon(sd)==1)
 					wd = battle_calc_pc_weapon_attack(src,target,skill_num,skill_lv,wflag);
@@ -3994,8 +3980,8 @@ struct Damage battle_calc_weapon_attack(
 	if (battle_config.equipment_breaking && target->type == BL_PC && (wd.damage > 0 || wd.damage2 > 0)) {
 		int breakrate=1;
 		if(src->type==BL_PC && ((struct map_session_data *)src)->sc_data[SC_MELTDOWN].timer!=-1) breakrate+=70*((struct map_session_data *)src)->sc_data[SC_MELTDOWN].val1;
-		if (wd.type==0x0a)
-			breakrate*=2;
+		//if (wd.type==0x0a) removed! because CRITS don't affect on breaking chance [Lupus]
+		//	breakrate*=2;
 		if (rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
 			pc_breakarmor((struct map_session_data *)target);
 		}
