@@ -1728,7 +1728,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		if(rand()%100 < rate)
 			skill_addtimerskill(src,tick + 800,bl->id,0,0,skillid,skilllv,0,flag);
 	}
-	if(damage > 0 && dmg.flag&BF_SKILL && bl->type==BL_PC && pc_checkskill((struct map_session_data *)bl,RG_PLAGIARISM)){
+	if(damage > 0 && dmg.flag&BF_SKILL && bl->type==BL_PC && pc_checkskill((struct map_session_data *)bl,RG_PLAGIARISM) && sc_data[SC_PRESERVE].timer != -1){
 		struct map_session_data *tsd = (struct map_session_data *)bl;
 		nullpo_retr(0, tsd);
 		if(!tsd->status.skill[skillid].id && !tsd->status.skill[skillid].id
@@ -3849,6 +3849,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			}
 		}
 		break;
+
 	case RG_STRIPHELM:			/* ストリップヘルム */
 		{
 			struct status_change *tsc_data = battle_get_sc_data(bl);
@@ -3871,6 +3872,31 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			}
 		}
 		break;
+
+	case ST_FULLSTRIP:
+		{
+			struct status_change *tsc_data = battle_get_sc_data(bl);
+			
+			if(tsc_data && tsc_data[SC_CP_HELM].timer != -1)
+				break;
+			strip_per = 5+2*skilllv+strip_fix/5;
+			strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
+			if(rand()%100 < strip_per){
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
+				if(dstsd){
+					for(i=0;i<MAX_INVENTORY;i++){
+						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0100){
+							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							break;
+						}
+					}
+				}
+			}
+		}
+		break;
+
+
 	/* PotionPitcher */
 	case AM_POTIONPITCHER:		/* ポ?ションピッチャ? */
 		{
@@ -3904,7 +3930,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					hp = hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
 					if(dstsd) {
 						sp = dstsd->status.max_sp * sd->potion_per_sp / 100;
-						sp = sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER) + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
+						sp = sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
 					}
 				}
 				else {
@@ -3915,7 +3941,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 							hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 					}
 					if(sd->potion_sp > 0) {
-						sp = sd->potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER) + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
+						sp = sd->potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
 						sp = sp * (100 + (battle_get_int(bl)<<1)) / 100;
 						if(dstsd)
 							sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10) / 100;
@@ -3976,6 +4002,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		}
 		break;
+
 	case SA_DISPELL:			/* ディスペル */
 		{
 			int i;
@@ -4345,12 +4372,14 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		if(sd)
 			skill_use_id(sd,src->id,sd->skillid_dance,sd->skilllv_dance);
 		break;
+
 	case AS_SPLASHER:		/* ベナムスプラッシャ? */
 		if((double)battle_get_max_hp(bl)*2/3 < battle_get_hp(bl)) //HPが2/3以上?っていたら失敗
 			return 1;
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,skillid,src->id,0,skill_get_time(skillid,skilllv),0 );
 		break;
+
 	case PF_MINDBREAKER:		/* プロボック */
 		{
 			struct status_change *sc_data = battle_get_sc_data(bl);
@@ -4385,6 +4414,20 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				if(range < 0)
 					range = battle_get_range(src) - (range + 1);
 				mob_target((struct mob_data *)bl,src,range);
+			}
+		}
+		break;
+
+	// Slim Pitcher [Celest]
+	case CR_SLIMPITCHER:
+		{
+			if (sd && flag&1) {
+				int hp = sd->potion_hp * (100 + pc_checkskill(sd,CR_SLIMPITCHER)*5 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
+				hp = hp * (100 + (battle_get_vit(bl)<<1))/100;
+				if (dstsd)
+					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				battle_heal(src,bl,hp,0,0);
 			}
 		}
 		break;
@@ -4840,6 +4883,33 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 				md->deletetimer=add_timer(gettick()+skill_get_time(skillid,skilllv),mob_timer_delete,id,0);
 			}
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
+		}
+		break;
+
+	// Slim Pitcher [Celest]
+	case CR_SLIMPITCHER:
+		{
+			if (sd) {
+				int x = skilllv%11 - 1;
+				int i = pc_search_inventory(sd,skill_db[skillid].itemid[x]);
+				if(i < 0 || skill_db[skillid].itemid[x] <= 0 || sd->inventory_data[i] == NULL ||
+					sd->status.inventory[i].amount < skill_db[skillid].amount[x]) {
+					clif_skill_fail(sd,skillid,0,0);
+					map_freeblock_unlock();
+					return 1;
+				}
+				sd->state.potionpitcher_flag = 1;
+				sd->potion_hp = 0;
+				run_script(sd->inventory_data[i]->use_script,0,sd->bl.id,0);
+				pc_delitem(sd,i,skill_db[skillid].amount[x],0);
+				sd->state.potionpitcher_flag = 0;
+				if(sd->potion_hp > 0) {
+					map_foreachinarea(skill_area_sub,
+						src->m,x-3,y-3,x+3,y+3,0,
+						src,skillid,skilllv,tick,flag|BCT_ALL|1,
+						skill_castend_nodamage_id);					
+				}
+			}
 		}
 		break;
 	}

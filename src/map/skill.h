@@ -352,7 +352,7 @@ enum {	// struct map_session_data ‚Ì status_change‚Ì”Ô?ƒe?ƒuƒ‹
 	SC_HAWKEYES			= 199,
 	SC_BATTLEORDERS		= 200,
 	SC_REGENERATION		= 201,
-
+	SC_PRESERVE         = 202,
 
 // -- testing various SC effects
 //	SC_AURABLADE			=81,

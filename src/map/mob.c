@@ -2458,6 +2458,28 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			log_drop(mvp_sd, md->class, log_item);
 		#endif
 
+		// Ore Discovery [Celest]
+		if (pc_checkskill(sd,BS_FINDINGORE)>0 && 1 >= rand()%1000) {
+			struct delay_item_drop *ditem;
+			int itemid[17] = { 714, 756, 757, 969, 984, 985, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1002 };
+			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
+			ditem->nameid = itemid[rand()%17];
+			log_item[i] = ditem->nameid;
+			ditem->amount = 1;
+			ditem->m = md->bl.m;
+			ditem->x = md->bl.x;
+			ditem->y = md->bl.y;
+			ditem->first_sd = mvp_sd;
+			ditem->second_sd = second_sd;
+			ditem->third_sd = third_sd;
+			add_timer(tick+500+i,mob_delay_item_drop,(int)ditem,0);
+		}
+
+		#ifndef TXT_ONLY
+		if(log_config.drop > 0)
+			log_drop(mvp_sd, md->class, log_item);
+		#endif
+
 		if(sd && sd->state.attack_type == BF_WEAPON) {
 			for(i=0;i<sd->monster_drop_item_count;i++) {
 				struct delay_item_drop *ditem;
