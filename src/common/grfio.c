@@ -492,8 +492,10 @@ void* grfio_reads(char *fname, int *size)
 		strncpy(lfname,fname,255);
 		// i hope this is the correct way =p [celest]
 		if ((rname=grfio_resnametable(fname,lfname))!=NULL) {			
+			char tbuf[255];
 			//sprintf(rname,"%s",grfio_resnametable(fname,lfname));
-			sprintf(lfname,"%s%s",data_dir,rname);
+			sprintf(tbuf,"%s%s",data_dir,rname);
+			strcpy(lfname, tbuf);
 			//printf("%s\n",lfname);
 		}
 
