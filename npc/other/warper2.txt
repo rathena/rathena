@@ -240,7 +240,7 @@ amatsu.gat,194,79,1		duplicate(warpra)	Warp NPC	115
 comodo.gat,194,158,4		duplicate(warpra)	Warp NPC	115
 geffen.gat,115,66,4		duplicate(warpra)	Warp NPC	115
 izlude.gat,131,116,4		duplicate(warpra)	Warp NPC	115
-xmas_fild01.gat,115,174,4	duplicate(warpra)	Warp NPC	115
+xmas.gat,150,136,4	duplicate(warpra)	Warp NPC	115
 morocc.gat,156,99,4		duplicate(warpra)	Warp NPC	115
 payon.gat,182,110,4		duplicate(warpra)	Warp NPC	115
 prontera.gat,153,183,4		duplicate(warpra)	Warp NPC	115
