@@ -17,6 +17,7 @@ Date	Added
 	  is set to 'yes' -- they're only not allowed to cast near players [celest]
 	* Print number of online users in online.txt/.html even if there's only 1 user
 	  online [celest]
+	* Updated obj_del to delete all GNUMakeFile and .o files + compiled exes [DracoRPG]
 
 03/23
         * Adjusted my trade fix [1280: MouseJstr]
