@@ -10511,8 +10511,25 @@ int do_init_clif(void) {
 	memcpy(clif_parse_func_table[6], clif_parse_func_table[5], sizeof(clif_parse_func_table[0]));
 	// init packet function calls for packet ver 14 (same function of packet version 13, but size are different)
 	memcpy(clif_parse_func_table[7], clif_parse_func_table[6], sizeof(clif_parse_func_table[0]));
-	// Init packet function calls for packet ver 15 (same function of packet version 14, but size are different)
+	// Init packet function calls for packet ver 15
 	memcpy(clif_parse_func_table[8], clif_parse_func_table[7], sizeof(clif_parse_func_table[0]));
+	clif_parse_func_table[3][0x190] = clif_parse_UseItem;
+	clif_parse_func_table[3][0x094] = clif_parse_MoveToKafra;
+	clif_parse_func_table[3][0x09f] = clif_parse_ActionRequest;
+	clif_parse_func_table[3][0x0a7] = clif_parse_WalkToXY;
+	clif_parse_func_table[3][0x07e] = clif_parse_UseSkillToPos;
+	clif_parse_func_table[3][0x116] = clif_parse_DropItem;
+	clif_parse_func_table[3][0x08c] = clif_parse_GetCharNameRequest;
+	clif_parse_func_table[3][0x085] = clif_parse_GlobalMessage;
+	clif_parse_func_table[3][0x0f7] = clif_parse_SolveCharName;
+	clif_parse_func_table[3][0x113] = clif_parse_UseSkillToPos;
+	clif_parse_func_table[3][0x0f3] = clif_parse_ChangeDir;
+	clif_parse_func_table[3][0x0f5] = clif_parse_WantToConnection;
+	clif_parse_func_table[3][0x09b] = clif_parse_CloseKafra;
+	clif_parse_func_table[3][0x0a2] = clif_parse_TakeItem;
+	clif_parse_func_table[3][0x089] = clif_parse_TickSend;
+	clif_parse_func_table[3][0x072] = clif_parse_UseSkillToId;
+	clif_parse_func_table[3][0x193] = clif_parse_MoveFromKafra;
 
 	// size of packet version 5
 	memcpy(&packet_size_table[0], &packet_len_table, sizeof(packet_len_table));
