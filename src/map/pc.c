@@ -1885,6 +1885,13 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->autospell2_type = 1;	// enemy
 		}
 		break;
+	case SP_HP_LOSS_RATE:
+		if(sd->state.lr_flag != 2) {
+			sd->hp_loss_value = type2;
+			sd->hp_loss_rate = type3;
+			sd->hp_loss_type = val;
+		}
+		break;
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus3: unknown type %d %d %d %d!\n",type,type2,type3,val);
@@ -6646,10 +6653,10 @@ static int pc_bleeding (struct map_session_data *sd)
 			sd->hp_loss_tick -= interval;
 			if (sd->status.hp < hp)
 				hp = sd->status.hp;
-			if (sd->hp_loss_type == 0) {
-				pc_heal(sd,-hp,0);
-			} else if (sd->hp_loss_type == 1) {
+			if (sd->hp_loss_type == 1) {
+				clif_damage(&sd->bl,&sd->bl,gettick(),0,0,hp,0,0,0);
 			}
+			pc_heal(sd,-hp,0);
 			sd->hp_loss_tick = 0;
 		}
 	}

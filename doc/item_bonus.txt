@@ -158,5 +158,11 @@ bonus2 bSkillAtk,n,x;			Increase damage of skill n by x%
 bonus2 bAddDamageByClass,n,x;		When being hit by monster of class n increase
                                         damage taken by x%
 
+bonus3 bHPLossRate,n,x,y;		Lose n amount of hp every x amount of time
+                                        y:0=Don't show damage 1=Show damage
 bonus3 bAutoSpellWhenHit,x,y,n;		n% chance to cast skill x of level y when
                                         being hit by physical close range damage
+
+bonus4 bAutoSpellWhenHit,x,y,n,i;	n% chance to cast skill x of level y when
+                                        being hit by physical close range damage
+                                        i:0=cast on self  1=cast on enemy
