@@ -959,8 +959,6 @@ void map_addnickdb(struct map_session_data *sd) {
  *------------------------------------------
  */
 int map_quit(struct map_session_data *sd) {
-	int i;
-
 	nullpo_retr(0, sd);
 
 	if(sd->chatID)	// チャットから出る
@@ -1031,7 +1029,7 @@ int map_quit(struct map_session_data *sd) {
 	//double connect bug fix by Valaris
 	if(sd->alive_timer) {
 		delete_timer(sd->alive_timer,pc_alive_timer);
-		sd->alive_timer = NULL;
+		sd->alive_timer = 0;
 	}
 
 	if( sd->npc_stackbuf && sd->npc_stackbuf != NULL)
