@@ -188,21 +188,54 @@ unsigned char isGM(int account_id) {
 	return *level;
 }
 
-void read_GMs(void) {
+static int gmdb_final(void *key,void *data,va_list ap) {
+	unsigned char *level;
+
+	nullpo_retr(0, level=data);
+
+	free(level);
+
+	return 0;
+}
+
+void do_final_gmdb(void) {
+	if(gm_db){
+		numdb_final(gm_db,gmdb_final);
+		gm_db=NULL;
+	}
+}
+
+void read_GMs(int fd) {
     unsigned char *level;
-    level = malloc(sizeof(unsigned char));
+    int i=0;
+        
+    if(gm_db)
+        do_final_gmdb();
+        
+    gm_db = numdb_init();
     
-    sprintf(tmpsql,"SELECT `%s`,`%s` FROM `%s` WHERE `%s` > 0", login_db_account_id, login_db_level, login_db,login_db_level);
+    sprintf(tmpsql,"SELECT `%s`,`%s` FROM `%s` WHERE `%s` > '%d'", login_db_account_id, login_db_level, login_db,login_db_level,lowest_gm_level);
     sql_query(tmpsql,"read_GMs");
     
+    WFIFOW(fd, 0) = 0x2732;
+    
     if ((sql_res = mysql_store_result(&mysql_handle))) {
-        while((sql_row = mysql_fetch_row(sql_res))) {
+        for(i=0;(sql_row = mysql_fetch_row(sql_res));i++) {
+            level = malloc(sizeof(unsigned char));
+            
             if( (*level = atoi(sql_row[1])) > 99 )
                 *level = 99;
 
             numdb_insert(gm_db, atoi(sql_row[0]), level);
+            
+            WFIFOL(fd,6+5*i) = atoi(sql_row[0]);
+            WFIFOB(fd,10+5*i) = *level;
         }
+        
+        WFIFOW(fd,2) = i;
     }
+    
+    WFIFOSET(fd,6+5*i);
     
     mysql_free_result(sql_res);
 }    
@@ -930,10 +963,6 @@ int do_init(int argc,char **argv){
 	// Online user database init
     free(online_db);
 	online_db = numdb_init();
-	
-	// GM database init
-    free(gm_db);
-	gm_db = numdb_init();
 	
 	// Read GMs from table
 	read_GMs();

@@ -155,6 +155,11 @@ int console = 0;
 
 char prev_query[65535];
 
+char servers_connected = 0;
+
+// GM Database
+struct dbt *gm_db;
+
 //----------------------------------------------
 //SQL Commands ( Original by Clownisius ) [Edit: Wizputer]
 //----------------------------------------------
@@ -198,36 +203,66 @@ int remove_control_chars(unsigned char *str) {
 // and returns its level (or 0 if it isn't a GM account or if not found)
 //----------------------------------------------------------------------
 // Removed since nothing GM related goes on in the char server [CLOWNISIUS]
-int isGM(int account_id) {
-	int i;
 
-	for(i = 0; i < GM_num; i++)
-		if (gm_account[i].account_id == account_id)
-			return gm_account[i].level;
+unsigned char isGM(int account_id) {
+    unsigned char *level;
+    
+   	level = numdb_search(gm_db, account_id);
+	if (level == NULL)
+		return 0;
+
+	return *level;
+}
+
+static int gmdb_final(void *key,void *data,va_list ap) {
+	unsigned char *level;
+
+	nullpo_retr(0, level=data);
+
+	free(level);
+
 	return 0;
 }
 
-void read_gm_account(void) {
-	if (gm_account != NULL)
-		free(gm_account);
-	GM_num = 0;
-
-	sprintf(tmp_lsql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",login_db_account_id,login_db_level,login_db,login_db_level,lowest_gm_level);
-	if (mysql_query(&lmysql_handle, tmp_lsql)) {
-		printf("DB server Error (select %s to Memory)- %s\n",login_db,mysql_error(&lmysql_handle));
-		return;
+void do_final_gmdb(void) {
+	if(gm_db){
+		numdb_final(gm_db,gmdb_final);
+		gm_db=NULL;
 	}
-	lsql_res = mysql_store_result(&lmysql_handle);
-	if (lsql_res) {
-		gm_account = calloc(sizeof(struct gm_account) * mysql_num_rows(lsql_res), 1);
-		while ((lsql_row = mysql_fetch_row(lsql_res))) {
-			gm_account[GM_num].account_id = atoi(lsql_row[0]);
-			gm_account[GM_num].level = atoi(lsql_row[1]);
-			GM_num++;
-		}
-	}
+}
 
-	mysql_free_result(lsql_res);
+void read_gm_accounts(int fd, int len) {
+    GM_num = RFIFOW(fd,2);
+    
+	if(len < (6+5*GM_num))
+	    return;
+	    
+    int i=0,account_id=0;
+    unsigned char level*;
+    
+    if (gm_db)
+		do_final_gmdb();
+		
+	gm_db = numdb_init();
+
+	WFIFOW(fd,0) = 0x2b99;
+	WFIFOW(fd,2) = GM_num;
+	
+	if(GM_num) {
+	    for(i=0;i<GM_num;i++) {
+	        level = malloc(sizeof(unsigned char));
+	        
+	        *level = RFIFOB(fd,(10+5*(GM_num-1));
+	        account_id = RFIFOW(fd,(6+5*(GM_num-1))
+	        
+	        numdb_insert(gm_db, account_id, level);
+	        
+	        WFIFOL(fd,6+5*i) = account_id;
+            WFIFOB(fd,10+5*i) = *level;
+	    }
+	}
+ 
+    WFIFOSET(fd,6+5*i);    
 }
 
 //=====================================================================================================
@@ -244,7 +279,9 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	#ifdef DEBUG
 	printf("(\033[1;32m%d\033[0m) %s \trequest save char data - ",char_id,char_dat[0].name);
 	#endif
-
+	
+	sql_query("START TRANSACTION","mmo_char_tosql");
+	
 //=========================================map  inventory data > memory ===============================
 	//map inventory data
 	for(i=0;i<MAX_INVENTORY;i++){
@@ -351,7 +388,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	printf("Char [%s] - Saved Char data to SQL!\n",p->name);
 	#endif
 	
-	sprintf(tmp_sql,"REPLACE INTO `%s`(`char_id`,`map`,`x`,`y`) VALUES ",memo_db);
+	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",memo_db,char_id);
+	sql_query(tmp_sql,"mmo_char_tosql");
+	
+	sprintf(tmp_sql,"INSERT INTO `%s`(`char_id`,`map`,`x`,`y`) VALUES ",memo_db);
 	for(i=0;i<10;i++){
 	    if(i)
  	        sprintf(tmp_sql,"%s,",tmp_sql);
@@ -367,7 +407,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	printf("Char [%s] - Saved memo data to SQL!\n",p->name);
 	#endif
 
-	sprintf(tmp_sql,"REPLACE INTO `%s`(`char_id`, `id`, `lv`) VALUES ",skill_db);
+	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",skill_db,char_id);
+	sql_query(tmp_sql,"mmo_char_tosql");
+
+	sprintf(tmp_sql,"INSERT INTO `%s`(`char_id`, `id`, `lv`) VALUES ",skill_db);
 	for(i=0;i<MAX_SKILL;i++){
 		if(p->skill[i].id){
 			if (p->skill[i].id && p->skill[i].flag!=1) {
@@ -386,7 +429,10 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	printf("Char [%s] - Save skill data to SQL!\n",p->name);
 	#endif
 
-	sprintf(tmp_sql,"REPLACE INTO `%s`(`char_id`, `str`, `value`) VALUES ",reg_db);
+	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d' AND `type`='3'",reg_db,char_id);
+	sql_query(tmp_sql,"mmo_char_tosql");
+
+	sprintf(tmp_sql,"INSERT INTO `%s`(`char_id`, `str`, `value`) VALUES ",reg_db);
 	for(i=0;i<p->global_reg_num;i++){
 		if (p->global_reg[i].str) {
 			if(p->global_reg[i].value !=0){
@@ -400,6 +446,8 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	}
 	
 	sql_query(tmp_sql,"mmo_char_tosql");
+	
+	sql_query("COMMIT","mmo_char_tosql");
 	
 	#ifdef DEBUG
 	printf("Char [%s] - Save global reg data to SQL!\n",p->name);
@@ -699,9 +747,10 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 	}
 	return 0;
 }
+
 //=====================================================================================================
 int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
-	int i, n;
+	int i=0, n=0;
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 
@@ -850,7 +899,8 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	
 	if ((sql_res = mysql_store_result(&mysql_handle))) {
 		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++){
-			p->skill[n].id = atoi(sql_row[0]);
+		    n = atoi(sql_row[0]);
+			p->skill[n].id = n;
 			p->skill[n].lv = atoi(sql_row[1]);
 		}
 		mysql_free_result(sql_res);
@@ -889,56 +939,47 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 }
 //==========================================================================================================
 int mmo_char_sql_init(void) {
-	int i;
+	int i=0;
 
-	printf("init start.......\n");
 	// memory initialize
 	// no need to set twice size in this routine. but some cause segmentation error. :P
-	printf("initializing char memory...(%d byte)\n",sizeof(struct mmo_charstatus)*2);
+	#ifdef DEBUG
+	printf("Initializing char memory...(%d byte)\n",sizeof(struct mmo_charstatus)*2);
+	#endif
+	
 	CREATE(char_dat, struct mmo_charstatus, 2);
-
 	memset(char_dat, 0, sizeof(struct mmo_charstatus)*2);
-/*	Initialized in inter.c already [Wizputer]
-	// DB connection initialized
-	// for char-server session only
-	mysql_init(&mysql_handle);
-	printf("Connect DB server....(char server)\n");
-	if(!mysql_real_connect(&mysql_handle, char_server_ip, char_server_id, char_server_pw, char_server_db ,char_server_port, (char *)NULL, CLIENT_MULTI_STATEMENTS)) {
-		// SQL connection pointer check
-		printf("%s\n",mysql_error(&mysql_handle));
-		exit(1);
-	} else {
-		printf("connect success! (char server)\n");
-	}
-*/
+	
 	sprintf(tmp_sql , "SELECT count(*) FROM `%s`", char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	sql_row = mysql_fetch_row(sql_res);
-	printf("total char data -> '%s'.......\n",sql_row[0]);
-	i = atoi (sql_row[0]);
-	mysql_free_result(sql_res);
+	sql_query(tmp_sql,"mmo_char_sql_init");
+	
+	if((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
+	    i = atoi (sql_row[0]);
+	    #ifdef DEBUG
+	    printf("Total number of chars in DB [%d]\n",i);
+	    #endif
+	}    
+	    
+    mysql_free_result(sql_res);
 
 	if (i !=0) {
 		sprintf(tmp_sql , "SELECT max(`char_id`) FROM `%s`", char_db);
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-		}
-		sql_res = mysql_store_result(&mysql_handle) ;
-		sql_row = mysql_fetch_row(sql_res);
-		char_id_count = atoi (sql_row[0]);
-
+		sql_query(tmp_sql,"mmo_char_sql_init");
+		
+		if((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res)))
+		    char_id_count = atoi (sql_row[0]);
+		    
 		mysql_free_result(sql_res);
-	} else
-		printf("set char_id_count: %d.......\n",char_id_count);
-
-	sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (reset_online `%s`)- %s\n", char_db, mysql_error(&mysql_handle));
-	}
-	printf("init end.......\n");
+	#ifdef DEBUG
+	    printf("Highest Char ID [%d]\n",char_id_count);
+	} else {
+		printf("Highest Char ID [%d]\n",char_id_count);
+	#endif
+	}	
+	
+	#ifdef DEBUG
+	printf("Init finsihed\n");
+	#endif
 
 	return 0;
 }
@@ -949,9 +990,13 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 	struct char_session_data *sd;
 	char t_name[100];
 	int i;
+	
 	//aphostropy error check! - fixed!
 	jstrescapecpy(t_name, dat);
-	printf("making new char -");
+	
+	#ifdef DEBUG
+	printf("Making new char [%s]\n",dat);
+	#endif
 
 	sd = session[fd]->session_data;
 
@@ -968,8 +1013,7 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 
 	//check stat error
 	if ((dat[24]+dat[25]+dat[26]+dat[27]+dat[28]+dat[29]!=5*6 ) ||
-	    (dat[30] >= 9) ||
-	    (dat[33] <= 0) || (dat[33] >= 20) ||
+	    (dat[30] >= 9) || (dat[33] <= 0) || (dat[33] >= 20) ||
 	    (dat[31] >= 9)) {
 
 		// check individual stat value
@@ -980,103 +1024,68 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 		}
 
 		// char.log to charlog
-		sprintf(tmp_sql,"INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+		sprintf(tmp_sql,"INSERT DELAYED INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
 			"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 			charlog_db,"make new char error", sd->account_id, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
 		//query
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-		}
-		printf("make new char error %d-%d %s %d, %d, %d, %d, %d, %d %d, %d" RETCODE,
+		sql_query(tmp_sql,"amke_new_char_sql");
+		
+		#ifdef DEBUG
+		printf("Make new char error %d-%d %s %d, %d, %d, %d, %d, %d %d, %d" RETCODE,
 			fd, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
+		#endif
+		
 		return -1;
 	}
 
 	// char.log to charlog
-	sprintf(tmp_sql,"INSERT INTO `%s`(`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+	sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
 		"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		charlog_db,"make new char", sd->account_id, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
 	//query
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-	}
+	sql_query(tmp_sql,"make_new_char_sql");
+	
+	#ifdef DEBUG
 	printf("make new char %d-%d %s %d, %d, %d, %d, %d, %d - %d, %d" RETCODE,
 		fd, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
-
-	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `name` = '%s'",char_db, t_name);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-		return -1;
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	sql_row = mysql_fetch_row(sql_res);
-	printf("\033[1;32m name check result : %s -\033[0m ",sql_row[0]);
-	if (atoi(sql_row[0]) > 0) {
-		mysql_free_result(sql_res);
-		return -1;
-	} else
-		mysql_free_result(sql_res);
-
+	#endif
+	
 	// check char slot.
 	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d'",char_db, sd->account_id, dat[30]);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
+	sql_query(tmp_sql,"make_new_char_sql");
+	
+	if((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
+	    if (atoi(sql_row[0]) > 0) {
+	        mysql_free_result(sql_res);
+	        return -1;
+        } else
+		    mysql_free_result(sql_res);
 	}
-	sql_res = mysql_store_result(&mysql_handle);
-	sql_row = mysql_fetch_row(sql_res);
-
-	//printf("slot check result : %s\n",sql_row[0]);
-	if (atoi(sql_row[0]) > 0) {
-		mysql_free_result(sql_res);
-		return -1;
-	} else
-		mysql_free_result(sql_res);
-
+     
 	char_id_count++;
 
 	// make new char.
-	sprintf(tmp_sql,"INSERT INTO `%s` (`char_id`,`account_id`,`char_num`,`name`,`zeny`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,`hair`,`hair_color`)"
-		" VALUES ('%d', '%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d')",
+	sprintf(tmp_sql,"INSERT INTO `%s` (`char_id`,`account_id`,`char_num`,`name`,`zeny`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,"
+        "`max_hp`,`hp`,`max_sp`,`sp`,`hair`,`hair_color`,`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`)"
+		" VALUES ('%d', '%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d','%s','%d','%d','%s','%d','%d')",
 		 char_db, char_id_count, sd->account_id , dat[30] , t_name, start_zeny, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29],
-		(40 * (100 + dat[26])/100) , (40 * (100 + dat[26])/100 ),  (11 * (100 + dat[27])/100), (11 * (100 + dat[27])/100), dat[33], dat[31]);
+		(40 * (100 + dat[26])/100) , (40 * (100 + dat[26])/100 ),  (11 * (100 + dat[27])/100), (11 * (100 + dat[27])/100), dat[33], dat[31],
+        start_point.map,start_point.x,start_point.y, start_point.map,start_point.x,start_point.y);
 	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
+		printf("DB server Error (insert new char into `char`)- %s\n", mysql_error(&mysql_handle));
+		return -1;
 	}
 
 	//`inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
-	sprintf(tmp_sql,"INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%d', '%d', '%d', '%d')",
-		inventory_db, char_id_count, 1201,1,0x02,1); //add Knife
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (insert `inventory`)- %s\n", mysql_error(&mysql_handle));
-	}
+	sprintf(tmp_sql,"INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%d', '%d', '%d', '%d'),('%d', '%d', '%d', '%d', '%d')",
+		inventory_db, char_id_count, 1201,1,0x02,1,char_id_count,2301,1,0x10,1); //add Knife and Cotton Shirt
+	sql_query(tmp_sql,"make_new_char_sql");
 
-	sprintf(tmp_sql,"INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%d', '%d', '%d', '%d')",
-		inventory_db, char_id_count, 2301,1,0x10,1); //add Cotton Shirt
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (insert `inventory`)- %s\n", mysql_error(&mysql_handle));
-	}
-	// respawn map and start point set
-	sprintf(tmp_sql,"UPDATE `%s` SET `last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d'  WHERE  `char_id` = '%d'",
-		char_db, start_point.map,start_point.x,start_point.y, start_point.map,start_point.x,start_point.y, char_id_count);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (update `char`)- %s\n", mysql_error(&mysql_handle));
-	}
-	printf("making new char success - id:(\033[1;32m%d\033[0m\tname:\033[1;32%s\033[0m\n", char_id_count, t_name);
+	#ifdef DEBUG
+    printf("Make new char success - id:(\033[1;32m%d\033[0m\tname:\033[1;32%s\033[0m\n", char_id_count, t_name);
+    #endif
+    
 	return char_id_count;
-}
-
-//==========================================================================================================
-
-void mmo_char_sync(void){
-	printf("mmo_char_sync() - nothing to do\n");
-}
-
-// to do
-///////////////////////////
-
-int mmo_char_sync_timer(int tid, unsigned int tick, int id, int data) {
-	printf("mmo_char_sync_timer() tic - no works to do\n");
-	return 0;
 }
 
 int count_users(void) {
@@ -1084,7 +1093,7 @@ int count_users(void) {
 
 	if (login_fd > 0 && session[login_fd]){
 		users = 0;
-		for(i = 0; i < MAX_MAP_SERVERS; i++) {
+		for(i = 0; i < MAX_MAP_SERVERS && i < servers_connected; i++) {
 			if (server_fd[i] >= 0) {
 				users += server[i].users;
 			}
@@ -1112,38 +1121,34 @@ int send_users_tologin(int tid, unsigned int tick, int id, int data) {
 	return 0;
 }
 
+
+
 int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	int i, j, found_num = 0;
 	struct mmo_charstatus *p = NULL;
-// hehe. commented other. anyway there's no need to use older version.
-// if use older packet version just uncomment that!
-//#ifdef NEW_006b
-	const int offset = 24;
-//#else
-//	int offset = 4;
-//#endif
 
-	printf("mmo_char_send006b start.. (account:%d)\n",sd->account_id);
-//	printf("offset -> %d...\n",offset);
+	const int offset = 24;
+
+	#ifdef DEBUG
+	printf("Send Chars (account:%d)\n",sd->account_id);
+	#endif
 
 	//search char.
 	sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d'",char_db, sd->account_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
+	sql_query(tmp_sql,"mmo_char_send006b");
+	
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
 		found_num = mysql_num_rows(sql_res);
+		
+		#ifdef DEBUG
 		printf("number of chars: %d\n", found_num);
-		i = 0;
-		while((sql_row = mysql_fetch_row(sql_res))) {
+		#endif
+		
+		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++)
 			sd->found_char[i] = atoi(sql_row[0]);
-			i++;
-		}
-		mysql_free_result(sql_res);
 	}
-
-//	printf("char fetching end (total: %d)....\n", found_num);
+	
+	mysql_free_result(sql_res);
 
 	for(i = found_num; i < 9; i++)
 		sd->found_char[i] = -1;
@@ -1152,7 +1157,9 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	WFIFOW(fd, 0) = 0x6b;
 	WFIFOW(fd, 2) = offset + found_num * 106;
 
+	#ifdef DEBUG
 	printf("(\033[1;13m%d\033[0m) Request Char Data:\n",sd->account_id);
+	#endif
 
 	for(i = 0; i < found_num; i++) {
 		mmo_char_fromsql(sd->found_char[i], char_dat, 0);
@@ -1204,19 +1211,232 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	}
 
 	WFIFOSET(fd,WFIFOW(fd,2));
-//	printf("mmo_char_send006b end..\n");
+	
+	#ifdef DEBUG
+	printf("Sent [%d] Chars to [%d]\n",found_num,sd->account_id);
+	#endif
+	
 	return 0;
 }
 
-int parse_tologin(int fd) {
+void reply_login_request(int fd, int len) {
+    if (len < 3)
+				return;
+	
+	if (RFIFOB(fd, 2)) {
+		printf("Can not connect to login-server.\n");
+		printf("The server communication passwords (default s1/p1) is probably invalid.\n");
+		printf("Also, please make sure your login db has the username/password present and the sex of the account is S.\n");
+		printf("If you changed the communication passwords, change them back at map_athena.conf and char_athena.conf\n");
+		return;
+	}else {
+		printf("Connected to login-server (connection #%d).\n", fd);
+		// if no map-server already connected, display a message...
+		if(!servers_connected)
+			printf("Awaiting maps from map-server.\n");
+			
+		request_gm_accounts();
+			
+		// send USER COUNT PING to login server.
+		#ifdef DEBUG
+		printf("Add timer: (send_users_tologin)\n");
+		#endif
+		
+		user_count_timer = add_timer_interval(gettick() + 10, send_users_tologin, 0, 0, 5 * 1000);
+	}
+	
+	RFIFOSKIP(fd, 3);
+}
+
+void send_chars(int fd, int len) {
+	if(len<51)
+		return;
+	
 	int i;
 	struct char_session_data *sd;
+	
+	for(i = 0; i < fd_max; i++) {
+		if (session[i] && (sd = session[i]->session_data) && sd->account_id == RFIFOL(fd,2)) {
+			if (RFIFOB(fd,6) != 0) {
+				WFIFOW(i,0) = 0x6c;
+				WFIFOB(i,2) = 0x42;
+				WFIFOSET(i,3);
+			} else if (max_connect_user == 0 || count_users() < max_connect_user) {
+			    sd->connect_until_time = (time_t)RFIFOL(fd,47);
+				// send characters to player
+				mmo_char_send006b(i, sd);
+			} else {
+				// refuse connection: too much online players
+				WFIFOW(i,0) = 0x6c;
+				WFIFOW(i,2) = 0;
+				WFIFOSET(i,3);
+			}
+		}
+	}
+	RFIFOSKIP(fd,51);	
+}
+
+void connect_until_reply(int fd, int len) {
+	if (len < 50)
+		return;
+		
+	int i;
+	struct char_session_data *sd;
+
+	for(i = 0; i < fd_max; i++) {
+		if (session[i] && (sd = session[i]->session_data)) {
+			if (sd->account_id == RFIFOL(fd,2)) {
+			   sd->connect_until_time = (time_t)RFIFOL(fd,46);
+			   break;
+			}
+		}
+	}
+
+	RFIFOSKIP(fd,50);
+}			
+
+// changesex reply (modified by [Yor])
+void change_sex_reply(int fd, int len) {
+	if (len < 7)
+		return;
+
+	int acc, sex, i;
+	unsigned char buf[16];
+	struct char_session_data *sd;
+
+	acc = RFIFOL(fd,2);
+	sex = RFIFOB(fd,6);
+	RFIFOSKIP(fd, 7);
+
+	if (acc > 0) {
+		sprintf(tmp_sql, "SELECT `char_id`,`class`,`skill_point` FROM `%s` WHERE `account_id` = '%d'",char_db, acc);
+		sql_query(tmp_sql,"change_sex_reply");
+
+		if ((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
+			int char_id, jobclass, skill_point, char_class;
+						
+			char_id = atoi(sql_row[0]);
+			jobclass = atoi(sql_row[1]);
+			skill_point = atoi(sql_row[2]);
+			char_class = jobclass;
+
+			if (jobclass == 19 || jobclass == 20 ||
+			    jobclass == 4020 || jobclass == 4021 ||
+			    jobclass == 4042 || jobclass == 4043) {
+
+		        // job modification
+		        if (jobclass == 19 || jobclass == 20) {
+					char_class = (sex) ? 19 : 20;
+				} else if (jobclass == 4020 || jobclass == 4021) {
+					char_class = (sex) ? 4020 : 4021;
+				} else if (jobclass == 4042 || jobclass == 4043) {
+					char_class = (sex) ? 4042 : 4043;
+				}
+
+				// remove specifical skills of classes 19,20 4020,4021 and 4042,4043
+				sprintf(tmp_sql, "SELECT `lv` FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330'",skill_db, char_id);
+				sql_query(tmp_sql,"change_sex_reply");
+					
+				if ((sql_res = mysql_store_result(&mysql_handle))) {
+					while(( sql_row = mysql_fetch_row(sql_res))) {
+						skill_point += atoi(sql_row[0]);
+					}
+				}
+
+				sprintf(tmp_sql, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330'",skill_db, char_id);
+				sql_query(tmp_sql,"change_sex_reply");
+
+				// to avoid any problem with equipment and invalid sex, equipment is unequiped.
+				sprintf(tmp_sql, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'",inventory_db, char_id);
+				sql_query(tmp_sql,"change_sex_reply");
+						
+				sprintf(tmp_sql, "UPDATE `%s` SET `class`='%d' , `skill_point`='%d' , `weapon`='0' , `shield='0' , `head_top`='0' , `head_mid`='0' , `head_bottom`='0' WHERE `char_id` = '%d'",char_db, char_class, skill_point, char_id);
+				sql_query(tmp_sql,"change_sex_reply");
+			}
+		}
+				
+		// disconnect player if online on char-server
+		for(i = 0; i < fd_max; i++) {
+			if (session[i] && (sd = session[i]->session_data)) {
+				if (sd->account_id == acc) {
+					session[i]->eof = 1;
+					break;
+				}
+			}
+		}
+
+		WBUFW(buf,0) = 0x2b0d;
+		WBUFL(buf,2) = acc;
+		WBUFB(buf,6) = sex;
+		mapif_sendall(buf, 7);
+    }
+}
+
+void account_reg2(int fd, int len) {
+    if (len < 4 || len < RFIFOW(fd,2))
+        return;
+
+	struct global_reg reg[ACCOUNT_REG2_NUM];
+	unsigned char buf[4096];
+	int j, p, acc;
+
+	acc = RFIFOL(fd,4);
+
+	for(p = 8, j = 0; p < RFIFOW(fd,2) && j < ACCOUNT_REG2_NUM; p += 36, j++) {
+		memcpy(reg[j].str, RFIFOP(fd,p), 32);
+		reg[j].value = RFIFOL(fd,p+32);
+	}
+
+	// set_account_reg2(acc,j,reg);
+	// 同垢ログインを禁止していれば送る必要は無い
+	memcpy(buf,RFIFOP(fd,0), RFIFOW(fd,2));
+	WBUFW(buf,0) = 0x2b11;
+	mapif_sendall(buf, WBUFW(buf,2));
+	RFIFOSKIP(fd, RFIFOW(fd,2));
+	
+	#ifdef DEBUG
+	printf("char: save_account_reg_reply\n");
+	#endif
+}
+
+// State change of account/ban notification (from login-server) by [Yor]
+void change_state_reply(int fd, int len) {
+    if (len < 11)
+		return;
+		
+	int i;
+	struct char_session_data *sd;
+
+	// send to all map-servers to disconnect the player
+	unsigned char buf[16];
+	WBUFW(buf,0) = 0x2b14;
+	WBUFL(buf,2) = RFIFOL(fd,2);
+	WBUFB(buf,6) = RFIFOB(fd,6); // 0: change of statut, 1: ban
+	WBUFL(buf,7) = RFIFOL(fd,7); // status or final date of a banishment
+	mapif_sendall(buf, 11);
+
+	// disconnect player if online on char-server
+	for(i = 0; i < fd_max; i++) {
+		if (session[i] && (sd = session[i]->session_data)) {
+			if (sd->account_id == RFIFOL(fd,2)) {
+				session[i]->eof = 1;
+				break;
+			}
+		}
+	}
+
+	RFIFOSKIP(fd,11);
+}
+
+int parse_tologin(int fd) {
+	int len = 0;
 
 	// only login-server can have an access to here.
 	// so, if it isn't the login-server, we disconnect the session.
 	//session eof check!
 	if(fd != login_fd)
 		session[fd]->eof = 1;
+		
 	if(session[fd]->eof) {
 		if (fd == login_fd) {
 			printf("Char-server can't connect to login-server (connection #%d).\n", fd);
@@ -1228,241 +1448,30 @@ int parse_tologin(int fd) {
 		return 0;
 	}
 
-	sd = session[fd]->session_data;
-
 	// hehe. no need to set user limite on SQL version. :P
 	// but char limitation is good way to maintain server. :D
-	while(RFIFOREST(fd) >= 2) {
-//		printf("parse_tologin : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd, 0));
+	len = RFIFOREST(fd);
+	while(len >= 2) {
+	    #ifdef DEBUG
+		printf("parse_tologin : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd, 0));
+		#endif
 
 		switch(RFIFOW(fd, 0)){
-		case 0x2711:
-			if (RFIFOREST(fd) < 3)
-				return 0;
-			if (RFIFOB(fd, 2)) {
-				//printf("connect login server error : %d\n", RFIFOB(fd, 2));
-				printf("Can not connect to login-server.\n");
-				printf("The server communication passwords (default s1/p1) is probably invalid.\n");
-				printf("Also, please make sure your login db has the username/password present and the sex of the account is S.\n");
-				printf("If you changed the communication passwords, change them back at map_athena.conf and char_athena.conf\n");
-				return 0;
-				//exit(1); //fixed for server shutdown.
-			}else {
-				printf("Connected to login-server (connection #%d).\n", fd);
-				// if no map-server already connected, display a message...
-				for(i = 0; i < MAX_MAP_SERVERS; i++)
-					if (server_fd[i] >= 0 && server[i].map[0][0]) // if map-server online and at least 1 map
-						break;
-				if (i == MAX_MAP_SERVERS)
-					printf("Awaiting maps from map-server.\n");
-					
-				// send USER COUNT PING to login server.
-				printf("add interval tic (send_users_tologin)....\n");
-				user_count_timer = add_timer_interval(gettick() + 10, send_users_tologin, 0, 0, 5 * 1000);
-			}
-			RFIFOSKIP(fd, 3);
-			break;
-
-		case 0x2713:
-			if(RFIFOREST(fd)<51)
-				return 0;
-			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = session[i]->session_data) && sd->account_id == RFIFOL(fd,2)) {
-					if (RFIFOB(fd,6) != 0) {
-						WFIFOW(i,0) = 0x6c;
-						WFIFOB(i,2) = 0x42;
-						WFIFOSET(i,3);
-					} else if (max_connect_user == 0 || count_users() < max_connect_user) {
-//						if (max_connect_user == 0)
-//							printf("max_connect_user (unlimited) -> accepted.\n");
-//						else
-//							printf("count_users(): %d < max_connect_user (%d) -> accepted.\n", count_users(), max_connect_user);
-						sd->connect_until_time = (time_t)RFIFOL(fd,47);
-						// send characters to player
-						mmo_char_send006b(i, sd);
-					} else {
-						// refuse connection: too much online players
-//						printf("count_users(): %d < max_connect_use (%d) -> fail...\n", count_users(), max_connect_user);
-						WFIFOW(i,0) = 0x6c;
-						WFIFOW(i,2) = 0;
-						WFIFOSET(i,3);
-					}
-				}
-			}
-			RFIFOSKIP(fd,51);
-			break;
-
-		case 0x2717:
-			if (RFIFOREST(fd) < 50)
-				return 0;
-			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = session[i]->session_data)) {
-					if (sd->account_id == RFIFOL(fd,2)) {
-					sd->connect_until_time = (time_t)RFIFOL(fd,46);
-					break;
-					}
-				}
-			}
-			RFIFOSKIP(fd,50);
-			break;
-
-/*		case 0x2721:	// gm reply. I don't want to support this function.
-			printf("0x2721:GM reply\n");
-		  {
-			int oldacc, newacc;
-			unsigned char buf[64];
-			if (RFIFOREST(fd) < 10)
-				return 0;
-			oldacc = RFIFOL(fd, 2);
-			newacc = RFIFOL(fd, 6);
-			RFIFOSKIP(fd, 10);
-			if (newacc > 0) {
-				for(i=0;i<char_num;i++){
-					if(char_dat[i].account_id==oldacc)
-						char_dat[i].account_id=newacc;
-				}
-			}
-			WBUFW(buf,0)=0x2b0b;
-			WBUFL(buf,2)=oldacc;
-			WBUFL(buf,6)=newacc;
-			mapif_sendall(buf,10);
-//			printf("char -> map\n");
-		  }
-			break;
-*/
-		case 0x2723:	// changesex reply (modified by [Yor])
-			if (RFIFOREST(fd) < 7)
-				return 0;
-		  {
-			int acc, sex;
-			unsigned char buf[16];
-
-			acc = RFIFOL(fd,2);
-			sex = RFIFOB(fd,6);
-			RFIFOSKIP(fd, 7);
-			if (acc > 0) {
-				sprintf(tmp_sql, "SELECT `char_id`,`class`,`skill_point` FROM `%s` WHERE `account_id` = '%d'",char_db, acc);
-				if (mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
-				}
-				sql_res = mysql_store_result(&mysql_handle);
-
-				if (sql_res) {
-						int char_id, jobclass, skill_point, class;
-						sql_row = mysql_fetch_row(sql_res);
-						char_id = atoi(sql_row[0]);
-						jobclass = atoi(sql_row[1]);
-						skill_point = atoi(sql_row[2]);
-						class = jobclass;
-						if (jobclass == 19 || jobclass == 20 ||
-						    jobclass == 4020 || jobclass == 4021 ||
-						    jobclass == 4042 || jobclass == 4043) {
-							// job modification
-							if (jobclass == 19 || jobclass == 20) {
-								class = (sex) ? 19 : 20;
-							} else if (jobclass == 4020 || jobclass == 4021) {
-								class = (sex) ? 4020 : 4021;
-							} else if (jobclass == 4042 || jobclass == 4043) {
-								class = (sex) ? 4042 : 4043;
-							}
-							// remove specifical skills of classes 19,20 4020,4021 and 4042,4043
-							sprintf(tmp_sql, "SELECT `lv` FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330'",skill_db, char_id);
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
-							}
-							sql_res = mysql_store_result(&mysql_handle);
-							if (sql_res) {
-								while(( sql_row = mysql_fetch_row(sql_res))) {
-									skill_point += atoi(sql_row[0]);
-								}
-							}
-							sprintf(tmp_sql, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330'",skill_db, char_id);
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
-							}
-						}
-						// to avoid any problem with equipment and invalid sex, equipment is unequiped.
-						sprintf(tmp_sql, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'",inventory_db, char_id);
-						if (mysql_query(&mysql_handle, tmp_sql)) {
-							printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
-						}
-						sprintf(tmp_sql, "UPDATE `%s` SET `class`='%d' , `skill_point`='%d' , `weapon`='0' , `shield='0' , `head_top`='0' , `head_mid`='0' , `head_bottom`='0' WHERE `char_id` = '%d'",char_db, class, skill_point, char_id);
-						if (mysql_query(&mysql_handle, tmp_sql)) {
-							printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
-						}
-					}
-				}
-				// disconnect player if online on char-server
-				for(i = 0; i < fd_max; i++) {
-					if (session[i] && (sd = session[i]->session_data)) {
-						if (sd->account_id == acc) {
-							session[i]->eof = 1;
-							break;
-						}
-					}
-				}
-
-			WBUFW(buf,0) = 0x2b0d;
-			WBUFL(buf,2) = acc;
-			WBUFB(buf,6) = sex;
-
-			mapif_sendall(buf, 7);
-		  }
-			break;
-
-		// account_reg2変更通知
-		case 0x2729:
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-		  {
-			struct global_reg reg[ACCOUNT_REG2_NUM];
-			unsigned char buf[4096];
-			int j, p, acc;
-			acc = RFIFOL(fd,4);
-			for(p = 8, j = 0; p < RFIFOW(fd,2) && j < ACCOUNT_REG2_NUM; p += 36, j++) {
-				memcpy(reg[j].str, RFIFOP(fd,p), 32);
-				reg[j].value = RFIFOL(fd,p+32);
-			}
-			// set_account_reg2(acc,j,reg);
-			// 同垢ログインを禁止していれば送る必要は無い
-			memcpy(buf,RFIFOP(fd,0), RFIFOW(fd,2));
-			WBUFW(buf,0) = 0x2b11;
-			mapif_sendall(buf, WBUFW(buf,2));
-			RFIFOSKIP(fd, RFIFOW(fd,2));
-//			printf("char: save_account_reg_reply\n");
-		  }
-			break;
-
-		// State change of account/ban notification (from login-server) by [Yor]
-		case 0x2731:
-			if (RFIFOREST(fd) < 11)
-				return 0;
-			// send to all map-servers to disconnect the player
-		  {
-			unsigned char buf[16];
-			WBUFW(buf,0) = 0x2b14;
-			WBUFL(buf,2) = RFIFOL(fd,2);
-			WBUFB(buf,6) = RFIFOB(fd,6); // 0: change of statut, 1: ban
-			WBUFL(buf,7) = RFIFOL(fd,7); // status or final date of a banishment
-			mapif_sendall(buf, 11);
-		  }
-			// disconnect player if online on char-server
-			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = session[i]->session_data)) {
-					if (sd->account_id == RFIFOL(fd,2)) {
-						session[i]->eof = 1;
-						break;
-					}
-				}
-			}
-			RFIFOSKIP(fd,11);
-			break;
+		case 0x2711: reply_login_request(fd,len); break;
+		case 0x2713: send_chars(fd,len);          break;
+		case 0x2717: connect_until_reply(fd,len); break;
+		case 0x2723: change_sex_reply(fd,len);    break;
+		case 0x2729: account_reg2(fd,len);        break;
+		case 0x2731: change_state_reply(fd,len);  break;
+		case 0x2732: read_gm_accounts(fd,len);    break;
 
 		default:
 			printf("set eof.\n");
 			session[fd]->eof = 1;
 			return 0;
 		}
+		
+		len = RFIFOREST(fd);
 	}
 
 	RFIFOFLUSH(fd);
@@ -1493,9 +1502,142 @@ int map_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
 	return 0;
 }
 
+void recv_map_names(int fd, int len, unsigned char id) {
+    if (len < 4 || len < RFIFOW(fd,2))
+        return;
+    
+    memset(server[id].map, 0, sizeof(server[id].map));
+    
+	int j = 0;
+	unsigned char buf[16384];
+	int x;
+	
+    for(i = 4; i < RFIFOW(fd,2); i += 16) {
+	    memcpy(server[id].map[j], RFIFOP(fd,i), 16);
+//				printf("set map %d.%d : %s\n", id, j, server[id].map[j]);
+		j++;
+	}
+	
+    i = server[id].ip;
+
+	unsigned char *p = (unsigned char *)&server[id].ip;
+
+	printf("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
+	       id, j, p[0], p[1], p[2], p[3], server[id].port);
+	
+
+	WFIFOW(fd,0) = 0x2afb;
+	WFIFOB(fd,2) = 0;
+	memcpy(WFIFOP(fd,3), wisp_server_name, 24); // name for wisp to player
+	WFIFOSET(fd,27);
+
+
+	if (j == 0) {
+		printf("WARNING: Map-Server %d have NO maps.\n", id);
+	} else {
+		// Transmitting maps information to the other map-servers
+		WBUFW(buf,0) = 0x2b04;
+		WBUFW(buf,2) = j * 16 + 10;
+		WBUFL(buf,4) = server[id].ip;
+		WBUFW(buf,8) = server[id].port;
+		memcpy(WBUFP(buf,10), RFIFOP(fd,4), j * 16);
+		mapif_sendallwos(fd, buf, WBUFW(buf,2));
+	}
+
+	// Transmitting the maps of the other map-servers to the new map-server
+	for(x = 0; x < MAX_MAP_SERVERS; x++) {
+		if (server_fd[x] >= 0 && x != id) {
+			WFIFOW(fd,0) = 0x2b04;
+			WFIFOL(fd,4) = server[x].ip;
+			WFIFOW(fd,8) = server[x].port;
+
+			j = 0;
+
+			for(i = 0; i < MAX_MAP_PER_SERVER; i++)
+				if (server[x].map[i][0])
+					memcpy(WFIFOP(fd,10+(j++)*16), server[x].map[i], 16);
+
+			if (j > 0) {
+				WFIFOW(fd,2) = j * 16 + 10;
+				WFIFOSET(fd,WFIFOW(fd,2));
+			}
+		}
+	}
+
+	RFIFOSKIP(fd,RFIFOW(fd,2));
+		
+	printf("Map-server %d loading complete.\n", id);
+}
+
+void auth_request(int fd, int len) {
+    if (len < 22)
+		return;
+
+    #ifdef DEBUG
+	printf("(AUTH request) auth_fifo search %d %d %d\n", RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOL(fd, 10));
+	#endif
+	
+	for(i = 0; i < AUTH_FIFO_SIZE; i++) {
+		if (auth_fifo[i].account_id == RFIFOL(fd,2) &&
+		    auth_fifo[i].char_id == RFIFOL(fd,6) &&
+		    auth_fifo[i].login_id1 == RFIFOL(fd,10) &&
+#if CMP_AUTHFIFO_LOGIN2 != 0
+		    // here, it's the only area where it's possible that we doesn't know login_id2 (map-server asks just after 0x72 packet, that doesn't given the value)
+		    (auth_fifo[i].login_id2 == RFIFOL(fd,14) || RFIFOL(fd,14) == 0) && // relate to the versions higher than 18
+#endif
+		    (!check_ip_flag || auth_fifo[i].ip == RFIFOL(fd,18)) &&
+		    !auth_fifo[i].delflag) {
+
+			auth_fifo[i].delflag = 1;
+			WFIFOW(fd,0) = 0x2afd;
+			WFIFOW(fd,2) = 16 + sizeof(struct mmo_charstatus);
+			WFIFOL(fd,4) = RFIFOL(fd,2);
+			WFIFOL(fd,8) = auth_fifo[i].login_id2;
+			WFIFOL(fd,12) = (unsigned long)auth_fifo[i].connect_until_time;
+			mmo_char_fromsql(auth_fifo[i].char_id, char_dat, 1);
+			char_dat[0].sex = auth_fifo[i].sex;
+			memcpy(WFIFOP(fd,16), &char_dat[0], sizeof(struct mmo_charstatus));
+			WFIFOSET(fd, WFIFOW(fd,2));
+			
+			#ifdef DEBUG
+            printf("auth_fifo search success (auth #%d, account %d, character: %d).\n", i, RFIFOL(fd,2), RFIFOL(fd,6));
+            #endif
+			
+			return;
+		}
+	}
+
+	if (i == AUTH_FIFO_SIZE) {
+		WFIFOW(fd,0) = 0x2afe;
+		WFIFOL(fd,2) = RFIFOL(fd,2);
+		WFIFOSET(fd,6);
+		
+		#ifdef DEBUG
+		printf("(AUTH request) auth_fifo search error!\n");
+		#endif
+	}
+
+	RFIFOSKIP(fd,22);
+}
+
+void set_map_users(int fd, int len) {
+	if (len < 6 || len < RFIFOW(fd,2))
+		return 0;
+
+	if (RFIFOW(fd,4) != server[id].users)
+		printf("map user: %d\n", RFIFOW(fd,4));
+
+	server[id].users = RFIFOW(fd,4);
+
+	if(anti_freeze_enable)
+		server_freezeflag[id] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
+
+	RFIFOSKIP(fd,RFIFOW(fd,2));
+}
+
 int parse_frommap(int fd) {
-	int i = 0, j = 0;
-	int id;
+	int i = 0, j = 0,len;
+	unsigned char id;
 
 	// Sometimes fd=0, and it will cause server crash. Don't know why. :(
 	if (fd <= 0) {
@@ -1503,140 +1645,41 @@ int parse_frommap(int fd) {
 		return 0;
 	}
 
-	for(id = 0; id < MAX_MAP_SERVERS; id++)
+	for(id = 0; id < MAX_MAP_SERVERS && id < servers_connected; id++)
 		if (server_fd[id] == fd)
 			break;
-	if(id == MAX_MAP_SERVERS)
+			
+	if(id == MAX_MAP_SERVERS || !servers_connected)
 		session[fd]->eof = 1;
+		
 	if(session[fd]->eof) {
-		if (id < MAX_MAP_SERVERS) {
+		if (servers_connected) {
 			memset(&server[id], 0, sizeof(struct mmo_map_server));
+			
 			printf("Map-server %d (session #%d) has disconnected.\n", id, fd);
+			
 			sprintf(tmp_sql, "DELETE FROM `ragsrvinfo` WHERE `index`='%d'", server_fd[id]);
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
+			sql_query(tmp_sql,"parse_frommap");
+			
 			server_fd[id] = -1;
 		}
 		close(fd);
 		delete_session(fd);
 		return 0;
 	}
-
-	while(RFIFOREST(fd) >= 2) {
-//		printf("parse_frommap : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
+	
+	len = RFIFOREST(fd);
+	
+	while(len >= 2) {
+	    #ifdef DEBUG
+		printf("parse_frommap : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
+		#endif
 
 		switch(RFIFOW(fd, 0)) {
-		case 0x2af7:
-			RFIFOSKIP(fd,2);
-			read_gm_account();
-			break;
-
-		// mapserver -> map names recv.
-		case 0x2afa:
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-			memset(server[id].map, 0, sizeof(server[id].map));
-			j = 0;
-			for(i = 4; i < RFIFOW(fd,2); i += 16) {
-				memcpy(server[id].map[j], RFIFOP(fd,i), 16);
-//				printf("set map %d.%d : %s\n", id, j, server[id].map[j]);
-				j++;
-			}
-			i = server[id].ip;
-			{
-				unsigned char *p = (unsigned char *)&server[id].ip;
-				printf("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
-				       id, j, p[0], p[1], p[2], p[3], server[id].port);
-				printf("Map-server %d loading complete.\n", id);
-			}
-			WFIFOW(fd,0) = 0x2afb;
-			WFIFOB(fd,2) = 0;
-			memcpy(WFIFOP(fd,3), wisp_server_name, 24); // name for wisp to player
-			WFIFOSET(fd,27);
-			{
-				unsigned char buf[16384];
-				int x;
-				if (j == 0) {
-					printf("WARNING: Map-Server %d have NO maps.\n", id);
-				// Transmitting maps information to the other map-servers
-				} else {
-					WBUFW(buf,0) = 0x2b04;
-					WBUFW(buf,2) = j * 16 + 10;
-					WBUFL(buf,4) = server[id].ip;
-					WBUFW(buf,8) = server[id].port;
-					memcpy(WBUFP(buf,10), RFIFOP(fd,4), j * 16);
-					mapif_sendallwos(fd, buf, WBUFW(buf,2));
-				}
-				// Transmitting the maps of the other map-servers to the new map-server
-				for(x = 0; x < MAX_MAP_SERVERS; x++) {
-					if (server_fd[x] >= 0 && x != id) {
-						WFIFOW(fd,0) = 0x2b04;
-						WFIFOL(fd,4) = server[x].ip;
-						WFIFOW(fd,8) = server[x].port;
-						j = 0;
-						for(i = 0; i < MAX_MAP_PER_SERVER; i++)
-							if (server[x].map[i][0])
-								memcpy(WFIFOP(fd,10+(j++)*16), server[x].map[i], 16);
-						if (j > 0) {
-							WFIFOW(fd,2) = j * 16 + 10;
-							WFIFOSET(fd,WFIFOW(fd,2));
-						}
-					}
-				}
-			}
-			RFIFOSKIP(fd,RFIFOW(fd,2));
-			break;
-
-		// auth request
-		case 0x2afc:
-			if (RFIFOREST(fd) < 22)
-				return 0;
-//			printf("(AUTH request) auth_fifo search %d %d %d\n", RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOL(fd, 10));
-			for(i = 0; i < AUTH_FIFO_SIZE; i++) {
-				if (auth_fifo[i].account_id == RFIFOL(fd,2) &&
-				    auth_fifo[i].char_id == RFIFOL(fd,6) &&
-				    auth_fifo[i].login_id1 == RFIFOL(fd,10) &&
-#if CMP_AUTHFIFO_LOGIN2 != 0
-				    // here, it's the only area where it's possible that we doesn't know login_id2 (map-server asks just after 0x72 packet, that doesn't given the value)
-				    (auth_fifo[i].login_id2 == RFIFOL(fd,14) || RFIFOL(fd,14) == 0) && // relate to the versions higher than 18
-#endif
-				    (!check_ip_flag || auth_fifo[i].ip == RFIFOL(fd,18)) &&
-				    !auth_fifo[i].delflag) {
-					auth_fifo[i].delflag = 1;
-					WFIFOW(fd,0) = 0x2afd;
-					WFIFOW(fd,2) = 16 + sizeof(struct mmo_charstatus);
-					WFIFOL(fd,4) = RFIFOL(fd,2);
-					WFIFOL(fd,8) = auth_fifo[i].login_id2;
-					WFIFOL(fd,12) = (unsigned long)auth_fifo[i].connect_until_time;
-					mmo_char_fromsql(auth_fifo[i].char_id, char_dat, 1);
-					char_dat[0].sex = auth_fifo[i].sex;
-					memcpy(WFIFOP(fd,16), &char_dat[0], sizeof(struct mmo_charstatus));
-					WFIFOSET(fd, WFIFOW(fd,2));
-					//printf("auth_fifo search success (auth #%d, account %d, character: %d).\n", i, RFIFOL(fd,2), RFIFOL(fd,6));
-					break;
-				}
-			}
-			if (i == AUTH_FIFO_SIZE) {
-				WFIFOW(fd,0) = 0x2afe;
-				WFIFOL(fd,2) = RFIFOL(fd,2);
-				WFIFOSET(fd,6);
-//				printf("(AUTH request) auth_fifo search error!\n");
-			}
-			RFIFOSKIP(fd,22);
-			break;
-
-		// set MAP user
-		case 0x2aff:
-			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-			if (RFIFOW(fd,4) != server[id].users)
-				printf("map user: %d\n", RFIFOW(fd,4));
-			server[id].users = RFIFOW(fd,4);
-			if(anti_freeze_enable)
-				server_freezeflag[id] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
-			RFIFOSKIP(fd,RFIFOW(fd,2));
-			break;
+		case 0x2af7: read_gm_accounts(fd,len);	break;
+		case 0x2afa: recv_map_names(fd,len,id);	break;
+		case 0x2afc: auth_request(fd,len);      break;
+		case 0x2aff: set_map_users(fd,len);  	break;
 
 		// char saving
 		case 0x2b01:
@@ -1959,6 +2002,8 @@ int parse_frommap(int fd) {
 			session[fd]->eof = 1;
 			return 0;
 		}
+		
+		len = RFIFOREST(fd);
 	}
 	return 0;
 }

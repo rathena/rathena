@@ -187,9 +187,10 @@ CREATE TABLE `char` (
   KEY (`partner_id`),
   KEY (`party_id`),
   KEY (`guild_id`),
+  UNIQUE (`name`),
   FOREIGN KEY (`account_id`) REFERENCES `login` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`partner_id`) REFERENCES `char` (`char_id`) ON DELETE SET NULL
-) TYPE=INNODB AUTO_INCREMENT=150001; 
+) TYPE=INNODB AUTO_INCREMENT=150000; 
 
 CREATE TABLE `friend` (
   `char_id` mediumint(6) UNSIGNED NOT NULL default '0',
