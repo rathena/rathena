@@ -1,6 +1,25 @@
 Date	Added
 
 02/16
+        * Set 'killerrid' and do PCKillEvent before calling PCDieEvent, thanks to
+          mrmagoo for pointing it out [celest]
+
+        * Added some new script event related options to script config [celest]
+
+          - [die/kill/login/logout]_event_name: Name of script to activate when an
+                     event has occured
+          - event_requires_trigger: whether or not a 'set [EventName],1;' has to be
+                     defined first for the event to be activated
+
+        * Added 10 of the new card effects on the 2/15's patch (still untested and
+          not yet added to the item_db)
+          - Refer to doc/item_bonus.txt for description
+
+        * Minor rewrites on self and enemy weapon/armor breaking during battle [celest]
+        * Added missing code for 'bBreakWeaponRate' and 'bBreakWeaponRate' effects
+          [celest]
+        * Added missing code for 'bAddStealRate' effect [celest]
+        * Removed redundant 'infinite_autospell' in map_session_data [celest]
         * Fixed Treasure Box spawn bug in all castles. [Lupus]
         * Fixed wrong PresentLOG (it wasn't showing PRESENT BOX type ID) [Lupus]
 	* Expanded Monsters Drops Slots from 8 to 10. Everywhere in the sources. [Lupus]
@@ -10,6 +29,7 @@ Date	Added
 	  On expanding MOB_DB.TXT we'll remove that plug.
 	  We are adding new cards and some monsters
 	  have no free slots for them. Current state is tested and works fine.
+
 02/15
         * Allow Potion Pitcher to be able to cast on yourself -- i've almost forgot
           about this, thanks to Filougarou and Poki#3 for the fix ^^; [celest]

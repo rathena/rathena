@@ -1050,7 +1050,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 					diff = mhp*10/100;
 					if (hp - diff < mhp>>2)
 						diff = hp - (mhp>>2);
-					pc_heal((struct map_session_data *)bl, -hp, 0);
+					pc_heal(dstsd, -hp, 0);
 				} else if(bl->type == BL_MOB) {
 					struct mob_data *md = (struct mob_data *)bl;
 					hp -= mhp*15/100;
@@ -1287,58 +1287,88 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 		break;
 	}
 
-	if(sd && skillid != MC_CARTREVOLUTION && attack_type&BF_WEAPON){	/* カ?ドによる追加?果 */
+	if((sd||dstsd) && skillid != MC_CARTREVOLUTION && attack_type&BF_WEAPON){	/* カ?ドによる追加?果 */
 		int i;
 		int sc_def_card=100;
 
 		for(i=SC_STONE;i<=SC_BLIND;i++){
 			//?象に?態異常
-			if(i==SC_STONE || i==SC_FREEZE)
-				sc_def_card=sc_def_mdef;
-			else if(i==SC_STAN || i==SC_POISON || i==SC_SILENCE)
-				sc_def_card=sc_def_vit;
-			else if(i==SC_SLEEP || i==SC_CONFUSION || i==SC_BLIND)
-				sc_def_card=sc_def_int;
-			else if(i==SC_CURSE)
-				sc_def_card=sc_def_luk;
-
-			if(!sd->state.arrow_atk) {
-				if(rand()%10000 < (sd->addeff[i-SC_STONE])*sc_def_card/100 ){
-					if(battle_config.battle_log)
-						printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",sd->bl.id,i,sd->addeff[i-SC_STONE]);
-					status_change_start(bl,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
-				}
+			switch (i) {
+				case SC_STONE:
+				case SC_FREEZE:
+					sc_def_card=sc_def_mdef;
+					break;
+				case SC_STAN:
+				case SC_POISON:
+				case SC_SILENCE:
+					sc_def_card=sc_def_vit;
+					break;
+				case SC_SLEEP:
+				case SC_CONFUSION:
+				case SC_BLIND:
+					sc_def_card=sc_def_int;
+					break;
+				case SC_CURSE:
+					sc_def_card=sc_def_luk;
 			}
-			else {
-				if(rand()%10000 < (sd->addeff[i-SC_STONE]+sd->arrow_addeff[i-SC_STONE])*sc_def_card/100 ){
-					if(battle_config.battle_log)
-						printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",sd->bl.id,i,sd->addeff[i-SC_STONE]);
-					status_change_start(bl,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+
+			if (sd) {
+				if(!sd->state.arrow_atk) {
+					if(rand()%10000 < (sd->addeff[i-SC_STONE])*sc_def_card/100 ){
+						if(battle_config.battle_log)
+							printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",sd->bl.id,i,sd->addeff[i-SC_STONE]);
+						status_change_start(bl,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+					}
+				}
+				else {
+					if(rand()%10000 < (sd->addeff[i-SC_STONE]+sd->arrow_addeff[i-SC_STONE])*sc_def_card/100 ){
+						if(battle_config.battle_log)
+							printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",sd->bl.id,i,sd->addeff[i-SC_STONE]);
+						status_change_start(bl,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+					}
 				}
 			}
 			//自分に?態異常
-			if(i==SC_STONE || i==SC_FREEZE)
-				sc_def_card=sc_def_mdef2;
-			else if(i==SC_STAN || i==SC_POISON || i==SC_SILENCE)
-				sc_def_card=sc_def_vit2;
-			else if(i==SC_SLEEP || i==SC_CONFUSION || i==SC_BLIND)
-				sc_def_card=sc_def_int2;
-			else if(i==SC_CURSE)
-				sc_def_card=sc_def_luk2;
+			switch (i) {
+				case SC_STONE:
+				case SC_FREEZE:
+					sc_def_card=sc_def_mdef2;
+					break;
+				case SC_STAN:
+				case SC_POISON:
+				case SC_SILENCE:
+					sc_def_card=sc_def_vit2;
+					break;
+				case SC_SLEEP:
+				case SC_CONFUSION:
+				case SC_BLIND:
+					sc_def_card=sc_def_int2;
+					break;
+				case SC_CURSE:
+					sc_def_card=sc_def_luk2;
+			}
 
-			if(!sd->state.arrow_atk) {
-				if(rand()%10000 < (sd->addeff2[i-SC_STONE])*sc_def_card/100 ){
-					if(battle_config.battle_log)
-						printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",src->id,i,sd->addeff2[i-SC_STONE]);
-					status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+			if (sd) {
+				if(!sd->state.arrow_atk) {
+					if(rand()%10000 < (sd->addeff2[i-SC_STONE])*sc_def_card/100 ){
+						if(battle_config.battle_log)
+							printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",src->id,i,sd->addeff2[i-SC_STONE]);
+						status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+					}
+				}
+				else {
+					if(rand()%10000 < (sd->addeff2[i-SC_STONE]+sd->arrow_addeff2[i-SC_STONE])*sc_def_card/100 ){
+						if(battle_config.battle_log)
+							printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",src->id,i,sd->addeff2[i-SC_STONE]);
+						status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+					}
 				}
 			}
-			else {
-				if(rand()%10000 < (sd->addeff2[i-SC_STONE]+sd->arrow_addeff2[i-SC_STONE])*sc_def_card/100 ){
-					if(battle_config.battle_log)
-						printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",src->id,i,sd->addeff2[i-SC_STONE]);
-					status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
-				}
+			if (dstsd &&
+				rand()%10000 < dstsd->addeff3[i-SC_STONE]*sc_def_card/100){
+				if(battle_config.battle_log)
+					printf("PC %d skill_addeff: cardによる異常?動 %d %d\n",src->id,i,dstsd->addeff3[i-SC_STONE]);
+				status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
 			}
 		}
 	}
@@ -3951,6 +3981,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		}
 
 		if (tsc_data && tsc_data[scid].timer != -1)
+			break;
+		if (dstsd && dstsd->unstripable_equip & equip)
 			break;
 
 		strip_fix = status_get_dex(src) - status_get_dex(bl);

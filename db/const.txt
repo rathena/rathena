@@ -110,8 +110,8 @@ MaxHp		6	1
 Sp		7	1
 MaxSp		8	1
 BaseJob		119	1
-Karma		4
-Manner		5
+Karma		4	1
+Manner		5	1
 
 bMaxHP		6
 bMaxSP		8
@@ -241,9 +241,7 @@ bAddEffWhenHit	2016
 bAutoSpellWhenHit	2017
 bSkillAtk	2018
 bUnstripable	2019
-bAddMob	2020
-bSubMob	2021
-bAddByMob	2022
+bAddDamageByClass	2020
 
 
 Eff_Stone	0

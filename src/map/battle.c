@@ -1508,6 +1508,12 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			}
 		}
+		for(i=0;i<tsd->add_damage_class_count2;i++) {
+			if(tsd->add_damage_classid2[i] == md->class_) {
+				cardfix=cardfix*(100+tsd->add_damage_classrate2[i])/100;
+				break;
+			}
+		}
 		if(flag&BF_LONG)
 			cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
 		if(flag&BF_SHORT)
@@ -1776,6 +1782,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	if(da == 0){ //ダブルアタックが発動していない
 		// クリティカル計算
 		cri = status_get_critical(src);
+		cri += sd->critaddrace[t_race];
 
 		if(sd->state.arrow_atk)
 			cri += sd->arrow_cri;
@@ -1798,7 +1805,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 			else
 				cri <<= 1;
 		}
-
 		if(skill_num == SN_SHARPSHOOTING)
 			cri += 200;
 	}
@@ -1812,13 +1818,16 @@ static struct Damage battle_calc_pc_weapon_attack(
 		damage += atkmax;
 		damage2 += atkmax_;
 		if(sd->atk_rate != 100 || sd->weapon_atk_rate != 0) {
-                    if (sd->status.weapon < 16) {
-			damage = (damage * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
-			damage2 = (damage2 * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
-                    }
+			if (sd->status.weapon < 16) {
+				damage = (damage * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
+				damage2 = (damage2 * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
+			}
 		}
 		if(sd->state.arrow_atk)
 			damage += sd->arrow_atk;
+
+		damage += damage * sd->crit_atk_rate / 100;
+		
 		type = 0x0a;
 
 /*		if(def1 < 1000000) {
@@ -2322,6 +2331,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 				damage *= div_;
 				damage2 *= div_;
 			}
+			if (sd && skill_num > 0 && sd->skillatk[0] == skill_num)
+				damage += damage*sd->skillatk[1]/100;
 		}
 		if(da == 2) { //三段掌が発動しているか
 			type = 0x08;
@@ -2815,37 +2826,45 @@ struct Damage battle_calc_weapon_attack(
 		memset(&wd,0,sizeof(wd));
 
 	if(battle_config.equipment_breaking && src->type==BL_PC && (wd.damage > 0 || wd.damage2 > 0)) {
-		struct map_session_data *sd=(struct map_session_data *)src;
-		int breakrate = 1;	//0.01% weapon breaking chance [DracoRPG]
+		struct map_session_data *sd = (struct map_session_data *)src;
+		// weapon = 0, armor = 1
+		int breakrate = 1;	//0.01% default self weapon breaking chance [DracoRPG]
+		int breakrate_[2] = {0,0};	//enemy breaking chance [celest]
+		int breaktime = 5000;
 
-		if(sd->status.weapon && sd->status.weapon != 11) {
-			if(sd->sc_data[SC_MELTDOWN].timer!=-1) {
-				int breakrate_;	// separate breaking rates for meltdown [Celest]
-				breakrate_ = 100*sd->sc_data[SC_MELTDOWN].val1;
-				if(rand()%10000 < breakrate_*battle_config.equipment_break_rate/100 || breakrate_ >= 10000) {
-					if (target->type == BL_PC)
-						pc_breakweapon((struct map_session_data *)target);
-					else
-						status_change_start(target,SC_STRIPWEAPON,1,75,0,0,skill_get_time2(WS_MELTDOWN,1),0 );
-				}
-
-				breakrate_ = 70*sd->sc_data[SC_MELTDOWN].val1;
-				if (rand()%10000 < breakrate_*battle_config.equipment_break_rate/100 || breakrate_ >= 10000) {
-					if (target->type == BL_PC)
-						pc_breakarmor((struct map_session_data *)target);
-					else
-						status_change_start(target,SC_STRIPSHIELD,1,75,0,0,skill_get_time2(WS_MELTDOWN,1),0 );
-				}
+		breakrate_[0] += sd->break_weapon_rate;
+		breakrate_[1] += sd->break_armor_rate;
+		
+		if (sd->sc_count) {
+			if (sd->sc_data[SC_MELTDOWN].timer!=-1) {
+				breakrate_[0] += 100*sd->sc_data[SC_MELTDOWN].val1;
+				breakrate_[1] = 70*sd->sc_data[SC_MELTDOWN].val1;
+				breaktime = skill_get_time2(WS_MELTDOWN,1);
 			}
 			if(sd->sc_data[SC_OVERTHRUST].timer!=-1)
-				breakrate += 10;	//+ 0.1% whatever skill level you use [DracoRPG]
+				breakrate += 10;
+		}
 
-			//if(wd.type==0x0a) //removed! because CRITS don't affect on breaking chance [Lupus]
-			//	breakrate*=2;
-			if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
-				if(pc_breakweapon(sd)==1)
+		if(sd->status.weapon && sd->status.weapon != 11) {
+			if(rand() % 10000 < breakrate * battle_config.equipment_break_rate / 100 || breakrate >= 10000)
+				if (pc_breakweapon(sd) == 1)
 					wd = battle_calc_pc_weapon_attack(src,target,skill_num,skill_lv,wflag);
-			}
+		}
+		if(rand() % 10000 < breakrate_[0] * battle_config.equipment_break_rate / 100 || breakrate_[0] >= 10000) {
+			if (target->type == BL_PC) {
+				struct map_session_data *tsd = (struct map_session_data *)target;
+				if(tsd->status.weapon != 11)
+					pc_breakweapon(tsd);
+			} else
+				status_change_start(target,SC_STRIPWEAPON,1,75,0,0,breaktime,0);
+		}
+		if(rand() % 10000 < breakrate_[1] * battle_config.equipment_break_rate/100 || breakrate_[1] >= 10000) {
+			if (target->type == BL_PC) {
+				struct map_session_data *tsd = (struct map_session_data *)target;
+				if(tsd->status.weapon != 11)
+					pc_breakarmor(tsd);
+			} else
+				status_change_start(target,SC_STRIPSHIELD,1,75,0,0,breaktime,0);
 		}
 	}
 
@@ -3084,6 +3103,8 @@ struct Damage battle_calc_magic_attack(
 			}
 		}
 		damage=damage*cardfix/100;
+		if (skill_num > 0 && sd->skillatk[0] == skill_num)
+			damage += damage*sd->skillatk[1]/100;
 	}
 
 	if( tsd ){
@@ -3283,6 +3304,9 @@ struct Damage  battle_calc_misc_attack(
 			cardfix=cardfix*(100-tsd->misc_def_rate)/100;
 			damage=damage*cardfix/100;
 		}
+		if (sd && skill_num > 0 && sd->skillatk[0] == skill_num)
+			damage += damage*sd->skillatk[1]/100;
+
 		if(damage < 0) damage = 0;
 		damage=battle_attr_fix(damage, ele, status_get_element(target) );		// 属性修正
 	}
@@ -3517,7 +3541,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			}
 		}
 		if(sd) {
-			if(sd->autospell_id > 0 && sd->autospell_lv > 0 && rand()%100 < sd->autospell_rate) {
+			if(sd->autospell_id > 0 && rand()%100 < sd->autospell_rate) {
 				int skilllv=sd->autospell_lv,i,f=0,sp;
 				i = rand()%100;
 				if(i >= 50) skilllv -= 2;
@@ -3562,6 +3586,36 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				}
 
 				if (hp || sp) pc_heal(sd, hp, sp);
+			}
+		}
+		if (target->type == BL_PC) {
+			struct map_session_data *tsd = (struct map_session_data *)target;
+			if(tsd->autospell2_id > 0 && rand()%100 < tsd->autospell2_rate) {
+				int skilllv = tsd->autospell_lv,i,f=0,sp;
+				i = rand()%100;
+				if(i >= 50) skilllv -= 2;
+				else if(i >= 15) skilllv--;
+				if(skilllv < 1) skilllv = 1;
+				sp = skill_get_sp(tsd->autospell2_id,skilllv)*2/3;
+				if(tsd->status.sp >= sp) {
+					if((i=skill_get_inf(tsd->autospell2_id) == 2) || i == 32)
+						f = skill_castend_pos2(target,src->x,src->y,tsd->autospell2_id,skilllv,tick,flag);
+					else {
+						switch( skill_get_nk(tsd->autospell2_id) ) {
+							case 0:	case 2:
+								f = skill_castend_damage_id(target,src,tsd->autospell2_id,skilllv,tick,flag);
+								break;
+							case 1:/* 支援系 */
+								if((tsd->autospell2_id==AL_HEAL || (tsd->autospell2_id==ALL_RESURRECTION && src->type != BL_PC)) &&
+									battle_check_undead(status_get_race(src),status_get_elem_type(src)))
+									f = skill_castend_damage_id(target,src,tsd->autospell2_id,skilllv,tick,flag);
+								else
+									f = skill_castend_nodamage_id(target,src,tsd->autospell2_id,skilllv,tick,flag);
+								break;
+						}
+					}
+					if(!f) pc_heal(tsd,0,-sp);
+				}
 			}
 		}
 

@@ -808,9 +808,16 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
 
 	// Automated script events
-	sd->state.event_death = pc_readglobalreg(sd,"PCDieEvent");
-	sd->state.event_kill = pc_readglobalreg(sd,"PCKillEvent");
-	sd->state.event_disconnect = pc_readglobalreg(sd,"PCLogoffEvent");
+	if (script_config.event_requires_trigger) {
+		sd->state.event_death = pc_readglobalreg(sd,"PCDieEvent");
+		sd->state.event_kill = pc_readglobalreg(sd,"PCKillEvent");
+		sd->state.event_disconnect = pc_readglobalreg(sd,"PCLogoffEvent");
+	// if script triggers are not required
+	} else {
+		sd->state.event_death = 1;
+		sd->state.event_kill = 1;
+		sd->state.event_disconnect = 1;
+	}
 
 	if (night_flag == 1 && !map[sd->bl.m].flag.indoors) {
 		char tmpstr[1024];
@@ -835,9 +842,10 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	{
 		struct npc_data *npc;
 		//printf("pc: OnPCLogin event done. (%d events)\n", npc_event_doall("OnPCLogin") );
-		if ((npc = npc_name2id("PCLoginEvent"))) {
+		if ((npc = npc_name2id(script_config.login_event_name))) {
 			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLoginNPC
-			ShowStatus("Event '"CL_WHITE"PCLoginEvent"CL_RESET"' executed.\n");
+			sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.login_event_name);
+			ShowStatus(tmp_output);
 		}
 	}
 	// Send friends list
@@ -1539,9 +1547,33 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->status.weapon == 11 && sd->state.lr_flag != 2)
 			sd->atk_rate += val;
 		break;
+	case SP_BREAK_WEAPON_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->break_weapon_rate+=val;
+		break;
+	case SP_BREAK_ARMOR_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->break_armor_rate+=val;
+		break;
+	case SP_ADD_STEAL_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->add_steal_rate+=val;
+		break;
 	case SP_DELAYRATE:
 		if(sd->state.lr_flag != 2)
 			sd->delayrate+=val;
+		break;
+	case SP_CRIT_ATK_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->crit_atk_rate += val;
+		break;
+	case SP_NO_REGEN:
+		if(sd->state.lr_flag != 2)
+			sd->no_regen = val;
+		break;
+	case SP_UNSTRIPABLE:
+		if(sd->state.lr_flag != 2)
+			sd->unstripable_equip |= EQP_ARMOR;
 		break;
 	default:
 		if(battle_config.error_log)
@@ -1758,6 +1790,39 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->weapon_atk_rate[type2]+=val;
 		break;
+	case SP_CRITICAL_ADDRACE:
+		if(sd->state.lr_flag != 2)
+			sd->critaddrace[type2]+=val;
+		break;
+	case SP_ADDEFF_WHENHIT:
+		if(sd->state.lr_flag != 2)
+			sd->addeff3[type2]+=val;
+		break;
+	case SP_SKILL_ATK:
+		if(sd->state.lr_flag != 2) {
+			if (sd->skillatk[0] == type2)
+				sd->skillatk[1] += val;
+			else {
+				sd->skillatk[0] = type2;
+				sd->skillatk[1] = val;
+			}
+		}
+		break;
+	case SP_ADD_DAMAGE_BY_CLASS:
+		if(sd->state.lr_flag != 2) {
+			for(i=0;i<sd->add_damage_class_count2;i++) {
+				if(sd->add_damage_classid2[i] == type2) {
+					sd->add_damage_classrate2[i] += val;
+					break;
+				}
+			}
+			if(i >= sd->add_damage_class_count2 && sd->add_damage_class_count2 < 10) {
+				sd->add_damage_classid2[sd->add_damage_class_count2] = type2;
+				sd->add_damage_classrate2[sd->add_damage_class_count2] += val;
+				sd->add_damage_class_count2++;				
+			}			
+		}
+		break;
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
@@ -1793,6 +1858,13 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->autospell_id = type2;
 			sd->autospell_lv = type3;
 			sd->autospell_rate = val;
+		}
+		break;
+	case SP_AUTOSPELL_WHENHIT:
+		if(sd->state.lr_flag != 2){
+			sd->autospell2_id = type2;
+			sd->autospell2_lv = type3;
+			sd->autospell2_rate = val;
 		}
 		break;
 	default:
@@ -2622,6 +2694,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 					if(itemid > 0 && itemdb_type(itemid) != 6)
 					{
 						rate = (mob_db[md->class_].dropitem[i].p / battle_config.item_rate_common * 100 * skill)/100;
+						rate += sd->add_steal_rate;
 
 						if(rand()%10000 < rate)
 						{
@@ -4467,25 +4540,27 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	clif_updatestatus(sd,SP_HP);
 	status_calc_pc(sd,0);
 
-	if (sd->state.event_death) {
-		struct npc_data *npc;
-		if ((npc = npc_name2id("PCDeathEvent"))) {
-			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCDeathNPC
-			ShowStatus("Event '"CL_WHITE"PCDeathEvent"CL_RESET"' executed.\n");
-		}
-	}
-
 	if (src && src->type == BL_PC) {
-		if (((struct map_session_data *)src)->state.event_kill) {
-			struct npc_data *npc;
-			if ((npc = npc_name2id("PCKillEvent"))) {
-				run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCKillNPC
-				ShowStatus("Event '"CL_WHITE"PCKillEvent"CL_RESET"' executed.\n");
-			}
-		}
-
 		if (sd->state.event_death)
 			pc_setglobalreg(sd,"killerrid",((struct map_session_data *)src)->status.account_id);
+
+		if (((struct map_session_data *)src)->state.event_kill) {
+			struct npc_data *npc;
+			if ((npc = npc_name2id(script_config.kill_event_name))) {
+				run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCKillNPC
+				sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.kill_event_name);
+				ShowStatus(tmp_output);
+			}
+		}	
+	}
+
+	if (sd->state.event_death) {
+		struct npc_data *npc;
+		if ((npc = npc_name2id(script_config.die_event_name))) {
+			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCDeathNPC
+			sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.die_event_name);
+			ShowStatus(tmp_output);
+		}
 	}
 
 	if(battle_config.bone_drop==2
@@ -6277,6 +6352,9 @@ static int pc_natural_heal_hp(struct map_session_data *sd)
 	if (sd->sc_count && sd->sc_data[SC_TRICKDEAD].timer != -1)		// Modified by RoVeRT
 		return 0;
 
+	if (sd->no_regen & 1)
+		return 0;
+
 	if(pc_checkoverhp(sd)) {
 		sd->hp_sub = sd->inchealhptick = 0;
 		return 0;
@@ -6374,6 +6452,9 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 
 	if (sd->sc_count && (sd->sc_data[SC_TRICKDEAD].timer != -1 ||	// Modified by RoVeRT
 		sd->sc_data[SC_BERSERK].timer != -1))
+		return 0;
+
+	if (sd->no_regen & 2)
 		return 0;
 
 	if(pc_checkoversp(sd)) {

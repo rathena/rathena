@@ -7222,6 +7222,14 @@ int script_config_read(char *cfgName)
 	script_config.check_cmdcount=8192;
 	script_config.check_gotocount=512;
 
+	script_config.die_event_name = (char *)aCallocA(24,sizeof(char));
+	script_config.kill_event_name = (char *)aCallocA(24,sizeof(char));
+	script_config.login_event_name = (char *)aCallocA(24,sizeof(char));
+	script_config.logout_event_name = (char *)aCallocA(24,sizeof(char));
+
+	script_config.event_script_type = 0;
+	script_config.event_requires_trigger = 1;
+
 	fp=fopen(cfgName,"r");
 	if(fp==NULL){
 		printf("file not found: %s\n",cfgName);
@@ -7253,6 +7261,24 @@ int script_config_read(char *cfgName)
 		}
 		else if(strcmpi(w1,"check_gotocount")==0) {
 			script_config.check_gotocount = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"event_script_type")==0) {
+			script_config.event_script_type = battle_config_switch(w2);
+		}
+		else if(strcmpi(w1,"die_event_name")==0) {			
+			strcpy(script_config.die_event_name, w2);			
+		}
+		else if(strcmpi(w1,"kill_event_name")==0) {
+			strcpy(script_config.kill_event_name, w2);
+		}
+		else if(strcmpi(w1,"login_event_name")==0) {
+			strcpy(script_config.login_event_name, w2);
+		}
+		else if(strcmpi(w1,"logout_event_name")==0) {
+			strcpy(script_config.logout_event_name, w2);
+		}
+		else if(strcmpi(w1,"require_set_trigger")==0) {
+			script_config.event_requires_trigger = battle_config_switch(w2);
 		}
 		else if(strcmpi(w1,"import")==0){
 			script_config_read(w2);
@@ -7302,10 +7328,19 @@ int do_final_script()
 	if(userfunc_db)
 		strdb_final(userfunc_db,userfunc_db_final);
 
-        if (str_data)
-            aFree(str_data);
-        if (str_buf)
-            aFree(str_buf);
+	if (str_data)
+		aFree(str_data);
+	if (str_buf)
+		aFree(str_buf);
+
+	if (script_config.die_event_name)
+		aFree(script_config.die_event_name);
+	if (script_config.kill_event_name)
+		aFree(script_config.die_event_name);
+	if (script_config.login_event_name)
+		aFree(script_config.die_event_name);
+	if (script_config.logout_event_name)
+		aFree(script_config.die_event_name);
 
 	return 0;
 }

@@ -9,6 +9,13 @@ extern struct Script_Config {
 	int warn_cmd_mismatch_paramnum;
 	int check_cmdcount;
 	int check_gotocount;
+
+	int event_script_type;
+	char* die_event_name;
+	char* kill_event_name;
+	char* login_event_name;
+	char* logout_event_name;
+	int event_requires_trigger;
 } script_config;
 
 struct script_data {

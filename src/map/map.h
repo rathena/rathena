@@ -275,15 +275,17 @@ struct map_session_data {
 	int weapon_coma_ele[10],weapon_coma_race[12];
 	int break_weapon_rate,break_armor_rate;
 	short add_steal_rate;
-	//--- 02/15's new card effectds [celest]
+	//--- 02/15's new card effects [celest]
 	int crit_atk_rate;
-	int critaddrace[12],critaddrace_[12],arrow_critaddrace[12];
+	int critaddrace[12];
 	int no_regen;
-	int addeff3[10], arrow_addeff3[10];
+	int addeff3[10];
 	short autospell2_id,autospell2_lv,autospell2_rate;
 	int skillatk[2];
 	unsigned short unstripable_equip;
-	int addmob[2],submob[2],addbymob[2];
+	short add_damage_classid2[10];
+	int add_damage_classrate2[10];
+	int add_damage_class_count2;
 
 	short spiritball, spiritball_old;
 	int spirit_timer[MAX_SKILL_LEVEL];
@@ -625,7 +627,7 @@ enum {
 
 	SP_CRIT_ATK_RATE, SP_CRITICAL_ADDRACE, SP_NO_REGEN, SP_ADDEFF_WHENHIT, SP_AUTOSPELL_WHENHIT, // 2013-2017
 	SP_SKILL_ATK, SP_UNSTRIPABLE, // 2018-2019
-	SP_ADDMOB, SP_SUBMOB, SP_ADDBYMOB // 2020-2022
+	SP_ADD_DAMAGE_BY_CLASS // 2020-2022
 };
 
 enum {

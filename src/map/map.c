@@ -1426,9 +1426,10 @@ int map_quit(struct map_session_data *sd) {
 
 	if (sd->state.event_disconnect) {
 		struct npc_data *npc;
-		if ((npc = npc_name2id("PCLogoutEvent"))) {
+		if ((npc = npc_name2id(script_config.logout_event_name))) {
 			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLogoutNPC
-			ShowStatus("Event '"CL_WHITE"PCLogoutEvent"CL_RESET"' executed.\n");
+			sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.logout_event_name);
+			ShowStatus(tmp_output);
 		}
 	}
 

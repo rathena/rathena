@@ -135,3 +135,23 @@ bonus3 bAutoSpell,n,x,y;		Auto Spell casting of spell n at level x with y% chanc
 
 // bAddDamageClass, bAddMagicDamageClass and bAddMonsterDropItem it is setting possible up to 10. Those which exceed 10 are ignored.
 // those which can be used with the arrow are only bCritical, bAtkEle, bHit, bAddEle, bAddRace, bAddSize and bAddEff. The other things are ignored.
+
+
+
+//---- 2/15 new card effects ----
+
+bonus bCritAtkRate,n;			Increase critical damage by +n%
+bonus bNoRegen,n;			Stops regeneration for n.
+                                        n: 1=HP, 2=SP
+bonus bUnstripable,n;			Armor cannot be taken off via Strip skills
+
+bonus2 bCriticalAddRace,n,x;		Increase critical + n vs. enemies of type x
+
+bonus2 bAddEffWhenHit,n,x;		n% chance to cause x state to the enemy when
+                                        being hit by physical close range damage
+bonus2 bSkillAtk,n,x;			Increase damage of skill n by x%
+bonus2 bAddDamageByClass,n,x;		When being hit by monster of class n increase
+                                        damage taken by x%
+
+bonus3 bAutoSpellWhenHit,x,y,n;		n% chance to cast skill x of level y when
+                                        being hit by physical close range damage

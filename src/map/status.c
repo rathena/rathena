@@ -252,6 +252,30 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->hp_drain_value = sd->hp_drain_value_ = sd->sp_drain_value = sd->sp_drain_value_ = 0;
 	sd->unbreakable_equip = 0;
 
+	sd->break_weapon_rate = sd->break_armor_rate = 0;
+	sd->add_steal_rate = 0;
+	sd->crit_atk_rate = 0;
+	sd->no_regen = 0;
+	sd->unstripable_equip = 0;
+	sd->autospell2_id = sd->autospell2_lv = sd->autospell2_rate = 0;
+	memset(sd->critaddrace,0,sizeof(sd->critaddrace));
+	memset(sd->addeff3,0,sizeof(sd->addeff3));
+	memset(sd->skillatk,0,sizeof(sd->skillatk));
+	sd->add_damage_class_count = sd->add_damage_class_count_ = sd->add_magic_damage_class_count = 0;
+	sd->add_def_class_count = sd->add_mdef_class_count = 0;
+	sd->add_damage_class_count2 = 0;
+	memset(sd->add_damage_classid,0,sizeof(sd->add_damage_classid));
+	memset(sd->add_damage_classid_,0,sizeof(sd->add_damage_classid_));
+	memset(sd->add_magic_damage_classid,0,sizeof(sd->add_magic_damage_classid));
+	memset(sd->add_damage_classrate,0,sizeof(sd->add_damage_classrate));
+	memset(sd->add_damage_classrate_,0,sizeof(sd->add_damage_classrate_));
+	memset(sd->add_magic_damage_classrate,0,sizeof(sd->add_magic_damage_classrate));
+	memset(sd->add_def_classid,0,sizeof(sd->add_def_classid));
+	memset(sd->add_def_classrate,0,sizeof(sd->add_def_classrate));
+	memset(sd->add_mdef_classid,0,sizeof(sd->add_mdef_classid));
+	memset(sd->add_mdef_classrate,0,sizeof(sd->add_mdef_classrate));
+	memset(sd->add_damage_classid2,0,sizeof(sd->add_damage_classid2));
+	memset(sd->add_damage_classrate2,0,sizeof(sd->add_damage_classrate2));
 
 	if(!sd->disguiseflag && sd->disguise) {
 		sd->disguise=0;
