@@ -7,11 +7,13 @@
 #include <unistd.h>
 #endif
 #include <signal.h>
+#include <string.h>
 
 #include "core.h"
 #include "socket.h"
 #include "timer.h"
 #include "version.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -51,6 +53,23 @@ static void sig_proc(int sn)
 	}
 }
 
+int get_svn_revision(char *svnentry) { // Warning: minor syntax checking
+	char line[1024];
+	int rev = 0;
+	FILE *fp;
+	if ((fp = fopen(svnentry, "r")) == NULL) {
+		return 0;
+	} else {
+		while (fgets(line,1023,fp)) if (strstr(line,"revision=")) break;
+		fclose(fp);
+		if (sscanf(line," %*[^\"]\"%d%*[^\n]",&rev)==1) 
+		return rev;
+		else
+		return 0;
+	}
+//	return 0;
+}
+
 /*======================================
  *	CORE : Display title
  *--------------------------------------
@@ -58,6 +77,7 @@ static void sig_proc(int sn)
 
 static void display_title(void)
 {
+	int revision;
 	// for help with the console colors look here:
 	// http://www.edoceo.com/liberum/?doc=printf-with-color
 	// some code explanation (used here):
@@ -82,6 +102,11 @@ static void display_title(void)
 	printf("\033[0;44m          (\033[1m                                                         \033[0;44m)\033[K\033[0m\n"); // yellow writing (33)
 	printf("\033[0;44m          (\033[1;33m  Advanced Fusion Maps (c) 2003-2004 The Fusion Project  \033[0;44m)\033[K\033[0m\n"); // yellow writing (33)
 	printf("\033[37;44m          (=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=)\033[K\033[0m\n\n"); // reset color
+	
+	if ((revision = get_svn_revision(".svn\\entries"))>0) {
+		snprintf(tmp_output,sizeof(tmp_output),"SVN Revision: %d.\n",revision);
+		ShowInfo(tmp_output);
+	}
 }
 
 // Added by Gabuzomeu

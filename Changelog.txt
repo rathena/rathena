@@ -1,4 +1,8 @@
 Date	Added
+11/27
+	* Added get_svn_revision() in core.c [MC Cameri]
+	  -Only if you have the file .svn\entries, it will show the revision # at runtime.
+
 11/26   
 	* Fixed Abrakadabra (2 minor bugs of consumed items - they were ignored if placed in 0 pos) [Lupus]
         * Finished Full Strip, Weapon Refine, Slim Pitcher and Full Protection. [celest]

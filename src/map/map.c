@@ -37,6 +37,7 @@
 #include "nullpo.h"
 #include "socket.h"
 #include "log.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -1816,7 +1817,8 @@ int map_config_read(char *cfgName) {
 				char_ip_set_ = 1;
 				h = gethostbyname (w2);
 				if(h != NULL) { 
-					printf("Character server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+					snprintf(tmp_output,sizeof(tmp_output),"Character server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+					ShowInfo(tmp_output);
 					sprintf(w2,"%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 				}
 				chrif_setip(w2);

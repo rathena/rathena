@@ -3,7 +3,9 @@
 #include <string.h>
 #include "showmsg.h"
 
-int _ShowMessage(const char *string, int flag){ // by MC Cameri
+char tmp_output[1024] = "\0";
+
+int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 	/* 
 		_ShowMessage MUST be used instead of printf as of 10/24/2004.
 		Return: 0 = Successful, 1 = Failed.
@@ -12,7 +14,7 @@ int _ShowMessage(const char *string, int flag){ // by MC Cameri
 	char prefix[40];
 	char *output;
 	if (strlen(string) <= 0) {
-		ShowMessage("Empty string passed to ShowMessage().\n",MSG_ERROR);
+		ShowError("Empty string passed to ShowMessage().\n");
 		return 1;
 	}
 	switch (flag) {
@@ -40,7 +42,7 @@ int _ShowMessage(const char *string, int flag){ // by MC Cameri
 			strcpy(prefix,"\033[1;31m[Fatal Error]\033[0;0m: ");
 			break;
 		default:
-			ShowMessage("In function ShowMessage() -> Invalid flag passed.\n",MSG_ERROR);
+			ShowError("In function _ShowMessage() -> Invalid flag passed.\n");
 			return 1;
 	}
 	output = (char*)malloc(sizeof(char)*(strlen(prefix)+strlen(string))+1);
