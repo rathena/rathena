@@ -1,130 +1,158 @@
+//File created using Spamrat's Athena Database Editor v1.3.1
+//
 // 古いカード帖から得られるアイテムを設定。
-// nameid, item_name(dummy), rate
+// ItemID, ItemDBName, ItemName(Dummy), Rate
 // アイテムID、アイテムの名前(ダミー)、確率(*10000)をした物です。500000なら50%で1000000なら100%です。)
-// アイテムIDが0の場合確率をアイテムの選択に失敗した時に得られるデフォルトアイテムのIDとして認識します。(複数である場合最後の物だけ有効です。) 
-0,Poring Card,4001
-4001,Poring Card,70000
-4002,Fabre Card,70000
-4003,Pupa Card,60000
-4004,Drops Card,70000
-4005,Santa Poring Card,10000
-4006,Lunatic Card,70000
-4007,Pecopeco Egg Card,40000
-4008,Picky Card,70000
-4009,Chonchon Card,70000
-4010,Willow Card,70000
-4011,Picky Egg Card,70000
-4012,Thief Bug Egg Card,50000
-4013,Andre Egg Card,50000
-4014,Roda Frog Card,50000
-4015,Condor Card,50000
-4016,Thief Bug Card,50000
-4017,Savage Babe Card,50000
-4019,Hornet Card,50000
-4020,Farmiliar Card,50000
-4021,Rocker Card,50000
-4022,Spore Card,50000
-4023,Baby Desert Wolf Card,50000
-4024,Plankton Card,50000
-4025,Skeleton Card,50000
-4026,Female Thiefbug Card,30000
-4027,Kukre Card,30000
-4028,Tarou Card,30000
-4029,Wolf Card,30000
-4030,Mandragora Card,30000
-4031,Pecopeco Card,30000
-4032,Ambernite Card,30000
-4033,Poporing Card,30000
-4034,Worm Tail Card,30000
-4035,Hydra Card,30000
-4036,Muka Card,30000
-4037,Snake Card,30000
-4038,Zombie Card,30000
-4039,Stainer Card,30000
-4040,Creamy Card,30000
-4041,Coco Card,30000
-4042,Steel Chonchon Card,30000
-4043,Andre Card,30000
-4044,Smokie Card,30000
-4045,Horn Card,30000
-4046,Martin Card,30000
-4047,Ghostring Card,10000
-4048,Poison Spore Card,30000
-4049,Vadon Card,30000
-4050,Male Thiefbug Card,30000
-4051,Yoyo Card,30000
-4052,Elder Willow Card,30000
-4053,Vitata Card,10000
-4054,Angeling Card,10000
-4055,Marina Card,30000
-4056,Dustiness Card,30000
-4057,Metaller Card,20000
-4058,Thara Frog Card,20000
-4060,Goblin Card,20000
-4061,Cornutus Card,20000
-4062,Anacondaq Card,20000
-4063,Caramel Card,20000
-4064,Zerom Card,20000
-4065,Kaho Card,20000
-4066,Orc Warrior Card,20000
-4067,Megalodon Card,20000
-4068,Scorpion Card,20000
-4069,Drainliar Card,20000
-4070,Eggyra Card,20000
-4071,Orc Zombie Card,20000
-4072,Golem Card,20000
-4073,Pirate Skeleton Card,20000
-4074,BigFoot Card,20000
-4075,Argos Card,20000
-4076,Magnolia Card,20000
-4077,Phen Card,20000
-4078,Savage Card,20000
-4079,Mantis Card,20000
-4080,Flora Card,20000
-4081,Hode Card,20000
-4082,Desert Wolf Card,10000
-4083,Rafflesia Card,10000
-4084,Marine Sphere Card,10000
-4085,Orc Skeleton Card,10000
-4086,Soldier Skeleton Card,10000
-4087,Giearth Card,10000
-4088,Frilldora Card,10000
-4089,Swordfish Card,10000
-4090,Munak Card,10000
-4091,Kobold Card,10000
-4092,Skel Worker Card,10000
-4093,Obeaune Card,10000
-4094,Archer Skeleton Card,10000
-4095,Marse Card,10000
-4096,Zenorc Card,10000
-4097,Matyr Card,10000
-4098,Dokebi Card,10000
-4099,Pasana Card,10000
-4100,Sohee Card,10000
-4101,Sandman Card,10000
-4102,Whisper Card,10000
-4103,Horong Card,10000
-4104,Requiem Card,10000
-4105,Marc Card,10000
-4106,Mummy Card,10000
-4107,Verit Card,10000
-4108,Myst Card,10000
-4109,Jakk Card,10000
-4110,Ghoul Card,10000
-4111,Strouf Card,10000
-4112,Marduk Card,10000
-4113,Marionette Card,10000
-4114,Argiope Card,10000
-4115,Hunter Fly Card,10000
-4116,Isis Card,10000
-4117,Sidewinder Card,10000
-4118,Petit Card,10000
-4119,Bathory Card,10000
-4120,Petit  Card,10000
-4122,Deviruchi Card,10000
-4125,Deviace Card,10000
-4127,Nightmare Card,10000
-4129,Baphomet  Card,10000
-4133,Raydric Card,10000
-4136,Khalitzburg Card,10000
-4139,Joker Card,10000
+// アイテムIDが0の場合確率をアイテムの選択に失敗した時に得られるデフォルトアイテムのIDとして認識します。(複数である場合最後の物だけ有効です。)
+//
+0,Poring_Card,Poring Card,4001
+4001,Poring_Card,Poring Card,70000
+4002,Fabre_Card,Fabre Card,70000
+4003,Pupa_Card,Pupa Card,70000
+4004,Drops_Card,Drops Card,70000
+4005,Santa_Poring_Card,Santa Poring Card,10000
+4006,Lunatic_Card,Lunatic Card,70000
+4007,Pecopeco_Egg_Card,Pecopeco Egg Card,40000
+4008,Picky_Card,Picky Card,10000
+4009,Chonchon_Card,Chonchon Card,70000
+4010,Willow_Card,Willow Card,70000
+4011,Picky_Egg_Card,Picky Egg Card,70000
+4012,Thief_Bug_Egg_Card,Thief Bug Egg Card,50000
+4013,Andre_Egg_Card,Andre Egg Card,50000
+4014,Roda_Frog_Card,Roda Frog Card,50000
+4015,Condor_Card,Condor Card,50000
+4016,Thief_Bug_Card,Thief Bug Card,50000
+4017,Savage_Babe_Card,Savage Babe Card,50000
+4019,Hornet_Card,Hornet Card,50000
+4020,Farmiliar_Card,Farmiliar Card,50000
+4021,Rocker_Card,Rocker Card,50000
+4022,Spore_Card,Spore Card,50000
+4023,Baby_Desert_Wolf_Card,Baby Desert Wolf Card,50000
+4024,Plankton_Card,Plankton Card,50000
+4025,Skeleton_Card,Skeleton Card,50000
+4026,Female_Thiefbug_Card,Female Thiefbug Card,30000
+4027,Kukre_Card,Kukre Card,30000
+4028,Tarou_Card,Tarou Card,30000
+4029,Wolf_Card,Wolf Card,30000
+4030,Mandragora_Card,Mandragora Card,30000
+4031,Pecopeco_Card,Pecopeco Card,30000
+4032,Ambernite_Card,Ambernite Card,30000
+4033,Poporing_Card,Poporing Card,30000
+4034,Worm_Tail_Card,Worm Tail Card,30000
+4035,Hydra_Card,Hydra Card,30000
+4036,Muka_Card,Muka Card,30000
+4037,Snake_Card,Snake Card,30000
+4038,Zombie_Card,Zombie Card,30000
+4039,Stainer_Card,Stainer Card,30000
+4040,Creamy_Card,Creamy Card,30000
+4041,Coco_Card,Coco Card,30000
+4042,Steel_Chonchon_Card,Steel Chonchon Card,30000
+4043,Andre_Card,Andre Card,30000
+4044,Smokie_Card,Smokie Card,10000
+4045,Horn_Card,Horn Card,30000
+4046,Martin_Card,Martin Card,30000
+4047,Ghostring_Card,Ghostring Card,10000
+4048,Poison_Spore_Card,Poison Spore Card,30000
+4049,Vadon_Card,Vadon Card,30000
+4050,Male_Thiefbug_Card,Male Thiefbug Card,30000
+4051,Yoyo_Card,Yoyo Card,30000
+4052,Elder_Willow_Card,Elder Willow Card,30000
+4053,Vitata_Card,Vitata Card,10000
+4054,Angeling_Card,Angeling Card,10000
+4055,Marina_Card,Marina Card,30000
+4056,Dustiness_Card,Dustiness Card,30000
+4057,Metaller_Card,Metaller Card,20000
+4058,Thara_Frog_Card,Thara Frog Card,20000
+4060,Goblin_Card,Goblin Card,20000
+4061,Cornutus_Card,Cornutus Card,20000
+4062,Anacondaq_Card,Anacondaq Card,20000
+4063,Caramel_Card,Caramel Card,20000
+4064,Zerom_Card,Zerom Card,20000
+4065,Kaho_Card,Kaho Card,20000
+4066,Orc_Warrior_Card,Orc Warrior Card,20000
+4067,Megalodon_Card,Megalodon Card,20000
+4068,Scorpion_Card,Scorpion Card,20000
+4069,Drainliar_Card,Drainliar Card,20000
+4070,Eggyra_Card,Eggyra Card,20000
+4071,Orc_Zombie_Card,Orc Zombie Card,20000
+4072,Golem_Card,Golem Card,20000
+4073,Pirate_Skeleton_Card,Pirate Skeleton Card,20000
+4074,BigFoot_Card,BigFoot Card,20000
+4075,Argos_Card,Argos Card,20000
+4076,Magnolia_Card,Magnolia Card,20000
+4077,Phen_Card,Phen Card,20000
+4078,Savage_Card,Savage Card,20000
+4079,Mantis_Card,Mantis Card,20000
+4080,Flora_Card,Flora Card,10000
+4081,Hode_Card,Hode Card,20000
+4082,Desert_Wolf_Card,Desert Wolf Card,10000
+4083,Rafflesia_Card,Rafflesia Card,10000
+4084,Marine_Sphere_Card,Marine Sphere Card,10000
+4085,Orc_Skeleton_Card,Orc Skeleton Card,10000
+4086,Soldier_Skeleton_Card,Soldier Skeleton Card,10000
+4087,Giearth_Card,Giearth Card,10000
+4088,Frilldora_Card,Frilldora Card,10000
+4089,Sword_Fish_Card,Swordfish Card,10000
+4090,Munak_Card,Munak Card,10000
+4091,Kobold_Card,Kobold Card,10000
+4092,Skel_Worker_Card,Skel Worker Card,10000
+4093,Obeaune_Card,Obeaune Card,10000
+4094,Archer_Skeleton_Card,Archer Skeleton Card,10000
+4095,Marse_Card,Marse Card,10000
+4096,Zenorc_Card,Zenorc Card,10000
+4097,Matyr_Card,Matyr Card,10000
+4098,Dokebi_Card,Dokebi Card,10000
+4099,Pasana_Card,Pasana Card,10000
+4100,Sohee_Card,Sohee Card,10000
+4101,Sand_Man_Card,Sandman Card,10000
+4102,Whisper_Card,Whisper Card,10000
+4103,Horong_Card,Horong Card,10000
+4104,Requiem_Card,Requiem Card,10000
+4105,Marc_Card,Marc Card,10000
+4106,Mummy_Card,Mummy Card,10000
+4107,Verit_Card,Verit Card,10000
+4108,Myst_Card,Myst Card,10000
+4109,Jakk_Card,Jakk Card,10000
+4110,Ghoul_Card,Ghoul Card,10000
+4111,Strouf_Card,Strouf Card,10000
+4112,Marduk_Card,Marduk Card,10000
+4113,Marionette_Card,Marionette Card,10000
+4114,Argiope_Card,Argiope Card,10000
+4115,Hunter_Fly_Card,Hunter Fly Card,10000
+4116,Isis_Card,Isis Card,10000
+4117,Side_Winder_Card,Sidewinder Card,10000
+4118,Petit_Card,Petit Card,10000
+4119,Bathory_Card,Bathory Card,10000
+4120,Petit__Card,Petit  Card,10000
+4122,Deviruchi_Card,Deviruchi Card,10000
+4124,Medusa_Card,Medusa Card,10000
+4125,Deviace_Card,Deviace Card,10000
+4126,Minorous_Card,Minorous Card,10000
+4127,Nightmare_Card,Nightmare Card,10000
+4129,Baphomet__Card,Baphomet  Card,10000
+4130,Scorpion_King_Card,Scorpion King Card,10000
+4133,Raydric_Card,Raydric Card,10000
+4136,Khalitzburg_Card,Khalitzburg Card,10000
+4139,Joker_Card,Joker Card,10000
+4140,Knight_Of_Abyss_Card,Knight Of Abyss Card,10000
+4141,Evil_Druid_Card,Evil Druid Card,10000
+4149,Bon_Gun_Card,Bon Gun Card,10000
+4150,Orc_Archer_Card,Orc Archer Card,10000
+4151,Mimic_Card,Mimic Card,10000
+4152,Wraith_Card,Wraith Card,10000
+4153,Alarm_Card,Alarm Card,10000
+4154,Arclouse_Card,Arclouse Card,10000
+4155,Rideword_Card,Rideword Card,10000
+4156,Skeleton_Prisoner_Card,Skel Prisoner Card,10000
+4157,Zombie_Prisoner_Card,Zombie Prisoner Card,10000
+4158,Dark_Priest_Card,Dark Priest Card,10000
+4159,Punk_Card,Punk Card,10000
+4160,Zherlthsh_Card,Zherlthsh Card,10000
+4161,Mysteltainn_Card,Mysteltainn Card,10000
+4164,Anolian_Card,Anolian Card,10000
+4165,Sting_Card,Sting Card,10000
+4166,Wander_Man_Card,Wander Man Card,10000
+4167,Cramp_Card,Cramp Card,10000
+4168,Filamentous_Card,Filamentous Card,10000
+4169,Brilight_Card,Brilight Card,10000
+4170,Iron_Fist_Card,Iron Fist Card,10000
