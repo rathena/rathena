@@ -6821,7 +6821,8 @@ int pc_setsavepoint(struct map_session_data *sd,char *mapname,int x,int y)
  *------------------------------------------
  */
 static int last_save_fd,save_flag;
-static int Ghp[MAX_GUILDCASTLE][8]; // so save only if HP are changed // experimental code [Yor]
+// --- uncomment to reenable guild castle saving ---//
+//static int Ghp[MAX_GUILDCASTLE][8]; // so save only if HP are changed // experimental code [Yor]
 
 static int pc_autosave_sub(struct map_session_data *sd,va_list ap)
 {

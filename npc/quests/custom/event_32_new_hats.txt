@@ -699,7 +699,7 @@ L1_19:
 	mes "Let me check the items you have brought here.";
 	next;
 	if((countitem(10007) < 1)) goto L_ITEM_1b;
-	if((countitem(10008) < 1)) goto L_ITEM_2b;
+	if((countitem(10009) < 1)) goto L_ITEM_2b;
 	mes "[Jac]";
 	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Kafra Band for you right away. Please Wait a Moment.";
    	next;

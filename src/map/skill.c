@@ -1436,10 +1436,14 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		break;
 	case ASC_BREAKER:	// [celest]
 		if (attack_type&BF_MAGIC) {	// only display damage for the 2nd attack
-			clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage+tmpdmg, dmg.div_, skillid, skilllv, type);
+			if (damage + tmpdmg != 0)	// if both attacks missed, do not display a 2nd 'miss'
+				clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage+tmpdmg, dmg.div_, skillid, skilllv, type);
 			tmpdmg = 0;	// clear the temporary damage
-		} else
+		} else {
+			if (damage == 0)	// if weapon attack missed, display the 'miss'
+				clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, 0, dmg.div_, skillid, skilllv, type);
 			tmpdmg = damage;	// store the temporary weapon damage
+		}
 		break;
 	case NPC_SELFDESTRUCTION:
 	case NPC_SELFDESTRUCTION2:

@@ -1,5 +1,9 @@
 Date	Added
 
+03/15
+        * Fixed a compile warning in pc.c [celest]
+        * Updated Soul Breaker's damage display, by DracoRPG [celest]
+
 03/14
         * Fixed @marry and @divorce. Also added Wedding music+confetti effect to @marry [Lupus]
 		- @marry Player1,Player2

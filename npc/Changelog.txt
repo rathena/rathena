@@ -35,6 +35,11 @@ Other Ppl
 Date		Added
 ======
 
+03/15
+        * Fixed some typos in shops.txt, thanks to Dino9021 [celest]
+        * Fixed some bugs in the 32 new hats script, the custom jobchanger and platinum
+          skills script, thanks to midas [celest]
+
 03/11
         * Reverted the Moving HP skill quest change, thanks to DracoRPG [celest]
 

@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/15
+        * Fixed pricing for Claw, thanks to Dino9021 [celest]
 03/09
 	* Added new items. Thanks to Landarma [Lupus]
 02/23
