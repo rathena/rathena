@@ -1,11 +1,11 @@
 //===== eAthena Script =======================================
 //= X-mas Event
 //===== By: ==================================================
-//=
+//= eAthena Dev Team
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//=
+//= Any version of eAthena
 //===== Description: =========================================
 //= Beat up Antonios and grab his socks.  Get at least 3 and
 //= give them to Santa Claus Claus in exchange for a present.
@@ -17,6 +17,7 @@
 
 
 xmas_in.gat,100,96,4	script	Father Christmas::Santa2	718,{
+	if(event_xmas != 1) goto M_2;
 	mes "[Santa Claus]";
 	mes "I'm having a bit of a problem...";
 	mes "Do you care to listen?";
@@ -83,6 +84,12 @@ xmas_in.gat,100,96,4	script	Father Christmas::Santa2	718,{
 			mes "and get more for me and I'll";
 			mes "reward you.";
 			close;
+
+	M_2:
+		mes "Merry Christmas! I got a gift for you!;
+		mes "Ho Ho Ho!;"
+		getitem 644,1;
+		set event_xmas,1;
 	M_End:
 		mes "[Santa Claus]";
 		mes "I see.  Well, at the very least";
