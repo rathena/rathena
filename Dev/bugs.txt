@@ -124,13 +124,13 @@ Progress:       0%
 
 Problem:	blacksmith hammerfall on the new_1-1.gat's bridge crashes server
 Assigned:       N/A
-Progress:       0%
+Progress:       100% (fixed)
 
 Problem:	hunter spamming traps crashes server
 Assigned:       N/A
-Progress:       0%
+Progress:       100% (fixed)
 
-Problem:	PETS can attack Guardians, so players go to enemy castles before WOE and KILL all their Guards with PETS...
+Problem:	PETS can attack Guardians, so players go to enemy castles before WOE and KILL all their Guards with PETS... LoL!
 Assigned:       N/A
 Progress:       0%
 
