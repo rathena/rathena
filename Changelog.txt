@@ -1,6 +1,6 @@
 Date	Added
 12/23
-	* Fixed some bugs in the clif.c changes [MouseJstr]
+	* Fixed some bugs in the clif.c changes (SVN 766 to SVN 767) [MouseJstr]
 	* Added ayo monsters to @disguise
 	* Began updated clif.c to work with 1108 and 1206, tested and works [nsstrunks]
         * Fixed skills still being available after a job change [MouseJstr]
