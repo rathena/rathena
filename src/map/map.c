@@ -683,6 +683,37 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 		in = y0 - s * x0;
 	}
 	//printf ("%lf %d\n", s, in);
+// I'm not finished thinking on it
+// but first it might better use a parameter equation
+// x=(x1-x0)*t+x0; y=(y1-y0)*t+y0; t=[0,1]
+// would not need special case aproximating for infinity/zero slope
+// so maybe this way:
+/*
+	double deltax = 0.0;
+	double deltay = 0.0;
+	int t;
+	// find maximum runindex
+	int tmax = abs(y1-y0);
+	if(tmax < abs(x1-x0))	
+		tmax = abs(x1-x0);
+
+	// pre-calculate delta values for x and y destination
+	// should speed up cause you don't need to divide in the loop
+	if(tmax>0)
+	{
+		deltax = ((double)(x1-x0)) / ((double)tmax);
+		deltay = ((double)(y1-y0)) / ((double)tmax);
+	}
+	// go along the index
+	for(t=0; t<=tmax; t++)
+	{
+		int x = (int)floor(deltax * (double)t +0.5)+x0;
+		int y = (int)floor(deltay * (double)t +0.5)+y0;
+		// the xy pairs of points in line between x0y0 and x1y1 
+		// including start and end point
+		printf("%i\t%i\n",x,y);
+	}
+ */
 
 	if (type == 0 || type != BL_MOB)
 		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {

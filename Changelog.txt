@@ -1,6 +1,9 @@
 Date	Added
 
 02/11
+        * not realy fixing the "unknown skill" error 
+          but returning skill_castend_damage_id when called with skillid < 0
+          still need to search a reason why it is called with -1 [Shinomori]
         * EXPERIMENTAL: Reduced memory used for the skill_tree DB by 30+mb [celest]
         * Added script commands isday and isnight - checks whether its night or 
           daytime. Example: if(isnight()) ... [celest]

@@ -2212,6 +2212,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	struct status_change *sc_data = status_get_sc_data(src);
 	int i;
 
+	if(skillid < 0)	return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;
 
 	nullpo_retr(1, src);
