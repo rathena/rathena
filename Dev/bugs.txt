@@ -321,3 +321,53 @@ Problem:	Scripts prob
 		We can't use jA's new commands: FOR, WHILE, ELSE, etc
 Assigned:	N/A
 Progress:	0%
+
+Problem:	BARD HP exploit
+		When he plays that 'apple' healing song. Accidently players get HPMAX 32000.
+		With low HP, but big HPMAX.
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Sniper
+		They have 2 skills to dismount traps: Emeny's and Our's.
+		So.. during GVG you can't use 1 of the skills at all
+		but the 2ns one dismounts BOTH types of traps: yours and enemies
+Assigned:	N/A
+Progress:	0%
+
+Problem:	WARP PORTAL
+		You can cast it under someone's feet. (He warps)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	WATERBALL
+		According to http://bbs.emperium.org/viewtopic.php?t=15566&highlight=waterball+faq
+		Waterballs power depends on the TYPE of water on the map:
+		Works with Sage's Deluge, although it drains the cells.
+		Also note, if you cast Waterball with less water
+		(some areas count as shallow water and do not give the full effects either) than required for the full effect, you will shoot out less Waterballs. This skill is chainable. 
+Assigned:	N/A
+Progress:	0%
+
+Problem:	ABRAKADABRA (HOCUS POCUS)
+		It misses half of its effects
+		According to http://bbs.emperium.org/viewtopic.php?t=15566&highlight=waterball+faq
+		This skill allows you to use any active skill from any class. However, skills that need you to have a weapon or item you cannot equip or posses will fail. So like Adrenaline Rush and Double Strafe will fail. Also, keep in mind the level of Hocus Pocus also equals the level of the skill you cast. So with Hocus Pocus level 10 you can cast Grand Cross level 10, etc. In addition to those skills you have a chance of casting any of these skills (not sure what the actual names of the skills are): 
+		Monster Chant- basically the same effect as a Dead Branch (not sure if it can be used in town or not). 
+		Reverse Orcish- the Sage's face becomes green like that of an...Orc... 
+		Suicide- the Sage dies. You lose experience as well. 
+		Full-Heal- you regenerate all SP and HP. 
+		Coma- the Sage's HP/SP fall to 1. 
+		Gravity - This skill was supposed to advertise Gravity but was disabled outside of kRO/jRO since other companies carry RO (not in iRO?). 
+		????- This skill will randomly become one of the following if cast on a target: 
+		1) Grim Reaper - the target will die. You won't gain any experience nor will the monster drop anything. Rumors say that you can instant-kill an MVP. This works in PvP. 
+		2) Mono Cell - Change target into a Poring. Only on monsters though. 
+		3) Class Change - Changes the target to an MVP boss monster. If cast on an Alchemist's Flora or Marine Sphere, the MVP will die after the set amount of time that monster would have died. 
+		4) Monster Tame - if you target a monster that is possible to have as a pet, you will see a slot machine pop up. Basically this is a free tame. 
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Arrows Dupe
+		You should prepare/remove arrows while trade. And have both - names and unnamed arrows ^_-
+Assigned:	N/A
+Progress:	0%
