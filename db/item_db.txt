@@ -623,7 +623,7 @@
 1519,Chain,Chain,4,23000,0,800,84,,1,2,312754,2,2,2,14,8,{},{}
 1520,Chain_,Chain,4,23000,0,800,84,,1,3,312754,2,2,2,14,8,{},{}
 1521,Chain__,Chain,4,23000,0,800,84,,1,3,312754,2,2,2,14,8,{},{}
-1522,Stunner,Stunner,4,60000,0,2000,140,,1,0,256,2,2,3,27,8,{},{ bonus2 bAddEff,Eff_Stan,1000; },,,,
+1522,Stunner,Stunner,4,60000,0,2000,140,,1,0,33040,2,2,3,27,8,{},{ bonus2 bAddEff,Eff_Stan,1000; },,,,
 1523,Spike,Spike,4,20,0,700,85,,1,0,33040,2,2,4,40,8,{},{ bonus bCritical,40; bonus bDefRate,-67; bonus bDef2Rate,-67; },,,
 1524,Golden_Mace,Golden Mace,4,20,0,800,110,,1,1,33040,2,2,4,40,8,{},{ bonus2 bAddRace,1,10; bonus bUnbreakable,100; },,,,
 1525,Long_Mace,Long Mace,4,20,0,800,135,,3,0,33040,2,2,4,40,8,{},{ bonus bLongAtkDef,10; },,,,,

@@ -7,6 +7,7 @@
 
 12/3    * corrected Spider Web's maximum level [celest]
         * Removed Soul Drain from Professor's skill tree [celest]
+        * Updated Stunner's job - Acolytes and monks should be able to use it too! [celest]
 
 12/2    * Updated skill tree prerequisites for the new kRO skills [celest]
 
