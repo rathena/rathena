@@ -21,11 +21,13 @@ Shinigami
 Mass Zero
 	* Novice Training Ground.
 	* (Probably unofficial) Lou Yang NPC's, mobs, etc...
-
 MC Cameri
 	* Bank NPC - Now 100% done for new payon
 	* Warper NPC - 100%, fixed memory consumption problem
 	* Heal NPC - 100%
+DracoRPG
+	* New Novice Training Grounds - In progress with Riotblade's help
+	* Towns Message Boards - Recruited Riotblade to work on them ^^
 
 Other Ppl	
 	* Their Work?

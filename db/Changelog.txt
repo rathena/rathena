@@ -7,6 +7,8 @@
 
 03/24
 	* Corrected exp table entries for level 11 and 99, thanks to Dino9021
+	* Corrected some item effects according to the newly found Aegis Zone Server [DracoRPG]
+
 03/22
 	* Corrected some typos in the items DB, thanks to Zoc [celest]
 	* Added new items. Thanks to Landarma [Lupus]
