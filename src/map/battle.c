@@ -2041,10 +2041,10 @@ static struct Damage battle_calc_pet_weapon_attack(
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case CH_TIGERFIST:	// 伏虎拳
-				damage = damage*(100+ 20*skill_lv)/100;
+				damage = damage*(100+ 60*skill_lv)/100;
 				break;
 			case CH_CHAINCRUSH:	// 連柱崩撃
-				damage = damage*(100+ 20*skill_lv)/100;
+				damage = damage*(100+ 60*skill_lv)/100;
 				div_=skill_get_num(skill_num,skill_lv);
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
@@ -2059,7 +2059,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 					((struct mob_data *)target)->canmove_tick = gettick() + 1000;
 				break;
 			case LK_HEADCRUSH:				/* ヘッドクラッシュ */
-				damage = damage*(100+ 20*skill_lv)/100;
+				damage = damage*(100+ 40*skill_lv)/100;
 				break;
 			case LK_JOINTBEAT:				/* ジョイントビート */
 				damage = damage*(50+ 10*skill_lv)/100;
@@ -2071,7 +2071,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 				damage += damage*(30*skill_lv)/100;
 				break;
 			case CG_ARROWVULCAN:			/* アローバルカン */
-				damage = damage*(160+40*skill_lv)/100;
+				damage = damage*(200+100*skill_lv)/100;
 				div_=9;
 				break;
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
@@ -2526,7 +2526,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 				damage = damage*(100+ 20*skill_lv)/100;
 				break;
 			case CH_CHAINCRUSH:	// 連柱崩撃
-				damage = damage*(100+ 20*skill_lv)/100;
+				damage = damage*(100+ 60*skill_lv)/100;
 				div_=skill_get_num(skill_num,skill_lv);
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
@@ -2541,7 +2541,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 					tmd->canmove_tick = gettick() + 1000;
 				break;
 			case LK_HEADCRUSH:				/* ヘッドクラッシュ */
-				damage = damage*(100+ 20*skill_lv)/100;
+				damage = damage*(100+ 40*skill_lv)/100;
 				break;
 			case LK_JOINTBEAT:				/* ジョイントビート */
 				damage = damage*(50+ 10*skill_lv)/100;
@@ -2553,7 +2553,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 				damage += damage*(30*skill_lv)/100;
 				break;
 			case CG_ARROWVULCAN:			/* アローバルカン */
-				damage = damage*(160+40*skill_lv)/100;
+				damage = damage*(200+100*skill_lv)/100;
 				div_=9;
 				break;
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
@@ -2912,7 +2912,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 		}
 
 		if(skill_num == SN_SHARPSHOOTING && rand()%100 < 50)
-			cri = 1000;
+			cri += 200;
 	}
 
 	if(tsd && tsd->critical_def)
@@ -3326,8 +3326,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 				damage2 = damage2*(100+ 20*skill_lv)/100;
 				break;
 			case CH_CHAINCRUSH:	// 連柱崩撃
-				damage = damage*(100+ 20*skill_lv)/100;
-				damage2 = damage2*(100+ 20*skill_lv)/100;
+				damage = damage*(100+ 60*skill_lv)/100;
+				damage2 = damage2*(100+ 60*skill_lv)/100;
 				div_=skill_get_num(skill_num,skill_lv);
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
@@ -3344,8 +3344,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 					tmd->canmove_tick = gettick() + 1000;
 				break;
 			case LK_HEADCRUSH:				/* ヘッドクラッシュ */
-				damage = damage*(100+ 20*skill_lv)/100;
-				damage2 = damage2*(100+ 20*skill_lv)/100;
+				damage = damage*(100+ 40*skill_lv)/100;
+				damage2 = damage2*(100+ 40*skill_lv)/100;
 				break;
 			case LK_JOINTBEAT:				/* ジョイントビート */
 				damage = damage*(50+ 10*skill_lv)/100;
@@ -3360,8 +3360,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 				damage2 += damage2*(30*skill_lv)/100;
 				break;
 			case CG_ARROWVULCAN:			/* アローバルカン */
-				damage = damage*(160+40*skill_lv)/100;
-				damage2 = damage2*(160+40*skill_lv)/100;
+				damage = damage*(200+100*skill_lv)/100;
+				damage2 = damage2*(200+100*skill_lv)/100;
 				div_=9;
 				break;
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
