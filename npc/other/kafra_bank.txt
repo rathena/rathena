@@ -17,7 +17,7 @@
 // 1.1 Added log of bank operation -> logmes "some info";
 //============================================================ 
 
-prontera.gat,131,190,1	script	Bank Clerk	833,{  
+prontera.gat,131,190,1	script	Bank Clerk::bankg	833,{  
  mes"[Maniss]";
  mes strcharinfo(0)+", welcome to the 2nd Bank of Prontera!";
 
