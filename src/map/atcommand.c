@@ -670,6 +670,11 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 
 	nullpo_retr(AtCommand_None, sd);
 
+	if (!battle_config.allow_atcommand_when_mute &&
+		sd->sc_count && sd->sc_data[SC_NOCHAT].timer != -1) {
+		return AtCommand_Unknown;
+	}
+
 	if (!message || !*message)
 		return AtCommand_None;
 

@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/5    * Edited skill_nocast_db - the skills should be useable outside GvG maps even
+          if woe is on [celest]
+
 12/3    * corrected Spider Web's maximum level [celest]
         * Removed Soul Drain from Professor's skill tree [celest]
         * Updated Stunner's job - Acolytes and monks should be able to use it too! [celest]

@@ -4962,14 +4962,13 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 
 	if( range>0 && range < arange )	{// ‰“‚·‚¬‚é
 // be lenient if the skill was cast before we have moved to the correct position [Celest]
-		if (src->type != BL_PC)
-			return 0;
-		else if (src->type == BL_PC) {
+		if (src->type == BL_PC) {
 			struct map_session_data *sd;
 			nullpo_retr(0, (sd=(struct map_session_data *)bl));
 			if (sd->walktimer != -1 && !((arange-=battle_config.skill_range_leniency)<=range))
 				return 0;
 		}
+		else return 0;
 	}
 
 	if( arange<2 )	// “¯‚¶ƒ}ƒX‚©—×Ú
@@ -5224,6 +5223,7 @@ static const struct {
 	{ "night_darkness_level",   &battle_config.night_darkness_level}, // [celest]
 	{ "skill_range_leniency",   &battle_config.skill_range_leniency}, // [celest]
 	{ "motd_type",              &battle_config.motd_type}, // [celest]
+	{ "allow_atcommand_when_mute",			&battle_config.allow_atcommand_when_mute}, // [celest]
 
 //SQL-only options start
 #ifndef TXT_ONLY 
@@ -5455,6 +5455,8 @@ void battle_set_defaults() {
 	battle_config.night_darkness_level = 9;
 	battle_config.skill_range_leniency = 1;
 	battle_config.motd_type = 0;
+	battle_config.allow_atcommand_when_mute = 0;
+
 
 	battle_config.castrate_dex_scale = 150;
 

@@ -1,5 +1,10 @@
 Date	Added
 12/5
+        * Added allow_atcommand_when_mute - Change this to set whether muted players
+          can use gm commands [celest]
+        * Temporarily leaving the changing guild emblems requiring Glory of Guild 
+          feature only for TXT until the SQL char-server supports guild skills fully[celest]
+        * Modified battle_range again to check if src's type is a player first [celest]
         * Corrected typo in battle_range [celest]
 	* Fixed a crash where party chats can be sent to a 
 	  partially disconnected player [MouseJstr]

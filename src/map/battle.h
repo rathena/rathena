@@ -323,7 +323,7 @@ extern struct Battle_Config {
 	int any_warp_GM_min_level; // added by [Yor]
 	int packet_ver_flag; // added by [Yor]
 	int muting_players; // added by [Apple]
-
+	
 	int min_hair_style; // added by [MouseJstr]
 	int max_hair_style; // added by [MouseJstr]
 	int min_hair_color; // added by [MouseJstr]
@@ -342,6 +342,7 @@ extern struct Battle_Config {
 	int night_darkness_level; // [celest]
 	int skill_range_leniency; // [celest]
 	int motd_type; // [celest]
+	int allow_atcommand_when_mute; // [celest]
 
 #ifndef TXT_ONLY /* SQL-only options */
 	int mail_system; // [Valaris]
