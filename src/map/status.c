@@ -483,8 +483,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->paramb[1]+= 2+sd->sc_data[SC_INCREASEAGI].val1;
 			sd->speed -= sd->speed *25/100;
 		}
-		if(sd->sc_data[SC_DECREASEAGI].timer!=-1)	// 速度減少(agiはbattle.cで)
+		if(sd->sc_data[SC_DECREASEAGI].timer!=-1) {	// 速度減少(agiはbattle.cで)
 			sd->speed = sd->speed *125/100;
+			sd->paramb[1] -= 2 + sd->sc_data[SC_DECREASEAGI].val1;	// reduce agility [celest]
+		}
 		if(sd->sc_data[SC_CLOAKING].timer!=-1) {
 			sd->critical_rate += 100; // critical increases
 			sd->speed = sd->speed * (sd->sc_data[SC_CLOAKING].val3-sd->sc_data[SC_CLOAKING].val1*3) /100;
@@ -575,6 +577,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->paramc[5]=sd->status.luk+sd->paramb[5]+sd->parame[5];
 	for(i=0;i<6;i++)
 		if(sd->paramc[i] < 0) sd->paramc[i] = 0;
+
+	if (sd->sc_count) {
+		if (sd->sc_data[SC_CURSE].timer!=-1)
+			sd->paramc[5] = 0;
+	}
 
 	if(sd->status.weapon == 11 || sd->status.weapon == 13 || sd->status.weapon == 14) {
 		str = sd->paramc[4];
@@ -1426,31 +1433,35 @@ int status_get_max_hp(struct block_list *bl)
  */
 int status_get_str(struct block_list *bl)
 {
-	int str=0;
-	struct status_change *sc_data;
-
+	int str = 0;
 	nullpo_retr(0, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_MOB && ((struct mob_data *)bl)) {
-		str = mob_db[((struct mob_data *)bl)->class_].str;
-		if(battle_config.mobs_level_up) // mobs leveling up increase [Valaris]
-			str+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
-	}
-	else if(bl->type==BL_PC && ((struct map_session_data *)bl))
-		return ((struct map_session_data *)bl)->paramc[0];
-	else if(bl->type==BL_PET && ((struct pet_data *)bl))
-		str = mob_db[((struct pet_data *)bl)->class_].str;
 
-	if(sc_data) {
-		if(sc_data[SC_LOUD].timer!=-1 && sc_data[SC_QUAGMIRE].timer == -1 && bl->type != BL_PC)
-			str += 4;
-		if( sc_data[SC_BLESSING].timer != -1 && bl->type != BL_PC){	// ブレッシング
-			int race=status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race==6 )	str >>= 1;	// 悪 魔/不死
-			else str += sc_data[SC_BLESSING].val1;	// その他
+	if (bl->type == BL_PC && ((struct map_session_data *)bl))
+		return ((struct map_session_data *)bl)->paramc[0];
+	else {		
+		struct status_change *sc_data;
+		sc_data = status_get_sc_data(bl);
+
+		if(bl->type == BL_MOB && ((struct mob_data *)bl)) {
+			str = mob_db[((struct mob_data *)bl)->class_].str;
+			if(battle_config.mobs_level_up) // mobs leveling up increase [Valaris]
+				str += ((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
 		}
-		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
-			str += 5;
+		else if(bl->type == BL_PET && ((struct pet_data *)bl))
+			str = mob_db[((struct pet_data *)bl)->class_].str;
+
+		if(sc_data) {
+			if(sc_data[SC_LOUD].timer != -1 && sc_data[SC_QUAGMIRE].timer == -1)
+				str += 4;
+			if( sc_data[SC_BLESSING].timer != -1){	// ブレッシング
+				int race = status_get_race(bl);
+				if(battle_check_undead(race,status_get_elem_type(bl)) || race == 6)
+					str >>= 1;	// 悪 魔/不死
+				else str += sc_data[SC_BLESSING].val1;	// その他
+			}
+			if(sc_data[SC_TRUESIGHT].timer!=-1)	// トゥルーサイト
+				str += 5;
+		}
 	}
 	if(str < 0) str = 0;
 	return str;
@@ -1464,39 +1475,37 @@ int status_get_str(struct block_list *bl)
 int status_get_agi(struct block_list *bl)
 {
 	int agi=0;
-	struct status_change *sc_data;
-
 	nullpo_retr(0, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl) {
-		agi=mob_db[((struct mob_data *)bl)->class_].agi;
-		if(battle_config.mobs_level_up) // increase of mobs leveling up [Valaris]
-			agi+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
-	}
-	else if(bl->type==BL_PC && (struct map_session_data *)bl)
-		agi=((struct map_session_data *)bl)->paramc[1];
-	else if(bl->type==BL_PET && (struct pet_data *)bl)
-		agi=mob_db[((struct pet_data *)bl)->class_].agi;
 
-	if(sc_data) {
-		if( sc_data[SC_INCREASEAGI].timer!=-1 && sc_data[SC_QUAGMIRE].timer == -1 && sc_data[SC_DONTFORGETME].timer == -1 &&
-			bl->type != BL_PC)	// 速度増加(PCはpc.cで)
-			agi += 2+sc_data[SC_INCREASEAGI].val1;
-
-		if(sc_data[SC_CONCENTRATE].timer!=-1 && sc_data[SC_QUAGMIRE].timer == -1 && bl->type != BL_PC)
-			agi += agi*(2+sc_data[SC_CONCENTRATE].val1)/100;
-
-		if(sc_data[SC_DECREASEAGI].timer!=-1)	// 速度減少
-			agi -= 2+sc_data[SC_DECREASEAGI].val1;
-
-		if(sc_data[SC_QUAGMIRE].timer!=-1 ) {	// クァグマイア
-			//agi >>= 1;
-			//int agib = agi*(sc_data[SC_QUAGMIRE].val1*10)/100;
-			//agi -= agib > 50 ? 50 : agib;
-			agi -= (bl->type == BL_PC) ? sc_data[SC_QUAGMIRE].val1*5 : sc_data[SC_QUAGMIRE].val1*10;
+	if(bl->type==BL_PC && (struct map_session_data *)bl)
+		return ((struct map_session_data *)bl)->paramc[1];
+	else {
+		struct status_change *sc_data;	
+		sc_data = status_get_sc_data(bl);
+		if(bl->type == BL_MOB && (struct mob_data *)bl) {
+			agi = mob_db[((struct mob_data *)bl)->class_].agi;
+			if(battle_config.mobs_level_up) // increase of mobs leveling up [Valaris]
+				agi += ((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
 		}
-		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
-			agi += 5;
+		else if(bl->type == BL_PET && (struct pet_data *)bl)
+			agi = mob_db[((struct pet_data *)bl)->class_].agi;
+
+		if(sc_data) {
+			if(sc_data[SC_INCREASEAGI].timer!=-1 && sc_data[SC_QUAGMIRE].timer == -1 && sc_data[SC_DONTFORGETME].timer == -1)	// 速度増加(PCはpc.cで)
+				agi += 2 + sc_data[SC_INCREASEAGI].val1;
+			if(sc_data[SC_CONCENTRATE].timer!=-1 && sc_data[SC_QUAGMIRE].timer == -1)
+				agi += agi * (2 + sc_data[SC_CONCENTRATE].val1)/100;
+			if(sc_data[SC_DECREASEAGI].timer!=-1)	// 速度減少
+				agi -= 2 + sc_data[SC_DECREASEAGI].val1;
+			if(sc_data[SC_QUAGMIRE].timer!=-1 ) {	// クァグマイア
+				//agi >>= 1;
+				//int agib = agi*(sc_data[SC_QUAGMIRE].val1*10)/100;
+				//agi -= agib > 50 ? 50 : agib;
+				agi -= sc_data[SC_QUAGMIRE].val1*10;
+			}
+			if(sc_data[SC_TRUESIGHT].timer!=-1)	// トゥルーサイト
+				agi += 5;
+		}
 	}
 	if(agi < 0) agi = 0;
 	return agi;
@@ -1508,27 +1517,28 @@ int status_get_agi(struct block_list *bl)
  */
 int status_get_vit(struct block_list *bl)
 {
-	int vit=0;
-	struct status_change *sc_data;
-
+	int vit = 0;
 	nullpo_retr(0, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl) {
-		vit=mob_db[((struct mob_data *)bl)->class_].vit;
-		if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
-			vit+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
-	}
-	else if(bl->type==BL_PC && (struct map_session_data *)bl)
-		vit=((struct map_session_data *)bl)->paramc[2];
-	else if(bl->type==BL_PET && (struct pet_data *)bl)
-		vit=mob_db[((struct pet_data *)bl)->class_].vit;
-	if(sc_data) {
-		if(sc_data[SC_STRIPARMOR].timer != -1 && bl->type!=BL_PC)
-		vit = vit*60/100;
-		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
-			vit += 5;
-	}
 
+	if(bl->type == BL_PC && (struct map_session_data *)bl)
+		return ((struct map_session_data *)bl)->paramc[2];
+	else {
+		struct status_change *sc_data;	
+		sc_data = status_get_sc_data(bl);
+		if(bl->type == BL_MOB && (struct mob_data *)bl) {
+			vit = mob_db[((struct mob_data *)bl)->class_].vit;
+			if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+				vit += ((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
+		}	
+		else if(bl->type == BL_PET && (struct pet_data *)bl)
+			vit = mob_db[((struct pet_data *)bl)->class_].vit;
+		if(sc_data) {
+			if(sc_data[SC_STRIPARMOR].timer != -1)
+				vit = vit*60/100;
+			if(sc_data[SC_TRUESIGHT].timer!=-1)	// トゥルーサイト
+				vit += 5;
+		}
+	}
 	if(vit < 0) vit = 0;
 	return vit;
 }
@@ -1540,30 +1550,34 @@ int status_get_vit(struct block_list *bl)
 int status_get_int(struct block_list *bl)
 {
 	int int_=0;
-	struct status_change *sc_data;
-
 	nullpo_retr(0, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl){
-		int_=mob_db[((struct mob_data *)bl)->class_].int_;
-		if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
-			int_+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
-	}
-	else if(bl->type==BL_PC && (struct map_session_data *)bl)
-		int_=((struct map_session_data *)bl)->paramc[3];
-	else if(bl->type==BL_PET && (struct pet_data *)bl)
-		int_=mob_db[((struct pet_data *)bl)->class_].int_;
 
-	if(sc_data) {
-		if( sc_data[SC_BLESSING].timer != -1 && bl->type != BL_PC){	// ブレッシング
-			int race=status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race==6 )	int_ >>= 1;	// 悪 魔/不死
-			else int_ += sc_data[SC_BLESSING].val1;	// その他
+	if(bl->type == BL_PC && (struct map_session_data *)bl)
+		return ((struct map_session_data *)bl)->paramc[3];
+	else {
+		struct status_change *sc_data;
+		sc_data = status_get_sc_data(bl);
+		if(bl->type == BL_MOB && (struct mob_data *)bl){
+			int_ = mob_db[((struct mob_data *)bl)->class_].int_;
+			if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+				int_ += ((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
+		}		
+		else if(bl->type == BL_PET && (struct pet_data *)bl)
+			int_ = mob_db[((struct pet_data *)bl)->class_].int_;
+
+		if(sc_data) {
+			if(sc_data[SC_BLESSING].timer != -1){	// ブレッシング
+				int race = status_get_race(bl);
+				if(battle_check_undead(race,status_get_elem_type(bl)) || race == 6 )
+					int_ >>= 1;	// 悪 魔/不死
+				else
+					int_ += sc_data[SC_BLESSING].val1;	// その他
+			}
+			if(sc_data[SC_STRIPHELM].timer != -1)
+				int_ = int_*60/100;
+			if(sc_data[SC_TRUESIGHT].timer!=-1)	// トゥルーサイト
+				int_ += 5;
 		}
-		if( sc_data[SC_STRIPHELM].timer != -1 && bl->type != BL_PC)
-			int_ = int_*60/100;
-		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
-			int_ += 5;
 	}
 	if(int_ < 0) int_ = 0;
 	return int_;
@@ -1575,39 +1589,40 @@ int status_get_int(struct block_list *bl)
  */
 int status_get_dex(struct block_list *bl)
 {
-	int dex=0;
-	struct status_change *sc_data;
-
+	int dex = 0;
 	nullpo_retr(0, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl) {
-		dex=mob_db[((struct mob_data *)bl)->class_].dex;
-		if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
-			dex+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
-	}
-	else if(bl->type==BL_PC && (struct map_session_data *)bl)
-		dex=((struct map_session_data *)bl)->paramc[4];
-	else if(bl->type==BL_PET && (struct pet_data *)bl)
-		dex=mob_db[((struct pet_data *)bl)->class_].dex;
 
-	if(sc_data) {
-		if(sc_data[SC_CONCENTRATE].timer!=-1 && sc_data[SC_QUAGMIRE].timer == -1 && bl->type != BL_PC)
-			dex += dex*(2+sc_data[SC_CONCENTRATE].val1)/100;
+	if(bl->type==BL_PC && (struct map_session_data *)bl)
+		return ((struct map_session_data *)bl)->paramc[4];
+	else {
+		struct status_change *sc_data;	
+		sc_data = status_get_sc_data(bl);
+		if(bl->type == BL_MOB && (struct mob_data *)bl) {
+			dex = mob_db[((struct mob_data *)bl)->class_].dex;
+			if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+				dex += ((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
+		}		
+		else if(bl->type == BL_PET && (struct pet_data *)bl)
+			dex = mob_db[((struct pet_data *)bl)->class_].dex;
 
-		if( sc_data[SC_BLESSING].timer != -1 && bl->type != BL_PC){	// ブレッシング
-			int race=status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race==6 )	dex >>= 1;	// 悪 魔/不死
-			else dex += sc_data[SC_BLESSING].val1;	// その他
+		if(sc_data) {
+			if(sc_data[SC_CONCENTRATE].timer!=-1 && sc_data[SC_QUAGMIRE].timer == -1)
+				dex += dex*(2+sc_data[SC_CONCENTRATE].val1)/100;
+			if(sc_data[SC_BLESSING].timer != -1){	// ブレッシング
+				int race = status_get_race(bl);
+				if(battle_check_undead(race,status_get_elem_type(bl)) || race == 6 )
+					dex >>= 1;	// 悪 魔/不死
+				else dex += sc_data[SC_BLESSING].val1;	// その他
+			}
+			if(sc_data[SC_QUAGMIRE].timer!=-1)	{ // クァグマイア
+				// dex >>= 1;
+				//int dexb = dex*(sc_data[SC_QUAGMIRE].val1*10)/100;
+				//dex -= dexb > 50 ? 50 : dexb;
+				dex -= sc_data[SC_QUAGMIRE].val1*10;
+			}
+			if(sc_data[SC_TRUESIGHT].timer!=-1)	// トゥルーサイト
+				dex += 5;
 		}
-
-		if(sc_data[SC_QUAGMIRE].timer!=-1 )	{ // クァグマイア
-			// dex >>= 1;
-			//int dexb = dex*(sc_data[SC_QUAGMIRE].val1*10)/100;
-			//dex -= dexb > 50 ? 50 : dexb;
-			dex -= (bl->type == BL_PC) ? sc_data[SC_QUAGMIRE].val1*5 : sc_data[SC_QUAGMIRE].val1*10;
-		}
-		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
-			dex += 5;
 	}
 	if(dex < 0) dex = 0;
 	return dex;
@@ -1619,28 +1634,29 @@ int status_get_dex(struct block_list *bl)
  */
 int status_get_luk(struct block_list *bl)
 {
-	int luk=0;
-	struct status_change *sc_data;
-
+	int luk = 0;
 	nullpo_retr(0, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_MOB && (struct mob_data *)bl) {
-		luk=mob_db[((struct mob_data *)bl)->class_].luk;
-		if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
-			luk+=((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
-	}
-	else if(bl->type==BL_PC && (struct map_session_data *)bl)
-		luk=((struct map_session_data *)bl)->paramc[5];
-	else if(bl->type==BL_PET && (struct pet_data *)bl)
-		luk=mob_db[((struct pet_data *)bl)->class_].luk;
 
-	if(sc_data) {
-		if(sc_data[SC_GLORIA].timer!=-1 && bl->type != BL_PC)	// グロリア(PCはpc.cで)
-			luk += 30;
-		if(sc_data[SC_CURSE].timer!=-1 )		// 呪い
-			luk=0;
-		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
-			luk += 5;
+	if(bl->type == BL_PC && (struct map_session_data *)bl)
+		return ((struct map_session_data *)bl)->paramc[5];
+	else {
+		struct status_change *sc_data;
+		sc_data = status_get_sc_data(bl);
+		if(bl->type == BL_MOB && (struct mob_data *)bl) {
+			luk = mob_db[((struct mob_data *)bl)->class_].luk;
+			if(battle_config.mobs_level_up) // increase from mobs leveling up [Valaris]
+				luk += ((struct mob_data *)bl)->level - mob_db[((struct mob_data *)bl)->class_].lv;
+		}		
+		else if(bl->type == BL_PET && (struct pet_data *)bl)
+			luk = mob_db[((struct pet_data *)bl)->class_].luk;
+		if(sc_data) {
+			if(sc_data[SC_GLORIA].timer!=-1)	// グロリア(PCはpc.cで)
+				luk += 30;
+			if(sc_data[SC_TRUESIGHT].timer!=-1)	// トゥルーサイト
+				luk += 5;
+			if(sc_data[SC_CURSE].timer!=-1)		// 呪い
+				luk = 0;
+		}
 	}
 	if(luk < 0) luk = 0;
 	return luk;
@@ -1653,33 +1669,34 @@ int status_get_luk(struct block_list *bl)
  */
 int status_get_flee(struct block_list *bl)
 {
-	int flee=1;
-	struct status_change *sc_data;
-
+	int flee = 1;
 	nullpo_retr(1, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_PC && (struct map_session_data *)bl)
-		flee=((struct map_session_data *)bl)->flee;
-	else
-		flee=status_get_agi(bl) + status_get_lv(bl);
 
-	if(bl->type != BL_PC && sc_data){
-		if(sc_data[SC_WHISTLE].timer!=-1)
-			flee += flee*(sc_data[SC_WHISTLE].val1+sc_data[SC_WHISTLE].val2
+	if(bl->type == BL_PC && (struct map_session_data *)bl)
+		return ((struct map_session_data *)bl)->flee;
+	else {
+		struct status_change *sc_data;	
+		sc_data = status_get_sc_data(bl);
+		flee = status_get_agi(bl) + status_get_lv(bl);
+
+		if(sc_data){
+			if(sc_data[SC_WHISTLE].timer!=-1)
+				flee += flee*(sc_data[SC_WHISTLE].val1+sc_data[SC_WHISTLE].val2
 					+(sc_data[SC_WHISTLE].val3>>16))/100;
-		if(sc_data[SC_BLIND].timer!=-1)
-			flee -= flee*25/100;
-		if(sc_data[SC_WINDWALK].timer!=-1) // ウィンドウォーク
-			flee += flee*(sc_data[SC_WINDWALK].val2)/100;
-		if(sc_data[SC_SPIDERWEB].timer!=-1) //スパイダーウェブ
-			flee -= flee*50/100;
-		if(sc_data[SC_GOSPEL].timer!=-1) {
-			if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
-				sc_data[SC_GOSPEL].val3 == 13)
-				flee += flee*5/100;
-			else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
-				sc_data[SC_GOSPEL].val3 == 7)
-				flee = 0;
+			if(sc_data[SC_BLIND].timer!=-1)
+				flee -= flee*25/100;
+			if(sc_data[SC_WINDWALK].timer!=-1) // ウィンドウォーク
+				flee += flee*(sc_data[SC_WINDWALK].val2)/100;
+			if(sc_data[SC_SPIDERWEB].timer!=-1) //スパイダーウェブ
+				flee -= flee*50/100;
+			if(sc_data[SC_GOSPEL].timer!=-1) {
+				if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+					sc_data[SC_GOSPEL].val3 == 13)
+					flee += flee*5/100;
+				else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+					sc_data[SC_GOSPEL].val3 == 7)
+					flee = 0;
+			}
 		}
 	}
 	if(flee < 1) flee = 1;
@@ -1692,30 +1709,30 @@ int status_get_flee(struct block_list *bl)
  */
 int status_get_hit(struct block_list *bl)
 {
-	int hit=1;
-	struct status_change *sc_data;
-
+	int hit = 1;
 	nullpo_retr(1, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_PC && (struct map_session_data *)bl)
-		hit=((struct map_session_data *)bl)->hit;
-	else
-		hit=status_get_dex(bl) + status_get_lv(bl);
+	if(bl->type == BL_PC && (struct map_session_data *)bl)
+		return ((struct map_session_data *)bl)->hit;
+	else {
+		struct status_change *sc_data;
+		sc_data = status_get_sc_data(bl);		
+		hit = status_get_dex(bl) + status_get_lv(bl);
 
-	if(bl->type != BL_PC && sc_data) {
-		if(sc_data[SC_HUMMING].timer!=-1)	//
-			hit += hit*(sc_data[SC_HUMMING].val1*2+sc_data[SC_HUMMING].val2
+		if(sc_data) {
+			if(sc_data[SC_HUMMING].timer!=-1)	//
+				hit += hit*(sc_data[SC_HUMMING].val1*2+sc_data[SC_HUMMING].val2
 					+sc_data[SC_HUMMING].val3)/100;
-		if(sc_data[SC_BLIND].timer!=-1)		// 呪い
-			hit -= hit*25/100;
-		if(sc_data[SC_TRUESIGHT].timer!=-1)		// トゥルーサイト
-			hit += 3*(sc_data[SC_TRUESIGHT].val1);
-		if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
-			hit += (hit*(10*(sc_data[SC_CONCENTRATION].val1)))/100;
-		if(sc_data[SC_GOSPEL].timer!=-1 &&
-			sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
-			sc_data[SC_GOSPEL].val3 == 14)
-			hit += hit*5/100;
+			if(sc_data[SC_BLIND].timer!=-1)		// 呪い
+				hit -= hit*25/100;
+			if(sc_data[SC_TRUESIGHT].timer!=-1)		// トゥルーサイト
+				hit += 3*(sc_data[SC_TRUESIGHT].val1);
+			if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
+				hit += (hit*(10*(sc_data[SC_CONCENTRATION].val1)))/100;
+			if(sc_data[SC_GOSPEL].timer!=-1 &&
+				sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+				sc_data[SC_GOSPEL].val3 == 14)
+				hit += hit*5/100;
+		}
 	}
 	if(hit < 1) hit = 1;
 	return hit;
@@ -1727,22 +1744,21 @@ int status_get_hit(struct block_list *bl)
  */
 int status_get_flee2(struct block_list *bl)
 {
-	int flee2=1;
-	struct status_change *sc_data;
-
+	int flee2 = 1;
 	nullpo_retr(1, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_PC && (struct map_session_data *)bl){
-		flee2 = status_get_luk(bl) + 10;
-		flee2 += ((struct map_session_data *)bl)->flee2 - (((struct map_session_data *)bl)->paramc[5] + 10);
-	}
-	else
-		flee2=status_get_luk(bl)+1;
 
-	if(sc_data) {
-		if(sc_data[SC_WHISTLE].timer!=-1 && bl->type != BL_PC)
-			flee2 += (sc_data[SC_WHISTLE].val1+sc_data[SC_WHISTLE].val2
+	if(bl->type==BL_PC && (struct map_session_data *)bl){
+		return ((struct map_session_data *)bl)->flee2;
+	} else {
+		struct status_change *sc_data;
+		sc_data = status_get_sc_data(bl);
+		flee2 = status_get_luk(bl)+1;
+
+		if(sc_data) {
+			if(sc_data[SC_WHISTLE].timer!=-1)
+				flee2 += (sc_data[SC_WHISTLE].val1+sc_data[SC_WHISTLE].val2
 					+(sc_data[SC_WHISTLE].val3&0xffff))*10;
+		}
 	}
 	if(flee2 < 1) flee2 = 1;
 	return flee2;
@@ -1754,26 +1770,25 @@ int status_get_flee2(struct block_list *bl)
  */
 int status_get_critical(struct block_list *bl)
 {
-	int critical=1;
-	struct status_change *sc_data;
-
+	int critical = 1;
 	nullpo_retr(1, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_PC && (struct map_session_data *)bl){
-		critical = status_get_luk(bl)*3 + 10;
-		critical += ((struct map_session_data *)bl)->critical - ((((struct map_session_data *)bl)->paramc[5]*3) + 10);
-	}
-	else
-		critical=status_get_luk(bl)*3 + 1;
 
-	if(sc_data) {
-		if(sc_data[SC_FORTUNE].timer!=-1 && bl->type != BL_PC)
-			critical += (10+sc_data[SC_FORTUNE].val1+sc_data[SC_FORTUNE].val2
-					+sc_data[SC_FORTUNE].val3)*10;
-		if(sc_data[SC_EXPLOSIONSPIRITS].timer!=-1 && bl->type != BL_PC)
-			critical += sc_data[SC_EXPLOSIONSPIRITS].val2;
-		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC) //トゥルーサイト
-			critical += critical*sc_data[SC_TRUESIGHT].val1/100;
+	if(bl->type == BL_PC && (struct map_session_data *)bl){
+		return ((struct map_session_data *)bl)->critical;
+	} else {
+		struct status_change *sc_data;
+		sc_data = status_get_sc_data(bl);		
+		critical = status_get_luk(bl)*3 + 1;
+
+		if(sc_data) {
+			if(sc_data[SC_FORTUNE].timer!=-1)
+				critical += (10+sc_data[SC_FORTUNE].val1+sc_data[SC_FORTUNE].val2
+					+ sc_data[SC_FORTUNE].val3)*10;
+			if(sc_data[SC_EXPLOSIONSPIRITS].timer!=-1)
+				critical += sc_data[SC_EXPLOSIONSPIRITS].val2;
+			if(sc_data[SC_TRUESIGHT].timer!=-1) //トゥルーサイト
+				critical += critical*sc_data[SC_TRUESIGHT].val1/100;
+		}
 	}
 	if(critical < 1) critical = 1;
 	return critical;
@@ -1785,28 +1800,29 @@ int status_get_critical(struct block_list *bl)
  */
 int status_get_baseatk(struct block_list *bl)
 {
-	struct status_change *sc_data;
-	int batk=1;
-
+	int batk = 1;
 	nullpo_retr(1, bl);
-	sc_data=status_get_sc_data(bl);
+	
 	if(bl->type==BL_PC && (struct map_session_data *)bl) {
 		batk = ((struct map_session_data *)bl)->base_atk; //設定されているbase_atk
 		if (((struct map_session_data *)bl)->status.weapon < 16)
 			batk += ((struct map_session_data *)bl)->weapon_atk[((struct map_session_data *)bl)->status.weapon];
 	} else { //それ以外なら
+		struct status_change *sc_data;
 		int str,dstr;
 		str = status_get_str(bl); //STR
 		dstr = str/10;
 		batk = dstr*dstr + str; //base_atkを計算する
-	}
-	if(sc_data) { //状態異常あり
-		if(sc_data[SC_PROVOKE].timer!=-1 && bl->type != BL_PC) //PCでプロボック(SM_PROVOKE)状態
-			batk = batk*(100+2*sc_data[SC_PROVOKE].val1)/100; //base_atk増加
-		if(sc_data[SC_CURSE].timer!=-1 ) //呪われていたら
-			batk -= batk*25/100; //base_atkが25%減少
-		if(sc_data[SC_CONCENTRATION].timer!=-1 && bl->type != BL_PC) //コンセントレーション
-			batk += batk*(5*sc_data[SC_CONCENTRATION].val1)/100;
+		sc_data = status_get_sc_data(bl);
+
+		if(sc_data) { //状態異常あり
+			if(sc_data[SC_PROVOKE].timer!=-1) //PCでプロボック(SM_PROVOKE)状態
+				batk = batk*(100+2*sc_data[SC_PROVOKE].val1)/100; //base_atk増加
+			if(sc_data[SC_CURSE].timer!=-1) //呪われていたら
+				batk -= batk*25/100; //base_atkが25%減少
+			if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
+				batk += batk*(5*sc_data[SC_CONCENTRATION].val1)/100;
+		}
 	}
 	if(batk < 1) batk = 1; //base_atkは最低でも1
 	return batk;
@@ -1818,33 +1834,36 @@ int status_get_baseatk(struct block_list *bl)
  */
 int status_get_atk(struct block_list *bl)
 {
-	struct status_change *sc_data;
-	int atk=0;
-
+	int atk = 0;
 	nullpo_retr(0, bl);
-	sc_data=status_get_sc_data(bl);
+
 	if(bl->type==BL_PC && (struct map_session_data *)bl)
-		atk = ((struct map_session_data*)bl)->watk;
-	else if(bl->type==BL_MOB && (struct mob_data *)bl)
-		atk = mob_db[((struct mob_data*)bl)->class_].atk1;
-	else if(bl->type==BL_PET && (struct pet_data *)bl)
-		atk = mob_db[((struct pet_data*)bl)->class_].atk1;
+		return ((struct map_session_data*)bl)->watk;
+	else {
+		struct status_change *sc_data;
+		sc_data=status_get_sc_data(bl);
+		
+		if(bl->type == BL_MOB && (struct mob_data *)bl)
+			atk = mob_db[((struct mob_data*)bl)->class_].atk1;
+		else if(bl->type == BL_PET && (struct pet_data *)bl)
+			atk = mob_db[((struct pet_data*)bl)->class_].atk1;
 
-	if(bl->type != BL_PC && sc_data) {
-		if(sc_data[SC_PROVOKE].timer!=-1)
-			atk = atk*(100+2*sc_data[SC_PROVOKE].val1)/100;
-		if(sc_data[SC_CURSE].timer!=-1)
-			atk -= atk*25/100;
-		if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
-			atk += atk*(5*sc_data[SC_CONCENTRATION].val1)/100;
+		if(sc_data) {
+			if(sc_data[SC_PROVOKE].timer!=-1)
+				atk = atk*(100+2*sc_data[SC_PROVOKE].val1)/100;
+			if(sc_data[SC_CURSE].timer!=-1)
+				atk -= atk*25/100;
+			if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
+				atk += atk*(5*sc_data[SC_CONCENTRATION].val1)/100;
 
-		if(sc_data[SC_GOSPEL].timer!=-1) {
-			if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
-				sc_data[SC_GOSPEL].val3 == 12)
-				atk += atk*8/100;
-			else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
-				sc_data[SC_GOSPEL].val3 == 6)
-				atk = 0;
+			if(sc_data[SC_GOSPEL].timer!=-1) {
+				if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+					sc_data[SC_GOSPEL].val3 == 12)
+					atk += atk*8/100;
+				else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+					sc_data[SC_GOSPEL].val3 == 6)
+					atk = 0;
+			}
 		}
 	}
 	if(atk < 0) atk = 0;
@@ -1923,31 +1942,23 @@ int status_get_atk_2(struct block_list *bl)
  */
 int status_get_matk1(struct block_list *bl)
 {
-	struct status_change *sc_data;
+	int matk = 0;
 	nullpo_retr(0, bl);
-	sc_data=status_get_sc_data(bl);
-	if(bl->type==BL_MOB){
-		int matk,int_=status_get_int(bl);
-		matk = int_+(int_/5)*(int_/5);
 
-		if(sc_data)
-			if(sc_data[SC_MINDBREAKER].timer!=-1 && bl->type != BL_PC)
-				matk = matk*(100+2*sc_data[SC_MINDBREAKER].val1)/100;
-			return matk;
-	}
-	else if(bl->type==BL_PC && (struct map_session_data *)bl)
+	if(bl->type == BL_PC && (struct map_session_data *)bl)
 		return ((struct map_session_data *)bl)->matk1;
-	else if(bl->type==BL_PET){
-		int matk,int_=status_get_int(bl);
+	else {
+		struct status_change *sc_data;
+		int int_ = status_get_int(bl);
 		matk = int_+(int_/5)*(int_/5);
 
-		if(sc_data)
-			if(sc_data[SC_MINDBREAKER].timer!=-1 && bl->type != BL_PC)
+		sc_data = status_get_sc_data(bl);
+		if(sc_data) {
+			if(sc_data[SC_MINDBREAKER].timer!=-1)
 				matk = matk*(100+2*sc_data[SC_MINDBREAKER].val1)/100;
-		return matk;
+		}
 	}
-	else
-		return 0;
+	return matk;
 }
 /*==========================================
  * 対象のMAtk2を返す(汎用)
@@ -1956,29 +1967,22 @@ int status_get_matk1(struct block_list *bl)
  */
 int status_get_matk2(struct block_list *bl)
 {
-	struct status_change *sc_data=status_get_sc_data(bl);
+	int matk = 0;
 	nullpo_retr(0, bl);
-	if(bl->type==BL_MOB){
-		int matk,int_=status_get_int(bl);
+
+	if(bl->type == BL_PC && (struct map_session_data *)bl)
+		return ((struct map_session_data *)bl)->matk2;
+	else {
+		struct status_change *sc_data = status_get_sc_data(bl);
+		int int_ = status_get_int(bl);
 		matk = int_+(int_/7)*(int_/7);
 
-		if(sc_data)
-			if(sc_data[SC_MINDBREAKER].timer!=-1 && bl->type != BL_PC)
+		if(sc_data) {
+			if(sc_data[SC_MINDBREAKER].timer!=-1)
 				matk = matk*(100+2*sc_data[SC_MINDBREAKER].val1)/100;
-			return matk;
+		}
 	}
-	else if(bl->type==BL_PC && (struct map_session_data *)bl)
-		return ((struct map_session_data *)bl)->matk2;
-	else if(bl->type==BL_PET){
-		int matk,int_=status_get_int(bl);
-		matk = int_+(int_/7)*(int_/7);
-		if(sc_data)
-			if(sc_data[SC_MINDBREAKER].timer!=-1 && bl->type != BL_PC)
-				matk = matk*(100+2*sc_data[SC_MINDBREAKER].val1)/100;
-			return matk;
-	}
-	else
-		return 0;
+	return matk;
 }
 /*==========================================
  * 対象のDefを返す(汎用)

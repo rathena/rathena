@@ -1,5 +1,8 @@
 Date	Added
 
+02/04
+        * Some more tidying up in status_get_ functions [celest]
+
 02/03
         * When loading shop scripts automatically check if the prices can be exploited
           with OC/DC [celest]
