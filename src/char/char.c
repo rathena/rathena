@@ -22,6 +22,7 @@
 #include "socket.h"
 #include "timer.h"
 #include "mmo.h"
+#include "db.h"
 #include "version.h"
 #include "lock.h"
 #include "char.h"
@@ -628,11 +629,6 @@ int mmo_char_init(void) {
 	char_dat = (struct mmo_charstatus*)aCalloc(sizeof(struct mmo_charstatus) * 256, 1);
 	if (!char_dat) {
 		printf("out of memory: mmo_char_init (calloc of char_dat).\n");
-		exit(1);
-	}
-	online_chars = (struct online_chars*)aCalloc(sizeof(struct online_chars) * 256, 1);
-	if (!online_chars) {
-		printf("out of memory: mmo_char_init (calloc of online_chars).\n");
 		exit(1);
 	}
 	for(i = 0; i < char_max; i++)
@@ -3456,8 +3452,9 @@ void do_final(void) {
 	delete_session(login_fd);
 	delete_session(char_fd);
 
-	for(i = 0; i < fd_max; i++)
-		if(session[i] != NULL) aFree(session[i]);
+	inter_final();
+	exit_dbn();
+	timer_final();
 
 	char_log("----End of char-server (normal end with closing of all files)." RETCODE);
 }
@@ -3511,7 +3508,6 @@ int do_init(int argc, char **argv) {
 		online_chars[i].char_id = -1;
 		online_chars[i].server = -1;
 	}
-
 
 	mmo_char_init();
 

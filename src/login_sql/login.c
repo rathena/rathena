@@ -41,30 +41,19 @@ void Gettimeofday(struct timeval *timenow)
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h>
-#include "malloc.h"
 
 //add include for DBMS(mysql)
 #include <mysql.h>
 
-#include "../common/strlib.h"
-#include "timer.h"
-/*
-#include "timer.h"
-#include "core.h"
-#include "socket.h"
-#include "login.h"
-#include "mmo.h"
-#include "version.h"
-#include "db.h"
-*/
-
 #include "../common/core.h"
 #include "../common/socket.h"
-#include "login.h"
-#include "../common/mmo.h"
-#include "../common/version.h"
+#include "../common/malloc.h"
 #include "../common/db.h"
 #include "../common/timer.h"
+#include "../common/strlib.h"
+#include "../common/mmo.h"
+#include "../common/version.h"
+#include "login.h"
 
 #ifdef PASSWORDENC
 #include "md5calc.h"
@@ -1835,6 +1824,24 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 	return 0;
 }
 
+//--------------------------------------
+// Function called at exit of the server
+//--------------------------------------
+static int online_db_final(void *key,void *data,va_list ap)
+{
+	int *p = data;
+	if (p) aFree(p);
+	return 0;
+}
+void do_final(void) {
+	//sync account when terminating.
+	//but no need when you using DBMS (mysql)
+	mmo_db_close();
+	numdb_final(online_db, online_db_final);
+	exit_dbn();
+	timer_final();
+}
+
 int do_init(int argc,char **argv){
 	//initialize login server
 	int i;
@@ -1876,9 +1883,7 @@ int do_init(int argc,char **argv){
 	printf ("Running mmo_auth_sqldb_init()\n");
 	mmo_auth_sqldb_init();
 	printf ("finished mmo_auth_sqldb_init()\n");
-	//sync account when terminating.
-	//but no need when you using DBMS (mysql)
-	set_termfunc(mmo_db_close);
+	set_termfunc(do_final);
 
 	//set default parser as parse_login function
 	set_defaultparse(parse_login);

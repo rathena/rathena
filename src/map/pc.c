@@ -7234,6 +7234,11 @@ int pc_readdb(void)
  * pc? ŒW‰Šú‰»
  *------------------------------------------
  */
+void do_final_pc(void) {
+	if (gm_account)
+		aFree(gm_account);
+	return;
+}
 int do_init_pc(void) {
 	pc_readdb();
 

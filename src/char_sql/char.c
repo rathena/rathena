@@ -3134,6 +3134,12 @@ int char_lan_config_read(const char *lancfgName){
 	return 0;
 }
 
+static int char_db_final(void *key,void *data,va_list ap)
+{
+	struct mmo_charstatus *p = data;
+	if (p) aFree(p);
+	return 0;
+}
 void do_final(void) {
 	printf("Doing final stage...\n");
 	//mmo_char_sync();
@@ -3162,9 +3168,12 @@ void do_final(void) {
 
 	delete_session(login_fd);
 	delete_session(char_fd);
+	numdb_final(char_db_, char_db_final);
+	exit_dbn();
 
 	mysql_close(&mysql_handle);
 	mysql_close(&lmysql_handle);
+	timer_final();
 
 	printf("ok! all done...\n");
 }

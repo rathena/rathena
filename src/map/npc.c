@@ -2315,7 +2315,37 @@ static int npc_read_indoors(void)
 
 	return 0;
 }
+static int npc_unload(struct npc_data *nd)
+{
+	struct chat_data *cd;
 
+	nullpo_retr (0, nd);
+	if (nd->chat_id && (cd=(struct chat_data*)map_id2bl(nd->chat_id))){
+		aFree (cd);
+		cd = NULL;
+	}	
+	if (nd->bl.subtype == SCRIPT) {
+		if (nd->u.scr.timer_event)
+			aFree(nd->u.scr.timer_event);
+	 	if (nd->u.scr.src_id==0) {
+			if(nd->u.scr.script) {
+				aFree(nd->u.scr.script);
+				nd->u.scr.script=NULL;
+			}
+			if (nd->u.scr.label_list) {
+				aFree(nd->u.scr.label_list);
+				nd->u.scr.label_list = NULL;
+			}
+		}
+	}
+	clif_clearchar_area(&nd->bl, 2);
+	map_delblock(&nd->bl);
+	map_deliddb(&nd->bl);
+	aFree(nd);
+	nd = NULL;
+
+	return 0;
+}
 static int ev_db_final(void *key,void *data,va_list ap)
 {
 	aFree(data);
@@ -2328,6 +2358,30 @@ static int npcname_db_final(void *key,void *data,va_list ap)
 	return 0;
 }
 /*==========================================
+ * 
+ *------------------------------------------
+ */
+int npc_reload(void)
+{
+	struct npc_data *nd;
+	struct block_list *bl;
+	int i;	
+
+	if(ev_db) 
+		strdb_final(ev_db,ev_db_final);
+	if(npcname_db)
+		strdb_final(npcname_db,npcname_db_final);
+
+	for (i = START_NPC_NUM; i < npc_id; i++) {
+		if((bl = map_id2bl(i)) && bl->type == BL_NPC && (nd = (struct npc_data *)bl))
+			npc_unload(nd);
+	}
+
+	return 0;
+
+	
+}
+/*==========================================
  * èIóπ
  *------------------------------------------
  */
@@ -2337,7 +2391,6 @@ int do_final_npc(void)
 	struct block_list *bl;
 	struct npc_data *nd;
 	struct mob_data *md;
-	struct chat_data *cd;
 	struct pet_data *pd;
 
 	if(ev_db)
@@ -2345,31 +2398,14 @@ int do_final_npc(void)
 	if(npcname_db)
 		strdb_final(npcname_db,npcname_db_final);
 
-	for(i=START_NPC_NUM;i<npc_id;i++){
-		if((bl=map_id2bl(i))){
+	npc_clearsrcfile();
+
+	for (i = START_NPC_NUM; i < npc_id; i++){
+		if((bl = map_id2bl(i))){
 			if(bl->type == BL_NPC && (nd = (struct npc_data *)bl)){
-				if(nd->chat_id && (cd=(struct chat_data*)map_id2bl(nd->chat_id))){
-					aFree(cd);
-					cd = NULL;
-				}
-				if(nd->bl.subtype == SCRIPT){
-					if(nd->u.scr.timer_event)
-						aFree(nd->u.scr.timer_event);
-				 	if(nd->u.scr.src_id==0){
-						if(nd->u.scr.script){
-							aFree(nd->u.scr.script);
-							nd->u.scr.script=NULL;
-						}
-						if(nd->u.scr.label_list){
-							aFree(nd->u.scr.label_list);
-							nd->u.scr.label_list = NULL;
-						}
-					}
-				}
-				aFree(nd);
-				nd = NULL;
-			}else if(bl->type == BL_MOB && (md = (struct mob_data *)bl)){
-				if(md->lootitem){
+				npc_unload(nd);
+			}else if (bl->type == BL_MOB && (md = (struct mob_data *)bl)){
+				if (md->lootitem){
 					aFree(md->lootitem);
 					md->lootitem = NULL;
 				}
@@ -2415,10 +2451,10 @@ int do_init_npc(void)
 	// comparing only the first 24 chars of labels that are 50 chars long isn't that nice
 	// will cause "duplicated" labels where actually no dup is...
 	//ev_db=strdb_init(24); 
-	ev_db=strdb_init(51);
-	npcname_db=strdb_init(24);
+	ev_db = strdb_init(51);
+	npcname_db = strdb_init(24);
 
-        ev_db->release = ev_release;
+	ev_db->release = ev_release;
 
 	memset(&ev_tm_b,-1,sizeof(ev_tm_b));
 

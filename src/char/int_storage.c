@@ -291,6 +291,22 @@ int inter_storage_init()
 	return 0;
 }
 
+int storage_db_final (void *k, void *data, va_list ap) {
+	struct storage *p = data;
+	if (p) aFree(p);
+	return 0;
+}
+int guild_storage_db_final (void *k, void *data, va_list ap) {
+	struct guild_storage *p = data;
+	if (p) aFree(p);
+	return 0;
+}
+void inter_storage_final() {
+	numdb_final(storage_db, storage_db_final);
+	numdb_final(guild_storage_db, guild_storage_db_final);
+	return;
+}
+
 int inter_storage_save_sub(void *key,void *data,va_list ap)
 {
 	char line[65536];

@@ -290,10 +290,30 @@ int inter_init(const char *file)
 	inter_pet_sql_init();
 	inter_accreg_sql_init();
 
+	atexit(inter_final);
+
 	//printf ("interserver timer initializing : %d sec...\n",autosave_interval);
 	//i=add_timer_interval(gettick()+autosave_interval,inter_save_timer,0,0,autosave_interval);
 
 	return 0;
+}
+
+// finalize
+int wis_db_final (void *k, void *data, va_list ap) {
+	struct WisData *p = data;
+	if (p) aFree(p);
+	return 0;
+}
+void inter_final() {
+	numdb_final(wis_db, wis_db_final);
+
+	inter_guild_sql_final();
+	inter_storage_sql_final();
+	inter_party_sql_final();
+	inter_pet_sql_final();
+	
+	if (accreg_pt) aFree(accreg_pt);
+	return;
 }
 
 int inter_mapif_init(int fd) {

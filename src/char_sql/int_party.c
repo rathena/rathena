@@ -237,6 +237,10 @@ int inter_party_sql_init(){
 
 	return 0;
 }
+void inter_party_sql_final(){
+	if (party_pt) aFree(party_pt);
+	return;
+}
 
 
 // Search for the party according to its name

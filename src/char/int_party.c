@@ -117,6 +117,17 @@ int inter_party_init() {
 	return 0;
 }
 
+int party_db_final (void *k, void *data, va_list ap) {
+	struct party *p = data;
+	if (p) aFree(p);
+	return 0;
+}
+void inter_party_final()
+{
+	numdb_final(party_db, party_db_final);
+	return;
+}
+
 // パ?ティ?デ?タのセ?ブ用
 int inter_party_save_sub(void *key, void *data, va_list ap) {
 	char line[8192];

@@ -7,9 +7,6 @@
 #include "memwatch.h"
 #endif
 
-// 独自メモリマネージャを使用する場合、次のコメントを外してください。
-// #define USE_MEMMGR
-
 #if !defined(DMALLOC) && !defined(GCOLLECT) && !defined(BCHECK) && !defined(USE_MEMMGR)
 
 void* aMalloc_( size_t size, const char *file, int line, const char *func )
@@ -537,6 +534,7 @@ static void memmer_exit(void) {
 		printf("memmgr: no memory leaks found.\n");
 	} else {
 		printf("memmgr: memory leaks found.\n");
+		fclose(fp);
 	}
 }
 

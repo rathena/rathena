@@ -943,11 +943,9 @@ void do_final_socket(void)
 		aFree(access_deny);
 
 	// session[0] のダミーデータを削除
-	if (session[0]) {
-		aFree(session[0]->rdata);
-		aFree(session[0]->wdata);
-		aFree(session[0]);
-	}
+	aFree(session[0]->rdata);
+	aFree(session[0]->wdata);
+	aFree(session[0]);	
 }
 
 void do_socket(void)

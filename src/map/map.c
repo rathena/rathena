@@ -1697,24 +1697,24 @@ int map_addnpc(int m,struct npc_data *nd) {
 }
 
 void map_removenpc(void) {
-    int i,m,n=0;
+	int i,m,n=0;
 
-    for(m=0;m<map_num;m++) {
-        for(i=0;i<map[m].npc_num && i<MAX_NPC_PER_MAP;i++) {
-            if(map[m].npc[i]!=NULL) {
-                clif_clearchar_area(&map[m].npc[i]->bl,2);
-                map_delblock(&map[m].npc[i]->bl);
-                numdb_erase(id_db,map[m].npc[i]->bl.id);
-                if(map[m].npc[i]->bl.subtype==SCRIPT) {
-//                    aFree(map[m].npc[i]->u.scr.script);
-//                    aFree(map[m].npc[i]->u.scr.label_list);
-                }
-                aFree(map[m].npc[i]);
-                map[m].npc[i] = NULL;
-                n++;
-            }
-        }
-    }
+	for(m=0;m<map_num;m++) {
+		for(i=0;i<map[m].npc_num && i<MAX_NPC_PER_MAP;i++) {
+			if(map[m].npc[i]!=NULL) {
+				clif_clearchar_area(&map[m].npc[i]->bl,2);
+				map_delblock(&map[m].npc[i]->bl);
+				numdb_erase(id_db,map[m].npc[i]->bl.id);
+				if(map[m].npc[i]->bl.subtype==SCRIPT) {
+					aFree(map[m].npc[i]->u.scr.script);
+					aFree(map[m].npc[i]->u.scr.label_list);
+				}
+				aFree(map[m].npc[i]);
+				map[m].npc[i] = NULL;
+				n++;
+			}
+		}
+	}
 
 	sprintf(tmp_output,"Successfully removed and freed from memory '"CL_WHITE"%d"CL_RESET"' NPCs.\n",n);
 	ShowStatus(tmp_output);
@@ -3097,29 +3097,20 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 	return 0;
 }
 
-int id_db_final(void *k,void *d,va_list ap)
+int id_db_final(void *k,void *d,va_list ap) { return 0; }
+int map_db_final(void *k,void *d,va_list ap) { return 0; }
+int nick_db_final(void *k,void *d,va_list ap)
 {
-	struct mob_data *id;
-	nullpo_retr(0, id = (struct mob_data*)d);
-	if(id->lootitem)
-		aFree(id->lootitem);
-	if(id)
-		aFree(id);
+	char *p = d;
+	if (p) aFree(p);
 	return 0;
 }
-
-int map_db_final(void *k,void *d,va_list ap)
+int charid_db_final(void *k,void *d,va_list ap)
 {
-	struct map_data *id;
-	nullpo_retr(0, id = (struct map_data*)d);
-	if(id->gat)
-		aFree(id->gat);
-	if(id)
-		aFree(id);
+	struct charid2nick *p = d;
+	if (p) aFree(p);
 	return 0;
 }
-int nick_db_final(void *k,void *d,va_list ap){ return 0; }
-int charid_db_final(void *k,void *d,va_list ap){ return 0; }
 int cleanup_sub(struct block_list *bl, va_list ap) {
 	nullpo_retr(0, bl);
 
@@ -3152,12 +3143,12 @@ int cleanup_sub(struct block_list *bl, va_list ap) {
  *------------------------------------------
  */
 void do_final(void) {
-    int map_id, i;
+    int i;
 	ShowStatus("Terminating...\n");
 
-    for (map_id = 0; map_id < map_num;map_id++)
-		if(map[map_id].m)
-			map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, 0, 0);
+    for (i = 0; i < map_num; i++)
+		if(map[i].m)
+			map_foreachinarea(cleanup_sub, i, 0, 0, map[i].xs, map[i].ys, 0, 0);
 
 #ifndef TXT_ONLY
     chrif_char_reset_offline();
@@ -3165,38 +3156,35 @@ void do_final(void) {
 
     chrif_flush_fifo();
 
-    for (i = 0; i < fd_max; i++)
-        delete_session(i);
-
-#if 0
-    map_removenpc();
-
-//    do_final_timer(); (we used timer_final() instead)
-    timer_final();
-//    numdb_final(id_db, id_db_final);
-    strdb_final(map_db, map_db_final);
-    strdb_final(nick_db, nick_db_final);
-    numdb_final(charid_db, charid_db_final);
-
+//#if 0	// why is this here? >_>
 	do_final_chrif(); // ‚±‚Ì“à•”‚ÅƒLƒƒƒ‰‚ğ‘S‚ÄØ’f‚·‚é
+	do_final_npc();
+//	map_removenpc();
 	do_final_script();
 	do_final_itemdb();
 	do_final_storage();
 	do_final_guild();
+	do_final_party();
+	do_final_pc();
 	do_final_pet();
-/*
-	for(i=0;i<map_num;i++){
-		if(map[i].gat) {
-			aFree(map[i].gat);
-			map[i].gat=NULL; //isn't it NULL already o_O?
-		}
+
+	for (i=0; i<map_num; i++) {
+		if(map[i].gat) aFree(map[i].gat);
 		if(map[i].block) aFree(map[i].block);
 		if(map[i].block_mob) aFree(map[i].block_mob);
 		if(map[i].block_count) aFree(map[i].block_count);
 		if(map[i].block_mob_count) aFree(map[i].block_mob_count);
 	}
-*/
-#endif
+
+//    do_final_timer(); (we used timer_final() instead)
+    timer_final();
+    numdb_final(id_db, id_db_final);
+	strdb_final(map_db, map_db_final);
+    strdb_final(nick_db, nick_db_final);
+    numdb_final(charid_db, charid_db_final);
+	exit_dbn();
+
+//#endif
 
 #ifndef TXT_ONLY
     map_sql_close();

@@ -488,10 +488,28 @@ int inter_guild_init() {
 	return 0;
 }
 
+int castle_db_final (void *k, void *data, va_list ap)
+{
+	struct guild_castle *gc = data;
+	if (gc) aFree(gc);
+	return 0;
+}
+int guild_db_final (void *k, void *data, va_list ap)
+{
+	struct guild *g = data;
+	if (g) aFree(g);
+	return 0;
+}
+void inter_guild_final() {
+	numdb_final(castle_db, castle_db_final);
+	numdb_final(guild_db, guild_db_final);
+	return;
+}
+
 struct guild *inter_guild_search(int guild_id) {
 	struct guild *g;
 
-	g= (struct guild *) numdb_search(guild_db, guild_id);
+	g = (struct guild *) numdb_search(guild_db, guild_id);
 
 	return g;
 }

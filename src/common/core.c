@@ -285,6 +285,12 @@ int main(int argc,char **argv)
 {
 	int next;
 
+	display_title();
+#ifdef USE_MEMMGR
+	// call this first so it'll be finalised last
+	do_init_memmgr(argv[0]); // 一番最初に実行する必要がある
+#endif
+
 	sscanf(argv[0], "./%24[^\n]", server_type);	// map/char/login?
 	atexit(log_uptime);
 	pid_create(argv[0]);
@@ -304,12 +310,6 @@ int main(int argc,char **argv)
 		compat_signal(SIGBUS, sig_dump);
 		compat_signal(SIGTRAP, SIG_DFL);
 	#endif
-
-	display_title();
-
-#ifdef USE_MEMMGR
-	do_init_memmgr(argv[0]); // 一番最初に実行する必要がある
-#endif
 
 	tick_ = time(0);
 	ticks = gettick();

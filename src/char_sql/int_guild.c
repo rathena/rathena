@@ -709,6 +709,35 @@ int inter_guild_sql_init()
 	return 0;
 }
 
+int guild_expcache_db_final (void *k, void *data, va_list ap) { return 0; }
+int guild_infoevent_db_final (void *k, void *data, va_list ap) { return 0; }
+int guild_castleinfoevent_db_final (void *k, void *data, va_list ap) { return 0; }
+int guild_db_final (void *k, void *data, va_list ap)
+{
+	struct guild *g = data;
+	if (g) aFree(g);
+	return 0;
+}
+int castle_db_final (void *k, void *data, va_list ap)
+{
+	struct guild_castle *gc = data;
+	if (gc) aFree(gc);
+	return 0;
+}
+void inter_guild_sql_final()
+{
+	if (guild_pt) aFree(guild_pt);
+	if (guild_pt2) aFree(guild_pt2);
+	if (guildcastle_pt) aFree(guildcastle_pt);
+	
+	numdb_final(guild_db_, guild_db_);
+	numdb_final(castle_db_, castle_db_final);
+	numdb_final(guild_expcache_db_, guild_expcache_db_final);
+	numdb_final(guild_infoevent_db_, guild_infoevent_db_final);
+	numdb_final(guild_castleinfoevent_db_, guild_castleinfoevent_db_final);
+
+	return;
+}
 
 // Get guild by its name
 struct guild* search_guildname(char *str)

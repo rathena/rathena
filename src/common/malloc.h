@@ -3,6 +3,9 @@
 
 #include <stdlib.h>
 
+// 独自メモリマネージャを使用する場合、次のコメントを外してください。
+// #define USE_MEMMGR
+
 #if defined(DMALLOC)
 
 #	include "dmalloc.h"

@@ -2,6 +2,7 @@
 #define _INT_PET_H_
 
 int inter_pet_init();
+void inter_pet_sql_final();
 int inter_pet_save();
 int inter_pet_delete(int pet_id);
 

@@ -166,6 +166,13 @@ int inter_storage_sql_init(){
 
 	return 1;
 }
+// storage data finalize
+void inter_storage_sql_final()
+{
+	if (storage_pt) aFree(storage_pt);
+	if (guild_storage_pt) aFree(guild_storage_pt);	 
+	return;
+}
 // q?f[^?
 int inter_storage_delete(int account_id)
 {

@@ -109,6 +109,17 @@ int inter_pet_init()
 	return 0;
 }
 
+int pet_db_final (void *k, void *data, va_list ap) {
+	struct s_pet *p = data;
+	if (p) aFree(p);
+	return 0;
+}
+void inter_pet_final()
+{
+	numdb_final(pet_db, pet_db_final);
+	return;
+}
+
 int inter_pet_save_sub(void *key,void *data,va_list ap)
 {
 	char line[8192];

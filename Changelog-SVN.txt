@@ -1,6 +1,8 @@
 Date	Added
 
 03/23
+	* Fixed alot of memory leaks [celest]
+	* Added stray memory cleaning routine to db.c [celest]
 	* Fixed some compile errors, sorry xP [celest]
 	* Corrected potion creation success chances, thanks to Avaj and DracoRPG
 	* Removed some unused potion creation code, thanks to DracoRPG

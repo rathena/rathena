@@ -261,6 +261,29 @@ int inter_init(const char *file) {
 	return 0;
 }
 
+// finalize
+int accreg_db_final (void *k, void *data, va_list ap) {	
+	struct accreg *p = data;
+	if (p) aFree(p);
+	return 0;
+}
+int wis_db_final (void *k, void *data, va_list ap) {
+	struct WisData *p = data;
+	if (p) aFree(p);
+	return 0;
+}
+void inter_final() {
+	numdb_final(accreg_db, accreg_db_final);
+	numdb_final(wis_db, wis_db_final);
+
+	inter_party_final();
+	inter_guild_final();
+	inter_storage_final();
+	inter_pet_final();
+
+	return;
+}
+
 // マップサーバー接続
 int inter_mapif_init(int fd) {
 	inter_guild_mapif_init(fd);
