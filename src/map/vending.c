@@ -113,12 +113,6 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		return;
 	}
 
-	//log added by Lupus
-	#ifndef TXT_ONLY
-	if(log_config.vend > 0)
-		log_vend(sd,vsd, 0,1, z); //n == 0, amount == 1 for Zeny log.
-	#endif
-	
 	pc_payzeny(sd, z);
 	pc_getzeny(vsd, z);
 	for(i = 0; 8 + 4 * i < len; i++) {
@@ -132,8 +126,11 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 
 		//log added by Lupus
 		#ifndef TXT_ONLY
-		if(log_config.vend > 0)
-			log_vend(sd,vsd, index, amount, 0); // for Item log.
+		if(log_config.vend > 0) {
+			log_vend(sd,vsd, index, amount, z); // for Item + Zeny. log.
+			//we log ZENY only with the 1st item. Then zero it for the rest items 8).
+			z = 0;
+		}
 		#endif
 
 	}
