@@ -734,6 +734,13 @@ int intif_parse_LoadStorage(int fd) {
 	struct map_session_data *sd;
 
 	stor = account2storage( RFIFOL(fd,4));
+
+	if (stor->storage_status == 1) { // Already open.. lets ignore this update
+		if (battle_config.error_log)
+			printf("intif_parse_LoadStorage: storage received for a client already open\n");
+		return 0;
+	}
+
 	if (RFIFOW(fd,2)-8 != sizeof(struct storage)) {
 		if (battle_config.error_log)
 			printf("intif_parse_LoadStorage: data size error %d %d\n", RFIFOW(fd,2)-8, sizeof(struct storage));

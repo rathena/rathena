@@ -110,12 +110,14 @@ int storage_storageopen(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	if((stor = numdb_search(storage_db,sd->status.account_id)) != NULL) {
-		stor->storage_status = 1;
-		sd->state.storage_flag = 0;
-		clif_storageitemlist(sd,stor);
-		clif_storageequiplist(sd,stor);
-		clif_updatestorageamount(sd,stor);
-		return 0;
+		if (stor->storage_status == 0) {
+			stor->storage_status = 1;
+			sd->state.storage_flag = 0;
+			clif_storageitemlist(sd,stor);
+			clif_storageequiplist(sd,stor);
+			clif_updatestorageamount(sd,stor);
+			return 0;
+		}	
 	} else
 		intif_request_storage(sd->status.account_id);
 

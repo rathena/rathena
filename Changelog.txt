@@ -1,5 +1,6 @@
 Date	Added
 12/29
+	* Double storage/lag exploit fixed (SVN 867) [MouseJstr]
 	* Another -1 alive_timer fix (SVN 866) [MouseJstr]
 	* Added @dmstart and @dmtick for debugging malloc tests [MouseJstr]
 	* Fix some more compile errors on different platforms [MouseJstr]
