@@ -197,11 +197,11 @@ L_InProgress:
 	close;
 L_WrongBrideName:
 	mes "[Marry Happy]";
-	mes "How come you forgot your wife name!? Sorry come back later when you know who you want to marry.";
+	mes "How come you forgot your wife's name!? Sorry come back later when you know who you want to marry.";
 	close;
 L_WrongGroomName:
 	mes "[Marry Happy]";
-	mes "How come you forgot your husband name!? Sorry come back later when you know who you want to marry.";
+	mes "How come you forgot your husband's name!? Sorry come back later when you know who you want to marry.";
 	close;
 L_NeedRing:
 	mes "[Tristan the Third]";
@@ -376,7 +376,7 @@ L_Marry:
 	mes "you are able to get married strait away.";
 	mes "One must be the Groom and the other the Bride.";
 	mes "Do you wish to register to get married?";
-	if($SameSex == 1)	menu "I'm gonna be the Groom",-,"I,m gonna be the Bride",L_BrideRegister,"Never mind",L_Bye;
+	if($SameSex == 1)	menu "I'm gonna be the Groom",-,"I'm gonna be the Bride",L_BrideRegister,"Never mind",L_Bye;
 	if(event_wedding == 1) goto L_Married;
 	if(@register >= 1) goto L_AlreadyRegistered;
 	if($@progress >= 2) goto L_InProgress;
@@ -416,7 +416,7 @@ L_BrideRegister:
 	if((countitem(2338) > 0) || (countitem(7170) > 0) || (@outfit == 1)) goto L_BrideRegister2;
 	mes "[Marry Happy]";
 	if(sex == 1) mes "No problem sir, please fill out your name here.";
-	if(sex == 0) mes "No problem mis, please fill out your name here.";
+	if(sex == 0) mes "No problem miss, please fill out your name here.";
 	mes "And I'll need to collect a 100,000z fee for your wedding fees and outfit.";
 	next;
 	if(zeny < @costbrideA) goto L_NeedZeny2;
