@@ -225,3 +225,9 @@ Problem:	Older Clients are unable to log into the server, period.
 		Even if the packet_db is set to use the older clients, they still are unable to connect.
 Assigned:	Celest
 Progress:	0%
+Notes:          I *still* need to know which version is the client, because problem is,
+                I did not make major changes to client detecting in clif.c so i can't
+                find out where went wrong yet, and all exes (0906-0110... not 12xx of
+                course however) in my laptop can login ^^;
+                It would be even better if you could send me the client in question so
+                i can test it.

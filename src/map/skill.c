@@ -3414,7 +3414,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				int range = skill_get_range(skillid,skilllv);
 				if(range < 0)
 					range = battle_get_range(src) - (range + 1);
-				md->state.provoke_flag = src->id;
+				dstmd->state.provoke_flag = src->id;
 				mob_target(dstmd,src,range);
 			}
 		}

@@ -1,6 +1,7 @@
 Date	Added
 
 01/24
+        * Fixed a typo in Provoke that was causing crashes [celest]
         * Fixed another compile warning in src/char/char.c
           [SVN 985] [MouseJstr]
         * Fixed a account wipe bug in login/login.c (Thanks Wallex)
