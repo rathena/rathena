@@ -1,6 +1,10 @@
 Date	Added
 
 12/20
+        * Added reading leveluseskillspamount.txt from the GRF to auto set sp used for each skill [celest]
+        * Added reading indoorrswtable.txt from the GRF to auto set 'indoor' mapflags
+          [celest]
+        * Added check in grfio.c to prevent crashing if a file wasn't found [celest]
         * Rolling GUILDCACHE and FASTCHAR into main branches/stable
           tree [MouseJstr]
 	* Changed max_paramter to an unsigned int so that you can have over 255 as your max stat [Codemaster]

@@ -21,6 +21,7 @@
 #include "pet.h"
 #include "battle.h"
 #include "skill.h"
+#include "grfio.h"
 #include "showmsg.h"
 
 #ifdef MEMWATCH
@@ -2135,6 +2136,39 @@ static int npc_parse_mapflag(char *w1,char *w2,char *w3,char *w4)
 	return 0;
 }
 
+static int npc_read_indoors(void)
+{
+	char *buf,*p;
+	int s, m;
+
+	buf=grfio_reads("data\\indoorrswtable.txt",&s);
+
+	if(buf==NULL)
+		return -1;
+
+	buf[s]=0;
+	for(p=buf;p-buf<s;){
+		char buf2[64];
+
+		if(sscanf(p,"%[^#]#",buf2) == 1){
+			char map_name[64] = "";
+			strncpy(map_name, buf2, strlen(buf2) - 4);
+			strcat(map_name, ".gat");
+			if ((m = map_mapname2mapid(map_name)) >= 0)
+				map[m].flag.indoors=1;
+		}
+		
+		p=strchr(p,10);
+		if(!p) break;
+		p++;
+	}
+	free(buf);
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\indoorrswtable.txt");
+	ShowStatus(tmp_output);
+
+	return 0;
+}
+
 static int ev_db_final(void *key,void *data,va_list ap)
 {
 	free(data);
@@ -2226,6 +2260,10 @@ int do_init_npc(void)
 	time_t last_time = time(0);
 	int busy = 0;
 	char c = '-';
+
+	// indoorrswtable.txt and etcinfo.txt [Celest]
+	npc_read_indoors();
+	//npc_read_weather();
 
 	ev_db=strdb_init(24);
 	npcname_db=strdb_init(24);

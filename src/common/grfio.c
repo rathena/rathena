@@ -444,13 +444,13 @@ int grfio_size(char *fname)
 	entry = filelist_find(fname);
 
 	if (entry==NULL || entry->gentry<0) {	// LocalFileCheck
-		char lfname[256],rname[256],*p;
+		char lfname[256],*rname,*p;
 		FILELIST lentry;
 		struct stat st;
 		
-	    if(strcmp(data_dir, "") != 0) {
+	    if(strcmp(data_dir, "") != 0 && (rname=grfio_resnametable(fname,lfname))!=NULL) {
             //printf("%s\t",fname);
-            sprintf(rname,"%s",grfio_resnametable(fname,lfname));
+            //sprintf(rname,"%s",grfio_resnametable(fname,lfname));
             //printf("%s\n",rname);
             sprintf(lfname,"%s%s",data_dir,rname);
             //printf("%s\n",lfname);
@@ -486,13 +486,16 @@ void* grfio_reads(char *fname, int *size)
 	entry = filelist_find(fname);
 
 	if (entry==NULL || entry->gentry<=0) {	// LocalFileCheck
-		char lfname[256],rname[256],*p;
+		char lfname[256],*rname,*p;
 		FILELIST lentry;
 
 		strncpy(lfname,fname,255);
-		sprintf(rname,"%s",grfio_resnametable(fname,lfname));
-		sprintf(lfname,"%s%s",data_dir,rname);
-		//printf("%s\n",lfname);
+		// i hope this is the correct way =p [celest]
+		if ((rname=grfio_resnametable(fname,lfname))!=NULL) {			
+			//sprintf(rname,"%s",grfio_resnametable(fname,lfname));
+			sprintf(lfname,"%s%s",data_dir,rname);
+			//printf("%s\n",lfname);
+		}
 
 		for(p=&lfname[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix
 

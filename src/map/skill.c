@@ -25,6 +25,7 @@
 #include "chrif.h"
 #include "guild.h"
 #include "showmsg.h"
+#include "grfio.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -11982,6 +11983,52 @@ int skill_readdb(void)
 	return 0;
 }
 
+/*===============================================
+ * For reading leveluseskillspamount.txt [Celest]
+ *-----------------------------------------------
+ */
+static int skill_read_skillspamount(void)
+{
+	char *buf,*p;
+	struct skill_db *skill = NULL;
+	int s, idx, new_flag=1, level=1, sp=0;
+	
+	buf=grfio_reads("data\\leveluseskillspamount.txt",&s);
+
+	if(buf==NULL)
+		return -1;
+
+	buf[s]=0;
+	for(p=buf;p-buf<s;){
+		char buf2[64];
+				
+		if (sscanf(p,"%[@]",buf2) == 1) {
+			level = 1;
+			new_flag = 1;
+		} else if (new_flag && sscanf(p,"%[^#]#",buf2) == 1) {
+			for (idx=0; skill_names[idx].id != 0; idx++) {
+				if (strstr(buf2, skill_names[idx].name) != NULL) {
+					skill = &skill_db[ skill_names[idx].id ];
+					new_flag = 0;
+					break;
+				}
+			}
+		} else if (!new_flag && sscanf(p,"%d#",&sp) == 1) {
+			skill->sp[level-1]=sp;
+			level++;
+		}
+
+		p=strchr(p,10);
+		if(!p) break;
+		p++;
+	}
+	free(buf);
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\leveluseskillspamount.txt");
+	ShowStatus(tmp_output);
+
+	return 0;
+}
+
 void skill_reload(void)
 {
 	/*
@@ -12001,6 +12048,7 @@ void skill_reload(void)
 int do_init_skill(void)
 {
 	skill_readdb();
+	skill_read_skillspamount();
 
 	add_timer_func_list(skill_unit_timer,"skill_unit_timer");
 	add_timer_func_list(skill_castend_id,"skill_castend_id");
