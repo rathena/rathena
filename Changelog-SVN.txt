@@ -1,5 +1,9 @@
 Date	Added
 
+02/21
+        * Updated Bleeding effect [celest]
+        * Removed some unused code for Graffiti [celest]
+
 02/20
 	* Char SQL: Rewrote/Fixed the castle save function, now the sql version saves castles! [Sirius]
 	* Fixed the /mm /mapmove command access bug [Sirius]

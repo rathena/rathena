@@ -2811,9 +2811,10 @@ int mob_class_change(struct mob_data *md,int *value)
  */
 int mob_heal(struct mob_data *md,int heal)
 {
-	int max_hp = status_get_max_hp(&md->bl);
+	int max_hp;
 
 	nullpo_retr(0, md);
+	max_hp = status_get_max_hp(&md->bl);
 
 	md->hp += heal;
 	if( max_hp < md->hp )

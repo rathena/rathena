@@ -37,6 +37,8 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_TRICKDEAD		= 29,
 	SC_LOUD				= 30,
 	SC_ENERGYCOAT		= 31,
+	SC_BROKNARMOR		= 32,
+	SC_BROKNWEAPON		= 33,
 	SC_HALLUCINATION	= 34,
 	SC_WEIGHT50			= 35,
 	SC_WEIGHT90			= 36,
@@ -44,7 +46,9 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_SPEEDPOTION1		= 38,
 	SC_SPEEDPOTION2		= 39,
 	SC_SPEEDPOTION3		= 40,
-//-- 40-50
+	SC_SPEEDUP0			= 41, // for skill speedup
+	SC_SPEEDUP1			= 42, // for skill speedup
+//-- 43-50
 	SC_STRIPWEAPON		= 50,
 	SC_STRIPSHIELD		= 51,
 	SC_STRIPARMOR		= 52,
@@ -78,7 +82,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_ASSUMPTIO		= 110, /* アシャンプティオ */
 //-- 111, 112
 	SC_MAGICPOWER		= 113, /* 魔法力?幅 */
-//-- 114
+	SC_EDP				= 114, /* エフェクトが判明したら移動 */
 	SC_TRUESIGHT		= 115, /* トゥル?サイト */
 	SC_WINDWALK			= 116, /* ウインドウォ?ク */
 	SC_MELTDOWN			= 117, /* メルトダウン */
@@ -86,8 +90,9 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 //-- 119
 	SC_REJECTSWORD		= 120, /* リジェクトソ?ド */
 	SC_MARIONETTE		= 121, /* マリオネットコントロ?ル */
-//-- 122, 123
-	SC_HEADCRUSH		= 124, /* ヘッドクラッシュ */
+	SC_MARIONETTE2		= 122, // Marionette target
+//-- 123
+	SC_BLEEDING			= 124, /* ヘッドクラッシュ */
 	SC_JOINTBEAT		= 125, /* ジョイントビ?ト */
 //-- 126, 127
 
@@ -103,7 +108,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_CONFUSION		= 135,
 	SC_BLIND			= 136,
 	SC_DIVINA			= SC_SILENCE,
-
+//-- 137-139
 	SC_SAFETYWALL		= 140,
 	SC_PNEUMA			= 141,
 	SC_WATERBALL		= 142,
@@ -111,7 +116,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_DANCING			= 144,
 	SC_KEEPING			= 145,
 	SC_BARRIER			= 146,
-
+//-- 147,148
 	SC_MAGICROD			= 149,
 	SC_SIGHT			= 150,
 	SC_RUWACH			= 151,
@@ -122,8 +127,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_BLADESTOP_WAIT	= 156,
 	SC_BLADESTOP		= 157,
 	SC_EXTREMITYFIST	= 158,
-	SC_GRAFFITI			= 159,
-
+//-- 159	
 	SC_LULLABY			=160,
 	SC_RICHMANKIM		=161,
 	SC_ETERNALCHAOS		=162,
@@ -143,7 +147,6 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_FORTUNE			=176,
 	SC_SERVICE4U		=177,
 	SC_SPIDERWEB		=180,		/* スパイダ?ウェッブ */
-//	SC_EDP							// moved
 	SC_SACRIFICE		=184,		/* サクリファイス */
 	SC_WEDDING			=187,	//結婚用(結婚衣裳になって?くのが?いとか)
 	SC_NOCHAT			=188,	//赤エモ?態
@@ -153,16 +156,11 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_DPOISON			=198,		/* 猛毒 */
 
 // Used by English Team
-	SC_BROKNARMOR		=32,
-	SC_BROKNWEAPON		=33,
-	SC_SPEEDUP0			=41, // for skill speedup
-	SC_SPEEDUP1			=42, // for skill speedup
 	SC_SLOWDOWN			=45, // for skill slowdown
 	SC_AUTOBERSERK		=46,
 	SC_SIGHTTRASHER		=73,
-	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]
-	SC_EDP				=114, /* エフェクトが判明したら移動 */
-	SC_MARIONETTE2		=122, // Marionette target
+	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]	
+	
 	SC_ENSEMBLE			=159,
 	SC_FOGWALL			=178,
 	SC_GOSPEL			=179,
@@ -176,29 +174,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_LANDPROTECTOR	=193,
 	SC_ADAPTATION		=194,
 	SC_CHASEWALK		=195,
-	SC_REGENERATION		=196,
-	
-
-// [Celest]
-	SC_BLEEDING			= 124, // Temporarily same id as headcrush	
-	
-// -- testing various SC effects
-//	SC_AURABLADE			=81,
-//	SC_CONCENTRATION		=83,
-//	SC_TENSIONRELAX		=84,
-//	SC_BERSERK			=85,
-//	SC_CALLSPIRITS			=100,
-//	SC_PARRYING			=100,
-//	SC_FREECAST			=101,
-//	SC_ABSORBSPIRIT		=102,
-//	SC_ASSUMPTIO			=114,
-//	SC_SHARPSHOOT			=127,
-//	SC_GANGSTER			=184,
-//	SC_CANNIBALIZE			=186,
-//	SC_SPHEREMINE			=187,
-//	SC_METEOSTORM		=189,
-//	SC_CASTCANCEL			=190,
-//	SC_SPIDERWEB			=191,
+	SC_REGENERATION		=196,	
 };
 extern int SkillStatusChangeTable[];
 

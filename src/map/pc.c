@@ -6538,7 +6538,8 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	if (sd->sc_count && (sd->sc_data[SC_TRICKDEAD].timer != -1 ||	// Modified by RoVeRT
-		sd->sc_data[SC_BERSERK].timer != -1))
+		sd->sc_data[SC_BERSERK].timer != -1 ||
+		sd->sc_data[SC_BLEEDING].timer != -1))
 		return 0;
 
 	if (sd->no_regen & 2)

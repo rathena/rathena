@@ -1019,7 +1019,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 		{//?件が良く分からないので適?に
 			int race=status_get_race(bl);
 			if( !(battle_check_undead(race,status_get_elem_type(bl)) || race == 6) && rand()%100 < (2*skilllv+10)*sc_def_vit/100 )
-				status_change_start(bl,SC_HEADCRUSH,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
+				status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		}
 			break;
 	case LK_JOINTBEAT:				/* ジョイントビ?ト */

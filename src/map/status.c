@@ -241,7 +241,7 @@ int SkillStatusChangeTable[]={	/* status.h‚Ìenum‚ÌSC_***‚Æ‚ ‚í‚¹‚é‚±‚Æ */
 	SC_MOONLIT,
 	SC_MARIONETTE,
 	-1,
-	SC_HEADCRUSH,
+	SC_BLEEDING,
 	SC_JOINTBEAT,
 /* 400 */
 	-1,-1,
@@ -3072,13 +3072,9 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			return 0;
 		if ((type >=SC_STAN && type <= SC_BLIND) || type == SC_DPOISON)
 			return 0;/* ?‚¬‘«‚µ‚ª‚Å‚«‚È‚¢?‘ÔˆÙí‚Å‚ ‚éŽž‚Í?‘ÔˆÙí‚ðs‚í‚È‚¢ */
-		if(type == SC_GRAFFITI){	//ˆÙí’†‚É‚à‚¤ˆê“x?‘ÔˆÙí‚É‚È‚Á‚½Žž‚É‰ðœ‚µ‚Ä‚©‚çÄ“x‚©‚©‚é
-			status_change_end(bl,type,-1);
-		} else {
-			(*sc_count)--;
-			delete_timer(sc_data[type].timer, status_change_timer);
-			sc_data[type].timer = -1;
-		}
+		(*sc_count)--;
+		delete_timer(sc_data[type].timer, status_change_timer);
+		sc_data[type].timer = -1;
 	}
 
 	switch(type){	/* ˆÙí‚ÌŽí—Þ‚²‚Æ‚Ì?— */
@@ -3648,7 +3644,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_AURABLADE:		/* ƒI?ƒ‰ƒuƒŒ?ƒh */
 		case SC_PARRYING:		/* ƒpƒŠƒCƒ“ƒO */
 //		case SC_ASSUMPTIO:		/*  */
-		case SC_HEADCRUSH:		/* ƒwƒbƒhƒNƒ‰ƒbƒVƒ… */
+//		case SC_HEADCRUSH:		/* ƒwƒbƒhƒNƒ‰ƒbƒVƒ… */
 //		case SC_JOINTBEAT:		/* ƒWƒ‡ƒCƒ“ƒgƒr?ƒg */
 //		case SC_MARIONETTE:		/* ƒ}ƒŠƒIƒlƒbƒgƒRƒ“ƒgƒ?ƒ‹ */
 
@@ -3764,14 +3760,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			val2 = 3; //3‰ñ‰r¥‚ð1/3‚É‚·‚é
 			break;
 
-		case SC_GRAFFITI:		/* ƒOƒ‰ƒtƒBƒeƒB */
-			{
-				struct skill_unit_group *sg = skill_unitsetting(bl,RG_GRAFFITI,val1,val2,val3,0);
-				if(sg)
-					val4 = (int)sg;
-			}
-			break;
-
 		case SC_SPLASHER:		/* ƒxƒiƒ€ƒXƒvƒ‰ƒbƒVƒƒ? */
 			break;
 
@@ -3781,6 +3769,18 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			break;
 
 		case SC_PRESERVE:
+			break;
+
+		case SC_BLEEDING:
+			{
+				// every 1 vit deducts 1 second
+				val3 = tick - status_get_vit(bl) * 1000;
+				// minimum 50 seconds
+				if (val3 < 50000)
+					val3 = 50000;
+				val4 = 10000;
+				tick = 1000;
+			}
 			break;
 
 		case SC_SLOWDOWN:
@@ -4072,13 +4072,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					}
 				}
 				calc_flag = 1;
-				break;
-			case SC_GRAFFITI:
-				{
-					struct skill_unit_group *sg=(struct skill_unit_group *)sc_data[type].val4;	//val4‚ªƒOƒ‰ƒtƒBƒeƒB‚Ìgroup_id
-					if(sg)
-						skill_delunitgroup(sg);
-				}
 				break;
 			case SC_NOCHAT:	//ƒ`ƒƒƒbƒg‹ÖŽ~?‘Ô
 				{
@@ -4470,9 +4463,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			if( (--sc_data[type].val3) > 0) {
 				int hp = status_get_max_hp(bl);
 				if(status_get_hp(bl) > hp>>2) {
-					if(bl->type == BL_PC) {
+					if(sd) {
 						hp = 3 + hp*3/200;
-						pc_heal((struct map_session_data *)bl,-hp,0);
+						pc_heal(sd,-hp,0);
 					}
 					else if(bl->type == BL_MOB) {
 						struct mob_data *md;
@@ -4526,22 +4519,28 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
 		}
 		break;
-	case SC_HEADCRUSH:	// temporary damage [celest]
-//	case SC_BLEEDING:
-		if((--sc_data[type].val3) > 0) {
-			int hp = status_get_max_hp(bl);
-			if(sd) {
-				hp = 3 + hp*3/200;
-				pc_heal(sd,-hp,0);
+	case SC_BLEEDING:	// [celest]
+		// i hope i haven't interpreted it wrong.. which i might ^^;
+		// Source:
+		// - 10õ©ª´ªÈªËHPª¬Êõá´
+		// - õóúìªÎªÞªÞ«µ?«Ðì¹ÔÑªä«ê«í«°ª·ªÆªâ?ÍýªÏá¼ª¨ªÊª¤
+		if((sc_data[type].val3 -= 1000) > 0) {
+			if((sc_data[type].val4 -= 1000) > 0) {
+				int hp = rand()%300+400;
+				if(sd) {
+					pc_heal(sd,-hp,0);
+					sd->canmove_tick = tick+1000;
+				}
+				else if(bl->type == BL_MOB) {
+					struct mob_data *md;
+					nullpo_retr(0, md=(struct mob_data *)bl);
+					md->hp -= hp;
+				}
 			}
-			else if(bl->type == BL_MOB) {
-				struct mob_data *md;
-				nullpo_retr(0, md=(struct mob_data *)bl);
-				/*if((md=((struct mob_data *)bl)) == NULL)
-					break;*/
-				hp = 3 + hp/200;
-				md->hp -= hp;
+			if (sd) {				
+				sd->canact_tick = tick+1000;
 			}
+
 			sc_data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
 		}
 		break;
