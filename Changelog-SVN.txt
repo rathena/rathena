@@ -1,6 +1,8 @@
 Date	Added
 
 02/23
+        * Fixed another bad typo causing @allskill to not add points into advanced job
+          skills [celest]
         * Fixed a bad typo in status.c's StatusChangeTable [celest]
         * Corrected Spiral Pierce's hits in the skill_db [celest]
         * Moved /common/*.o into a obj folder when compiling [celest]

@@ -1001,7 +1001,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 						}
 						if (sd->status.job_level < skill_tree[s][c][i].joblv)
 							f=0;
-						if (id >= 2 && id <= 53 && pc_checkskill(sd, NV_BASIC) < 9)
+						else if (id >= 2 && id <= 53 && pc_checkskill(sd, NV_BASIC) < 9)
 							f=0;						
 					}
 					if(f && sd->status.skill[id].id==0 ){
@@ -4348,9 +4348,9 @@ int pc_allskillup(struct map_session_data *sd)
 		}
 		if(battle_config.enable_upper_class){ //conf‚Å–³?‚Å‚È‚¯‚ê‚Î?‚Ý?‚Þ
 			for(i=355;i<411;i++)
-				sd->status.skill[i].id=i;
+				sd->status.skill[i].lv=skill_get_max(i);
 			for(i=475;i<480;i++)
-				sd->status.skill[i].id=i;
+				sd->status.skill[i].lv=skill_get_max(i);
 		}
 	}
 	else {

@@ -297,8 +297,8 @@ Problem:	Compilers Bug: Some skills don't work under win32 builds
 		e.g. Whispers can't cloak... Players can't Hide, etc
 		LINUX builds work fine (or maybe 116x fukked them up...)
 		oh yeah, Celest mentoned it
-Assigned:	N/A
-Progress:	0%
+Assigned:	Celest
+Progress:	100% [My bad, fixed ^^; ]
 
 Problem:	Rogues Skill "back stab" works without PREPARING arrows.
 		It consumes arrows, but works even when them aren't prepered (equipped)
