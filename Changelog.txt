@@ -1,6 +1,8 @@
 Date	Added
 
 12/20
+        * Rolling GUILDCACHE and FASTCHAR into main branches/stable
+          tree [MouseJstr]
 	* Changed max_paramter to an unsigned int so that you can have over 255 as your max stat [Codemaster]
         * Experimental: Reverting a change on deleting any skill units when we're 
           logging off - might reduce the 'delete_timer' errors [celest]

@@ -3,9 +3,6 @@
 // SQL conversion by hack
 //
 
-#ifdef TWILIGHT
-#define GUILDCACHE
-#endif
 
 #include "char.h"
 #include "strlib.h"
@@ -15,21 +12,17 @@
 #include "int_storage.h"
 #include "mmo.h"
 #include "socket.h"
-#ifdef GUILDCACHE
 #include "db.h"
-#endif /* GUILDCACHE */
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef GUILDCACHE
 static struct dbt *guild_db_;
 static struct dbt *castle_db_;
 static struct dbt *guild_expcache_db_;
 static struct dbt *guild_infoevent_db_;
 static struct dbt *guild_castleinfoevent_db_;
-#endif /* GUILDCACHE */
 
 static struct guild *guild_pt;
 static struct guild *guild_pt2;
@@ -46,9 +39,7 @@ int mapif_guild_basicinfochanged(int guild_id,int type,const void *data,int len)
 int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(void *key,void *data,va_list ap);
 
-#ifdef FASTCHAR
 #define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
-#endif /* FASTCHAR */
 
 // Save guild into sql
 int inter_guild_tosql(struct guild *g,int flag)
@@ -68,11 +59,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	
 	if (g->guild_id<=0) return -1;
 	
-#ifndef FASTCHAR
-	printf("(\033[1;35m%d\033[0m)  Request save guild - ",g->guild_id);
-#else /* FASTCHAR */
 	printf("(\033[1;35m%d\033[0m)  Request save guild -(flag 0x%x) ",g->guild_id, flag);
-#endif /* FASTCHAR */
 	
 	jstrescapecpy(t_name, g->name);
 	
@@ -206,35 +193,6 @@ int inter_guild_tosql(struct guild *g,int flag)
 	}
 	
 	if (flag&2||guild_member==0){
-#ifndef FASTCHAR
-		//printf("- Insert guild %d to guild_member\n",g->guild_id);
-		for(i=0;i<g->max_member;i++){
-			if (g->member[i].account_id>0){
-				struct guild_member *m = &g->member[i];
-				sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",guild_member_db, m->char_id);
-				if(mysql_query(&mysql_handle, tmp_sql) ) {
-					printf("DB server Error (delete `guild_member`)- %s\n", mysql_error(&mysql_handle) );
-				}
-				sprintf(tmp_sql,"INSERT INTO `%s` "
-					"(`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`rsv1`,`rsv2`,`name`) "
-					"VALUES ('%d','%d','%d','%d','%d', '%d','%d','%d','%d','%d','%d','%d','%d','%d','%s')",
-					guild_member_db, g->guild_id,
-					m->account_id,m->char_id,
-					m->hair,m->hair_color,m->gender,
-					m->class,m->lv,m->exp,m->exp_payper,m->online,m->position,
-					0,0,
-					jstrescapecpy(t_member,m->name));
-				//printf(" %s\n",tmp_sql);
-				if(mysql_query(&mysql_handle, tmp_sql) ) {
-					printf("DB server Error (insert `guild_member`)- %s\n", mysql_error(&mysql_handle) );
-				}
-				sprintf(tmp_sql, "UPDATE `%s` SET `guild_id`='%d' WHERE `account_id`='%d' AND `char_id`='%d'",char_db, g->guild_id,m->account_id,m->char_id);
-				if(mysql_query(&mysql_handle, tmp_sql) ) {
-					printf("DB server Error (update `char`)- %s\n", mysql_error(&mysql_handle) );
-				}
-			}
-		}
-#else /* FASTCHAR */
 	  struct StringBuf sbuf;
 	  struct StringBuf sbuf2;
 	  int first = 1;
@@ -275,7 +233,6 @@ int inter_guild_tosql(struct guild *g,int flag)
 
 	  StringBuf_Destroy(&sbuf2);
 	  StringBuf_Destroy(&sbuf);
-#endif /* FASTCHAR */
 	}
 	
 	if (flag&4||guild_member==0){
@@ -350,16 +307,11 @@ int inter_guild_tosql(struct guild *g,int flag)
 }
 
 // Read guild from sql
-#ifndef GUILDCACHE
-int inter_guild_fromsql(int guild_id,struct guild *g)
-#else /* GUILDCACHE */
 struct guild * inter_guild_fromsql(int guild_id)
-#endif /* GUILDCACHE */
 {
 	int i;
 	char emblem_data[4096];
 	char *pstr;
-#ifdef GUILDCACHE
 	struct guild *g;
 
 	if (guild_id==0) return 0;
@@ -367,17 +319,9 @@ struct guild * inter_guild_fromsql(int guild_id)
 	g = numdb_search(guild_db_,guild_id);
 	if (g != NULL)
 		return g;
-#endif /* GUILDCACHE */
 	
-#ifndef GUILDCACHE
-	if (g==NULL) return 0;
-#else /* GUILDCACHE */
 	g = (struct guild *) malloc(sizeof(struct guild));
-#endif /* GUILDCACHE */
 	memset(g,0,sizeof(struct guild));
-#ifndef GUILDCACHE
-	if (guild_id==0) return 0;
-#endif /* not GUILDCACHE */
 	
 //	printf("Retrieve guild information from sql ......\n");
 //	printf("- Read guild %d from sql \n",guild_id);
@@ -387,9 +331,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	//printf("  %s\n",tmp_sql);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (select `guild`)- %s\n", mysql_error(&mysql_handle) );
-#ifdef GUILDCACHE
 		free(g);
-#endif /* GUILDCACHE */
 		return 0;
 	}
 	
@@ -398,9 +340,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 		sql_row = mysql_fetch_row(sql_res);
 		if (sql_row==NULL) {
 			mysql_free_result(sql_res);
-#ifdef GUILDCACHE
 			free(g);
-#endif /* GUILDCACHE */
 			return 0;
 		}
 		
@@ -439,9 +379,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	//printf("  %s\n",tmp_sql);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (select `guild_member`)- %s\n", mysql_error(&mysql_handle) );
-#ifdef GUILDCACHE
 		free(g);
-#endif /* GUILDCACHE */
 		return 0;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
@@ -470,9 +408,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	//printf("  %s\n",tmp_sql);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (select `guild_position`)- %s\n", mysql_error(&mysql_handle) );
-#ifdef GUILDCACHE
 		free(g);
-#endif /* GUILDCACHE */
 		return 0;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
@@ -492,9 +428,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	sprintf(tmp_sql,"SELECT `guild_id`,`opposition`,`alliance_id`,`name` FROM `%s` WHERE `guild_id`='%d'",guild_alliance_db, guild_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (select `guild_alliance`)- %s\n", mysql_error(&mysql_handle) );
-#ifdef GUILDCACHE
 		free(g);
-#endif /* GUILDCACHE */
 		return 0;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
@@ -513,9 +447,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	sprintf(tmp_sql,"SELECT `guild_id`,`name`,`mes`,`acc`,`account_id`,`rsv1`,`rsv2`,`rsv3` FROM `%s` WHERE `guild_id`='%d'",guild_expulsion_db, guild_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (select `guild_expulsion`)- %s\n", mysql_error(&mysql_handle) );
-#ifdef GUILDCACHE
 		free(g);
-#endif /* GUILDCACHE */
 		return 0;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
@@ -540,9 +472,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	sprintf(tmp_sql,"SELECT `guild_id`,`id`,`lv` FROM `%s` WHERE `guild_id`='%d' ORDER BY `id`",guild_skill_db, guild_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (select `guild_skill`)- %s\n", mysql_error(&mysql_handle) );
-#ifdef GUILDCACHE
 		free(g);
-#endif /* GUILDCACHE */
 		return 0;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
@@ -557,33 +487,19 @@ struct guild * inter_guild_fromsql(int guild_id)
 							
 //	printf("Successfully retrieve guild information from sql!\n");
 
-#ifndef GUILDCACHE
-	return 0;
-	
-#else /* GUILDCACHE */
 	numdb_insert(guild_db_, guild_id,g);
 
 	return g;
-#endif /* GUILDCACHE */
 }
 
 // Save guild_castle to sql
 int inter_guildcastle_tosql(struct guild_castle *gc)
 {
-#ifdef FASTCHAR
         struct guild_castle *gcopy;
-#endif /* FASTCHAR */
 	// `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
 	
 	if (gc==NULL) return 0;
 	//printf("Save to guild_castle\n");
-#ifndef FASTCHAR
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `castle_id`='%d'",guild_castle_db, gc->castle_id);
-	//printf(" %s\n",tmp_sql);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
-		return 0;
-#else /* FASTCHAR */
 
 	gcopy = numdb_search(castle_db_,gc->castle_id);
 	if (gcopy == NULL) {
@@ -595,17 +511,11 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 	      (strcmp(gcopy->castle_event, gc->castle_event) == 0) &&
 	      (memcmp(&gcopy->guild_id, &gc->guild_id, &gc->GID7 - &gc->guild_id) == 0))
 	    return 0;
-#endif /* FASTCHAR */
 	}
-#ifndef FASTCHAR
-	
-	sprintf(tmp_sql,"INSERT INTO `%s` "
-#else /* FASTCHAR */
 
 	memcpy(gcopy, gc, sizeof(struct guild_castle));
 
 	sprintf(tmp_sql,"REPLACE INTO `%s` "
-#endif /* FASTCHAR */
 		"(`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
 		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
 		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7`)"
@@ -638,15 +548,9 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 // Read guild_castle from sql
 int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 {
-#ifndef FASTCHAR
-	
-#else /* FASTCHAR */
-
         struct guild_castle *gcopy;
-#endif /* FASTCHAR */
 	if (gc==NULL) return 0;
 	//printf("Read from guild_castle\n");
-#ifdef FASTCHAR
 
 	gcopy = numdb_search(castle_db_,gc->castle_id);
 	if (gcopy == NULL) {
@@ -657,7 +561,6 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 	  return 0;
 	}
 
-#endif /* FASTCHAR */
 	memset(gc,0,sizeof(struct guild_castle));
 	gc->castle_id=castle_id;
 	if (castle_id==-1) return 0;
@@ -707,11 +610,9 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 
 	}
 	mysql_free_result(sql_res) ; //resource free
-#ifdef FASTCHAR
 
 	memcpy(gcopy, gc, sizeof(struct guild_castle));
 
-#endif /* FASTCHAR */
 	return 0;
 }
 
@@ -746,13 +647,11 @@ int inter_guild_sql_init()
 {
 	int i;
 
-#ifdef GUILDCACHE
         guild_db_=numdb_init();
         castle_db_=numdb_init();
         guild_expcache_db_=numdb_init();
         guild_infoevent_db_=numdb_init();
         guild_castleinfoevent_db_=numdb_init();
-#endif /* GUILDCACHE */
 	
 	printf("interserver guild memory initialize.... (%d byte)\n",sizeof(struct guild));
 	guild_pt = calloc(sizeof(struct guild), 1);
@@ -795,9 +694,6 @@ int inter_guild_sql_init()
 // Get guild by its name
 struct guild* search_guildname(char *str)
 {
-#ifndef GUILDCACHE
-	struct guild *g=guild_pt;
-#endif /* not GUILDCACHE */
 	char t_name[24];
 	int guild_id=0;
 	printf("search_guildname\n");
@@ -811,12 +707,7 @@ struct guild* search_guildname(char *str)
 		guild_id = atoi (sql_row[0]);
 	}
 	mysql_free_result(sql_res);
-#ifndef GUILDCACHE
-	inter_guild_fromsql(guild_id,g);
-	return g;
-#else /* GUILDCACHE */
 	return inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 }
 
 // Check if guild is empty
@@ -1248,13 +1139,7 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 // Return guild info to client
 int mapif_parse_GuildInfo(int fd,int guild_id)
 {
-#ifndef GUILDCACHE
-	struct guild *g;
-	g=guild_pt;
-	inter_guild_fromsql(guild_id,g);
-#else /* GUILDCACHE */
 	struct guild * g = inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 	if(g!=NULL&&g->guild_id>0){
 		guild_calcinfo(g);
 		mapif_guild_info(fd,g);
@@ -1266,17 +1151,9 @@ int mapif_parse_GuildInfo(int fd,int guild_id)
 // Add member to guild
 int mapif_parse_GuildAddMember(int fd,int guild_id,struct guild_member *m)
 {
-#ifndef GUILDCACHE
-	struct guild *g=guild_pt;
-#else /* GUILDCACHE */
 	struct guild *g = inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 	int i;
-#ifndef GUILDCACHE
 
-	inter_guild_fromsql(guild_id,g);
-#endif /* not GUILDCACHE */
-	
 	if(g==NULL||g->guild_id<=0){
 		mapif_guild_memberadded(fd,guild_id,m->account_id,m->char_id,1);
 		return 0;
@@ -1300,13 +1177,7 @@ int mapif_parse_GuildAddMember(int fd,int guild_id,struct guild_member *m)
 // Delete member from guild
 int mapif_parse_GuildLeave(int fd,int guild_id,int account_id,int char_id,int flag,const char *mes)
 {
-#ifndef GUILDCACHE
-	struct guild *g=guild_pt;
-
-	inter_guild_fromsql(guild_id,g);
-#else /* GUILDCACHE */
 	struct guild *g= inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 	
 	if(g!=NULL&&g->guild_id>0){
 		int i;
@@ -1356,38 +1227,18 @@ int mapif_parse_GuildLeave(int fd,int guild_id,int account_id,int char_id,int fl
 		/* mapif_guild_leaved(guild_id,account_id,char_id,flag,g->member[i].name,mes);	*/
 	}
 	
-#ifndef GUILDCACHE
-	
-#endif /* not GUILDCACHE */
 	return 0;
 }
-#ifdef GUILDCACHE
-
-#endif /* GUILDCACHE */
 // Change member info
 int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 	int account_id,int char_id,int online,int lv,int class)
 {
 	// Could speed up by manipulating only guild_member
-#ifndef GUILDCACHE
-	struct guild * g=guild_pt;
-#else /* GUILDCACHE */
 	struct guild * g= inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 	int i,alv,c;
 
-#ifndef GUILDCACHE
-
-
-
-	
-#endif /* not GUILDCACHE */
 	if(g==NULL||g->guild_id<=0)
 		return 0;
-#ifndef GUILDCACHE
-
-	inter_guild_fromsql(guild_id,g);
-#endif /* not GUILDCACHE */
 	
 	g->connect_member=0;
 	
@@ -1418,19 +1269,9 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 // BreakGuild
 int mapif_parse_BreakGuild(int fd,int guild_id)
 {
-#ifndef GUILDCACHE
-	struct guild *g=guild_pt;
-#else /* GUILDCACHE */
 	struct guild *g= inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 	if(g==NULL)
 		return 0;
-#ifndef GUILDCACHE
-	inter_guild_fromsql(guild_id,g);
-
-
-
-#endif /* not GUILDCACHE */
 	
 	// Delete guild from sql
 	//printf("- Delete guild %d from guild\n",guild_id);
@@ -1494,25 +1335,12 @@ int mapif_parse_GuildMessage(int fd,int guild_id,int account_id,char *mes,int le
 int mapif_parse_GuildBasicInfoChange(int fd,int guild_id,
 	int type,const char *data,int len)
 {
-#ifndef GUILDCACHE
-	struct guild * g=guild_pt;
-#else /* GUILDCACHE */
 	struct guild * g = inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 //	int dd=*((int *)data);
 	short dw=*((short *)data);
 
-#ifndef GUILDCACHE
-
-
-
-	
-#endif /* not GUILDCACHE */
 	if(g==NULL||g->guild_id<=0)
 		return 0;
-#ifndef GUILDCACHE
-	inter_guild_fromsql(guild_id,g);
-#endif /* not GUILDCACHE */
 	switch(type){
 	case GBI_GUILDLV: {
 		printf("GBI_GUILDLV\n");
@@ -1539,15 +1367,8 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 {
 	// Could make some improvement in speed, because only change guild_member
 	int i;
-#ifndef GUILDCACHE
-	struct guild * g=guild_pt;
-#else /* GUILDCACHE */
 	struct guild * g = inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 
-#ifndef GUILDCACHE
-	inter_guild_fromsql(guild_id,g);
-#endif /* not GUILDCACHE */
 	//printf("GuildMemberInfoChange %s \n",(type==GMI_EXP)?"GMI_EXP":"OTHER");
 	
 	if(g==NULL){
@@ -1586,13 +1407,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 int mapif_parse_GuildPosition(int fd,int guild_id,int idx,struct guild_position *p)
 {
 	// Could make some improvement in speed, because only change guild_position
-#ifndef GUILDCACHE
-	struct guild * g=guild_pt;
-
-	inter_guild_fromsql(guild_id,g);	
-#else /* GUILDCACHE */
 	struct guild * g = inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 
 	if(g==NULL || idx<0 || idx>=MAX_GUILDPOSITION){
 		return 0;
@@ -1607,16 +1422,9 @@ int mapif_parse_GuildPosition(int fd,int guild_id,int idx,struct guild_position 
 int mapif_parse_GuildSkillUp(int fd,int guild_id,int skill_num,int account_id)
 {
 	// Could make some improvement in speed, because only change guild_position
-#ifndef GUILDCACHE
-	struct guild *g=guild_pt;
-#else /* GUILDCACHE */
 	struct guild *g = inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 	int idx = skill_num - GD_SKILLBASE;
 
-#ifndef GUILDCACHE
-	inter_guild_fromsql(guild_id,g);
-#endif /* not GUILDCACHE */
 
 	if(g == NULL || idx < 0 || idx >= MAX_GUILDSKILL)
 		return 0;
@@ -1642,15 +1450,8 @@ int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,
 	// Could speed up
 	struct guild *g[2];
 	int j,i;
-#ifndef GUILDCACHE
-	g[0]=guild_pt;
-	g[1]=guild_pt2;
-	inter_guild_fromsql(guild_id1,g[0]);
-	inter_guild_fromsql(guild_id2,g[1]);
-#else /* GUILDCACHE */
 	g[0]= inter_guild_fromsql(guild_id1);
 	g[1]= inter_guild_fromsql(guild_id2);
-#endif /* GUILDCACHE */
 	
 	if(g[0]==NULL || g[1]==NULL || g[0]->guild_id ==0 || g[1]->guild_id==0)
 		return 0;
@@ -1684,13 +1485,7 @@ int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,
 // ギルド告知変更要求
 int mapif_parse_GuildNotice(int fd,int guild_id,const char *mes1,const char *mes2)
 {
-#ifndef GUILDCACHE
-	struct guild *g=guild_pt;
-
-	inter_guild_fromsql(guild_id,g);
-#else /* GUILDCACHE */
 	struct guild *g= inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 	
 	if(g==NULL||g->guild_id<=0)
 		return 0;
@@ -1702,13 +1497,7 @@ int mapif_parse_GuildNotice(int fd,int guild_id,const char *mes1,const char *mes
 // ギルドエンブレム変更要求
 int mapif_parse_GuildEmblem(int fd,int len,int guild_id,int dummy,const char *data)
 {
-#ifndef GUILDCACHE
-	struct guild * g=guild_pt;
-
-	inter_guild_fromsql(guild_id,g);
-#else /* GUILDCACHE */
 	struct guild * g= inter_guild_fromsql(guild_id);
-#endif /* GUILDCACHE */
 	
 	if(g==NULL||g->guild_id<=0)
 		return 0;
@@ -1769,12 +1558,7 @@ int mapif_parse_GuildCastleDataSave(int fd,int castle_id,int index,int value)   
 	case 1:
 		if( gc->guild_id!=value ){
 			int gid=(value)?value:gc->guild_id;
-#ifndef GUILDCACHE
-			struct guild *g=guild_pt;
-			inter_guild_fromsql(gid, g);
-#else /* GUILDCACHE */
 			struct guild *g=inter_guild_fromsql(gid);
-#endif /* GUILDCACHE */
 			if(log_inter)
 				inter_log("guild %s (id=%d) %s castle id=%d" RETCODE,
 					(g)?g->name:"??" ,gid, (value)?"occupy":"abandon", index);

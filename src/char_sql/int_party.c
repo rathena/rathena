@@ -17,10 +17,8 @@ int mapif_party_broken(int party_id,int flag);
 int party_check_empty(struct party *p);
 int mapif_parse_PartyLeave(int fd,int party_id,int account_id);
 
-#ifdef FASTCHAR
 #define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
 
-#endif /* FASTCHAR */
 // Save party to mysql
 int inter_party_tosql(int party_id,struct party *p)
 {
@@ -124,7 +122,7 @@ int inter_party_tosql(int party_id,struct party *p)
 		int i = 0;
 		while (i<MAX_PARTY&&((p->member[i].account_id>0&&p->member[i].leader==0)||(p->member[i].account_id<0))) i++;
 		if (i<MAX_PARTY) leader_id = p->member[i].account_id;
-		sprintf(tmp_sql,"INSERT DELAYED INTO `%s`  (`party_id`, `name`, `exp`, `item`, `leader_id`) VALUES ('%d', '%s', '%d', '%d', '%d')",
+		sprintf(tmp_sql,"INSERT INTO `%s`  (`party_id`, `name`, `exp`, `item`, `leader_id`) VALUES ('%d', '%s', '%d', '%d', '%d')",
 			party_db, party_id, t_name, p->exp, p->item,leader_id);
 		if(mysql_query(&mysql_handle, tmp_sql) ) {
 			printf("DB server Error (inset/update `party`)- %s\n", mysql_error(&mysql_handle) );
