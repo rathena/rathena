@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+11/27	* Fixed some drain rates, fixed Balmung, Mjolnir, fixed all maces (for right jobs) [shadow]
+
 11/26	* Fixed Abrakadabra (3 Yellow Gemstones -> Yellow Gemstones 2).
 	  And of course it would still use 1 Yellow even if you have Mistress Card, etc. [Lupus]
 	  TODO: Abrakadabra should also summon Monsters and even MVP by chance...
