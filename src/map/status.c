@@ -4464,54 +4464,21 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			return 0;
 		}
 		break;
+
 	case SC_POISON:
-		if(sc_data[SC_SLOWPOISON].timer == -1) {
-			if( (--sc_data[type].val3) > 0) {
-				int hp = status_get_max_hp(bl);
-				if(status_get_hp(bl) > hp>>2) {
-					if(sd) {
-						hp = 3 + hp*3/200;
-						pc_heal(sd,-hp,0);
-					}
-					else if(bl->type == BL_MOB) {
-						struct mob_data *md;
-						nullpo_retr(0, md=(struct mob_data *)bl);
-						/*if((md=((struct mob_data *)bl)) == NULL)
-							break;*/
-						hp = 3 + hp/200;
-						md->hp -= hp;
-					}
-				}
-				sc_data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
-				// hmm setting up a timer and breaking then to call status_change_end just right away?
-				// I think you're missing a:
-				return 0;
-				
-			}
-		}
-		else
-		{
-			sc_data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
-			// hmm setting up a timer and breaking then to call status_change_end just right away?
-			// I think you're missing brackets and a:
-			return 0;
-		}
-		break;
 	case SC_DPOISON:
 		if (sc_data[SC_SLOWPOISON].timer == -1 && (--sc_data[type].val3) > 0) {
 			int hp = status_get_max_hp(bl);
-			if (status_get_hp(bl) > hp>>2) {
-				if(sd) {
-					hp = 3 + hp/50;
-					pc_heal(sd, -hp, 0);
-				} else if (bl->type == BL_MOB) {
-					struct mob_data *md;
-					nullpo_retr(0, md=(struct mob_data *)bl);
-					/*if ((md=((struct mob_data *)bl)) == NULL)
-						break;*/
-					hp = 3 + hp/100;
-					md->hp -= hp;
-				}
+			if (type == SC_POISON && status_get_hp(bl) < hp>>2)
+				break;
+			if(sd) {
+				hp = (type == SC_DPOISON) ? 3 + hp/50 : 3 + hp*3/200;
+				pc_heal(sd, -hp, 0);
+			} else if (bl->type == BL_MOB) {
+				struct mob_data *md;
+				nullpo_retr(0, md=(struct mob_data *)bl);
+				hp = (type == SC_DPOISON) ? 3 + hp/100 : 3 + hp/200;
+				md->hp -= hp;
 			}
 		}
 		if (sc_data[type].val3 > 0)

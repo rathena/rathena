@@ -756,42 +756,32 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 	switch(skillid){
 	case 0:					/* 通常攻? */
 		/* 自動鷹 */
-		if( sd && pc_isfalcon(sd) && sd->status.weapon == 11 && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
-			rand()%1000 <= sd->paramc[5]*10/3+1 ) {
-			int lv=(sd->status.job_level+9)/10;
-			skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<lv)?skill:lv,tick,0xf00000);
-		}
-		// スナッチャ?
-		if(sd && sd->status.weapon != 11 && (skill=pc_checkskill(sd,RG_SNATCHER)) > 0)
-			if((skill*15 + 55) + (skill2 = pc_checkskill(sd,TF_STEAL))*10 > rand()%1000) {
+		if(sd) {
+			struct status_change *sc_data = status_get_sc_data(bl);
+			if (pc_isfalcon(sd) && sd->status.weapon == 11 && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
+				rand()%1000 <= sd->paramc[5]*10/3+1 ) {
+				int lv=(sd->status.job_level+9)/10;
+				skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<lv)?skill:lv,tick,0xf00000);
+			}
+			// スナッチャ?
+			if(sd->status.weapon != 11 && (skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
+				(skill*15 + 55) + (skill2 = pc_checkskill(sd,TF_STEAL))*10 > rand()%1000) {
 				if(pc_steal_item(sd,bl))
 					clif_skill_nodamage(src,bl,TF_STEAL,skill2,1);
 				else if (battle_config.display_snatcher_skill_fail)
 					clif_skill_fail(sd,skillid,0,0);
 			}
-		// エンチャントデットリ?ポイズン(猛毒?果)
-		if (sd && sd->sc_data[SC_EDP].timer != -1 && rand() % 10000 < sd->sc_data[SC_EDP].val2 * sc_def_vit) {
-			int mhp = status_get_max_hp(bl);
-			int hp = status_get_hp(bl);
-			int lvl = sd->sc_data[SC_EDP].val1;
-			int diff;
-			// MHPの1/4以下にはならない
-			if(hp > mhp>>2) {
-				if(bl->type == BL_PC) {
-					diff = mhp*10/100;
-					if (hp - diff < mhp>>2)
-						diff = hp - (mhp>>2);
-					pc_heal(dstsd, -hp, 0);
-				} else if(bl->type == BL_MOB) {
-					struct mob_data *md = (struct mob_data *)bl;
-					hp -= mhp*15/100;
-					if (hp > mhp>>2)
-						md->hp = hp;
-					else
-						md->hp = mhp>>2;
-				}
+			// enchant poison has a chance of poisoning enemy
+			if (sd->sc_data[SC_ENCPOISON].timer != -1 && sc_data && sc_data[SC_POISON].timer == -1 &&
+				rand() % 100 < sd->sc_data[SC_ENCPOISON].val1 * sc_def_vit) {
+				status_change_start(bl,SC_POISON,sd->sc_data[SC_ENCPOISON].val1,
+					0,0,0,skill_get_time2(AS_ENCHANTPOISON,sd->sc_data[SC_ENCPOISON].val1),0);
 			}
-			status_change_start(bl,SC_DPOISON,lvl,0,0,0,skill_get_time2(ASC_EDP,lvl),0);
+			// エンチャントデットリ?ポイズン(猛毒?果)
+			if (sd->sc_data[SC_EDP].timer != -1 && sc_data && sc_data[SC_DPOISON].timer == -1 &&
+				rand() % 100 < sd->sc_data[SC_EDP].val2 * sc_def_vit)
+				status_change_start(bl,SC_DPOISON,sd->sc_data[SC_EDP].val1,
+					0,0,0,skill_get_time2(ASC_EDP,sd->sc_data[SC_EDP].val1),0);			
 		}
 		break;
 

@@ -1,6 +1,9 @@
 Date	Added
 
 03/08
+        * Added chance for Enchant Poison to poison enemy, and reduced Deadly Poison
+          chance [celest]
+        * Compacted some code for Deadly Poison [celest]
         * Added DracoRPG's code for Soul Breaker - the magic attack part should work
           as it should now, thanks! ^^ [celest]
         * Reverted the reverted jA event change but this time without bugs (hopefully) [Shinomori]
