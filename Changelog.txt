@@ -1,4 +1,6 @@
 Date	Added
+12/17
+	* Added clearweather to the atcommand configuration file. [nsstrunks]
 12/16
         * Added a fix for AFM loading, thanks to Pete [celest]
         * Updated maximum levels for supernovice to 99 [celest]
