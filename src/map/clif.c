@@ -7146,7 +7146,8 @@ void clif_sitting(struct map_session_data *sd)
 	WBUFW(buf, 0) = 0x8a;
 	WBUFL(buf, 2) = sd->bl.id;
 	WBUFB(buf,26) = 2;
-	clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
+	//clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
+	clif_send(buf, packet_db[0x8a].len, &sd->bl, AREA);
 }
 
 /*==========================================
