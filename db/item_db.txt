@@ -69,6 +69,7 @@
 566,Tom_Yum_Goong,Tom_Yum_Goong,0,20,150,0,,,,,10477567,2,,,,,{ itemheal rand(100,200),0; },{}
 567,Prawn,Prawn,0,20,40,0,,,,,10477567,3,,,,,{ itemheal rand(50,100),0; },{}
 568,Lemon,Lemon,0,20,40,0,,,,,0,3,,,,,{},{}
+569,Novice's_Red_Potion,Novices Red Potion,0,50,0,70,,,,,10477567,2,,,,,{ itemheal rand(55,74),0; },{}
 
 // Usable Items
 //===================================================================
@@ -1720,6 +1721,3 @@
 12001,Heal_3,Heal Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,3,"Heal Level 3"; },{}
 12002,Heal_5,Heal Level 5,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 28,5,"Heal Level 5"; },{}
 12003,Teleport_1,Teleport Level 1,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 26,1,"Teleport Level 1"; },{}
-
-// I found a missing item. 
-569,Strange_Red_Potion,Strange Red Potion,0,50,0,70,,,,,10477567,2,,,,,{ itemheal rand(55,74),0; },{}

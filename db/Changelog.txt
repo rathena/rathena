@@ -7,6 +7,8 @@
 
 12/20
         * Corrected skill tree requirements for 3 Peco Lord knight skills [celest]
+        * Updated item 569 -> it's a Red potion given to novices if they pass the
+          training grounds test [celest]
 12/18
 	* Lord Knight's Concentration can now be used with any weapon [Aria]
 	* Changed few God-items to fit kRO 12/7/04 Patch [Aria]
