@@ -1,6 +1,7 @@
 Date	Added
 
 03/08
+        * Speedup inventory and storage saving, thanks to Ilpalazzo-sama [celest]
         * Reverted a jA change in event loading [celest]
 
 03/07
@@ -9,6 +10,8 @@ Date	Added
                 #define LOG_UPTIME 0
           To-do: Add this as an option to log config
         * Fixed 'make clean' not removing the .o files in /common [celest]
+        * Removed some unused code for Breaker and temporarily set Emperium to be
+          immune to Breaker [celest]
 
         * Updated core and map-server to jA 1115~1137 [celest]
           - Added monster_delay_damage to battle conf
@@ -18,8 +21,6 @@ Date	Added
           - Added monster skill NPC_EXPLOSIONSPIRITS
           - Corrected Mindbreaker level to 5
           - Updated Meteor Assault to instant-cast
-          - Removed some unused code for Breaker
-          - Temporarily set Emperium to be immune to Breaker
           - Added command @users - shows the percentage of users in all maps
           - Don't save status if the player is set for disconnection
           - Added free block lock-checking system

@@ -19,45 +19,29 @@ struct guild_storage *guild_storage_pt=NULL;
 // storage data -> DB conversion
 int storage_tosql(int account_id,struct storage *p){
 	int i;
-	int eqcount=1;
-	int noteqcount=1;
-	struct itemtemp mapitem;
+//	int eqcount=1;
+//	int noteqcount=1;
+	int count=0;
+	struct itemtmp mapitem[MAX_GUILD_STORAGE];
 	for(i=0;i<MAX_STORAGE;i++){
 		if(p->storage[i].nameid>0){
-			if(itemdb_isequip(p->storage[i].nameid)==1){
-				mapitem.equip[eqcount].flag=0;
-				mapitem.equip[eqcount].id = p->storage[i].id;
-				mapitem.equip[eqcount].nameid=p->storage[i].nameid;
-				mapitem.equip[eqcount].amount = p->storage[i].amount;
-				mapitem.equip[eqcount].equip = p->storage[i].equip;
-				mapitem.equip[eqcount].identify = p->storage[i].identify;
-				mapitem.equip[eqcount].refine = p->storage[i].refine;
-				mapitem.equip[eqcount].attribute = p->storage[i].attribute;
-				mapitem.equip[eqcount].card[0] = p->storage[i].card[0];
-				mapitem.equip[eqcount].card[1] = p->storage[i].card[1];
-				mapitem.equip[eqcount].card[2] = p->storage[i].card[2];
-				mapitem.equip[eqcount].card[3] = p->storage[i].card[3];
-				eqcount++;
-			}
-			else if(itemdb_isequip(p->storage[i].nameid)==0){
-				mapitem.notequip[noteqcount].flag=0;
-				mapitem.notequip[noteqcount].id = p->storage[i].id;
-				mapitem.notequip[noteqcount].nameid=p->storage[i].nameid;
-				mapitem.notequip[noteqcount].amount = p->storage[i].amount;
-				mapitem.notequip[noteqcount].equip = p->storage[i].equip;
-				mapitem.notequip[noteqcount].identify = p->storage[i].identify;
-				mapitem.notequip[noteqcount].refine = p->storage[i].refine;
-				mapitem.notequip[noteqcount].attribute = p->storage[i].attribute;
-				mapitem.notequip[noteqcount].card[0] = p->storage[i].card[0];
-				mapitem.notequip[noteqcount].card[1] = p->storage[i].card[1];
-				mapitem.notequip[noteqcount].card[2] = p->storage[i].card[2];
-				mapitem.notequip[noteqcount].card[3] = p->storage[i].card[3];
-				noteqcount++;
-			}
+			mapitem[count].flag=0;
+			mapitem[count].id = p->storage[i].id;
+			mapitem[count].nameid=p->storage[i].nameid;
+			mapitem[count].amount = p->storage[i].amount;
+			mapitem[count].equip = p->storage[i].equip;
+			mapitem[count].identify = p->storage[i].identify;
+			mapitem[count].refine = p->storage[i].refine;
+			mapitem[count].attribute = p->storage[i].attribute;
+			mapitem[count].card[0] = p->storage[i].card[0];
+			mapitem[count].card[1] = p->storage[i].card[1];
+			mapitem[count].card[2] = p->storage[i].card[2];
+			mapitem[count].card[3] = p->storage[i].card[3];
+			count++;
 		}
 	}
 
-	memitemdata_to_sql(mapitem, eqcount, noteqcount, account_id,TABLE_STORAGE);
+	memitemdata_to_sql(mapitem, count, account_id,TABLE_STORAGE);
 
 	//printf ("storage dump to DB - id: %d (total: %d)\n", account_id, j);
 	return 0;
@@ -103,45 +87,29 @@ int storage_fromsql(int account_id, struct storage *p){
 // Save guild_storage data to sql
 int guild_storage_tosql(int guild_id, struct guild_storage *p){
 	int i;
-	int eqcount=1;
-	int noteqcount=1;
-	struct itemtemp mapitem;
+//	int eqcount=1;
+//	int noteqcount=1;
+	int count=0;
+	struct itemtmp mapitem[MAX_GUILD_STORAGE];
 	for(i=0;i<MAX_GUILD_STORAGE;i++){
 		if(p->storage[i].nameid>0){
-			if(itemdb_isequip(p->storage[i].nameid)==1){
-				mapitem.equip[eqcount].flag=0;
-				mapitem.equip[eqcount].id = p->storage[i].id;
-				mapitem.equip[eqcount].nameid=p->storage[i].nameid;
-				mapitem.equip[eqcount].amount = p->storage[i].amount;
-				mapitem.equip[eqcount].equip = p->storage[i].equip;
-				mapitem.equip[eqcount].identify = p->storage[i].identify;
-				mapitem.equip[eqcount].refine = p->storage[i].refine;
-				mapitem.equip[eqcount].attribute = p->storage[i].attribute;
-				mapitem.equip[eqcount].card[0] = p->storage[i].card[0];
-				mapitem.equip[eqcount].card[1] = p->storage[i].card[1];
-				mapitem.equip[eqcount].card[2] = p->storage[i].card[2];
-				mapitem.equip[eqcount].card[3] = p->storage[i].card[3];
-				eqcount++;
-			}
-			else if(itemdb_isequip(p->storage[i].nameid)==0){
-				mapitem.notequip[noteqcount].flag=0;
-				mapitem.notequip[noteqcount].id = p->storage[i].id;
-				mapitem.notequip[noteqcount].nameid=p->storage[i].nameid;
-				mapitem.notequip[noteqcount].amount = p->storage[i].amount;
-				mapitem.notequip[noteqcount].equip = p->storage[i].equip;
-				mapitem.notequip[noteqcount].identify = p->storage[i].identify;
-				mapitem.notequip[noteqcount].refine = p->storage[i].refine;
-				mapitem.notequip[noteqcount].attribute = p->storage[i].attribute;
-				mapitem.notequip[noteqcount].card[0] = p->storage[i].card[0];
-				mapitem.notequip[noteqcount].card[1] = p->storage[i].card[1];
-				mapitem.notequip[noteqcount].card[2] = p->storage[i].card[2];
-				mapitem.notequip[noteqcount].card[3] = p->storage[i].card[3];
-				noteqcount++;
-			}
+			mapitem[count].flag=0;
+			mapitem[count].id = p->storage[i].id;
+			mapitem[count].nameid=p->storage[i].nameid;
+			mapitem[count].amount = p->storage[i].amount;
+			mapitem[count].equip = p->storage[i].equip;
+			mapitem[count].identify = p->storage[i].identify;
+			mapitem[count].refine = p->storage[i].refine;
+			mapitem[count].attribute = p->storage[i].attribute;
+			mapitem[count].card[0] = p->storage[i].card[0];
+			mapitem[count].card[1] = p->storage[i].card[1];
+			mapitem[count].card[2] = p->storage[i].card[2];
+			mapitem[count].card[3] = p->storage[i].card[3];
+			count++;
 		}
 	}
 
-	memitemdata_to_sql(mapitem, eqcount, noteqcount, guild_id,TABLE_GUILD_STORAGE);
+	memitemdata_to_sql(mapitem, count, guild_id,TABLE_GUILD_STORAGE);
 
 	printf ("guild storage save to DB - id: %d (total: %d)\n", guild_id,i);
 	return 0;
@@ -198,7 +166,7 @@ int inter_storage_sql_init(){
 
 	return 1;
 }
-// 倉庫データ削除
+// q?f[^?
 int inter_storage_delete(int account_id)
 {
 		sprintf(tmp_sql, "DELETE FROM `%s` WHERE `account_id`='%d'",storage_db, account_id);

@@ -40,7 +40,7 @@ enum {
 struct itemtemp{
 	struct itemtmp equip[MAX_GUILD_STORAGE],notequip[MAX_GUILD_STORAGE];
 };
-int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int char_id,int tableswitch);
+int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id,int tableswitch);
 int mapif_sendall(unsigned char *buf,unsigned int len);
 int mapif_sendallwos(int fd,unsigned char *buf,unsigned int len);
 int mapif_send(int fd,unsigned char *buf,unsigned int len);
