@@ -1219,7 +1219,7 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 
 	// Check Authorised letters/symbols in the name of the character
 	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
-		for (i = 0; i < strlen(const char*dat); i++)
+		for (i = 0; i < strlen(const char*)dat); i++)
 			if (strchr(char_name_letters, dat[i]) == NULL)
 				return -1;
 	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
