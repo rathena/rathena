@@ -7318,6 +7318,14 @@ int clif_specialeffect(struct block_list *bl, int type, int flag) {
 	return 0;
 
 }
+
+// refresh the client's screen, getting rid of any effects
+int clif_refresh(struct map_session_data *sd) {
+	nullpo_retr(-1, sd);
+	clif_changemap(sd,sd->mapname,sd->bl.x,sd->bl.y);
+	return 0;
+}
+
 // ------------
 // clif_parse_*
 // ------------

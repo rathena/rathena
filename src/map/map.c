@@ -3185,6 +3185,7 @@ void do_final(void) {
 	do_final_party();
 	do_final_pc();
 	do_final_pet();
+	do_final_msg();
 
 	for (i=0; i<map_num; i++) {
 		if(map[i].gat) aFree(map[i].gat);

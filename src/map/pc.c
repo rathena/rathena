@@ -7014,8 +7014,12 @@ int map_day_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
 			night_flag = 0; // 0=day, 1=night [Yor]
 			for(i = 0; i < fd_max; i++) {
 				if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
-					pl_sd->opt2 &= ~STATE_BLIND;
-					clif_changeoption(&pl_sd->bl);
+					if (battle_config.night_darkness_level > 0)
+						clif_refresh (pl_sd);
+					else {
+						pl_sd->opt2 &= ~STATE_BLIND;
+						clif_changeoption(&pl_sd->bl);
+					}
 					clif_wis_message(pl_sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 				}
 			}

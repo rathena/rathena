@@ -275,6 +275,7 @@ int atcommand_recall(const int fd, struct map_session_data* sd, const char* comm
 
 int atcommand_config_read(const char *cfgName);
 int msg_config_read(const char *cfgName);
+void do_final_msg();
 
 char *estr_lower(char *str);
 

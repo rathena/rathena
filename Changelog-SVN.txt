@@ -1,12 +1,26 @@
 Date	Added
 
 03/27
+	* Moved guardian hostility checking and monster_ignore_gm check to battle.c --
+	  processed earlier, and more appropiate [celest]
+	* Fixed a SQL syntax crash when logging character names with "'" in them
+	  [celest]
+	* Added use dynamic allocation when loading the msg_table [celest]
+	* Fixed some memory leaks with the new timer changes [celest]
+	* Refresh the client when day comes to get rid of the night effect (if
+	  night_darkness_level was used) [celest]
+	* Changed @refresh to fake map loading, but without teleporting side effect
+	  (skill delays reset, extra load on server etc)[celest]
+	* Updated SQL file for the item_db, thanks to Zoc
+	* Fixed the 'show_mob_hp' option not updating when a monster is healed, thanks
+	  to leinsirk10
 	* Added flexible Filter to the Monster Drops logging [Lupus]
 	   - Now you can choose what types of items either to log or not.
 	   - You can also log expensive items (you can set the min logging price)
 	* Optimized a bit ATCommands.c functions (inspired by Freya) [Lupus]
 	* Added missing parenthesis in my Improve Dodge code, not giving +4/lv to proper jobs [DracoRPG]
 	* Added all released cards into monsters drops and Old Card Album [Lupus]
+
 03/25
 	* Fixed a typo in my fix for Stalk / Tunnel Drive increasing instead of decreasing speed, sorry [DracoRPG]
 	* Rewrote a little bit Improve Dodge [DracoRPG]

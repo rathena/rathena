@@ -39,7 +39,8 @@
 
 static char command_symbol = '@'; // first char of the commands (by [Yor])
 
-char msg_table[1000][256]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
+#define MAX_MSG 1000
+char *msg_table[MAX_MSG]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
 #define ACMD_FUNC(x) int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 ACMD_FUNC(broadcast);
@@ -660,7 +661,7 @@ int lowtohigh_compare (const void * a, const void * b)
 // Return the message string of the specified number by [Yor]
 //-----------------------------------------------------------
 char * msg_txt(int msg_number) {
-	if (msg_number >= 0 && msg_number < (int)(sizeof(msg_table) / sizeof(msg_table[0])) &&
+	if (msg_number >= 0 && msg_number < MAX_MSG &&
 	    msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
 		return msg_table[msg_number];
 
@@ -910,12 +911,15 @@ int msg_config_read(const char *cfgName) {
 	int msg_number;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
+	static int called = 1;
 
 	if ((fp = fopen(cfgName, "r")) == NULL) {
 		printf("Messages file not found: %s\n", cfgName);
 		return 1;
 	}
 
+	if ((--called) == 0)
+		memset(&msg_table[0], 0, sizeof(msg_table[0]) * MAX_MSG);
 	while(fgets(line, sizeof(line)-1, fp)) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
@@ -924,15 +928,30 @@ int msg_config_read(const char *cfgName) {
 				msg_config_read(w2);
 			} else {
 				msg_number = atoi(w1);
-				if (msg_number >= 0 && msg_number < (int)(sizeof(msg_table) / sizeof(msg_table[0])))
-					strcpy(msg_table[msg_number], w2);
+				if (msg_number >= 0 && msg_number < MAX_MSG) {
+					if (msg_table[msg_number] != NULL)
+						aFree(msg_table[msg_number]);
+					msg_table[msg_number] = (char *)aCalloc(strlen(w2) + 1, sizeof (char));
+					strcpy(msg_table[msg_number],w2);
 				//	printf("message #%d: '%s'.\n", msg_number, msg_table[msg_number]);
+				}
 			}
 		}
 	}
 	fclose(fp);
 
 	return 0;
+}
+
+/*==========================================
+ * Cleanup Message Data
+ *------------------------------------------
+ */
+void do_final_msg () {
+	int i;
+	for (i = 0; i < MAX_MSG; i++)
+		aFree(msg_table[i]);
+	return;
 }
 
 /*==========================================
@@ -4495,8 +4514,12 @@ int atcommand_day(
 		night_flag = 0; // 0=day, 1=night [Yor]
 		for(i = 0; i < fd_max; i++) {
 			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
-				pl_sd->opt2 &= ~STATE_BLIND;
-				clif_changeoption(&pl_sd->bl);
+				if (battle_config.night_darkness_level > 0)
+					clif_refresh (pl_sd);
+				else {
+					pl_sd->opt2 &= ~STATE_BLIND;
+					clif_changeoption(&pl_sd->bl);
+				}
 				clif_displaymessage(pl_sd->fd, msg_table[60]); // Day has arrived.
 			}
 		}
@@ -8104,7 +8127,8 @@ int atcommand_refresh(
 	const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	pc_setpos(sd, sd->mapname, sd->bl.x, sd->bl.y, 3);
+	//pc_setpos(sd, sd->mapname, sd->bl.x, sd->bl.y, 3);
+	clif_refresh(sd);
 	return 0;
 }
 
