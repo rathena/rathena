@@ -1,6 +1,7 @@
 Date	Added
 
 12/19
+	* Separated NPCs and Maps from map_athena.conf into npcs_list.txt and maps_list.conf [MC Cameri]
 	* Modified all the *_athena.conf's to have the import command enabled by default [Ajarn]
 	* Added charcommand_conf.txt and log_conf.txt in conf-tmpl/import [Ajarn]
 	* Fixed import command for log_athena.conf file [Ajarn]
@@ -17,6 +18,10 @@ Date	Added
 	  prep for unleasing it on the sql using public [MouseJstr]
 	* Fixed some SQL queries crashing char server [davidsiaw]
 	* Added several PID GM commands, thanks to Dino9021 [nsstrunks]
+
+12/18
+=======
+>>>>>>> .r637
 	* Storage was merging items incorrectly [Mousejstr]
 	* eliminated a uninitialized var when using afm maps [MouseJstr]
 	* Added concept of dirty storage to reduce saves/load
@@ -27,6 +32,7 @@ Date	Added
 	  back to the character server (storage wipes) [MouseJstr]
 	* Made it save storage as soon as you close the storage
 	  window to reduce possibility of loss/abuse [MouseJstr]
+
 12/17
 	* Added #item [MC Cameri]
 	* Added #storagelist, removed @charstoragelist [MC Cameri]
