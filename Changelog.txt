@@ -1,5 +1,11 @@
 Date	Added
 12/16
+        * Corrected Extremity Fist to not require Explosion Spirits when being used
+          right after using Combo Finish or Dilemma [celest]
+        * Added instant cast weapon skills rely on attack speed as cast delays, not
+          on dex [celest]
+        * Fixed mob_ghostring_fix not working [celest]
+        * Changed default value for mob_ghostring_fix to 'yes' [celest]
 	* Added #itemlist, removed @charitemlist [MC Cameri]
 	* Changed @job and #job so that when it's used it unequips all the items, to prevent sprite errors [MC Cameri]
 	* Fixed a misuse of mysql_config (thanks Daegalus for

@@ -2717,11 +2717,11 @@ static struct Damage battle_calc_mob_weapon_attack(
 	if(damage < 0) damage = 0;
 
 	// 属 性の適用
-        if (!((battle_config.mob_ghostring_fix == 1) && 
-              (battle_get_element(target) == 8) && 
-              (target->type==BL_PC))) // [MouseJstr]
-	if(skill_num != 0 || s_ele != 0 || !battle_config.mob_attack_attr_none)
-	damage=battle_attr_fix(damage, s_ele, battle_get_element(target) );
+	if (!((battle_config.mob_ghostring_fix == 1) && 
+		(battle_get_elem_type(target) == 8) && 
+		(target->type==BL_PC))) // [MouseJstr]
+		if(skill_num != 0 || s_ele != 0 || !battle_config.mob_attack_attr_none)
+			damage=battle_attr_fix(damage, s_ele, battle_get_element(target) );
 
 	//if(sc_data && sc_data[SC_AURABLADE].timer!=-1)	/* オーラブレード 必中 */
 	//	damage += sc_data[SC_AURABLADE].val1 * 10;
@@ -5394,9 +5394,9 @@ void battle_set_defaults() {
 	battle_config.pc_cloak_check_type = 0;
 	battle_config.monster_cloak_check_type = 0;
 	battle_config.gvg_short_damage_rate = 100;
-	battle_config.gvg_long_damage_rate = 100;
-	battle_config.gvg_magic_damage_rate = 100;
-	battle_config.gvg_misc_damage_rate = 100;
+	battle_config.gvg_long_damage_rate = 60;
+	battle_config.gvg_magic_damage_rate = 50;
+	battle_config.gvg_misc_damage_rate = 60;
 	battle_config.gvg_eliminate_time = 7000;
 	battle_config.mob_changetarget_byskill = 0;
 	battle_config.pc_attack_direction_change = 1;

@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/12/15 8:56:46 PM Celestia $
+// $Id: skill.c,v 1.8 2004/12/16 6:46:08 PM Celestia $
 /* ƒXƒLƒ‹?ŒW */
 
 #include <stdio.h>
@@ -7259,6 +7259,9 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		}
 		break;
 	case ST_EXPLOSIONSPIRITS:
+		if (skill == MO_EXTREMITYFIST && ((sd->sc_data[SC_COMBO].timer != -1 && (sd->sc_data[SC_COMBO].val1 == MO_COMBOFINISH || sd->sc_data[SC_COMBO].val1 == CH_CHAINCRUSH)) || sd->sc_data[SC_BLADESTOP].timer!=-1)) {
+			break;
+		}
 		if(sd->sc_data[SC_EXPLOSIONSPIRITS].timer == -1) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
@@ -7728,6 +7731,11 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		casttime = casttime/2;
 		if((--sc_data[SC_MEMORIZE].val2)<=0)
 			skill_status_change_end(&sd->bl, SC_MEMORIZE, -1);
+	}
+
+	// instant cast attack skills depend on aspd as delay [celest]
+	if (casttime == 0 && delay == 0 && skill_db[skill_num].skill_type == BF_WEAPON) {
+		delay = battle_get_adelay (&sd->bl) * battle_config.delay_rate / 100;
 	}
 
 	if(battle_config.pc_skill_log)
