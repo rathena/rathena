@@ -168,7 +168,7 @@ enum AtCommandType {
 	AtCommand_NpcMove, // by MouseJstr
 	AtCommand_Killable, // by MouseJstr
 	AtCommand_CharKillable, // by MouseJstr
-	AtCommand_Chareffect, // by MouseJstr
+//	AtCommand_Chareffect, // by MouseJstr, now #effect
 	AtCommand_Dropall, // by MouseJstr
 	AtCommand_Chardropall, // by MouseJstr
 	AtCommand_Storeall, // by MouseJstr

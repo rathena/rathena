@@ -186,7 +186,6 @@ ACMD_FUNC(killer); // by MouseJstr
 ACMD_FUNC(npcmove); // by MouseJstr
 ACMD_FUNC(killable); // by MouseJstr
 ACMD_FUNC(charkillable); // by MouseJstr
-ACMD_FUNC(chareffect); // by MouseJstr
 ACMD_FUNC(dropall); // by MouseJstr
 ACMD_FUNC(chardropall); // by MouseJstr
 ACMD_FUNC(storeall); // by MouseJstr
@@ -433,7 +432,6 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_NpcMove,			"@npcmove",			20, atcommand_npcmove }, // by MouseJstr
 	{ AtCommand_Killable,			"@killable",		40, atcommand_killable }, // by MouseJstr
 	{ AtCommand_CharKillable,		"@charkillable",	40, atcommand_charkillable }, // by MouseJstr
- 	{ AtCommand_Chareffect,			"@chareffect",		40, atcommand_chareffect  }, // MouseJstr
 	{ AtCommand_Dropall,			"@dropall",			40, atcommand_dropall }, // MouseJstr
 	{ AtCommand_Chardropall,		"@chardropall",		40, atcommand_chardropall }, // MouseJstr
 	{ AtCommand_Storeall,			"@storeall",		40, atcommand_storeall }, // MouseJstr
@@ -7097,34 +7095,6 @@ atcommand_follow(const int fd, struct map_session_data* sd,
 }
 
 
-/*==========================================
- * @chareffect by [MouseJstr]
- *
- * Create a effect localized on another character
- *------------------------------------------
- */
-int
-atcommand_chareffect(const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	struct map_session_data *pl_sd = NULL;
-	char target[255];
-	int type = 0;
-	nullpo_retr(-1, sd);
-
-	if (!message || !*message || sscanf(message, "%d %s", &type, target) != 2) {
-		clif_displaymessage(fd, "usage: @chareffect <type+> <target>.");
-		return -1;
-	}
-
-	if((pl_sd=map_nick2sd((char *) target)) == NULL)
-		return -1;
-
-	clif_specialeffect(&pl_sd->bl, type, 0);
-	clif_displaymessage(fd, msg_table[229]); // Your effect has changed.
-
-	return 0;
-}
 /*==========================================
  * @dropall by [MouseJstr]
  *

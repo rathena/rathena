@@ -1,5 +1,7 @@
 Date	Added
 12/17
+	* Fixed warning message in db.c line 445 [MC Cameri]
+	* Added #effect, removed @chareffect [MC Cameri]
         * Reverted a change in map.c causing problems, sorry >.< [celest]
         * Updated Sphere Mine - it'll now move in the opposite direction if
           being hit by its master [celest]

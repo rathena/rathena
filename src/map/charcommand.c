@@ -44,6 +44,7 @@ CCMD_FUNC(stats_all);
 CCMD_FUNC(reset);
 CCMD_FUNC(spiritball);
 CCMD_FUNC(itemlist);
+CCMD_FUNC(effect);
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -74,6 +75,7 @@ static CharCommandInfo charcommand_info[] = {
 	{ CharCommandStatsAll,				"#statsall",				40, charcommand_stats_all },
 	{ CharCommandSpiritball,			"#spiritball",				40, charcommand_spiritball },
 	{ CharCommandItemList,				"#itemlist",				40,	charcommand_itemlist },
+	{ CharCommandEffect,				"#effect",					40, charcommand_effect },
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -861,6 +863,35 @@ charcommand_itemlist(
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
 	}
+
+	return 0;
+}
+
+/*==========================================
+ * #effect by [MouseJstr]
+ *
+ * Create a effect localized on another character
+ *------------------------------------------
+ */
+int
+charcommand_effect(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd = NULL;
+	char target[255];
+	int type = 0;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || sscanf(message, "%d %s", &type, target) != 2) {
+		clif_displaymessage(fd, "usage: #effect <type+> <target>.");
+		return -1;
+	}
+
+	if((pl_sd=map_nick2sd((char *) target)) == NULL)
+		return -1;
+
+	clif_specialeffect(&pl_sd->bl, type, 0);
+	clif_displaymessage(fd, msg_table[229]); // Your effect has changed.
 
 	return 0;
 }
