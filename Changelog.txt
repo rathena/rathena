@@ -1,5 +1,7 @@
 Date	Added
 01/07
+        * Upon changing to high novice 100 stat points should be given, not 88 [celest]
+        * Give high novices First Aid and Trick Dead upon job changing [celest]
         * Remove some unnecessary checks in battle.c [celest]
         * Added some checks to prevent novices still allowed to attack when using
           Trick Dead [celest]

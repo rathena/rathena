@@ -5375,7 +5375,10 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 	sd->status.dex=1;
 	sd->status.luk=1;
 	if(sd->status.class_ == 4001)
-		sd->status.status_point=88;
+		sd->status.status_point=100;	// not 88 [celest]
+		// give platinum skills upon changing
+		pc_skill(sd,142,1,0);
+		pc_skill(sd,143,1,0);
 	}
 
 	if(type == 2){
