@@ -35,6 +35,8 @@ Other Ppl
 
 Date		Added
 ======
+11/17
+	* Fixed valkyrie.txt (wrong condition check, temp var->perm vars) but it still has no exit for common players [Lupus]
 11/16
 	* - grandpa_pharmacist.txt: Added subfunction for potion making as well as zeny/input
 		exploit safeguards. Used Lupus's "loopless" technique.
