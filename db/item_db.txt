@@ -1790,7 +1790,7 @@
 7310,Peco_Coupon,Pecopeco Free Coupon,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
 7311,Airship_Coupon,Airship Free Coupon,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
 7312,Jubile,Jubilaeum,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
-7313,Witch\'s_Voucher,Witch's Voucher,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7313,Witch's_Voucher,Witch's Voucher,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
 7314,The_Sign,The Sign,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
 
 7315,Black_Quartz_Piece,Piece of Black Quartz,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
