@@ -98,3 +98,7 @@ Progress:	0%
 
 	Lupus: heh i fixid similiar bug in DELITEM script command. i think it's the same bug in other function
 	so i'm in charge 
+
+Problem:	~40+ players connected.. and soon can't re-connect, they can enter password, but never see "select character" screen.
+Assigned:	N/A
+Progress:	0%
