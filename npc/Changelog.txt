@@ -36,7 +36,8 @@ Other Ppl
 Date		Added
 ======
 11/16
-	* - Fixed Npc Position on Lutie( warper.txt and warper2.txt). [shadow]
+	* - Removed Empty Bottle from amatsu shops to prevent exploits.
+	  - Fixed Npc Position on Lutie( warper.txt and warper2.txt). [shadow]
 
 11/15
 	* - Fixed xmas.txt X-mas event, now you get a gift box when you first talk to Santa.
