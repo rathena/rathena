@@ -89,3 +89,7 @@ Problem:	Line 130 in item_db.txt is giving error.
 Note:		This is the whole line: 658,Tribal_Solidarity,Tribal Solidarity,2,1000,0,500,,,,,10477567,2,,,,,{ guildgetexp rand(1,10000); },{}
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Attack speed is somehow lowered., sword+dopp+80 in agi, and aspd in 188 o_O that doesnt look right
+Assigned:	N/A
+Progress:	0%
