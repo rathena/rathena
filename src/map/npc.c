@@ -589,7 +589,7 @@ int npc_timerevent(int tid,unsigned int tick,int id,int data)
 		nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,id,next);
 	}
 
-	run_script(nd->u.scr.script,te->pos,nd->u.scr.timerrid,nd->bl.id);
+	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);
 	return 0;
 }
 /*==========================================
@@ -612,7 +612,7 @@ int npc_timerevent_start(struct npc_data *nd)
 	}
 	nd->u.scr.nexttimer=j;
 	nd->u.scr.timertick=gettick();
-	nd->u.scr.timerrid=0;	// no players attached by default [celest]
+	nd->u.scr.rid=0;	// reset attached player [celest]
 
 	if(j>=n)
 		return 0;

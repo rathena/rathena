@@ -55,6 +55,9 @@
 #define MAX_PACKET_DB 0x224
 
 int packet_db_ver = -1;
+int *packet_db_size;
+void (**packet_db_parse_func)();
+short packet_db_pos[MAX_PACKET_DB][20];
 
 static const int packet_len_table[MAX_PACKET_DB] = {
    10,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -10159,11 +10162,14 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
 {
 	int i, cmd;
 
+	if (packet_db_ver < 0)
+		return;
+
 	cmd = RFIFOW(fd,0);
 
 	printf("packet debug 0x%4X\n",cmd);
 	printf("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-	for(i=0;i<packet_size_table[packet_db_ver - 5][cmd];i++){
+	for(i=0;i<packet_db_size[cmd];i++){
 		if((i&15)==0)
 			printf("\n%04X ",i);
 		printf("%02X ",RFIFOB(fd,i));
@@ -10630,7 +10636,8 @@ static int packetdb_readdb(void)
 	};
 
 //	memset(packet_db,0,sizeof(packet_db));
-
+	memset(packet_db_pos,0,sizeof(packet_db_pos));
+	
 	if( (fp=fopen("db/packet_db.txt","r"))==NULL ){
 		printf("can't read db/packet_db.txt\n");		
 		return 1;
@@ -10645,62 +10652,64 @@ static int packetdb_readdb(void)
 				continue;
 			if(strcmpi(w1,"packet_db_ver")==0) {
 				packet_db_ver = atoi(w2);
-				printf ("packet db version = %d\n", packet_db_ver);
 				break;	// stop reading config and load the rest of the file
 			}
 		}
 	}
-	while(fgets(line,1020,fp)){
-		if (packet_db_ver <= 7)	// minimum packet version allowed
-			break;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(str,0,sizeof(str));
-		for(j=0,p=line;j<4 && p;j++){
-			str[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if(str[0]==NULL)
-			continue;
+	if (packet_db_ver > 7) {	// minimum packet version allowed
+		packet_db_size = packet_size_table[packet_db_ver - 5];
+		packet_db_parse_func = clif_parse_func_table[packet_db_ver - 7];
 
-		cmd=strtol(str[0],(char **)NULL,0);
-		if(cmd<=0 || cmd>=MAX_PACKET_DB)
-			continue;
-
-		if(str[1]==NULL){
-			sprintf(tmp_output, "packet_db: packet len error\n");
-			ShowError(tmp_output);
-			continue;
-		}
-		packet_size_table[packet_db_ver - 5][cmd] = atoi(str[1]);
-
-		if(str[2]==NULL){
-			ln++;
-			continue;
-		}
-		for(j=0;j<sizeof(clif_parse_func)/sizeof(clif_parse_func[0]);j++){
-			if(clif_parse_func[j].name != NULL &&
-				strcmp(str[2],clif_parse_func[j].name)==0){
-				clif_parse_func_table[packet_db_ver - 7][cmd] = clif_parse_func[j].func;
-				break;
+		while(fgets(line,1020,fp)){
+			if(line[0]=='/' && line[1]=='/')
+				continue;
+			memset(str,0,sizeof(str));
+			for(j=0,p=line;j<4 && p;j++){
+				str[j]=p;
+				p=strchr(p,',');
+				if(p) *p++=0;
 			}
-		}
-		if(str[3]==NULL){
-			sprintf(tmp_output, "packet_db: packet error\n");
-			ShowError(tmp_output);
-			exit(1);
-		}
-		for(j=0,p2=str[3];p2;j++){
-			str2[j]=p2;
-			p2=strchr(p2,':');
-			if(p2) *p2++=0;
-//			packet_db[cmd].pos[j]=atoi(str2[j]);	// since this isn't implemented yet
-		}
+			if(str[0]==NULL)
+				continue;
 
-		ln++;
-//		if(packet_size_table[packet_db_ver - 5][cmd] > 2 /* && packet_db[cmd].pos[0] == 0 */)
-//			printf("packet_db: %d 0x%x %d %s %p\n",ln,cmd,packet_size_table[packet_db_ver - 5][cmd],str[2],clif_parse_func_table[packet_db_ver - 7][cmd]);
+			cmd=strtol(str[0],(char **)NULL,0);
+			if(cmd<=0 || cmd>=MAX_PACKET_DB)
+				continue;
+
+			if(str[1]==NULL){
+				sprintf(tmp_output, "packet_db: packet len error\n");
+				ShowError(tmp_output);
+				continue;
+			}
+			packet_db_size[cmd] = atoi(str[1]);
+
+			if(str[2]==NULL){
+				ln++;
+				continue;
+			}
+			for(j=0;j<sizeof(clif_parse_func)/sizeof(clif_parse_func[0]);j++){
+				if(clif_parse_func[j].name != NULL &&
+					strcmp(str[2],clif_parse_func[j].name)==0){
+					packet_db_parse_func[cmd] = clif_parse_func[j].func;
+					break;
+				}
+			}
+			if(str[3]==NULL){
+				sprintf(tmp_output, "packet_db: packet error\n");
+				ShowError(tmp_output);
+				exit(1);
+			}
+			for(j=0,p2=str[3];p2;j++){
+				str2[j]=p2;
+				p2=strchr(p2,':');
+				if(p2) *p2++=0;
+				packet_db_pos[cmd][j]=atoi(str2[j]);
+			}
+
+			ln++;
+//			if(packet_size_table[packet_db_ver - 5][cmd] > 2 /* && packet_db[cmd].pos[0] == 0 */)
+//				printf("packet_db: %d 0x%x %d %s %p | %p\n",ln,cmd,packet_db_size[cmd],str[2],packet_db_parse_func[cmd],clif_parse_func_table[packet_db_ver - 7][cmd]);
+		}
 	}
 	fclose(fp);
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/packet_db.txt");
@@ -10981,6 +10990,9 @@ int do_init_clif(void) {
 
 	// Size of packet version 16 (packet db)
 	memcpy(&packet_size_table[11], &packet_size_table[10], sizeof(packet_len_table));
+
+	packet_db_size = packet_size_table[0];
+	packet_db_parse_func = clif_parse_func_table[0];
 
 	packetdb_readdb();
 	

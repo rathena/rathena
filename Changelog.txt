@@ -1,5 +1,10 @@
 Date	Added
 01/10
+        * Completed adding packet DB reading... still needs (a lot) more work in
+          clif.c [celest]
+        * Added Shinomori's suggestions for npc timers, thanks again ^^ [celest]
+        * Removed checking for script event timers' length, and added Shinomori's
+          changes [celest]
         * Start adding packet DB reading [celest]
         * Added 'max_eventtimer_length' (default is 32) to script_athena.conf. [celest]
           Some event timers with names longer than 24 could cause the server to close

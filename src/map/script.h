@@ -9,7 +9,6 @@ extern struct Script_Config {
 	int warn_cmd_mismatch_paramnum;
 	int check_cmdcount;
 	int check_gotocount;
-	int max_eventtimer_len;
 } script_config;
 
 struct script_data {

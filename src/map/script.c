@@ -3893,6 +3893,7 @@ int buildin_initnpctimer(struct script_state *st)
 
 	npc_settimerevent_tick(nd,0);
 	npc_timerevent_start(nd);
+	nd->u.scr.rid=st->rid;
 	return 0;
 }
 /*==========================================
@@ -3985,7 +3986,7 @@ int buildin_attachnpctimer(struct script_state *st)
 	if (sd==NULL)
 		return 0;
 
-	nd->u.scr.timerrid = sd->bl.id;
+	nd->u.scr.rid = sd->bl.id;
 	return 0;
 }
 
@@ -4001,7 +4002,7 @@ int buildin_detachnpctimer(struct script_state *st)
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	nd->u.scr.timerrid = 0;
+	nd->u.scr.rid = 0;
 	return 0;
 }
 
@@ -7204,7 +7205,6 @@ int script_config_read(char *cfgName)
 	script_config.warn_cmd_mismatch_paramnum=1;
 	script_config.check_cmdcount=8192;
 	script_config.check_gotocount=512;
-	script_config.max_eventtimer_len=32;
 
 	fp=fopen(cfgName,"r");
 	if(fp==NULL){
@@ -7237,9 +7237,6 @@ int script_config_read(char *cfgName)
 		}
 		else if(strcmpi(w1,"check_gotocount")==0) {
 			script_config.check_gotocount = battle_config_switch(w2);
-		}
-		else if(strcmpi(w1,"max_eventtimer_length")==0) {
-			script_config.max_eventtimer_len = battle_config_switch(w2);
 		}
 		else if(strcmpi(w1,"import")==0){
 			script_config_read(w2);

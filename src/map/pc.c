@@ -6791,14 +6791,12 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 
 	nullpo_retr(0, sd);
 
-	Assert(strlen(name) < script_config.max_eventtimer_len);
-
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i]==-1 )
 			break;
 	if(i<MAX_EVENTTIMER){
-		char *evname=(char *)aCalloc(script_config.max_eventtimer_len,sizeof(char));
-		memcpy(evname,name,script_config.max_eventtimer_len);
+		char *evname=(char *)aMalloc((strlen(name)+1)*sizeof(char));
+		memcpy(evname,name,(strlen(name)+1));
 		sd->eventtimer[i]=add_timer(gettick()+tick,
 			pc_eventtimer,sd->bl.id,(int)evname);
 		sd->eventcount++;
