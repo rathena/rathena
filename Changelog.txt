@@ -3,6 +3,7 @@ Date	Added
 12/20
 	* Fixed some gcc 2.95 problems [MouseJstr]
 	* Speedups in socket code [MouseJstr]
+	* made samesex weddings work and give out correct ring [MouseJstr]
 	* CFixed wedding NPC halting after server reboot/crash (shadowlady put in comments but didn't add to code) [Aria]
         * Added reading leveluseskillspamount.txt from the GRF to auto set sp used for each skill [celest]
         * Added reading indoorrswtable.txt from the GRF to auto set 'indoor' mapflags
