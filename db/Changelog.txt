@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/24
+	* Corrected exp table entries for level 11 and 99, thanks to Dino9021
 03/22
 	* Corrected some typos in the items DB, thanks to Zoc [celest]
 	* Added new items. Thanks to Landarma [Lupus]
