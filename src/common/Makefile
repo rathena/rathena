@@ -20,4 +20,4 @@ obj/showmsg.o: showmsg.c showmsg.h
 obj/strlib.o: strlib.c strlib.h utils.h
 
 clean:
-	rm -f *.o obj
+	rm -rf *.o obj

@@ -1,6 +1,12 @@
 Date	Added
 
 03/07
+        * Added uptime logging support whenever the server closes, to enable change
+          the 0 to 1 in core.c [celest]
+                #define LOG_UPTIME 0
+          To-do: Add this as an option to log config
+        * Fixed 'make clean' not removing the .o files in /common [celest]
+
         * Updated core and map-server to jA 1115~1137 [celest]
           - Added monster_delay_damage to battle conf
           - Increased some default settings in script conf

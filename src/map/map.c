@@ -50,8 +50,6 @@
 // maybe put basic macros to somewhere else
 #define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
 
-unsigned long ticks = 0; // by MC Cameri
-
 #ifndef TXT_ONLY
 
 #include "mail.h" // mail system [Valaris]
@@ -167,6 +165,7 @@ char help_txt[256] = "conf/help.txt";
 char wisp_server_name[24] = "Server"; // can be modified in char-server configuration file
 
 int console = 0;
+
 /*==========================================
  * ‘SmapI?Œv‚Å‚ÌÚ??İ’è
  * (charI‚©‚ç‘—‚ç‚ê‚Ä‚­‚é)
@@ -3421,8 +3420,6 @@ int do_init(int argc, char *argv[]) {
 
 	sprintf(tmp_output,"Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
 	ShowStatus(tmp_output);
-
-	ticks = gettick();
 
 	return 0;
 }

@@ -788,8 +788,6 @@ int map_who(int fd);
 void map_helpscreen(); // [Valaris]
 int map_delmap(char *mapname);
 
-extern unsigned long ticks;
-
 #ifndef TXT_ONLY
 
 // MySQL

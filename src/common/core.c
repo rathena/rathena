@@ -201,7 +201,9 @@ static void display_title(void)
  */
 
 int runflag = 1;
+unsigned long ticks = 0; // by MC Cameri
 char pid_file[256];
+char server_type[24];
 
 void pid_delete(void) {
 	unlink(pid_file);
@@ -227,11 +229,46 @@ void pid_create(const char* file) {
 	}
 }
 
+#define LOG_UPTIME 0
+void log_uptime()
+{
+#if LOG_UPTIME
+	time_t curtime;
+	char curtime2[24];
+	FILE *fp;
+	long seconds = 0, day = 24*60*60, hour = 60*60,
+		minute = 60, days = 0, hours = 0, minutes = 0;
+
+	fp = fopen("log/uptime.log","a");
+	if (fp) {
+		time(&curtime);
+		strftime(curtime2, 24, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+
+		seconds = (gettick()-ticks)/CLOCKS_PER_SEC;
+		days = seconds/day;
+		seconds -= (seconds/day>0)?(seconds/day)*day:0;
+		hours = seconds/hour;
+		seconds -= (seconds/hour>0)?(seconds/hour)*hour:0;
+		minutes = seconds/minute;
+		seconds -= (seconds/minute>0)?(seconds/minute)*minute:0;
+
+		fprintf(fp, "%s: %s uptime - %ld days, %ld hours, %ld minutes, %ld seconds.\n",
+			curtime2, server_type, days, hours, minutes, seconds);
+		fclose(fp);
+	}
+
+	return;
+#endif
+}
+
 int main(int argc,char **argv)
 {
 	int next;
 
+	sscanf(argv[0], "./%24[^\n]", server_type);	// map/char/login?
+	atexit(log_uptime);
 	pid_create(argv[0]);
+	
 	Net_Init();
 	do_socket();
 	
@@ -253,6 +290,7 @@ int main(int argc,char **argv)
 	do_init_memmgr(argv[0]); // ˆê”ÔÅ‰‚ÉÀs‚·‚é•K—v‚ª‚ ‚é
 
 	tick_ = time(0);
+	ticks = gettick();
 
 	do_init(argc,argv);
 	while(runflag){

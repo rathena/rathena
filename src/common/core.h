@@ -4,6 +4,7 @@
 #define	_CORE_H_
 
 extern int runflag;
+extern unsigned long ticks;
 
 int do_init(int,char**);
 
