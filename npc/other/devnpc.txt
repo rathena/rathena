@@ -197,3 +197,85 @@ OnInit:
  	initnpctimer;
         break;
 }
+
+//Aria
+Aria
+prontera.gat,156,179,4	script	Aria	805,{
+ 	npcspeed 150;
+	mes "[Aria]";
+	mes "Okay, I'm Evera's brother, Aria";
+	mes "^FF00FFAge^000000: 13 years";
+	mes "^FF00FFWhat I do^000000: Graphics and NPCs";
+	mes "^FF00FFWhy I'm here^000000: Cuz eAthena ROX";
+	close;
+OnTimer15000:
+	npcwalkto 150+rand(17),169+rand(16);
+	setnpctimer 0;
+
+Lariatalk:
+	set $ariatalk,rand(10);
+	if($ariatalk == 0) goto Lquote0;
+	if($ariatalk == 1) goto Lquote1;
+	if($ariatalk == 2) goto Lquote2;
+	if($ariatalk == 3) goto Lquote3;
+	if($ariatalk == 4) goto Lquote4;
+	if($ariatalk == 5) goto Lquote5;
+	if($ariatalk == 6) goto Lquote6;
+	if($ariatalk == 7) goto Lquote7;
+	if($ariatalk == 8) goto Lquote8;
+	if($ariatalk == 9) goto Lquote9;
+	if($ariatalk == 10) goto Lquote10;
+	goto Lariatalk;
+
+Lquote0:
+	npctalk "OMGWTFBBQ";
+
+Lquote1:
+	npctalk "So its u -> 0";
+	npctalk "... That did not look right";
+
+Lquote3:
+	npctalk "OMGITSJEEBUS!#!@%!";
+	setnpctimer 0;
+	break;
+
+Lquote4:
+	npctalk "Evera died. I guess.";
+	setnpctimer 0;
+	break;
+
+Lquote5:
+	npctalk "I CLICK THE BUTTON AND THEY DON'T DIE!";
+	setnpctimer 0;
+	break;
+
+Lquote6:
+	npctalk "RO? wtf?";
+	npctalk "Oh yeah.";
+	setnpctimer 0;
+	break;
+
+Lquote7:
+	npctalk "omgnoob. DIE!";
+	setnpctimer 0;
+	break;
+
+Lquote8:
+	npctalk "WooT!";
+	setnpctimer 0;
+	break;
+
+Lquote9:
+	npctalk "is that why u bought windows";
+	npctalk "cuz bill has red hair";
+	setnpctimer 0;
+	break;
+
+Lquote10:
+	setnpctimer 0;
+	break;
+
+OnInit:
+ 	initnpctimer;
+        break;
+}
