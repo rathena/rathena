@@ -232,17 +232,17 @@ prt_church.gat,95,100,4	script	Mary	71,{
 L_GmMenu:
 	set @gmlevel,getgmlevel(50);
 	if(@gmlevel < 50) goto L_NotGM;
-	mes "Hello "+strcharinfo(0)+" How i can serve you?";
+	mes "Hello " + strcharinfo(0) + " How i can serve you?";
 	menu "Enable Same-Sex Weddings",L_EnableSameSex,"Disable Same-Sex Weddings",L_DisableSameSex,"Reset the Variables",L_ResetVariables,"Just Checking...",L_Bye;
 L_NotGM:
-	mes "You cant have access to this special menu "+strcharinfo(0)+";
+	mes "You cant have access to this special menu " + strcharinfo(0) + "";
 	mes "Only GMs can change the ceremony options.";
 	close;
 L_EnableSameSex:
 	set $samesex,1;
 	mes "Same-Sex Weddings are enabled now!";
 	close;
-L_EnableSameSex:
+L_DisableSameSex:
 	set $samesex,0;
 	mes "Same-Sex Weddings are disabled now!";
 	close;
