@@ -30,6 +30,7 @@ typedef int socklen_t;
 #include <string.h>
 
 #include "socket.h"
+#include "../common/dll.h"
 #include "../common/mmo.h"	// [Valaris] thanks to fov
 #include "../common/timer.h"
 #include "../common/utils.h"
@@ -46,35 +47,16 @@ int ip_rules = 1;
 
 #define UPNP
 #ifdef UPNP
-	#if defined(CYGWIN)
-
-		#include <dlfcn.h>
-		void *upnp_dll;
+	#if defined(CYGWIN) || defined(_WIN32)
+		DLL upnp_dll;
 		int (*upnp_init)();
 		int (*upnp_final)();
 		int (*firewall_addport)(char *desc, int port);
 		int (*upnp_addport)(char *desc, char *ip, int port);
-		#define DLL_OPEN(x)		dlopen(x,RTLD_NOW)
-		#define DLL_SYM(x,y,z)	x=(void *)dlsym(y,z)
-		#define DLL_CLOSE(x)	dlclose(x)
-
-	#elif _WIN32
-
-		// windows.h already included
-		HINSTANCE upnp_dll;
-		int (WINAPI* upnp_init)();
-		int (WINAPI* upnp_final)();
-		int (WINAPI* firewall_addport)(char *desc, int port);
-		int (WINAPI* upnp_addport)(char *desc, char *ip, int port);
-		#define DLL_OPEN(x)		LoadLibrary(x)
-		#define DLL_SYM(x,y,z)	(FARPROC)x=GetProcAddress(y,z)
-		#define DLL_CLOSE(x)	FreeLibrary(x)
-
+		extern char server_type[24];
 	#else
 		#error This doesnt work with non-Windows yet
 	#endif
-
-	extern char server_type[24];
 #endif
 
 int rfifo_size = 65536;

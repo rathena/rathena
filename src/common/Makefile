@@ -9,7 +9,7 @@ obj/%.o: %.c
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 obj/core.o: core.c core.h showmsg.h
-obj/socket.o: socket.c socket.h mmo.h showmsg.h
+obj/socket.o: socket.c socket.h mmo.h showmsg.h dll.h
 obj/timer.o: timer.c timer.h showmsg.h
 obj/grfio.o: grfio.c grfio.h showmsg.h
 obj/db.o: db.c db.h showmsg.h
