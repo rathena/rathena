@@ -34,7 +34,7 @@ OnAgitInit:
 	if((gettime(4)==2) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
 	if((gettime(4)==4) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
 	if((gettime(4)==6) && (gettime(3)>=16 && gettime(3)<18)) goto L_Start;
-	if(gettime(4)!=2 || gettime(4)!=4 || gettime(4)!=6) end;	//stops script on non woe day
+	if(gettime(4)!=2 && gettime(4)!=4 && gettime(4)!=6) end;	//stops script on non woe day
 
 	Announce "The War Of Emperium is over!",8;
 	AgitEnd;
