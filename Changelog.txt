@@ -1,5 +1,7 @@
 Date	Added
 12/27
+        * Updated the new guild skills - cannot be reused within 5 minutes of 
+          activating it [celest]
         * Added @mobsearch, @cleanmap and @giveitem from jA [celest]
 	* Fixed the guild issues (SVN 832) [MouseJstr]
         * Updated description for player_check_cloak_type [celest]

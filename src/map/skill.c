@@ -4656,6 +4656,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
 					src,skillid,skilllv,tick, flag|BCT_ALL|1,
 					skill_castend_nodamage_id);
+				skill_status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,300000,0 );
 			}
 		}
 		break;
@@ -4680,6 +4681,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
 					src,skillid,skilllv,tick, flag|BCT_ALL|1,
 					skill_castend_nodamage_id);
+				skill_status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,300000,0 );
 			}
 		}
 		break;
@@ -4709,6 +4711,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
 					src,skillid,skilllv,tick, flag|BCT_ALL|1,
 					skill_castend_nodamage_id);
+				skill_status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,300000,0 );
 			}
 		}
 		break;
@@ -4716,7 +4719,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		{
 			int dx[9]={-1, 1, 0, 0,-1, 1,-1, 1, 0};
 			int dy[9]={ 0, 0, 1,-1, 1,-1,-1, 1, 0};
-			int c, j = 0;
+			int j = 0;
 			struct guild *g = NULL;
 			// Only usable during WoE
 			if (!agit_flag) {
@@ -4732,7 +4735,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					if ((dstsd = g->member[i].sd) != NULL && sd != dstsd &&
 						!map[sd->bl.m].flag.nowarpto && !map[dstsd->bl.m].flag.nowarp) {
 						clif_skill_nodamage(src,bl,skillid,skilllv,1);
-						if ((c=read_gat(sd->bl.m,sd->bl.x+dx[j],sd->bl.y+dy[j]))==1 || c==5)
+						if(map_getcell(sd->bl.m,sd->bl.x+dx[j],sd->bl.y+dy[j],CELL_CHKNOPASS))
 							dx[j] = dy[j] = 0;
 						pc_setpos(dstsd, sd->mapname, sd->bl.x+dx[j], sd->bl.y+dy[j], 2);
 					}
