@@ -417,8 +417,9 @@ int WFIFOSET(int fd,int len)
 		return 0;
 #endif /* NSOCKET */
 	if( s->wdata_size+len+16384 > s->max_wdata ){
+		unsigned char *sin_addr = (unsigned char *)&s->client_addr.sin_addr;
 		realloc_fifo(fd,s->max_rdata, s->max_wdata <<1 );
-		printf("socket: %d wdata expanded to %d bytes.\n",fd, s->max_wdata);
+		printf("socket: %d (%d.%d.%d.%d) wdata expanded to %d bytes.\n",fd, sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3], s->max_wdata);
 	}
 	s->wdata_size=(s->wdata_size+(len)+2048 < s->max_wdata) ?
 		 s->wdata_size+len : (printf("socket: %d wdata lost !!\n",fd),s->wdata_size);
