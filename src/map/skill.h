@@ -353,10 +353,9 @@ enum {	// struct map_session_data ‚Ì status_change‚Ì”Ô?ƒe?ƒuƒ‹
 	SC_MINDBREAKER		=191,
 	SC_SPELLBREAKER		=192,
 	SC_LANDPROTECTOR	=193,
-	SC_BLOCKSKILL		=194, // for disallowing the use of a skill for a time period
-	SC_ADAPTATION		=195,
-	SC_CHASEWALK		=196,
-	SC_REGENERATION		=201,
+	SC_ADAPTATION		=194,
+	SC_CHASEWALK		=195,
+	SC_REGENERATION		=196,
 	
 
 // [Celest]

@@ -91,6 +91,8 @@ int pc_bonus2(struct map_session_data *sd,int,int,int);
 int pc_bonus3(struct map_session_data *sd,int,int,int,int);
 int pc_skill(struct map_session_data*,int,int,int);
 
+void pc_blockskill_start (struct map_session_data*,int,int);	// [celest]
+
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
 int pc_item_identify(struct map_session_data *sd,int idx);

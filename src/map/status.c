@@ -3489,11 +3489,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_PRESERVE:
 			break;
 
-		case SC_BLOCKSKILL:
-			if (!tick) tick = 60000;
-			if (!val3) val3 = -1;
-			break;
-
 		case SC_SLOWDOWN:
 		case SC_SPEEDUP0:
 			calc_flag = 1;

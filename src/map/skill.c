@@ -810,16 +810,25 @@ int skill_trap_splash(struct block_list *bl, va_list ap );
 int skill_count_target(struct block_list *bl, va_list ap );
 
 // [MouseJstr] - skill ok to cast? and when?
-int skillnotok(int skillid, struct map_session_data *sd) {
-	
-	if (sd == 0)
+int skillnotok(int skillid, struct map_session_data *sd)
+{	
+	nullpo_retr (1, sd);
+	//if (sd == 0)
 		//return 0; 
-		return 1;
+		//return 1;
 	// I think it was meant to be "no skills allowed when not a valid sd"
 	
 	if (!(skillid >= 10000 && skillid < 10015))
 		if ((skillid > MAX_SKILL) || (skillid < 0))
 			return 1;
+
+	{
+		int i = skillid;
+		if (i >= 10000 && i < 10015)
+			i -= 9500;
+		if (sd->blockskill[i] > 0)
+			return 1;
+	}
 
      if (pc_isGM(sd) >= 20)
            return 0;  // gm's can do anything damn thing they want
@@ -835,16 +844,16 @@ int skillnotok(int skillid, struct map_session_data *sd) {
 		return 1;
 	if (battle_config.pk_mode && !map[sd->bl.m].flag.nopvp && skill_get_nocast (skillid) & 16)
 		return 1;
-
-     switch (skillid) {
-       case AL_WARP:
-       case AL_TELEPORT:
-       case MC_VENDING:
-       case MC_IDENTIFY:
-             return 0; // always allowed
-       default:
-           return(map[sd->bl.m].flag.noskill);
-     }
+	
+	switch (skillid) {
+		case AL_WARP:
+		case AL_TELEPORT:
+		case MC_VENDING:
+		case MC_IDENTIFY:
+			return 0; // always allowed
+		default:
+			return(map[sd->bl.m].flag.noskill);
+	}
 }
 
 
@@ -1495,7 +1504,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		return 0;
 	if(bl->type == BL_PC && pc_isdead((struct map_session_data *)bl)) //?象がPCですでに死んでいたら何もしない
 		return 0;
-	if(bl->type == BL_PC && skillnotok(skillid, (struct map_session_data *)  bl))
+	if(bl->type == BL_PC && skillnotok(skillid, (struct map_session_data *)bl))
 	        return 0; // [MouseJstr]
 	if(sc_data && sc_data[SC_HIDING].timer != -1) { //ハイディング?態で
 		if(skill_get_pl(skillid) != 2) //スキルの?性が地?性でなければ何もしない
@@ -2784,7 +2793,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 					clif_updatestatus(sd,SP_SP);
 				}				
 			}
-			status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0, (skilllv < 5 ? 10000: 15000),0 );
+			pc_blockskill_start (sd, skillid, (skilllv < 5 ? 10000: 15000));
 		}
 		break;
 
@@ -2924,7 +2933,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		return 1;
 	if(status_get_class(bl) == 1288)
 		return 1;
-	if (skillnotok(skillid, (struct map_session_data *)bl)) // [MouseJstr]
+	if (sd && skillnotok(skillid, sd)) // [MouseJstr]
 		return 0;
 
 	map_freeblock_lock();
@@ -3266,7 +3275,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case SM_ENDURE:			/* インデュア */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
-		status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,10000,0 );
+		pc_blockskill_start (sd, skillid, 10000);
 		break;
 
 	case SM_AUTOBERSERK:	// Celest
@@ -4609,7 +4618,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
 					src,skillid,skilllv,tick, flag|BCT_ALL|1,
 					skill_castend_nodamage_id);
-				status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,300000,0 );
+				pc_blockskill_start (sd, skillid, 300000);
 			}
 		}
 		break;
@@ -4634,7 +4643,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
 					src,skillid,skilllv,tick, flag|BCT_ALL|1,
 					skill_castend_nodamage_id);
-				status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,300000,0 );
+				pc_blockskill_start (sd, skillid, 300000);
 			}
 		}
 		break;
@@ -4664,7 +4673,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
 					src,skillid,skilllv,tick, flag|BCT_ALL|1,
 					skill_castend_nodamage_id);
-				status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,300000,0 );
+				pc_blockskill_start (sd, skillid, 300000);
 			}
 		}
 		break;
@@ -4693,7 +4702,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 						pc_setpos(dstsd, sd->mapname, sd->bl.x+dx[j], sd->bl.y+dy[j], 2);
 					}
 				}
-				status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,300000,0 );
+				pc_blockskill_start (sd, skillid, 300000);
 			}
 		}
 		break;
@@ -4868,8 +4877,8 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 		skillid != AM_SPHEREMINE)
 		clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 
-        if (skillnotok(skillid, sd)) // [MouseJstr]
-             return 0;
+	if (sd && skillnotok(skillid, sd)) // [MouseJstr]
+		return 0;
 
 	switch(skillid)
 	{
@@ -5002,7 +5011,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 			pc_movepos(sd,x,y);
 		}else if( src->type==BL_MOB )
 			mob_warp((struct mob_data *)src,-1,x,y,0);
-		status_change_start(src,SC_BLOCKSKILL,skilllv,0,MO_EXTREMITYFIST,0,2000,0 );
+		pc_blockskill_start (sd, MO_EXTREMITYFIST, 2000);
 		break;
 	case AM_CANNIBALIZE:	// バイオプラント
 		if(sd){
@@ -5085,8 +5094,8 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 	if( sd->bl.prev == NULL || pc_isdead(sd) )
 		return 0;
 
-        if(skillnotok(skill_num, sd))
-            return 0;
+	if(skillnotok(skill_num, sd))
+		return 0;
 
 	if( sd->opt1>0 || sd->status.option&2 )
 		return 0;
@@ -5100,10 +5109,6 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 			sd->sc_data[SC_BERSERK].timer != -1 ||
 			sd->sc_data[SC_MARIONETTE].timer != -1)
 			return 0;
-
-		if (sd->sc_data[SC_BLOCKSKILL].timer!=-1)
-			if (skill_num == sd->sc_data[SC_BLOCKSKILL].val3)
-				return 0;
 	}
 
 	if( skill_num != sd->skillid)	/* 不正パケットらしい */
@@ -7474,10 +7479,6 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 			if(lv==5 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE && skill_num!=MO_CHAINCOMBO && skill_num!=MO_EXTREMITYFIST) return 0;
 		}
 
-		if (sc_data[SC_BLOCKSKILL].timer!=-1)
-			if (skill_num == sc_data[SC_BLOCKSKILL].val3)
-				return 0;
-
 		if (sc_data[SC_BASILICA].timer != -1) { // Disallow all other skills in Basilica [celest]
 			struct skill_unit *su;
 			if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
@@ -7821,10 +7822,6 @@ int skill_use_pos( struct map_session_data *sd,
 			sc_data[SC_BERSERK].timer != -1  ||
 			sc_data[SC_MARIONETTE].timer != -1)
 			return 0;	/* ?態異常や沈?など */
-
-		if (sc_data[SC_BLOCKSKILL].timer!=-1)
-			if (skill_num == sd->sc_data[SC_BLOCKSKILL].val3)
-				return 0;
 
 		if (sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
 			struct skill_unit *su;

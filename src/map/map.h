@@ -215,6 +215,7 @@ struct map_session_data {
 	struct skill_unit_group skillunit[MAX_SKILLUNITGROUP];
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	struct skill_timerskill skilltimerskill[MAX_SKILLTIMERSKILL];
+	char blockskill[MAX_SKILL];	// [celest]	
 	unsigned short timerskill_count; // [celest]
 	int cloneskill_id;
 	int potion_hp,potion_sp,potion_per_hp,potion_per_sp;

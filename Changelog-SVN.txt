@@ -1,6 +1,9 @@
 Date	Added
 
 02/15
+        * Rewrote skill blocking system that was allowing people to bypass blocking
+          time simply by casting a different skill [celest]
+        * Edited out some inconsistencies with skillnotok [celest]
         * Corrected Investigate's damage calculation, thanks to matthias [celest]
         * Generate the remaining entries of the stat point DB if the number of
           entries in db/statuspoints.txt is less than MAX_LEVEL, or statuspoints.txt

@@ -706,6 +706,9 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 		sd->skilltimerskill[i].timer = -1;
 	sd->timerskill_count=0;
 
+	for (i=0; i<MAX_SKILL; i++)
+		sd->blockskill[i]=0;
+
 	memset(&sd->dev,0,sizeof(struct square));
 	for(i = 0; i < 5; i++) {
 		sd->dev.val1[i] = 0;
@@ -1830,6 +1833,33 @@ int pc_skill(struct map_session_data *sd,int id,int level,int flag)
 	}
 
 	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int pc_blockskill_end(int tid,unsigned int tick,int id,int data)
+{
+	struct map_session_data *sd;
+	
+	nullpo_retr (-1, sd = map_id2sd(id));
+	sd->blockskill[data] = 0;
+	
+	return 1;
+}
+void pc_blockskill_start (struct map_session_data *sd, int skillid, int tick)
+{
+	nullpo_retv(sd);
+
+	if (skillid >= 10000 && skillid < 10015)
+		skillid -= 9500;
+	else if (skillid < 1 || skillid > MAX_SKILL)
+		return;
+
+	sd->blockskill[skillid] = 1;
+	add_timer(gettick()+tick,pc_blockskill_end,sd->bl.id,skillid);
+	return;
 }
 
 /*==========================================
