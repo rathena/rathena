@@ -1,5 +1,6 @@
 Date	Added
 11/21
+	* Added rest of mapflags to const.txt. [Valaris]
 	* Closed AFM files after reading, this fixed the improper char-server session #. [Valaris]
         * Skill updates: [Celest]
           - Updated Basilica, Sharp Shooting, Berserk, Meditatio (Thanks to DracoRPG!)
