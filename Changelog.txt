@@ -1,6 +1,8 @@
 Date	Added
 
 12/20
+	* Fixed npc_parse_mob with large/tiny monsters causing
+	  memory corruption [MouseJstr]
 	* Fixed a crash in char.c with new chars [MouseJstr]
 	* Updated npcs_list.txt [Ajarn]
 	* If last_pos.x or .y == 0, set to start point [MouseJstr]
