@@ -1,0 +1,55 @@
+//===== eAthena Script ======================================= 
+//= Fox Mask Quest
+//===== By: ================================================== 
+//= KitsuneStarWind (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena version.
+//===== Description: ========================================= 
+// Seperate quest for the Fox Mask.
+//===== Additional Comments: ================================= 
+//
+//============================================================
+
+pay_dun04.gat,204,152,2	script	Nine Tail	1180,{
+	mes "[Nine Tail]";
+	mes "What do you want?";
+	next;
+	mes "[Nine Tail]";
+	mes "Have you come here for a ^FF3300 Fox Mask^000000?";
+	next;
+	menu "Yeah, Sure.",L_1,"No",L_2;
+L_1:
+	mes "[Nine Tail]";
+	mes "Fine then. If I make one for you, will you go away?";
+	mes "You realize that it requires 999 Nine Tails to make, do you?";
+	menu "Sure.",L_1_1,"Nah.",L_1_2;
+L_1_1:
+	mes "[Nine Tail]";
+	mes "Ok then, I shall make one for you.";
+	next;
+	goto L_1_SUB;				
+L_1_2:
+	mes "[Nine Tail]";
+	mes "Grrrr... I'll make one anyway but I hope my master gets you.";
+	next;
+L_1_SUB:
+	if (countitem(1022) < 999) goto L_1_SUB2;
+	delitem 1022,999;
+	getitem 5069,1;
+	next;
+	mes "[Nine Tails]";
+	mes "Have fun.";
+	close;
+L_1_SUB2:
+	mes "[Nine Tail]";
+	mes "You do not have have enough Nine Tails.";
+	mes "You need 999 of them.";
+	close;
+L_2:
+	mes "[Nine Tail]";
+	mes "Then leave me alone... for I am waiting for my master.";
+	close;
+}
