@@ -79,48 +79,55 @@ void trade_tradeack(struct map_session_data *sd,int type)
  * アイテム追加
  *------------------------------------------
  */
-void trade_tradeadditem(struct map_session_data *sd,int index,int amount)
+void trade_tradeadditem(struct map_session_data *sd, int index, int amount)
 {
 	struct map_session_data *target_sd;
 	int trade_i;
-	int trade_weight=0;
+	int trade_weight = 0;
 	int c;
 
 	nullpo_retv(sd);
 
-	if(((target_sd = map_id2sd(sd->trade_partner)) != NULL) && (sd->deal_locked < 1)){
-		if(index<2 || index>=MAX_INVENTORY+2){
-			if(index == 0 && amount > 0 && amount <= sd->status.zeny){
-				sd->deal_zeny=amount;
-				clif_tradeadditem(sd,target_sd,0,amount);
+	if (((target_sd = map_id2sd(sd->trade_partner)) != NULL) && (sd->deal_locked < 1)){
+		if (index < 2 || index >= MAX_INVENTORY + 2){
+			if (index == 0) {
+				if (amount > 0 && amount <= MAX_ZENY && amount <= sd->status.zeny && // check amount
+				    (target_sd->status.zeny + amount) <= MAX_ZENY) { // fix positiv overflow
+					sd->deal_zeny = amount;
+					clif_tradeadditem(sd, target_sd, 0, amount);
+				} else {
+					trade_tradecancel(sd);
+					return;
+				}
 			}
-		}else if(amount <= sd->status.inventory[index-2].amount && amount > 0){
-			for(trade_i=0; trade_i<10;trade_i++){
-				if(sd->deal_item_amount[trade_i] == 0){
-					trade_weight+=sd->inventory_data[index-2]->weight*amount;
-					if(target_sd->weight + trade_weight > target_sd->max_weight){
-						clif_tradeitemok(sd,index,1); //fail to add item -- the player was over weighted.
-                                                amount = 0; // [MouseJstr]
-					}else{
-						for(c=0; c==trade_i-1;c++){ // re-deal exploit protection [Valaris]
-							if(sd->deal_item_index[c]==index) {
+		} else if (amount > 0 && amount <= sd->status.inventory[index-2].amount) {
+			for(trade_i = 0; trade_i < 10; trade_i++) {
+				if (sd->deal_item_amount[trade_i] == 0) {
+					trade_weight += sd->inventory_data[index-2]->weight * amount;
+					if (target_sd->weight + trade_weight > target_sd->max_weight){
+						clif_tradeitemok(sd, index, 1); // fail to add item -- the player was over weighted.
+						amount = 0; // [MouseJstr]
+					} else {
+						for(c = 0; c == trade_i - 1; c++) { // re-deal exploit protection [Valaris]
+							if (sd->deal_item_index[c] == index) {
 								trade_tradecancel(sd);
 								return;
 							}
 						}
-						sd->deal_item_index[trade_i] =index;
-						sd->deal_item_amount[trade_i]+=amount;
-						clif_tradeitemok(sd,index,0); //success to add item
-						clif_tradeadditem(sd,target_sd,index,amount);
+						sd->deal_item_index[trade_i] = index;
+						sd->deal_item_amount[trade_i] += amount;
+						clif_tradeitemok(sd, index, 0); // success to add item
+						clif_tradeadditem(sd, target_sd, index, amount);
 					}
 					break;
-				}else{
-					trade_weight+=sd->inventory_data[sd->deal_item_index[trade_i]-2]->weight*sd->deal_item_amount[trade_i];
+				} else {
+					trade_weight += sd->inventory_data[sd->deal_item_index[trade_i]-2]->weight * sd->deal_item_amount[trade_i];
 				}
 			}
 		}
 	}
 }
+
 
 /*==========================================
  * アイテム追加完了(ok押し)
