@@ -1,6 +1,7 @@
 Date	Added
 
 12/19
+	* Modified the main.sql to add the friend0 column; also added the upgrade_1.0.0.sql file [Codemaster]
 	* Introduced StringBuf into utils for use in building larger queries [MouseJstr]
 	* tested GUILD_CACHE (reducing guild related sql traffic to 30%) in 
 	  prep for unleasing it on the sql using public [MouseJstr]
