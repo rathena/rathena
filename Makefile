@@ -1,7 +1,8 @@
 # $Id: Makefile 158 2004-10-01 03:45:15Z PoW $
 
-# CC = /usr/local/bin/gcc -fbounds-checking -pipe
-CC = gcc -pipe
+CC = /usr/local/bin/gcc -fbounds-checking -pipe
+# CC = /usr/local/bin/gcc 
+#CC = gcc -pipe
 PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT
 #PACKETDEF = -DPACKETVER=5 -DNEW_006b
 #PACKETDEF = -DPACKETVER=4 -DNEW_006b
@@ -24,7 +25,7 @@ OS_TYPE = -DCYGWIN
 CFLAGS = $(OPT) -Wall -DFD_SETSIZE=4096 -I../common $(PACKETDEF) $(OS_TYPE)
 else
 OS_TYPE =
-CFLAGS = $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
+CFLAGS = $(OPT) -DTWILIGHT -Wall -I../common $(PACKETDEF) $(OS_TYPE)
 endif
 
 MYSQLFLAG_INCLUDE_DEFAULT = /usr/local/include/mysql
