@@ -8041,7 +8041,8 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 	}
 	if (sd->npc_id != 0 || sd->opt1 > 0 || sd->status.option & 2 ||
 	    (sd->sc_data &&
-	     (sd->sc_data[SC_AUTOCOUNTER].timer != -1 || //オートカウンター
+	     (sd->sc_data[SC_TRICKDEAD].timer != -1 ||
+		  sd->sc_data[SC_AUTOCOUNTER].timer != -1 || //オートカウンター
 	      sd->sc_data[SC_BLADESTOP].timer != -1 || //白刃取り
 	      sd->sc_data[SC_DANCING].timer != -1))) //ダンス中
 		return;

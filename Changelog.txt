@@ -1,5 +1,8 @@
 Date	Added
 01/07
+        * Remove some unnecessary checks in battle.c [celest]
+        * Added some checks to prevent novices still allowed to attack when using
+          Trick Dead [celest]
         * Added 'summon' script command. Syntax:
 
           	summon <monster name>,<monster id>[,<event>];

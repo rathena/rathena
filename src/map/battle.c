@@ -1932,7 +1932,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 	if(t_sc_data != NULL && t_sc_data[SC_SLEEP].timer!=-1 )
 		cri <<=1;
 
-	if(skill_num == 0 && skill_lv >= 0 && battle_config.enemy_critical && (rand() % 1000) < cri)
+	if(skill_num == 0 && battle_config.enemy_critical && (rand() % 1000) < cri)
 	{
 		damage += atkmax;
 		type = 0x0a;
@@ -2250,7 +2250,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 
 	// 完全回避の判定
 	if(battle_config.enemy_perfect_flee) {
-		if(skill_num == 0 && skill_lv >= 0 && tmd!=NULL && rand()%1000 < battle_get_flee2(target) ){
+		if(skill_num == 0 && tmd!=NULL && rand()%1000 < battle_get_flee2(target) ){
 			damage=0;
 			type=0x0b;
 			dmg_lv = ATK_LUCKY;
@@ -2782,14 +2782,14 @@ static struct Damage battle_calc_mob_weapon_attack(
 	}
 
 	// 完全回避の判定
-	if(skill_num == 0 && skill_lv >= 0 && tsd!=NULL && rand()%1000 < battle_get_flee2(target) ){
+	if(skill_num == 0 && tsd!=NULL && rand()%1000 < battle_get_flee2(target) ){
 		damage=0;
 		type=0x0b;
 		dmg_lv = ATK_LUCKY;
 	}
 
 	if(battle_config.enemy_perfect_flee) {
-		if(skill_num == 0 && skill_lv >= 0 && tmd!=NULL && rand()%1000 < battle_get_flee2(target) ){
+		if(skill_num == 0 && tmd!=NULL && rand()%1000 < battle_get_flee2(target) ){
 			damage=0;
 			type=0x0b;
 			dmg_lv = ATK_LUCKY;
@@ -2984,11 +2984,11 @@ static struct Damage battle_calc_pc_weapon_attack(
 
 	//三段掌
 	//if(skill_num == 0 && skill_lv >= 0 && (skill = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16 && !sd->state.arrow_atk) {
-	if(skill_num == 0 && skill_lv >= 0 && (skill = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16) { // triple blow works with bows ^^ [celest]
+	if(skill_num == 0 && (skill = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16) { // triple blow works with bows ^^ [celest]
 			da = (rand()%100 < (30 - skill)) ? 2:0;
 	}
 
-	if(sd->double_rate > 0 && da == 0 && skill_num == 0 && skill_lv >= 0)
+	if(sd->double_rate > 0 && da == 0 && skill_num == 0)
 		da = (rand()%100 < sd->double_rate) ? 1:0;
 
 	// 過剰精錬ボーナス
@@ -3915,7 +3915,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	}
 
 	// 完全回避の判定
-	if(skill_num == 0 && skill_lv >= 0 && tsd!=NULL && div_ < 255 && rand()%1000 < battle_get_flee2(target) ){
+	if(skill_num == 0 && tsd!=NULL && div_ < 255 && rand()%1000 < battle_get_flee2(target) ){
 		damage=damage2=0;
 		type=0x0b;
 		dmg_lv = ATK_LUCKY;
@@ -3923,7 +3923,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 
 	// 対象が完全回避をする設定がONなら
 	if(battle_config.enemy_perfect_flee) {
-		if(skill_num == 0 && skill_lv >= 0 && tmd!=NULL && div_ < 255 && rand()%1000 < battle_get_flee2(target) ) {
+		if(skill_num == 0 && tmd!=NULL && div_ < 255 && rand()%1000 < battle_get_flee2(target) ) {
 			damage=damage2=0;
 			type=0x0b;
 			dmg_lv = ATK_LUCKY;

@@ -9749,6 +9749,9 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			calc_flag = 1;
 			break;
 		case SC_TRICKDEAD:			/* 死んだふり */
+			if (bl->type == BL_PC) {
+				pc_stopattack((struct map_session_data *)sd);
+			}			
 			break;
 		case SC_QUAGMIRE:			/* クァグマイア */
 			calc_flag = 1;
