@@ -5965,14 +5965,16 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			int type=SkillStatusChangeTable[sg->skill_id];
 			if(sg->src_id == bl->id)
 				break;
-			if(sc_data && sc_data[type].timer==-1)
-				skill_status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
-					(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
-			else if( (unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
-				if( unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+			if(sc_data) {
+				if (sc_data[type].timer==-1)
 					skill_status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
 						(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
-				ts->tick-=sg->interval;
+				else if( (unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
+					if( unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+						skill_status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
+							(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
+					ts->tick-=sg->interval;
+				}
 			}
 		} break;
 
