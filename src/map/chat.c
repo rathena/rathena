@@ -82,6 +82,11 @@ int chat_joinchat(struct map_session_data *sd,int chatid,char* pass)
 		clif_joinchatfail(sd,1);
 		return 0;
 	}
+	if(chatid == sd->chatID) //Double Chat fix by Alex14, thx CHaNGeTe 
+	{
+		clif_joinchatfail(sd,1);
+		return 0;
+	}
 
 	cd->usersd[cd->users] = sd;
 	cd->users++;
