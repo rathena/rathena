@@ -630,3 +630,43 @@
 04-12-2004 22:32:26.778: The char-server is ready (Server is listening on the port 6121).
 04-12-2004 22:32:27.787: From login-server: receiving of 5 GM accounts information.
 04-12-2004 22:32:31.147: ----End of char-server (normal end with closing of all files).
+
+05-12-2004 10:40:19.437: The char-server starting...
+05-12-2004 10:40:19.479: mmo_char_init: 4 characters read in save/athena.txt.
+05-12-2004 10:40:19.479: Id for the next created character: 150004.
+05-12-2004 10:40:19.485: The char-server is ready (Server is listening on the port 6121).
+05-12-2004 10:40:21.290: From login-server: receiving of 5 GM accounts information.
+05-12-2004 10:40:47.142: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+05-12-2004 10:41:25.195: Creation of New Character: (connection #7, account: 2000006) slot 0, character Name: camx, stats: 5+5+5+5+5+5=30, hair: 1, hair color: 0.
+05-12-2004 10:41:26.040: Character Selected, Account ID: 2000006, Character Slot: 0, Character Name: camx.
+05-12-2004 10:41:35.090: ----End of char-server (normal end with closing of all files).
+
+05-12-2004 11:26:07.625: The char-server starting...
+05-12-2004 11:26:07.682: mmo_char_init: 5 characters read in save/athena.txt.
+05-12-2004 11:26:07.682: Id for the next created character: 150005.
+05-12-2004 11:26:07.685: The char-server is ready (Server is listening on the port 6121).
+05-12-2004 11:26:28.696: From login-server: receiving of 5 GM accounts information.
+05-12-2004 11:26:58.695: From login-server: receiving of 5 GM accounts information.
+05-12-2004 11:29:38.710: From login-server: receiving of 5 GM accounts information.
+05-12-2004 11:32:18.692: From login-server: receiving of 5 GM accounts information.
+05-12-2004 11:32:23.547: ----End of char-server (normal end with closing of all files).
+
+05-12-2004 11:41:24.906: The char-server starting...
+05-12-2004 11:41:24.950: mmo_char_init: 5 characters read in save/athena.txt.
+05-12-2004 11:41:24.950: Id for the next created character: 150005.
+05-12-2004 11:41:24.954: The char-server is ready (Server is listening on the port 6121).
+05-12-2004 11:41:25.967: From login-server: receiving of 5 GM accounts information.
+05-12-2004 11:41:52.197: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+05-12-2004 11:41:59.777: Creation of New Character: (connection #6, account: 2000002) slot 1, character Name: rturo, stats: 5+5+5+5+5+5=30, hair: 1, hair color: 0.
+05-12-2004 11:42:02.742: Creation of New Character: (connection #6, account: 2000002) slot 2, character Name: arturo, stats: 5+5+5+5+5+5=30, hair: 1, hair color: 0.
+05-12-2004 11:43:58.637: ----End of char-server (normal end with closing of all files).
+
+05-12-2004 11:44:04.719: The char-server starting...
+05-12-2004 11:44:04.862: mmo_char_init: 5 characters read in save/athena.txt.
+05-12-2004 11:44:04.862: Id for the next created character: 150007.
+05-12-2004 11:44:04.865: The char-server is ready (Server is listening on the port 6121).
+05-12-2004 11:44:05.875: From login-server: receiving of 5 GM accounts information.
+05-12-2004 11:44:12.970: Creation of New Character: (connection #6, account: 2000002) slot 1, character Name: rturo, stats: 5+5+5+5+5+5=30, hair: 1, hair color: 0.
+05-12-2004 11:44:16.030: Make new char error (invalid letter in the name): (connection #6, account: 2000002), name: arturo, invalid letter: a.
+05-12-2004 11:44:24.547: Make new char error (invalid letter in the name): (connection #6, account: 2000002), name: artple, invalid letter: a.
+05-12-2004 11:44:34.427: ----End of char-server (normal end with closing of all files).
