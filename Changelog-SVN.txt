@@ -1,6 +1,7 @@
 Date	Added
 
 03/17
+        * Added the new Einbroch/Einbech maps to maps_athena.conf [celest]
         * Added display script filename when a script error is found while parsing
           [celest]
         * Added 2 char-server packets to support Freya's login server [celest]
