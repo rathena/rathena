@@ -2540,13 +2540,22 @@ int id_db_final(void *k,void *d,va_list ap)
 	nullpo_retr(0, id=d);
 	if(id->lootitem)
 		free(id->lootitem);
-	free(id);
+	if(id)
+		free(id);
 	return 0;
 }
-int map_db_final(void *k,void *d,va_list ap){ return 0; }
+int map_db_final(void *k,void *d,va_list ap)
+{
+	struct map_data *id;
+	nullpo_retr(0, id=d);
+	if(id->gat)
+		free(id->gat);
+	if(id)
+		free(id);
+	return 0;
+}
 int nick_db_final(void *k,void *d,va_list ap){ return 0; }
 int charid_db_final(void *k,void *d,va_list ap){ return 0; }
-
 static int cleanup_sub(struct block_list *bl, va_list ap) {
 	nullpo_retr(0, bl);
 
