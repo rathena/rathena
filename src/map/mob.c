@@ -1590,15 +1590,19 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				(dist=distance(md->bl.x,md->bl.y,abl->x,abl->y))>=32 || battle_check_target(bl,abl,BCT_ENEMY)==0)
 				md->attacked_id=0;
 			else {
-				md->target_id=md->attacked_id; // set target
-				md->state.targettype = ATTACKABLE;
-				attack_type = 1;
-				md->attacked_id=0;
-				md->min_chase=dist+13;
-				if(md->min_chase>26)
-					md->min_chase=26;
+				//‹——£‚ª‰“‚¢ê‡‚Íƒ^ƒQ‚ð•ÏX‚µ‚È‚¢
+
+				if (!md->target_id || (distance(md->bl.x,md->bl.y,abl->x,abl->y)<3)) {
+					md->target_id=md->attacked_id; // set target
+					md->state.targettype = ATTACKABLE;
+					attack_type = 1;
+					md->attacked_id=0;
+					md->min_chase=dist+13;
+					if(md->min_chase>26)
+						md->min_chase=26;
+				}
+			}
 		}
-	}
 	}
 
 	md->state.master_check = 0;
@@ -3040,7 +3044,7 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 
 	if(battle_config.mob_skill_log)
 		printf("MOB skill castend skill=%d, class = %d\n",md->skillid,md->class);
-	mob_stop_walking(md,0);
+//	mob_stop_walking(md,0);
 
 	switch( skill_get_nk(md->skillid) )
 	{
@@ -3171,7 +3175,7 @@ int mobskill_castend_pos( int tid, unsigned int tick, int id,int data )
 
 	if(battle_config.mob_skill_log)
 		printf("MOB skill castend skill=%d, class = %d\n",md->skillid,md->class);
-	mob_stop_walking(md,0);
+//	mob_stop_walking(md,0);
 
 	skill_castend_pos2(&md->bl,md->skillx,md->skilly,md->skillid,md->skilllv,tick,0);
 
@@ -3257,6 +3261,7 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 
 	if(casttime>0 || forcecast){ 	// ‰r¥‚ª•K—v
 //		struct mob_data *md2;
+		mob_stop_walking(md,0);		// •às’âŽ~
 		clif_skillcasting( &md->bl,
 			md->bl.id, target->id, 0,0, skill_id,casttime);
 
@@ -3352,9 +3357,11 @@ int mobskill_use_pos( struct mob_data *md,
 		printf("MOB skill use target_pos=(%d,%d) skill=%d lv=%d cast=%d, class = %d\n",
 			skill_x,skill_y,skill_id,skill_lv,casttime,md->class);
 
-	if( casttime>0 )	// A cast time is required.
+	if( casttime>0 ) {	// A cast time is required.
+		mob_stop_walking(md,0);		// •às’âŽ~
 		clif_skillcasting( &md->bl,
 			md->bl.id, 0, skill_x,skill_y, skill_id,casttime);
+	}
 
 	if( casttime<=0 )	// A skill without a cast time wont be cancelled.
 		md->state.skillcastcancel=0;

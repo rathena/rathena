@@ -2786,8 +2786,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 	struct mob_data *tmd=NULL;
 	int hitrate,flee,cri = 0,atkmin,atkmax;
 	int dex,luk,target_count = 1;
+	int no_cardfix=0;
 	int def1 = battle_get_def(target);
 	int def2 = battle_get_def2(target);
+//	int mdef1, mdef2;
 	int t_vit = battle_get_vit(target);
 	struct Damage wd;
 	int damage,damage2,damage3=0,damage4=0,type,div_,blewcount=skill_get_blewcount(skill_num,skill_lv);
@@ -3307,6 +3309,9 @@ static struct Damage battle_calc_pc_weapon_attack(
 				break;
 			case CR_GRANDCROSS:
 				hitrate= 1000000;
+				if(!battle_config.gx_cardfix)
+
+					no_cardfix = 1;
 				break;
 			case AM_DEMONSTRATION:	// デモンストレーション
 				damage = damage*(100+ 20*skill_lv)/100;
@@ -3418,6 +3423,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case ASC_METEORASSAULT:			/* メテオアサルト */
 				damage = damage*(40+ 40*skill_lv)/100;
 				damage2 = damage2*(40+ 40*skill_lv)/100;
+				no_cardfix = 1;
 				break;
 			case SN_SHARPSHOOTING:			/* シャープシューティング */
 				damage += damage*(30*skill_lv)/100;
@@ -3548,6 +3554,25 @@ static struct Damage battle_calc_pc_weapon_attack(
 			}
 		}
 	}
+
+	// 状態異常中のダメージ追加でクリティカルにも有効なスキル
+
+	if (sc_data) {
+
+		// エンチャントデッドリーポイズン
+
+		if(sc_data[SC_EDP].timer != -1) {
+
+			damage += damage * (150 + sc_data[SC_EDP].val1 * 50) / 100;
+
+			damage2 += damage2 * (150 + sc_data[SC_EDP].val1 * 50) / 100;
+
+			no_cardfix = 1;
+
+		}
+
+	}
+
 	// 精錬ダメージの追加
 	if( skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST) {			//DEF, VIT無視
 		damage += battle_get_atk2(src);
@@ -3614,7 +3639,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	//Advanced Katar Research by zanetheinsane
 	if(sd->weapontype1 == 0x10 || sd->weapontype2 == 0x10){
 		if((skill = pc_checkskill(sd,ASC_KATAR)) > 0) {
-			damage += (damage*((skill*2)+10)) / 100 ;
+			damage += damage*(10+(skill * 2))/100;
 		}
 	}
 
@@ -3667,8 +3692,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 			break;
 		}
 	}
-	if(skill_num != CR_GRANDCROSS || !battle_config.gx_cardfix)
-	damage=damage*cardfix/100; //カード補正によるダメージ増加
+	if(!no_cardfix)
+		damage=damage*cardfix/100; //カード補正によるダメージ増加
 //カードによるダメージ増加処理ここまで
 
 //カードによるダメージ追加処理(左手)ここから
@@ -3689,7 +3714,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 			break;
 		}
 	}
-	if(skill_num != CR_GRANDCROSS) damage2=damage2*cardfix/100; //カード補正による左手ダメージ増加
+	if(!no_cardfix)
+
+		damage2=damage2*cardfix/100;
+//カード補正による左手ダメージ増加
 //カードによるダメージ増加処理(左手)ここまで
 
 // -- moonsoul (cardfix for magic damage portion of ASC_BREAKER)
@@ -4465,6 +4493,12 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		return 0;
 	}
 
+	if(battle_check_target(src,target,BCT_ENEMY) <= 0 &&
+
+				!battle_check_range(src,target,0))
+
+		return 0;	// 攻撃対象外
+
 	race = battle_get_race(target);
 	ele = battle_get_elem_type(target);
 	if(battle_check_target(src,target,BCT_ENEMY) > 0 &&
@@ -5012,6 +5046,7 @@ static const struct {
 	{ "player_skillup_limit",              &battle_config.skillup_limit			},
 	{ "weapon_produce_rate",               &battle_config.wp_rate					},
 	{ "potion_produce_rate",               &battle_config.pp_rate					},
+	{ "deadly_potion_produce_rate",	       &battle_config.cdp_rate					},
 	{ "monster_active_enable",             &battle_config.monster_active_enable	},
 	{ "monster_damage_delay_rate",         &battle_config.monster_damage_delay_rate},
 	{ "monster_loot_type",                 &battle_config.monster_loot_type		},
@@ -5100,6 +5135,7 @@ static const struct {
 	{ "making_arrow_name_input",           &battle_config.making_arrow_name_input	},
 	{ "holywater_name_input",              &battle_config.holywater_name_input		},
 	{ "display_delay_skill_fail",          &battle_config.display_delay_skill_fail	},
+	{ "display_snatcher_skill_fail",       &battle_config.display_snatcher_skill_fail	},
 	{ "chat_warpportal",                   &battle_config.chat_warpportal			},
 	{ "mob_warpportal",                    &battle_config.mob_warpportal			},
 	{ "dead_branch_active",                &battle_config.dead_branch_active			},
@@ -5114,6 +5150,7 @@ static const struct {
 	{ "gx_cardfix",                        &battle_config.gx_cardfix				},
 	{ "gx_dupele",                         &battle_config.gx_dupele				},
 	{ "gx_disptype",                       &battle_config.gx_disptype				},
+	{ "devotion_level_difference",         &battle_config.devotion_level_difference	},
 	{ "player_skill_partner_check",        &battle_config.player_skill_partner_check},
 	{ "hide_GM_session",                   &battle_config.hide_GM_session			},
 	{ "unit_movement_type",                &battle_config.unit_movement_type		},
@@ -5240,6 +5277,7 @@ void battle_set_defaults() {
 	battle_config.skillup_limit = 0;
 	battle_config.wp_rate=100;
 	battle_config.pp_rate=100;
+	battle_config.cdp_rate=100;
 	battle_config.monster_active_enable=1;
 	battle_config.monster_damage_delay_rate=100;
 	battle_config.monster_loot_type=0;
@@ -5329,6 +5367,7 @@ void battle_set_defaults() {
 	battle_config.making_arrow_name_input = 1;
 	battle_config.holywater_name_input = 1;
 	battle_config.display_delay_skill_fail = 1;
+	battle_config.display_snatcher_skill_fail = 1;
 	battle_config.chat_warpportal = 0;
 	battle_config.mob_warpportal = 0;
 	battle_config.dead_branch_active = 0;
@@ -5343,6 +5382,7 @@ void battle_set_defaults() {
 	battle_config.gx_cardfix = 0;
 	battle_config.gx_dupele = 1;
 	battle_config.gx_disptype = 1;
+	battle_config.devotion_level_difference = 10;
 	battle_config.player_skill_partner_check = 1;
 	battle_config.hide_GM_session = 0;
 	battle_config.unit_movement_type = 0;

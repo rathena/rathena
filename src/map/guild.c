@@ -54,13 +54,25 @@ int guild_skill_get_inf(int id) { // Modified for new skills [Sara]
 int guild_skill_get_sp(int id,int lv){ return 0; }
 int guild_skill_get_range(int id){ return 0; }
 int guild_skill_get_max(int id) { // Modified for new skills [Sara]
-	if (id==GD_EXTENSION) return 10;
-	else if (id==GD_REGENERATION) return 3;
+	if(id==GD_EXTENSION) return 10;
+	else if(id==GD_REGENERATION) return 3;
 	else return 1;
 }
 
 // ギルドスキルがあるか確認
-int guild_checkskill(struct guild *g,int id){ return g->skill[id-10000].lv; }
+int guild_checkskill(struct guild *g,int id)
+{
+
+	int idx = id-GD_SKILLBASE;
+
+
+	if (idx < 0 || idx >= MAX_GUILDSKILL)
+
+		return 0;
+
+	return g->skill[idx].lv;
+
+}
 
 
 int guild_payexp_timer(int tid,unsigned int tick,int id,int data);
@@ -931,17 +943,20 @@ int guild_payexp(struct map_session_data *sd,int exp)
 int guild_skillup(struct map_session_data *sd,int skill_num,int flag)
 {
 	struct guild *g;
-	int idx;
+	int idx = skill_num - GD_SKILLBASE;
 
 	nullpo_retr(0, sd);
 
+	if(idx < 0 || idx >= MAX_GUILDSKILL)
+
+		return 0;
 	if(sd->status.guild_id==0 || (g=guild_search(sd->status.guild_id))==NULL)
 		return 0;
 	if(strcmp(sd->status.name,g->master))
 		return 0;
 
 	if( (g->skill_point>0 || flag&1) &&
-		g->skill[(idx=skill_num-10000)].id!=0 &&
+		g->skill[idx].id!=0 &&
 		g->skill[idx].lv < guild_skill_get_max(skill_num) ){
 		intif_guild_skillup(g->guild_id,skill_num,sd->status.account_id,flag);
 	}
@@ -958,7 +973,7 @@ int guild_skillupack(int guild_id,int skill_num,int account_id)
 	if(g==NULL)
 		return 0;
 	if(sd!=NULL)
-		clif_guild_skillup(sd,skill_num,g->skill[skill_num-10000].lv);
+		clif_guild_skillup(sd,skill_num,g->skill[skill_num-GD_SKILLBASE].lv);
 	// 全員に通知
 	for(i=0;i<g->max_member;i++)
 		if((sd=g->member[i].sd)!=NULL)

@@ -174,6 +174,7 @@ extern struct Battle_Config {
 	int skillup_limit;
 	int wp_rate;
 	int pp_rate;
+	int cdp_rate;
 	int monster_active_enable;
 	int monster_damage_delay_rate;
 	int monster_loot_type;
@@ -262,6 +263,7 @@ extern struct Battle_Config {
 	int making_arrow_name_input;
 	int holywater_name_input;
 	int display_delay_skill_fail;
+	int display_snatcher_skill_fail;
 	int chat_warpportal;
 	int mob_warpportal;
 	int dead_branch_active;
@@ -302,6 +304,7 @@ extern struct Battle_Config {
 	int gx_cardfix;
 	int gx_dupele;
 	int gx_disptype;
+	int devotion_level_difference;
 	int player_skill_partner_check;
 	int hide_GM_session;
 	int unit_movement_type;

@@ -311,6 +311,9 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 
 	SC_SPIDERWEB			=180,		/* スパイダ?ウェッブ */
 	SC_MEMORIZE			=181,		/* メモライズ */
+//	SC_DPOISON			=182,		/* 猛毒 */
+
+//	SC_EDP				=183,		/* エフェクトが判明したら移動 */
 
 	SC_WEDDING			=187,	//結婚用(結婚衣裳になって?くのが?いとか)
 	SC_NOCHAT			=188,	//赤エモ?態
@@ -860,7 +863,8 @@ enum {
 	CR_FULLPROTECTION,
 	ITM_TOMAHAWK,
 
-	GD_APPROVAL=10000,
+//	moved to common/mmo.h
+/*	GD_APPROVAL=10000,
 	GD_KAFRACONTACT=10001,
 	GD_GUARDIANRESEARCH=10002,
 	GD_GUARDUP=10003,
@@ -874,7 +878,7 @@ enum {
 	GD_REGENERATION=10011,
 	GD_RESTORE=10012,
 	GD_EMERGENCYCALL=10013,
-	GD_DEVELOPMENT=10014,
+	GD_DEVELOPMENT=10014,*/
 };
 
 #endif

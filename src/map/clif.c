@@ -9002,6 +9002,10 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd) {
 	if (item_index < 0 || item_index >= MAX_INVENTORY)
 		return;
 
+	if(itemdb_isdropable(sd->status.inventory[item_index].nameid) == 0)
+
+		return;
+
 	if (sd->state.storage_flag)
 		storage_guild_storageadd(sd, item_index, item_amount);
 	else
@@ -10023,6 +10027,9 @@ static int clif_parse(int fd) {
 			map_deliddb(&sd->bl); // account_id has been included in the DB before auth answer
 		}
 		close(fd);
+		if (sd) // ’Ç‰Á
+
+			map_deliddb(&sd->bl); // ’Ç‰Á
 		delete_session(fd);
 		return 0;
 	}

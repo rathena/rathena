@@ -2727,6 +2727,25 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->hp_drain_per_ += val;
 		}
 		break;
+	case SP_HP_DRAIN_VALUE:
+
+		if(!sd->state.lr_flag) {
+
+			sd->hp_drain_rate += type2;
+
+			sd->hp_drain_value += val;
+
+		}
+
+		else if(sd->state.lr_flag == 1) {
+
+			sd->hp_drain_rate_ += type2;
+
+			sd->hp_drain_value_ += val;
+
+		}
+
+		break;
 	case SP_SP_DRAIN_RATE:
 		if(!sd->state.lr_flag) {
 			sd->sp_drain_rate += type2;
@@ -2736,6 +2755,25 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->sp_drain_rate_ += type2;
 			sd->sp_drain_per_ += val;
 		}
+		break;
+	case SP_SP_DRAIN_VALUE:
+
+		if(!sd->state.lr_flag) {
+
+			sd->sp_drain_rate += type2;
+
+			sd->sp_drain_value += val;
+
+		}
+
+		else if(sd->state.lr_flag == 1) {
+
+			sd->sp_drain_rate_ += type2;
+
+			sd->sp_drain_value_ += val;
+
+		}
+
 		break;
 	case SP_WEAPON_COMA_ELE:
 		if(sd->state.lr_flag != 2)
@@ -3107,6 +3145,16 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 {
 	nullpo_retr(1, sd);
 
+	if(n < 0 || n >= MAX_INVENTORY)
+
+		return 1;
+
+
+	if(amount <= 0)
+
+		return 1;
+
+
 	if (sd->status.inventory[n].nameid <= 0 ||
 	    sd->status.inventory[n].amount < amount ||
 	    sd->trade_partner != 0 || sd->vender_id != 0 ||
@@ -3240,8 +3288,10 @@ int pc_useitem(struct map_session_data *sd,int n)
 		if(sd->inventory_data[n])
 			run_script(sd->inventory_data[n]->use_script,0,sd->bl.id,0);
 
-		clif_useitemack(sd,n,amount-1,1);
 		pc_delitem(sd,n,1,1);
+		amount = sd->status.inventory[n].amount;
+
+		clif_useitemack(sd,n,amount,1);
 	}
 
 	return 0;

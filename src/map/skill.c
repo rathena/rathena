@@ -232,7 +232,11 @@ int SkillStatusChangeTable[]={	/* skill.hのenumのSC_***とあわせること */
 	-1,-1,
 	SC_GOSPEL,
 /* 370- */
-	-1,-1,-1,-1,-1,-1,-1,-1,SC_EDP,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,
+
+	SC_EDP,
+
+	-1,
 /* 380- */
 	SC_TRUESIGHT,
 	-1,-1,
@@ -1053,8 +1057,8 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			if((skill*15 + 55) + (skill2 = pc_checkskill(sd,TF_STEAL))*10 > rand()%1000) {
 				if(pc_steal_item(sd,bl))
 					clif_skill_nodamage(src,bl,TF_STEAL,skill2,1);
-				//else
-				//	clif_skill_fail(sd,skillid,0,0); // it's annoying! =p [Celest]
+				else if (battle_config.display_snatcher_skill_fail)
+					clif_skill_fail(sd,skillid,0,0); // it's annoying! =p [Celest]
 			}
 		// エンチャントデットリ?ポイズン(猛毒?果)
 		if (sd && sd->sc_data[SC_EDP].timer != -1 && rand() % 10000 < sd->sc_data[SC_EDP].val2 * sc_def_vit) {
@@ -2559,6 +2563,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	case WZ_JUPITEL:			/* ユピテルサンダ? */
 	case NPC_MAGICALATTACK:		/* MOB:魔法打?攻? */
 	case PR_ASPERSIO:			/* アスペルシオ */
+//	case HW_NAPALMVULCAN:		/* ナパームバルカン */
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
@@ -2612,34 +2617,34 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		}
 		break;
 
-		case HW_NAPALMVULCAN: // Fixed By SteelViruZ
-			if(flag&1){
-				if(bl->id!=skill_area_temp[1]){
-					skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,
-						skill_area_temp[0]);
-				}
-			}else{
-				int ar=(skillid==HW_NAPALMVULCAN)?1:2;
-				skill_area_temp[1]=bl->id;
-				if(skillid==HW_NAPALMVULCAN){
-					skill_area_temp[0]=0;
-					map_foreachinarea(skill_area_sub,
-						bl->m,bl->x-1,bl->y-1,bl->x+1,bl->y+1,0,
-						src,skillid,skilllv,tick, flag|BCT_ENEMY ,
-						skill_area_sub_count);
-				}else{
-					skill_area_temp[0]=0;
-					skill_area_temp[2]=bl->x;
-					skill_area_temp[3]=bl->y;
-				}
+	case HW_NAPALMVULCAN: // Fixed By SteelViruZ
+		if(flag&1){
+			if(bl->id!=skill_area_temp[1]){
 				skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,
-					skill_area_temp[0] );
-				map_foreachinarea(skill_area_sub,
-					bl->m,bl->x-ar,bl->y-ar,bl->x+ar,bl->y+ar,0,
-					src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-					skill_castend_damage_id);
+					skill_area_temp[0]);
 			}
-			break;
+		}else{
+			int ar=(skillid==HW_NAPALMVULCAN)?1:2;
+			skill_area_temp[1]=bl->id;
+			if(skillid==HW_NAPALMVULCAN){
+				skill_area_temp[0]=0;
+				map_foreachinarea(skill_area_sub,
+					bl->m,bl->x-1,bl->y-1,bl->x+1,bl->y+1,0,
+					src,skillid,skilllv,tick, flag|BCT_ENEMY ,
+					skill_area_sub_count);
+			}else{
+				skill_area_temp[0]=0;
+				skill_area_temp[2]=bl->x;
+				skill_area_temp[3]=bl->y;
+			}
+			skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,
+				skill_area_temp[0] );
+			map_foreachinarea(skill_area_sub,
+				bl->m,bl->x-ar,bl->y-ar,bl->x+ar,bl->y+ar,0,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+				skill_castend_damage_id);
+		}
+		break;
 
 	case WZ_FROSTNOVA:			/* フロストノヴァ */
 		skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
