@@ -1,6 +1,7 @@
 Date	Added
 12/10
 	* Fixed parse's for login-server, it actually fails if packet len isn't long enough [Wizputer]
+	* Edit of parses in char-server, -UNTESTED- [Wizputer]
 
 12/09
 	* char-server changes -UNTESTED- [Wizputer]

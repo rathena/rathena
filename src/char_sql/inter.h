@@ -24,11 +24,6 @@ extern MYSQL_RES* 	sql_res ;
 extern MYSQL_ROW	sql_row ;
 extern int 	sql_cnt;
 
-extern MYSQL lmysql_handle;
-extern char tmp_lsql[65535];
-extern MYSQL_RES* 	lsql_res ;
-extern MYSQL_ROW	lsql_row ;
-
 extern int char_server_port;
 extern char char_server_ip[32];
 extern char char_server_id[32];

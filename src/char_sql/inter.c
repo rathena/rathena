@@ -36,11 +36,6 @@ MYSQL_ROW	sql_row ;
 int sql_fields, sql_cnt;
 char tmp_sql[65535];
 
-MYSQL lmysql_handle;
-char tmp_lsql[65535];
-MYSQL_RES* 	lsql_res ;
-MYSQL_ROW	lsql_row ;
-
 int char_server_port = 3306;
 char char_server_ip[32] = "127.0.0.1";
 char char_server_id[32] = "ragnarok";
@@ -263,7 +258,7 @@ int inter_init(const char *file)
 	
 	//DB connection initialized
 	mysql_init(&mysql_handle);
-	printf("Connect Character DB server.... (Character Server)\n");
+	printf("Connect to DB server....\n");
 	if(!mysql_real_connect(&mysql_handle, char_server_ip, char_server_id, char_server_pw,
 		char_server_db ,char_server_port, (char *)NULL, CLIENT_MULTI_STATEMENTS)) {
 			//pointer check
@@ -271,19 +266,9 @@ int inter_init(const char *file)
 			exit(1);
 	}
 	else {
-		printf ("Connect Success! (Character Server)\n");
+		printf ("Connect Success!\n");
 	}
 	
-	mysql_init(&lmysql_handle);
-	printf("Connect Character DB server.... (login server)\n");
-	if(!mysql_real_connect(&lmysql_handle, login_server_ip, login_server_id, login_server_pw,
-		login_server_db ,login_server_port, (char *)NULL, 0)) {
-			//pointer check
-			printf("%s\n",mysql_error(&lmysql_handle));
-			exit(1);
-	}else {
-		printf ("Connect Success! (Login Server)");
-	}
 	wis_db = numdb_init();
 	inter_guild_sql_init();
 	inter_storage_sql_init();

@@ -2103,6 +2103,7 @@ int client_request_connect(int fd, int len) {
 	    return -1;
 
    	struct char_session_data *sd = session[fd]->session_data;
+   	int i;
    	
 	#ifdef DEBUG	      
    	printf("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOL(fd, 10));
@@ -2184,11 +2185,12 @@ int client_request_connect(int fd, int len) {
 	return 0;
 }
 
-int char_select(int fd, int len) {
+int char_select(int fd, int len, unsigned char *ip) {
 	if (len < 3)
 		return -1;
 	
 	int i;
+	struct char_session_data *sd = session[fd]->session_data;
 
 	#ifdef DEBUG
 	printf("0x66> request connect - account_id:%d/char_num:%d\n",sd->account_id,RFIFOB(fd, 2));
@@ -2268,7 +2270,7 @@ int char_select(int fd, int len) {
 	memcpy(WFIFOP(fd, 6), char_dat[0].last_point.map, 16);
 
 	//Lan check added by Kashy
-	if (lan_ip_check(p))
+	if (lan_ip_check(ip))
 		WFIFOL(fd, 22) = inet_addr(lan_map_ip);
 	else
 		WFIFOL(fd, 22) = server[i].ip;
@@ -2306,7 +2308,8 @@ int make_new_char(int fd, int len) {
 	if (len < 37)
 		return -1;
 
-    int i;
+    int i, ch;
+    struct char_session_data *sd = session[fd]->session_data;
     
 	#ifdef DEBUG
 	printf("Request to make a new char\n");
@@ -2379,6 +2382,7 @@ int delete_char(int fd, int len) {
 
 	char email[40];
 	int char_id = RFIFOL(fd, 2);
+	struct char_session_data *sd = session[fd]->session_data;
 
 	#ifdef DEBUG
 	printf("\033[1;31m Request Char Del:\033[0m \033[1;32m%d\033[0m(\033[1;32m%d\033[0m)\n", sd->account_id, char_id);
@@ -2388,8 +2392,7 @@ int delete_char(int fd, int len) {
 	sprintf(tmp_sql, "SELECT `email` FROM `%s` WHERE `%s`='%d'",login_db, login_db_account_id, sd->account_id);
 	sql_query(tmp_sql,"delete_char");
 	
-			
-	if ((sql_res = mysql_store_result(&lmysql_handle)) &&(sql_row = mysql_fetch_row(sql_res))) {
+	if ((sql_res = mysql_store_result(&mysql_handle)) &&(sql_row = mysql_fetch_row(sql_res))) {
 		if (strcmp(email,sql_row[0]) == 0) {
 			mysql_free_result(sql_res);
 		} else {
@@ -2417,6 +2420,7 @@ int delete_char(int fd, int len) {
 		sql_query(tmp_sql,"delete_char");
 
 		if (sql_row[0] != 0) {
+		    char buf[16];
 			WBUFW(buf,0) = 0x2b12;
 			WBUFL(buf,2) = char_id;
 			WBUFL(buf,6) = atoi(sql_row[1]);
@@ -2434,10 +2438,72 @@ int delete_char(int fd, int len) {
 	return 0;
 }
 
+int mapserver_login(int fd, int len) {
+	if (len < 60)
+		return -1;
+	
+	int i;
+	
+	WFIFOW(fd, 0) = 0x2af9;
+
+	for(i = 0; i < MAX_MAP_SERVERS; i++) {
+		if (server_fd[i] < 0)
+			break;
+	}
+
+	if (i == MAX_MAP_SERVERS || strcmp(RFIFOP(fd,2), userid) || strcmp(RFIFOP(fd,26), passwd)) {
+		WFIFOB(fd,2) = 3;
+		WFIFOSET(fd, 3);
+	} else {
+		WFIFOB(fd,2) = 0;
+		WFIFOSET(fd, 3);
+		session[fd]->func_parse = parse_frommap;
+		server_fd[i] = fd;
+		if(anti_freeze_enable)
+			server_freezeflag[i] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
+		server[i].ip = RFIFOL(fd, 54);
+		server[i].port = RFIFOW(fd, 58);
+		server[i].users = 0;
+		memset(server[i].map, 0, sizeof(server[i].map));
+		realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
+		char_mapif_init(fd);
+	}
+
+	RFIFOSKIP(fd,60);
+	
+	return 0;
+}
+
+int skip_packet(int fd, int len, int real_len) {
+	if (len < real_len)
+		return 0;
+
+	RFIFOSKIP(fd,real_len);
+	
+	return 0;
+}
+
+int get_info(int fd, int len) {
+	// Athena info get
+	WFIFOW(fd, 0) = 0x7531;
+	WFIFOB(fd, 2) = ATHENA_MAJOR_VERSION;
+	WFIFOB(fd, 3) = ATHENA_MINOR_VERSION;
+	WFIFOB(fd, 4) = ATHENA_REVISION;
+	WFIFOB(fd, 5) = ATHENA_RELEASE_FLAG;
+	WFIFOB(fd, 6) = ATHENA_OFFICIAL_FLAG;
+	WFIFOB(fd, 7) = ATHENA_SERVER_INTER | ATHENA_SERVER_CHAR;
+	WFIFOW(fd, 8) = ATHENA_MOD_VERSION;
+	WFIFOSET(fd, 10);
+	RFIFOSKIP(fd, 2);
+
+	return 0;
+}
+
 int parse_char(int fd) {
-	int i, ch = 0,len,res=0;
+	int len,res=0;
 	unsigned short cmd;
-	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
+	unsigned char *ip = (unsigned char *) &session[fd]->client_addr.sin_addr;
+	struct char_session_data *sd = session[fd]->session_data;
 
 	if(login_fd < 0)
 		session[fd]->eof = 1;
@@ -2450,8 +2516,6 @@ int parse_char(int fd) {
 		return 0;
 	}
 
-
-	
 	len = RFIFOREST(fd);
 	
 	while(len >= 2 && res == 0) {
@@ -2480,71 +2544,24 @@ int parse_char(int fd) {
 //			cmd = 0xffff;	// パケットダンプを表示させる
 		
 		switch(cmd){
-		case 0x20b: //20040622 encryption ragexe correspondence
-			if (RFIFOREST(fd) < 19)
-				return 0;
-			RFIFOSKIP(fd,19);
-			break;
+		//20040622 encryption ragexe correspondence			
+		case 0x20b: res = skip_packet(fd,len,19);         break;
 
 		case 0x65: res = client_request_connect(fd,len);  break;
-		case 0x66: res = char_select(fd,len);             break;
+		case 0x66: res = char_select(fd,len,ip);          break;
 		case 0x67: res = make_new_char(fd,len);           break;
 		case 0x68: res = delete_char(fd,len);			  break;
-
-		case 0x2af8: // login as map-server
-			if (RFIFOREST(fd) < 60)
-				return 0;
-			WFIFOW(fd, 0) = 0x2af9;
-			for(i = 0; i < MAX_MAP_SERVERS; i++) {
-				if (server_fd[i] < 0)
-					break;
-			}
-			if (i == MAX_MAP_SERVERS || strcmp(RFIFOP(fd,2), userid) || strcmp(RFIFOP(fd,26), passwd)) {
-				WFIFOB(fd,2) = 3;
-				WFIFOSET(fd, 3);
-			} else {
-//				int len;
-				WFIFOB(fd,2) = 0;
-				WFIFOSET(fd, 3);
-				session[fd]->func_parse = parse_frommap;
-				server_fd[i] = fd;
-				if(anti_freeze_enable)
-					server_freezeflag[i] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
-				server[i].ip = RFIFOL(fd, 54);
-				server[i].port = RFIFOW(fd, 58);
-				server[i].users = 0;
-				memset(server[i].map, 0, sizeof(server[i].map));
-				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
-				char_mapif_init(fd);
-			}
-			RFIFOSKIP(fd,60);
-			break;
-
-		case 0x187:	// Alive?
-			if (RFIFOREST(fd) < 6) {
-				return 0;
-			}
-			RFIFOSKIP(fd, 6);
-			break;
-
-		case 0x7530:	// Athena info get
-			WFIFOW(fd, 0) = 0x7531;
-			WFIFOB(fd, 2) = ATHENA_MAJOR_VERSION;
-			WFIFOB(fd, 3) = ATHENA_MINOR_VERSION;
-			WFIFOB(fd, 4) = ATHENA_REVISION;
-			WFIFOB(fd, 5) = ATHENA_RELEASE_FLAG;
-			WFIFOB(fd, 6) = ATHENA_OFFICIAL_FLAG;
-			WFIFOB(fd, 7) = ATHENA_SERVER_INTER | ATHENA_SERVER_CHAR;
-			WFIFOW(fd, 8) = ATHENA_MOD_VERSION;
-			WFIFOSET(fd, 10);
-			RFIFOSKIP(fd, 2);
-			return 0;
+		case 0x2af8: res = mapserver_login(fd,len);       break;
+		case 0x187:	res = skip_packet(fd,len,6);		  break;
+		case 0x7530: res = get_info(fd,len);              break;
 
 		case 0x7532:	// disconnect(default also disconnect)
 		default:
 			session[fd]->eof = 1;
 			return 0;
 		}
+		
+		len = RFIFOREST(fd);
 	}
 	RFIFOFLUSH(fd);
 
@@ -2707,26 +2724,22 @@ int char_lan_config_read(const char *lancfgName){
 }
 
 void do_final(void) {
-	printf("Doing final stage...\n");
-	//mmo_char_sync();
-	//inter_save();
+	printf("Closing char-server...\n");
+
 	do_final_itemdb();
+
 	//check SQL save progress.
 	//wait until save char complete
-	printf("waiting until char saving complete...\n");
+	printf("Waiting until char saving complete...\n");
 	do {
 		sleep (0);
 	}while (save_flag != 0);
 
 	sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
-	}
+	sql_query(tmp_sql,"do_final");
 
 	sprintf(tmp_sql,"DELETE FROM `ragsrvinfo");
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
-	}
+	sql_query(tmp_sql,"do_final");
 
 	if(gm_account) free(gm_account);
 
@@ -2735,9 +2748,8 @@ void do_final(void) {
 	delete_session(char_fd);
 
 	mysql_close(&mysql_handle);
-	mysql_close(&lmysql_handle);
-
-	printf("ok! all done...\n");
+	
+	printf("Good-bye...\n");
 }
 
 void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
