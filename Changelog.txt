@@ -1,5 +1,6 @@
 Date	Added
 11/13
+	* Updated & Optimized TXT Login from FREYA. (need to do SQL now) [Codemaster]
 	* Removed compile warnings in intif.c. [Valaris]
 	* Fixed chrif_changesex and @changesex, now uses packet 0x3000. [MC Cameri]
 
