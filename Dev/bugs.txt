@@ -1,8 +1,3 @@
-Problem:	Adding the new guild skills causes it to crash?
-Assigned:	Celest
-Progess:	90%
-Note:           The skills should be almost working now.
-
 Problem:	2-2-1 classes are regarded as Novicies by the game server. NPCs aren't taking them as thier jobs but if you the the NPC to do something for a novice class it works with the 2-2-1 like renters. Also if some one becomes high novice, if they use jobra they can become first jobs like a swordsman.
 Assigned:	N/A
 Progess:	0%
@@ -43,27 +38,9 @@ Problem:	When servers restart sometime the gm lvls in sql get reset back to 0
 Assigned:	Wizputer
 Progess:	0%
 
-Problem:	[mob attacks againsts players wearing ghostring armor do full damage mob_ghostring_fix: yes] Does not work, does nothing.
-Assigned:	N/A
-Progess:	0%
-
 Problem:	When athena is run in linux it creates core files which takes 300 megs.
 Assigned:	N/A (it's not a bug, those core files are createt on every server crash)
 Progess:	0%
-
-Problem:	Sage's Area Skills (Delu.,Vulcano, etc) if casted on the same area (or overlap each other) instantly reboots server. use @gvgon when test. Don't test it towns
-Assigned:	N/A
-Progess:	0%
-Notes:          Never heard of this being reported again... fixed maybe? [Celest]
-
-Problem:        Changing email and Broadcast both use the same packets / Packet 0x3000 assigned to changing email instead of broadcasting?
-Notes:          Refer to char.c line 2272 and line 2416, intif.c line 107, chrif.c line 377
-Assigned:       N/A
-Progress:       0%
-
-Problem:	AFM Maps not loading coords correctly, players appearing outside boundaries of the maps.
-Assigned:	N/A
-Progress:	100% (Fixed, i hope. ;p [Celest])
 
 Problem:	Wierd login-server bug on sql, it displays that the server is full when map-server crashes, has something to do with anti double login feature?
 Assigned:	N/A
@@ -73,19 +50,9 @@ Problem:	Login-Txt is now crashing when you close it using ^C, Ctrl+C(on windows
 Assigned:	MC Cameri
 Progress:	100%
 
-Problem:	Storm Gust doesn't freeze mobs / players
-Assigned:	Celest
-Progress:	100% (Should be working now.)
-
 Problem:	MVP cast spells w/o showing "prepare cast line"
 Assigned:	N/A
 Progress:	0%
-
-Problem:	Line 130 in item_db.txt is giving error.
-Note:		This is the whole line: 658,Tribal_Solidarity,Tribal Solidarity,2,1000,0,500,,,,,10477567,2,,,,,{ guildgetexp rand(1,10000); },{}
-Assigned:	N/A
-Progress:	-
-Notes:          It's a new script command, you need to compile with an updated script.c. [celest]
 
 Problem:	Item duping bug in storage...
 Assigned:	N/A
@@ -159,10 +126,13 @@ Note:		An example of this would be to make the last line of your NPC you right c
 Problem:	Berserk disallows you to talk and never turns off
 Assigned:	N/A
 Progress:	0%
+Notes:          Doesn't it stop when you have only 100 hp left? [Celest]
 
 Problem:	Auto Berserk doesn't automatically start when you get < 25% HP
 Assigned:	N/A
-Progress:	0%
+Progress:	-
+Notes:          It works differently now, you have to use it once to *allow* it to
+                activate, and once again to stop it from activating. ^^; [Celest]
 
 Problem:	When you change JOB, you don't lose skills in DB. It means if you were Merchant once 
 		you can buy/sell with discount being Mage, etc.

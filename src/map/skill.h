@@ -1,4 +1,4 @@
-// $Id: skill.h,v 1.5 2004/12/3 7:53:26 PM Celestia $
+// $Id: skill.h,v 1.5 2004/12/23 7:43:16 PM Celestia $
 #ifndef _SKILL_H_
 #define _SKILL_H_
 
@@ -223,6 +223,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_SPEEDPOTION1		= 38,
 	SC_SPEEDPOTION2		= 39,
 	SC_SPEEDPOTION3		= 40,
+//-- 40-50
 	SC_STRIPWEAPON		= 50,
 	SC_STRIPSHIELD		= 51,
 	SC_STRIPARMOR		= 52,
@@ -238,6 +239,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_DEFENDER			= 62,
 	SC_AUTOSPELL		= 65,
 	SC_SPEARSQUICKEN	= 68,
+//-- 69-85
 	SC_EXPLOSIONSPIRITS	= 86,
 	SC_STEELBODY		= 87,
 	SC_COMBO			= 89,
@@ -245,21 +247,28 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_FROSTWEAPON		= 91,
 	SC_LIGHTNINGLOADER	= 92,
 	SC_SEISMICWEAPON	= 93,
+//-- 94-102
 	SC_AURABLADE		= 103, /* オ?ラブレ?ド */
 	SC_PARRYING			= 104, /* パリイング */
 	SC_CONCENTRATION	= 105, /* コンセントレ?ション */
 	SC_TENSIONRELAX		= 106, /* テンションリラックス */
 	SC_BERSERK			= 107, /* バ?サ?ク */
+//-- 108, 109
 	SC_ASSUMPTIO		= 110, /* アシャンプティオ */
+//-- 111, 112
 	SC_MAGICPOWER		= 113, /* 魔法力?幅 */
+//-- 114
 	SC_TRUESIGHT		= 115, /* トゥル?サイト */
 	SC_WINDWALK			= 116, /* ウインドウォ?ク */
 	SC_MELTDOWN			= 117, /* メルトダウン */
 	SC_CARTBOOST		= 118, /* カ?トブ?スト */
+//-- 119
 	SC_REJECTSWORD		= 120, /* リジェクトソ?ド */
 	SC_MARIONETTE		= 121, /* マリオネットコントロ?ル */
+//-- 122, 123
 	SC_HEADCRUSH		= 124, /* ヘッドクラッシュ */
 	SC_JOINTBEAT		= 125, /* ジョイントビ?ト */
+//-- 126, 127
 
 	SC_STONE			= 128,
 	SC_FREEZE			= 129,
@@ -314,7 +323,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_SPIDERWEB		=180,		/* スパイダ?ウェッブ */
 	SC_MEMORIZE			=181,		/* メモライズ */
 	SC_DPOISON			=182,		/* 猛毒 */
-	SC_EDP				=183,		/* エフェクトが判明したら移動 */
+//	SC_EDP				=183,	// moved
 	SC_SACRIFICE		=184,		/* サクリファイス */
 	SC_WEDDING			=187,	//結婚用(結婚衣裳になって?くのが?いとか)
 	SC_NOCHAT			=188,	//赤エモ?態
@@ -332,7 +341,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_SIGHTTRASHER		=73,
 //	SC_BASILICA			=125, // 125 is the same id as joint break
 	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]
-//	SC_EDP				=114, // 
+	SC_EDP				=114, /* エフェクトが判明したら移動 */
 	SC_MARIONETTE2		=122, // Marionette target
 	SC_ENSEMBLE			=159,
 	SC_FOGWALL			=178,

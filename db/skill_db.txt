@@ -425,7 +425,7 @@
 365,8,8,1,0,2,1,1,yes,0,0,0,magic,0	//HW_MAGICCRASHER#?ジッククラッシャ?#
 366,0,6,4,0,1,10,1,no,0,0,0,magic,0	//HW_MAGICPOWER#魔?力増幅#
 367,8,8,1,0,2,5,1,no,0,0,0,magic,0	//PA_PRESSURE#プレッシャ?#
-368,8,6,1,0,2,5,1,yes,0,0,0,magic,0	//PA_SACRIFICE#サクリフ?イス#
+368,0,6,4,0,1,5,1,yes,0,0,0,magic,0	//PA_SACRIFICE#サクリファイス#
 369,0,6,4,0,1,10,1,yes,0,0,0,magic,0	//PA_GOSPEL#ゴスペル#
 370,-2,6,1,0,0,5,1,yes,0,0,0,weapon,3	//CH_PALMSTRIKE#猛虎硬派山#
 371,-2,8,4,0,0,5,1,no,0,0,0,weapon,0	//CH_TIGERFIST#伏虎拳#

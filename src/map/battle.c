@@ -3490,16 +3490,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 				damage = damage*(200+20*skill_lv+20*pc_checkskill(sd,AS_POISONREACT))/100;
 				damage2 = damage2*(200+20*skill_lv+20*pc_checkskill(sd,AS_POISONREACT))/100;
 				break;
-			case PA_SACRIFICE:
-				if(sd){
-					int hp, mhp, damage3;
-					hp = battle_get_hp(src);
-					mhp = battle_get_max_hp(src);
-					damage3 = mhp*9/100;
-					damage = damage*damage3*(90+10*skill_lv)/10000;
-					damage2 = damage2*damage3*(90+10*skill_lv)/10000;
-				}
-				break;
 			case ASC_BREAKER:		// -- moonsoul (special damage for ASC_BREAKER skill)
 				if(sd){
 					int damage3;
@@ -3614,11 +3604,12 @@ static struct Damage battle_calc_pc_weapon_attack(
 			damage += damage * (150 + sc_data[SC_EDP].val1 * 50) / 100;
 			no_cardfix = 1;
 		}
-		if (!skill_num && !(t_mode&0x20) && sc_data[SC_SACRIFICE].timer != -1) {
+		// sacrifice works on boss monsters, and does 9% damage to self [Celest]
+		if (!skill_num && /*!(t_mode&0x20) &&*/ sc_data[SC_SACRIFICE].timer != -1) {
 			int mhp = battle_get_max_hp(src);
-			int dmg = mhp * (5 + sc_data[SC_SACRIFICE].val1 * 5) / 1000;
+			int dmg = mhp * 9/100;
 			pc_heal(sd, -dmg, 0);
-			damage = dmg * (90 + sc_data[SC_SACRIFICE].val1 * 15) / 100;
+			damage = dmg * (90 + sc_data[SC_SACRIFICE].val1 * 10) / 100;
 			damage2 = 0;
 			hitrate = 1000000;
 			s_ele = 0;
