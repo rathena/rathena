@@ -1,5 +1,6 @@
 Date	Added
 12/8
+        * fixed @revive [MouseJstr]
         * Added option to turn off login server logging [celest]
         * Moved char server starting logging to after we've read the configuration
           file first [celest]

@@ -4087,12 +4087,12 @@ int atcommand_revive(
 	}
 
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isdead(sd)) {
+		if (pc_isdead(pl_sd)) {
 			pl_sd->status.hp = pl_sd->status.max_hp;
 			clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
 			pc_setstand(pl_sd);
 			if (battle_config.pc_invincible_time > 0)
-				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+				pc_setinvincibletimer(pl_sd, battle_config.pc_invincible_time);
 			clif_updatestatus(pl_sd, SP_HP);
 			clif_updatestatus(pl_sd, SP_SP);
 			clif_resurrection(&pl_sd->bl, 1);
