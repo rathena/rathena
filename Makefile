@@ -110,10 +110,16 @@ clean: src/common/GNUmakefile src/login/GNUmakefile src/char/GNUmakefile src/map
 	cd src ; cd ladmin ; $(MAKE) $(MKDEF) $@ ; cd ..
 	cd src ; cd txt-converter ; cd login ; $(MAKE) $(MKLIB) $@ ; cd ..
 	cd src ; cd txt-converter ; cd char ; $(MAKE) $(MKLIB) $@ ; cd ..
+	cd src ; cd webserver; $(MAKE) $(MKDEF) $@ ; cd ..
 
 tools:
 	cd tool && $(MAKE) $(MKDEF) && cd ..
 	$(CC) -o setupwizard setupwizard.c
+webserver:
+	cd src ; cd webserver ; $(MAKE) $(MKDEF) $@ ; cd ..
+
+#webserver: src/webserver/GNUmakefile
+	
 
 src/common/GNUmakefile: src/common/Makefile
 	sed -e 's/$$>/$$^/' src/common/Makefile > src/common/GNUmakefile
@@ -133,3 +139,5 @@ src/txt-converter/login/GNUmakefile: src/txt-converter/login/Makefile
 	sed -e 's/$$>/$$^/' src/txt-converter/login/Makefile > src/txt-converter/login/GNUmakefile
 src/txt-converter/char/GNUmakefile: src/txt-converter/char/Makefile
 	sed -e 's/$$>/$$^/' src/txt-converter/char/Makefile > src/txt-converter/char/GNUmakefile
+src/webserver/GNUmakefile: src/webserver/Makefile
+	sed -e 's/$$>/$$^/' src/webserver/Makefile > src/webserver/GNUmakefile

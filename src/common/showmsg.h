@@ -10,7 +10,7 @@ extern int _ShowMessage(const char *string, enum msg_type flag);
 /* MSG_XX */
 	#define ShowMsg(string,flag) _ShowMessage(string,flag)
 //	#define DisplayMsg(string,flag) _ShowMessage(string,flag)
-//	#define ShowMessage(string,flag) _ShowMessage(string,flag)
+	#define ShowMessage(string,flag) _ShowMessage(string,flag)
 
 /* MSG_STATUS */
 	#define ShowStatus(string) _ShowMessage(string,MSG_STATUS)
