@@ -3374,8 +3374,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 					hp = battle_get_hp(src);
 					mhp = battle_get_max_hp(src);
 					damage3 = mhp*9/100;
-					damage = damage*damage3*(90+10*skill_lv)/100;
-					damage2 = damage2*damage3*(90+10*skill_lv)/100;
+					damage = damage*damage3*(90+10*skill_lv)/10000;
+					damage2 = damage2*damage3*(90+10*skill_lv)/10000;
 				}
 				break;
 			case ASC_BREAKER:		// -- moonsoul (special damage for ASC_BREAKER skill)
