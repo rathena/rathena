@@ -3426,9 +3426,20 @@ static struct Damage battle_calc_pc_weapon_attack(
 				damage2 += damage2*(30*skill_lv)/100;
 				break;
 			case CG_ARROWVULCAN:			/* アローバルカン */
+				if(!sd->state.arrow_atk && sd->arrow_atk > 0) {
+					int arr = rand()%(sd->arrow_atk+1);
+					damage += arr;
+					damage2 += arr;
+				}
 				damage = damage*(200+100*skill_lv)/100;
 				damage2 = damage2*(200+100*skill_lv)/100;
 				div_=9;
+				if(sd->arrow_ele > 0) {
+					s_ele = sd->arrow_ele;
+					s_ele_ = sd->arrow_ele;
+				}
+				flag=(flag&~BF_RANGEMASK)|BF_LONG;
+				sd->state.arrow_atk = 1;
 				break;
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
 				damage = damage*(200+20*skill_lv+20*pc_checkskill(sd,AS_POISONREACT))/100;

@@ -1,3 +1,6 @@
+DROP DATABASE erag;
+CREATE DATABASE erag;
+USE erag;
 CREATE TABLE `item_db` (
   `id` smallint(5) unsigned NOT NULL default '0',
   `name_english` varchar(24) NOT NULL default '',
@@ -1515,7 +1518,7 @@ INSERT INTO `item_db` VALUES (7252, 'Unknown_Item', '???', 3, NULL, NULL, 10, NU
 INSERT INTO `item_db` VALUES (7253, 'Unknown_Item', '??????', 3, NULL, NULL, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `item_db` VALUES (7254, 'Unknown_Item', '???????', 3, NULL, NULL, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `item_db` VALUES (7262, 'Grave_Lump', 'Grave Lump', 3, 233, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `item_db` VALUES (7263, 'Cat's_Eye', 'Cat's-Eye', 3, NULL, 477, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `item_db` VALUES (7263, 'Cats_Eye', 'Cats-Eye', 3, NULL, 477, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `item_db` VALUES (7264, 'Dried_Sand', 'Dried Sand', 3, NULL, 161, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `item_db` VALUES (7265, 'Dragon_Horn', 'Dragon Horn', 3, NULL, 272, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `item_db` VALUES (7266, 'Dragon_Teeth', 'Dragon Teeth', 3, 218, 10, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);

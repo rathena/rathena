@@ -980,17 +980,7 @@ int chrif_parse(int fd)
 		if (fd == char_fd) {
 			printf("Map-server can't connect to char-server (connection #%d).\n", fd);
 			char_fd = -1;
-			check_connect_char_server(0, 0, 0, 0);
-			while (char_fd <= 0 || session[char_fd] == NULL) {
-				struct map_session_data *sd;
-				int idx;
-				for (idx = 0; idx <fd_max; idx++)
-                			if ((session[idx] != NULL) && (sd = session[idx]->session_data) && sd && sd->state.auth)
-						clif_displaymessage(idx, "Map server is paused waiting for char server to return..");
-				flush_fifos();
-				sleep(10);
-				check_connect_char_server(0, 0, 0, 0);
-			}
+//			check_connect_char_server(0, 0, 0, 0);
 		}
 		close(fd);
 		delete_session(fd);
