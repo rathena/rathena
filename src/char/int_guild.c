@@ -1369,7 +1369,7 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 			struct guild *g = numdb_search(guild_db, gid);
 			if(log_inter)
 				inter_log("guild %s (id=%d) %s castle id=%d" RETCODE,
-					(g) ? g->name : "??", gid, (value) ? "occupy" : "abandon", index);
+					(g) ? g->name : "??", gid, (value) ? "occupy" : "abandon", castle_id);
 		}
 		gc->guild_id = value;
 		break;
