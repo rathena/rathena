@@ -1,5 +1,6 @@
 Date	Added
 12/6
+	* Fixed global message not working on txt [Wizputer]
 	* fixed a server crash in mobinsite [MouseJstr]
 	* fixed a server crash in party sharing exp [MouseJstr]
 	* fixed a server crash in BS_FINDINGORE [MouseJstr]

@@ -7728,7 +7728,7 @@ atcommand_changesex(
 	const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	chrif_changesex(sd->status.account_id, ((sd->status.sex+1)%2));
+	chrif_char_ask_name(sd->status.account_id,sd->status.name, 5,0,0,0,0,0,0);
 	return 0;
 }
 

@@ -434,7 +434,7 @@ int chrif_changesex(int id, int sex) {
    	if (char_fd < 1 )
 		return -1;
 
-	WFIFOW(char_fd,0) = 0x3000;
+	WFIFOW(char_fd,0) = 0x2b11;
 	WFIFOW(char_fd,2) = 9;
 	WFIFOL(char_fd,4) = id;
 	WFIFOB(char_fd,8) = sex;

@@ -2412,21 +2412,6 @@ int parse_frommap(int fd) {
 //			printf("char: save_account_reg (from map)\n");
 			break;
 		  }
-		// Map server send information to change an email of an account -> login-server
-		case 0x3000:
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-			if (login_fd > 0) { // don't send request if no login-server
-				WFIFOW(login_fd,0) = 0x3000;
-				WFIFOW(login_fd,2) = RFIFOW(fd,2);
-				WFIFOL(login_fd,4) = RFIFOL(fd,4);
-				WFIFOB(login_fd,8) = RFIFOB(fd,8);
-				WFIFOSET(login_fd, RFIFOW(fd,2));
-				printf("char : change sex -> login %d %d %d \n", RFIFOL(fd,4), RFIFOB(fd,8), RFIFOW(fd,2));
-			}
-			RFIFOSKIP(fd, RFIFOW(fd,2));
-			break;
-
 		default:
 			// inter serverˆ—‚É“n‚·
 			{
