@@ -3172,7 +3172,7 @@ int char_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "server_name") == 0) {
 			memcpy(server_name, w2, sizeof(server_name));
 			server_name[sizeof(server_name) - 1] = '\0';
-			printf("%s server has been intialized\n", w2);
+			printf("%s server has been initialized\n", w2);
 		} else if (strcmpi(w1, "wisp_server_name") == 0) {
 			if (strlen(w2) >= 4) {
 				memcpy(wisp_server_name, w2, sizeof(wisp_server_name));
