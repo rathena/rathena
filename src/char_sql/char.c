@@ -1175,7 +1175,9 @@ int parse_tologin(int fd) {
 	// only login-server can have an access to here.
 	// so, if it isn't the login-server, we disconnect the session.
 	//session eof check!
-	if (fd != login_fd || session[fd]->eof) {
+	if(fd != login_fd)
+		session[fd]->eof = 1;
+	if(session[fd]->eof) {
 		if (fd == login_fd) {
 			printf("Char-server can't connect to login-server (connection #%d).\n", fd);
 			login_fd = -1;
@@ -1459,7 +1461,9 @@ int parse_frommap(int fd) {
 	for(id = 0; id < MAX_MAP_SERVERS; id++)
 		if (server_fd[id] == fd)
 			break;
-	if(id == MAX_MAP_SERVERS || session[fd]->eof) {
+	if(id == MAX_MAP_SERVERS)
+		session[fd]->eof = 1;
+	if(session[fd]->eof) {
 		if (id < MAX_MAP_SERVERS) {
 			memset(&server[id], 0, sizeof(struct mmo_map_server));
 			printf("Map-server %d (session #%d) has disconnected.\n", id, fd);
@@ -1976,7 +1980,9 @@ int parse_char(int fd) {
 	struct char_session_data *sd;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 
-	if(login_fd < 0 || session[fd]->eof) {
+	if(login_fd < 0)
+		session[fd]->eof = 1;
+	if(session[fd]->eof) {
 		if (fd == login_fd)
 			login_fd = -1;
 		close(fd);
