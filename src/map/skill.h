@@ -322,6 +322,8 @@ enum {	// struct map_session_data の status_changeの番号テーブル
 	SC_SIGHTTRASHER		=73,
 //	SC_BASILICA			=125, // 125 is the same id as joint break
 	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]
+	SC_EDP				= 114, // 
+	SC_MARIONETTE2      = 122, // Marionette target
 	SC_ENSEMBLE			=159,
 	SC_FOGWALL			=178,
 	SC_GOSPEL			=179,
@@ -334,11 +336,10 @@ enum {	// struct map_session_data の status_changeの番号テーブル
 	SC_SPELLBREAKER		=192,
 
 // [Celest]
-	SC_EDP				= 114, // 
-	SC_MARIONETTE2      = 122, // Marionette target
+	SC_SLOWDOWN         = 45, // for skill slowdown
 	SC_BLEEDING         = 124, // Temporarily same id as headcrush
-	SC_POISON2			= 193, // for EDP -- notes: Not implemented since damage unknown yet
-	SC_GRIMTOOTH        = 194, // for grimtooth's slowdown
+	SC_POISON2			= 193, // for EDP -- notes: Not implemented since damage unknown yet	
+	SC_BLOCKSKILL       = 194, // for disallowing the use of a skill for a time period
 
 // -- testing various SC effects
 //	SC_AURABLADE			=81,

@@ -932,6 +932,8 @@ int battle_get_speed(struct block_list *bl)
 			//ウィンドウォーク時はLv*2%減算
 			if(sc_data[SC_WINDWALK].timer!=-1)
 				speed -= (speed*(sc_data[SC_WINDWALK].val1*2))/100;
+			if(sc_data[SC_SLOWDOWN].timer!=-1)
+				speed = speed*150/100;
 		}
 		if(speed < 1) speed = 1;
 		return speed;

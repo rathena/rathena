@@ -2272,7 +2272,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	case MO_CHAINCOMBO:		/* 連打掌 */
 		{
 			struct status_change *sc_data = battle_get_sc_data(src);
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 			if(sc_data && sc_data[SC_BLADESTOP].timer != -1)
 				skill_status_change_end(src,SC_BLADESTOP,-1);
 		}
@@ -2370,6 +2370,11 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 				skill_castend_damage_id);
 			if (skillid == SM_MAGNUM)	// fire element for 10 seconds
 				skill_status_change_start(src,SC_FLAMELAUNCHER,0,0,0,0,10000,0);
+		}
+		if (bl->type == BL_MOB && skillid == AS_GRIMTOOTH) {
+			struct status_change *sc_data = battle_get_sc_data(bl);
+			if (sc_data && sc_data[SC_SLOWDOWN].timer == -1)
+				skill_status_change_start(bl,SC_SLOWDOWN,0,0,0,0,1000,0);
 		}
 		break;
 
@@ -3019,7 +3024,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case AS_POISONREACT:	/* ポイズンリアクト */
 	case MC_LOUD:			/* ラウドボイス */
 	case MG_ENERGYCOAT:		/* エナジ?コ?ト */
-	case SM_ENDURE:			/* インデュア */
+//	case SM_ENDURE:			/* インデュア */
 	case MG_SIGHT:			/* サイト */
 	case AL_RUWACH:			/* ルアフ */
 	case MO_EXPLOSIONSPIRITS:	// 爆裂波動
@@ -3039,6 +3044,13 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		break;
+	case SM_ENDURE:			/* インデュア */
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+		skill_status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,10000,0 );
+		break;
+		
+	
 	case AS_ENCHANTPOISON: // Prevent spamming [Valaris]
 		if(bl->type==BL_PC) {
 			struct map_session_data *sd2=(struct map_session_data *)bl;
@@ -4619,6 +4631,10 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 			sd->sc_data[SC_BERSERK].timer != -1 ||
 			sd->sc_data[SC_MARIONETTE].timer != -1)
 			return 0;
+		
+		if (sd->sc_data[SC_BLOCKSKILL].timer!=-1)
+			if (skill_num == sd->sc_data[SC_BLOCKSKILL].val3)
+				return 0;
 	}
 
 	if( skill_num != sd->skillid)	/* 不正パケットらしい */
@@ -6260,9 +6276,9 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			sd->sc_data[SC_STEELBODY].timer != -1 ||
 			sd->sc_data[SC_BERSERK].timer != -1 ||
 			(sd->sc_data[SC_MARIONETTE].timer != -1 && sd->skillid != CG_MARIONETTE)){
-		clif_skill_fail(sd,sd->skillid,0,0);
+			clif_skill_fail(sd,sd->skillid,0,0);
 			return 0;	/* ?態異常や沈?など */
-		}
+		}	
 	}
 	skill = sd->skillid;
 	lv = sd->skilllv;
@@ -6737,6 +6753,10 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 			if(lv==5 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE && skill_num!=MO_CHAINCOMBO && skill_num!=MO_EXTREMITYFIST) return 0;
 		}
 
+		if (sd->sc_data[SC_BLOCKSKILL].timer!=-1)
+			if (skill_num == sd->sc_data[SC_BLOCKSKILL].val3)
+				return 0;
+
 		if (sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
 			struct skill_unit *su;
 			if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
@@ -6746,7 +6766,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 					skill_delunitgroup (sg);
 				}
 			}
-		}
+		}		
 	}
 
 	if(sd->status.option&4 && skill_num==TF_HIDING)
@@ -7031,6 +7051,10 @@ int skill_use_pos( struct map_session_data *sd,
 			sc_data[SC_BERSERK].timer != -1  ||
 			sd->sc_data[SC_MARIONETTE].timer != -1)
 			return 0;	/* ?態異常や沈?など */
+
+		if (sd->sc_data[SC_BLOCKSKILL].timer!=-1)
+			if (skill_num == sd->sc_data[SC_BLOCKSKILL].val3)
+				return 0;
 
 		if (sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
 			struct skill_unit *su;
@@ -9158,6 +9182,12 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_FOGWALL:
 			val2 = 75;
 			// calc_flag = 1;	// not sure of effects yet [celest]
+			break;
+		case SC_BLOCKSKILL:
+			if (!tick) tick = 60000;
+			if (!val3) val3 = -1;
+			break;
+		case SC_SLOWDOWN:
 			break;
 		default:
 			if(battle_config.error_log)
