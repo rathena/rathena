@@ -1,8 +1,10 @@
 Date	Added
 11/10	
+	* char/char.c & char_sql/char.c: Fixed start_armor and start_weapon - thanks to AppleGirl [Codemaster]
 	* Added packetver 6 flag to makefile. [Valaris]
 
 11/09
+	* mob_db.txt: Fixed Drake dropping the wrong card - thanks to roslen [Codemaster]
 	* chat.c: Fixed multiple joins in a single chat - thanks to Alex14 and CHaNGeTe. [Codemaster]
 	* clif.c: Fixed sitting. [spira]
 	* -  Fixed item 657 Job ID , 11/09 patch updates to item_db, Correct stats for item 5097
