@@ -8994,7 +8994,7 @@ int atcommand_mobinfo(
 	}
 	strcpy(output," Drops:");
 	j=0;
-	for (i=0; i<8; i++) {
+	for (i=0; i<10; i++) { // 8 -> 10 Lupus
 		if ( mob_db[mob_id].dropitem[i].nameid<=0 || mob_db[mob_id].dropitem[i].p<=0)
 			continue;
 		if( (item_data = itemdb_search(mob_db[mob_id].dropitem[i].nameid)) == NULL)

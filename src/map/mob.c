@@ -2531,9 +2531,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	// item drop
 	if(!(type&1)) {
-		int log_item[8] = {0};
+		int log_item[10] = {0}; //8 -> 10 Lupus
 		int drop_ore = -1,drop_items=0; //slot N for DROP LOG, number of dropped items
-		for(i=0;i<8;i++){
+		for(i=0;i<10;i++){ // 8 -> 10 Lupus
 			struct delay_item_drop *ditem;
 			int drop_rate;
 
@@ -2552,7 +2552,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				drop_ore = i; //we rmember an empty slot to put there ORE DISCOVERY drop later.
 				continue;
 			}
-			drop_items++;
+			drop_items++; //we cound if there were any drops
 
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
 			ditem->nameid = mob_db[md->class_].dropitem[i].nameid;
@@ -2573,8 +2573,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			int itemid[17] = { 714, 756, 757, 969, 984, 985, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1002 };
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
 			ditem->nameid = itemid[rand()%17]; //should return from 0 to 16
-			if (drop_ore<0) i=7; //we have only 8 slots in LOG, there's a check to not overflow
+			if (drop_ore<0) i=7; //we have only 10 slots in LOG, there's a check to not overflow <- TODO: change 7 to 9
 			log_item[i] = ditem->nameid; //it's for logging only
+			drop_items++; //we cound if there were any drops
 			ditem->amount = 1;
 			ditem->m = md->bl.m;
 			ditem->x = md->bl.x;
@@ -3836,9 +3837,9 @@ static int mob_makedummymobdb(int class_)
 	mob_db[class_].adelay=1000;
 	mob_db[class_].amotion=500;
 	mob_db[class_].dmotion=500;
-	mob_db[class_].dropitem[0].nameid=909;	// Jellopy
-	mob_db[class_].dropitem[0].p=1000;
-	for(i=1;i<8;i++){
+	//mob_db[class_].dropitem[0].nameid=909;	// Jellopy
+	//mob_db[class_].dropitem[0].p=1000;
+	for(i=1;i<10;i++){ // 8-> 10 Lupus
 		mob_db[class_].dropitem[i].nameid=0;
 		mob_db[class_].dropitem[i].p=0;
 	}
@@ -3942,7 +3943,7 @@ static int mob_readdb(void)
 			mob_db[class_].amotion=atoi(str[27]);
 			mob_db[class_].dmotion=atoi(str[28]);
 
-			for(i=0;i<8;i++){
+			for(i=0;i<8;i++){ // TODO: 8 -> 10 Lupus
 				int rate = 0,type,ratemin,ratemax;
 				mob_db[class_].dropitem[i].nameid=atoi(str[29+i*2]);
 				type = itemdb_type(mob_db[class_].dropitem[i].nameid);
@@ -4014,6 +4015,15 @@ static int mob_readdb(void)
 				rate = (rate < ratemin)? ratemin: (rate > ratemax)? ratemax: rate;
 				mob_db[class_].dropitem[i].p = rate;
 			}
+			//TEMP PLUG till we expand TXT DB and SQL DBs [Lupus]
+			for(i=8;i<10;i++){ //TODO: 8 -> 10 Lupus
+				//we fill 9th and 10th DROP slots with 0
+				mob_db[class_].dropitem[i].nameid = mob_db[class_].dropitem[i].p = 0;
+			}
+			//END of temp plug
+
+			//TODO: Shift columns (after adding 2 drops (4 coulmns)) Lupus
+
 			// Item1,Item2
 			mob_db[class_].mexp=atoi(str[45])*battle_config.mvp_exp_rate/100;
 			mob_db[class_].mexpper=atoi(str[46]);
@@ -4409,7 +4419,7 @@ static int mob_read_sqldb(void)
 			mob_db[class_].amotion=atoi(str[27]);
 			mob_db[class_].dmotion=atoi(str[28]);
 
-            for(i=0;i<8;i++){
+			for(i=0;i<8;i++){ //TODO: 8 -> 10 Lupus
 				int rate = 0,type,ratemin,ratemax;
 				mob_db[class_].dropitem[i].nameid=atoi(str[29+i*2]);
 				type = itemdb_type(mob_db[class_].dropitem[i].nameid);
@@ -4442,7 +4452,14 @@ static int mob_read_sqldb(void)
 				rate = (rate < ratemin)? ratemin: (rate > ratemax)? ratemax: rate;
 				mob_db[class_].dropitem[i].p = rate;
 			}
+			//TEMP PLUG till we expand TXT DB and SQL DBs [Lupus]
+			for(i=8;i<10;i++){ //TODO: 8 -> 10 Lupus
+				//we fill 9th and 10th DROP slots with 0
+				mob_db[class_].dropitem[i].nameid = mob_db[class_].dropitem[i].p = 0;
+			}
+			//END of temp plug
 
+			//TODO: Shift columns (after adding 2 drops (4 coulmns)) Lupus
 			mob_db[class_].mexp=atoi(str[45])*battle_config.mvp_exp_rate/100;
 			mob_db[class_].mexpper=atoi(str[46]);
 			for(i=0;i<3;i++){

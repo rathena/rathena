@@ -1,5 +1,15 @@
 Date	Added
 
+02/16
+        * Fixed Treasure Box spawn bug in all castles. [Lupus]
+        * Fixed wrong PresentLOG (it wasn't showing PRESENT BOX type ID) [Lupus]
+	* Expanded Monsters Drops Slots from 8 to 10. Everywhere in the sources. [Lupus]
+	  But in TXT / SQL monsters DB reading functions, I added a temp plug
+	  to make eA work fine with existing DBs. It reads only 8 drops and fills
+	  9th and 10th drops with Zero.
+	  On expanding MOB_DB.TXT we'll remove that plug.
+	  We are adding new cards and some monsters
+	  have no free slots for them. Current state is tested and works fine.
 02/15
         * Allow Potion Pitcher to be able to cast on yourself -- i've almost forgot
           about this, thanks to Filougarou and Poki#3 for the fix ^^; [celest]

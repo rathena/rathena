@@ -9,7 +9,7 @@ Darkchild
 	* Monk Quest - Botting An Acolyte Atm
 Lupus
 	* looking for exploits, optimization, bugs hunt
-	* Lolz - 100%
+	* Adding new cards, checking/adding mobs/items
 Aria
 	* Devnpc
 	* Correct typos/mistakes
@@ -34,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+02/16
+        * Fixed treasure chests spawn in the castles. (had to simplify some code and unroll some loops) [Lupus]
+
 02/13
         * Added midas's fixes for bugs in the novice training ground and the custom
           jobchanger script [celest]

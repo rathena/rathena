@@ -2614,9 +2614,9 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 
 			if(0 < skill)
 			{
-				for(count = 8; count <= 8 && count != 0; count--)
+				for(count = 10; count <= 10 && count != 0; count--) //8 -> 10 Lupus
 				{
-					i = rand()%8;
+					i = rand()%10; //8 -> 10 Lupus
 					itemid = mob_db[md->class_].dropitem[i].nameid;
 
 					if(itemid > 0 && itemdb_type(itemid) != 6)

@@ -2302,7 +2302,7 @@ int buildin_checkweight(struct script_state *st)
  */
 int buildin_getitem(struct script_state *st)
 {
-	int nameid,amount,flag = 0;
+	int nameid,nameidsrc,amount,flag = 0;
 	struct item item_tmp;
 	struct map_session_data *sd;
 	struct script_data *data;
@@ -2324,12 +2324,12 @@ int buildin_getitem(struct script_state *st)
 		return 0; //return if amount <=0, skip the useles iteration
 	}
 	//Violet Box, Blue Box, etc - random item pick
-	if(nameid<0) { // ƒ‰ƒ“ƒ_ƒ€
+	if((nameidsrc = nameid)<0) { // Save real ID of the source Box [Lupus]
 		nameid=itemdb_searchrandomid(-nameid);
-		#ifndef TXT_ONLY
+
 		if(log_config.present > 0)
-			log_present(sd, -nameid, nameid);
-		#endif //USE_SQL
+			log_present(sd, -nameidsrc, nameid); //fixed missing ID by Lupus
+
 		flag = 1;
 	}
 
