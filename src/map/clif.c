@@ -7272,7 +7272,8 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 	if ((old_sd = map_id2sd(account_id)) != NULL) {
 		clif_authfail_fd(fd, 8); // still recognizes last connection
 		clif_authfail_fd(old_sd->fd, 2); // same id
-		clif_setwaitclose(sd->fd); // Set session to EOF
+		if (sd != 0)
+			clif_setwaitclose(sd->fd); // Set session to EOF
 	} else {
 		sd = session[fd]->session_data = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
 		sd->fd = fd;

@@ -1,5 +1,8 @@
 Date	Added
 12/26
+	* Fixed a crash that resulted when disconnecting (SVN 800)
+	  the new client when the old client is still connected [MouseJstr]
+	* Fixed some gcc 2.95 compile errors [MouseJstr]
 	* Fixed some array bounds errors (SVN 799) [MouseJstr]
 	* @mapexit (and do_final) now persist all data to the
 	  char server before exiting to eliminate storage/inventory

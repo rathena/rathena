@@ -592,8 +592,8 @@ static int itemdb_read_itemslottable(void)
 	buf[s]=0;
 	for(p=buf;p-buf<s;){
 		int nameid,equip;
-		sscanf(p,"%d#%d#",&nameid,&equip);
 		struct item_data* item = itemdb_search(nameid);
+		sscanf(p,"%d#%d#",&nameid,&equip);
 		if (item && itemdb_isequip2(item))
 			item->equip=equip;
 		p=strchr(p,10);
