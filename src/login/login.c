@@ -69,6 +69,8 @@ int save_unknown_packets = 0;
 long creation_time_GM_account_file;
 int gm_account_filename_check_timer = 15; // Timer to check if GM_account file has been changed and reload GM account automaticaly (in seconds; default: 15)
 
+int log_login = 1;
+
 int display_parse_login = 0; // 0: no, 1: yes
 int display_parse_admin = 0; // 0: no, 1: yes
 int display_parse_fromchar = 0; // 0: no, 1: yes (without packet 0x2714), 2: all packets
@@ -169,26 +171,28 @@ int console = 0;
 // Writing function of logs file
 //------------------------------
 int login_log(char *fmt, ...) {
-	va_list ap;
-	struct timeval tv;
-	char tmpstr[2048];
+	if (log_login) {
+		va_list ap;
+		struct timeval tv;
+		char tmpstr[2048];
 
-	if(!log_fp)
+		if(!log_fp)
+			log_fp = fopen(login_log_filename, "a");
+
 		log_fp = fopen(login_log_filename, "a");
-
-	log_fp = fopen(login_log_filename, "a");
-	if (log_fp) {
-		if (fmt[0] == '\0') // jump a line if no message
-			fprintf(log_fp, RETCODE);
-		else {
-			va_start(ap, fmt);
-			gettimeofday(&tv, NULL);
-			strftime(tmpstr, 24, date_format, localtime(&(tv.tv_sec)));
-			sprintf(tmpstr + strlen(tmpstr), ".%03d: %s", (int)tv.tv_usec / 1000, fmt);
-			vfprintf(log_fp, tmpstr, ap);
-			va_end(ap);
+		if (log_fp) {
+			if (fmt[0] == '\0') // jump a line if no message
+				fprintf(log_fp, RETCODE);
+			else {
+				va_start(ap, fmt);
+				gettimeofday(&tv, NULL);
+				strftime(tmpstr, 24, date_format, localtime(&(tv.tv_sec)));
+				sprintf(tmpstr + strlen(tmpstr), ".%03d: %s", (int)tv.tv_usec / 1000, fmt);
+				vfprintf(log_fp, tmpstr, ap);
+				va_end(ap);
+			}
+			fflush(log_fp); // under cygwin or windows, if software is stopped, data are not written in the file -> fflush at every line
 		}
-		fflush(log_fp); // under cygwin or windows, if software is stopped, data are not written in the file -> fflush at every line
 	}
 
 	return 0;
@@ -3416,6 +3420,8 @@ int login_config_read(const char *cfgName) {
 				memset(login_log_filename, 0, sizeof(login_log_filename));
 				strncpy(login_log_filename, w2, sizeof(login_log_filename));
 				login_log_filename[sizeof(login_log_filename)-1] = '\0';
+			} else if (strcmpi(w1, "log_login") == 0) {
+				log_login = atoi(w2);
 			} else if (strcmpi(w1, "login_log_unknown_packets_filename") == 0) {
 				memset(login_log_unknown_packets_filename, 0, sizeof(login_log_unknown_packets_filename));
 				strncpy(login_log_unknown_packets_filename, w2, sizeof(login_log_unknown_packets_filename));

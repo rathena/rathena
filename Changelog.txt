@@ -1,5 +1,8 @@
 Date	Added
 12/8
+        * Added option to turn off login server logging [celest]
+        * Moved char server starting logging to after we've read the configuration
+          file first [celest]
         * Fixed crash with supernovices with 100% base exp [celest]
 	* Updated the readme a little. [Mass Zero]
 

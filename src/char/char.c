@@ -3348,12 +3348,13 @@ void do_final(void) {
 int do_init(int argc, char **argv) {
 	int i;
 
-	// a newline in the log...
-	char_log("");
-	char_log("The char-server starting..." RETCODE);
-
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
 	lan_config_read((argc > 1) ? argv[1] : LOGIN_LAN_CONF_NAME);
+
+		// a newline in the log...
+		char_log("");
+		// moved behind char_config_read in case we changed the filename [celest]
+		char_log("The char-server starting..." RETCODE);
 
         if ((naddr_ != 0) && (login_ip_set_ == 0 || char_ip_set_ == 0)) { 
           // The char server should know what IP address it is running on
