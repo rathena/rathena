@@ -18,13 +18,12 @@
 
 // MouseJstr =========================================================>\\
 ayothaya.gat,76,145,5	script	MouseJstr	763,{
- 	npcspeed 100;
+ 	npcspeed 50;
 	mes "[MouseJstr]";
 	mes "Yo homeslices..";
 	mes "I am MouseJstr on AIM and josh in real life..";
 	next;
 	mes "I enjoy maintaining a RO server because of the abuse I get";
- 	initnpctimer;
 	close;
  OnTimer15000:
 	npcwalkto 70+rand(17),135+rand(16);
@@ -59,11 +58,14 @@ Lquote4:
 	npctalk "I am the dark angel of eAthena.. withen weeks of my arrival, almost everybody was gone or dead..  fear me...";
 	setnpctimer 0;
 	break;
+OnInit:
+ 	initnpctimer;
+        break;
 }
 
 // MC Cameri =========================================================>\\
 morocc.gat,160,97,4	script	MC Cameri	706,{
- 	npcspeed 150;
+ 	npcspeed 50;
 	mes "[MC Cameri]";
 	mes "I'm the @command guy from oA...";
 	mes "^FF00FFReal Name^000000: Can't tell you my name";
@@ -76,7 +78,6 @@ morocc.gat,160,97,4	script	MC Cameri	706,{
 	next;
 	mes "[MC Cameri]";
 	mes "I'm a senior student, programmer, body builder(yes, I lift weights), etc.";
- 	initnpctimer;
 	close;
  OnTimer15000:
 	npcwalkto 154+rand(17),87+rand(16);
@@ -139,17 +140,19 @@ Lquote9:
 Lquote10:
 	setnpctimer 0;
 	break;
+OnInit:
+ 	initnpctimer;
+        break;
 }
 
 
 // Davidsiaw =========================================================>\\
 payon.gat,182,104,4	script	Davidsiaw	1002,{
- 	npcspeed 150;
+ 	npcspeed 50;
 	mes "[Davidsiaw]";
 	mes "omghi";
- 	initnpctimer;
 	close;
- OnTimer15000:
+OnTimer15000:
 	npcwalkto 176+rand(17),94+rand(16);
 	setnpctimer 0;
 
@@ -190,4 +193,7 @@ Lquote5:
 Lquote6:
 	setnpctimer 0;
 	break;
+OnInit:
+ 	initnpctimer;
+        break;
 }

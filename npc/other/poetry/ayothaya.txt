@@ -1,0 +1,91 @@
+//===== eAthena Script =======================================
+//= Wandering poet NPC
+//===== By: ==================================================
+//= by MouseJstr
+//===== Current Version: =====================================
+//= 0.1
+//===== Compatible With: =====================================
+//= eAthena 1.0 Final +
+//===== Description: =========================================
+
+ayothaya.gat,58,134,5	script	Louise Gluck	763,{
+	mes "[Louise Gluck]";
+	mes "What is the next line? ";
+	close;
+
+OnTimer5000:
+	npcwalkto 65,129;
+	npctalk "Twas brillig, and the slithy toves Did gyre and gimble in the wabe: ";
+	break;
+
+OnTimer10000:
+	npcwalkto 71,131;
+	npctalk " All mimsy were the bogoroves, And the mome raths outgrabe.  ";
+	break;
+
+OnTimer15000:
+	npcwalkto 75,127;
+	npctalk "Beware the Jabberwock, my son!  The jaws that bite, theh claws that catch!";
+	break;
+
+OnTimer20000:
+	npcwalkto 80,122;
+	npctalk " Beware the Jubjub bird and shun The frumious Bandersnatch!";
+	break;
+
+OnTimer25000:
+	npcwalkto 82,118;
+	npctalk " He took his vorpal sword in hand: Long time the manxome foe he sought- ";
+	break;
+
+OnTimer30000:
+	npcwalkto 93,115;
+	npctalk " So rested he by the Tumtum tree, And stood a while in thought.  ";
+	break;
+
+OnTimer35000:
+	npcwalkto 94,112;
+	npctalk " And, as in uffish thought he stood, The Jabberwock, with eyes of flame, ";
+	break;
+
+OnTimer40000:
+	npcwalkto 88,124;
+	npctalk " Came whiffling through the tulgey wood, And burbled as it came!  ";
+	break;
+
+OnTimer45000:
+	npcwalkto 81,129;
+	npctalk " One, two! One, two! And through and through The vorpal blade went snicker-snack!  ";
+	break;
+
+OnTimer50000:
+	npcwalkto 76,139;
+	npctalk " He left it dead, and with its head He went galumphing back.  ";
+	break;
+
+OnTimer55000:
+	npcwalkto 67,138;
+	npctalk "And hast though slain the Jabberwock?  Come to my arms beamish boy!  ";
+	break;
+
+OnTimer60000:
+	npcwalkto 59,144;
+	npctalk " O frabjous day! Callooh! Callay! He chortled in his joy.  ";
+	break;
+
+OnTimer65000:
+	npcwalkto 55,124;
+	npctalk " Twas brillig, and the slithy toves Did gyre and gimble in the wabe: ";
+	break;
+
+OnTimer70000:
+	npcwalkto 58,134;
+	npctalk " All mimsy were the bogoroves, And the mome raths outgrabe.  ";
+	setnpctimer 0;
+	break;
+
+OnInit:
+ 	npcspeed 150;
+ 	initnpctimer;
+        break;
+}

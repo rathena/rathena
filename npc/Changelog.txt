@@ -39,6 +39,7 @@ Date		Added
 	* Added custom WOE warper (now you can get to Novice Castles from Prontera) [Lupus]
 	* Prontera.txt (Sewers) anti-novice exploit fix. should be added to any quests/banks where u once get free items/zeny [Lupus]
 11/17
+	* Added poetry npc to ayothaya [MouseJstr]
 	* Fixed valkyrie.txt (wrong condition check, temp var->perm vars) but it still has no exit for common players [Lupus]
 	* - Fixed guardians hp not updating when investment in defense is made.
 	  - Moved treasure spawn times to ev_agit_event.txt.
