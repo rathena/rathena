@@ -560,9 +560,9 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 //	if(((1<<sd->status.class_)&item->class_) == 0)
 //		return 0;
-	if(map[sd->bl.m].flag.pvp && (item->flag.no_equip==1 || item->flag.no_equip==3))
+	if(map[sd->bl.m].flag.pvp && (item->flag.no_equip&1)) //optimized by Lupus
 		return 0;
-	if(map[sd->bl.m].flag.gvg && (item->flag.no_equip==2 || item->flag.no_equip==3))
+	if(map[sd->bl.m].flag.gvg && (item->flag.no_equip>1)) //optimized by Lupus
 		return 0;
 	if(item->equip & 0x0002 && sc_data && sc_data[SC_STRIPWEAPON].timer != -1)
 		return 0;
@@ -2295,6 +2295,9 @@ int pc_useitem(struct map_session_data *sd,int n)
 			sd->status.inventory[n].amount <= 0 ||
 			sd->sc_data[SC_BERSERK].timer!=-1 ||
 			sd->sc_data[SC_MARIONETTE].timer!=-1 ||
+			//added item_noequip.txt items check by Maya&[Lupus]
+			(map[sd->bl.m].flag.pvp && (sd->inventory_data[n]->flag.no_equip&1) ) || // PVP
+			(map[sd->bl.m].flag.gvg && (sd->inventory_data[n]->flag.no_equip>1) ) || // GVG
 			!pc_isUseitem(sd,n) ) {
 			clif_useitemack(sd,n,0,0);
 			return 1;
@@ -6028,10 +6031,10 @@ int pc_checkitem(struct map_session_data *sd)
 			calc_flag = 1;
 		}
 		//?備制限チェック
-		if(sd->status.inventory[i].equip && map[sd->bl.m].flag.pvp && (it->flag.no_equip==1 || it->flag.no_equip==3)){//PvP制限
+		if(sd->status.inventory[i].equip && map[sd->bl.m].flag.pvp && (it->flag.no_equip&1)){//PVP check for forbiden items. optimized by [Lupus]
 			sd->status.inventory[i].equip=0;
 			calc_flag = 1;
-		}else if(sd->status.inventory[i].equip && map[sd->bl.m].flag.gvg && (it->flag.no_equip==2 || it->flag.no_equip==3)){//GvG制限
+		}else if(sd->status.inventory[i].equip && map[sd->bl.m].flag.gvg && (it->flag.no_equip>1)){//GvG optimized by [Lupus]
 			sd->status.inventory[i].equip=0;
 			calc_flag = 1;
 		}

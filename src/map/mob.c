@@ -2532,6 +2532,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	// item drop
 	if(!(type&1)) {
 		int log_item[8] = {0};
+		int drop_ore = -1,drop_items=0; //slot N for DROP LOG, number of dropped items
 		for(i=0;i<8;i++){
 			struct delay_item_drop *ditem;
 			int drop_rate;
@@ -2547,8 +2548,11 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				drop_rate = 1;
 			if(battle_config.drops_by_luk>0 && sd && md) drop_rate+=(sd->status.luk*battle_config.drops_by_luk)/100;	// drops affected by luk [Valaris]
 			if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class_].lv - sd->status.base_level >= 20)) drop_rate*=1.25; // pk_mode increase drops if 20 level difference [Valaris]
-			if(drop_rate <= rand()%10000)
+			if(drop_rate <= rand()%10000) {
+				drop_ore = i; //we rmember an empty slot to put there ORE DISCOVERY drop later.
 				continue;
+			}
+			drop_items++;
 
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
 			ditem->nameid = mob_db[md->class_].dropitem[i].nameid;
@@ -2563,18 +2567,14 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			add_timer(tick+500+i,mob_delay_item_drop,(int)ditem,0);
 		}
 
-		#ifndef TXT_ONLY
-		if(log_config.drop > 0)
-			log_drop(mvp_sd, md->class_, log_item);
-		#endif
-
 		// Ore Discovery [Celest]
 		if (pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/100 >= rand()%1000) {
 			struct delay_item_drop *ditem;
 			int itemid[17] = { 714, 756, 757, 969, 984, 985, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1002 };
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
-			ditem->nameid = itemid[rand()%17];
-			// log_item[i] = ditem->nameid;
+			ditem->nameid = itemid[rand()%17]; //should return from 0 to 16
+			if (drop_ore<0) i=7; //we have only 8 slots in LOG, there's a check to not overflow
+			log_item[i] = ditem->nameid; //it's for logging only
 			ditem->amount = 1;
 			ditem->m = md->bl.m;
 			ditem->x = md->bl.x;
@@ -2585,10 +2585,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			add_timer(tick+500+i,mob_delay_item_drop,(int)ditem,0);
 		}
 
-		#ifndef TXT_ONLY
-		if(log_config.drop > 0)
-			log_drop(mvp_sd, md->class_, log_item);
-		#endif
+		//this drop log contains ALL dropped items + ORE (if there was ORE Recovery) [Lupus]
+		if(log_config.drop > 0 && drop_items) //we check were there any drops.. and if not - don't write the log
+			log_drop(sd, md->class_, log_item); //mvp_sd
 
 		if(sd && sd->state.attack_type == BF_WEAPON) {
 			for(i=0;i<sd->monster_drop_item_count;i++) {
@@ -2672,10 +2671,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			}
 			break;
 		}
-		#ifndef TXT_ONLY
-			if(log_config.mvpdrop > 0)
-				log_mvpdrop(mvp_sd, md->class_, log_mvp);
-		#endif
+
+		if(log_config.mvpdrop > 0)
+			log_mvpdrop(mvp_sd, md->class_, log_mvp);
 	}
 
         } // [MouseJstr]

@@ -1,6 +1,9 @@
 Date	Added
 
 02/11
+        * mob.c fixed doubling entries in DROPS LOG, optimized [Lupus]
+        * item_noequip.txt now you can disable named consumable items
+	  during GvG / PvP, too by Maya, optimized and checked [Lupus]
 	NOTE: Get rid of old cards on your server!!! IDs: 4149-4332
 	  before using of this item_db.txt (some cards have changed their IDs)
 	  and it could cause ALIEN cards in your players equipment 8))
