@@ -3233,7 +3233,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				break;
 			}
 		}
-		if(rand()%100 > (60+skilllv*10) && (skilllv != 5)) {
+		if(skilllv < 4 && rand()%100 > (60+skilllv*10) ) {
 			clif_skill_fail(sd,skillid,0,0);
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
 			if(bl->type==BL_PC && battle_config.equipment_breaking) {

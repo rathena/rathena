@@ -2133,6 +2133,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 			case LK_SPIRALPIERCE:			/* スパイラルピアース */
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
 				div_=5;
+				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				if(target->type == BL_PC)
 					((struct map_session_data *)target)->canmove_tick = gettick() + 1000;
 				else if(target->type == BL_MOB)
@@ -2629,6 +2630,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 			case LK_SPIRALPIERCE:			/* スパイラルピアース */
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
 				div_=5;
+				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				if(tsd)
 					tsd->canmove_tick = gettick() + 1000;
 				else if(tmd)
@@ -3459,6 +3461,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
 				damage2 = damage2*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
 				div_=5;
+				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				if(tsd)
 					tsd->canmove_tick = gettick() + 1000;
 				else if(tmd)
@@ -3539,6 +3542,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 						damage3=1;
 
 					damage3=battle_attr_fix(damage2,s_ele_, battle_get_element(target) );*/
+
+					flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				}
 				break;
 			}
@@ -4036,7 +4041,7 @@ struct Damage battle_calc_weapon_attack(
 
 	if(battle_config.equipment_breaking && src->type==BL_PC && (wd.damage > 0 || wd.damage2 > 0)) {
 		struct map_session_data *sd=(struct map_session_data *)src;
-		int breakrate = 0;
+		int breakrate = 1;	//0.01% weapon breaking chance [DracoRPG]
 
 		if(sd->status.weapon && sd->status.weapon != 11) {
 			if(sd->sc_data[SC_MELTDOWN].timer!=-1) {
@@ -4058,7 +4063,7 @@ struct Damage battle_calc_weapon_attack(
 				}
 			}
 			if(sd->sc_data[SC_OVERTHRUST].timer!=-1) {
-				breakrate = 10*sd->sc_data[SC_OVERTHRUST].val1;
+				breakrate += 10;	//+ 0.1% whatever skill level you use [DracoRPG]
 			//if(wd.type==0x0a) //removed! because CRITS don't affect on breaking chance [Lupus]
 			//	breakrate*=2;
 				if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {

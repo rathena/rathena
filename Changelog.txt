@@ -1,6 +1,11 @@
 Date	Added
 01/02
 	* More atempts at memory leak fixes [Codemaster] [SVN 890]
+        * Updated weapon breaking rates, thanks to DracoRPG [celest]
+        * Optimized enchanting skills success rates calculation, thanks to Wallex
+          (you were right! ^^; ) [celest]
+        * Modified Spiral Pierce and Breaker to type ranged [celest]
+
 01/01
 	* Attempted to fix a memory leak [Codemaster] - tell me if it works XD (NPC/Mob memory leak in npc_parse_mob(...)) [SVN 886]
 	* Added a char config that allows GMs that have a certain level or above to 
