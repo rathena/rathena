@@ -11,6 +11,7 @@
         * Updated Sleipnir, Brisingamen, Mjolnir, Megingord, Counter Dagger,
           Poison Knife [celest]
         * Updated SP requirements for Full Strip, Full Chemical Protection, Cannibalize [celest]
+        * Corrected some item_db typos, thanks to DracoRPG
 
 12/6    * Changed spiritball requirements for Chain Crush to 1, thanks to MaoMao of cAthena
 

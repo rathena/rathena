@@ -15,7 +15,7 @@
 509,White_Herb,White Herb,0,120,0,70,,,,,10477567,2,,,,,{ itemheal rand(75,114),0; },{}
 510,Blue_Herb,Blue Herb,0,60,0,70,,,,,10477567,2,,,,,{ itemheal 0,rand(15,29); },{}
 511,Green_Herb,Green Herb,0,10,0,30,,,,,10477567,2,,,,,{ sc_end SC_Poison; },{}
-512,mace,Apple,0,15,0,20,,,,,10477567,2,,,,,{ itemheal rand(16,21),0; },{}
+512,Apple,Apple,0,15,0,20,,,,,10477567,2,,,,,{ itemheal rand(16,21),0; },{}
 513,Banana,Banana,0,15,0,20,,,,,10477567,2,,,,,{ itemheal rand(17,20),0; },{}
 514,Grape,Grape,0,200,0,20,,,,,10477567,2,,,,,{ itemheal 0,rand(10,14); },{}
 515,Carrot,Carrot,0,15,0,20,,,,,10477567,2,,,,,{ itemheal rand(18,19),0; },{}
@@ -28,7 +28,7 @@
 522,Mastela_Fruit,Mastela Fruit,0,840,0,30,,,,,10477567,2,,,,,{ itemheal rand(400,599),0; },{}
 523,Holy_Water,Holy Water,0,20,0,30,,,,,10477567,2,,,,,{ sc_end SC_Curse; },{}
 525,Panacea,Panacea,0,500,0,100,,,,,10477567,2,,,,,{ sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; },{}
-526,Royal_Jelly,Royal Jelly,0,7000,0,150,,,,,10477567,2,,,,,{ itemheal rand(325,404),rand(40,59); sc_end SC_Posion; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; },{}
+526,Royal_Jelly,Royal Jelly,0,7000,0,150,,,,,10477567,2,,,,,{ itemheal rand(325,404),rand(40,59); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; },{}
 528,Monster's_Feed,Monster Food,0,60,0,150,,,,,10477567,2,,,,,{ itemheal rand(72,107),0; },{}
 529,Candy,Candy,0,10,0,30,,,,,10477567,2,,,,,{ itemheal rand(45,64),0; },{}
 530,Candy_Cane,Candy Cane,0,20,0,40,,,,,10477567,2,,,,,{ itemheal rand(105,144),0; },{}
