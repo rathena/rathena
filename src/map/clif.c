@@ -1695,7 +1695,10 @@ static int clif_waitclose(int tid, unsigned int tick, int id, int data) {
  *------------------------------------------
  */
 void clif_setwaitclose(int fd) {
-	add_timer(gettick() + 5000, clif_waitclose, fd, 0);
+	if((sd=session[fd]->session_data) == NULL
+		add_timer(gettick() + 1000, clif_waitclose, fd, 0);
+	else
+		add_timer(gettick() + 5000, clif_waitclose, fd, 0);
 }
 
 /*==========================================
