@@ -194,6 +194,9 @@ enum AtCommandType {
 	AtCommand_Identify, // by MC Cameri
 	AtCommand_Gmotd, // Added by MC Cameri, created by davidsiaw
 	AtCommand_MiscEffect, // by MC Cameri
+	AtCommand_MobSearch,
+	AtCommand_CleanMap,
+	AtCommand_GiveItem,
 
 	// SQL-only commands start
 #ifndef TXT_ONLY 
