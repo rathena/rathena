@@ -954,6 +954,12 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	} else
 		printf("char2 - failed\n");	//Error?! ERRRRRR WHAT THAT SAY!?
 
+	if (p->last_point.x == 0 || p->last_point.y == 0 || p->last_point.map[0] == '\0') 
+		memcpy(&p->last_point, &start_point, sizeof(start_point));
+
+	if (p->save_point.x == 0 || p->save_point.y == 0 || p->save_point.map[0] == '\0') 
+		memcpy(&p->save_point, &start_point, sizeof(start_point));
+
 	printf("char2 ");
 
 	//read memo data
