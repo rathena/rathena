@@ -1088,7 +1088,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 					}
 				}
 			}
-			if (dstsd &&
+			if (dstsd && ((sd && !sd->state.arrow_atk) || (status_get_range(src)<=2)) &&
 				rand()%10000 < dstsd->addeff3[i-SC_STONE]*sc_def_card/100){
 				if(battle_config.battle_log)
 					printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",src->id,i,dstsd->addeff3[i-SC_STONE]);
