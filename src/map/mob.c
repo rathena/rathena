@@ -196,8 +196,8 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
 		md->m = m;
 		md->x0 = x;
 		md->y0 = y;
-		md->xs = 0;
-		md->ys = 0;
+		//md->xs = 0;
+		//md->ys = 0;
 		md->spawndelay1 = -1;	// 一度のみフラグ
 		md->spawndelay2 = -1;	// 一度のみフラグ
 
@@ -297,13 +297,7 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
 	for(count=0;count<amount;count++){
 		struct guild_castle *gc;
 		md=(struct mob_data *) aCalloc(sizeof(struct mob_data), 1);
-		if(md==NULL){
-			printf("mob_spawn_guardian: out of memory !\n");
-			exit(1);
-		}
 		memset(md, '\0', sizeof *md);
-
-
 
 		mob_spawn_dataset(md,mobname,class_);
 		md->bl.m=m;
@@ -334,7 +328,6 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
 			if(guardian==5) { md->hp=gc->Ghp5; gc->GID5=md->bl.id; }
 			if(guardian==6) { md->hp=gc->Ghp6; gc->GID6=md->bl.id; }
 			if(guardian==7) { md->hp=gc->Ghp7; gc->GID7=md->bl.id; }
-
 		}
 	}
 
@@ -760,9 +753,6 @@ static int mob_timer(int tid,unsigned int tick,int id,int data)
 
 	nullpo_retr(1, md=(struct mob_data*)bl);
 
-	if(!md->bl.type || md->bl.type!=BL_MOB)
-		return 1;
-
 	if(md->timer != tid){
 		if(battle_config.error_log)
 			printf("mob_timer %d != %d\n",md->timer,tid);
@@ -1068,7 +1058,6 @@ int mob_stopattack(struct mob_data *md)
 int mob_stop_walking(struct mob_data *md,int type)
 {
 	nullpo_retr(0, md);
-
 
 	if(md->state.state == MS_WALK || md->state.state == MS_IDLE) {
 		int dx=0,dy=0;
@@ -1405,6 +1394,18 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 	if(!mmd || mmd->bl.type!=BL_MOB || mmd->bl.id!=md->master_id)
 		return 0;
 
+	// 呼び戻し
+	if(mmd->recall_flag == 1){
+		if (mmd->recallcount < (mmd->recallmob_count+2) ){
+			mob_warp(md,-1,mmd->bl.x,mmd->bl.y,3);
+			mmd->recallcount += 1;
+		} else{
+			mmd->recall_flag = 0;
+			mmd->recallcount=0;
+		}
+		md->state.master_check = 1;
+		return 0;
+	}
 	// Since it is in the map on which the master is not, teleport is carried out and it pursues.
 	if( mmd->bl.m != md->bl.m ){
 		mob_warp(md,mmd->bl.m,mmd->bl.x,mmd->bl.y,3);
@@ -1597,7 +1598,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	nullpo_retr(0, md=(struct mob_data*)bl);
 
 	tick=va_arg(ap,unsigned int);
-
 
 	if(DIFF_TICK(tick,md->last_thinktime)<MIN_MOBTHINKTIME)
 		return 0;
@@ -1898,19 +1898,20 @@ static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
 static int mob_ai_sub_lazy(void * key,void * data,va_list app)
 {
 	struct mob_data *md=(struct mob_data *)data;
+	struct mob_data *mmd=NULL;
 	unsigned int tick;
 	va_list ap;
 
 	nullpo_retr(0, md);
 	nullpo_retr(0, app);
-
-	ap=va_arg(app,va_list);
+	nullpo_retr(0, ap=va_arg(app,va_list));
 
 	if(md->bl.type!=BL_MOB)
 		return 0;
 
-	if(!md->bl.type || md->bl.type!=BL_MOB)
-		return 0;
+	if (md->master_id > 0) {
+		mmd = (struct mob_data *)map_id2bl(md->master_id);	//自分のBOSSの情報
+	}
 
 	tick=va_arg(ap,unsigned int);
 
@@ -1921,6 +1922,12 @@ static int mob_ai_sub_lazy(void * key,void * data,va_list app)
 	if(md->bl.prev==NULL || md->skilltimer!=-1){
 		if(DIFF_TICK(tick,md->next_walktime)>MIN_MOBTHINKTIME*10)
 			md->next_walktime=tick;
+		return 0;
+	}
+
+	// 取り巻きモンスターの処理（呼び戻しされた時）
+	if(mmd && md->state.special_mob_ai == 0 && mmd->recall_flag == 1) {
+		mob_ai_sub_hard_slavemob (md,tick);
 		return 0;
 	}
 
@@ -2130,15 +2137,10 @@ int mob_catch_delete(struct mob_data *md,int type)
 
 int mob_timer_delete(int tid, unsigned int tick, int id, int data)
 {
-	struct block_list *bl=map_id2bl(id);
-	struct mob_data *md;
+	struct mob_data *md=(struct mob_data *)map_id2bl(id);
+	nullpo_retr(0, md);
 
-	nullpo_retr(0, bl);
-
-	md = (struct mob_data *)bl;
 //for Alchemist CANNIBALIZE [Lupus]
-
-
 	mob_catch_delete(md,3);
 	return 0;
 }
@@ -2476,10 +2478,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	// [MouseJstr]
 	if((map[md->bl.m].flag.pvp == 0) || (battle_config.pvp_exp == 1)) {
 
-/*	if((double)max_hp < tdmg)
-		dmg_rate = ((double)max_hp) / tdmg;
-	else dmg_rate = 1;*/
-
 	// 経験値の分配
 	for(i=0;i<DAMAGELOG_SIZE;i++){
 		int pid,base_exp,job_exp,flag=1,zeny=0;
@@ -2490,7 +2488,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 		if (battle_config.exp_calc_type == 0) {
 			// jAthena's exp formula
-		//	per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./((double)max_hp) * dmg_rate;
 			per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./tdmg;
 			temp = (double)mob_db[md->class_].base_exp * per;
 			base_exp = (temp > 2147483647.)? 0x7fffffff:(int)temp;
@@ -2552,7 +2549,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		}
 
 		if((pid=tmpsd[i]->status.party_id)>0){	// パーティに入っている
-			int j=0;
+			int j;
 			for(j=0;j<pnum;j++)	// 公平パーティリストにいるかどうか
 				if(pt[j].id==pid)
 					break;
@@ -3006,7 +3003,6 @@ int mob_countslave_sub(struct block_list *bl,va_list ap)
 	nullpo_retr(0, c=va_arg(ap,int *));
 	nullpo_retr(0, md = (struct mob_data *)bl);
 
-
 	if( md->master_id==id )
 		(*c)++;
 	return 0;
@@ -3196,7 +3192,9 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 	md->skilltimer=-1;
 	//沈黙や状態異常など
 	if(md->sc_data){
-		if(md->opt1>0 || md->sc_data[SC_DIVINA].timer != -1 || md->sc_data[SC_ROKISWEIL].timer != -1 || md->sc_data[SC_STEELBODY].timer != -1)
+		if(md->opt1>0 || md->sc_data[SC_DIVINA].timer != -1 ||
+			(!(mob_db[md->class_].mode & 0x20) && md->sc_data[SC_ROKISWEIL].timer != -1) ||
+			md->sc_data[SC_STEELBODY].timer != -1)
 			return 0;
 		if(md->sc_data[SC_AUTOCOUNTER].timer != -1 && md->skillid != KN_AUTOCOUNTER) //オートカウンター
 			return 0;
@@ -3279,7 +3277,9 @@ int mobskill_castend_pos( int tid, unsigned int tick, int id,int data )
 
 	md->skilltimer=-1;
 	if(md->sc_data){
-		if(md->opt1>0 || md->sc_data[SC_DIVINA].timer != -1 || md->sc_data[SC_ROKISWEIL].timer != -1 || md->sc_data[SC_STEELBODY].timer != -1)
+		if(md->opt1>0 || md->sc_data[SC_DIVINA].timer != -1 ||
+			(!(mob_db[md->class_].mode & 0x20) && md->sc_data[SC_ROKISWEIL].timer != -1) ||
+			md->sc_data[SC_STEELBODY].timer != -1)
 			return 0;
 		if(md->sc_data[SC_AUTOCOUNTER].timer != -1 && md->skillid != KN_AUTOCOUNTER) //オートカウンター
 			return 0;
@@ -3354,7 +3354,9 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 
 	// 沈黙や異常
 	if(md->sc_data){
-		if(md->opt1>0 || md->sc_data[SC_DIVINA].timer != -1 || md->sc_data[SC_ROKISWEIL].timer != -1 || md->sc_data[SC_STEELBODY].timer != -1)
+		if(md->opt1>0 || md->sc_data[SC_DIVINA].timer != -1 ||
+			(!(mob_db[md->class_].mode & 0x20) && md->sc_data[SC_ROKISWEIL].timer != -1) ||
+			md->sc_data[SC_STEELBODY].timer != -1)
 			return 0;
 		if(md->sc_data[SC_AUTOCOUNTER].timer != -1 && md->skillid != KN_AUTOCOUNTER) //オートカウンター
 			return 0;
@@ -3471,7 +3473,9 @@ int mobskill_use_pos( struct mob_data *md,
 
 	//沈黙や状態異常など
 	if(md->sc_data){
-		if(md->opt1>0 || md->sc_data[SC_DIVINA].timer != -1 || md->sc_data[SC_ROKISWEIL].timer != -1 || md->sc_data[SC_STEELBODY].timer != -1)
+		if(md->opt1>0 || md->sc_data[SC_DIVINA].timer != -1 ||
+			(!(mob_db[md->class_].mode & 0x20) && md->sc_data[SC_ROKISWEIL].timer != -1) ||
+			md->sc_data[SC_STEELBODY].timer != -1)
 			return 0;
 		if(md->sc_data[SC_AUTOCOUNTER].timer != -1 && md->skillid != KN_AUTOCOUNTER) //オートカウンター
 			return 0;

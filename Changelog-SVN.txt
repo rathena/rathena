@@ -1,6 +1,23 @@
 
 Date	Added
 
+03/30
+	* updated map server to jA1137~1159
+	  - Added @reloadatcommand, @reloadbattleconf, @reloadstatusdb, @reloadpcdb
+
+	  (Note: You should copy the latest msg_athena.conf from conf-tmpl and replace
+	  your current one EVERYTIME it's updated to prevent it from crashing when it
+	  can't find the newer messages!)
+
+	  - Updated packet DB to support /item and /monster
+	  - Added pc_remove_map()
+	  - Added 2 new mobs skills: NPC_RUNAWAY and RECALL
+	  - Updated BioCannibalize
+	  - Updated Hammerfall, Meteor Shower and Lord of Vermillion -- when MvP's
+	    cast them they should have much more range
+	  - Some other skill tweaks
+	* Some tidying up in mob.c and skill.c [celest]
+
 03/29
         * Please make sure to use the stable/sql-files/upgrade_svn1315.sql to
           upgrade your mysql as a result of the new adoption system.  Thank you

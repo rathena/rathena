@@ -714,8 +714,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 		sd->skilltimerskill[i].timer = -1;
 	sd->timerskill_count=0;
 
-	for (i=0; i<MAX_SKILL; i++)
-		sd->blockskill[i]=0;
+	memset(sd->blockskill,0,sizeof(sd->blockskill));
 
 	memset(&sd->dev,0,sizeof(struct square));
 	for(i = 0; i < 5; i++) {
@@ -2037,25 +2036,24 @@ int pc_skill(struct map_session_data *sd,int id,int level,int flag)
  */
 int pc_blockskill_end(int tid,unsigned int tick,int id,int data)
 {
-	struct map_session_data *sd;
-	
-	nullpo_retr (-1, sd = map_id2sd(id));
-	sd->blockskill[data] = 0;
+	struct map_session_data *sd = map_id2sd(id);
+	if (data <= 0 || data >= MAX_SKILL)
+		return 0;
+	if (sd) sd->blockskill[data] = 0;
 	
 	return 1;
 }
-void pc_blockskill_start (struct map_session_data *sd, int skillid, int tick)
+int pc_blockskill_start (struct map_session_data *sd, int skillid, int tick)
 {
-	nullpo_retv(sd);
+	nullpo_retr (-1, sd);
 
 	if (skillid >= 10000 && skillid < 10015)
 		skillid -= 9500;
 	else if (skillid < 1 || skillid > MAX_SKILL)
-		return;
+		return -1;
 
 	sd->blockskill[skillid] = 1;
-	add_timer(gettick()+tick,pc_blockskill_end,sd->bl.id,skillid);
-	return;
+	return add_timer(gettick()+tick,pc_blockskill_end,sd->bl.id,skillid);
 }
 
 /*==========================================
@@ -2460,6 +2458,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	nullpo_retr(1, sd);
 
 	if(n >=0 && n < MAX_INVENTORY) {
+		char *script;
 		sd->itemid = sd->status.inventory[n].nameid;
 		amount = sd->status.inventory[n].amount;
 		if(sd->status.inventory[n].nameid <= 0 ||
@@ -2474,12 +2473,10 @@ int pc_useitem(struct map_session_data *sd,int n)
 			clif_useitemack(sd,n,0,0);
 			return 1;
 		}
-		
-		if(sd->inventory_data[n])
-			run_script(sd->inventory_data[n]->use_script,0,sd->bl.id,0);
-
+		script = sd->inventory_data[n]->use_script;
 		amount = sd->status.inventory[n].amount;
 		clif_useitemack(sd,n,amount-1,1);
+		run_script(script,0,sd->bl.id,0);
 		pc_delitem(sd,n,1,1);
 	}
 
@@ -2878,40 +2875,53 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *bl)
 //
 //
 /*==========================================
- * PCの位置設定
+ * PCをマップから離脱する
  *------------------------------------------
  */
-int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrtype)
-{
-	char mapname[24];
-	int m=0,disguise=0;
 
+int pc_remove_map(struct map_session_data *sd,int clrtype) {
 	nullpo_retr(0, sd);
 
-	if(sd->chatID)	// チャットから出る
+	// map 上に登録されていない
+	if(!sd->bl.prev)
+		return 1;
+
+	// チャットから出る
+	if(sd->chatID)
 		chat_leavechat(sd);
-	if(sd->trade_partner)	// 取引を中?する
+
+	// 取引を中断する
+	if(sd->trade_partner)
 		trade_tradecancel(sd);
+
+	// 倉庫を開いてるなら保存する
 	if(sd->state.storage_flag)
 		storage_guild_storage_quit(sd,0);
 	else
-		storage_storage_quit(sd);	// 倉庫を開いてるなら保存する
+		storage_storage_quit(sd);
 
-	if(sd->party_invite>0)	// パ?ティ?誘を拒否する
+	// パーティ勧誘を拒否する
+	if(sd->party_invite>0)
 		party_reply_invite(sd,sd->party_invite_account,0);
-	if(sd->guild_invite>0)	// ギルド?誘を拒否する
+
+	// ギルド勧誘を拒否する
+	if(sd->guild_invite>0)
 		guild_reply_invite(sd,sd->guild_invite,0);
-	if(sd->guild_alliance>0)	// ギルド同盟?誘を拒否する
+
+	// ギルド同盟勧誘を拒否する
+	if(sd->guild_alliance>0)
 		guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
 
-	skill_castcancel(&sd->bl,0);	// 詠唱中?
-	pc_stop_walking(sd,0);		// ?行中?
-	pc_stopattack(sd);			// 攻?中?
+	// check if we've been authenticated [celest]
+	//if (sd->state.auth) {
+		pc_stop_walking(sd,0);		// 歩行中断
+		pc_stopattack(sd);			// 攻撃中断
+		pc_delinvincibletimer(sd);	// 無敵タイマー削除
+	//}
 
-	if(pc_issit(sd)) {
-		pc_setstand(sd);
-		skill_gangsterparadise(sd,0);
-	}
+	// ブレードストップを終わらせる
+	if(sd->sc_data[SC_BLADESTOP].timer!=-1)
+		status_change_end(&sd->bl,SC_BLADESTOP,-1);
 
 	if (sd->sc_count) {
 		if(sd->sc_data[SC_TRICKDEAD].timer != -1)
@@ -2933,17 +2943,41 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 		}
 	}
 
+	// check if we've been authenticated [celest]
+	//if (sd->state.auth)
+		skill_castcancel(&sd->bl,0);			// 詠唱中断
+	skill_gangsterparadise(sd,0);			// ギャングスターパラダイス削除
+	skill_unit_move(&sd->bl,gettick(),0);	// スキルユニットから離脱
+	skill_cleartimerskill(&sd->bl);			// タイマースキルクリア
+	skill_clear_unitgroup(&sd->bl);			// スキルユニットグループの削除
+
+	clif_clearchar_area(&sd->bl,clrtype&0xffff);
+	map_delblock(&sd->bl);
+	return 0;
+}
+
+/*==========================================
+ * PCの位置設定
+ *------------------------------------------
+ */
+int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrtype)
+{
+	char mapname[24];
+	int m=0,disguise=0;
+
+	nullpo_retr(0, sd);
+
+	if(pc_issit(sd)) {
+		pc_setstand(sd);
+		skill_gangsterparadise(sd,0);
+	}
+
 	if(sd->status.option&2)
 		status_change_end(&sd->bl, SC_HIDING, -1);
 	if(sd->status.option&4)
 		status_change_end(&sd->bl, SC_CLOAKING, -1);
 	if(sd->status.option&16384)
 		status_change_end(&sd->bl, SC_CHASEWALK, -1);
-
-	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
-		pet_stopattack(sd->pd);
-		pet_changestate(sd->pd,MS_IDLE,0);
-	}
 
 	if(sd->disguise) { // clear disguises when warping [Valaris]
 		clif_clearchar(&sd->bl, 9);
@@ -2960,14 +2994,9 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 	m=map_mapname2mapid(mapname);
 
 	if(m<0){
-		if(sd->mapname[0]){
+		//if(sd->mapname[0]){
 			int ip,port;
 			if(map_mapname2ipport(mapname,&ip,&port)==0){
-				skill_stop_dancing(&sd->bl,1);
-				skill_unit_move(&sd->bl,gettick(),0);
-				clif_clearchar_area(&sd->bl,clrtype&0xffff);
-				skill_gangsterparadise(sd,0);
-				map_delblock(&sd->bl);
 				if(sd->status.pet_id > 0 && sd->pd) {
 					if(sd->pd->bl.m != m && sd->pet.intimate <= 0) {
 						pet_remove_map(sd);
@@ -2985,6 +3014,15 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 						map_delblock(&sd->pd->bl);
 					}
 				}
+				
+				party_send_logout(sd);					// パーティのログアウトメッセージ送信
+				guild_send_memberinfoshort(sd,0);		// ギルドのログアウトメッセージ送信
+				status_change_clear(&sd->bl,1);	// ステータス異常を解除する
+				skill_stop_dancing(&sd->bl,1);			// ダンス/演奏中断
+				pc_cleareventtimer(sd);					// イベントタイマを破棄する
+				pc_delspiritball(sd,sd->spiritball,1);	// 気功削除
+				pc_remove_map(sd,clrtype);
+
 				memcpy(sd->mapname,mapname,24);
 				sd->bl.x=x;
 				sd->bl.y=y;
@@ -2998,7 +3036,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 				chrif_changemapserver(sd, mapname, x, y, ip, port);
 				return 0;
 			}
-		}
+		//}
 #if 0
 		clif_authfail_fd(sd->fd,0);	// cancel
 		clif_setwaitclose(sd->fd);
@@ -3019,12 +3057,17 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 		} while(map_getcell(m,x,y,CELL_CHKNOPASS));
 	}
 
-	if(sd->mapname[0] && sd->bl.prev != NULL){
-		skill_unit_move(&sd->bl,gettick(),0);
-		clif_clearchar_area(&sd->bl,clrtype&0xffff);
-		skill_gangsterparadise(sd,0);
-		map_delblock(&sd->bl);
-		// pet
+	if(m == sd->bl.m) {
+		// 同じマップなのでダンスユニット引き継ぎ
+		sd->to_x = x;
+		sd->to_y = y;
+		skill_stop_dancing(&sd->bl, 2); //移動先にユニットを移動するかどうかの判断もする
+	} else {
+		// 違うマップなのでダンスユニット削除
+		skill_stop_dancing(&sd->bl, 1);
+	}
+	if(sd->bl.prev != NULL){
+		pc_remove_map(sd,clrtype);
 		if(sd->status.pet_id > 0 && sd->pd) {
 			if(sd->pd->bl.m != m && sd->pet.intimate <= 0) {
 				pet_remove_map(sd);
@@ -3034,9 +3077,6 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 				sd->petDB = NULL;
 				if(battle_config.pet_status_support)
 					status_calc_pc(sd,2);
-				pc_makesavestatus(sd);
-				chrif_save(sd);
-				storage_storage_save(sd);
 			}
 			else if(sd->pet.intimate > 0) {
 				pet_stopattack(sd->pd);
@@ -3053,13 +3093,8 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 
 	memcpy(sd->mapname,mapname,24);
 	sd->bl.m = m;
-	sd->to_x = x;
-	sd->to_y = y;
-
-	// moved and changed dance effect stopping
-
-	sd->bl.x =  x;
-	sd->bl.y =  y;
+	sd->bl.x = x;
+	sd->bl.y = y;
 
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
 		sd->pd->bl.m = m;

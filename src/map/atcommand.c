@@ -10,6 +10,7 @@
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
 #include "../common/db.h"
+#include "../common/core.h"
 
 #include "log.h"
 #include "clif.h"
@@ -29,7 +30,6 @@
 #include "script.h"
 #include "npc.h"
 #include "trade.h"
-#include "core.h"
 
 #ifndef TXT_ONLY
 #include "mail.h"
@@ -142,6 +142,10 @@ ACMD_FUNC(reloadmobdb);
 ACMD_FUNC(reloadskilldb);
 ACMD_FUNC(reloadscript);
 ACMD_FUNC(reloadgmdb); // by Yor
+ACMD_FUNC(reloadatcommand);
+ACMD_FUNC(reloadbattleconf);
+ACMD_FUNC(reloadstatusdb);
+ACMD_FUNC(reloadpcdb);
 ACMD_FUNC(mapexit);
 ACMD_FUNC(idsearch);
 ACMD_FUNC(mapinfo);
@@ -389,6 +393,10 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ReloadSkillDB,		"@reloadskilldb",	99, atcommand_reloadskilldb }, // admin command
 	{ AtCommand_ReloadScript,		"@reloadscript",	99, atcommand_reloadscript }, // admin command
 	{ AtCommand_ReloadGMDB,			"@reloadgmdb",		99, atcommand_reloadgmdb }, // admin command
+	{ AtCommand_ReloadAtcommand,	"@reloadatcommand",	99, atcommand_reloadatcommand },
+	{ AtCommand_ReloadBattleConf,	"@reloadbattleconf",99, atcommand_reloadbattleconf },
+	{ AtCommand_ReloadStatusDB,		"@reloadstatusdb",	99, atcommand_reloadstatusdb },
+	{ AtCommand_ReloadPcDB,			"@reloadpcdb",		99, atcommand_reloadpcdb },
 	{ AtCommand_CharModel,			"@charmodel",		50, atcommand_charmodel },
 	{ AtCommand_CharSKPoint,		"@charskpoint",		60, atcommand_charskpoint },
 	{ AtCommand_CharSTPoint,		"@charstpoint",		60, atcommand_charstpoint },
@@ -5622,6 +5630,7 @@ int atcommand_reloadmobdb(
 {
 	nullpo_retr(-1, sd);
 	mob_reload();
+	read_petdb();
 	clif_displaymessage(fd, msg_table[98]); // Monster database reloaded.
 
 	return 0;
@@ -5639,6 +5648,66 @@ int atcommand_reloadskilldb(
 	skill_reload();
 	clif_displaymessage(fd, msg_table[99]); // Skill database reloaded.
 
+	return 0;
+}
+
+/*==========================================
+ * @reloadatcommand
+ *   atcommand_athena.conf のリロード
+ *------------------------------------------
+ */
+int
+atcommand_reloadatcommand(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
+	clif_displaymessage(fd, msg_table[254]);
+	return 0;
+}
+/*==========================================
+ * @reloadbattleconf
+ *   battle_athena.conf のリロード
+ *------------------------------------------
+ */
+int
+atcommand_reloadbattleconf(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	battle_config_read(BATTLE_CONF_FILENAME);
+	clif_displaymessage(fd, msg_table[255]);
+	return 0;
+}
+/*==========================================
+ * @reloadstatusdb
+ *   job_db1.txt job_db2.txt job_db2-2.txt 
+ *   refine_db.txt size_fix.txt
+ *   のリロード
+ *------------------------------------------
+ */
+int
+atcommand_reloadstatusdb(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	status_readdb();
+	clif_displaymessage(fd, msg_table[256]);
+	return 0;
+}
+/*==========================================
+ * @reloadpcdb
+ *   exp.txt skill_tree.txt attr_fix.txt 
+ *   のリロード
+ *------------------------------------------
+ */
+int
+atcommand_reloadpcdb(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	pc_readdb();
+	clif_displaymessage(fd, msg_table[257]);
 	return 0;
 }
 

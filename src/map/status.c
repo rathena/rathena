@@ -3189,18 +3189,18 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				return 0;
 			if(bl->type == BL_PC)
 				if(pc_checkskill(sd,BS_HILTBINDING)>0)
-					tick *= 1.1;
+					tick += tick / 10;
 			calc_flag = 1;
 			break;
 		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
 			if(bl->type == BL_PC)
 				if(pc_checkskill(sd,BS_HILTBINDING)>0)
-					tick *= 1.1;
+					tick += tick / 10;
 			break;
 		case SC_OVERTHRUST:			/* オ?バ?スラスト */
 			if(bl->type == BL_PC)
 				if(pc_checkskill(sd,BS_HILTBINDING)>0)
-					tick *= 1.1;
+					tick += tick / 10;
 			*opt3 |= 2;
 			break;
 		case SC_MAXIMIZEPOWER:		/* マキシマイズパワ?(SPが1減る時間,val2にも) */
@@ -3563,6 +3563,11 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			tick = 1000;
 			break;
 		case SC_SILENCE:			/* 沈?（レックスデビ?ナ） */
+			if (sc_data && sc_data[SC_GOSPEL].timer!=-1) {
+				skill_delunitgroup((struct skill_unit_group *)sc_data[SC_GOSPEL].val3);
+				status_change_end(bl,SC_GOSPEL,-1);
+				break;
+			}
 			if(!(flag&2)) {
 				int sc_def = 100 - status_get_vit(bl);
 				tick = tick * sc_def / 100;

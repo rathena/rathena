@@ -110,6 +110,16 @@ int check_online_timer=0; // [Valaris]
 
 #endif /* not TXT_ONLY */
 
+char *INTER_CONF_NAME;
+char *LOG_CONF_NAME;
+char *MAP_CONF_NAME;
+char *BATTLE_CONF_FILENAME;
+char *ATCOMMAND_CONF_FILENAME;
+char *CHARCOMMAND_CONF_FILENAME;
+char *SCRIPT_CONF_NAME;
+char *MSG_CONF_NAME;
+char *GRF_PATH_FILENAME;
+
 #define USE_AFM
 #define USE_AF2
 
@@ -1460,59 +1470,19 @@ int map_quit(struct map_session_data *sd) {
 			}
 		}
 
-		if(sd->chatID)	// チャットから出る
-			chat_leavechat(sd);
-
-		if(sd->trade_partner)	// 取引を中?する
-			trade_tradecancel(sd);
-
-		if(sd->party_invite>0)	// パ?ティ?誘を拒否する
-			party_reply_invite(sd,sd->party_invite_account,0);
-
-		if(sd->guild_invite>0)	// ギルド?誘を拒否する
-			guild_reply_invite(sd,sd->guild_invite,0);
-		if(sd->guild_alliance>0)	// ギルド同盟?誘を拒否する
-			guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
-
-		party_send_logout(sd);	// パ?ティのログアウトメッセ?ジ送信
-
-		guild_send_memberinfoshort(sd,0);	// ギルドのログアウトメッセ?ジ送信
-
-		pc_cleareventtimer(sd);	// イベントタイマを破棄する
-
-		if(sd->state.storage_flag)
-			storage_guild_storage_quit(sd,0);
-		else
-			storage_storage_quit(sd);	// 倉庫を開いてるなら保存する
-
-		// check if we've been authenticated [celest]
-		if (sd->state.auth)
-			skill_castcancel(&sd->bl,0);	// 詠唱を中?する
-
-		skill_stop_dancing(&sd->bl,1);// ダンス/演奏中?
-
 		if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中の終了はHPを100に
 			sd->status.hp = 100;
 
+		party_send_logout(sd);	// パ?ティのログアウトメッセ?ジ送信
+		guild_send_memberinfoshort(sd,0);	// ギルドのログアウトメッセ?ジ送信
+		skill_stop_dancing(&sd->bl,1);// ダンス/演奏中?
 		status_change_clear(&sd->bl,1);	// ステ?タス異常を解除する
-		skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
-		skill_cleartimerskill(&sd->bl);
-
-		// check if we've been authenticated [celest]
-		if (sd->state.auth) {
-			pc_stop_walking(sd,0);
-			pc_stopattack(sd);
-			pc_delinvincibletimer(sd);
-		}
+		pc_cleareventtimer(sd);
 		pc_delspiritball(sd,sd->spiritball,1);
-		skill_gangsterparadise(sd,0);
-		skill_unit_move(&sd->bl,gettick(),0);
 
 		if (sd->state.auth)
 			status_calc_pc(sd,4);
 	//	skill_clear_unitgroup(&sd->bl);	// [Sara-chan]
-
-		clif_clearchar_area(&sd->bl,2);
 
 		if(sd->status.pet_id && sd->pd) {
 			pet_lootitem_drop(sd->pd,sd);
@@ -1530,11 +1500,11 @@ int map_quit(struct map_session_data *sd) {
 		if(pc_isdead(sd))
 			pc_setrestartvalue(sd,2);
 
+		pc_remove_map(sd,2);
 		pc_makesavestatus(sd);
 		chrif_save(sd);
 		storage_storage_dirty(sd);
 		storage_storage_save(sd);
-		map_delblock(&sd->bl);
 	}
 
 	if( sd->npc_stackbuf && sd->npc_stackbuf != NULL) {
@@ -3266,15 +3236,15 @@ int do_init(int argc, char *argv[]) {
 	GC_enable_incremental();
 #endif
 
-	char *INTER_CONF_NAME="conf/inter_athena.conf";
-	char *LOG_CONF_NAME="conf/log_athena.conf";
-	char *MAP_CONF_NAME = "conf/map_athena.conf";
-	char *BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
-	char *ATCOMMAND_CONF_FILENAME = "conf/atcommand_athena.conf";
-	char *CHARCOMMAND_CONF_FILENAME = "conf/charcommand_athena.conf";
-	char *SCRIPT_CONF_NAME = "conf/script_athena.conf";
-	char *MSG_CONF_NAME = "conf/msg_athena.conf";
-	char *GRF_PATH_FILENAME = "conf/grf-files.txt";
+	INTER_CONF_NAME="conf/inter_athena.conf";
+	LOG_CONF_NAME="conf/log_athena.conf";
+	MAP_CONF_NAME = "conf/map_athena.conf";
+	BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
+	ATCOMMAND_CONF_FILENAME = "conf/atcommand_athena.conf";
+	CHARCOMMAND_CONF_FILENAME = "conf/charcommand_athena.conf";
+	SCRIPT_CONF_NAME = "conf/script_athena.conf";
+	MSG_CONF_NAME = "conf/msg_athena.conf";
+	GRF_PATH_FILENAME = "conf/grf-files.txt";
 
 	chrif_connected = 0;
 

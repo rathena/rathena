@@ -386,7 +386,7 @@ int guild_check_member(const struct guild *g)
 	nullpo_retr(0, g);
 
 	for(i=0;i<fd_max;i++){
-		if(session[i] && (sd=(struct map_session_data *) session[i]->session_data) && sd->state.auth){
+		if(session[i] && (sd=(struct map_session_data *) session[i]->session_data) && sd->state.auth && !sd->state.waitingdisconnect){
 			if(sd->status.guild_id==g->guild_id){
 				int j,f=1;
 				for(j=0;j<MAX_GUILD;j++){	// データがあるか
@@ -412,7 +412,7 @@ int guild_recv_noinfo(int guild_id)
 	int i;
 	struct map_session_data *sd;
 	for(i=0;i<fd_max;i++){
-		if(session[i] && (sd=(struct map_session_data *) session[i]->session_data) && sd->state.auth){
+		if(session[i] && (sd=(struct map_session_data *) session[i]->session_data) && sd->state.auth && !sd->state.waitingdisconnect){
 			if(sd->status.guild_id==guild_id)
 				sd->status.guild_id=0;
 		}
@@ -442,9 +442,11 @@ int guild_recv_info(struct guild *sg)
 	for(i=bm=m=0;i<g->max_member;i++){	// sdの設定と人数の確認
 		if(g->member[i].account_id>0){
 			struct map_session_data *sd = map_id2sd(g->member[i].account_id);
-			g->member[i].sd=(sd!=NULL &&
-				sd->status.char_id==g->member[i].char_id &&
-				sd->status.guild_id==g->guild_id)?	sd:NULL;
+			if (sd && sd->status.char_id == g->member[i].char_id &&
+				sd->status.guild_id == g->guild_id &&
+				!sd->state.waitingdisconnect)
+				g->member[i].sd = sd;
+			else sd = NULL;
 			m++;
 		}else
 			g->member[i].sd=NULL;
@@ -795,9 +797,11 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 
 	for(i=0;i<g->max_member;i++){	// sd再設定
 		struct map_session_data *sd= map_id2sd(g->member[i].account_id);
-		g->member[i].sd=(sd!=NULL &&
-			sd->status.char_id==g->member[i].char_id &&
-			sd->status.guild_id==guild_id)?sd:NULL;
+		if (sd && sd->status.char_id == g->member[i].char_id &&
+			sd->status.guild_id == g->guild_id &&
+			!sd->state.waitingdisconnect)
+			g->member[i].sd = sd;
+		else sd = NULL;
 	}
 
 	// ここにクライアントに送信処理が必要

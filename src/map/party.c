@@ -175,7 +175,7 @@ int party_recv_info(struct party *sp)
 	
 	for(i=0;i<MAX_PARTY;i++){	// sd‚Ìİ’è
 		struct map_session_data *sd = map_id2sd(p->member[i].account_id);
-		p->member[i].sd=(sd!=NULL && sd->status.party_id==p->party_id)?sd:NULL;
+		p->member[i].sd=(sd!=NULL && sd->status.party_id==p->party_id && !sd->state.waitingdisconnect)?sd:NULL;
 	}
 
 	clif_party_info(p,-1);
@@ -419,7 +419,7 @@ int party_recv_movemap(int party_id,int account_id,char *map,int online,int lv)
 	
 	for(i=0;i<MAX_PARTY;i++){	// sdÄİ’è
 		struct map_session_data *sd= map_id2sd(p->member[i].account_id);
-		p->member[i].sd=(sd!=NULL && sd->status.party_id==p->party_id)?sd:NULL;
+		p->member[i].sd=(sd!=NULL && sd->status.party_id==p->party_id && !sd->state.waitingdisconnect)?sd:NULL;
 	}
 
 	party_send_xy_clear(p);	// À•WÄ’Ê’m—v¿

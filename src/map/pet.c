@@ -816,7 +816,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 		pet_birth_process(sd);
 	else {
 		pet_data_init(sd);
-		if(sd->bl.prev != NULL) {
+		if(sd->pd && sd->bl.prev != NULL) {
 			map_addblock(&sd->pd->bl);
 			clif_spawnpet(sd->pd);
 			clif_send_petdata(sd,0,0);

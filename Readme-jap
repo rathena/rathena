@@ -1,4 +1,406 @@
 --------------------
+//1162 by pizza
+・スパイラルピアース・ソウルブレーカー・発勁・ファルコンアサルトについて本鯖準拠に修正
+
+	(db)
+		skill_db.txt
+			スパイラルピアース・ソウルブレーカーの射程
+			ソウルブレーカーが詠唱妨害可
+		skill_cast_db.txt
+			ソウルブレーカーの詠唱時間
+			
+	(src/map)
+		battle.c	
+			発勁・ファルコンアサルトの計算式
+			スパイラルピアースがニュマで無効化
+
+--------------------
+//1161 by Nameless
+
+・バイオプラントによる召還mobのIDとスキルを本鯖準拠に修正
+　※呼び出せる数についてはまだ未実装…
+
+	(db)
+		mob_avail.txt
+			クライアントによって発生する可能性のあるグラ問題の
+			暫定対応
+		mob_db.txt
+			バイオプラント用mobのステを一部修正
+		mob_skill_db.txt
+			バイオプラント用mobにスキルを修正
+
+	(src/map)
+		skill.c			- case AM_CANNIBALIZE: 修正
+
+--------------------
+//1160 by Nameless
+
+・1158のfix
+　フェアリーフの非移動化と呼び出されたMOBのHPを下方修正
+
+	(src/map)
+		skill.c			- case AM_CANNIBALIZE: 修正
+
+--------------------
+//1158 by もっさり
+・mob後退実装 　自分が向いてる方とは逆にskilllvの分ぐらい動きます
+ 離れすぎる呼び戻されないので取り巻き呼び戻しを修正
+ IWの斜め位置がおかしかったのを修正（バグ報告スレッド part8 >>110)
+
+	(src/map)
+		skill.c			呼び戻し修正、後退追加、IW修正
+		skill.h	
+		mob.c
+		map.h
+	(db)
+		skill_db.txt
+--------------------
+//1158 by Nameless
+
+・アルケミのバイオプラントを修正
+　各LVにあわせて、マンドラゴラ、ヒドラ、フローラ、フェアリーフ、ジオグラファー
+　を呼び出すようにした
+
+	(src/map)
+		skill.c			- case AM_CANNIBALIZE: 修正
+
+--------------------
+//1157 by eigen
+
+・バードダンサースキルの使用でMAP鯖が落ちる不具合を修正
+
+	(src/map)
+		skill.c			- skill_unit_onout() 修正
+
+--------------------
+//1156 by eigen
+
+・聖体降福使用時、モンクが人数カウントされていなかった不具合を修正
+（thanks to 本鯖相違スレpart3 >>121氏）
+・バードダンサースキルの効果が切れなかった不具合を修正
+
+	(src/map)
+		skill.c			- skill_unit_onout(), skill_check_condition_char_sub() 修正
+
+--------------------
+//1155 by latte
+・ディボーションに詠唱時間付与
+・サクリファイス：倍率修正とボスに有効に。
+・グランドクロスのエフェクトの修正
+
+	(db)
+		skill_cast_db.txt
+		skill_db.txt
+	(src/map)
+		battle.c
+
+--------------------
+//1154 by eigen
+
+・バードダンサースキル使用でMAP鯖が落ちる問題を修正
+・ゴスペルの実装
+・マグナムブレイクの仕様を本鯖に合わせて変更(火属性追加ダメージは未実装です)
+
+	(db)
+		skill_cast_db.txt	- ゴスペル, マグナムブレイクに関する修正
+		skill_require_db.txt	- マグナムブレイクに関する修正
+		skill_unit_db.txt	- ゴスペルに関する修正
+	(src/map)
+		battle.c		- battle_calc_pet_weapon_attack(), battle_calc_mob_weapon_attack(),
+						battle_calc_pc_weapon_attack(), battle_calc_magic_attack() 修正
+		clif.c			- clif_parse_UseSkillToId(), clif_parse_UseSkillToId(),
+						clif_parse_WalkToXY(), clif_parse_ActionRequest(),
+						clif_parse_UseSkillToId(), clif_parse_UseSkillMap() 修正
+		map.h			- MAX_STATUSCHANGEの増加
+		pc.c			- pc_natural_heal_sub() 修正
+		skill.h			- マグナムブレイク, ゴスペルに関する状態異常テーブル追加
+		skill.c			- skill_castend_damage_id(), skill_castend_nodamage_id(),
+						skill_unit_onout(), skill_unit_onplace_timer(),
+						skill_init_unit_layout() 修正
+		status.c		- status_change_start(), status_change_end() 修正
+
+--------------------
+//1153 by ぽえ
+
+・ヒール、サンクの修正
+　(イビルドルイドC装備中にPv,Gv以外だとダメージが出ないように修正)
+　(該当PCにヒールを使用した場合SPだけ消費)
+・放置されてるversion.hの更新
+	(src/map)
+		skill.c			- skill_castend_id(),skill_unit_onplace_timer() 修正
+	(src/common)
+		version.h		- mod version 1153
+--------------------
+//1152 by p
+
+・鉱石発見修正
+	(db)
+		item_db.txt			- 古い巻物の getitem 番号を戻し
+	(src/map)
+		itemdb.c			- 鉱石発見時生成処理の変更
+		mob.c				- 鉱石発見処理の変更
+--------------------
+//1151 by p
+
+・ブラックスミススキル鉱石発見の実装(仮)
+	(conf)
+		battle_athena.conf	- 鉱石発見率の指定
+	(db)
+		item_findingore.txt	- 鉱石ドロップ率の指定
+		item_db.txt			- 古い巻物の getitem 番号変更
+	(src/map)
+		itemdb.c			- db/item_findingore.txt の読み込みと発見時生成
+		battle.h			- 設定保持用の項目追加
+		battle.c			- 設定読み込み処理追加
+		mob.c				- 鉱石発見処理追加
+
+--------------------
+//1150 by Theia
+
+・ベノムスプラッシャーをjRO仕様に変更
+　(完全ではないので補完希望)
+・シャープシューティングの計算式を変更
+　(今までの計算式だと必中していた)
+	(db)
+		skill_cast.txt
+		skill_require_db.txt
+	(src/map)
+		skill.c			- ベノムスプラッシャーの発動条件を変更
+		battle.c		- ベノムスプラッシャー,シャープシューティングの倍率を変更
+
+--------------------
+//1149 by eigen
+
+・一部のダンサーバードスキルの演奏スキル上から出るとMAP鯖が落ちる不具合を修正
+
+	(src/map)
+		skill.c			- skill_unit_onout() 修正
+
+--------------------
+//1148 by eigen
+
+・ストリップスキルが詠唱中断されないよう変更
+・ストリップスキル成功率のスキルレベル比重を5に変更
+・バックスタブの射程を武器に関係なく1に変更
+・バックスタブ使用時、弓を装備しているならダメージ半減に変更
+・アシッドテラーとデモンストレーションが詠唱中断されるよう変更
+・アシッドテラー使用後、相手の鎧を破壊することに成功した場合ショックエモを出すよう変更
+・メルトダウンで破壊できる箇所を武器と鎧のみに変更
+・ダンサーバードの演奏スキル範囲外に出ても効果が20秒持続するよう変更
+（ただし私を忘れないでと合奏スキルは除く）
+・倉庫の最大収容量を300に変更
+（以上thanks to 本鯖相違スレPart3 >>115氏）
+・メルトダウン鎧破壊確率を0.7～7%に変更
+
+	(db)
+		skill_db.txt		- cast_cancel、rangeの修正
+		skill_unit_db.txt	- (1148-fixの取り込み)
+	(src/common)
+		mmo.h			- MAX_STORAGEを300に
+	(src/map)
+		battle.c		- battle_calc_pc_weapon_attack() 修正
+		skill.c			- skill_additional_effect(), skill_castend_nodamage_id(),
+						skill_castend_damage_id(), skill_unit_onout() 修正
+
+--------------------
+//1147 by eigen
+
+・インデュア使用後、10秒経たないと再使用できないよう変更
+・シーズモードではインデュアを使用するとMDEFが上がるだけに変更
+・残影使用後、2秒経たないと阿修羅を使用できないよう変更
+
+	(src/map)
+		map.h		- #define MAX_SKILL_ID, unsigned int skillstatictimer[MAX_SKILL_ID] 追加
+		clif.c		- clif_parse_UseSkillToId(), clif_damage() 修正
+		skill.c		- skill_castend_nodamage_id(), skill_castend_pos2(), skill_use_id() 修正
+		pc.c		- pc_setnewpc(), pc_authok() 修正
+		status.c	- status_get_dmotion() 修正
+		battle.c	- battle_calc_damage() 修正
+
+--------------------
+//1146 by eigen
+
+・インデュア使用時Lvに応じてMDEFが上がるように変更
+・インデュア使用中7回ダメージを受けると解除するよう変更
+・石投げの固定ダメージを50に変更
+
+	(src/map)
+		battle.c	- battle_calc_damage(), battle_calc_misc_attack() 修正
+		status.c	- status_calc_pc(), status_change_start(), status_change_end() 修正
+
+--------------------
+//1145 by End_of_exam
+
+・start のチェック間隔が短すぎたのを修正(start)
+・skill_unit_effect() から無限ループに突入して、スタックオーバーフローで落ちる
+　可能性があるバグを修正(skill.c)
+・ペットの読み込みに失敗した時に落ちるバグを修正(pet.c)
+・２重ログインの切断処理が違っていたバグを修正(map.c)
+
+・1142のマグヌスエクソシズムの修正を元に戻す(skill.c)
+・メディタティオのSP回復量修正の取り込み(skill.c thanks to ななしさん)
+
+	(/)
+		start		- チェック間隔を修正
+
+	(src/map)
+		map.c		- map_quit() 修正
+		pet.c		- pet_recv_petdata() 修正
+		skill.c		- skill_unit_onplace_timer() , skill_unit_effect() 修正
+		status.c	- status_calc_pc() 修正
+
+--------------------
+//1144 by 聖
+
+・VCでコンパイルしたとき警告が出るのを修正。
+・簡易アイテム・モンスター召還コマンド@imを追加。
+・@im追加に伴いAEGISで使われている/item,/monsterを実装。
+　(AEGISの仕様に則り装備は1個単位・未鑑定で
+　ほかのアイテムは30個単位・鑑定済みで出ます。)
+・@monsterを召還匹数入力なしで召還できるようにした。
+・コマンド入力の際とある条件を満たすと
+　バッファオーバーフローが発生するバグを修正。
+	(src/map)
+		atcommand.h 修正。
+		atcommand.c
+			atcommand_monster() 修正。
+			atcommand_itemmonster() 追加。
+		clif.c
+			clif_parse_GMkillall() 修正。
+			clif_parse_GMsummon() 修正。
+			clif_parse_GMitemmonster() 追加。
+		status.c
+			status_change_start() 修正。
+	(db)
+		packet_db.txt 修正。
+	(conf)
+		msg_athena.conf 修正。
+		atcommand_athena.conf 修正。
+
+--------------------
+//1143 by End_of_exam
+
+・map_quit(), pc_setpos() を色々整理(map.c pc.c)
+・モンスターがバシリカを使うと落ちるバグを修正(skill.c)
+・ボスモンスターにロキの叫びが効いていたのを修正(mob.c)
+・ダンス途中にサーバー内の別のマップに移動した場合、スキルユニットが消えない
+　（転送前のマップに残っている）バグを修正。(pc.c)
+・1134でサーバー間のワープポータルを使った時に、スキル使用者が乗ったらサーバーが
+　落ちるバグを修正(skill.c)
+・1134でハエの羽を使ってサーバー間を移動した場合、アイテムが減らないバグを修正(pc.c)
+
+	(src/map)
+		map.c		- map_quit() 修正
+		mob.c		- mobskill_castend_id() , mobskill_castend_pos(),
+					  mobskill_use_id(), mobskill_use_pos() 修正
+		pc.c		- pc_useitem(), pc_setpos() 修正、pc_remove_map() 追加
+		pc.h		- pc_remove_map() 追加
+		skill.c		- skill_castend_nodamege_id(), skill_unit_onplace() 修正
+
+--------------------
+//1142 by づん
+・マグヌスエクソシズムで種族にアンデットを持つモンスターに当たらなかったのを修正
+	(src/map)
+	skill.c		- && race!=1を追加
+
+--------------------
+//1141.1 by BDPQ銀 [ 2005/02/21 ]
+・1141の添付忘れの追加です。申し訳ありませんでした。
+・GMコマンドを行った時のメッセージを追加しました。
+
+	(conf)
+		msg_athena.conf	- 113～117		追加	(@reload～ を行った時のメッセージを追加)
+
+--------------------
+//1141 by BDPQ銀 [ 2005/02/20 ]
+・GMコマンドを追加
+	@reloadatcommand	- atcommand_athena.conf を再読込する
+	@reloadbattleconf	- battle_athena.conf を再読込する
+	@reloadgmaccount	- gm_account_filename (デフォルト GM_account.txt ) を再読込する
+	@reloadstatusdb		- job_db1.txt / job_db2.txt / job_db2-2.txt / refine_db.txt / size_fix.txt を再読込する
+	@reloadpcdb			- exp.txt / skill_tree.txt / attr_fix.txt を再読込する
+・GMコマンド「@reloadmobdb」でペットのデータベースも再読込するように変更
+		* @reload～ にはクライアントのリログが必要な場合も有ります。
+・GMコマンド「@who+」でレベルも表示するように変更
+・ヒールを何レベル以上で9999固定にするかのオプション(heal_counterstop)追加
+
+	(conf)
+		atcommand_athena.conf	- reloadatcommand reloadbattleconf reloadgmaccount reloadstatusdb reloadpcdb	追加	(デフォルト99)
+		battle_athena.conf		- heal_counterstop		追加	(デフォルト11)
+		help.txt				- reloadatcommand reloadbattleconf reloadgmaccount reloadstatusdb reloadpcdb who+ の説明を追加
+
+	(doc)
+		conf_ref.txt	- 5. conf/battle_athena.conf	編集	(heal_counterstop の説明とサンプルを追加)
+						- 6. atcommand_athena.conf		編集	(説明とサンプルに再読込関連を追加)
+
+	(src/map)
+		atcommand.c		- AtCommandInfo atcommand_info	編集	(構造体定義)
+						- atcommand_whop()				編集	(プレイヤーのレベルも表示するよう変更)
+						- atcommand_reloadatcommand()	追加	(atcommand_athena.conf 再読込)
+						- atcommand_reloadbattleconf()	追加	(battle_athena.conf 再読込)
+						- atcommand_reloadgmaccount()	追加	(gm_account_filename 再読込)
+						- atcommand_reloadstatusdb()	追加	(ステータス関連DB 再読込)
+						- atcommand_reloadpcdb()		追加	(プレイヤー関連DB 再読込)
+						- atcommand_reloadmobdb()		編集	(ペットのデータベースも読込むよう変更)
+		atcommand.h		- AtCommandType					編集	(構造体定義)
+
+		battle.c		- battle_config_read()			編集	(heal_counterstop の追加)
+		battle.h		- Battle_Config					編集	(heal_counterstop の追加)
+
+		skill.c			- skill_castend_nodamage_id()	編集	(9999ヒール部を battle_athena.conf を参照するよう変更)
+		
+		pet.h			- int read_petdb();				追加	(ペット関連DB 再読込用)
+
+		pc.h			- int pc_readdb(void);			追加	(プレイヤー関連DB 再読込用)
+
+		status.h		- int status_readdb(void);		追加	(ステータス関連DB 再読込用)
+
+--------------------
+//1140 by eigen
+・一部の環境でathena-startとstartが正常に動作していなかったバグを修正
+
+	athena-start		- 改行コードを0Aに統一
+	start			- 改行コードを0Aに統一
+
+--------------------
+//1139 by もっさり
+・NPC取り巻き呼び戻しスキル実装
+・コメントされてる9999ヒール(skilllv>10の時)、広範囲メテオ(skilllv>10の時)、広範囲ハンマーフォール(skilllv>5の時)のコメント取り外し。
+・広範囲lovの付け加え(skilllv>10の時)
+例
+1312,取り巻き呼び戻し＠タートルジェネラル,attack,354,1,3000,0,0,no,self,always,0,,,,,,10
+1063,9999ヒール＠ルナティック,idle,28,11,10,2000,60000,yes,self,always,0,,,,,,　
+	
+	(src/map)
+		skill.c	  npc_recallスキル追加,上記のコメント取り外し
+		skill.h   NPC_RECALL = 354を追加
+		mob.c     スキル追加のために「取り巻きモンスターの処理」部分に付け加え
+		mob.h     int mob_countslave(struct mob_data *md);を追加
+		map.h     struct mob_dataにrecall_flagとrecallmob_countメンバー追加
+	(db)
+		skill_db.txt	スキル追加
+
+--------------------
+//1138 by End_of_exam
+
+・1132のsocket.cに紛れ込んでいたかなり深刻なバグ（送信データがランダムに
+　書き換わる可能性があるバグ）を修正(socket.c)
+・1134で組み込んだアイテムdupe対策が不完全だったのを修正(pc.c party.c guild.c)
+
+	(src/common/)
+		socket.c		- send_from_fifo() 修正
+
+	(src/map)
+		pc.c			- pc_setpos() 修正
+		party.c			- 色々修正
+		guild.c			- 色々修正
+
+--------------------
+//1137 by いど
+
+・サーバースナップショット
+
+--------------------
 //1136 by by eigen
 
 ・1135で消えていたbattle_athena.confの項目とデフォルト値を復活

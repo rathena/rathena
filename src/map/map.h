@@ -220,6 +220,7 @@ struct map_session_data {
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	struct skill_timerskill skilltimerskill[MAX_SKILLTIMERSKILL];
 	char blockskill[MAX_SKILL];	// [celest]	
+	//unsigned int skillstatictimer[MAX_SKILL];
 	unsigned short timerskill_count; // [celest]
 	int cloneskill_id;
 	int potion_hp,potion_sp,potion_per_hp,potion_per_sp;
@@ -490,7 +491,9 @@ struct mob_data {
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	char npc_event[50];
 	unsigned char size;
-	int owner;
+	short recall_flag;
+	int recallmob_count;
+	short recallcount;
 };
 struct pet_data {
 	struct block_list bl;
@@ -799,6 +802,16 @@ int cleanup_sub(struct block_list *bl, va_list ap);
 
 void map_helpscreen(); // [Valaris]
 int map_delmap(char *mapname);
+
+extern char *INTER_CONF_NAME;
+extern char *LOG_CONF_NAME;
+extern char *MAP_CONF_NAME;
+extern char *BATTLE_CONF_FILENAME;
+extern char *ATCOMMAND_CONF_FILENAME;
+extern char *CHARCOMMAND_CONF_FILENAME;
+extern char *SCRIPT_CONF_NAME;
+extern char *MSG_CONF_NAME;
+extern char *GRF_PATH_FILENAME;
 
 #ifndef TXT_ONLY
 

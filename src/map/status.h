@@ -259,6 +259,7 @@ int status_getrefinebonus(int lv,int type);
 int status_percentrefinery(struct map_session_data *sd,struct item *item);
 extern int percentrefinery[5][10];
 
+int status_readdb(void);
 int do_init_status(void);
 
 #endif

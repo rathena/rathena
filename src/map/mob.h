@@ -139,6 +139,7 @@ int mobskill_event(struct mob_data *md,int flag);
 int mobskill_castend_id( int tid, unsigned int tick, int id,int data );
 int mobskill_castend_pos( int tid, unsigned int tick, int id,int data );
 int mob_summonslave(struct mob_data *md2,int *value,int amount,int flag);
+int mob_countslave(struct mob_data *md);
 
 int mob_gvmobcheck(struct map_session_data *sd, struct block_list *bl);
 void mob_reload(void);

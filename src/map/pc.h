@@ -65,6 +65,7 @@ int pc_setsavepoint(struct map_session_data*,char*,int,int);
 int pc_randomwarp(struct map_session_data *sd,int type);
 int pc_memo(struct map_session_data *sd,int i);
 int pc_randomwalk(struct map_session_data*,int tick);
+int pc_remove_map(struct map_session_data *sd,int clrtype);
 
 int pc_checkadditem(struct map_session_data*,int,int);
 int pc_inventoryblank(struct map_session_data*);
@@ -92,7 +93,7 @@ int pc_bonus3(struct map_session_data *sd,int,int,int,int);
 int pc_bonus4(struct map_session_data *sd,int,int,int,int,int);
 int pc_skill(struct map_session_data*,int,int,int);
 
-void pc_blockskill_start (struct map_session_data*,int,int);	// [celest]
+int pc_blockskill_start (struct map_session_data*,int,int);	// [celest]
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
@@ -202,6 +203,7 @@ int pc_delspiritball(struct map_session_data *sd,int,int);
 
 int pc_eventtimer(int tid,unsigned int tick,int id,int data); // for npc_dequeue 
 
+int pc_readdb(void);
 int do_init_pc(void);
 void do_final_pc(void);
 

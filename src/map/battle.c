@@ -928,6 +928,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
 				damage = damage*(200+20*skill_lv)/100;
+				hitrate = 1000000;
 				break;
 			}
 			if (div_flag && div_ > 1) {	// [Skotlex]
@@ -1432,6 +1433,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
 				damage = damage*(200+20*skill_lv)/100;
+				hitrate = 1000000;
 				break;
 			}
 			if (div_flag && div_ > 1) {	// [Skotlex]
@@ -2291,6 +2293,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
 				damage = damage*(200+20*skill_lv+20*pc_checkskill(sd,AS_POISONREACT))/100;
 				damage2 = damage2*(200+20*skill_lv+20*pc_checkskill(sd,AS_POISONREACT))/100;
+				no_cardfix = 1;
+				hitrate = 1000000;
 				break;
 			case ASC_BREAKER:		// -- moonsoul (special damage for ASC_BREAKER skill)
 				if(sd){

@@ -3706,7 +3706,8 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	if(type != 4 && dst->type == BL_PC && ((struct map_session_data *)dst)->special_state.infinite_endure)
 		type = 9;
 	if(sc_data) {
-		if(type != 4 && sc_data[SC_ENDURE].timer != -1)
+		if(type != 4 && sc_data[SC_ENDURE].timer != -1 &&
+			(dst->type == BL_PC && !map[dst->m].flag.gvg))
 			type = 9;
 		if(sc_data[SC_HALLUCINATION].timer != -1) {
 			if(damage > 0)
@@ -9794,31 +9795,6 @@ void clif_parse_OpenVending(int fd,struct map_session_data *sd) {
 }
 
 /*==========================================
- * /monster /item rewriten by [Yor]
- *------------------------------------------
- */
-void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd) {
-	char monster_item_name[25];
-
-	nullpo_retv(sd);
-
-	memset(monster_item_name, '\0', sizeof(monster_item_name));
-
-	if (battle_config.atc_gmonly == 0 || pc_isGM(sd)) {
-		memcpy(monster_item_name, RFIFOP(fd,2), 24);
-
-		if (mobdb_searchname(monster_item_name) != 0) {
-			if (pc_isGM(sd) >= get_atcommand_level(AtCommand_Monster))
-				atcommand_spawn(fd, sd, "@spawn", monster_item_name); // as @spawn
-		} else if (itemdb_searchname(monster_item_name) != NULL) {
-			if (pc_isGM(sd) >= get_atcommand_level(AtCommand_Item))
-				atcommand_item(fd, sd, "@item", monster_item_name); // as @item
-		}
-
-	}
-}
-
-/*==========================================
  * ƒMƒ‹ƒh‚ðì‚é
  *------------------------------------------
  */
@@ -10097,6 +10073,31 @@ void clif_parse_Recall(int fd, struct map_session_data *sd) {	// Added by RoVeRT
 	}
 
 	return;
+}
+
+/*==========================================
+ * /monster /item rewriten by [Yor]
+ *------------------------------------------
+ */
+void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd) {
+	char monster_item_name[25];
+
+	nullpo_retv(sd);
+
+	memset(monster_item_name, '\0', sizeof(monster_item_name));
+
+	if (battle_config.atc_gmonly == 0 || pc_isGM(sd)) {
+		memcpy(monster_item_name, RFIFOP(fd,2), 24);
+
+		if (mobdb_searchname(monster_item_name) != 0) {
+			if (pc_isGM(sd) >= get_atcommand_level(AtCommand_Monster))
+				atcommand_spawn(fd, sd, "@spawn", monster_item_name); // as @spawn
+		} else if (itemdb_searchname(monster_item_name) != NULL) {
+			if (pc_isGM(sd) >= get_atcommand_level(AtCommand_Item))
+				atcommand_item(fd, sd, "@item", monster_item_name); // as @item
+		}
+
+	}
 }
 
 void clif_parse_GMHide(int fd, struct map_session_data *sd) {	// Modified by [Yor]
@@ -10989,7 +10990,8 @@ static int packetdb_readdb(void)
 		{clif_parse_friends_list_add,"friendslistadd"},
 		{clif_parse_friends_list_remove,"friendslistremove"},
 		{clif_parse_GMkillall,"killall"},
-		{clif_parse_GM_Monster_Item,"summon"},
+		{clif_parse_Recall,"summon"},
+		{clif_parse_GM_Monster_Item,"itemmonster"},
 		{clif_parse_Shift,"shift"},
 		{clif_parse_debug,"debug"},
 
