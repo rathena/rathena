@@ -507,8 +507,8 @@
 1221,Gladius__,Gladius,4,43000,,700,105,,1,0,2055918,2,2,3,24,1,{},{},,,,,,
 1222,Damascus,Damascus,4,49000,,800,118,,1,1,2055918,2,2,3,24,1,{},{},,,,,,
 1223,Fortune_Sword,Fortune Sword,4,20,,500,90,,1,0,2055918,2,2,4,24,1,{},{ bonus bLuk,5; bonus bFlee2,20; },,,,
-1224,Sword_Breaker,Swordbreaker,4,20,,1000,70,,1,0,2055918,2,2,4,36,1,{},{ bonus bBreakWeaponRate,100; },,,,,,
-1225,Mail_Breaker,Mailbreaker,4,20,,1000,70,,1,0,2055918,2,2,4,36,1,{},{ bonus bBreakArmorRate,100; },,,,,,
+1224,Sword_Breaker,Swordbreaker,4,20,,1000,70,,1,0,2055918,2,2,4,36,1,{},{ bonus bBreakWeaponRate,500; },,,,,,
+1225,Mail_Breaker,Mailbreaker,4,20,,1000,70,,1,0,2055918,2,2,4,36,1,{},{ bonus bBreakArmorRate,500; },,,,,,
 1226,Damascus_,Damascus,4,49000,,800,118,,1,2,2055918,2,2,3,24,1,{},{},,,,,,
 1227,Weeder_Knife,Weeder Knife,4,20,,400,80,,1,0,2055918,2,2,4,36,1,{},{ bonus bIgnoreDefRace,3; bonus2 bAddRace,3,15; bonus2 bSubRace,3,15; },
 1228,Combat_Knife,Combat Knife,4,20,,400,80,,1,0,2055918,2,2,4,36,1,{},{ bonus bIgnoreDefRace,7; bonus2 bSubRace,7,10; bonus2 bSubRace,6,-10; },
@@ -517,13 +517,13 @@
 1231,Bazerald,Bazerald,4,20,,500,70,,1,0,2055918,2,2,4,36,1,{},{ bonus bAtkEle,3; bonus bInt,5; bonus bMatkRate,10; },,,
 1232,Assassin_Dagger,Assasin Dagger,4,20,,600,140,,1,0,4096,2,2,4,36,1,{},{ bonus bMaxHPrate,20; bonus bMaxSPrate,15; bonus bAspdAddRate,2; bonus bAtkEle,7; },,
 1233,Exercise,Excorcise,4,20,,700,90,,1,0,2055918,2,2,4,36,1,{},{ bonus bIgnoreDefRace,6; bonus2 bSubRace,6,5; bonus2 bSubRace,7,-10; },
-1234,Moonlight_Sword,Walgwanggum,4,20,,700,50,,1,0,2055918,2,2,4,36,1,{},{ bonus bMaxSPrate,10; bonus2 bSPDrainRate,100,3; },,,,,
+1234,Moonlight_Sword,Walgwanggum,4,20,,700,50,,1,0,2055918,2,2,4,36,1,{},{ bonus bMaxSPrate,10; bonus2 bSPDrainRate,10000,1; },,,,,
 1235,Azoth,Azoth,4,20,,700,110,,1,0,262144,2,2,4,36,1,{},{},,,,,,
 1236,Sucsamad,Sucsamad,4,20,,800,140,,1,0,2055918,2,2,4,36,1,{},{ bonus2 bAddEle,2,10; bonus2 bAddEle,4,10; bonus bUnbreakable,100; },,
 1237,Grimtooth_,Grimtooth,4,20,,800,180,,1,0,2055918,2,2,4,36,1,{},{ bonus bFlee,10; bonus bFlee2,5; bonus bDefRate,-50; bonus bDef2Rate,-50; },,
 1238,Zeny_Knife,Zeny Knife,4,20,,1200,64,,1,0,2055918,2,2,3,40,1,{},{ bonus bGetZenyNum,100; },,,,,
 1239,Poison_Knife,Poison Knife,4,20,,800,64,,1,0,2055918,2,2,3,65,1,{},{ bonus bAtkEle,5; bonus2 bAddEff,Eff_Poison,2000; },,,,,
-1240,Princess_Knife,Princess Knife,4,20,,400,84,,1,0,2055918,2,2,4,1,1,{},{ bonus bStr,1; bonus bAgi,1; bonus bVit,1; bonus bInt,1; bonus bDex,1; bonus bLuk,1; }
+1240,Princess_Knife,Princess Knife,4,20,,400,84,,1,0,2055918,2,2,4,1,1,{},{ bonus bAllStats,1; }
 1241,Cursed_Dagger,Cursed Dagger,4,20,,400,55,,1,0,66052,2,2,4,85,1,{},{ bonus2 bAddEff,Eff_Curse,500; },,,,
 1242,Counter_Dagger,Counter Dagger,4,20,,550,75,,1,0,66052,2,2,4,55,1,{},{ bonus bCritical,5; bonus3 bAutoSpell,61,1,25; },,,,,
 1243,Main_Gauche_For_Novice,Novice Main Gauche,4,20,,1,45,,1,0,8388609,2,2,1,1,1,{},{},,,,,,
@@ -579,7 +579,7 @@
 1410,Lance,Lance,4,60000,,2500,185,,3,0,16514,2,34,3,33,5,{},{},,,
 1411,Lance_,Lance,4,60000,,2500,185,,3,0,16514,2,34,3,33,5,{},{},,,
 1412,Lance__,Lance,4,60000,,2500,185,,3,0,16514,2,34,3,33,5,{},{},,,
-1413,Gungnir,Gungnir,4,20,,500,120,,3,0,16514,2,2,4,4,4,{},{ bonus bAtkEle,4; bonus bPerfectHitRate,25; bonus bHit,30; }
+1413,Gungnir,Gungnir,4,20,,500,120,,3,0,16514,2,2,4,4,4,{},{ bonus bPerfectHitRate,25; bonus bHit,30; }
 1414,Gelerdria,Gelerdria,4,20,,700,145,,3,0,16514,2,2,4,48,4,{},{ bonus bAtkEle,2; bonus bMaxHP,500; bonus bMaxSP,-50; }
 1415,Skewer,Brocca,4,20,,850,100,,3,0,16514,2,2,4,48,4,{},{ bonus bIgnoreDefRace,11; bonus2 bAddEle,0,25; }
 1416,Tjungkuletti,Tjungkuletti,4,20,,1000,95,,3,0,16514,2,2,4,48,4,{},{ bonus2 bSPDrainRate,10000,1; bonus2 bSPDrainRate,100,5; },,,
@@ -949,7 +949,7 @@
 2412,Greaves_,Greaves,5,48000,,750,,5,,1,16512,2,64,,65,0,{},{},,,,
 2413,Safety_Shoes,Safety Shoes,5,20,,350,,6,,0,16514,2,64,,30,0,{},{},,,,
 2414,Sandal_For_Novice,Novice Sandals,5,20,,1,,2,,0,8388609,2,64,,0,0,{},{},,,,
-2415,Bunny_Slippers,Bunny Slippers,3,20,,10,,,,,,,,,,,{},{}
+2415,Bunny_Slippers,Bunny Slippers,5,20,,300,,,,,,,,,,,{},{}
 
 // Garments
 //===================================================================
@@ -1319,7 +1319,6 @@
 5096,Assassin_Mask_,Assassin Mask,5,20,,100,,0,,0,4096,2,1,,70,180,{},{},,,
 5097,Annual_Commemoration_Hat,Annual Commemoration Hat,5,,,30,,3,,0,10477567,2,256,,0,166,{},{ bonus bAllStats,3; }
 5098,Tiger_Mask,Tiger Mask,5,20,,400,,2,,,10477567,3,768,,,181,{},{ bonus bStr,3; bonus bMaxHP,100; }
-
 // Misc items
 //===================================================================
 7001,Mold_Powder,Mould Powder,3,680,,10,,,,,,,,,,,{},{}
