@@ -2939,9 +2939,9 @@ int parse_console(char *buf) {
     
     printf("Type of command: %s || Command: %s \n",type,command);
     
-    free(buf);
-    free(type);
-    free(command);
+    if(buf) free(buf);
+    if(type) free(type);
+    if(command) free(command);
     
     return 0;
 }
@@ -3322,17 +3322,19 @@ void do_final(void) {
 		online_chars[i].server = -1;
 	}
 	create_online_files();
-	free(online_chars);
+	if(online_chars) free(online_chars);
 
 	mmo_char_sync();
 	inter_save();
 
-	if (gm_account != NULL)
-		free(gm_account);
+	if(gm_account) free(gm_account);
+	if(char_dat) free(char_dat);
 
-	free(char_dat);
 	delete_session(login_fd);
 	delete_session(char_fd);
+
+	for(i = 0; i < fd_max; i++)
+		if(session[i]->session_data) free(session[i]->session_data);
 
 	char_log("----End of char-server (normal end with closing of all files)." RETCODE);
 }
