@@ -1,5 +1,6 @@
 Date	Added
 01/13
+	* Added a bug - Celest, LOOK AT THIS BUG ASAP. [Codemaster]
         * Tided up/fixed some mobs [Lupus]
 01/12
         * Implemented Vending Log [Lupus]
