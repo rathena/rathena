@@ -1527,6 +1527,7 @@ static int clif_waitclose(int tid, unsigned int tick, int id, int data) {
 	if (session[id])
 		session[id]->eof = 1;
 
+	close(id);
 	return 0;
 }
 
@@ -10347,7 +10348,8 @@ static int clif_parse(int fd) {
 			RFIFOSKIP(fd,2);
 			break;
 		case 0x7532: // 接続の切断
-			session[fd]->eof = 1;
+			close(fd);
+			session[fd]->eof=1;
 			break;
 		}
 		return 0;
@@ -10416,6 +10418,7 @@ static int clif_parse(int fd) {
 	    cmd >= MAX_PACKET_DB || packet_size_table[packet_ver-5][cmd] == 0) {
 		if (!fd)
 			return 0;
+		close(fd);
 		session[fd]->eof = 1;
 		printf("clif_parse: session #%d, packet 0x%x (%d bytes received) -> disconnected.\n", fd, cmd, RFIFOREST(fd));
 		return 0;
@@ -10428,7 +10431,8 @@ static int clif_parse(int fd) {
 			return 0; // 可変長パケットで長さの所までデータが来てない
 		packet_len = RFIFOW(fd,2);
 		if (packet_len < 4 || packet_len > 32768) {
-			session[fd]->eof = 1;
+			close(fd);
+			session[fd]->eof =1;
 			return 0;
 		}
 	}

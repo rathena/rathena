@@ -1,5 +1,9 @@
 Date	Added
 01/11
+	* Added a fix to @sound where if you forgot the .wav exention, i'd attempt to play the file without it (it adds the .wav) [Codemaster] [SVN 949]
+	* Added @disguiseall / @undisguiseall [Codemaster] [SVN 949]
+	* Added misc. clif.c fixes (jAthena added alot of close(fd)'s, so i added them, too) [Codemaster] [SVN 949]
+	* Added bug reports - Celest, you might want to check one of those out [Codemaster] [SVN 949]
         * Fixed a bug in clif.c which didn't allow to enther the map-server.
 	  It worked under win32, but didn't under Linux. [Lupus]
 01/10

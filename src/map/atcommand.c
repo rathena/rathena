@@ -217,7 +217,7 @@ ACMD_FUNC(readmail); // [Valaris]
 ACMD_FUNC(sendmail); // [Valaris]
 ACMD_FUNC(sendprioritymail); // [Valaris]
 ACMD_FUNC(deletemail); // [Valaris]
-ACMD_FUNC(sound); // [Valaris]
+//ACMD_FUNC(sound); // [Valaris]
 ACMD_FUNC(refreshonline); // [Valaris]
 #endif /* TXT_ONLY */
 
@@ -248,6 +248,8 @@ ACMD_FUNC(killid2); // by Dino9021
 ACMD_FUNC(charkillableid); // by Dino9021
 ACMD_FUNC(charkillableid2);  // by Dino9021
 ACMD_FUNC(sound);
+ACMD_FUNC(undisguiseall);
+ACMD_FUNC(disguiseall);
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -518,6 +520,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_CharKillableId,      "@charkillableid",    40, atcommand_charkillableid }, // [Dino9021]
 	{ AtCommand_CharKillableId2,      "@charkillableid2",    40, atcommand_charkillableid2 }, // [Dino9021]
 	{ AtCommand_Sound,		"@sound",	40,	atcommand_sound },
+	{ AtCommand_UndisguiseAll,		"@undisguiseall",	99,	atcommand_undisguiseall },
+	{ AtCommand_DisguiseAll,		"@disguiseall",	99,	atcommand_disguiseall },
 
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
@@ -6453,6 +6457,50 @@ int atcommand_disguise(
 }
 
 /*==========================================
+ * DisguiseAll
+ *------------------------------------------
+ */
+
+int atcommand_disguiseall(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int mob_id=0, i=0;
+	struct map_session_data *pl_sd;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, "Please, enter a Monster/NPC name/id (usage: @disguiseall <monster_name_or_monster_ID>).");
+		return -1;
+	}
+
+	if ((mob_id = mobdb_searchname(message)) == 0) // check name first (to avoid possible name begining by a number)
+		mob_id = atoi(message);
+
+	if ((mob_id >=  46 && mob_id <= 125) || (mob_id >= 700 && mob_id <= 718) || // NPC
+	    (mob_id >= 721 && mob_id <= 755) || (mob_id >= 757 && mob_id <= 811) || // NPC
+	    (mob_id >= 813 && mob_id <= 834) || // NPC
+	    (mob_id > 1000 && mob_id < 1582)) { // monsters
+		for(i=0; i < fd_max; i++) {
+			if(session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+				if(pc_isriding(pl_sd)) { // temporary prevention of crash caused by peco + disguise, will look into a better solution [Valaris]
+					clif_displaymessage(fd, msg_table[227]); // Cannot wear disguise while riding a Peco.
+				} else {
+					pl_sd->disguiseflag = 1; // set to override items with disguise script [Valaris]
+					pl_sd->disguise = mob_id;
+					pc_setpos(pl_sd, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y, 3);
+				}
+			}
+		}
+		clif_displaymessage(fd, msg_table[122]); // Disguise applied.
+	} else {
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
  * @undisguise by [Yor]
  *------------------------------------------
  */
@@ -6470,6 +6518,30 @@ int atcommand_undisguise(
 		clif_displaymessage(fd, msg_table[125]); // You're not disguised.
 		return -1;
 	}
+
+	return 0;
+}
+
+/*==========================================
+ * UndisguiseAll
+ *------------------------------------------
+ */
+int atcommand_undisguiseall(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd;
+	int i;
+	nullpo_retr(-1, sd);
+
+	for(i=0; i < fd_max; i++) {
+		if(session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && pl_sd->disguise) {
+			clif_clearchar(&pl_sd->bl, 9);
+			pl_sd->disguise = 0;
+			pc_setpos(pl_sd, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y, 3);
+		}
+	}
+	clif_displaymessage(fd, msg_table[124]); // Undisguise applied.
 
 	return 0;
 }
@@ -7578,6 +7650,9 @@ atcommand_sound(
 	memset(sound_file, '\0', sizeof(sound_file));
 	if(sscanf(message, "%99[^\n]", sound_file) < 1)
 		return -1;
+
+	if(strstr(sound_file, ".wav") == NULL)
+		strcat(sound_file, ".wav");
 
 	clif_soundeffectall(&sd->bl, sound_file,0);
 

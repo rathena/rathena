@@ -233,6 +233,8 @@ enum AtCommandType {
 	AtCommand_CharKillableId, // by Dino9021
 	AtCommand_CharKillableId2, // by Dino9021
 	AtCommand_Sound,
+	AtCommand_UndisguiseAll,
+	AtCommand_DisguiseAll,
 
 	// end
 	AtCommand_Unknown,
