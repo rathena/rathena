@@ -1,5 +1,6 @@
 Date	Added
 12/21
+	* Fixed a tiny compile warning in npc.c [Codemaster]
 	* Allowed the NPCs without proper curly brackets to still load, but give an error still [Codemaster]
 	* Added variable 'current_file' which tells the filename of the script while loading npcs [MC Cameri]
 	  -the variable its set in do_init_npc() or something like that, so you can only access it
