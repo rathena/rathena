@@ -1,6 +1,6 @@
 Date	Added
 11/22
-	* Changed monster_ignore_gm option to a level value. [Valaris]
+	* Changed monsters_ignore_gm option to a level value. [Valaris]
 	  (accounts greater than or equal to this setting won't be attacked by aggressives.)
 	* Fixed mapflag #s and constants for setmapflag and remove mapflag. [Valaris]
         * Added skill names for kRO 11/23's new skills [celest]
