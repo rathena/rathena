@@ -371,3 +371,14 @@ Problem:	Arrows Dupe
 		You should prepare/remove arrows while trade. And have both - names and unnamed arrows ^_-
 Assigned:	N/A
 Progress:	0%
+
+Problem:	PArty EXP shar Exploit.
+		1. you enter the game with your HIGH-level character
+		2. start killing some mobs (e.g. 5 Seals) within a party... Don't finish them!
+		3. Re-enter with a LOW-LEVEL character from your account 
+		4. now finish the mobs or... let someone do it.
+		5. u get all your HIGH-LEVEL exp!!!
+		6. fukko!!!
+			Why does it look at ACCOUNT ID ? instead of the CHAR ID ?
+Assigned:	N/A
+Progress:	0%
