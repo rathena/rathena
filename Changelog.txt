@@ -1,5 +1,8 @@
 Date	Added
+
 02/02
+	* Added checks to prevent some crashes in skill.c
+	  [Full credit to shinomori] [SVN 1022: Ajarn]
         * Removed nullpo check in skillnotok() -- otherwise it will display fail 
           messages for monster skills [celest]
         * Added crash check for Ice Wall [celest]
@@ -25,6 +28,7 @@ Date	Added
           to char disconnection -- Fixes an odd crash with lazy mob AI [celest]
 	* Added at(@) command @autoloot, which turns autoloot on or off for the
 	  player who uses it [Upa-Kun]
+	  
 01/29
 	* Fixed Storage Bug with Named Stackable items. Thanks to Nimion [Lupus]
 		e.g. Arrows, Iron, Elemental stones, etc...

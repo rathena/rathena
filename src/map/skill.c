@@ -5819,7 +5819,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	if(!goflag)
 		return 0;
 	ts->tick=tick;
-	
+
 	switch(sg->unit_id){
 	case 0x83:	/* サンクチュアリ */
 		{
@@ -5867,7 +5867,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 				if (sc_data[type].timer==-1)
 					status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
 				else if((unit2 = (struct skill_unit *)sc_data[type].val2) && unit2 != src){
-					if(unit2->group && DIFF_TICK(sg->tick,unit2->group->tick) > 0)
+					if(unit2 && unit2->group && DIFF_TICK(sg->tick,unit2->group->tick) > 0)
 						status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
 					ts->tick-=sg->interval;
 				}
@@ -6020,7 +6020,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 				if (sc_data[type].timer==-1)
 					status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 				else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
-					if( unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+					if(unit2 && unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
 						status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 					ts->tick-=sg->interval;
 				}
@@ -6057,7 +6057,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 					status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
 						(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 				else if( (unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
-					if( unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+					if(unit2 && unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
 						status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
 							(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 					ts->tick-=sg->interval;
@@ -6077,7 +6077,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 					status_change_start(bl,type,sg->skill_lv,(sg->val1)>>16,(sg->val1)&0xffff,
 						(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 				else if((unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
-					if( unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+					if(unit2 && unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
 						status_change_start(bl,type,sg->skill_lv,(sg->val1)>>16,(sg->val1)&0xffff,
 							(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 					ts->tick-=sg->interval;
@@ -6097,7 +6097,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 					skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
 				}
 				else if( (unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
-					if( unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 ) {
+					if(unit2 && unit2->group && DIFF_TICK(sg->tick,unit2->group->tick)>0 ) {
 						status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
 							(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 						skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
