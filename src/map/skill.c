@@ -8036,25 +8036,6 @@ int skill_check_cloaking(struct block_list *bl)
 	return end;
 }
 
-int skill_type_cloaking(struct block_list *bl)
-{
-	static int dx[]={ 0, 1, 0, -1, -1,  1, 1, -1}; //optimized by Lupus
-	static int dy[]={-1, 0, 1,  0, -1, -1, 1,  1};
-	int i;
-
-	nullpo_retr(0, bl);
-	if(bl->type == BL_PC && battle_config.pc_cloak_check_type&1)
-		return 0;
-	else if(bl->type == BL_MOB && battle_config.monster_cloak_check_type&1)
-		return 0;
-	for(i=0; i<sizeof(dx)/sizeof(dx[0]); i++)
-	{
-		if(map_getcell(bl->m,bl->x+dx[i],bl->y+dy[i],CELL_CHKNOPASS))
-			return 0;
-	}
-	return 1;
-}
-
 /*
  *----------------------------------------------------------------------------
  * スキルユニット

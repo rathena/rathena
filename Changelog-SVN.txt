@@ -1,6 +1,7 @@
 Date	Added
 
 02/24
+        * Re-added missing cart dupe-proof code. From Freya [Lupus]
         * Some rewrites on Basilica [celest]
         * Fixed another bad typo in skill list_num reading, thanks to orn [celest]
 	* Fixed Steal Item Rate. It has been multiplied twice on common_item_drop value for any kinds of items. [Lupus]

@@ -170,7 +170,6 @@ void skill_devotion_end(struct map_session_data *md,struct map_session_data *sd,
 
 // その他
 int skill_check_cloaking(struct block_list *bl);
-int skill_type_cloaking(struct block_list *bl);
 
 // ステ?タス異常
 int skill_encchant_eremental_end(struct block_list *bl, int type);

@@ -2235,9 +2235,11 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 	i = MAX_INVENTORY;
 
 	if(!itemdb_isequip2(data)){
-		// ? 備品ではないので、?所有品なら個?のみ?化させる
+		// 装 備品ではないので、既所有品なら個数のみ変化させる
 		for(i=0;i<MAX_INVENTORY;i++)
-		if(compare_item(&sd->status.inventory[i], item_data)) {
+		if(sd->status.inventory[i].nameid == item_data->nameid &&
+			sd->status.inventory[i].card[0] == item_data->card[0] && sd->status.inventory[i].card[1] == item_data->card[1] &&
+			sd->status.inventory[i].card[2] == item_data->card[2] && sd->status.inventory[i].card[3] == item_data->card[3]) {
 			if(sd->status.inventory[i].amount+amount > MAX_AMOUNT)
 				return 5;
 			sd->status.inventory[i].amount+=amount;
@@ -2246,16 +2248,11 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 		}
 	}
 	if(i >= MAX_INVENTORY){
-		// ? 備品か未所有品だったので空き欄へ追加
+		// 装 備品か未所有品だったので空き欄へ追加
 		i = pc_search_inventory(sd,0);
 		if(i >= 0) {
 			memcpy(&sd->status.inventory[i],item_data,sizeof(sd->status.inventory[0]));
-			if(itemdb_isequip2(data)){
-				sd->status.inventory[i].amount=1;
-				amount=1;
-			} else {
-				sd->status.inventory[i].amount=amount;
-			}
+			sd->status.inventory[i].amount=amount;
 			sd->inventory_data[i]=data;
 			clif_additem(sd,i,amount,0);
 		}
@@ -2477,9 +2474,11 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 
 	i=MAX_CART;
 	if(!itemdb_isequip2(data)){
-		// ? 備品ではないので、?所有品なら個?のみ?化させる
+		// 装 備品ではないので、既所有品なら個数のみ変化させる
 		for(i=0;i<MAX_CART;i++){
-			if(compare_item(&sd->status.cart[i], item_data)) {
+			if(sd->status.cart[i].nameid==item_data->nameid &&
+				sd->status.cart[i].card[0] == item_data->card[0] && sd->status.cart[i].card[1] == item_data->card[1] &&
+				sd->status.cart[i].card[2] == item_data->card[2] && sd->status.cart[i].card[3] == item_data->card[3]){
 				if(sd->status.cart[i].amount+amount > MAX_AMOUNT)
 					return 1;
 				sd->status.cart[i].amount+=amount;
@@ -2489,16 +2488,11 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		}
 	}
 	if(i >= MAX_CART){
-		// ? 備品か未所有品だったので空き欄へ追加
+		// 装 備品か未所有品だったので空き欄へ追加
 		for(i=0;i<MAX_CART;i++){
 			if(sd->status.cart[i].nameid==0){
 				memcpy(&sd->status.cart[i],item_data,sizeof(sd->status.cart[0]));
-				if(itemdb_isequip2(data)){
-					sd->status.inventory[i].amount=1;
-					amount=1;
-				} else {
-					sd->status.inventory[i].amount=amount;
-				}
+				sd->status.cart[i].amount=amount;
 				sd->cart_num++;
 				clif_cart_additem(sd,i,amount,0);
 				break;
