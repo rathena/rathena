@@ -392,15 +392,28 @@ int npc_event_do_clock(int tid,unsigned int tick,int id,int data)
 	time_t timer;
 	struct tm *t;
 	char buf[64];
+        char *day;
 	int c=0;
 	
 	time(&timer);
 	t=localtime(&timer);
+
+        switch (t->tm_wday) {
+	case 0: day = "Sun"; break;
+	case 1: day = "Mon"; break;
+	case 2: day = "Tue"; break;
+	case 3: day = "Wed"; break;
+	case 4: day = "Thu"; break;
+	case 5: day = "Fri"; break;
+	case 6: day = "Sat"; break;
+	}
 	
 	if (t->tm_min != ev_tm_b.tm_min ) {
 		sprintf(buf,"OnMinute%02d",t->tm_min);
 		c+=npc_event_doall(buf);
 		sprintf(buf,"OnClock%02d%02d",t->tm_hour,t->tm_min);
+		c+=npc_event_doall(buf);
+		sprintf(buf,"On%s%02d%02d",day,t->tm_hour,t->tm_min);
 		c+=npc_event_doall(buf);
 	}
 	if (t->tm_hour!= ev_tm_b.tm_hour) {

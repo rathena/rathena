@@ -1,5 +1,7 @@
 Date	Added
 11/16
+	* Fix for compiling against gcc 2.95 [MouseJstr]
+	* Added day of week events (OnSat2000) into scripting engine [MouseJstr]
 	* Temporarily Disabled GM Command Logs; Weren't working Properly >_<! [Codemaster]
 	* Fixed a typo in ../db/Changelog.txt [Nana]
 	* Added -funroll-loops argument to makefile to further increase performance [Shinigami]

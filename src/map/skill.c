@@ -1378,12 +1378,11 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 int skill_attack( int attack_type, struct block_list* src, struct block_list *dsrc,
 	 struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag )
 {
-
-	if(skilllv <= 0) return 0;
-
 	struct Damage dmg;
 	struct status_change *sc_data;
 	int type,lv,damage;
+
+	if(skilllv <= 0) return 0;
 
 	rdamage = 0;
 	nullpo_retr(0, src);
@@ -2111,11 +2110,11 @@ int skill_cleartimerskill(struct block_list *src)
  */
 int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag )
 {
-	if(skilllv <= 0) return 0;
-
 	struct map_session_data *sd=NULL;
 	struct status_change *sc_data = battle_get_sc_data(src);
 	int i;
+
+	if(skilllv <= 0) return 0;
 
 	nullpo_retr(1, src);
 	nullpo_retr(1, bl);
@@ -2650,8 +2649,6 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
  */
 int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag )
 {
-	if(skilllv <= 0) return 0;
-
 	struct map_session_data *sd=NULL;
 	struct map_session_data *dstsd=NULL;
 	struct mob_data *md=NULL;
@@ -2663,6 +2660,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	int changeclass[]={1038,1039,1046,1059,1086,1087,1112,1115
 				,1157,1159,1190,1272,1312,1373,1492};
 	int poringclass[]={1002};
+
+	if(skilllv <= 0) return 0;
 
 	nullpo_retr(1, src);
 	nullpo_retr(1, bl);
@@ -4406,10 +4405,10 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
  */
 int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skilllv,unsigned int tick,int flag)
 {
-	if(skilllv <= 0) return 0;
-
 	struct map_session_data *sd=NULL;
 	int i,tmpx = 0,tmpy = 0, x1 = 0, y1 = 0;
+
+	if(skilllv <= 0) return 0;
 
 	nullpo_retr(0, src);
 
@@ -7515,8 +7514,10 @@ int skill_frostjoke_scream(struct block_list *bl,va_list ap)
  */
 int skill_abra_dataset(int skilllv)
 {
-	if(skilllv <= 0) return 0;
 	int skill = rand()%331;
+
+	if(skilllv <= 0) return 0;
+
 	//dbに基づくレベル?確率判定
 	if(skill_abra_db[skill].req_lv > skilllv || rand()%10000 >= skill_abra_db[skill].per) return 0;
 	//NPCスキルはダメ
@@ -9244,9 +9245,10 @@ int skill_check_cloaking(struct block_list *bl)
 	static int dy[]={-1,-1,-1, 0, 0, 1, 1, 1};
 	int end=1,i;
 
-	nullpo_retr(0, bl);
 	//missing sd [Found by Celest, commited by Aria]
 	struct map_session_data *sd=(struct map_session_data *)bl;
+
+	nullpo_retr(0, bl);
 
 	if(bl->type == BL_PC && 
 		(battle_config.pc_cloak_check_type&1 || pc_checkskill(sd,AS_CLOAKING)>2))
@@ -9455,10 +9457,11 @@ static int skill_unit_group_newid=10;
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	int count,int skillid,int skilllv,int unit_id)
 {
-	if(skilllv <= 0) return 0;
 	int i;
 	struct skill_unit_group *group=NULL, *list=NULL;
 	int maxsug=0;
+
+	if(skilllv <= 0) return 0;
 
 	nullpo_retr(NULL, src);
 
