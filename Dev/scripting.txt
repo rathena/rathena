@@ -8,3 +8,8 @@ Assignee	- The nickname of the person whom is assigned the task
 Notes		- Miscellaneous notes concerning the task
 
 --------------------------
+
+Description:	-Thief Test its not working correctly
+Type:		-Quest
+Status:		-Pending
+Assignee:	-N/A
