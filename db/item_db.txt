@@ -1411,6 +1411,7 @@
 5094,Orc_Hero_Helm,Orc Hero Helm,5,20,,900,,5,,0,2088958,2,768,,55,178,{},{ bonus bStr,2; bonus bVit,1; }
 5096,Assassin_Mask_,Assassin Mask,5,20,,100,,0,,0,4096,2,1,,70,180,{},{},,,
 5097,Annual_Commemoration_Hat,Annual Commemoration Hat,5,,,30,,3,,0,10477567,2,256,,0,166,{},{ bonus2 bAllStats,3; }
+5098,Tiger_Mask,Tiger Mask,5,20,,400,,2,,,10477567,3,768,,,181,{},{ bonus bStr,3; bonus bMaxHP,100; }
 
 // Misc items
 7001,Mold_Powder,Mould Powder,3,680,,10,,,,,,,,,,,{},{}
@@ -1696,7 +1697,7 @@
 7283,Quiz_Participation_Certificate_4,QP Certificate 4,3,20,,10,,,,,,,,,,,{},{}
 7284,Quiz_Participation_Certificate_5,QP Certificate 5,3,20,,10,,,,,,,,,,,{},{}
 
-// 11/09 Updates
+// 11/09(Ayothana) Items
 7285,Sacred_Wool_Charm,Sacred_Wool_Charm,3,,10,0,,,,,,,,,,,{},{},,
 7286,Red_Chili,Red_Chili,3,,10,0,,,,,,,,,,,{},{},,
 566,Tom_Yum_Goong,Tom_Yum_Goong,0,,150,0,,,,,,,,,,,{},{},,
