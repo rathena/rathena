@@ -14,11 +14,6 @@
 #include <netinet/in.h>
 #endif
 #include <time.h>
-// SO_REUSEPORT is predefined in FreeBSD in sys/socket.h so we only have to define if it's not
-#ifndef SO_REUSEPORT
-#define SO_REUSEPORT
-#endif
-
 #include "malloc.h"
 
 extern time_t tick_;
