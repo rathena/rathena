@@ -7,6 +7,8 @@
 2104,Buckler,10000
 2106,Shield,10000
 2108,Mirror Shield,10000
+2202,Sunglasses,10000
+2204,Glasses,10000
 2207,Fancy Flower,10000
 2209,Ribbon,10000
 2213,Kitty Band,10000

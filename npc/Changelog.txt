@@ -33,6 +33,8 @@ Other Ppl
 Date		Added
 ======
 
+04/04
+	* Added Deviling in the "Poring Island" map pay_fild04, 2 hours respawn [Lupus]
 04/03
 	* Finished Valkyrie. Now it correctly works. Valhallana reborns players to High Novices. [Lupus]
 	  (added missed kRO condition: to reborn, player shouldn't have money nor items(equipment) )
@@ -42,7 +44,6 @@ Date		Added
 	  On reaching 45 Job Level they may visit Valkyrie and get 2-2-1 / 2-1-1 class (3rd Job)
 	  from a correct NPC.
 	* Fixed SKILL POINTS exploit in Assassin Job Quest [Lupus]
-
 03/31
 	* Payon : new NPCs scripted as far as I could and old ones updated (all from iRO) [DracoRPG]
 	* Corrected a G_GRYPHON spawn in umbala field to GRYPHON, thanks to CrasherZero

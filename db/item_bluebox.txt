@@ -7,6 +7,8 @@
 2104,Buckler,20000
 2106,Shield,10000
 2108,Mirror Shield,10000
+2201,Sunglasses,10000
+2203,Glasses,10000
 2205,Diver's Goggles,30000
 2206,Wedding Veil,10000
 2207,Fancy Flower,10000
