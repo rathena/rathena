@@ -184,7 +184,7 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 		md->spawndelay1=-1;	// 一度のみフラグ
 		md->spawndelay2=-1;	// 一度のみフラグ
 
-		memcpy(md->npc_event,event,sizeof(md->npc_event));
+		memcpy(md->npc_event,event,strlen(event));
 
 		md->bl.type=BL_MOB;
 		map_addiddb(&md->bl);

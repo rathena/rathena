@@ -1,6 +1,17 @@
 Date	Added
 12/13
-        * Internal MAIL system: moved all strings to msg_athena.conf [Lupus]
+	* Increased max skills to 650 from 450 fixing MANY crashes [MouseJstr]
+	* Creating Guild events were reading beyond supplied guild names ,
+	  causing crashes [MouseJstr
+	* trades were derefing -2 into the inventory table sometimes [MouseJstr]
+	* Not having a arrow in your inventory but having a bow
+	  could cause it to set sd->status.inventory[-1].equip=32768
+	  resulting in a memory corruption [MouseJstr]
+	* local broadcasts of messages larger then 64 bytes were
+	  corrupting the stack, causing crashes [MouseJstr]
+	* mob eventnames were reading beyond source point, risking
+	  going over page boundries, causing crashes [MouseJstr]
+	* Internal MAIL system: moved all strings to msg_athena.conf [Lupus]
 
 12/12
         * Made guild skills to check for skill levels first when casting [celest]

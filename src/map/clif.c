@@ -9030,7 +9030,7 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_LGMmessage(int fd, struct map_session_data *sd) {
-	unsigned char buf[64];
+	unsigned char buf[512];
 
 	nullpo_retv(sd);
 

@@ -6762,7 +6762,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
 	pc_checkallowskill(sd);	// ?備品でスキルか解除されるかチェック
-	if (itemdb_look(sd->status.inventory[n].nameid) == 11 && arrow){	// Added by RoVeRT
+	if (itemdb_look(sd->status.inventory[n].nameid) == 11 && (arrow >= 0)){	// Added by RoVeRT
 		clif_arrowequip(sd,arrow);
 		sd->status.inventory[arrow].equip=32768;
 	}

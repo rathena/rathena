@@ -2013,7 +2013,7 @@ static int npc_parse_mapflag(char *w1,char *w2,char *w3,char *w4)
 //マップフラグ
 	if ( strcmpi(w3,"nosave")==0) {
 		if (strcmp(w4,"SavePoint")==0) {
-			memcpy(map[m].save.map,"SavePoint",16);
+			memcpy(map[m].save.map,"SavePoint",10);
 			map[m].save.x=-1;
 			map[m].save.y=-1;
 		}else if (sscanf(w4,"%[^,],%d,%d",savemap,&savex,&savey)==3) {

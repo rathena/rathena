@@ -275,7 +275,7 @@ int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,char* t
 		cd->trigger = trigger;
 	cd->pub = pub;
 	cd->users = 0;
-	memcpy(cd->pass,"",8);
+	memcpy(cd->pass,"",1);
 	if(titlelen>=sizeof(cd->title)-1) titlelen=sizeof(cd->title)-1;
 	memcpy(cd->title,title,titlelen);
 	cd->title[titlelen]=0;
@@ -286,7 +286,7 @@ int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,char* t
 	cd->bl.type = BL_CHAT;
 	cd->owner_ = (struct block_list *)nd;
 	cd->owner = &cd->owner_;
-	memcpy(cd->npc_event,ev,sizeof(cd->npc_event));
+	memcpy(cd->npc_event,ev,strlen(ev));
 
 	cd->bl.id = map_addobject(&cd->bl);	
 	if(cd->bl.id==0){

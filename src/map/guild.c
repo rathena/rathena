@@ -364,7 +364,7 @@ int guild_npc_request_info(int guild_id,const char *event)
 		return guild_request_info(guild_id);
 
 	ev=(struct eventlist *)aCalloc(1,sizeof(struct eventlist));
-	memcpy(ev->name,event,sizeof(ev->name));
+	memcpy(ev->name,event,strlen(event));
 	ev->next=(struct eventlist *)numdb_search(guild_infoevent_db,guild_id);
 	numdb_insert(guild_infoevent_db,guild_id,ev);
 	return guild_request_info(guild_id);

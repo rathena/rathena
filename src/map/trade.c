@@ -142,8 +142,8 @@ void trade_tradeok(struct map_session_data *sd)
 	nullpo_retv(sd);
 	
 	for(trade_i=0;trade_i<10;trade_i++) {
-		if(sd->deal_item_amount[trade_i]>sd->status.inventory[sd->deal_item_index[trade_i]-2].amount ||
-			sd->deal_item_amount[trade_i]<0) {
+		int idx = sd->deal_item_index[trade_i]-2;
+		if(((idx >= 0) && (sd->deal_item_amount[trade_i]>sd->status.inventory[idx].amount)) || sd->deal_item_amount[trade_i]<0) {
 			trade_tradecancel(sd);
 			return;
 		}
