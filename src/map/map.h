@@ -378,7 +378,7 @@ struct npc_data {
 struct mob_data {
 	struct block_list bl;
 	short n;
-	short base_class,class,dir,mode;
+	short base_class,class,dir,mode,level;
 	short m,x0,y0,xs,ys;
 	char name[24];
 	int spawndelay1,spawndelay2;

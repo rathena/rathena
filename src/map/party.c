@@ -575,8 +575,8 @@ int party_send_hp_check(struct block_list *bl,va_list ap)
 	return 0;
 }
 
-// ŒoŒ±’lŒö•½•ª”z
-int party_exp_share(struct party *p,int map,int base_exp,int job_exp)
+// exp share and added zeny share [Valaris]
+int party_exp_share(struct party *p,int map,int base_exp,int job_exp,int zeny)
 {
 	struct map_session_data *sd;
 	int i,c;
@@ -589,8 +589,11 @@ int party_exp_share(struct party *p,int map,int base_exp,int job_exp)
 	if(c==0)
 		return 0;
 	for(i=0;i<MAX_PARTY;i++)
-		if((sd=p->member[i].sd)!=NULL && sd->bl.m==map)
+		if((sd=p->member[i].sd)!=NULL && sd->bl.m==map) {
 			pc_gainexp(sd,base_exp/c+1,job_exp/c+1);
+			if(battle_config.zeny_from_mobs) // zeny from mobs [Valaris]
+				pc_getzeny(sd,zeny/c+1);
+		}
 	return 0;
 }
 

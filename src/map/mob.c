@@ -124,7 +124,7 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 	else
 		m=map_mapname2mapid(mapname);
 
-	if(m<0 || amount<=0 || (class>=0 && class<=1000) || class>2000)	// 値が異常なら召喚を止める
+	if(m<0 || amount<=0 || (class>=0 && class<=1000) || class>6000)	// 値が異常なら召喚を止める
 		return 0;
 
 	if(class<0){	// ランダムに召喚
@@ -160,6 +160,15 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 			md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 		else
 			md->lootitem=NULL;
+
+		if(class>4000) { // large/tiny mobs [Valaris]
+			md->size=2;
+			class-=4000;
+		}
+		else if(class>2000) {
+			md->size=1;
+			class-=2000;
+		}
 
 		mob_spawn_dataset(md,mobname,class);
 		md->bl.m=m;
@@ -211,7 +220,7 @@ int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
 	max=(y1-y0+1)*(x1-x0+1)*3;
 	if(max>1000)max=1000;
 
-	if(m<0 || amount<=0 || (class>=0 && class<=1000) || class>2000)	// 値が異常なら召喚を止める
+	if(m<0 || amount<=0 || (class>=0 && class<=1000) || class>6000)	// A summon is stopped if a value is unusual
 		return 0;
 
 	for(i=0;i<amount;i++){
@@ -726,7 +735,7 @@ static int mob_timer(int tid,unsigned int tick,int id,int data)
 
 	nullpo_retr(1, md=(struct mob_data*)bl);
 
-	if(md->bl.type!=BL_MOB)
+	if(!md->bl.type || md->bl.type!=BL_MOB)
 		return 1;
 
 	if(md->timer != tid){
@@ -924,6 +933,10 @@ int mob_spawn(int id)
 	if(!md->speed)
 		md->speed = mob_db[md->class].speed;
 	md->def_ele = mob_db[md->class].element;
+
+	if(!md->level) // [Valaris]
+		md->level=mob_db[md->class].lv;
+
 	md->master_id=0;
 	md->master_dist=0;
 
@@ -2048,7 +2061,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	struct map_session_data *sd = NULL,*tmpsd[DAMAGELOG_SIZE];
 	struct {
 		struct party *p;
-		int id,base_exp,job_exp;
+		int id,base_exp,job_exp,zeny;
 	} pt[DAMAGELOG_SIZE];
 	int pnum=0;
 	int mvp_damage,max_hp;
@@ -2072,7 +2085,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 //	if(battle_config.battle_log)
 //		printf("mob_damage %d %d %d\n",md->hp,max_hp,damage);
 	if(md->bl.prev==NULL){
-		if(battle_config.error_log)
+		if(battle_config.error_log==1)
 			printf("mob_damage : BlockError!!\n");
 		return 0;
 	}
@@ -2124,7 +2137,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			if(md->attacked_id <= 0 && md->state.special_mob_ai==0)
 				md->attacked_id = sd->bl.id;
 		}
-		if(src && src->type == BL_PET && battle_config.pet_attack_exp_to_master) {
+		if(src && src->type == BL_PET && battle_config.pet_attack_exp_to_master==1) {
 			struct pet_data *pd = (struct pet_data *)src;
 			nullpo_retr(0, pd);
 			for(i=0,minpos=0,mindmg=0x7fffffff;i<DAMAGELOG_SIZE;i++){
@@ -2316,7 +2329,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	// 経験値の分配
 	for(i=0;i<DAMAGELOG_SIZE;i++){
-		int pid,base_exp,job_exp,flag=1;
+		int pid,base_exp,job_exp,flag=1,zeny=0;
 		double per;
 		struct party *p;
 		if(tmpsd[i]==NULL || tmpsd[i]->bl.m != md->bl.m)
@@ -2348,7 +2361,12 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			job_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
 		}
 		if(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1) job_exp = 0;	// Added [Valaris]
-
+		else if(battle_config.zeny_from_mobs) { 
+			if(md->level > 0) zeny=(md->level+rand()%md->level)*per/256; // zeny calculation moblv + random moblv [Valaris]
+			if(mob_db[md->class].mexp > 0)
+				zeny*=rand()%250;
+		}
+		
 		if((pid=tmpsd[i]->status.party_id)>0){	// パーティに入っている
 			int j=0;
 			for(j=0;j<pnum;j++)	// 公平パーティリストにいるかどうか
@@ -2360,21 +2378,31 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 					pt[pnum].p=p;
 					pt[pnum].base_exp=base_exp;
 					pt[pnum].job_exp=job_exp;
+					if(battle_config.zeny_from_mobs)
+						pt[pnum].zeny=zeny; // zeny share [Valaris]
 					pnum++;
 					flag=0;
 				}
 			}else{	// いるときは公平
 				pt[j].base_exp+=base_exp;
 				pt[j].job_exp+=job_exp;
+				if(battle_config.zeny_from_mobs)
+					pt[j].zeny+=zeny;  // zeny share [Valaris]
 				flag=0;
 			}
 		}
-		if(flag)	// 各自所得
+		if(flag) {	// added zeny from mobs [Valaris]
+			if(base_exp > 0 || job_exp > 0)
 			pc_gainexp(tmpsd[i],base_exp,job_exp);
+			if (battle_config.zeny_from_mobs && zeny > 0) {
+				pc_getzeny(tmpsd[i],zeny); // zeny from mobs [Valaris]
+			}
+		}
+
 	}
 	// 公平分配
 	for(i=0;i<pnum;i++)
-		party_exp_share(pt[i].p,md->bl.m,pt[i].base_exp,pt[i].job_exp);
+		party_exp_share(pt[i].p,md->bl.m,pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
 
 	// item drop
 	if(!(type&1)) {
@@ -2538,6 +2566,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	}
 
 	clif_clearchar_area(&md->bl,1);
+	if(md->level) md->level=0;
 	map_delblock(&md->bl);
 	if(mob_get_viewclass(md->class) <= 1000)
 		clif_clearchar_delay(tick+3000,&md->bl,0);

@@ -331,6 +331,8 @@ extern struct Battle_Config {
 	int castrate_dex_scale; // added by [MouseJstr]
 	int area_size; // added by [MouseJstr]
 
+	int zeny_from_mobs; // [Valaris]
+
 #ifndef TXT_ONLY /* SQL-only options */
 	int mail_system; // [Valaris]
 #endif

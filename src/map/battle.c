@@ -5084,6 +5084,7 @@ static const struct {
 	{ "castrate_dex_scale",                &battle_config.castrate_dex_scale	}, // added by [MouseJstr]
 	{ "area_size",                         &battle_config.area_size	}, // added by [MouseJstr]
 	{ "muting_players",                   &battle_config.muting_players}, // added by [Apple]
+	{ "zeny_from_mobs",			&battle_config.zeny_from_mobs}, // [Valaris]
 //SQL-only options start
 #ifndef TXT_ONLY 
 	{ "mail_system",		&battle_config.mail_system	}, // added by [Valaris]
@@ -5303,6 +5304,7 @@ void battle_set_defaults() {
 	battle_config.max_hair_color = 9;
 	battle_config.min_cloth_color = 0;
 	battle_config.max_cloth_color = 4;
+	battle_config.zeny_from_mobs = 0;
 
 	battle_config.castrate_dex_scale = 150;
 
