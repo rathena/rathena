@@ -65,7 +65,7 @@ M_N2:
  delitem 1144,50;//Items: Sashimi,
  delitem 1023,1;//Items: Fish Tail,
  delitem 938,100;//Items: Sticky Mucus,
- getitem 5065,1//Items: Fresh Blueish Fish,
+ getitem 5065,1;//Items: Fresh Blueish Fish,
  mes "[Traveler]";
  mes "Thanks. Bye.";
  close;
