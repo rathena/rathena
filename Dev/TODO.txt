@@ -754,3 +754,9 @@ Description	the char server is a fricken dog...
 Status:		Pending
 Assignee	None
 Notes		None
+***
+68.
+Description	add no_mob_drops as a map flag
+Status:		Pending
+Assignee	None
+Notes		so that mobs don't drop shit in pvp arena's

@@ -134,3 +134,8 @@ Problem:	PETS can attack Guardians, so players go to enemy castles before WOE an
 Assigned:       N/A
 Progress:       0%
 
+Problem:	mob_aval clone bug crashes client
+Assigned:       N/A
+Progress:       0%
+
+                spawn mob 1600..
