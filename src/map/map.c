@@ -103,9 +103,7 @@ int read_gm_interval = 600000;
 char char_db[32] = "char";
 
 static int online_timer(int,unsigned int,int,int);
-
 int CHECK_INTERVAL = 3600000; // [Valaris]
-int check_online_timer=0; // [Valaris]
 
 #endif /* not TXT_ONLY */
 
@@ -1555,9 +1553,7 @@ int map_quit(struct map_session_data *sd) {
 		sd->npc_stackbuf = NULL;
 	}
 
-#ifndef TXT_ONLY
 	chrif_char_offline(sd);
-#endif
 
 	{
 		void *p = numdb_search(charid_db,sd->status.char_id);
@@ -3072,41 +3068,27 @@ int log_sql_init(void){
 	return 0;
 }
 
-int online_timer(int tid,unsigned int tick,int id,int data)
+int online_timer (int tid,unsigned int tick,int id,int data)
 {
 	if(check_online_timer != tid)
 		return 0;
-
 	char_online_check();
-
-	check_online_timer=add_timer(gettick()+CHECK_INTERVAL,online_timer,0,0);
-
 	return 0;
 }
-
 void char_online_check(void)
 {
 	int i;
-	struct map_session_data *sd=NULL;
+	struct map_session_data *sd;
 
 	chrif_char_reset_offline();
 
-	for(i=0;i<fd_max;i++){
-		if (session[i] && (sd = (struct map_session_data*)session[i]->session_data) && sd && sd->state.auth &&
-		 !(battle_config.hide_GM_session && pc_isGM(sd)))
-			if(sd->status.char_id) {
+	for (i = 0; i < fd_max; i++) {
+		if (session[i] && (sd = (struct map_session_data*)session[i]->session_data) && sd->state.auth &&
+			!(battle_config.hide_GM_session && pc_isGM(sd)))
+			if(sd->status.char_id)
 				 chrif_char_online(sd);
-			}
 	}
-
-
-	if(check_online_timer && check_online_timer != -1) {
-		delete_timer(check_online_timer,online_timer);
-		add_timer(gettick()+CHECK_INTERVAL,online_timer,0,0);
-	}
-
 }
-
 #endif /* not TXT_ONLY */
 
 //-----------------------------------------------------
@@ -3275,6 +3257,7 @@ int do_init(int argc, char *argv[]) {
 	FILE *data_conf;
 	char line[1024], w1[1024], w2[1024];
 
+	SERVER_TYPE = SERVER_MAP;
 #ifdef GCOLLECT
 	GC_enable_incremental();
 #endif
@@ -3398,7 +3381,7 @@ int do_init(int argc, char *argv[]) {
 
 #ifndef TXT_ONLY // online status timer, checks every hour [Valaris]
 	add_timer_func_list(online_timer, "online_timer");
-	check_online_timer=add_timer(gettick()+CHECK_INTERVAL,online_timer,0,0);
+	add_timer_interval(gettick()+10, online_timer, 0, 0, CHECK_INTERVAL);	
 #endif /* not TXT_ONLY */
 
 	do_init_chrif();

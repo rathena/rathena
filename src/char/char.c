@@ -228,6 +228,25 @@ char * search_character_name(int index) {
 	return unknown_char_name;
 }
 
+//-------------------------------------------------
+// Set Character online/offline [Wizputer]
+//-------------------------------------------------
+
+void set_char_online(int char_id, int account_id) {
+	if (login_fd <= 0 || session[login_fd]->eof)
+		return;
+	WFIFOW(login_fd,0) = 0x272b;
+	WFIFOL(login_fd,2) = account_id;
+	WFIFOSET(login_fd,6);
+}
+void set_char_offline(int char_id, int account_id) {
+    if (login_fd <= 0 || session[login_fd]->eof)
+		return;
+	WFIFOW(login_fd,0) = 0x272c;
+	WFIFOL(login_fd,2) = account_id;
+	WFIFOSET(login_fd,6);
+}
+
 /*---------------------------------------------------
   Make a data line for friends list
  --------------------------------------------------*/
@@ -2526,7 +2545,25 @@ int parse_frommap(int fd) {
 			RFIFOSKIP(fd, RFIFOW(fd,2));
 //			printf("char: save_account_reg (from map)\n");
 			break;
-		  }
+		}
+		// Character disconnected set online 0 [Wizputer]
+		case 0x2b17:
+			if (RFIFOREST(fd) < 6)
+				return 0;
+			//printf("Setting %d char offline\n",RFIFOL(fd,2));
+			set_char_offline(RFIFOL(fd,2),RFIFOL(fd,6));
+			RFIFOSKIP(fd,10);
+			break;
+
+		// Character set online [Wizputer]
+		case 0x2b19:
+			if (RFIFOREST(fd) < 6)
+				return 0;
+			//printf("Setting %d char online\n",RFIFOL(fd,2));
+			set_char_online(RFIFOL(fd,2),RFIFOL(fd,6));
+			RFIFOSKIP(fd,10);
+			break;
+
 		default:
 			// inter serverˆ—‚É“n‚·
 			{
@@ -3470,6 +3507,7 @@ void do_final(void) {
 int do_init(int argc, char **argv) {
 	int i;
 
+	SERVER_TYPE = SERVER_CHAR;
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
 	lan_config_read((argc > 1) ? argv[1] : LOGIN_LAN_CONF_NAME);
 

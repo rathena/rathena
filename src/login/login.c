@@ -165,6 +165,8 @@ int level_new_gm = 60;
 
 struct gm_account *gm_account_db;
 
+static struct dbt *online_db;
+
 int dynamic_pass_failure_ban = 1;
 int dynamic_pass_failure_ban_time = 5;
 int dynamic_pass_failure_ban_how_many = 3;
@@ -202,6 +204,26 @@ int login_log(char *fmt, ...) {
 	}
 
 	return 0;
+}
+
+//-----------------------------------------------------
+// Online User Database [Wizputer]
+//-----------------------------------------------------
+
+void add_online_user (int account_id) {
+	int *p;
+	p = (int *)aMalloc(sizeof(int));
+	*p = account_id;
+	numdb_insert(online_db, account_id, p);
+}
+int is_user_online (int account_id) {
+	int *p = (int*)numdb_search(online_db, account_id);
+	return (p != NULL);
+}
+void remove_online_user (int account_id) {
+	int *p;
+	p = (int*)numdb_erase(online_db, account_id);
+	aFree(p);
 }
 
 //----------------------------------------------------------------------
@@ -1736,6 +1758,21 @@ int parse_fromchar(int fd) {
 				RFIFOSKIP(fd,6);
 			}
 			return 0;
+
+		case 0x272b:    // Set account_id to online [Wizputer]
+			if (RFIFOREST(fd) < 6)
+				return 0;
+			add_online_user(RFIFOL(fd,2));
+			RFIFOSKIP(fd,6);
+			break;
+		
+		case 0x272c:   // Set account_id to offline [Wizputer]
+			if (RFIFOREST(fd) < 6)
+				return 0;
+			remove_online_user(RFIFOL(fd,2));
+			RFIFOSKIP(fd,6);
+			break;
+
 		case 0x3000: //change sex for chrif_changesex()
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
@@ -3870,11 +3907,18 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 //--------------------------------------
 // Function called at exit of the server
 //--------------------------------------
+static int online_db_final(void *key,void *data,va_list ap)
+{
+	int *p = (int *) data;
+	if (p) aFree(p);
+	return 0;
+}
 void do_final(void) {
 	int i, fd;
 	printf("Terminating...\n");
 	fflush(stdout);
 	mmo_auth_sync();
+	numdb_final(online_db, online_db_final);
 
 	if(auth_dat) aFree(auth_dat);
 	if(gm_account_db) aFree(gm_account_db);
@@ -3907,6 +3951,7 @@ void do_final(void) {
 int do_init(int argc, char **argv) {
 	int i, j;
 
+	SERVER_TYPE = SERVER_LOGIN;
 	// read login-server configuration
 	login_config_read((argc > 1) ? argv[1] : LOGIN_CONF_NAME);
 	display_conf_warnings(); // not in login_config_read, because we can use 'import' option, and display same message twice or more
@@ -3928,6 +3973,8 @@ int do_init(int argc, char **argv) {
 	read_gm_account();
 //	set_termfunc(mmo_auth_sync);
 	set_defaultparse(parse_login);
+	// Online user database init
+    online_db = numdb_init();
 
         if (bind_ip_str[0] != '\0')
             bind_ip = inet_addr(bind_ip_str);

@@ -152,36 +152,31 @@ struct dbt *online_db;
 //-----------------------------------------------------
 
 void add_online_user(int account_id) {
-    int *p;
-    if(register_users_online <= 0)
-	return;
-    p = (int*)aMalloc(sizeof(int));
-    if (p == NULL) {
-		printf("add_online_user: memory allocation failure (malloc)!\n");
-		exit(0);
-	}
-    *p = account_id;
-    numdb_insert(online_db, account_id, p);
+	int *p;
+	if(register_users_online <= 0)
+		return;
+	p = (int*)aMalloc(sizeof(int));
+	*p = account_id;
+	numdb_insert(online_db, account_id, p);
 }
 
 int is_user_online(int account_id) {
-    int *p;
-    if(register_users_online <= 0)
-	return 0;
+	int *p;
+	if(register_users_online <= 0)
+		return 0;
 
 	p = (int*)numdb_search(online_db, account_id);
-	if (p == NULL)
-		return 0;
 	printf("Acccount %d\n",*p);
-	return 1;
+	
+	return (p != NULL);
 }
 
 void remove_online_user(int account_id) {
-    int *p;
-    if(register_users_online <= 0)
-	return;
-    p = (int*)numdb_erase(online_db,account_id);
-    aFree(p);
+	int *p;
+	if(register_users_online <= 0)
+		return;
+	p = (int*)numdb_erase(online_db,account_id);
+	aFree(p);
 }
 
 //-----------------------------------------------------
@@ -1828,6 +1823,7 @@ int do_init(int argc,char **argv){
 	//initialize login server
 	int i;
 
+	SERVER_TYPE = SERVER_LOGIN;	
 	//read login configue
 	login_config_read( (argc>1)?argv[1]:LOGIN_CONF_NAME );
 	sql_config_read(SQL_CONF_NAME);

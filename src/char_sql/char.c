@@ -208,18 +208,18 @@ void set_char_offline(int char_id, int account_id) {
 
     if ( char_id == 99 )
         sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `account_id`='%d'", char_db, account_id);
-    else {
-        cp = (struct mmo_charstatus*)numdb_search(char_db_,char_id);
-        if (cp != NULL) {
-            aFree(cp);
-            numdb_erase(char_db_,char_id);
-        }
+	else {
+		cp = (struct mmo_charstatus*)numdb_search(char_db_,char_id);
+		if (cp != NULL) {
+			aFree(cp);
+			numdb_erase(char_db_,char_id);
+		}
 
-        sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, char_id);
+		sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, char_id);
 
-	if (mysql_query(&mysql_handle, tmp_sql))
-		printf("DB server Error (set_char_offline)- %s\n", mysql_error(&mysql_handle));
-    }
+		if (mysql_query(&mysql_handle, tmp_sql))
+			printf("DB server Error (set_char_offline)- %s\n", mysql_error(&mysql_handle));
+	}
 
    if (login_fd <= 0 || session[login_fd]->eof)
 	return;
@@ -2372,7 +2372,7 @@ int parse_char(int fd) {
 
 	sd = (struct char_session_data*)session[fd]->session_data;
 
-        if(login_fd < 0)
+	if(login_fd < 0)
 		session[fd]->eof = 1;
 	if(session[fd]->eof) {
 		if (fd == login_fd)
@@ -3387,6 +3387,7 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 int do_init(int argc, char **argv){
 	int i;
 
+	SERVER_TYPE = SERVER_CHAR;
 	for(i = 0; i < MAX_MAP_SERVERS; i++) {
 		memset(&server[i], 0, sizeof(struct mmo_map_server));
 		server_fd[i] = -1;

@@ -461,8 +461,8 @@
 401,0,6,4,0,1,1,1,yes,0,0,0,weapon,0	//CH_SOULCOLLECT#狂気功#
 402,8,6,1,0,1,5,1,no,0,0,0,none,0	//PF_MINDBREAKER#?インドブレ?カ?#
 403,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//PF_MEMORIZE#メモライズ#
-404,3,6,2,2,1,5,1,yes,0,256,1,magic,0	//PF_FOGWALL#フォグウォ?ル#
-405,3,6,2,0,1,1,1,no,0,128,2,misc,0	//PF_SPIDERWEB#スパイ??ウェッブ#
+404,3,6,2,2,1,5,1,yes,0,256,2,magic,0	//PF_FOGWALL#フォグウォ?ル#
+405,3,6,1,0,1,1,1,no,0,128,2,misc,0	//PF_SPIDERWEB#スパイ??ウェッブ#
 406,0,6,4,0,1,10,1,no,33,0,0,weapon,0	//ASC_METEORASSAULT#メテオアサルト#
 407,0,6,4,0,1,1,0,no,0,0,0,none,0	//ASC_CDP#デッドリ??イズン製造#
 408,8,6,4,0,1,1,1,yes,0,0,0,magic,0	//WE_BABY##
@@ -542,7 +542,7 @@
 10000,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_APPROVAL#正規ギルド承認#
 10001,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_KAFRACONTRACT#カプラ雇用#
 10002,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_GUARDRESEARCH#ガ?ディアン研究#
-10003,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_CHARISMA#カリス?#Later changed to GD_GUARDUP#
+10003,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_CHARISMA#カリス?#
 10004,0,0,0,0,0,10,0,no,0,0,0,none,0	//GD_EXTENSION#ギルド拡張#
 10005,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_GLORYGUILD##
 10006,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_LEADERSHIP##

@@ -396,7 +396,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			}
 
 		if(sc_data[SC_FOGWALL].timer != -1 && flag&BF_MAGIC)
-			if(rand()%100 < sc_data[SC_FOGWALL].val2)
+			if(rand()%100 < 75)
 				damage = 0;
 	}
 
@@ -978,7 +978,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 	// 回避修正
 	if(	hitrate < 1000000 && t_sc_data ) {			// 必中攻撃
 		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
-			hitrate -= 50;
+			hitrate -= 75;
 		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
 			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
 			t_sc_data[SC_FREEZE].timer!=-1 ||
@@ -1000,7 +1000,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 		if(t_sc_data[SC_DEFENDER].timer != -1 && flag&BF_LONG)
 			cardfix=cardfix*(100-t_sc_data[SC_DEFENDER].val2)/100;
 		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
-			cardfix=cardfix*(100-t_sc_data[SC_FOGWALL].val2)/100;
+			cardfix=cardfix*50/100;
 		if(cardfix != 100)
 			damage=damage*cardfix/100;
 	}
@@ -1488,7 +1488,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 	// 回避修正
 	if(	hitrate < 1000000 && t_sc_data ) {			// 必中攻撃
 		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
-			hitrate -= 50;
+			hitrate -= 75;
 		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
 			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
 			t_sc_data[SC_FREEZE].timer!=-1 ||
@@ -1537,7 +1537,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 		if(t_sc_data[SC_DEFENDER].timer != -1 && flag&BF_LONG)
 			cardfix=cardfix*(100-t_sc_data[SC_DEFENDER].val2)/100;
 		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
-			cardfix=cardfix*(100-t_sc_data[SC_FOGWALL].val2)/100;
+			cardfix=cardfix*50/100;
 		if(cardfix != 100)
 			damage=damage*cardfix/100;
 	}
@@ -2495,7 +2495,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	// 回避修正
 	if(	hitrate < 1000000 && t_sc_data ) {			// 必中攻撃
 		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
-			hitrate -= 50;
+			hitrate -= 75;
 		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
 			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
 			t_sc_data[SC_FREEZE].timer!=-1 ||
@@ -2635,7 +2635,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 		if(t_sc_data[SC_DEFENDER].timer != -1 && flag&BF_LONG) //ディフェンダー状態で遠距離攻撃
 			cardfix=cardfix*(100-t_sc_data[SC_DEFENDER].val2)/100; //ディフェンダーによる減衰
 		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
-			cardfix=cardfix*(100-t_sc_data[SC_FOGWALL].val2)/100;
+			cardfix=cardfix*50/100;
 		if(cardfix != 100) {
 			damage=damage*cardfix/100; //ディフェンダー補正によるダメージ減少
 			damage2=damage2*cardfix/100; //ディフェンダー補正による左手ダメージ減少

@@ -1,6 +1,14 @@
 
 Date	Added
 
+04/05
+	* Simplified Valaris' online_timer [celest]
+	* Updated Fogwall, Spiderweb, and HP Conversion, thanks to redcard [celest]
+	* Adding saving character online/offline for TXT char and login (unfinished)
+	* Added SERVER_TYPE to core for future plugins support [celest]
+	* Added support for the UPNP plugin to release port mappings and re-close firewall
+	  ports on shutdown [celest]
+
 04/04
         * Some work on re-enabling trade and storage logging [MouseJstr]
 	* Updated showmsg with Shinomori's improvements [celest]

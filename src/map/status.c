@@ -3340,6 +3340,8 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			calc_flag = 1;
 			val3 = val1>=5?15: (val1==4?14: (val1==3?12: ( val1==2?9:5 ) ) );
 			val4 = val1>=5?20: (val1==4?19: (val1==3?17: ( val1==2?14:10 ) ) );
+			if (sc_data[SC_FOGWALL].timer != -1 && sc_data[SC_BLIND].timer != -1)
+				status_change_end(bl,SC_BLIND,-1);
 			break;
 		case SC_VIOLENTGALE:
 			calc_flag = 1;
@@ -3802,8 +3804,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			break;
 
 		case SC_FOGWALL:
-			val2 = 75;
-			// calc_flag = 1;	// not sure of effects yet [celest]
 			break;
 
 		case SC_PRESERVE:

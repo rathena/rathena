@@ -978,8 +978,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			status_change_start(bl,SC_AUTOCOUNTER,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 	case PF_FOGWALL:		/* ホ?リ?クロス */
-		if(src!=bl && rand()%100 < 3*skilllv*sc_def_int/100 )
-			status_change_start(bl,SC_BLIND,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
+		if (src != bl) {
+			struct status_change *sc_data = status_get_sc_data(bl);
+			if (sc_data && sc_data[SC_DELUGE].timer == -1)
+				status_change_start(bl,SC_BLIND,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
+		}
 		break;
 	case LK_HEADCRUSH:				/* ヘッドクラッシュ */
 		{//?件が良く分からないので適?に
@@ -995,14 +998,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	case PF_SPIDERWEB:		/* スパイダ?ウェッブ */
 		{
-			if(bl->type == BL_MOB)
-			{
-				int sec=skill_get_time2(skillid,skilllv);
-				if(map[src->m].flag.pvp) //PvPでは拘束時間半減？
-					sec = sec/2;
-				battle_stopwalking(bl,1);
-				status_change_start(bl,SC_SPIDERWEB,skilllv,0,0,0,sec,0);
-			}
+			int sec = skill_get_time2(skillid,skilllv);
+			if(map[src->m].flag.pvp) //PvPでは拘束時間半減？
+				sec = sec/2;
+			battle_stopwalking(bl,1);
+			status_change_start(bl,SC_SPIDERWEB,skilllv,0,0,0,sec,0);
 		}
 		break;
 	case ASC_METEORASSAULT:			/* メテオアサルト */
@@ -4389,16 +4389,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case PF_HPCONVERSION:			/* ライフ置き換え */
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(sd){
-			int conv_hp=0,conv_sp=0;
-			conv_hp=sd->status.hp/10; //基本はHPの10%
-			sd->status.hp -= conv_hp; //HPを減らす
-			conv_sp=conv_hp*10*skilllv/100;
-			conv_sp=(sd->status.sp+conv_sp>sd->status.max_sp)?sd->status.max_sp-sd->status.sp:conv_sp;
-			sd->status.sp += conv_sp; //SPを?やす
-			pc_heal(sd,-conv_hp,conv_sp);
-			clif_heal(sd->fd,SP_SP,conv_sp);
+		clif_skill_nodamage(src, bl, skillid, skilllv, 1);
+		if (sd) {
+			int conv_hp, conv_sp;
+			conv_hp = sd->status.max_hp / 10; //基本はHPの10%
+			//sd->status.hp -= conv_hp; //HPを減らす
+			conv_sp = conv_hp * 10 * skilllv / 100;
+			if (sd->status.sp + conv_sp > sd->status.max_sp)
+				conv_hp = sd->status.max_sp - sd->status.sp;
+			if (pc_checkoversp(sd))
+				conv_hp = conv_sp = 0;
+			//sd->status.sp += conv_sp; //SPを?やす
+			pc_heal(sd, -conv_hp, conv_sp);
+			clif_heal(sd->fd, SP_SP, conv_sp);
 		}
 		break;
 	case HT_REMOVETRAP:				/* リム?ブトラップ */
@@ -4553,6 +4556,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
+		break;
+
+	case PF_SPIDERWEB:			/* スパイダ?ウェッブ */
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		skill_unitsetting(src,skillid,skilllv,bl->x,bl->y,0);
 		break;
 
 	// Weapon Refining [Celest]
@@ -4975,7 +4983,6 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case HT_CLAYMORETRAP:		/* クレイモア?トラップ */
 	case AS_VENOMDUST:			/* ベノムダスト */
 	case AM_DEMONSTRATION:			/* デモンストレ?ション */
-	case PF_SPIDERWEB:			/* スパイダ?ウェッブ */
 	case PF_FOGWALL:			/* フォグウォ?ル */
 	case HT_TALKIEBOX:			/* ト?キ?ボックス */
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -5553,21 +5560,20 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			skill_blown(&src->bl,bl,1);
 		break;
 
-	case 0xb6:				/* フォグウォ?ル */
+	case 0xb6:	/* フォグウォ?ル */
 		if (sc_data && sc_data[type].timer!=-1) {
-			unit2 = (struct skill_unit *)sc_data[type].val4;
-			if (unit2 && unit2->group &&
-				(unit2 == src || DIFF_TICK(sg->tick,unit2->group->tick)<=0))
+			struct skill_unit_group *sg2 = (struct skill_unit_group *)sc_data[type].val4;
+			if (sg2 && (sg2 == src->group || DIFF_TICK(sg->tick,sg2->tick)<=0))
 				break;
 		}
-		status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
-				(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
-		skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
+		status_change_start (bl, type, sg->skill_lv, sg->val1, sg->val2, (int)sg,
+				skill_get_time2(sg->skill_id, sg->skill_lv), 0);
+		if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
+			skill_additional_effect (ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, tick);
 		break;
 
 	case 0xb2:				/* あなたを_?いたいです */
 	case 0xb3:				/* ゴスペル */
-	//case 0xb6:				/* フォグウォ?ル */ - moved [celest]
 	//とりあえず何もしない
 		break;
 	/*	default:
@@ -5911,8 +5917,7 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 
 	case 0xb6:
 		{
-			struct block_list *target = map_id2bl(sg->val2);
-			if(target && target==bl) {
+			if (sc_data[type].timer!=-1 && sc_data[type].val4==(int)sg) {
 				status_change_end(bl,SC_FOGWALL,-1);
 				if (sc_data && sc_data[SC_BLIND].timer!=-1)
 					sc_data[SC_BLIND].timer = add_timer(
