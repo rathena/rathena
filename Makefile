@@ -1,8 +1,12 @@
 # $Id: Makefile 158 2004-10-01 03:45:15Z PoW $
 
-# CC = /usr/local/bin/gcc -fbounds-checking -pipe
-# CC = /usr/local/bin/gcc 
 CC = gcc -pipe
+# CC = gcc -pipe -DGCOLLECT
+# CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
+
+# GCLIB = -lgc
+GCLIB =
+
 PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT
 #PACKETDEF = -DPACKETVER=5 -DNEW_006b
 #PACKETDEF = -DPACKETVER=4 -DNEW_006b
@@ -26,6 +30,7 @@ CFLAGS = $(OPT) -Wall -DFD_SETSIZE=4096 -I../common $(PACKETDEF) $(OS_TYPE)
 else
 OS_TYPE =
 CFLAGS = $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
+# CFLAGS = $(OPT) -DTWILIGHT -Wall -I../common $(PACKETDEF) $(OS_TYPE)
 endif
 
 MYSQLFLAG_INCLUDE_DEFAULT = /usr/local/include/mysql
@@ -60,11 +65,11 @@ else
 LIB_S = $(LIB_S_DEFAULT)
 endif
 
-MYLIB = CC="$(CC)" CFLAGS="$(CFLAGS) $(MYSQLFLAG_INCLUDE)" LIB_S="$(LIB_S)"
+MYLIB = CC="$(CC)" CFLAGS="$(CFLAGS) $(MYSQLFLAG_INCLUDE)" LIB_S="$(LIB_S) $(GCLIB)"
 
 endif
 
-MKDEF = CC="$(CC)" CFLAGS="$(CFLAGS)"
+MKDEF = CC="$(CC)" CFLAGS="$(CFLAGS)" LIB_S="$(GCLIB)"
 
 all: conf txt
 
