@@ -1,4 +1,3 @@
-<<<<<<< .mine
 //===== eAthena Script =======================================
 //= Jobchanger Script
 //===== By: ==================================================
@@ -691,7 +690,7 @@ Lchange:
 	close;
 
 Llevelcheck:
-	if(readparam(55) >= 45 || readparam(19) == 4001 && readparam(55) >= 10) goto Lexisting;
+	if(readparam(55) >= 45 || readparam(19) == 4001 && readparam(55) >= 10) goto Ladvclasses;
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "You need a higher level to change...";
 	cutin "kafra_01",255;
