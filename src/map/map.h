@@ -159,7 +159,6 @@ struct map_session_data {
 		unsigned no_weapon_damage : 1;
 		unsigned no_gemstone : 1;
 		unsigned infinite_endure : 1;
-		unsigned infinite_autospell : 1;
 	} special_state;
 	int char_id, login_id1, login_id2, sex;
 	int packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
@@ -274,8 +273,17 @@ struct map_session_data {
 	short hp_drain_value,sp_drain_value,hp_drain_value_,sp_drain_value_;
 	int short_weapon_damage_return,long_weapon_damage_return;
 	int weapon_coma_ele[10],weapon_coma_race[12];
-	short break_weapon_rate,break_armor_rate;
+	int break_weapon_rate,break_armor_rate;
 	short add_steal_rate;
+	//--- 02/15's new card effectds [celest]
+	int crit_atk_rate;
+	int critaddrace[12],critaddrace_[12],arrow_critaddrace[12];
+	int no_regen;
+	int addeff3[10], arrow_addeff3[10];
+	short autospell2_id,autospell2_lv,autospell2_rate;
+	int skillatk[2];
+	unsigned short unstripable_equip;
+	int addmob[2],submob[2],addbymob[2];
 
 	short spiritball, spiritball_old;
 	int spirit_timer[MAX_SKILL_LEVEL];
@@ -610,10 +618,14 @@ enum {
 	SP_HP_DRAIN_VALUE,SP_SP_DRAIN_VALUE, // 1079-1080
 	SP_WEAPON_ATK,SP_WEAPON_ATK_RATE, // 1081-1082
 	SP_DELAYRATE,	// 1083
-
+	
 	SP_RESTART_FULL_RECORVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
 	SP_NO_CASTCANCEL2,SP_INFINITE_ENDURE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
-	SP_UNBREAKABLE_SHIELD, SP_LONG_ATK_RATE // 2011-2012
+	SP_UNBREAKABLE_SHIELD, SP_LONG_ATK_RATE, // 2011-2012
+
+	SP_CRIT_ATK_RATE, SP_CRITICAL_ADDRACE, SP_NO_REGEN, SP_ADDEFF_WHENHIT, SP_AUTOSPELL_WHENHIT, // 2013-2017
+	SP_SKILL_ATK, SP_UNSTRIPABLE, // 2018-2019
+	SP_ADDMOB, SP_SUBMOB, SP_ADDBYMOB // 2020-2022
 };
 
 enum {
