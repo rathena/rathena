@@ -1670,10 +1670,13 @@ int map_readallmap(void) {
 	for(i=0;i<map_num;i++){
 #ifdef USE_AFM
 		char afm_name[256] = "";
+		char *p;
 		strncpy(afm_name, map[i].name, strlen(map[i].name) - 4);
 		strcat(afm_name, ".afm");
 
 		sprintf(fn,"%s\\%s",afm_dir,afm_name);
+		for(p=&fn[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix
+
 		afm_file = fopen(fn, "r");
 		if (afm_file != NULL) {
 			map_readafm(i,fn);

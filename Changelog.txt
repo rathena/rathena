@@ -1,5 +1,6 @@
 Date	Added
 12/16
+        * Added a fix for AFM loading, thanks to Pete [celest]
         * Updated maximum levels for supernovice to 99 [celest]
         * Updated supernovice jobexp table - should be same from 50 onwards [celest]
         * Corrected maximum job level checking in @joblvup and @charjob [celest]
