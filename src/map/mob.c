@@ -536,7 +536,7 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 
 		if(md->walkpath.path_pos>=md->walkpath.path_len)
 			clif_fixmobpos(md);	// ‚Æ‚Ü‚Á‚½‚Æ‚«‚ÉˆÊ’u‚ÌÄ‘—M
-	}
+	}	
 	return 0;
 }
 
@@ -2303,6 +2303,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	}
 
 	if(md->hp>0){
+		if (battle_config.show_mob_hp)
+			clif_update_mobhp (md);
 		return 0;
 	}
 
@@ -2394,7 +2396,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class].lv - sd->status.base_level >= 20)) {
 			job_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
 		}
-		if(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1) { // for summoned creatures [Valaris]
+		if(md->master_id || (md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1)) { // for summoned creatures [Valaris]
 			base_exp = 0;
 			job_exp = 0;
 		}
@@ -2454,7 +2456,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			struct delay_item_drop *ditem;
 			int drop_rate;
 
-			if(md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1)	// Added [Valaris]
+			if(md->master_id || (md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1))	// Added [Valaris]
 				break;	// End
 
 			if(mob_db[md->class].dropitem[i].nameid <= 0)

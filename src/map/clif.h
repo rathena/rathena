@@ -174,6 +174,7 @@ int clif_wis_message(int fd,char *nick,char *mes,int mes_len);
 int clif_wis_end(int fd,int flag);
 
 int clif_solved_charname(struct map_session_data *sd,int char_id);
+int clif_update_mobhp(struct mob_data *md);
 
 int clif_use_card(struct map_session_data *sd,int idx);
 int clif_insert_card(struct map_session_data *sd,int idx_equip,int idx_card,int flag);

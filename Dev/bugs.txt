@@ -16,8 +16,8 @@ Assigned:	Celest
 Progess:	~90% (Notes: not sure if it causes problems, need more testing =p)
 
 Problem:	Monster hp view only shows but does not go down with a hit.
-Assigned:	N/A
-Progess:	0%
+Assigned:	Celest
+Progess:	100% (Yep... would be better to use party hp view)
 Note:		Could it be fixed using the party hp view?
 
 Problem:	When u spawn ~300 mobs (and more or less) then do @killmonster then some mobs freeze on the screen (have no names, don't move, etc)

@@ -5816,6 +5816,30 @@ int clif_hpmeter(struct map_session_data *sd)
 	
 	return 0;
 }
+/*==================================================
+ * Update monster hp view if it has changed [Celest]
+ *--------------------------------------------------
+ */
+int clif_update_mobhp(struct mob_data *md)
+{
+	unsigned char buf[102];
+	char mobhp[50];
+
+	nullpo_retr(0, md);
+		
+	WBUFW(buf,0) = 0x95;
+	WBUFL(buf,2) = md->bl.id;
+
+	memcpy(WBUFP(buf,6), md->name, 24);
+	sprintf(mobhp, "hp: %d/%d", md->hp, mob_db[md->class].max_hp);
+	WBUFW(buf, 0) = 0x195;
+	memcpy(WBUFP(buf,30), mobhp, 24);
+	WBUFL(buf,54) = 0;
+	WBUFL(buf,78) = 0;
+	clif_send(buf,packet_len_table[0x195],&md->bl,AREA);
+	
+	return 0;
+}
 /*==========================================
  * パーティ場所移動（未使用）
  *------------------------------------------
@@ -7676,7 +7700,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 	bl = map_id2bl(account_id);
 	if (bl == NULL)
 		return;
-
+	
 	WFIFOW(fd,0) = 0x95;
 	WFIFOL(fd,2) = account_id;
 
@@ -10232,22 +10256,22 @@ static int clif_parse(int fd) {
 	// 接続が切れてるので後始末
 	if (!chrif_isconnect() || session[fd]->eof) { // char鯖に繋がってない間は接続禁止 (!chrif_isconnect())
 		if (sd && sd->state.auth) {
-			if (chrif_isconnect())
-				clif_quitsave(fd, sd);
+			clif_quitsave(fd, sd); // the function doesn't send to inter-server/char-server if it is not connected [Yor]
 			if (sd->status.name != NULL)
 				sprintf(tmp_output,"%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off.\n", (pc_isGM(sd))?"GM ":"",sd->status.name); // Player logout display [Valaris]
 			else
 				sprintf(tmp_output,"%sCharacter with Account ID '"CL_WHITE"%d"CL_RESET"' logged off.\n", (pc_isGM(sd))?"GM ":"", sd->bl.id); // Player logout display [Yor]
 		} else if (sd) { // not authentified! (refused by char-server or disconnect before to be authentified)
 			sprintf(tmp_output,"Player not authenticated with Account ID '"CL_WHITE"%d"CL_RESET"' logged off.\n", sd->bl.id); // Player logout display [Yor]
-			if (chrif_isconnect())
-				clif_quitsave(fd, sd);
-			sd = 0;
+//			if (chrif_isconnect())
+//				clif_quitsave(fd, sd);
+			map_deliddb(&sd->bl); // account_id has been included in the DB before auth answer [Yor]
+//			sd = 0;
 		}
 		ShowInfo(tmp_output);
 		close(fd);
-		if (sd) // 追加
-			map_deliddb(&sd->bl); // 追加
+//		if (sd) // 追加
+//			map_deliddb(&sd->bl); // 追加
 		delete_session(fd);
 		return 0;
 	}

@@ -1,5 +1,11 @@
 Date	Added
 12/27
+        * Summoned monsters will not give exp and items [celest]
+        * Added the 6 new Yuno fields to maps_athena.conf [celest]
+        * Added some Freya's optimisations in clif_parse [celest]
+        * Added clif_update_mobhp - monsters' hp viewing now updates properly [celest]
+        * Set alive_timer to -1 when quitting, not 0, or the map server might assume
+          its still active [celest]
 	* Changed the *_override_grffile to no by default, because many were having issues with it [Ajarn]
 
 12/26
