@@ -232,11 +232,11 @@ void do_final_gmdb(void) {
 	}
 }
 
-void read_gm_accounts(int fd, int len) {
+int read_gm_accounts(int fd, int len) {
     GM_num = RFIFOW(fd,2);
     
 	if(len < (6+5*GM_num))
-	    return;
+	    return -1;
 	    
     int i=0,account_id=0;
     unsigned char *level;
@@ -263,7 +263,9 @@ void read_gm_accounts(int fd, int len) {
 	    }
 	}
  
-    WFIFOSET(fd,6+5*i);    
+    WFIFOSET(fd,6+5*i);   
+    
+    return 0; 
 }
 
 //=====================================================================================================
@@ -1220,16 +1222,16 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	return 0;
 }
 
-void reply_login_request(int fd, int len) {
+int reply_login_request(int fd, int len) {
     if (len < 3)
-				return;
+        return -1;
 	
 	if (RFIFOB(fd, 2)) {
 		printf("Can not connect to login-server.\n");
 		printf("The server communication passwords (default s1/p1) is probably invalid.\n");
 		printf("Also, please make sure your login db has the username/password present and the sex of the account is S.\n");
 		printf("If you changed the communication passwords, change them back at map_athena.conf and char_athena.conf\n");
-		return;
+		return -1;
 	}else {
 		printf("Connected to login-server (connection #%d).\n", fd);
 		// if no map-server already connected, display a message...
@@ -1245,11 +1247,13 @@ void reply_login_request(int fd, int len) {
 	}
 	
 	RFIFOSKIP(fd, 3);
+	
+	return 0;
 }
 
-void send_chars(int fd, int len) {
+int send_chars(int fd, int len) {
 	if(len<51)
-		return;
+		return -1;
 	
 	int i;
 	struct char_session_data *sd;
@@ -1272,12 +1276,14 @@ void send_chars(int fd, int len) {
 			}
 		}
 	}
-	RFIFOSKIP(fd,51);	
+	RFIFOSKIP(fd,51);
+	
+	return 0;
 }
 
-void connect_until_reply(int fd, int len) {
+int connect_until_reply(int fd, int len) {
 	if (len < 50)
-		return;
+		return -1;
 		
 	int i;
 	struct char_session_data *sd;
@@ -1292,12 +1298,14 @@ void connect_until_reply(int fd, int len) {
 	}
 
 	RFIFOSKIP(fd,50);
+	
+	return 0;
 }			
 
 // changesex reply (modified by [Yor])
-void change_sex_reply(int fd, int len) {
+int change_sex_reply(int fd, int len) {
 	if (len < 7)
-		return;
+		return -1;
 
 	int acc, sex, i;
 	unsigned char buf[16];
@@ -1369,11 +1377,13 @@ void change_sex_reply(int fd, int len) {
 		WBUFB(buf,6) = sex;
 		mapif_sendall(buf, 7);
     }
+    
+    return 0;
 }
 
-void account_reg2(int fd, int len) {
+int account_reg2(int fd, int len) {
     if (len < 4 || len < RFIFOW(fd,2))
-        return;
+        return -1;
 
 	struct global_reg reg[ACCOUNT_REG2_NUM];
 	unsigned char buf[4096];
@@ -1396,12 +1406,14 @@ void account_reg2(int fd, int len) {
 	#ifdef DEBUG
 	printf("char: save_account_reg_reply\n");
 	#endif
+	
+	return 0;
 }
 
 // State change of account/ban notification (from login-server) by [Yor]
-void change_state_reply(int fd, int len) {
+int change_state_reply(int fd, int len) {
     if (len < 11)
-		return;
+		return -1;
 		
 	int i;
 	struct char_session_data *sd;
@@ -1425,10 +1437,12 @@ void change_state_reply(int fd, int len) {
 	}
 
 	RFIFOSKIP(fd,11);
+	
+	return 0;
 }
 
 int parse_tologin(int fd) {
-	int len = 0;
+	int len,res = 0;
 
 	// only login-server can have an access to here.
 	// so, if it isn't the login-server, we disconnect the session.
@@ -1450,19 +1464,19 @@ int parse_tologin(int fd) {
 	// hehe. no need to set user limite on SQL version. :P
 	// but char limitation is good way to maintain server. :D
 	len = RFIFOREST(fd);
-	while(len >= 2) {
+	while(len >= 2 && res == 0) {
 	    #ifdef DEBUG
 		printf("parse_tologin : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd, 0));
 		#endif
 
 		switch(RFIFOW(fd, 0)){
-		case 0x2711: reply_login_request(fd,len); break;
-		case 0x2713: send_chars(fd,len);          break;
-		case 0x2717: connect_until_reply(fd,len); break;
-		case 0x2723: change_sex_reply(fd,len);    break;
-		case 0x2729: account_reg2(fd,len);        break;
-		case 0x2731: change_state_reply(fd,len);  break;
-		case 0x2732: read_gm_accounts(fd,len);    break;
+		case 0x2711: res = reply_login_request(fd,len); break;
+		case 0x2713: res = send_chars(fd,len);          break;
+		case 0x2717: res = connect_until_reply(fd,len); break;
+		case 0x2723: res = change_sex_reply(fd,len);    break;
+		case 0x2729: res = account_reg2(fd,len);        break;
+		case 0x2731: res = change_state_reply(fd,len);  break;
+		case 0x2732: res = read_gm_accounts(fd,len);    break;
 
 		default:
 			printf("set eof.\n");
@@ -1501,9 +1515,9 @@ int map_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
 	return 0;
 }
 
-void recv_map_names(int fd, int len, unsigned char id) {
+int recv_map_names(int fd, int len, unsigned char id) {
     if (len < 4 || len < RFIFOW(fd,2))
-        return;
+        return -1;
     
     memset(server[id].map, 0, sizeof(server[id].map));
     
@@ -1566,11 +1580,15 @@ void recv_map_names(int fd, int len, unsigned char id) {
 	RFIFOSKIP(fd,RFIFOW(fd,2));
 		
 	printf("Map-server %d loading complete.\n", id);
+	
+	servers_connected++;
+	
+	return 0;
 }
 
-void auth_request(int fd, int len) {
+int auth_request(int fd, int len) {
     if (len < 22)
-		return;
+		return -1;
 
     int i;
     
@@ -1604,7 +1622,7 @@ void auth_request(int fd, int len) {
             printf("auth_fifo search success (auth #%d, account %d, character: %d).\n", i, RFIFOL(fd,2), RFIFOL(fd,6));
             #endif
 			
-			return;
+			return 0;
 		}
 	}
 
@@ -1619,11 +1637,13 @@ void auth_request(int fd, int len) {
 	}
 
 	RFIFOSKIP(fd,22);
+	
+	return 0;
 }
 
-void set_map_users(int fd, int len, unsigned char id) {
+int set_map_users(int fd, int len, unsigned char id) {
 	if (len < 6 || len < RFIFOW(fd,2))
-		return;
+		return -1;
 
 	if (RFIFOW(fd,4) != server[id].users)
 		printf("map user: %d\n", RFIFOW(fd,4));
@@ -1634,10 +1654,321 @@ void set_map_users(int fd, int len, unsigned char id) {
 		server_freezeflag[id] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
 
 	RFIFOSKIP(fd,RFIFOW(fd,2));
+	
+	return 0;
+}
+
+int save_char(int fd, int len) {
+	if (len < 4 || len < RFIFOW(fd,2))
+		return -1;
+		
+	//check account
+	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",char_db, RFIFOL(fd,4),RFIFOL(fd,8));
+	sql_query(tmp_sql,"save_char");
+	
+	if ((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res)))
+		if (atoi(sql_row[0]) == 1) {
+			memcpy(&char_dat[0], RFIFOP(fd,12), sizeof(struct mmo_charstatus));
+			mmo_char_tosql(RFIFOL(fd,8), char_dat);
+		}
+
+	mysql_free_result(sql_res);
+
+
+	RFIFOSKIP(fd,RFIFOW(fd,2));
+			
+	return 0;
+}
+
+int request_char_select(int fd, int len) {
+	if (len < 18)
+		return -1;
+
+	if (auth_fifo_pos >= AUTH_FIFO_SIZE)
+		auth_fifo_pos = 0;
+
+	#ifdef DEBUG
+	printf("(charselect) auth_fifo set %d - account_id:%08x login_id1:%08x\n", auth_fifo_pos, RFIFOL(fd, 2), RFIFOL(fd, 6));
+	#endif
+	
+	auth_fifo[auth_fifo_pos].account_id = RFIFOL(fd, 2);
+	auth_fifo[auth_fifo_pos].char_id = 0;
+	auth_fifo[auth_fifo_pos].login_id1 = RFIFOL(fd, 6);
+	auth_fifo[auth_fifo_pos].login_id2 = RFIFOL(fd,10);
+	auth_fifo[auth_fifo_pos].delflag = 2;
+	auth_fifo[auth_fifo_pos].char_pos = 0;
+	auth_fifo[auth_fifo_pos].connect_until_time = 0; // unlimited/unknown time by default (not display in map-server)
+	auth_fifo[auth_fifo_pos].ip = RFIFOL(fd,14);
+	auth_fifo_pos++;
+ 
+    WFIFOW(fd, 0) = 0x2b03;
+	WFIFOL(fd, 2) = RFIFOL(fd, 2);
+	WFIFOB(fd, 6) = 0;
+	WFIFOSET(fd, 7);
+
+	RFIFOSKIP(fd, 18);
+	
+	return 0;
+}
+
+int request_change_map(int fd, int len) {
+    if (len < 49)
+		return -1;
+
+	if (auth_fifo_pos >= AUTH_FIFO_SIZE)
+		auth_fifo_pos = 0;
+
+	WFIFOW(fd, 0) = 0x2b06;
+	memcpy(WFIFOP(fd,2), RFIFOP(fd,2), 42);
+	
+	#ifdef DEBUG
+	printf("(map change) auth_fifo set %d - account_id:%08x login_id1:%08x\n", auth_fifo_pos, RFIFOL(fd, 2), RFIFOL(fd, 6));
+	#endif
+
+	auth_fifo[auth_fifo_pos].account_id = RFIFOL(fd, 2);
+	auth_fifo[auth_fifo_pos].login_id1 = RFIFOL(fd, 6);
+	auth_fifo[auth_fifo_pos].login_id2 = RFIFOL(fd,10);
+	auth_fifo[auth_fifo_pos].char_id = RFIFOL(fd,14);
+	auth_fifo[auth_fifo_pos].delflag = 0;
+	auth_fifo[auth_fifo_pos].sex = RFIFOB(fd,44);
+	auth_fifo[auth_fifo_pos].ip = RFIFOL(fd,45);
+
+	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", char_db, RFIFOL(fd,2), RFIFOL(fd,14));
+	sql_query(tmp_sql,"request_map_change");
+	
+    if ((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
+        
+		auth_fifo[auth_fifo_pos].char_pos = auth_fifo[auth_fifo_pos].char_id;
+		auth_fifo_pos++;
+
+		WFIFOL(fd,6) = 0;
+    }		
+    
+    if (atoi(sql_row[0]) == 0)
+		WFIFOW(fd,6) = 1;
+				
+	WFIFOSET(fd,44);
+	RFIFOSKIP(fd,49);
+	
+	mysql_free_result(sql_res);
+	
+	return 0;
+}
+
+int char_name_check(int fd, int len) {
+    if (len < 6)
+        return -1;
+        
+    WFIFOW(fd,0) = 0x2b09;
+	WFIFOL(fd,2) = RFIFOL(fd,2);
+
+	sprintf(tmp_sql, "SELECT `name` FROM `%s` WHERE `char_id`='%d'", char_db, RFIFOL(fd,2));
+	sql_query(tmp_sql,"char_name_check");
+
+	if((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res)))
+		memcpy(WFIFOP(fd,6), sql_row[0], 24);
+	else
+		memcpy(WFIFOP(fd,6), unknown_char_name, 24);
+
+	mysql_free_result(sql_res);
+
+	WFIFOSET(fd,30);
+	
+    RFIFOSKIP(fd,6);
+    
+    return 0;
+} 
+
+int account_reg(int fd, int len) {
+	if (len < 4 || len < RFIFOW(fd,2))
+	    return -1;
+
+	struct global_reg reg[ACCOUNT_REG2_NUM];
+	int j,p,acc;
+	acc=RFIFOL(fd,4);
+	for(p=8,j=0;p<RFIFOW(fd,2) && j<ACCOUNT_REG2_NUM;p+=36,j++){
+		memcpy(reg[j].str,RFIFOP(fd,p),32);
+		reg[j].value=RFIFOL(fd,p+32);
+	}
+
+	// set_account_reg2(acc,j,reg);
+	// loginサーバーへ送る
+	if (login_fd > 0) { // don't send request if no login-server
+		WFIFOW(login_fd, 0) = 0x2728;
+		memcpy(WFIFOP(login_fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
+		WFIFOSET(login_fd, WFIFOW(login_fd,2));
+	}
+
+	// ワールドへの同垢ログインがなければmapサーバーに送る必要はない
+	//memcpy(buf,RFIFOP(fd,0),RFIFOW(fd,2));
+	//WBUFW(buf,0)=0x2b11;
+	//mapif_sendall(buf,WBUFW(buf,2));
+	RFIFOSKIP(fd,RFIFOW(fd,2));
+	
+//			printf("char: save_account_reg (from map)\n");
+
+    return 0;
+}
+
+// Map server send information to change an email of an account -> login-server
+int change_email_request(int fd, int len) {
+	if (len < 86)
+	    return -1;
+			
+	if (login_fd > 0) { // don't send request if no login-server
+		memcpy(WFIFOP(login_fd,0), RFIFOP(fd,0), 86); // 0x2722 <account_id>.L <actual_e-mail>.40B <new_e-mail>.40B
+		WFIFOW(login_fd,0) = 0x2722;
+		WFIFOSET(login_fd, 86);
+	}
+	
+    RFIFOSKIP(fd, 86);
+    
+    return 0;
+} 
+
+// Receiving from map-server a status change resquest. Transmission to login-server (by Yor)
+int status_change_request(int fd, int len) {
+    if (len < 44)
+		return -1;
+
+	char character_name[24];
+	int acc = RFIFOL(fd,2); // account_id of who ask (-1 if nobody)
+
+	memcpy(character_name, RFIFOP(fd,6), 24);
+	character_name[sizeof(character_name) -1] = '\0';
+
+	// prepare answer
+	WFIFOW(fd,0) = 0x2b0f; // answer
+	WFIFOL(fd,2) = acc; // who want do operation
+	WFIFOW(fd,30) = RFIFOW(fd, 30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban
+
+	sprintf(tmp_sql, "SELECT `account_id`,`name` FROM `%s` WHERE `name` = '%s'",char_db, character_name);
+	sql_query(tmp_sql,"status_change_request");
+
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
+	    if ((sql_row = mysql_fetch_row(sql_res))) {
+	         memcpy(WFIFOP(fd,6), sql_row[1], 24); // put correct name if found
+	         WFIFOW(fd,32) = 0; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+			 
+    	     switch(RFIFOW(fd, 30)) {
+				case 1: // block
+					if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
+						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOW(login_fd,0) = 0x2724;
+							WFIFOL(login_fd,2) = atoi(sql_row[0]); // account value
+							WFIFOL(login_fd,6) = 5; // status of the account
+							WFIFOSET(login_fd, 10);
+//							printf("char : status -> login: account %d, status: %d \n", char_dat[i].account_id, 5);
+						} else
+							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					} else
+						WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					break;
+				case 2: // ban
+					if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
+						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOW(login_fd, 0) = 0x2725;
+							WFIFOL(login_fd, 2) = atoi(sql_row[0]); // account value
+							WFIFOW(login_fd, 6) = RFIFOW(fd,32); // year
+							WFIFOW(login_fd, 8) = RFIFOW(fd,34); // month
+							WFIFOW(login_fd,10) = RFIFOW(fd,36); // day
+							WFIFOW(login_fd,12) = RFIFOW(fd,38); // hour
+							WFIFOW(login_fd,14) = RFIFOW(fd,40); // minute
+							WFIFOW(login_fd,16) = RFIFOW(fd,42); // second
+							WFIFOSET(login_fd,18);
+//							printf("char : status -> login: account %d, ban: %dy %dm %dd %dh %dmn %ds\n",
+//							       char_dat[i].account_id, (short)RFIFOW(fd,32), (short)RFIFOW(fd,34), (short)RFIFOW(fd,36), (short)RFIFOW(fd,38), (short)RFIFOW(fd,40), (short)RFIFOW(fd,42));
+						} else
+							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					} else
+						WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					break;
+				case 3: // unblock
+					if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
+						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOW(login_fd,0) = 0x2724;
+							WFIFOL(login_fd,2) = atoi(sql_row[0]); // account value
+							WFIFOL(login_fd,6) = 0; // status of the account
+							WFIFOSET(login_fd, 10);
+//							printf("char : status -> login: account %d, status: %d \n", char_dat[i].account_id, 0);
+						} else
+							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					} else
+						WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					break;
+				case 4: // unban
+					if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
+						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOW(login_fd, 0) = 0x272a;
+							WFIFOL(login_fd, 2) = atoi(sql_row[0]); // account value
+							WFIFOSET(login_fd, 6);
+//							printf("char : status -> login: account %d, unban request\n", char_dat[i].account_id);
+						} else
+							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					} else
+						WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					break;
+				case 5: // changesex
+					if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
+						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOW(login_fd, 0) = 0x2727;
+							WFIFOL(login_fd, 2) = atoi(sql_row[0]); // account value
+							WFIFOSET(login_fd, 6);
+//							printf("char : status -> login: account %d, change sex request\n", char_dat[i].account_id);
+						} else
+							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					} else
+						WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					break;
+			 }
+		} else {
+			// character name not found
+			memcpy(WFIFOP(fd,6), character_name, 24);
+			WFIFOW(fd,32) = 1; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+		}
+			
+        // send answer if a player ask, not if the server ask
+		if (acc != -1) {
+			WFIFOSET(fd, 34);
+		}
+	}
+
+	RFIFOSKIP(fd, 44);
+	
+	return 0;
+}
+
+int recieve_rates(int fd, int len) {
+    if (len < 6 || len < RFIFOW(fd,8))
+		return -1;
+
+	sprintf(tmp_sql, "INSERT INTO `ragsrvinfo` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d',`motd`='%s'",
+	        fd, server_name, RFIFOW(fd,2), RFIFOW(fd,4), RFIFOW(fd,6), RFIFOP(fd,10));
+	sql_query(tmp_sql,"recieve_rates");
+	
+	RFIFOSKIP(fd,RFIFOW(fd,8));
+	
+	return 0;
+}
+
+int set_offline(int fd, int len) {
+	if (len < 6 )
+		return -1;
+
+	#ifdef DEBUG
+	printf("Setting [%d] char offline\n",RFIFOL(fd,2));
+	#endif
+	
+	sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, RFIFOL(fd,2));
+	sql_query(tmp_sql,"set_offline");
+	
+	RFIFOSKIP(fd,6);
+	
+	return 0;
 }
 
 int parse_frommap(int fd) {
-	int i = 0,len;
+	int len,res=0;
 	unsigned char id;
 
 	// Sometimes fd=0, and it will cause server crash. Don't know why. :(
@@ -1663,6 +1994,8 @@ int parse_frommap(int fd) {
 			sql_query(tmp_sql,"parse_frommap");
 			
 			server_fd[id] = -1;
+			
+			servers_connected--;
 		}
 		close(fd);
 		delete_session(fd);
@@ -1671,326 +2004,27 @@ int parse_frommap(int fd) {
 	
 	len = RFIFOREST(fd);
 	
-	while(len >= 2) {
+	while(len >= 2 && res == 0) {
 	    #ifdef DEBUG
 		printf("parse_frommap : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
 		#endif
 
 		switch(RFIFOW(fd, 0)) {
-		case 0x2af7: read_gm_accounts(fd,len);	break;
-		case 0x2afa: recv_map_names(fd,len,id);	break;
-		case 0x2afc: auth_request(fd,len);      break;
-		case 0x2aff: set_map_users(fd,len,id); 	break;
-
-		// char saving
-		case 0x2b01:
-			i = 0;
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-			//check account
-			sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",char_db, RFIFOL(fd,4),RFIFOL(fd,8));
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
-			sql_res = mysql_store_result(&mysql_handle);
-			if (sql_res) {
-				sql_row = mysql_fetch_row(sql_res);
-				if (sql_row)
-					i = atoi(sql_row[0]);
-			}
-			mysql_free_result(sql_res);
-
-			if (i == 1) {
-				memcpy(&char_dat[0], RFIFOP(fd,12), sizeof(struct mmo_charstatus));
-				mmo_char_tosql(RFIFOL(fd,8), char_dat);
-				//save to DB
-			}
-			RFIFOSKIP(fd,RFIFOW(fd,2));
-			break;
-
-		// req char selection
-		case 0x2b02:
-			if (RFIFOREST(fd) < 18)
-				return 0;
-
-			if (auth_fifo_pos >= AUTH_FIFO_SIZE)
-				auth_fifo_pos = 0;
-
-//			printf("(charselect) auth_fifo set %d - account_id:%08x login_id1:%08x\n", auth_fifo_pos, RFIFOL(fd, 2), RFIFOL(fd, 6));
-			auth_fifo[auth_fifo_pos].account_id = RFIFOL(fd, 2);
-			auth_fifo[auth_fifo_pos].char_id = 0;
-			auth_fifo[auth_fifo_pos].login_id1 = RFIFOL(fd, 6);
-			auth_fifo[auth_fifo_pos].login_id2 = RFIFOL(fd,10);
-			auth_fifo[auth_fifo_pos].delflag = 2;
-			auth_fifo[auth_fifo_pos].char_pos = 0;
-			auth_fifo[auth_fifo_pos].connect_until_time = 0; // unlimited/unknown time by default (not display in map-server)
-			auth_fifo[auth_fifo_pos].ip = RFIFOL(fd,14);
-			auth_fifo_pos++;
-
-			WFIFOW(fd, 0) = 0x2b03;
-			WFIFOL(fd, 2) = RFIFOL(fd, 2);
-			WFIFOB(fd, 6) = 0;
-			WFIFOSET(fd, 7);
-
-			RFIFOSKIP(fd, 18);
-			break;
-
-		// request "change map server"
-		case 0x2b05:
-			if (RFIFOREST(fd) < 49)
-				return 0;
-
-			if (auth_fifo_pos >= AUTH_FIFO_SIZE)
-				auth_fifo_pos = 0;
-
-			WFIFOW(fd, 0) = 0x2b06;
-			memcpy(WFIFOP(fd,2), RFIFOP(fd,2), 42);
-//			printf("(map change) auth_fifo set %d - account_id:%08x login_id1:%08x\n", auth_fifo_pos, RFIFOL(fd, 2), RFIFOL(fd, 6));
-			auth_fifo[auth_fifo_pos].account_id = RFIFOL(fd, 2);
-			auth_fifo[auth_fifo_pos].login_id1 = RFIFOL(fd, 6);
-			auth_fifo[auth_fifo_pos].login_id2 = RFIFOL(fd,10);
-			auth_fifo[auth_fifo_pos].char_id = RFIFOL(fd,14);
-			auth_fifo[auth_fifo_pos].delflag = 0;
-			auth_fifo[auth_fifo_pos].sex = RFIFOB(fd,44);
-			auth_fifo[auth_fifo_pos].ip = RFIFOL(fd,45);
-
-			sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", char_db, RFIFOL(fd,2), RFIFOL(fd,14));
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
-			sql_res = mysql_store_result(&mysql_handle);
-
-			if (( sql_row = mysql_fetch_row(sql_res))) {
-				i = atoi(sql_row[0]);
-				mysql_free_result(sql_res);
-
-				auth_fifo[auth_fifo_pos].char_pos = auth_fifo[auth_fifo_pos].char_id;
-				auth_fifo_pos++;
-
-				WFIFOL(fd,6) = 0;
-				break;
-			}
-			if (i == 0)
-				WFIFOW(fd,6) = 1;
-
-			WFIFOSET(fd,44);
-			RFIFOSKIP(fd,49);
-			break;
-
-		// char name check
-		case 0x2b08:
-			if (RFIFOREST(fd) < 6)
-				return 0;
-
-			sprintf(tmp_sql, "SELECT `name` FROM `%s` WHERE `char_id`='%d'", char_db, RFIFOL(fd,2));
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
-			sql_res = mysql_store_result(&mysql_handle);
-
-			sql_row = mysql_fetch_row(sql_res);
-
-			WFIFOW(fd,0) = 0x2b09;
-			WFIFOL(fd,2) = RFIFOL(fd,2);
-
-			if (sql_row)
-				memcpy(WFIFOP(fd,6), sql_row[0], 24);
-			else
-				memcpy(WFIFOP(fd,6), unknown_char_name, 24);
-			mysql_free_result(sql_res);
-
-			WFIFOSET(fd,30);
-
-			RFIFOSKIP(fd,6);
-			break;
-
-/*		// I want become GM - fuck!
-		case 0x2b0a:
-			if(RFIFOREST(fd)<4)
-				return 0;
-			if(RFIFOREST(fd)<RFIFOW(fd,2))
-				return 0;
-			memcpy(WFIFOP(login_fd,2),RFIFOP(fd,2),RFIFOW(fd,2)-2);
-			WFIFOW(login_fd,0)=0x2720;
-			WFIFOSET(login_fd,RFIFOW(fd,2));
-//			printf("char : change gm -> login %d %s %d\n", RFIFOL(fd, 4), RFIFOP(fd, 8), RFIFOW(fd, 2));
-			RFIFOSKIP(fd, RFIFOW(fd, 2));
-			break;
-		*/
-
-		// account_reg保存要求
-		case 0x2b10:
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-		  {
-			struct global_reg reg[ACCOUNT_REG2_NUM];
-			int j,p,acc;
-			acc=RFIFOL(fd,4);
-			for(p=8,j=0;p<RFIFOW(fd,2) && j<ACCOUNT_REG2_NUM;p+=36,j++){
-				memcpy(reg[j].str,RFIFOP(fd,p),32);
-				reg[j].value=RFIFOL(fd,p+32);
-			}
-			// set_account_reg2(acc,j,reg);
-			// loginサーバーへ送る
-			if (login_fd > 0) { // don't send request if no login-server
-				WFIFOW(login_fd, 0) = 0x2728;
-				memcpy(WFIFOP(login_fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
-				WFIFOSET(login_fd, WFIFOW(login_fd,2));
-			}
-			// ワールドへの同垢ログインがなければmapサーバーに送る必要はない
-			//memcpy(buf,RFIFOP(fd,0),RFIFOW(fd,2));
-			//WBUFW(buf,0)=0x2b11;
-			//mapif_sendall(buf,WBUFW(buf,2));
-			RFIFOSKIP(fd,RFIFOW(fd,2));
-//			printf("char: save_account_reg (from map)\n");
-		  }
-			break;
-
-		// Map server send information to change an email of an account -> login-server
-		case 0x2b0c:
-			if (RFIFOREST(fd) < 86)
-				return 0;
-			if (login_fd > 0) { // don't send request if no login-server
-				memcpy(WFIFOP(login_fd,0), RFIFOP(fd,0), 86); // 0x2722 <account_id>.L <actual_e-mail>.40B <new_e-mail>.40B
-				WFIFOW(login_fd,0) = 0x2722;
-				WFIFOSET(login_fd, 86);
-			}
-			RFIFOSKIP(fd, 86);
-			break;
-
-		// Receiving from map-server a status change resquest. Transmission to login-server (by Yor)
-		case 0x2b0e:
-			if (RFIFOREST(fd) < 44)
-				return 0;
-		  {
-			char character_name[24];
-			int acc = RFIFOL(fd,2); // account_id of who ask (-1 if nobody)
-			memcpy(character_name, RFIFOP(fd,6), 24);
-			character_name[sizeof(character_name) -1] = '\0';
-			// prepare answer
-			WFIFOW(fd,0) = 0x2b0f; // answer
-			WFIFOL(fd,2) = acc; // who want do operation
-			WFIFOW(fd,30) = RFIFOW(fd, 30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban
-			sprintf(tmp_sql, "SELECT `account_id`,`name` FROM `%s` WHERE `name` = '%s'",char_db, character_name);
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
-			}
-
-			sql_res = mysql_store_result(&mysql_handle);
-
-			if (sql_res) {
-				if (mysql_num_rows(sql_res)) {
-					sql_row = mysql_fetch_row(sql_res);
-					memcpy(WFIFOP(fd,6), sql_row[1], 24); // put correct name if found
-					WFIFOW(fd,32) = 0; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-					switch(RFIFOW(fd, 30)) {
-					case 1: // block
-						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
-							if (login_fd > 0) { // don't send request if no login-server
-								WFIFOW(login_fd,0) = 0x2724;
-								WFIFOL(login_fd,2) = atoi(sql_row[0]); // account value
-								WFIFOL(login_fd,6) = 5; // status of the account
-								WFIFOSET(login_fd, 10);
-//								printf("char : status -> login: account %d, status: %d \n", char_dat[i].account_id, 5);
-							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						break;
-					case 2: // ban
-						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
-							if (login_fd > 0) { // don't send request if no login-server
-								WFIFOW(login_fd, 0) = 0x2725;
-								WFIFOL(login_fd, 2) = atoi(sql_row[0]); // account value
-								WFIFOW(login_fd, 6) = RFIFOW(fd,32); // year
-								WFIFOW(login_fd, 8) = RFIFOW(fd,34); // month
-								WFIFOW(login_fd,10) = RFIFOW(fd,36); // day
-								WFIFOW(login_fd,12) = RFIFOW(fd,38); // hour
-								WFIFOW(login_fd,14) = RFIFOW(fd,40); // minute
-								WFIFOW(login_fd,16) = RFIFOW(fd,42); // second
-								WFIFOSET(login_fd,18);
-//								printf("char : status -> login: account %d, ban: %dy %dm %dd %dh %dmn %ds\n",
-//								       char_dat[i].account_id, (short)RFIFOW(fd,32), (short)RFIFOW(fd,34), (short)RFIFOW(fd,36), (short)RFIFOW(fd,38), (short)RFIFOW(fd,40), (short)RFIFOW(fd,42));
-							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						break;
-					case 3: // unblock
-						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
-							if (login_fd > 0) { // don't send request if no login-server
-								WFIFOW(login_fd,0) = 0x2724;
-								WFIFOL(login_fd,2) = atoi(sql_row[0]); // account value
-								WFIFOL(login_fd,6) = 0; // status of the account
-								WFIFOSET(login_fd, 10);
-//								printf("char : status -> login: account %d, status: %d \n", char_dat[i].account_id, 0);
-							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						break;
-					case 4: // unban
-						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
-							if (login_fd > 0) { // don't send request if no login-server
-								WFIFOW(login_fd, 0) = 0x272a;
-								WFIFOL(login_fd, 2) = atoi(sql_row[0]); // account value
-								WFIFOSET(login_fd, 6);
-//								printf("char : status -> login: account %d, unban request\n", char_dat[i].account_id);
-							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						break;
-					case 5: // changesex
-						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
-							if (login_fd > 0) { // don't send request if no login-server
-								WFIFOW(login_fd, 0) = 0x2727;
-								WFIFOL(login_fd, 2) = atoi(sql_row[0]); // account value
-								WFIFOSET(login_fd, 6);
-//								printf("char : status -> login: account %d, change sex request\n", char_dat[i].account_id);
-							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-						break;
-					}
-				} else {
-					// character name not found
-					memcpy(WFIFOP(fd,6), character_name, 24);
-					WFIFOW(fd,32) = 1; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
-				}
-				// send answer if a player ask, not if the server ask
-				if (acc != -1) {
-					WFIFOSET(fd, 34);
-				}
-			}
-		  }
-			RFIFOSKIP(fd, 44);
-			break;
-
-		// Recieve rates [Wizputer]
-		case 0x2b16:
-			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,8))
-				return 0;
-			sprintf(tmp_sql, "INSERT INTO `ragsrvinfo` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d',`motd`='%s'",
-			        fd, server_name, RFIFOW(fd,2), RFIFOW(fd,4), RFIFOW(fd,6), RFIFOP(fd,10));
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
-			RFIFOSKIP(fd,RFIFOW(fd,8));
-			break;
-
-		// Character disconnected set online 0 [Wizputer]
-		case 0x2b17:
-			if (RFIFOREST(fd) < 6 )
-				return 0;
-			//printf("Setting %d char offline\n",RFIFOL(fd,2));
-			sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, RFIFOL(fd,2));
-			if (mysql_query(&mysql_handle, tmp_sql))
-				printf("DB server Error (update online `%s`)- %s\n", char_db, mysql_error(&mysql_handle));
-			RFIFOSKIP(fd,6);
-			break;
-		default:
+		case 0x2af7: res = read_gm_accounts(fd,len);      break;
+		case 0x2afa: res = recv_map_names(fd,len,id);     break;
+		case 0x2afc: res = auth_request(fd,len);          break;
+		case 0x2aff: res = set_map_users(fd,len,id);      break;
+		case 0x2b01: res = save_char(fd,len);	          break;
+		case 0x2b02: res = request_char_select(fd,len);   break;
+		case 0x2b05: res = request_change_map(fd,len);	  break;
+		case 0x2b08: res = char_name_check(fd,len);       break;
+		case 0x2b10: res = account_reg(fd,len);  		  break;
+		case 0x2b0c: res = change_email_request(fd,len);  break;
+		case 0x2b0e: res = status_change_request(fd,len); break;
+		case 0x2b16: res = recieve_rates(fd,len);         break;
+		case 0x2b17: res = set_offline(fd,len);			  break;
+		
+        default:
 			// inter server - packet
 			{
 				int r = inter_parse_frommap(fd);
@@ -2021,7 +2055,7 @@ int search_mapserver(char *map) {
 		temp_map[strchr(temp_map, '.') - temp_map + 1] = '\0'; // suppress the '.gat', but conserve the '.' to be sure of the name of the map
 
 	temp_map_len = strlen(temp_map);
-	for(i = 0; i < MAX_MAP_SERVERS; i++)
+	for(i = 0; i < MAX_MAP_SERVERS && i < servers_connected; i++)
 		if (server_fd[i] >= 0)
 			for (j = 0; server[i].map[j][0]; j++)
 				//printf("%s : %s = %d\n", server[i].map[j], map, strncmp(server[i].map[j], temp_map, temp_map_len));
@@ -2064,15 +2098,350 @@ int lan_ip_check(unsigned char *p){
 	return lancheck;
 }
 
-int parse_char(int fd) {
-	int i, ch = 0;
+int client_request_connect(int fd, int len) {
+	if (len < 17)
+	    return -1;
+
+   	struct char_session_data *sd = session[fd]->session_data;
+   	
+	#ifdef DEBUG	      
+   	printf("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOL(fd, 10));
+   	#endif
+
+	if (sd == NULL) {
+		CREATE(session[fd]->session_data, struct char_session_data, 1);
+		sd = session[fd]->session_data;
+		sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
+	}
+
+	sd->account_id = RFIFOL(fd, 2);
+	sd->login_id1 = RFIFOL(fd, 6);
+	sd->login_id2 = RFIFOL(fd, 10);
+	sd->sex = RFIFOB(fd, 16);
+
+	WFIFOL(fd, 0) = RFIFOL(fd, 2);
+	WFIFOSET(fd, 4);
+
+	for(i = 0; i < AUTH_FIFO_SIZE; i++) {
+		if(auth_fifo[i].account_id == sd->account_id &&
+		   auth_fifo[i].login_id1 == sd->login_id1 &&
+#if CMP_AUTHFIFO_LOGIN2 != 0
+		   auth_fifo[i].login_id2 == sd->login_id2 && // relate to the versions higher than 18
+#endif
+		   (!check_ip_flag || auth_fifo[i].ip == session[fd]->client_addr.sin_addr.s_addr) &&
+		   auth_fifo[i].delflag == 2) {
+		   auth_fifo[i].delflag = 1;
+
+		   if (max_connect_user == 0 || count_users() < max_connect_user) {
+		       if (login_fd > 0) { // don't send request if no login-server
+			       // request to login-server to obtain e-mail/time limit
+			       WFIFOW(login_fd,0) = 0x2716;
+			       WFIFOL(login_fd,2) = sd->account_id;
+			       WFIFOSET(login_fd,6);
+               }
+			
+               // send characters to player
+               mmo_char_send006b(fd, sd);
+           } else {
+               // refuse connection (over populated)
+               WFIFOW(fd,0) = 0x6c;
+               WFIFOW(fd,2) = 0;
+               WFIFOSET(fd,3);
+           }
+           
+           #ifdef DEBUG
+           printf("connection request> set delflag 1(o:2)- account_id:%d/login_id1:%d(fifo_id:%d)\n", sd->account_id, sd->login_id1, i);
+           #endif
+
+           break;
+       }    
+	}
+	if (i == AUTH_FIFO_SIZE) {
+		if (login_fd > 0) { // don't send request if no login-server
+			WFIFOW(login_fd,0) = 0x2712; // ask login-server to authentify an account
+			WFIFOL(login_fd,2) = sd->account_id;
+			WFIFOL(login_fd,6) = sd->login_id1;
+			WFIFOL(login_fd,10) = sd->login_id2;
+			WFIFOB(login_fd,14) = sd->sex;
+			WFIFOL(login_fd,15) = session[fd]->client_addr.sin_addr.s_addr;
+			WFIFOSET(login_fd,19);
+		} else { // if no login-server, we must refuse connection
+			WFIFOW(fd,0) = 0x6c;
+			WFIFOW(fd,2) = 0;
+			WFIFOSET(fd,3);
+		}
+	}
+
+	#ifdef DEBUG
+	if (isGM(RFIFOL(fd,2)))
+		printf("Account Logged On; Account ID: %d (GM level %d).\n", RFIFOL(fd,2), isGM(RFIFOL(fd,2)));
+	else
+		printf("Account Logged On; Account ID: %d.\n", RFIFOL(fd,2));
+	#endif
+
+	RFIFOSKIP(fd, 17);
+	
+	return 0;
+}
+
+int char_select(int fd, int len) {
+	if (len < 3)
+		return -1;
+	
+	int i;
+
+	#ifdef DEBUG
+	printf("0x66> request connect - account_id:%d/char_num:%d\n",sd->account_id,RFIFOB(fd, 2));
+	#endif
+
+	sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d'",char_db, sd->account_id, RFIFOB(fd, 2));
+	sql_query(tmp_sql,"char_select");
+
+	if ((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
+		mmo_char_fromsql(atoi(sql_row[0]), char_dat, 0);
+		mysql_free_result(sql_res);
+	} else {
+		mysql_free_result(sql_res);
+		RFIFOSKIP(fd, 3);
+		return 0;
+	}
+
+	sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')",
+			charlog_db, sd->account_id, RFIFOB(fd, 2), char_dat[0].name);
+	sql_query(tmp_sql,"char_select");
+	
+    #ifdef DEBUG
+	printf("(\033[1;64m%d\033[0m) char selected (\033[1;32m%d\033[0m) \033[1;32m%s\033[0m" RETCODE, sd->account_id, RFIFOB(fd, 2), char_dat[0].name);
+	#endif
+
+	i = search_mapserver(char_dat[0].last_point.map);
+
+	// if map is not found, we check major cities
+	if (i < 0) {
+		if ((i = search_mapserver("prontera.gat")) >= 0) { // check is done without 'gat'.
+			memcpy(char_dat[0].last_point.map, "prontera.gat", 16);
+			char_dat[0].last_point.x = 273; // savepoint coordonates
+			char_dat[0].last_point.y = 354;
+		} else if ((i = search_mapserver("geffen.gat")) >= 0) { // check is done without 'gat'.
+			memcpy(char_dat[0].last_point.map, "geffen.gat", 16);
+			char_dat[0].last_point.x = 120; // savepoint coordonates
+			char_dat[0].last_point.y = 100;
+		} else if ((i = search_mapserver("morocc.gat")) >= 0) { // check is done without 'gat'.
+			memcpy(char_dat[0].last_point.map, "morocc.gat", 16);
+			char_dat[0].last_point.x = 160; // savepoint coordonates
+			char_dat[0].last_point.y = 94;
+		} else if ((i = search_mapserver("alberta.gat")) >= 0) { // check is done without 'gat'.
+			memcpy(char_dat[0].last_point.map, "alberta.gat", 16);
+			char_dat[0].last_point.x = 116; // savepoint coordonates
+			char_dat[0].last_point.y = 57;
+		} else if ((i = search_mapserver("payon.gat")) >= 0) { // check is done without 'gat'.
+			memcpy(char_dat[0].last_point.map, "payon.gat", 16);
+			char_dat[0].last_point.x = 87; // savepoint coordonates
+			char_dat[0].last_point.y = 117;
+		} else if ((i = search_mapserver("izlude.gat")) >= 0) { // check is done without 'gat'.
+			memcpy(char_dat[0].last_point.map, "izlude.gat", 16);
+			char_dat[0].last_point.x = 94; // savepoint coordonates
+			char_dat[0].last_point.y = 103;
+		} else {
+			int j;
+			// get first online server
+			i = 0;
+			for(j = 0; j < MAX_MAP_SERVERS && i < servers_connected; j++)
+				if (server_fd[j] >= 0 && server[j].map[0][0])  {
+					i = j;
+					printf("Map-server #%d found with a map: '%s'.\n", j, server[j].map[0]);
+					break;
+				}
+			// if no map-servers are connected, we send: server closed
+			if (j == MAX_MAP_SERVERS) {
+				WFIFOW(fd,0) = 0x81;
+				WFIFOL(fd,2) = 1; // 01 = Server closed
+				WFIFOSET(fd,3);
+				RFIFOSKIP(fd,3);
+				return 0;
+			}
+		}
+	}
+
+	WFIFOW(fd, 0) =0x71;
+	WFIFOL(fd, 2) =char_dat[0].char_id;
+	memcpy(WFIFOP(fd, 6), char_dat[0].last_point.map, 16);
+
+	//Lan check added by Kashy
+	if (lan_ip_check(p))
+		WFIFOL(fd, 22) = inet_addr(lan_map_ip);
+	else
+		WFIFOL(fd, 22) = server[i].ip;
+
+	WFIFOW(fd, 26) = server[i].port;
+	WFIFOSET(fd, 28);
+
+	if (auth_fifo_pos >= AUTH_FIFO_SIZE)
+		auth_fifo_pos = 0;
+
+	#ifdef DEBUG
+	printf("auth_fifo set (auth_fifo_pos:%d) - account_id:%d char_id:%d login_id1:%d\n", auth_fifo_pos, sd->account_id, char_dat[0].char_id, sd->login_id1);
+	#endif
+	
+	auth_fifo[auth_fifo_pos].account_id = sd->account_id;
+	auth_fifo[auth_fifo_pos].char_id = char_dat[0].char_id;
+	auth_fifo[auth_fifo_pos].login_id1 = sd->login_id1;
+	auth_fifo[auth_fifo_pos].login_id2 = sd->login_id2;
+	auth_fifo[auth_fifo_pos].delflag = 0;
+	//auth_fifo[auth_fifo_pos].char_pos = sd->found_char[ch];
+	auth_fifo[auth_fifo_pos].char_pos = 0;
+	auth_fifo[auth_fifo_pos].sex = sd->sex;
+	auth_fifo[auth_fifo_pos].connect_until_time = sd->connect_until_time;
+	auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr.sin_addr.s_addr;
+	auth_fifo_pos++;
+
+//	printf("0x66> end\n");
+
+	RFIFOSKIP(fd, 3);
+	
+	return 0;
+}
+
+int make_new_char(int fd, int len) {
+	if (len < 37)
+		return -1;
+
+    int i;
+    
+	#ifdef DEBUG
+	printf("Request to make a new char\n");
+	#endif
+
+	i = make_new_char_sql(fd, RFIFOP(fd, 2));
+
+	if (i < 0) {
+		WFIFOW(fd, 0) = 0x6e;
+		WFIFOB(fd, 2) = 0x00;
+		WFIFOSET(fd, 3);
+		RFIFOSKIP(fd, 37);
+		return 0;
+	}
+
+	WFIFOW(fd, 0) = 0x6d;
+	memset(WFIFOP(fd, 2), 0x00, 106);
+
+	mmo_char_fromsql(i, char_dat, 0);
+
+	i = 0;
+
+	WFIFOL(fd, 2) = char_dat[i].char_id;
+	WFIFOL(fd,2+4) = char_dat[i].base_exp;
+	WFIFOL(fd,2+8) = char_dat[i].zeny;
+	WFIFOL(fd,2+12) = char_dat[i].job_exp;
+	WFIFOL(fd,2+16) = char_dat[i].job_level;
+	WFIFOL(fd,2+28) = char_dat[i].karma;
+	WFIFOL(fd,2+32) = char_dat[i].manner;
+	WFIFOW(fd,2+40) = 0x30;
+	WFIFOW(fd,2+42) = (char_dat[i].hp > 0x7fff) ? 0x7fff : char_dat[i].hp;
+	WFIFOW(fd,2+44) = (char_dat[i].max_hp > 0x7fff) ? 0x7fff : char_dat[i].max_hp;
+	WFIFOW(fd,2+46) = (char_dat[i].sp > 0x7fff) ? 0x7fff : char_dat[i].sp;
+	WFIFOW(fd,2+48) = (char_dat[i].max_sp > 0x7fff) ? 0x7fff : char_dat[i].max_sp;
+	WFIFOW(fd,2+50) = DEFAULT_WALK_SPEED; // char_dat[i].speed;
+	WFIFOW(fd,2+52) = char_dat[i].class;
+	WFIFOW(fd,2+54) = char_dat[i].hair;
+	WFIFOW(fd,2+58) = char_dat[i].base_level;
+	WFIFOW(fd,2+60) = char_dat[i].skill_point;
+	WFIFOW(fd,2+64) = char_dat[i].shield;
+	WFIFOW(fd,2+66) = char_dat[i].head_top;
+	WFIFOW(fd,2+68) = char_dat[i].head_mid;
+	WFIFOW(fd,2+70) = char_dat[i].hair_color;
+	memcpy(WFIFOP(fd,2+74), char_dat[i].name, 24);
+	WFIFOB(fd,2+98) = char_dat[i].str;
+	WFIFOB(fd,2+99) = char_dat[i].agi;
+	WFIFOB(fd,2+100) = char_dat[i].vit;
+	WFIFOB(fd,2+101) = char_dat[i].int_;
+	WFIFOB(fd,2+102) = char_dat[i].dex;
+	WFIFOB(fd,2+103) = char_dat[i].luk;
+	WFIFOB(fd,2+104) = char_dat[i].char_num;
+	WFIFOSET(fd, 108);
+
+	RFIFOSKIP(fd, 37);
+	
+	//to do
+	for(ch = 0; ch < 9; ch++) {
+		if (sd->found_char[ch] == -1) {
+			sd->found_char[ch] = char_dat[i].char_id;
+			break;
+		}
+	}
+	
+	return 0;
+}
+
+int delete_char(int fd, int len) {
+	if (len < 46)
+		return -1;
+
 	char email[40];
+	int char_id = RFIFOL(fd, 2);
+
+	#ifdef DEBUG
+	printf("\033[1;31m Request Char Del:\033[0m \033[1;32m%d\033[0m(\033[1;32m%d\033[0m)\n", sd->account_id, char_id);
+	#endif
+
+	memcpy(email, RFIFOP(fd,6), 40);
+	sprintf(tmp_sql, "SELECT `email` FROM `%s` WHERE `%s`='%d'",login_db, login_db_account_id, sd->account_id);
+	sql_query(tmp_sql,"delete_char");
+	
+			
+	if ((sql_res = mysql_store_result(&lmysql_handle)) &&(sql_row = mysql_fetch_row(sql_res))) {
+		if (strcmp(email,sql_row[0]) == 0) {
+			mysql_free_result(sql_res);
+		} else {
+			WFIFOW(fd, 0) = 0x70;
+			WFIFOB(fd, 2) = 0;
+			WFIFOSET(fd, 3);
+			RFIFOSKIP(fd, 46);
+			mysql_free_result(sql_res);
+			return 0;
+		}
+	} else {
+		WFIFOW(fd, 0) = 0x70;
+		WFIFOB(fd, 2) = 0;
+		WFIFOSET(fd, 3);
+		RFIFOSKIP(fd, 46);
+		mysql_free_result(sql_res);
+		return 0;
+	}
+
+	sprintf(tmp_sql, "SELECT `partner_id` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
+	sql_query(tmp_sql,"delete_char");
+	
+	if ((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
+		sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
+		sql_query(tmp_sql,"delete_char");
+
+		if (sql_row[0] != 0) {
+			WBUFW(buf,0) = 0x2b12;
+			WBUFL(buf,2) = char_id;
+			WBUFL(buf,6) = atoi(sql_row[1]);
+			mapif_sendall(buf,10);
+		}
+	}
+	
+	mysql_free_result(sql_res);
+
+	WFIFOW(fd, 0) = 0x6f;
+	WFIFOSET(fd, 2);
+
+	RFIFOSKIP(fd, 46);
+	
+	return 0;
+}
+
+int parse_char(int fd) {
+	int i, ch = 0,len,res=0;
 	unsigned short cmd;
-	struct char_session_data *sd;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 
 	if(login_fd < 0)
 		session[fd]->eof = 1;
+		
 	if(session[fd]->eof) {
 		if (fd == login_fd)
 			login_fd = -1;
@@ -2081,10 +2450,14 @@ int parse_char(int fd) {
 		return 0;
 	}
 
-	sd = session[fd]->session_data;
 
-	while(RFIFOREST(fd) >= 2) {
+	
+	len = RFIFOREST(fd);
+	
+	while(len >= 2 && res == 0) {
+	    
 		cmd = RFIFOW(fd,0);
+		
 		// crc32のスキップ用
 		if(	sd==NULL			&&	// 未ログインor管理パケット
 			RFIFOREST(fd)>=4	&&	// 最低バイト数制限 ＆ 0x7530,0x7532管理パケ除去
@@ -2113,420 +2486,10 @@ int parse_char(int fd) {
 			RFIFOSKIP(fd,19);
 			break;
 
-		case 0x65: // request to connect
-			printf("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOL(fd, 10));
-			if (RFIFOREST(fd) < 17)
-				return 0;
-		  {
-/*removed from isGM setup
-			if (isGM(RFIFOL(fd,2)))
-				printf("Account Logged On; Account ID: %d (GM level %d).\n", RFIFOL(fd,2), isGM(RFIFOL(fd,2)));
-			else
-				printf("Account Logged On; Account ID: %d.\n", RFIFOL(fd,2));
-*/
-			if (sd == NULL) {
-				CREATE(session[fd]->session_data, struct char_session_data, 1);
-				sd = session[fd]->session_data;
-				sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
-			}
-			sd->account_id = RFIFOL(fd, 2);
-			sd->login_id1 = RFIFOL(fd, 6);
-			sd->login_id2 = RFIFOL(fd, 10);
-			sd->sex = RFIFOB(fd, 16);
-
-			WFIFOL(fd, 0) = RFIFOL(fd, 2);
-			WFIFOSET(fd, 4);
-
-			for(i = 0; i < AUTH_FIFO_SIZE; i++) {
-				if (auth_fifo[i].account_id == sd->account_id &&
-				    auth_fifo[i].login_id1 == sd->login_id1 &&
-#if CMP_AUTHFIFO_LOGIN2 != 0
-				    auth_fifo[i].login_id2 == sd->login_id2 && // relate to the versions higher than 18
-#endif
-				    (!check_ip_flag || auth_fifo[i].ip == session[fd]->client_addr.sin_addr.s_addr) &&
-				    auth_fifo[i].delflag == 2) {
-					auth_fifo[i].delflag = 1;
-
-				if (max_connect_user == 0 || count_users() < max_connect_user) {
-					if (login_fd > 0) { // don't send request if no login-server
-						// request to login-server to obtain e-mail/time limit
-						WFIFOW(login_fd,0) = 0x2716;
-						WFIFOL(login_fd,2) = sd->account_id;
-						WFIFOSET(login_fd,6);
-					}
-					// send characters to player
-					mmo_char_send006b(fd, sd);
-				} else {
-					// refuse connection (over populated)
-					WFIFOW(fd,0) = 0x6c;
-					WFIFOW(fd,2) = 0;
-					WFIFOSET(fd,3);
-				}
-//				printf("connection request> set delflag 1(o:2)- account_id:%d/login_id1:%d(fifo_id:%d)\n", sd->account_id, sd->login_id1, i);
-				break;
-				}
-			}
-			if (i == AUTH_FIFO_SIZE) {
-				if (login_fd > 0) { // don't send request if no login-server
-					WFIFOW(login_fd,0) = 0x2712; // ask login-server to authentify an account
-					WFIFOL(login_fd,2) = sd->account_id;
-					WFIFOL(login_fd,6) = sd->login_id1;
-					WFIFOL(login_fd,10) = sd->login_id2;
-					WFIFOB(login_fd,14) = sd->sex;
-					WFIFOL(login_fd,15) = session[fd]->client_addr.sin_addr.s_addr;
-					WFIFOSET(login_fd,19);
-				} else { // if no login-server, we must refuse connection
-					WFIFOW(fd,0) = 0x6c;
-					WFIFOW(fd,2) = 0;
-					WFIFOSET(fd,3);
-				}
-			}
-		  }
-			RFIFOSKIP(fd, 17);
-			break;
-
-		case 0x66: // char select
-//			printf("0x66> request connect - account_id:%d/char_num:%d\n",sd->account_id,RFIFOB(fd, 2));
-			if (RFIFOREST(fd) < 3)
-				return 0;
-
-			sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d'",char_db, sd->account_id, RFIFOB(fd, 2));
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
-			sql_res = mysql_store_result(&mysql_handle);
-
-			sql_row = mysql_fetch_row(sql_res);
-
-			if (sql_row)
-				mmo_char_fromsql(atoi(sql_row[0]), char_dat, 0);
-			else {
-				mysql_free_result(sql_res);
-				RFIFOSKIP(fd, 3);
-				break;
-			}
-
-			sprintf(tmp_sql,"INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')",
-				charlog_db, sd->account_id, RFIFOB(fd, 2), char_dat[0].name);
-			//query
-			if(mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
-			printf("(\033[1;64m%d\033[0m) char selected (\033[1;32m%d\033[0m) \033[1;32m%s\033[0m" RETCODE, sd->account_id, RFIFOB(fd, 2), char_dat[0].name);
-
-			i = search_mapserver(char_dat[0].last_point.map);
-
-			// if map is not found, we check major cities
-			if (i < 0) {
-				if ((i = search_mapserver("prontera.gat")) >= 0) { // check is done without 'gat'.
-					memcpy(char_dat[0].last_point.map, "prontera.gat", 16);
-					char_dat[0].last_point.x = 273; // savepoint coordonates
-					char_dat[0].last_point.y = 354;
-				} else if ((i = search_mapserver("geffen.gat")) >= 0) { // check is done without 'gat'.
-					memcpy(char_dat[0].last_point.map, "geffen.gat", 16);
-					char_dat[0].last_point.x = 120; // savepoint coordonates
-					char_dat[0].last_point.y = 100;
-				} else if ((i = search_mapserver("morocc.gat")) >= 0) { // check is done without 'gat'.
-					memcpy(char_dat[0].last_point.map, "morocc.gat", 16);
-					char_dat[0].last_point.x = 160; // savepoint coordonates
-					char_dat[0].last_point.y = 94;
-				} else if ((i = search_mapserver("alberta.gat")) >= 0) { // check is done without 'gat'.
-					memcpy(char_dat[0].last_point.map, "alberta.gat", 16);
-					char_dat[0].last_point.x = 116; // savepoint coordonates
-					char_dat[0].last_point.y = 57;
-				} else if ((i = search_mapserver("payon.gat")) >= 0) { // check is done without 'gat'.
-					memcpy(char_dat[0].last_point.map, "payon.gat", 16);
-					char_dat[0].last_point.x = 87; // savepoint coordonates
-					char_dat[0].last_point.y = 117;
-				} else if ((i = search_mapserver("izlude.gat")) >= 0) { // check is done without 'gat'.
-					memcpy(char_dat[0].last_point.map, "izlude.gat", 16);
-					char_dat[0].last_point.x = 94; // savepoint coordonates
-					char_dat[0].last_point.y = 103;
-				} else {
-					int j;
-					// get first online server
-					i = 0;
-					for(j = 0; j < MAX_MAP_SERVERS; j++)
-						if (server_fd[j] >= 0 && server[j].map[0][0])  {
-							i = j;
-							printf("Map-server #%d found with a map: '%s'.\n", j, server[j].map[0]);
-							break;
-						}
-					// if no map-servers are connected, we send: server closed
-					if (j == MAX_MAP_SERVERS) {
-						WFIFOW(fd,0) = 0x81;
-						WFIFOL(fd,2) = 1; // 01 = Server closed
-						WFIFOSET(fd,3);
-						RFIFOSKIP(fd,3);
-						break;
-					}
-				}
-			}
-			WFIFOW(fd, 0) =0x71;
-			WFIFOL(fd, 2) =char_dat[0].char_id;
-			memcpy(WFIFOP(fd, 6), char_dat[0].last_point.map, 16);
-			//Lan check added by Kashy
-			if (lan_ip_check(p))
-				WFIFOL(fd, 22) = inet_addr(lan_map_ip);
-			else
-				WFIFOL(fd, 22) = server[i].ip;
-			WFIFOW(fd, 26) = server[i].port;
-			WFIFOSET(fd, 28);
-
-			if (auth_fifo_pos >= AUTH_FIFO_SIZE) {
-				auth_fifo_pos = 0;
-			}
-//			printf("auth_fifo set (auth_fifo_pos:%d) - account_id:%d char_id:%d login_id1:%d\n", auth_fifo_pos, sd->account_id, char_dat[0].char_id, sd->login_id1);
-			auth_fifo[auth_fifo_pos].account_id = sd->account_id;
-			auth_fifo[auth_fifo_pos].char_id = char_dat[0].char_id;
-			auth_fifo[auth_fifo_pos].login_id1 = sd->login_id1;
-			auth_fifo[auth_fifo_pos].login_id2 = sd->login_id2;
-			auth_fifo[auth_fifo_pos].delflag = 0;
-			//auth_fifo[auth_fifo_pos].char_pos = sd->found_char[ch];
-			auth_fifo[auth_fifo_pos].char_pos = 0;
-			auth_fifo[auth_fifo_pos].sex = sd->sex;
-			auth_fifo[auth_fifo_pos].connect_until_time = sd->connect_until_time;
-			auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr.sin_addr.s_addr;
-			auth_fifo_pos++;
-//			printf("0x66> end\n");
-			RFIFOSKIP(fd, 3);
-			break;
-
-		case 0x67:	// make new
-//			printf("0x67>request make new char\n");
-			if (RFIFOREST(fd) < 37)
-				return 0;
-			i = make_new_char_sql(fd, RFIFOP(fd, 2));
-			if (i < 0) {
-				WFIFOW(fd, 0) = 0x6e;
-				WFIFOB(fd, 2) = 0x00;
-				WFIFOSET(fd, 3);
-				RFIFOSKIP(fd, 37);
-				break;
-			}
-
-			WFIFOW(fd, 0) = 0x6d;
-			memset(WFIFOP(fd, 2), 0x00, 106);
-
-			mmo_char_fromsql(i, char_dat, 0);
-			i = 0;
-			WFIFOL(fd, 2) = char_dat[i].char_id;
-			WFIFOL(fd,2+4) = char_dat[i].base_exp;
-			WFIFOL(fd,2+8) = char_dat[i].zeny;
-			WFIFOL(fd,2+12) = char_dat[i].job_exp;
-			WFIFOL(fd,2+16) = char_dat[i].job_level;
-
-			WFIFOL(fd,2+28) = char_dat[i].karma;
-			WFIFOL(fd,2+32) = char_dat[i].manner;
-
-			WFIFOW(fd,2+40) = 0x30;
-			WFIFOW(fd,2+42) = (char_dat[i].hp > 0x7fff) ? 0x7fff : char_dat[i].hp;
-			WFIFOW(fd,2+44) = (char_dat[i].max_hp > 0x7fff) ? 0x7fff : char_dat[i].max_hp;
-			WFIFOW(fd,2+46) = (char_dat[i].sp > 0x7fff) ? 0x7fff : char_dat[i].sp;
-			WFIFOW(fd,2+48) = (char_dat[i].max_sp > 0x7fff) ? 0x7fff : char_dat[i].max_sp;
-			WFIFOW(fd,2+50) = DEFAULT_WALK_SPEED; // char_dat[i].speed;
-			WFIFOW(fd,2+52) = char_dat[i].class;
-			WFIFOW(fd,2+54) = char_dat[i].hair;
-
-			WFIFOW(fd,2+58) = char_dat[i].base_level;
-			WFIFOW(fd,2+60) = char_dat[i].skill_point;
-
-			WFIFOW(fd,2+64) = char_dat[i].shield;
-			WFIFOW(fd,2+66) = char_dat[i].head_top;
-			WFIFOW(fd,2+68) = char_dat[i].head_mid;
-			WFIFOW(fd,2+70) = char_dat[i].hair_color;
-
-			memcpy(WFIFOP(fd,2+74), char_dat[i].name, 24);
-
-			WFIFOB(fd,2+98) = char_dat[i].str;
-			WFIFOB(fd,2+99) = char_dat[i].agi;
-			WFIFOB(fd,2+100) = char_dat[i].vit;
-			WFIFOB(fd,2+101) = char_dat[i].int_;
-			WFIFOB(fd,2+102) = char_dat[i].dex;
-			WFIFOB(fd,2+103) = char_dat[i].luk;
-			WFIFOB(fd,2+104) = char_dat[i].char_num;
-
-			WFIFOSET(fd, 108);
-			RFIFOSKIP(fd, 37);
-			//to do
-			for(ch = 0; ch < 9; ch++) {
-				if (sd->found_char[ch] == -1) {
-					sd->found_char[ch] = char_dat[i].char_id;
-					break;
-				}
-			}
-
-		case 0x68: // delete
-			if (RFIFOREST(fd) < 46)
-				return 0;
-			printf("\033[1;31m Request Char Del:\033[0m \033[1;32m%d\033[0m(\033[1;32m%d\033[0m)\n", sd->account_id, RFIFOL(fd, 2));
-			memcpy(email, RFIFOP(fd,6), 40);
-			sprintf(tmp_sql, "SELECT `email` FROM `%s` WHERE `%s`='%d'",login_db, login_db_account_id, sd->account_id);
-			if (mysql_query(&lmysql_handle, tmp_sql)) {
-				printf("\033[1;31m DB server Error Delete Char data - %s \033[0m  \n", mysql_error(&lmysql_handle));
-			}
-			sql_res = mysql_store_result(&lmysql_handle);
-			if (sql_res) {
-				sql_row = mysql_fetch_row(sql_res);
-				if (strcmp(email,sql_row[0]) == 0) {
-					mysql_free_result(sql_res);
-				} else {
-					WFIFOW(fd, 0) = 0x70;
-					WFIFOB(fd, 2) = 0;
-					WFIFOSET(fd, 3);
-					RFIFOSKIP(fd, 46);
-					mysql_free_result(sql_res);
-					break;
-				}
-			} else {
-				WFIFOW(fd, 0) = 0x70;
-				WFIFOB(fd, 2) = 0;
-				WFIFOSET(fd, 3);
-				RFIFOSKIP(fd, 46);
-				mysql_free_result(sql_res);
-				break;
-			}
-			sprintf(tmp_sql, "SELECT `name`,`partner_id` FROM `%s` WHERE `char_id`='%d'",char_db, RFIFOL(fd,2));
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
-			sql_res = mysql_store_result(&mysql_handle);
-			if(sql_res)
-				sql_row = mysql_fetch_row(sql_res);
-
-			if (sql_res && sql_row[0]) {
-				//delete char from SQL
-				sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",pet_db, RFIFOL(fd, 2));
-				if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-				sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",inventory_db, RFIFOL(fd, 2));
-				if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-
-				sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",cart_db, RFIFOL(fd, 2));
-				if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-
-				sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",memo_db, RFIFOL(fd, 2));
-				if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-
-				sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",skill_db, RFIFOL(fd, 2));
-				if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-
-				sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",char_db, RFIFOL(fd, 2));
-				if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-
-				//Divorce [Wizputer]
-				if (sql_row[1] != 0) {
-					char buf[64];
-					sprintf(tmp_sql,"UPDATE `%s` SET `partner_id`='0' WHERE `char_id`='%d'",char_db,atoi(sql_row[1]));
-					if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-					}
-					sprintf(tmp_sql,"DELETE FROM `%s` WHERE (`nameid`='%d' OR `nameid`='%d') AND `char_id`='%d'",inventory_db,WEDDING_RING_M,WEDDING_RING_F,atoi(sql_row[1]));
-					if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-					}
-					WBUFW(buf,0) = 0x2b12;
-					WBUFL(buf,2) = atoi(sql_row[0]);
-					WBUFL(buf,6) = atoi(sql_row[1]);
-					mapif_sendall(buf,10);
-				}
-				// Also delete info from guildtables.
-				sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",guild_member_db, RFIFOL(fd,2));
-				if (mysql_query(&mysql_handle, tmp_sql)) {
-					printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-
-				sprintf(tmp_sql, "SELECT `guild_id` FROM `%s` WHERE `master` = '%s'", guild_db, sql_row[0]);
-
-				if (mysql_query(&mysql_handle, tmp_sql) == 0) {
-					sql_res = mysql_store_result(&mysql_handle);
-
-					if (sql_res != NULL) {
-						if (mysql_num_rows(sql_res) != 0) {
-							sql_row = mysql_fetch_row(sql_res);
-
-							sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_db, atoi(sql_row[0]));
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-							}
-
-							sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_member_db, atoi(sql_row[0]));
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-							}
-
-							sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_castle_db, atoi(sql_row[0]));
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-							}
-
-							sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_storage_db, atoi(sql_row[0]));
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-							}
-
-							sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d' OR `alliance_id` = '%d'", guild_alliance_db, atoi(sql_row[0]), atoi(sql_row[0]));
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-							}
-
-							sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_position_db, atoi(sql_row[0]));
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-							}
-
-							sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_skill_db, atoi(sql_row[0]));
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-							}
-
-							sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_expulsion_db, atoi(sql_row[0]));
-							if (mysql_query(&mysql_handle, tmp_sql)) {
-								printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-							}
-
-							mysql_free_result(sql_res);
-						}
-					} else {
-						if (mysql_errno(&mysql_handle) != 0) {
-							printf("Database server error: %s\n", mysql_error(&mysql_handle));
-						}
-					}
-				} else {
-					printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-			}
-
-			for(i = 0; i < 9; i++) {
-				printf("char comp: %d - %d (%d)\n", sd->found_char[i], RFIFOL(fd, 2), sd->account_id);
-				if (sd->found_char[i] == RFIFOL(fd, 2)) {
-					for(ch = i; ch < 9-1; ch++)
-						sd->found_char[ch] = sd->found_char[ch+1];
-					sd->found_char[8] = -1;
-					break;
-				}
-			}
-			if (i == 9) { // reject
-				WFIFOW(fd, 0) = 0x70;
-				WFIFOB(fd, 2) = 0;
-				WFIFOSET(fd, 3);
-			} else { // deleted!
-				WFIFOW(fd, 0) = 0x6f;
-				WFIFOSET(fd, 2);
-			}
-			RFIFOSKIP(fd, 46);
-			break;
+		case 0x65: res = client_request_connect(fd,len);  break;
+		case 0x66: res = char_select(fd,len);             break;
+		case 0x67: res = make_new_char(fd,len);           break;
+		case 0x68: res = delete_char(fd,len);			  break;
 
 		case 0x2af8: // login as map-server
 			if (RFIFOREST(fd) < 60)
@@ -2553,17 +2516,6 @@ int parse_char(int fd) {
 				memset(server[i].map, 0, sizeof(server[i].map));
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 				char_mapif_init(fd);
-				// send gm acccounts level to map-servers
-/* removed by CLOWNISIUS due to isGM
-				len = 4;
-				WFIFOW(fd,0) = 0x2b15;
-				for(i = 0; i < GM_num; i++) {
-					WFIFOL(fd,len) = gm_account[i].account_id;
-					WFIFOB(fd,len+4) = (unsigned char)gm_account[i].level;
-					len += 5;
-				}
-				WFIFOW(fd,2) = len;
-				WFIFOSET(fd,len);*/
 			}
 			RFIFOSKIP(fd,60);
 			break;
@@ -2629,7 +2581,7 @@ int mapif_sendall(unsigned char *buf, unsigned int len) {
 	int fd;
 
 	c = 0;
-	for(i = 0; i < MAX_MAP_SERVERS; i++) {
+	for(i = 0; i < MAX_MAP_SERVERS && i < servers_connected; i++) {
 		if ((fd = server_fd[i]) >= 0) {
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -2645,7 +2597,7 @@ int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	int fd;
 
 	c = 0;
-	for(i=0, c=0;i<MAX_MAP_SERVERS;i++){
+	for(i=0, c=0;i<MAX_MAP_SERVERS && i < servers_connected;i++){
 		if ((fd = server_fd[i]) >= 0 && fd != sfd) {
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd, len);
@@ -2660,7 +2612,7 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len) {
 	int i;
 
 	if (fd >= 0) {
-		for(i = 0; i < MAX_MAP_SERVERS; i++) {
+		for(i = 0; i < MAX_MAP_SERVERS && i < servers_connected; i++) {
 			if (fd == server_fd[i]) {
 				memcpy(WFIFOP(fd,0), buf, len);
 				WFIFOSET(fd,len);
