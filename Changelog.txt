@@ -1,6 +1,8 @@
 Date	Added
 
 01/29
+	* Fixed Storage Bug with Named Stackable items. Thanks to Nimion [Lupus]
+		e.g. Arrows, Iron, Elemental stones, etc...
         * Added a crash check to Safety Wall, thanks to LebrEf[TaVu] / Freya for
           pointing it out [celest]
         * Added some optimisations in clif_parse_MapMove, by Ilpalazzo-sama [celest]

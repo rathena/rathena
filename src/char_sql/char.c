@@ -815,10 +815,11 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 							//printf("the same item : %d ; i : %d ; flag :  %d\n", mapitem.notequip[i].nameid, i, mapitem.notequip[i].flag); //DEBUG-STRING
 						}
 						else{
+							//named item dupe bugfix by Nimion [Lupus]
 							sprintf(tmp_sql,"UPDATE `%s` SET `amount`='%d', `equip`='%d', `identify`='%d',"
-							"`attribute`='%d' WHERE `%s`='%d' AND `nameid`='%d'",
+							"`attribute`='%d' WHERE `%s`='%d' AND `nameid`='%d' AND `card0`='%d' AND `card2`='%d'",
 							tablename, mapitem.notequip[i].amount, mapitem.notequip[i].equip, mapitem.notequip[i].identify, mapitem.notequip[i].attribute,
-							selectoption, char_id, mapitem.notequip[i].nameid);
+							selectoption, char_id, mapitem.notequip[i].nameid,mapitem.notequip[i].card[0],mapitem.notequip[i].card[2]);
 							//printf("%s",tmp_sql);
 							if(mysql_query(&mysql_handle, tmp_sql))
 								printf("DB server Error (UPdate `notequ %s`)- %s\n",tablename ,mysql_error(&mysql_handle));
