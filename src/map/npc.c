@@ -1886,9 +1886,10 @@ static int npc_parse_function(char *w1,char *w2,char *w3,char *w4,char *first_li
  */
 int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 {
-	int m,x,y,xs,ys,class,num,delay1,delay2;
+	int m,x,y,xs,ys,class,num,delay1,delay2,level;
 	int i;
 	char mapname[24];
+	char mobname[24];
 	char eventname[24]="";
 	struct mob_data *md;
 
@@ -1916,10 +1917,15 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 		md->bl.m=m;
 		md->bl.x=x;
 		md->bl.y=y;
-		if(strcmp(w3,"--en--")==0)
-			memcpy(md->name,mob_db[class].name,24);
-		else if(strcmp(w3,"--ja--")==0)
-			memcpy(md->name,mob_db[class].jname,24);
+
+		if(sscanf(w3,"%[^,],%d",mobname,&level) > 1) {
+			if(strcmp(mobname,"--en--")==0)
+				memcpy(md->name,mob_db[class].name,24);
+			else if(strcmp(mobname,"--ja--")==0)
+				memcpy(md->name,mob_db[class].jname,24);
+			md->level=level;
+		}
+
 		else
 		memcpy(md->name,w3,24);
 
