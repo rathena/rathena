@@ -35,6 +35,9 @@ Other Ppl
 Date		Added
 ======
 
+03/03
+	* Fixed Moving HP skill quest
+
 02/28
 	* warps/louyang.txt: Added 2 escapes from 2 mountains 018,019 [Lupus]
 	  Some players used to stuck there after warps

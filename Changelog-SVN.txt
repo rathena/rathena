@@ -1,6 +1,8 @@
 Date	Added
 
 03/02
+	* Fixed SQL Guild Castle Saving (partial, yet it doesn't clear GuildID when you abandon a castle) [Lupus]
+	  + added 2 fixes by POW (Mac Guild Position fix, Max Guild Members fix)
 	* Fixed Emotion Flood (by Yor) [Lupus]
         * SQL: Fixed temporary ban. Now banned players can enter the server when the ban time is over. [Lupus]
 	  It wasn't working because STATE hasn't been cleared properly.

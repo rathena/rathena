@@ -3,7 +3,6 @@
 // SQL conversion by hack
 //
 
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -362,7 +361,10 @@ struct guild * inter_guild_fromsql(int guild_id)
 		strncpy(g->master,sql_row[2],24);
 		g->guild_lv=atoi(sql_row[3]);
 		g->connect_member=atoi(sql_row[4]);
-		g->max_member=atoi(sql_row[5]);
+                if (atoi(sql_row[5]) > MAX_GUILD) // Fix reduction of MAX_GUILD [PoW]
+                        g->max_member = MAX_GUILD;
+                else
+                        g->max_member = atoi(sql_row[5]);
 		g->average_lv=atoi(sql_row[6]);
 		g->exp=atoi(sql_row[7]);
 		g->next_exp=atoi(sql_row[8]);
@@ -409,8 +411,12 @@ struct guild * inter_guild_fromsql(int guild_id)
 			m->lv=atoi(sql_row[7]);
 			m->exp=atoi(sql_row[8]);
 			m->exp_payper=atoi(sql_row[9]);
-			m->online=atoi(sql_row[10]);
-			m->position=atoi(sql_row[11]);
+                        m->online=atoi(sql_row[10]);
+                        if (atoi(sql_row[11]) >= MAX_GUILDPOSITION) // Fix reduction of MAX_GUILDPOSITION [PoW]
+                                m->position = MAX_GUILDPOSITION - 1;
+                        else
+                                m->position = atoi(sql_row[11]);
+
 			strncpy(m->name,sql_row[14],24);
 		}
 	}
@@ -505,7 +511,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	return g;
 }
 
-#if 0
+#if 1
 static int _set_guild_castle(void *key, void *data, va_list ap) {
     int castle_id = va_arg(ap, int);
     int guild_id = va_arg(ap, int);
@@ -519,51 +525,64 @@ static int _set_guild_castle(void *key, void *data, va_list ap) {
 }
 #endif
 
-// Save guild_castle to sql
-int inter_guildcastle_tosql(struct guild_castle *gc){
+int inter_guildcastle_tosql(struct guild_castle *gc)
+{
+        struct guild_castle *gcopy;
+	// `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
 
-	if(gc->castle_id < 0 || gc->guild_id <= 0){ //fixed bug! gc->castle_id can be == 0 (for the 1st castle it's == 0) [Lupus]
-		return 0;
-	}
-	printf("[Guild Castle]: Save..");
-
-	sprintf(tmp_sql, "SELECT `castle_id` FROM `%s` WHERE `castle_id` = '%d'", guild_castle_db, gc->castle_id);
-	if(mysql_query(&mysql_handle, tmp_sql)){
-		//fail ://
-		printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
+	if(gc == NULL || gc->castle_id < 0 ){ //gc->castle_id can be == 0 (for the 1st castle it's == 0) [Lupus]
 		return 0;
 	}
 
-	sql_res = mysql_store_result(&mysql_handle);
-	if(sql_res!=NULL){ //fixed [Lupus]
-		if(mysql_num_rows(sql_res) > 0){
-			//okay .. guild is existable
-			mysql_free_result(sql_res);
-			sprintf(tmp_sql, "UPDATE `%s` SET `guild_id` = '%d', `economy` = '%d', `defense` = '%d', `triggerE` = '%d', `triggerD` = '%d', `nextTime` = '%d', `payTime` = '%d', `createTime` = '%d', `visibleC` = '%d', `visibleG0` = '%d', `visibleG1` = '%d', `visibleG2` = '%d', `visibleG3` = '%d', `visibleG4` = '%d', `visibleG5` = '%d', `visibleG6` = '%d', `visibleG7` = '%d', `gHP0` = '%d', `gHP1` = '%d', `gHP2` = '%d', `gHP3` = '%d', `gHP4` = '%d', `gHP5` = '%d', `gHP6` = '%d', `gHP7` = '%d' WHERE `castle_id` = '%d'", guild_castle_db, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC, gc->visibleG0, gc->visibleG1, gc->visibleG2, gc->visibleG3, gc->visibleG4, gc->visibleG5,gc->visibleG6, gc->visibleG7, gc->Ghp0, gc->Ghp1, gc->Ghp2, gc->Ghp3, gc->Ghp4, gc->Ghp5, gc->Ghp6, gc->Ghp7, gc->castle_id);
-			if(mysql_query(&mysql_handle, tmp_sql)){
-				printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
+	if( gc->guild_id > 0) { //we just update the castle
+		printf("[Guild Castle %02i]: Save...\n",gc->castle_id);
+
+		gcopy = numdb_search(castle_db_,gc->castle_id);
+		if (gcopy == NULL) {
+			gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
+			numdb_insert(castle_db_, gc->castle_id, gcopy);
+		} else {
+			//if the castle data hasn't been changed, then we don't write it into SQL
+			if ((gc->guild_id  == gcopy->guild_id ) && (  gc->economy  == gcopy->economy ) && ( gc->defense  == gcopy->defense ) && ( gc->triggerE  == gcopy->triggerE ) && ( gc->triggerD  == gcopy->triggerD ) && ( gc->nextTime  == gcopy->nextTime ) && ( gc->payTime  == gcopy->payTime ) && ( gc->createTime  == gcopy->createTime ) && ( gc->visibleC  == gcopy->visibleC ) && ( gc->visibleG0  == gcopy->visibleG0 ) && ( gc->visibleG1  == gcopy->visibleG1 ) && ( gc->visibleG2  == gcopy->visibleG2 ) && ( gc->visibleG3  == gcopy->visibleG3 ) && ( gc->visibleG4  == gcopy->visibleG4 ) && ( gc->visibleG5  == gcopy->visibleG5 ) && ( gc->visibleG6  == gcopy->visibleG6 ) && ( gc->visibleG7  == gcopy->visibleG7 ) && ( gc->Ghp0  == gcopy->Ghp0 ) && ( gc->Ghp1  == gcopy->Ghp1 ) && ( gc->Ghp2  == gcopy->Ghp2 ) && ( gc->Ghp3  == gcopy->Ghp3 ) && ( gc->Ghp4  == gcopy->Ghp4 ) && ( gc->Ghp5  == gcopy->Ghp5 ) && ( gc->Ghp6  == gcopy->Ghp6 ) && ( gc->Ghp7 == gcopy->Ghp7 ))
 				return 0;
-			}else{
-				printf(" done(U). (Castle: %d)\n", gc->castle_id);
-				return 1;
-			}
-		}else{
-			//not exists  insert ..
-                         sprintf(tmp_sql,"INSERT INTO `%s` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`, `gHP0`, `gHP1`, `gHP2`, `gHP3`, `gHP4`, `gHP5`, `gHP6`, `gHP7`) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')", guild_castle_db, gc->castle_id, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC, gc->visibleG0, gc->visibleG1, gc->visibleG2, gc->visibleG3, gc->visibleG4, gc->visibleG5, gc->visibleG6, gc->visibleG7, gc->Ghp0, gc->Ghp1, gc->Ghp2, gc->Ghp3, gc->Ghp4, gc->Ghp5, gc->Ghp6, gc->Ghp7);
-			if(mysql_query(&mysql_handle, tmp_sql)){
-				printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
-				return 0;
-			}else{
-				printf(" done(I). (Castle: %d)\n", gc->castle_id);
-				return 1;
-			}
+	        }
+		printf("[Guild Castle %02i]: Save... ->SQL\n",gc->castle_id);
+		memcpy(gcopy, gc, sizeof(struct guild_castle));
+
+		sprintf(tmp_sql,"REPLACE INTO `%s` "
+		"(`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
+		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
+		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7`)"
+		"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')", 
+		guild_castle_db, gc->castle_id, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, 
+		gc->createTime, gc->visibleC, gc->visibleG0, gc->visibleG1, gc->visibleG2, gc->visibleG3, gc->visibleG4, gc->visibleG5,
+		gc->visibleG6, gc->visibleG7, gc->Ghp0, gc->Ghp1, gc->Ghp2, gc->Ghp3, gc->Ghp4, gc->Ghp5, gc->Ghp6, gc->Ghp7);
+
+		//printf(" %s\n",tmp_sql);
+		if(mysql_query(&mysql_handle, tmp_sql) ) {
+			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
+			return 0;
 		}
-	}else{
-		printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
-		return 0;
+	} else {
+		sprintf(tmp_sql,"UPDATE `%s` SET `castle_id`='-1' WHERE `castle_id`='%d'",guild_db, gc->castle_id);
+		//printf(" %s\n",tmp_sql);
+		if(mysql_query(&mysql_handle, tmp_sql) ) {
+			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
+			return 0;
+		}
+		
+		sprintf(tmp_sql,"UPDATE `%s` SET `castle_id`='%d' WHERE `guild_id`='%d'",guild_db, gc->castle_id,gc->guild_id);
+		//printf(" %s\n",tmp_sql);
+		if(mysql_query(&mysql_handle, tmp_sql) ) {
+			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
+			return 0;
+		}
 	}
+        db_foreach(guild_db_, _set_guild_castle, gc->castle_id,gc->guild_id);
+	
 	return 0;
 }
+
 // Read guild_castle from sql
 int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 {
@@ -1131,7 +1150,7 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 	memcpy(&g->member[0],master,sizeof(struct guild_member));
 
 	g->position[0].mode=0x11;
-	strcpy(g->position[                  0].name,"GuildMaster");
+	strcpy(g->position[0].name,"GuildMaster");
 	strcpy(g->position[MAX_GUILDPOSITION-1].name,"Newbie");
 	for(i=1;i<MAX_GUILDPOSITION-1;i++)
 		sprintf(g->position[i].name,"Position %d",i+1);

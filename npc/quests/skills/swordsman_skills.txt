@@ -3,15 +3,16 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.0a
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
 //= <Description> 
 //===== Additional Comments: =================================
 //= Fully working
-//=1.0a Now using functions found in "Global_Functions.txt" for
-//= class checks.
+//= 1.0a Now using functions found in "Global_Functions.txt"
+//= for class checks.
+//= 1.1 Added missing delitem [Lupus]
 //============================================================
 
 
@@ -233,6 +234,7 @@ L_Check:
 	mes "Haha! You have just learned HP Moving Recovery!";
 	delitem 713,200;
 	delitem 1058,1;
+	delitem 2312,1;
 	skill 144,1,0;
 	set MOVHPREC, 0;
 	next;
