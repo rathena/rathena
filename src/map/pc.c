@@ -1475,7 +1475,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	}
 
 	// New guild skills - Celest
-	if (sd->status.guild_id > 0) {
+	if (sd->status.guild_id > 0 && !(first&4)) {
 		struct guild *g;
 		if ((g = guild_search(sd->status.guild_id)) && strcmp(sd->status.name,g->master)==0) {
 			if (!sd->state.leadership_flag && guild_checkskill(g, GD_LEADERSHIP)>0) {
@@ -3174,19 +3174,16 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	nullpo_retr(1, sd);
 
 	if(n < 0 || n >= MAX_INVENTORY)
-
 		return 1;
-
 
 	if(amount <= 0)
-
 		return 1;
-
 
 	if (sd->status.inventory[n].nameid <= 0 ||
 	    sd->status.inventory[n].amount < amount ||
 	    sd->trade_partner != 0 || sd->vender_id != 0 ||
-	    sd->status.inventory[n].amount <= 0)
+	    sd->status.inventory[n].amount <= 0 ||
+		itemdb_isdropable(sd->status.inventory[n].nameid) == 0) // Celest
 		return 1;
 	map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, NULL, NULL, NULL, 0);
 	pc_delitem(sd, n, amount, 0);

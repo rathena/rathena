@@ -9092,7 +9092,6 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd) {
 		return;
 
 	if(itemdb_isdropable(sd->status.inventory[item_index].nameid) == 0)
-
 		return;
 
 	if (sd->state.storage_flag)

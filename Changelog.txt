@@ -1,6 +1,10 @@
 Date	Added
 
 12/20
+        * Experimental: Reverting a change on deleting any skill units when we're 
+          logging off - might reduce the 'delete_timer' errors [celest]
+        * Added check whether an item is allowed to be dropped, for example wedding
+          rings [celest]
         * Updated Acid Terror - should never miss [celest]
         * updated Sword Reject - should display reflected damage properly now [celest]
         * Updated Double Strafe - should only work with bows [celest]
