@@ -1,6 +1,8 @@
 Date	Added
 
 01/31
+        * Updated skill_range_leniency code when casting a ground targetting spell      
+          ( as in Revision 968) [celest]
         * Added Karma and Manner to const.txt
           -- To change a player's alignment to more Good/Evil in scripting for example,
              use:

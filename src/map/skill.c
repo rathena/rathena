@@ -811,12 +811,11 @@ int skill_count_target(struct block_list *bl, va_list ap );
 
 // [MouseJstr] - skill ok to cast? and when?
 int skillnotok(int skillid, struct map_session_data *sd) {
-     if (sd == 0)
-           return 0;
+	nullpo_retr (1, sd);
 
-     if (!(skillid >= 10000 && skillid < 10015))
-	if ((skillid > MAX_SKILL) || (skillid < 0))
-		return 1;
+	if (!(skillid >= 10000 && skillid < 10015))
+		if ((skillid > MAX_SKILL) || (skillid < 0))
+			return 1;
 
      if (pc_isGM(sd) >= 20)
            return 0;  // gm's can do anything damn thing they want
@@ -7806,14 +7805,28 @@ int skill_use_pos( struct map_session_data *sd,
 	bl.m = sd->bl.m;
 	bl.x = skill_x;
 	bl.y = skill_y;
-	range = skill_get_range(skill_num,skill_lv);
-	if(range < 0)
-		range = status_get_range(&sd->bl) - (range + 1);
-// be lenient if the skill was cast before we have moved to the correct position [Celest]
-	if (sd->walktimer != -1)
-		range += battle_config.skill_range_leniency;
-	if(!battle_check_range(&sd->bl,&bl,range) )
-		return 0;
+
+	{
+		int check_range_flag = 0;
+
+		/* 射程と障害物チェック */
+		range = skill_get_range(skill_num,skill_lv);
+		if(range < 0)
+			range = status_get_range(&sd->bl) - (range + 1);
+		// be lenient if the skill was cast before we have moved to the correct position [Celest]
+		if (sd->walktimer != -1)
+			range += battle_config.skill_range_leniency;
+		else check_range_flag = 1;
+		if(!battle_check_range(&sd->bl,&bl,range)) {
+			if (check_range_flag && battle_check_range(&sd->bl,&bl,range + battle_config.skill_range_leniency)) {
+				int dir, mask[8][2] = {{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1}};
+				dir = map_calc_dir(&sd->bl,bl.x,bl.y);
+				pc_walktoxy (sd, sd->bl.x + mask[dir][0] * battle_config.skill_range_leniency,
+					sd->bl.y + mask[dir][1] * battle_config.skill_range_leniency);
+			} else
+				return 0;
+		}
+	}
 
 	pc_stopattack(sd);
 
