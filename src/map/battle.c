@@ -4468,6 +4468,7 @@ struct Damage  battle_calc_misc_attack(
 #ifdef TWILIGHT
 		if( sd==NULL || (skill = pc_checkskill(sd,HT_BLITZBEAT)) <= 0)
 			skill=0;
+ 		damage=(100+50*skill_lv+(dex/10+int_/2+skill*3+40)*2) * 2;
 #else
 		if( sd==NULL || (skill = pc_checkskill(sd,HT_STEELCROW)) <= 0)
 			skill=0;

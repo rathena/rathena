@@ -997,6 +997,8 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	c = pc_calc_skilltree_normalize_job(c, sd);
 
 	for(i=0;i<MAX_SKILL;i++){
+                if(skill_get_inf2(i))
+                        continue;
 		if (sd->status.skill[i].flag != 13)   
 		        sd->status.skill[i].id=0;
 		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){	// cardƒXƒLƒ‹‚È‚çA
@@ -1024,8 +1026,6 @@ int pc_calc_skilltree(struct map_session_data *sd)
                 flag=0;
                 for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
                     int j,f=1;
-                    if(skill_get_inf2(id))
-                        continue;
                     if(!battle_config.skillfree) {
                         for(j=0;j<5;j++) {
                             if( skill_tree[s][c][i].need[j].id &&
@@ -1084,7 +1084,7 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 				case 17:
 					c = 6;
 					break;
-#if 0
+// #if 0
 				case 4008:
 				case 4014:
 				case 4015:
@@ -1139,7 +1139,7 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 				case 4043:
 					c = 4029;
 					break;
-#endif
+// #endif
 			}
 		}
 	}
