@@ -1,4 +1,7 @@
 Date	Added
+01/12
+        * Implemented Vending Log [Lupus]
+	  TODO: use log option to log only important deals (much money, rare items, etc)
 01/11
         * Added Shinomori's changes to npc event timers (I never realised it, thanks
           ^^; ) [celest]

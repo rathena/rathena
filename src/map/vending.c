@@ -112,6 +112,13 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		clif_tradecancelled(vsd);
 		return;
 	}
+
+	//log added by Lupus
+	#ifndef TXT_ONLY
+	if(log_config.vend > 0)
+		log_vend(sd,vsd, 0,1, z); //n == 0, amount == 1 for Zeny log.
+	#endif
+	
 	pc_payzeny(sd, z);
 	pc_getzeny(vsd, z);
 	for(i = 0; 8 + 4 * i < len; i++) {
@@ -122,6 +129,13 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		vsd->vending[vend_list[i]].amount -= amount;
 		pc_cart_delitem(vsd, index, amount, 0);
 		clif_vendingreport(vsd, index, amount);
+
+		//log added by Lupus
+		#ifndef TXT_ONLY
+		if(log_config.vend > 0)
+			log_vend(sd,vsd, index, amount, 0); // for Item log.
+		#endif
+
 	}
 }
 
