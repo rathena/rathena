@@ -298,6 +298,8 @@ int buildin_skilluseid(struct script_state *st); // originally by Qamera [celest
 int buildin_skillusepos(struct script_state *st); // originally by Qamera [celest]
 int buildin_logmes(struct script_state *st); // [Lupus]
 int buildin_summon(struct script_state *st); // [celest]
+int buildin_isnight(struct script_state *st); // [celest]
+int buildin_isday(struct script_state *st); // [celest]
 
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
@@ -522,6 +524,8 @@ struct {
 	{buildin_skillusepos,"skillusepos","iiii"}, // [Celest]
 	{buildin_logmes,"logmes","s"}, //this command actls as MES but prints info into LOG file either SQL/TXT [Lupus]
 	{buildin_summon,"summon","si*"}, // summons a slave monster [Celest]
+	{buildin_isnight,"isnight",""}, // check whether it is night time [Celest]
+	{buildin_isday,"isday",""}, // check whether it is day time [Celest]
 	{NULL,NULL,NULL},
 };
 int buildin_message(struct script_state *st); // [MouseJstr]
@@ -6512,6 +6516,18 @@ int buildin_summon(struct script_state *st)
 		clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
 	}
 
+	return 0;
+}
+
+int buildin_isnight(struct script_state *st)
+{
+	push_val(st->stack,C_INT, (night_flag == 1));
+	return 0;
+}
+
+int buildin_isday(struct script_state *st)
+{
+	push_val(st->stack,C_INT, (night_flag == 0));
 	return 0;
 }
 

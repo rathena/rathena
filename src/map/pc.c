@@ -48,7 +48,7 @@ static int exp_table[14][MAX_LEVEL];
 static char statp[255][7];
 
 // h-files are for declarations, not for implementations... [Shinomori]
-struct skill_tree_entry skill_tree[3][MAX_PC_CLASS][100];
+struct skill_tree_entry skill_tree[3][25][MAX_SKILL_TREE];
 // timer for night.day implementation
 int day_timer_tid;
 int night_timer_tid;
@@ -6843,7 +6843,12 @@ int pc_readdb(void)
 		s_class = pc_calc_base_job(atoi(split[0]));
 		i = s_class.job;
 		u = s_class.upper;
-		for(j=0;skill_tree[u][i][j].id;j++);
+		// check for bounds [celest]
+		if (i > 25 || u > 3)
+			continue;
+		for(j = 0; skill_tree[u][i][j].id && j < MAX_SKILL_TREE; j++);
+		if (j == MAX_SKILL_TREE)
+			continue;
 		skill_tree[u][i][j].id=atoi(split[1]);
 		skill_tree[u][i][j].max=atoi(split[2]);
 

@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/12/16 6:46:08 PM Celestia $
+// $Id: skill.c,v 1.8 2004/01/07 10:46:38 PM Celestia $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -2297,10 +2297,12 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 
 	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
 		{
-			int dx, dy, wx = 0, wy = 0;
+		#if 0	// temporarily keeping this block for future reference [celest]
+			/*int dx, dy, wx = 0, wy = 0;
 			int weight, num = 0;
 			int x1 = src->x, y1 = src->y;
 			int x0 = bl->x, y0 = bl->y;
+			int *xs, *ys;
 
 			dx = (x1 - x0);
 			if (dx < 0) {
@@ -2310,6 +2312,8 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 			}
 			dy = (y1 - y0);
 			weight = dx > abs(dy) ? dx : abs(y1 - y0);
+			xs = (int *)aCallocA(weight, sizeof(int));
+			ys = (int *)aCallocA(weight, sizeof(int));
 			while ((x0 != x1 || y0 != y1) && num < skill_get_range(skillid,skilllv)) { // fixed [Shinomori]
 				wx += dx;
 				wy += dy;
@@ -2325,11 +2329,28 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 					if (dy > 0) { y0++; }
 					else { y0--; }
 				}
-				map_foreachinarea (skill_attack_area,src->m,x0,y0,x0,y0,0,
-						BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+				//xs[number] = x0;
+				//ys[number] = y0
+				printf ("%d - %d %d\n", weight, x0, y0);
+				//map_foreachinarea (skill_attack_area,src->m,x0,y0,x0,y0,0,
+						//BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 				num++;	// make sure it doesn't run infinitely
 			}
+			//for num = 0; num < weight; num++
+			//map_foreach skill attack area
+			//if last of xs || ys != x y, manually skill attack
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			aFree (xs);
+			aFree (ys);*/
+		#endif
+
+		#if 0	// change 0 to 1 to switch to the this system [celest]
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		#else
+			map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
+				2,skill_get_range(skillid,skilllv),0,
+				BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+		#endif
 		}
 		break;
 
@@ -2486,7 +2507,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		break;
 	/* 武器系範?攻?スキル */
 	case AC_SHOWER:			/* アロ?シャワ? */
-	case SM_MAGNUM:			/* マグナムブレイク */
+//	case SM_MAGNUM:			/* マグナムブレイク */
 	case AS_GRIMTOOTH:		/* グリムトゥ?ス */
 	case MC_CARTREVOLUTION:	/* カ?トレヴォリュ?ション */
 	case NPC_SPLASHATTACK:	/* スプラッシュアタック */
@@ -2496,11 +2517,11 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 			/* 個別にダメ?ジを?える */
 			if(bl->id!=skill_area_temp[1]){
 				int dist=0;
-				if(skillid==SM_MAGNUM){	/* マグナムブレイクなら中心からの距離を計算 */
-					int dx=abs( bl->x - skill_area_temp[2] );
-					int dy=abs( bl->y - skill_area_temp[3] );
-					dist=((dx>dy)?dx:dy);
-				}
+				//if(skillid==SM_MAGNUM){	/* マグナムブレイクなら中心からの距離を計算 */
+				//	int dx=abs( bl->x - skill_area_temp[2] );
+				//	int dy=abs( bl->y - skill_area_temp[3] );
+				//	dist=((dx>dy)?dx:dy);
+				//}
 				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,
 					0x0500|dist  );
 				if (bl->type == BL_MOB && skillid == AS_GRIMTOOTH) {
@@ -2512,10 +2533,11 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		}else{
 			int ar=1;
 			int x=bl->x,y=bl->y;
-			if( skillid==SM_MAGNUM){
+			/*if( skillid==SM_MAGNUM){
 				x=src->x;
 				y=src->y;
-			}else if(skillid==AC_SHOWER || skillid==ASC_METEORASSAULT)	/* アロ?シャワ?、メテオアサルト範?5*5 */
+			}else*/
+			if(skillid==AC_SHOWER || skillid==ASC_METEORASSAULT)	/* アロ?シャワ?、メテオアサルト範?5*5 */
 				ar=2;
 			else if(skillid==AS_SPLASHER)	/* ベナムスプラッシャ?範?3*3 */
 				ar=1;
@@ -2535,8 +2557,19 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 				bl->m,x-ar,y-ar,x+ar,y+ar,0,
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
-			if (skillid == SM_MAGNUM)	// fire element for 10 seconds
-				status_change_start(src,SC_FLAMELAUNCHER,0,0,0,0,10000,0);
+		}
+		break;
+
+	case SM_MAGNUM:			/* マグナムブレイク [celest] */
+		{
+			int dist = 0;
+			int dx = abs( bl->x - skill_area_temp[2] );
+			int dy = abs( bl->y - skill_area_temp[3] );
+			dist = ((dx>dy)?dx:dy);
+			map_foreachinarea (skill_attack_area,src->m,src->x-1,src->y-1,src->x+1,src->y+1,0,
+				BF_WEAPON,src,src,skillid,skilllv,tick,0x0500|dist,BCT_ENEMY);
+			status_change_start (src,SC_FLAMELAUNCHER,0,0,0,0,10000,0);
+			clif_skill_nodamage (src,src,skillid,skilllv,1);
 		}
 		break;
 
@@ -2773,15 +2806,20 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 				if (skilllv == 5)
 					skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,0 );
 				if (bl->type == BL_PC) {
-					((struct map_session_data *)bl)->status.sp = 0;
-					clif_updatestatus((struct map_session_data *)bl,SP_SP);
+					struct map_session_data *tsd = (struct map_session_data *)bl;
+					if (tsd) {
+						tsd->status.sp = 0;
+						clif_updatestatus((struct map_session_data *)bl,SP_SP);
+					}
 				}
 			} else {
 				clif_skill_nodamage(src,src,skillid,skilllv,1);
 				if (skilllv == 5)
 					skill_attack(BF_MAGIC,src,src,src,skillid,skilllv,tick,0 );
-				sd->status.sp = 0;
-				clif_updatestatus(sd,SP_SP);
+				if (sd) {
+					sd->status.sp = 0;
+					clif_updatestatus(sd,SP_SP);
+				}				
 			}
 			status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0, (skilllv < 5 ? 10000: 15000),0 );
 		}
@@ -3363,7 +3401,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			lv = (lv<0)?-lv:lv;
 			if((dstsd->bl.type!=BL_PC)	// 相手はPCじゃないとだめ
 			 ||(sd->bl.id == dstsd->bl.id)	// 相手が自分はだめ
-			 ||(lv > 10)			// レベル差±10まで
+			 ||(lv > battle_config.devotion_level_difference)			// レベル差±10まで
 			 ||(!sd->status.party_id && !sd->status.guild_id)	// PTにもギルドにも所?無しはだめ
 			 ||((sd->status.party_id != dstsd->status.party_id)	// 同じパ?ティ?か、
 			 &&(sd->status.guild_id != dstsd->status.guild_id))	// 同じギルドじゃないとだめ
@@ -5989,9 +6027,11 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			struct status_change *sc_data=status_get_sc_data(bl);
 			if(sg->val2==0 && sc_data && sc_data[SC_ANKLE].timer==-1){
 				int moveblock = ( bl->x/BLOCK_SIZE != src->bl.x/BLOCK_SIZE || bl->y/BLOCK_SIZE != src->bl.y/BLOCK_SIZE);
-				int sec = skill_get_time2(sg->skill_id,sg->skill_lv) - status_get_agi(bl)/10;
+				int sec = skill_get_time2(sg->skill_id,sg->skill_lv) - status_get_agi(bl)*100;
 				if(status_get_mode(bl)&0x20)
 					sec = sec/5;
+				if (sec < 3000)	// minimum time of 3 seconds [celest]
+					sec = 3000;
 				battle_stopwalking(bl,1);
 				status_change_start(bl,SC_ANKLE,sg->skill_lv,0,0,0,sec,0);
 
@@ -7034,7 +7074,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			return 0;
 		break;
 	case CH_TIGERFIST:						//伏虎拳
-		if(sd->sc_data[SC_COMBO].timer == -1 || sd->sc_data[SC_COMBO].val1 != MO_COMBOFINISH)
+		if((sd->sc_data[SC_COMBO].timer == -1 || sd->sc_data[SC_COMBO].val1 != MO_COMBOFINISH) && !sd->state.skill_flag)
 			return 0;
 		break;
 	case CH_CHAINCRUSH:						//連柱崩?
@@ -7619,6 +7659,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	    skill_num != MO_EXTREMITYFIST &&
 	    skill_num != CH_TIGERFIST &&
 	    skill_num != CH_CHAINCRUSH) ||
+		(skill_num == CH_CHAINCRUSH && sd->state.skill_flag) ||
 		(skill_num == MO_EXTREMITYFIST && sd->state.skill_flag) )
 		pc_stopattack(sd);
 
@@ -7652,10 +7693,16 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		}
 		break;
 	case MO_COMBOFINISH:		/*猛龍拳*/
-	case CH_TIGERFIST:		/* 伏虎拳 */
+//	case CH_TIGERFIST:		/* 伏虎拳 */
 	case CH_CHAINCRUSH:		/* 連柱崩? */
 		target_id = sd->attacktarget;
 		break;
+
+	case CH_TIGERFIST:		/* 伏虎拳 */
+		if(sc_data && sc_data[SC_COMBO].timer != -1 && sc_data[SC_COMBO].val1 == MO_COMBOFINISH)
+			target_id = sd->attacktarget;
+		break;
+
 
 // -- moonsoul	(altered to allow proper usage of extremity from new champion combos)
 //

@@ -1,5 +1,23 @@
 Date	Added
 
+02/11
+        * EXPERIMENTAL: Reduced memory used for the skill_tree DB by 30+mb [celest]
+        * Added script commands isday and isnight - checks whether its night or 
+          daytime. Example: if(isnight()) ... [celest]
+        * Skill Updates [celest]
+          - Sharp Shooting: Dropped jA's and kA's code and wrote a new
+            map_foreachinpath function in map.c -- about 14 times faster, but still
+            uncomplete
+          - Ankle Snare: Added matthias' suggestion to let agility reduce more trap
+            time, but no less than 3 seconds.
+          - Magnum Break: simplified code a bit, and changed to non-targetting /
+            automatically damages an area around the caster
+          - Tiger Fist: enable it to be used by its own besides as a part of
+            the combo skills
+          - Devotion: Fixed maximum level difference not reading its setting from
+            battle_athena.conf, thanks to leinsirk
+          - Soul Burn: Added some safety checks
+
 02/10
 	* Login/Login SQL: fixed the client version check function [Sirius]
 

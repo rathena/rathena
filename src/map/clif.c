@@ -9016,6 +9016,20 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 					return;
 				}
 			}
+		} else if (skillnum == CH_TIGERFIST) {
+			if (sd->sc_data[SC_COMBO].timer == -1 || sd->sc_data[SC_COMBO].val1 != MO_COMBOFINISH) {
+				if (!sd->state.skill_flag ) {
+					sd->state.skill_flag = 1;
+					if (!sd->attacktarget) {
+						clif_skillinfo(sd, CH_TIGERFIST, 1, -2);
+						return;
+					} else
+						target_id = sd->attacktarget;
+				} else if (sd->bl.id == target_id) {
+					clif_skillinfo(sd, CH_TIGERFIST, 1, -2);
+					return;
+				}
+			}
 		}
 		if ((lv = pc_checkskill(sd, skillnum)) > 0) {
 			if (skilllv > lv)

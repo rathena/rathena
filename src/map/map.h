@@ -689,6 +689,7 @@ void map_foreachinarea(int (*)(struct block_list*,va_list),int,int,int,int,int,i
 // -- moonsoul (added map_foreachincell)
 void map_foreachincell(int (*)(struct block_list*,va_list),int,int,int,int,...);
 void map_foreachinmovearea(int (*)(struct block_list*,va_list),int,int,int,int,int,int,int,int,...);
+void map_foreachinpath(int (*)(struct block_list*,va_list),int,int,int,int,int,int,int,int,...); // Celest
 int map_countnearpc(int,int,int);
 //blockŠÖ˜A‚É’Ç‰Á
 int map_count_oncell(int m,int x,int y);

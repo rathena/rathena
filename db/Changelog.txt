@@ -5,6 +5,10 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+02/11
+        * Updated Chain Crush to require level 2 Tiger Fist, thanks to matthias for
+          pointing it out [celest]
+
 02/05
         * item_db.txt Added prices to all Magic Scrolls and to Horse Crest,
 	  added +100-1000 Zeny effect to Gold Coin (it's used in st.Patric event)

@@ -9,6 +9,8 @@
 #define CART_MASK 0x788
 #define STATE_BLIND 0x10
 
+#define MAX_SKILL_TREE 51
+
 #define pc_setdead(sd) ((sd)->state.dead_sit = 1)
 #define pc_setsit(sd) ((sd)->state.dead_sit = 2)
 //#define pc_setstand(sd) ((sd)->state.dead_sit = 0)
@@ -175,13 +177,14 @@ int pc_calc_base_job2(int b_class);	// Celest
 int pc_calc_upper(int b_class);
 
 struct skill_tree_entry {
-	int id;
-	int max;
+	short id;
+	unsigned char max;
 	struct {
-		short id,lv;
-	} need[6];
+		short id;
+		unsigned char lv;
+	} need[5];
 }; // Celest
-extern struct skill_tree_entry skill_tree[3][MAX_PC_CLASS][100];
+extern struct skill_tree_entry skill_tree[3][25][MAX_SKILL_TREE];
 
 int pc_read_gm_account(int fd);
 int pc_setinvincibletimer(struct map_session_data *sd,int);
