@@ -4,6 +4,7 @@ Date	Added
 	* Fixed a battle_range crash [MouseJstr]
         * Updated Stone Curse, Soul Drain, Auto Berserk [celest]
         * Added a fix for MVP exp being multiplied twice by Gengar
+        * Modified battle_range to check for sd first [celest]
 
 12/2
 	* Fixed double login feature, resets online users when map connects to char [Wizputer]
