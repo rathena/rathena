@@ -4364,7 +4364,7 @@ static int mob_read_sqldb(void)
                         sql_row[40],sql_row[41],sql_row[42],sql_row[43],sql_row[44],
                         sql_row[45],sql_row[46],sql_row[47],sql_row[48],sql_row[49],
                         sql_row[50],sql_row[51],sql_row[52],sql_row[53],sql_row[54],
-			sql_row[56],sql_row[57],sql_row[58],sql_row[59]);
+			sql_row[55],sql_row[56],sql_row[57],sql_row[58],sql_row[59]);
 
 			for(i=0,p=line;i<60;i++){
 				if((np=strchr(p,','))!=NULL){

@@ -59,7 +59,7 @@ int log_drop(struct map_session_data *sd, int monster_id, int *log_drop)
 			time_t curtime;
 			time(&curtime);
 			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d,%d,%d,%d,%d,%d,%d%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_drop[0], log_drop[1], log_drop[2], log_drop[3], log_drop[4], log_drop[5], log_drop[6], log_drop[7], RETCODE);
+			fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_drop[0], log_drop[1], log_drop[2], log_drop[3], log_drop[4], log_drop[5], log_drop[6], log_drop[7], log_drop[8], log_drop[9], RETCODE);
 			fclose(logfp);
 		}
 	#ifndef TXT_ONLY
