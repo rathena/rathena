@@ -1,6 +1,8 @@
 Date	Added
 
 02/04
+	* TXT convertors now read the import command in inter_athena.conf
+	  [SVN 1038: Ajarn]
         * Fixed some compile errors [SVN 1037: MouseJstr]
 	* Added common/buffer.(c/h) [SVN 1033: Ajarn]
 	* Login server can now set it's ip address in the config [SVN 1033: Ajarn]

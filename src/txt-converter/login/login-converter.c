@@ -234,6 +234,10 @@ int login_config_read(const char *cfgName){
 			strcpy(db_server_logindb, w2);
 			printf ("set db_server_logindb : %s\n",w2);
 		}
+		//support the import command, just like any other config
+		else if(strcmpi(w1,"import")==0){
+			login_config_read(w2);
+		}
 	}
 	fclose(fp);
 	printf ("End reading interserver configuration...\n");

@@ -789,6 +789,9 @@ int inter_config_read(const char *cfgName) {
 		else if(strcmpi(w1,"db_server_logindb")==0){
 			strcpy(db_server_logindb, w2);
 			printf ("set db_server_logindb : %s\n",w2);
+		//support the import command, just like any other config
+		}else if(strcmpi(w1,"import")==0){
+			sql_config_read(w2);
 		}
 	}
 	fclose(fp);
