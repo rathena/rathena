@@ -1,5 +1,8 @@
 Date	Added
 12/16
+        * Updated maximum levels for supernovice to 99 [celest]
+        * Updated supernovice jobexp table - should be same from 50 onwards [celest]
+        * Corrected maximum job level checking in @joblvup and @charjob [celest]
         * Added the new spell scrolls, thanks to Landarma [celest]
         * Corrected a few skills, thanks to orn [celest]
         * Corrected Extremity Fist to not require Explosion Spirits when being used

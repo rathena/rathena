@@ -2474,16 +2474,21 @@ int atcommand_joblevelup(
 	const char* command, const char* message)
 {
 	int up_level = 50, level;
+	struct pc_base_job s_class;
 	nullpo_retr(-1, sd);
+	s_class = pc_calc_base_job(sd->status.class);
 
 	if (!message || !*message || (level = atoi(message)) == 0) {
 		clif_displaymessage(fd, "Please, enter a level adjustement (usage: @joblvup/@jlevel/@joblvlup <number of levels>).");
 		return -1;
 	}
 
-	if (sd->status.class == 0 || sd->status.class == 4001)
+	if (s_class.job == 0)
 		up_level -= 40;
-	else if ((sd->status.class > 4007 && sd->status.class < 4024) || sd->status.class == 23)
+	// super novices can go up to 99 [celest]
+	else if (s_class.job == 23)
+		up_level += 49;
+	else if (sd->status.class > 4007 && sd->status.class < 4023)
 		up_level += 20;
 
 	if (level > 0) {
@@ -4711,8 +4716,10 @@ int atcommand_character_joblevel(
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change job level only lower or same gm level
 			if (pl_s_class.job == 0)
 				max_level -= 40;
-			if ((pl_s_class.job == 23) || (pl_s_class.upper == 1 && pl_s_class.type == 2)) //ƒXƒpƒmƒr‚Æ“]¶E‚ÍJobƒŒƒxƒ‹‚ÌÅ‚‚ª70
-			// To-do: super novices has max level 99 - celest
+			// super novices can go up to 99 [celest]
+			else if (pl_s_class.job == 23)
+				max_level += 49;
+			else if (pl_sd->status.class > 4007 && pl_sd->status.class < 4023)
 				max_level += 20;
 
 			if (level > 0) {

@@ -5746,14 +5746,17 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		pc_heal(sd, sd->status.max_hp, sd->status.max_sp);
 		break;
 	case SP_JOBLEVEL:
-		if (sd->status.class == 0)
+		if (s_class.job == 0)
 			up_level -= 40;
-		if ((sd->status.class == 23) || (sd->status.class >= 4001 && sd->status.class <= 4022))
+		// super novices can go up to 99 [celest]
+		else if (s_class.job == 23)
+			up_level += 49;
+		else if (sd->status.class >= 4008 && sd->status.class <= 4022)
 			up_level += 20;
 		if (val >= sd->status.job_level) {
 			if (val > up_level)val = up_level;
 			sd->status.skill_point += (val-sd->status.job_level);
-		sd->status.job_level = val;
+			sd->status.job_level = val;
 			sd->status.job_exp = 0;
 			clif_updatestatus(sd, SP_JOBLEVEL);
 			clif_updatestatus(sd, SP_NEXTJOBEXP);
