@@ -9,6 +9,7 @@ Darkchild
 	* Monk Quest - Botting An Acolyte Atm
 Lupus
 	* looking for exploits, optimization, bugs hunt
+	* Lolz - 100%
 
 kobra_k88
 	* Optimize WoE
@@ -33,6 +34,8 @@ Other Ppl
 Date		Added
 ======
 	
+12/20	
+	* xmas.txt: Added Xmas Jakk, fixed 2 possible items exploits, fixed reward Box ID [Lupus]
 12/18	
 	* My NPC is back in action [Aria]
 	* Added 2 temp kRO shops which sell Arrows, Magic Scrolls. Prices,coords, sprites are unsure, but exploitless [Lupus]
