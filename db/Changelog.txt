@@ -6,6 +6,8 @@
 	Skill databases == celest working on them i believe.
 
 02/21
+	* Added actual item_db.sql into sql-files. [Lupus]
+	* item_db.txt: Added missing fields / removed extra fields from some new items V__V' [Lupus]
 	* More monsters name fixes (GIANT_HONET -> GIANT_HORNET , etc) [Lupus]
 	* Added actual mob_db.sql into sql-files. If you use SQL Mob DB then update it [Lupus]
 

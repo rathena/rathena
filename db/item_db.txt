@@ -1725,7 +1725,7 @@
 7252,Chinese_Medicine,Chinese Medicine,3,20,0,10,,,,,,,,,,,{},{}
 7253,Golden_Flag,Golden Flag,3,20,0,10,,,,,,,,,,,{},{}
 7254,Digitally_Printed_Ticket,Digitally Printed Ticket,3,20,0,10,,,,,,,,,,,{},{}
-7262,Paper_Fan,Paper Fan,3,233,0,,,,,,,,,,,,{},{}
+7262,Paper_Fan,Paper Fan,3,233,0,10,,,,,,,,,,,{},{}
 7263,Cat's_Eye,Cat's-Eye,3,20,477,10,,,,,,,,,,,{},{}
 7264,Dried_Sand,Dried Sand,3,20,161,10,,,,,,,,,,,{},{}
 7265,Dragon_Horn,Dragon Horn,3,20,0,10,,,,,,,,,,,{},{}
@@ -1733,7 +1733,7 @@
 7267,Tigerskin_Underwear,Tigerskin Underwear,3,20,107,10,,,,,,,,,,,{},{}
 7268,Ghost_Doll,Ghost Doll,3,20,605,10,,,,,,,,,,,{},{}
 7269,Baby_Bib,Baby Bib,3,20,0,10,,,,,,,,,,,{},{}
-7270,Baby_Bottle,Baby Bottle,3,20,0,,,,,,,,,,,,{},{}
+7270,Baby_Bottle,Baby Bottle,3,20,0,10,,,,,,,,,,,{},{}
 7271,Novice_Statue,Novice Statue,3,20,0,10,,,,,,,,,,,{},{}
 7272,Dumpling_Doll,Dumpling Doll,3,20,0,10,,,,,,,,,,,{},{}
 7273,RWC_Necklace,RWC Necklace,3,20,0,10,,,,,,,,,,,{},{}
@@ -1768,7 +1768,7 @@
 7300,Jeweled_Ore,Jeweled Ore,3,20,0,10,,,,,,,,,,,{},{}
 7301,Knife_Decoration,Knife Decoration,3,20,0,10,,,,,,,,,,,{},{}
 7302,Krathong,Krathong,3,20,0,10,,,,,,,,,,,{},{}
-7303,Rice_Bag,Rice Straw Bag,3,20,0,800,,,,,,,,,,,,{},{}
+7303,Rice_Bag,Rice Straw Bag,3,20,0,800,,,,,,,,,,,{},{}
 
 7500,THG_Membership,THG Membership,3,20,0,10,,,,,,,,,,,{},{}
 7501,Token_Bag,Token Bag,3,20,0,10,,,,,,,,,,,{},{}
