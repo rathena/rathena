@@ -1,5 +1,7 @@
 Date	Added
 01/05
+        * Reset all skill variables if the skill fails so certain skills can't be
+          abused (such as Warp, thanks to Alex14 for pointing it out) [celest]
         * Added /mapflag/noreturn.txt for disabling butterfly wings (not fly wings)
           [celest]
         * Fixed skill_require_db reading somehow getting corrupted if weapons usable

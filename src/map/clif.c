@@ -4315,6 +4315,11 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 
 	fd=sd->fd;
 
+	// reset all variables [celest]
+	sd->skillx = sd->skilly = -1;
+	sd->skillid = sd->skilllv = -1;
+	sd->skillitem = sd->skillitemlv = -1;
+
 	if(type==0x4 && battle_config.display_delay_skill_fail==0){
 		return 0;
 	}
