@@ -1,4 +1,7 @@
 Date	Added
+11/14
+	* Corrected the file type attribute on most of the files in three which fixes the
+	  newline issues between linux and dos [MouseJstr]
 11/13
 	* Fixed map-server loading, doesn't require data\resnametable.txt anymore [Wizputer]
 	* Updated & Optimized TXT Login from FREYA. (need to do SQL now) [Codemaster]
