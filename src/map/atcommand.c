@@ -233,6 +233,19 @@ ACMD_FUNC(rings); // by MouseJstr
 
 ACMD_FUNC(grind); // by MouseJstr
 
+ACMD_FUNC(jumptoid); // by Dino9021
+ACMD_FUNC(jumptoid2); // by Dino9021
+ACMD_FUNC(recallid); // by Dino9021
+ACMD_FUNC(recallid2); // by Dino9021
+ACMD_FUNC(kickid); // by Dino9021
+ACMD_FUNC(kickid2); // by Dino9021
+ACMD_FUNC(reviveid); // by Dino9021
+ACMD_FUNC(reviveid2); // by Dino9021
+ACMD_FUNC(killid); // by Dino9021
+ACMD_FUNC(killid2); // by Dino9021
+ACMD_FUNC(charkillableid); // by Dino9021
+ACMD_FUNC(charkillableid2);  // by Dino9021
+
 /*==========================================
  *AtCommandInfo atcommand_info[]\‘¢‘Ì‚Ì’è‹`
  *------------------------------------------
@@ -483,6 +496,23 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Divorce,		"@divorce",	40, atcommand_divorce }, // [MouseJstr]
 	{ AtCommand_Rings,		"@rings",	40, atcommand_rings }, // [MouseJstr]
 	{ AtCommand_Grind,		"@grind",	40, atcommand_grind }, // [MouseJstr]
+
+	{ AtCommand_JumpToId,       "@jumptoid",  20, atcommand_jumptoid }, // [Dino9021]
+	{ AtCommand_JumpToId,       "@warptoid",  20, atcommand_jumptoid }, // [Dino9021]
+	{ AtCommand_JumpToId,       "@gotoid",  20, atcommand_jumptoid }, // [Dino9021]
+	{ AtCommand_JumpToId2,       "@jumptoid2",  20, atcommand_jumptoid2 }, // [Dino9021]
+	{ AtCommand_JumpToId2,       "@warptoid2",  20, atcommand_jumptoid2 }, // [Dino9021]
+	{ AtCommand_JumpToId2,       "@gotoid2",  20, atcommand_jumptoid2 }, // [Dino9021]
+	{ AtCommand_RecallId,       "@recallid", 60, atcommand_recallid }, // [Dino9021]
+	{ AtCommand_RecallId2,       "@recallid2", 60, atcommand_recallid2 }, // [Dino9021]
+	{ AtCommand_KickId,                "@kickid", 99, atcommand_kickid }, // [Dino9021]
+	{ AtCommand_KickId2,                "@kickid2", 99, atcommand_kickid2 }, // [Dino9021]
+	{ AtCommand_ReviveId,              "@reviveid", 60, atcommand_reviveid }, // [Dino9021]
+	{ AtCommand_ReviveId2,              "@reviveid2", 60, atcommand_reviveid2 }, // [Dino9021]
+	{ AtCommand_KillId,                "@killid", 60, atcommand_killid }, // [Dino9021]
+	{ AtCommand_KillId2,                "@killid2", 60, atcommand_killid2 }, // [Dino9021]
+	{ AtCommand_CharKillableId,      "@charkillableid",    40, atcommand_charkillableid }, // [Dino9021]
+	{ AtCommand_CharKillableId2,      "@charkillableid2",    40, atcommand_charkillableid2 }, // [Dino9021]
 
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
@@ -1221,9 +1251,9 @@ int atcommand_who(
 					player_name[j] = tolower(player_name[j]);
 				if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
 					if (pl_GM_level > 0)
-						sprintf(output, "Name: %s (GM:%d) | Location: %s %d %d", pl_sd->status.name, pl_GM_level, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y);
+						sprintf(output, "(CID:%d/AID:%d) Name: %s (GM:%d) | Location: %s %d %d", pl_sd->status.char_id, pl_sd->status.account_id, pl_sd->status.name, pl_GM_level, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y);
 					else
-						sprintf(output, "Name: %s | Location: %s %d %d", pl_sd->status.name, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y);
+						sprintf(output, "(CID:%d/AID:%d) Name: %s | Location: %s %d %d", pl_sd->status.char_id, pl_sd->status.account_id, pl_sd->status.name, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y);
 					clif_displaymessage(fd, output);
 					count++;
 				}
@@ -8025,6 +8055,642 @@ int atcommand_sendmail(
 		mail_send(sd,name,text,0);
 
 	return 0;
+}
+
+int charid2sessionid(int charid)
+{
+   int i;
+   int session_id=0;
+   struct map_session_data *pl_sd = NULL;
+
+   for(i=0;i<fd_max;i++){
+      if(session[i] && (pl_sd=session[i]->session_data) && pl_sd->state.auth){
+         if (pl_sd->status.char_id==charid) { session_id = i; break; }
+      }
+   }
+   
+   return session_id;
+}
+
+int accountid2sessionid(int accountid)
+{
+   int i;
+   int session_id=0;
+   struct map_session_data *pl_sd = NULL;
+
+   for(i=0;i<fd_max;i++){
+      if(session[i] && (pl_sd=session[i]->session_data) && pl_sd->state.auth){
+         if (pl_sd->status.account_id==accountid) { session_id = i; break; }
+      }
+   }
+   
+   return session_id;
+}
+
+
+/*==========================================
+ * Jump to a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+
+int atcommand_jumptoid(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   char character[100];
+   char output[200];
+   int cid=0;
+   int session_id=0;
+   struct map_session_data *pl_sd;
+
+   memset(character, '\0', sizeof(character));
+   memset(output, '\0', sizeof(output));
+
+   if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player CID (usage: @jumptoid/@warptoid/@gotoid <char id>).");
+      return -1;
+   }
+
+   cid=atoi(message);
+
+   if ((session_id=charid2sessionid(cid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+            clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
+            return -1;
+         }
+         if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+            clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+            return -1;
+         }
+         pc_setpos(sd, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y, 3);
+         sprintf(output, msg_table[4], pl_sd->status.name); // Jump to %s
+         clif_displaymessage(fd, output);
+      } else {
+         clif_displaymessage(fd, msg_table[154]); // Character not found.
+         return -1;
+      }
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, cid = %d\n",session_id,cid);
+
+   return 0;
+}
+
+/*==========================================
+ * Jump to a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+
+int atcommand_jumptoid2(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   char character[100];
+   char output[200];
+   int aid=0;
+   int session_id=0;
+   struct map_session_data *pl_sd;
+
+   memset(character, '\0', sizeof(character));
+   memset(output, '\0', sizeof(output));
+
+   if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player AID (usage: @jumptoid/@warptoid/@gotoid <account id>).");
+      return -1;
+   }
+
+   aid=atoi(message);
+
+   if ((session_id=accountid2sessionid(aid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+            clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
+            return -1;
+         }
+         if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+            clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+            return -1;
+         }
+         pc_setpos(sd, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y, 3);
+         sprintf(output, msg_table[4], pl_sd->status.name); // Jump to %s
+         clif_displaymessage(fd, output);
+      } else {
+         clif_displaymessage(fd, msg_table[154]); // Character not found.
+         return -1;
+      }
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, aid = %d\n",session_id,aid);
+
+   return 0;
+}
+
+/*==========================================
+ * Recall a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int atcommand_recallid(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   char character[100];
+   char output[200];
+   int cid=0;
+   int session_id=0;
+   struct map_session_data *pl_sd;
+
+   memset(character, '\0', sizeof(character));
+   memset(output, '\0', sizeof(output));
+
+   if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player CID (usage: @recallid <char id>).");
+      return -1;
+   }
+
+   cid=atoi(message);
+
+   if ((session_id=charid2sessionid(cid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level
+            if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+               clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
+               return -1;
+            }
+            if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+               clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+               return -1;
+            }
+            pc_setpos(pl_sd, sd->mapname, sd->bl.x, sd->bl.y, 2);
+            sprintf(output, msg_table[46], pl_sd->status.name); // Jump to %s
+            clif_displaymessage(fd, output);
+         } else {
+            clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+            return -1;
+         }
+      } else {
+         clif_displaymessage(fd, msg_table[154]); // Character not found.
+         return -1;
+      }
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, cid = %d\n",session_id,cid);
+
+   return 0;
+}
+
+/*==========================================
+ * Recall a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int atcommand_recallid2(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   char character[100];
+   char output[200];
+   int aid=0;
+   int session_id=0;
+   struct map_session_data *pl_sd;
+
+   memset(character, '\0', sizeof(character));
+   memset(output, '\0', sizeof(output));
+
+   if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player AID (usage: @recallid2 <account id>).");
+      return -1;
+   }
+
+   aid=atoi(message);
+
+   if ((session_id=accountid2sessionid(aid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level
+            if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+               clif_displaymessage(fd, "You are not authorised to warp you to the map of this player.");
+               return -1;
+            }
+            if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+               clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
+               return -1;
+            }
+            pc_setpos(pl_sd, sd->mapname, sd->bl.x, sd->bl.y, 2);
+            sprintf(output, msg_table[46], pl_sd->status.name); // Jump to %s
+            clif_displaymessage(fd, output);
+         } else {
+            clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+            return -1;
+         }
+      } else {
+         clif_displaymessage(fd, msg_table[154]); // Character not found.
+         return -1;
+      }
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, aid = %d\n",session_id,aid);
+
+   return 0;
+}
+
+/*==========================================
+ * Kick a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int atcommand_kickid(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   struct map_session_data *pl_sd;
+   char character[100];
+   int cid=0;
+   int session_id=0;
+
+   memset(character, '\0', sizeof(character));
+
+   if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player CID (usage: @kickid <char id>).");
+      return -1;
+   }
+
+   cid=atoi(message);
+
+   if ((session_id=charid2sessionid(cid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         if (pc_isGM(sd) >= pc_isGM(pl_sd)) // you can kick only lower or same gm level
+            clif_GM_kick(sd, pl_sd, 1);
+         else {
+            clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+            return -1;
+         }
+      } else {
+         clif_displaymessage(fd, msg_table[3]); // Character not found.
+         return -1;
+      }
+
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, cid = %d\n",session_id,cid);
+
+   return 0;
+}
+
+/*==========================================
+ * Kick a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int atcommand_kickid2(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   struct map_session_data *pl_sd;
+   char character[100];
+   int aid=0;
+   int session_id=0;
+
+   memset(character, '\0', sizeof(character));
+
+   if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player AID (usage: @kickid2 <account id>).");
+      return -1;
+   }
+
+   aid=atoi(message);
+
+   if ((session_id=accountid2sessionid(aid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         if (pc_isGM(sd) >= pc_isGM(pl_sd)) // you can kick only lower or same gm level
+            clif_GM_kick(sd, pl_sd, 1);
+         else {
+            clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+            return -1;
+         }
+      } else {
+         clif_displaymessage(fd, msg_table[3]); // Character not found.
+         return -1;
+      }
+
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, aid = %d\n",session_id,aid);
+
+   return 0;
+}
+
+/*==========================================
+ * Revive a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int atcommand_reviveid(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   char character[100];
+   int cid=0;
+   int session_id=0;
+   struct map_session_data *pl_sd;
+
+   memset(character, '\0', sizeof(character));
+
+   if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player CID (usage: @reviveid <char id>).");
+      return -1;
+   }
+
+   cid=atoi(message);
+
+   if ((session_id=charid2sessionid(cid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         pl_sd->status.hp = pl_sd->status.max_hp;
+         pc_setstand(pl_sd);
+         if (battle_config.pc_invincible_time > 0)
+            pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+         clif_updatestatus(pl_sd, SP_HP);
+         clif_updatestatus(pl_sd, SP_SP);
+         clif_resurrection(&pl_sd->bl, 1);
+         clif_displaymessage(fd, msg_table[51]); // Character revived.
+      } else {
+         clif_displaymessage(fd, msg_table[3]); // Character not found.
+         return -1;
+      }
+
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, cid = %d\n",session_id,cid);
+
+
+   return 0;
+}
+
+/*==========================================
+ * Revive a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int atcommand_reviveid2(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   char character[100];
+   int aid=0;
+   int session_id=0;
+   struct map_session_data *pl_sd;
+
+   memset(character, '\0', sizeof(character));
+
+   if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player AID (usage: @reviveid2 <account id>).");
+      return -1;
+   }
+
+   aid=atoi(message);
+
+   if ((session_id=accountid2sessionid(aid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         pl_sd->status.hp = pl_sd->status.max_hp;
+         pc_setstand(pl_sd);
+         if (battle_config.pc_invincible_time > 0)
+            pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+         clif_updatestatus(pl_sd, SP_HP);
+         clif_updatestatus(pl_sd, SP_SP);
+         clif_resurrection(&pl_sd->bl, 1);
+         clif_displaymessage(fd, msg_table[51]); // Character revived.
+      } else {
+         clif_displaymessage(fd, msg_table[3]); // Character not found.
+         return -1;
+      }
+
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, aid = %d\n",session_id,aid);
+
+
+   return 0;
+}
+
+/*==========================================
+ * Kill a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int atcommand_killid(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   char character[100];
+   int cid=0;
+   int session_id=0;
+   struct map_session_data *pl_sd;
+
+   memset(character, '\0', sizeof(character));
+
+   if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player CID (usage: @killid <char id>).");
+      return -1;
+   }
+
+   cid=atoi(message);
+
+   if ((session_id=charid2sessionid(cid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same level
+            pc_damage(NULL, pl_sd, pl_sd->status.hp + 1);
+            clif_displaymessage(fd, msg_table[14]); // Character killed.
+         } else {
+            clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+            return -1;
+         }
+      } else {
+         clif_displaymessage(fd, msg_table[3]); // Character not found.
+         return -1;
+      }
+
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, cid = %d\n",session_id,cid);
+
+   return 0;
+}
+
+/*==========================================
+ * Kill a player by PID number
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int atcommand_killid2(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   char character[100];
+   int aid=0;
+   int session_id=0;
+   struct map_session_data *pl_sd;
+
+   memset(character, '\0', sizeof(character));
+
+   if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+      clif_displaymessage(fd, "Please, enter a player AID (usage: @killid2 <account id>).");
+      return -1;
+   }
+
+   aid=atoi(message);
+
+   if ((session_id=accountid2sessionid(aid))!=0)
+   {
+      if ((pl_sd = session[session_id]->session_data) != NULL) {
+         if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same level
+            pc_damage(NULL, pl_sd, pl_sd->status.hp + 1);
+            clif_displaymessage(fd, msg_table[14]); // Character killed.
+         } else {
+            clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+            return -1;
+         }
+      } else {
+         clif_displaymessage(fd, msg_table[3]); // Character not found.
+         return -1;
+      }
+
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, aid = %d\n",session_id,aid);
+
+   return 0;
+}
+
+/*==========================================
+ * Make a player killable, by PID
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int
+atcommand_charkillableid(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   struct map_session_data *pl_sd = NULL;
+   int cid=0;
+   int session_id=0;
+
+   if (!message || (cid = atoi(message)) == 0  || !*message)
+      return -1;
+
+   cid=atoi(message);
+
+   if ((session_id=charid2sessionid(cid))!=0)
+   {
+      if((pl_sd=session[session_id]->session_data) == NULL)
+                   return -1;
+   
+      pl_sd->special_state.killable = !pl_sd->special_state.killable;
+   
+      if(pl_sd->special_state.killable)
+        clif_displaymessage(fd, "The player is now killable");
+           else
+        clif_displaymessage(fd, "The player is no longer killable");
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, cid = %d\n",session_id,cid);
+   return 0;
+}
+
+
+/*==========================================
+ * Make a player killable, by PID
+ * Original by Dino9021
+ * Added in by nsstrunks
+ *------------------------------------------
+ */
+int
+atcommand_charkillableid2(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+   struct map_session_data *pl_sd = NULL;
+   int aid=0;
+   int session_id=0;
+
+   if (!message || (aid = atoi(message)) == 0 || !*message)
+      return -1;
+
+   aid=atoi(message);
+
+   if ((session_id=accountid2sessionid(aid))!=0)
+   {
+      if((pl_sd=session[session_id]->session_data) == NULL)
+                   return -1;
+   
+      pl_sd->special_state.killable = !pl_sd->special_state.killable;
+   
+      if(pl_sd->special_state.killable)
+        clif_displaymessage(fd, "The player is now killable");
+           else
+        clif_displaymessage(fd, "The player is no longer killable");
+   }
+   else
+   {
+      clif_displaymessage(fd,msg_table[3]);
+   }
+   //printf("Session_id = %d, aid = %d\n",session_id,aid);
+   return 0;
 }
 
 /*==========================================
