@@ -147,3 +147,8 @@ Progress:	100%
 Problem:	Due to the Guilds CACHE we see some went-offline members as online ones. It is very confusing. You don't know who's really on.
 Assigned:	N/A
 Progress:	0%
+
+Problem:	When you have UNNAMED Arrows and Named Arrows in the storage and take some arrows then it change amount of other items.
+		It happens because server doesn't recognize Named and Unnamed Stockable items (Elemental Gems, Iron, Steel, Holy Water, Arrows)
+Assigned:	N/A
+Progress:	0%
