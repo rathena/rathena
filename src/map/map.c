@@ -2697,7 +2697,7 @@ int do_init(int argc, char *argv[]) {
 	FILE *data_conf;
 	char line[1024], w1[1024], w2[1024];
 
-#ifdef DGCOLLECT
+#ifdef GCOLLECT
 	GC_enable_incremental();
 #endif
 
