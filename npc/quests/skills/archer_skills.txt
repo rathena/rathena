@@ -142,7 +142,7 @@ L_LowLvl:
 
 
 //<============================== Arrow Repel ===============================>\\
-payon.gat,190,176,5	script	Jason	88,{
+payon.gat,103,63,5	script	Jason	88,{
 	mes "[Jason]";
 	if (callfunc("Is_Bow_Class")) goto L_Start;
 

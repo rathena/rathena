@@ -329,7 +329,7 @@ L_Fling:
 
 
 //====================================================================================
-payon.gat,149,120,4	script	RuRumuni	99,{
+payon.gat,91,77,4	script	RuRumuni	99,{
 	mes "[RuRumuni]";
 	if(SANDATTACK == 1 && BAGNFNTY != 2) goto L_Start;
 

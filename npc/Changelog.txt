@@ -37,6 +37,10 @@ Other Ppl
 Date		Added
 ======
 
+03/27
+	* Fixed Ant Hell warps, thanks to Dino9021
+	* Corrected positions for Thief and Archer quest skills NPCs, thanks to Dino9021
+
 03/24
 	* Added support for Emsolute Develop in the guild manager script [celest]
 	* Fixed the custom jobchanger allowing Super Novices to change to high novice,
