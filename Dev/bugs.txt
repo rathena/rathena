@@ -293,3 +293,24 @@ Problem:	'Adrenaline Rush' has to work with any weapon again (for whole party)
 		according to the kRO Sak patch on 21/12
 Assigned:	N/A
 Progress:	0%
+
+Problem:	[Urgent!] Server doesn't save Variables (#global and global)
+		If you exit the client with Alt-F4 or lose connection to the server.
+Assigned:	N/A
+Progress:	0%
+
+Problem:	[Scripts] Mob spawn. If you set unexisting monster Id
+		then you have "novice" looking mobs with random EXP
+		for exapmple there was a mob with 1 HP and 22.000 Exp.
+Assigned:	N/A
+Progress:	0%
+
+Problem:	When 2 players try to pickup one dropped item at the same time
+		then both pickup the item, but 1st one gets ACTUAL item
+		and another one gets Apple - Unknown item (with random stats, random upgrade, etc)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	[ATCommands] GMs teleportings to non-existing maps crash the server
+Assigned:	N/A
+Progress:	0%
