@@ -1,5 +1,6 @@
 Date	Added
 11/12
+	* added folder: /save-tmpl, removed folder /save
 	* battle_athena.conf: Updated Packet Version Flags.
 	* !!!Fixed Mobs Attacking!!!: Thanks for MagicalTux and Yor, I fixed the mobs attacking by using one of their files. [Codemaster]
 	* Warps Update : Added ayothaya warps in ./npc/warps/ and in map_athena.conf [Nana]
