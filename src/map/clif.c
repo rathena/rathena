@@ -7647,8 +7647,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 	char *buf;
 
 	nullpo_retv(sd);
-	if (is_charcommand(fd, sd, RFIFOP(fd,4),0)!= CharCommand_None) return;
 	if ((is_atcommand(fd, sd, RFIFOP(fd,4), 0) != AtCommand_None) ||
+        (is_charcommand(fd, sd, RFIFOP(fd,4),0)!= CharCommand_None) ||
 	    (sd->sc_data && 
 	    (sd->sc_data[SC_BERSERK].timer != -1 || //バーサーク時は会話も不可
 	     sd->sc_data[SC_NOCHAT].timer != -1 ))) //チャット禁止
@@ -7662,7 +7662,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		printf("Hack on global message: character '%s' (account: %d), use an other name to send a (normal) message.\n", sd->status.name, sd->status.account_id);
 
 		// information is sended to all online GM
-		sprintf(message, "Hack on global message (normal message): character '%s' (account: %d) uses an other name.", sd->status.name, sd->status.account_id);
+		sprintf(message, "Hack on global message (normal message): character '%s' (account: %d) uses another name.", sd->status.name, sd->status.account_id);
 		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message, strlen(message) + 1);
 		if (strlen(RFIFOP(fd,4)) == 0)
 			strcpy(message, " This player sends a void name and a void message.");
@@ -7680,6 +7680,11 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		if (battle_config.ban_spoof_namer > 0) {
 			chrif_char_ask_name(-1, sd->status.name, 2, 0, 0, 0, 0, battle_config.ban_spoof_namer, 0); // type: 2 - ban (year, month, day, hour, minute, second)
 			clif_setwaitclose(fd); // forced to disconnect because of the hack
+			
+			if(message) free(message);
+			if(buf) free(buf);
+
+			return;
 		}
 		// but for the hacker, we display on his screen (he see/look no difference).
 	} else {
