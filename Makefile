@@ -26,13 +26,15 @@ endif
 
 OPT = -g -O2 -ffast-math
 
+SVN_VERSION = $(shell echo " $Rev$ " | sed -e 's/^.* \(.*\) .*/\1/') 
+
 ifeq ($(findstring CYGWIN,$(PLATFORM)), CYGWIN)
 OS_TYPE = -DCYGWIN
-CFLAGS = $(OPT) -Wall -DFD_SETSIZE=4096 -I../common $(PACKETDEF) $(OS_TYPE)
+CFLAGS = -DSVN_VERSION=$(SVN_VERSION) $(OPT) -Wall -DFD_SETSIZE=4096 -I../common $(PACKETDEF) $(OS_TYPE)
 else
 OS_TYPE =
-CFLAGS = $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
-# CFLAGS = $(OPT) -DTWILIGHT -Wall -I../common $(PACKETDEF) $(OS_TYPE)
+CFLAGS = -DSVN_VERSION=$(SVN_VERSION) $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
+# CFLAGS = -DTWILIGHT -DSVN_VERSION=$(SVN_VERSION) $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
 endif
 
 MYSQLFLAG_INCLUDE_DEFAULT = /usr/local/include/mysql
@@ -67,11 +69,11 @@ else
 LIB_S = $(LIB_S_DEFAULT)
 endif
 
-MYLIB = CC="$(CC)" CFLAGS="$(CFLAGS) $(MYSQLFLAG_INCLUDE)" LIB_S="$(LIB_S) $(GCLIB)"
+MYLIB = SVN_VERSION="$(SVN_VERSION)" CC="$(CC)" CFLAGS="$(CFLAGS) $(MYSQLFLAG_INCLUDE)" LIB_S="$(LIB_S) $(GCLIB)"
 
 endif
 
-MKDEF = CC="$(CC)" CFLAGS="$(CFLAGS)" LIB_S="$(GCLIB)"
+MKDEF = SVN_VERSION="$(SVN_VERSION)" CC="$(CC)" CFLAGS="$(CFLAGS)" LIB_S="$(GCLIB)"
 
 all: conf txt
 

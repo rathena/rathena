@@ -5,7 +5,9 @@ COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/version.h ../common/db.h ../common/lock.h ../common/malloc.h ../common/showmsg.h ../common/strlib.h
 
 login-server: login.o md5calc.o $(COMMON_OBJ)
-	$(CC) -o ../../$@ login.o md5calc.o $(COMMON_OBJ)
+	$(CC) -o ../../$@-$(SVN_VERSION) login.o md5calc.o $(COMMON_OBJ)
+	cp ../../$@-$(SVN_VERSION) ../../$@
+
 login.o: login.c login.h md5calc.h $(COMMON_H)
 md5calc.o: md5calc.c md5calc.h
 

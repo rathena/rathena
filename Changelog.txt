@@ -4,6 +4,8 @@ SVN: $Rev$
 
 Date	Added
 12/29
+	* Modified the build system to include SVN revision as a #define
+	  as well as in the executable name (SVN 871) [MouseJstr]
 	* Fix account register wipe issue (SVN 868) [MouseJstr]
 	* Double storage/lag exploit fixed (SVN 867) [MouseJstr]
 	* Another -1 alive_timer fix (SVN 866) [MouseJstr]

@@ -5,8 +5,8 @@ COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/db.h ../common/malloc.h ../common/showmsg.h ../common/utils.h ../common/strlib.h
 
 char-server_sql: char.o inter.o int_party.o int_guild.o int_storage.o int_pet.o itemdb.o $(COMMON_OBJ)
-	$(CC) -o ../../$@ $^ $(LIB_S)
-
+	$(CC) -o ../../$@-$(SVN_VERSION) $^ $(LIB_S)
+	cp ../../$@-$(SVN_VERSION) ../../$@
 
 char.o: char.c char.h ../common/strlib.h itemdb.h ../common/showmsg.h
 inter.o: inter.c inter.h int_party.h int_guild.h int_storage.h int_pet.h ../common/mmo.h char.h ../common/socket.h ../common/showmsg.h
