@@ -1977,6 +1977,10 @@ static struct Damage battle_calc_pet_weapon_attack(
 			case AS_GRIMTOOTH:
 				damage = damage*(100+ 20*skill_lv)/100;         
 				break;
+			case AS_POISONREACT: // celest
+				s_ele = 0;
+				damage = damage*(100+ 30*skill_lv)/100;
+				break;
 			case AS_SONICBLOW:	// ソニックブロウ
 				damage = damage*(300+ 50*skill_lv)/100;
 				div_=8;
@@ -2297,11 +2301,9 @@ static struct Damage battle_calc_mob_weapon_attack(
 			}
 			else ac_flag = 1;
 		} else if(skill_num != CR_GRANDCROSS && t_sc_data && t_sc_data[SC_POISONREACT].timer != -1) {   // poison react [Celest]
-			//memset(&wd,0,sizeof(wd));
 			t_sc_data[SC_POISONREACT].val3 = 0;
 			t_sc_data[SC_POISONREACT].val4 = 1;
 			t_sc_data[SC_POISONREACT].val3 = src->id;
-			return wd;         
 		}
 	}
 	flag=BF_SHORT|BF_WEAPON|BF_NORMAL;	// 攻撃の種類の設定
@@ -2464,6 +2466,10 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case AS_GRIMTOOTH:
 				damage = damage*(100+ 20*skill_lv)/100;         
+				break;
+			case AS_POISONREACT: // celest
+				s_ele = 0;
+				damage = damage*(100+ 30*skill_lv)/100;
 				break;
 			case AS_SONICBLOW:	// ソニックブロウ
 				damage = damage*(300+ 50*skill_lv)/100;
@@ -2845,11 +2851,9 @@ static struct Damage battle_calc_pc_weapon_attack(
 			}
 			else ac_flag = 1;
 		} else if(skill_num != CR_GRANDCROSS && t_sc_data && t_sc_data[SC_POISONREACT].timer != -1) {   // poison react [Celest]
-			//memset(&wd,0,sizeof(wd));
 			t_sc_data[SC_POISONREACT].val3 = 0;
 			t_sc_data[SC_POISONREACT].val4 = 1;
 			t_sc_data[SC_POISONREACT].val3 = src->id;
-			return wd;         
 		}
 	}
 //オートカウンター処理ここまで
@@ -3207,6 +3211,11 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case AS_GRIMTOOTH:
 				damage = damage*(100+ 20*skill_lv)/100;
 				damage2 = damage2*(100+ 20*skill_lv)/100;
+				break;
+			case AS_POISONREACT: // celest
+				s_ele = 0;
+				damage = damage*(100+ 30*skill_lv)/100;
+				damage2 = damage2*(100+ 30*skill_lv)/100;
 				break;
 			case AS_SONICBLOW:	// ソニックブロウ
 				hitrate+=30; // hitrate +30, thanks to midas
@@ -3766,6 +3775,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 		damage = damage2;
 		damage2 = 0;
 	}
+	
 	// 右手、左手修練の適用
 	if(sd->status.weapon > 16) {// 二刀流か?
 		int dmg = damage, dmg2 = damage2;
@@ -3781,7 +3791,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 	else //二刀流でなければ左手ダメージは0
 		damage2 = 0;
 
-		// 右手,短剣のみ
+	// 右手,短剣のみ
 	if(da == 1) { //ダブルアタックが発動しているか
 		div_ = 2;
 		damage += damage;
@@ -4448,6 +4458,9 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				((struct mob_data *)src)->dir = map_calc_dir(src, target->x,target->y );
 			wd=battle_calc_weapon_attack(src,target,KN_AUTOCOUNTER,flag&0xff,0);
 		}
+		else if(flag&AS_POISONREACT && sc_data && sc_data[SC_POISONREACT].timer!=-1) {
+			wd=battle_calc_weapon_attack(src,target,AS_POISONREACT,sc_data[SC_POISONREACT].val1,0);
+		}
 		else
 			wd=battle_calc_weapon_attack(src,target,0,0,0);
 		if((damage = wd.damage + wd.damage2) > 0 && src != target) {
@@ -4632,7 +4645,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			struct map_session_data *tsd = (struct map_session_data *)target;
 			if ((src->type == BL_MOB && battle_get_elem_type(src)==5) || (src->type == BL_PC && battle_get_attack_element(src)==5)) {
 				t_sc_data[SC_POISONREACT].val2 = 0;
-				battle_weapon_attack(target,src,tick,flag|t_sc_data[SC_POISONREACT].val1);
+				battle_weapon_attack(target,src,tick,flag|AS_POISONREACT);
 			} else {
 				skill_use_id(tsd,src->id,TF_POISON,5);
 				--t_sc_data[SC_POISONREACT].val2;

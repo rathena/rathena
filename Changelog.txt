@@ -14,6 +14,7 @@ Date	Added
           - Pneuma (thanks to DracoRPG)
           - Changed sc_ id for Basilica
           - Cancel Basilica (100%) when caster moves or uses another skill
+          - Updated Poison React (90%)
 	* Modified pc_attack to fix monster npc's not working in certain exes, thanks
 	  to leinsirk10 [celest]
 	* Moved mapflags organized by type to main mapflag folder and removed "type" folder.
