@@ -6,6 +6,7 @@
 	Skill databases == celest working on them i believe.
 
 02/11
+        * Updated Soul Breaker cast and delay time, thanks to matthias [celest]
         * Updated Chain Crush to require level 2 Tiger Fist, thanks to matthias for
           pointing it out [celest]
 

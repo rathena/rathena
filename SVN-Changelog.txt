@@ -1,6 +1,8 @@
 Date	Added
 
 02/11
+        * Tidied up battle_check_target abit [celest]
+        * Updated traps to affect allies as well in GvG [celest]
         * Check if login server is online before setting character to online (in SQL),
           thanks to Alex14 [celest]
         * Synchronise storage as well when saving character to cut down on item
