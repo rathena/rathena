@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/01/07 10:46:38 PM Celestia $
+// $Id: skill.c,v 1.8 2004/02/24 10:28:24 PM Celestia $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -3506,25 +3506,13 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 
 	case HP_BASILICA:			/* バジリカ */
 		{
-			// cancel Basilica if already in effect
-			struct status_change *sc_data = status_get_sc_data(src);
-			if(sc_data && sc_data[SC_BASILICA].timer != -1){
-				struct skill_unit *su;
-				if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
-					struct skill_unit_group *sg;
-					if ((sg = su->group) && sg->src_id == sd->bl.id) {
-						status_change_end(src,SC_BASILICA,-1);
-						skill_delunitgroup (sg);
-						break;
-					}
-				}
-			} else {
-				// otherwise allow casting
-				status_change_start(src,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
-				skill_clear_unitgroup(src);
-				clif_skill_nodamage(src,bl,skillid,skilllv,1);
-				skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
-			}
+			struct skill_unit_group *sg;
+			battle_stopwalking(src,1);
+			skill_clear_unitgroup(src);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
+			status_change_start(src,SkillStatusChangeTable[skillid],skilllv,0,0,(int)sg,
+				skill_get_time(skillid,skilllv),0);
 		}
 		break;
 
@@ -5147,11 +5135,6 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		val2 = status_get_luk(src)/10;
 		break;
 
-	case HP_BASILICA:			/* バジリカ */
-		//Fix to prevent the priest from walking while Basilica is up.
-		battle_stopwalking(src,1);
-		break;
-
 	case PF_FOGWALL:	/* フォグウォ?ル */
 		if(sc_data && sc_data[SC_DELUGE].timer!=-1) limit *= 2;
 		break;
@@ -5227,51 +5210,36 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			unit->val2=val2;
 			unit->limit=limit;
 			unit->range=range;
-			
+
 			// [celest]
-			if (sc_data) {
-				// attach the unit's id to the caster
-				switch (skillid) {
-				case HP_BASILICA:
-					if (sc_data[SC_BASILICA].timer!=-1)
-						sc_data[SC_BASILICA].val4 = (int)unit;
-					break;
-				case GD_LEADERSHIP:
-					{
-						struct map_session_data *sd = (struct map_session_data *)src;
-						if (sd)
-							sd->state.leadership_flag = (int)unit;
+			if (sc_data && src->type == BL_PC) {
+				struct map_session_data *sd = (struct map_session_data *)src;
+				if (sd) {
+					// attach the unit's id to the caster
+					switch (skillid) {
+					case GD_LEADERSHIP:							
+						sd->state.leadership_flag = (int)group;
+						break;
+					case GD_GLORYWOUNDS:
+						sd->state.glorywounds_flag = (int)group;
+						break;
+					case GD_SOULCOLD:
+						sd->state.soulcold_flag = (int)unit;
+						break;
+					case GD_HAWKEYES:
+						sd->state.hawkeyes_flag = (int)unit;
+						break;
 					}
-					break;
-				case GD_GLORYWOUNDS:
-					{
-						struct map_session_data *sd = (struct map_session_data *)src;
-						if (sd)
-							sd->state.glorywounds_flag = (int)unit;
-					}
-					break;
-				case GD_SOULCOLD:
-					{
-						struct map_session_data *sd = (struct map_session_data *)src;
-						if (sd)
-							sd->state.soulcold_flag = (int)unit;
-					}
-					break;
-				case GD_HAWKEYES:
-					{
-						struct map_session_data *sd = (struct map_session_data *)src;
-						if (sd)
-							sd->state.hawkeyes_flag = (int)unit;
-					}
-					break;
 				}
 			}
+			
 			if (range==0 && active_flag)
 				map_foreachinarea(skill_unit_effect,unit->bl.m
 					,unit->bl.x,unit->bl.y,unit->bl.x,unit->bl.y
 					,0,&unit->bl,gettick(),1);
 		}
 	}
+	
 	return group;
 }
 
@@ -5352,7 +5320,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 				break;
 		}
 		status_change_start(bl,type,sg->skill_lv,(int)src,0,0,
-				skill_get_time2(sg->skill_id,sg->skill_lv),0);
+			skill_get_time2(sg->skill_id,sg->skill_lv),0);
 		break;
 
 	case 0x9e:	/* 子守唄 */
@@ -5373,7 +5341,6 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	case 0xad:	/* 私を忘れないで… */
 	case 0xae:	/* 幸運のキス */
 	case 0xaf:	/* サ?ビスフォ?ユ? */
-	case 0xb4:
 		if (sg->src_id==bl->id)
 			break;
 		if (sc_data && sc_data[type].timer!=-1) {
@@ -5384,6 +5351,19 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		}
 		status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
 				(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
+		break;
+
+	case 0xb4:	// Basilica
+		if (battle_check_target(&src->bl,bl,BCT_NOENEMY)>0) {
+			if (sc_data && sc_data[type].timer!=-1) {
+				struct skill_unit_group *sg2 = (struct skill_unit_group *)sc_data[type].val4;
+				if (sg2 && (sg2 == src->group || DIFF_TICK(sg->tick,sg2->tick)<=0))
+					break;
+			} else
+				status_change_start(bl,type,sg->skill_lv,(int)src,0,0,
+					skill_get_time2(sg->skill_id,sg->skill_lv),0);
+		} else if (!status_get_mode(bl)&0x20)
+			skill_blown(&src->bl,bl,1);
 		break;
 
 	case 0xb6:				/* フォグウォ?ル */
@@ -5655,18 +5635,17 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		}
 		break;	
 
-	//case 0xb4:				/* バジリカ */
-	   	/*if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
-				!(status_get_mode(bl)&0x20))
+	// Basilica
+	case 0xb4:				/* バジリカ */
+	   	if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
+			!(status_get_mode(bl)&0x20))
 			skill_blown(&src->bl,bl,1);
 		if (sg->src_id==bl->id)
 			break;
-		if (battle_check_target(&src->bl,bl,BCT_NOENEMY)>0) {
-			type = SkillStatusChangeTable[sg->skill_id];
-			status_change_start(bl,type,sg->skill_lv,sg->val1,sg->val2,
-				(int)src,sg->interval+100,0);
-		}
-		break;*/
+		if (battle_check_target(&src->bl,bl,BCT_NOENEMY)>0 && sc_data && sc_data[type].timer == -1)
+			status_change_start(bl,type,sg->skill_lv,(int)src,0,0,
+				skill_get_time2(sg->skill_id,sg->skill_lv),0);
+		break;
 
 	case 0xb7:	/* スパイダ?ウェッブ */
 		if(sg->val2==0){
@@ -5773,8 +5752,13 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 	case 0xad:	/* 私を忘れないで… */
 	case 0xae:	/* 幸運のキス */
 	case 0xaf:	/* サ?ビスフォ?ユ? */
-	case 0xb4:
 		if (sc_data[type].timer!=-1 && sc_data[type].val4==(int)src) {
+			status_change_end(bl,type,-1);
+		}
+		break;
+
+	case 0xb4:	// Basilica
+		if (sc_data[type].timer!=-1 && sc_data[type].val4==(int)sg) {
 			status_change_end(bl,type,-1);
 		}
 		break;
@@ -6872,18 +6856,12 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		}
 
 		if (sc_data[SC_BASILICA].timer != -1) { // Disallow all other skills in Basilica [celest]
-			struct skill_unit *su;
-			if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
-				struct skill_unit_group *sg;
-				// if caster is the owner of basilica
-				if ((sg = su->group) && sg->src_id == sd->bl.id) {
-					// status_change_end(&sd->bl,SC_BASILICA,-1);
-					// skill_delunitgroup (sg);
-					if (skill_num != HP_BASILICA) return 0;
-				} // otherwise...
-				else
-					return 0;
-			}
+			struct skill_unit_group *sg = (struct skill_unit_group *)sc_data[SC_BASILICA].val4;
+			// if caster is the owner of basilica
+			if (sg && sg->src_id == sd->bl.id &&
+				skill_num == HP_BASILICA) ;	// do nothing
+			// otherwise...
+			else return 0;
 		}
 		/* 演奏/ダンス中 */
 		if(sc_data[SC_DANCING].timer!=-1 ){
@@ -6901,21 +6879,6 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		return 0;
 	if(sd->status.option&2 && skill_num!=TF_HIDING && skill_num!=AS_GRIMTOOTH && skill_num!=RG_BACKSTAP && skill_num!=RG_RAID )
 		return 0;
-
-	/*if(map[sd->bl.m].flag.gvg){ //GvGで使用できないスキル
-		switch(skill_num){
-		case SM_ENDURE:
-		case AL_TELEPORT:
-		case AL_WARP:
-		case WZ_ICEWALL:
-		case TF_BACKSLIDING:
-		//case LK_BERSERK: // now usable in WoE - celest
-		case HP_BASILICA:
-		case HP_ASSUMPTIO:
-		case ST_CHASEWALK:
-		return 0;
-		}
-	}*/
 
 	if(skill_get_inf2(skill_num)&0x200 && sd->bl.id == target_id)
 		return 0;
@@ -7105,13 +7068,25 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		casttime = 700;
 		break;
 	case HP_BASILICA:		/* バジリカ */
-		if (skill_check_unit_range(sd->bl.m,sd->bl.x,sd->bl.y,sd->skillid,sd->skilllv)) {
-			clif_skill_fail(sd,sd->skillid,0,0);
-			return 0;
-		}
-		if (skill_check_unit_range2(sd->bl.m,sd->bl.x,sd->bl.y,sd->skillid,sd->skilllv)) {
-			clif_skill_fail(sd,sd->skillid,0,0);
-			return 0;
+		{
+			if (skill_check_unit_range(sd->bl.m,sd->bl.x,sd->bl.y,sd->skillid,sd->skilllv)) {
+				clif_skill_fail(sd,sd->skillid,0,0);
+				return 0;
+			}
+			if (skill_check_unit_range2(sd->bl.m,sd->bl.x,sd->bl.y,sd->skillid,sd->skilllv)) {
+				clif_skill_fail(sd,sd->skillid,0,0);
+				return 0;
+			}
+			// cancel Basilica if already in effect
+			struct status_change *sc_data = status_get_sc_data(&sd->bl);
+			if(sc_data && sc_data[SC_BASILICA].timer != -1) {
+				struct skill_unit_group *sg = (struct skill_unit_group *)sc_data[SC_BASILICA].val4;
+				if (sg && sg->src_id == sd->bl.id) {
+					status_change_end(&sd->bl,SC_BASILICA,-1);
+					skill_delunitgroup (sg);
+					return 0;
+				}
+			}
 		}
 		break;
 	case GD_BATTLEORDER:
@@ -7217,30 +7192,18 @@ int skill_use_pos( struct map_session_data *sd,
 			sc_data[SC_MARIONETTE].timer != -1)
 			return 0;	/* ?態異常や沈?など */
 
-		if (sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
-			struct skill_unit *su;
-			if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
-				struct skill_unit_group *sg;
-				// if caster is the owner of basilica
-				if ((sg = su->group) && sg->src_id == sd->bl.id) {
-					// status_change_end(&sd->bl,SC_BASILICA,-1);
-					// skill_delunitgroup (sg);
-					if (skill_num != HP_BASILICA) return 0;
-				} // otherwise...
-				else
-					return 0;
-			}
+		if (sc_data[SC_BASILICA].timer != -1) {
+			struct skill_unit_group *sg = (struct skill_unit_group *)sc_data[SC_BASILICA].val4;
+			// if caster is the owner of basilica
+			if (sg && sg->src_id == sd->bl.id &&
+				skill_num == HP_BASILICA) ;	// do nothing
+			// otherwise...
+			else return 0;
 		}
 	}
 
 	if(sd->status.option&2)
 		return 0;
-
-/*	if(map[sd->bl.m].flag.gvg &&
-		(skill_num == SM_ENDURE || skill_num == AL_TELEPORT ||
-		skill_num == AL_WARP || skill_num == WZ_ICEWALL ||
-		skill_num == TF_BACKSLIDING))
-		return 0;*/
 
 	sd->skillid = skill_num;
 	sd->skilllv = skill_lv;
@@ -7751,35 +7714,7 @@ int skill_frostjoke_scream(struct block_list *bl,va_list ap)
 
 	return 0;
 }
-/*==========================================
- * Basilica creates a 'safe zone' [celest]
- *------------------------------------------
- */
-static int skill_basilica_count(struct block_list *bl,va_list ap)
-{
-	int *c;
-	struct skill_unit *unit;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, (unit=(struct skill_unit *)bl));
-	nullpo_retr(0, unit->group);
-
-	c=va_arg(ap,int *);
-
-	if(unit && unit->group->unit_id == 0xb4 && c)
-		(*c)++;
-	return 0;
-}
-
-int skill_check_basilica (struct block_list *bl, int dx, int dy)
-{
-	int c=0;
-	nullpo_retr(0, bl);
-	map_foreachinarea(skill_basilica_count,bl->m,
-			dx-1,dy-1,dx+1,dy+1,BL_SKILL,&c);
-	return (c>0);
-}
 /*==========================================
  * Moonlit creates a 'safe zone' [celest]
  *------------------------------------------
@@ -8208,8 +8143,8 @@ struct skill_unit *skill_initunit(struct skill_unit_group *group,int idx,int x,i
 	map_addblock(&unit->bl);
 	clif_skill_setunit(unit);
 
-//	if (group->skill_id==HP_BASILICA)
-//		skill_basilica_cell(unit,CELL_SETBASILICA);
+	if (group->skill_id==HP_BASILICA)
+		skill_basilica_cell(unit,CELL_SETBASILICA);
 
 	return unit;
 }
@@ -8237,8 +8172,8 @@ int skill_delunit(struct skill_unit *unit)
 			&unit->bl,gettick(),0);
 	}
 
-//	if (group->skill_id==HP_BASILICA)
-//		skill_basilica_cell(unit,CELL_CLRBASILICA);
+	if (group->skill_id==HP_BASILICA)
+		skill_basilica_cell(unit,CELL_CLRBASILICA);
 
 	clif_skill_delunit(unit);
 

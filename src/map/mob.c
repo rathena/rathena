@@ -507,8 +507,7 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 			return 0;
 		}
 
-		if (skill_check_basilica (&md->bl,x+dx,y+dy) ||
-			skill_check_moonlit (&md->bl,x+dx,y+dy)) {
+		if (skill_check_moonlit (&md->bl,x+dx,y+dy)) {
 			mob_walktoxy_sub(md);
 			return 0;
 		}
