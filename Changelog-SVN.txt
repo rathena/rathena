@@ -1,6 +1,8 @@
 Date	Added
 
-04/02
+03/05
+	* Reversed drop_rate0item option, corrected MVP Drop rate (thanks to Freya) [Lupus]
+03/04
 	* Fixed SQL Guild Castle Saving (now fully working, tested on 100 players during WOE) [Lupus]
 03/02
 	* Fixed SQL Guild Castle Saving (partial, yet it doesn't clear GuildID when you abandon a castle) [Lupus]

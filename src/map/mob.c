@@ -2588,11 +2588,11 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			if(mob_db[md->class_].dropitem[i].nameid <= 0)
 				continue;
 			drop_rate = mob_db[md->class_].dropitem[i].p;
-			if(drop_rate <= 0 && battle_config.drop_rate0item)
+			if(drop_rate <= 0 && !battle_config.drop_rate0item)
 				drop_rate = 1;
 			if(battle_config.drops_by_luk>0 && sd && md) drop_rate+=(sd->status.luk*battle_config.drops_by_luk)/100;	// drops affected by luk [Valaris]
 			if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class_].lv - sd->status.base_level >= 20)) drop_rate*=1.25; // pk_mode increase drops if 20 level difference [Valaris]
-			if(drop_rate <= rand()%10000) {
+			if(drop_rate <= rand()%10000+1) { //if rate == 0, then it doesn't drop (from Freya)
 				drop_ore = i; //we rmember an empty slot to put there ORE DISCOVERY drop later.
 				continue;
 			}
@@ -2695,13 +2695,14 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			if(mob_db[md->class_].mvpitem[i].nameid <= 0)
 				continue;
 			drop_rate = mob_db[md->class_].mvpitem[i].p;
-			if(drop_rate <= 0 && battle_config.drop_rate0item)
+			if(drop_rate <= 0 && !battle_config.drop_rate0item)
 				drop_rate = 1;
-			if(drop_rate < battle_config.item_drop_mvp_min)
+/*			if(drop_rate < battle_config.item_drop_mvp_min)
 				drop_rate = battle_config.item_drop_mvp_min;
 			else if(drop_rate > battle_config.item_drop_mvp_max) //fixed
 				drop_rate = battle_config.item_drop_mvp_max;
-			if(drop_rate <= rand()%10000)
+*/
+			if(drop_rate <= rand()%10000+1) //if ==0, then it doesn't drop
 				continue;
 			memset(&item,0,sizeof(item));
 			item.nameid=mob_db[md->class_].mvpitem[i].nameid;
@@ -3989,8 +3990,11 @@ static int mob_readdb(void)
 			mob_db[class_].mexpper=atoi(str[50]);
 			// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 			for(i=0;i<3;i++){
+				int rate=atoi(str[52+i*2])*battle_config.mvp_item_rate/100; //idea of the fix from Freya
 				mob_db[class_].mvpitem[i].nameid=atoi(str[51+i*2]);
-				mob_db[class_].mvpitem[i].p=atoi(str[52+i*2])*battle_config.mvp_item_rate/100;
+				mob_db[class_].mvpitem[i].p= (rate < battle_config.item_drop_mvp_min) 
+					? battle_config.item_drop_mvp_min : (rate > battle_config.item_drop_mvp_max) 
+					? battle_config.item_drop_mvp_max : rate;
 			}
 			for(i=0;i<MAX_RANDOMMONSTER;i++)
 				mob_db[class_].summonper[i]=0;
