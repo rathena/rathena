@@ -1,6 +1,7 @@
 Date	Added
 11/19
 	* Re-added check for empty bottle when using aqua benedicta. [Valaris]
+        * Fixed skills not showing after using @allskill [celest]
 
 11/18
         * Added a line to @unmute, added @mute. [celest]

@@ -4797,9 +4797,11 @@ int pc_allskillup(struct map_session_data *sd)
 	}
 	else {
 		for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
-			if(sd->status.skill[id].id==0 && (!(skill_get_inf2(id)&0x01) || battle_config.quest_skill_learn) )
+			if(sd->status.skill[id].id==0 && (!(skill_get_inf2(id)&0x01) || battle_config.quest_skill_learn) ) {
+				sd->status.skill[id].id = id;	// celest
 				// sd->status.skill[id].lv=skill_get_max(id);
-				sd->status.skill[id].lv=skill_tree_get_max(id, sd->status.class);	// celest
+				sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class);	// celest				
+			}
 		}
 	}
 	pc_calcstatus(sd,0);
