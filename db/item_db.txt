@@ -1026,8 +1026,9 @@
 2639,Purification_Sachet,Occult Incense,5,20,0,100,,0,,,10477567,2,136,,0,,{},{ bonus bAgi,1; bonus bInt,1; }
 2640,Kafra_Ring,Kafra Ring,5,20,0,200,,,,,10477567,2,136,,,,{},{ bonus bStr,1; bonus bAgi,1; bonus bInt,1; bonus bLuk,1; }
 2641,Fashion_Hip_Sack,Fashion Hip Sack,5,20,0,700,,0,,0,263200,2,136,,50,,{},{ bonus bStr,2; }
-2642,Celines_Ring,Celine's Ring,5,,,100,,0,,0,10477567,2,136,,,,{},{}
-2643,Celines_Ring_,Celine's Ring,5,,,100,,0,,0,10477567,2,136,,,,{},{}
+2642,Celines_Ring,Celine's Ring,5,20,0,100,,0,,0,10477567,2,136,,,,{},{}
+2643,Celines_Ring_,Celine's Ring,5,20,0,100,,0,,0,10477567,2,136,,,,{},{}
+2644,The_Sign_,The Sign,5,20,0,0,,0,,0,10477567,2,136,,,,{},{}
 
 // Cards
 //===================================================================
@@ -1035,7 +1036,7 @@
 4002,Fabre_Card,Fabre Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bVit,1; bonus bMaxHP,100; }
 4003,Pupa_Card,Pupa Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bMaxHP,700; }
 4004,Drops_Card,Drops Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bDex,1; bonus bHit,3; }
-4005,Poring__Card,Poring  Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEle,7,20; }
+4005,Santa_Poring_Card,Santa Poring Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEle,7,20; }
 4006,Lunatic_Card,Lunatic Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bLuk,1; bonus bCritical,1; bonus bFlee2,1; }
 4007,Pecopeco_Egg_Card,Pecopeco Egg Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace,0,20; }
 4008,Picky_Card,Picky Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bStr,1; bonus bBaseAtk,10; }
@@ -1466,8 +1467,8 @@
 5097,Annual_Commemoration_Hat,Annual Commemoration Hat,5,20,0,30,,3,,0,10477567,2,256,,0,166,{},{ bonus bAllStats,3; }
 5098,Tiger_Mask,Tiger Mask,5,20,0,400,,2,,,10477567,2,768,,,181,{},{ bonus bStr,3; bonus bMaxHP,100; }
 5100,Sale_Sign,Sale Sign,5,20,0,800,,1,,0,10477567,2,256,,75,183,{},{ bonus bStr,1; bonus bAgi,1; bonus bLuk,1; }
-5101,Takius_Blindfold,Takius' Blindfold,5,,,100,,,,0,10477567,2,512,,,184,{},{}
-5102,Round_Eyes,Round Eyes,5,,,100,,,,0,10477567,2,512,,,185,{},{}
+5101,Takius_Blindfold,Takius' Blindfold,5,20,0,100,,,,0,10477567,2,512,,,184,{},{}
+5102,Round_Eyes,Round Eyes,5,20,0,100,,,,0,10477567,2,512,,,185,{},{}
 
 // Misc items
 //===================================================================
@@ -1777,15 +1778,17 @@
 7303,Rice_Bag,Rice Straw Bag,3,20,0,800,,,,,,,,,,,{},{}
 
 // 2005
-7304,Witchs_Spellbook,Witch's Spellbook,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7305,Unknown_item,Authority of 9 worlds,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7306,Piece_of_Soul,Piece of Soul,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7307,Whisper_of_Soul,Whisper of Soul,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7308,Witchs_Potion,Witch's Potion,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7309,Crows_Wing,Crow's Wing,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7310,Peco_Coupon,Pecopeco Free Coupon,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7311,Airship_Coupon,Airship Free Coupon,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7312,Jubile,Jubilaeum,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7304,Witchs_Spellbook,Witch's Spellbook,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7305,Unknown_item,Authority of 9 worlds,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7306,Piece_of_Soul,Piece of Soul,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7307,Whisper_of_Soul,Whisper of Soul,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7308,Witchs_Potion,Witch's Potion,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7309,Crows_Wing,Crow's Wing,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7310,Peco_Coupon,Pecopeco Free Coupon,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7311,Airship_Coupon,Airship Free Coupon,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7312,Jubile,Jubilaeum,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7313,Witch\'s_Voucher,Witch's Voucher,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7314,The_Sign,The Sign,3,20,0,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
 
 7500,THG_Membership,THG Membership,3,20,0,10,,,,,,,,,,,{},{}
 7501,Token_Bag,Token Bag,3,20,0,10,,,,,,,,,,,{},{}
@@ -1890,13 +1893,10 @@
 12014,Immaterial_Arrow_Quiver,Immaterial Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1757,500; },{}
 12015,Rusty_Arrow_Quiver,Rusty Arrow Quiver,2,1500,,250,,,,,10477567,2,,,,,{ getitem 1762,500; },{}
 
-12016,Speed_Increasing_Potion,Inc.Speed Potion,2,1000,0,100,,,,,10477567,2,,,,,{},{}
-12017,Speed_Decreasing_Potion,Dec.Speed Potion,2,1000,0,100,,,,,10477567,2,,,,,{},{}
+12016,Speed_Increasing_Potion,Speed Potion,2,1000,0,100,,,,,10477567,2,,,,,{},{}
+12017,Speed_Decreasing_Potion,Speed Potion,2,1000,0,100,,,,,10477567,2,,,,,{},{}
 12018,Fire_Cracker,Fire Cracker,2,250,0,20,,,,,10477567,2,,,,,{ misceffect(256); },{}
 
 // 2005
-12019,Sacred_Egg,Sacred Egg,2,,,150,,,,,10477567,2,,,,,{},{} //Acts like Yggdra 
-
-
-
-
+12019,Sacred_Egg,Sacred Egg,2,20,0,150,,,,,10477567,2,,,,,{},{} //Acts like Yggdra 
+12020,Dark_Water,Dark Water,2,20,0,10,,,,,10477567,2,,,,,{},{}
