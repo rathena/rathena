@@ -9,6 +9,8 @@
 	Skill databases == celest working on them i believe.
 
 03/31
+	* Reverted Berzebub card to reduce casting rate
+	* Corrected some item effects, thanks to digigp and htm
 	* Updated some cards effects from 3/25 patch [DracoRPG]
 	* Updated freeze time for Frost Diver and Frost Nova
 	* Updated cast time for Preserve, thanks to Neko2
