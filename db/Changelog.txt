@@ -1,0 +1,14 @@
+	Post here any database changes ok guys? [shadowlady]
+
+	==== progress ====
+	Atothala mobs == Added but using poring stats ( ? )
+	Ayothala items == Added but no effect ( all are "ect" itens)
+	Skill databases == celest working on them i believe.
+	
+
+11/15
+	- Minor fix on wedding skills, to use 15% of SP/HP . [shadowlady]
+	-  ?
+
+11/14
+	- Fixed Golden Thief Bug Mode!(+detects hidden) [Lupus]
