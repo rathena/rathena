@@ -35,7 +35,7 @@ int mail_check(struct map_session_data *sd,int type)
 
 	nullpo_retr (0, sd);
 
-	sprintf(tmp_msql,"SELECT `message_id`,`to_account_id`,`from_char_name`,`read_flag`,`priority`,`check_flag"
+	sprintf(tmp_msql,"SELECT `message_id`,`to_account_id`,`from_char_name`,`read_flag`,`priority`,`check_flag` "
 		"FROM `%s` WHERE `to_account_id` = \"%d\" ORDER by `message_id`", mail_db, sd->status.account_id);
 
 	if (mysql_query(&mail_handle, tmp_msql)) {
