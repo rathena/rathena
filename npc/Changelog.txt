@@ -35,8 +35,9 @@ Other Ppl
 Date		Added
 ======
 11/18
-        * Fixed typo in payon.txt [celest]
-	* Fixed typos on izlude.txt [shadow]
+      * Fixed typo in payon.txt [celest]
+	* - Fixed infinite zeny exploit in novice_skills.txt(other quest skills npcs need revision!!!)
+	  - Fixed typos on izlude.txt [shadow]
 	* Added custom WOE warper (now you can get to Novice Castles from Prontera) [Lupus]
 	* Prontera.txt (Sewers) anti-novice exploit fix. should be added to any quests/banks where u once get free items/zeny [Lupus]
 11/17
