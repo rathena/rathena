@@ -8,10 +8,13 @@
 	Einbroch items == 5%
 	Skill databases == celest working on them i believe.
 
+
 04/05
+	* Removed Evil Wings drops from Mini Demon,Deviruchi,Archangeling and put it into Deviling [Lupus]
+	  according to kRO "evil wings" are dropped by Deviling only
+	  Deviling items drop chances aren't correct yet
 	* Fixed skill tree entries for Vulcan Arrow, and Throw Arrow for gypsies,
 	  thanks to Hekate
-
 04/04
 	* Removed required skills for Berserk (only job level 50 is needed) [DracoRPG]
 	* Re-added MDEF +15 to Resting Cat [DracoRPG]
