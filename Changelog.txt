@@ -1,4 +1,6 @@
 Date	Added
+11/22
+	* Added the old effect list # into effect_list.txt of spira's. [shadow]
 11/21
 	* Display IP when wdata is expanded [Wizputer]
 	* Added bClassChange,%; Has random chance to turn monster into another monster. [Valaris]
