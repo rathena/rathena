@@ -151,7 +151,7 @@ Assigned:	N/A
 Progress:	0%
 
 Problem:	SVN 8XX. After 1 day up it started to repeat every players commands twice:
-			i.g. Item usage, movement, etc.
+			i.g. Item usage, movement, etc. It looks like LAGS
 Assigned:	N/A
 Progress:	0%
 
@@ -166,5 +166,9 @@ Assigned:	N/A
 Progress:	0%
 
 Problem:	Potion Pitcher skill should be able to target yourself.
+Assigned:	N/A
+Progress:	0%
+
+Problem:	There are many empty entries of newly created characters in Char DB Table (missing names)
 Assigned:	N/A
 Progress:	0%
