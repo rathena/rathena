@@ -7209,6 +7209,24 @@ void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *na
 
 	return;
 }
+
+int clif_soundeffectall(struct block_list *bl, char *name, int type)
+{
+	unsigned char buf[31];
+	memset(buf, 0, packet_len_table[0x1d3]);
+
+	nullpo_retr(0, bl);
+
+	WBUFW(buf,0)=0x1d3;
+	memcpy(WBUFP(buf,2), name, 24);
+	WBUFB(buf,26)=type;
+	WBUFL(buf,27)=0;
+	WBUFL(buf,31)=bl->id;
+	clif_send(buf, packet_len_table[0x1d3], bl, AREA);
+
+	return 0;
+}
+
 // displaying special effects (npcs, weather, etc) [Valaris]
 int clif_specialeffect(struct block_list *bl, int type, int flag) {
 	unsigned char buf[24];

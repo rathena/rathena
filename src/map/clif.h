@@ -93,6 +93,7 @@ void clif_wedding_effect(struct block_list *bl);
 void clif_adopt_process(struct map_session_data *sd);
 void clif_sitting(struct map_session_data *sd);
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *name,int type);
+int clif_soundeffectall(struct block_list *bl, char *name, int type);
 
 // trade
 int clif_traderequest(struct map_session_data *sd,char *name);

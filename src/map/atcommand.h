@@ -206,7 +206,7 @@ enum AtCommandType {
 	AtCommand_SendMail, // [Valaris]
 	AtCommand_DeleteMail, // [Valaris]
 	AtCommand_SendPriorityMail, // [Valaris]
-	AtCommand_Sound, // [Valaris]	
+//	AtCommand_Sound, // [Valaris]	
 	AtCommand_RefreshOnline, // [Valaris]
 	// SQL-only commands end
 #endif
@@ -232,6 +232,7 @@ enum AtCommandType {
 	AtCommand_KillId2, // by Dino9021
 	AtCommand_CharKillableId, // by Dino9021
 	AtCommand_CharKillableId2, // by Dino9021
+	AtCommand_Sound,
 
 	// end
 	AtCommand_Unknown,

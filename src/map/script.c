@@ -262,6 +262,7 @@ int buildin_clearitem(struct script_state *st);
 int buildin_classchange(struct script_state *st);
 int buildin_misceffect(struct script_state *st);
 int buildin_soundeffect(struct script_state *st);
+int buildin_soundeffectall(struct script_state *st);
 int buildin_setcastledata(struct script_state *st);
 int buildin_mapwarp(struct script_state *st);
 int buildin_inittimer(struct script_state *st);
@@ -483,6 +484,7 @@ struct {
 	{buildin_classchange,"classchange","ii"},
 	{buildin_misceffect,"misceffect","i"},
 	{buildin_soundeffect,"soundeffect","si"},
+	{buildin_soundeffectall,"soundeffectall","si"},	// SoundEffectAll [Codemaster]
 	{buildin_strmobinfo,"strmobinfo","ii"},	// display mob data [Valaris]
 	{buildin_guardian,"guardian","siisii*i"},	// summon guardians
 	{buildin_guardianinfo,"guardianinfo","i"},	// display guardian data [Valaris]
@@ -5795,6 +5797,24 @@ int buildin_soundeffect(struct script_state *st)
 		else{
 			clif_soundeffect(sd,&sd->bl,name,type);
 		}
+	}
+	return 0;
+}
+
+int buildin_soundeffectall(struct script_state *st)
+{
+	struct map_session_data *sd=script_rid2sd(st);
+	char *name;
+	int type=0;
+
+	name=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	type=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	if(sd)
+	{
+		if(st->oid)
+			clif_soundeffectall(map_id2bl(st->oid),name,type);
+		else
+			clif_soundeffectall(&sd->bl,name,type);
 	}
 	return 0;
 }

@@ -247,6 +247,7 @@ ACMD_FUNC(killid); // by Dino9021
 ACMD_FUNC(killid2); // by Dino9021
 ACMD_FUNC(charkillableid); // by Dino9021
 ACMD_FUNC(charkillableid2);  // by Dino9021
+ACMD_FUNC(sound);
 
 /*==========================================
  *AtCommandInfo atcommand_info[]\‘¢‘Ì‚Ì’è‹`
@@ -516,6 +517,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_KillId2,                "@killid2", 60, atcommand_killid2 }, // [Dino9021]
 	{ AtCommand_CharKillableId,      "@charkillableid",    40, atcommand_charkillableid }, // [Dino9021]
 	{ AtCommand_CharKillableId2,      "@charkillableid2",    40, atcommand_charkillableid2 }, // [Dino9021]
+	{ AtCommand_Sound,		"@sound",	40,	atcommand_sound },
 
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
@@ -7556,6 +7558,31 @@ atcommand_clearweather(
 	//clif_specialeffect(&sd->bl,effno,2); // not required. [celest]
 	return 0;
 } 
+
+/*===============================================================
+ * Sound Command - plays a sound for everyone! [Codemaster]
+ *---------------------------------------------------------------
+ */
+int
+atcommand_sound(
+	const int fd, struct map_session_data *sd,
+	const char *command, const char *message)
+{
+	char sound_file[100];
+
+	if(!message || !*message || sscanf(message, "%99[^\n]", sound_file) < 1) {
+		clif_displaymessage(fd, "Please, enter a sound filename. (usage: @sound <filename>)");
+		return -1;
+	}
+
+	memset(sound_file, '\0', sizeof(sound_file));
+	if(sscanf(message, "%99[^\n]", sound_file) < 1)
+		return -1;
+
+	clif_soundeffectall(&sd->bl, sound_file,0);
+
+	return 0;
+}
 
 /*==========================================
  * 	MOB Search
