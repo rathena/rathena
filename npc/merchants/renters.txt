@@ -18,7 +18,7 @@
 // PecoPeco Breeder (for Knights)-------------------------------------------
 prontera.gat,61,338,3	script	PecoPeco Breeder	86,{
 	mes "[PecoPeco Breeder]";
-	if(Class == Job_Knight || Class == Job_Knight2 || Class == 4008 || Class == Job_Lord_Knight || Class == Job_Lord_Knight2) goto L_Start;
+	if((Class == 7)||(Class == 4008)) goto L_Start;
 	mes "I'm a PecoPeco breeder and I rent out PecoPeco's for^4444FF Knights ^000000to ride on.";
 	close;
 
@@ -63,7 +63,7 @@ L_Start:
 // Grand PecoPeco Breeder (for Crusaders)-------------------------------------------
 prontera.gat,238,312,5	script	Grand PecoPeco Breeder	86,{
 	mes "[Grand PecoPeco Breeder]";
-	if(Class == Job_Crusader || Class == Job_Crusader2 || Class == 4015 || Class == Job_Paladin || Class == Job_Paladin2 ) goto L_Start;
+	if((Class == 14)||(Class == 4015)) goto L_Start;
 
 	mes "I'm a Grand PecoPeco breeder and I rent out Grand PecoPeco's for^4444FF Crusaders ^000000to ride on.";
 	close;
