@@ -3,13 +3,13 @@
 //===== By: ==================================================
 //= Dino9021
 //===== Current Version: ===================================== 
-//= n/a
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= Monk Job Quests for Athena 2004.12.30
 //===== Additional Comments: ================================= 
-// n/a
+// 1.1 Fixed missing '";'. Now it's loading fine [Lupus]
 //============================================================ 
 
 prt_monk.gat,55,249,4	script	Master	139,0,5,{
@@ -170,7 +170,7 @@ L_MENU_1:
 	next;
 	mes "[Elder Wuhai]";
 	mes "OKay, then let's start the test.";
-	mes "See if you really have the ability to become a Monk.
+	mes "See if you really have the ability to become a Monk.";
 	next;
 	mes "[Elder Wuhai]";
 	mes "First of all, we'll see if you have the ability doing something by yourself.";
