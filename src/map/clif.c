@@ -3887,7 +3887,7 @@ int clif_clearchar_skillunit(struct skill_unit *unit,int fd)
 	WFIFOW(fd, 0)=0x120;
 	WFIFOL(fd, 2)=unit->bl.id;
 	WFIFOSET(fd,packet_len_table[0x120]);
-	if(unit->group->skill_id == WZ_ICEWALL)
+	if(unit->group && unit->group->skill_id == WZ_ICEWALL)
 		clif_set0192(fd,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
 
 	return 0;

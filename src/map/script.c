@@ -5550,37 +5550,46 @@ int buildin_strmobinfo(struct script_state *st)
 	int num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	int class_=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
-	if(num<=0 || num>=8 || (class_>=0 && class_<=1000) || class_ >2000)
+	if((class_>=0 && class_<=1000) || class_ >2000)
 		return 0;
 
-	if(num==1) {
-		char *buf;
-		buf=aCallocA(24, 1);
-//		buf=mob_db[class_].name;
+	switch (num) {
+	case 1:
+		{
+			char *buf;
+			buf=aCallocA(24, 1);
+//			buf=mob_db[class_].name;
 // for string assignments you would need to go for c++ [Shinomori]
-		strcpy(buf,mob_db[class_].name);
-		push_str(st->stack,C_STR,buf);
-		return 0;
-	}
-	else if(num==2)	{
-		char *buf;
-		buf=aCallocA(24, 1);
-//		buf=mob_db[class_].jname;
+			strcpy(buf,mob_db[class_].name);
+			push_str(st->stack,C_STR,buf);
+			break;
+		}
+	case 2:
+		{
+			char *buf;
+			buf=aCallocA(24, 1);
+//			buf=mob_db[class_].jname;
 // for string assignments you would need to go for c++ [Shinomori]
-		strcpy(buf,mob_db[class_].jname);
-		push_str(st->stack,C_STR,buf);
-		return 0;
-	}
-	else if(num==3)
+			strcpy(buf,mob_db[class_].jname);
+			push_str(st->stack,C_STR,buf);
+			break;
+		}
+	case 3:
 		push_val(st->stack,C_INT,mob_db[class_].lv);
-	else if(num==4)
+		break;
+	case 4:
 		push_val(st->stack,C_INT,mob_db[class_].max_hp);
-	else if(num==5)
+		break;
+	case 5:
 		push_val(st->stack,C_INT,mob_db[class_].max_sp);
-	else if(num==6)
+		break;
+	case 6:
 		push_val(st->stack,C_INT,mob_db[class_].base_exp);
-	else if(num==7)
+		break;
+	case 7:
 		push_val(st->stack,C_INT,mob_db[class_].job_exp);
+		break;
+	}
 	return 0;
 }
 
