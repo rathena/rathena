@@ -35,6 +35,8 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 		case MSG_WARNING: //Bright Yellow
 			strcpy(prefix,CL_YELLOW"[Warning]"CL_RESET":");
 			break;
+		case MSG_DEBUG:
+			strcpy(prefix,CL_CYAN"[Debug]"CL_RESET":");
 		case MSG_ERROR: //Bright Red  (Regular errors)
 			strcpy(prefix,CL_RED"[Error]"CL_RESET":");
 			break;

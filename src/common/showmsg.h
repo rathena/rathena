@@ -1,6 +1,9 @@
 #ifndef _SHOWMSG_H_
 #define _SHOWMSG_H_
 
+//davidsiaw, 'lookee' here!
+#define SHOW_DEBUG_MSG 1
+
 #define	CL_RESET	"\033[0;0m"
 #define CL_NORMAL	CL_RESET
 #define CL_NONE		CL_RESET
@@ -15,7 +18,7 @@
 
 extern char tmp_output[1024];
 
-enum msg_type {MSG_STATUS,/* MSG_SQL, */MSG_INFORMATION,MSG_NOTICE,MSG_WARNING,MSG_ERROR,MSG_FATALERROR};
+enum msg_type {MSG_STATUS,/* MSG_SQL, */MSG_INFORMATION,MSG_NOTICE,MSG_WARNING,MSG_DEBUG,MSG_ERROR,MSG_FATALERROR};
 
 extern int _ShowMessage(const char *string, enum msg_type flag);
 
@@ -42,10 +45,16 @@ extern int _ShowMessage(const char *string, enum msg_type flag);
 	#define ShowNotice(string) _ShowMessage(string,MSG_NOTICE)
 //	#define DisplayNotice(string) _ShowMessage(string,MSG_NOTICE)
 
-/*  */
+/* MSG_WARNING */
 	#define ShowWarning(string) _ShowMessage(string,MSG_WARNING)
 //	#define DisplayWarning(string) _ShowMessage(string,MSG_WARNING)
 //	#define Warn(string) _ShowMessage(string,MSG_WARNING)
+
+/* MSG_DEBUG */
+	#define ShowDebug(string) _ShowMessage(string,MSG_DEBUG)
+	#define DisplayDebug(string) _ShowMessage(string,MSG_DEBUG)
+	#define Debug(string) _ShowMessage(string,MSG_DEBUG)
+	#define printDebug() _ShowMessage(striing,MSG_DEBUG)
 
 /* MSG_ERROR */
 	#define ShowError(string) _ShowMessage(string,MSG_ERROR)
