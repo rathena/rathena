@@ -152,11 +152,12 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 //		if(battle_config.etc_log)
 //			printf("mobclass=%d try=%d\n",class_,i);
 	}
+
 	if(sd){
 		if(x<=0) x=sd->bl.x;
 		if(y<=0) y=sd->bl.y;
 	}else if(x<=0 || y<=0){
-		printf("mob_once_spawn: ??\n");
+		printf("mob_once_spawn: %i at %s x:%i y:%i\n ??\n",class_,map[m].name,x,y); //got idea from Freya [Lupus]
 	}
 
 	for(count=0;count<amount;count++){
@@ -2683,7 +2684,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				drop_rate = 1;
 			if(drop_rate < battle_config.item_drop_mvp_min)
 				drop_rate = battle_config.item_drop_mvp_min;
-			if(drop_rate > battle_config.item_drop_mvp_max)
+			else if(drop_rate > battle_config.item_drop_mvp_max) //fixed
 				drop_rate = battle_config.item_drop_mvp_max;
 			if(drop_rate <= rand()%10000)
 				continue;
@@ -3891,23 +3892,29 @@ static int mob_readdb(void)
 			mob_db[class_].max_hp=atoi(str[4]);
 			mob_db[class_].max_sp=atoi(str[5]);
 
-			mob_db[class_].base_exp=atoi(str[6]);
-			if(mob_db[class_].base_exp < 0)
+			mob_db[class_].base_exp = atoi(str[6]);
+			if (mob_db[class_].base_exp <= 0)
 				mob_db[class_].base_exp = 0;
-			else if(mob_db[class_].base_exp > 0 && (mob_db[class_].base_exp*battle_config.base_exp_rate/100 > 1000000000 ||
-			    mob_db[class_].base_exp*battle_config.base_exp_rate/100 < 0))
-				mob_db[class_].base_exp=1000000000;
-			else
-				mob_db[class_].base_exp*= battle_config.base_exp_rate/100;
+			else if (mob_db[class_].base_exp * battle_config.base_exp_rate / 100 > 1000000000 ||
+			         mob_db[class_].base_exp * battle_config.base_exp_rate / 100 < 0)
+				mob_db[class_].base_exp = 1000000000;
+			else {
+				mob_db[class_].base_exp = mob_db[class_].base_exp * battle_config.base_exp_rate / 100;
+				if (mob_db[class_].base_exp < 1)
+					mob_db[class_].base_exp = 1;
+			}
 
-			mob_db[class_].job_exp=atoi(str[7]);
-			if(mob_db[class_].job_exp < 0)
+			mob_db[class_].job_exp = atoi(str[7]);
+			if (mob_db[class_].job_exp <= 0)
 				mob_db[class_].job_exp = 0;
-			else if(mob_db[class_].job_exp > 0 && (mob_db[class_].job_exp*battle_config.job_exp_rate/100 > 1000000000 ||
-			    mob_db[class_].job_exp*battle_config.job_exp_rate/100 < 0))
-				mob_db[class_].job_exp=1000000000;
-			else
-				mob_db[class_].job_exp*=battle_config.job_exp_rate/100;
+			else if (mob_db[class_].job_exp * battle_config.job_exp_rate / 100 > 1000000000 ||
+			         mob_db[class_].job_exp * battle_config.job_exp_rate / 100 < 0)
+				mob_db[class_].job_exp = 1000000000;
+			else {
+				mob_db[class_].job_exp = mob_db[class_].job_exp * battle_config.job_exp_rate / 100;
+				if (mob_db[class_].job_exp < 1)
+					mob_db[class_].job_exp = 1;
+			}
 
 			mob_db[class_].range=atoi(str[8]);
 			mob_db[class_].atk1=atoi(str[9]);
@@ -3935,73 +3942,32 @@ static int mob_readdb(void)
 				int rate = 0,type,ratemin,ratemax;
 				mob_db[class_].dropitem[i].nameid=atoi(str[29+i*2]);
 				type = itemdb_type(mob_db[class_].dropitem[i].nameid);
-				if (type == 0) {							// Added [Valaris]
-					rate = battle_config.item_rate_heal;
+				if (type == 0) {
+					rate = battle_config.item_rate_heal * atoi(str[30+i*2]) / 100; //fix by Yor
 					ratemin = battle_config.item_drop_heal_min;
 					ratemax = battle_config.item_drop_heal_max;
 				}
 				else if (type == 2) {
-					rate = battle_config.item_rate_use;
+					rate = battle_config.item_rate_use * atoi(str[30+i*2]) / 100; //fix by Yor
 					ratemin = battle_config.item_drop_use_min;
 					ratemax = battle_config.item_drop_use_max;	// End
 				}
 				else if (type == 4 || type == 5 || type == 8) {		// Changed to include Pet Equip
-					rate = battle_config.item_rate_equip;
+					rate = battle_config.item_rate_equip * atoi(str[30+i*2]) / 100;
 					ratemin = battle_config.item_drop_equip_min;
 					ratemax = battle_config.item_drop_equip_max;
 				}
 				else if (type == 6) {
-					rate = battle_config.item_rate_card;
+					rate = battle_config.item_rate_card * atoi(str[30+i*2]) / 100;
 					ratemin = battle_config.item_drop_card_min;
 					ratemax = battle_config.item_drop_card_max;
 				}
 				else {
-					rate = battle_config.item_rate_common;
+					rate = battle_config.item_rate_common * atoi(str[30+i*2]) / 100;
 					ratemin = battle_config.item_drop_common_min;
 					ratemax = battle_config.item_drop_common_max;
 				}
-				if (battle_config.item_rate_details == 1) {	//ドロップレート詳細項目が1の時 レート=x/100倍
-					if (rate < 10)
-						rate = rate * battle_config.item_rate_1/100;
-					else if (rate >= 10 && rate < 100)
-						rate = rate * battle_config.item_rate_10/100;
-					else if (rate >= 100 && rate < 1000)
-						rate = rate * battle_config.item_rate_100/100;
-					else rate = rate * battle_config.item_rate_1000/100;
-				}
-				else if (battle_config.item_rate_details == 2) {	//ドロップレート詳細項目が2の時　レート=x/100倍 min max 指定
-					if (rate >= 1 && rate < 10) {
-						if (rate * battle_config.item_rate_1/100 < battle_config.item_rate_1_min)
-							rate = battle_config.item_rate_1_min;
-						else if (rate * battle_config.item_rate_1/100 > battle_config.item_rate_1_max)
-							rate = battle_config.item_rate_1_max;
-						else rate = rate * battle_config.item_rate_1/100;
-					}
-					else if (rate >= 10 && rate < 100) {
-						if (rate * battle_config.item_rate_10/100 < battle_config.item_rate_10_min)
-							rate = battle_config.item_rate_10_min;
-						else if (rate * battle_config.item_rate_10/100 > battle_config.item_rate_10_max)
-							rate = battle_config.item_rate_10_max;
-						else rate = rate * battle_config.item_rate_10/100;
-					}
-					else if (rate >= 100 && rate < 1000) {
-						if (rate * battle_config.item_rate_100/100 < battle_config.item_rate_100_min)
-							rate = battle_config.item_rate_100_min;
-						else if (rate * battle_config.item_rate_100/100 > battle_config.item_rate_100_max)
-							rate = battle_config.item_rate_100_max;
-						else rate = rate * battle_config.item_rate_100/100;
-					}
-					else if (rate >= 1000) {
-						if (rate * battle_config.item_rate_1000/100 < battle_config.item_rate_1000_min)
-							rate = battle_config.item_rate_1000_min;
-						else if (rate * battle_config.item_rate_1000/100 > battle_config.item_rate_1000_max)
-							rate = battle_config.item_rate_1000_max;
-						else rate = rate * battle_config.item_rate_1000/100;
-					}
-				}
-				rate = rate * atoi(str[30+i*2])/100;
-				rate = (rate < ratemin)? ratemin: (rate > ratemax)? ratemax: rate;
-				mob_db[class_].dropitem[i].p = rate;
+				mob_db[class_].dropitem[i].p = (rate < ratemin) ? ratemin : (rate > ratemax) ? ratemax: rate;
 			}
 			// MVP EXP Bonus, Chance: MEXP,ExpPer
 			mob_db[class_].mexp=atoi(str[49])*battle_config.mvp_exp_rate/100;
@@ -4421,14 +4387,30 @@ static int mob_read_sqldb(void)
 			mob_db[class_].lv=atoi(str[3]);
 			mob_db[class_].max_hp=atoi(str[4]);
 			mob_db[class_].max_sp=atoi(str[5]);
-			mob_db[class_].base_exp=atoi(str[6])*
-					battle_config.base_exp_rate/100;
-			if(mob_db[class_].base_exp <= 0)
-				mob_db[class_].base_exp = 1;
-			mob_db[class_].job_exp=atoi(str[7])*
-					battle_config.job_exp_rate/100;
-			if(mob_db[class_].job_exp <= 0)
-				mob_db[class_].job_exp = 1;
+
+			mob_db[class_].base_exp = atoi(str[6]);
+			if (mob_db[class_].base_exp <= 0)
+				mob_db[class_].base_exp = 0;
+			else if (mob_db[class_].base_exp * battle_config.base_exp_rate / 100 > 1000000000 ||
+			         mob_db[class_].base_exp * battle_config.base_exp_rate / 100 < 0)
+				mob_db[class_].base_exp = 1000000000;
+			else {
+				mob_db[class_].base_exp = mob_db[class_].base_exp * battle_config.base_exp_rate / 100;
+				if (mob_db[class_].base_exp < 1)
+					mob_db[class_].base_exp = 1;
+			}
+			mob_db[class_].job_exp = atoi(str[7]);
+			if (mob_db[class_].job_exp <= 0)
+				mob_db[class_].job_exp = 0;
+			else if (mob_db[class_].job_exp * battle_config.job_exp_rate / 100 > 1000000000 ||
+			         mob_db[class_].job_exp * battle_config.job_exp_rate / 100 < 0)
+				mob_db[class_].job_exp = 1000000000;
+			else {
+				mob_db[class_].job_exp = mob_db[class_].job_exp * battle_config.job_exp_rate / 100;
+				if (mob_db[class_].job_exp < 1)
+					mob_db[class_].job_exp = 1;
+			}
+
 			mob_db[class_].range=atoi(str[8]);
 			mob_db[class_].atk1=atoi(str[9]);
 			mob_db[class_].atk2=atoi(str[10]);
@@ -4456,33 +4438,32 @@ static int mob_read_sqldb(void)
 				mob_db[class_].dropitem[i].nameid=atoi(str[29+i*2]);
 				type = itemdb_type(mob_db[class_].dropitem[i].nameid);
 				if (type == 0) {							// Added by Valaris
-					rate = battle_config.item_rate_heal;
+					rate = battle_config.item_rate_heal * atoi(str[30+i*2]) / 100;
 					ratemin = battle_config.item_drop_heal_min;
 					ratemax = battle_config.item_drop_heal_max;
 				}
 				else if (type == 2) {
-					rate = battle_config.item_rate_use;
+					rate = battle_config.item_rate_use * atoi(str[30+i*2]) / 100;
 					ratemin = battle_config.item_drop_use_min;
 					ratemax = battle_config.item_drop_use_max;	// End
 				}
 				else if (type == 4 || type == 5 || type == 8) {		// Changed to include Pet Equip
-					rate = battle_config.item_rate_equip;
+					rate = battle_config.item_rate_equip * atoi(str[30+i*2]) / 100;
 					ratemin = battle_config.item_drop_equip_min;
 					ratemax = battle_config.item_drop_equip_max;
 				}
 				else if (type == 6) {
-					rate = battle_config.item_rate_card;
+					rate = battle_config.item_rate_card * atoi(str[30+i*2]) / 100;
 					ratemin = battle_config.item_drop_card_min;
 					ratemax = battle_config.item_drop_card_max;
 				}
 				else {
-					rate = battle_config.item_rate_common;
+					rate = battle_config.item_rate_common * atoi(str[30+i*2]) / 100;
 					ratemin = battle_config.item_drop_common_min;
 					ratemax = battle_config.item_drop_common_max;
 				}
-				rate = (rate / 100) * atoi(str[30+i*2]);
-				rate = (rate < ratemin)? ratemin: (rate > ratemax)? ratemax: rate;
-				mob_db[class_].dropitem[i].p = rate;
+
+				mob_db[class_].dropitem[i].p = (rate < ratemin) ? ratemin : (rate > ratemax) ? ratemax: rate;
 			}
 			// MVP EXP Bonus, Chance: MEXP,ExpPer
 			mob_db[class_].mexp=atoi(str[49])*battle_config.mvp_exp_rate/100;

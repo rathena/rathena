@@ -4122,19 +4122,6 @@ static const struct {
 	{ "gm_can_drop_lv",				       &battle_config.gm_can_drop_lv			},
 	{ "disp_hpmeter",				       &battle_config.disp_hpmeter				},
 	{ "bone_drop",				           &battle_config.bone_drop				},
-	{ "item_rate_details",				   &battle_config.item_rate_details			},
-	{ "item_rate_1",				       &battle_config.item_rate_1				},
-	{ "item_rate_10",				       &battle_config.item_rate_10				},
-	{ "item_rate_100",				       &battle_config.item_rate_100				},
-	{ "item_rate_1000",				       &battle_config.item_rate_1000			},
-	{ "item_rate_1_min",				   &battle_config.item_rate_1_min			},
-	{ "item_rate_1_max",				   &battle_config.item_rate_1_max			},
-	{ "item_rate_10_min",				   &battle_config.item_rate_10_min			},
-	{ "item_rate_10_max",				   &battle_config.item_rate_10_max			},
-	{ "item_rate_100_min",				   &battle_config.item_rate_100_min			},
-	{ "item_rate_100_max",				   &battle_config.item_rate_100_max			},
-	{ "item_rate_1000_min",				   &battle_config.item_rate_1000_min		},
-	{ "item_rate_1000_max",				   &battle_config.item_rate_1000_max		},
 	{ "item_rate_common",                  &battle_config.item_rate_common	},	// Added by RoVeRT
 	{ "item_rate_equip",                   &battle_config.item_rate_equip	},
 	{ "item_rate_card",                    &battle_config.item_rate_card	},	// End Addition
@@ -4382,19 +4369,6 @@ void battle_set_defaults() {
 	battle_config.gm_can_drop_lv = 0;
 	battle_config.disp_hpmeter = 0;
 	battle_config.bone_drop = 0;
-	battle_config.item_rate_details = 0;
-	battle_config.item_rate_1 = 100;
-	battle_config.item_rate_10 = 100;
-	battle_config.item_rate_100 = 100;
-	battle_config.item_rate_1000 = 100;
-	battle_config.item_rate_1_min = 1;
-	battle_config.item_rate_1_max = 9;
-	battle_config.item_rate_10_min = 10;
-	battle_config.item_rate_10_max = 99;
-	battle_config.item_rate_100_min = 100;
-	battle_config.item_rate_100_max = 999;
-	battle_config.item_rate_1000_min = 1000;
-	battle_config.item_rate_1000_max = 10000;
 	battle_config.item_rate_common = 100;
 	battle_config.item_rate_equip = 100;
 	battle_config.item_rate_card = 100;
@@ -4605,7 +4579,7 @@ int battle_config_read(const char *cfgName)
 
 	fp = fopen(cfgName,"r");
 	if (fp == NULL) {
-		printf("file not found: %s\n", cfgName);
+		printf("File not found: %s\n", cfgName);
 		return 1;
 	}
 	while(fgets(line,1020,fp)){

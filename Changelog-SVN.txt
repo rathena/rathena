@@ -1,5 +1,11 @@
 Date	Added
 
+02/24
+	* Fixed Steal Item Rate. It has been multiplied twice on common_item_drop value for any kinds of items. [Lupus]
+	  e.g. If you set droprate of comman items to 500%, then even rare items could be stolen more easily. Thanks to Freya
+	* Items Droprate fix. Now it adjusts correctly, w/o overflows. Thanks to Freya [Lupus]
+	* mob DBbs EXP reading fix. w/o overflows. Thanks to Freya [Lupus]
+
 02/23
         * Added bAddItemHealRate [celest]
         * Fixed a crash if adding an offline player to a party, thanks to Alex14

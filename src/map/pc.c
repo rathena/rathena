@@ -2768,7 +2768,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 {
 	if(sd != NULL && bl != NULL && bl->type == BL_MOB) {
-		int i,skill,rate,itemid,flag, count;
+		int i,skill,itemid,flag, count;
 		struct mob_data *md;
 		md=(struct mob_data *)bl;
 		if(!md->state.steal_flag && mob_db[md->class_].mexp <= 0 && !(mob_db[md->class_].mode&0x20) &&
@@ -2789,10 +2789,8 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 
 					if(itemid > 0 && itemdb_type(itemid) != 6)
 					{
-						rate = (mob_db[md->class_].dropitem[i].p / battle_config.item_rate_common * 100 * skill)/100;
-						rate += sd->add_steal_rate;
-
-						if(rand()%10000 < rate)
+						//fixed rate. From Freya [Lupus]
+						if (rand() % 10000 < ((mob_db[md->class_].dropitem[i].p * skill) / 100 + sd->add_steal_rate))
 						{
 							struct item tmp_item;
 							memset(&tmp_item,0,sizeof(tmp_item));
