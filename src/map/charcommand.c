@@ -33,13 +33,17 @@ static char command_symbol = '#';
 static char msg_table[1000][1024]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
 #define CHARCOMMAND_FUNC(x) int charcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
+
+CHARCOMMAND_FUNC(jobchange);
+CHARCOMMAND_FUNC(petrename);
+
 #ifdef TXT_ONLY
 /* TXT_ONLY */
-	CHARCOMMAND_FUNC(test);
+
 /* TXT_ONLY */
 #else
 /* SQL-only */
-	//CHARCOMMAND_FUNC(funcname);
+
 /* SQL Only */
 #endif
 
@@ -51,15 +55,17 @@ static char msg_table[1000][1024]; // Server messages (0-499 reserved for GM com
 // First char of commands is configured in charcommand_athena.conf. Leave @ in this list for default value.
 // to set default level, read charcommand_athena.conf first please.
 static CharCommandInfo charcommand_info[] = {
-	
+	{ CharCommandJobChange,				"#job",						60,	charcommand_jobchange },
+	{ CharCommandJobChange,				"#jobchange",				60,	charcommand_jobchange },
+	{ CharCommandPetRename,				"#petrename",				50, charcommand_petrename },
+
 #ifdef TXT_ONLY
 /* TXT_ONLY */
-//	{ CharCommandType,				"#name",			level, charcommand_func },
-	{ CharCommandTest,				"#test",			0,	charcommand_test },
+
 /* TXT_ONLY */
 #else
 /* SQL-only */
-//	{ CharCommandType,				"#name",			level, charcommand_func },
+
 /* SQL Only */
 #endif
 
@@ -252,3 +258,124 @@ charcommand_test (const int fd, struct map_session_data* sd,
 	return 0;
 }
 
+/*==========================================
+ * 対象キャラクターを転職させる upper指定で転生や養子も可能
+ *------------------------------------------
+ */
+int charcommand_jobchange(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[100];
+	struct map_session_data* pl_sd;
+	int job = 0, upper = -1;
+
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, "Please, enter a job and a player name (usage: #job/#jobchange <job ID> <char name>).");
+		return -1;
+	}
+
+	if (sscanf(message, "%d %d %99[^\n]", &job, &upper, character) < 3) { //upper指定してある
+		upper = -1;
+		if (sscanf(message, "%d %99[^\n]", &job, character) < 2) { //upper指定してない上に何か足りない
+			clif_displaymessage(fd, "Please, enter a job and a player name (usage: #job/#jobchange <job ID> <char name>).");
+			return -1;
+		}
+	}
+
+	if ((pl_sd = map_nick2sd(character)) != NULL) {
+		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change job only to lower or same level
+			if ((job >= 0 && job < MAX_PC_CLASS)) {
+
+				// fix pecopeco display
+				if ((job != 13 && job != 21 && job != 4014 && job != 4022)) {
+					if (pc_isriding(sd)) {
+						if (pl_sd->status.class == 13)
+							pl_sd->status.class = pl_sd->view_class = 7;
+						if (pl_sd->status.class == 21)
+							pl_sd->status.class = pl_sd->view_class = 14;
+						if (pl_sd->status.class == 4014)
+							pl_sd->status.class = pl_sd->view_class = 4008;
+						if (pl_sd->status.class == 4022)
+							pl_sd->status.class = pl_sd->view_class = 4015;
+						pl_sd->status.option &= ~0x0020;
+						clif_changeoption(&pl_sd->bl);
+						pc_calcstatus(pl_sd, 0);
+					}
+				} else {
+					if (!pc_isriding(sd)) {
+						if (job == 13)
+							job = 7;
+						if (job == 21)
+							job = 14;
+						if (job == 4014)
+							job = 4008;
+						if (job == 4022)
+							job = 4015;
+					}
+				}
+
+				if (pc_jobchange(pl_sd, job, upper) == 0)
+					clif_displaymessage(fd, msg_table[48]); // Character's job changed.
+				else {
+					clif_displaymessage(fd, msg_table[192]); // Impossible to change the character's job.
+					return -1;
+				}
+			} else {
+				clif_displaymessage(fd, msg_table[49]); // Invalid job ID.
+				return -1;
+			}
+		} else {
+			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			return -1;
+		}
+	} else {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int charcommand_petrename(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[100];
+	struct map_session_data *pl_sd;
+
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #petrename <char name>).");
+		return -1;
+	}
+
+	if ((pl_sd = map_nick2sd(character)) != NULL) {
+		if (pl_sd->status.pet_id > 0 && pl_sd->pd) {
+			if (pl_sd->pet.rename_flag != 0) {
+				pl_sd->pet.rename_flag = 0;
+				intif_save_petdata(pl_sd->status.account_id, &pl_sd->pet);
+				clif_send_petstatus(pl_sd);
+				clif_displaymessage(fd, msg_table[189]); // This player can now rename his/her pet.
+			} else {
+				clif_displaymessage(fd, msg_table[190]); // This player can already rename his/her pet.
+				return -1;
+			}
+		} else {
+			clif_displaymessage(fd, msg_table[191]); // Sorry, but this player has no pet.
+			return -1;
+		}
+	} else {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
+	return 0;
+}

@@ -80,9 +80,7 @@ enum AtCommandType {
 	AtCommand_PetRename,
 	AtCommand_CharPetRename, // by Yor
 	AtCommand_Recall,
-	AtCommand_CharacterJob,
-	AtCommand_CharacterJob2,
-	AtCommand_CharacterJob3,
+//	AtCommand_CharacterJob,  // Now #jobchange
 	AtCommand_Revive,
 	AtCommand_CharacterStats,
 	AtCommand_CharacterStatsAll,
@@ -201,6 +199,7 @@ enum AtCommandType {
 	AtCommand_Refresh, // by MC Cameri
 	AtCommand_PetId, // by MC Cameri
 	AtCommand_Identify, // by MC Cameri
+	AtCommand_Gmotd, // Added by MC Cameri, created by davidsiaw
 
 	// SQL-only commands start
 #ifndef TXT_ONLY 

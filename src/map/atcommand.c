@@ -107,7 +107,6 @@ ATCOMMAND_FUNC(petrename);
 ATCOMMAND_FUNC(charpetrename); // by Yor
 ATCOMMAND_FUNC(recall);
 ATCOMMAND_FUNC(recallall);
-ATCOMMAND_FUNC(character_job);
 ATCOMMAND_FUNC(revive);
 ATCOMMAND_FUNC(character_stats);
 ATCOMMAND_FUNC(character_stats_all);
@@ -219,7 +218,8 @@ ATCOMMAND_FUNC(changesex); // by MC Cameri
 ATCOMMAND_FUNC(mute); // celest
 ATCOMMAND_FUNC(refresh); // by MC Cameri
 ATCOMMAND_FUNC(petid); // by MC Cameri
-ATCOMMAND_FUNC(identify);
+ATCOMMAND_FUNC(identify); // by MC Cameri
+ATCOMMAND_FUNC(gmotd); // Added by MC Cameri, created by davidsiaw
 
 #ifndef TXT_ONLY
 ATCOMMAND_FUNC(checkmail); // [Valaris]
@@ -299,8 +299,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Spawn,				"@spawn",			50, atcommand_spawn },
 //	{ AtCommand_Spawn,				"@summon",			50, atcommand_spawn },
 	{ AtCommand_Monster,			"@monster2",		50, atcommand_monster },
-	{ AtCommand_MonsterSmall,               "@monstersmall",         50, atcommand_monstersmall },
-	{ AtCommand_MonsterBig,               "@monsterbig",         50, atcommand_monsterbig },
+	{ AtCommand_MonsterSmall,		"@monstersmall",	50, atcommand_monstersmall },
+	{ AtCommand_MonsterBig,			"@monsterbig",		50, atcommand_monsterbig },
 	{ AtCommand_KillMonster,		"@killmonster",		60, atcommand_killmonster },
 	{ AtCommand_KillMonster2,		"@killmonster2",	40, atcommand_killmonster2 },
 	{ AtCommand_Refine,				"@refine",			60, atcommand_refine },
@@ -324,10 +324,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_PetFriendly,		"@petfriendly",		40, atcommand_petfriendly },
 	{ AtCommand_PetHungry,			"@pethungry",		40, atcommand_pethungry },
 	{ AtCommand_PetRename,			"@petrename",		 1, atcommand_petrename },
-	{ AtCommand_CharPetRename,		"@charpetrename",	50, atcommand_charpetrename }, // by Yor
 	{ AtCommand_Recall,				"@recall",			60, atcommand_recall }, // + /recall
-	{ AtCommand_CharacterJob,		"@charjob",			60, atcommand_character_job },
-	{ AtCommand_CharacterJob,		"@charjobchange",	60, atcommand_character_job },
 	{ AtCommand_Revive,				"@revive",			60, atcommand_revive },
 	{ AtCommand_CharacterStats,		"@charstats",		40, atcommand_character_stats },
 	{ AtCommand_CharacterStatsAll,	"@charstatsall",	40, atcommand_character_stats_all },
@@ -477,6 +474,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Refresh,	        "@refresh",			 0, atcommand_refresh }, // by MC Cameri
 	{ AtCommand_PetId,	    	    "@petid",			40, atcommand_petid }, // by MC Cameri
 	{ AtCommand_Identify,	   	    "@identify",		40, atcommand_identify }, // by MC Cameri
+	{ AtCommand_Gmotd,				"@gmotd",			 0, atcommand_gmotd }, // Added by MC Cameri, created by davidsiaw
 
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
@@ -2021,8 +2019,10 @@ int atcommand_alive(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	if (pc_isdead(sd)) {
 	sd->status.hp = sd->status.max_hp;
 	sd->status.sp = sd->status.max_sp;
+	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
 	pc_setstand(sd);
 	if (battle_config.pc_invincible_time > 0)
 		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
@@ -2030,8 +2030,10 @@ int atcommand_alive(
 	clif_updatestatus(sd, SP_SP);
 	clif_resurrection(&sd->bl, 1);
 	clif_displaymessage(fd, msg_table[16]); // You've been revived! It's a miracle!
-
 	return 0;
+	} 
+	return -1;
+	
 }
 
 /*==========================================
@@ -3963,47 +3965,6 @@ int atcommand_petrename(
  *
  *------------------------------------------
  */
-int atcommand_charpetrename(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	char character[100];
-	struct map_session_data *pl_sd;
-
-	memset(character, '\0', sizeof(character));
-
-	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: @charpetrename <char name>).");
-		return -1;
-	}
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pl_sd->status.pet_id > 0 && pl_sd->pd) {
-			if (pl_sd->pet.rename_flag != 0) {
-				pl_sd->pet.rename_flag = 0;
-				intif_save_petdata(pl_sd->status.account_id, &pl_sd->pet);
-				clif_send_petstatus(pl_sd);
-				clif_displaymessage(fd, msg_table[189]); // This player can now rename his/her pet.
-			} else {
-				clif_displaymessage(fd, msg_table[190]); // This player can already rename his/her pet.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[191]); // Sorry, but this player has no pet.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
-	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
 int
 atcommand_recall(
 	const int fd, struct map_session_data* sd,
@@ -4052,87 +4013,6 @@ atcommand_recall(
 }
 
 /*==========================================
- * 対象キャラクターを転職させる upper指定で転生や養子も可能
- *------------------------------------------
- */
-int atcommand_character_job(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	char character[100];
-	struct map_session_data* pl_sd;
-	int job = 0, upper = -1;
-
-	memset(character, '\0', sizeof(character));
-
-	if (!message || !*message) {
-		clif_displaymessage(fd, "Please, enter a job and a player name (usage: @charjob/@charjobchange <job ID> <char name>).");
-		return -1;
-	}
-
-	if (sscanf(message, "%d %d %99[^\n]", &job, &upper, character) < 3) { //upper指定してある
-		upper = -1;
-		if (sscanf(message, "%d %99[^\n]", &job, character) < 2) { //upper指定してない上に何か足りない
-			clif_displaymessage(fd, "Please, enter a job and a player name (usage: @charjob/@charjobchange <job ID> <char name>).");
-			return -1;
-		}
-	}
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change job only to lower or same level
-			if ((job >= 0 && job < MAX_PC_CLASS)) {
-
-				// fix pecopeco display
-				if ((job != 13 && job != 21 && job != 4014 && job != 4022)) {
-					if (pc_isriding(sd)) {
-						if (pl_sd->status.class == 13)
-							pl_sd->status.class = pl_sd->view_class = 7;
-						if (pl_sd->status.class == 21)
-							pl_sd->status.class = pl_sd->view_class = 14;
-						if (pl_sd->status.class == 4014)
-							pl_sd->status.class = pl_sd->view_class = 4008;
-						if (pl_sd->status.class == 4022)
-							pl_sd->status.class = pl_sd->view_class = 4015;
-						pl_sd->status.option &= ~0x0020;
-						clif_changeoption(&pl_sd->bl);
-						pc_calcstatus(pl_sd, 0);
-					}
-				} else {
-					if (!pc_isriding(sd)) {
-						if (job == 13)
-							job = 7;
-						if (job == 21)
-							job = 14;
-						if (job == 4014)
-							job = 4008;
-						if (job == 4022)
-							job = 4015;
-					}
-				}
-
-				if (pc_jobchange(pl_sd, job, upper) == 0)
-					clif_displaymessage(fd, msg_table[48]); // Character's job changed.
-				else {
-					clif_displaymessage(fd, msg_table[192]); // Impossible to change the character's job.
-					return -1;
-				}
-			} else {
-				clif_displaymessage(fd, msg_table[49]); // Invalid job ID.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
-	}
-
-	return 0;
-}
-
-/*==========================================
  *
  *------------------------------------------
  */
@@ -4151,14 +4031,19 @@ int atcommand_revive(
 	}
 
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		pl_sd->status.hp = pl_sd->status.max_hp;
-		pc_setstand(pl_sd);
-		if (battle_config.pc_invincible_time > 0)
-			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-		clif_updatestatus(pl_sd, SP_HP);
-		clif_updatestatus(pl_sd, SP_SP);
-		clif_resurrection(&pl_sd->bl, 1);
-		clif_displaymessage(fd, msg_table[51]); // Character revived.
+		if (pc_isdead(sd)) {
+			pl_sd->status.hp = pl_sd->status.max_hp;
+			clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
+			pc_setstand(pl_sd);
+			if (battle_config.pc_invincible_time > 0)
+				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+			clif_updatestatus(pl_sd, SP_HP);
+			clif_updatestatus(pl_sd, SP_SP);
+			clif_resurrection(&pl_sd->bl, 1);
+			clif_displaymessage(fd, msg_table[51]); // Character revived.
+			return 0;
+		}
+		return -1;
 	} else {
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
@@ -4726,6 +4611,7 @@ int atcommand_doommap(
 static void atcommand_raise_sub(struct map_session_data* sd)
 {
 	if (sd && sd->state.auth && pc_isdead(sd)) {
+		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
 		sd->status.hp = sd->status.max_hp;
 		sd->status.sp = sd->status.max_sp;
 		pc_setstand(sd);
@@ -7993,6 +7879,34 @@ atcommand_identify(
 		clif_displaymessage(fd,"There are no items to appraise.");
 	}
 	return 0;
+}
+
+/*==========================================
+ * @gmotd (Global MOTD) 
+ * by davidsiaw :P
+ *------------------------------------------
+ */
+int
+atcommand_gmotd(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+		char buf[256];
+		FILE *fp;
+		if(	(fp = fopen(motd_txt, "r"))!=NULL){
+			while (fgets(buf, 250, fp) != NULL){
+				int i;
+				for( i=0; buf[i]; i++){
+					if( buf[i]=='\r' || buf[i]=='\n'){
+						buf[i]=0;
+						break;
+					}
+				}
+				intif_GMmessage(buf,strlen(buf)+1,8);
+			}
+			fclose(fp);
+		}
+		return 0;
 }
 
 #ifndef TXT_ONLY  /* Begin SQL-Only commands */

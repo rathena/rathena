@@ -1,5 +1,8 @@
 Date	Added
 11/21
+	* @alive, @raisemap, @raise now display the resurrection skill animation [MC Cameri]
+	* @charpetrename(AtCommand) is now #petrename(CharCommand) [MC Cameri]
+	* @charjob/(AtCommand) is now #jobchange(CharCommand) [MC Cameri]
 	* Removed japanese interserver packets, should fix various problems (jumpto, where, charposreq). [Valaris]
 	* Added Yor's trade exploit bug fix. Added 2 skills bugs in the bugs.txt [Lupus]
 	* Added charcommand.c/.h for the following reasons: [MC Cameri]

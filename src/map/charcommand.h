@@ -3,10 +3,12 @@
 
 enum CharCommandType {
 	CharCommand_None = -1,
+	CharCommandJobChange,
+	CharCommandPetRename,
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
-	CharCommandTest,
+
 /* TXT_ONLY */
 #else
 /* SQL-only */
