@@ -11,13 +11,14 @@
 //= Auto Start for War of Emperium
 //=============================================
 //= gettime(3): Gets hour (24 hour time)
-//= gettime(4): Use it if you only want to have WoE start on 
-//= certain days.
-//= 1=Monday, 2=Tuesday, 3=Wednesday, 4=Thursday, etc.
+//= gettime(4): Gets day of week 1=Monday, 2=Tuesday,
+//= 3=Wednesday, 4=Thursday, etc.
 //===== Additional Comments: =================================
 //= v1.1a changed OnInit to OnAgitInit.[kobra_k88]
 //= v1.2 added gettime checks. removed $AgitStarted var.[kobra_k88]
 //= v1.3 Moved treasure spawn time here.[kobra_k88]
+//= v1.3a Implemented Shadowlady's idea to allow for different
+//= start/stop times on different days.[kobra_k88]
 //============================================================
 
 // WoE Start/Stop times
@@ -25,20 +26,23 @@
 - script Agit_Event -1,{
 	end;
 
+OnClock2100:	//start time for Tues(2), Thurs(4)
+OnClock2300:	//end time for Tues(2), Thurs(4)
+OnClock1600:	//start time for Sat(6)
+OnClock1800:	//end time for Sat(6)
 OnAgitInit:
-	if(gettime(3) >= 17 || gettime(3) < 10) goto L_Stop;
+	if((gettime(4)==2) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
+	if((gettime(4)==4) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
+	if((gettime(4)==6) && (gettime(3)>=16 && gettime(3)<18)) goto L_Start;
+	if(gettime(4)!=2 || gettime(4)!=4 || gettime(4)!=6) end;	//stops script on non woe day
 
-OnClock1000:
-//	if(gettime(4)!=1 || gettime(4)!=3 || gettime(4)!=6) end;
-	Announce "The War Of Emperium has begun!",8;
-	AgitStart;
-	Break;
-
-OnClock1700:
-L_Stop:
-//	if(gettime(4)!=1 || gettime(4)!=3 || gettime(4)!=6) end;
 	Announce "The War Of Emperium is over!",8;
 	AgitEnd;
+	Break;
+
+L_Start:
+	Announce "The War Of Emperium has begun!",8;
+	AgitStart;
 	Break;
 }
 

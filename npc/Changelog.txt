@@ -34,8 +34,11 @@ Other Ppl
 
 Date		Added
 ======
+11/19
+	* ev_agit_event.txt: Implemented Shadowlady's idea of allowing different woe start/stop times
+	  for different days of the week.[kobra_k88]
 11/18
-      * Fixed typo in payon.txt [celest]
+	* Fixed typo in payon.txt [celest]
 	* - Fixed infinite zeny exploit in novice_skills.txt(other quest skills npcs need revision!!!)
 	  - Fixed typos on izlude.txt, wrong label in umbala.txt [shadow]
 	* Added custom WOE warper (now you can get to Novice Castles from Prontera) [Lupus]
