@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -13,10 +13,9 @@
 //= 1.3a Fixed Louyang map name. Added additional shops in Yuno. [kobra_k88]
 //= 1.4 Added Niflheim Shops
 //= 1.5 New Payon Locations [Darkchild]
-//= Moved shops in Umbala.txt here. Commented out the duplicate
-//= ones.[kobra_k88]
+//= Moved shops in Umbala.txt here. Commented out the duplicate ones.[kobra_k88]
 //= 1.6 Removed GRAPE ID 514 from shops (caused exploits)
-//=     Raised selling price of Empty Bottles to 10 (it's a quest item...)
+//= 1.7 Removed juices from custom amatsu shops (it's a quest item + levelup exploit)
 //============================================================ 
 
 
@@ -43,7 +42,7 @@ aldeba_in.gat,94,56,5	shop	Tool Dealer	83,501:-1,502:-1,503:-1,504:-1,506:-1,601
 //AMATSU
 //=======================================================
 //Fruit merchant opens a zeny exploit (due to Juice Maker NPC)
-amatsu.gat,176,126,4	shop	Fruit Merchant	53,512:-1,513:-1,515:-1,516:-1,531:-1,532:-1,534:-1,533:-1
+amatsu.gat,176,126,4	shop	Fruit Merchant	53,512:-1,513:-1,515:-1,516:-1
 //amatsu.gat,169,111,6	shop	Tool Dealer	83,611:-1,1750:-1,501:-1,502:-1,503:-1,504:-1,506:-1,525:-1,601:-1,602:-1,1065:-1,2239:-1
 amatsu.gat,180,102,3	shop	Flower Girl	96,712:-1,744:-1,2612:-1,2215:-1
 amatsu.gat,189,99,7	shop	Butcher	49,517:-1,528:-1,540:-1,541:-1
