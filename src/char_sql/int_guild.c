@@ -517,7 +517,10 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 	if (gcopy == NULL) {
 	  gcopy = (struct guild_castle *) malloc(sizeof(struct guild_castle));
 	  numdb_insert(castle_db_, gc->castle_id, gcopy);
-	}
+	} else {
+            if ((gc->guild_id  == copy->guild_id ) && (  gc->economy  == copy->economy ) && ( gc->defense  == copy->defense ) && ( gc->triggerE  == copy->triggerE ) && ( gc->triggerD  == copy->triggerD ) && ( gc->nextTime  == copy->nextTime ) && ( gc->payTime  == copy->payTime ) && ( gc->createTime  == copy->createTime ) && ( gc->visibleC  == copy->visibleC ) && ( gc->visibleG0  == copy->visibleG0 ) && ( gc->visibleG1  == copy->visibleG1 ) && ( gc->visibleG2  == copy->visibleG2 ) && ( gc->visibleG3  == copy->visibleG3 ) && ( gc->visibleG4  == copy->visibleG4 ) && ( gc->visibleG5  == copy->visibleG5 ) && ( gc->visibleG6  == copy->visibleG6 ) && ( gc->visibleG7  == copy->visibleG7 ) && ( gc->Ghp0  == copy->Ghp0 ) && ( gc->Ghp1  == copy->Ghp1 ) && ( gc->Ghp2  == copy->Ghp2 ) && ( gc->Ghp3  == copy->Ghp3 ) && ( gc->Ghp4  == copy->Ghp4 ) && ( gc->Ghp5  == copy->Ghp5 ) && ( gc->Ghp6  == copy->Ghp6 ) && ( gc->Ghp7 == copy->Ghp7 ))
+            return 0;
+        }
 
 	memcpy(gcopy, gc, sizeof(struct guild_castle));
 

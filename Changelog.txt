@@ -1,5 +1,6 @@
 Date	Added
 12/27
+        * Now I remember what I was smoking.. (SVN 817) [MouseJstr]
 	* Fixed a bug in the guild_castle persistance code
 	  in char_sql.  What was I smoking?  (SVN: 816) [MouseJstr]
         * Corrected a bad error in itemdb_read_itemslottable [celest]
