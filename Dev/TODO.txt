@@ -746,13 +746,13 @@ Notes		None
 66.
 Description	re-add a better packet_db implementation
 Status:		Pending
-Assignee	None
+Assignee	nsstrunks
 Notes		None
 ***
 67.
 Description	the char server is a fricken dog...
 Status:		Pending
-Assignee	None
+Assignee	MouseJstr
 Notes		None
 ***
 68.
