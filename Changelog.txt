@@ -9,6 +9,9 @@ Date	Added
             skill_db[500-514]
           - Corrected Hilt Binding
           - Corrected Assassin Cross' dual wield
+          - Changed player_cloak_check_type to yes by default and edited description
+            since it's already fully implemented.
+
 11/22
 	* (TXT)Stripped some code off read_gm_accounts() and made with it addGM() [MC Cameri]
 	  -Usage: addGM(account_id,level);
