@@ -25,6 +25,8 @@ CREATE TABLE `droplog` (
   `item6` int(11) NOT NULL default '0',
   `item7` int(11) NOT NULL default '0',
   `item8` int(11) NOT NULL default '0',
+  `item9` int(11) NOT NULL default '0',
+  `itemCard` int(11) NOT NULL default '0',
   `map` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`drop_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;

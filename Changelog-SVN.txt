@@ -1,6 +1,13 @@
 Date	Added
 
 02/17
+	* Now all mobs have 10 drops slots. the last one is used for Cards Drops [Lupus]
+	  Don't forget to update your SQL files (Drop Log: logs.sql and db_tables.sql
+	  if u were using SQL Mobs DB. Update it from TXT! )
+	* Fixed Branch Log TXT filename [Lupus]
+	* Made all logs work with compiled TXT Server, too (removed old #ifndef) [Lupus]
+	* Added 4 columns into mob_db.txt (check DB\changelog.txt) [Lupus]
+	* Fixed some mobs drops (Whisper, etc) and some MVP mobs (bonuses were shifted...) [Lupus]
         * Readded Chemical Protection -- i forgot to check for it when changing some
           jA stuff earlier, sorry ^^; [celest]
         * Removed some old eA code that was causing Frost Nova to do an extra hit
@@ -12,7 +19,6 @@ Date	Added
         * Fixed some compile errors in Windows, thanks to Ser [celest]
         * Changed remove_control_characters back to supporting korean chars [celest]
         * Moved some other code around [celest]
-
         * Added Shinomori's changes to Dissonance -- don't increment the timer again
           if the target has died [celest]
         * Changed some nullpo checks back to normal null checks -- in some situations

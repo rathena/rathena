@@ -2578,7 +2578,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			int itemid[17] = { 714, 756, 757, 969, 984, 985, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1002 };
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
 			ditem->nameid = itemid[rand()%17]; //should return from 0 to 16
-			if (drop_ore<0) i=7; //we have only 10 slots in LOG, there's a check to not overflow <- TODO: change 7 to 9
+			if (drop_ore<0) i=8; //we have only 10 slots in LOG, there's a check to not overflow (9th item usually a card, so we use 8th slot)
 			log_item[i] = ditem->nameid; //it's for logging only
 			drop_items++; //we cound if there were any drops
 			ditem->amount = 1;
@@ -3883,12 +3883,12 @@ static int mob_readdb(void)
 		}
 		while(fgets(line,1020,fp)){
 			int class_,i;
-			char *str[55],*p,*np;
+			char *str[60],*p,*np; // 55->60 Lupus
 
 			if(line[0] == '/' && line[1] == '/')
 				continue;
 
-			for(i=0,p=line;i<55;i++){
+			for(i=0,p=line;i<60;i++){
 				if((np=strchr(p,','))!=NULL){
 					str[i]=p;
 					*np=0;
@@ -3948,7 +3948,7 @@ static int mob_readdb(void)
 			mob_db[class_].amotion=atoi(str[27]);
 			mob_db[class_].dmotion=atoi(str[28]);
 
-			for(i=0;i<8;i++){ // TODO: 8 -> 10 Lupus
+			for(i=0;i<10;i++){ // 8 -> 10 Lupus
 				int rate = 0,type,ratemin,ratemax;
 				mob_db[class_].dropitem[i].nameid=atoi(str[29+i*2]);
 				type = itemdb_type(mob_db[class_].dropitem[i].nameid);
@@ -4020,21 +4020,13 @@ static int mob_readdb(void)
 				rate = (rate < ratemin)? ratemin: (rate > ratemax)? ratemax: rate;
 				mob_db[class_].dropitem[i].p = rate;
 			}
-			//TEMP PLUG till we expand TXT DB and SQL DBs [Lupus]
-			for(i=8;i<10;i++){ //TODO: 8 -> 10 Lupus
-				//we fill 9th and 10th DROP slots with 0
-				mob_db[class_].dropitem[i].nameid = mob_db[class_].dropitem[i].p = 0;
-			}
-			//END of temp plug
-
-			//TODO: Shift columns (after adding 2 drops (4 coulmns)) Lupus
-
-			// Item1,Item2
-			mob_db[class_].mexp=atoi(str[45])*battle_config.mvp_exp_rate/100;
-			mob_db[class_].mexpper=atoi(str[46]);
+			// MVP EXP Bonus, Chance: MEXP,ExpPer
+			mob_db[class_].mexp=atoi(str[49])*battle_config.mvp_exp_rate/100;
+			mob_db[class_].mexpper=atoi(str[50]);
+			// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 			for(i=0;i<3;i++){
-				mob_db[class_].mvpitem[i].nameid=atoi(str[47+i*2]);
-				mob_db[class_].mvpitem[i].p=atoi(str[48+i*2])*battle_config.mvp_item_rate/100;
+				mob_db[class_].mvpitem[i].nameid=atoi(str[51+i*2]);
+				mob_db[class_].mvpitem[i].p=atoi(str[52+i*2])*battle_config.mvp_item_rate/100;
 			}
 			for(i=0;i<MAX_RANDOMMONSTER;i++)
 				mob_db[class_].summonper[i]=0;
@@ -4349,7 +4341,7 @@ static int mob_read_sqldb(void)
 	char line[1024];
 	int i,class_;
 	long unsigned int ln=0;
-	char *str[55],*p,*np;
+	char *str[60],*p,*np; // 55->60 Lupus
 
 	memset(mob_db,0,sizeof(mob_db));
 
@@ -4360,7 +4352,7 @@ static int mob_read_sqldb(void)
 	sql_res = mysql_store_result(&mmysql_handle);
 	if (sql_res) {
 		while((sql_row = mysql_fetch_row(sql_res))){
-            sprintf(line,"%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+            sprintf(line,"%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                         sql_row[0],sql_row[1],sql_row[2],sql_row[3],sql_row[4],
                         sql_row[5],sql_row[6],sql_row[7],sql_row[8],sql_row[9],
                         sql_row[10],sql_row[11],sql_row[12],sql_row[13],sql_row[14],
@@ -4371,9 +4363,10 @@ static int mob_read_sqldb(void)
                         sql_row[35],sql_row[36],sql_row[37],sql_row[38],sql_row[39],
                         sql_row[40],sql_row[41],sql_row[42],sql_row[43],sql_row[44],
                         sql_row[45],sql_row[46],sql_row[47],sql_row[48],sql_row[49],
-                        sql_row[50],sql_row[51],sql_row[52]);
+                        sql_row[50],sql_row[51],sql_row[52],sql_row[53],sql_row[54],
+			sql_row[56],sql_row[57],sql_row[58],sql_row[59]);
 
-			for(i=0,p=line;i<55;i++){
+			for(i=0,p=line;i<60;i++){
 				if((np=strchr(p,','))!=NULL){
 					str[i]=p;
 					*np=0;
@@ -4424,7 +4417,7 @@ static int mob_read_sqldb(void)
 			mob_db[class_].amotion=atoi(str[27]);
 			mob_db[class_].dmotion=atoi(str[28]);
 
-			for(i=0;i<8;i++){ //TODO: 8 -> 10 Lupus
+			for(i=0;i<10;i++){ // 8 -> 10 Lupus
 				int rate = 0,type,ratemin,ratemax;
 				mob_db[class_].dropitem[i].nameid=atoi(str[29+i*2]);
 				type = itemdb_type(mob_db[class_].dropitem[i].nameid);
@@ -4457,19 +4450,13 @@ static int mob_read_sqldb(void)
 				rate = (rate < ratemin)? ratemin: (rate > ratemax)? ratemax: rate;
 				mob_db[class_].dropitem[i].p = rate;
 			}
-			//TEMP PLUG till we expand TXT DB and SQL DBs [Lupus]
-			for(i=8;i<10;i++){ //TODO: 8 -> 10 Lupus
-				//we fill 9th and 10th DROP slots with 0
-				mob_db[class_].dropitem[i].nameid = mob_db[class_].dropitem[i].p = 0;
-			}
-			//END of temp plug
-
-			//TODO: Shift columns (after adding 2 drops (4 coulmns)) Lupus
-			mob_db[class_].mexp=atoi(str[45])*battle_config.mvp_exp_rate/100;
-			mob_db[class_].mexpper=atoi(str[46]);
+			// MVP EXP Bonus, Chance: MEXP,ExpPer
+			mob_db[class_].mexp=atoi(str[49])*battle_config.mvp_exp_rate/100;
+			mob_db[class_].mexpper=atoi(str[50]);
+			// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 			for(i=0;i<3;i++){
-				mob_db[class_].mvpitem[i].nameid=atoi(str[47+i*2]);
-				mob_db[class_].mvpitem[i].p=atoi(str[48+i*2])*battle_config.mvp_item_rate/100;
+				mob_db[class_].mvpitem[i].nameid=atoi(str[51+i*2]);
+				mob_db[class_].mvpitem[i].p=atoi(str[52+i*2])*battle_config.mvp_item_rate/100;
 			}
 			for(i=0;i<MAX_RANDOMMONSTER;i++)
 				mob_db[class_].summonper[i]=0;

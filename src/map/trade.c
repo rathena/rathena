@@ -236,10 +236,8 @@ void trade_tradecommit(struct map_session_data *sd) {
 							if (sd->status.inventory[n].amount < sd->deal_item_amount[trade_i])
 								sd->deal_item_amount[trade_i] = sd->status.inventory[n].amount;
 
-							#ifndef TXT_ONLY
 							if(log_config.trade > 0)
 								log_trade(sd,target_sd,n,sd->deal_item_amount[trade_i]);
-							#endif //USE_SQL
 
 							flag = pc_additem(target_sd, &sd->status.inventory[n], sd->deal_item_amount[trade_i]);
 							if (flag == 0)
@@ -255,10 +253,8 @@ void trade_tradecommit(struct map_session_data *sd) {
 							if (target_sd->status.inventory[n].amount < target_sd->deal_item_amount[trade_i])
 								target_sd->deal_item_amount[trade_i] = target_sd->status.inventory[n].amount;
 
-							#ifndef TXT_ONLY
 							if(log_config.trade > 0)
 								log_trade(target_sd,sd,n,target_sd->deal_item_amount[trade_i]);
-							#endif //USE_SQL
 
 							flag = pc_additem(sd, &target_sd->status.inventory[n], target_sd->deal_item_amount[trade_i]);
 							if (flag == 0)
@@ -270,18 +266,14 @@ void trade_tradecommit(struct map_session_data *sd) {
 						}
 					}
 					if (sd->deal_zeny) {
-						#ifndef TXT_ONLY	
 						if (log_config.trade > 0 && log_config.zeny > 0)
 							log_zeny(sd, target_sd, sd->deal_zeny);
-						#endif //USE_SQL
 						sd->status.zeny -= sd->deal_zeny;
 						target_sd->status.zeny += sd->deal_zeny;
 					}
 					if (target_sd->deal_zeny) {
-					#ifndef TXT_ONLY	
 						if (log_config.trade > 0 && log_config.zeny > 0)
 							log_zeny(target_sd, sd, sd->deal_zeny);
-						#endif //USE_SQL
 
 						target_sd->status.zeny -= target_sd->deal_zeny;
 						sd->status.zeny += target_sd->deal_zeny;

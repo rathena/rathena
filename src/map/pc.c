@@ -2367,10 +2367,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	  (sd->status.class_>=4023 && ((1<<(sd->status.class_-4023))&item->class_) == 0))
 		return 0;
 
-#ifndef TXT_ONLY
 	if((log_config.branch > 0) && (nameid == 604))
 		log_branch(sd);
-#endif
 
 	return 1;
 }

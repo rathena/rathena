@@ -9569,10 +9569,8 @@ int skill_produce_mix( struct map_session_data *sd,
 			*((unsigned long *)(&tmp_item.card[2]))=sd->char_id;	/* ƒLƒƒƒ‰ID */
 		}
 
-		#ifndef TXT_ONLY
 		if(log_config.produce > 0)
 			log_produce(sd,nameid,slot1,slot2,slot3,1);
-		#endif //USE_SQL
 
 		switch (skill_produce_db[idx].req_skill) {
 			case AM_PHARMACY:
@@ -9595,10 +9593,8 @@ int skill_produce_mix( struct map_session_data *sd,
 		}
 	}
 	else {
-		#ifndef TXT_ONLY
 		if(log_config.produce > 0)
 			log_produce(sd,nameid,slot1,slot2,slot3,0);
-		#endif //USE_SQL
 
 		switch (skill_produce_db[idx].req_skill) {
 			case AM_PHARMACY:

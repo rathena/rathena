@@ -3067,10 +3067,8 @@ int buildin_successrefitem(struct script_state *st)
 	if(i >= 0) {
 		ep=sd->status.inventory[i].equip;
 
-		#ifndef TXT_ONLY
 		if(log_config.refine > 0)
 			log_refine(sd, i, 1);
-		#endif //USE_SQL
 
 		sd->status.inventory[i].refine++;
 		pc_unequipitem(sd,i,2);
@@ -3097,10 +3095,8 @@ int buildin_failedrefitem(struct script_state *st)
 	sd=script_rid2sd(st);
 	i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0) {
-		#ifndef TXT_ONLY
 		if(log_config.refine > 0)
 			log_refine(sd, i, 0);
-		#endif //USE_SQL
 
 		sd->status.inventory[i].refine = 0;
 		pc_unequipitem(sd,i,3);

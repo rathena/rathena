@@ -24,7 +24,7 @@ int log_branch(struct map_session_data *sd)
 			printf("DB server Error - %s\n",mysql_error(&mmysql_handle));
 	} else {
 	#endif
-		if((logfp=fopen(log_config.log_drop,"a+")) != NULL) {
+		if((logfp=fopen(log_config.log_branch,"a+")) != NULL) {
 			char timestring[255];
 			time_t curtime;
 			time(&curtime);
@@ -48,8 +48,7 @@ int log_drop(struct map_session_data *sd, int monster_id, int *log_drop)
 	#ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
-		//TODO: Expand 8 slots into 10
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`drop_date`, `kill_char_id`, `monster_id`, `item1`, `item2`, `item3`, `item4`, `item5`, `item6`, `item7`, `item8`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s') ", log_config.log_drop_db, sd->status.char_id, monster_id, log_drop[0], log_drop[1], log_drop[2], log_drop[3], log_drop[4], log_drop[5], log_drop[6], log_drop[7], sd->mapname);
+		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`drop_date`, `kill_char_id`, `monster_id`, `item1`, `item2`, `item3`, `item4`, `item5`, `item6`, `item7`, `item8`, `item9`, `itemCard`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s') ", log_config.log_drop_db, sd->status.char_id, monster_id, log_drop[0], log_drop[1], log_drop[2], log_drop[3], log_drop[4], log_drop[5], log_drop[6], log_drop[7], log_drop[8], log_drop[9], sd->mapname);
 		if(mysql_query(&mmysql_handle, tmp_sql))
 			printf("DB server Error - %s\n",mysql_error(&mmysql_handle));
 	} else {

@@ -125,14 +125,11 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		clif_vendingreport(vsd, index, amount);
 
 		//log added by Lupus
-		#ifndef TXT_ONLY
 		if(log_config.vend > 0) {
 			log_vend(sd,vsd, index, amount, z); // for Item + Zeny. log.
 			//we log ZENY only with the 1st item. Then zero it for the rest items 8).
 			z = 0;
 		}
-		#endif
-
 	}
 }
 

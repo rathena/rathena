@@ -6,6 +6,12 @@
 	Skill databases == celest working on them i believe.
 
 02/17
+	* Added 4 columns into mob_db.txt & mob_db2.txt [Lupus]
+	  If you were using SQL MOB DB, then update your SQL DB and import all data
+	  from mob_db.txt mob_db2.txt
+	* Fixed some mobs drops Whisper + Boss Whissper had wrong drops %%  [Lupus]
+	  and Whisper had 0% Card drop...Also fixed all MVP mobs (MVP bonuses were shifted...
+	  MVP EXP was missing, etc)
         * Corrected Parrying lasting time, thanks to p14333 and krc2k for pointing it
           out [celest]
 
