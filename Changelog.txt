@@ -1,5 +1,7 @@
 Date	Added
 12/6
+	* Added a case_sensitive to login [MouseJstr]
+	* Fixed follow crashing server when gm dies [MouseJstr]
 	* Fixed global message not working on txt [Wizputer]
 	* fixed a server crash in mobinsite [MouseJstr]
 	* fixed a server crash in party sharing exp [MouseJstr]

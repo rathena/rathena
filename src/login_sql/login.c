@@ -135,6 +135,8 @@ char tmpsql[65535], tmp_sql[65535];
 
 int console = 0;
 
+int case_sensitive = 1;
+
 //-----------------------------------------------------
 
 #define AUTH_FIFO_SIZE 256
@@ -399,7 +401,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	// make query
 	sprintf(tmpsql, "SELECT `%s`,`%s`,`%s`,`lastlogin`,`logincount`,`sex`,`connect_until`,`last_ip`,`ban_until`,`state`,`%s`"
-	                " FROM `%s` WHERE BINARY `%s`='%s'", login_db_account_id, login_db_userid, login_db_user_pass, login_db_level, login_db, login_db_userid, t_uid);
+	                " FROM `%s` WHERE %s `%s`='%s'", login_db_account_id, login_db_userid, login_db_user_pass, login_db_level, login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
 	//login {0-account_id/1-userid/2-user_pass/3-lastlogin/4-logincount/5-sex/6-connect_untl/7-last_ip/8-ban_until/9-state}
 
 	// query
@@ -563,7 +565,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 			return 6; // 6 = Your are Prohibited to log in until %s
 		} else { // ban is finished
 			// reset the ban time
-			sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE BINARY `%s`='%s'", login_db, login_db_userid, t_uid);
+			sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
 			if (mysql_query(&mysql_handle, tmpsql)) {
 				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 			}
@@ -588,8 +590,8 @@ int mmo_auth( struct mmo_account* account , int fd){
 	memcpy(account->lastlogin, tmpstr, 24);
 	account->sex = sql_row[5][0] == 'S' ? 2 : sql_row[5][0]=='M';
 
-	sprintf(tmpsql, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount` +1, `last_ip`='%s'  WHERE BINARY  `%s` = '%s'",
-	        login_db, ip, login_db_userid, sql_row[1]);
+	sprintf(tmpsql, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount` +1, `last_ip`='%s'  WHERE %s  `%s` = '%s'",
+	        login_db, ip, case_sensitive ? "BINARY" : "", login_db_userid, sql_row[1]);
 	mysql_free_result(sql_res) ; //resource free
 	if (mysql_query(&mysql_handle, tmpsql)) {
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
@@ -1328,7 +1330,7 @@ int parse_login(int fd) {
 				result = -3;
 			}
 
-			sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE BINARY `%s` = '%s'",login_db,login_db_userid, t_uid);
+			sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE %s `%s` = '%s'",login_db, case_sensitive ? "BINARY" : "",login_db_userid, t_uid);
             if(mysql_query(&mysql_handle, tmpsql)) {
                 printf("DB server Error - %s\n", mysql_error(&mysql_handle));
             }
@@ -1670,6 +1672,12 @@ int login_config_read(const char *cfgName){
     	else if (strcmpi(w1, "console") == 0) {
 			    if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
 			        console = 1;
+        }
+    	else if (strcmpi(w1, "case_sensitive") == 0) {
+			    if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
+			        case_sensitive = 1;
+			    if(strcmpi(w2,"off") == 0 || strcmpi(w2,"no") == 0 )
+			        case_sensitive = 0;
         }
  	}
 	fclose(fp);

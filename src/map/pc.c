@@ -4606,7 +4606,8 @@ int pc_follow_timer(int tid,unsigned int tick,int id,int data)
   struct map_session_data *sd, *bl;
 
   sd=map_id2sd(id);
-  if(sd == NULL || sd->followtimer != tid)
+
+  if(sd == NULL || sd->followtimer != tid || pc_isdead(sd))
     return 0;
 
   sd->followtimer=-1;
