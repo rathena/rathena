@@ -7299,12 +7299,17 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		skill_status_change_start(&sd->bl,SC_NOCHAT,0,0,0,0,0,0);
 
 	if (night_flag) {
-		// night - when changing from indoors to outdoors - celest
-		if (!map[sd->bl.m].flag.indoors && sd->opt2 != STATE_BLIND)
-			sd->opt2 |= STATE_BLIND;
-		// changing from outdoors to indoors
-		else if (map[sd->bl.m].flag.indoors && sd->opt2 == STATE_BLIND)
-			sd->opt2 &= ~STATE_BLIND;					
+		if (battle_config.night_darkness_level > 0 && !map[sd->bl.m].flag.indoors)
+			clif_specialeffect(&sd->bl, 474 + battle_config.night_darkness_level, 0);
+		else {
+			//clif_specialeffect(&sd->bl, 483, 0); // default darkness level
+			// night - when changing from indoors to outdoors - celest
+			if (!map[sd->bl.m].flag.indoors && sd->opt2 != STATE_BLIND)
+				sd->opt2 |= STATE_BLIND;
+			// changing from outdoors to indoors
+			else if (map[sd->bl.m].flag.indoors && sd->opt2 == STATE_BLIND)
+				sd->opt2 &= ~STATE_BLIND;
+		}
 	}
 
 	// option

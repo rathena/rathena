@@ -3,6 +3,10 @@ Date	Added
           - Napalm vulcan, Enchant Deadly Poison, Slow Poison (based on jAthena 1066)
           - Create Deadly Poison, thanks to DracoRPG!
           - Added effect for Meteor Assault
+        * Added night_darkness_level to battle_athena.conf. [celest]
+          Use this to set 'how dark' it'll become during night time. Use 0 for default,
+          or between 1-10. (Yeah, i know lots of people hated the original night! xP)
+          Warning: It may cause errors with old exe's!
 
 11/19
 	* Re-added check for empty bottle when using aqua benedicta. [Valaris]

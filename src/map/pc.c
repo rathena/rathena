@@ -803,7 +803,11 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 		char tmpstr[1024];
 		strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-		sd->opt2 |= STATE_BLIND;
+		if (battle_config.night_darkness_level > 0)
+			clif_specialeffect(&sd->bl, 474 + battle_config.night_darkness_level, 0);
+		else
+			//clif_specialeffect(&sd->bl, 483, 0); // default darkness level
+			sd->opt2 |= STATE_BLIND;
 	}
 
 	// ステ?タス初期計算など
@@ -7227,8 +7231,13 @@ int map_night_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
 			night_flag = 1; // 0=day, 1=night [Yor]
 			for(i = 0; i < fd_max; i++) {
 				if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth  && !map[pl_sd->bl.m].flag.indoors) {
-					pl_sd->opt2 |= STATE_BLIND;
-					clif_changeoption(&pl_sd->bl);
+					if (battle_config.night_darkness_level > 0)
+						clif_specialeffect(&pl_sd->bl, 474 + battle_config.night_darkness_level, 0);
+					else {
+						//clif_specialeffect(&pl_sd->bl, 483, 0); // default darkness level
+						pl_sd->opt2 |= STATE_BLIND;
+						clif_changeoption(&pl_sd->bl);
+					}
 					clif_wis_message(pl_sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 				}
 			}

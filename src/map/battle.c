@@ -5132,6 +5132,7 @@ static const struct {
 	{ "pk_min_level",           &battle_config.pk_min_level}, // [celest]
 	{ "skill_steal_type",       &battle_config.skill_steal_type}, // [celest]
 	{ "skill_steal_rate",       &battle_config.skill_steal_rate}, // [celest]
+	{ "night_darkness_level",   &battle_config.night_darkness_level}, // [celest]
 
 //SQL-only options start
 #ifndef TXT_ONLY 
@@ -5357,6 +5358,7 @@ void battle_set_defaults() {
 	battle_config.pk_min_level = 55;
 	battle_config.skill_steal_type = 1;
 	battle_config.skill_steal_rate = 100;
+	battle_config.night_darkness_level = 9;
 
 	battle_config.castrate_dex_scale = 150;
 
@@ -5476,6 +5478,9 @@ void battle_validate_conf() {
 	// at least 1 client must be accepted
 	if ((battle_config.packet_ver_flag & 63) == 0) // added by [Yor]
 		battle_config.packet_ver_flag = 63; // accept all clients
+	
+	if (battle_config.night_darkness_level > 10) // Celest
+		battle_config.night_darkness_level = 10;
 }
 
 /*==========================================

@@ -8094,7 +8094,8 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			break;
 		}
 
-		if (night_flag == 1 && (*opt2 & STATE_BLIND) == 0 && bl->type == BL_PC && !map[bl->m].flag.indoors) { // by [Yor]
+		if (night_flag == 1 && (*opt2 & STATE_BLIND) == 0 && bl->type == BL_PC && // by [Yor]
+			!map[bl->m].flag.indoors && battle_config.night_darkness_level <= 0) { // [celest]
 			*opt2 |= STATE_BLIND;
 			opt_flag = 1;
 		}
@@ -9369,7 +9370,8 @@ int skill_status_change_clear(struct block_list *bl, int type)
 	*opt3 = 0;
 	*option &= OPTION_MASK;
 
-	if (night_flag == 1 && type == BL_PC && !map[bl->m].flag.indoors) // by [Yor]
+	if (night_flag == 1 && type == BL_PC && !map[bl->m].flag.indoors && // by [Yor]
+		!map[bl->m].flag.indoors && battle_config.night_darkness_level <= 0) // [celest]
 		*opt2 |= STATE_BLIND;
 
 	if(!type || type&2)
