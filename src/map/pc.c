@@ -872,6 +872,12 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	//スパノビ用死にカウンタ?のスクリプト??からの?み出しとsdへのセット
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
 
+	// Automated script events
+	sd->state.event_death = pc_readglobalreg(sd,"PCDieEvent");
+	sd->state.event_kill = pc_readglobalreg(sd,"PCKillEvent");
+	sd->state.event_disconnect = pc_readglobalreg(sd,"PCLogoffEvent");
+	sd->state.event_onconnect = pc_readglobalreg(sd,"PCLoginEvent");
+	
 	if (night_flag == 1 && !map[sd->bl.m].flag.indoors) {
 		char tmpstr[1024];
 		strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
@@ -892,7 +898,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 		sprintf(tmp_output,"Character '"CL_WHITE"%s"CL_RESET"' logged in. (Account ID: '"CL_WHITE"%d"CL_RESET"').\n", sd->status.name, sd->status.account_id);
 	ShowInfo(tmp_output);
 
-	{
+	if (sd->state.event_onconnect) {
 		struct npc_data *npc;
 		//printf("pc: OnPCLogin event done. (%d events)\n", npc_event_doall("OnPCLogin") );
 		if ((npc = npc_name2id("PCLoginEvent"))) {
@@ -5602,6 +5608,27 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	clif_updatestatus(sd,SP_HP);
 	pc_calcstatus(sd,0);
 
+	if (sd->state.event_death) {
+		struct npc_data *npc;
+		if ((npc = npc_name2id("PCDeathEvent"))) {
+			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCDeathNPC
+			ShowStatus("Event '"CL_WHITE"PCDeathEvent"CL_RESET"' executed.\n");
+		}
+	}
+
+	if (src && src->type == BL_PC) {
+		if (((struct map_session_data *)src)->state.event_kill) {
+			struct npc_data *npc;
+			if ((npc = npc_name2id("PCKillEvent"))) {
+				run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCKillNPC
+				ShowStatus("Event '"CL_WHITE"PCKillEvent"CL_RESET"' executed.\n");
+			}
+		}
+
+		if (sd->state.event_death)
+			pc_setglobalreg(sd,"killerrid",((struct map_session_data *)src)->status.account_id);
+	}
+
 	if(battle_config.bone_drop==2
 		|| (battle_config.bone_drop==1 && map[sd->bl.m].flag.pvp)){	// ドクロドロップ
 		struct item item_tmp;
@@ -6544,7 +6571,16 @@ int pc_setglobalreg(struct map_session_data *sd,char *reg,int val)
 	if(strcmp(reg,"PC_DIE_COUNTER") == 0 && sd->die_counter != val){
 		sd->die_counter = val;
 		pc_calcstatus(sd,0);
+	} else if(strcmp(reg,"PCDieEvent") == 0){
+		sd->state.event_death = val;
+	} else if(strcmp(reg,"PCKillEvent") == 0){
+		sd->state.event_kill = val;
+	} else if(strcmp(reg,"PCLogoutEvent") == 0){
+		sd->state.event_disconnect = val;
+	} else if(strcmp(reg,"PCLoginEvent") == 0){
+		sd->state.event_onconnect = val;
 	}
+
 	if(val==0){
 		for(i=0;i<sd->status.global_reg_num;i++){
 			if(strcmp(sd->status.global_reg[i].str,reg)==0){

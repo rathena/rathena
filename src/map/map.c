@@ -969,6 +969,14 @@ void map_addnickdb(struct map_session_data *sd) {
 int map_quit(struct map_session_data *sd) {
 	nullpo_retr(0, sd);
 
+	if (sd->state.event_disconnect) {
+		struct npc_data *npc;
+		if ((npc = npc_name2id("PCLogoutEvent"))) {
+			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLogoutNPC
+			ShowStatus("Event '"CL_WHITE"PCLogoutEvent"CL_RESET"' executed.\n");
+		}
+	}
+
 	if(sd->chatID)	// チャットから出る
 		chat_leavechat(sd);
 

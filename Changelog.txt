@@ -1,5 +1,19 @@
 Date	Added
 01/05
+        * Added a simplified version of Qamera's OnConnect: OnDisconnect: OnDeath: 
+          NPC events mod, (All credits go to him.) except adapted based on eA's current
+          PCLoginEvent. (by davidsiaw) [celest]
+          - Currently only 4 events have been added: PCDieEvent, PCKillEvent, 
+            PCLogoutEvent and PCLoginEvent
+          - For notes and usage example check /npc/sample/PCLoginEvent.txt (by
+            davidsiaw)
+          - To enable them for a player in a script, do
+            "set <name of event>, <0 or 1>;"
+            (yes it's saved in a permanent character variable and auto read every time)
+          - Simply put, if any of them is set to 1 the appropiate event will activate
+          p.s - Scripters who are already using PcLoginEvent, you'll need to add a
+                "set PCLoginEvent, 1;" now, sorry for the trouble.
+
         * Optimised PCLoginEvent activation a bit [celest]
         * Set 'droprate0item''s default to 'yes' so that items with 0 rate will never
           drop [celest]

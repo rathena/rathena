@@ -143,6 +143,11 @@ struct map_session_data {
 		int glorywounds_flag;
 		int soulcold_flag;
 		int hawkeyes_flag;
+		// originally by Qamera, adapted by celest
+		unsigned event_death : 1;
+		unsigned event_kill : 1;
+		unsigned event_disconnect : 1;
+		unsigned event_onconnect : 1;
 	} state;
 	struct {
 		unsigned killer : 1;
