@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/26
+	* Fixed some incorrect create arrow entries, thanks to boredpoo
+
 03/25
 	* Added Einbrook's mobs, thanks to RodneyJ for their IDs [Lupus]
 	* Removed some extra 0's in the item_db, thanks to Zoc
