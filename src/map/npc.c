@@ -156,7 +156,7 @@ int npc_event_dequeue(struct map_session_data *sd)
 			sd->eventtimer[ev]=add_timer(gettick()+100,pc_eventtimer,sd->bl.id,(int)name);//!!todo!!
 
 		}else
-			ShowMessage("npc_event_dequeue: event timer is full !\n");
+			printf("npc_event_dequeue: event timer is full !\n");
 	}
 	return 0;
 }
