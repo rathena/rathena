@@ -961,7 +961,6 @@ int mob_spawn(int id)
 			md->guild_id = gc->guild_id;
 	}
 	
-	md->sg_count=0;
 	md->deletetimer=-1;
 
 	md->skilltimer=-1;
@@ -2672,8 +2671,7 @@ int mob_class_change(struct mob_data *md,int *value)
 	md->next_walktime = tick+rand()%50+5000;
 	md->attackabletime = tick;
 	md->canmove_tick = tick;
-	md->sg_count=0;
-
+	
 	for(i=0,c=tick-1000*3600*10;i<MAX_MOBSKILL;i++)
 		md->skilldelay[i] = c;
 	md->skillid=0;
@@ -3280,6 +3278,11 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 	case SA_MAGICROD:
 	case SA_SPELLBREAKER:
 		forcecast=1;
+		break;
+	case NPC_SUMMONSLAVE:
+	case NPC_SUMMONMONSTER:
+		if(md->master_id!=0)
+			return 0;
 		break;
 	}
 

@@ -1993,6 +1993,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 			case NPC_POISONATTACK:
 			case NPC_HOLYATTACK:
 			case NPC_DARKNESSATTACK:
+			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
 				div_= pd->skillduration; // [Valaris]
 				break;
@@ -2072,14 +2073,14 @@ static struct Damage battle_calc_pet_weapon_attack(
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case CH_TIGERFIST:	// 伏虎拳
-				damage = damage*(100+ 60*skill_lv)/100;
+				damage = damage*(40+ 100*skill_lv)/100;
 				break;
 			case CH_CHAINCRUSH:	// 連柱崩撃
-				damage = damage*(100+ 60*skill_lv)/100;
+				damage = damage*(400+ 100*skill_lv)/100;
 				div_=skill_get_num(skill_num,skill_lv);
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
-				damage = damage*(50+ 100*skill_lv)/100;
+				damage = damage*(200+ 100*skill_lv)/100;
 				break;
 			case LK_SPIRALPIERCE:			/* スパイラルピアース */
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
@@ -2486,6 +2487,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 			case NPC_POISONATTACK:
 			case NPC_HOLYATTACK:
 			case NPC_DARKNESSATTACK:
+			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
 				damage = damage*(100+25*(skill_lv-1))/100;
 				break;
@@ -2565,14 +2567,14 @@ static struct Damage battle_calc_mob_weapon_attack(
 				damage = damage*(240+ 60*skill_lv)/100;
 				break;
 			case CH_TIGERFIST:	// 伏虎拳
-				damage = damage*(100+ 20*skill_lv)/100;
+				damage = damage*(40+ 100*skill_lv)/100;
 				break;
 			case CH_CHAINCRUSH:	// 連柱崩撃
-				damage = damage*(100+ 60*skill_lv)/100;
+				damage = damage*(400+ 100*skill_lv)/100;
 				div_=skill_get_num(skill_num,skill_lv);
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
-				damage = damage*(50+ 100*skill_lv)/100;
+				damage = damage*(200+ 100*skill_lv)/100;
 				break;
 			case LK_SPIRALPIERCE:			/* スパイラルピアース */
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
@@ -3254,6 +3256,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case NPC_POISONATTACK:
 			case NPC_HOLYATTACK:
 			case NPC_DARKNESSATTACK:
+			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
 				damage = damage*(100+25*skill_lv)/100;
 				damage2 = damage2*(100+25*skill_lv)/100;

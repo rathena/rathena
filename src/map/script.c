@@ -3035,7 +3035,7 @@ int buildin_successrefitem(struct script_state *st)
 		#endif //USE_SQL
 
 		sd->status.inventory[i].refine++;
-		pc_unequipitem(sd,i,0, BF_NORMAL);
+		pc_unequipitem(sd,i,2);
 		clif_refine(sd->fd,sd,0,i,sd->status.inventory[i].refine);
 		clif_delitem(sd,i,1);
 		clif_additem(sd,i,1,0);
@@ -3065,7 +3065,7 @@ int buildin_failedrefitem(struct script_state *st)
 		#endif //USE_SQL
 
 		sd->status.inventory[i].refine = 0;
-		pc_unequipitem(sd,i,0, BF_NORMAL);
+		pc_unequipitem(sd,i,3);
 		// 精錬失敗エフェクトのパケット
 		clif_refine(sd->fd,sd,1,i,sd->status.inventory[i].refine);
 		pc_delitem(sd,i,1,0);
@@ -5885,7 +5885,7 @@ int buildin_nude(struct script_state *st)
 	
 	for(i=0;i<11;i++) 
 		if(sd->equip_index[i] >= 0)
-			pc_unequipitem(sd,sd->equip_index[i],1, BF_NORMAL);
+			pc_unequipitem(sd,sd->equip_index[i],2);
 
 	return 0;
 }

@@ -1,5 +1,14 @@
 Date	Added
 12/13
+        * Skill Updates [celest]
+          - Added the new 'Throw Tomahawk' skill (Requires Sakexe1129 or newer) 
+          - Added some new monster skills - but still not complete.
+          - Adjusted Palm Strike, Tiger Fist and Chain Crush based on 11/14's patch
+        * Removed redundant 'sg_count' for map_session_data and mob_data [celest]
+        * Save both persons' data after trading in case a crash causes them to
+          rollback -  fix by Freya [celest]
+        * Removed 'type' paramater from pc_unequipitem to use 'flag' instead[celest]
+        * Moved unequip checking code from clif.c to pc.c [celest]
 	* Replaced many printf's in map-server with _ShowMessage(). [MC Cameri]
 	* Skill timers for skills with id's higher then 450 were
 	  corrupting memory [MouseJstr]

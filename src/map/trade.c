@@ -10,6 +10,7 @@
 #include "battle.h"
 #include "nullpo.h"
 #include "log.h"
+#include "chrif.h"
 
 /*==========================================
  * æˆø—v¿‚ğ‘Šè‚É‘—‚é
@@ -288,6 +289,9 @@ void trade_tradecommit(struct map_session_data *sd)
 				target_sd->trade_partner=0;
 				clif_tradecompleted(sd,0);
 				clif_tradecompleted(target_sd,0);
+				// save both player to avoid crash: they always have no advantage/disadvantage between the 2 players [Yor]
+				chrif_save(sd); // do pc_makesavestatus and save storage too
+				chrif_save(target_sd); // do pc_makesavestatus and save storage too
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/12/9 8:14:18 PM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/12/13 7:22:51 PM Celestia $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -2323,6 +2323,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	case NPC_HOLYATTACK:
 	case NPC_DARKNESSATTACK:
 	case NPC_TELEKINESISATTACK:
+	case NPC_UNDEADATTACK:
 	case LK_AURABLADE:		/* オ?ラブレ?ド */
 	case LK_SPIRALPIERCE:	/* スパイラルピア?ス */
 	case LK_HEADCRUSH:	/* ヘッドクラッシュ */
@@ -2333,6 +2334,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	case CG_ARROWVULCAN:			/* アロ?バルカン */
 	case ASC_BREAKER:				/* ソウルブレ?カ? */
 	case HW_MAGICCRASHER:		/* マジッククラッシャ? */
+	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case NPC_DARKBREATH:
@@ -2789,6 +2791,14 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 			}
 		}
 		break;
+
+	// unknown skills [Celest]
+	case NPC_BIND:
+	case NPC_EXPLOSIONSPIRITS:
+	case NPC_INCAGI:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		break;
+
 	case 0:
 		if(sd) {
 			if(flag&3){
@@ -3877,7 +3887,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				if(dstsd){
 					for(i=0;i<MAX_INVENTORY;i++){
 						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0002){
-							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							pc_unequipitem(dstsd,i,3);
 							break;
 						}
 					}
@@ -3900,7 +3910,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				if(dstsd){
 					for(i=0;i<MAX_INVENTORY;i++){
 						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0020){
-							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							pc_unequipitem(dstsd,i,3);
 							break;
 						}
 					}
@@ -3923,7 +3933,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				if(dstsd){
 					for(i=0;i<MAX_INVENTORY;i++){
 						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0010){
-							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							pc_unequipitem(dstsd,i,3);
 							break;
 						}
 					}
@@ -3946,7 +3956,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				if(dstsd){
 					for(i=0;i<MAX_INVENTORY;i++){
 						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0100){
-							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							pc_unequipitem(dstsd,i,3);
 							break;
 						}
 					}
@@ -3982,7 +3992,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 						if(dstsd){
 							for(i=0;i<MAX_INVENTORY;i++){
 								if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & striplist[1][j]){
-									pc_unequipitem(dstsd,i,0,BF_SKILL);
+									pc_unequipitem(dstsd,i,3);
 									--c;
 									break;
 								}
@@ -4351,6 +4361,33 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 
 	case NPC_DEFENDER:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		break;
+
+	// Equipment breaking monster skills [Celest]
+	case NPC_BREAKWEAPON:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		if(bl->type == BL_PC && rand()%100 < skilllv && battle_config.equipment_breaking)
+			pc_breakweapon((struct map_session_data *)bl);
+		break;
+	
+	case NPC_BREAKARMOR:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		if(bl->type == BL_PC && rand()%100 < skilllv && battle_config.equipment_breaking)
+			pc_breakarmor((struct map_session_data *)bl);
+		break;
+	
+	case NPC_BREAKHELM:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		if(bl->type == BL_PC && rand()%100 < skilllv && battle_config.equipment_breaking)
+			// since we don't have any code for helm breaking yet...
+			pc_breakweapon((struct map_session_data *)bl);
+		break;
+	
+	case NPC_BREAKSHIELD:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		if(bl->type == BL_PC && rand()%100 < skilllv && battle_config.equipment_breaking)
+			// since we don't have any code for helm breaking yet...
+			pc_breakweapon((struct map_session_data *)bl);
 		break;
 
 	case WE_MALE:				/* 君だけは護るよ */

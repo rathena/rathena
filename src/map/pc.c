@@ -1,4 +1,4 @@
-// $Id: pc.c 101 2004-12-2 12:58:29 AM Celestia $
+// $Id: pc.c 101 2004-12-13 7:23:07 PM Celestia $
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -609,7 +609,7 @@ int pc_breakweapon(struct map_session_data *sd)
 		if(sd->status.inventory[i].equip && sd->status.inventory[i].equip & 0x0002 && !sd->status.inventory[i].attribute==1){
 			item=sd->inventory_data[i];
 			sd->status.inventory[i].attribute=1;
-			pc_unequipitem(sd,i,0,BF_NORMAL);
+			pc_unequipitem(sd,i,3);
 			sprintf(output, "%s has broken.",item->jname);
 			clif_emotion(&sd->bl,23);
 			clif_displaymessage(sd->fd, output);
@@ -641,7 +641,7 @@ int pc_breakarmor(struct map_session_data *sd)
 		if(sd->status.inventory[i].equip && sd->status.inventory[i].equip & 0x0010 && !sd->status.inventory[i].attribute==1){
 			item=sd->inventory_data[i];
 			sd->status.inventory[i].attribute=1;
-			pc_unequipitem(sd,i,0,BF_NORMAL);
+			pc_unequipitem(sd,i,3);
 			sprintf(output, "%s has broken.",item->jname);
 			clif_emotion(&sd->bl,23);
 			clif_displaymessage(sd->fd, output);
@@ -697,8 +697,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd->skillitem = -1;
 	sd->skillitemlv = -1;
 	sd->invincible_timer = -1;
-	sd->sg_count = 0;
-
+	
 	sd->deal_locked = 0;
 	sd->trade_partner = 0;
 
@@ -3146,7 +3145,7 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type)
 	sd->weight -= sd->inventory_data[n]->weight*amount ;
 	if(sd->status.inventory[n].amount<=0){
 		if(sd->status.inventory[n].equip)
-			pc_unequipitem(sd,n,0,BF_NORMAL);
+			pc_unequipitem(sd,n,3);
 		memset(&sd->status.inventory[n],0,sizeof(sd->status.inventory[0]));
 		sd->inventory_data[n] = NULL;
 	}
@@ -3556,7 +3555,7 @@ int pc_item_refine(struct map_session_data *sd,int idx)
 				pc_delitem(sd, i, 1, 0);
 				if(item->equip) {
 					ep = item->equip;
-					pc_unequipitem(sd,idx,0, BF_NORMAL);
+					pc_unequipitem(sd,idx,3);
 				}
 				clif_refine(sd->fd,sd,0,idx,item->refine);
 				clif_delitem(sd,idx,1);				
@@ -3569,7 +3568,7 @@ int pc_item_refine(struct map_session_data *sd,int idx)
 				pc_delitem(sd, i, 1, 0);
 				item->refine = 0;
 				if(item->equip)
-					pc_unequipitem(sd,idx,0, BF_NORMAL);
+					pc_unequipitem(sd,idx,3);
 				clif_refine(sd->fd,sd,1,idx,item->refine);
 				pc_delitem(sd,idx,1,0);
 				clif_misceffect(&sd->bl,2);
@@ -5253,7 +5252,7 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 	for(i=0;i<11;i++) { // unequip items that can't be equipped by base 1 [Valaris]
 		if(sd->equip_index[i] >= 0)
 			if(!pc_isequip(sd,sd->equip_index[i]))
-				pc_unequipitem(sd,sd->equip_index[i],1,BF_NORMAL);
+				pc_unequipitem(sd,sd->equip_index[i],2);
 	}
 
 	clif_skillinfoblock(sd);
@@ -5532,7 +5531,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 					int n = eq_n[rand()%eq_num];//該?アイテムの中からランダム
 					if(rand()%10000 < per){
 						if(sd->status.inventory[n].equip)
-							pc_unequipitem(sd,n,0,BF_NORMAL);
+							pc_unequipitem(sd,n,3);
 						pc_dropitem(sd,n,1);
 					}
 				}
@@ -5545,7 +5544,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 							|| (type == 2 && sd->status.inventory[i].equip)
 							|| type == 3) ){
 						if(sd->status.inventory[i].equip)
-							pc_unequipitem(sd,i,0,BF_NORMAL);
+							pc_unequipitem(sd,i,3);
 						pc_dropitem(sd,i,1);
 						break;
 					}
@@ -6056,7 +6055,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	for(i=0;i<11;i++) {
 		if(sd->equip_index[i] >= 0)
 			if(!pc_isequip(sd,sd->equip_index[i]))
-				pc_unequipitem(sd,sd->equip_index[i],1,BF_NORMAL);	// ?備外し
+				pc_unequipitem(sd,sd->equip_index[i],2);	// ?備外し
 	}
 
 	clif_changelook(&sd->bl,LOOK_BASE,sd->view_class); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
@@ -6693,7 +6692,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 	arrow=pc_search_inventory(sd,pc_checkequip(sd,9));	// Added by RoVeRT
 	for(i=0;i<11;i++) {
 		if(sd->equip_index[i] >= 0 && sd->status.inventory[sd->equip_index[i]].equip&pos) {
-			pc_unequipitem(sd,sd->equip_index[i],1,BF_NORMAL);
+			pc_unequipitem(sd,sd->equip_index[i],2);
 		}
 	}
 	// 弓矢?備
@@ -6789,15 +6788,19 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 
 /*==========================================
  * ? 備した物を外す
+ * type:
+ * 0 - only unequip
+ * 1 - calculate status after unequipping
+ * 2 - force unequip
  *------------------------------------------
  */
-int pc_unequipitem(struct map_session_data *sd,int n,int type, int flag)
+int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 {
 	nullpo_retr(0, sd);	
 
 // -- moonsoul	(if player is berserk then cannot unequip)
 //
-	if(!flag && sd->sc_count && sd->sc_data[SC_BERSERK].timer!=-1){
+	if(flag<2 && sd->sc_count && (sd->sc_data[SC_BLADESTOP].timer!=-1 || sd->sc_data[SC_BERSERK].timer!=-1)){
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
 	}
@@ -6836,20 +6839,25 @@ int pc_unequipitem(struct map_session_data *sd,int n,int type, int flag)
 		if(sd->status.inventory[n].equip & 0x0040)
 			clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-		if(sd->sc_count && sd->sc_data[SC_BROKNWEAPON].timer != -1 && sd->status.inventory[n].equip & 0x0002 &&
-			sd->status.inventory[i].attribute==1)
-			skill_status_change_end(&sd->bl,SC_BROKNWEAPON,-1);
+		if(sd->sc_count) {
+			if (sd->sc_data[SC_BROKNWEAPON].timer != -1 && sd->status.inventory[n].equip & 0x0002 &&
+				sd->status.inventory[n].attribute == 1)
+				skill_status_change_end(&sd->bl,SC_BROKNWEAPON,-1);
+			if(sd->sc_data[SC_BROKNARMOR].timer != -1 && sd->status.inventory[n].equip & 0x0010 &&
+				sd->status.inventory[n].attribute == 1)
+				skill_status_change_end(&sd->bl,SC_BROKNARMOR,-1);
+		}
 
 		clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
 		sd->status.inventory[n].equip=0;
-		if(!type)
+		if(flag&1)
 			pc_checkallowskill(sd);
 		if(sd->weapontype1 == 0 && sd->weapontype2 == 0)
 			skill_encchant_eremental_end(&sd->bl,-1);  //武器持ち誓えは無?件で?性付?解除
 	} else {
 		clif_unequipitemack(sd,n,0,0);
 	}
-	if(!type) {
+	if(flag&1) {
 		pc_calcstatus(sd,0);
 		if(sd->sc_count && sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 			skill_status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);

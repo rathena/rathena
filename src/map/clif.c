@@ -8306,17 +8306,18 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 		clif_clearchar_area(&sd->bl,1);
 		return;
 	}
+	if(sd->npc_id!=0 || sd->vender_id != 0 || sd->opt1 > 0)
+		return;
 	index = RFIFOW(fd,2)-2;
-	if(sd->status.inventory[index].attribute == 1 && sd->sc_data && sd->sc_data[SC_BROKNWEAPON].timer!=-1)
+
+	/*if(sd->status.inventory[index].attribute == 1 && sd->sc_data && sd->sc_data[SC_BROKNWEAPON].timer!=-1)
 		skill_status_change_end(&sd->bl,SC_BROKNWEAPON,-1);
 	if(sd->status.inventory[index].attribute == 1 && sd->sc_data && sd->sc_data[SC_BROKNARMOR].timer!=-1)
 		skill_status_change_end(&sd->bl,SC_BROKNARMOR,-1);
-	if(sd->sc_data && ( sd->sc_data[SC_BLADESTOP].timer!=-1 || sd->sc_data[SC_BERSERK].timer!=-1 ))
-		return;
+	if(sd->sc_count && ( sd->sc_data[SC_BLADESTOP].timer!=-1 || sd->sc_data[SC_BERSERK].timer!=-1 ))
+		return;*/
 
-	if(sd->npc_id!=0 || sd->vender_id != 0 || sd->opt1 > 0)
-		return;
-	pc_unequipitem(sd,index,0,BF_NORMAL);
+	pc_unequipitem(sd,index,1);
 }
 
 /*==========================================

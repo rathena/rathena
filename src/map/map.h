@@ -271,7 +271,6 @@ struct map_session_data {
 	int unbreakable;
 	int classchange; // [Valaris]
 
-	
 	int die_counter;
 	short doridori_counter;
 
@@ -315,8 +314,7 @@ struct map_session_data {
 	int eventtimer[MAX_EVENTTIMER];
 
 	int last_skillid,last_skilllv;		// Added by RoVeRT
-	short sg_count;
-
+	
 	unsigned char change_level; // [celest]
 
 #ifndef TXT_ONLY
@@ -425,7 +423,6 @@ struct mob_data {
 	short sc_count;
 	short opt1,opt2,opt3,option;
 	short min_chase;
-	short sg_count;
 	int guild_id;
 	int deletetimer;
 

@@ -386,11 +386,19 @@
 334,8,6,4,0,1,1,1,yes,0,0,0,magic,0	//WE_MALE#ŒN‚¾‚¯‚ÍŒì‚é‚æ#
 335,8,6,4,0,1,1,1,yes,0,0,0,magic,0	//WE_FEMALE#‚ ‚È‚½‚És‚­‚µ‚Ü‚·#
 336,8,6,4,0,1,1,1,yes,0,0,1,magic,0	//WE_CALLPARTNER#‚ ‚È‚½‚Éˆ§‚¢‚½‚¢#
+337,9,6,1,0,0,1,1,no,0,0,0,weapon,0	//ITM_TOMAHAWK#«È«Þ«Û?«¯÷áª²#
 
 //338					//NPC_DARKCROSS#ƒ_[ƒNƒNƒƒX#
 339,0,6,4,7,0,10,1,no,33,256,0,magic,0		//NPC_DARKGRANDCROSS#ˆÅƒOƒ‰ƒ“ƒhƒNƒƒX#
-340,8,8,1,7,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0,0,magic,0	//NPC_DARKSOULSTRIKE#ˆÅƒ\ƒEƒ‹ƒXƒgƒ‰ƒCƒN#
-341,8,8,1,7,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0,0,magic,2:3:3:4:4:5:5:6:6:7//NPC_DARKJUPITEL#ˆÅƒ†ƒsƒeƒ‹#
+340,8,8,1,7,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,2,0,magic,0	//NPC_DARKSOULSTRIKE#ˆÅƒ\ƒEƒ‹ƒXƒgƒ‰ƒCƒN#
+341,8,8,1,7,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,2,0,magic,2:3:3:4:4:5:5:6:6:7	//NPC_DARKJUPITEL#ˆÅƒ†ƒsƒeƒ‹#
+
+343,1,6,1,0,1,10,1,yes,0,2,0,weapon,0	//NPC_BREAKWEAPON
+344,1,6,1,0,1,10,1,yes,0,2,0,weapon,0	//NPC_BREAKARMOR
+345,1,6,1,0,1,10,1,yes,0,2,0,weapon,0	//NPC_BREAKHELM
+346,1,6,1,0,1,10,1,yes,0,2,0,weapon,0	//NPC_BREAKSHIELD
+347,-1,6,1,9,0,10,1,no,0,2,0,weapon,0	//NPC_UNDEADATTACK
+
 //342‘©”›
 //343•Ší‰ó‚µ
 //344ŠZ‰ó‚µ
@@ -546,6 +554,3 @@
 10012,0,0,4,0,1,1,0,no,0,0,0,none,0	//GD_RESTORE##
 10013,0,0,4,0,1,1,0,no,0,0,0,none,0	//GD_EMERGENCYCALL##
 10014,0,0,0,0,0,1,0,no,0,0,0,none,0	//GD_DEVELOPMENT##
-
-
-// ITM_TOMAHAWK#Åä¸¶È£Å©_´øÁö±â# 337

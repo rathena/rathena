@@ -612,7 +612,7 @@ int chrif_changedsex(int fd)
 			// to avoid any problem with equipment and invalid sex, equipment is unequiped.
 			for (i = 0; i < MAX_INVENTORY; i++) {
 				if (sd->status.inventory[i].nameid && sd->status.inventory[i].equip)
-					pc_unequipitem((struct map_session_data*)sd, i, 0, BF_NORMAL);
+					pc_unequipitem((struct map_session_data*)sd, i, 2);
 			}
 			// reset skill of some job
 			if (s_class.job == 19 || s_class.job == 4020 || s_class.job == 4042 ||
@@ -644,7 +644,7 @@ int chrif_changedsex(int fd)
 			chrif_save(sd);
 			sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
 			                 // do same modify in login-server for the account, but no in char-server (it ask again login_id1 to login, and don't remember it)
-			clif_displaymessage(sd->fd, "Your sex has been changed (need disconexion by the server)...");
+			clif_displaymessage(sd->fd, "Your sex has been changed (need disconnection by the server)...");
 			clif_setwaitclose(sd->fd); // forced to disconnect for the change
 		}
 	} else {
@@ -749,7 +749,7 @@ int chrif_accountdeletion(int fd)
 	if (acc > 0) {
 		if (sd != NULL) {
 			sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
-			clif_displaymessage(sd->fd, "Your account has been deleted (disconnexion)...");
+			clif_displaymessage(sd->fd, "Your account has been deleted (disconnection)...");
 			clif_setwaitclose(sd->fd); // forced to disconnect for the change
 		}
 	} else {
