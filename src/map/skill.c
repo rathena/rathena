@@ -5003,7 +5003,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		range=3;
 		//Fix to prevent the priest from walking while Basilica is up.
 		battle_stopwalking(src,1);
-		skill_status_change_start(src,SC_ANKLE,skilllv,0,0,0,limit,0);
+		//skill_status_change_start(src,SC_ANKLE,skilllv,0,0,0,limit,0);
 		//sd->canmove_tick = gettick() + limit; // added later [celest]
 		break;
 	case PA_GOSPEL:		/* ƒSƒXƒyƒ‹ */
@@ -5258,6 +5258,12 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			unit->val2=val2;
 			unit->limit=limit;
 			unit->range=range;
+
+			// [celest]
+			if (sc_data) {
+				if (sc_data[SC_BASILICA].timer!=-1) // attach Basilica's id to the caster
+					sc_data[SC_BASILICA].val4 = (int)unit;
+			}
 		}
 	}
 	return group;
@@ -6722,14 +6728,25 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		}
 
 		if(sc_data[SC_BLADESTOP].timer != -1){
-		int lv = sc_data[SC_BLADESTOP].val1;
-		if(sc_data[SC_BLADESTOP].val2==1) return 0;//”’‰H‚³‚ê‚½‘¤‚È‚Ì‚Åƒ_ƒ
-		if(lv==1) return 0;
-		if(lv==2 && skill_num!=MO_FINGEROFFENSIVE) return 0;
-		if(lv==3 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE) return 0;
-		if(lv==4 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE && skill_num!=MO_CHAINCOMBO) return 0;
-		if(lv==5 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE && skill_num!=MO_CHAINCOMBO && skill_num!=MO_EXTREMITYFIST) return 0;
-	}
+			int lv = sc_data[SC_BLADESTOP].val1;
+			if(sc_data[SC_BLADESTOP].val2==1) return 0;//”’‰H‚³‚ê‚½‘¤‚È‚Ì‚Åƒ_ƒ
+			if(lv==1) return 0;
+			if(lv==2 && skill_num!=MO_FINGEROFFENSIVE) return 0;
+			if(lv==3 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE) return 0;
+			if(lv==4 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE && skill_num!=MO_CHAINCOMBO) return 0;
+			if(lv==5 && skill_num!=MO_FINGEROFFENSIVE && skill_num!=MO_INVESTIGATE && skill_num!=MO_CHAINCOMBO && skill_num!=MO_EXTREMITYFIST) return 0;
+		}
+
+		if (sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
+			struct skill_unit *su;
+			if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
+				struct skill_unit_group *sg;
+				if ((sg = su->group) && sg->src_id == sd->bl.id) {
+					skill_status_change_end(&sd->bl,SC_BASILICA,-1);
+					skill_delunitgroup (sg);
+				}
+			}
+		}
 	}
 
 	if(sd->status.option&4 && skill_num==TF_HIDING)
@@ -7014,6 +7031,17 @@ int skill_use_pos( struct map_session_data *sd,
 			sc_data[SC_BERSERK].timer != -1  ||
 			sd->sc_data[SC_MARIONETTE].timer != -1)
 			return 0;	/* ?‘ÔˆÙí‚â’¾?‚È‚Ç */
+
+		if (sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
+			struct skill_unit *su;
+			if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
+				struct skill_unit_group *sg;
+				if ((sg = su->group) && sg->src_id == sd->bl.id) {
+					skill_status_change_end(&sd->bl,SC_BASILICA,-1);
+					skill_delunitgroup (sg);
+				}
+			}
+		}
 	}
 
 	if(sd->status.option&2)

@@ -12,7 +12,8 @@ Date	Added
 	* Skill updates [celest]
 	  - Updated Cloaking (thanks to orn), Endure
           - Pneuma (thanks to DracoRPG)
-          - Changed sc_ id for Basilica (80%)
+          - Changed sc_ id for Basilica
+          - Cancel Basilica (100%) when caster moves or uses another skill
 	* Modified pc_attack to fix monster npc's not working in certain exes, thanks
 	  to leinsirk10 [celest]
 	* Moved mapflags organized by type to main mapflag folder and removed "type" folder.
