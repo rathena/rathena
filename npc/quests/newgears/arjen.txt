@@ -17,7 +17,7 @@ gef_tower.gat,128,148,6	script	Arjen	807,{
  mes "[Arjen]";
  mes "What item information do you require?";
  next;
- menu "X-Shaped Hairpin.",M_1,"Bandage",M_2,"Flower Hairpin.",M_3;
+ menu "X-Shaped Hairpin.",M_1,"Bandage",M_2,"Flower Hairpin.",M_3,"Quit.",M_EXIT;
 M_1:
  mes "[Arjen]";
  mes "Hyaaaaaaaa!";
