@@ -1,5 +1,9 @@
 Date	Added
 12/27
+        * Updated description for player_check_cloak_type [celest]
+        * Increased skill range limitations in pc_no_footset [celest]
+        * Added exp_calc_type - to alternate between 3 different versions for exp
+          calculating [celest]
 	* Reinitialized variable 'c' in map_readmap, it's supposed to have a start value. Ex. '-'. [MC Cameri]
 	* Commented out dump_timer_heap() again... [MC Cameri]
 	* Added include of string.h in malloc.c, was causing compile errors/warnings [MC Cameri]

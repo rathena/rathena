@@ -5308,6 +5308,7 @@ static const struct {
 	{ "motd_type",              &battle_config.motd_type}, // [celest]
 	{ "allow_atcommand_when_mute",			&battle_config.allow_atcommand_when_mute}, // [celest]
 	{ "finding_ore_rate",       &battle_config.finding_ore_rate}, // [celest]
+	{ "exp_calc_type",       &battle_config.exp_calc_type}, // [celest]
 
 //SQL-only options start
 #ifndef TXT_ONLY 
@@ -5567,6 +5568,7 @@ void battle_set_defaults() {
 	battle_config.finding_ore_rate = 100;
 	battle_config.castrate_dex_scale = 150;
 	battle_config.area_size = 14;
+	battle_config.exp_calc_type = 1;
 
 //SQL-only options start
 #ifndef TXT_ONLY 

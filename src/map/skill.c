@@ -6717,7 +6717,7 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 			case HT_TALKIEBOX:
 			case PF_SPIDERWEB:		/* スパイダ?ウェッブ */
 			case WZ_ICEWALL:
-				range = 1;
+				range = 2;
 				break;
 			case AL_WARP:
 				range = 0;

@@ -356,6 +356,7 @@ extern struct Battle_Config {
 	int motd_type; // [celest]
 	int allow_atcommand_when_mute; // [celest]
 	int finding_ore_rate; // orn
+	int exp_calc_type;
 
 #ifndef TXT_ONLY /* SQL-only options */
 	int mail_system; // [Valaris]

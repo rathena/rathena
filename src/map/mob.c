@@ -2369,31 +2369,45 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		struct party *p;
 		if(tmpsd[i]==NULL || tmpsd[i]->bl.m != md->bl.m || pc_isdead(tmpsd[i]))
 			continue;
-/* jAthena's exp formula
-	//	per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./((double)max_hp) * dmg_rate;
-		per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./tdmg;
-		temp = ((double)mob_db[md->class].base_exp * (double)battle_config.base_exp_rate / 100. * per);
-		base_exp = (temp > 2147483647.)? 0x7fffffff:(int)temp;
-		if(mob_db[md->class].base_exp > 0 && base_exp < 1) base_exp = 1;
-		if(base_exp < 0) base_exp = 0;
-		temp = ((double)mob_db[md->class].job_exp * (double)battle_config.job_exp_rate / 100. * per);
-		job_exp = (temp > 2147483647.)? 0x7fffffff:(int)temp;
-		if(mob_db[md->class].job_exp > 0 && job_exp < 1) job_exp = 1;
-		if(job_exp < 0) job_exp = 0;
-*/
-//eAthena's exp formula rather than jAthena's
-		per=(double)md->dmglog[i].dmg*256*(9+(double)((count > 6)? 6:count))/10/(double)max_hp;
-		if(per>512) per=512;
-		if(per<1) per=1;
-		base_exp=mob_db[md->class].base_exp*per/256;
 
-		if(base_exp < 1) base_exp = 1;
-		if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class].lv - sd->status.base_level >= 20)) {
-			base_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
+		if (battle_config.exp_calc_type == 0) {
+			// jAthena's exp formula
+		//	per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./((double)max_hp) * dmg_rate;
+			per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./tdmg;
+			temp = (double)mob_db[md->class].base_exp * per;
+			base_exp = (temp > 2147483647.)? 0x7fffffff:(int)temp;
+			if(mob_db[md->class].base_exp > 0 && base_exp < 1) base_exp = 1;
+			if(base_exp < 0) base_exp = 0;
+			temp = (double)mob_db[md->class].job_exp * per;
+			job_exp = (temp > 2147483647.)? 0x7fffffff:(int)temp;
+			if(mob_db[md->class].job_exp > 0 && job_exp < 1) job_exp = 1;
+			if(job_exp < 0) job_exp = 0;
 		}
-		job_exp=mob_db[md->class].job_exp*per/256;
-		if(job_exp < 1) job_exp = 1;
-		if(sd && md && battle_config.pk_mode==1 && (mob_db[md->class].lv - sd->status.base_level >= 20)) {
+		else if (battle_config.exp_calc_type == 1) {
+			//eAthena's exp formula rather than jAthena's
+			per=(double)md->dmglog[i].dmg*256*(9+(double)((count > 6)? 6:count))/10/(double)max_hp;
+			if(per>512) per=512;
+			if(per<1) per=1;
+			base_exp=mob_db[md->class].base_exp*per/256;
+			if(base_exp < 1) base_exp = 1;
+			job_exp=mob_db[md->class].job_exp*per/256;
+			if(job_exp < 1) job_exp = 1;
+		}
+		else {
+			//eAthena's exp formula rather than jAthena's, but based on total damage dealt
+			per=(double)md->dmglog[i].dmg*256*(9+(double)((count > 6)? 6:count))/10/tdmg;
+			if(per>512) per=512;
+			if(per<1) per=1;
+			base_exp=mob_db[md->class].base_exp*per/256;
+			if(base_exp < 1) base_exp = 1;
+			job_exp=mob_db[md->class].job_exp*per/256;
+			if(job_exp < 1) job_exp = 1;
+		}
+		
+		if(sd && battle_config.pk_mode && (mob_db[md->class].lv - sd->status.base_level >= 20)) {
+			base_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
+		}		
+		if(sd && battle_config.pk_mode && (mob_db[md->class].lv - sd->status.base_level >= 20)) {
 			job_exp*=1.15; // pk_mode additional exp if monster >20 levels [Valaris]
 		}
 		if(md->master_id || (md->state.special_mob_ai >= 1 && battle_config.alchemist_summon_reward != 1)) { // for summoned creatures [Valaris]
