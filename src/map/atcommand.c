@@ -213,6 +213,7 @@ ATCOMMAND_FUNC(setbattleflag); // by MouseJstr
 ATCOMMAND_FUNC(unmute); // [Valaris]
 ATCOMMAND_FUNC(uptime); // by MC Cameri
 ATCOMMAND_FUNC(changesex); // by MC Cameri
+ATCOMMAND_FUNC(mute); // celest
 
 #ifndef TXT_ONLY
 ATCOMMAND_FUNC(checkmail); // [Valaris]
@@ -463,6 +464,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_UnMute,				"@unmute",			60, atcommand_unmute }, // [Valaris]
 	{ AtCommand_UpTime,				"@uptime",			 0, atcommand_uptime }, // by MC Cameri
 	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri
+	{ AtCommand_Mute,		        "@mute",	        99, atcommand_mute }, // [celest]
+	{ AtCommand_Mute,		        "@red",	            99, atcommand_mute }, // [celest]
 
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
@@ -7696,6 +7699,7 @@ int atcommand_unmute(
 
 	if((pl_sd=map_nick2sd((char *) message)) != NULL) {
 		if(pl_sd->sc_data[SC_NOCHAT].timer!=-1) {
+			pl_sd->status.manner = 0; // have to set to 0 first [celest]
 			skill_status_change_end(&pl_sd->bl,SC_NOCHAT,-1); 
 			clif_displaymessage(sd->fd,"Player unmuted");
 		}
@@ -7768,6 +7772,36 @@ atcommand_changesex(
 //		sprintf(output,msg_table[460],(isex == 0)?"female":"male");
 //		clif_displaymessage(fd,output);
 //	}
+	return 0;
+}
+
+/*================================================
+ * @mute - Mutes a player for a set amount of time
+ *------------------------------------------------
+ */
+int atcommand_mute(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd = NULL;
+	char character[100];
+	int manner;
+
+	if (!message || !*message || sscanf(message, "%d %99[^\n]", &manner, character) < 1) {
+		clif_displaymessage(fd, "usage: @mute <time> <character name>.");
+		return -1;
+	}
+
+	if ((pl_sd = map_nick2sd(character)) != NULL) {
+		pl_sd->status.manner -= manner;
+		if(pl_sd->status.manner < 0)
+			skill_status_change_start(&pl_sd->bl,SC_NOCHAT,0,0,0,0,0,0);
+	}
+	else {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
 	return 0;
 }
 

@@ -1,6 +1,8 @@
 Date	Added
 
 11/18
+        * Added a line to @unmute, added @mute. [celest]
+          Usage: @mute <time in minutes> <character name>
         * Added save_flag for skill_status_change_start [celest]
         * Fixed muting not being saved when you quit/change characters/log off [celest]
         * *Hopefully* fixed the skill tree problem where you have to use 49 skill 
