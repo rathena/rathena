@@ -5,7 +5,7 @@
 //= Converted by: Shin
 //=
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= Need optimalization and fixing
 //= thanks to Komurka, KiLLaLeN, Lupus (fixing error)
 //= just a temp Job Quest
+//= 1.2 minor fix of announcement by Freya people
 //============================================================
 
 prt_castle.gat,178,99,6	script	Lothar	752,{
@@ -714,7 +715,7 @@ NEXT_o:
 						PASS:
 									mes "[^000080Arthur^000000]";
 									mes "Excellent work!  You qualify to pass the ^FF8000Knowledge Test^000000!";
-									mes "You're almost done, you are now at the ^FF8000Purification Test^000000, find the Guardian Knight at ^008000Prontera Castle^000000.";
+									mes "You're almost done, you are now at the ^FF8000Purification Test^000000, find Harrison at ^008000Prontera Chivalry^000000.";
 									set Job_CR, 11;
 								close;
 							NO:
@@ -1014,7 +1015,7 @@ job_cru.gat,23,42,0	script	Test_2	139,8,8,{
 
 		if (Job_CR != 6) goto EXIT;
 				set @CR_etmp,1;
-				announce "Please endure here and go to exit",8;
+				areaannounce "job_cru.gat",0,0,23,42 "Please endure here and go to exit",8;
 
 				monster "job_cru.gat",10,43,"Ghoul",1423,1,"dead";
 				monster "job_cru.gat",14,47,"Khalitzburg",1438,1,"dead";
