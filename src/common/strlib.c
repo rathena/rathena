@@ -10,12 +10,12 @@
 // string lib.
 char* jstrescape (char* pt) {
 	//copy from here
-	unsigned char * ptr;
+	char *ptr;
 	int i =0, j=0;
 
 	//copy string to temporary
 	CREATE_A(ptr, char, J_MAX_MALLOC_SIZE);
-	strcpy (ptr,pt);
+	strcpy(ptr,pt);
 
 	while (ptr[i] != '\0') {
 		switch (ptr[i]) {

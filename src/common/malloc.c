@@ -8,7 +8,7 @@
 void* aMalloc_( size_t size, const char *file, int line, const char *func )
 {
 	void *ret;
-	
+
 //	printf("%s:%d: in func %s: malloc %d\n",file,line,func,size);
 	ret=malloc(size);
 	if(ret==NULL){
@@ -21,7 +21,7 @@ void* aMalloc_( size_t size, const char *file, int line, const char *func )
 void* aCalloc_( size_t num, size_t size, const char *file, int line, const char *func )
 {
 	void *ret;
-	
+
 //	printf("%s:%d: in func %s: calloc %d %d\n",file,line,func,num,size);
 	ret=calloc(num,size);
 	if(ret==NULL){
@@ -35,7 +35,7 @@ void* aCalloc_( size_t num, size_t size, const char *file, int line, const char 
 void* aRealloc_( void *p, size_t size, const char *file, int line, const char *func )
 {
 	void *ret;
-	
+
 //	printf("%s:%d: in func %s: realloc %p %d\n",file,line,func,p,size);
 	ret=realloc(p,size);
 	if(ret==NULL){
@@ -66,7 +66,7 @@ void * _bcalloc(size_t size, size_t cnt) {
 
 char * _bstrdup(const char *chr) {
 	int len = strlen(chr);
-	char *ret = aMalloc(len + 1);
+	char *ret = (char*)aMalloc(len + 1);
 	strcpy(ret, chr);
 	return ret;
 }

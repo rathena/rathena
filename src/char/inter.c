@@ -114,7 +114,7 @@ int inter_accreg_init() {
 	while(fgets(line, sizeof(line)-1, fp)){
 		line[sizeof(line)-1] = '\0';
 
-		reg = aCalloc(sizeof(struct accreg), 1);
+		reg = (struct accreg*)aCalloc(sizeof(struct accreg), 1);
 		if (reg == NULL) {
 			printf("inter: accreg: out of memory!\n");
 			exit(0);
@@ -325,7 +325,7 @@ int mapif_account_reg(int fd, unsigned char *src) {
 
 // アカウント変数要求返信
 int mapif_account_reg_reply(int fd,int account_id) {
-	struct accreg *reg = numdb_search(accreg_db,account_id);
+	struct accreg *reg = (struct accreg*)numdb_search(accreg_db,account_id);
 
 	WFIFOW(fd,0) = 0x3804;
 	WFIFOL(fd,4) = account_id;
@@ -366,7 +366,7 @@ int check_ttl_wisdata() {
 		wis_delnum = 0;
 		numdb_foreach(wis_db, check_ttl_wisdata_sub, tick);
 		for(i = 0; i < wis_delnum; i++) {
-			struct WisData *wd = numdb_search(wis_db, wis_dellist[i]);
+			struct WisData *wd = (struct WisData*)numdb_search(wis_db, wis_dellist[i]);
 			printf("inter: wis data id=%d time out : from %s to %s\n", wd->id, wd->src, wd->dst);
 			// removed. not send information after a timeout. Just no answer for the player
 			//mapif_wis_end(wd, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
@@ -403,7 +403,7 @@ int mapif_parse_WisRequest(int fd) {
 	}
 
 	// search if character exists before to ask all map-servers
-	if ((index = search_character_index(RFIFOP(fd,28))) == -1) {
+	if ((index = search_character_index((char*)RFIFOP(fd,28))) == -1) {
 		unsigned char buf[27];
 		WBUFW(buf, 0) = 0x3802;
 		memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), 24);
@@ -413,9 +413,9 @@ int mapif_parse_WisRequest(int fd) {
 	} else {
 		// to be sure of the correct name, rewrite it
 		memset(RFIFOP(fd,28), 0, 24);
-		strncpy(RFIFOP(fd,28), search_character_name(index), 24);
+		strncpy((char*)RFIFOP(fd,28), search_character_name(index), 24);
 		// if source is destination, don't ask other servers.
-		if (strcmp(RFIFOP(fd,4),RFIFOP(fd,28)) == 0) {
+		if (strcmp((char*)RFIFOP(fd,4),(char*)RFIFOP(fd,28)) == 0) {
 			unsigned char buf[27];
 			WBUFW(buf, 0) = 0x3802;
 			memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), 24);
@@ -450,7 +450,7 @@ int mapif_parse_WisRequest(int fd) {
 // Wisp/page transmission result
 int mapif_parse_WisReply(int fd) {
 	int id = RFIFOL(fd,2), flag = RFIFOB(fd,6);
-	struct WisData *wd = numdb_search(wis_db, id);
+	struct WisData *wd = (struct WisData*)numdb_search(wis_db, id);
 
 	if (wd == NULL)
 		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
@@ -478,10 +478,10 @@ int mapif_parse_WisToGM(int fd) {
 // アカウント変数保存要求
 int mapif_parse_AccReg(int fd) {
 	int j, p;
-	struct accreg *reg = numdb_search(accreg_db, RFIFOL(fd,4));
+	struct accreg *reg = (struct accreg*)numdb_search(accreg_db, RFIFOL(fd,4));
 
 	if (reg == NULL) {
-		if ((reg = aCalloc(sizeof(struct accreg), 1)) == NULL) {
+		if ((reg = (struct accreg*)aCalloc(sizeof(struct accreg), 1)) == NULL) {
 			printf("inter: accreg: out of memory !\n");
 			exit(0);
 		}

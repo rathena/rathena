@@ -574,7 +574,7 @@ void* grfio_reads(char *fname, int *size)
 				lentry.declen = ftell(in);
 			}
 			fseek(in,0,0);	// SEEK_SET
-			buf2 = (unsigned char *) aCallocA(lentry.declen+1024, 1);
+			buf2 = (unsigned char *)aCallocA(lentry.declen+1024, 1);
 			if (buf2==NULL) {
 				printf("file read memory allocate error : declen\n");
 				goto errret;
@@ -612,7 +612,7 @@ void* grfio_reads(char *fname, int *size)
 		fseek(in,entry->srcpos,0);
 		fread(buf,1,entry->srclen_aligned,in);
 		fclose(in);
-		buf2 = (unsigned char *) aCallocA(entry->declen+1024, 1);
+		buf2 = (unsigned char *)aCallocA(entry->declen+1024, 1);
 		if (buf2==NULL) {
 			printf("file decode memory allocate error\n");
 			goto errret;

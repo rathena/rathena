@@ -1,6 +1,8 @@
 Date	Added
 
 01/23
+	* char-server (SQL & TXT), login-server (SQL & TXT), and txt-coonvertors
+	  (char and login) all compile on g++ now [svn 975] [Ajarn]
 	* Fixed the sizeof errors in g++ [SVN 972] [Ajarn]
 	* Reverted back some of the char* changes [SVN 972] [Ajarn]
 	* Changed parse_script to now return char* [SVN 969] [Ajarn] 

@@ -94,7 +94,7 @@ int inter_party_init() {
 			continue;
 		}
 
-		p = aCalloc(sizeof(struct party), 1);
+		p = (struct party*)aCalloc(sizeof(struct party), 1);
 		if (p == NULL){
 			printf("int_party: out of memory!\n");
 			exit(0);
@@ -572,15 +572,15 @@ int mapif_parse_PartyCheck(int fd, int party_id, int account_id, char *nick) {
 // ・エラーなら0(false)、そうでないなら1(true)をかえさなければならない
 int inter_party_parse_frommap(int fd) {
 	switch(RFIFOW(fd,0)) {
-	case 0x3020: mapif_parse_CreateParty(fd, RFIFOL(fd,2), RFIFOP(fd,6), RFIFOP(fd,30), RFIFOP(fd,54), RFIFOW(fd,70)); break;
+	case 0x3020: mapif_parse_CreateParty(fd, RFIFOL(fd,2), (char*)RFIFOP(fd,6), (char*)RFIFOP(fd,30), (char*)RFIFOP(fd,54), RFIFOW(fd,70)); break;
 	case 0x3021: mapif_parse_PartyInfo(fd, RFIFOL(fd,2)); break;
-	case 0x3022: mapif_parse_PartyAddMember(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOP(fd,10), RFIFOP(fd,34), RFIFOW(fd,50)); break;
+	case 0x3022: mapif_parse_PartyAddMember(fd, RFIFOL(fd,2), RFIFOL(fd,6), (char*)RFIFOP(fd,10), (char*)RFIFOP(fd,34), RFIFOW(fd,50)); break;
 	case 0x3023: mapif_parse_PartyChangeOption(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOW(fd,10), RFIFOW(fd,12)); break;
 	case 0x3024: mapif_parse_PartyLeave(fd, RFIFOL(fd,2), RFIFOL(fd,6)); break;
-	case 0x3025: mapif_parse_PartyChangeMap(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOP(fd,10), RFIFOB(fd,26), RFIFOW(fd,27)); break;
+	case 0x3025: mapif_parse_PartyChangeMap(fd, RFIFOL(fd,2), RFIFOL(fd,6), (char*)RFIFOP(fd,10), RFIFOB(fd,26), RFIFOW(fd,27)); break;
 	case 0x3026: mapif_parse_BreakParty(fd, RFIFOL(fd,2)); break;
-	case 0x3027: mapif_parse_PartyMessage(fd, RFIFOL(fd,4), RFIFOL(fd,8), RFIFOP(fd,12), RFIFOW(fd,2)-12); break;
-	case 0x3028: mapif_parse_PartyCheck(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOP(fd,10)); break;
+	case 0x3027: mapif_parse_PartyMessage(fd, RFIFOL(fd,4), RFIFOL(fd,8), (char*)RFIFOP(fd,12), RFIFOW(fd,2)-12); break;
+	case 0x3028: mapif_parse_PartyCheck(fd, RFIFOL(fd,2), RFIFOL(fd,6), (char*)RFIFOP(fd,10)); break;
 	default:
 		return 0;
 	}

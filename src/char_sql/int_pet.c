@@ -18,11 +18,11 @@ static int pet_newid = 100;
 int inter_pet_tosql(int pet_id, struct s_pet *p) {
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)
 	char t_name[100];
-	
+
 	printf("request save pet: %d.......\n",pet_id);
-	
+
 	jstrescapecpy(t_name, p->name);
-	
+
 	if(p->hungry < 0)
 		p->hungry = 0;
 	else if(p->hungry > 100)
@@ -36,7 +36,7 @@ int inter_pet_tosql(int pet_id, struct s_pet *p) {
 			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) 
+	if (sql_res!=NULL && mysql_num_rows(sql_res)>0)
 		//row reside -> updating
 		sprintf(tmp_sql, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%d',`equip`='%d',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incuvate`='%d' WHERE `pet_id`='%d'",
 			pet_db, p->class_, t_name, p->account_id, p->char_id, p->level, p->egg_id,
@@ -49,19 +49,19 @@ int inter_pet_tosql(int pet_id, struct s_pet *p) {
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (inset/update `pet`)- %s\n", mysql_error(&mysql_handle) );
 	}
-	
+
 	printf("pet save success.......\n");
 	return 0;
 }
 
 int inter_pet_fromsql(int pet_id, struct s_pet *p){
-	
+
 	printf("request load pet: %d.......\n",pet_id);
-	
+
 	memset(p, 0, sizeof(struct s_pet));
-	
+
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)
-	
+
 	sprintf(tmp_sql,"SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate` FROM `%s` WHERE `pet_id`='%d'",pet_db, pet_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 			printf("DB server Error (select `pet`)- %s\n", mysql_error(&mysql_handle) );
@@ -70,7 +70,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet *p){
 	sql_res = mysql_store_result(&mysql_handle) ;
 	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
 		sql_row = mysql_fetch_row(sql_res);
-		
+
 		p->pet_id = pet_id;
 		p->class_ = atoi(sql_row[1]);
 		memcpy(p->name, sql_row[2],24);
@@ -92,20 +92,20 @@ int inter_pet_fromsql(int pet_id, struct s_pet *p){
 		p->intimate = 0;
 	else if(p->intimate > 1000)
 		p->intimate = 1000;
-	
+
 	mysql_free_result(sql_res);
-	
+
 	printf("pet load success.......\n");
 	return 0;
 }
 //----------------------------------------------
-	
+
 int inter_pet_sql_init(){
 	int i;
-		
+
 	//memory alloc
 	printf("interserver pet memory initialize.... (%d byte)\n",sizeof(struct s_pet));
-	pet_pt = aCalloc(sizeof(struct s_pet), 1);
+	pet_pt = (struct s_pet*)aCalloc(sizeof(struct s_pet), 1);
 
 	sprintf (tmp_sql , "SELECT count(*) FROM `%s`", pet_db);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
@@ -124,22 +124,22 @@ int inter_pet_sql_init(){
 		if(mysql_query(&mysql_handle, tmp_sql) ) {
 			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
 		}
-		
+
 		sql_res = mysql_store_result(&mysql_handle) ;
-		
+
 		sql_row = mysql_fetch_row(sql_res);
 		pet_newid = atoi (sql_row[0])+1; //should SET MAX existing PET ID + 1 [Lupus]
 		mysql_free_result(sql_res);
 	}
-	
+
 	printf("set pet_newid: %d.......\n",pet_newid);
-	
+
 	return 0;
 }
 //----------------------------------
 int inter_pet_delete(int pet_id){
 	printf("request delete pet: %d.......\n",pet_id);
-	
+
 	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `pet_id`='%d'",pet_db, pet_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
@@ -232,19 +232,19 @@ int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short
 		pet_pt->intimate = 0;
 	else if(pet_pt->intimate > 1000)
 		pet_pt->intimate = 1000;
-	
+
 	inter_pet_tosql(pet_pt->pet_id,pet_pt);
-	
+
 	mapif_pet_created(fd, account_id, pet_pt);
-	
+
 	return 0;
 }
 
 int mapif_load_pet(int fd, int account_id, int char_id, int pet_id){
 	memset(pet_pt, 0, sizeof(struct s_pet));
-	
+
 	inter_pet_fromsql(pet_id, pet_pt);
-	
+
 	if(pet_pt!=NULL) {
 		if(pet_pt->incuvate == 1) {
 			pet_pt->account_id = pet_pt->char_id = 0;
@@ -267,7 +267,7 @@ int mapif_save_pet(int fd, int account_id, struct s_pet *data) {
 	if(sizeof(struct s_pet)!=len-8) {
 		printf("inter pet: data size error %d %d\n", sizeof(struct s_pet), len-8);
 	}
-	
+
 	else{
 		if(data->hungry < 0)
 			data->hungry = 0;
@@ -292,7 +292,7 @@ int mapif_delete_pet(int fd, int pet_id){
 
 int mapif_parse_CreatePet(int fd){
 	mapif_create_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOW(fd, 10), RFIFOW(fd, 12), RFIFOW(fd, 14), RFIFOW(fd, 16), RFIFOL(fd, 18),
-		RFIFOL(fd, 20), RFIFOB(fd, 22), RFIFOB(fd, 23), RFIFOP(fd, 24));
+		RFIFOL(fd, 20), RFIFOB(fd, 22), RFIFOB(fd, 23), (char*)RFIFOP(fd, 24));
 	return 0;
 }
 

@@ -87,20 +87,20 @@ static int wis_dellist[WISDELLIST_MAX], wis_delnum;
 //--------------------------------------------------------
 // Save account_reg to sql (type=2)
 int inter_accreg_tosql(int account_id,struct accreg *reg){
-	
+
 	int j;
 	char temp_str[32];
 	if (account_id<=0) return 0;
 	reg->account_id=account_id;
-	
+
 	//`global_reg_value` (`type`, `account_id`, `char_id`, `str`, `value`)
 	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `type`=2 AND `account_id`='%d'",reg_db, account_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (delete `global_reg_value`)- %s\n", mysql_error(&mysql_handle) );
 	}
-	
+
 	if (reg->reg_num<=0) return 0;
-	
+
 	for(j=0;j<reg->reg_num;j++){
 		if(reg->reg[j].str != NULL){
 			sprintf(tmp_sql,"INSERT INTO `%s` (`type`, `account_id`, `str`, `value`) VALUES (2,'%d', '%s','%d')",
@@ -120,7 +120,7 @@ int inter_accreg_fromsql(int account_id,struct accreg *reg)
 	if (reg==NULL) return 0;
 	memset(reg, 0, sizeof(struct accreg));
 	reg->account_id=account_id;
-	
+
 	//`global_reg_value` (`type`, `account_id`, `char_id`, `str`, `value`)
 	sprintf (tmp_sql, "SELECT `str`, `value` FROM `%s` WHERE `type`=2 AND `account_id`='%d'",reg_db, reg->account_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
@@ -129,7 +129,7 @@ int inter_accreg_fromsql(int account_id,struct accreg *reg)
 	sql_res = mysql_store_result(&mysql_handle);
 
 	if (sql_res) {
-		for(j=0;(sql_row = mysql_fetch_row(sql_res));j++){	
+		for(j=0;(sql_row = mysql_fetch_row(sql_res));j++){
 			memcpy(reg->reg[j].str, sql_row[0],32);
 			reg->reg[j].value = atoi(sql_row[1]);
 		}
@@ -144,7 +144,7 @@ int inter_accreg_sql_init()
 {
 	CREATE(accreg_pt, struct accreg, 1);
 	return 0;
-	
+
 }
 
 /*==========================================
@@ -190,7 +190,7 @@ int inter_config_read(const char *cfgName) {
 		}
 		//Logins information to be read from the inter_athena.conf
 		//for character deletion (checks email in the loginDB)
-		
+
 		else if(strcmpi(w1,"login_server_ip")==0){
 			strcpy(login_server_ip, w2);
 			printf ("set login_server_ip : %s\n",w2);
@@ -226,7 +226,7 @@ int inter_config_read(const char *cfgName) {
 		}
 	}
 	fclose(fp);
-	
+
 	printf ("success reading interserver configuration\n");
 
 	return 0;
@@ -244,7 +244,7 @@ int inter_log(char *fmt,...)
 	sprintf(tmp_sql,"INSERT DELAYED INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')",interlog_db, jstrescapecpy(temp_str,str));
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error (insert `interlog`)- %s\n", mysql_error(&mysql_handle) );
-	}	
+	}
 
 	va_end(ap);
 	return 0;
@@ -255,10 +255,10 @@ int inter_log(char *fmt,...)
 int inter_init(const char *file)
 {
 	//int i;
-	
+
 	printf ("interserver initialize...\n");
 	inter_config_read(file);
-	
+
 	//DB connection initialized
 	mysql_init(&mysql_handle);
 	printf("Connect Character DB server.... (Character Server)\n");
@@ -271,7 +271,7 @@ int inter_init(const char *file)
 	else {
 		printf ("Connect Success! (Character Server)\n");
 	}
-	
+
 	mysql_init(&lmysql_handle);
 	printf("Connect Character DB server.... (login server)\n");
 	if(!mysql_real_connect(&lmysql_handle, login_server_ip, login_server_id, login_server_pw,
@@ -286,7 +286,7 @@ int inter_init(const char *file)
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();
-	
+
 	inter_pet_sql_init();
 	inter_accreg_sql_init();
 
@@ -335,7 +335,7 @@ int mapif_wis_message(struct WisData *wd) {
 int mapif_wis_end(struct WisData *wd,int flag)
 {
 	unsigned char buf[27];
-	
+
 	WBUFW(buf, 0)=0x3802;
 	memcpy(WBUFP(buf, 2),wd->src,24);
 	WBUFB(buf,26)=flag;
@@ -358,7 +358,7 @@ int mapif_account_reg_reply(int fd,int account_id)
 {
 	struct accreg *reg=accreg_pt;
 	inter_accreg_fromsql(account_id,reg);
-	
+
 	WFIFOW(fd,0)=0x3804;
 	WFIFOL(fd,4)=account_id;
 	if(reg->reg_num==0){
@@ -397,7 +397,7 @@ int check_ttl_wisdata() {
 		wis_delnum = 0;
 		numdb_foreach(wis_db, check_ttl_wisdata_sub, tick);
 		for(i = 0; i < wis_delnum; i++) {
-			struct WisData *wd = numdb_search(wis_db, wis_dellist[i]);
+			struct WisData *wd = (struct WisData*)numdb_search(wis_db, wis_dellist[i]);
 			printf("inter: wis data id=%d time out : from %s to %s\n", wd->id, wd->src, wd->dst);
 			// removed. not send information after a timeout. Just no answer for the player
 			//mapif_wis_end(wd, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
@@ -448,9 +448,9 @@ int mapif_parse_WisRequest(int fd) {
 	} else {
 		// to be sure of the correct name, rewrite it
 		memset(RFIFOP(fd,28), 0, 24);
-		strncpy(RFIFOP(fd,28), sql_row[0], 24);
+		strncpy((char*)RFIFOP(fd,28), sql_row[0], 24);
 		// if source is destination, don't ask other servers.
-		if (strcmp(RFIFOP(fd,4),RFIFOP(fd,28)) == 0) {
+		if (strcmp((char*)RFIFOP(fd,4),(char*)RFIFOP(fd,28)) == 0) {
 			unsigned char buf[27];
 			WBUFW(buf, 0) = 0x3802;
 			memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), 24);
@@ -482,7 +482,7 @@ int mapif_parse_WisRequest(int fd) {
 // Wisp/page transmission result
 int mapif_parse_WisReply(int fd) {
 	int id = RFIFOL(fd,2), flag = RFIFOB(fd,6);
-	struct WisData *wd = numdb_search(wis_db, id);
+	struct WisData *wd = (struct WisData*)numdb_search(wis_db, id);
 
 	if (wd == NULL)
 		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
@@ -504,13 +504,13 @@ int mapif_parse_AccReg(int fd)
 	struct accreg *reg=accreg_pt;
 	int account_id = RFIFOL(fd,4);
 	memset(accreg_pt,0,sizeof(struct accreg));
-	
+
 	for(j=0,p=8;j<ACCOUNT_REG_NUM && p<RFIFOW(fd,2);j++,p+=36){
 		memcpy(reg->reg[j].str,RFIFOP(fd,p),32);
 		reg->reg[j].value=RFIFOL(fd,p+32);
 	}
 	reg->reg_num=j;
-	
+
 	inter_accreg_tosql(account_id,reg);
 	mapif_account_reg(fd,RFIFOP(fd,0));	// Send confirm message to map
 	return 0;
@@ -539,7 +539,7 @@ int inter_parse_frommap(int fd)
 	// パケット長を調べる
 	if(	(len=inter_check_length(fd,inter_recv_packet_length[cmd-0x3000]))==0 )
 		return 2;
-	
+
 	switch(cmd){
 	case 0x3000: mapif_parse_GMmessage(fd); break;
 	case 0x3001: mapif_parse_WisRequest(fd); break;
@@ -569,9 +569,9 @@ int inter_check_length(int fd, int length)
 			return 0;
 		length = RFIFOW(fd, 2);
 	}
-	
+
 	if(RFIFOREST(fd)<length)	// packet not yet
 		return 0;
-	
+
 	return length;
 }

@@ -853,14 +853,14 @@ int make_new_char(int fd, unsigned char *dat) {
 
 	// remove control characters from the name
 	dat[23] = '\0';
-	if (remove_control_chars(dat)) {
+	if (remove_control_chars((char*)dat)) {
 		char_log("Make new char error (control char received in the name): (connection #%d, account: %d)." RETCODE,
 		         fd, sd->account_id);
 		return -1;
 	}
 
 	// check lenght of character name
-	if (strlen(dat) < 4) {
+	if (strlen((const char*)dat) < 4) {
 		char_log("Make new char error (character name too small): (connection #%d, account: %d, name: '%s')." RETCODE,
 		         fd, sd->account_id, dat);
 		return -1;
@@ -902,8 +902,8 @@ int make_new_char(int fd, unsigned char *dat) {
 	}
 
 	for(i = 0; i < char_num; i++) {
-		if ((name_ignoring_case != 0 && strcmp(char_dat[i].name, dat) == 0) ||
-			(name_ignoring_case == 0 && strcmpi(char_dat[i].name, dat) == 0)) {
+		if ((name_ignoring_case != 0 && strcmp(char_dat[i].name, (const char*)dat) == 0) ||
+			(name_ignoring_case == 0 && strcmpi(char_dat[i].name, (const char*)dat) == 0)) {
 			char_log("Make new char error (name already exists): (connection #%d, account: %d) slot %d, name: %s (actual name of other char: %d), stats: %d+%d+%d+%d+%d+%d=%d, hair: %d, hair color: %d." RETCODE,
 			         fd, sd->account_id, dat[30], dat, char_dat[i].name, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[24] + dat[25] + dat[26] + dat[27] + dat[28] + dat[29], dat[33], dat[31]);
 			return -1;
@@ -915,7 +915,7 @@ int make_new_char(int fd, unsigned char *dat) {
 		}
 	}
 
-	if (strcmp(wisp_server_name, dat) == 0) {
+	if (strcmp(wisp_server_name, (const char*)dat) == 0) {
 		char_log("Make new char error (name used is wisp name for server): (connection #%d, account: %d) slot %d, name: %s (actual name of other char: %d), stats: %d+%d+%d+%d+%d+%d=%d, hair: %d, hair color: %d." RETCODE,
 		         fd, sd->account_id, dat[30], dat, char_dat[i].name, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[24] + dat[25] + dat[26] + dat[27] + dat[28] + dat[29], dat[33], dat[31]);
 		return -1;
@@ -949,7 +949,7 @@ int make_new_char(int fd, unsigned char *dat) {
 	char_dat[i].char_id = char_id_count++;
 	char_dat[i].account_id = sd->account_id;
 	char_dat[i].char_num = dat[30];
-	strcpy(char_dat[i].name, dat);
+	strcpy(char_dat[i].name, (const char*)dat);
 	char_dat[i].class_ = 0;
 	char_dat[i].base_level = 1;
 	char_dat[i].job_level = 1;
@@ -1507,9 +1507,9 @@ int char_divorce(struct mmo_charstatus *cs) {
 //------------------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid). by [Yor]
 //------------------------------------------------------------
-int e_mail_check(unsigned char *email) {
+int e_mail_check(char *email) {
 	char ch;
-	unsigned char* last_arobas;
+	char* last_arobas;
 
 	// athena limits
 	if (strlen(email) < 3 || strlen(email) > 39)
@@ -1585,7 +1585,7 @@ static int char_delete(struct mmo_charstatus *cs) {
 	// —£¥
 	if (cs->partner_id){
 		// —£¥î•ñ‚ðmap‚É’Ê’m
-		char buf[10];
+		unsigned char buf[10];
 		WBUFW(buf,0) = 0x2b12;
 		WBUFL(buf,2) = cs->char_id;
 		WBUFL(buf,6) = cs->partner_id;
@@ -1798,7 +1798,7 @@ int parse_tologin(int fd) {
 				if (i == MAX_MAP_SERVERS)
 					char_log("'ladmin': Receiving a message for broadcast, but no map-server is online." RETCODE);
 				else {
-					char buf[128];
+					unsigned char buf[128];
 					char message[RFIFOL(fd,4) + 1]; // +1 to add a null terminated if not exist in the packet
 					int lp;
 					char *p;
@@ -1946,7 +1946,7 @@ int parse_tologin(int fd) {
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 		  {
-			char buf[32000];
+			unsigned char buf[32000];
 			if (gm_account != NULL)
 				aFree(gm_account);
 			gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * ((RFIFOW(fd,2) - 4) / 5), 1);
@@ -2559,7 +2559,7 @@ int parse_char(int fd) {
 			else
 				printf("Account Logged On; Account ID: %d.\n", RFIFOL(fd,2));
 			if (sd == NULL) {
-				sd = session[fd]->session_data = (struct char_session_data*)aCalloc(sizeof(struct char_session_data), 1);
+				sd = (struct char_session_data*)session[fd]->session_data = (struct char_session_data*)aCalloc(sizeof(struct char_session_data), 1);
 				memset(sd, 0, sizeof(struct char_session_data));
 				memcpy(sd->email, "no mail", 40); // put here a mail without '@' to refuse deletion if we don't receive the e-mail
 				sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
@@ -2881,7 +2881,7 @@ int parse_char(int fd) {
 				if (server_fd[i] < 0)
 					break;
 			}
-			if (i == MAX_MAP_SERVERS || strcmp(RFIFOP(fd,2), userid) || strcmp(RFIFOP(fd,26), passwd)){
+			if (i == MAX_MAP_SERVERS || strcmp((char*)RFIFOP(fd,2), userid) || strcmp((char*)RFIFOP(fd,26), passwd)){
 				WFIFOB(fd,2) = 3;
 				WFIFOSET(fd,3);
 				RFIFOSKIP(fd,60);
@@ -3019,7 +3019,7 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len) {
 
 int send_users_tologin(int tid, unsigned int tick, int id, int data) {
 	int users = count_users();
-	char buf[16];
+	unsigned char buf[16];
 
 	if (login_fd > 0 && session[login_fd]) {
 		// send number of user to login server

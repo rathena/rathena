@@ -95,7 +95,7 @@ static void MD5_Round_Calculate(const unsigned char *block,
 	//Save A as AA, B as BB, C as CC, and and D as DD (saving of A, B, C, and D)
 	unsigned int A=*A2, B=*B2, C=*C2, D=*D2;
 	unsigned int AA = A,BB = B,CC = C,DD = D;
-	
+
 	//It is a large region variable reluctantly because of calculation of a round. . . for Round1...4
 	pX = X;
 
@@ -186,7 +186,7 @@ void MD5_String2binary(const char * string, char * output)
    memset(padding_message+copy_len, 0, 64 - copy_len);           //It buries by 0 until it becomes extended bit length.
    padding_message[copy_len] |= 0x80;                            //The next of a message is 1.
 
-   //1-4 
+   //1-4
    //If 56 bytes or more (less than 64 bytes) of remainder becomes, it will calculate by extending to 64 bytes.
    if (56 <= copy_len) {
        MD5_Round_Calculate(padding_message, A,B,C,D);
@@ -225,7 +225,7 @@ void MD5_String(const char * string, char * output)
 {
    unsigned char digest[16];
 
-	MD5_String2binary(string,digest);
+	MD5_String2binary(string,(char*)digest);
 	sprintf(output,
 		"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
 		digest[ 0], digest[ 1], digest[ 2], digest[ 3],

@@ -971,7 +971,7 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 //-----------------------------------------------------
 void send_GM_accounts() {
 	int i;
-	char buf[32767];
+	unsigned char buf[32767];
 	int len;
 
 	len = 4;
@@ -1239,7 +1239,7 @@ int mmo_auth(struct mmo_account* account, int fd) {
 	}
 
 	gettimeofday(&tv, NULL);
-	strftime(tmpstr, 24, date_format, localtime(&(tv.tv_sec)));
+	strftime(tmpstr, 24, date_format, localtime((const time_t*)&(tv.tv_sec)));
 	sprintf(tmpstr + strlen(tmpstr), ".%03d", (int)tv.tv_usec / 1000);
 
 	account->account_id = auth_dat[i].account_id;
@@ -1463,7 +1463,7 @@ int parse_fromchar(int fd) {
 				WBUFW(buf,0) = 0x2721;
 				WBUFL(buf,2) = acc;
 				WBUFL(buf,6) = 0;
-				if (strcmp(RFIFOP(fd,8), gm_pass) == 0) {
+				if (strcmp((char*)RFIFOP(fd,8), gm_pass) == 0) {
 					// only non-GM can become GM
 					if (isGM(acc) == 0) {
 						// if we autorise creation
@@ -1473,7 +1473,7 @@ int parse_fromchar(int fd) {
 								char tmpstr[24];
 								struct timeval tv;
 								gettimeofday(&tv, NULL);
-								strftime(tmpstr, 23, date_format, localtime(&(tv.tv_sec)));
+								strftime(tmpstr, 23, date_format, localtime((const time_t*)&(tv.tv_sec)));
 								fprintf(fp, RETCODE "// %s: @GM command on account %d" RETCODE "%d %d" RETCODE, tmpstr, acc, acc, level_new_gm);
 								fclose(fp);
 								WBUFL(buf,6) = level_new_gm;
@@ -1801,7 +1801,7 @@ int parse_fromchar(int fd) {
 				logfp = fopen(login_log_unknown_packets_filename, "a");
 				if (logfp) {
 					gettimeofday(&tv, NULL);
-					strftime(tmpstr, 23, date_format, localtime(&(tv.tv_sec)));
+					strftime(tmpstr, 23, date_format, localtime((const time_t*)&(tv.tv_sec)));
 					fprintf(logfp, "%s.%03d: receiving of an unknown packet -> disconnection" RETCODE, tmpstr, (int)tv.tv_usec / 1000);
 					fprintf(logfp, "parse_fromchar: connection #%d (ip: %s), packet: 0x%x (with being read: %d)." RETCODE, fd, ip, RFIFOW(fd,0), RFIFOREST(fd));
 					fprintf(logfp, "Detail (in hex):" RETCODE);
@@ -1945,13 +1945,13 @@ int parse_admin(int fd) {
 				return 0;
 			{
 				struct mmo_account ma;
-				ma.userid = RFIFOP(fd, 2);
+				ma.userid = (char*)RFIFOP(fd, 2);
 				memcpy(ma.passwd, RFIFOP(fd, 26), 24);
 				ma.passwd[24] = '\0';
 				memcpy(ma.lastlogin, "-", 2);
 				ma.sex = RFIFOB(fd,50);
 				WFIFOW(fd,0) = 0x7931;
-				WFIFOL(fd,2) = -1;
+				WFIFOL(fd,2) = -1; // WTF? usigned being set to a -1???
 				memcpy(WFIFOP(fd,6), RFIFOP(fd,2), 24);
 				if (strlen(ma.userid) > 23 || strlen(ma.passwd) > 23) {
 					login_log("'ladmin': Attempt to create an invalid account (account or pass is too long, ip: %s)" RETCODE,
@@ -1997,8 +1997,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 26)
 				return 0;
 			WFIFOW(fd,0) = 0x7933;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; // WTF? an unsigned being set to -1
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			i = search_account_index(account_name);
@@ -2014,7 +2014,7 @@ int parse_admin(int fd) {
 				// save deleted account in log file
 				login_log("'ladmin': Account deletion (account: %s, id: %d, ip: %s) - saved in next line:" RETCODE,
 				          auth_dat[i].userid, auth_dat[i].account_id, ip);
-				mmo_auth_tostr(buf, &auth_dat[i]);
+				mmo_auth_tostr((char*)buf, &auth_dat[i]);
 				login_log("%s" RETCODE, buf);
 				// delete account
 				memset(auth_dat[i].userid, '\0', sizeof(auth_dat[i].userid));
@@ -2033,8 +2033,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 50)
 				return 0;
 			WFIFOW(fd,0) = 0x7935;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; /// WTF??? an unsigned being set to a -1
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			i = search_account_index(account_name);
@@ -2063,8 +2063,8 @@ int parse_admin(int fd) {
 				char error_message[20];
 				int statut;
 				WFIFOW(fd,0) = 0x7937;
-				WFIFOL(fd,2) = -1;
-				account_name = RFIFOP(fd,2);
+				WFIFOL(fd,2) = -1; // WTF???
+				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars(account_name);
 				statut = RFIFOL(fd,26);
@@ -2138,8 +2138,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 50)
 				return 0;
 			WFIFOW(fd,0) = 0x793b;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; // WTF???
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			i = search_account_index(account_name);
@@ -2170,8 +2170,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 27)
 				return 0;
 			WFIFOW(fd,0) = 0x793d;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; // WTF???
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			memcpy(WFIFOP(fd,6), account_name, 24);
@@ -2222,8 +2222,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 27)
 				return 0;
 			WFIFOW(fd,0) = 0x793f;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; // WTF???
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			memcpy(WFIFOP(fd,6), account_name, 24);
@@ -2250,7 +2250,7 @@ int parse_admin(int fd) {
 							if ((fp2 = lock_fopen(GM_account_filename, &lock)) != NULL) {
 								if ((fp = fopen(GM_account_filename, "r")) != NULL) {
 									gettimeofday(&tv, NULL);
-									strftime(tmpstr, 23, date_format, localtime(&(tv.tv_sec)));
+									strftime(tmpstr, 23, date_format, localtime((const time_t*)&(tv.tv_sec)));
 									modify_flag = 0;
 									// read/write GM file
 									while(fgets(line, sizeof(line)-1, fp)) {
@@ -2312,8 +2312,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 66)
 				return 0;
 			WFIFOW(fd,0) = 0x7941;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; // WTF???
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			memcpy(WFIFOP(fd,6), account_name, 24);
@@ -2347,8 +2347,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 28 || RFIFOREST(fd) < (28 + RFIFOW(fd,26)))
 				return 0;
 			WFIFOW(fd,0) = 0x7943;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; // WTF???
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			i = search_account_index(account_name);
@@ -2382,8 +2382,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 26)
 				return 0;
 			WFIFOW(fd,0) = 0x7945;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; // WTF???
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			i = search_account_index(account_name);
@@ -2409,7 +2409,7 @@ int parse_admin(int fd) {
 			memset(WFIFOP(fd,6), '\0', 24);
 			for(i = 0; i < auth_num; i++) {
 				if (auth_dat[i].account_id == RFIFOL(fd,2)) {
-					strncpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
+					strncpy((char*)WFIFOP(fd,6), auth_dat[i].userid, 24);
 					login_log("'ladmin': Request (by id) of an account name (account: %s, id: %d, ip: %s)" RETCODE,
 					          auth_dat[i].userid, RFIFOL(fd,2), ip);
 					break;
@@ -2418,7 +2418,7 @@ int parse_admin(int fd) {
 			if (i == auth_num) {
 				login_log("'ladmin': Name request (by id) of an unknown account (id: %d, ip: %s)" RETCODE,
 				          RFIFOL(fd,2), ip);
-				strncpy(WFIFOP(fd,6), "", 24);
+				strncpy((char*)WFIFOP(fd,6), "", 24);
 			}
 			WFIFOSET(fd,30);
 			RFIFOSKIP(fd,6);
@@ -2431,8 +2431,8 @@ int parse_admin(int fd) {
 				time_t timestamp;
 				char tmpstr[2048];
 				WFIFOW(fd,0) = 0x7949;
-				WFIFOL(fd,2) = -1;
-				account_name = RFIFOP(fd,2);
+				WFIFOL(fd,2) = -1; // WTF???
+				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars(account_name);
 				timestamp = (time_t)RFIFOL(fd,26);
@@ -2463,8 +2463,8 @@ int parse_admin(int fd) {
 				time_t timestamp;
 				char tmpstr[2048];
 				WFIFOW(fd,0) = 0x794b;
-				WFIFOL(fd,2) = -1;
-				account_name = RFIFOP(fd,2);
+				WFIFOL(fd,2) = -1; // WTF???
+				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars(account_name);
 				timestamp = (time_t)RFIFOL(fd,26);
@@ -2511,8 +2511,8 @@ int parse_admin(int fd) {
 				struct tm *tmtime;
 				char tmpstr[2048];
 				WFIFOW(fd,0) = 0x794d;
-				WFIFOL(fd,2) = -1;
-				account_name = RFIFOP(fd,2);
+				WFIFOL(fd,2) = -1; // WTF???
+				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars(account_name);
 				i = search_account_index(account_name);
@@ -2573,7 +2573,7 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 8 || RFIFOREST(fd) < (8 + RFIFOL(fd,4)))
 				return 0;
 			WFIFOW(fd,0) = 0x794f;
-			WFIFOW(fd,2) = -1;
+			WFIFOW(fd,2) = -1; // WTF???
 			if (RFIFOL(fd,4) < 1) {
 				login_log("'ladmin': Receiving a message for broadcast, but message is void (ip: %s)" RETCODE,
 				          ip);
@@ -2586,7 +2586,7 @@ int parse_admin(int fd) {
 					login_log("'ladmin': Receiving a message for broadcast, but no char-server is online (ip: %s)" RETCODE,
 					          ip);
 				} else {
-					char buf[32000];
+					unsigned char buf[32000];
 					char message[32000];
 					WFIFOW(fd,2) = 0;
 					memset(message, '\0', sizeof(message));
@@ -2618,8 +2618,8 @@ int parse_admin(int fd) {
 				char tmpstr[2048];
 				char tmpstr2[2048];
 				WFIFOW(fd,0) = 0x7951;
-				WFIFOL(fd,2) = -1;
-				account_name = RFIFOP(fd,2);
+				WFIFOL(fd,2) = -1; // WTF???
+				account_name = (char*)RFIFOP(fd,2);
 				account_name[23] = '\0';
 				remove_control_chars(account_name);
 				i = search_account_index(account_name);
@@ -2672,8 +2672,8 @@ int parse_admin(int fd) {
 			if (RFIFOREST(fd) < 26)
 				return 0;
 			WFIFOW(fd,0) = 0x7953;
-			WFIFOL(fd,2) = -1;
-			account_name = RFIFOP(fd,2);
+			WFIFOL(fd,2) = -1; // WTF???
+			account_name = (char*)RFIFOP(fd,2);
 			account_name[23] = '\0';
 			remove_control_chars(account_name);
 			i = search_account_index(account_name);
@@ -2739,7 +2739,7 @@ int parse_admin(int fd) {
 			if (i == auth_num) {
 				login_log("'ladmin': Attempt to obtain information (by the id) of an unknown account (id: %d, ip: %s)" RETCODE,
 				          RFIFOL(fd,2), ip);
-				strncpy(WFIFOP(fd,7), "", 24);
+				strncpy((char*)WFIFOP(fd,7), "", 24);
 				WFIFOW(fd,148) = 0;
 				WFIFOSET(fd,150);
 			}
@@ -2762,7 +2762,7 @@ int parse_admin(int fd) {
 				logfp = fopen(login_log_unknown_packets_filename, "a");
 				if (logfp) {
 					gettimeofday(&tv, NULL);
-					strftime(tmpstr, 23, date_format, localtime(&(tv.tv_sec)));
+					strftime(tmpstr, 23, date_format, localtime((const time_t*)&(tv.tv_sec)));
 					fprintf(logfp, "%s.%03d: receiving of an unknown packet -> disconnection" RETCODE, tmpstr, (int)tv.tv_usec / 1000);
 					fprintf(logfp, "parse_admin: connection #%d (ip: %s), packet: 0x%x (with being read: %d)." RETCODE, fd, ip, RFIFOW(fd,0), RFIFOREST(fd));
 					fprintf(logfp, "Detail (in hex):" RETCODE);
@@ -2874,7 +2874,7 @@ int parse_login(int fd) {
 			if (RFIFOREST(fd) < ((RFIFOW(fd,0) == 0x64) ? 55 : 47))
 				return 0;
 
-			account.userid = RFIFOP(fd,6);
+			account.userid = (char*)RFIFOP(fd,6);
 			account.userid[23] = '\0';
 			remove_control_chars(account.userid);
 			if (RFIFOW(fd,0) == 0x64) {
@@ -3022,15 +3022,15 @@ int parse_login(int fd) {
 				return 0;
 			{
 				int GM_value, len;
-				unsigned char* server_name;
-				account.userid = RFIFOP(fd,2);
+				char* server_name;
+				account.userid = (char*)RFIFOP(fd,2);
 				account.userid[23] = '\0';
 				remove_control_chars(account.userid);
 				memcpy(account.passwd, RFIFOP(fd,26), 24);
 				account.passwd[24] = '\0';
 				remove_control_chars(account.passwd);
 				account.passwdenc = 0;
-				server_name = RFIFOP(fd,60);
+				server_name = (char*)RFIFOP(fd,60);
 				server_name[19] = '\0';
 				remove_control_chars(server_name);
 				login_log("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (ip: %s)" RETCODE,
@@ -3117,7 +3117,7 @@ int parse_login(int fd) {
 			} else {
 				struct login_session_data *ld = (struct login_session_data*)session[fd]->session_data;
 				if (RFIFOW(fd,2) == 0) {	// non encrypted password
-					unsigned char* password="";
+					char* password="";
 					memcpy(password, RFIFOP(fd,4), 24);
 					password[24] = '\0';
 					remove_control_chars(password);
@@ -3167,7 +3167,7 @@ int parse_login(int fd) {
 				logfp = fopen(login_log_unknown_packets_filename, "a");
 				if (logfp) {
 					gettimeofday(&tv, NULL);
-					strftime(tmpstr, 23, date_format, localtime(&(tv.tv_sec)));
+					strftime(tmpstr, 23, date_format, localtime((const time_t*)&(tv.tv_sec)));
 					fprintf(logfp, "%s.%03d: receiving of an unknown packet -> disconnection" RETCODE, tmpstr, (int)tv.tv_usec / 1000);
 					fprintf(logfp, "parse_login: connection #%d (ip: %s), packet: 0x%x (with being read: %d)." RETCODE, fd, ip, RFIFOW(fd,0), RFIFOREST(fd));
 					fprintf(logfp, "Detail (in hex):" RETCODE);

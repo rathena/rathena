@@ -31,7 +31,7 @@ struct item_data* itemdb_search(int nameid)
 {
 	struct item_data *id;
 
-	id=numdb_search(item_db,nameid);
+	id = (struct item_data*)numdb_search(item_db,nameid);
 	if(id) return id;
 
 	CREATE(id, struct item_data, 1);
@@ -121,7 +121,7 @@ static int itemdb_readdb(void)
 		}
 		if(str[0]==NULL)
 			continue;
-		
+
 		nameid=atoi(str[0]);
 		if(nameid<=0 || nameid>=20000)
 			continue;
@@ -185,7 +185,7 @@ static int itemdb_read_sqldb(void) // sql item_db read, shortened version of map
 			// ----------
 */
             id=itemdb_search(nameid);
-             
+
 			memcpy(id->name, sql_row[1], 24);
 			memcpy(id->jname, sql_row[2], 24);
 
@@ -212,7 +212,7 @@ static int itemdb_final(void *key,void *data,va_list ap)
 {
 	struct item_data *id;
 
-	id=data;
+	id = (struct item_data*)data;
 	if(id->use_script)
 		aFree(id->use_script);
 	if(id->equip_script)

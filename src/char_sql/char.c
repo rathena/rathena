@@ -2654,7 +2654,7 @@ int parse_char(int fd) {
 
 				//Divorce [Wizputer]
 				if (sql_row[1] != 0) {
-					char buf[64];
+					unsigned char buf[64];
 					sprintf(tmp_sql,"UPDATE `%s` SET `partner_id`='0' WHERE `char_id`='%d'",char_db,atoi(sql_row[1]));
 					if(mysql_query(&mysql_handle, tmp_sql)) {
 						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
@@ -2900,7 +2900,7 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len) {
 
 int send_users_tologin(int tid, unsigned int tick, int id, int data) {
 	int users = count_users();
-	char buf[16];
+	unsigned char buf[16];
 
 	if (login_fd > 0 && session[login_fd]) {
 		// send number of user to login server

@@ -56,7 +56,7 @@ int storage_fromstr(char *str,struct storage *p)
 	if(set!=2)
 		return 1;
 	if(str[next]=='\n' || str[next]=='\r')
-		return 0;	
+		return 0;
 	next++;
 	for(i=0;str[next] && str[next]!='\t';i++){
 		if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
@@ -76,7 +76,7 @@ int storage_fromstr(char *str,struct storage *p)
 			p->storage[i].card[3] = tmp_int[10];
 			next += len;
 			if (str[next] == ' ')
-				next++;	
+				next++;
 		}
 
 		else if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
@@ -96,9 +96,9 @@ int storage_fromstr(char *str,struct storage *p)
 			p->storage[i].card[3] = tmp_int[10];
 			next += len;
 			if (str[next] == ' ')
-				next++;	
+				next++;
 		}
-		
+
 		else return 1;
 	}
 	return 0;
@@ -138,7 +138,7 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 	if(set!=2)
 		return 1;
 	if(str[next]=='\n' || str[next]=='\r')
-		return 0;	
+		return 0;
 	next++;
 	for(i=0;str[next] && str[next]!='\t';i++){
 	if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
@@ -158,7 +158,7 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 			p->storage[i].card[3] = tmp_int[10];
 			next += len;
 			if (str[next] == ' ')
-				next++;	
+				next++;
 		}
 
 		else if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
@@ -178,9 +178,9 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 			p->storage[i].card[3] = tmp_int[10];
 			next += len;
 			if (str[next] == ' ')
-				next++;	
+				next++;
 		}
-		
+
 		else return 1;
 	}
 	return 0;
@@ -242,7 +242,7 @@ int inter_storage_init()
 	}
 	while(fgets(line,65535,fp)){
 		sscanf(line,"%d",&tmp_int);
-		s=aCalloc(sizeof(struct storage), 1);
+		s = (struct storage*)aCalloc(sizeof(struct storage), 1);
 		if(s==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);
@@ -270,7 +270,7 @@ int inter_storage_init()
 	}
 	while(fgets(line,65535,fp)){
 		sscanf(line,"%d",&tmp_int);
-		gs=aCalloc(sizeof(struct guild_storage), 1);
+		gs = (struct guild_storage*)aCalloc(sizeof(struct guild_storage), 1);
 		if(gs==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);

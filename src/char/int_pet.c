@@ -41,16 +41,16 @@ int inter_pet_fromstr(char *str,struct s_pet *p)
 	int s;
 	int tmp_int[16];
 	char tmp_str[256];
-	
+
 	memset(p,0,sizeof(struct s_pet));
-	
+
 //	printf("sscanf pet main info\n");
 	s=sscanf(str,"%d,%d,%[^\t]\t%d,%d,%d,%d,%d,%d,%d,%d,%d",&tmp_int[0],&tmp_int[1],tmp_str,&tmp_int[2],
 		&tmp_int[3],&tmp_int[4],&tmp_int[5],&tmp_int[6],&tmp_int[7],&tmp_int[8],&tmp_int[9],&tmp_int[10]);
 
 	if(s!=12)
 		return 1;
-	
+
 	p->pet_id = tmp_int[0];
 	p->class_ = tmp_int[1];
 	memcpy(p->name,tmp_str,24);
@@ -88,7 +88,7 @@ int inter_pet_init()
 	if( (fp=fopen(pet_txt,"r"))==NULL )
 		return 1;
 	while(fgets(line,sizeof(line),fp)){
-		p=aCalloc(sizeof(struct s_pet), 1);
+		p = (struct s_pet*)aCalloc(sizeof(struct s_pet), 1);
 		if(p==NULL){
 			printf("int_pet: out of memory!\n");
 			exit(0);
@@ -242,11 +242,11 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 		p->intimate = 0;
 	else if(p->intimate > 1000)
 		p->intimate = 1000;
-	
+
 	numdb_insert(pet_db,p->pet_id,p);
-	
+
 	mapif_pet_created(fd,account_id,p);
-	
+
 	return 0;
 }
 
@@ -292,7 +292,7 @@ int mapif_save_pet(int fd,int account_id,struct s_pet *data)
 			p->pet_id = data->pet_id;
 			if(p->pet_id == 0)
 				data->pet_id = p->pet_id = pet_newid++;
-			numdb_insert(pet_db,p->pet_id,p);		
+			numdb_insert(pet_db,p->pet_id,p);
 		}
 		if(data->hungry < 0)
 			data->hungry = 0;
@@ -322,7 +322,7 @@ int mapif_delete_pet(int fd,int pet_id)
 int mapif_parse_CreatePet(int fd)
 {
 	mapif_create_pet(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOW(fd,10),RFIFOW(fd,12),RFIFOW(fd,14),RFIFOW(fd,16),RFIFOL(fd,18),
-		RFIFOL(fd,20),RFIFOB(fd,22),RFIFOB(fd,23),RFIFOP(fd,24));
+		RFIFOL(fd,20),RFIFOB(fd,22),RFIFOB(fd,23),(char*)RFIFOP(fd,24));
 	return 0;
 }
 

@@ -329,11 +329,11 @@ struct guild * inter_guild_fromsql(int guild_id)
 
 	if (guild_id==0) return 0;
 
-	g = numdb_search(guild_db_,guild_id);
+	g = (struct guild*)numdb_search(guild_db_,guild_id);
 	if (g != NULL)
 		return g;
 
-	g = (struct guild *) aMalloc(sizeof(struct guild));
+	g = (struct guild*)aMalloc(sizeof(struct guild));
 	memset(g,0,sizeof(struct guild));
 
 //	printf("Retrieve guild information from sql ......\n");
@@ -527,9 +527,9 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 	if (gc==NULL) return 0;
 	//printf("Save to guild_castle\n");
 
-	gcopy = numdb_search(castle_db_,gc->castle_id);
+	gcopy = (struct guild_castle*)numdb_search(castle_db_,gc->castle_id);
 	if (gcopy == NULL) {
-	  gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
+	  gcopy = (struct guild_castle*)aMalloc(sizeof(struct guild_castle));
 	  numdb_insert(castle_db_, gc->castle_id, gcopy);
 	} else {
             if ((gc->guild_id  == gcopy->guild_id ) && (  gc->economy  == gcopy->economy ) && ( gc->defense  == gcopy->defense ) && ( gc->triggerE  == gcopy->triggerE ) && ( gc->triggerD  == gcopy->triggerD ) && ( gc->nextTime  == gcopy->nextTime ) && ( gc->payTime  == gcopy->payTime ) && ( gc->createTime  == gcopy->createTime ) && ( gc->visibleC  == gcopy->visibleC ) && ( gc->visibleG0  == gcopy->visibleG0 ) && ( gc->visibleG1  == gcopy->visibleG1 ) && ( gc->visibleG2  == gcopy->visibleG2 ) && ( gc->visibleG3  == gcopy->visibleG3 ) && ( gc->visibleG4  == gcopy->visibleG4 ) && ( gc->visibleG5  == gcopy->visibleG5 ) && ( gc->visibleG6  == gcopy->visibleG6 ) && ( gc->visibleG7  == gcopy->visibleG7 ) && ( gc->Ghp0  == gcopy->Ghp0 ) && ( gc->Ghp1  == gcopy->Ghp1 ) && ( gc->Ghp2  == gcopy->Ghp2 ) && ( gc->Ghp3  == gcopy->Ghp3 ) && ( gc->Ghp4  == gcopy->Ghp4 ) && ( gc->Ghp5  == gcopy->Ghp5 ) && ( gc->Ghp6  == gcopy->Ghp6 ) && ( gc->Ghp7 == gcopy->Ghp7 ))
@@ -573,13 +573,13 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 // Read guild_castle from sql
 int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 {
-        struct guild_castle *gcopy;
+    struct guild_castle *gcopy;
 	if (gc==NULL) return 0;
 	//printf("Read from guild_castle\n");
 
-	gcopy = numdb_search(castle_db_, castle_id);
+	gcopy = (struct guild_castle*)numdb_search(castle_db_, castle_id);
 	if (gcopy == NULL) {
-	  gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
+	  gcopy = (struct guild_castle*)aMalloc(sizeof(struct guild_castle));
 	  numdb_insert(castle_db_, gc->castle_id, gcopy);
 	} else {
 	  memcpy(gc, gcopy, sizeof(struct guild_castle));
@@ -678,9 +678,9 @@ int inter_guild_sql_init()
         guild_castleinfoevent_db_=numdb_init();
 
 	printf("interserver guild memory initialize.... (%d byte)\n",sizeof(struct guild));
-	guild_pt = aCalloc(sizeof(struct guild), 1);
-	guild_pt2= aCalloc(sizeof(struct guild), 1);
-	guildcastle_pt=aCalloc(sizeof(struct guild_castle), 1);
+	guild_pt = (struct guild*)aCalloc(sizeof(struct guild), 1);
+	guild_pt2= (struct guild*)aCalloc(sizeof(struct guild), 1);
+	guildcastle_pt = (struct guild_castle*)aCalloc(sizeof(struct guild_castle), 1);
 
 	inter_guild_readdb(); // Read exp
 
@@ -1094,7 +1094,7 @@ int mapif_guild_castle_alldataload(int fd) {
 			gc->Ghp7 = atoi(sql_row[25]);
 			memcpy(WFIFOP(fd,len), gc, sizeof(struct guild_castle));
 
-                        gcopy = numdb_search(castle_db_,gc->castle_id);
+                        gcopy = (struct guild_castle*)numdb_search(castle_db_,gc->castle_id);
                         if (gcopy == NULL) {
                             gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
                             numdb_insert(castle_db_, gc->castle_id, gcopy);
@@ -1671,21 +1671,21 @@ int mapif_parse_GuildCheck(int fd,int guild_id,int account_id,int char_id)
 int inter_guild_parse_frommap(int fd)
 {
 	switch(RFIFOW(fd,0)){
-	case 0x3030: mapif_parse_CreateGuild(fd,RFIFOL(fd,4),RFIFOP(fd,8),(struct guild_member *)RFIFOP(fd,32)); break;
+	case 0x3030: mapif_parse_CreateGuild(fd,RFIFOL(fd,4),(char*)RFIFOP(fd,8),(struct guild_member *)RFIFOP(fd,32)); break;
 	case 0x3031: mapif_parse_GuildInfo(fd,RFIFOL(fd,2)); break;
 	case 0x3032: mapif_parse_GuildAddMember(fd,RFIFOL(fd,4),(struct guild_member *)RFIFOP(fd,8)); break;
-	case 0x3034: mapif_parse_GuildLeave(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),RFIFOP(fd,15)); break;
+	case 0x3034: mapif_parse_GuildLeave(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),(const char*)RFIFOP(fd,15)); break;
 	case 0x3035: mapif_parse_GuildChangeMemberInfoShort(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),RFIFOW(fd,15),RFIFOW(fd,17)); break;
 	case 0x3036: mapif_parse_BreakGuild(fd,RFIFOL(fd,2)); break;
-	case 0x3037: mapif_parse_GuildMessage(fd,RFIFOL(fd,4),RFIFOL(fd,8),RFIFOP(fd,12),RFIFOW(fd,2)-12); break;
+	case 0x3037: mapif_parse_GuildMessage(fd,RFIFOL(fd,4),RFIFOL(fd,8),(char*)RFIFOP(fd,12),RFIFOW(fd,2)-12); break;
 	case 0x3038: mapif_parse_GuildCheck(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10)); break;
-	case 0x3039: mapif_parse_GuildBasicInfoChange(fd,RFIFOL(fd,4),RFIFOW(fd,8),RFIFOP(fd,10),RFIFOW(fd,2)-10); break;
-	case 0x303A: mapif_parse_GuildMemberInfoChange(fd,RFIFOL(fd,4),RFIFOL(fd,8),RFIFOL(fd,12),RFIFOW(fd,16),RFIFOP(fd,18),RFIFOW(fd,2)-18); break;
+	case 0x3039: mapif_parse_GuildBasicInfoChange(fd,RFIFOL(fd,4),RFIFOW(fd,8),(const char*)RFIFOP(fd,10),RFIFOW(fd,2)-10); break;
+	case 0x303A: mapif_parse_GuildMemberInfoChange(fd,RFIFOL(fd,4),RFIFOL(fd,8),RFIFOL(fd,12),RFIFOW(fd,16),(const char*)RFIFOP(fd,18),RFIFOW(fd,2)-18); break;
 	case 0x303B: mapif_parse_GuildPosition(fd,RFIFOL(fd,4),RFIFOL(fd,8),(struct guild_position *)RFIFOP(fd,12)); break;
 	case 0x303C: mapif_parse_GuildSkillUp(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10)); break;
 	case 0x303D: mapif_parse_GuildAlliance(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOL(fd,14),RFIFOB(fd,18)); break;
-	case 0x303E: mapif_parse_GuildNotice(fd,RFIFOL(fd,2),RFIFOP(fd,6),RFIFOP(fd,66)); break;
-	case 0x303F: mapif_parse_GuildEmblem(fd,RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8),RFIFOP(fd,12)); break;
+	case 0x303E: mapif_parse_GuildNotice(fd,RFIFOL(fd,2),(const char*)RFIFOP(fd,6),(const char*)RFIFOP(fd,66)); break;
+	case 0x303F: mapif_parse_GuildEmblem(fd,RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8),(const char*)RFIFOP(fd,12)); break;
 	case 0x3040: mapif_parse_GuildCastleDataLoad(fd,RFIFOW(fd,2),RFIFOB(fd,4)); break;
 	case 0x3041: mapif_parse_GuildCastleDataSave(fd,RFIFOW(fd,2),RFIFOB(fd,4),RFIFOL(fd,5)); break;
 
