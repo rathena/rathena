@@ -713,3 +713,37 @@ Description	Make a battle_config option to cause, if a user is logged in and som
 Status:		Pending
 Assignee	None
 Notes		None
+***
+62.
+Description	Make a battle_config option to disable auto-muting
+Status:		Pending
+***
+63.
+Description	Can't unmute auto-muted people
+Status:		Pending
+Assignee	None
+Notes		None
+***
+64.
+Description	Wedding skill recall.. should only have one active at a time
+Status:		Pending
+Assignee	None
+Notes		None
+***
+65.
+Description	Wedding skill recall should work in noskill zone
+Status:		Pending
+Assignee	None
+Notes		None
+***
+66.
+Description	re-add a better packet_db implementation
+Status:		Pending
+Assignee	None
+Notes		None
+***
+67.
+Description	the char server is a fricken dog...
+Status:		Pending
+Assignee	None
+Notes		None
