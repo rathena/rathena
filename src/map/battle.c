@@ -4045,31 +4045,31 @@ struct Damage battle_calc_weapon_attack(
 
 		if(sd->status.weapon && sd->status.weapon != 11) {
 			if(sd->sc_data[SC_MELTDOWN].timer!=-1) {
-//				breakrate += 100*sd->sc_data[SC_MELTDOWN].val1; // since we don't know if there are any other factors for breaking yet, [celest]
-				breakrate += 100*sd->sc_data[SC_MELTDOWN].val1;
-				if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
+				int breakrate_;	// separate breaking rates for meltdown [Celest]
+				breakrate_ = 100*sd->sc_data[SC_MELTDOWN].val1;
+				if(rand()%10000 < breakrate_*battle_config.equipment_break_rate/100 || breakrate_ >= 10000) {
 					if (target->type == BL_PC)
 						pc_breakweapon((struct map_session_data *)target);
 					else
 						skill_status_change_start(target,SC_STRIPWEAPON,1,75,0,0,skill_get_time2(WS_MELTDOWN,1),0 );
 				}
 
-				breakrate = 70*sd->sc_data[SC_MELTDOWN].val1;
-				if (rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
+				breakrate_ = 70*sd->sc_data[SC_MELTDOWN].val1;
+				if (rand()%10000 < breakrate_*battle_config.equipment_break_rate/100 || breakrate_ >= 10000) {
 					if (target->type == BL_PC)
 						pc_breakarmor((struct map_session_data *)target);
 					else
 						skill_status_change_start(target,SC_STRIPSHIELD,1,75,0,0,skill_get_time2(WS_MELTDOWN,1),0 );
 				}
 			}
-			if(sd->sc_data[SC_OVERTHRUST].timer!=-1) {
+			if(sd->sc_data[SC_OVERTHRUST].timer!=-1)
 				breakrate += 10;	//+ 0.1% whatever skill level you use [DracoRPG]
+
 			//if(wd.type==0x0a) //removed! because CRITS don't affect on breaking chance [Lupus]
 			//	breakrate*=2;
-				if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
-					if(pc_breakweapon(sd)==1)
-						wd = battle_calc_pc_weapon_attack(src,target,skill_num,skill_lv,wflag);
-				}
+			if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
+				if(pc_breakweapon(sd)==1)
+					wd = battle_calc_pc_weapon_attack(src,target,skill_num,skill_lv,wflag);
 			}
 		}
 	}

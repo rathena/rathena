@@ -1,18 +1,22 @@
 Date	Added
 01/02
+        * Re-fixed map-server crashing if an empty line is in skill_castnodex.txt,
+          thanks to Alex14 for pointing it out (SVN 899) [celest]
+        * Modified breaking rates calculating - meltdown's chances is separated from
+          self breaking chances (SVN 900)  [celest]
         * Reduced MAX_SKILL_LEVEL to 10 to save a bit of memory and speed [celest]
-        * Tidied up parts in skill_castfix a bit [celest]
+        * Tidied up parts in skill_castfix a bit (SVN 895) [celest]
         * Fixed map-server crashing if an empty line was added in any of the skill-xx
-          db files [celest]
+          db files  (SVN 895) [celest]
         * Updated skill_castnodex reading - An *optional* 3rd value can be added to set
-          whether a skill's delay time can be affected by dex [celest]
+          whether a skill's delay time can be affected by dex  (SVN 895) [celest]
           Example: 46,1,1 - double strafe's delay is not affected by dex
                    46,1,0:0:0:0:1 - only level 5 double strafe is not affected by dex
 	* More atempts at memory leak fixes [Codemaster] [SVN 890]
-        * Updated weapon breaking rates, thanks to DracoRPG [celest]
+        * Updated weapon breaking rates, thanks to DracoRPG  (SVN 891) [celest]
         * Optimized enchanting skills success rates calculation, thanks to Wallex
-          (you were right! ^^; ) [celest]
-        * Modified Spiral Pierce and Breaker to type ranged [celest]
+          (you were right! ^^; )  (SVN 891) [celest]
+        * Modified Spiral Pierce and Breaker to type ranged (SVN 891) [celest]
 
 01/01
 	* Attempted to fix a memory leak [Codemaster] - tell me if it works XD (NPC/Mob memory leak in npc_parse_mob(...)) [SVN 886]
