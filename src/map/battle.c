@@ -3616,7 +3616,8 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		}
 		if (target->type == BL_PC) {
 			struct map_session_data *tsd = (struct map_session_data *)target;
-			if(tsd->autospell2_id > 0 && rand()%100 < tsd->autospell2_rate) {
+			if(tsd && ((sd && !sd->state.arrow_atk) || (status_get_range(src)<=2)) &&
+				tsd->autospell2_id > 0 && rand()%100 < tsd->autospell2_rate) {
 				int skilllv = tsd->autospell_lv,i,f=0,sp;
 				i = rand()%100;
 				if(i >= 50) skilllv -= 2;

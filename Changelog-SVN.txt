@@ -1,6 +1,7 @@
 Date	Added
 
 03/27
+	* Fixed AutospellWhenHit effect to only work on melee attacks [celest]
 	* Fixed AddEffWhenHit effect to only work on melee attacks [celest]
 	* Moved guardian hostility checking and monster_ignore_gm check to battle.c --
 	  processed earlier, and more appropiate [celest]
