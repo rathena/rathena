@@ -1,6 +1,10 @@
+
 Date	Added
 
 03/29
+        * Please make sure to use the stable/sql-files/upgrade_svn1315.sql to
+          upgrade your mysql as a result of the new adoption system.  Thank you
+             -MouseJstr
 	* Updated damage calculation for Magnum Break [celest]
 	* Fixed #item not working properly, thanks to TripleOxygen
         * Fixed a lot of compile time problems with our mixed C++/C
