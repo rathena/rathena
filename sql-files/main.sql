@@ -454,6 +454,8 @@ CREATE TABLE `storage` (
 CREATE TABLE `friends` (
   `id` int(11) NOT NULL auto_increment,
   `account_id` int(11) NOT NULL default '0',
+  `friend_id0` int(11) NOT NULL default '0',
+  `name0` varchar(255) NOT NULL default '',
   `friend_id1` int(11) NOT NULL default '0',
   `name1` varchar(255) NOT NULL default '',
   `friend_id2` int(11) NOT NULL default '0',
