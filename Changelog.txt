@@ -1,5 +1,7 @@
 Date	Added
 12/17
+	* db.c: Fixed probs with OnInit, OnTime, and etc NPC probs
+	  Just reverted it back. [Lupus]
 	* Fixed warning message in db.c line 445 [MC Cameri]
 	* Added #effect, removed @chareffect [MC Cameri]
         * Reverted a change in map.c causing problems, sorry >.< [celest]
