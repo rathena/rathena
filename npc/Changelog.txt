@@ -34,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+8/1
+        * Added the new Yuno field warps by Sara-chan [celest]
+
 2/1
         * Added missing Spore Doll to the Kaho Horns NPC (God... this was reported
           months ago)
