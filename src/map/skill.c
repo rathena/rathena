@@ -751,120 +751,43 @@ struct skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 /* アブラカダブラ?動スキルデ?タベ?ス */
 struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
-int	skill_get_hit( int id ){
-	if (id >= 10000 && id < 10015) id -= 9500;
-	return skill_db[id].hit;
-}
-int	skill_get_inf( int id ){
-	return (id < 500) ? skill_db[id].inf : guild_skill_get_inf(id);
-}
-int	skill_get_pl( int id ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	return skill_db[id].pl;
-}
-int	skill_get_nk( int id ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	return skill_db[id].nk;
-}
-int skill_get_max( int id ){
-	return (id < 500) ? skill_db[id].max : guild_skill_get_max(id);
-}
-int skill_get_range( int id , int lv ){
-	if (lv <= 0) return 0;
-	return (id < 500) ? skill_db[id].range[lv-1] : guild_skill_get_range(id);
-}
-int	skill_get_hp( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0: skill_db[id].hp[lv-1];
-}
-int	skill_get_sp( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	//if (lv <= 0) return 0;
-	//return (id < 500) ? skill_db[id].sp[lv-1] : guild_skill_get_sp(id, lv);
-	return (lv <= 0) ? 0: skill_db[id].sp[lv-1];
-}
-int	skill_get_zeny( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].zeny[lv-1];
-}
-int	skill_get_num( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].num[lv-1];
-}
-int	skill_get_cast( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].cast[lv-1];
-}
-int	skill_get_delay( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].delay[lv-1];
-}
-int	skill_get_time( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].upkeep_time[lv-1];
-}
-int	skill_get_time2( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].upkeep_time2[lv-1];
-}
-int	skill_get_castdef( int id ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return skill_db[id].cast_def_rate;
-}
-int	skill_get_weapontype( int id ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return skill_db[id].weapon;
-}
-int	skill_get_inf2( int id ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return skill_db[id].inf2;
-}
-int	skill_get_castcancel( int id ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return skill_db[id].castcancel;
-}
-int	skill_get_maxcount( int id ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return skill_db[id].maxcount;
-}
-int	skill_get_blewcount( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].blewcount[lv-1];
-}
-int	skill_get_mhp( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].mhp[lv-1];
-}
-int	skill_get_castnodex( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].castnodex[lv-1];
-}
-int	skill_get_delaynodex( int id ,int lv ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return (lv <= 0) ? 0:skill_db[id].delaynodex[lv-1];
-}
-int	skill_get_nocast ( int id ){
-	if (id >= 10000 && id < 10015) id-= 9500;
-	if ((id > MAX_SKILL) || (id < 0)) return 0;
-	return skill_db[id].nocast;
-}
+// macros to check for out of bounds errors [celest]
+// i: Skill ID, l: Skill Level, var: Value to return after checking
+// for values that don't require level just put a one (putting 0 will trigger return 0; instead
+// for values that might need to use a different function just skill_chk would suffice.
+#define skill_chk(i, l) \
+	if (i >= 10000 && i < 10015) {i -= 9500;} \
+	if (i < 1 || i > MAX_SKILL_DB) {return 0;} \
+	if (l <= 0 || l > MAX_SKILL_LEVEL) {return 0;}
+#define skill_get(var, i, l) \
+	{ skill_chk(i, l); return var; }
+
+// Skill DB
+int	skill_get_hit( int id ){ skill_get (skill_db[id].hit, id, 1); }
+int	skill_get_inf( int id ){ skill_chk (id, 1); return (id < 500) ? skill_db[id].inf : guild_skill_get_inf(id); }
+int	skill_get_pl( int id ){ skill_get (skill_db[id].pl, id, 1); }
+int	skill_get_nk( int id ){ skill_get (skill_db[id].nk, id, 1); }
+int skill_get_max( int id ){ skill_chk (id, 1); return (id < 500) ? skill_db[id].max : guild_skill_get_max(id); }
+int skill_get_range( int id , int lv ){ skill_chk (id, lv); return (id < 500) ? skill_db[id].range[lv-1] : guild_skill_get_range(id); }
+int	skill_get_hp( int id ,int lv ){ skill_get (skill_db[id].hp[lv-1], id, lv); }
+int	skill_get_sp( int id ,int lv ){ skill_get (skill_db[id].sp[lv-1], id, lv); }
+int	skill_get_zeny( int id ,int lv ){ skill_get (skill_db[id].zeny[lv-1], id, lv); }
+int	skill_get_num( int id ,int lv ){ skill_get (skill_db[id].num[lv-1], id, lv); }
+int	skill_get_cast( int id ,int lv ){ skill_get (skill_db[id].cast[lv-1], id, lv); }
+int	skill_get_delay( int id ,int lv ){ skill_get (skill_db[id].delay[lv-1], id, lv); }
+int	skill_get_time( int id ,int lv ){ skill_get (skill_db[id].upkeep_time[lv-1], id, lv); }
+int	skill_get_time2( int id ,int lv ){ skill_get (skill_db[id].upkeep_time2[lv-1], id, lv); }
+int	skill_get_castdef( int id ){ skill_get (skill_db[id].cast_def_rate, id, 1); }
+int	skill_get_weapontype( int id ){ skill_get (skill_db[id].weapon, id, 1); }
+int	skill_get_inf2( int id ){ skill_get (skill_db[id].inf2, id, 1); }
+int	skill_get_castcancel( int id ){ skill_get (skill_db[id].castcancel, id, 1); }
+int	skill_get_maxcount( int id ){ skill_get (skill_db[id].maxcount, id, 1); }
+int	skill_get_blewcount( int id ,int lv ){ skill_get (skill_db[id].blewcount[lv-1], id, lv); }
+int	skill_get_mhp( int id ,int lv ){ skill_get (skill_db[id].mhp[lv-1], id, lv); }
+int	skill_get_castnodex( int id ,int lv ){ skill_get (skill_db[id].castnodex[lv-1], id, lv); }
+int	skill_get_delaynodex( int id ,int lv ){ skill_get (skill_db[id].delaynodex[lv-1], id, lv); }
+int	skill_get_nocast ( int id ){ skill_get (skill_db[id].nocast, id, 1); }
+
 int skill_tree_get_max(int id, int b_class){
 	struct pc_base_job s_class = pc_calc_base_job(b_class);
 	int i, skillid;

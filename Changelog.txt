@@ -1,5 +1,9 @@
 Date	Added
 
+01/28
+        * Added macros skill_chk and skill_get to check for out of bounds errors when
+          retrieving info from the skill_db [celest]
+
 01/27
         * Added memory leak fixes with temporary script variables and pets-related
           actions, by End_of_exam / jA 1109 [celest]
