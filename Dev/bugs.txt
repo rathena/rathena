@@ -58,7 +58,10 @@ Problem:	If two clients using the same account the server will crash and it allo
 Assigned:	N/A
 Progess:	0%
 
-
 Problem:	When athena is run in linux it creates core files which takes 300 megs.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	The skill tree's max skill lvl is not read/used.
 Assigned:	N/A
 Progess:	0%
