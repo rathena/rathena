@@ -4,13 +4,14 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate Burning Blood Bandana quest.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text, wrong ID [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 
@@ -30,11 +31,11 @@ yuno.gat,301,188,6	script	Genbolt	826,{
  if ((countitem(7216) < 300) || (countitem(7097) < 300) || (countitem(982) < 1) || (countitem(2211) < 1)) GOTO L_NOITEM;//Items: Red Scarf, Burning Heart, White Dyestuff, Bandana,
  mes "[Genbolt]";
  mes "Very well, here you go.";
- next;
  delitem 7216,300;//Items: Red Scarf,
  delitem 7097,300;//Items: Burning Heart,
  delitem 982,1;//Items: White Dyestuff,
  delitem 2211,1;//Items: Bandana,
+ next;
  mes "[Genbolt]";
  mes "Now I can make it...";
  next;

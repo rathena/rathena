@@ -4,15 +4,15 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate New Hat quests.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
-
 
 yuno.gat,353,282,7	script	Neris	806,{
  mes "[Neris]";
@@ -34,11 +34,11 @@ M_LGB:
  if ((countitem(10016) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO L_NOITEM;//Items: Golden Bell, Emperium, Gold,
  mes "[Neris]";
  mes "Now, lets swap your items.";
- next;
  delitem 10016,1;//Items: Golden Bell,
  delitem 714,1;//Items: Emperium,
  delitem 969,3;//Items: Gold,
  set Zeny,Zeny-1000;
+ next;
  getitem 5091,1;//Items: Golden Bells,
  mes "[Neris]";
  mes "Thanks, and bye!";
@@ -65,11 +65,11 @@ M_COM:
  if ((countitem(2249) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO L_NOITEM;//Items: Coronet, Emperium, Gold,
  mes "[Neris]";
  mes "Now, lets swap your items.";
- next;
  delitem 2249,1;//Items: Coronet,
  delitem 714,1;//Items: Emperium,
  delitem 969,3;//Items: Gold,
  set Zeny,Zeny-1000;
+ next;
  getitem 5081,1;//Items: Crown of Mistress,
  mes "[Neris]";
  mes "Thanks, and bye!";
@@ -96,11 +96,11 @@ M_COAQ:
  if ((countitem(10006) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO L_NOITEM;//Items: Queen's Hair Ornament, Emperium, Gold,
  mes "[Neris]";
  mes "Now, lets swap your items";
- next;
  delitem 10006,1;//Items: Queen's Hair Ornament,
  delitem 714,1;//Items: Emperium,
  delitem 969,3;//Items: Gold,
  set Zeny,Zeny-1000;
+ next;
  getitem 5080,1;//Items: Crown of The Ancient Queen,
  mes "[Neris]";
  mes "Thanks, and bye!";

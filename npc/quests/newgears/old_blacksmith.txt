@@ -4,13 +4,14 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate Ears Of Angel & Ears Of Demon quests.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text, wrong ID! [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 yuno.gat,246,51,4	script	Old Blacksmith	813,{
@@ -31,10 +32,10 @@ M_EOD:
  mes "[Old Blacksmith]";
  mes "Wow, never thought a little fella like you could get tha.t";
  mes "Bwahaha, ok.";
- next;
  delitem 2255,1;//Items: Evil Wing,
  delitem 2286,1;//Items: Elven Ears,
  set Zeny,Zeny-20000;
+ next;
  getitem 5068,1;//Items: Ears Of Demon,
  mes "[Old Blacksmith]";
  mes "Well, enjoy your item!";
@@ -66,10 +67,10 @@ M_EOA:
  mes "[Old Blacksmith]";
  mes "Well well well! Someone who has the spirit!";
  mes "Okay, gimme the items.";
- next;
  delitem 2286,1;//Items: Elven Ears,
  delitem 2254,1;//Items: Angel Wing,
  set Zeny,Zeny-20000;
+ next;
  mes "[Old Blacksmith]";
  mes "Okay, and here you go.";
  next;

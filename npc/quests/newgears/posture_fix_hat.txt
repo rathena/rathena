@@ -4,7 +4,7 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text
 //=	fixed wrong items ID [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 payon.gat,155,115,5	script	Nan Hyang	814,{
@@ -29,9 +30,9 @@ payon.gat,155,115,5	script	Nan Hyang	814,{
  If ((countitem(1550) <1) || (countitem(2285) < 1 )) GOTO L_NOITEM;//Items: Book, Apple o' Archer,
  mes "[Nan Hyang]";
  mes "Ahh at last, someone who is serious!";
- next;
  delitem 1550,1;//Items: Book,
  delitem 2285,1;//Items: Apple o' Archer,
+ next;
  getitem 5073,1;//Items: Posture Fix Hat,
  mes "[Nan Hyang]";
  mes "Hehe, well, maybe you will become more careful, or your sense will become balanced.";

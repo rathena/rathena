@@ -4,7 +4,7 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text and labels,
 //=	changed Zeny amount, fixed wrong item ID [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 aldebaran.gat,236,235,3	script	Muslam	819,{
@@ -32,9 +33,9 @@ aldebaran.gat,236,235,3	script	Muslam	819,{
  if ((countitem(10002) < 1) || (Zeny < 300000)) GOTO L_NOITEM;//Items: Monster Oxygen Mask,
  mes "[Muslam]";
  mes "Great!";
- next;
  delitem 10002,1;//Items: Monster Oxygen Mask,
  set Zeny,Zeny-300000;
+ next;
  getitem 5086,1;//Items: Alarm Mask,
  mes "[Muslam]";
  mes "Enjoy your item!";

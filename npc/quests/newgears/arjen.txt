@@ -4,13 +4,14 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate quests for these items.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, wrong items ID. [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 //86
@@ -37,9 +38,9 @@ M_1:
  mes "[Arjen]";
  mes "Yes, that's just what I require!";
  mes "Nayayayaaaaaa!";
- next;
  delitem 10011,1;//Items: Stellar Hairpin,
  delitem 7220,400;//Items: Ectoplasm,
+ next;
  mes "[Arjen]";
  mes "Hmm... okay, thanks for the items.";
  mes "Let me make it for you.";
@@ -80,9 +81,9 @@ M_2:
  mes "[Arjen]";
  mes "Wow! You have the stuff I need! Thanks!";
  mes "Lemme do a swap, your stuff for the bandage";
- next;
  delitem 930,500;//Items: Rotten Bandage,
  delitem 970,1;//Items: Alcohol,
+ next;
  getitem 5063,1;//Items: Bandage,
  mes "[Arjen]";
  mes "Thanks! Hope that cures your aches!";
@@ -131,10 +132,10 @@ M_REQ3:
  If ((countitem(2269) < 1) || (countitem(999) < 10) || (Zeny < 20000)) GOTO L_NOITEM3;//Items: Romantic Flower, Steel,
  mes "[Arjen]";
  mes "Thanks!";
- next;
  delitem 2269,1;//Items: Romantic Flower,
  delitem 999,10;//Items: Steel,
  set Zeny,Zeny-20000;
+ next;
  getitem 5061,1;//Items: Flower Hairpin,
  mes "[Arjen]";
  mes "Enjoy!";

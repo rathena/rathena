@@ -4,13 +4,14 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate Back Ribbon quest.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 prontera.gat,164,232,5	script	Netpia	815,{
@@ -27,10 +28,10 @@ prontera.gat,164,232,5	script	Netpia	815,{
  If ((countitem(2244) < 1) || (countitem(2209) < 1) || (countitem(10007) < 1)) GOTO L_NOITEM;//Items: Big Ribbon, Ribbon, Silk Ribbon,
  mes "[Netpia]";
  mes "Wow, thank you! Let me just take your items.";
- next;
  delitem 2244,1;//Items: Big Ribbon,
  delitem 2209,1;//Items: Ribbon,
  delitem 10007,1;//Items: Silk Ribbon,
+ next;
  getitem 5083,1;//Items: Back Ribbon,
  mes "[Netpia]";
  mes "Okay, now here is your item.";

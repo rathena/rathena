@@ -4,13 +4,14 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate Mushroom Hairband quest.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 geffen.gat,66,87,6	script	Aipo	819,{
@@ -32,8 +33,8 @@ geffen.gat,66,87,6	script	Aipo	819,{
  if (countitem(921) < 300) GOTO L_NOITEM;//Items: Mushroom Spore,
  mes "[Aipo]";
  mes "Wow! Thanks! Lemme make the item then.";
- next;
  delitem 921,300;//Items: Mushroom Spore,
+ next;
  mes "[Aipo]";
  mes "Okay, thanks for the items, now yours in return!";
  next;

@@ -30,6 +30,9 @@ Other Ppl
 
 Date		Added
 ======
+12/10
+	* Newgearquests (14 files of 16) fixed possible exploits, added a missing close; 
+	  According to kro, changed ingredients of Indead Hairband quest [Lupus]
 12/08
 	* Changed ingredients of Ears of Demon Quest: Deviruchi Hat -> Evil Wing [Lupus]
 	* Added translated shop names for the Extended Shop, I'unno who made it. o.O; [Mass Zero]

@@ -4,13 +4,14 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate Tulip Hairpin quest.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
+//= 1.3 Fixed possible exploit and added missing close; [Lupus]
 //============================================================
 
 geffen.gat,84,189,6	script	Ses	815,{ 
@@ -31,9 +32,9 @@ geffen.gat,84,189,6	script	Ses	815,{
  mes "[Ses]";
  mes "Yay! thanks! Pineapple!";
  mes "Here you go!";
- next;
  delitem 2278,1;//Items: Mr. Smile,
  delitem 975,1;//Items: Scarlet Dyestuffs,
+ next;
  getitem 5077,1;//Items: Tulip Hairpin,
  mes "[Ses]";
  mes "Enjoy being pretty!";
@@ -60,4 +61,5 @@ M_EXIT:
  mes "[Ses]";
  mes "Okay!";
  mes "Byeeeee!";
+ close;
 }

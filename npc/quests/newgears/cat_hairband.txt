@@ -4,7 +4,7 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text,
 //=	fixed zeny amount [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 
@@ -33,11 +34,11 @@ payon_in01.gat,62,10,4	script	KoneKone	819,{
  If ((countitem(2213) < 1) || (countitem(7063) < 200) || (countitem(983) < 1) || (Zeny < 10000)) GOTO L_NOITEM;//Items: Kitty Band, Soft Feather, Black Dyestuff,
  mes "[KoneKone]";
  mes "Wow! thankies! I will now take your items!";
- next;
  delitem 2213,1;//Items: Kitty Band,
  delitem 7063,200;//Items: Soft Feather,
  delitem 983,1;//Items: Black Dyestuff,
  set Zeny,Zeny-10000;
+ next;
  mes "[KoneKone]";
  mes "Mew mew! thanks! Now for your ears!";
  next;

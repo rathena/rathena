@@ -4,13 +4,14 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate Sea Otter Hat quest.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
 xmas.gat,184,267,4	script	Pretty Rency	818,{
@@ -30,9 +31,9 @@ xmas.gat,184,267,4	script	Pretty Rency	818,{
  if ((countitem(5084) < 1) || (countitem(5064) < 1)) GOTO L_NOITEM;//Items: Lazy Racoon Hat, Transformation Leaf,
  mes "[Pretty Rency]";
  mes "Congratulations!";
- next;
  delitem 5084,1;//Items: Lazy Racoon Hat,
  delitem 5064,1;//Items: Transformation Leaf,
+ next;
  mes "[Pretty Rency]";
  mes "Thanks for your items! Now I will make yours for you!";
  next;
