@@ -388,3 +388,9 @@ Problem:	ICE WALL
 		WHY?
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Castles Again!
+		The casltes data isn't being saved at all.
+		During WOE everything acts like it was at the previous Castles save bug time.
+Assigned:	N/A
+Progress:	0%
