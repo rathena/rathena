@@ -1,6 +1,12 @@
 Date	Added
 
 01/28
+        * Fixed a typo that was causing /in to always report failure even when the
+          name was removed from the ignore list [celest]
+        * Link "wisexin", "wisexlist" and "wisall" to the PM ignore functions, and
+         "friendslistadd" and "friendslistremove" to the friends list functions
+          when parsing the packet DB [celest]
+        * added clif_parse_PMIgnoreList (packet 0xd3) from jA [celest]
         * Added DUMP_ALL_PACKETS and moved dump packets code in clif_parse a bit to
           support it [celest]
         * Added base code for Party Item Sharing -- still needs some work in client-

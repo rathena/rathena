@@ -10158,7 +10158,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 			for(i = 0; i < MAX_IGNORE_LIST; i++)
 				if (strcmp(sd->ignore[i].name, nick) == 0) {
 					memset(sd->ignore[i].name, 0, sizeof(sd->ignore[i].name));
-					if (pos != -1) {
+					if (pos == -1) {
 						WFIFOB(fd,3) = 0; // success
 						WFIFOSET(fd, packet_len_table[0x0d1]);
 						pos = i; // don't break, to remove ALL same nick
@@ -10206,6 +10206,38 @@ void clif_parse_PMIgnoreAll(int fd, struct map_session_data *sd) { // Rewritten 
 			clif_wis_message(fd, wisp_server_name, "You already allow everyone.", strlen("You already allow everyone.") + 1);
 		}
 	}
+
+	return;
+}
+
+/*==========================================
+ * Wis拒否リスト
+ *------------------------------------------
+ */
+ int pstrcmp(const void *a, const void *b)
+{
+	return strcmp((char *)a, (char *)b);
+}
+void clif_parse_PMIgnoreList(int fd,struct map_session_data *sd)
+{
+	int i,j=0,count=0;
+
+	qsort (sd->ignore[0].name, MAX_IGNORE_LIST, sizeof(sd->ignore[0].name), pstrcmp);
+	for(i = 0; i < MAX_IGNORE_LIST; i++){	//中身があるのを数える
+		if(sd->ignore[i].name[0] != 0)
+			count++;
+	}
+	WFIFOW(fd,0) = 0xd4;
+	WFIFOW(fd,2) = 4 + (24 * count);
+	for(i = 0; i < MAX_IGNORE_LIST; i++){
+		if(sd->ignore[i].name[0] != 0){
+			memcpy(WFIFOP(fd, 4 + j * 24),sd->ignore[i].name, 24);
+			j++;
+		}
+	}
+	WFIFOSET(fd, WFIFOW(fd,2));
+	if(count >= MAX_IGNORE_LIST)	//満タンなら最後の1個を消す
+		sd->ignore[MAX_IGNORE_LIST - 1].name[0] = 0;
 
 	return;
 }
@@ -10427,7 +10459,7 @@ static void (*clif_parse_func_table[MAX_PACKET_DB])(int, struct map_session_data
 	NULL, clif_parse_HowManyConnections, NULL, NULL, NULL, clif_parse_NpcBuySellSelected, NULL, NULL,
 	clif_parse_NpcBuyListSend, clif_parse_NpcSellListSend, NULL, NULL, clif_parse_GMKick, NULL, clif_parse_GMkillall, clif_parse_PMIgnore,
 	// d0
-	clif_parse_PMIgnoreAll, NULL, NULL, NULL, NULL, clif_parse_CreateChatRoom, NULL, NULL,
+	clif_parse_PMIgnoreAll, NULL, NULL, clif_parse_PMIgnoreList, NULL, clif_parse_CreateChatRoom, NULL, NULL,
 	NULL, clif_parse_ChatAddMember, NULL, NULL, NULL, NULL, clif_parse_ChatRoomStatusChange, NULL,
 	// e0
 	clif_parse_ChangeChatOwner, NULL, clif_parse_KickFromChat, clif_parse_ChatLeave, clif_parse_TradeRequest, NULL, clif_parse_TradeAck, NULL,
@@ -10869,9 +10901,11 @@ static int packetdb_readdb(void)
 		{clif_parse_GMReqNoChatCount,"gmreqnochatcount"},
 		{clif_parse_sn_doridori,"sndoridori"},
 		{clif_parse_sn_explosionspirits,"snexplosionspirits"},
-//		{clif_parse_wisexin,"wisexin"},
-//		{clif_parse_wisexlist,"wisexlist"},
-//		{clif_parse_wisall,"wisall"},
+		{clif_parse_PMIgnore,"wisexin"},
+		{clif_parse_PMIgnoreList,"wisexlist"},
+		{clif_parse_PMIgnoreAll,"wisall"},
+		{clif_parse_friends_list_add,"friendslistadd"},
+		{clif_parse_friends_list_remove,"friendslistremove"},		
 		{clif_parse_GMkillall,"killall"},
 		{clif_parse_GM_Monster_Item,"summon"},
 		{clif_parse_Shift,"shift"},
