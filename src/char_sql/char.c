@@ -1186,6 +1186,18 @@ int mmo_char_sql_init(void) {
 	} else
 		printf("set char_id_count: %d.......\n",char_id_count);
 
+	sprintf(tmp_sql , "REPLACE INTO `%s` SET `online`=0", char_db);
+	if (mysql_query(&mysql_handle, tmp_sql)) 
+		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
+
+	sprintf(tmp_sql , "REPLACE INTO `%s` SET `online`=0", guild_member_db);
+	if (mysql_query(&mysql_handle, tmp_sql)) 
+		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
+
+	sprintf(tmp_sql , "REPLACE INTO `%s` SET `connect_member`=0", guild_db);
+	if (mysql_query(&mysql_handle, tmp_sql)) 
+		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
+
 	printf("init end.......\n");
 
 	return 0;
