@@ -57,3 +57,8 @@ Progess:	0%
 Problem:	If two clients using the same account the server will crash and it allows people to dupe using the trade bug, one person trades over and item relogs it saves and the other person doesn't, they crash server both of them end up with the item.
 Assigned:	N/A
 Progess:	0%
+
+
+Problem:	When athena is run in linux it creates core files which takes 300 megs.
+Assigned:	N/A
+Progess:	0%
