@@ -16,10 +16,12 @@
 #define END_ACCOUNT_NUM		100000000
 
 struct mmo_account {
+	int version;	//Added by sirius for versioncheck
 	char* userid;
 	char* passwd;
 	int passwdenc;
-
+	
+	
 	long account_id;
 	long login_id1;
 	long login_id2;

@@ -114,6 +114,11 @@ int add_to_unlimited_account = 0; // Give possibility or not to adjust (ladmin c
 int start_limited_time = -1; // Starting additional sec from now for the limited time at creation of accounts (-1: unlimited time, 0 or more: additional sec from now)
 int check_ip_flag = 1; // It's to check IP of a player between login-server and char-server (part of anti-hacking system)
 
+int check_client_version = 0; //Client version check ON/OFF .. (sirius)
+int client_version_to_connect = 20; //Client version needed to connect ..(sirius)
+
+
+
 struct login_session_data {
 	int md5keylen;
 	char md5key[20];
@@ -1115,7 +1120,14 @@ int mmo_auth(struct mmo_account* account, int fd) {
 			newaccount = 1;
 		account->userid[len] = '\0';
 	}
-
+	
+	//EXE Version check [Sirius]
+        if(check_client_version == 1){
+        	if(account->version != client_version_to_connect){
+        		return 5;
+		}
+	}
+	
 	// Strict account search
 	for(i = 0; i < auth_num; i++) {
 		if (strcmp(account->userid, auth_dat[i].userid) == 0)
@@ -2880,7 +2892,8 @@ int parse_login(int fd) {
 		case 0x01dd:	// Ask connection of a client (encryption mode)
 			if (RFIFOREST(fd) < ((RFIFOW(fd,0) == 0x64) ? 55 : 47))
 				return 0;
-
+			
+			account.version = RFIFOL(fd, 2);	//for exe version check [Sirius]
 			account.userid = (char*)RFIFOP(fd,6);
 			account.userid[23] = '\0';
 			remove_control_chars(account.userid);
@@ -3569,6 +3582,15 @@ int login_config_read(const char *cfgName) {
 				flush_on = atoi(w2);			//Added by Mugendai for GUI
 			} else if(strcmpi(w1,"flush_time")==0) {	//Added by Mugendai for GUI
 				flush_time = atoi(w2);			//Added by Mugendai for GUI
+			} else if(strcmpi(w1, "check_client_version") == 0){		//Added by Sirius for client version check
+				if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 ){
+					check_client_version = 1;
+				}
+				if(strcmpi(w2,"off") == 0 || strcmpi(w2,"no") == 0 ){
+					check_client_version = 0;
+				}
+			}else if(strcmpi(w1, "client_version_to_connect") == 0){	//Added by Sirius for client version check
+				client_version_to_connect = atoi(w2);			//Added by Sirius for client version check
 			} else if (strcmpi(w1, "console") == 0) {
 			    if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
 			        console = 1;

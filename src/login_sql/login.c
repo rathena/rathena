@@ -108,6 +108,8 @@ int auth_num = 0, auth_max = 0;
 
 int min_level_to_connect = 0; // minimum level of player/GM (0: player, 1-99: gm) to connect on the server
 int check_ip_flag = 1; // It's to check IP of a player between login-server and char-server (part of anti-hacking system)
+int check_client_version = 0; //Client version check ON/OFF .. (sirius)
+int client_version_to_connect = 20; //Client version needed to connect ..(sirius)
 
 MYSQL mysql_handle;
 
@@ -406,7 +408,7 @@ int mmo_auth( struct mmo_account* account , int fd){
                       account_id_count <= END_ACCOUNT_NUM && len >= 4 && strlen(account->passwd) >= 4) {
                           if (new_account_flag == 1) 
                                         account->userid[len] = '\0';                       	                                        
-                                      	sprintf(tmp_sql, "SELECT `userid` FROM `%s` WHERE `userid` = '%s'", login_db, account->userid);
+                                      	sprintf(tmp_sql, "SELECT `%s` FROM `%s` WHERE `userid` = '%s'", login_db_userid, login_db, account->userid);
 					if(mysql_query(&mysql_handle, tmp_sql)){
 						printf("SQL error (_M/_F reg): %s", mysql_error(&mysql_handle));
 					}else{
@@ -414,7 +416,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 						if(mysql_num_rows(sql_res) == 0){
 						//ok no existing acc,
 							printf("Adding a new account user: %s with passwd: %s sex: %c (ip: %s)\n", account->userid, account->passwd, account->userid[len+1], ip);
-							sprintf(tmp_sql, "INSERT INTO `%s` (`userid`, `user_pass`, `sex`, `email`) VALUES ('%s', '%s', '%c', '%s')", login_db, account->userid, account->passwd, account->userid[len+1], "a@a.com");
+							sprintf(tmp_sql, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`) VALUES ('%s', '%s', '%c', '%s')", login_db, login_db_userid, login_db_user_pass, account->userid, account->passwd, account->userid[len+1], "a@a.com");
 							if(mysql_query(&mysql_handle, tmp_sql)){
 								//Failed to insert new acc :/
 								printf("SQL Error (_M/_F reg) .. insert ..: %s", mysql_error(&mysql_handle));
@@ -425,6 +427,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 	     }//all values for NEWaccount ok ?
                                                                                                                
 
+
  	// auth start : time seed
 	gettimeofday(&tv, NULL);
 	strftime(tmpstr, 24, "%Y-%m-%d %H:%M:%S",localtime((const time_t*)&(tv.tv_sec)));
@@ -432,6 +435,15 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	jstrescapecpy(t_uid,account->userid);
 	jstrescapecpy(t_pass, account->passwd);
+
+
+	//check for lasted version (exe version check) [Sirius]
+        if(check_client_version == 1){
+		if(account->version != client_version_to_connect){
+			return 6;
+		}
+	}
+                                                                        
 
 	// make query
 	sprintf(tmpsql, "SELECT `%s`,`%s`,`%s`,`lastlogin`,`logincount`,`sex`,`connect_until`,`last_ip`,`ban_until`,`state`,`%s`"
@@ -455,6 +467,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 		printf("mmo_auth DB result error ! \n");
 		return 0;
 	}
+	                                                                        
 	// Documented by CLOWNISIUS || LLRO || Gunstar lead this one with me
 	// IF changed to diferent returns~ you get diferent responses from your msgstringtable.txt
 	//Ireturn 2  == line 9
@@ -616,6 +629,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 	return 3; // Rejected
 #endif
     }
+
 
 	account->account_id = atoi(sql_row[0]);
 	account->login_id1 = rand();
@@ -1209,7 +1223,7 @@ int parse_login(int fd) {
 				return 0;
 
 			printf("client connection request %s from %d.%d.%d.%d\n", RFIFOP(fd, 6), p[0], p[1], p[2], p[3]);
-
+			account.version = RFIFOL(fd, 2);
 			account.userid = (char*)RFIFOP(fd, 6);
 			account.passwd = (char*)RFIFOP(fd, 30);
 #ifdef PASSWORDENC
@@ -1218,15 +1232,18 @@ int parse_login(int fd) {
 			account.passwdenc=0;
 #endif
 			result=mmo_auth(&account, fd);
+			
 
 		jstrescapecpy(t_uid,(char*)RFIFOP(fd, 6));
 		if(result==-1){
 		    int gm_level = isGM(account.account_id);
-            if (min_level_to_connect > gm_level) {
+
+        	    if (min_level_to_connect > gm_level) {
 					WFIFOW(fd,0) = 0x81;
 					WFIFOL(fd,2) = 1; // 01 = Server closed
 					WFIFOSET(fd,3);
 		    } else {
+		    
                     if (p[0] != 127) {
                          sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', '%s','100', 'login ok')", loginlog_db, p[0], p[1], p[2], p[3], t_uid);
                          //query
@@ -1366,6 +1383,8 @@ int parse_login(int fd) {
 						printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 				}
 				result = -3;
+			}else if(result == 6){ //not lastet version ..
+				result = 5;
 			}
 
 			sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE %s `%s` = '%s'",login_db, case_sensitive ? "BINARY" : "",login_db_userid, t_uid);
@@ -1667,7 +1686,7 @@ int login_config_read(const char *cfgName){
 		else if(strcmpi(w1,"dynamic_pass_failure_ban_how_long")==0){
 			dynamic_pass_failure_ban_how_long=atoi(w2);
 			printf ("set dynamic_pass_failure_ban_how_long : %d\n",dynamic_pass_failure_ban_how_long);
-		}
+		}		
 		else if(strcmpi(w1,"anti_freeze_enable")==0){
 			anti_freeze_enable = config_switch(w2);
 		}
@@ -1688,6 +1707,16 @@ int login_config_read(const char *cfgName){
 			flush_time = atoi(w2);			//Added by Mugendai for GUI
 		} else if(strcmpi(w1, "new_account") == 0){ 	//Added by Sirius for new account _M/_F
 			new_account_flag = atoi(w2);		//Added by Sirius for new account _M/_F		
+		} else if(strcmpi(w1, "check_client_version") == 0){ 		//Added by Sirius for client version check
+			//check_client_version = config_switch(w2); 		//Added by Sirius for client version check
+                           if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 ){
+                           	check_client_version = 1;
+			   }
+			   if(strcmpi(w2,"off") == 0 || strcmpi(w2,"no") == 0 ){
+                           	check_client_version = 0;
+                           }                                                                                          
+		} else if(strcmpi(w1, "client_version_to_connect") == 0){	//Added by Sirius for client version check
+			client_version_to_connect = atoi(w2);			//Added by SIrius for client version check
 		} else if(strcmpi(w1,"use_MD5_passwords")==0){
 			if (!strcmpi(w2,"yes")) {
 				use_md5_passwds=1;

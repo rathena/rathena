@@ -1,6 +1,10 @@
 Date	Added
 
 02/06
+	* Login server uses  login_db_userid and login_db_user_pass for 
+	  queries now [Credit to Sirius] [1059: Ajarn]
+	* Login server can now check clientversion in clientinfo
+	  [Credit to Sirius] [1059: Ajarn]
 	* Fixed txt build compile problems[1057: MouseJstr]
 	* Corrected end-of-line issues in source code [1056: MouseJstr]
 	* Coded new command: @MOBINFO <monster name|monster N> [Lupus]
