@@ -1541,6 +1541,7 @@ int map_quit(struct map_session_data *sd) {
 		if(pc_isdead(sd))
 			pc_setrestartvalue(sd,2);
 
+		pc_clean_skilltree(sd);
 		pc_makesavestatus(sd);
 		chrif_save(sd);
 		storage_storage_dirty(sd);

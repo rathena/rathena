@@ -52,6 +52,7 @@ int pc_checkequip(struct map_session_data *sd,int pos);
 
 int pc_calc_skilltree(struct map_session_data *sd);
 int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd);
+int pc_clean_skilltree(struct map_session_data *sd);
 
 int pc_checkoverhp(struct map_session_data*);
 int pc_checkoversp(struct map_session_data*);

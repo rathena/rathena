@@ -779,15 +779,16 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->paramb[5]+= 5;
 		}
 		if(sd->sc_data[SC_MARIONETTE].timer!=-1){
-			struct map_session_data *psd = map_id2sd(sd->sc_data[SC_MARIONETTE2].val3);
-			if (psd) {	// if partner is found
+			// skip partner checking -- should be handled in status_change_timer
+			//struct map_session_data *psd = map_id2sd(sd->sc_data[SC_MARIONETTE2].val3);
+			//if (psd) {	// if partner is found
 				sd->paramb[0]-= sd->status.str/2;	// bonuses not included
 				sd->paramb[1]-= sd->status.agi/2;
 				sd->paramb[2]-= sd->status.vit/2;
 				sd->paramb[3]-= sd->status.int_/2;
 				sd->paramb[4]-= sd->status.dex/2;
 				sd->paramb[5]-= sd->status.luk/2;
-			}
+			//}
 		}
 		else if(sd->sc_data[SC_MARIONETTE2].timer!=-1){
 			struct map_session_data *psd = map_id2sd(sd->sc_data[SC_MARIONETTE2].val3);

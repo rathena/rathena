@@ -33,6 +33,8 @@ Other Ppl
 Date		Added
 ======
 
+04/06
+	* Set PCLoginEvent.txt to disabled by default [celest]
 04/04
 	* Changed "set @TEMP,rand(0);" to set "@TEMP,0;" in the Payon Fortune Teller script [DracoRPG]
 	  We'll have to get all the fortunes, but they are more than 200...

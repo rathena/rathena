@@ -1772,21 +1772,23 @@ int buildin_menu(struct script_state *st)
  */
 int buildin_rand(struct script_state *st)
 {
-	int range,min,max;
+	int range;
 
-	if(st->end>st->start+3){
-		min=conv_num(st,& (st->stack->stack_data[st->start+2]));
-		max=conv_num(st,& (st->stack->stack_data[st->start+3]));
-		if(max<min){
-			int tmp;
-			tmp=min;
-			min=max;
-			max=tmp;
+	if (st->end > st->start+3){
+		int min, max;
+		min = conv_num(st,& (st->stack->stack_data[st->start+2]));
+		max = conv_num(st,& (st->stack->stack_data[st->start+3]));
+		if (max < min){
+			int tmp = min;
+			min = max;
+			max = tmp;
 		}
-		range=max-min+1;
+		range = max - min + 1;
+		if (range == 0) range = 1;
 		push_val(st->stack,C_INT,rand()%range+min);
 	} else {
-		range=conv_num(st,& (st->stack->stack_data[st->start+2]));
+		range = conv_num(st,& (st->stack->stack_data[st->start+2]));
+		if (range == 0) range = 1;
 		push_val(st->stack,C_INT,rand()%range);
 	}
 	return 0;

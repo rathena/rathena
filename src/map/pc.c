@@ -365,7 +365,6 @@ static int pc_walktoxy_sub(struct map_session_data *);
  */
 int pc_makesavestatus(struct map_session_data *sd)
 {
-        int i;
 	nullpo_retr(0, sd);
 
 	// 秒ﾌ色は色?弊害が多いので保存?象にはしない
@@ -396,16 +395,6 @@ int pc_makesavestatus(struct map_session_data *sd)
 	//マナ?ポイントがプラスだった場合0に
 	if(battle_config.muting_players && sd->status.manner > 0)
 		sd->status.manner = 0;
-
-	// Make sure all the skills are in the correct condition
-	// before persisting to the backend.. [MouseJstr]
-	for(i=0;i<MAX_SKILL;i++){
-	  if(sd->status.skill[i].flag == 13){
-	    sd->status.skill[i].id=0;
-	    sd->status.skill[i].lv=0;
-	    sd->status.skill[i].flag=0;
-	  }
-	}
 
 	return 0;
 }
@@ -1016,6 +1005,21 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	}
 //	if(battle_config.etc_log)
 //		printf("calc skill_tree\n");
+	return 0;
+}
+
+// Make sure all the skills are in the correct condition
+// before persisting to the backend.. [MouseJstr]
+int pc_clean_skilltree(struct map_session_data *sd) {
+	int i;
+	for (i = 0; i < MAX_SKILL; i++){
+		if (sd->status.skill[i].flag == 13){
+			sd->status.skill[i].id = 0;
+			sd->status.skill[i].lv = 0;
+			sd->status.skill[i].flag = 0;
+		}
+	}
+
 	return 0;
 }
 
@@ -3007,6 +3011,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 				sd->bl.x=x;
 				sd->bl.y=y;
 				sd->state.waitingdisconnect=1;
+				pc_clean_skilltree(sd);
 				pc_makesavestatus(sd);
 				if(sd->status.pet_id > 0 && sd->pd)
 					intif_save_petdata(sd->status.account_id,&sd->pet);
@@ -3052,6 +3057,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 				sd->petDB = NULL;
 				if(battle_config.pet_status_support)
 					status_calc_pc(sd,2);
+				pc_clean_skilltree(sd);
 				pc_makesavestatus(sd);
 				chrif_save(sd);
 				storage_storage_save(sd);
