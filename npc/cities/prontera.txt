@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.0 
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 
 //= Fully working
+//= +AntiNovice exploit fix [Lupus]
 //============================================================
 
 
@@ -153,6 +154,8 @@ prt_in.gat,88,105,2	script	Recruiter	105,{
 	next;
 	mes "[Recruiter]";
 	mes "We decided to recruit volunteers to deal with the 'issues' that have been plauging our cities' sewers.";
+	if (Class==Job_Novice) mes "But you're a novice. Go get at least a job...";
+	if (Class==Job_Novice) close;
 	next;
 	menu "Volunteer.",L0,"Issues...?",L1,"Quit",LEnd;
 	

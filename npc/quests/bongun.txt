@@ -53,6 +53,5 @@ mes "Can you please help me?";
     ExEnd:
         mes "[Sherri]";
 	mes "*sighs*";
-        close;
-close;    
+	close;    
 }

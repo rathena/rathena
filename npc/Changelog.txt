@@ -8,8 +8,7 @@ Darkchild
 	* Sage - Done
 	* Monk Quest - Botting An Acolyte Atm
 Lupus
-	* removing a loop from grandpa_pharmacist.txt (similiar to Juice quest) 0%
-	* removing Zeny exploits from Milkman, Juice maker, Potion maker 0%
+	* looking for exploits, optimization, bugs hunt
 
 kobra_k88
 	* Optimize WoE
@@ -35,6 +34,8 @@ Other Ppl
 
 Date		Added
 ======
+11/18
+	* Prontera.txt (Sewers) anti-novice exploit fix. should be added to any quests/banks where u once get free items/zeny [Lupus]
 11/17
 	* Fixed valkyrie.txt (wrong condition check, temp var->perm vars) but it still has no exit for common players [Lupus]
 	* - Fixed guardians hp not updating when investment in defense is made.
