@@ -6422,8 +6422,8 @@ int atcommand_unjail(
 			if (pl_sd->bl.m != map_mapname2mapid("sec_pri.gat")) {
 				clif_displaymessage(fd, msg_table[119]); // This player is not in jails.
 				return -1;
-			} else if (pc_setpos(pl_sd, "prontera.gat", 156, 191, 3) == 0) {
-				pc_setsavepoint(pl_sd, "prontera.gat", 156, 191); // Save char respawn point in Prontera
+			} else if (pc_setpos(pl_sd, "prontera.gat", 0, 0, 3) == 0) { //old coords: 156,191
+				pc_setsavepoint(pl_sd, "prontera.gat", 0, 0); // Save char respawn point in Prontera
 				clif_displaymessage(pl_sd->fd, msg_table[120]); // GM has discharge you.
 				clif_displaymessage(fd, msg_table[121]); // Player warped to Prontera.
 			} else {

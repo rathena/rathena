@@ -268,6 +268,10 @@ int percentrefinery[5][10];	// 精錬成功率(refine_db.txt)
 static int atkmods[3][20];	// 武器ATKサイズ修正(size_fix.txt)
 static char job_bonus[3][MAX_PC_CLASS][MAX_LEVEL];
 
+int current_equip_item_index; //Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
+//we need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only
+//to avoid cards exploits
+
 /*==========================================
  * 精錬ボーナス
  *------------------------------------------
@@ -537,7 +541,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	}
 
 	for(i=0;i<10;i++) {
-		index = sd->equip_index[i];
+		current_equip_item_index = index = sd->equip_index[i]; //We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
 			continue;
 		if(i == 9 && sd->equip_index[8] == index)
@@ -594,7 +598,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	// ?備品によるステ?タス?化はここで?行
 	for(i=0;i<10;i++) {
-		index = sd->equip_index[i];
+		current_equip_item_index = index = sd->equip_index[i]; //We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
 			continue;
 		if(i == 9 && sd->equip_index[8] == index)

@@ -1,5 +1,18 @@
 Date	Added
 
+03/09
+	* Added new script command: 'cardscnt'. It returns N of inserted cards in the same weapon. [Lupus]
+	  Now I can start fixing CARDS COMBO exploits. And it's possible to fix old cards power abuse, too.
+		e.g. Assassins can equip 2 4-slot weapons and have HUGE card bonuses.
+		It's said that you can have only ONE bonus per hand...
+	* Fixed and tested script command 'isequippedcnt'. It didn't return real value [Lupus]
+	  Here's an easy way to test all items:
+		4149,Gargoyle_Card,Gargoyle Card,6,20,0,10,,,,,,,2,,,,{},{ dispbottom "Gagoyle OK:"; dispbottom isequipped(4149); dispbottom isequippedcnt(4149); dispbottom cardscnt(4149); }
+	* Fixed "nice char save by the fountain of Prontera"; People (Helpers, GMs) did abuse their power and [Lupus]
+	  used to @jail friend / @unjail friend. To make his save point in the middle of the Prontera.
+	  So I made @unjail save coords to 0,0 (on unjail it makes player's save point to appear always in a random place of Prontera)
+		You can use this query to "Clear nice save point of all jail/unjail abusers friends"
+		SQL QUERY: update ragnarok.char set save_x = 0, save_y = 0 where (save_map = 'prontera.gat' and save_y = 191)
 03/08
         * Added chance for Enchant Poison to poison enemy, and reduced Deadly Poison
           chance [celest]
