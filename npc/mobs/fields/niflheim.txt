@@ -11,7 +11,7 @@
 //============================================================
 
 //niflheim
-niflheim.gat,0,0,0,0	monster	Lord Of Death	5373,1,15600000,78000000,1
+niflheim.gat,0,0,0,0	monster	Lord Of Death	5373,1,5400000,2700000,1
 niflheim.gat,0,0,0,0	monster	Gibbet	1503,10,2400000,1200000,0
 niflheim.gat,0,0,0,0	monster	Dullahan	1504,5,3600000,1800000,0
 niflheim.gat,0,0,0,0	monster	Quve	1508,20,60000,30000,0

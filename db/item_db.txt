@@ -1044,7 +1044,7 @@
 4042,Steel_Chonchon_Card,Steel Chonchon Card,6,20,0,10,,,,,,,16,,,,{},{ bonus2 bSubEle,4,10; bonus bDef,2; }
 4043,Andre_Card,Andre Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bBaseAtk,20; }
 4044,Smokie_Card,Smokie Card,6,20,0,10,,,,,,,136,,,,{},{ skill 51,1; }
-4045,horn_Card,horn Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bLongAtkDef,35; }
+4045,Horn_Card,Horn Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bLongAtkDef,35; }
 4046,Martin_Card,Martin Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bResEff,Eff_Blind,2000; bonus bDef,1; }
 4047,Ghostring_Card,Ghostring Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDefEle,8; bonus bHPrecovRate,-25; }
 4048,Poison_Spore_Card,Poison Spore Card,6,20,0,10,,,,,,,136,,,,{},{ skill 52,3; }

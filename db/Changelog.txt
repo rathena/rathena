@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/8
+        * Capitalised horn_Card in item_db [celest]
+
 12/7    
 	* Fixed some item names (and swpped names of Alarm Mask and Expressionless Mask) [Lupus]
 	* Added effect for Bow Thimble, Archer Skeleton Card and Tribal Solidarity [celest]

@@ -6,6 +6,7 @@
 
 
 // Towns  ==================>\\
+alb2trea.gat	mapflag	nomemo
 alb_ship.gat	mapflag	nomemo
 alberta_in.gat	mapflag	nomemo
 aldeba_in.gat	mapflag	nomemo
@@ -13,6 +14,9 @@ ama_in01.gat	mapflag	nomemo
 ama_in02.gat	mapflag	nomemo
 cmd_in01.gat	mapflag	nomemo
 cmd_in02.gat	mapflag	nomemo
+gef_fild06.gat	mapflag	nomemo
+gef_fild08.gat	mapflag	nomemo
+gef_fild12.gat	mapflag	nomemo
 gef_tower.gat	mapflag	nomemo
 geffen_in.gat	mapflag	nomemo
 gon_test.gat	mapflag	nomemo
@@ -24,21 +28,31 @@ lou_in01.gat	mapflag	nomemo
 lou_in02.gat	mapflag	nomemo
 moc_castle.gat	mapflag	nomemo
 morocc_in.gat	mapflag	nomemo
+mjolnir_01.gat	mapflag	nomemo
+mjolnir_07.gat	mapflag	nomemo
+mjolnir_10.gat	mapflag	nomemo
+niflheim.gat	mapflag	nomemo
 nif_in.gat	mapflag	nomemo
 new_1-1.gat	mapflag	nomemo
 new_1-2.gat	mapflag	nomemo
 new_1-3.gat	mapflag	nomemo
 new_1-4.gat	mapflag	nomemo
+pay_fild05.gat	mapflag	nomemo
 payon_in01.gat	mapflag	nomemo
 payon_in02.gat	mapflag	nomemo
 prt_castle.gat	mapflag	nomemo
 prt_church.gat	mapflag	nomemo
 prt_in.gat	mapflag	nomemo
 um_in.gat	mapflag	nomemo
+um_fild01.gat	mapflag	nomemo
+um_fild02.gat	mapflag	nomemo
+um_fild03.gat	mapflag	nomemo
 xmas_in.gat	mapflag	nomemo
+yuno_fild02.gat	mapflag	nomemo
 yuno_in01.gat	mapflag	nomemo
 yuno_in02.gat	mapflag	nomemo
 yuno_in03.gat	mapflag	nomemo
+
 
 // Job quests ===================
 sword_1-1.gat	mapflag	nomemo
