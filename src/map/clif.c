@@ -4567,10 +4567,10 @@ int clif_skill_warppoint(struct map_session_data *sd,int skill_num,
 	fd=sd->fd;
 	WFIFOW(fd,0)=0x11c;
 	WFIFOW(fd,2)=skill_num;
-	memcpy(WFIFOP(fd, 4),map1,16);
-	memcpy(WFIFOP(fd,20),map2,16);
-	memcpy(WFIFOP(fd,36),map3,16);
-	memcpy(WFIFOP(fd,52),map4,16);
+	strncpy(WFIFOP(fd, 4),map1,16);
+	strncpy(WFIFOP(fd,20),map2,16);
+	strncpy(WFIFOP(fd,36),map3,16);
+	strncpy(WFIFOP(fd,52),map4,16);
 	WFIFOSET(fd,packet_len_table[0x11c]);
 	return 0;
 }
@@ -6388,32 +6388,32 @@ int clif_guild_basicinfo(struct map_session_data *sd)
 			if(g->guild_id == gc->guild_id)	t++;
 	}
 
-	if      (t==1)  memcpy(WFIFOP(fd,94),"One Castle",20);
-	else if (t==2)  memcpy(WFIFOP(fd,94),"Two Castles",20);
-	else if (t==3)  memcpy(WFIFOP(fd,94),"Three Castles",20);
-	else if (t==4)  memcpy(WFIFOP(fd,94),"Four Castles",20);
-	else if (t==5)  memcpy(WFIFOP(fd,94),"Five Castles",20);
-	else if (t==6)  memcpy(WFIFOP(fd,94),"Six Castles",20);
-	else if (t==7)  memcpy(WFIFOP(fd,94),"Seven Castles",20);
-	else if (t==8)  memcpy(WFIFOP(fd,94),"Eight Castles",20);
-	else if (t==9)  memcpy(WFIFOP(fd,94),"Nine Castles",20);
-	else if (t==10) memcpy(WFIFOP(fd,94),"Ten Castles",20);
-	else if (t==11) memcpy(WFIFOP(fd,94),"Eleven Castles",20);
-	else if (t==12) memcpy(WFIFOP(fd,94),"Twelve Castles",20);
-	else if (t==13) memcpy(WFIFOP(fd,94),"Thirteen Castles",20);
-	else if (t==14) memcpy(WFIFOP(fd,94),"Fourteen Castles",20);
-	else if (t==15) memcpy(WFIFOP(fd,94),"Fifteen Castles",20);
-	else if (t==16) memcpy(WFIFOP(fd,94),"Sixteen Castles",20);
-	else if (t==17) memcpy(WFIFOP(fd,94),"Seventeen Castles",20);
-	else if (t==18) memcpy(WFIFOP(fd,94),"Eighteen Castles",20);
-	else if (t==19) memcpy(WFIFOP(fd,94),"Nineteen Castles",20);
-	else if (t==20) memcpy(WFIFOP(fd,94),"Twenty Castles",20);
-	else if (t==21) memcpy(WFIFOP(fd,94),"Twenty One Castles",20);
-	else if (t==22) memcpy(WFIFOP(fd,94),"Twenty Two Castles",20);
-	else if (t==23) memcpy(WFIFOP(fd,94),"Twenty Three Castles",20);
-	else if (t==24) memcpy(WFIFOP(fd,94),"Twenty Four Castles",20);
-	else if (t==MAX_GUILDCASTLE) memcpy(WFIFOP(fd,94),"Total Domination",20);
-	else memcpy(WFIFOP(fd,94),"None Taken",20);
+	if      (t==1)  strncpy(WFIFOP(fd,94),"One Castle",20);
+	else if (t==2)  strncpy(WFIFOP(fd,94),"Two Castles",20);
+	else if (t==3)  strncpy(WFIFOP(fd,94),"Three Castles",20);
+	else if (t==4)  strncpy(WFIFOP(fd,94),"Four Castles",20);
+	else if (t==5)  strncpy(WFIFOP(fd,94),"Five Castles",20);
+	else if (t==6)  strncpy(WFIFOP(fd,94),"Six Castles",20);
+	else if (t==7)  strncpy(WFIFOP(fd,94),"Seven Castles",20);
+	else if (t==8)  strncpy(WFIFOP(fd,94),"Eight Castles",20);
+	else if (t==9)  strncpy(WFIFOP(fd,94),"Nine Castles",20);
+	else if (t==10) strncpy(WFIFOP(fd,94),"Ten Castles",20);
+	else if (t==11) strncpy(WFIFOP(fd,94),"Eleven Castles",20);
+	else if (t==12) strncpy(WFIFOP(fd,94),"Twelve Castles",20);
+	else if (t==13) strncpy(WFIFOP(fd,94),"Thirteen Castles",20);
+	else if (t==14) strncpy(WFIFOP(fd,94),"Fourteen Castles",20);
+	else if (t==15) strncpy(WFIFOP(fd,94),"Fifteen Castles",20);
+	else if (t==16) strncpy(WFIFOP(fd,94),"Sixteen Castles",20);
+	else if (t==17) strncpy(WFIFOP(fd,94),"Seventeen Castles",20);
+	else if (t==18) strncpy(WFIFOP(fd,94),"Eighteen Castles",20);
+	else if (t==19) strncpy(WFIFOP(fd,94),"Nineteen Castles",20);
+	else if (t==20) strncpy(WFIFOP(fd,94),"Twenty Castles",20);
+	else if (t==21) strncpy(WFIFOP(fd,94),"Twenty One Castles",20);
+	else if (t==22) strncpy(WFIFOP(fd,94),"Twenty Two Castles",20);
+	else if (t==23) strncpy(WFIFOP(fd,94),"Twenty Three Castles",20);
+	else if (t==24) strncpy(WFIFOP(fd,94),"Twenty Four Castles",20);
+	else if (t==MAX_GUILDCASTLE) strncpy(WFIFOP(fd,94),"Total Domination",20);
+	else strncpy(WFIFOP(fd,94),"None Taken",20);
 
 	WFIFOSET(fd,packet_len_table[WFIFOW(fd,0)]);
 	clif_guild_emblem(sd,g);	// Guild emblem vanish fix [Valaris]

@@ -546,7 +546,8 @@ int battle_get_baseatk(struct block_list *bl)
 	sc_data=battle_get_sc_data(bl);
 	if(bl->type==BL_PC && (struct map_session_data *)bl) {
 		batk = ((struct map_session_data *)bl)->base_atk; //İ’è‚³‚ê‚Ä‚¢‚ébase_atk
-		batk += ((struct map_session_data *)bl)->weapon_atk[((struct map_session_data *)bl)->status.weapon];
+		if (((struct map_session_data *)bl)->status.weapon < 16)
+			batk += ((struct map_session_data *)bl)->weapon_atk[((struct map_session_data *)bl)->status.weapon];
 	} else { //‚»‚êˆÈŠO‚È‚ç
 		int str,dstr;
 		str = battle_get_str(bl); //STR
@@ -3075,8 +3076,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 		else
 			damage2 += atkmin_ ;
 		if(sd->atk_rate != 100 || sd->weapon_atk_rate != 0) {
-			damage = (damage * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
-			damage2 = (damage2 * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
+			if (((struct map_session_data *)bl)->status.weapon < 16) {
+				damage = (damage * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
+				damage2 = (damage2 * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
+			}
 		}
 
 		if(sd->state.arrow_atk) {

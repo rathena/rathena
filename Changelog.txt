@@ -1,5 +1,6 @@
 Date	Added
 12/26
+	* Fixed some array bounds errors (SVN 795) [MouseJstr]
 	* @mapexit (and do_final) now persist all data to the
 	  char server before exiting to eliminate storage/inventory
 	  inconsistancies.. [MouseJstr]  (SVN 793)
