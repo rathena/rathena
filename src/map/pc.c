@@ -31,6 +31,7 @@
 #include "nullpo.h"
 #include "atcommand.h"
 #include "log.h"
+#include "showmsg.h"
 
 #ifndef TXT_ONLY // mail system [Valaris]
 #include "mail.h"
@@ -840,6 +841,10 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 				clif_displaymessage(sd->fd, buf);
 			}
 			fclose(fp);
+		}
+		else if(battle_config.error_log) {
+			sprintf(buf, "%s not found\n", motd_txt);
+			ShowWarning (buf);
 		}
 	}
 

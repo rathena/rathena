@@ -87,3 +87,8 @@ http://eathena.deltaanime.net/forum/viewtopic.php?p=79951#79951)
 Problem:	@disguise has no death sprite so the client crashes when you die, a solution would be that upon death before the sprites change you're undisguised.
 Assigned:	N/a
 Progess:	0%
+
+Problem:        Changing email and Broadcast both use the same packets / Packet 0x3000 assigned to changing email instead of broadcasting?
+Notes:          Refer to char.c line 2272 and line 2416, intif.c line 107, chrif.c line 377
+Assigned:       N/A
+Progress:       0%

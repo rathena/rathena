@@ -2057,8 +2057,9 @@ static struct Damage battle_calc_pet_weapon_attack(
 				damage2 = damage2*(100+ 40*skill_lv)/100;
 				break;
 			case MO_FINGEROFFENSIVE:	//Žw’e
-				damage = damage * (100 + 50 * skill_lv) / 100;
+				damage = damage * (125 + 25 * skill_lv) / 100;
 				div_ = 1;
+				flag=(flag&~BF_RANGEMASK)|BF_LONG;   //orn
 				break;
 			case MO_INVESTIGATE:	// ”­ ™¤
 				if(def1 < 1000000)
@@ -2549,8 +2550,9 @@ static struct Damage battle_calc_mob_weapon_attack(
 				damage2 = damage2*(100+ 40*skill_lv)/100;
 				break;
 			case MO_FINGEROFFENSIVE:	//Žw’e
-				damage = damage * (100 + 50 * skill_lv) / 100;
+				damage = damage * (125 + 25 * skill_lv) / 100;
 				div_ = 1;
+				flag=(flag&~BF_RANGEMASK)|BF_LONG;   //orn
 				break;
 			case MO_INVESTIGATE:	// ”­ ™¤
 				if(def1 < 1000000)
@@ -3329,15 +3331,16 @@ static struct Damage battle_calc_pc_weapon_attack(
 				break;
 			case MO_FINGEROFFENSIVE:	//Žw’e
 				if(battle_config.finger_offensive_type == 0) {
-					damage = damage * (100 + 50 * skill_lv) / 100 * sd->spiritball_old;
-					damage2 = damage2 * (100 + 50 * skill_lv) / 100 * sd->spiritball_old;
+					damage = damage * (125 + 25 * skill_lv) / 100 * sd->spiritball_old;
+					damage2 = damage2 * (125 + 25 * skill_lv) / 100 * sd->spiritball_old;
 					div_ = sd->spiritball_old;
 				}
 				else {
-					damage = damage * (100 + 50 * skill_lv) / 100;
-					damage2 = damage2 * (100 + 50 * skill_lv) / 100;
+					damage = damage * (125 + 25 * skill_lv) / 100;
+					damage2 = damage2 * (125 + 25 * skill_lv) / 100;
 					div_ = 1;
 				}
+				flag=(flag&~BF_RANGEMASK)|BF_LONG;   //orn
 				break;
 			case MO_INVESTIGATE:	// ”­ ™¤
 				if(def1 < 1000000) {
@@ -5418,7 +5421,7 @@ void battle_set_defaults() {
 	battle_config.ban_spoof_namer = 5; // added by [Yor] (default: 5 minutes)
 	battle_config.hack_info_GM_level = 60; // added by [Yor] (default: 60, GM level)
 	battle_config.any_warp_GM_min_level = 20; // added by [Yor]
-	battle_config.packet_ver_flag = 63; // added by [Yor]
+	battle_config.packet_ver_flag = 511; // added by [Yor]
 	battle_config.min_hair_style = 0;
 	battle_config.max_hair_style = 20;
 	battle_config.min_hair_color = 0;
@@ -5548,8 +5551,8 @@ void battle_validate_conf() {
 		battle_config.any_warp_GM_min_level = 100;
 
 	// at least 1 client must be accepted
-	if ((battle_config.packet_ver_flag & 63) == 0) // added by [Yor]
-		battle_config.packet_ver_flag = 63; // accept all clients
+	if ((battle_config.packet_ver_flag & 511) == 0) // added by [Yor]
+		battle_config.packet_ver_flag = 511; // accept all clients
 	
 	if (battle_config.night_darkness_level > 10) // Celest
 		battle_config.night_darkness_level = 10;

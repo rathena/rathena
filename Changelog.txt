@@ -1,4 +1,10 @@
 Date	Added
+11/28
+        * Updated packet_ver_flag's default value, thanks to iscandium
+        * Updated Finger Offensive, thanks to orn
+        * Added warning if motd.txt was not found
+          (Turn on error_log in battle_athena.conf to enable it)
+
 11/27
 	* Fixed some compile time errors associated with showmsg [MouseJstr]
 	* Added get_svn_revision() in core.c [MC Cameri]

@@ -2384,16 +2384,16 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		{
 			struct status_change *sc_data = battle_get_sc_data(src);
 
-		if(!battle_config.finger_offensive_type)
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		else {
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-			if(sd) {
-				for(i=1;i<sd->spiritball_old;i++)
-					skill_addtimerskill(src,tick+i*200,bl->id,0,0,skillid,skilllv,BF_WEAPON,flag);
-				sd->canmove_tick = tick + (sd->spiritball_old-1)*200;
+			if(!battle_config.finger_offensive_type)
+				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+			else {
+				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+				if(sd) {
+					for(i=1;i<sd->spiritball_old;i++)
+						skill_addtimerskill(src,tick+i*200,bl->id,0,0,skillid,skilllv,BF_WEAPON,flag);
+					sd->canmove_tick = tick + (sd->spiritball_old-1)*200;
+				}
 			}
-		}
 			if(sc_data && sc_data[SC_BLADESTOP].timer != -1)
 				skill_status_change_end(src,SC_BLADESTOP,-1);
 		}
