@@ -250,7 +250,7 @@ void pid_create(const char* file) {
 }
 
 #define LOG_UPTIME 0
-void log_uptime()
+void log_uptime(void)
 {
 #if LOG_UPTIME
 	time_t curtime;

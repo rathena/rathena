@@ -2,6 +2,9 @@
 Date	Added
 
 03/30
+        * Made the map-server build cleanly using Microsoft Visual
+          Studio.. entirely native code without any cygwin dependency
+          [SVN: 1345 MouseJstr]
 	* Fixed @reloadgmdb in SQL -- after reloading ask the char to forward the new
 	  accounts back to the map [celest]
 	* Added base code for loading Ser's UPNP plugin [celest]

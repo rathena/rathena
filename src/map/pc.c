@@ -3236,7 +3236,10 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 	int moveblock;
 	int x,y,dx,dy;
 
-	nullpo_retr_f(0, (sd=map_id2sd(id)), "id=%d", id);
+        sd=map_id2sd(id);
+#ifndef _WIN32
+	nullpo_retr_f(0, sd, "id=%d", id);
+#endif
 
 	if(sd->walktimer != tid){
 		if(battle_config.error_log)

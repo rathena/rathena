@@ -4300,7 +4300,10 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 // security system to prevent forgetting timer removal
 	int temp_timerid;
 
-	nullpo_retr_f(0, bl=map_id2bl(id), "id=%d data=%d",id,data);
+        bl=map_id2bl(id);
+#ifndef _WIN32
+	nullpo_retr_f(0, bl, "id=%d data=%d",id,data);
+#endif
 	nullpo_retr(0, sc_data=status_get_sc_data(bl));
 
 	if(bl->type==BL_PC)

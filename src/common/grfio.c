@@ -33,7 +33,7 @@
 
 #ifdef _WIN32
 	#ifdef LOCALZLIB
-		#include "../lib/zlib/zlib.h"
+		#include "zlib.h"
 		#define zlib_inflateInit inflateInit
 		#define zlib_inflate     inflate
 		#define zlib_inflateEnd  inflateEnd
