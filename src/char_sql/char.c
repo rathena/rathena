@@ -2097,6 +2097,7 @@ int parse_frommap(int fd) {
 			WFIFOW(fd, 0) = 0x2b06;
 			memcpy(WFIFOP(fd,2), RFIFOP(fd,2), 42);
 //			printf("(map change) auth_fifo set %d - account_id:%08x login_id1:%08x\n", auth_fifo_pos, RFIFOL(fd, 2), RFIFOL(fd, 6));
+			printf("[MapChange] ");
 			auth_fifo[auth_fifo_pos].account_id = RFIFOL(fd, 2);
 			auth_fifo[auth_fifo_pos].login_id1 = RFIFOL(fd, 6);
 			auth_fifo[auth_fifo_pos].login_id2 = RFIFOL(fd,10);
@@ -2105,18 +2106,20 @@ int parse_frommap(int fd) {
 			auth_fifo[auth_fifo_pos].sex = RFIFOB(fd,44);
 			auth_fifo[auth_fifo_pos].ip = RFIFOL(fd,45);
 
-			sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", char_db, RFIFOL(fd,2), RFIFOL(fd,14));
+			sprintf(tmp_sql, "SELECT `char_id`, `name` FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", char_db, RFIFOL(fd,2), RFIFOL(fd,14));
 			if (mysql_query(&mysql_handle, tmp_sql)) {
 				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 			}
 			sql_res = mysql_store_result(&mysql_handle);
 			if(sql_res){
 				i = atoi(sql_row[0]);
+				printf("aid: %d, cid: %d, name: %s", RFIFOL(fd,2), atoi(sql_row[0]), sql_row[1]);
 				mysql_free_result(sql_res);
 				auth_fifo[auth_fifo_pos].char_pos = auth_fifo[auth_fifo_pos].char_id;
 				auth_fifo_pos++;
 				WFIFOL(fd,6) = 0;
 			}else{
+				printf("Error, aborted\n");
 				return 0;
 			}
 			
@@ -2126,7 +2129,7 @@ int parse_frommap(int fd) {
 			
 			WFIFOSET(fd, 44);
 			RFIFOSKIP(fd, 49);
-			
+			printf(" done.\n");			
 			/*
 			if (( sql_row = mysql_fetch_row(sql_res))) {
 				i = atoi(sql_row[0]);
