@@ -1274,11 +1274,14 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 		break;
 	case PF_SPIDERWEB:		/* スパイダ?ウェッブ */
 		{
-			int sec=skill_get_time2(skillid,skilllv);
-			if(map[src->m].flag.pvp) //PvPでは拘束時間半減？
-				sec = sec/2;
-			battle_stopwalking(bl,1);
-			skill_status_change_start(bl,SC_SPIDERWEB,skilllv,0,0,0,sec,0);
+			if(bl->type == BL_MOB)
+			{
+				int sec=skill_get_time2(skillid,skilllv);
+				if(map[src->m].flag.pvp) //PvPでは拘束時間半減？
+					sec = sec/2;
+				battle_stopwalking(bl,1);
+				skill_status_change_start(bl,SC_SPIDERWEB,skilllv,0,0,0,sec,0);
+			}
 		}
 		break;
 	case ASC_METEORASSAULT:			/* メテオアサルト */
