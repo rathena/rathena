@@ -34,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+02/27
+	* Fixed some bugs in Monk Job Quest. Now it's fully passable. [Lupus]
+	  Going to brush it up a bit later. First have to re-check Crusader+Assassin+Rogue quests ^_-
 02/26
 	* Now players can reach Guilds Dungeons only trough their own captured castles. [Lupus]
 		Before they coulkd enter the dungeons vie unoccupied castles. Thanks 2Ishizu-chan for fix
