@@ -8224,7 +8224,7 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 		else
 			sc_data[type].timer=add_timer(1000+tick,skill_status_change_timer, bl->id, data );
 		break;
-		case SC_TENSIONRELAX:	/* テンションリラックス */
+	case SC_TENSIONRELAX:	/* テンションリラックス */
 		if(sd){		/* SPがあって、HPが?タンでなければ?? */
 			if( sd->status.sp > 12 && sd->status.max_hp > sd->status.hp ){
 /*				if(sc_data[type].val2 % (sc_data[type].val1+3) ==0 ){
@@ -8238,6 +8238,25 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 			if(sd->status.max_hp <= sd->status.hp)
 				skill_status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
+		}
+		break;
+	case SC_HEADCRUSH:	// temporary damage [celest]
+//	case SC_BLEEDING:
+	case SC_POISON2:
+		if((--sc_data[type].val3) > 0) {
+			int hp = battle_get_max_hp(bl);
+			if(bl->type == BL_PC) {
+				hp = 3 + hp*3/200;
+				pc_heal((struct map_session_data *)bl,-hp,0);
+			}
+			else if(bl->type == BL_MOB) {
+				struct mob_data *md;
+				if((md=((struct mob_data *)bl)) == NULL)
+					break;
+				hp = 3 + hp/200;
+				md->hp -= hp;
+			}
+			sc_data[type].timer=add_timer(1000+tick,skill_status_change_timer, bl->id, data );
 		}
 		break;
 

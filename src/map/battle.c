@@ -4619,10 +4619,12 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			}         
 		}
 		if(t_sc_data && t_sc_data[SC_BLADESTOP_WAIT].timer != -1){
-			int lv = t_sc_data[SC_BLADESTOP_WAIT].val1;
-			skill_status_change_end(target,SC_BLADESTOP_WAIT,-1);
-			skill_status_change_start(src,SC_BLADESTOP,lv,1,(int)src,(int)target,skill_get_time2(MO_BLADESTOP,lv),0);
-			skill_status_change_start(target,SC_BLADESTOP,lv,2,(int)target,(int)src,skill_get_time2(MO_BLADESTOP,lv),0);
+			if (!(src->type = BL_MOB && mob_db[((struct mob_data *)src)->class].mode&0x32)) {
+				int lv = t_sc_data[SC_BLADESTOP_WAIT].val1;
+				skill_status_change_end(target,SC_BLADESTOP_WAIT,-1);
+				skill_status_change_start(src,SC_BLADESTOP,lv,1,(int)src,(int)target,skill_get_time2(MO_BLADESTOP,lv),0);
+				skill_status_change_start(target,SC_BLADESTOP,lv,2,(int)target,(int)src,skill_get_time2(MO_BLADESTOP,lv),0);
+			}
 		}
 		if(t_sc_data && t_sc_data[SC_SPLASHER].timer!=-1)	//殴ったので対象のベナムスプラッシャー状態を解除
 			skill_status_change_end(target,SC_SPLASHER,-1);

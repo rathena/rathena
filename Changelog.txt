@@ -7,6 +7,8 @@ Date	Added
 	* Corrected the file type attribute on most of the files in three which fixes the
 	  newline issues between linux and dos [MouseJstr]
               svn propset -R svn:eol-style native .
+        * Skill changes [celest]
+          - Corrected steal formula, updated BladeStop, Headcrush.
 
 11/13
 	* Fixed map-server loading, doesn't require data\resnametable.txt anymore [Wizputer]
