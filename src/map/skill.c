@@ -2399,6 +2399,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 					((struct map_session_data *)bl)->dir=dir;
 				else if (bl->type == BL_MOB)
 					((struct mob_data *)bl)->dir=dir;
+				clif_changed_dir(bl);
 				//skill_blown(src,bl,skill_get_blewcount(skillid,skilllv)); 
 			}
 			else if(src->type == BL_PC)

@@ -7007,6 +7007,30 @@ void clif_callpartner(struct map_session_data *sd)
 }
 */
 /*==========================================
+ * Adopt baby [Celest]
+ *------------------------------------------
+ */
+void clif_adopt_process(struct map_session_data *sd) 
+{
+	int fd;
+	nullpo_retv(sd);
+
+	fd=sd->fd;
+	WFIFOW(fd,0)=0x1f8;
+	WFIFOSET(fd,packet_len_table[0x1f8]);
+}
+
+/*==========================================
+ * 
+ *------------------------------------------
+ */
+void clif_parse_ReqAdopt(int fd, struct map_session_data *sd) {
+	nullpo_retv(sd);
+
+	printf ("%d\n", RFIFOL(fd,2));
+}
+
+/*==========================================
  * À‚é
  *------------------------------------------
  */
@@ -7854,8 +7878,31 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd) {
  *
  *------------------------------------------
  */
-void clif_parse_ChangeDir(int fd, struct map_session_data *sd) {
+void clif_changed_dir(struct block_list *bl) {
 	unsigned char buf[64];
+	struct map_session_data *sd = NULL;
+
+	if (bl->type == BL_PC)
+		nullpo_retv (sd=(struct map_session_data *)bl);
+
+	WBUFW(buf,0) = 0x9c;
+	WBUFL(buf,2) = bl->id;
+	if (sd)
+		WBUFW(buf,6) = sd->head_dir;
+	WBUFB(buf,8) = battle_get_dir(bl);
+	if (sd && sd->disguise > 23 && sd->disguise < 4001) // mob disguises [Valaris]
+		clif_send(buf, packet_len_table[0x9c], &sd->bl, AREA);
+	else
+		clif_send(buf, packet_len_table[0x9c], bl, AREA_WOS);
+
+	return;
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+void clif_parse_ChangeDir(int fd, struct map_session_data *sd) {
 	short headdir, dir;
 
 	nullpo_retv(sd);
@@ -7897,15 +7944,8 @@ void clif_parse_ChangeDir(int fd, struct map_session_data *sd) {
 
 	pc_setdir(sd, dir, headdir);
 
-	WBUFW(buf,0) = 0x9c;
-	WBUFL(buf,2) = sd->bl.id;
-	WBUFW(buf,6) = headdir;
-	WBUFB(buf,8) = dir;
-	if (sd->disguise > 23 && sd->disguise < 4001) // mob disguises [Valaris]
-		clif_send(buf, packet_len_table[0x9c], &sd->bl, AREA);
-	else
-		clif_send(buf, packet_len_table[0x9c], &sd->bl, AREA_WOS);
-
+	clif_changed_dir(&sd->bl);
+	return;
 }
 
 /*==========================================
@@ -10136,7 +10176,8 @@ static void (*clif_parse_func_table[7][0x220])() = {
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, clif_parse_sn_doridori,
 	clif_parse_CreateParty2, NULL, NULL, NULL, NULL, clif_parse_sn_explosionspirits, NULL, NULL,
 	// 1f0
-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, clif_parse_ReqAdopt,
+	NULL, NULL, NULL, NULL, NULL, NULL,
 
 	// 200
 	NULL, NULL, clif_parse_friends_list_add, clif_parse_friends_list_remove, NULL, NULL, NULL, NULL,

@@ -90,6 +90,7 @@ void clif_talkiebox(struct block_list *bl,char* talkie);
 void clif_wedding_effect(struct block_list *bl);
 //void clif_sitting(int fd, struct map_session_data *sd);
 //void clif_callpartner(struct map_session_data *sd);
+void clif_adopt_process(struct map_session_data *sd);
 void clif_sitting(struct map_session_data *sd);
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *name,int type);
 
@@ -195,6 +196,7 @@ int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv,const ch
 int clif_mvp_effect(struct map_session_data *sd);
 int clif_mvp_item(struct map_session_data *sd,int nameid);
 int clif_mvp_exp(struct map_session_data *sd,int exp);
+void clif_changed_dir(struct block_list *bl);
 
 // vending
 int clif_openvendingreq(struct map_session_data *sd,int num);
