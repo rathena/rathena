@@ -10111,7 +10111,8 @@ static int clif_parse(int fd) {
 				printf("Player with account [%d] has logged off your server.\n", sd->bl.id); // Player logout display [Yor]
 		} else if (sd) { // not authentified! (refused by char-server or disconnect before to be authentified)
 			printf("Player with account [%d] has logged off your server (not auth account).\n", sd->bl.id); // Player logout display [Yor]
-			map_deliddb(&sd->bl); // account_id has been included in the DB before auth answer
+			if (chrif_isconnect())
+				clif_quitsave(fd, sd);
 			sd = 0;
 		}
 		close(fd);
