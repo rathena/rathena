@@ -102,7 +102,7 @@ L_BeMage:
 	next;
 	mes "[Expert Mage]";
 	if(countitem(1090) >= 1) goto L_Retry;//Items: Unknown_Test_Tube,
-	if(countitem(1071)<1 && countitem(1085)<1 && countitem(1086)<1 && countitem(1087)<1) goto L_NoSol;//Items: Unknown_Test_Tube, Unknown_Test_Tube, Unknown_Test_Tube, Unknown_Test_Tube,
+	if((countitem(1071)<1) && (countitem(1085)<1) && (countitem(1086)<1) && (countitem(1087)<1)) goto L_NoSol;//Items: Unknown_Test_Tube, Unknown_Test_Tube, Unknown_Test_Tube, Unknown_Test_Tube,
 
 	if(SkillPoint > 0) mes "You need to use up all of your skill points before I can make you a Mage.";
 	if(SkillPoint > 0) close;
@@ -118,12 +118,11 @@ L_BeMage:
 	next;
 	JobChange 2;// Job: Job_Mage
 	set Zeny,Zeny+500;
+	if(job_magician_q == 1) delitem 1071,1;//Items: Unknown_Test_Tube,
+	if(job_magician_q == 2) delitem 1085,1;//Items: Unknown_Test_Tube,
+	if(job_magician_q == 3) delitem 1086,1;//Items: Unknown_Test_Tube,
+	if(job_magician_q == 4) delitem 1087,1;//Items: Unknown_Test_Tube,
 	set job_magician_q,0;
-	if(job_magician_q==1) delitem 1071,1;//Items: Unknown_Test_Tube,
-	if(job_magician_q==2) delitem 1085,1;//Items: Unknown_Test_Tube,
-	if(job_magician_q==3) delitem 1086,1;//Items: Unknown_Test_Tube,
-	if(job_magician_q==4) delitem 1087,1;//Items: Unknown_Test_Tube,
-
 	mes "[Expert Mage]";
 	mes "'Welcome to My World~ teh hehe.  I've always wanted to say that.  Anyways, congratulations!.  You're one of us now so let's be friends okays!";
 	emotion 18;
