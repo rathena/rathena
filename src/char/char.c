@@ -49,11 +49,11 @@ char server_name[20];
 char wisp_server_name[24] = "Server";
 int login_ip_set_ = 0;
 char login_ip_str[16];
-int login_ip;
+in_addr_t login_ip;
 int login_port = 6900;
 int char_ip_set_ = 0;
 char char_ip_str[16];
-int char_ip;
+in_addr_t char_ip;
 int char_port = 6121;
 int char_maintenance;
 int char_new;
@@ -769,7 +769,8 @@ void mmo_char_sync(void) {
 	int i, j, k;
 	int lock;
 	FILE *fp,*f_fp;
-	int *id = (int *) aMalloc(sizeof(int) * char_num);
+	//int *id = (int *) aMalloc(sizeof(int) * char_num);
+	CREATE_BUFFER(id, int, char_num);
 
 	// Sorting before save (by [Yor])
 	for(i = 0; i < char_num; i++) {
@@ -808,6 +809,8 @@ void mmo_char_sync(void) {
 		if (fp == NULL) {
 			printf("WARNING: Server can't not create backup of characters file.\n");
 			char_log("WARNING: Server can't not create backup of characters file." RETCODE);
+			//aFree(id); // free up the memory before leaving -.- [Ajarn]
+			DELETE_BUFFER(id);
 			return;
 		}
 		for(i = 0; i < char_num; i++) {
@@ -828,7 +831,8 @@ void mmo_char_sync(void) {
 
 	lock_fclose(f_fp, friends_txt, &lock);
 
-	aFree(id);
+	//aFree(id);
+	DELETE_BUFFER(id);
 
 	return;
 }
@@ -3431,7 +3435,8 @@ int do_init(int argc, char **argv) {
 	set_termfunc(do_final);
 	set_defaultparse(parse_char);
 
-	char_fd = make_listen_port(char_port);
+	//char_fd = make_listen_port(char_port);
+	char_fd = make_listen_bind(char_ip,char_port);
 
 	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
 	add_timer_func_list(send_users_tologin, "send_users_tologin");

@@ -54,6 +54,8 @@ void Gettimeofday(struct timeval *timenow)
 int account_id_count = START_ACCOUNT_NUM;
 int server_num;
 int new_account_flag = 0;
+char login_ip_str[16];
+in_addr_t login_ip;
 int login_port = 6900;
 char lan_char_ip[16];
 int subneti[4];
@@ -872,7 +874,8 @@ void mmo_auth_sync(void) {
 	int i, j, k, lock;
 	int account_id;
 	//int id[auth_num];
-	int *id = (int *)aCalloc(auth_num, sizeof(int));
+	//int *id = (int *)aCalloc(auth_num, sizeof(int));
+	CREATE_BUFFER(id, int, auth_num);
 	char line[65536];
 
 	// Sorting before save
@@ -891,7 +894,8 @@ void mmo_auth_sync(void) {
 
 	// Data save
 	if ((fp = lock_fopen(account_filename, &lock)) == NULL) {
-		if (id) free(id);
+		//if (id) aFree(id); // aFree, right?
+		DELETE_BUFFER(id);
 		return;
 	}
 
@@ -924,7 +928,8 @@ void mmo_auth_sync(void) {
 	if (auth_before_save_file < AUTH_BEFORE_SAVE_FILE)
 		auth_before_save_file = AUTH_BEFORE_SAVE_FILE;
 
-	if (id) aFree(id);
+	//if (id) aFree(id);
+	DELETE_BUFFER(id);
 
 	return;
 }
@@ -1891,7 +1896,8 @@ int parse_admin(int fd) {
 			{
 				int st, ed, len;
 				//int id[auth_num];
-				int *id=(int *)aCalloc(auth_num, sizeof(int));
+				//int *id=(int *)aCalloc(auth_num, sizeof(int));
+				CREATE_BUFFER(id, int, auth_num);
 				st = RFIFOL(fd,2);
 				ed = RFIFOL(fd,6);
 				RFIFOSKIP(fd,10);
@@ -1935,7 +1941,8 @@ int parse_admin(int fd) {
 				}
 				WFIFOW(fd,2) = len;
 				WFIFOSET(fd,len);
-				if (id) free(id);
+				//if (id) free(id);
+				DELETE_BUFFER(id);
 			}
 			break;
 
@@ -3412,6 +3419,14 @@ int login_config_read(const char *cfgName) {
 				level_new_gm = atoi(w2);
 			} else if (strcmpi(w1, "new_account") == 0) {
 				new_account_flag = config_switch(w2);
+			} else if (strcmpi(w1, "login_ip") == 0) {
+				//login_ip_set_ = 1;
+				h = gethostbyname (w2);
+				if (h != NULL) {
+					printf("Login server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+					sprintf(login_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+				} else
+					memcpy(login_ip_str,w2,16);
 			} else if (strcmpi(w1, "login_port") == 0) {
 				login_port = atoi(w2);
 			} else if (strcmpi(w1, "account_filename") == 0) {
@@ -3938,7 +3953,9 @@ int do_init(int argc, char **argv) {
 	read_gm_account();
 //	set_termfunc(mmo_auth_sync);
 	set_defaultparse(parse_login);
-	login_fd = make_listen_port(login_port);
+	login_ip = inet_addr(login_ip_str);
+	//login_fd = make_listen_port(login_port);
+	login_fd = make_listen_bind(login_ip,login_port);
 
 	if(anti_freeze_enable > 0) {
 		add_timer_func_list(char_anti_freeze_system, "char_anti_freeze_system");

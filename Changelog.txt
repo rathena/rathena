@@ -1,6 +1,10 @@
 Date	Added
 
 02/04
+	* Added common/buffer.(c/h) [SVN 1033: Ajarn]
+	* Login server can now set it's ip address in the config [SVN 1033: Ajarn]
+	* Servers now bind to a single ip address, thus allowing multiple servers to
+	  a single port [SVN 1033: Ajarn]
         * Added experimental code to generate a stack dump when it segfaults, thanks
           to Ser [celest]
           - does not work with Cygwin, as it does not have glibc

@@ -270,6 +270,55 @@ int make_listen_port(int port)
 	return fd;
 }
 
+int make_listen_bind(long ip,int port)
+{
+	struct sockaddr_in server_address;
+	int fd;
+	int result;
+
+	fd = socket( AF_INET, SOCK_STREAM, 0 );
+	if(fd_max<=fd) fd_max=fd+1;
+
+#ifdef _WIN32
+        {
+	  	unsigned long val = 1;
+  		ioctlsocket(fd, FIONBIO, &val);
+        }
+#else
+	result = fcntl(fd, F_SETFL, O_NONBLOCK);
+#endif
+
+	setsocketopts(fd);
+
+	server_address.sin_family      = AF_INET;
+	server_address.sin_addr.s_addr = ip;
+	server_address.sin_port        = htons((unsigned short)port);
+
+	result = bind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
+	if( result == -1 ) {
+		perror("bind");
+		exit(1);
+	}
+	result = listen( fd, 5 );
+	if( result == -1 ) { /* error */
+		perror("listen");
+		exit(1);
+	}
+
+	FD_SET(fd, &readfds );
+
+	CREATE(session[fd], struct socket_data, 1);
+
+	if(session[fd]==NULL){
+		printf("out of memory : make_listen_bind\n");
+		exit(1);
+	}
+	memset(session[fd],0,sizeof(*session[fd]));
+	session[fd]->func_recv = connect_client;
+
+	return fd;
+}
+
 // Console Reciever [Wizputer]
 int console_recieve(int i) {
 	int n;

@@ -89,11 +89,11 @@ char server_name[20];
 char wisp_server_name[24] = "Server";
 int login_ip_set_ = 0;
 char login_ip_str[128];
-int login_ip;
+in_addr_t login_ip;
 int login_port = 6900;
 int char_ip_set_ = 0;
 char char_ip_str[128];
-int char_ip;
+in_addr_t char_ip;
 int char_port = 6121;
 int char_maintenance;
 int char_new;
@@ -3305,16 +3305,13 @@ int do_init(int argc, char **argv){
 	printf("set terminate function -> do_final().....\n");
 	set_termfunc(do_final);
 
-	printf("open port %d.....\n",char_port);
-	char_fd = make_listen_port(char_port);
-
         if ((naddr_ != 0) && (login_ip_set_ == 0 || char_ip_set_ == 0)) {
           // The char server should know what IP address it is running on
           //   - MouseJstr
           int localaddr = ntohl(addr_[0]);
           unsigned char *ptr = (unsigned char *) &localaddr;
           char buf[16];
-          sprintf(buf, "%d.%d.%d.%d", ptr[0], ptr[1], ptr[2], ptr[3]);;
+          sprintf(buf, "%d.%d.%d.%d", ptr[0], ptr[1], ptr[2], ptr[3]);
           if (naddr_ != 1)
             printf("Multiple interfaces detected..  using %s as our IP address\n", buf);
           else
@@ -3330,6 +3327,10 @@ int do_init(int argc, char **argv){
 
 	login_ip = inet_addr(login_ip_str);
 	char_ip = inet_addr(char_ip_str);
+
+	printf("open port %d.....\n",char_port);
+	//char_fd = make_listen_port(char_port);
+	char_fd = make_listen_bind(char_ip,char_port);
 
 	// send ALIVE PING to login server.
 	printf("add interval tic (check_connect_login_server)....\n");

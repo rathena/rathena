@@ -10907,7 +10907,7 @@ static int packetdb_readdb(void)
 		{clif_parse_PMIgnoreList,"wisexlist"},
 		{clif_parse_PMIgnoreAll,"wisall"},
 		{clif_parse_friends_list_add,"friendslistadd"},
-		{clif_parse_friends_list_remove,"friendslistremove"},		
+		{clif_parse_friends_list_remove,"friendslistremove"},
 		{clif_parse_GMkillall,"killall"},
 		{clif_parse_GM_Monster_Item,"summon"},
 		{clif_parse_Shift,"shift"},
@@ -11356,13 +11356,15 @@ int do_init_clif(void) {
 
 	set_defaultparse(clif_parse);
 #ifdef __WIN32
-	if (!make_listen_port(map_port)) {
+	//if (!make_listen_port(map_port)) {
+	if (!make_listen_bind(map_ip,map_port)) {
 		printf("cant bind game port\n");
 		exit(1);
 	}
 #else
 	for(i = 0; i < 10; i++) {
-		if (make_listen_port(map_port))
+		//if (make_listen_port(map_port))
+		if (make_listen_bind(map_ip,map_port))
 			break;
 		sleep(20);
 	}

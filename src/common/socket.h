@@ -88,6 +88,7 @@ extern int fd_max;
 // Function prototype declaration
 
 int make_listen_port(int);
+int make_listen_bind(long,int);
 int make_connection(long,int);
 int delete_session(int);
 int realloc_fifo(int fd,int rfifo_size,int wfifo_size);
