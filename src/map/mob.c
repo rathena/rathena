@@ -2483,7 +2483,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		#endif
 
 		// Ore Discovery [Celest]
-		if (pc_checkskill(sd,BS_FINDINGORE)>0 && 1 >= rand()%1000) {
+		if (pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/100 >= rand()%1000) {
 			struct delay_item_drop *ditem;
 			int itemid[17] = { 714, 756, 757, 969, 984, 985, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1002 };
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));

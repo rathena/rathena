@@ -1,5 +1,6 @@
 Date	Added
 12/22
+        * Added finding_ore_rate to battle_athena.conf, thanks to orn [celest]
 	* Changed how party exp is passed out to eliminate players
 	  current in a chat window or those who havn't moved or attacked
 	  in 2 minutes [MouseJstr]

@@ -5301,7 +5301,7 @@ static const struct {
 	{ "max_cloth_color",                   &battle_config.max_cloth_color	}, // added by [MouseJstr]
 	{ "castrate_dex_scale",                &battle_config.castrate_dex_scale	}, // added by [MouseJstr]
 	{ "area_size",                         &battle_config.area_size	}, // added by [MouseJstr]
-	{ "muting_players",                   &battle_config.muting_players}, // added by [Apple]
+	{ "muting_players",                    &battle_config.muting_players}, // added by [Apple]
 	{ "zeny_from_mobs",			&battle_config.zeny_from_mobs}, // [Valaris]
 	{ "mobs_level_up",			&battle_config.mobs_level_up}, // [Valaris]
 	{ "pk_min_level",           &battle_config.pk_min_level}, // [celest]
@@ -5311,6 +5311,7 @@ static const struct {
 	{ "skill_range_leniency",   &battle_config.skill_range_leniency}, // [celest]
 	{ "motd_type",              &battle_config.motd_type}, // [celest]
 	{ "allow_atcommand_when_mute",			&battle_config.allow_atcommand_when_mute}, // [celest]
+	{ "finding_ore_rate",       &battle_config.finding_ore_rate}, // [celest]
 
 //SQL-only options start
 #ifndef TXT_ONLY 
@@ -5567,10 +5568,8 @@ void battle_set_defaults() {
 	battle_config.skill_range_leniency = 1;
 	battle_config.motd_type = 0;
 	battle_config.allow_atcommand_when_mute = 0;
-
-
+	battle_config.finding_ore_rate = 100;
 	battle_config.castrate_dex_scale = 150;
-
 	battle_config.area_size = 14;
 
 //SQL-only options start
@@ -5702,6 +5701,9 @@ void battle_validate_conf() {
 		battle_config.motd_type = 0;
 	else if (battle_config.motd_type > 1)
 		battle_config.motd_type = 1;
+
+	if (battle_config.finding_ore_rate < 0)
+		battle_config.finding_ore_rate = 0;
 
 	if (battle_config.vending_max_value > 10000000 || battle_config.vending_max_value<=0) // Lupus & Kobra_k88
 		battle_config.vending_max_value = 10000000;
