@@ -4713,6 +4713,9 @@ int clif_status_change(struct block_list *bl,int type,int flag)
  */
 int clif_displaymessage(const int fd, char* mes)
 {
+	// invalid pointer?
+	nullpo_retr(-1, mes);
+	
 	//Console [Wizputer]
 	if (fd == 0)
 		printf("\033[0;36mConsole: \033[0m\033[1m%s\033[0m\n", mes);
