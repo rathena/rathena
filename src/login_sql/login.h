@@ -24,6 +24,7 @@
 #include "../common/version.h"
 #include "../common/db.h"
 #include "../common/timer.h"
+#include "../common/nullpo.h"
 
 #include "strlib.h"
 

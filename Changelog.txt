@@ -1,6 +1,6 @@
 Date	Added
 12/09
-	* char-server -UNTESTED- [Wizputer]
+	* char-server changes -UNTESTED- [Wizputer]
 	* new method for getting GMs [Wizputer]
 	* Added unique key for Char names [Wizputer]
 

@@ -118,6 +118,7 @@ struct dbt *online_db;
 
 // GM Database
 struct dbt *gm_db;
+int lowest_gm_level = 1;
 
 //-----------------------------------------------------
 // Online User Database [Wizputer]
@@ -849,6 +850,9 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		else if (strcmpi(w1, "loginlog_db") == 0) {
 			strcpy(loginlog_db, w2);
 		}
+		else if(strcmpi(w1,"lowest_gm_level")==0){
+			lowest_gm_level = atoi(w2);
+		}
     }
     fclose(fp);
     printf("reading SQL configuration done.....\n");
@@ -963,9 +967,6 @@ int do_init(int argc,char **argv){
 	// Online user database init
     free(online_db);
 	online_db = numdb_init();
-	
-	// Read GMs from table
-	read_GMs();
 	
 	printf("The login-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", login_port);
 

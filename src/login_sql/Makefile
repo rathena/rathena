@@ -2,8 +2,8 @@ all: login-server_sql
 sql: login-server_sql
 
 shared_libs=all
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/malloc.o ../common/showmsg.o
-COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/version.h ../common/db.h ../common/malloc.h ../common/showmsg.h
+COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/malloc.o ../common/showmsg.o ../common/nullpo.o
+COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/version.h ../common/db.h ../common/malloc.h ../common/showmsg.h ../common/nullpo.h
 
 login-server_sql: login.o char_int.o login_int.o md5calc.o strlib.o $(COMMON_OBJ)
 	$(CC) -o ../../$@ $^ $(LIB_S)

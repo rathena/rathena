@@ -19,6 +19,7 @@
 #endif
 
 #include "../common/utils.h"
+#include "../common/nullpo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <netinet/in.h>
@@ -238,7 +239,7 @@ void read_gm_accounts(int fd, int len) {
 	    return;
 	    
     int i=0,account_id=0;
-    unsigned char level*;
+    unsigned char *level;
     
     if (gm_db)
 		do_final_gmdb();
@@ -252,8 +253,8 @@ void read_gm_accounts(int fd, int len) {
 	    for(i=0;i<GM_num;i++) {
 	        level = malloc(sizeof(unsigned char));
 	        
-	        *level = RFIFOB(fd,(10+5*(GM_num-1));
-	        account_id = RFIFOW(fd,(6+5*(GM_num-1))
+	        *level = RFIFOB(fd,(10+5*(GM_num-1)));
+	        account_id = RFIFOW(fd,(6+5*(GM_num-1)));
 	        
 	        numdb_insert(gm_db, account_id, level);
 	        
@@ -1234,9 +1235,7 @@ void reply_login_request(int fd, int len) {
 		// if no map-server already connected, display a message...
 		if(!servers_connected)
 			printf("Awaiting maps from map-server.\n");
-			
-		request_gm_accounts();
-			
+
 		// send USER COUNT PING to login server.
 		#ifdef DEBUG
 		printf("Add timer: (send_users_tologin)\n");
@@ -1508,7 +1507,7 @@ void recv_map_names(int fd, int len, unsigned char id) {
     
     memset(server[id].map, 0, sizeof(server[id].map));
     
-	int j = 0;
+	int j = 0,i;
 	unsigned char buf[16384];
 	int x;
 	
@@ -1573,6 +1572,8 @@ void auth_request(int fd, int len) {
     if (len < 22)
 		return;
 
+    int i;
+    
     #ifdef DEBUG
 	printf("(AUTH request) auth_fifo search %d %d %d\n", RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOL(fd, 10));
 	#endif
@@ -1620,9 +1621,9 @@ void auth_request(int fd, int len) {
 	RFIFOSKIP(fd,22);
 }
 
-void set_map_users(int fd, int len) {
+void set_map_users(int fd, int len, unsigned char id) {
 	if (len < 6 || len < RFIFOW(fd,2))
-		return 0;
+		return;
 
 	if (RFIFOW(fd,4) != server[id].users)
 		printf("map user: %d\n", RFIFOW(fd,4));
@@ -1636,7 +1637,7 @@ void set_map_users(int fd, int len) {
 }
 
 int parse_frommap(int fd) {
-	int i = 0, j = 0,len;
+	int i = 0,len;
 	unsigned char id;
 
 	// Sometimes fd=0, and it will cause server crash. Don't know why. :(
@@ -1679,7 +1680,7 @@ int parse_frommap(int fd) {
 		case 0x2af7: read_gm_accounts(fd,len);	break;
 		case 0x2afa: recv_map_names(fd,len,id);	break;
 		case 0x2afc: auth_request(fd,len);      break;
-		case 0x2aff: set_map_users(fd,len);  	break;
+		case 0x2aff: set_map_users(fd,len,id); 	break;
 
 		// char saving
 		case 0x2b01:
@@ -3094,8 +3095,6 @@ int do_init(int argc, char **argv){
 		i = add_timer_interval(gettick() + 1000, map_anti_freeze_system, 0, 0, ANTI_FREEZE_INTERVAL * 1000); // checks every X seconds user specifies
 	}
 
-	read_gm_account();
-	
 	if ( console ) {
 	    set_defaultconsoleparse(parse_console);
 	   	start_console();
