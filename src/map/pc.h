@@ -40,8 +40,11 @@ int pc_authfail(int);
 int pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 
-int pc_breakweapon(struct map_session_data *sd); // weapon breaking [Valaris]
-int pc_breakarmor(struct map_session_data *sd); // armor breaking [Valaris]
+int pc_break_equip(struct map_session_data *, unsigned short);
+#define pc_breakweapon(sd)	(pc_break_equip(sd, EQP_WEAPON))
+#define pc_breakarmor(sd)	(pc_break_equip(sd, EQP_ARMOR))
+#define pc_breakshield(sd)	(pc_break_equip(sd, EQP_SHIELD))
+#define pc_breakhelm(sd)	(pc_break_equip(sd, EQP_HELM))
 
 int pc_checkskill(struct map_session_data *sd,int skill_id);
 int pc_checkallowskill(struct map_session_data *sd);

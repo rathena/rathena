@@ -159,8 +159,6 @@ struct map_session_data {
 		unsigned no_weapon_damage : 1;
 		unsigned no_gemstone : 1;
 		unsigned infinite_endure : 1;
-		unsigned unbreakable_weapon : 1;
-		unsigned unbreakable_armor : 1;
 		unsigned infinite_autospell : 1;
 	} special_state;
 	int char_id, login_id1, login_id2, sex;
@@ -169,6 +167,7 @@ struct map_session_data {
 	struct item_data *inventory_data[MAX_INVENTORY];
 	short equip_index[11];
 	unsigned short unbreakable_equip;
+	unsigned short unbreakable;	// chance to prevent equipment breaking [celest]
 	int weight,max_weight;
 	int cart_weight,cart_max_weight,cart_num,cart_max_num;
 	char mapname[24];
@@ -282,7 +281,6 @@ struct map_session_data {
 	int magic_damage_return; // AppleGirl Was Here
 	int random_attack_increase_add,random_attack_increase_per; // [Valaris]
 	int perfect_hiding; // [Valaris]
-	int unbreakable;
 	int classchange; // [Valaris]
 
 	int die_counter;

@@ -1,5 +1,11 @@
 Date	Added
 
+02/13
+        * Merged jA's equipment breaking system into the current one, and corrected
+          items with unbreakable effects in the item_db [celest]
+          - "bonus bUnbreakable,[chance];" changed to
+            "bonus bUnbreakable[Weapon/Armor/Helm/Shield],0;"
+
 02/12
         * Merged Dexity's pc_statpointdb into pc_readdb, changed statp's string
           array to short (less memory), and fixed the db not giving status points if

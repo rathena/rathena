@@ -583,9 +583,10 @@ int pc_break_equip(struct map_session_data *sd, unsigned short where)
 	int sc;
 	char output[255];
 
-	if(sd == NULL)
-		return -1;
+	nullpo_retr(-1, sd);
 	if(sd->unbreakable_equip & where)
+		return 0;
+	if(sd->unbreakable >= rand()%100)
 		return 0;
 	switch (where) {
 		case EQP_WEAPON:
@@ -603,14 +604,15 @@ int pc_break_equip(struct map_session_data *sd, unsigned short where)
 		default:
 			return 0;
 	}
-	if( sd->sc_data && sd->sc_data[sc].timer != -1 )
+	if(sd->sc_count && sd->sc_data[sc].timer != -1)
 		return 0;
 
 	for (i=0;i<MAX_INVENTORY;i++) {
-		if (sd->status.inventory[i].equip & where) {
+		if (sd->status.inventory[i].equip & where &&
+			!sd->status.inventory[i].attribute == 1) {
 			item=sd->inventory_data[i];
 			sd->status.inventory[i].attribute = 1;
-			pc_unequipitem(sd,i,0);
+			pc_unequipitem(sd,i,3);
 			sprintf(output, "%s has broken.",item->jname);
 			clif_emotion(&sd->bl,23);
 			clif_displaymessage(sd->fd, output);
@@ -619,72 +621,9 @@ int pc_break_equip(struct map_session_data *sd, unsigned short where)
 		}
 	}
 
-	return 0;
+	return 1;
 }
 
-/*==========================================
- * Weapon Breaking [Valaris]
- *------------------------------------------
- */
-int pc_breakweapon(struct map_session_data *sd)
-{
-	struct item_data* item;
-	char output[255];
-	int i;
-
-	if(sd==NULL)
-		return -1;
-	if(sd->unbreakable>=rand()%100)
-		return 0;
-	if(sd->sc_count && sd->sc_data[SC_CP_WEAPON].timer != -1)
-		return 0;
-
-	for(i=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].equip && sd->status.inventory[i].equip & 0x0002 && !sd->status.inventory[i].attribute==1){
-			item=sd->inventory_data[i];
-			sd->status.inventory[i].attribute=1;
-			pc_unequipitem(sd,i,3);
-			sprintf(output, "%s has broken.",item->jname);
-			clif_emotion(&sd->bl,23);
-			clif_displaymessage(sd->fd, output);
-			clif_equiplist(sd);
-			return 1;
-		}
-	}
-
-	return 0;
-}
-/*==========================================
- * Armor Breaking [Valaris]
- *------------------------------------------
- */
-int pc_breakarmor(struct map_session_data *sd)
-{
-	struct item_data* item;
-	char output[255];
-	int i;
-
-	if(sd==NULL)
-		return -1;
-	if(sd->unbreakable>=rand()%100)
-		return 0;
-	if(sd->sc_count && sd->sc_data[SC_CP_ARMOR].timer != -1)
-		return 0;
-
-	for(i=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].equip && sd->status.inventory[i].equip & 0x0010 && !sd->status.inventory[i].attribute==1){
-			item=sd->inventory_data[i];
-			sd->status.inventory[i].attribute=1;
-			pc_unequipitem(sd,i,3);
-			sprintf(output, "%s has broken.",item->jname);
-			clif_emotion(&sd->bl,23);
-			clif_displaymessage(sd->fd, output);
-			clif_equiplist(sd);
-		}
-	}
-
-	return 0;
-}
 /*==========================================
  * session idに問題無し
  * char鯖から送られてきたステ?タスを設定
