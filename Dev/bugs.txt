@@ -143,3 +143,7 @@ Progress:	0%
 Problem:	Due to the Guilds CACHE we see some went-offline members as online ones. It is very confusing. You don't know who's really on.
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Appeared in the last SVN: all broadcast / guildchat messaged are sending twice.
+Assigned:	N/A
+Progress:	0%
