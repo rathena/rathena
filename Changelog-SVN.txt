@@ -1,5 +1,8 @@
 Date	Added
 
+03/08
+        * Reverted a jA change in event loading [celest]
+
 03/07
         * Added uptime logging support whenever the server closes, to enable change
           the 0 to 1 in core.c [celest]

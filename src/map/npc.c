@@ -1882,15 +1882,15 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 				printf("npc_parse_script: label name error !\n");
 				exit(1);
 			}else{
-				struct event_data *ev2;
+				//struct event_data *ev2;
 				ev->nd=nd;
 				ev->pos=pos;
 				sprintf(buf,"%s::%s",nd->exname,lname);
-				ev2 = strdb_search(ev_db,buf);
-				if(ev2 != NULL) {
-					printf("npc_parse_script : duplicate event %s\n",buf);
-					aFree(ev2);
-				}
+				//ev2 = strdb_search(ev_db,buf);
+				//if(ev2 != NULL) {
+				//	printf("npc_parse_script : duplicate event %s\n",buf);
+				//	aFree(ev2);
+				//}
 				strdb_insert(ev_db,buf,ev);
 			}
 		}
