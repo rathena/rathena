@@ -1,5 +1,7 @@
 Date	Added
 12/16
+	* Added #itemlist, removed @charitemlist [MC Cameri]
+	* Changed @job and #job so that when it's used it unequips all the items, to prevent sprite errors [MC Cameri]
         * Updated Forging and Potion making formulas by DracoRPG [celest]
         * Changes to the guild skills
           - Dropped using sc_data and use flag values instead

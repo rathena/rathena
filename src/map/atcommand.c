@@ -38,201 +38,200 @@ static char command_symbol = '@'; // first char of the commands (by [Yor])
 
 char msg_table[1000][256]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
-#define ATCOMMAND_FUNC(x) int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
-ATCOMMAND_FUNC(broadcast);
-ATCOMMAND_FUNC(localbroadcast);
-ATCOMMAND_FUNC(rurap);
-ATCOMMAND_FUNC(rura);
-ATCOMMAND_FUNC(where);
-ATCOMMAND_FUNC(jumpto);
-ATCOMMAND_FUNC(jump);
-ATCOMMAND_FUNC(who);
-ATCOMMAND_FUNC(who2);
-ATCOMMAND_FUNC(who3);
-ATCOMMAND_FUNC(whomap);
-ATCOMMAND_FUNC(whomap2);
-ATCOMMAND_FUNC(whomap3);
-ATCOMMAND_FUNC(whogm); // by Yor
-ATCOMMAND_FUNC(whozeny); // [Valaris]
-ATCOMMAND_FUNC(happyhappyjoyjoy); // [Valaris]
-ATCOMMAND_FUNC(save);
-ATCOMMAND_FUNC(load);
-ATCOMMAND_FUNC(speed);
-ATCOMMAND_FUNC(storage);
-ATCOMMAND_FUNC(guildstorage);
-ATCOMMAND_FUNC(option);
-ATCOMMAND_FUNC(hide);
-ATCOMMAND_FUNC(jobchange);
-ATCOMMAND_FUNC(die);
-ATCOMMAND_FUNC(kill);
-ATCOMMAND_FUNC(alive);
-ATCOMMAND_FUNC(kami);
-ATCOMMAND_FUNC(heal);
-ATCOMMAND_FUNC(item);
-ATCOMMAND_FUNC(item2);
-ATCOMMAND_FUNC(itemreset);
-ATCOMMAND_FUNC(itemcheck);
-ATCOMMAND_FUNC(baselevelup);
-ATCOMMAND_FUNC(joblevelup);
-ATCOMMAND_FUNC(help);
-ATCOMMAND_FUNC(gm);
-ATCOMMAND_FUNC(pvpoff);
-ATCOMMAND_FUNC(pvpon);
-ATCOMMAND_FUNC(gvgoff);
-ATCOMMAND_FUNC(gvgon);
-ATCOMMAND_FUNC(model);
-ATCOMMAND_FUNC(go);
-ATCOMMAND_FUNC(monster);
-ATCOMMAND_FUNC(monstersmall);
-ATCOMMAND_FUNC(monsterbig);
-ATCOMMAND_FUNC(spawn);
-ATCOMMAND_FUNC(killmonster);
-ATCOMMAND_FUNC(killmonster2);
-ATCOMMAND_FUNC(refine);
-ATCOMMAND_FUNC(produce);
-ATCOMMAND_FUNC(memo);
-ATCOMMAND_FUNC(gat);
-ATCOMMAND_FUNC(packet);
-ATCOMMAND_FUNC(statuspoint);
-ATCOMMAND_FUNC(skillpoint);
-ATCOMMAND_FUNC(zeny);
-ATCOMMAND_FUNC(param);
-ATCOMMAND_FUNC(guildlevelup);
-ATCOMMAND_FUNC(makeegg);
-ATCOMMAND_FUNC(hatch);
-ATCOMMAND_FUNC(petfriendly);
-ATCOMMAND_FUNC(pethungry);
-ATCOMMAND_FUNC(petrename);
-ATCOMMAND_FUNC(recall);
-ATCOMMAND_FUNC(recallall);
-ATCOMMAND_FUNC(revive);
-ATCOMMAND_FUNC(character_stats_all);
-ATCOMMAND_FUNC(character_save);
-ATCOMMAND_FUNC(night);
-ATCOMMAND_FUNC(day);
-ATCOMMAND_FUNC(doom);
-ATCOMMAND_FUNC(doommap);
-ATCOMMAND_FUNC(raise);
-ATCOMMAND_FUNC(raisemap);
-ATCOMMAND_FUNC(character_baselevel);
-ATCOMMAND_FUNC(character_joblevel);
-ATCOMMAND_FUNC(kick);
-ATCOMMAND_FUNC(kickall);
-ATCOMMAND_FUNC(allskill);
-ATCOMMAND_FUNC(questskill);
-ATCOMMAND_FUNC(charquestskill);
-ATCOMMAND_FUNC(lostskill);
-ATCOMMAND_FUNC(charlostskill);
-ATCOMMAND_FUNC(spiritball);
-ATCOMMAND_FUNC(party);
-ATCOMMAND_FUNC(guild);
-ATCOMMAND_FUNC(charskreset);
-ATCOMMAND_FUNC(charstreset);
-ATCOMMAND_FUNC(charreset);
-ATCOMMAND_FUNC(charstpoint);
-ATCOMMAND_FUNC(charmodel);
-ATCOMMAND_FUNC(charskpoint);
-ATCOMMAND_FUNC(charzeny);
-ATCOMMAND_FUNC(agitstart);
-ATCOMMAND_FUNC(agitend);
-ATCOMMAND_FUNC(reloaditemdb);
-ATCOMMAND_FUNC(reloadmobdb);
-ATCOMMAND_FUNC(reloadskilldb);
+#define ACMD_FUNC(x) int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
+ACMD_FUNC(broadcast);
+ACMD_FUNC(localbroadcast);
+ACMD_FUNC(rurap);
+ACMD_FUNC(rura);
+ACMD_FUNC(where);
+ACMD_FUNC(jumpto);
+ACMD_FUNC(jump);
+ACMD_FUNC(who);
+ACMD_FUNC(who2);
+ACMD_FUNC(who3);
+ACMD_FUNC(whomap);
+ACMD_FUNC(whomap2);
+ACMD_FUNC(whomap3);
+ACMD_FUNC(whogm); // by Yor
+ACMD_FUNC(whozeny); // [Valaris]
+ACMD_FUNC(happyhappyjoyjoy); // [Valaris]
+ACMD_FUNC(save);
+ACMD_FUNC(load);
+ACMD_FUNC(speed);
+ACMD_FUNC(storage);
+ACMD_FUNC(guildstorage);
+ACMD_FUNC(option);
+ACMD_FUNC(hide);
+ACMD_FUNC(jobchange);
+ACMD_FUNC(die);
+ACMD_FUNC(kill);
+ACMD_FUNC(alive);
+ACMD_FUNC(kami);
+ACMD_FUNC(heal);
+ACMD_FUNC(item);
+ACMD_FUNC(item2);
+ACMD_FUNC(itemreset);
+ACMD_FUNC(itemcheck);
+ACMD_FUNC(baselevelup);
+ACMD_FUNC(joblevelup);
+ACMD_FUNC(help);
+ACMD_FUNC(gm);
+ACMD_FUNC(pvpoff);
+ACMD_FUNC(pvpon);
+ACMD_FUNC(gvgoff);
+ACMD_FUNC(gvgon);
+ACMD_FUNC(model);
+ACMD_FUNC(go);
+ACMD_FUNC(monster);
+ACMD_FUNC(monstersmall);
+ACMD_FUNC(monsterbig);
+ACMD_FUNC(spawn);
+ACMD_FUNC(killmonster);
+ACMD_FUNC(killmonster2);
+ACMD_FUNC(refine);
+ACMD_FUNC(produce);
+ACMD_FUNC(memo);
+ACMD_FUNC(gat);
+ACMD_FUNC(packet);
+ACMD_FUNC(statuspoint);
+ACMD_FUNC(skillpoint);
+ACMD_FUNC(zeny);
+ACMD_FUNC(param);
+ACMD_FUNC(guildlevelup);
+ACMD_FUNC(makeegg);
+ACMD_FUNC(hatch);
+ACMD_FUNC(petfriendly);
+ACMD_FUNC(pethungry);
+ACMD_FUNC(petrename);
+ACMD_FUNC(recall);
+ACMD_FUNC(recallall);
+ACMD_FUNC(revive);
+ACMD_FUNC(character_stats_all);
+ACMD_FUNC(character_save);
+ACMD_FUNC(night);
+ACMD_FUNC(day);
+ACMD_FUNC(doom);
+ACMD_FUNC(doommap);
+ACMD_FUNC(raise);
+ACMD_FUNC(raisemap);
+ACMD_FUNC(character_baselevel);
+ACMD_FUNC(character_joblevel);
+ACMD_FUNC(kick);
+ACMD_FUNC(kickall);
+ACMD_FUNC(allskill);
+ACMD_FUNC(questskill);
+ACMD_FUNC(charquestskill);
+ACMD_FUNC(lostskill);
+ACMD_FUNC(charlostskill);
+ACMD_FUNC(spiritball);
+ACMD_FUNC(party);
+ACMD_FUNC(guild);
+ACMD_FUNC(charskreset);
+ACMD_FUNC(charstreset);
+ACMD_FUNC(charreset);
+ACMD_FUNC(charstpoint);
+ACMD_FUNC(charmodel);
+ACMD_FUNC(charskpoint);
+ACMD_FUNC(charzeny);
+ACMD_FUNC(agitstart);
+ACMD_FUNC(agitend);
+ACMD_FUNC(reloaditemdb);
+ACMD_FUNC(reloadmobdb);
+ACMD_FUNC(reloadskilldb);
 #ifndef TXT_ONLY
-ATCOMMAND_FUNC(rehash);// by Fr3DBr
+ACMD_FUNC(rehash);// by Fr3DBr
 #else /* TXT_ONLY */
-ATCOMMAND_FUNC(reloadscript);
+ACMD_FUNC(reloadscript);
 #endif /* TXT_ONLY */
-ATCOMMAND_FUNC(reloadgmdb); // by Yor
-ATCOMMAND_FUNC(mapexit);
-ATCOMMAND_FUNC(idsearch);
-ATCOMMAND_FUNC(mapinfo);
-ATCOMMAND_FUNC(dye); //** by fritz
-ATCOMMAND_FUNC(hair_style); //** by fritz
-ATCOMMAND_FUNC(hair_color); //** by fritz
-ATCOMMAND_FUNC(stat_all); //** by fritz
-ATCOMMAND_FUNC(char_change_sex); // by Yor
-ATCOMMAND_FUNC(char_block); // by Yor
-ATCOMMAND_FUNC(char_ban); // by Yor
-ATCOMMAND_FUNC(char_unblock); // by Yor
-ATCOMMAND_FUNC(char_unban); // by Yor
-ATCOMMAND_FUNC(mount_peco); // by Valaris
-ATCOMMAND_FUNC(char_mount_peco); // by Yor
-ATCOMMAND_FUNC(guildspy); // [Syrus22]
-ATCOMMAND_FUNC(partyspy); // [Syrus22]
-ATCOMMAND_FUNC(repairall); // [Valaris]
-ATCOMMAND_FUNC(guildrecall); // by Yor
-ATCOMMAND_FUNC(partyrecall); // by Yor
-//ATCOMMAND_FUNC(nuke); // [Valaris]
-ATCOMMAND_FUNC(enablenpc);
-ATCOMMAND_FUNC(disablenpc);
-ATCOMMAND_FUNC(servertime); // by Yor
-ATCOMMAND_FUNC(chardelitem); // by Yor
-ATCOMMAND_FUNC(jail); // by Yor
-ATCOMMAND_FUNC(unjail); // by Yor
-ATCOMMAND_FUNC(disguise); // [Valaris]
-ATCOMMAND_FUNC(undisguise); // by Yor
-ATCOMMAND_FUNC(chardisguise); // Kalaspuff
-ATCOMMAND_FUNC(charundisguise); // Kalaspuff
-ATCOMMAND_FUNC(email); // by Yor
-ATCOMMAND_FUNC(effect);//by Apple
-ATCOMMAND_FUNC(character_item_list); // by Yor
-ATCOMMAND_FUNC(character_storage_list); // by Yor
-ATCOMMAND_FUNC(character_cart_list); // by Yor
-ATCOMMAND_FUNC(addwarp); // by MouseJstr
-ATCOMMAND_FUNC(follow); // by MouseJstr
-ATCOMMAND_FUNC(skillon); // by MouseJstr
-ATCOMMAND_FUNC(skilloff); // by MouseJstr
-ATCOMMAND_FUNC(killer); // by MouseJstr
-ATCOMMAND_FUNC(npcmove); // by MouseJstr
-ATCOMMAND_FUNC(killable); // by MouseJstr
-ATCOMMAND_FUNC(charkillable); // by MouseJstr
-ATCOMMAND_FUNC(chareffect); // by MouseJstr
-ATCOMMAND_FUNC(dropall); // by MouseJstr
-ATCOMMAND_FUNC(chardropall); // by MouseJstr
-ATCOMMAND_FUNC(storeall); // by MouseJstr
-ATCOMMAND_FUNC(charstoreall); // by MouseJstr
-ATCOMMAND_FUNC(skillid); // by MouseJstr
-ATCOMMAND_FUNC(useskill); // by MouseJstr
-ATCOMMAND_FUNC(summon);
-ATCOMMAND_FUNC(rain);
-ATCOMMAND_FUNC(snow);
-ATCOMMAND_FUNC(sakura);
-ATCOMMAND_FUNC(fog);
-ATCOMMAND_FUNC(leaves);
-ATCOMMAND_FUNC(adjgmlvl); // by MouseJstr
-ATCOMMAND_FUNC(adjcmdlvl); // by MouseJstr
-ATCOMMAND_FUNC(trade); // by MouseJstr
-ATCOMMAND_FUNC(send); // by davidsiaw
-ATCOMMAND_FUNC(setbattleflag); // by MouseJstr
-ATCOMMAND_FUNC(unmute); // [Valaris]
-ATCOMMAND_FUNC(clearweather); // Dexity
-ATCOMMAND_FUNC(uptime); // by MC Cameri
-ATCOMMAND_FUNC(changesex); // by MC Cameri
-ATCOMMAND_FUNC(mute); // celest
-ATCOMMAND_FUNC(refresh); // by MC Cameri
-ATCOMMAND_FUNC(petid); // by MC Cameri
-ATCOMMAND_FUNC(identify); // by MC Cameri
-ATCOMMAND_FUNC(gmotd); // Added by MC Cameri, created by davidsiaw
-ATCOMMAND_FUNC(misceffect); // by MC Cameri
+ACMD_FUNC(reloadgmdb); // by Yor
+ACMD_FUNC(mapexit);
+ACMD_FUNC(idsearch);
+ACMD_FUNC(mapinfo);
+ACMD_FUNC(dye); //** by fritz
+ACMD_FUNC(hair_style); //** by fritz
+ACMD_FUNC(hair_color); //** by fritz
+ACMD_FUNC(stat_all); //** by fritz
+ACMD_FUNC(char_change_sex); // by Yor
+ACMD_FUNC(char_block); // by Yor
+ACMD_FUNC(char_ban); // by Yor
+ACMD_FUNC(char_unblock); // by Yor
+ACMD_FUNC(char_unban); // by Yor
+ACMD_FUNC(mount_peco); // by Valaris
+ACMD_FUNC(char_mount_peco); // by Yor
+ACMD_FUNC(guildspy); // [Syrus22]
+ACMD_FUNC(partyspy); // [Syrus22]
+ACMD_FUNC(repairall); // [Valaris]
+ACMD_FUNC(guildrecall); // by Yor
+ACMD_FUNC(partyrecall); // by Yor
+//ACMD_FUNC(nuke); // [Valaris]
+ACMD_FUNC(enablenpc);
+ACMD_FUNC(disablenpc);
+ACMD_FUNC(servertime); // by Yor
+ACMD_FUNC(chardelitem); // by Yor
+ACMD_FUNC(jail); // by Yor
+ACMD_FUNC(unjail); // by Yor
+ACMD_FUNC(disguise); // [Valaris]
+ACMD_FUNC(undisguise); // by Yor
+ACMD_FUNC(chardisguise); // Kalaspuff
+ACMD_FUNC(charundisguise); // Kalaspuff
+ACMD_FUNC(email); // by Yor
+ACMD_FUNC(effect);//by Apple
+ACMD_FUNC(character_storage_list); // by Yor
+ACMD_FUNC(character_cart_list); // by Yor
+ACMD_FUNC(addwarp); // by MouseJstr
+ACMD_FUNC(follow); // by MouseJstr
+ACMD_FUNC(skillon); // by MouseJstr
+ACMD_FUNC(skilloff); // by MouseJstr
+ACMD_FUNC(killer); // by MouseJstr
+ACMD_FUNC(npcmove); // by MouseJstr
+ACMD_FUNC(killable); // by MouseJstr
+ACMD_FUNC(charkillable); // by MouseJstr
+ACMD_FUNC(chareffect); // by MouseJstr
+ACMD_FUNC(dropall); // by MouseJstr
+ACMD_FUNC(chardropall); // by MouseJstr
+ACMD_FUNC(storeall); // by MouseJstr
+ACMD_FUNC(charstoreall); // by MouseJstr
+ACMD_FUNC(skillid); // by MouseJstr
+ACMD_FUNC(useskill); // by MouseJstr
+ACMD_FUNC(summon);
+ACMD_FUNC(rain);
+ACMD_FUNC(snow);
+ACMD_FUNC(sakura);
+ACMD_FUNC(fog);
+ACMD_FUNC(leaves);
+ACMD_FUNC(adjgmlvl); // by MouseJstr
+ACMD_FUNC(adjcmdlvl); // by MouseJstr
+ACMD_FUNC(trade); // by MouseJstr
+ACMD_FUNC(send); // by davidsiaw
+ACMD_FUNC(setbattleflag); // by MouseJstr
+ACMD_FUNC(unmute); // [Valaris]
+ACMD_FUNC(clearweather); // Dexity
+ACMD_FUNC(uptime); // by MC Cameri
+ACMD_FUNC(changesex); // by MC Cameri
+ACMD_FUNC(mute); // celest
+ACMD_FUNC(refresh); // by MC Cameri
+ACMD_FUNC(petid); // by MC Cameri
+ACMD_FUNC(identify); // by MC Cameri
+ACMD_FUNC(gmotd); // Added by MC Cameri, created by davidsiaw
+ACMD_FUNC(misceffect); // by MC Cameri
 
 #ifndef TXT_ONLY
-ATCOMMAND_FUNC(checkmail); // [Valaris]
-ATCOMMAND_FUNC(listmail); // [Valaris]
-ATCOMMAND_FUNC(listnewmail); // [Valaris]
-ATCOMMAND_FUNC(readmail); // [Valaris]
-ATCOMMAND_FUNC(sendmail); // [Valaris]
-ATCOMMAND_FUNC(sendprioritymail); // [Valaris]
-ATCOMMAND_FUNC(deletemail); // [Valaris]
-ATCOMMAND_FUNC(sound); // [Valaris]
-ATCOMMAND_FUNC(refreshonline); // [Valaris]
+ACMD_FUNC(checkmail); // [Valaris]
+ACMD_FUNC(listmail); // [Valaris]
+ACMD_FUNC(listnewmail); // [Valaris]
+ACMD_FUNC(readmail); // [Valaris]
+ACMD_FUNC(sendmail); // [Valaris]
+ACMD_FUNC(sendprioritymail); // [Valaris]
+ACMD_FUNC(deletemail); // [Valaris]
+ACMD_FUNC(sound); // [Valaris]
+ACMD_FUNC(refreshonline); // [Valaris]
 #endif /* TXT_ONLY */
 
-ATCOMMAND_FUNC(skilltree); // by MouseJstr
+ACMD_FUNC(skilltree); // by MouseJstr
 
-ATCOMMAND_FUNC(marry); // by MouseJstr
-ATCOMMAND_FUNC(divorce); // by MouseJstr
-ATCOMMAND_FUNC(rings); // by MouseJstr
+ACMD_FUNC(marry); // by MouseJstr
+ACMD_FUNC(divorce); // by MouseJstr
+ACMD_FUNC(rings); // by MouseJstr
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -421,7 +420,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_CharUnDisguise,		"@charundisguise",	60, atcommand_charundisguise }, // Kalaspuff
 	{ AtCommand_EMail,				"@email",			 0, atcommand_email }, // by Yor
 	{ AtCommand_Effect,				"@effect",			40, atcommand_effect }, // by Apple
-	{ AtCommand_Char_Item_List,		"@charitemlist",	40, atcommand_character_item_list }, // by Yor
+//	{ AtCommand_Char_Item_List,		"@charitemlist",	40, atcommand_character_item_list }, // by Yor, now #itemlist
 	{ AtCommand_Char_Storage_List,	"@charstoragelist",	40, atcommand_character_storage_list }, // by Yor
 	{ AtCommand_Char_Cart_List,		"@charcartlist",	40, atcommand_character_cart_list }, // by Yor
 	{ AtCommand_Follow,				"@follow",			10, atcommand_follow }, // by MouseJstr
@@ -2068,7 +2067,11 @@ int atcommand_jobchange(
 					job = 4015;
 			}
 		}
-
+		int j;
+		for (j=0; j < MAX_INVENTORY; j++) {
+			if(sd->status.inventory[j].nameid>0 && sd->status.inventory[j].equip!=0)
+				pc_unequipitem(sd, j, 3);
+		}
 		if (pc_jobchange(sd, job, upper) == 0)
 			clif_displaymessage(fd, msg_table[12]); // Your job has been changed.
 		else {
@@ -6719,120 +6722,6 @@ int atcommand_effect(
 				clif_displaymessage(pl_sd->fd, msg_table[229]); // Your effect has changed.
 			}
 		}
-	}
-
-	return 0;
-}
-
-/*==========================================
- * @charitemlist <character>: Displays the list of a player's items.
- *------------------------------------------
- */
-int
-atcommand_character_item_list(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	struct map_session_data *pl_sd;
-	struct item_data *item_data, *item_temp;
-	int i, j, equip, count, counter, counter2;
-	char character[100], output[200], equipstr[100], outputtmp[200];
-	nullpo_retr(-1, sd);
-
-	memset(character, '\0', sizeof(character));
-	memset(output, '\0', sizeof(output));
-	memset(equipstr, '\0', sizeof(equipstr));
-	memset(outputtmp, '\0', sizeof(outputtmp));
-
-	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: @charitemlist <char name>).");
-		return -1;
-	}
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can look items only lower or same level
-			counter = 0;
-			count = 0;
-			for (i = 0; i < MAX_INVENTORY; i++) {
-				if (pl_sd->status.inventory[i].nameid > 0 && (item_data = itemdb_search(pl_sd->status.inventory[i].nameid)) != NULL) {
-					counter = counter + pl_sd->status.inventory[i].amount;
-					count++;
-					if (count == 1) {
-						sprintf(output, "------ Items list of '%s' ------", pl_sd->status.name);
-						clif_displaymessage(fd, output);
-					}
-					if ((equip = pl_sd->status.inventory[i].equip)) {
-						strcpy(equipstr, "| equiped: ");
-						if (equip & 4)
-							strcat(equipstr, "robe/gargment, ");
-						if (equip & 8)
-							strcat(equipstr, "left accessory, ");
-						if (equip & 16)
-							strcat(equipstr, "body/armor, ");
-						if ((equip & 34) == 2)
-							strcat(equipstr, "right hand, ");
-						if ((equip & 34) == 32)
-							strcat(equipstr, "left hand, ");
-						if ((equip & 34) == 34)
-							strcat(equipstr, "both hands, ");
-						if (equip & 64)
-							strcat(equipstr, "feet, ");
-						if (equip & 128)
-							strcat(equipstr, "right accessory, ");
-						if ((equip & 769) == 1)
-							strcat(equipstr, "lower head, ");
-						if ((equip & 769) == 256)
-							strcat(equipstr, "top head, ");
-						if ((equip & 769) == 257)
-							strcat(equipstr, "lower/top head, ");
-						if ((equip & 769) == 512)
-							strcat(equipstr, "mid head, ");
-						if ((equip & 769) == 512)
-							strcat(equipstr, "lower/mid head, ");
-						if ((equip & 769) == 769)
-							strcat(equipstr, "lower/mid/top head, ");
-						// remove final ', '
-						equipstr[strlen(equipstr) - 2] = '\0';
-					} else
-						memset(equipstr, '\0', sizeof(equipstr));
-					if (sd->status.inventory[i].refine)
-						sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", pl_sd->status.inventory[i].amount, item_data->name, pl_sd->status.inventory[i].refine, item_data->jname, pl_sd->status.inventory[i].refine, pl_sd->status.inventory[i].nameid, equipstr);
-					else
-						sprintf(output, "%d %s (%s, id: %d) %s", pl_sd->status.inventory[i].amount, item_data->name, item_data->jname, pl_sd->status.inventory[i].nameid, equipstr);
-					clif_displaymessage(fd, output);
-					memset(output, '\0', sizeof(output));
-					counter2 = 0;
-					for (j = 0; j < item_data->slot; j++) {
-						if (pl_sd->status.inventory[i].card[j]) {
-							if ((item_temp = itemdb_search(pl_sd->status.inventory[i].card[j])) != NULL) {
-								if (output[0] == '\0')
-									sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-								else
-									sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-								strcat(output, outputtmp);
-							}
-						}
-					}
-					if (output[0] != '\0') {
-						output[strlen(output) - 2] = ')';
-						output[strlen(output) - 1] = '\0';
-						clif_displaymessage(fd, output);
-					}
-				}
-			}
-			if (count == 0)
-				clif_displaymessage(fd, "No item found on this player.");
-			else {
-				sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
-				clif_displaymessage(fd, output);
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
 	}
 
 	return 0;

@@ -43,6 +43,7 @@ CCMD_FUNC(save);
 CCMD_FUNC(stats_all);
 CCMD_FUNC(reset);
 CCMD_FUNC(spiritball);
+CCMD_FUNC(itemlist);
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -72,6 +73,7 @@ static CharCommandInfo charcommand_info[] = {
 	{ CharCommandSave,					"#save",					60, charcommand_save },
 	{ CharCommandStatsAll,				"#statsall",				40, charcommand_stats_all },
 	{ CharCommandSpiritball,			"#spiritball",				40, charcommand_spiritball },
+	{ CharCommandItemList,				"#itemlist",				40,	charcommand_itemlist },
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -317,7 +319,11 @@ int charcommand_jobchange(
 							job = 4015;
 					}
 				}
-
+				int j;
+				for (j=0; j < MAX_INVENTORY; j++) {
+					if(pl_sd->status.inventory[j].nameid>0 && pl_sd->status.inventory[j].equip!=0)
+						pc_unequipitem(pl_sd, j, 3);
+				}
 				if (pc_jobchange(pl_sd, job, upper) == 0)
 					clif_displaymessage(fd, msg_table[48]); // Character's job changed.
 				else {
@@ -742,5 +748,119 @@ int charcommand_spiritball(const int fd, struct map_session_data* sd,const char*
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
 	}
+	return 0;
+}
+
+/*==========================================
+ * #itemlist <character>: Displays the list of a player's items.
+ *------------------------------------------
+ */
+int
+charcommand_itemlist(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd;
+	struct item_data *item_data, *item_temp;
+	int i, j, equip, count, counter, counter2;
+	char character[100], output[200], equipstr[100], outputtmp[200];
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+	memset(equipstr, '\0', sizeof(equipstr));
+	memset(outputtmp, '\0', sizeof(outputtmp));
+
+	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #itemlist <char name>).");
+		return -1;
+	}
+
+	if ((pl_sd = map_nick2sd(character)) != NULL) {
+		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can look items only lower or same level
+			counter = 0;
+			count = 0;
+			for (i = 0; i < MAX_INVENTORY; i++) {
+				if (pl_sd->status.inventory[i].nameid > 0 && (item_data = itemdb_search(pl_sd->status.inventory[i].nameid)) != NULL) {
+					counter = counter + pl_sd->status.inventory[i].amount;
+					count++;
+					if (count == 1) {
+						sprintf(output, "------ Items list of '%s' ------", pl_sd->status.name);
+						clif_displaymessage(fd, output);
+					}
+					if ((equip = pl_sd->status.inventory[i].equip)) {
+						strcpy(equipstr, "| equiped: ");
+						if (equip & 4)
+							strcat(equipstr, "robe/gargment, ");
+						if (equip & 8)
+							strcat(equipstr, "left accessory, ");
+						if (equip & 16)
+							strcat(equipstr, "body/armor, ");
+						if ((equip & 34) == 2)
+							strcat(equipstr, "right hand, ");
+						if ((equip & 34) == 32)
+							strcat(equipstr, "left hand, ");
+						if ((equip & 34) == 34)
+							strcat(equipstr, "both hands, ");
+						if (equip & 64)
+							strcat(equipstr, "feet, ");
+						if (equip & 128)
+							strcat(equipstr, "right accessory, ");
+						if ((equip & 769) == 1)
+							strcat(equipstr, "lower head, ");
+						if ((equip & 769) == 256)
+							strcat(equipstr, "top head, ");
+						if ((equip & 769) == 257)
+							strcat(equipstr, "lower/top head, ");
+						if ((equip & 769) == 512)
+							strcat(equipstr, "mid head, ");
+						if ((equip & 769) == 512)
+							strcat(equipstr, "lower/mid head, ");
+						if ((equip & 769) == 769)
+							strcat(equipstr, "lower/mid/top head, ");
+						// remove final ', '
+						equipstr[strlen(equipstr) - 2] = '\0';
+					} else
+						memset(equipstr, '\0', sizeof(equipstr));
+					if (sd->status.inventory[i].refine)
+						sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", pl_sd->status.inventory[i].amount, item_data->name, pl_sd->status.inventory[i].refine, item_data->jname, pl_sd->status.inventory[i].refine, pl_sd->status.inventory[i].nameid, equipstr);
+					else
+						sprintf(output, "%d %s (%s, id: %d) %s", pl_sd->status.inventory[i].amount, item_data->name, item_data->jname, pl_sd->status.inventory[i].nameid, equipstr);
+					clif_displaymessage(fd, output);
+					memset(output, '\0', sizeof(output));
+					counter2 = 0;
+					for (j = 0; j < item_data->slot; j++) {
+						if (pl_sd->status.inventory[i].card[j]) {
+							if ((item_temp = itemdb_search(pl_sd->status.inventory[i].card[j])) != NULL) {
+								if (output[0] == '\0')
+									sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+								else
+									sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+								strcat(output, outputtmp);
+							}
+						}
+					}
+					if (output[0] != '\0') {
+						output[strlen(output) - 2] = ')';
+						output[strlen(output) - 1] = '\0';
+						clif_displaymessage(fd, output);
+					}
+				}
+			}
+			if (count == 0)
+				clif_displaymessage(fd, "No item found on this player.");
+			else {
+				sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+				clif_displaymessage(fd, output);
+			}
+		} else {
+			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			return -1;
+		}
+	} else {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
 	return 0;
 }
