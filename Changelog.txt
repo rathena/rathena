@@ -11,6 +11,8 @@ Date	Added
           you can use
              If (BaseJob==12) or If (BaseJob==Job_Assassin)
         * Added 'indoors' mapflag : When in-doors players will not be affected by Night [celest]
+        * Skill updates [celest]
+          - Assumptio is now disabled in GvG maps.
 
 11/15
 	* Added a Database Changelog.txt File, use it for any changes inside the db folder. [shadowlady]

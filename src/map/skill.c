@@ -6743,6 +6743,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		case TF_BACKSLIDING:
 		//case LK_BERSERK: // now usable in WoE - celest
 		case HP_BASILICA:
+		case HP_ASSUMPTIO:
 		case ST_CHASEWALK:
 		return 0;
 		}
@@ -7015,8 +7016,10 @@ int skill_use_pos( struct map_session_data *sd,
 	if(sd->status.option&2)
 		return 0;
 
-	if(map[sd->bl.m].flag.gvg && (skill_num == SM_ENDURE || skill_num == AL_TELEPORT || skill_num == AL_WARP ||
-		skill_num == WZ_ICEWALL || skill_num == TF_BACKSLIDING))
+	if(map[sd->bl.m].flag.gvg &&
+		(skill_num == SM_ENDURE || skill_num == AL_TELEPORT ||
+		skill_num == AL_WARP || skill_num == WZ_ICEWALL || 
+		skill_num == TF_BACKSLIDING))
 		return 0;
 
 	sd->skillid = skill_num;
