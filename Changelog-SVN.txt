@@ -2,6 +2,10 @@
 Date	Added
 
 04/05
+	* Fixed damage reflecting (silly typo xP) [celest]
+	* Fixed Backstab to not have a push back effect [celest]
+	* Fixed auto spell to not taking SP, thanks to Hekate
+	* Fixed Sanctuary to have proper healing count, thanks to Hekate
 	* Simplified Valaris' online_timer [celest]
 	* Updated Fogwall, Spiderweb, and HP Conversion, thanks to redcard [celest]
 	* Adding saving character online/offline for TXT char and login (unfinished)

@@ -5633,26 +5633,26 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	switch (sg->unit_id) {
 	case 0x83:	/* サンクチュアリ */
 		{
-			int race=status_get_race(bl);
+			int race = status_get_race(bl);
 
-			if (battle_check_undead(race,status_get_elem_type(bl)) || race==6) {
-				if (skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0)) {
-					// reduce healing count if this was meant for damaging [celest]
-					// sg->val1 /= 2;
-					sg->val1--;	// チャットキャンセルに対応
+			if (battle_check_undead(race, status_get_elem_type(bl)) || race==6) {
+				if (skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0)) {
+					// reduce healing count if this was meant for damaging [hekate]
+					sg->val1 -= 2;
+					//sg->val1--;	// チャットキャンセルに対応
 				}
 			} else {
 				int heal = sg->val2;
-				if (status_get_hp(bl)>=status_get_max_hp(bl))
+				if (status_get_hp(bl) >= status_get_max_hp(bl))
 					break;
-				if(bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage)
-					heal=0;	/* 黄金蟲カード（ヒール量０） */
-				clif_skill_nodamage(&src->bl,bl,AL_HEAL,heal,1);
-				battle_heal(NULL,bl,heal,0,0);
-				if (diff>=500)
+				if (bl->type == BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage)
+					heal = 0;	/* 黄金蟲カード（ヒール量０） */
+				clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
+				battle_heal(NULL, bl, heal, 0, 0);
+				if (diff >= 500)
 					sg->val1--;	// 新規に入ったユニットだけカウント
 			}
-			if (sg->val1<=0)
+			if (sg->val1 <= 0)
 				skill_delunitgroup(sg);
 			break;
 		}
