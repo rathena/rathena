@@ -1676,7 +1676,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		if(curly_count > 0) {
 			printf("warning: Missing right curly at line %d\n",*lines);
 			script=NULL;
-			exit(1);
+			//exit(1); //Wtf? We do we exit?
 		} else {
 			// printf("Ok line %d\n",*lines);
 			script=parse_script(srcbuf,startline);
