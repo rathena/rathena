@@ -1,5 +1,6 @@
 Date	Added
 11/06
+	- Fixed wrong coords for payon guild flags (it has the old map coords) [shadowlady]
 	* atcommand.c/.h,chrif.c/.h, added @changesex. [MC Cameri]
 	* mob.c & clif.c: Added & Modified a few parts dealing with monsters and guilds [Codemaster]
 	* mob.c: Re-did a few parts according to jA's 1057 version. [Codemaster]
