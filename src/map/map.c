@@ -693,8 +693,6 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 					if(bl && type && bl->type!=type)
 						continue;
 					if(bl) {
-						printf ("%lf %lf\n", s * bl->x + in - bl->y, (in - bl->y)/s - bl->x);
-
 						if (((s == 999 && bl->x == x0) ||
 							(s == 0 && in == y0 && bl->y == y0) ||
 							abs(s * bl->x + in - bl->y) <= range ||
@@ -712,7 +710,6 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 				c = map[m].block_mob_count[bx+by*map[m].bxs];
 				for(i=0;i<c && bl;i++,bl=bl->next){
 					if(bl) {
-						printf ("%lf %lf\n", s * bl->x + in - bl->y, (bl->y - in)/s - bl->x);
 						if (((s == 999 && bl->x == x0) ||
 							(s == 0 && in == y0 && bl->y == y0) ||
 							abs(s * bl->x + in - bl->y) <= range ||
