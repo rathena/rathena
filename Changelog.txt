@@ -1,5 +1,7 @@
 Date	Added
 12/16
+        * Added the new spell scrolls, thanks to Landarma [celest]
+        * Corrected a few skills, thanks to orn [celest]
         * Corrected Extremity Fist to not require Explosion Spirits when being used
           right after using Combo Finish or Dilemma [celest]
         * Added instant cast weapon skills rely on attack speed as cast delays, not
