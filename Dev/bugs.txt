@@ -50,7 +50,10 @@ Problem:	Joker card 4139 lets anyone to steal money / zeny. Just like he's a thi
 Assigned:	N/A
 Progess:	0%
 
-
 Problem:	When servers restart sometime the gm lvls in sql get reset back to 0
+Assigned:	N/A
+Progess:	0%
+
+Problem:	[mob attacks againsts players wearing ghostring armor do full damage mob_ghostring_fix: yes] Does not work, does nothing.
 Assigned:	N/A
 Progess:	0%
