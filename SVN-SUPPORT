@@ -1,0 +1,36 @@
+
+If you are reading this, you are one of the lucky fools to be actually
+using the active development tree of the eAthena team.   This is the
+only version that most of the eA dev team will activly support.
+
+svn can be retrieved via:
+
+  http://subversion.tigris.org/files/documents/15/18114/svn-win32-1.1.1.zip
+
+once downloaded and placed in your path, you can just do:
+
+C> svn co http://dev.deltaanime.net:8080/svnroot/eathena/branches/stable
+
+this will check out a copy of our active stable development tree which
+you can then build.  Build? figure it out...
+
+So, my server is crashing and I built it out of the svn stable
+branch.. what do I do?
+
+Each developer has their own feelings on supporting this tree and
+how.  
+
+Dev=> MouseJstr  (AIM: MouseJstr, Yahoo: MouseJstr, msn: joshs@stormbirds.org):
+
+  If you are running linux and are experiencing crashing/coredumping,
+  give me ssh access to your machine and I willhappily gdb your
+  server, debug your cores, and place fixes back into the svn tree to
+  make the system more stable. 
+
+  In some cases, if the problem is very difficult to debug, I may wish
+  to install a different compiler (in a different location) on your
+  machine which may require root access 
+
+  The cost?  Its free..  just work with me to make it better for
+  everybody...
+
