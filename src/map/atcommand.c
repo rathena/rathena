@@ -2729,13 +2729,8 @@ int atcommand_dye(const int fd, struct map_session_data* sd, const char* command
 	}
 
 	if (cloth_color >= MIN_CLOTH_COLOR && cloth_color <= MAX_CLOTH_COLOR) {
-		if (cloth_color != 0 && sd->status.sex == 1 && (sd->status.class == 12 || sd->status.class == 17)) {
-			clif_displaymessage(fd, msg_table[35]); // You can't use this command with this class.
-			return -1;
-		} else {
-			pc_changelook(sd, LOOK_CLOTHES_COLOR, cloth_color);
-			clif_displaymessage(fd, msg_table[36]); // Appearence changed.
-		}
+		pc_changelook(sd, LOOK_CLOTHES_COLOR, cloth_color);
+		clif_displaymessage(fd, msg_table[36]); // Appearence changed.
 	} else {
 		clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
 		return -1;

@@ -523,7 +523,7 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 {
         struct guild_castle *gcopy;
 	// `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
-	
+
 	if (gc==NULL) return 0;
 	//printf("Save to guild_castle\n");
 
@@ -577,7 +577,7 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 	if (gc==NULL) return 0;
 	//printf("Read from guild_castle\n");
 
-	gcopy = numdb_search(castle_db_,gc->castle_id);
+	gcopy = numdb_search(castle_db_, castle_id);
 	if (gcopy == NULL) {
 	  gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
 	  numdb_insert(castle_db_, gc->castle_id, gcopy);
@@ -586,7 +586,6 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 	  return 0;
 	}
 
-	memset(gc,0,sizeof(struct guild_castle));
 	gc->castle_id=castle_id;
 	if (castle_id==-1) return 0;
 	sprintf(tmp_sql,"SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, "

@@ -1,5 +1,6 @@
 Date	Added
 12/27
+	* Fixed the guild issues (SVN 832) [MouseJstr]
         * Updated description for player_check_cloak_type [celest]
         * Increased skill range limitations in pc_no_footset [celest]
         * Added exp_calc_type - to alternate between 3 different versions for exp
