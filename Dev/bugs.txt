@@ -165,7 +165,7 @@ Problem:	There are many empty entries of newly created characters in Char DB Tab
 Assigned:	N/A
 Progress:	0%
 
-Problem:	Wedding skills fully donate SP/HP from thin air (even when the donor has 1 SP / HP)
+Problem:	Wedding skills fully donate SP/HP even when the donor has 1 SP / HP (when player has low amount of Max SP/HP)
 Assigned:	N/A
 Progress:	0%
 
@@ -174,3 +174,33 @@ Problem:	Bash, Counterattack, Grand Cross, Monk's Combo, etc
 		some delays appered
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Exp Party Sharing Bug.
+		i.g. Hunter + Merchant are in the same party. M. is sitting. Hunter is killing some Seals. M. doesn't get EXP.
+		Then H. teleports to another map and hunts there. Now, M. kills a poring and get a huuuuuuuuuuuuuuuuge amount
+		of EXP (like it was collecting... all the time he was sitting next to H.)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Guilds alliances
+		You can have any number of alliances entried in SQL db. Sometimes it glitches and you get > 4 alliances
+		Assigned:	N/A
+Progress:	0%
+
+Problem:	Disguise Stats Bonus bug.
+		try @disguise 1002 or 'bonus bDisguise,1002;' as a script in a wearable item. And then go in hide.
+		You'll get +255 os ro bonuses for all stats and would kill LOD in one kick.
+		It's a global bug.. comes from those times when WEDDING Class had such ++++bonuses
+		So Wedding Class has been fixed, but not the source of the bug.
+		Assigned:	N/A
+Progress:	0%
+
+Problem:	Guilds DB
+		There always appears an empty guild with ID 100000.
+		Assigned:	N/A
+Progress:	0%
+
+Problem:	Double Connection Bug still exist. Sometimes people can't re-connect till the server reboot
+		Assigned:	N/A
+Progress:	0%
+
