@@ -18,6 +18,7 @@ Date	Added
 	* Print number of online users in online.txt/.html even if there's only 1 user
 	  online [celest]
 	* Updated obj_del to delete all GNUMakeFile and .o files + compiled exes [DracoRPG]
+	* Fixed a typo in Stalk / Tunnel Drive speed calculation [DracoRPG]
 
 03/23
         * Adjusted my trade fix [1280: MouseJstr]
