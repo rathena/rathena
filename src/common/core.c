@@ -289,7 +289,9 @@ int main(int argc,char **argv)
 
 	display_title();
 
+#ifndef BCHECK
 	do_init_memmgr(argv[0]); // ˆê”ÔÅ‰‚ÉÀs‚·‚é•K—v‚ª‚ ‚é
+#endif
 
 	tick_ = time(0);
 	ticks = gettick();

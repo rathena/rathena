@@ -1,6 +1,8 @@
 Date	Added
 
 03/17
+	* Fixed heap corrupion in map.c caused while loading maps 
+	  [SVN 1241: MouseJstr]
         * Re-fixed compile error in map.c -- sorry ^^; [celest]
         * trade.c fixed possibility of STORAGE+TRADE spooffing dupe [Lupus]
 	  Now, on accepting trade your active Storage window closes. (Either Common or Guils Storage)

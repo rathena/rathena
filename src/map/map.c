@@ -1729,15 +1729,14 @@ int map_mapname2mapid(char *name) {
 
 	md = (struct map_data*)strdb_search(map_db,name);
 
-	#ifdef USE_AFM
-		// If we can't find the .gat map try .afm instead [celest]
-		if(md==NULL && strstr(name,".gat")) {
-			char afm_name[16] = "";
-			strncpy(afm_name, name, strlen(name) - 4);
-			strcat(afm_name, ".afm");
-			md = (struct map_data*)strdb_search(map_db,afm_name);
-		}
-	#endif
+#ifdef USE_AFM
+	// If we can't find the .gat map try .afm instead [celest]
+	if(md==NULL && strstr(name,".gat")) {
+	  char *afm_name = strdup(name);
+	  strcpy(&afm_name[strlen(name) - 3], "afm");
+	  md = (struct map_data*)strdb_search(map_db,afm_name);
+	}
+#endif
 
 	if(md==NULL || md->gat==NULL)
 		return -1;
