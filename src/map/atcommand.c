@@ -1974,6 +1974,7 @@ int atcommand_die(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	clif_specialeffect(&sd->bl,450,1);
 	pc_damage(NULL, sd, sd->status.hp + 1);
 	clif_displaymessage(fd, msg_table[13]); // A pity! You've died.
 
@@ -4571,7 +4572,7 @@ int atcommand_doom(
 {
 	struct map_session_data *pl_sd;
 	int i;
-
+	clif_specialeffect(&sd->bl,450,2);
 	for(i = 0; i < fd_max; i++) {
 		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && i != fd &&
 		    pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can doom only lower or same gm level
@@ -4594,11 +4595,12 @@ int atcommand_doommap(
 {
 	struct map_session_data *pl_sd;
 	int i;
-
+	clif_specialeffect(&sd->bl,450,3);
 	for (i = 0; i < fd_max; i++) {
 		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && i != fd && sd->bl.m == pl_sd->bl.m &&
 		    pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can doom only lower or same gm level
 			pc_damage(NULL, pl_sd, pl_sd->status.hp + 1);
+//			clif_specialeffect(&pl_sd->bl,450,1);
 			clif_displaymessage(pl_sd->fd, msg_table[61]); // The holy messenger has given judgement.
 		}
 	}

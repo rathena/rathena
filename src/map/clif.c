@@ -7051,6 +7051,17 @@ int clif_specialeffect(struct block_list *bl, int type, int flag) {
 	WBUFL(buf,2) = bl->id;
 	WBUFL(buf,6) = type;
 
+	if (flag == 3) {
+//		struct map_session_data *sd;
+		struct map_session_data *pl_sd;
+		int i;
+		for(i = 0; i < fd_max; i++) {
+			if (session[i] && (pl_sd = session[i]->session_data) != NULL && 
+				pl_sd->state.auth && 
+				(pc_isGM((struct map_session_data *)&bl) > pc_isGM((struct map_session_data *)&pl_sd->bl)))
+				clif_specialeffect(&pl_sd->bl, type, 1);
+		}
+	}
 	if (flag == 2) {
 		struct map_session_data *sd;
 		int i;

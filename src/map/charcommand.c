@@ -391,41 +391,50 @@ int charcommand_petfriendly(
 {
 	int friendly = 0;
 	int t = 0;
+	char character[100];
+	struct map_session_data *pl_sd;
 
-	if (!message || !*message || (friendly = atoi(message)) < 0) {
+	memset(character, '\0', sizeof(character));
+	if (!message || !*message || sscanf(message,"%d %s",&friendly,character) < 2) {
 		clif_displaymessage(fd, "Please, enter a valid value (usage: "
 			"#petfriendly <0-1000> <player>).");
 		return 0;
 	}
 
-	if (sd->status.pet_id > 0 && sd->pd) {
-		if (friendly >= 0 && friendly <= 1000) {
-			if (friendly != sd->pet.intimate) {
-				t = sd->pet.intimate;
-				sd->pet.intimate = friendly;
-				clif_send_petstatus(sd);
-				if (battle_config.pet_status_support) {
-					if ((sd->pet.intimate > 0 && t <= 0) ||
-					    (sd->pet.intimate <= 0 && t > 0)) {
-						if (sd->bl.prev != NULL)
-							pc_calcstatus(sd, 0);
-						else
-							pc_calcstatus(sd, 2);
+	if (((pl_sd = map_nick2sd(character)) != NULL) && pc_isGM(sd)>pc_isGM(pl_sd)) {
+		if (pl_sd->status.pet_id > 0 && pl_sd->pd) {
+			if (friendly >= 0 && friendly <= 1000) {
+				if (friendly != pl_sd->pet.intimate) {
+					t = pl_sd->pet.intimate;
+					pl_sd->pet.intimate = friendly;
+					clif_send_petstatus(pl_sd);
+					if (battle_config.pet_status_support) {
+						if ((pl_sd->pet.intimate > 0 && t <= 0) ||
+						    (pl_sd->pet.intimate <= 0 && t > 0)) {
+							if (pl_sd->bl.prev != NULL)
+								pc_calcstatus(pl_sd, 0);
+							else
+								pc_calcstatus(pl_sd, 2);
+						}
 					}
+					clif_displaymessage(pl_sd->fd, msg_table[182]); // Pet friendly value changed!
+					clif_displaymessage(sd->fd, msg_table[182]); // Pet friendly value changed!
+				} else {
+					clif_displaymessage(fd, msg_table[183]); // Pet friendly is already the good value.
+					return -1;
 				}
-				clif_displaymessage(fd, msg_table[182]); // Pet friendly value changed!
 			} else {
-				clif_displaymessage(fd, msg_table[183]); // Pet friendly is already the good value.
+				clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
 				return -1;
 			}
 		} else {
-			clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[184]); // Sorry, but you have no pet.
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
 	}
 
 	return 0;
 }
+

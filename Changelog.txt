@@ -1,6 +1,8 @@
 Date	Added
 11/22
 	* Added the old effect list # into effect_list.txt of spira's. [shadow]
+	* Added new flag (#3) to clif_specialeffect [MC Cameri]
+	* @doom,@die,@doommap now display the Dark Cross effect on you. [MC Cameri]
 11/21
 	* Display IP when wdata is expanded [Wizputer]
 	* Added bClassChange,%; Has random chance to turn monster into another monster. [Valaris]
@@ -13,7 +15,7 @@ Date	Added
           - Fixed a typo with Blade Stop that was causing crashes, sorry. ^^;
           - Reverted changes to Cloaking, ours is already more updated! ^_^
           - Added temporary code for guild skills to stop crashing
-	* @alive, @raisemap, @raise now display the resurrection skill animation [MC Cameri]
+	* @alive, @raisemap, @raise, @revive now display the resurrection skill animation [MC Cameri]
 	* @charpetrename(AtCommand) is now #petrename(CharCommand) [MC Cameri]
 	* @charjob/(AtCommand) is now #jobchange(CharCommand) [MC Cameri]
 	* Removed japanese interserver packets, should fix various problems (jumpto, where, charposreq). [Valaris]
