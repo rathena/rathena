@@ -695,21 +695,28 @@ Notes:		http://forums.emperium.org/viewtopic.php?t=44856
 
 ********
 59.
-Description	Add a function where usable item bonuses cannot stack. Eg, an item that gives you +1 str when used again does not total to +2 str.
+Description	Add a function where usable item bonuses
+	cannot stack. Eg, an item that gives you +1 str when used
+	again does not total to +2 str.
 Status		Pending
 Assignee	None
 Notes		None
 
 **********
 60.
-Description	Make it possible to set the selling price of an item in a shop npc. If a selling price is not present it uses the item_db and this can be selectable by battleconf
+Description	Make it possible to set the selling
+	price of an item in a shop npc. If a selling price is not
+	present it uses the item_db and this can be selectable
+	by battleconf
 Status		Pending
 Assignee	None
 Notes		None
 
 **********
 61.
-Description	Make a battle_config option to cause, if a user is logged in and somebody tries to log in again, it logs them both out...
+Description	Make a battle_config option to cause, if
+	a user is logged in and somebody tries to log in again,
+	it logs them both out...
 Status:		Pending
 Assignee	None
 Notes		None
