@@ -1,6 +1,316 @@
 Date	Added
 
 -------- Read Changelog-SVN.txt for the newer SVN entries--------
+
+03/01
+        * Effects from dancer/bard skills will stay for 20 seconds after leaving the
+          skill area [celest]
+        * Fixed /resetstate /resetskill being unuseable at all [celest]
+        * Fixed /mm /mapmove being useable by all players [celest]
+        * Fixed some compile errors in mob_once_spawn [celest]
+        * Corrected a typo in Chemical Protection skills, thanks to holyfork [celest]
+
+02/28
+        * Fixed SQL Castle saving bugs [Lupus]
+        * Corrected Tiger Fist, Chain Crush, and Palm Push Strike damage, thanks to
+          Eskadron [celest]
+        * Updated Endure to be usable in GvG, but only gives the mdef bonus [celest]
+        * Some rewrites on the passive guild skills effects [celest]
+
+02/27
+	* Fixed some bugs in Monk Job Quest. Now it's fully passable. [Lupus]
+02/26
+        * Added jA's dummy socket to prevent fd crashes [celest]
+        * Added some jA script commands: [Lupus] (first steps to add ELSE, FOR, WHILE, etc)
+	  - getusersname (works like @WHO ATCommand, outputs by 10 names in the Pop-up window)
+	  - dispbottom (print message in the common chat window)
+	  - recovery (restore MaxHP/SP and revives all players on the server)
+	  - getpetinfo (returns pet's name, type, class, hunger, intimacy)
+	  - globalmes (works like Announce, but outputs in the common chat window)
+	  - jump_zero (reserved - for future compatibility)
+	  - select (reserved - for future compatibility)
+	  - getmapmobs (# mobs on a named map, use "this" for current map)  
+	  check script.c for their paremeters (in English)
+02/25
+        * Fixed npc_dequeue, testing on remove of RoVeRT's npc timer system [Shinomori]
+02/24
+
+        * Re-added missing cart dupe-proof code. From Freya [Lupus]
+        * Some rewrites on Basilica [celest]
+        * Fixed another bad typo in skill list_num reading, thanks to orn [celest]
+	* Fixed Steal Item Rate. It has been multiplied twice on common_item_drop value for any kinds of items. [Lupus]
+	  e.g. If you set droprate of comman items to 500%, then even rare items could be stolen more easily. Thanks to Freya
+	* Items Droprate fix. Now it adjusts correctly, w/o overflows. Thanks to Freya [Lupus]
+	* mob DBbs EXP reading fix. w/o overflows. Thanks to Freya [Lupus]
+
+02/23
+        * Added bAddItemHealRate [celest]
+        * Fixed a crash if adding an offline player to a party, thanks to Alex14
+          [celest]
+        * Fixed a crash with Warp [celest]
+	* New Cards: Some fixes, revisions, additions [Lupus]
+        * Fixed char server crash when sending wisp with a "'" in the names [celest]
+        * Fixed Backstab not checking for and consuming arrows [celest]
+        * Fixed another bad typo causing @allskill to not add points into advanced job
+          skills [celest]
+        * Fixed a bad typo in status.c's StatusChangeTable [celest]
+        * Corrected Spiral Pierce's hits in the skill_db [celest]
+        * Moved /common/*.o into a obj folder when compiling [celest]
+        * Updated core and map server to jA 1094~1115 [celest]
+          - Added End_of_exam's Memory Manager for detecting memory problems.
+            To enable remove the // in malloc.c line 11
+               // #define USE_MEMMGR
+          - Added @npctalk and @pettalk
+          - Added support for jA's local zlib
+          - Fixed a bug with path search long
+          - Updated malloc.c to support Memwatch
+          - Added DB data loss detection
+          - Added db/skill_unit_db.txt
+          - Updated skill unit system
+          - Changed Waterball to the new timerskill system
+          ~ For more detailed logs check 'Readme-jap' (knowledge in japanese required,
+            obviously ^^;)
+          Please test if there's any skills that might have suddenly stopped working,
+          thanks ^^;
+
+02/22
+	* Revised New Cards, added missing effects, fixed bugs [Lupus]
+	  ~20 cards to check left 8) But on 22 Feb some new cards have been announced T__T'
+	* Cleaned up some compiler warnings [SVN 1158: MouseJstr]
+	* Added perl regular expression support.. look at src/map/npc_chat.c
+	  for all the dirt on the new features.  To build it, you have
+	  to enable the PCRE_SUPPORT #define and you also have to
+	  build/install the pcre library. [SVN 1157: MouseJstr]
+
+02/21
+	* Added actual item_db.sql into sql-files. [Lupus]
+	* Added actual mob_db.sql into sql-files. If you use SQL Mob DB then update it [Lupus]
+        * Updated Bleeding effect [celest]
+        * Removed some unused code for Graffiti [celest]
+
+02/20
+	* Char SQL: Rewrote/Fixed the castle save function, now the sql version saves castles! [Sirius]
+	* Fixed the /mm /mapmove command access bug [Sirius]
+        * Added skill requirements for the new guild skills [celest]
+        * Allow Emergency Recall to be cast in guild castles even if nowarp and
+          nowarpto mapflags are enabled [celest]
+        * Add 'minimum job level required' for skill_tree reading [celest]
+          - Berserk now requires job level 50
+        * Added Spring Trap to be able to trigger ankle snare traps that aren't
+          activated yet [celest]
+        * Added a fix in guild.c by Mellowz [celest]
+        * Some rewrites on the pet skill bonuses system -- also fixes pet bonuses
+          not effecting stats as they should [celest]
+        * Check whether a monster is still alive before starting a status change
+          -- also fixes the status_change_timer nullpo errors with grimtooth [celest]
+
+02/19
+        * Added bSubSize, bHPGainValue, and bDamageWhenUnequip [celest]
+        * Updated bSPDrainValue/Rate to accept a 'type' [celest]
+        * Set baby class players' size to 0(small) [celest]
+        * Fixed item_db2.txt reading printing wrong number of entries read [celest]
+        * Fixed @allskill not giving the newer stalker, whitesmith and creator skills
+          [celest]
+
+02/18
+        * Fixed a bug with statpoint.txt reading and giving too much stat points,
+          thanks to Benz / eAthenaC [celest]
+        * Fixed client errors when pecopeco Lord Knights/Paladins log in with a weapon
+          equipped [celest]
+        * Added bAddRace2 -- check item_bonus.txt [celest]
+        * Added mob_race2_db.txt -- contains 'main races' of certain monsters [celest]
+        * Updated description for backup_txt in char_athena.conf a bit [celest]
+        * Set read_map_from_cache to 2 (enable compression), and map_cache_file back to
+          saving in /db instead of /save, as suggested by Poki#3 [celest]
+        * Updated description for auto_counter_type, and set plaer_auto_counter_type
+          to 0 by default, as suggested by Poki#3 [celest]
+        * Use the event names from script_athena.conf to check whenever a player event
+          trigger is being read/set [celest]
+        * Removed an unused save/bank.txt [celest]
+	* Added some new cards effects. (check DB\changelog.txt) [Lupus]
+
+02/17
+	* Now all mobs have 10 drops slots. the last one is used for Cards Drops [Lupus]
+	  Don't forget to update your SQL files (Drop Log: logs.sql and db_tables.sql
+	  if u were using SQL Mobs DB. Update it from TXT! )
+	* Fixed Branch Log TXT filename [Lupus]
+	* Made all logs work with compiled TXT Server, too (removed old #ifndef) [Lupus]
+	* Added 4 columns into mob_db.txt (check DB\changelog.txt) [Lupus]
+	* Fixed some mobs drops (Whisper, etc) and some MVP mobs (bonuses were shifted...) [Lupus]
+        * Readded Chemical Protection -- i forgot to check for it when changing some
+          jA stuff earlier, sorry ^^; [celest]
+        * Removed some old eA code that was causing Frost Nova to do an extra hit
+          [celest]
+        * Corrected Vulcan Arrow's hits in skill_db -- the bug appeared when the
+          correct numbers hardcoded were removed [celest]
+        * Readded zlib and zconf .h files to under /lib for compiling in Windows,
+          thanks to Ser [celest]
+        * Fixed some compile errors in Windows, thanks to Ser [celest]
+        * Changed remove_control_characters back to supporting korean chars [celest]
+        * Moved some other code around [celest]
+        * Added Shinomori's changes to Dissonance -- don't increment the timer again
+          if the target has died [celest]
+        * Changed some nullpo checks back to normal null checks -- in some situations
+          it would be normal to get a NULL [celest]
+        * Changed some nullpo checks to print some debug information [celest]
+        * Added some sd checks before calling pc_blockskill [celest]
+        * Added Dino9021's fix for SQL char's friend list updating [celest]
+        * Fixed a crash if the player invited to join a guild is not online, thanks to
+          Alex14 [celest]
+        * Find the guild invitation sender first before clearing its ID [celest]
+
+        * Added 2 new script commands to support 2/15's cards patch... most of the
+          effects in kRO should be available now ^^ [celest]
+
+          - isequipped(...): Accepts a list of item ID's and checks whether all of
+                             the items/cards have been equipped.
+          - isequippedcnt(...): Same as above, except it returns how many of the items
+                                are being equipped
+
+          Example: if(isequipped(4002,4004,4006)) bonus bStr,1;
+
+02/16
+	* Char SQL: Fixed the Whisper chat on splittet mapservers (i think now all features work!) [Sirius]
+
+        * Added 3 more of the new card effects -- check item_bonus.txt [celest]
+
+        * Added 'bonus4' to support the new card effects that might need up to 4
+          parameters [celest]
+        * Set 'killerrid' and do PCKillEvent before calling PCDieEvent, thanks to
+          mrmagoo for pointing it out [celest]
+
+        * Added some new script event related options to script config [celest]
+
+          - [die/kill/login/logout]_event_name: Name of script to activate when an
+                     event has occured
+          - event_requires_trigger: whether or not a 'set [EventName],1;' has to be
+                     defined first for the event to be activated
+
+        * Added 8 of the new card effects on the 2/15's patch (still untested and
+          not yet added to the item_db)
+          - Refer to doc/item_bonus.txt for description
+
+        * Minor rewrites on self and enemy weapon/armor breaking during battle [celest]
+        * Added missing code for 'bBreakWeaponRate' and 'bBreakArmorRate' effects
+          [celest]
+        * Added missing code for 'bAddStealRate' effect [celest]
+        * Removed redundant 'infinite_autospell' in map_session_data [celest]
+        * Fixed Treasure Box spawn bug in all castles. [Lupus]
+        * Fixed wrong PresentLOG (it wasn't showing PRESENT BOX type ID) [Lupus]
+	* Expanded Monsters Drops Slots from 8 to 10. Everywhere in the sources. [Lupus]
+	  But in TXT / SQL monsters DB reading functions, I added a temp plug
+	  to make eA work fine with existing DBs. It reads only 8 drops and fills
+	  9th and 10th drops with Zero.
+	  On expanding MOB_DB.TXT we'll remove that plug.
+	  We are adding new cards and some monsters
+	  have no free slots for them. Current state is tested and works fine.
+
+02/15
+        * Allow Potion Pitcher to be able to cast on yourself -- i've almost forgot
+          about this, thanks to Filougarou and Poki#3 for the fix ^^; [celest]
+        * Added Wallex's changes for weapon skills to read list_num from the skill_db
+          when calculating damage [celest]
+	* Login / Login SQL: Fixed the EXE-Version check (now it works finally :) [Sirius]
+	* Char SQL: Fixed the '0x2b05' reply to the mapserver (now multi - mapservers works again!)
+        * Rewrote skill blocking system that was allowing people to bypass blocking
+          time simply by casting a different skill [celest]
+        * Edited out some inconsistencies with skillnotok [celest]
+        * Corrected Investigate's damage calculation, thanks to matthias [celest]
+        * Generate the remaining entries of the stat point DB if the number of
+          entries in db/statuspoints.txt is less than MAX_LEVEL, or statuspoints.txt
+          was not found [celest]
+        * Try to spawn the player at a default map ("prontera.gat") when logging in if
+          the save point map was not found [celest]
+
+02/13
+        * added an @autoloot switch that Upa-kun has forgotten [Shinomori]
+        * changed pet_skillattack_timer and corrected the poison spore attack
+        * tighter check's on "unknown skill" error; but added prints to trace it
+        * Added Wallex's changes to only evoke script_rid2sd if agitcheck(1) is used
+          [celest]
+        * Merged jA's equipment breaking system into the current one, and corrected
+          items with unbreakable effects in the item_db [celest]
+          - "bonus bUnbreakable,[chance];" changed to
+            "bonus bUnbreakable[Weapon/Armor/Helm/Shield],0;"
+
+02/12
+        * Merged Dexity's pc_statpointdb into pc_readdb, changed statp's string
+          array to short (less memory), and fixed the db not giving status points if
+          character level is above 255 [celest]
+        * fixing and optimizing sharp shooting
+          have implemented two different versions, just have a look and 
+          decide which to use, description is in the code [Shinomori]
+        * Changed default map cache path from db/map.info to save/mapinfo.txt [celest]
+        * Removed old code for Sharp Shooting (still a little buggy) [celest]
+        * Merged Shinomori's code into map_foreachinpath [celest]
+
+02/11
+        * mob.c fixed doubling entries in DROPS LOG, optimized [Lupus]
+        * item_noequip.txt now you can disable named consumable items
+	  during GvG / PvP, too by Maya, optimized and checked [Lupus]
+	NOTE: Get rid of old cards on your server!!! IDs: 4149-4332
+	  before using of this item_db.txt (some cards have changed their IDs)
+	  and it could cause ALIEN cards in your players equipment 8))
+		i.g. a weapon compounding CARDS inserted in armor, etc...
+        * item_db.txt Massive update: [Lupus]
+	  - Added all new missing items (up to st.Valentine's Day Event)
+	  - Added new cards 4149-4332, sorted them and set their sripts.
+	  - Fixed some names, typos, weigths and prices
+	* Commented out old custom cards from Old_Card_Album.txt till we brush them up [Lupus]
+	* Removed old custom cards from MOBs drops [Lupus]
+	  thanks to Landarma(new items templates) Poki#3(removing cards from drops)
+        * Tidied up battle_check_target abit [celest]
+        * Updated traps to affect allies as well in GvG [celest]
+        * Check if login server is online before setting character to online (in SQL),
+          thanks to Alex14 [celest]
+        * Synchronise storage as well when saving character to cut down on item
+          rollbacks or duping, by Yor / Frea [celest]
+        * Added fix for super novices' Guardian Angel system crashing when base_exp = 0
+          thanks to Alex14 [celest]
+        * not realy fixing the "unknown skill" error 
+          but returning skill_castend_damage_id when called with skillid < 0
+          still need to search a reason why it is called with -1 [Shinomori]
+        * EXPERIMENTAL: Reduced memory used for the skill_tree DB by 30+mb [celest]
+        * Added script commands isday and isnight - checks whether its night or 
+          daytime. Example: if(isnight()) ... [celest]
+        * Skill Updates [celest]
+          - Sharp Shooting: Dropped jA's and kA's code and wrote a new
+            map_foreachinpath function in map.c -- about 14 times faster, but still
+            uncomplete
+          - Ankle Snare: Added matthias' suggestion to let agility reduce more trap
+            time, but no less than 3 seconds.
+          - Magnum Break: simplified code a bit, and changed to non-targetting /
+            automatically damages an area around the caster
+          - Tiger Fist: enable it to be used by its own besides as a part of
+            the combo skills
+          - Devotion: Fixed maximum level difference not reading its setting from
+            battle_athena.conf, thanks to leinsirk
+          - Soul Burn: Added some safety checks
+
+02/10
+	* Login/Login SQL: fixed the client version check function [Sirius]
+
+02/09
+	* Added conf-tmpl/readme.txt, explaining the import folder [1066: Ajarn]
+	* SQL Char: Rewrote the char_create function (now it's faster/optimized) [Sirius]
+	* SQL Char: Fixed the reply if a charname is invalid on create (now it replys denied..) [Sirius]
+	* SQL Char: Added a Character limit per Account (can be set in the config) [Sirius]
+	* SQL Char: Optimized some SQL-Querys [Sirius]
+
+02/06
+	* NULL entries for guild data fixed [Credit to Sirius] [1060: Ajarn]
+	* Login server uses  login_db_userid and login_db_user_pass for 
+	  queries now [Credit to Sirius] [1059: Ajarn]
+	* Login server can now check clientversion in clientinfo
+	  [Credit to Sirius] [1059: Ajarn]
+	* Fixed txt build compile problems[1057: MouseJstr]
+	* Corrected end-of-line issues in source code [1056: MouseJstr]
+	* Coded new command: @MOBINFO <monster name|monster N> [Lupus]
+	  the command has also 2 aliases: @monsterinfo, @mi
+	  It shows all Monster stats, Element, Race and stuff
+	  It shows all items with their drop chance
+	  It also shows MVP bonuses (MVP EXP, MVP Drops)	
+
 02/05
 	* increased the max_files allowed in a grf [1054: MouseJstr]
 	* Changed the way char deletion works for SQL [1051: Ajarn]

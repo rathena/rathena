@@ -254,6 +254,7 @@ bLoseSPWhenUnequip	2029
 bExpAddRace	2030
 bSPGainRace	2031
 bSPSubRace2	2032
+bAddEffWhenHitShort	2033
 
 
 Eff_Stone	0

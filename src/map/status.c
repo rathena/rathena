@@ -498,6 +498,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->autospell2_id = sd->autospell2_lv = sd->autospell2_rate = 0;
 	memset(sd->critaddrace,0,sizeof(sd->critaddrace));
 	memset(sd->addeff3,0,sizeof(sd->addeff3));
+	memset(sd->addeff3_type,0,sizeof(sd->addeff3_type));
 	memset(sd->skillatk,0,sizeof(sd->skillatk));
 	sd->add_damage_class_count = sd->add_damage_class_count_ = sd->add_magic_damage_class_count = 0;
 	sd->add_def_class_count = sd->add_mdef_class_count = 0;

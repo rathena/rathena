@@ -1829,8 +1829,16 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->critaddrace[type2]+=val;
 		break;
 	case SP_ADDEFF_WHENHIT:
-		if(sd->state.lr_flag != 2)
+		if(sd->state.lr_flag != 2) {
 			sd->addeff3[type2]+=val;
+			sd->addeff3_type[type2]=1;
+		}
+		break;
+	case SP_ADDEFF_WHENHIT_SHORT:
+		if(sd->state.lr_flag != 2) {
+			sd->addeff3[type2]+=val;
+			sd->addeff3_type[type2]=0;
+		}
 		break;
 	case SP_SKILL_ATK:
 		if(sd->state.lr_flag != 2) {
@@ -3198,10 +3206,8 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 	int moveblock;
 	int x,y,dx,dy;
 
-	sd = map_id2sd(id);
-#ifndef _WIN32
-	nullpo_retr_f(0, sd, "id=%d", id);
-#endif
+	if ((sd = map_id2sd(id)) == NULL)
+		return 0;
 
 	if(sd->walktimer != tid){
 		if(battle_config.error_log)

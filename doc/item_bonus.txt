@@ -121,7 +121,7 @@ bonus2 bMagicSubRace,n,x;		Magical damage x% reduction from n race
 						0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
 bonus2 bAddEle,n,x;			In n attribute the damage addition of x%
 						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
-bonus2 bMagicAddEle,n,x 			In n attribute the damage addition of x% (only magical attack) 
+bonus2 bMagicAddEle,n,x 			In n attribute the damage addition of x% (only magical attack) 
 						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
 bonus2 bSubEle,n,x;			Damage x% reduction from n attribute
 						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
@@ -160,6 +160,8 @@ bonus bDamageWhenUnequip,n;		Lose n HP when the item is unequipped
 bonus2 bCriticalAddRace,n,x;		Increase critical + n vs. enemies of type x
 bonus2 bHPLossRate,n,x;			Lose n amount of hp every x amount of time
 bonus2 bAddEffWhenHit,n,x;		n% chance to cause x state to the enemy when
+                                        being hit by physical damage
+bonus2 bAddEffWhenHitShort,n,x;		n% chance to cause x state to the enemy when
                                         being hit by physical close range damage
 bonus2 bSkillAtk,n,x;			Increase damage of skill n by x%
 bonus2 bAddDamageByClass,n,x;		When being hit by monster of class n increase
@@ -176,7 +178,7 @@ bonus3 bAutoSpellWhenHit,x,y,n;		n% chance to cast skill x of level y when
 bonus3 bSPDrainRate,n,x,y;		When attacking there is a n% chance to either
                                         gain SP equivalent to x% of damage dealt, OR
                                         drain the amount of sp from the enemy.
-                                        y:0=gain sp  1:drain enemy sp
+                                        y:0=gain sp  1:drain enemy sp
 bonus3 bSPDrainValue,n,x,y;		When attacking there is a n% chance to either
                                         gain x SP, OR drain the amount of sp from the
                                         enemy. y:0=gain sp  1:drain enemy sp

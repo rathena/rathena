@@ -1020,10 +1020,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	if((sd||dstsd) && skillid != MC_CARTREVOLUTION && attack_type&BF_WEAPON){	/* ƒJ?ƒh‚É‚æ‚é’Ç‰Á?‰Ê */
-		int i;
+		int i, type;
 		int sc_def_card=100;
 
 		for(i=SC_STONE;i<=SC_BLIND;i++){
+			type=i-SC_STONE;
 			//?Û‚É?‘ÔˆÙí
 			switch (i) {
 				case SC_STONE:
@@ -1046,17 +1047,17 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			if (sd) {
 				if(!sd->state.arrow_atk) {
-					if(rand()%10000 < (sd->addeff[i-SC_STONE])*sc_def_card/100 ){
+					if(rand()%10000 < (sd->addeff[type])*sc_def_card/100 ){
 						if(battle_config.battle_log)
-							printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",sd->bl.id,i,sd->addeff[i-SC_STONE]);
-						status_change_start(bl,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+							printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",sd->bl.id,i,sd->addeff[type]);
+						status_change_start(bl,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[type],7),0);
 					}
 				}
 				else {
-					if(rand()%10000 < (sd->addeff[i-SC_STONE]+sd->arrow_addeff[i-SC_STONE])*sc_def_card/100 ){
+					if(rand()%10000 < (sd->addeff[type]+sd->arrow_addeff[type])*sc_def_card/100 ){
 						if(battle_config.battle_log)
-							printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",sd->bl.id,i,sd->addeff[i-SC_STONE]);
-						status_change_start(bl,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+							printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",sd->bl.id,i,sd->addeff[type]);
+						status_change_start(bl,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[type],7),0);
 					}
 				}
 			}
@@ -1082,25 +1083,26 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			if (sd) {
 				if(!sd->state.arrow_atk) {
-					if(rand()%10000 < (sd->addeff2[i-SC_STONE])*sc_def_card/100 ){
+					if(rand()%10000 < (sd->addeff2[type])*sc_def_card/100 ){
 						if(battle_config.battle_log)
-							printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",src->id,i,sd->addeff2[i-SC_STONE]);
-						status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+							printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",src->id,i,sd->addeff2[type]);
+						status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[type],7),0);
 					}
 				}
 				else {
-					if(rand()%10000 < (sd->addeff2[i-SC_STONE]+sd->arrow_addeff2[i-SC_STONE])*sc_def_card/100 ){
+					if(rand()%10000 < (sd->addeff2[type]+sd->arrow_addeff2[type])*sc_def_card/100 ){
 						if(battle_config.battle_log)
-							printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",src->id,i,sd->addeff2[i-SC_STONE]);
-						status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+							printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",src->id,i,sd->addeff2[type]);
+						status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[type],7),0);
 					}
 				}
 			}
-			if (dstsd && ((sd && !sd->state.arrow_atk) || (status_get_range(src)<=2)) &&
-				rand()%10000 < dstsd->addeff3[i-SC_STONE]*sc_def_card/100){
+			if (dstsd && rand()%10000 < dstsd->addeff3[type]*sc_def_card/100){
+				if (dstsd->addeff3_type[type] != 1 && ((sd && !sd->state.arrow_atk) || (status_get_range(src)<=2)))
+					continue;
 				if(battle_config.battle_log)
-					printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",src->id,i,dstsd->addeff3[i-SC_STONE]);
-				status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[i-SC_STONE],7),0);
+					printf("PC %d skill_addeff: card‚É‚æ‚éˆÙí?“® %d %d\n",src->id,i,dstsd->addeff3[type]);
+				status_change_start(src,i,7,0,0,0,(i==SC_CONFUSION)? 10000+7000:skill_get_time2(sc2[type],7),0);
 			}
 		}
 	}
