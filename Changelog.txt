@@ -1,7 +1,12 @@
 Date	Added
-12/9
+12/10
         * Fixed players unable to move in AFM maps [celest]
         * Added error message if a player's last map couldn't be found [celest]
+        * Moved AFM map check to map_mapname2mapid [celest]
+        * Added USE_AFM and USE_AF2 to be used later [celest]
+        * Modified sc_data check in pc_damage [celest]
+
+12/9
 	* Moved a map_freeblock_unlock() around to eliminate a 
 	  crash [MouseJstr]
 	* Fixed how players are cleaned up when they disconnected

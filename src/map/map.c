@@ -105,6 +105,10 @@ int CHECK_INTERVAL = 3600000; // [Valaris]
 int check_online_timer=0; // [Valaris]
 
 #endif /* not TXT_ONLY */
+
+#define USE_AFM
+#define USE_AF2
+
 // 極力 staticでローカルに収める
 static struct dbt * id_db=NULL;
 static struct dbt * map_db=NULL;
@@ -1215,6 +1219,17 @@ int map_mapname2mapid(char *name) {
 	struct map_data *md=NULL;
 
 	md=strdb_search(map_db,name);
+
+	#ifdef USE_AFM
+		// If we can't find the .gat map try .afm instead [celest]
+		if(md==NULL && strstr(name,".gat")) {
+			char afm_name[16] = "";
+			strncpy(afm_name, name, strlen(name) - 4);
+			strcat(afm_name, ".afm");
+			md = strdb_search(map_db,afm_name);
+		}
+	#endif
+	
 	if(md==NULL || md->gat==NULL)
 		return -1;
 	return md->m;
@@ -1416,7 +1431,7 @@ static void map_readwater(char *watertxt) {
 	fclose(fp);
 }
 
-
+#ifdef USE_AFM
 static int map_readafm(int m,char *fn) {
 	
 	/*
@@ -1559,6 +1574,7 @@ static int map_readafm(int m,char *fn) {
 
 	return 0;
 }
+#endif
 
 /*==========================================
  * マップ1枚読み込み
@@ -1629,10 +1645,13 @@ static int map_readmap(int m,char *fn, char *alias) {
 int map_readallmap(void) {
 	int i,maps_removed=0;
 	char fn[256];
+#ifdef USE_AFM
 	FILE *afm_file;
+#endif
 
 	// 先に全部のャbプの存在を確認
 	for(i=0;i<map_num;i++){
+#ifdef USE_AFM
 		char afm_name[256] = "";
 		strncpy(afm_name, map[i].name, strlen(map[i].name) - 4);
 		strcat(afm_name, ".afm");
@@ -1644,6 +1663,9 @@ int map_readallmap(void) {
 			fclose(afm_file);
 		}
 		else if(strstr(map[i].name,".gat")!=NULL) {
+#else
+		if(strstr(map[i].name,".gat")!=NULL) {
+#endif
 			char *p = strstr(map[i].name, "<"); // [MouseJstr]
 			if (p != NULL) {
 				char buf[64];

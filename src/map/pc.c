@@ -3775,13 +3775,8 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 		strcat(mapname,".gat");
 	}
 
-	// If we can't find the .gat map try .afm instead [celest]
-	if ((m=map_mapname2mapid(mapname))<0) {
-		char afm_name[16] = "";
-		strncpy(afm_name, mapname, strlen(mapname) - 4);
-		strcat(afm_name, ".afm");
-		m=map_mapname2mapid(afm_name);
-	}
+	m=map_mapname2mapid(mapname);
+
 	if(m<0){
 		if(sd->mapname[0]){
 			int ip,port;
@@ -5382,7 +5377,9 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 			pc_stop_walking(sd,3);
 		else if(sd->sc_data[SC_ENDURE].timer != -1 && src->type==BL_MOB && (--sd->sc_data[SC_ENDURE].val2) <= 0)
 			skill_status_change_end(&sd->bl, SC_ENDURE, -1);
-	}
+	} else
+		pc_stop_walking(sd,3);
+
 	// ‰‰‘t/ƒ_ƒ“ƒX‚Ì’†?
 	if(damage > sd->status.max_hp>>2)
 		skill_stop_dancing(&sd->bl,0);
