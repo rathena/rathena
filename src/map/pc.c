@@ -7853,7 +7853,9 @@ int pc_alive_timer(int tid,unsigned int tick,int id,int data)
 	nullpo_retr(0, sd);
 	if(sd->alive_timer != tid)
 		return 0;
-	map_quit(sd);
+//	map_quit(sd);
+	clif_timedout (sd);
+
 	return 0;
 }
 

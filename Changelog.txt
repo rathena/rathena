@@ -1,5 +1,9 @@
 Date	Added
 12/24
+        * Added suggested fix when client disconnected [celest]
+          - send "disconnected due to time gap" and close session when timed out
+          - send "server still recognises last login" message and close existing
+            session when client reconnects
 	* Upped windwalk to lv 10 in skill_tree [MouseJstr]
 	* Fixed a scripting crash (SVN: 781) [MouseJstr]
 	* removed @changesex and @charchangesex until we can
@@ -18,6 +22,7 @@ Date	Added
 		Note:	mes = otput into client's NPC window
 			debugmes = output into map-server window
 			logmes = output into lognpc log DB.
+
 12/23
 	* Fixed some bugs in the clif.c changes (SVN 766 to SVN 767) [MouseJstr]
 	* Added ayo monsters to @disguise

@@ -7104,6 +7104,25 @@ int clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd,int ty
 
 	return 0;
 }
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+
+int clif_timedout(struct map_session_data *sd) 
+{
+	nullpo_retr(0, sd);
+
+	sprintf(tmp_output,"%sCharacter with Account ID '"CL_WHITE"%d"CL_RESET"' timed out.\n", (pc_isGM(sd))?"GM ":"", sd->bl.id);
+	ShowInfo(tmp_output);
+	map_quit(sd);
+	clif_authfail_fd(sd->fd,3); // Even if player is not on we still send anyway
+	clif_setwaitclose(sd->fd); // Set session to EOF
+
+	return 0;
+}
+
 /*==========================================
  * Wis‹‘”Û‹–‰Â‰ž“š
  *------------------------------------------
@@ -7251,8 +7270,9 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 
 	// if same account already connected, we disconnect the 2 sessions
 	if ((old_sd = map_id2sd(account_id)) != NULL) {
-		clif_authfail_fd(fd, 2); // same id
+		clif_authfail_fd(fd, 8); // still recognizes last connection
 		clif_authfail_fd(old_sd->fd, 2); // same id
+		clif_setwaitclose(sd->fd); // Set session to EOF
 	} else {
 		sd = session[fd]->session_data = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
 		sd->fd = fd;
@@ -10234,7 +10254,7 @@ static int clif_parse(int fd) {
 	if (RFIFOREST(fd) < 2)
 		return 0;
 
-	//printf("clif_parse: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
+//	printf("clif_parse: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
 
 	cmd = RFIFOW(fd,0);
 
