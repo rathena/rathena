@@ -955,7 +955,7 @@ int pet_change_name(struct map_session_data *sd,char *name)
 	
 	nullpo_retr(1, sd);
 
-	if(sd->pet.rename_flag == 1 && battle_config.pet_rename == 0)
+	if((sd->pd == NULL) || (sd->pet.rename_flag == 1 && battle_config.pet_rename == 0))
 		return 1;
 
 	for(i=0;i<24 && name[i];i++){

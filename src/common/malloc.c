@@ -1,3 +1,4 @@
+#if !defined(DMALLOC) && !defined(GCOLLECT) && !defined(BCHECK)
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,3 +50,4 @@ void * _bcalloc(size_t size, size_t cnt) {
 	memset(ret, 0, size * cnt);
 	return ret;
 }
+#endif

@@ -3,8 +3,18 @@
 
 #include <stdlib.h>
 
-#if defined(GCOLLECT)
+#if defined(DMALLOC)
 
+#include "dmalloc.h"
+
+#define aMalloc(size) \
+  dmalloc_malloc(__FILE__, __LINE__, (size), DMALLOC_FUNC_MALLOC, 0, 0)
+#define aCalloc(count,size) \
+  dmalloc_malloc(__FILE__, __LINE__, (count)*(size), DMALLOC_FUNC_CALLOC, 0, 0)
+#define aRealloc(ptr,size) \
+  dmalloc_realloc(__FILE__, __LINE__, (ptr), (size), DMALLOC_FUNC_REALLOC, 0)
+
+#elif defined(GCOLLECT)
 #include "gc.h"
 #define aMalloc(n) GC_MALLOC(n)
 #define aCalloc(m,n) _bcalloc(m,n)

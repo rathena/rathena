@@ -1,5 +1,7 @@
 Date	Added
 12/29
+	* Fixing a crash if you change the name of a pet you don't have (SVN 862) [MouseJstr]
+	* Eliminated src/common/malloc.c when not needed [MouseJstr]
 	* Some code cleanup in prep for new debugging malloc (SVN 861) [MouseJstr]
         * Updated Soul Breaker's damage calculation [celest]
         * Updated Meteor Assault's cast delay to be not affected by dex [celest]
