@@ -1,6 +1,7 @@
 Date	Added
 
 02/05
+	* Made eA compile under AMD64 64-bit native [1047: MouseJstr]
         * Changed interface binding to use a bind_ip instead of using
           the login_ip, char_ip, or map_ip.  This lets you still be
           able to set your WAN IP seperate from what interface you

@@ -1874,7 +1874,8 @@ static int mob_ai_sub_lazy(void * key,void * data,va_list app)
 
 	nullpo_retr(0, md);
 	nullpo_retr(0, app);
-	nullpo_retr(0, ap=va_arg(app,va_list));
+
+	ap=va_arg(app,va_list);
 
 	if(md->bl.type!=BL_MOB)
 		return 0;

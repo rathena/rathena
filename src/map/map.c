@@ -429,9 +429,9 @@ struct skill_unit *map_find_skill_unit_oncell(int m,int x,int y,int skill_id)
  *------------------------------------------
  */
 void map_foreachinarea(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int type,...) {
+	va_list ap;
 	int bx,by;
 	struct block_list *bl=NULL;
-	va_list ap=NULL;
 	int blockcount=bl_list_count,i,c;
 
 	if(m < 0)
@@ -494,7 +494,7 @@ void map_foreachinarea(int (*func)(struct block_list*,va_list),int m,int x0,int 
 void map_foreachinmovearea(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int dx,int dy,int type,...) {
 	int bx,by;
 	struct block_list *bl=NULL;
-	va_list ap=NULL;
+	va_list ap;
 	int blockcount=bl_list_count,i,c;
 
 	va_start(ap,type);
@@ -603,7 +603,7 @@ void map_foreachinmovearea(int (*func)(struct block_list*,va_list),int m,int x0,
 void map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y,int type,...) {
 	int bx,by;
 	struct block_list *bl=NULL;
-	va_list ap=NULL;
+	va_list ap;
 	int blockcount=bl_list_count,i,c;
 
 	va_start(ap,type);
@@ -734,7 +734,7 @@ int map_delobject(int id) {
 void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...) {
 	int i;
 	int blockcount=bl_list_count;
-	va_list ap=NULL;
+	va_list ap;
 
 	va_start(ap,type);
 
@@ -1202,7 +1202,7 @@ struct block_list * map_id2bl(int id)
  *------------------------------------------
  */
 int map_foreachiddb(int (*func)(void*,void*,va_list),...) {
-	va_list ap=NULL;
+	va_list ap;
 
 	va_start(ap,func);
 	numdb_foreach(id_db,func,ap);
