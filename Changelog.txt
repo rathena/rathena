@@ -1,5 +1,6 @@
 Date	Added
 12/18
+	* Added several PID GM commands, thanks to Dino9021 [nsstrunks]
 	* Storage was merging items incorrectly [Mousejstr]
 	* eliminated a uninitialized var when using afm maps [MouseJstr]
 	* Added concept of dirty storage to reduce saves/load
