@@ -3544,24 +3544,22 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
  *------------------------------------------
  */
 void clif_getareachar_npc(struct map_session_data* sd,struct npc_data* nd)
-{
 	int len;
-
 	nullpo_retv(sd);
 	nullpo_retv(nd);
-
 	if(nd->class < 0 || nd->flag&1 || nd->class == INVISIBLE_CLASS)
 		return;
-
+	if(nd->state.state == MS_WALK){
+		len = clif_npc007b(nd,WFIFOP(sd->fd,0));
+		WFIFOSET(sd->fd,len);
+	} else {
 	len = clif_npc0078(nd,WFIFOP(sd->fd,0));
 	WFIFOSET(sd->fd,len);
-
+	}
 	if(nd->chat_id){
 		clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
 	}
-
 }
-
 /*==========================================
  * ˆÚ“®’âŽ~
  *------------------------------------------
