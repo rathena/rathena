@@ -959,9 +959,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 // -- moonsoul (stun ability of new champion skill tigerfist)
 //
 	case CH_TIGERFIST:
-		if( rand()%100 < (10 + skilllv*10)*sc_def_vit/100 ) {
+		if (rand()%100 < (10 + skilllv*10)*sc_def_vit/100) {
 			int sec = skill_get_time2 (skillid,skilllv) - status_get_agi(bl)/10;
-			status_change_start(bl,SC_STAN,skilllv,0,0,0,sec,0);
+			if (dstsd) {
+				dstsd->canmove_tick += sec;
+				dstsd->canact_tick += sec;
+			} else if (dstmd)
+				dstmd->canmove_tick += sec;
 		}
 		break;
 
@@ -6893,15 +6897,15 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 
 	nullpo_retr(0, sd);
 
-	if(sd->bl.m != bl->m || pc_isdead(sd))
-		return 0;
-	if(skillnotok(skill_num, sd)) // [MouseJstr]
-		return 0;
 	if ((bl = map_id2bl(target_id)) == NULL)
 		return 0;
 	if (bl->type == BL_PC) {
 		nullpo_retr(0, tsd = (struct map_session_data*)bl);
 	}
+	if(sd->bl.m != bl->m || pc_isdead(sd))
+		return 0;
+	if(skillnotok(skill_num, sd)) // [MouseJstr]
+		return 0;
 	if (tsd && skill_num == ALL_RESURRECTION && !pc_isdead(tsd))
 		return 0;
 

@@ -1,6 +1,7 @@
 
 Date	Added
 04/02
+	* Updated Tiger Knucke Fist's 'fixed state' effect [celest]
 	* Allowed people to enable/disable using the online column via 
 	  'register_users_online' in the login_athena.conf [Codemaster]
 	* Added the 3 baby skills WE_BABY, CALLBABY and CALLPARENT [celest]
