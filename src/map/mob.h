@@ -4,6 +4,9 @@
 
 #define MAX_RANDOMMONSTER 3
 #define MAX_MOB_RACE_DB 6
+#define MAX_MOB_DB 2000		/* Change this to increase the table size in your mob_db to accomodate
+				numbers more than 2000 for mobs if you want to (and know what you're doing).
+				Be sure to note that 4001 to 4047 are for advanced classes. */
 
 struct mob_skill {
 	short state;

@@ -32,10 +32,8 @@
 
 #define MOB_LAZYMOVEPERC 50	// Move probability in the negligent mode MOB (rate of 1000 minute)
 #define MOB_LAZYWARPPERC 20	// Warp probability in the negligent mode MOB (rate of 1000 minute)
-#define MAX_MOB_DB 2000		/* Change this to increase the table size in your mob_db to accomodate
-								numbers more than 2000 for mobs if you want to (and know what you're doing).
-								Be sure to note that 4001 to 4047 are for advanced classes. */
-struct mob_db mob_db[2001];
+
+struct mob_db mob_db[MAX_MOB_DB+1];
 
 #define CLASSCHANGE_BOSS_NUM 21
 

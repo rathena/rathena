@@ -1,6 +1,7 @@
 Date	Added
 
-03/10
+03/20
+	* Fixed @storage / @gstorage ATcommands thanks2 Yor/Freya [Lupus]
 	* Added a sql upgrader to handle the mob_db changes to assist
 	  in migrating to the newer SVN servers [MouseJstr]
 03/19
