@@ -1886,13 +1886,13 @@ static int map_readmap(int m,char *fn, char *alias, int *map_cache, int maxmap) 
 	unsigned char *gat="";
 	size_t size;
 	
-	int i;
+	int i = 0;
 	int e = 0;
 	char progress[21] = "                    ";
 
 	//printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
 	if (map_num) { //avoid map-server crashing if there are 0 maps
-		char c;
+		char c = '-';
 		static int lasti = -1;
 		static int last_time = -1;
 		i=m*20/maxmap;

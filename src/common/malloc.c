@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "malloc.h"
 
 void* aMalloc_( size_t size, const char *file, int line, const char *func )

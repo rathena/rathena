@@ -114,6 +114,7 @@ unsigned int gettick(void)
  */
 
 // デバッグ用関数群
+/*
 static void dump_timer_heap(void) {
 	int j;
 	for(j = 1 ; j <= timer_heap[0] ; j++) {
@@ -128,6 +129,7 @@ static void dump_timer_heap(void) {
 		printf("%d : %d %d\n",j,timer_heap[j],timer_data[timer_heap[j]].tick);
 	}
 }
+*/
 
 static void push_timer_heap(int index)
 {
