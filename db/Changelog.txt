@@ -4,6 +4,11 @@
 	Ayathoya mobs == Added but using poring stats ( ? )
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
+
+01/05
+        * Added DracoRPG's changes [celest]
+          - changed Gungnir to wind element
+          - changed Damascus to cannot be broken
 01/04
         * item name fix Daydric Card -> Raydric Card [Lupus]
 	  Changed weight of Durian,Ramadan,Realgar Wine.

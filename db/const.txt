@@ -227,7 +227,8 @@ bInfiniteEndure	2007
 bUnbreakableWeapon	2008
 bUnbreakableArmor	2009
 bUnbreakableHelm	2010
-bLongAtkRate	2011
+bUnbreakableShield	2011
+bLongAtkRate	2012
 
 
 Eff_Stone	0
