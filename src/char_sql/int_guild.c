@@ -730,7 +730,7 @@ void inter_guild_sql_final()
 	if (guild_pt2) aFree(guild_pt2);
 	if (guildcastle_pt) aFree(guildcastle_pt);
 	
-	numdb_final(guild_db_, guild_db_);
+	numdb_final(guild_db_, guild_db_final);
 	numdb_final(castle_db_, castle_db_final);
 	numdb_final(guild_expcache_db_, guild_expcache_db_final);
 	numdb_final(guild_infoevent_db_, guild_infoevent_db_final);
