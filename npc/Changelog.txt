@@ -36,6 +36,9 @@ Other Ppl
 
 Date		Added
 ======
+12/22
+	* Corrected a typo in other/pvp.txt [Ajarn]
+
 12/21
 	* Corrected position of start { in a crap load of scripts. [Ajarn]
 		- jA decided that it had to be on the definition line

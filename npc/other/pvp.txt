@@ -22,7 +22,7 @@
 //==========================================================================
 
 // Alberta -----------------------------------------
-alberta_in.gat, 22, 146,4	script	PvP Narrator#1	84,{
+alberta_in.gat,22,146,4	script	PvP Narrator#1	84,{
 	callfunc "F_PvPNarr", "alberta_in.gat", 24, 143;
 	end;
 }
