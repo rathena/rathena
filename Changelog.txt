@@ -1,5 +1,8 @@
 Date	Added
 
+12/19
+	* Updated charcommand.conf [nsstrunks]
+
 12/18
 	* Added some of my info to Dev/quotes.txt, not done yet... [Ajarn]
 	* Added some ideas to Dev/Ideas_Suggestions.txt [Ajarn]
