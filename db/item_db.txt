@@ -631,7 +631,7 @@
 1527,Quadrille,Quadrille,4,20,0,900,165,,1,0,33040,2,2,4,40,8,{},{ bonus2 bAddRace,1,10; bonus2 bAddRace,7,10; bonus2 bAddEle,2,10; }
 1528,Grand_Cross,Grand Cross,4,20,0,1500,140,,1,0,33040,2,2,4,40,8,{},{ bonus bAtkEle,6; skill 77,3; bonus3 bAutoSpell,77,3,25; bonus2 bHPDrainRate,100,1; },
 1529,Iron_Driver,Iron Driver,4,20,0,3000,155,,1,0,33024,2,2,3,78,8,{},{},,,,,,
-1530,Mjolnir,Mjolnir,4,20,0,6000,250,,1,0,8701363,2,2,4,98,8,{},{ bonus bAtkEle,4; bonus bDex,40; bonus bStr,15; bonus bAspdRate,30; },,
+1530,Mjolnir,Mjolnir,4,20,0,6000,250,,1,0,8701363,2,2,4,95,8,{},{ bonus bAtkEle,4; bonus bDex,40; bonus bStr,15; bonus bAspdRate,30; },,
 1531,Spanner,Spanner,4,20,0,2500,115,,1,0,33040,2,2,3,55,8,{},{ bonus2 bAddEff,Eff_Blind,100; bonus2 bAddEff,Eff_Stan,100; bonus2 bAddEff,Eff_Poison,100; bonus2 bAddEff,Eff_Freeze,100; },,,,,,
 // Books
 1550,Book,Book,4,30000,0,600,85,,1,3,65792,2,2,2,14,15,{},{},,,,,,
@@ -937,7 +937,7 @@
 2407,Crystal_Pumps,Crystal Pumps,5,20,0,100,,0,,0,2088958,0,64,,0,0,{},{ bonus bMdef,10; bonus bLuk,5; }
 2408,Cuffs,Cuffs,5,5000,0,3000,,3,,0,10477567,2,64,,0,0,{},{}
 2409,Spiky_Heel,Spiky Heel,5,8500,0,600,,2,,0,2088958,2,64,,0,0,{},{ bonus bMdef,5; }
-2410,Sleipnir,Sleipnir,5,20,0,3500,,0,,0,10477567,2,64,,95,0,{},{ bonus bMdef,10; bonus bMaxHPrate,10; bonus bMaxSPrate,10; bonus bSPrecovRate,15; bonus bSpeedRate,25; }
+2410,Sleipnir,Sleipnir,5,20,0,3500,,5,,0,10477567,2,64,,94,0,{},{ bonus bMaxHPrate,20; bonus bMaxSPrate,20;}
 2411,Greaves,Greaves,5,48000,0,750,,5,,0,16512,2,64,,65,0,{},{},,,,
 2412,Greaves_,Greaves,5,48000,0,750,,5,,1,16512,2,64,,65,0,{},{},,,,
 2413,Safety_Shoes,Safety Shoes,5,20,0,350,,6,,0,16514,2,64,,30,0,{},{},,,,
@@ -986,8 +986,8 @@
 2626,Rosary_,Ancient Rosary,5,15000,0,200,,0,,1,2088958,2,136,,90,0,{},{ bonus bMdef,3; bonus bLuk,1; },,,
 2627,Belt,Ancient Belt,5,20000,0,1200,,0,,1,10477567,2,136,,25,0,{},{},,,,,
 2628,Novice_Armlet,Novice Armlet,5,400,0,200,,0,,1,8388609,2,136,,0,0,{},{ bonus bStr,1; bonus bInt,1; bonus bLuk,1; },,
-2629,Megingjard,Megingjard,5,20,0,8000,,2,,0,10477567,2,136,,90,0,{},{ bonus bStr,40; bonus bMdef,7; },,,
-2630,Brisingamen,Brisingamen,5,20,0,1500,,1,,0,10477567,2,136,,95,0,{},{ bonus bStr,3; bonus bAgi,3; bonus bVit,3; bonus bInt,3; bonus bMdef,5; }
+2629,Megingjard,Megingjard,5,20,0,8000,,2,,0,10477567,2,136,,94,0,{},{ bonus bStr,6; bonus bAgi,6; bonus bVit,6; bonus bLuk,10; },,,
+2630,Brisingamen,Brisingamen,5,20,0,1500,,1,,0,10477567,2,136,,94,0,{},{ bonus bStr,3; bonus bAgi,3; bonus bVit,3; bonus bInt,3; bonus bMdef,5; }
 2631,Celebration_Ring,Celebration Ring,5,20,0,10,,0,,0,10477567,2,136,,0,0,{},{ bonus bStr,2; bonus bAgi,2; bonus bVit,2; bonus bInt,2; bonus bDex,2; bonus bLuk,2; }
 2634,Wedding_Ring_M,Wedding Ring,4,20,0,0,,,,0,10477567,1,2,,0,,{},{ skill 334,1; skill 336,1; }
 2635,Wedding_Ring_F,Wedding Ring,4,20,0,0,,,,0,10477567,0,2,,0,,{},{ skill 335,1; skill 336,1; }
