@@ -3722,6 +3722,9 @@ void clif_getareachar_mob(struct map_session_data* sd,struct mob_data* md)
 	int len;
 	nullpo_retv(sd);
 	nullpo_retv(md);
+	
+	if (session[sd->fd] == NULL)
+		return;
 
 	if(md->state.state == MS_WALK){
 		len = clif_mob007b(md,WFIFOP(sd->fd,0));
@@ -3905,6 +3908,9 @@ int clif_01ac(struct block_list *bl)
 	nullpo_retr(0, ap);
 
 	sd=va_arg(ap,struct map_session_data*);
+
+	if (sd == NULL || session[sd->fd] == NULL)
+		return 0;
 
 	switch(bl->type){
 	case BL_PC:

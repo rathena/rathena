@@ -1,5 +1,7 @@
 Date	Added
 12/5
+	* Fixed another crash sending updates to disconnected 
+	  clients [MouseJstr]
 	* Fixed the range_check again to stop it from crashing 
 	  servers [MouseJstr]
 	* removed stubbed out unfinished atcommands as per Cameri [MouseJstr]
