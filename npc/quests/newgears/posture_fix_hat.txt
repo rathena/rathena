@@ -1,0 +1,61 @@
+//===== eAthena Script ======================================= 
+//= Posture Fix Hat Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate Posture Fix Hat quest.
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+pay_in01.gat,171,142,5	script	Nan Hyang	814,{
+		If (getequipisequiped(5073)) GOTO GOOD;
+		If (Class == 0) GOTO EXT;
+ mes "[Nan Hyang]";
+ mes "Tut tut! you have terrible posture!";
+ mes "You need to correct it immediately!";
+	next;
+ mes "[Nan Hyang]";
+ mes "I could correct it for you If you brought me";
+ mes "some materials to make you a posture aid.";
+	next;
+	 menu "Can you please make me the aid.",-,"What do I need to bring?",AIT,"No thanks!",EXT;
+		If ((Countitem(1550) <1) || (Countitem(2285) < 1 )) GOTO A_NM;
+ mes "[Nan Hyang]";
+ mes "Ahh at last, someone who is serious!";
+	next;
+		delitem 1550,1;
+		delitem 2885,1;
+		getitem 5073,1;
+ mes "[Nan Hyang]";
+ mes "Hehe, well, maybe you will become more careful, or your sense will";
+ mes "become balanced.";
+	close;
+AIT:
+ mes "[Nan Hyang]";
+ mes "What I require is very simple...";
+	next;
+ mes "[Nan Hyang]";
+ mes "1 Book.";
+ mes "And 1 Apple o' Archer to balance on it.";
+	close;
+A_NM:
+ mes "[Nan Hyang]";
+ mes "At least be serious, you dont have enough items!";
+ mes "Come back when you wish to learn posture.";
+	close;
+GOOD:
+ mes "[Nan Hyang]";
+ mes "Ah, that's it! good to see you are willing to learn!";
+	close;
+EXIT:
+	next;
+ mes "[Nan Hyang]";
+ mes "Good day to you.";
+	close;
+}

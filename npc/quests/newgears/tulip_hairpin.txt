@@ -1,0 +1,49 @@
+//===== eAthena Script ======================================= 
+//= Tulip Hairpin Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate Tulip Hairpin quest.
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+prontera.gat,84,189,6	script	Ses	815,{
+ mes "[Ses]";
+ mes "Woo, hello! Fruit fruit!";
+ mes "Sorry, I just love flowers, fruits and everything that makes me";
+ mes "look more FRUITY!";
+	next;
+	 menu "Shh, just make me the Tulip Hairpin!",-,"What do I need for the Tulip Hairpin?",TH_REQ,"Bye!",EXIT;
+ mes "[Ses]";
+ mes "You have the items?";
+	next;
+	menu "Yes!",-,"No!",EXIT;
+		If ((countitem(2278) < 1) || (countitem(975) < 1)) GOTO EX_NM;
+ mes "[Ses]";
+ mes "Yay! thanks! Pineapple!";
+ mes "Here you go!";
+	next;
+		delitem 2278,1;
+		delitem 975,1;
+		getitem 5077,1;
+ mes "[Ses]";
+ mes "Enjoy being pretty!";
+	close;
+TH_REQ:
+ mes "[Ses]";
+ mes "Well, I need...";
+ mes "1 Mr. Smile for the substance";
+ mes "and 1 scarlet dyestuff!";
+ mes "Bring these to me for your item!";
+	close;
+EXIT:
+ mes "[Ses]";
+ mes "Okay!";
+ mes "Byeeeee!";
+}

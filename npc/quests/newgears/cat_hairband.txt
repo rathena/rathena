@@ -1,0 +1,66 @@
+//===== eAthena Script ======================================= 
+//= Cat Hairband Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate Cat Hairband quest.
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+pay_cast01.gat,110,160,4	KoneKone	819,{
+ mes "[KoneKone]";
+ mes "Don't you just love cats? the way they have the pointy,";
+ mes "sticky ears and stuff, they're just so cute!";
+	next;
+ mes "[KoneKone]";
+ mes "Hehe... well, I decided, I would make a Cat Hairband!";
+ mes "It is modeled on my most favourite of cat... BLACK!";
+ mes "Of course, I got the idea from Hwikebain!";
+	next;
+ mes "[KoneKone]";
+ mes "I can make it  for you, but it requires the correct materials.";
+	next;
+ menu "Please make me this item.",-,"What are the materials needed?",BCM,"Bye.",EXT;
+		If ((countitem(2213) < 1) || (countitem(7063) < 200) || (countitem(983) < 1) || (Zeny < 10000)) GOTO CAT_NM;
+ mes "[KoneKone]";
+ mes "Wow! thankies! I will now take your items!";
+	next;
+		delitem 2213,1;
+		delitem 7063,200;
+		delitem 983,1;
+		set Zeny,Zeny-1000;
+ mes "[KoneKone]";
+ mes "Mew mew! thanks! Now for your ears!";
+	next;
+		getitem 5057,1;
+ mes "[KoneKone]";
+ mes "Mew! thanks! It was a pleasure to make them for you!";
+	close;
+CAT_NM:
+ mes "[KoneKone]";
+ mes "Sorry, but you dont have what I asked for...";
+	close;
+BCM:
+ mes "[KoneKone]";
+ mes "For the ^670000Cat Hairband^000000, the following items are needed:";
+	next;
+ mes "[KoneKone]";
+ mes "1 Kitty Band,";
+ mes "200 Soft Feathers,";
+ mes "Some Black Dye,";
+ mes "And of course 10,000z for labour costs.";
+	next;
+ mes "[KoneKone]";
+ mes "Bring me these items and the money and I will make it for you.";
+	close;
+EXT:
+ mes "[KoneKone]";
+ mes "Okay, *meow* have a nice day!";
+	close;
+}

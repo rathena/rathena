@@ -30,6 +30,8 @@ Other Ppl
 
 Date		Added
 ======
+12/06	* Added seperate quests for the new headgears, missing Fox Mask and Orc Hero Helm. (I'll so 'em ASAP.) [Mass Zero]
+
 11/30   * Added Lutie shops
         * Corrected some typos, thanks to leinsirk10
 

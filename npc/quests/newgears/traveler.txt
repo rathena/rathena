@@ -1,0 +1,114 @@
+//===== eAthena Script ======================================= 
+//= Traveler (New Hat Quests)
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate New Hat quests.
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+morroc.gat,234,77,6	script	Traveler	807,{
+		if (Class == 0) GOTO EXT;
+ mes "[Traveler]";
+ mes "What item do you want from me?";
+	next;
+	 menu "Annoyed Raccoon Dog Hat.",MN1,"Fresh Bluish Fish Hat",MN2,"Drooping Cat",MN3,"Transformation Leaf",MN4;
+MN1:
+ mes "[Traveler]";
+ mes "Gimme 1000 Acorns,";
+ mes "100 Sea Otter Skins,";
+ mes "and 10 Raccoon Dog's Leaf";
+	next;
+ mes "[Traveler]";
+ mes "Got these items?";
+	next;
+menu "Yep.",-,"No!",EXT;
+		if ((countitem(1026) < 1000) || (countitem(7065) < 100) || (countitem(945) < 10)) GOTO EX_NM;
+ mes "[Traveler]";
+ mes "Well, then here is your item";
+	next;
+		delitem 1026,1000;
+		delitem 7065,100;
+		delitem 945,10;
+		getitem 5084,1;
+ mes "[Traveler]";
+ mes "Enjoy.";
+	close;
+MN2:
+ mes "[Traveler]";
+ mes "Gimme 1 Rotten Fish,";
+ mes "300 Rotten Scales,";
+ mes "50 Sashimi,";
+ mes "1 Tail of a Fish,";
+ mes "and 100 Sticky Mucus";
+	next;
+ mes "[Traveler]";
+ mes "Got these items?";
+	 menu "Yes",-,"No.",EXT;
+		if ((countitem(624) < 1) || (countitem(959) < 300) || (countitem(1144) < 50) || (countitem(1023) < 1) || (countitem(938) < 100)) GOTO EX_NM; 
+ mes "[Traveler]";
+ mes "Okay, thanks.";
+	next;
+		delitem 624,1;
+		delitem 959,300;
+		delitem 1144,50;
+		delitem 1023,1;
+		delitem 938,100;
+		getitem 5065,1
+ mes "[Traveler]";
+ mes "Thanks. Bye.";
+	close;
+MN3:
+ mes "[Traveler]";
+ mes "Give me 1 Slotted Circlet,";
+ mes "1 Black Dyestuff,";
+ mes "and 300 Cat Dolls.";
+ mes "Loli Ruri drops the last one.";
+	next;
+ mes "[Traveler]";
+ mes "Have you these items?";
+	next;
+menu "Yes",-,"No.",EXT;
+		if ((countitem(2233) < 1) || (countitem(7206) < 300)) GOTO EX_NM;
+ mes "[Traveler]";
+ mes "Okay, here you are.";
+	next;
+		delitem 2233,1;
+		delitem 7206,300;
+		getitem 5058,1;
+ mes "[Traveler]";
+ mes "Good luck.";
+	close;
+MN4:
+ mes "[Traveler]";
+ mes "Bring me 600 Raccoon Dog's Leaf (Raccoon Leaf)";
+	next;
+ mes "[Traveler]";
+ mes "You have these?";
+	next;
+menu "Yes!",-,"Nope.",EXT;
+		if (countitem(945) < 600) GOTO EX_NM;
+ mes "[Traveler]";
+ mes "Thanks. here's your leaf";
+	next;
+		delitem 945,600;
+		getitem 5064,1;
+ mes "[Traveler]";
+ mes "Enjoy your Item";
+	close;
+EX_NM:
+ mes "[Traveler]";
+ mes "No stuff, no item!";
+ mes "When you have it, come back.";
+	close;
+EXT:
+ mes "[Traveler]";
+ mes "Bye.";
+	close;
+}

@@ -1,0 +1,42 @@
+//===== eAthena Script ======================================= 
+//= Indian Headband Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate Indian Headband quest.
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+comodo.gat,238,217,5	script	Merunte	832,{
+ mes "[Merunte]";
+ mes "Well, umbaga umbumbaga.";
+ mes "I like to do stuff like that!";
+ mes "And I love Indian Headbands too!";
+	next;
+ mes "[Merunte]";
+ mes "Give me:";
+ mes "100 Bill of Birds,";
+ mes "and 10,000 Zeny.";
+	next;
+ mes "[Merunte]";
+ mes "Got these items?";
+	next;
+	 menu "Yep!",-,"Nope!",EXT;
+		if ((countitem(925) < 1) || (Zeny < 10000)) GOTO EXT;
+		delitem 925,1;
+		set Zeny,Zeny-10000;
+		getitem 5071,1;
+ mes "[Merunte]";
+ mes "Thanks! Bye.";
+	close;
+EXT:
+ mes "[Merunte]";
+ mes "Kay bye.";
+	close;
+}

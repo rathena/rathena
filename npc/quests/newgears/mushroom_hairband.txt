@@ -1,0 +1,50 @@
+//===== eAthena Script ======================================= 
+//= Mushroom Hairband Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate Mushroom Hairband quest.
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+prontera.gat,66,87,6	script	Aipo	819,{
+ mes "[Aipo]";
+ mes "Heeeeee.";
+	next;
+ mes "[Aipo]";
+ mes "Have you ever wondered what you would look like with a ^000080Mushroom Hairband^000000?";
+ mes "Well, I can make you one If you like, just give me 300 Mushroom Spores!";
+	next;
+ mes "[Aipo]";
+ mes "This wondrous item grew in the depths of a gave and needs the spores for the final";
+ mes "materials neededm";
+ mes "Want me to make it for you?";
+	next;
+	 menu "Yes! Now make me the item!",-,"No, thanks!",EXT;
+		if (countitem(921) < 300) GOTO NM_EXT;
+ mes "[Aipo]";
+ mes "Wow! Thanks! Lemme make the item then.";
+	next;
+		delitem 921,300;
+ mes "[Aipo]";
+ mes "Okay, thanks for the items, now yours in return!";
+	next;
+		getitem 5082,1;
+ mes "[Aipo]";
+ mes "Thanks again! Bye!";
+	close;
+NM_EXT:
+ mes "[Aipo]";
+ mes "You don't have enough Mushroom Spores... sorry!";
+	close;
+EXT:
+ mes "[Aipo]";
+ mes "Well, I'm always here If you change your mind!";
+	close;
+}

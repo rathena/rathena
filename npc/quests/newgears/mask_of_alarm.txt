@@ -1,0 +1,44 @@
+//===== eAthena Script ======================================= 
+//= Mask of Alarm Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate Mask of Alarm quest.
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+aldebaran.gat,87,181,3	script	Muslam	819,{
+ mes "[Muslam]";
+ mes "I love Alarms, so evil, just like me.";
+ mes "Touch me and I will rip your arm off!";
+	next;
+ mes "[Muslam]";
+ mes "Anyways... If you want a Mask of an Alarm,";
+ mes "bring me 3000 Zeny,";
+ mes "and 1 Monster Oxygen Mask.";
+	next;
+ mes "[Muslam]";
+ mes "Got these?";
+	next;
+	 menu "Yep!",-,"Nope!",EXT;
+		if ((countitem(10002) < 1) || (Zeny < 300000)) GOTO EX_NR;
+ mes "[Muslam]";
+ mes "Great!";
+	next;
+		delitem 1002,1;
+		set Zeny,Zeny-300000;
+		getitem 5087,1;
+ mes "[Muslam]";
+ mes "Enjoy your item!";
+	close;
+EX_NR:
+ mes "[Muslam]";
+ mes "Kay! byeee.";
+	close;
+}

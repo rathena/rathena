@@ -1,0 +1,58 @@
+//===== eAthena Script ======================================= 
+//= Back Ribbon Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate Back Ribbon quest.
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+prontera.gat,164,232,5	script	Netpia	815,{
+ mes "[Netpia]";
+ mes "Wheee! Don't you just love making youself look pretty!?";
+ mes "I love glamourising myself with all the best accessories!";
+	next;
+ mes "[Netpia]";
+ mes "Ever heard of a ^560000Back Ribbon^000000?";
+ mes "I can make you one, and you too can be fashionable!";
+	next;
+	 menu "Please make me a ^670000Back ribbon^000000.",-,"What are the requirements?",BR_REQ,"No, I dont want one.",EXT;
+		If ((countitem(2244) < 1) || (countitem(2209) < 1) || (countitem(10007) < 1)) GOTO BR_NM;
+ mes "[Netpia]";
+ mes "Wow, thank you! Let me just take your items.";
+	next;
+		delitem 2244,1;
+		delitem 2209,1;
+		delitem 10007,1;
+		getitem 5083,1;
+ mes "[Netpia]";
+ mes "Okay, now here is your item.";
+	next;
+ mes "[Netpia]";
+ mes "Enjoy being pretty!";
+	close;
+BR_NM:
+ mes "[Netpia]";
+ mes "Aww... sorry, but I cant make it If you don't bring me the materials.";
+	next;
+	 GOTO BR_REQ;
+BR_REQ:
+ mes "[Netpia]";
+ mes "Well, for me to make you my BEAUTIFUL Back Ribbon...";
+ mes "I require these materials:";
+ mes "1 big ribbon.";
+ mes "1 ribbon (Slotted).";
+ mes "1 silk ribbon.";
+	close;
+EXT:
+ mes "[Netpia]";
+ mes "Aww, well, okay then!";
+ mes "Be pretty some other time";
+	close;
+}
