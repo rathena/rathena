@@ -1,5 +1,6 @@
 Date	Added
 12/16
+	* Fixed compile time errors for gcc 2.95 [MouseJstr]
 	* Added #itemlist, removed @charitemlist [MC Cameri]
 	* Changed @job and #job so that when it's used it unequips all the items, to prevent sprite errors [MC Cameri]
         * Updated Forging and Potion making formulas by DracoRPG [celest]

@@ -289,6 +289,7 @@ int charcommand_jobchange(
 	}
 
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
+		int j;
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change job only to lower or same level
 			if ((job >= 0 && job < MAX_PC_CLASS)) {
 
@@ -319,7 +320,6 @@ int charcommand_jobchange(
 							job = 4015;
 					}
 				}
-				int j;
 				for (j=0; j < MAX_INVENTORY; j++) {
 					if(pl_sd->status.inventory[j].nameid>0 && pl_sd->status.inventory[j].equip!=0)
 						pc_unequipitem(pl_sd, j, 3);

@@ -2039,6 +2039,7 @@ int atcommand_jobchange(
 		return 0;
 
 	if ((job >= 0 && job < MAX_PC_CLASS)) {
+		int j;
 
 		// fix pecopeco display
 		if ((job != 13 && job != 21 && job != 4014 && job != 4022)) {
@@ -2067,7 +2068,6 @@ int atcommand_jobchange(
 					job = 4015;
 			}
 		}
-		int j;
 		for (j=0; j < MAX_INVENTORY; j++) {
 			if(sd->status.inventory[j].nameid>0 && sd->status.inventory[j].equip!=0)
 				pc_unequipitem(sd, j, 3);
