@@ -1,6 +1,8 @@
 Date	Added
 
 02/18
+        * Fixed a bug with statpoint.txt reading and giving too much stat points,
+          thanks to Benz / eAthenaC [celest]
         * Fixed client errors when pecopeco Lord Knights/Paladins log in with a weapon
           equipped [celest]
         * Added bAddRace2 -- check item_bonus.txt [celest]

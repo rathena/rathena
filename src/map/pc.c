@@ -7065,7 +7065,7 @@ int pc_readdb(void)
 
 	// ƒXƒLƒ‹ƒcƒŠ?
 	memset(statp,0,sizeof(statp));
-	i=0;
+	i=1;
 	j=45;	// base points
 	fp=fopen("db/statpoint.txt","r");
 	if(fp == NULL){
@@ -7077,6 +7077,8 @@ int pc_readdb(void)
 				continue;
 			if ((j=atoi(line))<0)
 				j=0;
+			if (i >= MAX_LEVEL)
+				break;
 			statp[i]=j;			
 			i++;
 		}
