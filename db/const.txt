@@ -67,37 +67,29 @@ Job_Baby_Dancer	66
 Job_Baby_Crusader2	67
 Job_Super_Baby	68
 
-
-
 mf_nomemo	0
 mf_noteleport	1
 mf_nosave	2
 mf_nobranch	3
 mf_nopenalty	4
-mf_pvp	5
-mf_pvp_noparty	6
-mf_pvp_noguild	7
-mf_gvg		8
-mf_gvg_noparty	9
-mf_nozenypenalty	10
-mf_pvp	11
-mf_pvp_noparty	12
-mf_pvp_noguild	13
-mf_gvg	14
-mf_gvg_noparty	15
-mf_notrade	16
-mf_noskill	17
-mf_nowarp	18
-mf_noicewall	19
-mf_snow	20
-mf_fog	21
-mf_sakura	22
-mf_leaves	23
-mf_rain	24
-mf_indoors	25
-mf_nogo	26
-
-
+mf_nozenypenalty	5
+mf_pvp	6
+mf_pvp_noparty	7
+mf_pvp_noguild	8
+mf_gvg		9
+mf_gvg_noparty	10
+mf_notrade	11
+mf_noskill	12
+mf_nowarp	13
+mf_nopvp	14
+mf_noicewall	15
+mf_snow		16
+mf_fog		17
+mf_sakura	18
+mf_leaves	19
+mf_rain	20
+mf_indoors	21
+mf_nogo	22
 
 StatusPoint	9	1
 BaseLevel	11	1

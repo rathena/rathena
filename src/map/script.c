@@ -4584,8 +4584,9 @@ int buildin_isloggedin(struct script_state *st)
  *
  *------------------------------------------
  */
-enum { MF_NOMEMO,MF_NOTELEPORT,MF_NOSAVE,MF_NOBRANCH,MF_NOPENALTY,MF_NOZENYPENALTY,MF_PVP,MF_PVP_NOPARTY,MF_PVP_NOGUILD,MF_GVG,MF_GVG_NOPARTY,MF_NOTRADE,MF_NOSKILL, MF_NOWARP,MF_NOPVP,MF_NOICEWALL,
-	MF_SNOW, MF_FOG, MF_SAKURA, MF_LEAVES, MF_RAIN, MF_INDOORS, MF_NOGO };
+enum {  MF_NOMEMO,MF_NOTELEPORT,MF_NOSAVE,MF_NOBRANCH,MF_NOPENALTY,MF_NOZENYPENALTY,
+	MF_PVP,MF_PVP_NOPARTY,MF_PVP_NOGUILD,MF_GVG,MF_GVG_NOPARTY,MF_NOTRADE,MF_NOSKILL,
+	MF_NOWARP,MF_NOPVP,MF_NOICEWALL,MF_SNOW,MF_FOG,MF_SAKURA,MF_LEAVES,MF_RAIN,MF_INDOORS,MF_NOGO };
 
 int buildin_setmapflagnosave(struct script_state *st)
 {
@@ -4629,17 +4630,23 @@ int buildin_setmapflag(struct script_state *st)
 			case MF_NOPENALTY:
 				map[m].flag.nopenalty=1;
 				break;
+			case MF_NOZENYPENALTY:
+				map[m].flag.nozenypenalty=1;
+				break;
+			case MF_PVP:
+				map[m].flag.pvp=1;
+				break;
 			case MF_PVP_NOPARTY:
 				map[m].flag.pvp_noparty=1;
 				break;
 			case MF_PVP_NOGUILD:
 				map[m].flag.pvp_noguild=1;
 				break;
+			case MF_GVG:
+				map[m].flag.gvg=1;
+				break;
 			case MF_GVG_NOPARTY:
 				map[m].flag.gvg_noparty=1;
-				break;
-			case MF_NOZENYPENALTY:
-				map[m].flag.nozenypenalty=1;
 				break;
 			case MF_NOTRADE:
 				map[m].flag.notrade=1;
@@ -4677,6 +4684,7 @@ int buildin_setmapflag(struct script_state *st)
 			case MF_NOGO: // celest
 				map[m].flag.nogo=1;
 				break;
+
 		}
 	}
 
@@ -4708,11 +4716,17 @@ int buildin_removemapflag(struct script_state *st)
 			case MF_NOPENALTY:
 				map[m].flag.nopenalty=0;
 				break;
+			case MF_PVP:
+				map[m].flag.pvp=0;
+				break;
 			case MF_PVP_NOPARTY:
 				map[m].flag.pvp_noparty=0;
 				break;
 			case MF_PVP_NOGUILD:
 				map[m].flag.pvp_noguild=0;
+				break;
+			case MF_GVG:
+				map[m].flag.gvg=0;
 				break;
 			case MF_GVG_NOPARTY:
 				map[m].flag.gvg_noparty=0;
