@@ -668,7 +668,11 @@ extern int night_flag; // 0=day, 1=night [Yor]
 int map_getcell(int,int,int,CELL_CHK);
 int map_getcellp(struct map_data*,int,int,CELL_CHK);
 extern int map_read_flag;	//セル情報のソース判定フラグ、0ならgrfファイル、1ならビットマップファイル
-enum { READ_FROM_GAT, READ_FROM_AFM, READ_FROM_BITMAP, CREATE_BITMAP };
+enum { 
+	READ_FROM_GAT, READ_FROM_AFM,
+	READ_FROM_BITMAP, CREATE_BITMAP,
+	READ_FROM_BITMAP_COMPRESSED, CREATE_BITMAP_COMPRESSED
+};
 
 extern char motd_txt[];
 extern char help_txt[];
