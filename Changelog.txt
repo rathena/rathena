@@ -1,5 +1,7 @@
 Date	Added
 
+01/26
+        * libGC isn't ready to be the default quite yet... [MouseJstr]
 01/25
         * Fixed TXT compile problems with libGC [celest]
         * Added "Clients older than 2004-09-06aSakray" option to packet_ver_flag in

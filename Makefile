@@ -1,12 +1,12 @@
 
-# CC = gcc -pipe
+CC = gcc -pipe
 # CC = g++
-CC = gcc -pipe -DGCOLLECT
+# CC = gcc -pipe -DGCOLLECT
 # CC = gcc -pipe -DDMALLOC -DDMALLOC_FUNC_CHECK
 # CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
 
-GCLIB = -L/usr/local/lib -lgc
-# GCLIB =
+# GCLIB = -L/usr/local/lib -lgc
+GCLIB =
 # GCLIB = -ldmalloc
 
 PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT
