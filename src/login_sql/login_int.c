@@ -15,6 +15,12 @@ void client_request_login(int fd,unsigned char *p ) {
     struct mmo_account account;
    	char t_uid[32];  
    	int server_num = 0,result,i;
+   	
+   	if( !servers_connected) {
+   	       	WFIFOW(fd,0) = 0x81;
+			WFIFOL(fd,2) = 1; // 01 = Server closed
+			WFIFOSET(fd,3);
+    }			
     
     #ifdef DEBUG
     printf("client connection request %s from %d.%d.%d.%d\n", RFIFOP(fd, 6), p[0], p[1], p[2], p[3]);
