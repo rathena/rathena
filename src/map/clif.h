@@ -92,7 +92,7 @@ int clif_misceffect(struct block_list*,int);	// area
 int clif_misceffect2(struct block_list *bl,int type);
 int clif_changeoption(struct block_list*);	// area
 int clif_useitemack(struct map_session_data*,int,int,int);	// self
-
+void clif_GlobalMessage(struct block_list *bl,char *message);
 int clif_createchat(struct map_session_data*,int);	// self
 int clif_dispchat(struct chat_data*,int);	// area or fd
 int clif_joinchatfail(struct map_session_data*,int);	// self

@@ -26,6 +26,7 @@ int npc_buylist(struct map_session_data *,int,unsigned short *);
 int npc_selllist(struct map_session_data *,int,unsigned short *);
 int npc_parse_mob(char *w1,char *w2,char *w3,char *w4);
 int npc_parse_warp(char *w1,char *w2,char *w3,char *w4);
+int npc_globalmessage(const char *name,char *mes);
 
 int npc_enable(const char *name,int flag);
 struct npc_data* npc_name2id(const char *name);

@@ -4761,6 +4761,27 @@ int clif_GMmessage(struct block_list *bl, char* mes, int len, int flag)
 }
 
 /*==========================================
+ * グローバルメッセージ
+ *------------------------------------------
+ */
+void clif_GlobalMessage(struct block_list *bl,char *message)
+{
+	char buf[100];
+	int len,cmd=0x8d;
+
+	if(!bl || !message)
+		return;
+
+	len=strlen(message)+1;
+
+	WBUFW(buf,0)=cmd;
+	WBUFW(buf,2)=len+8;
+	WBUFL(buf,4)=bl->id;
+	strncpy(WBUFP(buf,8),message,len);
+	clif_send(buf,WBUFW(buf,2),bl,AREA_CHAT_WOC);
+}
+
+/*==========================================
  * HPSP回復エフェクトを送信する
  *------------------------------------------
  */

@@ -308,6 +308,16 @@ int buildin_isnight(struct script_state *st); // [celest]
 int buildin_isday(struct script_state *st); // [celest]
 int buildin_isequipped(struct script_state *st); // [celest]
 int buildin_isequippedcnt(struct script_state *st); // [celest]
+int buildin_getusersname(struct script_state *st); //jA commands added [Lupus]
+int buildin_dispbottom(struct script_state *st);
+int buildin_recovery(struct script_state *st);
+int buildin_getpetinfo(struct script_state *st);
+int buildin_checkequipedcard(struct script_state *st);
+int buildin_globalmes(struct script_state *st);
+int buildin_jump_zero(struct script_state *st);
+int buildin_select(struct script_state *st);
+int buildin_getmapmobs(struct script_state *st); //jA addition end
+
 
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
@@ -550,6 +560,15 @@ struct {
         {buildin_deactivatepset, "deactivatepset", "i"}, // Deactive a pattern set [MouseJstr]
         {buildin_deletepset, "deletepset", "i"}, // Delete a pattern set [MouseJstr]
 #endif
+	{buildin_dispbottom,"dispbottom","s"}, //added from jA [Lupus]
+	{buildin_getusersname,"getusersname","*"},
+	{buildin_recovery,"recovery",""},
+	{buildin_getpetinfo,"getpetinfo","i"},
+	{buildin_checkequipedcard,"checkequipedcard","i"},
+	{buildin_jump_zero,"jump_zero","ii"}, //for future jA script compatibility
+	{buildin_select,"select","*"}, //for future jA script compatibility
+	{buildin_globalmes,"globalmes","s*"},
+	{buildin_getmapmobs,"getmapmobs","s"}, //end jA addition
 	{NULL,NULL,NULL},
 };
 
@@ -4140,6 +4159,25 @@ int buildin_getusers(struct script_state *st)
 	return 0;
 }
 /*==========================================
+ * Works like @WHO - displays all online users names in window
+ *------------------------------------------
+ */
+int buildin_getusersname(struct script_state *st)
+{
+	struct map_session_data *pl_sd = NULL;
+	int i=0,disp_num=1;
+	
+	for (i=0;i<fd_max;i++)
+		if(session[i] && (pl_sd=session[i]->session_data) && pl_sd->state.auth){
+			if( !(battle_config.hide_GM_session && pc_isGM(pl_sd)) ){
+				if((disp_num++)%10==0)
+					clif_scriptnext(script_rid2sd(st),st->oid);
+				clif_scriptmes(script_rid2sd(st),st->oid,pl_sd->status.name);
+			}
+		}
+	return 0;
+}
+/*==========================================
  * マップ指定ユーザー数所得
  *------------------------------------------
  */
@@ -4550,6 +4588,29 @@ int buildin_waitingroom(struct script_state *st)
 	}
 	chat_createnpcchat( (struct npc_data *)map_id2bl(st->oid),
 		limit,pub,trigger,name,strlen(name)+1,ev);
+	return 0;
+}
+/*==========================================
+ * Works like 'announce' but outputs in the common chat window
+ *------------------------------------------
+ */
+int buildin_globalmes(struct script_state *st)
+{
+	struct block_list *bl = map_id2bl(st->oid);
+	struct npc_data *nd = (struct npc_data *)bl;
+	char *name=NULL,*mes;
+
+	mes=conv_str(st,& (st->stack->stack_data[st->start+2]));	// メッセージの取得
+	if(mes==NULL) return 0;
+	
+	if(st->end>st->start+3){	// NPC名の取得(123#456)
+		name=conv_str(st,& (st->stack->stack_data[st->start+3]));
+	} else {
+		name=nd->name;
+	}
+
+	npc_globalmessage(name,mes);	// グローバルメッセージ送信
+
 	return 0;
 }
 /*==========================================
@@ -6113,6 +6174,221 @@ int buildin_gmcommand(struct script_state *st)
 
         is_atcommand(sd->fd, sd, cmd, 99);
 
+	return 0;
+}
+
+/*==========================================
+ * Displays a message for the player only (like system messages like "you got an apple" )
+ *------------------------------------------
+ */
+int buildin_dispbottom(struct script_state *st)
+{
+	struct map_session_data *sd=script_rid2sd(st);
+	char *message;
+	message=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	if(sd)
+		clif_disp_onlyself(sd,message,strlen(message));
+	return 0;
+}
+
+/*==========================================
+ * All The Players Full Recovery
+   (HP/SP full restore and resurrect if need)
+ *------------------------------------------
+ */
+int buildin_recovery(struct script_state *st)
+{
+	int i = 0;
+	for (i = 0; i < fd_max; i++) {
+		if (session[i]){
+			struct map_session_data *sd = session[i]->session_data;
+			if (sd && sd->state.auth) {
+				sd->status.hp = sd->status.max_hp;
+				sd->status.sp = sd->status.max_sp;
+				clif_updatestatus(sd, SP_HP);
+				clif_updatestatus(sd, SP_SP);
+				if(pc_isdead(sd)){
+					pc_setstand(sd);
+					clif_resurrection(&sd->bl, 1);
+				}
+				clif_displaymessage(sd->fd,"You have been recovered!");
+			}
+		}
+	}
+	return 0;
+}
+/*==========================================
+ * Get your pet info: getpetinfo(n)  
+ * n -> 0:pet_id 1:pet_class 2:pet_name
+	3:friendly 4:hungry
+ *------------------------------------------
+ */
+int buildin_getpetinfo(struct script_state *st)
+{
+	struct map_session_data *sd=script_rid2sd(st);
+	int type=conv_num(st,& (st->stack->stack_data[st->start+2]));
+
+	if(sd && sd->status.pet_id){
+		switch(type){
+			case 0:
+				push_val(st->stack,C_INT,sd->status.pet_id);
+				break;
+			case 1:
+				if(sd->pet.class_)
+					push_val(st->stack,C_INT,sd->pet.class_);
+				else
+					push_val(st->stack,C_INT,0);
+				break;
+			case 2:
+				if(sd->pet.name)
+					push_str(st->stack,C_STR,sd->pet.name);
+				else
+					push_val(st->stack,C_INT,0);
+				break;
+			case 3:
+				//if(sd->pet.intimate)
+				push_val(st->stack,C_INT,sd->pet.intimate);
+				break;
+			case 4:
+				//if(sd->pet.hungry)
+				push_val(st->stack,C_INT,sd->pet.hungry);
+				break;
+			default:
+				push_val(st->stack,C_INT,0);
+				break;
+		}
+	}else{
+		push_val(st->stack,C_INT,0);
+	}
+	return 0;
+}
+/*==========================================
+ * Shows wether your inventory(and equips) contain
+   selected card or not.
+	checkequipedcard(4001);
+ *------------------------------------------
+ */
+int buildin_checkequipedcard(struct script_state *st)
+{
+	struct map_session_data *sd=script_rid2sd(st);
+	int n,i,c=0;
+	c=conv_num(st,& (st->stack->stack_data[st->start+2]));
+
+	if(sd){
+		for(i=0;i<MAX_INVENTORY;i++){
+			if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount){
+				for(n=0;n<4;n++){
+					if(sd->status.inventory[i].card[n]==c){
+						push_val(st->stack,C_INT,1);
+						return 0;
+					}
+				}
+			}
+		}
+	}
+	push_val(st->stack,C_INT,0);
+	return 0;
+}
+
+int buildin_jump_zero(struct script_state *st) {
+	int sel;
+	sel=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	if(!sel) {
+		int pos;
+		if( st->stack->stack_data[st->start+3].type!=C_POS ){
+			printf("script: jump_zero: not label !\n");
+			st->state=END;
+			return 0;
+		}
+
+		pos=conv_num(st,& (st->stack->stack_data[st->start+3]));
+		st->pos=pos;
+		st->state=GOTO;
+		// printf("script: jump_zero: jumpto : %d\n",pos);
+	} else {
+		// printf("script: jump_zero: fail\n");
+	}
+	return 0;
+}
+
+int buildin_select(struct script_state *st)
+{
+	char *buf;
+	int len,i;
+	struct map_session_data *sd;
+
+	sd=script_rid2sd(st);
+
+	if(sd->state.menu_or_input==0){
+		st->state=RERUNLINE;
+		sd->state.menu_or_input=1;
+		for(i=st->start+2,len=16;i<st->end;i++){
+			conv_str(st,& (st->stack->stack_data[i]));
+			len+=strlen(st->stack->stack_data[i].u.str)+1;
+		}
+		buf=(char *)aCalloc(len,sizeof(char));
+		buf[0]=0;
+		for(i=st->start+2,len=0;i<st->end;i++){
+			strcat(buf,st->stack->stack_data[i].u.str);
+			strcat(buf,":");
+		}
+		clif_scriptmenu(script_rid2sd(st),st->oid,buf);
+		free(buf);
+	} else if(sd->npc_menu==0xff){	// cansel
+		sd->state.menu_or_input=0;
+		st->state=END;
+	} else {
+		pc_setreg(sd,add_str("l15"),sd->npc_menu);
+		pc_setreg(sd,add_str("@menu"),sd->npc_menu);
+		sd->state.menu_or_input=0;
+		push_val(st->stack,C_INT,sd->npc_menu);
+	}
+	return 0;
+}
+
+/*==========================================
+ * GetMapMobs
+	returns mob counts on a set map:
+	e.g. GetMapMobs("prontera.gat")
+	use "this" - for player's map
+ *------------------------------------------
+ */
+int buildin_getmapmobs(struct script_state *st)
+{
+	char *str=NULL;
+	int m=-1,bx,by,i;
+	int count=0,c;
+	struct block_list *bl;
+
+	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
+
+	if(strcmp(str,"this")==0){
+		struct map_session_data *sd=script_rid2sd(st);
+		if(sd)
+			m=sd->bl.m;
+		else{
+			push_val(st->stack,C_INT,-1);
+			return 0;
+		}
+	}else
+		m=map_mapname2mapid(str);
+
+	if(m < 0){
+		push_val(st->stack,C_INT,-1);
+		return 0;
+	}
+
+	for(by=0;by<=(map[m].ys-1)/BLOCK_SIZE;by++){
+		for(bx=0;bx<=(map[m].xs-1)/BLOCK_SIZE;bx++){
+			bl = map[m].block_mob[bx+by*map[m].bxs];
+			c = map[m].block_mob_count[bx+by*map[m].bxs];
+			for(i=0;i<c && bl;i++,bl=bl->next){
+				if(bl->x>=0 && bl->x<=map[m].xs-1 && bl->y>=0 && bl->y<=map[m].ys-1)
+					count++;
+			}
+		}
+	}
+	push_val(st->stack,C_INT,count);
 	return 0;
 }
 
