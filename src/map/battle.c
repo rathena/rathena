@@ -755,33 +755,36 @@ int battle_get_def(struct block_list *bl)
 
 	if(def < 1000000) {
 		if(sc_data) {
-			//キーピング時はDEF100
-			if( sc_data[SC_KEEPING].timer!=-1)
-				def = 100;
-			//プロボック時は減算
-			if( sc_data[SC_PROVOKE].timer!=-1 && bl->type != BL_PC)
-				def = (def*(100 - 6*sc_data[SC_PROVOKE].val1)+50)/100;
-			//戦太鼓の響き時は加算
-			if( sc_data[SC_DRUMBATTLE].timer!=-1 && bl->type != BL_PC)
-				def += sc_data[SC_DRUMBATTLE].val3;
-			//毒にかかっている時は減算
-			if(sc_data[SC_POISON].timer!=-1 && bl->type != BL_PC)
-				def = def*75/100;
-			//ストリップシールド時は減算
-			if(sc_data[SC_STRIPSHIELD].timer!=-1 && bl->type != BL_PC)
-				def = def*sc_data[SC_STRIPSHIELD].val2/100;
-			//シグナムクルシス時は減算
-			if(sc_data[SC_SIGNUMCRUCIS].timer!=-1 && bl->type != BL_PC)
-				def = def * (100 - sc_data[SC_SIGNUMCRUCIS].val2)/100;
-			//永遠の混沌時はDEF0になる
-			if(sc_data[SC_ETERNALCHAOS].timer!=-1 && bl->type != BL_PC)
-				def = 0;
 			//凍結、石化時は右シフト
 			if(sc_data[SC_FREEZE].timer != -1 || (sc_data[SC_STONE].timer != -1 && sc_data[SC_STONE].val2 == 0))
 				def >>= 1;
-			//コンセントレーション時は減算
-			if( sc_data[SC_CONCENTRATION].timer!=-1 && bl->type != BL_PC)
-				def = (def*(100 - 5*sc_data[SC_CONCENTRATION].val1))/100;
+
+			if (bl->type != BL_PC) {
+				//キーピング時はDEF100
+				if( sc_data[SC_KEEPING].timer!=-1)
+					def = 100;
+				//プロボック時は減算
+				if( sc_data[SC_PROVOKE].timer!=-1)
+					def = (def*(100 - 6*sc_data[SC_PROVOKE].val1)+50)/100;
+				//戦太鼓の響き時は加算
+				if( sc_data[SC_DRUMBATTLE].timer!=-1)
+					def += sc_data[SC_DRUMBATTLE].val3;
+				//毒にかかっている時は減算
+				if(sc_data[SC_POISON].timer!=-1)
+					def = def*75/100;
+				//ストリップシールド時は減算
+				if(sc_data[SC_STRIPSHIELD].timer!=-1)
+					def = def*sc_data[SC_STRIPSHIELD].val2/100;
+				//シグナムクルシス時は減算
+				if(sc_data[SC_SIGNUMCRUCIS].timer!=-1)
+					def = def * (100 - sc_data[SC_SIGNUMCRUCIS].val2)/100;
+				//永遠の混沌時はDEF0になる
+				if(sc_data[SC_ETERNALCHAOS].timer!=-1)
+					def = 0;			
+				//コンセントレーション時は減算
+				if( sc_data[SC_CONCENTRATION].timer!=-1)
+					def = (def*(100 - 5*sc_data[SC_CONCENTRATION].val1))/100;
+			}
 		}
 		//詠唱中は詠唱時減算率に基づいて減算
 		if(skilltimer != -1) {
@@ -846,15 +849,15 @@ int battle_get_def2(struct block_list *bl)
 	else if(bl->type==BL_PET)
 		def2 = mob_db[((struct pet_data *)bl)->class_].vit;
 
-	if(sc_data) {
-		if( sc_data[SC_ANGELUS].timer!=-1 && bl->type != BL_PC)
+	if(bl->type != BL_PC && sc_data) {
+		if( sc_data[SC_ANGELUS].timer!=-1)
 			def2 = def2*(110+5*sc_data[SC_ANGELUS].val1)/100;
-		if( sc_data[SC_PROVOKE].timer!=-1 && bl->type != BL_PC)
+		if( sc_data[SC_PROVOKE].timer!=-1)
 			def2 = (def2*(100 - 6*sc_data[SC_PROVOKE].val1)+50)/100;
-		if(sc_data[SC_POISON].timer!=-1 && bl->type != BL_PC)
+		if(sc_data[SC_POISON].timer!=-1)
 			def2 = def2*75/100;
 		//コンセントレーション時は減算
-		if( sc_data[SC_CONCENTRATION].timer!=-1 && bl->type != BL_PC)
+		if( sc_data[SC_CONCENTRATION].timer!=-1)
 			def2 = def2*(100 - 5*sc_data[SC_CONCENTRATION].val1)/100;
 	}
 	if(def2 < 1) def2 = 1;
