@@ -1,6 +1,8 @@
 Date	Added
 
 03/29
+        * Fixed a lot of compile time problems with our mixed C++/C
+          conformance [1328: MouseJstr]
         * Fixed use of storage variable to conform to ANSI C spec 
           [1327: MouseJstr]
         * Added CIA-bot to the #athena channel [MouseJstr]

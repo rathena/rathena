@@ -39,7 +39,7 @@ char db_server_id[32] = "ragnarok";
 char db_server_pw[32] = "ragnarok";
 char db_server_logindb[32] = "ragnarok";
 
-struct storage *storage=NULL;
+struct storage *storage_=NULL;
 
 struct mmo_map_server server[MAX_MAP_SERVERS];
 int server_fd[MAX_MAP_SERVERS];
@@ -182,13 +182,13 @@ int storage_tosql(int account_id,struct storage *p){
 	//printf ("all storage item was deleted ok\n");
 
 	for(i=0;i<MAX_STORAGE;i++) {
-		//printf ("save storage num: %d (%d:%d)\n",i, p->storage[i].nameid , p->storage[i].amount);
+		//printf ("save storage num: %d (%d:%d)\n",i, p->storage_[i].nameid , p->storage_[i].amount);
 
-		if( (p->storage[i].nameid) && (p->storage[i].amount) ){
+		if( (p->storage_[i].nameid) && (p->storage_[i].amount) ){
 			sprintf(tmp_sql,"INSERT INTO `storage` (`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`card0`,`card1`,`card2`,`card3`,`broken`) VALUES ('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			  p->account_id, p->storage[i].nameid, p->storage[i].amount, p->storage[i].equip,
-			  p->storage[i].identify, p->storage[i].refine, p->storage[i].attribute,
-			  p->storage[i].card[0], p->storage[i].card[1], p->storage[i].card[2], p->storage[i].card[3], p->storage[i].broken );
+			  p->account_id, p->storage_[i].nameid, p->storage_[i].amount, p->storage_[i].equip,
+			  p->storage_[i].identify, p->storage_[i].refine, p->storage_[i].attribute,
+			  p->storage_[i].card[0], p->storage_[i].card[1], p->storage_[i].card[2], p->storage_[i].card[3], p->storage_[i].broken );
 			//printf ("%s\n",tmp_sql);
 			if(mysql_query(&mysql_handle, tmp_sql) ) {
 				printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
@@ -219,18 +219,18 @@ int storage_fromstr(char *str, struct storage *p)
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6],
 		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[11], &len) == 12) {
-			p->storage[i].id = tmp_int[0];
-			p->storage[i].nameid = tmp_int[1];
-			p->storage[i].amount = tmp_int[2];
-			p->storage[i].equip = tmp_int[3];
-			p->storage[i].identify = tmp_int[4];
-			p->storage[i].refine = tmp_int[5];
-			p->storage[i].attribute = tmp_int[6];
-			p->storage[i].card[0] = tmp_int[7];
-			p->storage[i].card[1] = tmp_int[8];
-			p->storage[i].card[2] = tmp_int[9];
-			p->storage[i].card[3] = tmp_int[10];
-			p->storage[i].broken  = tmp_int[11];
+			p->storage_[i].id = tmp_int[0];
+			p->storage_[i].nameid = tmp_int[1];
+			p->storage_[i].amount = tmp_int[2];
+			p->storage_[i].equip = tmp_int[3];
+			p->storage_[i].identify = tmp_int[4];
+			p->storage_[i].refine = tmp_int[5];
+			p->storage_[i].attribute = tmp_int[6];
+			p->storage_[i].card[0] = tmp_int[7];
+			p->storage_[i].card[1] = tmp_int[8];
+			p->storage_[i].card[2] = tmp_int[9];
+			p->storage_[i].card[3] = tmp_int[10];
+			p->storage_[i].broken  = tmp_int[11];
 			next += len;
 			if (str[next] == ' ')
 				next++;
@@ -240,18 +240,18 @@ int storage_fromstr(char *str, struct storage *p)
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6],
 		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &len) == 11) {
-			p->storage[i].id = tmp_int[0];
-			p->storage[i].nameid = tmp_int[1];
-			p->storage[i].amount = tmp_int[2];
-			p->storage[i].equip = tmp_int[3];
-			p->storage[i].identify = tmp_int[4];
-			p->storage[i].refine = tmp_int[5];
-			p->storage[i].attribute = tmp_int[6];
-			p->storage[i].card[0] = tmp_int[7];
-			p->storage[i].card[1] = tmp_int[8];
-			p->storage[i].card[2] = tmp_int[9];
-			p->storage[i].card[3] = tmp_int[10];
-			p->storage[i].broken = 0;
+			p->storage_[i].id = tmp_int[0];
+			p->storage_[i].nameid = tmp_int[1];
+			p->storage_[i].amount = tmp_int[2];
+			p->storage_[i].equip = tmp_int[3];
+			p->storage_[i].identify = tmp_int[4];
+			p->storage_[i].refine = tmp_int[5];
+			p->storage_[i].attribute = tmp_int[6];
+			p->storage_[i].card[0] = tmp_int[7];
+			p->storage_[i].card[1] = tmp_int[8];
+			p->storage_[i].card[2] = tmp_int[9];
+			p->storage_[i].card[3] = tmp_int[10];
+			p->storage_[i].broken = 0;
 			next += len;
 			if (str[next] == ' ')
 				next++;
@@ -705,14 +705,14 @@ int mmo_char_init(void){
 		set=sscanf(line,"%d,%d",&tmp_int[0],&tmp_int[1]);
 		if(set==2) {
 			if(i==0){
-				storage = (struct storage*)malloc(sizeof(struct storage));
+				storage_ = (struct storage*)malloc(sizeof(struct storage));
 			}else{
-				storage = (struct storage*)realloc(storage,sizeof(struct storage)*(i+1));
+				storage_ = (struct storage*)realloc(storage_,sizeof(struct storage)*(i+1));
 			}
-			memset(&storage[i],0,sizeof(struct storage));
-			storage[i].account_id=tmp_int[0];
-			storage_fromstr(line,&storage[i]);
-			storage_tosql(tmp_int[0],&storage[i]); //to sql. (dump)
+			memset(&storage_[i],0,sizeof(struct storage));
+			storage_[i].account_id=tmp_int[0];
+			storage_fromstr(line,&storage_[i]);
+			storage_tosql(tmp_int[0],&storage_[i]); //to sql. (dump)
 			i++;
 		}
 	}

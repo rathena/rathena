@@ -65,15 +65,15 @@ void* aRealloc_( void *p, size_t size, const char *file, int line, const char *f
 	return ret;
 }
 
-void* aStrdup_( const void *p, const char *file, int line, const char *func )
+char* aStrdup_( const void *p, const char *file, int line, const char *func )
 {
-	void *ret;
+	char *ret;
 	
 	// printf("%s:%d: in func %s: strdup %p\n",file,line,func,p);
 #ifdef MEMWATCH
 	ret=mwStrdup(p,file,line);
 #else
-	ret=strdup(p);
+	ret= strdup((char *) p);
 #endif
 	if(ret==NULL){
 		printf("%s:%d: in func %s: strdup error out of memory!\n",file,line,func);

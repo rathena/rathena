@@ -62,7 +62,7 @@ static struct str_data_struct {
 	int str;
 	int backpatch;
 	int label;
-	int (*func)();
+	int (*func)(script_state *);
 	int val;
 	int next;
 } *str_data;
@@ -1190,7 +1190,7 @@ static void read_constdb(void)
 		   sscanf(line,"%[A-Za-z0-9_] %d %d",name,&val,&type)>=2){
 			for(i=0;name[i];i++)
 				name[i]=tolower(name[i]);
-			n=add_str(name);
+			n=add_str((const unsigned char *) name);
 			if(type==0)
 				str_data[n].type=C_INT;
 			else
@@ -1281,7 +1281,7 @@ char* parse_script(unsigned char *src,int line)
 	add_scriptc(C_NOP);
 
 	script_size = script_pos;
-	script_buf=(char *)aRealloc(script_buf,script_pos + 1);
+	script_buf=(unsigned char *)aRealloc(script_buf,script_pos + 1);
 
 	// –¢‰ðŒˆ‚Ìƒ‰ƒxƒ‹‚ð‰ðŒˆ
 	for(i=LABEL_START;i<str_num;i++){
@@ -1308,7 +1308,7 @@ char* parse_script(unsigned char *src,int line)
 	printf("\n");
 #endif
 
-	return script_buf;
+	return (char *) script_buf;
 }
 
 //
@@ -1445,7 +1445,7 @@ static int set_reg(struct map_session_data *sd,int num,char *name,void *v)
 
 int set_var(struct map_session_data *sd, char *name, void *val)
 {
-    return set_reg(sd, add_str(name), name, val);
+    return set_reg(sd, add_str((unsigned char *) name), name, val);
 }
 
 /*==========================================
@@ -1525,7 +1525,7 @@ void push_str(struct script_stack *stack,int type,unsigned char *str)
 //	if(battle_config.etc_log)
 //		printf("push (%d,%x)-> %d\n",type,str,stack->sp);
 	stack->stack_data[stack->sp].type=type;
-	stack->stack_data[stack->sp].u.str=str;
+	stack->stack_data[stack->sp].u.str=(char *) str;
 	stack->sp++;
 }
 
@@ -1537,10 +1537,10 @@ void push_copy(struct script_stack *stack,int pos)
 {
 	switch(stack->stack_data[pos].type){
 	case C_CONSTSTR:
-		push_str(stack,C_CONSTSTR,stack->stack_data[pos].u.str);
+		push_str(stack,C_CONSTSTR,(unsigned char *) stack->stack_data[pos].u.str);
 		break;
 	case C_STR:
-		push_str(stack,C_STR,aStrdup(stack->stack_data[pos].u.str));
+		push_str(stack,C_STR,(unsigned char *) aStrdup(stack->stack_data[pos].u.str));
 		break;
 	default:
 		push_val(stack,stack->stack_data[pos].type,stack->stack_data[pos].u.num);
@@ -1609,7 +1609,7 @@ int buildin_callfunc(struct script_state *st)
 	char *scr;
 	char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 
-	if( (scr=strdb_search(script_get_userfunc_db(),str)) ){
+	if( (scr=(char *) strdb_search(script_get_userfunc_db(),str)) ){
 		int i,j;
 		for(i=st->start+3,j=0;i<st->end;i++,j++)
 			push_copy(st->stack,i);
@@ -1748,8 +1748,8 @@ int buildin_menu(struct script_state *st)
 		st->state=END;
 	} else {	// goto“®ì
 		// ragemuŒÝŠ·‚Ì‚½‚ß
-		pc_setreg(sd,add_str("l15"),sd->npc_menu);
-		pc_setreg(sd,add_str("@menu"),sd->npc_menu);
+		pc_setreg(sd,add_str((unsigned char *) "l15"),sd->npc_menu);
+		pc_setreg(sd,add_str((unsigned char *) "@menu"),sd->npc_menu);
 		sd->state.menu_or_input=0;
 		if(sd->npc_menu>0 && sd->npc_menu<(st->end-st->start)/2){
 			int pos;
@@ -1930,7 +1930,7 @@ int buildin_input(struct script_state *st)
 {
 	struct map_session_data *sd=NULL;
 	int num=(st->end>st->start+2)?st->stack->stack_data[st->start+2].u.num:0;
-	char *name=(st->end>st->start+2)?str_buf+str_data[num&0x00ffffff].str:"";
+	char *name=(char *) ((st->end>st->start+2)?str_buf+str_data[num&0x00ffffff].str:"");
 //	char prefix=*name;
 	char postfix=name[strlen(name)-1];
 
@@ -1961,7 +1961,7 @@ int buildin_input(struct script_state *st)
 				set_reg(sd,num,name,(void*)sd->npc_amount);
 			} else {
 				// ragemuŒÝŠ·‚Ì‚½‚ß
-				pc_setreg(sd,add_str("l14"),sd->npc_amount);
+				pc_setreg(sd,add_str((unsigned char *) "l14"),sd->npc_amount);
 			}
 		}
 	} else {
@@ -2186,7 +2186,7 @@ int buildin_deletearray(struct script_state *st)
 	}
 	for(;i<(128-(num>>24));i++){
 		if( postfix!='$' ) set_reg(sd,num+(i<<24),name, 0);
-		if( postfix=='$' ) set_reg(sd,num+(i<<24),name, "");
+		if( postfix=='$' ) set_reg(sd,num+(i<<24),name, (void *) "");
 	}
 	return 0;
 }
@@ -2704,9 +2704,9 @@ int buildin_getpartyname(struct script_state *st)
 	party_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	name=buildin_getpartyname_sub(party_id);
 	if(name!=0)
-		push_str(st->stack,C_STR,name);
+		push_str(st->stack,C_STR,(unsigned char *)name);
 	else
-		push_str(st->stack,C_CONSTSTR,"null");
+		push_str(st->stack,C_CONSTSTR, (unsigned char *) "null");
 
 	return 0;
 }
@@ -2726,12 +2726,12 @@ int buildin_getpartymember(struct script_state *st)
 		for(i=0;i<MAX_PARTY;i++){
 			if(p->member[i].account_id){
 //				printf("name:%s %d\n",p->member[i].name,i);
-				mapreg_setregstr(add_str("$@partymembername$")+(i<<24),p->member[i].name);
+				mapreg_setregstr(add_str((unsigned char *) "$@partymembername$")+(i<<24),p->member[i].name);
 				j++;
 			}
 		}
 	}
-	mapreg_setreg(add_str("$@partymembercount"),j);
+	mapreg_setreg(add_str((unsigned char *) "$@partymembercount"),j);
 
 	return 0;
 }
@@ -2758,9 +2758,9 @@ int buildin_getguildname(struct script_state *st)
 	int guild_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	name=buildin_getguildname_sub(guild_id);
 	if(name!=0)
-		push_str(st->stack,C_STR,name);
+		push_str(st->stack,C_STR,(unsigned char *) name);
 	else
-		push_str(st->stack,C_CONSTSTR,"null");
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) "null");
 	return 0;
 }
 
@@ -2788,9 +2788,9 @@ int buildin_getguildmaster(struct script_state *st)
 	int guild_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	master=buildin_getguildmaster_sub(guild_id);
 	if(master!=0)
-		push_str(st->stack,C_STR,master);
+		push_str(st->stack,C_STR,(unsigned char *) master);
 	else
-		push_str(st->stack,C_CONSTSTR,"null");
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) "null");
 	return 0;
 }
 
@@ -2827,23 +2827,23 @@ int buildin_strcharinfo(struct script_state *st)
 		char *buf;
 		buf=(char *)aCallocA(24,sizeof(char));
 		strncpy(buf,sd->status.name, 23);
-		push_str(st->stack,C_STR,buf);
+		push_str(st->stack,C_STR,(unsigned char *) buf);
 	}
 	if(num==1){
 		char *buf;
 		buf=buildin_getpartyname_sub(sd->status.party_id);
 		if(buf!=0)
-			push_str(st->stack,C_STR,buf);
+			push_str(st->stack,C_STR,(unsigned char *) buf);
 		else
-			push_str(st->stack,C_CONSTSTR,"");
+			push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
 	}
 	if(num==2){
 		char *buf;
 		buf=buildin_getguildname_sub(sd->status.guild_id);
 		if(buf!=0)
-			push_str(st->stack,C_STR,buf);
+			push_str(st->stack,C_STR,(unsigned char *) buf);
 		else
-			push_str(st->stack,C_CONSTSTR,"");
+			push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
 	}
 
 	return 0;

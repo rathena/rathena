@@ -18,6 +18,11 @@ struct dbn {
 	struct dbn *prev;
 };
 
+struct db_free {
+  struct dbn *z;
+  struct dbn **root;
+};
+
 struct dbt {
 	int (*cmp)(struct dbt*,void*,void*);
 	unsigned int (*hash)(struct dbt*,void*);
@@ -30,10 +35,7 @@ struct dbt {
 	int alloc_line; // DB?s
 	// db_foreach 内部でdb_erase される対策として、
 	// db_foreach が終わるまでロックすることにする
-	struct db_free {
-		struct dbn *z;
-		struct dbn **root;
-	} *free_list;
+	struct db_free *free_list;
 	int free_count;
 	int free_max;
 	int free_lock;

@@ -71,7 +71,7 @@ extern char guild_storage_db[256];
 extern char party_db[256];
 extern char pet_db[256];
 
-int db_use_sqldbs; // added for sql item_db read for char server [Valaris]
+extern int db_use_sqldbs; // added for sql item_db read for char server [Valaris]
 extern char login_db_level[32];
 extern char login_db_account_id[32];
 

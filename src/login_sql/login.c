@@ -1829,7 +1829,7 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 //--------------------------------------
 static int online_db_final(void *key,void *data,va_list ap)
 {
-	int *p = data;
+	int *p = (int *) data;
 	if (p) aFree(p);
 	return 0;
 }

@@ -2012,7 +2012,7 @@ int map_eraseipport(char *name,unsigned long ip,int port)
 	struct map_data_other_server *mdos;
 //	unsigned char *p=(unsigned char *)&ip;
 
-	md=strdb_search(map_db,name);
+	md=(struct map_data *) strdb_search(map_db,name);
 	if(md){
 		if(md->gat) // local -> check data
 			return 0;
@@ -3119,13 +3119,13 @@ int id_db_final(void *k,void *d,va_list ap) { return 0; }
 int map_db_final(void *k,void *d,va_list ap) { return 0; }
 int nick_db_final(void *k,void *d,va_list ap)
 {
-	char *p = d;
+	char *p = (char *) d;
 	if (p) aFree(p);
 	return 0;
 }
 int charid_db_final(void *k,void *d,va_list ap)
 {
-	struct charid2nick *p = d;
+	struct charid2nick *p = (struct charid2nick *) d;
 	if (p) aFree(p);
 	return 0;
 }

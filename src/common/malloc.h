@@ -63,7 +63,7 @@
 	void* aCalloc_( size_t num, size_t size, const char *file, int line, const char *func );
 	void* aRealloc_( void *p, size_t size, const char *file, int line, const char *func );
 	void  aFree_( void *p, const char *file, int line, const char *func );
-	void* aStrdup_( const void *p, const char *file, int line, const char *func );
+	char* aStrdup_( const void *p, const char *file, int line, const char *func );
 
 #	define aMalloc(n) aMalloc_(n,ALC_MARK)
 #	define aMallocA(n) aMalloc_(n,ALC_MARK)

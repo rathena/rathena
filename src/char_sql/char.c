@@ -67,6 +67,7 @@ char party_db[256] = "party";
 char pet_db[256] = "pet";
 char login_db[256] = "login";
 char friend_db[256] = "friends";
+int db_use_sqldbs;
 
 char login_db_account_id[32] = "account_id";
 char login_db_level[32] = "level";
@@ -3138,7 +3139,7 @@ int char_lan_config_read(const char *lancfgName){
 
 static int char_db_final(void *key,void *data,va_list ap)
 {
-	struct mmo_charstatus *p = data;
+	struct mmo_charstatus *p = (struct mmo_charstatus *) data;
 	if (p) aFree(p);
 	return 0;
 }
@@ -3280,8 +3281,8 @@ int char_config_read(const char *cfgName) {
 		if (sscanf(line,"%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
 
-		remove_control_chars(w1);
-		remove_control_chars(w2);
+		remove_control_chars((unsigned char *) w1);
+		remove_control_chars((unsigned char *) w2);
 		if (strcmpi(w1, "userid") == 0) {
 			memcpy(userid, w2, 24);
 		} else if (strcmpi(w1, "passwd") == 0) {

@@ -532,7 +532,7 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 		return 0;
 	}
 	//printf("[Guild Castle %02i]: Save...\n",gc->castle_id);
-	gcopy = numdb_search(castle_db_,gc->castle_id);
+	gcopy = (struct guild_castle *) numdb_search(castle_db_,gc->castle_id);
 	if (gcopy == NULL) {
 		gcopy = (struct guild_castle *) aMalloc(sizeof(struct guild_castle));
 		numdb_insert(castle_db_, gc->castle_id, gcopy);
@@ -714,13 +714,13 @@ int guild_infoevent_db_final (void *k, void *data, va_list ap) { return 0; }
 int guild_castleinfoevent_db_final (void *k, void *data, va_list ap) { return 0; }
 int guild_db_final (void *k, void *data, va_list ap)
 {
-	struct guild *g = data;
+	struct guild *g = (struct guild *) data;
 	if (g) aFree(g);
 	return 0;
 }
 int castle_db_final (void *k, void *data, va_list ap)
 {
-	struct guild_castle *gc = data;
+	struct guild_castle *gc = (struct guild_castle *) data;
 	if (gc) aFree(gc);
 	return 0;
 }

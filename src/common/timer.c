@@ -54,9 +54,9 @@ int add_timer_func_list(int (*func)(int,unsigned int,int,int), char* name) {
 	struct timer_func_list* tfl;
 
 	//CALLOC(tfl, struct timer_func_list, 1);
-	tfl = aCalloc( sizeof(struct timer_func_list) , 1);
+	tfl = (struct timer_func_list*) aCalloc( sizeof(struct timer_func_list) , 1);
 	//MALLOC(tfl->name, char, strlen(name) + 1);
-	tfl->name = aMalloc( strlen(name) + 1 );
+	tfl->name = (char *) aMalloc( strlen(name) + 1 );
 
 	tfl->next = tfl_root;
 	tfl->func = func;
@@ -112,11 +112,11 @@ static void push_timer_heap(int index) {
 		if (timer_heap_max == 0) {
 			timer_heap_max = 256;
 			//CALLOC(timer_heap, int, 256);
-			timer_heap = aCalloc( sizeof(int) , 256);
+			timer_heap = (int *) aCalloc( sizeof(int) , 256);
 		} else {
 			timer_heap_max += 256;
 			//REALLOC(timer_heap, int, timer_heap_max);
-			timer_heap = aRealloc( timer_heap, sizeof(int) * timer_heap_max);
+			timer_heap = (int *) aRealloc( timer_heap, sizeof(int) * timer_heap_max);
 			memset(timer_heap + (timer_heap_max - 256), 0, sizeof(int) * 256);
 		}
 	}
@@ -178,11 +178,11 @@ int add_timer(unsigned int tick,int (*func)(int,unsigned int,int,int),int id,int
 		if (timer_data_max == 0) {
 			timer_data_max = 256;
 			//CALLOC(timer_data, struct TimerData, timer_data_max);
-			timer_data = aCalloc( sizeof(struct TimerData) , timer_data_max);
+			timer_data = (struct TimerData*) aCalloc( sizeof(struct TimerData) , timer_data_max);
 		} else {
 			timer_data_max += 256;
 			//REALLOC(timer_data, struct TimerData, timer_data_max);
-			timer_data = aRealloc( timer_data, sizeof(struct TimerData) * timer_data_max);
+			timer_data = (struct TimerData *) aRealloc( timer_data, sizeof(struct TimerData) * timer_data_max);
 			memset(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
 		}
 	}
@@ -267,7 +267,7 @@ int do_timer(unsigned int tick) {
 				if (free_timer_list_pos >= free_timer_list_max) {
 					free_timer_list_max += 256;
 					//REALLOC(free_timer_list, int, free_timer_list_max);
-					free_timer_list = aRealloc(free_timer_list, sizeof(int) * free_timer_list_max);
+					free_timer_list = (int *) aRealloc(free_timer_list, sizeof(int) * free_timer_list_max);
 					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
 				}
 				free_timer_list[free_timer_list_pos++] = i;

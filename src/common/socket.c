@@ -678,7 +678,7 @@ static int connect_check_(unsigned int ip) {
 		hist = hist->next;
 	}
 	// IPƒŠƒXƒg‚É–³‚¢‚Ì‚ÅV‹Kì¬
-	hist_new = aCalloc(1,sizeof(struct _connect_history));
+	hist_new = (struct _connect_history *) aCalloc(1,sizeof(struct _connect_history));
 	hist_new->ip   = ip;
 	hist_new->tick = gettick();
 	if(connect_history[ip & 0xFFFF] != NULL) {
@@ -791,12 +791,12 @@ int socket_config_read(const char *cfgName) {
 			if(strcmpi(w2,"allow,deny")==0) access_order=ACO_ALLOW_DENY;
 			if(strcmpi(w2,"mutual-failure")==0) access_order=ACO_MUTUAL_FAILTURE;
 		} else if(strcmpi(w1,"allow")==0){
-			access_allow = aRealloc(access_allow,(access_allownum+1)*sizeof(struct _access_control));
+			access_allow = (struct _access_control *) aRealloc(access_allow,(access_allownum+1)*sizeof(struct _access_control));
 			if(access_ipmask(w2,&access_allow[access_allownum])) {
 				access_allownum++;
 			}
 		} else if(strcmpi(w1,"deny")==0){
-			access_deny = aRealloc(access_deny,(access_denynum+1)*sizeof(struct _access_control));
+			access_deny = (struct _access_control *) aRealloc(access_deny,(access_denynum+1)*sizeof(struct _access_control));
 			if(access_ipmask(w2,&access_deny[access_denynum])) {
 				access_denynum++;
 			}

@@ -851,10 +851,10 @@ static int itemdb_read_sqldb(void)
 				if (sql_row[17] != NULL)
 				{
                                         if (sql_row[17][0] == '{')
-					  id->use_script = parse_script(sql_row[17], 0);
+					  id->use_script = parse_script((unsigned char *) sql_row[17], 0);
                                         else {
 					  sprintf(script, "{%s}", sql_row[17]);
-					  id->use_script = parse_script(script, 0);
+					  id->use_script = parse_script((unsigned char *) script, 0);
                                         }
 				}
 				else
@@ -865,10 +865,10 @@ static int itemdb_read_sqldb(void)
 				if (sql_row[18] != NULL)
 				{
                                         if (sql_row[18][0] == '{')
-					  id->equip_script = parse_script(sql_row[18], 0);
+					  id->equip_script = parse_script((unsigned char *) sql_row[18], 0);
                                         else {
 					  sprintf(script, "{%s}", sql_row[18]);
-					  id->equip_script = parse_script(script, 0);
+					  id->equip_script = parse_script((unsigned char *) script, 0);
                                         }
 				}
 				else

@@ -875,7 +875,7 @@ int npc_checknear(struct map_session_data *sd,int id)
  */
 int npc_globalmessage(const char *name,char *mes)
 {
-	struct npc_data *nd=strdb_search(npcname_db,name);
+	struct npc_data *nd=(struct npc_data *) strdb_search(npcname_db,name);
 	char temp[100];
 	char ntemp[50];
 	char *ltemp;
