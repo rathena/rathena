@@ -1,5 +1,10 @@
 Date	Added
 
+03/02
+
+        * SQL: Fixed temporary ban. Now banned players can enter the server when the ban time is over. [Lupus]
+	  It wasn't working because STATE hasn't been cleared properly.
+	  Also fixed wrong client messages (ban reasons: Banned by GM / Temp ban till DATE).
 03/01
         * Effects from dancer/bard skills will stay for 20 seconds after leaving the
           skill area [celest]

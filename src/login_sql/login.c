@@ -534,27 +534,6 @@ int mmo_auth( struct mmo_account* account , int fd){
 		printf("auth ok %s %s" RETCODE, tmpstr, account->userid);
 	}
 
-	if (atoi(sql_row[9])) {
-		switch(atoi(sql_row[9])) { // packet 0x006a value + 1
-		case 1:   // 0 = Unregistered ID
-		case 2:   // 1 = Incorrect Password
-		case 3:   // 2 = This ID is expired
-		case 4:   // 3 = Rejected from Server
-		case 5:   // 4 = You have been blocked by the GM Team
-		case 6:   // 5 = Your Game's EXE file is not the latest version
-		case 7:   // 6 = Your are Prohibited to log in until %s
-		case 8:   // 7 = Server is jammed due to over populated
-		case 9:   // 8 = No MSG (actually, all states after 9 except 99 are No MSG, use only this)
-		case 100: // 99 = This ID has been totally erased
-			printf("Auth Error #%d\n", atoi(sql_row[9]));
-			return atoi(sql_row[9]) - 1;
-			break;
-		default:
-			return 99; // 99 = ID has been totally erased
-			break;
-		}
-	}
-
 /*
 // do not remove this section. this is meant for future, and current forums usage
 // as a login manager and CP for login server. [CLOWNISIUS]
@@ -595,10 +574,36 @@ int mmo_auth( struct mmo_account* account , int fd){
 			return 6; // 6 = Your are Prohibited to log in until %s
 		} else { // ban is finished
 			// reset the ban time
-			sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
+			if (atoi(sql_row[9])==7) {//it was a temp ban - so we set STATE to 0
+				sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0', `state`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
+				strcpy(sql_row[9],"0"); //we clear STATE
+			} else //it was a permanent ban + temp ban. So we leave STATE = 5, but clear the temp ban
+				sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
+
 			if (mysql_query(&mysql_handle, tmpsql)) {
 				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 			}
+		}
+	}
+
+	if (atoi(sql_row[9])) {
+		switch(atoi(sql_row[9])) { // packet 0x006a value + 1
+		case 1:   // 0 = Unregistered ID
+		case 2:   // 1 = Incorrect Password
+		case 3:   // 2 = This ID is expired
+		case 4:   // 3 = Rejected from Server
+		case 5:   // 4 = You have been blocked by the GM Team
+		case 6:   // 5 = Your Game's EXE file is not the latest version
+		case 7:   // 6 = Your are Prohibited to log in until %s
+		case 8:   // 7 = Server is jammed due to over populated
+		case 9:   // 8 = No MSG (actually, all states after 9 except 99 are No MSG, use only this)
+		case 100: // 99 = This ID has been totally erased
+			printf("Auth Error #%d\n", atoi(sql_row[9]));
+			return atoi(sql_row[9]) - 1;
+			break;
+		default:
+			return 99; // 99 = ID has been totally erased
+			break;
 		}
 	}
 
@@ -606,13 +611,12 @@ int mmo_auth( struct mmo_account* account , int fd){
 		return 2; // 2 = This ID is expired
 	}
 
-    if ( is_user_online(atol(sql_row[0])) ) {
-        printf("User [%s] is already online - Rejected.\n",sql_row[1]);
+	if ( is_user_online(atol(sql_row[0])) ) {
+	        printf("User [%s] is already online - Rejected.\n",sql_row[1]);
 #ifndef TWILIGHT
-	return 3; // Rejected
+		return 3; // Rejected
 #endif
-    }
-
+	}
 
 	account->account_id = atoi(sql_row[0]);
 	account->login_id1 = rand();
@@ -1367,7 +1371,7 @@ int parse_login(int fd) {
 				}
 				result = -3;
 			}else if(result == 6){ //not lastet version ..
-				result = 5;
+				//result = 5;
 			}
 
 			sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE %s `%s` = '%s'",login_db, case_sensitive ? "BINARY" : "",login_db_userid, t_uid);
