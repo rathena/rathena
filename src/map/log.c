@@ -471,6 +471,9 @@ int log_config_read(char *cfgName)
 				strcpy(log_config.log_gm, w2);
 				if(log_config.gm > 0)
 					printf("Logging GM Level %d Commands to file `%s`.txt\n", log_config.gm, w2);
+			//support the import command, just like any other config
+			} else if(strcmpi(w1,"import")==0){
+				log_config_read(w2);
 			}
 		}
 	}

@@ -1,6 +1,9 @@
 Date	Added
 
 12/19
+	* Modified all the *_athena.conf's to have the import command enabled by default [Ajarn]
+	* Added charcommand_conf.txt and log_conf.txt in conf-tmpl/import [Ajarn]
+	* Fixed import command for log_athena.conf file [Ajarn]
 	* Updated charcommand.conf [nsstrunks]
 
 12/18
