@@ -1,5 +1,7 @@
 Date	Added
 01/07
+        * Enabled login server 'anti-freeze' by default as a temporary solution
+          to char-login disconnection [celest]
         * The TXT char server was rejecting login's "i'm alive" packet and disconnecting
           it... fixed [celest]
         * Stall_time wasn't being read in login_athena at all (not by the login server,

@@ -1696,6 +1696,14 @@ int parse_tologin(int fd) {
 			RFIFOSKIP(fd,50);
 			break;
 
+		// login-server alive packet
+		case 0x2718:
+			if (RFIFOREST(fd) < 2)
+				return 0;
+			// do whatever it's supposed to do here?
+			RFIFOSKIP(fd,2);
+			break;
+
 		case 0x2721:	// gm reply
 			if (RFIFOREST(fd) < 10)
 				return 0;
@@ -1956,14 +1964,6 @@ int parse_tologin(int fd) {
 			mapif_sendall(buf, RFIFOW(fd,2));
 		  }
 			RFIFOSKIP(fd,RFIFOW(fd,2));
-			break;
-
-		// login-server alive packet
-		case 0x2718:
-			if (RFIFOREST(fd) < 2)
-				return 0;
-			// do whatever it's supposed to do here
-			RFIFOSKIP(fd,2);
 			break;
 
 		default:
