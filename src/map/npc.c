@@ -1586,10 +1586,10 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 {
 	int x,y,dir=0,m,xs=0,ys=0,class=0;	// [Valaris] thanks to fov
 	char mapname[24];
-	char *srcbuf=NULL,*script=NULL;
+	unsigned char *srcbuf=NULL,*script;
 	int srcsize=65536;
 	int startline=0;
-	char line[1024];
+	unsigned char line[1024];
 	int i;
 	struct npc_data *nd;
 	int evflag=0;
@@ -1602,109 +1602,58 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 	if(strcmp(w1,"-")==0){
 		x=0;y=0;m=-1;
 	}else{
-		// 引数の個数チェック
-		if (sscanf(w1,"%[^,],%d,%d,%d",mapname,&x,&y,&dir) != 4 ||
+	// 引数の個数チェック
+	if (sscanf(w1,"%[^,],%d,%d,%d",mapname,&x,&y,&dir) != 4 ||
 		   ( strcmp(w2,"script")==0 && strchr(w4,',')==NULL) ) {
-			if (strlen(current_file)) {
-			printf("\n");
-			sprintf(tmp_output,"Bad script on line '"CL_WHITE"%s"CL_RESET"' fro"
-				"m file '"CL_WHITE"%s"CL_RESET"'.\n",w3,current_file);
-			ShowError(tmp_output);
-			}
-			return 1;
-		}
-		m = map_mapname2mapid(mapname);
+		printf("bad script line : %s\n",w3);
+		return 1;
 	}
-	
+	m = map_mapname2mapid(mapname);
+	}
+
 	if(strcmp(w2,"script")==0){
 		// スクリプトの解析
-		// { , } の入れ子許したらこっちでも簡易解析しないといけなくなったりもする
-		int curly_count = 0;
-		int string_flag = 0;
-		int j;
 		srcbuf=(char *)aCalloc(srcsize,sizeof(char));
-		if (strchr(first_line,'{')) {
-			strcpy(srcbuf,strchr(first_line,'{'));
-			startline=*lines;
-		} else
-			srcbuf[0]=0;
-		while(1) {
-			fgets(line,1020,fp);
-			(*lines)++;
-			if (feof(fp))
-				break;
-
-			// line の中に文字列 , {} が含まれているか調査
-			i = strlen(line);
-			for(j = 0; j < i ; j++) {
-				if(string_flag) {
-					if(line[j] == '\"' && (j <= 0 || line[j-1] != '\\')) {
-						string_flag = 0;
-					}
-				} else {
-					if(line[j] == '\"') {
-						string_flag = 1;
-					} else if(line[j] == '}') {
-						if(curly_count == 0) {
-							// 抜けるのはfor だけ
-							break;
-						} else {
-							curly_count--;
-						}
-					} else if(line[j] == '{') {
-						curly_count++;
-					} else if(line[j] == '/' && line[j+1] == '/') {
-						// コメント
-						break;
-					} else if(*(unsigned char*)(line + j) >= 0x80) {
-						// 全角文字
-						j++;
-					}
-				}
-			}
-			if (strlen(srcbuf)+strlen(line)+1>=srcsize) {
-				srcsize += 65536;
+	if (strchr(first_line,'{')) {
+		strcpy(srcbuf,strchr(first_line,'{'));
+		startline=*lines;
+	} else
+		srcbuf[0]=0;
+	while(1) {
+		for(i=strlen(srcbuf)-1;i>=0 && isspace(srcbuf[i]);i--);
+		if (i>=0 && srcbuf[i]=='}')
+			break;
+		fgets(line,1020,fp);
+		(*lines)++;
+		if (feof(fp))
+			break;
+		if (strlen(srcbuf)+strlen(line)+1>=srcsize) {
+			srcsize += 65536;
 				srcbuf = (char *)aRealloc(srcbuf, srcsize);
-				memset(srcbuf + srcsize - 65536, '\0', 65536);
+			memset(srcbuf + srcsize - 65536, '\0', 65536);
+		}
+		if (srcbuf[0]!='{') {
+			if (strchr(line,'{')) {
+				strcpy(srcbuf,strchr(line,'{'));
+				startline=*lines;
 			}
-			if (srcbuf[0]!='{') {
-				if (strchr(line,'{')) {
-					strcpy(srcbuf,strchr(line,'{'));
-					startline=*lines;
-				}
-			} else
-				strcat(srcbuf,line);
-			if(!string_flag && line[j] == '}' && curly_count == 0) {
-				break;
-			}
-		}
-		if(curly_count > 0) {
-			printf("\n");
-			snprintf(tmp_output,sizeof(tmp_output),"Missing rig"
-				"ht curly brace at line '"CL_WHITE"%d"CL_RESET"' of file \n\t'"
-				CL_WHITE"%s"CL_RESET"'.\n",*lines,current_file);
-			ShowWarning(tmp_output);
-			//script=NULL;	// Let's load it anyway I guess :p
-			//exit(1); //Wtf? We do we exit?
-		} else {
-			// printf("Ok line %d\n",*lines);
-			script=parse_script(srcbuf,startline);
-		}
-		if (script==NULL) {
-			// script parse error?
-			free(srcbuf);
-			return 1;
-		}
-		
+		} else
+			strcat(srcbuf,line);
+	}
+	script=parse_script(srcbuf,startline);
+	if (script==NULL) {
+		// script parse error?
+		free(srcbuf);
+		return 1;
+	}
+
 	}else{
 		// duplicateする
 		
 		char srcname[128];
 		struct npc_data *nd2;
 		if( sscanf(w2,"duplicate(%[^)])",srcname)!=1 ){
-			printf("\n");
-			snprintf(tmp_output,sizeof(tmp_output),"Bad duplicate name! : %s",w2);
-			ShowWarning(tmp_output);
+			printf("bad duplicate name! : %s",w2);
 			return 0;
 		}
 		if( (nd2=npc_name2id(srcname))==NULL ){
@@ -1979,6 +1928,16 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 
 	for(i=0;i<num;i++) {
 		md=(struct mob_data *)aCalloc(1,sizeof(struct mob_data));
+
+		if(class>4000) { // large/tiny mobs [Valaris]
+			md->size=2;
+			class-=4000;
+		}
+		else if(class>2000) {
+			md->size=1;
+			class-=2000;
+		}
+
 		md->bl.prev=NULL;
 		md->bl.next=NULL;
 		md->bl.m=m;
@@ -1997,18 +1956,7 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 		memcpy(md->name,w3,24);
 
 		md->n = i;
-
-		if(class>4000) { // large/tiny mobs [Valaris]
-			md->size=2;
-			md->base_class = md->class = class-4000;
-		}
-		else if(class>2000) {
-			md->size=1;
-			md->base_class = md->class = class-2000;
-		} else {
-			md->base_class = md->class = class;
-		}
-
+		md->base_class = md->class = class;
 		md->bl.id=npc_get_new_npc_id();
 		md->m =m;
 		md->x0=x;
@@ -2022,9 +1970,9 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 		md->timer = -1;
 		md->target_id=0;
 		md->attacked_id=0;
-		md->speed=mob_db[md->base_class].speed;
+		md->speed=mob_db[class].speed;
 
-		if (mob_db[md->base_class].mode&0x02)
+		if (mob_db[class].mode&0x02)
 			md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 		else
 			md->lootitem=NULL;
@@ -2314,8 +2262,7 @@ int do_init_npc(void)
 	char c = '-';
 
 	// indoorrswtable.txt and etcinfo.txt [Celest]
-	if (battle_config.indoors_override_grffile)
-		npc_read_indoors();
+	npc_read_indoors();
 	//npc_read_weather();
 
 	ev_db=strdb_init(24);
@@ -2330,7 +2277,6 @@ int do_init_npc(void)
 			free(nsl->prev);
 			nsl->prev = NULL;
 		}
-		strcpy(current_file,nsl->name);
 		fp=fopen(nsl->name,"r");
 		if (fp==NULL) {
 			printf("file not found : %s\n",nsl->name);
@@ -2377,8 +2323,8 @@ int do_init_npc(void)
 			} else if (strcmpi(w2,"script")==0 && count > 3) {
 				if( strcmpi(w1,"function")==0 ){
 					npc_parse_function(w1,w2,w3,w4,line+w4pos,fp,&lines);
-				} else {
-					npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines);
+				}else{
+				npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines);
 				}
 			} else if ( (i=0,sscanf(w2,"duplicate%n",&i), (i>0 && w2[i]=='(')) && count > 3) {
 				npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines);
@@ -2418,7 +2364,7 @@ int do_init_npc(void)
 	add_timer_func_list(npc_event_timer,"npc_event_timer");
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
-	memset(current_file,'\0',sizeof(current_file));
+
 	//exit(1);
 
 	return 0;
