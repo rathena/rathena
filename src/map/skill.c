@@ -230,7 +230,7 @@ int SkillStatusChangeTable[]={	/* skill.hのenumのSC_***とあわせること */
 	-1,-1,
 	SC_GOSPEL,
 /* 370- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,SC_EDP,-1,
 /* 380- */
 	SC_TRUESIGHT,
 	-1,-1,
@@ -1004,7 +1004,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 		rate=rate<=5?5:rate;
 		if(rand()%100 < rate)
 			skill_status_change_start(bl,SC_FREEZE,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
-		else if(sd)
+		else if(sd && skillid==MG_FROSTDIVER)
 			clif_skill_fail(sd,skillid,0,0);
 		break;
 
@@ -2225,6 +2225,12 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 				if(sc_data && sc_data[SC_HIDING].timer != -1)
 					skill_status_change_end(src, SC_HIDING, -1);	// ハイディング解除
 				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+				dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
+				if (bl->type == BL_PC)
+					((struct map_session_data *)bl)->dir=dir;
+				else if (bl->type == BL_MOB)
+					((struct mob_data *)bl)->dir=dir;
+				//skill_blown(src,bl,skill_get_blewcount(skillid,skilllv)); 
 			}
 			else if(src->type == BL_PC)
 				clif_skill_fail(sd,sd->skillid,0,0);
@@ -2507,7 +2513,8 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 
 	case WZ_FROSTNOVA:			/* フロストノヴァ */
 		skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
-		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		//skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		map_foreachinarea(skill_attack_area,src->m,src->x-5,bl->y-5,bl->x+5,bl->y+5,0,BF_MAGIC,src,src,skillid,skilllv,tick,flag,BCT_ENEMY); 
 		break;
 
 	case WZ_SIGHTRASHER:
@@ -2979,6 +2986,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case ST_REJECTSWORD:	/* リジェクトソード */
 	case HW_MAGICPOWER:		/* 魔法力増幅 */
 	case PF_MEMORIZE:		/* メモライズ */
+	case ASC_EDP:			// [Celest]
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		break;
@@ -4116,6 +4124,24 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,skillid,src->id,0,skill_get_time(skillid,skilllv),0 );
 		break;
+	case ASC_CDP:   // Temporary skill for Create Deadly Poison[Celest]
+		if(sd) {
+			int eflag;
+			struct item item_tmp;
+			struct block_list tbl;
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			memset(&item_tmp,0,sizeof(item_tmp));
+			memset(&tbl,0,sizeof(tbl)); // [MouseJstr]
+			item_tmp.nameid = 678;
+			item_tmp.identify = 1;
+			tbl.id = 0;
+			eflag = pc_additem(sd,&item_tmp,1);
+			if(eflag) {
+				clif_additem(sd,0,0,eflag);
+				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
+			}
+		}
+		break;
 	case PF_MINDBREAKER:		/* プロボック */
 		{
 			struct status_change *sc_data = battle_get_sc_data(bl);
@@ -4681,7 +4707,10 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			limit=1000;
 		interval=2000;
 		val1=skilllv+2;
-		range=1;
+		if(skilllv < 6)
+			range=1;
+		else
+			range=2; 
 		break;
 
 	case MG_THUNDERSTORM:		/* サンダーストーム */
@@ -5289,7 +5318,8 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 
 	case 0x88:	/* ファイアーピラー(発動後) */
 		if(DIFF_TICK(tick,sg->tick) < 150)
-			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			//skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			map_foreachinarea(skill_attack_area,bl->m,bl->x-1,bl->y-1,bl->x+1,bl->y+1,0,BF_MAGIC,ss,&src->bl,sg->skill_id,sg->skill_lv,tick,0,BCT_ENEMY);  // area damage [Celest]
 		break;
 
 	case 0x90:	/* スキッドトラップ */
@@ -6304,6 +6334,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		}
 		break;
 	case MG_FIREWALL:		/* ファイアーウォール */
+	case WZ_FIREPILLAR: // celest 
 		/* 数制限 */
 		if(battle_config.pc_land_skill_limit) {
 			int maxcount = skill_get_maxcount(skill);
@@ -6432,6 +6463,8 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			continue;
 		if(((itemid[i] >= 715 && itemid[i] <= 717) || itemid[i] == 1065) && sd->sc_data[SC_INTOABYSS].timer != -1)
 			continue;
+		if(skill == WZ_FIREPILLAR && lv<=5)
+			continue; // no gemstones for 1-5 [Celest] 
 		if(skill == AM_POTIONPITCHER && i != x)
 			continue;
 
@@ -7733,6 +7766,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			case SC_MATKPOT:		/* magic attack potion [Valaris] */
 			case SC_WEDDING:	//結婚用(結婚衣裳になって歩くのが遅いとか)
 			case SC_MELTDOWN:		/* メルトダウン */
+			case SC_EDP:		// Celest
 				calc_flag = 1;
 				break;
 			case SC_BERSERK:			/* バーサーク */
@@ -8138,10 +8172,10 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 		case SC_TENSIONRELAX:	/* テンションリラックス */
 		if(sd){		/* SPがあって、HPが満タンでなければ継続 */
 			if( sd->status.sp > 12 && sd->status.max_hp > sd->status.hp ){
-				if(sc_data[type].val2 % (sc_data[type].val1+3) ==0 ){
+/*				if(sc_data[type].val2 % (sc_data[type].val1+3) ==0 ){
 					sd->status.sp -= 12;
 					clif_updatestatus(sd,SP_SP);
-				}
+				}						*/
 				sc_data[type].timer=add_timer(	/* タイマー再設定 */
 					10000+tick, skill_status_change_timer,
 					bl->id, data);
@@ -8410,6 +8444,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			break;
 		case SC_ENDURE:				/* インデュア */
 			if(tick <= 0) tick = 1000 * 60;
+			val2 = 7; // [Celest]
 			break;
 		case SC_CONCENTRATE:		/* 集中力向上 */
 			calc_flag = 1;
@@ -8476,7 +8511,11 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			val2=(((val1 - 1) / 2) + 3)*100;	/* 毒付与確率 */
 			skill_encchant_eremental_end(bl,SC_ENCPOISON);
 			break;
+		case SC_EDP:	// [Celest]
+			calc_flag = 1;
+			break;
 		case SC_POISONREACT:	/* ポイズンリアクト */
+			val2=val1/2 + val1%2; // [Celest] 
 			break;
 		case SC_IMPOSITIO:			/* インポシティオマヌス */
 			calc_flag = 1;

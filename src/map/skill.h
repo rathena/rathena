@@ -331,6 +331,8 @@ enum {	// struct map_session_data ‚Ì status_change‚Ì”Ô†ƒe[ƒuƒ‹
 	SC_MINDBREAKER		=191,
 	SC_SPELLBREAKER		=192,
 
+	SC_EDP				= 114,	// [Celest]
+
 // -- testing various SC effects
 //	SC_AURABLADE			=81,
 //	SC_CONCENTRATION		=83,

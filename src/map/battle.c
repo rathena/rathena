@@ -531,6 +531,8 @@ int battle_get_baseatk(struct block_list *bl)
 			batk -= batk*25/100; //base_atkが25%減少
 		if(sc_data[SC_CONCENTRATION].timer!=-1 && bl->type != BL_PC) //コンセントレーション
 			batk += batk*(5*sc_data[SC_CONCENTRATION].val1)/100;
+		if(sc_data[SC_EDP].timer != -1) // [Celest]
+			batk += batk*(50+50*sc_data[SC_EDP].val1)/100;
 	}
 	if(batk < 1) batk = 1; //base_atkは最低でも1
 	return batk;
@@ -1932,6 +1934,9 @@ static struct Damage battle_calc_pet_weapon_attack(
 				damage = damage*(100+ 50*skill_lv)/100;
 				blewcount=0;
 				break;
+			case AS_GRIMTOOTH:
+				damage = damage*(100+ 20*skill_lv)/100;         
+				break;
 			case AS_SONICBLOW:	// ソニックブロウ
 				damage = damage*(300+ 50*skill_lv)/100;
 				div_=8;
@@ -2143,7 +2148,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 	damage=battle_attr_fix(damage, s_ele, battle_get_element(target) );
 
 	if(skill_num==PA_PRESSURE) /* プレッシャー 必中? */
-		damage = 700+100*skill_lv;
+		damage = 500+300*skill_lv;
 
 	// インベナム修正
 	if(skill_num==TF_POISON){
@@ -2245,6 +2250,12 @@ static struct Damage battle_calc_mob_weapon_attack(
 				return wd;
 			}
 			else ac_flag = 1;
+		} else if(skill_num != CR_GRANDCROSS && t_sc_data && t_sc_data[SC_POISONREACT].timer != -1) {   // poison react [Celest]
+			//memset(&wd,0,sizeof(wd));
+			t_sc_data[SC_POISONREACT].val3 = 0;
+			t_sc_data[SC_POISONREACT].val4 = 1;
+			t_sc_data[SC_POISONREACT].val3 = src->id;
+			return wd;         
 		}
 	}
 	flag=BF_SHORT|BF_WEAPON|BF_NORMAL;	// 攻撃の種類の設定
@@ -2404,6 +2415,9 @@ static struct Damage battle_calc_mob_weapon_attack(
 				else
 					hitrate = 1000000;
 				flag=(flag&~BF_SKILLMASK)|BF_NORMAL;
+				break;
+			case AS_GRIMTOOTH:
+				damage = damage*(100+ 20*skill_lv)/100;         
 				break;
 			case AS_SONICBLOW:	// ソニックブロウ
 				damage = damage*(300+ 50*skill_lv)/100;
@@ -2651,7 +2665,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 	if(sc_data && sc_data[SC_AURABLADE].timer!=-1)	/* オーラブレード 必中 */
 		damage += sc_data[SC_AURABLADE].val1 * 10;
 	if(skill_num==PA_PRESSURE) /* プレッシャー 必中? */
-		damage = 700+100*skill_lv;
+		damage = 500+300*skill_lv;
 
 	// インベナム修正
 	if(skill_num==TF_POISON){
@@ -2777,6 +2791,12 @@ static struct Damage battle_calc_pc_weapon_attack(
 				return wd; //ダメージ構造体を返して終了
 			}
 			else ac_flag = 1;
+		} else if(skill_num != CR_GRANDCROSS && t_sc_data && t_sc_data[SC_POISONREACT].timer != -1) {   // poison react [Celest]
+			//memset(&wd,0,sizeof(wd));
+			t_sc_data[SC_POISONREACT].val3 = 0;
+			t_sc_data[SC_POISONREACT].val4 = 1;
+			t_sc_data[SC_POISONREACT].val3 = src->id;
+			return wd;         
 		}
 	}
 //オートカウンター処理ここまで
@@ -3131,6 +3151,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 					hitrate = 1000000;
 				flag=(flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
+			case AS_GRIMTOOTH:
+				damage = damage*(100+ 20*skill_lv)/100;
+				damage2 = damage2*(100+ 20*skill_lv)/100;
+				break;
 			case AS_SONICBLOW:	// ソニックブロウ
 				hitrate+=30; // hitrate +30, thanks to midas
 				damage = damage*(300+ 50*skill_lv)/100;
@@ -3349,9 +3373,9 @@ static struct Damage battle_calc_pc_weapon_attack(
 					int hp, mhp, damage3;
 					hp = battle_get_hp(src);
 					mhp = battle_get_max_hp(src);
-					damage3 = mhp*((skill_lv/2)+(50/100))/100;
-					damage = (((skill_lv*15)+90)/100)*damage3/100;
-					damage2 = (((skill_lv*15)+90)/100)*damage3/100;
+					damage3 = mhp*9/100;
+					damage = damage*damage3*(90+10*skill_lv)/100;
+					damage2 = damage2*damage3*(90+10*skill_lv)/100;
 				}
 				break;
 			case ASC_BREAKER:		// -- moonsoul (special damage for ASC_BREAKER skill)
@@ -3667,8 +3691,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 		damage2 += sc_data[SC_AURABLADE].val1 * 10;
 	}
 	if(skill_num==PA_PRESSURE){ /* プレッシャー 必中? */
-		damage = 700+100*skill_lv;
-		damage2 = 700+100*skill_lv;
+		damage = 500+300*skill_lv;
+		damage2 = 500+300*skill_lv;
 	}
 
 	// >二刀流の左右ダメージ計算誰かやってくれぇぇぇぇえええ！
@@ -3980,7 +4004,7 @@ struct Damage battle_calc_magic_attack(
 			MATK_FIX( 100+skill_lv*10, 100);
 			break;
 		case WZ_FROSTNOVA:	// フロストダイバ
-			MATK_FIX( ((100+skill_lv*10)*(2/3)), 100);
+			MATK_FIX((100+skill_lv*10)*2/3, 100);
 			break;
 		case WZ_FIREPILLAR:	// ファイヤーピラー
 			if(mdef1 < 1000000)
@@ -4239,8 +4263,8 @@ struct Damage  battle_calc_misc_attack(
 		}
 		break;
 	case SN_FALCONASSAULT:			/* ファルコンアサルト */
-		skill = pc_checkskill(sd,HT_BLITZBEAT);
-		damage=(100+50*skill_lv+(dex/10+int_/2+skill*3+40)*2);
+		skill = pc_checkskill(sd,HT_STEELCROW); // Celest 
+		damage=((150+50*skill_lv)*(dex/10+int_/2+skill*3+40)*2)/100;
 		break;
 	}
 
@@ -4542,6 +4566,20 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			if(t_sc_data[SC_AUTOCOUNTER].val3 == src->id)
 				battle_weapon_attack(target,src,tick,0x8000|t_sc_data[SC_AUTOCOUNTER].val1);
 			skill_status_change_end(target,SC_AUTOCOUNTER,-1);
+		}
+		if(t_sc_data && t_sc_data[SC_POISONREACT].timer != -1 && t_sc_data[SC_POISONREACT].val4 > 0) {   // poison react [Celest]
+			if(t_sc_data[SC_POISONREACT].val3 == src->id) {
+			struct map_session_data *tsd = (struct map_session_data *)target;
+			if ((src->type == BL_MOB && battle_get_elem_type(src)==5) || (src->type == BL_PC && battle_get_attack_element(src)==5)) {
+				t_sc_data[SC_POISONREACT].val2 = 0;
+				battle_weapon_attack(target,src,tick,flag|t_sc_data[SC_POISONREACT].val1);
+			} else {
+				skill_use_id(tsd,src->id,TF_POISON,5);
+				--t_sc_data[SC_POISONREACT].val2;
+			}
+			if (t_sc_data[SC_POISONREACT].val2<=0)
+ 				skill_status_change_end(target,SC_POISONREACT,-1);            
+			}         
 		}
 		if(t_sc_data && t_sc_data[SC_BLADESTOP_WAIT].timer != -1){
 			int lv = t_sc_data[SC_BLADESTOP_WAIT].val1;
