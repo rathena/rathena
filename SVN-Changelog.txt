@@ -1,6 +1,17 @@
 Date	Added
 
 02/11
+	NOTE: Get rid of old cards on your server!!! IDs: 4149-4332
+	  before using of this item_db.txt (some cards have changed their IDs)
+	  and it could cause ALIEN cards in your players equipment 8))
+		i.g. a weapon compounding CARDS inserted in armor, etc...
+        * item_db.txt Massive update: [Lupus]
+	  - Added all new missing items (up to st.Valentine's Day Event)
+	  - Added new cards 4149-4332, sorted them and set their sripts.
+	  - Fixed some names, typos, weigths and prices
+	* Commented out old custom cards from Old_Card_Album.txt till we brush them up [Lupus]
+	* Removed old custom cards from MOBs drops [Lupus]
+	  thanks to Landarma(new items templates) Poki#3(removing cards from drops)
         * Tidied up battle_check_target abit [celest]
         * Updated traps to affect allies as well in GvG [celest]
         * Check if login server is online before setting character to online (in SQL),
@@ -1825,5 +1836,3 @@ Date	Added
 	  external IP address.  On the other hand, we should be able to 
 	  eliminate the lan_conf file since we know our IP addresses as well 
 	  as our netmask.
-
-		src/txt-converter/login/login-converter.c src/txt-converter/char/char-converter.c src/login_sql/login.c src/common/socket.c src/common/socket.h src/char_sql/char.c src/char_sql/int_guild.c src/char_sql/inter.c src/map/atcommand.c src/map/map.c src/map/mail.c src/char/char.c conf-tmpl/map_athena.conf conf-tmpl/char_athena.conf Changelog.txt

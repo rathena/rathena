@@ -136,23 +136,26 @@
 4139,Joker Card,10000
 4140,Knight Of Abyss Card,10000
 4141,Evil Druid Card,10000
-4149,Bon Gun Card,10000
-4150,Orc Archer Card,10000
-4151,Mimic Card,10000
-4152,Wraith Card,10000
-4153,Alarm Card,10000
-4154,Arclouse Card,10000
-4155,Rideword Card,10000
-4156,Skel Prisoner Card,10000
-4157,Zombie Prisoner Card,10000
-4158,Dark Priest Card,10000
-4159,Punk Card,10000
-4160,Zherlthsh Card,10000
-4161,Mysteltainn Card,10000
-4164,Anolian Card,10000
-4165,Sting Card,10000
-4166,Wander Man Card,10000
-4167,Cramp Card,10000
-4168,Filamentous Card,10000
-4169,Brilight Card,10000
-4170,Iron Fist Card,10000
+
+//Lupus: Don't uncomment these CUSTOM cards yet!
+//they have new IDs now. Wait when we settle it down!
+//4149,Bon Gun Card,10000
+//4150,Orc Archer Card,10000
+//4151,Mimic Card,10000
+//4152,Wraith Card,10000
+//4153,Alarm Card,10000
+//4154,Arclouse Card,10000
+//4155,Rideword Card,10000
+//4156,Skel Prisoner Card,10000
+//4157,Zombie Prisoner Card,10000
+//4158,Dark Priest Card,10000
+//4159,Punk Card,10000
+//4160,Zherlthsh Card,10000
+//4161,Mysteltainn Card,10000
+//4164,Anolian Card,10000
+//4165,Sting Card,10000
+//4166,Wander Man Card,10000
+//4167,Cramp Card,10000
+//4168,Filamentous Card,10000
+//4169,Brilight Card,10000
+//4170,Iron Fist Card,10000
