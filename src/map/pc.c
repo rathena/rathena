@@ -45,7 +45,7 @@
 #define PVP_CALCRANK_INTERVAL 1000	// PVP‡ˆÊŒvŽZ‚ÌŠÔŠu
 
 static int exp_table[14][MAX_LEVEL];
-static char statp[255][7];
+static short statp[MAX_LEVEL];
 
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[3][25][MAX_SKILL_TREE];
@@ -4310,11 +4310,14 @@ int pc_resetstate(struct map_session_data* sd)
 {
 	#define sumsp(a) ((a)*((a-2)/10+2) - 5*((a-2)/10)*((a-2)/10) - 6*((a-2)/10) -2)
 //	int add=0; // Removed by Dexity
+	int lv;
 
 	nullpo_retr(0, sd);
+	// allow it to just read the last entry [celest]
+	lv = sd->status.base_level < MAX_LEVEL ? sd->status.base_level : MAX_LEVEL - 1;
 
 //	New statpoint table used here - Dexity
-	sd->status.status_point = atoi (statp[sd->status.base_level - 1]);
+	sd->status.status_point = statp[lv];
 	if(sd->status.class_ >= 4001 && sd->status.class_ <= 4024)
 		sd->status.status_point+=52;	// extra 52+48=100 stat points
 //	End addition
@@ -6917,45 +6920,27 @@ int pc_readdb(void)
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/attr_fix.txt");
 	ShowStatus(tmp_output);
 
-	return 0;
-}
-
-static void pc_statpointdb(void)
-{
-	char * buf_stat;
-	int i=0,j=0,k=0,l=0, end = 0;
-
-	FILE *stp;
-
-	stp=fopen("db/statpoint.txt","r");
-
-	if(stp==NULL){
+	// ƒXƒLƒ‹ƒcƒŠ?
+	memset(statp,0,sizeof(statp));
+	fp=fopen("db/statpoint.txt","r");
+	if(fp==NULL){
 		printf("can't read db/statpoint.txt\n");
-		return;
+		return 1;
 	}
-
-	fseek(stp, 0, SEEK_END);
-	end = ftell(stp);
-	rewind(stp);
-
-	buf_stat = (char *) aMallocA (end + 1);
-	l = fread(buf_stat,1,end,stp);
-	fclose(stp);
+	i=0;
+	while(fgets(line, sizeof(line)-1, fp)){
+		if(line[0]=='/' && line[1]=='/')
+			continue;
+		if ((j=atoi(line))<0)
+			j=0;
+		statp[i]=j;
+		i++;
+	}
+	fclose(fp);
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/statpoint.txt");
 	ShowStatus(tmp_output);
-//	printf("read db/statpoint.txt done (size=%d)\n",l);
 
-	for(i=0;i<255;i++) {
-		j=0;
-		while (*(buf_stat+k)!='\n') {
-			statp[i][j]=*(buf_stat+k);
-			j++;k++;
-		}
-		statp[i][j+1]='\0';
-		k++;
-	}
-
-	aFree(buf_stat);
+	return 0;
 }
 
 /*==========================================
@@ -6964,7 +6949,6 @@ static void pc_statpointdb(void)
  */
 int do_init_pc(void) {
 	pc_readdb();
-	pc_statpointdb();
 
 //	gm_account_db = numdb_init();
 

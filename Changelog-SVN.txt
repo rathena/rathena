@@ -1,6 +1,9 @@
 Date	Added
 
 02/12
+        * Merged Dexity's pc_statpointdb into pc_readdb, changed statp's string
+          array to short (less memory), and fixed the db not giving status points if
+          character level is above 255 [celest]
         * fixing and optimizing sharp shooting
           have implemented two different versions, just have a look and 
           decide which to use, description is in the code [Shinomori]
