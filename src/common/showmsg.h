@@ -32,8 +32,19 @@
 
 extern char tmp_output[1024];
 
-enum msg_type {MSG_STATUS, MSG_SQL, MSG_INFORMATION,MSG_NOTICE,MSG_WARNING,MSG_DEBUG,MSG_ERROR,MSG_FATALERROR};
+enum msg_type {
+	MSG_NONE,
+	MSG_STATUS,
+	MSG_SQL,
+	MSG_INFORMATION,
+	MSG_NOTICE,
+	MSG_WARNING,
+	MSG_DEBUG,
+	MSG_ERROR,
+	MSG_FATALERROR
+};
 
+extern int ShowMessage(const char *, ...);
 extern int ShowStatus(const char *, ...);
 extern int ShowSQL(const char *, ...);
 extern int ShowInfo(const char *, ...);

@@ -14,20 +14,21 @@
 	#endif
 #endif
 
-#include "../common/mmo.h"
-#include "malloc.h"
 #include "core.h"
-#include "socket.h"
-#include "timer.h"
-#include "version.h"
-#include "showmsg.h"
+#include "../common/mmo.h"
+#include "../common/malloc.h"
+#include "../common/socket.h"
+#include "../common/timer.h"
+#include "../common/version.h"
+#include "../common/showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
 #endif
 
-char server_type[24];
+char *argp;
 int runflag = 1;
+char SERVER_TYPE = SERVER_NONE;
 unsigned long ticks = 0; // by MC Cameri
 char pid_file[256];
 static void (*term_func)(void)=NULL;
@@ -132,7 +133,7 @@ void sig_dump(int sn)
 
 	// search for a usable filename
 	do {
-		sprintf (file, "log/%s%04d.stackdump", server_type, ++no);
+		sprintf (file, "log/%s%04d.stackdump", argp, ++no);
 	} while((fp = fopen(file,"r")) && (fclose(fp), no < 9999));
 	// dump the trace into the file
 
@@ -171,12 +172,13 @@ int get_svn_revision(char *svnentry) { // Warning: minor syntax checking
 	if ((fp = fopen(svnentry, "r")) == NULL) {
 		return 0;
 	} else {
-		while (fgets(line,1023,fp)) if (strstr(line,"revision=")) break;
+		while (fgets(line,1023,fp))
+			if (strstr(line,"revision=")) break;
 		fclose(fp);
-		if (sscanf(line," %*[^\"]\"%d%*[^\n]",&rev)==1) 
-		return rev;
+		if (sscanf(line," %*[^\"]\"%d%*[^\n]",&rev) == 1)
+			return rev;
 		else
-		return 0;
+			return 0;
 	}
 //	return 0;
 }
@@ -273,7 +275,7 @@ void log_uptime(void)
 		seconds -= (seconds/minute>0)?(seconds/minute)*minute:0;
 
 		fprintf(fp, "%s: %s uptime - %ld days, %ld hours, %ld minutes, %ld seconds.\n",
-			curtime2, server_type, days, hours, minutes, seconds);
+			curtime2, argp, days, hours, minutes, seconds);
 		fclose(fp);
 	}
 
@@ -285,14 +287,15 @@ int main(int argc,char **argv)
 {
 	int next;
 
-	display_title();
-	// call this first so it'll be finalised last
-	do_init_memmgr(argv[0]); // 一番最初に実行する必要がある
+	if ((argp = strstr(argv[0], "./")) != NULL)
+		argp+=2;
+	else argp = argv[0];
 
-	sscanf(argv[0], "./%24[^\n]", server_type);	// map/char/login?
-	atexit(log_uptime);
-	pid_create(argv[0]);
+	display_title();
 	
+	do_init_memmgr(argp); // 一番最初に実行する必要がある
+	atexit(log_uptime);
+	pid_create(argp);
 	Net_Init();
 	do_socket();
 	
@@ -313,6 +316,7 @@ int main(int argc,char **argv)
 	ticks = gettick();
 
 	do_init(argc,argv);
+
 	while(runflag){
 		next=do_timer(gettick_nocache());
 		do_sendrecv(next);

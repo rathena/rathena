@@ -54,7 +54,10 @@ int (*upnp_init)();
 int (*upnp_final)();
 int (*firewall_addport)(char *desc, int port);
 int (*upnp_addport)(char *desc, char *ip, int port);
-extern char server_type[24];
+extern char *argp;
+
+int release_mappings = 1;
+int close_ports = 1;
 #else
 #error This doesnt work with non-Windows yet
 #endif
@@ -327,10 +330,10 @@ int make_listen_bind(long ip,int port)
 		char buf[16];
 		sprintf(buf, "%d.%d.%d.%d", natip[0], natip[1], natip[2], natip[3]);
 		//printf("natip=%d.%d.%d.%d\n", natip[0], natip[1], natip[2], natip[3]);
-		if (firewall_addport(server_type, port))
+		if (firewall_addport(argp, port))
 			printf ("Firewall port %d successfully opened\n", port);
 		if (natip[0] == 192 && natip[1] == 168) {
-			if (upnp_addport(server_type, natip, port))
+			if (upnp_addport(argp, natip, port))
 				printf ("Upnp mappings successfull\n");
 			else printf ("Upnp mapping failed\n");
 		}
@@ -845,6 +848,20 @@ int socket_config_read(const char *cfgName) {
 			else if(strcmpi(w2,"no")==0)
 				access_debug = 0;
 			else access_debug = atoi(w2);
+	#ifdef UPNP
+		} else if(!strcmpi(w1,"release_mappings")){
+			if(strcmpi(w2,"yes")==0)
+				release_mappings = 1;
+			else if(strcmpi(w2,"no")==0)
+				release_mappings = 0;
+			else release_mappings = atoi(w2);
+		} else if(!strcmpi(w1,"close_ports")){
+			if(strcmpi(w2,"yes")==0)
+				close_ports = 1;
+			else if(strcmpi(w2,"no")==0)
+				close_ports = 0;
+			else close_ports = atoi(w2);
+	#endif
 		} else if (strcmpi(w1, "import") == 0)
 			socket_config_read(w2);
 	}
@@ -957,6 +974,9 @@ int  Net_Init(void)
 // not implemented yet ^^;
 void do_init_upnp(void)
 {
+	int *_release_mappings;
+	int *_close_ports;
+
 	upnp_dll = DLL_OPEN ("upnp.dll");
 	if (!upnp_dll) {
 		printf ("Cannot open upnp.dll: %s\n", dlerror());
@@ -972,6 +992,14 @@ void do_init_upnp(void)
 		upnp_dll = NULL;
 		return;
 	}
+
+	DLL_SYM (_release_mappings, upnp_dll, "release_mappings");
+	DLL_SYM (_close_ports, upnp_dll, "close_ports");
+	if (release_mappings && _release_mappings)
+		*_release_mappings = release_mappings;
+	if (close_ports && _close_ports)
+		*_close_ports = close_ports;
+
 	if (upnp_init() == 0) {
 		printf ("Error initialising upnp.dll, unloading...\n");
 		DLL_CLOSE (upnp_dll);
