@@ -743,7 +743,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 		if(sd->sc_data[SC_SLOWDOWN].timer!=-1)
 			sd->speed = sd->speed*150/100;
-		if(sd->sc_data[SC_SPEEDUP0].timer!=-1)
+		if(sd->sc_data[SC_SPEEDUP0].timer!=-1 && sd->sc_data[SC_INCREASEAGI].timer==-1)
 			sd->speed -= sd->speed*25/100;
 		if(sd->sc_data[SC_BLESSING].timer!=-1){	// ブレッシング
 			sd->paramb[0]+= sd->sc_data[SC_BLESSING].val1;

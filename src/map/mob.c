@@ -4052,21 +4052,24 @@ static int mob_readdb_mobavail(void)
 				*np=0;
 				p=np+1;
 			} else
-					str[j]=p;
-			}
+				str[j]=p;
+		}
 
 		if(str[0]==NULL)
 			continue;
 
 		class_=atoi(str[0]);
-
 		if(class_<=1000 || class_>MAX_MOB_DB)	// ’l‚ªˆÙí‚È‚çˆ—‚µ‚È‚¢B
 			continue;
-		k=atoi(str[1]);
-		if(k >= 0)
-			mob_db[class_].view_class=k;
 
-		if((mob_db[class_].view_class < 24) || (mob_db[class_].view_class > 4000)) {
+		k=atoi(str[1]);
+		if(k < 0)
+			continue;
+		if (j > 3 && k > 23 && k < 69)
+			k += 3977;	// advanced job/baby class
+		mob_db[class_].view_class=k;
+
+		if((k < 24) || (k > 4000)) {
 			mob_db[class_].sex=atoi(str[2]);
 			mob_db[class_].hair=atoi(str[3]);
 			mob_db[class_].hair_color=atoi(str[4]);
@@ -4078,7 +4081,6 @@ static int mob_readdb_mobavail(void)
 			mob_db[class_].option=atoi(str[10])&~0x46;
 			mob_db[class_].clothes_color=atoi(str[11]); // Monster player dye option - Valaris
 		}
-
 		else if(atoi(str[2]) > 0) mob_db[class_].equip=atoi(str[2]); // mob equipment [Valaris]
 
 		ln++;

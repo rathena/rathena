@@ -1,5 +1,10 @@
 Date	Added
 
+03/14
+        * Added auto convert advanced job and baby class sprite ID's in mob_avail.txt
+          to correct format [celest]
+        * Added SC_Speedup cannot be stacked with Increase Agility [celest]
+
 03/13
         * Added PvP/GvG check for Tiger Knuckle fist [celest]
         * Fixed Pressure reducing the target's SP twice, thanks to deepin [celest]
