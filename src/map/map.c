@@ -109,7 +109,7 @@ int check_online_timer=0; // [Valaris]
 #define USE_AFM
 #define USE_AF2
 
-// 極力 staticでローカルに収める
+// 極力 staticでロ?カルに?める
 static struct dbt * id_db=NULL;
 static struct dbt * map_db=NULL;
 static struct dbt * nick_db=NULL;
@@ -157,7 +157,7 @@ char wisp_server_name[24] = "Server"; // can be modified in char-server configur
 
 int console = 0;
 /*==========================================
- * 全map鯖総計での接続数設定
+ * 全map鯖?計での接??設定
  * (char鯖から送られてくる)
  *------------------------------------------
  */
@@ -166,7 +166,7 @@ void map_setusers(int n) {
 }
 
 /*==========================================
- * 全map鯖総計での接続数取得 (/wへの応答用)
+ * 全map鯖?計での接??取得 (/wへの?答用)
  *------------------------------------------
  */
 int map_getusers(void) {
@@ -174,11 +174,11 @@ int map_getusers(void) {
 }
 
 //
-// block削除の安全性確保処理
+// block削除の安全性確保?理
 //
 
 /*==========================================
- * blockをfreeするときfreeの変わりに呼ぶ
+ * blockをfreeするときfreeの?わりに呼ぶ
  * ロックされているときはバッファにためる
  *------------------------------------------
  */
@@ -234,10 +234,10 @@ int map_freeblock_unlock(void) {
 
 
 //
-// block化処理
+// block化?理
 //
 /*==========================================
- * map[]のblock_listから繋がっている場合に
+ * map[]のblock_listから?がっている場合に
  * bl->prevにbl_headのアドレスを入れておく
  *------------------------------------------
  */
@@ -245,9 +245,9 @@ static struct block_list bl_head;
 
 /*==========================================
  * map[]のblock_listに追加
- * mobは数が多いので別リスト
+ * mobは?が多いので別リスト
  *
- * 既にlink済みかの確認が無い。危険かも
+ * ?にlink?みかの確認が無い。危?かも
  *------------------------------------------
  */
 int map_addblock(struct block_list *bl)
@@ -291,7 +291,7 @@ int map_addblock(struct block_list *bl)
 
 /*==========================================
  * map[]のblock_listから外す
- * prevがNULLの場合listに繋がってない
+ * prevがNULLの場合listに?がってない
  *------------------------------------------
  */
 int map_delblock(struct block_list *bl)
@@ -299,7 +299,7 @@ int map_delblock(struct block_list *bl)
 	int b;
 	nullpo_retr(0, bl);
 
-	// 既にblocklistから抜けている
+	// ?にblocklistから?けている
 	if(bl->prev==NULL){
 		if(bl->next!=NULL){
 			// prevがNULLでnextがNULLでないのは有ってはならない
@@ -336,7 +336,7 @@ int map_delblock(struct block_list *bl)
 }
 
 /*==========================================
- * 周囲のPC人数を数える (現在未使用)
+ * 周?のPC人?を?える (現在未使用)
  *------------------------------------------
  */
 int map_countnearpc(int m, int x, int y) {
@@ -362,7 +362,7 @@ int map_countnearpc(int m, int x, int y) {
 }
 
 /*==========================================
- * セル上のPCとMOBの数を数える (グランドクロス用)
+ * セル上のPCとMOBの?を?える (グランドクロス用)
  *------------------------------------------
  */
 int map_count_oncell(int m, int x, int y) {
@@ -392,7 +392,7 @@ int map_count_oncell(int m, int x, int y) {
 
 
 /*==========================================
- * map m (x0,y0)-(x1,y1)内の全objに対して
+ * map m (x0,y0)-(x1,y1)?の全objに?して
  * funcを呼ぶ
  * type!=0 ならその種類のみ
  *------------------------------------------
@@ -443,7 +443,7 @@ void map_foreachinarea(int (*func)(struct block_list*,va_list),int m,int x0,int 
 	map_freeblock_lock();	// メモリからの解放を禁止する
 		
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// 有効かどうかチェック
+		if(bl_list[i]->prev)	// 有?かどうかチェック
 			func(bl_list[i],ap);
 
 	map_freeblock_unlock();	// 解放を許可する
@@ -454,8 +454,8 @@ void map_foreachinarea(int (*func)(struct block_list*,va_list),int m,int x0,int 
 
 /*==========================================
  * 矩形(x0,y0)-(x1,y1)が(dx,dy)移動した時の
- * 領域外になる領域(矩形かL字形)内のobjに
- * 対してfuncを呼ぶ
+ * 領域外になる領域(矩形かL字形)?のobjに
+ * ?してfuncを呼ぶ
  *
  * dx,dyは-1,0,1のみとする（どんな値でもいいっぽい？）
  *------------------------------------------
@@ -552,7 +552,7 @@ void map_foreachinmovearea(int (*func)(struct block_list*,va_list),int m,int x0,
 	map_freeblock_lock();	// メモリからの解放を禁止する
 		
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev) {	// 有効かどうかチェック
+		if(bl_list[i]->prev) {	// 有?かどうかチェック
 			if (bl_list[i]->type == BL_PC 
 			  && session[((struct map_session_data *) bl_list[i])->fd] == NULL)
 				continue;
@@ -612,7 +612,7 @@ void map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y
 	map_freeblock_lock();	// メモリからの解放を禁止する
 		
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// 有効かどうかチェック
+		if(bl_list[i]->prev)	// 有?かどうかチェック
 			func(bl_list[i],ap);
 
 	map_freeblock_unlock();	// 解放を許可する
@@ -622,8 +622,8 @@ void map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y
 }
 
 /*==========================================
- * 床アイテムやエフェクト用の一時obj割り当て
- * object[]への保存とid_db登録まで
+ * 床アイテムやエフェクト用の一時obj割り?て
+ * object[]への保存とid_db登?まで
  *
  * bl->idもこの中で設定して問題無い?
  *------------------------------------------
@@ -654,7 +654,7 @@ int map_addobject(struct block_list *bl) {
 
 /*==========================================
  * 一時objectの解放
- *	map_delobjectのfreeしないバージョン
+ *	map_delobjectのfreeしないバ?ジョン
  *------------------------------------------
  */
 int map_delobjectnofree(int id) {
@@ -680,7 +680,7 @@ int map_delobjectnofree(int id) {
  * block_listからの削除、id_dbからの削除
  * object dataのfree、object[]へのNULL代入
  *
- * addとの対称性が無いのが気になる
+ * addとの??性が無いのが?になる
  *------------------------------------------
  */
 int map_delobject(int id) {
@@ -739,7 +739,7 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...) {
  * data!=0の時は拾う等で消えた時として動作
  *
  * 後者は、map_clearflooritem(id)へ
- * map.h内で#defineしてある
+ * map.h?で#defineしてある
  *------------------------------------------
  */
 int map_clearflooritem_timer(int tid,unsigned int tick,int id,int data) {
@@ -762,10 +762,10 @@ int map_clearflooritem_timer(int tid,unsigned int tick,int id,int data) {
 }
 
 /*==========================================
- * (m,x,y)の周囲rangeマス内の空き(=侵入可能)cellの
- * 内から適当なマス目の座標をx+(y<<16)で返す
+ * (m,x,y)の周?rangeマス?の空き(=侵入可能)cellの
+ * ?から適?なマス目の座標をx+(y<<16)で返す
  *
- * 現状range=1でアイテムドロップ用途のみ
+ * 現?range=1でアイテムドロップ用途のみ
  *------------------------------------------
  */
 int map_searchrandfreecell(int m,int x,int y,int range) {
@@ -807,7 +807,7 @@ int map_searchrandfreecell(int m,int x,int y,int range) {
 }
 
 /*==========================================
- * (m,x,y)を中心に3x3以内に床アイテム設置
+ * (m,x,y)を中心に3x3以?に床アイテム設置
  *
  * item_dataはamount以外をcopyする
  *------------------------------------------
@@ -887,7 +887,7 @@ void map_addchariddb(int charid, char *name) {
 	int req=0;
 
 	p=numdb_search(charid_db,charid);
-	if(p==NULL){	// データベースにない
+	if(p==NULL){	// デ?タベ?スにない
 		p = (struct charid2nick *)aCalloc(1,sizeof(struct charid2nick));
 		p->req_id=0;
 	}else
@@ -914,7 +914,7 @@ int map_reqchariddb(struct map_session_data * sd,int charid) {
 	nullpo_retr(0, sd);
 
 	p=numdb_search(charid_db,charid);
-	if(p!=NULL)	// データベースにすでにある
+	if(p!=NULL)	// デ?タベ?スにすでにある
 		return 0;
 	p = (struct charid2nick *)aCalloc(1,sizeof(struct charid2nick));
 	p->req_id=sd->bl.id;
@@ -953,9 +953,9 @@ void map_addnickdb(struct map_session_data *sd) {
 }
 
 /*==========================================
- * PCのquit処理 map.c内分
+ * PCのquit?理 map.c?分
  *
- * quit処理の主体が違うような気もしてきた
+ * quit?理の主?が違うような?もしてきた
  *------------------------------------------
  */
 int map_quit(struct map_session_data *sd) {
@@ -966,20 +966,20 @@ int map_quit(struct map_session_data *sd) {
 	if(sd->chatID)	// チャットから出る
 		chat_leavechat(sd);
 		
-	if(sd->trade_partner)	// 取引を中断する
+	if(sd->trade_partner)	// 取引を中?する
 		trade_tradecancel(sd);
 
-	if(sd->party_invite>0)	// パーティ勧誘を拒否する
+	if(sd->party_invite>0)	// パ?ティ?誘を拒否する
 		party_reply_invite(sd,sd->party_invite_account,0);
 
-	if(sd->guild_invite>0)	// ギルド勧誘を拒否する
+	if(sd->guild_invite>0)	// ギルド?誘を拒否する
 		guild_reply_invite(sd,sd->guild_invite,0);
-	if(sd->guild_alliance>0)	// ギルド同盟勧誘を拒否する
+	if(sd->guild_alliance>0)	// ギルド同盟?誘を拒否する
 		guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
 
-	party_send_logout(sd);	// パーティのログアウトメッセージ送信
+	party_send_logout(sd);	// パ?ティのログアウトメッセ?ジ送信
 
-	guild_send_memberinfoshort(sd,0);	// ギルドのログアウトメッセージ送信
+	guild_send_memberinfoshort(sd,0);	// ギルドのログアウトメッセ?ジ送信
 
 	pc_cleareventtimer(sd);	// イベントタイマを破棄する
 
@@ -988,14 +988,14 @@ int map_quit(struct map_session_data *sd) {
 	else
 		storage_storage_quit(sd);	// 倉庫を開いてるなら保存する
 
-	skill_castcancel(&sd->bl,0);	// 詠唱を中断する
-	skill_stop_dancing(&sd->bl,1);// ダンス/演奏中断
+	skill_castcancel(&sd->bl,0);	// 詠唱を中?する
+	skill_stop_dancing(&sd->bl,1);// ダンス/演奏中?
 
-	if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1) //バーサーク中の終了はHPを100に
+	if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中の終了はHPを100に
 		sd->status.hp = 100;
 
-	skill_status_change_clear(&sd->bl,1);	// ステータス異常を解除する
-//	skill_clear_unitgroup(&sd->bl);	// スキルユニットグループの削除
+	skill_status_change_clear(&sd->bl,1);	// ステ?タス異常を解除する
+//	skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
 	skill_cleartimerskill(&sd->bl);
 	pc_stop_walking(sd,0);
 	pc_stopattack(sd);
@@ -1024,7 +1024,7 @@ int map_quit(struct map_session_data *sd) {
 	if(pc_isdead(sd))
 		pc_setrestartvalue(sd,2);
 	pc_makesavestatus(sd);
-	//クローンスキルで覚えたスキルは消す
+	//クロ?ンスキルで?えたスキルは消す
 	for(i=0;i<MAX_SKILL;i++){
 		if(sd->status.skill[i].flag == 13){
 			sd->status.skill[i].id=0;
@@ -1052,7 +1052,7 @@ int map_quit(struct map_session_data *sd) {
 }
 
 /*==========================================
- * id番号のPCを探す。居なければNULL
+ * id番?のPCを探す。居なければNULL
  *------------------------------------------
  */
 struct map_session_data * map_id2sd(int id) {
@@ -1081,7 +1081,7 @@ struct map_session_data * map_id2sd(int id) {
 }
 
 /*==========================================
- * char_id番号の名前を探す
+ * char_id番?の名前を探す
  *------------------------------------------
  */
 char * map_charid2nick(int id) {
@@ -1132,7 +1132,7 @@ struct map_session_data * map_nick2sd(char *nick) {
 }
 
 /*==========================================
- * id番号の物を探す
+ * id番?の物を探す
  * 一時objectの場合は配列を引くのみ
  *------------------------------------------
  */
@@ -1148,7 +1148,7 @@ struct block_list * map_id2bl(int id)
 }
 
 /*==========================================
- * id_db内の全てにfuncを実行
+ * id_db?の全てにfuncを?行
  *------------------------------------------
  */
 int map_foreachiddb(int (*func)(void*,void*,va_list),...) {
@@ -1214,7 +1214,7 @@ void map_removenpc(void) {
 }
 
 /*==========================================
- * map名からmap番号へ変換
+ * map名からmap番?へ?換
  *------------------------------------------
  */
 int map_mapname2mapid(char *name) {
@@ -1238,7 +1238,7 @@ int map_mapname2mapid(char *name) {
 }
 
 /*==========================================
- * 他鯖map名からip,port変換
+ * 他鯖map名からip,port?換
  *------------------------------------------
  */
 int map_mapname2ipport(char *name,int *ip,int *port) {
@@ -1332,7 +1332,7 @@ int map_calc_dir( struct block_list *src,int x,int y) {
 
 // gat系
 /*==========================================
- * (m,x,y)の状態を調べる
+ * (m,x,y)の?態を調べる
  *------------------------------------------
  */
 int map_getcell(int m,int x,int y) {
@@ -1342,7 +1342,7 @@ int map_getcell(int m,int x,int y) {
 }
 
 /*==========================================
- * (m,x,y)の状態をtにする
+ * (m,x,y)の?態をtにする
  *------------------------------------------
  */
 int map_setcell(int m,int x,int y,int t) {
@@ -1579,7 +1579,7 @@ static int map_readafm(int m,char *fn) {
 #endif
 
 /*==========================================
- * マップ1枚読み込み
+ * マップ1枚?み?み
  *------------------------------------------
  */
 static int map_readmap(int m,char *fn, char *alias) {
@@ -1651,7 +1651,7 @@ static int map_readmap(int m,char *fn, char *alias) {
 }
 
 /*==========================================
- * 全てのmapデータを読み込む
+ * 全てのmapデ?タを?み?む
  *------------------------------------------
  */
 int map_readallmap(void) {
@@ -1691,13 +1691,11 @@ int map_readallmap(void) {
 				char buf[64];
 				*p++ = '\0';
 				sprintf(buf,"data\\%s", p);
-				for(p=&buf[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix
 				map[i].alias = strdup(buf);
 			} else
 				map[i].alias = NULL;
 
 			sprintf(fn,"data\\%s",map[i].name);
-			for(p=&fn[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix
 			if(map_readmap(i,fn, p) == -1) {
 				map_delmap(map[i].name);
 				maps_removed++;
@@ -1729,7 +1727,7 @@ int map_readallmap(void) {
 }
 
 /*==========================================
- * 読み込むmapを追加する
+ * ?み?むmapを追加する
  *------------------------------------------
  */
 int map_addmap(char *mapname) {
@@ -1748,7 +1746,7 @@ int map_addmap(char *mapname) {
 }
 
 /*==========================================
- * 読み込むmapを削除する
+ * ?み?むmapを削除する
  *------------------------------------------
  */
 int map_delmap(char *mapname) {
@@ -1859,7 +1857,7 @@ int parse_console(char *buf) {
 }
 
 /*==========================================
- * 設定ファイルを読み込む
+ * 設定ファイルを?み?む
  *------------------------------------------
  */
 int map_config_read(char *cfgName) {
@@ -2213,7 +2211,7 @@ static int cleanup_sub(struct block_list *bl, va_list ap) {
 }
 
 /*==========================================
- * map鯖終了時処理
+ * map鯖終了時?理
  *------------------------------------------
  */
 void do_final(void) {
@@ -2419,7 +2417,7 @@ int do_init(int argc, char *argv[]) {
 	do_init_chrif();
 	do_init_clif();
 	do_init_itemdb();
-	do_init_mob();	// npcの初期化時内でmob_spawnして、mob_dbを参照するのでinit_npcより先
+	do_init_mob();	// npcの初期化時?でmob_spawnして、mob_dbを?照するのでinit_npcより先
 	do_init_script();
 	do_init_pc();
 	do_init_party();
@@ -2441,7 +2439,7 @@ int do_init(int argc, char *argv[]) {
 	}
 #endif /* not TXT_ONLY */
 
-	npc_event_do_oninit();	// npcのOnInitイベント実行
+	npc_event_do_oninit();	// npcのOnInitイベント?行
 	
 	if ( console ) {
 	    set_defaultconsoleparse(parse_console);
