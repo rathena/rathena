@@ -1,4 +1,7 @@
 Date	Added
+12/1
+	- Changed #define MAX_PET_DB to 300, it's easier for people adding new pets like this. [Nas]
+
 11/30
         * Fixed client crash when disguised characters die [celest]
         * Skill Updates [celest]
