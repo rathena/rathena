@@ -5061,13 +5061,13 @@ int buildin_agitcheck(struct script_state *st)
 	struct map_session_data *sd;
 	int cond;
 
-	sd=script_rid2sd(st);
 	cond=conv_num(st,& (st->stack->stack_data[st->start+2]));
 
 	if(cond == 0) {
 		if (agit_flag==1) push_val(st->stack,C_INT,1);
 		if (agit_flag==0) push_val(st->stack,C_INT,0);
 	} else {
+		sd=script_rid2sd(st);
 		if (agit_flag==1) pc_setreg(sd,add_str("@agit_flag"),1);
 		if (agit_flag==0) pc_setreg(sd,add_str("@agit_flag"),0);
 	}
