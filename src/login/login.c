@@ -82,9 +82,6 @@ int display_parse_fromchar = 0; // 0: no, 1: yes (without packet 0x2714), 2: all
 
 struct mmo_char_server server[MAX_SERVERS];
 int server_fd[MAX_SERVERS];
-int server_freezeflag[MAX_SERVERS]; // Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
-int anti_freeze_enable = 0;
-int ANTI_FREEZE_INTERVAL = 15;
 
 int login_fd;
 
@@ -1260,32 +1257,6 @@ int mmo_auth(struct mmo_account* account, int fd) {
 	return -1; // account OK
 }
 
-//-------------------------------
-// Char-server anti-freeze system
-//-------------------------------
-int char_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
-	int i;
-
-	//printf("Entering in char_anti_freeze_system function to check freeze of servers.\n");
-	for(i = 0; i < MAX_SERVERS; i++) {
-		if (server_fd[i] >= 0) {// if char-server is online
-			//printf("char_anti_freeze_system: server #%d '%s', flag: %d.\n", i, server[i].name, server_freezeflag[i]);
-			if (server_freezeflag[i]-- < 1) { // Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
-				printf("Char-server anti-freeze system: char-server #%d '%s' is freezed -> disconnection.\n", i, server[i].name);
-				login_log("Char-server anti-freeze system: char-server #%d '%s' is freezed -> disconnection." RETCODE,
-				          i, server[i].name);
-				session[server_fd[i]]->eof = 1;
-			} else {
-				// send alive packet to check connection
-				WFIFOW(server_fd[i],0) = 0x2718;
-				WFIFOSET(server_fd[i],2);
-			}
-		}
-	}
-
-	return 0;
-}
-
 //--------------------------------
 // Packet parsing for char-servers
 //--------------------------------
@@ -1392,9 +1363,6 @@ int parse_fromchar(int fd) {
 				return 0;
 			//printf("parse_fromchar: Receiving of the users number of the server '%s': %d\n", server[id].name, RFIFOL(fd,2));
 			server[id].users = RFIFOL(fd,2);
-			if(anti_freeze_enable)
-				server_freezeflag[id] = 5; // Char anti-freeze system. Counter. 5 ok, 4...0 freezed
-
 			// send some answer
 			WFIFOW(fd,0) = 0x2718;
 			WFIFOSET(fd,2);
@@ -3060,8 +3028,6 @@ int parse_login(int fd) {
 					server[account.account_id].maintenance = RFIFOW(fd,82);
 					server[account.account_id].new_ = RFIFOW(fd,84);
 					server_fd[account.account_id] = fd;
-					if(anti_freeze_enable)
-						server_freezeflag[account.account_id] = 5; // Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
 					WFIFOW(fd,0) = 0x2711;
 					WFIFOB(fd,2) = 0;
 					WFIFOSET(fd,3);
@@ -3083,10 +3049,8 @@ int parse_login(int fd) {
 					if (server_fd[account.account_id] != -1) {
 						printf("Connection of the char-server '%s' REFUSED - already connected (account: %ld-%s, pass: %s, ip: %s)\n",
 					        server_name, account.account_id, account.userid, account.passwd, ip);
-						printf("You must probably wait that the freeze system detect the disconnection.\n");
 						login_log("Connexion of the char-server '%s' REFUSED - already connected (account: %ld-%s, pass: %s, ip: %s)" RETCODE,
 					          server_name, account.account_id, account.userid, account.passwd, ip);
-						login_log("You must probably wait that the freeze system detect the disconnection." RETCODE);
 					} else {
 						printf("Connection of the char-server '%s' REFUSED (account: %s, pass: %s, ip: %s).\n", server_name, account.userid, account.passwd, ip);
 						login_log("Connexion of the char-server '%s' REFUSED (account: %s, pass: %s, ip: %s)" RETCODE,
@@ -3556,13 +3520,6 @@ int login_config_read(const char *cfgName) {
 				dynamic_pass_failure_ban_how_many = atoi(w2);
 			} else if (strcmpi(w1, "dynamic_pass_failure_ban_how_long") == 0) {
 				dynamic_pass_failure_ban_how_long = atoi(w2);
-			// Anti-Freeze
-			} else if(strcmpi(w1,"anti_freeze_enable")==0){
-				anti_freeze_enable = config_switch(w2);
-			} else if (strcmpi(w1, "anti_freeze_interval") == 0) {
-				ANTI_FREEZE_INTERVAL = atoi(w2);
-				if (ANTI_FREEZE_INTERVAL < 5)
-					ANTI_FREEZE_INTERVAL = 5; // minimum 5 seconds
 			} else if (strcmpi(w1, "import") == 0) {
 				login_config_read(w2);
 			} else if(strcmpi(w1,"imalive_on")==0) {	//Added by Mugendai for I'm Alive mod
@@ -3980,10 +3937,6 @@ int do_init(int argc, char **argv) {
 	//login_fd = make_listen_port(login_port);
 	login_fd = make_listen_bind(bind_ip,login_port);
 
-	if(anti_freeze_enable > 0) {
-		add_timer_func_list(char_anti_freeze_system, "char_anti_freeze_system");
-		i = add_timer_interval(gettick() + 1000, char_anti_freeze_system, 0, 0, ANTI_FREEZE_INTERVAL * 1000);
-	}
 	add_timer_func_list(check_auth_sync, "check_auth_sync");
 	i = add_timer_interval(gettick() + 60000, check_auth_sync, 0, 0, 60000); // every 60 sec we check if we must save accounts file (only if necessary to save)
 

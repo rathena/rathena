@@ -48,9 +48,6 @@ typedef long in_addr_t;
 
 struct mmo_map_server server[MAX_MAP_SERVERS];
 int server_fd[MAX_MAP_SERVERS];
-int server_freezeflag[MAX_MAP_SERVERS]; // Map-server anti-freeze system. Counter. 5 ok, 4...0 freezed
-int anti_freeze_enable = 0;
-int ANTI_FREEZE_INTERVAL = 6;
 
 int login_fd, char_fd;
 char userid[24];
@@ -2094,28 +2091,6 @@ int parse_tologin(int fd) {
 	return 0;
 }
 
-//--------------------------------
-// Map-server anti-freeze system
-//--------------------------------
-int map_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
-	int i;
-
-	//printf("Entering in map_anti_freeze_system function to check freeze of servers.\n");
-	for(i = 0; i < MAX_MAP_SERVERS; i++) {
-		if (server_fd[i] >= 0) {// if map-server is online
-			//printf("map_anti_freeze_system: server #%d, flag: %d.\n", i, server_freezeflag[i]);
-			if (server_freezeflag[i]-- < 1) { // Map-server anti-freeze system. Counter. 5 ok, 4...0 freezed
-				printf("Map-server anti-freeze system: char-server #%d is freezed -> disconnection.\n", i);
-				char_log("Map-server anti-freeze system: char-server #%d is freezed -> disconnection." RETCODE,
-				         i);
-				session[server_fd[i]]->eof = 1;
-			}
-		}
-	}
-
-	return 0;
-}
-
 int parse_frommap(int fd) {
 	int i, j;
 	int id;
@@ -2261,8 +2236,6 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 			server[id].users = RFIFOW(fd,4);
-			if(anti_freeze_enable)
-				server_freezeflag[id] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
 			// remove all previously online players of the server
 			for(i = 0; i < online_players_max; i++)
 				if (online_chars[i].server == id) {
@@ -3015,8 +2988,6 @@ int parse_char(int fd) {
 				WFIFOB(fd,2) = 0;
 				session[fd]->func_parse = parse_frommap;
 				server_fd[i] = fd;
-				if(anti_freeze_enable)
-					server_freezeflag[i] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
 				server[i].ip = RFIFOL(fd,54);
 				server[i].port = RFIFOW(fd,58);
 				server[i].users = 0;
@@ -3437,12 +3408,6 @@ int char_config_read(const char *cfgName) {
 				online_refresh_html = 1;
 		} else if(strcmpi(w1,"db_path")==0) {
 			strcpy(db_path,w2);
-		} else if(strcmpi(w1,"anti_freeze_enable")==0){
-			anti_freeze_enable = config_switch(w2);
-		} else if (strcmpi(w1, "anti_freeze_interval") == 0) {
-			ANTI_FREEZE_INTERVAL = atoi(w2);
-			if (ANTI_FREEZE_INTERVAL < 5)
-				ANTI_FREEZE_INTERVAL = 5; // minimum 5 seconds
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2);
 		} else if (strcmpi(w1, "console") == 0) {
@@ -3582,13 +3547,6 @@ int do_init(int argc, char **argv) {
 	//Added by Mugendai for GUI support
 	if (flush_on)
 		add_timer_interval(gettick()+10, flush_timer,0,0,flush_time);
-
-
-
-	if(anti_freeze_enable > 0) {
-		add_timer_func_list(map_anti_freeze_system, "map_anti_freeze_system");
-		i = add_timer_interval(gettick() + 1000, map_anti_freeze_system, 0, 0, ANTI_FREEZE_INTERVAL * 1000); // checks every X seconds user specifies
-	}
 
 	if(console) {
 	    set_defaultconsoleparse(parse_console);

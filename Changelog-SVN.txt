@@ -1,6 +1,10 @@
 
 Date	Added
 
+04/04
+	* Removed anti-freeze system for login and char -- Shinomori's update would
+	  be enough to keep inter connections alive [celest]
+
 04/03
 	* integrating anti freeze system to status update [Shinomori]
 	* Fixed impossible drops at 0.01% chance [Lupus]

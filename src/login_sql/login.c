@@ -79,9 +79,6 @@ int subnetmaski[4]; // Subnetmask added by kashy
 
 struct mmo_char_server server[MAX_SERVERS];
 int server_fd[MAX_SERVERS];
-int server_freezeflag[MAX_SERVERS]; // Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
-int anti_freeze_enable = 0;
-int ANTI_FREEZE_INTERVAL = 15;
 
 int login_fd;
 
@@ -648,28 +645,6 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	return c;
 }
 
-//--------------------------------
-// Char-server anti-freeze system
-//--------------------------------
-int char_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
-	int i;
-
-	for(i = 0; i < MAX_SERVERS; i++) {
-		if (server_fd[i] >= 0) {// if char-server is online
-//			printf("char_anti_freeze_system: server #%d '%s', flag: %d.\n", i, server[i].name, server_freezeflag[i]);
-			if (server_freezeflag[i]-- < 1) {// Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
-				session[server_fd[i]]->eof = 1;
-			} else {
-				// send alive packet to check connection
-				WFIFOW(server_fd[i],0) = 0x2718;
-				WFIFOSET(server_fd[i],2);
-			}
-		}
-	}
-
-	return 0;
-}
-
 //-----------------------------------------------------
 // char-server packet parse
 //-----------------------------------------------------
@@ -799,9 +774,6 @@ int parse_fromchar(int fd){
 					printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 				}
 			}
-
-			if(anti_freeze_enable)
-				server_freezeflag[id] = 5; // Char anti-freeze system. Counter. 5 ok, 4...0 freezed
 
 			// send some answer
 			WFIFOW(fd,0) = 0x2718;
@@ -1454,8 +1426,6 @@ int parse_login(int fd) {
 					server[account.account_id].maintenance=RFIFOW(fd,82);
 					server[account.account_id].new_=RFIFOW(fd,84);
 					server_fd[account.account_id]=fd;
-					if(anti_freeze_enable)
-						server_freezeflag[account.account_id] = 5; // Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
 					sprintf(tmpsql,"DELETE FROM `sstatus` WHERE `index`='%ld'", account.account_id);
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
@@ -1680,14 +1650,6 @@ int login_config_read(const char *cfgName){
 			dynamic_pass_failure_ban_how_long=atoi(w2);
 			printf ("set dynamic_pass_failure_ban_how_long : %d\n",dynamic_pass_failure_ban_how_long);
 		}		
-		else if(strcmpi(w1,"anti_freeze_enable")==0){
-			anti_freeze_enable = config_switch(w2);
-		}
-		else if (strcmpi(w1, "anti_freeze_interval") == 0) {
-			ANTI_FREEZE_INTERVAL = atoi(w2);
-			if (ANTI_FREEZE_INTERVAL < 5)
-				ANTI_FREEZE_INTERVAL = 5; // minimum 5 seconds
-		}
 		else if (strcmpi(w1, "import") == 0) {
 			login_config_read(w2);
 		} else if(strcmpi(w1,"imalive_on")==0) {		//Added by Mugendai for I'm Alive mod
@@ -1915,12 +1877,6 @@ int do_init(int argc,char **argv){
 	//Added by Mugendai for GUI support
 	if(flush_on)
 		add_timer_interval(gettick()+10, flush_timer,0,0,flush_time);
-
-
-	if(anti_freeze_enable > 0) {
-		add_timer_func_list(char_anti_freeze_system, "char_anti_freeze_system");
-		i = add_timer_interval(gettick()+1000, char_anti_freeze_system, 0, 0, ANTI_FREEZE_INTERVAL * 1000);
-	}
 
 	// ban deleter timer - 1 minute term
 	printf("add interval tic (ip_ban_check)....\n");

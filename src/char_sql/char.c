@@ -78,10 +78,6 @@ char *SQL_CONF_NAME = "conf/inter_athena.conf";
 
 struct mmo_map_server server[MAX_MAP_SERVERS];
 int server_fd[MAX_MAP_SERVERS];
-int server_freezeflag[MAX_MAP_SERVERS]; // Map-server anti-freeze system. Counter. 5 ok, 4...0 freezed
-
-int anti_freeze_enable = 0;
-int ANTI_FREEZE_INTERVAL = 6;
 
 int login_fd, char_fd;
 char userid[24];
@@ -1800,29 +1796,6 @@ int parse_tologin(int fd) {
 	return 0;
 }
 
-//--------------------------------
-// Map-server anti-freeze system
-//--------------------------------
-int map_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
-	int i;
-
-	for(i = 0; i < MAX_MAP_SERVERS; i++) {
-		if (server_fd[i] >= 0) {// if map-server is online
-			printf("map_anti_freeze_system: server #%d, flag: %d.\n", i, server_freezeflag[i]);
-			if (server_freezeflag[i]-- < 1) {// Map-server anti-freeze system. Counter. 5 ok, 4...0 freezed
-				printf("Map-server anti-freeze system: char-server #%d is frozen -> disconnection.\n", i);
-				session[server_fd[i]]->eof = 1;
-				sprintf(tmp_sql, "DELETE FROM `ragsrvinfo` WHERE `index`='%d'", server_fd[i]);
-				if (mysql_query(&mysql_handle, tmp_sql)) {
-				    printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-				}
-			}
-		}
-	}
-
-	return 0;
-}
-
 int parse_frommap(int fd) {
 	int i = 0, j = 0;
 	int id;
@@ -1972,8 +1945,6 @@ int parse_frommap(int fd) {
 			if (RFIFOW(fd,4) != server[id].users)
 				printf("[UserCount]: %d (Server: %d)\n", RFIFOW(fd,4), id);
 			server[id].users = RFIFOW(fd,4);
-			if(anti_freeze_enable)
-				server_freezeflag[id] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
 			RFIFOSKIP(fd,RFIFOW(fd,2));
 			break;
 
@@ -2908,8 +2879,6 @@ int parse_char(int fd) {
 				WFIFOSET(fd, 3);
 				session[fd]->func_parse = parse_frommap;
 				server_fd[i] = fd;
-				if(anti_freeze_enable)
-					server_freezeflag[i] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
 				server[i].ip = RFIFOL(fd, 54);
 				server[i].port = RFIFOW(fd, 58);
 				server[i].users = 0;
@@ -3384,13 +3353,6 @@ int char_config_read(const char *cfgName) {
 			check_ip_flag = config_switch(w2);
                 } else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
                         char_per_account = atoi(w2);
-		// anti-freeze options [Valaris]
-		} else if(strcmpi(w1,"anti_freeze_enable")==0){
-			anti_freeze_enable = config_switch(w2);
-		} else if (strcmpi(w1, "anti_freeze_interval") == 0) {
-			ANTI_FREEZE_INTERVAL = atoi(w2);
-			if (ANTI_FREEZE_INTERVAL < 5)
-				ANTI_FREEZE_INTERVAL = 5; // minimum 5 seconds
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2);
 		} else if (strcmpi(w1, "console") == 0) {
@@ -3494,7 +3456,6 @@ int do_init(int argc, char **argv){
 	//printf("add interval tic (mmo_char_sync_timer)....\n");
 	//i = add_timer_interval(gettick() + 10, mmo_char_sync_timer, 0, 0, autosave_interval);
 
-	add_timer_func_list(map_anti_freeze_system, "map_anti_freeze_system");
 	//Added for Mugendais I'm Alive mod
 	if(imalive_on)
 		add_timer_interval(gettick()+10, imalive_timer,0,0,imalive_time*1000);
@@ -3502,11 +3463,6 @@ int do_init(int argc, char **argv){
 	//Added by Mugendai for GUI support
 	if(flush_on)
 		add_timer_interval(gettick()+10, flush_timer,0,0,flush_time);
-
-	if(anti_freeze_enable > 0) {
-		add_timer_func_list(map_anti_freeze_system, "map_anti_freeze_system");
-		i = add_timer_interval(gettick() + 1000, map_anti_freeze_system, 0, 0, ANTI_FREEZE_INTERVAL * 1000); // checks every X seconds user specifies
-	}
 
 	read_gm_account();
 
