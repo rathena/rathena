@@ -1,5 +1,7 @@
 Date	Added
 01/11
+        * Added Shinomori's changes to npc event timers (I never realised it, thanks
+          ^^; ) [celest]
         * Updated clif.c to be able to identify client versions based on the packet DB
           [celest]
         * Correct packet_db_ver to the maximum version allowed if it was set too high 

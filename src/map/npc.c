@@ -596,7 +596,7 @@ int npc_timerevent(int tid,unsigned int tick,int id,int data)
  * タイマーイベント開始
  *------------------------------------------
  */
-int npc_timerevent_start(struct npc_data *nd)
+int npc_timerevent_start(struct npc_data *nd, int rid)
 {
 	int j,n, next;
 
@@ -610,12 +610,13 @@ int npc_timerevent_start(struct npc_data *nd)
 		if( nd->u.scr.timer_event[j].timer > nd->u.scr.timer )
 			break;
 	}
+	if(j>=n) // check if there is a timer to use !!BEFORE!! you write stuff to the structures [Shinomori]
+		return 0;
+
 	nd->u.scr.nexttimer=j;
 	nd->u.scr.timertick=gettick();
-	nd->u.scr.rid=0;	// reset attached player [celest]
-
-	if(j>=n)
-		return 0;
+	if (rid >= 0) nd->u.scr.rid=rid;	// changed to: attaching to given rid by default [Shinomori]
+	// if rid is less than 0 leave it unchanged [celest]
 	
 	next = nd->u.scr.timer_event[j].timer - nd->u.scr.timer;
 	nd->u.scr.timerid = add_timer(gettick()+next,npc_timerevent,nd->bl.id,next);
@@ -635,6 +636,7 @@ int npc_timerevent_stop(struct npc_data *nd)
 		if(nd->u.scr.timerid!=-1)
 			delete_timer(nd->u.scr.timerid,npc_timerevent);
 		nd->u.scr.timerid = -1;
+		nd->u.scr.rid = 0;
 	}
 	return 0;
 }
@@ -669,7 +671,7 @@ int npc_settimerevent_tick(struct npc_data *nd,int newtimer)
 	npc_timerevent_stop(nd);
 	nd->u.scr.timer=newtimer;
 	if(flag>=0)
-		npc_timerevent_start(nd);
+		npc_timerevent_start(nd, -1);
 	return 0;
 }
 

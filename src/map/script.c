@@ -3892,8 +3892,7 @@ int buildin_initnpctimer(struct script_state *st)
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
 	npc_settimerevent_tick(nd,0);
-	npc_timerevent_start(nd);
-	nd->u.scr.rid=st->rid;
+	npc_timerevent_start(nd, st->rid);
 	return 0;
 }
 /*==========================================
@@ -3908,7 +3907,7 @@ int buildin_startnpctimer(struct script_state *st)
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	npc_timerevent_start(nd);
+	npc_timerevent_start(nd, st->rid);
 	return 0;
 }
 /*==========================================
