@@ -134,7 +134,7 @@
 661,Sky_Apron,Soft Apron,2,20,0,50,,,,,10477567,2,,,,,{ pet 1275; },{}
 
 // Newer Items
-662,Horse_Crest,Crest of the Horse,2,2,0,3000,0,0,0,0,10477567,2,0,0,0,0,{ skilleffect 29,5; sc_start SC_SpeedUp0,240000,0; },{}
+662,Horse_Crest,Crest of the Horse,2,3000,0,30,0,0,0,0,10477567,2,0,0,0,0,{ skilleffect 29,5; sc_start SC_SpeedUp0,240000,0; },{}
 664,Gift_Box_,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 665,Gift_Box__,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
 666,Gift_Box___,Gift Box,2,20,0,200,,,,,10477567,2,,,,,{ getitem -4,1; },{},
