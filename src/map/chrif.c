@@ -23,6 +23,7 @@
 #include "npc.h"
 #include "pc.h"
 #include "nullpo.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -244,13 +245,16 @@ int chrif_connectack(int fd)
 		printf("Connected to char-server failed %d.\n", RFIFOB(fd,2));
 		exit(1);
 	}
-	printf("Connected to char-server (connection #%d).\n", fd);
+	sprintf(tmp_output,"Successfully connected to Char-Server (Connection #%d).\n",fd);
+	ShowStatus(tmp_output);
 	chrif_state = 1;
 
 	chrif_sendmap(fd);
 
-	printf("chrif: OnCharIfInit event done. (%d events)\n", npc_event_doall("OnCharIfInit"));
-	printf("chrif: OnInterIfInit event done. (%d events)\n", npc_event_doall("OnInterIfInit"));
+	sprintf(tmp_output,"Event '"CL_WHITE"OnCharIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnCharIfInit"));
+	ShowStatus(tmp_output);
+	sprintf(tmp_output,"Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
+	ShowStatus(tmp_output);
 
 	// <Agit> Run Event [AgitInit]
 //	printf("NPC_Event:[OnAgitInit] do (%d) events (Agit Initialize).\n", npc_event_doall("OnAgitInit"));
@@ -856,8 +860,8 @@ int chrif_chardisconnect(struct map_session_data *sd)
  */
 int chrif_recvgmaccounts(int fd) 
 {
-	printf("From login-server: receiving of %d GM accounts information.\n", pc_read_gm_account(fd));
-
+	sprintf(tmp_output,"From login-server: receiving information of '"CL_WHITE"%d"CL_RESET"' GM accounts.\n", pc_read_gm_account(fd));
+	ShowInfo(tmp_output);
 	return 0;
 }
 

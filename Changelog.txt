@@ -1,5 +1,9 @@
 Date	Added
 12/14
+	* Replaced the way map loading was displayed into a progress-like way [MC Cameri]
+	* Fixed some typos in _ShowMessage() [MC Cameri]
+	* Replaced lots of more printf's in map-server with _ShowMessage() [MC Cameri]
+	* Added constants for console colors in showmsg.h [MC Cameri]
 	* src/char_sql/int_guild.c:56 - t_mes2 was not big enough causing
 	  stack overrun's, corruptions, and crashes [MouseJstr]
 	* common/mmo.h: changed base_level and job_level to unsigned int to increase max levels [Codemaster]
@@ -28,6 +32,7 @@ Date	Added
           rollback -  fix by Freya [celest]
         * Removed 'type' paramater from pc_unequipitem to use 'flag' instead[celest]
         * Moved unequip checking code from clif.c to pc.c [celest]
+>>>>>>> .r565
 	* Replaced many printf's in map-server with _ShowMessage(). [MC Cameri]
 	* Skill timers for skills with id's higher then 450 were
 	  corrupting memory [MouseJstr]

@@ -826,13 +826,15 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	pc_calcstatus(sd,1);
 
 	if (pc_isGM(sd))
-		printf("Connection accepted: character '%s' (account: %d; GM level %d).\n", sd->status.name, sd->status.account_id, pc_isGM(sd));
+		sprintf(tmp_output,"GM Character '"CL_WHITE"%s"CL_RESET"' logged in. (Acc. ID: '"CL_WHITE"%d"CL_RESET"', GM Level '"CL_WHITE"%d"CL_RESET"').\n", sd->status.name, sd->status.account_id, pc_isGM(sd));
 	else
-		printf("Connection accepted: Character '%s' (account: %d).\n", sd->status.name, sd->status.account_id);
-
+		sprintf(tmp_output,"Character '"CL_WHITE"%s"CL_RESET"' logged in. (Account ID: '"CL_WHITE"%d"CL_RESET"').\n", sd->status.name, sd->status.account_id);
+	ShowInfo(tmp_output);
 	//printf("pc: OnPCLogin event done. (%d events)\n", npc_event_doall("OnPCLogin") );
-	if (npc_name2id("PCLoginEvent"))
+	if (npc_name2id("PCLoginEvent")) {
 		run_script(npc_name2id("PCLoginEvent")->u.scr.script,0,sd->bl.id,npc_name2id("PCLoginEvent")->bl.id); // PCLoginNPC
+		ShowStatus("Event '\033[1;29mPCLoginEvent\033[0;0m' executed.\n");
+	}
 	// Send friends list
 	clif_friends_list_send(sd);
 
@@ -857,8 +859,8 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 			fclose(fp);
 		}
 		else if(battle_config.error_log) {
-			sprintf(buf, "%s not found\n", motd_txt);
-			ShowWarning (buf);
+			sprintf(tmp_output, "In function pc_atuhok() -> File '"CL_WHITE"%s"CL_RESET"' not found.\n", motd_txt);
+			ShowWarning(tmp_output);
 		}
 	}
 
@@ -7808,7 +7810,8 @@ int pc_readdb(void)
 			break;
 	}
 	fclose(fp);
-	printf("read db/job_db2-2.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/job_db2-2.txt");
+	ShowStatus(tmp_output);
 
 	// ƒXƒLƒ‹ƒcƒŠ?
 	memset(skill_tree,0,sizeof(skill_tree));

@@ -614,7 +614,8 @@ static int grfio_entryread(char *gfname,int gentry)
 
 	fp = fopen(gfname,"rb");
 	if(fp==NULL) {
-		printf("%s not found (grfio_entryread)\n",gfname);
+		sprintf(tmp_output,"GRF Data File not found: '\033[1;29m%s\033[0;0m'.\n",gfname);
+		ShowWarning(tmp_output);
 		return 1;	// 1:not found error
 	}
 
@@ -837,7 +838,8 @@ int grfio_add(char *fname)
 		exit(1);
 	}
 
-	printf("%s file reading...\n",fname);
+//	sprintf(tmp_output,"Reading GRF File: '%s'.\n",fname);
+//	ShowStatus(tmp_output);
 
 	if (gentry_entrys>=gentry_maxentry) {
 		char **new_gentry = (char**)realloc(
@@ -924,7 +926,7 @@ void grfio_init(char *fname)
 		}
 
 		fclose(data_conf);
-		sprintf(tmp_output,"Done reading GRF File: '\033[1;29m%s\033[0;0m'.\n",fname);
+		sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n",fname);
 		ShowStatus(tmp_output);
 	} // end of reading grf-files.txt
 

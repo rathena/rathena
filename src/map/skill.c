@@ -11531,7 +11531,8 @@ int skill_readdb(void)
 			skill_db[i].blewcount[k]=(split2[k])? atoi(split2[k]):atoi(split2[0]);
 	}
 	fclose(fp);
-	printf("read db/skill_db.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_db.txt");
+	ShowStatus(tmp_output);
 
 	fp=fopen("db/skill_require_db.txt","r");
 	if(fp==NULL){
@@ -11670,7 +11671,8 @@ int skill_readdb(void)
 		skill_db[i].amount[9]=atoi(split[29]);
 	}
 	fclose(fp);
-	printf("read db/skill_require_db.txt done\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_cast_db.txt");
+	ShowStatus(tmp_output);
 
 	/* キャスティングデ?タベ?ス */
 	fp=fopen("db/skill_cast_db.txt","r");

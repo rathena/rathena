@@ -24,6 +24,7 @@
 #include "../common/malloc.h"
 #include "../common/version.h"
 #include "../common/nullpo.h"
+#include "../common/showmsg.h"
 
 #include "map.h"
 #include "chrif.h"
@@ -10107,15 +10108,16 @@ static int clif_parse(int fd) {
 			if (chrif_isconnect())
 				clif_quitsave(fd, sd);
 			if (sd->status.name != NULL)
-				printf("Player [%s] has logged off your server.\n", sd->status.name); // Player logout display [Valaris]
+				sprintf(tmp_output,"%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off.\n", (pc_isGM(sd))?"GM ":"",sd->status.name); // Player logout display [Valaris]
 			else
-				printf("Player with account [%d] has logged off your server.\n", sd->bl.id); // Player logout display [Yor]
+				sprintf(tmp_output,"%sCharacter with Account ID '"CL_WHITE"%d"CL_RESET"' logged off.\n", (pc_isGM(sd))?"GM ":"", sd->bl.id); // Player logout display [Yor]
 		} else if (sd) { // not authentified! (refused by char-server or disconnect before to be authentified)
-			printf("Player with account [%d] has logged off your server (not auth account).\n", sd->bl.id); // Player logout display [Yor]
+			sprintf(tmp_output,"Player not authenticated with Account ID '"CL_WHITE"%d"CL_RESET"' logged off.\n", sd->bl.id); // Player logout display [Yor]
 			if (chrif_isconnect())
 				clif_quitsave(fd, sd);
 			sd = 0;
 		}
+		ShowInfo(tmp_output);
 		close(fd);
 		if (sd) // ’Ç‰Á
 			map_deliddb(&sd->bl); // ’Ç‰Á

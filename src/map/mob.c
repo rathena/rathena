@@ -3959,7 +3959,8 @@ static int mob_readdb_mobavail(void)
 		ln++;
 	}
 	fclose(fp);
-	printf("read db/mob_avail.txt done (count=%d)\n",ln);
+	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,"db/mob_avail.txt");
+	ShowStatus(tmp_output);
 	return 0;
 }
 

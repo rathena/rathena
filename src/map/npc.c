@@ -2219,6 +2219,7 @@ void ev_release(struct dbn *db, int which)
  */
 int do_init_npc(void)
 {
+	ShowStatus("Loading NPCs...\n");
 	struct npc_src_list *nsl;
 	FILE *fp;
 	char line[1024];
@@ -2297,8 +2298,14 @@ int do_init_npc(void)
 //		printf("\rLoading NPCs [%d]: %-54s",npc_id-START_NPC_NUM,nsl->name);
 //		fflush(stdout);
 	}
-	printf("\rNPCs Loaded: %d [Warps:%d Shops:%d Scripts:%d Mobs:%d]\n",
+	printf("\r");
+	sprintf(tmp_output,"Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:\n\t-'"
+		CL_WHITE"%d"CL_RESET"' Warps\n\t-'"
+		CL_WHITE"%d"CL_RESET"' Shops\n\t-'"
+		CL_WHITE"%d"CL_RESET"' Scripts\n\t-'"
+		CL_WHITE"%d"CL_RESET"' Mobs\n",
 		npc_id-START_NPC_NUM,npc_warp,npc_shop,npc_script,npc_mob);
+	ShowInfo(tmp_output);
 
 	add_timer_func_list(npc_walktimer,"npc_walktimer"); // [Valaris]
 	add_timer_func_list(npc_event_timer,"npc_event_timer");

@@ -552,7 +552,8 @@ static int itemdb_read_itemnametable(void)
 		p++;
 	}
 	free(buf);
-	printf("read data\\idnum2itemdisplaynametable.txt done.\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","data\\idnum2itemdisplaynametable.txt");
+	ShowStatus(tmp_output);
 
 	return 0;
 }
@@ -587,7 +588,8 @@ static int itemdb_read_cardillustnametable(void)
 		p++;
 	}
 	free(buf);
-	printf("read data\\num2cardillustnametable.txt done.\n");
+	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","data\\num2cardillustnametable.txt");
+	ShowStatus(tmp_output);
 
 	return 0;
 }
@@ -631,7 +633,8 @@ static int itemdb_read_noequip(void)
 
 	}
 	fclose(fp);
-	printf("read db/item_noequip.txt done (count=%d)\n",ln);
+	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,"db/item_noequip.txt");
+	ShowStatus(tmp_output);
 	return 0;
 }
 #ifndef TXT_ONLY

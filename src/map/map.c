@@ -104,6 +104,8 @@ static int online_timer(int,unsigned int,int,int);
 int CHECK_INTERVAL = 3600000; // [Valaris]
 int check_online_timer=0; // [Valaris]
 
+static int pos = 0;
+
 #endif /* not TXT_ONLY */
 
 #define USE_AFM
@@ -1588,16 +1590,26 @@ static int map_readmap(int m,char *fn, char *alias) {
 	int x,y,xs,ys;
 	struct gat_1cell {float high[4]; int type;} *p=NULL;
 	int wh;
+	int i;
+	int e = 0;
+	
 	size_t size;
-
+	char progress[21] = "                    ";
 	// read & convert fn
 	gat=grfio_read(fn);
 	if(gat==NULL)
 		return -1;
-
-	printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
-	fflush(stdout);
-
+	//printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
+	if (map_num) { //avoid map-server crashing if there are 0 maps
+	printf("\r");
+	ShowStatus("Progress: ");
+		i=m*20/420;
+		printf("[");
+		for (e=0;e<i;e++) progress[e] = '#';
+		printf(progress);
+		printf("] Working: [");
+		fflush(stdout);
+	}
 	map[m].m=m;
 	xs=map[m].xs=*(int*)(gat+6);
 	ys=map[m].ys=*(int*)(gat+10);
@@ -1645,8 +1657,12 @@ static int map_readmap(int m,char *fn, char *alias) {
  *------------------------------------------
  */
 int map_readallmap(void) {
+	ShowStatus("Loading Maps...\n");
 	int i,maps_removed=0;
 	char fn[256];
+	char c = '-';
+	time_t last_time = time(0);
+	int busy = 0;
 #ifdef USE_AFM
 	FILE *afm_file;
 #endif
@@ -1681,16 +1697,28 @@ int map_readallmap(void) {
 			if(map_readmap(i,fn, p) == -1) {
 				map_delmap(map[i].name);
 				maps_removed++;
+			} else {
+				if (last_time != time(0)) {
+					last_time = time(0);
+					switch(busy) {
+						case 0: c='\\'; busy++; break;
+						case 1: c='|'; busy++; break;
+						case 2: c='/'; busy++; break;
+						case 3: c='-'; busy=0;
+					}
+				}
+				printf("%c]",c);
+				fflush(stdout);
 			}
 		}
 	}
 
 	free(waterlist);
 	printf("\r");
-	snprintf(tmp_output,sizeof(tmp_output),"Maps Loaded: \033[1;29m%d\033[0;0m %50s\n",map_num,"");
+	snprintf(tmp_output,sizeof(tmp_output),"Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps.%50s\n",map_num,"");
 	ShowInfo(tmp_output);
 	if (maps_removed) {
-		snprintf(tmp_output,sizeof(tmp_output),"Maps Removed: %d\n",maps_removed);
+		snprintf(tmp_output,sizeof(tmp_output),"Maps Removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);
 		ShowNotice(tmp_output);
 	}
 	return 0;
@@ -2386,13 +2414,13 @@ int do_init(int argc, char *argv[]) {
 	do_init_itemdb();
 	do_init_mob();	// npc‚Ì‰Šú‰»Žž“à‚Åmob_spawn‚µ‚ÄAmob_db‚ðŽQÆ‚·‚é‚Ì‚Åinit_npc‚æ‚èæ
 	do_init_script();
-	do_init_npc();
 	do_init_pc();
 	do_init_party();
 	do_init_guild();
 	do_init_storage();
 	do_init_skill();
 	do_init_pet();
+	do_init_npc();
 
 #ifndef TXT_ONLY /* mail system [Valaris] */
 	if(battle_config.mail_system)	
