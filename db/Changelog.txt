@@ -5,6 +5,10 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+02/17
+        * Corrected Parrying lasting time, thanks to p14333 and krc2k for pointing it
+          out [celest]
+
 02/11
 	NOTE: Get rid of old cards on your server!!! IDs: 4149-4332
 	  before using of this item_db.txt (some cards have changed their IDs)
