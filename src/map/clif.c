@@ -7541,7 +7541,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 	}
 
 	//double connection bug fix by Valaris
-	if(sd->alive_timer) 
+	if(sd->alive_timer > 0) 
 		delete_timer(sd->alive_timer,pc_alive_timer);
 	sd->alive_timer=add_timer(gettick()+60*1000,pc_alive_timer,sd->bl.id,0);
 

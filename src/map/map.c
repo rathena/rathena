@@ -1055,7 +1055,7 @@ int map_quit(struct map_session_data *sd) {
 	storage_storage_save(sd);
 
 	//double connect bug fix by Valaris
-	if(sd->alive_timer) {
+	if(sd->alive_timer > 0) {
 		delete_timer(sd->alive_timer,pc_alive_timer);
 		sd->alive_timer = -1;	// not 0, the server will assume it's still active
 	}

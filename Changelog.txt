@@ -1,5 +1,6 @@
 Date	Added
 12/27
+	* don't delete alive_timers of -1  (SVN 823) [MouseJstr]
 	* switched malloc,calloc,realloc to aMalloc, aCalloc, aRealloc
 	  so support the use of a garbage collector (SVN 821) [MouseJstr]
 	* Removed some printf's from map-sql [MC Cameri]
