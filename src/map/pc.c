@@ -280,9 +280,14 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 
 	//-----------------------
 	// 死亡した
-	if(sd->special_state.restart_full_recover) {	// オシリスカ?ド
+	if(sd->special_state.restart_full_recover ||	// オシリスカ?ド
+		sd->state.snovice_flag == 4) {				// [Celest]
 		sd->status.hp=sd->status.max_hp;
 		sd->status.sp=sd->status.max_sp;
+		if (sd->state.snovice_flag == 4) {
+			sd->state.snovice_flag = 0;
+			skill_status_change_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],1,0,0,0,skill_get_time(MO_STEELBODY,1),0 );
+		}
 	}
 	else {
 		if(s_class.job == 0 && battle_config.restart_hp_rate < 50) { //ノビは半分回復
@@ -5426,6 +5431,10 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	skill_status_change_clear(&sd->bl,0);	// ステ?タス異常を解除する
 	clif_updatestatus(sd,SP_HP);
 	pc_calcstatus(sd,0);
+
+	// activate Steel body if a super novice dies at 99+% exp [celest]
+	if (s_class.job == 23 && (i=sd->status.base_exp*1000/pc_nextbaseexp(sd))>=990 && i<=1000)
+		sd->state.snovice_flag = 4;
 
 	for(i=0;i<5;i++)
 		if(sd->dev.val1[i]){

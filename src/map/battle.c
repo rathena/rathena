@@ -2926,7 +2926,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 	}
 
 	//O’i¶
-	if(skill_num == 0 && skill_lv >= 0 && (skill = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16 && !sd->state.arrow_atk) {
+	//if(skill_num == 0 && skill_lv >= 0 && (skill = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16 && !sd->state.arrow_atk) {
+	if(skill_num == 0 && skill_lv >= 0 && (skill = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16) { // triple blow works with bows ^^ [celest]
 			da = (rand()%100 < (30 - skill)) ? 2:0;
 	}
 

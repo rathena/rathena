@@ -137,6 +137,7 @@ struct map_session_data {
 		unsigned make_arrow_flag : 1;
 		unsigned potionpitcher_flag : 1;
 		unsigned storage_flag : 1;
+		unsigned snovice_flag : 4;
 	} state;
 	struct {
 		unsigned killer : 1;
