@@ -1,6 +1,6 @@
 //The packet database allows you to add support for new clients, because packets change every release.
 //This only allows 1 type of client at a time, make sure your client is the last one in the list
-//EX: You have client 628 and it goes up to 1021, delete or comment (use //) till your client is last.
+//EX: You have client 628 and it goes up to 1021, delete or comment (use //) till your client is last in the list.
 
 //Packet, Packet Size, Function, Position0:Position1:etc.
 0x0064,55
