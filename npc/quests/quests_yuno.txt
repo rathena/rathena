@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= DiaDz (v1.0)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= v1.1 Re-did the text and re-organized the script.  Corrected some items. [kobra_k88]
 //= v1.2 Added part to Bro's for alchemist quest [Darkchild]
+//= 1.3 fixed that part of Alch Job Quest. [Lupus]
 //============================================================ 
 
 
@@ -65,7 +66,6 @@ L_Check:
 	delitem 756,3;
 	set Zeny, Zeny-2000;
 	mes @name$;
-	if(ALCH_Q == 6) goto L_Alchemist;
 
 	L_Alchemist:
 		mes "Okay, let's try this out!";
@@ -86,7 +86,8 @@ L_Check:
 		if(@wowitem == 1) mes "3 Gold!";
 		if(@wowitem == 1) getitem 969,3;
 		next;
-		set ALCH_Q2, 2;
+		//if u take Alchemist Job Quest then
+		if(ALCH_Q == 6) set ALCH_Q2, 2;
 		mes @name$;
 		mes "Now that we know that it works,";
 		mes "I don't have any need for this.";
