@@ -1664,7 +1664,15 @@ int npc_convertlabel_db(void *key,void *data,va_list ap)
 		lst=(struct npc_label_list *)aRealloc(lst,sizeof(struct npc_label_list)*(num+1));
 
 	*p='\0';
-	strncpy(lst[num].name,lname,24);
+	
+	// here we check if the label fit into the buffer
+	if (strlen(lname)>23) { 
+		printf("npc_parse_script: label name longer than 23 chars! '%s'\n", lname);
+		exit(1);
+	}
+	memcpy(lst[num].name,lname,strlen(lname)+1); //including EOS
+	
+	
 	*p=':';
 	lst[num].pos=pos;
 	nd->u.scr.label_list=lst;
@@ -1873,11 +1881,16 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		int pos=nd->u.scr.label_list[i].pos;
 
 		if ((lname[0]=='O' || lname[0]=='o')&&(lname[1]=='N' || lname[1]=='n')) {
+/*
+I rearrange the code so this is just for commenting; remove it if you have enough if it [Shinomori]
 			struct event_data *ev;
 			char *buf;
 			// エクスポートされる
 			ev=(struct event_data *)aCalloc(1,sizeof(struct event_data));
+why allocing 50 chars ?
 			buf=(char *)aCallocA(50,sizeof(char));
+why checking here? 
+lname is identical to nd->u.scr.label_list[i].name which is only 24 chars so check for strlen should be 23
 			if (strlen(lname)>24) {
 				printf("npc_parse_script: label name error !\n");
 				exit(1);
@@ -1891,7 +1904,47 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 				//	printf("npc_parse_script : duplicate event %s\n",buf);
 				//	aFree(ev2);
 				//}
+you are sure reentering the same database key will overwrite the existing entry?
 				strdb_insert(ev_db,buf,ev);
+anyway instead of removing data from the db and inserting a new one
+wouldn't it be easier just not to insert the new duplicate event, it is a duplicate anyway?
+			}	
+*/
+			// this check is useless here because the buffer is only 24 chars 
+			// and already overwritten if this is here is reached
+			// I leave the check anyway but place it correctly to npc_convertlabel_db
+			if (strlen(lname)>23) { 
+				printf("npc_parse_script: label name longer than 23 chars! '%s'\n", lname);
+				exit(1);
+			}else{
+				struct event_data *ev;
+				struct event_data *ev2;
+				char *buf;
+				// エクスポートされる
+				
+				// 51 comes from: 24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
+				//buf=(char *)aMalloc(51,sizeof(char)); 
+				// but to save some memory we alloc only the really necessary space
+				buf=(char *)aMalloc( (3+strlen(nd->exname)+strlen(lname))*sizeof(char));
+				sprintf(buf,"%s::%s",nd->exname,lname);
+				
+				// search the label in ev_db; 
+				// remember the label is max 50 chars + eos; see the strdb_init below
+				ev2 = (struct event_data *)strdb_search(ev_db,buf);
+				if(ev2 != NULL) {
+					printf("npc_parse_script : duplicate event %s\n",buf);
+					
+					// just skip the label insertion and free the alloced buffer
+					aFree(buf);
+				}
+				else
+				{	// generate the data and insert it
+					ev=(struct event_data *)aCalloc(1,sizeof(struct event_data));
+					ev->nd=nd;
+					ev->pos=pos;
+					strdb_insert(ev_db,buf,ev);
+				}
+
 			}
 		}
 	}
@@ -2362,7 +2415,10 @@ int do_init_npc(void)
 	npc_read_indoors();
 	//npc_read_weather();
 
-	ev_db=strdb_init(24);
+	// comparing only the first 24 chars of labels that are 50 chars long isn't that nice
+	// will cause "duplicated" labels where actually no dup is...
+	//ev_db=strdb_init(24); 
+	ev_db=strdb_init(51);
 	npcname_db=strdb_init(24);
 
         ev_db->release = ev_release;

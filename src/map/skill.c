@@ -6979,6 +6979,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		break;
 	case HP_BASILICA:		/* ƒoƒWƒŠƒJ */
 		{
+			struct status_change *sc_data;
 			if (skill_check_unit_range(sd->bl.m,sd->bl.x,sd->bl.y,sd->skillid,sd->skilllv)) {
 				clif_skill_fail(sd,sd->skillid,0,0);
 				return 0;
@@ -6988,7 +6989,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 				return 0;
 			}
 			// cancel Basilica if already in effect
-			struct status_change *sc_data = status_get_sc_data(&sd->bl);
+			sc_data = status_get_sc_data(&sd->bl);
 			if(sc_data && sc_data[SC_BASILICA].timer != -1) {
 				struct skill_unit_group *sg = (struct skill_unit_group *)sc_data[SC_BASILICA].val4;
 				if (sg && sg->src_id == sd->bl.id) {

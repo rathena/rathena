@@ -1,6 +1,11 @@
 Date	Added
 
 03/08
+        * Reverted the reverted jA event change but this time without bugs (hopefully) [Shinomori]
+        * corrected status_change_timer as far as I understand the functionality
+          (better have a look at it, Celest), added a some security to prevent pending timers
+        * moved two variable declarations to scope start (mob.c and skill.c)
+
         * Fixes Icewall can be directly cast on players and monsters -- also removes
           the 'unsupported layout' message [celest]
         * Added the new turbo_room and alde_tt to the maps config [celest]
@@ -40,6 +45,8 @@ Date	Added
 	  It also auto-ban hackers and broadcasts messages to all GMs. Good work, Yor!
 	* Misc fixes. [Lupus]
 	  2Shino: BTW Some players can't re-connect to the server. Due to the updated session checks in chrif.c
+         actually impossible, because the checks handle the connection with the char server, not with users
+         anyway, I checked again and rearranged code but functionality is still the same and valid [Shinomori]
 03/05
 	* Reversed drop_rate0item option, corrected MVP Drop rate (thanks to Freya) [Lupus]
 03/04

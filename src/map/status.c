@@ -4274,6 +4274,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	struct status_change *sc_data;
 	//short *sc_count; //使ってない？
 
+// security system to prevent forgetting timer removal
+	int temp_timerid;
+
 	nullpo_retr_f(0, bl=map_id2bl(id), "id=%d data=%d",id,data);
 	nullpo_retr(0, sc_data=status_get_sc_data(bl));
 
@@ -4287,6 +4290,11 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			printf("status_change_timer %d != %d\n",tid,sc_data[type].timer);
 		return 0;
 	}
+
+	// security system to prevent forgetting timer removal
+	// you shouldn't be that careless inside the switch here
+	temp_timerid = sc_data[type].timer;
+	sc_data[type].timer = -1;
 
 	switch(type){	/* 特殊な?理になる場合 */
 	case SC_MAXIMIZEPOWER:	/* マキシマイズパワ? */
@@ -4417,9 +4425,11 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				break;
 			skill_additional_effect(bl,bl,unit->group->skill_id,sc_data[type].val1,BF_LONG|BF_SKILL|BF_MISC,tick);
 			if (unit->group != 0)
+			{
 				sc_data[type].timer=add_timer(skill_get_time(unit->group->skill_id,unit->group->skill_lv)/10+tick,
 					status_change_timer, bl->id, data );
-			return 0;
+				return 0;
+			}// dont forget the brackets
 		}
 		break;
 
@@ -4473,10 +4483,19 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 					}
 				}
 				sc_data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
+				// hmm setting up a timer and breaking then to call status_change_end just right away?
+				// I think you're missing a:
+				return 0;
+				
 			}
 		}
 		else
+		{
 			sc_data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
+			// hmm setting up a timer and breaking then to call status_change_end just right away?
+			// I think you're missing brackets and a:
+			return 0;
+		}
 		break;
 	case SC_DPOISON:
 		if (sc_data[SC_SLOWPOISON].timer == -1 && (--sc_data[type].val3) > 0) {
@@ -4496,7 +4515,12 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 		}
 		if (sc_data[type].val3 > 0)
+		{
 			sc_data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
+			// hmm setting up a timer and breaking then to call status_change_end just right away?
+			// I think you're missing brackets and a:
+			return 0;
+		}
 		break;
 
 	case SC_TENSIONRELAX:	/* テンションリラックス */
@@ -4512,7 +4536,13 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				return 0;
 			}
 			if(sd->status.max_hp <= sd->status.hp)
+			{
 				status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
+				// calling status_change_end then break and call it again might not be that what is necessary
+				// or am I wrong?
+				// so I just add brackets and a:
+				return 0;
+			}
 		}
 		break;
 	case SC_BLEEDING:	// [celest]
@@ -4538,6 +4568,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 
 			sc_data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
+			// hmm setting up a timer and breaking then to call status_change_end just right away?
+			// I think you're missing a:
+			return 0;
 		}
 		break;
 
@@ -4554,8 +4587,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_BROKNWEAPON:
 	case SC_BROKNARMOR:
 	case SC_SACRIFICE:
-//		if(sc_data[type].timer==tid)
-			sc_data[type].timer=add_timer( 1000*600+tick,status_change_timer, bl->id, data );
+		sc_data[type].timer=add_timer( 1000*600+tick,status_change_timer, bl->id, data );
 		return 0;
 
 	case SC_DANCING: //ダンススキルの時間SP消費
@@ -4862,14 +4894,23 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_GUILDAURA:
 		{
 			struct block_list *tbl = map_id2bl(sc_data[type].val2);
-			if (tbl && battle_check_range(bl, tbl, 2))
+			
+			if (tbl && battle_check_range(bl, tbl, 2)){
 				sc_data[type].timer = add_timer(
 					1000 + tick, status_change_timer,
 					bl->id, data);
-					return 0;			
+					return 0;
+			}// ugh, don't  forget the brackets
 		}
 		break;
 	}
+	
+	// default for all non-handled control paths
+	// security system to prevent forgetting timer removal
+
+	// if we reach this point we need the timer for the next call, 
+	// so restore it to have status_change_end handle a valid timer
+	sc_data[type].timer = temp_timerid; 
 
 	return status_change_end( bl,type,tid );
 }

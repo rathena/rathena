@@ -135,9 +135,9 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 		return 0;
 
 	if(class_<0){	// ƒ‰ƒ“ƒ_ƒ€‚É¢Š«
+		int k;
 		i = 0;
 		j = -class_-1;
-		int k;
 		if(j>=0 && j<MAX_RANDOMMONSTER){
 			do{
 				class_=rand()%1000+1001;

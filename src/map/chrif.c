@@ -100,7 +100,7 @@ int chrif_save(struct map_session_data *sd)
 {
 	nullpo_retr(-1, sd);
 
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect())
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	pc_makesavestatus(sd);
@@ -189,7 +189,7 @@ int chrif_changemapserver(struct map_session_data *sd, char *name, int x, int y,
 
 	nullpo_retr(-1, sd);
 
-	if (!sd || char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+	if( !sd || char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	s_ip = 0;
@@ -299,7 +299,9 @@ int chrif_authreq(struct map_session_data *sd)
 
 	nullpo_retr(-1, sd);
 
-	if (!sd || char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() || !sd->bl.id || !sd->login_id1)
+	if(!sd || !sd->bl.id || !sd->login_id1)
+		return -1;
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	for(i = 0; i < fd_max; i++)
@@ -327,7 +329,9 @@ int chrif_charselectreq(struct map_session_data *sd)
 
 	nullpo_retr(-1, sd);
 
-	if(!sd || char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() || !sd->bl.id || !sd->login_id1)
+	if( !sd || !sd->bl.id || !sd->login_id1 )
+		return -1;
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	s_ip = 0;
@@ -353,7 +357,9 @@ int chrif_charselectreq(struct map_session_data *sd)
  */
 int chrif_searchcharid(int char_id)
 {
-	if (!char_id || char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect())
+	if( !char_id )
+		return -1;
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b08;
@@ -372,7 +378,7 @@ int chrif_changegm(int id, const char *pass, int len)
 	if (battle_config.etc_log)
 		printf("chrif_changegm: account: %d, password: '%s'.\n", id, pass);
 
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b0a;
@@ -393,7 +399,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email)
 	if (battle_config.etc_log)
 		printf("chrif_changeemail: account: %d, actual_email: '%s', new_email: '%s'.\n", id, actual_email, new_email);
 
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b0c;
@@ -418,7 +424,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email)
  */
 int chrif_char_ask_name(int id, char * character_name, short operation_type, int year, int month, int day, int hour, int minute, int second)
 {
-   	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd, 0) = 0x2b0e;
@@ -444,7 +450,7 @@ int chrif_char_ask_name(int id, char * character_name, short operation_type, int
  *------------------------------------------
  */
 int chrif_changesex(int id, int sex) {
-   	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b11;
@@ -678,7 +684,7 @@ int chrif_saveaccountreg2(struct map_session_data *sd)
 	int p, j;
 	nullpo_retr(-1, sd);
 
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	p = 8;
@@ -851,7 +857,7 @@ int chrif_chardisconnect(struct map_session_data *sd)
 {
 	nullpo_retr(-1, sd);
 
-	if(char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect())
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0)=0x2b18;
@@ -881,7 +887,7 @@ int chrif_recvgmaccounts(int fd)
  */
 int chrif_reloadGMdb(void)
 {
-   	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2af7;
@@ -900,7 +906,7 @@ int chrif_reloadGMdb(void)
 	FILE *fp;
 	int i;
 
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b16;
@@ -936,7 +942,7 @@ int chrif_reloadGMdb(void)
 
 int chrif_char_offline(struct map_session_data *sd)
 {
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect())
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b17;
@@ -952,7 +958,7 @@ int chrif_char_offline(struct map_session_data *sd)
  *-----------------------------------------
  */
 int chrif_flush_fifo(void) {
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect())
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	set_nonblocking(char_fd, 0);
@@ -967,7 +973,7 @@ int chrif_flush_fifo(void) {
  *-----------------------------------------
  */
 int chrif_char_reset_offline(void) {
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect())
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b18;
@@ -983,7 +989,7 @@ int chrif_char_reset_offline(void) {
 
 int chrif_char_online(struct map_session_data *sd)
 {
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect())
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b19;
@@ -1099,7 +1105,7 @@ int send_users_tochar(int tid, unsigned int tick, int id, int data) {
 	int users = 0, i;
 	struct map_session_data *sd;
 
-	if (char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect()) // Thanks to Toster
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() ) // Thanks to Toster
 		return 0;
 
 	WFIFOW(char_fd,0) = 0x2aff;
