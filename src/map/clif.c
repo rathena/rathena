@@ -7967,15 +7967,15 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 	case 0x02: // sitdown
 		if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 3) {
 			pc_stop_walking(sd, 1);
-			skill_gangsterparadise(sd, 1); // ギャングスターパラダイス設定
 			pc_setsit(sd);
+			skill_gangsterparadise(sd, 1); // ギャングスターパラダイス設定 fixed Valaris
 			clif_sitting(sd);
 		} else
 			clif_skill_fail(sd, 1, 0, 2);
 		break;
 	case 0x03: // standup
-		skill_gangsterparadise(sd, 0); // ギャングスターパラダイス解除
 		pc_setstand(sd);
+		skill_gangsterparadise(sd, 0); // ギャングスターパラダイス解除 fixed Valaris
 		WBUFW(buf, 0) = 0x8a;
 		WBUFL(buf, 2) = sd->bl.id;
 		WBUFB(buf,26) = 3;
