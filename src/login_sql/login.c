@@ -81,7 +81,7 @@ void Gettimeofday(struct timeval *timenow)
 //-----------------------------------------------------
 int account_id_count = START_ACCOUNT_NUM;
 int server_num;
-int new_account_flag = 0;
+int new_account_flag = 0; //Set from config too XD [Sirius]
 char bind_ip_str[16];
 in_addr_t bind_ip;
 int login_port = 6900;
@@ -382,8 +382,11 @@ int mmo_auth( struct mmo_account* account , int fd){
 	char t_uid[256], t_pass[256];
 	char user_password[256];
 
-	MYSQL_RES* 	sql_res ;
-	MYSQL_ROW	sql_row ;
+	//added for account creation _M _F
+	int len;
+
+	MYSQL_RES* 	sql_res;
+	MYSQL_ROW	sql_row;
 	//int sql_fields, sql_cnt;
 	char md5str[64], md5bin[32];
 
@@ -391,11 +394,38 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	unsigned char *sin_addr = (unsigned char *)&session[fd]->client_addr.sin_addr;
 
+
 	printf ("auth start...\n");
-
 	sprintf(ip, "%d.%d.%d.%d", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
+	
+	//accountreg with _M/_F .. [Sirius]
+	len = strlen(account->userid) -2;
+	
+             if (account->passwdenc == 0 && account->userid[len] == '_' &&
+                 (account->userid[len+1] == 'F' || account->userid[len+1] == 'M') && new_account_flag == 1 &&
+                      account_id_count <= END_ACCOUNT_NUM && len >= 4 && strlen(account->passwd) >= 4) {
+                          if (new_account_flag == 1) 
+                                        account->userid[len] = '\0';                       	                                        
+                                      	sprintf(tmp_sql, "SELECT `userid` FROM `%s` WHERE `userid` = '%s'", login_db, account->userid);
+					if(mysql_query(&mysql_handle, tmp_sql)){
+						printf("SQL error (_M/_F reg): %s", mysql_error(&mysql_handle));
+					}else{
+					sql_res = mysql_store_result(&mysql_handle);
+						if(mysql_num_rows(sql_res) == 0){
+						//ok no existing acc,
+							printf("Adding a new account user: %s with passwd: %s sex: %c (ip: %s)\n", account->userid, account->passwd, account->userid[len+1], ip);
+							sprintf(tmp_sql, "INSERT INTO `%s` (`userid`, `user_pass`, `sex`, `email`) VALUES ('%s', '%s', '%c', '%s')", login_db, account->userid, account->passwd, account->userid[len+1], "a@a.com");
+							if(mysql_query(&mysql_handle, tmp_sql)){
+								//Failed to insert new acc :/
+								printf("SQL Error (_M/_F reg) .. insert ..: %s", mysql_error(&mysql_handle));
+							}//sql query check to insert
+						}//rownum check (0!)
+					mysql_free_result(sql_res);
+					}//sqlquery                              
+	     }//all values for NEWaccount ok ?
+                                                                                                               
 
-	// auth start : time seed
+ 	// auth start : time seed
 	gettimeofday(&tv, NULL);
 	strftime(tmpstr, 24, "%Y-%m-%d %H:%M:%S",localtime((const time_t*)&(tv.tv_sec)));
 	sprintf(tmpstr+19, ".%03d", (int)tv.tv_usec/1000);
@@ -1656,8 +1686,9 @@ int login_config_read(const char *cfgName){
 			flush_on = atoi(w2);			//Added by Mugendai for GUI
 		} else if(strcmpi(w1,"flush_time")==0) {	//Added by Mugendai for GUI
 			flush_time = atoi(w2);			//Added by Mugendai for GUI
-		}
-		else if(strcmpi(w1,"use_MD5_passwords")==0){
+		} else if(strcmpi(w1, "new_account") == 0){ 	//Added by Sirius for new account _M/_F
+			new_account_flag = atoi(w2);		//Added by Sirius for new account _M/_F		
+		} else if(strcmpi(w1,"use_MD5_passwords")==0){
 			if (!strcmpi(w2,"yes")) {
 				use_md5_passwds=1;
 			} else if (!strcmpi(w2,"no")){

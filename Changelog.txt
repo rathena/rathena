@@ -1,6 +1,7 @@
 Date	Added
 
 02/05
+	* SQL Login accepts _M/_F now [Credit to Sirius] [1049: Ajarn]
 	* Map server now actually reads bind_ip [1048: Ajarn]
 	  Side note: login reads bind_ip, but doesn't use login_ip now.
 	* Made eA compile under AMD64 64-bit native [1047: MouseJstr]
