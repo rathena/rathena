@@ -7,7 +7,6 @@
 
 #ifdef __WIN32
 #include <winsock.h>
-#define close(fd) closesocket(fd)
 #else
 #include <sys/types.h>
 #include <sys/socket.h>

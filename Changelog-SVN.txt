@@ -2,6 +2,7 @@
 Date	Added
 
 03/30
+        * sql native vc7 projects now build/link [1351: MouseJstr]
         * Began sql projects for VC7 [1349: MouseJstr]
         * text char-server and login-server now build using VC7.  You
           can use the eAthena.sln solution to build all three.  These
