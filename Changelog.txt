@@ -8,6 +8,7 @@ Date	Added
 		Amplify Magic Power, Napalm Vulcan, True Sight, Wind Walk, Aura Blade,
 		Concentration, Cart Boost, Magic Power
 		- Thanks goes to Celest, Midas, and DracoRPG!
+	* Fixed spira's mistake in using the packet_len_table; no biggie ^_^ [Codemaster]
 	* char/char.c & char_sql/char.c: Fixed start_armor and start_weapon - thanks to AppleGirl [Codemaster]
 	* Added packetver 6 flag to makefile. [Valaris]
 
