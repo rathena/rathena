@@ -5,8 +5,10 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
-12/18   * Found one missing item N 569, added a temp plug [Lupus]
+12/18   * Found one missing item N 569, looks like red Potion. Added a temp plug
+	  fixed typo bolt -> Bolt in one scroll [Lupus]
 	BTW I made a TXT Resources merger (it helps merge clients resources itemdesc,etc)
+	so if u need it just tell me
 
 12/17   * Added effect for Deadly poison bottle and Ice cream [celest]
 
