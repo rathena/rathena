@@ -565,6 +565,18 @@ char * job_name(int class) {
 	return "Unknown Job";
 }
 
+// compare function for sorting high to lowest
+int hightolow_compare (const void * a, const void * b)
+{
+  return ( *(int*)b - *(int*)a );
+}
+
+// compare function for sorting lowest to highest
+int lowtohigh_compare (const void * a, const void * b)
+{
+  return ( *(int*)a - *(int*)b );
+}
+
 //-----------------------------------------------------------
 // Return the message string of the specified number by [Yor]
 //-----------------------------------------------------------
@@ -1600,11 +1612,6 @@ int atcommand_whogm(
 	return 0;
 }
 
-int compare (const void * a, const void * b)
-{
-  return ( *(int*)b - *(int*)a );
-}
-
 int atcommand_whozeny(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
@@ -1639,7 +1646,7 @@ int atcommand_whozeny(
 		}
 	}
 
-	qsort(zeny, count, sizeof(int), compare);
+	qsort(zeny, count, sizeof(int), hightolow_compare);
 	for (c = 0; c < count && c < 50; c++) {
 		if(!zeny[c])
 			continue;
@@ -1667,6 +1674,8 @@ int atcommand_whozeny(
 	return 0;
 }
 
+
+// cause random emote on all online players [Valaris]
 int atcommand_happyhappyjoyjoy(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
@@ -1677,7 +1686,9 @@ int atcommand_happyhappyjoyjoy(
 
 	for (i = 0; i < fd_max; i++) {
 		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
-			e=rand()%40;	
+			e=rand()%40;
+			if(e==34) 
+				e = 0;
 			clif_emotion(&pl_sd->bl,e);
 		}
 	}
