@@ -7318,8 +7318,12 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 			account_id = RFIFOL(fd,12);
 		else if (RFIFOREST(fd) >= 32 && (RFIFOB(fd,31) == 0 || RFIFOB(fd,31) == 1)) // 00 = Female, 01 = Male
 			account_id = RFIFOL(fd,10);
-		else // 29 28 28
-			account_id = RFIFOL(fd,5);
+		else {	// 29 28 28
+			if (RFIFOW(fd,1) == 0)	// testing ^^;
+				account_id = RFIFOL(fd,3);
+			else
+				account_id = RFIFOL(fd,5);
+		}
 	// 0x9B
 	} else {
 		account_id = RFIFOL(fd,3);
@@ -7374,8 +7378,13 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 				sd->packet_ver = 11; // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
 				pc_setnewpc(sd, account_id, RFIFOL(fd,17), RFIFOL(fd,23), RFIFOL(fd,27), RFIFOB(fd,31), fd);
 			} else { // 29
-				sd->packet_ver = 13; // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
-				pc_setnewpc(sd, account_id, RFIFOL(fd,14), RFIFOL(fd,20), RFIFOL(fd,24), RFIFOB(fd,28), fd);
+				if (RFIFOW(fd,1) == 0) {
+					sd->packet_ver = 15; // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+					pc_setnewpc(sd, account_id, RFIFOL(fd,10), RFIFOL(fd,20), RFIFOL(fd,24), RFIFOB(fd,28), fd);
+				} else {
+					sd->packet_ver = 13; // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+					pc_setnewpc(sd, account_id, RFIFOL(fd,14), RFIFOL(fd,20), RFIFOL(fd,24), RFIFOB(fd,28), fd);
+				}
 			}
 		// 0x9B
 		} else {
@@ -10587,8 +10596,12 @@ static int clif_parse(int fd) {
 				packet_ver = 12; // 12: 18oct04
 			else if (RFIFOREST(fd) >= 32 && (RFIFOB(fd,31) == 0 || RFIFOB(fd,31) == 1)) // 00 = Female, 01 = Male
 				packet_ver = 11; // 11: 21sept04
-			else if (RFIFOREST(fd) >= 29 && (RFIFOB(fd,28) == 0 || RFIFOB(fd,28) == 1)) // 00 = Female, 01 = Male
-				packet_ver = 13; // 13: 25oct04 (by [Yor])
+			else if (RFIFOREST(fd) >= 29 && (RFIFOB(fd,28) == 0 || RFIFOB(fd,28) == 1)) {	// 00 = Female, 01 = Male
+				if (RFIFOW(fd,1) == 0)	// testing ^^;
+					packet_ver = 15;
+				else
+					packet_ver = 13; // 13: 25oct04 (by [Yor])
+			}
 			// -- some way to identify version 14 and 15? --
 			// else probably incomplete packet
 			else if (RFIFOREST(fd) < 29)

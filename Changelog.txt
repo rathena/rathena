@@ -1,5 +1,7 @@
 Date	Added
 01/13
+        * Added and testing support for 2004-12-06Sakexe [celest]
+        * Removed emblem changing requiring Glory of Guild limited to TXT only [celest]
         * Corrected a typo preventing Plagiarism to work, thanks to orn [celest]
         * Fixed Berzebub card and other 'reduce cast delays' equipment not working
           [celest]

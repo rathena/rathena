@@ -890,16 +890,10 @@ int guild_change_emblem(struct map_session_data *sd,int len,const char *data)
 
 	nullpo_retr(0, sd);
 
-	/* Temporarily only for TXT until there's proper char server support [Celest] */
-	#ifdef TXT_ONLY
-		if ((g = guild_search(sd->status.guild_id)) && guild_checkskill(g, GD_GLORYGUILD)>0)
-			return intif_guild_emblem(sd->status.guild_id,len,data);
+	if ((g = guild_search(sd->status.guild_id)) && guild_checkskill(g, GD_GLORYGUILD)>0)
+		return intif_guild_emblem(sd->status.guild_id,len,data);
 
-		clif_skill_fail(sd,GD_GLORYGUILD,0,0);
-	#else
-		if ((g = guild_search(sd->status.guild_id)))
-			return intif_guild_emblem(sd->status.guild_id,len,data);
-	#endif		
+	clif_skill_fail(sd,GD_GLORYGUILD,0,0);
 	return 0;
 }
 // ギルドエンブレム変更通知
