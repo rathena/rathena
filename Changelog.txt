@@ -1,5 +1,6 @@
 Date	Added
 12/05
+	* Added src/webserver, eAthena Web Server (Second Edition), not finished [MC Cameri]
 	* some cleanup of char_sql [MouseJstr]
 	* added verbose mysql debugging to char_sql [MouseJstr]
 
