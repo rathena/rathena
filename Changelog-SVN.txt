@@ -1,5 +1,9 @@
 Date	Added
 
+03/17
+        * trade.c fixed possibility of STORAGE+TRADE spooffing dupe [Lupus]
+	  Now, on accepting trade your active Storage window closes. (Either Common or Guils Storage)
+		thanx to Sergey for the exploit test and report
 03/16
         * map.c fixed compilation error [Lupus]
         * Updated jA's dummy socket to mod1137 [celest]

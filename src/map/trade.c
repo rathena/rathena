@@ -12,6 +12,7 @@
 #include "npc.h"
 #include "battle.h"
 #include "chrif.h"
+#include "storage.h"
 #include "intif.h"
 #include "atcommand.h"
 
@@ -57,7 +58,7 @@ void trade_traderequest(struct map_session_data *sd, int target_id) {
  */
 void trade_tradeack(struct map_session_data *sd, int type) {
 	struct map_session_data *target_sd;
-
+	struct storage *stor;
 	nullpo_retv(sd);
 
 	if ((target_sd = map_id2sd(sd->trade_partner)) != NULL) {
@@ -73,6 +74,15 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 			npc_event_dequeue(sd);
 		if (target_sd->npc_id != 0)
 			npc_event_dequeue(target_sd);
+
+		//close STORAGE window if it's open. It protects from spooffing packets [Lupus]
+		nullpo_retv(stor=account2storage2(sd->status.account_id));
+		if(stor->storage_status == 1) {
+			if (sd->state.storage_flag) //is it Guild Storage or Common
+				storage_guild_storageclose(sd);
+			else
+				storage_storageclose(sd);
+		}//END OF STORAGE CLOSE
 	}
 }
 
