@@ -9300,7 +9300,7 @@ int skill_readdb(void)
 		skill_db[i].pl=atoi(split[4]);
 		skill_db[i].nk=atoi(split[5]);
 		skill_db[i].max=atoi(split[6]);
-		skill_split_atoi(split[1],skill_db[i].num);
+		skill_split_atoi(split[7],skill_db[i].num);
 
 		if(strcmpi(split[8],"yes") == 0)
 			skill_db[i].castcancel=1;
