@@ -126,7 +126,7 @@ int pc_set_gm_level(int account_id, int level) {
     }
 
     GM_num++;
-    gm_account = aRealloc(gm_account, sizeof(struct gm_account) * GM_num);
+    gm_account = (struct gm_account *) aRealloc(gm_account, sizeof(struct gm_account) * GM_num);
     gm_account[GM_num - 1].account_id = account_id;
     gm_account[GM_num - 1].level = level;
     return 0;
@@ -6558,7 +6558,7 @@ int pc_setreg(struct map_session_data *sd,int reg,int val)
 		}
 	}
 	sd->reg_num++;
-	sd->reg = aRealloc(sd->reg, sizeof(*(sd->reg)) * sd->reg_num);
+	sd->reg = (struct script_reg *) aRealloc(sd->reg, sizeof(*(sd->reg)) * sd->reg_num);
 	if (sd->reg == NULL){
 		printf("out of memory : pc_setreg\n");
 		exit(1);
@@ -6609,7 +6609,7 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 			return 0;
 		}
 	sd->regstr_num++;
-	sd->regstr = aRealloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
+	sd->regstr = (struct script_regstr *) aRealloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
 	if(sd->regstr==NULL){
 		printf("out of memory : pc_setreg\n");
 		exit(1);
@@ -7891,7 +7891,7 @@ int pc_read_gm_account(int fd)
 		aFree(gm_account);
 	GM_num = 0;
 #ifdef TXT_ONLY
-	gm_account = aCallocA(sizeof(struct gm_account) * ((RFIFOW(fd,2) - 4) / 5), 1);
+	gm_account = (struct gm_account *) aCallocA(sizeof(struct gm_account) * ((RFIFOW(fd,2) - 4) / 5), 1);
 	for (i = 4; i < RFIFOW(fd,2); i = i + 5) {
 		gm_account[GM_num].account_id = RFIFOL(fd,i);
 		gm_account[GM_num].level = (int)RFIFOB(fd,i+4);
@@ -7933,7 +7933,7 @@ int map_day_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
 			strcpy(tmpstr, msg_txt(502)); // The day has arrived!
 			night_flag = 0; // 0=day, 1=night [Yor]
 			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+				if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 					pl_sd->opt2 &= ~STATE_BLIND;
 					clif_changeoption(&pl_sd->bl);
 					clif_wis_message(pl_sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
@@ -7959,7 +7959,7 @@ int map_night_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
 			strcpy(tmpstr, msg_txt(503)); // The night has fallen...
 			night_flag = 1; // 0=day, 1=night [Yor]
 			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth  && !map[pl_sd->bl.m].flag.indoors) {
+				if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth  && !map[pl_sd->bl.m].flag.indoors) {
 					if (battle_config.night_darkness_level > 0)
 						clif_specialeffect(&pl_sd->bl, 474 + battle_config.night_darkness_level, 0);
 					else {

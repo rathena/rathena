@@ -89,7 +89,7 @@ int npc_enable_sub( struct block_list *bl, va_list ap )
 }
 int npc_enable(const char *name,int flag)
 {
-	struct npc_data *nd=strdb_search(npcname_db,name);
+	struct npc_data *nd= (struct npc_data *) strdb_search(npcname_db,name);
 	if (nd==NULL)
 		return 0;
 
@@ -120,7 +120,7 @@ int npc_enable(const char *name,int flag)
  */
 struct npc_data* npc_name2id(const char *name)
 {
-	return strdb_search(npcname_db,name);
+	return (struct npc_data *) strdb_search(npcname_db,name);
 }
 /*==========================================
  * イベントキューのイベント処理
@@ -172,7 +172,7 @@ int npc_event_timer(int tid,unsigned int tick,int id,int data)
 
 int npc_timer_event(const char *eventname)	// Added by RoVeRT
 {
-	struct event_data *ev=strdb_search(ev_db,eventname);
+	struct event_data *ev=(struct event_data *) strdb_search(ev_db,eventname);
 	struct npc_data *nd;
 //	int xs,ys;
 
@@ -245,8 +245,8 @@ int npc_event_export(void *key,void *data,va_list ap)
 		char *buf;
 		char *p=strchr(lname,':');
 		// エクスポートされる
-		ev=aCalloc(sizeof(struct event_data), 1);
-		buf=aCallocA(50, 1);
+		ev=(struct event_data *) aCalloc(sizeof(struct event_data), 1);
+		buf=(char *) aCallocA(50, 1);
 		if (ev==NULL || buf==NULL) {
 			printf("npc_event_export: out of memory !\n");
 			exit(1);
@@ -460,7 +460,7 @@ int npc_addeventtimer(struct npc_data *nd,int tick,const char *name)
 		if( nd->eventtimer[i]==-1 )
 			break;
 	if(i<MAX_EVENTTIMER){
-		char *evname=aMallocA(24);
+		char *evname=(char *) aMallocA(24);
 		if(evname==NULL){
 			printf("npc_addeventtimer: out of memory !\n");exit(1);
 		}
@@ -546,8 +546,8 @@ int npc_timerevent_import(void *key,void *data,va_list ap)
 		// タイマーイベント
 		struct npc_timerevent_list *te=nd->u.scr.timer_event;
 		int j,i=nd->u.scr.timeramount;
-		if(te==NULL) te=aMallocA(sizeof(struct npc_timerevent_list));
-		else te=aRealloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
+		if(te==NULL) te=(struct npc_timerevent_list*)aMallocA(sizeof(struct npc_timerevent_list));
+		else te= (struct npc_timerevent_list*)aRealloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
 		if(te==NULL){
 			printf("npc_timerevent_import: out of memory !\n");
 			exit(1);
@@ -681,7 +681,7 @@ int npc_settimerevent_tick(struct npc_data *nd,int newtimer)
  */
 int npc_event(struct map_session_data *sd,const char *eventname,int mob_kill)
 {
-	struct event_data *ev=strdb_search(ev_db,eventname);
+	struct event_data *ev=(struct event_data *) strdb_search(ev_db,eventname);
 	struct npc_data *nd;
 	int xs,ys;
 	char mobevent[100];
@@ -697,7 +697,7 @@ int npc_event(struct map_session_data *sd,const char *eventname,int mob_kill)
 		if(mob_kill && (ev==NULL || (nd=ev->nd)==NULL)){
 			strcpy( mobevent, eventname);
 			strcat( mobevent, "::OnMyMobDead");
-			ev=strdb_search(ev_db,mobevent);
+			ev= (struct event_data *) strdb_search(ev_db,mobevent);
 	if (ev==NULL || (nd=ev->nd)==NULL) {
 				if (strnicmp(eventname,"GM_MONSTER",10)!=0)
 					printf("npc_event: event not found [%s]\n",mobevent);
@@ -1627,7 +1627,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 
 	if(strcmp(w2,"script")==0){
 		// スクリプトの解析
-		srcbuf=(char *)aCallocA(srcsize,sizeof(char));
+		srcbuf=(unsigned char *)aCallocA(srcsize,sizeof(char));
 	if (strchr(first_line,'{')) {
 		strcpy(srcbuf,strchr(first_line,'{'));
 		startline=*lines;

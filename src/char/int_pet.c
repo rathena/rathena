@@ -136,7 +136,7 @@ int inter_pet_save()
 int inter_pet_delete(int pet_id)
 {
 	struct s_pet *p;
-	p = numdb_search(pet_db,pet_id);
+	p = (struct s_pet *) numdb_search(pet_db,pet_id);
 	if( p == NULL)
 		return 1;
 	else {
@@ -210,7 +210,7 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 	short pet_equip,short intimate,short hungry,char rename_flag,char incuvate,char *pet_name)
 {
 	struct s_pet *p;
-	p=aMalloc(sizeof(struct s_pet));
+	p= (struct s_pet *) aMalloc(sizeof(struct s_pet));
 	if(p==NULL){
 		printf("int_pet: out of memory !\n");
 		mapif_pet_created(fd,account_id,NULL);
@@ -253,7 +253,7 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 int mapif_load_pet(int fd,int account_id,int char_id,int pet_id)
 {
 	struct s_pet *p;
-	p=numdb_search(pet_db,pet_id);
+	p=(struct s_pet *)numdb_search(pet_db,pet_id);
 	if(p!=NULL) {
 		if(p->incuvate == 1) {
 			p->account_id = p->char_id = 0;
@@ -280,9 +280,9 @@ int mapif_save_pet(int fd,int account_id,struct s_pet *data)
 	}
 	else{
 		pet_id = data->pet_id;
-		p=numdb_search(pet_db,pet_id);
+		p=(struct s_pet *)numdb_search(pet_db,pet_id);
 		if(p == NULL) {
-			p=aMalloc(sizeof(struct s_pet));
+			p=(struct s_pet *)aMalloc(sizeof(struct s_pet));
 			if(p==NULL){
 				printf("int_pet: out of memory !\n");
 				mapif_save_pet_ack(fd,account_id,1);

@@ -190,9 +190,9 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 struct storage *account2storage(int account_id)
 {
 	struct storage *s;
-	s=numdb_search(storage_db,account_id);
+	s= (struct storage *) numdb_search(storage_db,account_id);
 	if(s == NULL) {
-		s = aCalloc(sizeof(struct storage), 1);
+		s = (struct storage *) aCalloc(sizeof(struct storage), 1);
 		if(s==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);
@@ -208,9 +208,9 @@ struct guild_storage *guild2storage(int guild_id)
 {
 	struct guild_storage *gs = NULL;
 	if(inter_guild_search(guild_id) != NULL) {
-		gs=numdb_search(guild_storage_db,guild_id);
+		gs= (struct guild_storage *) numdb_search(guild_storage_db,guild_id);
 		if(gs == NULL) {
-			gs = aCalloc(sizeof(struct guild_storage), 1);
+			gs = (struct guild_storage *) aCalloc(sizeof(struct guild_storage), 1);
 			if(gs==NULL){
 				printf("int_storage: out of memory!\n");
 				exit(0);
@@ -348,7 +348,7 @@ int inter_guild_storage_save()
 // 倉庫データ削除
 int inter_storage_delete(int account_id)
 {
-	struct storage *s = numdb_search(storage_db,account_id);
+	struct storage *s = (struct storage *) numdb_search(storage_db,account_id);
 	if(s) {
 		int i;
 		for(i=0;i<s->storage_amount;i++){
@@ -364,7 +364,7 @@ int inter_storage_delete(int account_id)
 // ギルド倉庫データ削除
 int inter_guild_storage_delete(int guild_id)
 {
-	struct guild_storage *gs = numdb_search(guild_storage_db,guild_id);
+	struct guild_storage *gs = (struct guild_storage *) numdb_search(guild_storage_db,guild_id);
 	if(gs) {
 		int i;
 		for(i=0;i<gs->storage_amount;i++){

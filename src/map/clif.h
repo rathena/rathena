@@ -18,7 +18,7 @@ typedef unsigned int in_addr_t;
 
 struct packet_db {
 	short len;
-	void (*func)();
+	void (*func)(int, struct map_session_data *);
 	short pos[20];
 };
 extern struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];

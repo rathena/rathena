@@ -391,7 +391,7 @@ int mapif_parse_CreateParty(int fd, int account_id, char *name, char *nick, char
 		mapif_party_created(fd, account_id, NULL);
 		return 0;
 	}
-	p = aCalloc(sizeof(struct party), 1);
+	p = (struct party *) aCalloc(sizeof(struct party), 1);
 	if (p == NULL) {
 		printf("int_party: out of memory !\n");
 		mapif_party_created(fd,account_id,NULL);
@@ -421,7 +421,7 @@ int mapif_parse_CreateParty(int fd, int account_id, char *name, char *nick, char
 int mapif_parse_PartyInfo(int fd, int party_id) {
 	struct party *p;
 
-	p = numdb_search(party_db, party_id);
+	p = (struct party *) numdb_search(party_db, party_id);
 	if (p != NULL)
 		mapif_party_info(fd, p);
 	else
@@ -435,7 +435,7 @@ int mapif_parse_PartyAddMember(int fd, int party_id, int account_id, char *nick,
 	struct party *p;
 	int i;
 
-	p = numdb_search(party_db, party_id);
+	p = (struct party *) numdb_search(party_db, party_id);
 	if (p == NULL) {
 		mapif_party_memberadded(fd, party_id, account_id, 1);
 		return 0;
@@ -473,7 +473,7 @@ int mapif_parse_PartyChangeOption(int fd, int party_id, int account_id, int exp,
 	struct party *p;
 	int flag = 0;
 
-	p = numdb_search(party_db, party_id);
+	p = (struct party *) numdb_search(party_db, party_id);
 	if (p == NULL)
 		return 0;
 
@@ -494,7 +494,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id) {
 	struct party *p;
 	int i;
 
-	p = numdb_search(party_db, party_id);
+	p = (struct party *) numdb_search(party_db, party_id);
 	if (p != NULL) {
 		for(i = 0; i < MAX_PARTY; i++) {
 			if (p->member[i].account_id == account_id) {
@@ -516,7 +516,7 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, char *map, 
 	struct party *p;
 	int i;
 
-	p = numdb_search(party_db, party_id);
+	p = (struct party *) numdb_search(party_db, party_id);
 	if (p == NULL)
 		return 0;
 
@@ -546,7 +546,7 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, char *map, 
 int mapif_parse_BreakParty(int fd, int party_id) {
 	struct party *p;
 
-	p = numdb_search(party_db, party_id);
+	p = (struct party *) numdb_search(party_db, party_id);
 	if (p == NULL)
 		return 0;
 

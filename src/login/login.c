@@ -2994,7 +2994,8 @@ int parse_login(int fd) {
 					session[fd]->eof = 1;
 					return 0;
 				}
-				ld = (struct login_session_data*)session[fd]->session_data = (struct login_session_data*)aCalloc(1, sizeof(struct login_session_data));
+				ld = (struct login_session_data*)aCalloc(1, sizeof(struct login_session_data));
+                                session[fd]->session_data = ld;
 				if (!ld) {
 					printf("login: Request for md5 key: memory allocation failure (malloc)!\n");
 					session[fd]->eof = 1;

@@ -7343,7 +7343,8 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 		if (sd != 0)
 			clif_setwaitclose(sd->fd); // Set session to EOF
 	} else {
-		sd = (struct map_session_data*)session[fd]->session_data = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
+		sd = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
+		session[fd]->session_data = sd;
 		sd->fd = fd;
 
 		if (IS_PACKET_DB_VER(cmd)) {
@@ -10392,7 +10393,7 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
 }
 
 // functions list
-static void (*clif_parse_func_table[MAX_PACKET_DB])() = {
+static void (*clif_parse_func_table[MAX_PACKET_DB])(int, struct map_session_data *) = {
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -10745,7 +10746,7 @@ static int packetdb_readdb(void)
 	char *str[32],*p,*str2[32],*p2,w1[24],w2[24];
 
 	struct {
-		void (*func)();
+		void (*func)(int, struct map_session_data *);
 		char *name;
 	} clif_parse_func[]={
 		{clif_parse_WantToConnection,"wanttoconnection"},
