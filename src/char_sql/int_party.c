@@ -452,7 +452,7 @@ int mapif_party_message(int party_id,int account_id,char *mes,int len, int sfd)
 
 
 // Create Party
-int mapif_parse_CreateParty(int fd,int account_id,char *name,char *nick,char *map,int lv)
+int mapif_parse_CreateParty(int fd,int account_id,char *name,char *nick,char *map,int lv, int item, int item2)
 {
 	struct party *p;
 	if( (p=search_partyname(name))!=NULL){
@@ -470,7 +470,12 @@ int mapif_parse_CreateParty(int fd,int account_id,char *name,char *nick,char *ma
 	p->party_id=party_newid++;
 	memcpy(p->name,name,24);
 	p->exp=0;
-	p->item=0;
+	p->item=item;
+	//<item1>アイテム?集方法。0で個人別、1でパ?ティ公有
+	//<item2>アイテム分配方法。0で個人別、1でパ?ティに均等分配
+	//difference between "collection" and "distribution" is...? ^^;
+	p->itemc = 0;
+
 	p->member[0].account_id=account_id;
 	memcpy(p->member[0].name,nick,24);
 	memcpy(p->member[0].map,map,16);
@@ -727,7 +732,7 @@ int mapif_parse_PartyCheck(int fd,int party_id,int account_id,char *nick)
 int inter_party_parse_frommap(int fd)
 {
 	switch(RFIFOW(fd,0)){
-	case 0x3020: mapif_parse_CreateParty(fd,RFIFOL(fd,2),(char*)RFIFOP(fd,6),(char*)RFIFOP(fd,30),(char*)RFIFOP(fd,54),RFIFOW(fd,70)); break;
+	case 0x3020: mapif_parse_CreateParty(fd,RFIFOL(fd,2),(char*)RFIFOP(fd,6),(char*)RFIFOP(fd,30),(char*)RFIFOP(fd,54),RFIFOW(fd,70), RFIFOB(fd,72), RFIFOB(fd,73)); break;
 	case 0x3021: mapif_parse_PartyInfo(fd,RFIFOL(fd,2)); break;
 	case 0x3022: mapif_parse_PartyAddMember(fd,RFIFOL(fd,2),RFIFOL(fd,6),(char*)RFIFOP(fd,10),(char*)RFIFOP(fd,34),RFIFOW(fd,50)); break;
 	case 0x3023: mapif_parse_PartyChangeOption(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOW(fd,10),RFIFOW(fd,12)); break;

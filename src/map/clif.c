@@ -1,6 +1,7 @@
 // $Id: clif.c 2200 2004-11-07 11:49:58Z Yor $
 
 #define DUMP_UNKNOWN_PACKET	1
+#define	DUMP_ALL_PACKETS	0
 
 #include <stdio.h>
 #include <ctype.h>
@@ -9593,7 +9594,7 @@ void clif_parse_CloseKafra(int fd, struct map_session_data *sd) {
  */
 void clif_parse_CreateParty(int fd, struct map_session_data *sd) {
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 7) {
-		party_create(sd,(char*)RFIFOP(fd,2));
+		party_create(sd,(char*)RFIFOP(fd,2),0,0);
 	} else
 		clif_skill_fail(sd,1,0,4);
 }
@@ -9604,7 +9605,7 @@ void clif_parse_CreateParty(int fd, struct map_session_data *sd) {
  */
 void clif_parse_CreateParty2(int fd, struct map_session_data *sd) {
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 7){
-		party_create(sd,(char*)RFIFOP(fd,2));
+		party_create(sd,(char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27));
 	} else
 		clif_skill_fail(sd,1,0,4);
 }
@@ -10504,7 +10505,7 @@ static void (*clif_parse_func_table[MAX_PACKET_DB])(int, struct map_session_data
  *------------------------------------------
  */
 static int clif_parse(int fd) {
-	int packet_len = 0, cmd, packet_ver;
+	int packet_len = 0, cmd, packet_ver, dump = 0;
 	struct map_session_data *sd;
 
 	sd = (struct map_session_data*)session[fd]->session_data;
@@ -10672,6 +10673,10 @@ static int clif_parse(int fd) {
 	if (RFIFOREST(fd) < packet_len)
 		return 0; // まだ1パケット分データが揃ってない
 
+	#if DUMP_ALL_PACKETS
+		dump = 1;
+	#endif
+
 	if (sd && sd->state.auth == 1 && sd->state.waitingdisconnect == 1) { // 切断待ちの場合パケットを処理しない
 
 	} else if (packet_db[packet_ver][cmd].func) { // packet version 5-6-7 use same functions, but size are different
@@ -10680,28 +10685,13 @@ static int clif_parse(int fd) {
 	} else {
 		// 不明なパケット
 		if (battle_config.error_log) {
-			if (fd)
-				printf("\nclif_parse: session #%d, packet 0x%x, lenght %d\n", fd, cmd, packet_len);
-#ifdef DUMP_UNKNOWN_PACKET
+#if DUMP_UNKNOWN_PACKET
 			{
 				int i;
 				FILE *fp;
 				char packet_txt[256] = "save/packet.txt";
 				time_t now;
-				printf("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-				for(i = 0; i < packet_len; i++) {
-					if ((i & 15) == 0)
-						printf("\n%04X ",i);
-					printf("%02X ", RFIFOB(fd,i));
-				}
-				if (sd && sd->state.auth) {
-					if (sd->status.name != NULL)
-						printf("\nAccount ID %d, character ID %d, player name %s.\n",
-						       sd->status.account_id, sd->status.char_id, sd->status.name);
-					else
-						printf("\nAccount ID %d.\n", sd->bl.id);
-				} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
-					printf("\nAccount ID %d.\n", sd->bl.id);
+				dump = 1;
 
 				if ((fp = fopen(packet_txt, "a")) == NULL) {
 					printf("clif.c: cant write [%s] !!! data is lost !!!\n", packet_txt);
@@ -10730,6 +10720,27 @@ static int clif_parse(int fd) {
 #endif
 		}
 	}
+
+	if (dump) {
+		int i;
+		if (fd)
+			printf("\nclif_parse: session #%d, packet 0x%x, lenght %d\n", fd, cmd, packet_len);
+		printf("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
+		for(i = 0; i < packet_len; i++) {
+			if ((i & 15) == 0)
+				printf("\n%04X ",i);
+			printf("%02X ", RFIFOB(fd,i));
+		}
+		if (sd && sd->state.auth) {
+			if (sd->status.name != NULL)
+				printf("\nAccount ID %d, character ID %d, player name %s.\n",
+			       sd->status.account_id, sd->status.char_id, sd->status.name);
+			else
+				printf("\nAccount ID %d.\n", sd->bl.id);
+		} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
+			printf("\nAccount ID %d.\n", sd->bl.id);
+	}
+
 	RFIFOSKIP(fd, packet_len);
 
 	return 0;

@@ -1,6 +1,10 @@
 Date	Added
 
 01/28
+        * Added DUMP_ALL_PACKETS and moved dump packets code in clif_parse a bit to
+          support it [celest]
+        * Added base code for Party Item Sharing -- still needs some work in client-
+          server support [celest]
 	* new GC link http://amber.stormbirds.org/~joshs/gc6.4.tar.gz
 	  This fixes some issues... works better
         * Added macros skill_chk and skill_get to check for out of bounds errors when

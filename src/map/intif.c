@@ -273,7 +273,7 @@ int intif_send_guild_storage(int account_id,struct guild_storage *gstor)
 }
 
 // パーティ作成要求
-int intif_create_party(struct map_session_data *sd,char *name)
+int intif_create_party(struct map_session_data *sd,char *name,int item,int item2)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -285,7 +285,9 @@ int intif_create_party(struct map_session_data *sd,char *name)
 	memcpy(WFIFOP(inter_fd,30),sd->status.name,24);
 	memcpy(WFIFOP(inter_fd,54),map[sd->bl.m].name,16);
 	WFIFOW(inter_fd,70)= sd->status.base_level;
-	WFIFOSET(inter_fd,72);
+	WFIFOB(inter_fd,72)= item;
+	WFIFOB(inter_fd,73)= item2;
+	WFIFOSET(inter_fd,74);
 //	if(battle_config.etc_log)
 //		printf("intif: create party\n");
 	return 0;

@@ -1960,7 +1960,7 @@ static int mob_delay_item_drop(int tid,unsigned int tick,int id,int data)
 {
 	struct delay_item_drop *ditem;
 	struct item temp_item;
-	int flag;
+	int flag, drop_flag = 1;
 
 	nullpo_retr(0, ditem=(struct delay_item_drop *)id);
 
@@ -1969,16 +1969,43 @@ static int mob_delay_item_drop(int tid,unsigned int tick,int id,int data)
 	temp_item.amount = ditem->amount;
 	temp_item.identify = !itemdb_isequip3(temp_item.nameid);
 
-	if(battle_config.item_auto_get){
-		if(ditem->first_sd && (flag = pc_additem(ditem->first_sd,&temp_item,ditem->amount))){
-			clif_additem(ditem->first_sd,0,0,flag);
-			map_addflooritem(&temp_item,1,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
+	if (ditem->first_sd){
+		#if 0
+		if (ditem->first_sd->status.party_id > 0){
+			struct party *p;
+			if((p=party_search(ditem->first_sd->status.party_id)) && p->item){
+				struct map_session_data *sd = NULL;
+				int i;
+				for (i = p->itemc + 1; i!=p->itemc; i++) {	// initialise counter and loop through the party
+					if (i >= MAX_PARTY)
+						i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
+					if ((sd=p->member[i].sd)!=NULL && sd->bl.m == ditem->first_sd->bl.m)
+						break;
+				}
+				if (sd){	// if an appropiate party member was found
+					drop_flag = 0;
+					if ((p->itemc++) >= MAX_PARTY)
+						p->itemc = 0;
+					if ((flag = pc_additem(ditem->first_sd,&temp_item,ditem->amount))) {
+						clif_additem(ditem->first_sd,0,0,flag);
+						drop_flag = 1;
+					}
+				}
+			}
+		} else
+		#endif
+		if(battle_config.item_auto_get){
+			drop_flag = 0;
+			if((flag = pc_additem(ditem->first_sd,&temp_item,ditem->amount))){
+				clif_additem(ditem->first_sd,0,0,flag);
+				drop_flag = 1;
+			}
 		}
-		aFree(ditem);
-		return 0;
 	}
 
-	map_addflooritem(&temp_item,1,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
+	if (drop_flag) {
+		map_addflooritem(&temp_item,1,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
+	}
 
 	aFree(ditem);
 	return 0;
@@ -1991,20 +2018,47 @@ static int mob_delay_item_drop(int tid,unsigned int tick,int id,int data)
 static int mob_delay_item_drop2(int tid,unsigned int tick,int id,int data)
 {
 	struct delay_item_drop2 *ditem;
-	int flag;
+	int flag, drop_flag = 1;
 
 	nullpo_retr(0, ditem=(struct delay_item_drop2 *)id);
 
-	if(battle_config.item_auto_get){
-		if(ditem->first_sd && (flag = pc_additem(ditem->first_sd,&ditem->item_data,ditem->item_data.amount))){
-			clif_additem(ditem->first_sd,0,0,flag);
-			map_addflooritem(&ditem->item_data,ditem->item_data.amount,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
+	if (ditem->first_sd){
+		#if 0
+		if (ditem->first_sd->status.party_id > 0){
+			struct party *p;
+			if((p=party_search(ditem->first_sd->status.party_id)) && p->item){
+				struct map_session_data *sd = NULL;
+				int i;
+				for (i = p->itemc + 1; i!=p->itemc; i++) {	// initialise counter and loop through the party
+					if (i >= MAX_PARTY)
+						i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
+					if ((sd=p->member[i].sd)!=NULL && sd->bl.m == ditem->first_sd->bl.m)
+						break;
+				}
+				if (sd){	// if an appropiate party member was found
+					drop_flag = 0;
+					if ((p->itemc++) >= MAX_PARTY)
+						p->itemc = 0;
+					if((flag = pc_additem(ditem->first_sd,&ditem->item_data,ditem->item_data.amount))){
+						clif_additem(ditem->first_sd,0,0,flag);
+						drop_flag = 1;
+					}
+				}
+			}
+		} else
+		#endif
+		if(battle_config.item_auto_get){
+			drop_flag = 0;
+			if((flag = pc_additem(ditem->first_sd,&ditem->item_data,ditem->item_data.amount))){
+				clif_additem(ditem->first_sd,0,0,flag);
+				drop_flag = 1;
+			}
 		}
-		aFree(ditem);
-		return 0;
 	}
 
-	map_addflooritem(&ditem->item_data,ditem->item_data.amount,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
+	if (drop_flag) {
+		map_addflooritem(&ditem->item_data,ditem->item_data.amount,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
+	}
 
 	aFree(ditem);
 	return 0;

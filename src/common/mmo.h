@@ -198,7 +198,7 @@ struct party {
 	int party_id;
 	char name[24];
 	int exp;
-	int item;
+	int item, itemc;
 	struct party_member member[MAX_PARTY];
 };
 

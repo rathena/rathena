@@ -5098,7 +5098,7 @@ int atcommand_party(
 		return -1;
 	}
 
-	party_create(sd, party);
+	party_create(sd, party, 0, 0);
 
 	return 0;
 }

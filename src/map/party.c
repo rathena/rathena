@@ -69,12 +69,12 @@ struct party* party_searchname(char *str)
 	return p;
 }
 // ì¬—v‹
-int party_create(struct map_session_data *sd,char *name)
+int party_create(struct map_session_data *sd,char *name,int item,int item2)
 {
 	nullpo_retr(0, sd);
 
 	if(sd->status.party_id==0)
-		intif_create_party(sd,name);
+		intif_create_party(sd,name,item,item2);
 	else
 		clif_party_created(sd,2);
 	return 0;
