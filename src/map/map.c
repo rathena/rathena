@@ -1880,7 +1880,7 @@ int map_config_read(char *cfgName) {
 				char_ip_set_ = 1;
 				h = gethostbyname (w2);
 				if(h != NULL) { 
-					snprintf(tmp_output,sizeof(tmp_output),"Character server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+					snprintf(tmp_output,sizeof(tmp_output),"Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 					ShowInfo(tmp_output);
 					sprintf(w2,"%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 				}
@@ -1891,7 +1891,8 @@ int map_config_read(char *cfgName) {
 				map_ip_set_ = 1;
 				h = gethostbyname (w2);
 				if (h != NULL) { 
-					printf("Map server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+					snprintf(tmp_output,sizeof(tmp_output),"Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+					ShowInfo(tmp_output);
 					sprintf(w2, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 				}
 				clif_setip(w2);
@@ -1927,8 +1928,10 @@ int map_config_read(char *cfgName) {
 			} else if (strcmpi(w1, "import") == 0) {
 				map_config_read(w2);
 			} else if (strcmpi(w1, "console") == 0) {
-			    if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
+			    if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 ) {
 			        console = 1;
+					ShowNotice("Console Commands is enabled.\n");
+				}
             } else if(strcmpi(w1,"imalive_on")==0){		//Added by Mugendai for I'm Alive mod
 				imalive_on = atoi(w2);					//Added by Mugendai for I'm Alive mod
 			} else if(strcmpi(w1,"imalive_time")==0){	//Added by Mugendai for I'm Alive mod
@@ -2286,6 +2289,7 @@ void map_versionscreen(int flag) {
  *------------------------------------------------------
  */
 int do_init(int argc, char *argv[]) {
+	chrif_connected = 0;
 	int i;
 	FILE *data_conf;
 	char line[1024], w1[1024], w2[1024];

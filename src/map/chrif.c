@@ -245,9 +245,10 @@ int chrif_connectack(int fd)
 		printf("Connected to char-server failed %d.\n", RFIFOB(fd,2));
 		exit(1);
 	}
-	sprintf(tmp_output,"Successfully connected to Char-Server (Connection #%d).\n",fd);
+	sprintf(tmp_output,"Successfully connected to Char Server (Connection: '"CL_WHITE"%d"CL_RESET"').\n",fd);
 	ShowStatus(tmp_output);
 	chrif_state = 1;
+	chrif_connected=1;
 
 	chrif_sendmap(fd);
 
@@ -862,6 +863,7 @@ int chrif_recvgmaccounts(int fd)
 {
 	sprintf(tmp_output,"From login-server: receiving information of '"CL_WHITE"%d"CL_RESET"' GM accounts.\n", pc_read_gm_account(fd));
 	ShowInfo(tmp_output);
+	memset(tmp_output,'\0',sizeof(tmp_output));
 	return 0;
 }
 
@@ -977,12 +979,15 @@ int chrif_char_online(struct map_session_data *sd)
 int chrif_parse(int fd) 
 {
 	int packet_len, cmd;
-
 	// only char-server can have an access to here.
 	// so, if it isn't the char-server, we disconnect the session (fd != char_fd).
 	if (fd != char_fd || session[fd]->eof) {
 		if (fd == char_fd) {
-			printf("Map-server can't connect to char-server (connection #%d).\n", fd);
+			if (chrif_connected == 1) {
+				sprintf(tmp_output,"Map Server disconnected from Char Server.\n\n");
+				ShowWarning(tmp_output);
+				chrif_connected=0;
+			}
 			char_fd = -1;
 //			check_connect_char_server(0, 0, 0, 0);
 		}
@@ -1077,14 +1082,19 @@ int send_users_tochar(int tid, unsigned int tick, int id, int data) {
  *------------------------------------------
  */
 int check_connect_char_server(int tid, unsigned int tick, int id, int data) {
+	static int displayed = 0;
 	if (char_fd <= 0 || session[char_fd] == NULL) {
-		printf("Attempt to connect to char-server...\n");
+		if (!displayed) {
+			ShowStatus("Attempting to connect to Char Server. Please wait.\n");
+			displayed = 1;
+		}
 		chrif_state = 0;
 		char_fd = make_connection(char_ip, char_port);
 		session[char_fd]->func_parse = chrif_parse;
 		realloc_fifo(char_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 
 		chrif_connect(char_fd);
+		chrif_connected = chrif_isconnect();
 #ifndef TXT_ONLY
 		srvinfo = 0;
 	} else {
@@ -1094,7 +1104,7 @@ int check_connect_char_server(int tid, unsigned int tick, int id, int data) {
 		}
 #endif /* not TXT_ONLY */
 	}
-
+	if (chrif_isconnect()) displayed = 0;
 	return 0;
 }
 

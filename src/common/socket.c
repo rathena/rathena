@@ -115,7 +115,7 @@ static int recv_to_fifo(int fd)
 //			printf("%s has logged off your server.\n",RFIFOP(fd,6));	// Removed [Valaris]
 
 //		else if (fd != 8)	// [Valaris]
-		printf("set eof : connection #%d\n", fd);
+//		printf("set eof : connection #%d\n", fd);
 		session[fd]->eof=1;
 	}
 	return 0;
@@ -149,7 +149,7 @@ static int send_from_fifo(int fd)
 			session[fd]->wdata_size=0;
 		}
 	} else if (errno != EAGAIN) {
-		printf("set eof :%d\n",fd);
+//		printf("set eof :%d\n",fd);
 		session[fd]->eof=1;
 	}
 	return 0;

@@ -104,7 +104,7 @@ static void display_title(void)
 	printf("\033[37;44m          (=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=)\033[K\033[0m\n\n"); // reset color
 	
 	if ((revision = get_svn_revision(".svn\\entries"))>0) {
-		snprintf(tmp_output,sizeof(tmp_output),"SVN Revision: %d.\n",revision);
+		snprintf(tmp_output,sizeof(tmp_output),"SVN Revision: '"CL_WHITE"%d"CL_RESET"'.\n",revision);
 		ShowInfo(tmp_output);
 	}
 }

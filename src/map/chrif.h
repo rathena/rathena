@@ -9,6 +9,8 @@ void chrif_setport(int);
 
 int chrif_isconnect(void);
 
+int chrif_connected;
+
 int chrif_authreq(struct map_session_data *);
 int chrif_save(struct map_session_data*);
 int chrif_charselectreq(struct map_session_data *);

@@ -2314,12 +2314,12 @@ int do_init_npc(void)
 //		fflush(stdout);
 	}
 	printf("\r");
-	sprintf(tmp_output,"Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:\n\t-'"
+	sprintf(tmp_output,"Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:%30s\n\t-'"
 		CL_WHITE"%d"CL_RESET"' Warps\n\t-'"
 		CL_WHITE"%d"CL_RESET"' Shops\n\t-'"
 		CL_WHITE"%d"CL_RESET"' Scripts\n\t-'"
 		CL_WHITE"%d"CL_RESET"' Mobs\n",
-		npc_id-START_NPC_NUM,npc_warp,npc_shop,npc_script,npc_mob);
+		npc_id-START_NPC_NUM,"",npc_warp,npc_shop,npc_script,npc_mob);
 	ShowInfo(tmp_output);
 
 	add_timer_func_list(npc_walktimer,"npc_walktimer"); // [Valaris]

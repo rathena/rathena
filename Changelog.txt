@@ -1,5 +1,7 @@
 Date	Added
 12/14
+	* Changed "Map-server can't connect to char-server" message to reduce output spamming and set it to
+	  display only once [MC Cameri]
 	* Added a busy animation for npc loading [MC Cameri]
 	* Replaced the way map loading was displayed into a progress-like way [MC Cameri]
 	* Fixed some typos in _ShowMessage() [MC Cameri]
