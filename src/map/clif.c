@@ -5105,7 +5105,7 @@ int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv,const ch
 	if(range < 0)
 		range = battle_get_range(&sd->bl) - (range + 1);
 	WFIFOW(fd,12)=range;
-	memcpy(WFIFOP(fd,14),name,24);
+	strncpy(WFIFOP(fd,14),name,24);
 	WFIFOB(fd,38)=0;
 	WFIFOSET(fd,packet_len_table[0x147]);
 	return 0;
