@@ -2,20 +2,35 @@
 // new version of the login-server by [Yor]
 
 #include <sys/types.h>
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
+#include <time.h>
+void Gettimeofday(struct timeval *timenow)
+{
+	time_t t;
+	t = clock();
+	timenow->tv_usec = t;
+	timenow->tv_sec = t / CLK_TCK;
+	return;
+}
+#define gettimeofday(timenow, dummy) Gettimeofday(timenow)
+#else
 #include <sys/socket.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <netinet/in.h>
 #include <sys/time.h>
-#include <time.h>
 #include <sys/ioctl.h>
-#include <sys/stat.h> // for stat/lstat/fstat
 #include <unistd.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/stat.h> // for stat/lstat/fstat
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h>
-#include <arpa/inet.h>
-#include <netdb.h>
 #include <stdarg.h>
 
 #include "../common/core.h"
