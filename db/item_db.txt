@@ -1179,195 +1179,189 @@
 
 // New Cards
 //===================================================================
-// NEW CARDS. ORDERED: these cards numbers are fine. They go in right order
-// todo: item_cardalbum.txt drops should be fixed, according to the new CARDS IDs
-// note: the cards which have Ordered_Card name are blank yet.
-//What is this? THIS OLD card has the same ID as new Dark_Lord_Card [Lupus]
-//4168,Filamentous_Card,Filamentous Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bResEff,Eff_Stone,100; bonus2 bResEff,Eff_Freeze,100; bonus2 bResEff,Eff_Stan,100; bonus2 bResEff,Eff_Sleep,100; bonus2 bResEff,Eff_Poison,100; bonus2 bResEff,Eff_Curse,100; bonus2 bResEff,Eff_Silence,100; bonus2 bResEff,Eff_Confusion,100; bonus2 bResEff,Eff_Blind,100; }
-
-4149,Gargoyle_Card,Gargoyle Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bRange,5; }
-4150,Goat_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4151,Gajomart_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4152,Galapago_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4153,Crab_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4154,Dumpling_Child_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4155,Goblin_Leader_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4156,Goblin_Steamrider_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4157,Goblin_Archer_Card,Goblin Archer Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,2,20; }
-4158,Sky_Deleter_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4159,Nine_Tail_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4160,Firelock_Soldier_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4161,Grand_Peco_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4162,Grizzly_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4163,Gryphon_Card,Gryphon Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEff,Eff_Silence,500; bonus bAtk,25; }
-4164,Gullinbursti_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4165,Gig_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4166,Nightmare_Terror_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4167,Nereid_Card,Neraid Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bAgi,2; }
-4168,Dark_Lord_Card,Dark Lord Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtkEle,9; }
-4169,Dark_Illusion_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4170,Dark_Frame_Card,Dark Frame Card,6,20,0,10,,,,,,,769,,,,{},{ skill 32,2; }
-4171,Dark_Priest_Card,Dark Priest Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bUseSPrate,-15; }
-4172,The_Paper_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4173,Demon_Pungus_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4174,Deviling_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4175,Poisonous_Toad_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4176,Dullahan_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4177,Dryad_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4178,Dragon_Tail_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4179,Dragon_Fly_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4180,Driller_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4181,Disguise_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4182,Diabolic_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4183,Vagabond_Wolf_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4184,Lava_Golem_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4185,Rideword_Card,Rideword Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bDex,4; }
-4186,Raggler_Card,Raggler Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEff,Eff_Sleep,500; }
-4187,Raydric_Archer_Card,Raydric Archer Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtkEle,3; }
-4188,Leib_Olmai_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4189,Wraith_Dead_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4190,Wraith_Card,Wraith Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bMatk,8; }
-4191,Loli_Ruri_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4192,Rotar_Zairo_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4193,Lude_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4194,Rybio_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4195,Leaf_Cat_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4196,Marin_Card,Marin Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,1,20; }
-4197,Mastering_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4198,Maya_Purple_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4199,Merman_Card,Merman Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtkEle,1; }
-4200,Megalith_Card,Megalith Card,6,20,0,10,,,,,,,4,,,,{},{ skill 9,1; }
-4201,Majoruros_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4202,Civil_Servant_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4203,Mutant_Dragonoid_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4204,Mini_Demon_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4205,Mimic_Card,Mimic Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bAgi,1; bonus bDex,2; bonus bLuk,3; }
-4206,Myst_Case_Card,Mystcase Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bCastrate,-10; bonus bAtk,10; }
-4207,Mysteltainn_Card,Mysteltainn Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bAtk,30; bonus bMaxHPrate,-22; bonus bDelayrate,-10; }
-4208,Miyabi_Ningyo_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4209,Violy_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4210,Wanderer_Card,Wander Man Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bHit,25; bonus bCritical,5; }
-4211,Vocal_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4212,Bon_Gun_Card,Bon Gun Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bInt,2; }
-4213,Brilight_Card,Brilight Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bAgi,2; bonus bLuk,3; }
-4214,Bloody_Murderer_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4215,Blazer_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4216,Sasquatch_Card,Sasquatch Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bAddSize,1,20; bonus bAtk,-10; }
-4217,Enchanted_Peach_Tree_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4218,Succubus_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4219,Sage_Worm_Card,Sage Worm Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtkEle,8; }
-4220,Solider_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4221,Skeleton_General_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4222,Skeleton_Prisoner_Card,Skel Prisoner Card,6,20,0,10,,,,,,,136,,,,{},{ skill 45,3; }
-4223,Stalactic_Golem_Card,Stalactic Golem Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bMaxHP,500; bonus bDex,-3; }
-4224,Stem_Worm_Card,Stem Worm Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bDex,2; }
-4225,Stone_Shooter_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4226,Sting_Card,Sting Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bDex,4; }
-4227,Spring_Rabbit_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4228,Sleeper_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4229,Clock_Tower_Manager_Card,C Tower Manager Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEff,Eff_Curse,500; }
-4230,Shinobi_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4231,Increase_Soil_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4232,Hermit_Plant_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4233,Baby_Leopard_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4234,Anolian_Card,Anolian Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bStr,2; }
-4235,Anubis_2_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4236,Amon_Ra_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4237,Owl_Duke_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4238,Owl_Baron_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4239,Iron_Fist_Card,Iron Fist Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bVit,2; }
-4240,Arclouze_Card,Arclouze Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bStr,2; }
-4241,Arc_Angeling_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4242,Apocalipse_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4243,Antonio_Card,Antonio Card,6,20,0,10,,,,,,,136,,,,{},{ skill 50,5; skill 210,5; }
-4244,Alarm_Card,Alarm Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bCastrate,-10; }
-4245,Am_Mut_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4246,Assulter_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4247,Aster_Card,Aster Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,3,20; }
-4248,Ancient_Mummy_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4249,Ancient_Worm_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4250,Executioner_Card,Executioner Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bRandomAttackIncrease,300, 4; }
-4251,Elder_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4252,Alligator_Card,Alligator Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEff,Eff_Poison,500; }
-4253,Alice_Card,Alice Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtkEle,6; }
-4254,Tirfing_Card,Tirfing Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAgi,3; bonus bFlee,10; }
-4255,Orc_Lady_Card,Orc Lady Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,4,20; }
-4256,Orc_Archer_Card,Orc Archer Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bRange,1; }
-4257,Wild_Rose_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4258,Evil_Nymph_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4259,Wooden_Golem_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4260,Wootan_Shooter_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4261,Wootan_Fighter_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4262,Taoist_Hermit_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4263,Incantation_Samurai_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4264,Wind_Ghost_Card,Wind Ghost Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtkEle,4; }
-4265,Li_Me_Mang_Ryang_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4266,Eclipse_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4267,Explosion_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4268,Incubus_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4269,Injustice_Card,Injustice Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,9,20; }
-4270,Giant_Spider_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4271,Giant_Hornet_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4272,Dancing_Dragon_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4273,Shellfish_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4274,Zombie_Master_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4275,Zombie_Prisoner_Card,Zombie Prisoner Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bMaxHPrate,10; }
-4276,Lord_of_Death_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4277,Zherlthsh_Card,Zherlthsh Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bUseSPrate,-10; }
-4278,Gibbet_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4279,Earth_Deleter_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4280,Geographer_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4281,Zipper_Bear_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4282,Tengu_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4283,Greatest_General_Card,Greatest General Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,5,20; }
-4284,Chepet_Card,Chepet Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bLuk,5; }
-4285,Choco_Card,Choco Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bStr,1; bonus bAgi,1; bonus bVit,1; bonus bInt,1; bonus bDex,1; bonus bLuk,1; bonus bAtk,10; bonus bDef,1; }
-4286,Karakasa_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4287,Kapha_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4288,Carat_Card,Carat Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,6,20; }
-4289,Caterpillar_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4290,Cat_o'_Nine_Tail_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4291,Kobold_Leader_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4292,Kobold_Archer_Card,Kobold archer Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bHit,15; bonus bAtk,15; }
-4293,Cookie_Card,Cookie Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAtkEle,7; }
-4294,Quve_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4295,Kraben_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4296,Cramp_Card,Cramp Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bAgi,3; }
-4297,Cruiser_Card,Cruiser Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bDex,3; }
-4298,Creamy_Fear_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4299,Clock_Card,Clock Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bLuk,10; }
-4300,Chimera_Card,Chimera Card,6,20,0,10,,,,,,,2,,,,{},{  bonus2 bAddEff,Eff_Stan,500; bonus bAtk,25; }
-4301,Killer_Mantis_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4302,Tao_Gunka_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4304,Tamruan_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4305,Turtle_General_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4306,Toad_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4307,Beetle_King_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4308,Tri_Joint_Card,Tri Joint Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,7,20; }
-4309,Parasite_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4310,Panzer_Goblin_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4311,Permeter_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4312,Seal_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4313,Punk_Card,Punk Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bUseSPrate,-5; }
-4314,Penomena_Card,Penomena Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bMaxHPrate, 15; }
-4315,Pest_Card,Pest Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bSubEle,0,20; }
-4316,False_Angel_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4317,Mobster_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4318,Stormy_Knight_Card,Knight Of Windstorm Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bAddEff,Eff_Freeze,500; bonus bAtk,25; }
-4319,Freezer_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4320,Bloody_Knight_Card,Bloody Knight Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEff,Eff_Blind,500; bonus bAtk,25; bonus bMaxHPrate,-10; }
-4321,Heirozoist_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4322,High_Orc_Card,High Orc Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bStr,2; }
-4323,Garm_Baby_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4324,Garm_Card,Garm Card,6,20,0,10,,,,,,,64,,,,{},{ bonus2 bAddSize,2,20; bonus bAtk,-10; }
-4325,Harpy_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4326,Sea_Otter_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4327,Bloody_Butterfly_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4328,Hyegun_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4329,Phendark_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4330,Evil_Snake_Lord_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4331,Heater_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
-4332,Cookie_Xmas_Card,Ordered_Card,6,20,0,10,,,,,,,16,,,,{},{}
+4149,Gargoyle_Card,Gargoyle Card,6,20,0,10,,,,,,,,,,,{},{}
+4150,Goat_Card,Goat Card,6,20,0,10,,,,,,,,,,,{},{}
+4151,Gajomart_Card,Gajomart Card,6,20,0,10,,,,,,,,,,,{},{}
+4152,Galapago_Card,Galapago Card,6,20,0,10,,,,,,,,,,,{},{}
+4153,Crab_Card,Crab Card,6,20,0,10,,,,,,,2,,,,{},{}
+4154,Dumpling_Child_Card,Dumpling Child Card,6,20,0,10,,,,,,,,,,,{},{}
+4155,Goblin_Leader_Card,Goblin Leader Card,6,20,0,10,,,,,,,2,,,,{},{}
+4156,Goblin_Steamrider_Card,Goblin Steamrider Card,6,20,0,10,,,,,,,2,,,,{},{}
+4157,Goblin_Archer_Card,Goblin Archer Card,6,20,0,10,,,,,,,2,,,,{},{}
+4158,Sky_Deleter_Card,Sky Deleter Card,6,20,0,10,,,,,,,16,,,,{},{}
+4159,Nine_Tail_Card,Nine Tail Card,6,20,0,10,,,,,,,,,,,{},{}
+4160,Firelock_Soldier_Card,Firelock Soldier Card,6,20,0,10,,,,,,,,,,,{},{}
+4161,Grand_Peco_Card,Grand Peco Card,6,20,0,10,,,,,,,,,,,{},{}
+4162,Grizzly_Card,Grizzly Card,6,20,0,10,,,,,,,16,,,,{},{}
+4163,Gryphon_Card,Gryphon Card,6,20,0,10,,,,,,,2,,,,{},{}
+4164,Gullinbursti_Card,Gullinbursti Card,6,20,0,10,,,,,,,,,,,{},{}
+4165,Gig_Card,Gig Card,6,20,0,10,,,,,,,,,,,{},{}
+4166,Nightmare_Terror_Card,Nightmare Terror Card,6,20,0,10,,,,,,,16,,,,{},{}
+4167,Nereid_Card,Neraid Card,6,20,0,10,,,,,,,,,,,{},{}
+4168,Dark_Lord_Card,Dark Lord Card,6,20,0,10,,,,,,,,,,,{},{}
+4169,Dark_Illusion_Card,Dark Illusion Card,6,20,0,10,,,,,,,,,,,{},{}
+4170,Dark_Frame_Card,Dark Frame Card,6,20,0,10,,,,,,,,,,,{},{}
+4171,Dark_Priest_Card,Dark Priest Card,6,20,0,10,,,,,,,2,,,,{},{}
+4172,The_Paper_Card,The Paper Card,6,20,0,10,,,,,,,2,,,,{},{}
+4173,Demon_Pungus_Card,Demon Pungus Card,6,20,0,10,,,,,,,,,,,{},{}
+4174,Deviling_Card,Deviling Card,6,20,0,10,,,,,,,,,,,{},{}
+4175,Poisonous_Toad_Card,Poisonous Toad Card,6,20,0,10,,,,,,,2,,,,{},{}
+4176,Dullahan_Card,Dullahan Card,6,20,0,10,,,,,,,2,,,,{},{}
+4177,Dryad_Card,Dryad Card,6,20,0,10,,,,,,,,,,,{},{}
+4178,Dragon_Tail_Card,Dragon Tail Card,6,20,0,10,,,,,,,,,,,{},{}
+4179,Dragon_Fly_Card,Dragon Fly Card,6,20,0,10,,,,,,,4,,,,{},{}
+4180,Driller_Card,Driller Card,6,20,0,10,,,,,,,,,,,{},{}
+4181,Disguise_Card,Disguise Card,6,20,0,10,,,,,,,16,,,,{},{}
+4182,Diabolic_Card,Diabolic Card,6,20,0,10,,,,,,,,,,,{},{}
+4183,Vagabond_Wolf_Card,Vagabond Wolf Card,6,20,0,10,,,,,,,4,,,,{},{}
+4184,Lava_Golem_Card,Lava Golem Card,6,20,0,10,,,,,,,2,,,,{},{}
+4185,Rideword_Card,Rideword Card,6,20,0,10,,,,,,,769,,,,{},{}
+4186,Raggler_Card,Raggler Card,6,20,0,10,,,,,,,64,,,,{},{}
+4187,Raydric_Archer_Card,Raydric Archer Card,6,20,0,10,,,,,,,,,,,{},{}
+4188,Leib_Olmai_Card,Leib Olmai Card,6,20,0,10,,,,,,,,,,,{},{}
+4189,Wraith_Dead_Card,Wraith Dead Card,6,20,0,10,,,,,,,,,,,{},{}
+4190,Wraith_Card,Wraith Card,6,20,0,10,,,,,,,,,,,{},{}
+4191,Loli_Ruri_Card,Loli Ruri Card,6,20,0,10,,,,,,,16,,,,{},{}
+4192,Rotar_Zairo_Card,Rotar Zairo Card,6,20,0,10,,,,,,,2,,,,{},{}
+4193,Lude_Card,Lude Card,6,20,0,10,,,,,,,136,,,,{},{}
+4194,Rybio_Card,Rybio Card,6,20,0,10,,,,,,,16,,,,{},{}
+4195,Leaf_Cat_Card,Leaf Cat Card,6,20,0,10,,,,,,,,,,,{},{}
+4196,Marin_Card,Marin Card,6,20,0,10,,,,,,,,,,,{},{}
+4197,Mastering_Card,Mastering Card,6,20,0,10,,,,,,,4,,,,{},{}
+4198,Maya_Purple_Card,Maya Purple Card,6,20,0,10,,,,,,,,,,,{},{}
+4199,Merman_Card,Merman Card,6,20,0,10,,,,,,,64,,,,{},{}
+4200,Megalith_Card,Megalith Card,6,20,0,10,,,,,,,,,,,{},{}
+4201,Majoruros_Card,Majoruros Card,6,20,0,10,,,,,,,,,,,{},{}
+4202,Civil_Servant_Card,Civil Servant Card,6,20,0,10,,,,,,,2,,,,{},{}
+4203,Mutant_Dragonoid_Card,Mutant Dragonoid Card,6,20,0,10,,,,,,,,,,,{},{}
+4204,Mini_Demon_Card,Mini Demon Card,6,20,0,10,,,,,,,,,,,{},{}
+4205,Mimic_Card,Mimic Card,6,20,0,10,,,,,,,,,,,{},{}
+4206,Myst_Case_Card,Mystcase Card,6,20,0,10,,,,,,,,,,,{},{}
+4207,Mysteltainn_Card,Mysteltainn Card,6,20,0,10,,,,,,,32,,,,{},{}
+4208,Miyabi_Ningyo_Card,Miyabi Ningyo Card,6,20,0,10,,,,,,,64,,,,{},{}
+4209,Violy_Card,Violy Card,6,20,0,10,,,,,,,,,,,{},{}
+4210,Wanderer_Card,Wanderer Card,6,20,0,10,,,,,,,4,,,,{},{}
+4211,Vocal_Card,Vocal Card,6,20,0,10,,,,,,,4,,,,{},{}
+4212,Bon_Gun_Card,Bon Gun Card,6,20,0,10,,,,,,,136,,,,{},{}
+4213,Brilight_Card,Brilight Card,6,20,0,10,,,,,,,,,,,{},{}
+4214,Bloody_Murderer_Card,Bloody Murderer Card,6,20,0,10,,,,,,,2,,,,{},{}
+4215,Blazer_Card,Blazer Card,6,20,0,10,,,,,,,,,,,{},{}
+4216,Sasquatch_Card,Sasquatch Card,6,20,0,10,,,,,,,,,,,{},{}
+4217,Enchanted_Peach_Tree_Card,Enchanted Peach Tree Card,6,20,0,10,,,,,,,,,,,{},{}
+4218,Succubus_Card,Succubus Card,6,20,0,10,,,,,,,16,,,,{},{}
+4219,Sage_Worm_Card,Sage Worm Card,6,20,0,10,,,,,,,,,,,{},{}
+4220,Solider_Card,Solider Card,6,20,0,10,,,,,,,16,,,,{},{}
+4221,Skeleton_General_Card,Skeleton General Card,6,20,0,10,,,,,,,,,,,{},{}
+4222,Skeleton_Prisoner_Card,Skel Prisoner Card,6,20,0,10,,,,,,,16,,,,{},{}
+4223,Stalactic_Golem_Card,Stalactic Golem Card,6,20,0,10,,,,,,,,,,,{},{}
+4224,Stem_Worm_Card,Stem Worm Card,6,20,0,10,,,,,,,,,,,{},{}
+4225,Stone_Shooter_Card,Stone Shooter Card,6,20,0,10,,,,,,,2,,,,{},{}
+4226,Sting_Card,Sting Card,6,20,0,10,,,,,,,,,,,{},{}
+4227,Spring_Rabbit_Card,Spring Rabbit Card,6,20,0,10,,,,,,,,,,,{},{}
+4228,Sleeper_Card,Sleeper Card,6,20,0,10,,,,,,,,,,,{},{}
+4229,Clock_Tower_Manager_Card,Clock Tower Manager Card,6,20,0,10,,,,,,,,,,,{},{}
+4230,Shinobi_Card,Shinobi Card,6,20,0,10,,,,,,,,,,,{},{}
+4231,Increase_Soil_Card,Increase Soil Card,6,20,0,10,,,,,,,,,,,{},{}
+4232,Hermit_Plant_Card,Hermit Plant Card,6,20,0,10,,,,,,,,,,,{},{}
+4233,Baby_Leopard_Card,Baby Leopard Card,6,20,0,10,,,,,,,16,,,,{},{}
+4234,Anolian_Card,Anolian Card,6,20,0,10,,,,,,,,,,,{},{}
+4235,Anubis_2_Card,Anubis 2 Card,6,20,0,10,,,,,,,,,,,{},{}
+4236,Amon_Ra_Card,Amon Ra Card,6,20,0,10,,,,,,,64,,,,{},{}
+4237,Owl_Duke_Card,Owl Duke Card,6,20,0,10,,,,,,,,,,,{},{}
+4238,Owl_Baron_Card,Owl Baron Card,6,20,0,10,,,,,,,,,,,{},{}
+4239,Iron_Fist_Card,Iron Fist Card,6,20,0,10,,,,,,,,,,,{},{}
+4240,Arclouze_Card,Arclouze Card,6,20,0,10,,,,,,,,,,,{},{}
+4241,Arc_Angeling_Card,Arc Angeling Card,6,20,0,10,,,,,,,769,,,,{},{}
+4242,Apocalipse_Card,Apocalipse Card,6,20,0,10,,,,,,,,,,,{},{}
+4243,Antonio_Card,Antonio Card,6,20,0,10,,,,,,,,,,,{},{}
+4244,Alarm_Card,Alarm Card,6,20,0,10,,,,,,,,,,,{},{}
+4245,Am_Mut_Card,Am Mut Card,6,20,0,10,,,,,,,,,,,{},{}
+4246,Assulter_Card,Assulter Card,6,20,0,10,,,,,,,2,,,,{},{}
+4247,Aster_Card,Aster Card,6,20,0,10,,,,,,,2,,,,{},{}
+4248,Ancient_Mummy_Card,Ancient Mummy Card,6,20,0,10,,,,,,,,,,,{},{}
+4249,Ancient_Worm_Card,Ancient Worm Card,6,20,0,10,,,,,,,,,,,{},{}
+4250,Executioner_Card,Executioner Card,6,20,0,10,,,,,,,32,,,,{},{}
+4251,Elder_Card,Elder Card,6,20,0,10,,,,,,,2,,,,{},{}
+4252,Alligator_Card,Alligator Card,6,20,0,10,,,,,,,136,,,,{},{}
+4253,Alice_Card,Alice Card,6,20,0,10,,,,,,,,,,,{},{}
+4254,Tirfing_Card,Tirfing Card,6,20,0,10,,,,,,,32,,,,{},{}
+4255,Orc_Lady_Card,Orc Lady Card,6,20,0,10,,,,,,,2,,,,{},{}
+4256,Orc_Archer_Card,Orc Archer Card,6,20,0,10,,,,,,,,,,,{},{}
+4257,Wild_Rose_Card,Wild Rose Card,6,20,0,10,,,,,,,64,,,,{},{}
+4258,Evil_Nymph_Card,Evil Nymph Card,6,20,0,10,,,,,,,769,,,,{},{}
+4259,Wooden_Golem_Card,Wooden Golem Card,6,20,0,10,,,,,,,16,,,,{},{}
+4260,Wootan_Shooter_Card,Wootan Shooter Card,6,20,0,10,,,,,,,769,,,,{},{}
+4261,Wootan_Fighter_Card,Wootan Fighter Card,6,20,0,10,,,,,,,769,,,,{},{}
+4262,Taoist_Hermit_Card,Taoist Hermit Card,6,20,0,10,,,,,,,,,,,{},{}
+4263,Incantation_Samurai_Card,Incantation Samurai Card,6,20,0,10,,,,,,,2,,,,{},{}
+4264,Wind_Ghost_Card,Wind Ghost Card,6,20,0,10,,,,,,,,,,,{},{}
+4265,Li_Me_Mang_Ryang_Card,Li Me Mang Ryang Card,6,20,0,10,,,,,,,,,,,{},{}
+4266,Eclipse_Card,Eclipse Card,6,20,0,10,,,,,,,4,,,,{},{}
+4267,Explosion_Card,Explosion Card,6,20,0,10,,,,,,,,,,,{},{}
+4268,Incubus_Card,Incubus Card,6,20,0,10,,,,,,,769,,,,{},{}
+4269,Injustice_Card,Injustice Card,6,20,0,10,,,,,,,,,,,{},{}
+4270,Giant_Spider_Card,Giant Spider Card,6,20,0,10,,,,,,,,,,,{},{}
+4271,Giant_Hornet_Card,Giant Hornet Card,6,20,0,10,,,,,,,,,,,{},{}
+4272,Dancing_Dragon_Card,Dancing Dragon Card,6,20,0,10,,,,,,,136,,,,{},{}
+4273,Shellfish_Card,Shellfish Card,6,20,0,10,,,,,,,2,,,,{},{}
+4274,Zombie_Master_Card,Zombie Master Card,6,20,0,10,,,,,,,,,,,{},{}
+4275,Zombie_Prisoner_Card,Zombie Prisoner Card,6,20,0,10,,,,,,,,,,,{},{}
+4276,Lord_of_Death_Card,Lord of Death Card,6,20,0,10,,,,,,,,,,,{},{}
+4277,Zherlthsh_Card,Zherlthsh Card,6,20,0,10,,,,,,,,,,,{},{}
+4278,Gibbet_Card,Gibbet Card,6,20,0,10,,,,,,,,,,,{},{}
+4279,Earth_Deleter_Card,Earth Deleter Card,6,20,0,10,,,,,,,16,,,,{},{}
+4280,Geographer_Card,Geographer Card,6,20,0,10,,,,,,,,,,,{},{}
+4281,Zipper_Bear_Card,Zipper Bear Card,6,20,0,10,,,,,,,2,,,,{},{}
+4282,Tengu_Card,Tengu Card,6,20,0,10,,,,,,,,,,,{},{}
+4283,Greatest_General_Card,Greatest General Card,6,20,0,10,,,,,,,,,,,{},{}
+4284,Chepet_Card,Chepet Card,6,20,0,10,,,,,,,2,,,,{},{}
+4285,Choco_Card,Choco Card,6,20,0,10,,,,,,,4,,,,{},{}
+4286,Karakasa_Card,Karakasa Card,6,20,0,10,,,,,,,16,,,,{},{}
+4287,Kapha_Card,Kapha Card,6,20,0,10,,,,,,,,,,,{},{}
+4288,Carat_Card,Carat Card,6,20,0,10,,,,,,,,,,,{},{}
+4289,Caterpillar_Card,Caterpillar Card,6,20,0,10,,,,,,,,,,,{},{}
+4290,Cat_o'_Nine_Tail_Card,Cat o' Nine Tail Card,6,20,0,10,,,,,,,64,,,,{},{}
+4291,Kobold_Leader_Card,Kobold Leader Card,6,20,0,10,,,,,,,2,,,,{},{}
+4292,Kobold_Archer_Card,Kobold Archer Card,6,20,0,10,,,,,,,2,,,,{},{}
+4293,Cookie_Card,Cookie Card,6,20,0,10,,,,,,,136,,,,{},{}
+4294,Quve_Card,Quve Card,6,20,0,10,,,,,,,136,,,,{},{}
+4295,Kraben_Card,Kraben Card,6,20,0,10,,,,,,,,,,,{},{}
+4296,Cramp_Card,Cramp Card,6,20,0,10,,,,,,,,,,,{},{}
+4297,Cruiser_Card,Cruiser Card,6,20,0,10,,,,,,,2,,,,{},{}
+4298,Creamy_Fear_Card,Creamy Fear Card,6,20,0,10,,,,,,,,,,,{},{}
+4299,Clock_Card,Clock Card,6,20,0,10,,,,,,,,,,,{},{}
+4300,Chimera_Card,Chimera Card,6,20,0,10,,,,,,,16,,,,{},{}
+4301,Killer_Mantis_Card,Killer Mantis Card,6,20,0,10,,,,,,,,,,,{},{}
+4302,Tao_Gunka_Card,Tao Gunka Card,6,20,0,10,,,,,,,,,,,{},{}
+4304,Tamruan_Card,Tamruan Card,6,20,0,10,,,,,,,,,,,{},{}
+4305,Turtle_General_Card,Turtle General Card,6,20,0,10,,,,,,,,,,,{},{}
+4306,Toad_Card,Toad Card,6,20,0,10,,,,,,,4,,,,{},{}
+4307,Beetle_King_Card,Beetle King Card,6,20,0,10,,,,,,,,,,,{},{}
+4308,Tri_Joint_Card,Tri Joint Card,6,20,0,10,,,,,,,,,,,{},{}
+4309,Parasite_Card,Parasite Card,6,20,0,10,,,,,,,32,,,,{},{}
+4310,Panzer_Goblin_Card,Panzer Goblin Card,6,20,0,10,,,,,,,2,,,,{},{}
+4311,Permeter_Card,Permeter Card,6,20,0,10,,,,,,,769,,,,{},{}
+4312,Seal_Card,Seal Card,6,20,0,10,,,,,,,2,,,,{},{}
+4313,Punk_Card,Punk Card,6,20,0,10,,,,,,,,,,,{},{}
+4314,Penomena_Card,Penomena Card,6,20,0,10,,,,,,,32,,,,{},{}
+4315,Pest_Card,Pest Card,6,20,0,10,,,,,,,16,,,,{},{}
+4316,False_Angel_Card,False Angel Card,6,20,0,10,,,,,,,,,,,{},{}
+4317,Mobster_Card,Mobster Card,6,20,0,10,,,,,,,2,,,,{},{}
+4318,Stormy_Knight_Card,Stormy Knight Card,6,20,0,10,,,,,,,2,,,,{},{}
+4319,Freezer_Card,Freezer Card,6,20,0,10,,,,,,,,,,,{},{}
+4320,Bloody_Knight_Card,Bloody Knight Card,6,20,0,10,,,,,,,2,,,,{},{}
+4321,Heirozoist_Card,Heirozoist Card,6,20,0,10,,,,,,,,,,,{},{}
+4322,High_Orc_Card,High Orc Card,6,20,0,10,,,,,,,,,,,{},{}
+4323,Garm_Baby_Card,Garm Baby Card,6,20,0,10,,,,,,,,,,,{},{}
+4324,Garm_Card,Garm Card,6,20,0,10,,,,,,,16,,,,{},{}
+4325,Harpy_Card,Harpy Card,6,20,0,10,,,,,,,4,,,,{},{}
+4326,Sea_Otter_Card,Sea Otter Card,6,20,0,10,,,,,,,,,,,{},{}
+4327,Bloody_Butterfly_Card,Bloody Butterfly Card,6,20,0,10,,,,,,,136,,,,{},{}
+4328,Hyegun_Card,Hyegun Card,6,20,0,10,,,,,,,4,,,,{},{}
+4329,Phendark_Card,Phendark Card,6,20,0,10,,,,,,,,,,,{},{}
+4330,Evil_Snake_Lord_Card,Evil Snake Lord Card,6,20,0,10,,,,,,,769,,,,{},{}
+4331,Heater_Card,Heater Card,6,20,0,10,,,,,,,,,,,{},{}
+4332,Cookie_Xmas_Card,Cookie Xmas Card,6,20,0,10,,,,,,,136,,,,{},{}
 
 // Extra Headgears
 //===================================================================
