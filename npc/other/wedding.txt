@@ -72,7 +72,8 @@ L_GroomCeremony:
 	mes "[Tristan the Third]";
 	mes "Please tell your wife to speak to me, and then we will start exchanging rings";
 	delitem 2613,1;//Items: Diamond_Ring,
-	getitem 2635,1;//Items: Wedding_Ring_F,
+	if (sex == 0) getitem 2635,1;//Items: Wedding_Ring_F,
+	if (sex == 1) getitem 2634,1;//Items: Wedding_Ring_M,
 	set @get_ring,1;
 	next;
 	mes "[Tristan the Third]";
@@ -107,7 +108,8 @@ L_BrideCeremony:
 	deltimer "weddinglimit2";
 	marriage $name$;
 	delitem 2613,1;//Items: Diamond_Ring,
-	getitem 2634,1;//Items: Wedding_Ring_M,
+	if (sex == 0) getitem 2635,1;//Items: Wedding_Ring_F,
+	if (sex == 1) getitem 2634,1;//Items: Wedding_Ring_M,
 	set @get_ring,1;
 	close;
 L_CancelWedding:

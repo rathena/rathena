@@ -38,6 +38,7 @@ Date		Added
 ======
 	
 12/20	
+        * made samesex marriages give out the correct rings [MouseJstr]
 	* Changed $progress -> $@progress in wedding.txt (shadowlady put in comments but didn't add to code) [Aria]
 	* xmas.txt: Added Xmas Jakk, fixed 2 possible items exploits, fixed reward Box ID [Lupus]
 12/18	
