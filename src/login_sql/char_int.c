@@ -15,7 +15,7 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	int fd;
 
 	c = 0;
-	for(i = 0; i < MAX_SERVERS; i++) {
+	for(i = 0; i < MAX_SERVERS && i < servers_connected; i++) {
 		if ((fd = server_fd[i]) > 0 && fd != sfd) {
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -32,7 +32,7 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 int char_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
 	int i;
 
-	for(i = 0; i < MAX_SERVERS; i++) {
+	for(i = 0; i < MAX_SERVERS && i < servers_connected; i++) {
 		if (server_fd[i] >= 0) {// if char-server is online
 //			printf("char_anti_freeze_system: server #%d '%s', flag: %d.\n", i, server[i].name, server_freezeflag[i]);
 			if (server_freezeflag[i]-- < 1) {// Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
@@ -77,21 +77,21 @@ void send_account_reg(int fd) {
 
 		sprintf(tmpsql, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id);
 		sql_query(tmpsql,"send_account_reg");
-		sql_res = mysql_store_result(&mysql_handle) ;
 		
-        if (sql_res) {
-			sql_row = mysql_fetch_row(sql_res);
-			connect_until_time = atol(sql_row[1]);
-			strcpy(email, sql_row[0]);
+		
+        if ((sql_res = mysql_store_result(&mysql_handle))) {
+			if((sql_row = mysql_fetch_row(sql_res))) {
+			    connect_until_time = atol(sql_row[1]);
+			    strcpy(email, sql_row[0]);
+			}    
 		}
 		mysql_free_result(sql_res);
 		
 		if (account_id > 0) {
 			sprintf(tmpsql, "SELECT `str`,`value` FROM `global_reg_value` WHERE `type`='1' AND `account_id`='%d'",account_id);
 			sql_query(tmpsql,"send_account_reg");
-			sql_res = mysql_store_result(&mysql_handle) ;
 			
-            if (sql_res) {
+            if ((sql_res = mysql_store_result(&mysql_handle))) {
 				WFIFOW(fd,0) = 0x2729;
 				WFIFOL(fd,4) = account_id;
 				for(p = 8; (sql_row = mysql_fetch_row(sql_res));p+=36){
@@ -150,12 +150,12 @@ void email_time_request(int fd, int id) {
 	
 	sprintf(tmpsql,"SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'",login_db, login_db_account_id, account_id);
 	sql_query(tmpsql,"email_time_request");
-	
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res);
-		connect_until_time = atol(sql_row[1]);
-		strcpy(email, sql_row[0]);
+
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
+		if((sql_row = mysql_fetch_row(sql_res))) {
+		    connect_until_time = atol(sql_row[1]);
+		    strcpy(email, sql_row[0]);
+		}    
 	}
 	mysql_free_result(sql_res);
 	
@@ -201,18 +201,18 @@ void change_account_email(int fd, int id, char ip[16]) {
 		sprintf(tmpsql, "SELECT `%s`,`email` FROM `%s` WHERE `%s` = '%d'", login_db_userid, login_db, login_db_account_id, acc);
 		sql_query(tmpsql,"change_account_email");
 
-		sql_res = mysql_store_result(&mysql_handle);
-		if (sql_res) {
-			sql_row = mysql_fetch_row(sql_res);	//row fetching
-
-			if (strcmpi(sql_row[1], actual_email) == 0) {
-				sprintf(tmpsql, "UPDATE `%s` SET `email` = '%s' WHERE `%s` = '%d'", login_db, new_email, login_db_account_id, acc);
-				sql_query(tmpsql,"change_account_email");
-				#ifdef DEBUG
-				printf("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d (%s), new e-mail: %s, ip: %s)." RETCODE,
- 				       server[id].name, acc, sql_row[0], actual_email, ip);
-                #endif
-			}
+		if ((sql_res = mysql_store_result(&mysql_handle))) {
+			if((sql_row = mysql_fetch_row(sql_res))) {	//row fetching
+			    if (strcmpi(sql_row[1], actual_email) == 0) {
+				    sprintf(tmpsql, "UPDATE `%s` SET `email` = '%s' WHERE `%s` = '%d'", login_db, new_email, login_db_account_id, acc);
+				    sql_query(tmpsql,"change_account_email");
+				    
+                    #ifdef DEBUG
+                    printf("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d (%s), new e-mail: %s, ip: %s)." RETCODE,
+                            server[id].name, acc, sql_row[0], actual_email, ip);
+                    #endif
+                }
+            }    
 		}
 				
     }
@@ -229,18 +229,17 @@ void status_change_request(int fd) {
 	sprintf(tmpsql, "SELECT `state` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, acc);
 	sql_query(tmpsql,"status_change_request");
 	
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res); // row fetching
-
-		if (atoi(sql_row[0]) != status && status != 0) {
-			unsigned char buf[16];
-			WBUFW(buf,0) = 0x2731;
-			WBUFL(buf,2) = acc;
-			WBUFB(buf,6) = 0; // 0: change of statut, 1: ban
-			WBUFL(buf,7) = status; // status or final date of a banishment
-			charif_sendallwos(-1, buf, 11);
-		}
+	if ((sql_res = mysql_store_result(&mysql_handle))) {
+		if((sql_row = mysql_fetch_row(sql_res))) { // row fetching
+		    if (atoi(sql_row[0]) != status && status != 0) {
+		        unsigned char buf[16];
+		        WBUFW(buf,0) = 0x2731;
+		        WBUFL(buf,2) = acc;
+		        WBUFB(buf,6) = 0; // 0: change of statut, 1: ban
+		        WBUFL(buf,7) = status; // status or final date of a banishment
+		        charif_sendallwos(-1, buf, 11);
+            }
+        }    
 			
 		sprintf(tmpsql,"UPDATE `%s` SET `state` = '%d' WHERE `%s` = '%d'", login_db, status,login_db_account_id,acc);
 		sql_query(tmpsql,"status_change_request");
@@ -259,10 +258,7 @@ void ban_request(int fd) {
 	sprintf(tmpsql, "SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'",login_db,login_db_account_id,acc);
 	sql_query(tmpsql,"ban_request");
 	
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res); // row fetching
-
+	if ((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
 		tmptime = atol(sql_row[0]);
 
 		if (tmptime == 0 || tmptime < time(NULL))
@@ -315,11 +311,7 @@ void change_sex(int fd) {
 	sprintf(tmpsql,"SELECT `sex` FROM `%s` WHERE `%s` = '%d'",login_db,login_db_account_id,acc);
     sql_query(tmpsql,"change_sex");
         
-    sql_res = mysql_store_result(&mysql_handle) ;
-        
-    if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res);	//row fetching
-	
+    if ((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) {
         if (strcmpi(sql_row[0], "M") == 0)
             sex = 1;
         else
@@ -351,10 +343,7 @@ void save_account_reg(int fd){
 			memcpy(str,RFIFOP(fd,p),32);
 			value=RFIFOL(fd,p+32);
 			
-            sprintf(tmpsql,"DELETE FROM `global_reg_value` WHERE `type`='1' AND `account_id`='%d' AND `str`='%s';",acc,jstrescapecpy(temp_str,str));
-			sql_query(tmpsql,"save_account_reg");
-			
-            sprintf(tmpsql,"INSERT INTO `global_reg_value` (`type`, `account_id`, `str`, `value`) VALUES ( 1 , '%d' , '%s' , '%d');",  acc, jstrescapecpy(temp_str,str), value);
+            sprintf(tmpsql,"REPLACE INTO `global_reg_value` (`type`, `account_id`, `str`, `value`) VALUES ( 1 , '%d' , '%s' , '%d');",  acc, jstrescapecpy(temp_str,str), value);
 			sql_query(tmpsql,"save_account_reg");
 		}
 
@@ -377,19 +366,8 @@ void save_account_reg(int fd){
 void unban_request(int fd) {
 	int acc = RFIFOL(fd,2);
 				
-    sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'",login_db,login_db_account_id,acc);
+    sprintf(tmpsql,"UPDATE `%s` SET `ban_until` = '0', `state`='0' WHERE `%s` = '%d' AND `state`='6'", login_db,login_db_account_id,acc);
     sql_query(tmpsql,"unban_request");
-    
-    sql_res = mysql_store_result(&mysql_handle) ;
-
-    if (sql_res) {
-        sql_row = mysql_fetch_row(sql_res);	//row fetching
-
-        if (atol(sql_row[0]) != 0) {
-            sprintf(tmpsql,"UPDATE `%s` SET `ban_until` = '0', `state`='0' WHERE `%s` = '%d'", login_db,login_db_account_id,acc);
-            sql_query(tmpsql,"unban_request");
-		}
-	}
 
 	RFIFOSKIP(fd,6);
 }
@@ -405,7 +383,7 @@ int parse_fromchar(int fd){
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
 
-	for(id = 0; id < MAX_SERVERS; id++)
+	for(id = 0; id < MAX_SERVERS && id < servers_connected; id++)
 		if (server_fd[id] == fd)
 			break;
 
@@ -417,6 +395,7 @@ int parse_fromchar(int fd){
 			printf("Char-server '%s' has disconnected.\n", server[id].name);
 			server_fd[id] = -1;
 			memset(&server[id], 0, sizeof(struct mmo_char_server));
+			servers_connected--;
 			// server delete
 			sprintf(tmpsql, "DELETE FROM `sstatus` WHERE `index`='%d'", id);
     		sql_query(tmpsql,"parse_fromchar");

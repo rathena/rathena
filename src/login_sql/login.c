@@ -54,6 +54,7 @@ int subnetmaski[4];
 // Char-server data
 struct mmo_char_server server[MAX_SERVERS];
 int server_fd[MAX_SERVERS];
+unsigned char servers_connected = 0;
 
 // Anti-freeze Data
 int server_freezeflag[MAX_SERVERS];
@@ -115,6 +116,9 @@ int console = 0;
 // Online User DB
 struct dbt *online_db;
 
+// GM Database
+struct dbt *gm_db;
+
 //-----------------------------------------------------
 // Online User Database [Wizputer]
 //-----------------------------------------------------
@@ -136,7 +140,10 @@ int is_user_online(int account_id) {
 	p = numdb_search(online_db, account_id);
 	if (p == NULL)
 		return 0;
-	printf("Acccount %d\n",*p);
+	
+	#ifdef DEBUG
+	printf("Acccount [%d] Online\n",*p);
+	#endif
 	return 1;
 }
 
@@ -168,31 +175,38 @@ void sql_query(char* query,char function[32]) {
 }
 
 //-----------------------------------------------------
-// check user level
+// check user level [Wizputer]
 //-----------------------------------------------------
 
-int isGM(int account_id) {
-	int level=0;
-
-	sprintf(tmpsql,"SELECT `%s` FROM `%s` WHERE `%s`='%d'", login_db_level, login_db, login_db_account_id, account_id);
-	sql_query(tmpsql,"isGM");
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res);
-		level = atoi(sql_row[0]);
-		if (level > 99)
-			level = 99;
-	}
-
-	if (level == 0) {
+unsigned char isGM(int account_id) {
+    unsigned char *level;
+    
+   	level = numdb_search(gm_db, account_id);
+	if (level == NULL)
 		return 0;
-		//not GM
-	}
 
-	mysql_free_result(sql_res);
-
-	return level;
+	return *level;
 }
+
+void read_GMs(void) {
+    unsigned char *level;
+    level = malloc(sizeof(unsigned char));
+    
+    sprintf(tmpsql,"SELECT `%s`,`%s` FROM `%s` WHERE `%s` > 0", login_db_account_id, login_db_level, login_db,login_db_level);
+    sql_query(tmpsql,"read_GMs");
+    
+    if ((sql_res = mysql_store_result(&mysql_handle))) {
+        while((sql_row = mysql_fetch_row(sql_res))) {
+            if( (*level = atoi(sql_row[1])) > 99 )
+                *level = 99;
+
+            numdb_insert(gm_db, atoi(sql_row[0]), level);
+        }
+    }
+    
+    mysql_free_result(sql_res);
+}    
+    
 
 //---------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
@@ -257,8 +271,12 @@ int mmo_auth_sqldb_init(void) {
 	} else {
 		printf("Connected to MySQL Server\n");
 	}
+	
+	//delete all server status
+	sprintf(tmpsql,"TRUNCATE TABLE `sstatus`");
+	sql_query(tmpsql,"mmo_db_close");
 
-	sprintf(tmpsql, "INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '', 'lserver', '100','login server started')", loginlog_db);
+	sprintf(tmpsql, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '', 'lserver', '100','login server started')", loginlog_db);
 	sql_query(tmpsql,"mmo_auth_sqldb_init");
 
 	return 0;
@@ -271,11 +289,11 @@ void mmo_db_close(void) {
 	int i, fd;
 
 	//set log.
-	sprintf(tmpsql,"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '', 'lserver','100', 'login server shutdown')", loginlog_db);
+	sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '', 'lserver','100', 'login server shutdown')", loginlog_db);
 	sql_query(tmpsql,"mmo_db_close");
 
 	//delete all server status
-	sprintf(tmpsql,"DELETE FROM `sstatus`");
+	sprintf(tmpsql,"TRUNCATE TABLE `sstatus`");
 	sql_query(tmpsql,"mmo_db_close");
 
 	mysql_close(&mysql_handle);
@@ -344,36 +362,53 @@ int mmo_auth( struct mmo_account* account , int fd){
 		#endif
 		return 0;
 	}
-	// Documented by CLOWNISIUS || LLRO || Gunstar lead this one with me
-	// IF changed to diferent returns~ you get diferent responses from your msgstringtable.txt
-	//Ireturn 2  == line 9
-	//Ireturn 5  == line 311
-	//Ireturn 6  == line 450
-	//Ireturn 7  == line 440
-	//Ireturn 8  == line 682
-	//Ireturn 9  == line 704
-	//Ireturn 10 == line 705
-	//Ireturn 11 == line 706
-	//Ireturn 12 == line 707
-	//Ireturn 13 == line 708
-	//Ireturn 14 == line 709
-	//Ireturn 15 == line 710
-	//Ireturn -1 == line 010
-	// Check status
 
 	account->ban_until_time = atol(sql_row[8]);
 	state = atoi(sql_row[9]);
 
-	if (state == -3) {
-		//id is banned
-		mysql_free_result(sql_res);
-		return -3;
-	} else if (state == -2) { //dynamic ban
-		//id is banned
-		mysql_free_result(sql_res);
-		//add IP list.
-		return -2;
+	if (state) {
+		switch(state) { // packet 0x006a value + 1
+		case 1:   // 0 = Unregistered ID
+		case 2:   // 1 = Incorrect Password
+		case 3:   // 2 = This ID is expired
+		case 4:   // 3 = Rejected from Server
+		case 5:   // 4 = You have been blocked by the GM Team
+		case 6:   // 5 = Your Game's EXE file is not the latest version
+		case 8:   // 7 = Server is jammed due to over populated
+		case 9:   // 8 = No MSG (actually, all states after 9 except 99 are No MSG, use only this)
+		case 100: // 99 = This ID has been totally erased
+		    #ifdef DEBUG
+			printf("Auth Error #%d\n", state);
+			#endif
+			mysql_free_result(sql_res);
+			return state;
+			break;
+		case 7:   // 6 = Your are Prohibited to log in until %s
+		    strftime(tmpstr, 20, date_format, localtime(&account->ban_until_time));
+		    tmpstr[19] = '\0';
+		    if (account->ban_until_time > time(NULL)) { // always banned
+		        mysql_free_result(sql_res);  
+		        return 7;
+            } else { // ban is finished
+			    // reset the ban time
+			    sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0',`state`='0' WHERE BINARY `%s`='%s'", login_db, login_db_userid, t_uid);
+			    sql_query(tmpsql,"mmo_auth");
+		    }
+		    break;
+		default:
+			return 100; // 99 = ID has been totally erased
+			break;
+		}
 	}
+	
+	if (atol(sql_row[6]) != 0 && atol(sql_row[6]) < time(NULL)) {
+		return 2; // 2 = This ID is expired
+	}
+
+    if ( is_user_online(atol(sql_row[0])) ) {
+        printf("User [%s] is already online - Rejected.\n",sql_row[1]);
+	    return 3; // Rejected
+    }
 
 	if (use_md5_passwds) {
 		MD5_String(account->passwd,user_password);
@@ -448,85 +483,13 @@ int mmo_auth( struct mmo_account* account , int fd){
 			#endif
 #endif
 		}
-		return 1;
+		return 2;
 	}
 
 	#ifdef DEBUG
 	printf("Auth ok: Time: [%s] Username: [%s]\n" RETCODE, tmpstr, account->userid);
 	#endif
 
-	if (state) {
-		switch(state) { // packet 0x006a value + 1
-		case 1:   // 0 = Unregistered ID
-		case 2:   // 1 = Incorrect Password
-		case 3:   // 2 = This ID is expired
-		case 4:   // 3 = Rejected from Server
-		case 5:   // 4 = You have been blocked by the GM Team
-		case 6:   // 5 = Your Game's EXE file is not the latest version
-		case 8:   // 7 = Server is jammed due to over populated
-		case 9:   // 8 = No MSG (actually, all states after 9 except 99 are No MSG, use only this)
-		case 100: // 99 = This ID has been totally erased
-			printf("Auth Error #%d\n", state);
-			return state;
-			break;
-		case 7:   // 6 = Your are Prohibited to log in until %s
-		    strftime(tmpstr, 20, date_format, localtime(&account->ban_until_time));
-		    tmpstr[19] = '\0';
-		    if (account->ban_until_time > time(NULL)) { // always banned
-		        return 7;
-            } else { // ban is finished
-			    // reset the ban time
-			    sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0',`state`='0' WHERE BINARY `%s`='%s'", login_db, login_db_userid, t_uid);
-			    sql_query(tmpsql,"mmo_auth");
-		    }
-		    break;
-		default:
-			return 100; // 99 = ID has been totally erased
-			break;
-		}
-	}
-
-/*
-// do not remove this section. this is meant for future, and current forums usage
-// as a login manager and CP for login server. [CLOWNISIUS]
-	if (atoi(sql_row[10]) == 1) {
-		return 4;
-	}
-
-	if (atoi(sql_row[10]) >= 5) {
-		switch(atoi(sql_row[10])) {
-		case 5:
-			return 5;
-			break;
-		case 6:
-			return 7;
-			break;
-		case 7:
-			return 9;
-			break;
-		case 8:
-			return 10;
-			break;
-		case 9:
-			return 11;
-			break;
-		default:
-			return 10;
-			break;
-		}
-	}
-*/
-
-
-	if (atol(sql_row[6]) != 0 && atol(sql_row[6]) < time(NULL)) {
-		return 2; // 2 = This ID is expired
-	}
-
-    if ( is_user_online(atol(sql_row[0])) ) {
-        printf("User [%s] is already online - Rejected.\n",sql_row[1]);
-	    return 3; // Rejected
-    }
-        
 	account->account_id = atoi(sql_row[0]);
 	account->login_id1 = rand();
 	account->login_id2 = rand();
@@ -967,6 +930,13 @@ int do_init(int argc,char **argv){
 	// Online user database init
     free(online_db);
 	online_db = numdb_init();
+	
+	// GM database init
+    free(gm_db);
+	gm_db = numdb_init();
+	
+	// Read GMs from table
+	read_GMs();
 	
 	printf("The login-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", login_port);
 

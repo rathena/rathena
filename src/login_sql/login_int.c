@@ -31,14 +31,14 @@ void client_request_login(int fd,unsigned char *p ) {
 
 	jstrescapecpy(t_uid,RFIFOP(fd, 6));
 	if(result==-1){
-	    int gm_level = isGM(account.account_id);
-        if (min_level_to_connect > gm_level) {
+	    unsigned char gm_level = isGM(account.account_id);
+        if (min_level_to_connect > gm_level || !servers_connected) {
 			WFIFOW(fd,0) = 0x81;
 			WFIFOL(fd,2) = 1; // 01 = Server closed
 			WFIFOSET(fd,3);
 	    } else {
             if (p[0] != 127) {
-                sprintf(tmpsql,"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', '%s','100', 'login ok')", loginlog_db, p[0], p[1], p[2], p[3], t_uid);
+                sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', '%s','100', 'login ok')", loginlog_db, p[0], p[1], p[2], p[3], t_uid);
                 sql_query(tmpsql,"client_request_login");
             }
 
@@ -52,12 +52,12 @@ void client_request_login(int fd,unsigned char *p ) {
 				#endif
 			}
    			
-            for(i = 0; i < MAX_SERVERS; i++) {
-				if (server_fd[i] >= 0) {
-					//Lan check added by Kashy
-					if (lan_ip_check(p))
-						WFIFOL(fd,47+server_num*32) = inet_addr(lan_char_ip);
-					else
+		    for(i = 0; i < MAX_SERVERS || server_num < servers_connected ; i++)
+		        if (server_fd[i] >= 0) {
+		            //Lan check added by Kashy
+		            if (lan_ip_check(p))
+					    WFIFOL(fd,47+server_num*32) = inet_addr(lan_char_ip);
+	                else
                         WFIFOL(fd,47+server_num*32) = server[i].ip;
 
                     WFIFOW(fd,47+server_num*32+4) = server[i].port;
@@ -66,11 +66,8 @@ void client_request_login(int fd,unsigned char *p ) {
                     WFIFOW(fd,47+server_num*32+28) = server[i].maintenance;
                     WFIFOW(fd,47+server_num*32+30) = server[i].new;
                     server_num++;
-                }
-            }
+                }   
             
-            // if at least 1 char-server
-            if (server_num > 0) {
                 WFIFOW(fd,0)=0x69;
                 WFIFOW(fd,2)=47+32*server_num;
                 WFIFOL(fd,4)=account.login_id1;
@@ -91,74 +88,26 @@ void client_request_login(int fd,unsigned char *p ) {
                 auth_fifo[auth_fifo_pos].delflag=0;
                 auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr.sin_addr.s_addr;
                 auth_fifo_pos++;
-            } else {
-                WFIFOW(fd,0) = 0x81;
-                WFIFOL(fd,2) = 1; // 01 = Server closed
-                WFIFOSET(fd,3);
-            }
         }
     } else {
-		char error[64];
-		char tmp_sql[65535];
+		char error[32];
 		
-        sprintf(tmp_sql,"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', '%s', '%d','login failed : %%s')", loginlog_db, p[0], p[1], p[2], p[3], t_uid, result);
-		switch((result)) {
-		
-        case -3:  //-3 = Account Banned
-			sprintf(tmpsql,tmp_sql,"Account banned.");
-			sprintf(error,"Account banned.");
-		break;
-		case -2:  //-2 = Dynamic Ban
-			sprintf(tmpsql,tmp_sql,"dynamic ban (ip and account).");
-			sprintf(error,"dynamic ban (ip and account).");
-		break;
-		case 1:   // 0 = Unregistered ID
-			sprintf(tmpsql,tmp_sql,"Unregisterd ID.");
-			sprintf(error,"Unregisterd ID.");
-		break;
-		case 2:   // 1 = Incorrect Password
-			sprintf(tmpsql,tmp_sql,"Incorrect Password.");
-			sprintf(error,"Incorrect Password.");
-		break;
-		case 3:   // 2 = This ID is expired
-			sprintf(tmpsql,tmp_sql,"Account Expired.");
-			sprintf(error,"Account Expired.");
-		break;
-		case 4:   // 3 = Rejected from Server
-			sprintf(tmpsql,tmp_sql,"Rejected from server.");
-			sprintf(error,"Rejected from server.");
-		break;
-		case 5:   // 4 = You have been blocked by the GM Team
-			sprintf(tmpsql,tmp_sql,"Blocked by GM.");
-			sprintf(error,"Blocked by GM.");
-		break;
-		case 6:   // 5 = Your Game's EXE file is not the latest version
-			sprintf(tmpsql,tmp_sql,"Not latest game EXE.");
-			sprintf(error,"Not latest game EXE.");
-		break;
-		case 7:   // 6 = Your are Prohibited to log in until %s
-			sprintf(tmpsql,tmp_sql,"Banned.");
-			sprintf(error,"Banned.");
-		break;
-		case 8:   // 7 = Server is jammed due to over populated
-			sprintf(tmpsql,tmp_sql,"Server Over-population.");
-			sprintf(error,"Server Over-population.");
-		break;
-		case 9:   // 8 = No MSG (actually, all states after 9 except 99 are No MSG, use only this)
-			sprintf(tmpsql,tmp_sql," ");
-			sprintf(error," ");
-		break;
-		case 100: // 99 = This ID has been totally erased
-			sprintf(tmpsql,tmp_sql,"Account gone.");
-			sprintf(error,"Account gone.");
-		break;
-		default:
-			sprintf(tmpsql,tmp_sql,"Uknown Error.");
-			sprintf(error,"Uknown Error.");
-		break;
-		}
-
+		sprintf(tmpsql,"SELECT `error` FROM `errors` WHERE `result`='%d'",result);
 		sql_query(tmpsql,"client_request_login");
+		
+		if ((sql_res = mysql_store_result(&mysql_handle))) {
+                if ((sql_row = mysql_fetch_row(sql_res))) {
+                    sprintf(error,sql_row[0]);
+                } else {
+                    sprintf(error,"No Error!");
+                }
+        }        
+		
+        
+        sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', '%s', '%d','login failed : %s')", loginlog_db, p[0], p[1], p[2], p[3], t_uid, result, error);
+        
+        		
+        sql_query(tmpsql,"client_request_login");
 
 		if ((result == 1) && (dynamic_pass_failure_ban != 0)){	// failed password
 			sprintf(tmpsql,"SELECT count(*) FROM `%s` WHERE `ip` = '%d.%d.%d.%d' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
@@ -177,12 +126,8 @@ void client_request_login(int fd,unsigned char *p ) {
 			
 			mysql_free_result(sql_res);
 			
-		} else if (result == -2) {	//dynamic banned - add ip to ban list.
-			sprintf(tmpsql,"INSERT INTO `ipbanlist`(`list`,`btime`,`rtime`,`reason`) VALUES ('%d.%d.%d.*', NOW() , NOW() +  INTERVAL 1 MONTH ,'Dynamic banned user id : %s')", p[0], p[1], p[2], t_uid);
-			sql_query(tmpsql,"client_request_login");
-			result = -3;
 		}
-
+		
 		//cannot connect login failed
 		memset(WFIFOP(fd,0),'\0',23);
 		WFIFOW(fd,0)=0x6a;
@@ -226,7 +171,7 @@ void char_request_login(int fd, unsigned char *p) {
    	char t_uid[32];  
 	int result;
 	
-	sprintf(tmpsql,"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, p[0], p[1], p[2], p[3], RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
+	sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, p[0], p[1], p[2], p[3], RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
 	sql_query(tmpsql,"char_request_login");
 	
 	#ifdef DEBUG
@@ -261,12 +206,9 @@ void char_request_login(int fd, unsigned char *p) {
 		if(anti_freeze_enable)
 			server_freezeflag[account.account_id] = 5; // Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
 
-		sprintf(tmpsql,"DELETE FROM `sstatus` WHERE `index`='%ld'", account.account_id);
-		sql_query(tmpsql,"char_request_login");
-
 		jstrescapecpy(t_uid,server[account.account_id].name);
 		
-		sprintf(tmpsql,"INSERT DELAYED INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%ld', '%s', '%d')",
+		sprintf(tmpsql,"REPLACE DELAYED INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%ld', '%s', '%d')",
 				account.account_id, server[account.account_id].name,0);
 		sql_query(tmpsql,"char_request_login");
 		
@@ -275,6 +217,8 @@ void char_request_login(int fd, unsigned char *p) {
 		WFIFOSET(fd,3);
 		session[fd]->func_parse=parse_fromchar;
 		realloc_fifo(fd,FIFOSIZE_SERVERLINK,FIFOSIZE_SERVERLINK);
+		
+		servers_connected++;
 	} else {
 		WFIFOW(fd, 0) =0x2711;
 		WFIFOB(fd, 2)=3;
@@ -328,7 +272,7 @@ int parse_login(int fd) {
                     // ip ban ok.
                     printf ("packet from banned ip : %d.%d.%d.%d" RETCODE, p[0], p[1], p[2], p[3]);
                 
-                    sprintf(tmpsql,"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', 'unknown','-3', 'ip banned')", loginlog_db, p[0], p[1], p[2], p[3]);
+                    sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%d.%d.%d.%d', 'unknown','-3', 'ip banned')", loginlog_db, p[0], p[1], p[2], p[3]);
                     sql_query(tmpsql,"parse_login");
                 
                     #ifdef DEBUG
@@ -350,9 +294,11 @@ int parse_login(int fd) {
     
 	if (session[fd]->eof) {
 	    int i;
-		for(i = 0; i < MAX_SERVERS; i++)
-			if (server_fd[i] == fd)
+		for(i = 0; i < MAX_SERVERS && i < servers_connected; i++)
+			if (server_fd[i] == fd) {
 				server_fd[i] = -1;
+				servers_connected--;
+			}			
 		close(fd);
 		delete_session(fd);
 		return 0;

@@ -114,6 +114,7 @@ extern int subnetmaski[4];
 // Char-server data
 extern struct mmo_char_server server[MAX_SERVERS];
 extern int server_fd[MAX_SERVERS];
+extern unsigned char servers_connected;
 
 // Anti-freeze Data
 extern int server_freezeflag[MAX_SERVERS];
@@ -150,7 +151,7 @@ void add_online_user(int);
 int is_user_online(int);
 void remove_online_user(int);
 int mmo_auth( struct mmo_account*, int);
-int isGM(int);
+unsigned char isGM(int);
 int lan_ip_check(unsigned char *);
 
 
