@@ -111,3 +111,15 @@ Progress:       0%
    rresponds to your MySQL server version for the right syntax to use near 'n' Sniff')' at line 1
     Scratch 'n' Sniff
 
+Problem:        Spiral Pierce can cause loss of Skill Points
+Assigned:       N/A
+Progress:       0%
+
+    If you have a skill but due to a job change (or admin update), the
+    skill tree changes and you no longer can get to that skill, you
+    will loose the skill points if you log out/in
+
+    The easiest way to reproduce this problem is become a Peco Lord
+    Knight, get spiral pierce, get off the peco, log off, log in, and
+    get back on the peco.  You will not have Spiral Pierce anymore and
+    you will have lost the skill points
