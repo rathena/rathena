@@ -1,6 +1,7 @@
 Date	Added
 11/09
-	* - Added Unbreakable funcions to item_db armors/shields/garments/footgear. Fixed item 657 Job ID [shadow]
+	* -  Fixed item 657 Job ID , 11/09 patch updates to item_db
+	  - Added Unbreakable funcions to item_db armors/shields/garments/footgear [shadow]
 	* Defined SO_REUSEPORT to allow the servers to re-use ports if server crashes [Wizputer]
 
 11/08
