@@ -1,4 +1,9 @@
 Date	Added
+12/29
+	* Uncommented out import in charcommand_athena.conf, there is
+          need to have it commented (all the others ones are
+          uncommented) [Ajarn]
+
 12/28
         * When restarting the char-server,  reset the online status
           of all characters and guild-members (SVN 849) [MouseJstr]
