@@ -2533,7 +2533,6 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 
 int id_db_final(void *k,void *d,va_list ap)
 {
-printf
 	struct mob_data *id;
 //	nullpo_retr(0, id=d);
 	if(id->lootitem)
