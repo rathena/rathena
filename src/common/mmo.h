@@ -152,6 +152,7 @@ struct mmo_charstatus {
 };
 
 struct storage {
+	int dirty;
 	int account_id;
 	short storage_status;
 	short storage_amount;

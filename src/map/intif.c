@@ -731,6 +731,7 @@ int intif_parse_LoadStorage(int fd) {
 	if(battle_config.save_log)
 		printf("intif_openstorage: %d\n",RFIFOL(fd,4) );
 	memcpy(stor,RFIFOP(fd,8),sizeof(struct storage));
+	stor->dirty=0;
 	stor->storage_status=1;
 	sd->state.storage_flag = 0;
 	clif_storageitemlist(sd,stor);

@@ -1,4 +1,13 @@
 Date	Added
+12/18
+	* Added concept of dirty storage to reduce saves/load
+	  to the char server (do a clean build!) [MouseJstr]
+	* Eliminated storage_storageopen2 as unused [MouseJstr]
+	* Switched to account2storage2() whenever possible
+	  to eliminate the possibility of saving empty storage
+	  back to the character server (storage wipes) [MouseJstr]
+	* Made it save storage as soon as you close the storage
+	  window to reduce possibility of loss/abuse [MouseJstr]
 12/17
 	* Added #item [MC Cameri]
 	* Added #storagelist, removed @charstoragelist [MC Cameri]

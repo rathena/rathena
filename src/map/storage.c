@@ -121,25 +121,6 @@ int storage_storageopen(struct map_session_data *sd)
 	return 1;
 }
 
-int storage_storageopen2(struct map_session_data *sd, struct map_session_data *pl_sd)
-{
-	struct storage *stor;
-	if(sd == NULL || pl_sd == NULL)
-	{
-		printf("storage_storageopen nullpo\n");
-		return 0;
-	}
-
-	if((stor = numdb_search(storage_db,pl_sd->status.account_id)) != NULL)
-	{
-		clif_storageitemlist(sd,stor);
-		clif_storageequiplist(sd,stor);
-		clif_updatestorageamount(sd,stor);
-		return 1;
-	}
-	return 0;
-}
-
 /*==========================================
  * カプラ倉庫へアイテム追加
  *------------------------------------------
@@ -187,6 +168,8 @@ int storage_additem(struct map_session_data *sd,struct storage *stor,struct item
 		if(i>=MAX_STORAGE)
 			return 1;
 	}
+
+	stor->dirty = 1;
 	return 0;
 }
 /*==========================================
@@ -209,6 +192,8 @@ int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int a
 	}
 	clif_storageitemremoved(sd,n,amount);
 
+	stor->dirty = 1;
+
 	return 0;
 }
 /*==========================================
@@ -220,7 +205,7 @@ int storage_storageadd(struct map_session_data *sd,int index,int amount)
 	struct storage *stor;
 
 	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=account2storage(sd->status.account_id));
+	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
 	if( (stor->storage_amount <= MAX_STORAGE) && (stor->storage_status == 1) ) { // storage not full & storage open
 		if(index>=0 && index<MAX_INVENTORY) { // valid index
@@ -245,7 +230,7 @@ int storage_storageget(struct map_session_data *sd,int index,int amount)
 	int flag;
 
 	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=account2storage(sd->status.account_id));
+	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
 	if(stor->storage_status == 1) { //  storage open
 		if(index>=0 && index<MAX_STORAGE) { // valid index
@@ -269,7 +254,7 @@ int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount)
 	struct storage *stor;
 
 	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=account2storage(sd->status.account_id));
+	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
 	if( (stor->storage_amount <= MAX_STORAGE) && (stor->storage_status == 1) ) { // storage not full & storage open
 		if(index>=0 && index<MAX_INVENTORY) { // valid index
@@ -292,7 +277,7 @@ int storage_storagegettocart(struct map_session_data *sd,int index,int amount)
 	struct storage *stor;
 
 	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=account2storage(sd->status.account_id));
+	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
 	if(stor->storage_status == 1) { //  storage open
 		if(index>=0 && index<MAX_STORAGE) { // valid index
@@ -317,11 +302,13 @@ int storage_storageclose(struct map_session_data *sd)
 	struct storage *stor;
 
 	nullpo_retr(0, sd);
-	nullpo_retr(0, stor=account2storage(sd->status.account_id));
+	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
 	stor->storage_status=0;
 	sd->state.storage_flag = 0;
 	clif_storageclose(sd);
+
+	storage_storage_save(sd);
 
 	sortage_sortitem(stor);
 	return 0;
@@ -338,7 +325,10 @@ int storage_storage_quit(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	stor = numdb_search(storage_db,sd->status.account_id);
-	if(stor) stor->storage_status = 0;
+	if(stor)  {
+		stor->storage_status = 0;
+		storage_storage_save(sd);
+	}
 
 	return 0;
 }
@@ -350,7 +340,10 @@ int storage_storage_save(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	stor=numdb_search(storage_db,sd->status.account_id);
-	if(stor) intif_send_storage(stor);
+	if(stor && stor->dirty)  {
+		intif_send_storage(stor);
+		stor->dirty = 0;
+	}
 
 	return 0;
 }
