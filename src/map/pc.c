@@ -6583,6 +6583,12 @@ int pc_setaccountreg(struct map_session_data *sd,char *reg,int val)
 
 	nullpo_retr(0, sd);
 
+	if (sd->status.account_reg_num == -1) {
+		if(battle_config.error_log)
+			printf("pc_setaccountreg : refusing to set until vars are received\n");
+		return 1;
+	}
+
 	if(val==0){
 		for(i=0;i<sd->status.account_reg_num;i++){
 			if(strcmp(sd->status.account_reg[i].str,reg)==0){

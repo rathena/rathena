@@ -196,6 +196,9 @@ int intif_saveaccountreg(struct map_session_data *sd) {
 
 	nullpo_retr(0, sd);
 
+	if (sd->status.account_reg_num == -1)
+		return 0;
+
 	WFIFOW(inter_fd,0) = 0x3004;
 	WFIFOL(inter_fd,4) = sd->bl.id;
 	for(j=0,p=8;j<sd->status.account_reg_num;j++,p+=36){
@@ -216,6 +219,9 @@ int intif_request_accountreg(struct map_session_data *sd)
 	WFIFOW(inter_fd,0) = 0x3005;
 	WFIFOL(inter_fd,2) = sd->bl.id;
 	WFIFOSET(inter_fd,6);
+
+	sd->status.account_reg_num = -1;
+
 	return 0;
 }
 
