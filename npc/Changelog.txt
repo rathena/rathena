@@ -35,6 +35,7 @@ Other Ppl
 Date		Added
 ======
 11/27
+	* Added some Lou Yang NPC's [Mass Zero]
 	* Get Freya fixes of crusader.txt (announce->areaannounce), Mr.Smile(removed vulgar words) [Lupus]
 11/23
 	* - Fixed repairman prices (5k)(someone need to check if it requires a steel) [shadow]
