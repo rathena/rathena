@@ -1,5 +1,10 @@
 Date	Added
 
+03/21
+        * Moved /tool and /webserver to under /src and added 'make tools' and 'make
+          web-server' [celest]
+        * Removed ladmin compiling from 'make sql' [celest]
+
 03/20
         * Don't register the day/night timers if any one is set to 0 [celest]
 	* Fixed @storage / @gstorage ATcommands thanks2 Yor/Freya [Lupus]
