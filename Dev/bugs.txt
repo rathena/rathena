@@ -71,14 +71,10 @@ Problem:	Sage's Area Skills (Delu.,Vulcano, etc) if casted on the same area (or 
 Assigned:	N/A
 Progess:	0%
 
-Problem:	@job/#job turns you into 2-2-1 and not into any other jobs
-Assigned:	N/a
-Progess:	0% (Notes by Celest: Actually, check here ^_- 
-http://eathena.deltaanime.net/forum/viewtopic.php?p=79951#79951)
-
 Problem:	@disguise has no death sprite so the client crashes when you die, a solution would be that upon death before the sprites change you're undisguised.
 Assigned:	N/a
 Progess:	0%
+Note 1:		Please state which sprite makes the client crash, I tried many spriters and I never crashed. [MC Cameri]
 
 Problem:        Changing email and Broadcast both use the same packets / Packet 0x3000 assigned to changing email instead of broadcasting?
 Notes:          Refer to char.c line 2272 and line 2416, intif.c line 107, chrif.c line 377
@@ -88,3 +84,7 @@ Progress:       0%
 Problem:	Sanctuary heal emp during WoE?
 Assigned:       N/A
 Progress:       0%
+
+Problem:	AFM Maps not loading coords correctly, players appearing outside boundaries of the maps.
+Assigned:	N/A
+Progress:	0%

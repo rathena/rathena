@@ -542,3 +542,57 @@
 24-11-2004 18:55:48.542: Id for the next created character: 150004.
 24-11-2004 18:55:48.580: The char-server is ready (Server is listening on the port 6121).
 24-11-2004 18:55:49.631: From login-server: receiving of 5 GM accounts information.
+
+27-11-2004 22:59:49.906: The char-server starting...
+27-11-2004 22:59:52.173: mmo_char_init: 4 characters read in save/athena.txt.
+27-11-2004 22:59:52.174: Id for the next created character: 150004.
+27-11-2004 22:59:52.177: The char-server is ready (Server is listening on the port 6121).
+27-11-2004 22:59:53.209: From login-server: receiving of 5 GM accounts information.
+27-11-2004 22:59:55.624: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+27-11-2004 23:00:49.419: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+27-11-2004 23:01:18.859: Character Selected, Account ID: 2000003, Character Slot: 0, Character Name: MC Cameri.
+27-11-2004 23:02:52.184: Character Selected, Account ID: 2000003, Character Slot: 0, Character Name: MC Cameri.
+27-11-2004 23:02:57.732: Character Selected, Account ID: 2000003, Character Slot: 0, Character Name: MC Cameri.
+27-11-2004 23:03:04.347: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+27-11-2004 23:05:04.760: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+27-11-2004 23:06:22.509: ----End of char-server (normal end with closing of all files).
+
+28-11-2004 08:49:48.046: The char-server starting...
+28-11-2004 08:49:50.434: mmo_char_init: 4 characters read in save/athena.txt.
+28-11-2004 08:49:50.434: Id for the next created character: 150004.
+28-11-2004 08:49:50.461: The char-server is ready (Server is listening on the port 6121).
+28-11-2004 08:49:50.912: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 08:49:51.470: From login-server: receiving of 5 GM accounts information.
+28-11-2004 08:50:16.963: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+28-11-2004 08:51:51.543: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+
+28-11-2004 10:40:27.218: The char-server starting...
+28-11-2004 10:40:29.910: mmo_char_init: 4 characters read in save/athena.txt.
+28-11-2004 10:40:29.910: Id for the next created character: 150004.
+28-11-2004 10:40:30.148: The char-server is ready (Server is listening on the port 6121).
+28-11-2004 10:40:31.416: From login-server: receiving of 5 GM accounts information.
+28-11-2004 10:40:47.486: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 10:40:55.551: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+28-11-2004 10:45:30.949: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 10:49:22.279: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 10:50:20.502: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 10:51:41.268: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 10:52:46.203: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 10:54:56.215: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 10:56:12.838: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 10:59:36.759: ----End of char-server (normal end with closing of all files).
+
+28-11-2004 11:08:59.109: The char-server starting...
+28-11-2004 11:09:01.393: mmo_char_init: 4 characters read in save/athena.txt.
+28-11-2004 11:09:01.393: Id for the next created character: 150004.
+28-11-2004 11:09:01.397: The char-server is ready (Server is listening on the port 6121).
+28-11-2004 11:09:02.404: From login-server: receiving of 5 GM accounts information.
+28-11-2004 11:09:17.534: Map-Server 0 connected: 420 maps, from IP 127.0.0.1 port 5121. Map-server 0 loading complete.
+28-11-2004 11:10:41.247: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+28-11-2004 11:20:35.903: Character Selected, Account ID: 2000003, Character Slot: 0, Character Name: MC Cameri.
+28-11-2004 11:20:55.364: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+28-11-2004 11:26:09.696: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+28-11-2004 11:37:43.297: Character Selected, Account ID: 2000002, Character Slot: 0, Character Name: cameri.
+28-11-2004 11:56:34.469: Character Selected, Account ID: 2000003, Character Slot: 0, Character Name: MC Cameri.
+28-11-2004 12:05:55.156: Character Selected, Account ID: 2000004, Character Slot: 0, Character Name: genosonic.
+28-11-2004 12:58:29.282: Character Selected, Account ID: 2000004, Character Slot: 0, Character Name: genosonic.
