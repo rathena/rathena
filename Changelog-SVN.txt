@@ -1,6 +1,10 @@
 
 Date	Added
 
+03/31
+	* Added back up old files in 'save' before saving new data -- also fixes
+	  'Access denied' errors when saving in TXT
+
 03/30
         * sql native vc7 projects now build/link [1351: MouseJstr]
         * Began sql projects for VC7 [1349: MouseJstr]
