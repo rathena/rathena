@@ -2601,7 +2601,10 @@ int parse_char(int fd) {
 			sql_res = mysql_store_result(&lmysql_handle);
 			if (sql_res) {
 				sql_row = mysql_fetch_row(sql_res);
-				if (strcmp(email,sql_row[0]) == 0) {
+
+				if ( (strcmp(email,sql_row[0]) == 0) || // client_value == db_value?
+					 ((strcmp(email,"") == 0) &&
+					  (strcmp(sql_row[0],"a@a.com") == 0)) ) { // client_value == "" && db_value == "a@a.com" ?
 					mysql_free_result(sql_res);
 				} else {
 					WFIFOW(fd, 0) = 0x70;

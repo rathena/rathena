@@ -1,6 +1,10 @@
 Date	Added
 
 02/05
+	* Changed the way char deletion works for SQL [1051: Ajarn]
+	  - If the email the client fails check then check if the
+	    email is blank and the DB email is a@a.com (default)
+	    If so, assume it was created with _M/_F, and delete it
 	* SQL Login accepts _M/_F now [Credit to Sirius] [1049: Ajarn]
 	* Map server now actually reads bind_ip [1048: Ajarn]
 	  Side note: login reads bind_ip, but doesn't use login_ip now.
