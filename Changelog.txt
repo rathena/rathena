@@ -1,4 +1,7 @@
 Date	Added
+12/13
+        * Internal MAIL system: moved all strings to msg_athena.conf [Lupus]
+
 12/10
         * Fixed players unable to move in AFM maps [celest]
         * Added error message if a player's last map couldn't be found [celest]

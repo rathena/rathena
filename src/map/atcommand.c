@@ -36,7 +36,7 @@
 
 static char command_symbol = '@'; // first char of the commands (by [Yor])
 
-static char msg_table[1000][1024]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
+char msg_table[1000][256]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
 #define ATCOMMAND_FUNC(x) int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 ATCOMMAND_FUNC(broadcast);

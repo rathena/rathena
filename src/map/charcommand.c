@@ -30,7 +30,7 @@
 
 static char command_symbol = '#';
 
-static char msg_table[1000][1024]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
+extern char msg_table[1000][256]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
 #define CCMD_FUNC(x) int charcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 
