@@ -1431,7 +1431,7 @@
 7107,Antelope_Skin,Antelope Skin,3,756,,10,,,,,,,,,,,{},{}
 7108,Piece_of_Shield,Broken Shield,3,20,,10,,,,,,,,,,,{},{}
 7109,Shining_Spear_Blade,Shiny Spear Tip,3,20,,10,,,,,,,,,,,{},{}
-7110,Broken_Sword,Sharp Sword,3,588,,10,,,,,,,,,,,{},{}
+7110,Broken_Sword,Broken Sword,3,588,,10,,,,,,,,,,,{},{}
 7111,Slick_Paper,String Paper,3,706,,10,,,,,,,,,,,{},{}
 7112,Sharp_Paper,Transparent Paper,3,906,,10,,,,,,,,,,,{},{}
 7113,Broken_Symbol_of_Pharaoh,Broken Symbol of Pharaoh,3,20,,10,,,,,,,,,,,{},{}

@@ -4,6 +4,9 @@
 	Atothala mobs == Added but using poring stats ( ? )
 	Ayothala items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
+
+11/16
+	item 7110 fixed name -> Broken Sword (part of Bongun quest) [Lupus]
 	
 11/16   - Added BaseJob to const.txt [celest]
 
