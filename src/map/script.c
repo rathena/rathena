@@ -2458,12 +2458,12 @@ int buildin_makeitem(struct script_state *st)
 	return 0;
 }
 /*==========================================
- *
+ * script DELITEM command (fixed 2 bugs by Lupus, added deletion priority by Lupus)
  *------------------------------------------
  */
 int buildin_delitem(struct script_state *st)
 {
-	int nameid=0,amount,i;
+	int nameid=0,amount,i,important_item=0;
 	struct map_session_data *sd;
 	struct script_data *data;
 
@@ -2487,35 +2487,53 @@ int buildin_delitem(struct script_state *st)
 		return 0;
 	}
 	sd=script_rid2sd(st);
-
+	//1st pass
+	//here we won't delete items with CARDS, named items but we count them
 	for(i=0;i<MAX_INVENTORY;i++){
+		//we don't delete wrong item or equipped item
 		if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
-		   sd->inventory_data[i]->type!=7 ||
-		   sd->status.inventory[i].amount<=0)
+		   sd->status.inventory[i].amount<=0 ||	sd->status.inventory[i].nameid!=nameid )
 			continue;
-		if(sd->status.inventory[i].nameid == nameid){
-			if(sd->status.inventory[i].card[0] == (short)0xff00){
-				if(search_petDB_index(nameid, PET_EGG) >= 0){
-					intif_delete_petdata(*((long *)(&sd->status.inventory[i].card[1])));
-					break;
-				}
-			}
+		//1 egg uses 1 cell in the inventory. so it's ok to delete 1 pet / per cycle
+		if(sd->inventory_data[i]->type==7 && sd->status.inventory[i].card[0] == (short)0xff00 && search_petDB_index(nameid, PET_EGG) >= 0 ){
+			intif_delete_petdata(*((long *)(&sd->status.inventory[i].card[1])));
+			//clear egg flag. so it won't be put in IMPORTANT items (eggs look like item with 2 cards ^_^)
+			sd->status.inventory[i].card[1] = sd->status.inventory[i].card[0] = 0; 
+			//now this egg'll be deleted as a common unimportant item
+		}
+		//is this item important? does it have cards? or Player's name? or Refined/Upgraded
+		if( sd->status.inventory[i].card[0] || sd->status.inventory[i].card[1] ||
+			sd->status.inventory[i].card[2] || sd->status.inventory[i].card[3] || sd->status.inventory[i].refine) {
+			//this is important item, count it
+			important_item++;
+			continue;
+		}
+
+		if(sd->status.inventory[i].amount>=amount){
+			pc_delitem(sd,i,amount,0);
+			return 0; //we deleted exact amount of items. now exit
+		} else {
+			amount-=sd->status.inventory[i].amount;
+			pc_delitem(sd,i,sd->status.inventory[i].amount,0);
 		}
 	}
-	for(i=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].nameid==nameid){
+	//2nd pass
+	//now if there WERE items with CARDs/REFINED/NAMED... and if we still have to delete some items. we'll delete them finally
+	if (important_item>0 && amount>0)
+		for(i=0;i<MAX_INVENTORY;i++){
+			//we don't delete wrong item
+			if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
+				sd->status.inventory[i].amount<=0 || sd->status.inventory[i].nameid!=nameid )
+				continue;
+
 			if(sd->status.inventory[i].amount>=amount){
-				pc_delitem(sd,i,amount,0);
-				break;
+				pc_delitem(sd,i,amount,0);		
+				return 0; //we deleted exact amount of items. now exit
 			} else {
 				amount-=sd->status.inventory[i].amount;
-				if(amount==0)
-					amount=sd->status.inventory[i].amount;
-				pc_delitem(sd,i,amount,0);
-				break;
+				pc_delitem(sd,i,sd->status.inventory[i].amount,0);
 			}
 		}
-	}
 
 	return 0;
 }

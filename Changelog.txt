@@ -1,4 +1,11 @@
 Date	Added
+11/16
+	* Fixed 2 bugs in DELITEM script command. [Lupus]
+	  - added deleting priority: If you have some items with the same ID and want to delete some of them, then
+	    at first it'll delete common items then, if necessary, delete the rest items but upgraded/named/with cards. [Lupus]
+
+Added GM Command Logs & Added TXT Logs + TXT Log Options [Codemaster]
+
 11/15
 	* Added GM Command Logs & Added TXT Logs + TXT Log Options [Codemaster]
 	* Added spawning of monsters at specific level by adding ,# after the spawn name. [Valaris]
