@@ -10,15 +10,21 @@
 //= Beat up Antonios and grab his socks.  Get at least 3 and
 //= give them to Santa Claus Claus in exchange for a present.
 //= Includes X-mas mobs.
-//= This npc will disable, the current Santa Claus Claus npc.
+//= This npc will disable, the current Santa Claus npc.
 //===== Additional Comments: =================================
 //= Fixed the spawns [shadowlady]
 //============================================================
 
 
 xmas_in.gat,100,96,4	script	Father Christmas::Santa2	718,{
-	if(event_xmas != 1) goto M_2;
 	mes "[Santa Claus]";
+	if(event_xmas == 1) goto L_Start;
+	mes "Merry Christmas! I have a gift for you! Ho Ho Ho!";
+	getitem 644,1;
+	set event_xmas,1;
+	close;
+
+L_Start:
 	mes "I'm having a bit of a problem...";
 	mes "Do you care to listen?";
 	next;
@@ -84,12 +90,6 @@ xmas_in.gat,100,96,4	script	Father Christmas::Santa2	718,{
 			mes "and get more for me and I'll";
 			mes "reward you.";
 			close;
-
-	M_2:
-		mes "Merry Christmas! I got a gift for you!";
-		mes "Ho Ho Ho!;"
-		getitem 644,1;
-		set event_xmas,1;
 	M_End:
 		mes "[Santa Claus]";
 		mes "I see.  Well, at the very least";
@@ -129,6 +129,9 @@ gef_fild10.gat,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
 gef_fild11.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 gef_fild11.gat,0,0,0,0	monster	Gobline Xmas	1245,5,0,0,0
 gef_fild11.gat,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
+gef_fild12.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild13.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild14.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 
 glast_01.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 glast_01.gat,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
@@ -243,9 +246,6 @@ prt_fild10.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 prt_fild10.gat,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
 prt_fild11.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 prt_fild11.gat,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild12.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild13.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild14.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 
 cmd_fild01.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 cmd_fild02.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0

@@ -1,32 +1,33 @@
-//===== eAthena Script ======================================= 
+//===== eAthena Script =======================================
 //= Juice Maker Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
-//= 1.3
-//===== Compatible With: ===================================== 
+//===== Current Version: =====================================
+//= 1.3a
+//===== Compatible With: =====================================
 //= eAthena 7.15 +
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= 
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Fully working
 //= 1.1 fixed input number check [Lupus]
 //= 1.2 fixed misplaced Grape<->Carrot juices [Lupus]
 //= 1.3 added a loopless menu 'as many as possible' [Lupus]
-//============================================================ 
-
-
+//= 1.3a Turned the juice making part of the Juicer npc into a
+//= subfunc.  Changed fruit amount needed to 1.[kobra_k88]
+//============================================================
 
 
 // Morrison ------------------------------------------------
 prt_in.gat,47,173,2	script	Morrison	97,
 {
-	if(MEAT > 10) goto L_Candy;
-	if(MARIANNE == 10) goto L_GoAway;
-
 	mes "[Little Morrison]";
+	if(MEAT > 10) goto L_Candy;
+	if(MARIANNE == 1) goto L_GoAway;
+
 	mes "Wahhhhh!!! Wahh... NO more! NO more!";
 	mes "I won't... eat anymore stupid ^0000ffFruit^000000 things!!";
+	emotion 28;
 	next;
 	menu "Talk",M_Talk,"Cancel",M_End;
 
@@ -34,8 +35,10 @@ prt_in.gat,47,173,2	script	Morrison	97,
 		if(countitem(517) > 0) goto L_Meat; //Meat
 
 		mes "[Little Morrison]";
-		mes "Arhhggg!! I'VE HAD ENOUGH!!! I can't eat anymore ^0000ffFruits^000000!";
-		mes "They taste so SOUR..... I have to PEEL them before I can eat them.....they feel sticky and squishy...... it's really ANNOYING!!!!";
+		mes "Arhhggg!! I'VE HAD ENOUGH!!! I can't eat anymore ^0000ffFruits^000000! They";
+		mes "taste so SOUR..... I have to PEEL them before I can eat them.....";
+		mes "they feel sticky and squishy...... it's really ANNOYING!!!!";
+		emotion 16;
 		next;
 		mes "[LIttle Morrison]";
 		mes "I just HATE FRUIT! I can't even get full off of the stuff.(~sigh~)";
@@ -45,13 +48,16 @@ prt_in.gat,47,173,2	script	Morrison	97,
 		L_Meat:
 		mes "[Little Morrison]";
 		mes "...(sniff)....(sniff)(sniff).... Oh! Is that ^ff0000Meat^000000???";
+		emotion 5;
 		next;
 		mes "[Little Morrison]";
 		mes "Do you have some ^ff0000Meat^000000?!!!~(drools)~";
 		mes "Umm... that yummy smell is making me SOOO HUNGRYYYY!!!l";
+		emotion 37;
 		next;
 		mes "[Little Morrison]";
 		mes "... Umm... excuse me..... could you give me some of that meat PLEEAASSSE?";
+		emotion 28;
 		next;
 		menu "Give him some",sM_Give,"Ignore him",sM_Ignore;
 		
@@ -59,32 +65,36 @@ prt_in.gat,47,173,2	script	Morrison	97,
 			set MORRISON,1;
 			set MEAT,MEAT + 1;
 			delitem 517,1;	//Meat
-
 			mes "[Little Morrison]";
 			mes "Whoah~!!! It's real Meat, Meat!";
 			mes "Mmmm! It makes my mouth water.";
 			mes "Oh thank you. Now I feel happy. Yum Yum...";
+			emotion 38;
 			close;
+
 		sM_Ignore:
 			set MORRISON,2;
-
 			mes "[Little Morrison]";
 			mes "Boo...";
 			mes "Boo... Fine... Alright, Alright~!!! Selfish meanie!";
+			emotion 36;
 			close;
 	M_End:
 		mes "[Little Morrison]";
-		mes "Wahhhhh!!! No matter how hard I try, I just can't eat Vegetables or ^0000ffFruit^000000! They're plain disgusting!!";
+		mes "Wahhhh!!! No matter how hard I try, I just can't eat Vegetables";
+		mes "or ^0000ffFruit^000000! They're plain disgusting!!";
+		emotion 28;
 		close;
 
 L_GoAway:
-	mes "[Little Morrison]";
-	mes "Pffff... Leave me alone! You DON'T CARE about me! I'm gonna DIE because of these stupid Veggies and Fuits so MIND your own business!";
+	mes "Pffff... Leave me alone! You DON'T CARE about me! I'm gonna DIE";
+	mes "because of these stupid Veggies and Fuits so MIND your own business!";
+	emotion 32;
 	close;
+
 L_Candy:
-	mes "[Little Morrison]";
-	mes "Ah..I am full now.";
-	mes "You don't have to feed me any more. I think I am gonna BURST if i keep eating more.";
+	mes "Ah..I am full now. You don't have to feed me any more. I think I";
+	mes "am gonna BURST if I keep eating more.";
 	next;
 	mes "[Little Morrison]";
 	mes "And... um... Take this.";
@@ -92,9 +102,9 @@ L_Candy:
 	getitem 529,3;
 	getitem 530,1;
 	set MEAT,0;
-
 	mes "[Little Morrison]";
-	mes "It is from my secret stash of Candy that I hide from my Mom.  Since you gave me some Meat, I will give you some candy." ;
+	mes "It is from my secret stash of Candy that I hide from my Mom.  Since";
+	mes "you gave me some Meat, I will give you some candy." ;
 	close;
 
 }
@@ -102,66 +112,78 @@ L_Candy:
 // Housewife Marianne ---------------------------------------------------
 prt_in.gat,49,172,2	script	Housewife Marianne	53,
 {
+	mes "[Housewife Marianne]";
 	if(MORRISON == 1) goto L_GaveMeat;
 	if(MORRISON == 2) goto L_Juice;
 
-	mes "[Housewife Marianne]";
 	mes "Morrison!! Please eat some fruit will ya? Fruit~!";
 	mes "*Sob*~!! Like father like son...";
+	emotion 28;
 	next;
 	menu "Talk",M_Talk,"Cancel",M_Cancel;
 	close;	
 
 	M_Talk:
 		mes "[Housewife Marianne]";
-		mes "(~Sigh~)...This is Morrison... My one and only son.";
-		mes "He's going through some kinda faze and doesn't want to eat any ^0000ffFruits^000000 or vegetables.  Look at his face, it turns sour just hearing about ^0000fffFruit^000000...";
+		mes "(~Sigh~)...This is Morrison... My one and only son. He's going";
+		mes "through some kinda faze and doesn't want to eat any ^0000ffFruits^000000 or";
+		mes "vegetables.";
+		emotion 40;
 		next;
 		mes "[Housewife Marianne]";
-		mes "All he wants to eat is but ^ff0000Meat^000000... (sigh)...he needs ^0000ffFruits^000000 and vegetables for a proper diet.";
+		mes "Look at his face..., it turns sour just hearing about ^0000ffFruit^000000...";
 		next;
-		close;
+		mes "[Housewife Marianne]";
+		mes "All he wants to eat is but ^ff0000Meat^000000... (sigh)...he needs";
+		mes "^0000ffFruits^000000 and vegetables for a proper diet.";
+		next;
 
 	M_Cancel:
 		mes "[Housewife Marianne]";
 		mes "Morrison!! I will get mad at you if you keep doing this!";
+		emotion 36;
 		close;
 	
 L_GaveMeat:
 	set MORRISON,0;
-
-	mes "[Housewife Marianne]";
 	mes "Oh MY GOD!!... Oh lord...";
+	emotion 23;
 	next;
 	mes "[Housewife Marianne]";
 	mes "WHAT ARE YOU DOING!! HOW DARE YOU feed my son!! And ^ff0000MEAT^000000 of all things!!!";
 	next;
 	mes "[Housewife Marianne]";
 	mes "Arrrgh~~!! Get Lost right now!!!!!!";
+	emotion 32;
 	close;
 
 L_Juice:
 	set MORRISON,0;
 	set MARIANNE,1;
-
-	mes "[Housewife Marianne]";
-	mes "Thank you for not giving my son any meat.  I'm trying to feed him ^0000ffFruits^000000 and vegetables, but this child doesn't want to eat anything except Meat...";
+	mes "Thank you for not giving my son any meat.  I'm trying to feed him";
+	mes "^0000ffFruits^000000 and vegetables, but this child doesn't want to eat";
+	mes "anything except Meat...";
 	next;
 	mes "[Housewife Marianne]";
-	mes "What if I could turn ^0000ffFruits^000000 into a ^0000ffJuice^000000... for example...Orange juice... Would my child like it?";
+	mes "What if I could turn ^0000ffFruits^000000 into a ^0000ffJuice^000000... for example...Orange";
+	mes "juice... Would my child like it?";
+	emotion 20;
 	next;
 	mes "[Housewife Marianne]";
-	mes "Ah! Now I remember..There is a town where you can get a variety of ^0000ffFruit^000000 turned into ^0000ffFruit Juices^000000.";
+	mes "Ah! Now I remember..There is a town where you can get a variety of";
+	mes "^0000ffFruit^000000 turned into ^0000ffFruit Juices^000000.";
+	emotion 5;
 	next;
 	mes "[Housewife Marianne]";
 	mes "... Was is it...^ff0000Payon^000000...or ^ff0000Morroc^000000...?";
+	emotion 20;
 	next;
 	close;
 
 }
 
-// Juicer Marx Hansen -----------------------------------------------------------------------
-payon_in01.gat,5,48,3	script	Juicer Marx Hansen	86,
+// Juicer Marx Hansen ---------------------------------------------------------
+payon_in01.gat,5,48,7	script	Juicer Marx Hansen	86,
 {
 	mes "[Juicer Marx Hansen]";
 	if(MARIANNE == 1) goto L_Juice;
@@ -189,120 +211,97 @@ payon_in01.gat,5,48,3	script	Juicer Marx Hansen	86,
 		mes "Ok then.";
 		close;
 
+//--------------
 L_Juice:
-	mes "Welcome to my shop. Do you come here to process Fruits like the rest?";
+//---------
+	mes "Welcome to my shop. Are you here to process Fruits like everyone else?";
 	next;
-
-	menu "Yes, I do.",M_1a,"How do you make fruit juice?",M_1b,"No, I don't.",M_1End;
+	menu "Yes, I am.",M_1a, "How do you make fruit juice?",M_1b, "Nope.",M_1End;
 		
 	M_1a:
 		mes "[Juicer Marx Hansen]";
 		mes "So what kind of fruit juice would you like to process?";
 		next;
-		menu "Apple Juice",sM_1a,"Banana Juice",sM_1b,"Grape Juice",sM_1c,"Carrot Juice",sM_1d,"Nope, I'm fine.",sM_1End;
+		menu "Apple Juice",sM_1a,"Banana Juice",sM_1b,"Grape Juice",sM_1c,"Carrot Juice",sM_1d,"None.",M_1End;
 
 		sM_1a:
-			set @FRUIT,512;
-			set @JUICE,531;
-			goto sL_Make;
+			callsub sF_Make, 512, "apples", 531;
+			goto M_1a;
 		sM_1b:
-			set @FRUIT,513;
-			set @JUICE,532;
-			goto sL_Make;
+			callsub sF_Make, 513, "bananas", 532;
+			goto M_1a;
 		sM_1c:
-			set @FRUIT,514;
-			set @JUICE,533;
-			goto sL_Make;
+			callsub sF_Make, 514, "grapes", 533;
+			goto M_1a;
 		sM_1d:
-			set @FRUIT,515;
-			set @JUICE,534;
-
-		sL_Make:
-			mes "[Juicer Marx Hansen]";
-			mes "How many bottles would you like?";
-			next;
-			menu "I'll tell you.",sL_Make_InputN, "As many as possible",-, "I've changed my mind.",sM_1End;
-
-			set @FRUITNUM,100;		//max possible amount of Juice
-			//calc max possible # juices
-			if(Zeny/3 < @FRUITNUM) set @FRUITNUM,Zeny/3;
-			if(countitem(@FRUIT) < @FRUITNUM) set @FRUITNUM,countitem(@FRUIT);
-			if(countitem(713) < @FRUITNUM) set @FRUITNUM,countitem(713);
-			if(@FRUITNUM > 0) goto sL_Make_Max;
-			mes "[Juicer Marx Hansen]";
-			mes "Doh! You don't have enough ingredients for a single bottle of juice.";
-			emotion 0;
-			close;
-
-		sL_Make_Max:
-			delitem @FRUIT,@FRUITNUM;	//del Fruit
-			delitem 713,@FRUITNUM;		//del Empty Bottle
-			set Zeny,Zeny-@FRUITNUM*3;
-			getitem @JUICE,@FRUITNUM;	//get Juice
-			goto sL_Make_Got;
-
-		sL_Make_InputN:
-			mes "[Juicer Marx Hansen]";
-			mes "Very well then.  How many bottles would you like?";
-			mes "Enter 0 if you don't want any.";
-			next;
-			input @input;
-
-			if(@input < 1) goto sM_1End;
-			set @FRUITNUM,(3*@input);
-			set @ZENYNUM,(3*@input);
-			if(countitem(@FRUIT) < @FRUITNUM) goto sl_Fruits;
-			if(countitem(713) <  @input) goto sl_Bottles;
-			if(Zeny <  @ZENYNUM) goto sl_Zeny;
-
-			delitem @FRUIT,@FRUITNUM;	//del Fruit
-			delitem 713,@input;		//del Empty Bottle
-			set Zeny,Zeny - @ZENYUM;	//get Juice
-			getitem @JUICE,@input;
-		sL_Make_Got:
-			mes "[Juicer Marx Hansen]";
-			mes "Here you are. Take it.";
-			close;
-
-
-			sl_Fruits:
-				mes "[Juicer Marx Hansen]";
-				mes "You don't have enough fruit.";
-				if (@FRUIT == 512) mes "You need "+@FRUITNUM+" apples to make that much apple juice.";
-				if (@FRUIT == 513) mes "You need "+@FRUITNUM+" bannanas to make that much bannana juice.";
-				if (@FRUIT == 514) mes "You need "+@FRUITNUM+" grapes to make that much grape juice.";
-				if (@FRUIT == 515) mes "You need "+@FRUITNUM+" carrots to make that much carrot juice.";
-				next;
-				goto M_1a;
-				close;
-
-			sl_Bottles:
-				mes "[Juicer Marx Hansen]";
-				mes "You don't have enough bottles.  You need "+@input+" empty bottle(s) to make that many juice drinks.";
-				next;
-				goto M_1a;
-
-			sl_Zeny:
-				mes "[Juicer Marx Hansen]";
-				mes "You don't have enough zeny.  You need "+@ZENYNUM+" zeny, to make that many juice drinks.";
-				next;
-				goto M_1a;
-
-		sM_1End:
-			mes "[Juicer Marx Hansen]";
-			mes "Oh well... see you next time.";
-			close;
-
+			callsub sF_Make, 515, "carrots", 534;
+			goto M_1a;
 	M_1b:
 		mes "[Juicer Marx Hansen]";
 		mes "# Fruit Juice Info #";
-		mes "Apple Juice - Apple x 3 ea, Empty Bottle x 1 ea, 3 zeny.";
-		mes "Banane Juice - Banana x 3 ea, Empty Bottle x 1 ea, 3 zeny.";
-		mes "Carrot Juice - Carrot x 3 ea, Empty Bottle x 1 ea, 3 zeny.";
-		mes "Grape Juice - Grape x 3 ea, Empty Bottle x 1 ea, 3 zeny.";
+		mes "- ^FF3355Apple^000000 Juice - Apple x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
+		mes "- ^D5A500Banana^000000 Juice - Banana x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
+		mes "- ^FF8800Carrot^000000 Juice - Carrot x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
+		mes "- ^AA00AAGrape^000000 Juice - Grape x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
 		close;
-
 	M_1End:
+		mes "[Juicer Marx Hansen]";
+		mes "Oh well... see you next time.";
 		close;
-}
 
+// Subfunction for making juice
+//----------------------------------
+sF_Make:
+	mes "[Juicer Marx Hansen]";
+	mes "How many bottles would you like?";
+	next;
+	menu "I'll tell you.",M_Tell, "As many as possible",-, "I've changed my mind.",M_1End;
+
+		set @amount,1000;		//max possible amount of Juice
+		//calc max possible # juices
+		if(Zeny/3 < @amount) set @ipnut, Zeny/3;
+		if(countitem(getarg(0)) < @amount) set @amount, countitem(getarg(0));
+		if(countitem(713) < @amount) set @amount, countitem(713);
+		if(@amount > 0) goto L_Make;
+		mes "[Juicer Marx Hansen]";
+		mes "Doh! You don't have enough ingredients for a single bottle of juice.";
+		emotion 0;
+		close;
+
+	M_Tell:
+		mes "[Juicer Marx Hansen]";
+		mes "Very well then. Enter 0 if you don't want any. Also you cannot";
+		mes "buy more than 1000 at a time.";
+		next;
+		input @amount;
+		if(@amount < 1 || @amount > 1000) return;
+		if(countitem(getarg(0)) < @amount) goto sL_NoFruits;
+		if(countitem(713) <  @amount) goto sL_NoBottles;
+		if(Zeny < @amount * 3) goto sL_NoZeny;
+
+	L_Make:
+		delitem getarg(0), @amount;	//del Fruit
+		delitem 713, @amount;		//del Empty Bottle
+		set Zeny, Zeny - @amount * 3;
+		getitem getarg(2), @amount;	//get Juice
+		mes "[Juicer Marx Hansen]";
+		mes "Here you are. Take it.";
+		close;
+
+		sL_NoFruits:
+			mes "[Juicer Marx Hansen]";
+			mes "You don't have enough fruit.";
+			mes "You need " +@amount+ " " +getarg(1)+ " to make that much juice.";
+			next;
+			return;
+		sL_NoBottles:
+			mes "[Juicer Marx Hansen]";
+			mes "You don't have enough bottles.  You need "+@amount+" empty bottle(s) to make that many juice drinks.";
+			next;
+			return;
+		sL_NoZeny:
+			mes "[Juicer Marx Hansen]";
+			mes "You don't have enough zeny.  You need " +(@amount*3)+ " zeny, to make that many juice drinks.";
+			next;
+			return;
+}

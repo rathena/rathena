@@ -36,6 +36,11 @@ Other Ppl
 Date		Added
 ======
 11/16
+	* - grandpa_pharmacist.txt: Added subfunction for potion making as well as zeny/input
+		exploit safeguards. Used Lupus's "loopless" technique.
+	  - juice_maker.txt: Added subfunction for juice making.  Also changed amount of
+		fruit needed to 1.
+	  - xmas.txt: Corrected some typos. [kobra_k88]
 	* - Removed Empty Bottle from amatsu shops to prevent exploits.
 	  - Fixed Npc Position on Lutie( warper.txt and warper2.txt). [shadow]
 
