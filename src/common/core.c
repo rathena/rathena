@@ -169,6 +169,8 @@ int main(int argc,char **argv)
 
 	display_title();
 
+	tick_ = time(0);
+
 	do_init(argc,argv);
 	while(runflag){
 		next=do_timer(gettick_nocache());

@@ -4016,11 +4016,6 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 //	map_addblock(&sd->bl);	/// ブロック登?とspawnは
 //	clif_spawnpc(sd);
 
-	//double connection bug fix by Valaris
-	if(sd->alive_timer > 0) 
-		delete_timer(sd->alive_timer,pc_alive_timer);
-	sd->alive_timer=add_timer(gettick()+60*1000,pc_alive_timer,sd->bl.id,0);
-
 	return 0;
 }
 
@@ -4323,7 +4318,7 @@ int pc_walktoxy(struct map_session_data *sd,int x,int y)
 
 	sd->to_x=x;
 	sd->to_y=y;
-	sd->idletime = time(0);
+	sd->idletime = tick_;
 
 	if(sd->walktimer != -1 && sd->state.change_walk_target==0){
 		// 現在?いている最中の目的地?更なのでマス目の中心に?た暫ﾉ
@@ -4652,7 +4647,7 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 	if(sd == NULL)
 		return 0;
 
-	sd->idletime = time(0);
+	sd->idletime = tick_;
 
 	if(sd->attacktimer != tid){
 		if(battle_config.error_log)
@@ -4773,7 +4768,7 @@ int pc_attack(struct map_session_data *sd,int target_id,int type)
 	if(bl==NULL)
 		return 1;
 
-	sd->idletime = time(0);
+	sd->idletime = tick_;
 	
 	if(bl->type==BL_NPC) { // monster npcs [Valaris]
 		//npc_click(sd,RFIFOL(sd->fd,2));
@@ -7894,24 +7889,6 @@ int map_night_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
 	return 0;
 }
 
-/*==========================================
- * I'm alive timer (to prevent double connect bug) by Valaris
- *------------------------------------------
- */
-int pc_alive_timer(int tid,unsigned int tick,int id,int data)
-{
-	//struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
-	struct map_session_data *sd=map_id2sd(id); // more accurate [celest]
-	nullpo_retr(0, sd);
-	if(sd->alive_timer != tid)
-		return 0;
-	sd->alive_timer = -1;
-//	map_quit(sd);
-	clif_timedout (sd);
-
-	return 0;
-}
-
 void pc_setstand(struct map_session_data *sd){
 	nullpo_retv(sd);
 
@@ -8308,7 +8285,6 @@ int do_init_pc(void) {
 	// add night/day timer (by [yor])
 	add_timer_func_list(map_day_timer, "map_day_timer"); // by [yor]
 	add_timer_func_list(map_night_timer, "map_night_timer"); // by [yor]
-	add_timer_func_list(pc_alive_timer, "pc_alive_timer"); //by Valaris
 	{
 		int day_duration = battle_config.day_duration;
 		int night_duration = battle_config.night_duration;

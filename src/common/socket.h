@@ -12,7 +12,12 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #endif
+#include <time.h>
+
 #include "malloc.h"
+
+extern time_t tick_;
+extern time_t stall_time_;
 
 // define declaration
 
@@ -55,6 +60,7 @@ struct socket_data{
 	unsigned char *rdata,*wdata;
 	int max_rdata,max_wdata;
 	int rdata_size,wdata_size;
+	time_t rdata_tick;
 	int rdata_pos;
 	struct sockaddr_in client_addr;
 	int (*func_recv)(int);

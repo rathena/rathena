@@ -37,6 +37,8 @@
 
 fd_set readfds;
 int fd_max;
+time_t tick_;
+time_t stall_time_ = 60;
 
 int rfifo_size = 65536;
 int wfifo_size = 65536;
@@ -106,6 +108,7 @@ static int recv_to_fifo(int fd)
 	//{ int i; printf("recv %d : ",fd); for(i=0;i<len;i++){ printf("%02x ",RFIFOB(fd,session[fd]->rdata_size+i)); } printf("\n");}
 	if(len>0){
 		session[fd]->rdata_size+=len;
+		session[fd]->rdata_tick = tick_;
 	} else if(len<=0){
 		// value of connection is not necessary the same
 //		printf("set eof : connection #%d\n", fd);
@@ -209,6 +212,7 @@ static int connect_client(int listen_fd)
 	session[fd]->func_send   = send_from_fifo;
 	session[fd]->func_parse  = default_func_parse;
 	session[fd]->client_addr = client_address;
+	session[fd]->rdata_tick = tick_;
 
   //printf("new_session : %d %d\n",fd,session[fd]->eof);
 	return fd;
@@ -347,6 +351,7 @@ int make_connection(long ip,int port)
 	session[fd]->func_recv  = recv_to_fifo;
 	session[fd]->func_send  = send_from_fifo;
 	session[fd]->func_parse = default_func_parse;
+	session[fd]->rdata_tick = tick_;
 
 	return fd;
 }
@@ -407,7 +412,10 @@ int do_sendrecv(int next)
 	struct timeval timeout;
 	int ret,i;
 
-	rfd=readfds;
+	tick_ = time(0);
+
+	memcpy(&rfd, &readfds, sizeof(rfd));
+
 	FD_ZERO(&wfd);
 	for(i=0;i<fd_max;i++){
 		if(!session[i] && FD_ISSET(i,&readfds)){
@@ -431,13 +439,11 @@ int do_sendrecv(int next)
 		if(FD_ISSET(i,&wfd)){
 			//printf("write:%d\n",i);
 			if(session[i]->func_send)
-			    //send_from_fifo(i);
 				session[i]->func_send(i);
 		}
 		if(FD_ISSET(i,&rfd)){
 			//printf("read:%d\n",i);
 			if(session[i]->func_recv)
-			    //recv_to_fifo(i);
 				session[i]->func_recv(i);
 		}
 	}
@@ -450,6 +456,8 @@ int do_parsepacket(void)
 	for(i=0;i<fd_max;i++){
 		if(!session[i])
 			continue;
+		if ((session[i]->rdata_tick != 0) && ((tick_ - session[i]->rdata_tick) > stall_time_)) 
+			session[i]->eof = 1;
 		if(session[i]->rdata_size==0 && session[i]->eof==0)
 			continue;
 		if(session[i]->func_parse){

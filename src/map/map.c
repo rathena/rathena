@@ -1051,12 +1051,6 @@ int map_quit(struct map_session_data *sd) {
 	storage_storage_dirty(sd);
 	storage_storage_save(sd);
 
-	//double connect bug fix by Valaris
-	if(sd->alive_timer > 0) {
-		delete_timer(sd->alive_timer,pc_alive_timer);
-		sd->alive_timer = -1;	// not 0, the server will assume it's still active
-	}
-
 	if( sd->npc_stackbuf && sd->npc_stackbuf != NULL) {
 		free( sd->npc_stackbuf );
 		sd->npc_stackbuf = NULL;
@@ -2440,6 +2434,8 @@ int sql_config_read(char *cfgName)
 			strcpy(login_server_pw, w2);
 		} else if(strcmpi(w1,"login_server_db")==0){
 			strcpy(login_server_db, w2);
+		} else if(strcmpi(w1,"stall_time")==0){
+			stall_time_ = atoi(w2);
 		} else if(strcmpi(w1,"lowest_gm_level")==0){
 			lowest_gm_level = atoi(w2);
 		} else if(strcmpi(w1,"read_gm_interval")==0){

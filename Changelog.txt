@@ -1,4 +1,19 @@
 Date	Added
+01/06
+	* Fixed typo in src/map/map.c causing compile 
+	  errors (SVN 924) [MouseJstr]
+	* Removed the alive_timer mechanism entirly replaced with
+	  a stall detection mechanism that will disconnect a player
+	  who has not sent any data for a configurable 
+	  (conf/login_athena.conf:stall_time) amount of time.  The default
+	  is currently 60 seconds.
+
+	  The root cause of the disconnect error is that some NAT based
+	  routers are not dropping the TCP connection when the aliased
+	  machine goes offline abnormally.   This means that we are seeing
+	  a stalled but perfectly valid TCP connection.
+
+	  (SVN 924) [MouseJstr]
 01/05
 	* Fixed some typos in map_versionscreen() [MC Cameri]
 	* Removed loop freeing in map-server's do_final(), it was causing seg faults [MC Cameri]

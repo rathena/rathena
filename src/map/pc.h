@@ -200,8 +200,5 @@ extern int night_timer_tid;
 int map_day_timer(int,unsigned int,int,int); // by [yor]
 int map_night_timer(int,unsigned int,int,int); // by [yor]
 
-//double connect bug fix
-int pc_alive_timer(int tid,unsigned int tick,int,int);
-
 #endif
 
