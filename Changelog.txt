@@ -2,6 +2,44 @@ Date	Added
 
 01/26
         * libGC isn't ready to be the default quite yet... [MouseJstr]
+        
+          Enough people have asked so... Once you grab a copy of the
+          libGC library from  (http://amber.stormbirds.org/~joshs/gc6.3.tar),
+          you start up a bash shell from inside cygwin and untar
+          the gc6.3.tar.  This will produce a gc6.3 directory.  Then
+          cd into that directory and type ./configure.  Once that is
+          done you type "make" and then "make install".  This will
+          spray the various includes and libraries all over your
+          cygwin install (most in /usr/local).  
+
+          Now, edit Makefile and change the CC line to use the
+
+             CC = gcc -pipe -DGCOLLECT
+
+          entry.  Also change the GCLIB to 
+
+             GCLIB = -L/usr/local/lib -lgc
+
+          Remember to comment out the ones no longer used.  Do a clean
+          build and good luck.  Obviously,  this has not been tested
+          by that many people so you really are on the cutting edge
+          but if you have good results, send me a note
+          (joshs@stormbirds.org) so that we can see if it really is
+          ready for prime time.
+
+          What should you see?  Well, the map-server should not
+          grow/consume extra memory anymore.  More so, it should use
+          dramatically less memory then it did before using the
+          garbage collector.
+
+          The downside is that it will consume a little more CPU...
+
+          The question is, how much?  how laggy?   what effect on lots
+          of players?  I've heard stories saying it makes the server
+          unplayable and others told me that they saw no
+          player-visible effects at all.
+
+
 01/25
         * Fixed TXT compile problems with libGC [celest]
         * Added "Clients older than 2004-09-06aSakray" option to packet_ver_flag in
