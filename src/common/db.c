@@ -441,7 +441,11 @@ void db_foreach(struct dbt *table,int (*func)(void*,void*,va_list),...)
 			continue;
 		sp=0;
 		while(1){
-			func(p->key,p->data,ap);
+			if (!p->data) {
+				printf("Warning: no data for key %d in db_foreach (db.c) !\n",p->key);
+			} else {
+				func(p->key, p->data, ap);
+			}
 			if((pn=p->left)!=NULL){
 				if(p->right){
 					stack[sp++]=p->right;
