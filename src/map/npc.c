@@ -1674,7 +1674,11 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 			}
 		}
 		if(curly_count > 0) {
-			printf("warning: Missing right curly at line %d\n",*lines);
+			printf("\n");
+			snprintf(tmp_output,sizeof(tmp_output),"Script skipped. Missing rig"
+				"ht curly brace at line '"CL_WHITE"%d"CL_RESET"' of file \n\t'"
+				CL_WHITE"%s"CL_RESET"'.\n",*lines,current_file);
+			ShowWarning(tmp_output);
 			script=NULL;
 			//exit(1); //Wtf? We do we exit?
 		} else {
@@ -2319,6 +2323,7 @@ int do_init_npc(void)
 			free(nsl->prev);
 			nsl->prev = NULL;
 		}
+		strcpy(current_file,nsl->name);
 		fp=fopen(nsl->name,"r");
 		if (fp==NULL) {
 			printf("file not found : %s\n",nsl->name);

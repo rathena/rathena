@@ -1517,7 +1517,7 @@ int buildin_goto(struct script_state *st)
 	int pos;
 
 	if( st->stack->stack_data[st->start+2].type!=C_POS ){
-		printf("script: goto: not label !\n");
+		printf("script: goto: not label!\n");
 		st->state=END;
 		return 0;
 	}

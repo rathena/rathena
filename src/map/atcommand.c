@@ -41,7 +41,6 @@ char msg_table[1000][256]; // Server messages (0-499 reserved for GM commands, 5
 #define ACMD_FUNC(x) int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 ACMD_FUNC(broadcast);
 ACMD_FUNC(localbroadcast);
-ACMD_FUNC(rurap);
 ACMD_FUNC(rura);
 ACMD_FUNC(where);
 ACMD_FUNC(jumpto);
@@ -254,8 +253,6 @@ ACMD_FUNC(charkillableid2);  // by Dino9021
 // First char of commands is configured in atcommand_athena.conf. Leave @ in this list for default value.
 // to set default level, read atcommand_athena.conf first please.
 static AtCommandInfo atcommand_info[] = {
-	{ AtCommand_RuraP,				"@rura+",			60, atcommand_rurap },
-	{ AtCommand_RuraP,				"@charwarp",		60, atcommand_rurap },
 	{ AtCommand_Rura,				"@rura",			40, atcommand_rura },
 	{ AtCommand_Warp,				"@warp",			40, atcommand_rura },
 	{ AtCommand_Where,				"@where",			 1, atcommand_where },
@@ -970,72 +967,6 @@ int atcommand_send(
 		
 		
 	}
-	return 0;
-}
-
-/*==========================================
- * @rura+
- *------------------------------------------
- */
-int atcommand_rurap(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	char map_name[100];
-	char character[100];
-	int x = 0, y = 0;
-	struct map_session_data *pl_sd;
-	int m;
-
-	nullpo_retr(-1, sd);
-
-	memset(map_name, '\0', sizeof(map_name));
-	memset(character, '\0', sizeof(character));
-
-	if (!message || !*message || sscanf(message, "%99s %d %d %99[^\n]", map_name, &x, &y, character) < 4) {
-		clif_displaymessage(fd, "Usage: @charwarp/@rura+ <mapname> <x> <y> <char name>");
-		return -1;
-	}
-
-	if (x <= 0)
-		x = rand() % 399 + 1;
-	if (y <= 0)
-		y = rand() % 399 + 1;
-	if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < 13) // 16 - 4 (.gat)
-		strcat(map_name, ".gat");
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can rura+ only lower or same GM level
-			if (x > 0 && x < 400 && y > 0 && y < 400) {
-				m = map_mapname2mapid(map_name);
-				if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-					clif_displaymessage(fd, "You are not authorised to warp someone to this map.");
-					return -1;
-				}
-				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-					clif_displaymessage(fd, "You are not authorised to warp this player from its actual map.");
-					return -1;
-				}
-				if (pc_setpos(pl_sd, map_name, x, y, 3) == 0) {
-					clif_displaymessage(pl_sd->fd, msg_table[0]); // Warped.
-					clif_displaymessage(fd, msg_table[15]); // Player warped (message sends to player too).
-				} else {
-					clif_displaymessage(fd, msg_table[1]); // Map not found.
-					return -1;
-				}
-			} else {
-				clif_displaymessage(fd, msg_table[2]); // Coordinates out of range.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
-	}
-
 	return 0;
 }
 

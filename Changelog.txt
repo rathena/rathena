@@ -1,5 +1,11 @@
 Date	Added
 12/21
+	* Added variable 'current_file' which tells the filename of the script while loading npcs [MC Cameri]
+	  -the variable its set in do_init_npc() or something like that, so you can only access it
+	   after the use of do_init_npc().
+	* Fixed the display of a warning saying that a right curly brace was missing [MC Cameri]
+	* Removed @charwarp and @rura+ and added #warp, #rura, #rura+ [MC Cameri]
+	* Removed conf/npcs_list.txt, and placed it in npc/npcs_athena.conf [MC Cameri]
         * Moved some code in pc_break_equip that was causing compile errors [celest]
 	* guild skills vanished due to incorrect placement of a 
 	  check for quest skills in the calc_skilltree code [MouseJstr]

@@ -228,10 +228,13 @@ Lariatalk:
 
 Lquote0:
 	npctalk "OMGWTFBBQ";
-
+	break;
 Lquote1:
 	npctalk "So its u -> 0";
 	npctalk "... That did not look right";
+	break;
+Lquote2:
+	npc
 
 Lquote2:
 

@@ -16,6 +16,7 @@ enum CharCommandType {
 	CharCommandEffect,
 	CharCommandStorageList,
 	CharCommandItem, // by MC Cameri
+	CharCommandWarp,
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
