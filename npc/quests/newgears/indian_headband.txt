@@ -1,8 +1,8 @@
-//===== eAthena Script ======================================= 
+//===== eAthena Script =======================================
 //= Indian Headband Quest
 //===== By: ================================================== 
-//= Halca (1.0)
-//= Mass Zero (1.1)
+//= Halca (1.0), Mass Zero (1.1)
+//= Lupus (1.2)
 //===== Current Version: ===================================== 
 //= 1.1
 //===== Compatible With: ===================================== 
@@ -10,7 +10,8 @@
 //===== Description: ========================================= 
 //= Seperate Indian Headband quest.
 //===== Additional Comments: ================================= 
-//=
+//= 1.2 Fixed wrong labels, added missing text, fixed
+//=     items count [Lupus]
 //============================================================
 
 comodo.gat,238,217,5	script	Merunte	832,{
@@ -18,25 +19,34 @@ comodo.gat,238,217,5	script	Merunte	832,{
  mes "Well, umbaga umbumbaga.";
  mes "I like to do stuff like that!";
  mes "And I love Indian Headbands too!";
-	next;
+ next;
+ menu "Make me an Indian Headband!",-,"Bye!",M_EXIT;
+
  mes "[Merunte]";
- mes "Give me:";
+ mes "Ok. Gimme:";
  mes "100 Bill of Birds,";
  mes "and 10,000 Zeny.";
-	next;
+ next;
  mes "[Merunte]";
  mes "Got these items?";
-	next;
-	 menu "Yep!",-,"Nope!",EXT;
-		if ((countitem(925) < 1) || (Zeny < 10000)) GOTO EXT;
-		delitem 925,1;
-		set Zeny,Zeny-10000;
-		getitem 5071,1;
+ next;
+ menu "Yep!",-,"Nope!",M_EXIT;
+
+ if ((countitem(925) < 100) || (Zeny < 10000)) GOTO L_NOITEM;//Items: Bill of Birds,
+ delitem 925,100;//Items: Bill of Birds,
+ set Zeny,Zeny-10000;
+ getitem 5071,1;//Items: Indian Headband,
  mes "[Merunte]";
  mes "Thanks! Bye.";
-	close;
-EXT:
+ close;
+
+L_NOITEM:
+ mes "[Merunte]";
+ mes "Ya miss some items or zeny.";
+ close;
+
+M_EXIT:
  mes "[Merunte]";
  mes "Kay bye.";
-	close;
+ close;
 }

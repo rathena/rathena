@@ -4,59 +4,64 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
 //= Seperate Bear hat quest.
 //===== Additional Comments: ================================= 
-//=
+//= 1.2 Fixed wrong labels, added missing text, added missing
+//=     items check [Lupus]
 //============================================================
 
 xmas.gat,156,152,3	script	Bora	826,{
  mes "[Bora]";
  mes "Don't bears have such a cute expression on their faces?";
  mes "And I bet you wouldn't mind one of those vute expressions yourself!";
-	next;
+ next;
  mes "[Bora]";
  mes "Well, I can make you one!";
-	next;
-	 menu "Yes, make me one now!",NN,"What are the requirements?",REQ,"No, thanks.",EXT;
-MN:
+ next;
+ menu "Yes, make me one now!",-,"What are the requirements?",M_REQ,"No, thanks.",M_EXIT;
+
+ If ((countitem(5030) < 1) || (countitem(7213) < 100) || (countitem(7217) < 100) || (countitem(7167) < 300)) GOTO L_NOITEM;//Items: Panda Hat, Pin Cusion, Spool of Thread, Strange Piece of Iron,
  mes "[Bora]";
  mes "Yay! now I can make my famous Bear Hat!";
  mes "Now, give me your items!";
-	next;
-		delitem 5030,1;
-		delitem 7213,100;
-		delitem 7217,100;
-		delitem 7167,300;
+ next;
+ delitem 5030,1;//Items: Panda Hat,
+ delitem 7213,100;//Items: Pin Cusion,
+ delitem 7217,100;//Items: Spool of Thread,
+ delitem 7167,300;//Items: Strange Piece of Iron,
  mes "[Bora]";
  mes "Now I will give you the hat!";
-	next;
-		getitem 5059,1;
+ next;
+ getitem 5059,1;//Items: Bear Hat,
  mes "[Bora]";
  mes "Thanks, and bye!";
-	close;
-REQ:
+ close;
+
+M_REQ:
  mes "[Bora]";
  mes "Bring me...";
  mes "1 Panda Hat,";
- mes "100 Stabbing Needles,";
+ mes "100 Pin Cusion,";
  mes "100 Spool of Thread";
- mes "300 Zippers.";
-	next;
+ mes "300 Strange Pieces of Iron.";
+ next;
  mes "[Bora]";
- mes "For the Stabbing Needles and Spool of Thread,";
+ mes "For the Pin Cusion (Stabbing Needles) and Spool of Thread,";
  mes "Hyzoloists in Niflheim drop those, I believe.";
-	close;
-EX_NI:
+ close;
+
+L_NOITEM:
  mes "[Bora]";
  mes "Sorry, I want all the items I asked.";
  mes "Please dont try to cheat me.";
-	close;
-EXT:
+ close;
+
+M_EXIT:
  mes "[Bora]";
  mes "Okay, well, byebye!";
-	close;
+ close;
 }

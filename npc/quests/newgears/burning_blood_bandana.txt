@@ -4,52 +4,61 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
-//= Seperate Burning Blood Bandana quest.
+//= Seperate Red Bandana (Burning Blood Bandana?) quest.
 //===== Additional Comments: ================================= 
-//=
+//= 1.2 Fixed wrong labels, added missing text, wrong ID [Lupus]
 //============================================================
+
 
 yuno.gat,301,188,6	Genbolt	826,{
  mes "[Genbolt]";
  mes "Why, don't you think looking badass is most important?";
  mes "After all, we all have to fend for ourselves in this world!";
-	next;
+ next;
  mes "[Genbolt]";
  mes "I am the only one who can make you look the coolest,";
- mes "as I can craft a ^000090Burning Blood Bandana^000000.";
+ mes "as I can craft a ^000090Red Bandana^000000.";
  mes "You can wear this, and you clench your fist without knowing";
  mes "because of the raw power you feel!";
-	next;
-	 menu "Wow! make me one!",-,"What do I need?",REQ,"Naw, bye",EXT;
-		if ((countitem(7216) < 300) || (countitem(7097) < 300) || (countitem(982) < 1) || (countitem(2211) < 1)) GOTO EX_NI;
+ next;
+ menu "Wow! Make me one!",-,"What do I need?",M_REQ,"Naw, bye",M_EXIT;
+
+ if ((countitem(7216) < 300) || (countitem(7097) < 300) || (countitem(982) < 1) || (countitem(2211) < 1)) GOTO L_NOITEM;//Items: Red Scarf, Burning Heart, White Dyestuff, Bandana,
  mes "[Genbolt]";
  mes "Very well, here you go.";
-	next;
-		delitem 7216,300;
-		delitem 7097,300;
-		delitem 982,1;
-		delitem 2211,1;
+ next;
+ delitem 7216,300;//Items: Red Scarf,
+ delitem 7097,300;//Items: Burning Heart,
+ delitem 982,1;//Items: White Dyestuff,
+ delitem 2211,1;//Items: Bandana,
  mes "[Genbolt]";
  mes "Now I can make it...";
-	next;
-		getitem 5071,1;
+ next;
+ getitem 2275,1;//Items: Red Bandana,
  mes "[Genbolt]";
  mes "Enjoy.";
-	close;
-REQ:
+ close;
+
+L_NOITEM:
+ mes "[Genbolt]";
+ mes "Where are the items? Ok, I list them for you again...";
+ next;
+
+M_REQ:
  mes "[Genbolt]";
  mes "Bring me:";
  mes "300 Red Scarfs,";
  mes "300 Burning Hearts,";
  mes "1 White Dyestuff,";
  mes "and 1 Bandana.";
-	close;
-EXT:
+ close;
+
+M_EXIT:
  mes "[Genbolt]";
  mes "Bye then.";
-	close;
+ close;
 }

@@ -10,92 +10,117 @@
 //===== Description: ========================================= 
 //= Seperate New Hat quests.
 //===== Additional Comments: ================================= 
-//=
+//= 1.2 Fixed wrong labels, added missing text [Lupus]
 //============================================================
 
 yuno.gat,21,17,7	script	Neris	806,{
  mes "[Neris]";
  mes "So, whatcha want then?";
-	next;
-	 menu "Large Golden Bell.",LGB,"Crown of Mistress.",COM,"Crown of Ancient Queen.",COAQ;
-LGB:
+ next;
+ menu "Big Golden Bell.",M_LGB,"Crown of Mistress.",M_COM,"Crown of Ancient Queen.",M_COAQ,"Nothing, thanks.",M_EXIT;
+
+M_LGB:
  mes "[Neris]";
  mes "Hehe, so you are a fan of Sohee's eh?";
  mes "Yeah, I guess I like the bell they carry too!";
-	next;
+ next;
  mes "[Neris]";
  mes "Looks pretty cute when you wear it.";
  mes "So... what can I do for you?";
-	 menu "Make me the golden bell!",-,"What do I need to make it?",REQL,"Nothing, thanks.",EXT;
-		if ((countitem(10016) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO EX_NR;
+ menu "Make me the golden bell!",-,"What do I need to make it?",M_REQL,"Nothing, thanks.",M_EXIT;
+
+ if ((countitem(10016) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO L_NOITEM;//Items: Golden Bell, Emperium, Gold,
  mes "[Neris]";
  mes "Now, lets swap your items.";
-	next;
-		delitem 10016,1;
-		delitem 714,1;
-		delitem 969,3;
-		set Zeny,Zeny-1000;
-		getitem 5091,1;
+ next;
+ delitem 10016,1;//Items: Golden Bell,
+ delitem 714,1;//Items: Emperium,
+ delitem 969,3;//Items: Gold,
+ set Zeny,Zeny-1000;
+ getitem 5091,1;//Items: Big Golden Bell,
  mes "[Neris]";
  mes "Thanks, and bye!";
-	close;
-REQL:
+ close;
+
+M_REQL:
  mes "[Neris]";
  mes "Okay all these are gold related:";
  mes "1 Golden Bell,";
  mes "1 Emperium,";
- mes "3 Golds,";
+ mes "3 Gold,";
  mes "1000 Zeny for the labor.";
-	close;
-COM:
+ close;
+
+M_COM:
  mes "[Neris]";
  mes "You like mistresses?";
-	next;
+ next;
  mes "[Neris]";
  mes "So... what can I do for you?";
-	 menu "Make me the item.",-,"What do I need to make it?",REQC,"Nothing, thanks.",EXT;
-		if ((countitem(2249) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO EX_NR;
+ next;
+ menu "Make me the item.",-,"What do I need to make it?",M_REQC,"Nothing, thanks.",M_EXIT;
+
+ if ((countitem(2249) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO L_NOITEM;//Items: Coronet, Emperium, Gold,
  mes "[Neris]";
  mes "Now, lets swap your items.";
-	next;
-		delitem 2249,1;
-		delitem 714,1;
-		delitem 969,3;
-		set Zeny,Zeny-1000;
-		getitem 5081,1;
+ next;
+ delitem 2249,1;//Items: Coronet,
+ delitem 714,1;//Items: Emperium,
+ delitem 969,3;//Items: Gold,
+ set Zeny,Zeny-1000;
+ getitem 5081,1;//Items: Crown of Mistress,
  mes "[Neris]";
  mes "Thanks, and bye!";
-	close;
-REQC:
+ close;
+
+M_REQC:
  mes "[Neris]";
  mes "Okay all these are gold related:";
  mes "1 Coronet,";
  mes "1 Emperium,";
- mes "3 Golds,";
+ mes "3 Gold,";
  mes "1000 Zeny for the labor.";
-	close;
-COAQ:
+ close;
+
+M_COAQ:
  mes "[Neris]";
  mes "You like ancient queens?";
-	next;
+ next;
  mes "[Neris]";
  mes "So.. what can I do for you?";
-	 menu "Make me the item.",-,"What do I need to make it?",REQC,"Nothing, thanks.",EXT;
-		if ((countitem(10006) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO EX_NR;
+ next;
+ menu "Make me the item.",-,"What do I need to make it?",M_REQC2,"Nothing, thanks.",M_EXIT;
+
+ if ((countitem(10006) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO L_NOITEM;//Items: Queen's Hair Ornament, Emperium, Gold,
  mes "[Neris]";
  mes "Now, lets swap your items";
-	next;
-		delitem 10006,1;
-		delitem 714,1;
-		delitem 969,3;
-		set Zeny,Zeny-1000;
-		getitem 5080,1;
+ next;
+ delitem 10006,1;//Items: Queen's Hair Ornament,
+ delitem 714,1;//Items: Emperium,
+ delitem 969,3;//Items: Gold,
+ set Zeny,Zeny-1000;
+ getitem 5080,1;//Items: Crown of The Ancient Queen,
  mes "[Neris]";
  mes "Thanks, and bye!";
-	close;
-EX_NR:
+ close;
+
+M_REQC2:
+ mes "[Neris]";
+ mes "Okay all these are gold related:";
+ mes "1 Queen's Hair Ornament,";
+ mes "1 Emperium,";
+ mes "3 Gold,";
+ mes "1000 Zeny for the labor.";
+ close;
+
+L_NOITEM:
  mes "[Neris]";
  mes "Don't take me for a fool!";
  mes "No items, no deal!";
-	close; 
+ close; 
+
+M_EXIT:
+ mes "[Neris]";
+ mes "Bye! Come again.";
+ close; 
 }

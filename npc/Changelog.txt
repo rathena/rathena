@@ -30,7 +30,11 @@ Other Ppl
 
 Date		Added
 ======
-12/07	* Added Fox Mask quest. [Mass Zero]
+12/07	Fixed all Newgear quests: arjen.txt,back_ribbon.txt,bear_hat.txt,burning_blood_bandana.txt,cat_hairband.txt
+		fox_mask.txt,hat_seller.txt,indian_headband.txt,mask_of_alarm.txt,mushroom_hairband.txt,neris.txt
+		old_blacksmith.txt,posture_fix_hat.txt,sea_otter_hat.txt,traveler.txt,tulip_hairpin.txt
+	Fixed missing labels, missing delitem, wrong zeny amount, wrong items id, spelling [Lupus]
+	* Added Fox Mask quest. [Mass Zero]
 
 12/06	* Added seperate quests for the new headgears, missing Fox Mask and Orc Hero Helm. (I'll so 'em ASAP.) [Mass Zero]
 
