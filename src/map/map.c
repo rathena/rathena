@@ -2298,6 +2298,97 @@ int map_config_read(char *cfgName) {
 	return 0;
 }
 
+int inter_config_read(char *cfgName)
+{
+	int i;
+	char line[1024],w1[1024],w2[1024];
+	FILE *fp;
+
+	fp=fopen(cfgName,"r");
+	if(fp==NULL){
+		snprintf(tmp_output,sizeof(tmp_output),"File not found: '%s'.\n",cfgName);
+		ShowError(tmp_output);
+		return 1;
+	}
+	while(fgets(line,1020,fp)){
+		if(line[0] == '/' && line[1] == '/')
+			continue;
+		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
+		if(i!=2)
+			continue;
+		if(strcmpi(w1,"stall_time")==0){
+			stall_time_ = atoi(w2);			
+	#ifndef TXT_ONLY
+		} else if(strcmpi(w1,"item_db_db")==0){
+			strcpy(item_db_db,w2);
+		} else if(strcmpi(w1,"mob_db_db")==0){
+			strcpy(mob_db_db,w2);
+		} else if(strcmpi(w1,"login_db_level")==0){
+			strcpy(login_db_level,w2);
+		} else if(strcmpi(w1,"login_db_account_id")==0){
+		    strcpy(login_db_account_id,w2);
+		} else if(strcmpi(w1,"login_db")==0){
+			strcpy(login_db,w2);
+		} else if (strcmpi(w1, "char_db") == 0) {
+			strcpy(char_db, w2);
+		} else if(strcmpi(w1,"gm_db_level")==0){
+			strcpy(gm_db_level,w2);
+		} else if(strcmpi(w1,"gm_db_account_id")==0){
+		    strcpy(gm_db_account_id,w2);
+		} else if(strcmpi(w1,"gm_db")==0){
+			strcpy(gm_db,w2);
+		//Map Server SQL DB
+		} else if(strcmpi(w1,"map_server_ip")==0){
+			strcpy(map_server_ip, w2);
+		} else if(strcmpi(w1,"map_server_port")==0){
+			map_server_port=atoi(w2);
+		} else if(strcmpi(w1,"map_server_id")==0){
+			strcpy(map_server_id, w2);
+		} else if(strcmpi(w1,"map_server_pw")==0){
+			strcpy(map_server_pw, w2);
+		} else if(strcmpi(w1,"map_server_db")==0){
+			strcpy(map_server_db, w2);
+		} else if(strcmpi(w1,"use_sql_db")==0){
+			if (strcmpi(w2,"yes")){db_use_sqldbs=0;} else if (strcmpi(w2,"no")){db_use_sqldbs=1;}
+			printf ("Using SQL dbs: %s\n",w2);
+		//Login Server SQL DB
+		} else if(strcmpi(w1,"login_server_ip")==0){
+			strcpy(login_server_ip, w2);
+        } else if(strcmpi(w1,"login_server_port")==0){
+			login_server_port = atoi(w2);
+		} else if(strcmpi(w1,"login_server_id")==0){
+			strcpy(login_server_id, w2);
+		} else if(strcmpi(w1,"login_server_pw")==0){
+			strcpy(login_server_pw, w2);
+		} else if(strcmpi(w1,"login_server_db")==0){
+			strcpy(login_server_db, w2);
+		} else if(strcmpi(w1,"lowest_gm_level")==0){
+			lowest_gm_level = atoi(w2);
+		} else if(strcmpi(w1,"read_gm_interval")==0){
+			read_gm_interval = ( atoi(w2) * 60 * 1000 ); // Minutes multiplied by 60 secs per min by 1000 milliseconds per second
+		} else if(strcmpi(w1,"log_db")==0) {
+			strcpy(log_db, w2);
+		} else if(strcmpi(w1,"log_db_ip")==0) {
+			strcpy(log_db_ip, w2);
+		} else if(strcmpi(w1,"log_db")==0) {
+			strcpy(log_db, w2);
+		} else if(strcmpi(w1,"log_db_id")==0) {
+			strcpy(log_db_id, w2);
+		} else if(strcmpi(w1,"log_db_pw")==0) {
+			strcpy(log_db_pw, w2);
+		} else if(strcmpi(w1,"log_db_port")==0) {
+			log_db_port = atoi(w2);
+	#endif
+		//support the import command, just like any other config
+		} else if(strcmpi(w1,"import")==0){
+			inter_config_read(w2);
+		}
+	}
+	fclose(fp);
+
+	return 0;
+}
+
 #ifndef TXT_ONLY
 /*=======================================
  *  MySQL Init
@@ -2369,104 +2460,6 @@ int log_sql_init(void){
 	} else {
 		printf(""CL_WHITE"[SQL]"CL_RESET": Successfully '"CL_GREEN"connected"CL_RESET"' to Database '"CL_WHITE"%s"CL_RESET"'.\n", log_db);
 	}
-
-	return 0;
-}
-
-int sql_config_read(char *cfgName)
-{
-	int i;
-	char line[1024],w1[1024],w2[1024];
-	FILE *fp;
-
-	fp=fopen(cfgName,"r");
-	if(fp==NULL){
-		snprintf(tmp_output,sizeof(tmp_output),"File not found: '%s'.\n",cfgName);
-		ShowError(tmp_output);
-		return 1;
-	}
-	while(fgets(line,1020,fp)){
-		if(line[0] == '/' && line[1] == '/')
-			continue;
-		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
-		if(i!=2)
-			continue;
-		if(strcmpi(w1,"item_db_db")==0){
-			strcpy(item_db_db,w2);
-		} else if(strcmpi(w1,"mob_db_db")==0){
-			strcpy(mob_db_db,w2);
-		} else if(strcmpi(w1,"login_db_level")==0){
-			strcpy(login_db_level,w2);
-		} else if(strcmpi(w1,"login_db_account_id")==0){
-		    strcpy(login_db_account_id,w2);
-		} else if(strcmpi(w1,"login_db")==0){
-			strcpy(login_db,w2);
-		} else if (strcmpi(w1, "char_db") == 0) {
-			strcpy(char_db, w2);
-		} else if(strcmpi(w1,"gm_db_level")==0){
-			strcpy(gm_db_level,w2);
-		} else if(strcmpi(w1,"gm_db_account_id")==0){
-		    strcpy(gm_db_account_id,w2);
-		} else if(strcmpi(w1,"gm_db")==0){
-			strcpy(gm_db,w2);
-		//Map Server SQL DB
-		} else if(strcmpi(w1,"map_server_ip")==0){
-			strcpy(map_server_ip, w2);
-		} else if(strcmpi(w1,"map_server_port")==0){
-			map_server_port=atoi(w2);
-		} else if(strcmpi(w1,"map_server_id")==0){
-			strcpy(map_server_id, w2);
-		} else if(strcmpi(w1,"map_server_pw")==0){
-			strcpy(map_server_pw, w2);
-		} else if(strcmpi(w1,"map_server_db")==0){
-			strcpy(map_server_db, w2);
-		} else if(strcmpi(w1,"use_sql_db")==0){
-			if (strcmpi(w2,"yes")){db_use_sqldbs=0;} else if (strcmpi(w2,"no")){db_use_sqldbs=1;}
-			printf ("Using SQL dbs: %s\n",w2);
-		//Login Server SQL DB
-		} else if(strcmpi(w1,"login_server_ip")==0){
-			strcpy(login_server_ip, w2);
-        } else if(strcmpi(w1,"login_server_port")==0){
-			login_server_port = atoi(w2);
-		} else if(strcmpi(w1,"login_server_id")==0){
-			strcpy(login_server_id, w2);
-		} else if(strcmpi(w1,"login_server_pw")==0){
-			strcpy(login_server_pw, w2);
-		} else if(strcmpi(w1,"login_server_db")==0){
-			strcpy(login_server_db, w2);
-		} else if(strcmpi(w1,"stall_time")==0){
-			stall_time_ = atoi(w2);
-		} else if(strcmpi(w1,"lowest_gm_level")==0){
-			lowest_gm_level = atoi(w2);
-		} else if(strcmpi(w1,"read_gm_interval")==0){
-			read_gm_interval = ( atoi(w2) * 60 * 1000 ); // Minutes multiplied by 60 secs per min by 1000 milliseconds per second
-		} else if(strcmpi(w1,"log_db")==0) {
-			strcpy(log_db, w2);
-		} else if(strcmpi(w1,"log_db_ip")==0) {
-			strcpy(log_db_ip, w2);
-		} else if(strcmpi(w1,"log_db")==0) {
-			strcpy(log_db, w2);
-		} else if(strcmpi(w1,"log_db_id")==0) {
-			strcpy(log_db_id, w2);
-		} else if(strcmpi(w1,"log_db_pw")==0) {
-			strcpy(log_db_pw, w2);
-		} else if(strcmpi(w1,"log_db_port")==0) {
-			log_db_port = atoi(w2);
-		}else if(strcmpi(w1,"read_map_from_bitmap")==0){
-			if (atoi(w2) == 2)
-				map_read_flag = READ_FROM_BITMAP_COMPRESSED;
-			else if (atoi(w2) == 1)
-				map_read_flag = READ_FROM_BITMAP;
-			else
-				map_read_flag = READ_FROM_GAT;
-		}else if(strcmpi(w1,"map_bitmap_path")==0){
-			strncpy(map_bitmap_filename,w2,255);
-		//support the import command, just like any other config
-		} else if(strcmpi(w1,"import")==0){
-			sql_config_read(w2);
-		}
-	}
-	fclose(fp);
 
 	return 0;
 }
@@ -2683,9 +2676,7 @@ int do_init(int argc, char *argv[]) {
 	FILE *data_conf;
 	char line[1024], w1[1024], w2[1024];
 
-#ifndef TXT_ONLY
-	unsigned char *SQL_CONF_NAME="conf/inter_athena.conf";
-#endif
+	unsigned char *INTER_CONF_NAME="conf/inter_athena.conf";
 	unsigned char *LOG_CONF_NAME="conf/log_athena.conf";
 	unsigned char *MAP_CONF_NAME = "conf/map_athena.conf";
 	unsigned char *BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
@@ -2719,8 +2710,8 @@ int do_init(int argc, char *argv[]) {
 		else if (strcmp(argv[i],"--grf_path_file") == 0 || strcmp(argv[i],"--grf-path-file") == 0)
 			GRF_PATH_FILENAME = argv[i+1];
 #ifndef TXT_ONLY
-		else if (strcmp(argv[i],"--sql_config") == 0 || strcmp(argv[i],"--sql-config") == 0)
-		    SQL_CONF_NAME = argv[i+1];	
+		else if (strcmp(argv[i],"--inter_config") == 0 || strcmp(argv[i],"--inter-config") == 0)
+		    INTER_CONF_NAME = argv[i+1];	
 #endif /* not TXT_ONLY */
 		else if (strcmp(argv[i],"--log_config") == 0 || strcmp(argv[i],"--log-config") == 0)
 		    LOG_CONF_NAME = argv[i+1];	
@@ -2761,9 +2752,7 @@ int do_init(int argc, char *argv[]) {
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
 	charcommand_config_read(CHARCOMMAND_CONF_FILENAME);
 	script_config_read(SCRIPT_CONF_NAME);
-#ifndef TXT_ONLY
-	sql_config_read(SQL_CONF_NAME);
-#endif /* not TXT_ONLY */
+	inter_config_read(INTER_CONF_NAME);
 	log_config_read(LOG_CONF_NAME);
 
 	atexit(do_final);
