@@ -111,8 +111,9 @@ M_Menu2:
 
 // Chemist Morgenstein -----------------------------------------------------------
 geffen_in.gat,141,140,2	script	Morgenstein	121,{
-	if(MORGEN == 2) goto L_0;
+	if((MORGEN == 2) || (ALCH_Q2 == 1)) goto L_0;
 	if(MORGEN == 3) goto L_1;
+
 
 	mes "[Chemist Morgenstein]";
 	mes "Heheheheheh... Sniff Sniff... I can smell something appetizing here.";
@@ -160,7 +161,6 @@ M_Menu:
 		mes "I can make one for you right now,if you want?? Ahhh... Talking about my experiments and research makes me.... 'excited'.......";
 		mes "You too can feel my 'excitement' if you wish..... Ahhhhh.... I can make you feel...";
 		set MORGEN,3;
-		if(ALCH_Q == 4) set al_morgen,1;
 		close;
 
 L_1:
@@ -214,6 +214,8 @@ M_Menu2:
 					set Zeny, Zeny-3000;
 					mes "[Chemist Morgenstein]";
 					mes ".... Hmmm......";
+					set COUNTER, 1;
+					if (MIX == 1 && COUNTER == 1) goto L_Quest_Alch;
 					close;
 
 		sM_Mixture:
@@ -251,8 +253,16 @@ M_Menu2:
 					set Zeny, Zeny-4000;
 					mes "[Chemist Morgenstein]";
 					mes ".... Hmmm......";
+					set MIX, 1;
+					if (MIX == 1 && COUNTER == 1) goto L_Quest_Alch;
 					close;
 
+	L_Quest_Alch:
+		mes "[Chemist Morgenstein]";
+		mes "Now go back to ^5533FFVan Helmont^000000";
+		set al_morgen,1;
+		close;
+		
 	M_End:
 		mes "[Chemist Morgenstein]";
 		mes "... Kekekekekekeke....";
