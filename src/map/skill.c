@@ -980,7 +980,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 	case LK_JOINTBEAT:				/* ジョイントビ?ト */
 		//?件が良く分からないので適?に
 		if( rand()%100 < (5*skilllv+5)*sc_def_vit/100 )
-			status_change_start(bl,SC_JOINTBEAT,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
+			status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 	case PF_SPIDERWEB:		/* スパイダ?ウェッブ */
 		{
@@ -8752,8 +8752,8 @@ int skill_produce_mix( struct map_session_data *sd,
 // Corrected rates [DracoRPG] --------------------------//
 		if(skill_produce_db[idx].req_skill==AM_PHARMACY) {
 			make_per = pc_checkskill(sd,AM_LEARNINGPOTION)*100
-					+ pc_checkskill(sd,AM_PHARMACY)*300 + sd->status.job_level*20
-					+ sd->status.dex*10+sd->status.int_*5;
+				+ pc_checkskill(sd,AM_PHARMACY)*300 + sd->status.job_level*20
+				+ sd->status.paramc[4]*10+sd->status.paramc[5]*10;
 
 			if(nameid >= 501 && nameid <= 505) // Normal potions
 				make_per += 2000 + pc_checkskill(sd,AM_POTIONPITCHER)*100;

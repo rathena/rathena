@@ -1,5 +1,10 @@
 Date	Added
 
+03/23
+	* Corrected potion creation success chances, thanks to Avaj and DracoRPG
+	* Removed some unused potion creation code, thanks to DracoRPG
+	* Updated Joint Beat's effect, thanks to DracoRPG
+
 03/22
 	* Fixed Alchemist's CANNIBALIZE, now it summons correct # of plants. With their real HP [Lupus]
 	* Updated @reloadmobdb, @reloadskilldb, @reloaditemdb [celest]
