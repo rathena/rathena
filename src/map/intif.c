@@ -457,7 +457,7 @@ int intif_guild_leave(int guild_id,int account_id,int char_id,int flag,const cha
 }
 // ギルドメンバのオンライン状況/Lv更新要求
 int intif_guild_memberinfoshort(int guild_id,
-	int account_id,int char_id,int online,int lv,int class)
+	int account_id,int char_id,int online,int lv,int class_)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -467,7 +467,7 @@ int intif_guild_memberinfoshort(int guild_id,
 	WFIFOL(inter_fd,10) = char_id;
 	WFIFOB(inter_fd,14) = online;
 	WFIFOW(inter_fd,15) = lv;
-	WFIFOW(inter_fd,17) = class;
+	WFIFOW(inter_fd,17) = class_;
 	WFIFOSET(inter_fd,19);
 	return 0;
 }
@@ -640,7 +640,7 @@ int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 
 //	if(battle_config.etc_log)
 //		printf("intif_parse_wismessage: %d %s %s %s\n",id,RFIFOP(fd,6),RFIFOP(fd,30),RFIFOP(fd,54) );
-	
+
 	sd=map_nick2sd(RFIFOP(fd,32));	// 送信先を探す
 	if(sd!=NULL && strcmp(sd->status.name, RFIFOP(fd,32)) == 0){
 /*
@@ -698,7 +698,7 @@ int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B
 	struct map_session_data *pl_sd;
 	char Wisp_name[24];
         char mbuf[255];
-	char *message = ((RFIFOW(fd,2) - 30) >= sizeof(mbuf)) ? (char *) aMalloc((RFIFOW(fd,2) - 30)) : mbuf;
+	char *message = ((RFIFOW(fd,2) - 30) >= sizeof(mbuf)) ? (char *) aMallocA((RFIFOW(fd,2) - 30)) : mbuf;
 
 	min_gm_level = (int)RFIFOW(fd,28);
 	memcpy(Wisp_name, RFIFOP(fd,4), 24);
@@ -712,7 +712,7 @@ int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B
 				clif_wis_message(i, Wisp_name, message, strlen(message) + 1);
 
         if (message != mbuf)
-            free(message);
+            aFree(message);
 
 	return 0;
 }

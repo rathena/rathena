@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "showmsg.h"
+#include "malloc.h"
 
 char tmp_output[1024] = {"\0"};
 
@@ -47,7 +48,7 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 			return 1;
 	}
 	if (!(flag == MSG_DEBUG && !SHOW_DEBUG_MSG)) {
-		output = (char*)malloc(sizeof(char)*(strlen(prefix)+strlen(string)+2)); // prefix+string+two chars(space and \0)
+		output = (char*)aMalloc(sizeof(char)*(strlen(prefix)+strlen(string)+2)); // prefix+string+two chars(space and \0)
 		if (output == NULL) {
 			return 1;
 //			exit(1); // Kill server? Deadly
@@ -58,7 +59,7 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 		strcat(output,string);
 		printf(output);
 		fflush(stdout);
-		free(output);
+		aFree(output);
 	}
 /*
 	if ((core_config.debug_output_level > -1) && (flag >= core_config.debug_output_level)) {

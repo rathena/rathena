@@ -191,8 +191,8 @@ int inter_storage_sql_init(){
 	
 	//memory alloc
 	printf("interserver storage memory initialize....(%d byte)\n",sizeof(struct storage));
-	storage_pt=calloc(sizeof(struct storage), 1);
-	guild_storage_pt=calloc(sizeof(struct guild_storage), 1);
+	storage_pt=aCalloc(sizeof(struct storage), 1);
+	guild_storage_pt=aCalloc(sizeof(struct guild_storage), 1);
 	memset(storage_pt,0,sizeof(struct storage));
 	memset(guild_storage_pt,0,sizeof(struct guild_storage));
 	

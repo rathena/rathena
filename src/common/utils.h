@@ -30,6 +30,12 @@
    if (!((result) = (type *) aCalloc ((number), sizeof(type))))   \
       { perror("SYSERR: malloc failure"); abort(); } } while(0)
 
+#define CREATE_A(result, type, number)  do {\
+   if ((number) * sizeof(type) <= 0)   \
+      printf("SYSERR: Zero bytes or less requested at %s:%d.\n", __FILE__, __LINE__);   \
+   if (!((result) = (type *) aCallocA ((number), sizeof(type))))   \
+      { perror("SYSERR: malloc failure"); abort(); } } while(0)
+
 #define RECREATE(result,type,number) do {\
   if (!((result) = (type *) aRealloc ((result), sizeof(type) * (number))))\
       { printf("SYSERR: realloc failure"); abort(); } } while(0)

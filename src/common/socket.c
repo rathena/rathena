@@ -3,11 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <errno.h>
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <winsock2.h>
+#include <io.h>
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -16,7 +18,6 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
-#include <errno.h>
 
 #ifndef SIOCGIFCONF
 #include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
@@ -151,11 +152,11 @@ static int send_from_fifo(int fd)
 	return 0;
 }
 
-void flush_fifos() 
+void flush_fifos()
 {
 	int i;
 	for(i=0;i<fd_max;i++)
-		if(session[i] != NULL && 
+		if(session[i] != NULL &&
 		   session[i]->func_send == send_from_fifo)
 			send_from_fifo(i);
 }
@@ -177,20 +178,22 @@ static int connect_client(int listen_fd)
 	int fd;
 	struct sockaddr_in client_address;
 	int len;
+#ifndef _WIN32
 	int result;
+#endif
 
 	//printf("connect_client : %d\n",listen_fd);
 
 	len=sizeof(client_address);
 
-	fd=accept(listen_fd,(struct sockaddr*)&client_address,&len);
+	fd = accept(listen_fd,(struct sockaddr*)&client_address,(socklen_t*)&len);
 	if(fd_max<=fd) fd_max=fd+1;
 
 	setsocketopts(fd);
 
 	if(fd==-1)
 		perror("accept");
-	else 
+	else
 		FD_SET(fd,&readfds);
 
 #ifdef _WIN32
@@ -203,8 +206,8 @@ static int connect_client(int listen_fd)
 #endif
 
 	CREATE(session[fd], struct socket_data, 1);
-	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
-	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
+	CREATE_A(session[fd]->rdata, unsigned char, rfifo_size);
+	CREATE_A(session[fd]->wdata, unsigned char, wfifo_size);
 
 	session[fd]->max_rdata   = rfifo_size;
 	session[fd]->max_wdata   = wfifo_size;
@@ -240,7 +243,7 @@ int make_listen_port(int port)
 
 	server_address.sin_family      = AF_INET;
 	server_address.sin_addr.s_addr = htonl( INADDR_ANY );
-	server_address.sin_port        = htons(port);
+	server_address.sin_port        = htons((unsigned short)port);
 
 	result = bind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
 	if( result == -1 ) {
@@ -271,12 +274,13 @@ int make_listen_port(int port)
 int console_recieve(int i) {
 	int n;
 	char *buf;
-	
-	CREATE(buf, char , 64);
-	
+
+	CREATE_A(buf, char , 64);
+
 	memset(buf,0,sizeof(64));
 
 	n = read(0, buf , 64);
+
 	if ( n < 0 )
 		printf("Console input read error\n");
 	else
@@ -298,21 +302,21 @@ static int null_console_parse(char *buf)
 // Console Input [Wizputer]
 int start_console(void) {
 	FD_SET(0,&readfds);
-    
+
 	CREATE(session[0], struct socket_data, 1);
 	if(session[0]==NULL){
 		printf("out of memory : start_console\n");
 		exit(1);
 	}
-	
+
 	memset(session[0],0,sizeof(*session[0]));
-	
+
 	session[0]->func_recv = console_recieve;
 	session[0]->func_console = default_console_parse;
-	
+
 	return 0;
-}   
-    
+}
+
 int make_connection(long ip,int port)
 {
 	struct sockaddr_in server_address;
@@ -320,14 +324,14 @@ int make_connection(long ip,int port)
 	int result;
 
 	fd = socket( AF_INET, SOCK_STREAM, 0 );
-	if(fd_max<=fd) 
+	if(fd_max<=fd)
 		fd_max=fd+1;
 
 	setsocketopts(fd);
 
 	server_address.sin_family = AF_INET;
 	server_address.sin_addr.s_addr = ip;
-	server_address.sin_port = htons(port);
+	server_address.sin_port = htons((unsigned short)port);
 
 #ifdef _WIN32
         {
@@ -343,8 +347,8 @@ int make_connection(long ip,int port)
 	FD_SET(fd,&readfds);
 
 	CREATE(session[fd], struct socket_data, 1);
-	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
-	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
+	CREATE_A(session[fd]->rdata, unsigned char, rfifo_size);
+	CREATE_A(session[fd]->wdata, unsigned char, wfifo_size);
 
 	session[fd]->max_rdata  = rfifo_size;
 	session[fd]->max_wdata  = wfifo_size;
@@ -363,12 +367,12 @@ int delete_session(int fd)
 	FD_CLR(fd,&readfds);
 	if(session[fd]){
 		if(session[fd]->rdata)
-			free(session[fd]->rdata);
+			aFree(session[fd]->rdata);
 		if(session[fd]->wdata)
-			free(session[fd]->wdata);
+			aFree(session[fd]->wdata);
 		if(session[fd]->session_data)
-			free(session[fd]->session_data);
-		free(session[fd]);
+			aFree(session[fd]->session_data);
+		aFree(session[fd]);
 	}
 	session[fd]=NULL;
 	//printf("delete_session:%d\n",fd);
@@ -401,7 +405,7 @@ int WFIFOSET(int fd,int len)
 	}
 	s->wdata_size=(s->wdata_size+(len)+2048 < s->max_wdata) ?
 		 s->wdata_size+len : (printf("socket: %d wdata lost !!\n",fd),s->wdata_size);
-	if (s->wdata_size > (TCP_FRAME_LEN)) 
+	if (s->wdata_size > (TCP_FRAME_LEN))
 		send_from_fifo(fd);
 	return 0;
 }
@@ -456,7 +460,7 @@ int do_parsepacket(void)
 	for(i=0;i<fd_max;i++){
 		if(!session[i])
 			continue;
-		if ((session[i]->rdata_tick != 0) && ((tick_ - session[i]->rdata_tick) > stall_time_)) 
+		if ((session[i]->rdata_tick != 0) && ((tick_ - session[i]->rdata_tick) > stall_time_))
 			session[i]->eof = 1;
 		if(session[i]->rdata_size==0 && session[i]->eof==0)
 			continue;
@@ -500,7 +504,7 @@ int  Net_Init(void)
     unsigned int i;
     char fullhost[255];
     struct hostent* hent;
-    
+
         /* Start up the windows networking */
     WSADATA wsaData;
 
@@ -512,7 +516,7 @@ int  Net_Init(void)
     if(gethostname(fullhost, sizeof(fullhost)) == SOCKET_ERROR) {
         printf("Ugg.. no hostname defined!\n");
         return 0;
-    } 
+    }
 
     // XXX This should look up the local IP addresses in the registry
     // instead of calling gethostbyname. However, the way IP addresses
@@ -545,7 +549,7 @@ int  Net_Init(void)
     return 0;
   }
 
-  for(pos = 0; pos < ic.ifc_len;) 
+  for(pos = 0; pos < ic.ifc_len;)
   {
     struct ifreq * ir = (struct ifreq *) (ic.ifc_buf + pos);
 

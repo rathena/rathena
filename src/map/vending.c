@@ -48,7 +48,7 @@ void vending_vendinglistreq(struct map_session_data *sd,int id)
  */
 void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned char *p)
 {
-	int i, j, w, z, new = 0, blank, vend_list[12];
+	int i, j, w, z, new_ = 0, blank, vend_list[12];
 	short amount, index;
 	struct map_session_data *vsd = map_id2sd(id);
 
@@ -99,8 +99,8 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		case ADDITEM_EXIST:
 			break;
 		case ADDITEM_NEW:
-			new++;
-			if (new > blank)
+			new_++;
+			if (new_ > blank)
 				return;	// í—Ş”’´‰ß
 			break;
 		case ADDITEM_OVERAMOUNT:

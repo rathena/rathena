@@ -207,7 +207,7 @@ int inter_party_sql_init(){
 	
 	//memory alloc
 	printf("interserver party memory initialize.... (%d byte)\n",sizeof(struct party));
-	party_pt = calloc(sizeof(struct party), 1);
+	party_pt = aCalloc(sizeof(struct party), 1);
 	
 	sprintf (tmp_sql , "SELECT count(*) FROM `%s`",party_db);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {

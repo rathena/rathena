@@ -8,15 +8,15 @@
 
 //-----------------------------------------------
 // string lib.
-unsigned char* jstrescape (unsigned char* pt) {
+char* jstrescape (char* pt) {
 	//copy from here
 	unsigned char * ptr;
 	int i =0, j=0;
-	
+
 	//copy string to temporary
-	CREATE(ptr, char, J_MAX_MALLOC_SIZE);
+	CREATE_A(ptr, char, J_MAX_MALLOC_SIZE);
 	strcpy (ptr,pt);
-	
+
 	while (ptr[i] != '\0') {
 		switch (ptr[i]) {
 			case '\'':
@@ -32,14 +32,14 @@ unsigned char* jstrescape (unsigned char* pt) {
 		}
 	}
 	pt[j++] = '\0';
-	free (ptr);
-	return (unsigned char*) &pt[0];
+	aFree (ptr);
+	return &pt[0];
 }
 
-unsigned char* jstrescapecpy (unsigned char* pt,unsigned char* spt) {
+char* jstrescapecpy (char* pt,char* spt) {
 	//copy from here
 	int i =0, j=0;
-	
+
 	while (spt[i] != '\0') {
 		switch (spt[i]) {
 			case '\'':
@@ -55,12 +55,12 @@ unsigned char* jstrescapecpy (unsigned char* pt,unsigned char* spt) {
 		}
 	}
 	pt[j++] = '\0';
-	return (unsigned char*) &pt[0];
+	return &pt[0];
 }
-int jmemescapecpy (unsigned char* pt,unsigned char* spt, int size) {
+int jmemescapecpy (char* pt,char* spt, int size) {
 	//copy from here
 	int i =0, j=0;
-	
+
 	while (i < size) {
 		switch (spt[i]) {
 			case '\'':

@@ -284,7 +284,7 @@ int guild_payexp_timer_sub(void *key,void *data,va_list ap)
 	c->exp=0;
 
 	dellist[(*delp)++]=dataid;
-	free(c);
+	aFree(c);
 	return 0;
 }
 int guild_payexp_timer(int tid,unsigned int tick,int id,int data)
@@ -476,7 +476,7 @@ int guild_recv_info(struct guild *sg)
 	// イベントの発生
 	if( (ev=numdb_search(guild_infoevent_db,sg->guild_id))!=NULL ){
 		numdb_erase(guild_infoevent_db,sg->guild_id);
-		for(;ev;ev2=ev->next,free(ev),ev=ev2){
+		for(;ev;ev2=ev->next,aFree(ev),ev=ev2){
 			npc_event_do(ev->name);
 		}
 	}
@@ -750,7 +750,7 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 	return 0;
 }
 // ギルドメンバのオンライン状態/Lv更新通知
-int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int online,int lv,int class)
+int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int online,int lv,int class_)
 {
 	int i,alv,c,idx=0,om=0,oldonline=-1;
 	struct guild *g=guild_search(guild_id);
@@ -762,7 +762,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 			oldonline=m->online;
 			m->online=online;
 			m->lv=lv;
-			m->class_=class;
+			m->class_=class_;
 			idx=i;
 		}
 		if(m->account_id>0){
@@ -938,7 +938,7 @@ int guild_payexp(struct map_session_data *sd,int exp)
 		return 0;
 
 	if( (c=numdb_search(guild_expcache_db,sd->status.char_id))==NULL ){
-		c=(struct guild_expcache *)aCalloc(1,sizeof(struct guild_expcache));
+		c=(struct guild_expcache *)aCallocA(1,sizeof(struct guild_expcache));
 		c->guild_id=sd->status.guild_id;
 		c->account_id=sd->status.account_id;
 		c->char_id=sd->status.char_id;
@@ -960,9 +960,9 @@ int guild_getexp(struct map_session_data *sd,int exp)
 
 	if(sd->status.guild_id==0 || (g=guild_search(sd->status.guild_id))==NULL )
 		return 0;
-	
+
 	if( (c=numdb_search(guild_expcache_db,sd->status.char_id))==NULL ){
-		c=(struct guild_expcache *)aCalloc(1,sizeof(struct guild_expcache));
+		c=(struct guild_expcache *)aCallocA(1,sizeof(struct guild_expcache));
 		c->guild_id=sd->status.guild_id;
 		c->account_id=sd->status.account_id;
 		c->char_id=sd->status.char_id;
@@ -1191,7 +1191,7 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 	const char *guild_name[2];
 	struct map_session_data *sd[2];
 	int j,i;
-	
+
 	guild_id[0] = guild_id1;
 	guild_id[1] = guild_id2;
 	guild_name[0] = name1;
@@ -1300,7 +1300,7 @@ int guild_broken(int guild_id,int flag)
 	numdb_foreach(guild_db,guild_broken_sub,guild_id);
 	numdb_erase(guild_db,guild_id);
 	guild_storage_delete(guild_id);
-	free(g);
+	aFree(g);
 	return 0;
 }
 
@@ -1396,7 +1396,7 @@ int guild_castledataloadack(int castle_id,int index,int value)
 	}
 	if( (ev=numdb_search(guild_castleinfoevent_db,code))!=NULL ){
 		numdb_erase(guild_castleinfoevent_db,code);
-		for(;ev;ev2=ev->next,free(ev),ev=ev2){
+		for(;ev;ev2=ev->next,aFree(ev),ev=ev2){
 			npc_event_do(ev->name);
 		}
 	}
@@ -1500,7 +1500,7 @@ int guild_agit_end(void)
 int guild_gvg_eliminate_timer(int tid,unsigned int tick,int id,int data)
 {	// Run One NPC_Event[OnAgitEliminate]
 	size_t len = strlen((const char*)data);
-	char *evname=(char*)aCalloc(len + 4,sizeof(char));
+	char *evname=(char*)aCallocA(len + 4,sizeof(char));
 	int c=0;
 
 	if(!agit_flag) return 0;	// Agit already End
@@ -1517,7 +1517,7 @@ int guild_agit_break(struct mob_data *md)
 
 	nullpo_retr(0, md);
 
-	evname=(char *)aCalloc(strlen(md->npc_event) + 1, sizeof(char));
+	evname=(char *)aCallocA(strlen(md->npc_event) + 1, sizeof(char));
 
 	strcpy(evname,md->npc_event);
 // Now By User to Run [OnAgitBreak] NPC Event...
@@ -1539,7 +1539,7 @@ int guild_checkcastles(struct guild *g) {
 	for(i=0;i<MAX_GUILDCASTLE;i++){
 		gc=guild_castle_search(i);
 		cas_id=gc->guild_id;
-		if(g->guild_id==cas_id) 
+		if(g->guild_id==cas_id)
 			nb_cas=nb_cas+1;
 		} //end for
 	return nb_cas;
@@ -1570,12 +1570,12 @@ int guild_isallied(struct guild *g, struct guild_castle *gc)
 
 	return 0;
 }
-  
+
 static int guild_db_final(void *key,void *data,va_list ap)
 {
 	struct guild *g=data;
 
-	free(g);
+	aFree(g);
 
 	return 0;
 }
@@ -1583,7 +1583,7 @@ static int castle_db_final(void *key,void *data,va_list ap)
 {
 	struct guild_castle *gc=data;
 
-	free(gc);
+	aFree(gc);
 
 	return 0;
 }
@@ -1591,7 +1591,7 @@ static int guild_expcache_db_final(void *key,void *data,va_list ap)
 {
 	struct guild_expcache *c=data;
 
-	free(c);
+	aFree(c);
 
 	return 0;
 }
@@ -1599,7 +1599,7 @@ static int guild_infoevent_db_final(void *key,void *data,va_list ap)
 {
 	struct eventlist *ev=data;
 
-	free(ev);
+	aFree(ev);
 
 	return 0;
 }

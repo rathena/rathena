@@ -49,7 +49,7 @@ int chat_createchat(struct map_session_data *sd,int limit,int pub,char* pass,cha
 	cd->bl.id = map_addobject(&cd->bl);	
 	if(cd->bl.id==0){
 		clif_createchat(sd,1);
-		free(cd);
+		aFree(cd);
 		return 0;
 	}
 	pc_setchatid(sd,cd->bl.id);
@@ -82,7 +82,7 @@ int chat_joinchat(struct map_session_data *sd,int chatid,char* pass)
 		clif_joinchatfail(sd,1);
 		return 0;
 	}
-	if(chatid == sd->chatID) //Double Chat fix by Alex14, thx CHaNGeTe 
+	if(chatid == (int)sd->chatID) //Double Chat fix by Alex14, thx CHaNGeTe 
 	{
 		clif_joinchatfail(sd,1);
 		return 0;
@@ -290,7 +290,7 @@ int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,char* t
 
 	cd->bl.id = map_addobject(&cd->bl);	
 	if(cd->bl.id==0){
-		free(cd);
+		aFree(cd);
 		return 0;
 	}
 	nd->chat_id=cd->bl.id;

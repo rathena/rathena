@@ -1,6 +1,3 @@
-DROP DATABASE erag;
-CREATE DATABASE erag;
-USE erag;
 CREATE TABLE `item_db` (
   `id` smallint(5) unsigned NOT NULL default '0',
   `name_english` varchar(24) NOT NULL default '',

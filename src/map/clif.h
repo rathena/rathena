@@ -16,13 +16,19 @@ typedef unsigned int in_addr_t;
 #define MAX_PACKET_DB		0x224
 #define MAX_PACKET_VER		17
 
-extern int packet_db_ver;
 struct packet_db {
 	short len;
 	void (*func)();
 	short pos[20];
 };
 extern struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
+
+extern struct Clif_Config {
+	int enable_packet_db;
+	int packet_db_ver;
+	int prefer_packet_db;
+	int connect_cmd;
+} clif_config;
 
 void clif_setip(char*);
 void clif_setport(int);
@@ -137,8 +143,8 @@ int clif_petinsight(struct block_list *bl,va_list ap);
 int clif_npcoutsight(struct block_list *bl,va_list ap);
 int clif_npcinsight(struct block_list *bl,va_list ap);
 
-int clif_class_change(struct block_list *bl,int class,int type);
-int clif_mob_class_change(struct mob_data *md,int class);
+int clif_class_change(struct block_list *bl,int class_,int type);
+int clif_mob_class_change(struct mob_data *md,int class_);
 int clif_mob_equip(struct mob_data *md,int nameid); // [Valaris]
 
 int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range);
@@ -177,7 +183,7 @@ int clif_autospell(struct map_session_data *sd,int skilllv);
 int clif_devotion(struct map_session_data *sd,int target);
 int clif_spiritball(struct map_session_data *sd);
 int clif_combo_delay(struct block_list *src,int wait);
-int clif_bladestop(struct block_list *src,struct block_list *dst,int bool);
+int clif_bladestop(struct block_list *src,struct block_list *dst,int bool_);
 int clif_changemapcell(int m,int x,int y,int cell_type,int type);
 
 int clif_status_change(struct block_list *bl,int type,int flag);

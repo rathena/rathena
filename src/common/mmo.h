@@ -326,19 +326,25 @@ enum {
 	GD_DEVELOPMENT=10014,
 };
 
-#ifndef _WIN32
-#ifndef strcmpi
-#define strcmpi strcasecmp
-#endif
-#ifndef stricmp
-#define stricmp strcasecmp
-#endif
-#ifndef strncmpi
-#define strncmpi strncasecmp
-#endif
-#ifndef strnicmp
-#define strnicmp strncasecmp
-#endif
+#ifndef __WIN32
+	#ifndef strcmpi
+		#define strcmpi strcasecmp
+	#endif
+	#ifndef stricmp
+		#define stricmp strcasecmp
+	#endif
+	#ifndef strncmpi
+		#define strncmpi strncasecmp
+	#endif
+	#ifndef strnicmp
+		#define strnicmp strncasecmp
+	#endif
+#else
+	#define snprintf _snprintf
+	#define vsnprintf _vsnprintf
+	#ifndef strncmpi
+		#define strncmpi strnicmp
+	#endif
 #endif
 
 #endif	// _MMO_H_

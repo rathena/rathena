@@ -172,7 +172,7 @@ static int itemdb_read_sqldb(void) // sql item_db read, shortened version of map
 
 			// Insert a new row into the item database
 /*
-			id = calloc(sizeof(struct item_data), 1);
+			id = aCalloc(sizeof(struct item_data), 1);
 
 			if (id == NULL) {
 				printf("out of memory : itemdb_read_sqldb\n");
@@ -214,10 +214,10 @@ static int itemdb_final(void *key,void *data,va_list ap)
 
 	id=data;
 	if(id->use_script)
-		free(id->use_script);
+		aFree(id->use_script);
 	if(id->equip_script)
-		free(id->equip_script);
-	free(id);
+		aFree(id->equip_script);
+	aFree(id);
 
 	return 0;
 }

@@ -105,7 +105,7 @@ int inter_pet_sql_init(){
 		
 	//memory alloc
 	printf("interserver pet memory initialize.... (%d byte)\n",sizeof(struct s_pet));
-	pet_pt = calloc(sizeof(struct s_pet), 1);
+	pet_pt = aCalloc(sizeof(struct s_pet), 1);
 
 	sprintf (tmp_sql , "SELECT count(*) FROM `%s`", pet_db);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {

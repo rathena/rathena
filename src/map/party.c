@@ -30,7 +30,7 @@ int party_send_xyhp_timer(int tid,unsigned int tick,int id,int data);
  */
 static int party_db_final(void *key,void *data,va_list ap)
 {
-	free(data);
+	aFree(data);
 	return 0;
 }
 void do_final_party(void)

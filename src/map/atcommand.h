@@ -112,9 +112,9 @@ enum AtCommandType {
 	AtCommand_CharSkReset,
 	AtCommand_CharStReset,
 	//by chbrules
-	AtCommand_CharModel, 
+	AtCommand_CharModel,
 	AtCommand_CharSKPoint,
-	AtCommand_CharSTPoint, 
+	AtCommand_CharSTPoint,
 //	AtCommand_CharZeny, //now #zeny
 	AtCommand_RecallAll,
 	AtCommand_ReloadItemDB,
@@ -198,7 +198,7 @@ enum AtCommandType {
 	AtCommand_CleanMap,
 
 	// SQL-only commands start
-#ifndef TXT_ONLY 
+#ifndef TXT_ONLY
 	AtCommand_CheckMail, // [Valaris]
 	AtCommand_ListMail, // [Valaris]
 	AtCommand_ListNewMail, // [Valaris]
@@ -206,7 +206,7 @@ enum AtCommandType {
 	AtCommand_SendMail, // [Valaris]
 	AtCommand_DeleteMail, // [Valaris]
 	AtCommand_SendPriorityMail, // [Valaris]
-//	AtCommand_Sound, // [Valaris]	
+//	AtCommand_Sound, // [Valaris]
 	AtCommand_RefreshOnline, // [Valaris]
 	// SQL-only commands end
 #endif
@@ -272,7 +272,7 @@ int msg_config_read(const char *cfgName);
 
 char *estr_lower(char *str);
 
-char * job_name(int class);
+char * job_name(int class_);
 int e_mail_check(unsigned char *email);
 
 #endif

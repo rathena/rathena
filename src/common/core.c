@@ -9,6 +9,7 @@
 #include <signal.h>
 #include <string.h>
 
+#include "../common/mmo.h"
 #include "core.h"
 #include "socket.h"
 #include "timer.h"

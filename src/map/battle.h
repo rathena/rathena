@@ -115,6 +115,7 @@ enum {
 	BCT_NOPARTY	=0x50000,
 	BCT_ALL		=0x20000,
 	BCT_NOONE	=0x60000,
+	BCT_SELF	=0x60000,
 };
 
 int battle_check_undead(int race,int element);
@@ -291,7 +292,7 @@ extern struct Battle_Config {
 	int prevent_logout;	// Added by RoVeRT
 
 	int alchemist_summon_reward;	// [Valaris]
-	int maximum_level;
+	unsigned int maximum_level;
 	int drops_by_luk;
 	int monsters_ignore_gm;
 	int equipment_breaking;
@@ -348,7 +349,7 @@ extern struct Battle_Config {
 
 	int zeny_from_mobs; // [Valaris]
 	int mobs_level_up; // [Valaris]
-	int pk_min_level; // [celest]
+	unsigned int pk_min_level; // [celest]
 	int skill_steal_type; // [celest]
 	int skill_steal_rate; // [celest]
 	int night_darkness_level; // [celest]
@@ -357,7 +358,7 @@ extern struct Battle_Config {
 	int allow_atcommand_when_mute; // [celest]
 	int finding_ore_rate; // orn
 	int exp_calc_type;
-	int double_login_system;
+	int min_skill_delay_limit;
 
 #ifndef TXT_ONLY /* SQL-only options */
 	int mail_system; // [Valaris]

@@ -179,6 +179,10 @@ int battle_get_max_hp(struct block_list *bl)
 			if(sc_data[SC_APPLEIDUN].timer!=-1)
 				max_hp += ((5+sc_data[SC_APPLEIDUN].val1*2+((sc_data[SC_APPLEIDUN].val2+1)>>1)
 						+sc_data[SC_APPLEIDUN].val3/10) * max_hp)/100;
+			if(sc_data[SC_GOSPEL].timer!=-1 &&
+				sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+				sc_data[SC_GOSPEL].val3 == 4)
+				max_hp += max_hp * 25 / 100;
 		}
 		if(max_hp < 1) max_hp = 1;
 		return max_hp;
@@ -429,16 +433,24 @@ int battle_get_flee(struct block_list *bl)
 	else
 		flee=battle_get_agi(bl) + battle_get_lv(bl);
 
-	if(sc_data) {
-		if(sc_data[SC_WHISTLE].timer!=-1 && bl->type != BL_PC)
+	if(bl->type != BL_PC && sc_data){
+		if(sc_data[SC_WHISTLE].timer!=-1)
 			flee += flee*(sc_data[SC_WHISTLE].val1+sc_data[SC_WHISTLE].val2
 					+(sc_data[SC_WHISTLE].val3>>16))/100;
-		if(sc_data[SC_BLIND].timer!=-1 && bl->type != BL_PC)
+		if(sc_data[SC_BLIND].timer!=-1)
 			flee -= flee*25/100;
-		if(sc_data[SC_WINDWALK].timer!=-1 && bl->type != BL_PC) // ウィンドウォーク
+		if(sc_data[SC_WINDWALK].timer!=-1) // ウィンドウォーク
 			flee += flee*(sc_data[SC_WINDWALK].val2)/100;
-		if(sc_data[SC_SPIDERWEB].timer!=-1 && bl->type != BL_PC) //スパイダーウェブ
+		if(sc_data[SC_SPIDERWEB].timer!=-1) //スパイダーウェブ
 			flee -= flee*50/100;
+		if(sc_data[SC_GOSPEL].timer!=-1) {
+			if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+				sc_data[SC_GOSPEL].val3 == 13)
+				flee += flee*5/100;
+			else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+				sc_data[SC_GOSPEL].val3 == 7)
+				flee = 0;
+		}
 	}
 	if(flee < 1) flee = 1;
 	return flee;
@@ -460,16 +472,20 @@ int battle_get_hit(struct block_list *bl)
 	else
 		hit=battle_get_dex(bl) + battle_get_lv(bl);
 
-	if(sc_data) {
-		if(sc_data[SC_HUMMING].timer!=-1 && bl->type != BL_PC)	//
+	if(bl->type != BL_PC && sc_data) {
+		if(sc_data[SC_HUMMING].timer!=-1)	//
 			hit += hit*(sc_data[SC_HUMMING].val1*2+sc_data[SC_HUMMING].val2
 					+sc_data[SC_HUMMING].val3)/100;
-		if(sc_data[SC_BLIND].timer!=-1 && bl->type != BL_PC)		// 呪い
+		if(sc_data[SC_BLIND].timer!=-1)		// 呪い
 			hit -= hit*25/100;
-		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)		// トゥルーサイト
+		if(sc_data[SC_TRUESIGHT].timer!=-1)		// トゥルーサイト
 			hit += 3*(sc_data[SC_TRUESIGHT].val1);
-		if(sc_data[SC_CONCENTRATION].timer!=-1 && bl->type != BL_PC) //コンセントレーション
+		if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
 			hit += (hit*(10*(sc_data[SC_CONCENTRATION].val1)))/100;
+		if(sc_data[SC_GOSPEL].timer!=-1 &&
+			sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+			sc_data[SC_GOSPEL].val3 == 14)
+			hit += hit*5/100;
 	}
 	if(hit < 1) hit = 1;
 	return hit;
@@ -560,7 +576,7 @@ int battle_get_baseatk(struct block_list *bl)
 		if(sc_data[SC_CURSE].timer!=-1 ) //呪われていたら
 			batk -= batk*25/100; //base_atkが25%減少
 		if(sc_data[SC_CONCENTRATION].timer!=-1 && bl->type != BL_PC) //コンセントレーション
-			batk += batk*(5*sc_data[SC_CONCENTRATION].val1)/100;		
+			batk += batk*(5*sc_data[SC_CONCENTRATION].val1)/100;
 	}
 	if(batk < 1) batk = 1; //base_atkは最低でも1
 	return batk;
@@ -584,13 +600,22 @@ int battle_get_atk(struct block_list *bl)
 	else if(bl->type==BL_PET && (struct pet_data *)bl)
 		atk = mob_db[((struct pet_data*)bl)->class_].atk1;
 
-	if(sc_data) {
-		if(sc_data[SC_PROVOKE].timer!=-1 && bl->type != BL_PC)
+	if(bl->type != BL_PC && sc_data) {
+		if(sc_data[SC_PROVOKE].timer!=-1)
 			atk = atk*(100+2*sc_data[SC_PROVOKE].val1)/100;
-		if(sc_data[SC_CURSE].timer!=-1 )
+		if(sc_data[SC_CURSE].timer!=-1)
 			atk -= atk*25/100;
-		if(sc_data[SC_CONCENTRATION].timer!=-1 && bl->type != BL_PC) //コンセントレーション
+		if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
 			atk += atk*(5*sc_data[SC_CONCENTRATION].val1)/100;
+
+		if(sc_data[SC_GOSPEL].timer!=-1) {
+			if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+				sc_data[SC_GOSPEL].val3 == 12)
+				atk += atk*8/100;
+			else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+				sc_data[SC_GOSPEL].val3 == 6)
+				atk = 0;
+		}
 	}
 	if(atk < 0) atk = 0;
 	return atk;
@@ -605,9 +630,6 @@ int battle_get_atk_(struct block_list *bl)
 	nullpo_retr(0, bl);
 	if(bl->type==BL_PC && (struct map_session_data *)bl){
 		int atk=((struct map_session_data*)bl)->watk_;
-
-		if(((struct map_session_data *)bl)->sc_data[SC_CURSE].timer!=-1 )
-			atk -= atk*25/100;
 		return atk;
 	}
 	else
@@ -780,10 +802,19 @@ int battle_get_def(struct block_list *bl)
 					def = def * (100 - sc_data[SC_SIGNUMCRUCIS].val2)/100;
 				//永遠の混沌時はDEF0になる
 				if(sc_data[SC_ETERNALCHAOS].timer!=-1)
-					def = 0;			
+					def = 0;
 				//コンセントレーション時は減算
 				if( sc_data[SC_CONCENTRATION].timer!=-1)
 					def = (def*(100 - 5*sc_data[SC_CONCENTRATION].val1))/100;
+
+				if(sc_data[SC_GOSPEL].timer!=-1) {
+					if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+						sc_data[SC_GOSPEL].val3 == 11)
+						def += def*25/100;
+					else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+						sc_data[SC_GOSPEL].val3 == 5)
+						def = 0;
+				}
 			}
 		}
 		//詠唱中は詠唱時減算率に基づいて減算
@@ -859,6 +890,15 @@ int battle_get_def2(struct block_list *bl)
 		//コンセントレーション時は減算
 		if( sc_data[SC_CONCENTRATION].timer!=-1)
 			def2 = def2*(100 - 5*sc_data[SC_CONCENTRATION].val1)/100;
+
+		if(sc_data[SC_GOSPEL].timer!=-1) {
+			if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+				sc_data[SC_GOSPEL].val3 == 11)
+				def2 += def2*25/100;
+			else if (sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+				sc_data[SC_GOSPEL].val3 == 5)
+				def2 = 0;
+		}
 	}
 	if(def2 < 1) def2 = 1;
 	return def2;
@@ -942,6 +982,10 @@ int battle_get_speed(struct block_list *bl)
 				speed = speed*150/100;
 			if(sc_data[SC_SPEEDUP0].timer!=-1)
 				speed -= speed*25/100;
+			if(sc_data[SC_GOSPEL].timer!=-1 &&
+				sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+				sc_data[SC_GOSPEL].val3 == 8)
+				speed = speed*125/100;
 		}
 		if(speed < 1) speed = 1;
 		return speed;
@@ -1002,6 +1046,10 @@ int battle_get_adelay(struct block_list *bl)
 			//ディフェンダー時は加算
 			if(sc_data[SC_DEFENDER].timer != -1)
 				adelay += (1100 - sc_data[SC_DEFENDER].val1*100);
+			if(sc_data[SC_GOSPEL].timer!=-1 &&
+				sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
+				sc_data[SC_GOSPEL].val3 == 8)
+				aspd_rate = aspd_rate*125/100;
 		}
 		if(aspd_rate != 100)
 			adelay = adelay*aspd_rate/100;
@@ -1315,7 +1363,7 @@ int battle_delay_damage_sub(int tid,unsigned int tick,int id,int data)
 	struct battle_delay_damage_ *dat=(struct battle_delay_damage_ *)data;
 	if( dat && map_id2bl(id)==dat->src && dat->target->prev!=NULL)
 		battle_damage(dat->src,dat->target,dat->damage,dat->flag);
-	free(dat);
+	aFree(dat);
 	return 0;
 }
 int battle_delay_damage(unsigned int tick,struct block_list *src,struct block_list *target,int damage,int flag)
@@ -1487,11 +1535,11 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	struct mob_data *md=NULL;
 	struct status_change *sc_data,*sc;
 	short *sc_count;
-	int class;
+	int class_;
 
 	nullpo_retr(0, bl);
 
-	class = battle_get_class(bl);
+	class_ = battle_get_class(bl);
 	if(bl->type==BL_MOB) md=(struct mob_data *)bl;
 	else sd=(struct map_session_data *)bl;
 
@@ -1612,7 +1660,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 		// リジェクトソード
 		if(sc_data[SC_REJECTSWORD].timer!=-1 && damage > 0 && flag&BF_WEAPON &&
-		  ((src->type==BL_PC && ((struct map_session_data *)src)->status.weapon == (1 || 2 || 3)) || src->type==BL_MOB )){
+			// Fixed the condition check [Aalye]
+			(src->type==BL_MOB || (src->type==BL_PC && (((struct map_session_data *)src)->status.weapon == 1 ||
+			((struct map_session_data *)src)->status.weapon == 2 ||
+			((struct map_session_data *)src)->status.weapon == 3)))){
 			if(rand()%100 < (15*sc_data[SC_REJECTSWORD].val1)){ //反射確率は15*Lv
 				damage = damage*50/100;
 				clif_damage(bl,src,gettick(),0,0,damage,0,0,0);
@@ -1630,22 +1681,22 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 				damage<<=1;
 				skill_status_change_end(bl, SC_SPIDERWEB, -1);
 			}
-		
+
 		if(sc_data[SC_FOGWALL].timer != -1 && flag&BF_MAGIC)
 			if(rand()%100 < sc_data[SC_FOGWALL].val2)
 				damage = 0;
 	}
 
-	if(class == 1288 || class == 1287 || class == 1286 || class == 1285) {
-//	if(class == 1288) {
-		if(class == 1288 && flag&BF_SKILL)
+	if(class_ == 1288 || class_ == 1287 || class_ == 1286 || class_ == 1285) {
+//	if(class_ == 1288) {
+		if(class_ == 1288 && flag&BF_SKILL)
 			damage=0;
 		if(src->type == BL_PC) {
 			struct guild *g=guild_search(((struct map_session_data *)src)->status.guild_id);
 			struct guild_castle *gc=guild_mapname2gc(map[bl->m].name);
 			if(!((struct map_session_data *)src)->status.guild_id)
 				damage=0;
-			if(gc && agit_flag==0 && class != 1288)	// guardians cannot be damaged during non-woe [Valaris]
+			if(gc && agit_flag==0 && class_ != 1288)	// guardians cannot be damaged during non-woe [Valaris]
 				damage=0;  // end woe check [Valaris]
 			if(g == NULL)
 				damage=0;//ギルド未加入ならダメージ無し
@@ -2010,7 +2061,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 				blewcount=0;
 				break;
 			case AS_GRIMTOOTH:
-				damage = damage*(100+ 20*skill_lv)/100;         
+				damage = damage*(100+ 20*skill_lv)/100;
 				break;
 			case AS_POISONREACT: // celest
 				s_ele = 0;
@@ -2208,7 +2259,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 			hitrate -= 50;
 		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
 			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
-			t_sc_data[SC_FREEZE].timer!=-1 || 
+			t_sc_data[SC_FREEZE].timer!=-1 ||
 			(t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0))	// 凍結は必中
 			hitrate = 1000000;
 	}
@@ -2221,7 +2272,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 		dmg_lv = ATK_DEF;
 	}
 
-	
+
 	if(t_sc_data) {
 		int cardfix=100;
 		if(t_sc_data[SC_DEFENDER].timer != -1 && flag&BF_LONG)
@@ -2507,7 +2558,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 				flag=(flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
 			case AS_GRIMTOOTH:
-				damage = damage*(100+ 20*skill_lv)/100;         
+				damage = damage*(100+ 20*skill_lv)/100;
 				break;
 			case AS_POISONREACT: // celest
 				s_ele = 0;
@@ -2710,7 +2761,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 			hitrate -= 50;
 		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
 			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
-			t_sc_data[SC_FREEZE].timer!=-1 || 
+			t_sc_data[SC_FREEZE].timer!=-1 ||
 			(t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0))	// 凍結は必中
 			hitrate = 1000000;
 	}
@@ -2762,8 +2813,8 @@ static struct Damage battle_calc_mob_weapon_attack(
 	if(damage < 0) damage = 0;
 
 	// 属 性の適用
-	if (!((battle_config.mob_ghostring_fix == 1) && 
-		(battle_get_elem_type(target) == 8) && 
+	if (!((battle_config.mob_ghostring_fix == 1) &&
+		(battle_get_elem_type(target) == 8) &&
 		(target->type==BL_PC))) // [MouseJstr]
 		if(skill_num != 0 || s_ele != 0 || !battle_config.mob_attack_attr_none)
 			damage=battle_attr_fix(damage, s_ele, battle_get_element(target) );
@@ -3506,7 +3557,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 /*					int mdef1=battle_get_mdef(target);
 					int mdef2=battle_get_mdef2(target);
 					int imdef_flag=0;
-						
+
 					damage = ((damage * 5) + (skill_lv * battle_get_int(src) * 5) + rand()%500 + 500) /2;
 					damage2 = ((damage2 * 5) + (skill_lv * battle_get_int(src) * 5) + rand()%500 + 500) /2;
 					damage3 = damage;
@@ -3520,7 +3571,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 
 					// calculate magic part of damage
 					damage3 = skill_lv * battle_get_int(src) * 5;
-					
+
 					// ignores magic defense now [Celest]
 					/*if(sd->ignore_mdef_ele & (1<<t_ele) || sd->ignore_mdef_race & (1<<t_race))
 						imdef_flag = 1;
@@ -3540,7 +3591,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 							damage3 = (damage3*(100-mdef1))/100 - mdef2;
 						}
 					}
-	
+
 					if(damage3<1)
 						damage3=1;
 
@@ -3688,7 +3739,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 			hitrate -= 50;
 		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
 			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
-			t_sc_data[SC_FREEZE].timer!=-1 || 
+			t_sc_data[SC_FREEZE].timer!=-1 ||
 			(t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0))	// 凍結は必中
 			hitrate = 1000000;
 	}
@@ -3876,7 +3927,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 		damage = damage2;
 		damage2 = 0;
 	}
-	
+
 	// 右手、左手修練の適用
 	if(sd->status.weapon > 16) {// 二刀流か?
 		int dmg = damage, dmg2 = damage2;
@@ -4258,7 +4309,7 @@ struct Damage battle_calc_magic_attack(
 			} else if (target->type == BL_PC) {
 				damage = ((struct map_session_data *)target)->status.sp * 2;
 				matk_flag = 0; // don't consider matk and matk2
-			}				
+			}
 			break;
 		}
 	}
@@ -4554,6 +4605,7 @@ struct Damage battle_calc_attack(	int attack_type,
 	default:
 		if(battle_config.error_log)
 			printf("battle_calc_attack: unknwon attack type ! %d\n",attack_type);
+		memset(&d,0,sizeof(d));
 		break;
 	}
 	return d;
@@ -4596,7 +4648,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	}
 
 	if(battle_check_target(src,target,BCT_ENEMY) <= 0 &&
-				!battle_check_range(src,target,0))
+		!battle_check_range(src,target,0))
 		return 0;	// 攻撃対象外
 
 	race = battle_get_race(target);
@@ -4810,8 +4862,8 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				--t_sc_data[SC_POISONREACT].val2;
 			}
 			if (t_sc_data[SC_POISONREACT].val2<=0)
- 				skill_status_change_end(target,SC_POISONREACT,-1);            
-			}         
+ 				skill_status_change_end(target,SC_POISONREACT,-1);
+			}
 		}
 	if (t_sc_data && t_sc_data[SC_BLADESTOP_WAIT].timer != -1 &&
 			!(battle_get_mode(src)&0x20)) { // ボスには無効
@@ -4911,7 +4963,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return -1;
 		if(ss->prev == NULL)
 			return -1;
-		if(inf2&0x80 && 
+		if(inf2&0x80 &&
                    (map[src->m].flag.pvp || pc_iskiller((struct map_session_data *)src, (struct map_session_data *)target)) &&  // [MouseJstr]
                    !(target->type == BL_PC && pc_isinvisible((struct map_session_data *)target)))
 			return 0;
@@ -5037,7 +5089,7 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 	int dx,dy;
 	struct walkpath_data wpd;
 	int arange;
-	
+
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
 
@@ -5182,7 +5234,7 @@ static const struct {
 	{ "item_slots_override_grffile",       &battle_config.item_slots_override_grffile},	// [Celest]
 	{ "indoors_override_grffile",          &battle_config.indoors_override_grffile},	// [Celest]
 	{ "skill_sp_override_grffile",         &battle_config.skill_sp_override_grffile},	// [Celest]
-	{ "cardillust_read_grffile",           &battle_config.cardillust_read_grffile},	// [Celest]	
+	{ "cardillust_read_grffile",           &battle_config.cardillust_read_grffile},	// [Celest]
 	{ "arrow_decrement",                   &battle_config.arrow_decrement			},
 	{ "max_aspd",                          &battle_config.max_aspd					},
 	{ "max_hp",                            &battle_config.max_hp					},
@@ -5329,10 +5381,10 @@ static const struct {
 	{ "allow_atcommand_when_mute",			&battle_config.allow_atcommand_when_mute}, // [celest]
 	{ "finding_ore_rate",       &battle_config.finding_ore_rate}, // [celest]
 	{ "exp_calc_type",          &battle_config.exp_calc_type}, // [celest]
-	{ "double_login_system",    &battle_config.double_login_system}, // [celest]
+	{ "min_skill_delay_limit",    &battle_config.min_skill_delay_limit}, // [celest]
 
 //SQL-only options start
-#ifndef TXT_ONLY 
+#ifndef TXT_ONLY
 	{ "mail_system",		&battle_config.mail_system	}, // added by [Valaris]
 //SQL-only options end
 #endif
@@ -5442,7 +5494,7 @@ void battle_set_defaults() {
 	battle_config.item_slots_override_grffile=0;	// [Celest]
 	battle_config.indoors_override_grffile=0;	// [Celest]
 	battle_config.skill_sp_override_grffile=0;	// [Celest]
-	battle_config.cardillust_read_grffile=0;	// [Celest]	
+	battle_config.cardillust_read_grffile=0;	// [Celest]
 	battle_config.arrow_decrement=1;
 	battle_config.max_aspd = 199;
 	battle_config.max_hp = 32500;
@@ -5590,10 +5642,10 @@ void battle_set_defaults() {
 	battle_config.castrate_dex_scale = 150;
 	battle_config.area_size = 14;
 	battle_config.exp_calc_type = 1;
-	battle_config.double_login_system = 0;
+	battle_config.min_skill_delay_limit = 100;
 
 //SQL-only options start
-#ifndef TXT_ONLY 
+#ifndef TXT_ONLY
 	battle_config.mail_system = 0;
 //SQL-only options end
 #endif
@@ -5710,13 +5762,13 @@ void battle_validate_conf() {
 	// at least 1 client must be accepted
 	if ((battle_config.packet_ver_flag & 127) == 0) // added by [Yor]
 		battle_config.packet_ver_flag = 127; // accept all clients
-	
+
 	if (battle_config.night_darkness_level > 10) // Celest
 		battle_config.night_darkness_level = 10;
 
 	if (battle_config.skill_range_leniency < 0) // Celest
 		battle_config.skill_range_leniency = 0;
-	
+
 	if (battle_config.motd_type < 0)
 		battle_config.motd_type = 0;
 	else if (battle_config.motd_type > 1)
@@ -5728,22 +5780,21 @@ void battle_validate_conf() {
 	if (battle_config.vending_max_value > 10000000 || battle_config.vending_max_value<=0) // Lupus & Kobra_k88
 		battle_config.vending_max_value = 10000000;
 
-	if (battle_config.double_login_system < 0)
-		battle_config.double_login_system = 0;
-
+	if (battle_config.min_skill_delay_limit < 10)
+		battle_config.min_skill_delay_limit = 10;	// minimum delay of 10ms
 }
 
 /*==========================================
  * 設定ファイルを読み込む
  *------------------------------------------
  */
-int battle_config_read(const char *cfgName) 
+int battle_config_read(const char *cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 	static int count = 0;
 
-	if ((count++) == 0) 
+	if ((count++) == 0)
 		battle_set_defaults();
 
 	fp = fopen(cfgName,"r");

@@ -262,7 +262,7 @@ int add_timer(unsigned int tick,int (*func)(int,unsigned int,int,int),int id,int
 		int j;
 		if (timer_data_max == 0) {
 			timer_data_max = 256;
-			CREATE(timer_data, struct TimerData, timer_data_max);
+			CREATE_A(timer_data, struct TimerData, timer_data_max);
 			//timer_data[0] = NULL;
 		} else {
 			timer_data_max += 256;
@@ -403,13 +403,13 @@ void timer_final(void)
 	for(tfl = tfl_root; tfl; tfl = tfl_next)
 	{
 		tfl_next = tfl->next;
-		free(tfl);
+		aFree(tfl);
 		tfl = NULL;
 	}
 	if(timer_heap)
-		free(timer_heap);
+		aFree(timer_heap);
 	if(free_timer_list)
-		free(free_timer_list);
+		aFree(free_timer_list);
 	if(timer_data)
-		free(timer_data);
+		aFree(timer_data);
 }

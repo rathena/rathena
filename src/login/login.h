@@ -33,7 +33,7 @@ struct mmo_char_server {
 	short port;
 	int users;
 	int maintenance;
-	int new;
+	int new_;
 };
 
 extern struct mmo_char_server server[MAX_SERVERS];

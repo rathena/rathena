@@ -329,7 +329,7 @@ struct map_session_data {
 	unsigned short eventcount; // [celest]
 
 	int last_skillid,last_skilllv;		// Added by RoVeRT
-	
+
 	unsigned char change_level; // [celest]
 
 #ifndef TXT_ONLY
@@ -414,6 +414,7 @@ struct mob_data {
 		unsigned walk_easy : 1;
 		unsigned special_mob_ai : 3;
 		unsigned soul_change_flag : 1; // Celest
+		int provoke_flag; // Celest
 	} state;
 	int timer;
 	short to_x,to_y;
@@ -509,7 +510,7 @@ enum {
 
 struct map_data {
 	char name[24];
-	unsigned char *gat;	// NULLなら下のmap_data_other_serverとして扱う
+	char *gat;	// NULLなら下のmap_data_other_serverとして扱う
 	char *alias; // [MouseJstr]
 	int *gat_fileused[MAX_CELL_TYPE+1+1]; //もしビットマップを使うならこちらを使う、
 						//上のgatはキャストされてgat_fileused[0]に指す
@@ -562,7 +563,7 @@ struct map_data {
 };
 struct map_data_other_server {
 	char name[24];
-	unsigned char *gat;	// NULL固定にして判断
+	char *gat;	// NULL固定にして判断
 	unsigned long ip;
 	unsigned int port;
 };
@@ -634,7 +635,7 @@ enum {
  * CHELL_CHKTOUCH：セルはタッチ系の場合は1を返す、以外は0
  * CELL_CHKTYPE： セルのタイプを知りたい場合は1を返す、以外は0
 */
-typedef enum { 
+typedef enum {
 	CELL_CHKPASS,CELL_CHKNOPASS,CELL_CHKWATER=3,CELL_CHKHIGH=5,CELL_CHKTOUCH,CELL_CHKTYPE
 } CELL_CHK;
 
@@ -671,7 +672,7 @@ extern int night_flag; // 0=day, 1=night [Yor]
 int map_getcell(int,int,int,CELL_CHK);
 int map_getcellp(struct map_data*,int,int,CELL_CHK);
 extern int map_read_flag;	//セル情報のソース判定フラグ、0ならgrfファイル、1ならビットマップファイル
-enum { 
+enum {
 	READ_FROM_GAT, READ_FROM_AFM,
 	READ_FROM_BITMAP, CREATE_BITMAP,
 	READ_FROM_BITMAP_COMPRESSED, CREATE_BITMAP_COMPRESSED

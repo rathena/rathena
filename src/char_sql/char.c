@@ -73,7 +73,7 @@ char login_db_level[32] = "level";
 
 int lowest_gm_level = 1;
 
-unsigned char *SQL_CONF_NAME = "conf/inter_athena.conf";
+char *SQL_CONF_NAME = "conf/inter_athena.conf";
 
 struct mmo_map_server server[MAX_MAP_SERVERS];
 int server_fd[MAX_MAP_SERVERS];
@@ -206,9 +206,9 @@ void set_char_offline(int char_id, int account_id) {
     if ( char_id == 99 )
         sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `account_id`='%d'", char_db, account_id);
     else {
-        cp = numdb_search(char_db_,char_id);
+        cp = (struct mmo_charstatus*)numdb_search(char_db_,char_id);
         if (cp != NULL) {
-            free(cp);
+            aFree(cp);
             numdb_erase(char_db_,char_id);
         }
 
@@ -229,7 +229,7 @@ void set_char_offline(int char_id, int account_id) {
 //-----------------------------------------------------
 // Function to suppress control characters in a string.
 //-----------------------------------------------------
-int remove_control_chars(unsigned char *str) {
+int remove_control_chars(char *str) {
 	int i;
 	int change = 0;
 
@@ -259,7 +259,7 @@ int isGM(int account_id) {
 
 void read_gm_account(void) {
 	if (gm_account != NULL)
-		free(gm_account);
+		aFree(gm_account);
 	GM_num = 0;
 
 	sprintf(tmp_lsql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",login_db_account_id,login_db_level,login_db,login_db_level,lowest_gm_level);
@@ -268,7 +268,7 @@ void read_gm_account(void) {
 	}
 	lsql_res = mysql_store_result(&lmysql_handle);
 	if (lsql_res) {
-		gm_account = aCalloc(sizeof(struct gm_account) * mysql_num_rows(lsql_res), 1);
+		gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * mysql_num_rows(lsql_res), 1);
 		while ((lsql_row = mysql_fetch_row(lsql_res))) {
 			gm_account[GM_num].account_id = atoi(lsql_row[0]);
 			gm_account[GM_num].level = atoi(lsql_row[1]);
@@ -329,7 +329,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	if (char_id!=p->char_id) return 0;
 
-	cp = numdb_search(char_db_,char_id);
+	cp = (struct mmo_charstatus*)numdb_search(char_db_,char_id);
 
 	if (cp == NULL) {
 		cp = (struct mmo_charstatus *) aMalloc(sizeof(struct mmo_charstatus));
@@ -441,7 +441,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 //=====================================================================================================
 
-	if ((p->base_exp != cp->base_exp) || (p->class_ != cp->class_) || 
+	if ((p->base_exp != cp->base_exp) || (p->class_ != cp->class_) ||
 	    (p->base_level != cp->base_level) || (p->job_level != cp->job_level) ||
 	    (p->job_exp != cp->job_exp) || (p->zeny != cp->zeny) ||
 	    (p->last_point.x != cp->last_point.x) || (p->last_point.y != cp->last_point.y) ||
@@ -457,7 +457,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	    (p->shield != cp->shield) || (p->head_top != cp->head_top) ||
 	    (p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom) ||
 	    (p->partner_id != cp->partner_id)) {
-	
+
 //}//---------------------------test count------------------------------
 	//check party_exist
 	party_exist=0;
@@ -546,7 +546,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	diff = 0;
 	for(i=0;i<MAX_SKILL;i++) {
-            if ((p->skill[i].lv != 0) && (p->skill[i].id == 0)) 
+            if ((p->skill[i].lv != 0) && (p->skill[i].id == 0))
                 p->skill[i].id = i; // Fix skill tree
 
             if((p->skill[i].id != cp->skill[i].id) || (p->skill[i].lv != cp->skill[i].lv) ||
@@ -589,7 +589,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	    break;
 	  }
 	}
-	
+
 	if (diff) {
 	//printf("- Save global_reg_value data to MySQL!\n");
 	//`global_reg_value` (`char_id`, `str`, `value`)
@@ -603,7 +603,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		if (p->global_reg[i].str) {
 			if(p->global_reg[i].value !=0){
 					sprintf(tmp_sql,"INSERT INTO `%s` (`char_id`, `str`, `value`) VALUES ('%d', '%s','%d')",
-					         reg_db, char_id, jstrescapecpy(temp_str,(unsigned char*)p->global_reg[i].str), p->global_reg[i].value);
+					         reg_db, char_id, jstrescapecpy(temp_str,p->global_reg[i].str), p->global_reg[i].value);
 					if(mysql_query(&mysql_handle, tmp_sql)) {
 						printf("DB server Error (insert `global_reg_value`)- %s\n", mysql_error(&mysql_handle));
 					}
@@ -612,9 +612,9 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	}
 	}
 
-	// Friends list 
+	// Friends list
 	// account_id, friend_id0, name0, ...
-	
+
 	tmp_p += sprintf(tmp_p, "REPLACE INTO `%s` (`id`, `account_id`",friend_db);
 
 	diff = 0;
@@ -623,7 +623,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		tmp_p += sprintf(tmp_p, ", `friend_id%d`, `name%d`", i, i);
 
 	tmp_p += sprintf(tmp_p, ") VALUES (NULL, '%d'", char_id);
-	
+
 	for (i=0;i<20;i++) {
 		tmp_p += sprintf(tmp_p, ", '%d', '%s'", p->friend_id[i], p->friend_name[i]);
 		if ((p->friend_id[i] != cp->friend_id[i]) ||
@@ -633,7 +633,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	tmp_p += sprintf(tmp_p, ")");
 
-	if (diff) 
+	if (diff)
 	  mysql_query(&mysql_handle, tmp_sql);
 
 	printf("saving char is done.\n");
@@ -882,9 +882,9 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	char *tmp_p = tmp_sql;
 	struct mmo_charstatus *cp;
 
-	cp = numdb_search(char_db_,char_id);
+	cp = (struct mmo_charstatus*)numdb_search(char_db_,char_id);
 	if (cp != NULL)
-	  free(cp);
+	  aFree(cp);
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 
@@ -966,10 +966,10 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	} else
 		printf("char2 - failed\n");	//Error?! ERRRRRR WHAT THAT SAY!?
 
-	if (p->last_point.x == 0 || p->last_point.y == 0 || p->last_point.map[0] == '\0') 
+	if (p->last_point.x == 0 || p->last_point.y == 0 || p->last_point.map[0] == '\0')
 		memcpy(&p->last_point, &start_point, sizeof(start_point));
 
-	if (p->save_point.x == 0 || p->save_point.y == 0 || p->save_point.map[0] == '\0') 
+	if (p->save_point.x == 0 || p->save_point.y == 0 || p->save_point.map[0] == '\0')
 		memcpy(&p->save_point, &start_point, sizeof(start_point));
 
 	printf("char2 ");
@@ -1102,10 +1102,10 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	sql_row = mysql_fetch_row(sql_res);
 
 	i=mysql_num_rows(sql_res);
-	
+
 	// debugg
 	//printf("mysql: %d\n",i);
-	
+
 	// Create an entry for the character if it doesnt already have one
 	if(!i) {
 
@@ -1188,15 +1188,15 @@ int mmo_char_sql_init(void) {
 		printf("set char_id_count: %d.......\n",char_id_count);
 
 	sprintf(tmp_sql , "REPLACE INTO `%s` SET `online`=0", char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) 
+	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 
 	sprintf(tmp_sql , "REPLACE INTO `%s` SET `online`=0", guild_member_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) 
+	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 
 	sprintf(tmp_sql , "REPLACE INTO `%s` SET `connect_member`=0", guild_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) 
+	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 
 	printf("init end.......\n");
@@ -1212,10 +1212,10 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 	int i;
 
 	//aphostropy error check! - fixed!
-	jstrescapecpy(t_name, dat);
+	jstrescapecpy(t_name, (char*)dat);
 	printf("making new char -");
 
-	sd = session[fd]->session_data;
+	sd = (struct char_session_data*)session[fd]->session_data;
 
 	// Check Authorised letters/symbols in the name of the character
 	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
@@ -1477,7 +1477,7 @@ int parse_tologin(int fd) {
 		return 0;
 	}
 
-	sd = session[fd]->session_data;
+	sd = (struct char_session_data*)session[fd]->session_data;
 
 	// hehe. no need to set user limite on SQL version. :P
 	// but char limitation is good way to maintain server. :D
@@ -1513,7 +1513,7 @@ int parse_tologin(int fd) {
 			if(RFIFOREST(fd)<51)
 				return 0;
 			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = session[i]->session_data) && sd->account_id == RFIFOL(fd,2)) {
+				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2)) {
 					if (RFIFOB(fd,6) != 0) {
 						WFIFOW(i,0) = 0x6c;
 						WFIFOB(i,2) = 0x42;
@@ -1546,7 +1546,7 @@ int parse_tologin(int fd) {
 			if (RFIFOREST(fd) < 50)
 				return 0;
 			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = session[i]->session_data)) {
+				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
 					if (sd->account_id == RFIFOL(fd,2)) {
 					sd->connect_until_time = (time_t)RFIFOL(fd,46);
 					break;
@@ -1606,22 +1606,22 @@ int parse_tologin(int fd) {
 				sql_res = mysql_store_result(&mysql_handle);
 
 				if (sql_res) {
-						int char_id, jobclass, skill_point, class;
+						int char_id, jobclass, skill_point, class_;
 						sql_row = mysql_fetch_row(sql_res);
 						char_id = atoi(sql_row[0]);
 						jobclass = atoi(sql_row[1]);
 						skill_point = atoi(sql_row[2]);
-						class = jobclass;
+						class_ = jobclass;
 						if (jobclass == 19 || jobclass == 20 ||
 						    jobclass == 4020 || jobclass == 4021 ||
 						    jobclass == 4042 || jobclass == 4043) {
 							// job modification
 							if (jobclass == 19 || jobclass == 20) {
-								class = (sex) ? 19 : 20;
+								class_ = (sex) ? 19 : 20;
 							} else if (jobclass == 4020 || jobclass == 4021) {
-								class = (sex) ? 4020 : 4021;
+								class_ = (sex) ? 4020 : 4021;
 							} else if (jobclass == 4042 || jobclass == 4043) {
-								class = (sex) ? 4042 : 4043;
+								class_ = (sex) ? 4042 : 4043;
 							}
 							// remove specifical skills of classes 19,20 4020,4021 and 4042,4043
 							sprintf(tmp_sql, "SELECT `lv` FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330'",skill_db, char_id);
@@ -1644,7 +1644,7 @@ int parse_tologin(int fd) {
 						if (mysql_query(&mysql_handle, tmp_sql)) {
 							printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
 						}
-						sprintf(tmp_sql, "UPDATE `%s` SET `class`='%d' , `skill_point`='%d' , `weapon`='0' , `shield='0' , `head_top`='0' , `head_mid`='0' , `head_bottom`='0' WHERE `char_id` = '%d'",char_db, class, skill_point, char_id);
+						sprintf(tmp_sql, "UPDATE `%s` SET `class`='%d' , `skill_point`='%d' , `weapon`='0' , `shield='0' , `head_top`='0' , `head_mid`='0' , `head_bottom`='0' WHERE `char_id` = '%d'",char_db, class_, skill_point, char_id);
 						if (mysql_query(&mysql_handle, tmp_sql)) {
 							printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
 						}
@@ -1652,7 +1652,7 @@ int parse_tologin(int fd) {
 				}
 				// disconnect player if online on char-server
 				for(i = 0; i < fd_max; i++) {
-					if (session[i] && (sd = session[i]->session_data)) {
+					if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
 						if (sd->account_id == acc) {
 							session[i]->eof = 1;
 							break;
@@ -1706,7 +1706,7 @@ int parse_tologin(int fd) {
 		  }
 			// disconnect player if online on char-server
 			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = session[i]->session_data)) {
+				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
 					if (sd->account_id == RFIFOL(fd,2)) {
 						session[i]->eof = 1;
 						break;
@@ -2296,7 +2296,7 @@ int parse_char(int fd) {
 	struct char_session_data *sd;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 
-	sd = session[fd]->session_data;
+	sd = (struct char_session_data*)session[fd]->session_data;
 
         if(login_fd < 0)
 		session[fd]->eof = 1;
@@ -2353,7 +2353,7 @@ int parse_char(int fd) {
 */
 			if (sd == NULL) {
 				CREATE(session[fd]->session_data, struct char_session_data, 1);
-				sd = session[fd]->session_data;
+				sd = (struct char_session_data*)session[fd]->session_data;
 				sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
 			}
 			sd->account_id = RFIFOL(fd, 2);
@@ -2843,15 +2843,15 @@ int parse_console(char *buf) {
 
     printf("Type of command: %s || Command: %s \n",type,command);
 
-    if(buf) free(buf);
-    if(type) free(type);
-    if(command) free(command);
+    if(buf) aFree(buf);
+    if(type) aFree(type);
+    if(command) aFree(command);
 
     return 0;
 }
 
 // MAP send all
-int mapif_sendall(unsigned char *buf, unsigned int len) {
+int mapif_sendall(char *buf, unsigned int len) {
 	int i, c;
 	int fd;
 
@@ -2867,7 +2867,7 @@ int mapif_sendall(unsigned char *buf, unsigned int len) {
 	return c;
 }
 
-int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
+int mapif_sendallwos(int sfd, char *buf, unsigned int len) {
 	int i, c;
 	int fd;
 
@@ -2883,7 +2883,7 @@ int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	return c;
 }
 
-int mapif_send(int fd, unsigned char *buf, unsigned int len) {
+int mapif_send(int fd, char *buf, unsigned int len) {
 	int i;
 
 	if (fd >= 0) {
@@ -3016,12 +3016,12 @@ void do_final(void) {
 		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
 
 	if(gm_account)  {
-		free(gm_account);
+		aFree(gm_account);
 		gm_account = 0;
 	}
 
 	if(char_dat)  {
-		free(char_dat);
+		aFree(char_dat);
 		char_dat = 0;
 	}
 

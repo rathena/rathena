@@ -186,7 +186,7 @@ enum {
 enum {	// struct map_session_data の status_changeの番?テ?ブル
 // SC_SENDMAX未?はクライアントへの通知あり。
 // 2-2次職の値はなんかめちゃくちゃっぽいので暫定。たぶん?更されます。
-	SC_SENDMAX			=128,
+	SC_SENDMAX			= 128,	// note: max is now 182, but we'll need to do alot of moving around
 	SC_PROVOKE			= 0,
 	SC_ENDURE			= 1,
 	SC_TWOHANDQUICKEN	= 2,
@@ -275,8 +275,10 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 
 	SC_STONE			= 128,
 	SC_FREEZE			= 129,
+// <-- 130 = a baby skill status?
 	SC_STAN				= 130,
 	SC_SLEEP			= 131,
+// <-- 132 = another baby skill?
 	SC_POISON			= 132,
 	SC_CURSE			= 133,
 	SC_SILENCE			= 134,
@@ -322,17 +324,15 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_DONTFORGETME		=175,
 	SC_FORTUNE			=176,
 	SC_SERVICE4U		=177,
-
 	SC_SPIDERWEB		=180,		/* スパイダ?ウェッブ */
-	SC_MEMORIZE			=181,		/* メモライズ */
-	SC_DPOISON			=182,		/* 猛毒 */
 //	SC_EDP							// moved
 	SC_SACRIFICE		=184,		/* サクリファイス */
 	SC_WEDDING			=187,	//結婚用(結婚衣裳になって?くのが?いとか)
 	SC_NOCHAT			=188,	//赤エモ?態
 	SC_SPLASHER			=189,	/* ベナムスプラッシャ? */
 	SC_SELFDESTRUCTION	=190,	/* 自爆 */
-
+	SC_MEMORIZE			=197,		/* メモライズ */ // changed from 181 to 192
+	SC_DPOISON			=198,		/* 猛毒 */
 
 // Used by English Team
 	SC_BROKNARMOR		=32,
@@ -348,6 +348,8 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_ENSEMBLE			=159,
 	SC_FOGWALL			=178,
 	SC_GOSPEL			=179,
+	SC_PRESERVE         =181,
+	SC_BATTLEORDERS		=182,
 	SC_MOONLIT			=183,
 	SC_ATKPOT			=185,	// [Valaris]
 	SC_MATKPOT			=186,	// [Valaris]
@@ -357,9 +359,8 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_BLOCKSKILL		=194, // for disallowing the use of a skill for a time period
 	SC_ADAPTATION		=195,
 	SC_CHASEWALK		=196,
-	SC_BATTLEORDERS		=200,
 	SC_REGENERATION		=201,
-	SC_PRESERVE         =202,
+	
 
 // [Celest]
 	SC_BLEEDING			= 124, // Temporarily same id as headcrush	

@@ -65,13 +65,13 @@ int do_init_storage(void) // map.c::do_init()‚©‚çŒÄ‚Î‚ê‚é
 static int guild_storage_db_final(void *key,void *data,va_list ap)
 {
 	struct guild_storage *gstor=data;
-	free(gstor);
+	aFree(gstor);
 	return 0;
 }
 static int storage_db_final(void *key,void *data,va_list ap)
 {
 	struct storage *stor=data;
-	free(stor);
+	aFree(stor);
 	return 0;
 }
 void do_final_storage(void) // by [MC Cameri]
@@ -87,7 +87,7 @@ struct storage *account2storage(int account_id)
 	struct storage *stor;
 	stor=numdb_search(storage_db,account_id);
 	if(stor == NULL) {
-		stor = aCalloc(sizeof(struct storage), 1);
+		stor = aCallocA(sizeof(struct storage), 1);
 		if(stor == NULL){
 			printf("storage: out of memory!\n");
 			exit(0);
@@ -109,7 +109,7 @@ int storage_delete(int account_id)
 	struct storage *stor = numdb_search(storage_db,account_id);
 	if(stor) {
 		numdb_erase(storage_db,account_id);
-		free(stor);
+		aFree(stor);
 	}
 	return 0;
 }
@@ -381,7 +381,7 @@ struct guild_storage *guild2storage(int guild_id)
 	if(guild_search(guild_id) != NULL) {
 		gs=numdb_search(guild_storage_db,guild_id);
 		if(gs == NULL) {
-			gs = aCalloc(sizeof(struct guild_storage), 1);
+			gs = aCallocA(sizeof(struct guild_storage), 1);
 			if(gs==NULL){
 				printf("storage: out of memory!\n");
 				exit(0);
@@ -398,7 +398,7 @@ int guild_storage_delete(int guild_id)
 	struct guild_storage *gstor = numdb_search(guild_storage_db,guild_id);
 	if(gstor) {
 		numdb_erase(guild_storage_db,guild_id);
-		free(gstor);
+		aFree(gstor);
 	}
 	return 0;
 }

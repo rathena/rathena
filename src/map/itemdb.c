@@ -530,7 +530,7 @@ static int itemdb_read_itemnametable(void)
 		if(!p) break;
 		p++;
 	}
-	free(buf);
+	aFree(buf);
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\idnum2itemdisplaynametable.txt");
 	ShowStatus(tmp_output);
 
@@ -566,7 +566,7 @@ static int itemdb_read_cardillustnametable(void)
 		if(!p) break;
 		p++;
 	}
-	free(buf);
+	aFree(buf);
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\num2cardillustnametable.txt");
 	ShowStatus(tmp_output);
 
@@ -604,7 +604,7 @@ static int itemdb_read_itemslottable(void)
 		if(!p) break;
 		p++;
 	}
-	free(buf);
+	aFree(buf);
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\itemslottable.txt");
 	ShowStatus(tmp_output);
 
@@ -636,7 +636,7 @@ static int itemdb_read_itemslotcounttable(void)
 		if(!p) break;
 		p++;
 	}
-	free(buf);
+	aFree(buf);
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\itemslotcounttable.txt");
 	ShowStatus(tmp_output);
 
@@ -896,10 +896,10 @@ static int itemdb_final(void *key,void *data,va_list ap)
 	nullpo_retr(0, id=data);
 
 	if(id->use_script)
-		free(id->use_script);
+		aFree(id->use_script);
 	if(id->equip_script)
-		free(id->equip_script);
-	free(id);
+		aFree(id->equip_script);
+	aFree(id);
 
 	return 0;
 }

@@ -1,4 +1,142 @@
 Date	Added
+
+01/23
+	* Forgot a couple small changes [SVN 35] [Ajarn]
+	* Changed map_data.gat and map_data_other_server.gat from unsigned char*
+	  to char* (this might be needed, because of unicode or something, please
+	  correct me if I'm wrong) [SVN 34] [Ajarn]
+	* Converted decode_zip, enconde_zip, remove_control_chars, mapif_sendall*,
+	  and e_mail_check to use char* instead of unsigned char* (again, please test)
+	  [SVN 34] [Ajarn]
+        * Modified skill unit group checking in skill_unit_onplace that might have
+          been causing crashes [celest]
+        * Updated packet 0x143 length's for version 14 (2004-11-01Sakexe) and version
+          16 (2005-01-10Sakexe), thanks to jathena and ice2big [celest]
+        * Fixed login-server compile error with the "new" -> "new_" changes [celest]
+
+01/22
+	* Fixed an error that was in my last commit (optimising g++ build) [SVN 29]
+	  [Ajarn]
+	* Made strlib functions char*, instead of unsigned char*. Strings are meant
+	  to be char. (Shouldn't break anyhting, but might, please test this for me)
+	  [SVN 26] [Ajarn]
+	* Added cast for TXT version [SVN 25] [Ajarn]
+	* Added cast from allocation calls, from void* to intended type [SVN 24] [Ajarn]
+	* Changed bool -> bool_. Still need to make convertions between
+	  char* and unsigned char* valid, and some other convertions too.
+	  Also, sizeof is being used wierd in map.c, at least g++
+	  complains [SVN 22] [Ajarn]
+	* Changed the rest of the class variable names to class_ and all the new
+	  variable names to new_, for futher g++ support [SVN 21] [Ajarn]
+        * Update both caster and target's SP after using Soul Change -- thanks to Aalye
+          / Freya [celest]
+        * Force a monster to switch attack target when being casted Provoke [celest]
+        * Corrected description for @enablenpc -- "@npcon" -> "@enablenpc" [celest]
+        * Since job normalising is still buggy require all 1st class skills to check
+          for Basic Skill level when calculating the skill tree [celest]
+
+01/21
+        * Updated packet DB configurations : enable_packet_db, packet_db_ver,
+          -- check the .txt for description [celest]
+
+          Note: For people having connection problems try setting 'enable_packet_db'
+          to 'no'... and use the latest client (01-10Sakexe)
+
+        * Fixed a small typo in 12-06's packets -- 21b => 21d [celest]
+        * Updated packet_db.txt to only contain the latest version, like jAthena,
+          since there's not much point to re-read packets eA already supports 
+          (although if you remove all the //'s it can still read multiple versions)
+          [celest]
+        * Added clif_config in clif.c - for keeping packet/client connections related
+          stuff [celest]
+        * Send 'Game Exe not latest version' to a client if it hasn't been authentified
+          yet, but is sending a non-connection-related packet to prevent crashing
+          -- assume the client is using an unknown exe [celest]
+
+01/20
+	* Fixed compile time problems with the non-GC case [MouseJstr]
+	* Introduced aMallocA and aCallocA
+
+	  These two functions allocate "atomic" memory which means 
+	  "memory that does not contain references to other memory".
+
+	  This lets the garbage collector ignore these objects when searching
+	  memory for references to other objects dramatically increasing
+	  performance of the GC.  
+
+	  When in doubt, use aMalloc and aCalloc.  It is better to add
+	  a tiny bit of work to the GC then do cause a crash due to memory
+	  being cleaned up when it shouldn't.
+	  [MouseJstr]
+	* Modified all calls to aMalloc and aCalloc that reference
+	  atomic memory to use aMallocA and aCallocA
+	  [MouseJstr]
+	* Modified the socket buffer allocator to use "atomic" memory
+	  for the fifo data buffers [MouseJstr]
+01/19
+	* added support for the Hans-J. Boehm libC garbage collector
+	  (A copy is in http://amber.stormbirds.org/~joshs/gc6.3.tar).  
+
+	  It is ABSOLUTELY critical for people to use
+	  aFree/aMalloc/aCalloc/aStrdup for this to work.  If somebody
+	  has just used free or malloc, this will crash when used with
+	  the garbage collector.  
+
+	  A amusing environmental variable to set is GC_PRINT_STATS (to 1)
+	  so that you see real time statistics of leaked data being
+	  recovered.  
+
+	  grab a copy of the gc6.3.tar.. build it .. install it.. 
+	  modify the Makefile to have the 
+
+		CC = gcc -pipe -DGCOLLECT
+		GCLIB = -lgc
+
+	  lines... and make the sql servers (the txt server doesn't
+	  build using this right now due to stupid Makefile issues)
+
+	  [MouseJstr]
+	* SVN 3 on http://svn.stormbirds.org/svn/eathena will be what
+	  I diff against when I merge back into delta.. if we ever merge
+	  back into delta   [MouseJstr]
+        * Removed 12-06 Sakexe detection, since it doesn't seem to work, and
+          might be conflicting with 10-25 clients [celest]
+        * Update the Soul Burn target's SP when it has been successfully reduced to 0,
+          thanks to Aalye / Freya [celest]
+        * Moved SC_PRESERVE and SC_BATTLEORDERS's id so they'll display a status icon
+          when cast, thanks XiaoLin of cAthena [celest]
+        * Added missing code for Preserve -- i totally forgot to add it ^^; [celest]
+
+01/18
+        * Added some skill bug fixes, thanks to Aalye / Freya [celest]
+          - stop player attacking if the target goes into hiding
+          - fixed Sword Reject not working against swords, only daggers
+          - additional check in case Marionette Control doesn't end properly even
+            when one of the partners has logged off
+        * Added stun, bleeding and SP loss effect for Pressure, thanks to DracoRpg
+          [celest]
+        * TEST: Fixed more compile warnings in MSVC [celest]
+        * TEST: Fixed some compile errors in MS Visual C++, thanks to Ser [celest]
+
+01/17
+        * Some rewrites in skill_delayfix [celest]
+          - If the delay is < 0, add the weapon aspd delay to it
+          - If the skill is not weapon type, and has 0 delay, add 300ms as default
+        * Added min_skill_delay_limit as the minimum allowed delay for any skills
+          [celest]
+        * Some tidying up in battle_get_ functions [celest]
+        * Set exp table and job bonus table to 0 before reading - might solve some
+          memory bugs [celest]
+        * Updated skill range leniency code - If possible try and move towards the
+          skill target so that when casting it no longer falls out of range [celest]
+
+01/15
+        * Added effects to enemies for Gospel [celest]
+        * Added mobs spawn to all Yuno fields (according to 4th Jan patch) [Lupus]
+
+01/14
+        * Added party supporting effects for Gospel [celest]
+
 01/13
         * Added and testing support for 2004-12-06Sakexe [celest]
         * Removed emblem changing requiring Glory of Guild limited to TXT only [celest]

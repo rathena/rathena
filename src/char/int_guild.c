@@ -398,7 +398,7 @@ int inter_guild_init() {
 			continue;
 		}
 
-		g = calloc(sizeof(struct guild), 1);
+		g = aCalloc(sizeof(struct guild), 1);
 		if(g == NULL){
 			printf("int_guild: out of memory!\n");
 			exit(0);
@@ -412,7 +412,7 @@ int inter_guild_init() {
 			guild_calcinfo(g);
 		} else {
 			printf("int_guild: broken data [%s] line %d\n", guild_txt, c);
-			free(g);
+			aFree(g);
 		}
 		c++;
 	}
@@ -426,7 +426,7 @@ int inter_guild_init() {
 	}
 
 	while(fgets(line, sizeof(line)-1, fp)) {
-		gc = calloc(sizeof(struct guild_castle), 1);
+		gc = aCalloc(sizeof(struct guild_castle), 1);
 		if(gc == NULL){
 			printf("int_guild: out of memory!\n");
 			exit(0);
@@ -436,7 +436,7 @@ int inter_guild_init() {
 			numdb_insert(castle_db, gc->castle_id, gc);
 		} else {
 			printf("int_guild: broken data [%s] line %d\n", castle_txt, c);
-			free(gc);
+			aFree(gc);
 		}
 		c++;
 	}
@@ -445,7 +445,7 @@ int inter_guild_init() {
 		printf(" %s - making Default Data...\n", castle_txt);
 		//デフォルトデータを作成
 		for(i = 0; i < MAX_GUILDCASTLE; i++) {
-			gc = calloc(sizeof(struct guild_castle), 1);
+			gc = aCalloc(sizeof(struct guild_castle), 1);
 			if (gc == NULL) {
 				printf("int_guild: out of memory!\n");
 				exit(0);
@@ -577,7 +577,7 @@ int guild_check_empty(struct guild *g) {
 	numdb_erase(guild_db, g->guild_id);
 	inter_guild_storage_delete(g->guild_id);
 	mapif_guild_broken(g->guild_id, 0);
-	free(g);
+	aFree(g);
 
 	return 1;
 }
@@ -765,7 +765,7 @@ int mapif_guild_memberinfoshort(struct guild *g, int idx) {
 	WBUFL(buf, 2) = g->guild_id;
 	WBUFL(buf, 6) = g->member[idx].account_id;
 	WBUFL(buf,10) = g->member[idx].char_id;
-	WBUFB(buf,14) = g->member[idx].online;
+	WBUFB(buf,14) = (unsigned char)g->member[idx].online;
 	WBUFW(buf,15) = g->member[idx].lv;
 	WBUFW(buf,17) = g->member[idx].class_;
 	mapif_sendall(buf, 19);
@@ -965,7 +965,7 @@ int mapif_parse_CreateGuild(int fd, int account_id, char *name, struct guild_mem
 		mapif_guild_created(fd, account_id, NULL);
 		return 0;
 	}
-	g = calloc(sizeof(struct guild), 1);
+	g = aCalloc(sizeof(struct guild), 1);
 	if (g == NULL) {
 		printf("int_guild: CreateGuild: out of memory !\n");
 		mapif_guild_created(fd, account_id, NULL);
@@ -1085,7 +1085,7 @@ int mapif_parse_GuildLeave(int fd, int guild_id, int account_id, int char_id, in
 }
 
 // オンライン/Lv更新
-int mapif_parse_GuildChangeMemberInfoShort(int fd, int guild_id, int account_id, int char_id, int online, int lv, int class) {
+int mapif_parse_GuildChangeMemberInfoShort(int fd, int guild_id, int account_id, int char_id, int online, int lv, int class_) {
 	struct guild *g;
 	int i, alv, c;
 
@@ -1101,7 +1101,7 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd, int guild_id, int account_id,
 		if (g->member[i].account_id == account_id && g->member[i].char_id == char_id) {
 			g->member[i].online = online;
 			g->member[i].lv = lv;
-			g->member[i].class_ = class;
+			g->member[i].class_ = class_;
 			mapif_guild_memberinfoshort(g, i);
 		}
 		if (g->member[i].account_id > 0) {
@@ -1111,7 +1111,7 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd, int guild_id, int account_id,
 		if (g->member[i].online)
 			g->connect_member++;
 	}
-	
+
 	if (c)
 		// 平均レベル
 		g->average_lv = alv / c;
@@ -1147,7 +1147,7 @@ int mapif_parse_BreakGuild(int fd, int guild_id) {
 
 	if(log_inter)
 		inter_log("guild %s (id=%d) broken" RETCODE, g->name, guild_id);
-	free(g);
+	aFree(g);
 
 	return 0;
 }

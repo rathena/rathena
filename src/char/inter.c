@@ -114,7 +114,7 @@ int inter_accreg_init() {
 	while(fgets(line, sizeof(line)-1, fp)){
 		line[sizeof(line)-1] = '\0';
 
-		reg = calloc(sizeof(struct accreg), 1);
+		reg = aCalloc(sizeof(struct accreg), 1);
 		if (reg == NULL) {
 			printf("inter: accreg: out of memory!\n");
 			exit(0);
@@ -123,7 +123,7 @@ int inter_accreg_init() {
 			numdb_insert(accreg_db, reg->account_id, reg);
 		} else {
 			printf("inter: accreg: broken data [%s] line %d\n", accreg_txt, c);
-			free(reg);
+			aFree(reg);
 		}
 		c++;
 	}
@@ -371,7 +371,7 @@ int check_ttl_wisdata() {
 			// removed. not send information after a timeout. Just no answer for the player
 			//mapif_wis_end(wd, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 			numdb_erase(wis_db, wd->id);
-			free(wd);
+			aFree(wd);
 		}
 	} while(wis_delnum >= WISDELLIST_MAX);
 
@@ -423,7 +423,7 @@ int mapif_parse_WisRequest(int fd) {
 			mapif_send(fd, buf, 27);
 		} else {
 
-			wd = (struct WisData *)calloc(sizeof(struct WisData), 1);
+			wd = (struct WisData *)aCalloc(sizeof(struct WisData), 1);
 			if (wd == NULL){
 				printf("inter: WisRequest: out of memory !\n");
 				return 0;
@@ -458,7 +458,7 @@ int mapif_parse_WisReply(int fd) {
 	if ((--wd->count) <= 0 || flag != 1) {
 		mapif_wis_end(wd, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 		numdb_erase(wis_db, id);
-		free(wd);
+		aFree(wd);
 	}
 
 	return 0;
@@ -481,7 +481,7 @@ int mapif_parse_AccReg(int fd) {
 	struct accreg *reg = numdb_search(accreg_db, RFIFOL(fd,4));
 
 	if (reg == NULL) {
-		if ((reg = calloc(sizeof(struct accreg), 1)) == NULL) {
+		if ((reg = aCalloc(sizeof(struct accreg), 1)) == NULL) {
 			printf("inter: accreg: out of memory !\n");
 			exit(0);
 		}

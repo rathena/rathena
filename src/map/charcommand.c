@@ -1063,8 +1063,8 @@ int charcommand_item(
 					if (pet_id >= 0) {
 						sd->catch_target_class = pet_db[pet_id].class_;
 						intif_create_pet(sd->status.account_id, sd->status.char_id,
-						                 pet_db[pet_id].class_, mob_db[pet_db[pet_id].class_].lv,
-						                 pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate,
+						                 (short)pet_db[pet_id].class_, (short)mob_db[pet_db[pet_id].class_].lv,
+						                 (short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
 						                 100, 0, 1, pet_db[pet_id].jname);
 					// if not pet egg
 					} else {

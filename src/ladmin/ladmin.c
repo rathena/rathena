@@ -280,7 +280,7 @@ int ladmin_log(char *fmt, ...) {
 			fprintf(logfp, RETCODE);
 		else {
 			gettimeofday(&tv, NULL);
-			strftime(tmpstr, 24, date_format, localtime(&(tv.tv_sec)));
+			strftime(tmpstr, 24, date_format, localtime((const time_t*)&(tv.tv_sec)));
 			sprintf(tmpstr + strlen(tmpstr), ".%03d: %s", (int)tv.tv_usec / 1000, fmt);
 			vfprintf(logfp, tmpstr, ap);
 		}
@@ -294,7 +294,7 @@ int ladmin_log(char *fmt, ...) {
 //-----------------------------------------------------
 // Function to suppress control characters in a string.
 //-----------------------------------------------------
-int remove_control_chars(unsigned char *str) {
+int remove_control_chars(char *str) {
 	int i;
 	int change = 0;
 
@@ -381,9 +381,9 @@ int verify_accountname(char* account_name) {
 //---------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
 //---------------------------------------------------
-int e_mail_check(unsigned char *email) {
+int e_mail_check(char *email) {
 	char ch;
-	unsigned char* last_arobas;
+	char* last_arobas;
 
 	// athena limits
 	if (strlen(email) < 3 || strlen(email) > 39)
@@ -3266,7 +3266,7 @@ int parse_fromlogin(int fd) {
 	}
 
 //	printf("parse_fromlogin : %d %d %d\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
-	sd = session[fd]->session_data;
+	sd = (struct char_session_data*)session[fd]->session_data;
 
 	while(RFIFOREST(fd) >= 2) {
 		switch(RFIFOW(fd,0)) {

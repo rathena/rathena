@@ -6,7 +6,7 @@ struct item_data {
 	char name[24],jname[24];
 	int value_buy,value_sell,value_notdc,value_notoc;
 	int type;
-	int class;
+	int class_;
 	int sex;
 	int equip;
 	int weight;

@@ -161,7 +161,7 @@ struct dbt *online_db;
 
 void add_online_user(int account_id) {
     int *p;
-    p = aMalloc(sizeof(int));
+    p = (int*)aMalloc(sizeof(int));
     if (p == NULL) {
 		printf("add_online_user: memory allocation failure (malloc)!\n");
 		exit(0);
@@ -173,7 +173,7 @@ void add_online_user(int account_id) {
 int is_user_online(int account_id) {
     int *p;
 
-	p = numdb_search(online_db, account_id);
+	p = (int*)numdb_search(online_db, account_id);
 	if (p == NULL)
 		return 0;
 	printf("Acccount %d\n",*p);
@@ -182,8 +182,8 @@ int is_user_online(int account_id) {
 
 void remove_online_user(int account_id) {
     int *p;
-    p = numdb_erase(online_db,account_id);
-    free(p);
+    p = (int*)numdb_erase(online_db,account_id);
+    aFree(p);
 }
 
 //-----------------------------------------------------
@@ -238,9 +238,9 @@ int remove_control_chars(unsigned char *str) {
 //---------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
 //---------------------------------------------------
-int e_mail_check(unsigned char *email) {
+int e_mail_check(char *email) {
 	char ch;
-	unsigned char* last_arobas;
+	char* last_arobas;
 
 	// athena limits
 	if (strlen(email) < 3 || strlen(email) > 39)
@@ -394,7 +394,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	// auth start : time seed
 	gettimeofday(&tv, NULL);
-	strftime(tmpstr, 24, "%Y-%m-%d %H:%M:%S",localtime(&(tv.tv_sec)));
+	strftime(tmpstr, 24, "%Y-%m-%d %H:%M:%S",localtime((const time_t*)&(tv.tv_sec)));
 	sprintf(tmpstr+19, ".%03d", (int)tv.tv_usec/1000);
 
 	jstrescapecpy(t_uid,account->userid);
@@ -1217,7 +1217,7 @@ int parse_login(int fd) {
                             memcpy(WFIFOP(fd,47+server_num*32+6), server[i].name, 20);
                             WFIFOW(fd,47+server_num*32+26) = server[i].users;
                             WFIFOW(fd,47+server_num*32+28) = server[i].maintenance;
-                            WFIFOW(fd,47+server_num*32+30) = server[i].new;
+                            WFIFOW(fd,47+server_num*32+30) = server[i].new_;
                             server_num++;
                         }
                     }
@@ -1407,7 +1407,7 @@ int parse_login(int fd) {
 					memcpy(server[account.account_id].name,RFIFOP(fd,60),20);
 					server[account.account_id].users=0;
 					server[account.account_id].maintenance=RFIFOW(fd,82);
-					server[account.account_id].new=RFIFOW(fd,84);
+					server[account.account_id].new_=RFIFOW(fd,84);
 					server_fd[account.account_id]=fd;
 					if(anti_freeze_enable)
 						server_freezeflag[account.account_id] = 5; // Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
@@ -1480,9 +1480,9 @@ int parse_console(char *buf) {
 
     printf("Type of command: %s || Command: %s \n",type,command);
 
-    if(buf) free(buf);
-    if(type) free(type);
-    if(command) free(command);
+    if(buf) aFree(buf);
+    if(type) aFree(type);
+    if(command) aFree(command);
 
     return 0;
 }
@@ -1841,7 +1841,7 @@ int do_init(int argc,char **argv){
 	}
 
 	// Online user database init
-    free(online_db);
+    aFree(online_db);
 	online_db = numdb_init();
 
 	printf("The login-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", login_port);

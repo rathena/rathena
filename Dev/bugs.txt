@@ -221,9 +221,7 @@ Problem:	Berzebub, etc cards don't decrease aftercast delays
 Assigned:	N/A
 Progress:	0%
 
-Problem:	Some clients that are able to log into eAthena servers properly are not able to when custom items are used.
-		I believe Celest may have accidentially "broken" a few things when she was attempting to create new packet
-		compatibility and removed old ones.
+Problem:	Older Clients are unable to log into the server, period. 
+		Even if the packet_db is set to use the older clients, they still are unable to connect.
 Assigned:	Celest
 Progress:	0%
-		Celest: What version was the client using?

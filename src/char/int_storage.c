@@ -192,7 +192,7 @@ struct storage *account2storage(int account_id)
 	struct storage *s;
 	s=numdb_search(storage_db,account_id);
 	if(s == NULL) {
-		s = calloc(sizeof(struct storage), 1);
+		s = aCalloc(sizeof(struct storage), 1);
 		if(s==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);
@@ -210,7 +210,7 @@ struct guild_storage *guild2storage(int guild_id)
 	if(inter_guild_search(guild_id) != NULL) {
 		gs=numdb_search(guild_storage_db,guild_id);
 		if(gs == NULL) {
-			gs = calloc(sizeof(struct guild_storage), 1);
+			gs = aCalloc(sizeof(struct guild_storage), 1);
 			if(gs==NULL){
 				printf("int_storage: out of memory!\n");
 				exit(0);
@@ -242,7 +242,7 @@ int inter_storage_init()
 	}
 	while(fgets(line,65535,fp)){
 		sscanf(line,"%d",&tmp_int);
-		s=calloc(sizeof(struct storage), 1);
+		s=aCalloc(sizeof(struct storage), 1);
 		if(s==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);
@@ -254,7 +254,7 @@ int inter_storage_init()
 		}
 		else{
 			printf("int_storage: broken data [%s] line %d\n",storage_txt,c);
-			free(s);
+			aFree(s);
 		}
 		c++;
 	}
@@ -270,7 +270,7 @@ int inter_storage_init()
 	}
 	while(fgets(line,65535,fp)){
 		sscanf(line,"%d",&tmp_int);
-		gs=calloc(sizeof(struct guild_storage), 1);
+		gs=aCalloc(sizeof(struct guild_storage), 1);
 		if(gs==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);
@@ -282,7 +282,7 @@ int inter_storage_init()
 		}
 		else{
 			printf("int_storage: broken data [%s] line %d\n",guild_storage_txt,c);
-			free(gs);
+			aFree(gs);
 		}
 		c++;
 	}
@@ -356,7 +356,7 @@ int inter_storage_delete(int account_id)
 				inter_pet_delete(*((long *)(&s->storage[i].card[2])));
 		}
 		numdb_erase(storage_db,account_id);
-		free(s);
+		aFree(s);
 	}
 	return 0;
 }
@@ -372,7 +372,7 @@ int inter_guild_storage_delete(int guild_id)
 				inter_pet_delete(*((long *)(&gs->storage[i].card[2])));
 		}
 		numdb_erase(guild_storage_db,guild_id);
-		free(gs);
+		aFree(gs);
 	}
 	return 0;
 }

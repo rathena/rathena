@@ -94,7 +94,7 @@ int inter_party_init() {
 			continue;
 		}
 
-		p = calloc(sizeof(struct party), 1);
+		p = aCalloc(sizeof(struct party), 1);
 		if (p == NULL){
 			printf("int_party: out of memory!\n");
 			exit(0);
@@ -107,7 +107,7 @@ int inter_party_init() {
 			party_check_empty(p);
 		} else {
 			printf("int_party: broken data [%s] line %d\n", party_txt, c + 1);
-			free(p);
+			aFree(p);
 		}
 		c++;
 	}
@@ -199,7 +199,7 @@ int party_check_empty(struct party *p) {
 		// ’N‚à‚¢‚È‚¢‚Ì‚Å‰ðŽU
 	mapif_party_broken(p->party_id, 0);
 	numdb_erase(party_db, p->party_id);
-	free(p);
+	aFree(p);
 
 	return 1;
 }
@@ -391,7 +391,7 @@ int mapif_parse_CreateParty(int fd, int account_id, char *name, char *nick, char
 		mapif_party_created(fd, account_id, NULL);
 		return 0;
 	}
-	p = calloc(sizeof(struct party), 1);
+	p = aCalloc(sizeof(struct party), 1);
 	if (p == NULL) {
 		printf("int_party: out of memory !\n");
 		mapif_party_created(fd,account_id,NULL);

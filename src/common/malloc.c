@@ -1,8 +1,9 @@
-#if !defined(DMALLOC) && !defined(GCOLLECT) && !defined(BCHECK)
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "malloc.h"
+
+#if !defined(DMALLOC) && !defined(GCOLLECT) && !defined(BCHECK)
 
 void* aMalloc_( size_t size, const char *file, int line, const char *func )
 {
@@ -45,9 +46,27 @@ void* aRealloc_( void *p, size_t size, const char *file, int line, const char *f
 	return ret;
 }
 
+#endif
+
+
+#if defined(GCOLLECT)
+
+void * _bcallocA(size_t size, size_t cnt) {
+	void *ret = aMallocA(size * cnt);
+	memset(ret, 0, size * cnt);
+	return ret;
+}
+
 void * _bcalloc(size_t size, size_t cnt) {
-	void *ret = malloc(size * cnt);
+	void *ret = aMalloc(size * cnt);
 	memset(ret, 0, size * cnt);
 	return ret;
 }
 #endif
+
+char * _bstrdup(const char *chr) {
+	int len = strlen(chr);
+	char *ret = aMalloc(len + 1);
+	strcpy(ret, chr);
+	return ret;
+}

@@ -402,7 +402,7 @@ int check_ttl_wisdata() {
 			// removed. not send information after a timeout. Just no answer for the player
 			//mapif_wis_end(wd, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 			numdb_erase(wis_db, wd->id);
-			free(wd);
+			aFree(wd);
 		}
 	} while(wis_delnum >= WISDELLIST_MAX);
 
@@ -490,7 +490,7 @@ int mapif_parse_WisReply(int fd) {
 	if ((--wd->count) <= 0 || flag != 1) {
 		mapif_wis_end(wd, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 		numdb_erase(wis_db, id);
-		free(wd);
+		aFree(wd);
 	}
 
 	return 0;

@@ -424,7 +424,7 @@ void* db_erase(struct dbt *table,void* key)
 #ifdef MALLOC_DBN
 	free_dbn(p);
 #else
-	free(p);
+	aFree(p);
 #endif
 	return data;
 }
@@ -497,11 +497,11 @@ void db_final(struct dbt *table,int (*func)(void*,void*,va_list),...)
 #ifdef MALLOC_DBN
 			free_dbn(p);
 #else
-			free(p);
+			aFree(p);
 #endif
 			p=pn;
 		}
 	}
-	free(table);
+	aFree(table);
 	va_end(ap);
 }

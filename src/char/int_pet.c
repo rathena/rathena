@@ -88,7 +88,7 @@ int inter_pet_init()
 	if( (fp=fopen(pet_txt,"r"))==NULL )
 		return 1;
 	while(fgets(line,sizeof(line),fp)){
-		p=calloc(sizeof(struct s_pet), 1);
+		p=aCalloc(sizeof(struct s_pet), 1);
 		if(p==NULL){
 			printf("int_pet: out of memory!\n");
 			exit(0);
@@ -100,7 +100,7 @@ int inter_pet_init()
 			numdb_insert(pet_db,p->pet_id,p);
 		}else{
 			printf("int_pet: broken data [%s] line %d\n",pet_txt,c);
-			free(p);
+			aFree(p);
 		}
 		c++;
 	}
@@ -210,7 +210,7 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 	short pet_equip,short intimate,short hungry,char rename_flag,char incuvate,char *pet_name)
 {
 	struct s_pet *p;
-	p=malloc(sizeof(struct s_pet));
+	p=aMalloc(sizeof(struct s_pet));
 	if(p==NULL){
 		printf("int_pet: out of memory !\n");
 		mapif_pet_created(fd,account_id,NULL);
@@ -282,7 +282,7 @@ int mapif_save_pet(int fd,int account_id,struct s_pet *data)
 		pet_id = data->pet_id;
 		p=numdb_search(pet_db,pet_id);
 		if(p == NULL) {
-			p=malloc(sizeof(struct s_pet));
+			p=aMalloc(sizeof(struct s_pet));
 			if(p==NULL){
 				printf("int_pet: out of memory !\n");
 				mapif_save_pet_ack(fd,account_id,1);
