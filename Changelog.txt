@@ -1,5 +1,6 @@
 Date	Added
 12/22
+	* Reverted npc.c back to before jA 1081. This fixes warp portals missing and other npc bugs [Ajarn]
 	* Added conditional SHOW_DEBUG_MSG for displaying ShowDebug()'s output, it was missing before [MC Cameri]
 	* Added #zeny, removed @charzeny [MC Cameri]
         * Fixed reading itemslottable.txt causing cards to become unuseable [celest]
