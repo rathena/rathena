@@ -16,9 +16,9 @@
 
 
 
-//===============================================================================================================//
-//						BBQ Camp Grounds						//
-//===============================================================================================================//
+//============================================================================//
+//			BBQ Camp Grounds
+//============================================================================//
 
 //====================================================
 comodo.gat,216,310,4	script	BBQ Papa	85,{
@@ -81,9 +81,9 @@ comodo.gat,218,309,4	script	Razy	69,{
 
 
 
-//===============================================================================================================//
-//							Casino							//
-//===============================================================================================================//
+//============================================================================//
+//				Casino
+//============================================================================//
 
 //=============================================================
 cmd_in02.gat,172,105,4	script	G . J	86,{
@@ -251,17 +251,17 @@ cmd_in02.gat,48,55,4	script	Scoursege	51,{
 
 
 
-//===============================================================================================================//
-//						Chief Quest							//
-//===============================================================================================================//
+//============================================================================//
+//			Chief Quest (Doomed Swords Part 1)
+//============================================================================//
 //=======================================================
 comodo.gat,206,310,4	script	Rochito	48,
 {
-	if(chief_Q == 1) goto L_1;
-	if(chief_Q == 2) goto L_2;
-	if(chief_Q == 3) goto sL_2;
-	if(chief_Q == 4) goto L_3;
-	if(chief_Q == 5) goto sL_3;
+	if(dmdswrd_Q == 1) goto L_1;
+	if(dmdswrd_Q == 2) goto L_2;
+	if(dmdswrd_Q == 3) goto sL_2;
+	if(dmdswrd_Q == 4) goto L_3;
+	if(dmdswrd_Q == 5 || dmdswrd_Q == 6) goto sL_3;
 L_0:
 	mes "[Rochito]";
 	mes "Meat, meat, meat... I LOVE MEAT!! Eat, eat, eat... ALL I eat is MEAT!! I'm sooo obsessed with meat..... I'm... I.. I... I'm a MEAT MAN!!";
@@ -297,7 +297,7 @@ L_0:
 		mes "[Rochito]";
 		mes "Still, the authorities are worried about how Koserahserah should be regulated.";
 		mes "The ^5555FFChief of Comodo^000000 is currently working on a some guidlines for it.";
-		set chief_Q, 1;
+		if(dmdswrd_Q == 0) set dmdswrd_Q, 1;
 		close;
 	M_End:
 		close;
@@ -352,7 +352,7 @@ L_2:
 	mes "Please.  We would be very grateful if you could give this to him.";
 	next;
 	mes "^5555FF~ recieved 'Mureuchieligu Wine' ~^000000";
-	set chief_Q, 3;
+	set dmdswrd_Q, 3;
 	close;
 
 	sL_2:
@@ -364,7 +364,7 @@ L_3:
 	mes "[Rochito]";
 	mes "You've returned..... Oh! Thank you for the delivering the wine for us.";
 	emotion 15;
-	set chief_Q, 5;
+	set dmdswrd_Q, 5;
 	next;
 
 	sL_3:
@@ -378,7 +378,7 @@ L_3:
 		mes "[Rochito]";
 		mes "I believe there is a cheese expert named ^5533FFTORUNA^000000 somewhere on this island.";
 		mes "If your interested in the cheese you should go ask him about it.";
-		if(cheese_Q == 0) set cheese_Q, 1;
+		if(dmdswrd_Q == 5) set dmdswrd_Q, 6;
 		close;
 
 	
@@ -387,8 +387,8 @@ L_3:
 //=======================================================
 comodo.gat,204,310,4	script	Rockha	98,
 {
-	if(chief_Q == 3) goto L_1;
-	if(chief_Q == 4 || chief_Q==5) goto L_2;
+	if(dmdswrd_Q == 3) goto L_1;
+	if(dmdswrd_Q == 4 || dmdswrd_Q==5) goto L_2;
 L_0:
 	mes "[Rockha]";
 	mes ". . . . . . . . . .";
@@ -441,8 +441,8 @@ L_2:
 //=======================================================
 comodo.gat,209,314,4	script	Rotute	82,
 {
-	if(chief_Q==2 || chief_Q==3) goto L_1;
-	if(chief_Q == 4 || chief_Q==5) goto L_2;
+	if(dmdswrd_Q==2 || dmdswrd_Q==3) goto L_1;
+	if(dmdswrd_Q == 4 || dmdswrd_Q==5) goto L_2;
 
 L_0:
 	mes "[Rotute]";
@@ -558,10 +558,10 @@ comodo.gat,209,305,4	script	Emralhandas	70,{
 // Chief's House =========================================================//
 cmd_in02.gat,32,140,4	script	Chief Tausupa	49,
 {
-	if(chief_Q == 1) goto L_1;
-	if(chief_Q == 2) goto sL_1;
-	if(chief_Q == 3) goto L_2;
-	if(chief_Q == 4) goto sL_2;
+	if(dmdswrd_Q == 1) goto L_1;
+	if(dmdswrd_Q == 2) goto sL_1;
+	if(dmdswrd_Q == 3) goto L_2;
+	if(dmdswrd_Q == 4) goto sL_2;
 
 L_0:
 	mes "[Chief Tausupa]";
@@ -616,7 +616,7 @@ L_1:
 	mes "Can you take this special seasoning to my friends?";
 	next;
 	mes "^5555FF~ recieved Koserahserah ~^000000";
-	set chief_Q, 2;
+	set dmdswrd_Q, 2;
 	next;
 
 	sL_1:
@@ -655,7 +655,7 @@ L_2:
 	mes "[Chief Tausupa]";
 	mes "I am thankful for my friends' advice.  The gift they gave me had a great deal of meaning.";
 	mes "Please tell my friends this, 'I will not avoid my destiny.  On the contrary, I will fullfill it to the best of my ability'.";
-	set chief_Q, 4;
+	set dmdswrd_Q, 4;
 	next;
 
 	sL_2:
@@ -666,14 +666,14 @@ L_2:
 
 
 
-//=======================================================================================================//
-//						Cheese Quest						//
-//=======================================================================================================//
+//============================================================================//
+//			Cheese Quest (Doomed Swords Part 2)
+//============================================================================//
 
 //=======================================================
 comodo.gat,88,97,4	script	Cheese Expert TORUNA	109,
 {
-	if(cheese_Q == 2) goto sL_2;
+	if(dmdswrd_Q == 7) goto sL_2;
 	mes "[TORUNA]";
 	mes "I hear that the cheese here is delicious.  Everytime I come here to visit, I ask for some of that popular cheese.";
 	mes "But they always seem to be out!  If I could just get a taste of that cheese...........";
@@ -708,7 +708,7 @@ M_Menu:
 		mes "They slowly chipped away at the limestone surfaces, to shape the interior of the cave into something much more eye pleasing.";
 		mes "It was from these humble beginnings that the Comodo you see today, was founded.";
 		next;
-		if(cheese_Q == 1) goto sL_1;
+		if(dmdswrd_Q == 6) goto sL_1;
 
 		mes "[TORUNA]";
 		mes "Unfortunately that is only half the story.";
@@ -742,7 +742,7 @@ M_Menu:
 			mes "[TORUNA]";
 			mes "This special Cheese is simply DELICIOUS! You will understand how good the Cheese is once you try it.";
 			emotion 14;
-			set cheese_Q, 2;
+			set dmdswrd_Q, 7;
 			next;
 		sL_2:
 			mes "[TORUNA]";
@@ -763,8 +763,8 @@ M_Menu:
 //=======================================================
 comodo.gat,164,291,2	script	Rakusa	73,
 {
-	if(cheese_Q == 2) goto L_1;
-	if(cheese_Q == 3) goto L_2;
+	if(dmdswrd_Q == 7) goto L_1;
+	if(dmdswrd_Q == 8) goto L_2;
 
 	mes "[Rakusa]";
 	mes "Comodo is often reffered to as the town of 'recreation and relaxation'.......";
@@ -782,7 +782,7 @@ L_1:
 	next;
 	mes "[Rakusa]";
 	mes "I just can't stop wondering about what kind of Cheese it is.  I sure hope I will have the opportunity to try it someday.";
-	set cheese_Q, 3;
+	set dmdswrd_Q, 8;
 	next;
 L_2:
 	mes "[Rakusa]";
@@ -797,8 +797,8 @@ L_2:
 comodo.gat,169,284,4	script	Kichiri	99,
 {
 	mes "[Kichiri]";
-	if(cheese_Q == 3) goto L_1;
-	if(cheese_Q == 4) goto L_2;
+	if(dmdswrd_Q == 8) goto L_1;
+	if(dmdswrd_Q == 9) goto L_2;
 
 	mes "In the heart of Comodo lies a performance stage.  It's where a number of crazed residents put on shows for the tourists that come to visit.";
 	mes "The shows are so popular that some tourist even come back to Comodo to see them again.";
@@ -813,7 +813,7 @@ L_1:
 	next;
 	mes "[Kichiri]";
 	mes "Yeah, right over there, the guy named ^3355FFMagatu^000000.  Can you do something about it?";
-	set cheese_Q, 4;
+	set dmdswrd_Q, 9;
 	close;
 L_2:
 	mes "I just want to have a quit time and have a few drinks, is this too much to ask for?";
@@ -826,8 +826,8 @@ L_2:
 comodo.gat,163,280,4	script	Magatu	55,
 {
 	mes "[Magatu]";
-	if(cheese_Q == 4) goto L_1;
-	if(cheese_Q == 5) goto L_2;
+	if(dmdswrd_Q == 9) goto L_1;
+	if(dmdswrd_Q == 10) goto L_2;
 
 	mes "Yes! That's it!! The irresistable smell of that amazing ^5533FFCheese^000000!! It's so delicious!.... Oh, I can't wait any longer......";
 	emotion 3;
@@ -853,7 +853,7 @@ L_1:
 	mes "When you see him give him this Bottle Cap.  Don't do anything else, just give him the bottle cap and he will give you some info on the Cheese....";
 	next;
 	mes "^3355FF- Received a Bottle Cap -^000000";
-	set cheese_Q, 5;
+	set dmdswrd_Q, 10;
 	close;
 L_2:
 	mes "Oh yeah, I gotta tell you my friend's name.....";
@@ -866,8 +866,8 @@ L_2:
 
 //======================================================
 cmd_in02.gat,189,99,4	script	Manzi	85,{
-	if(cheese_Q == 5) goto L_1;
-	if(cheese_Q == 6) goto L_2;
+	if(dmdswrd_Q == 10) goto L_1;
+	if(dmdswrd_Q == 11) goto L_2;
 	if(Class == Job_Novice) goto L_Nov;
 
 	mes "[Manzi]";
@@ -909,7 +909,7 @@ L_1:
 	next;
 	mes "[Manzi]";
 	mes "By the way......... no else is listening this right?....... *whispers: that lady is actually incharge of the Comodo Cheese distribution*...........";
-	set cheese_Q, 6;
+	set dmdswrd_Q, 11;
 	close;
 L_2:
 	mes "[Manzi]";
@@ -921,10 +921,10 @@ L_2:
 comodo.gat,187,153,4	script	Hullaris	701,
 {
 	mes "[Hullaris]";
-	if(cheese_Q == 6) goto L_1;
-	if(cheese_Q == 7) goto L_2;
-	if(cheese_Q == 8) goto L_3;
-	if(cheese_Q == 9) goto L_4;
+	if(dmdswrd_Q == 11) goto L_1;
+	if(dmdswrd_Q == 12) goto L_2;
+	if(dmdswrd_Q == 13) goto L_3;
+	if(dmdswrd_Q == 14) goto L_4;
 
 	mes "Hula Dance? Who says it's merely a hula dance?? It is much more than just some dance.";
 	mes "To reffer to Comodo's unique form of dancing as simply a hula dance, is just insulting!";
@@ -1000,7 +1000,7 @@ L_2:
 	mes "[Hullaris]";
 	mes "Just tell Nigirboran everything I have told you and he will judge whether or not you are worthy of the Stone of Awakening.";
 	mes "Best of luck to you.";
-	set cheese_Q, 7;
+	set dmdswrd_Q, 12;
 	close;
 L_3:
 	mes "Your back........ do you have the ^5533FFProof of Worthiness^000000?";
@@ -1036,18 +1036,17 @@ L_4:
 	mes "[Hullaris]";
 	mes "You are now one of the few who have been priviledged enough to taste Comodo's special 'Cheese', heh heh heh.....";
 	mes "Well have fun here in Comodo.";
-	set cheese_Q,10;
+	set dmdswrd_Q,15;
 	close;
 }
 
 //=========================================================
-beach_dun3.gat,30,220,4	script	Wizard Nigirboran	704,
-{
+beach_dun3.gat,30,220,4	script	Wizard Nigirboran	704,{
 	mes "[Nigirboran]";
-	if(cheese_Q == 7) goto L_1;
-	if(cheese_Q == 8) goto L_2;
-	if(cheese_Q == 9) goto L_3;
-	if(comodo_npc == 14) goto L_4;
+	if(dmdswrd_Q == 12) goto L_1;
+	if(dmdswrd_Q == 13) goto L_2;
+	if(dmdswrd_Q == 14) goto L_3;
+	if(dmdswrd_Q == 15) goto L_4;
 
 	mes ". . . . . . . . . . . . . . .";
 	next;
@@ -1085,7 +1084,7 @@ L_1:
 	next;
 	menu "Sure, why not.",-, "...... Uh... no....",M_End;
 
-		set cheese_Q, 8;
+		set dmdswrd_Q, 13;
 		mes "[Nigirboran]";
 		goto L_2;
 		
@@ -1146,7 +1145,7 @@ L_2:
 		emotion 18;
 		next;
 		mes "[Nigirboran]";
-		mes "If you cannot hadle a little piece of cheese, there is absolutely no way you will be able to handle the Stone of Awakening.";
+		mes "If you cannot handle a little piece of cheese, there is absolutely no way you will be able to handle the Stone of Awakening.";
 		next;
 		mes "[Nigirboran]";
 		mes "If you feel up to it, you may try again later.  The fact that you're still alive is a good sign.";
@@ -1182,10 +1181,8 @@ L_2:
 		next;
 		mes "[Nigirboran]";
 		mes "Just show this to Hullaris and she will give you the Stone of Awakening.";
-		set cheese_Q, 9;
-		close;
-
-		// this section is for another quest. will implement later.
+		set dmdswrd_Q, 14;
+		next;
 		mes "[Nigirboran]";
 		mes "Oh, by the way, why did you choose to look for the Stone in the first place?";
 		next;
@@ -1201,10 +1198,10 @@ L_2:
 		mes "could conquer the whole world with ease.";
 		next;
 		mes "[Nigirboran]";
-		mes "And again, to summon these three Doomed Swords, the user is also required to possess";
-		mes "both ?^3355FF` Tablet of Power '^000000 and";
+		mes "To summon these three Doomed Swords, the user is also required to possess";
+		mes "both the ^3355FF` Tablet of Power '^000000 and";
 		mes "^3355FF` Book of the Tiresome Sheep'^000000.";
-		next;
+		close;
 
 	L_LowLvl:
 		mes "^3355FF~ it is unbearable and causes you to faint ~^000000";
@@ -1222,18 +1219,17 @@ L_3:
 	mes "Go see Hullaris for the Stone of Awakening.  Good luck to you.";
 	close;
 L_4:
-	mes "[Nigirboran]";
 	mes "Look for ^3355FFMoet Leng Good^000000 somewhere";
-	mes "inside ^3355FFAldebaran^000000 ?";
+	mes "inside ^3355FFAldebaran^000000";
 	mes "regarding information about the 'Tablet of Power'";
 	close;
 }
 
 
 
-//===============================================================================================================//
-//					Comodo Pharos Lightouse (Beacon Island)					//
-//===============================================================================================================//
+//============================================================================//
+//			Comodo Pharos Lightouse (Beacon Island)
+//============================================================================//
 
 //==================================================
 cmd_fild07.gat,192,58,4	script	Light House Guard	100,{
@@ -1328,10 +1324,9 @@ cmd_fild07.gat,94,134,4,	script	Sailor	100,{
 }
 
 
-
-//=======================================================================================================//
-//						Kokomo Beach						//
-//=======================================================================================================//
+//============================================================================//
+//			Kokomo Beach
+//============================================================================//
 
 //=============================================================
 cmd_fild04.gat,188,74,4	script	Zyosegirl	93,{
@@ -1362,223 +1357,9 @@ cmd_fild04.gat,267,137,4	script	Kid	703,{
 }
 
 
-//=====================================================================================================//
+//============================================================================//
 //						Others
-//=====================================================================================================//
-
-//=========================================================
-aldebaran.gat,44,53,4	script	Wizard in Training	64,{
-	if(comodo_npc == 14) goto cmd_npc14;
-	if(comodo_npc == 15) goto cmd_npc15;
-	if(comodo_npc == 16) goto cmd_npc16;
-	if(comodo_npc == 17) goto cmd_npc17;
-	mes "[Moet Leng Good]";
-	mes "Did you know that some people signed contract in shadows with the Dark Lord with the";
-	mes "^3355FF`Tablet of Power'^000000?!";
-	next;
-	mes "[Moet Leng Good]";
-	mes "As a result of their greed for power, it brought disasters for the entire world.";
-	mes "So please, be happy with what you already have and do not give in to the dark side.";
-	close;
-
-	cmd_npc14:
-		mes "[Moet Leng Good]";
-		mes "I guess you are the possessor of the 'Stone of Awakening' and also the one seeking for the 'Tablet of Power'.";
-		next;
-		mes "[Moet Leng Good]";
-		mes "Very well then, I will help you to make a 'Tablet of Power'.";
-		mes "However, it is not a simple task, I will need a number of materials in order to succeed.";
-		next;
-		mes "[Moet Leng Good]";
-		mes "I will need one of these stones, gems, and ores.";
-		mes "^3355FF`Blue Gemstone'^000000";
-		mes "^3355FF`Sapphire'^000000";
-		mes "^3355FF`Aquarmarine'^000000";
-		mes "^3355FF`Shining Stone'^000000";
-		mes "and ^3355FF`Rough Elunium'^000000";
-		next;
-		mes "[Moet Leng Good]";
-		mes "In other words, the 'Tablet of Power' is very valuable, and might take you a while to gather the resources for it.";
-		set comodo_npc,15;
-		close;
-	cmd_npc15:
-		if((countitem(717) > 0) & (countitem(726) > 0) & (countitem(720) > 0) & (countitem(640) > 0) & (countitem(757) > 0)) goto set_cmd_npc16; 
-		mes "[Moet Leng Good]";
-		mes "Very well then, I will help you to make a 'Tablet of Power'.";
-		mes "However, it is not a simple task, I will need a number of materials in order to succeed.";
-		next;
-		mes "[Moet Leng Good]";
-		mes "I will need one of these stones, gems, and ores.";
-		mes "^3355FF`Blue Gemstone'^000000";
-		mes "^3355FF`Sapphire'^000000";
-		mes "^3355FF`Aquarmarine'^000000";
-		mes "^3355FF`Shining Stone'^000000";
-		mes "and ^3355FF`Rough Elunium'^000000";
-		next;
-		mes "[Moet Leng Good]";
-		mes "In other words, the 'Tablet of Power' is very valuable, and might take you a while to gather the resources for it.";
-		close;
-
-		set_cmd_npc16:
-			mes "[Moet Leng Good]";
-			mes ". . . . . ! !";
-			mes "I can hardly believe that you actually gathered all the resources for the 'Tablet of Power'";
-			mes "Because you have worked so hard, let me make the tablet for you now.";
-			next;
-			delitem 717,1;
-			delitem 726,1;
-			delitem 720,1;
-			delitem 640,1;
-			delitem 757,1;
-			mes "^3355FF- Gives him all the stones -^000000";
-			set comodo_npc,16;
-			next;
-			mes "[Moet Leng Good]";
-			mes "Now, I'll just need you to gather a few ingredients for the fininshing touch of the tablet.";
-			next;
-			mes "[Moet Leng Good]";
-			mes "I will need just one ^3355FF`Cobweb'^000000";
-			mes "You could easily obtain them through argos in Mt. Mjolnir";
-			next;
-			mes "^3355FF- Moet Leng Good's-^000000";
-			mes "^3355FF- working hard on the tablet -^000000";
-			close;
-	cmd_npc16:
-		if(countitem(1025) > 0) goto set_cmd_npc17;
-		mes "[Moet Leng Good]";
-		mes "The tablet will be done when I finish!";
-		mes "Please do not bother me for now, I need to concentrate";
-		next;
-		mes "[Moet Leng Good]";
-		mes "Meanwhile, please go find a cobweb so I could use it to provide some finishing touches to the tablet, thanks.";
-		close;
-
-		set_cmd_npc17:
-			mes "[Moet Leng Good]";
-			mes "Ah, very good, you got a cobweb, please just leave it over there.";
-			next;
-			mes "^3355FF- Gives cobweb to him-^000000";
-			delitem 1025,1;
-			next;
-			mes "[Moet Leng Good]";
-			mes "Alright, here we go !!";
-			next;
-			mes "^3355FF- Clang ! Clang ! Clunk ! -^000000";
-			mes "^3355FF- Boom ! ! -^000000";
-			next;
-			mes "^3355FF- `Tablet of Power'-^000000";
-			mes "^3355FF- is forged -^000000";
-			next;
-			mes "^3355FF- Received 'Tablet of Power'-^000000";
-			set comodo_npc,17;
-			next;
-			mes "[Moet Leng Good]";
-			mes "Even though you possess the 'Tablet of Power' now, the tablet would not be effective without";
-			mes "the ^3355FF` Book of the Tiresome Sheep'^000000??";
-			next;
-			mes "[Moet Leng Good]";
-			mes "^3355FF`Book of the Tiresome Sheep'^000000";
-			mes "was originally crafted by demons located in the desert and now the crafting skill have been passed down to a few wanderers near Morroc.";
-			next;
-			mes "[Moet Leng Good]";
-			mes "So if you wish to obatin the 'Book of the Tiresome Sheep', Morroc would be a smart place to look";
-			close;
-	cmd_npc17:
-		mes "[Moet Leng Good]";
-		mes "Head to Morroc then!";
-		mes "Show the someone the 'Tablet of Power' and maybe some people will tell you about the 'Book of the Tiresome Sheep'.";
-		close;
-}
-
-//=======================================================
-comodo.gat,232,87,4	script	Wandering Swordsman WON	106,{
-	if(comodo_npc == 22) goto cmd_npc22;
-	if(comodo_npc == 23) goto cmd_npc23;
-	if(comodo_npc == 24) goto cmd_npc24;
-
-	mes "[WON]";
-	mes "My name is ^3355FF'Won'^000000.  I have searched far and wide, across the oceans and the mountains, to find one who is worthy.......";
-	next;
-	mes "[WON]";
-	mes "It has been many years since the Evil Witch was defeated in that legendary battle..... It is now a story of the past.......";
-	mes "Still, the quest must continue!  This is what the heavens desire of me.....";
-	next;
-	mes "[Won]";
-	mes "I must stay here in Comodo..... It is my fate.... I must stay here and wait.........";
-	mes ". . . . . . . . . . . . . . . . . . . .";
-	mes ". . . . . . . . . . . . . . .";
-	mes ". . . . . . . . . .";
-	mes ". . . . .";
-	close;
-		
-	cmd_npc22:
-		mes "^3355FF- The swordsman examines you -^000000";
-		mes "^3355FF- for a few seconds -^000000";
-		next;
-		mes "[Swordsman]";
-		mes "Heh, you're just a normal fella.";
-		mes "I am a wandering swordsman,";
-		mes "^3355FF`WON'^000000";
-		next;
-		mes "[WON]";
-		mes "What? You say you are gonna summon the Doomed Swords?";
-		mes "Psh, I don't care what you say, I will be the judge on whether or not you are worthy.";
-		mes "Let me explain...";
-		next;
-		mes "[WON]";
-		mes "Even though you do have all the required materials to summon the Doomed Swords but that does not mean that you could withstand the energy drained during one summoning.";
-		next;
-		mes "[WON]";
-		mes "Without careful control of energy transfer from the normal world to the Dark World, many disasters could arise upon the world or even unforeseen consequences.";
-		next;
-		mes "[WON]";
-		mes "I am sure that you have heard that the three different Doomed Swords are:";
-		mes "^3355FF` Mysteltain '^000000";
-		mes "^3355FF` Grimtooth '^000000";
-		mes "and ^3355FF` Executioner '^000000.";
-		mes "Each of them with very distinct specialties.";
-		next;
-		mes "[WON]";
-		mes "Now that you understand these, let us start the summoning then.";
-		next;
-		mes "- `Won'-";
-		mes "- draws his sword -";
-		mes "- and starts to swing it around -";
-		next;
-		mes "- You notice something -";
-		mes "- a blue light descending -";
-		mes "- from the sky -";
-		next;
-		mes "^3355FF-You got-^000000";
-		mes "^3355FF-Voucher of Power-^000000";
-		set comodo_npc,23;
-		next;
-		mes "[WON]";
-		mes ". . . . .";
-		mes "Hmm, it seems like the Dark World is not ready to give you the Doomed Sword just yet...even though you have what it takes to be the master of the swords.";
-		next;
-		mes "[WON]";
-		mes "However, when the day is as long as the night, when the sunlight is as bright as solar sword.";
-		mes "Only during that time, you will have the opportunity to receive the Doomed Swords.";
-		next;
-		mes "[WON]";
-		mes "When that time comes, visit the East for a quiet city name Payon, and you shall find yourself in a new journey for the Doomed Swords.";
-		close;
-	cmd_npc23:
-		mes "[WON]";
-		mes "Hmm, it seems like the Dark World is not ready to give you the Doomed Sword just yet...even though you have what it takes to be the master of the swords.";
-		next;
-		mes "[WON]";
-		mes "However, when the day is as long as the night, when the sunlight is as bright as solar sword.";
-		mes "Only during that time, you will have the opportunity to receive the Doomed Swords.";
-		next;
-		mes "[WON]";
-		mes "When that time comes, visit the East for a quiet city name Payon, and you shall find yourself in a new journey for the Doomed Swords.";
-		close;
-	cmd_npc24:
-		mes "123456789101112131415";
-		close;
-}
+//============================================================================//
 
 //============================================================
 moc_fild12.gat,35,303,4	script	Saint Darmain Gatekeeper	59,{

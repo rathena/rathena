@@ -11,7 +11,6 @@ Lupus
 	* removing a loop from grandpa_pharmacist.txt (similiar to Juice quest) 0%
 kobra_k88
 	* Optimize WoE
-	* Easter Egg event
 Aria
 	* Debugging/Overlooking NPCs.
 	* Making misc npcs
@@ -31,6 +30,10 @@ Other Ppl
 
 Date		Added
 ======
+11/07
+	* lutie.txt - Edited text, updated/corrected triggers for the Jack Frost quest.
+	  comodo.txt, morocc.txt, doomed_swords.txt - Implemented all of the triggers for
+	  the Doomed Swords quest based on mRO's version.  Now the quest is much longer.[kobra_k88]
 11/05
 	* Fixed and redo optional Umbalian quests:
 	- Wise Man Fabius' Umbalian Language Quest (you can learn Umbalian language in
