@@ -5570,7 +5570,7 @@ void battle_set_defaults() {
 	battle_config.ban_spoof_namer = 5; // added by [Yor] (default: 5 minutes)
 	battle_config.hack_info_GM_level = 60; // added by [Yor] (default: 60, GM level)
 	battle_config.any_warp_GM_min_level = 20; // added by [Yor]
-	battle_config.packet_ver_flag = 511; // added by [Yor]
+	battle_config.packet_ver_flag = 127; // added by [Yor]
 	battle_config.min_hair_style = 0;
 	battle_config.max_hair_style = 20;
 	battle_config.min_hair_color = 0;
@@ -5708,8 +5708,8 @@ void battle_validate_conf() {
 		battle_config.any_warp_GM_min_level = 100;
 
 	// at least 1 client must be accepted
-	if ((battle_config.packet_ver_flag & 511) == 0) // added by [Yor]
-		battle_config.packet_ver_flag = 511; // accept all clients
+	if ((battle_config.packet_ver_flag & 127) == 0) // added by [Yor]
+		battle_config.packet_ver_flag = 127; // accept all clients
 	
 	if (battle_config.night_darkness_level > 10) // Celest
 		battle_config.night_darkness_level = 10;

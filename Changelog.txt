@@ -1,11 +1,22 @@
 Date	Added
 01/11
+        * Added support for 2005-01-10Sakexe [celest]
+        * Updated packet functions for 2004-11-08 and 2004-12-06 (Note: eA *can*
+          support 12-06, but still doesn't recognise it... so unless we find a way,
+          it is *not* supported yet) [celest]
+        * Updated packet_db, thanks to Sara-chan [celest]
+        * REMOVED support for clients before packet version 10 (2004-08-25 and 
+          earlier) - the client will receive a 'Game Exe not latest version' message
+          [celest]
+        * Added a check to prevent crashing when trying to log in with
+          2005-01-10aSakexe in servers that don't support it [celest]          
 	* Added a fix to @sound where if you forgot the .wav exention, i'd attempt to play the file without it (it adds the .wav) [Codemaster] [SVN 949]
 	* Added @disguiseall / @undisguiseall [Codemaster] [SVN 949]
 	* Added misc. clif.c fixes (jAthena added alot of close(fd)'s, so i added them, too) [Codemaster] [SVN 949]
 	* Added bug reports - Celest, you might want to check one of those out [Codemaster] [SVN 949]
         * Fixed a bug in clif.c which didn't allow to enther the map-server.
 	  It worked under win32, but didn't under Linux. [Lupus]
+
 01/10
         * Completed adding packet DB reading... still needs (a lot) more work in
           clif.c [celest]

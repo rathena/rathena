@@ -604,3 +604,22 @@ packet_db_ver: 16
 0x0221,-1
 0x021d,6
 0x0223,8
+
+//2005-01-10bSakexe by Sara
+0x009b,32,wanttoconnection,3:12:23:27:31
+0x0089,9,ticksend,5
+0x00a7,13,walktoxy,10
+0x0190,20,actionrequest,9:19
+0x00f3,-1,globalmessage,2:4
+0x008c,8,getcharnamerequest,4
+0x0085,23,changedir,12:22
+0x0094,20,movetokafra,10:16
+0x0193,2,closekafra,0
+0x00f7,21,movefromkafra,11:17
+0x009f,17,useitem,5:13
+0x0116,20,dropitem,15:18
+0x00f5,9,takeitem,5
+0x0113,34,useskilltopos,10:18:22:32
+0x0072,26,useskilltoid,8:16:22
+0x007e,114,useskilltopos,9:18:22:32:34
+0x00a2,11,solvecharname,7
