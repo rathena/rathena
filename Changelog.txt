@@ -1,5 +1,8 @@
 Date	Added
 
+01/27
+	* Fixed TRADE exploits (it cures proxy hack / vending+trade hack) thanks to Freya [Lupus]
+
 01/26
         * Added bug fix for a memory leak caused when a character logs out,
           by End_of_exam / jA 1108 [celest]
