@@ -42,6 +42,7 @@ void Gettimeofday(struct timeval *timenow)
 #include "../common/db.h"
 #include "../common/lock.h"
 #include "../common/malloc.h"
+#include "../common/buffer.h"
 
 #ifdef PASSWORDENC
 #include "md5calc.h"

@@ -117,7 +117,7 @@ static struct dbt * nick_db=NULL;
 static struct dbt * charid_db=NULL;
 
 static int users=0;
-static struct block_list *object[MAX_FLOORITEM];
+static struct block_list *objects[MAX_FLOORITEM];
 static int first_free_object_id=0,last_object_id=0;
 
 #define block_free_max 1048576
@@ -668,7 +668,7 @@ int map_addobject(struct block_list *bl) {
 	if(first_free_object_id<2 || first_free_object_id>=MAX_FLOORITEM)
 		first_free_object_id=2;
 	for(i=first_free_object_id;i<MAX_FLOORITEM;i++)
-		if(object[i]==NULL)
+		if(objects[i]==NULL)
 			break;
 	if(i>=MAX_FLOORITEM){
 		if(battle_config.error_log)
@@ -678,7 +678,7 @@ int map_addobject(struct block_list *bl) {
 	first_free_object_id=i;
 	if(last_object_id<i)
 		last_object_id=i;
-	object[i]=bl;
+	objects[i]=bl;
 	numdb_insert(id_db,i,bl);
 	return i;
 }
@@ -689,18 +689,18 @@ int map_addobject(struct block_list *bl) {
  *------------------------------------------
  */
 int map_delobjectnofree(int id) {
-	if(object[id]==NULL)
+	if(objects[id]==NULL)
 		return 0;
 
-	map_delblock(object[id]);
+	map_delblock(objects[id]);
 	numdb_erase(id_db,id);
-//	map_freeblock(object[id]);
-	object[id]=NULL;
+//	map_freeblock(objects[id]);
+	objects[id]=NULL;
 
 	if(first_free_object_id>id)
 		first_free_object_id=id;
 
-	while(last_object_id>2 && object[last_object_id]==NULL)
+	while(last_object_id>2 && objects[last_object_id]==NULL)
 		last_object_id--;
 
 	return 0;
@@ -715,7 +715,7 @@ int map_delobjectnofree(int id) {
  *------------------------------------------
  */
 int map_delobject(int id) {
-	struct block_list *obj = object[id];
+	struct block_list *obj = objects[id];
 
 	if(obj==NULL)
 		return 0;
@@ -739,15 +739,15 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...) {
 	va_start(ap,type);
 
 	for(i=2;i<=last_object_id;i++){
-		if(object[i]){
-			if(type && object[i]->type!=type)
+		if(objects[i]){
+			if(type && objects[i]->type!=type)
 				continue;
 			if(bl_list_count>=BL_LIST_MAX) {
 				if(battle_config.error_log)
 					printf("map_foreachobject: too many block !\n");
 			}
 			else
-				bl_list[bl_list_count++]=object[i];
+				bl_list[bl_list_count++]=objects[i];
 		}
 	}
 
@@ -776,7 +776,7 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...) {
 int map_clearflooritem_timer(int tid,unsigned int tick,int id,int data) {
 	struct flooritem_data *fitem=NULL;
 
-	fitem = (struct flooritem_data *)object[id];
+	fitem = (struct flooritem_data *)objects[id];
 	if(fitem==NULL || fitem->bl.type!=BL_ITEM || (!data && fitem->cleartimer != tid)){
 		if(battle_config.error_log)
 			printf("map_clearflooritem_timer : error\n");
@@ -1189,8 +1189,8 @@ struct map_session_data * map_nick2sd(char *nick) {
 struct block_list * map_id2bl(int id)
 {
 	struct block_list *bl=NULL;
-	if(id<sizeof(object)/sizeof(object[0]))
-		bl = object[id];
+	if(id<sizeof(objects)/sizeof(objects[0]))
+		bl = objects[id];
 	else
 		bl = (struct block_list*)numdb_search(id_db,id);
 
@@ -1539,14 +1539,16 @@ struct map_cache_info {
 	int compressed_len; // zilb’Ê‚¹‚é‚æ‚¤‚É‚·‚éˆ×‚Ì—\–ñ
 }; // 56 byte
 
+struct map_cache_head {
+    int sizeof_header;
+    int sizeof_map;
+    // ã‚Ì‚Q‚Â‰ü•Ï•s‰Â
+    int nmaps; // ƒ}ƒbƒv‚ÌŒÂ”
+    int filesize;
+};
+
 struct {
-	struct map_cache_head {
-		int sizeof_header;
-		int sizeof_map;
-		// ã‚Ì‚Q‚Â‰ü•Ï•s‰Â
-		int nmaps; // ƒ}ƒbƒv‚ÌŒÂ”
-		int filesize;
-	} head;
+        struct map_cache_head head;
 	struct map_cache_info *map;
 	FILE *fp;
 	int dirty;
@@ -1574,7 +1576,7 @@ static int map_cache_open(char *fn)
 			map_cache.head.filesize      == ftell(map_cache.fp)
 		) {
 			// ƒLƒƒƒbƒVƒ…“Ç‚Ýž‚Ý¬Œ÷
-			map_cache.map = aMalloc(sizeof(struct map_cache_info) * map_cache.head.nmaps);
+			map_cache.map = (struct map_cache_info *) aMalloc(sizeof(struct map_cache_info) * map_cache.head.nmaps);
 			fseek(map_cache.fp,sizeof(struct map_cache_head),SEEK_SET);
 			fread(map_cache.map,sizeof(struct map_cache_info),map_cache.head.nmaps,map_cache.fp);
 			return 1;
@@ -1585,7 +1587,7 @@ static int map_cache_open(char *fn)
 	map_cache.fp = fopen(fn,"wb");
 	if(map_cache.fp) {
 		memset(&map_cache.head,0,sizeof(struct map_cache_head));
-		map_cache.map   = aCalloc(sizeof(struct map_cache_info),MAX_MAP_CACHE);
+		map_cache.map   = (struct map_cache_info *) aCalloc(sizeof(struct map_cache_info),MAX_MAP_CACHE);
 		map_cache.head.nmaps         = MAX_MAP_CACHE;
 		map_cache.head.sizeof_header = sizeof(struct map_cache_head);
 		map_cache.head.sizeof_map    = sizeof(struct map_cache_info);
@@ -1690,14 +1692,14 @@ static int map_cache_write(struct map_data *m)
 			if(map_read_flag == 2) {
 				// ˆ³k•Û‘¶
 				// ‚³‚·‚ª‚É‚Q”{‚É–c‚ê‚éŽ–‚Í‚È‚¢‚Æ‚¢‚¤Ž–‚Å
-				write_buf = aMalloc(m->xs * m->ys * 2);
+				write_buf = (char *) aMalloc(m->xs * m->ys * 2);
 				len_new = m->xs * m->ys * 2;
-				encode_zip(write_buf,&len_new,m->gat,m->xs * m->ys);
+				encode_zip((unsigned char *) write_buf,&len_new,m->gat,m->xs * m->ys);
 				map_cache.map[i].compressed     = 1;
 				map_cache.map[i].compressed_len = len_new;
 			} else {
 				len_new = m->xs * m->ys;
-				write_buf = m->gat;
+				write_buf = (char *) m->gat;
 				map_cache.map[i].compressed     = 0;
 				map_cache.map[i].compressed_len = 0;	
 			}
@@ -1727,14 +1729,14 @@ static int map_cache_write(struct map_data *m)
 		if(map_cache.map[i].fn[0] == 0) {
 			// V‚µ‚¢êŠ‚É“o˜^
 			if(map_read_flag == 2) {
-				write_buf = aMalloc(m->xs * m->ys * 2);
+				write_buf = (char *) aMalloc(m->xs * m->ys * 2);
 				len_new = m->xs * m->ys * 2;
-				encode_zip(write_buf,&len_new,m->gat,m->xs * m->ys);
+				encode_zip((unsigned char *) write_buf,&len_new,m->gat,m->xs * m->ys);
 				map_cache.map[i].compressed     = 1;
 				map_cache.map[i].compressed_len = len_new;
 			} else {
 				len_new = m->xs * m->ys;
-				write_buf = m->gat;
+				write_buf = (char *) m->gat;
 				map_cache.map[i].compressed     = 0;
 				map_cache.map[i].compressed_len = 0;
 			}

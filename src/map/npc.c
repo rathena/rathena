@@ -1636,26 +1636,26 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		// スクリプトの解析
 		srcbuf=(unsigned char *)aCallocA(srcsize,sizeof(char));
 	if (strchr(first_line,'{')) {
-		strcpy(srcbuf,strchr(first_line,'{'));
+		strcpy((char *) srcbuf,strchr(first_line,'{'));
 		startline=*lines;
 	} else
 		srcbuf[0]=0;
 	while(1) {
-		for(i=strlen(srcbuf)-1;i>=0 && isspace(srcbuf[i]);i--);
+		for(i=strlen((const char *) srcbuf)-1;i>=0 && isspace(srcbuf[i]);i--);
 		if (i>=0 && srcbuf[i]=='}')
 			break;
-		fgets(line,1020,fp);
+		fgets((char *) line,1020,fp);
 		(*lines)++;
 		if (feof(fp))
 			break;
-		if (strlen(srcbuf)+strlen(line)+1>=srcsize) {
+		if (strlen((char *) srcbuf)+strlen((char *) line)+1>=srcsize) {
 			srcsize += 65536;
-				srcbuf = (char *)aRealloc(srcbuf, srcsize);
+				srcbuf = (unsigned char *)aRealloc(srcbuf, srcsize);
 			memset(srcbuf + srcsize - 65536, '\0', 65536);
 		}
 		if (srcbuf[0]!='{') {
-			if (strchr(line,'{')) {
-				strcpy(srcbuf,strchr(line,'{'));
+			if (strchr((char *) line,'{')) {
+				strcpy(srcbuf,strchr((const char *) line,'{'));
 				startline=*lines;
 			}
 		} else

@@ -25,6 +25,7 @@
 #include "lock.h"
 #include "char.h"
 #include "showmsg.h"
+#include "buffer.h"
 
 #include "inter.h"
 #include "int_pet.h"
