@@ -1613,16 +1613,6 @@ int map_readallmap(void) {
 
 	// 先に全部のャbプの存在を確認
 	for(i=0;i<map_num;i++){
-		if(strstr(map[i].name,".gat")==NULL)
-			continue;
-		sprintf(fn,"data\\%s",map[i].name);
-		if(grfio_size(fn) == -1) {
-		    map_delmap(map[i].name);
-                    maps_removed++;
-	        }
-        }
-		
-	for(i=0;i<map_num;i++){
 		char afm_name[256] = "";
 		strncpy(afm_name, map[i].name, strlen(map[i].name) - 4);
 		strcat(afm_name, ".afm");
@@ -1631,7 +1621,7 @@ int map_readallmap(void) {
 		afm_file = fopen(fn, "r");
 		if (afm_file != NULL) {			
 			map_readafm(i,fn);
-    }
+    		}
 		else if(strstr(map[i].name,".gat")!=NULL) {
                       char *p = strstr(map[i].name, ">"); // [MouseJstr]
                       if (p != NULL) {
@@ -1640,13 +1630,13 @@ int map_readallmap(void) {
                          strcpy(alias, map[i].name);
                          strcpy(map[i].name, p + 1);
                          sprintf(fn,"data\\%s",map[i].name);
-                         if(map_readmap(i,fn, alias) == -1) {
+                         if(grfio_size(fn) == -1 || map_readmap(i,fn, alias) == -1) {
                             map_delmap(map[i].name);
                             maps_removed++;
                          }
                       } else {
                          sprintf(fn,"data\\%s",map[i].name);
-                         if(map_readmap(i,fn, NULL) == -1) {
+                         if(grfio_size(fn) == -1 || map_readmap(i,fn, NULL) == -1) {
                             map_delmap(map[i].name);
                             maps_removed++;
                          }
@@ -1685,6 +1675,7 @@ int map_addmap(char *mapname) {
  *------------------------------------------
  */
 int map_delmap(char *mapname) {
+
 	int i;
 	
 	if (strcmpi(mapname, "all") == 0) {

@@ -417,7 +417,7 @@ char* grfio_resnametable(char* fname, char *lfname)
 	fp = fopen(restable,"rb");
 	if(fp==NULL) {
 		printf("%s not found (grfio_resnametable)\n",restable);
-		exit(1);	// 1:not found error
+		return NULL;	// 1:not found error
 	}
 
 	while(fgets(line,508,fp)){
