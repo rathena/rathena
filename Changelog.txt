@@ -1,4 +1,6 @@
 Date	Added
+11/08
+	* Fixed item_cardalbum.txt: Removed extra column which mad all albums empty [Lupus]
 11/07
 	* clif.c: Added a few things from jAthena 1057 [Codemaster]
 	* Corrected some typos in item_db. Items 1143 and 1719 need to be re-checked.[kobra_k88]
