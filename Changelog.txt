@@ -1,5 +1,6 @@
 Date	Added
 12/22
+        * Translated the japanese part in battle_athena.conf [celest]
         * Added ignore the new skill delays when chaining monk combos [celest]
 
 12/21
