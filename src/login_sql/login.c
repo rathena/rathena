@@ -1406,9 +1406,9 @@ int parse_console(char *buf) {
     
     printf("Type of command: %s || Command: %s \n",type,command);
     
-    free(buf);
-    free(type);
-    free(command);
+    if(buf) free(buf);
+    if(type) free(type);
+    if(command) free(command);
     
     return 0;
 }

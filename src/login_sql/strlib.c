@@ -31,7 +31,7 @@ unsigned char* jstrescape (unsigned char* pt) {
 		}
 	}
 	pt[j++] = '\0';
-	free (ptr);
+	if(ptr) free(ptr);
 	return (unsigned char*) &pt[0];
 }
 
