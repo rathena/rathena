@@ -981,7 +981,9 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 		else if ((sd->status.skill_point >= sd->status.job_level && skill_point < sd->change_level+8) && (c > 6 && c < 23)) {
 			switch(c) {
 				case 7:
+				case 13:
 				case 14:
+				case 21:
 					c = 1;
 					break;
 				case 8:
@@ -1005,8 +1007,10 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 				case 17:
 					c = 6;
 					break;
-				/*case 4008:
+				case 4008:
+				case 4014:
 				case 4015:
+				case 4022:
 					c = 4002;
 					break;
 				case 4009:
@@ -1031,7 +1035,9 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 					c = 4007;
 					break;
 				case 4030:
+				case 4036:
 				case 4037:
+				case 4044:
 					c = 4024;
 					break;
 				case 4031:
@@ -1054,7 +1060,7 @@ int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd) {
 				case 4035:
 				case 4043:
 					c = 4029;
-					break;*/
+					break;
 			}
 		}
 	}

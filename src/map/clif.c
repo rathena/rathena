@@ -4845,6 +4845,8 @@ int clif_refine(int fd,struct map_session_data *sd,int fail,int index,int val)
  */
 int clif_wis_message(int fd, char *nick, char *mes, int mes_len) // R 0097 <len>.w <nick>.24B <message>.?B
 {
+//	printf("clif_wis_message(%d, %s, %s)\n", fd, nick, mes);
+
 	WFIFOW(fd,0) = 0x97;
 	WFIFOW(fd,2) = mes_len + 24 + 4;
 	memcpy(WFIFOP(fd,4), nick, 24);
@@ -5534,6 +5536,8 @@ int clif_vendingreport(struct map_session_data *sd,int index,int amount)
 int clif_party_created(struct map_session_data *sd,int flag)
 {
 	int fd;
+
+	// printf("clif_party_message(%s, %d, %s)\n", p->name, account_id, mes);
 
 	nullpo_retr(0, sd);
 
@@ -6246,6 +6250,8 @@ int clif_guild_memberlogin_notice(struct guild *g,int idx,int flag)
 	unsigned char buf[64];
 
 	nullpo_retr(0, g);
+
+	// printf("clif_guild_message(%s, %d, %s)\n", g->name, account_id, mes);
 
 	WBUFW(buf, 0)=0x16d;
 	WBUFL(buf, 2)=g->member[idx].account_id;

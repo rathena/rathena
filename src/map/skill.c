@@ -4264,9 +4264,9 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			int skill_time = skill_get_time(skillid,skilllv);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_time,0 );
-			if (bl->type == BL_MOB)
+			if (src->type == BL_MOB)
 				mob_changestate((struct mob_data *)src,MS_DELAY,skill_time);
-			else if (bl->type == BL_PC)
+			else if (src->type == BL_PC)
 				sd->attackabletime = sd->canmove_tick = tick + skill_time;
 		}
 		break;
@@ -6023,7 +6023,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 				if (sc_data[type].timer==-1)
 					skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 				else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
-					if( DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+					if( unit2->group != 0 && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
 						skill_status_change_start(bl,type,sg->skill_lv,(int)src,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 					ts->tick-=sg->interval;
 				}
@@ -6080,7 +6080,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 					skill_status_change_start(bl,type,sg->skill_lv,(sg->val1)>>16,(sg->val1)&0xffff,
 						(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 				else if((unit2=(struct skill_unit *)sc_data[type].val4) && unit2 != src ){
-					if( DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+					if( unit2->group != 0 && DIFF_TICK(sg->tick,unit2->group->tick)>0 )
 						skill_status_change_start(bl,type,sg->skill_lv,(sg->val1)>>16,(sg->val1)&0xffff,
 							(int)src,skill_get_time2(sg->skill_id,sg->skill_lv),0);
 					ts->tick-=sg->interval;
@@ -8926,8 +8926,9 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 			if(!unit || !unit->group || unit->group->src_id==bl->id)
 				break;
 			skill_additional_effect(bl,bl,unit->group->skill_id,sc_data[type].val1,BF_LONG|BF_SKILL|BF_MISC,tick);
-			sc_data[type].timer=add_timer(skill_get_time(unit->group->skill_id,unit->group->skill_lv)/10+tick,
-				skill_status_change_timer, bl->id, data );
+			if (unit->group != 0)
+				sc_data[type].timer=add_timer(skill_get_time(unit->group->skill_id,unit->group->skill_lv)/10+tick,
+					skill_status_change_timer, bl->id, data );
 			return 0;
 		}
 		break;
