@@ -13,3 +13,10 @@ Description:	-Thief Test its not working correctly
 Type:		-Quest
 Status:		-Pending
 Assignee:	-N/A
+
+--------------------------
+
+Description:	- Some one needs to check the item_db there are alot of errors.
+Type:		- DB
+Status:		- Pending
+Assignee:	- N/A
