@@ -255,6 +255,10 @@ bExpAddRace	2030
 bSPGainRace	2031
 bSPSubRace2	2032
 bAddEffWhenHitShort	2033
+bUnstripableWeapon	2034
+bUnstripableArmor	2035
+bUnstripableHelm	2036
+bUnstripableShield	2037
 
 
 Eff_Stone	0

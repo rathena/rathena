@@ -1,6 +1,8 @@
 
 Date	Added
 04/02
+	* Added bonuses bUnstripable[Weapon|Armor|Helm|Shield]
+	  instead of just bUnstripable that worked only for armor [DracoRPG]
 	* Updated Tiger Knucke Fist's 'fixed state' effect [celest]
 	* Allowed people to enable/disable using the online column via 
 	  'register_users_online' in the login_athena.conf [Codemaster]
@@ -137,7 +139,8 @@ Date	Added
 	* Fixed a typo in my fix for Stalk / Tunnel Drive increasing instead of decreasing speed, sorry [DracoRPG]
 	* Rewrote a little bit Improve Dodge [DracoRPG]
 	   - The speed bonus does not effect when Cloaked
-	   - Assassins & Rogues get +4 Flee/lv, but all other jobs can get +3/lv if they have the skill (not only Thiefs & Super Novices)
+	   - Assassins & Rogues get +4 Flee/lv, but all other jobs can get +3/lv
+	     if they have the skill (not only Thiefs & Super Novices)
 	* Some minor changes to Sacrifice in battle.c [celest]
 	* Set the Emperium to be immune to Sacrifice [celest]
 	* Set the Emperium to be have max status effects immunity [celest]

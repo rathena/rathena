@@ -7,6 +7,14 @@
 	Ayathoya items == 70% Added but no effect ( all are "etc" itens)
 	Einboroch items == 5%
 	Skill databases == celest working on them i believe.
+
+04/02
+	* More new cards and fixes [DracoRPG]
+	  - added Acolyte, Archer and Merchant sets effects
+	  - added Turtle General Card effect
+	  - corrected Job_Super_Novice -> Job_SuperNovice for Lude and Quve Cards
+	  - autospell weapons (except Fireblend, Ice Falchion and Electric Guitar)
+	    give no more the skill so it can't be used when you want
 04/01
 	* New cards updates and additions [DracoRPG]
 	  - added Mage and Swordman sets effects

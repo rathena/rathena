@@ -1457,22 +1457,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->special_state.infinite_endure = 1;
 		break;
-	case SP_UNBREAKABLE_WEAPON:
-		if(sd->state.lr_flag != 2)
-			sd->unbreakable_equip |= EQP_WEAPON;
-		break;
-	case SP_UNBREAKABLE_ARMOR:
-		if(sd->state.lr_flag != 2)
-			sd->unbreakable_equip |= EQP_ARMOR;
-		break;
-	case SP_UNBREAKABLE_HELM:
-		if(sd->state.lr_flag != 2)
-			sd->unbreakable_equip |= EQP_HELM;
-		break;
-	case SP_UNBREAKABLE_SHIELD:
-		if(sd->state.lr_flag != 2)
-			sd->unbreakable_equip |= EQP_SHIELD;
-		break;
 	case SP_SPLASH_RANGE:
 		if(sd->state.lr_flag != 2 && sd->splash_range < val)
 			sd->splash_range = val;
@@ -1537,6 +1521,22 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->unbreakable += val;
 		}
 		break;
+	case SP_UNBREAKABLE_WEAPON:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_WEAPON;
+		break;
+	case SP_UNBREAKABLE_ARMOR:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_ARMOR;
+		break;
+	case SP_UNBREAKABLE_HELM:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_HELM;
+		break;
+	case SP_UNBREAKABLE_SHIELD:
+		if(sd->state.lr_flag != 2)
+			sd->unbreakable_equip |= EQP_SHIELD;
+		break;
 	case SP_CLASSCHANGE: // [Valaris]
 		if(sd->state.lr_flag !=2){
 			sd->classchange=val;
@@ -1570,9 +1570,22 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->no_regen = val;
 		break;
+	case SP_UNSTRIPABLE_WEAPON:
+		if(sd->state.lr_flag != 2)
+			sd->unstripable_equip |= EQP_WEAPON;
+		break;
 	case SP_UNSTRIPABLE:
+	case SP_UNSTRIPABLE_ARMOR:
 		if(sd->state.lr_flag != 2)
 			sd->unstripable_equip |= EQP_ARMOR;
+		break;
+	case SP_UNSTRIPABLE_HELM:
+		if(sd->state.lr_flag != 2)
+			sd->unstripable_equip |= EQP_HELM;
+		break;
+	case SP_UNSTRIPABLE_SHIELD:
+		if(sd->state.lr_flag != 2)
+			sd->unstripable_equip |= EQP_SHIELD;
 		break;
 	case SP_SP_GAIN_VALUE:
 		if(!sd->state.lr_flag)
