@@ -608,7 +608,6 @@ int pet_remove_map(struct map_session_data *sd)
 		clif_clearchar_area(&sd->pd->bl,0);
 		map_delblock(&sd->pd->bl);
 		map_deliddb(&sd->pd->bl);
-		map_freeblock(sd->pd);
 	}
 	return 0;
 }

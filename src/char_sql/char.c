@@ -3338,7 +3338,9 @@ int do_init(int argc, char **argv){
 #undef mysql_query
 
 int debug_mysql_query(char *file, int line, void *mysql, const char *q) {
+#ifdef TWILIGHT
         printf("sql: %s:%d# %s\n", file, line, q);
+#endif
         return mysql_query((MYSQL *) mysql, q);
 }
 
