@@ -229,12 +229,12 @@ extern struct Battle_Config {
 	int undead_detect_type;
 	int pc_auto_counter_type;
 	int monster_auto_counter_type;
-	int agi_penaly_type;
-	int agi_penaly_count;
-	int agi_penaly_num;
-	int vit_penaly_type;
-	int vit_penaly_count;
-	int vit_penaly_num;
+	int agi_penalty_type;
+	int agi_penalty_count;
+	int agi_penalty_num;
+	int vit_penalty_type;
+	int vit_penalty_count;
+	int vit_penalty_num;
 	int player_defense_type;
 	int monster_defense_type;
 	int pet_defense_type;
@@ -256,7 +256,7 @@ extern struct Battle_Config {
 	int pc_undead_nofreeze;
 	int pc_land_skill_limit;
 	int monster_land_skill_limit;
-	int party_skill_penaly;
+	int party_skill_penalty;
 	int monster_class_change_full_recover;
 	int produce_item_name_input;
 	int produce_potion_name_input;
@@ -297,8 +297,8 @@ extern struct Battle_Config {
 	int pk_mode;
 	int show_mob_hp;  // end additions [Valaris]
 
-	int agi_penaly_count_lv;
-	int vit_penaly_count_lv;
+	int agi_penalty_count_lv;
+	int vit_penalty_count_lv;
 
 	int gx_allhit;
 	int gx_cardfix;

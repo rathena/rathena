@@ -1,15 +1,21 @@
 Date	Added
 12/14
+        * Added nullpo_retb to nullpo.c - does a break; if null [celest]
+        * Replaced some parts in skill.c with nullpo checks [celest]
+        * Corrected some typos - penaly -> penalty [celest]
+        * Skill Updates [celest]
+          - Most of 12/14's Sakray patch
 	* The SKILL_MAX_DB (yes, a different #define from the one below)
 	  was not large enough for current skills causing memory 
 	  corruptions and crashes [MouseJstr]
 	* Fixed how socket handles EAGIN errors (retry instead of
 	  disconnecting) [MouseJstr]
+
 12/13
         * Skill Updates [celest]
           - Added the new 'Throw Tomahawk' skill (Requires Sakexe1129 or newer) 
           - Added some new monster skills - but still not complete.
-          - Adjusted Palm Strike, Tiger Fist and Chain Crush based on 11/14's patch
+          - Adjusted Palm Strike, Tiger Fist and Chain Crush based on 12/14's patch
         * Removed redundant 'sg_count' for map_session_data and mob_data [celest]
         * Save both persons' data after trading in case a crash causes them to
           rollback -  fix by Freya [celest]

@@ -1458,7 +1458,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	}
 
 	if( (skill=pc_checkskill(sd,MC_INCCARRY))>0 )	// skill can be used with an item now, thanks to orn [Valaris]
-		sd->max_weight += skill*1000;
+		sd->max_weight += skill*2000;
 
 	if( (skill=pc_checkskill(sd,AC_OWL))>0 )	// ふくろうの目
 		sd->paramb[4] += skill;
@@ -1466,6 +1466,9 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0) {   // Hilt binding gives +1 str +4 atk
 		sd->paramb[0] ++;
 		sd->base_atk += 4;
+	}
+	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0 ){ // Dragonology increases +1 int every 2 levels
+		sd->paramb[3] += (skill+1)*0.5;
 	}
 
 	// New guild skills - Celest
@@ -1656,7 +1659,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 
 	//攻?速度?加
 
-	if( (skill=pc_checkskill(sd,AC_VULTURE))>0){	// ワシの目
+	if((skill=pc_checkskill(sd,AC_VULTURE))>0){	// ワシの目
 		sd->hit += skill;
 		if(sd->status.weapon == 11)
 			sd->attackrange += skill;
@@ -1671,27 +1674,17 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	else if (pc_isriding(sd)) {	// ペコペコ?りによる速度?加
 		sd->speed -= (0.25 * DEFAULT_WALK_SPEED);
 		sd->max_weight += 10000;
-	}
-	if(sd->sc_count){
-		if(sd->sc_data[SC_WINDWALK].timer!=-1)	//ウィンドウォ?ク時はLv*2%減算
-			sd->speed -= sd->speed *(sd->sc_data[SC_WINDWALK].val1*2)/100;
-		if(sd->sc_data[SC_CARTBOOST].timer!=-1)	// カ?トブ?スト
-		sd->speed -= (DEFAULT_WALK_SPEED * 20)/100;
-		if(sd->sc_data[SC_BERSERK].timer!=-1)	//バ?サ?ク中はIAと同じぐらい速い？
-			sd->speed -= sd->speed *25/100;
-		if(sd->sc_data[SC_WEDDING].timer!=-1)	//結婚中は?くのが?い
-			sd->speed = 2*DEFAULT_WALK_SPEED;
-	}
-
+	}	
 	if((skill=pc_checkskill(sd,CR_TRUST))>0) { // フェイス
 		sd->status.max_hp += skill*200;
 		sd->subele[6] += skill*5;
 	}
-	if((skill=pc_checkskill(sd,BS_SKINTEMPER))>0)
-	{
+	if((skill=pc_checkskill(sd,BS_SKINTEMPER))>0) {
 		sd->subele[0] += skill;
 		sd->subele[3] += skill*5;
 	}
+	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 )
+		aspd_rate -= skill*0.5;
 
 	bl=sd->status.base_level;
 
@@ -1831,16 +1824,17 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		}
 		if(sd->sc_data[SC_NIBELUNGEN].timer!=-1) {	// ニ?ベルングの指輪
 			index = sd->equip_index[9];
-			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 3)
+			/*if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 3)
 				sd->watk += sd->sc_data[SC_NIBELUNGEN].val3;
 			index = sd->equip_index[8];
 			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 3)
 				sd->watk_ += sd->sc_data[SC_NIBELUNGEN].val3;
+			index = sd->equip_index[9];*/
 			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 4)
-				sd->watk += sd->sc_data[SC_NIBELUNGEN].val2;
+				sd->watk2 += sd->sc_data[SC_NIBELUNGEN].val3;
 			index = sd->equip_index[8];
 			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 4)
-				sd->watk_ += sd->sc_data[SC_NIBELUNGEN].val2;
+				sd->watk_2 += sd->sc_data[SC_NIBELUNGEN].val3;
 		}
 
 		if(sd->sc_data[SC_VOLCANO].timer!=-1 && sd->def_ele==3){	// ボルケ?ノ
@@ -1876,7 +1870,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			aspd_rate -= 30;
 		if(sd->sc_data[SC_ADRENALINE].timer != -1 && sd->sc_data[SC_TWOHANDQUICKEN].timer == -1 &&
 			sd->sc_data[SC_QUAGMIRE].timer == -1 && sd->sc_data[SC_DONTFORGETME].timer == -1) {	// アドレナリンラッシュ
-			if(sd->sc_data[SC_ADRENALINE].val2 || !battle_config.party_skill_penaly)
+			if(sd->sc_data[SC_ADRENALINE].val2 || !battle_config.party_skill_penalty)
 				aspd_rate -= 30;
 			else
 				aspd_rate -= 25;
@@ -1896,6 +1890,14 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->sc_data[i=SC_SPEEDPOTION1].timer!=-1 ||
 			sd->sc_data[i=SC_SPEEDPOTION0].timer!=-1)	// ? 速ポ?ション
 			aspd_rate -= sd->sc_data[i].val2;
+		if(sd->sc_data[SC_WINDWALK].timer!=-1)	//ウィンドウォ?ク時はLv*2%減算
+			sd->speed -= sd->speed *(sd->sc_data[SC_WINDWALK].val1*2)/100;
+		if(sd->sc_data[SC_CARTBOOST].timer!=-1)	// カ?トブ?スト
+		sd->speed -= (DEFAULT_WALK_SPEED * 20)/100;
+		if(sd->sc_data[SC_BERSERK].timer!=-1)	//バ?サ?ク中はIAと同じぐらい速い？
+			sd->speed -= sd->speed *25/100;
+		if(sd->sc_data[SC_WEDDING].timer!=-1)	//結婚中は?くのが?い
+			sd->speed = 2*DEFAULT_WALK_SPEED;
 
 		// HIT/FLEE?化系
 		if(sd->sc_data[SC_WHISTLE].timer!=-1){  // 口笛
@@ -1980,13 +1982,15 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		}
 		if(sd->sc_data[SC_DEFENDER].timer != -1) {
 			sd->aspd += (550 - sd->sc_data[SC_DEFENDER].val1*50);
-			sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
+			// removed as of 12/14's patch [celest]
+			//sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
 		}
 		if(sd->sc_data[SC_ENCPOISON].timer != -1)
 			sd->addeff[4] += sd->sc_data[SC_ENCPOISON].val2;
 
 		if( sd->sc_data[SC_DANCING].timer!=-1 ){		// 演奏/ダンス使用中
-			sd->speed*=4;
+			sd->speed = (double)sd->speed * (6.- 0.4 * pc_checkskill(sd, ((s_class.job == 19) ? BA_MUSICALLESSON : DC_DANCINGLESSON)));
+			//sd->speed*=4;
 			sd->nhealsp = 0;
 			sd->nshealsp = 0;
 			sd->nsshealsp = 0;
@@ -2175,10 +2179,11 @@ int pc_calcspeed (struct map_session_data *sd)
 			sd->speed = (sd->speed * 125) / 100;
 		}
 		if(sd->sc_data[SC_DEFENDER].timer != -1) {
-			sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
+			// removed as of 12/14's patch [celest]
+			//sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
 		}
 		if( sd->sc_data[SC_DANCING].timer!=-1 ){
-			sd->speed*=4;
+			sd->speed = (double)sd->speed * (6.- 0.4 * pc_checkskill(sd, ((s_class.job == 19) ? BA_MUSICALLESSON : DC_DANCINGLESSON)));
 		}
 		if(sd->sc_data[SC_CURSE].timer!=-1)
 			sd->speed += 450;

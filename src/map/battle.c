@@ -638,7 +638,7 @@ int battle_get_atk2(struct block_list *bl)
 			if(sc_data[SC_DRUMBATTLE].timer!=-1)
 				atk2 += sc_data[SC_DRUMBATTLE].val2;
 			if(sc_data[SC_NIBELUNGEN].timer!=-1 && (battle_get_element(bl)/10) >= 8 )
-				atk2 += sc_data[SC_NIBELUNGEN].val2;
+				atk2 += sc_data[SC_NIBELUNGEN].val3;
 			if(sc_data[SC_STRIPWEAPON].timer!=-1)
 				atk2 = atk2*sc_data[SC_STRIPWEAPON].val2/100;
 			if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
@@ -921,11 +921,12 @@ int battle_get_speed(struct block_list *bl)
 			if(sc_data[SC_STEELBODY].timer!=-1)
 				speed = speed*125/100;
 			//ディフェンダー時は加算
-			if(sc_data[SC_DEFENDER].timer!=-1)
-				speed = (speed * (155 - sc_data[SC_DEFENDER].val1*5)) / 100;
+			// removed as of 12/14's patch [celest]
+			/*if(sc_data[SC_DEFENDER].timer!=-1)
+				speed = (speed * (155 - sc_data[SC_DEFENDER].val1*5)) / 100;*/
 			//踊り状態は4倍遅い
 			if(sc_data[SC_DANCING].timer!=-1 )
-				speed*=4;
+				speed *= 6;
 			//呪い時は450加算
 			if(sc_data[SC_CURSE].timer!=-1)
 				speed = speed + 450;
@@ -967,7 +968,7 @@ int battle_get_adelay(struct block_list *bl)
 			if(sc_data[SC_ADRENALINE].timer != -1 && sc_data[SC_TWOHANDQUICKEN].timer == -1 &&
 				sc_data[SC_QUAGMIRE].timer == -1 && sc_data[SC_DONTFORGETME].timer == -1) {	// アドレナリンラッシュ
 				//使用者とパーティメンバーで格差が出る設定でなければ3割減算
-				if(sc_data[SC_ADRENALINE].val2 || !battle_config.party_skill_penaly)
+				if(sc_data[SC_ADRENALINE].val2 || !battle_config.party_skill_penalty)
 					aspd_rate -= 30;
 				//そうでなければ2.5割減算
 				else
@@ -1020,7 +1021,7 @@ int battle_get_amotion(struct block_list *bl)
 				aspd_rate -= 30;
 			if(sc_data[SC_ADRENALINE].timer != -1 && sc_data[SC_TWOHANDQUICKEN].timer == -1 &&
 				sc_data[SC_QUAGMIRE].timer == -1 && sc_data[SC_DONTFORGETME].timer == -1) {	// アドレナリンラッシュ
-				if(sc_data[SC_ADRENALINE].val2 || !battle_config.party_skill_penaly)
+				if(sc_data[SC_ADRENALINE].val2 || !battle_config.party_skill_penalty)
 					aspd_rate -= 30;
 				else
 					aspd_rate -= 25;
@@ -1579,10 +1580,18 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if(rand()%100 < sc_data[SC_AUTOGUARD].val2) {
 				damage = 0;
 				clif_skill_nodamage(bl,bl,CR_AUTOGUARD,sc_data[SC_AUTOGUARD].val1,1);
+				// different delay depending on skill level [celest]
+				int delay;
+				if (sc_data[SC_AUTOGUARD].val1 <= 5)
+					delay = 300;
+				else if (sc_data[SC_AUTOGUARD].val1 > 5 && sc_data[SC_AUTOGUARD].val1 <= 9)
+					delay = 200;
+				else
+					delay = 100;
 				if(sd)
-					sd->canmove_tick = gettick() + 300;
+					sd->canmove_tick = gettick() + delay;
 				else if(md)
-					md->canmove_tick = gettick() + 300;
+					md->canmove_tick = gettick() + delay;
 			}
 		}
 // -- moonsoul (chance to block attacks with new Lord Knight skill parrying)
@@ -1838,14 +1847,14 @@ static struct Damage battle_calc_pet_weapon_attack(
 
 	// 回避率計算、回避判定は後で
 	flee = battle_get_flee(target);
-	if(battle_config.agi_penaly_type > 0 || battle_config.vit_penaly_type > 0)
-		target_count += battle_counttargeted(target,src,battle_config.agi_penaly_count_lv);
-	if(battle_config.agi_penaly_type > 0) {
-		if(target_count >= battle_config.agi_penaly_count) {
-			if(battle_config.agi_penaly_type == 1)
-				flee = (flee * (100 - (target_count - (battle_config.agi_penaly_count - 1))*battle_config.agi_penaly_num))/100;
-			else if(battle_config.agi_penaly_type == 2)
-				flee -= (target_count - (battle_config.agi_penaly_count - 1))*battle_config.agi_penaly_num;
+	if(battle_config.agi_penalty_type > 0 || battle_config.vit_penalty_type > 0)
+		target_count += battle_counttargeted(target,src,battle_config.agi_penalty_count_lv);
+	if(battle_config.agi_penalty_type > 0) {
+		if(target_count >= battle_config.agi_penalty_count) {
+			if(battle_config.agi_penalty_type == 1)
+				flee = (flee * (100 - (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num))/100;
+			else if(battle_config.agi_penalty_type == 2)
+				flee -= (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num;
 			if(flee < 1) flee = 1;
 		}
 	}
@@ -2065,11 +2074,11 @@ static struct Damage battle_calc_pet_weapon_attack(
 				damage = damage*(240+ 60*skill_lv)/100;
 				break;
 			case DC_THROWARROW:	// 矢撃ち
-				damage = damage*(100+ 50 * skill_lv)/100;
+				damage = damage*(60+ 40 * skill_lv)/100;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case BA_MUSICALSTRIKE:	// ミュージカルストライク
-				damage = damage*(100+ 50 * skill_lv)/100;
+				damage = damage*(60+ 40 * skill_lv)/100;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case CH_TIGERFIST:	// 伏虎拳
@@ -2117,18 +2126,18 @@ static struct Damage battle_calc_pet_weapon_attack(
 			// ディバインプロテクション（ここでいいのかな？）
 			if ( skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST && skill_num != KN_AUTOCOUNTER && def1 < 1000000 ) {	//DEF, VIT無視
 				int t_def;
-				target_count = 1 + battle_counttargeted(target,src,battle_config.vit_penaly_count_lv);
-				if(battle_config.vit_penaly_type > 0) {
-					if(target_count >= battle_config.vit_penaly_count) {
-						if(battle_config.vit_penaly_type == 1) {
-							def1 = (def1 * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
-							def2 = (def2 * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
-							t_vit = (t_vit * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
+				target_count = 1 + battle_counttargeted(target,src,battle_config.vit_penalty_count_lv);
+				if(battle_config.vit_penalty_type > 0) {
+					if(target_count >= battle_config.vit_penalty_count) {
+						if(battle_config.vit_penalty_type == 1) {
+							def1 = (def1 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
+							def2 = (def2 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
+							t_vit = (t_vit * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
 						}
-						else if(battle_config.vit_penaly_type == 2) {
-							def1 -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
-							def2 -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
-							t_vit -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
+						else if(battle_config.vit_penalty_type == 2) {
+							def1 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
+							def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
+							t_vit -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 						}
 						if(def1 < 0) def1 = 0;
 						if(def2 < 1) def2 = 1;
@@ -2298,14 +2307,14 @@ static struct Damage battle_calc_mob_weapon_attack(
 
 	// 回避率計算、回避判定は後で
 	flee = battle_get_flee(target);
-	if(battle_config.agi_penaly_type > 0 || battle_config.vit_penaly_type > 0)
-		target_count += battle_counttargeted(target,src,battle_config.agi_penaly_count_lv);
-	if(battle_config.agi_penaly_type > 0) {
-		if(target_count >= battle_config.agi_penaly_count) {
-			if(battle_config.agi_penaly_type == 1)
-				flee = (flee * (100 - (target_count - (battle_config.agi_penaly_count - 1))*battle_config.agi_penaly_num))/100;
-			else if(battle_config.agi_penaly_type == 2)
-				flee -= (target_count - (battle_config.agi_penaly_count - 1))*battle_config.agi_penaly_num;
+	if(battle_config.agi_penalty_type > 0 || battle_config.vit_penalty_type > 0)
+		target_count += battle_counttargeted(target,src,battle_config.agi_penalty_count_lv);
+	if(battle_config.agi_penalty_type > 0) {
+		if(target_count >= battle_config.agi_penalty_count) {
+			if(battle_config.agi_penalty_type == 1)
+				flee = (flee * (100 - (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num))/100;
+			else if(battle_config.agi_penalty_type == 2)
+				flee -= (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num;
 			if(flee < 1) flee = 1;
 		}
 	}
@@ -2556,11 +2565,11 @@ static struct Damage battle_calc_mob_weapon_attack(
 				div_=4;
 				break;
 			case BA_MUSICALSTRIKE:	// ミュージカルストライク
-				damage = damage*(100+ 50 * skill_lv)/100;
+				damage = damage*(60+ 40 * skill_lv)/100;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case DC_THROWARROW:	// 矢撃ち
-				damage = damage*(100+ 50 * skill_lv)/100;
+				damage = damage*(60+ 40 * skill_lv)/100;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case MO_COMBOFINISH:	// 猛龍拳
@@ -2611,18 +2620,18 @@ static struct Damage battle_calc_mob_weapon_attack(
 			// ディバインプロテクション（ここでいいのかな？）
 			if ( skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST && skill_num != KN_AUTOCOUNTER && def1 < 1000000) {	//DEF, VIT無視
 				int t_def;
-				target_count = 1 + battle_counttargeted(target,src,battle_config.vit_penaly_count_lv);
-				if(battle_config.vit_penaly_type > 0) {
-					if(target_count >= battle_config.vit_penaly_count) {
-						if(battle_config.vit_penaly_type == 1) {
-							def1 = (def1 * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
-							def2 = (def2 * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
-							t_vit = (t_vit * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
+				target_count = 1 + battle_counttargeted(target,src,battle_config.vit_penalty_count_lv);
+				if(battle_config.vit_penalty_type > 0) {
+					if(target_count >= battle_config.vit_penalty_count) {
+						if(battle_config.vit_penalty_type == 1) {
+							def1 = (def1 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
+							def2 = (def2 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
+							t_vit = (t_vit * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
 						}
-						else if(battle_config.vit_penaly_type == 2) {
-							def1 -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
-							def2 -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
-							t_vit -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
+						else if(battle_config.vit_penalty_type == 2) {
+							def1 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
+							def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
+							t_vit -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 						}
 						if(def1 < 0) def1 = 0;
 						if(def2 < 1) def2 = 1;
@@ -2856,14 +2865,14 @@ static struct Damage battle_calc_pc_weapon_attack(
 
 	// 回避率計算、回避判定は後で
 	flee = battle_get_flee(target);
-	if(battle_config.agi_penaly_type > 0 || battle_config.vit_penaly_type > 0) //AGI、VITペナルティ設定が有効
-		target_count += battle_counttargeted(target,src,battle_config.agi_penaly_count_lv);	//対象の数を算出
-	if(battle_config.agi_penaly_type > 0) {
-		if(target_count >= battle_config.agi_penaly_count) { //ペナルティ設定より対象が多い
-			if(battle_config.agi_penaly_type == 1) //回避率がagi_penaly_num%ずつ減少
-				flee = (flee * (100 - (target_count - (battle_config.agi_penaly_count - 1))*battle_config.agi_penaly_num))/100;
-			else if(battle_config.agi_penaly_type == 2) //回避率がagi_penaly_num分減少
-				flee -= (target_count - (battle_config.agi_penaly_count - 1))*battle_config.agi_penaly_num;
+	if(battle_config.agi_penalty_type > 0 || battle_config.vit_penalty_type > 0) //AGI、VITペナルティ設定が有効
+		target_count += battle_counttargeted(target,src,battle_config.agi_penalty_count_lv);	//対象の数を算出
+	if(battle_config.agi_penalty_type > 0) {
+		if(target_count >= battle_config.agi_penalty_count) { //ペナルティ設定より対象が多い
+			if(battle_config.agi_penalty_type == 1) //回避率がagi_penalty_num%ずつ減少
+				flee = (flee * (100 - (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num))/100;
+			else if(battle_config.agi_penalty_type == 2) //回避率がagi_penalty_num分減少
+				flee -= (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num;
 			if(flee < 1) flee = 1; //回避率は最低でも1
 		}
 	}
@@ -3365,8 +3374,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 					damage += arr;
 					damage2 += arr;
 				}
-				damage = damage*(100+ 50 * skill_lv)/100;
-				damage2 = damage2*(100+ 50 * skill_lv)/100;
+				damage = damage*(60+ 40 * skill_lv)/100;
+				damage2 = damage2*(60+ 40 * skill_lv)/100;
 				if(sd->arrow_ele > 0) {
 					s_ele = sd->arrow_ele;
 					s_ele_ = sd->arrow_ele;
@@ -3508,18 +3517,18 @@ static struct Damage battle_calc_pc_weapon_attack(
 			// ディバインプロテクション（ここでいいのかな？）
 			if ( skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST && skill_num != KN_AUTOCOUNTER && def1 < 1000000) {	//DEF, VIT無視
 				int t_def;
-				target_count = 1 + battle_counttargeted(target,src,battle_config.vit_penaly_count_lv);
-				if(battle_config.vit_penaly_type > 0) {
-					if(target_count >= battle_config.vit_penaly_count) {
-						if(battle_config.vit_penaly_type == 1) {
-							def1 = (def1 * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
-							def2 = (def2 * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
-							t_vit = (t_vit * (100 - (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num))/100;
+				target_count = 1 + battle_counttargeted(target,src,battle_config.vit_penalty_count_lv);
+				if(battle_config.vit_penalty_type > 0) {
+					if(target_count >= battle_config.vit_penalty_count) {
+						if(battle_config.vit_penalty_type == 1) {
+							def1 = (def1 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
+							def2 = (def2 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
+							t_vit = (t_vit * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
 						}
-						else if(battle_config.vit_penaly_type == 2) {
-							def1 -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
-							def2 -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
-							t_vit -= (target_count - (battle_config.vit_penaly_count - 1))*battle_config.vit_penaly_num;
+						else if(battle_config.vit_penalty_type == 2) {
+							def1 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
+							def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
+							t_vit -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 						}
 						if(def1 < 0) def1 = 0;
 						if(def2 < 1) def2 = 1;
@@ -5131,14 +5140,14 @@ static const struct {
 	{ "undead_detect_type",                &battle_config.undead_detect_type		},
 	{ "player_auto_counter_type",          &battle_config.pc_auto_counter_type		},
 	{ "monster_auto_counter_type",         &battle_config.monster_auto_counter_type},
-	{ "agi_penaly_type",                   &battle_config.agi_penaly_type			},
-	{ "agi_penaly_count",                  &battle_config.agi_penaly_count			},
-	{ "agi_penaly_num",                    &battle_config.agi_penaly_num			},
-	{ "agi_penaly_count_lv",               &battle_config.agi_penaly_count_lv		},
-	{ "vit_penaly_type",                   &battle_config.vit_penaly_type			},
-	{ "vit_penaly_count",                  &battle_config.vit_penaly_count			},
-	{ "vit_penaly_num",                    &battle_config.vit_penaly_num			},
-	{ "vit_penaly_count_lv",               &battle_config.vit_penaly_count_lv		},
+	{ "agi_penalty_type",                   &battle_config.agi_penalty_type			},
+	{ "agi_penalty_count",                  &battle_config.agi_penalty_count			},
+	{ "agi_penalty_num",                    &battle_config.agi_penalty_num			},
+	{ "agi_penalty_count_lv",               &battle_config.agi_penalty_count_lv		},
+	{ "vit_penalty_type",                   &battle_config.vit_penalty_type			},
+	{ "vit_penalty_count",                  &battle_config.vit_penalty_count			},
+	{ "vit_penalty_num",                    &battle_config.vit_penalty_num			},
+	{ "vit_penalty_count_lv",               &battle_config.vit_penalty_count_lv		},
 	{ "player_defense_type",               &battle_config.player_defense_type		},
 	{ "monster_defense_type",              &battle_config.monster_defense_type		},
 	{ "pet_defense_type",                  &battle_config.pet_defense_type			},
@@ -5159,7 +5168,7 @@ static const struct {
 	{ "monster_attack_direction_change",   &battle_config.monster_attack_direction_change },
 	{ "player_land_skill_limit",           &battle_config.pc_land_skill_limit		},
 	{ "monster_land_skill_limit",          &battle_config.monster_land_skill_limit},
-	{ "party_skill_penaly",                &battle_config.party_skill_penaly		},
+	{ "party_skill_penalty",                &battle_config.party_skill_penalty		},
 	{ "monster_class_change_full_recover", &battle_config.monster_class_change_full_recover },
 	{ "produce_item_name_input",           &battle_config.produce_item_name_input	},
 	{ "produce_potion_name_input",         &battle_config.produce_potion_name_input},
@@ -5365,14 +5374,14 @@ void battle_set_defaults() {
 	battle_config.undead_detect_type = 0;
 	battle_config.pc_auto_counter_type = 1;
 	battle_config.monster_auto_counter_type = 1;
-	battle_config.agi_penaly_type = 0;
-	battle_config.agi_penaly_count = 3;
-	battle_config.agi_penaly_num = 0;
-	battle_config.agi_penaly_count_lv = ATK_FLEE;
-	battle_config.vit_penaly_type = 0;
-	battle_config.vit_penaly_count = 3;
-	battle_config.vit_penaly_num = 0;
-	battle_config.vit_penaly_count_lv = ATK_DEF;
+	battle_config.agi_penalty_type = 0;
+	battle_config.agi_penalty_count = 3;
+	battle_config.agi_penalty_num = 0;
+	battle_config.agi_penalty_count_lv = ATK_FLEE;
+	battle_config.vit_penalty_type = 0;
+	battle_config.vit_penalty_count = 3;
+	battle_config.vit_penalty_num = 0;
+	battle_config.vit_penalty_count_lv = ATK_DEF;
 	battle_config.player_defense_type = 0;
 	battle_config.monster_defense_type = 0;
 	battle_config.pet_defense_type = 0;
@@ -5394,7 +5403,7 @@ void battle_set_defaults() {
 	battle_config.pc_undead_nofreeze = 0;
 	battle_config.pc_land_skill_limit = 1;
 	battle_config.monster_land_skill_limit = 1;
-	battle_config.party_skill_penaly = 1;
+	battle_config.party_skill_penalty = 1;
 	battle_config.monster_class_change_full_recover = 0;
 	battle_config.produce_item_name_input = 1;
 	battle_config.produce_potion_name_input = 1;
@@ -5534,10 +5543,10 @@ void battle_validate_conf() {
 		battle_config.max_cart_weight = 100;
 	battle_config.max_cart_weight *= 10;
 
-	if(battle_config.agi_penaly_count < 2)
-		battle_config.agi_penaly_count = 2;
-	if(battle_config.vit_penaly_count < 2)
-		battle_config.vit_penaly_count = 2;
+	if(battle_config.agi_penalty_count < 2)
+		battle_config.agi_penalty_count = 2;
+	if(battle_config.vit_penalty_count < 2)
+		battle_config.vit_penalty_count = 2;
 
 	if(battle_config.guild_exp_limit > 99)
 		battle_config.guild_exp_limit = 99;
