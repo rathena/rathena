@@ -18,7 +18,7 @@
 // Young Man -----------------------------------------------------------
 alberta_in.gat,20,183,6	script	Young Man	49,{
 	mes "[Merchant]";
-	mes "People say that ^0000ffGungnir^000000, the legendary bow, never missess its' target.  If that's true, then it's simply amazing.";
+	mes "People say that ^0000ffGungnir^000000, the legendary spear, never missess its' target.  If that's true, then it's simply amazing.";
 	close;
 }
 
@@ -183,8 +183,8 @@ alberta.gat,131,139,4	script	Drunken old man	709,{
 			mes "Ah~ the good ol'days... only... if only we hadn't run into that STORM... (~hiccup~)";
 			next;
 			mes "[Drunken old man]";
-			mes "AH~ Captian.  I miss our capt'n more than anything.... no foe could ever survive capt'n's sword.";
-			mes "CAPTIAN~~~!!! (~HICCUP~) He'd swing his sword like THIS!... then... THEN...!!!";
+			mes "AH~ Captain.  I miss our capt'n more than anything.... no foe could ever survive capt'n's sword.";
+			mes "CAPTAIN~~~!!! (~HICCUP~) He'd swing his sword like THIS!... then... THEN...!!!";
 			next;
 			mes "[Drunken old man]";
 			mes "The enemy and anything around him was surrounded by flames! Now that I think of it, the sword must've had some sort of mysterious power.";
