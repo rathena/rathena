@@ -1266,8 +1266,10 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 // -- moonsoul (stun ability of new champion skill tigerfist)
 //
 	case CH_TIGERFIST:
-		if( rand()%100 < (10 + skilllv*10)*sc_def_vit/100 )
-			skill_status_change_start(bl,SC_STAN,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
+		if( rand()%100 < (10 + skilllv*10)*sc_def_vit/100 ) {
+			int sec = skill_get_time2 (skillid,skilllv) - (double)battle_get_agi(bl)*0.1;
+			skill_status_change_start(bl,SC_STAN,skilllv,0,0,0,sec,0);
+		}
 		break;
 
 	case LK_SPIRALPIERCE:
