@@ -575,7 +575,7 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 				mes ".........................";
 				mes ".........................^000000";
 				next;
-				if(event_umbala < 6) goto LLSecondCheck;
+				if(event_umbala < 6) goto LSecondCheck;
 					if(@ryumon == 33) goto Lwarp;
 				LSecondCheck:
 				if(event_umbala >= 6) goto LLNewEnd;
