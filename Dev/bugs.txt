@@ -93,3 +93,13 @@ Progress:	0%
 Problem:	Attack speed is somehow lowered., sword+dopp+80 in agi, and aspd in 188 o_O that doesnt look right
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Item duping bug in storage...
+Assigned:	N/A
+Progress:	0%
+	
+	Let's say you have 200 arrows and 100 Rosiotti arrow, you'll put 100 and 50 in storage
+	And you should end when you log back in with 100 of each on you and 100 and 50 in storage
+	Gain 50
+	Repeat
+
