@@ -1094,6 +1094,8 @@ int map_quit(struct map_session_data *sd) {
 	} 
 	strdb_erase(nick_db,sd->status.name);
 	numdb_erase(charid_db,sd->status.char_id);
+	free(sd->reg);
+	free(sd->regstr);
 
 	return 0;
 }
@@ -2626,6 +2628,7 @@ void do_final(void) {
 	do_final_itemdb();
 	do_final_storage();
 	do_final_guild();
+	do_final_pet();
 /*
 	for(i=0;i<map_num;i++){
 		if(map[i].gat) {

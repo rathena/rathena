@@ -64,6 +64,7 @@ int pet_heal_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_skillattack_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 
 int do_init_pet(void);
+int do_final_pet(void);
 
 #endif
 

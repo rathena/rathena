@@ -610,6 +610,7 @@ int pet_remove_map(struct map_session_data *sd)
 			pet_hungry_timer_delete(sd);
 		clif_clearchar_area(&sd->pd->bl,0);
 		map_delblock(&sd->pd->bl);
+		free(sd->pd->lootitem);
 		map_deliddb(&sd->pd->bl);
 	}
 	return 0;
@@ -653,7 +654,8 @@ int pet_return_egg(struct map_session_data *sd)
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
 
 	if(sd->status.pet_id && sd->pd) {
-		struct pet_data *pd=sd->pd;
+		// ルートしたItemを落とさせる
+		pet_lootitem_drop(sd->pd,sd);
 		pet_remove_map(sd);
 		sd->status.pet_id = 0;
 		sd->pd = NULL;
@@ -677,8 +679,6 @@ int pet_return_egg(struct map_session_data *sd)
 			else
 				status_calc_pc(sd,2);
 		}
-		// ルートしたItemを落とさせる
-		pet_lootitem_drop(pd,sd);
 
 		intif_save_petdata(sd->status.account_id,&sd->pet);
 		pc_makesavestatus(sd);
@@ -1382,8 +1382,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 				else
 					add_timer(gettick()+540+i,pet_delay_item_drop2,(int)ditem,0);
 			}
-			pd->lootitem=NULL;
-			pd->lootitem=(struct item *)aCalloc(PETLOOT_SIZE,sizeof(struct item));
+			memset(pd->lootitem,0,LOOTITEM_SIZE * sizeof(struct item));
 			pd->lootitem_count = 0;
 			pd->lootitem_weight = 0;
 			pd->lootitem_timer = gettick()+10000;	//	10*1000msの間拾わない
@@ -1701,3 +1700,12 @@ int do_init_pet(void)
 	return 0;
 }
 
+int do_final_pet(void) {
+	int i;
+	for(i = 0;i < MAX_PET_DB; i++) {
+		if(pet_db[i].script) {
+			free(pet_db[i].script);
+		}
+	}
+	return 0;
+}
