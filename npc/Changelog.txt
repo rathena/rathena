@@ -34,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+02/26
+	* Now players can reach Guilds Dungeons only trough their own captured castles. [Lupus]
+		Before they coulkd enter the dungeons vie unoccupied castles. Thanks 2Ishizu-chan for fix
 02/16
 	* Fixed 1 payon castle guardian spawn coords
 	* Fixed Wootan and Beetle King names in the spawn files [Lupus]

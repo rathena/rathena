@@ -35,7 +35,7 @@ function	script	F_GldDunSw	{
 	menu "Yes",-,"No",M_No;
 
 		set @GID, GetCastleData(getarg(0)+".gat",1);
-		if (getcharid(2) != @GID) goto L_NotGLead;
+		if (@GID == 0 || getcharid(2) != @GID) goto L_NotGLead;
 		warp "gld_dun"+getarg(1)+".gat",getarg(2),getarg(3);
 		end;
 
