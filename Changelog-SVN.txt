@@ -1,6 +1,7 @@
 Date	Added
 
 02/21
+	* Added actual mob_db.sql into sql-files. If you use SQL Mob DB then update it [Lupus]
         * Updated Bleeding effect [celest]
         * Removed some unused code for Graffiti [celest]
 

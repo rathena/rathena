@@ -5,6 +5,10 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+02/21
+	* More monsters name fixes (GIANT_HONET -> GIANT_HORNET , etc) [Lupus]
+	* Added actual mob_db.sql into sql-files. If you use SQL Mob DB then update it [Lupus]
+
 02/19
 	* Added released cards into the monsters drops. Fixed couple card names [Lupus]
 	  (Arc Angeling -> Archangeling)
