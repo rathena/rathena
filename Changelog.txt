@@ -15,6 +15,10 @@ Date	Added
         * Added 'indoors' mapflag : When in-doors players will not be affected by Night [celest]
         * Skill updates [celest]
           - Assumptio is now disabled in GvG maps.
+          - Changed cloaking checks a bit.
+          - Tidied up some parts of skill.c abit. ;P
+        * Added pk_min_level option in battle_athena.conf. Change this to define the
+          minimum level players can attack others when pk_mode is on. [celest]
 
 11/15
 	* Added a Database Changelog.txt File, use it for any changes inside the db folder. [shadowlady]

@@ -4810,7 +4810,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		if(map[ss->m].flag.pvp || pc_iskiller((struct map_session_data *)ss, (struct map_session_data*)target)) { // [MouseJstr]
 			if(su && su->group->target_flag==BCT_NOENEMY)
 				return 1;
-			else if(battle_config.pk_mode && (((struct map_session_data*)ss)->status.class==0 || ((struct map_session_data*)target)->status.class==0))
+			else if (battle_config.pk_mode &&
+				(((struct map_session_data*)ss)->status.class==0 || ((struct map_session_data*)target)->status.class==0 ||
+				((struct map_session_data*)ss)->status.base_level < battle_config.pk_min_level ||
+				((struct map_session_data*)target)->status.base_level < battle_config.pk_min_level))
 				return 1; // prevent novice engagement in pk_mode [Valaris]
 			else if(map[ss->m].flag.pvp_noparty && s_p > 0 && t_p > 0 && s_p == t_p)
 				return 1;
@@ -5110,6 +5113,7 @@ static const struct {
 	{ "muting_players",                   &battle_config.muting_players}, // added by [Apple]
 	{ "zeny_from_mobs",			&battle_config.zeny_from_mobs}, // [Valaris]
 	{ "mobs_level_up",			&battle_config.mobs_level_up}, // [Valaris]
+	{ "pk_min_level",            &battle_config.pk_min_level}, // [celest]
 //SQL-only options start
 #ifndef TXT_ONLY 
 	{ "mail_system",		&battle_config.mail_system	}, // added by [Valaris]
@@ -5331,6 +5335,7 @@ void battle_set_defaults() {
 	battle_config.max_cloth_color = 4;
 	battle_config.zeny_from_mobs = 0;
 	battle_config.mobs_level_up = 0;
+	battle_config.pk_min_level = 55;
 
 	battle_config.castrate_dex_scale = 150;
 

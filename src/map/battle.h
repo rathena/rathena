@@ -333,6 +333,7 @@ extern struct Battle_Config {
 
 	int zeny_from_mobs; // [Valaris]
 	int mobs_level_up; // [Valaris]
+	int pk_min_level; // [celest]
 
 #ifndef TXT_ONLY /* SQL-only options */
 	int mail_system; // [Valaris]

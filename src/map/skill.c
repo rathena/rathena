@@ -2828,22 +2828,22 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		}
 		break;
 	case SA_ABRACADABRA:
-	//require 1 yellow gemstone even with mistress card or Into the Abyss
-	if (pc_search_inventory(sd, 715) <= 0 ) {
-		clif_skill_fail(sd,sd->skillid,0,0);
+		//require 1 yellow gemstone even with mistress card or Into the Abyss
+		if (pc_search_inventory(sd, 715) <= 0 ) {
+			clif_skill_fail(sd,sd->skillid,0,0);
+			break;
+		}
+		pc_delitem(sd, pc_search_inventory(sd, 715), 1, 0);
+		//
+		do{
+			abra_skillid=skill_abra_dataset(skilllv);
+		}while(abra_skillid == 0);
+		abra_skilllv=skill_get_max(abra_skillid)>pc_checkskill(sd,SA_ABRACADABRA)?pc_checkskill(sd,SA_ABRACADABRA):skill_get_max(abra_skillid);
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		sd->skillitem=abra_skillid;
+		sd->skillitemlv=abra_skilllv;
+		clif_item_skill(sd,abra_skillid,abra_skilllv,"アブラカダブラ");
 		break;
-	}
-	pc_delitem(sd, pc_search_inventory(sd, 715), 1, 0);
-	//
-	do{
-		abra_skillid=skill_abra_dataset(skilllv);
-	}while(abra_skillid == 0);
-	abra_skilllv=skill_get_max(abra_skillid)>pc_checkskill(sd,SA_ABRACADABRA)?pc_checkskill(sd,SA_ABRACADABRA):skill_get_max(abra_skillid);
-	clif_skill_nodamage(src,bl,skillid,skilllv,1);
-	sd->skillitem=abra_skillid;
-	sd->skillitemlv=abra_skilllv;
-	clif_item_skill(sd,abra_skillid,abra_skilllv,"アブラカダブラ");
-	break;
 	case SA_COMA:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage )
@@ -4239,11 +4239,6 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			}
 		}
 		break;
-
-
-
-
-
 
 	case RG_CLEANER:	//AppleGirl
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -9245,17 +9240,16 @@ int skill_status_change_clear(struct block_list *bl, int type)
 /* クロ?キング?査（周りに移動不可能地?があるか） */
 int skill_check_cloaking(struct block_list *bl) 
 {
-	struct map_session_data *sd=NULL;
 	static int dx[]={-1, 0, 1,-1, 1,-1, 0, 1};
 	static int dy[]={-1,-1,-1, 0, 0, 1, 1, 1};
 	int end=1,i;
 
 	nullpo_retr(0, bl);
-	sd=(struct map_session_data *)bl; //missing sd [Found by Celest, commited by Aria]
+	//missing sd [Found by Celest, commited by Aria]
+	struct map_session_data *sd=(struct map_session_data *)bl;
 
-	if(pc_checkskill(sd,AS_CLOAKING)>2)
-		return 0;
-	if(bl->type == BL_PC && battle_config.pc_cloak_check_type&1)
+	if(bl->type == BL_PC && 
+		(battle_config.pc_cloak_check_type&1 || pc_checkskill(sd,AS_CLOAKING)>2))
 		return 0;
 	if(bl->type == BL_MOB && battle_config.monster_cloak_check_type&1)
 		return 0;
