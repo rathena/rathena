@@ -1,5 +1,7 @@
 Date	Added
 
+-------- Read Changelog-SVN.txt for the newer SVN entries--------
+
 10/15
 	* added @setbattleflag to let me reset a battle_config at runtime [MouseJstr]
 	* --- RC5 release
