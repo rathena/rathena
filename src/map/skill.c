@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/09/25 05:32:19 MouseJstr Exp $
+// $Id: skill.c,v 1.8 2004/11/24 10:51:28 Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -837,7 +837,7 @@ int skill_tree_get_max(int id, int b_class){
 }
 
 /* プロトタイプ */
-struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,int skilllv,int x,int y,int flag);
+//struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,int skilllv,int x,int y,int flag);
 int skill_check_condition( struct map_session_data *sd,int type);
 int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
 int skill_frostjoke_scream(struct block_list *bl,va_list ap);
@@ -4391,24 +4391,72 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			}
 		}
 		break;
+
+	// New guild skills [Celest]
 	case GD_BATTLEORDER:
 		{
 			struct guild *g = NULL;
-			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id))) {
+			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
+				strcmp(sd->status.name,g->master)==0) {
 				for(i = 0; i < g->max_member; i++) {
-					if ((dstsd = g->member[i].sd) != NULL) {
+					if ((dstsd = g->member[i].sd) != NULL && sd->bl.m == dstsd->bl.m) {
 						clif_skill_nodamage(src,bl,skillid,skilllv,1);
-						skill_status_change_start(&dstsd->bl,SC_BATTLEORDERS,skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+						skill_status_change_start(&dstsd->bl,SC_BATTLEORDERS,skilllv,0,0,0,0,0 );
 					}
 				}
 			}
 		}
-		printf("Guild skill castend:%d\n",skillid);
 		break;
-	case GD_REGENERATION:
-	case GD_RESTORE:
+	case GD_REGENERATION:		
+		{
+			struct guild *g = NULL;
+			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
+				strcmp(sd->status.name,g->master)==0) {
+				for(i = 0; i < g->max_member; i++) {
+					if ((dstsd = g->member[i].sd) != NULL && sd->bl.m == dstsd->bl.m) {
+						clif_skill_nodamage(src,bl,skillid,skilllv,1);
+						skill_status_change_start(&dstsd->bl,SC_REGENERATION,skilllv,0,0,0,0,0 );
+					}
+				}
+			}
+		}
+		break;
+	case GD_RESTORE:		
+		{
+			struct guild *g = NULL;
+			int hp, sp;
+			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
+				strcmp(sd->status.name,g->master)==0) {
+				for(i = 0; i < g->max_member; i++) {
+					if ((dstsd = g->member[i].sd) != NULL && sd->bl.m == dstsd->bl.m) {
+						hp = dstsd->status.max_hp*0.9;
+						sp = dstsd->status.sp + hp < dstsd->status.max_sp ? hp : dstsd->status.max_sp - dstsd->status.sp;
+						clif_skill_nodamage(src,bl,AL_HEAL,hp,1);
+						battle_heal(NULL,bl,hp,sp,0);
+					}
+				}
+			}
+		}
+		break;
 	case GD_EMERGENCYCALL:
-		printf("Guild skill castend:%d\n",skillid);
+		{
+			struct guild *g = NULL;
+			// i don't know if it actually summons in a circle, but oh well. ;P
+			int dx[9]={-2, 0, 2,-2, 0, 2,-2, 0, 2};
+			int dy[9]={-2,-2,-2, 0, 0, 0, 2, 2, 2};
+			int j = 0;
+			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
+				strcmp(sd->status.name,g->master)==0) {
+				for(i = 0; i < g->max_member; i++, j++) {
+					if (j>8) j=0;
+					if ((dstsd = g->member[i].sd) != NULL && sd != dstsd &&
+						!map[sd->bl.m].flag.nowarpto && !map[sd->bl.m].flag.nowarp) {
+						clif_skill_nodamage(src,bl,skillid,skilllv,1);
+						pc_setpos(dstsd, sd->mapname, sd->bl.x+dx[j], sd->bl.y+dy[j], 2);
+					}
+				}
+			}
+		}
 		break;
 	default:
 		printf("Unknown skill used:%d\n",skillid);
@@ -4946,6 +4994,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		limit=500;
 		range=5;
 		break;
+
 	case WZ_HEAVENDRIVE:		/* ヘヴンズドライブ */
 		limit=500;
 		range=2;
@@ -5146,12 +5195,14 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			val1 = (pc_checkskill((struct map_session_data *)src,DC_DANCINGLESSON)+1)>>1;
 		val2 = battle_get_luk(src)/10;
 		break;
+
 	case AM_DEMONSTRATION:		/* デモンストレ?ション */
 		limit=skill_get_time(skillid,skilllv);
 		interval=1000;
 		range=1;
 		target=BCT_ENEMY;
 		break;
+
 	case WE_CALLPARTNER:		/* あなたに逢いたい */
 		limit=skill_get_time(skillid,skilllv);
 		range=-1;
@@ -5166,16 +5217,19 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		//skill_status_change_start(src,SC_ANKLE,skilllv,0,0,0,limit,0);
 		//sd->canmove_tick = gettick() + limit; // added later [celest]
 		break;
+
 	case PA_GOSPEL:		/* ゴスペル */
 		count=49;
 		target=BCT_PARTY;
 		limit=skill_get_time(skillid,skilllv);
 		break;
+
 	case CG_MOONLIT:
 		range=1;
 		target=BCT_ALL;
 		limit=skill_get_time(skillid,skilllv);
 		break;
+
 	case PF_FOGWALL:	/* フォグウォ?ル */
 		count=15;
 		limit=skill_get_time(skillid,skilllv);
@@ -5183,11 +5237,21 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			if (sc_data[SC_DELUGE].timer!=-1) limit *= 2;
 		}
 		break;
+
 	case RG_GRAFFITI:			/* Graffiti */
 		count=1;	// Leave this at 1 [Valaris]
 		limit=600000;	// Time length [Valaris]
 		break;
-	};
+
+	case GD_LEADERSHIP:
+	case GD_GLORYWOUNDS:
+	case GD_SOULCOLD:
+	case GD_HAWKEYES:
+		range=2;
+		target=BCT_NOENEMY;
+		limit=600000;
+		break;
+	}
 
 	nullpo_retr(NULL, group=skill_initunitgroup(src,count,skillid,skilllv,skill_get_unit_id(skillid,flag&1)));
 	group->limit=limit;
@@ -5427,8 +5491,25 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 
 			// [celest]
 			if (sc_data) {
-				if (sc_data[SC_BASILICA].timer!=-1) // attach Basilica's id to the caster
-					sc_data[SC_BASILICA].val4 = (int)unit;
+				// attach the unit's id to the caster
+				switch (skillid) {
+				case HP_BASILICA:
+					if (sc_data[SC_BASILICA].timer!=-1)
+						sc_data[SC_BASILICA].val4 = (int)unit;
+					break;
+				case GD_LEADERSHIP:
+					sc_data[SC_LEADERSHIP].val4 = (int)unit;
+					break;
+				case GD_GLORYWOUNDS:
+					sc_data[SC_GLORYWOUNDS].val4 = (int)unit;
+					break;
+				case GD_SOULCOLD:
+					sc_data[SC_SOULCOLD].val4 = (int)unit;
+					break;
+				case GD_HAWKEYES:
+					sc_data[SC_HAWKEYES].val4 = (int)unit;
+					break;
+				}
 			}
 		}
 	}
@@ -5781,6 +5862,44 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		}
 		break;
 
+	// New guild skills [Celest]
+	case 0xc1: // GD_LEADERSHIP
+		{
+			struct map_session_data *sd;
+			if (srcsd && bl->type == BL_PC && (sd=(struct map_session_data *)bl) &&
+				sd->status.guild_id == srcsd->status.guild_id &&
+				sd->sc_data[SC_LEADERSHIP].timer == -1 && !sd->sc_data[SC_LEADERSHIP].val4)
+				skill_status_change_start(bl,SC_LEADERSHIP,1,0,0,0,0,0 );
+		}
+		break;
+	case 0xc2: // GD_GLORYWOUNDS
+		{
+			struct map_session_data *sd;
+			if (srcsd && bl->type == BL_PC && (sd=(struct map_session_data *)bl) &&
+				sd->status.guild_id == srcsd->status.guild_id &&
+				sd->sc_data[SC_GLORYWOUNDS].timer == -1 && !sd->sc_data[SC_GLORYWOUNDS].val4)
+				skill_status_change_start(bl,SC_GLORYWOUNDS,1,0,0,0,0,0 );
+		}
+		break;
+	case 0xc3: // GD_SOULCOLD
+		{
+			struct map_session_data *sd;
+			if (srcsd && bl->type == BL_PC && (sd=(struct map_session_data *)bl) &&
+				sd->status.guild_id == srcsd->status.guild_id &&
+				sd->sc_data[SC_SOULCOLD].timer == -1 && !sd->sc_data[SC_SOULCOLD].val4)
+				skill_status_change_start(bl,SC_SOULCOLD,1,0,0,0,0,0 );
+		}
+		break;
+	case 0xc4: // GD_HAWKEYES
+		{
+			struct map_session_data *sd;
+			if (srcsd && bl->type == BL_PC && (sd=(struct map_session_data *)bl) &&
+				sd->status.guild_id == srcsd->status.guild_id &&
+				sd->sc_data[SC_HAWKEYES].timer == -1 && !sd->sc_data[SC_HAWKEYES].val4)
+				skill_status_change_start(bl,SC_HAWKEYES,1,0,0,0,0,0 );
+		}
+		break;
+
 /*	default:
 		if(battle_config.error_log)
 			printf("skill_unit_onplace: Unknown skill unit id=%d block=%d\n",sg->unit_id,bl->id);
@@ -5916,6 +6035,35 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 			sg->limit=DIFF_TICK(tick,sg->tick)+1000;
 		}
 		break;
+		// New guild skills [Celest]
+	case 0xc1: // GD_LEADERSHIP
+		{
+			struct status_change *sc_data=battle_get_sc_data(bl);
+			if (sc_data && sc_data[SC_LEADERSHIP].timer != -1)
+				skill_status_change_end(bl,SC_LEADERSHIP,-1);
+		}
+		break;
+	case 0xc2: // GD_GLORYWOUNDS
+		{
+			struct status_change *sc_data=battle_get_sc_data(bl);
+			if (sc_data && sc_data[SC_GLORYWOUNDS].timer != -1)
+				skill_status_change_end(bl,SC_GLORYWOUNDS,-1);
+		}
+		break;
+	case 0xc3: // GD_SOULCOLD
+		{
+			struct status_change *sc_data=battle_get_sc_data(bl);
+			if (sc_data && sc_data[SC_SOULCOLD].timer != -1)
+				skill_status_change_end(bl,SC_SOULCOLD,-1);
+		}
+		break;
+	case 0xc4: // GD_HAWKEYES
+		{
+			struct status_change *sc_data=battle_get_sc_data(bl);
+			if (sc_data && sc_data[SC_HAWKEYES].timer != -1)
+				skill_status_change_end(bl,SC_HAWKEYES,-1);
+		}
+		break;
 
 /*	default:
 		if(battle_config.error_log)
@@ -5969,6 +6117,10 @@ int skill_unit_ondelete(struct skill_unit *src,struct block_list *bl,unsigned in
 	case 0xae:	/* 幸運のキス */
 	case 0xaf:	/* サ?ビスフォ?ユ? */
 	case 0xb4:
+	case 0xc1:
+	case 0xc2:
+	case 0xc3:
+	case 0xc4:
 		return skill_unit_onout(src,bl,tick);
 
 /*	default:
@@ -6022,6 +6174,38 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 				return 0;
 
 			pc_setpos(p_sd,map[src->bl.m].name,src->bl.x,src->bl.y,3);
+		}
+		break;
+	case 0xc1: // GD_LEADERSHIP
+		{
+			struct map_session_data *sd;
+			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
+				sd->sc_data[SC_LEADERSHIP].val4 = 0;
+			}				
+		}
+		break;
+	case 0xc2: // GD_GLORYWOUNDS
+		{
+			struct map_session_data *sd;
+			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
+				sd->sc_data[SC_GLORYWOUNDS].val4 = 0;
+			}				
+		}
+		break;
+	case 0xc3: // GD_SOULCOLD
+		{
+			struct map_session_data *sd;
+			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
+				sd->sc_data[SC_SOULCOLD].val4 = 0;
+			}				
+		}
+		break;
+	case 0xc4: // GD_HAWKEYES
+		{
+			struct map_session_data *sd;
+			if ((sd = (struct map_session_data *)(map_id2bl(sg->src_id)))!= NULL) {
+				sd->sc_data[SC_HAWKEYES].val4 = 0;
+			}
 		}
 		break;
 	}
@@ -6962,11 +7146,21 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 			sd->skillid_old = skill_num;
 		}
 		break;
+
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
 	case GD_RESTORE:
 	case GD_EMERGENCYCALL:
-		if (skill_lv <= 0) skill_lv = 1;
+		{
+			struct guild *g;
+			if (!sd->status.guild_id)
+				return 0;
+			if (!(g = guild_search(sd->status.guild_id)))
+				return 0;
+			if (strcmp(sd->status.name,g->master))
+				return 0;
+			if (skill_lv <= 0) skill_lv = 1;
+		}
 		break;
 	}
 
@@ -8652,7 +8846,19 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 				return 0;
 		}
 		break;
+	case SC_LEADERSHIP:
+	case SC_GLORYWOUNDS:
+	case SC_SOULCOLD:
+	case SC_HAWKEYES:
+		if (sd) {
+			sc_data[type].timer = add_timer(
+				1000+tick, skill_status_change_timer,
+				bl->id, data);
+		}
+		break;
 	}
+
+	
 
 	return skill_status_change_end( bl,type,tid );
 }
@@ -9283,18 +9489,22 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_KEEPING:
 		case SC_BARRIER:
 			calc_flag = 1;
+
 		case SC_HALLUCINATION:
 			break;
+
 		case SC_CONCENTRATION:	/* コンセントレ?ション */
 			*opt3 |= 1;
 			calc_flag = 1;
 			break;
+
 		case SC_TENSIONRELAX:	/* テンションリラックス */
 			calc_flag = 1;
 			if(bl->type == BL_PC) {
 				tick = 10000;
 			}
 			break;
+
 		case SC_AURABLADE:		/* オ?ラブレ?ド */
 		case SC_PARRYING:		/* パリイング */
 //		case SC_ASSUMPTIO:		/*  */
@@ -9334,6 +9544,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			calc_flag = 1;
 			val2 = (val1 / 2); //Flee上昇率
 			break;
+
 		case SC_BERSERK:		/* バ?サ?ク */
 			if(sd){
 				sd->status.hp = sd->status.max_hp * 3;
@@ -9346,16 +9557,20 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			tick = 10000;
 			calc_flag = 1;
 			break;
+
 		case SC_ASSUMPTIO:		/* アスムプティオ */
 			*opt3 |= 2048;
 			break;
+
 		case SC_BASILICA: // [celest]
 			break;
+
 		case SC_MARIONETTE:		/* マリオネットコントロ?ル */
 		case SC_MARIONETTE2:
 			calc_flag = 1;
 			*opt3 |= 1024;
 			break;
+
 		case SC_MELTDOWN:		/* メルトダウン */
 		case SC_CARTBOOST:		/* カ?トブ?スト */
 		case SC_TRUESIGHT:		/* トゥル?サイト */
@@ -9363,12 +9578,15 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_MAGICPOWER:		/* 魔法力?幅 */
 			calc_flag = 1;
 			break;
+
 		case SC_REJECTSWORD:	/* リジェクトソ?ド */
 			val2 = 3; //3回攻?を跳ね返す
 			break;
+
 		case SC_MEMORIZE:		/* メモライズ */
 			val2 = 3; //3回詠唱を1/3にする
 			break;
+
 		case SC_GRAFFITI:		/* グラフィティ */
 			{
 				struct skill_unit_group *sg = skill_unitsetting(bl,RG_GRAFFITI,val1,val2,val3,0);
@@ -9376,25 +9594,40 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 					val4 = (int)sg;
 			}
 			break;
+
 		case SC_SPLASHER:		/* ベナムスプラッシャ? */
 			break;
+
 		case SC_FOGWALL:
 			val2 = 75;
 			// calc_flag = 1;	// not sure of effects yet [celest]
 			break;
+
 		case SC_BLOCKSKILL:
 			if (!tick) tick = 60000;
 			if (!val3) val3 = -1;
 			break;
+
 		case SC_SLOWDOWN:
+			calc_flag = 1;
+			break;
+
 		case SC_LEADERSHIP:
 		case SC_GLORYWOUNDS:
 		case SC_SOULCOLD:
 		case SC_HAWKEYES:
-		case SC_BATTLEORDERS:
+			tick = 1000;
+			calc_flag = 1;
+			//val4 = 1;
+			break;
+
 		case SC_REGENERATION:
+			val1 = 2;
+		case SC_BATTLEORDERS:
+			tick = 60000; // 1 minute
 			calc_flag = 1;
 			break;
+
 		default:
 			if(battle_config.error_log)
 				printf("UnknownStatusChange [%d]\n", type);
@@ -10080,12 +10313,6 @@ int skill_unit_timer_sub( struct block_list *bl, va_list ap )
 	if(unit->alive &&
 		(DIFF_TICK(tick,group->tick)>=group->limit || DIFF_TICK(tick,group->tick)>=unit->limit) ){
 		switch(group->unit_id){
-
-
-
-
-
-
 			case 0x8f:	/* ブラストマイン */
 				group->unit_id = 0x8c;
 				clif_changelook(bl,LOOK_BASE,group->unit_id);

@@ -1,4 +1,4 @@
-// $Id: pc.c 101 2004-11-23 14:33:00Z Celestia $
+// $Id: pc.c 101 2004-11-24 10:52:07 Celestia $
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1438,20 +1438,28 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		sd->base_atk += 4;
 	}
 
-	// Celest
+	// New guild skills - Celest
 	if (sd->status.guild_id > 0) {
 		struct guild *g;
 		if ((g = guild_search(sd->status.guild_id)) && strcmp(sd->status.name,g->master)==0) {
-			if (guild_checkskill(g, GD_LEADERSHIP)>0)
-				; //skillunitsetting
-			if (guild_checkskill(g, GD_GLORYWOUNDS)>0)
-				; //skillunitsetting
-			if (guild_checkskill(g, GD_SOULCOLD)>0)
-				; //skillunitsetting
-			if (guild_checkskill(g, GD_HAWKEYES)>0)
-				; //skillunitsetting
-		}		
-		if (sd->sc_count) {
+			if (!sd->sc_data[SC_LEADERSHIP].val4 && guild_checkskill(g, GD_LEADERSHIP)>0) {
+				//skill_status_change_start(&sd->bl,SC_LEADERSHIP,1,0,0,0,0,0 );
+				skill_unitsetting(&sd->bl,GD_LEADERSHIP,1,sd->bl.x,sd->bl.y,0);
+			}
+			if (!sd->sc_data[SC_GLORYWOUNDS].val4 && guild_checkskill(g, GD_GLORYWOUNDS)>0) {
+				//skill_status_change_start(&sd->bl,SC_GLORYWOUNDS,1,0,0,0,0,0 );
+				skill_unitsetting(&sd->bl,GD_GLORYWOUNDS,1,sd->bl.x,sd->bl.y,0);
+			}
+			if (!sd->sc_data[SC_SOULCOLD].val4 && guild_checkskill(g, GD_SOULCOLD)>0) {
+				//skill_status_change_start(&sd->bl,SC_SOULCOLD,1,0,0,0,0,0 );
+				skill_unitsetting(&sd->bl,GD_SOULCOLD,1,sd->bl.x,sd->bl.y,0);
+			}
+			if (!sd->sc_data[SC_HAWKEYES].val4 && guild_checkskill(g, GD_HAWKEYES)>0) {
+				//skill_status_change_start(&sd->bl,SC_HAWKEYES,1,0,0,0,0,0 );
+				skill_unitsetting(&sd->bl,GD_HAWKEYES,1,sd->bl.x,sd->bl.y,0);
+			}
+		}
+		else {
 			if (sd->sc_data[SC_LEADERSHIP].timer != -1)
 				sd->paramb[0] += 2;
 			if (sd->sc_data[SC_GLORYWOUNDS].timer != -1)
@@ -3796,8 +3804,21 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 		sd->bl.y = y;
 		if(moveblock) map_addblock(&sd->bl);
 
-		if(sd->sc_data[SC_DANCING].timer!=-1)
-			skill_unit_move_unit_group((struct skill_unit_group *)sd->sc_data[SC_DANCING].val2,sd->bl.m,dx,dy);
+		if (sd->status.guild_id > 0) {
+			struct skill_unit *su;
+			if (sd->sc_data[SC_LEADERSHIP].val4 && (su=(struct skill_unit *)sd->sc_data[SC_LEADERSHIP].val4)) {
+				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
+			}
+			if (sd->sc_data[SC_GLORYWOUNDS].val4 && (su=(struct skill_unit *)sd->sc_data[SC_GLORYWOUNDS].val4)) {
+				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
+			}
+			if (sd->sc_data[SC_SOULCOLD].val4 && (su=(struct skill_unit *)sd->sc_data[SC_SOULCOLD].val4)) {
+				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
+			}
+			if (sd->sc_data[SC_HAWKEYES].val4 && (su=(struct skill_unit *)sd->sc_data[SC_HAWKEYES].val4)) {
+				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
+			}
+		}
 
 		map_foreachinmovearea(clif_pcinsight,sd->bl.m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,0,sd);
 		sd->walktimer = -1;
@@ -3820,18 +3841,22 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 				break;
 			}
 		/* 被ディボ?ション?査 */
-		if(sd->sc_data) {
+		if(sd->sc_count) {
+			if (sd->sc_data[SC_DANCING].timer!=-1)
+				skill_unit_move_unit_group((struct skill_unit_group *)sd->sc_data[SC_DANCING].val2,sd->bl.m,dx,dy);
+
 			if (sd->sc_data[SC_DEVOTION].val1)
 				skill_devotion2(&sd->bl,sd->sc_data[SC_DEVOTION].val1);
+
 			if (sd->sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
 				struct skill_unit *su;
 				if ((su = (struct skill_unit *)sd->sc_data[SC_BASILICA].val4)) {
 					struct skill_unit_group *sg;
 					if ((sg = su->group) && sg->src_id == sd->bl.id) {
 						skill_status_change_end(&sd->bl,SC_BASILICA,-1);
-						skill_delunitgroup (sg);						
+						skill_delunitgroup (sg);
 					}
-				}				
+				}
 			}
 		}
 

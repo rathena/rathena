@@ -5,7 +5,7 @@ Date	Added
 	* @charpetfriendly is now #petfriendly [MC Cameri]
 	* @charstats is now #stats [MC Cameri]
         * Skill Updates: [celest]
-          - Added some code for the new guild skills (10%) and Moonlit Petals (5%)
+          - Added some code for the new guild skills (50%) and Moonlit Petals (5%)
           - Notes to other devs: Guild skills with id's 10000-10014 will be stored in
             skill_db[500-514]
           - Corrected Hilt Binding

@@ -102,6 +102,7 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 int skill_additional_effect( struct block_list* src, struct block_list *bl,int skillid,int skilllv,int attack_type,unsigned int tick);
 
 // ユニットスキル
+struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,int skilllv,int x,int y,int flag);
 struct skill_unit *skill_initunit(struct skill_unit_group *group,int idx,int x,int y);
 int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
@@ -347,7 +348,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_SOULCOLD			= 198,
 	SC_HAWKEYES			= 199,
 	SC_BATTLEORDERS		= 200,
-	SC_REGENERATION		= 201,	
+	SC_REGENERATION		= 201,
 
 
 // -- testing various SC effects
