@@ -1,6 +1,7 @@
 Date	Added
 
 12/20
+	* Updated Valaris' large/tiny monsters - of course, he told us what he did wrong and how to fix it :) [Codemaster & Valaris]
 	* Updated makefiles to new strlib locations [Codemaster]
 	* Moved strlib.h and strlib.c into the common directory [Codemaster]
 	* Updated a bit of jA 1081 - it's not completly updated yet!!! [Codemaster]
