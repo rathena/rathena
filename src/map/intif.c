@@ -627,6 +627,7 @@ int intif_guild_castle_datasave(int castle_id,int index, int value)
 // Wisp/Page reception
 int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 	struct map_session_data* sd;
+	char *wisp_source;
 	int id=RFIFOL(fd,4);
 	int i=0; //,j=0;
 
@@ -651,9 +652,20 @@ int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 
 		else{
 */
-		if(i == MAX_IGNORE_LIST) {
-			clif_wis_message(sd->fd,RFIFOP(fd,8),RFIFOP(fd,56),RFIFOW(fd,2)-56);
-			intif_wis_replay(RFIFOL(fd,4),0);	// 送信成功
+		else {
+			wisp_source = RFIFOP(fd,8); // speed up [Yor]
+			for(i=0;i<MAX_IGNORE_LIST;i++){   //拒否リストに名前があるかどうか判定してあれば拒否
+				if(strcmp(sd->ignore[i].name, wisp_source)==0){
+					break;
+				}
+			}
+			if(i==MAX_IGNORE_LIST) // run out of list, so we are not ignored
+			{
+				clif_wis_message(sd->fd, wisp_source, (char*)RFIFOP(fd,56),RFIFOW(fd,2)-56);
+				intif_wis_replay(id,0);   // 送信成功
+			}
+			else
+				intif_wis_replay(id, 2);   // 受信拒否
 		}
 	}else
 		intif_wis_replay(id,1);	// そんな人いません

@@ -1,9 +1,11 @@
 Date	Added
 12/23
 	* Updated mapflags (added missing payon_in03,ayo_in01,ayo_in02, que_god01, que_god02) [Lupus]
-        * Updated Sacrifice [celest]
+        * Updated Sacrifice : it's now self-activating, and lasts for 5 attacks [celest]
         * Fixed compile errors in party.c [celest]
         * Moved SC_EDP back to 114 [celest]
+        * Added some of Shinomori's fixes [celest]
+        * Added optimisation in intif_parse_WisMessage from Freya [celest]
 
 12/22
 	* Eliminated skill tree mapping since we have entries

@@ -32,13 +32,17 @@
 
 struct npc_src_list {
 	struct npc_src_list * next;
-	struct npc_src_list * prev;
+//	struct npc_src_list * prev; //[Shinomori]
 	char name[4];
 } ;
 
-static struct npc_src_list *npc_src_first,*npc_src_last;
+static struct npc_src_list *npc_src_first=NULL;
+static struct npc_src_list *npc_src_last=NULL;
 static int npc_id=START_NPC_NUM;
-static int npc_warp,npc_shop,npc_script,npc_mob;
+static int npc_warp=0;
+static int npc_shop=0;
+static int npc_script=0;
+static int npc_mob=0;
 
 int npc_get_new_npc_id(void){ return npc_id++; }
 
@@ -1366,6 +1370,17 @@ void npc_addsrcfile(char *name)
 		return;
 	}
 
+	{
+		// prevent multiple insert of source files
+		struct npc_src_list *p=npc_src_first;
+		while( p )
+		{   // found the file, no need to insert it again
+			if( 0==strcmp(name,p->name) )
+				return;
+			p=p->next;
+		}
+	}
+
 	len = sizeof(*new) + strlen(name);
 	new=(struct npc_src_list *)aCalloc(1,len);
 	new->next = NULL;
@@ -2273,10 +2288,10 @@ int do_init_npc(void)
 	memset(&ev_tm_b,-1,sizeof(ev_tm_b));
 
 	for(nsl=npc_src_first;nsl;nsl=nsl->next) {
-		if(nsl->prev){
+		/*if(nsl->prev){ // [Shinomori]
 			free(nsl->prev);
 			nsl->prev = NULL;
-		}
+		}*/
 		fp=fopen(nsl->name,"r");
 		if (fp==NULL) {
 			printf("file not found : %s\n",nsl->name);

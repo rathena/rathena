@@ -181,7 +181,8 @@ struct skill_tree_entry {
 	struct {
 		short id,lv;
 	} need[6];
-} skill_tree[3][MAX_PC_CLASS][100];	// Celest
+}; // Celest
+extern struct skill_tree_entry skill_tree[3][MAX_PC_CLASS][100];
 
 int pc_read_gm_account(int fd);
 int pc_setinvincibletimer(struct map_session_data *sd,int);
@@ -194,8 +195,8 @@ int do_init_pc(void);
 enum {ADDITEM_EXIST,ADDITEM_NEW,ADDITEM_OVERAMOUNT};
 
 // timer for night.day
-int day_timer_tid;
-int night_timer_tid;
+extern int day_timer_tid;
+extern int night_timer_tid;
 int map_day_timer(int,unsigned int,int,int); // by [yor]
 int map_night_timer(int,unsigned int,int,int); // by [yor]
 

@@ -140,7 +140,11 @@ static unsigned char NibbleData[4][64]={
  */
 static unsigned int getlong(unsigned char *p)
 {
-  return *p+p[1]*256+(p[2]+p[3]*256)*65536;
+//	return *p+p[1]*256+(p[2]+p[3]*256)*65536;
+	return   p[0]
+		| p[1] << 0x08
+		| p[2] << 0x10
+		| p[3] << 0x18; // Shinomori
 }
 
 /*==========================================
@@ -158,15 +162,17 @@ static void BitConvert(BYTE *Src,char *BitSwapTable)
 {
 	int lop,prm;
 	BYTE tmp[8];
-	*(DWORD*)tmp=*(DWORD*)(tmp+4)=0;
+//	*(DWORD*)tmp=*(DWORD*)(tmp+4)=0;
+	memset(tmp,0,8);
 	for(lop=0;lop!=64;lop++) {
 		prm = BitSwapTable[lop]-1;
 		if (Src[(prm >> 3) & 7] & BitMaskTable[prm & 7]) {
 			tmp[(lop >> 3) & 7] |= BitMaskTable[lop & 7];
 		}
 	}
-	*(DWORD*)Src     = *(DWORD*)tmp;
-	*(DWORD*)(Src+4) = *(DWORD*)(tmp+4);
+//	*(DWORD*)Src     = *(DWORD*)tmp;
+//	*(DWORD*)(Src+4) = *(DWORD*)(tmp+4);
+	memcpy(Src,tmp,8);
 }
 
 static void BitConvert4(BYTE *Src)
@@ -194,7 +200,11 @@ static void BitConvert4(BYTE *Src)
 			tmp[(lop >> 3) + 4] |= BitMaskTable[lop & 7];
 		}
 	}
-	*(DWORD*)Src ^= *(DWORD*)(tmp+4);
+//	*(DWORD*)Src ^= *(DWORD*)(tmp+4);
+	Src[0] ^= tmp[4];
+	Src[1] ^= tmp[5];
+	Src[2] ^= tmp[6];
+	Src[3] ^= tmp[7];
 }
 
 static void decode_des_etc(BYTE *buf,int len,int type,int cycle)

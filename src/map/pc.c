@@ -55,13 +55,11 @@ static char job_bonus[3][MAX_PC_CLASS][MAX_LEVEL];
 static int exp_table[14][MAX_LEVEL];
 static char statp[255][7];
 
-/*static struct {
-	int id;
-	int max;
-	struct {
-		short id,lv;
-	} need[6];
-} skill_tree[3][MAX_PC_CLASS][100];*/ // moved to pc.h - celest
+// h-files are for declarations, not for implementations... [Shinomori]
+struct skill_tree_entry skill_tree[3][MAX_PC_CLASS][100];
+// timer for night.day implementation
+int day_timer_tid;
+int night_timer_tid;
 
 static int atkmods[3][20];	// 武器ATKサイズ修正(size_fix.txt)
 static int refinebonus[5][3];	// 精?ボ?ナステ?ブル(refine_db.txt)

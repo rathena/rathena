@@ -325,10 +325,6 @@ enum {
 #ifndef strnicmp
 #define strnicmp strncasecmp
 #endif
-#ifndef strrchr
-#define strrchr rindex
-#endif
-
 #endif
 
 #endif	// _MMO_H_

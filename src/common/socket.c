@@ -17,6 +17,11 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <errno.h>
+
+#ifndef SIOCGIFCONF
+#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
+#endif
+
 #endif
 
 #include <fcntl.h>
