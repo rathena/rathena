@@ -1,5 +1,6 @@
 Date	Added
 11/16
+	* Temporarily Disabled GM Command Logs; Weren't working Properly >_<! [Codemaster]
 	* Fixed a typo in ../db/Changelog.txt [Nana]
 	* Added -funroll-loops argument to makefile to further increase performance [Shinigami]
 	* Fixed 2 bugs in DELITEM script command. [Lupus]
