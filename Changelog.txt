@@ -1,5 +1,6 @@
 Date	Added
-01/09
+01/0
+	* Added 'OnInterIfInitOnce' for WoE scripts & modified the WoE scripts as well [Ajarn & Codemaster] [Thanks to FREYA] [SVN 943]
 	* Added the @sound command and the NPC command of soundeffectall
 	 - works just like soundeffect, but plays for everyone in the area [Codemaster] [SVN 942]
 	* Don't allow Pets to attack Guardians outside of WoE [Codemaster] [SVN 940]

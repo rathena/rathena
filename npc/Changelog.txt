@@ -34,6 +34,8 @@ Other Ppl
 
 Date		Added
 ======
+01/09/05
+	* Modified guild war scripts to fix a bug for duplicate guild storages. [Codemaster & Ajarn]
 8/1
         * Added the new Yuno field warps by Sara-chan [celest]
 

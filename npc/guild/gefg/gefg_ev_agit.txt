@@ -16,7 +16,7 @@
 
 // Castle 1 ================================================================
 gefg_cas01.gat,198,182,0	script	Agit_G01	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "gefg_cas01.gat",0,"::OnRecvCastleG01";
 	end;
 OnRecvCastleG01:
@@ -39,7 +39,7 @@ OnAgitEnd:
 
 // Castle 2 ================================================================
 gefg_cas02.gat,176,178,0	script	Agit_G02	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "gefg_cas02.gat",0,"::OnRecvCastleG02";
 	end;
 OnRecvCastleG02:
@@ -62,7 +62,7 @@ OnAgitEnd:
 
 // Castle 3 ================================================================
 gefg_cas03.gat,245,167,0	script	Agit_G03	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "gefg_cas03.gat",0,"::OnRecvCastleG03";
 	end;
 OnRecvCastleG03:
@@ -85,7 +85,7 @@ OnAgitEnd:
 
 // Castle 4 ================================================================
 gefg_cas04.gat,174,178,0	script	Agit_G04	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "gefg_cas04.gat",0,"::OnRecvCastleG04";
 	end;
 OnRecvCastleG04:
@@ -108,7 +108,7 @@ OnAgitEnd:
 
 // Castle 5 ================================================================
 gefg_cas05.gat,194,184,0	script	Agit_G05	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "gefg_cas05.gat",0,"::OnRecvCastleG05";
 	end;
 OnRecvCastleG05:

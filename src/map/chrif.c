@@ -36,13 +36,14 @@ static const int packet_len_table[0x20] = {
 	-1,-1,10, 6,11,-1, 0, 0,	// 2b10-2b17
 };
 
-int char_fd;
+int char_fd = -1;
 int srvinfo;
 static char char_ip_str[16];
 static int char_ip;
 static int char_port = 6121;
 static char userid[24], passwd[24];
-static int chrif_state;
+static int chrif_state = 0;
+static int char_init_done = 0;
 
 // ê›íËÉtÉ@ÉCÉãì«Ç›çûÇ›ä÷åW
 /*==========================================
@@ -256,6 +257,11 @@ int chrif_connectack(int fd)
 	ShowStatus(tmp_output);
 	sprintf(tmp_output,"Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
 	ShowStatus(tmp_output);
+	if(!char_init_done) {
+		char_init_done = 1;
+		sprintf(tmp_output,"Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInitOnce"));
+		ShowStatus(tmp_output);
+	}
 
 	// <Agit> Run Event [AgitInit]
 //	printf("NPC_Event:[OnAgitInit] do (%d) events (Agit Initialize).\n", npc_event_doall("OnAgitInit"));
