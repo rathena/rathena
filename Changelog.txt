@@ -1,5 +1,7 @@
 Date	Added
 12/5
+	* Fixed the range_check again to stop it from crashing 
+	  servers [MouseJstr]
 	* removed stubbed out unfinished atcommands as per Cameri [MouseJstr]
 	* Fixed nullpo's for gcc 2.95 [MouseJstr]
 	* Fixed bug in which login-txt was crashing in do_final() due to some free's [MC Cameri]

@@ -4962,7 +4962,7 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 
 	if( range>0 && range < arange )	{// ‰“‚·‚¬‚é
 // be lenient if the skill was cast before we have moved to the correct position [Celest]
-		if (src->type == BL_PC) {
+		if (src->type == BL_PC && bl->type == BL_PC) {
 			struct map_session_data *sd;
 			nullpo_retr(0, (sd=(struct map_session_data *)bl));
 			if (sd->walktimer != -1 && !((arange-=battle_config.skill_range_leniency)<=range))
