@@ -2105,12 +2105,29 @@ int parse_frommap(int fd) {
 			auth_fifo[auth_fifo_pos].sex = RFIFOB(fd,44);
 			auth_fifo[auth_fifo_pos].ip = RFIFOL(fd,45);
 
-			sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", char_db, RFIFOL(fd,2), RFIFOL(fd,14));
+			sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'", char_db, RFIFOL(fd,2), RFIFOL(fd,14));
 			if (mysql_query(&mysql_handle, tmp_sql)) {
 				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 			}
 			sql_res = mysql_store_result(&mysql_handle);
-
+			if(sql_res){
+				i = atoi(sql_row[0]);
+				mysql_free_result(sql_res);
+				auth_fifo[auth_fifo_pos].char_pos = auth_fifo[auth_fifo_pos].char_id;
+				auth_fifo_pos++;
+				WFIFOL(fd,6) = 0;
+			}else{
+				return 0;
+			}
+			
+			if(i == 0){
+				WFIFOW(fd, 6) = 0;
+			}
+			
+			WFIFOSET(fd, 44);
+			RFIFOSKIP(fd, 49);
+			
+			/*
 			if (( sql_row = mysql_fetch_row(sql_res))) {
 				i = atoi(sql_row[0]);
 				mysql_free_result(sql_res);
@@ -2127,7 +2144,10 @@ int parse_frommap(int fd) {
 			WFIFOSET(fd,44);
 			RFIFOSKIP(fd,49);
 			break;
+			*/
 
+		break;
+		
 		// char name check
 		case 0x2b08:
 			if (RFIFOREST(fd) < 6)

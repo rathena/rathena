@@ -1,6 +1,8 @@
 Date	Added
 
 02/15
+	* Login / Login SQL: Fixed the EXE-Version check (now it works finally :) [Sirius]
+	* Char SQL: Fixed the '0x2b05' reply to the mapserver (now multi - mapservers works again!)
         * Rewrote skill blocking system that was allowing people to bypass blocking
           time simply by casting a different skill [celest]
         * Edited out some inconsistencies with skillnotok [celest]

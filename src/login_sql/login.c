@@ -437,16 +437,6 @@ int mmo_auth( struct mmo_account* account , int fd){
 	jstrescapecpy(t_pass, account->passwd);
 
 
-	//check for lasted version (exe version check) [Sirius]
-	if(account->sex != 0){
-        	if(check_client_version == 1){
-			if(account->version != client_version_to_connect){
-				return 6;
-			}
-		}
-	}
-                                                                        
-
 	// make query
 	sprintf(tmpsql, "SELECT `%s`,`%s`,`%s`,`lastlogin`,`logincount`,`sex`,`connect_until`,`last_ip`,`ban_until`,`state`,`%s`"
 	                " FROM `%s` WHERE %s `%s`='%s'", login_db_account_id, login_db_userid, login_db_user_pass, login_db_level, login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
@@ -469,6 +459,14 @@ int mmo_auth( struct mmo_account* account , int fd){
 		printf("mmo_auth DB result error ! \n");
 		return 0;
 	}
+	
+	//Client Version check[Sirius]
+        if(check_client_version == 1 && account->version != 0){
+        	if(account->version != client_version_to_connect){
+			mysql_free_result(sql_res);
+			return 6;
+		}
+	}           
 	                                                                        
 	// Documented by CLOWNISIUS || LLRO || Gunstar lead this one with me
 	// IF changed to diferent returns~ you get diferent responses from your msgstringtable.txt
