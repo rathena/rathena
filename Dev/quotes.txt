@@ -146,3 +146,12 @@ Biography:
 // Back 2 Me :P
 	npctalk "Sorry Valaris";
 	npctalk "(He Is Da Man!)";
+
+nsstrunks
+// Off on my own somewhere lol. In a town that no one visits ;)
+- General Dev, do whatever I feel like at the time
+- Real name unknown, just call me nsstrunks ;)
+- 16 years old
+- Off on my own most of the time
+- Willing to help as long as your not annoying ;)
+- *goes off into own world*
