@@ -247,8 +247,11 @@ int battle_get_agi(struct block_list *bl)
 		if(sc_data[SC_DECREASEAGI].timer!=-1)	// 速度減少
 			agi -= 2+sc_data[SC_DECREASEAGI].val1;
 
-		if(sc_data[SC_QUAGMIRE].timer!=-1 )	// クァグマイア
-			agi >>= 1;
+		if(sc_data[SC_QUAGMIRE].timer!=-1 ) {	// クァグマイア
+			//agi >>= 1;
+			int agib = agi*(sc_data[SC_QUAGMIRE].val1*10)/100;
+			agi -= agib > 50 ? 50 : agib;
+		}
 		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
 			agi += 5;
 	}
@@ -345,8 +348,11 @@ int battle_get_dex(struct block_list *bl)
 			else dex += sc_data[SC_BLESSING].val1;	// その他
 		}
 
-		if(sc_data[SC_QUAGMIRE].timer!=-1 )	// クァグマイア
-			dex >>= 1;
+		if(sc_data[SC_QUAGMIRE].timer!=-1 )	{ // クァグマイア
+			// dex >>= 1;
+			int dexb = dex*(sc_data[SC_QUAGMIRE].val1*10)/100;
+			dex -= dexb > 50 ? 50 : dexb;
+		}
 		if(sc_data[SC_TRUESIGHT].timer!=-1 && bl->type != BL_PC)	// トゥルーサイト
 			dex += 5;
 	}
@@ -1581,6 +1587,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 				damage<<=1;
 				skill_status_change_end(bl, SC_SPIDERWEB, -1);
 			}
+		
+		if(sc_data[SC_FOGWALL].timer != -1 && flag&BF_MAGIC)
+			if(rand()%100 < sc_data[SC_FOGWALL].val2)
+				damage = 0;
 	}
 
 	if(class == 1288 || class == 1287 || class == 1286 || class == 1285) {
@@ -2126,13 +2136,17 @@ static struct Damage battle_calc_pet_weapon_attack(
 	if(damage<1) damage=1;
 
 	// 回避修正
+	if(	hitrate < 1000000 && t_sc_data ) {			// 必中攻撃
+		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
+			hitrate -= 50;
+		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
+			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
+			t_sc_data[SC_FREEZE].timer!=-1 || 
+			(t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0))	// 凍結は必中
+			hitrate = 1000000;
+	}
 	if(hitrate < 1000000)
 		hitrate = ( (hitrate>95)?95: ((hitrate<5)?5:hitrate) );
-	if(	hitrate < 1000000 &&			// 必中攻撃
-		(t_sc_data != NULL && (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
-		t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
-		t_sc_data[SC_FREEZE].timer!=-1 || (t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0) ) ) )	// 凍結は必中
-		hitrate = 1000000;
 	if(type == 0 && rand()%100 >= hitrate) {
 		damage = damage2 = 0;
 		dmg_lv = ATK_FLEE;
@@ -2145,6 +2159,8 @@ static struct Damage battle_calc_pet_weapon_attack(
 		int cardfix=100;
 		if(t_sc_data[SC_DEFENDER].timer != -1 && flag&BF_LONG)
 			cardfix=cardfix*(100-t_sc_data[SC_DEFENDER].val2)/100;
+		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
+			cardfix=cardfix*(100-t_sc_data[SC_FOGWALL].val2)/100;
 		if(cardfix != 100)
 			damage=damage*cardfix/100;
 	}
@@ -2613,13 +2629,17 @@ static struct Damage battle_calc_mob_weapon_attack(
 	if(damage<1) damage=1;
 
 	// 回避修正
+	if(	hitrate < 1000000 && t_sc_data ) {			// 必中攻撃
+		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
+			hitrate -= 50;
+		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
+			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
+			t_sc_data[SC_FREEZE].timer!=-1 || 
+			(t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0))	// 凍結は必中
+			hitrate = 1000000;
+	}
 	if(hitrate < 1000000)
 		hitrate = ( (hitrate>95)?95: ((hitrate<5)?5:hitrate) );
-	if(	hitrate < 1000000 &&			// 必中攻撃
-		(t_sc_data != NULL && (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
-		t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
-		t_sc_data[SC_FREEZE].timer!=-1 || (t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0) ) ) )	// 凍結は必中
-		hitrate = 1000000;
 	if(type == 0 && rand()%100 >= hitrate) {
 		damage = damage2 = 0;
 		dmg_lv = ATK_FLEE;
@@ -2651,6 +2671,8 @@ static struct Damage battle_calc_mob_weapon_attack(
 		int cardfix=100;
 		if(t_sc_data[SC_DEFENDER].timer != -1 && flag&BF_LONG)
 			cardfix=cardfix*(100-t_sc_data[SC_DEFENDER].val2)/100;
+		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
+			cardfix=cardfix*(100-t_sc_data[SC_FOGWALL].val2)/100;
 		if(cardfix != 100)
 			damage=damage*cardfix/100;
 	}
@@ -3533,18 +3555,23 @@ static struct Damage battle_calc_pc_weapon_attack(
 	}
 
 	// 回避修正
+	if(	hitrate < 1000000 && t_sc_data ) {			// 必中攻撃
+		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
+			hitrate -= 50;
+		if (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
+			t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
+			t_sc_data[SC_FREEZE].timer!=-1 || 
+			(t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0))	// 凍結は必中
+			hitrate = 1000000;
+	}
 	hitrate = (hitrate<5)?5:hitrate;
-	if(	hitrate < 1000000 && // 必中攻撃
-		(t_sc_data != NULL && (t_sc_data[SC_SLEEP].timer!=-1 ||	// 睡眠は必中
-		t_sc_data[SC_STAN].timer!=-1 ||		// スタンは必中
-		t_sc_data[SC_FREEZE].timer!=-1 || (t_sc_data[SC_STONE].timer!=-1 && t_sc_data[SC_STONE].val2==0) ) ) )	// 凍結は必中
-		hitrate = 1000000;
 	if(type == 0 && rand()%100 >= hitrate) {
 		damage = damage2 = 0;
 		dmg_lv = ATK_FLEE;
 	} else {
 		dmg_lv = ATK_DEF;
 	}
+
 	// スキル修正３（武器研究）
 	if( (skill=pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0) {
 		damage+= skill*2;
@@ -3665,6 +3692,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 		cardfix=100;
 		if(t_sc_data[SC_DEFENDER].timer != -1 && flag&BF_LONG) //ディフェンダー状態で遠距離攻撃
 			cardfix=cardfix*(100-t_sc_data[SC_DEFENDER].val2)/100; //ディフェンダーによる減衰
+		if(t_sc_data[SC_FOGWALL].timer != -1 && flag&BF_LONG)
+			cardfix=cardfix*(100-t_sc_data[SC_FOGWALL].val2)/100;
 		if(cardfix != 100) {
 			damage=damage*cardfix/100; //ディフェンダー補正によるダメージ減少
 			damage2=damage2*cardfix/100; //ディフェンダー補正による左手ダメージ減少

@@ -1455,8 +1455,10 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->paramb[0]+= 4;
 		if(sd->sc_data[SC_QUAGMIRE].timer!=-1){	// クァグマイア
 			sd->speed = sd->speed*3/2;
-			sd->paramb[1]-=(sd->status.agi+sd->paramb[1]+sd->parame[1])/2;
-			sd->paramb[4]-=(sd->status.dex+sd->paramb[4]+sd->parame[4])/2;
+			int agib = (sd->status.agi+sd->paramb[1]+sd->parame[1])*(sd->sc_data[SC_QUAGMIRE].val1*10)/100;
+			int dexb = (sd->status.dex+sd->paramb[4]+sd->parame[4])*(sd->sc_data[SC_QUAGMIRE].val1*10)/100;
+			sd->paramb[1]-= agib > 50 ? 50 : agib;
+			sd->paramb[4]-= dexb > 50 ? 50 : dexb;
 		}
 		if(sd->sc_data[SC_TRUESIGHT].timer!=-1){	// トゥルーサイト
 			sd->paramb[0]+= 5;
@@ -1465,6 +1467,14 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->paramb[3]+= 5;
 			sd->paramb[4]+= 5;
 			sd->paramb[5]+= 5;
+		}
+		if(sd->sc_data[SC_MARIONETTE].timer!=-1){
+			sd->paramb[0]-= (sd->status.str+sd->paramb[0]+sd->parame[0])/2;
+			sd->paramb[1]-= (sd->status.agi+sd->paramb[1]+sd->parame[1])/2;
+			sd->paramb[2]-= (sd->status.vit+sd->paramb[2]+sd->parame[2])/2;
+			sd->paramb[3]-= (sd->status.int_+sd->paramb[3]+sd->parame[3])/2;
+			sd->paramb[4]-= (sd->status.dex+sd->paramb[4]+sd->parame[4])/2;
+			sd->paramb[5]-= (sd->status.luk+sd->paramb[5]+sd->parame[5])/2;			
 		}
 	}
 
@@ -1562,9 +1572,10 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		sd->speed += (1.2*DEFAULT_WALK_SPEED - skill*9);
 	if (pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)	// カートによる速度低下
 		sd->speed += (10-skill) * (DEFAULT_WALK_SPEED * 0.1);
-	else if (pc_isriding(sd))	// ペコペコ乗りによる速度増加
+	else if (pc_isriding(sd)) {	// ペコペコ乗りによる速度増加
 		sd->speed -= (0.25 * DEFAULT_WALK_SPEED);
-		sd->max_weight += 1000;
+		sd->max_weight += 10000;
+	}
 	if(sd->sc_count){
 		if(sd->sc_data[SC_WINDWALK].timer!=-1)	//ウィンドウォーク時はLv*2%減算
 			sd->speed -= sd->speed *(sd->sc_data[SC_WINDWALK].val1*2)/100;
@@ -1890,6 +1901,10 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		if(sd->sc_data[SC_DELUGE].timer!=-1)	// エンチャントポイズン(属性はbattle.cで)
 			sd->addeff[0]+=sd->sc_data[SC_DELUGE].val2;//% of granting
 		*/
+		if(sd->sc_data[SC_KEEPING].timer!=-1)
+			sd->def = 100;
+		if(sd->sc_data[SC_BARRIER].timer!=-1)
+			sd->mdef = 100;
 	}
 
 	if(sd->speed_rate != 100)

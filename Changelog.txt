@@ -6,7 +6,11 @@ Date	Added
 	* Fixed chrif_changesex and @changesex, now uses packet 0x3000. [MC Cameri]
         * Updated some skills, credits to orn and midas. [celest]
           - Magnum Break, Throw Stone, Sprinkle Sand, Magic Power, Memorise, Quagmire,
-            Spider Web, Reject Sword, and assassin's Dodge.
+            Spider Web, Reject Sword, assassin's Dodge, Demonbane, Divine Protection.
+          - Firewall, Quagmire, Fog Wall (100%), Marionette Control (30%), Sandman, 
+            Claymore Trap
+          - Adjusted some mob skills for mod support.
+        * Fixed weight increase when riding. [celest]
 
 11/12
 	* added folder: /save-tmpl, removed folder /save
