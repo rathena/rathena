@@ -4133,6 +4133,7 @@ static const struct {
 	{ "finding_ore_rate",       &battle_config.finding_ore_rate}, // [celest]
 	{ "exp_calc_type",          &battle_config.exp_calc_type}, // [celest]
 	{ "min_skill_delay_limit",    &battle_config.min_skill_delay_limit}, // [celest]
+	{ "require_glory_guild",    &battle_config.require_glory_guild}, // [celest]
 
 //SQL-only options start
 #ifndef TXT_ONLY
@@ -4380,6 +4381,7 @@ void battle_set_defaults() {
 	battle_config.area_size = 14;
 	battle_config.exp_calc_type = 1;
 	battle_config.min_skill_delay_limit = 100;
+	battle_config.require_glory_guild = 1;
 
 //SQL-only options start
 #ifndef TXT_ONLY

@@ -295,16 +295,16 @@ struct map_session_data {
 	short ignore_def_mob, ignore_def_mob_;
 	int hp_loss_tick, hp_loss_rate;
 	short hp_loss_value, hp_loss_type;
-	int addrace2[6],addrace2_[6];
+	int addrace2[12],addrace2_[12];
 	int subsize[3];
 	short unequip_losehp[11];
 	short unequip_losesp[11];
 	int itemid;
-	int itemhealrate[6];
+	int itemhealrate[7];
 	//--- 03/15's new card effects
-	int expaddrace[6];
-	int subrace2[6];
-	short sp_gain_race[6];
+	int expaddrace[12];
+	int subrace2[12];
+	short sp_gain_race[12];
 
 	short spiritball, spiritball_old;
 	int spirit_timer[MAX_SKILL_LEVEL];

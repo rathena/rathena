@@ -1,6 +1,9 @@
 Date	Added
 
 03/23
+	* Fixed some --addrace variables' sizes [celest]
+	* Added' require_glory_guild' - sets whether changing guild emblems require
+	  the Glory of Guild skill [celest]
 	* Fixed alot of memory leaks [celest]
 	* Added stray memory cleaning routine to db.c [celest]
 	* Fixed some compile errors, sorry xP [celest]
