@@ -2362,7 +2362,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		int pid,base_exp,job_exp,flag=1,zeny=0;
 		double per;
 		struct party *p;
-		if(tmpsd[i]==NULL || tmpsd[i]->bl.m != md->bl.m)
+		if(tmpsd[i]==NULL || tmpsd[i]->bl.m != md->bl.m || pc_isdead(tmpsd[i]))
 			continue;
 /* jAthena's exp formula
 	//	per = ((double)md->dmglog[i].dmg)*(9.+(double)((count > 6)? 6:count))/10./((double)max_hp) * dmg_rate;

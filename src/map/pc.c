@@ -7853,7 +7853,8 @@ int map_night_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
  */
 int pc_alive_timer(int tid,unsigned int tick,int id,int data)
 {
-	struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
+	//struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
+	struct map_session_data *sd=map_id2sd(id); // more accurate [celest]
 	nullpo_retr(0, sd);
 	if(sd->alive_timer != tid)
 		return 0;

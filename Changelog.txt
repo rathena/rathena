@@ -1,5 +1,8 @@
 Date	Added
 12/23
+        * Changed pc_alive_timer to use map_id2sd - should be more accurate [celest]
+        * Added jA 1084's fix to mob.c - check whether the player is still alive
+          when calculating exp [celest]
         * Added clif_changed_dir, clif_adopt_process [celest]
         * updated Backstab to show the target's new direction [celest]
         * Corrected the file types of several files in the SVN tree to
