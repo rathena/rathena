@@ -28,7 +28,7 @@ um_fild03.gat,0,0,0,0	monster	Pest	1256,10,0,0,0
 um_fild03.gat,0,0,0,0	monster	Parasite	1500,55,0,0,0
 um_fild03.gat,0,0,0,0	monster	Alligator	1271,30,0,0,0
 um_fild03.gat,0,0,0,0	monster	Dragon Tail	1321,25,0,0,0
-um_fild03.gat,0,0,0,0	monster	Gryphon	1447,1,3600000,3600000,0
+um_fild03.gat,0,0,0,0	monster	Gryphon	1259,1,3600000,3600000,0
 
 //(um_fild04.gat)*
 um_fild04.gat,0,0,0,0	monster	Stainer	1174,30,0,0,0

@@ -8,6 +8,9 @@
 	Einboroch items == 5%
 	Skill databases == celest working on them i believe.
 
+03/31
+	* Updated freeze time for Frost Diver and Frost Nova
+	* Updated cast time for Preserve, thanks to Neko2
 03/29
 	* Some optimizatons, added missing skill to Electric Guitar [Lupus]
 	* Added new items (thanx to Landarma) [Lupus]

@@ -37,6 +37,8 @@ Other Ppl
 Date		Added
 ======
 
+03/31
+	* Corrected a G_GRYPHON spawn in umbala field to GRYPHON, thanks to CrasherZero
 03/29
 	* Corrected Amatsu warp points, thanks to Dino9021
 03/28

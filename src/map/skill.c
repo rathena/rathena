@@ -772,13 +772,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			}
 			// enchant poison has a chance of poisoning enemy
 			if (sd->sc_data[SC_ENCPOISON].timer != -1 && sc_data && sc_data[SC_POISON].timer == -1 &&
-				rand() % 100 < sd->sc_data[SC_ENCPOISON].val1 * sc_def_vit) {
+				rand() % 100 < sd->sc_data[SC_ENCPOISON].val1 * sc_def_vit / 100) {
 				status_change_start(bl,SC_POISON,sd->sc_data[SC_ENCPOISON].val1,
 					0,0,0,skill_get_time2(AS_ENCHANTPOISON,sd->sc_data[SC_ENCPOISON].val1),0);
 			}
 			// エンチャントデットリ?ポイズン(猛毒?果)
 			if (sd->sc_data[SC_EDP].timer != -1 && sc_data && sc_data[SC_DPOISON].timer == -1 &&
-				rand() % 100 < sd->sc_data[SC_EDP].val2 * sc_def_vit)
+				rand() % 100 < sd->sc_data[SC_EDP].val2 * sc_def_vit / 100)
 				status_change_start(bl,SC_DPOISON,sd->sc_data[SC_EDP].val1,
 					0,0,0,skill_get_time2(ASC_EDP,sd->sc_data[SC_EDP].val1),0);			
 		}
@@ -6791,7 +6791,7 @@ int skill_delayfix( struct block_list *bl, int time )
 	sc_data = status_get_sc_data(bl);
 
 	if(sd) {
-		delayrate=((struct map_session_data *)bl)->delayrate;
+		delayrate = sd->delayrate;
 
 		// instant cast attack skills depend on aspd as delay [celest]
 		if (time == 0) {
