@@ -118,7 +118,7 @@ L_Start:
 			SetCastleData getarg(1)+".gat",4,@TriggerE+1;
 			SetCastleData getarg(1)+".gat",2,@Economy+1;
 			// if we learnt Emsolute Develop there's a chance to get +1 investment again
-			if (getgdskilllv(@GID,10014) > 0) && rand(100)>50) set @Economy, @Economy + 1;
+			if (getgdskilllv(@GID,10014) > 0 && rand(100)>50) set @Economy, @Economy + 1;
 			mes "[ "+getarg(0)+" ]";
 			mes "You have invested successfully.";
 			return 0;
@@ -176,7 +176,7 @@ L_Start:
 			// set new hp values for guardians
 			set @Defence, @Defence + 1;
 			// if we learnt Emsolute Develop there's a chance to get +1 investment again
-			if (getgdskilllv(@GID,10014) > 0) && rand(100)>50) set @Defence, @Defence + 1;
+			if (getgdskilllv(@GID,10014) > 0 && rand(100)>50) set @Defence, @Defence + 1;
 			set @AGuardian, 28634 + (@Defence*2000);
 			set @KGuardian, 30214 + (@Defence*2000);
 			set @SGuardian, 15670 + (@Defence*2000);
