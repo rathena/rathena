@@ -813,6 +813,26 @@ int chrif_accountban(int fd)
 }
 
 /*==========================================
+ * キャラクター切断通知
+ *------------------------------------------
+ */
+int chrif_chardisconnect(struct map_session_data *sd)
+{
+	nullpo_retr(-1, sd);
+
+	if(char_fd<=0)
+		return -1;
+
+	WFIFOW(char_fd,0)=0x2b18;
+	WFIFOL(char_fd,2)=sd->status.account_id;
+	WFIFOL(char_fd,6)=sd->status.char_id;
+	WFIFOSET(char_fd,10);
+	//printf("chrif: char disconnect: %d %s\n",sd->bl.id,sd->status.name);
+	return 0;
+
+}
+
+/*==========================================
  * Receiving GM accounts and their levels from char-server by [Yor]
  *------------------------------------------
  */

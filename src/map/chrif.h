@@ -24,6 +24,7 @@ int chrif_reloadGMdb(void);
 int chrif_ragsrvinfo(int base_rate,int job_rate, int drop_rate);
 int chrif_char_offline(struct map_session_data *sd);
 int chrif_changesex(int id, int sex);
+int chrif_chardisconnect(struct map_session_data *sd);
 
 int do_init_chrif(void);
 
