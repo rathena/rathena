@@ -6,10 +6,11 @@
 
 #define MAX_SKILL_DB			450
 #define MAX_SKILL_PRODUCE_DB	 150
+#define MAX_PRODUCE_RESOURCE	7
 #define MAX_SKILL_ARROW_DB	 150
 #define MAX_SKILL_ABRA_DB	 350
 
-// スキルデータベース
+// スキルデ?タベ?ス
 struct skill_db {
 	int range[MAX_SKILL_LEVEL],hit,inf,pl,nk,max;
 	int num[MAX_SKILL_LEVEL];
@@ -32,22 +33,22 @@ struct skill_name_db {
 };
 extern struct skill_name_db skill_names[];
 
-// アイテム作成データベース
+// アイテム作成デ?タベ?ス
 struct skill_produce_db {
 	int nameid, trigger;
 	int req_skill,itemlv;
-	int mat_id[5],mat_amount[5];
+	int mat_id[MAX_PRODUCE_RESOURCE],mat_amount[MAX_PRODUCE_RESOURCE];
 };
 extern struct skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
-// 矢作成データベース
+// 矢作成デ?タベ?ス
 struct skill_arrow_db {
 	int nameid, trigger;
 	int cre_id[5],cre_amount[5];
 };
 extern struct skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
-// アブラカダブラデータベース
+// アブラカダブラデ?タベ?ス
 struct skill_abra_db {
 	int nameid;
 	int req_lv;
@@ -62,7 +63,7 @@ struct skill_unit_group;
 
 int do_init_skill(void);
 
-// スキルデータベースへのアクセサ
+// スキルデ?タベ?スへのアクセサ
 int	skill_get_hit( int id );
 int	skill_get_inf( int id );
 int	skill_get_pl( int id );
@@ -97,7 +98,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 int skill_cleartimerskill(struct block_list *src);
 int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int x,int y,int skill_id,int skill_lv,int type,int flag);
 
-// 追加効果
+// 追加?果
 int skill_additional_effect( struct block_list* src, struct block_list *bl,int skillid,int skilllv,int attack_type,unsigned int tick);
 
 // ユニットスキル
@@ -146,7 +147,7 @@ int skill_check_cloaking(struct block_list *bl);
 int skill_type_cloaking(struct block_list *bl);
 int skill_is_danceskill(int id);
 
-// ステータス異常
+// ステ?タス異常
 int skill_status_change_start(struct block_list *bl,int type,int val1,int val2,int val3,int val4,int tick,int flag);
 int skill_status_change_timer(int tid, unsigned int tick, int id, int data);
 int skill_encchant_eremental_end(struct block_list *bl, int type);
@@ -166,7 +167,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
 int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skilllv,unsigned int tick,int flag);
 
-// スキル攻撃一括処理
+// スキル攻?一括?理
 int skill_attack( int attack_type, struct block_list* src, struct block_list *dsrc,
 	 struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
 
@@ -177,9 +178,9 @@ enum {
 	ST_RECOV_WEIGHT_RATE,ST_MOVE_ENABLE,ST_WATER,
 };
 
-enum {	// struct map_session_data の status_changeの番号テーブル
-// SC_SENDMAX未満はクライアントへの通知あり。
-// 2-2次職の値はなんかめちゃくちゃっぽいので暫定。たぶん変更されます。
+enum {	// struct map_session_data の status_changeの番?テ?ブル
+// SC_SENDMAX未?はクライアントへの通知あり。
+// 2-2次職の値はなんかめちゃくちゃっぽいので暫定。たぶん?更されます。
 	SC_SENDMAX				=128,
 	SC_PROVOKE			= 0,
 	SC_ENDURE			= 1,
@@ -241,21 +242,21 @@ enum {	// struct map_session_data の status_changeの番号テーブル
 	SC_FROSTWEAPON		=91,
 	SC_LIGHTNINGLOADER		=92,
 	SC_SEISMICWEAPON		=93,
-	SC_AURABLADE			=103, /* オーラブレード */
+	SC_AURABLADE			=103, /* オ?ラブレ?ド */
 	SC_PARRYING			=104, /* パリイング */
-	SC_CONCENTRATION		=105, /* コンセントレーション */
+	SC_CONCENTRATION		=105, /* コンセントレ?ション */
 	SC_TENSIONRELAX		=106, /* テンションリラックス */
-	SC_BERSERK			=107, /* バーサーク */
+	SC_BERSERK			=107, /* バ?サ?ク */
 	SC_ASSUMPTIO			=110, /* アシャンプティオ */
-	SC_MAGICPOWER		=113, /* 魔法力増幅 */
-	SC_TRUESIGHT			=115, /* トゥルーサイト */
-	SC_WINDWALK			=116, /* ウインドウォーク */
+	SC_MAGICPOWER		=113, /* 魔法力?幅 */
+	SC_TRUESIGHT			=115, /* トゥル?サイト */
+	SC_WINDWALK			=116, /* ウインドウォ?ク */
 	SC_MELTDOWN			=117, /* メルトダウン */
-	SC_CARTBOOST			=118, /* カートブースト */
-	SC_REJECTSWORD		=120, /* リジェクトソード */
-	SC_MARIONETTE			=121, /* マリオネットコントロール */
+	SC_CARTBOOST			=118, /* カ?トブ?スト */
+	SC_REJECTSWORD		=120, /* リジェクトソ?ド */
+	SC_MARIONETTE			=121, /* マリオネットコントロ?ル */
 	SC_HEADCRUSH			=124, /* ヘッドクラッシュ */
-	SC_JOINTBEAT			=125, /* ジョイントビート */
+	SC_JOINTBEAT			=125, /* ジョイントビ?ト */
 
 	SC_STONE			=128,
 	SC_FREEZE			=129,
@@ -307,12 +308,12 @@ enum {	// struct map_session_data の status_changeの番号テーブル
 	SC_FORTUNE			=176,
 	SC_SERVICE4U			=177,
 
-	SC_SPIDERWEB			=180,		/* スパイダーウェッブ */
+	SC_SPIDERWEB			=180,		/* スパイダ?ウェッブ */
 	SC_MEMORIZE			=181,		/* メモライズ */
 
-	SC_WEDDING			=187,	//結婚用(結婚衣裳になって歩くのが遅いとか)
-	SC_NOCHAT			=188,	//赤エモ状態
-	SC_SPLASHER			=189,	/* ベナムスプラッシャー */
+	SC_WEDDING			=187,	//結婚用(結婚衣裳になって?くのが?いとか)
+	SC_NOCHAT			=188,	//赤エモ?態
+	SC_SPLASHER			=189,	/* ベナムスプラッシャ? */
 	SC_SELFDESTRUCTION		=190,	/* 自爆 */
 
 
@@ -338,7 +339,7 @@ enum {	// struct map_session_data の status_changeの番号テーブル
 // [Celest]
 	SC_SLOWDOWN         = 45, // for skill slowdown
 	SC_BLEEDING         = 124, // Temporarily same id as headcrush
-	SC_POISON2			= 193, // for EDP -- notes: Not implemented since damage unknown yet	
+	SC_DPOISON			= 193, /* 猛毒 */
 	SC_BLOCKSKILL       = 194, // for disallowing the use of a skill for a time period
 
 // -- testing various SC effects

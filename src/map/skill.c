@@ -945,13 +945,13 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 		dstsd=(struct map_session_data *)bl;
 	else if(bl->type==BL_MOB){
 		dstmd=(struct mob_data *)bl; //未使用？
-		if(sc_def_mdef>50)
+		if(sc_def_mdef<50)
 			sc_def_mdef=50;
-		if(sc_def_vit>50)
+		if(sc_def_vit<50)
 			sc_def_vit=50;
-		if(sc_def_int>50)
+		if(sc_def_int<50)
 			sc_def_int=50;
-		if(sc_def_luk>50)
+		if(sc_def_luk<50)
 			sc_def_luk=50;
 	}
 	if(sc_def_mdef<0)
@@ -977,6 +977,30 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 				//else
 				//	clif_skill_fail(sd,skillid,0,0); // it's annoying! =p [Celest]
 			}
+		// エンチャントデットリーポイズン(猛毒効果)
+		if (sd && sd->sc_data[SC_EDP].timer != -1 && rand() % 10000 < sd->sc_data[SC_EDP].val2 * sc_def_vit) {
+			int mhp = battle_get_max_hp(bl);
+			int hp = battle_get_hp(bl);
+			int lvl = sd->sc_data[SC_EDP].val1;
+			int diff;
+			// MHPの1/4以下にはならない
+			if(hp > mhp>>2) {
+				if(bl->type == BL_PC) {
+					diff = mhp*10/100;
+					if (hp - diff < mhp>>2)
+						diff = hp - (mhp>>2);
+					pc_heal((struct map_session_data *)bl, -hp, 0);
+				} else if(bl->type == BL_MOB) {
+					struct mob_data *md = (struct mob_data *)bl;
+					hp -= mhp*15/100;
+					if (hp > mhp>>2)
+						md->hp = hp;
+					else
+						md->hp = mhp>>2;
+				}
+			}
+			skill_status_change_start(bl,SC_DPOISON,lvl,0,0,0,skill_get_time2(ASC_EDP,lvl),0);
+		}
 		break;
 
 	case SM_BASH:			/* バッシュ（急所攻?） */
@@ -1183,6 +1207,11 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 	case MO_EXTREMITYFIST:			/* 阿修羅覇凰拳 */
 		//阿修羅を使うと5分間自然回復しないようになる
 		skill_status_change_start(src,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time2(skillid,skilllv),0 );
+		break;
+	case HW_NAPALMVULCAN:			/* ナパームバルカン */
+		// skilllv*5%の確率で呪い
+		if (rand()%10000 < 5*skilllv*sc_def_luk)
+			skill_status_change_start(bl,SC_CURSE,7,0,0,0,skill_get_time2(NPC_CURSEATTACK,7),0);
 		break;
 	}
 
@@ -2358,6 +2387,11 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 				ar=1;
 			else if(skillid==NPC_SPLASHATTACK)	/* スプラッシュアタックは範?7*7 */
 				ar=3;
+
+			// meteor assault cast effect (not sure how else to properly add it =p) [Celest]
+			if (skillid == ASC_METEORASSAULT)
+				clif_specialeffect(&sd->bl,409, 1);
+			
 			skill_area_temp[1]=bl->id;
 			skill_area_temp[2]=x;
 			skill_area_temp[3]=y;
@@ -3130,6 +3164,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case CR_DEVOTION:		/* ディボ?ション */
 		if(sd && dstsd){
 			//?生や養子の場合の元の職業を算出する
+			struct pc_base_job dst_s_class = pc_calc_base_job(dstsd->status.class);
 
 			int lv = sd->status.base_level-dstsd->status.base_level;
 			lv = (lv<0)?-lv:lv;
@@ -3139,8 +3174,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			 ||(!sd->status.party_id && !sd->status.guild_id)	// PTにもギルドにも所?無しはだめ
 			 ||((sd->status.party_id != dstsd->status.party_id)	// 同じパ?ティ?か、
 			 &&(sd->status.guild_id != dstsd->status.guild_id))	// 同じギルドじゃないとだめ
-			 ||(dstsd->status.class==14||dstsd->status.class==21
-			 ||dstsd->status.class==4015||dstsd->status.class==4022)){	// クルセだめ
+			 ||(dst_s_class.job==14||dst_s_class.job==21)){	// クルセだめ
 				clif_skill_fail(sd,skillid,0,0);
 				map_freeblock_unlock();
 				return 1;
@@ -3233,6 +3267,13 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
 		break;
+	case ASC_CDP: // [DracoRPG]
+		// notes: success rate (from emperium.org) = 20 + [(20*Dex)/50] + [(20*Luk)/100]
+		if(sd) {
+			clif_skill_produce_mix_list(sd,256);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		}
+		break;	
 	case BS_HAMMERFALL:		/* ハンマ?フォ?ル */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_weapon_damage )
@@ -3466,7 +3507,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			if(pc_steal_item(sd,bl))
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			else
-				clif_skill_nodamage(src,bl,skillid,skilllv,0);
+				clif_skill_fail(sd,skillid,0x0a,0);
 		}
 		break;
 
@@ -3480,7 +3521,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				mob_target((struct mob_data *)bl,src,range);
 			}
 			else
-				clif_skill_nodamage(src,bl,skillid,skilllv,0);
+				clif_skill_fail(sd,skillid,0,0);
 		}
 		break;
 
@@ -3518,6 +3559,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case TF_DETOXIFY:			/* 解毒 */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_status_change_end(bl, SC_POISON	, -1 );
+		skill_status_change_end(bl, SC_DPOISON	, -1 );
 		break;
 
 	case PR_STRECOVERY:			/* リカバリ? */
@@ -4195,25 +4237,6 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			return 1;
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,skillid,src->id,0,skill_get_time(skillid,skilllv),0 );
-		break;
-	case ASC_CDP:   // Temporary skill for Create Deadly Poison[Celest]
-		// notes: success rate (from emperium.org) = 20 + [(20*Dex)/50] + [(20*Luk)/100]
-		if(sd) {
-			int eflag;
-			struct item item_tmp;
-			struct block_list tbl;
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			memset(&item_tmp,0,sizeof(item_tmp));
-			memset(&tbl,0,sizeof(tbl)); // [MouseJstr]
-			item_tmp.nameid = 678;
-			item_tmp.identify = 1;
-			tbl.id = 0;
-			eflag = pc_additem(sd,&item_tmp,1);
-			if(eflag) {
-				clif_additem(sd,0,0,eflag);
-				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
-			}
-		}
 		break;
 	case PF_MINDBREAKER:		/* プロボック */
 		{
@@ -6086,13 +6109,11 @@ static int skill_check_condition_char_sub(struct block_list *bl,va_list ap)
 		return 0;
 	}
 
-	;
 	ss_class = pc_calc_base_job(ssd->status.class);
 
 	switch(ssd->skillid){
 	case PR_BENEDICTIO:				/* 聖?降福 */
-		if(sd != ssd && (sd->status.class == 4 || sd->status.class == 8 || sd->status.class == 15 ||
-			sd->status.class == 4005 || sd->status.class == 4009 || sd->status.class == 4016) &&
+		if(sd != ssd && (s_class.job == 4 || s_class.job == 8 || s_class.job == 15) &&
 			(sd->bl.x == ssd->bl.x - 1 || sd->bl.x == ssd->bl.x + 1) && sd->status.sp >= 10)
 			(*c)++;
 		break;
@@ -6107,12 +6128,8 @@ static int skill_check_condition_char_sub(struct block_list *bl,va_list ap)
 	case BD_RAGNAROK:				/* 神?の?昏 */
 	case CG_MOONLIT:				/* 月明りの泉に落ちる花びら */
 		if(sd != ssd &&
-		 ((ssd->status.class==19 && sd->status.class==20) ||
-		 (ssd->status.class==20 && sd->status.class==19) ||
-		 (ssd->status.class==4020 && sd->status.class==4021) ||
-		 (ssd->status.class==4021 && sd->status.class==4020) ||
-		 (ssd->status.class==20 && sd->status.class==4020) ||
-		 (ssd->status.class==19 && sd->status.class==4021)) &&
+		 ((ss_class.job==19 && s_class.job==20) ||
+		 (ss_class.job==20 && s_class.job==19)) &&
 		 pc_checkskill(sd,ssd->skillid) > 0 &&
 		 (*c)==0 &&
 		 sd->status.party_id == ssd->status.party_id &&
@@ -6160,8 +6177,7 @@ static int skill_check_condition_use_sub(struct block_list *bl,va_list ap)
 	if(skilllv <= 0) return 0;
 	switch(skillid){
 	case PR_BENEDICTIO:				/* 聖?降福 */
-		if(sd != ssd && (sd->status.class == 4 || sd->status.class == 8 || sd->status.class == 15 ||
-			sd->status.class == 4005 || sd->status.class == 4009 || sd->status.class == 4016) &&
+		if(sd != ssd && (s_class.job == 4 || s_class.job == 8 || s_class.job == 15) &&
 			(sd->bl.x == ssd->bl.x - 1 || sd->bl.x == ssd->bl.x + 1) && sd->status.sp >= 10){
 			sd->status.sp -= 10;
 			pc_calcstatus(sd,0);
@@ -6179,12 +6195,8 @@ static int skill_check_condition_use_sub(struct block_list *bl,va_list ap)
 	case BD_RAGNAROK:				/* 神?の?昏 */
 	case CG_MOONLIT:				/* 月明りの泉に落ちる花びら */
 		if(sd != ssd && //本人以外で
-		  ((ssd->status.class==19 && sd->status.class==20) ||
-		 (ssd->status.class==20 && sd->status.class==19) ||
-		 (ssd->status.class==4020 && sd->status.class==4021) ||
-		 (ssd->status.class==4021 && sd->status.class==4020) ||
-		 (ssd->status.class==20 && sd->status.class==4020) ||
-		 (ssd->status.class==19 && sd->status.class==4021)) && //自分がダンサ?ならバ?ドで
+		  ((ss_class.job==19 && s_class.job==20) || //自分がバードならダンサーで
+		   (ss_class.job==20 && s_class.job==19)) && //自分がダンサーならバードで
 		   pc_checkskill(sd,skillid) > 0 && //スキルを持っていて
 		   (*c)==0 && //最初の一人で
 		   sd->status.party_id == ssd->status.party_id && //パ?ティ?が同じで
@@ -6255,7 +6267,8 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		sd->skillitem = sd->skillitemlv = -1;
 		return 0;
 	}
-	if(sd->skillid == AM_PHARMACY &&	sd->state.produce_flag == 1) {
+	if((sd->skillid == AM_PHARMACY || sd->skillid == ASC_CDP)
+		&& sd->state.produce_flag == 1) {
 		sd->skillitem = sd->skillitemlv = -1;
 		return 0;
 	}
@@ -7516,7 +7529,7 @@ int skill_gangsterparadise(struct map_session_data *sd ,int type)
 		map_foreachinarea(skill_gangster_count,sd->bl.m,
 			sd->bl.x-range,sd->bl.y-range,
 			sd->bl.x+range,sd->bl.y+range,BL_PC,&c);
-		if(c > 0) {/*ギャングスタ?成功したら自分にもギャングスタ??性付?*/
+		if(c > 1) {/*ギャングスター成功したら自分にもギャングスター属性付与*/
 			map_foreachinarea(skill_gangster_in,sd->bl.m,
 				sd->bl.x-range,sd->bl.y-range,
 				sd->bl.x+range,sd->bl.y+range,BL_PC);
@@ -7528,7 +7541,7 @@ int skill_gangsterparadise(struct map_session_data *sd ,int type)
 		map_foreachinarea(skill_gangster_count,sd->bl.m,
 			sd->bl.x-range,sd->bl.y-range,
 			sd->bl.x+range,sd->bl.y+range,BL_PC,&c);
-		if(c < 1)
+		if(c < 2)
 			map_foreachinarea(skill_gangster_out,sd->bl.m,
 				sd->bl.x-range,sd->bl.y-range,
 				sd->bl.x+range,sd->bl.y+range,BL_PC);
@@ -8001,13 +8014,23 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			break;
 
 		case SC_POISON:
+			if (sc_data[SC_DPOISON].timer != -1)	//
+				break;						// DPOISON用のオプション
+			*opt2 &= ~1;					// が専用に用意された場合には 
+			opt_flag = 1;					// ここは削除する 
+			break;							//
 		case SC_CURSE:
 		case SC_SILENCE:
 		case SC_BLIND:
 			*opt2 &= ~(1<<(type-SC_POISON));
 			opt_flag = 1;
 			break;
-
+		case SC_DPOISON:
+			if (sc_data[SC_POISON].timer != -1)	// DPOISON用のオプションが	
+				break;							// 用意されたら削除
+			*opt2 &= ~1;	// 毒状態解除
+			opt_flag = 1;
+			break;
 		case SC_SIGNUMCRUCIS:
 			*opt2 &= ~0x40;
 			opt_flag = 1;
@@ -8308,6 +8331,26 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 		else
 			sc_data[type].timer=add_timer(1000+tick,skill_status_change_timer, bl->id, data );
 		break;
+	case SC_DPOISON:
+		if (sc_data[SC_SLOWPOISON].timer == -1 && (--sc_data[type].val3) > 0) {
+			int hp = battle_get_max_hp(bl);
+			if (battle_get_hp(bl) > hp>>2) {
+				if(bl->type == BL_PC) {
+					hp = 3 + hp/50;
+					pc_heal((struct map_session_data *)bl, -hp, 0);
+				} else if (bl->type == BL_MOB) {
+					struct mob_data *md;
+					if ((md=((struct mob_data *)bl)) == NULL)
+						break;
+					hp = 3 + hp/100;
+					md->hp -= hp;
+				}
+			}
+		}
+		if (sc_data[type].val3 > 0)
+			sc_data[type].timer=add_timer(1000+tick,skill_status_change_timer, bl->id, data );
+		break;
+
 	case SC_TENSIONRELAX:	/* テンションリラックス */
 		if(sd){		/* SPがあって、HPが?タンでなければ?? */
 			if( sd->status.sp > 12 && sd->status.max_hp > sd->status.hp ){
@@ -8326,7 +8369,6 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 	case SC_HEADCRUSH:	// temporary damage [celest]
 //	case SC_BLEEDING:
-	case SC_POISON2:
 		if((--sc_data[type].val3) > 0) {
 			int hp = battle_get_max_hp(bl);
 			if(bl->type == BL_PC) {
@@ -8526,6 +8568,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_STAN:
 		case SC_SILENCE:
 		case SC_POISON:
+		case SC_DPOISON:
 			scdef=3+battle_get_vit(bl)+battle_get_luk(bl)/3;
 			break;
 		case SC_SLEEP:
@@ -8650,7 +8693,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			clif_emotion(bl,4);
 			break;
 		case SC_SLOWPOISON:
-			if(sc_data[SC_POISON].timer == -1 )
+			if (sc_data[SC_POISON].timer == -1 && sc_data[SC_DPOISON].timer == -1)
 				return 0;
 			break;
 		case SC_TWOHANDQUICKEN:		/* 2HQ */
@@ -8683,6 +8726,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			skill_encchant_eremental_end(bl,SC_ENCPOISON);
 			break;
 		case SC_EDP:	// [Celest]
+			val2 = val1 + 2;			/* 猛毒付与確率(%) */
 			calc_flag = 1;
 			break;
 		case SC_POISONREACT:	/* ポイズンリアクト */
@@ -8981,6 +9025,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 
 		/* option2 */
 		case SC_POISON:				/* 毒 */
+		case SC_DPOISON:			/* 猛毒 */
 			calc_flag = 1;
 			if(!(flag&2)) {
 				int sc_def = 100 - (battle_get_vit(bl) + battle_get_luk(bl)/5);
@@ -9227,6 +9272,10 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_SILENCE:
 		case SC_BLIND:
 			*opt2 |= 1<<(type-SC_POISON);
+			opt_flag = 1;
+			break;
+		case SC_DPOISON:	// 暫定で毒のエフェクトを使用
+			*opt2 |= 1;
 			opt_flag = 1;
 			break;
 		case SC_SIGNUMCRUCIS:
@@ -10225,7 +10274,7 @@ int skill_can_produce_mix( struct map_session_data *sd, int nameid, int trigger 
 		return 0;
 
 	if(trigger>=0){
-		if(trigger==32 || trigger==16 || trigger==64){
+		if(trigger == 32 || trigger == 16 || trigger==64 || trigger == 256) {
 			if(skill_produce_db[i].itemlv!=trigger)	/* ファ?マシ?＊ポ?ション類と溶??＊?石以外はだめ */
 				return 0;
 		}else{
@@ -10238,7 +10287,7 @@ int skill_can_produce_mix( struct map_session_data *sd, int nameid, int trigger 
 	if( (j=skill_produce_db[i].req_skill)>0 && pc_checkskill(sd,j)<=0 )
 		return 0;		/* スキルが足りない */
 
-	for(j=0;j<5;j++){
+	for(j=0;j<MAX_PRODUCE_RESOURCE;j++){
 		int id,x,y;
 		if( (id=skill_produce_db[i].mat_id[j]) <= 0 )	/* これ以上は材料要らない */
 			continue;
@@ -10250,7 +10299,7 @@ int skill_can_produce_mix( struct map_session_data *sd, int nameid, int trigger 
 			for(y=0,x=0;y<MAX_INVENTORY;y++)
 				if( sd->status.inventory[y].nameid == id )
 					x+=sd->status.inventory[y].amount;
-			if(x<skill_produce_db[i].mat_amount[j])	/* アイテムが足りない */
+			if(x<skill_produce_db[i].mat_amount[j]) /* アイテムが足りない */
 				return 0;
 		}
 	}
@@ -10296,7 +10345,7 @@ int skill_produce_mix( struct map_session_data *sd,
 	}
 
 	/* 材料消費 */
-	for(i=0;i<5;i++){
+	for(i=0;i<MAX_PRODUCE_RESOURCE;i++){
 		int j,id,x;
 		if( (id=skill_produce_db[idx].mat_id[i]) <= 0 )
 			continue;
@@ -10339,8 +10388,10 @@ int skill_produce_mix( struct map_session_data *sd,
 					pc_checkskill(sd,AM_CP_SHIELD)*100 + pc_checkskill(sd,AM_CP_ARMOR)*100 + pc_checkskill(sd,AM_CP_HELM)*100;
 			else
 				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;
-		}
-		else {
+		} else if (skill_produce_db[idx].req_skill == ASC_CDP) {
+			make_per = 2000 + 40*sd->paramc[4] + 20*sd->paramc[5];			
+			//make_per = 20 + (20*sd->paramc[4])/50 + (20*sd->paramc[5])/100;
+		} else {
 			if(nameid == 998)
 				make_per = 2000 + sd->status.base_level*30 + sd->paramc[4]*20 + sd->paramc[5]*10 + pc_checkskill(sd,skill_produce_db[idx].req_skill)*600;
 			else if(nameid == 985)
@@ -10365,7 +10416,8 @@ int skill_produce_mix( struct map_session_data *sd,
 
 	if(make_per < 1) make_per = 1;
 
-	if(skill_produce_db[idx].req_skill==AM_PHARMACY) {
+	if(skill_produce_db[idx].req_skill==AM_PHARMACY || 
+		skill_produce_db[idx].req_skill==ASC_CDP) {
 		if( battle_config.pp_rate!=100 )
 			make_per=make_per*battle_config.pp_rate/100;
 	}
@@ -10401,16 +10453,19 @@ int skill_produce_mix( struct map_session_data *sd,
 			log_produce(sd,nameid,slot1,slot2,slot3,1);
 		#endif //USE_SQL
 
-		if(skill_produce_db[idx].req_skill!=AM_PHARMACY && skill_produce_db[idx].req_skill!=WS_CREATECOIN) {	//武器製造の場合
-			clif_produceeffect(sd,0,nameid);/* 武器製造エフェクトパケット */
-			clif_misceffect(&sd->bl,3); /* 他人にも成功を通知（精?成功エフェクトと同じでいいの？） */
-		}
-		else if(skill_produce_db[idx].req_skill==AM_PHARMACY){	//ファ?マシ?の場合
-			clif_produceeffect(sd,2,nameid);/* 製?エフェクトパケット */
-			clif_misceffect(&sd->bl,5); /* 他人にも成功を通知*/
-		}else{
-			clif_produceeffect(sd,0,nameid);/* 不明なのでとりあえず製造エフェクトパケット */
-			clif_misceffect(&sd->bl,3); /* 他人にも成功を通知*/
+		switch (skill_produce_db[idx].req_skill) {
+			case AM_PHARMACY:
+				clif_produceeffect(sd,2,nameid);/* 製薬エフェクト */
+				clif_misceffect(&sd->bl,5); /* 他人にも成功を通知 */
+				break;
+			case ASC_CDP:
+				clif_produceeffect(sd,2,nameid);/* 暫定で製薬エフェクト */
+				clif_misceffect(&sd->bl,5);
+				break;
+			default:  /* 武器製造、コイン製造 */
+				clif_produceeffect(sd,0,nameid); /* 武器製造エフェクト */
+				clif_misceffect(&sd->bl,3);
+				break;
 		}
 
 		if((flag = pc_additem(sd,&tmp_item,1))) {
@@ -10424,16 +10479,22 @@ int skill_produce_mix( struct map_session_data *sd,
 			log_produce(sd,nameid,slot1,slot2,slot3,0);
 		#endif //USE_SQL
 
-		if(skill_produce_db[idx].req_skill!=AM_PHARMACY) {	//武器製造の場合
-			clif_produceeffect(sd,1,nameid);/* 武器製造失敗エフェクトパケット */
-			clif_misceffect(&sd->bl,2); /* 他人にも失敗を通知 */
-		}
-		else if(skill_produce_db[idx].req_skill==AM_PHARMACY){	//ファ?マシ?の場合
-			clif_produceeffect(sd,3,nameid);/* 製?失敗エフェクトパケット */
-			clif_misceffect(&sd->bl,6); /* 他人にも失敗を通知*/
-		}else{
-			clif_produceeffect(sd,1,nameid);/* 不明なのでとりあえず製造失敗エフェクトパケット */
-			clif_misceffect(&sd->bl,2); /* 他人にも失敗を通知*/
+		switch (skill_produce_db[idx].req_skill) {
+			case AM_PHARMACY:
+				clif_produceeffect(sd,3,nameid);/* 製薬失敗エフェクト */
+				clif_misceffect(&sd->bl,6); /* 他人にも失敗を通知 */
+				break;
+			case ASC_CDP:
+				{
+					clif_produceeffect(sd,3,nameid); /* 暫定で製薬エフェクト */
+					clif_misceffect(&sd->bl,6); /* 他人にも失敗を通知 */
+					pc_heal(sd, -(sd->status.max_hp>>2), 0);
+				}
+				break;
+			default:
+				clif_produceeffect(sd,1,nameid);/* 武器製造失敗エフェクト */
+				clif_misceffect(&sd->bl,2); /* 他人にも失敗を通知 */
+				break;
 		}
 	}
 	return 0;
@@ -10785,12 +10846,12 @@ int skill_readdb(void)
 		}
 		k=0;
 		while(fgets(line,1020,fp)){
-			char *split[16];
+			char *split[6 + MAX_PRODUCE_RESOURCE * 2];
 			int x,y;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
 			memset(split,0,sizeof(split));
-			for(j=0,p=line;j<13 && p;j++){
+			for(j=0,p=line;j<3 + MAX_PRODUCE_RESOURCE * 2 && p;j++){
 				split[j]=p;
 				p=strchr(p,',');
 				if(p) *p++=0;
@@ -10805,7 +10866,7 @@ int skill_readdb(void)
 			skill_produce_db[k].itemlv=atoi(split[1]);
 			skill_produce_db[k].req_skill=atoi(split[2]);
 
-			for(x=3,y=0;split[x] && split[x+1] && y<5;x+=2,y++){
+			for(x=3,y=0; split[x] && split[x+1] && y<MAX_PRODUCE_RESOURCE; x+=2,y++){
 				skill_produce_db[k].mat_id[y]=atoi(split[x]);
 				skill_produce_db[k].mat_amount[y]=atoi(split[x+1]);
 			}
