@@ -52,9 +52,10 @@
 #endif
 
 #define STATE_BLIND 0x10
-#define MAX_PACKET_DB 0x224
 
-int packet_db_ver = -1;
+int packet_db_ver = -1;	// the packet version used by packet_db
+int packet_db_connect_cmd = 0xF5;	// the default packet used for connecting to the server
+
 int *packet_db_size;
 void (**packet_db_parse_func)();
 short packet_db_pos[MAX_PACKET_DB][20];
@@ -7293,8 +7294,12 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 		return;
 	}
 
+	// packet DB
+	if (RFIFOW(fd,0) == packet_db_connect_cmd) {
+		//printf("Received bytes %d with packet 0x72.\n", RFIFOREST(fd));
+		account_id = RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][0]);
 	// 0x72
-	if (RFIFOW(fd,0) == 0x72) {
+	} else if (RFIFOW(fd,0) == 0x72) {
 		//printf("Received bytes %d with packet 0x72.\n", RFIFOREST(fd));
 		if (RFIFOREST(fd) >= 39 && (RFIFOB(fd,38) == 0 || RFIFOB(fd,38) == 1)) // 00 = Female, 01 = Male
 			account_id = RFIFOL(fd,12);
@@ -7336,7 +7341,13 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 		sd->fd = fd;
 
 		// 0x72
-		if (RFIFOW(fd,0) == 0x72) {
+		if (RFIFOW(fd,0) == packet_db_connect_cmd) {
+			sd->packet_ver = packet_db_ver; // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
+			pc_setnewpc(sd, account_id, RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][1]),
+				RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][2]),
+				RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][3]),
+				RFIFOL(fd,packet_db_pos[packet_db_connect_cmd][4]), fd);
+		} else if (RFIFOW(fd,0) == 0x72) {
 			if (RFIFOREST(fd) >= 39 && (RFIFOB(fd,38) == 0 || RFIFOB(fd,38) == 1)) { // 00 = Female, 01 = Male
 				sd->packet_ver = 7; // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
 				pc_setnewpc(sd, account_id, RFIFOL(fd,22), RFIFOL(fd,30), RFIFOL(fd,34), RFIFOB(fd,38), fd);
@@ -10415,6 +10426,8 @@ static void (*clif_parse_func_table[10][MAX_PACKET_DB])() = {
 	{NULL},
 	{NULL},
 	{NULL},
+	{NULL},
+	{NULL},
 	{NULL}
 };
 
@@ -10488,8 +10501,14 @@ static int clif_parse(int fd) {
 		packet_ver = sd->packet_ver;
 	// check authentification packet to know packet version
 	else {
+		// packet DB		
+		if (cmd == packet_db_connect_cmd) {
+			if (RFIFOREST(fd) >= packet_db_size[cmd] &&
+				(RFIFOB(fd,packet_db_pos[cmd][4]) == 0 || RFIFOB(fd,packet_db_pos[cmd][4]) == 1)) {// 00 = Female, 01 = Male
+				packet_ver = packet_db_ver;
+			}
 		// 0x72
-		if (cmd == 0x72) {
+		} else if (cmd == 0x72) {
 			if (RFIFOREST(fd) >= 39 && (RFIFOB(fd,38) == 0 || RFIFOB(fd,38) == 1)) // 00 = Female, 01 = Male
 				packet_ver = 7; // 7: 13july04
 			else if (RFIFOREST(fd) >= 22 && (RFIFOB(fd,21) == 0 || RFIFOB(fd,21) == 1)) // 00 = Female, 01 = Male
@@ -10533,19 +10552,13 @@ static int clif_parse(int fd) {
 		}
 		// check if version is accepted
 		if (packet_ver <= 9 ||	// reject any client versions older than 6sept04
-/*		if (packet_ver < 5 ||
-			(packet_ver ==  5 && (battle_config.packet_ver_flag &   1) == 0) ||
-		    (packet_ver ==  6 && (battle_config.packet_ver_flag &   2) == 0) ||
-		    (packet_ver ==  7 && (battle_config.packet_ver_flag &   4) == 0) ||
-		    (packet_ver ==  8 && (battle_config.packet_ver_flag &   8) == 0) ||
-		    (packet_ver ==  9 && (battle_config.packet_ver_flag &  16) == 0) ||*/
-		    (packet_ver == 10 && (battle_config.packet_ver_flag &	1) == 0) ||
-		    (packet_ver == 11 && (battle_config.packet_ver_flag &	2) == 0) ||
-		    (packet_ver == 12 && (battle_config.packet_ver_flag &	4) == 0) ||
-		    (packet_ver == 13 && (battle_config.packet_ver_flag &	8) == 0) ||
+			(packet_ver == 10 && (battle_config.packet_ver_flag &	1) == 0) ||
+			(packet_ver == 11 && (battle_config.packet_ver_flag &	2) == 0) ||
+			(packet_ver == 12 && (battle_config.packet_ver_flag &	4) == 0) ||
+			(packet_ver == 13 && (battle_config.packet_ver_flag &	8) == 0) ||
 			(packet_ver == 14 && (battle_config.packet_ver_flag &	16) == 0) ||
 			(packet_ver == 15 && (battle_config.packet_ver_flag &	32) == 0) ||
-			(packet_ver == 16 && (battle_config.packet_ver_flag &	64) == 0) ||			
+			(packet_ver == 16 && (battle_config.packet_ver_flag &	64) == 0) ||
 			packet_ver > 16) {	// no support yet
 			WFIFOW(fd,0) = 0x6a;
 			WFIFOB(fd,2) = 5; // 05 = Game's EXE is not the latest version
@@ -10803,6 +10816,10 @@ static int packetdb_readdb(void)
 		}
 	}
 	if (packet_db_ver > 7) {	// minimum packet version allowed
+		// check if packet db version is higher than allowed
+		if (packet_db_ver > (j= 6 + sizeof(clif_parse_func_table)/sizeof(clif_parse_func_table[0])))
+			packet_db_ver = j;
+		
 		packet_db_size = packet_size_table[packet_db_ver - 5];
 		packet_db_parse_func = clif_parse_func_table[packet_db_ver - 7];
 
@@ -10840,6 +10857,10 @@ static int packetdb_readdb(void)
 					break;
 				}
 			}
+			// set the identifying cmd for the packet_db version
+			if (strcmp(str[2],"wanttoconnection")==0){
+				packet_db_connect_cmd = cmd;
+			}
 			if(str[3]==NULL){
 				sprintf(tmp_output, "packet_db: packet error\n");
 				ShowError(tmp_output);
@@ -10856,6 +10877,10 @@ static int packetdb_readdb(void)
 //			if(packet_size_table[packet_db_ver - 5][cmd] > 2 /* && packet_db[cmd].pos[0] == 0 */)
 //				printf("packet_db: %d 0x%x %d %s %p | %p\n",ln,cmd,packet_db_size[cmd],str[2],packet_db_parse_func[cmd],clif_parse_func_table[packet_db_ver - 7][cmd]);
 		}
+	} else {	// old packet version - just use predefined values
+		packet_db_size = packet_size_table[0];
+		packet_db_parse_func = clif_parse_func_table[0];
+		packet_db_connect_cmd = 0x72;
 	}
 	fclose(fp);
 	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/packet_db.txt");

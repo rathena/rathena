@@ -1,5 +1,9 @@
 Date	Added
 01/11
+        * Updated clif.c to be able to identify client versions based on the packet DB
+          [celest]
+        * Correct packet_db_ver to the maximum version allowed if it was set too high 
+          or too low in packet_db.txt [celest]
         * Added support for 2005-01-10Sakexe [celest]
         * Updated packet functions for 2004-11-08 and 2004-12-06 (Note: eA *can*
           support 12-06, but still doesn't recognise it... so unless we find a way,
