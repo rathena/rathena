@@ -94,6 +94,6 @@ prontera.gat,161,192,4	duplicate(warpra)	Warp NPC	115
 prt_fild05.gat,273,215,4	duplicate(warpra)	Warp NPC	115
 tur_dun01.gat,148,239,4	duplicate(warpra)	Warp NPC	115
 umbala.gat,132,130,4	duplicate(warpra)	Warp NPC	115
-xmas_fild01.gat,115,174,4	duplicate(warpra)	Warp NPC	115
+xmas.gat,150,136,4	duplicate(warpra)	Warp NPC	115
 yuno.gat,137,162,4	duplicate(warpra)	Warp NPC	115
 yuno_fild03.gat,37,135,4	duplicate(warpra)	Warp NPC	115
