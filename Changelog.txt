@@ -1,5 +1,6 @@
 Date	Added
 11/15
+	* Added -ffast-math argument to makefile to increase performance, thanks to kashy. [Valaris]
 	* Added small and big mob sprite spawning. [Valaris]
 	  -Added @monstersmall and @monsterbig commands.
 	  -For using in scripts, use id +2000 for small and id +4000 for big.

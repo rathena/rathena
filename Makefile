@@ -16,7 +16,7 @@ else
 MAKE = make
 endif
 
-OPT = -g -O2
+OPT = -g -O2 -ffast-math
 
 ifeq ($(findstring CYGWIN,$(PLATFORM)), CYGWIN)
 OS_TYPE = -DCYGWIN
