@@ -10,7 +10,7 @@ txtobj:
 sqlobj:
 	mkdir sqlobj
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o
+COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o ../common/utils.o
 LIBS = -lz -lm
 
 map-server: txtobj/map.o txtobj/chrif.o txtobj/clif.o txtobj/pc.o txtobj/npc.o txtobj/chat.o txtobj/path.o txtobj/itemdb.o txtobj/mob.o txtobj/script.o txtobj/storage.o txtobj/skill.o txtobj/atcommand.o txtobj/charcommand.o txtobj/battle.o txtobj/intif.o txtobj/trade.o txtobj/party.o txtobj/vending.o txtobj/guild.o txtobj/pet.o $(COMMON_OBJ)

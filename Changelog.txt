@@ -1,6 +1,9 @@
 Date	Added
 
 12/19
+	* Introduced StringBuf into utils for use in building larger queries [MouseJstr]
+	* tested GUILD_CACHE (reducing guild related sql traffic to 30%) in 
+	  prep for unleasing it on the sql using public [MouseJstr]
 	* Fixed some SQL queries crashing char server [davidsiaw]
 
 12/18

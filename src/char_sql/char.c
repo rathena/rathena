@@ -958,7 +958,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 	for(i=0;i<20;i++) {
 		p->friend_id[i] = 0;
-		sprintf(p->friend_name[i], "");
+		p->friend_name[i][0] = '\0';
 	}
 
 	tmp_p += sprintf(tmp_p, "SELECT `id`, `account_id`");

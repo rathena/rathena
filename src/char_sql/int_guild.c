@@ -3,6 +3,10 @@
 // SQL conversion by hack
 //
 
+#ifdef TWILIGHT
+#define GUILDCACHE
+#endif
+
 #include "char.h"
 #include "strlib.h"
 #include "int_storage.h"
