@@ -3,7 +3,7 @@
 // Made by Nana.
 
 // -== White Smith ==-
-valkyrie.gat,44,58,6	script	White Smith	725,{
+valkyrie.gat,44,51,6	script	White Smith	725,{
 	if(getskilllv(153) > 0) set @qsk,1;
 	if(getskilllv(154) > 0) set @qsk1,1;
 	if(getskilllv(155) > 0) set @qsk2,1;

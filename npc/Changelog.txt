@@ -34,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+12/24
+	* Fixed Whitesmith.txt, was on top of another npc [Ajarn]
+
 12/23
 	* Added logs into kafra_bank.txt (it keeps logs of all bank operations! Very handy to find abusers/cheaters) [Lupus]
 
