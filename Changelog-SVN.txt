@@ -1,6 +1,7 @@
 Date	Added
 
 02/23
+        * Fixed Backstab not checking for and consuming arrows [celest]
         * Fixed another bad typo causing @allskill to not add points into advanced job
           skills [celest]
         * Fixed a bad typo in status.c's StatusChangeTable [celest]

@@ -302,8 +302,8 @@ Progress:	100% [My bad, fixed ^^; ]
 
 Problem:	Rogues Skill "back stab" works without PREPARING arrows.
 		It consumes arrows, but works even when them aren't prepered (equipped)
-Assigned:	N/A
-Progress:	0%
+Assigned:	Celest
+Progress:	100%
 
 Problem:	Party EXP share bug
 		When one member enter, re-enter the server sometimes it happens you

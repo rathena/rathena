@@ -1293,20 +1293,23 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if(attack_type&BF_MAGIC && sc_data && sc_data[SC_MAGICROD].timer != -1 && src == dsrc) { //魔法攻?でマジックロッド?態でsrc=dsrcなら
 		dmg.damage = dmg.damage2 = 0; //ダメ?ジ0
 		if(bl->type == BL_PC) { //?象がPCの場合
-			int sp = skill_get_sp(skillid,skilllv); //使用されたスキルのSPを吸?
-			sp = sp * sc_data[SC_MAGICROD].val2 / 100; //吸?率計算
-			if(skillid == WZ_WATERBALL && skilllv > 1) //ウォ?タ?ボ?ルLv1以上
-				sp = sp/((skilllv|1)*(skilllv|1)); //さらに計算？
-			if(sp > 0x7fff) sp = 0x7fff; //SP多すぎの場合は理論最大値
-			else if(sp < 1) sp = 1; //1以下の場合は1
-			if(((struct map_session_data *)bl)->status.sp + sp > ((struct map_session_data *)bl)->status.max_sp) { //回復SP+現在のSPがMSPより大きい場合
-				sp = ((struct map_session_data *)bl)->status.max_sp - ((struct map_session_data *)bl)->status.sp; //SPをMSP-現在SPにする
-				((struct map_session_data *)bl)->status.sp = ((struct map_session_data *)bl)->status.max_sp; //現在のSPにMSPを代入
+			struct map_session_data *sd = (struct map_session_data *)bl;
+			if (sd) {
+				int sp = skill_get_sp(skillid,skilllv); //使用されたスキルのSPを吸?
+				sp = sp * sc_data[SC_MAGICROD].val2 / 100; //吸?率計算
+				if(skillid == WZ_WATERBALL && skilllv > 1) //ウォ?タ?ボ?ルLv1以上
+					sp = sp/((skilllv|1)*(skilllv|1)); //さらに計算？
+				if(sp > 0x7fff) sp = 0x7fff; //SP多すぎの場合は理論最大値
+				else if(sp < 1) sp = 1; //1以下の場合は1
+				if(sd->status.sp + sp > sd->status.max_sp) { //回復SP+現在のSPがMSPより大きい場合
+					sp = sd->status.max_sp - sd->status.sp; //SPをMSP-現在SPにする
+					sd->status.sp = sd->status.max_sp; //現在のSPにMSPを代入
+				}
+				else //回復SP+現在のSPがMSPより小さい場合は回復SPを加算
+					sd->status.sp += sp;
+				clif_heal(sd->fd,SP_SP,sp); //SP回復エフェクトの表示
+				sd->canact_tick = tick + skill_delayfix(bl, skill_get_delay(SA_MAGICROD,sc_data[SC_MAGICROD].val1)); //
 			}
-			else //回復SP+現在のSPがMSPより小さい場合は回復SPを加算
-				((struct map_session_data *)bl)->status.sp += sp;
-			clif_heal(((struct map_session_data *)bl)->fd,SP_SP,sp); //SP回復エフェクトの表示
-			((struct map_session_data *)bl)->canact_tick = tick + skill_delayfix(bl, skill_get_delay(SA_MAGICROD,sc_data[SC_MAGICROD].val1)); //
 		}
 		clif_skill_nodamage(bl,bl,SA_MAGICROD,sc_data[SC_MAGICROD].val1,1); //マジックロッドエフェクトを表示
 	}
@@ -6521,6 +6524,15 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			return 0;
 		}
 		arrow_flag = 1;
+		break;
+	case RG_BACKSTAP:
+		if(sd->status.weapon == 11) {
+			if (sd->equip_index[10] < 0) {
+				clif_arrow_fail(sd,0);
+				return 0;
+			}
+			arrow_flag = 1;
+		}
 		break;
 	}
 
