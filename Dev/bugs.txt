@@ -134,3 +134,12 @@ Progress:	0%
 	battle.c:3078:    Number of elements:   16
 	battle.c:3078:    Created at:           malloc.c, line 23
 	battle.c:3078:    Storage class:        heap
+
+
+Problem:	This bug's appeared again: Permanent #Variables/Variables disappear.
+			Quests, Banks, etc wipe when you create a new character
+
+		We had no such a bug before, but Freya has it. Probably it soaked into eA with 
+		Freya optimizations code...
+Assigned:	N/A
+Progress:	0%
