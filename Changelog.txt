@@ -1,9 +1,6 @@
-$LastChangedDate: 2004-12-30 00:22:54 -0500 (Thu, 30 Dec 2004)$
-
-SVN: $Rev$
-
 Date	Added
-01/01/05
+01/01
+	* Changed some create arrow outputs for new kRO 12/21/04 patch [Aria]
 	* Fixed some respawn delays of MVP/Miniboss monsters. Redo Umbala/Niflheim fields, added missing mobs, corrected
 	  monsters quantity. In Niflheim fixed wrong Lord of Death monster ID. [Lupus]
 12/30
