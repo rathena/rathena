@@ -1,5 +1,6 @@
 Date	Added
 12/22
+        * Fixed reading itemslottable.txt causing cards to become unuseable [celest]
         * Added error message if file renaming in lock_fclose fails [celest]
         * Fixed frost diver not working ... my bad =p [celest]
         * Corrected typo in clif_hpmeter - md -> sd [celest]
