@@ -337,6 +337,16 @@ int storage_storage_quit(struct map_session_data *sd)
 	return 0;
 }
 
+void storage_storage_dirty(struct map_session_data *sd)
+{
+	struct storage *stor;
+
+	stor=numdb_search(storage_db,sd->status.account_id);
+
+	if(stor)
+		stor->dirty = 1;
+}
+
 int storage_storage_save(struct map_session_data *sd)
 {
 	struct storage *stor;

@@ -1032,6 +1032,7 @@ int map_quit(struct map_session_data *sd) {
 
 	pc_makesavestatus(sd);
 	chrif_save(sd);
+	storage_storage_dirty(sd);
 	storage_storage_save(sd);
 
 	//double connect bug fix by Valaris
