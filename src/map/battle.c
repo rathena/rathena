@@ -3497,17 +3497,26 @@ static struct Damage battle_calc_pc_weapon_attack(
 				break;
 			case ASC_BREAKER:		// -- moonsoul (special damage for ASC_BREAKER skill)
 				if(sd){
-					int damage3;
-					int mdef1=battle_get_mdef(target);
+/*					int mdef1=battle_get_mdef(target);
 					int mdef2=battle_get_mdef2(target);
 					int imdef_flag=0;
-	
+						
 					damage = ((damage * 5) + (skill_lv * battle_get_int(src) * 5) + rand()%500 + 500) /2;
 					damage2 = ((damage2 * 5) + (skill_lv * battle_get_int(src) * 5) + rand()%500 + 500) /2;
 					damage3 = damage;
-					hitrate = 1000000;
-	
-					if(sd->ignore_mdef_ele & (1<<t_ele) || sd->ignore_mdef_race & (1<<t_race))
+					// physical damage can miss
+					hitrate = 1000000;*/
+
+					// calculate physical part of damage
+					damage = damage * skill_lv;
+					damage2 = damage2 * skill_lv;
+					// element modifier added right after this
+
+					// calculate magic part of damage
+					damage3 = skill_lv * battle_get_int(src) * 5;
+					
+					// ignores magic defense now [Celest]
+					/*if(sd->ignore_mdef_ele & (1<<t_ele) || sd->ignore_mdef_race & (1<<t_race))
 						imdef_flag = 1;
 					if(t_mode & 0x20) {
 						if(sd->ignore_mdef_race & (1<<10))
@@ -3529,7 +3538,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 					if(damage3<1)
 						damage3=1;
 
-					damage3=battle_attr_fix(damage2,s_ele_, battle_get_element(target) );
+					damage3=battle_attr_fix(damage2,s_ele_, battle_get_element(target) );*/
 				}
 				break;
 			}
@@ -3773,8 +3782,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 //カードによるダメージ増加処理(左手)ここまで
 
 // -- moonsoul (cardfix for magic damage portion of ASC_BREAKER)
-	if(skill_num == ASC_BREAKER)
+	if(skill_num == ASC_BREAKER) {
 		damage3 = damage3 * cardfix / 100;
+		dmg_lv = ATK_DEF; // ignores flee [celest]
+	}
 
 //カードによるダメージ減衰処理ここから
 	if(tsd){ //対象がPCの場合
@@ -3975,8 +3986,9 @@ static struct Damage battle_calc_pc_weapon_attack(
 
 // -- moonsoul (final combination of phys, mag damage for ASC_BREAKER)
 	if(skill_num == ASC_BREAKER) {
+		damage3 += rand()%500+500;
 		damage += damage3;
-		damage2 += damage3;
+//		damage2 += damage3;
 	}
 
 	wd.damage=damage;

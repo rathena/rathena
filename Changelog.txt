@@ -1,5 +1,7 @@
 Date	Added
 12/29
+        * Updated Soul Breaker's damage calculation [celest]
+        * Updated Meteor Assault's cast delay to be not affected by dex [celest]
         * Changed int_guild.c so it will calculate average guild level only if > 0
           members are found - prevent divide by zero crashes (why would an empty guild
           be requested to update its' member info in the first place?) [celest]
