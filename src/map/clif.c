@@ -7964,6 +7964,10 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 	WFIFOW(fd,0) = 0x8e;
 	WFIFOSET(fd, WFIFOW(fd,2));
 
+#ifdef PCRE_SUPPORT
+        map_foreachinarea(npc_chat_sub, sd->bl.m, sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE, sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_NPC, RFIFOP(fd,4), strlen(RFIFOP(fd,4)), &sd->bl);
+#endif
+
 	// Celest
 	if (pc_calc_base_job2 (sd->status.class_) == 23 ) {
 		int next = pc_nextbaseexp(sd)>0 ? pc_nextbaseexp(sd) : sd->status.base_exp;

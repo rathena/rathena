@@ -411,6 +411,8 @@ struct npc_data {
 	char eventqueue[MAX_EVENTQUEUE][50];
 	int eventtimer[MAX_EVENTTIMER];
 	short arenaflag;
+
+	void *chatdb;
 };
 struct mob_data {
 	struct block_list bl;

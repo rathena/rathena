@@ -1,5 +1,10 @@
 Date	Added
 
+02/22
+	* Added perl regular expression support.. look at src/map/npc_chat.c
+	  for all the dirt on the new features.  To build it, you have
+	  to enable the PCRE_SUPPORT #define and you also have to
+	  build/install the pcre library. [SVN 1157: MouseJstr]
 02/21
 	* Added actual item_db.sql into sql-files. [Lupus]
 	* Added actual mob_db.sql into sql-files. If you use SQL Mob DB then update it [Lupus]

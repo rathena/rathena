@@ -1,11 +1,13 @@
 
 CC = gcc -pipe
+# CC = gcc -pipe -DPCRE_SUPPORT
 # CC = g++
 # CC = gcc -pipe -DGCOLLECT
 # CC = gcc -pipe -DDMALLOC -DDMALLOC_FUNC_CHECK
 # CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
 
 # GCLIB = -lgc
+# GCLIB = -L/usr/local/lib -lpcre
 GCLIB =
 # GCLIB = -ldmalloc
 

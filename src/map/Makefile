@@ -13,10 +13,10 @@ sqlobj:
 COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o ../common/utils.o ../common/strlib.o
 LIBS = -lz -lm
 
-map-server: txtobj/map.o txtobj/chrif.o txtobj/clif.o txtobj/pc.o txtobj/status.o txtobj/npc.o txtobj/chat.o txtobj/path.o txtobj/itemdb.o txtobj/mob.o txtobj/script.o txtobj/storage.o txtobj/skill.o txtobj/atcommand.o txtobj/charcommand.o txtobj/battle.o txtobj/intif.o txtobj/trade.o txtobj/party.o txtobj/vending.o txtobj/guild.o txtobj/pet.o txtobj/log.o $(COMMON_OBJ)
+map-server: txtobj/map.o txtobj/chrif.o txtobj/clif.o txtobj/pc.o txtobj/status.o txtobj/npc.o txtobj/npc_chat.o txtobj/chat.o txtobj/path.o txtobj/itemdb.o txtobj/mob.o txtobj/script.o txtobj/storage.o txtobj/skill.o txtobj/atcommand.o txtobj/charcommand.o txtobj/battle.o txtobj/intif.o txtobj/trade.o txtobj/party.o txtobj/vending.o txtobj/guild.o txtobj/pet.o txtobj/log.o $(COMMON_OBJ)
 	$(CC) -o ../../$@ $> $(LIBS) $(LIB_S)
 
-map-server_sql: sqlobj/map.o sqlobj/chrif.o sqlobj/clif.o sqlobj/pc.o sqlobj/status.o sqlobj/npc.o sqlobj/chat.o sqlobj/path.o sqlobj/itemdb.o sqlobj/mob.o sqlobj/script.o sqlobj/storage.o sqlobj/skill.o sqlobj/atcommand.o sqlobj/charcommand.o sqlobj/battle.o sqlobj/intif.o sqlobj/trade.o sqlobj/party.o sqlobj/vending.o sqlobj/guild.o sqlobj/pet.o sqlobj/mail.o sqlobj/log.o $(COMMON_OBJ)
+map-server_sql: sqlobj/map.o sqlobj/chrif.o sqlobj/clif.o sqlobj/pc.o sqlobj/status.o sqlobj/npc.o sqlobj/npc_chat.o sqlobj/chat.o sqlobj/path.o sqlobj/itemdb.o sqlobj/mob.o sqlobj/script.o sqlobj/storage.o sqlobj/skill.o sqlobj/atcommand.o sqlobj/charcommand.o sqlobj/battle.o sqlobj/intif.o sqlobj/trade.o sqlobj/party.o sqlobj/vending.o sqlobj/guild.o sqlobj/pet.o sqlobj/mail.o sqlobj/log.o $(COMMON_OBJ)
 	$(CC) -o ../../$@ $> $(LIB_S)
 
 txtobj/%.o: %.c
@@ -31,6 +31,7 @@ txtobj/clif.o: clif.c map.h chrif.h clif.h mob.h intif.h pc.h npc.h itemdb.h cha
 txtobj/pc.o: pc.c map.h clif.h intif.h pc.h npc.h mob.h itemdb.h battle.h skill.h script.h party.h guild.h pet.h trade.h storage.h chat.h vending.h ../common/timer.h ../common/mmo.h ../common/db.h ../common/showmsg.h
 txtobj/status.o: status.c pc.h map.h clif.h status.h mob.h itemdb.h battle.h skill.h script.h pet.h guild.h ../common/timer.h ../common/mmo.h ../common/db.h ../common/showmsg.h
 txtobj/npc.o: npc.c map.h npc.h clif.h pc.h script.h mob.h itemdb.h battle.h ../common/db.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
+txtobj/npc_chat.o: npc_chat.c map.h npc.h clif.h pc.h script.h mob.h itemdb.h battle.h ../common/db.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 txtobj/chat.o: chat.c map.h clif.h pc.h chat.h ../common/db.h ../common/mmo.h ../common/showmsg.h
 txtobj/path.o: path.c map.h battle.h ../common/mmo.h ../common/showmsg.h
 txtobj/itemdb.o: itemdb.c map.h battle.h itemdb.h ../common/db.h ../common/grfio.h ../common/mmo.h ../common/showmsg.h
@@ -55,6 +56,7 @@ sqlobj/clif.o: clif.c map.h chrif.h clif.h mob.h intif.h pc.h npc.h itemdb.h cha
 sqlobj/pc.o: pc.c map.h clif.h intif.h pc.h npc.h mob.h itemdb.h battle.h skill.h script.h party.h guild.h pet.h trade.h storage.h chat.h vending.h log.h ../common/timer.h ../common/mmo.h ../common/db.h ../common/showmsg.h
 sqlobj/status.o: status.c pc.h map.h clif.h status.h mob.h itemdb.h battle.h skill.h script.h pet.h guild.h ../common/timer.h ../common/mmo.h ../common/db.h ../common/showmsg.h
 sqlobj/npc.o: npc.c map.h npc.h clif.h pc.h script.h mob.h itemdb.h battle.h ../common/db.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
+sqlobj/npc_chat.o: npc_chat.c map.h npc.h clif.h pc.h script.h mob.h itemdb.h battle.h ../common/db.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 sqlobj/chat.o: chat.c map.h clif.h pc.h chat.h ../common/db.h ../common/mmo.h ../common/showmsg.h
 sqlobj/path.o: path.c map.h battle.h ../common/mmo.h ../common/showmsg.h
 sqlobj/itemdb.o: itemdb.c map.h battle.h itemdb.h ../common/db.h ../common/grfio.h ../common/mmo.h ../common/showmsg.h

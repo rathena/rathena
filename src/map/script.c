@@ -253,9 +253,9 @@ int buildin_failedremovecards(struct script_state *st);
 int buildin_marriage(struct script_state *st);
 int buildin_wedding_effect(struct script_state *st);
 int buildin_divorce(struct script_state *st);
-int buildin_ispartneron(struct script_state *st);
-int buildin_getpartnerid(struct script_state *st);
-int buildin_warppartner(struct script_state *st);
+int buildin_ispartneron(struct script_state *st); // MouseJstr
+int buildin_getpartnerid(struct script_state *st); // MouseJstr
+int buildin_warppartner(struct script_state *st); // MouseJstr
 int buildin_getitemname(struct script_state *st);
 int buildin_makepet(struct script_state *st);
 int buildin_getexp(struct script_state *st);
@@ -314,6 +314,13 @@ int run_func(struct script_state *st);
 
 int mapreg_setreg(int num,int val);
 int mapreg_setregstr(int num,const char *str);
+
+#ifdef PCRE_SUPPORT
+int buildin_defpattern(struct script_state *st); // MouseJstr
+int buildin_activatepset(struct script_state *st); // MouseJstr
+int buildin_deactivatepset(struct script_state *st); // MouseJstr
+int buildin_deletepset(struct script_state *st); // MouseJstr
+#endif
 
 struct {
 	int (*func)(struct script_state *);
@@ -537,10 +544,14 @@ struct {
 	{buildin_isday,"isday",""}, // check whether it is day time [Celest]
 	{buildin_isequipped,"isequipped","i*"}, // check whether another item/card has been equipped [Celest]
 	{buildin_isequippedcnt,"isequippedcnt","i*"}, // check how many items/cards are being equipped [Celest]
+#ifdef PCRE_SUPPORT
+        {buildin_defpattern, "defpattern", "iss"}, // Define pattern to listen for [MouseJstr]
+        {buildin_activatepset, "activatepset", "i"}, // Activate a pattern set [MouseJstr]
+        {buildin_deactivatepset, "deactivatepset", "i"}, // Deactive a pattern set [MouseJstr]
+        {buildin_deletepset, "deletepset", "i"}, // Delete a pattern set [MouseJstr]
+#endif
 	{NULL,NULL,NULL},
 };
-int buildin_message(struct script_state *st); // [MouseJstr]
-
 
 enum {
 	C_NOP,C_POS,C_INT,C_PARAM,C_FUNC,C_STR,C_CONSTSTR,C_ARG,
@@ -1401,6 +1412,11 @@ static int set_reg(struct map_session_data *sd,int num,char *name,void *v)
 		}
 	}
 	return 0;
+}
+
+int set_var(struct map_session_data *sd, char *name, void *val)
+{
+    return set_reg(sd, add_str(name), name, val);
 }
 
 /*==========================================
