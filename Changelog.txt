@@ -1,5 +1,37 @@
 Date	Added
 
+01/24
+        * some G++ compile tweaks and got through several files in the
+        map server - [SVN 976]   [MouseJstr]
+
+          Why are we doing a C++ conversion?  We have a lot of duplicate
+          code and would like to make the "classes" in the server share
+          code.. For example, a pet should be able to share code from
+          the player or from a mob.  Similerly, introducing a new type
+          of entity in the game should be as simple as creating a
+          sub-class instead of having to crawl through the entire source
+          tree searching for every class check and introducing handler
+          code in for your new type.
+
+          Finally, while a garbage collector is "cool", it would still
+          be nice to have enough object knowledge on how to clean up
+          data that it is not absolutely required.  It is faster for
+          us to clean up our own messes then introduce a whole system
+          for cleaning up after ourselves.
+
+          Is there a C++ performance penalty?  Not if the code is
+          written correctly.   For example
+                  1) No templates - code bloat and destroys cpu cache
+                     coheriancy
+                  2) No C++ exceptions - slows down entering and
+                     exiting functions
+                  3) No operator overloading - makes it hard to
+                     understand what is going on.
+                  4) No C++ STL libraries - Templates, huge, bloated,
+                     unportable
+                  5) No method inlining - code bloat and reduces cache
+                     coheriancy.  Let the optimizer do it...
+
 01/23
 	* char-server (SQL & TXT), login-server (SQL & TXT), and txt-coonvertors
 	  (char and login) all compile on g++ now [svn 975] [Ajarn]
