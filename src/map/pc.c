@@ -6785,6 +6785,8 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 
 	nullpo_retr(0, sd);
 
+	Assert(strlen(name) < 24);
+
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i]==-1 )
 			break;

@@ -1,5 +1,6 @@
 Date	Added
 01/06
+	* Fixed various memory corruptions causing crashes (SVN 925) [MouseJstr]
 	* Fixed typo in src/map/map.c causing compile 
 	  errors (SVN 924) [MouseJstr]
 	* Removed the alive_timer mechanism entirly replaced with
