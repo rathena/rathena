@@ -740,29 +740,94 @@ struct skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 /* アブラカダブラ?動スキルデ?タベ?ス */
 struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
-int	skill_get_hit( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].hit : 0; }
-int	skill_get_inf( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].inf : guild_skill_get_inf(id); }
-int	skill_get_pl( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].pl : 0; }
-int	skill_get_nk( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].nk : 2; }
-int skill_get_max( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].max : guild_skill_get_max(id); }
-int skill_get_range( int id , int lv ){ return (lv <= 0) ? 0: ((id < MAX_SKILL_DB) ? skill_db[id].range[lv-1] : guild_skill_get_max(id)); }
-int	skill_get_hp( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].hp[lv-1]; }
-int	skill_get_sp( int id ,int lv ){ return (lv <= 0) ? 0: ((id < MAX_SKILL_DB) ? skill_db[id].sp[lv-1] : guild_skill_get_sp(id, lv)); }
-int	skill_get_zeny( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].zeny[lv-1]; }
-int	skill_get_num( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].num[lv-1]; }
-int	skill_get_cast( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].cast[lv-1]; }
-int	skill_get_delay( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].delay[lv-1]; }
-int	skill_get_time( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].upkeep_time[lv-1]; }
-int	skill_get_time2( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].upkeep_time2[lv-1]; }
-int	skill_get_castdef( int id ){ return skill_db[id].cast_def_rate; }
-int	skill_get_weapontype( int id ){ return skill_db[id].weapon; }
-int	skill_get_inf2( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].inf2 : 0; }
-int	skill_get_castcancel( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].maxcount : 0; }
-int	skill_get_maxcount( int id ){ return skill_db[id].maxcount; }
-int	skill_get_blewcount( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].blewcount[lv-1]; }
-int	skill_get_mhp( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].mhp[lv-1]; }
-int	skill_get_castnodex( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].castnodex[lv-1]; }
-
+int	skill_get_hit( int id ){
+	if (id >= 10000 && id < 10015) id -= 9500;
+	return skill_db[id].hit;
+}
+int	skill_get_inf( int id ){
+	return (id < 500) ? skill_db[id].inf : guild_skill_get_inf(id);
+}
+int	skill_get_pl( int id ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return skill_db[id].pl;
+}
+int	skill_get_nk( int id ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return skill_db[id].nk;
+}
+int skill_get_max( int id ){
+	return (id < 500) ? skill_db[id].max : guild_skill_get_max(id);
+}
+int skill_get_range( int id , int lv ){
+	if (lv <= 0) return 0;
+	return (id < 500) ? skill_db[id].range[lv-1] : guild_skill_get_range(id);
+}
+int	skill_get_hp( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0: skill_db[id].hp[lv-1];
+}
+int	skill_get_sp( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	//if (lv <= 0) return 0;
+	//return (id < 500) ? skill_db[id].sp[lv-1] : guild_skill_get_sp(id, lv);
+	return (lv <= 0) ? 0: skill_db[id].sp[lv-1];
+}
+int	skill_get_zeny( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].zeny[lv-1];
+}
+int	skill_get_num( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].num[lv-1];
+}
+int	skill_get_cast( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].cast[lv-1];
+}
+int	skill_get_delay( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].delay[lv-1];
+}
+int	skill_get_time( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].upkeep_time[lv-1];
+}
+int	skill_get_time2( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].upkeep_time2[lv-1];
+}
+int	skill_get_castdef( int id ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return skill_db[id].cast_def_rate;
+}
+int	skill_get_weapontype( int id ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return skill_db[id].weapon;
+}
+int	skill_get_inf2( int id ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return skill_db[id].inf2;
+}
+int	skill_get_castcancel( int id ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return skill_db[id].maxcount;
+}
+int	skill_get_maxcount( int id ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return skill_db[id].maxcount;
+}
+int	skill_get_blewcount( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].blewcount[lv-1];
+}
+int	skill_get_mhp( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].mhp[lv-1];
+}
+int	skill_get_castnodex( int id ,int lv ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return (lv <= 0) ? 0:skill_db[id].castnodex[lv-1];
+}
 int skill_tree_get_max(int id, int b_class){
 	struct pc_base_job s_class = pc_calc_base_job(b_class);
 	int i, skillid;
@@ -872,8 +937,14 @@ int skill_get_unit_id(int id,int flag)
 	case WE_CALLPARTNER:	return 0xb2;				/* あなたに逢いたい */
 	case PA_GOSPEL:			return 0xb3;				/* ゴスペル */
 	case HP_BASILICA:		return 0xb4;				/* バジリカ */
+	case CG_MOONLIT:		return 0xb5;
 	case PF_FOGWALL:		return 0xb6;				/* フォグウォ?ル */
 	case PF_SPIDERWEB:		return 0xb7;				/* スパイダ?ウェッブ */
+	// temporary unit ID's [Celest]
+	case GD_LEADERSHIP:		return 0xc1;
+	case GD_GLORYWOUNDS:	return 0xc2;
+	case GD_SOULCOLD:		return 0xc3;
+	case GD_HAWKEYES:		return 0xc4;
 	}
 	return 0;
 	/*
@@ -2169,6 +2240,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	if(bl->type == BL_PC && pc_isdead((struct map_session_data *)bl))
 		return 1;
 	map_freeblock_lock();
+
 	switch(skillid)
 	{
 	/* 武器攻?系スキル */
@@ -2750,9 +2822,9 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		return 1;
 	if(battle_get_class(bl) == 1288)
 		return 1;
-        if (skillnotok(skillid, (struct map_session_data *)bl)) // [MouseJstr]
-                return 0;
-
+	if (skillnotok(skillid, (struct map_session_data *)bl)) // [MouseJstr]
+		return 0;
+	
 	map_freeblock_lock();
 	switch(skillid)
 	{
@@ -4320,9 +4392,23 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		}
 		break;
 	case GD_BATTLEORDER:
+		{
+			struct guild *g = NULL;
+			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id))) {
+				for(i = 0; i < g->max_member; i++) {
+					if ((dstsd = g->member[i].sd) != NULL) {
+						clif_skill_nodamage(src,bl,skillid,skilllv,1);
+						skill_status_change_start(&dstsd->bl,SC_BATTLEORDERS,skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
+					}
+				}
+			}
+		}
+		printf("Guild skill castend:%d\n",skillid);
+		break;
 	case GD_REGENERATION:
 	case GD_RESTORE:
 	case GD_EMERGENCYCALL:
+		printf("Guild skill castend:%d\n",skillid);
 		break;
 	default:
 		printf("Unknown skill used:%d\n",skillid);
@@ -5085,12 +5171,17 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		target=BCT_PARTY;
 		limit=skill_get_time(skillid,skilllv);
 		break;
+	case CG_MOONLIT:
+		range=1;
+		target=BCT_ALL;
+		limit=skill_get_time(skillid,skilllv);
+		break;
 	case PF_FOGWALL:	/* フォグウォ?ル */
 		count=15;
 		limit=skill_get_time(skillid,skilllv);
 		if(sc_data) {
 			if (sc_data[SC_DELUGE].timer!=-1) limit *= 2;
-		}		
+		}
 		break;
 	case RG_GRAFFITI:			/* Graffiti */
 		count=1;	// Leave this at 1 [Valaris]
@@ -5292,6 +5383,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		case DC_DONTFORGETME:	/* 私を忘れないで… */
 		case DC_FORTUNEKISS:	/* 幸運のキス */
 		case DC_SERVICEFORYOU:	/* サ?ビスフォ?ユ? */
+		case CG_MOONLIT:
 			ux+=(i%7-3);
 			uy+=(i/7-3);
 			if(i==40)
@@ -6870,6 +6962,12 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 			sd->skillid_old = skill_num;
 		}
 		break;
+	case GD_BATTLEORDER:
+	case GD_REGENERATION:
+	case GD_RESTORE:
+	case GD_EMERGENCYCALL:
+		if (skill_lv <= 0) skill_lv = 1;
+		break;
 	}
 
 	sd->skillid = skill_num;
@@ -7005,7 +7103,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	case GD_REGENERATION:
 	case GD_RESTORE:
 	case GD_EMERGENCYCALL:
-		printf ("guild skill used : id = %d\n", skill_num);
+		casttime = 1000; // temporary [Celest]
 		break;
 	}
 
@@ -7024,8 +7122,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 
 	if( casttime>0 || forcecast ){ /* 詠唱が必要 */
 		struct mob_data *md;
-		clif_skillcasting( &sd->bl,
-			sd->bl.id, target_id, 0,0, skill_num,casttime);
+		clif_skillcasting( &sd->bl, sd->bl.id, target_id, 0,0, skill_num,casttime);
 
 		/* 詠唱反?モンスタ? */
 		if( bl->type==BL_MOB && (md=(struct mob_data *)bl) && mob_db[md->class].mode&0x10 &&
@@ -7961,9 +8058,17 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			case SC_MATKPOT:		/* magic attack potion [Valaris] */
 			case SC_WEDDING:	//結婚用(結婚衣裳になって?くのが?いとか)
 			case SC_MELTDOWN:		/* メルトダウン */
-			case SC_EDP:		// Celest
+			// Celest
+			case SC_EDP:
 			case SC_MARIONETTE:
 			case SC_MARIONETTE2:
+			case SC_SLOWDOWN:
+			case SC_LEADERSHIP:
+			case SC_GLORYWOUNDS:
+			case SC_SOULCOLD:
+			case SC_HAWKEYES:
+			case SC_BATTLEORDERS:
+			case SC_REGENERATION:
 				calc_flag = 1;
 				break;
 			case SC_BERSERK:			/* バ?サ?ク */
@@ -9282,6 +9387,13 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			if (!val3) val3 = -1;
 			break;
 		case SC_SLOWDOWN:
+		case SC_LEADERSHIP:
+		case SC_GLORYWOUNDS:
+		case SC_SOULCOLD:
+		case SC_HAWKEYES:
+		case SC_BATTLEORDERS:
+		case SC_REGENERATION:
+			calc_flag = 1;
 			break;
 		default:
 			if(battle_config.error_log)
@@ -10193,26 +10305,26 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int
 
 	if(group->unit!=NULL){
 		if(!battle_config.unit_movement_type){
-		int i;
-		for(i=0;i<group->unit_count;i++){
-			struct skill_unit *unit=&group->unit[i];
-			if(unit->alive && !(m==unit->bl.m && dx==0 && dy==0)){
-				int range=unit->range;
-				map_delblock(&unit->bl);
-				unit->bl.m = m;
-				unit->bl.x += dx;
-				unit->bl.y += dy;
-				map_addblock(&unit->bl);
-				clif_skill_setunit(unit);
-				if(range>0){
-					if(range<7)
-						range=7;
-					map_foreachinarea( skill_unit_move_unit_group_sub, unit->bl.m,
-						unit->bl.x-range,unit->bl.y-range,unit->bl.x+range,unit->bl.y+range,0,
-						&unit->bl,gettick() );
+			int i;
+			for(i=0;i<group->unit_count;i++){
+				struct skill_unit *unit=&group->unit[i];
+				if(unit->alive && !(m==unit->bl.m && dx==0 && dy==0)){
+					int range=unit->range;
+					map_delblock(&unit->bl);
+					unit->bl.m = m;
+					unit->bl.x += dx;
+					unit->bl.y += dy;
+					map_addblock(&unit->bl);
+					clif_skill_setunit(unit);
+					if(range>0){
+						if(range<7)
+							range=7;
+						map_foreachinarea( skill_unit_move_unit_group_sub, unit->bl.m,
+							unit->bl.x-range,unit->bl.y-range,unit->bl.x+range,unit->bl.y+range,0,
+							&unit->bl,gettick() );
+					}
 				}
 			}
-		}
 		}else{
 			int i,j, *r_flag, *s_flag, *m_flag;
 			struct skill_unit *unit1;
@@ -10250,9 +10362,9 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int
 						//?純移動(rangeも?承の必要無し)
 						int range=unit1->range;
 						map_delblock(&unit1->bl);
-					unit1->bl.m = m;
-					unit1->bl.x += dx;
-					unit1->bl.y += dy;
+						unit1->bl.m = m;
+						unit1->bl.x += dx;
+						unit1->bl.y += dy;
 						map_addblock(&unit1->bl);
 						clif_skill_setunit(unit1);
 						if(range > 0){
@@ -10290,9 +10402,9 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int
 					}
 				}
 			}
-                        free(r_flag);
-                        free(s_flag);
-                        free(m_flag);
+			free(r_flag);
+            free(s_flag);
+            free(m_flag);
 		}
 	}
 	return 0;
@@ -10631,7 +10743,9 @@ int skill_readdb(void)
 			continue;
 
 		i=atoi(split[0]);
-		if(i<0 || i>MAX_SKILL_DB)
+		if (i>=10000 && i<10015) // for guild skills [Celest]
+			i -= 9500;
+		else if(i<0 || i>MAX_SKILL_DB)
 			continue;
 
 /*		printf("skill id=%d\n",i); */
@@ -10703,7 +10817,9 @@ int skill_readdb(void)
 			continue;
 
 		i=atoi(split[0]);
-		if(i<0 || i>MAX_SKILL_DB)
+		if (i>=10000 && i<10015) // for guild skills [Celest]
+			i -= 9500;
+		else if(i<0 || i>MAX_SKILL_DB)
 			continue;
 
 		memset(split2,0,sizeof(split2));
@@ -10842,7 +10958,9 @@ int skill_readdb(void)
 			continue;
 
 		i=atoi(split[0]);
-		if(i<0 || i>MAX_SKILL_DB)
+		if (i>=10000 && i<10015) // for guild skills [Celest]
+			i -= 9500;
+		else if(i<0 || i>MAX_SKILL_DB)
 			continue;
 
 		memset(split2,0,sizeof(split2));

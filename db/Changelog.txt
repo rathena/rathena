@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+11/23   * Added temporary requirements for the new guild skills [celest]
+
 11/22
         * Changed weapon requirements for Sharp Shooting [celest]
 	* fixed job_db2.txt (,, -> ,) [Lupus]

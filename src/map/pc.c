@@ -1,4 +1,4 @@
-// $Id: pc.c 101 2004-09-25 17:57:22Z Valaris $
+// $Id: pc.c 101 2004-11-23 14:33:00Z Celestia $
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1434,8 +1434,38 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		sd->paramb[4] += skill;
 
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0) {   // Hilt binding gives +1 str +4 atk
-		sd->paramb[4] ++;
+		sd->paramb[0] ++;
 		sd->base_atk += 4;
+	}
+
+	// Celest
+	if (sd->status.guild_id > 0) {
+		struct guild *g;
+		if ((g = guild_search(sd->status.guild_id)) && strcmp(sd->status.name,g->master)==0) {
+			if (guild_checkskill(g, GD_LEADERSHIP)>0)
+				; //skillunitsetting
+			if (guild_checkskill(g, GD_GLORYWOUNDS)>0)
+				; //skillunitsetting
+			if (guild_checkskill(g, GD_SOULCOLD)>0)
+				; //skillunitsetting
+			if (guild_checkskill(g, GD_HAWKEYES)>0)
+				; //skillunitsetting
+		}		
+		if (sd->sc_count) {
+			if (sd->sc_data[SC_LEADERSHIP].timer != -1)
+				sd->paramb[0] += 2;
+			if (sd->sc_data[SC_GLORYWOUNDS].timer != -1)
+				sd->paramb[2] += 2;
+			if (sd->sc_data[SC_SOULCOLD].timer != -1)
+				sd->paramb[1] += 2;
+			if (sd->sc_data[SC_HAWKEYES].timer != -1)
+				sd->paramb[4] += 2;
+			if (sd->sc_data[SC_BATTLEORDERS].timer != -1) {
+				sd->paramb[0]+= 5;
+				sd->paramb[3]+= 5;
+				sd->paramb[4]+= 5;
+			}
+		}
 	}
 
 	// ステ?タス?化による基本パラメ?タ補正
@@ -6301,7 +6331,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 	// 二刀流?理
 	if ((pos==0x22) // 一?、?備要求箇所が二刀流武器かチェックする
 	 &&	(id->equip==2)	// ? 手武器
-	 &&	(pc_checkskill(sd, AS_LEFT) > 0 || sd->status.class == 12) ) // 左手修?有
+	 &&	(pc_checkskill(sd, AS_LEFT) > 0 || pc_calc_base_job2(sd->status.class) == 12) ) // 左手修?有
 	{
 		int tpos=0;
 		if(sd->equip_index[8] >= 0)
@@ -6745,9 +6775,13 @@ static int pc_spheal(struct map_session_data *sd)
 
 	a = natural_heal_diff_tick;
 	if(pc_issit(sd)) a += a;
-	if (sd->sc_data[SC_MAGNIFICAT].timer!=-1)	// マグニフィカ?ト
-		a += a;
-	 if((skill = pc_checkskill(sd,HP_MEDITATIO)) > 0) //Increase natural SP regen with Meditatio [DracoRPG]
+	if (sd->sc_count) {
+		if (sd->sc_data[SC_MAGNIFICAT].timer!=-1)	// マグニフィカ?ト
+			a += a;
+		if (sd->sc_data[SC_REGENERATION].timer != -1)
+			a *= sd->sc_data[SC_REGENERATION].val1;
+	}
+	if((skill = pc_checkskill(sd,HP_MEDITATIO)) > 0) //Increase natural SP regen with Meditatio [DracoRPG]
 		a += a*skill*3/100;
 
 	gc=guild_mapname2gc(sd->mapname);	// Increased guild castle regen [Valaris]
@@ -6774,9 +6808,12 @@ static int pc_hpheal(struct map_session_data *sd)
 
 	a = natural_heal_diff_tick;
 	if(pc_issit(sd)) a += a;
-	if( sd->sc_data[SC_MAGNIFICAT].timer!=-1 )	// Modified by RoVeRT
-		a += a;
-
+	if (sd->sc_count) {
+		if( sd->sc_data[SC_MAGNIFICAT].timer!=-1 )	// Modified by RoVeRT
+			a += a;
+		if (sd->sc_data[SC_REGENERATION].timer != -1)
+			a *= sd->sc_data[SC_REGENERATION].val1;
+	}
 	gc=guild_mapname2gc(sd->mapname);	// Increased guild castle regen [Valaris]
 	if(gc)	{
 		struct guild *g;

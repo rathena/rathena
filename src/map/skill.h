@@ -4,11 +4,11 @@
 
 #include "map.h"
 
-#define MAX_SKILL_DB			472
-#define MAX_SKILL_PRODUCE_DB	 150
+#define MAX_SKILL_DB			515
+#define MAX_SKILL_PRODUCE_DB	150
 #define MAX_PRODUCE_RESOURCE	7
-#define MAX_SKILL_ARROW_DB	 150
-#define MAX_SKILL_ABRA_DB	 350
+#define MAX_SKILL_ARROW_DB		150
+#define MAX_SKILL_ABRA_DB		350
 
 // スキルデ?タベ?ス
 struct skill_db {
@@ -320,27 +320,35 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 // Used by English Team
 	SC_BROKNARMOR		=32,
 	SC_BROKNWEAPON		=33,
+	SC_SLOWDOWN			=45, // for skill slowdown
 	SC_SIGHTTRASHER		=73,
 //	SC_BASILICA			=125, // 125 is the same id as joint break
 	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]
-	SC_EDP				= 114, // 
-	SC_MARIONETTE2      = 122, // Marionette target
+	SC_EDP				=114, // 
+	SC_MARIONETTE2		=122, // Marionette target
 	SC_ENSEMBLE			=159,
 	SC_FOGWALL			=178,
 	SC_GOSPEL			=179,
-	SC_LANDPROTECTOR		=182,
-	SC_ADAPTATION			=183,
-	SC_CHASEWALK			=184,
+	SC_LANDPROTECTOR	=182,
+	SC_ADAPTATION		=183,
+	SC_CHASEWALK		=184,
 	SC_ATKPOT			=185,	// [Valaris]
 	SC_MATKPOT			=186,	// [Valaris]
 	SC_MINDBREAKER		=191,
 	SC_SPELLBREAKER		=192,
+	SC_DPOISON			=193, /* 猛毒 */
+	SC_BLOCKSKILL		=194, // for disallowing the use of a skill for a time period
 
 // [Celest]
-	SC_SLOWDOWN         = 45, // for skill slowdown
-	SC_BLEEDING         = 124, // Temporarily same id as headcrush
-	SC_DPOISON			= 193, /* 猛毒 */
-	SC_BLOCKSKILL       = 194, // for disallowing the use of a skill for a time period
+	SC_BLEEDING			= 124, // Temporarily same id as headcrush	
+	SC_MOONLIT			= 195,
+	SC_LEADERSHIP		= 196,
+	SC_GLORYWOUNDS		= 197,
+	SC_SOULCOLD			= 198,
+	SC_HAWKEYES			= 199,
+	SC_BATTLEORDERS		= 200,
+	SC_REGENERATION		= 201,	
+
 
 // -- testing various SC effects
 //	SC_AURABLADE			=81,

@@ -1,4 +1,12 @@
 Date	Added
+11/23
+        * Skill Updates: [celest]
+          - Added some code for the new guild skills (10%) and Moonlit Petals (5%)
+          - Notes to other devs: Guild skills with id's 10000-10014 will be stored in
+            skill_db[500-514]
+          - Corrected Hilt Binding
+          - Corrected Assassin Cross' dual wield
+
 11/22
 	* (TXT)Stripped some code off read_gm_accounts() and made with it addGM() [MC Cameri]
 	  -Usage: addGM(account_id,level);
