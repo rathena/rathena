@@ -47,7 +47,10 @@ int char_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
 //-------------------------------------------
 // Request for account reg from char-server [Edit: Wizputer]
 //-------------------------------------------
-void send_account_reg(int fd) {
+int send_account_reg(int fd, int len) {
+	if (RFIFOREST(fd) < 19)
+		return -1;
+
     int account_id = RFIFOL(fd,2);
     int i;
 			
@@ -119,12 +122,17 @@ void send_account_reg(int fd) {
 		WFIFOSET(fd,51);
 	}
 	RFIFOSKIP(fd,19);
+	
+	return 0;
 }
 
 //----------------------------------------------------------
 // Number of users in the world (connected char-server(s)) [Edit: Wizputer]
 //----------------------------------------------------------
-void number_world_users(int fd, int id) {
+int number_world_users(int fd, int len, int id) {
+	if (len < 6)
+		return -1;
+		
 	#ifdef DEBUG
     if (server[id].users != RFIFOL(fd,2))
 		printf("set number users %s : %d\n", server[id].name, RFIFOL(fd,2));
@@ -138,12 +146,17 @@ void number_world_users(int fd, int id) {
 	sql_query(tmpsql,"number_world_users");
 	
 	RFIFOSKIP(fd,6);
+	
+	return 0;
 }
 
 //-----------------------------------------
 // Email and Time request from char-server [Edit: Wizputer]
 //-----------------------------------------
-void email_time_request(int fd, int id) {
+int email_time_request(int fd, int len, int id) {
+    if (len < 6)
+		return -1;
+		
 	int account_id=RFIFOL(fd,2);
 	time_t connect_until_time = 0;
 	char email[40] = "";
@@ -170,12 +183,17 @@ void email_time_request(int fd, int id) {
 	WFIFOSET(fd,50);
 
 	RFIFOSKIP(fd,6);
+	
+	return 0;
 }
 
 //--------------------------------
 // Request to change email [Edit: Wizputer]
 //--------------------------------
-void change_account_email(int fd, int id, char ip[16]) {
+int change_account_email(int fd, int len, int id, char ip[16]) {
+	if (len < 86)
+		return -1;
+		
 	int acc = RFIFOL(fd,2);
 	char actual_email[40], new_email[40];
 
@@ -218,12 +236,17 @@ void change_account_email(int fd, int id, char ip[16]) {
     }
     
     RFIFOSKIP(fd, 86);
+    
+    return 0;
 }
 
 //-----------------------------------------------
 // State change request from map server (By Yor) [Edit: Wizputer]
 //-----------------------------------------------
-void status_change_request(int fd) {
+int status_change_request(int fd, int len) {
+    if (len < 10)
+		return -1;
+    
 	int acc = RFIFOL(fd,2), status = RFIFOL(fd,6);
 
 	sprintf(tmpsql, "SELECT `state` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, acc);
@@ -246,12 +269,17 @@ void status_change_request(int fd) {
     }    
 	
     RFIFOSKIP(fd,10);
+    
+    return 0;
 }
 //--------------------------------------
 // Ban request from map-server (By Yor) [Edit: Wizputer]
 //--------------------------------------
-void ban_request(int fd) {
-	int acc=RFIFOL(fd,2);
+int ban_request(int fd, int len) {
+    if (len < 18)
+		return -1;
+		
+    int acc=RFIFOL(fd,2);
 	struct tm *tmtime;
 	time_t timestamp, tmptime;
 
@@ -299,12 +327,17 @@ void ban_request(int fd) {
     }
     
 	RFIFOSKIP(fd,18);
+	
+	return 0;
 }
 
 //-----------------------------
 // Change sex [Edit: Wizputer]
 //-----------------------------
-void change_sex(int fd) {
+int change_sex(int fd,int len) {
+	if (len < 6)
+		return -1;
+
 	int sex,acc=RFIFOL(fd,4);
 	unsigned char buf[16];
 	
@@ -327,12 +360,17 @@ void change_sex(int fd) {
     }	
 	
     RFIFOSKIP(fd,6);
+    
+    return 0;
 }
 
 //-------------------------------
 // Save Account Reg [Edit: Wizputer]
 //-------------------------------
-void save_account_reg(int fd){
+int save_account_reg(int fd, int len){
+    if (len < 4 || len < RFIFOW(fd,2))
+        return -1;
+    
 	int p,j,value,acc=RFIFOL(fd,4);
 	char str[32];
 	char temp_str[32];
@@ -358,25 +396,60 @@ void save_account_reg(int fd){
 	#ifdef DEBUG
 	printf("login: save account_reg (from char)\n");
 	#endif
+	
+	return 0;
 }
 
 //------------------------------------------------
 // Recieve unban request from map-server (by Yor) [Edit: Wizputer]
 //------------------------------------------------
-void unban_request(int fd) {
+int unban_request(int fd, int len) {
+    if (len < 6)
+		return -1;
+		
 	int acc = RFIFOL(fd,2);
 				
     sprintf(tmpsql,"UPDATE `%s` SET `ban_until` = '0', `state`='0' WHERE `%s` = '%d' AND `state`='6'", login_db,login_db_account_id,acc);
     sql_query(tmpsql,"unban_request");
 
 	RFIFOSKIP(fd,6);
+	
+	return 0;
 }
 
+//---------------------------------------
+// Map-server Add Online User [Wizputer]
+//---------------------------------------
+int map_add_online_user(int fd, int len) {
+    if (len < 6)
+        return -1;
+        
+    add_online_user(RFIFOL(fd,2));
+
+    RFIFOSKIP(fd,6);
+    
+    return 0;
+}
+
+//---------------------------------------
+// Map-server Remove Online User [Wizputer]
+//---------------------------------------
+int map_rem_online_user(int fd, int len) {
+    if (len < 6)
+        return -1;
+
+    remove_online_user(RFIFOL(fd,2));
+    
+    RFIFOSKIP(fd,6);
+    
+    return 0;
+}
+        
 //-----------------------------------------------------
 // char-server packet parse [Edit: Wizputer]
 //-----------------------------------------------------
 int parse_fromchar(int fd){
-	int id;
+	int id, len, res=0;
 
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 	char ip[16];
@@ -404,80 +477,26 @@ int parse_fromchar(int fd){
 		delete_session(fd);
 		return 0;
 	}
-
-	while(RFIFOREST(fd) >= 2) {
+	
+	len = RFIFOREST(fd);
+	
+	while(len >= 2 && res == 0) {
 	    #ifdef DEBUG_PACKETS
 		printf("char_parse: %d %d packet case=%x\n", fd, RFIFOREST(fd), RFIFOW(fd, 0));
 		#endif
 		
 		switch (RFIFOW(fd,0)) {
-		case 0x2712:
-			if (RFIFOREST(fd) < 19)
-				return 0;
-			send_account_reg(fd);
-			break;
-
-		case 0x2714:
-			if (RFIFOREST(fd) < 6)
-				return 0;
-			number_world_users(fd,id);
-			break;
-
-		case 0x2716:
-			if (RFIFOREST(fd) < 6)
-				return 0;
-			email_time_request(fd, id);
-			break;
-	
-		case 0x2722:
-			if (RFIFOREST(fd) < 86)
-				return 0;
-			change_account_email(fd, id, ip);
-			break;
-
-		case 0x2724:
-			if (RFIFOREST(fd) < 10)
-				return 0;
-			status_change_request(fd);
-			break;
-
-		case 0x2725:
-			if (RFIFOREST(fd) < 18)
-				return 0;
-			ban_request(fd);
-			break;
-
-		case 0x2727:
-			if (RFIFOREST(fd) < 6)
-				return 0;
-			change_sex(fd);
-			break;
-
-		case 0x2728:
-            if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-                return 0;
-            save_account_reg(fd);	
-            break;
-
-        case 0x272a:
-			if (RFIFOREST(fd) < 6)
-				return 0;
-			unban_request(fd);
-			return 0;
-			
-        case 0x272b:    // Set account_id to online [Wizputer]
-            if (RFIFOREST(fd) < 6)
-                return 0;
-            add_online_user(RFIFOL(fd,2));
-            RFIFOSKIP(fd,6);
-            break;
-    
-        case 0x272c:   // Set account_id to offline [Wizputer]
-            if (RFIFOREST(fd) < 6)
-                return 0;
-            remove_online_user(RFIFOL(fd,2));
-            RFIFOSKIP(fd,6);
-            break;
+		case 0x2712: res = send_account_reg(fd,len);	       break;
+		case 0x2714: res = number_world_users(fd,len,id);	   break;
+		case 0x2716: res = email_time_request(fd,len,id);      break;
+		case 0x2722: res = change_account_email(fd,len,id,ip); break;
+		case 0x2724: res = status_change_request(fd,len);      break;
+		case 0x2725: res = ban_request(fd,len);          	   break;
+		case 0x2727: res = change_sex(fd,len);         		   break;
+		case 0x2728: res = save_account_reg(fd,len);           break;
+        case 0x272a: res = unban_request(fd,len);		       break;
+        case 0x272b: res = map_add_online_user(fd,len);        break;
+        case 0x272c: res = map_rem_online_user(fd,len);        break;
 			
 		default:
 		    #ifdef DEBUG
@@ -485,6 +504,8 @@ int parse_fromchar(int fd){
 		    #endif
 		    session[fd]->eof = 1;
         }
+        
+        len = RFIFOREST(fd);
 	}
 
 	return 0;

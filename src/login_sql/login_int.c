@@ -11,7 +11,10 @@
 //----------------------
 // Client requesting login [Edit: Wizputer]
 //----------------------
-void client_request_login(int fd,unsigned char *p ) {
+int client_request_login(int fd,int len,unsigned char *p ) {
+	if(len < ((RFIFOW(fd, 0) ==0x64)?55:47))
+	    return -1;
+    
     struct mmo_account account;
    	char t_uid[32];  
    	int server_num = 0,result,i;
@@ -151,12 +154,22 @@ void client_request_login(int fd,unsigned char *p ) {
 	WFIFOSET(fd,23);
 
 	RFIFOSKIP(fd,(RFIFOW(fd,0)==0x64)?55:47);
+	
+	return 0;
 }
 
 //------------------------------------------------------
 // MD5 Key requested for encypted login [Edit: Wizputer
 //------------------------------------------------------
-void md5_key_request(int fd) {
+int md5_key_request(int fd, int len) {
+    if (session[fd]->session_data) {
+          #ifdef DEBUG
+          printf("login: abnormal request of MD5 key (already opened session).\n");
+          #endif
+          session[fd]->eof = 1;
+          return -1;
+    }
+    
     #ifdef DEBUG
     printf("Request Password key -%s\n",md5key);
     #endif
@@ -166,12 +179,17 @@ void md5_key_request(int fd) {
 	WFIFOW(fd,2)=4+md5keylen;
 	memcpy(WFIFOP(fd,4),md5key,md5keylen);
 	WFIFOSET(fd,WFIFOW(fd,2));
+	
+	return 0;
 }
 
 //----------------------------------------------------
 // Char-server requesting connection [Edit: Wizputer]
 //-----------------------------------------------------
-void char_request_login(int fd, unsigned char *p) {
+int char_request_login(int fd, int len, unsigned char *p) {
+    if(len<86)
+		return -1;
+		
     struct mmo_account account;
 	unsigned char* server_name;
    	char t_uid[32];  
@@ -232,12 +250,14 @@ void char_request_login(int fd, unsigned char *p) {
 	}
 
 	RFIFOSKIP(fd, 86);
+	
+	return 0;
 }
 
 //---------------------------------------------
 // Athena Version Info Request [Edit: Wizputer]
 //---------------------------------------------
-void request_athena_info(int fd) {
+int request_athena_info(int fd, int len) {
     #ifdef DEBUG
 	printf ("Athena version check...\n");
 	#endif
@@ -252,6 +272,8 @@ void request_athena_info(int fd) {
 	WFIFOW(fd,8)=ATHENA_MOD_VERSION;
 	WFIFOSET(fd,10);
 	RFIFOSKIP(fd,2);
+	
+	return 0;
 }
 
 //----------------------------------------------------------------------------------------
@@ -259,6 +281,7 @@ void request_athena_info(int fd) {
 //----------------------------------------------------------------------------------------
 int parse_login(int fd) {
 	char ip[16];
+	int len,res=0;
  	
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
@@ -309,8 +332,10 @@ int parse_login(int fd) {
 		delete_session(fd);
 		return 0;
 	}
-
-	while(RFIFOREST(fd)>=2){
+	
+	len = RFIFOREST(fd);
+	
+	while(len>=2 && res == 0){
 	    #ifdef DEBUG_PACKETS
 		printf("parse_login : %d %d packet case=%x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
 		#endif
@@ -329,31 +354,10 @@ int parse_login(int fd) {
 			break;
 
 		case 0x64:
-		case 0x01dd:
-			if(RFIFOREST(fd)< ((RFIFOW(fd, 0) ==0x64)?55:47))
-				return 0;
-			client_request_login(fd, p);	
-			break;
-		case 0x01db:
-		    if (session[fd]->session_data) {
-		          #ifdef DEBUG
-		          printf("login: abnormal request of MD5 key (already opened session).\n");
-		          #endif
-		          session[fd]->eof = 1;
-		          return 0;
-            }
-            md5_key_request(fd);
-            break;
-
-        case 0x2710:
-			if(RFIFOREST(fd)<86)
-				return 0;
-			char_request_login(fd,p);
-			break;
-
-		case 0x7530:
-		    request_athena_info(fd);
-			break;
+		case 0x01dd: res = client_request_login(fd,len,p);  break;
+		case 0x01db: res = md5_key_request(fd,len);         break;
+        case 0x2710: res = char_request_login(fd,len,p);	break;
+		case 0x7530: res = request_athena_info(fd,len);     break;
 
 		case 0x7532:
 		default:
@@ -363,6 +367,8 @@ int parse_login(int fd) {
 			session[fd]->eof = 1;
 			return 0;
 		}
+		
+		len = RFIFOREST(fd);
 	}
 
 	return 0;
