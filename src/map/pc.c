@@ -7694,6 +7694,20 @@ int map_night_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
 	return 0;
 }
 
+/*==========================================
+ * I'm alive timer (to prevent double connect bug) by Valaris
+ *------------------------------------------
+ */
+int pc_alive_timer(int tid,unsigned int tick,int id,int data)
+{
+	struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
+	nullpo_retr(0, sd);
+	if(sd->alive_timer != tid)
+		return 0;
+	map_quit(sd);
+	return 0;
+}
+
 void pc_setstand(struct map_session_data *sd){
 	nullpo_retv(sd);
 
@@ -8109,16 +8123,5 @@ int do_init_pc(void) {
 		}
 	}
 
-	return 0;
-}
-
-//Valaris
-int pc_alive_timer(int tid,unsigned int tick,int id,int data)
-{
-	struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
-	nullpo_retr(0, sd);
-	if(sd->alive_timer != tid)
-		return 0;
-	map_quit(sd);
 	return 0;
 }
