@@ -220,6 +220,7 @@ ATCOMMAND_FUNC(refresh); // by MC Cameri
 ATCOMMAND_FUNC(petid); // by MC Cameri
 ATCOMMAND_FUNC(identify); // by MC Cameri
 ATCOMMAND_FUNC(gmotd); // Added by MC Cameri, created by davidsiaw
+ATCOMMAND_FUNC(misceffect); // by MC Cameri
 
 #ifndef TXT_ONLY
 ATCOMMAND_FUNC(checkmail); // [Valaris]
@@ -475,6 +476,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_PetId,	    	    "@petid",			40, atcommand_petid }, // by MC Cameri
 	{ AtCommand_Identify,	   	    "@identify",		40, atcommand_identify }, // by MC Cameri
 	{ AtCommand_Gmotd,				"@gmotd",			 0, atcommand_gmotd }, // Added by MC Cameri, created by davidsiaw
+	{ AtCommand_MiscEffect,			"@misceffect",		50, atcommand_misceffect }, // by MC Cameri
 
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
@@ -7912,6 +7914,21 @@ atcommand_gmotd(
 			fclose(fp);
 		}
 		return 0;
+}
+
+int atcommand_misceffect(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int effect = 0;
+	nullpo_retr(-1, sd);
+	if (!message || !*message)
+		return -1;
+	if (sscanf(message, "%d", &effect) < 1)
+		return -1;
+	clif_misceffect(&sd->bl,effect);
+	
+	return 0;
 }
 
 #ifndef TXT_ONLY  /* Begin SQL-Only commands */

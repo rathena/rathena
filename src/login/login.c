@@ -191,6 +191,46 @@ int isGM(int account_id) {
 	return 0;
 }
 
+//----------------------------------------------------------------------
+// Adds a new GM using acc id and level
+//----------------------------------------------------------------------
+void addGM(int account_id, int level) {
+	int i;
+	int do_add = 0;
+	for(i = 0; i < auth_num; i++) {
+		if (auth_dat[i].account_id==account_id) {
+			do_add = 1;
+			break;
+		}
+	}
+	for(i = 0; i < GM_num; i++)
+		if (gm_account_db[i].account_id == account_id) {
+			if (gm_account_db[i].level == level)
+				printf("addGM: GM account %d defined twice (same level: %d).\n", account_id, level);
+			else {
+				printf("addGM: GM account %d defined twice (levels: %d and %d).\n", account_id, gm_account_db[i].level, level);
+				gm_account_db[i].level = level;
+			}
+			return;
+		}
+		
+	// if new account
+	if (i == GM_num && do_add) {
+		if (GM_num >= GM_max) {
+			GM_max += 256;
+			gm_account_db = realloc(gm_account_db, sizeof(struct gm_account) * GM_max);
+			memset(gm_account_db + (GM_max - 256), 0, sizeof(struct gm_account) * 256);
+		}
+		gm_account_db[GM_num].account_id = account_id;
+		gm_account_db[GM_num].level = level;
+		GM_num++;
+		if (GM_num >= 4000) {
+			printf("***WARNING: 4000 GM accounts found. Next GM accounts are not read.\n");
+			login_log("***WARNING: 4000 GM accounts found. Next GM accounts are not read." RETCODE);
+		}
+	}
+}
+
 //-------------------------------------------------------
 // Reading function of GM accounts file (and their level)
 //-------------------------------------------------------
@@ -198,8 +238,9 @@ int read_gm_account() {
 	char line[512];
 	FILE *fp;
 	int account_id, level;
-	int i, line_counter;
+	int line_counter;
 	struct stat file_stat;
+	int start_range = 0, end_range = 0, is_range = 0, current_id = 0;
 
 	if(gm_account_db) free(gm_account_db);
 	GM_num = 0;
@@ -227,8 +268,9 @@ int read_gm_account() {
 		line_counter++;
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
-		if (sscanf(line, "%d %d", &account_id, &level) != 2 && sscanf(line, "%d: %d", &account_id, &level) != 2)
-			printf("read_gm_account: file [%s], invalid 'id_acount level' format (line #%d).\n", GM_account_filename, line_counter);
+		is_range = (sscanf(line, "%d%*[-~]%d %d",&start_range,&end_range,&level)==3); // ID Range [MC Cameri]
+		if (!is_range && sscanf(line, "%d %d", &account_id, &level) != 2 && sscanf(line, "%d: %d", &account_id, &level) != 2)
+			printf("read_gm_account: file [%s], invalid 'acount_id|range level' format (line #%d).\n", GM_account_filename, line_counter);
 		else if (level <= 0)
 			printf("read_gm_account: file [%s] %dth account (line #%d) (invalid level [0 or negative]: %d).\n", GM_account_filename, GM_num+1, line_counter, level);
 		else {
@@ -236,37 +278,23 @@ int read_gm_account() {
 				printf("read_gm_account: file [%s] %dth account (invalid level, but corrected: %d->99).\n", GM_account_filename, GM_num+1, level);
 				level = 99;
 			}
-			for(i = 0; i < GM_num; i++)
-				if (gm_account_db[i].account_id == account_id) {
-					if (gm_account_db[i].level == level)
-						printf("read_gm_account: GM account %d defined twice (same level: %d).\n", account_id, level);
-					else {
-						printf("read_gm_account: GM account %d defined twice (levels: %d and %d).\n", account_id, gm_account_db[i].level, level);
-						gm_account_db[i].level = level;
-					}
-					break;
-				}
-			// if new account
-			if (i == GM_num) {
-				if (GM_num >= GM_max) {
-					GM_max += 256;
-					gm_account_db = realloc(gm_account_db, sizeof(struct gm_account) * GM_max);
-					memset(gm_account_db + (GM_max - 256), 0, sizeof(struct gm_account) * 256);
-				}
-				gm_account_db[GM_num].account_id = account_id;
-				gm_account_db[GM_num].level = level;
-				GM_num++;
-				if (GM_num >= 4000) {
-					printf("***WARNING: 4000 GM accounts found. Next GM accounts are not readed.\n");
-					login_log("***WARNING: 4000 GM accounts found. Next GM accounts are not readed." RETCODE);
-				}
+			if (is_range) {
+				if (start_range==end_range)
+					printf("read_gm_account: file [%s] invalid range, beginning of range is equal to end of range (line #%d).\n", GM_account_filename, line_counter);
+				else if (start_range>end_range)
+					printf("read_gm_account: file [%s] invalid range, beginning of range must be lower than end of range (line #%d).\n", GM_account_filename, line_counter);
+				else 
+					for (current_id = start_range;current_id<=end_range;current_id++)
+						addGM(current_id,level);
+			} else {
+				addGM(account_id,level);
 			}
 		}
 	}
 	fclose(fp);
 
-	printf("read_gm_account: file '%s' readed (%d GM accounts found).\n", GM_account_filename, GM_num);
-	login_log("read_gm_account: file '%s' readed (%d GM accounts found)." RETCODE, GM_account_filename, GM_num);
+	printf("read_gm_account: file '%s' read (%d GM accounts found).\n", GM_account_filename, GM_num);
+	login_log("read_gm_account: file '%s' read (%d GM accounts found)." RETCODE, GM_account_filename, GM_num);
 
 	return 0;
 }
@@ -447,6 +475,7 @@ int search_account_index(char* account_name) {
 
 	quantity = 0;
 	index = -1;
+
 	for(i = 0; i < auth_num; i++) {
 		// Without case sensitive check (increase the number of similar account names found)
 		if (stricmp(auth_dat[i].userid, account_name) == 0) {
@@ -3872,8 +3901,8 @@ int do_init(int argc, char **argv) {
 	gm_account_db = NULL;
 	GM_num = 0;
 	GM_max = 0;
-	read_gm_account();
 	mmo_auth_init();
+	read_gm_account();
 //	set_termfunc(mmo_auth_sync);
 	set_defaultparse(parse_login);
 	login_fd = make_listen_port(login_port);

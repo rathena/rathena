@@ -1,5 +1,9 @@
 Date	Added
 11/22
+	* (TXT)Stripped some code off read_gm_accounts() and made with it addGM() [MC Cameri]
+	  -Usage: addGM(account_id,level);
+	* (TXT)Changed GM_accounts.txt to meet new standards. [MC Cameri]
+	* (TXT)Enabled the use of id ranges in GM_accounts.txt [MC Cameri]
 	* Added a few free()'s so that I am sure it freed the allocated memory (char & login) [Codemaster]
 	* Changed monsters_ignore_gm option to a level value. [Valaris]
 	  (accounts greater than or equal to this setting won't be attacked by aggressives.)

@@ -200,6 +200,7 @@ enum AtCommandType {
 	AtCommand_PetId, // by MC Cameri
 	AtCommand_Identify, // by MC Cameri
 	AtCommand_Gmotd, // Added by MC Cameri, created by davidsiaw
+	AtCommand_MiscEffect, // by MC Cameri
 
 	// SQL-only commands start
 #ifndef TXT_ONLY 

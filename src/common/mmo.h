@@ -14,6 +14,8 @@
 #define RETCODE "\n"	// (LFÅFUnixånÅj
 #endif
 
+#define RET RETCODE
+
 #define FIFOSIZE_SERVERLINK	128*1024
 
 // set to 0 to not check IP of player between each server.

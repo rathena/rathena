@@ -2916,12 +2916,13 @@ int buildin_getequipisenableref(struct script_state *st)
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	sd=script_rid2sd(st);
 	i=pc_checkequip(sd,equip[num-1]);
-	if(i >= 0 && num<7 && sd->inventory_data[i] && (num!=1 || sd->inventory_data[i]->def > 1
+	if(i >= 0 && num<7 && sd->inventory_data[i] && (num!=1 
+				 || sd->inventory_data[i]->def > 1
 	             || (sd->inventory_data[i]->def==1 && sd->inventory_data[i]->equip_script==NULL)
-	             || (sd->inventory_data[i]->def<=0 && sd->inventory_data[i]->equip_script!=NULL))
-	   ){
+	             || (sd->inventory_data[i]->def<=0 && sd->inventory_data[i]->equip_script!=NULL)))
+	{
 		push_val(st->stack,C_INT,1);
-	}else{
+	} else {
 		push_val(st->stack,C_INT,0);
 	}
 

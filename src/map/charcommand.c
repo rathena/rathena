@@ -408,6 +408,7 @@ int charcommand_petfriendly(
 					t = pl_sd->pet.intimate;
 					pl_sd->pet.intimate = friendly;
 					clif_send_petstatus(pl_sd);
+					clif_pet_emotion(pl_sd->pd,0);
 					if (battle_config.pet_status_support) {
 						if ((pl_sd->pet.intimate > 0 && t <= 0) ||
 						    (pl_sd->pet.intimate <= 0 && t > 0)) {
