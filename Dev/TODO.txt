@@ -771,4 +771,17 @@ Notes		for allowing a monster on monster arena
 Description	Redo the gm help files
 Status		Pending
 Assignee	MC_Cameri
-Notes		Do this after all @char commands are converted to # to avoid any problems.
+Notes		Do this after all @char commands are converted to # to
+avoid any problems.
+**
+71.
+Description	Make a way for NPC's to retrieve and set battle_flags
+Status		Pending
+Assignee	MouseJstr
+**
+72.
+Description	Add a @rates command to summerize the current rates
+Status		Pending
+Assignee	MouseJstr
+
+
