@@ -1,5 +1,6 @@
 Date	Added
 11/17   
+	* Added stub-handler for packet 0x3090 into char_sql [MouseJstr]
 	* Fixed a crash in the afm reading/closing code [MouseJstr]
 	* Added skill_steal_type to battle_athena.conf for the new (but unconfirmed) 
           stealing formula [celest]
