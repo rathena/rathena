@@ -25,6 +25,7 @@ have account names after each gm command. I'm not sure which one I like, or whic
 the "level" system is kind of hard to do when you want to have sistem levels. Like, some have group A 
 commands, and some have group B commands, having nothing to do with group A. There is no way to do that 
 with the current system.
+	nsstrunks: The group numbers is kinda pointless, since currently if you set it to a higher number, everyone above that will have access.
 
 4) Private Message SPY! (@pmspy <char name>) What it does is you see everything that that person private 
 messages to another, and anything another pms to them. I'm not sure if it can be already done, but this 
