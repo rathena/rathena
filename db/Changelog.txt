@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+11/30   * Corrected bUnbreakable value in const.txt [celest]
+        * updated skill_cast_db for Meltdown [celest]
+
 11/29   * Updated skill_db for Quagmire, Fog Wall [celest]
 
 11/28	* Fixed Wedding rings placement 2->136 [Lupus]

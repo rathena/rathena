@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/11/26 7:12:23 PM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/11/30 8:26:49 PM Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -24,6 +24,7 @@
 #include "log.h"
 #include "chrif.h"
 #include "guild.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -398,6 +399,10 @@ const struct skill_name_db skill_names[] = {
  { DC_SERVICEFORYOU, "SERVICEFORYOU", "Prostitute" } ,
  { DC_THROWARROW, "THROWARROW", "Throw_Arrow" } ,
  { DC_UGLYDANCE, "UGLYDANCE", "Ugly_Dance" } ,
+ { GD_BATTLEORDER, "BATTLEORDER", "Battle_Orders" } ,
+ { GD_REGENERATION, "REGENERATION", "Regeneration" } ,
+ { GD_RESTORE, "RESTORE", "Restore" } ,
+ { GD_EMERGENCYCALL, "EMERGENCYCALL", "Emergency_Call" } ,
  { HP_ASSUMPTIO, "ASSUMPTIO", "Assumptio" } ,
  { HP_BASILICA, "BASILICA", "Basilica" } ,
  { HP_MEDITATIO, "MEDITATIO", "Meditation" } ,
@@ -832,6 +837,10 @@ int	skill_get_castnodex( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
 	return (lv <= 0) ? 0:skill_db[id].castnodex[lv-1];
 }
+int	skill_get_nocast ( int id ){
+	if (id >= 10000 && id < 10015) id-= 9500;
+	return skill_db[id].nocast;
+}
 int skill_tree_get_max(int id, int b_class){
 	struct pc_base_job s_class = pc_calc_base_job(b_class);
 	int i, skillid;
@@ -861,15 +870,15 @@ int skillnotok(int skillid, struct map_session_data *sd) {
            return 0;  // gm's can do anything damn thing they want
 
 	// Check skill restrictions [Celest]
-	if(!map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.gvg && skill_db[skillid].nocast & 1)
+	if(!map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.gvg && skill_get_nocast (skillid) & 1)
 		return 1;
-	if(map[sd->bl.m].flag.pvp && skill_db[skillid].nocast & 2)
+	if(map[sd->bl.m].flag.pvp && skill_get_nocast (skillid) & 2)
 		return 1;
-	if(map[sd->bl.m].flag.gvg && skill_db[skillid].nocast & 4)
+	if(map[sd->bl.m].flag.gvg && skill_get_nocast (skillid) & 4)
 		return 1;
-	if (agit_flag && skill_db[skillid].nocast & 8)
+	if (agit_flag && skill_get_nocast (skillid) & 8)
 		return 1;
-	if (battle_config.pk_mode && !map[sd->bl.m].flag.nopvp && skill_db[skillid].nocast & 16)
+	if (battle_config.pk_mode && !map[sd->bl.m].flag.nopvp && skill_get_nocast (skillid) & 16)
 		return 1;
 
      switch (skillid) {
@@ -3727,11 +3736,11 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case BS_REPAIRWEAPON:			/* 武器修理 */
 		if(sd) {
 //動作しないのでとりあえずコメントアウト
-			if (pc_search_inventory(sd, 999) < 0 ) { //fixed by Lupus (item pos can be = 0!)
+			/*if (pc_search_inventory(sd, 999) < 0 ) { //fixed by Lupus (item pos can be = 0!)
 				clif_skill_fail(sd,sd->skillid,0,0);
 				map_freeblock_unlock();
 				return 1;
-			}
+			}*/
 			clif_item_repair_list(sd);
 		}
 		break;
@@ -5422,9 +5431,14 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case GD_SOULCOLD:
 	case GD_HAWKEYES:
 		range=2;
-		target=BCT_NOENEMY;
-		limit=600000;
+		target=BCT_ALL;
+		limit=60000;
 		break;
+
+	default:
+		if(battle_config.error_log)
+			printf ("skill_unitsetting: Unknown skill id = %d\n",skillid);
+		return 0;
 	}
 
 	nullpo_retr(NULL, group=skill_initunitgroup(src,count,skillid,skilllv,skill_get_unit_id(skillid,flag&1)));
@@ -9380,8 +9394,12 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			val2=10+val1*3;
 			break;
 		case SC_STRIPWEAPON:
+			if (val2==0) val2=90;
+			break;
 		case SC_STRIPSHIELD:
-		case SC_STRIPARMOR:
+			if (val2==0) val2=85;
+			break;
+		case SC_STRIPARMOR:			
 		case SC_STRIPHELM:
 		case SC_CP_WEAPON:
 		case SC_CP_SHIELD:
@@ -10549,7 +10567,21 @@ int skill_unit_timer_sub( struct block_list *bl, va_list ap )
 							map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,NULL,NULL,NULL,0);	// ?返還
 						}
 					}
+					skill_delunit(unit);
 				}
+				break;
+
+			case 0xc1:
+			case 0xc2:
+			case 0xc3:
+			case 0xc4:
+				{
+					struct block_list *src=map_id2bl(group->src_id);
+					if (src)
+						group->tick = tick;
+				}
+				break;
+
 			default:
 				skill_delunit(unit);
 		}
@@ -11605,7 +11637,9 @@ int skill_readdb(void)
 		if(split[0]==NULL)
 			continue;
 		i=atoi(split[0]);
-		if(i < 0 || i > MAX_SKILL_DB)
+		if (i>=10000 && i<10015) // for guild skills [Celest]
+			i -= 9500;
+		else if(i<0 || i>MAX_SKILL_DB)
 			continue;
 		skill_db[i].nocast=atoi(split[1]);
 		k++;

@@ -1,6 +1,7 @@
 Problem:	Adding the new guild skills causes it to crash?
-Assigned:	N/A
-Progess:	0%
+Assigned:	Celest
+Progess:	90%
+Note:           The skills should be almost working now.
 
 Problem:	2-2-1 classes are regarded as Novicies by the game server. NPCs aren't taking them as thier jobs but if you the the NPC to do something for a novice class it works with the 2-2-1 like renters. Also if some one becomes high novice, if they use jobra they can become first jobs like a swordsman.
 Assigned:	N/A
@@ -55,25 +56,17 @@ Problem:	When athena is run in linux it creates core files which takes 300 megs.
 Assigned:	N/A
 Progess:	0%
 
-Problem:	The skill tree's max skill lvl is not read/used.
-Assigned:	Celest
-Progess:	~100% (Notes: Maybe there's a less messy way? xP)
-
 Problem:	Char server and Map server crash when you recall some one.
 Assigned:	N/A
 Progess:	0% 
-
-Problem:	Monk's Skill ROOT instantly reboots server
-Assigned:	Celest
-Progess:	100%? (Notes: Typo... my bad, sorry ^^; )
 
 Problem:	Sage's Area Skills (Delu.,Vulcano, etc) if casted on the same area (or overlap each other) instantly reboots server. use @gvgon when test. Don't test it towns
 Assigned:	N/A
 Progess:	0%
 
 Problem:	@disguise has no death sprite so the client crashes when you die, a solution would be that upon death before the sprites change you're undisguised.
-Assigned:	N/a
-Progess:	0%
+Assigned:	Celest
+Progess:	100%
 Note 1:		Please state which sprite makes the client crash, I tried many spriters and I never crashed. [MC Cameri]
 
 Problem:        Changing email and Broadcast both use the same packets / Packet 0x3000 assigned to changing email instead of broadcasting?
@@ -84,6 +77,7 @@ Progress:       0%
 Problem:	Sanctuary heal emp during WoE?
 Assigned:       N/A
 Progress:       0%
+Note:           Isn't sanctuary supposed to be able to heal the emperium? [celest]
 
 Problem:	AFM Maps not loading coords correctly, players appearing outside boundaries of the maps.
 Assigned:	N/A

@@ -131,8 +131,8 @@ bFlee		50
 bFlee2		51
 bCritical	52
 bAspd		53
-bFame		57
-bUnbreakable	58
+bFame		59
+bUnbreakable	60
 
 bAtkRange	1000
 bAtkEle		1001

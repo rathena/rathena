@@ -1,4 +1,13 @@
 Date	Added
+11/30
+        * Fixed client crash when disguised characters die [celest]
+        * Skill Updates [celest]
+          - Fixed and finished Guild Skills (~90%)
+          - Fixed Meltdown and Overthrust used together breaking your own weapon
+          - Updated Weapon Repair :- uses different materials depending on repaired item
+            (Iron Ore/Iron/Steel/Rough Oridecon)
+          - Fixed sp recovery problem, thanks to OutSider for pointing it out
+
 11/29
 	* Fixed crash in src/char_sql/char.c when setting chars offline [MouseJstr]
 	* Added mapbug.txt which is displayed in map-server, displays

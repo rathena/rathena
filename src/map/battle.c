@@ -640,7 +640,7 @@ int battle_get_atk2(struct block_list *bl)
 			if(sc_data[SC_NIBELUNGEN].timer!=-1 && (battle_get_element(bl)/10) >= 8 )
 				atk2 += sc_data[SC_NIBELUNGEN].val2;
 			if(sc_data[SC_STRIPWEAPON].timer!=-1)
-				atk2 = atk2*90/100;
+				atk2 = atk2*sc_data[SC_STRIPWEAPON].val2/100;
 			if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
 				atk2 += atk2*(5*sc_data[SC_CONCENTRATION].val1)/100;
 		}
@@ -767,7 +767,7 @@ int battle_get_def(struct block_list *bl)
 				def = def*75/100;
 			//ストリップシールド時は減算
 			if(sc_data[SC_STRIPSHIELD].timer!=-1 && bl->type != BL_PC)
-				def = def*85/100;
+				def = def*sc_data[SC_STRIPSHIELD].val2/100;
 			//シグナムクルシス時は減算
 			if(sc_data[SC_SIGNUMCRUCIS].timer!=-1 && bl->type != BL_PC)
 				def = def * (100 - sc_data[SC_SIGNUMCRUCIS].val2)/100;
@@ -3959,31 +3959,36 @@ struct Damage battle_calc_weapon_attack(
 
 	if(battle_config.equipment_breaking && src->type==BL_PC && (wd.damage > 0 || wd.damage2 > 0)) {
 		struct map_session_data *sd=(struct map_session_data *)src;
-		int breakrate=1;
-		if(sd->status.weapon && sd->status.weapon!=11) {
-			if(target->type == BL_PC && sd->sc_data[SC_MELTDOWN].timer!=-1){ 
-				breakrate+=100*sd->sc_data[SC_MELTDOWN].val1;
-				if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000)
-					pc_breakweapon((struct map_session_data *)target);
+		int breakrate = 0;
+
+		if(sd->status.weapon && sd->status.weapon != 11) {
+			if(sd->sc_data[SC_MELTDOWN].timer!=-1) {
+//				breakrate += 100*sd->sc_data[SC_MELTDOWN].val1; // since we don't know if there are any other factors for breaking yet, [celest]
+				breakrate += 100*sd->sc_data[SC_MELTDOWN].val1;
+				if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
+					if (target->type == BL_PC)
+						pc_breakweapon((struct map_session_data *)target);
+					else
+						skill_status_change_start(target,SC_STRIPWEAPON,1,75,0,0,skill_get_time2(WS_MELTDOWN,1),0 );
+				}
+
+				breakrate = 70*sd->sc_data[SC_MELTDOWN].val1;
+				if (rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
+					if (target->type == BL_PC)
+						pc_breakarmor((struct map_session_data *)target);
+					else
+						skill_status_change_start(target,SC_STRIPSHIELD,1,75,0,0,skill_get_time2(WS_MELTDOWN,1),0 );
+				}
 			}
-			if(sd->sc_data[SC_OVERTHRUST].timer!=-1)
-				breakrate+=20*sd->sc_data[SC_OVERTHRUST].val1;
+			if(sd->sc_data[SC_OVERTHRUST].timer!=-1) {
+				breakrate = 20*sd->sc_data[SC_OVERTHRUST].val1;
 			//if(wd.type==0x0a) //removed! because CRITS don't affect on breaking chance [Lupus]
 			//	breakrate*=2;
-			if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
-				if(pc_breakweapon(sd)==1)
-					wd = battle_calc_pc_weapon_attack(src,target,skill_num,skill_lv,wflag);
+				if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
+					if(pc_breakweapon(sd)==1)
+						wd = battle_calc_pc_weapon_attack(src,target,skill_num,skill_lv,wflag);
+				}
 			}
-		}
-	}
-		
-	if (battle_config.equipment_breaking && target->type == BL_PC && (wd.damage > 0 || wd.damage2 > 0)) {
-		int breakrate=1;
-		if(src->type==BL_PC && ((struct map_session_data *)src)->sc_data[SC_MELTDOWN].timer!=-1) breakrate+=70*((struct map_session_data *)src)->sc_data[SC_MELTDOWN].val1;
-		//if (wd.type==0x0a) removed! because CRITS don't affect on breaking chance [Lupus]
-		//	breakrate*=2;
-		if (rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {
-			pc_breakarmor((struct map_session_data *)target);
 		}
 	}
 

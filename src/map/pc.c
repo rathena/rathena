@@ -1,4 +1,4 @@
-// $Id: pc.c 101 2004-11-26 5:47:29 PM Celestia $
+// $Id: pc.c 101 2004-11-30 8:27:10 PM Celestia $
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -3462,18 +3462,29 @@ int pc_item_identify(struct map_session_data *sd,int idx)
  */
 int pc_item_repair(struct map_session_data *sd,int idx)
 {
-	int flag=1;
+	int flag=1, material;
+	int materials[5] = { 0, 1002, 998, 999, 756 };
 
 	nullpo_retr(0, sd);
+	struct item *item = &sd->status.inventory[idx];
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
-		if(sd->status.inventory[idx].nameid > 0 && sd->status.inventory[idx].attribute == 1 ) {
+		if(item->nameid > 0 && item->attribute == 1 ) {
+			if (itemdb_type(item->nameid)==4)
+				material = materials [itemdb_wlv (item->nameid)];
+			else
+				material = materials [3];
+
+			if (pc_search_inventory(sd, material) < 0 ) { //fixed by Lupus (item pos can be = 0!)
+				clif_skill_fail(sd,sd->skillid,0,0);
+				return 0;
+			}
 			flag=0;
-			sd->status.inventory[idx].attribute=0;
+			item->attribute=0;
 			//Temporary Weapon Repair code [DracoRPG]
-			pc_delitem(sd, pc_search_inventory(sd, 999), 1, 0);
+			pc_delitem(sd, pc_search_inventory(sd, material), 1, 0);
 			clif_equiplist(sd);
-			clif_produceeffect(sd, 0, sd->status.inventory[idx].nameid);
+			clif_produceeffect(sd, 0, item->nameid);
 			clif_misceffect(&sd->bl, 3);
 			clif_displaymessage(sd->fd,"Item has been repaired.");
 		}
@@ -5353,7 +5364,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		return 0;
 	}
 	sd->status.hp = 0;
-	pc_setdead(sd);
+	//pc_setdead(sd);
 	if(sd->vender_id)
 		vending_closevending(sd);
 
@@ -5369,6 +5380,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	pc_stop_walking(sd,0);
 	skill_castcancel(&sd->bl,0);	// ‰r¥‚Ì’†Ž~
 	clif_clearchar_area(&sd->bl,1);
+	pc_setdead(sd);
 	skill_unit_out_all(&sd->bl,gettick(),1);
 	if(sd->sc_data[SC_BLADESTOP].timer!=-1)//”’n‚ÍŽ–‘O‚É‰ðœ
 		skill_status_change_end(&sd->bl,SC_BLADESTOP,-1);
@@ -7219,7 +7231,7 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 	bsp=sd->status.sp;
 
 	inc_num = pc_spheal(sd);
-	if(sd->sc_count && sd->sc_data[SC_EXPLOSIONSPIRITS].timer == -1)
+	if(sd->sc_data[SC_EXPLOSIONSPIRITS].timer == -1)
 		sd->sp_sub += inc_num;
 	if(sd->walktimer == -1)
 		sd->inchealsptick += natural_heal_diff_tick;
