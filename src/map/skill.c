@@ -2969,11 +2969,12 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		break;
 	case SA_ABRACADABRA:
 		//require 1 yellow gemstone even with mistress card or Into the Abyss
-		if (pc_search_inventory(sd, 715) <= 0 ) {
+		if ((i=pc_search_inventory(sd, 715)) < 0 ) { //bug fixed by Lupus (item pos can be 0, too!)
 			clif_skill_fail(sd,sd->skillid,0,0);
 			break;
 		}
-		pc_delitem(sd, pc_search_inventory(sd, 715), 1, 0);
+		//pc_delitem(sd, pc_search_inventory(sd, 715), 1, 0);
+		pc_delitem(sd, i, 1, 0);
 		//
 		do{
 			abra_skillid=skill_abra_dataset(skilllv);
@@ -3726,7 +3727,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case BS_REPAIRWEAPON:			/* 武器修理 */
 		if(sd) {
 //動作しないのでとりあえずコメントアウト
-			if (pc_search_inventory(sd, 999) <= 0 ) {
+			if (pc_search_inventory(sd, 999) < 0 ) { //fixed by Lupus (item pos can be = 0!)
 				clif_skill_fail(sd,sd->skillid,0,0);
 				map_freeblock_unlock();
 				return 1;

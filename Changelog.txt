@@ -1,5 +1,6 @@
 Date	Added
 11/26   
+	* Fixed Abrakadabra (2 minor bugs of consumed items - they were ignored if placed in 0 pos) [Lupus]
         * Finished Full Strip, Weapon Refine, Slim Pitcher and Full Protection. [celest]
         * Added skill_nocast_db.txt. Use it to set which skills cannot be used in
           which conditions [celest]
