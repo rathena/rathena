@@ -36,6 +36,7 @@ Other Ppl
 Date		Added
 ======
 11/13
+	* - Deleted folder other/old which was empty [MC Cameri]
 	* - Fixed MC Cameri's Bank NPC for the new payon [MC Cameri]
 	* - Fixed warps to Amatsu Dungeon (now u can get there via a special quest only) thanks to shadowlady [Lupus]
 	  - Fixed logical bug in Sleipnir Alchem. sub-quest [Lupus]
