@@ -1,4 +1,7 @@
 Date	Added
+12/5
+        * Corrected typo in battle_range [celest]
+
 12/4
 	* Fixed a crash in clif_send when player disconnects but player
 	  object is not fully removed from map [MouseJstr]
