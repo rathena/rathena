@@ -249,7 +249,8 @@ int SkillStatusChangeTable[]={	/* skill.hのenumのSC_***とあわせること */
 	SC_CHASEWALK,
 /* 390- */
 	SC_REJECTSWORD,
-	-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,
+	SC_MOONLIT,
 	SC_MARIONETTE,
 	-1,
 	SC_HEADCRUSH,
@@ -964,7 +965,7 @@ int skill_get_unit_id(int id,int flag)
 	case WE_CALLPARTNER:	return 0xb2;				/* あなたに逢いたい */
 	case PA_GOSPEL:			return 0xb3;				/* ゴスペル */
 	case HP_BASILICA:		return 0xb4;				/* バジリカ */
-	case CG_MOONLIT:		return 0xb5;
+//	case CG_MOONLIT:		return 0xb5;
 	case PF_FOGWALL:		return 0xb6;				/* フォグウォ?ル */
 	case PF_SPIDERWEB:		return 0xb7;				/* スパイダ?ウェッブ */
 	// temporary unit ID's [Celest]
@@ -3265,6 +3266,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case PF_MEMORIZE:		/* メモライズ */
 	case PA_SACRIFICE:
 	case ASC_EDP:			// [Celest]
+	case CG_MOONLIT:		/* 月明りの泉に落ちる花びら */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		break;
@@ -3670,7 +3672,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case DC_DONTFORGETME:		/* 私を忘れないで… */
 	case DC_FORTUNEKISS:		/* 幸運のキス */
 	case DC_SERVICEFORYOU:		/* サ?ビスフォ?ユ? */
-	case CG_MOONLIT:			/* 月明りの泉に落ちる花びら */
+//	case CG_MOONLIT:			/* 月明りの泉に落ちる花びら */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
 		break;
@@ -5553,11 +5555,11 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		limit=skill_get_time(skillid,skilllv);
 		break;
 
-	case CG_MOONLIT:
+/*	case CG_MOONLIT:
 		range=1;
 		target=BCT_ALL;
 		limit=skill_get_time(skillid,skilllv);
-		break;
+		break;*/
 
 	case PF_FOGWALL:	/* フォグウォ?ル */
 		count=15;
@@ -5782,7 +5784,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		case DC_DONTFORGETME:	/* 私を忘れないで… */
 		case DC_FORTUNEKISS:	/* 幸運のキス */
 		case DC_SERVICEFORYOU:	/* サ?ビスフォ?ユ? */
-		case CG_MOONLIT:
+//		case CG_MOONLIT:
 			ux+=(i%7-3);
 			uy+=(i/7-3);
 			if(i==40)
@@ -6359,7 +6361,7 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 			}
 		}
 		break;
-	case 0xb5:
+//	case 0xb5:
 	case 0xb8:
 		{
 			struct block_list *target=map_id2bl(sg->val2);
@@ -8363,6 +8365,64 @@ int skill_frostjoke_scream(struct block_list *bl,va_list ap)
 
 	return 0;
 }
+/*==========================================
+ * Basilica creates a 'safe zone' [celest]
+ *------------------------------------------
+ */
+static int skill_basilica_count(struct block_list *bl,va_list ap)
+{
+	int *c;
+	struct skill_unit *unit;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, ap);
+	nullpo_retr(0, (unit=(struct skill_unit *)bl));
+	nullpo_retr(0, unit->group);
+
+	c=va_arg(ap,int *);
+
+	if(unit && unit->group->unit_id == 0xb4 && c)
+		(*c)++;
+	return 0;
+}
+
+int skill_check_basilica (struct block_list *bl, int dx, int dy)
+{
+	int c=0;
+	nullpo_retr(0, bl);
+	map_foreachinarea(skill_basilica_count,bl->m,
+			dx-1,dy-1,dx+1,dy+1,BL_SKILL,&c);
+	return (c>0);
+}
+/*==========================================
+ * Moonlit creates a 'safe zone' [celest]
+ *------------------------------------------
+ */
+static int skill_moonlit_count(struct block_list *bl,va_list ap)
+{
+	int *c, id;
+	struct map_session_data *sd;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, ap);
+	nullpo_retr(0, (sd=(struct map_session_data *)bl));
+
+	id=va_arg(ap,int);
+	c=va_arg(ap,int *);
+
+	if (sd->bl.id != id && sd->sc_count && sd->sc_data[SC_MOONLIT].timer != -1 && c)
+		(*c)++;
+	return 0;
+}
+
+int skill_check_moonlit (struct block_list *bl, int dx, int dy)
+{
+	int c=0;
+	nullpo_retr(0, bl);
+	map_foreachinarea(skill_moonlit_count,bl->m,
+			dx-1,dy-1,dx+1,dy+1,BL_PC,bl->id,&c);
+	return (c>0);
+}
 
 /*==========================================
  *アブラカダブラの使用スキル決定(決定スキルがダメなら0を返す)
@@ -9827,6 +9887,9 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_SERVICE4U:			/* サ?ビスフォ?ユ? */
 			calc_flag = 1;
 			break;
+		case SC_MOONLIT:
+			val2 = bl->id;
+			break;
 		case SC_DANCING:			/* ダンス/演奏中 */
 			calc_flag = 1;
 			val3= tick / 1000;
@@ -10189,15 +10252,6 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_SPEEDUP0:
 			calc_flag = 1;
 			break;
-
-/*		case SC_LEADERSHIP:
-		case SC_GLORYWOUNDS:
-		case SC_SOULCOLD:
-		case SC_HAWKEYES:
-			tick = 1000;
-			calc_flag = 1;
-			//val4 = 1;
-			break;*/
 
 		case SC_REGENERATION:
 			val1 = 2;

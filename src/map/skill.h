@@ -134,6 +134,8 @@ void skill_stop_dancing(struct block_list *src, int flag);
 int skill_castcancel(struct block_list *bl,int type);
 
 int skill_gangsterparadise(struct map_session_data *sd ,int type);
+int skill_check_basilica (struct block_list *bl, int dx, int dy);
+int skill_check_moonlit (struct block_list *bl, int dx, int dy);
 void skill_brandishspear_first(struct square *tc,int dir,int x,int y);
 void skill_brandishspear_dir(struct square *tc,int dir,int are);
 int skill_autospell(struct map_session_data *md,int skillid);
@@ -323,7 +325,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_SPIDERWEB		=180,		/* スパイダ?ウェッブ */
 	SC_MEMORIZE			=181,		/* メモライズ */
 	SC_DPOISON			=182,		/* 猛毒 */
-//	SC_EDP				=183,	// moved
+//	SC_EDP							// moved
 	SC_SACRIFICE		=184,		/* サクリファイス */
 	SC_WEDDING			=187,	//結婚用(結婚衣裳になって?くのが?いとか)
 	SC_NOCHAT			=188,	//赤エモ?態
@@ -339,33 +341,27 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_SLOWDOWN			=45, // for skill slowdown
 	SC_AUTOBERSERK		=46,
 	SC_SIGHTTRASHER		=73,
-//	SC_BASILICA			=125, // 125 is the same id as joint break
 	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]
 	SC_EDP				=114, /* エフェクトが判明したら移動 */
 	SC_MARIONETTE2		=122, // Marionette target
 	SC_ENSEMBLE			=159,
 	SC_FOGWALL			=178,
 	SC_GOSPEL			=179,
+	SC_MOONLIT			=183,
 	SC_ATKPOT			=185,	// [Valaris]
 	SC_MATKPOT			=186,	// [Valaris]
 	SC_MINDBREAKER		=191,
 	SC_SPELLBREAKER		=192,
 	SC_LANDPROTECTOR	=193,
-//	SC_DPOISON			=193, /* 猛毒 */
 	SC_BLOCKSKILL		=194, // for disallowing the use of a skill for a time period
 	SC_ADAPTATION		=195,
 	SC_CHASEWALK		=196,
-/*	SC_LEADERSHIP		=196, // temporarily disabled - they're too buggy =/
-	SC_GLORYWOUNDS		=197,
-	SC_SOULCOLD			=198,
-	SC_HAWKEYES			=199,*/
 	SC_BATTLEORDERS		=200,
 	SC_REGENERATION		=201,
 	SC_PRESERVE         =202,
 
 // [Celest]
-	SC_BLEEDING			= 124, // Temporarily same id as headcrush
-	SC_MOONLIT			=195,
+	SC_BLEEDING			= 124, // Temporarily same id as headcrush	
 	
 // -- testing various SC effects
 //	SC_AURABLADE			=81,

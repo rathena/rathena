@@ -1,4 +1,7 @@
 Date	Added
+12/26
+        * Added some code for Moonlit Petals and Basilica [celest]
+
 12/24
         * Added suggested fix when client disconnected [celest]
           - send "disconnected due to time gap" and close session when timed out

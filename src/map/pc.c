@@ -4175,7 +4175,10 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 			pc_walktoxy_sub(sd);
 			return 0;
 		}
-
+		if (skill_check_moonlit (&sd->bl,x+dx,y+dy)) {
+			pc_stop_walking(sd,1);
+			return 0;
+		}
 		moveblock = ( x/BLOCK_SIZE != (x+dx)/BLOCK_SIZE || y/BLOCK_SIZE != (y+dy)/BLOCK_SIZE);
 
 		sd->walktimer = 1;
@@ -4317,22 +4320,18 @@ int pc_walktoxy(struct map_session_data *sd,int x,int y)
 	if (sd->sc_data && sd->status.guild_id > 0) {
 		struct skill_unit *su;
 		struct skill_unit_group *sg;
-		//if (sd->sc_data[SC_LEADERSHIP].val4 && (su=(struct skill_unit *)sd->sc_data[SC_LEADERSHIP].val4)) {
 		if (sd->state.leadership_flag && (su=(struct skill_unit *)sd->state.leadership_flag) && 
 			(sg=su->group) && sg->src_id == sd->bl.id) {
 			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
 		}
-		//if (sd->sc_data[SC_GLORYWOUNDS].val4 && (su=(struct skill_unit *)sd->sc_data[SC_GLORYWOUNDS].val4)) {
 		if (sd->state.glorywounds_flag && (su=(struct skill_unit *)sd->state.glorywounds_flag) && 
 			(sg=su->group) && sg->src_id == sd->bl.id) {
 			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
 		}
-		//if (sd->sc_data[SC_SOULCOLD].val4 && (su=(struct skill_unit *)sd->sc_data[SC_SOULCOLD].val4)) {
 		if (sd->state.soulcold_flag && (su=(struct skill_unit *)sd->state.soulcold_flag) && 
 			(sg=su->group) && sg->src_id == sd->bl.id) {
 			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
 		}
-		//if (sd->sc_data[SC_HAWKEYES].val4 && (su=(struct skill_unit *)sd->sc_data[SC_HAWKEYES].val4)) {
 		if (sd->state.hawkeyes_flag && (su=(struct skill_unit *)sd->state.hawkeyes_flag) && 
 			(sg=su->group) && sg->src_id == sd->bl.id) {
 			skill_unit_move_unit_group(sg,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
