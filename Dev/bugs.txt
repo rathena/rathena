@@ -158,3 +158,28 @@ Progress:	0%
 Problem:	Storage BUGS! Items doubles/clones again any kinds of items! (due to "latest storage fix")
 Assigned:	N/A
 Progress:	0%
+
+Problem:	status.weapon can be 16... which causes the accesses outside
+	        the bounds of the array
+Assigned:	N/A
+Progress:	0%
+
+	battle.c:549:Bounds error: array reference (16) outside bounds of the array.
+	battle.c:549:  Pointer value: 0x1ceda808
+	battle.c:549:  Object `calloc':
+	battle.c:549:    Address in memory:    0x1ceda7c8 .. 0x1ceda807
+	battle.c:549:    Size:                 64 bytes
+	battle.c:549:    Element size:         4 bytes
+	battle.c:549:    Number of elements:   16
+	battle.c:549:    Created at:           malloc.c, line 23
+	battle.c:549:    Storage class:        heap
+	battle.c:3078:Bounds error: array reference (16) outside bounds of the array.
+	battle.c:3078:  Pointer value: 0x1ceda848
+	battle.c:3078:  Object `calloc':
+	battle.c:3078:    Address in memory:    0x1ceda808 .. 0x1ceda847
+	battle.c:3078:    Size:                 64 bytes
+	battle.c:3078:    Element size:         4 bytes
+	battle.c:3078:    Number of elements:   16
+	battle.c:3078:    Created at:           malloc.c, line 23
+	battle.c:3078:    Storage class:        heap
+		
