@@ -1,4 +1,6 @@
 Date	Added
+12/8
+	* Updated the readme a little. [Mass Zero]
 12/7
 	* Added GUILDCACHE #define to int_guild.c for testing performance
 	  effects [MouseJstr]

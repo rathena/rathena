@@ -30,6 +30,8 @@ Other Ppl
 
 Date		Added
 ======
+12/08
+	* Added translated shop names for the Extended Shop, I'unno who made it. o.O; [Mass Zero]
 12/07	
 	* Added npc/other/mc_cameri/heal.txt, a heal npc that is as simple as one click healing [MC Cameri]
 	* Fixed Al De Baran to Mjolnir warp in Al De Baran [MC Cameri]
