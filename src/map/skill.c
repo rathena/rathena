@@ -1238,7 +1238,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			break;
 	case LK_JOINTBEAT:				/* ジョイントビ?ト */
 		//?件が良く分からないので適?に
-		if( rand()%100 < (2*skilllv+10)*sc_def_vit/100 )
+		if( rand()%100 < (5*skilllv+5)*sc_def_vit/100 )
 			status_change_start(bl,SC_JOINTBEAT,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 	case PF_SPIDERWEB:		/* スパイダ?ウェッブ */

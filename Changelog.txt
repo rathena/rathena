@@ -1,5 +1,9 @@
 Date	Added
 
+02/03
+        * Fixed a mistake that was causing Ruwach to only work in PvP and PvM [celest]
+        * Added DracoRPG's code for Joint Beat effects, thanks! [celest]
+
 02/02
 	* Added checks to prevent some crashes in skill.c
 	  [Full credit to shinomori] [SVN 1022: Ajarn]

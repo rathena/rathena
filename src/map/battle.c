@@ -689,8 +689,13 @@ static struct Damage battle_calc_pet_weapon_attack(
 		if(cri < 1)
 			cri = 1;
 	}
-	if(t_sc_data != NULL && t_sc_data[SC_SLEEP].timer!=-1 )
-		cri <<=1;
+	if(t_sc_data) {
+		if (t_sc_data[SC_SLEEP].timer!=-1)
+			cri <<=1;
+		if(t_sc_data[SC_JOINTBEAT].timer != -1 &&
+			t_sc_data[SC_JOINTBEAT].val2 == 6) // Always take crits with Neck broken by Joint Beat [DracoRPG]
+			cri = 1000;
+	}
 
 	if(skill_num == 0 && battle_config.enemy_critical && (rand() % 1000) < cri)
 	{
@@ -1155,8 +1160,13 @@ static struct Damage battle_calc_mob_weapon_attack(
 		if(cri < 1)
 			cri = 1;
 	}
-	if(t_sc_data != NULL && t_sc_data[SC_SLEEP].timer!=-1 )	// 睡眠中はクリティカルが倍に
-		cri <<=1;
+	if(t_sc_data) {
+		if (t_sc_data[SC_SLEEP].timer!=-1 )	// 睡眠中はクリティカルが倍に
+			cri <<=1;
+		if(t_sc_data[SC_JOINTBEAT].timer != -1 &&
+			t_sc_data[SC_JOINTBEAT].val2 == 6) // Always take crits with Neck broken by Joint Beat [DracoRPG]
+			cri = 1000;
+	}
 
 	if(ac_flag) cri = 1000;
 
@@ -1767,8 +1777,13 @@ static struct Damage battle_calc_pc_weapon_attack(
 				// カタールの場合、クリティカルを倍に
 			cri <<=1;
 		cri -= status_get_luk(target) * 3;
-		if(t_sc_data != NULL && t_sc_data[SC_SLEEP].timer!=-1 )	// 睡眠中はクリティカルが倍に
-			cri <<=1;
+		if(t_sc_data) {
+			if (t_sc_data[SC_SLEEP].timer!=-1 )	// 睡眠中はクリティカルが倍に
+				cri <<=1;
+			if(t_sc_data[SC_JOINTBEAT].timer != -1 &&
+				t_sc_data[SC_JOINTBEAT].val2 == 6) // Always take crits with Neck broken by Joint Beat [DracoRPG]
+				cri = 1000;
+		}
 		if(ac_flag) cri = 1000;
 
 		if(skill_num == KN_AUTOCOUNTER) {

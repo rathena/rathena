@@ -1007,6 +1007,28 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		if(sd->sc_data[SC_BARRIER].timer!=-1)
 			sd->mdef = 100;
 
+		if(sd->sc_data[SC_JOINTBEAT].timer!=-1) { // Random break [DracoRPG]
+			switch(sd->sc_data[SC_JOINTBEAT].val2) {
+			case 1: //Ankle break
+				sd->speed_rate += 50;
+				break;
+			case 2:	//Wrist	break
+				sd->aspd_rate += 25;
+				break;
+			case 3:	//Knee break
+				sd->speed_rate += 30;
+				sd->aspd_rate += 10;
+				break;
+			case 4:	//Shoulder break
+				sd->def2 -= sd->def2*50/100;
+				break;
+			case 5:	//Waist	break
+				sd->def2 -= sd->def2*50/100;
+				sd->base_atk -= sd->base_atk*25/100;
+				break;
+			}
+		}
+
 		if(sd->sc_data[SC_GOSPEL].timer!=-1) {
 			if (sd->sc_data[SC_GOSPEL].val4 == BCT_PARTY){
 				switch (sd->sc_data[SC_GOSPEL].val3)
@@ -2023,6 +2045,12 @@ int status_get_def(struct block_list *bl)
 						sc_data[SC_GOSPEL].val3 == 5)
 						def = 0;
 				}
+				if(sc_data[SC_JOINTBEAT].timer!=-1) {
+					if (sc_data[SC_JOINTBEAT].val2 == 4)
+						def -= def*50/100;
+					else if (sc_data[SC_JOINTBEAT].val2 == 5)
+						def -= def*25/100;
+				}
 			}
 		}
 		//詠唱中は詠唱時減算率に基づいて減算
@@ -2194,6 +2222,12 @@ int status_get_speed(struct block_list *bl)
 				sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
 				sc_data[SC_GOSPEL].val3 == 8)
 				speed = speed*125/100;
+			if(sc_data[SC_JOINTBEAT].timer!=-1) {
+				if (sc_data[SC_JOINTBEAT].val2 == 1)
+					speed = speed*150/100;
+				else if (sc_data[SC_JOINTBEAT].val2 == 3)
+					speed = speed*130/100;				
+			}
 		}
 		if(speed < 1) speed = 1;
 		return speed;
@@ -2258,6 +2292,12 @@ int status_get_adelay(struct block_list *bl)
 				sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
 				sc_data[SC_GOSPEL].val3 == 8)
 				aspd_rate = aspd_rate*125/100;
+			if(sc_data[SC_JOINTBEAT].timer!=-1) {
+				if (sc_data[SC_JOINTBEAT].val2 == 2)
+					aspd_rate = aspd_rate*125/100;
+				else if (sc_data[SC_JOINTBEAT].val2 == 3)
+					aspd_rate = aspd_rate*110/100;
+			}
 		}
 		if(aspd_rate != 100)
 			adelay = adelay*aspd_rate/100;
@@ -3295,7 +3335,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_PARRYING:		/* パリイング */
 //		case SC_ASSUMPTIO:		/*  */
 		case SC_HEADCRUSH:		/* ヘッドクラッシュ */
-		case SC_JOINTBEAT:		/* ジョイントビ?ト */
+//		case SC_JOINTBEAT:		/* ジョイントビ?ト */
 //		case SC_MARIONETTE:		/* マリオネットコントロ?ル */
 
 			//とりあえず手?き
@@ -3329,6 +3369,12 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_WINDWALK:		/* ウインドウォ?ク */
 			calc_flag = 1;
 			val2 = (val1 / 2); //Flee上昇率
+			break;
+		
+		case SC_JOINTBEAT: // Random break [DracoRPG]
+			calc_flag = 1;
+			val2 = rand()%6 + 1;
+			if (val2 == 6) status_change_start(bl,SC_BLEEDING,val1,0,0,0,skill_get_time2(type,val1),0);
 			break;
 
 		case SC_BERSERK:		/* バ?サ?ク */
@@ -4549,15 +4595,14 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 		break;
 	case SC_RUWACH:	/* ルアフ */
 		if( (*status_get_option(bl))&6 ){
-			if(battle_check_target( src,bl, BCT_ENEMY ) > 0) {
-				struct status_change *sc_data = status_get_sc_data(bl);	// check whether the target is hiding/cloaking [celest]
-				if (sc_data && (sc_data[SC_HIDING].timer != -1 ||	// if the target is using a special hiding, i.e not using normal hiding/cloaking, don't bother
-					sc_data[SC_CLOAKING].timer != -1)) {
-					status_change_end( bl, SC_HIDING, -1);
-					status_change_end( bl, SC_CLOAKING, -1);
-					skill_attack(BF_MAGIC,src,src,bl,AL_RUWACH,sc_data[type].val1,tick,0);
-				}
+			struct status_change *sc_data = status_get_sc_data(bl);	// check whether the target is hiding/cloaking [celest]
+			if (sc_data && (sc_data[SC_HIDING].timer != -1 ||	// if the target is using a special hiding, i.e not using normal hiding/cloaking, don't bother
+				sc_data[SC_CLOAKING].timer != -1)) {
+				status_change_end( bl, SC_HIDING, -1);
+				status_change_end( bl, SC_CLOAKING, -1);
 			}
+			if(battle_check_target( src,bl, BCT_ENEMY ) > 0)
+				skill_attack(BF_MAGIC,src,src,bl,AL_RUWACH,sc_data[type].val1,tick,0);
 		}
 		break;
 	}
