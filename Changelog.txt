@@ -1,5 +1,7 @@
 Date	Added
 11/28
+	* Changed MSG_INFO color to bright white, since bright blue want so bright... [MC Cameri]
+	* Made Map Removed: %d string be displayed only if there were maps removed. [MC Cameri]
 	* Fixed online system for char not sending players left "online" to login when restarting [Wizputer]
 	* Fixed damage formula of Cart revolution: 150% +1% per 80ea [Lupus]
 	* Removed 2x Chance of Equipment Breaking during CRITICAL attacks [Lupus]

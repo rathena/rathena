@@ -39,10 +39,6 @@ Problem:	With 1025 client, some NPC sprites look different (i.e. Black Jack's NP
 Assigned:	N/A
 Progess:	0%
 
-Problem:	Thiefs can steal ZENY / items from TREASURE chests!!baaaah!! and Guardians! 
-Assigned:	N/A
-Progess:	0%
-
 Problem:	Joker card 4139 lets anyone to steal money / zeny. Just like he's a thief. It shoul;d be revised - success rates lowered and "steal item" disabled
 Assigned:	N/A
 Progess:	0%
@@ -65,7 +61,7 @@ Progess:	~100% (Notes: Maybe there's a less messy way? xP)
 
 Problem:	Char server and Map server crash when you recall some one.
 Assigned:	N/A
-Progess:	0%
+Progess:	0% 
 
 Problem:	Monk's Skill ROOT instantly reboots server
 Assigned:	Celest

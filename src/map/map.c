@@ -1656,9 +1656,13 @@ int map_readallmap(void) {
 	}
 
 	free(waterlist);
-	printf("\rMaps Loaded: %d %60s\n",map_num,"");
-	printf("\rMaps Removed: %d \n",maps_removed);
-
+	printf("\r");
+	snprintf(tmp_output,sizeof(tmp_output),"Maps Loaded: \033[1;29m%d\033[0;0m %50s\n",map_num,"");
+	ShowInfo(tmp_output);
+	if (maps_removed) {
+		snprintf(tmp_output,sizeof(tmp_output),"Maps Removed: %d\n",maps_removed);
+		ShowNotice(tmp_output);
+	}
 	return 0;
 }
 
