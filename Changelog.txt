@@ -1,5 +1,6 @@
 Date	Added
 11/23
+	* Fixed script loading small/large monsters. [Valaris]
 	* @charoption is now #option [MC Cameri]
 	* @charpetfriendly is now #petfriendly [MC Cameri]
 	* @charstats is now #stats [MC Cameri]

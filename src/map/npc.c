@@ -1925,6 +1925,15 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 	for(i=0;i<num;i++) {
 		md=(struct mob_data *)aCalloc(1,sizeof(struct mob_data));
 
+		if(class>4000) { // large/tiny mobs [Valaris]
+			md->size=2;
+			class-=4000;
+		}
+		else if(class>2000) {
+			md->size=1;
+			class-=2000;
+		}
+
 		md->bl.prev=NULL;
 		md->bl.next=NULL;
 		md->bl.m=m;
