@@ -875,7 +875,10 @@ OnStart:
 	if($@KntUsers > 0) end;
 
 	if ((getwaitingroomstate(33)) == 0) end;			// stops the rest of the script from running if there is no one in the waiting room;
-	killmonsterall "job_knt.gat";			//kills off any left over monsters from other testers
+	//kills off any left over monsters from other testers
+	killmonster "job_knt.gat", "KntLvl1::OnMyMobDead";
+	killmonster "job_knt.gat", "KntLvl2::OnMyMobDead";
+	killmonster "job_knt.gat", "KntLvl3::OnMyMobDead";
 	warpwaitingpc "job_knt.gat",43,146;
 	donpcevent "KntLvl1";
 	end;
@@ -884,7 +887,6 @@ OnStart:
 // First Level ---------------------------------------------------------
 job_knt.gat,1,1,1	script	KntLvl1	-1,
 {
-	disablenpc "Warp1";
 	set $@KntRm, 1;
 	set $@KntMob,12;
 	monster "job_knt.gat",39,150,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
@@ -1015,7 +1017,9 @@ OnTimer184000:
 	if($@KntRm==2) areawarp "job_knt.gat", 24, 32, 63, 71, "prt_in.gat",77,96;
 	if($@KntRm==3) areawarp "job_knt.gat", 124, 132, 163, 171, "prt_in.gat",77,96;
 	areaannounce "job_knt.gat", 82, 98, 97, 113, "[Sir Windsor]: The testing rooms are now open.....",8;
-	killmonsterall "job_knt.gat";
+	killmonster "job_knt.gat", "KntLvl1::OnMyMobDead";
+	killmonster "job_knt.gat", "KntLvl2::OnMyMobDead";
+	killmonster "job_knt.gat", "KntLvl3::OnMyMobDead";
 	donpcevent "SW2::OnStart";
 	end;
 

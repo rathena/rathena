@@ -30,6 +30,8 @@ Other Ppl
 
 Date		Added
 ======
+11/05
+	* Added easter and xmas event npcs.  Added custom blackjack npc.
 11/02
 	* Added unofficial nguild castles.  Updated stats for Stone Shooter, Wooden Golem, Hyegun,
 	  Civil Servant, Dancing Dragon, Baby Garm, and Increase Soil mobs in mob db.  Drops are still
@@ -38,8 +40,8 @@ Date		Added
 	* Set Comodo Kafra to warp to Umbala (11/2/04 patch) [Aria]
 10/31
 	* Fixed Dev NPCs giving off errors... [Aria]
-	* Fixed prob. with duplicating mobs in wizard.txt.  Corrected some item names in sage.txt.  Corrected mode values
-	  for hornet, wolf, baby desert wolf, and peco peco in mob db.[kobra_k88]
+	* Fixed prob. with duplicating mobs in wizard.txt.  Corrected some item names in sage.txt.
+	  Corrected mode values for hornet, wolf, baby desert wolf, and peco peco in mob db.[kobra_k88]
 10/30
 	* Commented out unfinished Dev NPCs and added npc line to map_athena.conf [Aria]
 10/29
@@ -48,9 +50,8 @@ Date		Added
 	* Re-organized mob scripts.[kobra_k88]
 	* Updated mob placements with info from emperium.org.[Lupus]
 	* Fixed Aldebaran (gatekeeper conditions bugs and wrong Key ID). Fixed some typos in other cities [Lupus]
-	* assassin.txt, rogue.txt: added clothes dye reset before job change since
-	  thiefs with custom dyes were getting errors upon job change.
-	  updated towns.txt and nopenatly.txt mapflags.[kobra_k88]
+	* assassin.txt, rogue.txt: added clothes dye reset before job change since thiefs with custom dyes
+	  were getting errors upon job change. Updated towns.txt and nopenatly.txt mapflags.[kobra_k88]
 10/26
 	* Added more quotes -_- [Aria]
 	* Fixed Mouse's devnpc only saying his quotes once per server reset [Aria]
