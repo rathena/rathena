@@ -819,7 +819,7 @@ int	skill_get_inf2( int id ){
 }
 int	skill_get_castcancel( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
-	return skill_db[id].maxcount;
+	return skill_db[id].castcancel;
 }
 int	skill_get_maxcount( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
@@ -4613,6 +4613,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 						pc_setpos(dstsd, sd->mapname, sd->bl.x+dx[j], sd->bl.y+dy[j], 2);
 					}
 				}
+				skill_status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,300000,0 );
 			}
 		}
 		break;

@@ -363,8 +363,8 @@ L_WeddingSystem:
 L_Marry:
 	mes "[Marry Happy]";
 	mes "If you wish to get married you must first register.";
-	mes "Male is ^FF00FF@costgroomA^000000 zeny and female is ^FF00FF@costbrideA^000000 zeny";
-	if((countitem(2338) > 0) || (countitem(7170) > 0) || (@outfit == 1)) mes "But only ^FF00FF@costgroomB^000000 zeny for male and ^FF00FF@costbrideB^000000 zeny for female if you already have registered before";
+	mes "Male is ^FF00FF" + @costgroomA + "^000000 zeny and female is ^FF00FF" + @costbrideA + "^000000 zeny";
+	if((countitem(2338) > 0) || (countitem(7170) > 0) || (@outfit == 1)) mes "But only ^FF00FF" + @costgroomB + "^000000 zeny for male and ^FF00FF" + @costbrideB + "^000000 zeny for female if you already have registered before";
 	mes "Both male and female must have registered,";
 	mes "and both must have paid fees, have Diamond Rings and be on same party!";
 	mes "The Bride will get a Wedding Dress, while the Groom will get a Chinese Tuxedo";
@@ -383,7 +383,7 @@ L_Marry:
 	mes "[Marry Happy]";
 	if(sex == 1) mes "No problem sir, please fill out your name here.";
 	if(sex == 0) mes "No problem miss, please fill out your name here.";
-	mes "And I'll need to collect a @costgroomA zeny fee for your wedding fees and outfit.";
+	mes "And I'll need to collect a " + @costgroomA + " zeny fee for your wedding fees and outfit.";
 	next;
 	mes "[Marry Happy]";
 	mes "Now You Must Insert The Your Bride's Name";

@@ -8,6 +8,8 @@ Date	Added
             (Iron Ore/Iron/Steel/Rough Oridecon)
           - Fixed sp recovery problem, thanks to OutSider for pointing it out
           - Updated Tiger Knuckle Fist stun time
+          - Added cooldown time for Emergency Recall
+          - Fixed typo in skill.c, thanks to Toster
 
 11/29
 	* Fixed crash in src/char_sql/char.c when setting chars offline [MouseJstr]
