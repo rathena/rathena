@@ -7,18 +7,9 @@ Problem:	Stats nor skills don't downgrade when your level gets reverted due to e
 Assigned:	N/A
 Progess:	0%
 
-Problem:	You can hit yourself with your own spider web.
-Assigned:	N/A
-Progess:	90% - should be fixed, but please test!
-
 Problem:	Pre skill requirements for new skills are wrong it makes you use 49 skills points before you can get the newer skills.
 Assigned:	Celest
 Progess:	~90% (Notes: not sure if it causes problems, need more testing =p)
-
-Problem:	Monster hp view only shows but does not go down with a hit.
-Assigned:	Celest
-Progess:	100% (Yep... would be better to use party hp view)
-Note:		Could it be fixed using the party hp view?
 
 Problem:	When u spawn ~300 mobs (and more or less) then do @killmonster then some mobs freeze on the screen (have no names, don't move, etc)
 Assigned:	N/A
@@ -35,7 +26,9 @@ Progress:	0%
 
 Problem:	MVP cast spells w/o showing "prepare cast line"
 Assigned:	N/A
-Progress:	0%
+Progress:	jA's mob skill DB itself already has skills that have no cast time,
+                does the same problem happen in jA? Perhaps it should read right from
+                skill_cast_db instead? [celest]
 
 Problem:	~40+ players connected.. and soon can't re-connect, they can enter password, but never see "select character" screen.
 Assigned:	MouseJstr
@@ -71,22 +64,6 @@ Progress:       0%
                 1002,1039,1 // makes a poring a big bapho  
                 1002,1039,2 // makes a poring a small bapho
                 effect id or something
-
-Problem:	The last line of NPC files isn't read, or is mis-handled
-Assigned:	N/A
-Progress:	0%
-Note:		An example of this would be to make the last line of your NPC you right curly bracket - the } - and then try to run the server with that NPC - the map server will whine about it.
-
-Problem:	Berserk disallows you to talk and never turns off
-Assigned:	N/A
-Progress:	0%
-Notes:          Doesn't it stop when you have only 100 hp left? [Celest]
-
-Problem:	Auto Berserk doesn't automatically start when you get < 25% HP
-Assigned:	N/A
-Progress:	-
-Notes:          It works differently now, you have to use it once to *allow* it to
-                activate, and once again to stop it from activating. ^^; [Celest]
 
 Problem:	Due to the Guilds CACHE we see some went-offline members as online ones. It is very confusing. You don't know who's really on.
 Assigned:	MouseJstr
@@ -212,17 +189,13 @@ Progress:	0%
 Problem:	Older Clients are unable to log into the server, period. 
 		Even if the packet_db is set to use the older clients, they still are unable to connect.
 Assigned:	Celest
-Progress:	0%
-Notes:          I *still* need to know which version is the client, because problem is,
-                I did not make major changes to client detecting in clif.c so i can't
-                find out where went wrong yet, and all exes (0906-0110... not 12xx of
-                course however) in my laptop can login ^^;
-                It would be even better if you could send me the client in question so
-                i can test it.
+Progress:	~100%
+Notes:          Fixed. A typo caused the code to block packet version 5 clients
 
 Problem:	Fire Pillar doesn't consume GEMS!
 Assigned:	N/A
-Progress:	0%
+Progress:	N/A
+Notes:          It isn't supposed to for level 1-5 ^^ [Celest]
 
 Problem:	Friends List doesn't save / load again. It used to work 2 months ago.
 		Let's use Freya's Friends solution (faster, better)
@@ -272,8 +245,8 @@ Progress:	0%
 
 Problem:	New Guilds Active Skills Abuse. You call 1st skill, then call 2nd and NOW, without dalay of 30 min (or whatever)
 		you can AGAIN call the 1st skill... So there's no time limit... etc.
-Assigned:	N/A
-Progress:	0%
+Assigned:	Celest
+Progress:	100% - Fixed
 
 Problem:	Wedding TELEPORT skills now work on maps where TELEPORT was disabled
 Assigned:	N/A

@@ -1,6 +1,8 @@
 Date	Added
 
 02/15
+        * Allow Potion Pitcher to be able to cast on yourself -- i've almost forgot
+          about this, thanks to Filougarou and Poki#3 for the fix ^^; [celest]
         * Added Wallex's changes for weapon skills to read list_num from the skill_db
           when calculating damage [celest]
 	* Login / Login SQL: Fixed the EXE-Version check (now it works finally :) [Sirius]

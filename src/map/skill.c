@@ -3983,10 +3983,6 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct block_list tbl;
 			int i,x,hp = 0,sp = 0;
 			if(sd) {
-				if(sd==dstsd) {	// cancel use on oneself
-					map_freeblock_unlock();
-					return 1;
-				}
 				x = skilllv%11 - 1;
 				i = pc_search_inventory(sd,skill_db[skillid].itemid[x]);
 				if(i < 0 || skill_db[skillid].itemid[x] <= 0) {
