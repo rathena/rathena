@@ -223,23 +223,6 @@ int isGM(int account_id) {
 	return level;
 }
 
-//-----------------------------------------------------
-// Function to suppress control characters in a string.
-//-----------------------------------------------------
-int remove_control_chars(unsigned char *str) {
-	int i;
-	int change = 0;
-
-	for(i = 0; str[i]; i++) {
-		if (str[i] < 32) {
-			str[i] = '_';
-			change = 1;
-		}
-	}
-
-	return change;
-}
-
 //---------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
 //---------------------------------------------------

@@ -7,4 +7,7 @@
 char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt,char* spt);
 int jmemescapecpy (char* pt,char* spt, int size);
+
+// custom functions
+int remove_control_chars(unsigned char *);
 #endif

@@ -15,6 +15,7 @@ void Gettimeofday(struct timeval *timenow)
 	return;
 }
 #define gettimeofday(timenow, dummy) Gettimeofday(timenow)
+#define in_addr_t unsigned long
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -43,6 +44,7 @@ void Gettimeofday(struct timeval *timenow)
 #include "../common/lock.h"
 #include "../common/malloc.h"
 #include "../common/buffer.h"
+#include "../common/strlib.h"
 
 #ifdef PASSWORDENC
 #include "md5calc.h"
@@ -434,23 +436,6 @@ int check_ladminip(unsigned int ip) {
 	}
 
 	return 0;
-}
-
-//-----------------------------------------------------
-// Function to suppress control characters in a string.
-//-----------------------------------------------------
-int remove_control_chars(char *str) {
-	int i;
-	int change = 0;
-
-	for(i = 0; str[i]; i++) {
-		if (str[i] < 32) {
-			str[i] = '_';
-			change = 1;
-		}
-	}
-
-	return change;
 }
 
 //---------------------------------------------------

@@ -1,6 +1,18 @@
 Date	Added
 
 02/17
+        * Readded Chemical Protection -- i forgot to check for it when changing some
+          jA stuff earlier, sorry ^^; [celest]
+        * Removed some old eA code that was causing Frost Nova to do an extra hit
+          [celest]
+        * Corrected Vulcan Arrow's hits in skill_db -- the bug appeared when the
+          correct numbers hardcoded were removed [celest]
+        * Readded zlib and zconf .h files to under /lib for compiling in Windows,
+          thanks to Ser [celest]
+        * Fixed some compile errors in Windows, thanks to Ser [celest]
+        * Changed remove_control_characters back to supporting korean chars [celest]
+        * Moved some other code around [celest]
+
         * Added Shinomori's changes to Dissonance -- don't increment the timer again
           if the target has died [celest]
         * Changed some nullpo checks back to normal null checks -- in some situations

@@ -33,7 +33,7 @@
 
 #ifdef _WIN32
 	#include <windows.h>
-	#include "zlib_win32.h"
+	#include "../lib/zlib_win32.h"
 	HINSTANCE zlib_dll;
 	#define zlib_inflateInit(strm) zlib_inflateInit_((strm),ZLIB_VERSION, sizeof(z_stream))
 	#define zlib_deflateInit(strm, level) zlib_deflateInit_((strm),(level),ZLIB_VERSION,sizeof(z_stream))

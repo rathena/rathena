@@ -18,7 +18,6 @@
 #include <netdb.h>
 #endif
 
-#include "../common/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <netinet/in.h>
@@ -34,6 +33,7 @@
 #include <stdarg.h>
 
 #include "char.h"
+#include "../common/utils.h"
 #include "../common/strlib.h"
 #include "itemdb.h"
 #include "inter.h"
@@ -230,23 +230,6 @@ void set_char_offline(int char_id, int account_id) {
    WFIFOW(login_fd,0) = 0x272c;
    WFIFOL(login_fd,2) = account_id;
    WFIFOSET(login_fd,6);
-}
-
-//-----------------------------------------------------
-// Function to suppress control characters in a string.
-//-----------------------------------------------------
-int remove_control_chars(char *str) {
-	int i;
-	int change = 0;
-
-	for(i = 0; i < strlen(str); i++) {
-		if (str[i] < 32) {
-			str[i] = '_';
-			change = 1;
-		}
-	}
-
-	return change;
 }
 
 //----------------------------------------------------------------------

@@ -78,3 +78,21 @@ int jmemescapecpy (char* pt,char* spt, int size) {
 	// copy size is 0 ~ (j-1)
 	return j;
 }
+
+//-----------------------------------------------------
+// Function to suppress control characters in a string.
+//-----------------------------------------------------
+//int remove_control_chars(char *str) {
+int remove_control_chars(unsigned char *str) {
+	int i;
+	int change = 0;
+
+	for(i = 0; str[i]; i++) {
+		if (str[i] < 32) {
+			str[i] = '_';
+			change = 1;
+		}
+	}
+
+	return change;
+}

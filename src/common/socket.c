@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <winsock2.h>
 #include <io.h>
+typedef int socklen_t;
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
