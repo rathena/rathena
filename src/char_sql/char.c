@@ -201,10 +201,12 @@ void set_char_offline(int char_id, int account_id) {
 	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error (set_char_offline)- %s\n", mysql_error(&mysql_handle));
 
+   if (login_fd <= 0 || session[login_fd]->eof)
+	return;
+
    WFIFOW(login_fd,0) = 0x272c;
    WFIFOL(login_fd,2) = account_id;
    WFIFOSET(login_fd,6);
-
 }       
 
 //-----------------------------------------------------
@@ -2048,12 +2050,13 @@ int parse_char(int fd) {
 
 	sd = session[fd]->session_data;
 	
-    if(login_fd < 0)
+        if(login_fd < 0)
 		session[fd]->eof = 1;
 	if(session[fd]->eof) {
 		if (fd == login_fd)
 			login_fd = -1;
-		set_char_offline(99,sd->account_id);
+		if (sd != NULL)
+			set_char_offline(99,sd->account_id);
 		close(fd);
 		delete_session(fd);
 		return 0;
