@@ -107,9 +107,7 @@ Problem:        Chars with ' in their name.. is legal.. and messes up sql
 Assigned:       N/A
 Progress:       0%
 
-   DB server Error - You have an error in your SQL syntax; check the manual that co
-   rresponds to your MySQL server version for the right syntax to use near 'n' Sniff')' at line 1
-    Scratch 'n' Sniff
+	DB server Error - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'n' Sniff')' at line 1    Scratch 'n' Sniff
 
 Problem:        Spiral Pierce can cause loss of Skill Points
 Assigned:       N/A
@@ -117,12 +115,17 @@ Progress:       0%
 
     If you have a skill but due to a job change (or admin update), the
     skill tree changes and you no longer can get to that skill, you
-    will loose the skill points if you log out/in
+    will loose the skill points if you log out/i
 
     The easiest way to reproduce this problem is become a Peco Lord
     Knight, get spiral pierce, get off the peco, log off, log in, and
     get back on the peco.  You will not have Spiral Pierce anymore and
     you will have lost the skill points
 
- blacksmith hammerfall on the new_1-1.gat's bridge crashes server
- hunter spamming traps crashes server
+Problem:	blacksmith hammerfall on the new_1-1.gat's bridge crashes server
+Assigned:       N/A
+Progress:       0%
+
+Problem:	hunter spamming traps crashes server
+Assigned:       N/A
+Progress:       0%
