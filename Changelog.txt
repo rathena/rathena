@@ -1,6 +1,9 @@
 Date	Added
 
 01/26
+	* Removed WATER.TXT (this file wasn't used at all. There's no such mapflag as WATER even). [Lupus]
+	* Added Water Height of New Yuno Fileds 9 and 11.
+	  Now Water Ball works there as should. Wizards could levelup on sleepers, too. [Lupus]
         * libGC isn't ready to be the default quite yet... [MouseJstr]
         
           Enough people have asked so... Once you grab a copy of the

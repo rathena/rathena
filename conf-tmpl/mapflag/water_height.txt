@@ -66,3 +66,5 @@ gefg_cas05.gat	5
 prtg_cas05.gat	13
 tur_dun01.gat	-65
 ama_fild01.gat	5
+yuno_fild09.gat	10
+yuno_fild11.gat	-19
