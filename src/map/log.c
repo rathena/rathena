@@ -340,6 +340,34 @@ int log_atcommand(struct map_session_data *sd, const char *message)
 	return 0;
 }
 
+int log_npc(struct map_session_data *sd, const char *message)
+{	//[Lupus]
+	FILE *logfp;
+	if(log_config.enable_logs <= 0)
+		return 0;
+	nullpo_retr(0, sd);
+	#ifndef TXT_ONLY
+	if(log_config.sql_logs > 0)
+	{
+		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES(NOW(), '%d', '%d', '%s', '%s', '%s') ", log_config.log_npc_db, sd->status.account_id, sd->status.char_id, sd->status.name, sd->mapname, message);
+		if(mysql_query(&mmysql_handle, tmp_sql))
+			printf("DB server Error - %s\n",mysql_error(&mmysql_handle));
+	} else {
+	#endif
+		if((logfp=fopen(log_config.log_npc,"a+")) != NULL) {
+			char timestring[255];
+			time_t curtime;
+			time(&curtime);
+			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+			fprintf(logfp,"%s - %s[%d]: %s%s",timestring,sd->status.name,sd->status.account_id,message,RETCODE);
+			fclose(logfp);
+		}
+	#ifndef TXT_ONLY
+	}
+	#endif
+	return 0;
+}
+
 int log_config_read(char *cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
@@ -385,6 +413,8 @@ int log_config_read(char *cfgName)
 					log_config.zeny = (atoi(w2));
 			} else if(strcmpi(w1,"log_gm") == 0) {
 				log_config.gm = (atoi(w2));
+			} else if(strcmpi(w1,"log_npc") == 0) {
+				log_config.npc = (atoi(w2));
 			}
 
 			else if(strcmpi(w1, "log_branch_db") == 0) {
@@ -428,6 +458,10 @@ int log_config_read(char *cfgName)
 				strcpy(log_config.log_gm_db, w2);
 				if(log_config.gm > 0)
 					printf("Logging GM Level %d Commands to table `%s`\n", log_config.gm, w2);
+			} else if(strcmpi(w1, "log_npc_db") == 0) {
+				strcpy(log_config.log_npc_db, w2);
+				if(log_config.npc > 0)
+					printf("Logging NPC 'logmes' to table `%s`\n", w2);
 			}
 
 			else if(strcmpi(w1, "log_branch") == 0) {
@@ -471,6 +505,10 @@ int log_config_read(char *cfgName)
 				strcpy(log_config.log_gm, w2);
 				if(log_config.gm > 0)
 					printf("Logging GM Level %d Commands to file `%s`.txt\n", log_config.gm, w2);
+			} else if(strcmpi(w1, "log_npc") == 0) {
+				strcpy(log_config.log_npc, w2);
+				if(log_config.npc > 0)
+					printf("Logging NPC 'logmes' to file `%s`.txt\n", w2);
 			//support the import command, just like any other config
 			} else if(strcmpi(w1,"import")==0){
 				log_config_read(w2);

@@ -295,6 +295,7 @@ int buildin_checkoption2(struct script_state *st); // [celest]
 int buildin_guildgetexp(struct script_state *st); // [celest]
 int buildin_skilluseid(struct script_state *st); // originally by Qamera [celest]
 int buildin_skillusepos(struct script_state *st); // originally by Qamera [celest]
+int buildin_logmes(struct script_state *st); // [Lupus]
 
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
@@ -511,6 +512,7 @@ struct {
 	{buildin_skilluseid,"skilluseid","ii"}, // originally by Qamera [Celest]
 	{buildin_skilluseid,"doskill","ii"}, // since a lot of scripts would already use 'doskill'...
 	{buildin_skillusepos,"skillusepos","iiii"}, // [Celest]
+	{buildin_logmes,"logmes","s"}, //this command actls as MES but prints info into LOG file either SQL/TXT [Lupus]
 	{NULL,NULL,NULL},
 };
 int buildin_message(struct script_state *st); // [MouseJstr]
@@ -6345,6 +6347,18 @@ int buildin_skillusepos(struct script_state *st)
    skill_use_pos(sd,x,y,skid,sklv);
 
    return 0;
+}
+
+/*==========================================
+ * Allows player to write NPC logs (i.e. Bank NPC, etc) [Lupus]
+ *------------------------------------------
+ */
+int buildin_logmes(struct script_state *st)
+{
+	if (log_config.npc <= 0 ) return 0;
+	conv_str(st,& (st->stack->stack_data[st->start+2]));
+	log_npc(script_rid2sd(st),st->stack->stack_data[st->start+2].u.str);
+	return 0;
 }
 
 //

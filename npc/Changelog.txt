@@ -21,8 +21,6 @@ Shinigami
 Mass Zero
 	* Novice Training Ground.
 	* (Probably unofficial) Lou Yang NPC's, mobs, etc...
-Shadowlady
-	* Marriage (Fix, optimization) ?%
 
 MC Cameri
 	* Bank NPC - Now 100% done for new payon
@@ -36,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+12/23
+	* Added logs into kafra_bank.txt (it keeps logs of all bank operations! Very handy to find abusers/cheaters) [Lupus]
+
 12/22
 	* Added Arrow Quivers to the scrolls_arrows.txt and removed some rare arrows from the shop [Lupus]
 	* Corrected a typo in other/pvp.txt [Ajarn]
