@@ -2303,7 +2303,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 			sp = tsd->status.max_sp * 10 * skilllv / 100;
 			if (sp > tsd->status.sp) sp = tsd->status.sp;
 			tsd->status.sp -= sp;
-			pc_heal(sd,0,-sp);
+			pc_heal(tsd,0,-sp);
 		}
 		break;
 	case NPC_DARKBREATH:
