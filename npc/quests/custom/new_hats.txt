@@ -1,13 +1,19 @@
 //===== eAthena Script =======================================
-//= The 32 New Hats
+//= The 32 New Hats (custom)
 //===== By: ==================================================
 //= Darkchild
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
-//= 4 brothers give you quests to get 32 new hats
+//=
+//= Don't use these NPC, there are separate quests for these
+//= items in quests/newgear/ folder
+//=
+//= And some of these items have made-up ingredients
+//= 	4 brothers give you quests to get 32 new hats
+//=
 //===== Additional Comments: =================================
 //= There are 2 scripts for these 32 'new' hats.
 //= The other one doesnt have all the new ones and has some old ones
@@ -17,6 +23,7 @@
 //= 1.4 fixed amount of Fish Tail (300 -> 30), Zeny bugs in Ear of Angel,
 //=     Ear of Demon,Big Golden Bell, Mistress Crown,
 //=     Crown of The Ancient Queen, Indian Headband, Orc Hero Helm [Lupus]
+//= 1.5 Fixed Posture Fix Hat (Campus Hat).
 //============================================================
 prontera.gat,140,172,5	script	Zac	704,{
 	mes "[Zac]";
@@ -25,21 +32,21 @@ prontera.gat,140,172,5	script	Zac	704,{
 	mes "I provide 8 hats and my brothers provides the other 24.";
 	mes "What hat do you want me to make?";
 	next;
-	menu "Attitude Campus Hat",L1_1,"Fox Mask",L1_2,"X Cross Hairpin",L1_3,"Flower Hair Pin",L1_4,"Tulip Hair Pin",L1_5,"Mushroom Hairband",L1_6,"Troublesome Raccoon Doll",L1_7,"Blue Fish",L1_8;
+	menu "Posture Fix Hat",L1_1,"Fox Mask",L1_2,"X Cross Hairpin",L1_3,"Flower Hair Pin",L1_4,"Tulip Hair Pin",L1_5,"Mushroom Hairband",L1_6,"Troublesome Raccoon Doll",L1_7,"Blue Fish",L1_8;
 	L1_1:
 			mes "[Zac]";
 			mes "Let me check the items you have brought here.";
 			next;
-			if((countitem(2285)<1) && (countitem(1550)<1)) goto L_ITEM_1;//Items: Apple o' Archer, Book,
+			if((countitem(2285)<1) || (countitem(1550)<1)) goto L_ITEM_1;//Items: Apple o' Archer, Book,
 			mes "[Zac]";
 			mes "Wow!! Well done! Finally you have gathered all items needed!";
-			mes "We will make the Attitude Campus Hat for you right away.";
+			mes "We will make the Posture Fix Hat for you right away.";
 			mes "Please Wait a Moment.";
    			next;
 			delitem 2285,1;//Items: Apple o' Archer,
 			delitem 1550,1;//Items: Book,
 			mes "[Zac]";
-			mes "Tah Dah!!!^FF0000Attitude Campus Hat^000000...! Please Take it!";
+			mes "Tah Dah!!!^FF0000Posture Fix Hat^000000...! Please Take it!";
 			getitem 5073,1;//Items: Campus Hat,
 			next;
 			mes "[Zac]";
@@ -54,7 +61,7 @@ prontera.gat,140,172,5	script	Zac	704,{
 			mes "about this?";
 			next;
 			mes "[Zac]";
-			mes "Attitude Campus Hat requires~~";
+			mes "Posture Fix Hat requires~~";
 			next;
 			mes "[Zac]";
 			mes "1 Apple o' Archer";
