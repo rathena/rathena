@@ -6,7 +6,7 @@
 //= converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.3b
+//= 1.3c
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= v1.3 Rollback from the wrong Kashy's fix
 //= v1.3a Fixed issue with duplicating monsters thx to Bison.[kobra_k88]
 //= v1.3b changed one Horong to Frilldora (now 3rd room contains 1 agressive mob.)
+//= v1.3c more simplified fire room - removed agressive Desert Wolf. Got it from Freya [Lupus]
 //============================================================ 
 
 
@@ -1293,7 +1294,7 @@ OnMyMobDead2:
 // Room of Fire ------------------------------------------------------------------------------------------------------------
 job_wiz.gat,1,1,1	script	FireRm	-1,{
 	set $@WzRm, 3;
-	set $@WzMOB, 8;
+	set $@WzMOB, 7;
 	monster "job_wiz.gat",58,110,"Zerom",1178,1,"FireRm::OnMyMobDead1";
 	monster "job_wiz.gat",33,110,"Flail Goblin",1123,1,"FireRm::OnMyMobDead1";
 	monster "job_wiz.gat",40,103,"Scorpion",1001,1,"FireRm::OnMyMobDead1";
@@ -1301,7 +1302,6 @@ job_wiz.gat,1,1,1	script	FireRm	-1,{
 	monster "job_wiz.gat",40,92,"Peco Peco",1019,1,"FireRm::OnMyMobDead1";
 	monster "job_wiz.gat",51,92,"Elder Willow",1033,1,"FireRm::OnMyMobDead1";
 	monster "job_wiz.gat",37,89,"Metaller",1058,1,"FireRm::OnMyMobDead1";
-	monster "job_wiz.gat",54,89,"Desert Wolf",1106,1,"FireRm::OnMyMobDead1";
 	initnpctimer "TimerWz";
 	end;
 
@@ -1318,8 +1318,8 @@ OnTimer2000:
 	set $@WzMOB, 3;
 	areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: You now must defeat the door gaurds! Hurry!.",8;
 	monster "job_wiz.gat",44,99,"Greatest General",1277,1,"FireRm::OnMyMobDead2";
-	monster "job_wiz.gat",43,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
-	monster "job_wiz.gat",45,99,"Frilldora",1119,1,"FireRm::OnMyMobDead2";
+	monster "job_wiz.gat",43,99,"Hode",1127,1,"FireRm::OnMyMobDead2";
+	monster "job_wiz.gat",45,99,"Hode",1127,1,"FireRm::OnMyMobDead2";
 	setnpctimer 120000, "TimerWz";
 	startnpctimer "TimerWz";
 	end;

@@ -234,11 +234,6 @@ Problem:	If a char has been saved with non-existing map name
 Assigned:	N/A
 Progress:	0%
 
-Problem:	@autoloot is screwed. It brings only ONE item. If a mob drops more,
-		the rest items just disappear w/o traces
-Assigned:	N/A
-Progress:	0%
-
 Problem:	[item exploit] Trade Window + Blacksmith's/Alchemyst's MAKE skills -> item exploit
 Assigned:	N/A
 Progress:	0%
@@ -294,5 +289,35 @@ Problem:	[script.c] script command DOEVENT now doesn't work...
 		so Knight JOB Quest is unpassable now, Monks Job Quest is too easy (traps don't work)
 		probably more bugs...
 		I (Lupus) have script-wise solution. But it isn't good! 8((( DOEVENT used to work fine!
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Compilers Bug: Some skills don't work under win32 builds
+		e.g. HIDE, CLOACKING, etc (both MOB's and PC's skills)
+		e.g. Whispers can't cloak... Players can't Hide, etc
+		LINUX builds work fine (or maybe 116x fukked them up...)
+		oh yeah, Celest mentoned it
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Rogues Skill "back stab" works without PREPARING arrows.
+		It consumes arrows, but works even when them aren't prepered (equipped)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Party EXP share bug
+		When one member enter, re-enter the server sometimes it happens you
+		can share EXP with memebers of ANY LEVEL.
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Skill Delays Bug (Hunters)
+		When you use a skill then Equip Another kind of arrows,
+		you can immediately cast another SKILL. (Bind skills on hot keys and... u get a killing machine)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Scripts prob
+		We can't use jA's new commands: FOR, WHILE, ELSE, etc
 Assigned:	N/A
 Progress:	0%
