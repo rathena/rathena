@@ -376,7 +376,7 @@ struct npc_data {
 			char *script;
 			short xs,ys;
 			int guild_id;
-			int timer,timerid,timeramount,nexttimer;
+			int timer,timerid,timeramount,nexttimer,timerrid;
 			unsigned int timertick;
 			struct npc_timerevent_list *timer_event;
 			int label_list_num;

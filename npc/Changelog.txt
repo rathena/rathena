@@ -34,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+01/10
+        * Fixed some typos and exploits in the Blacksmith and Hunter job quest,
+          thanks to Riotblade and nonox
 01/09/05
 	* Modified guild war scripts to fix a bug for duplicate guild storages. [Codemaster & Ajarn]
 8/1

@@ -193,6 +193,8 @@ int buildin_stopnpctimer(struct script_state *st);
 int buildin_startnpctimer(struct script_state *st);
 int buildin_setnpctimer(struct script_state *st);
 int buildin_getnpctimer(struct script_state *st);
+int buildin_attachnpctimer(struct script_state *st);	// [celest]
+int buildin_detachnpctimer(struct script_state *st);	// [celest]
 int buildin_announce(struct script_state *st);
 int buildin_mapannounce(struct script_state *st);
 int buildin_areaannounce(struct script_state *st);
@@ -414,6 +416,8 @@ struct {
 	{buildin_startnpctimer,"startnpctimer","*"},
 	{buildin_setnpctimer,"setnpctimer","*"},
 	{buildin_getnpctimer,"getnpctimer","i*"},
+	{buildin_attachnpctimer,"attachnpctimer","*"}, // attached the player id to the npc timer [Celest]
+	{buildin_detachnpctimer,"detachnpctimer","*"}, // detached the player id from the npc timer [Celest]
 	{buildin_announce,"announce","si"},
 	{buildin_mapannounce,"mapannounce","ssi"},
 	{buildin_areaannounce,"areaannounce","siiiisi"},
@@ -3968,6 +3972,46 @@ int buildin_setnpctimer(struct script_state *st)
 }
 
 /*==========================================
+ * attaches the player rid to the timer [Celest]
+ *------------------------------------------
+ */
+int buildin_attachnpctimer(struct script_state *st)
+{
+	struct map_session_data *sd;
+	struct npc_data *nd;
+
+	nd=(struct npc_data *)map_id2bl(st->oid);	
+	if( st->end > st->start+2 ) {
+		char *name = conv_str(st,& (st->stack->stack_data[st->start+2]));
+		sd=map_nick2sd(name);
+	} else {
+		sd = script_rid2sd(st);
+	}
+
+	if (sd==NULL)
+		return 0;
+
+	nd->u.scr.timerrid = sd->bl.id;
+	return 0;
+}
+
+/*==========================================
+ * detaches a player rid from the timer [Celest]
+ *------------------------------------------
+ */
+int buildin_detachnpctimer(struct script_state *st)
+{
+	struct npc_data *nd;
+	if( st->end > st->start+2 )
+		nd=npc_name2id(conv_str(st,& (st->stack->stack_data[st->start+2])));
+	else
+		nd=(struct npc_data *)map_id2bl(st->oid);
+
+	nd->u.scr.timerrid = 0;
+	return 0;
+}
+
+/*==========================================
  * 天の声アナウンス
  *------------------------------------------
  */
@@ -5445,10 +5489,13 @@ int buildin_marriage(struct script_state *st)
 int buildin_wedding_effect(struct script_state *st)
 {
 	struct map_session_data *sd=script_rid2sd(st);
+	struct block_list *bl;
 
-	if(sd==NULL)
-		return 0;
-	clif_wedding_effect(&sd->bl);
+	if(sd==NULL) {
+		bl=map_id2bl(st->oid);
+	} else
+		bl=&sd->bl;
+	clif_wedding_effect(bl);
 	return 0;
 }
 int buildin_divorce(struct script_state *st)

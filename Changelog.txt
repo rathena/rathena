@@ -1,11 +1,30 @@
 Date	Added
-01/0
+01/10
+        * Added Shinomori and orn's fix for the skill tree to only check the first
+          required skill in the DB and skipping the rest [celest]
+        * Modified 'wedding' script command to work with "OnTimer" scripts even without
+          doing 'attachnpctimer' (The 'player not attached' error will still display,
+          but the effect will appear *over the NPC* instead of the player...
+          at least it won't fail ^^) [celest]
+        * Added 'attachnpctimer' script command for attaching the player to the current
+          npc's timer in "OnTimerxxxx" scripts, thanks to Wallex for the idea. [celest]
+          Syntax:
+                 attachnpctimer;
+                 attachnpctimer "<Player Name">;
+
+          Check /npc/sample/npc_test_npctimer2.txt for example.
+        * Added 'detachnpctimer' script command for detaching players from the npc's
+          timer. [celest] Syntax:
+                 detachnpctimer;
+                 detachnpctimer "<NPC Name">;
+
 	* Added 'OnInterIfInitOnce' for WoE scripts & modified the WoE scripts as well [Ajarn & Codemaster] [Thanks to FREYA] [SVN 943]
 	* Added the @sound command and the NPC command of soundeffectall
 	 - works just like soundeffect, but plays for everyone in the area [Codemaster] [SVN 942]
 	* Don't allow Pets to attack Guardians outside of WoE [Codemaster] [SVN 940]
 	* Require 15% of HP or more for WE_MALE skill [Codemaster] [SVN 940]
 	* Require 15% of SP or more for WE_FEMALE skill [Codemaster] [SVN 940]
+
 01/07
         * Upon changing to high novice 100 stat points should be given, not 88 [celest]
         * Give high novices First Aid and Trick Dead upon job changing [celest]

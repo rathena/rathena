@@ -1048,9 +1048,10 @@ int pc_calc_skilltree(struct map_session_data *sd)
                         for(j=0;j<5;j++) {
                             if( skill_tree[s][c][i].need[j].id &&
                                 pc_checkskill(sd,skill_tree[s][c][i].need[j].id) <
-                                skill_tree[s][c][i].need[j].lv)
+                                skill_tree[s][c][i].need[j].lv) {
                                 f=0;
-				break;
+								break;
+							}
                         }
                     }
                     if(f && sd->status.skill[id].id==0 ){

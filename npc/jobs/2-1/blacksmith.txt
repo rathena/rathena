@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena  0.5.2 +
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= names and labels. Edited some text.[kobra_k88]
 //= Removed "if(JobLevel > 48) goto higher". It was a left over line.
 //= Thx to "Decker".[kobra_k88]
+//= Fixed some typos, thanks to Riotblade [celest]
 ==============================================================
 
 
@@ -461,7 +462,7 @@ L_result:
 	mes "Good!";
 	next;
 	mes "[Geshupenschte]";
-	mes "Lets see....your score is ^5533FF"+@score+"."^000000;
+	mes "Lets see....your score is ^5533FF"+@score+".^000000";
 	if (@score == 100) goto L_perfect;
 	mes ".............";
 	next;
@@ -485,7 +486,7 @@ L_result2:
 	mes "Great!";
 	next;
 	mes "[Geshupenschte]";
-	mes "Lets see....your score is ^5533FF"+@score+"."^000000;
+	mes "Lets see....your score is ^5533FF"+@score+".^000000";
 	if (@score > 80) goto L_pass;
 	mes ".............";
 	next;
@@ -1160,7 +1161,7 @@ comodo.gat,158,342,4	script	Bismarck	118,{
 	if (BSMITH_Q == 3) goto L_Start;
 
 	mes "[Bismarck]";
-	mes "......Ughï....";
+	mes "......Ugh?...";
 	mes ".....When's that delivery coming......";
 	next;
 	mes "[Bismarck]";
