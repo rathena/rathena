@@ -1576,7 +1576,9 @@ struct map_session_data * map_id2sd(int id) {
 	return NULL;
 */
 	int i;
-	struct map_session_data *sd=NULL;
+	struct map_session_data *sd;
+
+	if (id <= 0) return 0;
 
 	for(i = 0; i < fd_max; i++)
 		if (session[i] && (sd = (struct map_session_data*)session[i]->session_data) && sd->bl.id == id)
@@ -2927,7 +2929,7 @@ int inter_config_read(char *cfgName)
 		} else if(strcmpi(w1,"map_server_db")==0){
 			strcpy(map_server_db, w2);
 		} else if(strcmpi(w1,"use_sql_db")==0){
-			if (strcmpi(w2,"yes")){db_use_sqldbs=0;} else if (strcmpi(w2,"no")){db_use_sqldbs=1;}
+			db_use_sqldbs = battle_config_switch(w2);
 			printf ("Using SQL dbs: %s\n",w2);
 		//Login Server SQL DB
 		} else if(strcmpi(w1,"login_server_ip")==0){

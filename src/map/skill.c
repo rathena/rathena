@@ -3633,7 +3633,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 
 	case AL_CURE:				/* キュア? */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage )
+		if(dstsd && dstsd->special_state.no_magic_damage )
 			break;
 		status_change_end(bl, SC_SILENCE	, -1 );
 		status_change_end(bl, SC_BLIND	, -1 );
@@ -3652,18 +3652,17 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case PR_STRECOVERY:			/* リカバリ? */
 		{
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if( bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage )
+			if(dstsd && dstsd->special_state.no_magic_damage)
 				break;
 			status_change_end(bl, SC_FREEZE	, -1 );
 			status_change_end(bl, SC_STONE	, -1 );
 			status_change_end(bl, SC_SLEEP	, -1 );
-			status_change_end(bl, SC_STAN		, -1 );
+			status_change_end(bl, SC_STAN	, -1 );
 			if( battle_check_undead(status_get_race(bl),status_get_elem_type(bl)) ){//アンデッドなら暗闇?果
-				int blind_time;
-				//blind_time=30-status_get_vit(bl)/10-status_get_int/15;
-				blind_time=30*(100-(status_get_int(bl)+status_get_vit(bl))/2)/100;
-				if(rand()%100 < (100-(status_get_int(bl)/2+status_get_vit(bl)/3+status_get_luk(bl)/10)))
-					status_change_start(bl, SC_BLIND,1,0,0,0,blind_time,0);
+				if(rand()%100 < (100-(status_get_int(bl)/2+status_get_vit(bl)/3+status_get_luk(bl)/10))) {
+					status_change_start(bl, SC_BLIND,1,0,0,0,
+						1000 * 30 * (100-(status_get_int(bl)+status_get_vit(bl))/2)/100,0);
+				}
 			}
 			if(dstmd){
 				dstmd->attacked_id=0;

@@ -1,9 +1,14 @@
 Date	Added
 
 03/12
+        * Fixed Status Recovery dealing too short blind time on undead [celest]
+        * Fixed mobs not affected by Blind status [celest]
+        * Added an invalid id check check in map_id2sd [celest]
+        * Added sd check in clif_send [celest]
         * Fixed usage of mvp_hp_rate and monster_hp_rate. MVP rate was used for common monsters [Lupus]
 	* Added additional random respawn delay for instant respawning monsters (0..5 seconds) [Lupus]
 		- Should be made as an option of battle_athena.conf
+
 03/11
         * Fixed "--en/ja--" usage in 'monster' script not working properly, thanks
           to sbilly [celest]

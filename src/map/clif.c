@@ -295,14 +295,16 @@ int clif_send_sub(struct block_list *bl, va_list ap)
  */
 int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 	int i;
-	struct map_session_data *sd;
-	struct chat_data *cd;
+	struct map_session_data *sd = NULL;
 	struct party *p = NULL;
 	struct guild *g = NULL;
 	int x0 = 0, x1 = 0, y0 = 0, y1 = 0;
 
 	if (type != ALL_CLIENT) {
 		nullpo_retr(0, bl);
+	}
+	if (bl && bl->type == BL_PC) {
+		nullpo_retr (0, sd=(struct map_session_data*)bl);
 	}
 
 	switch(type) {
@@ -337,21 +339,24 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 		break;
 	case CHAT:
 	case CHAT_WOS:
-		cd = (struct chat_data*)bl;
-		if (bl->type == BL_PC) {
-			sd = (struct map_session_data*)bl;
-			cd = (struct chat_data*)map_id2bl(sd->chatID);
-		} else if (bl->type != BL_CHAT)
-			break;
-		if (cd == NULL)
-			break;
-		for(i = 0; i < cd->users; i++) {
-			if (type == CHAT_WOS && cd->usersd[i] == (struct map_session_data*)bl)
-				continue;
-			if (packet_db[cd->usersd[i]->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-				if (cd->usersd[i]->fd >=0 && session[cd->usersd[i]->fd]) // Added check to see if session exists [PoW]
-					memcpy(WFIFOP(cd->usersd[i]->fd,0), buf, len);
-				WFIFOSET(cd->usersd[i]->fd,len);
+		{
+			struct chat_data *cd;
+			if (sd) {
+				cd = (struct chat_data*)map_id2bl(sd->chatID);
+			} else if (bl->type == BL_CHAT) {
+				cd = (struct chat_data*)bl;
+			} else if (bl->type != BL_CHAT)
+				break;
+			if (cd == NULL)
+				break;
+			for(i = 0; i < cd->users; i++) {
+				if (type == CHAT_WOS && cd->usersd[i] == sd)
+					continue;
+				if (packet_db[cd->usersd[i]->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
+					if (cd->usersd[i]->fd >=0 && session[cd->usersd[i]->fd]) // Added check to see if session exists [PoW]
+						memcpy(WFIFOP(cd->usersd[i]->fd,0), buf, len);
+					WFIFOSET(cd->usersd[i]->fd,len);
+				}
 			}
 		}
 		break;
@@ -366,13 +371,11 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 	case PARTY_WOS:			// 自分以外の全パーティーメンバに送信
 	case PARTY_SAMEMAP:		// 同じマップの全パーティーメンバに送信
 	case PARTY_SAMEMAP_WOS:	// 自分以外の同じマップの全パーティーメンバに送信
-		if (bl->type == BL_PC) {
-			sd = (struct map_session_data *)bl;
+		if (sd) {
 			if (sd->partyspy > 0) {
 				p = party_search(sd->partyspy);
-			} else {
-				if (sd->status.party_id > 0)
-					p = party_search(sd->status.party_id);
+			} else if (sd->status.party_id > 0) {
+				p = party_search(sd->status.party_id);
 			}
 		}
 		if (p) {
@@ -411,8 +414,7 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 		}
 		break;
 	case SELF:
-		sd = (struct map_session_data *)bl;
-		if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
+		if (sd && packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 			memcpy(WFIFOP(sd->fd,0), buf, len);
 			WFIFOSET(sd->fd,len);
 		}
@@ -428,13 +430,11 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 		y1 = bl->y + AREA_SIZE;
 	case GUILD:
 	case GUILD_WOS:
-		if (bl && bl->type == BL_PC) { // guildspy [Syrus22]
-			sd = (struct map_session_data *)bl;
+		if (sd) { // guildspy [Syrus22]
 			if (sd->guildspy > 0) {
 				g = guild_search(sd->guildspy);
-			} else {
-				if (sd->status.guild_id > 0)
-					g = guild_search(sd->status.guild_id);
+			} else if (sd->status.guild_id > 0) {
+				g = guild_search(sd->status.guild_id);
 			}
 		}
 		if (g) {
@@ -462,10 +462,8 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 		break;
 	case GUILD_SAMEMAP:
 	case GUILD_SAMEMAP_WOS:
-		if (bl->type == BL_PC) {
-			sd = (struct map_session_data *)bl;
-			if (sd->status.guild_id > 0)
-				g = guild_search(sd->status.guild_id);
+		if (sd && sd->status.guild_id > 0) {
+			g = guild_search(sd->status.guild_id);
 		}
 		if (g) {
 			for(i = 0; i < g->max_member; i++) {
