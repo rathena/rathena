@@ -1105,9 +1105,9 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range)
 	}
 	//========== guildcastle guardian no search eof==============
 
-	if(bl && bl->type == BL_PC && battle_config.monsters_ignore_gm==1) {	 // option to have monsters ignore GMs [Valaris]
+	if(bl && bl->type == BL_PC && battle_config.monsters_ignore_gm) {	 // option to have monsters ignore GMs [Valaris]
 		struct map_session_data *sd;
-		if((sd=(struct map_session_data *)bl) != NULL && pc_isGM(sd))
+		if((sd=(struct map_session_data *)bl) != NULL && pc_isGM(sd) >= battle_config.monsters_ignore_gm)
 			return 0;
   	}
 
