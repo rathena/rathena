@@ -1,5 +1,8 @@
 Date	Added
 12/28
+	* added checks into the skill code to prevent proxy's/bots
+	  from crashing the server by using skillid's that
+	  are WAY out of range (SVN 838) [MouseJstr]
 	* Fixed clif.c errors that prevent old clients from being used. [nsstrunks]
 	* Fixed @jobchange to not default to upper (SVN 837) [MouseJstr]
 	* Fixed a compile error in @mobsearch (SVN 836) [MouseJstr]

@@ -774,72 +774,89 @@ int skill_get_range( int id , int lv ){
 }
 int	skill_get_hp( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0: skill_db[id].hp[lv-1];
 }
 int	skill_get_sp( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	//if (lv <= 0) return 0;
 	//return (id < 500) ? skill_db[id].sp[lv-1] : guild_skill_get_sp(id, lv);
 	return (lv <= 0) ? 0: skill_db[id].sp[lv-1];
 }
 int	skill_get_zeny( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].zeny[lv-1];
 }
 int	skill_get_num( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].num[lv-1];
 }
 int	skill_get_cast( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].cast[lv-1];
 }
 int	skill_get_delay( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].delay[lv-1];
 }
 int	skill_get_time( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].upkeep_time[lv-1];
 }
 int	skill_get_time2( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].upkeep_time2[lv-1];
 }
 int	skill_get_castdef( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return skill_db[id].cast_def_rate;
 }
 int	skill_get_weapontype( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return skill_db[id].weapon;
 }
 int	skill_get_inf2( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return skill_db[id].inf2;
 }
 int	skill_get_castcancel( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return skill_db[id].castcancel;
 }
 int	skill_get_maxcount( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return skill_db[id].maxcount;
 }
 int	skill_get_blewcount( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].blewcount[lv-1];
 }
 int	skill_get_mhp( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].mhp[lv-1];
 }
 int	skill_get_castnodex( int id ,int lv ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return (lv <= 0) ? 0:skill_db[id].castnodex[lv-1];
 }
 int	skill_get_nocast ( int id ){
 	if (id >= 10000 && id < 10015) id-= 9500;
+	if ((id > MAX_SKILL) || (id < 0)) return 0;
 	return skill_db[id].nocast;
 }
 int skill_tree_get_max(int id, int b_class){
@@ -867,6 +884,11 @@ int skill_count_target(struct block_list *bl, va_list ap );
 int skillnotok(int skillid, struct map_session_data *sd) {
      if (sd == 0)
            return 0;
+
+     if (!(skillid >= 10000 && skillid < 10015)) 
+	if ((skillid > MAX_SKILL) || (skillid < 0)) 
+		return 1;
+
      if (pc_isGM(sd) >= 20)
            return 0;  // gm's can do anything damn thing they want
 
