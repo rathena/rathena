@@ -1,5 +1,7 @@
 Date	Added
 11/14
+	* Added AFM (Advanced Fusion Map) support, thanks to alexkreuz and fusion. [Valaris]
+	  Use the afm_dir option in grf-files.txt (currently needs a resnametable.txt). 
 	* Initialized password variable in login.c. [Valaris]
 	* Added zeny_from_mobs option. [Valaris]
 	* Corrected the file type attribute on most of the files in three which fixes the

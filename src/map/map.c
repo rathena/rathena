@@ -120,6 +120,8 @@ static int block_free_count = 0, block_free_lock = 0;
 static struct block_list *bl_list[BL_LIST_MAX];
 static int bl_list_count = 0;
 
+static char afm_dir[1024] = ""; // [Valaris]
+
 struct map_data map[MAX_MAP_PER_SERVER];
 int map_num = 0;
 
@@ -1405,6 +1407,143 @@ static void map_readwater(char *watertxt) {
 	fclose(fp);
 }
 
+
+static int map_readafm(int m,char *fn) {
+	
+	/*
+	Advanced Fusion Maps Support
+	(c) 2003-2004, The Fusion Project
+	- AlexKreuz
+	
+	The following code has been provided by me for eAthena
+	under the GNU GPL.  It provides Advanced Fusion
+	Map, the map format desgined by me for Fusion, support
+	for the eAthena emulator.
+	
+	I understand that because it is under the GPL
+	that other emulators may very well use this code in their
+	GNU project as well.
+	
+	The AFM map format was not originally a part of the GNU
+	GPL. It originated from scratch by my own hand.  I understand
+	that distributing this code to read the AFM maps with eAthena
+	causes the GPL to apply to this code.  But the actual AFM
+	maps are STILL copyrighted to the Fusion Project.  By choosing
+	
+	In exchange for that 'act of faith' I ask for the following.
+	
+	A) Give credit where it is due.  If you use this code, do not
+	   place your name on the changelog.  Credit should be given
+	   to AlexKreuz.
+	B) As an act of courtesy, ask me and let me know that you are putting
+	   AFM support in your project.  You will have my blessings if you do.
+	C) Use the code in its entirety INCLUDING the copyright message.
+	   Although the code provided may now be GPL, the AFM maps are not
+	   and so I ask you to display the copyright message on the STARTUP
+	   SCREEN as I have done here. (refer to core.c)
+	   "Advanced Fusion Maps (c) 2003-2004 The Fusion Project"
+	   
+	Without this copyright, you are NOT entitled to bundle or distribute
+	the AFM maps at all.  On top of that, your "support" for AFM maps
+	becomes just as shady as your "support" for Gravity GRF files.
+	
+	The bottom line is this.  I know that there are those of you who
+	would like to use this code but aren't going to want to provide the
+	proper credit.  I know this because I speak frome experience.  If
+	you are one of those people who is going to try to get around my
+	requests, then save your breath because I don't want to hear it.
+	
+	I have zero faith in GPL and I know and accept that if you choose to
+	not display the copyright for the AFMs then there is absolutely nothing
+	I can do about it.  I am not about to start a legal battle over something
+	this silly.
+	
+	Provide the proper credit because you believe in the GPL.  If you choose
+	not to and would rather argue about it, consider the GPL failed.
+	
+	October 18th, 2004
+	- AlexKreuz
+	- The Fusion Project
+	*/
+	
+	
+	int s;
+	int x,y,xs,ys;
+	size_t size;
+	
+	char afm_line[65535];
+	int afm_size[1];
+	FILE *afm_file;
+	char *str;
+	
+	afm_file = fopen(fn, "r");
+	if (afm_file != NULL) {
+			
+		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
+		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
+		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
+		sscanf(str , "%d%d", &afm_size[0], &afm_size[1]);	
+
+		map[m].m = m;	
+		xs = map[m].xs = afm_size[0];
+		ys = map[m].ys = afm_size[1];
+		map[m].gat = calloc(s = map[m].xs * map[m].ys, 1);
+		
+		if(map[m].gat==NULL){
+			printf("out of memory : map_readmap gat\n");
+			exit(1);
+		}
+		
+		map[m].npc_num=0;
+		map[m].users=0;
+		memset(&map[m].flag,0,sizeof(map[m].flag));
+		
+		if(battle_config.pk_mode) map[m].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
+
+		for (y = 0; y < ys; y++) {
+			str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
+			for (x = 0; x < xs; x++) {
+				map[m].gat[x+y*xs] = str[x]-48;
+			}
+		}
+		
+		map[m].bxs=(xs+BLOCK_SIZE-1)/BLOCK_SIZE;
+		map[m].bys=(ys+BLOCK_SIZE-1)/BLOCK_SIZE;
+		size = map[m].bxs * map[m].bys * sizeof(struct block_list*);
+		map[m].block = calloc(size, 1);
+		
+		if(map[m].block == NULL){
+			printf("out of memory : map_readmap block\n");
+			exit(1);
+		}
+		
+		map[m].block_mob = calloc(size, 1);
+		if (map[m].block_mob == NULL) {
+			printf("out of memory : map_readmap block_mob\n");
+			exit(1);
+		}
+		
+		size = map[m].bxs*map[m].bys*sizeof(int);
+		
+		map[m].block_count = calloc(size, 1);
+		if(map[m].block_count==NULL){
+			printf("out of memory : map_readmap block\n");
+			exit(1);
+		}
+		memset(map[m].block_count,0,size);
+
+		map[m].block_mob_count=calloc(size, 1);
+		if(map[m].block_mob_count==NULL){
+			printf("out of memory : map_readmap block_mob\n");
+			exit(1);
+		}
+		memset(map[m].block_mob_count,0,size);
+
+		strdb_insert(map_db,map[m].name,&map[m]);
+	}
+	return 0;
+}
+
 /*==========================================
  * マップ1枚読み込み
  *------------------------------------------
@@ -1470,6 +1609,7 @@ static int map_readmap(int m,char *fn, char *alias) {
 int map_readallmap(void) {
 	int i,maps_removed=0;
 	char fn[256]="";
+	FILE *afm_file;
 
 	// 先に全部のャbプの存在を確認
 	for(i=0;i<map_num;i++){
@@ -1481,8 +1621,18 @@ int map_readallmap(void) {
                     maps_removed++;
 	        }
         }
+		
 	for(i=0;i<map_num;i++){
-		if(strstr(map[i].name,".gat")!=NULL) {
+		char afm_name[256] = "";
+		strncpy(afm_name, map[i].name, strlen(map[i].name) - 4);
+		strcat(afm_name, ".afm");
+		
+		sprintf(fn,"%s\\%s",afm_dir,afm_name);
+		afm_file = fopen(fn, "r");
+		if (afm_file != NULL) {			
+			map_readafm(i,fn);
+    }
+		else if(strstr(map[i].name,".gat")!=NULL) {
                       char *p = strstr(map[i].name, ">"); // [MouseJstr]
                       if (p != NULL) {
                          char alias[64];
@@ -1502,6 +1652,7 @@ int map_readallmap(void) {
                          }
                       }
 	    }
+		fclose(afm_file);
 	}
 
 	free(waterlist);
@@ -2061,6 +2212,8 @@ void map_helpscreen() {
  */
 int do_init(int argc, char *argv[]) {
 	int i;
+	FILE *data_conf;
+	char line[1024], w1[1024], w2[1024];
 
 #ifndef TXT_ONLY
 	unsigned char *SQL_CONF_NAME="conf/inter_athena.conf";
@@ -2145,6 +2298,19 @@ int do_init(int argc, char *argv[]) {
 #endif /* not TXT_ONLY */
 
 	grfio_init(GRF_PATH_FILENAME);
+
+	data_conf = fopen(GRF_PATH_FILENAME, "r");
+	// It will read, if there is grf-files.txt.
+	if (data_conf) {
+		while(fgets(line, 1020, data_conf)) {
+			if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
+				if(strcmp(w1,"afm_dir") == 0)
+					strcpy(afm_dir, w2);
+			}
+		}
+		fclose(data_conf);
+	} // end of reading grf-files.txt for AFMs
+	
 
 	map_readallmap();
 
