@@ -1,6 +1,8 @@
 Date	Added
 
 01/26
+        * Added status_get_sc_def for calculating resistance against status
+          abnormalities [celest]
         * Added status.c and status.h of jA 1091 update and moved some functions into
           the new source files:
           -- skill_status_change_  ->  status_change_

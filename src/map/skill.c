@@ -1045,7 +1045,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 	struct pet_data *pd=NULL;
 
 	int skill,skill2;
-	int rate,luk;
+	int rate;
 
 	int sc_def_mdef,sc_def_vit,sc_def_int,sc_def_luk;
 	int sc_def_mdef2,sc_def_vit2,sc_def_int2,sc_def_luk2;
@@ -1064,44 +1064,23 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 		nullpo_retr(0, pd = (struct pet_data *)src); // [Valaris]
 	}
 
+	if(bl->type == BL_PC) {
+		nullpo_retr(0, dstsd=(struct map_session_data *)bl);
+	} else if(bl->type == BL_MOB) {
+		nullpo_retr(0, dstmd=(struct mob_data *)bl); //未使用？
+	}
+
 	//?象の耐性
-	luk = status_get_luk(bl);
-	sc_def_mdef=100 - (3 + status_get_mdef(bl) + luk/3);
-	sc_def_vit=100 - (3 + status_get_vit(bl) + luk/3);
-	sc_def_int=100 - (3 + status_get_int(bl) + luk/3);
-	sc_def_luk=100 - (3 + luk);
+	sc_def_mdef = status_get_sc_def_mdef(bl);
+	sc_def_vit = status_get_sc_def_vit(bl);
+	sc_def_int = status_get_sc_def_int(bl);
+	sc_def_luk = status_get_sc_def_luk(bl);
+
 	//自分の耐性
-	luk = status_get_luk(src);
-	sc_def_mdef2=100 - (3 + status_get_mdef(src) + luk/3);
-	sc_def_vit2=100 - (3 + status_get_vit(src) + luk/3);
-	sc_def_int2=100 - (3 + status_get_int(src) + luk/3);
-	sc_def_luk2=100 - (3 + luk);
-	if(bl->type==BL_PC)
-		dstsd=(struct map_session_data *)bl;
-	else if(bl->type==BL_MOB){
-		dstmd=(struct mob_data *)bl; //未使用？
-		if(sc_def_mdef<50)
-			sc_def_mdef=50;
-		if(sc_def_vit<50)
-			sc_def_vit=50;
-		if(sc_def_int<50)
-			sc_def_int=50;
-		if(sc_def_luk<50)
-			sc_def_luk=50;
-	}
-	if (dstsd && dstsd->sc_count && dstsd->sc_data[SC_GOSPEL].timer != -1 &&
-		dstsd->sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
-		dstsd->sc_data[SC_GOSPEL].val3 == 3) {
-		sc_def_mdef -= 25;
-		sc_def_vit -= 25;
-		sc_def_int -= 25;
-	}
-	if(sc_def_mdef<0)
-		sc_def_mdef=0;
-	if(sc_def_vit<0)
-		sc_def_vit=0;
-	if(sc_def_int<0)
-		sc_def_int=0;
+	sc_def_mdef2 = status_get_sc_def_mdef(src);
+	sc_def_vit2 = status_get_sc_def_vit(src);
+	sc_def_int2 = status_get_sc_def_int(src);
+	sc_def_luk2 = status_get_sc_def_luk(src);
 
 	switch(skillid){
 	case 0:					/* 通常攻? */
@@ -2674,7 +2653,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	{
 		struct status_change *sc_data = status_get_sc_data(bl);
 		int sc_def_mdef, rate, damage;
-		sc_def_mdef = 100 - (3 + status_get_mdef(bl) + status_get_luk(bl)/3);
+		sc_def_mdef = status_get_sc_def_mdef(bl);
 		rate = (skilllv*3+35)*sc_def_mdef/100-(status_get_int(bl)+status_get_luk(bl))/15;
 		rate = rate<=5?5:rate;
 		if (sc_data && sc_data[SC_FREEZE].timer != -1) {
@@ -2957,23 +2936,14 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 
 	sc_dex=status_get_mdef(bl);
 	sc_luk=status_get_luk(bl);
-	sc_def_vit = 100 - (3 + status_get_vit(bl) + status_get_luk(bl)/3);
-	//sc_def_vit = 100 - (3 + status_get_vit(bl) + status_get_luk(bl)/3);
-	sc_def_mdef = 100 - (3 + status_get_mdef(bl) + status_get_luk(bl)/3);
+	sc_def_vit = status_get_sc_def_vit(bl);
+	sc_def_mdef = status_get_sc_def_mdef (bl);
 
 	if(bl->type==BL_PC){
 		nullpo_retr(1, dstsd=(struct map_session_data *)bl);
 	}else if(bl->type==BL_MOB){
 		nullpo_retr(1, dstmd=(struct mob_data *)bl);
-		if(sc_def_vit>50)
-			sc_def_vit=50;
-		if(sc_def_mdef>50)
-			sc_def_mdef=50;
 	}
-	if(sc_def_vit < 0)
-		sc_def_vit=0;
-	if(sc_def_mdef < 0)
-		sc_def_mdef=0;
 
 	if(bl == NULL || bl->prev == NULL)
 		return 1;

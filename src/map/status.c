@@ -2559,6 +2559,65 @@ short *status_get_option(struct block_list *bl)
 	return 0;
 }
 
+int status_get_sc_def(struct block_list *bl, int type)
+{
+	int sc_def;
+	nullpo_retr(0, bl);
+	
+	switch (type)
+	{
+	case SP_MDEF1:	// mdef
+		sc_def = 100 - (3 + status_get_mdef(bl) + status_get_luk(bl)/3);
+		break;
+	case SP_MDEF2:	// int
+		sc_def = 100 - (3 + status_get_int(bl) + status_get_luk(bl)/3);
+		break;
+	case SP_DEF1:	// def
+		sc_def = 100 - (3 + status_get_def(bl) + status_get_luk(bl)/3);
+		break;
+	case SP_DEF2:	// vit
+		sc_def = 100 - (3 + status_get_vit(bl) + status_get_luk(bl)/3);
+		break;
+	case SP_LUK:	// luck
+		sc_def = 100 - (3 + status_get_luk(bl));
+		break;
+
+	case SC_STONE:
+	case SC_FREEZE:
+		sc_def = 100 - (3 + status_get_mdef(bl) + status_get_luk(bl)/3);
+		break;
+	case SC_STAN:
+	case SC_POISON:
+	case SC_SILENCE:
+		sc_def = 100 - (3 + status_get_vit(bl) + status_get_luk(bl)/3);
+		break;	
+	case SC_SLEEP:
+	case SC_CONFUSION:
+	case SC_BLIND:
+		sc_def = 100 - (3 + status_get_int(bl) + status_get_luk(bl)/3);
+		break;
+	case SC_CURSE:
+		sc_def = 100 - (3 + status_get_luk(bl));
+		break;	
+
+	default:
+		sc_def = 100;
+		break;
+	}
+
+	if(bl->type == BL_MOB && sc_def < 50)
+		sc_def = 50;
+	else if(bl->type == BL_PC) {
+		struct status_change* sc_data = status_get_sc_data(bl);
+		if (sc_data && sc_data[SC_GOSPEL].timer != -1 &&
+			sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
+			sc_data[SC_GOSPEL].val3 == 3)
+			sc_def -= 25;
+	}
+
+	return (sc_def < 0) ? 0 : sc_def;
+}
+
 /*==========================================
  * ステータス異常開始
  *------------------------------------------
@@ -3077,7 +3136,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			break;
 		case SC_STAN:				/* スタン（val2にミリ秒セット） */
 			if(!(flag&2)) {
-				int sc_def = 100 - (status_get_vit(bl) + status_get_luk(bl)/3);
+				int sc_def = status_get_sc_def_vit(bl);
 				tick = tick * sc_def / 100;
 			}
 			break;
