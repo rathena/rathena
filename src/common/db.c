@@ -1,5 +1,4 @@
 // $Id: db.c,v 1.2 2004/09/23 14:43:06 MouseJstr Exp $
-// #define MALLOC_DBN
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,8 +11,16 @@
 #include "memwatch.h"
 #endif
 
-#define ROOT_SIZE 4096
+//#define MALLOC_DBN
+
+// Backup cleaning routine in case the core doesn't do so properly,
+// only enabled if malloc_dbn is not defined.
+// As a temporary solution the root of the problem should still be found and fixed
+struct dbn *head;
+struct dbn *tail;
+
 #ifdef MALLOC_DBN
+#define ROOT_SIZE 4096
 static struct dbn *dbn_root[512], *dbn_free;
 static int dbn_root_rest=0,dbn_root_num=0;
 
@@ -39,6 +46,34 @@ static void free_dbn(struct dbn* add_dbn)
 {
 	add_dbn->parent = dbn_free;
 	dbn_free = add_dbn;
+}
+
+void exit_dbn(void)
+{
+	int i;
+
+	for (i=0;i<dbn_root_num;i++)
+		if (dbn_root[i])
+			aFree(dbn_root[i]);
+
+	dbn_root_rest=0;
+	dbn_root_num=0;
+
+	return;
+}
+#else
+void exit_dbn(void)
+{
+	int i = 0;
+	struct dbn *p = head, *p2;
+	while (p) {		
+		p2 = p->next;
+		aFree(p);
+		p = p2;
+		i++;
+	}
+	//printf ("freed %d stray dbn\n", i);
+	return;
 }
 #endif
 
@@ -438,6 +473,16 @@ struct dbn* db_insert(struct dbt *table,void* key,void* data)
 	p->data  = data;
 	p->color = RED;
 	p->deleted = 0;
+	p->prev = NULL;
+	p->next = NULL;
+	if (head == NULL)
+		head = tail = p;
+	else {
+		p->prev = tail;
+		tail->next = p;
+		tail = p;
+	}
+
 	if(c==0){ // hash entry is empty
 		table->ht[hash] = p;
 		p->color = BLACK;
@@ -454,6 +499,7 @@ struct dbn* db_insert(struct dbt *table,void* key,void* data)
 		}
 	}
 	table->item_count++;
+	
 	return p;
 }
 
@@ -497,6 +543,15 @@ void* db_erase(struct dbt *table,void* key)
 		}
 	} else {
 		db_rebalance_erase(p,&table->ht[hash]);
+		if (p->prev)
+			p->prev->next = p->next;
+		else
+			head = p->next;
+		if (p->next)
+			p->next->prev = p->prev;
+		else
+			tail = p->prev;
+
 	#ifdef MALLOC_DBN
 		free_dbn(p);
 	#else
@@ -584,6 +639,14 @@ void db_final(struct dbt *table,int (*func)(void*,void*,va_list),...)
 					pn=stack[--sp];
 				}
 			}
+			if (p->prev)
+				p->prev->next = p->next;
+			else
+				head = p->next;
+			if (p->next)
+				p->next->prev = p->prev;
+			else
+				tail = p->prev;
 #ifdef MALLOC_DBN
 			free_dbn(p);
 #else

@@ -14,6 +14,8 @@ struct dbn {
 	void *key;
 	void *data;
 	int deleted;	// íœÏ‚İƒtƒ‰ƒO(db_foreach)
+	struct dbn *next;
+	struct dbn *prev;
 };
 
 struct dbt {
@@ -59,5 +61,6 @@ struct dbn* db_insert(struct dbt *table,void* key,void* data);
 void* db_erase(struct dbt *table,void* key);
 void db_foreach(struct dbt*,int(*)(void*,void*,va_list),...);
 void db_final(struct dbt*,int(*)(void*,void*,va_list),...);
+void exit_dbn(void);
 
 #endif
