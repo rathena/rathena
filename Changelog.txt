@@ -1,9 +1,11 @@
 Date	Added
 12/17
+        * Added a fix for map loading, thanks to 'Guest' [celest]
 	* Fixed skill #301 causing crashes [MouseJstr]
 	* Fixed documentation error on gm_skills_unconditionl [MouseJstr]
 	* added @grind test command.. only for testing [MouseJstr]
 	* Added clearweather to the atcommand configuration file. [nsstrunks]
+
 12/16
         * Added a fix for AFM loading, thanks to Pete [celest]
         * Updated maximum levels for supernovice to 99 [celest]

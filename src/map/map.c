@@ -1691,11 +1691,13 @@ int map_readallmap(void) {
 				char buf[64];
 				*p++ = '\0';
 				sprintf(buf,"data\\%s", p);
+				for(p=&buf[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix
 				map[i].alias = strdup(buf);
 			} else
 				map[i].alias = NULL;
 
 			sprintf(fn,"data\\%s",map[i].name);
+			for(p=&fn[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix
 			if(map_readmap(i,fn, p) == -1) {
 				map_delmap(map[i].name);
 				maps_removed++;
