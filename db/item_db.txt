@@ -989,8 +989,8 @@
 2629,Megingjard,Megingjard,5,20,0,8000,,2,,0,10477567,2,136,,90,0,{},{ bonus bStr,40; bonus bMdef,7; },,,
 2630,Brisingamen,Brisingamen,5,20,0,1500,,1,,0,10477567,2,136,,95,0,{},{ bonus bStr,3; bonus bAgi,3; bonus bVit,3; bonus bInt,3; bonus bMdef,5; }
 2631,Celebration_Ring,Celebration Ring,5,20,0,10,,0,,0,10477567,2,136,,0,0,{},{ bonus bStr,2; bonus bAgi,2; bonus bVit,2; bonus bInt,2; bonus bDex,2; bonus bLuk,2; }
-2634,Wedding_Ring_M,Wedding Ring,4,20,0,0,,,,0,10477567,1,2,,0,,{},{ skill 334,1; skill 336,1; }
-2635,Wedding_Ring_F,Wedding Ring,4,20,0,0,,,,0,10477567,0,2,,0,,{},{ skill 335,1; skill 336,1; }
+2634,Wedding_Ring_M,Wedding Ring,4,20,0,0,,,,0,10477567,1,136,,0,,{},{ skill 334,1; skill 336,1; }
+2635,Wedding_Ring_F,Wedding Ring,4,20,0,0,,,,0,10477567,0,136,,0,,{},{ skill 335,1; skill 336,1; }
 2636,Gold_Christmas_Ring,Gold Xmas Ring,5,20,0,0,,0,,0,10477567,2,136,,0,,{},{}
 2637,Silver_Christmas_Ring,Silver Xmas Ring,5,20,0,0,,0,,0,10477567,2,136,,0,,{},{}
 2638,Exorcize_Sachet,Exorcize Sachet,5,20,0,100,,0,,,10477567,2,136,,0,,{},{ bonus bStr,1; bonus bLuk,1; },,,

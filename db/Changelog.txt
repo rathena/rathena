@@ -5,7 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
-11/28	* Fixed mob Amon Ra stats/drops [shadow]
+11/28	* Fixed Wedding rings placement 2->136 [Lupus]
+	* Fixed mob Amon Ra stats/drops [shadow]
 
 11/27	* Fixed some drain rates, fixed Balmung, Mjolnir, fixed all maces (for right jobs) [shadow]
 
