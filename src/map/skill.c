@@ -811,7 +811,8 @@ int skill_count_target(struct block_list *bl, va_list ap );
 
 // [MouseJstr] - skill ok to cast? and when?
 int skillnotok(int skillid, struct map_session_data *sd) {
-	nullpo_retr (1, sd);
+	if (sd == 0)
+		return 0;
 
 	if (!(skillid >= 10000 && skillid < 10015))
 		if ((skillid > MAX_SKILL) || (skillid < 0))

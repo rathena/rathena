@@ -1,5 +1,7 @@
 Date	Added
 02/02
+        * Removed nullpo check in skillnotok() -- otherwise it will display fail 
+          messages for monster skills [celest]
         * Added crash check for Ice Wall [celest]
         * Added some optimisations by Ilpalazzo-sama [celest]
           - reduce mob_data->size variable to 1 bytes
