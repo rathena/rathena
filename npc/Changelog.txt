@@ -37,6 +37,8 @@ Other Ppl
 Date		Added
 ======
 
+03/29
+	* Corrected Amatsu warp points, thanks to Dino9021
 03/28
 	* Corrected Yuno warp points, thanks to Dino9021
 	* Added Yuno warps to the Aldebaran kafra NPC, thanks to Dino9021
