@@ -8,8 +8,6 @@ Darkchild
 	* Sage - Done
 	* Monk Quest - Botting An Acolyte Atm
 Lupus
-	* Marriage (Fix, optimization) - 70%
-	* fixing skill quests/ kafras to work with high classes
 	* removing a loop from grandpa_pharmacist.txt (similiar to Juice quest) 0%
 kobra_k88
 	* Optimize WoE
@@ -23,6 +21,9 @@ Shinigami
 Mass Zero
 	* Novice Training Ground.
 	* (Probably unofficial) Lou Yang NPC's, mobs, etc...
+Shadowlady
+	* Marriage (Fix, optimization) ?%
+
 Other Ppl	
 	* Their Work?
 
@@ -30,6 +31,15 @@ Other Ppl
 
 Date		Added
 ======
+11/05
+	* Fixed and redo optional Umbalian quests:
+	- Wise Man Fabius' Umbalian Language Quest (you can learn Umbalian language in
+	  alternative way)
+	- On speaking with Umbalian Chief about meaning of masks you activate Turban Thief Quest
+	  (For Sphinx Mask)
+	* Fixed several bugs in Niflheim Piano Keys Quest (wrong variable name, missing CLOSE buttons)
+	  Zeny/Item Exploit in Niflhein Sairin NPC quest (should add similiar checks in every
+	  easy quests with expensive prizes to avoid exploits) [Lupus]
 11/05
 	* Added easter and xmas event npcs.  Added custom blackjack npc.[kobra_k88]
 11/02

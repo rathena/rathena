@@ -249,11 +249,11 @@ cmd_in01.gat,164,115,1	script	Niles	731,{
 //Trade money for meat
 umbala.gat,70,106,3	script	Utan Child#1	781,{
 if(event_umbala < 3) goto LumWord;
-	mes "[？？？]";
+	mes "[???]";
 	mes "Hello!  I'm a member of";
 	mes "the Utan tribe.";
 	next;
-	mes "[？？？]";
+	mes "[???]";
 	mes "My name is Hatan!  Nice to";
 	mes "meet you.";
 	emotion 18;
@@ -283,7 +283,7 @@ if(event_umbala < 3) goto LumWord;
 		mes "Yay!!";
 		mes "You're the best!!";
 		set Zeny,Zeny-1000;
-		getitem 517,1;
+		getitem 517,1;//Items: Meat,
 		emotion 19;
 		next;
 		mes "[Hatan]";
@@ -304,11 +304,11 @@ if(event_umbala < 3) goto LumWord;
 		close;
 
 LumWord:
-	mes "[？？？]";
+	mes "[???]";
 	mes "Umba!";
 	mes "Umbaluwababawamuba.";
 	next;
-	mes "[？？？]";
+	mes "[???]";
 	mes "Umba!  Umbaumba!";
 	mes "Umbabama Hatan baba.";
 	emotion 18;
@@ -340,7 +340,7 @@ LumWord:
 		mes "Um!-babaumba-baumba-.";
 		mes "Umba-umba-Umbabawamamaba!";
 		set Zeny,Zeny-1000;
-		getitem 517,1;
+		getitem 517,1;//Items: Meat,
 		emotion 19;
 		next;
 		mes "[Hatan]";
@@ -371,15 +371,15 @@ if(event_umbala < 3) goto LumWord;
 	mes "...Gimme meat!";
 	next;
 	menu "Sure",-,"No way!",L2;
-	if(countitem(517) < 1) goto LError;
+	if(countitem(517) < 1) goto LError;//Items: Meat,
 		mes "[Kotan]";
 		mes "Hey, thanks!";
 		mes "Take these!";
 		emotion 10;
-		delitem 517,1;
-		getitem 909,2;
-		getitem 914,2;
-		getitem 705,2;
+		delitem 517,1;//Items: Meat,
+		getitem 909,2;//Items: Jellopy,
+		getitem 914,2;//Items: Fluff,
+		getitem 705,2;//Items: Clover,
 		close;
 	L2:
 		mes "[Kotan]";
@@ -396,7 +396,7 @@ LError:
 	emotion 6;
 	close;
 LumWord:
-	mes "[？？？]";
+	mes "[???]";
 	mes "....";
 	mes "....";
 	mes "...Umbaba!";
@@ -404,25 +404,25 @@ LumWord:
 	emotion 11;
 	next;
 	menu "Umba",-,"Umbabu",Lu2;
-	if(countitem(517) < 1) goto LuError;
-		mes "[？？？]";
+	if(countitem(517) < 1) goto LuError;//Items: Meat,
+		mes "[???]";
 		mes "Umbaumbaumbababa.";
 		mes "Umbababauma.";
 		emotion 10;
-		delitem 517,1;
-		getitem 909,2;
-		getitem 914,2;
-		getitem 705,2;
+		delitem 517,1;//Items: Meat,
+		getitem 909,2;//Items: Jellopy,
+		getitem 914,2;//Items: Fluff,
+		getitem 705,2;//Items: Clover,
 		close;
 	Lu2:
-		mes "[？？？]";
+		mes "[???]";
 		mes "....";
 		mes "......Unguba!";
 		mes "....Umbababa.";
 		emotion 28;
 		close;
 LuError:
-	mes "[？？？]";
+	mes "[???]";
 	mes "Umbawamufumabababa!";
 	mes "Umbabababaumbaumbu!";
 	emotion 6;
@@ -457,12 +457,12 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 			goto LRight;
 		L1_2:
 			//Blue
-			if(countitem(717) < 1) goto L1_2_e;
+			if(countitem(717) < 1) goto L1_2_e;//Items: Blue Gemstone,
 				mes "^3355FFYou inserted a Blue Gemstone into the";
 				mes "left socket.^000000";
 				next;
-				delitem 717,1;
-				getitem 717,1;
+				delitem 717,1;//Items: Blue Gemstone,
+				getitem 717,1;//Items: Blue Gemstone,
 				set @ryumon,1;
 				mes "^3355FFA rolling sound can be heard, and";
 				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
@@ -470,12 +470,12 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 				goto LRight;
 		L1_3:
 			//Yellow
-			if(countitem(715) < 1) goto L1_3_e;
+			if(countitem(715) < 1) goto L1_3_e;//Items: Yellow Gemstone,
 				mes "^3355FFYou inserted a Yellow Gemstone into the";
 				mes "left socket.^000000";
 				next;
-				delitem 715,1;
-				getitem 715,1;
+				delitem 715,1;//Items: Yellow Gemstone,
+				getitem 715,1;//Items: Yellow Gemstone,
 				set @ryumon,2;
 				mes "^3355FFA rolling sound can be heard, and";
 				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
@@ -483,12 +483,12 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 				goto LRight;
 		L1_4:
 			//Red
-			if(countitem(716) < 1) goto L1_4_e;
+			if(countitem(716) < 1) goto L1_4_e;//Items: Red Gemstone,
 				mes "^3355FFYou inserted a Red Gemstone into the";
 				mes "left socket.^000000";
 				next;
-				delitem 716,1;
-				getitem 716,1;
+				delitem 716,1;//Items: Red Gemstone,
+				getitem 716,1;//Items: Red Gemstone,
 				set @ryumon,3;
 				mes "^3355FFA rolling sound can be heard, and";
 				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
@@ -516,12 +516,12 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 			goto Lfin;
 		L2_2:
 			//Blue
-			if(countitem(717) < 1) goto L2_2_e;
+			if(countitem(717) < 1) goto L2_2_e;//Items: Blue Gemstone,
 				mes "^3355FFYou inserted a Blue Gemstone into the";
 				mes "left socket.^000000";
 				next;
-				delitem 717,1;
-				getitem 717,1;
+				delitem 717,1;//Items: Blue Gemstone,
+				getitem 717,1;//Items: Blue Gemstone,
 				set @ryumon,@ryumon+10;
 				mes "^3355FFA rolling sound can be heard, and";
 				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
@@ -529,12 +529,12 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 				goto Lfin;
 		L2_3:
 			//Yellow
-			if(countitem(715) < 1) goto L2_3_e;
+			if(countitem(715) < 1) goto L2_3_e;//Items: Yellow Gemstone,
 				mes "^3355FFYou inserted a Yellow Gemstone into the";
 				mes "left socket.^000000";
 				next;
-				delitem 715,1;
-				getitem 715,1;
+				delitem 715,1;//Items: Yellow Gemstone,
+				getitem 715,1;//Items: Yellow Gemstone,
 				set @ryumon,@ryumon+20;
 				mes "^3355FFA rolling sound can be heard, and";
 				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
@@ -542,12 +542,12 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 				goto Lfin;
 		L2_4:
 			//Red
-			if(countitem(716) < 1) goto L2_4_e;
+			if(countitem(716) < 1) goto L2_4_e;//Items: Red Gemstone,
 				mes "^3355FFYou inserted a Red Gemstone into the";
 				mes "left socket.^000000";
 				next;
-				delitem 716,1;
-				getitem 716,1;
+				delitem 716,1;//Items: Red Gemstone,
+				getitem 716,1;//Items: Red Gemstone,
 				set @ryumon,@ryumon+30;
 				mes "^3355FFA rolling sound can be heard, and";
 				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
@@ -702,6 +702,8 @@ LStart2:
 		mes "because sometimes by hiding your";
 		mes "face, you can express more geniune";
 		mes "feelings.";
+	//Activate Sphinx Mask Quest (optional)
+		set mask_q,1;
 		next;
 		mes "[Karukatan]";
 		mes "Over time, the mask itself";
@@ -763,7 +765,7 @@ LStart2:
 		mes "your memories.";
 		close;
 LStart3:
-	if ((countitem(7151)>=10) && (countitem(7111)>=5) && (countitem(1024)>=1) && (countitem(916)>=1)) goto Lchkok;
+	if ((countitem(7151)>=10) && (countitem(7111)>=5) && (countitem(1024)>=1) && (countitem(916)>=1)) goto Lchkok;//Items: Oiled Paper, String Paper, Squid Ink, Feather of Birds,
 	mes "[Karukatan]";
 	mes "It seems you've not yet prepared the";
 	mes "proper items.  Did you forget what";
@@ -802,10 +804,10 @@ Lchkok:
 	mes "Try talking to others in the Utan";
 	mes "tribe.  They'll warm up to your quickly";
 	mes "now that you speak the language.";
-	delitem 7151,10;
-	delitem 7111,5;
-	delitem 1024,1;
-	delitem 916,1;
+	delitem 7151,10;//Items: Oiled Paper,
+	delitem 7111,5;//Items: String Paper,
+	delitem 1024,1;//Items: Squid Ink,
+	delitem 916,1;//Items: Feather of Birds,
 	set event_umbala,3;
 	next;
 	mes "[Karukatan]";
@@ -854,7 +856,7 @@ LStart5:
 	set event_umbala,5;
 	close;
 LStart6:
-	if(countitem(2278) > 0) goto Lsmileok;
+	if(countitem(2278) > 0) goto Lsmileok;//Items: Mr. Smile,
 	mes "[Karukatan]";
 	mes "Did you find the ^3377FFSmile Mask^000000 yet?";
 	mes "In order to let you see the shaman,";
@@ -869,7 +871,7 @@ Lsmileok:
 	mes "on just once, but I promised to";
 	mes "give this to Putsuchiritan as";
 	mes "a gift.";
-	delitem 2278,1;
+	delitem 2278,1;//Items: Mr. Smile,
 	set event_umbala,6;
 	next;
 	mes "[Karukatan]";
@@ -968,25 +970,25 @@ L1:
 	next;
 	menu "Earth",L1_1,"Water",L1_2,"Fire",L1_3,"Wind",L1_4;
 	L1_1:
-		if (countitem(947)<15) goto L1_1e;
+		if (countitem(947)<15) goto L1_1e;//Items: Horn,
 		set @umchange[1],947;
 		set @umchange[2],15;
 		set @umchange[3],993;
 		goto L1_ketugou;
 	L1_2:
-		if (countitem(946)<20) goto L1_2e;
+		if (countitem(946)<20) goto L1_2e;//Items: Snails Shell,
 		set @umchange[1],946;
 		set @umchange[2],20;
 		set @umchange[3],991;
 		goto L1_ketugou;
 	L1_3:
-		if (countitem(904)<20) goto L1_3e;
+		if (countitem(904)<20) goto L1_3e;//Items: Scorpion Tail,
 		set @umchange[1],904;
 		set @umchange[2],20;
 		set @umchange[3],990;
 		goto L1_ketugou;
 	L1_4:
-		if (countitem(1013)<25) goto L1_4e;
+		if (countitem(1013)<25) goto L1_4e;//Items: Rainbow Shell,
 		set @umchange[1],1013;
 		set @umchange[2],25;
 		set @umchange[3],992;
@@ -1087,25 +1089,25 @@ L2:
 	next;
 	menu "Earth",L2_1,"Water",L2_2,"Fire",L2_3,"Wind",L2_4;
 	L2_1:
-	if (countitem(997)<1) goto L2_1e;
+	if (countitem(997)<1) goto L2_1e;//Items: Great Nature,
 		set @umchange[1],997;
 		set @umchange[2],1;
 		set @umchange[3],993;
 		goto L2_bunkai;
 	L2_2:
-	if (countitem(995)<1) goto L2_2e;
+	if (countitem(995)<1) goto L2_2e;//Items: Mystic Frozen,
 		set @umchange[1],995;
 		set @umchange[2],1;
 		set @umchange[3],991;
 		goto L2_bunkai;
 	L2_3:
-	if (countitem(994)<1) goto L2_3e;
+	if (countitem(994)<1) goto L2_3e;//Items: Flame Heart,
 		set @umchange[1],994;
 		set @umchange[2],1;
 		set @umchange[3],990;
 		goto L2_bunkai;
 	L2_4:
-	if (countitem(996)<1) goto L2_4e;
+	if (countitem(996)<1) goto L2_4e;//Items: Rough Wind,
 		set @umchange[1],996;
 		set @umchange[2],1;
 		set @umchange[3],992;
@@ -1200,7 +1202,7 @@ L2_empty:
 	mes "so that the ritual can be completed.";
 	close;
 LumWord:
-	mes "[？？？？？]";
+	mes "[?????]";
 	mes "Umbaumbaumbaba Utan Umbaba";
 	mes "Umbaumbaumbafumbabauma...";
 	mes "Umbabaumbaumbabaumbabaumba";
@@ -1327,7 +1329,7 @@ umbala.gat,140,157,6	script	Utan Tribe Young Adult#1	785,{
 	mes "as an adult in the Utan tribe.";
 	close;
 LumWord:
-	mes "[？？？？？]";
+	mes "[?????]";
 	mes "Umbaumbafumba.";
 	mes "Uwambaunbaumbabaufumba";
 	mes "Umbababaumbaumba.";
@@ -1344,7 +1346,7 @@ umbala.gat,146,157,4	script	Utan Young Adult#2	786,{
 	mes "gather for a large feast.";
 	close;
 LumWord:
-	mes "[？？？？]";
+	mes "[????]";
 	mes "Umbaumbaumbabaumbaba.";
 	mes "Umbaumbabaumbababaumufumuba.";
 	close;
@@ -1361,7 +1363,7 @@ umbala.gat,149,165,4	script	Utan Young Adult#3	781,{
 	mes "member of the Utan tribe.";
 	close;
 LumWord:
-	mes "[？？？？？？]";
+	mes "[??????]";
 	mes "Umbaumbaumbababa.";
 	mes "Umbaumbaumumbabaumfumuba.";
 	mes "Umbaumbaumumubafumba.";
@@ -1385,12 +1387,12 @@ umbala.gat,92,159,4	script	Hartan	785,{
 	mes "Mmmmmmm...Chocolate...";
 	close;
 LumWord:
-	mes "[？？？？]";
+	mes "[????]";
 	mes "Umbaumbaumba";
 	mes "Umbaumbaumba";
 	mes "Umbaumbaumba";
 	next;
-	mes "[？？？？]";
+	mes "[????]";
 	mes "Umbaumbabaungaha.";
 	emotion 28;
 	close;
@@ -1419,17 +1421,17 @@ umbala.gat,194,104,4	script	Utan Tribe Child#2	787,{
 		mes "they'll have to recognize me as an adult!";
 		close;
 LumWord:
-	mes "[？？？]";
+	mes "[???]";
 	mes "Umbaumbababaumfumuba.";
 	mes "Umbababaumbabaumbaumba.";
 	next;
 	menu "Um...yes?",-,"Nope...",Lu2;
-		mes "[？？？]";
+		mes "[???]";
 		mes "Umbaumbaumbababa.";
 		mes "Umbaumbaumubaba.";
 		close;
 	Lu2:
-		mes "[？？？]";
+		mes "[???]";
 		mes "Umbaumbaumuam.";
 		mes "Umbaumbaumbaba.";
 		mes "Umbaumfumababaumu.";
@@ -1448,7 +1450,7 @@ umbala.gat,193,208,6	script	Utan Child#3	789,{
 	mes "boys will be boys, don't you think?";
 	close;
 LumWord:
-	mes "[？？？？]";
+	mes "[????]";
 	mes "Umbaumbababa.";
 	mes "Umbamubafumabaumumbabamua";
 	mes "Umumbababaumbafuma.";
@@ -1479,14 +1481,14 @@ umbala.gat,139,205,4	script	Utan Tribe Young Adult#5	785,{
 	mes "If you linger underwater, you might die...";
 	close;
 LumWord:
-	mes "[？？？？]";
+	mes "[????]";
 	mes "Umbaumba!";
 	mes "Umbaumbabababaumumba.";
 	mes "Babaum Utan Umbaumbaba";
 	mes "Umbababafumu.";
 	mes "Umfumubabaumbaumbaumbaba.";
 	next;
-	mes "[？？？？]";
+	mes "[????]";
 	mes "Umbafumumababaumba.";
 	mes "Umbabatanumbaumba.";
 	mes "Umumu.  Umbaumbaumbaum.";
@@ -1549,7 +1551,7 @@ um_in.gat,158,71,3	script	Utan Tribesman	787,{
 	mes "not visit it if you're over that way?";
 	close;
 LumWord:
-	mes "[？？？？]";
+	mes "[????]";
 	mes "Umbaumbaumbabaumba!";
 	mes "Umbaumbaumbababaumba";
 	mes "Umbaumbaumba";

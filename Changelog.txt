@@ -1,6 +1,13 @@
 Date	Added
-
 11/05
+	* Fixed and redo optional Umbalian quests:
+	- Wise Man Fabius' Umbalian Language Quest (you can learn Umbalian language in
+	  alternative way)
+	- On speaking with Umbalian Chief about meaning of masks you activate Turban Thief Quest
+	  (For Sphinx Mask)
+	* Fixed several bugs in Niflheim Piano Keys Quest (wrong variable name, missing CLOSE buttons)
+	  Zeny/Item Exploit in Niflhein Sairin NPC quest (should add similiar checks in every
+	  easy quests with expensive prizes to avoid exploits) [Lupus]
 	* Revised and fixed all comodo,yuno,amatsu,gonryun,umbala mobs and drops. Also fixed mvp and woe mobs too [Shadowlady]
 	* Fixed crash from guild skill point allocation, there seems to be a problem with guilds loading still. [Valaris]
 	* Fixed committed typo in map_athena.conf, remove aria's dev npc (was giving errors preventing server startup). [Valaris]
