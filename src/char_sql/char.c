@@ -976,8 +976,9 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	sql_row = mysql_fetch_row(sql_res);
 
 	i=mysql_num_rows(sql_res);
-
-	printf("mysql: %d\n",i);
+	
+	// debugg
+	//printf("mysql: %d\n",i);
 	
 	// Create an entry for the character if it doesnt already have one
 	if(!i) {
@@ -988,7 +989,6 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 
 		if (sql_res) {
 			for(i=0;i<20;i++) {
-				//printf("\nLOL\n");
 				p->friend_id[i] = atoi(sql_row[i*2 +2]);
 				sprintf(p->friend_name[i], "%s", sql_row[i*2 +3]);
 			}
@@ -1004,9 +1004,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 		set_char_online(char_id,p->account_id);
 	}
 
-	printf("character data loaded]\n");	//ok. all data load successfuly!
-
-	//printf("char cloade");
+	printf("char data load success]\n");	//ok. all data load successfuly!
 
 	return 1;
 }
