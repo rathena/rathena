@@ -35,6 +35,9 @@ Other Ppl
 Date		Added
 ======
 
+03/16
+        * Fixed some typos in /cites/payon.txt, thanks to Hibiki [celest]
+
 03/15
         * Fixed some typos in shops.txt, thanks to Dino9021 [celest]
         * Fixed some bugs in the 32 new hats script, the custom jobchanger and platinum

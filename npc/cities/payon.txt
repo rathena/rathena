@@ -51,7 +51,7 @@ payon_in01.gat,177,91,5	script	Young Man	88,{
 	close;
 }
 
-payon.gat,104,62,5 script	Young Man	88,{
+payon.gat,104,62,5	script	Young Man	88,{
 	mes "[Young Man]";
 	mes "I still remember the story my grandfather told me long ago about the Amulet that possessed an Evil Power within it.";
 	next;
@@ -70,7 +70,7 @@ payon.gat,104,62,5 script	Young Man	88,{
 	close;
 }
 
-payon_in01.gat,180,7,0 script	Waitress	90,{
+payon_in01.gat,180,7,0	script	Waitress	90,{
 	mes "[Waitress]";
 	mes "People in this place seem to be busy all the time, they come and go to be Archers or to buy arrows, I have to stick with this small shop.";
 	mes "I feell so melancholy and bored.";
@@ -147,7 +147,7 @@ L_Menu4:
  	close;
 }
 
-payon.gat,193,116,1 script	Woman	66,{
+payon.gat,193,116,1	script	Woman	66,{
 	mes "[Woman]";
 	mes "Welcome to Payon.  You must have had a hard time getting through the thick forest?  I hope you didn't run into too much trouble?";
 	next;
@@ -336,7 +336,7 @@ L_Menu3:
 	close;
 }
 
-payon_in01.gat,66,64,5 script	Archer Wolt	88,{
+payon_in01.gat,66,64,5	script	Archer Wolt	88,{
 	mes "[Archer Wolt]";
 	mes "Archers should practice as much as they can. Otherwise they won't be an expert.";
 	mes "Are you new here? Howdy!";
@@ -546,7 +546,7 @@ L_Menu3:
 	close;	
 }
 
-payon_in01.gat,144,9,2 script	Monster Scholar	98,{
+payon_in01.gat,144,9,2	script	Monster Scholar	98,{
 	mes "[Monster Scholar Vuicokk]";
 	mes "Nice to meet you. I am Vuicokk the cholar in the monster research organization of Rune Midgard.";
 	mes "Do you have any questions about monsters of Rune Midgard?";
@@ -771,7 +771,7 @@ payon.gat,160,185,0	script	Billboard	111,{
 
 payon.gat,173,238,4	script	Unknown	740,{
 	mes "[Unknown]";
-	mes "This is an new kRO Npc";
+	mes "This is a new kRO Npc";
 	mes "This Npc hasn't been translated yet";
 	mes "If by accident you know what this npc is and could translate it";
 	mes "Please contact Darkchild (eAthena Dev)";
@@ -780,36 +780,36 @@ payon.gat,173,238,4	script	Unknown	740,{
 
 payon_in03.gat,75,129,4	script	Unknown	704,{
 	mes "[Unknown]";
-	mes "This is an new kRO Npc";
+	mes "This is a new kRO Npc";
 	mes "This Npc hasn't been translated yet";
-	mes "I by excident you know what this npc is and could translate it";
+	mes "If by accident you know what this npc is and could translate it";
 	mes "Please contact Darkchild (eAthena Dev)";
 	close;
 }
 
 payon_in03.gat,117,128,4	script	Unknown	704,{
 	mes "[Unknown]";
-	mes "This is an new kRO Npc";
+	mes "This is a new kRO Npc";
 	mes "This Npc hasn't been translated yet";
-	mes "I by excident you know what this npc is and could translate it";
+	mes "If by accident you know what this npc is and could translate it";
 	mes "Please contact Darkchild (eAthena Dev)";
 	close;
 }
 
 payon_in03.gat,118,119,8	script	Unknown	101,{
 	mes "[Unknown]";
-	mes "This is an new kRO Npc";
+	mes "This is a new kRO Npc";
 	mes "This Npc hasn't been translated yet";
-	mes "I by excident you know what this npc is and could translate it";
+	mes "If by accident you know what this npc is and could translate it";
 	mes "Please contact Darkchild (eAthena Dev)";
 	close;
 }
 
 payon_in03.gat,131,7,4	script	Unknown	59,{
 	mes "[Unknown]";
-	mes "This is an new kRO Npc";
+	mes "This is a new kRO Npc";
 	mes "This Npc hasn't been translated yet";
-	mes "I by excident you know what this npc is and could translate it";
+	mes "If by accident you know what this npc is and could translate it";
 	mes "Please contact Darkchild (eAthena Dev)";
 	close;
 }
