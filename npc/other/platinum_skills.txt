@@ -100,5 +100,11 @@ LskillsEND:
 mes "[Platinum Skill NPC]";
 mes "Have a nice day.";
 close;
+Lnogetskills:
+mes "[Platinum Skill NPC]";
+mes "Aww, how come you dont want my special skills?";
+mes "*sob* FINE!";
+mes "Have a nice day... >.>";
+close;
 }
 
