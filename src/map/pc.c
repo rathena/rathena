@@ -2106,13 +2106,7 @@ int pc_calcspeed (struct map_session_data *sd)
 
 	b_speed = sd->speed;
 	sd->speed = DEFAULT_WALK_SPEED ;
-	sd->speed_rate = 100;
-	sd->speed_add_rate = 100;
-	if(sd->speed_add_rate != 100)
-		sd->speed_rate += sd->speed_add_rate - 100;
-	if(sd->aspd_add_rate != 100)
-		sd->aspd_rate += sd->aspd_add_rate - 100;
-
+	
 	if(sd->sc_count){
 		if(sd->sc_data[SC_INCREASEAGI].timer!=-1 && sd->sc_data[SC_QUAGMIRE].timer == -1 && sd->sc_data[SC_DONTFORGETME].timer == -1){	// ‘¬“x?‰Á
 			sd->speed -= sd->speed *25/100;

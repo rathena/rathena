@@ -4396,55 +4396,93 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case GD_BATTLEORDER:
 		{
 			struct guild *g = NULL;
-			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
-				strcmp(sd->status.name,g->master)==0) {
-				for(i = 0; i < g->max_member; i++) {
-					if ((dstsd = g->member[i].sd) != NULL && sd->bl.m == dstsd->bl.m) {
-						clif_skill_nodamage(src,bl,skillid,skilllv,1);
-						skill_status_change_start(&dstsd->bl,SC_BATTLEORDERS,skilllv,0,0,0,0,0 );
-					}
+			// Only usable during WoE
+			if (!agit_flag) {
+				clif_skill_fail(sd,skillid,0,0);
+				map_freeblock_unlock();
+				return 0;
+			}
+			if(flag&1) {
+				if (dstsd && dstsd->status.guild_id == sd->status.guild_id)	{
+					skill_status_change_start(&dstsd->bl,SC_BATTLEORDERS,skilllv,0,0,0,0,0 );
 				}
+			}
+			else if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
+				strcmp(sd->status.name,g->master)==0) {
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				map_foreachinarea(skill_area_sub,
+					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
+					src,skillid,skilllv,tick, flag|BCT_ALL|1,
+					skill_castend_nodamage_id);
 			}
 		}
 		break;
 	case GD_REGENERATION:
 		{
 			struct guild *g = NULL;
-			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
-				strcmp(sd->status.name,g->master)==0) {
-				for(i = 0; i < g->max_member; i++) {
-					if ((dstsd = g->member[i].sd) != NULL && sd->bl.m == dstsd->bl.m) {
-						clif_skill_nodamage(src,bl,skillid,skilllv,1);
-						skill_status_change_start(&dstsd->bl,SC_REGENERATION,skilllv,0,0,0,0,0 );
-					}
+			// Only usable during WoE
+			if (!agit_flag) {
+				clif_skill_fail(sd,skillid,0,0);
+				map_freeblock_unlock();
+				return 0;
+			}
+			if(flag&1) {
+				if (dstsd && dstsd->status.guild_id == sd->status.guild_id)	{
+					skill_status_change_start(&dstsd->bl,SC_REGENERATION,skilllv,0,0,0,0,0 );
 				}
+			}
+			else if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
+				strcmp(sd->status.name,g->master)==0) {
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				map_foreachinarea(skill_area_sub,
+					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
+					src,skillid,skilllv,tick, flag|BCT_ALL|1,
+					skill_castend_nodamage_id);
 			}
 		}
 		break;
 	case GD_RESTORE:		
 		{
 			struct guild *g = NULL;
-			int hp, sp;
-			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
-				strcmp(sd->status.name,g->master)==0) {
-				for(i = 0; i < g->max_member; i++) {
-					if ((dstsd = g->member[i].sd) != NULL && sd->bl.m == dstsd->bl.m) {
-						hp = dstsd->status.max_hp*0.9;
-						sp = dstsd->status.sp + hp <= dstsd->status.max_sp ? hp : dstsd->status.max_sp - dstsd->status.sp;
-						clif_skill_nodamage(src,bl,AL_HEAL,hp,1);
-						battle_heal(NULL,bl,hp,sp,0);
-					}
+			// Only usable during WoE
+			if (!agit_flag) {
+				clif_skill_fail(sd,skillid,0,0);
+				map_freeblock_unlock();
+				return 0;
+			}
+			if(flag&1) {
+				if (dstsd && dstsd->status.guild_id == sd->status.guild_id)	{
+					int hp, sp;
+					hp = dstsd->status.max_hp*0.9;
+					sp = dstsd->status.max_sp*0.9;
+					sp = dstsd->status.sp + sp <= dstsd->status.max_sp ? sp : dstsd->status.max_sp - dstsd->status.sp;
+					clif_skill_nodamage(src,bl,AL_HEAL,hp,1);
+					battle_heal(NULL,bl,hp,sp,0);
 				}
+			}
+			else if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
+				strcmp(sd->status.name,g->master)==0) {
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				map_foreachinarea(skill_area_sub,
+					src->m,src->x-15,src->y-15,src->x+15,src->y+15,0,
+					src,skillid,skilllv,tick, flag|BCT_ALL|1,
+					skill_castend_nodamage_id);
 			}
 		}
 		break;
 	case GD_EMERGENCYCALL:
 		{
 			struct guild *g = NULL;
+			// Only usable during WoE
+			if (!agit_flag) {
+				clif_skill_fail(sd,skillid,0,0);
+				map_freeblock_unlock();
+				return 0;
+			}
 			// i don't know if it actually summons in a circle, but oh well. ;P
-			int dx[9]={-2, 0, 2,-2, 0, 2,-2, 0, 2};
-			int dy[9]={-2,-2,-2, 0, 0, 0, 2, 2, 2};
-			int j = 0;
+			int dx[9]={-1, 1, 0, 0,-1, 1,-1, 1, 0};
+			int dy[9]={ 0, 0, 1,-1, 1,-1,-1, 1, 0};
+			int c, j = 0;
 			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
 				strcmp(sd->status.name,g->master)==0) {
 				for(i = 0; i < g->max_member; i++, j++) {
@@ -4452,6 +4490,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 					if ((dstsd = g->member[i].sd) != NULL && sd != dstsd &&
 						!map[sd->bl.m].flag.nowarpto && !map[dstsd->bl.m].flag.nowarp) {
 						clif_skill_nodamage(src,bl,skillid,skilllv,1);
+						if ((c=read_gat(sd->bl.m,sd->bl.x+dx[j],sd->bl.y+dy[j]))==1 || c==5)
+							dx[j] = dy[j] = 0;
 						pc_setpos(dstsd, sd->mapname, sd->bl.x+dx[j], sd->bl.y+dy[j], 2);
 					}
 				}
