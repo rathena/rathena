@@ -54,6 +54,9 @@ struct socket_data *session[FD_SETSIZE];
 static int null_parse(int fd);
 static int (*default_func_parse)(int) = null_parse;
 
+// fdが不正な時に代わりに読み書きするバッファ
+unsigned char socket_dummy[SOCKET_DUMMY_SIZE];
+
 static int null_console_parse(char *buf);
 static int (*default_console_parse)(char*) = null_console_parse;
 
@@ -431,7 +434,10 @@ int delete_session(int fd)
 
 int realloc_fifo(int fd,int rfifo_size,int wfifo_size)
 {
-	struct socket_data *s=session[fd];
+	struct socket_data *s;
+
+	if (fd <= 0) return 0;
+	s = session[fd];
 	if( s->max_rdata != rfifo_size && s->rdata_size < rfifo_size){
 		RECREATE(s->rdata, unsigned char, rfifo_size);
 		s->max_rdata  = rfifo_size;
@@ -445,7 +451,10 @@ int realloc_fifo(int fd,int rfifo_size,int wfifo_size)
 
 int WFIFOSET(int fd,int len)
 {
-	struct socket_data *s=session[fd];
+	struct socket_data *s;
+
+	if (fd <= 0) return 0;
+	s = session[fd];
 	if (s == NULL  || s->wdata == NULL)
 		return 0;
 	if( s->wdata_size+len+16384 > s->max_wdata ){
@@ -531,7 +540,10 @@ void do_socket(void)
 
 int RFIFOSKIP(int fd,int len)
 {
-	struct socket_data *s=session[fd];
+	struct socket_data *s;
+
+	if (fd <= 0) return 0;
+	s = session[fd];
 
 	if (s->rdata_size-s->rdata_pos-len<0) {
 		fprintf(stderr,"too many skip\n");

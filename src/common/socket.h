@@ -22,24 +22,30 @@ extern time_t stall_time_;
 
 // define declaration
 
-#define RFIFOP(fd,pos) (session[fd]->rdata+session[fd]->rdata_pos+(pos))
-#define RFIFOB(fd,pos) (*(unsigned char*)(session[fd]->rdata+session[fd]->rdata_pos+(pos)))
-#define RFIFOW(fd,pos) (*(unsigned short*)(session[fd]->rdata+session[fd]->rdata_pos+(pos)))
-#define RFIFOL(fd,pos) (*(unsigned int*)(session[fd]->rdata+session[fd]->rdata_pos+(pos)))
+// fdが不正な時に代わりに読み書きするバッファ
+#define SOCKET_DUMMY_SIZE 32768
+extern unsigned char socket_dummy[SOCKET_DUMMY_SIZE];
+
+#define RFIFOSPACE(fd) (fd <= 0 ? SOCKET_DUMMY_SIZE : session[fd]->max_rdata-session[fd]->rdata_size)
+#define RFIFOP(fd,pos) (fd <= 0 ? socket_dummy : session[fd]->rdata+session[fd]->rdata_pos+(pos))
+// use function instead of macro.
+#define RFIFOB(fd,pos) (*(unsigned char*)RFIFOP(fd,pos))
+#define RFIFOW(fd,pos) (*(unsigned short*)RFIFOP(fd,pos))
+#define RFIFOL(fd,pos) (*(unsigned int*)RFIFOP(fd,pos))
+#define RFIFOREST(fd)  (fd <= 0 ? 0 : session[fd]->rdata_size-session[fd]->rdata_pos)
+#define RFIFOFLUSH(fd) (fd <= 0 ? 0 : memmove(session[fd]->rdata,RFIFOP(fd,0),RFIFOREST(fd)),session[fd]->rdata_size=RFIFOREST(fd),session[fd]->rdata_pos=0)
 //#define RFIFOSKIP(fd,len) ((session[fd]->rdata_size-session[fd]->rdata_pos-(len)<0) ? (fprintf(stderr,"too many skip\n"),exit(1)) : (session[fd]->rdata_pos+=(len)))
-#define RFIFOREST(fd) (session[fd]->rdata_size-session[fd]->rdata_pos)
-#define RFIFOFLUSH(fd) (memmove(session[fd]->rdata,RFIFOP(fd,0),RFIFOREST(fd)),session[fd]->rdata_size=RFIFOREST(fd),session[fd]->rdata_pos=0)
-#define RFIFOSPACE(fd) (session[fd]->max_rdata-session[fd]->rdata_size)
+
 #define RBUFP(p,pos) (((unsigned char*)(p))+(pos))
 #define RBUFB(p,pos) (*(unsigned char*)RBUFP((p),(pos)))
 #define RBUFW(p,pos) (*(unsigned short*)RBUFP((p),(pos)))
 #define RBUFL(p,pos) (*(unsigned int*)RBUFP((p),(pos)))
 
-#define WFIFOSPACE(fd) (session[fd]->max_wdata-session[fd]->wdata_size)
-#define WFIFOP(fd,pos) (session[fd]->wdata+session[fd]->wdata_size+(pos))
-#define WFIFOB(fd,pos) (*(unsigned char*)(session[fd]->wdata+session[fd]->wdata_size+(pos)))
-#define WFIFOW(fd,pos) (*(unsigned short*)(session[fd]->wdata+session[fd]->wdata_size+(pos)))
-#define WFIFOL(fd,pos) (*(unsigned int*)(session[fd]->wdata+session[fd]->wdata_size+(pos)))
+#define WFIFOSPACE(fd) (fd <= 0 ? SOCKET_DUMMY_SIZE : session[fd]->max_wdata-session[fd]->wdata_size)
+#define WFIFOP(fd,pos) (fd <= 0 ? socket_dummy : session[fd]->wdata+session[fd]->wdata_size+(pos))
+#define WFIFOB(fd,pos) (*(unsigned char*)WFIFOP(fd,pos))
+#define WFIFOW(fd,pos) (*(unsigned short*)WFIFOP(fd,pos))
+#define WFIFOL(fd,pos) (*(unsigned int*)WFIFOP(fd,pos))
 // use function instead of macro.
 //#define WFIFOSET(fd,len) (session[fd]->wdata_size = (session[fd]->wdata_size+(len)+2048 < session[fd]->max_wdata) ? session[fd]->wdata_size+len : session[fd]->wdata_size)
 #define WBUFP(p,pos) (((unsigned char*)(p))+(pos))

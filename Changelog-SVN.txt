@@ -1,6 +1,7 @@
 Date	Added
 
 02/26
+        * Added jA's dummy socket to prevent fd crashes [celest]
         * Added some jA script commands: [Lupus] (first steps to add ELSE, FOR, WHILE, etc)
 	  - getusersname (works like @WHO ATCommand, outputs by 10 names in the Pop-up window)
 	  - dispbottom (print message in the common chat window)
