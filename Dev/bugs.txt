@@ -239,3 +239,17 @@ Problem:	Problems with View ID od wearable Items / Weapons
 		You can see both Knife + Shield in a hand
 Assigned:	N/A
 Progress:	0%
+
+Problem:	[item exploit] Hunters can set traps not consuming the TRAPS ITEMS, when Bards
+		use their special support skill.
+		Then Hunters can collect these traps for free... And then sell, etc.
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Speed hack and other proxy-like hacks
+		they change/double selected packets for different exploits:
+			dupe, multiattack (destroy Emp in 1 minute.) etc...
+		We should check packets, should keep eye on frequency of users packets
+			and ban / kick / log funkers
+Assigned:	N/A
+Progress:	0%
