@@ -721,7 +721,7 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 	if (!*str)
 		return AtCommand_None;
 
-	type = atcommand(gmlvl > 0 ? gmlvl : pc_isGM(sd), str, &info);
+	type = atcommand(sd, gmlvl > 0 ? gmlvl : pc_isGM(sd), str, &info);
 	if (type != AtCommand_None) {
 		char command[100];
 		char output[200];
@@ -747,10 +747,6 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 			}
 		}
 
-		// ToDo: Fix Logs :)
-		if((log_config.gm) && (info.level >= log_config.gm))
-			log_atcommand(sd, message);
-
 		return info.type;
 	}
 
@@ -761,7 +757,7 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
  *
  *------------------------------------------
  */
-AtCommandType atcommand(const int level, const char* message, struct AtCommandInfo* info) {
+AtCommandType atcommand(struct map_session_data* sd, const int level, const char* message, struct AtCommandInfo* info) {
 	char* p = (char *)message; // it's 'char' and not 'const char' to have possibility to modify the first character if necessary
 
 	if (!info)
@@ -794,6 +790,8 @@ AtCommandType atcommand(const int level, const char* message, struct AtCommandIn
 				return AtCommand_None;
 			else
 				return AtCommand_Unknown;
+		} else if((log_config.gm) && (atcommand_info[i].level >= log_config.gm)) {
+			log_atcommand(sd, message);
 		}
 		memcpy(info, &atcommand_info[i], sizeof atcommand_info[i]);
 	} else {

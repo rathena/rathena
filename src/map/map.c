@@ -2680,8 +2680,8 @@ int do_init(int argc, char *argv[]) {
 
 #ifndef TXT_ONLY
 	unsigned char *SQL_CONF_NAME="conf/inter_athena.conf";
-	unsigned char *LOG_CONF_NAME="conf/log_athena.conf";
 #endif
+	unsigned char *LOG_CONF_NAME="conf/log_athena.conf";
 	unsigned char *MAP_CONF_NAME = "conf/map_athena.conf";
 	unsigned char *BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
 	unsigned char *ATCOMMAND_CONF_FILENAME = "conf/atcommand_athena.conf";
@@ -2715,10 +2715,10 @@ int do_init(int argc, char *argv[]) {
 			GRF_PATH_FILENAME = argv[i+1];
 #ifndef TXT_ONLY
 		else if (strcmp(argv[i],"--sql_config") == 0 || strcmp(argv[i],"--sql-config") == 0)
-		    SQL_CONF_NAME = argv[i+1];
-		else if (strcmp(argv[i],"--log_config") == 0 || strcmp(argv[i],"--log-config") == 0)
-		    LOG_CONF_NAME = argv[i+1];		
+		    SQL_CONF_NAME = argv[i+1];	
 #endif /* not TXT_ONLY */
+		else if (strcmp(argv[i],"--log_config") == 0 || strcmp(argv[i],"--log-config") == 0)
+		    LOG_CONF_NAME = argv[i+1];	
 		else if (strcmp(argv[i],"--run_once") == 0)	// close the map-server as soon as its done.. for testing [Celest]
 			runflag = 0;
 	}
@@ -2758,8 +2758,8 @@ int do_init(int argc, char *argv[]) {
 	script_config_read(SCRIPT_CONF_NAME);
 #ifndef TXT_ONLY
 	sql_config_read(SQL_CONF_NAME);
-	log_config_read(LOG_CONF_NAME);
 #endif /* not TXT_ONLY */
+	log_config_read(LOG_CONF_NAME);
 
 	atexit(do_final);
 

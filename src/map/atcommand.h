@@ -252,6 +252,7 @@ AtCommandType
 is_atcommand(const int fd, struct map_session_data* sd, const char* message, int gmlvl);
 
 AtCommandType atcommand(
+	struct map_session_data *sd,
 	const int level, const char* message, AtCommandInfo* info);
 int get_atcommand_level(const AtCommandType type);
 

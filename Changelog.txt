@@ -1,5 +1,7 @@
 Date	Added
 01/04
+	* Fixed GM Command Logging (Not sure why TXT logging still isn't working properly :( ) [Codemaster] [SVN 907]
+	* Fixed one of Lupus' additions to the item_db [Codemaster] [SVN 907]
         * Fixed Seismic Weapon Skill (it 100% didn't break target's weapon at 4 level of the skill) [Lupus]
 01/02
         * Re-fixed map-server crashing if an empty line is in skill_castnodex.txt,

@@ -466,51 +466,51 @@ int log_config_read(char *cfgName)
 
 			else if(strcmpi(w1, "log_branch") == 0) {
 				strcpy(log_config.log_branch, w2);
-				if(log_config.branch == 1)
+				if(log_config.branch > 0 && log_config.sql_logs < 1)
 					printf("Logging Dead Branch Usage to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_drop") == 0) {
 				strcpy(log_config.log_drop, w2);
-				if(log_config.drop == 1)
+				if(log_config.drop > 0 && log_config.sql_logs < 1)
 					printf("Logging Item Drops to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_mvpdrop") == 0) {
 				strcpy(log_config.log_mvpdrop, w2);
-				if(log_config.mvpdrop == 1)
+				if(log_config.mvpdrop > 0 && log_config.sql_logs < 1)
 					printf("Logging MVP Drops to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_present") == 0) {
 				strcpy(log_config.log_present, w2);
-				if(log_config.present == 1)
+				if(log_config.present > 0 && log_config.sql_logs < 1)
 					printf("Logging Present Usage & Results to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_produce") == 0) {
 				strcpy(log_config.log_produce, w2);
-				if(log_config.produce == 1)
+				if(log_config.produce > 0 && log_config.sql_logs < 1)
 					printf("Logging Producing to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_refine") == 0) {
 				strcpy(log_config.log_refine, w2);
-				if(log_config.refine == 1)
+				if(log_config.refine > 0 && log_config.sql_logs < 1)
 					printf("Logging Refining to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_trade") == 0) {
 				strcpy(log_config.log_trade, w2);
-				if(log_config.trade == 1)
+				if(log_config.trade > 0 && log_config.sql_logs < 1)
 				{
 					printf("Logging Item Trades");
-					if(log_config.zeny == 1)
+					if(log_config.zeny > 0)
 						printf("and Zeny Trades");
 					printf(" to file `%s`.txt\n", w2);
 				}
 			} else if(strcmpi(w1, "log_vend") == 0) {
 				strcpy(log_config.log_vend, w2);
-				if(log_config.vend == 1)
+				if(log_config.vend > 0  && log_config.sql_logs < 1)
 					printf("Logging Vending to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_gm") == 0) {
 				strcpy(log_config.log_gm, w2);
-				if(log_config.gm > 0)
+				if(log_config.gm > 0 && log_config.sql_logs < 1)
 					printf("Logging GM Level %d Commands to file `%s`.txt\n", log_config.gm, w2);
 			} else if(strcmpi(w1, "log_npc") == 0) {
 				strcpy(log_config.log_npc, w2);
-				if(log_config.npc > 0)
+				if(log_config.npc > 0 && log_config.sql_logs < 1)
 					printf("Logging NPC 'logmes' to file `%s`.txt\n", w2);
 			//support the import command, just like any other config
-			} else if(strcmpi(w1,"import")==0){
+			} else if(strcmpi(w1,"import") == 0) {
 				log_config_read(w2);
 			}
 		}
