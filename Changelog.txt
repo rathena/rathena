@@ -1,6 +1,8 @@
 Date	Added
 
 01/28
+	* new GC link http://amber.stormbirds.org/~joshs/gc6.4.tar.gz
+	  This fixes some issues... works better
         * Added macros skill_chk and skill_get to check for out of bounds errors when
           retrieving info from the skill_db [celest]
 
