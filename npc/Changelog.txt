@@ -40,6 +40,8 @@ Date		Added
 		exploit safeguards. Used Lupus's "loopless" technique.
 	  - juice_maker.txt: Added subfunction for juice making.  Also changed amount of
 		fruit needed to 1.
+	  - milk_trader.txt: Used Lupus's "loopless" technique.  Added input exploit safegaurd.
+	  - clothes_dyer.txt: Disabled dye for male Assassins.
 	  - xmas.txt: Corrected some typos. [kobra_k88]
 	* - Removed Empty Bottle from amatsu shops to prevent exploits.
 	  - Fixed Npc Position on Lutie( warper.txt and warper2.txt). [shadow]

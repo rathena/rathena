@@ -1,20 +1,19 @@
-//===== eAthena Script ======================================= 
+//===== eAthena Script =======================================
 //= Milk Trader
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
-//= 1.1
-//===== Compatible With: ===================================== 
+//===== Current Version: =====================================
+//= 1.2a
+//===== Compatible With: =====================================
 //= eAthena 7.15 +
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= trades bottles for milk
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Fully working
 //= 1.1 Negative input bug fixed [Lupus]
 //= 1.2 Raised the price to close zeny exploit [Lupus]
-//============================================================ 
-
-
+//= 1.2a Switched to Lupus's "loopless" technique.[kobra_k88]
+//============================================================
 
 
 // Milk Trader -------------------------------------------------------------
@@ -22,29 +21,27 @@ prontera.gat,71,131,7	script	Milk Trader	86,{
 	mes "[Milk Trader]";
 	mes "If you bring me an empty bottle and 20 Zeny, I will exchange it for 1 bottle of milk.";
 	next;
-	menu "-Exchange all empty bottles",M_0, "-Let me set the amount.",M_1, "-Cancel",M_End;
+	menu "-Exchange as many as possible.",M_0, "-Let me set the amount.",M_1, "-Cancel",M_End;
 
 	M_0:
-		if(countitem(713) < 1) goto L_NoBottle;
-		if(Zeny < 20) goto L_NoZeny;
-
-		sL_GetMilk:
-			if(countitem(713)<1 || Zeny<20) goto M_End;
-			getitem 519,1;
-			delitem 713,1;
-			set Zeny, Zeny - 20;
-			goto sL_GetMilk;
+		set @amount, 1000;
+		if(zeny/20 < @amount) set @amount, zeny/20;
+		if(countitem(713) < @amount) set @amount, countitem(713);
+		if(@amount > 0) goto L_Milk;
+		mes "[Milk Trader]";
+		mes "..... Are you trying to make a fool of me.... ?";
+		close;
 
 	M_1:
-		set @INPUT,0;
-		input @INPUT;
-		if(@INPUT < 1 || @INPUT > 100) goto M_End;
-		if(countitem(713) < @INPUT) goto L_NoBottle;
-		if(Zeny < (@INPUT*20)) goto L_NoZeny;
-		getitem 519, @INPUT;
-		delitem 713, @INPUT;
-		set Zeny, Zeny - (@INPUT*20);
-		goto M_End;
+		input @amount;
+		if(@amount < 1 || @amount > 1000) goto M_End;
+		if(countitem(713) < @amount) goto L_NoBottle;
+		if(zeny < (@amount*20)) goto L_NoZeny;
+
+	L_Milk:
+		getitem 519, @amount;
+		delitem 713, @amount;
+		set zeny, zeny - (@amount*20);
 
 	M_End:
 		mes "[Milk Trader]";
@@ -59,6 +56,6 @@ prontera.gat,71,131,7	script	Milk Trader	86,{
 
 	L_NoZeny:
 		mes "[Milk Trader]";
-		mes "You need more money.";
+		mes "You need more zeny.";
 		close;
 }

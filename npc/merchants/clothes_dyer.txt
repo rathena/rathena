@@ -47,6 +47,7 @@ M_Menu:
 	L_Dye:
 		mes "[Dyer Ginedin Rephere]";
 		if(Class==0) goto sL_Novice;
+		if(Class==12) goto L_Assassin_M;
 		mes "Oh... you need my work? Well... okay sounds good.";
 		next;
 		mes "[Dyer Ginedin Rephere]";
@@ -70,7 +71,7 @@ Male_dye:
 		if(Class==8 || Class==15) goto L_Priest_Monk_M;
 		if(Class==9 || Class==11 || Class==19 || Class==23) goto L_Wiz_Hunt_Bard_SN_M;
 		if(Class==10 || Class==18) goto L_BlackSmith_Alchemist_M;
-		if(Class==12) goto L_Assassin_M;
+//		if(Class==12) goto L_Assassin_M;
 		if(Class==17) goto L_Rogue_M;
 	
 	//1 Class
@@ -125,11 +126,13 @@ Male_dye:
 		set @black, 4;
 		menu "- Red",L_Dye_Red,"- Green",L_Dye_Green,"- White",L_Dye_White,"- Black",L_Dye_Black,"- Cancel",L_End;
 	L_Assassin_M:
-		set @blue, 1;
-		set @red, 2;
-		set @green, 3;
-		set @black, 4;
-		menu "- Red",L_Dye_Red,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
+		mes "I'm am sorry but I currently cannot dye male Assassin clothing.";
+		close;
+//		set @blue, 1;
+//		set @red, 2;
+//		set @green, 3;
+//		set @black, 4;
+//		menu "- Red",L_Dye_Red,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
 	L_Rogue_M:
 		set @red, 2;
 		set @green, 3;
@@ -310,12 +313,13 @@ L_Dye_Yellow:
 	L_PriceList:
 		mes "[Dyer Ginedin Rephere]";
 		mes "Here is the list of colors you can choose from and their prices:";
-		mes " - Red: 10000 zeny, 1 Scarlet Dyestuff";
-		mes " - Yellow: 10000 zeny, 1 Lemon Dyestuff";
-		mes " - Violet: 10000 zeny, 1 Violet Dyestuff";
-		mes " - Orange: 10000 zeny, 1 Orange Dyestuff";
-		mes " - Blue: 10000 zeny, 1 CobaltBlue Dyestuff";
-		mes " - Green: 10000 zeny, 1 DarkGreen Dyestuff";
+		mes " ";
+		mes " - ^FF4422Red^000000: 10000 zeny, 1 Scarlet Dyestuff";
+		mes " - ^D5A500Yellow^000000: 10000 zeny, 1 Lemon Dyestuff";
+		mes " - ^AA00AAViolet^000000: 10000 zeny, 1 Violet Dyestuff";
+		mes " - ^FF8800Orange^000000: 10000 zeny, 1 Orange Dyestuff";
+		mes " - ^4422FFBlue^000000: 10000 zeny, 1 CobaltBlue Dyestuff";
+		mes " - ^009500Green^000000: 10000 zeny, 1 DarkGreen Dyestuff";
 		goto M_Menu;
 
 	L_End:
