@@ -1,5 +1,11 @@
 Date	Added
 11/14
+	* Made the Advance jobchangers to kRO standars with the following;
+	 - Checks if you are level 99/50 and 2nd class OR above.
+	 - Checks if you have an Cart of Falcon equiped.
+	 - Checks if you have any Quest Skills, stores a variable on you and gives them back
+	   when you change to 1st advance class.
+	 - Added minimum joblevel to change to an 2nd or 2-2 advance class to job 45 after kro. [Nana]
 	* Fixed loading of AFMs when no resnametable is found. [Valaris]
 	* mob_db.txt: Fixed Golden Thief Bug MVP MOB mode (it wasn't moving/attacking) [Lupus]
 	* Added AFM (Advanced Fusion Map) support, thanks to alexkreuz and fusion. [Valaris]
