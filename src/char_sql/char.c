@@ -3242,11 +3242,7 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 			strcpy(db_path,w2);
 		//Map server option to use SQL db or not
 		}else if(strcmpi(w1,"use_sql_db")==0){ // added for sql item_db read for char server [Valaris]
-			if (strcmpi(w2, "yes")) {
-				db_use_sqldbs = 1;
-			} else if (strcmpi(w2, "no")) {
-				db_use_sqldbs = 0;
-			}
+			db_use_sqldbs = config_switch(w2);
 			printf("Using SQL dbs: %s\n",w2);
 		//custom columns for login database
 		}else if(strcmpi(w1,"login_db_level")==0){
@@ -3405,9 +3401,6 @@ int char_config_read(const char *cfgName) {
 	}
 	fclose(fp);
 
-//Read ItemDB
-	do_init_itemdb();
-
 	return 0;
 }
 
@@ -3443,6 +3436,9 @@ int do_init(int argc, char **argv){
 	sql_config_read(SQL_CONF_NAME);
 
 	printf("charserver configuration reading done.....\n");
+
+	//Read ItemDB
+	do_init_itemdb();
 
 	inter_init((argc > 2) ? argv[2] : inter_cfgName); // inter server √ ±‚»≠
 	printf("interserver configuration reading done.....\n");

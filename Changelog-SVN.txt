@@ -1,6 +1,8 @@
 Date	Added
 
-03/29	* Added three fields to mmo_charstatus - father/mother/child
+03/29
+	* Fixed 'use_sql_db' not read properly in SQL char server, thanks to Wallex
+	* Added three fields to mmo_charstatus - father/mother/child
 	  needed for adoption system [veider]
 	* Added adoption support to charserver SQL version [veider]
 	* Added atcommand_adopt - create a family of three [veider]
