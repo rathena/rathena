@@ -543,12 +543,16 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	}
 
 	diff = 0;
-	for(i=0;i<MAX_SKILL;i++)
-	  if((p->skill[i].id != cp->skill[i].id) || (p->skill[i].lv != cp->skill[i].lv) ||
-	     (p->skill[i].flag != cp->skill[i].flag)) {
-	    diff = 1;
-	    break;
-	  }
+	for(i=0;i<MAX_SKILL;i++) {
+            if ((p.skill[i].lv != 0) && (p.skill[i].id == 0)) 
+                p->skill[i].id = i;
+
+            if((p->skill[i].id != cp->skill[i].id) || (p->skill[i].lv != cp->skill[i].lv) ||
+                (p->skill[i].flag != cp->skill[i].flag)) {
+                diff = 1;
+                break;
+            }
+        }
 
 	if (diff) {
 	//printf("- Save skill data to MySQL!\n");

@@ -416,8 +416,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 	    sd->status.skill[i].id=0;
 	    sd->status.skill[i].lv=0;
 	    sd->status.skill[i].flag=0;
-	  } else if ((sd->status.skill[i].lv != 0) && (sd->status.skill[i].id == 0)) 
-	    sd->status.skill[i].id = i;
+	  }
 	}
 
 	return 0;

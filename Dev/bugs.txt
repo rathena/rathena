@@ -134,11 +134,15 @@ Progress:	-
 Notes:          It works differently now, you have to use it once to *allow* it to
                 activate, and once again to stop it from activating. ^^; [Celest]
 
-Problem:	When you change JOB, you don't lose skills in DB. It means if you were Merchant once 
+Problem:	When you change JOB, you don't lose skills in DB. It
+		means if you were Merchant once  
 		you can buy/sell with discount being Mage, etc.
-		Those skills aren't being shown in the skilltree, but they do work. 
-Assigned:	N/A
-Progress:	0%
+		Those skills aren't being shown in the skilltree, but
+		they do work. 
+                (fixed)
+
+Assigned:	MouseJstr
+Progress:	100%
 
 Problem:	Due to the Guilds CACHE we see some went-offline members as online ones. It is very confusing. You don't know who's really on.
 Assigned:	N/A

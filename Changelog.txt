@@ -1,5 +1,6 @@
 Date	Added
 12/23
+        * Fixed skills still being available after a job change [MouseJstr]
         * Changed pc_alive_timer to use map_id2sd - should be more accurate [celest]
         * Added jA 1084's fix to mob.c - check whether the player is still alive
           when calculating exp [celest]
