@@ -1,5 +1,8 @@
 Date	Added
 
+02/10
+	* Login/Login SQL: fixed the client version check function [Sirius]
+
 02/09
 	* Added conf-tmpl/readme.txt, explaining the import folder [1066: Ajarn]
 	* SQL Char: Rewrote the char_create function (now it's faster/optimized) [Sirius]

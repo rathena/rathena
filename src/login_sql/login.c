@@ -438,9 +438,11 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 
 	//check for lasted version (exe version check) [Sirius]
-        if(check_client_version == 1){
-		if(account->version != client_version_to_connect){
-			return 6;
+	if(account->sex != 0){
+        	if(check_client_version == 1){
+			if(account->version != client_version_to_connect){
+				return 6;
+			}
 		}
 	}
                                                                         
