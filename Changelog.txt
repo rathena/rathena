@@ -1,5 +1,7 @@
 Date	Added
 12/14
+	* The SKILL_MAX_DB was not large enough for current skills
+	  causing memory corruptions and crashes [MouseJstr]
 	* Fixed how socket handles EAGIN errors (retry instead of
 	  disconnecting) [MouseJstr]
 12/13

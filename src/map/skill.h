@@ -4,7 +4,7 @@
 
 #include "map.h"
 
-#define MAX_SKILL_DB			515
+#define MAX_SKILL_DB			750
 #define MAX_SKILL_PRODUCE_DB	150
 #define MAX_PRODUCE_RESOURCE	7
 #define MAX_SKILL_ARROW_DB		150
