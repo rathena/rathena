@@ -748,8 +748,8 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 		}
 
 		// ToDo: Fix Logs :)
-		//if((log_config.gm) && (info.level >= log_config.gm))
-		//	log_atcommand(sd, message);
+		if((log_config.gm) && (info.level >= log_config.gm))
+			log_atcommand(sd, message);
 
 		return info.type;
 	}
