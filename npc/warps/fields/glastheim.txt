@@ -1,0 +1,85 @@
+//===== Athena Script ========================================
+//= Glastheim Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 2.x
+//===== Description: =========================================
+//= Warp Points for Glastheim
+//===== Additional Comments: =================================
+//= Split off npc_warp.txt, 1.1 added gl18-2 [Lupus]
+//============================================================
+
+//Glastheim
+gef_fild06.gat,20,304,0	warp	gef027	3,3,glast_01.gat,375,304
+gl_cas01.gat,135,40,0	warp	gl01	1,1,gl_cas01.gat,144,314
+gl_cas01.gat,149,314,0	warp	gl02	1,1,gl_prison.gat,14,70
+gl_cas01.gat,167,191,0	warp	gl03	1,1,gl_prison.gat,14,70
+gl_cas01.gat,185,236,0	warp	gl06	1,1,gl_cas01.gat,163,191
+gl_cas01.gat,200,165,0	warp	gl10	1,1,gl_cas02.gat,104,25
+gl_cas01.gat,200,18,0	warp	gl7-1	2,2,glast_01.gat,200,294
+gl_cas01.gat,215,236,0	warp	gl07	1,1,gl_cas01.gat,238,192
+gl_cas01.gat,234,192,0	warp	gl04	1,1,gl_prison.gat,14,70
+gl_cas01.gat,371,301,0	warp	gl05	1,1,gl_prison.gat,14,70
+gl_cas01.gat,372,39,0	warp	gl08	1,1,gl_cas01.gat,367,301
+gl_cas02.gat,104,15,0	warp	gl10-1	1,1,gl_cas01.gat,200,160
+gl_cas02.gat,104,193,0	warp	gl8-1	1,1,glast_01.gat,199,325
+gl_church.gat,156,4,0	warp	gl9-1	1,1,glast_01.gat,200,134
+gl_church.gat,16,299,0	warp	gl11	1,1,gl_chyard.gat,147,284
+gl_church.gat,301,46,0	warp	gl12	1,1,gl_chyard.gat,147,15
+gl_chyard.gat,12,149,0	warp	gl22	1,1,gl_sew02.gat,29,270
+gl_chyard.gat,147,12,0	warp	gl12-1	1,1,gl_church.gat,295,46
+gl_chyard.gat,147,287,0	warp	gl11-1	1,1,gl_church.gat,16,295
+gl_dun01.gat,133,277,0	warp	gl25-1	1,1,gl_sew04.gat,101,78
+gl_dun01.gat,225,18,0	warp	gl13	1,1,gl_dun02.gat,224,274
+gl_dun02.gat,224,277,0	warp	gl13-1	1,1,gl_dun01.gat,225,22
+gl_in01.gat,106,125,0	warp	gl5-1	1,1,glast_01.gat,219,357
+gl_in01.gat,118,59,0	warp	gl6-1	1,1,glast_01.gat,234,330
+gl_in01.gat,81,68,0	warp	gl3-1	1,1,glast_01.gat,165,330
+gl_in01.gat,83,174,0	warp	gl4-1	1,1,glast_01.gat,181,357
+gl_knt01.gat,104,204,0	warp	gl15	1,1,gl_knt01.gat,123,292
+gl_knt01.gat,12,148,0	warp	gl14	1,1,gl_knt02.gat,15,140
+gl_knt01.gat,128,292,0	warp	gl15-1	1,1,gl_knt01.gat,104,199
+gl_knt01.gat,150,291,0	warp	gl16	1,1,gl_knt02.gat,157,287
+gl_knt01.gat,150,6,0	warp	gl2-1	2,2,glast_01.gat,74,193
+gl_knt01.gat,231,197,0	warp	gl24-1	1,1,gl_sew02.gat,296,22
+gl_knt01.gat,287,144,0	warp	gl17	1,1,gl_knt02.gat,283,140
+gl_knt02.gat,10,138,0	warp	gl14-1	1,1,gl_knt01.gat,7,148
+gl_knt02.gat,157,292,0	warp	gl16-1	1,1,gl_knt01.gat,150,286
+gl_knt02.gat,289,138,0	warp	gl17-1	1,1,gl_knt01.gat,292,144
+gl_prison.gat,149,183,0	warp	gl18-1	1,1,gl_prison1.gat,150,14
+gl_prison.gat,10,70,4	script	gl18-2	45,1,1,{
+set @r,rand(2);
+if(@r==0) goto w1;
+if(@r==1) goto w2;
+w1: warp "gl_cas01",236,192; end;
+w2: warp "gl_cas01",164,191; end;
+}
+gl_prison1.gat,150,10,0	warp	gl18	1,1,gl_prison.gat,149,178
+gl_prison1.gat,62,187,0	warp	gl10	1,1,gl_sew01.gat,258,255
+gl_sew01.gat,19,21,0	warp	gl19	1,1,gl_sew02.gat,108,291
+gl_sew01.gat,258,258,0	warp	gl09	1,1,gl_prison1.gat,61,183
+gl_sew02.gat,109,294,0	warp	gl19-1	1,1,gl_sew01.gat,19,24
+gl_sew02.gat,16,26,0	warp	gl11	1,1,gl_prison1.gat,61,183
+gl_sew02.gat,290,156,0	warp	gl23	1,1,gl_step.gat,117,124
+gl_sew02.gat,296,18,0	warp	gl24	1,1,gl_knt01.gat,231,192
+gl_sew02.gat,299,294,0	warp	gl20	1,1,gl_sew03.gat,171,283
+gl_sew02.gat,30,273,0	warp	gl22-1	1,1,gl_chyard.gat,15,149
+gl_sew03.gat,171,286,0	warp	gl20-1	1,1,gl_sew02.gat,295,294
+gl_sew03.gat,64,10,0	warp	gl21	1,1,gl_sew04.gat,68,277
+gl_sew04.gat,104,78,0	warp	gl25	1,1,gl_dun01.gat,133,271
+gl_sew04.gat,68,280,0	warp	gl21-1	1,1,gl_sew03.gat,64,13
+gl_step.gat,120,124,0	warp	gl23-1	1,1,gl_sew02.gat,285,158
+gl_step.gat,8,7,0	warp	gl1-1	1,1,glast_01.gat,54,108
+glast_01.gat,162,330,0	warp	gl3	1,1,gl_in01.gat,77,68
+glast_01.gat,179,360,0	warp	gl4	1,1,gl_in01.gat,80,174
+glast_01.gat,199,322,0	warp	gl8	1,1,gl_cas02.gat,104,189
+glast_01.gat,200,137,0	warp	gl9	1,1,gl_church.gat,156,7
+glast_01.gat,200,297,0	warp	gl7	1,1,gl_cas01.gat,199,29
+glast_01.gat,220,360,0	warp	gl5	1,1,gl_in01.gat,110,125
+glast_01.gat,237,330,0	warp	gl6	1,1,gl_in01.gat,122,59
+glast_01.gat,377,304,0	warp	glst001	3,3,gef_fild06.gat,22,304
+glast_01.gat,51,108,0	warp	gl1	1,1,gl_step.gat,12,7
+glast_01.gat,77,193,0	warp	gl2	1,1,gl_knt01.gat,150,15

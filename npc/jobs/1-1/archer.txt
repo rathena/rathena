@@ -1,0 +1,183 @@
+//===== eAthena Script ======================================= 
+//= Archer Job Quest
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.0 
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= <Description> 
+//===== Additional Comments: ================================= 
+//= Fully working
+//============================================================ 
+
+
+// -- Archer Guildsman -- 
+payon_in02.gat,64,71,4	script	Archer Guildsman	59,
+{
+	mes "[Archer Guildsman]";
+	if(Class==Job_Novice && job_archer_q == 1) goto L_Check;
+	mes "Good Day. How may I help you?";
+	next;
+	menu "I would like to become an Archer.",M_0,"What are the Requirements?",M_1,"Never mind.",M_End;
+
+	M_0:
+		mes "[Archer Guildsman]";
+		if(Class == Job_Archer) goto sL_Archer;
+		if(Class != Job_Novice) goto sL_Other;
+
+		mes "You have made an execellent job choice.";
+		mes "Please submit your resume so that I can check your qualifications.";
+		next;
+		mes "(You hand over your resume)";
+		next;
+		mes "[Archer Guildsman]";
+		if(JobLevel < 10) goto sL_LowLvl;
+		set job_archer_q,1;
+		mes "Looks good.  You have the necesssary skills to become an archer....";
+		next;
+		mes "[Archer Guildsman]";
+		mes "but.... ";
+		next;
+		mes "[Archer Guildsman]";
+		mes "you must first pass a test in order to do so.  I hope you didn't think becoming an archer was going to be that easy.  Ha ha!";
+		next;
+		mes "[Archer Guildsman]";
+		mes "A well made bow is essential for a good archer, and high quality wood is in turn essential for a well made bow.";
+		mes "You will be tested on how well you are able to gather high quality wood.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "The higher the quality of the wood you gather the higher your score.";
+		mes "You must recieve a score of ^ff0000at least 25^000000 in order to ^ff0000pass the test^000000.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "You can find wood by battling ^0000ff'Willows'^000000, a type of tree monster found outside of town in Payon forest.";
+		mes "They drop the wood in the form of^0000ff 'Trunks'^000000.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "There are a total of 4 different kind of trunks each with a different point value.  Gather a variety of trunks and bring them back here for me to grade.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "I must warn you, the Willows can be tough monsters so be carefull and remember to rest and use your healing items.  Good luck!";
+		close;
+
+		sL_Archer:
+			mes "Your free spirited nature tells me that you're already an archer....that and the bow and arrow in your hands...Haha";
+			emotion 18;
+			close;
+
+		sL_Other:
+			mes "I'm sorry but you cannot leave your current job to become an Archer...though I can understand why you would want to do so."; 
+			close;
+		
+		sL_LowLvl:
+			mes "It seems that you are not qualified to become an Archer yet.  Please take a look at the job requirments once more.";
+			close;
+
+
+	M_1:
+		mes "[Archer Guildsman]";
+		if(Class == Job_Archer) goto sM_1a;
+		if(Class != Job_Novice) goto sM_1b;
+		mes "Let me explain the requirements for becoming an archer to you:";
+		next;
+		mes "[Archer Guildsman]";
+		mes "First of all, you have to have a job level of 9 and you must learn all of the skills that come with that job level.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "Secondly, you will have to take a test that will determine whether or not you have the skills to become an archer.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "Those are the requirements.  Fullfill them and you will be able to live life as only an Archer can.";
+		close;
+
+		sM_1a:
+			mes "Have you already forgotten how you became an Archer?....";
+			emotion 1;
+			close;
+		sM_1b:
+			mes "Telling you the requirements won't help you become an Archer since you already have another job.";
+			close;	
+
+	M_End:
+		mes "[Archer Guildsman]";
+		mes "Ok then, take care.";
+		close;
+
+L_Check:
+	mes "Oh, I see you've come back.";
+	next;
+	mes "[Archer Guildsman]";	
+	if((CountItem(1066) == 0) && (CountItem(1067) == 0) && (CountItem(1068) == 0) && (Countitem(1019) == 0)) goto sL_NotRdy;
+	if(SkillPoint > 0) goto sL_SkPoints;
+	set @Trunk1, CountItem(1066)*5;
+	set @Trunk2, CountItem(1067)*3;
+	set @Trunk3, CountItem(1068)*2;
+	set @Trunk4, CountItem(1019);
+	set @TrunkTotal, @Trunk1 + @Trunk2 + @Trunk3 + @Trunk4;
+
+	mes "Lets see.....";
+	next;
+	mes "[Archer Guildsman]";
+	mes "You have:";
+	mes "^0000FF" +Countitem(1066)+ "^000000 Fine grained trunks for ^ff0000" +@Trunk1+ "^000000 points,";
+	mes "^0000FF" +Countitem(1067)+ "^000000 Solid trunks for ^ff0000" +@Trunk2+ "^000000 points,";
+	mes "^0000FF" +Countitem(1068)+ "^000000 Barren trunks for ^ff0000" +@Trunk3+ "^000000 points,";
+	mes "^0000FF" +Countitem(1019)+ "^000000 Trunks for ^ff0000" +@Trunk4+ "^000000 points.....";
+	next;
+	mes "[Archer Guildsman]";
+	mes "That gives you a total score of: ^ff0000" +@TrunkTotal+"^000000";
+	next;
+	mes "[Archer Guildsman]";
+	if(@TrunkTotal < 25) goto sL_Failed;
+
+	mes "Very good!  You have passed the test.  Congratulations, you are now fully qualified to become an archer.";
+	emotion 21;
+	next;
+	mes "[Archer Guildsman]";
+	mes "I will now transform you...";
+	next;
+	JobChange Job_Archer;
+	set job_archer_q, 0;
+	mes "[Archer Guildsman]";
+	mes "In exchange for the trunks you brought in I will give you this Bow and some arrows.  Please take them.";
+	next;
+	getitem 1702,1;//Items: Bow_,
+	getitem 1750,200;//Items: Arrow,
+	delitem 1066, countitem(1066);//Items: Fine-grained_Trunk,
+	delitem 1067, countitem(1067);//Items: Solid_Trunk,
+	delitem 1068, countitem(1068);//Items: Barren_Trunk,
+	delitem 1019, countitem(1019);//Items: Trunk,
+	mes "[Archer Guildsman]";
+	mes "An Archer knows no bounds so live your life to its fullest.  I know you will make an exellent archer.";
+	next;
+	mes "[Archer Guildsman]";
+	mes "Farewell and good luck on your journey.";
+	close;
+
+	sL_NotRdy:
+		mes "What?  You didn't bring any trunks back for me to grade?  Let me explain the test requirements again just in case you forgot...";
+		emotion 1;
+		next;
+		mes "[Archer Guildsman]";
+		mes "There are a total of ^5555FF4 different kind of Trunks^000000 each with a different point value.";
+		mes "Gather a variety of Trunks and bring them back here for me to grade.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "You can find Trunks by battling ^0000ff'Willows'^000000, a type of tree monster found outside of town in Payon forest.";
+		close;
+	sL_SkPoints:
+		mes "You need to use up all of your skill points before I can make you an Archer.";
+		close;
+	sL_Failed:
+		mes "I'm sorry but your score is too low.  I'm afraid that you have failed the test.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "Fortunatley for you I'm somewhat softhearted so I'll give you another chance.  Go gather some more trunks and come back.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "Hopefull they will be of a high enough quality for you to pass the test.";
+		close;
+
+}

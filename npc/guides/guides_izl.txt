@@ -1,0 +1,118 @@
+//===== eAthena Script ======================================= 
+//= Izlude Guides
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.0 
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Fully working
+//============================================================
+
+
+
+
+
+// South ----------------------------------------
+izlude.gat,123,87,6	script	Guide	105,{
+	cutin "prt_soldier",2;
+	mes "[Izlude Soldier]";
+	mes "Welcome to Izlude, the satelite city of Prontera and home to the Swordsman Association!.";
+	next;
+	mes "[Izlude Soldier]";
+	mes "We are here to help you find your way.  Please feel free to speak to us anytime you need help.";
+M_Menu:
+	next;
+	menu "View Buildings",M_1, "Notice",M_2, "Cancel",M_End;
+
+	M_1:
+		mes "[Izlude Soldier]";
+		mes "Do you want me to leave indications on the Mini-Map?";
+		next;
+		menu "No Thanks",sM_1a,"Yes Please",sM_1b;
+		
+		sM_1a:
+			set @COMPASS_CHECK,0;
+			goto L_Cont;
+
+		sM_1b:
+			set @COMPASS_CHECK,1;
+
+		L_Cont:
+		mes "[Izlude Soldier]";
+		mes "Please choose a building to view.";
+		next;
+	sM_Menu:
+		menu 	"^FF0000Swordsman Association^000000",M_1_1, "Swordsman Hall",M_1_2, "The Arena",M_1_3,
+			"Izlude Marina",M_1_4, "Armory",M_1_5, "Item Shop",M_1_6, "Wipe all Indications on Mini-Map",M_1_7, "Cancel",M_End;
+
+		M_1_1:
+			mes "[Izlude Soldier]";
+			mes "Do you want to be a Swordsman?  Then head over to the Swordsman Association in the Western part of town.";
+			viewpoint 1,52,140,1,0xFF0000;
+			goto sL_Wipe;
+		M_1_2:
+			mes "[Izlude Soldier]";
+			mes "Swordman Hall, the official Training Center of the Swordsman Assosiation, is located in the Eastern part of town.";
+			viewpoint 1,214,130,2,0x00FF00;
+			goto sL_Wipe;
+		M_1_3:
+			mes "[Izlude Soldier]";
+			mes "The 'Arena' is a popular place for young warriors to train.  Just head north and you'll find it.";
+			mes "You can have fun there, you know.";
+			viewpoint 1,128,225,3,0x00FF00;
+			goto sL_Wipe;
+		M_1_4:
+			mes "[Izlude Soldier]";
+			mes "The beautifull Marina is where you should go if you would like to take a ship to 'Alberta' or 'Byalan Island'.  It is in the Northeastern part of town.";
+			viewpoint 1,200,180,4,0xFF0000;
+			goto sL_Wipe;
+		M_1_5:
+			mes "[Izlude Soldier]";
+			mes "The Armory is located NorthWest of the Center Food Court.";
+			viewpoint 1,111,149,5,0xFF00FF;
+			goto sL_Wipe;
+		M_1_6:
+			mes "[Izlude Soldier]";
+			mes "The Item Shop is located NorthEast of the Center Food Court.";
+			viewpoint 1,148,148,6,0xFF00FF;
+			goto sL_Wipe;
+		M_1_7:
+			set @COMPASS_CHECK, 2;
+
+		sL_Wipe:
+			if(@COMPASS_CHECK != 2) next;
+			if(@COMPASS_CHECK == 1) goto sM_Menu;
+			viewpoint 2,52,140,1,0xFF0000;
+			viewpoint 2,214,130,2,0x00FF00;
+			viewpoint 2,128,225,3,0x00FF00;
+			viewpoint 2,200,180,4,0xFF0000;
+			viewpoint 2,111,149,5,0xFF00FF;
+			viewpoint 2,148,148,6,0xFF00FF;
+			if(@COMPASS_CHECK == 0) goto sM_Menu;
+			mes "[Izlude Soldier]";
+			mes "All indications have been removed";
+			cutin "prt_soldier",255;
+			close;
+
+	M_2:
+		mes "[Izlude Soldier]";
+		mes "We upgraded the Location Guide to the Newest Digital Style.  We hope you like this gorgeous new system.";
+		next;
+		mes "[Izlude Soldier]";
+		mes "Don't forget to refer to the Mini-Map on the Upper-Right corner of your screen.";
+		next;
+		mes "[Izlude Soldier]";
+		mes "If you can't see the Mini-Map, just hit ^0000ff'ctrl+tab'^000000 or Click the ^0000ff'map'^000000 button in the Basic Information Window";
+		mes "Remeber to use the ^ff0000+,-^000000 buttons to adjust the map to your liking.";
+		goto M_Menu;
+
+	M_End:
+		mes "[Izlude Soldier]";
+		mes "Try not to get lost.";
+		cutin "prt_soldier",255;
+		close;
+}

@@ -1,0 +1,33 @@
+
+prontera.gat,156,183,0	script	NPCtimerテスト::npctimerX0000	116,{
+	mes "タイマー値" + getnpctimer(0);
+	mes "タイマー状態" + getnpctimer(1,"npctimerX0000");
+	mes "イベント個数" + getnpctimer(2);
+	menu "初期化",L_INIT,"停止",L_STOP,"再開",L_START,"設定",L_SET;
+	close;
+L_INIT:
+	initnpctimer;
+	close;
+L_STOP:
+	stopnpctimer;
+	close;
+L_START:
+	startnpctimer;
+	close;
+L_SET:
+	input @temp;
+	setnpctimer @temp;
+	close;
+
+OnTimer1000:
+	announce "1秒経過",0;
+	end;
+
+OnTimer5000:
+	announce "5秒経過",0;
+	end;
+
+OnTimer10000:
+	announce "10秒経過",0;
+	end;
+}

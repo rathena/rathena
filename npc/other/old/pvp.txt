@@ -1,0 +1,1455 @@
+// Original Athena Japanese Dev PVP Script
+// *With added NPCs, missing Warps, and Warpers*
+// *Caution! This is an intended version/addition of the Izlude Arena!*
+//
+// Additions/Translation By DiaDz
+// Jan 24, 2004
+//
+//Addition 2v2 script by: Unknown - added
+
+
+
+// Begin PVP Room N
+pvp_y_room.gat,30,85,4	script	Usher 31~40	105,{
+	if ((BaseLevel < 31) || (BaseLevel > 40)) goto LVNG;
+	menu "Prontera Arena [" + getmapusers("pvp_y_1-1.gat") + " / 128]",Lpro,
+	"Izlude Arena [" + getmapusers("pvp_y_1-2.gat") + " / 128]",Lizu,
+	"Payon Arena [" + getmapusers("pvp_y_1-3.gat") + " / 128]",Lpay,
+	"Alberta Arena [" + getmapusers("pvp_y_1-4.gat") + " / 128]",Lalb,
+	"Morroc Arena [" + getmapusers("pvp_y_1-5.gat") + " / 128]",Lmoc,
+	"Quit",Lcancel;
+Lpro:
+	if(getmapusers("pvp_y_1-1.gat") >= 128 ) goto LError;
+	warp "pvp_y_1-1",0,0;
+	break;
+Lizu:
+	if(getmapusers("pvp_y_1-2.gat") >= 128 ) goto LError;
+	warp "pvp_y_1-2",0,0;
+	break;
+Lpay:
+	if(getmapusers("pvp_y_1-3.gat") >= 128 ) goto LError;
+	warp "pvp_y_1-3",0,0;
+	break;
+Lalb:
+	if(getmapusers("pvp_y_1-4.gat") >= 128 ) goto LError;
+	warp "pvp_y_1-4",0,0;
+	break;
+Lmoc:
+	if(getmapusers("pvp_y_1-5.gat") >= 128 ) goto LError;
+	warp "pvp_y_1-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 31~40";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 41 ~ LV 50",0;
+	break;
+}
+pvp_y_room.gat,38,85,4	script	Usher 41~50	105,{
+	if ((BaseLevel < 41) || (BaseLevel > 50)) goto LVNG;
+	menu "Prontera Arena [" + getmapusers("pvp_y_2-1.gat") + " / 128]",Lpro,
+	"Izlude Arena [" + getmapusers("pvp_y_2-2.gat") + " / 128]",Lizu,
+	"Payon Arena [" + getmapusers("pvp_y_2-3.gat") + " / 128]",Lpay,
+	"Alberta Arena [" + getmapusers("pvp_y_2-4.gat") + " / 128]",Lalb,
+	"Morroc Arena [" + getmapusers("pvp_y_2-5.gat") + " / 128]",Lmoc,
+	"Quit",Lcancel;
+Lpro:
+	if(getmapusers("pvp_y_2-1.gat") >= 128 ) goto LError;
+	warp "pvp_y_2-1",0,0;
+	break;
+Lizu:
+	if(getmapusers("pvp_y_2-2.gat") >= 128 ) goto LError;
+	warp "pvp_y_2-2",0,0;
+	break;
+Lpay:
+	if(getmapusers("pvp_y_2-3.gat") >= 128 ) goto LError;
+	warp "pvp_y_2-3",0,0;
+	break;
+Lalb:
+	if(getmapusers("pvp_y_2-4.gat") >= 128 ) goto LError;
+	warp "pvp_y_2-4",0,0;
+	break;
+Lmoc:
+	if(getmapusers("pvp_y_2-5.gat") >= 128 ) goto LError;
+	warp "pvp_y_2-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 41~50";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 40 ~ LV 50",0;
+	break;
+}
+pvp_y_room.gat,46,85,4	script	Usher 51~60	105,{
+	if ((BaseLevel < 51) || (BaseLevel > 60)) goto LVNG;
+	menu "Prontera Arena [" + getmapusers("pvp_y_3-1.gat") + " / 128]",Lpro,
+	"Izlude Arena [" + getmapusers("pvp_y_3-2.gat") + " / 128]",Lizu,
+	"Payon Arena [" + getmapusers("pvp_y_3-3.gat") + " / 128]",Lpay,
+	"Alberta Arena [" + getmapusers("pvp_y_3-4.gat") + " / 128]",Lalb,
+	"Morroc Arena [" + getmapusers("pvp_y_3-5.gat") + " / 128]",Lmoc,
+	"Quit",Lcancel;
+Lpro:
+	if(getmapusers("pvp_y_3-1.gat") >= 128 ) goto LError;
+	warp "pvp_y_3-1",0,0;
+	break;
+Lizu:
+	if(getmapusers("pvp_y_3-2.gat") >= 128 ) goto LError;
+	warp "pvp_y_3-2",0,0;
+	break;
+Lpay:
+	if(getmapusers("pvp_y_3-3.gat") >= 128 ) goto LError;
+	warp "pvp_y_3-3",0,0;
+	break;
+Lalb:
+	if(getmapusers("pvp_y_3-4.gat") >= 128 ) goto LError;
+	warp "pvp_y_3-4",0,0;
+	break;
+Lmoc:
+	if(getmapusers("pvp_y_3-5.gat") >= 128 ) goto LError;
+	warp "pvp_y_3-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 51~60";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 51 ~ LV 60",0;
+	break;
+}
+pvp_y_room.gat,54,85,4	script	Usher 61~70	105,{
+	if ((BaseLevel < 61) || (BaseLevel > 70)) goto LVNG;
+	menu "Prontera Arena [" + getmapusers("pvp_y_4-1.gat") + " / 128]",Lpro,
+	"Izlude Arena [" + getmapusers("pvp_y_4-2.gat") + " / 128]",Lizu,
+	"Payon Arena [" + getmapusers("pvp_y_4-3.gat") + " / 128]",Lpay,
+	"Alberta Arena [" + getmapusers("pvp_y_4-4.gat") + " / 128]",Lalb,
+	"Morroc Arena [" + getmapusers("pvp_y_4-5.gat") + " / 128]",Lmoc,
+	"Quit",Lcancel;
+Lpro:
+	if(getmapusers("pvp_y_4-1.gat") >= 128 ) goto LError;
+	warp "pvp_y_4-1",0,0;
+	break;
+Lizu:
+	if(getmapusers("pvp_y_4-2.gat") >= 128 ) goto LError;
+	warp "pvp_y_4-2",0,0;
+	break;
+Lpay:
+	if(getmapusers("pvp_y_4-3.gat") >= 128 ) goto LError;
+	warp "pvp_y_4-3",0,0;
+	break;
+Lalb:
+	if(getmapusers("pvp_y_4-4.gat") >= 128 ) goto LError;
+	warp "pvp_y_4-4",0,0;
+	break;
+Lmoc:
+	if(getmapusers("pvp_y_4-5.gat") >= 128 ) goto LError;
+	warp "pvp_y_4-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 61~70";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 61 ~ LV 70",0;
+	break;
+}
+pvp_y_room.gat,62,85,4	script	Usher 71~80	105,{
+	if ((BaseLevel < 71) || (BaseLevel > 80)) goto LVNG;
+	menu "Prontera Arena [" + getmapusers("pvp_y_5-1.gat") + " / 128]",Lpro,
+	"Izlude Arena [" + getmapusers("pvp_y_5-2.gat") + " / 128]",Lizu,
+	"Payon Arena [" + getmapusers("pvp_y_5-3.gat") + " / 128]",Lpay,
+	"Alberta Arena [" + getmapusers("pvp_y_5-4.gat") + " / 128]",Lalb,
+	"Morroc Arena [" + getmapusers("pvp_y_5-5.gat") + " / 128]",Lmoc,
+	"Quit",Lcancel;
+Lpro:
+	if(getmapusers("pvp_y_5-1.gat") >= 128 ) goto LError;
+	warp "pvp_y_5-1",0,0;
+	break;
+Lizu:
+	if(getmapusers("pvp_y_5-2.gat") >= 128 ) goto LError;
+	warp "pvp_y_5-2",0,0;
+	break;
+Lpay:
+	if(getmapusers("pvp_y_5-3.gat") >= 128 ) goto LError;
+	warp "pvp_y_5-3",0,0;
+	break;
+Lalb:
+	if(getmapusers("pvp_y_5-4.gat") >= 128 ) goto LError;
+	warp "pvp_y_5-4",0,0;
+	break;
+Lmoc:
+	if(getmapusers("pvp_y_5-5.gat") >= 128 ) goto LError;
+	warp "pvp_y_5-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 71~80";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 71 ~ LV 80",0;
+	break;
+}
+pvp_y_room.gat,70,85,4	script	Usher 81~90	105,{
+	if ((BaseLevel < 81) || (BaseLevel > 90)) goto LVNG;
+	menu "Prontera Arena [" + getmapusers("pvp_y_6-1.gat") + " / 128]",Lpro,
+	"Izlude Arena [" + getmapusers("pvp_y_6-2.gat") + " / 128]",Lizu,
+	"Payon Arena [" + getmapusers("pvp_y_6-3.gat") + " / 128]",Lpay,
+	"Alberta Arena [" + getmapusers("pvp_y_6-4.gat") + " / 128]",Lalb,
+	"Morroc Arena [" + getmapusers("pvp_y_6-5.gat") + " / 128]",Lmoc,
+	"Quit",Lcancel;
+Lpro:
+	if(getmapusers("pvp_y_6-1.gat") >= 128 ) goto LError;
+	warp "pvp_y_6-1",0,0;
+	break;
+Lizu:
+	if(getmapusers("pvp_y_6-2.gat") >= 128 ) goto LError;
+	warp "pvp_y_6-2",0,0;
+	break;
+Lpay:
+	if(getmapusers("pvp_y_6-3.gat") >= 128 ) goto LError;
+	warp "pvp_y_6-3",0,0;
+	break;
+Lalb:
+	if(getmapusers("pvp_y_6-4.gat") >= 128 ) goto LError;
+	warp "pvp_y_6-4",0,0;
+	break;
+Lmoc:
+	if(getmapusers("pvp_y_6-5.gat") >= 128 ) goto LError;
+	warp "pvp_y_6-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 81~90";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 81 ~ LV 90",0;
+	break;
+}
+pvp_y_room.gat,78,85,4	script	Usher 91~Higher	105,{
+	if (BaseLevel < 91) goto LVNG;
+	menu "Prontera Arena [" + getmapusers("pvp_y_7-1.gat") + " / 128]",Lpro,
+	"Izlude Arena [" + getmapusers("pvp_y_7-2.gat") + " / 128]",Lizu,
+	"Payon Arena [" + getmapusers("pvp_y_7-3.gat") + " / 128]",Lpay,
+	"Alberta Arena [" + getmapusers("pvp_y_7-4.gat") + " / 128]",Lalb,
+	"Morroc Arena [" + getmapusers("pvp_y_7-5.gat") + " / 128]",Lmoc,
+	"Quit",Lcancel;
+Lpro:
+	if(getmapusers("pvp_y_7-1.gat") >= 128 ) goto LError;
+	warp "pvp_y_7-1",0,0;
+	break;
+Lizu:
+	if(getmapusers("pvp_y_7-2.gat") >= 128 ) goto LError;
+	warp "pvp_y_7-2",0,0;
+	break;
+Lpay:
+	if(getmapusers("pvp_y_7-3.gat") >= 128 ) goto LError;
+	warp "pvp_y_7-3",0,0;
+	break;
+Lalb:
+	if(getmapusers("pvp_y_7-4.gat") >= 128 ) goto LError;
+	warp "pvp_y_7-4",0,0;
+	break;
+Lmoc:
+	if(getmapusers("pvp_y_7-5.gat") >= 128 ) goto LError;
+	warp "pvp_y_7-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 91~Higher";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 91 ~ Higher",0;
+	break;
+}
+pvp_y_room.gat,86,85,4	script	Usher All Levels	105,{
+	menu "Prontera Arena [" + getmapusers("pvp_y_8-1.gat") + " / 128]",Lpro,
+	"Izlude Arena [" + getmapusers("pvp_y_8-2.gat") + " / 128]",Lizu,
+	"Payon Arena [" + getmapusers("pvp_y_8-3.gat") + " / 128]",Lpay,
+	"Alberta Arena [" + getmapusers("pvp_y_8-4.gat") + " / 128]",Lalb,
+	"Morroc Arena [" + getmapusers("pvp_y_8-5.gat") + " / 128]",Lmoc,
+	"Quit",Lcancel;
+Lpro:
+	if(getmapusers("pvp_y_8-1.gat") >= 128 ) goto LError;
+	warp "pvp_y_8-1",0,0;
+	break;
+Lizu:
+	if(getmapusers("pvp_y_8-2.gat") >= 128 ) goto LError;
+	warp "pvp_y_8-2",0,0;
+	break;
+Lpay:
+	if(getmapusers("pvp_y_8-3.gat") >= 128 ) goto LError;
+	warp "pvp_y_8-3",0,0;
+	break;
+Lalb:
+	if(getmapusers("pvp_y_8-4.gat") >= 128 ) goto LError;
+	warp "pvp_y_8-4",0,0;
+	break;
+Lmoc:
+	if(getmapusers("pvp_y_8-5.gat") >= 128 ) goto LError;
+	warp "pvp_y_8-5",0,0;
+	break;
+Lcancel:
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "All Levels",0;
+	break;
+}
+
+// Begin PVP Room N
+pvp_n_room.gat,30,85,4	script	Usher 31~40	105,{
+	if ((BaseLevel < 31) || (BaseLevel > 40)) goto LVNG;
+	menu "Sandwich Arena [" + getmapusers("pvp_n_1-1.gat") + " / 64]",Lsand,
+	"Rock Arena [" + getmapusers("pvp_n_1-2.gat") + " / 32]",Llock,
+	"Four Arena [" + getmapusers("pvp_n_1-3.gat") + " / 32]",Lpolu,
+	"Undercross Arena [" + getmapusers("pvp_n_1-4.gat") + " / 32]",Lunder,
+	"Copass Arena [" + getmapusers("pvp_n_1-5.gat") + " / 32]",Lcom,
+	"Quit",Lcancel;
+Lsand:
+	if(getmapusers("pvp_n_1-1.gat") >= 64 ) goto LError;
+	warp "pvp_n_1-1",0,0;
+	break;
+Llock:
+	if(getmapusers("pvp_n_1-2.gat") >= 32 ) goto LError;
+	warp "pvp_n_1-2",0,0;
+	break;
+Lpolu:
+	if(getmapusers("pvp_n_1-3.gat") >= 32 ) goto LError;
+	warp "pvp_n_1-3",0,0;
+	break;
+Lunder:
+	if(getmapusers("pvp_n_1-4.gat") >= 32 ) goto LError;
+	warp "pvp_n_1-4",0,0;
+	break;
+Lcom:
+	if(getmapusers("pvp_n_1-5.gat") >= 32 ) goto LError;
+	warp "pvp_n_1-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 31~40";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 31 ~ LV 40",0;
+	break;
+}
+pvp_n_room.gat,38,85,4	script	Usher 41~50	105,{
+	if ((BaseLevel < 41) || (BaseLevel > 50)) goto LVNG;
+	menu "Sandwich Arena [" + getmapusers("pvp_n_2-1.gat") + " / 64]",Lsand,
+	"Rock Arena [" + getmapusers("pvp_n_2-2.gat") + " / 32]",Llock,
+	"Four Arena [" + getmapusers("pvp_n_2-3.gat") + " / 32]",Lpolu,
+	"Undercross Arena [" + getmapusers("pvp_n_2-4.gat") + " / 32]",Lunder,
+	"Copass Arena [" + getmapusers("pvp_n_2-5.gat") + " / 32]",Lcom,
+	"Quit",Lcancel;
+Lsand:
+	if(getmapusers("pvp_n_2-1.gat") >= 64 ) goto LError;
+	warp "pvp_n_2-1",0,0;
+	break;
+Llock:
+	if(getmapusers("pvp_n_2-2.gat") >= 32 ) goto LError;
+	warp "pvp_n_2-2",0,0;
+	break;
+Lpolu:
+	if(getmapusers("pvp_n_2-3.gat") >= 32 ) goto LError;
+	warp "pvp_n_2-3",0,0;
+	break;
+Lunder:
+	if(getmapusers("pvp_n_2-4.gat") >= 32 ) goto LError;
+	warp "pvp_n_2-4",0,0;
+	break;
+Lcom:
+	if(getmapusers("pvp_n_2-5.gat") >= 32 ) goto LError;
+	warp "pvp_n_2-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 41~50";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 41 ~ LV 50",0;
+	break;
+}
+pvp_n_room.gat,46,85,4	script	Usher 51~60	105,{
+	if ((BaseLevel < 51) || (BaseLevel > 60)) goto LVNG;
+	menu "Sandwich Arena [" + getmapusers("pvp_n_3-1.gat") + " / 64]",Lsand,
+	"Rock Arena [" + getmapusers("pvp_n_3-2.gat") + " / 32]",Llock,
+	"Four Arena [" + getmapusers("pvp_n_3-3.gat") + " / 32]",Lpolu,
+	"Undercross Arena [" + getmapusers("pvp_n_3-4.gat") + " / 32]",Lunder,
+	"Copass Arena [" + getmapusers("pvp_n_3-5.gat") + " / 32]",Lcom,
+	"Quit",Lcancel;
+Lsand:
+	if(getmapusers("pvp_n_3-1.gat") >= 64 ) goto LError;
+	warp "pvp_n_3-1",0,0;
+	break;
+Llock:
+	if(getmapusers("pvp_n_3-2.gat") >= 32 ) goto LError;
+	warp "pvp_n_3-2",0,0;
+	break;
+Lpolu:
+	if(getmapusers("pvp_n_3-3.gat") >= 32 ) goto LError;
+	warp "pvp_n_3-3",0,0;
+	break;
+Lunder:
+	if(getmapusers("pvp_n_3-4.gat") >= 32 ) goto LError;
+	warp "pvp_n_3-4",0,0;
+	break;
+Lcom:
+	if(getmapusers("pvp_n_3-5.gat") >= 32 ) goto LError;
+	warp "pvp_n_3-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 51~60";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 51 ~ LV 60",0;
+	break;
+}
+pvp_n_room.gat,54,85,4	script	Usher 61~70	105,{
+	if ((BaseLevel < 61) || (BaseLevel > 70)) goto LVNG;
+	menu "Sandwich Arena [" + getmapusers("pvp_n_4-1.gat") + " / 64]",Lsand,
+	"Rock Arena [" + getmapusers("pvp_n_4-2.gat") + " / 32]",Llock,
+	"Four Arena [" + getmapusers("pvp_n_4-3.gat") + " / 32]",Lpolu,
+	"Undercross Arena [" + getmapusers("pvp_n_4-4.gat") + " / 32]",Lunder,
+	"Copass Arena [" + getmapusers("pvp_n_4-5.gat") + " / 32]",Lcom,
+	"Quit",Lcancel;
+Lsand:
+	if(getmapusers("pvp_n_4-1.gat") >= 64 ) goto LError;
+	warp "pvp_n_4-1",0,0;
+	break;
+Llock:
+	if(getmapusers("pvp_n_4-2.gat") >= 32 ) goto LError;
+	warp "pvp_n_4-2",0,0;
+	break;
+Lpolu:
+	if(getmapusers("pvp_n_4-3.gat") >= 32 ) goto LError;
+	warp "pvp_n_4-3",0,0;
+	break;
+Lunder:
+	if(getmapusers("pvp_n_4-4.gat") >= 32 ) goto LError;
+	warp "pvp_n_4-4",0,0;
+	break;
+Lcom:
+	if(getmapusers("pvp_n_4-5.gat") >= 32 ) goto LError;
+	warp "pvp_n_4-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 61~70";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 61 ~ LV 70",0;
+	break;
+}
+pvp_n_room.gat,62,85,4	script	Usher 71~80	105,{
+	if ((BaseLevel < 71) || (BaseLevel > 80)) goto LVNG;
+	menu "Sandwich Arena [" + getmapusers("pvp_n_5-1.gat") + " / 64]",Lsand,
+	"Rock Arena [" + getmapusers("pvp_n_5-2.gat") + " / 32]",Llock,
+	"Four Arena [" + getmapusers("pvp_n_5-3.gat") + " / 32]",Lpolu,
+	"Undercross Arena [" + getmapusers("pvp_n_5-4.gat") + " / 32]",Lunder,
+	"Copass Arena [" + getmapusers("pvp_n_5-5.gat") + " / 32]",Lcom,
+	"Quit",Lcancel;
+Lsand:
+	if(getmapusers("pvp_n_5-1.gat") >= 64 ) goto LError;
+	warp "pvp_n_5-1",0,0;
+	break;
+Llock:
+	if(getmapusers("pvp_n_5-2.gat") >= 32 ) goto LError;
+	warp "pvp_n_5-2",0,0;
+	break;
+Lpolu:
+	if(getmapusers("pvp_n_5-3.gat") >= 32 ) goto LError;
+	warp "pvp_n_5-3",0,0;
+	break;
+Lunder:
+	if(getmapusers("pvp_n_5-4.gat") >= 32 ) goto LError;
+	warp "pvp_n_5-4",0,0;
+	break;
+Lcom:
+	if(getmapusers("pvp_n_5-5.gat") >= 32 ) goto LError;
+	warp "pvp_n_5-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 71~80";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 71 ~ LV 80",0;
+	break;
+}
+pvp_n_room.gat,70,85,4	script	Usher 81~90	105,{
+	if ((BaseLevel < 81) || (BaseLevel > 90)) goto LVNG;
+	menu "Sandwich Arena [" + getmapusers("pvp_n_6-1.gat") + " / 64]",Lsand,
+	"Rock Arena [" + getmapusers("pvp_n_6-2.gat") + " / 32]",Llock,
+	"Four Arena [" + getmapusers("pvp_n_6-3.gat") + " / 32]",Lpolu,
+	"Undercross Arena [" + getmapusers("pvp_n_6-4.gat") + " / 32]",Lunder,
+	"Copass Arena [" + getmapusers("pvp_n_6-5.gat") + " / 32]",Lcom,
+	"Quit",Lcancel;
+Lsand:
+	if(getmapusers("pvp_n_6-1.gat") >= 64 ) goto LError;
+	warp "pvp_n_6-1",0,0;
+	break;
+Llock:
+	if(getmapusers("pvp_n_6-2.gat") >= 32 ) goto LError;
+	warp "pvp_n_6-2",0,0;
+	break;
+Lpolu:
+	if(getmapusers("pvp_n_6-3.gat") >= 32 ) goto LError;
+	warp "pvp_n_6-3",0,0;
+	break;
+Lunder:
+	if(getmapusers("pvp_n_6-4.gat") >= 32 ) goto LError;
+	warp "pvp_n_6-4",0,0;
+	break;
+Lcom:
+	if(getmapusers("pvp_n_6-5.gat") >= 32 ) goto LError;
+	warp "pvp_n_6-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 81~90";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 81 ~ LV 90",0;
+	break;
+}
+pvp_n_room.gat,78,85,4	script	Usher 91~Higher	105,{
+	if (BaseLevel < 91) goto LVNG;
+	menu "Sandwich Arena [" + getmapusers("pvp_n_7-1.gat") + " / 64]",Lsand,
+	"Rock Arena [" + getmapusers("pvp_n_7-2.gat") + " / 32]",Llock,
+	"Four Arena [" + getmapusers("pvp_n_7-3.gat") + " / 32]",Lpolu,
+	"Undercross Arena [" + getmapusers("pvp_n_7-4.gat") + " / 32]",Lunder,
+	"Copass Arena [" + getmapusers("pvp_n_7-5.gat") + " / 32]",Lcom,
+	"Quit",Lcancel;
+Lsand:
+	if(getmapusers("pvp_n_7-1.gat") >= 64 ) goto LError;
+	warp "pvp_n_7-1",0,0;
+	break;
+Llock:
+	if(getmapusers("pvp_n_7-2.gat") >= 32 ) goto LError;
+	warp "pvp_n_7-2",0,0;
+	break;
+Lpolu:
+	if(getmapusers("pvp_n_7-3.gat") >= 32 ) goto LError;
+	warp "pvp_n_7-3",0,0;
+	break;
+Lunder:
+	if(getmapusers("pvp_n_7-4.gat") >= 32 ) goto LError;
+	warp "pvp_n_7-4",0,0;
+	break;
+Lcom:
+	if(getmapusers("pvp_n_7-5.gat") >= 32 ) goto LError;
+	warp "pvp_n_7-5",0,0;
+	break;
+Lcancel:
+	close;
+LVNG:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is only for levels 91~Higher0";
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "LV 91 ~ Higher",0;
+	break;
+}
+pvp_n_room.gat,86,85,4	script	Usher All Levels	105,{
+	menu "Sandwich Arena [" + getmapusers("pvp_n_8-1.gat") + " / 64]",Lsand,
+	"Rock Arena [" + getmapusers("pvp_n_8-2.gat") + " / 32]",Llock,
+	"Four Arena [" + getmapusers("pvp_n_8-3.gat") + " / 32]",Lpolu,
+	"Undercross Arena [" + getmapusers("pvp_n_8-4.gat") + " / 32]",Lunder,
+	"Copass Arena [" + getmapusers("pvp_n_8-5.gat") + " / 32]",Lcom,
+	"Quit",Lcancel;
+Lsand:
+	if(getmapusers("pvp_n_8-1.gat") >= 64 ) goto LError;
+	warp "pvp_n_8-1",0,0;
+	break;
+Llock:
+	if(getmapusers("pvp_n_8-2.gat") >= 32 ) goto LError;
+	warp "pvp_n_8-2",0,0;
+	break;
+Lpolu:
+	if(getmapusers("pvp_n_8-3.gat") >= 32 ) goto LError;
+	warp "pvp_n_8-3",0,0;
+	break;
+Lunder:
+	if(getmapusers("pvp_n_8-4.gat") >= 32 ) goto LError;
+	warp "pvp_n_8-4",0,0;
+	break;
+Lcom:
+	if(getmapusers("pvp_n_8-5.gat") >= 32 ) goto LError;
+	warp "pvp_n_8-5",0,0;
+	break;
+Lcancel:
+	close;
+LError:
+	mes "[PVP Usher]";
+	mes "Sorry, this arena is currently full";
+	close;
+OnInit:
+	waitingroom "All Levels",0;
+	break;
+}
+
+// PvP Representative NPC prontera 164 175
+prontera.gat,164,175,5	script	PvP Representative	116,{
+	mes "[PvP Representative]";
+	mes "Hello there! I'm the PvP Representative!";
+	next;
+	mes "[PvP Representative]";
+	mes "I'm here to advertise our Arena in Izlude! It's specially designed for you players to beat each other up!";
+	next;
+	menu "Sounds interesting! I'll join!",entrance,"PvP? Whats that?",info,"Nah, maybe later.",quit;
+entrance:
+	mes "[PvP Representative]";
+	mes "Most excellent! I'll warp you to our Arena's Front Gate!";
+	next;
+	warp "izlude.gat",128,218;
+	close;
+info:
+	mes "[PvP Representative]";
+	mes "PvP Stands For 'Player versus Player', where you get to choose from a variety of arenas in which to fight in!";
+	next;
+	mes "[PvP Representative]";
+	mes "You don't have to worry about losing items, we have a NO PENALTY rule that states you cannot loose items or EXP!";
+	next;
+	mes "[PvP Representative]";
+	mes "So whadduya think?";
+	next;
+	menu "Sounds interesting! I'll join!",entrance,"Nah, maybe later.",quit;
+quit:
+	mes "[PvP Representative]";
+	mes "'Kay - I hope you change your mind in the near future.";
+	mes " ";
+	mes "Come Again! ^_^";
+	close;
+}
+
+// Arena Bulletin Board NPC izlude 125 219
+izlude.gat,125,219,5	script	Arena Bulletin Board	111,{
+	mes "[Arena Bulletin Board]";
+	mes "Welcome to the one and only...";
+	mes " ";
+	mes "Player Versus Player Arena!";
+	close;
+}
+
+// Arena Master NPC prt_are_in 100 84
+prt_are_in.gat,100,84,4	script	Arena Master	734,{
+	mes "[Arena Master]";
+	mes "Aaahh yes! Welcome to my humble and world renown PvP Arena!";
+	next;
+	mes "[Arena Master]";
+	mes "Tell me...do you wish to learn more of my Arena?";
+	next;
+	menu "Sure",sure,"Maybe later...",later;
+sure:
+	mes "[Arena Master]";
+	mes "After much boredom that I've went through all my life of killing simple monsters, I decided that it wasn't enough!";
+	next;
+	mes "[Arena Master]";
+	mes "I needed HUMAN FLESH! To satisfy my need to kill...";
+	next;
+	mes "[Arena Master]";
+	mes "And after years of construction and planning ~ it's finally complete for all of Midgard to see and cherish!";
+	next;
+	mes "[Arena Master]";
+	mes "I present you...";
+	mes " ";
+	mes "MY ARENA!!!";
+	close;
+later:
+	mes "[Arena Master]";
+	mes "Fine fine, please do enjoy your stay.";
+	close;
+}
+
+// PvP Attendant NPC prt_are_in 97 86
+prt_are_in.gat,97,86,4	script	PvP Attendant	98,{
+	mes "[PvP Attendant]";
+	mes "Welcome To The PVP ARENA!";
+	next;
+	mes "[PvP Attendant]";
+	mes "The Hall to the Left leads to City simulation Arenas";
+	next;
+	mes "[PvP Attendant]";
+	mes "The Hall to the Right leads to our Special map Arenas";
+	close;
+}
+
+// PvP Attendant NPC prt_are_in 102 86
+prt_are_in.gat,102,86,4	script	PvP Attendant	98,{
+	mes "[PvP Attendant]";
+	mes "Welcome To The PVP ARENA!";
+	next;
+	mes "[PvP Attendant]";
+	mes "The Hall to the Left leads to City simulation Arenas";
+	next;
+	mes "[PvP Attendant]";
+	mes "The Hall to the Right are our Special map Arenas";
+	close;
+}
+
+// Begin 2v2 pvp Script
+pvp_2vs2.gat,32,22,2	script	Bruno	87,{
+	mes "[Bruno]";
+	mes "You wimpin out already?";
+	menu "Yes",goback,"No",stay;
+		goback:
+		mes "Man!, you don't even got scratches, you wimp.";
+		next;
+		warp "prt_are_in.gat",167,90;
+		close;
+		stay:
+		mes "Impressive!, I respect your stamina!";
+		close;
+}
+
+prt_are_in.gat,167,92,4	script	Bruno	87,{
+        mes "[Bruno]";
+        mes "You sure you wanna goto our underground 2vs2 arena dork?";
+        menu "Yes",gopvp,"No",nopvp;
+                gopvp:
+                mes "Was nice knowin you chump.";
+                next;
+                warp "pvp_2vs2.gat",36,49;
+                close;
+                nopvp:
+                mes "Didn't think so, wuss!";
+                close;
+}
+
+prt_are_in.gat,92,86,4	script	Herman	125,{
+	mes "[Herman]";
+	mes "Welcome to Royal Rumble!";
+	mes "Ladies and Gents, my name is Herman from 'Cool Event Corp.'!";
+	next;
+	menu "What's Royal Rumble?",M0,"Boo~Go Home~",MEnd;
+
+	M0:
+		mes "[Herman]";
+		mes "We, Cool Event Corp., have opened a special event open to everyone visiting the Arena.";
+		mes "You can escape your monotonous life with this really great even we are providing you!";
+		next;
+		mes "[Herman]";
+		mes "This event is called ..Rooooooyal Rumbbbbbbble!!";
+		mes "*Cough*..*Cough*..*Cough* !!";
+		next;
+		mes "[Herman]";
+		mes ". . . . .";
+		mes "Arrggghhh Sooorry...";
+		next;
+		mes "[Herman]";
+		mes "When there are enough players in every 'Stand-By Room',";
+		mes "We will guide you to the beautiful Colosseum.";
+		next;
+		mes "[Herman]";
+		mes "In that Colosseum, you have to fight with hard and hostile Monsters within 5 minutes,";
+		mes "Using 8 warp zones located in 8 directions.";
+		next;
+		mes "[Herman]";
+		mes "When you strike into the deep inside of Monsters you will see Organ NPCs which control and generate Monsters.";
+		mes "You should have to speak them if you want to make an easy way to get a victory. They will release you from enemies.";
+		next;
+		mes "[Herman]";
+		mes "Whatever you eliminate all enemies by yourself or get helped by Organ NPCs, When you kill them all,";
+		mes "It is regarded as the Perfect Clear on Royal Rumble!";
+		next;
+		mes "[Herman]";
+		mes "Have some fun in Royal Rumble with your companions.";
+		mes "Once again, My name is Herman from Cool Event Corp. Thank you!";
+		close;
+
+	MEnd:
+		mes "[Herman]";
+		mes "You go Home, Baby";
+		close;
+}
+
+prt_are_in.gat,93,86,4	script	Lancelot	125,{
+	mes "[Lancelot]";
+	mes "Hi Hi! Come on ! Make yourself at Home!";
+	mes "My name is Lacelot from Cool Event Corp. I am here to tell you about Time Limit Fight. Do you want to Listen?";
+	next;
+	menu "Yeah, Cool.",M0,"Sorry, I don't want to.",MEnd;
+
+	M0:
+		mes "[Lancelot]";
+		mes "We, Cool Event Corp., open a Special event to give a fun to everybody visiting Arena.";
+		mes "You can slip your monotonous day life for the moment during the event we provide you!";
+		next;
+		mes "[Lancelot]";
+		mes "The Event Called ..Timeeeee-- Limmmmmitttt---Figgggghhtt !!";
+		mes "*Aaahchoo* !! *Achoo* !! *Cough**Cough* ..";
+		next;
+		mes "[Lancelot]";
+		mes ". . . . . Whack..";
+		mes "Oh Boy.. Really Sorry to make you uncomfortable with this.";
+		next;
+		mes "[Lancelot]";
+		mes "When players gather as many as we need in Each Standbyroom";
+		mes "We will guide you to the Labylinth.";
+		next;
+		mes "[Lancelot]";
+		mes "In that Labylinth,you have to terminate all monsters within 5 minutes,";
+		mes "Using this Warp zone and that warp zone...";
+		next;
+		mes "[Lancelot]";
+		mes "When you kill all Monsters in one room,another gate will be opened ..and you can go in there.";
+		mes "One thing you must know is when you enter the new room door is totally closed to block your exit ..";
+		next;
+		mes "[Lancelot]";
+		mes "You cannot go back to where you're from.";
+		next;
+		mes "[Lancelot]";
+		mes "In case of Level 1 Stage, the door of Boss Stage will be opened when you eliminate all monsters in every room ..";
+		mes "But in Level 2 and 3, even though there are many complexed corridors, if you follow the shortcut, you will enter the Boss Room at ease.";
+		next;
+		mes "[Lancelot]";
+		mes "Get some fun with your companions.";
+		mes "Thank you for your time, once again my name is Lancelot!";
+		close;
+	MEnd:
+		mes "[Lancelot]";
+		mes "Alright, Bye Bye";
+		close;
+}
+
+prt_are_in.gat,94,85,4	Zakkie	84,{
+	mes "[Zakkie]";
+	mes "Welcome to Royal Rumble,the World of Fighters!";
+	mes "My name is Zakkie from Cool Event Corp.!";
+	mes "If you don't mind let me give you some tips for more fun.";
+	next;
+	menu "No!i don't mind.Go ahead.",M0,"Errr....I know already.",MEnd;
+
+	M0:
+		mes "[Zakkie]";
+		mes "when get started, You will ecounter many monsters through 8 warp zones.";
+		mes "You can choose either way of the Battle. You can find Organ NPCs behind each Warp Zone or You can kill all Enemies by yourself.";
+		next;
+		mes "[Zakkie]";
+		mes "When you satisfy one of them, it is regarded as Clear on that Round.";
+		mes "We suggest you to discuss with party members to find out better way of the Battle.";
+		close;
+	MEnd:
+		mes "[Zakkie]";
+		mes "Whattt!! Did you say you know the tips?!";
+		mes "Wow~Excellent. Then you don't need my help. Well have fun~!";
+		close;
+}
+
+prt_are_in.gat,108,86,4	script	Boris	84,{
+	mes "[Boris]";
+	mes "Hmm.. I can easily imagine how frustrated you have been in your life, dear.. Because Common people cannot dare to visit me.";
+	mes "Let me introduce myself. My name is Boris and the director of Customer Support Team in Cool Event Corp.";
+	mes "I will give you the exceptional tips only for the Bloodthirsty.";
+	next;
+	menu "Will you please?",M0,"Thank you but I already know about it.",MEnd;
+
+	M0:
+		mes "[Boris]";
+		mes "Before get started, you must work out a strategy considering your members.";
+		mes "Then you can warp into the Battle.";
+		next;
+		mes "[Boris]";
+		mes "If 8 men jump into the Warp zone together, You will succeed.";
+		mes "Otherwise If a man or two, I don't think you can survive.";
+		next;
+		mes "[Boris]";
+		mes "And let's talk about the Running Time of Royal Rumble and of Time Limit Fight.";
+		mes "Although every Battle Time is limitted, but sometimes it is increased by a Bonus when you clear One Round.";
+		next;
+		mes "[Boris]";
+		mes "Bonus Time will be increased by Second.. When you get a Bonus Time";
+		mes "Definately you could extent the Limit of Battle. You can check the Time passage with the announcement of our employee.";
+		close;
+
+	MEnd:
+		mes "[Boris]";
+		mes ".. Ahh...I need my room in Dark ..";
+		mes "Hmm Hmm Nothing, Nothing.";
+		close;
+}
+
+// Add missing Warps Begins Here
+prt_are_in.gat,32,95,0	warp	areawarpfix1	1,1,pvp_y_room.gat,52,23
+prt_are_in.gat,170,95,0	warp	areawarpfix2	1,1,pvp_n_room.gat,52,23
+pvp_y_room.gat,52,18,0	warp	areawarpfix3	1,1,prt_are_in.gat,32,92
+pvp_n_room.gat,52,18,0	warp	areawarpfix4	1,1,prt_are_in.gat,170,92
+
+// PvP Mapflags
+pvp_y_1-1.gat	mapflag	nopenalty
+pvp_y_1-2.gat	mapflag	nopenalty
+pvp_y_1-3.gat	mapflag	nopenalty
+pvp_y_1-4.gat	mapflag	nopenalty
+pvp_y_1-5.gat	mapflag	nopenalty
+pvp_y_2-1.gat	mapflag	nopenalty
+pvp_y_2-2.gat	mapflag	nopenalty
+pvp_y_2-3.gat	mapflag	nopenalty
+pvp_y_2-4.gat	mapflag	nopenalty
+pvp_y_2-5.gat	mapflag	nopenalty
+pvp_y_3-1.gat	mapflag	nopenalty
+pvp_y_3-2.gat	mapflag	nopenalty
+pvp_y_3-3.gat	mapflag	nopenalty
+pvp_y_3-4.gat	mapflag	nopenalty
+pvp_y_3-5.gat	mapflag	nopenalty
+pvp_y_4-1.gat	mapflag	nopenalty
+pvp_y_4-2.gat	mapflag	nopenalty
+pvp_y_4-3.gat	mapflag	nopenalty
+pvp_y_4-4.gat	mapflag	nopenalty
+pvp_y_4-5.gat	mapflag	nopenalty
+pvp_y_5-1.gat	mapflag	nopenalty
+pvp_y_5-2.gat	mapflag	nopenalty
+pvp_y_5-3.gat	mapflag	nopenalty
+pvp_y_5-4.gat	mapflag	nopenalty
+pvp_y_5-5.gat	mapflag	nopenalty
+pvp_y_6-1.gat	mapflag	nopenalty
+pvp_y_6-2.gat	mapflag	nopenalty
+pvp_y_6-3.gat	mapflag	nopenalty
+pvp_y_6-4.gat	mapflag	nopenalty
+pvp_y_6-5.gat	mapflag	nopenalty
+pvp_y_7-1.gat	mapflag	nopenalty
+pvp_y_7-2.gat	mapflag	nopenalty
+pvp_y_7-3.gat	mapflag	nopenalty
+pvp_y_7-4.gat	mapflag	nopenalty
+pvp_y_7-5.gat	mapflag	nopenalty
+pvp_y_8-1.gat	mapflag	nopenalty
+pvp_y_8-2.gat	mapflag	nopenalty
+pvp_y_8-3.gat	mapflag	nopenalty
+pvp_y_8-4.gat	mapflag	nopenalty
+pvp_y_8-5.gat	mapflag	nopenalty
+pvp_n_1-1.gat	mapflag	nopenalty
+pvp_n_1-2.gat	mapflag	nopenalty
+pvp_n_1-3.gat	mapflag	nopenalty
+pvp_n_1-4.gat	mapflag	nopenalty
+pvp_n_1-5.gat	mapflag	nopenalty
+pvp_n_2-1.gat	mapflag	nopenalty
+pvp_n_2-2.gat	mapflag	nopenalty
+pvp_n_2-3.gat	mapflag	nopenalty
+pvp_n_2-4.gat	mapflag	nopenalty
+pvp_n_2-5.gat	mapflag	nopenalty
+pvp_n_3-1.gat	mapflag	nopenalty
+pvp_n_3-2.gat	mapflag	nopenalty
+pvp_n_3-3.gat	mapflag	nopenalty
+pvp_n_3-4.gat	mapflag	nopenalty
+pvp_n_3-5.gat	mapflag	nopenalty
+pvp_n_4-1.gat	mapflag	nopenalty
+pvp_n_4-2.gat	mapflag	nopenalty
+pvp_n_4-3.gat	mapflag	nopenalty
+pvp_n_4-4.gat	mapflag	nopenalty
+pvp_n_4-5.gat	mapflag	nopenalty
+pvp_n_5-1.gat	mapflag	nopenalty
+pvp_n_5-2.gat	mapflag	nopenalty
+pvp_n_5-3.gat	mapflag	nopenalty
+pvp_n_5-4.gat	mapflag	nopenalty
+pvp_n_5-5.gat	mapflag	nopenalty
+pvp_n_6-1.gat	mapflag	nopenalty
+pvp_n_6-2.gat	mapflag	nopenalty
+pvp_n_6-3.gat	mapflag	nopenalty
+pvp_n_6-4.gat	mapflag	nopenalty
+pvp_n_6-5.gat	mapflag	nopenalty
+pvp_n_7-1.gat	mapflag	nopenalty
+pvp_n_7-2.gat	mapflag	nopenalty
+pvp_n_7-3.gat	mapflag	nopenalty
+pvp_n_7-4.gat	mapflag	nopenalty
+pvp_n_7-5.gat	mapflag	nopenalty
+pvp_n_8-1.gat	mapflag	nopenalty
+pvp_n_8-2.gat	mapflag	nopenalty
+pvp_n_8-3.gat	mapflag	nopenalty
+pvp_n_8-4.gat	mapflag	nopenalty
+pvp_n_8-5.gat	mapflag	nopenalty
+pvp_2vs2.gat	mapflag	nopenalty
+
+pvp_y_1-1.gat	mapflag	pvp
+pvp_y_1-2.gat	mapflag	pvp
+pvp_y_1-3.gat	mapflag	pvp
+pvp_y_1-4.gat	mapflag	pvp
+pvp_y_1-5.gat	mapflag	pvp
+pvp_y_2-1.gat	mapflag	pvp
+pvp_y_2-2.gat	mapflag	pvp
+pvp_y_2-3.gat	mapflag	pvp
+pvp_y_2-4.gat	mapflag	pvp
+pvp_y_2-5.gat	mapflag	pvp
+pvp_y_3-1.gat	mapflag	pvp
+pvp_y_3-2.gat	mapflag	pvp
+pvp_y_3-3.gat	mapflag	pvp
+pvp_y_3-4.gat	mapflag	pvp
+pvp_y_3-5.gat	mapflag	pvp
+pvp_y_4-1.gat	mapflag	pvp
+pvp_y_4-2.gat	mapflag	pvp
+pvp_y_4-3.gat	mapflag	pvp
+pvp_y_4-4.gat	mapflag	pvp
+pvp_y_4-5.gat	mapflag	pvp
+pvp_y_5-1.gat	mapflag	pvp
+pvp_y_5-2.gat	mapflag	pvp
+pvp_y_5-3.gat	mapflag	pvp
+pvp_y_5-4.gat	mapflag	pvp
+pvp_y_5-5.gat	mapflag	pvp
+pvp_y_6-1.gat	mapflag	pvp
+pvp_y_6-2.gat	mapflag	pvp
+pvp_y_6-3.gat	mapflag	pvp
+pvp_y_6-4.gat	mapflag	pvp
+pvp_y_6-5.gat	mapflag	pvp
+pvp_y_7-1.gat	mapflag	pvp
+pvp_y_7-2.gat	mapflag	pvp
+pvp_y_7-3.gat	mapflag	pvp
+pvp_y_7-4.gat	mapflag	pvp
+pvp_y_7-5.gat	mapflag	pvp
+pvp_y_8-1.gat	mapflag	pvp
+pvp_y_8-2.gat	mapflag	pvp
+pvp_y_8-3.gat	mapflag	pvp
+pvp_y_8-4.gat	mapflag	pvp
+pvp_y_8-5.gat	mapflag	pvp
+pvp_n_1-1.gat	mapflag	pvp
+pvp_n_1-2.gat	mapflag	pvp
+pvp_n_1-3.gat	mapflag	pvp
+pvp_n_1-4.gat	mapflag	pvp
+pvp_n_1-5.gat	mapflag	pvp
+pvp_n_2-1.gat	mapflag	pvp
+pvp_n_2-2.gat	mapflag	pvp
+pvp_n_2-3.gat	mapflag	pvp
+pvp_n_2-4.gat	mapflag	pvp
+pvp_n_2-5.gat	mapflag	pvp
+pvp_n_3-1.gat	mapflag	pvp
+pvp_n_3-2.gat	mapflag	pvp
+pvp_n_3-3.gat	mapflag	pvp
+pvp_n_3-4.gat	mapflag	pvp
+pvp_n_3-5.gat	mapflag	pvp
+pvp_n_4-1.gat	mapflag	pvp
+pvp_n_4-2.gat	mapflag	pvp
+pvp_n_4-3.gat	mapflag	pvp
+pvp_n_4-4.gat	mapflag	pvp
+pvp_n_4-5.gat	mapflag	pvp
+pvp_n_5-1.gat	mapflag	pvp
+pvp_n_5-2.gat	mapflag	pvp
+pvp_n_5-3.gat	mapflag	pvp
+pvp_n_5-4.gat	mapflag	pvp
+pvp_n_5-5.gat	mapflag	pvp
+pvp_n_6-1.gat	mapflag	pvp
+pvp_n_6-2.gat	mapflag	pvp
+pvp_n_6-3.gat	mapflag	pvp
+pvp_n_6-4.gat	mapflag	pvp
+pvp_n_6-5.gat	mapflag	pvp
+pvp_n_7-1.gat	mapflag	pvp
+pvp_n_7-2.gat	mapflag	pvp
+pvp_n_7-3.gat	mapflag	pvp
+pvp_n_7-4.gat	mapflag	pvp
+pvp_n_7-5.gat	mapflag	pvp
+pvp_n_8-1.gat	mapflag	pvp
+pvp_n_8-2.gat	mapflag	pvp
+pvp_n_8-3.gat	mapflag	pvp
+pvp_n_8-4.gat	mapflag	pvp
+pvp_n_8-5.gat	mapflag	pvp
+pvp_2vs2.gat	mapflag	pvp
+
+pvp_y_1-1.gat	mapflag	pvp_noparty
+pvp_y_1-2.gat	mapflag	pvp_noparty
+pvp_y_1-3.gat	mapflag	pvp_noparty
+pvp_y_1-4.gat	mapflag	pvp_noparty
+pvp_y_1-5.gat	mapflag	pvp_noparty
+pvp_y_2-1.gat	mapflag	pvp_noparty
+pvp_y_2-2.gat	mapflag	pvp_noparty
+pvp_y_2-3.gat	mapflag	pvp_noparty
+pvp_y_2-4.gat	mapflag	pvp_noparty
+pvp_y_2-5.gat	mapflag	pvp_noparty
+pvp_y_3-1.gat	mapflag	pvp_noparty
+pvp_y_3-2.gat	mapflag	pvp_noparty
+pvp_y_3-3.gat	mapflag	pvp_noparty
+pvp_y_3-4.gat	mapflag	pvp_noparty
+pvp_y_3-5.gat	mapflag	pvp_noparty
+pvp_y_4-1.gat	mapflag	pvp_noparty
+pvp_y_4-2.gat	mapflag	pvp_noparty
+pvp_y_4-3.gat	mapflag	pvp_noparty
+pvp_y_4-4.gat	mapflag	pvp_noparty
+pvp_y_4-5.gat	mapflag	pvp_noparty
+pvp_y_5-1.gat	mapflag	pvp_noparty
+pvp_y_5-2.gat	mapflag	pvp_noparty
+pvp_y_5-3.gat	mapflag	pvp_noparty
+pvp_y_5-4.gat	mapflag	pvp_noparty
+pvp_y_5-5.gat	mapflag	pvp_noparty
+pvp_y_6-1.gat	mapflag	pvp_noparty
+pvp_y_6-2.gat	mapflag	pvp_noparty
+pvp_y_6-3.gat	mapflag	pvp_noparty
+pvp_y_6-4.gat	mapflag	pvp_noparty
+pvp_y_6-5.gat	mapflag	pvp_noparty
+pvp_y_7-1.gat	mapflag	pvp_noparty
+pvp_y_7-2.gat	mapflag	pvp_noparty
+pvp_y_7-3.gat	mapflag	pvp_noparty
+pvp_y_7-4.gat	mapflag	pvp_noparty
+pvp_y_7-5.gat	mapflag	pvp_noparty
+pvp_y_8-1.gat	mapflag	pvp_noparty
+pvp_y_8-2.gat	mapflag	pvp_noparty
+pvp_y_8-3.gat	mapflag	pvp_noparty
+pvp_y_8-4.gat	mapflag	pvp_noparty
+pvp_y_8-5.gat	mapflag	pvp_noparty
+pvp_n_1-1.gat	mapflag	pvp_noparty
+pvp_n_1-2.gat	mapflag	pvp_noparty
+pvp_n_1-3.gat	mapflag	pvp_noparty
+pvp_n_1-4.gat	mapflag	pvp_noparty
+pvp_n_1-5.gat	mapflag	pvp_noparty
+pvp_n_2-1.gat	mapflag	pvp_noparty
+pvp_n_2-2.gat	mapflag	pvp_noparty
+pvp_n_2-3.gat	mapflag	pvp_noparty
+pvp_n_2-4.gat	mapflag	pvp_noparty
+pvp_n_2-5.gat	mapflag	pvp_noparty
+pvp_n_3-1.gat	mapflag	pvp_noparty
+pvp_n_3-2.gat	mapflag	pvp_noparty
+pvp_n_3-3.gat	mapflag	pvp_noparty
+pvp_n_3-4.gat	mapflag	pvp_noparty
+pvp_n_3-5.gat	mapflag	pvp_noparty
+pvp_n_4-1.gat	mapflag	pvp_noparty
+pvp_n_4-2.gat	mapflag	pvp_noparty
+pvp_n_4-3.gat	mapflag	pvp_noparty
+pvp_n_4-4.gat	mapflag	pvp_noparty
+pvp_n_4-5.gat	mapflag	pvp_noparty
+pvp_n_5-1.gat	mapflag	pvp_noparty
+pvp_n_5-2.gat	mapflag	pvp_noparty
+pvp_n_5-3.gat	mapflag	pvp_noparty
+pvp_n_5-4.gat	mapflag	pvp_noparty
+pvp_n_5-5.gat	mapflag	pvp_noparty
+pvp_n_6-1.gat	mapflag	pvp_noparty
+pvp_n_6-2.gat	mapflag	pvp_noparty
+pvp_n_6-3.gat	mapflag	pvp_noparty
+pvp_n_6-4.gat	mapflag	pvp_noparty
+pvp_n_6-5.gat	mapflag	pvp_noparty
+pvp_n_7-1.gat	mapflag	pvp_noparty
+pvp_n_7-2.gat	mapflag	pvp_noparty
+pvp_n_7-3.gat	mapflag	pvp_noparty
+pvp_n_7-4.gat	mapflag	pvp_noparty
+pvp_n_7-5.gat	mapflag	pvp_noparty
+pvp_n_8-1.gat	mapflag	pvp_noparty
+pvp_n_8-2.gat	mapflag	pvp_noparty
+pvp_n_8-3.gat	mapflag	pvp_noparty
+pvp_n_8-4.gat	mapflag	pvp_noparty
+pvp_n_8-5.gat	mapflag	pvp_noparty
+
+pvp_y_1-1.gat	mapflag	nomemo
+pvp_y_1-2.gat	mapflag	nomemo
+pvp_y_1-3.gat	mapflag	nomemo
+pvp_y_1-4.gat	mapflag	nomemo
+pvp_y_1-5.gat	mapflag	nomemo
+pvp_y_2-1.gat	mapflag	nomemo
+pvp_y_2-2.gat	mapflag	nomemo
+pvp_y_2-3.gat	mapflag	nomemo
+pvp_y_2-4.gat	mapflag	nomemo
+pvp_y_2-5.gat	mapflag	nomemo
+pvp_y_3-1.gat	mapflag	nomemo
+pvp_y_3-2.gat	mapflag	nomemo
+pvp_y_3-3.gat	mapflag	nomemo
+pvp_y_3-4.gat	mapflag	nomemo
+pvp_y_3-5.gat	mapflag	nomemo
+pvp_y_4-1.gat	mapflag	nomemo
+pvp_y_4-2.gat	mapflag	nomemo
+pvp_y_4-3.gat	mapflag	nomemo
+pvp_y_4-4.gat	mapflag	nomemo
+pvp_y_4-5.gat	mapflag	nomemo
+pvp_y_5-1.gat	mapflag	nomemo
+pvp_y_5-2.gat	mapflag	nomemo
+pvp_y_5-3.gat	mapflag	nomemo
+pvp_y_5-4.gat	mapflag	nomemo
+pvp_y_5-5.gat	mapflag	nomemo
+pvp_y_6-1.gat	mapflag	nomemo
+pvp_y_6-2.gat	mapflag	nomemo
+pvp_y_6-3.gat	mapflag	nomemo
+pvp_y_6-4.gat	mapflag	nomemo
+pvp_y_6-5.gat	mapflag	nomemo
+pvp_y_7-1.gat	mapflag	nomemo
+pvp_y_7-2.gat	mapflag	nomemo
+pvp_y_7-3.gat	mapflag	nomemo
+pvp_y_7-4.gat	mapflag	nomemo
+pvp_y_7-5.gat	mapflag	nomemo
+pvp_y_8-1.gat	mapflag	nomemo
+pvp_y_8-2.gat	mapflag	nomemo
+pvp_y_8-3.gat	mapflag	nomemo
+pvp_y_8-4.gat	mapflag	nomemo
+pvp_y_8-5.gat	mapflag	nomemo
+pvp_n_1-1.gat	mapflag	nomemo
+pvp_n_1-2.gat	mapflag	nomemo
+pvp_n_1-3.gat	mapflag	nomemo
+pvp_n_1-4.gat	mapflag	nomemo
+pvp_n_1-5.gat	mapflag	nomemo
+pvp_n_2-1.gat	mapflag	nomemo
+pvp_n_2-2.gat	mapflag	nomemo
+pvp_n_2-3.gat	mapflag	nomemo
+pvp_n_2-4.gat	mapflag	nomemo
+pvp_n_2-5.gat	mapflag	nomemo
+pvp_n_3-1.gat	mapflag	nomemo
+pvp_n_3-2.gat	mapflag	nomemo
+pvp_n_3-3.gat	mapflag	nomemo
+pvp_n_3-4.gat	mapflag	nomemo
+pvp_n_3-5.gat	mapflag	nomemo
+pvp_n_4-1.gat	mapflag	nomemo
+pvp_n_4-2.gat	mapflag	nomemo
+pvp_n_4-3.gat	mapflag	nomemo
+pvp_n_4-4.gat	mapflag	nomemo
+pvp_n_4-5.gat	mapflag	nomemo
+pvp_n_5-1.gat	mapflag	nomemo
+pvp_n_5-2.gat	mapflag	nomemo
+pvp_n_5-3.gat	mapflag	nomemo
+pvp_n_5-4.gat	mapflag	nomemo
+pvp_n_5-5.gat	mapflag	nomemo
+pvp_n_6-1.gat	mapflag	nomemo
+pvp_n_6-2.gat	mapflag	nomemo
+pvp_n_6-3.gat	mapflag	nomemo
+pvp_n_6-4.gat	mapflag	nomemo
+pvp_n_6-5.gat	mapflag	nomemo
+pvp_n_7-1.gat	mapflag	nomemo
+pvp_n_7-2.gat	mapflag	nomemo
+pvp_n_7-3.gat	mapflag	nomemo
+pvp_n_7-4.gat	mapflag	nomemo
+pvp_n_7-5.gat	mapflag	nomemo
+pvp_n_8-1.gat	mapflag	nomemo
+pvp_n_8-2.gat	mapflag	nomemo
+pvp_n_8-3.gat	mapflag	nomemo
+pvp_n_8-4.gat	mapflag	nomemo
+pvp_n_8-5.gat	mapflag	nomemo
+pvp_2vs2.gat	mapflag	nomemo
+
+pvp_y_1-1.gat	mapflag	noteleport
+pvp_y_1-2.gat	mapflag	noteleport
+pvp_y_1-3.gat	mapflag	noteleport
+pvp_y_1-4.gat	mapflag	noteleport
+pvp_y_1-5.gat	mapflag	noteleport
+pvp_y_2-1.gat	mapflag	noteleport
+pvp_y_2-2.gat	mapflag	noteleport
+pvp_y_2-3.gat	mapflag	noteleport
+pvp_y_2-4.gat	mapflag	noteleport
+pvp_y_2-5.gat	mapflag	noteleport
+pvp_y_3-1.gat	mapflag	noteleport
+pvp_y_3-2.gat	mapflag	noteleport
+pvp_y_3-3.gat	mapflag	noteleport
+pvp_y_3-4.gat	mapflag	noteleport
+pvp_y_3-5.gat	mapflag	noteleport
+pvp_y_4-1.gat	mapflag	noteleport
+pvp_y_4-2.gat	mapflag	noteleport
+pvp_y_4-3.gat	mapflag	noteleport
+pvp_y_4-4.gat	mapflag	noteleport
+pvp_y_4-5.gat	mapflag	noteleport
+pvp_y_5-1.gat	mapflag	noteleport
+pvp_y_5-2.gat	mapflag	noteleport
+pvp_y_5-3.gat	mapflag	noteleport
+pvp_y_5-4.gat	mapflag	noteleport
+pvp_y_5-5.gat	mapflag	noteleport
+pvp_y_6-1.gat	mapflag	noteleport
+pvp_y_6-2.gat	mapflag	noteleport
+pvp_y_6-3.gat	mapflag	noteleport
+pvp_y_6-4.gat	mapflag	noteleport
+pvp_y_6-5.gat	mapflag	noteleport
+pvp_y_7-1.gat	mapflag	noteleport
+pvp_y_7-2.gat	mapflag	noteleport
+pvp_y_7-3.gat	mapflag	noteleport
+pvp_y_7-4.gat	mapflag	noteleport
+pvp_y_7-5.gat	mapflag	noteleport
+pvp_y_8-1.gat	mapflag	noteleport
+pvp_y_8-2.gat	mapflag	noteleport
+pvp_y_8-3.gat	mapflag	noteleport
+pvp_y_8-4.gat	mapflag	noteleport
+pvp_y_8-5.gat	mapflag	noteleport
+pvp_n_1-1.gat	mapflag	noteleport
+pvp_n_1-2.gat	mapflag	noteleport
+pvp_n_1-3.gat	mapflag	noteleport
+pvp_n_1-4.gat	mapflag	noteleport
+pvp_n_1-5.gat	mapflag	noteleport
+pvp_n_2-1.gat	mapflag	noteleport
+pvp_n_2-2.gat	mapflag	noteleport
+pvp_n_2-3.gat	mapflag	noteleport
+pvp_n_2-4.gat	mapflag	noteleport
+pvp_n_2-5.gat	mapflag	noteleport
+pvp_n_3-1.gat	mapflag	noteleport
+pvp_n_3-2.gat	mapflag	noteleport
+pvp_n_3-3.gat	mapflag	noteleport
+pvp_n_3-4.gat	mapflag	noteleport
+pvp_n_3-5.gat	mapflag	noteleport
+pvp_n_4-1.gat	mapflag	noteleport
+pvp_n_4-2.gat	mapflag	noteleport
+pvp_n_4-3.gat	mapflag	noteleport
+pvp_n_4-4.gat	mapflag	noteleport
+pvp_n_4-5.gat	mapflag	noteleport
+pvp_n_5-1.gat	mapflag	noteleport
+pvp_n_5-2.gat	mapflag	noteleport
+pvp_n_5-3.gat	mapflag	noteleport
+pvp_n_5-4.gat	mapflag	noteleport
+pvp_n_5-5.gat	mapflag	noteleport
+pvp_n_6-1.gat	mapflag	noteleport
+pvp_n_6-2.gat	mapflag	noteleport
+pvp_n_6-3.gat	mapflag	noteleport
+pvp_n_6-4.gat	mapflag	noteleport
+pvp_n_6-5.gat	mapflag	noteleport
+pvp_n_7-1.gat	mapflag	noteleport
+pvp_n_7-2.gat	mapflag	noteleport
+pvp_n_7-3.gat	mapflag	noteleport
+pvp_n_7-4.gat	mapflag	noteleport
+pvp_n_7-5.gat	mapflag	noteleport
+pvp_n_8-1.gat	mapflag	noteleport
+pvp_n_8-2.gat	mapflag	noteleport
+pvp_n_8-3.gat	mapflag	noteleport
+pvp_n_8-4.gat	mapflag	noteleport
+pvp_n_8-5.gat	mapflag	noteleport
+pvp_2vs2.gat	mapflag	noteleport
+
+pvp_y_1-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_1-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_1-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_1-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_1-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_2-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_2-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_2-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_2-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_2-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_3-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_3-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_3-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_3-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_3-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_4-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_4-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_4-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_4-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_4-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_5-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_5-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_5-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_5-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_5-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_6-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_6-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_6-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_6-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_6-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_7-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_7-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_7-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_7-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_7-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_8-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_8-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_8-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_8-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_y_8-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_1-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_1-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_1-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_1-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_1-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_2-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_2-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_2-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_2-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_2-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_3-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_3-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_3-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_3-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_3-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_4-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_4-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_4-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_4-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_4-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_5-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_5-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_5-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_5-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_5-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_6-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_6-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_6-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_6-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_6-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_7-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_7-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_7-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_7-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_7-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_8-1.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_8-2.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_8-3.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_8-4.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_n_8-5.gat	mapflag	nosave	prt_are_in.gat,100,80
+pvp_2vs2.gat	mapflag	nosave	prt_are_in.gat,100,80

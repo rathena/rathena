@@ -1,0 +1,50 @@
+	Post here any database changes ok guys? [shadowlady]
+
+	==== progress ====
+	Ayathoya mobs == Added but using poring stats ( ? )
+	Ayathoya items == Added but no effect ( all are "ect" itens)
+	Skill databases == celest working on them i believe.
+
+11/27	* Fixed some drain rates, fixed Balmung, Mjolnir, fixed all maces (for right jobs) [shadow]
+
+11/26	* Fixed Abrakadabra (3 Yellow Gemstones -> Yellow Gemstones 2).
+	  And of course it would still use 1 Yellow even if you have Mistress Card, etc. [Lupus]
+	  TODO: Abrakadabra should also summon Monsters and even MVP by chance...
+	* Lowered max level of Oridecon Research skill from 10 to 5 [Lupus]
+
+11/25   * Added element effects to const.txt. [celest]
+          Usage example: sc_start SC_Frost,30000,0;
+          to change the weapon element to Water for 30 seconds.
+
+11/23   * Added temporary requirements for the new guild skills [celest]
+
+11/22
+        * Changed weapon requirements for Sharp Shooting [celest]
+	* fixed job_db2.txt (,, -> ,) [Lupus]
+        * Adding 11/23 kRO's new skills [celest]
+	* Slim Potions requires empty test tube, not empty potion bottle *fixed* [shadow]
+
+11/21
+	* added bClassChange to const.txt and added bClassChange,50; to azoth (.5% chance to transform monster into another.) [Valaris]
+	* added mob stats: 1027,Raptice [Lupus]
+
+11/20
+	- Added deadly poison bottle to produce_db.txt [celest]
+        - Edited ASC_CDP in skill_require_db.txt
+        - Edited ASC_EDP in skill_cast_db.txt
+
+11/17
+	- Corrected max level for cloaking in skill_tree.txt [celest]
+
+11/16
+	- Item 7110 fixed name -> Broken Sword (part of Bongun quest) [Lupus]
+	
+11/16   
+	- Added BaseJob to const.txt [celest]
+
+11/15
+	- Minor fix on wedding skills, to use 15% of SP/HP . [shadowlady]
+	-  ?
+
+11/14
+	- Fixed Golden Thief Bug Mode!(+detects hidden) [Lupus]

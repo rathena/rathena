@@ -1,0 +1,443 @@
+//===== eAthena Script =======================================
+//= Monster Tamers
+//===== By: ==================================================
+//= kobra_k88, Darkchild, x[tsk]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena 1.0
+//===== Description: =========================================
+//= Cute pet quest items
+//===== Additional Comments: =================================
+//= May not have all of the Monster Tamers, but the ones here are fully working.
+//============================================================
+
+
+
+
+//<================================================= Alberta ===============================================>\\
+alberta_in.gat,173,77,3	script	Monster Tamer	125,
+{
+	mes "[Monster Tamer Iwado]";
+	mes "Monster taming has never been more popular than it is now! Why not join in on all of the excitement?....";
+M_Menu:
+	next;
+	menu 	"^5555FFMonster Taming^000000",M_0,
+		"^5555FF'Monster Juice'^000000",M_1,
+		"^5555FF'Singing Flower'^000000",M_2,
+		"^5555FF'Wild Flower'^000000",M_3,
+		"Please make one for me",M_Make,
+		"Cancel",M_End;
+	M_0:
+		mes "[Monster Tamer Iwado]";
+		mes "Monster Taming is the way in which players can get certain monsters to become their pets.";
+		mes "By using a ^5555FF'Taming Item'^000000 a player can lure a monster into becoming a pet.";
+		next;
+		mes "[Monster Tamer Iwado]";
+		mes "These Taming Items are very hard to come by, but Monster Tamer Guild members such as myself can get them to you without any hassle.";
+		next;
+		mes "[Monster Tamer Iwado]";
+		mes "Here the Taming Items that I offer:";
+		mes "^5555FF'Monster Juice'^000000";
+		mes "^5555FF'Singing Flower'^000000";
+		mes "^5555FF'Wild Flower'^000000";
+		next;
+		mes "[Monster Tamer Iwado]";
+		mes "These are fantastic items! You should really give them a try!";
+		goto M_Menu;
+	M_1:
+		mes "[Monster Tamer Iwado]";
+		mes "It is a drink made from animal blood.  It's nothing a person would want to drink, but for the monster '^FF5555'Hunter Fly'^000000, it's a delicacy.";
+		next;
+		mes "[Monster Tamer Iwado]";
+		mes "I can give you a ^5555FF'Monster Juice'^000000 in exchange for:";
+		mes "-^FF5555'1 Animal Gore'";
+		mes "-'2 Apples'^000000";
+		next;
+		mes "[Monster Tamer Iwado]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_2:
+		mes "[Monster Tamer Iwado]";
+		mes "The flower of a Singing Plant.  It is a very unique and unusual item that seems to attract ^FF5555'Rockers'^000000.";
+		next;
+		mes "[Monster Tamer Iwado]";
+		mes "I can give you a ^5555FF'Singing Flower'^000000 in exchange for:";
+		mes "-^FF5555'1 Singing Plant'^000000";
+		next;
+		mes "[Monster Tamer Iwado]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_3:
+		mes "[Monster Tamer Iwado]";
+		mes "This flower blooms naturally here in Rune-Midgard.  It can be used as armor for your ^FF5555Orc Warrior^000000 pet.";
+		mes "I can give you a ^5555FF'Wild Flower'^000000 in exchange for:";
+		mes "-^FF5555'1 Fancy Flower'";
+		mes "-'1 Clover'^000000";
+		next;
+		mes "[Monster Tamer Iwado]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_Make:
+		mes "[Monster Tamer Iwado]";
+		mes "Which Taming Item would you like?";
+		next;
+		menu "^5555FF'Monster Juice'^000000",sM_1, "^5555FF'Singing Flower'^000000",sM_2, "^5555FF'Wild Flower'^000000",sM_3, "Cancel",M_End;
+
+		sM_1:
+			if(countitem(702)<1 || countitem(512)<2) goto sL_NoItems;
+			mes "[Monster Tamer Iwado]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer Iwado]";
+			mes "Here you are! A Monster Juice! Enjoy and feel free to come back anytime.";
+			getitem 626,1;
+			delitem 702,1;
+			delitem 512,2;
+			close;
+		sM_2:
+			if(countitem(707)<1) goto sL_NoItems;
+			mes "[Monster Tamer Iwado]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer Iwado]";
+			mes "Here you are! A Singing Flower! Enjoy and feel free to come back anytime.";
+			getitem 629,1;
+			delitem 707,1;
+			close;
+		sM_3:
+			if(countitem(2207)<1 || countitem(705)<1) goto sL_NoItems;
+			mes "[Monster Tamer Iwado]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer Iwado]";
+			mes "Here you are! A Wild Flower! Enjoy and feel free to come back anytime.";
+			getitem 10009,1;
+			delitem 2207,1;
+			delitem 705,1;
+			close;
+
+			sL_NoItems:
+				mes "[Monster Tamer Iwado]";
+				mes "It looks like you don't have enough items to exchange for this tame.  Please come back when you do.";
+				close;
+	M_End:
+		mes "[Monster Tamer Iwado]";
+		mes "Oh... I see.  You probably haven't decided on what monster to raise as a pet yet.  It's a very important decision, so please, take your time.";
+		close;
+
+}
+
+
+//<================================================= Al De Baran ===============================================>\\
+aldeba_in.gat,167,177,3	script	Monster Tamer	125,
+{
+	mes "[Monster Tamer YuU]";
+	mes "You must be looking for some Taming Items.... When it comes to making Taming Items there is no one better than me here in Rune Midgard.";
+M_Menu:
+	next;
+	menu 	"^5555FF'Monster Taming'^000000",M_0,
+		"^5555FF'Skull Helm'^000000",M_1,
+		"^5555FF'Monster Oxygen Mask'^000000",M_2,
+		"^5555FF'Silk Ribbon'^000000",M_3,
+		"^5555FF'Stellar Hairpin'^000000",M_4,
+		"^5555FF'Tiny Egg Shell'^000000",M_5,
+		"^5555FF'Rocker Glasses'^000000",M_6,
+		"Please make one for me",M_Make,
+		"Cancel",M_End;
+	M_0:
+		mes "[Monster Tamer YuU]";
+		mes "Monster Taming is the way in which players can get certain monsters to become their pets.";
+		mes "By using a ^5555FF'Taming Item'^000000 a player can lure a monster into becoming a pet.";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "Once you obtain a pet, you must show it love and appreciation.  This is the most important part of monster taming.";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "The best way to show your new pet you care, is to get it an 'Accessory' to make it stand out from the rest of the monsters in Rune Midgard.";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "These ^5555FF'Cute Pet Accessories'^000000 are very hard to come by, but Monster Tamer Guild members such as myself can get them to you without any hassle.";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "Here the Taming Items that I offer:";
+		mes "^5555FF'Skull Helm'";
+		mes "'Monster Oxygen Mask'";
+		mes "'Silk Ribbon'";
+		mes "'Stellar Hairpin'";
+		mes "'Tiny Egg Shell'";
+		mes "'Rocker Glasses'^000000";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "These are fantastic items! You should really give them a try!";
+		goto M_Menu;
+	M_1:
+		mes "[Monster Tamer YuU]";
+		mes "It may be disgusting, but it has a mysterious power that has the potential to make its wearer go crazy!";
+		mes "This item will look great on your '^FF5555'Baphomet Jr.'^000000 pet.";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "I can give you a ^5555FF'Skull Helm'^000000 in exchange for:";
+		mes "-^FF5555'1 Bone Helm'^000000";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_2:
+		mes "[Monster Tamer YuU]";
+		mes "Once worn it makes it difficult to tell whether or not the wearer is a monster or a human.";
+		mes "A great gift for your ^FF5555'Choncon', 'Steel Choncon', or 'Hunter Fly'^000000.";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "I can give you a ^5555FF'Monster Oxygen Mask'^000000 in exchange for:";
+		mes "-^FF5555'1 Oxygen Mask'^000000";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_3:
+		mes "[Monster Tamer YuU]";
+		mes "It's a high quality ribbon knitted out of smooth silk.  It will make your pet ^FF5555'Lunatic'^000000 look even cuter!.";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "I can give you a ^5555FF'Silk Ribbon'^000000 in exchange for:";
+		mes "-^FF5555'1 Ribbon (0 Slotts)'^000000";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_4:
+		mes "[Monster Tamer YuU]";
+		mes "It is extremely sharp and possesses a mysterious power that makes monsters want to wear it.";
+		mes "Your ^FF5555'Green Petite'^000000 will love wearing this!";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "I can give you a ^5555FF'Stellar Hairpin'^000000 in exchange for:";
+		mes "-^FF5555'1 Stellar'^000000";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_5:
+		mes "[Monster Tamer YuU]";
+		mes "This seems to have a peculiar scent and a magnificent shine! It can be used as armor for your ^FF5555'Picky'^000000.";
+		mes "I can give you a ^5555FF'Tiny Egg Shell'^000000 in exchange for:";
+		mes "-^FF5555'1 Egg Shell'^000000";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_6:
+		mes "[Monster Tamer YuU]";
+		mes "Mysterious pair of eye glasses which make its wearer look like a geek.  It's perfect for your ^FF5555Rocker^000000 pet.";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "I can give you a pair of ^5555FF'Rocker Glasses'^000000 in exchange for:";
+		mes "-^FF5555'1 Ribbon (0 Slotts)'";
+		mes "-'2 Zargon'";
+		mes "-'400 Zeny'^000000";
+		next;
+		mes "[Monster Tamer YuU]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_Make:
+		mes "[Monster Tamer YuU]";
+		mes "Which Taming Item would you like?";
+		next;
+		menu 	"^5555FF'Skull Helm'^000000",sM_1,
+			"^5555FF'Monster Oxygen Mask'^000000",sM_2,
+			"^5555FF'Silk Ribbon'^000000",sM_3,
+			"^5555FF'Stellar Hairpin'^000000",sM_4,
+			"^5555FF'Tiny Egg Shell'^000000",sM_5,
+			"^5555FF'Rocker Glasses'^000000",sM_6,
+			"Cancel",M_End;
+
+		sM_1:
+			if(countitem(5017)<1) goto sL_NoItems;
+			mes "[Monster Tamer YuU]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer YuU]";
+			mes "Here you are! A Skull Helm! Enjoy and feel free to come back anytime.";
+			getitem 10001,1;
+			delitem 5017,1;
+			close;
+		sM_2:
+			if(countitem(5004)<1) goto sL_NoItems;
+			mes "[Monster Tamer YuU]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer YuU]";
+			mes "Here you are! A Monster Oxygen Mask! Enjoy and feel free to come back anytime.";
+			getitem 10002,1;
+			delitem 5004,1;
+			close;
+		sM_3:
+			if(countitem(2208)<1) goto sL_NoItems;
+			mes "[Monster Tamer YuU]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer YuU]";
+			mes "Here you are! A Silk Ribbon! Enjoy and feel free to come back anytime.";
+			getitem 10007,1;
+			delitem 2208,1;
+			close;
+		sM_4:
+			if(countitem(2294)<1) goto sL_NoItems;
+			mes "[Monster Tamer YuU]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer YuU]";
+			mes "Here you are! Stellar Hairpin! Enjoy and feel free to come back anytime.";
+			getitem 10011,1;
+			delitem 2294,1;
+			close;
+		sM_5:
+			if(countitem(5015)<1) goto sL_NoItems;
+			mes "[Monster Tamer YuU]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer YuU]";
+			mes "Here you are! A Tiny Egg Shell! Enjoy and feel free to come back anytime.";
+			getitem 10012,1;
+			delitem 5015,1;
+			close;
+		sM_6:
+			if(countitem(2208)<1 || countitem(912)<2 || Zeny<400) goto sL_NoItems;
+			mes "[Monster Tamer YuU]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer YuU]";
+			mes "Here you are! A pair of Rocker Glasses! Enjoy and feel free to come back anytime.";
+			getitem 10014,1;
+			delitem 2208,1;
+			delitem 912,2;
+			set Zeny, Zeny-400;
+			close;
+
+			sL_NoItems:
+				mes "[Monster Tamer YuU]";
+				mes "It looks like you don't have enough items to exchange for this tame.  Please come back when you do.";
+				close;
+	M_End:
+		mes "[Monster Tamer YuU]";
+		mes "Oh... I see.  You probably haven't decided on what monster to raise as a pet yet.  It's a very important decision, so please, take your time.";
+		close;
+
+}
+
+
+//<================================================= Izlude ===============================================>\\
+izlude_in.gat,128,64,3	script	Monster Tamer	125,
+{
+	mes "[Monster Tamer Shogo]";
+	mes "Are you pre-occupied with gathering items for your cute pets, and want a break? Then let us find those items for you.....";
+M_Menu:
+	next;
+	menu 	"^5555FFMonster Taming^000000",M_0,
+		"^5555FF'Book of Devil'^000000",M_1,
+		"^5555FF'No Recipient'^000000",M_2,
+		"^5555FF'Horror of Tribe'^000000",M_3,
+		"Please make one for me",M_Make,
+		"Cancel",M_End;
+	M_0:
+		mes "[Monster Tamer Shogo]";
+		mes "Monster Taming is the way in which players can get certain monsters to become their pets.";
+		mes "By using a ^5555FF'Taming Item'^000000 a player can lure a monster into becoming a pet.";
+		next;
+		mes "[Monster Tamer Shogo]";
+		mes "These Taming Items are very hard to come by, but Monster Tamer Guild members such as myself can get them to you without any hassle.";
+		next;
+		mes "[Monster Tamer Shogo]";
+		mes "Here the Taming Items that I offer:";
+		mes "^5555FF'Book of Devil'^000000,";
+		mes "^5555FF'No Recipient'^000000,";
+		mes "^5555FF'Horror of Tribe'^000000.";
+		next;
+		mes "[Monster Tamer Shogo]";
+		mes "These are fantastic items! You should really give them a try!";
+		goto M_Menu;
+	M_1:
+		mes "[Monster Tamer Shogo]";
+		mes "This book is far too powerfull for any mere mortal to read and contains the secret method of summoning a devil!";
+		mes "Use it to lure the monster ^FF5555'Deviruchi.'^000000.";
+		next;
+		mes "[Monster Tamer Shogo]";
+		mes "I can give you a ^5555FF'Book of Devil'^000000 in exchange for:";
+		mes "-^FF5555'1 Old Magic Book'";
+		mes "-'2 Horrendous Mouth'^000000";
+		next;
+		mes "[Monster Tamer Shogo]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_2:
+		mes "[Monster Tamer Shogo]";
+		mes "An old letter which wasn't delivered because of an unkown recipient.";
+		mes "It has no meaning to any living human, but ^FF5555'Munaks'^000000 seem to be very fond of it.";
+		next;
+		mes "[Monster Tamer Shogo]";
+		mes "I can give you a ^5555FF'No Recipient'^000000 in exchange for:";
+		mes "-^FF5555'1 Old Portrait'^000000";
+		next;
+		mes "[Monster Tamer Shogo]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_3:
+		mes "[Monster Tamer Shogo]";
+		mes "This trophy is an ^FF5555'Orc Warrior's'^000000 favorite item.";
+		mes "I can give you a ^5555FF'Horror of Tribe'^000000 in exchange for:";
+		mes "-^FF5555'1 Chivalry Emblem'";
+		mes "-'1 Scorpion Tail'^000000";
+		next;
+		mes "[Monster Tamer Shogo]";
+		mes "Once you bring me these items I will make this Taming item with the uttmost pride!";
+		goto M_Menu;
+	M_Make:
+		mes "[Monster Tamer Shogo]";
+		mes "Which Taming Item would you like?";
+		next;
+		menu "^5555FF'Book of Devil'^000000",sM_1, "^5555FF'No Recipient'^000000",sM_2, "^5555FF'Horror of Tribe'^000000",sM_3, "Cancel",M_End;
+
+		sM_1:
+			if(countitem(1006)<1 || countitem(958)<2) goto sL_NoItems;
+			mes "[Monster Tamer Shogo]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer Shogo]";
+			mes "Here you are! A Book of Devil! Enjoy and feel free to come back anytime.";
+			getitem 642,1;
+			delitem 1006,1;
+			delitem 958,2;
+			close;
+		sM_2:
+			if(countitem(7014)<1) goto sL_NoItems;
+			mes "[Monster Tamer Shogo]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer Shogo]";
+			mes "Here you are! A No Recipient! Enjoy and feel free to come back anytime.";
+			getitem 636,1;
+			delitem 7014,1;
+			close;
+		sM_3:
+			if(countitem(1004)<1 || countitem(904)<1) goto sL_NoItems;
+			mes "[Monster Tamer Shogo]";
+			mes "Alright, just a minute while I prepare the tame......";
+			next;
+			mes "[Monster Tamer Shogo]";
+			mes "Here you are! A Horror of Tribe! Enjoy and feel free to come back anytime.";
+			getitem 635,1;
+			delitem 1004,1;
+			delitem 904,1;
+			close;
+
+			sL_NoItems:
+				mes "[Monster Tamer Shogo]";
+				mes "It looks like you don't have enough items to exchange for this tame.  Please come back when you do.";
+				close;
+	M_End:
+		mes "[Monster Tamer Shogo]";
+		mes "Oh... I see.  You probably haven't decided on what monster to raise as a pet yet.  It's a very important decision, so please, take your time.";
+		close;
+
+}

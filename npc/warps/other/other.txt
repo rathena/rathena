@@ -1,0 +1,35 @@
+//===== Athena Script ========================================
+//= Other Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version;
+//===== Description: =========================================
+//= Warp Points for Other Maps
+//===== Additional Comments: =================================
+//= Split off npc_warp.txt
+//============================================================
+
+//guild_room.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs1.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs1.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs1.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs1.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs2.gat,50,88,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs2.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs2.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs2.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs3.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs3.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs3.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs3.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs4.gat,7,50,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs4.gat,50,7,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs4.gat,92,50,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs4.gat,50,92,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs5.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs5.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs5.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0
+//guild_vs5.gat,0,0,0	warp	warp4	0,0,hoge.gat,0,0

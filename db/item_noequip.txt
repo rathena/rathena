@@ -1,0 +1,4 @@
+// The equipment restriction file 
+// here equipment at PvP and GvG 
+// where it is possible to restrict, the prescribed form: < ItemID> < Mode> 
+// mode = 1- So with PvP restriction, 2- GvG restriction, 3- PvP and GvG which restriction 

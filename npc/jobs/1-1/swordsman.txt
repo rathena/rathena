@@ -1,0 +1,795 @@
+//===== eAthena Script ======================================= 
+//= Swordsman Job Quest
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.0 
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= <Description> 
+//===== Additional Comments: ================================= 
+//= Fully working.  I have created a custom warp to get into the test room so disable
+//= the one in your warp script or scripts.  It is this warp: "izlude_in.gat",40,170.
+//============================================================ 
+
+
+// == Monsters ==
+//Spawn is included in this file so make shure its not elsewhere to!
+sword_1-1.gat,35,78,0,0	monster	Fabre	1184,4,0,0,0
+sword_1-1.gat,50,108,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,61,28,0,0	monster	Fabre	1184,4,0,0,0
+sword_1-1.gat,61,92,0,0	monster	Fabre	1184,2,0,0,0
+//
+sword_1-1.gat,110,112,0,0	monster	Fabre	1184,3,0,0,0
+sword_1-1.gat,161,94,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,130,76,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,103,58,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,130,24,0,0	monster	Fabre	1184,3,0,0,0
+//
+sword_1-1.gat,201,36,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,201,16,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,239,44,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,239,76,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,231,101,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,234,117,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,198,91,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,200,63,0,0	monster	Fabre	1184,2,0,0,0
+
+
+// == Warp ==
+// -- Warp to test room --
+izlude_in.gat,62,170,0	script	w1039	45,1,1,
+{
+	if(Class==Job_Novice && job_sword_q > 0) warp "izlude_in.gat",40,170;
+	if(job_sword_q == 0) doevent "Swordsman::OnStart";
+	end;
+}
+
+
+// == Npcs ==
+// -- Master Swordsman --
+izlude_in.gat,74,172,5	script	Master Swordsman	119,
+{
+	mes "[Master Swordsman]";
+	if(Class==Job_Novice && job_sword_q == 2) goto L_Done;
+	mes "Welcome to the Swordsman Association! So.. What business brings you to us?";
+L_Menu:
+	next;
+	menu "Make me a Swordsman!",M_0,"About being a Swordsman.",M_1,"The job requirements.",M_2,"Cancel.",M_End;
+        	close;
+
+	M_0:
+		mes "[Master Swordsman]";
+		if(Class == Job_Swordman) goto O_1b;
+		if(Class != Job_Novice) goto O_1c;
+		mes "So you wish to become a Swordsman aye? A very good choice!!  Fill out this application form first.";
+		next;
+		mes "..(you fill out the form and hand it to him)..";
+		next;
+		mes "[Master Swordsman]";
+		if(JobLevel < 10) goto O_1d;
+
+		O_1a:
+			set job_sword_q,1;
+			savepoint "izlude_in.gat",65,165;
+			mes "Okay.  Let me just review your information......";
+			next;
+			mes "[Master Swordsman]";
+			mes "Ah!! I see that you have met the necessary requirements.....";
+			next;
+			mes "[Master Swordsman]";
+			mes "But there is one last thing you need to do to before I can make you an offical Swordsman.";
+			mes "You must prove your valour by taking the Izlude Swordsman Test!!!";
+			next;
+			mes "[Master Swordsman]";
+			mes "Are you willing to do so?";
+			next;
+			menu "Yes.",sM_0,"No.",sM_1;
+
+			sM_0:
+				mes "[Master Swordsman]";
+				mes "Very good!!!  The testing room is too my right.";
+				next;
+				mes "[Master Swordsman]";
+				mes "Good luck young warrior!!!";
+				close;
+
+			sM_1:
+				mes "[Master Swordsman]";
+				mes "Very well then. Your registration is complete.  When you are ready to take the test, just enter the testing room to my right.";
+				close;
+
+		O_1b:
+			mes "Muhahaha! You must be kidding me! You're already a swordsman.";
+			emotion 18;
+			close;
+
+		O_1c:
+			mes "Im sorry but you can not hold more than one job at a time and therefore I must refuse your request.";
+			next;
+			mes "[Master Swordsman]";
+			mes "Try picking up a hobby to make use of your spare time. Muhahahahah!!";
+			emotion 18;
+			close;
+
+		O_1d:
+			mes "A hem...., you have yet to learn all of the 'Basic Skills' needed to become a Swordsman.  Please check the requirements again.";
+			close;
+
+	M_1:
+		mes "[Master Swordsman]";
+		mes "So you wish to know about the Swordsman profession... very good then! I will explain it to you.";
+		next;
+		mes "[Master Swordsman]";
+		mes "The primary advantage of being a Swordsman is that you will become superior in pure strength and mele combat compared with those in the other professions.";
+		next;
+		mes "[Master Swordsman]";
+		mes "There are 3 reasons why the swordsman is unparalled in hand to hand combat v.s. those of the other job types!";
+		next;
+		mes "[Master Swordsman]";
+		mes " - 1st, the swordsman has a skill that gives him/her an excellent hp regeration rate.";
+		mes " - 2nd, the swordsman is capable of using more kinds of weapons than those in the other job types.";
+		mes " - 3rd, Most of the swordsman's skills enhance and increase physical attacks making him/her an elite warrior.";
+		next;
+		mes "[Master Swordsman]";
+		mes "A Simple but adequte explanation for a newbie like you.";
+		next;
+		mes "[Master Swordsman]";
+		mes "Aside from this, in my personal opinion, being a 'Swordsman' is greatest job in all the land!";
+		mes "Muhahahah!!!";
+		emotion 18;
+		goto L_Menu;
+
+	M_2:
+		mes "[Master Swordsman]";
+		mes "So you wish to become a swordsman....";
+		next;
+		if(Class == Job_Novice) goto O_2a;
+		if(Class == Job_Swordman) goto O_2b;
+		mes "[Master Swordsman]";
+		mes "But you already have another job.... it's too late for you to become a Swordsman.";
+		next;
+		mes "[Master Swordsman]";
+		mes "Still you seek knowledge about the Swordsman proffession ay?... very well then....";
+		next;
+
+		O_2a:
+			mes "[Master Swordsman]";	
+			mes "First, You must learn all 9 Basic Skills. If you can't satisfy this condition, you won't be able to become anything.";
+			next;
+			mes "[Master Swordsman]";
+	 		mes "Secondly you must pass the legendary Izlude Swordsman Test.";
+			next;
+			mes "[Master Swordsman]";
+			mes "When you fullfill these 2 conditions, you can become an offical Swordsman.";
+			goto L_Menu;
+		
+		O_2b:
+			mes "[Master Swordsman]";
+			mes "....but you're already a Swordsman...????";
+			emotion 20;
+			close;
+					
+	M_End:
+		mes "[Master Swordsman]";
+		mes "Enjoy your youth before you lose it~~ Muhahahaha!!!!";
+		emotion 18;
+		close;
+
+L_Done:
+	mes "Let me see here....so you've past the test aye??....";
+	next;
+	if(SkillPoint > 0) goto L_Skillpt;
+	mes "[Master Swordsman]";
+	mes "Congratulations! Now you are now fully qualified to become a Real Swordsman! I will transform you right away!!";
+	next;
+	JobChange Job_Swordman;
+	set job_sword_q,0;
+	mes "[Master Swordsman]";
+	mes "As you set forth on your journey I will expect you to represent the Swordsman Assosiation of Izlude with great honor and integrity.";
+	next;
+	mes "[Master Swordsman]";
+	mes "Muhahahaha!!!";
+	close;
+
+	L_Skillpt:
+		mes "[Master Swordsman]";
+		mes "Hmm... just a momement... it seems you still have skill points left over.";
+		mes "Please use them up so that I can make you a Swordsman.";
+		close;
+}
+
+// -- Swordsman --
+izlude_in.gat,65,171,5	script	Swordsman	85,{
+	doevent "Swordsman";
+	end;
+}
+
+// -- Hidden Npc --
+izlude_in.gat,65,171,5	script	Swordsman	-1,{
+
+OnStart:
+	mes "[Swordsman]";
+	if(Class == 1) goto L_Sword;
+	if(Class == 0) goto L_Novice;
+
+L_Other:
+	mes "Who might you be?! Those who are not Novices are not permitted to go in! Please leave.";
+	emotion 1;
+	close;
+L_Sword:
+	mes "You're already a Swordsman!! You don't need to take this silly test!";
+	emotion 0;
+	close;
+
+L_Novice:
+	if(job_sword_q == 1) goto L_Start;
+	if(job_sword_q == 2) goto L_Done;
+
+		mes "Halt! Do you want to take the Swordsman Test?";
+		mes "If so, please fill out the swordsman application first.";
+		mes "Speak with the 'Master Swordsman' for more information.";
+		emotion 0;
+		close;
+
+	L_Start:
+		mes "Please enter the testing room when you are ready.  Good luck!";
+		close;
+
+	L_Done:
+		mes "Speak with the Master Swordsman so that he can make you a Swordsman.";
+		close;
+}
+
+// -- Test Guide --
+izlude_in.gat,30,175,4	script	Test Guide	92,{
+	mes "[Test Guide]";
+	mes "I will tell you about the legendary Izlude Swordsman Test! Listen VERY CAREFULLY for I won't repeat this again!";
+	next;
+	mes "[Test Guide]";
+	mes "The purpose of this test is to decide wheather or not you qualify to become a Swordsman."; 
+	mes "As you know, a Swordsman needs superior physical Strength as well as an iron will!";
+	mes "If you possess neither of these attributes you will surely fail this grueling test.";
+	next;
+	mes "[Test Guide]";
+	mes "The objective of the test is very simple!";
+	next;
+	mes "[Test Guide]";
+	mes "You need to make through an obsticale course within ^FF00007 minutes^000000 in order to pass.";
+	next;
+	mes "[Test Guide]";
+	mes "The obsticale course is made up of 3 parts and is littered with booby-traps so becarefull!";
+	mes "Some traps will reduce your HP while others will warp you to an random underground cave causing you to start over.";
+	next;
+	mes "[Test Guide]";
+	mes "If you `Surrender' or if you excede the 'time limit', you will be fail the test.";
+	next;
+	mes "[Test Guide]";
+	mes "That is everything you need to know in order to take the test.";
+	mes "May God bless you.";
+	close;
+}
+
+
+// -- Test Hall Staff 1 --
+izlude_in.gat,30,163,8	script	Test Hall Staff	105,{
+	mes "[Test Hall Staff]";
+	if(SWTEST == 1) goto L_Option2;
+	if(SWTEST >= 2) goto L_Option3;
+	set SWTEST, 0;
+
+	mes "    So you want to take the test huh? You look confident.. that's good.  Stay relaxed and do your best. This is not a difficult test.";
+	next;
+	mes "[Test Hall Staff]";
+	mes "Are you ready?";
+	next;
+	menu "Let me at it!!",M_yes,"Ah..maybe later..",M_no;
+	close;
+
+	M_yes:
+		set SWTEST, SWTEST + 1;
+		savepoint "izlude_in.gat",39,170;
+		warp "sword_1-1.gat",10,245;
+		deltimer "Test Hall Staff::OnTimer7min";
+		deltimer "Test Hall Staff::OnTimer4min";
+		deltimer "Test Hall Staff::OnTimer2min";
+		deltimer "Test Hall Staff::OnTimer1min";
+		deltimer "Test Hall Staff::OnTimer30sec";
+		deltimer "Test Hall Staff::OnTimer0min";
+		addtimer 2000, "Test Hall Staff::OnTimer7min";
+		addtimer 182000, "Test Hall Staff::OnTimer4min";
+		addtimer 302000, "Test Hall Staff::OnTimer2min";
+		addtimer 362000, "Test Hall Staff::OnTimer1min";
+		addtimer 392000, "Test Hall Staff::OnTimer30sec";
+		addtimer 422000, "Test Hall Staff::OnTimer0min";
+		end;
+
+	M_no:
+		 mes "[Test Hall Staff]";
+		 mes "Check back with me when you are ready.";
+		 close;
+
+L_Option2:
+	mes "Taking the test over?.... Keep your head up. I like those who never back down from a challange! Now take this and cheer up!";
+	getitem 512,3;//Items: Apple,
+	next;
+	goto M_yes;
+	end;
+L_Option3:
+	mes "Don't give up! I know you will pass this time!";
+	mes "(you catch him whispering '...loooooseerrr...')";
+	getitem 512,5;//Items: Apple,
+	next;
+	goto M_yes;
+	end;
+
+L_Timer:
+	OnTimer7min:
+		areaannounce "sword_1-1.gat", 8, 162, 191, 251, "[Test Hall Staff]: Your 7 minutes starts now!",0;
+		end;
+	OnTimer4min:
+		areaannounce "sword_1-1.gat", 8, 162, 191, 251, "[Test Hall Staff]: You have 4 minutes left!",0;
+		end;
+	OnTimer2min:
+		areaannounce "sword_1-1.gat", 8, 162, 191, 251, "[Test Hall Staff]: You have 2 minutes left!",0;
+		end;
+	OnTimer1min:
+		areaannounce "sword_1-1.gat", 8, 162, 191, 251, "[Test Hall Staff]: You have 1minute left",0;
+		end;
+	OnTimer30sec:
+		areaannounce "sword_1-1.gat", 8, 162, 191, 251, "[Test Hall Staff]: You have 30 seconds left, hurry!",0;
+		end;
+	OnTimer0min:
+		areaannounce "sword_1-1.gat", 8, 162, 191, 251, "[Test Hall Staff]: Your times up!  You failed the test.",0;
+		addtimer 4000, "Test Hall Staff::OnTimerWarp";
+		end;
+	OnTimerWarp:
+		warp "izlude_in.gat",39,170;
+}
+
+
+// -- Medic 1 --
+sword_1-1.gat,230,245,2	script	Medic	105,{
+	mes "[Medic]";
+	mes "This is the 1st check point! You're doing great!";
+	percentheal 100, 100;
+	close;
+}
+	
+// -- Test Hall Staff 2 --
+sword_1-1.gat,230,242,2	script	Test Hall Staff	105,{
+	mes "[Test Hall Staff]";
+	mes "Do you surrender?";
+	next;
+	menu "Yes.",M_0,"No.",M_1;
+
+	M_0:
+		warp "izlude_in.gat",65,165;
+		close;
+	M_1:
+		mes "[Test Hall Staff]";
+		mes "Bravo! Go for it again!";
+   		close;
+}
+
+// -- Medic 2 --
+sword_1-1.gat,230,207,2	script	Medic	105,{
+	mes "[Medic]";
+	mes "This is the 2nd check point! Keep up the good work!";
+	percentheal 100, 100;
+	close;
+}
+
+// -- Test Hall Staff 3 --
+sword_1-1.gat,230,204,2	script	Test Hall Staff	105,{
+	mes "[Test Hall Staff]";
+	mes "Do you surrender?";
+	next;
+	menu "Yes.",M_0,"No.",M_1;
+
+	M_0:
+		warp "izlude_in.gat",65,165;
+		close;
+	M_1:
+		mes "[Test Hall Staff]";
+		mes "Bravo! Go for it again!";
+   		close;
+}
+
+// -- Mae (Medic 3) --		
+sword_1-1.gat,223,167,2	script	Mae	92,{
+	mes "[Mae]";
+	mes "I sincerely congratulate you for passing the test!";
+	mes "I've already sent your test results to the 'Master Swordsman'.";
+	mes "Please inquire with him about your results. Thank you.";
+	next;
+	percentheal 100, 100;
+	set job_sword_q,2;
+	set SWTEST,0;
+	warp "izlude_in.gat",66,173;
+	close;
+}
+
+
+
+
+// == Green Traps ==
+// reduce hp when stepped on
+
+// -- First Section --
+// - Left -
+sword_1-1.gat,22,172,1	script	1green_1::green	139,0,0,{
+	heal (-4),0;
+	end;
+}
+
+// -- Duplicates --
+sword_1-1.gat,22,173,1	duplicate(green)	1green_2	139,0,0
+sword_1-1.gat,23,172,1	duplicate(green)	1green_3	139,0,0
+sword_1-1.gat,23,173,1	duplicate(green)	1green_4	139,0,0
+sword_1-1.gat,34,172,1	duplicate(green)	1green_5	139,0,0
+sword_1-1.gat,34,173,1	duplicate(green)	1green_6	139,0,0
+sword_1-1.gat,35,172,1	duplicate(green)	1green_7	139,0,0
+sword_1-1.gat,35,173,1	duplicate(green)	1green_8	139,0,0
+sword_1-1.gat,66,170,1	duplicate(green)	1green_9	139,0,0
+sword_1-1.gat,66,171,1	duplicate(green)	1green_10	139,0,0
+sword_1-1.gat,67,170,1	duplicate(green)	1green_11	139,0,0
+sword_1-1.gat,67,171,1	duplicate(green)	1green_12	139,0,0
+sword_1-1.gat,70,170,1	duplicate(green)	1green_13	139,0,0
+sword_1-1.gat,70,171,1	duplicate(green)	1green_14	139,0,0
+sword_1-1.gat,71,170,1	duplicate(green)	1green_15	139,0,0
+sword_1-1.gat,71,171,1	duplicate(green)	1green_16	139,0,0
+
+// - Right -
+sword_1-1.gat,22,164,1	duplicate(green)	1green_17	139,0,0
+sword_1-1.gat,22,165,1	duplicate(green)	1green_18	139,0,0
+sword_1-1.gat,23,164,1	duplicate(green)	1green_19	139,0,0
+sword_1-1.gat,23,165,1	duplicate(green)	1green_20	139,0,0
+sword_1-1.gat,34,164,1	duplicate(green)	1green_21	139,0,0
+sword_1-1.gat,34,165,1	duplicate(green)	1green_22	139,0,0
+sword_1-1.gat,35,164,1	duplicate(green)	1green_23	139,0,0
+sword_1-1.gat,35,165,1	duplicate(green)	1green_24	139,0,0
+sword_1-1.gat,66,166,1	duplicate(green)	1green_25	139,0,0
+sword_1-1.gat,66,167,1	duplicate(green)	1green_26	139,0,0
+sword_1-1.gat,67,166,1	duplicate(green)	1green_27	139,0,0
+sword_1-1.gat,67,167,1	duplicate(green)	1green_28	139,0,0
+sword_1-1.gat,70,166,1	duplicate(green)	1green_29	139,0,0
+sword_1-1.gat,70,167,1	duplicate(green)	1green_30	139,0,0
+sword_1-1.gat,71,166,1	duplicate(green)	1green_31	139,0,0
+sword_1-1.gat,71,167,1	duplicate(green)	1green_32	139,0,0
+// - Center -
+sword_1-1.gat,86,168,1	duplicate(green)	1green_33	139,0,0
+sword_1-1.gat,86,169,1	duplicate(green)	1green_34	139,0,0
+sword_1-1.gat,87,168,1	duplicate(green)	1green_35	139,0,0
+sword_1-1.gat,87,169,1	duplicate(green)	1green_36	139,0,0
+
+// -- Second Section --
+// - Left -
+sword_1-1.gat,83,171,1	duplicate(green)	2green_1	139,0,1
+sword_1-1.gat,82,171,1	duplicate(green)	2green_2	139,0,1
+sword_1-1.gat,90,171,1	duplicate(green)	2green_3	139,0,1
+sword_1-1.gat,91,171,1	duplicate(green)	2green_4	139,0,1
+sword_1-1.gat,84,173,1	duplicate(green)	2green_5	139,1,0
+sword_1-1.gat,90,173,1	duplicate(green)	2green_6	139,1,0
+sword_1-1.gat,83,166,1	duplicate(green)	2green_7	139,0,1
+sword_1-1.gat,82,166,1	duplicate(green)	2green_8	139,0,1
+sword_1-1.gat,90,166,1	duplicate(green)	2green_9	139,0,1
+sword_1-1.gat,91,166,1	duplicate(green)	2green_10	139,0,1
+sword_1-1.gat,84,164,1	duplicate(green)	2green_11	139,1,0
+sword_1-1.gat,90,164,1	duplicate(green)	2green_12	139,1,0
+sword_1-1.gat,102,168,1	duplicate(green)	2green_13	139,0,0
+sword_1-1.gat,102,169,1	duplicate(green)	2green_14	139,0,0
+// - Right -
+sword_1-1.gat,102,172,1	duplicate(green)	2green_15	139,0,0
+sword_1-1.gat,102,173,1	duplicate(green)	2green_16	139,0,0
+sword_1-1.gat,103,172,1	duplicate(green)	2green_17	139,0,0
+sword_1-1.gat,103,173,1	duplicate(green)	2green_18	139,0,0
+sword_1-1.gat,106,172,1	duplicate(green)	2green_19	139,0,0
+sword_1-1.gat,106,173,1	duplicate(green)	2green_20	139,0,0
+sword_1-1.gat,107,172,1	duplicate(green)	2green_21	139,0,0
+sword_1-1.gat,107,173,1	duplicate(green)	2green_22	139,0,0
+sword_1-1.gat,110,172,1	duplicate(green)	2green_23	139,0,0
+sword_1-1.gat,110,173,1	duplicate(green)	2green_24	139,0,0
+sword_1-1.gat,111,172,1	duplicate(green)	2green_25	139,0,0
+sword_1-1.gat,111,173,1	duplicate(green)	2green_26	139,0,0
+// - Center -
+sword_1-1.gat,102,164,1	duplicate(green)	2green_27	139,0,0
+sword_1-1.gat,102,165,1	duplicate(green)	2green_28	139,0,0
+sword_1-1.gat,103,164,1	duplicate(green)	2green_29	139,0,0
+sword_1-1.gat,103,165,1	duplicate(green)	2green_30	139,0,0
+sword_1-1.gat,106,164,1	duplicate(green)	2green_31	139,0,0
+sword_1-1.gat,106,165,1	duplicate(green)	2green_32	139,0,0
+sword_1-1.gat,107,164,1	duplicate(green)	2green_33	139,0,0
+sword_1-1.gat,107,165,1	duplicate(green)	2green_34	139,0,0
+sword_1-1.gat,110,164,1	duplicate(green)	2green_35	139,0,0
+sword_1-1.gat,110,165,1	duplicate(green)	2green_36	139,0,0
+sword_1-1.gat,111,164,1	duplicate(green)	2green_37	139,0,0
+sword_1-1.gat,111,165,1	duplicate(green)	2green_38	139,0,0
+
+
+// -- Third Section --
+sword_1-1.gat,121,172,1	duplicate(green)	3green_1	139,2,0
+sword_1-1.gat,121,173,1	duplicate(green)	3green_2	139,2,0
+sword_1-1.gat,121,164,1	duplicate(green)	3green_3	139,2,0
+sword_1-1.gat,121,165,1	duplicate(green)	3green_4	139,2,0
+sword_1-1.gat,121,168,1	duplicate(green)	3green_5	139,2,0
+sword_1-1.gat,121,169,1	duplicate(green)	3green_6	139,2,0
+
+// -- Fourth Section --
+sword_1-1.gat,130,169,1	duplicate(green)	4green_1	139,0,4
+sword_1-1.gat,131,169,1	duplicate(green)	4green_2	139,0,4
+sword_1-1.gat,135,164,1	duplicate(green)	4green_3	139,5,0
+sword_1-1.gat,136,165,1	duplicate(green)	4green_4	139,4,0
+sword_1-1.gat,140,169,1	duplicate(green)	4green_5	139,0,3
+sword_1-1.gat,141,168,1	duplicate(green)	4green_6	139,0,4
+sword_1-1.gat,137,172,1	duplicate(green)	4green_7	139,2,0
+sword_1-1.gat,138,173,1	duplicate(green)	4green_8	139,3,0
+sword_1-1.gat,134,171,1	duplicate(green)	4green_9	139,0,2
+sword_1-1.gat,135,168,1	duplicate(green)	4green_10	139,0,1
+sword_1-1.gat,135,170,1	duplicate(green)	4green_11	139,1,0
+
+// -- Fifth Section --
+sword_1-1.gat,144,169,1	duplicate(green)	5green_1	139,0,4
+sword_1-1.gat,145,169,1	duplicate(green)	5green_2	139,0,4
+sword_1-1.gat,148,164,1	duplicate(green)	5green_3	139,4,0
+sword_1-1.gat,149,165,1	duplicate(green)	5green_4	139,3,0
+sword_1-1.gat,156,166,1	duplicate(green)	5green_5	139,0,2
+sword_1-1.gat,157,166,1	duplicate(green)	5green_6	139,0,2
+sword_1-1.gat,153,169,1	duplicate(green)	5green_7	139,4,0
+sword_1-1.gat,152,168,1	duplicate(green)	5green_8	139,3,0
+sword_1-1.gat,149,171,1	duplicate(green)	5green_9	139,0,1
+sword_1-1.gat,148,171,1	duplicate(green)	5green_10	139,0,2
+sword_1-1.gat,154,173,1	duplicate(green)	5green_11	139,2,0
+sword_1-1.gat,154,172,1	duplicate(green)	5green_12	139,2,0
+
+// -- Last Section --
+sword_1-1.gat,164,172,1	duplicate(green)	6green_1	139,0,0
+sword_1-1.gat,164,173,1	duplicate(green)	6green_2	139,0,0
+sword_1-1.gat,165,172,1	duplicate(green)	6green_3	139,0,0
+sword_1-1.gat,165,173,1	duplicate(green)	6green_4	139,0,0
+sword_1-1.gat,172,172,1	duplicate(green)	6green_5	139,0,0
+sword_1-1.gat,172,173,1	duplicate(green)	6green_6	139,0,0
+sword_1-1.gat,173,172,1	duplicate(green)	6green_7	139,0,0
+sword_1-1.gat,173,173,1	duplicate(green)	6green_8	139,0,0
+
+sword_1-1.gat,164,168,1	duplicate(green)	6green_9	139,0,0
+sword_1-1.gat,164,169,1	duplicate(green)	6green_10	139,0,0
+sword_1-1.gat,165,168,1	duplicate(green)	6green_11	139,0,0
+sword_1-1.gat,165,169,1	duplicate(green)	6green_12	139,0,0
+sword_1-1.gat,172,168,1	duplicate(green)	6green_13	139,0,0
+sword_1-1.gat,172,169,1	duplicate(green)	6green_14	139,0,0
+sword_1-1.gat,173,168,1	duplicate(green)	6green_15	139,0,0
+sword_1-1.gat,173,169,1	duplicate(green)	6green_16	139,0,0
+
+sword_1-1.gat,164,164,1	duplicate(green)	6green_17	139,0,0
+sword_1-1.gat,164,165,1	duplicate(green)	6green_18	139,0,0
+sword_1-1.gat,165,164,1	duplicate(green)	6green_19	139,0,0
+sword_1-1.gat,165,165,1	duplicate(green)	6green_20	139,0,0
+sword_1-1.gat,172,164,1	duplicate(green)	6green_21	139,0,0
+sword_1-1.gat,172,165,1	duplicate(green)	6green_22	139,0,0
+sword_1-1.gat,173,164,1	duplicate(green)	6green_23	139,0,0
+sword_1-1.gat,173,165,1	duplicate(green)	6green_24	139,0,0
+
+
+
+// == Fall Warps ==
+
+sword_1-1.gat,16,251,4	script	1_blank_1a#1::1_blank	139,0,1,{
+	set @TEMP,rand(5);
+	if (@TEMP==0) warp "sword_1-1.gat",65,56;
+	if (@TEMP==1) warp "sword_1-1.gat",29,26;
+	if (@TEMP==2) warp "sword_1-1.gat",43,16;
+	if (@TEMP==3) warp "sword_1-1.gat",23,112;
+	if (@TEMP==4) warp "sword_1-1.gat",58,83;
+	end;
+}
+
+// -- Duplicates --
+sword_1-1.gat,19,251,4	duplicate(1_blank)	1_blank_1b	139,0,1
+sword_1-1.gat,17,250,4	duplicate(1_blank)	1_blank_1c	139,1,0
+sword_1-1.gat,17,251,4	duplicate(1_blank)	1_blank_1a	139,1,1
+sword_1-1.gat,18,251,4	duplicate(1_blank)	1_blank_1b	139,1,1
+sword_1-1.gat,17,251,4	duplicate(1_blank)	1_blank_1c	139,1,1
+sword_1-1.gat,16,238,4	duplicate(1_blank)	1_blank_2a	139,0,1
+sword_1-1.gat,19,238,4	duplicate(1_blank)	1_blank_2b	139,0,1
+sword_1-1.gat,17,239,4	duplicate(1_blank)	1_blank_2c	139,0,1
+sword_1-1.gat,28,246,4	duplicate(1_blank)	1_blank_3a	139,4,1
+sword_1-1.gat,33,245,4	duplicate(1_blank)	1_blank_3b	139,0,2
+sword_1-1.gat,29,242,4	duplicate(1_blank)	1_blank_3c	139,4,0
+sword_1-1.gat,24,244,4	duplicate(1_blank)	1_blank_3d	139,0,2
+sword_1-1.gat,38,251,4	duplicate(1_blank)	1_blank_4a	139,0,1
+sword_1-1.gat,41,251,4	duplicate(1_blank)	1_blank_4b	139,0,1
+sword_1-1.gat,39,250,4	duplicate(1_blank)	1_blank_4c	139,1,0
+sword_1-1.gat,38,238,4	duplicate(1_blank)	1_blank_5a	139,0,1
+sword_1-1.gat,41,238,4	duplicate(1_blank)	1_blank_5_b	139,0,1
+sword_1-1.gat,39,239,4	duplicate(1_blank)	1_blank_5_c	139,1,0
+sword_1-1.gat,54,251,4	duplicate(1_blank)	1_blank_6_a	139,0,1
+sword_1-1.gat,71,251,4	duplicate(1_blank)	1_blank_6_b	139,0,1
+sword_1-1.gat,62,250,4	duplicate(1_blank)	1_blank_6_c	139,9,0
+sword_1-1.gat,62,247,4	duplicate(1_blank)	1_blank_7_a	139,8,0
+sword_1-1.gat,71,244,4	duplicate(1_blank)	1_blank_7_b	139,0,2
+sword_1-1.gat,63,242,4	duplicate(1_blank)	1_blank_7_c	139,8,0
+sword_1-1.gat,54,244,4	duplicate(1_blank)	1_blank_7_d	139,0,2
+sword_1-1.gat,54,238,4	duplicate(1_blank)	1_blank_8_a	139,0,1
+sword_1-1.gat,71,238,4	duplicate(1_blank)	1_blank_8_b	139,0,1
+sword_1-1.gat,62,239,4	duplicate(1_blank)	1_blank_8_c	139,9,0
+sword_1-1.gat,102,247,4	duplicate(1_blank)	1_blank_9_a	139,2,0
+sword_1-1.gat,105,245,4	duplicate(1_blank)	1_blank_9_b	139,0,2
+sword_1-1.gat,103,242,4	duplicate(1_blank)	1_blank_9_c	139,2,0
+sword_1-1.gat,100,244,4	duplicate(1_blank)	1_blank_9_d	139,0,2
+sword_1-1.gat,156,249,4	duplicate(1_blank)	1_blank_10_a	139,14,0
+sword_1-1.gat,156,248,4	duplicate(1_blank)	1_blank_10_b	139,14,0
+sword_1-1.gat,170,249,4	duplicate(1_blank)	1_blank_10_c	139,1,0
+sword_1-1.gat,170,248,4	duplicate(1_blank)	1_blank_10_d	139,1,0
+sword_1-1.gat,156,245,4	duplicate(1_blank)	1_blank_11_a	139,14,0
+sword_1-1.gat,156,244,4	duplicate(1_blank)	1_blank_11_b	139,14,0
+sword_1-1.gat,170,245,4	duplicate(1_blank)	1_blank_11_c	139,1,0
+sword_1-1.gat,170,244,4	duplicate(1_blank)	1_blank_11_d	139,1,0
+sword_1-1.gat,156,241,4	duplicate(1_blank)	1_blank_12_a	139,14,0
+sword_1-1.gat,156,240,4	duplicate(1_blank)	1_blank_12_b	139,14,0
+sword_1-1.gat,170,241,4	duplicate(1_blank)	1_blank_12_c	139,1,0
+sword_1-1.gat,170,240,4	duplicate(1_blank)	1_blank_12_d	139,1,0
+sword_1-1.gat,180,251,4	duplicate(1_blank)	1_blank_13_a	139,0,1
+sword_1-1.gat,183,251,4	duplicate(1_blank)	1_blank_13_b	139,0,1
+sword_1-1.gat,181,250,4	duplicate(1_blank)	1_blank_13_c	139,1,0
+sword_1-1.gat,180,238,4	duplicate(1_blank)	1_blank_14_a	139,0,1
+sword_1-1.gat,183,238,4	duplicate(1_blank)	1_blank_14_b	139,0,1
+sword_1-1.gat,181,239,4	duplicate(1_blank)	1_blank_14_c	139,1,0
+
+
+sword_1-1.gat,56,212,4	script	2_blank_1_a::2_blank	139,40,0,{
+	set @TEMP,rand(5);
+	if (@TEMP==0) warp "sword_1-1.gat",162,120;
+	if (@TEMP==1) warp "sword_1-1.gat",94,120;
+	if (@TEMP==2) warp "sword_1-1.gat",94,85;
+	if (@TEMP==3) warp "sword_1-1.gat",162,85;
+	if (@TEMP==4) warp "sword_1-1.gat",130,47;
+	end;
+}
+
+// -- Duplicates --
+sword_1-1.gat,95,212,4	duplicate(2_blank)	2_blank_1_b	139,2,0
+sword_1-1.gat,56,210,4	duplicate(2_blank)	2_blank_2_a	139,40,0
+sword_1-1.gat,95,210,4	duplicate(2_blank)	2_blank_2_b	139,2,0
+sword_1-1.gat,16,206,4	duplicate(2_blank)	2_blank_2_c	139,0,3
+sword_1-1.gat,97,206,4	duplicate(2_blank)	2_blank_2_d	139,0,3
+sword_1-1.gat,56,203,4	duplicate(2_blank)	2_blank_2_e	139,40,0
+sword_1-1.gat,95,203,4	duplicate(2_blank)	2_blank_2_f	139,2,0
+sword_1-1.gat,56,201,4	duplicate(2_blank)	2_blank_3_a	139,40,0
+sword_1-1.gat,95,201,4	duplicate(2_blank)	2_blank_3_b	139,2,0
+
+// - part 2 -
+sword_1-1.gat,113,212,4	duplicate(2_blank)	2_blank_4_a	139,14,0
+sword_1-1.gat,125,212,4	duplicate(2_blank)	2_blank_4_b	139,2,0
+sword_1-1.gat,113,210,4	duplicate(2_blank)	2_blank_5_a	139,14,0
+sword_1-1.gat,125,210,4	duplicate(2_blank)	2_blank_5_b	139,2,0
+sword_1-1.gat,100,206,4	duplicate(2_blank)	2_blank_5_c	139,0,3
+sword_1-1.gat,127,206,4	duplicate(2_blank)	2_blank_5_d	139,0,3
+sword_1-1.gat,113,203,4	duplicate(2_blank)	2_blank_5_e	139,14,0
+sword_1-1.gat,125,210,4	duplicate(2_blank)	2_blank_5_f	139,2,0
+sword_1-1.gat,113,201,4	duplicate(2_blank)	2_blank_6_a	139,14,0
+sword_1-1.gat,113,201,4	duplicate(2_blank)	2_blank_6_b	139,2,0
+
+// - part 3 -
+sword_1-1.gat,155,212,4	duplicate(2_blank)	2_blank_7_a	139,21,0
+sword_1-1.gat,181,212,4	duplicate(2_blank)	2_blank_7_b	139,2,0
+sword_1-1.gat,155,210,4	duplicate(2_blank)	2_blank_8_a	139,21,0
+sword_1-1.gat,181,210,4	duplicate(2_blank)	2_blank_8_b	139,2,0
+sword_1-1.gat,130,206,4	duplicate(2_blank)	2_blank_8_c	139,0,3
+sword_1-1.gat,183,206,4	duplicate(2_blank)	2_blank_8_d	139,0,3
+sword_1-1.gat,155,203,4	duplicate(2_blank)	2_blank_8_e	139,21,0
+sword_1-1.gat,181,203,4	duplicate(2_blank)	2_blank_8_f	139,2,0
+sword_1-1.gat,155,201,4	duplicate(2_blank)	2_blank_9_a	139,40,0
+sword_1-1.gat,181,201,4	duplicate(2_blank)	2_blank_9_b	139,2,0
+
+sword_1-1.gat,17,174,4	script	3_blank_1_a::3_blank	139,2,0,{
+	set @TEMP,rand(5);
+	if (@TEMP==0) warp "sword_1-1.gat",195,15;
+	if (@TEMP==1) warp "sword_1-1.gat",195,38;
+	if (@TEMP==2) warp "sword_1-1.gat",231,30;
+	if (@TEMP==3) warp "sword_1-1.gat",198,65;
+	if (@TEMP==4) warp "sword_1-1.gat",196,116;
+	end;
+}
+
+// -- Duplicates --
+sword_1-1.gat,17,163,4	duplicate(3_blank)	3_blank_2_a	139,2,0
+sword_1-1.gat,29,171,4	duplicate(3_blank)	3_blank_3_a	139,2,0
+sword_1-1.gat,31,168,4	duplicate(3_blank)	3_blank_3_b	139,0,2
+sword_1-1.gat,28,166,4	duplicate(3_blank)	3_blank_3_c	139,2,0
+sword_1-1.gat,26,168,4	duplicate(3_blank)	3_blank_3_d	139,0,2
+sword_1-1.gat,36,169,4	duplicate(3_blank)	3_blank_4_a	139,0,0
+sword_1-1.gat,37,169,4	duplicate(3_blank)	3_blank_4_b	139,0,0
+sword_1-1.gat,37,168,4	duplicate(3_blank)	3_blank_4_c	139,0,0
+sword_1-1.gat,36,168,4	duplicate(3_blank)	3_blank_4_c	139,0,0
+sword_1-1.gat,40,175,4	duplicate(3_blank)	3_blank_5_a	139,0,1
+sword_1-1.gat,41,175,4	duplicate(3_blank)	3_blank_5_b	139,0,1
+sword_1-1.gat,41,171,4	duplicate(3_blank)	3_blank_6_a	139,1,0
+sword_1-1.gat,41,170,4	duplicate(3_blank)	3_blank_6_b	139,1,0
+sword_1-1.gat,41,167,4	duplicate(3_blank)	3_blank_6_c	139,1,0
+sword_1-1.gat,41,166,4	duplicate(3_blank)	3_blank_6_d	139,1,0
+sword_1-1.gat,42,169,4	duplicate(3_blank)	3_blank_6_e	139,0,1
+sword_1-1.gat,43,170,4	duplicate(3_blank)	3_blank_6_f	139,0,1
+sword_1-1.gat,43,167,4	duplicate(3_blank)	3_blank_6_g	139,0,1
+sword_1-1.gat,40,162,4	duplicate(3_blank)	3_blank_7_a	139,0,1
+sword_1-1.gat,41,162,4	duplicate(3_blank)	3_blank_7_b	139,0,1
+sword_1-1.gat,46,175,4	duplicate(3_blank)	3_blank_8_a	139,0,1
+sword_1-1.gat,51,175,4	duplicate(3_blank)	3_blank_8_b	139,0,1
+sword_1-1.gat,47,174,4	duplicate(3_blank)	3_blank_8_c	139,1,0
+sword_1-1.gat,50,174,4	duplicate(3_blank)	3_blank_8_d	139,1,0
+sword_1-1.gat,48,173,4	duplicate(3_blank)	3_blank_8_e	139,0,1
+sword_1-1.gat,49,173,4	duplicate(3_blank)	3_blank_8_f	139,0,1
+sword_1-1.gat,46,162,4	duplicate(3_blank)	3_blank_9_a	139,0,1
+sword_1-1.gat,51,162,4	duplicate(3_blank)	3_blank_9_b	139,0,1
+sword_1-1.gat,47,163,4	duplicate(3_blank)	3_blank_9_c	139,1,0
+sword_1-1.gat,50,163,4	duplicate(3_blank)	3_blank_9_d	139,1,0
+sword_1-1.gat,48,164,4	duplicate(3_blank)	3_blank_9_e	139,0,1
+sword_1-1.gat,49,164,4	duplicate(3_blank)	3_blank_9_f	139,0,1
+sword_1-1.gat,54,170,4	duplicate(3_blank)	3_blank_10_a	139,0,1
+sword_1-1.gat,55,170,4	duplicate(3_blank)	3_blank_10_b	139,0,1
+sword_1-1.gat,54,167,4	duplicate(3_blank)	3_blank_10_c	139,0,1
+sword_1-1.gat,55,167,4	duplicate(3_blank)	3_blank_10_d	139,0,1
+sword_1-1.gat,53,169,4	duplicate(3_blank)	3_blank_10_e	139,1,0
+sword_1-1.gat,53,168,4	duplicate(3_blank)	3_blank_10_f	139,1,0
+sword_1-1.gat,56,169,4	duplicate(3_blank)	3_blank_10_g	139,1,0
+sword_1-1.gat,56,168,4	duplicate(3_blank)	3_blank_10_h	139,1,0
+sword_1-1.gat,58,175,4	duplicate(3_blank)	3_blank_11_a	139,0,1
+sword_1-1.gat,59,174,4	duplicate(3_blank)	3_blank_11_b	139,1,0
+sword_1-1.gat,60,173,4	duplicate(3_blank)	3_blank_11_c	139,0,1
+sword_1-1.gat,61,172,4	duplicate(3_blank)	3_blank_11_d	139,1,0
+sword_1-1.gat,58,162,4	duplicate(3_blank)	3_blank_12_a	139,0,1
+sword_1-1.gat,59,163,4	duplicate(3_blank)	3_blank_12_b	139,1,0
+sword_1-1.gat,60,164,4	duplicate(3_blank)	3_blank_12_c	139,0,1
+sword_1-1.gat,61,165,4	duplicate(3_blank)	3_blank_12_d	139,1,0
+sword_1-1.gat,76,172,4	duplicate(3_blank)	3_blank_13_a	139,1,0
+sword_1-1.gat,77,173,4	duplicate(3_blank)	3_blank_13_b	139,0,1
+sword_1-1.gat,78,174,4	duplicate(3_blank)	3_blank_13_c	139,1,0
+sword_1-1.gat,79,175,4	duplicate(3_blank)	3_blank_13_d	139,0,1
+sword_1-1.gat,76,165,4	duplicate(3_blank)	3_blank_14_a	139,1,0
+sword_1-1.gat,77,164,4	duplicate(3_blank)	3_blank_14_b	139,0,1
+sword_1-1.gat,78,163,4	duplicate(3_blank)	3_blank_14_c	139,1,0
+sword_1-1.gat,79,162,4	duplicate(3_blank)	3_blank_14_d	139,0,1
+sword_1-1.gat,94,175,4	duplicate(3_blank)	3_blank_15_a	139,0,1
+sword_1-1.gat,95,174,4	duplicate(3_blank)	3_blank_15_b	139,1,0
+sword_1-1.gat,98,174,4	duplicate(3_blank)	3_blank_15_c	139,1,0
+sword_1-1.gat,99,175,4	duplicate(3_blank)	3_blank_16_d	139,0,1
+sword_1-1.gat,96,169,4	duplicate(3_blank)	3_blank_17_a	139,0,0
+sword_1-1.gat,97,169,4	duplicate(3_blank)	3_blank_17_b	139,0,0
+sword_1-1.gat,97,168,4	duplicate(3_blank)	3_blank_17_c	139,0,0
+sword_1-1.gat,96,168,4	duplicate(3_blank)	3_blank_17_d	139,0,0
+sword_1-1.gat,94,162,4	duplicate(3_blank)	3_blank_18_a	139,0,1
+sword_1-1.gat,95,163,4	duplicate(3_blank)	3_blank_18_b	139,1,0
+sword_1-1.gat,98,163,4	duplicate(3_blank)	3_blank_18_c	139,1,0
+sword_1-1.gat,99,162,4	duplicate(3_blank)	3_blank_18_d	139,0,1
+sword_1-1.gat,114,175,4	duplicate(3_blank)	3_blank_19_a	139,0,1
+sword_1-1.gat,115,175,4	duplicate(3_blank)	3_blank_19_b	139,0,1
+sword_1-1.gat,114,162,4	duplicate(3_blank)	3_blank_20_a	139,0,1
+sword_1-1.gat,115,162,4	duplicate(3_blank)	3_blank_20_b	139,0,1
+sword_1-1.gat,126,175,4	duplicate(3_blank)	3_blank_21_a	139,0,1
+sword_1-1.gat,127,175,4	duplicate(3_blank)	3_blank_21_b	139,0,1
+sword_1-1.gat,126,162,4	duplicate(3_blank)	3_blank_23_a	139,0,1
+sword_1-1.gat,127,162,4	duplicate(3_blank)	3_blank_23_b	139,0,1
+sword_1-1.gat,160,174,4	duplicate(3_blank)	3_blank_24_a	139,0,2
+sword_1-1.gat,161,174,4	duplicate(3_blank)	3_blank_24_b	139,0,2
+sword_1-1.gat,160,163,4	duplicate(3_blank)	3_blank_25_a	139,0,2
+sword_1-1.gat,161,163,4	duplicate(3_blank)	3_blank_25_b	139,0,2
+sword_1-1.gat,168,175,4	duplicate(3_blank)	3_blank_26_a	139,0,2
+sword_1-1.gat,169,175,4	duplicate(3_blank)	3_blank_26_b	139,0,2
+sword_1-1.gat,168,162,4	duplicate(3_blank)	3_blank_27_a	139,0,2
+sword_1-1.gat,169,162,4	duplicate(3_blank)	3_blank_27_b	139,0,2
+sword_1-1.gat,176,174,4	duplicate(3_blank)	3_blank_28_a	139,0,2
+sword_1-1.gat,177,174,4	duplicate(3_blank)	3_blank_28_b	139,0,2
+sword_1-1.gat,178,173,4	duplicate(3_blank)	3_blank_28_c	139,1,0
+sword_1-1.gat,178,172,4	duplicate(3_blank)	3_blank_28_d	139,1,0
+sword_1-1.gat,181,174,4	duplicate(3_blank)	3_blank_28_e	139,2,0
+sword_1-1.gat,179,169,4	duplicate(3_blank)	3_blank_29_a	139,3,0
+sword_1-1.gat,179,168,4	duplicate(3_blank)	3_blank_29_b	139,3,0
+sword_1-1.gat,182,169,4	duplicate(3_blank)	3_blank_29_c	139,0,2
+sword_1-1.gat,183,169,4	duplicate(3_blank)	3_blank_29_d	139,0,2
+sword_1-1.gat,181,167,4	duplicate(3_blank)	3_blank_29_e	139,1,0
+sword_1-1.gat,181,166,4	duplicate(3_blank)	3_blank_29_f	139,1,0
+sword_1-1.gat,183,167,4	duplicate(3_blank)	3_blank_29_g	139,0,1
+sword_1-1.gat,176,163,4	duplicate(3_blank)	3_blank_30_a	139,0,2
+sword_1-1.gat,177,163,4	duplicate(3_blank)	3_blank_30_b	139,0,2
+sword_1-1.gat,181,163,4	duplicate(3_blank)	3_blank_30_c	139,2,0

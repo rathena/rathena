@@ -1,0 +1,31 @@
+//===== Athena Script ========================================
+//= Yuno Field Warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 5+
+//===== Description: =========================================
+//= Warp Points for Yuno Field
+//===== Additional Comments: =================================
+//= No Comment!
+//============================================================
+
+//= Yuno Field ===============================================
+yuno_fild01.gat,286,368,0	warp	yunfild01	1,1,yuno_fild02.gat,294,26
+yuno_fild02.gat,294,24,0	warp	yunfild01-1	1,1,yuno_fild01.gat,286,366
+yuno_fild01.gat,70,378,0	warp	yunfild02	1,1,yuno_fild02.gat,70,25
+yuno_fild02.gat,70,23,0	warp	yunfild02-1	1,1,yuno_fild01.gat,70,376
+yuno_fild02.gat,18,337,0	warp	yunfild03	1,1,yuno_fild03.gat,381,331
+yuno_fild03.gat,383,331,0	warp	yunfild03-1	1,1,yuno_fild02.gat,20,337
+yuno_fild03.gat,19,79,0	warp	yunfild04	1,1,yuno_fild04.gat,373,84
+yuno_fild04.gat,375,84,0	warp	yunfild04-1	1,1,yuno_fild03.gat,21,79
+yuno_fild03.gat,20,155,0	warp	yunfild05	1,1,yuno_fild04.gat,373,150
+yuno_fild04.gat,375,150,0	warp	yunfild05-1	1,1,yuno_fild03.gat,22,155
+yuno_fild04.gat,231,211,0	warp	yunfild-yun	1,1,yuno.gat,158,17
+yuno_fild03.gat,32,139,0	warp	yunfild-mag01	1,1,mag_dun01.gat,126,68
+
+//= Al de Baran <-> Yuno Connection ==========================
+aldebaran.gat,140,244,0	warp	alde-yunfild	1,1,yuno_fild01.gat,208,19
+yuno_fild01.gat,208,17,0	warp	yunfild-alde	1,1,aldebaran.gat,140,242

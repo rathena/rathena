@@ -1,0 +1,40 @@
+//Reset NPC for Athena by Script&DB Team 
+prontera.gat,150,193,4	script	Reset Girl	124,{
+	mes "[Reset Girl]";
+	mes "I am a Reset Girl.";
+	mes "Reset Stats: 5,000z";
+	mes "Reset Skills: 5,000z";
+	mes "Reset Both: 9,000z";
+	next;
+	mes "Please select the service you want:";
+	menu "^FF3355Reset Skills",L0,"Reset Stats",L1,"Reset Both^000000",L2,"Quit",LEnd;
+	
+	L0:
+		mes "[Reset Girl]";
+		if (Zeny < 5000) goto NeedZenys;
+		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+		set Zeny,zeny-5000;
+		ResetSkill;
+		close;
+	L1:
+		mes "[Reset Girl]";
+		if (Zeny < 5000) goto NeedZenys;
+		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+		set Zeny,zeny-5000;
+		ResetStatus;
+		close;
+	L2:
+		mes "[Reset Girl]";
+		if (Zeny < 9000) goto NeedZenys;
+		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+		set Zeny,zeny-9000;
+		ResetSkill;
+		ResetStatus;
+		close;
+
+		NeedZenys:
+			mes "Sorry, you don't have enough Zeny.";
+			close;
+	LEnd:
+		close;	
+}

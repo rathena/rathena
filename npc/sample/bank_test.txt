@@ -1,0 +1,59 @@
+// カプラ銀行サービス	テストスクリプト
+prontera.gat,162,188,1	script	銀行員カプラ	112,{
+	cutin "kafra_06",2;
+
+	mes"[銀行員カプラ]";
+	mes "カプラ銀行サービスです。";
+	mes "毎度ご利用ありがとうございます♪";
+	mes "1000zからでのご利用になります。";
+	next;
+	menu "預ける",BANK_IN,"引き出す",BANK_OUT,"やっぱやめる",B_EXIT2;
+BANK_IN:
+	mes"[銀行員カプラ]";
+	mes "預ける金額を入力してください♪";
+	mes "ちなみに、手数料として";
+	mes "預かり金の1%頂きます。";
+	next;
+	input @kafrabank;
+
+	if(@kafrabank<1000) goto B_EXIT2;
+	set @kafrabank2,@kafrabank*1/100;
+	if(@kafrabank+@kafrabank2>Zeny) goto BANK_F;
+	set Zeny,Zeny-@kafrabank-@kafrabank2;
+	set #kafrabank,#kafrabank+@kafrabank;
+	mes "手数料^135445" + @kafrabank2 + "z^000000頂きますね。";
+
+	goto B_EXIT;
+BANK_OUT:
+	if(#kafrabank==0) goto BANK_F2;
+	mes"[銀行員カプラ]";
+	mes "現在あなたからお預かりしているのは";
+	mes "^135445" + #kafrabank + "^000000Zenyです。";
+	mes "引き出す金額を入力してください♪";
+	next;
+	input @kafrabank;
+
+	if(@kafrabank<1) goto B_EXIT2;
+	if(@kafrabank>#kafrabank) goto BANK_F;
+	set #kafrabank,#kafrabank-@kafrabank;
+	set Zeny,Zeny+@kafrabank;
+
+	goto B_EXIT;
+
+BANK_F:
+	mes"[銀行員カプラ]";
+	mes "持ち金が足りないようですね。";
+	goto B_EXIT2;
+BANK_F2:
+	mes"[銀行員カプラ]";
+	mes "あなたからは、1zも";
+	mes "お預かりしていないですよ？";
+	goto B_EXIT2;
+
+B_EXIT:
+	mes "無事に取り引きできました。";
+B_EXIT2:
+	mes "またのご利用をお待ちしています♪";
+	cutin "kafra_06",255;
+	close;
+}

@@ -1,0 +1,12 @@
+//<Skill id>,<1 or 0>
+// With 1, dex does not effect the skill's cast rate
+// With 0, dex effects the skill's cast rate
+46,1
+47,1
+129,1
+366,1
+381,1
+382,1
+383,1
+394,1
+403,1

@@ -1,0 +1,9 @@
+// item id,sprite id
+// Client will use sprite ID to display particular item.
+// If 0 is used then item will be disabled.
+660,5028	//Forbidden_Red_Candle,Candle (Will use candle sprite and description)
+661,7047	//Flapping_Apron,Alice's_Apron
+9026,720	//Alice_Egg,Aquamarine
+9027,723	//Zherlthsh_Egg,Ruby
+2237,2241	//Bandit_Beard",2240 BEARD
+2240,2241

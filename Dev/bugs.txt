@@ -1,0 +1,89 @@
+Problem:	Adding the new guild skills causes it to crash?
+Assigned:	N/A
+Progess:	0%
+
+Problem:	2-2-1 classes are regarded as Novicies by the game server. NPCs aren't taking them as thier jobs but if you the the NPC to do something for a novice class it works with the 2-2-1 like renters. Also if some one becomes high novice, if they use jobra they can become first jobs like a swordsman.
+Assigned:	N/A
+Progess:	0%
+Ideas:		Codemaster - I believe that they register them as normal classes, but sets Upper as 1, so you can do things such as if(Upper == 1)
+
+Problem:	Stats nor skills don't downgrade when your level gets reverted due to exp loss.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	You can hit yourself with your own spider web.
+Assigned:	N/A
+Progess:	90% - should be fixed, but please test!
+
+Problem:	Pre skill requirements for new skills are wrong it makes you use 49 skills points before you can get the newer skills.
+Assigned:	Celest
+Progess:	~90% (Notes: not sure if it causes problems, need more testing =p)
+
+Problem:	Monster hp view only shows but does not go down with a hit.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Monsters always freeze, when hit they don't move but 2 mins later they move.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Mobs don't attack
+Assigned:	N/A
+Progess:	0%
+
+Problem:	When u spawn ~300 mobs (and more or less) then do @killmonster then some mobs freeze on the screen (have no names, don't move, etc)
+Assigned:	N/A
+Progess:	0%
+
+Problem:	With 1025 client, some NPC sprites look different (i.e. Black Jack's NPC sprite)
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Thiefs can steal ZENY / items from TREASURE chests!!baaaah!! and Guardians! 
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Joker card 4139 lets anyone to steal money / zeny. Just like he's a thief. It shoul;d be revised - success rates lowered and "steal item" disabled
+Assigned:	N/A
+Progess:	0%
+
+Problem:	When servers restart sometime the gm lvls in sql get reset back to 0
+Assigned:	Wizputer
+Progess:	0%
+
+Problem:	[mob attacks againsts players wearing ghostring armor do full damage mob_ghostring_fix: yes] Does not work, does nothing.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	If two clients using the same account the server will crash and it allows people to dupe using the trade bug, one person trades over and item relogs it saves and the other person doesn't, they crash server both of them end up with the item.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	When athena is run in linux it creates core files which takes 300 megs.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	The skill tree's max skill lvl is not read/used.
+Assigned:	Celest
+Progess:	~100% (Notes: Maybe there's a less messy way? xP)
+
+Problem:	Char server and Map server crash when you recall some one.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Monk's Skill ROOT instantly reboots server
+Assigned:	Celest
+Progess:	100%? (Notes: Typo... my bad, sorry ^^; )
+
+Problem:	Sage's Area Skills (Delu.,Vulcano, etc) if casted on the same area (or overlap each other) instantly reboots server. use @gvgon when test. Don't test it towns
+Assigned:	N/A
+Progess:	0%
+
+Problem:	@job/#job turns you into 2-2-1 and not into any other jobs
+Assigned:	N/a
+Progess:	0% (Notes by Celest: Actually, check here ^_- 
+http://eathena.deltaanime.net/forum/viewtopic.php?p=79951#79951)
+
+Problem:	@disguise has no death sprite so the client crashes when you die, a solution would be that upon death before the sprites change you're undisguised.
+Assigned:	N/a
+Progess:	0%

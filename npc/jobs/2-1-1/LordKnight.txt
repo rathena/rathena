@@ -1,0 +1,107 @@
+// Advance Class jobchanger after kRO Normals.
+// Checks if the player have any questskills, cart\falcon, level and such.
+// Made by Nana.
+
+// -== Lord Knight ==-
+valkyrie.gat,44,39,6	script	Lord Knight	56,{
+	if(getskilllv(144) > 0) set @qsk,1;
+	if(getskilllv(145) > 0) set @qsk1,1;
+	if(getskilllv(146) > 0) set @qsk2,1;
+	if(checkcart(0) > 0) goto L_Cart;
+	if(readparam(12) > 0) goto Skill_Points;
+	if(readparam(19) >= 4008) goto L_Advance;
+	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
+	if((readparam(19) == 4002) && (readparam(55) >= 45)) goto L_HSWM;
+	if(readparam(19) < 7) goto L_Class;
+	if(readparam(19) == 4001) goto L_Class1;
+	if(readparam(19) == 4002) goto L_Class;
+	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
+	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
+	mes "[Lord Knight]";
+	mes "Hi there...";
+	close;
+
+L_Change:
+	mes "[Lord Knight]";
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of Lord Knight,";
+	mes "I wish you good fortune in the near future!";
+	jobchange 24;
+	resetlvl(1);
+	close;
+
+L_Cart:
+	mes "[Lord Knight]";
+	mes "Please un-equip that cart before continuing.";
+	close;
+
+L_Class1:
+	mes "[Lord Knight]";
+	mes "You're not ready to become an High Swordsman yet.";
+	close;
+
+L_Class:
+	mes "[Lord Knight]";
+	mes "You've come far to get here. unfortunately, you're not ready to become an Lord Knight yet.";
+	close;
+
+L_Levels:
+	mes "[Lord Knight]";
+	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an Lord Knight";
+	close;
+
+L_HNov:
+	mes "[Lord Knight]";
+	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
+	mes "Must great fortune follow you!";
+	jobchange 25;
+	next;
+	mes "[Lord Knight]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
+	next;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	if(@qsk3 > 0) goto qsk3;
+	next;
+qsk:
+	skill 144,1,0;
+	set @qsk,0;
+	if(@qsk1 > 0) goto qsk1;
+	if(@qsk2 > 0) goto qsk2;
+	goto L_HNov_2;
+qsk1:
+	skill 145,1,0;
+	set @qsk1,0;
+	if(@qsk > 0) goto qsk;
+	if(@qsk2 > 0) goto qsk2;
+	goto L_HNov_2;
+qsk2:
+	skill 146,1,0;
+	set @qsk2,0;
+	if(@qsk > 0) goto qsk;
+	if(@qsk1 > 0) goto qsk1;
+	goto L_HNov_2;
+
+L_HNov_2:
+	mes "[Lord Knight]";
+	mes "Now when the formalities are fixed, I congratulate you on your Advancement to High Swordsman";
+	close;
+L_HSWM:
+	mes "[Lord Knight]";
+	mes "Congratulations!";
+	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an Lord Knight!";
+	jobchange 31;
+	close;
+
+Skill_Points:
+	mes "[Lord Knight]";
+	mes "Please use all of your skillpoints before proceeding.";
+	close;
+
+L_Advance:
+	mes "[Lord Knight]";
+	mes "Hey there! You are already an Reborn. You cannot reach any higher";
+	mes "*whistles*";
+	close;
+}

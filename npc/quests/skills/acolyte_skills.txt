@@ -1,0 +1,126 @@
+//===== eAthena Script =======================================
+//= Acolyte Skill Quest
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.0a
+//===== Compatible With: =====================================
+//= eAthena 7.15 +
+//===== Description: =========================================
+//= <Description> 
+//===== Additional Comments: =================================
+//= v1.0a Now using functions found in "Global_Functions.txt"
+//= for class checks.
+//============================================================
+
+
+prt_church.gat,173,23,4	script	Acolyte Klift	79,
+{
+	mes "[Acolyte Klift]";
+	if (callfunc("Is_Holy_Class")) goto L_Start;
+
+L_Other:
+	mes "Ah, welcome to the Prontera Church also known as the Sanctuary.";
+	mes "Unfortunately I cannot be of much help to you.  For my fellow";
+	mes "Priests and Acolytes however, I can help them to find their ^5555FF'hidden";
+	mes "ability'^000000.";
+	close;
+
+L_Start:
+	if (HOLYLIGHT == 1) goto L_Check;
+	if (getskilllv(156)>0) goto L_GotSkill;
+	if(sex==1) mes "Ahh... Brother!";
+	if(sex==0) mes "Ahh... Sister!";
+	mes "Does the task of caring for our lost sheep tire you out? Is it too";
+	mes "much of a burden? Do not despair, I am here to assist you.";
+	next;
+	menu "About an Acolyte's ^5555FF'hidden ablitiy'^000000...",M_0, "End Conversation.",M_End;
+
+	M_0:
+		mes "[Acolyte Klift]";
+		mes "Faced with great danger in an endless struggle with evil, our";
+		mes "brethren are in much need of assistance.";
+		next;
+		mes "[Acolyte Klift]";
+		mes "As acolytes approach their senior years in the clergy, they learn to";
+		mes "call upon their inner power to use a special skill to aid them in";
+		mes "battle.";
+		next;
+		mes "[Acolyte Klift]";
+		mes "That skill is ^5555FF'Holy Light'^000000.  Holy Light does damage to";
+		mes "all foes but is even more effective on the undead.";
+		next;
+		mes "[Acolyte Klift]";
+		mes "For someone like yourself to learn this skill, takes some hard work.";
+		mes "Would you like to learn this skill?";
+		next;
+		menu "Yes, please.",-, "Let me think about it.",M_End;
+
+			mes "[Acolyte Klift]";
+			mes "Very good.  You will need to find these items in order to learn the";
+			mes "skill:";
+			mes "^5555FF1 Opal^000000,";
+			mes "^5555FF1 Crystal Bule^000000,";
+			mes "and ^5555FF1 Rosary^000000.";
+			next;
+			mes "[Acolyte Klift]";
+			mes "Of course you will also need to have a sufficient level of";
+			mes "experience.  Namely a ^5555FFjob level of at least 30^000000.  This does";
+			mes "not apply to Priests or Monks however, because of the vast amount of";
+			mes "experience they already have.";
+			next;
+			mes "[Acolyte Klift]";
+			mes "Come back when you are ready.  I will be here.";
+			set HOLYLIGHT, 1;
+			close;
+	M_End:
+		mes "[Acolyte Klift]";
+		mes "I understand your zeal.  You have much time yet to practice and gain";
+		mes "experience.  Go forth with many blessings...";
+		close;
+
+L_Check:
+	mes "So, are you ready for the Holy Light training? Let me check....";
+	next;
+	mes "[Acolyte Klift]";
+	if (Class==Job_Acolyte && JobLevel<30) goto L_LowLvl;
+	if (countitem(727)<1 || countitem(991)<1 || countitem(2608)<1) goto L_NoItems;
+
+	mes "Oh! Very good.  You have brought back all of the items I asked for.";
+	next;
+	mes "[Acolyte Klift]";
+	mes "Ok lets get started...";
+	next;
+	mes "(after hours of praying and meditation)";
+	next;
+	mes "[Acolyte Klift]";
+	mes "Yes! I feel it. You have released your hidden abilities and can now";
+	mes "use ^5555FFHoly Light^000000!";
+	delitem 727,1;
+	delitem 991,1;
+	delitem 2608,1;
+	skill 156,1,0;
+	set HOLYLIGHT, 0;
+	mes "[Priest]";
+	mes "You have done well.  May God bless you!";
+	emotion 21;
+	close;
+
+	L_LowLvl:
+		mes "I'm sorry but you need more training before I can teach you Holy";
+		mes "Light.  Come back when your job level is at least 30.";
+		close;
+	L_NoItems:
+		mes "I'm sorry but you don't have the required items for Holy Light.";
+		mes "You need:";
+		mes "^5555FF1 Opal^000000,";
+		mes "^5555FF1 Crystal Bule^000000,";
+		mes "and ^5555FF1 Rosary^000000.";
+		close;
+
+L_GotSkill:
+	mes "Ah, I see you have been using Holy Light.  It is such a great skill";
+	mes "that I truly believe it to be a gift from the lord himself.  May";
+	mes "God be with you always.";
+	close;
+}

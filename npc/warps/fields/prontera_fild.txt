@@ -1,0 +1,101 @@
+//===== Athena Script ========================================
+//= Prontera Field Warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Prontera Field
+//===== Additional Comments: =================================
+//= No Comment!
+//============================================================
+
+//= Prontera Fields ==========================================
+prt_fild00.gat,159,383,0	warp	prtf007	4,2,mjolnir_07.gat,156,19
+prt_fild00.gat,165,18,0	warp	prtf01	9,3,prt_fild04.gat,158,384
+prt_fild00.gat,18,129,0	warp	prtf015	2,6,gef_fild00.gat,376,140
+prt_fild00.gat,317,18,0	warp	prtf02	8,2,prt_fild04.gat,323,384
+prt_fild00.gat,383,249,0	warp	prtf008	2,4,mjolnir_09.gat,33,248
+prt_fild01.gat,136,373,0	warp	prtf030	2,2,prt_maze01.gat,176,7
+prt_fild01.gat,199,24,0	warp	prtf001	3,2,prt_gld.gat,159,295
+prt_fild01.gat,20,292,0	warp	prtf009	2,3,mjolnir_09.gat,370,288
+prt_fild01.gat,261,373,0	warp	prtf010	6,2,mjolnir_10.gat,265,16
+prt_fild01.gat,380,243,0	warp	prtf03	2,5,prt_fild02.gat,20,242
+prt_fild01.gat,382,304,0	warp	prtf04	2,10,prt_fild02.gat,20,305
+prt_fild01.gat,382,351,0	warp	prtf05	2,8,prt_fild02.gat,20,350
+prt_fild01.gat,66,373,0	warp	prtf011	2,2,mjolnir_10.gat,66,18
+prt_fild02.gat,17,242,0	warp	prtf03-1	2,5,prt_fild01.gat,377,243
+prt_fild02.gat,17,305,0	warp	prtf04-1	2,5,prt_fild01.gat,379,302
+prt_fild02.gat,17,350,0	warp	prtf05-1	2,7,prt_fild01.gat,379,351
+prt_fild02.gat,173,382,0	warp	prtf012	4,2,mjolnir_11.gat,174,23
+prt_fild02.gat,305,17,0	warp	prtf06	10,2,prt_fild06.gat,277,315
+prt_fild02.gat,380,347,0	warp	prtf07	2,10,prt_fild03.gat,23,249
+prt_fild03.gat,16,249,0	warp	prtf07-1	2,10,prt_fild02.gat,373,353
+prt_fild03.gat,371,256,0	warp	prtf006	2,2,prt_monk.gat,25,248
+prt_fild04.gat,160,387,0	warp	prtf01-1	10,2,prt_fild00.gat,164,24
+prt_fild04.gat,17,114,0	warp	prtf016	2,10,gef_fild01.gat,375,111
+prt_fild04.gat,323,387,0	warp	prtf02-1	7,2,prt_fild00.gat,315,21
+prt_fild04.gat,378,72,0	warp	prtf08	2,6,prt_fild05.gat,17,59
+prt_fild04.gat,384,155,0	warp	prtf09	2,7,prt_fild05.gat,20,134
+prt_fild04.gat,384,334,0	warp	prtf10	2,6,prt_fild05.gat,20,333
+prt_fild05.gat,105,381,0	warp	prtf013	5,2,mjolnir_09.gat,106,34
+prt_fild05.gat,13,63,0	warp	prtf08-1	2,15,prt_fild04.gat,374,73
+prt_fild05.gat,134,14,0	warp	prtf11	14,3,prt_fild07.gat,129,374
+prt_fild05.gat,14,141,0	warp	prtf09-1	2,18,prt_fild04.gat,380,158
+prt_fild05.gat,15,333,0	warp	prtf10-1	2,8,prt_fild04.gat,380,332
+prt_fild05.gat,255,14,0	warp	prtf12	12,2,prt_fild07.gat,248,369
+prt_fild05.gat,292,385,0	warp	prtf014	4,2,mjolnir_09.gat,305,33
+prt_fild05.gat,373,205,0	warp	prtf002	3,3,prontera.gat,26,203
+prt_fild06.gat,23,193,0	warp	prtf003	2,3,prontera.gat,285,203
+prt_fild06.gat,277,320,0	warp	prtf06-1	10,2,prt_fild02.gat,305,22
+prt_fild07.gat,13,64,0	warp	prtf017	3,8,gef_fild02.gat,376,69
+prt_fild07.gat,132,381,0	warp	prtf11-1	9,3,prt_fild05.gat,142,18
+prt_fild07.gat,14,289,0	warp	prtf018	3,10,gef_fild02.gat,375,292
+prt_fild07.gat,17,145,0	warp	prtf019	3,12,gef_fild02.gat,376,156
+prt_fild07.gat,206,12,0	warp	prtf13	4,2,prt_fild09.gat,224,377
+prt_fild07.gat,248,376,0	warp	prtf12-1	8,2,prt_fild05.gat,257,18
+prt_fild07.gat,383,239,0	warp	prtf14	3,20,prt_fild08.gat,20,239
+prt_fild07.gat,385,186,0	warp	prtf15	3,20,prt_fild08.gat,20,186
+prt_fild07.gat,84,13,0	warp	prtf16	4,2,prt_fild09.gat,87,377
+prt_fild08.gat,16,187,0	warp	prtf15-1	3,17,prt_fild07.gat,380,186
+prt_fild08.gat,16,239,0	warp	prtf14-1	3,15,prt_fild07.gat,379,239
+prt_fild08.gat,170,378,0	warp	prtf004	3,2,prontera.gat,156,26
+prt_fild08.gat,233,16,0	warp	prtf023	12,1,moc_fild01.gat,238,378
+prt_fild08.gat,371,212,0	warp	prtf005	3,3,izlude.gat,35,78
+prt_fild08.gat,55,21,0	warp	prtf024	4,2,moc_fild01.gat,56,380
+prt_fild09.gat,14,124,0	warp	prtf17	2,6,prt_fild10.gat,336,126
+prt_fild09.gat,14,139,0	warp	prtf17-1	2,8,prt_fild10.gat,336,126
+prt_fild09.gat,224,380,0	warp	prtf13-1	4,2,prt_fild07.gat,206,15
+prt_fild09.gat,246,16,0	warp	prtf025	7,2,moc_fild04.gat,92,378
+prt_fild09.gat,383,223,0	warp	prtf026	2,15,moc_fild01.gat,25,242
+prt_fild09.gat,383,251,0	warp	prtf027	2,15,moc_fild01.gat,25,242
+prt_fild09.gat,87,380,0	warp	prtf16-1	5,2,prt_fild07.gat,84,16
+prt_fild09.gat,95,16,0	warp	prtf028	7,2,moc_fild05.gat,325,379
+prt_fild10.gat,20,122,0	warp	prtf19	2,4,prt_fild11.gat,359,111
+prt_fild10.gat,20,196,0	warp	prtf20	2,4,prt_fild11.gat,358,184
+prt_fild10.gat,227,299,0	warp	prtf020	5,2,gef_fild02.gat,266,21
+prt_fild10.gat,263,20,0	warp	prtf029	6,2,moc_fild05.gat,144,372
+prt_fild10.gat,339,126,0	warp	prtf17-2	2,8,prt_fild09.gat,17,133
+prt_fild11.gat,17,281,0	warp	prtf021	2,4,gef_fild11.gat,374,293
+prt_fild11.gat,302,301,0	warp	prtf022	5,2,gef_fild03.gat,312,19
+prt_fild11.gat,361,184,0	warp	prtf20-1	2,5,prt_fild10.gat,23,196
+prt_fild11.gat,362,111,0	warp	prtf19-1	2,6,prt_fild10.gat,23,122
+
+//= St. Capitolina Abbey =====================================
+monk_in.gat,128,46,0	warp	monk03	1,3,monk_in.gat,161,38
+monk_in.gat,128,84,0	warp	monk04	1,3,monk_in.gat,161,90
+monk_in.gat,159,38,0	warp	monk03-1	1,3,monk_in.gat,126,46
+monk_in.gat,159,90,0	warp	monk04-1	1,3,monk_in.gat,126,84
+monk_in.gat,40,38,0	warp	monk05	1,3,monk_in.gat,71,46
+monk_in.gat,40,92,0	warp	monk06	1,3,monk_in.gat,71,84
+monk_in.gat,69,46,0	warp	monk05-1	1,3,monk_in.gat,38,38
+monk_in.gat,69,84,0	warp	monk06-1	1,3,monk_in.gat,38,92
+monk_in.gat,98,186,0	warp	monk02-1	3,2,prt_monk.gat,245,139
+monk_in.gat,98,27,0	warp	monk01-1	5,2,prt_monk.gat,245,104
+monk_in.gat,99,102,0	warp	monk07	5,1,monk_in.gat,99,143
+monk_in.gat,99,141,0	warp	monk07-1	3,1,monk_in.gat,99,100
+prt_monk.gat,22,248,0	warp	monk001	2,2,prt_fild03.gat,368,256
+prt_monk.gat,245,106,0	warp	monk01	1,1,monk_in.gat,98,30
+prt_monk.gat,245,137,0	warp	monk02	1,1,monk_in.gat,98,183

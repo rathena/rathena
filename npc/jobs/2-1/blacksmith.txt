@@ -1,0 +1,1436 @@
+//===== eAthena Script =======================================
+//= Blacksmith Quest
+//===== By: ==================================================
+//= EREMES THE CANIVALIZER(Aegis)
+//= Translated by: yoshiki.
+//= Converted by: Komurka.
+//= Optimized and further edited by kobra_k88.
+//= Further bugfixed and tested by Lupus
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena  0.5.2 +
+//===== Description: =========================================
+//= 
+//===== Additional Comments: =================================
+//= Changed some npc names to the iRO names. Changed some variable
+//= names and labels. Edited some text.[kobra_k88]
+//= Removed "if(JobLevel > 48) goto higher". It was a left over line.
+//= Thx to "Decker".[kobra_k88]
+==============================================================
+
+
+
+//<==================================================== Blacksmith Altiregen (Job changer)==================================================>\\
+geffen_in.gat,110,169,4	script	Guildsman	731,{
+
+	if (class == 5) goto L_Merc;
+	mes "[Blacksmith Altiregen]";
+	mes "Welcome! We're the masters of the metal, blacksmiths!";
+	mes "Our skills in creating weapons, in a way, is almost a art form!.";
+	next;
+	mes "[Blacksmith Altiregen]";
+	mes "Those weapons, heh, can be sold for quite a profit as well.";
+	next;
+	mes "[Blacksmith Altiregen]";
+	if (class == 0) goto L_Nov;
+	if (callfunc("Is_Sword_Class")) goto L_Sword;
+	if (callfunc("Is_Holy_Class")) goto L_Aco;
+	if (callfunc("Is_Thief_Class")) goto L_Theif;
+	if (callfunc("Is_Magic_Class")) goto L_Wiz;
+	if (callfunc("Is_Bow_Class")) goto L_Arc;
+	if (class == 10) goto L_Black;
+	mes "Only Merchants can become Blacksmiths.";
+	close;
+
+L_Nov:
+	if(sex==0) mes "...Hello little lady! If you wish to be a blacksmith, you have to be a merchant first!";
+	if(sex==1) mes "Hmmm, you look like you wish to be a blacksmith! Sorry, but only merchants can be blacksmiths!.";
+	close;
+L_Sword:	
+	mes "Hello! Come here to order a sword? Sorry, but I have some paperwork to do, so I can't forge anything now.";
+	close;
+L_Arc:
+	mes "Hmmm, sorry, but we're not hiring anyone that isn't a merchent.";
+	close;	
+L_Wiz:
+	mes "Interested in training? Our guild cannot assist magic users is such matters.";
+	close;
+L_Aco:
+	mes "Oh! A Holy one...! Do me a favor and bless the sword I'm crafting!";
+	close;
+L_Theif:	
+	mes "Sorry, but this is more of a office, so there's nothing worth money.  We CAN do knife forges though.";
+	close;
+L_Black:
+	mes "Hey! Been a while, running a errand for Christopher? I feel like my hammer is getting rusty after all this office work.";
+	close;
+
+L_Merc:
+	mes "[Blacksmith Altiregen]";
+	if (BSMITH_Q == 1) goto L_Test1;
+	if (BSMITH_Q == 2 || BSMITH_Q == 3) goto L_Test2and3;
+	if (BSMITH_Q == 4) goto L_Test4;
+	if (BSMITH_Q == 5) goto L_Change;
+	mes "Hello fellow merchant! Are you here to apply?";
+	mes "Write your name and your job level on this piece of paper.";
+	next;
+	menu "Apply",M_App,"What's required?",M_Req,"Not now...",M_NtNow;
+
+	M_App:
+		if(JobLevel < 40) goto sL_Lowlvl;
+		if(JobLevel == 50) goto sL_HighLvl;
+		mes "[Blacksmith Altiregen]";
+		mes "Hmmm...";
+		mes "Your job level is satisfactory.";
+		next;
+		mes "[Blacksmith Altiregen]";
+		mes "Good, but we don't just accept anybody.";
+		mes "We'll need to test your merchant skills and your determination.";
+		next;
+		mes "[Blacksmith Altiregen]";
+		mes "Rustle Rustle";
+		next;
+		mes "[Blacksmith Altiregen]";
+		mes "Hmmm, the guildsman ^5533FFGeshupenschte in Alberta^000000, says he's a bit short of hands.";
+		mes "Go help him, that's the first test.";
+		next;
+		mes "[Blacksmith Altiregen]";
+		mes "Have a nice trip!";
+		set BSMITH_Q,1;
+		set JBLVL, 40;
+		close;
+
+		sL_Lowlvl:
+			mes "[Blacksmith Altiregen]";
+			mes "You need more training as a merchant.  We only accept job level 40+";
+			mes "As much as I want to accept you, we have regulations.  Sorry, but return later.";
+			close;
+		sL_HighLvl:
+			mes "[Blacksmith Altiregen]";
+			mes "Wow! I'm impressed! You've done a lot of training there.  You know what they say, with hard work comes great rewards.";
+			emotion 1;
+			next;
+			mes "[Blacksmith Altiregen]";
+			mes "Well, first things first..... The guildsman ^5533FFGeshupenschte in Alberta^000000, says he's a bit short on help.";
+			mes "Go help him, that's the first test.";
+			next;
+			mes "[Blacksmith Altiregen]";
+			mes "Have a nice trip!";
+			set BSMITH_Q,1;
+			set JBLVL, 50;
+			close;
+	M_Req:
+		mes "[Blacksmith Altiregen]";
+		mes "What is required?";
+		mes "First, be job level 40 at least.";
+		mes "And pass the test.";
+		mes "That's it. The test is a bit complicated, but passable.";
+		mes "The test involves delievering items and being quized on the special items of certain regions and then being tested on knowledge of blacksmiths.";
+		close;
+	M_NtNow:
+		mes "[Blacksmith Altiregen]";
+		mes "Alright, see you later.";
+		close;
+
+
+L_Test1:
+	mes "You didn't leave yet? I told you to go see Geshupenschte in Alberta.  See you then.";
+	emotion 1;
+	close;
+
+L_Test2and3:
+	mes "How was the work Geshupenschte gave you? He can be a pain sometimes.";
+	close;
+L_Test4:
+	if (BSMITH_Q2 == 1) goto L_NotDone;
+	mes "Congrats! You've passed Geshupenschte's tests!";
+	next;
+	mes "[Blacksmith Altiregen]";
+	mes "Hmm? Heh, there is one last test you know.";
+	mes "The guildsman for the last test is in Morroc, go there now.";
+	next;
+	menu "Cruel, but I'll go.",-,"......I don't wanna travel T_T",M_dontgo;
+
+		set BSMITH_Q2, 1;
+		mes "[Blacksmith Altiregen]";
+		mes "I know its far away, but it's not in my power.  Besides, you know the region well, right?";
+		mes "I hope you do, because the blacksmith's guild doesn't like shaming it's status by hiring idiots!";
+		next;
+		mes "[Blacksmith Altiregen]";
+		mes "If such a thing happened, I can see the guild crumbling down, sob T_T";
+		mes "Well..... Get to Morroc and find her!";
+		close;
+	M_dontgo:
+		mes "[Blacksmith Altiregen]";
+		mes "What!? You're giving up!?!.........";
+		emotion 1;
+		next;
+		mes "[Blacksmith Altiregen]";
+		mes "HOW DARE YOU INSULT OUR GUILD LIKE THAT!";
+		mes "Leave now! Don't you dare even DREAM about becoming a blacksmith!";
+		emotion 23;
+		next;
+		mes "[Blacksmith Altiregen]";
+		mes "Can't endure ANYTHING can you!? How do you plan to become a blacksmith if you can't do these simple tasks!?";
+		emotion 6;
+		close;
+
+	L_NotDone:	
+		mes "Hmmm? Didn't you say you're going to Morroc?";
+		mes "Sorry, but you gotta pass the test there.";	
+		close;
+
+L_Change:
+	if(countitem(1005) < 1) goto L_NoHam;
+	if(SkillPoint > 0) mes "You need to use up all of your skill points before I can make you a Blacksmith.";
+	if(SkillPoint > 0) close;
+	mes "Lo, I can see the fire in your eyes! You've passed!!";
+	mes "I'll grant you the power to work metals!";
+	next;
+	delitem 1005,1;
+	jobchange 10;
+	mes "[Blacksmith Altiregen]";
+	mes "Don't forget! We're the artists that put beauty into metal! Don't you dare forget that!";
+	next;
+	mes "[Blacksmith Altiregen]";
+	mes "Here's a present! Congrats on passing!";
+	if(JBLVL == 40) getitem 999,5;
+	if(JBLVL == 50) getitem 999,10;
+	callfunc "F_ClearJobVar";		// clears all job variables for the current player
+	emotion 21;
+	close;
+
+	L_NoHam:
+		mes "Did you forget something? You need to show me the ^5533FFHammer of Blacksmiths^000000 to prove that you've passed all of the tests.";
+		next;
+		mes "[Blacksmith Altiregen]";
+		mes "You DO have it..... don't you???";
+		next;
+		menu "Oh that thing... let me just get it out of storage...",-, "Actually I sold it for pots..... now what?",sM_What;
+
+			mes "[Blacksmith Altiregen]";
+			mes "....... grrrrrrr.......";
+			emotion 7;
+			close;
+		sM_What:
+			mes "[Blacksmith Altiregen]";
+			mes ".......... I'll tell you what.............";
+			next;
+			mes "[Blacksmith Altiregen]";
+			mes "YOU GET TO START ALL OVER!!!!";
+			set BSMITH_Q, 0;
+			set BSMITH_Q2, 0;
+			emotion 32;
+		close;
+}
+
+
+//<=============================================== Geshupenschte: 1st, 2nd, 3rd Test ===================================================>\\
+alberta_in.gat,174,22,4	script	Geshupenschte	63,{
+
+	if(Class==5) goto L_merchant;
+	mes "[Geshupenschte]";
+	mes "Hello sir! I'm the blacksmith.  Geshupenschte! Nice to meet you!";
+	next;
+	mes "[Geshupenschte]";
+	mes "Blacksmith is such a great job!! Don't you think so? Hahahahahahah!";
+	emotion 18;
+	close;
+
+L_merchant:
+	mes "[Geshupenschte]";
+	if (BSMITH_Q == 1) goto L_Test1;
+	if (BSMITH_Q == 2) goto L_Test2;
+	if (BSMITH_Q == 3) goto L_Test3;
+	if (BSMITH_Q == 4) goto L_Done;
+	if (BSMITH_Q == 5) goto L_GoChange;
+	mes "Hoho!! A merchant! Excellent! I was in need of some help!!";
+	next;
+	mes "[Geshupenschte]";
+	mes "Of course.... I wouldn't want to bother someone as busy as yourself.  Go on your way if you must!....";
+	next;
+	mes "[Geshupenschte]";
+	mes "~Dum dee dum dee dum~.....I am the best.... I am a blacksmith....(singing)";
+	next;
+	mes "[Geshupenschte]";
+	mes "What? Why are you still here?";
+	emotion 1;
+	close;
+
+// Test 1-----------------------------------------------------------------
+L_Test1:
+	if (BSMITH_Q2 == 1) goto L_ReTest1;
+	mes "You're the one sent by the guild, right?";
+	mes "Whew, the people order so many items >_> We don't have enough people to deliever.";
+	next;
+	mes "[Geshupenschte]";
+	mes "Well, you ARE the one sent by the guild, right?";
+	mes "Oh well, hopefully >_>";
+	next;
+	mes "[Geshupenschte]";
+	mes "See, this kid a few days ago,";
+	mes "he wasted SO much of our money.";
+	mes "Just because I sent him on a semi complicated errand >_>";
+	mes "Now, let me ask a few questions!";
+	next;
+	menu "Alright",M_Rdy,"Wait, let me go and get prepared",-;
+
+		mes "[Geshupenschte]";
+		mes "Ok, return after you're ready.";
+		mes "I'll be waiting here.";
+		close;
+	M_Rdy:
+		set @score, 0;
+		set @temp, rand(2);
+		if (@temp == 1) goto L_setq2;
+
+	L_setq1:
+		mes "[Geshupenschte]";
+		mes "1. Which town and local item don't match?";
+		next;
+		menu "Morroc - Thief Clothes",q1,"Alberta - 2 Hand Axe",q1,"Comodo - Berserk Potion",q1,"Alberta - Swordmace",-;
+
+			set @score,@score+10;
+		q1:
+
+		mes "[Geshupenschte]";
+		mes "2. What does the smith skill Hammerfall do?";
+		next;
+		menu "Stun",-,"Blind",q2,"Poison",q2,"Sleep",q2;
+
+			set @score,@score+10;
+		q2:
+
+		mes "[Geshupenschte]";
+		mes "3. What is a merchant not good at?";
+		next;
+		menu "Opening Shops",q3,"Buying Cheap",q3,"Selling High",q3,"Running Fast",-;
+
+			set @score,@score+10;
+
+		q3:
+
+		mes "[Geshupenschte]";
+		mes "4. Where do you buy Blue Gems?";
+		next;
+		menu "Alberta",q4,"Morroc",q4,"Geffen",-,"Prontera",q4;
+
+			set @score,@score+10;
+
+		q4:
+
+		mes "[Geshupenschte]";
+		mes "5. Where is the Geffen Tool Shop from the tower?";
+		next;
+		menu "8 o'clock",-,"11 o'clock",q5,"6 o'clock",q5,"5 o'clock",q5;
+
+			set @score,@score+10;
+
+		q5:
+
+		mes "[Geshupenschte]";
+		mes "6. What weapon can't be used by merchants?";
+		next;
+		menu "Stiletto",q6,"Buster",q6,"Chain",q6,"Bible",-;
+
+			set @score,@score+10;
+
+		q6:
+
+		mes "[Geshupenschte]";
+		mes "7. Which has the highest def?";
+		next;
+		menu "Panty",q7,"Mink Coat",-,"Wooden Mail",q7,"Silk Robe",q7;
+
+			set @score,@score+10;
+	
+		q7:
+
+		mes "[Geshupenschte]";
+		mes "8. How many times can you upgrade a lvl 3 weapon safely?";
+		next;
+		menu "+3 ",q8,"+4 ",q8,"+5 ",-,"+6 ",q8;
+
+			set @score,@score+10;
+		q8:
+
+		mes "[Geshupenschte]";
+		mes "9. What can you make with Trunks?";
+		next;
+		menu "Sakkat",-,"Ghost Bandana",q9,"Majestic Goat",q9,"Antlers",q9;
+
+			set @score,@score+10;
+		q9:
+
+		mes "[Geshupenschte]";
+		mes "10. What is the most important to merchants!?";
+		next;
+		menu "Helpfulness",-,"Honor",-,"Money",-,"Honesty",-;
+
+			set @score,@score+10;
+
+		if (BSMITH_Q2 == 1) goto L_result2;
+		goto L_result;
+
+	L_setq2:	
+		mes "[Geshupenschte]";
+		mes "1. Which town and local item is mismatched?";
+		next;
+		menu "Aldebaran - Ygg Leaf",q10,"Alberta - Hammer",q10,"Comodo - Berserk Potion",q10,"Aldebaran - Hammer",-;
+
+			set @score,@score+10;
+		q10:
+
+		mes "[Geshupenschte]";
+		mes "2. How much does Jellopy sell for?";
+		next;
+		menu "1z",q11,"2z",q11,"3z",-,"4z",q11;
+
+			set @score,@score+10;
+		q11:
+
+		mes "[Geshupenschte]";
+		mes "3. What's necessary to make a shop?";
+		next;
+		menu "Must have cart",-,"Item to sell",q12,"Have weapon equiped",q12,"Wear Armor",q12;
+
+			set @score,@score+10;
+		q12:
+
+		mes "[Geshupenschte]";
+		mes "4. Where is the merchant guild located?";
+		next;
+		menu "Alberta",-,"Morroc",q13,"Geffen",q13,"Prontera",q13;
+
+			set @score,@score+10;
+		q13:
+
+		mes "[Geshupenschte]";
+		mes "5. Where is the Morroc Weapon Shop from the center?";
+		next;
+		menu "7 o'clock",q14,"11 o'clock",q14,"6 o'clock",q14,"5 o'clock",-;
+
+			set @score,@score+10;
+		q14:
+
+		mes "[Geshupenschte]";
+		mes "6. What can't a merchant equip?";
+		next;
+		menu "Main Gauche",q15,"Claymore",-,"Chain",q15,"2 hand axe",q15;
+
+			set @score,@score+10;
+		q15:
+
+		mes "[Geshupenschte]";
+		mes "7. What has the highest defense?";
+		next;
+		menu "Panty",q16,"Mink Coat",-,"Wooden Mail",q16,"Silk Robe",q16;
+
+			set @score,@score+10;
+		q16:
+
+		mes "[Geshupenschte]";
+		mes "8. How many times can you safely upgrade a lvl 4 weapon?";
+		next;
+		menu "+3 ",q17,"+4",-,"+5",q17,"+6",q17;
+
+			set @score,@score+10;
+		q17:
+
+		mes "[Geshupenschte]";
+		mes "9. Which monster doesn't drop iron ore?";
+		next;
+		menu "Chonchon",q18,"Steel Chonchon",q18,"Zerom",q18,"Anolian",-;
+
+			set @score,@score+10;
+		q18:
+
+		mes "[Geshupenschte]";
+		mes "10. What is the most important to merchants?!";
+		next;
+		menu "Honesty",-,"Helpfulness",-,"Money",-,"Posture",-;
+
+			set @score,@score+10;
+
+		if (BSMITH_Q2 == 1) goto L_result2;	
+		goto L_result;
+
+L_result:
+	mes "[Geshupenschte]";
+	mes "Good!";
+	next;
+	mes "[Geshupenschte]";
+	mes "Lets see....your score is ^5533FF"+@score+"."^000000;
+	if (@score == 100) goto L_perfect;
+	mes ".............";
+	next;
+	mes "[Geshupenschte]";
+	mes "Sorry friend, I don't want to give you the job.";
+	mes "You need just a bit more knowledge. Go study some more";
+	set BSMITH_Q2, 1;
+	close;
+
+	L_perfect:
+		set BSMITH_Q,2;
+		set BSMITH_Q2, 0;
+		mes "Perfect!";
+		next;
+		mes "[Geshupenschte]";
+		mes "Then you definatly can do the errand!";
+		mes "Are you prepared?";
+		close;
+L_result2:
+	mes "[Geshupenschte]";
+	mes "Great!";
+	next;
+	mes "[Geshupenschte]";
+	mes "Lets see....your score is ^5533FF"+@score+"."^000000;
+	if (@score > 80) goto L_pass;
+	mes ".............";
+	next;
+	mes "[Geshupenschte]";
+	mes "You've missed again!";
+	mes "If you keep missing, I can't give you the job. Go study more.";
+	set BSMITH_Q2, 1;
+	close;
+
+	L_pass:
+		set BSMITH_Q,2;
+		set BSMITH_Q2, 0;
+		mes "You Passed!";
+		next;
+		mes "[Geshupenschte]";
+		mes "I'll let you do the job";
+		mes "Are you prepared?";
+		close;
+L_ReTest1:	
+	mes "Ah, I see you've studied more.  Don't miss any questions! Here we go!";
+	next;
+	goto M_Rdy;
+
+
+// Test 2-----------------------------------------------------------------
+L_Test2:
+	if(BSMITH_Q2 > 0) goto L_CheckTest2;
+	mes "Let's see... orders....";
+	next;
+	mes "[Geshupenschte]";
+	mes "Ah, here it is!";
+	mes "Here's the order that's almost due";
+	mes "Hmmm";
+	next;
+	mes "[Geshupenschte]";
+	mes "I need you to get me....";
+	next;
+	set BSMITH_Q2,rand(1,5);
+	if (BSMITH_Q2 == 2) goto R_item2;
+	if (BSMITH_Q2 == 3) goto R_item3;
+	if (BSMITH_Q2 == 4) goto R_item4;
+	if (BSMITH_Q2 == 5) goto R_item5;
+
+	R_item1:
+		mes "[Geshupenschte]";
+		mes "^5533FF2 Steel";
+		mes "1 Rotten Bandage";
+		mes "2 Blue Gemstone^000000";
+		mes "and ^5533FF1 Arc Wand^000000 from the store.";
+		next;
+		mes "[Geshupenschte]";
+		mes "Hey, we're not making you bring these because we're cheap! It's a test!";
+		next;
+		mes "[Geshupenschte]";
+		mes "^5533FF2 Steel";
+		mes "1 Rotten Bandage";
+		mes "2 Blue Gemstone^000000";
+		mes "and ^5533FF1 Arc Wand^000000 from the store.";
+		next;
+		goto L_finalword;
+	R_item2:	
+		mes "[Geshupenschte]";
+		mes "^5533FF2 Star Dust";
+		mes "2 Skel Bones";
+		mes "1 Zargons^000000";
+		mes "and ^5533FF1 Gladius^000000 from the stores.";
+		next;
+		mes "[Geshupenschte]";
+		mes "Hey! We're not being cheap, this is a test!";
+		next;
+		mes "[Geshupenschte]";
+		mes "I'll list them again";
+		mes "^5533FF2 Star Dust";
+		mes "2 Skel Bones";
+		mes "1 Zargons^000000";
+		mes "and ^5533FF1 Gladius^000000 from the stores.";
+		next;
+		goto L_finalword;
+	R_item3:
+		mes "[Geshupenschte]";
+		mes "^5533FF2 Coals";
+		mes "2 Shells";
+		mes "2 Red Bloods^000000";
+		mes "and ^5533FF1 Tsurugi^000000 from the stores.";
+		next;
+		mes "[Geshupenschte]";
+		mes "Hey! We're not being cheap, this is a test!";
+		next;
+		mes "[Geshupenschte]";
+		mes "I'll list them again";
+		mes "^5533FF2 Coals";
+		mes "2 Shells^000000";
+		mes "2 Red Bloods";
+		mes "and ^5533FF1 Tsurugi^000000 from the stores.";
+		next;
+		goto L_finalword;
+	R_item4:
+		mes "[Geshupenschte]";
+		mes "^5533FF8 Iron Ores";
+		mes "1 Trunk";
+		mes "2 Blue Gems^000000";
+		mes "And a ^5533FFArbalest^000000 from the stores.";
+		next;
+		mes "[Geshupenschte]";
+		mes "Hey! We're not being cheap!";
+		next;
+		mes "[Geshupenschte]";
+		mes "I'll list them again.";
+		mes "^5533FF8 Iron Ores";
+		mes "1 Trunk";
+		mes "2 Blue Gems^000000";
+		mes "And a ^5533FFArbalest^000000 from the stores.";
+		next;
+		goto L_finalword;
+	R_item5:
+		mes "[Geshupenschte]";
+		mes "^5533FF8 Iron Ores";
+		mes "20 Green Herbs";
+		mes "2 Animal Skin^000000";
+		mes "and ^5533FF1 Morning Star^000000 from the stores.";
+		next;
+		mes "[Geshupenschte]";
+		mes "Hey! We're not being cheap! It's a test!";
+		next;
+		mes "[Geshupenschte]";
+		mes "I'll list them again.";
+		mes "^5533FF8 Iron Ores";
+		mes "20 Green Herbs";
+		mes "2 Animal Skin^000000";
+		mes "and ^5533FF1 Morning Star^000000 from the stores.";
+		next;
+	L_finalword:
+		mes "[Geshupenschte]";
+		mes "Good luck!";
+		close;
+
+L_CheckTest2:
+	mes "Hmm? Did you bring all the items?";
+	next;
+	if (BSMITH_Q2 == 2) goto L_2b;
+	if (BSMITH_Q2 == 3) goto L_2c;
+	if (BSMITH_Q2 == 4) goto L_2d;
+	if (BSMITH_Q2 == 5) goto L_2e;
+
+	L_2a:
+		if(countitem(999) < 2 || countitem(930) < 1 || countitem(717) < 2 || countitem(1610) < 1) goto sL_NtEnuf1;
+		mes "[Geshupenschte]";
+		mes "Didn't I ask for 3 steels?";
+		next;
+		mes "[Geshupenschte]";
+		mes "Oh yea! I did ask for 2.";
+		mes "Gimme a sec.";
+		delitem 999,2;
+		delitem 930,1;
+		delitem 717,2;
+		delitem 1610,1;
+		callsub sF_Make;
+		mes "Deliever this to Geffen's Baisulitst and bring back the reciept.";
+		getitem 1610,1;
+		next;
+		mes "[Geshupenschte]";
+		mes "WHAT!? Nothing looks different?";
+		mes "Look carefully where my hand is.";
+		mes "See the emphesized groove!?";
+		mes "ITS THE SUPER Geshupenschte ARC WAND MK II!!!!! XDDDDD";
+		next;
+		mes "[Geshupenschte]";
+		mes "Feel the difference! Almost no inertia!";
+		next;
+		mes "[Geshupenschte]";
+		mes "Now, go deliever to Baisulitst!";
+		close;
+
+		sL_NtEnuf1:
+			mes "[Geshupenschte]";
+			mes "You didn't bring all the items!";
+			next;
+			goto R_item1;
+	L_2b:
+		if(countitem(1001) < 2 || countitem(932) < 1 || countitem(912) < 1 || countitem(1219) < 1) goto sL_NtEnuf2;
+		mes "[Geshupenschte]";
+		mes "Didn't I ask for 3 Star Dusts?";
+		next;
+		mes "[Geshupenschte]";
+		mes "Oh yea, 2, that's right.";
+		mes "Okay, gimme a sec.";
+		delitem 1001,2;
+		delitem 932,1;
+		delitem 912,1;
+		delitem 1219,1;
+		callsub sF_Make;
+		mes "Now, take this to Morroc's Wickebine";
+		getitem 1219,1;
+		next;
+		mes "[Geshupenschte]";
+		mes "WHAT!? IT DOESN'T LOOK ANY DIFFERENT!?";
+		mes "Look carefully at the blade!";
+		mes "CAN YOU NOT SEE THE BEAUTIFUL MARKINGS?!";
+		mes "ULTRA GLADIUS Geshupenschte Mk II!!";
+		next;
+		mes "[Geshupenschte]";
+		mes "Isnt it so pretty ^_^";
+		next;
+		mes "[Geshupenschte]";
+		mes "Well, go to Morroc and give it the Wickebine and bring the receipt back.";
+		close;
+		next;
+
+		sL_NtEnuf2:
+			mes "[Geshupenschte]";
+			mes "You didn't bring all the items!";
+			next;
+			goto R_item2;
+	L_2c:
+		if(countitem(1003) < 2 || countitem(935) < 2 || countitem(990) < 1 || countitem(1119) < 1) goto sL_NtEnuf3;
+		mes "[Geshupenschte]";
+		mes "Didn't I ask for 3 coals??";
+		next;
+		mes "[Geshupenschte]";
+		mes "That's right, 2 coals";
+		mes "Okay, wait a sec.";
+		delitem 1003,2;
+		delitem 935,2;
+		delitem 990,1;
+		delitem 1119,1;
+		callsub sF_Make;
+		mes "Give this to Izlude's Gromgast and bring back the receipt.";
+		getitem 1119,1;
+		next;
+		mes "[Geshupenschte]";
+		mes "WHAT!? NOTHING LOOKS DIFFERENT!?";
+		mes "Look carefully at the blade!";
+		mes "Look at the beautiful markings!";
+		mes "ULTRA Geshupenschte TSURUGI Mk II!!!";
+		next;
+		mes "[Geshupenschte]";
+		mes "Isn't it so pretty ^_^";
+		next;
+		mes "[Geshupenschte]";
+		mes "Anyways, Izlude's Gromgast! Go!";
+		close;
+
+		sL_NtEnuf3:
+			mes "[Geshupenschte]";
+			mes "You didn't bring all the items!";
+			next;
+			goto R_item3;
+
+	L_2d:
+		if(countitem(1002) < 8 || countitem(1019) < 1 || countitem(717) < 2 || countitem(1713) < 1) goto sL_NtEnuf4;
+		mes "[Geshupenschte]";
+		mes "Didn't I ask for 30 iron ores?";
+		next;
+		mes "[Geshupenschte]";
+		mes "Wait, 8 is right >_>";
+		mes "Hmmm, wait a sec then.";
+		delitem 1002,8;
+		delitem 1019,1;
+		delitem 717,2;
+		delitem 1713,1;
+		callsub sF_Make;
+		mes "Deliever this to Payon's Tilpitz";
+		getitem 1713,1;
+		next;
+		mes "[Geshupenschte]";
+		mes "WHAT!? NOTHING LOOKS DIFFERENT!?";
+		mes "LOOK AT THE GROOVES WHERE THE ARROWS GO!!";
+		mes "LOOK HOW CUSTOMIZED IT IS!!!!!";
+		mes "Geshupenschte'S MASTER ARCHER ARBALEST Mk II!!!";
+		next;
+		mes "[Geshupenschte]";
+		mes "Look how well built the bow is!";
+		next;
+		mes "[Geshupenschte]";
+		mes "Well, Tilpitz in Payon, and bring the envelop.";
+		close;
+
+		sL_NtEnuf4:
+			mes "[Geshupenschte]";
+			mes "You didn't bring all the items!";
+			next;
+			goto R_item4;
+
+	L_2e:
+		if(countitem(1002) < 8 || countitem(511) < 20 || countitem(919) < 2 || countitem(1513) < 1) goto sL_NtEnuf5;
+		mes "[Geshupenschte]";
+		mes "Didn't I ask for 40 ores?";
+		next;
+		mes "[Geshupenschte]";
+		mes "Wait, 8! That's right!";
+		mes "Okay, wait a sec!";
+		delitem 1002,8;
+		delitem 511,20;
+		delitem 919,2;
+		delitem 1513,1;
+		callsub sF_Make;
+		mes "Take this to Bismarck in Comodo and bring me the receipt.";
+		getitem 1513,1;
+		next;
+		mes "[Geshupenschte]";
+		mes "WHAT!? NOTHING LOOKS DIFFERENT!?";
+		mes "Look carefully at the tips of the spikes!!";
+		mes "The green herbs' antidote for poisons have been mixed in!";
+		mes "ANTI POISON Geshupenschte MORNING STAR MK II!!!!!";
+		next;
+		mes "[Geshupenschte]";
+		mes "Don't you get it!? When you're poisoned, you stab yourself with it!";
+		mes "The wound.....probably will get bigger! But the poison will be gone!";
+		next;
+		mes "[Geshupenschte]";
+		mes "Well, take this to Bismarck of Comodo!";
+		close;
+
+		sL_NtEnuf5:
+			mes "[Geshupenschte]";
+			mes "You didn't bring all the items!";
+			next;
+			goto R_item5;
+
+	sF_Make:
+		set BSMITH_Q, 3;
+		next;
+		mes "[Geshupenschte]";
+		mes "Grunt.......";
+		next;
+		mes "~clank~clonk~clank~";
+		next;
+		mes "[Geshupenschte]";
+		mes "Ergh......";
+		next;
+		mes "~bonk~bang~bonk~";
+		next;
+		mes "[Geshupenschte]";
+		mes "Whew.  There we go!";
+		return;
+
+
+// Test 3-----------------------------------------------------------------
+L_Test3:
+	if (BSMITH_Q3 == 1) goto L_CheckTest3;
+	mes "Go deliever!";
+	mes "........you didn't forget.......right?";
+	next;
+	mes "[Geshupenschte]";
+	if (BSMITH_Q2 == 2) goto L_3b;
+	if (BSMITH_Q2 == 3) goto L_3c;
+	if (BSMITH_Q2 == 4) goto L_3d;
+	if (BSMITH_Q2 == 5) goto L_3e;
+
+	L_3a:
+		if (countitem(1610) < 1) goto L_LostItem;
+		mes "Baisulitst should be at 11 o'clock of Geffen ";
+		close;
+	L_3b:
+		if (countitem(1210) < 1) goto L_LostItem;
+		mes "Take it to Wickebine near the Sword Mace dealer in Morroc.";
+		close;
+	L_3c:
+		if (countitem(1119) < 1) goto L_LostItem;
+		mes "Gromgast hangs out at 11 o'clock of Izlude.";
+		close;
+	L_3d:
+		if (countitem(1713) < 1) goto L_LostItem;
+		mes "Tilpitz hangs out at 5 o'clock of Payon";
+		close;
+	L_3e:
+		if (countitem(1513) < 1) goto L_LostItem;
+		mes "Bismarck is usually at 12 o'clock area of Comodo.";
+		close;
+
+	L_LostItem:
+		mes "WHAT!!! YOU LOST THE ITEM I GAVE YOU TO DELIVER!!!!";
+		emotion 23;
+		next;
+		mes "[Geshupenschte]";
+		mes "........... Well then.... I gues you'll just have too.....";
+		next;
+		mes "[Geshupenschte]";
+		mes "START ALL OVER!! Now get out of my sight!!";
+		set BSMITH_Q, 0;
+		set BSMITH_Q2, 0;
+		emotion 7;
+		close;
+
+L_CheckTest3:
+	mes "Did you deliever it?";
+	mes "Lets see the receipt then!";
+	next;
+	menu "Here you go",-,"Wait a second.",M_Wait;
+
+		if(countitem(1073) < 1) goto sL_noreceipt;
+		mes "[Geshupenschte]";
+		mes "Great! Very good! You're definalty a honest merchant! Go see Altiregen back in Geffen!";
+		mes "I know you'll definately pass the test!!!";
+		set BSMITH_Q, 4;
+		set BSMITH_Q2, 0;
+		set BSMITH_Q3, 0;
+		delitem 1073,1;
+		close;
+
+		sL_noreceipt:
+			mes "[Geshupenschte]";
+			mes "........You don't know where you left the receipt.........";
+			next;
+			mes "[Geshupenschte]";
+			mes "WHAT'S THIS?! YOU LOST IT!? DId you SELL it or something!?";
+			emotion 23;
+			next;
+			mes "[Geshupenschte]";
+			mes "The receipt is the soul of merchants! The life line of blacksmiths!";
+			mes "Guess what? You get to..... START ALL OVER!!";
+			set BSMITH_Q, 0;
+			set BSMITH_Q2, 0;
+			set BSMITH_Q3, 0;
+			emotion 32;
+			close;
+	M_Wait:
+		mes "[Geshupenschte]";
+		mes "Well, tell me if you find the receipt. I HOPE you got one.";
+		close;
+
+L_Done:
+	mes "Thanks for working for me! Now go see Altiregen!";
+	close;
+
+L_GoChange:
+	mes "There should be nothing you want now.........";
+	mes "Maybe you're thinking of Morroc or Geffen?";
+	close;
+}
+
+
+// Delivery Recipients ==================================================>\\
+// Baisulitst -----------------------------------------------------------
+geffen.gat,46,164,4	script	Baisulitst	69,{
+	if (BSMITH_Q==3) goto L_Start;
+
+	mes "[Baisulitst]";
+	mes "Now that I think about it, it's been a while since I've been to Alberta.  I'm a little upset with the service I've been getting, especially the late deliveries......";
+	next;
+	mes "[Baisulitst]";
+	mes "I ordered something from the Geffen Blacksmith Guild but the order got transfered to a blacksmith in Alberta.....";
+	next;
+	mes "[Baisulitst]";
+	mes "Hmmm....., I wonder when I will recieve my special order ^5555FFArc Wand^000000.....";
+	emotion 20;
+	close;
+
+L_Start:
+	if(BSMITH_Q2 != 1) goto L_Wrong;
+	if(countitem(1073) == 1) goto L_Done;
+	if(countitem(1610) < 1) goto L_NoItem;
+	mes "[Baisulitst]";
+	mes "Wow! Is it finally here?!";
+	mes "Thank you! I was waiting forever!";
+	delitem 1610,1;
+	set BSMITH_Q3, 1;
+	next;
+	mes "[Baisulitst]";
+	mes "I ordered this from the Geffen BS Guild, but they assigned it to the smith in Alberta!";
+	next;
+	mes "[Baisulitst]";
+	mes "Thanks for coming from so far away!";
+	mes "Also, make sure to hit Geshupenschte one for me! How could anything be so late >_>";
+	next;
+	mes "[Baisulitst]";
+	mes "Here's the receipt!";
+	next;
+	mes "~Scribble, Scribble~ Rip ~";
+	next;
+	getitem 1073,1;
+	mes "[Baisulitst]";
+	mes "Here you go! Good bye! Thank you for the delivery!";
+	close;
+
+	L_NoItem:
+		mes "[Baisulitst]";
+		mes "..... Hmm?.... What's this?..... You here to deliver something to me but you don't have the actual item??";
+		emotion 32;
+	L_Wrong:
+		mes "[Baisulitst]";
+		mes "..... Hmm?.... What's this?..... This is not what I ordered.....";
+		emotion 32;
+	L_Done:
+		mes "[Baisulitst]";
+		mes "Thanks again for the delivery.  I really appreciate it!";
+		close;
+}
+
+// Wickebine --------------------------------------------------------------------
+morocc.gat,27,112,4	script	Wickebine	725,{
+	if (BSMITH_Q == 3) goto L_Start;
+
+	mes "[Wickebine]";
+	mes "..........";
+	mes ".....When will my order be here?";
+	emotion 20;
+	next;
+	mes "[Wickebine]";
+	mes "The Geffen Blacksmith Guild and Geshupenschte are both CHRONICALLY LATE!";
+	emotion 32;
+	next;
+	mes "[Wickebine]";
+	mes "This is very upsetting......";
+	close;
+L_Start:
+	if(BSMITH_Q2 != 2) goto L_Wrong;
+	if(countitem(1073) == 1) goto L_Done;
+	if(countitem(1219) < 1) goto L_NoItem;
+	mes "[Wickebine]";
+	mes "Is it finally here!?!";
+	mes "Give it!!!!";
+	delitem 1219,1;
+	set BSMITH_Q3, 1;
+	next;
+	mes "[Wickebine]";
+	mes "Tell the BS guild";
+	mes "and your teacher Geshupenschte!";
+	next;
+	mes "[Wickebine]";
+	mes "You're LATE";
+	mes "and I was WAITING.";
+	next;
+	mes "[Wickebine]";
+	mes "But the item seems pretty high quality.";
+	next;
+	mes "(Writes something down)";
+	next;
+	getitem 1073,1;
+	mes "[Wickebine]";
+	mes "Here's the receipt and thanks for the delivery.";
+
+	L_NoItem:
+		mes "[Wickebine]";
+		mes "Ung! You came all this way to deliver my item and you lost it??!!";
+		emotion 6;
+		close;
+	L_Wrong:
+		mes "[Wickebine]";
+		mes "I think you're supposed to deliver this somewhere else.....";
+		emotion 4;
+		close;
+	L_Done:	
+		mes "[Wickebine]";
+		mes "Thank you";
+		close;
+}
+
+// Gromgast ---------------------------------------------------------------------
+izlude.gat,69,181,4	script	Gromgast	734,{
+	if (BSMITH_Q == 3) goto L_Start;
+
+	mes "[Gromgast]";
+	mes "..........";
+	mes ".....When will that sword arrive >_>";
+	next;
+	mes "[Gromgast]";
+	mes "I need that sword for my training!";
+	mes "Nooo.....I must not get rusty!";
+	next;
+	mes "[Gromgast]";
+	mes "Noooooooo T_T......";
+	close;
+
+L_Start:
+	if(BSMITH_Q2 != 3) goto L_Wrong;
+	if(countitem(1073) == 1) goto L_Done;
+	if(countitem(1119) < 1) goto L_NoItem;
+	mes "[Gromgast]";
+	mes "Ahhh, it's finally here";
+	mes "Let me see it.";
+	delitem 1119,1;
+	set BSMITH_Q3, 1;
+	next;
+	mes "[Gromgast]";
+	mes "Nice.....";
+	mes "It's better then I expected.";
+	next;
+	mes "[Gromgast]";
+	mes "I think this sword is exactly what I need!!";
+	mes "I like it!";
+	next;
+	mes "[Gromgast]";
+	mes "Here you go.";
+	next;
+	mes "~scribble~rip~";
+	next;
+	getitem 1073,1;
+	mes "[Gromgast]";
+	mes "Here's the receipt! Thank you.";
+	close;
+
+	L_NoItem:
+		mes "[Gromgast]";
+		mes "Hmm... I don't understand.... where is the item I ordered???....";
+		emotion 20;
+	L_Wrong:
+		mes "[Gromgast]";
+		mes "Sorry, but you've got the wrong person.";
+		close;
+	L_Done:	
+		mes "[Gromgast]";
+		mes "Thanks for the delivery!";
+		close;
+}
+
+// Tilpitz --------------------------------------------------------------------
+payon.gat,214,79,4	script	Tilpitz	59,{
+	if (BSMITH_Q == 3) goto L_Start;
+
+	mes "[Tilpitz]";
+	mes "When's that bow coming..........";
+	mes "How long ago did I order this thing >_>";
+	next;
+	mes "[Tilpitz]";
+	mes "There's no one that can make it execpt 'him'.........";
+	mes "but, WHEN WILL IT COME >_>";
+	next;
+	mes "[Tilpitz]";
+	mes " T_T ";
+	close;
+L_Start:
+	if(BSMITH_Q2 != 4) goto L_Wrong;
+	if(countitem(1073) == 1) goto L_Done;
+	if(countitem(1713) < 1) goto L_NoItem;
+	mes "[Tilpitz]";
+	mes ".......Ohhh! It's finally here!!!";
+	mes "Let me see it!";
+	delitem 1713,1;
+	set BSMITH_Q3, 1;
+	next;
+	mes "[Tilpitz]";
+	mes "Wow....";
+	mes "Not bad......not bad at all!!";
+	next;
+	mes "[Tilpitz]";
+	mes "Look at this curve!! It's wonderful!!";
+	mes "Oh, I love this";
+	next;
+	mes "[Tilpitz]";
+	mes "Thank you!!!";
+	next;
+	mes "scribble scribble rip";
+	next;
+	getitem 1073,1;
+	mes "[Tilpitz]";
+	mes "Here's the receipt! Thank you again!!!!!";
+	close;
+
+	L_NoItem:
+		mes "[Tilpitz]";
+		mes "Oooh! The delivery is here? What?..... You don't have anything???.....";
+		emotion 1;
+		next;
+		mes "[Tilpitz]";
+		mes "Don't play bad jokes on people!";
+		emotion 7;
+		close;
+	L_Wrong:
+		mes "[Tilpitz]";
+		mes "What's this? You have a delivery.... for someone else..... Then why not deliver it to that person instead???........";
+		emotion 4;
+		close;
+	L_Done:
+		mes "[Tilpitz]";
+		mes "More I look at it, more beautiful it gets!!! ";
+		close;
+}
+
+// Bismarck ---------------------------------------------------------------------------
+comodo.gat,158,342,4	script	Bismarck	118,{
+	if (BSMITH_Q == 3) goto L_Start;
+
+	mes "[Bismarck]";
+	mes "......Ughï....";
+	mes ".....When's that delivery coming......";
+	next;
+	mes "[Bismarck]";
+	mes "....the.....p...poison...... >_>....";
+	mes "Ack.....";
+	next;
+	mes "[Bismarck]";
+	mes "....Looks like... I'm....screwed.";
+	close;
+
+L_Start:
+	if(BSMITH_Q2 != 5) goto L_Wrong;
+	if(countitem(1073) == 1) goto L_Done;
+	if(countitem(1513) < 1) goto L_NoItem;
+	mes "[Bismarck]";
+	mes "Ugh.........finally...........";
+	mes "Pant pant..........give it to me~";
+	delitem 1513,1;
+	set BSMITH_Q3, 1;
+	next;
+	mes "[Bismarck]";
+	mes "Ugh....";
+	mes "The green herb is in it........right?";
+	next;
+	mes "[Bismarck]";
+	mes "I........can't move.........help me up";
+	mes "....grunt.....";
+	next;
+	mes "- STAB! -";
+	next;
+	mes "[Bismarck]";
+	mes "AAAAAAAAAAACCCCCCCCCKKKKKK!!!";
+	next;
+	mes "[Bismarck]";
+	mes "whew, that works pretty well..";
+	next;
+	getitem 1073,1;
+	mes "[Bismarck]";
+	mes "Cough.... Here's the receipt..... thank you for the delivery! I guess I get to live longer......";
+	close;
+
+	L_NoItem:
+		mes "[Bismarck]";
+		mes "ARE YOU TRYING TO TOY WITH ME!!?? How.... ~cough~... could....~ung~.... you....~ack~.....";
+		emotion 23;
+		close;
+	L_Wrong:
+		mes "[Bismarck]";
+		mes "I NEED AN ANTIDOTE DAMMIT!! Not this stuff ~ack~........";
+		emotion 23;
+		close;
+	L_Done:
+		mes "[Bismarck]";
+		mes "Whew, thank you.";
+		close;
+}
+
+
+
+//<===================================================== Mitehmaeeuh: Last Test ===================================================>\\
+morocc.gat,95,133,4	script	BS Guildsman	726,{
+	if (BSMITH_Q == 4) goto L_Start;
+	if (BSMITH_Q == 5) goto L_Done;
+	mes "[Mitmayer]";
+	mes "Whew.... the sun in Morroc is just too strong.... I guess it will gie me tougher skin... Oh well......";
+	emotion 19;
+	next;
+	mes "[Mitmayer]";
+	mes "Afteralll, we Blacksmiths are used to high temperatures since we work with fire everyday!";
+	next;
+	mes "[Mitmayer]";
+	mes "Getting nice and tan isn't so bad..... I think it gives you a healthy athletic look.";
+	close;
+L_Done:
+	mes "[Mitmayer]";
+	mes "I told you that you've passed.";
+	next;
+	mes "[Mitmayer]";
+	mes "Return to the guild";
+	next;
+	mes "[Mitmayer]";
+	mes "Also, don't lose the Hammer of Blacksmiths!!";
+	next;
+	mes "[Mitmayer]";
+	mes "Don't forget to use the skill points too!";
+	close;
+L_Start:
+	mes "[Mitmayer]";
+	mes "Welcome! You want to be a smith?";
+	mes "Okay, but know that not everyody passes.";
+	next;
+	mes "[Mitmayer]";
+	mes "It's a quiz about how well you know metals and the blacksmith class.";
+	mes "I have quite a bit to ask, so lets start";
+	next;
+	menu "Ok",M_Test,"Not now",-;
+
+		mes "[Mitmayer]";
+		mes "Okay, I'll see you then.";
+		close;
+	M_Test:
+		mes "[Mitmayer]";
+		mes "Okay, lets start You'll fail if you don't get enough right.";
+		next;
+		mes "[Mitmayer]";
+		mes "5 questions";
+		mes "I won't tell you what's right or wrong.";
+		next;
+		set @score, 0;
+		set @temp, rand(3);
+		if (@temp == 1) goto R_Set2; 
+		if (@temp == 2) goto R_Set3; 
+
+	R_Set1:
+		mes "[Mitmayer]";
+		mes "1. Which skill is needed for discount?";
+		next;
+		menu "Pushcart Lv 3",sM_1a,"Item Appraisal",sM_1a,"Mammonite Lv 10",sM_1a,"Enlarge Weight Lv 3",-;
+	
+			set @score,@score+20;
+		sM_1a:
+
+		mes "[Mittmayer]";
+		mes "2. What effect does hammerfall have?";
+		next;
+		menu "Stun",-,"Blind",sM_1b,"Confuse",sM_1b,"Poison",sM_1b;
+
+			set @score,@score+20;
+		sM_1b:
+
+		mes "[Mitmayer]";
+		mes "3. How much zeny is taken when Mammonite 10 is used?";
+		next;
+		menu "900z",sM_1c,"1,000z",-,"2,000z",sM_1c,"1,000,000z",sM_1c;
+
+			set @score,@score+20;
+		sM_1c:
+
+		mes "[Mitmayer]";
+		mes "4. How much money is saved with max discount??";
+		next;
+		menu "21 % ",sM_1d,"22 % ",sM_1d,"23 % ",sM_1d,"24 % ",-;
+
+			set @score,@score+20;
+		sM_1d:
+
+		mes "[Mitmayer]";
+		mes "5. How much can you earn with max overcharge?";
+		next;
+		menu "21 % ",sM_1e,"22 % ",sM_1e,"23 % ",-,"24 % ",sM_1e;
+
+			set @score,@score+20;
+		sM_1e:
+		goto L_Result;
+
+	R_Set2:
+		mes "[Mittmayer]";
+		mes "1. Which monster drops steel?";
+		next;
+		menu "Zerom",sM_2a,"Steel Chonchon",sM_2a,"Skel Worker",-,"Requiem",sM_2a;
+
+			set @score,@score+20;
+		sM_2a:
+
+		mes "[Mitmayer]";
+		mes "2. What can you make with Red Bloods?";
+		next;
+		menu "Flame Heart",-,"Rough Wind",sM_2b,"Great Nature",sM_2b,"Mystic Frozen",sM_2b;
+
+			set @score,@score+20;
+		sM_2b:
+
+		mes "[Mitmayer]";
+		mes "3. Which ore do you have the most of in storage?";
+		next;
+		menu "WoV",sM_2c,"Red Blood",-,"Green Live",-,"Crystal Blue",-;
+
+			set @score,@score+20;
+		sM_2c:
+
+		mes "[Mitmayer]";
+		mes "4. What kind of monsters are weak against wind weapons?";
+		next;
+		menu "Fire",sM_2d,"Water",-,"Earth",sM_2d,"Wind",sM_2d;
+
+			set @score,@score+20;
+		sM_2d:
+
+		mes "[Mitmayer]";
+		mes "5. How many irons are needed to make steel?";
+		next;
+		menu "5",-,"4",sM_2e,"3",sM_2e,"6",sM_2e;
+
+			set @score,@score+20;
+		sM_2e:
+		goto L_Result;
+
+	R_Set3:
+		mes "[Mitmayer]";
+		mes "1. What do you do when you find a person in distress?";
+		next;
+		menu "Ask what they need",-,"Talk for a bit",-,"Ignore",sM_3a,"Drop item and leave",sM_3a;
+
+			set @score,@score+20;
+		sM_3a:
+
+		mes "[Mitmayer]";
+		mes "2. Where do you learn change cart?";
+		next;
+		menu "Aldebaran",sM_3b,"Alberta",-,"Morroc",sM_3b,"Izlude",sM_3b;
+
+			set @score,@score+20;
+		sM_3b:
+
+		mes "[Mitmayer]";
+		mes "3. Geffen tower is the center, where is the BS guild?";
+		next;
+		menu "11oclock",sM_3c,"5oclock",-,"7oclock",sM_3c,"12oclock",sM_3c;
+
+			set @score,@score+20;
+		sM_3c:
+
+		mes "[Mitmayer]";
+		mes "4. Which town has the most smiths";
+		next;
+		menu "Prontera",sM_3d,"Morroc",sM_3d,"Alberta",sM_3d,"Geffen",-;
+
+			set @score,@score+20;
+		sM_3d:
+
+		mes "[Mitmayer]";
+		mes "5. Which stat affect forge?";
+		next;
+		menu "STR",sM_3e, "DEX ",-, "AGI",sM_3e, "VIT",sM_3e;
+
+			set @score,@score+20;
+		sM_3e:
+
+L_Result:
+	mes "[Mitmayer]";
+	mes "Great work!";
+	next;
+	mes "[Mitmayer]";
+	mes "lets see... your score is ^5533FF"+@score+"^000000 points!";
+	next;
+	mes "[Mitmayer]";
+	if (@score > 70) goto L_Pass;
+
+		mes "Failed, go study more!!";
+		next;
+		mes "[Mitmayer]";
+		mes "It's just not enough.....";
+		mes "Please return after you've studied more.";
+		close;
+
+	L_Pass:
+		mes "Great! Congrats! You pass!";
+		emotion 21;
+		next;
+		mes "[Mitmayer]";
+		mes "You'll need to return to the guild.  Here is proof that you passed the test.... the ^5533FFHammer of Blacksmiths^000000.";
+		getitem 1005,1;
+		set BSMITH_Q, 5;
+		set BSMITH_Q2, 0;
+		next;
+		mes "[Mitmayer]";
+		mes "DON'T LOOSE THIS!!";
+		emotion 0;
+		next;
+		mes "[Mitmayer]";
+		mes "Well, good luck!!!!";
+		close;
+}

@@ -1,0 +1,135 @@
+//===== eAthena Script ======================================= 
+//= Geffen Guides
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena  0.5.2 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Fully working.  Added a guide at every exit.
+//= v1.1 Now using duplicate command.
+//============================================================
+
+
+
+
+
+
+
+// North --------------------------------------------
+geffen.gat,123,202,5	script	Guide#1::Guide	705,{
+	cutin "gef_soldier",2;
+	mes "[Geffen Soldier]";
+	mes "Welcome to Geffen, the City of Magic.";
+	next;
+	mes "[Geffen Soldier]";
+	mes "We are here to help you find your way.  Please feel free to speak to us anytime you need help.";
+M_Menu:
+	next;
+	menu "View Buildings",M_1, "Notice",M_2, "Cancel",M_End;
+
+	M_1:
+		mes "[Geffen Soldier]";
+		mes "Do you want me to leave indications on the Mini-Map?";
+		next;
+		menu "No Thanks",sM_1a,"Yes Please",sM_1b;
+		
+		sM_1a:
+			set @COMPASS_CHECK,0;
+			goto L_Cont;
+
+		sM_1b:
+			set @COMPASS_CHECK,1;
+
+		L_Cont:
+		mes "[Geffen Soldier]";
+		mes "Please choose a building to view.";
+		next;
+	sM_Menu:
+		menu 	"^FF0000Magic Acadamy^000000",M_1_1, "^00A500Blacksmith Workshop^000000",M_1_2, "^4444FFGeffen Tower^000000",M_1_3,
+			"Armory",M_1_4, "Item Shop",M_1_5, "Pub",M_1_6, "Inn",M_1_7, "Wipe all indications from mini-map",M_1_8, "Cancel", M_End;
+
+		M_1_1:
+			mes "[Geffen Soldier]";
+			mes "'The 'Magic Acadamy' is the home of magical theorists, and the place for would be Mages.";
+			viewpoint 1,61,180,1,0xFF5555;
+			goto sL_Wipe;
+		M_1_2:
+			mes "[Geffen Soldier]";
+			mes "The 'Blacksmith Workshop' is SouthEast of Geffen Tower.  It is where Merchants train to become Blacksmiths.";
+			mes "You can also get your weapons and armor upgraded there.";
+			viewpoint 1,182,59,2,0x44FF44;
+			goto sL_Wipe;
+		M_1_3:
+			mes "[Geffen Soldier]";
+			mes "The lower levels of 'Geffen Tower' are spawning grounds for monsters.  People go there to train.";
+			mes "The top floor of the Tower is home to the ^0000FF'Wizard's Guild'^000000.  Mages can go there to become Wizards.";
+			viewpoint 1,120,120,3,0x5555FF;
+			goto sL_Wipe;
+		M_1_4:
+			mes "[Geffen Soldier]";
+			mes "Head over to the 'Armory' to equip yourself with a variety of weapons and armor.";
+			viewpoint 1,99,140,4,0xFF00FF;
+			goto sL_Wipe;
+		M_1_5:
+			mes "[Geffen Soldier]";
+			mes "The 'Item Shop' is the place to go when you need to stock up on things like potions and fly-wings.";
+			viewpoint 1,44,86,5,0xFF00FF;
+			goto sL_Wipe;
+		M_1_6:
+			mes "[Geffen Soldier]";
+			mes "The 'Pub' is a great place to meet people and have fun.";
+			viewpoint 1,138,138,6,0xF0C40F;
+			goto sL_Wipe;
+		M_1_7:
+			mes "[Geffen Soldier]";
+			mes "The 'Inn' is a good place to rest and replenish your hp and sp.";
+			viewpoint 1,172,174,7,0xFF8000;
+			goto sL_Wipe;
+		M_1_8:
+			set @COMPASS_CHECK, 2;
+
+		sL_Wipe:
+			if(@COMPASS_CHECK != 2) next;	// avoids a double 'next' when 'wipe indications' is chosen
+			if(@COMPASS_CHECK == 1) goto sM_Menu;
+			viewpoint 2,61,180,1,0xFF5555;
+			viewpoint 2,182,59,2,0x44FF44;
+			viewpoint 2,120,120,3,0x5555FF;
+			viewpoint 2,99,140,4,0xFF00FF;
+			viewpoint 2,44,86,5,0xFF00FF;
+			viewpoint 2,138,138,6,0xF0C40F;
+			viewpoint 2,172,174,7,0xFF8000;
+			if (@COMPASS_CHECK == 0) goto sM_Menu;
+			mes "[Geffen Soldier]";
+			mes "All indications have been removed";
+			cutin "gef_soldier",255;
+			close;
+
+	M_2:
+		mes "[Geffen Soldier]";
+		mes "We upgraded the Location Guide to the Newest Digital Style.  We hope you like this gorgeous new system.";
+		next;
+		mes "[Geffen Soldier]";
+		mes "Don't forget to refer to the Mini-Map on the Upper-Right corner of your screen.";
+		next;
+		mes "[Geffen Soldier]";
+		mes "If you can't see the Mini-Map, just hit ^0000ff'ctrl+tab'^000000 or Click the ^0000ff'map'^000000 button in the Basic Information Window";
+		mes "Remeber to use the ^ff0000+,-^000000 buttons to adjust the map to your liking.";
+		goto M_Menu;
+
+	M_End:
+		mes "[Geffen Soldier]";
+		mes "Have a nice day.";
+		cutin "gef_soldier",255;
+		close;
+}
+
+// South ------------------------------------------
+geffen.gat,118,62,0	duplicate(Guide)	Guide#2	705
+// East -----------------------------------------------------
+geffen.gat,203,116,2	duplicate(Guide)	Guide#3	705
+// West ----------------------------------------------
+geffen.gat,37,123,5	duplicate(Guide)	Guide#4	705

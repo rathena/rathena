@@ -1,0 +1,318 @@
+//===== eAthena Script ======================================= 
+//= Gonryun Town
+//===== By: ================================================== 
+//=  edited by x[tsk] 4/30/04
+//===== Current Version: ===================================== 
+//= 1.0 
+//===== Compatible With: ===================================== 
+//= eAthena 1.0
+//===== Description: ========================================= 
+//
+//===== Additional Comments: ================================= 
+// May be missing npc's and dialogue.
+//============================================================
+
+
+
+//Eventñ¢í≤ç∏ÅI
+
+alberta.gat,245,69,4	script	Gonryun Public Relations Official	776,{
+	mes "[Waba]";
+	mes "Hello there! I have traveled far from the Kingdom of Gonryun, my hometown.";
+	mes "I invite all to visit and celebrate the diversity of Gonryun! We welcome all sorts of visitors.";
+	M_Menu:
+	next;
+	menu "Gonryun? What is that?",M_1, "Travel to Gonryun.",M_2, "Nevermind.",M_End;
+
+	M_1:
+		mes "[Waba]";
+		mes "The Kingdom of Gonryun is a sight to behold! It floats high above the sky, beyond the pillar of light!";
+		next;
+		mes "[Waba]";
+		mes "You can certainly appreciate the sights of the floating mainland! If you go, be sure to try.";
+		mes "The steamed dumplings and peaches, they're a Gonryun specialty not to be missed!";
+		goto M_Menu;
+	M_2:
+		mes "[Waba]";
+		mes "The traveling expenses are ^0000ff10,000 zeny^000000.  The fee is a bit pricy but this is beacuse of the dangerous nature of the trip.";
+		mes "The return trip is free, however. Are you prepared to go?";
+		next;
+		menu "Let's Go!",-, "Actually... I changed my mind, sorry.",M_End;
+		
+			if (Zeny < 10000) goto L_NoZeny;
+			set Zeny,Zeny-10000;
+			warp "gon_fild01.gat",258,82;
+			end;
+		L_Zeny:
+			mes "[Waba]";
+			mes "I am sorry if it seems like alot, but the ^0000ff10,000 zeny^000000 we request is necessary in order to make the trip.";
+			close;
+	M_End:
+		mes "[Waba]";	
+		mes "Please see me again if you want to visit! I am pleased just to meet an honored guest from the Continent.";
+		close;
+
+}
+
+//===============================================================================
+
+gon_fild01.gat,255,79,6	script	Gonryun Public Relations Official	776,{
+	mes "[Waba]";
+	mes "We are ready to head back as soon as the conditions are favorable.";
+	next;
+	menu "ALBERTA.",-,"I'll stay a bit longer.",M_End;
+
+		warp "alberta.gat",243,68;
+		end;
+	M_End:
+		mes "[Waba]";
+		mes "Oh there's no rush! Enjoy yourself and take in all the sights!";
+		close;
+}
+
+//===============================================================================
+
+gon_fild01.gat,187,239,4	script	Gonryun Public Relations Official	776,{
+	mes "[Choseryu]";
+	mes "The sacred pillar of light connects this island to Gonryun Kingdom. There's no time to idly chit chat now, be on your way.";
+	mes "I hope you will have many fond memories of Gonryun before you leave.";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,153,64,0	script	Gonryun Public Relations Official	776,{
+	mes "[Choseryu]";
+	mes "If you're ready to set sail I can send you back to the harbor.";
+	next;
+	menu "Send me to the harbor.",-,"I'd like to stay a bit longer.",M_End;
+
+		mes "[Choseryu]";
+		mes "Please come back to visit soon!";
+		next;
+		warp "gon_fild01.gat",258,82;
+		close;
+	M_End:
+		mes "[Choseryu]";
+		mes "Be sure to see all that Gonryun has to offer!";
+		close;
+}
+
+//===============================================================================
+//In èh
+//===============================================================================
+
+gon_in.gat,153,35,4	script	Hotel Manager	702,{
+	mes "[Mayouban]";
+	mes "Welcome! Your face is new around here. We've had many strangers from the outside coming into the village recently.";
+	mes "We've been quite short-handed here at the hotel.";
+	next;
+	mes "[Mayouban]";
+	mes "It always seems to be 'get me this' or 'get me that' with the customers! Never a tip or a compliment. I suppose I should really welcome all the extra business.";
+	next;
+	menu "I'd like something to drink.",-,"I'll be on my way.",M_End;
+
+		mes "[Mayouban]";
+		mes "Here you go.  There have been so many rowdy customers lately sometimes I'd just like to sit down and have a drink myself.";
+		close;
+	M_End:
+		mes "[Mayouban]";
+		mes "May you have a safe journey! Come back any time.";
+		close;
+}
+
+//===============================================================================
+
+gon_in.gat,173,27,2	script	Kuhau	774,{
+	mes "[Kuhau]";
+	mes "This hotel sells the best drinks! Not only is it potent, but it tastes great, too! Of course that's only for the adults.";
+	next;
+	mes "[Kuhau]";
+	mes "But what about the children? We have a secret recipe for brewing great tea! Not only is it excellent, it's also good for them.";
+	close;
+}
+
+//===============================================================================
+
+gon_in.gat,165,16,4	script	Drunkard	748,{
+	mes "[Sorubun]";
+	mes "Oh my head! I had too much to drink yesterday and passed out right here on the table.";
+	mes "The manager told me that I shouldn't drink anymore and I should have listened.";
+	emotion 19;
+	next;
+	mes "[Sorubun]";
+	mes "Wow, the drinks here are strong! Much stronger than anything we have back home.";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,139,142,6	script	Girl	772,{
+	mes "[Sanfayon]";
+	mes "................";
+	mes "It's been great having new visitors come to the village, but........ ever since I was robbed by that Thief.......";
+	next;
+	mes "[Sanfayon]";
+	mes "I have been sooooo afraid of the foreigners.....";
+	emotion 16;
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,113,135,6	script	Guardsman	780,{
+	mes "[Guardsman]";
+	mes "Welcome to Gonryun. This is the home of our governor, Sayoumun.";
+	next;
+	mes "[Guardsman]";
+	mes "We're sure your intentions are benign, but any wrong moves and we'll be forced to take action.";
+	next;
+	mes "[Guardsman]";
+	mes "Such a thing rarely happens, but when it does.... we are always ready to deal with any problems!";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,113,127,6	script	Guardsman	780,{
+	mes "[Guardsman]";
+	mes "Welcome to Gonryun. This is the home of our elder, Sayoumun. He rules all of Gonryun.";
+	next;
+	mes "[Guardsman]";
+	mes "We're sure your intentions are benign, but any wrong moves and we'll be forced to take action.";
+	next;
+	mes "[Guardsman]";
+	mes "Such a thing rarely happens, but when it does. We are always ready to deal with any problems!";
+	close;
+}
+
+//===============================================================================
+//ë∫í∑ëÓ
+//===============================================================================
+
+gon_in.gat,18,27,4	script	Elder's Wife	771,{
+	mes "[Sangufayon]";
+	mes "Oh my! You look like an important visitor from the outside. Aren't you?";
+	next;
+	menu "Yes, I am.",-,"Where is the village Elder?",M_End;
+
+		mes "[Sangufayon]";
+		mes "We do not get many visitors from the outside to see my husband so it's so easy to spot them. Hohohohoho!";
+		close;
+	M_End:
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		mes "[Sangufayon]";
+		mes "The master of the house, hohohohoho? Why... he is upstairs on the second floor if you need to talk to him, hohohoho.";
+		close;
+}
+
+//===============================================================================
+
+gon_in.gat,17,93,4	script	Village Elder	775,{
+	mes "[Sayoumun]";
+	emotion 45;
+	mes "Zzzzzzzzzzz.......";
+	next;
+	mes "[Sayoumun]";
+	mes "Huh, a visitor?! Oh, hello! I was just, uhm, meditating. I am Sayoumun, mayor of Gonryun village. I welcome you to Gonryun.";
+	next;
+	mes "[Sayoumun]";
+	mes "There used to not be many visitors to this land, until the University of Foreign Studies in Alberta began offering trips to our small island.";
+	next;
+	mes "[Sayoumun]";
+	mes "I personally don't like all these outsiders coming all of the sudden. Alot of them are reckless, but I suppose it's good for business.";
+	next;
+	mes "[Sayoumun]";
+	mes "These reports of a thief in my town continually worry me, however I just know he's an outsider!";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,119,111,4	script	Chen Wan Sok	89,{
+	mes "[Chen Wan Sok]";
+	mes "The village Elder here is truly a sociable fellow. Just because he is friendly does not mean he is lax on the rules! He can get riled up sometimes.";
+	next;
+	mes "[Chen Wan Sok]";
+	mes "When the Elder's blessing, you can get away with a lot of things in this town. Sometimes there are those that cause mischief, but they are always dealt with.";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,100,241,5	script	Unsociable Man	733,{
+	emotion 9;
+	mes "[Saunso]";
+	mes "I am too busy to talk, come back later!";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,268,88,4	script	Ryan Chun Ho	776,{
+	mes "[Ryan Chun Ho]";
+	mes "We are an independent race, submitting to no aggressor! This is the blessed area which we will never give up.";
+	next;
+	mes "[Ryan Chun Ho]";
+	mes "We believe in victory, it is our glory.";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,181,161,4	script	Chon Munjin	773,{
+	mes "[Chon Munjin]";
+	mes "The men of Gonryun must be powerful and bold! But being such a man, one just can not get married. Don't you think?";
+	next;
+	mes "[Chon Munjin]";
+	mes "There's so many more men than women now it makes it even harder to find a woman. I wonder if my son will find himself a good woman?";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,237,225,4	script	Hanyon Kyou	776,{
+	mes "[Hanyon Kyou]";
+	mes "How could I have done something like this?";
+	mes "..............";
+	next;
+	mes "[Hanyon Kyou]";
+	mes "I've dropped my lucky knife! Now it's probably gone forever."; 
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,51,101,4	script	Gaiysonchoru	778,{
+	mes "[Gaiysonchoru]";
+	emotion 4;
+	mes "..............";
+	next;
+	mes "[Gaiysonchoru]";
+	mes "Well......... I'm worried.";
+	next;
+	mes "[Gaiysonchoru]";
+	mes "So very worried.";
+	close;
+}
+
+//===============================================================================
+
+gonryun.gat,166,196,4	script	Soldier	780,{
+	mes "[Wagou]";
+	mes "Do you know what this is?";
+	next;
+	menu "Yes.",-, "No.",M_End;
+
+		mes "[Wagou]";
+		mes "I just have to make sure all citizens are warned of the dangers inside before going any further.";
+		close;
+
+	M_End:
+		mes "[Wagou]";
+		mes "Long ago, this was the great hall, but once the great beast had arrived it quickly turned to ruin and became overrun with monsters.";
+		next;
+		mes "[Wagou]";
+		mes "I just have to make sure all citizens are warned of the dangers inside before going any further.";
+		close;
+}

@@ -1,0 +1,295 @@
+== Progress ==
+
+Person	Working On
+======
+Darkchild	
+	* New Payon City - 99% - As Far Done As Posible	
+	* Alchemist - Done
+	* Sage - Done
+	* Monk Quest - Botting An Acolyte Atm
+Lupus
+	* looking for exploits, optimization, bugs hunt
+
+kobra_k88
+	* Optimize WoE
+Aria
+	* Debugging/Overlooking NPCs.
+	* Making misc npcs
+	* Making the "Dev edition" npcs =D - 80% - Final layout finished, need more devs to put their quotes in.
+Shinigami
+	* Organizing/Optmizing/Checking for Typo in all NPCs.
+Mass Zero
+	* Novice Training Ground.
+	* (Probably unofficial) Lou Yang NPC's, mobs, etc...
+Shadowlady
+	* Marriage (Fix, optimization) ?%
+
+MC Cameri
+	* Bank NPC - Now 100% done for new payon
+
+Other Ppl	
+	* Their Work?
+
+== Changelog ==
+
+Date		Added
+======
+11/27
+	* Added some Lou Yang NPC's [Mass Zero]
+	* Get Freya fixes of crusader.txt (announce->areaannounce), Mr.Smile(removed vulgar words) [Lupus]
+11/23
+	* - Fixed repairman prices (5k)(someone need to check if it requires a steel) [shadow]
+11/22
+	* - Now wedding merchant sells tuxedos for 43k, implemented a easier way to change prices of weddings.
+	  - Fixed wrong label calling on jobchange.txt.
+	  - Fixed a timer on momotaro.txt and translated tougijou.txt. Thanks to Shinomori .[shadow]
+11/20
+	* Reduced walking speed for davidsiaw's Dev NPC. [MC Cameri]
+	* Fixed some typos in MC Cameri's Dev NPC, walking speed, etc. [MC Cameri]
+	* Fixed spawns on umbala fields, Fixed spawn point of Amon Ra in morroc pyramids B2 [shadow]
+11/21
+	* niflheim.txt: some typos in some variables fixed (thx 2 Dr.Evil) [Lupus]
+
+11/19
+	* cmd_fild02.gat: fixed respawn delay of one Seal [Lupus]
+	* ev_agit_event.txt: Implemented Shadowlady's idea of allowing different woe start/stop times
+	  for different days of the week.[kobra_k88]
+11/18
+	* Fixed typo in payon.txt [celest]
+	* - Fixed infinite zeny exploit in novice_skills.txt(other quest skills npcs need revision!!!)
+	  - Fixed typos on izlude.txt, wrong label in umbala.txt [shadow]
+	* Added custom WOE warper (now you can get to Novice Castles from Prontera) [Lupus]
+	* Prontera.txt (Sewers) anti-novice exploit fix. should be added to any quests/banks where u once get free items/zeny [Lupus]
+11/17
+	* Added poetry npc to ayothaya [MouseJstr]
+	* Fixed valkyrie.txt (wrong condition check, temp var->perm vars) but it still has no exit for common players [Lupus]
+	* - Fixed guardians hp not updating when investment in defense is made.
+	  - Moved treasure spawn times to ev_agit_event.txt.
+	  - Changes to headers and comments in various scripts.[kobra_k88]
+11/16
+	* - grandpa_pharmacist.txt: Added subfunction for potion making as well as zeny/input
+		exploit safeguards. Used Lupus's "loopless" technique.
+	  - juice_maker.txt: Added subfunction for juice making.  Also changed amount of
+		fruit needed to 1.
+	  - milk_trader.txt: Used Lupus's "loopless" technique.  Added input exploit safegaurd.
+	  - clothes_dyer.txt: Disabled dye for male Assassins.
+	  - xmas.txt: Corrected some typos. [kobra_k88]
+	* - Removed Empty Bottle from amatsu shops to prevent exploits.
+	  - Fixed Npc Position on Lutie( warper.txt and warper2.txt). [shadow]
+
+11/15
+	* - Fixed xmas.txt X-mas event, now you get a gift box when you first talk to Santa.
+	  - Same script again...Fixed the spawns, its 1 antonio per map, and it was using only santa poring IDs. [shadow]
+
+11/14
+	 - Fixed niflheim kafra. [shadow]
+	 - Added the total new set of Advance Jobchangers after kRO description and screenshots. [Nana]
+
+11/13
+	* - Translated and Fixed momotaro.txt event [shadow]
+	* - Deleted folder other/old which was empty [MC Cameri]
+	* - Fixed MC Cameri's Bank NPC for the new payon [MC Cameri]
+	* - Fixed warps to Amatsu Dungeon (now u can get there via a special quest only) thanks to shadowlady [Lupus]
+	  - Fixed logical bug in Sleipnir Alchem. sub-quest [Lupus]
+11/11
+	* - Fixed Jobchanger.txt and supernovice.txt [shadowlady]
+11/10
+	* - Fixed a bug on counteragent_mixture and quest_yuno(need to revise alchemist quest) [shadow]
+
+11/08
+	* - Temporary corrected an expliot in refine.txt.  Need to check sources to fully fix bug [Shinigami]
+	* - Fixed 2 bugs on jobchanger.txt , not being able to change to Creator and Clown,
+	  - Fixed a bug on mage.txt, not deleting the quest items.
+	  - Fixes on bongunsword.txt and fashion.txt , wrong spaces and quest items.
+	  - Added new Ayothana Mob listing, correct IDs, but need correct amount and respawn time. [shadow] 
+11/07
+	* - Fixed platinum_skill.txt, now advanced classes get quest skills.
+	  - Fixed a bug on novice.txt . [shadow]
+	* - lutie.txt: Edited text, updated/corrected triggers for the Jack Frost quest.
+	  - comodo.txt, morocc.txt, doomed_swords.txt: Implemented all of the triggers for
+	    the Doomed Swords quest based on mRO's version.  Now the quest is much longer.
+	  - pvp.txt: Added PvP Narrator function. Using args for Fight Square Helpers.
+	  - Corrected some typos in item_db. Items 1143 and 1719 need to be re-checked.[kobra_k88]
+11/05
+	* Fixed and redo optional Umbalian quests:
+	- Wise Man Fabius' Umbalian Language Quest (you can learn Umbalian language in
+	  alternative way)
+	- On speaking with Umbalian Chief about meaning of masks you activate Turban Thief Quest
+	  (For Sphinx Mask)
+	* Fixed several bugs in Niflheim Piano Keys Quest (wrong variable name, missing CLOSE buttons)
+	  Zeny/Item Exploit in Niflhein Sairin NPC quest (should add similiar checks in every
+	  easy quests with expensive prizes to avoid exploits) [Lupus]
+11/05
+	* Added easter and xmas event npcs.  Added custom blackjack npc.[kobra_k88]
+11/02
+	* Added unofficial nguild castles.  Updated stats for Stone Shooter, Wooden Golem, Hyegun,
+	  Civil Servant, Dancing Dragon, Baby Garm, and Increase Soil mobs in mob db.  Drops are still
+	  missing for some of them.[kobra_k88]
+11/01
+	* Set Comodo Kafra to warp to Umbala (11/2/04 patch) [Aria]
+10/31
+	* Fixed Dev NPCs giving off errors... [Aria]
+	* Fixed prob. with duplicating mobs in wizard.txt.  Corrected some item names in sage.txt.
+	  Corrected mode values for hornet, wolf, baby desert wolf, and peco peco in mob db.[kobra_k88]
+10/30
+	* Commented out unfinished Dev NPCs and added npc line to map_athena.conf [Aria]
+10/29
+	* Added missing Lmenu label to novice.txt.[kobra_k88]
+10/27
+	* Re-organized mob scripts.[kobra_k88]
+	* Updated mob placements with info from emperium.org.[Lupus]
+	* Fixed Aldebaran (gatekeeper conditions bugs and wrong Key ID). Fixed some typos in other cities [Lupus]
+	* assassin.txt, rogue.txt: added clothes dye reset before job change since thiefs with custom dyes
+	  were getting errors upon job change. Updated towns.txt and nopenatly.txt mapflags.[kobra_k88]
+10/26
+	* Added more quotes -_- [Aria]
+	* Fixed Mouse's devnpc only saying his quotes once per server reset [Aria]
+	* Fixed Umbalian Quest, fixed Amatsu, fixed Niflheim NPCs, Warper2 NPC, fixed 1 warp [Lupus]
+
+10/25
+	* updated Mousejstr in devnpc [ MouseJstr]
+10/23
+	* Finished Aria and MC Cameri "Dev edition" NPCs. [Aria]
+	* gldfunc_ev_agit.txt: added F_AgitEnd func.
+	  prtg_guardians.txt: fixed typos where I used OnInit instead of OnAgitInit.
+	  Minor cosmetic changes to various guild script files. [kobra_k88]
+
+10/21
+	* Replaced some checkcart and checkoption(x) with checkcart(0) in the guild folder [Aria]
+	* Waiting for various devs to tell me their coords, map, biography, quotes,
+	  moving coords, etc. In the meantime, I replaced them with (x,y),(lols),
+	  (sprite),(somewhere), and if they didn't give me any info, I didn't 
+	  add them yet =P. [Aria]
+	* Added Davidsiaw, Shinigami, Lord, Codemaster, MouseJstr, MC Cameri, and Darkchild
+	  to "Dev edition" NPCs [Aria]
+	* Revised "Dev edition" NPC layout a bit, should go smoother now. Should be final
+	  layout unless something goes wrong =O. [Aria]
+	* Changed "Dev edition" NPC layout so that they move by themselves by timers. [Aria]
+	* Changed "Dev edition" NPCs to walk during quotes, and added biography. [Aria]
+	* Fixed quest/all_quest.txt not showing the correct description of the binoculars. [Aria]
+	* Fixed quest/all_quest.txt not going to stop pass and not displaying requirements. [Aria]
+	* Fixed clothes_dyer.txt: Disabled Assassing/Rogues Dye. Also fixed wrong labels [Lupus]
+	* Fixed hair_dyer.txt: fixed missing menu label [Lupus]
+	* new_hats.txt 1.4 fixed amount of Fish Tail (300 -> 30), Zeny bugs in Ear of Angel,
+	  Ear of Demon,Big Golden Bell, Mistress Crown,
+	  Crown of The Ancient Queen, Indian Headband, Orc Hero Helm [Lupus]
+	* Fixed name of a flower in Prontera quest (Dreamy->Illusion) according to our DB [Lupus]
+	* Fixed item names in the temp Crusader Job Quest according to our DB [Lupus]
+
+10/20
+	* Finished basic layout, finished Aria starting to create Shinigami [Aria]
+	* Started to create "Dev edition" npcs [Aria]
+	* Fixed Castle aldg504-1 warp [Lupus]
+	* Fixed Payon's Skirt of virgin quest [Lupus]
+	* Fixed Doomed swords quest [Lupus]
+	* Optimized mapflags (removed useless nobranc flag, where gvg flag is set)
+
+10/16
+	* Fixed my stupid mistake with the guild switches.
+	  Moved shops from umbala.txt to shops.txt.  Commented out the other ones.
+	  Updated mapflags and re-organized them again.  Files in "mapflag\type" folder are the
+	  same as ones in "mapflag" folder, just organized differently.  ONLY use 1 set.[kobra_k88]
+	* Corrected Morroc warp npc overlaying Kafra npc. [Aria]
+	* Corrected kafra typo. [Shinigami]
+	* Corrected zeny amount subtracted for iron hammer in refine.txt[kobra_k88]
+10/15
+	* Added kafra_bank NPC - a new bank with daily interst of 0.1#%. [Lupus]
+10/14
+	* Kafras: Fixed some minor typos. Corrected savepoints for geffen, orc dun, comodo kafras.
+	  Added another argument to F_KafEnd. Added correct payon warp point.[kobra_k88]
+	* Forgot some qutoes in class check function calls in Blacksmith, Assassin, Wizard, Hunter
+	  quests, added them.[kobra_k88]
+	* Added optimized version of WoE scripts.  Moved old version to "old" folder.
+10/07
+	* Fixed Doctor Band items [Lupus]
+10/06
+	* Removed a left over if statement that caused the Blacksmith script to hang durring
+	  job change.[kobra_k88]
+10/04
+	* Implemented class check functions in all skills quests except novice. [kobra_k88]
+	* Implemented class check functions in hunter, blacksmith, wizard, and
+	  assassin quests.  Fixed some bugs in assassin quest.  Also implemented
+	  new Ontouch label function and close2 command in assassin.txt.(see file for details). [kobra_k88]
+	* Removed single job check functions from Global_Functions.txt and completed
+	  the rest of the multiple job check funtions.  Also added advanced and high
+	  job classes to the checks.[kobra_k88]
+	* Fixed some typos in inn.txt.  Switched from @variables to arguments. [kobra_k88]
+
+10/03
+	* Minor changes in Counteragent/Mixture Morgenstein Quest, a fix of Uneasy Cemetary [Lupus]
+
+10/02
+	* Added Crusader Quest [Lupus]
+
+09/26
+	* Cleared Up Npc Folder For Release [Darkchild]
+
+09/24
+	* Added Sage Job Quest [Darkchild]
+	* Updated a few Payon files [Darkchild]
+		- Removed Double Warp
+		- Placed BunnyBand Quest Npc Better
+		- Updated Pvp People's Locations
+		- Updated Warper/Warper2 Loc and Warp
+		- Same for Wapra 2
+		- Removed Msg Boards In Payon
+		- Updated Heal and Heal Payment Loc
+		- Commented Out a Falcon Renter which shouldnt be there
+		- Updated Guide's Viewpoints
+		- Bugs Were All Reported On The Forums
+	* Update Heal and Heal Payment Npcs To All Be Healrings [Darkchild]
+
+09/23		
+	* Added a loopless option "Gimme as many as possible" into Juice Maker quest [Lupus]
+
+09/19	
+	* Added missing warp mjol17 [Lupus]
+
+09/17
+	* Added Correct Niflheim Dialogs
+
+09/16
+	* Added nude; to palace guard in payon, will disarm player [Darkchild]
+
+09/14
+	* Added New Dye Npc, Has 'browse' option [Darkchild]
+	* Fixed skillpoints check in Hunter Job Quest [Lupus]
+
+09/13
+	* Added better save point inside city for payon [Darkchild]
+	* Fixed lil bug in Drunk npc in payon [Darkchild]
+
+09/12
+	* Deleted Old Non-Quest Alchemist Job Change [Darkchild]
+	* Added Alchemist Job Quest [Darkchild]
+	* Added Alchemist Shop [Darkchild]
+	* Changed Bain Bro's To Work With Alchemist Quest [Darkchild]
+	* Changed CounterAgent and Mixture Quest To Work With Alchemist Quest [Darkchild]
+	* Added Inn Npcs [Darkchild]
+
+09/10	
+	* Added cities/payon.txt. All Npcs at correct location, only 5 npcs arent translated. [Darkchild]
+	* Submitted Alchemyst Job Quest and Sage Job Quest (to help DC in his work). These quests are ports. [Lupus]
+	
+09/07	
+	* Better New Payon, All Except cities, will do 2morrow :P [Darkchild]
+	* Added Rogue job quest. [kobra_k88]
+	* Added missing cutin commands to town guides. [kobra_k88]
+	* Removed the delitem 2312(padded armor) in swordman_skills.txt as the
+	  armor is not supposed to be removed. The npc is only supposed to check
+	  for it and not delete it.  This is how it is on official servers. [kobra_k88]
+	* Removed duplicate waprs from izlude.txt, comodo.txt, morroc.txt, and jobquest.txt.
+	  Added complete rogue warps. Removed traingnd.txt file as those warps are
+	  already in jobquest.txt.  Added correct tabs to first 2 warps in louyang.txt. [kobra_k88]
+	* Fixed various typos in kafra files.  Now using arrays for the teleport service.
+	  Also added guild options. [kobra_k88] 
+
+09/06	
+	* Forgot the dun/field warps for payon, added now! [Darkchild]	
+	* Fixed: add a forgotten "delitem 2312,1;" in quest/skills/swordmand_skils.txt [Yor]
+
+09/05	
+	* Fixed 2 Bugs In Super Novice Script [Darkchild]
+	* Added Super Novice Official Quest [Darkchild]
+
+	- Started Changelog:		Same As Normal Changelog, but now for scripts, here we can put every lil thing we change :)	

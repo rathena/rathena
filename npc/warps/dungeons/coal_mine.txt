@@ -1,0 +1,22 @@
+//===== Athena Script ========================================
+//= Coal Mine Warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Coal Mines
+//===== Additional Comments: =================================
+//= No Comment!
+//============================================================
+
+//= Coal Mine ================================================
+mjo_dun01.gat,14,283,0	warp	mjod01	2,4,mjo_dun02.gat,381,343
+mjo_dun01.gat,52,14,0	warp	mjod001	4,2,mjolnir_02.gat,79,363
+mjo_dun02.gat,31,21,0	warp	mjod02	1,1,mjo_dun03.gat,302,262
+mjo_dun02.gat,384,343,0	warp	mjod01-1	2,4,mjo_dun01.gat,17,283
+mjo_dun02.gat,39,21,0	warp	mjod03	1,1,mjo_dun03.gat,308,262
+mjo_dun03.gat,302,264,0	warp	mjod02-1	1,1,mjo_dun02.gat,31,23
+mjo_dun03.gat,308,264,0	warp	mjod03-1	1,1,mjo_dun02.gat,39,23

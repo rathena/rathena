@@ -1,0 +1,1278 @@
+//===== eAthena Script =======================================
+//= Quest For Slotted Sunglasses
+//===== By: ==================================================
+//= RedxSwordxHero 
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= eAthena 1.0
+//===== Description: =========================================
+//= 4 brothers give you quests to get 32 new hats
+//===== Additional Comments: =================================
+//= Event New Hats by RedxSwordxHero 
+//= Ported and improved with timers [Lupus]
+//= Thanks to x[tsk],fixed all item requirments to iRO specs exept
+//= for hats which cannot be made on the real server. [Lupus]
+//============================================================
+
+
+
+prontera.gat,140,172,5	script	Zac	704,{
+	mes "[Zac]";
+	mes "I am the oldest and strongest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
+	next;
+	mes "[Zac]";
+	mes "I provide 8 hats and my brothers provides the other 24.";
+	next;
+	menu "Join",L1,"Information",L2,"Cancel",L3;
+L1:	
+	mes "[Zac]";
+	mes "What hat do you want me to make?";
+	next;
+	menu "Angel Helm",L1_1,"Apple Hat",L1_2,"Blue Bandana",L1_3,"Bongun Hat",L1_4,"Cake Hat",L1_5,"Candle Hat",L1_6,"Chef's Hat",L1_7,"Colored Egg Shell",L1_8;
+L1_1:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2254) < 1)) goto L_ITEM_1;
+	if((countitem(2229) < 1)) goto L_ITEM_2;
+	if((countitem(7036) < 5)) goto L_ITEM_3;
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Angel Helm for you right away. Please Wait a Moment.";
+	delitem 2254,1;
+	delitem 2229,1;
+	delitem 7036,5;
+	next;
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Angel Helm^000000...! Please Take it!";
+	getitem 5025,1;
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1:
+	mes "[Zac]";
+	mes "Oh dear, you need 1 Angel Hairband...";
+	close;
+L_ITEM_2:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Slotted Helm...";
+	close;
+L_ITEM_3:
+	mes "[Zac]";
+	mes "Oh, dear. You need 5 Fangs of Garm...";
+	close;
+L1_2:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(748) < 1)) goto L_ITEM_1a;
+	if((countitem(512) < 300)) goto L_ITEM_2a;
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Apple Hat for you right away. Please Wait a Moment.";
+	delitem 748,1;
+	delitem 512,300;
+	next;
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Apple Hat^000000...! Please Take it!";
+	getitem 5037,1;
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1a:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Witherless Rose...";
+	close;
+L_ITEM_2a:
+	mes "[Zac]";
+	mes "Oh, dear. You need 300 Apples...";
+	close;
+L1_3:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(7003) < 300)) goto L_ITEM_1b;
+	if((countitem(2211) < 1)) goto L_ITEM_2b;
+	if((countitem(978) < 1)) goto L_ITEM_3b;
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Blue Bandana for you right away. Please Wait a Moment.";
+   	next;
+	delitem 7003,300;
+	delitem 2211,1;
+	delitem 978,1;	
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Blue Bandana^000000...! Please Take it!";
+	getitem 5052,1;
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1b:
+	mes "[Zac]";
+	mes "Oh, dear. You need 300 Anolian Skins...";
+	close;
+L_ITEM_2b:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Bandana...";
+	close;
+L_ITEM_3b:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Cobaltblue Dyestuff...";
+	close;
+L1_4:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(609) < 10)) goto L_ITEM_1c;
+	if((countitem(978) < 1)) goto L_ITEM_2c;
+	if((countitem(2264) < 1)) goto L_ITEM_3c;
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Bongun Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 609,100;
+	delitem 978,1;
+	delitem 2264,1;	
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Bongun Hat^000000...! Please Take it!";
+	getitem 5046,1;
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1c:
+	mes "[Zac]";
+	mes "Oh, dear. You need 10 Amulets...";
+	close;
+L_ITEM_2c:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Cobaltblue Dyestuff...";
+	close;
+L_ITEM_3c:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Munak Hat...";
+	close;
+L1_5:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(529) < 10)) goto L_ITEM_1d;
+	if((countitem(530) < 5)) goto L_ITEM_2d;
+	if((countitem(538) < 15)) goto L_ITEM_3d;
+	if((countitem(539) < 20)) goto L_ITEM_4d;
+	if((countitem(999) < 10)) goto L_ITEM_5d;
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Cake Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 529,10;
+	delitem 530,5;
+	delitem 538,15;
+	delitem 539,20;
+	delitem 999,10;	
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Cake Hat^000000...! Please Take it!";
+	getitem 5024,1;
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1d:
+	mes "[Zac]";
+	mes "Oh, dear. You need 10 Candys...";
+	close;
+L_ITEM_2d:
+	mes "[Zac]";
+	mes "Oh, dear. You need 5 Candy Canes...";
+	close;
+L_ITEM_3d:
+	mes "[Zac]";
+	mes "Oh, dear. You need 15 Well Baked Cookies...";
+	close;
+L_ITEM_4d:
+	mes "[Zac]";
+	mes "Oh, dear. You need 20 Pieces of Cake...";
+	close;
+L_ITEM_5d:
+	mes "[Zac]";
+	mes "Oh, dear. You need 10 Steels...";
+	close;
+L1_6:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2279) < 1)) goto L_ITEM_1e;
+	if((countitem(518) < 100)) goto L_ITEM_2e;
+	if((countitem(7035) < 50)) goto L_ITEM_3e;
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Candle Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2279,1;
+	delitem 518,100;
+	delitem 7035,50;	
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Candle Hat^000000...! Please Take it!";
+	getitem 5028,1;
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1e:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Bomb Wick...";
+	close;
+L_ITEM_2e:
+	mes "[Zac]";
+	mes "Oh, dear. You need 100 Honeys...";
+	close;
+L_ITEM_3e:
+	mes "[Zac]";
+	mes "Oh, dear. You need 50 MatchSticks...";
+	close;
+L1_7:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(539) < 120)) goto L_ITEM_1f;
+	if((countitem(1036) < 450)) goto L_ITEM_2f;
+	if((countitem(982) < 1)) goto L_ITEM_3f;
+	if((countitem(949) < 330)) goto L_ITEM_4f;
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Chef's Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 539,120;
+	delitem 1036,450;
+	delitem 982,1;
+	delitem 949,330;	
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Chef's Hat^000000...! Please Take it!";
+	getitem 5026,1;
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1f:
+	mes "[Zac]";
+	mes "Oh, dear. You need 120 Pieces of Cake...";
+	close;
+L_ITEM_2f:
+	mes "[Zac]";
+	mes "Oh, dear. You need 450 Dragon Scales...";
+	close;
+L_ITEM_3f:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 White Dyestuff...";
+	close;
+L_ITEM_4f:
+	mes "[Zac]";
+	mes "Oh, dear. You need 330 Feathers...";
+	close;
+L1_8:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(5015) < 1)) goto L_ITEM_1g;
+	if((countitem(978) < 1)) goto L_ITEM_2g;
+	if((countitem(7030) < 50)) goto L_ITEM_3g;
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Colored Egg Shell for you right away. Please Wait a Moment.";
+   	next;
+	delitem 5015,1;
+	delitem 978,1;
+	delitem 7030,50;	
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Colored Egg Shell^000000...! Please Take it!";
+	getitem 5039,1;
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1g:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Egg Shell...";
+	close;
+L_ITEM_2g:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Cobaltblue Dyestuff...";
+	close;
+L_ITEM_3g:
+	mes "[Zac]";
+	mes "Oh, dear. You need 50 Claws of Desert Wolf...";
+	close;
+L2:	
+	mes "[Zac]";
+	mes "Which hat materials do you wish to know?";
+	next;
+	menu "Angel Helm",L2_1,"Apple Hat",L2_2,"Blue Bandana",L2_3,"Bongun Hat", L2_4,"Cake Hat",L2_5,"Candle Hat",L2_6,"Chef's Hat",L2_7,"Colored Egg Shell",L2_8;
+L2_1:
+	mes "[Zac]";
+	mes "You need 1 Angel Wing, 1 Slotted Helm and 5 Fangs of Garm for Angel Helm.";
+	close;
+L2_2:
+	mes "[Zac]";
+	mes "You need 1 Witherless Rose and 300 Apples for Apple Hat.";
+	close;
+L2_3:
+	mes "[Zac]";
+	mes "You need 300 Anolian Skins, 1 Bandana and 1 Cobaltblue Dyestuff for Blue Bandana.";
+	close;
+L2_4:
+	mes "[Zac]";
+	mes "You need 10 Amulets, 1 Cobaltblue Dyestuff and 1 Munak Hat for Bongun Hat.";
+	close;
+L2_5:
+	mes "[Zac]";
+	mes "You need 10 Candys, 5 Candy Canes, 15 Well Baked Cookies, 20 Pieces Of Cake and 10 Steels for Cake Hat.";
+	close;
+L2_6:
+	mes "[Zac]";
+	mes "You need 1 Bomb Wick, 100 Honeys and 50 Matchsticks for Candle Hat.";
+	close;
+L2_7:
+	mes "[Zac]";
+	mes "You need 120 Pieces of Cake, 450 Dragon Scales, 1 White Dyestuff and 330 Feathers for Chef's Hat.";
+	close;
+L2_8:
+	mes "[Zac]";
+	mes "You need 1 Egg Shell, 1 Cobaltblue Dyestuff and 50 Claws of Desert Wolf for Colored Egg Shell.";
+	close;		
+L3:
+	mes "[Zac]";
+	mes "Stop by some other time with the right materials, so I can make the hats for you.";
+	close;
+}
+
+prontera.gat,143,172,5	script	Blac	732,{
+	mes "[Blac]";
+	mes "I am the youngest and sexiest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
+	next;
+	mes "[Blac]";
+	mes "I provide 8 hats and my brothers provides the other 24.";
+	next;
+	menu "Join",L1,"Information",L2,"Cancel",L3;
+L1:	
+	mes "[Blac]";
+	mes "What hat do you want me to make?";
+	next;
+	menu "Crescent Moon Hairpin",L1_9,"Cross Hairband",L1_10,"Deviruchi Hat",L1_11,"Dumpling Decoration",L1_12,"Fashion Sunglasses",L1_13,"HandkerChief",L1_14,"Magic Instructor's Hat",L1_15,"Heart Hairpin",L1_16;
+L1_9:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(5041) < 1)) goto L_ITEM_1;
+	if((countitem(999) < 10)) goto L_ITEM_2;
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Crescent Moon Hairpin for you right away. Please Wait a Moment.";
+   	next;
+	delitem 5041,1;
+	delitem 999,10;	
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Crescent Moon Hairpin^000000...! Please Take it!";
+	getitem 5048,1;
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Heart Hairpin...";
+	close;
+L_ITEM_2:
+	mes "[Blac]";
+	mes "Oh, dear. You need 10 Steels...";
+	close;
+L1_10:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2608) < 1)) goto L_ITEM_1a;
+	if((countitem(7069) < 500)) goto L_ITEM_2a;
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Cross Hairband for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2608,1;
+	delitem 7069,500;
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Cross Hairband^000000...! Please Take it!";
+	getitem 5036,1;
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1a:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Rosary...";
+	close;
+L_ITEM_2a:
+	mes "[Blac]";
+	mes "Oh, dear. You need 500 Destroyed Armors...";
+	close;
+L1_11:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(7048) < 40)) goto L_ITEM_1b;
+	if((countitem(1038) < 600)) goto L_ITEM_2b;
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Deviruchi Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 7048,40;
+	delitem 1038,600;	
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Deviruchi Hat^000000...! Please Take it!";
+	getitem 5038,1;
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1b:
+	mes "[Blac]";
+	mes "Oh, dear. You need 40 Talons of Griffin...";
+	close;
+L_ITEM_2b:
+	mes "[Blac]";
+	mes "Oh, dear. You need 600 Little Evil Horns...";
+	close;
+L1_12:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(10007) < 1)) goto L_ITEM_1c;
+	if((countitem(968) < 50)) goto L_ITEM_2c;
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Dumpling Decoration for you right away. Please Wait a Moment.";
+   	next;
+	delitem 10007,1;
+	delitem 968,50;	
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Dumpling Decoration^000000...! Please Take it!";
+	getitem 5042,1;
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1c:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Silk Ribbon...";
+	close;
+L_ITEM_2c:
+	mes "[Blac]";
+	mes "Oh, dear. You need 50 Heroic Emblems...";
+	close;
+L1_13:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2271) < 1)) goto L_ITEM_1d;
+	if((countitem(975) < 1)) goto L_ITEM_2d;
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Fashion Sunglasses for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2271,1;
+	delitem 975,1;
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Fashion Sunglasses^000000...! Please Take it!";
+	getitem 5047,1;
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1d:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Jack a Dandy...";
+	close;
+L_ITEM_2d:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Scarlet Dyestuff...";
+	close;
+L1_14:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(1059) < 150)) goto L_ITEM_1e;
+	if((countitem(978) < 1)) goto L_ITEM_2e;
+	if((countitem(907) < 100)) goto L_ITEM_3e;
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Handkerchief for you right away. Please Wait a Moment.";
+   	next;
+	delitem 1059,150;
+	delitem 978,1;
+	delitem 907,100;	
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Handkerchief^000000...! Please Take it!";
+	getitem 5023,1;
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1e:
+	mes "[Blac]";
+	mes "Oh, dear. You need 150 Fabrics...";
+	close;
+L_ITEM_2e:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Cobaltblue Dyestuff...";
+	close;
+L_ITEM_3e:
+	mes "[Blac]";
+	mes "Oh, dear. You need 100 Resins...";
+	close;
+L1_15:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2251) < 1)) goto L_ITEM_1f;
+	if((countitem(4052) < 1)) goto L_ITEM_2f;
+	if((countitem(1036) < 400)) goto L_ITEM_3f;
+	if((countitem(7001) < 50)) goto L_ITEM_4f;
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Magic Instructor's Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2251,1;
+	delitem 4052,1;
+	delitem 1036,400;
+	delitem 7001,50;	
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Magic Instructor's Hat^000000...! Please Take it!";
+	getitem 5027,1;
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1f:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Wizard's Hat...";
+	close;
+L_ITEM_2f:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Elder Willow Card...";
+	close;
+L_ITEM_3f:
+	mes "[Blac]";
+	mes "Oh, dear. You need 400 Dragon Scales...";
+	close;
+L_ITEM_4f:
+	mes "[Blac]";
+	mes "Oh, dear. You need 50 Mould Powders...";
+	close;
+L1_16:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(7013) < 1200)) goto L_ITEM_1g;
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Heart Hairpin for you right away. Please Wait a Moment.";
+   	next;
+	delitem 7013,1200;	
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Heart Hairpin^000000...! Please Take it!";
+	getitem 5041,1;
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1g:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1200 Coral Reef's...";
+	close;
+L2:	
+	mes "[Blac]";
+	mes "Which hat materials do you wish to know?";
+	next;
+	menu "Crescent Moon Hairpin",L2_9,"Cross Hairband",L2_10,"Deviruchi Hat",L2_11,"Dumpling Decoration/Chun Li Hat",L2_12,"Fashion Sunglasses",L2_13,"HandkerChief",L2_14,"Magic Instructor's Hat",L2_15,"Heart Hairpin",L2_16;
+L2_9:
+	mes "[Blac]";
+	mes "You need 1 Heart Hairpin and 10 Steels for Crescent Moon Hairpin.";
+	close;
+L2_10:
+	mes "[Blac]";
+	mes "You need 1 Rosary and 500 Destroyed Armors for Cross Hairband.";
+	close;
+L2_11:
+	mes "[Blac]";
+	mes "You need 40 Talon's of Griffin and 600 Little Evil Horns for Deviruchi Hat.";
+	close;
+L2_12:
+	mes "[Blac]";
+	mes "You need 1 Silk Ribbon and 50 Heroic Emblems for Dumping Decoration.";
+	close;
+L2_13:
+	mes "[Blac]";
+	mes "You need 1 Jack a Dandy and 1 Scarlet Dyestuff for Fashion Sunglasses.";
+	close;
+L2_14:
+	mes "[Blac]";
+	mes "You need 150 Fabrics, 1 Cobaltblue Dyestuff and 100 Resins for Handkerchief.";
+	close;
+L2_15:
+	mes "[Blac]";
+	mes "You need 1 Wizard's Hat, 1 Elder Willow Card, 400 Dragon Scales and 50 Mould Powders for Magic Instructor's Hat.";
+	close;
+L2_16:
+	mes "[Blac]";
+	mes "You need 1200 Coral Reef's for Heart Hairpin.";
+	close;
+L3:
+	mes "[Blac]";
+	mes "Stop by some other time with the right materials, so I can make the hats for you.";
+	close;
+}
+
+prontera.gat,141,172,5	script	Jac	107,{
+	mes "[Jac]";
+	mes "I am the 2nd oldest and calmest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
+	next;
+	mes "[Jac]";
+	mes "I provide 8 hats and my brothers provides the other 24.";
+	next;
+	menu "Join",L1,"Information",L2,"Cancel",L3;
+L1:	
+	mes "[Jac]";
+	mes "What hat do you want me to make?";
+	next;
+	menu "Heart of Merchant",L1_17,"Innocence of Maiden",L1_18,"Kafra Band",L1_19,"Lightbulb Hairband",L1_20,"Magic Hat",L1_21,"Miner's Helm",L1_22,"Mysterious Apple Hat",L1_23,"Panda Hat",L1_24;
+L1_17:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2233) < 1)) goto L_ITEM_1;
+	if((countitem(969) < 1)) goto L_ITEM_2;
+	if((countitem(949) < 80)) goto L_ITEM_3;
+	if((countitem(938) < 100)) goto L_ITEM_4;
+	if((countitem(999) < 20)) goto L_ITEM_5;
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Heart of Merchant for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2233,1;
+	delitem 969,1;
+	delitem 949,80;
+	delitem 999,20;
+	delitem 938,800;	
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Heart of Merchant^000000...! Please Take it!";
+	getitem 5021,1;
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Slotted Circlet...";
+	close;
+L_ITEM_2:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Gold...";
+	close;
+L_ITEM_3:
+	mes "[Jac]";
+	mes "Oh, dear. You need 80 Feather...";
+	close;
+L_ITEM_4:
+	mes "[Jac]";
+	mes "Oh, dear. You need 800 Sticky Muscus...";
+	close;
+L_ITEM_5:
+	mes "[Jac]";
+	mes "Oh, dear. You need 20 Steels...";
+	close;
+L1_18:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(7047) < 100)) goto L_ITEM_1a;
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Innocence of Maiden for you right away. Please Wait a Moment.";
+   	next;
+	delitem 7047,100;	
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Innocence of Maiden^000000...! Please Take it!";
+	getitem 5040,1;
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1a:
+	mes "[Jac]";
+	mes "Oh, dear. You need 100 Alice's Apron...";
+	close;
+L1_19:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(10007) < 1)) goto L_ITEM_1b;
+	if((countitem(10008) < 1)) goto L_ITEM_2b;
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Kafra Band for you right away. Please Wait a Moment.";
+   	next;
+	delitem 10007,1;
+	delitem 10009,1;	
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Kafra Band^000000...! Please Take it!";
+	getitem 5020,1;
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1b:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Silk Ribbon...";
+	close;
+L_ITEM_2b:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Wild Flower...";
+	close;
+L1_20:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2233) < 1)) goto L_ITEM_1c;
+	if((countitem(746) < 20)) goto L_ITEM_2c;
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Lightbulb Hairband for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2233,1;
+	delitem 746,20;	
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Lightbulb Hairband^000000...! Please Take it!";
+	getitem 5034,1;
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1c:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Slotted Criclet...";
+	close;
+L_ITEM_2c:
+	mes "[Jac]";
+	mes "Oh, dear. You need 20 Glass Bead...";
+	close;
+L1_21:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2252) < 1)) goto L_ITEM_1d;
+	if((countitem(943) < 1200)) goto L_ITEM_2d;
+	if((countitem(1054) < 450)) goto L_ITEM_3d;
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Magic Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2252,1;
+	delitem 943,1200;
+	delitem 1054,450;		
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Magic Hat^000000...! Please Take it!";
+	getitem 5045,1;
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1d:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Wizard's Hat...";
+	close;
+L_ITEM_2d:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1200 Solid Shells...";
+	close;
+L_ITEM_3d:
+	mes "[Jac]";
+	mes "Oh, dear. You need 450 Ancient Lips...";
+	close;
+L1_22:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(5009) < 1)) goto L_ITEM_1e;
+	if((countitem(999) < 25)) goto L_ITEM_2e;
+	if((countitem(747) < 1)) goto L_ITEM_3e;
+	if((countitem(5028) < 1)) goto L_ITEM_4e;
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Miner's Helm for you right away. Please Wait a Moment.";
+   	next;
+	delitem 5009,1;
+	delitem 999,25;
+	delitem 747,1;
+	delitem 5028,1;
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Miner's Helm^000000...! Please Take it!";
+	getitem 5031,1;
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1e:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Safety Helmet...";
+	close;
+L_ITEM_2e:
+	mes "[Jac]";
+	mes "Oh, dear. You need 25 Steels...";
+	close;
+L_ITEM_3e:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Crystal Mirror...";
+	close;
+L_ITEM_4e:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Candle...";
+	close;
+L1_23:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(5037) < 1)) goto L_ITEM_1f;
+	if((countitem(7064) < 500)) goto L_ITEM_2f;
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Mysterious Apple Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 5037,1;
+	delitem 7064,500;	
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Mysterious Apple Hat^000000...! Please Take it!";
+	getitem 5050,1;
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1f:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Apple Hat...";
+	close;
+L_ITEM_2f:
+	mes "[Jac]";
+	mes "Oh, dear. You need 500 Wings of Dragonfly...";
+	close;
+L1_24:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(999) < 10)) goto L_ITEM_1g;
+	if((countitem(948) < 200)) goto L_ITEM_2g;
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Panda Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 999,10;
+	delitem 948,200;	
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Panda Hat^000000...! Please Take it!";
+	getitem 5030,1;
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1g:
+	mes "[Jac]";
+	mes "Oh, dear. You need 10 Steels...";
+	close;
+L_ITEM_2g:
+	mes "[Jac]";
+	mes "Oh, dear. You need 200 Bear Footskins...";
+	close;	
+L2:	
+	mes "[Jac]";
+	mes "Which hat materials do you wish to know?";
+	next;
+	menu "Heart of Merchant",L2_17,"Innocence of Maiden",L2_18,"Kafra Band",L2_19,"Lightbulb Hairband",L2_20,"Magic Hat",L2_21,"Miner's Helm",L2_22,"Mysterious Apple Hat",L2_23,"Panda Hat",L2_24;
+L2_17:
+	mes "[Jac]";
+	mes "You need 1 Slotted Circlet, 1 Gold Bar, 80 Feathers, 20 Steels and 800 Sticky Muscus for Heart of Merchant";
+	close;
+L2_18:
+	mes "[Jac]";
+	mes "You need 100 Alice's Aprons for Innocence of Maiden.";
+	close;
+L2_19:
+	mes "[Jac]";
+	mes "You need 1 Silk Ribbon and 1 Wild Flower for Kafra Band.";
+	close;
+L2_20:
+	mes "[Jac]";
+	mes "You need 1 Slotted Circlet and 20 Glass Beads for Lightbulb Hairband.";
+	close;
+L2_21:
+	mes "[Jac]";
+	mes "You need 1 Wizard's Hat, 1200 Solid Shells and 450 Ancient Lips for Magic Hat.";
+	close;
+L2_22:
+	mes "[Jac]";
+	mes "You need 1 Safety Helmet, 25 Steels, 1 Crystal Mirror and 1 Candle for Miner's Helm.";
+	close;
+L2_23:
+	mes "[Jac]";
+	mes "You need 1 Apple Hat and 500 Wings of Dragonfly for Mysterious Apple Hat.";
+	close;
+L2_24:
+	mes "[Jac]";
+	mes "You need 10 Steels and 200 Bear Footskins for Panda Hat.";
+	close;		
+L3:
+	mes "[Jac]";
+	mes "Stop by some other time with the right materials, so I can make the hats for you.";
+	close;
+}
+
+prontera.gat,142,172,5	script	Pac	705,{
+	mes "[Pac]";
+	mes "I am 3rd oldest and wisest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat so I can make them.";
+	next;
+	mes "[Pac]";
+	mes "I provide 8 hats and my brothers provides the other 24.";
+	next;
+	menu "Join",L1,"Information",L2,"Cancel",L3;
+L1:	
+	mes "[Pac]";
+	mes "What hat do you want me to make?";
+	next;
+	menu "Phantom of the Opera",L1_25,"Poring Hat",L1_26,"Smokie Hat",L1_27,"Solar God Helm",L1_28,"Sphinx Hat",L1_29,"Spore Hat",L1_30,"Striped Bandana",L1_31,"Sunday Hat",L1_32;
+L1_25:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2281) < 1)) goto L_ITEM_1;
+	if((countitem(1048) < 50)) goto L_ITEM_2;
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Phantom of the Opera for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2281,1;
+	delitem 1048,50;	
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Phatom of the Opera^000000...! Please Take it!";
+	getitem 5043,1;
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Opera Mask...";
+	close;
+L_ITEM_2:
+	mes "[Pac]";
+	mes "Oh, dear. You need 50 Horrendous Hairs...";
+	close;
+L1_26:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(741) < 1)) goto L_ITEM_1a;
+	if((countitem(909) < 300)) goto L_ITEM_2a;
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Poring Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 741,1;
+	delitem 909,300;	
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Poring Hat^000000...! Please Take it!";
+	getitem 5035,1;
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1a:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Poring Doll...";
+	close;
+L_ITEM_2a:
+	mes "[Pac]";
+	mes "Oh, dear. You need 300 Jellopys...";
+	close;
+L1_27:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2213) < 1)) goto L_ITEM_1b;
+	if((countitem(1036) < 20)) goto L_ITEM_2b;
+	if((countitem(7012) < 200)) goto L_ITEM_3b;
+	if((countitem(7065) < 300)) goto L_ITEM_4b;
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Smokie Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2213,1;
+	delitem 1036,20;
+	delitem 7012,200;
+	delitem 7065,300;	
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Smokie Hat^000000...! Please Take it!";
+	getitem 5033,1;
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1b:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Kitty Band...";
+	close;
+L_ITEM_2b:
+	mes "[Pac]";
+	mes "Oh, dear. You need 20 Dragon Scales...";
+	close;
+L_ITEM_3b:
+	mes "[Pac]";
+	mes "Oh, dear. You need 200 Tough Scalelike Stems...";
+	close;
+L_ITEM_4b:
+	mes "[Pac]";
+	mes "Oh, dear. You need 300 Fur's of Sea Otter...";
+	close;
+L1_28:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(7086) < 1)) goto L_ITEM_1c;
+	if((countitem(999) < 40)) goto L_ITEM_2c;
+	if((countitem(984) < 2)) goto L_ITEM_3c;
+	if((countitem(969) < 10)) goto L_ITEM_4c;
+	if((countitem(1003) < 50)) goto L_ITEM_5c;
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Solar God Helm for you right away. Please Wait a Moment.";
+   	next;
+	delitem 7086,1;
+	delitem 999,40;
+	delitem 984,2;
+	delitem 969,10;
+	delitem 1003,50;	
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Solar God Helm^000000...! Please Take it!";
+	getitem 5022,1;
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1c:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Emblem of the Sun God...";
+	close;
+L_ITEM_2c:
+	mes "[Pac]";
+	mes "Oh, dear. You need 40 Steels...";
+	close;
+L_ITEM_3c:
+	mes "[Pac]";
+	mes "Oh, dear. You need 2 Oridecons...";
+	close;
+L_ITEM_4c:
+	mes "[Pac]";
+	mes "Oh, dear. You need 10 Gold Bar's...";
+	close;
+L_ITEM_5c:
+	mes "[Pac]";
+	mes "Oh, dear. You need 50 Coals...";
+	close;
+L1_29:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(999) < 25)) goto L_ITEM_1d;
+	if((countitem(979) < 1)) goto L_ITEM_2d;
+	if((countitem(976) < 1)) goto L_ITEM_3d;
+	if((countitem(1059) < 150)) goto L_ITEM_4d;
+	if((countitem(969) < 2)) goto L_ITEM_5d;
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Sphinx Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 999,1;
+	delitem 979,1;
+	delitem 976,1;
+	delitem 1059,150;
+	delitem 969,2; 	
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Sphinx Hat^000000...! Please Take it!";
+	getitem 5053,1;
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 25 Steels...";
+	close;
+L_ITEM_2d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 DarkGreen Dyestuff...";
+	close;
+L_ITEM_3d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Lemon Dyestuff...";
+	close;
+L_ITEM_4d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 150 Fabric...";
+	close;
+L_ITEM_5d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 2 Gold Bar's...";
+	close;
+L1_30:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(7033) < 850)) goto L_ITEM_1e;
+	if((countitem(7068) < 300)) goto L_ITEM_2e;
+	if((countitem(1015) < 1)) goto L_ITEM_3e;
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Spore Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 7033,850;
+	delitem 7068,300;
+	delitem 1015,1;		
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Spore Hat^000000...! Please Take it!";
+	getitem 5029,1;
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1e:
+	mes "[Pac]";
+	mes "Oh, dear. You need 850 Poison Spores...";
+	close;
+L_ITEM_2e:
+	mes "[Pac]";
+	mes "Oh, dear. You need 300 Half Burnt Logs...";
+	close;
+L_ITEM_3e:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Tongue...";
+	close;
+L1_31:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(1099) < 1500)) goto L_ITEM_1f;
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Striped Bandana for you right away. Please Wait a Moment.";
+   	next;
+	delitem 1099,1500;	
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Striped Bandana^000000...! Please Take it!";
+	getitem 5049,1;
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1f:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1500 Worn-out Prisoner Uniforms...";
+	close;
+L1_32:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if((countitem(2221) < 1)) goto L_ITEM_1g;
+	if((countitem(2227) < 1)) goto L_ITEM_2g;
+	if((countitem(1059) < 250)) goto L_ITEM_3g;
+	if((countitem(7063) < 600)) goto L_ITEM_4g;
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Sunday Hat for you right away. Please Wait a Moment.";
+   	next;
+	delitem 2221,1;
+	delitem 2227,1;
+	delitem 1059,250;
+	delitem 7063,600;	
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Sunday Hat^000000...! Please Take it!";
+	getitem 5032,1;
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1g:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Slotted Hat...";
+	close;
+L_ITEM_2g:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Slotted Cap...";
+	close;
+L_ITEM_3g:
+	mes "[Pac]";
+	mes "Oh, dear. You need 250 Fabrics...";
+	close;
+L_ITEM_4g:
+	mes "[Pac]";
+	mes "Oh, dear. You need 600 Soft Feathers...";
+	close;
+L2:	
+	mes "[Pac]";
+	mes "Which hat materials do you wish to know?";
+	next;
+	menu "Phantom of the Opera",L2_25,"Poring Hat",L2_26,"Smokie Hat",L2_27,"Solar God Helm",L2_28,"Sphinx Hat",L2_29,"Spore Hat",L2_30,"Striped Bandana",L2_31,"Sunday Hat",L2_32;
+L2_25:
+	mes "[Pac]";
+	mes "You need 1 Opera Mask and 50 Horrendous Hairs for Phantom of the Opera.";
+	close;
+L2_26:
+	mes "[Pac]";
+	mes "You need 1 Poring Doll and 300 Jellopys for Poring Hat.";
+	close;
+L2_27:
+	mes "[Pac]";
+	mes "You need 1 Kitty Band, 20 Dragon Scale, 200 Tough Scalelike Stem and 300 Fur's of Sea Otter for Smokie Hat.";
+	close;
+L2_28:
+	mes "[Pac]";
+	mes "You need 1 Emblem of the Sun God, 40 Steels, 2 Oridecons, 10 Gold Bar's and 50 Coals for Solar God Helm.";
+	close;
+L2_29:
+	mes "[Pac]";
+	mes "You need 25 Steels, 1 DarkGreen Dyestuff, 1 Lemon Dyestuff, 150 Fabric and 2 Gold Bar's for Sphinx Hat.";
+	close;
+L2_30:
+	mes "[Pac]";
+	mes "You need 850 Poison Spores, 300 Half Burnt Logs and 1 Tongue for Spore Hat.";
+	close;
+L2_31:
+	mes "[Pac]";
+	mes "You need 1500 Worn-out Prisoner Uniforms for Striped Bandana.";
+	close;
+L2_32:
+	mes "[Pac]";
+	mes "You need 1 Slotted Hat, 1 Slotted Cap, 250 Fabrics and 600 Soft Feathers for Sunday Hat.";
+	close;
+L3:
+	mes "[Pac]";
+	mes "Stop by some other time with the right materials, so I can make the hats for you.";
+	close;
+}
+
+
+//these scripts make our brothers to appear and disappear in order
+-	script	EDZac	-1,{
+OnInit:
+OnMinute15:
+	disablenpc "Zac";
+	end;
+OnMinute01:
+	enablenpc "Zac";
+	end;
+}
+
+-	script	EDJac	-1,{
+OnInit:
+OnMinute30:
+	disablenpc "Jac";
+	end;
+OnMinute16:
+	enablenpc "Jac";
+	end;
+}
+
+-	script	EDPac	-1,{
+OnInit:
+OnMinute45:
+	disablenpc "Pac";
+	end;
+OnMinute31:
+	enablenpc "Pac";
+	end;
+}
+
+-	script	EDBlac	-1,{
+OnInit:
+OnMinute00:
+	disablenpc "Blac";
+	end;
+OnMinute46:
+	enablenpc "Blac";
+	end;
+}

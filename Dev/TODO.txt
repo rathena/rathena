@@ -1,0 +1,710 @@
+The format of to-do list items is:
+
+Description	- A description of the task
+Status		- The status of the task. The possible values are Pending and Completed
+Assignee	- The nickname of the person whom is assigned the task
+Notes		- Miscellaneous notes concerning the task
+
+**********
+
+Only the to-do list for the flat-file module should contain tasks concerning database corrections because databases changes for the SQL module are inherited from the flat-file module.
+
+**********
+1.
+Description:	Fix the equip field values in item_db
+
+Status:     	Pending
+
+Assignee:   	NONE
+
+Notes:      	<Valaris> i know the equip values in item_db are ****ed <Valaris> not ****ed <Valaris> but supernovice equip is
+
+
+**********
+2.
+Description:	Change monster summoning commands so they summon 1 monster if a quantity isn't specified
+
+Status:     	50%
+
+Assignee:   	NONE
+
+Notes:      	Will work with just mob_id/name specified (ie @monster poring)
+            	need to make it work with mob_id and name (ie @monster poring test) - Valaris
+
+
+**********
+3.
+Description:	Fix Ghostring Card
+
+Status:     	Done
+
+Assignee:   	MouseJstr
+
+Notes:      	battle_config flag to disable ghosty armor 
+                protecting you from mobs
+
+**********
+4.
+Description:	Add nomagic mapflag/@skilloff/@skillon
+
+Status:     	Done
+
+Assignee:   	MouseJstr
+
+Notes:      	NONE
+
+
+**********
+5.
+Description:	Checking help.txt (main directory, conf directory, doc directory) with atcommand.c
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	In doc directory, do a help.txt for explaination of all commands.
+            	In conf directory, do a help.txt for displaying the resume of each command in chat windows of the client
+            	  (chat windows does support more than 200 lines).
+            	In main directory, suggestion to delete it.
+
+
+**********
+6.
+Description:	Update produce_db
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	The Alchemist Forging items were recently changed. The DB needs to be edited and if needed, source to be modified
+
+
+**********
+7.
+Description:	novice.txt: new_1-4.gat,60,149,4	script	Helper	55
+            	This NPC gives infinite items and zenys.
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	If you clicks on 'cancel' button or quits the game to come back, you can have infinite zenys and items.
+            	So, we must save (in a variable) when the npc gives items/zenys and don't given them again.
+
+
+**********
+8.
+Description:	scripts, register variables and job 1
+            	When you become job 1, reset all variables of OTHER jobs too to save register memory.
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	None
+
+
+**********
+9.
+Description:	@mapspy <map> <on/off> command
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	to receive any messages of all characters on a specifical map.
+            	don't send duplicate messages if already @guildspy ou @partyspy
+
+
+**********
+10.
+Description:	Pet Skills.
+
+Status:     	90%
+
+Assignee:   	Valaris
+
+Notes:      	Don't touch pet.c, pet.h, or pet dbs.
+
+
+**********
+11.
+Description:	Add kRO server side friends list.
+
+Status:     	80%
+
+Assignee:   	davidsiaw
+
+Notes:      	Got most of the packets. Except the ones that tell the client that a player is online and tell the client to give messages.
+
+
+**********
+12.
+Description:	Updating the 'gmcommands.html' with actual commands.
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	NONE
+
+
+**********
+13.
+Description:	On PVP map, don't count a 'GM HIDE' GM (2 normal players + 1 HIDE GM: 2/2, not 3/3).
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	NONE
+
+
+**********
+14.
+Description:	Add encrypted password option in login-server.
+
+Status:     	Blocked, no solution without limited client version.
+
+Assignee:   	Yor
+
+Notes:      	It's impossible to use encrypted password in the account file, if we want to authorise all client version.
+            	Some clients use a (random) md5key and send a composed encrypted of the password.
+            	So, these clients send a different encrypted password based on plain text password at every connection.
+            	If the password is encrypted, we can not more compare with plain text.
+            	The other solution can be to not authorise these clients. But, that will probably be the futur of ALL clients.
+            	Reduce possibilities of client version isn't a good idea for the futur and for the compatibility (like use only plain text password client version).
+            	Save in account the plain text and the encypted version use more memory for nothing, and don't add security.
+            	Conclusion:
+            		If you want protected your password, you must:
+            		- protected you account file
+            		- never send a password outside the server
+            		- use only encypted client version (that send an encrypted password to server).
+
+
+**********
+15.
+Description:	Create all reloaddb command in ladmin.
+
+Status:     	Affected
+
+Assignee:   	Yor
+
+Notes:      	NONE
+
+
+**********
+16.
+Description:	Create a shutdown + time command in ladmin.
+
+Status:     	Affected
+
+Assignee:   	Yor
+
+Notes:      	NONE
+
+
+**********
+17.
+Description:	Create a kickall command in ladmin.
+
+Status:     	Affected
+
+Assignee:   	Yor
+
+Notes:      	NONE
+
+
+**********
+18.
+Description:	Create listban/listok command in ladmin.
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	NONE
+
+
+**********
+19.
+Description:	Login-server: create a first anti-hack system versus multiple connections trying.
+
+Status:     	Affected
+
+Assignee:   	Yor
+
+Notes:      	Set on IP.
+            	An option to set number of connections before to block (number_of_try_before_block)
+            	An option to set number of second where the tries must be done (within_seconds_for tries)
+            	An option to set the time of impossible connection after block (blocked_time_in_minutes)
+            	About wrong password, add:
+            	dynamic_pass_failure_ban_time: 5 (duration of ban, in minutes)
+            	dynamic_pass_failure_ban_how_many: 3 (number of tries before to ban)
+            	dynamic_pass_failure_ban_how_long: 60 (inside time where the tries must be done before to ban, in sec)
+
+
+**********
+20.
+Description:	Create @unban and @unblock GM command.
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	NONE
+
+
+**********
+21.
+Description:	Fix @nuke GM command.
+
+Status:     	Completed
+
+Assignee:   	Valaris
+
+Notes:      	If you nuke a mounted Knight/Crusader they lose Peco but see it in the equip.window.
+            	And can't get another one.
+
+
+**********
+22.
+Description:	Adding GM command @guildmaster <playername>
+
+Status:     	Pending
+
+Assignee:   	MC_Cameri
+
+Notes:      	Guild Master turns another member of his guild into Guild Master.
+		MC Cameri: It will now be called @swapgm, meaning swap of guild master.
+
+
+**********
+23.
+Description:	In Guilds folder change all checkcart -> checkcart(0)
+
+Status:     	Completed?
+
+Assignee:   	Aria
+
+Notes:      	All checkcart were in the old/ folder o_O?
+		Because just "checkcart" always returns 0. (All common Kafras&breeder have been already fixed)
+
+
+**********
+24.
+Description:	In script.c parser should be fixed to allow argumentless functions return value.
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	Functions like "checkcart", "checkfalcon", "checkriding" don't return value if used without agruments or without "()".
+            	Example: 'checkcart' always return Zero (because the parser doesn't recognize it as a function!)
+            	Example: 'checkcart()' map server doesn't load (because argless funcs aren't in use)
+            	As a temp fix Lupus added "*" in script.c in "checkcart", "checkfalcon", "checkriding" definitions.
+            	To be able running them with any fake arg. i.e. checkcart(0) works fine!
+
+
+**********
+25.
+Description:	Create a LAN management, 1 by server
+
+Status:     	Affected
+
+Assignee:   	Yor
+
+Notes:      	1 computer can be on multiple LAN. So, each server must have 1 LAN definition.
+
+
+**********
+26.
+Description:	@ban/@block must be usable when player is offline
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	NONE
+
+
+**********
+27.
+Description:	When it's night, inscreasing spawn of undeads
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	Variable 'night_flag' is 0 if it's day, or 1 if it's night.
+
+
+**********
+28.
+Description:	in ladmin, create a method for account with spaces
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	use "<account name>" or '<account name>'.
+
+
+**********
+29.
+Description:	@(un)ban/@(un)block: reduction of number of packets
+            	                     improvement of messages
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	None.
+
+
+**********
+30.
+Description:	Create (un)ban/(un)block in ladmin to be similar with GM command
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	None.
+
+
+**********
+31.
+Description:	Packet 0x3831 need too much size! IMPORTANT to found a solution!
+            	It's cause of crashes or freeze of servers (char or map).
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	When map-server do a connection to char-server, this packet is send (C->M). Example of display (1 connection!):
+            	socket #5:
+            	  wdata (size: 131072 bytes) need to be expanded.
+            	  wdata is actually used for 111654 bytes (free bytes: 19418).
+            	  packet 0x3831 need mode space (size of the packet: 12332).
+            	  wdata expanded to 262144 bytes.
+            	socket #5:
+            	  wdata (size: 262144 bytes) need to be expanded.
+            	  wdata is actually used for 234974 bytes (free bytes: 27170).
+            	  packet 0x3831 need mode space (size of the packet: 12332).
+            	  wdata expanded to 524288 bytes.
+            	Additional note: there is only 63 guilds on this server...
+
+
+**********
+32.
+Description:	Management of PM ignore for wisps
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	None.
+
+
+**********
+33.
+Description:	Add a GM info hacker minimum level parameter
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	first use: spoof namer
+
+
+**********
+34.
+Description:	Create @makepet to create directly a pet
+
+Status:     	Pending
+
+Assignee:   	None
+
+Notes:      	NONE
+
+
+**********
+35.
+Description:	In dungeon, set night for people. In shop, set day for people.
+
+Status:     	Assigned
+
+Assignee:   	Yor
+
+Notes:      	work like variable 'night_flag' is 0 if it's day, or 1 if it's night.
+
+
+**********
+36
+Description:	Create your limited time.... but an option can be good :)... 
+
+Status:     	Completed
+
+Assignee:   	Yor
+
+Notes:      	NONE
+
+**********
+37.
+Description:	@killer - enables a @gm to hit a player outside of pvp
+
+Status:     	Done
+
+Assignee:   	MouseJstr
+
+Notes:
+
+**********
+38.
+Description:	atcommand scripts - script @atcommands`
+
+Status:     	Pending
+
+Assignee:   	MouseJstr
+
+Notes:      	
+
+**********
+40.
+Description:	@addwarp - create a static warp to a target location
+
+Status:     	Done
+
+Assignee:   	MouseJstr
+
+Notes:      	
+**********
+41.
+Description:	@movenpc 
+   - manipulate npc's at runtime
+
+Status:     	Done
+
+Assignee:   	MouseJstr
+
+Notes:      	handling npc's with the same name on multiple maps 
+                requires thoughts
+**********
+42.
+Description:	@uptime - how long as the server been up?
+
+Status:     	Pending
+
+Assignee:   	MouseJstr, MC Cameri
+
+Notes:
+		MC Cameri: This is done already in OA, wait for merge.
+		Aria: I said that, but they told me it was BROKED!
+**********
+43.
+Description:	map aliases - 
+                  create virtual copies of maps but don't require
+                  changes to the client to support it
+
+Status:     	80% done
+
+Assignee:   	MouseJstr
+
+Notes
+**********
+44.
+Description:	Fix GTB card
+
+Status:     	Done
+
+Assignee:   	MouseJstr
+
+Notes:  battle_config command that controls just how magic resistant 
+        you raelly are
+**********
+45.
+Description:	gm @follow command
+
+Status:     	Done
+
+Assignee:   	MouseJstr
+
+Notes:  follows players, including warping to them... lets you do
+        a gm hide and grab a cup of coffee while watching a player
+        do bad things..
+**********
+47.
+Description:	different max aspd for players and GM's
+
+Status:     	Pending
+
+Assignee:   	MouseJstr
+
+Notes:
+**********
+48.
+Description:	Configurable max num castles for a guild
+
+Status:     	Done
+
+Assignee:   	MouseJstr
+
+Notes:          We limit each guild to 3 castles on my server
+*********
+49
+Description:    Add @chareffect - Done [MouseJstr]
+                     set a persistant effect on another character
+                Add @chardisguise - done [MouseJstr]
+                     set a persistant disguise effect on another character
+                Add @mobid
+                     look up a monster by name - needed?
+                Add @petid
+                     look up a pet by name
+                Add @chardye
+                Add @charhairstyle
+                Add @charhaircolor
+                     Versions of dye hairstyle and haircolor fo other chars
+                Add @followme
+                     make a character follow you.. including warps
+                Add @shuffle
+                     re-arrange everybody on the map randomly
+                Add @dropall - done [MouseJstr]
+                     takes all my possessions and throws them on the ground
+                Add @chardropall - done [MouseJstr]
+                     takes all the players possessions and throws them on the ground.. 
+                Add @storeall  - done [MouseJstr]
+                     takes all my possessions and puts them in storage, leaving 500 zeny to let you take it all back out again
+                Add @charstoreall - done [MouseJstr]
+                     takes all the players possessions and puts them in storage, leaving 500 zeny to let you take it all back out again
+                Add @skillid  - lookup a skill by name - done [MouseJstr
+                Add @useskill - use a skill given the number or name - done [MouseJstr]
+*********
+50.
+Description:	New Guild Skills
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		use http://forums.emperium.org/viewtopic.php?t=43245 for a list
+********
+51.
+Description:	Devilring
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		New mini-boss; find as much about it as possible including stats and drops
+*********
+52.
+Description:	LV4 Weapon Quests
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		Info here http://forums.emperium.org/viewtopic.php?t=39934 Use perm variables?
+*********
+53.
+Description:	Monster Pictures
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		WTF! http://forums.emperium.org/viewtopic.php?t=32998
+*********
+54.
+Description:	Wandering Singer
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		May have to spy on kRO to get more info. http://forums.emperium.org/viewtopic.php?t=32998
+********
+55.
+Description:	Arena Points
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		points->item system; http://forums.emperium.org/viewtopic.php?t=32998
+********
+56.
+Description:	kRO Account
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		Give us a kRO account, gm or whatever so we can spy =OOOOOOOO
+*********
+57.
+Description:	Baby Skills
+
+Stats:		Pending
+
+Assignee:	NONE
+
+Notes:		1. Skills
+		- Come here, baby.
+		( Summons the adoptee )
+		- Mom, Dad, I love you.
+		( For 5 minutes, the parent characters will not have EXP penalty upon death )
+		- Mom, Dad, I want to see you.
+		( Summons the parents )
+		* For the summon skill, it works like wedding summon skill - it can only be done in areas where warps can be saved at.
+
+		2. EXP Sharing
+		- Only the parents and the child can EXP share; nobody else can be in the party. If any other person joins, the EXP share resets.
+		- If you move to a different map, the EXP share resets.
+		- The EXP returned is only 1/3rd of normal since both mother and father character has to be in the same party with the child.
+
+		3. Changes after adoption
+		- For the child character, the character becomes small.
+
+		4. What happens if parents divorce
+		- The parents can NEVER adopt another child ever again even after divorce + remarry.
+		- The character child continues to be as it is (meaning, even if the child no longer has a parent, he or she will continue to be the 'child'), and only 1 child can be obtained per character.
+		- Even if the child character is deleted, the parents can never get another child.
+		* This means, when you adopt a child character, DO IT CAREFULLY. For the entire history of your character, you can only, and I mean ONLY get one child character. 
+
+		- The Child Adoption system now changes as following, so please make note of this:
+		* The adopted child cannot raise any stat to beyond 80. - Done [Celest]
+		* The adopted child will have 70% of MaxHP and MaxSP of normal characters. - Done [Celest]
+		* The adopted child cannot marry. - Done [Celest]
+		* "Mom, Dad, I love you" skill will only last 2 minutes instead of 5.
+		* The parents must be both LV 70 or above in order to adopt.
+		* The parents must be both LV 70 or above in order to share EXP as family.
+		* "Mom, Dad, I love you" skill will now take 10% of MaxSP instead of taking 1 SP.
+		- The wedding skills will now depend on percentage of MaxHP/MaxSP. 
+
+********
+58.
+Description:	Super novices max job level is now 99
+
+Status:		Pending
+
+Assignee:	NONE
+
+Notes:		http://forums.emperium.org/viewtopic.php?t=44856
+
+********
+59.
+Description	Add a function where usable item bonuses cannot stack. Eg, an item that gives you +1 str when used again does not total to +2 str.
+Status		Pending
+Assignee	None
+Notes		None
+
+**********
+60.
+Description	Make it possible to set the selling price of an item in a shop npc. If a selling price is not present it uses the item_db and this can be selectable by battleconf
+Status		Pending
+Assignee	None
+Notes		None
+
+**********

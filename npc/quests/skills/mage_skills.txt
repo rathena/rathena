@@ -1,0 +1,114 @@
+//===== eAthena Script =======================================
+//= Mage Skill Quest
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.0a
+//===== Compatible With: =====================================
+//= eAthena 7.15 +
+//===== Description: =========================================
+//= <Description> 
+//===== Additional Comments: =================================
+//= v1.0a Now using functions found in "Global_Functions.txt"
+//= for class checks.[kobra_k88]
+//============================================================
+
+
+
+geffen_in.gat,151,119,4	script	BLIZZARDRISS	71,
+{
+	mes "[BLIZZARDRISS]";
+	if(callfunc("Is_Magic_Class")) goto L_Start;
+
+L_Other:
+	mes "What new magic spells will I discover today......??";
+	emotion 20;
+	close;
+
+L_Start:
+	if(ENRGYCOAT == 1) goto L_GetSkill;
+	if(getskilllv(157)>0) goto L_GotSkill;
+	mes "Hey! My friend! I see that you are a magic user.  If you look within yourself, you'll find that you have... 'HIDDEN ABILITIES'!!";
+	next;
+	menu "'Hidden Abilities'.....?",M_0, "End Conversation.",M_End;
+
+	M_0:
+		mes "[BLIZZARDRISS]";
+		mes "For many years I studied the ancient magic of Geffen, and I recently re-discovered a forgotten magic spell that is quite usefull.";
+		next;
+		mes "[BLIZZARDRISS]";
+		mes "The spell uses your 'pyscho-kenetic energy' to 'coat' your body in a magical shield, protecting you from enemy attacks.";
+		next;
+		mes "[BLIZZARDRISS]";
+		mes "Only highly trained magic users can learn this amazing spell.";
+		mes "Those who want to use this spell must tap into the hidden energies and abilities burried deep within!";
+		next;
+		mes "[BLIZZARDRISS]";
+		mes "The spell is called ^5555FF'Energy Coat'^000000!.  Would you like me to teach it to you?";
+		next;
+		menu "Wow! Sounds great!",sM_0, "Meh... not interested.",sM_End;
+
+		sM_0: 
+			mes "[BLIZZARDRISS]";
+			mes "In order for me to teach you this spell I will need the following items:";
+			mes "^5533FF 3 Glass Beads,";
+			mes " 1 One Carat Diamond,";
+			mes " 5 Shells,^000000";
+			mes " and ^5533FF1 Solid shell^000000.";
+			next;
+			mes "[BLIZZARDRISS]";
+			mes "You will also need to have a sufficient amount of experience.  For Mages, a job level of at least 35 is needed.";
+			mes "Wizards and Sages are high level magic users and can learn the skill at any job level.";
+			next;
+			mes "[BLIZZARDRISS]";
+			mes "When you are fully trained and have all of the required items come back and see me.";
+			set ENRGYCOAT, 1;
+			close;
+
+		sM_End:
+			mes "[BLIZZARDRISS]";
+			mes "Hmf! Suit yourself.  Don't come complaining to me when get beat up by a bunch of spores!!";
+			emotion 6;
+			close;
+
+	M_End:
+		mes "[BLIZZARDRISS]";
+		mes "The wise man must have patience!  Prepare yourself and return when you are ready.";
+		close;
+
+L_GetSkill:
+	if(Class==Job_Mage && JobLevel < 35) goto L_JobLvl;
+	if(countitem(746)<3 || countitem(730)<1 || countitem(935)<5 || countitem(943)<1) goto L_Items;
+	mes "Ohh my, ohh my...... This is going to be swell.  Hand over the items... Thank you.";
+ 	next;
+	mes "~ several hours later ~";
+	next;
+	delitem 746,3;
+	delitem 730,1;
+	delitem 935,5;
+	delitem 943,1;
+	skill 157,1,0;
+	set ENRGYCOAT,0;
+ 	mes "[BLIZZARDRISS]";
+ 	mes "You can now use the spell, 'Energy Coat'!! Use it wisely my friend!";
+	emotion 21;
+ 	close;
+
+	L_JobLvl:
+		mes "Didn't you listen to my explanation? You need a job level of at least 35 to learn 'Energy Coat'.";
+		emotion 1;
+		close;
+
+	L_Items:
+		mes "Didn't you listen to my explanation? You need the following items for me to teach you 'Energy Coat':";
+		mes "^5533FF 3 Glass Beads,";
+		mes " 1 One Carat Diamond,";
+		mes " 5 Shells,^000000";
+		mes " and ^5533FF1 Solid shell^000000.";
+		emotion 1;
+		close;
+
+L_GotSkill:
+	mes "Well hello there.  The 'Energy Coat' skill is great isn't it? Anyway, good luck with your journey.";
+	close;
+}

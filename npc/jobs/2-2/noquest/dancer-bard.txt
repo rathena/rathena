@@ -1,0 +1,72 @@
+//Dancer/Bard NPC for Athena by DiaDz
+//No Quests, just npc on location
+//1.1 Added SkillPoint check [Lupus]
+
+//Dancer & Bard - Comodo 189 166 4_F_07
+comodo.gat,189,166,4	script	Performance Master	741,{
+	   if(Class==19) goto bard;
+	   if(Class==20) goto dance;
+	   if(Class !=3) goto notarch;
+
+       mes "[Performance Master]";
+       mes "Welcome to Comodo and the Performers Guild.";
+       next;
+       mes "[Performance Master]";
+       mes "What can I do for you , a Song or Dance perhaps?";
+       next;
+       menu "Change Job into a Bard/Dancer.",case1,"The Requirements.",case2,"Quit.",case3;
+        		case1:
+       				if(JobLevel < 40) goto notlvl;
+				if(sex==1) goto M;
+					mes "[Performance Master]";
+					if(SkillPoint > 0) mes "You need to use up all of your skill points before I can make you a Dancer.";
+					if(SkillPoint > 0) close;
+					mes "Welcome Glorious Dancer";
+					jobchange 20;// Job: Job_Dancer
+					close;
+      			        			
+       				M:
+					mes "[Performance Master]";
+					if(SkillPoint > 0) mes "You need to use up all of your skill points before I can make you a Bard.";
+					if(SkillPoint > 0) close;
+	                		mes "Welcome Master Bard";
+					jobchange 19;// Job: Job_Bard
+       					close;
+       			       			
+				notlvl:
+       					mes "[Performance Master]";
+       					mes "you need to be at least Job level 40";
+       					close;
+
+        		case2:
+        			mes "[Performance Master]";
+        			mes "Archers of Job Level 40 and above may become Dancers or Bards";
+        			next;
+        			mes "[Performance Master]";	
+        			mes "Its a Great Time to become a Bard or Dancer they are in Much demand!";
+				mes "You can't miss the perfect chance!";
+				close;
+       		
+        		case3:
+	        		mes "[Performance Master]";
+	        		mes "Please come again sometime";
+	        		close;
+        	
+	dance:
+		mes "[Performance Master]";
+		mes "You are already a Glorious Dancer.";
+		mes "Roam our world and bring joy and harmony to the masses of Midgard.";
+		close;
+		
+	bard:
+		mes "[Performance Master]";
+		mes "You are already a Masterful Bard.";
+		mes "Roam our world and bring joy and harmony to the masses of Midgard.";
+		close;
+
+	notarch:
+		mes "[Performance Master]";
+		mes "I'm sorry but there is nothing I can help you with.";
+		mes "Only Archers are nimble and dexterous enough to be as graceful as a 'Dancer' or 'Bard'.";
+		close;
+}

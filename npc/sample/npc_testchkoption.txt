@@ -1,0 +1,15 @@
+prontera.gat,156,89,6	script	test_chkoption	117,{
+	mes "Please enter a value of type!";
+	input @value;
+	if(checkoption(@value) == 1) goto L1;
+	if(checkoption(@value) == 0) goto L0;
+	end;
+	L1:
+		mes "True!";
+		close;
+		end;
+	L0:
+		mes "False!";
+		close;
+		end;
+}

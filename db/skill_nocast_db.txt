@@ -1,0 +1,17 @@
+//<Skill ID> <Mode>
+//
+// Mode:
+// 1 - Cannot be used in normal maps
+// 2 - Cannot be used in PvP maps
+// 4 - Cannot be used in GvG maps
+// 8 - Cannot be used when WoE is on
+// 16 - Cannot be used in PK Mode maps
+// Example: 8,6 = Endure cannot be used in PvP and GvG maps (2+4)
+8,12
+26,12
+27,12
+87,12
+150,12
+361,12
+362,12
+389,12

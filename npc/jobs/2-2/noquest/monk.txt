@@ -1,0 +1,54 @@
+//Monk NPC for Athena by DiaDz
+//No Quests, just npc on location
+//1.1 Added SkillPoint check [Lupus]
+
+//Monk Job Change Monk_in 99 64 4_M_MONK (new temp 55 cause of error)
+monk_in.gat,99,64,5	script	Master Monk	753,{
+	   if(Class==15) goto monk;
+	   if(Class !=4) goto notaco;
+
+       mes "[Master Monk]";
+       mes "Good Day,This is the Monk's Guild.";
+       next;
+       mes "[Master Monk]";
+       mes "How may I be of Service to you?";
+       next;
+       menu "Change Job into a Monk.",Lcase1,"The Requirements.",Lcase2,"Quit.",Lcase3;
+        		Lcase1:
+        			if(JobLevel < 40) goto notlvl;
+					mes "[Master Monk]";
+					if(SkillPoint > 0) mes "You need to use up all of your skill points before I can make you a Monk.";
+					if(SkillPoint > 0) close;
+		               		mes "Your Welcome to Stay here at the Abbey since you are now a Monk.";
+					jobchange 15;// Job: Job_Monk
+       					close;
+
+				notlvl:
+        				mes "[Master Monk]";
+        				mes "you need to be at least Job level 40";
+        				close;
+
+        		Lcase2:
+        			mes "[Master Monk]";
+        			mes "You need to be a Acolyte of Job Level 40 to become a Monk";
+        			next;
+        			mes "[Master Monk]";
+        			mes "We Monks are the masters of Hand to Hand Combat";
+				close;
+        		
+        		Lcase3:
+	        		mes "[Master Monk]";
+        			mes "Please come again sometime";
+	        		close;
+	
+	monk:
+		mes "[Master Monk]";
+		mes "You are already a Monk of much Skill and prowess";
+		close;
+	
+	notaco:
+		mes "[Master Monk]";
+		mes "I'm sorry but there is nothing I can help you with.";
+		mes "Divine fists can only be forged by Divine Acolytes in order to become a 'Monk'.";
+		close;
+}

@@ -1,0 +1,99 @@
+//===== eAthena Script =======================================
+//= Dog Script (for healings)
+//===== By: ==================================================
+//= Yor
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Any Athena Version (need dog sprite)
+//===== Description: =========================================
+//= Dog heals/regenerates people against zenys
+//===== Additional Comments: =================================
+//= alternative dog with payment.
+//= each HP need 1 zeny
+//= each SP need (baselevel / 5) zenys
+//= calculation is done at start of the script
+//= Added Duplicates And Correct payon Loc [Darkchild]
+//============================================================
+
+prontera.gat,150,184,5	script	Healring#h2-1::Healring	1002,{
+	set @tempHp, MaxHp-Hp;
+	set @tempSp, ((MaxSp-Sp) * BaseLevel) / 5;
+	if (@tempHp > 0) goto WOUNDED;
+	if (@tempSp > 0) goto ONLY_REGENERATION;
+
+	mes "[Healring]";
+	mes "Booiiing Boiing (You don't need healings).";
+	mes "Boing Boing! (Bye Bye!)";
+	close;
+
+	WOUNDED:
+		if (@tempSp > 0) goto WITH_REGENERATION;
+		mes "[Healring]";
+		mes "Booiing: BoooiiinnnG (Need healings: "+@tempHp+" z)?";
+		mes "BOINNG: Booing (I use zenys for a good cause: my medicines and my Poring Food)!";
+		next;
+		menu "Healing ("+@tempHp+"z)",HEALINGS,"No, thanks",CANCEL;
+
+	WITH_REGENERATION:
+		mes "[Healring]";
+		mes "Booiing: BoooiiinnnG (Need only healing: "+@tempHp+" z)?";
+		mes "Boooing: BoooiiinnnG (Only a regeneration: "+@tempSp+" z)?";
+		mes "Booiing Boooing: BoooiiinnnG (or healing and regeneration: "+(@tempHp+@tempSp)+" z)?";
+		mes "BOINNG: Booing (I use zenys for a good cause: my medicines and my Poring Food)!";
+		next;
+		menu "Only healings ("+@tempHp+"z)",HEALINGS,"Only a regeneration ("+@tempSp+"z)",REGENERATION,"Healings with regeneration ("+(@tempHp+@tempSp)+"z)",HEALINGS_AND_REGENERATION,"Nothing, thanks",CANCEL;
+
+	ONLY_REGENERATION:
+		mes "[Healring]";
+		mes "Boooing: BoooiiinnnG (Need a regeneration: "+@tempSp+" z)?";
+		mes "BOINNG: Booing (I use zenys for a good cause: my medicines and my Poring Food)!";
+		next;
+		menu "Regeneration ("+@tempSp+"z)",REGENERATION,"No, thanks",CANCEL;
+
+	HEALINGS:
+		if (Zeny < @tempHp) goto NO_ZENYS;
+		set Zeny, Zeny-@tempHp;
+		heal 30000,0;
+		goto FIN;
+
+	REGENERATION:
+		if (Zeny < @tempSp) goto NO_ZENYS;
+		set Zeny, Zeny-@tempSp;
+		heal 0,30000;
+		goto FIN;
+
+	HEALINGS_AND_REGENERATION:
+		if (Zeny < (@tempHp+@tempSp)) goto NO_ZENYS;
+		set Zeny, Zeny-(@tempHp+@tempSp);
+		heal 30000,30000;
+		goto FIN;
+
+	NO_ZENYS:
+		mes "[Healring]";
+		mes "BOIING! (You don't have enough zenys)!";
+		mes "BOING BOING!! (Starver)!";
+		close;
+
+	FIN:
+		mes "[Healring]";
+		mes "Boooing! Booiing Boing! (Healed! Have fun!)";
+		close;
+
+	CANCEL:
+		mes "[Healring]";
+		mes "Boing Boing! (Bye Bye!)";
+		close;
+}
+
+
+morocc.gat,159,96,5	duplicate(Healring)	Healring#h2-2	1002
+geffen.gat,121,61,5	duplicate(Healring)	Healring#h2-3	1002
+payon.gat,180,105,5	duplicate(Healring)	Healring#h2-4	1002
+alberta.gat,185,144,5	duplicate(Healring)	Healring#h2-5	1002
+aldebaran.gat,134,123,5	duplicate(Healring)	Healring#h2-6	1002
+izlude.gat,125,118,5	duplicate(Healring)	Healring#h2-7	1002
+xmas.gat,149,136,5	duplicate(Healring)	Healring#h2-8	1002
+comodo.gat,188,162,5	duplicate(Healring)	Healring#h2-9	1002
+amatsu.gat,200,80,5	duplicate(Healring)	Healring#h2-10	1002
+gonryun.gat,164,130,5	duplicate(Healring)	Healring#h2-1	1002

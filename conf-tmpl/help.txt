@@ -1,0 +1,225 @@
+// put at first, the minimum level to display the line
+  0:To use one command, type it inside the message window where you usually type to chat.
+ 20:@h/@help - display this help.
+ 40: 
+ 40:--- MESSAGE CMD ---
+ 40:/b/@broadcast <message> - Broadcasts a GM message with name of the GM (in yellow)
+ 40:/nb <message>/@kami <message> - Broadcasts a GM message without name of the GM (in yellow)
+ 40:@kamib <message> - Broadcasts a GM message without name of the GM (in blue)
+ 40:/lb/@localbroadcast <message> - Broadcasts a GM message with name of the GM (in yellow) ONLY on your map
+ 40:/nlb <message> - Broadcasts a GM message without name of the GM (in yellow) ONLY on your map
+  0: 
+  0:--- INFORMATION CMD ---
+ 20:@who/@whois [match_text] - Display a listing of who is online and where
+ 20:@who2 [match_text] - Display a listing of who is online and their job
+ 20:@who3 [match_text] - Display a listing of who is online and their party/guild
+ 20:@whomap/@whomap2/@whomap3 [map] - like @who/@who2/@who3 but only for specifical map
+ 20:@whogm [match_text] - Like @who+@who2+who3, but only for GM.
+  1:@where [char name] - Tells you the location of a character
+ 40:@charstatsall - Displays stats of all characters.
+ 40:@charitemlist <char name> - Displays all items of a player.
+ 40:@charstoragelist <char name> - Displays all items of a player's storage.
+ 40:@charcartlist <char name> - Displays all items of a player's cart.
+  0:@ignorelist - Displays your ignore list
+ 99:@mapinfo [<0-3> [map]] - Give information about a map (general info +: 0: no more, 1: players, 2: NPC, 3: shops/chat).
+  0:@time/@date/@server_date/@serverdate/@server_time/@servertime - Display the date/time of the server
+ 60: 
+ 60:@guildspy <guild_name/id> - You will receive all messages of the guild channel
+ 60:@partyspy <party_name/id> - You will receive all messages of the party channel
+  1: 
+  1:--- CHANGE GM STATE CMD ---
+ 40:/hide/@hide - Makes you character invisible (GM invisibility). Type @hide again become visible.
+ 40:@save - Sets respawn point to current spot
+ 40:@load/@return - Warps you to your save point
+ 40:/mm//mapmove/@warp/@rura/@mapmove <mapname> <x> <y> - Warps you to the selected position
+ 40:@jump [x [y]]- Randomly warps you like a flywing.
+ 20:/shift/@jumpto/@warpto/@goto <char name> - Warps you to selected character
+ 20:@follow <char_name> - follow a player
+ 10:@go <number/city_name> - Warps you to a city.
+ 10:  -3: (Memo point 2)  1: morocc   5: izlude         9: yuno     13: niflheim
+ 10:  -2: (Memo point 1)  2: geffen   6: aldebaran     10: amatsu   14: louyang
+ 10:  -1: (Memo point 0)  3: payon    7: xmas (lutie)  11: gonryun  15: start point
+ 10:   0: prontera        4: alberta  8: comodo        12: umbala   16: prison/jail
+ 10: 
+  1:@die ---- suicide
+ 60:@alive - Revives yourself from death
+ 40:@heal [<HP> <SP>] - Heals the desired amount of HP and SP. No value specified will do a full heal.
+ 20: 
+ 40:@job/@jobchange <job ID> - Changes your job
+ 40:   0 Novice          7 Knight          14 Crusader    22 Formal
+ 40:   1 Swordman        8 Priest          15 Monk        23 Super Novice
+ 40:   2 Mage            9 Wizard          16 Sage
+ 40:   3 Archer         10 Blacksmith      17 Rogue
+ 40:   4 Acolyte        11 Hunter          18 Alchem
+ 40:   5 Merchant       12 Assassin        19 Bard
+ 40:   6 Thief          13 Peco-Knight     20 Dancer      21 Peco-Crusader
+ 40:  24 Novice High    31 Lord Knight     38 Paladin
+ 40:  25 Swordman High  32 High Priest     39 Monk
+ 40:  26 Mage High      33 High Wizard     40 Professor
+ 40:  27 Archer High    34 Whitesmith      41 Stalker
+ 40:  28 Acolyte High   35 Sniper          42 Creator
+ 40:  29 Merchant High  36 Assassin Cross  43 Clown
+ 40:  30 Thief High     37 Peco Knight     44 Gypsy       45 Peco-Paladin
+ 60:@lvup/@blevel/@baselvlup <number of levels> - Raises your base level the desired number of levels. The max is 255 (User Defined).
+ 60:@joblvup/@jlevel/@joblvlup <number of levels> -Raises your job level the desired number of levels. The max is 50 For Basic Classes. For Super Novice and Advanced Classes it is 70.
+ 60:@allskill/@allskills/@skillall/@skillsall - Give you all skills.
+ 40:@option <param1> <param2> <param3> - Adds different visual effects on or around your character
+ 40:	<param1>      <param2>      <p3>(stackable)   <param3>               <param3>
+ 40:	1 Petrified   (stackable)   01 Sight           32 Peco Peco riding   2048 Orc Head
+ 40:	2 Frozen      01 Poison     02 Hide            64 GM Perfect Hide    4096 Wedding Sprites
+ 40:	3 Stunned     02 Cursed     04 Cloak          128 Level 2 Cart       8192 Ruwach
+ 40:	4 Sleeping    04 Silenced   08 Level 1 Cart   256 Level 3 Cart
+ 40:	6 darkness    08 ???        16 Falcon         512 Level 4 Cart
+ 40:	              16 darkness                    1024 Level 5 Cart
+ 20:@mountpeco - Give/remove you a peco (Class is required, but not skill)
+ 20:@disguise <monster_name_or_monster_ID> - Change your appearence to other players to a mob.
+ 20:@undisguise - Restore your normal appearance.
+ 20:@model <hair ID: 0-17> <hair color: 0-8> <clothes color: 0-4> - Changes your characters appearence.
+ 40:@dye/@ccolor <clothes color: 0-4> - Changes your characters appearence (only clothes color).
+ 40:@hairstyle/@hstyle <hair ID: 0-17> - Changes your characters appearence (only hair style).
+ 40:@haircolor/@hcolor <hair color: 0-8> - Changes your characters appearence (only hair color).
+ 40:@speed <1-1000> - Changes you walking speed. 1 being the fastest and 1000 the slowest. Default 150.
+ 40:@effect <effect_id> [flag] - Give an efect to your character.
+ 40:@dropall - throws all your possession on the ground
+ 40:@storeall - puts all your possessions in storage
+ 40:@killable - make your character killable
+ 60:@stpoint <number of points> - Gives you the desired number of stat points.
+ 60:@skpoint <number of points> - Gives you the desired number of skill points.
+ 60:@zeny <amount> - Gives you desired amount of Zeny.
+ 60:@str,@agi,@vit,@int,@dex,@luk <amount> - Adds desired amount to any stat. For example "@str 10" raises your str by 10
+ 60:@statall/@statsall/@allstats/@allstat [value] - Adds value in all stats (maximum if no value).
+ 40:@memo [memo_position] - set/change a memo location (no position: display memo points).
+ 40:@spiritball <number: 1-1000> - Gives you "spirit spheres" like from the skill "Call Spirits"
+ 40:	(If the number you use is > 1000, your server may become instable or crash)
+ 40:@questskill <#> - Gives you the specified quest skill
+ 40:@lostskill <#> - Takes away the specified quest skill from you
+ 40:@skillid <name> - look up a skill by name
+ 40:@useskill <skillid> <skillv> <target> - use a skill on target
+ 40:  Novice                 Swordsman                  Thief                Merchant
+ 40:  142 = Emergency Care   144 = Moving HP Recovery   149 = Throw Sand     153 = Cart Revolution
+ 40:  143 = Act dead         145 = Attack Weak Point    150 = Back Sliding   154 = Change Cart
+ 40:  Archer                 146 = Auto Berserk         151 = Take Stone     155 = Crazy Uproar/Loud Voice
+ 40:  147 = Arrow Creation   Acolyte                    152 = Stone Throw    Magician
+ 40:  148 = Charge Arrows    156 = Holy Light                                157 = Energy Coat
+ 60: @addwarp <map name> <x coord> <y coord>
+ 40: 
+ 40:--- MONSTERS CMD ---
+ 50:/monster <monster_name> - Spawns 1 of the desired monster.
+ 50:@spawn/@monster/@summon <monster_name_or_monster_ID> [<number to spawn> [<desired_monster_name> [<x coord> [<y coord>]]]]
+ 50:@monster2 <desired_monster_name> <monster_name_or_monster_ID> [<number to spawn> [<x coord> [<y coord>]]]
+ 50:@spawn/@monster/@summon/@monster2 "desired monster name" <monster_name_or_monster_ID> [<number to spawn> [<x coord> [<y coord>]]]
+ 50:@spawn/@monster/@summon/@monster2 <monster_name_or_monster_ID> "desired monster name" [<number to spawn> [<x coord> [<y coord>]]]
+ 50:	Spawns the desired monster with any desired name.
+ 60:@killmonster [map] - kill all monsters of the map (they drop)
+ 40:@killmonster2 - kill all monsters of your map (without drops)
+  1: 
+  1:--- ITEMS CMD ---
+  1:@storage - Opens storage
+ 50:@gstorage - Opens guild storage
+ 60:/item <item_name> - Gives you 1 of the desired item.
+ 60:@item <item name or ID> <quantity> - Gives you the desired item.
+ 60:@item2 <item name or ID> <quantity> <Identify_flag> <refine> <attribut> <Card1> <Card2> <Card3> <Card4> = Gives you the desired item.
+ 40:@itemreset - Remove all your items.
+ 60:@itemcheck - Check your items with authorised items.
+ 60:@idsearch <part_of_item_name> - Search all items that name have part_of_item_name
+ 60:@refine <equip position> <+/- amount>
+ 60:@produce <equip name or equip ID> <element> <# of very's>
+ 60:	Element: 0=None 1=Ice 2=Earth 3=Fire 4=Wind
+ 60:	It has separately with fragment 3 of the attribute + stars, you can apply.
+ 60:@repairall - Repair all items of your inventory
+ 40: 
+ 40:--- PVP CMD ---
+ 40:@pvpon - Turns pvp on on the current map
+ 40:@pvpoff - Turns pvp off on the current map
+ 40:@gvgon/@gpvpon - Turns gvg on on the current map
+ 40:@gvgoff/@gpvpoff - Turns gvg off on the current map
+ 60:@agitstart - Starts War of Emperium
+ 60:@agitend - End War of Emperium
+  1: 
+  1:--- GROUPS CMD ---
+  1:@party <party_name> - Create a party.
+ 50:@guild <guild_name> - Create a guild.
+ 60:@guildlvup/@guildlvlup <# of levels> - Raise Guild by desired number of levels
+ 60:@guildrecall <guild_name/id> - Warps all online characters of a guild to you.
+ 60:@partyrecall <party_name/id> - Warps all online characters of a party to you.
+  1: 
+  1:--- PETS CMD ---
+ 60:@hatch - Create a pet from your inventory eggs list.
+ 60:@makeegg <pet_id> - Gives pet egg for monster number in pet DB
+ 40:@petfriendly <#> - Set pet friendly amount (0-1000) 1000 = Max
+ 40:@pethungry <#> - Set pet hungry amount (0-100) 100 = Max
+  1:@petrename - Re-enable pet rename
+ 20: 
+ 20:--- REMOTE CHAR CMD ---
+ 60:@kill <char name> - Kills specified character.
+ 40:@charkillable <char name> - make another character killable
+ 60:@nuke <char name> - Kills specified character (nuclear effect).
+ 60:@chardropall <char name> - throws all a chars possession on the ground
+ 60:@charstoreall <char name> - puts all of anothers charactes possessions in storage
+ 60:/recall/@recall <char name> - Warps target character to you.
+ 80:@recallall - Warps every character online to you.
+ 60:@charwarp/@rura+ <mapname> <x> <y> <char name> - Warps character to location of choice
+ 60:@revive <char name> - Revives target character.
+ 40:@charstats <char name> - Displays a characters stats.
+ 20:@charignorelist <char name> - Displays ignore list of the player
+ 20:@inall <char name> - Allows all wispers for the player
+ 20:@exall <char name> - Blocks all wispers for the player
+ 60:@charoption <param1> <param2> <param3> <charname> - Like @option command but only to target character.
+ 50:@charmountpeco <charname> - Give/remove to a player a peco (Class is required, but not skill).
+ 50:@charpetrename <charname> - Re-enable pet rename to a player.
+ 60:@charsave <map> <x> <y> <charname> - Changes the target players respawn point.
+ 60:@charbaselvl <#> <nickname> - Change a characters base level.
+ 60:@charjlvl <#> <nickname> - Change a characters job level.
+ 60:@charjob/@charjobchange <job ID> <char name> - Changes target characters job.
+ 60:@charzeny <amount> <name> - Give/take a players Zeny
+ 60:@charstpoint <amount> <name> - Give/take a players stat points
+ 60:@charskpoint <amount> <name> - give/take a players skill points
+ 60:@charskreset <charname> - Reset skills of a character.
+ 60:@charstreset <charname> - Reset stats of a character.
+ 60:@charreset <charname> - Reset stats AND skills of a character.
+ 60:@charquestskill <#> <charname> - Gives to a player the specified quest skill.
+ 60:@charlostskill <#> <charname> - Takes away the specified quest skill from the player.
+ 60:@chardelitem <item_name_or_ID> <quantity> <player> - Remove items from a character
+ 50:@charmodel <hair type> <hair color> <clothes color> <name> - Changes a player's model
+ 60:@chardisguise <monster_name_or_monster_ID> <char name> - Changes disguise of a player
+ 60:@charundisguise <char name> - Cancels disguise of a player
+ 60:@charchangesex <name> - Changes sex of a player (all characters of the account)
+ 60:@charblock/@block <name> - Blocks definitively a account
+ 60:@charunblock/@unblock <name> - Unblocks a account
+ 60:@charban/@ban/@banish/@charbanish <time> <name> - Ban temporarily a account
+ 60:	time usage: adjustement (+/- value) and element (y/a, m, d/j, h, mn, s)
+ 60:	Example: @ban +1m-2mn1s-6y testplayer
+ 60:@charunban/@unban/@unbanish/@charunbanish <name> - Unban a account
+ 60:@jail <char_name> - Sends specified character in jails
+ 60:@trade <char_name> - Open a trade window with a another player
+ 20:@kick <charname> - Kicks specified character off the server
+ 99:@kickall - Kick all characters off the server
+ 99:@mapexit - Kick all players and shut down map-server.
+ 80:@doom - Kills all NON GM chars on the server.
+ 80:@doommap - Kills all non GM characters on the map.
+ 80:@raise - Resurrects all characters on the server.
+ 80:@raisemap - Resurrects all characters on the map.
+ 60:@unjail/@discharge <char_name> - Discharges specified character/prisoner
+ 80: 
+ 80:--- ENVIRONMENT CMD ---
+ 80:@night - Uses @option 00 16 00 on all characters. All characters are in darkness.
+ 80:@day - Uses @option 00 00 00 on all characters.
+ 80:@skillon - turn skills on for a map
+ 80:@skilloff - turn skills on for a map
+  0: 
+  0:--- ADMIN CMD ---
+ 99:@reloaditemdb - Reload item database (admin command)
+ 99:@reloadmobdb - Reload monster database (admin command)
+ 99:@reloadskilldb - Reload skills definition database (admin command)
+ 99:@reloadscript - Reload all scripts (admin command)
+ 99:@reloadgmdb - Reload GM levels (admin command)
+ 99:@adjgmlvl - Do a temporary adjustment of the GM level of a player (admin command)
+ 99:@adjcmdlvl - Do a temporary adjustment of the GM level of a command (admin command)
+ 80:@enablenpc <NPC_name> - Enable a NPC (admin command)
+ 80:@disablenpc <NPC_name> - Disable a NPC (admin command)
+ 80: 
+ 99:@gat - For debugging (you inspect around gat)
+ 99:@packet - For debugging (packet variety)
+ 99: 
+100:@GM <password> - it becomes GM!
+  0:@email <actual@email> <new@email> - to change your e-mail (characters protection)

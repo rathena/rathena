@@ -1,0 +1,110 @@
+//===== eAthena Script =======================================
+//= War of Emperium Managers for Al De Baran Guild Castles
+//===== By: ==================================================
+//= jAthena - kalen (1.0)
+//= 1.1 by Akaru, ho|yAnge|X, and Valaris
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= eAthena 0.1+; RO Episode 4+
+//===== Description: =========================================
+//=
+//===== Additional Comments: =================================
+//= v1.2 Optimized with functions.[kobra_k88]
+//============================================================
+
+
+// Castle 1 ==================================================================================
+aldeg_cas01.gat,218,175,0	script	Arl Fredo	55,{
+
+	if(callfunc("F_GldManager","Arl Fredo","aldeg_cas01",119,223,"A01") == 0) close;
+	
+	if(@GDnum==10) guardian "aldeg_cas01.gat",18,219,"Soldier Guardian",1287,1,"Guardian_A01::OnGuardianDied",0;
+	if(@GDnum==11) guardian "aldeg_cas01.gat",117,42,"Soldier Guardian",1287,1,"Guardian_A01::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "aldeg_cas01.gat",207,153,"Soldier Guardian",1287,1,"Guardian_A01::OnGuardianDied",2;
+	if(@GDnum==13) guardian "aldeg_cas01.gat",68,70,"Archer Guardian",1285,1,"Guardian_A01::OnGuardianDied",3;
+	if(@GDnum==14) guardian "aldeg_cas01.gat",187,140,"Archer Guardian",1285,1,"Guardian_A01::OnGuardianDied",4;
+	if(@GDnum==15) guardian "aldeg_cas01.gat",62,204,"Knight Guardian",1286,1,"Guardian_A01::OnGuardianDied",5;
+	if(@GDnum==16) guardian "aldeg_cas01.gat",113,100,"Knight Guardian",1286,1,"Guardian_A01::OnGuardianDied",6;
+	if(@GDnum==17) guardian "aldeg_cas01.gat",211,174,"Knight Guardian",1286,1,"Guardian_A01::OnGuardianDied",7;
+	mes "[Arl Fredo]";
+	mes "Guardian has been installed, the guardian will protect our guild base against enemies.";
+	close;
+}
+
+
+// Castle 2 ==================================================================================
+aldeg_cas02.gat,78,74,0	script	Chen Lee	55,{
+
+	if(callfunc("F_GldManager","Chen Lee","aldeg_cas02",135,231,"A02") == 0) close;
+
+	if(@GDnum==10) guardian "aldeg_cas02.gat",22,186,"Soldier Guardian",1287,1,"Guardian_A02::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "aldeg_cas02.gat",88,31,"Soldier Guardian",1287,1,"Guardian_A02::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "aldeg_cas02.gat",207,176,"Soldier Guardian",1287,1,"Guardian_A02::OnGuardianDied",2;
+	if(@GDnum==13) guardian "aldeg_cas02.gat",50,201,"Archer Guardian",1285,1,"Guardian_A02::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "aldeg_cas02.gat",197,146,"Archer Guardian",1285,1,"Guardian_A02::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "aldeg_cas02.gat",71,193,"Knight Guardian",1286,1,"Guardian_A02::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "aldeg_cas02.gat",88,31,"Knight Guardian",1286,1,"Guardian_A02::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "aldeg_cas02.gat",219,148,"Knight Guardian",1286,1,"Guardian_A02::OnGuardianDied",7;
+	mes "[ Chen Lee ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}
+
+
+// Castle 3 ==================================================================================
+aldeg_cas03.gat,110,118,0	script	Chen Lee	55,{
+
+	if(callfunc("F_GldManager","Chen Lee","aldeg_cas03",225,269,"A03") == 0) close;
+
+	if(@GDnum==10) guardian "aldeg_cas03.gat",57,216,"Soldier Guardian",1287,1,"Guardian_A03::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "aldeg_cas03.gat",80,108,"Soldier Guardian",1287,1,"Guardian_A03::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "aldeg_cas03.gat",199,183,"Soldier Guardian",1287,1,"Guardian_A03::OnGuardianDied",2;
+	if(@GDnum==13) guardian "aldeg_cas03.gat",98,267,"Archer Guardian",1285,1,"Guardian_A03::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "aldeg_cas03.gat",91,88,"Archer Guardian",1285,1,"Guardian_A03::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "aldeg_cas03.gat",78,121,"Knight Guardian",1286,1,"Guardian_A03::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "aldeg_cas03.gat",200,164,"Knight Guardian",1286,1,"Guardian_A03::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "aldeg_cas03.gat",200,164,"Knight Guardian",1286,1,"Guardian_A03::OnGuardianDied",7;
+	mes "[ Chen Lee ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}
+
+
+// Castle 4 ==================================================================================
+aldeg_cas04.gat,53,89,0	script	Brimhemsen	55,{
+//aldeg_cas04.gat,67,116,0	script	Brimhemsen	55,{
+
+	if(callfunc("F_GldManager","Brimhemsen","aldeg_cas04",85,12,"A04") == 0) close;
+
+	if(@GDnum==10) guardian "aldeg_cas04.gat",181,33,"Soldier Guardian",1287,1,"Guardian_A04::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "aldeg_cas04.gat",50,68,"Soldier Guardian",1287,1,"Guardian_A04::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "aldeg_cas04.gat",50,119,"Soldier Guardian",1287,1,"Guardian_A04::OnGuardianDied",2;
+	if(@GDnum==13) guardian "aldeg_cas04.gat",169,49,"Archer Guardian",1285,1,"Guardian_A04::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "aldeg_cas04.gat",133,196,"Archer Guardian",1285,1,"Guardian_A04::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "aldeg_cas04.gat",177,87,"Knight Guardian",1286,1,"Guardian_A04::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "aldeg_cas04.gat",50,119,"Knight Guardian",1286,1,"Guardian_A04::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "aldeg_cas04.gat",133,196,"Knight Guardian",1286,1,"Guardian_A04::OnGuardianDied",7;
+	mes "[ Brimhemsen ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}
+
+
+// Castle 5 ==================================================================================
+aldeg_cas05.gat,52,179,0	script	Brimhemsen	55,{
+
+	if(callfunc("F_GldManager","Brimhemsen","aldeg_cas05",66,11,"A05") == 0) close;
+
+	if(@GDnum==10) guardian "aldeg_cas05.gat",157,192,"Soldier Guardian",1287,1,"Guardian_A05::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "aldeg_cas05.gat",194,46,"Soldier Guardian",1287,1,"Guardian_A05::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "aldeg_cas05.gat",146,214,"Soldier Guardian",1287,1,"Guardian_A05::OnGuardianDied",2;
+	if(@GDnum==13) guardian "aldeg_cas05.gat",223,95,"Archer Guardian",1285,1,"Guardian_A05::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "aldeg_cas05.gat",131,223,"Archer Guardian",1285,1,"Guardian_A05::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "aldeg_cas05.gat",191,68,"Knight Guardian",1286,1,"Guardian_A05::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "aldeg_cas05.gat",160,194,"Knight Guardian",1286,1,"Guardian_A05::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "aldeg_cas05.gat",49,225,"Knight Guardian",1286,1,"Guardian_A05::OnGuardianDied",7;
+	mes "[ Brimhemsen ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}

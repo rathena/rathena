@@ -1,0 +1,40 @@
+//===== eAthena Script =======================================
+//= GvG On Map Flags
+//===== By: ==================================================
+//= eAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= gvg: Turns on GvG mode
+//===== Additional Comments: =================================
+//=
+//============================================================
+
+// GvG Arenas ==============
+guild_vs1.gat	mapflag	gvg
+guild_vs2.gat	mapflag	gvg
+guild_vs3.gat	mapflag	gvg
+guild_vs4.gat	mapflag	gvg
+guild_vs5.gat	mapflag	gvg
+
+// Guild Castles ==========
+aldeg_cas01.gat	mapflag	gvg
+aldeg_cas02.gat	mapflag	gvg
+aldeg_cas03.gat	mapflag	gvg
+aldeg_cas04.gat	mapflag	gvg
+aldeg_cas05.gat	mapflag	gvg
+gefg_cas01.gat	mapflag	gvg
+gefg_cas02.gat	mapflag	gvg
+gefg_cas03.gat	mapflag	gvg
+gefg_cas04.gat	mapflag	gvg
+gefg_cas05.gat	mapflag	gvg
+payg_cas01.gat	mapflag	gvg
+payg_cas02.gat	mapflag	gvg
+payg_cas03.gat	mapflag	gvg
+payg_cas04.gat	mapflag	gvg
+payg_cas05.gat	mapflag	gvg
+prtg_cas01.gat	mapflag	gvg
+prtg_cas02.gat	mapflag	gvg
+prtg_cas03.gat	mapflag	gvg
+prtg_cas04.gat	mapflag	gvg
+prtg_cas05.gat	mapflag	gvg

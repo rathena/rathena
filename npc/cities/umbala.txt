@@ -1,0 +1,1666 @@
+//===== eAthena script =======================================
+//= Umbala Town script
+//===== By: ==================================================
+//= jAthena (1.0)
+//= Fusion Dev Team (1.1)
+//= Muad Dib (1.2)
+//= Darkchild (1.3) 
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= Any eAthena Version; RO Episode XX
+//===== Description: =========================================
+//= Umbala Town Npcs
+//==================================================
+//Phase1.Learning the Language
+//1	(Elder)First discussion
+//2	(Elder)Asking about learning the language
+//3	(Elder)Final step (understanding NPC speech)
+//------------------------------------------
+//Phase2.Create Essence/Dismantle Stone
+//4	(Shaman)Get permission to speak with her from the chief
+//5	(Elder)Ask about conditions needed to be fulfilled to get permission
+//6	(Elder)Get permission
+//7	(Shaman)Use the shaman to create essences and dismantle elemental stones.
+//===== Additional Comments: =================================
+//= 1.0 - Done By jAthena (dunno Who)
+//= 1.1 - Translated by Fusion Dev Team
+//= 1.2 - Fixed Something by Muad Dib
+//= 1.2 - Fixed up For eA by Darkchild
+//============================================================
+
+
+//========================================================
+// == NPCs on the road to Umbala ==
+//========================================================
+//Note that On_Emotion is NOT an npc command but just an trigger for DoNpcEvent!!
+comodo.gat,170,137,7	script	Reid	84,{
+	close;
+On_Emotion20:
+	emotion 20;
+	end;
+On_Emotion29:
+	emotion 29;
+	end;
+}
+
+//========================================================
+comodo.gat,171,137,1	script	Heath	92,{
+	mes "[Reid]";
+	mes "There's a huuuuuuuge treasure hidden";
+	mes "somewhere around here!";
+	next;
+	mes "[Heath]";
+	mes "If only we could get our hands on it,";
+	mes "the people who call us the 'Dunce Duo'";
+	mes "will certainly have to eat their words!!";
+	next;
+	mes "[Reid]";
+	mes "We'll keep looking as long as it takes!";
+	next;
+	donpcevent "Reid::On_Emotion29";
+	emotion 29;
+	mes "[Heath]";
+	mes "Hey, Reid, come on!";
+	next;
+	mes "[Reid]";
+	mes "............";
+	next;
+	donpcevent "Reid::On_Emotion29";
+	emotion 20;
+	mes "[Reid]";
+	mes "Okay, okay...I'm coming.";
+	next;
+	menu "Hey, wait!  Treasure?",Lwhat_1;
+
+	Lwhat_1:
+		mes "[Reid]";
+		mes "You mean you've never heard of it?!";
+		next;
+		emotion 29;
+		mes "[Heath]";
+		mes "Oh, you want to hear the story of the";
+		mes "treasure, huh?  Well, how imporant";
+		mes "is it to you, really?";
+		next;
+		mes "[Reid and Heath]";
+		donpcevent "Reid::On_Emotion29";
+		emotion 29;
+		mes "Important enough for you to";
+		mes "cough up 1000 zeny?!";
+		next;
+		menu "Alright.  I'll be a sucker today",Lzeny_1,"Dream on, Dunce Duo!",Lzeny_2;
+
+		Lzeny_1:
+			if(Zeny < 1000) goto Lzeny_no;
+			set Zeny,Zeny-1000;
+			mes "[Heath]";
+			mes "Alright, my 'friend'. listen up.";
+			next;
+			mes "[Reid]";
+			mes "A famous adventurer named Niles";
+			mes "returned to this village from his";
+			mes "adventures abroad.";
+			mes "He was dragging...";
+			next;
+			mes "[Heath]";
+			mes "...(Whisperwhisperwhisper)";
+			mes "a really big box along behind him!!";
+			next;
+			mes "[Reid]";
+			mes "He returned during the dead of night,";
+			mes "hoping no one would see his cargo.";
+			next;
+			mes "[Heath]";
+			mes "There has to be something";
+			mes "valuable in that box!";
+			mes "There's no other explanation!";
+			next;
+			mes "[Reid]";
+			mes "I'm on a search for that box!";
+			mes "I'm going to find it!";
+			next;
+			emotion 20;
+			mes "[Heath]";
+			mes "There's just one problem.";
+			mes "We don't have the slightest";
+			mes "idea where Niles put the treasure.";
+			next;
+			mes "[Reid]";
+			mes "Niles is making us look foolish!";
+			next;
+			menu "Where is Niles now?",Lwhere_1;
+
+			Lwhere_1:
+				mes "[Reid]";
+				mes "He's on the north side of the village.";
+				next;
+				mes "[Heath]";
+				mes "I hope this information was worth";
+				mes "it.";
+				next;
+				mes "[Reid and Heath]";
+				mes "It was certainly worth it to us!";
+				mes "Heh heh heh!";
+				close;
+
+			Lzeny_no:
+				mes "[Reid]";
+				mes "Hey!  Come back when you're not dirt";
+				mes "poor!  Gotta spend money to make money, right?";
+				close;
+
+		Lzeny_2:
+			donpcevent "Reid::On_Emotion20";
+			emotion 20;
+			mes "[Heath]";
+			mes "Whaaaaat?!  I swear that our marks";
+			mes "aren't as gullible as they used to be.";
+			mes "How are we supposed to make an honest zeny?!";
+			close;
+}
+
+//========================================================
+cmd_in01.gat,175,120,3	script	Iria	69,{
+	mes "[Iria]";
+	mes "That guy over at the far table";
+	mes "in the corner is the adventurer";
+	mes "Niles.  He seems to have a wealth";
+	mes "of stories about his many adventures.";
+	next;
+	mes "[Iria]";
+	mes "He's always so boisterous, saying things";
+	mes "like 'Will your journey lead you to fame,";
+	mes "or to certain death?!'";
+	next;
+	mes "[Iria]";
+	mes "Nevertheless, anyone who talks to Niles";
+	mes "for any length of time seems to be invariably";
+	mes "inspired by his passion.";
+	close;
+}
+
+//========================================================
+cmd_in01.gat,164,115,1	script	Niles	731,{
+	mes "[Niles]";
+	mes "Oh?";
+	mes "Another fool come to ask about";
+	mes "that idiotic rumor circulating";
+	mes "around town?";
+	next;
+	mes "[Niles]";
+	mes "The story about me finding a great";
+	mes "treasure is a big misunderstanding.";
+	mes "In reality, it's just my collection";
+	mes "of modest finds.";
+	next;
+	mes "[Niles]";
+	mes "That said, I think I have a lead";
+	mes "on a potentially lucrative ";
+	mes "item just waiting to be found.";
+	next;
+	mes "[Niles]";
+	mes "Don't you think that cave";
+	mes "near Komodo village is interesting?";
+	next;
+	mes "[Niles]";
+	mes "I think a large jewel may be";
+	mes "hidden within its confines.";
+	next;
+	mes "[Niles]";
+	mes "Until recently, we didn't know how to";
+	mes "reach the cave.";
+	next;
+	mes "[Niles]";
+	mes ".............";
+	next;
+	mes "[Niles]";
+	mes ".......Hm?";
+	next;
+	mes "[Niles]";
+	mes "Is your mind set on going there?!";
+	mes "Can you imagine what you'll find?!";
+	next;
+	mes "[Niles]";
+	mes "Doesn't just talking about it make";
+	mes "you want to go on an adventure?!!!";
+	next;
+	mes "[Niles]";
+	mes "Just break down any barrier in your";
+	mes "path and trust your primal instincts";
+	mes "to guide you to your goal!";
+	next;
+	mes "[Niles]";
+	mes "Go!  Quickly!";
+	next;
+	mes "[Niles]";
+	mes "Will you find the path to fame on";
+	mes "your journey, or the path to certain";
+	mes "death?!  Hahahaha!!!!";
+	close;
+}
+
+
+//==================================================================
+//	Umbala NPCs and Quests
+//==================================================================
+
+//==================================================================
+//Trade money for meat
+umbala.gat,70,106,3	script	Utan Child#1	781,{
+if(event_umbala < 3) goto LumWord;
+	mes "[???]";
+	mes "Hello!  I'm a member of";
+	mes "the Utan tribe.";
+	next;
+	mes "[???]";
+	mes "My name is Hatan!  Nice to";
+	mes "meet you.";
+	emotion 18;
+	next;
+	mes "[Hatan]";
+	mes "...I can't play now, because";
+	mes "a recent thunderstorm caused";
+	mes "the roof of our house to become";
+	mes "cracked...";
+	emotion 28;
+	next;
+	mes "[Hatan]";
+	mes "...!";
+	next;
+	mes "[Hatan]";
+	mes "Hey!  You guys seem pretty well";
+	mes "off.  Do you think you could";
+	mes "give us a little zeny";
+	mes "so we can fix the crack?";
+	mes "Please!";
+	emotion 28;
+	next;
+	menu "Nod",-,"Shake Head",Lend2;
+
+		if(Zeny < 1000) goto LError2;
+		mes "[Hatan]";
+		mes "Yay!!";
+		mes "You're the best!!";
+		set Zeny,Zeny-1000;
+		getitem 517,1;//Items: Meat,
+		emotion 19;
+		next;
+		mes "[Hatan]";
+		mes "Please take this as a token of my gratitude.";
+		emotion 18;
+		close;
+
+		LError2:
+			mes "[Hatan]";
+			mes "Well, maybe I misunderestimated your";
+			mes "wealth, but you shouldn't lie...";
+			emotion 32;
+			close;
+	Lend2:
+		mes "[Hatan]";
+		mes "...Awwwww.";
+		emotion 28;
+		close;
+
+LumWord:
+	mes "[???]";
+	mes "Umba!";
+	mes "Umbaluwababawamuba.";
+	next;
+	mes "[???]";
+	mes "Umba!  Umbaumba!";
+	mes "Umbabama Hatan baba.";
+	emotion 18;
+	next;
+	mes "[Hatan]";
+	mes "...Umba, Umbaumbaumba.";
+	mes "Umbaumbaumbababa.";
+	mes "Umbabawaumbaumbaba.";
+	mes "Umbaumba.";
+	mes "...Umbaumbamabababumba.";
+	emotion 28;
+	next;
+	mes "[Hatan]";
+	mes "...!";
+	next;
+	mes "[Hatan]";
+	mes "Umba!";
+	mes "Umbaumbaumbababa.";
+	mes "Umbababaumbawabaumba!";
+	mes "Umbaumbaumbababa.";
+	mes "wamfuba!  Umba!";
+	emotion 28;
+	next;
+	menu "Nod",-,"Shake Head",Lend;
+
+		if(Zeny < 1000) goto LError;
+		mes "[Hatan]";
+		mes "Umbaumba!!";
+		mes "Um!-babaumba-baumba-.";
+		mes "Umba-umba-Umbabawamamaba!";
+		set Zeny,Zeny-1000;
+		getitem 517,1;//Items: Meat,
+		emotion 19;
+		next;
+		mes "[Hatan]";
+		mes "Umbaumba....";
+		emotion 18;
+		close;
+
+		LError:
+			mes "[Hatan]";
+			mes "Umba-Umbana!";
+			emotion 32;
+			close;
+	Lend:
+		mes "[Hatan]";
+		mes "....Umba....";
+		emotion 28;
+		close;
+}
+
+//==================================================================
+//Trade Meat for Clover, ???, and Soft Fur 
+umbala.gat,59,243,5	script	Utan Child#4	787,{
+if(event_umbala < 3) goto LumWord;
+	mes "[Kotan]";
+	mes ".....";
+	mes ".....";
+	mes "...I want meat.";
+	mes "...Gimme meat!";
+	next;
+	menu "Sure",-,"No way!",L2;
+	if(countitem(517) < 1) goto LError;//Items: Meat,
+		mes "[Kotan]";
+		mes "Hey, thanks!";
+		mes "Take these!";
+		emotion 10;
+		delitem 517,1;//Items: Meat,
+		getitem 909,2;//Items: Jellopy,
+		getitem 914,2;//Items: Fluff,
+		getitem 705,2;//Items: Clover,
+		close;
+	L2:
+		mes "[Kotan]";
+		mes "......";
+		mes "...I'm hungry!";
+		mes "...Gimme meat!";
+		emotion 28;
+		close;
+LError:
+	mes "[Kotan]";
+	mes "Hey!  You said you have";
+	mes "meat!  So you were lying?";
+	mes "I hate you!";
+	emotion 6;
+	close;
+LumWord:
+	mes "[???]";
+	mes "....";
+	mes "....";
+	mes "...Umbaba!";
+	mes "...Famba!";
+	emotion 11;
+	next;
+	menu "Umba",-,"Umbabu",Lu2;
+	if(countitem(517) < 1) goto LuError;//Items: Meat,
+		mes "[???]";
+		mes "Umbaumbaumbababa.";
+		mes "Umbababauma.";
+		emotion 10;
+		delitem 517,1;//Items: Meat,
+		getitem 909,2;//Items: Jellopy,
+		getitem 914,2;//Items: Fluff,
+		getitem 705,2;//Items: Clover,
+		close;
+	Lu2:
+		mes "[???]";
+		mes "....";
+		mes "......Unguba!";
+		mes "....Umbababa.";
+		emotion 28;
+		close;
+LuError:
+	mes "[???]";
+	mes "Umbawamufumabababa!";
+	mes "Umbabababaumbaumbu!";
+	emotion 6;
+	close;
+}
+
+//==============================================================================
+//Skeletal Gate
+//==============================================================================
+umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
+	if(event_umbala==7) goto LwarpNoText;
+	set @ryumon,0;
+	mes "^3355FFThe gate is shaped like a skeleton";
+	mes "You cannot pass this point as the gate is";
+	mes "locked.  You hear sounds coming from the";
+	mes "inside.^000000";
+	next;
+	menu "Examine the skeleton",-,"Nothing",Lend;
+		mes "^3355FFWhen you examine the gate";
+		mes "carefully, you notice that there";
+		mes "is a hole about the size of a gemstone";
+		mes "on the left side of the gate about where";
+		mes "the skeleton's left eye should be.  There is";
+		mes "a matching hole on the other side.^000000";
+		next;
+		mes "^3355FFWhat you would like to";
+		mes "to do with the left socket?^000000";
+		next;
+		menu "Nothing",-,"Insert a Blue Gemstone",L1_2,"Insert a Yellow Gemstone",L1_3,"Insert a Red Gemstone",L1_4;
+			mes "^3355FFNothing was inserted into the left socket.^000000";
+			next;
+			goto LRight;
+		L1_2:
+			//Blue
+			if(countitem(717) < 1) goto L1_2_e;//Items: Blue Gemstone,
+				mes "^3355FFYou inserted a Blue Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 717,1;//Items: Blue Gemstone,
+				getitem 717,1;//Items: Blue Gemstone,
+				set @ryumon,1;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto LRight;
+		L1_3:
+			//Yellow
+			if(countitem(715) < 1) goto L1_3_e;//Items: Yellow Gemstone,
+				mes "^3355FFYou inserted a Yellow Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 715,1;//Items: Yellow Gemstone,
+				getitem 715,1;//Items: Yellow Gemstone,
+				set @ryumon,2;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto LRight;
+		L1_4:
+			//Red
+			if(countitem(716) < 1) goto L1_4_e;//Items: Red Gemstone,
+				mes "^3355FFYou inserted a Red Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 716,1;//Items: Red Gemstone,
+				getitem 716,1;//Items: Red Gemstone,
+				set @ryumon,3;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto LRight;
+			L1_2_e:
+				mes "^3355FFYou don't have a Blue Gemstone.";
+				goto L1_e;
+			L1_3_e:
+				mes "^3355FFYou don't have a Yellow Gemstone.";
+				goto L1_e;
+			L1_4_e:
+				mes "^3355FFYou don't have a Red Gemstone.";
+			L1_e:
+				mes "Therefore, nothing was inserted into";
+				mes "the left socket.^000000";
+				next;
+	LRight:
+		mes "^3355FFWhat about the right";
+		mes "socket?^000000";
+		next;
+		menu "Nothing",-,"Insert a Blue Gemstone",L2_2,"Insert a Yellow Gemstone",L2_3,"Insert a Red Gemstone",L2_4;
+			mes "^3355FFNothing was inserted into the right socket.^000000";
+			next;
+			goto Lfin;
+		L2_2:
+			//Blue
+			if(countitem(717) < 1) goto L2_2_e;//Items: Blue Gemstone,
+				mes "^3355FFYou inserted a Blue Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 717,1;//Items: Blue Gemstone,
+				getitem 717,1;//Items: Blue Gemstone,
+				set @ryumon,@ryumon+10;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto Lfin;
+		L2_3:
+			//Yellow
+			if(countitem(715) < 1) goto L2_3_e;//Items: Yellow Gemstone,
+				mes "^3355FFYou inserted a Yellow Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 715,1;//Items: Yellow Gemstone,
+				getitem 715,1;//Items: Yellow Gemstone,
+				set @ryumon,@ryumon+20;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto Lfin;
+		L2_4:
+			//Red
+			if(countitem(716) < 1) goto L2_4_e;//Items: Red Gemstone,
+				mes "^3355FFYou inserted a Red Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 716,1;//Items: Red Gemstone,
+				getitem 716,1;//Items: Red Gemstone,
+				set @ryumon,@ryumon+30;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto Lfin;
+			L2_2_e:
+				mes "^3355FFYou don't have a Blue Gemstone.";
+				goto L2_e;
+			L2_3_e:
+				mes "^3355FFYou don't have a Yellow Gemstone.";
+				goto L2_e;
+			L2_4_e:
+				mes "^3355FFYou don't have a Red Gemstone.";
+			L2_e:
+				mes "Therefore, nothing was inserted into";
+				mes "the right socket.^000000";
+				next;
+			Lfin:
+				mes "^3355FF..........^000000";
+				next;
+				mes "^3355FF...................";
+				mes ".....................^000000";
+				next;
+				mes "^3355FF.......................";
+				mes ".........................";
+				mes ".........................^000000";
+				next;
+				if(event_umbala < 6) goto LSecondCheck;
+					if(@ryumon == 33) goto Lwarp;
+				LSecondCheck:
+				if(event_umbala >= 6) goto LLNewEnd;
+					if(@ryumon == 13) goto Lwarp;
+					LNewEnd:
+						mes "^3355FFNothing happened.";
+						mes "You hear a faint laugh, but";
+						mes "decide that it's all in";
+						mes "your head.^000000";
+						close;
+				Lwarp:
+					mes "^3355FFA rumbling sound can be";
+					mes "heard as the gate opens.";
+					mes "As you step across the threshold.";
+					mes "you feel as if you're walking in";
+					mes "into the arms of death itself.^000000";
+					next;
+				LwarpNoText:
+					warp "um_in.gat",32,71;
+					close;
+Lend:
+	mes "^3355FFAfter hitting the gate a few";
+	mes "times with no result, you decide to give";
+	mes "up.^000000";
+	close;
+}
+
+//==============================================================================
+//Umbala Event
+//==============================================================================
+um_in.gat,39,122,5	script	Utan Tribal Elder	784,{
+	if(event_umbala == 1) goto LStart2;	
+	if(event_umbala == 2) goto LStart3;
+	if(event_umbala == 3) goto LStart4;
+	if(event_umbala == 4) goto LStart5;
+	if(event_umbala == 5) goto LStart6;
+	if(event_umbala == 6) goto LStart4;
+	if(event_umbala == 7) goto LStart4;
+	mes "[Karukatan]";
+	mes "Aha, You're new to the Utan";
+	mes "family's little village, aren't";
+	mes "you?  I would remember such a face";
+	mes "had I met you before.";
+	next;
+	mes "[Karukatan]";
+	mes "We know there is a wide world around";
+	mes "us, but the there is something to";
+	mes "be appreciated in the simple life";
+	mes "we lead here.";
+	next;
+	mes "[Karukatan]";
+	mes "All decisions in the village are made";
+	mes "by me or with my input";
+	next;
+	mes "[Karukatan]";
+	mes "You want to know how I speak your";
+	mes "language when it seems no one else in";
+	mes "the village does?  A fair question.";
+	mes "I picked up your tongue from the";
+	mes "adventurers who sometimes pass";
+	mes "through this village.";
+	next;
+	mes "[Karukatan]";
+	mes "Some outsiders have also settled near here";
+	mes "over time.  In exchange for information";
+	mes "about their customs and culture, I";
+	mes "teach them the language and customs";
+	mes "of the Utan tribe.";
+	next;
+	mes "[Karukatan]";
+	mes "If you want to learn our language,";
+	mes "you must immerse yourselves in";
+	mes "our customs and cultural traditions.";
+	mes "You should even try and look as much";
+	mes "like us as you can.";
+	next;
+	mes "[Karukatan]";
+	mes "I hope you're worthy of my confidence.";
+	mes "Some members of the tribe have expressed";
+	mes "the sentiment that welcoming outsiders";
+	mes "is dangerous to the village.";
+	next;
+	mes "[Karukatan]";
+	mes "When you want to begin learning the";
+	mes "language, come and visit me.  Don't";
+	mes "forget to make yourself appear as";
+	mes "much like us as you can.";
+	set event_umbala,1;
+	close;
+LStart2:
+	mes "[Karukatan]";
+	mes "Ahh, have you looked around the";
+	mes "village a bit?  Did other people";
+	mes "from the tribe hide from you when";
+	mes "they saw you?  Don't worry.  They";
+	mes "were just surprised to see a new face.";
+	next;
+	mes "[Karukatan]";
+	mes "Hmm?  You need something from me?";
+	mes "How can I make your stay in the village";
+	mes "more pleasent?";
+	next;
+	menu "I want to learn the tribal language",-,"Umbaumbaba?",L2,"Forget it",L3;
+		if ((getequipisequiped(9)>0) && (getequipisequiped(10)>0)) goto L1_mask;
+		mes "[Karukatan]";
+		mes "Well, in order to understand our";
+		mes "language, you need to assimilate";
+		mes "our cultural values, too.  Trying to";
+		mes "understand a language in the context of an";
+		mes "alien culture is foolish, right?";
+		next;
+		mes "[Karukatan]";
+		mes "Besides, if the tribesmen in the";
+		mes "village fear you, how will you";
+		mes "ever get them to speak with you?";
+		mes "You should try making yourself";
+		mes "look like us in order to be more";
+		mes "accepted.";
+		close;
+	L1_mask:
+		mes "[Karukatan]";
+		mes "What a cute mask.  The Utan tribe";
+		mes "appreciates its traditional masks";
+		mes "because sometimes by hiding your";
+		mes "face, you can express more geniune";
+		mes "feelings.";
+	//Activate Sphinx Mask Quest (optional)
+		set mask_q,1;
+		next;
+		mes "[Karukatan]";
+		mes "Over time, the mask itself";
+		mes "has come to symbolize trust among";
+		mes "the members of the Utan tribe.";
+		next;
+		mes "[Karukatan]";
+		mes "Now that you're prepared, I will";
+		mes "begin teaching you the Utan";
+		mes "language as promised.  First,";
+		mes "you need to make some preparations,";
+		mes "however...";
+		next;
+		mes "[Karukatan]";
+		mes "First, I need some paper.  With";
+		mes "paper, I can write down the words";
+		mes "I intend to teach.";
+		next;
+		mes "[Karukatan]";
+		mes "I need ^3377FF10x Oily Paper^000000, and ^3377FF5x Smooth Paper^000000.";
+		mes "I also need something to write with.";
+		mes "of course.";
+		mes "For that, ^3377FF1x India Ink^000000 and ^3377FF1x Bird Feather^000000";
+		mes "will do nicely.";
+		next;
+		mes "[Karukatan]";
+		mes "Once you get these, I can start";
+		mes "teaching you the language.";
+		set event_umbala,2;
+		close;
+	L2:
+		mes "[Karukatan]";
+		mes "Haha.  Only imitating the sound";
+		mes "of the words is useless.  Even";
+		mes "though it sounds random, there is";
+		mes "a specific way of combining the";
+		mes "words.";
+		next;
+		mes "[Karukatan]";
+		mes "Also, our language has depends a";
+		mes "a lot on emotion to convey its";
+		mes "meaning.  Outsiders can't pick up";
+		mes "the subtlety right away, even though";
+		mes "we're the same race, ";
+		next;
+		mes "[Karukatan]";
+		mes "It seems you have an interest";
+		mes "in learning the language of the";
+		mes "Utan tribe.  If that's the case,";
+		mes "come visit me and I'll teach you.";
+		next;
+		mes "[Karukatan]";
+		mes "Then, you won't sound so silly.";
+		close;
+	L3:
+		mes "[Karukatan]";
+		mes "Ah.  If you want to continue your";
+		mes "trip, please keep this village in";
+		mes "your memories.";
+		close;
+LStart3:
+	if ((countitem(7151)>=10) && (countitem(7111)>=5) && (countitem(1024)>=1) && (countitem(916)>=1)) goto Lchkok;//Items: Oiled Paper, String Paper, Squid Ink, Feather of Birds,
+	mes "[Karukatan]";
+	mes "It seems you've not yet prepared the";
+	mes "proper items.  Did you forget what";
+	mes "you need to gather before I can";
+	mes "teach you the language?  You need to gather";
+	next;
+	mes "[Karukatan]";
+	mes "^3377FF10x Oily Paper^000000,";
+	mes "^3377FF5x Smooth Paper^000000,";
+	mes "^3377FF1x India Ink^000000, and";
+	mes "^3377FF1x Bird Feather^000000.";
+	mes "Once you have gathered those, I can teach";
+	mes "you Utan tribal language.";
+	close;
+Lchkok:
+	mes "[Karukatan]";
+	mes "Good.  You've prepared all the";
+	mes "necessary materials.  Now, I can";
+	mes "begin to teach you the Utan tribal";
+	mes "language.";
+	next;
+	mes "[Karukatan]";
+	mes "............";
+	next;
+	mes "[Karukatan]";
+	mes "............";
+	mes "............";
+	next;
+	mes "[Karukatan]";
+	mes "............";
+	mes "............";
+	mes "............";
+	next;
+	mes "[Karukatan]";
+	mes "Do you feel more enlightened now?";
+	mes "Try talking to others in the Utan";
+	mes "tribe.  They'll warm up to your quickly";
+	mes "now that you speak the language.";
+	delitem 7151,10;//Items: Oiled Paper,
+	delitem 7111,5;//Items: String Paper,
+	delitem 1024,1;//Items: Squid Ink,
+	delitem 916,1;//Items: Feather of Birds,
+	set event_umbala,3;
+	next;
+	mes "[Karukatan]";
+	mes "If you need something while you're";
+	mes "here, don't hesitate to visit me.";
+	close;
+LStart4:
+//fin
+	mes "[Karukatan]";
+	mes "Do you need something?";
+	mes "If you need someone to guide you around";
+	mes "the village, you should ask someone else.";
+	mes "I can't leave here right now.";
+	next;
+	mes "[Karukatan]";
+	mes "The best way to get a feel for";
+	mes "the village is to just walk";
+	mes "around and see the sights.  By doing";
+	mes "that, you can form a personal";
+	mes "bond with the village.";
+	close;
+LStart5:
+	mes "[Karukatan]";
+	mes "Oh, it seems you're enjoying yourself here.";
+	mes "You need something else?";
+	next;
+	mes "[Karukatan]";
+	mes "It seems you want to ask the";
+	mes "shaman Putsuchiratan something";
+	mes "and you're seeking my permission";
+	mes "to do so.";
+	next;
+	mes "[Karukatan]";
+	mes "Well...There's a mask from";
+	mes "abroad that Putsuchiratan and I";
+	mes "have both always desired.  Putsuchiratan";
+	mes "heard about it some time ago.";
+	next;
+	mes "[Karukatan]";
+	mes "If I could have the ^3377FFSmile Mask^000000,";
+	mes "it would be a great honor, but";
+	mes "I promised I would give it to";
+	mes "to Putsuchiratan as a gift if I ever";
+	mes "came across one.  If you can find a Smile Mask for me,";
+	mes "I'll give you permission to speak with her.";
+	set event_umbala,5;
+	close;
+LStart6:
+	if(countitem(2278) > 0) goto Lsmileok;//Items: Mr. Smile,
+	mes "[Karukatan]";
+	mes "Did you find the ^3377FFSmile Mask^000000 yet?";
+	mes "In order to let you see the shaman,";
+	mes "you need to collect one.";
+	mes "A gift will put Putsuchiritan in";
+	mes "a good mood, also.";
+	close;
+Lsmileok:
+	mes "[Karukatan]";
+	mes "Ahh!  It's a Smile Mask!";
+	mes "I would really like to put this";
+	mes "on just once, but I promised to";
+	mes "give this to Putsuchiritan as";
+	mes "a gift.";
+	delitem 2278,1;//Items: Mr. Smile,
+	set event_umbala,6;
+	next;
+	mes "[Karukatan]";
+	mes "I'll tell Putsuchiritan to allow you";
+	mes "to meet with her.  I'm certain that you";
+	mes "will find her talents to be a tremendous";
+	mes "help on your journey.";
+	close;
+}
+
+//=====================================================================
+um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
+	if(event_umbala < 3) goto LumWord;
+	if(event_umbala == 4) goto LStart2;
+	if(event_umbala == 5) goto LStart2;
+	if(event_umbala == 6) goto LStart3;
+	if(event_umbala == 7) goto LStart4;
+	mes "[Putsuchiritan]";
+	mes "I will not see outsiders that are";
+	mes "not from the Utan tribe.";
+	mes "...There are many things about the";
+	mes "nature of our society that you do";
+	mes "not yet understand.";
+	next;
+	mes "[Putsuchiritan]";
+	mes "Others of your type will do anything";
+	mes "to set foot on land which is sacred";
+	mes "to the Utan tribe.  We fear that";
+	mes "revealing our secrets will expose";
+	mes "use to danger.";
+	next;
+	mes "[Putsuchiritan]";
+	mes "What's worse, I don't think that";
+	mes "outsiders understand our desire";
+	mes "to preserve our tribal culture.";
+	next;
+	mes "[Putsuchiritan]";
+	mes "As my talents are foremost for";
+	mes "the use of the Utan tribe, you";
+	mes "must get permission from the elder";
+	mes "if you want my assistance.";
+	mes "Also, don't be stirring up trouble";
+	mes "among the tribesmen.";
+	set event_umbala,4;
+	close;
+LStart2:
+	mes "[Putsuchiritan]";
+	mes "Didn't you hear me?  You need";
+	mes "to get the elder's permission before";
+	mes "I can help you.";
+	close;
+LStart3:
+	mes "[Putsuchiritan]";
+	mes "You seem to have gotten permission from";
+	mes "the elder.  Fine, I'll help you, though";
+	mes "I don't really want to.";
+	next;
+	mes "[Putsuchiritan]";
+	mes "I can call forth hidden talents";
+	mes "buried deep within your psyche";
+	mes "and tap the power hidden in";
+	mes "elemental stones.";
+	next;
+	mes "[Putsuchiritan]";
+	mes "I need to prepare my rituals.";
+	mes "When you're ready to proceed, please";
+	mes "talk to me again.";
+	set event_umbala,7;
+	close;
+LStart4:
+	set @umchange[1],0;
+	set @umchange[2],0;
+	set @umchange[3],0;
+	set @umchange[4],0;
+	mes "[Putsuchiritan]";
+	mes "I don't know whether my talents";
+	mes "will be useful to you, but I'll";
+	mes "help you anyway.";
+	next;
+	mes "[Putsuchiritan]";
+	mes "I can create elemental essence from natural objects,";
+	mes "or, dismantle elemental stones into their component essences.";
+	mes "Which would you like to do?";
+	next;
+	menu "Create Essence",L1,"Dismantle Elemental Stone",L2,"Nothing",-;
+		mes "[Putsuchiritan]";
+		mes "If you don't wish my help at the moment,";
+		mes "that's fine.  When you do, please come";
+		mes "by again.";
+		close;
+L1:
+	mes "[Putsuchiritan]";
+	mes "Which elemental essence would you";
+	mes "like to create?  I can create earth, water,";
+	mes "fire, and wind essence.";
+	next;
+	menu "Earth",L1_1,"Water",L1_2,"Fire",L1_3,"Wind",L1_4;
+	L1_1:
+		if (countitem(947)<15) goto L1_1e;//Items: Horn,
+		set @umchange[1],947;
+		set @umchange[2],15;
+		set @umchange[3],993;
+		goto L1_ketugou;
+	L1_2:
+		if (countitem(946)<20) goto L1_2e;//Items: Snails Shell,
+		set @umchange[1],946;
+		set @umchange[2],20;
+		set @umchange[3],991;
+		goto L1_ketugou;
+	L1_3:
+		if (countitem(904)<20) goto L1_3e;//Items: Scorpion Tail,
+		set @umchange[1],904;
+		set @umchange[2],20;
+		set @umchange[3],990;
+		goto L1_ketugou;
+	L1_4:
+		if (countitem(1013)<25) goto L1_4e;//Items: Rainbow Shell,
+		set @umchange[1],1013;
+		set @umchange[2],25;
+		set @umchange[3],992;
+		goto L1_ketugou;
+	L1_ketugou:
+		mes "[Putsuchiritan]";
+		mes "Now, I will try to tap the";
+		mes "source of power hidden deep within";
+		mes "you.  Choose a number between 1 and 9.";
+		mes "If you don't want to create essence";
+		mes "after all, choose 0.";
+		next;
+	L1_input:
+		input @umchange[4];
+		if (@umchange[4]==0) goto L1_cancel;
+		if (@umchange[4]>9) goto L1_numError;
+		mes "[Putsuchiritan]";
+		if (@umchange[1]==947) mes "The horn begins to vibrate.";
+		if (@umchange[1]==904) mes "The tail begins to vibrate.";
+		if ((@umchange[1]==1013) && (@umchange[1]==946)) mes "The skin begins to vibrate.";
+//End Possible Conversion
+		mes "I will now chant a holy mantra.";
+		mes "Imagine the number in your mind";
+		mes "and imagine power radiating forth from";
+		mes "your body.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "Amba Omba Sanba!  Unba Chi!";
+		mes "Wanbatauma Eurukaba!  Unba!  Ba!";
+		mes "Jyur!  Fumuba  Rurara!  Wamba!  Ra!";
+		mes "Damtsuha Ombabaraka! Unba! Shi!";
+		mes "Sukatamba Aburumba! Umba! Shi!";
+		next;
+		delitem @umchange[1],@umchange[2];
+		getitem @umchange[3],@umchange[4];
+		mes "[Putsuchiritan]";
+		mes "There.  Your inner power has converted";
+		mes "these objects from nature into";
+		mes "elemental essence.  Put";
+		mes "it to good use.";
+		close;
+L1_cancel:
+	mes "[Putsuchiritan]";
+	mes "If you don't wish my help at the moment,";
+	mes "that's fine.  When you do, please come";
+	mes "by again.";
+	close;
+L1_numError:
+	mes "[Putsuchiritan]";
+	mes "You must choose a number between";
+	mes "1 and 9.  It is very important that";
+	mes "you choose the number most dear to";
+	mes "your heart.";
+	next;
+	goto L1_input;
+L1_1e:
+	mes "[Putsuchiritan]";
+	mes "Earth...You need that which is";
+	mes "a friend of the earth.  Explore";
+	mes "the verdant forest and find";
+	mes "^3377FF15x Horn^000000 for the ritual.";
+	goto L1_empty;
+L1_2e:
+	mes "[Putsuchiritan]";
+	mes "Water...You need that which is";
+	mes "saturated with water.  Explore";
+	mes "the area around here and find";
+	mes "^3377FF20x Katashimuri Skin^000000 for the ritual.";
+	goto L1_empty;
+L1_3e:
+	mes "[Putsuchiritan]";
+	mes "Fire...You need that which";
+	mes "can withstand the roiling heat";
+	mes "of perpetual flame.  Explore the";
+	mes "desert and find ^3377FF20x Scorpion Tail^000000";
+	mes "for the ritual.";
+	goto L1_empty;
+L1_4e:
+	mes "[Putsuchiritan]";
+	mes "Wind...You need that which";
+	mes "has an easy camaraderie with";
+	mes "the sky itself.";
+	mes "You need ^3377FF25x Radiant Pelt^000000";
+	mes "to complete the ritual.";
+L1_empty:
+	next;
+	mes "[Putsuchiritan]";
+	mes "Once you've prepared these";
+	mes "objects from nature, please return here";
+	mes "so we can complete the ritual.";
+	close;
+//----------------------------------------------------------
+L2:
+	mes "[Putsuchiritan]";
+	mes "What type of stone would you like to";
+	mes "dismantle?  Please choose earth, water,";
+	mes "fire, or wind.";
+	next;
+	menu "Earth",L2_1,"Water",L2_2,"Fire",L2_3,"Wind",L2_4;
+	L2_1:
+	if (countitem(997)<1) goto L2_1e;//Items: Great Nature,
+		set @umchange[1],997;
+		set @umchange[2],1;
+		set @umchange[3],993;
+		goto L2_bunkai;
+	L2_2:
+	if (countitem(995)<1) goto L2_2e;//Items: Mystic Frozen,
+		set @umchange[1],995;
+		set @umchange[2],1;
+		set @umchange[3],991;
+		goto L2_bunkai;
+	L2_3:
+	if (countitem(994)<1) goto L2_3e;//Items: Flame Heart,
+		set @umchange[1],994;
+		set @umchange[2],1;
+		set @umchange[3],990;
+		goto L2_bunkai;
+	L2_4:
+	if (countitem(996)<1) goto L2_4e;//Items: Rough Wind,
+		set @umchange[1],996;
+		set @umchange[2],1;
+		set @umchange[3],992;
+		goto L2_bunkai;
+	L2_bunkai:
+		mes "[Putsuchiritan]";
+		if (@umchange[1]==997) mes "I will dismantle your earth crystal";
+		if (@umchange[1]==995) mes "I will dismantle your frozen crystal";
+		if (@umchange[1]==994) mes "I will dismantle your heart of flame";
+		if (@umchange[1]==996) mes "I will dismantle your rough wind stone";
+		mes "into its component essence.";
+		mes "Choose a number between 1 and 9.";
+		mes "If you don't want me to dismantle the";
+		mes "stone, choose 0.";
+		next;
+	L2_input:
+		input @umchange[4];
+		if (@umchange[4]==0) goto L2_cancel;
+		if (@umchange[4]>9) goto L2_numError;
+//Calculating number of essences
+		set @umchange[4],rand(5)+@umchange[4];
+		set @umchange,@umchange + @rand;
+		if (@umchange[4]>10) set @umchange[4],@umchange[4]-10;
+		if (@umchange[4]<5) set @umchange[4],@umchange[4]+5;
+		mes "[Putsuchiritan]";
+		mes "Please place the elemental stone";
+		mes "inside this holy circle.  I will chant a";
+		mes "a mantra.  I don't know if I can";
+		mes "completely dismantle the stone,";
+		mes "but here goes...";
+		next;
+		mes "[Putsuchiritan]";
+		mes "Unba Unba Karama!  Unba!  Ta!";
+		mes "Rukara!  Ukarere!  Un!  Unba!  Ka!";
+		mes "Anburaka Taburaka Taburakan!  Unba Ra!";
+		mes "Onbaruzu Zan Kata!  Unba Ka!";
+		mes "Kan Tsun Rakarakan!  Unba!  Ha!";
+		next;
+		delitem @umchange[1],@umchange[2];
+		getitem @umchange[3],@umchange[4];
+		mes "[Putsuchiritan]";
+		mes "The elemental stone has been";
+		mes "dismantled into its natural";
+		mes "essence.  Please put it to";
+		mes "good use.";
+		close;
+L2_cancel:
+	mes "[Putsuchiritan]";
+	mes "If you don't wish my help at the moment,";
+	mes "that's fine.  When you do, please come";
+	mes "by again.";
+	close;
+L2_numError:
+	mes "[Putsuchiritan]";
+	mes "You must choose a number between";
+	mes "1 and 9.  It is very important that";
+	mes "you choose the number most dear to";
+	mes "your heart.";
+	next;
+	goto L2_input;
+L2_1e:	mes "[Putsuchiritan]";
+	mes "You need to have";
+	mes "^3377FF1x Great Nature^000000";
+	mes "to disassemble into its";
+	mes "component essence.";
+	goto L2_empty;
+L2_2e:
+	mes "[Putsuchiritan]";
+	mes "You need to have";
+	mes "^3377FF1x Mystic Frozen^000000";
+	mes "to disassemble into its";
+	mes "component essence.";
+	goto L2_empty;
+L2_3e:
+	mes "[Putsuchiritan]";
+	mes "You need to have";
+	mes "^3377FF1x Flaming Heart^000000";
+	mes "to disassemble into its";
+	mes "component essence.";
+	goto L2_empty;
+L2_4e:
+	mes "[Putsuchiritan]";
+	mes "You need to have";
+	mes "^3377FF1x Rough Wind^000000";
+	mes "to disassemble into its";
+	mes "component essence.";
+L2_empty:
+	next;
+	mes "[Putsuchiritan]";
+	mes "Once you have the necessary stone,";
+	mes "please come back and visit me";
+	mes "so that the ritual can be completed.";
+	close;
+LumWord:
+	mes "[?????]";
+	mes "Umbaumbaumbaba Utan Umbaba";
+	mes "Umbaumbaumbafumbabauma...";
+	mes "Umbabaumbaumbabaumbabaumba";
+	mes "Umbabaumbabaumbaumbabaumba";
+	mes "Fumbaumba.";
+	next;
+	warp "umbala.gat",217,186;
+	close;
+}
+
+//=====================================================================
+umbala.gat,177,153,3	script	Bast	97,{
+	if (event_umbala>=3) emotion 0;
+	mes "[Bast]";
+	mes "Oh!  Another outsider.  It's";
+	mes "great to encounter another one";
+	mes "in this village!  My name is";
+	mes "Bast.";
+	next;
+	mes "[Bast]";
+	mes "Because Umbala village is isolated";
+	mes "within a deep forest, its culture";
+	mes "is unaffected by the steady pull";
+	mes "of progress.";
+	next;
+	mes "[Bast]";
+	mes "Not only that, but the natives' skin color";
+	mes "and language are also different.";
+	mes "Aren't you confused by their";
+	mes "alien gestures and expressions?";
+	next;
+	mes "[Bast]";
+	mes "Even the things you would expect";
+	mes "to transcend culture have a";
+	mes "different meaning in Umbala.";
+	next;
+	mes "[Bast]";
+	mes "Just because a tribeman's face laughs";
+	mes "doesn't necessarily mean his";
+	mes "heart is laughing.  Understand?";
+	next;
+	emotion 28;
+	mes "[Bast]";
+	mes "Because of that, people in the village";
+	mes "who know our language may have trouble!!";
+	close;
+}
+
+//=====================================================================
+umbala.gat,80,146,4	script	Yuki	753,{
+	mes "[Yuki]";
+	mes "Umbaubaugau...Oh!";
+	mes "You're from abroad?  That's";
+	mes "wonderful!  I didn't think that";
+	mes "I would meet someone else from abroad.";
+	mes "Hahaha.";
+	next;
+	mes "[Yuki]";
+	mes "I came here looking for strong";
+	mes "companions, but I was unable";
+	mes "to understand the language.";
+	mes "I had to listen to the language being spoken";
+	mes "for some time before I picked it up.";
+	mes "Hahaha.";
+	next;
+	mes "[Yuki]";
+	mes "The people here seem to want to";
+	mes "preserve their native culture while";
+	mes "eschewing the trappings of modern life.";
+	mes "The tribesmen are really prone to";
+	mes "mischief-making.";
+	next;
+	mes "[Yuki]";
+	mes "The primitive atmosphere here is really";
+	mes "refreshing.  Tribal law is very lax and";
+	mes "doesn't intrude upon one's enjoyment of";
+	mes "the village.  It's really wonderful.";
+	close;
+}
+
+//=====================================================================
+um_in.gat,101,73,3	script	Yunatan 	783,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Yunatan]";
+	mes "I'm standing out here because I";
+	mes "can't stand to lay eyes on";
+	mes "that lecher Wambokoriotan.";
+	mes "I hate his guts!";
+	close;
+LumWord:
+	mes "[Yunatan]";
+	mes "Umbaba!  Umbaumbaugaga";
+	mes "Ugugumubaugaumuumu.";
+	mes "Umbabababababababa.";
+	close;
+}
+
+//=====================================================================
+um_in.gat,94,123,5	script	Bartsutan	783,{
+	if(event_umbala < 30) goto LumWord;
+	mes "[Bartsutan]";
+	mes "I want to see Wambokoriotan";
+	mes "morph into an insect so I can";
+	mes "have the satisfaction of crushing";
+	mes "his skull!  I hate him and his";
+	mes "advances!  I wish he would just stay";
+	mes "away from me.";
+	close;
+LumWord:
+	mes "[Bartsutan]";
+	mes "Umbarugumbarumbauma!";
+	mes "Umuguugumubarumba.";
+	mes "Umba...uumu.";
+	close;
+}
+
+//=====================================================================
+umbala.gat,140,157,6	script	Utan Tribe Young Adult#1	785,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Seirutan]";
+	mes "Bungy jumping is extremely dangerous.";
+	mes "As such, completing a successful";
+	mes "jump is a prerequisite for recognition";
+	mes "as an adult in the Utan tribe.";
+	close;
+LumWord:
+	mes "[?????]";
+	mes "Umbaumbafumba.";
+	mes "Uwambaunbaumbabaufumba";
+	mes "Umbababaumbaumba.";
+	close;
+}
+
+//=====================================================================
+umbala.gat,146,157,4	script	Utan Young Adult#2	786,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Arotan]";
+	mes "Making a safe bungy jump is a";
+	mes "really big deal.  When someone makes";
+	mes "their first jump safely, many people";
+	mes "gather for a large feast.";
+	close;
+LumWord:
+	mes "[????]";
+	mes "Umbaumbaumbabaumbaba.";
+	mes "Umbaumbabaumbababaumufumuba.";
+	close;
+}
+
+//=====================================================================
+umbala.gat,149,165,4	script	Utan Young Adult#3	781,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Kryubatan]";
+	mes "I'm really afraid of heights,";
+	mes "so I really don't want to jump,";
+	mes "but I must in order to be";
+	mes "recognized as a courageous";
+	mes "member of the Utan tribe.";
+	close;
+LumWord:
+	mes "[??????]";
+	mes "Umbaumbaumbababa.";
+	mes "Umbaumbaumumbabaumfumuba.";
+	mes "Umbaumbaumumubafumba.";
+	close;
+}
+
+//=====================================================================
+umbala.gat,92,159,4	script	Hartan	785,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Hartan]";
+	mes "You want to know why our";
+	mes "skin is jet-black?";
+	mes "......";
+	next;
+	mes "[Hartan]";
+	mes "Well...";
+	mes "Every night before we sleep,";
+	mes "we eat lots of chocolate!";
+	next;
+	mes "[Hartan]";
+	mes "Mmmmmmm...Chocolate...";
+	close;
+LumWord:
+	mes "[????]";
+	mes "Umbaumbaumba";
+	mes "Umbaumbaumba";
+	mes "Umbaumbaumba";
+	next;
+	mes "[????]";
+	mes "Umbaumbabaungaha.";
+	emotion 28;
+	close;
+}
+
+//=====================================================================
+umbala.gat,194,104,4	script	Utan Tribe Child#2	787,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Burkatan]";
+	mes "An outsider?";
+	mes "Are you here to try bungy jumping?";
+	next;
+	menu "You got it",-,"Well....",L2;
+		mes "[Burkatan]";
+		mes "What courage!";
+		mes "The Utan tribe welcomes those";
+		mes "with courageous hearts.";
+		close;
+	L2:
+		mes "[Burkatan]";
+		mes "The adults don't want me to even";
+		mes "get close to the bungy jumping area.";
+		mes "In this tribe, bungy jumping is a rite";
+		mes "of passage.  If I can show them that";
+		mes "I'm big enough to brave bungy jumping,";
+		mes "they'll have to recognize me as an adult!";
+		close;
+LumWord:
+	mes "[???]";
+	mes "Umbaumbababaumfumuba.";
+	mes "Umbababaumbabaumbaumba.";
+	next;
+	menu "Um...yes?",-,"Nope...",Lu2;
+		mes "[???]";
+		mes "Umbaumbaumbababa.";
+		mes "Umbaumbaumubaba.";
+		close;
+	Lu2:
+		mes "[???]";
+		mes "Umbaumbaumuam.";
+		mes "Umbaumbaumbaba.";
+		mes "Umbaumfumababaumu.";
+		close;
+}
+
+//=====================================================================
+umbala.gat,193,208,6	script	Utan Child#3	789,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Fuitan]";
+	mes "When I was younger, I went bungy";
+	mes "jumping even though it was extremely";
+	mes "dangerous.  I did it, though, and my";
+	mes "chest swelled with a feeling of achievement.";
+	mes "The tradition encourages rash behavior, but";
+	mes "boys will be boys, don't you think?";
+	close;
+LumWord:
+	mes "[????]";
+	mes "Umbaumbababa.";
+	mes "Umbamubafumabaumumbabamua";
+	mes "Umumbababaumbafuma.";
+	close;
+}
+
+//=====================================================================
+umbala.gat,139,205,4	script	Utan Tribe Young Adult#5	785,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Tsunitan]";
+	mes "Awesome!  I haven't seen an outsider in some time.";
+	mes "You're just in time to watch as";
+	mes "youth from all over the village bungy";
+	mes "jump to prove their courage!";
+	next;
+	mes "[Tsunitan]";
+	mes "After you jump, you can use the";
+	mes "cord to climb.  Also, if you search";
+	mes "underwater, you might be able to find";
+	mes "a submerged cave.  Of course, there have";
+	mes "been unlucky souls who have died...";
+	next;
+	mes "[Tsunitan]";
+	mes "You may also feel sick";
+	mes "as the bottom draws near, because";
+	mes "the ominous shapes of aquatic monsters";
+	mes "drift slowly under the surface.";
+	mes "If you linger underwater, you might die...";
+	close;
+LumWord:
+	mes "[????]";
+	mes "Umbaumba!";
+	mes "Umbaumbabababaumumba.";
+	mes "Babaum Utan Umbaumbaba";
+	mes "Umbababafumu.";
+	mes "Umfumubabaumbaumbaumbaba.";
+	next;
+	mes "[????]";
+	mes "Umbafumumababaumba.";
+	mes "Umbabatanumbaumba.";
+	mes "Umumu.  Umbaumbaumbaum.";
+	mes "Umbabaumbaumbaumubaamum.";
+	mes "Umbaumbaumbafumu.";
+	close;
+}
+
+//=====================================================================
+um_in.gat,158,71,3	script	Utan Tribesman	787,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Mutakutan]";
+	mes "Umbala has enough interesting trees";
+	mes "that studying them never gets old!";
+	next;
+	mes "[Mutakutan]";
+	mes "My favorite tree near Umbala is huge!";
+	mes "It stretches into the sky as far";
+	mes "as the eye can see!";
+	mes "It's supposed to be the tallest tree in the world!";
+	emotion 33;
+	next;
+	mes "[Mutakutan]";
+	mes "It's so old and large that";
+	mes "the top can't even be seen!";
+	next;
+	mes "[Mutakutan]";
+	mes "Even after climbing the tree";
+	mes "to quite a height, the top was not";
+	mes "in sight.  I consider myself";
+	mes "a tree-climbing expert, so this";
+	mes "was quite distressing.";
+	next;
+	mes "[Mutakutan]";
+	mes "That said, the fruit I was able";
+	mes "to pick off of some of the higher";
+	mes "branches is yummy!";
+	emotion 21;
+	next;
+	mes "[Mutakutan]";
+	mes "It has a slightly sour taste.  Eating";
+	mes "it makes me feel all tingly inside!!";
+	emotion 21;
+	next;
+	mes "[Mutakutan]";
+	mes "At the same time, a terrible illness";
+	mes "was ravaging Umbala village.";
+	next;
+	mes "[Mutakutan]";
+	mes "The elder's health was declining";
+	mes "and he was in danger of dying, but";
+	mes "when I gave him a piece of that";
+	mes "fruit, his health improved";
+	mes "dramatically in a short time.  Surely";
+	mes "this fruit was a gift from the forest!";
+	emotion 28;
+	next;
+	mes "[Mutakutan]";
+	mes "The tree is north of the village.  Why";
+	mes "not visit it if you're over that way?";
+	close;
+LumWord:
+	mes "[????]";
+	mes "Umbaumbaumbabaumba!";
+	mes "Umbaumbaumbababaumba";
+	mes "Umbaumbaumba";
+	mes "Umbabaumbaumbaba.";
+	close;
+}
+
+//=====================================================================
+umbala.gat,145,217,3	script	Chibibatan	783,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Chibibatan]";
+	mes "I want to have some fun with";
+	mes "Wambokoriotan, but after seeing";
+	mes "how his wife can be, I don't know if";
+	mes "I want to end up being on her bad side.";
+	close;
+LumWord:
+	mes "[Chibibatan]";
+	mes "Umbaba.";
+	mes "Ugaugumbarumbaruuuu!";
+	mes "Ugugauwubaruguagumbagua.";
+	close;
+}
+
+//=====================================================================
+um_in.gat,139,48,5	script	Purenotan	783,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Purenotan]";
+	mes "See that loser over there?";
+	mes "I'm on to him.  He hasn't";
+	mes "exactly made a secret of his desire";
+	mes "to have an affair or three.";
+	mes "He needs to be smacked in the nuts, HARD.";
+	close;
+LumWord:
+	mes "[Purenotan]";
+	mes "Umbaumbaugaga!";
+	mes "Umbaumbabababa!";
+	mes "Umbaumba!";
+	emotion 6;
+	next;
+	mes "[Purenotan]";
+	mes "Umbaumabaumbaumbaba!";
+	mes "Umbababababaugau!";
+	mes "Uguugaumbabaumbagumba!";
+	emotion 24;
+	next;
+	emotion 27;
+	close;
+On_emo:
+emotion 6;
+end;
+}
+
+//=====================================================================
+um_in.gat,144,45,5	script	Wambokoriotan	789,{
+	if(event_umbala < 3) goto LumWord;
+	mes "[Wambokoriotan]";
+	mes "Ahhh...My wife is a real";
+	mes "hothead.  Ouch...ouch.";
+	next;
+	mes "[Wambokoriotan]";
+	mes "Yunatan, Bartsutan, Chibibatan...";
+	mes "I want Umbala's babes as much";
+	mes "as they want me...Ouch...ouch!";
+	close;
+LumWord:
+	mes "[Wambokoriotan]";
+	mes "Umbaumbaba.....";
+	mes "Umbaugua!";
+	mes "Umbagumumbabagumbagaga!";
+	emotion 18;
+	next;
+	donpcevent "Purenotan::On_emo";
+	close;
+}
+
+//==============================================================================
+//Bungee jumping!
+//==============================================================================
+//umbala.gat,140,197,0	script	#Shibonochikka	139,0,1,{
+set @jumprand,rand(4);
+if (@jumprand == 1) goto L1;
+if (@jumprand == 2) goto L2;
+if (@jumprand == 3) goto L3;
+mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : Iyahaaaaahh!",8;
+end;
+
+L1:
+//Dead
+mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : Ukiyaaaaaaaaaa!",8;
+	percentheal -100,0;
+end;
+
+L2:
+//HP50% Damage
+mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : Kyaaaaaaaaaaa!",8;
+	percentheal -50,0;
+end;
+
+L3:
+//HP99%‚Ì Damage
+mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : Waaaaaaaaaah!",8;
+	percentheal -99,0;
+end;
+}
+
+//=====================================================================
+umbala.gat,136,195,0	script	#Warp Point	139,1,1,{
+	warp "umbala.gat",145,166;
+	end;
+}

@@ -1,0 +1,258 @@
+Job_Novice	0
+Job_Swordman	1
+Job_Mage	2
+Job_Archer	3
+Job_Acolyte	4
+Job_Merchant	5
+Job_Thief	6
+Job_Knight	7
+Job_Priest	8
+Job_Wizard	9
+Job_Blacksmith	10
+Job_Hunter	11
+Job_Assassin	12
+Job_Knight2	13
+Job_Crusader	14
+Job_Monk	15
+Job_Sage	16
+Job_Rogue	17
+Job_Alchem	18
+Job_Bard	19
+Job_Dancer	20
+Job_Crusader2	21
+Job_SuperNovice	23
+Job_Novice_High	24
+Job_Swordman_High	25
+Job_Mage_High	26
+Job_Archer_High	27
+Job_Acolyte_High	28
+Job_Merchant_High	29
+Job_Thief_High	30
+Job_Lord_Knight	31
+Job_High_Priest	32
+Job_High_Wizard	33
+Job_Whitesmith	34
+Job_Sniper	35
+Job_Assassin_Cross	36
+Job_Lord_Knight2	37
+Job_Paladin	38
+Job_Champion	39
+Job_Professor	40
+Job_Stalker	41
+Job_Creator	42
+Job_Clown	43
+Job_Gypsy	44
+Job_Paladin2	45
+Job_Baby	46
+Job_Baby_Swordman	47
+Job_Baby_Mage	48
+Job_Baby_Archer	49
+Job_Baby_Acolyte	50
+Job_Baby_Merchant	51
+Job_Baby_Thief	52
+Job_Baby_Knight	53
+Job_Baby_Priest	54
+Job_Baby_Wizard	55
+Job_Baby_Blacksmith	56
+Job_Baby_Hunter	57
+Job_Baby_Assassin	58
+Job_Baby_Knight2	59
+Job_Baby_Crusader	60
+Job_Baby_Monk	61
+Job_Baby_Sage	62
+Job_Baby_Rogue	63
+Job_Baby_Alchem	64
+Job_Baby_Bard	65
+Job_Baby_Dancer	66
+Job_Baby_Crusader2	67
+Job_Super_Baby	68
+
+mf_nomemo	0
+mf_noteleport	1
+mf_nosave	2
+mf_nobranch	3
+mf_nopenalty	4
+mf_nozenypenalty	5
+mf_pvp	6
+mf_pvp_noparty	7
+mf_pvp_noguild	8
+mf_gvg		9
+mf_gvg_noparty	10
+mf_notrade	11
+mf_noskill	12
+mf_nowarp	13
+mf_nopvp	14
+mf_noicewall	15
+mf_snow		16
+mf_fog		17
+mf_sakura	18
+mf_leaves	19
+mf_rain	20
+mf_indoors	21
+mf_nogo	22
+
+StatusPoint	9	1
+BaseLevel	11	1
+SkillPoint	12	1
+Class		19	1
+Upper		56	1
+Zeny		20	1
+Sex		21	1
+Weight		24	1
+MaxWeight	25	1
+JobLevel	55	1
+BaseExp		1	1
+JobExp		2	1
+NextBaseExp	22	1
+NextJobExp	23	1
+Hp		5	1
+MaxHp		6	1
+Sp		7	1
+MaxSp		8	1
+BaseJob		119	1
+
+bMaxHP		6
+bMaxSP		8
+bStr		13
+bAgi		14
+bVit		15
+bInt		16
+bDex		17
+bLuk		18
+bAtk		41
+bAtk2		42
+bMatk1		43
+bMatk2		44
+bDef		45
+bMdef		47
+bMdef2		48
+bHit		49
+bFlee		50
+bFlee2		51
+bCritical	52
+bAspd		53
+bFame		57
+bUnbreakable	58
+
+bAtkRange	1000
+bAtkEle		1001
+bDefEle		1002
+bCastrate	1003
+bMaxHPrate	1004
+bMaxSPrate	1005
+bUseSPrate	1006
+bAddEle		1007
+bAddRace	1008
+bAddSize	1009
+bSubEle		1010
+bSubRace	1011
+bAddEff		1012
+bResEff		1013
+bBaseAtk	1014
+bAspdRate	1015
+bHPrecovRate	1016
+bSPrecovRate	1017
+bSpeedRate	1018
+bCriticalDef	1019
+bNearAtkDef	1020
+bLongAtkDef	1021
+bDoubleRate	1022
+bDoubleAddRate	1023
+bMatk		1024
+bMatkRate	1025
+bIgnoreDefEle	1026
+bIgnoreDefRace	1027
+bAtkRate	1028
+bSpeedAddRate	1029
+bAspdAddRate	1030
+bMagicAtkDef	1031
+bMiscAtkDef	1032
+bIgnoreMdefEle	1033
+bIgnoreMdefRace	1034
+bMagicAddEle	1035
+bMagicAddRace	1036
+bMagicSubRace	1037
+bPerfectHitRate	1038
+bPerfectHitAddRate	1039
+bCriticalRate	1040
+bGetZenyNum	1041
+bAddGetZenyNum	1042
+bAddDamageClass	1043
+bAddMagicDamageClass	1044
+bAddDefClass	1045
+bAddMdefClass	1046
+bAddMonsterDropItem	1047
+bDefRatioAtkEle	1048
+bDefRatioAtkRace	1049
+bAddSpeed	1050
+bHitRate	1051
+bFleeRate	1052
+bFlee2Rate	1053
+bDefRate	1054
+bDef2Rate	1055
+bMdefRate	1056
+bMdef2Rate	1057
+bSplashRange	1058
+bSplashAddRange	1059
+bAutoSpell	1060
+bHPDrainRate	1061
+bSPDrainRate	1062
+bShortWeaponDamageReturn	1063
+bLongWeaponDamageReturn	1064
+bWeaponComaEle	1065
+bWeaponComaRace	1066
+bAddEff2	1067
+bBreakWeaponRate	1068
+bBreakArmorRate	1069
+bAddStealRate	1070
+bMagicDamageReturn	1071
+bRandomAttackIncrease	1072
+bAllStats		1073
+bAgiVit			1074
+bAgiDexStr		1075
+bPerfectHide		1076
+bDisguise		1077
+bClassChange	1078
+
+bRestartFullRecover	2000
+bNoCastCancel	2001
+bNoSizeFix	2002
+bNoMagicDamage	2003
+bNoWeaponDamage	2004
+bNoGemStone	2005
+bNoCastCancel2	2006
+bInfiniteEndure	2007
+
+
+Eff_Stone	0
+Eff_Freeze	1
+Eff_Stan	2
+Eff_Sleep	3
+Eff_Poison	4
+Eff_Curse	5
+Eff_Silence	6
+Eff_Confusion	7
+Eff_Blind	8
+
+SC_Stone	128
+SC_Freeze	129
+SC_Stan		130
+SC_Sleep	131
+SC_Poison	132
+SC_Curse	133
+SC_Silence	134
+SC_Confusion	135
+SC_Blind	136
+SC_SpeedPot0	37
+SC_SpeedPot1	38
+SC_SpeedPot2	39
+SC_ATKPot	185
+SC_MATKPot	186
+SC_EncPoison	6
+SC_Holy		17
+SC_Flame	90
+SC_Frost	91
+SC_Lightning	92
+SC_Seismic	93
+SC_Bleeding	124
+SC_BlockSkill	194

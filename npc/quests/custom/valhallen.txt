@@ -1,0 +1,199 @@
+//===== eAthena Script ======================================= 
+//= Valhallen items Quests NPC
+//===== By: ================================================== 
+//= Avaji
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= All-in-one: Mjolnir,Sleipnir,Brisingamen,Gleipnir,Megingjard
+//===== Additional Comments: ================================= 
+//= custom quest, ingridients were based on official RO FAQ
+//============================================================ 
+
+prontera.gat,147,171,5	script	Lenneth	811,{
+	mes "[Lenneth]";
+	mes "I come from Valhalla to aid you.";
+	mes "I can transmute for you many of the Valhallen items.";
+	mes "Although they require many rare elements to make.";
+	next;
+	mes "[Lenneth]";
+	mes "What would you like?";
+	next;
+	menu "Mjolnir",-,"Sleipnir",L_SLE,"Brisingamen",L_BRI,"Gleipnir",L_GLE,"Megingjard",L_MEG;
+
+	mes "[Lenneth]";
+	mes "The ^3355FFMjolnir^000000 is a mighty mace with the power of wind.";
+	mes "The items I need to transmute 2 ^3355FFSpanners^000000 into a ^3355FFMjolnir^000000 are as follows:";
+	mes "20 ^3355FFOridecon^000000 5 ^3355FFElunium^000000 and 40 ^3355FFGold^000000";
+	mes "I also need the following essences:";
+	mes "2 ^3355FFThor's Guntlet^000000";
+	mes "4 ^3355FFIron Maiden^000000";
+	mes "5 ^3355FFWrath of Valkyrie^000000";
+	mes "5 ^3355FFBreath of Soul^000000";
+	mes "5 ^3355FFOmen of tempest^000000";
+	next;
+	mes "[Lenneth]";
+	mes "Do you desire the ^3355FFMjolnir^000000";
+	next;
+	menu "Yes",-,"No",L_OUT;
+
+	if (countitem(984) < 20 || countitem(985) < 5 || countitem(969) < 40 || countitem(1531) < 2 || countitem(7089) < 5) goto L_NOTENOUGH;
+	if (countitem(7074) < 2 || countitem(7075) < 4 || countitem(7078) < 5 || countitem(7087) < 5) goto L_NOTENOUGH;
+
+	delitem 984,20;
+	delitem 985,5;
+	delitem 969,40;
+	delitem 1531,2;
+	delitem 7074,2;
+	delitem 7075,4;
+	delitem 7078,5;
+	delitem 7087,5;
+	delitem 7089,5;
+
+	getitem 1530,1;
+
+	mes "[Lenneth]";
+	mes "Here is your ^3355FFMjolnir^000000 may it serve you well.";
+	close;
+L_SLE:
+
+	mes "[Lenneth]";
+	mes "The ^3355FFSleipnir^000000 are shoes that increase your maximum hp/sp";
+	mes "To be able to transmute 2 ^3355FFBoots^000000 into a ^3355FFSleipnir^000000 I will need:";
+	mes "1 ^3355FFOridecon^000000 10 ^3355FFElunium^000000 and 20 ^3355FFGold^000000";
+	mes "I also need the following essences:";
+	mes "3 ^3355FFWheel of the Unknown^000000";
+	mes "5 ^3355FFFeather of Angel^000000";
+	mes "3 ^3355FFSprirt of Fish^000000";
+	mes "3 ^3355FFEmblem of the Sun God^000000";
+	next;
+	mes "[Lenneth]";
+	mes "Do you desire the ^3355FFSleipnir^000000";
+	next;
+	menu "Yes",-,"No",L_OUT;
+
+	if (countitem(969) < 20 || countitem(985) < 10 || countitem(984) < 1 || countitem(2406) < 2 || countitem(7076) < 3) goto L_NOTENOUGH;
+	if (countitem(7079) < 5 || countitem(7083) < 3 || countitem(7086) < 3) goto L_NOTENOUGH;
+
+	delitem 969,20;
+	delitem 985,10;
+	delitem 984,1;
+	delitem 2406,2;
+	delitem 7076,3;
+	delitem 7079,5;
+	delitem 7083,3;
+	delitem 7086,3;
+
+	getitem 2410,1;
+
+	mes "[Lenneth]";
+	mes "Here is your ^3355FFSleipnir^000000 may they help you.";
+	close;
+L_BRI:
+
+	mes "[Lenneth]";
+	mes "The ^3355FFBrisingamen^000000 increases your str agi int and vit.";
+	mes "The items I need to transmute a ^3355FFNecklace^000000 into the ^3355FFBrisingamen^000000 are as follows:";
+	mes "2 ^3355FFSapphire^000000 3 ^3355FFPearl^000000 10 ^3355FFOpal^000000";
+	mes "5 ^3355FFRuby^000000 and 20 ^3355FFGold^000000";
+	mes "I also need the following essences:";
+	mes "4 ^3355FFFreya's Jewel^000000";
+	mes "4 ^3355FFSilver Ornament^000000";
+	mes "3 ^3355FFSnow Crystal^000000";
+	mes "3 ^3355FFQuiet Wave^000000";
+	mes "3 ^3355FFDrifting Air^000000";
+	next;
+	mes "[Lenneth]";
+	mes "Do you desire the ^3355FFBrisingamen^000000";
+	next;
+	menu "Yes",-,"No",L_OUT;
+
+	if (countitem(969) < 20 || countitem(723) < 5 || countitem(727) < 10 || countitem(722) < 3 || countitem(726) < 2) goto L_NOTENOUGH;
+	if (countitem(7090) < 3 || countitem(7088) < 3 || countitem(7077) < 4 || countitem(7073) < 4 || countitem(2603) < 1) goto L_NOTENOUGH;
+	if (countitem(7092) < 3) goto L_NOTENOUGH;
+
+	delitem 726,2;
+	delitem 722,3;
+	delitem 727,10;
+	delitem 723,5;
+	delitem 969,20;
+	delitem 2603,1;
+	delitem 7073,4;
+	delitem 7077,4;
+	delitem 7088,3;
+	delitem 7090,3;
+	delitem 7092,3;
+
+	getitem 2630,1;
+
+	mes "[Lenneth]";
+	mes "Here is your ^3355FFBrisingamen^000000 may it serve you well.";
+	close;
+L_GLE:
+
+	mes "[Lenneth]";
+	mes "The ^3355FFGleipnir^000000 is a light yet strong rope used to make the ^3355FFMegingjard^000000";
+	mes "I will need the following essences to transmute a ^3355FFGleipnir^000000:";
+	mes "4 ^3355FFTread of Cat^000000";
+	mes "5 ^3355FFWoman's Moustache^000000";
+	mes "4 ^3355FFStone Fragment^000000";
+	mes "3 ^3355FFSaliva of Bird^000000";
+	mes "3 ^3355FFSinew of Bear^000000";
+	next;
+	mes "[Lenneth]";
+	mes "Do you desire the ^3355FFGleipnir^000000";
+	next;
+	menu "Yes",-,"No",L_OUT;
+
+	if (countitem(7085) < 3 || countitem(7084) < 3 || countitem(7082) < 4 || countitem(7081) < 5 || countitem(7080) < 4) goto L_NOTENOUGH;
+
+	delitem 7080,4;
+	delitem 7081,5;
+	delitem 7082,4;
+	delitem 7084,3;
+	delitem 7085,3;
+
+	getitem 7058,1;
+
+	mes "[Lenneth]";
+	mes "Here is your ^3355FFGleipnir^000000.";
+	close;
+L_MEG:
+
+	mes "[Lenneth]";
+	mes "The ^3355FFMegingjard^000000 is a powerfull belt that greatly increases ones strength.";
+	mes "To transmute a ^3355FFBelt^000000 into a ^3355FFMegingjard^000000 I will need the following:";
+	mes "10 ^3355FFGold^000000 10 ^3355FFSapphire^000000";
+	mes "5 ^3355FFOridecon^000000 and 1 ^3355FFGleipnir^000000";
+	next;
+	mes "[Lenneth]";
+	mes "Do you desire the ^3355FFMegingjard^000000";
+	next;
+	menu "Yes",-,"No",L_OUT;
+
+	if (countitem(2627) < 1 || countitem(984) < 5 || countitem(726) < 10 || countitem(969) < 10 || countitem(7058) < 1) goto L_NOTENOUGH;
+
+	delitem 7058,1;
+	delitem 969,10;
+	delitem 726,10;
+	delitem 984,5;
+	delitem 2627,1;
+
+	getitem 2629,1;
+
+	mes "[Lenneth]";
+	mes "Here is your ^3355FFMegingjard^000000 may it serve you well.";
+	close;
+L_NOTENOUGH:
+	mes "[Lenneth]";
+	mes "You are lacking a few items, please return when you have them.";
+	close;
+L_OUT:
+	next;
+	mes "[Lenneth]";
+	mes "Please return when you change your mind.";
+	close;
+}
+

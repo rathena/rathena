@@ -1,0 +1,30 @@
+//===== eAthena Script =======================================
+//= Toy Factory Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//=
+//============================================================
+
+//xmas_dun01
+//xmas_dun01.gat,0,0,0,0	monster	Poring	1002,10,0,0,0
+xmas_dun01.gat,0,0,0,0	monster	Poporing	1031,20,0,0,0
+xmas_dun01.gat,0,0,0,0	monster	Mastering	1090,1,1800000,900000,0
+xmas_dun01.gat,0,0,0,0	monster	Angeling	1096,1,3600000,1800000,0
+xmas_dun01.gat,0,0,0,0	monster	Drops	1113,10,0,0,0
+xmas_dun01.gat,0,0,0,0	monster	Marin	1242,30,0,0,0
+xmas_dun01.gat,0,0,0,0	monster	Christmas Cookie	1246,50,0,0,0
+xmas_dun01.gat,0,0,0,0	monster	Myst Case	1249,5,0,0,0
+xmas_dun01.gat,0,0,0,0	monster	Chepet	1250,1,900000,450000,0
+
+//xmas_dun02
+xmas_dun02.gat,0,0,0,0	monster	Christmas Cookie	1246,20,0,0,0
+xmas_dun02.gat,0,0,0,0	monster	Cookie	1265,20,0,0,0
+xmas_dun02.gat,0,0,0,0	monster	Cruiser	1248,40,0,0,0
+xmas_dun02.gat,0,0,0,0	monster	Myst Case	1249,55,0,0,0
+xmas_dun02.gat,0,0,0,0	monster	Stormy Knight	1251,1,3600000,7200000,0
+

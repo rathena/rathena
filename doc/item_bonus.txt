@@ -1,0 +1,137 @@
+﻿skill n,x;	skill n of level x
+
+bonus bStr,n;	STR + n
+bonus bAgi,n;	AGI + n
+bonus bVit,n;	VIT + n
+bonus bInt,n;	INT + n
+bonus bDex,n;	DEX + n
+bonus bLuk,n;	LUK + n
+
+bonus bMaxHP,n;			MAXHP + n
+bonus bMaxSP,n;			MAXSP + n
+bonus bMaxHPrate,n;		MAXHP + n% 
+bonus bMaxSPrate,n;		MAXSP + n%
+bonus bAtk,n;			ATK + n
+bonus bAtk2,n;			ATK2 + n
+bonus bAtkRate			attack power  + n%
+bonus bBaseAtk,n;		Basic attack power + n
+bonus bMatk,n;			Magical attack power 1 + n and magical attack power 2 + n
+bonus bMatk1,n;			Magical attack power 1 + n
+bonus bMatk2,n;			Magical attack power 2 + n
+bonus bMatkRate,n;		Magical attack power + n%
+bonus bMdef,n;			Magical defensive power + n
+bonus bDef,n;			DEF + n
+bonus bHit,n;			On-target hit power + n
+bonus bCritical,n;		Critical + n
+bonus bCriticalRate,n;		Critical ratio + n%
+bonus bFlee,n;			Evasion power + n
+bonus bFlee2,n;			Perfection evasion + n
+bonus bSpeed,n;			Drift speed + n
+bonus bAspd,n;			Attack speed + n
+bonus bSpeedRate,n;		Drift speed + n% (just high ones application)
+bonus bAspdRate,n;		Attack speed + n% (just high ones application)
+bonus bSpeedAddRate		drift speed + n%
+bonus bAspdAddRate		attack speed + n%
+bonus bAtkRange,n;		Attack Range + n
+bonus bCastrate,n;		Cast rate + n%
+bonus bUseSPrate,n;		SP consumption + n%
+bonus bHPrecovRate,n;		HP automatic recovery ratio + n% (you exclude the recovery with skill)
+bonus bSPrecovRate,n;		SP automatic recovery ratio + n% (you exclude the recovery with skill)
+bonus bDoubleRate,n;		attack probability n% (with weapon disregard just high ones application)
+bonus bDoubleAddRate,n;		Double attack probability + n% (weapon disregard)
+bonus bPerfectHitRate,n;	On-target impact attack probability n% (just high ones application)
+bonus bPerfectHitAddRate,n;	On-target impact attack probability +n%
+bonus bGetZenyNum,n;		When pushing down the monster with physical attack, rand () ゼニ of %n+1 is obtained, (as for n just high ones application)
+bonus bAddGetZenyNum,n;		When pushing down the monster with physical attack, rand () ゼニ of %n+1 is obtained, (n is done +)
+bonus bCriticalDef,n;		Critical 喰 and others the trap it is, probability + n%
+bonus bNearAtkDef,n;		The damage of short-range attack n% reduction (magic and the trap, the 鷹 is excluded)
+bonus bLongAtkDef,n;		damage of stand off attack n% reduction (magic and the trap, the 鷹 is excluded)
+bonus bMagicAtkDef		the damage of magical attack n% reduction
+bonus bMiscAtkDef		MISC attack (the trap and ?) the damage n% reduction
+
+bonus bIgnoreDefRace,n		Defense disregard of enemy of n race
+					0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than (normal monster) boss monster
+bonus bIgnoreDefEle,n;		Defense disregard of enemy of n attribute
+					0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
+bonus bIgnoreMDefRace		n race the magical defensive power disregard damage
+					0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
+bonus bIgnoreMDefEle		n attribute the magical defensive power disregard damage
+					0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality	
+bonus bDefRatioAtkRace,n;		n race if defensive power is high the high extent big damage is given, (defense disregard) 
+					0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
+bonus bDefRatioAtkEle,n;		n attribute if defensive power is high the high extent big damage is given, (defense disregard)
+					0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
+bonus bAtkEle,n;		Attack with element n
+					0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
+bonus bDefEle,n;		Guard against element n
+					0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
+bonus bHitRate,n;		on-target hit ratio +n%
+bonus bFleeRate,n;		evasion ratio +n%
+bonus bFlee2Rate,n;		complete evasion ratio +n%
+bonus bDefRate,n;		earned-run average +n% (equipment)
+bonus bDef2Rate,n;		earned-run average +n% (those due to vit)
+bonus bMdefRate,n;		magical earned-run average +n% (equipment)
+bonus bMdef2Rate,n;		magical earned-run average +n% (those due to int)
+bonus bSplashRange n;		damage is given to the peripheral n cell of the target with usual weapon attack, if (as for n just high ones application, 1 if the 3*3, 2 the 5*5)
+bonus bSplashAddRange n;	damage is given to the peripheral n cell of the target with usual weapon attack, (range + n)
+
+bonus bInfiniteEndure,n;	Unlimited Endure (n is meaningless) 
+bonus bRestartFullRecover,n;	When reviving, HP and SP all recoveries (non mind there is no n)
+bonus bNoCastCancel,n;		The casting is not cancelled (non mind there is no n)
+bonus bNoCastCancel2,n;		The casting is not cancelled (is not cancelled even with GVG, n is meaningless)
+bonus bNoSizeFix,n;		The attack revision with the size of the monster is not received, (non mind there is no n)
+bonus bNoWeaponDamage,n;	The damage is not received to physical attack, (non mind there is no n)
+bonus bNoMagicDamage,n;		The damage is not received to magic, (including also the heel, non mind there is no n)
+bonus bNoGemStone,n;		When using skill, the gemstone is not consumed (non mind there is no n)
+
+
+bonus2 bAddEff,Eff_Blind,n;	With the establishment of n% dark grant
+bonus2 bAddEff,Eff_Sleep,n;	With the establishment of n% sleep grant
+bonus2 bAddEff,Eff_Poison,n;	With the establishment of n% poison grant
+bonus2 bAddEff,Eff_Freeze,n;	With the establishment of n% freezing grant
+bonus2 bAddEff,Eff_Silence,n;	With the establishment of n% silence grant
+bonus2 bAddEff,Eff_Stan,n;	With the establishment of n% stun grant
+bonus2 bAddEff,Eff_Curse,n;	You curse with the establishment of n%, grant
+bonus2 bAddEff,Eff_Confusion,n;	With the establishment of n% confusion grant
+bonus2 bAddEff,Eff_Stone,n;	With the establishment of n% petrochemical grant
+
+bonus2 bResEff,Eff_Blind,n;	Dark tolerance + n%
+bonus2 bResEff,Eff_Sleep,n;	Sleep tolerance + n%
+bonus2 bResEff,Eff_Poison,n;	Poison tolerance + n%
+bonus2 bResEff,Eff_Freeze,n;	Freezing tolerance + n%
+bonus2 bResEff,Eff_Silence,n;	Silence tolerance + n%
+bonus2 bResEff,Eff_Stan,n;	Stun tolerance + 	n%
+bonus2 bResEff,Eff_Curse,n;	Cursing tolerance + n%
+bonus2 bResEff,Eff_Confusion,n;	Confusion tolerance + n%
+bonus2 bResEff,Eff_Stone,n;	Petrochemical tolerance + n%
+
+bonus2 bAddSize,n,x;			In n size the damage addition of x%
+						0,Small size 1,Medium size 2,Large size 
+bonus2 bAddRace,n,x;			In n race the damage addition of x%
+						0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
+bonus2 bSubRace,n,x;			Damage x% reduction from n race
+						0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
+bonus2 bMagicAddRace,n,x;		In n race the damage addition of x% (only magical attack)
+						0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
+bonus2 bMagicSubRace,n,x;		Magical damage x% reduction from n race
+						0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
+bonus2 bAddEle,n,x;			In n attribute the damage addition of x%
+						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
+bonus2 bMagicAddEle,n,x;			In n attribute the damage addition of x% (only magical attack) 
+						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
+bonus2 bSubEle,n,x;			Damage x% reduction from n attribute
+						0,Nothing 1,Water 2,Earth 3,Fire 4,Wind 5,Poison 6,Saint 7,Darkness 8,Sense 9,Immortality
+bonus2 bAddDamageClass,n,x;		In monster of class n the damage addition of x% (only physical attack), in case of prayer in n occupation the damage addition of x%
+bonus2 bAddMagicDamageClass,n,x;		In monster of class n in case of the magical damage addition and prayer of x% in n occupation the magical damage addition of x%
+bonus2 bAddDefClass,n,x;		In monster of class n the damage reduction of x% (only physical attack), in case of prayer in n occupation the damage reduction of x%
+bonus2 bAddMDefClass,n,x;		In monster of class n in case of the magical damage reduction and prayer of x% in n occupation the magical damage reduction of x%
+bonus2 bHPDrainRate,n,x;		it obtained to the enemy -- ? ME ? JI -- n % probability -- x % -- HP -- absorption (+ n and x are carried out)
+bonus2 bSPDrainRate,n,x;		it obtained to the enemy -- ? ME ? JI -- n % probability -- x % -- SP -- absorption (+ n and x are carried out)
+
+
+bonus3 bAddMonsterDropItem,n,x;		When pushing down the monster with physical attack, the probability which drops item n +x% (the item which the monster drops unrelated ones)
+						0,Intangibility 1,Immortality 2,Animal 3,Plant 4,Insect 5,Fish and shellfish 6,Demon 7,Human 8,Angel 9,Dragon family 10:Boss monster 11:Other than boss monster (normal monster)
+bonus3 bAutoSpell,n,x,y;		Auto Spell casting of spell n at level x with y% chance
+
+// bAddDamageClass, bAddMagicDamageClass and bAddMonsterDropItem it is setting possible up to 10. Those which exceed 10 are ignored.
+// those which can be used with the arrow are only bCritical, bAtkEle, bHit, bAddEle, bAddRace, bAddSize and bAddEff. The other things are ignored.

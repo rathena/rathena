@@ -1,0 +1,149 @@
+// Valkyrie Replacement after kRO.
+// The Jobquest from kRO on how to advance to a Reborn class.
+// Made by: Nana
+// 1.01 bugfixex by Lupus
+
+
+// -== Warp's needed! ==-
+valkyrie.gat,48,73,0	warp	valk01	1,1,valkyrie.gat,48,64,0
+valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
+
+// -== Book of Ymir (Heavens Door) ==-
+yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
+	if(valkyrie_Q == 1) goto L_Faded;
+	if(valkyrie_Q == 2) goto L_Start;
+	mes "[Book of Ymir]";
+	mes ". . . . .";
+	close;
+
+L_Faded:
+	mes "[Book of Ymir]";
+	mes "*The book opens as you aproach it*";
+	next;
+	mes "[Book of Ymir]";
+	mes "Those seeking the final foretreess in this world shall venture through hardships let alone to mankind. Venturing through rough times, helped by friends and loved ones, one can finaly after alot of work and commitment see the true view of the world and then.. go beond it.";
+	next;
+	mes "[Book of Ymir]";
+	mes "*After reading the two first pages you turn the other page, and watches the words fade away as you try to read them...";
+	close;
+
+L_Start:
+	mes "[Book of Ymir]";
+	mes "*The book opens as you aproach it*";
+	next;
+	mes "[Book of Ymir]";
+	mes "Those seeking the final foretreess in this world shall venture through hardships let alone to mankind. Venturing through rough times, helped by friends and loved ones, one can finaly after alot of work and commitment see the true view of the world and then.. go beond it.";
+	next;
+	mes "[Book of Ymir]";
+	mes "*After reading the first two pages you flip the last one and continues to read..";
+	next;
+	mes "[Book of Ymir]";
+	mes "That is when the god's and goddess of this world comes forth towards you in all disguise, checking you though. Reading your mind, thoughts and true feeling of the heart.";
+	mes "If the god's, decended from the world along time ago, accepts you into the halls of Valkyrie, high up above the clouds in the sacred realm of Valkyrie, into gods light you will become reborn, and sendt out to face the world once again.";
+	next;
+	mes "[Book of Ymir]";
+	mes "And only after then, the decended ones will aprove you to the highest obedience.. Into the warmth of Valkyrie, you will be welcomed by the gods themself.";
+	next;
+	mes "[Book og Ymir]";
+	mes "*As you close the book a strange ray of light sourounds you and you suddently feel light. Everything around you fades away and all you can see left is white before you pass out.*";
+	warp "valkyrie",48,9;
+	set valkyrie_Q,0;
+	close;
+}
+
+// -== The Librarian that watches the "Book of Ymir" ==-
+yuno_in02.gat,91,176,5	script	Librarian	754,{
+	if(readparam(19) >= 7) goto L_Pay;
+	mes "[Librarian]";
+	mes "Have a look around, but dont touch the book. Only a few chosen one can read its wise words.";
+	close;
+
+L_Pay:
+	mes "[Librarian]";
+	mes "You seem like a worthy human.";
+	mes "I, the 78th Librarian of the secret order sworn to protect this book wont thread lightly on you.";
+	mes "In order to let me allow you to view into this wonderous book, you have to do two things for me.";
+	next;
+	mes "[Librarian]";
+	mes "One. You have to pay me 1,285,000 zeny. Remember that you need the accurate amount. Not over or under 1,285,000z.";
+	mes "Two. You have to venture deep inside of Yuno castle, into the Heart of Ymir.";
+	mes "Remember that you cannot view the book unless you have done this.";
+	mes "Now go, brave one.";
+	menu "Pay now",pay_now,"Close",-;
+	close;
+
+pay_now:
+	if(readparam(20) < 1285000) goto accurate_z;
+	if(readparam(20) > 1285000) goto accurate_z;
+	mes "[Librarian]";
+	mes "Go now, into Heart of Ymir";
+	mes "There, you'll find the last pice of information before you can open the book.";
+	set valkyrie_Q,1;
+	set zeny,zeny-1285000;
+	close;
+
+accurate_z:
+	mes "[Librarian]";
+	mes "You didnt bring me the accurate number of zeny i wanted. Bring me back only 1,285,000 zeny!";
+	mes "Not more, nor less.";
+	close;
+}
+
+// -== The Heart of Ymir ==-
+yuno_in05.gat,80,44,0	script	Heart of Ymir	803,{
+	if(valkyrie_Q < 1) goto not_applicable;
+	if(valkyrie_Q == 1) goto L_Listen;
+	if(valkyrie_Q == 2) goto L_Done;
+	mes "[Heart of Ymir]";
+	mes "The book wont open.";
+	close;
+
+not_applicable:
+	mes "[Heart of Ymir]";
+	mes "The book wont open.";
+	mes "It seems like you have to pay the Librarian to open this book first!";
+	close;
+
+L_Listen:
+	mes "[Heart of Ymir]";
+	mes "Thus upon hard times and our self esteem is at it's lowest, then is when our faith have to be the strongest.";
+	mes "For aeon's the secret guardians of the path to heaven has protected the sacret gate from evil spirits entering it.";
+	mes "Thus, the bonds became to weaken over time.. Thats when the Legion of Sages started recruiting and making young, brave, quick minded mages, sages, teaching them the laws and propositions of our world.";
+	next;
+	mes "[Heart of Ymir]";
+	mes "Aeons passed and the Sages grew stronger in both min and forces. Until they all were feared throughout the monsters world.";
+	mes "Now, after listening to my words of wisdom, please advance to the Book of Ymir and give yourself in to god's light.";
+	mes "If you are pure of heart and have no evil intentions, the gates of dawn will open for you and take you in...";
+	set valkyrie_Q,2;
+	close;
+
+L_Done:
+	mes "[Heart of Ymir]";
+	mes "I have nothing more to teach you, nor to tell you.";
+	close;
+}
+
+// -== Researcher of the Book of Ymir ==-
+yuno_in02.gat,90,77,4	script	Researcher	744,{
+	mes "[Researcher]";
+	mes "Argh, where is it!?";
+	mes "They said that it would be around here somewhere..";
+	mes "Maybe i have to look deeper into this castle..";
+	close;
+}
+
+// -== Valhallana ==-
+valkyrie.gat,48,86,6	script	Valkyrie	811,{
+	if(readparam(19) < 7) goto L_cannot;
+	mes "[Valhallana]";
+	mes "Welcome to Valkyrie "+strcharinfo(0)+", from this point of, there is no returning back.";
+	mes "Please go over there, to the person representing your class.";
+	mes "Good Luck.";
+	close;
+
+L_cannot:
+	mes "[Valhallana]";
+	mes "You don't belong here yet.";
+	warp "prontera",100,100;
+	close;
+}

@@ -1,0 +1,27 @@
+//===== Athena Script ========================================
+//= Ant Hell Warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Ant Hell
+//===== Additional Comments: =================================
+//= No Comment!
+//============================================================
+
+//= Ant Hell =================================================
+anthell01.gat,35,267,0	script	ant001	45,1,1,{
+	if( anthell==1) goto moc15;
+	moc04:	warp "moc_fild04.gat",213,327; break;
+	moc15:	warp "moc_fild15.gat",251,248; break;
+}
+anthell02.gat,171,169,0	script	ant001	45,1,2,{
+	if(!anthell==0) goto moc15;
+	moc04:	warp "moc_fild04.gat",213,327; break;
+	moc15:	warp "moc_fild15.gat",251,248; break;
+}
+anthell01.gat,253,32,0	warp	ant01	2,1,anthell02.gat,34,263
+anthell02.gat,32,267,0	warp	ant01-1	2,2,anthell01.gat,253,35

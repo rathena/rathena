@@ -1,0 +1,621 @@
+//===== eAthena Script ======================================= 
+//= Prontera Town
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Fully working
+//= +AntiNovice exploit fix [Lupus]
+//============================================================
+
+
+
+
+// Tono ---------------------------------------------------------------
+prontera.gat,54,240,5	script	Tono	97,{
+	mes "[Tono]";
+	mes "Did you know the larva of a Creamy is a Fabre.";
+	mes "The pupa stage of a Fabre is simply called Pupa.";
+	mes "As you can imagine, there is another metamorphic monster out in the desert.";
+	next;
+	mes "[Tono]";
+	mes "That's it! It the Peco Peco.";
+	mes "The infant of the Peco Peco is called the Picky";
+	mes "Unlike the colourfull Peco Peco, the Picky is a very cute pink.";
+	close;
+}
+
+// Dairene ----------------------------------------------------------------
+prontera.gat,78,150,3	script	Dairenne	90,{
+	mes "[Town girl Dairenne]";
+	mes "(Cough Cough)... Nowadays the streets are too crowded. (Cough Cough)...";
+	mes "Oh..So Dusty...So dirty here... Now I think the Capital City isn't all that good.";
+	next;
+	mes "[Town girl Dairenne]";
+	mes "Hmm... Anyway what is the matter?";
+	next;
+	menu "Talk",L0,"Cancel",LEnd;
+	
+	L0:
+		mes "[Town girl Dairenne]";
+		if(Sex == 1) mes "I'm not sure if your into Girllie Dress Stuff..Hohoho..but...";
+		mes "These days, the most interesting topic around here is beautiful dresses Dyed in various Colors.";
+		next;
+		mes "[Town girl Dairenne]";
+		mes "To enchance your Clothing with those Dazzling Colors, you must use ^0000ffDyestuffs^000000 made in ^0000ffMorroc^000000 city... I hear they will cost you alot of money.";
+		next;
+		mes "[Town girl Dairenne]";
+		mes "Ah... I wish I could wear a Dress like that just once in my life...";
+		close;
+
+	LEnd:
+		mes "[Town girl Dairenne]";
+		mes "(Cough)....See you around.";
+		close;
+}
+
+// Merideth --------------------------------------------------------------
+prontera.gat,106,117,6	script	Merideth	91,
+{
+	mes "[Merideth]";
+	mes "The weather was nice on my day off, so my family and I decided to have a picnic.";
+	mes "We chose to go to a somewhat secluded area and were amazed at what we saw."; 
+	next;
+	mes "[Merideth]";
+	mes "A HUGE swarm of hornets!! I never saw anything like it! But what was even more surprising was the Queen Bee.";
+	mes "The fact that she could control all of them with such ease....";
+	emotion 23;
+	next;
+	mes "[Merideth]";
+	mes "If only a girl like myself had that much power over guys.... NOW THAT, would be really cool!!";
+	emotion 29;
+	close;
+}
+
+// YuNa ---------------------------------------------------------------------
+prontera.gat,146,204,2	script	YuNa	700,{
+	mes "[YuNa]";
+	mes "Odin is the god of wisdom and war.  He couragously removed one of his eyes in order to acquire ultimate wisdom. ";
+	next;
+	mes "[YuNa]";
+	mes "The statue in the middle of the water fountain over there is sculpted after the god himself.";
+	mes "I don't know who the sculptor was, which is a pitty because.... becasue....";
+	next;
+	mes "[YuNa]";
+	mes "HE DID IT ALL WRONG!!";
+	emotion 7;
+	next;
+	mes "[YuNa]";
+	mes "The statue is just totally different from the Odin we all know! He insisted that it was his artistic view or something....";
+	next;
+	mes "[YuNa]";
+	mes "Look~ He doesn't have a broad brimmed hat.... he's not even riding Sleipnir.... this is just totally unacceptable~!";
+	emotion 32;
+	close;
+}
+
+// YuPi -----------------------------------------------------------------------
+prontera.gat,160,133,2	script	YuPi	102,{
+	mes "[YuPi]";
+	mes "Among monsters of the same species, there are some that are MORE FEROCIOUS than others";
+	mes "If you even TOUCH them by mistake, you'd better prepare yourself for what's gonna happen next.";
+	next;
+	mes "[YuPi]";
+	mes "You can tell the difference between the more AGGRESSIVE ones and the more PASSSIVE ones by their body color.";
+	mes "The more AGGRESSIVE the monster is, the more bright, and flashy it's color is.";
+	close;
+}
+
+// Shuger -------------------------------------------------------------
+prontera.gat,102,287,5	script	Shuger	98,
+{
+	mes "[Shuger]";
+	mes "In the fields outside of town, there are pink monsters called '^FF8888Porings^000000'.";
+	mes "Though they are cute and do not harm people, they are notorious looters.  They will absorb any item that they find on the ground.";
+	next;
+	mes "[Shuger]";
+	mes "There are also green colored ones, called ^008800Poporings^000000'.  They are like the pink Porings but are much stronger.";
+	mes "It would be a HUGE MISTAKE for a newbie to attack a Poporing, thinking that it was as weak as a Poring!";
+	close;
+}
+ 
+// ------------------------------------------------------------------------------------------- Culvert -------------------------------------------------------------------------------\\
+// Culvert Gaurdian ----------------------------------------------------
+prt_fild05.gat,270,212,5	script	Culvert Gaurdian	105,{
+	if(sewer_prt == 1) goto L0;
+	mes "[Culvert Guardian]";
+	mes "Sorry, but only volunteers for the Culvert Campaign can go inside.";
+	mes "Speak with the ^000077Recruiter^000000 about volunteering.  He's located in the ^ff0000Prontera Chivalry^000000.";
+	close;
+
+	L0:
+		mes "[Culvert Guardian]";
+		mes "Here you are. The entrance of the Culvert. Are you sure you want to Go inside?";
+		next;
+		menu "Sure.",L0a,"Quit.",L1a;
+
+		L0a:
+			warp "prt_sewb1.gat",131,247;
+			close;
+		L1a:
+			close;
+}
+
+// Recruiter -----------------------------------------------------------
+prt_in.gat,88,105,2	script	Recruiter	105,{
+	if(sewer_prt == 1) goto L0a;
+	mes "[Recruiter]";
+	mes "Let me inform about the official Notice from the Capital Defense Headquarter of Rune-Midgard Kingdom";
+	next;
+	mes "[Recruiter]";
+	mes "We decided to recruit volunteers to deal with the 'issues' that have been plauging our cities' sewers.";
+	if (Class==Job_Novice) mes "But you're a novice. Go get at least a job...";
+	if (Class==Job_Novice) close;
+	next;
+	menu "Volunteer.",L0,"Issues...?",L1,"Quit",LEnd;
+	
+	L0:
+		mes "[Recruiter]";
+		mes "Very good!!! Your Registration is confirmed. We will try to maintain peace and order in Rune-Midgard Kingdom.";
+		mes "I appreciate your support of the Capital Defense Headquarter.  Here are some subsidies....";
+		next;
+		mes "[Recruiter]";
+		mes "3 Red Potions, 1 Milk, and 1 Orange Potion for an emergency.";
+		set sewer_prt,1;
+		getitem 501,3;
+		getitem 519,1;
+		getitem 502,1;
+		next;
+		
+		L0a:
+			mes "[Recruiter]";
+			mes "Are you ready? I will warp you to the Culvert.";
+			next;
+			warp "prt_fild05.gat",274,208;
+			close;
+
+	L1:
+		mes "[Recruiter]";
+		mes "Didn't you hear yet? The Culvert is infested with noxious insects. We found bugs, moggots, and other creatures there.";
+		mes "They've become a huge problem... You've Never heard of this?";
+		emotion 1;
+		next;
+		mes "[Recruiter]";
+		mes "Because of the severity of these 'issues',it is forbidden for the people to use the water supply for the time being.";
+		next;
+		mes "[Recruiter]";
+		mes "Needless to say, the people have been greatly inconvienced by this. If this were to linger on it would cause great ill will among the people of the Prontera.";
+		next;
+		mes "[Recruiter]";
+		mes "The situation is becoming critical! There is restlesness among the people!!";
+		next;
+		mes "[Recruiter]";
+		mes "Mighty Warrior!! The People NEED YOU!! Let's EXPEL these VILE creatures from our land!!!";
+		emotion 27;
+		next;
+		mes "[Recruiter]";
+		mes "WILL YOU volunteer????";
+		next;
+		menu "Volunteer.",L1a,"Quit.",L1aEnd;
+		
+		L1a:
+			goto L0;
+			close;
+
+		L1aEnd:
+			mes "[Recruiter]";
+         			mes "..............";
+			emotion 4;
+         			close;
+	LEnd:
+		close;
+
+}
+
+
+//------------------------------------------------------------------------------------- Prontera Church -------------------------------------------------------------------------------\\
+// Henson ---------------------------------------------------------------
+prt_church.gat,103,71,2	script	Henson	120,{
+	mes "[Henson]";
+	mes "Our duty is not only to help others, but to also purify poor souls that have been turned into the Undead.";
+	mes "In order to successfully accomplish our duty, we have to learn special skills and practice them very diligently.";
+	next;
+	mes "[Henson]";
+	mes "Well, what was it you wanted to ask me about?";
+qMenu:
+	next;
+	menu 	"About Divine Protection",L0, "About Demon Bane",L1, "About Decrease AGI",L2, "About Signum Crisis",L3, "About Pneuma",L4,
+		"About Ruwach",L5, "About Teleport",L6, "End conversation.",LEnd;
+
+	L0:
+		mes "[Henson]";
+		mes "If you want to improve your Defense against the Undead, it is a good idea to learn the skill called 'Divine Protection'.";
+		mes "It is the most basic skill you'll need, and it doesn't even have a time limit or anything, anyways....";
+		next;
+		mes "[Henson]";
+		mes "If you raise it to level 3, then a skill called 'Deamon Bane' will be available for you.  'Demon Bane' increases your attack against the Undead.";
+		mes "With 'Divine Protection' as a foundation, several high class skills such as 'Angelus' and 'Blessing' will be available to you.";
+		goto qMenu;
+	L1:
+		mes "[Henson]";
+		mes "'Demon Bane' improves your attack against the Undead.  You need 3 levels of 'Divine Protection' before you can learn Demon Bane.";
+		mes "As whith 'Devine Protection', 'Demon Bane' is a passive skill and requires no sp and has no time limit.";
+		next;
+		mes "[Henson]";
+		mes "Also, you have to aquire 3 levels of 'Demon Bane' to use a skill called, 'Signum Crisis', which lowers the Defense of Undead and Dark property monsters.";
+		next;
+		goto qMenu;
+		close;
+	L2:
+		mes "[Henson]";
+		mes "When you use this skill, the movement speed, attack rate, and evasion rate of a targeted monster will be reduced.";
+		mes "You will need to get 1 level of 'Increase AGI' first, before you can learn 'Decrease AGI.";
+		next;
+		goto qMenu;
+		close;
+	L3:
+		mes "[Henson]";
+		mes "You can lower the defense of Undead and Dark property monsters with this skill, and the range of attack is very wide.";
+		mes "The success rate, however, is pretty low since it is a very difficult skill to master.";
+		next;
+		mes "[Henson]";
+		mes "Do not be disappointed even if you don't successfully use this skill all the time.  You need level 3 'Demon Bane' to acquire this skill.";
+		next;
+		goto qMenu;
+		close;
+	L4:
+		mes "[Henson]";
+		mes "Once you master 'Warp Portal', you can learn this skill.";
+		next;
+		mes "[Henson]";
+		mes "It generates a barrier that defends you perfectly from long-range attacks, such as archer attacks.";
+		next;
+		goto qMenu;
+		close;
+	L5:
+		mes "[Henson]";
+		mes "Ruwach allows you to see hidden monsters or players.  You also need this skill to learn 'Teleport.";
+		next;
+		goto qMenu;
+		close;
+	L6:
+		mes "[Henson]";
+		mes "At level 1, it allows you teleport to a random spot on the map you are in.  At level2 it allows you to teleport to your last save point.";
+		mes "You must learn Ruwach first in order to learn teleport.";
+		next;
+		goto qMenu;
+		close;
+	LEnd:
+		mes "[Henson]";
+		mes "If you're still not certain about all of this, you are always welcome to speak with me later!";
+		close;
+}
+
+// Garnet --------------------------------------------------------------
+prt_church.gat,103,76,2	script	Garnet	67,{
+	mes "[Garnet]";
+	mes "Oh~ you want to find pleasure in helping other people, but you don't know how to do so?";
+	mes "Fortunately we have the abilities to help and support other people.";
+	next;
+	mes "[Garnet]";
+	mes "We can heal people who are in poor health or awaken the potential hidden deep within others.";
+	next;
+	mes "[Garnet]";
+	mes "Feel free to ask me anything.  Although the preist scolds me for my lack of skill, I can assure you I have a VERY STRONG grasp of the theories.";
+	next;
+	qMenu:
+	menu "About Heal",L0,"About Cure",L1,"About Increase AGI",L2,"About Angelus",L3,"Abour Blessing",L4,"About Warp Portal",L5,"End conversation",LEnd;
+	
+	L0:
+		mes "[Garnet]";
+		mes "You can recover either your own, or someone else's HP with 'Heal'.";
+		next;
+		mes "[Garnet]";
+		mes "If you learned 'Heal' while you were an Acolyte, then as priest you can create an HP recovering area with the skill 'Sanctuary'.";
+		next;
+		mes "[Garnet]";
+		mes "Here is a little secret... if you use 'Heal' on Undead monsters, it will actually inflict damage, not help them.";
+		mes "Ah~ Don't forget to hold the 'Shift' key when you use it though... Ahem~ shhhhh~~!";
+		next;
+		goto qMenu;
+		close;
+	L1:
+		mes "[Garnet]";
+		mes "'Cure' can allieviate any abnormal status effects you may have.  You have to have level 2 'Heal' in order to learn Cure though.";
+		next;
+		goto qMenu;
+		close;
+	L2:
+		mes "[Garnet]";
+		mes "'Increase AGI' increases your movement speed, attack rate, and evade rate.  You can learn it after you've learned 3 levels of 'Heal'.";
+		next;
+		goto qMenu;
+		close;
+	L3:
+		mes "[Garnet]";
+		mes "You can use 'Angelus' in order to increase the Defense of either yourself or your party members.";
+		mes "Now remember, you can only use it on members IN YOUR party.";
+		next;
+		mes "[Garnet]";
+		mes "Level 3 'Divine Protection' is needed to learn this skill.";
+		next;
+		mes "[Garnet]";
+		mes "If you practice 'Angelus' you'll be able to use 'Kyrie Eleison' as a Priest, which allows you to evade attacks for a short period of time.";
+		next;
+		goto qMenu;
+		close;
+	L4:
+		mes "[Garnet]";
+		mes "'Blessing' temporarily increases STR, DEX and INT.  I am sure this skill will be of great advantage for your friends.";
+		next;
+		mes "[Garnet]";
+		mes "'Blessing', like 'Angelus', also requires you know 'Divine Protection'.  But you'll need to have 5 levels of 'Divine Protection' to learn it.";
+		next;
+		goto qMenu;
+		close;
+	L5:
+		mes "[Garnet]";
+		mes "In order to open a 'Warp Portal' you first need to know how to 'Teleport', and in order to 'Teleport, you need 'Ruwach'.";
+		next;
+		mes "[Garnet]";
+		mes "You can remember up to 4 warp points depending on the levels of 'Warp Portal' you've learned.";
+		mes "But at least one place must be saved with a Kafra employee.";
+		next;
+		mes "[Garnet]";
+		mes "It's a bit of a hassle, but you have to physically be at the place you want to warp to, and save the position first.";
+		mes "This can be very dangerous in some areas so be quick~. Go in, save, and 'Teleport' out!";
+		next;
+		mes "[Garnet]";
+		mes "Also, 'Warp Portal' consumes a huge amount of energy, so you MUST use a 'Blue Gemstone' as a catalyst.";
+		next;
+		mes "[Garnet]";
+		mes "One more thing, you cannot Warp to the inside of dungeons so don't even waste your time trying to.";
+		next;
+		goto qMenu;
+		close;
+	LEnd:
+		mes "[Garnet]";
+		mes "Hehehe, hope I wasn't showing off too much.  Well, be Happy in whatever you do~~!";
+		close;
+
+}
+
+
+// ----------------------------------------------------------------------------------------------- PUB -----------------------------------------------------------------------------------------------------\\
+// Sir Michael (West End Pub)
+prt_in.gat,26,30,1	script	Sir Michael	54,
+{
+	mes "[Sir Michael]";
+	mes "I dunno if you'll ever believe me, but I saw the WEIRDEST thing down in the ^5555FFCulvert Sewers^000000.";
+	mes "I've been training in the 3rd level of the sewers for a long time now, so there's nothing about that area that I don't know.";
+	next;
+	mes "[Sir Michael]";
+	mes "The 4th level is a different story however, and I must have ventured there when it happened.......";
+	next;
+	mes "[Sir Michael]";
+	mes "I saw a GIAGANTIC, SHIMMERING, ^FF5555GOLDEN THIEF BUG^000000.";
+	emotion 0;
+	next;
+	mes "[Sir Michael]";
+	mes "I all my years I've never seen a thief bug as LARGE or as SHINY!!! What an amazing sight!";
+	close;
+}
+
+//Shevild ----------------------------------------------------
+prt_in.gat,173,24,2	script	Shevild	85,{
+	mes "[Shevild]";
+	mes "Hey~Hey~ Come on over and have a drink, man. I'll tell you some exciting stories.";
+	mes "Do not judge me by the way I look... I've been everywhere you can imagine around Prontera.";
+	mes "I've been to places packed with monsters, but they also have the greatest view.";
+	next;
+	menu "Where can I find those places?",L0,"Never mind",LEnd;
+	
+	L0:
+		mes "[Shevild]";
+		mes "In spite of how I look, I'm a all around-player~~!!!";
+		mes "I go hunting, I carry waepons and stuff... and I deliver this and that...";
+		mes "Some people ask, 'isn't that a job for an errand boy?....'";
+		next;
+		mes "[Shevild]";
+		mes "But personally I am very proud of myself and of what i'm doing. You should know how harsh the world can be, right?";
+		mes "But for me, nothing stands in the way of me accomplishing a job ~Ahem!";
+		next;
+		mes "[Shevild]";
+		mes "Anyways, thanks to my career, I've been able to visit many interesting places where nobody has ever visited before...";
+		mes "Oh~ that's the true charm of my job...";
+		next;
+		mes "[Shevild]";
+		mes "Hm... Now... I'm suddenly reminded of a mysterious dungeon and a dangerous forest....";
+		emotion 20;
+		next;
+		qMenu:
+		menu "The mysterious Dungeon?",L00,"The dangerous forest?",L01,"End conversation",L00End;
+		
+		L00:
+			mes "[Shevild]";
+			mes "Hm... yeah... yeah... a while ago I followed some hunters to a very mysterious dungeon to the north of Prontera.";
+			next;
+			mes "[Shevild]";
+			mes "Rumor says that the monsters are very tough there, but because of the high risk that you take, you get rewarded with valuble monster drops.";
+			mes "So I followed some highly skilled hunters there, but as soon as we stepped into the dungeon, we became confused by the maze of tunnels...";
+			next;
+			mes "[Shevild]";
+			mes "No matter which direction you moved it seemed like you were ending up where you started.";
+			mes "So we just got out empty-handed. I really want to explore that dungeon again sometime.";
+			next;
+			menu "How can I get there?",L00a,"End conversation",L00End;
+			
+			L00a:
+				mes "[Shevild]";
+				mes "Huh? What? haven't you even wandered around just outside of Prontera yet, man?";
+				mes "Alright, alright. I'll tell you. If you go north from the castle of Prontera, the dungeon is at the edge ot the north-west side of the forest.";
+				emotion 1;
+				next;
+				goto qMenu;
+
+		L01:
+			mes "[Shevild]";
+			mes "There is a splendid ruin to the north-east of Prontera. I went there a while ago to deliver something to a priest there.";
+			mes "Before you get to the ruins, there is a forest full of monkeys called ^FF4444Yoyos^000000.";
+			next;
+			mes "You have to be very cautious. As sone as you drop something on the ground, a Yoyo jumps out of nowhere and snatches it.";
+			next;
+			menu "How can I get there?",L01a,"End conversation",L00End;
+			
+			L01a:
+				mes "[Shevild]";
+				mes "The directions might sound a little confusing, but it really isn't, actually. Go out to the north and keep going to the east. Then you will find it.";
+				next;
+				goto qMenu;
+
+		L00End:
+			mes "[Shevild]";
+			mes "Okay... Anyways watch out while you're traveling outhere ~ pal!!";
+			close;
+	LEnd:
+		mes "[Shevild]";
+		mes "Sure... if you wanna hear more, come back here anytime. No problem~~";
+		close;
+}
+
+// Bartender ---------------------------------------------------------
+prt_in.gat,181,21,2	script	Bartender	61,{
+	mes "[Bartender]";
+	mes "Phew~ more and more people a crawling in these days.";
+	mes "I am getting more and more tired everyday, though business has never been better...";
+	mes "To tell you the truth, it's getting hard to get the right ingredients for my special dishes.";
+	next;
+	mes "[Bartender]";
+	mes "As you probably know, recently there have many more monsters appearing outside of town. I don't dare step outside of this townn anymore.";
+	mes "Think about it. How can I possibly make my Ultra Nice Super Special dishes with just regular ingredients?";
+	next;
+	mes "[Bartender]";
+	mes "I don't just use any ingredients from the market you know. I use ingredients that come directly from monsters slain by Super heavy level hunters I personally hired.";
+	mes "And they are EXTREMELY FRESH, I might add.";
+	mes "But it's getting very hard to get enough of what I need even from them";
+	next;
+	mes "[Bartender]";
+	mes "If thing's don't change... my special menu of 'Sour Crunches' and 'Tasty Yum-Yum' will disappear from people's memories, sob... sob...";
+	emotion 28;
+	next;
+	qMenu:
+	menu "'Sour Crunches'?",L0,"'Tasty Yum-Yum?'",L1,"Better let him be....",LEnd;
+	
+	L0:
+		mes "[Bartender]";
+		mes "Special Ant is the essential ingredient in making Sour Crunches. It can be found in Ant Hell on the way to the desert city of Morrocco.";
+		mes "The problem is that the number of ants grows exponentialy and they also get very hostile. Most hunters don't even think about going near there.";
+		next;
+		mes "[Bartender]";
+		mes "I can already see the ill fate that awaits my beloved pub... (Sighs~~)";
+		next;
+		goto qMenu;
+	L1:
+		mes "[Bartender]";
+		mes "It is a very tasty dish preparred with the legs of grasshopper creatures, called Rockers, that can be caught in the area past the forest to the west. ITS tHE BEST dish we have!";
+		mes "Those grasshoppers have became very hostile and, moreover, an enormous number of bees have appeared out of nowhere in that area. It's almost impossible to get them.";
+		next;
+		mes "[Bartender]";
+		mes "I can already see the ill fate that awaits my beloved pub... (Sighs~~)";
+		next;
+		goto qMenu;
+	LEnd:
+		mes "[Bartender]";
+		mes "(Sighs..) Anyways, be careful and take care of yourself~.";
+		close;
+}
+
+// Marvin -----------------------------------------------------------
+prt_in.gat,177,18,2	script	Marvin	80,{
+	mes "[Marvin]";
+	mes "....Usually skills are mastered at level 10. So some people get nervous about selecting which one they should learn.";
+	next;
+	mes "[Marvin]";
+	mes "'Hm... if I learn this, I won't be able to learn that...' or 'Uh-Huh? With that skill, will I have enough points to master this skill?' Like this...";
+	mes "BUT every rule has an EXCEPTION~~.";
+	mes "Not all skills require 10 skill points to be mastered. Ta-da~~... Ahem...";
+	next;
+	mes "[Marvin]";
+	mes "you can master some skills when at level 5. Even better, some skills only requiere 1 or 2 levels.";
+	mes "How pitiful would it be if you didn't learn a tremendously useful skill only beacuse you were afraid of using up your skill points.";
+	next;
+	mes "[Marvin]";
+	mes "But don't just willy nilly and use up all your skill points on every skill either. Collect some information about skills and plan ahead.";
+	mes "That way, you can use your valuable skill points very wisely without wasting any.";
+	close;
+}
+
+// Tensue -----------------------------------------------------
+prt_in.gat,177,20,2	script	TenSue	97,{
+	mes "[TenSue]";
+	set @TEMP,0;
+	set @TEMP,rand(3);
+	if(@TEMP == 2) goto Rmsg2;
+	if(@TEMP == 1) goto Rmsg1;
+	if(@TEMP == 0) goto Rmsg0;
+
+	Rmsg2:
+		mes "What? You're sick and tired of killing monsters in fields and dungeons?";
+		mes "Hahaha, it seems like you are very confident in your training. If you think so...";
+		mes "Why don't you visit Izlude, the satelitte of Prontera.";
+		emotion 1;
+		next;
+		mes "[TenSue]";
+		mes "Cool Event Corp. has opened up the arena called Time Limit Fight and Battle Ordeal, to fullfill the young poeple's thirst for more excitement...";
+		mes "Well... Of course you will have to pay a small fee to participate...";
+		next;
+		mes "[TenSue]";
+		mes "Are you gonna give it a shot?";
+		close;
+	Rmsg1:
+		mes "One time I walked all the way to a place called 'Al de Baran'. It was a very dangerous trip with all those monsters...";
+		mes "Some of monsters just kept following and attacking me although I did nothing to harm them.";
+		next;
+		mes "[TenSue]";
+		mes "Well.. Nonetheless, the scenic views on the way were so magnificent that I truly believe it was worth trying...";
+		mes "A canal surrounding 'Al de Baran' makes the city more distinguishably beautiful.";
+		next;
+		mes "[TenSue]";
+		mes "Also the Kafra Main Office is located there so you can expect great services. Haha. Don't forget to visit there once.";
+		close;
+	Rmsg0:
+		mes "Prontera is presently under the reign of Tristram the 3rd. Everything we have now is only avaiable thanks to his Majesty.";
+		next;
+		mes "[TenSue]";
+		mes "But you know those outsiders at the corner of Prontera? Why do we have to accept them all the time...I really think that is NOT necessary at all.";
+		mes "His Majesty ...well...is waaaaaaay to generous..";
+		close;
+}
+
+
+//------------------------------------------------------------------------------------------------- Library ----------------------------------------------------------------------------------------\\
+
+// Library Girl Ellen ----------------------------------------------------
+prt_in.gat,175,50,2	script	Librarian Ellen	71,{
+	mes "[Librarian Ellen]";
+	mes "Welcome. You can find books about monsters, organized by thier properties here. There are also books about Merchant and Blacksmith skills.";
+	next;
+	mes "[Librarian Ellen]";
+	mes "Ah~! The library next door also has many interesting reading materials so please visit there too.";
+	close;
+}
+
+// Gurator Guiss -------------------------------------------------------
+prt_in.gat,178,92,2	script	Curator  Guiss	57,{
+	mes "[Curator Guiss]";
+	mes "Our library keeps records of monsters in various dungeons scattered around Rune-Midgard.";
+	mes "They are categorized according to each dungeon where the specific monster resides. Needless to say, every record is very easily accessible.";
+	next;
+	mes "[Curator Guiss]";
+	mes "There are also must-read books for adventures on the top shelves. Please take your time and read those.";
+	next;
+	mes "[Curator Guiss]";
+	mes "The library next door has organized records of monsters according to thier properties.";
+	mes "If you are interested, you should stop by there, too.";
+	close;
+}
