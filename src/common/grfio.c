@@ -282,7 +282,7 @@ static void decode_des_etc(BYTE *buf,int len,int type,int cycle)
  *	Grf data decode sub : zip
  *------------------------------------------
  */
-int decode_zip(char *dest, unsigned long* destLen, const char* source, unsigned long sourceLen)
+int decode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen)
 {
 	z_stream stream;
 	int err;
@@ -313,7 +313,7 @@ int decode_zip(char *dest, unsigned long* destLen, const char* source, unsigned 
 	return err;
 }
 
-int encode_zip(char *dest, unsigned long* destLen, const char* source, unsigned long sourceLen) {
+int encode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen) {
 	z_stream stream;
 	int err;
 
