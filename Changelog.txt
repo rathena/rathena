@@ -1,6 +1,7 @@
 Date	Added
 
 12/18
+	* Fixed import command in inter_athena.conf file [Ajarn]
 	* Changed few God-items to fit kRO 12/7/04 Patch [Aria]
 	* Readded my own npc [Aria]
 	* Fixed SQL char creation, it now follows MySQL standards and uses mysql_last_insert_id [Ajarn]

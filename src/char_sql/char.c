@@ -2842,6 +2842,9 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		}else if(strcmpi(w1,"lowest_gm_level")==0){
 			lowest_gm_level = atoi(w2);
 			printf("set lowest_gm_level : %s\n",w2);
+		//support the import command, just like any other config
+		}else if(strcmpi(w1,"import")==0){
+			sql_config_read(w2);
 		}
 	}
 	fclose(fp);

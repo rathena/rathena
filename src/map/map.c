@@ -428,14 +428,14 @@ void map_foreachinarea(int (*func)(struct block_list*,va_list),int m,int x0,int 
 				}
 			}
 		}
-	
+
 	if(bl_list_count>=BL_LIST_MAX) {
 		if(battle_config.error_log)
 			printf("map_foreachinarea: *WARNING* block count too many!\n");
 	}
 
 	map_freeblock_lock();	// メモリからの解放を禁止する
-		
+
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	// 有効かどうかチェック
 			func(bl_list[i],ap);
@@ -544,7 +544,7 @@ void map_foreachinmovearea(int (*func)(struct block_list*,va_list),int m,int x0,
 	}
 
 	map_freeblock_lock();	// メモリからの解放を禁止する
-		
+
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	// 有効かどうかチェック
 			func(bl_list[i],ap);
@@ -592,7 +592,7 @@ void map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y
 			if(bl && bl->x==x && bl->y==y && bl_list_count<BL_LIST_MAX)
 				bl_list[bl_list_count++]=bl;
 		}
-	}	
+	}
 
 	if(bl_list_count>=BL_LIST_MAX) {
 		if(battle_config.error_log)
@@ -600,7 +600,7 @@ void map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y
 	}
 
 	map_freeblock_lock();	// メモリからの解放を禁止する
-		
+
 	for(i=blockcount;i<bl_list_count;i++)
 		if(bl_list[i]->prev)	// 有効かどうかチェック
 			func(bl_list[i],ap);
@@ -679,7 +679,7 @@ int map_delobject(int id) {
 	if(obj==NULL)
 		return 0;
 
-	map_delobjectnofree(id);	
+	map_delobjectnofree(id);
 	map_freeblock(obj);
 
 	return 0;
@@ -955,7 +955,7 @@ int map_quit(struct map_session_data *sd) {
 
 	if(sd->chatID)	// チャットから出る
 		chat_leavechat(sd);
-		
+
 	if(sd->trade_partner)	// 取引を中断する
 		trade_tradecancel(sd);
 
@@ -1180,7 +1180,7 @@ int map_addnpc(int m,struct npc_data *nd) {
 
 void map_removenpc(void) {
     int i,m,n=0;
-    
+
     for(m=0;m<map_num;m++) {
         for(i=0;i<map[m].npc_num && i<MAX_NPC_PER_MAP;i++) {
             if(map[m].npc[i]!=NULL) {
@@ -1411,29 +1411,29 @@ static void map_readwater(char *watertxt) {
 
 
 static int map_readafm(int m,char *fn) {
-	
+
 	/*
 	Advanced Fusion Maps Support
 	(c) 2003-2004, The Fusion Project
 	- AlexKreuz
-	
+
 	The following code has been provided by me for eAthena
 	under the GNU GPL.  It provides Advanced Fusion
 	Map, the map format desgined by me for Fusion, support
 	for the eAthena emulator.
-	
+
 	I understand that because it is under the GPL
 	that other emulators may very well use this code in their
 	GNU project as well.
-	
+
 	The AFM map format was not originally a part of the GNU
 	GPL. It originated from scratch by my own hand.  I understand
 	that distributing this code to read the AFM maps with eAthena
 	causes the GPL to apply to this code.  But the actual AFM
 	maps are STILL copyrighted to the Fusion Project.  By choosing
-	
+
 	In exchange for that 'act of faith' I ask for the following.
-	
+
 	A) Give credit where it is due.  If you use this code, do not
 	   place your name on the changelog.  Credit should be given
 	   to AlexKreuz.
@@ -1444,65 +1444,65 @@ static int map_readafm(int m,char *fn) {
 	   and so I ask you to display the copyright message on the STARTUP
 	   SCREEN as I have done here. (refer to core.c)
 	   "Advanced Fusion Maps (c) 2003-2004 The Fusion Project"
-	   
+
 	Without this copyright, you are NOT entitled to bundle or distribute
 	the AFM maps at all.  On top of that, your "support" for AFM maps
 	becomes just as shady as your "support" for Gravity GRF files.
-	
+
 	The bottom line is this.  I know that there are those of you who
 	would like to use this code but aren't going to want to provide the
 	proper credit.  I know this because I speak frome experience.  If
 	you are one of those people who is going to try to get around my
 	requests, then save your breath because I don't want to hear it.
-	
+
 	I have zero faith in GPL and I know and accept that if you choose to
 	not display the copyright for the AFMs then there is absolutely nothing
 	I can do about it.  I am not about to start a legal battle over something
 	this silly.
-	
+
 	Provide the proper credit because you believe in the GPL.  If you choose
 	not to and would rather argue about it, consider the GPL failed.
-	
+
 	October 18th, 2004
 	- AlexKreuz
 	- The Fusion Project
 	*/
-	
-	
+
+
 	int s;
 	int x,y,xs,ys;
 	size_t size;
-	
+
 	char afm_line[65535];
 	int afm_size[1];
 	FILE *afm_file;
 	char *str;
-	
+
 	afm_file = fopen(fn, "r");
 	if (afm_file != NULL) {
-			
+
 //		printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
 //		fflush(stdout);
 
 		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
 		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
 		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
-		sscanf(str , "%d%d", &afm_size[0], &afm_size[1]);	
+		sscanf(str , "%d%d", &afm_size[0], &afm_size[1]);
 
-		map[m].m = m;	
+		map[m].m = m;
 		xs = map[m].xs = afm_size[0];
 		ys = map[m].ys = afm_size[1];
 		map[m].gat = calloc(s = map[m].xs * map[m].ys, 1);
-		
+
 		if(map[m].gat==NULL){
 			printf("out of memory : map_readmap gat\n");
 			exit(1);
 		}
-		
+
 		map[m].npc_num=0;
 		map[m].users=0;
 		memset(&map[m].flag,0,sizeof(map[m].flag));
-		
+
 		if(battle_config.pk_mode) map[m].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
 
 		for (y = 0; y < ys; y++) {
@@ -1511,25 +1511,25 @@ static int map_readafm(int m,char *fn) {
 				map[m].gat[x+y*xs] = str[x]-48;
 			}
 		}
-		
+
 		map[m].bxs=(xs+BLOCK_SIZE-1)/BLOCK_SIZE;
 		map[m].bys=(ys+BLOCK_SIZE-1)/BLOCK_SIZE;
 		size = map[m].bxs * map[m].bys * sizeof(struct block_list*);
 		map[m].block = calloc(size, 1);
-		
+
 		if(map[m].block == NULL){
 			printf("out of memory : map_readmap block\n");
 			exit(1);
 		}
-		
+
 		map[m].block_mob = calloc(size, 1);
 		if (map[m].block_mob == NULL) {
 			printf("out of memory : map_readmap block_mob\n");
 			exit(1);
 		}
-		
+
 		size = map[m].bxs*map[m].bys*sizeof(int);
-		
+
 		map[m].block_count = calloc(size, 1);
 		if(map[m].block_count==NULL){
 			printf("out of memory : map_readmap block\n");
@@ -1687,12 +1687,12 @@ int map_addmap(char *mapname) {
 int map_delmap(char *mapname) {
 
 	int i;
-	
+
 	if (strcmpi(mapname, "all") == 0) {
 		map_num = 0;
 		return 0;
 	}
-	
+
 	for(i = 0; i < map_num; i++) {
 		if (strcmp(map[i].name, mapname) == 0) {
 		    printf("Removing map [ %s ] from maplist\n",map[i].name);
@@ -1715,52 +1715,52 @@ int parse_console(char *buf) {
     int x = 0, y = 0;
     int m, n;
     struct map_session_data *sd;
-    
+
     sd = calloc(sizeof(*sd), 1);
-    
+
     sd->fd = 0;
     strcpy( sd->status.name , "console");
-    
+
     type = (char *)malloc(64);
     command = (char *)malloc(64);
     map = (char *)malloc(64);
     buf2 = (char *)malloc(72);
-    
+
     memset(type,0,64);
     memset(command,0,64);
     memset(map,0,64);
-    memset(buf2,0,72);    
-    
+    memset(buf2,0,72);
+
     if ( ( n = sscanf(buf, "%[^:]:%[^:]:%99s %d %d[^\n]", type , command , map , &x , &y )) < 5 )
         if ( ( n = sscanf(buf, "%[^:]:%[^\n]", type , command )) < 2 )
             n = sscanf(buf,"%[^\n]",type);
-    
+
     if ( n == 5 ) {
         if (x <= 0) {
             x = rand() % 399 + 1;
             sd->bl.x = x;
         } else {
             sd->bl.x = x;
-        }        
-        
+        }
+
         if (y <= 0) {
             y = rand() % 399 + 1;
             sd->bl.y = y;
         } else {
             sd->bl.y = y;
-        }            
-    
+        }
+
         m = map_mapname2mapid(map);
         if ( m >= 0 )
             sd->bl.m = m;
         else {
             printf("Console: Unknown map\n");
             goto end;
-        }    
-    }    
+        }
+    }
 
     printf("Type of command: %s || Command: %s || Map: %s Coords: %d %d\n",type,command,map,x,y);
-    
+
     if ( strcmpi("admin",type) == 0 && n == 5 ) {
         sprintf(buf2,"console: %s",command);
         if( is_atcommand(sd->fd,sd,buf2,99) == AtCommand_None )
@@ -1778,8 +1778,8 @@ int parse_console(char *buf) {
         printf("IE: @spawn\n");
         printf("To shutdown the server:\n");
         printf("server:shutdown\n");
-    } 
-    
+    }
+
     end:
     free(buf);
     free(type);
@@ -1787,7 +1787,7 @@ int parse_console(char *buf) {
     free(map);
     free(buf2);
     free(sd);
-    
+
     return 0;
 }
 
@@ -1816,7 +1816,7 @@ int map_config_read(char *cfgName) {
 			} else if (strcmpi(w1, "char_ip") == 0) {
 				char_ip_set_ = 1;
 				h = gethostbyname (w2);
-				if(h != NULL) { 
+				if(h != NULL) {
 					snprintf(tmp_output,sizeof(tmp_output),"Character server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 					ShowInfo(tmp_output);
 					sprintf(w2,"%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
@@ -1827,7 +1827,7 @@ int map_config_read(char *cfgName) {
 			} else if (strcmpi(w1, "map_ip") == 0) {
 				map_ip_set_ = 1;
 				h = gethostbyname (w2);
-				if (h != NULL) { 
+				if (h != NULL) {
 					printf("Map server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 					sprintf(w2, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 				}
@@ -1904,9 +1904,9 @@ int map_sql_init(void){
 	else {
 		printf ("connect success! (Map Server Connection)\n");
 	}
-	
+
     mysql_init(&lmysql_handle);
-    
+
     //DB connection start
     printf("Connect Login DB Server....\n");
     if(!mysql_real_connect(&lmysql_handle, login_server_ip, login_server_id, login_server_pw,
@@ -1918,7 +1918,7 @@ int map_sql_init(void){
 	 else {
 		printf ("connect success! (Login Server Connection)\n");
 	 }
-	
+
 	if(battle_config.mail_system) { // mail system [Valaris]
 		mysql_init(&mail_handle);
 		if(!mysql_real_connect(&mail_handle, map_server_ip, map_server_id, map_server_pw,
@@ -1941,9 +1941,9 @@ int map_sql_close(void){
 }
 
 int log_sql_init(void){
-	
+
     mysql_init(&mmysql_handle);
-		
+
 	//DB connection start
 	printf("\033[1;29m[SQL]\033[0;0m: Connecting to Log Database \033[1;29m%s\033[0;0m At \033[1;29m%s\033[0;0m...\n",log_db,log_db_ip);
 	if(!mysql_real_connect(&mmysql_handle, log_db_ip, log_db_id, log_db_pw,
@@ -1986,7 +1986,7 @@ int sql_config_read(char *cfgName)
 		} else if(strcmpi(w1,"login_db")==0){
 			strcpy(login_db,w2);
 		} else if (strcmpi(w1, "char_db") == 0) {
-			strcpy(char_db, w2); 
+			strcpy(char_db, w2);
 		} else if(strcmpi(w1,"gm_db_level")==0){
 			strcpy(gm_db_level,w2);
 		} else if(strcmpi(w1,"gm_db_account_id")==0){
@@ -2047,7 +2047,10 @@ int sql_config_read(char *cfgName)
 			strcpy(log_db_pw, w2);
 		} else if(strcmpi(w1,"log_db_port")==0) {
 			log_db_port = atoi(w2);
-		} 
+		//support the import command, just like any other config
+		} else if(strcmpi(w1,"import")==0){
+			sql_config_read(w2);
+		}
 	}
 	fclose(fp);
 
@@ -2080,7 +2083,7 @@ int online_timer(int tid,unsigned int tick,int id,int data)
 
 	char_online_check();
 
-	check_online_timer=add_timer(gettick()+CHECK_INTERVAL,online_timer,0,0);	
+	check_online_timer=add_timer(gettick()+CHECK_INTERVAL,online_timer,0,0);
 
 	return 0;
 }
@@ -2093,7 +2096,7 @@ void char_online_check(void)
 	do_reset_online();
 
 	for(i=0;i<fd_max;i++){
-		if (session[i] && (sd = session[i]->session_data) && sd && sd->state.auth && 
+		if (session[i] && (sd = session[i]->session_data) && sd && sd->state.auth &&
 		 !(battle_config.hide_GM_session && pc_isGM(sd)))
 			if(sd->status.char_id) {
 				sprintf(tmp_sql,"UPDATE `%s` SET `online`='1' WHERE `char_id`='%d'", char_db, sd->status.char_id);
@@ -2103,7 +2106,7 @@ void char_online_check(void)
 			}
 	}
 
-	
+
 	if(check_online_timer && check_online_timer != -1) {
 		delete_timer(check_online_timer,online_timer);
 		add_timer(gettick()+CHECK_INTERVAL,online_timer,0,0);
@@ -2176,7 +2179,7 @@ void do_final(void) {
 		map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, 0, 0);
     }
 
-    for (i = 0; i < fd_max; i++) 
+    for (i = 0; i < fd_max; i++)
         delete_session(i);
 
     map_removenpc();
@@ -2257,20 +2260,20 @@ int do_init(int argc, char *argv[]) {
 
 	map_config_read(MAP_CONF_NAME);
 
-        if ((naddr_ == 0) && (map_ip_set_ == 0 || char_ip_set_ == 0)) { 
+        if ((naddr_ == 0) && (map_ip_set_ == 0 || char_ip_set_ == 0)) {
             printf("\nUnable to determine your IP address... please edit\n");
             printf("the map_athena.conf file and set it.\n");
             printf("(127.0.0.1 is valid if you have no network interface)\n");
         }
 
-        if (map_ip_set_ == 0 || char_ip_set_ == 0) { 
+        if (map_ip_set_ == 0 || char_ip_set_ == 0) {
           // The map server should know what IP address it is running on
           //   - MouseJstr
           int localaddr = ntohl(addr_[0]);
           unsigned char *ptr = (unsigned char *) &localaddr;
           char buf[16];
           sprintf(buf, "%d.%d.%d.%d", ptr[0], ptr[1], ptr[2], ptr[3]);;
-          if (naddr_ != 1) 
+          if (naddr_ != 1)
             printf("Multiple interfaces detected..  using %s as our IP address\n", buf);
           else
             printf("Defaulting to %s as our IP address\n", buf);
@@ -2279,10 +2282,10 @@ int do_init(int argc, char *argv[]) {
           if (char_ip_set_ == 0)
 		chrif_setip(buf);
 
-          if (ptr[0] == 192 && ptr[1] == 168)  
+          if (ptr[0] == 192 && ptr[1] == 168)
             printf("\nFirewall detected.. \n    edit lan_support.conf and map_athena.conf\n\n");
-        } 
-        
+        }
+
 	battle_config_read(BATTLE_CONF_FILENAME);
 	msg_config_read(MSG_CONF_NAME);
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
@@ -2316,7 +2319,7 @@ int do_init(int argc, char *argv[]) {
 		}
 		fclose(data_conf);
 	} // end of reading grf-files.txt for AFMs
-	
+
 
 	map_readallmap();
 
@@ -2330,7 +2333,7 @@ int do_init(int argc, char *argv[]) {
 
 #ifndef TXT_ONLY // online status timer, checks every hour [Valaris]
 	add_timer_func_list(online_timer, "online_timer");
-	check_online_timer=add_timer(gettick()+CHECK_INTERVAL,online_timer,0,0);	
+	check_online_timer=add_timer(gettick()+CHECK_INTERVAL,online_timer,0,0);
 #endif /* not TXT_ONLY */
 
 	do_init_chrif();
@@ -2347,11 +2350,11 @@ int do_init(int argc, char *argv[]) {
 	do_init_pet();
 
 #ifndef TXT_ONLY /* mail system [Valaris] */
-	if(battle_config.mail_system)	
+	if(battle_config.mail_system)
 		do_init_mail();
 
-	if (log_config.branch || log_config.drop || log_config.mvpdrop || 
-		log_config.present || log_config.produce || log_config.refine || 
+	if (log_config.branch || log_config.drop || log_config.mvpdrop ||
+		log_config.present || log_config.produce || log_config.refine ||
 		log_config.trade)
 	{
 		log_sql_init();
@@ -2359,22 +2362,22 @@ int do_init(int argc, char *argv[]) {
 #endif /* not TXT_ONLY */
 
 	npc_event_do_oninit();	// npcのOnInitイベント実行
-	
+
 	if ( console ) {
 	    set_defaultconsoleparse(parse_console);
 	   	start_console();
 	}
-	
+
 	if (battle_config.pk_mode == 1)
 		printf("The server is running in \033[1;31mPK Mode\033[0m.\n");
-	
+
 	//Added for Mugendais I'm Alive mod
 	if (imalive_on)
 		add_timer_interval(gettick()+10, imalive_timer,0,0,imalive_time*1000);
 
 	printf("The map-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", map_port);
 	ticks = gettick();
-	
+
 
 	return 0;
 }
