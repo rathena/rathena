@@ -62,7 +62,7 @@ static struct str_data_struct {
 	int str;
 	int backpatch;
 	int label;
-	int (*func)(script_state *);
+	int (*func)(struct script_state *);
 	int val;
 	int next;
 } *str_data;
