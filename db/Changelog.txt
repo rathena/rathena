@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/19
+        * Fixed missing END; in new cards, some optimizatons [Lupus]
 03/18
         * Updated item prices for Niflheim drops [celest]
         * Updated some Ayothaya mob stats [celest]
