@@ -2399,6 +2399,8 @@ static struct Damage battle_calc_mob_weapon_attack(
 			damage += damage*(2*sc_data[SC_TRUESIGHT].val1)/100;
 			if(sc_data[SC_BERSERK].timer!=-1)	// バーサーク
 				damage += damage*2;
+			if(sc_data && sc_data[SC_AURABLADE].timer!=-1)	//[DracoRPG]
+				damage += sc_data[SC_AURABLADE].val1 * 20;
 		}
 
 		if(skill_num>0){
@@ -2723,8 +2725,8 @@ static struct Damage battle_calc_mob_weapon_attack(
 	if(skill_num != 0 || s_ele != 0 || !battle_config.mob_attack_attr_none)
 	damage=battle_attr_fix(damage, s_ele, battle_get_element(target) );
 
-	if(sc_data && sc_data[SC_AURABLADE].timer!=-1)	/* オーラブレード 必中 */
-		damage += sc_data[SC_AURABLADE].val1 * 10;
+	//if(sc_data && sc_data[SC_AURABLADE].timer!=-1)	/* オーラブレード 必中 */
+	//	damage += sc_data[SC_AURABLADE].val1 * 10;
 	if(skill_num==PA_PRESSURE) /* プレッシャー 必中? */
 		damage = 500+300*skill_lv;
 
@@ -3095,6 +3097,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 			if(sc_data[SC_BERSERK].timer!=-1){	// バーサーク
 				damage += damage*2;
 				damage2 += damage2*2;
+			}
+			if(sc_data && sc_data[SC_AURABLADE].timer!=-1) {	//[DracoRPG]
+				damage += sc_data[SC_AURABLADE].val1 * 20;
+				damage2 += sc_data[SC_AURABLADE].val1 * 20;
 			}
 		}
 
@@ -3785,10 +3791,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 	damage += sd->spiritball*3;
 	damage2 += sd->spiritball*3;
 
-	if(sc_data && sc_data[SC_AURABLADE].timer!=-1){	/* オーラブレード 必中 */
-		damage += sc_data[SC_AURABLADE].val1 * 10;
-		damage2 += sc_data[SC_AURABLADE].val1 * 10;
-	}
+	//if(sc_data && sc_data[SC_AURABLADE].timer!=-1){	/* オーラブレード 必中 */
+	//	damage += sc_data[SC_AURABLADE].val1 * 10;
+	//	damage2 += sc_data[SC_AURABLADE].val1 * 10;
+	//}
 	if(skill_num==PA_PRESSURE){ /* プレッシャー 必中? */
 		damage = 500+300*skill_lv;
 		damage2 = 500+300*skill_lv;

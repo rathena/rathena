@@ -3708,9 +3708,30 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		break;
 
 	case BS_REPAIRWEAPON:			/* 武器修理 */
-		if(sd)
+		if(sd) {	//Temporary Weapon Repair code [DracoRPG]
 //動作しないのでとりあえずコメントアウト
 //			clif_item_repair_list(sd);
+			int i,r=0;
+			if (pc_search_inventory(sd, 999) <= 0 ) {
+				clif_skill_fail(sd,sd->skillid,0,0);
+				map_freeblock_unlock();
+				return 1;
+			}
+			for(i=0; i<MAX_INVENTORY; i++) {
+				if(sd->status.inventory[i].attribute == 1){
+					sd->status.inventory[i].attribute = 0;
+					pc_delitem(sd, pc_search_inventory(sd, 999), 1, 0);
+					clif_equiplist(sd);
+					clif_produceeffect(sd, 0, sd->status.inventory[i].nameid);
+					clif_misceffect(&sd->bl, 3);
+					clif_displaymessage(sd->fd,"Item has been repaired.");
+					r++;
+					break;
+				}
+			}
+			if(!r)
+				clif_skill_fail(sd,sd->skillid,0,0);
+		}
 		break;
 
 	case MC_VENDING:			/* 露店開設 */
