@@ -39,7 +39,7 @@ Date		Added
 12/21
 	* Corrected position of start { in a crap load of scripts. [Ajarn]
 		- jA decided that it had to be on the definition line
-		- So, if it wasn't, hte next script wouldn't load
+		- So, if it wasn't, the next script wouldn't load
         * Corrected script errors in devnpc.txt [celest]
 	
 12/20	
