@@ -124,7 +124,7 @@ int use_md5_passwds = 0;
 char login_db[256] = "login";
 char loginlog_db[256] = "loginlog";
 
-// added to help out custom login tables, without having to recompile 
+// added to help out custom login tables, without having to recompile
 // source so options are kept in the login_athena.conf or the inter_athena.conf
 char login_db_account_id[256] = "account_id";
 char login_db_userid[256] = "userid";
@@ -582,7 +582,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 	return 3; // Rejected
 #endif
     }
-        
+
 	account->account_id = atoi(sql_row[0]);
 	account->login_id1 = rand();
 	account->login_id2 = rand();
@@ -685,7 +685,7 @@ int parse_fromchar(int fd){
 				if (auth_fifo[i].account_id == account_id &&
 				    auth_fifo[i].login_id1 == RFIFOL(fd,6) &&
 #if CMP_AUTHFIFO_LOGIN2 != 0
-				    auth_fifo[i].login_id2 == RFIFOL(fd,10) && // relate to the versions higher than 18 
+				    auth_fifo[i].login_id2 == RFIFOL(fd,10) && // relate to the versions higher than 18
 #endif
 				    auth_fifo[i].sex == RFIFOB(fd,14) &&
 #if CMP_AUTHFIFO_IP != 0
@@ -850,9 +850,9 @@ int parse_fromchar(int fd){
 						      server[id].name, acc, sql_row[0], actual_email, ip);
 					}
 				}
-				
+
 			}
-		  }	
+		  }
 			RFIFOSKIP(fd, 86);
 			break;
 
@@ -929,7 +929,7 @@ int parse_fromchar(int fd){
 						WBUFL(buf,7) = timestamp; // status or final date of a banishment
 						charif_sendallwos(-1, buf, 11);
 					}
-					printf("Account: %d Banned until: %ld\n", acc, timestamp); 
+					printf("Account: %d Banned until: %ld\n", acc, timestamp);
 					sprintf(tmpsql, "UPDATE `%s` SET `ban_until` = '%ld', `state`='7' WHERE `%s` = '%d'", login_db, timestamp, login_db_account_id, acc);
 					// query
 					if (mysql_query(&mysql_handle, tmpsql)) {
@@ -950,14 +950,14 @@ int parse_fromchar(int fd){
 				unsigned char buf[16];
 				acc=RFIFOL(fd,4);
 				sprintf(tmpsql,"SELECT `sex` FROM `%s` WHERE `%s` = '%d'",login_db,login_db_account_id,acc);
-        
+
 	        if(mysql_query(&mysql_handle, tmpsql)) {
                     printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 		    return 0;
                 }
-        
+
 	        sql_res = mysql_store_result(&mysql_handle) ;
-        
+
 	        if (sql_res)	{
 		        if (mysql_num_rows(sql_res) == 0) {
 				mysql_free_result(sql_res);
@@ -965,7 +965,7 @@ int parse_fromchar(int fd){
 			}
 			sql_row = mysql_fetch_row(sql_res);	//row fetching
 	        }
-	
+
 	        if (strcmpi(sql_row[0], "M") == 0)
                     sex = 1;
                 else
@@ -1013,7 +1013,7 @@ int parse_fromchar(int fd){
 					WBUFW(buf,0)=0x2729;
 					charif_sendallwos(fd,buf,WBUFW(buf,2));
 				}
-			  }	
+			  }
 				RFIFOSKIP(fd,RFIFOW(fd,2));
 				//printf("login: save account_reg (from char)\n");
 			    break;
@@ -1043,21 +1043,21 @@ int parse_fromchar(int fd){
 				RFIFOSKIP(fd,6);
 			}
 			return 0;
-			
+
     case 0x272b:    // Set account_id to online [Wizputer]
         if (RFIFOREST(fd) < 6)
             return 0;
         add_online_user(RFIFOL(fd,2));
         RFIFOSKIP(fd,6);
         break;
-    
+
     case 0x272c:   // Set account_id to offline [Wizputer]
         if (RFIFOREST(fd) < 6)
             return 0;
         remove_online_user(RFIFOL(fd,2));
         RFIFOSKIP(fd,6);
         break;
-			
+
 	default:
 		printf("login: unknown packet %x! (from char).\n", RFIFOW(fd,0));
 		session[fd]->eof = 1;
@@ -1461,24 +1461,24 @@ int parse_login(int fd) {
 // Console Command Parser [Wizputer]
 int parse_console(char *buf) {
     char *type,*command;
-    
+
     type = (char *)malloc(64);
     command = (char *)malloc(64);
-    
+
     memset(type,0,64);
     memset(command,0,64);
-    
+
     printf("Console: %s\n",buf);
-    
+
     if ( sscanf(buf, "%[^:]:%[^\n]", type , command ) < 2 )
         sscanf(buf,"%[^\n]",type);
-    
+
     printf("Type of command: %s || Command: %s \n",type,command);
-    
+
     if(buf) free(buf);
     if(type) free(type);
     if(command) free(command);
-    
+
     return 0;
 }
 
@@ -1619,15 +1619,15 @@ int login_config_read(const char *cfgName){
 		else if(strcmpi(w1,"dynamic_pass_failure_ban_how_long")==0){
 			dynamic_pass_failure_ban_how_long=atoi(w2);
 			printf ("set dynamic_pass_failure_ban_how_long : %d\n",dynamic_pass_failure_ban_how_long);
-		} 
+		}
 		else if(strcmpi(w1,"anti_freeze_enable")==0){
 			anti_freeze_enable = config_switch(w2);
-		} 
+		}
 		else if (strcmpi(w1, "anti_freeze_interval") == 0) {
 			ANTI_FREEZE_INTERVAL = atoi(w2);
 			if (ANTI_FREEZE_INTERVAL < 5)
 				ANTI_FREEZE_INTERVAL = 5; // minimum 5 seconds
-		} 
+		}
 		else if (strcmpi(w1, "import") == 0) {
 			login_config_read(w2);
 		} else if(strcmpi(w1,"imalive_on")==0) {		//Added by Mugendai for I'm Alive mod
@@ -1741,9 +1741,13 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		else if (strcmpi(w1, "loginlog_db") == 0) {
 			strcpy(loginlog_db, w2);
 		}
-        }
-        fclose(fp);
-        printf("reading configure done.....\n");
+		//support the import command, just like any other config
+		else if(strcmpi(w1,"import")==0){
+			sql_config_read(w2);
+		}
+	}
+	fclose(fp);
+	printf("reading configure done.....\n");
 }
 
 
@@ -1830,11 +1834,11 @@ int do_init(int argc,char **argv){
 		set_defaultconsoleparse(parse_console);
 		start_console();
 	}
-	
+
 	// Online user database init
     free(online_db);
 	online_db = numdb_init();
-	
+
 	printf("The login-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", login_port);
 
 	return 0;

@@ -160,12 +160,12 @@ void set_char_online(int char_id, int account_id) {
 		if (mysql_query(&mysql_handle, tmp_sql)) {
 			printf("DB server Error (set char online)- %s\n", mysql_error(&mysql_handle));
 		}
-    }		
-    
+    }
+
     WFIFOW(login_fd,0) = 0x272b;
 	WFIFOL(login_fd,2) = account_id;
 	WFIFOSET(login_fd,6);
-        
+
 }
 
 void set_all_offline(void) {
@@ -181,16 +181,16 @@ void set_all_offline(void) {
 	            WFIFOW(login_fd,0) = 0x272c;
 	            WFIFOL(login_fd,2) = atoi(sql_row[0]);
 	            WFIFOSET(login_fd,6);
-            } 
+            }
        }
-    } 
-    
-   	mysql_free_result(sql_res);        
+    }
+
+   	mysql_free_result(sql_res);
     sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (set_all_offline)- %s\n", mysql_error(&mysql_handle));
 	}
-	
+
 }
 
 void set_char_offline(int char_id, int account_id) {
@@ -198,7 +198,7 @@ void set_char_offline(int char_id, int account_id) {
         sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `account_id`='%d'", char_db, account_id);
     else
 	    sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, char_id);
-	    
+
 	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error (set_char_offline)- %s\n", mysql_error(&mysql_handle));
 
@@ -208,7 +208,7 @@ void set_char_offline(int char_id, int account_id) {
    WFIFOW(login_fd,0) = 0x272c;
    WFIFOL(login_fd,2) = account_id;
    WFIFOSET(login_fd,6);
-}       
+}
 
 //-----------------------------------------------------
 // Function to suppress control characters in a string.
@@ -2060,7 +2060,7 @@ int parse_frommap(int fd) {
 			set_char_online(RFIFOL(fd,2),RFIFOL(fd,6));
 			RFIFOSKIP(fd,10);
 			break;
-		          
+
 		default:
 			// inter server - packet
 			{
@@ -2141,7 +2141,7 @@ int parse_char(int fd) {
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 
 	sd = session[fd]->session_data;
-	
+
         if(login_fd < 0)
 		session[fd]->eof = 1;
 	if(session[fd]->eof) {
@@ -2176,7 +2176,7 @@ int parse_char(int fd) {
 //		if (sd == NULL && cmd != 0x65 && cmd != 0x20b && cmd != 0x187 &&
 //					 cmd != 0x2af8 && cmd != 0x7530 && cmd != 0x7532)
 //			cmd = 0xffff;	// パケットダンプを表示させる
-		
+
 		switch(cmd){
 		case 0x20b: //20040622 encryption ragexe correspondence
 			if (RFIFOREST(fd) < 19)
@@ -2673,24 +2673,24 @@ int parse_char(int fd) {
 // Console Command Parser [Wizputer]
 int parse_console(char *buf) {
     char *type,*command;
-    
+
     type = (char *)malloc(64);
     command = (char *)malloc(64);
-    
+
     memset(type,0,64);
     memset(command,0,64);
-    
+
     printf("Console: %s\n",buf);
-    
+
     if ( sscanf(buf, "%[^:]:%[^\n]", type , command ) < 2 )
         sscanf(buf,"%[^\n]",type);
-    
+
     printf("Type of command: %s || Command: %s \n",type,command);
-    
+
     if(buf) free(buf);
     if(type) free(type);
     if(command) free(command);
-    
+
     return 0;
 }
 
@@ -2856,7 +2856,7 @@ void do_final(void) {
 	flush_fifos();
 
 	sprintf(tmp_sql,"DELETE FROM `ragsrvinfo");
-	if (mysql_query(&mysql_handle, tmp_sql)) 
+	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
 
 	if(gm_account)  {
@@ -2954,7 +2954,11 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		}else if(strcmpi(w1,"lowest_gm_level")==0){
 			lowest_gm_level = atoi(w2);
 			printf("set lowest_gm_level : %s\n",w2);
+		//support the import command, just like any other config
+		}else if(strcmpi(w1,"import")==0){
+			sql_config_read(w2);
 		}
+
 	}
 	fclose(fp);
 	printf("reading configure done.....\n");
@@ -3140,14 +3144,14 @@ int do_init(int argc, char **argv){
 	printf("open port %d.....\n",char_port);
 	char_fd = make_listen_port(char_port);
 
-        if ((naddr_ != 0) && (login_ip_set_ == 0 || char_ip_set_ == 0)) { 
+        if ((naddr_ != 0) && (login_ip_set_ == 0 || char_ip_set_ == 0)) {
           // The char server should know what IP address it is running on
           //   - MouseJstr
           int localaddr = ntohl(addr_[0]);
           unsigned char *ptr = (unsigned char *) &localaddr;
           char buf[16];
           sprintf(buf, "%d.%d.%d.%d", ptr[0], ptr[1], ptr[2], ptr[3]);;
-          if (naddr_ != 1) 
+          if (naddr_ != 1)
             printf("Multiple interfaces detected..  using %s as our IP address\n", buf);
           else
             printf("Defaulting to %s as our IP address\n", buf);
@@ -3156,9 +3160,9 @@ int do_init(int argc, char **argv){
           if (char_ip_set_ == 0)
           	strcpy(char_ip_str, buf);
 
-          if (ptr[0] == 192 && ptr[1] == 168)  
+          if (ptr[0] == 192 && ptr[1] == 168)
             printf("Firewall detected.. edit lan_support.conf and char_athena.conf\n");
-        } 
+        }
 
 	login_ip = inet_addr(login_ip_str);
 	char_ip = inet_addr(char_ip_str);
@@ -3190,12 +3194,12 @@ int do_init(int argc, char **argv){
 	}
 
 	read_gm_account();
-	
+
 	if ( console ) {
 	    set_defaultconsoleparse(parse_console);
 	   	start_console();
 	}
-	
+
 	printf("char server init func end (now unlimited loop start!)....\n");
 	printf("The char-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", char_port);
 	return 0;
