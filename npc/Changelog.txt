@@ -35,6 +35,7 @@ Other Ppl
 Date		Added
 ======
 11/19
+	* cmd_fild02.gat: fixed respawn delay of one Seal [Lupus]
 	* ev_agit_event.txt: Implemented Shadowlady's idea of allowing different woe start/stop times
 	  for different days of the week.[kobra_k88]
 11/18
