@@ -1,5 +1,7 @@
 Date	Added
 11/22
+	* timer.c static int timer_heap_max=0; //fix by Shinomori from eA forums
+	  ititialize static var!!!
 	* Added the old effect list # into effect_list.txt of spira's. [shadow]
 	* Added new flag (#3) to clif_specialeffect [MC Cameri]
 	* @doom,@die,@doommap now display the Dark Cross effect on you. [MC Cameri]

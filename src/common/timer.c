@@ -25,7 +25,7 @@ static int timer_data_max,timer_data_num;
 static int* free_timer_list;
 static int free_timer_list_max, free_timer_list_pos;
 
-static int timer_heap_max;
+static int timer_heap_max=0; //fixed Shinomori from eA forums
 static int* timer_heap = NULL;
 
 // for debug
