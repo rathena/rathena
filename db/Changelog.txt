@@ -2,10 +2,12 @@
 
 	==== progress ====
 	Ayathoya mobs == Added but using poring stats ( ? )
-	Ayathoya items == Added but no effect ( all are "ect" itens)
+	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
 02/18
+        * Added more new cards effects (thanks to DracoRPG at this time) [Lupus]
+	  added missing bonus 'bAllStats' into doc/item_bonus.txt
         * Changed Goblin Leader Card to using bAddRace2 -- each player can only save
           10 AddDamageClass, so this would save some space for other cards ^^ [celest]
 	* Started adding new cards effects. Also big thanks to Landarma [Lupus]

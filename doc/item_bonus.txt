@@ -1,4 +1,6 @@
-﻿skill n,x;	skill n of level x
+//eAthena Items Scripting Manual
+
+skill n,x;	skill n of level x
 
 bonus bStr,n;	STR + n
 bonus bAgi,n;	AGI + n
@@ -6,6 +8,8 @@ bonus bVit,n;	VIT + n
 bonus bInt,n;	INT + n
 bonus bDex,n;	DEX + n
 bonus bLuk,n;	LUK + n
+
+bonus bAllStats,n;	STR + n, AGI + n, VIT + n, INT + n, DEX + n, LUK + n
 
 bonus bMaxHP,n;			MAXHP + n
 bonus bMaxSP,n;			MAXSP + n
