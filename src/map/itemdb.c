@@ -136,7 +136,7 @@ int itemdb_searchrandomid(int flags)
  */
 struct item_data* itemdb_exists(int nameid)
 {
-	return numdb_search(item_db,nameid);
+	return (struct item_data *) numdb_search(item_db,nameid);
 }
 /*==========================================
  * DB‚ÌŒŸõ
@@ -146,7 +146,7 @@ struct item_data* itemdb_search(int nameid)
 {
 	struct item_data *id;
 
-	id=numdb_search(item_db,nameid);
+	id=(struct item_data *) numdb_search(item_db,nameid);
 	if(id) return id;
 
 	id=(struct item_data *)aCalloc(1,sizeof(struct item_data));
@@ -373,10 +373,10 @@ static int itemdb_readdb(void)
 
 			if((p=strchr(np,'{'))==NULL)
 				continue;
-			id->use_script = parse_script(p,lines);
+			id->use_script = parse_script((unsigned char *) p,lines);
 			if((p=strchr(p+1,'{'))==NULL)
 				continue;
-			id->equip_script = parse_script(p,lines);
+			id->equip_script = parse_script((unsigned char *) p,lines);
 		}
 		fclose(fp);
 		sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,filename[i]);
@@ -415,7 +415,7 @@ static int itemdb_read_randomitem()
 		struct random_item_data *pd=data[i].pdata;
 		int *pc=data[i].pcount;
 		int *pdefault=data[i].pdefault;
-		char *fn=data[i].filename;
+		char *fn=(char *) data[i].filename;
 
 		*pdefault = 0;
 		if( (fp=fopen(fn,"r"))==NULL ){
@@ -519,7 +519,7 @@ static int itemdb_read_itemnametable(void)
 	char *buf,*p;
 	int s;
 
-	buf=grfio_reads("data\\idnum2itemdisplaynametable.txt",&s);
+	buf=(char *) grfio_reads("data\\idnum2itemdisplaynametable.txt",&s);
 
 	if(buf==NULL)
 		return -1;
@@ -562,7 +562,7 @@ static int itemdb_read_cardillustnametable(void)
 	char *buf,*p;
 	int s;
 
-	buf=grfio_reads("data\\num2cardillustnametable.txt",&s);
+	buf=(char *) grfio_reads("data\\num2cardillustnametable.txt",&s);
 
 	if(buf==NULL)
 		return -1;
@@ -601,7 +601,7 @@ static int itemdb_read_itemslottable(void)
 	char *buf,*p;
 	int s;
 
-	buf=grfio_read("data\\itemslottable.txt");
+	buf=(char *) grfio_read("data\\itemslottable.txt");
 	if(buf==NULL)
 		return -1;
 	s=grfio_size("data\\itemslottable.txt");
@@ -636,7 +636,7 @@ static int itemdb_read_itemslotcounttable(void)
 	char *buf,*p;
 	int s;
 
-	buf=grfio_read("data\\itemslotcounttable.txt");
+	buf=(char *) grfio_read("data\\itemslotcounttable.txt");
 	if(buf==NULL)
 		return -1;
 	s=grfio_size("data\\itemslotcounttable.txt");
@@ -909,7 +909,7 @@ static int itemdb_final(void *key,void *data,va_list ap)
 {
 	struct item_data *id;
 
-	nullpo_retr(0, id=data);
+	nullpo_retr(0, id= (struct item_data *) data);
 
 	if(id->use_script)
 		aFree(id->use_script);

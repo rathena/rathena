@@ -1,6 +1,7 @@
 Date	Added
 
 02/04
+        * Fixed more compile signed/unsigned errors [SVN 1040: MouseJstr]
 	* TXT convertors now read the import command in inter_athena.conf
 	  [SVN 1038: Ajarn]
         * Fixed some compile errors [SVN 1037: MouseJstr]

@@ -52,7 +52,7 @@ static int script_pos,script_size;
 
 char *str_buf;
 int str_pos,str_size;
-static struct {
+static struct str_data_struct {
 	int type;
 	int str;
 	int backpatch;
@@ -306,7 +306,7 @@ int mapreg_setreg(int num,int val);
 int mapreg_setregstr(int num,const char *str);
 
 struct {
-	int (*func)();
+	int (*func)(struct script_state *);
 	char *name;
 	char *arg;
 } buildin_func[]={
@@ -559,7 +559,7 @@ static int search_str(const unsigned char *p)
 	int i;
 	i=str_hash[calc_hash(p)];
 	while(i){
-		if(strcmp(str_buf+str_data[i].str,p)==0){
+		if(strcmp(str_buf+str_data[i].str,(char *) p)==0){
 			return i;
 		}
 		i=str_data[i].next;
@@ -577,10 +577,10 @@ static int add_str(const unsigned char *p)
 	int i;
 	char *lowcase;
 
-	lowcase=aStrdup(p);
+	lowcase=aStrdup((char *) p);
 	for(i=0;lowcase[i];i++)
 		lowcase[i]=tolower(lowcase[i]);
-	if((i=search_str(lowcase))>=0){
+	if((i=search_str((unsigned char *) lowcase))>=0){
 		aFree(lowcase);
 		return i;
 	}
@@ -592,7 +592,7 @@ static int add_str(const unsigned char *p)
 	} else {
 		i=str_hash[i];
 		for(;;){
-			if(strcmp(str_buf+str_data[i].str,p)==0){
+			if(strcmp(str_buf+str_data[i].str,(char *) p)==0){
 				return i;
 			}
 			if(str_data[i].next==0)
@@ -603,22 +603,22 @@ static int add_str(const unsigned char *p)
 	}
 	if(str_num>=str_data_size){
 		str_data_size+=128;
-		str_data=aRealloc(str_data,sizeof(str_data[0])*str_data_size);
+		str_data=(struct str_data_struct *) aRealloc(str_data,sizeof(str_data[0])*str_data_size);
 		memset(str_data + (str_data_size - 128), '\0', 128);
 	}
-	while(str_pos+(int)strlen(p)+1>=str_size){
+	while(str_pos+(int)strlen((char *) p)+1>=str_size){
 		str_size+=256;
 		str_buf=(char *)aRealloc(str_buf,str_size);
 		memset(str_buf + (str_size - 256), '\0', 256);
 	}
-	strcpy(str_buf+str_pos,p);
+	strcpy(str_buf+str_pos, (char *) p);
 	str_data[str_num].type=C_NOP;
 	str_data[str_num].str=str_pos;
 	str_data[str_num].next=0;
 	str_data[str_num].func=NULL;
 	str_data[str_num].backpatch=-1;
 	str_data[str_num].label=-1;
-	str_pos+=strlen(p)+1;
+	str_pos+=strlen( (char *) p)+1;
 	return str_num++;
 }
 
@@ -631,7 +631,7 @@ static void check_script_buf(int size)
 {
 	if(script_pos+size>=script_size){
 		script_size+=SCRIPT_BLOCK_SIZE;
-		script_buf=(char *)aRealloc(script_buf,script_size);
+		script_buf=(unsigned char *)aRealloc(script_buf,script_size);
 		memset(script_buf + script_size - SCRIPT_BLOCK_SIZE, '\0',
 			SCRIPT_BLOCK_SIZE);
 	}
@@ -792,7 +792,7 @@ static void disp_error_message(const char *mes,const unsigned char *pos)
 
 	for(line=startline,p=startptr;p && *p;line++){
 		linestart=p;
-		lineend=strchr(p,'\n');
+		lineend=(unsigned char *) strchr((char *) p,'\n');
 		if(lineend){
 			c=*lineend;
 			*lineend=0;
@@ -842,9 +842,9 @@ unsigned char* parse_simpleexpr(unsigned char *p)
 		}
 	} else if(isdigit(*p) || ((*p=='-' || *p=='+') && isdigit(p[1]))){
 		char *np;
-		i=strtoul(p,&np,0);
+		i=strtoul((char *) p,&np,0);
 		add_scripti(i);
-		p=np;
+		p=(unsigned char *) np;
 	} else if(*p=='"'){
 		add_scriptc(C_STR);
 		p++;
@@ -871,12 +871,12 @@ unsigned char* parse_simpleexpr(unsigned char *p)
 			disp_error_message("unexpected character",p);
 			exit(1);
 		}
-		p2=skip_word(p);
+		p2=(char *) skip_word(p);
 		c=*p2;	*p2=0;	// 名前をadd_strする
 		l=add_str(p);
 
 		parse_cmd=l;	// warn_*_mismatch_paramnumのために必要
-		if(l==search_str("if"))	// warn_cmd_no_commaのために必要
+		if(l== search_str((unsigned char *) "if"))	// warn_cmd_no_commaのために必要
 			parse_cmd_if++;
 /*
 		// 廃止予定のl14/l15,およびプレフィックスｌの警告
@@ -887,11 +887,12 @@ unsigned char* parse_simpleexpr(unsigned char *p)
 			disp_error_message("prefix 'l' is DEPRECATED. use prefix '@' instead.",p2);
 		}
 */
-		*p2=c;	p=p2;
+		*p2=c;	
+                p=(unsigned char *) p2;
 
 		if(str_data[l].type!=C_FUNC && c=='['){
 			// array(name[i] => getelementofarray(name,i) )
-			add_scriptl(search_str("getelementofarray"));
+			add_scriptl(search_str((unsigned char *) "getelementofarray"));
 			add_scriptc(C_ARG);
 			add_scriptl(l);
 			p=parse_subexpr(p+1,-1);
@@ -929,14 +930,14 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 	p=skip_space(p);
 
 	if(*p=='-'){
-		tmpp=skip_space(p+1);
+		tmpp=(char *) skip_space((unsigned char *) (p+1));
 		if(*tmpp==';' || *tmpp==','){
 			add_scriptl(LABEL_NEXTLINE);
 			p++;
 			return p;
 		}
 	}
-	tmpp=p;
+	tmpp=(char *) p;
 	if((op=C_NEG,*p=='-') || (op=C_LNOT,*p=='!') || (op=C_NOT,*p=='~')){
 		p=parse_subexpr(p+1,100);
 		add_scriptc(op);
@@ -968,13 +969,13 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 			const char *plist[128];
 
 			if( str_data[func].type!=C_FUNC ){
-				disp_error_message("expect function",tmpp);
+				disp_error_message("expect function",(unsigned char *) tmpp);
 				exit(0);
 			}
 
 			add_scriptc(C_ARG);
 			do {
-				plist[i]=p;
+				plist[i]=(char *) p;
 				p=parse_subexpr(p,-1);
 				p=skip_space(p);
 				if(*p==',') p++;
@@ -984,7 +985,7 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 				p=skip_space(p);
 				i++;
 			} while(*p && *p!=')' && i<128);
-			plist[i]=p;
+			plist[i]=(char *) p;
 			if(*(p++)!=')'){
 				disp_error_message("func request '(' ')'",p);
 				exit(1);
@@ -995,7 +996,7 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 				int j=0;
 				for(j=0;arg[j];j++) if(arg[j]=='*')break;
 				if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) ){
-					disp_error_message("illegal number of parameters",plist[(i<j)?i:j]);
+					disp_error_message("illegal number of parameters",(unsigned char *) (plist[(i<j)?i:j]));
 				}
 			}
 		} else {
@@ -1052,19 +1053,19 @@ unsigned char* parse_line(unsigned char *p)
 	parse_cmd_if=0;	// warn_cmd_no_commaのために必要
 
 	// 最初は関数名
-	p2=p;
+	p2=(char *) p;
 	p=parse_simpleexpr(p);
 	p=skip_space(p);
 
 	cmd=parse_cmd;
 	if( str_data[cmd].type!=C_FUNC ){
-		disp_error_message("expect command",p2);
+		disp_error_message("expect command",(unsigned char *) p2);
 //		exit(0);
 	}
 
 	add_scriptc(C_ARG);
 	while(p && *p && *p!=';' && i<128){
-		plist[i]=p;
+		plist[i]=(char *) p;
 
 		p=parse_expr(p);
 		p=skip_space(p);
@@ -1076,7 +1077,7 @@ unsigned char* parse_line(unsigned char *p)
 		p=skip_space(p);
 		i++;
 	}
-	plist[i]=p;
+	plist[i]=(char *) p;
 	if(!p || *(p++)!=';'){
 		disp_error_message("need ';'",p);
 		exit(1);
@@ -1088,7 +1089,7 @@ unsigned char* parse_line(unsigned char *p)
 		int j=0;
 		for(j=0;arg[j];j++) if(arg[j]=='*')break;
 		if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) ){
-			disp_error_message("illegal number of parameters",plist[(i<j)?i:j]);
+			disp_error_message("illegal number of parameters",(unsigned char *) (plist[(i<j)?i:j]));
 		}
 	}
 
@@ -1104,7 +1105,7 @@ static void add_buildin_func(void)
 {
 	int i,n;
 	for(i=0;buildin_func[i].func;i++){
-		n=add_str(buildin_func[i].name);
+		n=add_str((unsigned char *) buildin_func[i].name);
 		str_data[n].type=C_FUNC;
 		str_data[n].val=i;
 		str_data[n].func=buildin_func[i].func;

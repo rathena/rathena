@@ -1655,13 +1655,13 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		}
 		if (srcbuf[0]!='{') {
 			if (strchr((char *) line,'{')) {
-				strcpy(srcbuf,strchr((const char *) line,'{'));
+				strcpy((char *) srcbuf,strchr((const char *) line,'{'));
 				startline=*lines;
 			}
 		} else
-			strcat(srcbuf,line);
+			strcat((char *) srcbuf,(const char *) line);
 	}
-	script=parse_script(srcbuf,startline);
+	script=(unsigned char *) parse_script((unsigned char *) srcbuf,startline);
 	if (script==NULL) {
 		// script parse error?
 		aFree(srcbuf);
@@ -1681,7 +1681,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 			printf("bad duplicate name! (not exist) : %s\n",srcname);
 			return 0;
 		}
-		script=nd2->u.scr.script;
+		script=(unsigned char *)nd2->u.scr.script;
 		label_dup=nd2->u.scr.label_list;
 		label_dupnum=nd2->u.scr.label_list_num;
 		src_id=nd2->bl.id;
@@ -1744,7 +1744,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 	nd->flag=0;
 	nd->class_=class_;
 	nd->speed=200;
-	nd->u.scr.script=script;
+	nd->u.scr.script=(char *) script;
 	nd->u.scr.src_id=src_id;
 	nd->chat_id=0;
 	nd->option = 0;
@@ -1893,7 +1893,7 @@ static int npc_parse_function(char *w1,char *w2,char *w3,char *w4,char *first_li
 		} else
 			strcat(srcbuf,line);
 	}
-	script=parse_script(srcbuf,startline);
+	script= parse_script((unsigned char *) srcbuf,startline);
 	if (script==NULL) {
 		// script parse error?
 		aFree(srcbuf);
@@ -2160,7 +2160,7 @@ static int npc_read_indoors(void)
 	char *buf,*p;
 	int s, m;
 
-	buf=grfio_reads("data\\indoorrswtable.txt",&s);
+	buf=(char *) grfio_reads("data\\indoorrswtable.txt",&s);
 
 	if(buf==NULL)
 		return -1;
@@ -2191,7 +2191,7 @@ static int npc_read_indoors(void)
 static int ev_db_final(void *key,void *data,va_list ap)
 {
 	aFree(data);
-	if(strstr(key,"::")!=NULL)
+	if(strstr((const char *) key,"::")!=NULL)
 		aFree(key);
 	return 0;
 }

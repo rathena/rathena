@@ -29,7 +29,7 @@ int chat_createchat(struct map_session_data *sd,int limit,int pub,char* pass,cha
 
 	nullpo_retr(0, sd);
 
-	cd = aCalloc(1,sizeof(struct chat_data));
+	cd = (struct chat_data *) aCalloc(1,sizeof(struct chat_data));
 
 	cd->limit = limit;
 	cd->pub = pub;
@@ -78,7 +78,7 @@ int chat_joinchat(struct map_session_data *sd,int chatid,char* pass)
 		clif_joinchatfail(sd,0);
 		return 0;
 	}
-	if(cd->pub==0 && strncmp(pass,cd->pass,8)){
+	if(cd->pub==0 && strncmp(pass,(char *) cd->pass,8)){
 		clif_joinchatfail(sd,1);
 		return 0;
 	}
@@ -268,7 +268,7 @@ int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,char* t
 
 	nullpo_retr(1, nd);
 
-	cd = aCalloc(1,sizeof(struct chat_data));
+	cd = (struct chat_data *) aCalloc(1,sizeof(struct chat_data));
 
 	cd->limit = cd->trigger = limit;
 	if(trigger>0)

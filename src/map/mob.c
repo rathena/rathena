@@ -288,7 +288,7 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
 
 	for(count=0;count<amount;count++){
 		struct guild_castle *gc;
-		md=aCalloc(sizeof(struct mob_data), 1);
+		md=(struct mob_data *) aCalloc(sizeof(struct mob_data), 1);
 		if(md==NULL){
 			printf("mob_spawn_guardian: out of memory !\n");
 			exit(1);
@@ -1868,7 +1868,7 @@ static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
  */
 static int mob_ai_sub_lazy(void * key,void * data,va_list app)
 {
-	struct mob_data *md=data;
+	struct mob_data *md=(struct mob_data *)data;
 	unsigned int tick;
 	va_list ap;
 
@@ -2693,7 +2693,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				struct map_session_data *tmpsd;
 				int i;
 				for(i=0;i<fd_max;i++){
-					if(session[i] && (tmpsd=session[i]->session_data) && tmpsd->state.auth) {
+					if(session[i] && (tmpsd= (struct map_session_data *) session[i]->session_data) && tmpsd->state.auth) {
 						if(md->bl.m == tmpsd->bl.m) {
 							sd = tmpsd;
 							break;

@@ -1,6 +1,6 @@
 
-CC = gcc -pipe
-# CC = g++
+# CC = gcc -pipe
+CC = g++
 # CC = gcc -pipe -DGCOLLECT
 # CC = gcc -pipe -DDMALLOC -DDMALLOC_FUNC_CHECK
 # CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
