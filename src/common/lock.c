@@ -2,7 +2,13 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#ifndef WIN32
 #include <unistd.h>
+#else
+#include <windows.h>
+#define F_OK   0x0
+#define R_OK   0x4
+#endif
 #include "lock.h"
 #include "showmsg.h"
 #define exists(filename) (!access(filename, F_OK))
