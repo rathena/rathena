@@ -14,6 +14,7 @@
 #include "db.h"
 #include "grfio.h"
 #include "malloc.h"
+#include "version.h"
 
 #include "map.h"
 #include "chrif.h"
@@ -2183,6 +2184,34 @@ void do_final(void) {
 }
 
 void map_helpscreen() {
+	puts("Usage: map-server [options]");
+	puts("Options:");
+	puts("  --help, --h, -h, /?		Displays this help screen");
+	puts("  --map-config <file>		Load map-server configuration from <file>");
+	puts("  --battle-config <file>	Load battle configuration from <file>");
+	puts("  --atcommand-config <file>	Load atcommand configuration from <file>");
+	puts("  --charcommand-config <file>	Load charcommand configuration from <file>");
+	puts("  --script-config <file>	Load script configuration from <file>");
+	puts("  --msg-config <file>		Load message configuration from <file>");
+	puts("  --grf-path-file <file>	Load grf path file configuration from <file>");
+	puts("  --sql-config <file>		Load inter-server configuration from <file>");
+	puts("				(SQL Only)");
+	puts("  --log-config <file>		Load logging configuration from <file>");
+	puts("				(SQL Only)");
+	puts("  --version, --v, -v, /v	Displays the server's version");
+	puts("\n");
+	exit(1);
+}
+
+void map_versionscreen() {
+	printf("\033[1;29meAthena version %d.%02d.%02d, Athena Mod version %d\033[0;0m\n",
+		ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION,
+		ATHENA_MOD_VERSION);
+	puts("\033[1;32mWebsite/Forum:\033[0;0m	http://eathena.deltaanime.net/");
+	puts("\033[1;32mDownload URL:\033[0;0m	http://eathena.systeminplace.net/");
+	puts("\033[1;32mIRC Channel:\033[0;0m	irc://irc.deltaanime.net/#athena");
+	puts("\nOpen \033[1;29mreadme.html\033[0;0m for more information.");
+	if (ATHENA_RELEASE_FLAG) ShowNotice("This version is not for release.\n");
 	exit(1);
 }
 
@@ -2213,23 +2242,27 @@ int do_init(int argc, char *argv[]) {
 
 		if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "--h") == 0 || strcmp(argv[i], "--?") == 0 || strcmp(argv[i], "/?") == 0)
 			map_helpscreen();
-		else if (strcmp(argv[i], "--map_config") == 0)
+		if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "/v") == 0)
+			map_versionscreen();
+		else if (strcmp(argv[i], "--map_config") == 0 || strcmp(argv[i], "--map-config") == 0)
 			MAP_CONF_NAME=argv[i+1];
-		else if (strcmp(argv[i],"--battle_config") == 0)
+		else if (strcmp(argv[i],"--battle_config") == 0 || strcmp(argv[i],"--battle-config") == 0)
 			BATTLE_CONF_FILENAME = argv[i+1];
-		else if (strcmp(argv[i],"--atcommand_config") == 0)
+		else if (strcmp(argv[i],"--atcommand_config") == 0 || strcmp(argv[i],"--atcommand-config") == 0)
 			ATCOMMAND_CONF_FILENAME = argv[i+1];
-		else if (strcmp(argv[i],"--charcommand_config") == 0)
+		else if (strcmp(argv[i],"--charcommand_config") == 0 || strcmp(argv[i],"--charcommand-config") == 0)
 			CHARCOMMAND_CONF_FILENAME = argv[i+1];
-		else if (strcmp(argv[i],"--script_config") == 0)
+		else if (strcmp(argv[i],"--script_config") == 0 || strcmp(argv[i],"--script-config") == 0)
 			SCRIPT_CONF_NAME = argv[i+1];
-		else if (strcmp(argv[i],"--msg_config") == 0)
+		else if (strcmp(argv[i],"--msg_config") == 0 || strcmp(argv[i],"--msg-config") == 0)
 			MSG_CONF_NAME = argv[i+1];
-		else if (strcmp(argv[i],"--grf_path_file") == 0)
+		else if (strcmp(argv[i],"--grf_path_file") == 0 || strcmp(argv[i],"--grf-path-file") == 0)
 			GRF_PATH_FILENAME = argv[i+1];
 #ifndef TXT_ONLY
-		else if (strcmp(argv[i],"--sql_config") == 0)
+		else if (strcmp(argv[i],"--sql_config") == 0 || strcmp(argv[i],"--sql-config") == 0)
 		    SQL_CONF_NAME = argv[i+1];
+		else if (strcmp(argv[i],"--log_config") == 0 || strcmp(argv[i],"--log-config") == 0)
+		    LOG_CONF_NAME = argv[i+1];
 #endif /* not TXT_ONLY */
 	}
 

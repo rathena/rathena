@@ -1,5 +1,7 @@
 Date	Added
 11/28
+	* Added map_versionscreen(), displayed when --version flag is passed on command-line. [MC Cameri]
+	* Finished map_helpscreen(), displayed when --help flag passed on command-line. [MC Cameri]
 	* Changed Suilds Extention Skill to +6 people per level. [Lupus]
 	  (tested it for 2 weeks! or a big server)
 	* Added a fix for gettimeofday() for WIN32 [Codemaster]
