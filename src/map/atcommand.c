@@ -7441,7 +7441,11 @@ atcommand_marry(const int fd, struct map_session_data* sd,
     return -1;
   }
 
-  return pc_marriage(pl_sd1, pl_sd2);
+  if (pc_marriage(pl_sd1, pl_sd2) == 0) {
+    clif_displaymessage(fd, "The marriage has failed.. talk to the judge..");
+    return 0;
+  } else
+    return -1;
 }
 
 /*==========================================
@@ -7461,8 +7465,11 @@ atcommand_divorce(const int fd, struct map_session_data* sd,
   if (!message || !*message)
     return -1;
 
-  if((pl_sd=map_nick2sd((char *) message)) != NULL)
+  if((pl_sd=map_nick2sd((char *) message)) != NULL) {
     return pc_divorce(pl_sd);
+    clif_displaymessage(fd, "They are now divorced.");
+  } else
+    clif_displaymessage(fd, "The divorce has failed.. talk to the judge..");
 
   return 0;
 }
@@ -7492,6 +7499,8 @@ atcommand_rings(const int fd, struct map_session_data* sd,
   item_tmp.identify = 1;
   if ((flag = pc_additem((struct map_session_data*)sd, &item_tmp, get_count)))
     clif_additem((struct map_session_data*)sd, 0, 0, flag);
+
+  clif_displaymessage(fd, "You have rings!  Give them to the lovers.");
 
   return 0;
 }
