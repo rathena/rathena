@@ -1,18 +1,18 @@
-// カプラ銀行サービス	テストスクリプト
-prontera.gat,162,188,1	script	銀行員カプラ	112,{
+// Bank Test
+prontera.gat,162,188,1	script	Bank Test	112,{
 	cutin "kafra_06",2;
 
-	mes"[銀行員カプラ]";
-	mes "カプラ銀行サービスです。";
-	mes "毎度ご利用ありがとうございます♪";
-	mes "1000zからでのご利用になります。";
+	mes "[Bank Test]";
+	mes "Welcome to Prontera's Bank Test.";
+	mes "You can only deposit a minimal of";
+	mes "1000z. What do you want to do?";
 	next;
-	menu "預ける",BANK_IN,"引き出す",BANK_OUT,"やっぱやめる",B_EXIT2;
+	menu "Deposit",BANK_IN,"Withdraw",BANK_OUT,"Exit",B_EXIT2;
 BANK_IN:
-	mes"[銀行員カプラ]";
-	mes "預ける金額を入力してください♪";
-	mes "ちなみに、手数料として";
-	mes "預かり金の1%頂きます。";
+	mes "[Bank Test]";
+	mes "You must deposit the same of less";
+	mes "amount of zeny that you carry.";
+	mes "How much do you want to deposit?";
 	next;
 	input @kafrabank;
 
@@ -21,15 +21,15 @@ BANK_IN:
 	if(@kafrabank+@kafrabank2>Zeny) goto BANK_F;
 	set Zeny,Zeny-@kafrabank-@kafrabank2;
 	set #kafrabank,#kafrabank+@kafrabank;
-	mes "手数料^135445" + @kafrabank2 + "z^000000頂きますね。";
+	mes "You now have: ^135445" + @kafrabank2 + "z^000000";
 
 	goto B_EXIT;
 BANK_OUT:
 	if(#kafrabank==0) goto BANK_F2;
-	mes"[銀行員カプラ]";
-	mes "現在あなたからお預かりしているのは";
-	mes "^135445" + #kafrabank + "^000000Zenyです。";
-	mes "引き出す金額を入力してください♪";
+	mes "[Bank Test]";
+	mes "You can only withdraw equally or below this quantity:";
+	mes "^135445" + #kafrabank + "^000000z";
+	mes "How much do you want to withdraw?";
 	next;
 	input @kafrabank;
 
@@ -41,19 +41,18 @@ BANK_OUT:
 	goto B_EXIT;
 
 BANK_F:
-	mes"[銀行員カプラ]";
-	mes "持ち金が足りないようですね。";
+	mes "[Bank Test]";
+	mes "You can't withdraw more than ^135445"+ #kafrabank + "^000000z.";
 	goto B_EXIT2;
 BANK_F2:
-	mes"[銀行員カプラ]";
-	mes "あなたからは、1zも";
-	mes "お預かりしていないですよ？";
+	mes "[Bank Test]";
+	mes "Your account is empty, you may not withdraw at this time.";
 	goto B_EXIT2;
 
 B_EXIT:
-	mes "無事に取り引きできました。";
+	mes "Thanks for using depositing";
 B_EXIT2:
-	mes "またのご利用をお待ちしています♪";
+	mes "Good bye!";
 	cutin "kafra_06",255;
 	close;
 }

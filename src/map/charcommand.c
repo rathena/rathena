@@ -27,6 +27,7 @@
 #include "npc.h"
 #include "trade.h"
 #include "core.h"
+#include "showmsg.h"
 
 static char command_symbol = '#';
 
@@ -1079,16 +1080,16 @@ int charcommand_item(
 				clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
 				return -1;
 			}
-		} else if(strncasecmp(character,"all")==0 || strncasecmp(character,"everyone")==0){			// –¼‘O‚ªALL‚È‚çAÚ‘±Ò‘Sˆõ‚Ö
+		} else if(/* from jA's @giveitem */strcmpi(character,"all")==0 || strcmpi(character,"everyone")==0){
 			for (i = 0; i < fd_max; i++) {
 				if (session[i] && (pl_sd = session[i]->session_data)){
-					atcommand_giveitem_sub(pl_sd,item_data,number);
-					snprintf(output, sizeof output, "You got %s %d.", item_name,number);
-					clif_displaymessage(pl_sd->fd, output);
+					charcommand_giveitem_sub(pl_sd,item_data,number);
+					snprintf(tmp_output, sizeof(tmp_output), "You got %s %d.", item_name,number);
+					clif_displaymessage(pl_sd->fd, tmp_output);
 				}
 			}
-			snprintf(output, sizeof output, "%s received %s %d.","Everyone",item_name,number);
-			clif_displaymessage(fd, output);
+			snprintf(tmp_output, sizeof(tmp_output), "%s received %s %d.","Everyone",item_name,number);
+			clif_displaymessage(fd, tmp_output);
 		} else {
 			clif_displaymessage(fd, msg_table[3]); // Character not found.
 			return -1;
