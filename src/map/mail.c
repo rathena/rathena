@@ -71,13 +71,13 @@ int mail_check(struct map_session_data *sd,int type)
 							//sprintf(message, "%d - From : %s (New - Priority)", i, mail_row[2]);
 							sprintf(message, msg_table[511], i, mail_row[2]);
 
-							clif_displaymessage(sd->fd, message);
+							clif_displaymessage(sd->fd, jstrescape(message));
 						}
 
 						else {
 							//sprintf(message, "%d - From : %s (New)", i, mail_row[2]);
 							sprintf(message, msg_table[512], i, mail_row[2]);
-							clif_displaymessage(sd->fd, message);
+							clif_displaymessage(sd->fd, jstrescape(message));
 						}
 					}
 				}
@@ -85,7 +85,7 @@ int mail_check(struct map_session_data *sd,int type)
 					else if(type==2){
 						//sprintf(message, "%d - From : %s", i, mail_row[2]);
 						sprintf(message, msg_table[513], i, mail_row[2]);
-						clif_displaymessage(sd->fd, message);
+						clif_displaymessage(sd->fd, jstrescape(message));
 					}
 				
 	        }
@@ -101,12 +101,12 @@ int mail_check(struct map_session_data *sd,int type)
 		//sprintf(message, "You have %d new messages.", new);
 		sprintf(message, msg_table[514], new);
 
-		clif_displaymessage(sd->fd, message);
+		clif_displaymessage(sd->fd, jstrescape(message));
 	}
 	if(i>0 && new>0 && priority>0 && type==1) {
 		//sprintf(message, "You have %d unread priority messages.", priority);
 		sprintf(message, msg_table[515], priority);
-		clif_displaymessage(sd->fd, message);
+		clif_displaymessage(sd->fd, jstrescape(message));
 	}
 	if(!new) {
 		//clif_displaymessage(sd->fd, "You have no new messages.");
@@ -151,10 +151,10 @@ int mail_read(struct map_session_data *sd, int message_id)
 
 			//sprintf(message, "Reading message from %s", mail_row[2]);
 			sprintf(message, msg_table[518], mail_row[2]);
-			clif_displaymessage(sd->fd, message);
+			clif_displaymessage(sd->fd, jstrescape(message));
 
 			sprintf(message, "%s", mail_row[3]);
-			clif_displaymessage(sd->fd, message);
+			clif_displaymessage(sd->fd, jstrescape(message));
 
 			sprintf(tmp_msql,"UPDATE `%s` SET `read_flag`='1' WHERE `message_id`= \"%d\"", mail_db, atoi(mail_row[0]));
 		        if(mysql_query(&mail_handle, tmp_msql) ) {
@@ -248,7 +248,7 @@ int mail_send(struct map_session_data *sd, char *name, char *message, int flag)
 			sprintf(tmp_msql,"SELECT DISTINCT `account_id` FROM `%s` WHERE `account_id` <> '%d' ORDER BY `account_id`", char_db, sd->status.account_id);
 	}
 	else
-		sprintf(tmp_msql,"SELECT `account_id`,`name` FROM `%s` WHERE `name` = \"%s\"", char_db, name);
+		sprintf(tmp_msql,"SELECT `account_id`,`name` FROM `%s` WHERE `name` = \"%s\"", char_db, jstrescape(name));
 
 	if (mysql_query(&mail_handle, tmp_msql)) {
 		printf("Database server error (executing query for %s): %s\n", char_db, mysql_error(&mail_handle));
@@ -267,11 +267,11 @@ int mail_send(struct map_session_data *sd, char *name, char *message, int flag)
 	        while ((mail_row = mysql_fetch_row(mail_res))) {
 			if(strcmp(name,"*")==0) {
 				sprintf(tmp_msql, "INSERT DELAYED INTO `%s` (`to_account_id`,`from_account_id`,`from_char_name`,`message`,`priority`)"
-					" VALUES ('%d', '%d', '%s', '%s', '%d')",mail_db, atoi(mail_row[0]), sd->status.account_id, sd->status.name, message, flag);			
+					" VALUES ('%d', '%d', '%s', '%s', '%d')",mail_db, atoi(mail_row[0]), sd->status.account_id, sd->status.name, jstrescape(message), flag);			
 			}
 			else {
 				sprintf(tmp_msql, "INSERT DELAYED INTO `%s` (`to_account_id`,`to_char_name`,`from_account_id`,`from_char_name`,`message`,`priority`)"
-					" VALUES ('%d', '%s', '%d', '%s', '%s', '%d')",mail_db, atoi(mail_row[0]), mail_row[1], sd->status.account_id, sd->status.name, message, flag);
+					" VALUES ('%d', '%s', '%d', '%s', '%s', '%d')",mail_db, atoi(mail_row[0]), mail_row[1], sd->status.account_id, sd->status.name, jstrescape(message), flag);
 				if(pc_isGM(sd) < 80)
 					sd->mail_counter=5;
 			}
