@@ -3873,7 +3873,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 		sd->disguise=0;
 	}
 
-	memcpy(mapname,mapname_org,24);
+	strncpy(mapname,mapname_org,sizeof(mapname));
 	mapname[16]=0;
 	if(strstr(mapname,".gat")==NULL && strstr(mapname,".afm")==NULL && strlen(mapname)<16){
 		strcat(mapname,".gat");
@@ -7685,6 +7685,8 @@ static int last_save_fd,save_flag;
 static int pc_autosave_sub(struct map_session_data *sd,va_list ap)
 {
 	nullpo_retr(0, sd);
+
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
 
 	if(save_flag==0 && sd->fd>last_save_fd){
 		struct guild_castle *gc=NULL;
