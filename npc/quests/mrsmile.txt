@@ -15,8 +15,7 @@
 
 
 // Alberta ------------------------------------------------------------------------------------------
-alberta.gat,113,53,3	script	Smile Assistance::SmileAT	92,
-{
+alberta.gat,113,53,3	script	Smile Assistance::SmileAT	92,{
 	mes "[Smile Assistant]";
 	mes "Hi, I'm a Smile Assistance.  How may I help you?";
 	next;

@@ -109,8 +109,7 @@ geffen_in.gat,34,170,0	script	"Young man"	47,{
 
 //<============================================ Inn =====================================================>\\
 // Waitress ---------------------------------------------------------------------------
-geffen_in.gat,70,67,5	script	Waitress	80,
-{
+geffen_in.gat,70,67,5	script	Waitress	80,{
 	mes "[Waitress]";
 	mes "Ugh!! SO annoying! Why would you drink here when you could drink at the pub!? This is an Inn, not a pub!!";
 	mes "That man!... everytime he drinks... he gets like that! Ugh!!";
@@ -160,8 +159,7 @@ M_Menu:
 }
 
 // Merhcant Daven -------------------------------------------------------------------
-geffen_in.gat,79,75,2	script	Merchant Daven	61,
-{
+geffen_in.gat,79,75,2	script	Merchant Daven	61,{
 	mes "[Merchant Daven]";
 	mes "Back in the day when I frist came to Geffen, the town was a very boring place to live in.";
 	next;
@@ -223,8 +221,7 @@ M_Menu:
 }
 
 // Drunkard -------------------------------------------------------------------
-geffen_in.gat,59,62,2	script	Drunkard	120,
-{
+geffen_in.gat,59,62,2	script	Drunkard	120,{
 	mes "[Drunkard]";
 	mes "Hmm... You're Joshua's friend too??";
 	next;
@@ -258,8 +255,7 @@ geffen_in.gat,59,62,2	script	Drunkard	120,
 }
 
 // Schubaltzwald Merchant ----------------------------------------------------------------------
-geffen_in.gat,113,73,4	script	Schubaltzwald Merchant	709,
-{
+geffen_in.gat,113,73,4	script	Schubaltzwald Merchant	709,{
 	mes "[Schubaltzwald Merchant]";
 	mes "How are you, Rune-Midgard young'un? I am Schubaltzwald's one and only Hans Hadenhiem.";
 	next;
@@ -286,8 +282,7 @@ geffen_in.gat,113,73,4	script	Schubaltzwald Merchant	709,
 
 //<============================================== Pub ==================================================>\\
 // Waitress -----------------------------------------------------------------
-geffen_in.gat,28,134,4	script	Waitress	69,
-{
+geffen_in.gat,28,134,4	script	Waitress	69,{
 	mes "[Waitress]";
 	mes "Meh! ALWAYS drinking and ALWAYS fighting..... HEY Mister! This is a place of BUSINESS!!";
 	emotion 6;
@@ -327,8 +322,7 @@ M_Menu:
 }
 
 // Drunkard ----------------------------------------------------------------------------
-geffen_in.gat,21,125,5	script	Drunkard	52,
-{
+geffen_in.gat,21,125,5	script	Drunkard	52,{
 	mes "[Drunkard]";
 	mes "You want to be an idiotic magician? Is that why you came here??";
 	emotion 1;
@@ -336,8 +330,7 @@ geffen_in.gat,21,125,5	script	Drunkard	52,
 }
 
 // Friend of Youth -----------------------------------------------------------------
-geffen_in.gat,37,124,5	script	Friend of Youth	704,
-{
+geffen_in.gat,37,124,5	script	Friend of Youth	704,{
 	set @temp,0;
 	mes "[Friend of Youth]";
 	mes "Welcome young one! Are you worrying about something? Tell me all your troubles and I will tell you your fortune with my silver ball of mystery!";

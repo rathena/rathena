@@ -18,16 +18,14 @@
 // 				Al De Baran				//
 //=======================================================================//
 / Welcome Sign ------------------------------------------------
-aldebaran.gat,133,104,1	script	Welcome Sign	111,
-{
+aldebaran.gat,133,104,1	script	Welcome Sign	111,{
   mes "~sign reads....~";
   mes "Hello and enjoy your visit to Aldebaran! Aldebaran is the mystical city of clocks and Kafras!";
   close;
 }
 
 // Kafra Corp. Main Office Sign ---------------------------------------------------------------
-aldebaran.gat,53,223,1	script	Kafra Corp. Main Office	111,
-{
+aldebaran.gat,53,223,1	script	Kafra Corp. Main Office	111,{
   mes "~sign reads...~";
   mes "This is the Kafra Services Main Office, home to the lovely Kafra employees.";
   close;
@@ -38,24 +36,21 @@ aldebaran.gat,53,223,1	script	Kafra Corp. Main Office	111,
 // 				Alberta					//
 //=======================================================================//
 // Sign: Alberta Harbor -----------------------------------------------
-alberta.gat,35,241,1	script	Alberta Harbor	111,
-{
+alberta.gat,35,241,1	script	Alberta Harbor	111,{
   mes "~sign reads....~";
   mes "Welcome to the port city Alberta! Alberta is the city of the sea! A tourist delight!";
   close;
 }
 
 // Welcome Sign -----------------------------------------------
-alberta.gat,196,152,1	script	Welcome Sign	111,
-{
+alberta.gat,196,152,1	script	Welcome Sign	111,{
   mes "~sign reads...~";
   mes "Welcome to the port city Alberta! Alberta is the city of the sea! A tourist delight!";
   close;
 }
 
 // Sign: Merchant Guild ------------------------------------------
-alberta.gat,37,39,1	script	Merchant Guild	111,
-{
+alberta.gat,37,39,1	script	Merchant Guild	111,{
   mes "~sign reads...~";
   mes "Enjoy the art of buying and selling?  Love making unbeatable deals?";
   mes "Then the Alberta Merchant Guild is perfect for you!";
@@ -68,48 +63,42 @@ alberta.gat,37,39,1	script	Merchant Guild	111,
 // 				Geffen					//
 //=======================================================================//
 // Welcome Sign ----------------------------------------------
-geffen.gat,116,58,1	script	Welcome Sign	111,
-{
+geffen.gat,116,58,1	script	Welcome Sign	111,{
   mes "~sign reads...~";
   mes "Greetings!! You are in the wonderfull city of Geffen! Geffen is the city of Magic and home to Mages and Wizards!.";
   close;
 }
 
 // Sign: Restaurant Inn ---------------------------------------------
-geffen.gat,167,175,1	script	Geffen Restaurant Inn	111,
-{
+geffen.gat,167,175,1	script	Geffen Restaurant Inn	111,{
   mes "~sign reads..... ~";
   mes "Welcome weary travelers!  Have a hot meal and stay the night at the the Geffen Restaurant Inn!";
   close;
 }
 
 // Sign: Mage Association ---------------------------------------
-geffen.gat,61,174,1	script	Mage Association	111,
-{
+geffen.gat,61,174,1	script	Mage Association	111,{
   mes "~sign reads...~";
   mes "Greetings!! This is the Geffen Magic Academy.  Come in if you have an interest in all things magic!";
   close;
 }
 
 // Sign: Geffen Tower Sign ----------------------------------------------
-geffen.gat,113,104,1	script	Geffen Tower	111,
-{
+geffen.gat,113,104,1	script	Geffen Tower	111,{
   mes "~sign reads...~";
   mes "This is the Geffen Tower, home to the Wizard Academey as well as the infamous Geffen Dungeon.  Novices beware!!!";
   close;
 }
 
 // Sign: Blacksmith Guild -------------------------------------------
-geffen.gat,184,61,1	script	Blacksmith Guild	111,
-{
+geffen.gat,184,61,1	script	Blacksmith Guild	111,{
   mes "~sign reads...~";
   mes "This is the Blacksmith Guild.";
   close;
 }
 
 // Sign Post -----------------------------------------------------------
-geffen.gat,119,190,0	script	Sign Post	111,
-{
+geffen.gat,119,190,0	script	Sign Post	111,{
   mes "~sign reads...~";
   mes "North to Geffen Fields";
   mes "NorthEast to Al De Baran";
@@ -128,16 +117,14 @@ geffen.gat,119,190,0	script	Sign Post	111,
 // 				Morroc					//
 //=======================================================================//
 // Welcome Sign ---------------------------------------------------
-morocc.gat,168,264,1	script	Welcome Sign	111,
-{
+morocc.gat,168,264,1	script	Welcome Sign	111,{
  mes "~sign reads...~";
  mes "Morocc welcomes you! Morocc is the city of the desert and home to Thieves, Assassins, and alls sorts of Egyption temptations!";
  close;
 }
 
 // Sign: Inn ----------------------------------------------------------
-morocc.gat,272,272,1	script	Morroc Town Inn	111,
-{
+morocc.gat,272,272,1	script	Morroc Town Inn	111,{
   mes "~sign reads....~";
   mes "Welcome weary travelers!  Stay the night at the Morroc Town Inn.";
   close;
@@ -154,16 +141,14 @@ morocc.gat,272,272,1	script	Morroc Town Inn	111,
 // 				Prontera					//
 //=======================================================================//
 // Welcome Sign -----------------------------------------------------------
-prontera.gat,156,197,1	script	Welcome Sign	111,
-{
+prontera.gat,156,197,1	script	Welcome Sign	111,{
   mes"~sign reads...~";
   mes "You've found yourself in the great city of Prontera! Prontera is one of the largest cities in Rune-Midgard and is home to the Prontera Chivalry!";
   close;
 }
 
 // Sign Post ----------------------------------------------------------------
-prontera.gat,158,213,1	script	Sign Post	111,
-{
+prontera.gat,158,213,1	script	Sign Post	111,{
 	mes "~ the sign post reads ~";
 	mes "North to Prontera Castle";
 	mes "Farther North to Al De Baran";

@@ -834,8 +834,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 }
 
 // Special Reserve ----------------------------------------------
-aldeba_in.gat,79,161,6	script	Kafra	115,
-{
+aldeba_in.gat,79,161,6	script	Kafra	115,{
 	cutin "kafra_03",2;
 	mes "[Kafra]";
 	mes "Welcome, ^6666FF" + strcharinfo(0) + "^000000.  This is where you can trade in your special reserve points for usefull items and cool prizes.";
@@ -1022,8 +1021,7 @@ M_Menu:
 }
 
 // Special Reserve 2 ----------------------------------------------
-aldeba_in.gat,88,161,3	script	Kafra	115,
-{
+aldeba_in.gat,88,161,3	script	Kafra	115,{
 	cutin "kafra_03",2;
 	mes "[Kafra]";
 	mes "Hello and welcome to the Kafra Corp. Main office.";

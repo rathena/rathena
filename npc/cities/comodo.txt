@@ -255,8 +255,7 @@ cmd_in02.gat,48,55,4	script	Scoursege	51,{
 //			Chief Quest (Doomed Swords Part 1)
 //============================================================================//
 //=======================================================
-comodo.gat,206,310,4	script	Rochito	48,
-{
+comodo.gat,206,310,4	script	Rochito	48,{
 	if(dmdswrd_Q == 1) goto L_1;
 	if(dmdswrd_Q == 2) goto L_2;
 	if(dmdswrd_Q == 3) goto sL_2;
@@ -385,8 +384,7 @@ L_3:
 }
 
 //=======================================================
-comodo.gat,204,310,4	script	Rockha	98,
-{
+comodo.gat,204,310,4	script	Rockha	98,{
 	if(dmdswrd_Q == 3) goto L_1;
 	if(dmdswrd_Q == 4 || dmdswrd_Q==5) goto L_2;
 L_0:
@@ -439,8 +437,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,209,314,4	script	Rotute	82,
-{
+comodo.gat,209,314,4	script	Rotute	82,{
 	if(dmdswrd_Q==2 || dmdswrd_Q==3) goto L_1;
 	if(dmdswrd_Q == 4 || dmdswrd_Q==5) goto L_2;
 
@@ -556,8 +553,7 @@ comodo.gat,209,305,4	script	Emralhandas	70,{
 
 
 // Chief's House =========================================================//
-cmd_in02.gat,32,140,4	script	Chief Tausupa	49,
-{
+cmd_in02.gat,32,140,4	script	Chief Tausupa	49,{
 	if(dmdswrd_Q == 1) goto L_1;
 	if(dmdswrd_Q == 2) goto sL_1;
 	if(dmdswrd_Q == 3) goto L_2;
@@ -671,8 +667,7 @@ L_2:
 //============================================================================//
 
 //=======================================================
-comodo.gat,88,97,4	script	Cheese Expert TORUNA	109,
-{
+comodo.gat,88,97,4	script	Cheese Expert TORUNA	109,{
 	if(dmdswrd_Q == 7) goto sL_2;
 	mes "[TORUNA]";
 	mes "I hear that the cheese here is delicious.  Everytime I come here to visit, I ask for some of that popular cheese.";
@@ -761,8 +756,7 @@ M_Menu:
 }
 
 //=======================================================
-comodo.gat,164,291,2	script	Rakusa	73,
-{
+comodo.gat,164,291,2	script	Rakusa	73,{
 	if(dmdswrd_Q == 7) goto L_1;
 	if(dmdswrd_Q == 8) goto L_2;
 
@@ -794,8 +788,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,169,284,4	script	Kichiri	99,
-{
+comodo.gat,169,284,4	script	Kichiri	99,{
 	mes "[Kichiri]";
 	if(dmdswrd_Q == 8) goto L_1;
 	if(dmdswrd_Q == 9) goto L_2;
@@ -823,8 +816,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,163,280,4	script	Magatu	55,
-{
+comodo.gat,163,280,4	script	Magatu	55,{
 	mes "[Magatu]";
 	if(dmdswrd_Q == 9) goto L_1;
 	if(dmdswrd_Q == 10) goto L_2;
@@ -918,8 +910,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,187,153,4	script	Hullaris	701,
-{
+comodo.gat,187,153,4	script	Hullaris	701,{
 	mes "[Hullaris]";
 	if(dmdswrd_Q == 11) goto L_1;
 	if(dmdswrd_Q == 12) goto L_2;

@@ -35,8 +35,7 @@ pay_fild10.gat,148,251,4	script	Hunter Guildsman	98,{
 
 
 //<====================================== Job Changer ========================================>\\
-in_hunter.gat,99,99,4	script	Hunter Sharon	727,
-{
+in_hunter.gat,99,99,4	script	Hunter Sharon	727,{
 	if(Class==Job_Archer) goto L_Start;
 	if(Class==Job_Hunter) goto L_Hunt;
 	if(callfunc("Is_Bow_Class")) goto L_Other;
@@ -373,8 +372,7 @@ L_Change:
 
 
 //<=========================== Demon Hunter: Second Test ===============================>\\
-in_hunter.gat,55,99,7	script	Demon Hunter	732,
-{
+in_hunter.gat,55,99,7	script	Demon Hunter	732,{
 	if(Class == Job_Archer) goto L_Arc;
 	if(Class == Job_Hunter) goto L_Hnt;
 
@@ -538,8 +536,7 @@ L_Done:
 
 
 //<=============================== Guild Master: Last Test =================================>\\
-payon_in02.gat,21,31,1	script	Guild Master	59,
-{
+payon_in02.gat,21,31,1	script	Guild Master	59,{
 	if(Class == Job_Archer) goto L_Archer;
 	if(Class == Job_Hunter) goto L_Hnt;
 
@@ -835,8 +832,7 @@ OnTimer196000:
 }
 
 // SwitchHnt ------------------------------------------------------
-job_hunte.gat,93,101,1	script	SwitchHnt	723,
-{
+job_hunte.gat,93,101,1	script	SwitchHnt	723,{
 	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  *** The exit has been activated! You have 30 sec. to find the exit!! *** ",8;
 	enablenpc "ExitHnt";
 	addtimer 30000, "TimerHnt::OnTimer196000";

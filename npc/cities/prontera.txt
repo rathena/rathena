@@ -388,8 +388,7 @@ prt_church.gat,103,76,2	script	Garnet	67,{
 
 // ----------------------------------------------------------------------------------------------- PUB -----------------------------------------------------------------------------------------------------\\
 // Sir Michael (West End Pub)
-prt_in.gat,26,30,1	script	Sir Michael	54,
-{
+prt_in.gat,26,30,1	script	Sir Michael	54,{
 	mes "[Sir Michael]";
 	mes "I dunno if you'll ever believe me, but I saw the WEIRDEST thing down in the ^5555FFCulvert Sewers^000000.";
 	mes "I've been training in the 3rd level of the sewers for a long time now, so there's nothing about that area that I don't know.";

@@ -15,8 +15,7 @@
 
 
 // Ph.D Hat Quest-------------------------------------------------------
-prt_in.gat,38,108,4	script	Teacher	53,
-{
+prt_in.gat,38,108,4	script	Teacher	53,{
 	if((countitem(710) >= 1) && (countitem(703) >= 1) && (countitem(704) >= 1) && (countitem(708) >= 1)) goto L_Start;//Items: Illusion Flower, Hinalle, Aloe, Ment,
 	mes "Don't you think.... ^4444FF'flowers'^000000 are pretty?";
 	next;

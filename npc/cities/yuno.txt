@@ -100,8 +100,7 @@ yuno.gat,158,205,4	script	Artisan	54,{
 }
 
 //======================================================================================
-yuno.gat,336,227,4	script	Yuno Granny	103,
-{
+yuno.gat,336,227,4	script	Yuno Granny	103,{
 	mes "[Granny]";
 	mes "Here you are......... I am an elderly Sage who can forsee everything before it happens.";
 	next;
@@ -119,8 +118,7 @@ yuno.gat,336,227,4	script	Yuno Granny	103,
 }
 
 //========================================================================================
-yuno.gat,329,239,4	script	Yuno Fighter	732,
-{
+yuno.gat,329,239,4	script	Yuno Fighter	732,{
 	mes "[Sergiof]";
 	mes "My name is Sergiof and I am Granny's protector.";
 	next;
@@ -137,8 +135,7 @@ yuno.gat,329,239,4	script	Yuno Fighter	732,
 }
 
 //========================================================================================
-yuno.gat,344,68,4	script	Yuno Tyrant	730,
-{
+yuno.gat,344,68,4	script	Yuno Tyrant	730,{
 	mes "[Ninno]";
 	mes "Have you ever heard of an Egyptian king who was once believed to be the son of a god?";
 	mes "His name was ^5533FF'Pharaoh'^000000";
@@ -173,8 +170,7 @@ yuno.gat,261,98,4	script	Ykla	735,{
 }
 
 //=========================================================================================
-yuno.gat,306,207,6	script	Sage Sykla	735,
-{
+yuno.gat,306,207,6	script	Sage Sykla	735,{
 		mes "[Sykla]";
 		mes "There is talk about a suspicious man living somewhere here in Yuno.";
 		mes "Apparently he is a dangerous person who is immersed in some kind of wicked research.";
@@ -196,8 +192,7 @@ yuno.gat,306,207,6	script	Sage Sykla	735,
 }
 
 //==========================================================================================
-yuno.gat,162,328,4	script	Sage Eskla	735,
-{
+yuno.gat,162,328,4	script	Sage Eskla	735,{
 	mes "[Eskla]";
 	mes "I remember seeing it once........ Yeah... I remember now....... ";
 	mes "There was this piece of paper floating in the air.  I asked myself, 'Hmm... who lost a piece of paper out here?'.";
@@ -288,8 +283,7 @@ yuno.gat,80,150,4	script	Young Woman	746,{
 //===================================================================================================//
 
 //========================================================================	
-yuno_in03.gat,25,39,3	script	Metto	709,
-{
+yuno_in03.gat,25,39,3	script	Metto	709,{
 	mes "[Metto]";
 	if(metto_q == 2 || metto_q == 4 || metto_q == 6) goto L_Check;
 	if(metto_q == 1) goto L_Stang;
@@ -387,8 +381,7 @@ L_Done:
 }
 
 //=====================================================================
-yuno_in01.gat,18,95,5	script	Stangckle	99,
-{
+yuno_in01.gat,18,95,5	script	Stangckle	99,{
 	mes "[Stangckle]";
 	if(metto_q > 2) goto L_Done;
 	if(metto_q == 2) goto L_Start;
@@ -439,8 +432,7 @@ L_Done:
 }
 
 //===================================================================
-yuno_in01.gat,19,182,3	script	Kato	55,
-{
+yuno_in01.gat,19,182,3	script	Kato	55,{
 	mes "[Kato]";
 	if(metto_q > 4) goto L_Done;
 	if(metto_q == 4) goto L_Start;
@@ -482,8 +474,7 @@ L_Done:
 }
 
 //===================================================================
-yuno_in03.gat,179,43,5	script	CiCi	121,
-{
+yuno_in03.gat,179,43,5	script	CiCi	121,{
 	mes "[CiCi]";
 	if(metto_q > 6) goto L_Done;
 	mes "My name is ^5533FFCiCi^000000.  I am one of the ^5533FF3 great scientists^000000 that live in this city.";
@@ -529,8 +520,7 @@ L_Done:
 }
 
 //===================================================================
-yuno_in01.gat,18,30,3	script	Wagan	85,
-{
+yuno_in01.gat,18,30,3	script	Wagan	85,{
 	mes "[Wagan]";
 	if(metto_q > 0) goto L_Check;
 	mes "I'm sure you know that our village has been able to prosper for many years because of the brilliant research done here.";

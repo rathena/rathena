@@ -16,8 +16,7 @@
 
 
 // -- Father Mareusis --
-prt_church.gat,184,41,4	script	"Father Mareusis"	60,
-{
+prt_church.gat,184,41,4	script	"Father Mareusis"	60,{
 	mes "[Father Mareusis]";
 	if(Class==Job_Novice && job_acolyte_q > 0) goto L_Check;
 	mes "What is it you are looking for?";

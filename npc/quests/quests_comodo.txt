@@ -117,8 +117,7 @@ M_Menu:
 //===================================================================================================//
 // 'Mine Helmet', 'Parcel Hat', 'Money Loser's Grief', 'Phantom of the Opera Mask'
 //===============================================================//
-comodo.gat,274,137,5	script	Mari Isac	702,
-{
+comodo.gat,274,137,5	script	Mari Isac	702,{
 	mes "[Mari Isac]";
 	mes "I travel all over the world and get to hear many interesting stories from the people I meet.";
 	mes "Sometimes they even teach me how to make special items";

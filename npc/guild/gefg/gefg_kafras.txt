@@ -17,8 +17,7 @@
 
 // Castle 1 ===============================================
 //gefg_cas01.gat,96,173,0	script	Kafra Service#G01	117,{
-gefg_cas01.gat,35,37,0	script	Kafra Service#G01	117,
-{
+gefg_cas01.gat,35,37,0	script	Kafra Service#G01	117,{
 	callfunc "F_GKafra", "gefg_cas01", "Geffen";
 	end;
 OnRecvCastleG01:
@@ -28,8 +27,7 @@ OnRecvCastleG01:
 
 
 // Castle 2 ===============================================
-gefg_cas02.gat,23,66,3	script	Kafra Service#G02	117,
-{
+gefg_cas02.gat,23,66,3	script	Kafra Service#G02	117,{
 	callfunc "F_GKafra", "gefg_cas02", "Geffen";
 	end;
 OnRecvCastleG02:
@@ -39,8 +37,7 @@ OnRecvCastleG02:
 
 
 // Castle 3 ===============================================
-gefg_cas03.gat,116,89,5	script	Kafra Service#G03	117,
-{
+gefg_cas03.gat,116,89,5	script	Kafra Service#G03	117,{
 	callfunc "F_GKafra", "gefg_cas03", "Geffen";
 	end;
 OnRecvCastleG03:
@@ -50,8 +47,7 @@ OnRecvCastleG03:
 
 
 // Castle 4 ===============================================
-gefg_cas04.gat,59,70,3	script	Kafra Service#G04	117,
-{
+gefg_cas04.gat,59,70,3	script	Kafra Service#G04	117,{
 	callfunc "F_GKafra", "gefg_cas04", "Geffen";
 	end;
 OnRecvCastleG04:
@@ -61,8 +57,7 @@ OnRecvCastleG04:
 
 
 // Castle 5 ===============================================
-gefg_cas05.gat,61,52,5	script	Kafra Service#G05	117,
-{
+gefg_cas05.gat,61,52,5	script	Kafra Service#G05	117,{
 	callfunc "F_GKafra", "gefg_cas05", "Geffen";
 	end;
 OnRecvCastleG05:

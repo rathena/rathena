@@ -17,8 +17,7 @@
 //================================================================================//
 // 					Castle 1
 //================================================================================//
-geffen.gat,109,123,2	script	Reprion#g1-1::Reprion	722,
-{
+geffen.gat,109,123,2	script	Reprion#g1-1::Reprion	722,{
 	callfunc "F_Flags","Geffen","gefg_cas01",83,47;
 	close;
 
@@ -45,8 +44,7 @@ gefg_cas01.gat,64,16,4	duplicate(Reprion)	Reprion#g1-12	722
 //===================================================================================//
 //					Castle 2
 //===================================================================================//
-geffen.gat,112,129,1	script	Yolbriger#g2-1::Yolbriger	722,
-{
+geffen.gat,112,129,1	script	Yolbriger#g2-1::Yolbriger	722,{
 	callfunc "F_Flags","Geffen","gefg_cas02",23,66;
 	close;
 
@@ -73,8 +71,7 @@ gefg_cas02.gat,68,36,2	duplicate(Yolbriger)	Yolbriger#g2-12	722
 //================================================================================//
 // 					Castle 3
 //================================================================================//
-geffen.gat,120,132,8	script	Isinlife#g3-1::Isinlife	722,
-{
+geffen.gat,120,132,8	script	Isinlife#g3-1::Isinlife	722,{
 	callfunc "F_Flags","Geffen","gefg_cas03",116,89;
 	close;
 
@@ -104,8 +101,7 @@ gefg_cas03.gat,34,208,1	duplicate(Isinlife)	Isinlife#g3-15	722
 //================================================================================//
 // 					Castle 4
 //================================================================================//
-geffen.gat,127,130,7	script	Berigel#g4-1::Berigel	722,
-{
+geffen.gat,127,130,7	script	Berigel#g4-1::Berigel	722,{
 	callfunc "F_Flags","Geffen","gefg_cas04",59,70;
 	close;
 
@@ -131,8 +127,7 @@ gefg_cas04.gat,35,73,4	duplicate(Berigel)	Berigel#g4-11	722
 //================================================================================//
 // 					Castle 5
 //================================================================================//
-geffen.gat,131,123,6	script	Melsedetsu#g5-1::Melsedetsu	722,
-{
+geffen.gat,131,123,6	script	Melsedetsu#g5-1::Melsedetsu	722,{
 	callfunc "F_Flags","Geffen","gefg_cas05",61,52;
 	close;
 

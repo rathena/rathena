@@ -26,8 +26,7 @@
 //=========================================================
 // Christopher: Geffen Blacksmith
 //=========================================================
-geffen_in.gat,110,172,2	script	Christopher	63,
-{
+geffen_in.gat,110,172,2	script	Christopher	63,{
 	mes "[Christopher Guillenrow]";
 	mes "Welcome to Christopher's Workshop.  Ye can find all yer forging equipment here.  So what can I help ye with?";
 	M_Menu:

@@ -23,8 +23,7 @@ job_thief1.gat,0,0,0,0	monster	Spore	1014,30,0,0,0
 
 // == NPCs ==
 // -- Interviewer --
-moc_prydb1.gat,39,129,5	script	Thief Guide	69,
-{
+moc_prydb1.gat,39,129,5	script	Thief Guide	69,{
 	if(Class== Job_Thief) goto L_JobThief;
 	if(Class == Job_Novice) goto L_Start;
 
@@ -232,8 +231,7 @@ M_Menu:
 
 
 // -- Test Grader --
-moc_prydb1.gat,42,133,2	script	Comrade Brad	118,
-{
+moc_prydb1.gat,42,133,2	script	Comrade Brad	118,{
 	if(Class == 0) goto L_Novice;
 	if(Class == 6) goto L_Thief;
 
@@ -326,8 +324,7 @@ L_4:
 
 
 // -- Irrelevant Man --
-moc_ruins.gat,141,125,3	script	Irrelevant Man	118,
-{
+moc_ruins.gat,141,125,3	script	Irrelevant Man	118,{
 	if(Class == 6) goto L_Thief;
 	if(Class == 0) goto L_Novice;
 

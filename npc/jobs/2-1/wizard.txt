@@ -23,8 +23,7 @@
 
 
 //<=================== Some dog =========================>
-gef_tower.gat,107,35,5	script	Some Dog	81,
-{
+gef_tower.gat,107,35,5	script	Some Dog	81,{
 	if(Class == Job_Mage) goto L_JobMage;
 	if(callfunc("Is_Magic_Class")) goto L_Magic;
 	if(callfunc("Is_Holy_Class")) goto L_Holy;
@@ -153,8 +152,7 @@ L_JobMage:
 
 
 //<=========================================== Registrar and Examiner Catherine Medichi ==============================================>\\
-gef_tower.gat,111,37,4	script	Catherine Medichi	68,
-{
+gef_tower.gat,111,37,4	script	Catherine Medichi	68,{
 	mes "[Catherine Medichi]";
 	if(Class == Job_Wizard) goto L_Wizard;
 	if(Class == Job_Novice) goto L_Novice;
@@ -495,8 +493,7 @@ L_Mage:
 
 
 //<================================================ Examiner: Raul Expagarus ==================================================>\\
-gef_tower.gat,102,24,3	script	Raul Expagarus	735,
-{
+gef_tower.gat,102,24,3	script	Raul Expagarus	735,{
 	mes "[Raul Expagarus]";
 	if(Class == Job_Mage) goto L_Mage;
 	if(Class == Job_Wizard) goto L_Wizard;
@@ -1130,8 +1127,7 @@ L_Mage:
 
 <====================================================== Test Arena ========================================================>\\
 // Test Guide  ---------------------------------------------------------------------------------
-job_wiz.gat,50,165,4	script	Wizard Test Guide::WzTG	123,
-{
+job_wiz.gat,50,165,4	script	Wizard Test Guide::WzTG	123,{
 	mes "[Test Guide]";
 	mes "Welcome.  I will be your guide for the Wizard Test.";
 	next;
@@ -1186,8 +1182,7 @@ OnStart:
 }
 
 // Room of Water  -----------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	WaterRm	-1,
-{
+job_wiz.gat,1,1,1	script	WaterRm	-1,{
 	set $@WzRm, 1;		// used to determine which map area(room) to make time announcements in
 	set $@WzMOB, 8;		//used as a counter for the monsters that are summoned
 	monster "job_wiz.gat",109,174,"Phen",1158,1,"WaterRm::OnMyMobDead1";
@@ -1239,8 +1234,7 @@ OnMyMobDead2:
 }
 
 // Room of Earth -----------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	EarthRm	-1,
-{
+job_wiz.gat,1,1,1	script	EarthRm	-1,{
 	set $@WzRm, 2;
 	set $@WzMOB, 10;
 	monster "job_wiz.gat",111,102,"Yoyo",1057,1,"EarthRm::OnMyMobDead1";
@@ -1296,8 +1290,7 @@ OnMyMobDead2:
 }
 
 // Room of Fire ------------------------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	FireRm	-1,
-{
+job_wiz.gat,1,1,1	script	FireRm	-1,{
 	set $@WzRm, 3;
 	set $@WzMOB, 8;
 	monster "job_wiz.gat",58,110,"Zerom",1178,1,"FireRm::OnMyMobDead1";
@@ -1349,8 +1342,7 @@ OnMyMobDead2:
 
 
 // Timer -----------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	TimerWz	-1,
-{
+job_wiz.gat,1,1,1	script	TimerWz	-1,{
 
 OnTimer1000:
 	if($@WzRm==1) areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: Room of Water, testing will begin.",8;

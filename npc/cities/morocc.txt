@@ -388,8 +388,7 @@ moc_fild16.gat,199,212,4	script	Hashisid	48,{
 // Assassin Guild Guards
 //===================================================
 
-moc_fild16.gat,195,281,4	script	Assassin Guardian#1::SinGuard	707,
-{
+moc_fild16.gat,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
 	mes "[Assassin Guardian]";
 	if(Class == Job_Assassin) mes "Welcome.";
 	if(Class == Job_Assassin) close;
