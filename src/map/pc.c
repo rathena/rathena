@@ -1452,7 +1452,9 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->speed = sd->speed *125/100;
 		if(sd->sc_data[SC_CLOAKING].timer!=-1) {
 			sd->critical_rate += 100; // critical increases
-			sd->speed = sd->speed * (sd->sc_data[SC_CLOAKING].val3-sd->sc_data[SC_CLOAKING].val1*3) /100;
+			//sd->speed = sd->speed * (sd->sc_data[SC_CLOAKING].val3-sd->sc_data[SC_CLOAKING].val1*3) /100;
+			//clocking speed descreases normally
+			sd->speed = (sd->speed*(76+(sd->sc_data[SC_CLOAKING].val1*3)))/100; // Fixed by MiKa & Asa [Lupus]
 		}
 			//sd->speed = (sd->speed*(76+(sd->sc_data[SC_INCREASEAGI].val1*3)))/100;
 		if(sd->sc_data[SC_CHASEWALK].timer!=-1)
