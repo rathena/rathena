@@ -1394,6 +1394,11 @@ int parse_fromchar(int fd) {
 			server[id].users = RFIFOL(fd,2);
 			if(anti_freeze_enable)
 				server_freezeflag[id] = 5; // Char anti-freeze system. Counter. 5 ok, 4...0 freezed
+
+			// send some answer
+			WFIFOW(fd,0) = 0x2718;
+			WFIFOSET(fd,2);
+
 			RFIFOSKIP(fd,6);
 			break;
 

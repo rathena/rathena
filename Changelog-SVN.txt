@@ -2,6 +2,7 @@
 Date	Added
 
 04/03
+	* integrating anti freeze system to status update [Shinomori]
 	* Fixed impossible drops at 0.01% chance [Lupus]
 	* Fixed some variable declarations in SQL login.c causing compilation errors [veider]
 	* Added NetBSD support into Makefile (Still lots of warrnings during compilation [veider]

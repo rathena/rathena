@@ -1071,7 +1071,7 @@ int chrif_parse(int fd)
 		case 0x2afb: chrif_sendmapack(fd); break;
 		case 0x2afd: pc_authok(RFIFOL(fd,4), RFIFOL(fd,8), (time_t)RFIFOL(fd,12), (struct mmo_charstatus*)RFIFOP(fd,16)); break;
 		case 0x2afe: pc_authfail(RFIFOL(fd,2)); break;
-		case 0x2b00: map_setusers(RFIFOL(fd,2)); break;
+		case 0x2b00: map_setusers(fd); break;
 		case 0x2b03: clif_charselectok(RFIFOL(fd,2)); break;
 		case 0x2b04: chrif_recvmap(fd); break;
 		case 0x2b06: chrif_changemapserverack(fd); break;

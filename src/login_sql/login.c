@@ -789,16 +789,24 @@ int parse_fromchar(int fd){
 				return 0;
 			// how many users on world? (update)
 			if (server[id].users != RFIFOL(fd,2))
+			{
 				printf("set users %s : %d\n", server[id].name, RFIFOL(fd,2));
-			server[id].users = RFIFOL(fd,2);
+
+				server[id].users = RFIFOL(fd,2);
+				sprintf(tmpsql,"UPDATE `sstatus` SET `user` = '%d' WHERE `index` = '%d'", server[id].users, id);
+				// query
+				if (mysql_query(&mysql_handle, tmpsql)) {
+					printf("DB server Error - %s\n", mysql_error(&mysql_handle));
+				}
+			}
+
 			if(anti_freeze_enable)
 				server_freezeflag[id] = 5; // Char anti-freeze system. Counter. 5 ok, 4...0 freezed
 
-			sprintf(tmpsql,"UPDATE `sstatus` SET `user` = '%d' WHERE `index` = '%d'", server[id].users, id);
-			// query
-			if (mysql_query(&mysql_handle, tmpsql)) {
-				printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-			}
+			// send some answer
+			WFIFOW(fd,0) = 0x2718;
+			WFIFOSET(fd,2);
+
 			RFIFOSKIP(fd,6);
 			break;
 

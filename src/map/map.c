@@ -180,8 +180,12 @@ int console = 0;
  * (charŽI‚©‚ç‘—‚ç‚ê‚Ä‚­‚é)
  *------------------------------------------
  */
-void map_setusers(int n) {
-	users = n;
+void map_setusers(int fd) 
+{
+	users = RFIFOL(fd,2);
+	// send some anser
+	WFIFOW(fd,0) = 0x2718;
+	WFIFOSET(fd,2);
 }
 
 /*==========================================
