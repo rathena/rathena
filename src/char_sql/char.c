@@ -2762,7 +2762,7 @@ void do_final(void) {
 
 	set_all_offline();
 
-	flush_fifos_for_final();
+	flush_fifos();
 
 	sprintf(tmp_sql,"DELETE FROM `ragsrvinfo");
 	if (mysql_query(&mysql_handle, tmp_sql)) 
