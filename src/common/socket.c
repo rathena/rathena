@@ -38,25 +38,44 @@ typedef int socklen_t;
 #include "memwatch.h"
 #endif
 
-#ifdef UPNP
-	#if defined(CYGWIN)
-		#include <dlfcn.h>
-	#elif _WIN32
-		// windows.h already included
-	#else
-		#error This doesnt work with non-Windows yet
-	#endif
-
-	void *upnp_dll;
-	void (*upnp_init)();
-	void (*upnp_final)();
-#endif
-
 fd_set readfds;
 int fd_max;
 time_t tick_;
 time_t stall_time_ = 60;
 int ip_rules = 1;
+
+#define UPNP
+#ifdef UPNP
+	#if defined(CYGWIN)
+
+		#include <dlfcn.h>
+		void *upnp_dll;
+		int (*upnp_init)();
+		int (*upnp_final)();
+		int (*firewall_addport)(char *desc, int port);
+		int (*upnp_addport)(char *desc, char *ip, int port);
+		#define DLL_OPEN(x)		dlopen(x,RTLD_NOW)
+		#define DLL_SYM(x,y,z)	x=(void *)dlsym(y,z)
+		#define DLL_CLOSE(x)	dlclose(x)
+
+	#elif _WIN32
+
+		// windows.h already included
+		HINSTANCE upnp_dll;
+		int (WINAPI* upnp_init)();
+		int (WINAPI* upnp_final)();
+		int (WINAPI* firewall_addport)(char *desc, int port);
+		int (WINAPI* upnp_addport)(char *desc, char *ip, int port);
+		#define DLL_OPEN(x)		LoadLibrary(x)
+		#define DLL_SYM(x,y,z)	(FARPROC)x=GetProcAddress(y,z)
+		#define DLL_CLOSE(x)	FreeLibrary(x)
+
+	#else
+		#error This doesnt work with non-Windows yet
+	#endif
+
+	extern char server_type[24];
+#endif
 
 int rfifo_size = 65536;
 int wfifo_size = 65536;
@@ -317,6 +336,23 @@ int make_listen_bind(long ip,int port)
 	server_address.sin_family      = AF_INET;
 	server_address.sin_addr.s_addr = ip;
 	server_address.sin_port        = htons((unsigned short)port);
+
+#ifdef UPNP
+	if (upnp_dll) {
+		int localaddr = ntohl(addr_[0]);
+		unsigned char *natip = (unsigned char *)&localaddr;
+		char buf[16];
+		sprintf(buf, "%d.%d.%d.%d", natip[0], natip[1], natip[2], natip[3]);
+		//printf("natip=%d.%d.%d.%d\n", natip[0], natip[1], natip[2], natip[3]);
+		if (firewall_addport(server_type, port))
+			printf ("Firewall port %d successfully opened\n", port);
+		if (natip[0] == 192 && natip[1] == 168) {
+			if (upnp_addport(server_type, natip, port))
+				printf ("Upnp mappings successfull\n");
+			else printf ("Upnp mapping failed\n");
+		}
+	}
+#endif
 
 	result = bind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
 	if( result == -1 ) {
@@ -938,19 +974,26 @@ int  Net_Init(void)
 // not implemented yet ^^;
 void do_init_upnp(void)
 {
-	upnp_dll = dlopen("upnp.dll", RTLD_NOW);
+	upnp_dll = DLL_OPEN ("upnp.dll");
 	if (!upnp_dll) {
 		printf ("Cannot open upnp.dll: %s\n", dlerror());
 		return;
 	}
-	upnp_init = (void *)dlsym(upnp_dll, "do_init");
-	upnp_final = (void *)dlsym(upnp_dll, "do_final");
-	if (!upnp_init || !upnp_final) {
+	DLL_SYM (upnp_init, upnp_dll, "do_init");
+	DLL_SYM (upnp_final, upnp_dll, "do_final");
+	DLL_SYM (firewall_addport, upnp_dll, "Firewall_AddPort");
+	DLL_SYM (upnp_addport, upnp_dll, "UPNP_AddPort");
+	if (!upnp_init || !upnp_final || !firewall_addport || !upnp_addport) {
 		printf ("Cannot load symbol: %s\n", dlerror());
-		dlclose (upnp_dll);
+		DLL_CLOSE (upnp_dll);
+		upnp_dll = NULL;
 		return;
 	}
-	upnp_init();
+	if (upnp_init() == 0) {
+		printf ("Error initialising upnp.dll, unloading...\n");
+		DLL_CLOSE (upnp_dll);
+		upnp_dll = NULL;
+	}
 	return;
 }
 #endif
@@ -983,10 +1026,10 @@ void do_final_socket(void)
 	aFree(session[0]);
 
 #ifdef UPNP
-	if (upnp_final)
+	if (upnp_dll) {
 		upnp_final();
-	if (upnp_dll)
-		dlclose(upnp_dll);
+		DLL_CLOSE(upnp_dll);
+	}
 #endif
 }
 
