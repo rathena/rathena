@@ -34,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+10/02
+        * Fixed Wizard job quest (made only one agressive mob in the last room) [Lupus]
+
 01/10
         * Fixed some typos and exploits in the Blacksmith and Hunter job quest,
           thanks to Riotblade and nonox

@@ -220,10 +220,6 @@ Notes:          I *still* need to know which version is the client, because prob
                 It would be even better if you could send me the client in question so
                 i can test it.
 
-Problem:	Ruwatch DOESN't work! But Sight does work.
-Assigned:	N/A
-Progress:	0%
-
 Problem:	Fire Pillar doesn't consume GEMS!
 Assigned:	N/A
 Progress:	0%
@@ -253,3 +249,22 @@ Problem:	Speed hack and other proxy-like hacks
 			and ban / kick / log funkers
 Assigned:	N/A
 Progress:	0%
+
+Problem:	@addwarp crashes the server
+Assigned:	N/A
+Progress:	0%
+
+Problem:	@autoloot is screwed. It brings only ONE item. If a mob drops more,
+		the rest items just disappear w/o traces
+Assigned:	N/A
+Progress:	0%
+
+Problem:	[item exploit] Trade Window + Blacksmith's/Alchemyst's MAKE skills -> item exploit
+Assigned:	N/A
+Progress:	0%
+
+Problem:	New Guilds Active Skills Abuse. You call 1st skill, then call 2nd and NOW, without dalay of 30 min (or whatever)
+		you can AGAIN call the 1st skill... So there's no time limit... etc.
+Assigned:	N/A
+Progress:	0%
+
