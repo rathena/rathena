@@ -944,23 +944,23 @@ charcommand_storagelist(
 				counter = 0;
 				count = 0;
 				for (i = 0; i < MAX_STORAGE; i++) {
-					if (stor->storage[i].nameid > 0 && (item_data = itemdb_search(stor->storage[i].nameid)) != NULL) {
-						counter = counter + stor->storage[i].amount;
+					if (stor->storage_[i].nameid > 0 && (item_data = itemdb_search(stor->storage_[i].nameid)) != NULL) {
+						counter = counter + stor->storage_[i].amount;
 						count++;
 						if (count == 1) {
 							sprintf(output, "------ Storage items list of '%s' ------", pl_sd->status.name);
 							clif_displaymessage(fd, output);
 						}
-						if (stor->storage[i].refine)
-							sprintf(output, "%d %s %+d (%s %+d, id: %d)", stor->storage[i].amount, item_data->name, stor->storage[i].refine, item_data->jname, stor->storage[i].refine, stor->storage[i].nameid);
+						if (stor->storage_[i].refine)
+							sprintf(output, "%d %s %+d (%s %+d, id: %d)", stor->storage_[i].amount, item_data->name, stor->storage_[i].refine, item_data->jname, stor->storage_[i].refine, stor->storage_[i].nameid);
 						else
-							sprintf(output, "%d %s (%s, id: %d)", stor->storage[i].amount, item_data->name, item_data->jname, stor->storage[i].nameid);
+							sprintf(output, "%d %s (%s, id: %d)", stor->storage_[i].amount, item_data->name, item_data->jname, stor->storage_[i].nameid);
 						clif_displaymessage(fd, output);
 						memset(output, '\0', sizeof(output));
 						counter2 = 0;
 						for (j = 0; j < item_data->slot; j++) {
-							if (stor->storage[i].card[j]) {
-								if ((item_temp = itemdb_search(stor->storage[i].card[j])) != NULL) {
+							if (stor->storage_[i].card[j]) {
+								if ((item_temp = itemdb_search(stor->storage_[i].card[j])) != NULL) {
 									if (output[0] == '\0')
 										sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
 									else

@@ -1,6 +1,8 @@
 Date	Added
 
 03/29
+        * Fixed use of storage variable to conform to ANSI C spec 
+          [1327: MouseJstr]
         * Added CIA-bot to the #athena channel [MouseJstr]
 	* Some tidying up in mail.c [celest]
 	* Added an invalid pointer check in clif_displaymessage [celest]
