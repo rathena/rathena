@@ -1,6 +1,7 @@
 Date	Added
 
 02/09
+	* Added conf-tmpl/readme.txt, explaining the import folder [1066: Ajarn]
 	* SQL Char: Rewrote the char_create function (now it's faster/optimized) [Sirius]
 	* SQL Char: Fixed the reply if a charname is invalid on create (now it replys denied..) [Sirius]
 	* SQL Char: Added a Character limit per Account (can be set in the config) [Sirius]
