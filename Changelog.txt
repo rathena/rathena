@@ -1,4 +1,6 @@
 Date	Added
+11/06
+	* mob.c: Re-did a few parts according to jA's 1057 version. [Codemaster] (hopefully fixed mobs?)
 11/05
 	* Fixed and redo optional Umbalian quests:
 	- Wise Man Fabius' Umbalian Language Quest (you can learn Umbalian language in
