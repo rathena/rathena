@@ -1,6 +1,7 @@
 Date	Added
 
 03/16
+        * map.c fixed compilation error [Lupus]
         * Updated jA's dummy socket to mod1137 [celest]
         * Added jA's ddos protection system -- check packet_athena.conf [celest]
         * Moved stall_time's reading from inter_athena.conf to packet_athena.conf
