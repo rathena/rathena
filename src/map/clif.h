@@ -98,7 +98,7 @@ int clif_changechatstatus(struct chat_data*);	// chat
 void clif_emotion(struct block_list *bl,int type);
 void clif_talkiebox(struct block_list *bl,char* talkie);
 void clif_wedding_effect(struct block_list *bl);
-void clif_sitting(int fd, struct map_session_data *sd);
+void clif_sitting(struct map_session_data *sd);
 //void clif_callpartner(struct map_session_data *sd);
 //void clif_sitting(struct map_session_data *sd);
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *name,int type);

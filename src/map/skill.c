@@ -2999,7 +2999,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case LK_TENSIONRELAX:	/* テンションリラックス */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		pc_setsit(sd);
-		clif_sitting(sd->fd,sd);
+		clif_sitting(sd);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
 		break;
 	case MC_CHANGECART:

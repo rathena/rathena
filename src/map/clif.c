@@ -7137,16 +7137,16 @@ void clif_callpartner(struct map_session_data *sd)
  * 座る
  *------------------------------------------
  */
-void clif_sitting(int fd, struct map_session_data *sd) 
+void clif_sitting(struct map_session_data *sd) 
 {
+	unsigned char buf[64];
+
 	nullpo_retv(sd);
 
-	fd=sd->fd;
-
-	WBUFW(fd, 0) = 0x8a;
-	WBUFL(fd, 2) = sd->bl.id;
-	WBUFB(fd,26) = 2;
-	clif_send(WFIFOP(fd,0),packet_db[0x8a].len,&sd->bl,AREA);
+	WBUFW(buf, 0) = 0x8a;
+	WBUFL(buf, 2) = sd->bl.id;
+	WBUFB(buf,26) = 2;
+	clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
 }
 
 /*==========================================
@@ -7896,7 +7896,7 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd, int cmd)
 			pc_stop_walking(sd,1);
 			skill_gangsterparadise(sd,1);/* ギャングスターパラダイス設定 */
 			pc_setsit(sd);
-			clif_sitting(fd,sd);
+			clif_sitting(sd);
 		} else
 			clif_skill_fail(sd, 1, 0, 2);
 		break;

@@ -1,5 +1,6 @@
 Date	Added
 11/09
+	* clif.c: Fixed sitting. [spira]
 	* -  Fixed item 657 Job ID , 11/09 patch updates to item_db, Correct stats for item 5097
 	  - Added Unbreakable funcions to item_db armors/shields/garments/footgear [shadow]
 	* Defined SO_REUSEPORT to allow the servers to re-use ports if server crashes [Wizputer]
