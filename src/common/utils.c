@@ -179,3 +179,10 @@ void StringBuf_Free(struct StringBuf *sbuf)
 	StringBuf_Destroy(sbuf);
 	free(sbuf)buf;
 }
+
+// Return the built string from the StringBuf [MouseJstr]
+char * StringBuf_Value(struct StringBuf *sbuf) 
+{
+	*sbuf->ptr_ = '\0';
+	return sbuf->base_;
+}

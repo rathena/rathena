@@ -42,6 +42,7 @@ extern struct StringBuf * StringBuf_Malloc();
 extern void StringBuf_Init(struct StringBuf *);
 extern int StringBuf_Printf(struct StringBuf *,const char *,...);
 extern int StringBuf_Append(struct StringBuf *,const struct StringBuf *);
+extern char * StringBuf_Value(struct StringBuf *);
 extern void StringBuf_Destroy(struct StringBuf *);
 extern void StringBuf_Free(struct StringBuf *);
 
