@@ -1,5 +1,7 @@
 Date	Added
 12/28
+	* Fixed typo in npcs_athena.conf (mc_cameri verses mc_Cameri),
+	  thanks Mellow972 for pointing that out (SVN 845) [MouseJstr]
         * Reduced weapon breaking chance for Overthrust, thanks Draco - i almost
           forgot to add this update [celest]
 	* added checks into the skill code to prevent proxy's/bots
