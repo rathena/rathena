@@ -2289,9 +2289,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 					// calculate physical part of damage
 					damage = damage * skill_lv;
 					damage2 = damage2 * skill_lv;
-					// calculate magic part of damage
-					damage3 = skill_lv * status_get_int(src) * 5;
-
 					flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				}
 				break;
@@ -2558,12 +2555,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 //カード補正による左手ダメージ増加
 //カードによるダメージ増加処理(左手)ここまで
 
-// -- moonsoul (cardfix for magic damage portion of ASC_BREAKER)
-	if(skill_num == ASC_BREAKER) {
-		damage3 = damage3 * cardfix / 100;
-		dmg_lv = ATK_DEF; // ignores flee [celest]
-	}
-
 //カードによるダメージ減衰処理ここから
 	if(tsd){ //対象がPCの場合
 		cardfix=100;
@@ -2760,14 +2751,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 				mob_class_change(((struct mob_data *)target),changeclass);
 			}
 		}
-
-
-// -- moonsoul (final combination of phys, mag damage for ASC_BREAKER)
-	if(skill_num == ASC_BREAKER) {
-		damage3 += rand()%500+500;
-		damage += damage3;
-//		damage2 += damage3;
-	}
 
 	wd.damage=damage;
 	wd.damage2=damage2;
@@ -3038,6 +3021,10 @@ struct Damage battle_calc_magic_attack(
 				damage = ((struct map_session_data *)target)->status.sp * 2;
 				matk_flag = 0; // don't consider matk and matk2
 			}
+			break;
+		case ASC_BREAKER:
+			damage = rand()%500 + 500 + skill_lv * status_get_int(bl) * 5;
+			matk_flag = 0; // don't consider matk and matk2
 			break;
 		}
 	}

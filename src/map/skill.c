@@ -1236,6 +1236,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	struct Damage dmg;
 	struct status_change *sc_data;
 	int type,lv,damage;
+	static int tmpdmg = 0;
 
 	if(skillid > 0 && skilllv <= 0) return 0;
 
@@ -1439,6 +1440,13 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	switch(skillid){
 	case AS_SPLASHER:
 		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
+		break;
+	case ASC_BREAKER:	// [celest]
+		if (attack_type&BF_MAGIC) {	// only display damage for the 2nd attack
+			clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage+tmpdmg, dmg.div_, skillid, skilllv, type);
+			tmpdmg = 0;	// clear the temporary damage
+		} else
+			tmpdmg = damage;	// store the temporary weapon damage
 		break;
 	case NPC_SELFDESTRUCTION:
 	case NPC_SELFDESTRUCTION2:
@@ -2156,13 +2164,19 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 //	case PA_SACRIFICE:	/* サクリファイス */
 //	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
 	case CG_ARROWVULCAN:			/* アロ?バルカン */
-	case ASC_BREAKER:				/* ソウルブレ?カ? */
+//	case ASC_BREAKER:				/* ソウルブレ?カ? */
 	case HW_MAGICCRASHER:		/* マジッククラッシャ? */
 	case ASC_METEORASSAULT:	/* メテオアサルト */
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
+	case ASC_BREAKER:				/* ソウルブレ?カ? */	// [DracoRPG]
+		// separate weapon and magic attacks
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		break;		
+	
 	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
 			map_foreachinpath (skill_attack_area,src->m,					// function, map
 					src->x,src->y,											// source xy

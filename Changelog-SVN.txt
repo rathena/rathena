@@ -1,11 +1,12 @@
 Date	Added
 
 03/08
+        * Added DracoRPG's code for Soul Breaker - the magic attack part should work
+          as it should now, thanks! ^^ [celest]
         * Reverted the reverted jA event change but this time without bugs (hopefully) [Shinomori]
         * corrected status_change_timer as far as I understand the functionality
           (better have a look at it, Celest), added a some security to prevent pending timers
         * moved two variable declarations to scope start (mob.c and skill.c)
-
         * Fixes Icewall can be directly cast on players and monsters -- also removes
           the 'unsupported layout' message [celest]
         * Added the new turbo_room and alde_tt to the maps config [celest]
