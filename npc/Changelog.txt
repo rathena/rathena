@@ -34,6 +34,8 @@ Other Ppl
 
 Date		Added
 ======
+11/23
+	* - Fixed repairman prices (5k)(someone need to check if it requires a steel) [shadow]
 11/22
 	* - Now wedding merchant sells tuxedos for 43k, implemented a easier way to change prices of weddings.
 	  - Fixed wrong label calling on jobchange.txt.
