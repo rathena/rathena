@@ -1,5 +1,6 @@
 Date	Added
 11/28
+	* Fixed online system for char not sending players left "online" to login when restarting [Wizputer]
 	* Fixed damage formula of Cart revolution: 150% +1% per 80ea [Lupus]
 	* Removed 2x Chance of Equipment Breaking during CRITICAL attacks [Lupus]
 	* Fix some file props [MouseJstr]

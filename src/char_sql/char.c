@@ -168,28 +168,28 @@ void set_char_online(int char_id, int account_id) {
 }
 
 void set_all_offline(void) {
-	sprintf(tmp_sql, "SELECT `account_id` FROM `%s` WHERE `online` = '1'",char_db);
+	sprintf(tmp_sql, "SELECT `account_id` FROM `%s` WHERE `online`='1'",char_db);
 	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (select `char`)- %s\n", mysql_error(&mysql_handle));
+		printf("DB server Error (select all online)- %s\n", mysql_error(&mysql_handle));
 	}
-		
 	sql_res = mysql_store_result(&mysql_handle);
 	if (sql_res) {
 	    while((sql_row = mysql_fetch_row(sql_res))) {
 	        if ( login_fd > 0 ) {
+	            printf("send user offline: %d\n",atoi(sql_row[0]));
 	            WFIFOW(login_fd,0) = 0x272c;
-	            WFIFOL(login_fd,2) = atol(sql_row[0]);
+	            WFIFOL(login_fd,2) = atoi(sql_row[0]);
 	            WFIFOSET(login_fd,6);
-            }
+            } 
        }
     } 
-            
+    
+   	mysql_free_result(sql_res);        
     sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
 	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
+		printf("DB server Error (set_all_offline)- %s\n", mysql_error(&mysql_handle));
 	}
 	
-	mysql_free_result(sql_res);
 }
 
 void set_char_offline(int char_id, int account_id) {
@@ -199,7 +199,7 @@ void set_char_offline(int char_id, int account_id) {
 	    sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `char_id`='%d'", char_db, char_id);
 	    
 	if (mysql_query(&mysql_handle, tmp_sql))
-		printf("DB server Error (update online `%s`)- %s\n", char_db, mysql_error(&mysql_handle));
+		printf("DB server Error (set_char_offline)- %s\n", mysql_error(&mysql_handle));
 
    WFIFOW(login_fd,0) = 0x272c;
    WFIFOL(login_fd,2) = account_id;
@@ -967,7 +967,6 @@ int mmo_char_sql_init(void) {
 	} else
 		printf("set char_id_count: %d.......\n",char_id_count);
 
-    set_all_offline();
 	printf("init end.......\n");
 
 	return 0;
@@ -1262,6 +1261,7 @@ int parse_tologin(int fd) {
 				//exit(1); //fixed for server shutdown.
 			}else {
 				printf("Connected to login-server (connection #%d).\n", fd);
+                set_all_offline();
 				// if no map-server already connected, display a message...
 				for(i = 0; i < MAX_MAP_SERVERS; i++)
 					if (server_fd[i] >= 0 && server[i].map[0][0]) // if map-server online and at least 1 map

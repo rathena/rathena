@@ -596,12 +596,6 @@ int inter_guild_sql_init()
 	
 	inter_guild_readdb(); // Read exp
 	
-	sprintf(tmp_sql,"UPDATE `%s` SET `online`='0'",guild_member_db);	
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		printf("DB server Error (update `char`)- %s\n", mysql_error(&mysql_handle) );
-		exit(0);
-	}
-	
 	sprintf (tmp_sql , "SELECT count(*) FROM `%s`",guild_db);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
