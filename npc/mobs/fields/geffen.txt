@@ -23,7 +23,7 @@ gef_fild00.gat,54,212,5,5	monster	Green Plant	1080,3,360000,180000,1
 //(gef_fild01.gat)*
 gef_fild01.gat,0,0,0,0	monster	Poporing	1031,40,0,0,0
 gef_fild01.gat,0,0,0,0	monster	Roda Frog	1012,80,0,0,0
-gef_fild01.gat,0,0,0,0	monster	Toad	1089,1,1800000,200000,1
+gef_fild01.gat,0,0,0,0	monster	Toad	1089,1,3600000,1800000,1
 gef_fild01.gat,215,225,10,10	monster	Green Plant	1080,5,360000,180000,1
 
 //(gef_fild02.gat)*

@@ -34,6 +34,9 @@ Other Ppl
 
 Date		Added
 ======
+12/29
+        * Fixed respawn delay of Toad and Golden Thief Bug (it was the actual_delay/2). Mob placement files should be revised again [Lupus]
+
 12/27
         * kafra_bank.txt added an extra exploit protection [Lupus]
         * kafra_bank.txt was missing an npc label [celest]
