@@ -1,4 +1,432 @@
 --------------------
+//1136 by by eigen
+
+・1135で消えていたbattle_athena.confの項目とデフォルト値を復活
+・conf_ref.txtにnext_exp_limitの説明を追加
+
+	(conf)
+		battle_athena.conf	- 消えた項目とデフォルト値を復活
+	(doc)
+		conf_ref.txt		- next_exp_limitの説明を追加
+
+--------------------
+//1135 by by Toshi^2
+・パッチ1125で修正された、経験値の上限設定を従来方式の制限無しも選べるように変更
+
+	(db)
+		battle_athena.conf	- next_exp_limitを追加。
+	(src/map)
+		battle.c	- battle_config_read() 修正
+		battle.h	- struct Battle_Config{}に int next_exp_limit; を追加。
+		pc.c		- pc_gainexp() 修正
+
+--------------------
+//1134 by End_of_exam
+
+・1132で#undef closeを忘れていたバグを修正(socket.c)
+・1133のアイテムdupe対策が不完全だったのを修正(map.c)
+・athena-start stop , kill の順番をmap -> char -> login に変更
+　　　　(athena-start thanks to eigenさん)
+
+	(/)
+		athena-start	- athena-start stop , kill の順番修正
+
+	(src/common)
+		socket.c		- #undef close 追加
+
+	(src/map)
+		map.c			- map_quit() 修正
+
+--------------------
+//1133 by End_of_exam
+
+・mapflag nosave が指定されたマップで死んでリスタートする時に、セーブポイントが
+　別マップサーバーにあると、(nul,0,0)に飛ばされていたバグを修正(pc.c)
+・マップサーバーを分配している時に、細工をした特殊なツールを使うことによって、
+　アイテムがdupeできたバグを修正。(pc.c)
+・buildin_menu, buildin_select() がバッファオーバーフローを起こしていた
+　バグを修正(script.c)
+
+	(src/map)
+		pc.c			- pc_makesavestatus(), pc_setpos(), pc_autosave_sub() 修正
+		script.c		- buildin_menu(), buildin_select() 修正
+
+--------------------
+//1132 by End_of_exam
+・@users コマンド(サーバー内の人数マップを表示)を追加(atcommand.c / h)
+・guild_check_alliance() を呼び出すときのチェックを追加(mob.c battle.c)
+・マップサーバー分配時にギルドのメンバーが抜けた時、そのギルドメンバーが
+　一人もログインしていないマップサーバーが落ちていたのを修正(guild.c)
+・1130で見切りの回避率上昇が消えていたのを戻す(status.c)
+・pid 対応版のstart, athena-start を統合(start , athena_start)
+・田代砲対策、Shinomoriさんの do_sendrecv() 高速化を組み込む
+　(socket.c socket.conf Makefile)
+・socket の高速化
+　　1. FIFOFLUSH が実行される頻度を下げる(socket.c char.c)
+　　2. 不正なfdを0 に変更(socket.c socket.h chrif.c char.c)
+
+	(/)
+		start			- pid ファイルに対応するように修正
+		sthena-start	- pid ファイルに対応するように修正
+		Makefile		- "-D_XOPEN_SOURCE -D_BSD_SOURCE" 追加
+
+	(conf/)
+		help.txt		- @users 追加、@mes の修正
+		socket.conf		- アクセス制限の設定ファイル
+
+	(src/common/)
+		socket.c		- アクセス制限の追加、色々高速化
+		socket.h		- FIFO命令の高速化
+
+	(src/char/)
+		char.c			- parse_tologin(), parse_char() 更新
+
+	(src/map/)
+		atcommand.c		- @users 追加
+		atcommand.h		- @users 追加
+		battle.c		- battle_calc_damage() 修正
+		chrif.c			- 不正なfdを0 に変更したのに伴う修正
+		guild.c			- guild_member_leaved() 修正
+		mob.c			- mob_gvmobcheck() 修正
+		status.c		- status_calc_pc() 修正
+
+--------------------
+//1131 by eigen
+・ギルド拡張の人数増分を+2/Lvから+4/Lvに変更
+・メテオストームにスタンがかかるよう修正
+・ロードオブヴァーミリオンに暗闇がかかるよう修正
+・ヒルトバインディングを取っていればSTR+1 ATK+4が付くよう変更
+・ヒルトバインディングを取っていればAR・OT・WPがの効果時間が10%長くなるよう変更
+・AR・OTのパーティーメンバー効果時間減少を撤廃
+・フロストダイバーで凍結する際、凍結時間がMDEFに影響されるよう変更
+・skill_db.txt、skill_require_db.txt、skill_cast_db.txtをOWNや各職Wikiなどを参考に修正
+
+	(src/map)
+		skill.c
+		status.c
+	(db)
+		skill_db.txt
+		skill_cast_db.txt
+		skill_require_db.txt
+
+--------------------
+//1130 by eigen
+・所持限界量増加の+100/Lvを+200/Lvに修正
+・シーフの上位職に於いて回避率増加のFlee上昇率+3/Lvを+4/Lvに修正
+・アサシン系が回避率増加を取得している場合、移動速度が+0.5%/Lvになるよう修正
+・プレッシャーのSP攻撃を実装
+・プリザーブ、フルストリップ、武器精錬、スリムピッチャー、フルケミカルチャージ
+をdbに追加
+
+	(src/map)
+		skill.c			- skill_additional_effect() 修正
+		status.c		- status_calc_pc() 修正
+	(db)
+		skill_db.txt
+		skill_cast_db.txt
+		skill_require_db.txt
+		skill_tree.txt
+
+--------------------
+//1129 by En_of_exam
+
+・NPC イベントが重複した場合のメモリ解放手順が違っていたバグを修正
+　　(npc.c thanks to TOSHI^2さん)
+
+	(src/map)
+		npc.c		- npc_parse_script() 修正
+
+--------------------
+//1128 by 悩める人
+・アイテムを消費せずに使用するかのオプション追加
+・カード、装備品、エル・オリのドロップ率を別に設定出来るようにオプション追加
+・battle_athena.confの初期設定で矢・聖水等を作成時に名前を付けないように変更
+　（本鯖ではまだ来てないと思ったので初期設定を変えました）
+	(src/map)
+		battle.c
+		mob.c
+		pc.c
+		battle.h
+	(conf)
+		battle_athena.conf
+
+--------------------
+//1127 by End_of_exam
+
+・getarraysize() が正しい値を返さないバグを修正(script.c)
+　このバグの影響で、deletearray() 命令の動作が正常なものと異なっていました。
+
+・buildin_deletearray() の最適化(script.c)
+・シグナル処理中に再度シグナルが呼ばれる可能性に対処する(core.c)
+・委託販売を追加してみる(npc_test_seller.txt)
+
+	(src/map)
+		script.c	- getarraysize() , buildin_deletearray() 修正
+
+	(src/common)
+		core.c		- sig_proc() 修正
+
+	(script/sample)
+		npc_test_seller.txt		- 委託販売NPC
+
+--------------------
+//1126 by eigen
+・メモライズの効果回数と詠唱短縮比率をそれぞれ5回、1/2に修正
+
+	(src/map)
+		skill.c		- 1/3になっているのを1/2に修正
+		status.c	- 3回になっているのを5回に修正
+
+--------------------
+//1125 by lizorett
+・ブランディッシュスピアのノックバックを3セルにし、ミス時にはノックバックしない
+よう変更
+・スピアスタブを対象から自分に向かって4マスの範囲攻撃に変更(本鯖仕様)
+・鷹/投石をニュマで防げるよう変更
+・ボウリングバッシュが対象にミスした場合にはノックバックしないよう変更
+・ソウルブレイカーのダメージ計算、ニュマでミスになるよう変更
+・獲得経験値の上限(現レベルの必要経験値-1)を設定
+・バジリカ展開時に展開者はノックバックしないよう変更
+・メテオアサルトを即時発動、使用者中心、詠唱500ms固定、エフェクト有に変更
+・ストリップウェポン時のmobの攻撃力低下を10%に変更
+・掛けられているものより低レベルのブレスにより呪い/石化が解除できるよう変更
+・ソウルバーン/マインドブレーカー/ソウルチェンジ実装
+・シャープシューティングを射線にいる敵にもダメージを与えるよう変更、クリティカル
+確率+20%で防御無視ダメージに変更
+・投石など一部のスキルが草などに1ダメージにならない問題を修正
+
+	(db)
+		skill_db.txt- BDS/メテオアサルト変更、スキル追加
+		skill_cast_db.txt
+					- スキル追加
+		skill_require_db.txt
+					- スキル追加
+	(src/map)
+		battle.c	- ソウルブレイカーのダメージ計算を変更
+					- シャープシューティングのクリティカル確率修正
+					- 鷹/投石をニュマで防げるよう変更
+		skill.h		- SC_MINDBREAKER追加
+		skill.c		- BDS/BBのノックバックを修正
+					- スピアスタブを範囲攻撃に変更
+					- メテオアサルト修正
+					- ソウルバーン/マインドブレーカー/ソウルチェンジ実装
+		path.c		- シャープシューティングの射線計算を追加
+		pc.c		- 獲得経験値の上限(前のレベルの経験値-1)を設定
+		status.c	- マインドブレーカーのmatk上昇/mdef減少の実装
+		map.h		- シャープシューティングの射線計算用構造体を追加
+
+--------------------
+//1124 by もっさり
+敵が使う爆裂波動実装
+効果
+atk1,atk2 1000*skilllv加算
+hit 20*skilllv加算
+
+	(src/map)
+		skill.c
+		skill.h 	NPC_EXPLOSIONSPIRITS関係を追加
+		status.c　　　　
+	(db)
+		skill_db.txt
+		skill_cast_db.txt	
+
+		
+
+--------------------
+//1123 by Nameless
+・Athenaサービス化キットを追加しました。(NT/2000/XP/2003/LH)
+　詳しい方法はdoc内のinstasv.txtを参照してください
+
+	(bin/tool)
+		instasv.bat	- サービス登録用バッチ
+		delasv.bat	- サービス抹消用バッチ
+	(doc/)
+		instasv.txt	- 説明書(テキスト版)
+
+--------------------
+//1122 by End_of_exam
+
+・1120のstrdb のキーを保存し忘れていたバグ修正（db.c）
+・念のため1121、1120のreadme をマージして、両方に含まれていたファイルを添付する
+
+	(src/char)
+		char.c		- 1121のものを添付
+
+	(src/common)
+		mmo.h		- 1121のものを添付
+		db.h		- 1120のものを添付
+		db.c		- strdb のキーを保存するようにする
+
+	(src/map)
+		battle.c	- 1121のものを添付
+		guild.c		- 1121のものを添付
+		guild.h		- 1121のものを添付
+		mob.c		- 1121のものを添付
+		skill.c		- 1121のものを添付
+		skill.h		- 1121のものを添付
+
+--------------------
+//1121 by _
+
+・ロードナイト/パラディンのログイン時のエラー対策
+・Gvでの同盟の扱いを修正
+　エンペリウム攻撃不可、ガーディアンから攻撃されないように修正
+・新追加スキル用の定数追加修正
+
+	(src/char)
+		char.c
+			修正	mmo_char_send006b()
+	(src/common)
+		mmo.h
+			修正	MAX_SKILL=500
+			追加	新ギルドスキル(コメントアウトしてます)
+	(src/map)
+		battle.c
+			修正	battle_calc_damage()
+		guild.c
+		guild.h
+			追加	guild_check_alliance()
+		mob.c
+			修正	mob_gvmobcheck()
+		skill.c
+			修正	SkillStatusChangeTable[] (420-490)
+		skill.h
+			修正	MAX_SKILL_DB=500
+			追加	475以降の新スキルID
+
+--------------------
+//1120 by End_of_exam
+
+・db_foreach()の呼び出し先でdb_erase()が呼び出されているされている場合、
+　複数回同じキーで関数を呼び出す可能性があるバグを修正(db.h db.c)
+
+　cygwin上で２重freeをした場合、プログラムが暴走する可能性があります。
+　char鯖との接続が切れたmap 鯖が暴走するバグは、これに起因しています。
+
+	(src/common)
+		db.c		- db_eraseを一時的にロックする機能追加
+		db.h		- db_eraseを一時的にロックする機能追加
+
+--------------------
+//1119 by ICO
+
+・NPCスキル(ブレイクウェポン、ブレイクアーマー、ブレイクヘルム、ブレイクシールド)の実装
+・battle_athena.confにmonster_damage_delayを追加。
+　noを指定するとFW等のノックバックスキルの挙動が多少本鯖に近づくかも…？
+
+	(db)
+		skill_db.txt
+		skill_cast_db.txt
+	(conf/)
+		battle_athena.conf
+			monster_damage_delay 追加
+	(map/)
+		battle.c
+		battle.h
+		mob.c
+			monster_damage_delay関連を追加
+		skill.c
+		skill.h
+			skill_additional_effect,skill_castend_damage_id 修正
+
+--------------------
+//1118 by BDPQ銀 [ 2005/02/10 ]
+■データベースが変更されています。導入時には御注意ください■
+・スキルの固定詠唱時間を skill_cast_db.txt に移動。
+  詠唱時間の計算は、 (通常詠唱 + 固定詠唱)*メモライズ補正 となります。
+  skill_cast_dbの書式は
+    [ID],[cast_list(通常詠唱)],[fixed_cast_list(固定詠唱)],[delay_list(ディレイ)],[upkeep_time(維持時間)],[upkeep_time2(維持時間2)] です。
+・アブラカタブラをディレイにASPDによるディレイを付加しないよう修正(即発動スキル用)
+・新2次職のskill_cast_dbに関する項目の修正
+
+	(src/map)
+		skill.c			-	skill_use_id()			修正	(詠唱時間計算部 ・ メモライズ/魔法力増幅 固定詠唱時間部削除)
+															(アブラカタブラの修正)
+							skill_use_pos()			修正	(詠唱時間計算部)
+							skill_readdb()			修正	(cast_db 読込部)
+		skill.h			-	skill_db				修正	(fixedcastの追加)
+							skill_get_fixedcast()	追加	(dbから固定詠唱時間の取得)
+
+	(db)
+		skill_cast_db.txt-	fixed_cast_list			追加	(固定詠唱時間) 
+															魔法力増幅-700、メモライズ-5000に設定
+
+							361(アスムプティオ)		修正	( R.O.M 776を参考に詠唱/ディレイを修正 )
+							365(マジッククラッシャー)修正	( R.O.M 776を参考に詠唱/ディレイを追加 )
+							373(ライフ置き換え)		修正	( R.O.M 776を参考にディレイを修正 )
+							375(ソウルバーン)		追加	( R.O.M 776を参考にディレイを追加 ) ( スキル効果は実装していません )
+							381(ファルコンアサルト)	修正	( R.O.M 776を参考にディレイを修正 )
+							383(ウィンドウォーク)	修正	( R.O.M 776を参考に詠唱/ディレイ/効果時間を修正 )	
+							384(メルトダウン)		修正	( R.O.M 776を参考に詠唱/ディレイを修正 )	
+							387(カートブースト)		修正	( R.O.M 776を参考に効果時間を修正 )	
+							398(ヘッドクラッシュ)	修正	( R.O.M 776を参考にディレイ持続時間を修正 )
+							406(メテオアサルト)		修正	( R.O.M 776を参考に詠唱/ディレイを追加 )
+
+	(doc)
+		db_ref.txt		-	1. db/skill_cast_db.txt	修正	(fixed_cast_listの項目を追加)
+
+--------------------
+//1117 by End_of_exam
+
+・ベナムスプラッシャーを毒状態の敵に使用したが、失敗した時（敵モンスターの
+　HPが2/3 以上だった時）に深刻なメモリリークが起きていたバグを修正(skill.c)
+・あなたに逢いたいが失敗した時に深刻なメモリリークが起きていたバグを修正(skill.c)
+
+　上２つは、共にmap_freeblock_unlock() が抜けている為に発生していました。
+　ドロップアイテム、スキルユニット、取り巻きなどで確保されたメモリが、
+　以降全く開放されなくなるというかなり深刻なメモリリークのバグです。
+　map_freeblock_lock() を呼ぶルーチンを修正する場合、ルーチンを抜けるときに、
+　map_freeblock_unlock() が呼ばれるように気を付けてください(return に注意!)。
+
+・map_freeblock_unlock() を忘れても良いように、定期的にblock_free_lockを
+　クリアするように修正(map.c)
+・Debian好き さんのMPVモンスターのHP計算がオーバーフローするバグ修正の取り込み(status.c)
+
+	(src/map)
+		skill.c		- skill_castend_nodamage_id() 修正
+		map.c		- map_freeblock_timer() 追加、 do_init() 修正
+		status.c	- status_get_max_hp() 修正
+
+--------------------
+//1116 by End_of_exam
+
+・copyarray で同じ配列を指定した時、コピー先の要素番号がコピー元の要素番号より
+　大きい時の動作が不定になっていたバグを修正(script.c npc_test_array.txt)
+・関数宣言せずに関数定義したユーザー定義関数を呼び出そうとすると、エラーが出る
+　バグを修正(script.c)
+・スクリプトのオーバーフロー判定基準を緩和させる(script.c)
+・ギルドの告知に\nが使えるバグを修正(int_guild.c)
+・イベントdbのメモリリーク修正が不完全だったのを修正(npc.c)
+・db_foreachのチェック方法を変更(db.c)
+・起動時に*.pid (プロセスIDのファイル)を作成するようにする(core.c)
+・経験値所得が全体発言になっているバグを修正(clif.c)
+・叫ぶを全体発言に変更(clif.c)
+・testerさん作成のVC++ Toolkit2003 用のバッチファイルを同伴(vc07_make.bat)
+
+	(/)
+		vc07_make.bat	- testerさん作成のバッチファイルを同伴
+
+	(src/common)
+		db.c			- db_foreach() 修正
+		core.c			- main() 修正 , pid_create() , pid_delete() 追加
+
+	(src/char)
+		int_guild.c		- mapif_parse_GuildPosition() 修正
+
+	(src/map)
+		clif.c			- clif_disp_onlyself() , clif_onlymessage() 修正
+		npc.c			- npc_parse_script() 修正
+		script.c		- buildin_copyarray() , parse_syntax() 修正
+
+	(script/sample)
+		npc_test_array.txt	- チェック項目の追加
+
+--------------------
+//1115 by いど
+
+・サーバースナップショット
+
+--------------------
 //1114-fix1 by 稀枝
 
 ・zlibをmap-server内部に取り込めるオプションを追加

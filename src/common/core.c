@@ -76,6 +76,11 @@ sigfunc *compat_signal(int signo, sigfunc *func)
 static void sig_proc(int sn)
 {
 	int i;
+	static int is_called = 0;
+
+	if(is_called++)
+		return;
+
 	switch(sn){
 	case SIGINT:
 	case SIGTERM:
@@ -196,11 +201,37 @@ static void display_title(void)
  */
 
 int runflag = 1;
+char pid_file[256];
+
+void pid_delete(void) {
+	unlink(pid_file);
+}
+
+void pid_create(const char* file) {
+	FILE *fp;
+	int len = strlen(file);
+	strcpy(pid_file,file);
+	if(len > 4 && pid_file[len - 4] == '.') {
+		pid_file[len - 4] = 0;
+	}
+	strcat(pid_file,".pid");
+	fp = fopen(pid_file,"w");
+	if(fp) {
+#ifdef _WIN32
+		fprintf(fp,"%d",GetCurrentProcessId());
+#else
+		fprintf(fp,"%d",getpid());
+#endif
+		fclose(fp);
+		atexit(pid_delete);
+	}
+}
 
 int main(int argc,char **argv)
 {
 	int next;
 
+	pid_create(argv[0]);
 	Net_Init();
 	do_socket();
 	

@@ -53,6 +53,12 @@ struct walkpath_data {
 	unsigned char path_len,path_pos,path_half;
 	unsigned char path[MAX_WALKPATH];
 };
+struct shootpath_data {
+	int rx,ry,len;
+	int x[MAX_WALKPATH];
+	int y[MAX_WALKPATH];
+};
+
 struct script_reg {
 	int index;
 	int data;
@@ -774,7 +780,7 @@ int map_calc_dir( struct block_list *src,int x,int y);
 
 // path.c‚æ‚è
 int path_search(struct walkpath_data*,int,int,int,int,int,int);
-int path_search_long(int m,int x0,int y0,int x1,int y1);
+int path_search_long(struct shootpath_data *,int,int,int,int,int);
 int path_blownpos(int m,int x0,int y0,int dx,int dy,int count);
 
 int map_who(int fd);

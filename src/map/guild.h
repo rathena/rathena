@@ -54,6 +54,7 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 	int flag,const char *name1,const char *name2);
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag);
 int guild_opposition(struct map_session_data *sd,int char_id);
+int guild_check_alliance(int guild_id1, int guild_id2, int flag);
 
 int guild_send_memberinfoshort(struct map_session_data *sd,int online);
 int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int online,int lv,int class_);

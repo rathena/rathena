@@ -280,7 +280,9 @@ extern struct Battle_Config {
 	int gm_can_drop_lv;
 	int disp_hpmeter;
 	int bone_drop;
+	int monster_damage_delay;
 
+// eAthena additions
 	int night_at_start; // added by [Yor]
 	int day_duration; // added by [Yor]
 	int night_duration; // added by [Yor]

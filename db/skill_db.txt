@@ -56,7 +56,7 @@
 54,8,6,16,6,1,4,1,yes,0,0,0,magic,0	//ALL_RESURRECTION#リザレクション#
 55,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//KN_SPEARMASTERY#槍修練#
 56,-1,8,1,0,0,10,3,no,0,0,0,weapon,0	//KN_PIERCE#ピア?ス#
-57,1,6,1,0,1,10,1,no,33,0,0,weapon,1	//KN_BRANDISHSPEAR#ブランディッシュスピア#
+57,1,6,1,0,1,10,1,no,33,0,0,weapon,3	//KN_BRANDISHSPEAR#ブランディッシュスピア#
 58,4,6,1,0,2,10,1,no,0,0,0,weapon,6	//KN_SPEARSTAB#スピアス?ブ#
 59,-3:-5:-7:-9:-11,6,1,0,0,5,1,no,0,0,0,weapon,0	//KN_SPEARBOOMERANG#スピアブ?メラン#
 60,0,6,4,0,1,10,1,no,0,0,0,weapon,0	//KN_TWOHANDQUICKEN#ツ?ハンドクイッケン#
@@ -313,7 +313,7 @@
 261,0,6,4,0,1,5,1,no,0,0,0,weapon,0	//MO_CALLSPIRITS#気功#
 262,6,6,16,0,1,1,1,no,0,0,0,weapon,0	//MO_ABSORBSPIRITS#気奪#
 263,0,8,0,0,0,10,3,no,0,0,0,weapon,0	//MO_TRIPLEATTACK#三段掌#
-264,50,6,2,0,1,1,1,no,0,0,0,none,0	//MO_BODYRELOCATION#残影#
+264,14,6,2,0,1,1,1,no,0,0,0,none,0	//MO_BODYRELOCATION#残影#
 265,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//MO_DODGE#見切り#
 266,8,6,1,0,0,5,1,no,0,0,0,weapon,0	//MO_INVESTIGATE#発勁#
 267,10,8,1,0,0,5,1:2:3:4:5,no,0,0,0,weapon,0	//MO_FINGEROFFENSIVE#指弾#
@@ -392,10 +392,10 @@
 340,8,8,1,7,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,2,0,magic,0	//NPC_DARKSOULSTRIKE#闇ソウルストライク#
 341,8,8,1,7,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,2,0,magic,2:3:3:4:4:5:5:6:6:7	//NPC_DARKJUPITEL#闇ユピテル#
 
-343,1,6,1,0,1,10,1,yes,0,2,0,weapon,0	//NPC_BREAKWEAPON
-344,1,6,1,0,1,10,1,yes,0,2,0,weapon,0	//NPC_BREAKARMOR
-345,1,6,1,0,1,10,1,yes,0,2,0,weapon,0	//NPC_BREAKHELM
-346,1,6,1,0,1,10,1,yes,0,2,0,weapon,0	//NPC_BREAKSHIELD
+343,8,6,1,0,0,5,1,no,0,2,0,weapon,0	//NPC_BREAKWEAPON#ブレイクウェポン#
+344,8,6,1,0,0,5,1,no,0,2,0,weapon,0	//NPC_BREAKARMOR#ブレイクアーマー#
+345,8,6,1,0,0,5,1,no,0,2,0,weapon,0	//NPC_BREAKHELM#ブレイクヘルム#
+346,8,6,1,0,0,5,1,no,0,2,0,weapon,0	//NPC_BREAKSIELD#ブレイクシールド#
 347,-1,6,1,9,0,10,1,no,0,2,0,weapon,0	//NPC_UNDEADATTACK
 
 //342束縛
@@ -405,7 +405,7 @@
 //346盾壊し
 //347不死属性攻撃
 //348攻撃系エフェクト（後退？）
-//349赤爆裂
+349,0,6,4,0,1,5,0,no,0,0,0,weapon,0	//NPC_EXPLOSIONSPIRITS#NPC爆裂波動#
 //350速度増加エフェクト
 //351攻撃系スキルエフェクト
 //352攻撃系スキルエフェクト
@@ -431,8 +431,8 @@
 371,-2,8,4,0,0,5,1,no,0,0,0,weapon,0	//CH_TIGERFIST#伏虎拳#
 372,-2,8,4,0,0,10,1:1:2:2:3:3:4:4:5:5,no,0,0,0,weapon,0	//CH_CHAINCRUSH#連柱崩撃#
 373,0,6,4,0,1,5,1,no,0,0,0,magic,0	//PF_HPCONVERSION#ライフ置き換え#
-374,4,6,16,0,1,1,1,yes,0,0,0,magic,0	//PF_SOULCHANGE#?ウル?ェンジ#
-375,4,6,1,0,0,5,1,yes,0,0,0,magic,0	//PF_SOULBURN#?ウルバ?ン#
+374,8,6,16,0,1,1,1,yes,0,0,0,none,0	//PF_SOULCHANGE#?ウル?ェンジ#
+375,8,6,1,0,0,5,1,yes,0,0,0,magic,0	//PF_SOULBURN#?ウルバ?ン#
 376,0,0,0,0,1,5,1,no,0,0,0,weapon,0	//ASC_KATAR#アドバンスドカ??ル研究#
 377,0,0,4,0,1,10,1,no,0,0,0,misc,0	//ASC_HALLUCINATION#ハルシネ?ションウォ?ク#
 378,0,6,4,5,1,5,1,no,0,1024,0,weapon,0	//ASC_EDP#エン?ャントデッドリ??イズン#
@@ -459,11 +459,11 @@
 399,4,6,1,0,0,10,1,no,0,0,0,weapon,0	//LK_JOINTBEAT#ジョイントビ?ト#
 400,8,8,1,8,0,5,1:2:3:4:5,yes,0,0,0,magic,0	//HW_NAPALMVULCAN#ナパ??バルカン#
 401,0,6,4,0,1,1,1,yes,0,0,0,weapon,0	//CH_SOULCOLLECT#狂気功#
-402,8,6,1,0,1,10,1,no,0,0,0,none,0	//PF_MINDBREAKER#?インドブレ?カ?#
+402,8,6,1,0,1,5,1,no,0,0,0,none,0	//PF_MINDBREAKER#?インドブレ?カ?#
 403,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//PF_MEMORIZE#メモライズ#
 404,3,6,2,2,1,5,1,yes,0,256,1,magic,0	//PF_FOGWALL#フォグウォ?ル#
 405,3,6,2,0,1,1,1,no,0,128,2,misc,0	//PF_SPIDERWEB#スパイ??ウェッブ#
-406,-1,6,1,0,2,10,1,no,33,0,0,weapon,0	//ASC_METEORASSAULT#メテオアサルト#
+406,0,6,4,0,1,10,1,no,33,0,0,weapon,0	//ASC_METEORASSAULT#メテオアサルト#
 407,0,6,4,0,1,1,0,no,0,0,0,none,0	//ASC_CDP#デッドリ??イズン製造#
 408,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//WE_BABY##
 409,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//WE_CALLPARENT##

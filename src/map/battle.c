@@ -400,7 +400,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	if(class_ == 1288 || class_ == 1287 || class_ == 1286 || class_ == 1285) {
 //	if(class_ == 1288) {
-		if(class_ == 1288 && flag&BF_SKILL)
+		if(class_ == 1288 && (flag&BF_SKILL || skill_num == ASC_BREAKER))
 			damage=0;
 		if(src->type == BL_PC) {
 			struct guild *g=guild_search(((struct map_session_data *)src)->status.guild_id);
@@ -417,6 +417,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 				damage=0;//正規ギルド承認がないとダメージ無し
 			else if (battle_config.guild_max_castles != 0 && guild_checkcastles(g)>=battle_config.guild_max_castles)
 				damage = 0; // [MouseJstr]
+			else if (g && gc && guild_check_alliance(gc->guild_id, g->guild_id, 0) == 1)
+				return 0;
 		}
 		else damage = 0;
 	}
@@ -775,7 +777,6 @@ static struct Damage battle_calc_pet_weapon_attack(
 				if(skill_lv>9 && wflag==2) damage2+=damage/4;
 				if(skill_lv>9 && wflag==3) damage2+=damage/2;
 				damage +=damage2;
-				blewcount=0;
 				break;
 			case KN_BOWLINGBASH:	// ボウリングバッシュ
 				damage = damage*(100+ 50*skill_lv)/100;
@@ -1271,7 +1272,6 @@ static struct Damage battle_calc_mob_weapon_attack(
 				if(skill_lv>9 && wflag==2) damage2+=damage/4;
 				if(skill_lv>9 && wflag==3) damage2+=damage/2;
 				damage +=damage2;
-				blewcount=0;
 				break;
 			case KN_BOWLINGBASH:	// ボウリングバッシュ
 				damage = damage*(100+ 50*skill_lv)/100;
@@ -1615,7 +1615,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 	int no_cardfix=0;
 	int def1 = status_get_def(target);
 	int def2 = status_get_def2(target);
-//	int mdef1, mdef2;
 	int t_vit = status_get_vit(target);
 	struct Damage wd;
 	int damage,damage2,damage3=0,damage4=0,type,div_,blewcount=skill_get_blewcount(skill_num,skill_lv);
@@ -2024,6 +2023,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case KN_SPEARSTAB:	// スピアスタブ
 				damage = damage*(100+ 15*skill_lv)/100;
 				damage2 = damage2*(100+ 15*skill_lv)/100;
+				blewcount=0;
 				break;
 			case KN_SPEARBOOMERANG:	// スピアブーメラン
 				damage = damage*(100+ 50*skill_lv)/100;
@@ -2047,7 +2047,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 				if(skill_lv>9 && wflag==2) damage4+=damage2/4;
 				if(skill_lv>9 && wflag==3) damage4+=damage2/2;
 				damage2 +=damage4;
-				blewcount=0;
 				break;
 			case KN_BOWLINGBASH:	// ボウリングバッシュ
 				damage = damage*(100+ 50*skill_lv)/100;
@@ -2287,48 +2286,11 @@ static struct Damage battle_calc_pc_weapon_attack(
 				break;
 			case ASC_BREAKER:		// -- moonsoul (special damage for ASC_BREAKER skill)
 				if(sd){
-/*					int mdef1=status_get_mdef(target);
-					int mdef2=status_get_mdef2(target);
-					int imdef_flag=0;
-
-					damage = ((damage * 5) + (skill_lv * status_get_int(src) * 5) + rand()%500 + 500) /2;
-					damage2 = ((damage2 * 5) + (skill_lv * status_get_int(src) * 5) + rand()%500 + 500) /2;
-					damage3 = damage;
-					// physical damage can miss
-					hitrate = 1000000;*/
-
 					// calculate physical part of damage
 					damage = damage * skill_lv;
 					damage2 = damage2 * skill_lv;
-					// element modifier added right after this
-
 					// calculate magic part of damage
 					damage3 = skill_lv * status_get_int(src) * 5;
-
-					// ignores magic defense now [Celest]
-					/*if(sd->ignore_mdef_ele & (1<<t_ele) || sd->ignore_mdef_race & (1<<t_race))
-						imdef_flag = 1;
-					if(t_mode & 0x20) {
-						if(sd->ignore_mdef_race & (1<<10))
-							imdef_flag = 1;
-					}
-					else {
-						if(sd->ignore_mdef_race & (1<<11))
-							imdef_flag = 1;
-					}
-					if(!imdef_flag){
-						if(battle_config.magic_defense_type) {
-							damage3 = damage3 - (mdef1 * battle_config.magic_defense_type) - mdef2;
-						}
-						else{
-							damage3 = (damage3*(100-mdef1))/100 - mdef2;
-						}
-					}
-
-					if(damage3<1)
-						damage3=1;
-
-					damage3=battle_attr_fix(damage2,s_ele_, status_get_element(target) );*/
 
 					flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				}
@@ -3221,7 +3183,7 @@ struct Damage  battle_calc_misc_attack(
 	struct Damage md;
 	int damagefix=1;
 
-	int aflag=BF_MISC|BF_LONG|BF_SKILL;
+	int aflag=BF_MISC|BF_SHORT|BF_SKILL;
 
 	//return前の処理があるので情報出力部のみ変更
 	if( bl == NULL || target == NULL ){
@@ -3263,13 +3225,13 @@ struct Damage  battle_calc_misc_attack(
 		damage=(dex/10+int_/2+skill*3+40)*2;
 		if(flag > 1)
 			damage /= flag;
-		if(status_get_mode(target) & 0x40)
-			damage = 1;
+		aflag |= (flag&~BF_RANGEMASK)|BF_LONG;
 		break;
 
 	case TF_THROWSTONE:	// 石投げ
 		damage=50;
 		damagefix=0;
+		aflag |= (flag&~BF_RANGEMASK)|BF_LONG;
 		break;
 
 	case BA_DISSONANCE:	// 不協和音
@@ -3312,8 +3274,7 @@ struct Damage  battle_calc_misc_attack(
 #endif
 		if(flag > 1)
 			damage /= flag;
-		if(status_get_mode(target) & 0x40)
-			damage = 1;
+		aflag |= (flag&~BF_RANGEMASK)|BF_LONG;
 		break;
 	}
 
@@ -3347,6 +3308,9 @@ struct Damage  battle_calc_misc_attack(
 	if(damage > 0 && (damage < div_ || (status_get_def(target) >= 1000000 && status_get_mdef(target) >= 1000000) ) ) {
 		damage = div_;
 	}
+
+	if(status_get_mode(target)&0x40 && damage>0)
+		damage = 1;
 
 	damage=battle_calc_damage(bl,target,damage,div_,skill_num,skill_lv,aflag);	// 最終修正
 
@@ -3476,7 +3440,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				}
 			}
 			if(rdamage > 0)
-				clif_damage(src,src,tick, wd.amotion,0,rdamage,1,4,0);
+				clif_damage(src,src,tick,wd.amotion,wd.dmotion,rdamage,1,4,0);
 		}
 
 		if (wd.div_ == 255 && sd)	{ //三段掌
@@ -3925,7 +3889,7 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 //		return 1;
 
 	// 障害物判定
-	return path_search_long(src->m,src->x,src->y,bl->x,bl->y);
+	return path_search_long(NULL,src->m,src->x,src->y,bl->x,bl->y);
 }
 
 /*==========================================
@@ -4122,6 +4086,9 @@ static const struct {
 	{ "gm_can_drop_lv",				       &battle_config.gm_can_drop_lv			},
 	{ "disp_hpmeter",				       &battle_config.disp_hpmeter				},
 	{ "bone_drop",				           &battle_config.bone_drop				},
+	{ "monster_damage_delay",				&battle_config.monster_damage_delay		},
+
+// eAthena additions
 	{ "item_rate_common",                  &battle_config.item_rate_common	},	// Added by RoVeRT
 	{ "item_rate_equip",                   &battle_config.item_rate_equip	},
 	{ "item_rate_card",                    &battle_config.item_rate_card	},	// End Addition
@@ -4369,6 +4336,9 @@ void battle_set_defaults() {
 	battle_config.gm_can_drop_lv = 0;
 	battle_config.disp_hpmeter = 0;
 	battle_config.bone_drop = 0;
+	battle_config.monster_damage_delay = 1;
+
+// eAthena additions
 	battle_config.item_rate_common = 100;
 	battle_config.item_rate_equip = 100;
 	battle_config.item_rate_card = 100;

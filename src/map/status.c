@@ -720,7 +720,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->paramb[1]+= (sd->status.agi+sd->paramb[1]+sd->parame[1]-sd->paramcard[1])*(2+sd->sc_data[SC_CONCENTRATE].val1)/100;
 			sd->paramb[4]+= (sd->status.dex+sd->paramb[4]+sd->parame[4]-sd->paramcard[4])*(2+sd->sc_data[SC_CONCENTRATE].val1)/100;
 		}
-		if(sd->sc_data[SC_INCREASEAGI].timer!=-1 && sd->sc_data[SC_QUAGMIRE].timer == -1 && sd->sc_data[SC_DONTFORGETME].timer == -1){	// 速度?加
+		if(sd->sc_data[SC_INCREASEAGI].timer!=-1){	// 速度?加
 			sd->paramb[1]+= 2+sd->sc_data[SC_INCREASEAGI].val1;
 			sd->speed -= sd->speed *25/100;
 		}
@@ -1021,13 +1021,12 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	//Flee上昇
 	if( (skill=pc_checkskill(sd,TF_MISS))>0 ){	// 回避率?加
-		if(sd->status.class_==6||sd->status.class_==4007 || sd->status.class_==23){
+		if(sd->status.class_==6||sd->status.class_==4007 || sd->status.class_==23)
 			sd->flee += skill*3;
-		}
-		if(sd->status.class_==12||sd->status.class_==17||sd->status.class_==4013||sd->status.class_==4018)
+		else if(sd->status.class_==12||sd->status.class_==17||sd->status.class_==4013||sd->status.class_==4018)
 			sd->flee += skill*4;
 		if(sd->status.class_==12||sd->status.class_==4013)
-			sd->speed -= sd->speed *(skill*1.5)/100;
+			sd->speed -= (short)(skill*1.5/100 * DEFAULT_WALK_SPEED);
 	}
 	if( (skill=pc_checkskill(sd,MO_DODGE))>0 )	// 見切り
 		sd->flee += (skill*3)>>1;
@@ -1090,7 +1089,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 
 		if(sd->sc_data[SC_VOLCANO].timer!=-1 && sd->def_ele==3){	// ボルケ?ノ
-			sd->watk += sd->sc_data[SC_VIOLENTGALE].val3;
+			sd->watk += sd->sc_data[SC_VOLCANO].val3;
 		}
 
 		if(sd->sc_data[SC_SIGNUMCRUCIS].timer!=-1)
@@ -1663,12 +1662,16 @@ int status_get_max_hp(struct block_list *bl)
 				max_hp += (md->level - mob_db[md->class_].lv) * status_get_vit(bl);
 
 			if(mob_db[md->class_].mexp > 0) {
-				if(battle_config.mvp_hp_rate != 100)
-					max_hp = (max_hp * battle_config.mvp_hp_rate)/100;
+				if(battle_config.mvp_hp_rate != 100) {
+					double hp = (double)max_hp * battle_config.mvp_hp_rate / 100.0;
+					max_hp = (hp > 0x7FFFFFFF ? 0x7FFFFFFF : (int)hp);
+				}
 			}
 			else {
-				if(battle_config.monster_hp_rate != 100)
-					max_hp = (max_hp * battle_config.monster_hp_rate)/100;
+				if(battle_config.mvp_hp_rate != 100) {
+					double hp = (double)max_hp * battle_config.mvp_hp_rate / 100.0;
+					max_hp = (hp > 0x7FFFFFFF ? 0x7FFFFFFF : (int)hp);
+				}
 			}
 		}
 		else if(bl->type == BL_PET) {
@@ -2007,6 +2010,8 @@ int status_get_hit(struct block_list *bl)
 				sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
 				sc_data[SC_GOSPEL].val3 == 14)
 				hit += hit*5/100;
+			if(sc_data[SC_EXPLOSIONSPIRITS].timer!=-1)
+				hit += 20*sc_data[SC_EXPLOSIONSPIRITS].val1;
 		}
 	}
 	if(hit < 1) hit = 1;
@@ -2130,6 +2135,10 @@ int status_get_atk(struct block_list *bl)
 				atk -= atk*25/100;
 			if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
 				atk += atk*(5*sc_data[SC_CONCENTRATION].val1)/100;
+			if(sc_data[SC_EXPLOSIONSPIRITS].timer!=-1)
+				atk += (1000*sc_data[SC_EXPLOSIONSPIRITS].val1);
+			if(sc_data[SC_STRIPWEAPON].timer!=-1)
+				atk -= atk*10/100;
 
 			if(sc_data[SC_GOSPEL].timer!=-1) {
 				if (sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
@@ -2191,6 +2200,8 @@ int status_get_atk2(struct block_list *bl)
 				atk2 = atk2*sc_data[SC_STRIPWEAPON].val2/100;
 			if(sc_data[SC_CONCENTRATION].timer!=-1) //コンセントレーション
 				atk2 += atk2*(5*sc_data[SC_CONCENTRATION].val1)/100;
+			if(sc_data[SC_EXPLOSIONSPIRITS].timer!=-1)
+				atk2 += (1000*sc_data[SC_EXPLOSIONSPIRITS].val1);
 		}
 		if(atk2 < 0) atk2 = 0;
 		return atk2;
@@ -2471,8 +2482,11 @@ int status_get_speed(struct block_list *bl)
 
 		if(sc_data) {
 			//速度増加時は25%減算
-			if(sc_data[SC_INCREASEAGI].timer!=-1 && sc_data[SC_DONTFORGETME].timer == -1)
+			if(sc_data[SC_INCREASEAGI].timer!=-1)
 				speed -= speed*25/100;
+			//ウィンドウォーク時はLv*2%減算
+			else if(sc_data[SC_WINDWALK].timer!=-1)
+				speed -= (speed*(sc_data[SC_WINDWALK].val1*2))/100;
 			//速度減少時は25%加算
 			if(sc_data[SC_DECREASEAGI].timer!=-1)
 				speed = speed*125/100;
@@ -2495,9 +2509,6 @@ int status_get_speed(struct block_list *bl)
 			//呪い時は450加算
 			if(sc_data[SC_CURSE].timer!=-1)
 				speed = speed + 450;
-			//ウィンドウォーク時はLv*2%減算
-			if(sc_data[SC_WINDWALK].timer!=-1 && sc_data[SC_INCREASEAGI].timer==-1)
-				speed -= (speed*(sc_data[SC_WINDWALK].val1*2))/100;
 			if(sc_data[SC_SLOWDOWN].timer!=-1)
 				speed = speed*150/100;
 			if(sc_data[SC_SPEEDUP0].timer!=-1)
@@ -3050,6 +3061,13 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	if(type==SC_FREEZE && undead_flag && !(flag&1))
 		return 0;
 
+	if (type==SC_BLESSING && (bl->type==BL_PC || (!undead_flag && race!=6))) {
+		if (sc_data[SC_CURSE].timer!=-1)
+			status_change_end(bl,SC_CURSE,-1);
+		if (sc_data[SC_STONE].timer!=-1 && sc_data[SC_STONE].val2==0)
+			status_change_end(bl,SC_STONE,-1);
+	}
+
 	if((type == SC_ADRENALINE || type == SC_WEAPONPERFECTION || type == SC_OVERTHRUST) &&
 		sc_data[type].timer != -1 && sc_data[type].val2 && !val2)
 		return 0;
@@ -3066,14 +3084,24 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	if(sc_data[type].timer != -1){	/* すでに同じ異常になっている場合タイマ解除 */
 		if(sc_data[type].val1 > val1 && type != SC_COMBO && type != SC_DANCING && type != SC_DEVOTION &&
 			type != SC_SPEEDPOTION0 && type != SC_SPEEDPOTION1 && type != SC_SPEEDPOTION2 && type != SC_SPEEDPOTION3
-						 && type != SC_ATKPOT && type != SC_MATKPOT) // added atk and matk potions [Valaris]
+			&& type != SC_ATKPOT && type != SC_MATKPOT) // added atk and matk potions [Valaris]
 			return 0;
+
 		if ((type >=SC_STAN && type <= SC_BLIND) || type == SC_DPOISON)
 			return 0;/* ?ぎ足しができない?態異常である時は?態異常を行わない */
+
 		(*sc_count)--;
 		delete_timer(sc_data[type].timer, status_change_timer);
 		sc_data[type].timer = -1;
 	}
+
+	// クアグマイア/私を忘れないで中は無効なスキル
+	if ((sc_data[SC_QUAGMIRE].timer!=-1 || sc_data[SC_DONTFORGETME].timer!=-1) &&
+		(type==SC_CONCENTRATE || type==SC_INCREASEAGI ||
+		type==SC_TWOHANDQUICKEN || type==SC_SPEARSQUICKEN ||
+		type==SC_ADRENALINE || type==SC_LOUD || type==SC_TRUESIGHT ||
+		type==SC_WINDWALK || type==SC_CARTBOOST || type==SC_ASSNCROS))
+	return 0;
 
 	switch(type){	/* 異常の種類ごとの?理 */
 		case SC_PROVOKE:			/* プロボック */
@@ -3093,23 +3121,13 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 					status_change_start(bl,SC_PROVOKE,10,1,0,0,0,0);
 			}
 			break;
+
 		case SC_CONCENTRATE:		/* 集中力向上 */
-			calc_flag = 1;
-			break;
 		case SC_BLESSING:			/* ブレッシング */
-			{
-				if(bl->type == BL_PC || (!undead_flag && race != 6)) {
-					if(sc_data[SC_CURSE].timer!=-1 )
-						status_change_end(bl,SC_CURSE,-1);
-					if(sc_data[SC_STONE].timer!=-1 && sc_data[SC_STONE].val2 == 0)
-						status_change_end(bl,SC_STONE,-1);
-				}
-				calc_flag = 1;
-			}
-			break;
 		case SC_ANGELUS:			/* アンゼルス */
 			calc_flag = 1;
 			break;
+		
 		case SC_INCREASEAGI:		/* 速度上昇 */
 			calc_flag = 1;
 			if(sc_data[SC_DECREASEAGI].timer!=-1 )
@@ -3151,16 +3169,21 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_ADRENALINE:			/* アドレナリンラッシュ */
 			if(sc_data[SC_DECREASEAGI].timer!=-1)
 				return 0;
+			if(bl->type == BL_PC)
+				if(pc_checkskill(sd,BS_HILTBINDING)>0)
+					tick *= 1.1;
 			calc_flag = 1;
 			break;
 		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
-			// Lasting time penalties have been removed on sakray as of 12/14 [celest]
-			//if(battle_config.party_skill_penalty && !val2) tick /= 5;
+			if(bl->type == BL_PC)
+				if(pc_checkskill(sd,BS_HILTBINDING)>0)
+					tick *= 1.1;
 			break;
 		case SC_OVERTHRUST:			/* オ?バ?スラスト */
+			if(bl->type == BL_PC)
+				if(pc_checkskill(sd,BS_HILTBINDING)>0)
+					tick *= 1.1;
 			*opt3 |= 2;
-			// Lasting time penalties have been removed on sakray as of 12/14 [celest]
-			//if(battle_config.party_skill_penalty && !val2) tick /= 10;
 			break;
 		case SC_MAXIMIZEPOWER:		/* マキシマイズパワ?(SPが1減る時間,val2にも) */
 			if(bl->type == BL_PC)
@@ -3624,10 +3647,9 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			break;
 
 		case SC_TENSIONRELAX:	/* テンションリラックス */
-			calc_flag = 1;
 			if(bl->type == BL_PC) {
 				tick = 10000;
-			}
+			} else return 0;
 			break;
 
 		case SC_AURABLADE:		/* オ?ラブレ?ド */
@@ -3746,7 +3768,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			break;
 
 		case SC_MEMORIZE:		/* メモライズ */
-			val2 = 3; //3回詠唱を1/3にする
+			val2 = 5; //回詠唱を1/3にする
 			break;
 
 		case SC_SPLASHER:		/* ベナムスプラッシャ? */
@@ -4001,10 +4023,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_APPLEIDUN:			/* イドゥンの林檎 */
 			case SC_RIDING:
 			case SC_BLADESTOP_WAIT:
-			case SC_AURABLADE:			/* オ?ラブレ?ド */
-			case SC_PARRYING:			/* パリイング */
 			case SC_CONCENTRATION:		/* コンセントレ?ション */
-			case SC_TENSIONRELAX:		/* テンションリラックス */
 			case SC_ASSUMPTIO:			/* アシャンプティオ */
 			case SC_WINDWALK:		/* ウインドウォ?ク */
 			case SC_TRUESIGHT:		/* トゥル?サイト */
@@ -4015,6 +4034,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_MATKPOT:		/* magic attack potion [Valaris] */
 			case SC_WEDDING:	//結婚用(結婚衣裳になって?くのが?いとか)
 			case SC_MELTDOWN:		/* メルトダウン */
+			case SC_MINDBREAKER:		/* マインドブレーカー */
 			// Celest
 			case SC_EDP:
 			case SC_SLOWDOWN:

@@ -213,6 +213,7 @@ ACMD_FUNC(mobsearch);
 ACMD_FUNC(cleanmap);
 ACMD_FUNC(npctalk);
 ACMD_FUNC(pettalk);
+ACMD_FUNC(users);
 ACMD_FUNC(autoloot);  // by Upa-Kun
 
 #ifndef TXT_ONLY
@@ -489,6 +490,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_CleanMap,			"@cleanmap",		 0, atcommand_cleanmap },
 	{ AtCommand_NpcTalk,			"@npctalk",			 0,	atcommand_npctalk },
 	{ AtCommand_PetTalk,			"@pettalk",			 0,	atcommand_pettalk },
+	{ AtCommand_Users,				"@users",		 0, atcommand_users },
 	{ AtCommand_ResetState,			"/reset",			40,	NULL },
 
 #ifndef TXT_ONLY // sql-only commands
@@ -7835,6 +7837,47 @@ atcommand_pettalk(
 	snprintf(temp, sizeof temp ,"%s : %s",sd->pet.name,mes);
 	clif_message(&pd->bl, temp);
 
+	return 0;
+}
+
+/*==========================================
+ * @users
+ * サーバー内の人数マップを表示させる
+ * 手抜きのため汚くなっているのは仕様です。
+ *------------------------------------------
+ */
+
+static struct dbt *users_db;
+static int users_all;
+
+static int atcommand_users_sub1(struct map_session_data* sd,va_list va) {
+	int users = (int)strdb_search(users_db,sd->mapname) + 1;
+	users_all++;
+	strdb_insert(users_db,sd->mapname,(void *)users);
+	return 0;
+}
+
+static int atcommand_users_sub2(void* key,void* val,va_list va) {
+	char buf[256];
+	struct map_session_data* sd = va_arg(va,struct map_session_data*);
+	sprintf(buf,"%s : %d (%d%%)",(char *)key,(int)val,(int)val * 100 / users_all);
+	clif_displaymessage(sd->fd,buf);
+	return 0;
+}
+
+int
+atcommand_users(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char buf[256];
+	users_all = 0;
+	users_db = strdb_init(24);
+	clif_foreachclient(atcommand_users_sub1);
+	strdb_foreach(users_db,atcommand_users_sub2,sd);
+	sprintf(buf,"all : %d",users_all);
+	clif_displaymessage(fd,buf);
+	strdb_final(users_db,NULL);
 	return 0;
 }
 

@@ -239,10 +239,27 @@ int map_freeblock_unlock(void) {
 	}else if(block_free_lock<0){
 		if(battle_config.error_log)
 			printf("map_freeblock_unlock: lock count < 0 !\n");
+		block_free_lock = 0; // 次回以降のロックに支障が出てくるのでリセット
 	}
 	return block_free_lock;
 }
 
+// map_freeblock_lock() を呼んで map_freeblock_unlock() を呼ばない
+// 関数があったので、定期的にblock_free_lockをリセットするようにする。
+// この関数は、do_timer() のトップレベルから呼ばれるので、
+// block_free_lock を直接いじっても支障無いはず。
+
+int map_freeblock_timer(int tid,unsigned int tick,int id,int data) {
+	if(block_free_lock > 0) {
+		printf("map_freeblock_timer: block_free_lock(%d) is invalid.\n",block_free_lock);
+		block_free_lock = 1;
+		map_freeblock_unlock();
+	}
+	// else {
+	// 	printf("map_freeblock_timer: check ok\n");
+	// }
+	return 0;
+}
 
 //
 // block化?理
@@ -1428,95 +1445,97 @@ void map_addnickdb(struct map_session_data *sd) {
 int map_quit(struct map_session_data *sd) {
 	nullpo_retr(0, sd);
 
-	if (sd->state.event_disconnect) {
-		struct npc_data *npc;
-		if ((npc = npc_name2id(script_config.logout_event_name))) {
-			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLogoutNPC
-			sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.logout_event_name);
-			ShowStatus(tmp_output);
+	if(!sd->state.waitingdisconnect) {
+		if (sd->state.event_disconnect) {
+			struct npc_data *npc;
+			if ((npc = npc_name2id(script_config.logout_event_name))) {
+				run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLogoutNPC
+				sprintf (tmp_output, "Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.logout_event_name);
+				ShowStatus(tmp_output);
+			}
 		}
-	}
 
-	if(sd->chatID)	// チャットから出る
-		chat_leavechat(sd);
+		if(sd->chatID)	// チャットから出る
+			chat_leavechat(sd);
 
-	if(sd->trade_partner)	// 取引を中?する
-		trade_tradecancel(sd);
+		if(sd->trade_partner)	// 取引を中?する
+			trade_tradecancel(sd);
 
-	if(sd->party_invite>0)	// パ?ティ?誘を拒否する
-		party_reply_invite(sd,sd->party_invite_account,0);
+		if(sd->party_invite>0)	// パ?ティ?誘を拒否する
+			party_reply_invite(sd,sd->party_invite_account,0);
 
-	if(sd->guild_invite>0)	// ギルド?誘を拒否する
-		guild_reply_invite(sd,sd->guild_invite,0);
-	if(sd->guild_alliance>0)	// ギルド同盟?誘を拒否する
-		guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
+		if(sd->guild_invite>0)	// ギルド?誘を拒否する
+			guild_reply_invite(sd,sd->guild_invite,0);
+		if(sd->guild_alliance>0)	// ギルド同盟?誘を拒否する
+			guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
 
-	party_send_logout(sd);	// パ?ティのログアウトメッセ?ジ送信
+		party_send_logout(sd);	// パ?ティのログアウトメッセ?ジ送信
 
-	guild_send_memberinfoshort(sd,0);	// ギルドのログアウトメッセ?ジ送信
+		guild_send_memberinfoshort(sd,0);	// ギルドのログアウトメッセ?ジ送信
 
-	pc_cleareventtimer(sd);	// イベントタイマを破棄する
+		pc_cleareventtimer(sd);	// イベントタイマを破棄する
 
-	if(sd->state.storage_flag)
-		storage_guild_storage_quit(sd,0);
-	else
-		storage_storage_quit(sd);	// 倉庫を開いてるなら保存する
-
-	// check if we've been authenticated [celest]
-	if (sd->state.auth)
-		skill_castcancel(&sd->bl,0);	// 詠唱を中?する
-
-	skill_stop_dancing(&sd->bl,1);// ダンス/演奏中?
-
-	if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中の終了はHPを100に
-		sd->status.hp = 100;
-
-	status_change_clear(&sd->bl,1);	// ステ?タス異常を解除する
-	skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
-	skill_cleartimerskill(&sd->bl);
-
-	// check if we've been authenticated [celest]
-	if (sd->state.auth) {
-		pc_stop_walking(sd,0);
-		pc_stopattack(sd);
-		pc_delinvincibletimer(sd);
-	}
-	pc_delspiritball(sd,sd->spiritball,1);
-	skill_gangsterparadise(sd,0);
-
-	if (sd->state.auth)
-		status_calc_pc(sd,4);
-//	skill_clear_unitgroup(&sd->bl);	// [Sara-chan]
-
-	clif_clearchar_area(&sd->bl,2);
-
-	if(sd->status.pet_id && sd->pd) {
-		pet_lootitem_drop(sd->pd,sd);
-		pet_remove_map(sd);
-		if(sd->pet.intimate <= 0) {
-			intif_delete_petdata(sd->status.pet_id);
-			sd->status.pet_id = 0;
-			sd->pd = NULL;
-			sd->petDB = NULL;
-		}
+		if(sd->state.storage_flag)
+			storage_guild_storage_quit(sd,0);
 		else
-			intif_save_petdata(sd->status.account_id,&sd->pet);
+			storage_storage_quit(sd);	// 倉庫を開いてるなら保存する
+
+		// check if we've been authenticated [celest]
+		if (sd->state.auth)
+			skill_castcancel(&sd->bl,0);	// 詠唱を中?する
+
+		skill_stop_dancing(&sd->bl,1);// ダンス/演奏中?
+
+		if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中の終了はHPを100に
+			sd->status.hp = 100;
+
+		status_change_clear(&sd->bl,1);	// ステ?タス異常を解除する
+		skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
+		skill_cleartimerskill(&sd->bl);
+
+		// check if we've been authenticated [celest]
+		if (sd->state.auth) {
+			pc_stop_walking(sd,0);
+			pc_stopattack(sd);
+			pc_delinvincibletimer(sd);
+		}
+		pc_delspiritball(sd,sd->spiritball,1);
+		skill_gangsterparadise(sd,0);
+		skill_unit_move(&sd->bl,gettick(),0);
+
+		if (sd->state.auth)
+			status_calc_pc(sd,4);
+	//	skill_clear_unitgroup(&sd->bl);	// [Sara-chan]
+
+		clif_clearchar_area(&sd->bl,2);
+
+		if(sd->status.pet_id && sd->pd) {
+			pet_lootitem_drop(sd->pd,sd);
+			pet_remove_map(sd);
+			if(sd->pet.intimate <= 0) {
+				intif_delete_petdata(sd->status.pet_id);
+				sd->status.pet_id = 0;
+				sd->pd = NULL;
+				sd->petDB = NULL;
+			}
+			else
+				intif_save_petdata(sd->status.account_id,&sd->pet);
+		}
+
+		if(pc_isdead(sd))
+			pc_setrestartvalue(sd,2);
+
+		pc_makesavestatus(sd);
+		chrif_save(sd);
+		storage_storage_dirty(sd);
+		storage_storage_save(sd);
+		map_delblock(&sd->bl);
 	}
-
-	if(pc_isdead(sd))
-		pc_setrestartvalue(sd,2);
-
-	pc_makesavestatus(sd);
-	chrif_save(sd);
-	storage_storage_dirty(sd);
-	storage_storage_save(sd);
 
 	if( sd->npc_stackbuf && sd->npc_stackbuf != NULL) {
 		aFree( sd->npc_stackbuf );
 		sd->npc_stackbuf = NULL;
 	}
-
-	map_delblock(&sd->bl);
 
 #ifndef TXT_ONLY
 	chrif_char_offline(sd);
@@ -3348,11 +3367,16 @@ int do_init(int argc, char *argv[]) {
 
 	map_readallmap();
 
+	add_timer_func_list(map_freeblock_timer,"map_freeblock_timer");
 	add_timer_func_list(map_clearflooritem_timer, "map_clearflooritem_timer");
+	add_timer_interval(gettick()+1000,map_freeblock_timer,0,0,60*1000);
 
 	//Added by Mugendai for GUI support
 	if (flush_on)
 		add_timer_interval(gettick()+10, flush_timer,0,0,flush_time);
+	//Added for Mugendais I'm Alive mod
+	if (imalive_on)
+		add_timer_interval(gettick()+10, imalive_timer,0,0,imalive_time*1000);
 
 #ifndef TXT_ONLY // online status timer, checks every hour [Valaris]
 	add_timer_func_list(online_timer, "online_timer");
@@ -3394,10 +3418,6 @@ int do_init(int argc, char *argv[]) {
 
 	if (battle_config.pk_mode == 1)
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
-
-	//Added for Mugendais I'm Alive mod
-	if (imalive_on)
-		add_timer_interval(gettick()+10, imalive_timer,0,0,imalive_time*1000);
 
 	sprintf(tmp_output,"Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
 	ShowStatus(tmp_output);

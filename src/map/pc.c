@@ -371,22 +371,24 @@ int pc_makesavestatus(struct map_session_data *sd)
 		sd->status.clothes_color=0;
 
 	// 死亡?態だったのでhpを1、位置をセ?ブ場所に?更
-	if(pc_isdead(sd)){
-		pc_setrestartvalue(sd,0);
-		memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
-	} else {
-		memcpy(sd->status.last_point.map,sd->mapname,24);
-		sd->status.last_point.x = sd->bl.x;
-		sd->status.last_point.y = sd->bl.y;
-	}
-
-	// セ?ブ禁止マップだったので指定位置に移動
-	if(map[sd->bl.m].flag.nosave){
-		struct map_data *m=&map[sd->bl.m];
-		if(strcmp(m->save.map,"SavePoint")==0)
+	if(!sd->state.waitingdisconnect) {
+		if(pc_isdead(sd)){
+			pc_setrestartvalue(sd,0);
 			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
-		else
-			memcpy(&sd->status.last_point,&m->save,sizeof(sd->status.last_point));
+		} else {
+			memcpy(sd->status.last_point.map,sd->mapname,24);
+			sd->status.last_point.x = sd->bl.x;
+			sd->status.last_point.y = sd->bl.y;
+		}
+
+		// セ?ブ禁止マップだったので指定位置に移動
+		if(map[sd->bl.m].flag.nosave){
+			struct map_data *m=&map[sd->bl.m];
+			if(strcmp(m->save.map,"SavePoint")==0)
+				memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
+			else
+				memcpy(&sd->status.last_point,&m->save,sizeof(sd->status.last_point));
+		}
 	}
 
 	//マナ?ポイントがプラスだった場合0に
@@ -585,10 +587,8 @@ int pc_isequip(struct map_session_data *sd,int n)
 //装備破壊
 int pc_break_equip(struct map_session_data *sd, unsigned short where)
 {
-	struct item_data* item;
 	int i;
 	int sc;
-	char output[255];
 
 	nullpo_retr(-1, sd);
 	if(sd->unbreakable_equip & where)
@@ -616,13 +616,12 @@ int pc_break_equip(struct map_session_data *sd, unsigned short where)
 
 	for (i=0;i<MAX_INVENTORY;i++) {
 		if (sd->status.inventory[i].equip & where &&
-			!sd->status.inventory[i].attribute == 1) {
-			item=sd->inventory_data[i];
+			sd->status.inventory[i].attribute != 1) {
 			sd->status.inventory[i].attribute = 1;
 			pc_unequipitem(sd,i,3);
-			sprintf(output, "%s has broken.",item->jname);
+			sprintf(tmp_output, "%s has broken.",sd->inventory_data[i]->jname);
 			clif_emotion(&sd->bl,23);
-			clif_displaymessage(sd->fd, output);
+			clif_displaymessage(sd->fd, tmp_output);
 			clif_equiplist(sd);
 			break;
 		}
@@ -6823,7 +6822,7 @@ static int pc_autosave_sub(struct map_session_data *sd,va_list ap)
 
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd);
 
-	if(save_flag==0 && sd->fd>last_save_fd){
+	if(save_flag==0 && sd->fd>last_save_fd && !sd->state.waitingdisconnect){
 		struct guild_castle *gc=NULL;
 		int i;
 //		if(battle_config.save_log)

@@ -1,6 +1,24 @@
 Date	Added
 
 03/07
+        * Updated core and map-server to jA 1115~1137 [celest]
+          - Added monster_delay_damage to battle conf
+          - Increased some default settings in script conf
+          - Updated Brandish Spear, Soul Change, Soul Burn
+          - Updated Body Relocation (shorter distance)
+          - Added monster skill NPC_EXPLOSIONSPIRITS
+          - Corrected Mindbreaker level to 5
+          - Updated Meteor Assault to instant-cast
+          - Removed some unused code for Breaker
+          - Temporarily set Emperium to be immune to Breaker
+          - Added command @users - shows the percentage of users in all maps
+          - Don't save status if the player is set for disconnection
+          - Added free block lock-checking system
+          - Added saving the processes' ID into [xx-server.pid]
+          - Fixed a memory leak with duplicate script labels
+          + For more detailed logs check 'Readme-jap'
+
+        * Fixed a typo in Volcano, thanks to Ilpalazzo-sama [celest]
         * Fixed Apple of Idun reading the wrong skill level and giving too much HP
           [celest]
 

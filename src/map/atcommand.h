@@ -198,6 +198,7 @@ enum AtCommandType {
 	AtCommand_CleanMap,
 	AtCommand_NpcTalk,
 	AtCommand_PetTalk,
+	AtCommand_Users,
 
 	// SQL-only commands start
 #ifndef TXT_ONLY

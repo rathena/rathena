@@ -1103,7 +1103,7 @@ int mob_stop_walking(struct mob_data *md,int type)
 	if(type&0x02) {
 		int delay=status_get_dmotion(&md->bl);
 		unsigned int tick = gettick();
-		if(md->canmove_tick < tick)
+		if(battle_config.monster_damage_delay && md->canmove_tick < tick)
 			md->canmove_tick = tick + delay;
 	}
 
@@ -2225,7 +2225,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		return 0;
 	}
 
-	if(md->sc_data[SC_ENDURE].timer == -1)
+	if(battle_config.monster_damage_delay && md->sc_data[SC_ENDURE].timer == -1)
 		mob_stop_walking(md,3);
 	if(damage > max_hp>>2)
 		skill_stop_dancing(&md->bl,0);
@@ -3777,11 +3777,14 @@ int mob_gvmobcheck(struct map_session_data *sd, struct block_list *bl)
 			return 0;//ギルド未加入ならダメージ無し
 		else if(gc != NULL && !map[sd->bl.m].flag.gvg)
 			return 0;//砦内でGvじゃないときはダメージなし
-		else if(g && gc != NULL && g->guild_id == gc->guild_id)
-			return 0;//自占領ギルドのエンペならダメージ無し
-		else if(g && guild_checkskill(g,GD_APPROVAL) <= 0 && md->class_ == 1288)
-			return 0;//正規ギルド承認がないとダメージ無し
-
+		else if(g) {
+			if (gc != NULL && g->guild_id == gc->guild_id)
+				return 0;//自占領ギルドのエンペならダメージ無し
+			else if(guild_checkskill(g,GD_APPROVAL) <= 0 && md->class_ == 1288)
+				return 0;//正規ギルド承認がないとダメージ無し
+			else if (gc && guild_check_alliance(gc->guild_id, g->guild_id, 0) == 1)
+				return 0;	// 同盟ならダメージ無し
+		}
 	}
 
 	return 1;

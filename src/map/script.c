@@ -1725,7 +1725,7 @@ int buildin_menu(struct script_state *st)
 			conv_str(st,& (st->stack->stack_data[i]));
 			len+=strlen(st->stack->stack_data[i].u.str)+1;
 		}
-		buf=(char *)aCallocA(len,sizeof(char));
+		buf=(char *)aCallocA(len+1,sizeof(char));
 		buf[0]=0;
 		for(i=st->start+2,len=0;i<st->end;i+=2){
 			strcat(buf,st->stack->stack_data[i].u.str);
@@ -6326,7 +6326,7 @@ int buildin_select(struct script_state *st)
 			conv_str(st,& (st->stack->stack_data[i]));
 			len+=strlen(st->stack->stack_data[i].u.str)+1;
 		}
-		buf=(char *)aCalloc(len,sizeof(char));
+		buf=(char *)aCalloc(len+1,sizeof(char));
 		buf[0]=0;
 		for(i=st->start+2,len=0;i<st->end;i++){
 			strcat(buf,st->stack->stack_data[i].u.str);
@@ -7652,8 +7652,8 @@ int script_config_read(char *cfgName)
 	script_config.warn_cmd_no_comma=1;
 	script_config.warn_func_mismatch_paramnum=1;
 	script_config.warn_cmd_mismatch_paramnum=1;
-	script_config.check_cmdcount=8192;
-	script_config.check_gotocount=512;
+	script_config.check_cmdcount=65535;
+	script_config.check_gotocount=2048;
 
 	script_config.die_event_name = (char *)aCallocA(24,sizeof(char));
 	script_config.kill_event_name = (char *)aCallocA(24,sizeof(char));

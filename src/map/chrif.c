@@ -1006,7 +1006,7 @@ int chrif_disconnect_sub(struct map_session_data* sd,va_list va) {
 
 int chrif_disconnect(int fd) {
 	if(fd == char_fd) {
-		char_fd = -1;
+		char_fd = 0;
 		sprintf(tmp_output,"Map Server disconnected from Char Server.\n\n");
 		ShowWarning(tmp_output);
 		clif_foreachclient(chrif_disconnect_sub);
