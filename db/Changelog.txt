@@ -6,6 +6,7 @@
 	Skill databases == celest working on them i believe.
 
 03/25
+	* Removed some extra 0's in the item_db, thanks to Zoc
 	* Corrected some item effects according to the mentoned earlier doc [Lupus]
 03/24
 	* Corrected exp table entries for level 11 and 99, thanks to Dino9021

@@ -1793,19 +1793,19 @@
 7313,Witch's_Voucher,Witch's Voucher,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
 7314,The_Sign,The Sign,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
 
-7315,Black_Quartz_Piece,Piece of Black Quartz,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7316,Insect_Long_leg,Insect's Long Leg,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7317,Rusted_Bolt,Rusted Bolt,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7318,Old_Pick,Old Pick,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7319,Old_Iron_Plate,Old Iron Plate,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7320,Dust,Dust,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7321,Quartz_Piece,Piece of Quartz,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7322,Poison_Gas,Poison Gas,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7323,Battered_Kettle,Battered Kettle,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7324,Toothed_Wheel,Gear,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7325,Tube,Tube,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7326,Fluorescent_Colored_Liquid,Fluorescent Liquid,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
-7327,Flashlight,Flashlight,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7315,Black_Quartz_Piece,Piece of Black Quartz,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7316,Insect_Long_leg,Insect's Long Leg,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7317,Rusted_Bolt,Rusted Bolt,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7318,Old_Pick,Old Pick,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7319,Old_Iron_Plate,Old Iron Plate,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7320,Dust,Dust,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7321,Quartz_Piece,Piece of Quartz,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7322,Poison_Gas,Poison Gas,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7323,Battered_Kettle,Battered Kettle,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7324,Toothed_Wheel,Gear,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7325,Tube,Tube,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7326,Fluorescent_Colored_Liquid,Fluorescent Liquid,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
+7327,Flashlight,Flashlight,3,20,0,10,0,0,0,0,0,0,0,0,0,0,{},{}
 
 7500,THG_Membership,THG Membership,3,20,0,10,,,,,,,,,,,{},{}
 7501,Token_Bag,Token Bag,3,20,0,10,,,,,,,,,,,{},{}
