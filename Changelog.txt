@@ -1,6 +1,8 @@
 Date	Added
 
 11/18
+        * Added save_flag for skill_status_change_start [celest]
+        * Fixed muting not being saved when you quit/change characters/log off [celest]
         * *Hopefully* fixed the skill tree problem where you have to use 49 skill 
           points first before 2nd job skills will show... please report any bugs found
           with it, thank you. [celest]
@@ -8,6 +10,7 @@ Date	Added
 	* Skill updates [celest]
 	  - Updated Cloaking (thanks to orn), Endure
           - Pneuma (thanks to DracoRPG)
+          - Changed sc_ id for Basilica (80%)
 	* Modified pc_attack to fix monster npc's not working in certain exes, thanks
 	  to leinsirk10 [celest]
 	* Moved mapflags organized by type to main mapflag folder and removed "type" folder.

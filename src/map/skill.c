@@ -22,6 +22,7 @@
 #include "script.h"
 #include "intif.h"
 #include "log.h"
+#include "chrif.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -3425,6 +3426,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		break;
 
 	case HP_BASILICA:			/* バジリカ */
+		skill_status_change_start(src,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0);		
 	case PA_GOSPEL:				/* ゴスペル */
 		skill_clear_unitgroup(src);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -4999,9 +5001,10 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		limit=skill_get_time(skillid,skilllv);
 		target=BCT_ALL;
 		range=3;
-                //Fix to prevent the priest from walking while Basilica is up.
-                battle_stopwalking(src,1);
-                skill_status_change_start(src,SC_ANKLE,skilllv,0,0,0,limit,0);
+		//Fix to prevent the priest from walking while Basilica is up.
+		battle_stopwalking(src,1);
+		skill_status_change_start(src,SC_ANKLE,skilllv,0,0,0,limit,0);
+		//sd->canmove_tick = gettick() + limit; // added later [celest]
 		break;
 	case PA_GOSPEL:		/* ゴスペル */
 		count=49;
@@ -7897,7 +7900,8 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 				{
 					struct map_session_data *sd=NULL;
 					if(bl->type == BL_PC && (sd=(struct map_session_data *)bl)){
-						sd->status.manner = 0;
+						if (sd->status.manner >= 0) // weeee ^^ [celest]
+							sd->status.manner = 0;
 						clif_updatestatus(sd,SP_MANNER);
 					}
 				}
@@ -8440,7 +8444,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 	struct map_session_data *sd = NULL;
 	struct status_change* sc_data;
 	short *sc_count, *option, *opt1, *opt2, *opt3;
-	int opt_flag = 0, calc_flag = 0,updateflag = 0, race, mode, elem, undead_flag;
+	int opt_flag = 0, calc_flag = 0,updateflag = 0, save_flag = 0, race, mode, elem, undead_flag;
 	int scdef=0;
 
 	nullpo_retr(0, bl);
@@ -8882,6 +8886,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 				if(!val2)
 					val2 = time(&timer);
 				updateflag = SP_MANNER;
+				save_flag = 1; // celest
 			}
 			break;
 		case SC_SELFDESTRUCTION: //自爆
@@ -9093,6 +9098,8 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_ASSUMPTIO:		/* アスムプティオ */
 			*opt3 |= 2048;
 			break;
+		case SC_BASILICA: // [celest]
+			break;
 		case SC_MARIONETTE:		/* マリオネットコントロ?ル */
 		case SC_MARIONETTE2:
 			calc_flag = 1;
@@ -9207,6 +9214,9 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 
 	if(bl->type==BL_PC && calc_flag)
 		pc_calcstatus(sd,0);	/* ステ?タス再計算 */
+
+	if(bl->type==BL_PC && save_flag)
+		chrif_save(sd); // save the player status
 
 	if(bl->type==BL_PC && updateflag)
 		clif_updatestatus(sd,updateflag);	/* ステ?タスをクライアントに送る */

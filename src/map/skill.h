@@ -320,7 +320,8 @@ enum {	// struct map_session_data ÇÃ status_changeÇÃî‘çÜÉeÅ[ÉuÉã
 	SC_BROKNARMOR		=32,
 	SC_BROKNWEAPON		=33,
 	SC_SIGHTTRASHER		=73,
-	SC_BASILICA			=125,
+//	SC_BASILICA			=125, // 125 is the same id as joint break
+	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]
 	SC_ENSEMBLE			=159,
 	SC_FOGWALL			=178,
 	SC_GOSPEL			=179,
