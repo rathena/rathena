@@ -256,7 +256,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 		break;
 	}
 
-	if (sd) {
+	if ((sd != NULL) && (session[sd->fd] != NULL)) {
 		if (WFIFOP(sd->fd,0) == buf) {
 			printf("WARNING: Invalid use of clif_send function\n");
 			printf("         Packet x%4x use a WFIFO of a player instead of to use a buffer.\n", WBUFW(buf,0));
