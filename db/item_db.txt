@@ -147,7 +147,7 @@
 675,Silver_Coin,Silver Coin,2,20,0,40,,,,,0,3,,,,,{},{}
 676,Silver_Coin_Pouch,Silver Coin Pouch,2,20,0,400,,,,,0,3,,,,,{},{}
 677,Platinum_Coin,Platinum Coin,2,20,0,40,,,,,0,3,,,,,{},{}
-678,Deadly_Poison_Bottle,Deadly Poison Bottle,2,20,0,100,,,,,10477567,2,,,,,{ if((Class>35)&&(Class<37)) mes "j0?"; close; },{}
+678,Deadly_Poison_Bottle,Deadly Poison Bottle,2,20,0,100,,,,,10477567,2,,,,,{ sc_start 193,60000,0; },{}
 679,Recall_Pills,Recall Pills,2,20,0,300,,,,,0,3,,,,,{},{}
 680,Carnation,Carnation,2,20,0,1000,,,,,0,3,,,,,{},{}
 681,Wedding_Photo_Album,Wedding_Photo_Album,2,20,0,10,,,,,0,3,,,,,{},{}
