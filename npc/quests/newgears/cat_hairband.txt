@@ -16,7 +16,7 @@
 //============================================================
 
 
-payon_in01.gat,62,10,4	script	KoneKone	819,{
+payon_in03.gat,110,160,4	script	KoneKone	819,{
  mes "[KoneKone]";
  mes "Don't you just love cats? the way they have the pointy,";
  mes "sticky ears and stuff, they're just so cute!";

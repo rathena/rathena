@@ -4,7 +4,7 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.2 Fixed wrong labels, added missing text
 //=	added missing delitem, fixed names, item amount [Lupus]
 //= 1.3 Fixed possible exploit [Lupus]
+//= 1.4 Fixed ingredients: Sashimi knife->Raw Fish (Sashimi) [Lupus]
 //============================================================
 
 morocc.gat,274,79,6	script	Traveler	807,{ 
@@ -49,7 +50,7 @@ M_N2:
  mes "[Traveler]";
  mes "Gimme 1 Rotten Fish,";
  mes "300 Rotten Scales,";
- mes "50 Sashimi,";
+ mes "50 Raw Fish (Sashimi, not a knife),";
  mes "1 Fish Tail,";
  mes "and 100 Sticky Mucus";
  next;
@@ -57,12 +58,12 @@ M_N2:
  mes "Got these items?";
  menu "Yes",-,"No.",M_EXIT;
 
- if ((countitem(624) < 1) || (countitem(959) < 300) || (countitem(1144) < 50) || (countitem(1023) < 1) || (countitem(938) < 100)) GOTO L_NOITEM; //Items: Rotten Fish, Stinky Scale, Sashimi, Fish Tail, Sticky Mucus,
+ if ((countitem(624) < 1) || (countitem(959) < 300) || (countitem(544) < 50) || (countitem(1023) < 1) || (countitem(938) < 100)) GOTO L_NOITEM; //Items: Rotten Fish, Stinky Scale, Sashimi, Fish Tail, Sticky Mucus,
  mes "[Traveler]";
  mes "Okay, thanks.";
  delitem 624,1;//Items: Rotten Fish,
  delitem 959,300;//Items: Stinky Scale,
- delitem 1144,50;//Items: Sashimi,
+ delitem 544,50;//Items: Raw Fish,
  delitem 1023,1;//Items: Fish Tail,
  delitem 938,100;//Items: Sticky Mucus,
  next;

@@ -15,7 +15,7 @@
 //= 1.3 Fixed possible exploit [Lupus]
 //============================================================
 
-payon.gat,155,115,5	script	Nan Hyang	814,{
+payon_in01.gat,143,8,5	script	Nan Hyang	814,{
  If (getequipisequiped(5073)) GOTO L_GOOD;
  If (Class == 0) GOTO L_NOVICE;
  mes "[Nan Hyang]";
