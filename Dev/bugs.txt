@@ -38,10 +38,6 @@ Problem:	With 1025 client, some NPC sprites look different (i.e. Black Jack's NP
 Assigned:	N/A
 Progess:	0%
 
-Problem:	On any crash - servers don't free their ports. It doesn't let reload the same servers faster.
-Assigned:	N/A
-Progess:	0%
-
 Problem:	Thiefs can steal ZENY / items from TREASURE chests!!baaaah!! and Guardians! 
 Assigned:	N/A
 Progess:	0%
@@ -51,7 +47,7 @@ Assigned:	N/A
 Progess:	0%
 
 Problem:	When servers restart sometime the gm lvls in sql get reset back to 0
-Assigned:	N/A
+Assigned:	Wizputer
 Progess:	0%
 
 Problem:	[mob attacks againsts players wearing ghostring armor do full damage mob_ghostring_fix: yes] Does not work, does nothing.
