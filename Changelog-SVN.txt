@@ -1,5 +1,6 @@
 Date	Added
-
+02/24
+        * Fixed npc_dequeue, testing on remove of RoVeRT's npc timer system [Shinomori]
 02/24
         * Re-added missing cart dupe-proof code. From Freya [Lupus]
         * Some rewrites on Basilica [celest]
