@@ -568,10 +568,10 @@ char * job_name(int class) {
 }
 
 /*==========================================
- * str_lower (replace strlwr, non ANSI function that doesn't exist in all C compilator)
+ * estr_lower (replace strlwr, non ANSI function that doesn't exist in all C compilator)
  *------------------------------------------
  */
-char *str_lower(char *str)
+char *estr_lower(char *str)
 {
 	int i;
 
@@ -7570,7 +7570,7 @@ atcommand_uptime(
 	minutes = seconds/minute;
 	seconds -= (seconds/minute>0)?(seconds/minute)*minute:0;
 	
-    snprintf(output, sizeof(output), msg_table[245], days, hours, minutes, seconds);
+        snprintf(output, sizeof(output), msg_table[245], days, hours, minutes, seconds);
 	clif_displaymessage(fd,output);
 	return 0;
 }
@@ -7654,14 +7654,14 @@ atcommand_petid(const int fd, struct map_session_data* sd,
 		return -1;
 	if (sscanf(message, "%99s", searchtext) < 1)
 		return -1;
-	str_lower(searchtext);
+	estr_lower(searchtext);
 	snprintf(temp0, sizeof(temp0), "Search results for: %s", searchtext);
 	clif_displaymessage(fd,temp0);
 	while (i < MAX_PET_DB) {
 		strcpy(temp1,pet_db[i].name);
-		strcpy(temp1, str_lower(temp1));
+		strcpy(temp1, estr_lower(temp1));
 		strcpy(temp0,pet_db[i].jname);
-		strcpy(temp0, str_lower(temp1));
+		strcpy(temp0, estr_lower(temp1));
 		if (strstr(temp1, searchtext) || strstr(temp0, searchtext) ) {
   			snprintf(temp0, sizeof(temp0), "ID: %i -- Name: %s", pet_db[i].class,
      			pet_db[i].jname);

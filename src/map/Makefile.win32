@@ -15,8 +15,8 @@ txtobj:
 sqlobj:
 	mkdir sqlobj
 
-ZLIBDIR = C:/athena/zlib122
-PACKETDEF = -DPACKETVER=5 -DNEW_006b
+ZLIBDIR = C:/eathena/zlib122
+PACKETDEF = -DPACKETVER=5 -DNEW_006b -D__WIN32
 # OPT = /MDd /D_DEBUG
 OPT = 
 LINKOPT = /debug /SUBSYSTEM:CONSOLE

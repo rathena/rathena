@@ -4529,6 +4529,9 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		break;
 	case GD_EMERGENCYCALL:
 		{
+			int dx[9]={-1, 1, 0, 0,-1, 1,-1, 1, 0};
+			int dy[9]={ 0, 0, 1,-1, 1,-1,-1, 1, 0};
+			int c, j = 0;
 			struct guild *g = NULL;
 			// Only usable during WoE
 			if (!agit_flag) {
@@ -4537,9 +4540,6 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				return 0;
 			}
 			// i don't know if it actually summons in a circle, but oh well. ;P
-			int dx[9]={-1, 1, 0, 0,-1, 1,-1, 1, 0};
-			int dy[9]={ 0, 0, 1,-1, 1,-1,-1, 1, 0};
-			int c, j = 0;
 			if (sd && sd->status.guild_id > 0 && (g = guild_search(sd->status.guild_id)) &&
 				strcmp(sd->status.name,g->master)==0) {
 				for(i = 0; i < g->max_member; i++, j++) {

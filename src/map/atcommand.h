@@ -249,7 +249,7 @@ int atcommand_recall(const int fd, struct map_session_data* sd, const char* comm
 int atcommand_config_read(const char *cfgName);
 int msg_config_read(const char *cfgName);
 
-char *str_lower(char *str);
+char *estr_lower(char *str);
 
 char * job_name(int class);
 int e_mail_check(unsigned char *email);
