@@ -1,5 +1,11 @@
 Date	Added
 
+02/09
+	* SQL Char: Rewrote the char_create function (now it's faster/optimized) [Sirius]
+	* SQL Char: Fixed the reply if a charname is invalid on create (now it replys denied..) [Sirius]
+	* SQL Char: Added a Character limit per Account (can be set in the config) [Sirius]
+	* SQL Char: Optimized some SQL-Querys [Sirius]
+
 02/06
 	* NULL entries for guild data fixed [Credit to Sirius] [1060: Ajarn]
 	* Login server uses  login_db_userid and login_db_user_pass for 
