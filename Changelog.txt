@@ -1,6 +1,8 @@
 Date	Added
 
 02/06
+	* Fixed txt build compile problems[1057: MouseJstr]
+	* Corrected end-of-line issues in source code [1056: MouseJstr]
 	* Coded new command: @MOBINFO <monster name|monster N> [Lupus]
 	  the command has also 2 aliases: @monsterinfo, @mi
 	  It shows all Monster stats, Element, Race and stuff

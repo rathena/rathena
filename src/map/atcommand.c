@@ -8916,6 +8916,8 @@ int atcommand_refreshonline(
 	return 0;
 }
 
+#endif /* end sql only */
+
 /*==========================================
  * Show Monster DB Info   v 1.0
  * originally by [Lupus] eAthena
@@ -9010,4 +9012,3 @@ int atcommand_mobinfo(
 	return 0;
 }
 
-#endif /* end sql only */
