@@ -1137,7 +1137,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			skill_status_change_start(bl,SC_STAN,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 	case ST_REJECTSWORD:	/* フリージングトラップ */
-		if( rand()%100 < (10 + skilllv*5) )
+		if( rand()%100 < (10 + skilllv*15) )
 			skill_status_change_start(bl,SC_AUTOCOUNTER,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 	case PF_FOGWALL:		/* ホーリークロス */
