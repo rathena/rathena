@@ -1582,7 +1582,8 @@ static int map_readmap(int m,char *fn, char *alias) {
 	map[m].npc_num=0;
 	map[m].users=0;
 	memset(&map[m].flag,0,sizeof(map[m].flag));
-	if(battle_config.pk_mode) map[m].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
+	if(battle_config.pk_mode) 
+		map[m].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
 	wh=map_waterheight(map[m].name);
 	for(y=0;y<ys;y++){
 		p=(struct gat_1cell*)(gat+y*xs*20+14);
@@ -1606,6 +1607,9 @@ static int map_readmap(int m,char *fn, char *alias) {
 	size = map[m].bxs*map[m].bys*sizeof(int);
 	map[m].block_count = (int *)aCalloc(1,size);
 	map[m].block_mob_count=(int *)aCalloc(1,size);
+	if (alias)
+           strdb_insert(map_db,alias,&map[m]);
+        else
            strdb_insert(map_db,map[m].name,&map[m]);
 
 //	printf("%s read done\n",fn);
@@ -1635,23 +1639,19 @@ int map_readallmap(void) {
 			fclose(afm_file);
 		}
 		else if(strstr(map[i].name,".gat")!=NULL) {
-			char *p = strstr(map[i].name, ">"); // [MouseJstr]
+			char *p = strstr(map[i].name, "<"); // [MouseJstr]
 			if (p != NULL) {
-				char alias[64];
-				*p = '\0';
-				strcpy(alias, map[i].name);
-				strcpy(map[i].name, p + 1);
-				sprintf(fn,"data\\%s",map[i].name);
-				if(map_readmap(i,fn, alias) == -1) {
-					map_delmap(map[i].name);
-					maps_removed++;
-				}
-			} else {
-				sprintf(fn,"data\\%s",map[i].name);
-				if(map_readmap(i,fn, NULL) == -1) {
-					map_delmap(map[i].name);
-					maps_removed++;
-				}
+				char buf[64];
+				*p++ = '\0';
+				sprintf(buf,"data\\%s", p);
+				map[i].alias = strdup(buf);
+			} else
+				map[i].alias = NULL;
+
+			sprintf(fn,"data\\%s",map[i].name);
+			if(map_readmap(i,fn, p) == -1) {
+				map_delmap(map[i].name);
+				maps_removed++;
 			}
 		}
 	}

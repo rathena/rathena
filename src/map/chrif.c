@@ -140,7 +140,7 @@ int chrif_sendmap(int fd)
 
 	WFIFOW(fd,0) = 0x2afa;
 	for(i = 0; i < map_num; i++)
-                if (map[i].alias[0] != '\0') // [MouseJstr] map aliasing
+                if (map[i].alias != '\0') // [MouseJstr] map aliasing
 		    memcpy(WFIFOP(fd,4+i*16), map[i].alias, 16);
 		else
 		    memcpy(WFIFOP(fd,4+i*16), map[i].name, 16);

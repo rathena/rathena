@@ -482,7 +482,7 @@ enum { ATK_LUCKY=1,ATK_FLEE,ATK_DEF};	// 囲まれペナルティ計算用
 
 struct map_data {
 	char name[24];
-	char alias[24]; // [MouseJstr]
+	char *alias; // [MouseJstr]
 	unsigned char *gat;	// NULLなら下のmap_data_other_serverとして扱う
 	struct block_list **block;
 	struct block_list **block_mob;
