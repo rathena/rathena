@@ -1,6 +1,7 @@
 Date	Added
 
 03/29
+	* Added sql upgrade file in sql-files for svn1315's update [celest]
 	* Added auto create 'save' folder from 'save-tmpl' when compiling for the
 	  first time, thanks to Jbain
 	* Fixed 'use_sql_db' not read properly in SQL char server, thanks to Wallex
