@@ -1,6 +1,12 @@
 
 Date	Added
 
+04/06
+	* Added logs filters in more logs [Lupus]
+	  now you can set individual bit-mask filter for each log file
+		Example: (drops log)
+		log_drop: 1 = logs ANY items
+		log_drop: 332 = logs only Healing items, Cards and those items which price is >= price_items_log
 04/05
 	* Fixed damage reflecting (silly typo xP) [celest]
 	* Fixed Backstab to not have a push back effect [celest]

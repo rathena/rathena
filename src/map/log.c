@@ -14,43 +14,38 @@ struct Log_Config log_config;
 char timestring[255];
 time_t curtime;
 
-//0 = none, 1024 = any
-//Bits |
-//1 - Healing items (Potions)
-//2 - Usable Items
-//4 - Etc Items
-//8 - Weapon
-//16 - Shields,Armor,Headgears,Accessories,etc
-//32 - Cards
-//64 - Pet Accessories
-//128 - Eggs (well, monsters don't drop 'em but we'll use the same system for ALL logs)
-//256 - Log expensive items ( >= price_log)
-//512 - Log big amount of items ( >= amount_log)
-int slog_healing = 0;
-int slog_usable = 0;
-int slog_etc = 0;
-int slog_weapon = 0;
-int slog_armor = 0;
-int slog_card = 0;
-int slog_petacc = 0;
-int slog_egg = 0;
-int slog_expensive = 0;
-int slog_amount = 0;
+//FILTER OPTIONS
+//0 = Don't log
+//1 = Log any item
+//Bits: ||
+//2 - Healing items (0)
+//3 - Etc Items(3) + Arrows (10)
+//4 - Usable Items(2)
+//5 - Weapon(4)
+//6 - Shields,Armor,Headgears,Accessories,etc(5)
+//7 - Cards(6)
+//8 - Pet Accessories(8) + Eggs(7) (well, monsters don't drop 'em but we'll use the same system for ALL logs)
+//9 - Log expensive items ( >= price_log)
+//10 - Log big amount of items ( >= amount_log)
+//11 - Log refined items (if their refine >= refine_log )
+//12 - Log rare items (if their drop chance <= rare_log )
 
 //check if this item should be logger according the settings
-int should_log_item(int nameid) {
+int should_log_item(int filter, int nameid) {
 	struct item_data *item_data;
-
 	if (nameid<512 || (item_data= itemdb_search(nameid)) == NULL) return 0;
+	if ( (filter&1) || // Filter = 1, we log any item
+		(filter&2 && item_data->type == 0 ) ||	//healing items
+		(filter&4 && (item_data->type == 3 || item_data->type == 10) ) ||	//etc+arrows
+		(filter&8 && item_data->type == 2 ) ||	//usable
+		(filter&16 && item_data->type == 4 ) ||	//weapon
+		(filter&32 && item_data->type == 5 ) ||	//armor
+		(filter&64 && item_data->type == 6 ) ||	//cards
+		(filter&128 && (item_data->type == 7 || item_data->type == 8) ) ||	//eggs+pet access
+		(filter&256 && item_data->value_buy >= log_config.price_items_log ) ||
+		(filter&512 && item_data->refine >= log_config.refine_items_log )
+	) return item_data->nameid;
 
-	if (slog_expensive && item_data->value_buy >= log_config.price_items_log ) return item_data->nameid;
-	if (slog_healing && item_data->type == 0 ) return item_data->nameid;
-	if (slog_etc && item_data->type == 3 ) return item_data->nameid;
-	if (slog_weapon && item_data->type == 4 ) return item_data->nameid;
-	if (slog_armor && item_data->type == 5 ) return item_data->nameid;
-	if (slog_card && item_data->type == 6 ) return item_data->nameid;
-	if (slog_petacc && item_data->type == 8 ) return item_data->nameid;
-	if (slog_egg && item_data->type == 7 ) return item_data->nameid;
 	return 0;
 }
 
@@ -94,7 +89,7 @@ int log_drop(struct map_session_data *sd, int monster_id, int *log_drop)
 		return 0;
 	nullpo_retr(0, sd);
 	for (i = 0; i<10; i++) { //Should we log these items? [Lupus]
-		flag += should_log_item(log_drop[i]);
+		flag += should_log_item(log_config.drop,log_drop[i]);
 	}
 	if (flag==0) return 0; //we skip logging this items set - they doesn't met our logging conditions [Lupus]
 
@@ -158,6 +153,7 @@ int log_present(struct map_session_data *sd, int source_type, int nameid)
 	if(log_config.enable_logs <= 0)
 		return 0;
 	nullpo_retr(0, sd);
+	if(!should_log_item(log_config.present,nameid)) return 0;	//filter [Lupus]
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
@@ -189,6 +185,7 @@ int log_produce(struct map_session_data *sd, int nameid, int slot1, int slot2, i
 	if(log_config.enable_logs <= 0)
 		return 0;
 	nullpo_retr(0, sd);
+	if(!should_log_item(log_config.produce,nameid)) return 0;	//filter [Lupus]
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
@@ -229,7 +226,7 @@ int log_refine(struct map_session_data *sd, int n, int success)
 		item_level = 0;
 	else
 		item_level = sd->status.inventory[n].refine + 1;
-
+	if(!should_log_item(log_config.refine,sd->status.inventory[n].nameid)) return 0;	//filter [Lupus]
 	for(i=0;i<4;i++)
 		log_card[i] = sd->status.inventory[n].card[i];
 
@@ -262,7 +259,6 @@ int log_tostorage(struct map_session_data *sd,int n, int guild)
     return 0;
 
   nullpo_retr(0, sd);
-
   if(sd->status.inventory[n].nameid==0 || sd->inventory_data[n] == NULL)
     return 1;
 
@@ -335,7 +331,7 @@ int log_trade(struct map_session_data *sd, struct map_session_data *target_sd, i
 
 	if(sd->status.inventory[n].amount < 0)
 		return 1;
-
+	if(!should_log_item(log_config.trade,sd->status.inventory[n].nameid)) return 0;	//filter [Lupus]
 	log_nameid = sd->status.inventory[n].nameid;
 	log_amount = sd->status.inventory[n].amount;
 	log_refine = sd->status.inventory[n].refine;
@@ -381,7 +377,7 @@ int log_vend(struct map_session_data *sd,struct map_session_data *vsd,int n,int 
 		return 1;
 	if(sd->status.inventory[n].amount< 0)
 		return 1;
-
+	if(!should_log_item(log_config.vend,sd->status.inventory[n].nameid)) return 0;	//filter [Lupus]
 	log_nameid = sd->status.inventory[n].nameid;
 	log_amount = sd->status.inventory[n].amount;
 	log_refine = sd->status.inventory[n].refine;
@@ -514,10 +510,11 @@ int log_config_read(char *cfgName)
 		printf("Log configuration file not found at: %s\n", cfgName);
 		return 1;
 	}
-
-	//Default values
-	log_config.what_items_log = 1023; //log any items
-	log_config.price_items_log = 1000;
+	
+	//LOG FILTER Default values
+	log_config.refine_items_log = 7; //log refined items, with refine >= +7
+	log_config.rare_items_log = 100; //log rare items. drop chance <= 1%
+	log_config.price_items_log = 1000; //1000z
 	log_config.amount_items_log = 100;
 
 	while(fgets(line, sizeof(line) -1, fp))
@@ -531,35 +528,16 @@ int log_config_read(char *cfgName)
 				log_config.enable_logs = (atoi(w2));
 			} else if(strcmpi(w1,"sql_logs") == 0) {
 				log_config.sql_logs = (atoi(w2));
-			} else if(strcmpi(w1,"what_items_log") == 0) {
-				log_config.what_items_log = (atoi(w2));
-
-//Bits |
-//1 - Healing items (Potions)
-//2 - Usable Items
-//4 - Etc Items
-//8 - Weapon
-//16 - Shields,Armor,Headgears,Accessories,etc
-//32 - Cards
-//64 - Pet Accessories
-//128 - Eggs (well, monsters don't drop 'em but we'll use the same system for ALL logs)
-//256 - Log expensive items ( >= price_log)
-//512 - Log big amount of items ( >= amount_log)
-				slog_healing = log_config.what_items_log&1;
-				slog_usable = log_config.what_items_log&2;
-				slog_etc = log_config.what_items_log&4;
-				slog_weapon = log_config.what_items_log&8;
-				slog_armor = log_config.what_items_log&16;
-				slog_card = log_config.what_items_log&32;
-				slog_petacc = log_config.what_items_log&64;
-				slog_egg = log_config.what_items_log&128;
-				slog_expensive = log_config.what_items_log&256;
-				slog_amount = log_config.what_items_log&512;
-
+//start of common filter settings
+			} else if(strcmpi(w1,"rare_items_log") == 0) {
+				log_config.rare_items_log = (atoi(w2));
+			} else if(strcmpi(w1,"refine_items_log") == 0) {
+				log_config.refine_items_log = (atoi(w2));
 			} else if(strcmpi(w1,"price_items_log") == 0) {
 				log_config.price_items_log = (atoi(w2));
 			} else if(strcmpi(w1,"amount_items_log") == 0) {
 				log_config.amount_items_log = (atoi(w2));
+//end of common filter settings
 			} else if(strcmpi(w1,"log_branch") == 0) {
 				log_config.branch = (atoi(w2));
 			} else if(strcmpi(w1,"log_drop") == 0) {
