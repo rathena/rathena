@@ -164,12 +164,31 @@ int npc_delete(struct npc_data *nd)
  */
 int npc_event_timer(int tid,unsigned int tick,int id,int data)
 {
+	char *eventname = (char *)data;
+	struct event_data *ev = (struct event_data *)strdb_search(ev_db,eventname);
+	struct npc_data *nd;
 	struct map_session_data *sd=map_id2sd(id);
-	if (sd==NULL)
-		return 0;
+	size_t i;
 
-	npc_event(sd,(const char *)data,0);
-	aFree((void*)data);
+	if((ev==NULL || (nd=ev->nd)==NULL))
+	{
+		if(battle_config.error_log)
+			printf("npc_event: event not found [%s]\n",eventname);
+	}	
+	else
+	{
+		for(i=0;i<MAX_EVENTTIMER;i++) {
+			if( nd->eventtimer[i]==tid ) {
+				nd->eventtimer[i]=-1;
+				npc_event(sd,eventname,0); // sd NULL check is within
+				break;
+			}
+		}
+		if(i==MAX_EVENTTIMER && battle_config.error_log)
+			printf("npc_event_timer: event timer not found [%s]!\n",eventname);
+	}
+
+	aFree(eventname);
 	return 0;
 }
 

@@ -1500,15 +1500,21 @@ int guild_agit_end(void)
 
 int guild_gvg_eliminate_timer(int tid,unsigned int tick,int id,int data)
 {	// Run One NPC_Event[OnAgitEliminate]
-	size_t len = strlen((const char*)data);
-	char *evname=(char*)aCallocA(len + 4,sizeof(char));
+	char *name = (char*)data;
+	size_t len = (name) ? strlen(name) : 0; 
+	// the rest is dangerous, but let it crash,
+	// if this happens, it's ruined anyway
+	char *evname=(char*)aMalloc( (len + 4) * sizeof(char));
 	int c=0;
 
-	if(!agit_flag) return 0;	// Agit already End
-	memcpy(evname,(const char *)data,len - 5);
-	strcpy(evname + len - 5,"Eliminate");
-	c = npc_event_do(evname);
-	printf("NPC_Event:[%s] Run (%d) Events.\n",evname,c);
+	if(agit_flag)	// Agit not already End
+	{
+		memcpy(evname,name,len - 5);
+		strcpy(evname + len - 5,"Eliminate");
+		c = npc_event_do(evname);
+		printf("NPC_Event:[%s] Run (%d) Events.\n",evname,c);
+	}
+	if(name) aFree(name);
 	return 0;
 }
 
