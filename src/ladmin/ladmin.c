@@ -6,27 +6,41 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include <sys/types.h>
+#include <time.h>
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
+void Gettimeofday(struct timeval *timenow)
+{
+	time_t t;
+	t = clock();
+	timenow->tv_usec = t;
+	timenow->tv_sec = t / CLK_TCK;
+	return;
+}
+#define gettimeofday(timenow, dummy) Gettimeofday(timenow)
+#else
 #include <sys/socket.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <netinet/in.h>
 #include <sys/time.h> // gettimeofday
-#include <time.h>
 #include <sys/ioctl.h>
 #include <unistd.h> // close
+#include <arpa/inet.h> // inet_addr
+#include <netdb.h> // gethostbyname
+#endif
+#include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h> // str*
-#include <arpa/inet.h> // inet_addr
-#include <netdb.h> // gethostbyname
 #include <stdarg.h> // valist
 #include <ctype.h> // tolower
 
-#include "core.h"
-#include "socket.h"
+#include "../common/core.h"
+#include "../common/socket.h"
 #include "ladmin.h"
-#include "version.h"
-#include "mmo.h"
+#include "../common/version.h"
+#include "../common/mmo.h"
 
 #ifdef PASSWORDENC
 #include "md5calc.h"
