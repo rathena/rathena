@@ -31,6 +31,9 @@
 
 #define MOB_LAZYMOVEPERC 50	// Move probability in the negligent mode MOB (rate of 1000 minute)
 #define MOB_LAZYWARPPERC 20	// Warp probability in the negligent mode MOB (rate of 1000 minute)
+#define MAX_MOB_DB 2000		/* Change this to increase the table size in your mob_db to accomodate 
+								numbers more than 2000 for mobs if you want to (and know what you're doing).
+								Be sure to note that 4001 to 4047 are for advanced classes. */
 
 struct mob_db mob_db[2001];
 
@@ -162,9 +165,9 @@ int mob_once_spawn(struct map_session_data *sd,char *mapname,
 			md->size=2;
 			class-=4000;
 		}
-		else if(class>2000) {
+		else if(class>MAX_MOB_DB) {
 			md->size=1;
-			class-=2000;
+			class-=MAX_MOB_DB;
 		}
 
 		if(mob_db[class].mode&0x02)
@@ -263,7 +266,7 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
 	else
 		m=map_mapname2mapid(mapname);
 
-	if(m<0 || amount<=0 || (class>=0 && class<=1000) || class>2000)	// 値が異常なら召喚を止める
+	if(m<0 || amount<=0 || (class>=0 && class<=1000) || class>MAX_MOB_DB)	// Invalid monster classes
 		return 0;
 
 	if(class<0)
@@ -2645,15 +2648,15 @@ int mob_class_change(struct mob_data *md,int *value)
 	nullpo_retr(0, md);
 	nullpo_retr(0, value);
 
-	if(value[0]<=1000 || value[0]>2000)
+	if(value[0]<=1000 || value[0]>MAX_MOB_DB)
 		return 0;
 	if(md->bl.prev == NULL) return 0;
 
-	while(count < 5 && value[count] > 1000 && value[count] <= 2000) count++;
+	while(count < 5 && value[count] > 1000 && value[count] <= MAX_MOB_DB) count++;
 	if(count < 1) return 0;
 
 	class = value[rand()%count];
-	if(class<=1000 || class>2000) return 0;
+	if(class<=1000 || class>MAX_MOB_DB) return 0;
 
 	max_hp = battle_get_max_hp(&md->bl);
 	hp_rate = md->hp*100/max_hp;
@@ -2886,7 +2889,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int flag)
 	by=md2->bl.y;
 	m=md2->bl.m;
 
-	if(value[0]<=1000 || value[0]>2000)	// 値が異常なら召喚を止める
+	if(value[0]<=1000 || value[0]>MAX_MOB_DB)	// 値が異常なら召喚を止める
 		return 0;
 	while(count < 5 && value[count] > 1000 && value[count] <= 2000) count++;
 	if(count < 1) return 0;
@@ -2894,7 +2897,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int flag)
 	for(k=0;k<count;k++) {
 		amount = a;
 		class = value[k];
-		if(class<=1000 || class>2000) continue;
+		if(class<=1000 || class>MAX_MOB_DB) continue;
 		for(;amount>0;amount--){
 			int x=0,y=0,c=0,i=0;
 			md=(struct mob_data *)aCalloc(1,sizeof(struct mob_data));
@@ -3802,7 +3805,7 @@ static int mob_readdb(void)
 			}
 
 			class=atoi(str[0]);
-			if(class<=1000 || class>2000)
+			if(class<=1000 || class>MAX_MOB_DB)
 				continue;
 
 			mob_db[class].view_class=class;
@@ -3949,7 +3952,7 @@ static int mob_readdb_mobavail(void)
 
 		class=atoi(str[0]);
 
-		if(class<=1000 || class>2000)	// 値が異常なら処理しない。
+		if(class<=1000 || class>MAX_MOB_DB)	// 値が異常なら処理しない。
 			continue;
 		k=atoi(str[1]);
 		if(k >= 0)
@@ -4017,7 +4020,7 @@ static int mob_read_randommonster(void)
 
 			class = atoi(str[0]);
 			per=atoi(str[2]);
-			if((class>1000 && class<=2000) || class==0)
+			if((class>1000 && class<=MAX_MOB_DB) || class==0)
 				mob_db[class].summonper[i]=per;
 		}
 		fclose(fp);
@@ -4236,7 +4239,7 @@ static int mob_read_sqldb(void)
 			}
 	
 			class=atoi(str[0]);
-			if(class<=1000 || class>2000)
+			if(class<=1000 || class>MAX_MOB_DB)
 				continue;
 			
 			ln++;

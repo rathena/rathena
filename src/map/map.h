@@ -446,6 +446,7 @@ struct mob_data {
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	char npc_event[50];
 	short size;
+	int owner;
 };
 struct pet_data {
 	struct block_list bl;
