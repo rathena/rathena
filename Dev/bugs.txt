@@ -143,3 +143,19 @@ Problem:	This bug's appeared again: Permanent #Variables/Variables disappear.
 		Freya optimizations code...
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Sometimes a new empty guild appears with ID 10000, blank name, blank master..
+		but some chars contain its ID and Guild Memebers Table isn't empty.
+		(probably can't get real Last used ID)
+Assigned:	N/A
+Progress:	0%
+
+Problem:	SVN 8XX. After 1 day up it started to repeat every players commands twice:
+			i.g. Item usage, movement, etc.
+Assigned:	N/A
+Progress:	0%
+
+Problem:	SVN 8XX. Firewall Spell doesn't hold mobs. They get all the damage and
+			walk trough the wall. (even at the level of 10th)
+Assigned:	N/A
+Progress:	0%
