@@ -2559,7 +2559,9 @@ int parse_char(int fd) {
 			else
 				printf("Account Logged On; Account ID: %d.\n", RFIFOL(fd,2));
 			if (sd == NULL) {
-				sd = (struct char_session_data*)session[fd]->session_data = (struct char_session_data*)aCalloc(sizeof(struct char_session_data), 1);
+				sd = (struct char_session_data*)aCalloc(sizeof(struct char_session_data), 1);
+				session[fd]->session_data = sd;
+
 				memset(sd, 0, sizeof(struct char_session_data));
 				memcpy(sd->email, "no mail", 40); // put here a mail without '@' to refuse deletion if we don't receive the e-mail
 				sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)

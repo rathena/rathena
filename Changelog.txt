@@ -1,6 +1,8 @@
 Date	Added
 
 01/24
+        * Fixed another compile warning in src/char/char.c
+          [SVN 985] [MouseJstr]
         * Fixed a account wipe bug in login/login.c (Thanks Wallex)
           [SVN 984] [MouseJstr]
         * Fixed a crash in char_sql/char.c where people were selecting
