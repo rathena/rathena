@@ -829,7 +829,7 @@ static int atmobsearch_sub(struct block_list *bl,va_list ap)
 		return 0;
 	}
 	mob_id = va_arg(ap,int);
-	fd = va_arg(ap,const int);
+	fd = va_arg(ap,int);
 	
 	md = (struct mob_data *)bl;
 	
