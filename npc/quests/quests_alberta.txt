@@ -24,7 +24,6 @@
 //						Doll Quest
 //=======================================================================================================//
 alberta.gat,117,134,8	script	Elin	96,{
-	
 	mes "[Elin]";
 	if(Sex == 0) mes "Hello, miss. Since you're a girl, you must like dolls, don't you?";
 	if(Sex == 1) mes "Hello, mister. Hmm, since you're a boy, you don't like dolls, do you?";
