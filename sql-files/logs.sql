@@ -139,3 +139,16 @@ CREATE TABLE `vendlog` (
   `zeny` int(11) NOT NULL default '0',
   KEY `vend_id` (`vend_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+#Database: log
+#Table: atcommandlog
+CREATE TABLE `atcommandlog` (
+  `atcommand_id` mediumint(9) unsigned NOT NULL auto_increment,
+  `atcommand_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `account_id` int(11) unsigned NOT NULL default '0',
+  `char_id` int(11) unsigned NOT NULL default '0',
+  `char_name` varchar(30) NOT NULL default '',
+  `map` varchar(20) NOT NULL default '',
+  `command` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`atcommand_id`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
