@@ -1,4 +1,4 @@
-// $Id: pc.c 101 2004-11-30 8:27:10 PM Celestia $
+// $Id: pc.c 101 2004-12-2 12:58:29 AM Celestia $
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1501,12 +1501,12 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		if(sd->sc_data[SC_CLOAKING].timer!=-1) {
 			sd->critical_rate += 100; // critical increases
 			sd->speed = sd->speed * (sd->sc_data[SC_CLOAKING].val3-sd->sc_data[SC_CLOAKING].val1*3) /100;
-			// Ours is accurate enough - refer skill_check_cloaking. ^^
-			//sd->speed = (sd->speed*(76+(sd->sc_data[SC_CLOAKING].val1*3)))/100; // Fixed by MiKa & Asa [Lupus]
 		}
-			//sd->speed = (sd->speed*(76+(sd->sc_data[SC_INCREASEAGI].val1*3)))/100;
-		if(sd->sc_data[SC_CHASEWALK].timer!=-1)
+		if(sd->sc_data[SC_CHASEWALK].timer!=-1) {
 			sd->speed = sd->speed * sd->sc_data[SC_CHASEWALK].val3 /100; // slow down by chasewalk
+			if(sd->sc_data[SC_CHASEWALK].val4)
+				sd->paramb[0] += (1<<(sd->sc_data[SC_CHASEWALK].val1-1)); // increases strength after 10 seconds
+		}
 		if(sd->sc_data[SC_BLESSING].timer!=-1){	// ブレッシング
 			sd->paramb[0]+= sd->sc_data[SC_BLESSING].val1;
 			sd->paramb[3]+= sd->sc_data[SC_BLESSING].val1;
@@ -3501,7 +3501,7 @@ int pc_item_repair(struct map_session_data *sd,int idx)
  */
 int pc_item_refine(struct map_session_data *sd,int idx)
 {
-	int flag = 1, i = 0, count = 0, ep = 0, per, refine;
+	int flag = 1, i = 0, ep = 0, per;
 	int material[5] = { 0, 1010, 1011, 984, 984 };
 	struct item *item;
 	
@@ -3511,38 +3511,23 @@ int pc_item_refine(struct map_session_data *sd,int idx)
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(item->nameid > 0 && itemdb_type(item->nameid)==4) {
 			// if it's no longer refineable
-			if (item->refine == 10) {
+			if (item->refine >= sd->skilllv || item->refine == 10) {
 				clif_skill_fail(sd,sd->skillid,0,0);
 				return 0;
 			}
-			refine = item->refine + sd->skilllv > 10
-				? 10 - item->refine : sd->skilllv;
-			for (i=0; i < MAX_INVENTORY; i++)
-				if(sd->status.inventory[i].nameid == material [itemdb_wlv (item->nameid)])
-					count += sd->status.inventory[i].amount;
-			if (count < refine ) {
+			if ((i=pc_search_inventory(sd, material [itemdb_wlv (item->nameid)])) < 0 ) { //fixed by Lupus (item pos can be = 0!)
 				clif_skill_fail(sd,sd->skillid,0,0);
 				return 0;
 			}
-			per = percentrefinery [itemdb_wlv (item->nameid)][item->refine + refine - 1];
+
+			per = percentrefinery [itemdb_wlv (item->nameid)][(int)item->refine];
 			//per += pc_checkskill(sd,BS_WEAPONRESEARCH);
 			per *= (75 + sd->status.job_level/2)/100;
 			
 			if (per > rand() % 100) {
 				flag = 0;
-				item->refine += refine;
-
-				for (i=0; i < MAX_INVENTORY; i++)
-					if(sd->status.inventory[i].nameid == material [itemdb_wlv (item->nameid)]) {
-						if (sd->status.inventory[i].amount >= refine) {
-							pc_delitem(sd,i,refine,0);
-							break;
-						} else {
-							refine -= sd->status.inventory[i].amount;
-							pc_delitem(sd,i,sd->status.inventory[i].amount,0);
-						}
-					}
-
+				item->refine++;
+				pc_delitem(sd, i, 1, 0);
 				if(item->equip) {
 					ep = item->equip;
 					pc_unequipitem(sd,idx,0, BF_NORMAL);
@@ -3555,7 +3540,7 @@ int pc_item_refine(struct map_session_data *sd,int idx)
 				clif_misceffect(&sd->bl,3);
 			}
 			else {
-				clif_delitem(sd,i,refine);
+				pc_delitem(sd, i, 1, 0);
 				item->refine = 0;
 				if(item->equip)
 					pc_unequipitem(sd,idx,0, BF_NORMAL);
@@ -4006,9 +3991,7 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 	int moveblock;
 	int x,y,dx,dy;
 
-	sd=map_id2sd(id);
-	if(sd==NULL)
-		return 0;
+	nullpo_retr(0, (sd=map_id2sd(id)));
 
 	if(sd->walktimer != tid){
 		if(battle_config.error_log)
@@ -4026,6 +4009,7 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 	sd->walkpath.path_half ^= 1;
 	if(sd->walkpath.path_half==0){ // マス目中心へ到着
 		sd->walkpath.path_pos++;
+
 		if(sd->state.change_walk_target){
 			pc_walktoxy_sub(sd);
 			return 0;
@@ -7194,7 +7178,7 @@ static int pc_natural_heal_hp(struct map_session_data *sd)
 
 	return 0;
 
-	if(sd->sc_count && sd->sc_data[SC_APPLEIDUN].timer!=-1) { // Apple of Idun
+	if(sd->sc_count && sd->sc_data[SC_APPLEIDUN].timer!=-1 && sd->sc_data[SC_BERSERK].timer==-1) { // Apple of Idun
 		if(sd->inchealhptick >= 6000 && sd->status.hp < sd->status.max_hp) {
 			bonus = skill*20;
 			while(sd->inchealhptick >= 6000) {

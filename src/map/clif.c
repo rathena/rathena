@@ -7947,6 +7947,9 @@ void clif_parse_Restart(int fd, struct map_session_data *sd) {
 			pc_setrestartvalue(sd, 3);
 			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 2);
 		}
+		// in case the player's status somehow wasn't updated yet [Celest]
+		else if (sd->status.hp <= 0)
+			pc_setdead(sd);
 		break;
 	case 0x01:
 		if(!pc_isdead(sd) && (sd->opt1 || (sd->opt2 && !(night_flag == 1 && sd->opt2 == STATE_BLIND))))

@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+
+12/2    * Updated skill tree prerequisites for the new kRO skills [celest]
+
 12/1    * Updated Poison React, Soul Change, Soul Burn [celest]
 
 11/30   * Corrected bUnbreakable value in const.txt [celest]

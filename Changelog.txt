@@ -1,4 +1,11 @@
 Date	Added
+12/2
+        * Skill Updates [celest]
+          - Modified Weapon Refine - should only +1 every time.
+          - Updated Berserk, Chase Walk, Slim Pitcher
+          - Added skill_range_leniency
+        * Added check for clif.c in case the server didn't realise we've died [celest]
+
 12/1
 	- Make it build against gcc 2.95 [MouseJstr]
 	- Changed #define MAX_PET_DB to 300, it's easier for people adding new pets like this. [Nas]

@@ -340,6 +340,7 @@ extern struct Battle_Config {
 	int skill_steal_type; // [celest]
 	int skill_steal_rate; // [celest]
 	int night_darkness_level; // [celest]
+	int skill_range_leniency; // [celest]
 
 #ifndef TXT_ONLY /* SQL-only options */
 	int mail_system; // [Valaris]

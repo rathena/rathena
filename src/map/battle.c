@@ -4955,8 +4955,12 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 	if(src->m != bl->m)	// 違うマップ
 		return 0;
 
-	if( range>0 && range < arange )	// 遠すぎる
+	if( range>0 && range < arange )	{// 遠すぎる
+// be lenient if the skill was cast before we have moved to the correct position [Celest]
+		if (src->type == BL_PC && ((struct map_session_data *)bl)->walktimer != -1 &&
+			!((arange-=battle_config.skill_range_leniency)<=range))
 		return 0;
+	}
 
 	if( arange<2 )	// 同じマスか隣接
 		return 1;
@@ -5208,6 +5212,7 @@ static const struct {
 	{ "skill_steal_type",       &battle_config.skill_steal_type}, // [celest]
 	{ "skill_steal_rate",       &battle_config.skill_steal_rate}, // [celest]
 	{ "night_darkness_level",   &battle_config.night_darkness_level}, // [celest]
+	{ "skill_range_leniency",   &battle_config.skill_range_leniency}, // [celest]
 
 //SQL-only options start
 #ifndef TXT_ONLY 
@@ -5437,6 +5442,7 @@ void battle_set_defaults() {
 	battle_config.skill_steal_type = 1;
 	battle_config.skill_steal_rate = 100;
 	battle_config.night_darkness_level = 9;
+	battle_config.skill_range_leniency = 1;
 
 	battle_config.castrate_dex_scale = 150;
 
@@ -5559,6 +5565,9 @@ void battle_validate_conf() {
 	
 	if (battle_config.night_darkness_level > 10) // Celest
 		battle_config.night_darkness_level = 10;
+
+	if (battle_config.skill_range_leniency <= 0) // Celest
+		battle_config.skill_range_leniency = 0;
 
 	if (battle_config.vending_max_value > 10000000 || battle_config.vending_max_value<=0) // Lupus & Kobra_k88
 		battle_config.vending_max_value = 10000000;

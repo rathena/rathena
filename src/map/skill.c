@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/12/1 11:59:43 PM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/12/2 12:58:19 AM Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -4522,7 +4522,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case CR_SLIMPITCHER:
 		{
 			if (sd && flag&1) {
-				int hp = sd->potion_hp * (100 + pc_checkskill(sd,CR_SLIMPITCHER)*5 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
+				int hp = sd->potion_hp * (100 + pc_checkskill(sd,CR_SLIMPITCHER)*10 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
 				hp = hp * (100 + (battle_get_vit(bl)<<1))/100;
 				if (dstsd)
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
@@ -7816,7 +7816,7 @@ int skill_castcancel(struct block_list *bl,int type)
 			}
 			sd->skilltimer=-1;
 			clif_skillcastcancel(bl);
-		}
+		}		
 
 		return 0;
 	}else if(bl->type==BL_MOB){
@@ -8775,11 +8775,17 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	case SC_CHASEWALK:
 		if(sd){
-			if( sd->status.sp > 19+sc_data[SC_CHASEWALK].val1*3){
-				sd->status.sp-=(19+(sc_data[SC_CHASEWALK].val1*3)); // update sp cost [Celest]
+			int sp = 10+sc_data[SC_CHASEWALK].val1*2;
+			if (map[sd->bl.m].flag.gvg) sp *= 5;
+			if( sd->status.sp > sp){
+				sd->status.sp -= sp; // update sp cost [Celest]
 				clif_updatestatus(sd,SP_SP);
 				sc_data[type].timer=add_timer( /* タイマ?再設定 */
-				sc_data[type].val2+tick, skill_status_change_timer, bl->id, data);
+					sc_data[type].val2+tick, skill_status_change_timer, bl->id, data);
+				sc_data[SC_CHASEWALK].val4++;
+				if (sc_data[SC_CHASEWALK].val4 > 3)
+					sc_data[SC_CHASEWALK].val4 = 0;
+				pc_calcstatus (sd, 0);
 				return 0;
 			}
 		}
