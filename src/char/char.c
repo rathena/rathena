@@ -1432,7 +1432,13 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOW(fd,j+50) = DEFAULT_WALK_SPEED; // p->speed;
 		WFIFOW(fd,j+52) = p->class_;
 		WFIFOW(fd,j+54) = p->hair;
-		WFIFOW(fd,j+56) = p->weapon;
+
+		// pecopeco knights/crusaders crash fix
+		if (p->class_ == 13 || p->class_ == 21 ||
+			p->class_ == 4014 || p->class_ == 4022)
+			WFIFOW(fd,j+56) = 0;
+		else WFIFOW(fd,j+56) = p->weapon;
+
 		WFIFOW(fd,j+58) = p->base_level;
 		WFIFOW(fd,j+60) = p->skill_point;
 		WFIFOW(fd,j+62) = p->head_bottom;

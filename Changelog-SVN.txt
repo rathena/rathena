@@ -1,6 +1,8 @@
 Date	Added
 
 02/18
+        * Fixed client errors when pecopeco Lord Knights/Paladins log in with a weapon
+          equipped [celest]
         * Added bAddRace2 -- check item_bonus.txt [celest]
         * Added mob_race2_db.txt -- contains 'main races' of certain monsters [celest]
         * Updated description for backup_txt in char_athena.conf a bit [celest]
