@@ -1,4 +1,6 @@
-Last Changed: $LastChangedDate$ SVN: $Rev$
+$LastChangedDate: 2004-12-30 00:22:54 -0500 (Thu, 30 Dec 2004)$
+
+SVN: $Rev$
 
 Date	Added
 12/29
