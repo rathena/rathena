@@ -6,6 +6,9 @@
 	Skill databases == celest working on them i believe.
 
 02/21
+	* Added new item: Takius' Blindfold. thanks to Landarma [Lupus]
+	* Revised New Cards, added missing effects, fixed bugs [Lupus]
+	  ~20 cards to check left 8) But in 22 Feb some new cards have been announced T__T'
 	* Added actual item_db.sql into sql-files. [Lupus]
 	* item_db.txt: Added missing fields / removed extra fields from some new items V__V' [Lupus]
 	* More monsters name fixes (GIANT_HONET -> GIANT_HORNET , etc) [Lupus]
