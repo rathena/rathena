@@ -38,6 +38,20 @@ typedef int socklen_t;
 #include "memwatch.h"
 #endif
 
+#ifdef UPNP
+	#if defined(CYGWIN)
+		#include <dlfcn.h>
+	#elif _WIN32
+		// windows.h already included
+	#else
+		#error This doesnt work with non-Windows yet
+	#endif
+
+	void *upnp_dll;
+	void (*upnp_init)();
+	void (*upnp_final)();
+#endif
+
 fd_set readfds;
 int fd_max;
 time_t tick_;
@@ -920,6 +934,27 @@ int  Net_Init(void)
   return(0);
 }
 
+#ifdef UPNP
+// not implemented yet ^^;
+void do_init_upnp(void)
+{
+	upnp_dll = dlopen("upnp.dll", RTLD_NOW);
+	if (!upnp_dll) {
+		printf ("Cannot open upnp.dll: %s\n", dlerror());
+		return;
+	}
+	upnp_init = (void *)dlsym(upnp_dll, "do_init");
+	upnp_final = (void *)dlsym(upnp_dll, "do_final");
+	if (!upnp_init || !upnp_final) {
+		printf ("Cannot load symbol: %s\n", dlerror());
+		dlclose (upnp_dll);
+		return;
+	}
+	upnp_init();
+	return;
+}
+#endif
+
 void do_final_socket(void)
 {
 	int i;
@@ -945,7 +980,14 @@ void do_final_socket(void)
 	// session[0] のダミーデータを削除
 	aFree(session[0]->rdata);
 	aFree(session[0]->wdata);
-	aFree(session[0]);	
+	aFree(session[0]);
+
+#ifdef UPNP
+	if (upnp_final)
+		upnp_final();
+	if (upnp_dll)
+		dlclose(upnp_dll);
+#endif
 }
 
 void do_socket(void)
@@ -966,4 +1008,8 @@ void do_socket(void)
 
 	// とりあえず５分ごとに不要なデータを削除する
 	add_timer_interval(gettick()+1000,connect_check_clear,0,0,300*1000);
+
+#ifdef UPNP
+	do_init_upnp();
+#endif
 }

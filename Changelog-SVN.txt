@@ -2,6 +2,8 @@
 Date	Added
 
 03/30
+	* Added base code for loading Ser's UPNP plugin [celest]
+	* Added 'idle_no_share' to battle_athena.conf [celest]
 	* updated map server to jA1137~1159
 	  - Added @reloadatcommand, @reloadbattleconf, @reloadstatusdb, @reloadpcdb
 
@@ -16,6 +18,7 @@ Date	Added
 	  - Updated Hammerfall, Meteor Shower and Lord of Vermillion -- when MvP's
 	    cast them they should have much more range
 	  - Some other skill tweaks
+	  - Added item_findingore.txt
 	* Some tidying up in mob.c and skill.c [celest]
 
 03/29

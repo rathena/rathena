@@ -608,8 +608,8 @@ int skillnotok(int skillid, struct map_session_data *sd)
 			return 1;
 	}
 
-     if (pc_isGM(sd) >= 20)
-           return 0;  // gm's can do anything damn thing they want
+	if (pc_isGM(sd) >= 20)
+		return 0;  // gm's can do anything damn thing they want
 
 	// Check skill restrictions [Celest]
 	if(!map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.gvg && skill_get_nocast (skillid) & 1)
@@ -630,7 +630,7 @@ int skillnotok(int skillid, struct map_session_data *sd)
 		case MC_IDENTIFY:
 			return 0; // always allowed
 		default:
-			return(map[sd->bl.m].flag.noskill);
+			return (map[sd->bl.m].flag.noskill);
 	}
 }
 
@@ -639,9 +639,9 @@ static int distance(int x0,int y0,int x1,int y1)
 {
 	int dx,dy;
 
-	dx=abs(x0-x1);
-	dy=abs(y0-y1);
-	return dx>dy ? dx : dy;
+	dx = abs(x0 - x1);
+	dy = abs(y0 - y1);
+	return dx > dy ? dx : dy;
 }
 
 /* スキルユニットの配置情報を返す */
@@ -649,26 +649,25 @@ struct skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
 int icewall_unit_pos;
 
-struct skill_unit_layout *skill_get_unit_layout(int skillid,int skilllv,struct block_list *src,int x,int y)
-{
-	
+struct skill_unit_layout *skill_get_unit_layout (int skillid, int skilllv, struct block_list *src, int x, int y)
+{	
 	int pos = skill_get_unit_layout_type(skillid,skilllv);
 	int dir;
 
-	if (pos!=-1)
+	if (pos != -1)
 		return &skill_unit_layout[pos];
 
-	if (src->x==x && src->y==y)
+	if (src->x == x && src->y == y)
 		dir = 2;
 	else
 		dir = map_calc_dir(src,x,y);
 
-	if (skillid==MG_FIREWALL)
-		return &skill_unit_layout[firewall_unit_pos+dir];
-	else if (skillid==WZ_ICEWALL)
-		return &skill_unit_layout[icewall_unit_pos+dir];
+	if (skillid == MG_FIREWALL)
+		return &skill_unit_layout [firewall_unit_pos + dir];
+	else if (skillid == WZ_ICEWALL)
+		return &skill_unit_layout [icewall_unit_pos + dir];
 
-	printf("unknown unit layout for skill %d, %d\n",skillid,skilllv);
+	printf("Unknown unit layout for skill %d, %d\n",skillid,skilllv);
 	return &skill_unit_layout[0];
 }
 
@@ -691,7 +690,7 @@ struct skill_unit_layout *skill_get_unit_layout(int skillid,int skilllv,struct b
  * スキル追加?果
  *------------------------------------------
  */
-int skill_additional_effect( struct block_list* src, struct block_list *bl,int skillid,int skilllv,int attack_type,unsigned int tick)
+int skill_additional_effect (struct block_list* src, struct block_list *bl, int skillid, int skilllv, int attack_type, unsigned int tick)
 {
 	/* MOB追加?果スキル用 */
 	const int sc[]={
@@ -825,8 +824,9 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 	case WZ_FROSTNOVA:		/* フロストノヴァ */
 		{
 			struct status_change *sc_data = status_get_sc_data(bl);
-			rate=(skilllv*3+35)*sc_def_mdef/100-(status_get_int(bl)+status_get_luk(bl))/15;
-			rate=rate<=5?5:rate;
+			rate = (skilllv*3+35)*sc_def_mdef/100-(status_get_int(bl)+status_get_luk(bl))/15;
+			if (rate <= 5)
+				rate = 5;
 			if(sc_data && sc_data[SC_FREEZE].timer == -1 && rand()%100 < rate)
 				status_change_start(bl,SC_FREEZE,skilllv,0,0,0,skill_get_time2(skillid,skilllv)*(1-sc_def_mdef/100),0);
 			else if (sd && skillid == MG_FROSTDIVER)
@@ -2384,9 +2384,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 
 	case SM_MAGNUM:			/* マグナムブレイク [celest] */
 		if(flag&1 && bl->id != skill_area_temp[1]){
-			int dx = abs( bl->x - skill_area_temp[2] );
-			int dy = abs( bl->y - skill_area_temp[3] );
-			int dist = ((dx>dy)?dx:dy);
+			int dist = distance (bl->x, bl->y, skill_area_temp[2], skill_area_temp[3]);
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,
 				0x0500|dist);
 		} else {
@@ -2514,18 +2512,16 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	case MG_NAPALMBEAT:			/* ナパ?ムビ?ト */
 	case MG_FIREBALL:			/* ファイヤ?ボ?ル */
 	case WZ_SIGHTRASHER:		/* サイトラッシャー */
-		if(flag&1){
+		if (flag & 1) {
 			/* 個別にダメ?ジを?える */
-			if(bl->id!=skill_area_temp[1]){
-				if(skillid==MG_FIREBALL){	/* ファイヤ?ボ?ルなら中心からの距離を計算 */
-					int dx=abs( bl->x - skill_area_temp[2] );
-					int dy=abs( bl->y - skill_area_temp[3] );
-					skill_area_temp[0]=((dx>dy)?dx:dy);
+			if (bl->id != skill_area_temp[1]){
+				if(skillid == MG_FIREBALL){	/* ファイヤ?ボ?ルなら中心からの距離を計算 */
+					skill_area_temp[0] = distance(bl->x, bl->y, skill_area_temp[2], skill_area_temp[3]);
 				}
 				skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,
 					skill_area_temp[0]| 0x0500);
 			}
-		}else{
+		} else {
 			int ar;
 			skill_area_temp[0]=0;
 			skill_area_temp[1]=bl->id;

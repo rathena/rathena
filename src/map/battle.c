@@ -4202,6 +4202,7 @@ static const struct {
 	{ "exp_calc_type",          &battle_config.exp_calc_type}, // [celest]
 	{ "min_skill_delay_limit",    &battle_config.min_skill_delay_limit}, // [celest]
 	{ "require_glory_guild",    &battle_config.require_glory_guild}, // [celest]
+	{ "idle_no_share",			&battle_config.idle_no_share}, // [celest], for a feature by [MouseJstr]
 
 //SQL-only options start
 #ifndef TXT_ONLY
@@ -4450,6 +4451,7 @@ void battle_set_defaults() {
 	battle_config.exp_calc_type = 1;
 	battle_config.min_skill_delay_limit = 100;
 	battle_config.require_glory_guild = 0;
+	battle_config.idle_no_share = 0;
 
 //SQL-only options start
 #ifndef TXT_ONLY

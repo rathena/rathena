@@ -586,23 +586,23 @@ int party_exp_share(struct party *p,int map,int base_exp,int job_exp,int zeny)
 
 	nullpo_retr(0, p);
 	
-	for(i=c=0;i<MAX_PARTY;i++)
-		if((sd=p->member[i].sd)!=NULL && p->member[i].online && sd->bl.m==map  && session[sd->fd] != NULL)
+	for (i=c=0; i < MAX_PARTY; i++)
+		if ((sd = p->member[i].sd) != NULL && p->member[i].online && sd->bl.m == map /*&& session[sd->fd] != NULL*/)	// should be done in socket.c
 			c++;
-		
-	if(c==0)
+
+	if(c == 0)
 		return 0;
-	for(i=0;i<MAX_PARTY;i++)
-		if((sd=p->member[i].sd)!=NULL && p->member[i].online && sd->bl.m==map  && session[sd->fd] != NULL) {
-			if (/* pc_issit(sd) || */ sd->chatID || (sd->idletime < (tick_ - 120)))
+	for (i = 0; i < MAX_PARTY; i++)
+		if ((sd = p->member[i].sd) != NULL && p->member[i].online && sd->bl.m == map /*&& session[sd->fd] != NULL*/) {
+			if (battle_config.idle_no_share && (/* pc_issit(sd) || */ sd->chatID || (sd->idletime < (tick_ - 120))))
 				continue;
-#ifdef TWILIGHT
+		#ifdef TWILIGHT
 			pc_gainexp(sd,base_exp,job_exp);
-#else
-			pc_gainexp(sd,base_exp/c+1,job_exp/c+1);
-#endif
-			if(battle_config.zeny_from_mobs) // zeny from mobs [Valaris]
-				pc_getzeny(sd,zeny/c+1);
+		#else
+			pc_gainexp(sd,(base_exp/c)+1,(job_exp/c)+1);
+		#endif
+			if (battle_config.zeny_from_mobs) // zeny from mobs [Valaris]
+				pc_getzeny(sd,(zeny/c)+1);
 		}
 	return 0;
 }
