@@ -1,4 +1,6 @@
 Date	Added
+12/9
+	* Adjusted some messages in @marry [MouseJstr]
 12/8
 	* Fixed @rings [MouseJstr]
         * Added @marry, @divorce, and @rings [MouseJstr]

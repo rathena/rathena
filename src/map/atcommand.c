@@ -7442,7 +7442,7 @@ atcommand_marry(const int fd, struct map_session_data* sd,
   }
 
   if (pc_marriage(pl_sd1, pl_sd2) == 0) {
-    clif_displaymessage(fd, "The marriage has failed.. talk to the judge..");
+    clif_displaymessage(fd, "They are married.. wish them well");
     return 0;
   } else
     return -1;
