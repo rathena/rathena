@@ -251,7 +251,7 @@ L_DisableSameSex:
 	mes "Same-Sex Weddings are disabled now!";
 	close;
 L_ResetVariables:
-	set $@progress,0;
+	set $progress,0;
 	set $groom$,"null";
 	set $bride$,"null";
 	set $name$,"null";

@@ -1,5 +1,7 @@
 Date	Added
 12/6
+	* Fixed file props for new npcs [MouseJstr]
+	* Fixed weddings.txt as per Fress_Boy [MouseJstr]
 	* Added a case_sensitive to login [MouseJstr]
 	* Fixed follow crashing server when gm dies [MouseJstr]
 	* Fixed global message not working on txt [Wizputer]
