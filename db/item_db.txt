@@ -806,8 +806,8 @@
 1954,Wire,Wire,4,17500,,1000,95,,2,2,1048576,2,2,2,16,14,{},{},,,
 1955,Wire_,Wire,4,17500,,1000,95,,2,3,1048576,2,2,2,16,14,{},{},,,
 
-1956,Rante,Rante,4,32000,,900,135,,2,0,1048576,2,2,3,30,14,{},{},,,
-1957,Rante_,Rante,4,32000,,900,135,,2,1,1048576,2,2,3,30,14,{},{},,,
+1956,Rante_Whip,Rante Whip,4,32000,,900,135,,2,0,1048576,2,2,3,30,14,{},{},,,
+1957,Rante_Whip_,Rante Whip,4,32000,,900,135,,2,1,1048576,2,2,3,30,14,{},{},,,
 
 1958,Tail,Tail,4,41000,,700,105,,2,1,1048576,2,2,3,30,14,{},{ bonus bLuk,3; },,
 1959,Tail_,Tail,4,41000,,700,105,,2,2,1048576,2,2,3,30,14,{},{ bonus bLuk,3; },,
@@ -1599,19 +1599,19 @@
 7183,Letter_of_Younger_Sister,Letter of Younger Sister,3,20,,10,,,,,,,,,,,{},{}
 7184,Piano_Key,Piano Key,3,20,,10,,,,,,,,,,,{},{}
 7185,Quiz_Participation_Ticket,Quiz Participation Ticket,3,20,,10,,,,,,,,,,,{},{}
-7186,Fine_Trunk,Fine Trunk,3,20,,10,,,,,,,,,,,{},{}
+7186,Thin_Trunk,Thin Trunk,3,20,,10,,,,,,,,,,,{},{}
 7187,Festival_Mask,Festival Mask,3,20,,10,,,,,,,,,,,{},{}
 7188,Brown_Root,Brown_Root,3,20,,10,,,,,,,,,,,{},{}
 7189,Wooden_Heart,Wooden Heart,3,20,,10,,,,,,,,,,,{},{}
 7190,Hard_Back_Shell,Hard Back Shell,3,20,,10,,,,,,,,,,,{},{}
 7191,Paper_Lantern,Paper Lantern,3,20,,10,,,,,,,,,,,{},{}
 7192,Pin_Wheel,Pin Wheel,3,20,,10,,,,,,,,,,,{},{}
-7193,Germinated_Seed,Germinated Seed,3,20,,10,,,,,,,,,,,{},{}
+7193,Sprout,Sprout,3,20,,10,,,,,,,,,,,{},{}
 7194,Soft_Grass_Leaf,Soft Grass Leaf,3,20,,10,,,,,,,,,,,{},{}
 7195,Slingshot,Slingshot,3,20,,10,,,,,,,,,,,{},{}
 7196,Shoulder_Guard,Shoulder Guard,3,20,,10,,,,,,,,,,,{},{}
 7197,Durable_Vine,Durable Vine,3,20,,10,,,,,,,,,,,{},{}
-7198,Large_Leaf,Large Leaf,3,20,,10,,,,,,,,,,,{},{}
+7198,Huge_Leaf,Huge Leaf,3,20,,10,,,,,,,,,,,{},{}
 7199,Hieroglyphic,Hieroglyphic,3,20,,10,,,,,,,,,,,{},{}
 7200,Elastic_Band,Elastic Band,3,20,,10,,,,,,,,,,,{},{}
 7201,Log,Log,3,20,,10,,,,,,,,,,,{},{}
