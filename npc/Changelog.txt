@@ -22,7 +22,7 @@ Shadowlady
 
 MC Cameri
 	* Bank NPC - Now 100% done for new payon
-	* Warper NPC - 100%
+	* Warper NPC - 100%, fixed memory consumption problem
 	* Heal NPC - 100%
 
 Other Ppl	
@@ -32,6 +32,8 @@ Other Ppl
 
 Date		Added
 ======
+12/11	* Fixed memory consumption in npc/other/mc_cameri/warper.txt [MC Cameri]
+
 12/10
 	* Added npc/other/mc_cameri/warper.txt, a warp npc just like warper2.txt that shows how many people are on each map. [MC Cameri]
 	* Newgearquests (14 files of 16) fixed possible exploits, added a missing close; 

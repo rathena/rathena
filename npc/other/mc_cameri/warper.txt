@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MC Cameri
 //===== Current Version: ===================================== 
-//= 1.0
+//= 2.0
 //===== Compatible With: ===================================== 
 //= Any eAthena Version with duplicate; RO Ep6+
 //===== Description: ========================================= 
@@ -13,6 +13,9 @@
 //= Most of the code here has been taken from warper2.txt in
 //= the folder /npc/other/.
 //= Credits given to Someone(that's his nickname).
+//= 2.0 Increased performance by removing variables.
+//=	-Fixed the memory problem.
+//= 1.0 First Version, consumed a lot of memory, about 2MB.
 //============================================================ 
 
 -	script	Warp NPC::warpra	115,{
@@ -21,189 +24,54 @@
 	set @reset$,"^000000";
 
 //	towns
-	set @alberta,getmapusers("alberta.gat");
-	set @aldebaran,getmapusers("aldebaran.gat");
-	set @amatsu,getmapusers("amatsu.gat");
-	set @comodo,getmapusers("comodo.gat");
-	set @gonryun,getmapusers("gonryun.gat");
-	set @geffen,getmapusers("geffen.gat");
-	set @izlude,getmapusers("izlude.gat");
-	set @lutie,getmapusers("xmas.gat");
-	set @morroc,getmapusers("morocc.gat");
-	set @niflheim,getmapusers("niflheim.gat");
-	set @payon,getmapusers("payon.gat");
-	set @prontera,getmapusers("prontera.gat");
-	set @yuno,getmapusers("yuno.gat");
-	set @umbala,getmapusers("umbala.gat");
-	set @valkyrie,getmapusers("valkyrie.gat");
-	set @louyang,getmapusers("louyang.gat");
-	set @towns, @alberta + @aldebaran + @amatsu + @comodo + @gonryun + @geffen + @izlude + @lutie + @morroc + @niflheim + @payon + @prontera + @yuno + @umbala + @valkyrie + @louyang;
+	set @towns, getmapusers("alberta.gat") + getmapusers("aldebaran.gat") + getmapusers("amatsu.gat") + getmapusers("comodo.gat") + getmapusers("gonryun.gat") + getmapusers("geffen.gat") + getmapusers("izlude.gat") + getmapusers("xmas.gat") + getmapusers("morocc.gat") + getmapusers("niflheim.gat") + getmapusers("payon.gat") + getmapusers("prontera.gat") + getmapusers("yuno.gat") + getmapusers("umbala.gat") + getmapusers("valkyrie.gat") + getmapusers("louyang.gat");
 //	dungeons
-	set @danthell1,getmapusers("anthell01.gat");
-	set @danthell2,getmapusers("anthell02.gat");
-	set @anthell, @danthell1 + @danthell2;
-
-	set @dbeach1,getmapusers("beach_dun.gat");
-	set @dbeach2,getmapusers("beach_dun2.gat");
-	set @dbeach3,getmapusers("beach_dun3.gat");
-	set @beach, @dbeach1 + @dbeach2 + @dbeach3;
-
-	set @dbyalan1,getmapusers("iz_dun00.gat");
-	set @dbyalan2,getmapusers("iz_dun01.gat");
-	set @dbyalan3,getmapusers("iz_dun02.gat");
-	set @dbyalan4,getmapusers("iz_dun03.gat");
-	set @dbyalan5,getmapusers("iz_dun04.gat");
-	set @dbyalan, @dbyalan1 + @dbyalan2 + @dbyalan3 + @dbyalan4 + @dbyalan5;
-
-	set @dalde1,getmapusers("alde_dun01.gat");
-	set @dalde2,getmapusers("alde_dun02.gat");
-	set @dalde3,getmapusers("alde_dun03.gat");
-	set @dalde4,getmapusers("alde_dun04.gat");
-	set @dclock1,getmapusers("c_tower1.gat");
-	set @dclock2,getmapusers("c_tower2.gat");
-	set @dclock3,getmapusers("c_tower3.gat");
-	set @dclock4,getmapusers("c_tower4.gat");
-	set @clock, @alde1 + @alde2 + @alde3 + @alde4 + @dclock1 + @dclock2 + @dclock3 + @dclock4;
-
-	set @dcoal1,getmapusers("mjo_dun01.gat");
-	set @dcoal2,getmapusers("mjo_dun02.gat");
-	set @dcoal3,getmapusers("mjo_dun03.gat");
-	set @coal, @dcoal1 + @dcoal2 + @dcoal3;
-
-	set @dculvert1,getmapusers("prt_sewb1.gat");
-	set @dculvert2,getmapusers("prt_sewb2.gat");
-	set @dculvert3,getmapusers("prt_sewb3.gat");
-	set @dculvert4,getmapusers("prt_sewb4.gat");
-	set @culvert, @dculvert1 + @dculvert2 + @dculvert3 + @dculvert4;
-
-	set @dgeffen1,getmapusers("gef_dun00.gat");
-	set @dgeffen2,getmapusers("gef_dun01.gat");
-	set @dgeffen3,getmapusers("gef_dun02.gat");
-	set @dgeffen4,getmapusers("gef_dun03.gat");
-	set @geffen, @dgeffen1 + @dgeffen2 + @dgeffen3 + @dgeffen4;
-
-	set @dglastent,getmapusers("glast_01.gat");
-	set @dglastcast1,getmapusers("gl_cas01.gat");
-	set @dglastcast2,getmapusers("gl_cas02.gat");
-	set @dglastchiv1,getmapusers("gl_knt01.gat");
-	set @dglastchiv2,getmapusers("gl_knt02.gat");
-	set @dglastyard,getmapusers("gl_chyard.gat");
-	set @dglastcul1,getmapusers("gl_sew01.gat");
-	set @dglastcul2,getmapusers("gl_sew02.gat");
-	set @dglastcul3,getmapusers("gl_sew03.gat");
-	set @dglastcul4,getmapusers("gl_sew04.gat");
-	set @dglastchur,getmapusers("gl_church.gat");
-	set @dglaststep,getmapusers("gl_step.gat");
-	set @dglastcave1,getmapusers("gl_dun01.gat");
-	set @dglastcave2,getmapusers("gl_dun02.gat");
-	set @dglastpris1,getmapusers("gl_prison.gat");
-	set @dglastpris2,getmapusers("gl_prison1.gat");
-	set @glast, @dglastent + @dglastcast1 + @dglastcast2 + @dglastchiv1 + @dglastchiv2
-	+ @dglastyard + @dglastcul1 + @dglastcul2 + @dglastcul3 + @dglastcul4 + @dglastchur
-	+ @dglaststep + @dglastcave1 + @dglastcave2 + @dglastpris1 + @dglastpris2;
-
-	set @dhidden1,getmapusers("prt_maze01.gat");
-	set @dhidden2,getmapusers("prt_maze02.gat");
-	set @dhidden3,getmapusers("prt_maze03.gat");
-	set @hidden, @dhidden1 + @dhidden2 + @dhidden3;
-
-	set @dmagma1,getmapusers("mag_dun01.gat");
-	set @dmagma2,getmapusers("mag_dun02.gat");
-	set @magma, @dmagma1 + @dmagma2;
-
-	set @dorc1,getmapusers("orcsdun01.gat");
-	set @dorc2,getmapusers("orcsdun02.gat");
-	set @orc, @dorc1 + @dorc2;
-
-	set @dpayon1,getmapusers("pay_dun00.gat");
-	set @dpayon2,getmapusers("pay_dun01.gat");
-	set @dpayon3,getmapusers("pay_dun02.gat");
-	set @dpayon4,getmapusers("pay_dun03.gat");
-	set @dpayon5,getmapusers("pay_dun04.gat");
-	set @payond, @dpayon1 + @dpayon2 + @dpayon3 + @dpayon4 + @dpayon5;
-
-	set @dpyramids1,getmapusers("moc_pryd01.gat");
-	set @dpyramids2,getmapusers("moc_pryd02.gat");
-	set @dpyramids3,getmapusers("moc_pryd03.gat");
-	set @dpyramids4,getmapusers("moc_pryd04.gat");
-	set @dpyramidsb1,getmapusers("moc_pryd05.gat");
-	set @dpyramidsb2,getmapusers("moc_pryd06.gat");
-	set @pyramids, @dpyramids1 + @dpyramids2 + @dpyramids3 + @dpyramids4 + @dpyramidsb1 + @dpyramidsb2;
-
-	set @dsphinx1,getmapusers("in_sphinx1.gat");
-	set @dsphinx2,getmapusers("in_sphinx2.gat");
-	set @dsphinx3,getmapusers("in_sphinx3.gat");
-	set @dsphinx4,getmapusers("in_sphinx4.gat");
-	set @dsphinx5,getmapusers("in_sphinx5.gat");
-	set @sphinx, @dsphinx1 + @dsphinx2 + @dsphinx3 + @dsphinx4 + @dsphinx5;
-
-	set @dsunken1,getmapusers("treasure01.gat");
-	set @dsunken2,getmapusers("treasure02.gat");
-	set @sunken, @dsunken1 + @dsunken2;
-
-	set @dtoy1,getmapusers("xmas_dun01.gat");
-	set @dtoy2,getmapusers("xmas_dun02.gat");
-	set @toy, @dtoy1 + @dtoy2;
-
-	set @dturtleent,getmapusers("tur_dun01.gat");
-	set @dturtle1,getmapusers("tur_dun02.gat");
-	set @dturtle2,getmapusers("tur_dun03.gat");
-	set @dturtle3,getmapusers("tur_dun04.gat");
-	set @turtle, @dturtleent + @dturtle1 + @dturtle2 + @dturtle3;
-
-	set @dama1,getmapusers("ama_dun01.gat");
-	set @dama2,getmapusers("ama_dun02.gat");
-	set @dama3,getmapusers("ama_dun03.gat");
-	set @ama, @dama1 + @dama2 + @dama2;
-
-	set @dgon1,getmapusers("gon_dun01.gat");
-	set @dgon2,getmapusers("gon_dun02.gat");
-	set @dgon3,getmapusers("gon_dun03.gat");
-	set @gon, @dgon1 + @dgon2 + @dgon3;
-
-	set @dgefenia1,getmapusers("gefenia01.gat");
-	set @dgefenia2,getmapusers("gefenia02.gat");
-	set @dgefenia3,getmapusers("gefenia03.gat");
-	set @dgefenia4,getmapusers("gefenia04.gat");
-	set @gefenia, @dgefenia1 + @dgefenia2 + @dgefenia3 + @dgefenia4;
-
-	set @dungeons, @danthell1 + @danthell2 + @dbeach1 + @dbeach2 + @dbeach3 
-	+ @dbyalan1 + @dbyalan2 + @dbyalan3 + @dbyalan4 + @dbyalan5 + @dalde1
-	+ @dalde2 + @dalde3 + @dalde4 + @dclock1 + @dclock2 + @dclock3 + @dclock4
-	+ @dcoal1 + @dcoal2 + @dcoal3 + @dculvert1 + @dculvert2 + @dculvert3
-	+ @dculvert4 + @dgeffen1 + @dgeffen2 + @dgeffen3 + @dgeffen4 + @dglastent
-	+ @dglastcast1 + @dglastcast2 + @dglastchiv1 + @dglastchiv2 + @dglastyard
-	+ @dglastcul1 + @dglastcul2 + @dglastcul3 + @dglastcul4 + @dglastchur
-	+ @dglaststep + @dglastcave1 + @dglastcave2 + @dglastpris1 + @dglastpris2
-	+ @dhidden1 + @dhidden2 + @dhidden3 + @dmagma1 + @dmagma2 + @dorc1
-	+ @dorc2 + @dpayon1 + @dpayon2 + @dpayon3 + @dpayon4 + @dpayon5
-	+ @dpyramids1 + @dpyramids2 + @dpyramids3 + @dpyramids4 + @dpyramidsb1
-	+ @dpyramidsb2 + @dsphinx1 + @dsphinx2 + @dsphinx3 + @dsphinx4
-	+ @dsphinx5 + @dsunken1 + @dsunken2 + @dtoy1 + @dtoy2 + @dturtleent
-	+ @dturtle1 + @dturtle2 + @dturtle3 + @dama1 + @dama2 + @dama3 + @dgon1
-	+ @dgon2 + @dgon3 + @dgefenia1 + @dgefenia2 + @dgefenia3 + @dgefenia4;
+	set @anthell, getmapusers("anthell01.gat") + getmapusers("anthell02.gat");
+	set @beach, getmapusers("beach_dun.gat") + getmapusers("beach_dun2.gat") + getmapusers("beach_dun3.gat");
+	set @byalan, getmapusers("iz_dun00.gat") + getmapusers("iz_dun01.gat") + getmapusers("iz_dun02.gat") + getmapusers("iz_dun03.gat") + getmapusers("iz_dun04.gat");
+	set @clock, getmapusers("alde_dun01.gat") + getmapusers("alde_dun02.gat") + getmapusers("alde_dun03.gat") + getmapusers("alde_dun04.gat") + getmapusers("c_tower1.gat") + getmapusers("c_tower2.gat") + getmapusers("c_tower3.gat") + getmapusers("c_tower4.gat");
+	set @coal, getmapusers("mjo_dun01.gat") + getmapusers("mjo_dun02.gat") + getmapusers("mjo_dun03.gat");
+	set @culvert, getmapusers("prt_sewb1.gat") + getmapusers("prt_sewb2.gat") + getmapusers("prt_sewb3.gat") + getmapusers("prt_sewb4.gat");
+	set @geffen, getmapusers("gef_dun00.gat") + getmapusers("gef_dun01.gat") + getmapusers("gef_dun02.gat") + getmapusers("gef_dun03.gat");
+	set @glast, getmapusers("glast_01.gat") + getmapusers("gl_cas01.gat") + getmapusers("gl_cas02.gat") + getmapusers("gl_knt01.gat") + getmapusers("gl_knt02.gat")
+	+ getmapusers("gl_chyard.gat") + getmapusers("gl_sew01.gat") + getmapusers("gl_sew02.gat") + getmapusers("gl_sew03.gat") + getmapusers("gl_sew04.gat") + getmapusers("gl_church.gat")
+	+ getmapusers("gl_step.gat") + getmapusers("gl_dun01.gat") + getmapusers("gl_dun02.gat") + getmapusers("gl_prison.gat") + getmapusers("gl_prison1.gat");
+	set @hidden, getmapusers("prt_maze01.gat") + getmapusers("prt_maze02.gat") + getmapusers("prt_maze03.gat");
+	set @magma, getmapusers("mag_dun01.gat") + getmapusers("mag_dun02.gat");
+	set @orc, getmapusers("orcsdun01.gat") + getmapusers("orcsdun02.gat");
+	set @payond, getmapusers("pay_dun00.gat") + getmapusers("pay_dun01.gat") + getmapusers("pay_dun02.gat") + getmapusers("pay_dun03.gat") + getmapusers("pay_dun04.gat");
+	set @pyramids, getmapusers("moc_pryd01.gat") + getmapusers("moc_pryd02.gat") + getmapusers("moc_pryd03.gat") + getmapusers("moc_pryd04.gat") + getmapusers("moc_pryd05.gat") + getmapusers("moc_pryd06.gat");
+	set @sphinx, getmapusers("in_sphinx1.gat") + getmapusers("in_sphinx2.gat") + getmapusers("in_sphinx3.gat") + getmapusers("in_sphinx4.gat") + getmapusers("in_sphinx5.gat");
+	set @sunken, getmapusers("treasure01.gat") + getmapusers("treasure02.gat");
+	set @toy, getmapusers("xmas_dun01.gat") + getmapusers("xmas_dun02.gat");
+	set @turtle, getmapusers("tur_dun01.gat") + getmapusers("tur_dun02.gat") + getmapusers("tur_dun03.gat") + getmapusers("tur_dun04.gat");
+	set @ama, getmapusers("ama_dun01.gat") + getmapusers("ama_dun02.gat") + getmapusers("ama_dun02.gat");
+	set @gon, getmapusers("gon_dun01.gat") + getmapusers("gon_dun02.gat") + getmapusers("gon_dun03.gat");
+	set @gefenia, getmapusers("gefenia01.gat") + getmapusers("gefenia02.gat") + getmapusers("gefenia03.gat") + getmapusers("gefenia04.gat");
+	set @dungeons, @anthell + @beach + @dbyalan + @clock + @coal + @culvert + @geffen + @glast + @hidden
+	+ @magma + @orc + @payond + @pyramids + @sphinx + @sunken + @toy + @turtle + @ama + @gon + @gefenia;
 
 	mes "[Warp NPC]";
 	mes "Hello, I can warp you to any Town and Dungeon! Were do you want to go?";
 	next;
 	menu "Towns [" + @red$ + @towns + @reset$ + "]",town,"Dungeons [" + @red$ + @dungeons + @reset$ +"]",dungeon;
 town:
-	menu	"Alberta [" + @red$ + @alberta + @reset$ + "]",walberta,
-		"Aldebaran [" + @red$ + @aldebaran + @reset$ + "]",waldebaran,
-		"Amatsu [" + @red$ + @amatsu + @reset$ + "]",wamatsu,
-		"Comodo [" + @red$ + @comodo + @reset$ + "]",wcomodo,
-		"Gonryun [" + @red$ + @gonryun + @reset$ + "]",wgonryun,
-		"Geffen [" + @red$ + @geffen + @reset$ + "]",wgeffen,
-		"Izlude [" + @red$ + @izlude + @reset$ + "]",wizlude,
-		"Lutie [" + @red$ + @lutie + @reset$ + "]",wxmas,
-		"Morroc [" + @red$ + @morroc + @reset$ + "]",wmorroc,
-		"Niflheim [" + @red$ + @niflheim + @reset$ + "]",wniflheim,
-		"Payon [" + @red$ + @payon + @reset$ + "]",wpayon,
-		"Prontera [" + @red$ + @prontera + @reset$ + "]",wprontera,
-		"Yuno [" + @red$ + @yuno + @reset$ + "]",wyuno,
-		"Umbala [" + @red$ + @umbala + @reset$ + "]",wumbala,
-		"Valkyrie [" + @red$ + @valkyrie + @reset$ + "]",wvalk,
-		"Louyang [" + @red$ + @louyang + @reset$ + "]",wlouyang;
+	menu	"Alberta [" + @red$ + getmapusers("alberta.gat") + @reset$ + "]",walberta,
+		"Aldebaran [" + @red$ + getmapusers("aldebaran.gat") + @reset$ + "]",waldebaran,
+		"Amatsu [" + @red$ + getmapusers("amatsu.gat") + @reset$ + "]",wamatsu,
+		"Comodo [" + @red$ + getmapusers("comodo.gat") + @reset$ + "]",wcomodo,
+		"Gonryun [" + @red$ + getmapusers("gonryun.gat") + @reset$ + "]",wgonryun,
+		"Geffen [" + @red$ + getmapusers("geffen.gat") + @reset$ + "]",wgeffen,
+		"Izlude [" + @red$ + getmapusers("izlude.gat") + @reset$ + "]",wizlude,
+		"Lutie [" + @red$ + getmapusers("xmas.gat") + @reset$ + "]",wxmas,
+		"Morroc [" + @red$ + getmapusers("morocc.gat") + @reset$ + "]",wmorroc,
+		"Niflheim [" + @red$ + getmapusers("niflheim.gat") + @reset$ + "]",wniflheim,
+		"Payon [" + @red$ + getmapusers("payon.gat") + @reset$ + "]",wpayon,
+		"Prontera [" + @red$ + getmapusers("prontera.gat") + @reset$ + "]",wprontera,
+		"Yuno [" + @red$ + getmapusers("yuno.gat") + @reset$ + "]",wyuno,
+		"Umbala [" + @red$ + getmapusers("umbala.gat") + @reset$ + "]",wumbala,
+		"Valkyrie [" + @red$ + getmapusers("valkyrie.gat") + @reset$ + "]",wvalk,
+		"Louyang [" + @red$ + getmapusers("louyang.gat") + @reset$ + "]",wlouyang;
 dungeon:
 	menu	"Amatsu Dungeon [" + @red$ + @ama + @reset$ + "]",ama,
 		"Gonryun Dungeon [" + @red$ + @gon + @reset$ + "]",gon,
@@ -229,168 +97,168 @@ ant:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @danthell1 + @reset$ + "]",danthell1,
-		"Level 2 [" + @red$ + @danthell2 + @reset$ + "]",danthell2;
+	menu	"Level 1 [" + @red$ + getmapusers("anthell01.gat")+ @reset$ + "]",danthell1,
+		"Level 2 [" + @red$ + getmapusers("anthell02.gat")+ @reset$ + "]",danthell2;
 beach:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dbeach1 + @reset$ + "]",dbeach1,
-		"Level 2 [" + @red$ + @dbeach2 + @reset$ + "]",dbeach2,
-		"Level 3 [" + @red$ + @dbeach3 + @reset$ + "]",dbeach3;
+	menu	"Level 1 [" + @red$ + getmapusers("beach_dun.gat") + @reset$ + "]",dbeach1,
+		"Level 2 [" + @red$ + getmapusers("beach_dun2.gat") + @reset$ + "]",dbeach2,
+		"Level 3 [" + @red$ + getmapusers("beach_dun3.gat") + @reset$ + "]",dbeach3;
 byalan:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dbyalan1 + @reset$ + "]",dbyalan1,
-		"Level 2 [" + @red$ + @dbyalan2 + @reset$ + "]",dbyalan2,
-		"Level 3 [" + @red$ + @dbyalan3 + @reset$ + "]",dbyalan3,
-		"Level 4 [" + @red$ + @dbyalan4 + @reset$ + "]",dbyalan4,
-		"Level 5 [" + @red$ + @dbyalan5 + @reset$ + "]",dbyalan5;
+	menu	"Level 1 [" + @red$ + getmapusers("iz_dun00.gat") + @reset$ + "]",dbyalan1,
+		"Level 2 [" + @red$ + getmapusers("iz_dun01.gat") + @reset$ + "]",dbyalan2,
+		"Level 3 [" + @red$ + getmapusers("iz_dun02.gat") + @reset$ + "]",dbyalan3,
+		"Level 4 [" + @red$ + getmapusers("iz_dun03.gat") + @reset$ + "]",dbyalan4,
+		"Level 5 [" + @red$ + getmapusers("iz_dun04.gat") + @reset$ + "]",dbyalan5;
 clock:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dclock1 + @reset$ + "]",dclock1,
-		"Level 2 [" + @red$ + @dclock2 + @reset$ + "]",dclock2,
-		"Level 3 [" + @red$ + @dclock3 + @reset$ + "]",dclock3,
-		"Level 4 [" + @red$ + @dclock4 + @reset$ + "]",dclock4,
-		"Basement 1 [" + @red$ + @dalde1 + @reset$ + "]",dalde1,
-		"Basement 2 [" + @red$ + @dalde2 + @reset$ + "]",dalde2,
-		"Basement 3 [" + @red$ + @dalde3 + @reset$ + "]",dalde3,
-		"Basement 4 [" + @red$ + @dalde4 + @reset$ + "]",dalde4;
+	menu	"Level 1 [" + @red$ + getmapusers("c_tower1.gat") + @reset$ + "]",dclock1,
+		"Level 2 [" + @red$ + getmapusers("c_tower2.gat") + @reset$ + "]",dclock2,
+		"Level 3 [" + @red$ + getmapusers("c_tower3.gat") + @reset$ + "]",dclock3,
+		"Level 4 [" + @red$ + getmapusers("c_tower4.gat") + @reset$ + "]",dclock4,
+		"Basement 1 [" + @red$ + getmapusers("alde_dun01.gat") + @reset$ + "]",dalde1,
+		"Basement 2 [" + @red$ + getmapusers("alde_dun02.gat") + @reset$ + "]",dalde2,
+		"Basement 3 [" + @red$ + getmapusers("alde_dun03.gat") + @reset$ + "]",dalde3,
+		"Basement 4 [" + @red$ + getmapusers("alde_dun04.gat") + @reset$ + "]",dalde4;
 coal:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dcoal1 + @reset$ + "]",dcoal1,
-		"Level 2 [" + @red$ + @dcoal2 + @reset$ + "]",dcoal2,
-		"Level 3 [" + @red$ + @dcoal3 + @reset$ + "]",dcoal3;
+	menu	"Level 1 [" + @red$ + getmapusers("mjo_dun01.gat") + @reset$ + "]",dcoal1,
+		"Level 2 [" + @red$ + getmapusers("mjo_dun02.gat") + @reset$ + "]",dcoal2,
+		"Level 3 [" + @red$ + getmapusers("mjo_dun03.gat") + @reset$ + "]",dcoal3;
 culvert:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dculvert1 + @reset$ + "]",dculvert1,
-		"Level 2 [" + @red$ + @dculvert2 + @reset$ + "]",dculvert2,
-		"Level 3 [" + @red$ + @dculvert3 + @reset$ + "]",dculvert3,
-		"Level 4 [" + @red$ + @dculvert4 + @reset$ + "]",dculvert4;
+	menu	"Level 1 [" + @red$ + getmapusers("prt_sewb1.gat") + @reset$ + "]",dculvert1,
+		"Level 2 [" + @red$ + getmapusers("prt_sewb2.gat") + @reset$ + "]",dculvert2,
+		"Level 3 [" + @red$ + getmapusers("prt_sewb3.gat") + @reset$ + "]",dculvert3,
+		"Level 4 [" + @red$ + getmapusers("prt_sewb4.gat") + @reset$ + "]",dculvert4;
 geffen:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dgeffen1 + @reset$ + "]",dgeffen1,
-		"Level 2 [" + @red$ + @dgeffen2 + @reset$ + "]",dgeffen2,
-		"Level 3 [" + @red$ + @dgeffen3 + @reset$ + "]",dgeffen3,
-		"Level 4 [" + @red$ + @dgeffen4 + @reset$ + "]",dgeffen4;
+	menu	"Level 1 [" + @red$ + getmapusers("gef_dun00.gat") + @reset$ + "]",dgeffen1,
+		"Level 2 [" + @red$ + getmapusers("gef_dun01.gat") + @reset$ + "]",dgeffen2,
+		"Level 3 [" + @red$ + getmapusers("gef_dun02.gat") + @reset$ + "]",dgeffen3,
+		"Level 4 [" + @red$ + getmapusers("gef_dun03.gat") + @reset$ + "]",dgeffen4;
 glast:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Entrance [" + @red$ + @dglastent + @reset$ + "]",dglastent,
-		"Castle 1 [" + @red$ + @dglastcast1 + @reset$ + "]",dglastcast1,
-		"Castle 2 [" + @red$ + @dglastcast2 + @reset$ + "]",dglastcast2,
-		"Chivalry 1 [" + @red$ + @dglastchiv1 + @reset$ + "]",dglastchiv1,
-		"Chivalry 2 [" + @red$ + @dglastchiv2 + @reset$ + "]",dglastchiv2,
-		"Churchyard [" + @red$ + @dglastyard + @reset$ + "]",dglastyard,
-		"Culvert 1 [" + @red$ + @dglastcul1 + @reset$ + "]",dglastcul1,
-		"Culvert 2 [" + @red$ + @dglastcul1 + @reset$ + "]",dglastcul1,
-		"Culvert 3 [" + @red$ + @dglastcul3 + @reset$ + "]",dglastcul3,
-		"Culvert 4 [" + @red$ + @dglastcul4 + @reset$ + "]",dglastcul4,
-		"St.Abbey [" + @red$ + @dglastchur + @reset$ + "]",dglastchur,
-		"Staircase Dungeon [" + @red$ + @dglaststep + @reset$ + "]",dglaststep,
-		"Underground Cave 1 [" + @red$ + @dglastcave1 + @reset$ + "]",dglastcave1,
-		"Underground Cave 2 [" + @red$ + @dglastcave2 + @reset$ + "]",dglastcave2,
-		"Underground Prison 1 [" + @red$ + @dglastpris1 + @reset$ + "]",dglastpris1,
-		"Underground Prison 2 [" + @red$ + @dglastpris2 + @reset$ + "]",dglastpris2;
+	menu	"Entrance [" + @red$ + getmapusers("glast_01.gat") + @reset$ + "]",dglastent,
+		"Castle 1 [" + @red$ + getmapusers("gl_cas01.gat") + @reset$ + "]",dglastcast1,
+		"Castle 2 [" + @red$ + getmapusers("gl_cas02.gat") + @reset$ + "]",dglastcast2,
+		"Chivalry 1 [" + @red$ + getmapusers("gl_knt01.gat") + @reset$ + "]",dglastchiv1,
+		"Chivalry 2 [" + @red$ + getmapusers("gl_knt02.gat") + @reset$ + "]",dglastchiv2,
+		"Churchyard [" + @red$ + getmapusers("gl_chyard.gat") + @reset$ + "]",dglastyard,
+		"Culvert 1 [" + @red$ + getmapusers("gl_sew01.gat") + @reset$ + "]",dglastcul1,
+		"Culvert 2 [" + @red$ + getmapusers("gl_sew02.gat") + @reset$ + "]",dglastcul1,
+		"Culvert 3 [" + @red$ + getmapusers("gl_sew03.gat") + @reset$ + "]",dglastcul3,
+		"Culvert 4 [" + @red$ + getmapusers("gl_sew04.gat") + @reset$ + "]",dglastcul4,
+		"St.Abbey [" + @red$ + getmapusers("gl_church.gat") + @reset$ + "]",dglastchur,
+		"Staircase Dungeon [" + @red$ + getmapusers("gl_step.gat") + @reset$ + "]",dglaststep,
+		"Underground Cave 1 [" + @red$ + getmapusers("gl_dun01.gat") + @reset$ + "]",dglastcave1,
+		"Underground Cave 2 [" + @red$ + getmapusers("gl_dun02.gat") + @reset$ + "]",dglastcave2,
+		"Underground Prison 1 [" + @red$ + getmapusers("gl_prison.gat") + @reset$ + "]",dglastpris1,
+		"Underground Prison 2 [" + @red$ + getmapusers("gl_prison1.gat") + @reset$ + "]",dglastpris2;
 hidden:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dhidden1 + @reset$ + "]",dhidden1,
-		"Level 2 [" + @red$ + @dhidden2 + @reset$ + "]",dhidden2,
-		"Level 3 [" + @red$ + @dhidden3 + @reset$ + "]",dhidden3;
+	menu	"Level 1 [" + @red$ + getmapusers("prt_maze01.gat") + @reset$ + "]",dhidden1,
+		"Level 2 [" + @red$ + getmapusers("prt_maze02.gat") + @reset$ + "]",dhidden2,
+		"Level 3 [" + @red$ + getmapusers("prt_maze03.gat") + @reset$ + "]",dhidden3;
 magma:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dmagma1 + @reset$ + "]",dmagma1,
-		"Level 2 [" + @red$ + @dmagma2 + @reset$ + "]",dmagma2;
+	menu	"Level 1 [" + @red$ + getmapusers("mag_dun01.gat") + @reset$ + "]",dmagma1,
+		"Level 2 [" + @red$ + getmapusers("mag_dun02.gat") + @reset$ + "]",dmagma2;
 orc:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dorc1 + @reset$ + "]",dorc1,
-		"Level 2 [" + @red$ + @dorc2 + @reset$ + "]",dorc2;
+	menu	"Level 1 [" + @red$ + getmapusers("orcsdun01.gat") + @reset$ + "]",dorc1,
+		"Level 2 [" + @red$ + getmapusers("orcsdun02.gat") + @reset$ + "]",dorc2;
 payon:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dpayon1 + @reset$ + "]",dpayon1,
-		"Level 2 [" + @red$ + @dpayon2 + @reset$ + "]",dpayon2,
-		"Level 3 [" + @red$ + @dpayon3 + @reset$ + "]",dpayon3,
-		"Level 4 [" + @red$ + @dpayon4 + @reset$ + "]",dpayon4,
-		"Level 5 [" + @red$ + @dpayon5 + @reset$ + "]",dpayon5;
+	menu	"Level 1 [" + @red$ + getmapusers("pay_dun00.gat") + @reset$ + "]",dpayon1,
+		"Level 2 [" + @red$ + getmapusers("pay_dun01.gat") + @reset$ + "]",dpayon2,
+		"Level 3 [" + @red$ + getmapusers("pay_dun02.gat") + @reset$ + "]",dpayon3,
+		"Level 4 [" + @red$ + getmapusers("pay_dun03.gat") + @reset$ + "]",dpayon4,
+		"Level 5 [" + @red$ + getmapusers("pay_dun04.gat") + @reset$ + "]",dpayon5;
 pyramids:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dpyramids1 + @reset$ + "]",dpyramids1,
-		"Level 2 [" + @red$ + @dpyramids2 + @reset$ + "]",dpyramids2,
-		"Level 3 [" + @red$ + @dpyramids3 + @reset$ + "]",dpyramids3,
-		"Level 4 [" + @red$ + @dpyramids4 + @reset$ + "]",dpyramids4,
-		"Basement 1 [" + @red$ + @dpyramidsb1 + @reset$ + "]",dpyramidsb1,
-		"Basement 2 [" + @red$ + @dpyramidsb2 + @reset$ + "]",dpyramidsb2;
+	menu	"Level 1 [" + @red$ + getmapusers("moc_pryd01.gat") + @reset$ + "]",dpyramids1,
+		"Level 2 [" + @red$ + getmapusers("moc_pryd02.gat") + @reset$ + "]",dpyramids2,
+		"Level 3 [" + @red$ + getmapusers("moc_pryd03.gat") + @reset$ + "]",dpyramids3,
+		"Level 4 [" + @red$ + getmapusers("moc_pryd04.gat") + @reset$ + "]",dpyramids4,
+		"Basement 1 [" + @red$ + getmapusers("moc_pryd05.gat") + @reset$ + "]",dpyramidsb1,
+		"Basement 2 [" + @red$ + getmapusers("moc_pryd06.gat") + @reset$ + "]",dpyramidsb2;
 sphinx:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dsphinx1 + @reset$ + "]",dsphinx1,
-		"Level 2 [" + @red$ + @dsphinx2 + @reset$ + "]",dsphinx2,
-		"Level 3 [" + @red$ + @dsphinx3 + @reset$ + "]",dsphinx3,
-		"Level 4 [" + @red$ + @dsphinx4 + @reset$ + "]",dsphinx4,
-		"Level 5 [" + @red$ + @dsphinx5 + @reset$ + "]",dsphinx5;
+	menu	"Level 1 [" + @red$ + getmapusers("in_sphinx1.gat") + @reset$ + "]",dsphinx1,
+		"Level 2 [" + @red$ + getmapusers("in_sphinx2.gat") + @reset$ + "]",dsphinx2,
+		"Level 3 [" + @red$ + getmapusers("in_sphinx3.gat") + @reset$ + "]",dsphinx3,
+		"Level 4 [" + @red$ + getmapusers("in_sphinx4.gat") + @reset$ + "]",dsphinx4,
+		"Level 5 [" + @red$ + getmapusers("in_sphinx5.gat") + @reset$ + "]",dsphinx5;
 sunken:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dsunken1 + @reset$ + "]",dsunken1,
-		"Level 2 [" + @red$ + @dsunken2 + @reset$ + "]",dsunken2;
+	menu	"Level 1 [" + @red$ + getmapusers("treasure01.gat") + @reset$ + "]",dsunken1,
+		"Level 2 [" + @red$ + getmapusers("treasure02.gat") + @reset$ + "]",dsunken2;
 toy:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dtoy1 + @reset$ + "]",dtoy1,
-		"Level 2 [" + @red$ + @dtoy2 + @reset$ + "]",dtoy2;
+	menu	"Level 1 [" + @red$ + getmapusers("xmas_dun01.gat") + @reset$ + "]",dtoy1,
+		"Level 2 [" + @red$ + getmapusers("xmas_dun02.gat") + @reset$ + "]",dtoy2;
 turtle:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Entrance [" + @red$ + @dturtleent + @reset$ + "]",dturtleent,
-		"Level 1 [" + @red$ + @dturtle1 + @reset$ + "]",dturtle1,
-		"Level 2 [" + @red$ + @dturtle2 + @reset$ + "]",dturtle2,
-		"Level 3 [" + @red$ + @dturtle3 + @reset$ + "]",dturtle3;
+	menu	"Entrance [" + @red$ + getmapusers("tur_dun01.gat") + @reset$ + "]",dturtleent,
+		"Level 1 [" + @red$ + getmapusers("tur_dun02.gat") + @reset$ + "]",dturtle1,
+		"Level 2 [" + @red$ + getmapusers("tur_dun03.gat") + @reset$ + "]",dturtle2,
+		"Level 3 [" + @red$ + getmapusers("tur_dun04.gat") + @reset$ + "]",dturtle3;
 ama:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dama1 + @reset$ + "]",dama1,
-		"Level 2 [" + @red$ + @dama2 + @reset$ + "]",dama2,
-		"Level 3 [" + @red$ + @dama3 + @reset$ + "]",dama3;
+	menu	"Level 1 [" + @red$ + getmapusers("ama_dun01.gat") + @reset$ + "]",dama1,
+		"Level 2 [" + @red$ + getmapusers("ama_dun02.gat") + @reset$ + "]",dama2,
+		"Level 3 [" + @red$ + getmapusers("ama_dun03.gat") + @reset$ + "]",dama3;
 gon:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dgon1 + @reset$ + "]",dgon1,
-		"Level 2 [" + @red$ + @dgon2 + @reset$ + "]",dgon2,
-		"Level 3 [" + @red$ + @dgon3 + @reset$ + "]",dgon3;
+	menu	"Level 1 [" + @red$ + getmapusers("gon_dun01.gat") + @reset$ + "]",dgon1,
+		"Level 2 [" + @red$ + getmapusers("gon_dun02.gat") + @reset$ + "]",dgon2,
+		"Level 3 [" + @red$ + getmapusers("gon_dun03.gat") + @reset$ + "]",dgon3;
 gefenia:
 	mes "[Warp NPC]";
 	mes "Please select a Level. Beware that you will be warped directly into the dungeon.";
 	next;
-	menu	"Level 1 [" + @red$ + @dgefenia1 + @reset$ + "]",dgefenia1,
-		"Level 2 [" + @red$ + @dgefenia2 + @reset$ + "]",dgefenia2,
-		"Level 3 [" + @red$ + @dgefenia3 + @reset$ + "]",dgefenia3,
-		"Level 4 [" + @red$ + @dgefenia4 + @reset$ + "]",dgefenia4;
+	menu	"Level 1 [" + @red$ + getmapusers("gefenia01.gat") + @reset$ + "]",dgefenia1,
+		"Level 2 [" + @red$ + getmapusers("gefenia02.gat") + @reset$ + "]",dgefenia2,
+		"Level 3 [" + @red$ + getmapusers("gefenia03.gat") + @reset$ + "]",dgefenia3,
+		"Level 4 [" + @red$ + getmapusers("gefenia04.gat") + @reset$ + "]",dgefenia4;
 
 //----------------Towns----------------\\
 
