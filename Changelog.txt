@@ -6,6 +6,7 @@ Date	Added
           - Updated Basilica, Sharp Shooting, Berserk, Meditatio (Thanks to DracoRPG!)
           - Fixed a typo with Blade Stop that was causing crashes, sorry. ^^;
           - Reverted changes to Cloaking, ours is already more updated! ^_^
+          - Added temporary code for guild skills to stop crashing
 	* @alive, @raisemap, @raise now display the resurrection skill animation [MC Cameri]
 	* @charpetrename(AtCommand) is now #petrename(CharCommand) [MC Cameri]
 	* @charjob/(AtCommand) is now #jobchange(CharCommand) [MC Cameri]

@@ -23,6 +23,7 @@
 #include "intif.h"
 #include "log.h"
 #include "chrif.h"
+#include "guild.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -733,14 +734,14 @@ struct skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 /* アブラカダブラ?動スキルデ?タベ?ス */
 struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
-int	skill_get_hit( int id ){ return skill_db[id].hit; }
-int	skill_get_inf( int id ){ return skill_db[id].inf; }
-int	skill_get_pl( int id ){ return skill_db[id].pl; }
-int	skill_get_nk( int id ){ return skill_db[id].nk; }
-int skill_get_max( int id ){ return skill_db[id].max; }
-int skill_get_range( int id , int lv ){ return (lv <= 0) ? 0:skill_db[id].range[lv-1]; }
+int	skill_get_hit( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].hit : 0; }
+int	skill_get_inf( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].inf : guild_skill_get_inf(id); }
+int	skill_get_pl( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].pl : 0; }
+int	skill_get_nk( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].nk : 2; }
+int skill_get_max( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].max : guild_skill_get_max(id); }
+int skill_get_range( int id , int lv ){ return (lv <= 0) ? 0: ((id < MAX_SKILL_DB) ? skill_db[id].range[lv-1] : guild_skill_get_max(id)); }
 int	skill_get_hp( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].hp[lv-1]; }
-int	skill_get_sp( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].sp[lv-1]; }
+int	skill_get_sp( int id ,int lv ){ return (lv <= 0) ? 0: ((id < MAX_SKILL_DB) ? skill_db[id].sp[lv-1] : guild_skill_get_sp(id, lv)); }
 int	skill_get_zeny( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].zeny[lv-1]; }
 int	skill_get_num( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].num[lv-1]; }
 int	skill_get_cast( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].cast[lv-1]; }
@@ -749,7 +750,8 @@ int	skill_get_time( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].upkeep_t
 int	skill_get_time2( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].upkeep_time2[lv-1]; }
 int	skill_get_castdef( int id ){ return skill_db[id].cast_def_rate; }
 int	skill_get_weapontype( int id ){ return skill_db[id].weapon; }
-int	skill_get_inf2( int id ){ return skill_db[id].inf2; }
+int	skill_get_inf2( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].inf2 : 0; }
+int	skill_get_castcancel( int id ){ return (id < MAX_SKILL_DB) ? skill_db[id].maxcount : 0; }
 int	skill_get_maxcount( int id ){ return skill_db[id].maxcount; }
 int	skill_get_blewcount( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].blewcount[lv-1]; }
 int	skill_get_mhp( int id ,int lv ){ return (lv <= 0) ? 0:skill_db[id].mhp[lv-1]; }
@@ -977,7 +979,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 				//else
 				//	clif_skill_fail(sd,skillid,0,0); // it's annoying! =p [Celest]
 			}
-		// エンチャントデットリーポイズン(猛毒効果)
+		// エンチャントデットリ?ポイズン(猛毒?果)
 		if (sd && sd->sc_data[SC_EDP].timer != -1 && rand() % 10000 < sd->sc_data[SC_EDP].val2 * sc_def_vit) {
 			int mhp = battle_get_max_hp(bl);
 			int hp = battle_get_hp(bl);
@@ -1208,7 +1210,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 		//阿修羅を使うと5分間自然回復しないようになる
 		skill_status_change_start(src,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time2(skillid,skilllv),0 );
 		break;
-	case HW_NAPALMVULCAN:			/* ナパームバルカン */
+	case HW_NAPALMVULCAN:			/* ナパ?ムバルカン */
 		// skilllv*5%の確率で呪い
 		if (rand()%10000 < 5*skilllv*sc_def_luk)
 			skill_status_change_start(bl,SC_CURSE,7,0,0,0,skill_get_time2(NPC_CURSEATTACK,7),0);
@@ -4311,6 +4313,11 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			}
 		}
 		break;
+	case GD_BATTLEORDER:
+	case GD_REGENERATION:
+	case GD_RESTORE:
+	case GD_EMERGENCYCALL:
+		break;
 	default:
 		printf("Unknown skill used:%d\n",skillid);
 		map_freeblock_unlock();
@@ -6217,8 +6224,8 @@ static int skill_check_condition_use_sub(struct block_list *bl,va_list ap)
 	case BD_RAGNAROK:				/* 神?の?昏 */
 	case CG_MOONLIT:				/* 月明りの泉に落ちる花びら */
 		if(sd != ssd && //本人以外で
-		  ((ss_class.job==19 && s_class.job==20) || //自分がバードならダンサーで
-		   (ss_class.job==20 && s_class.job==19)) && //自分がダンサーならバードで
+		  ((ss_class.job==19 && s_class.job==20) || //自分がバ?ドならダンサ?で
+		   (ss_class.job==20 && s_class.job==19)) && //自分がダンサ?ならバ?ドで
 		   pc_checkskill(sd,skillid) > 0 && //スキルを持っていて
 		   (*c)==0 && //最初の一人で
 		   sd->status.party_id == ssd->status.party_id && //パ?ティ?が同じで
@@ -6916,7 +6923,8 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	casttime=skill_castfix(&sd->bl, skill_get_cast( skill_num,skill_lv) );
 	if(skill_num != SA_MAGICROD)
 		delay=skill_delayfix(&sd->bl, skill_get_delay( skill_num,skill_lv) );
-	sd->state.skillcastcancel = skill_db[skill_num].castcancel;
+	//sd->state.skillcastcancel = skill_db[skill_num].castcancel;
+	sd->state.skillcastcancel = skill_get_castcancel(skill_num);
 
 	switch(skill_num){	/* 何か特殊な?理が必要 */
 //	case AL_HEAL:	/* ヒ?ル */
@@ -6963,17 +6971,16 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	case WE_MALE:
 	case WE_FEMALE:
 		{
-		struct map_session_data *p_sd = NULL;
-		if((p_sd = pc_get_partner(sd)) == NULL)
-			return 0;
-		target_id = p_sd->bl.id;
-		//rangeをもう1回?査
-		range = skill_get_range(skill_num,skill_lv);
-		if(range < 0)
-			range = battle_get_range(&sd->bl) - (range + 1);
-		if(!battle_check_range(&sd->bl,&p_sd->bl,range) ){
-			return 0;
-			}
+			struct map_session_data *p_sd = NULL;
+			if((p_sd = pc_get_partner(sd)) == NULL)
+				return 0;
+			target_id = p_sd->bl.id;
+			//rangeをもう1回?査
+			range = skill_get_range(skill_num,skill_lv);
+			if(range < 0)
+				range = battle_get_range(&sd->bl) - (range + 1);
+			if(!battle_check_range(&sd->bl,&p_sd->bl,range))
+				return 0;
 		}
 		break;
 	case AS_SPLASHER:				/* ベナムスプラッシャ? */
@@ -6988,7 +6995,12 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	case PF_MEMORIZE:				/* メモライズ */
 		casttime = 12000;
 		break;
-
+	case GD_BATTLEORDER:
+	case GD_REGENERATION:
+	case GD_RESTORE:
+	case GD_EMERGENCYCALL:
+		printf ("guild skill used : id = %d\n", skill_num);
+		break;
 	}
 
 	//メモライズ?態ならキャストタイムが1/3
@@ -7559,7 +7571,7 @@ int skill_gangsterparadise(struct map_session_data *sd ,int type)
 		map_foreachinarea(skill_gangster_count,sd->bl.m,
 			sd->bl.x-range,sd->bl.y-range,
 			sd->bl.x+range,sd->bl.y+range,BL_PC,&c);
-		if(c > 1) {/*ギャングスター成功したら自分にもギャングスター属性付与*/
+		if(c > 1) {/*ギャングスタ?成功したら自分にもギャングスタ??性付?*/
 			map_foreachinarea(skill_gangster_in,sd->bl.m,
 				sd->bl.x-range,sd->bl.y-range,
 				sd->bl.x+range,sd->bl.y+range,BL_PC);
@@ -8046,7 +8058,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 		case SC_POISON:
 			if (sc_data[SC_DPOISON].timer != -1)	//
 				break;						// DPOISON用のオプション
-			*opt2 &= ~1;					// が専用に用意された場合には 
+			*opt2 &= ~1;					// が?用に用意された場合には 
 			opt_flag = 1;					// ここは削除する 
 			break;							//
 		case SC_CURSE:
@@ -8058,7 +8070,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 		case SC_DPOISON:
 			if (sc_data[SC_POISON].timer != -1)	// DPOISON用のオプションが	
 				break;							// 用意されたら削除
-			*opt2 &= ~1;	// 毒状態解除
+			*opt2 &= ~1;	// 毒?態解除
 			opt_flag = 1;
 			break;
 		case SC_SIGNUMCRUCIS:
@@ -8757,7 +8769,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			skill_encchant_eremental_end(bl,SC_ENCPOISON);
 			break;
 		case SC_EDP:	// [Celest]
-			val2 = val1 + 2;			/* 猛毒付与確率(%) */
+			val2 = val1 + 2;			/* 猛毒付?確率(%) */
 			calc_flag = 1;
 			break;
 		case SC_POISONREACT:	/* ポイズンリアクト */
@@ -10487,11 +10499,11 @@ int skill_produce_mix( struct map_session_data *sd,
 
 		switch (skill_produce_db[idx].req_skill) {
 			case AM_PHARMACY:
-				clif_produceeffect(sd,2,nameid);/* 製薬エフェクト */
+				clif_produceeffect(sd,2,nameid);/* 製?エフェクト */
 				clif_misceffect(&sd->bl,5); /* 他人にも成功を通知 */
 				break;
 			case ASC_CDP:
-				clif_produceeffect(sd,2,nameid);/* 暫定で製薬エフェクト */
+				clif_produceeffect(sd,2,nameid);/* 暫定で製?エフェクト */
 				clif_misceffect(&sd->bl,5);
 				break;
 			default:  /* 武器製造、コイン製造 */
@@ -10513,12 +10525,12 @@ int skill_produce_mix( struct map_session_data *sd,
 
 		switch (skill_produce_db[idx].req_skill) {
 			case AM_PHARMACY:
-				clif_produceeffect(sd,3,nameid);/* 製薬失敗エフェクト */
+				clif_produceeffect(sd,3,nameid);/* 製?失敗エフェクト */
 				clif_misceffect(&sd->bl,6); /* 他人にも失敗を通知 */
 				break;
 			case ASC_CDP:
 				{
-					clif_produceeffect(sd,3,nameid); /* 暫定で製薬エフェクト */
+					clif_produceeffect(sd,3,nameid); /* 暫定で製?エフェクト */
 					clif_misceffect(&sd->bl,6); /* 他人にも失敗を通知 */
 					pc_heal(sd, -(sd->status.max_hp>>2), 0);
 				}
