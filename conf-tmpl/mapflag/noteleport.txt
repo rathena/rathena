@@ -2,9 +2,12 @@
 //= Map flags that disable use of fly/butterfly wings
 //===== By: ==================================================
 //= eAthena Dev Team
+//= 1.1 [Lupus]
 //===== Current Version: =====================================
 
-// Cities ===============>\\
+// Cities ========================
+ayo_in01.gat	mapflag	noteleport
+ayo_in02.gat	mapflag	noteleport
 alb_ship.gat	mapflag	noteleport
 alberta_in.gat	mapflag	noteleport
 aldeba_in.gat	mapflag	noteleport
@@ -30,6 +33,7 @@ new_1-4.gat	mapflag	noteleport
 nif_in.gat	mapflag	noteleport
 payon_in01.gat	mapflag	noteleport
 payon_in02.gat	mapflag	noteleport
+payon_in03.gat	mapflag	noteleport
 prt_are_in.gat	mapflag	noteleport
 prt_are01.gat	mapflag	noteleport
 prt_castle.gat	mapflag	noteleport
@@ -42,7 +46,7 @@ yuno_in03.gat	mapflag	noteleport
 yuno_in04.gat	mapflag	noteleport
 yuno_in05.gat	mapflag	noteleport
 
-// Job Quests =========================
+// Job Quests ====================
 sword_1-1.gat	mapflag	noteleport
 sword_2-1.gat	mapflag	noteleport
 sword_3-1.gat	mapflag	noteleport
@@ -64,7 +68,11 @@ monk_in.gat	mapflag	noteleport
 in_rogue.gat	mapflag	noteleport
 job_sage.gat	mapflag	noteleport
 
-// Guild Castles ====================
+// Special Quests Places =========
+que_god01.gat	mapflag	noteleport
+que_god02.gat	mapflag	noteleport
+
+// Guild Castles =================
 aldeg_cas01.gat	mapflag	noteleport
 aldeg_cas02.gat	mapflag	noteleport
 aldeg_cas03.gat	mapflag	noteleport

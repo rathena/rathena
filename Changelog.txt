@@ -1,4 +1,7 @@
 Date	Added
+12/23
+	* Updated mapflags (added missing payon_in03,ayo_in01,ayo_in02, que_god01, que_god02) [Lupus]
+
 12/22
 	* Eliminated skill tree mapping since we have entries
 	  for all the classes in the skill_tree.txt files  [MouseJstr]

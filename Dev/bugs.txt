@@ -159,3 +159,14 @@ Note:		An example of this would be to make the last line of your NPC you right c
 Problem:	Berserk disallows you to talk and never turns off
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Auto Berserk doesn't automatically start when you get < 25% HP
+Assigned:	N/A
+Progress:	0%
+
+Problem:	When you change JOB, you don't lose skills in DB. It means if you were Merchant once 
+		you can buy/sell with discount being Mage, etc.
+		Those skills aren't being shown in the skilltree, but they do work. 
+Assigned:	N/A
+Progress:	0%
+

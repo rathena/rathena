@@ -3,6 +3,8 @@
 //= To disable PvP mode on a specific map add the mapname here.
 //============================================================
 
+ayo_in01.gat	mapflag	nopvp
+ayo_in02.gat	mapflag	nopvp
 alberta_in.gat	mapflag	nopvp
 alberta.gat	mapflag	nopvp
 alde_alche.gat	mapflag	nopvp
@@ -55,4 +57,3 @@ yuno_in04.gat	mapflag	nopvp
 yuno_in05.gat	mapflag	nopvp
 yuno.gat	mapflag	nopvp
 gon_test.gat	mapflag	nopvp
-

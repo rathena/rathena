@@ -36,10 +36,10 @@ sec_pri.gat	mapflag	nowarp
 //Uncomment following maps to let your prisoners fight with other prisoners
 
 // PvP ===================================
-//sec_pri.gat	mapflag	pvp
+sec_pri.gat	mapflag	pvp
 
 // No Party ==============================
-//sec_pri.gat	mapflag	pvp_noparty
+sec_pri.gat	mapflag	pvp_noparty
 
 //Nightmare Equipment Drops PVP ==========
 sec_pri.gat	mapflag	pvp_nightmaredrop	random,equip,300

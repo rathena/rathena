@@ -2,10 +2,13 @@
 //= Map flags that disable exp. penalty on death.
 //===== By: ==================================================
 //= eAthena Dev Team
+//= 1.1 [Lupus]
 //===== Current Version: =====================================
 
 
 // Towns ====================>\\
+ayo_in01.gat	mapflag	nopenalty
+ayo_in02.gat	mapflag	nopenalty
 alb_ship.gat	mapflag	nopenalty
 alberta.gat	mapflag	nopenalty
 alberta_in.gat	mapflag	nopenalty
@@ -44,6 +47,7 @@ nif_in.gat	mapflag	nopenalty
 payon.gat	mapflag	nopenalty
 payon_in01.gat	mapflag	nopenalty
 payon_in02.gat	mapflag	nopenalty
+payon_in03.gat	mapflag	nopenalty
 prontera.gat	mapflag	nopenalty
 prt_are_in.gat	mapflag	nopenalty
 prt_are01.gat	mapflag	nopenalty
