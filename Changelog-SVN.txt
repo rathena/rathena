@@ -1,6 +1,9 @@
 Date	Added
 
 03/11
+        * Added Sage enchanting skills can only be cast on party members [celest]
+        * Fixed Magic Power not working for ground-targeted skills [celest]
+        * Fixed Frost Diver having double freezing chances [celest]
         * Added Breaker's magic damage to be blockable by Pneuma, thanks to DracoRPG
           [celest]
         * Corrected 1206Sakexe's packet detection, thanks to Yor / Freya [celest]

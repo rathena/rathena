@@ -815,12 +815,15 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 
 	case MG_FROSTDIVER:		/* フロストダイバ? */
 	case WZ_FROSTNOVA:		/* フロストノヴァ */
-		rate=(skilllv*3+35)*sc_def_mdef/100-(status_get_int(bl)+status_get_luk(bl))/15;
-		rate=rate<=5?5:rate;
-		if(rand()%100 < rate)
-			status_change_start(bl,SC_FREEZE,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
-		else if(sd && skillid==MG_FROSTDIVER)
-			clif_skill_fail(sd,skillid,0,0);
+		{
+			struct status_change *sc_data = status_get_sc_data(bl);
+			rate=(skilllv*3+35)*sc_def_mdef/100-(status_get_int(bl)+status_get_luk(bl))/15;
+			rate=rate<=5?5:rate;
+			if(sc_data && sc_data[SC_FREEZE].timer == -1 && rand()%100 < rate)
+				status_change_start(bl,SC_FREEZE,skilllv,0,0,0,skill_get_time2(skillid,skilllv)*(1-sc_def_mdef/100),0);
+			else if (sd && skillid == MG_FROSTDIVER)
+				clif_skill_fail(sd,skillid,0,0);
+		}
 		break;
 
 	case WZ_STORMGUST:		/* スト?ムガスト */
@@ -1494,13 +1497,11 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	}
 	/* ダメ?ジがあるなら追加?果判定 */
 	if(bl->prev != NULL){
-		struct map_session_data *sd = (struct map_session_data *)bl;
-		nullpo_retr(0, sd);
-		if( bl->type != BL_PC || (sd && !pc_isdead(sd)) ) {
-		if(damage > 0)
-			skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
-		if(bl->type==BL_MOB && src!=bl)	/* スキル使用?件のMOBスキル */
-		{
+		if(!status_isdead(bl)) {
+			if(damage > 0)
+				skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
+			if(bl->type==BL_MOB && src!=bl)	/* スキル使用?件のMOBスキル */
+			{
 				struct mob_data *md=(struct mob_data *)bl;
 				nullpo_retr(0, md);
 				if(battle_config.mob_changetarget_byskill == 1)
@@ -1757,8 +1758,6 @@ int skill_guildaura_sub (struct block_list *bl,va_list ap)
 /* ?象の?をカウントする。（skill_area_temp[0]を初期化しておくこと） */
 int skill_area_sub_count(struct block_list *src,struct block_list *target,int skillid,int skilllv,unsigned int tick,int flag)
 {
-	//if(skilllv <= 0) return 0;
-	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 	if(skill_area_temp[0] < 0xffff)
 		skill_area_temp[0]++;
 	return 0;
@@ -1911,6 +1910,13 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 					skl->timer = -1;
 				}
 				skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+				if (skl->type <= 1) {	// partial fix: it still doesn't end if the target dies
+					// should put outside of the switch, but since this is the only
+					// mage targetted spell for now,
+					struct status_change *sc_data = status_get_sc_data(src);
+					if(sc_data && sc_data[SC_MAGICPOWER].timer != -1)	//マジックパワ?の?果終了
+						status_change_end(src,SC_MAGICPOWER,-1);
+				}
 				break;
 			default:
 				skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
@@ -2454,31 +2460,9 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	case NPC_DARKJUPITEL:			/*闇ユピテル*/
 	case NPC_MAGICALATTACK:		/* MOB:魔法打?攻? */
 	case PR_ASPERSIO:			/* アスペルシオ */
+	case MG_FROSTDIVER:		/* フロストダイバー */
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
-
-	case MG_FROSTDIVER:		/* フロストダイバー */
-	{
-		struct status_change *sc_data = status_get_sc_data(bl);
-		int sc_def_mdef, rate, damage;
-		sc_def_mdef = status_get_sc_def_mdef(bl);
-		rate = (skilllv*3+35)*sc_def_mdef/100-(status_get_int(bl)+status_get_luk(bl))/15;
-		rate = rate<=5?5:rate;
-		if (sc_data && sc_data[SC_FREEZE].timer != -1) {
-			skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
-			if (sd)
-				clif_skill_fail(sd,skillid,0,0);
-			break;
-		}
-		damage = skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
-		if (status_get_hp(bl) > 0 && damage > 0 && rand()%100 < rate) {
-			status_change_start(bl,SC_FREEZE,skilllv,0,0,0,
-				skill_get_time2(skillid,skilllv)*(1-sc_def_mdef/100),0);
-		} else if (sd) {
-			clif_skill_fail(sd,skillid,0,0);
-		}
-		break;
-	}
 
 	case WZ_WATERBALL:			/* ウォ?タ?ボ?ル */
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
@@ -3062,26 +3046,27 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case SA_FROSTWEAPON:
 	case SA_LIGHTNINGLOADER:
 	case SA_SEISMICWEAPON:
-		if(bl->type==BL_PC && ((struct map_session_data *)bl)->special_state.no_magic_damage ){
-			clif_skill_nodamage(src,bl,skillid,skilllv,0);
-			break;
-		}
 		if(bl->type==BL_PC) {
-			struct map_session_data *sd2=(struct map_session_data *)bl;
-			if(sd2->status.weapon==0 || sd2->sc_data[SC_FLAMELAUNCHER].timer!=-1 || sd2->sc_data[SC_FROSTWEAPON].timer!=-1 ||
-				sd2->sc_data[SC_LIGHTNINGLOADER].timer!=-1 || sd2->sc_data[SC_SEISMICWEAPON].timer!=-1 ||
+			struct map_session_data *sd2 = (struct map_session_data *)bl;
+			if (sd2->special_state.no_magic_damage) {
+				clif_skill_nodamage(src,bl,skillid,skilllv,0);
+				break;
+			}
+			if(sd2->status.weapon==0 || (sd && sd->status.party_id > 0 && sd->status.party_id != sd2->status.party_id) ||
+				sd2->sc_data[SC_FLAMELAUNCHER].timer!=-1 || sd2->sc_data[SC_FROSTWEAPON].timer!=-1 ||
+					sd2->sc_data[SC_LIGHTNINGLOADER].timer!=-1 || sd2->sc_data[SC_SEISMICWEAPON].timer!=-1 ||
 					sd2->sc_data[SC_ENCPOISON].timer!=-1) {
-				clif_skill_fail(sd,skillid,0,0);
+				if (sd) clif_skill_fail(sd,skillid,0,0);
 				clif_skill_nodamage(src,bl,skillid,skilllv,0);
 				break;
 			}
 		}
 		if(skilllv < 5 && rand()%100 > (60+skilllv*10) ) { //fixed by Lupus (4 -> 5) or else it has 100% success even at lv4
-			clif_skill_fail(sd,skillid,0,0);
+			if (sd) clif_skill_fail(sd,skillid,0,0);
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
 			if(bl->type==BL_PC && battle_config.equipment_breaking) {
-				struct map_session_data *sd2=(struct map_session_data *)bl;
-				if(sd!=sd2) clif_displaymessage(sd->fd,"You broke target's weapon");
+				struct map_session_data *sd2 = (struct map_session_data *)bl;
+				if(sd && sd != sd2) clif_displaymessage(sd->fd,"You broke target's weapon");
 				pc_breakweapon(sd2);
 			}
 			break;
@@ -5812,7 +5797,6 @@ int skill_unit_effect(struct block_list *bl,va_list ap)
 int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 {
 	struct skill_unit_group *sg;
-
 	nullpo_retr(0, src);
 	nullpo_retr(0, sg=src->group);
 
@@ -6975,12 +6959,6 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 				return 0;
 		}
 		break;
-	case PF_MEMORIZE:				/* メモライズ */
-		casttime = 12000;
-		break;
-	case HW_MAGICPOWER:
-		casttime = 700;
-		break;
 	case HP_BASILICA:		/* バジリカ */
 		{
 			struct status_change *sc_data;
@@ -7202,8 +7180,9 @@ int skill_use_pos( struct map_session_data *sd,
 		skill_castend_pos(sd->skilltimer,tick,sd->bl.id,0);
 	}
 	//マジックパワ?の?果終了
-	if(sc_data && sc_data[SC_MAGICPOWER].timer != -1 && skill_num != HW_MAGICPOWER)
-		status_change_end(&sd->bl,SC_MAGICPOWER,-1);
+	if (skill_get_unit_id(skill_num, 0) != 0x86 &&
+		sc_data && sc_data[SC_MAGICPOWER].timer != -1)
+			status_change_end(&sd->bl,SC_MAGICPOWER,-1);
 
 	return 0;
 }
@@ -8182,10 +8161,15 @@ int skill_delunitgroup(struct skill_unit_group *group)
 
 	src=map_id2bl(group->src_id);
 	//ダンススキルはダンス状態を解除する
-	if (skill_get_unit_flag(group->skill_id)&UF_DANCE) {
-		if(src)
+	if(src) {
+		if (skill_get_unit_flag(group->skill_id)&UF_DANCE)		
 			status_change_end(src,SC_DANCING,-1);
+		if (group->unit_id == 0x86) {
+			struct status_change *sc_data = status_get_sc_data(src);
+			if(sc_data && sc_data[SC_MAGICPOWER].timer != -1)	//マジックパワ?の?果終了
+				status_change_end(src,SC_MAGICPOWER,-1);
 		}
+	}
 
 	group->alive_count=0;
 	if(group->unit!=NULL){
