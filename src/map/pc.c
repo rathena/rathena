@@ -5443,7 +5443,7 @@ int pc_resetstate(struct map_session_data* sd)
 //	New statpoint table used here - Dexity
 	sd->status.status_point = atoi (statp[sd->status.base_level - 1]);
 	if(sd->status.class_ >= 4001 && sd->status.class_ <= 4024)
-		sd->status.status_point+=40;
+		sd->status.status_point+=52;	// extra 52+48=100 stat points
 //	End addition 
 
 //	Removed by Dexity - old count
