@@ -9,6 +9,8 @@ Darkchild
 	* Monk Quest - Botting An Acolyte Atm
 Lupus
 	* removing a loop from grandpa_pharmacist.txt (similiar to Juice quest) 0%
+	* removing Zeny exploits from Milkman, Juice maker, Potion maker 0%
+
 kobra_k88
 	* Optimize WoE
 Aria
@@ -30,6 +32,9 @@ Other Ppl
 
 Date		Added
 ======
+11/13
+	* - Fixed warps to Amatsu Dungeon (now u can get there via a special quest only) thanks to shadowlady [Lupus]
+	  - Fixed logical bug in Sleipnir Alchem. sub-quest [Lupus]
 11/11
 	* - Fixed Jobchanger.txt and supernovice.txt [shadowlady]
 11/10
