@@ -35,6 +35,9 @@ Other Ppl
 Date		Added
 ======
 
+03/11
+        * Reverted the Moving HP skill quest change, thanks to DracoRPG [celest]
+
 03/07
         * Fixed a typo in high mage job changing, thanks to hongmei [celest]
 

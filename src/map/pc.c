@@ -6821,6 +6821,8 @@ int pc_setsavepoint(struct map_session_data *sd,char *mapname,int x,int y)
  *------------------------------------------
  */
 static int last_save_fd,save_flag;
+static int Ghp[MAX_GUILDCASTLE][8]; // so save only if HP are changed // experimental code [Yor]
+
 static int pc_autosave_sub(struct map_session_data *sd,va_list ap)
 {
 	nullpo_retr(0, sd);
@@ -6828,8 +6830,11 @@ static int pc_autosave_sub(struct map_session_data *sd,va_list ap)
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd);
 
 	if(save_flag==0 && sd->fd>last_save_fd && !sd->state.waitingdisconnect){
-		struct guild_castle *gc=NULL;
-		int i;
+// --- uncomment to reenable guild castle saving ---//
+//		struct guild_castle *gc=NULL;
+//		int i;
+//
+
 //		if(battle_config.save_log)
 //			printf("autosave %d\n",sd->fd);
 		// pet
@@ -6839,18 +6844,43 @@ static int pc_autosave_sub(struct map_session_data *sd,va_list ap)
 		chrif_save(sd);
 		storage_storage_save(sd);
 
-		for(i=0;i<MAX_GUILDCASTLE;i++){
-			gc=guild_castle_search(i);
-			if(!gc) continue;
-			if(gc->visibleG0==1) guild_castledatasave(gc->castle_id,18,gc->Ghp0);
-			if(gc->visibleG1==1) guild_castledatasave(gc->castle_id,19,gc->Ghp1);
-			if(gc->visibleG2==1) guild_castledatasave(gc->castle_id,20,gc->Ghp2);
-			if(gc->visibleG3==1) guild_castledatasave(gc->castle_id,21,gc->Ghp3);
-			if(gc->visibleG4==1) guild_castledatasave(gc->castle_id,22,gc->Ghp4);
-			if(gc->visibleG5==1) guild_castledatasave(gc->castle_id,23,gc->Ghp5);
-			if(gc->visibleG6==1) guild_castledatasave(gc->castle_id,24,gc->Ghp6);
-			if(gc->visibleG7==1) guild_castledatasave(gc->castle_id,25,gc->Ghp7);
-		}
+// --- uncomment to reenable guild castle saving ---//
+/*		for(i = 0; i < MAX_GUILDCASTLE; i++) {	// [Yor]
+			gc = guild_castle_search(i);
+			if (!gc) continue;
+			if (gc->visibleG0 == 1 && Ghp[i][0] != gc->Ghp0) {
+				guild_castledatasave(gc->castle_id, 18, gc->Ghp0);
+				Ghp[i][0] = gc->Ghp0;
+			}
+			if (gc->visibleG1 == 1 && Ghp[i][1] != gc->Ghp1) {
+				guild_castledatasave(gc->castle_id, 19, gc->Ghp1);
+				Ghp[i][1] = gc->Ghp1;
+			}
+			if (gc->visibleG2 == 1 && Ghp[i][2] != gc->Ghp2) {
+				guild_castledatasave(gc->castle_id, 20, gc->Ghp2);
+				Ghp[i][2] = gc->Ghp2;
+			}
+			if (gc->visibleG3 == 1 && Ghp[i][3] != gc->Ghp3) {
+				guild_castledatasave(gc->castle_id, 21, gc->Ghp3);
+				Ghp[i][3] = gc->Ghp3;
+			}
+			if (gc->visibleG4 == 1 && Ghp[i][4] != gc->Ghp4) {
+				guild_castledatasave(gc->castle_id, 22, gc->Ghp4);
+				Ghp[i][4] = gc->Ghp4;
+			}
+			if (gc->visibleG5 == 1 && Ghp[i][5] != gc->Ghp5) {
+				guild_castledatasave(gc->castle_id, 23, gc->Ghp5);
+				Ghp[i][5] = gc->Ghp5;
+			}
+			if (gc->visibleG6 == 1 && Ghp[i][6] != gc->Ghp6) {
+				guild_castledatasave(gc->castle_id, 24, gc->Ghp6);
+				Ghp[i][6] = gc->Ghp6;
+			}
+			if (gc->visibleG7 == 1 && Ghp[i][7] != gc->Ghp7) {
+				guild_castledatasave(gc->castle_id, 25, gc->Ghp7);
+				Ghp[i][7] = gc->Ghp7;
+			}
+		}*/
 
 		save_flag=1;
 		last_save_fd = sd->fd;

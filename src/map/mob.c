@@ -2612,7 +2612,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		}
 
 		// Ore Discovery [Celest]
-		if (pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/100 >= rand()%1000) {
+		if (sd && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/100 >= rand()%1000) {
 			struct delay_item_drop *ditem;
 			int itemid[17] = { 714, 756, 757, 969, 984, 985, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1002 };
 			ditem=(struct delay_item_drop *)aCalloc(1,sizeof(struct delay_item_drop));
@@ -2631,7 +2631,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		}
 
 		//this drop log contains ALL dropped items + ORE (if there was ORE Recovery) [Lupus]
-		if(log_config.drop > 0 && drop_items) //we check were there any drops.. and if not - don't write the log
+		if(sd && log_config.drop > 0 && drop_items) //we check were there any drops.. and if not - don't write the log
 			log_drop(sd, md->class_, log_item); //mvp_sd
 
 		if(sd && sd->state.attack_type == BF_WEAPON) {

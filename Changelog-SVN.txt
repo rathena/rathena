@@ -1,6 +1,13 @@
 Date	Added
 
 03/11
+        * Fixed "--en/ja--" usage in 'monster' script not working properly, thanks
+          to sbilly [celest]
+        * Speedup player autosaving -- don't save guild castle data at the same time,
+          thanks to Alex14 [celest]
+        * Optimised guild castle saving when autosaving player data, thanks to Yor /
+          Freya (UPDATE: view above)
+        * Added sd check in mob_damage, thanks to sbilly [celest]
         * Added Sage enchanting skills can only be cast on party members [celest]
         * Fixed Magic Power not working for ground-targeted skills [celest]
         * Fixed Frost Diver having double freezing chances [celest]

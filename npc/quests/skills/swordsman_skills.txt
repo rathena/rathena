@@ -234,7 +234,8 @@ L_Check:
 	mes "Haha! You have just learned HP Moving Recovery!";
 	delitem 713,200;
 	delitem 1058,1;
-	delitem 2312,1;
+//-- Padded armor does not have to be deleted! --
+//	delitem 2312,1;
 	skill 144,1,0;
 	set MOVHPREC, 0;
 	next;
