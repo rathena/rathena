@@ -20,6 +20,8 @@
 yuno_in01.gat,103,158,4	script	Bain	98,
 {
 	set @name$, "[Bain]";
+	if (sleiphnir_q == 1) goto L_Check;
+	
 OnStart:
 	mes @name$;
 	mes "We are going to invent a doll that can talk and communicate! Well, at least that's what I'm trying to do....";
@@ -65,12 +67,6 @@ L_Check:
 	mes @name$;
 	if(ALCH_Q == 6) goto L_Alchemist;
 
-	L_Other:
-		mes "And here is something for you, to show you how much we appreciate your help.";
-		getitem 2410, 1;
-		set sleiphnir_q, 0;
-		close;
-
 	L_Alchemist:
 		mes "Okay, let's try this out!";
 		mes "Hold on for just a second!";
@@ -102,6 +98,10 @@ L_Check:
 		mes "Thank for helping me out.";
 		mes "You have my eternal gratitude.";
 		mes "I wish you luck in your journeys!";
+		next;
+		mes "And here is something for you, to show you how much we appreciate your help.";
+		getitem 2410, 1;
+		set sleiphnir_q, 0;
 		close;
 
 	L_NotEnuf:
