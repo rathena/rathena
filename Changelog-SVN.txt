@@ -2,6 +2,8 @@
 Date	Added
 
 03/31
+        * fixed memory corruption in mapif_guild_info:int_guild.c
+          [SVN 1367: MouseJstr]
 	* Fixed common/lock.c (problem with unistd.h include) [Codemaster]
         * Added father/mother/child fields to mmo_char_tostr() and
           mmo_char_fromstr() [veider]

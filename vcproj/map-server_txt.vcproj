@@ -68,7 +68,8 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="..\src\common;..\src\map;..\src\zlib"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_WIN32;PACKETVER=6;TXT_ONLY;NEW_006b;__WIN32;LOCALZLIB"
 				RuntimeLibrary="4"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
@@ -78,7 +79,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/eAthena.exe"
+				AdditionalDependencies="WSOCK32.lib"
+				OutputFile="..\map-server.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"

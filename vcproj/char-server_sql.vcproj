@@ -69,9 +69,10 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="4"
-				UsePrecompiledHeader="3"
+				AdditionalIncludeDirectories="..\src\common;;src\zlib;C:\Program Files\MySQL\MySQL Server 4.1\include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_WIN32;PACKETVER=6;NEW_006b;__WIN32;LOCALZLIB"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="3"/>
@@ -79,6 +80,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="WSOCK32.lib mysqlclient.lib"
+				AdditionalLibraryDirectories="C:\Program Files\MySQL\MySQL Server 4.1\lib\debug"
 				OutputFile="../char-server_sql.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="TRUE"
