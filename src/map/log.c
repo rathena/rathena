@@ -411,12 +411,13 @@ int log_config_read(char *cfgName)
 					log_config.zeny = 0;
 				else
 					log_config.zeny = (atoi(w2));
-			} else if(strcmpi(w1,"log_gm") == 0) {
+			} else if(strcmpi(w1,"log_gm") == 0) {				
 				log_config.gm = (atoi(w2));
 			} else if(strcmpi(w1,"log_npc") == 0) {
 				log_config.npc = (atoi(w2));
 			}
 
+		#ifndef TXT_ONLY
 			else if(strcmpi(w1, "log_branch_db") == 0) {
 				strcpy(log_config.log_branch_db, w2);
 				if(log_config.branch == 1)
@@ -463,32 +464,33 @@ int log_config_read(char *cfgName)
 				if(log_config.npc > 0)
 					printf("Logging NPC 'logmes' to table `%s`\n", w2);
 			}
+		#endif
 
-			else if(strcmpi(w1, "log_branch") == 0) {
+			else if(strcmpi(w1, "log_branch_file") == 0) {
 				strcpy(log_config.log_branch, w2);
 				if(log_config.branch > 0 && log_config.sql_logs < 1)
 					printf("Logging Dead Branch Usage to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_drop") == 0) {
+			} else if(strcmpi(w1, "log_drop_file") == 0) {
 				strcpy(log_config.log_drop, w2);
 				if(log_config.drop > 0 && log_config.sql_logs < 1)
 					printf("Logging Item Drops to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_mvpdrop") == 0) {
+			} else if(strcmpi(w1, "log_mvpdrop_file") == 0) {
 				strcpy(log_config.log_mvpdrop, w2);
 				if(log_config.mvpdrop > 0 && log_config.sql_logs < 1)
 					printf("Logging MVP Drops to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_present") == 0) {
+			} else if(strcmpi(w1, "log_present_file") == 0) {
 				strcpy(log_config.log_present, w2);
 				if(log_config.present > 0 && log_config.sql_logs < 1)
 					printf("Logging Present Usage & Results to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_produce") == 0) {
+			} else if(strcmpi(w1, "log_produce_file") == 0) {
 				strcpy(log_config.log_produce, w2);
 				if(log_config.produce > 0 && log_config.sql_logs < 1)
 					printf("Logging Producing to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_refine") == 0) {
+			} else if(strcmpi(w1, "log_refine_file") == 0) {
 				strcpy(log_config.log_refine, w2);
 				if(log_config.refine > 0 && log_config.sql_logs < 1)
 					printf("Logging Refining to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_trade") == 0) {
+			} else if(strcmpi(w1, "log_trade_file") == 0) {
 				strcpy(log_config.log_trade, w2);
 				if(log_config.trade > 0 && log_config.sql_logs < 1)
 				{
@@ -497,15 +499,15 @@ int log_config_read(char *cfgName)
 						printf("and Zeny Trades");
 					printf(" to file `%s`.txt\n", w2);
 				}
-			} else if(strcmpi(w1, "log_vend") == 0) {
+			} else if(strcmpi(w1, "log_vend_file") == 0) {
 				strcpy(log_config.log_vend, w2);
 				if(log_config.vend > 0  && log_config.sql_logs < 1)
 					printf("Logging Vending to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_gm") == 0) {
+			} else if(strcmpi(w1, "log_gm_file") == 0) {
 				strcpy(log_config.log_gm, w2);
 				if(log_config.gm > 0 && log_config.sql_logs < 1)
 					printf("Logging GM Level %d Commands to file `%s`.txt\n", log_config.gm, w2);
-			} else if(strcmpi(w1, "log_npc") == 0) {
+			} else if(strcmpi(w1, "log_npc_file") == 0) {
 				strcpy(log_config.log_npc, w2);
 				if(log_config.npc > 0 && log_config.sql_logs < 1)
 					printf("Logging NPC 'logmes' to file `%s`.txt\n", w2);

@@ -1,5 +1,6 @@
 Date	Added
 01/05
+        * Fixed TXT logging - log_athena.conf reading was kind of messed up [celest]
         * Added a simplified version of Qamera's OnConnect: OnDisconnect: OnDeath: 
           NPC events mod, (All credits go to him.) except adapted based on eA's current
           PCLoginEvent. (by davidsiaw) [celest]
