@@ -3225,11 +3225,11 @@ int char_config_read(const char *cfgName) {
 			if (start_zeny < 0)
 				start_zeny = 0;
 		} else if (strcmpi(w1, "start_weapon") == 0) {
-			start_zeny = atoi(w2);
+			start_weapon = atoi(w2);
 			if (start_weapon < 0)
 				start_weapon = 0;
 		} else if (strcmpi(w1, "start_armor") == 0) {
-			start_zeny = atoi(w2);
+			start_armor = atoi(w2);
 			if (start_armor < 0)
 				start_armor = 0;
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {
