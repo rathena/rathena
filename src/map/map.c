@@ -1480,6 +1480,9 @@ static int map_readafm(int m,char *fn) {
 	afm_file = fopen(fn, "r");
 	if (afm_file != NULL) {
 			
+		printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
+		fflush(stdout);
+
 		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
 		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
 		str=fgets(afm_line, sizeof(afm_line)-1, afm_file);
@@ -1541,7 +1544,11 @@ static int map_readafm(int m,char *fn) {
 		memset(map[m].block_mob_count,0,size);
 
 		strdb_insert(map_db,map[m].name,&map[m]);
+
+		fclose(afm_file);
+
 	}
+
 	return 0;
 }
 
