@@ -1,6 +1,8 @@
 #include <string.h>
 #include "utils.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
 
 void dump(unsigned char *buffer, int num)
 {
@@ -106,3 +108,74 @@ void str_lower(char *name)
 
 #endif
 
+// Allocate a StringBuf  [MouseJstr]
+struct StringBuf * StringBuf_Malloc() 
+{
+	StringBuf * ret = (struct StringBuf *) malloc(sizeof(struct StringBuf));
+	StringBuf_Init(ret);
+	return ret;
+}
+
+// Initialize a previously allocated StringBuf [MouseJstr]
+void StringBuf_Init(struct StringBuf * sbuf) 
+	sbuf->max_ = 1024;
+	sbuf->ptr_ = sbuf->buf_ = (char *) malloc(sbuf->max_ + 1);
+{
+}
+
+// printf into a StringBuf, moving the pointer [MouseJstr]
+int StringBuf_Printf(struct StringBuf *sbuf,const char *fmt,...) 
+{
+	va_list ap;
+        int n, size, off;
+
+	while (1) {
+		/* Try to print in the allocated space. */
+		va_start(ap, fmt);
+		size = sbuf->max_ - (sbuf->ptr_ - sbuf->buf_);
+		n = vsnprintf (sbuf->ptr_, size, fmt, ap);
+		va_end(ap);
+		/* If that worked, return the length. */
+		if (n > -1 && n < size) {
+			sbuf->ptr_ += n;
+			return sbuf->ptr_ - sbuf->buf_;
+		}
+		/* Else try again with more space. */
+		sbuf->max_ *= 2; // twice the old size
+		off = sbuf->ptr_ - sbuf->buf_;
+		sbuf->buf_ = (char *) realloc(sbuf->buf_, sbuf->max_ + 1);
+		sbuf->ptr_ = sbuf->buf_ + off;
+	}
+}
+
+// Append buf2 onto the end of buf1 [MouseJstr]
+int StringBuf_Append(struct StringBuf *buf1,const struct StringBuf *buf2) 
+{
+	int buf1_avail = buf1->max_ - (buf1->ptr_ - buf1->buf_);
+	int size2 = buf2->ptr_ - buf2->buf_;
+
+	if (size2 >= buf1_avail)  {
+		int off = buf1->ptr_ - buf1->buf_;
+		buf1->max_ += size2;
+		buf1->buf_ = (char *) realloc(buf1->buf_, buf1->max_ + 1);
+		buf1->ptr_ = buf1->buf_ + off;
+	}
+
+	memcpy(buf1->ptr_, buf2->buf_, size2);
+	buf1->ptr_ += size2;
+	return buf1->ptr_ - buf1->buf_;
+}
+
+// Destroy a StringBuf [MouseJstr]
+void StringBuf_Destroy(struct StringBuf *sbuf) 
+{
+	free(sbuf->buf_);
+	sbuf->ptr_ = sbuf->buf_ = 0;
+}
+
+// Free a StringBuf returned by StringBuf_Malloc [MouseJstr]
+void StringBuf_Free(struct StringBuf *sbuf) 
+{
+	StringBuf_Destroy(sbuf);
+	free(sbuf)buf;
+}

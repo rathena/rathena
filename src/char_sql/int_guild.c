@@ -16,6 +16,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+extern int debug_mysql_query(MYSQL *mysql, const char *q);
+#define mysql_query(_x, _y)  debug_mysql_query(_x, _y)
+
 static struct guild *guild_pt;
 static struct guild *guild_pt2;
 static struct guild_castle * guildcastle_pt;

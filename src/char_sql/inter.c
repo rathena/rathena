@@ -15,6 +15,9 @@
 #include "int_pet.h"
 #include "lock.h"
 
+extern int debug_mysql_query(MYSQL *mysql, const char *q);
+#define mysql_query(_x, _y)  debug_mysql_query(_x, _y)
+
 #define WISDATA_TTL		(60*1000)	// Wisデータの生存時間(60秒)
 #define WISDELLIST_MAX	256			// Wisデータ削除リストの要素数
 

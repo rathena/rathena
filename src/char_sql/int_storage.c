@@ -14,6 +14,9 @@ struct storage *storage_pt=NULL;
 struct guild_storage *guild_storage_pt=NULL;
 
 
+extern int debug_mysql_query(MYSQL *mysql, const char *q);
+#define mysql_query(_x, _y)  debug_mysql_query(_x, _y)
+
 // storage data -> DB conversion
 int storage_tosql(int account_id,struct storage *p){
 	int i;

@@ -190,6 +190,7 @@ void read_gm_account(void) {
 	sprintf(tmp_lsql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",login_db_account_id,login_db_level,login_db,login_db_level,lowest_gm_level);
 	if (mysql_query(&lmysql_handle, tmp_lsql)) {
 		printf("DB server Error (select %s to Memory)- %s\n",login_db,mysql_error(&lmysql_handle));
+		return;
 	}
 	lsql_res = mysql_store_result(&lmysql_handle);
 	if (lsql_res) {
@@ -507,7 +508,6 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 	if((eqcount==1) && (dbeqcount==1)){//printf("%s Equip Empty\n",tablename);
 	//item empty
 	} else {
-
 		for(i=1;i<eqcount;i++){
 			for(j=1;j<dbeqcount;j++){
 				if(mapitem.equip[i].flag==1) break;
@@ -541,7 +541,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 
 		for(i=1;i<dbeqcount;i++){
 			//printf("dbitem.equip[i].flag = %d , dbitem.equip[i].id = %d\n",dbitem.equip[i].flag,dbitem.equip[i].id);
-			if (!(dbitem.equip[i].flag == 1)) {
+			if (dbitem.equip[i].flag == 0) {
 				sprintf(tmp_sql,"DELETE from `%s` where `id`='%d'",tablename , dbitem.equip[i].id);
 				//printf("%s", tmp_sql);
 				if(mysql_query(&mysql_handle, tmp_sql))
@@ -549,7 +549,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 			}
 		}
 		for(i=1;i<eqcount;i++){
-			if(!(mapitem.equip[i].flag==1)){
+			if(mapitem.equip[i].flag==0){
 				sprintf(tmp_sql,"INSERT INTO `%s`(`%s`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)"
 				" VALUES ( '%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 				tablename, selectoption,  char_id, mapitem.equip[i].nameid, mapitem.equip[i].amount, mapitem.equip[i].equip, mapitem.equip[i].identify, mapitem.equip[i].refine,
@@ -621,7 +621,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 
 		for(i=1;i<dbnoteqcount;i++){
 			//printf("dbitem.notequip[i].flag = %d , dbitem.notequip[i].id = %d\n",dbitem.notequip[i].flag,dbitem.notequip[i].id);
-			if(!(dbitem.notequip[i].flag==1)){
+			if(dbitem.notequip[i].flag==0){
 				sprintf(tmp_sql,"DELETE from `%s` where `id`='%d'", tablename, dbitem.notequip[i].id);
 				//printf("%s", tmp_sql);
 				if(mysql_query(&mysql_handle, tmp_sql))
@@ -629,7 +629,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 			}
 		}
 		for(i=1;i<noteqcount;i++){
-			if(!(mapitem.notequip[i].flag==1)){
+			if(mapitem.notequip[i].flag==0) {
 				sprintf(tmp_sql,"INSERT INTO `%s`( `%s`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)"
 				" VALUES ('%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 				tablename ,selectoption , char_id, mapitem.notequip[i].nameid, mapitem.notequip[i].amount, mapitem.notequip[i].equip, mapitem.notequip[i].identify, mapitem.notequip[i].refine,
@@ -3042,3 +3042,10 @@ int do_init(int argc, char **argv){
 }
 
 
+#undef mysql_query
+int             STDCALL mysql_query(MYSQL *mysql, const char *q);
+
+int debug_mysql_query(MYSQL *mysql, const char *q) {
+	printf("DEBUG_MYSQL: %s\n", q);
+	return mysql_query(mysql, q);
+}

@@ -1,3 +1,5 @@
+#ifndef UTILS_H
+#define UTILS_H
 
 #ifndef NULL
 #define NULL (void *)0
@@ -18,8 +20,7 @@
 #endif
 
 
- void dump(unsigned char *buffer, int num);
-
+void dump(unsigned char *buffer, int num);
 
 #define CREATE(result, type, number)  do {\
    if ((number) * sizeof(type) <= 0)   \
@@ -31,3 +32,17 @@
   if (!((result) = (type *) realloc ((result), sizeof(type) * (number))))\
       { printf("SYSERR: realloc failure"); abort(); } } while(0)
 
+struct StringBuf {
+	char *buf_;
+	char *ptr_;
+	unsigned int max_;
+};
+
+extern struct StringBuf * StringBuf_Malloc();
+extern void StringBuf_Init(struct StringBuf *);
+extern int StringBuf_Printf(struct StringBuf *,const char *,...);
+extern int StringBuf_Append(struct StringBuf *,const struct StringBuf *);
+extern void StringBuf_Destroy(struct StringBuf *);
+extern void StringBuf_Free(struct StringBuf *);
+
+#endif

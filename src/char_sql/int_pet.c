@@ -12,6 +12,8 @@
 struct s_pet *pet_pt;
 static int pet_newid = 100;
 
+extern int debug_mysql_query(MYSQL *mysql, const char *q);
+#define mysql_query(_x, _y)  debug_mysql_query(_x, _y)
 
 //---------------------------------------------------------
 int inter_pet_tosql(int pet_id, struct s_pet *p) {
