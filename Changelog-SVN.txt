@@ -1,6 +1,7 @@
 Date	Added
 
 03/20
+        * Don't register the day/night timers if any one is set to 0 [celest]
 	* Fixed @storage / @gstorage ATcommands thanks2 Yor/Freya [Lupus]
         * Added 4 new card effects from 3/15's patch -- check item_bonus.txt [celest]
         * Added 'enable_ip_rules' to packet_athena.conf [celest]
