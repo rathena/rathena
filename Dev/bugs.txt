@@ -149,3 +149,8 @@ Problem:	When you have UNNAMED Arrows and Named Arrows in the storage and take s
 		It happens because server doesn't recognize Named and Unnamed Stockable items (Elemental Gems, Iron, Steel, Holy Water, Arrows)
 Assigned:	MouseJstr
 Progress:	100%
+
+Problem:	Guilds BUG (it isn't related to the scripts, because noone change them recently)
+		When some guild SEIZE any castle, then Castle N 1 becomes their own, too (not M 0, but M 1)
+Assigned:	N/A
+Progress:	0%
