@@ -773,7 +773,7 @@ payon.gat,173,238,4	script	Unknown	740,{
 	mes "[Unknown]";
 	mes "This is an new kRO Npc";
 	mes "This Npc hasn't been translated yet";
-	mes "I by excident you know what this npc is and could translate it";
+	mes "If by accident you know what this npc is and could translate it";
 	mes "Please contact Darkchild (eAthena Dev)";
 	close;
 }

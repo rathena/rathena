@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+11/17   - Corrected max level for cloaking in skill_tree.txt [celest]
+
 11/16
 	item 7110 fixed name -> Broken Sword (part of Bongun quest) [Lupus]
 	

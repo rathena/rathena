@@ -8209,7 +8209,7 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 
 	if(sd->npc_id!=0 || sd->vender_id != 0 || sd->opt1 > 0)
 		return;
-	pc_unequipitem(sd,index,0);
+	pc_unequipitem(sd,index,0,BF_NORMAL);
 }
 
 /*==========================================

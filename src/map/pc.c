@@ -603,7 +603,7 @@ int pc_breakweapon(struct map_session_data *sd)
 		if(sd->status.inventory[i].equip && sd->status.inventory[i].equip & 0x0002 && !sd->status.inventory[i].attribute==1){
 			item=sd->inventory_data[i];
 			sd->status.inventory[i].attribute=1;
-			pc_unequipitem(sd,i,0);
+			pc_unequipitem(sd,i,0,BF_NORMAL);
 			sprintf(output, "%s has broken.",item->jname);
 			clif_emotion(&sd->bl,23);
 			clif_displaymessage(sd->fd, output);
@@ -635,7 +635,7 @@ int pc_breakarmor(struct map_session_data *sd)
 		if(sd->status.inventory[i].equip && sd->status.inventory[i].equip & 0x0010 && !sd->status.inventory[i].attribute==1){
 			item=sd->inventory_data[i];
 			sd->status.inventory[i].attribute=1;
-			pc_unequipitem(sd,i,0);
+			pc_unequipitem(sd,i,0,BF_NORMAL);
 			sprintf(output, "%s has broken.",item->jname);
 			clif_emotion(&sd->bl,23);
 			clif_displaymessage(sd->fd, output);
@@ -1443,10 +1443,13 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		}
 		if(sd->sc_data[SC_DECREASEAGI].timer!=-1)	// 速度減少(agiはbattle.cで)
 			sd->speed = sd->speed *125/100;
-		if(sd->sc_data[SC_CLOAKING].timer!=-1)
-			sd->speed = (sd->speed*(76+(sd->sc_data[SC_INCREASEAGI].val1*3)))/100;
+		if(sd->sc_data[SC_CLOAKING].timer!=-1) {
+			sd->critical_rate += 100; // critical increases
+			sd->speed = sd->speed * (sd->sc_data[SC_CLOAKING].val3-sd->sc_data[SC_CLOAKING].val1*3) /100;
+		}
+			//sd->speed = (sd->speed*(76+(sd->sc_data[SC_INCREASEAGI].val1*3)))/100;
 		if(sd->sc_data[SC_CHASEWALK].timer!=-1)
-			sd->speed = sd->speed*(135-sd->sc_data[SC_CHASEWALK].val1*5)/100; // slow down by chasewalk
+			sd->speed = sd->speed * sd->sc_data[SC_CHASEWALK].val3 /100; // slow down by chasewalk
 		if(sd->sc_data[SC_BLESSING].timer!=-1){	// ブレッシング
 			sd->paramb[0]+= sd->sc_data[SC_BLESSING].val1;
 			sd->paramb[3]+= sd->sc_data[SC_BLESSING].val1;
@@ -2946,7 +2949,7 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type)
 	sd->weight -= sd->inventory_data[n]->weight*amount ;
 	if(sd->status.inventory[n].amount<=0){
 		if(sd->status.inventory[n].equip)
-			pc_unequipitem(sd,n,0);
+			pc_unequipitem(sd,n,0,BF_NORMAL);
 		memset(&sd->status.inventory[n],0,sizeof(sd->status.inventory[0]));
 		sd->inventory_data[n] = NULL;
 	}
@@ -4129,7 +4132,8 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 	if(sd->bl.m != bl->m || pc_isdead(sd))
 		return 0;
 
-	if( sd->opt1>0 || sd->status.option&2 || sd->status.option&16388)	// 異常などで攻撃できない
+	//if( sd->opt1>0 || sd->status.option&2 || sd->status.option&16388)	// 異常などで攻撃できない
+	if( sd->opt1>0 || sd->status.option&2 || sd->status.option&16384)	// 異常などで攻撃できない
 		return 0;
 
 	if(sd->sc_data[SC_AUTOCOUNTER].timer != -1)
@@ -4137,7 +4141,8 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 	if(sd->sc_data[SC_BLADESTOP].timer != -1)
 		return 0;
 
-	if((opt = battle_get_option(bl)) != NULL && *opt&0x46)
+	//if((opt = battle_get_option(bl)) != NULL && *opt&0x46)
+	if((opt = battle_get_option(bl)) != NULL && *opt&0x42)
 		return 0;
 	if(((sc_data = battle_get_sc_data(bl)) != NULL && sc_data[SC_TRICKDEAD].timer != -1) ||
 	((sc_data = battle_get_sc_data(bl)) != NULL && sc_data[SC_BASILICA].timer != -1 ))
@@ -4178,6 +4183,7 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 			map_freeblock_lock();
 			pc_stop_walking(sd,0);
 			sd->attacktarget_lv = battle_weapon_attack(&sd->bl,bl,tick,0);
+			// &2 = ? - Celest
 			if(!(battle_config.pc_cloak_check_type&2) && sd->sc_data[SC_CLOAKING].timer != -1)
 				skill_status_change_end(&sd->bl,SC_CLOAKING,-1);
 			if(sd->status.pet_id > 0 && sd->pd && sd->petDB && battle_config.pet_attack_support)
@@ -4221,7 +4227,8 @@ int pc_attack(struct map_session_data *sd,int target_id,int type)
 		return 1;
 	
 	if(bl->type==BL_NPC) { // monster npcs [Valaris]
-		npc_click(sd,RFIFOL(sd->fd,2));
+		//npc_click(sd,RFIFOL(sd->fd,2));
+		npc_click(sd,target_id); // submitted by leinsirk10 [Celest]
 		return 0;
 	}
 	
@@ -4859,7 +4866,7 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 	for(i=0;i<11;i++) { // unequip items that can't be equipped by base 1 [Valaris]
 		if(sd->equip_index[i] >= 0)
 			if(!pc_isequip(sd,sd->equip_index[i]))
-				pc_unequipitem(sd,sd->equip_index[i],1);
+				pc_unequipitem(sd,sd->equip_index[i],1,BF_NORMAL);
 	}
 
 	clif_skillinfoblock(sd);
@@ -5125,7 +5132,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 					int n = eq_n[rand()%eq_num];//該当アイテムの中からランダム
 					if(rand()%10000 < per){
 						if(sd->status.inventory[n].equip)
-							pc_unequipitem(sd,n,0);
+							pc_unequipitem(sd,n,0,BF_NORMAL);
 						pc_dropitem(sd,n,1);
 					}
 				}
@@ -5138,7 +5145,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 							|| (type == 2 && sd->status.inventory[i].equip)
 							|| type == 3) ){
 						if(sd->status.inventory[i].equip)
-							pc_unequipitem(sd,i,0);
+							pc_unequipitem(sd,i,0,BF_NORMAL);
 						pc_dropitem(sd,i,1);
 						break;
 					}
@@ -5634,7 +5641,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	for(i=0;i<11;i++) {
 		if(sd->equip_index[i] >= 0)
 			if(!pc_isequip(sd,sd->equip_index[i]))
-				pc_unequipitem(sd,sd->equip_index[i],1);	// 装備外し
+				pc_unequipitem(sd,sd->equip_index[i],1,BF_NORMAL);	// 装備外し
 	}
 
 	clif_changelook(&sd->bl,LOOK_BASE,sd->view_class); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
@@ -6271,7 +6278,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 	arrow=pc_search_inventory(sd,pc_checkequip(sd,9));	// Added by RoVeRT
 	for(i=0;i<11;i++) {
 		if(sd->equip_index[i] >= 0 && sd->status.inventory[sd->equip_index[i]].equip&pos) {
-			pc_unequipitem(sd,sd->equip_index[i],1);
+			pc_unequipitem(sd,sd->equip_index[i],1,BF_NORMAL);
 		}
 	}
 	// 弓矢装備
@@ -6367,13 +6374,13 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
  * 装 備した物を外す
  *------------------------------------------
  */
-int pc_unequipitem(struct map_session_data *sd,int n,int type)
+int pc_unequipitem(struct map_session_data *sd,int n,int type, int flag)
 {
 	nullpo_retr(0, sd);	
 
 // -- moonsoul	(if player is berserk then cannot unequip)
 //
-	if(sd->sc_data[SC_BERSERK].timer!=-1){
+	if(!flag && sd->sc_data[SC_BERSERK].timer!=-1){
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
 	}

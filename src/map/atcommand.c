@@ -3207,7 +3207,7 @@ int atcommand_refine(
 			if (sd->status.inventory[i].refine != final_refine) {
 				sd->status.inventory[i].refine = final_refine;
 				current_position = sd->status.inventory[i].equip;
-				pc_unequipitem(sd, i, 0);
+				pc_unequipitem(sd, i, 0, BF_NORMAL);
 				clif_refine(fd, sd, 0, i, sd->status.inventory[i].refine);
 				clif_delitem(sd, i, 1);
 				clif_additem(sd, i, 1, 0);
@@ -7255,7 +7255,7 @@ atcommand_dropall(const int fd, struct map_session_data* sd,
 	for (i = 0; i < MAX_INVENTORY; i++) {
 	if (sd->status.inventory[i].amount) {
 		if(sd->status.inventory[i].equip != 0)
-			pc_unequipitem(sd, i, 0);
+			pc_unequipitem(sd, i, 0, BF_NORMAL);
 		pc_dropitem(sd,  i, sd->status.inventory[i].amount);
 		}
 	}
@@ -7282,7 +7282,7 @@ atcommand_chardropall(const int fd, struct map_session_data* sd,
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (pl_sd->status.inventory[i].amount) {
 			if(pl_sd->status.inventory[i].equip != 0)
-				pc_unequipitem(pl_sd, i, 0);
+				pc_unequipitem(pl_sd, i, 0, BF_NORMAL);
 			pc_dropitem(pl_sd,  i, pl_sd->status.inventory[i].amount);
 		}
 	}
@@ -7312,7 +7312,7 @@ atcommand_storeall(const int fd, struct map_session_data* sd,
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount) {
 			if(sd->status.inventory[i].equip != 0)
-				pc_unequipitem(sd, i, 0);
+				pc_unequipitem(sd, i, 0, BF_NORMAL);
 			storage_storageadd(sd,  i, sd->status.inventory[i].amount);
 		}
 	}
@@ -7347,7 +7347,7 @@ atcommand_charstoreall(const int fd, struct map_session_data* sd,
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (pl_sd->status.inventory[i].amount) {
 			if(pl_sd->status.inventory[i].equip != 0)
-				pc_unequipitem(pl_sd, i, 0);
+				pc_unequipitem(pl_sd, i, 0, BF_NORMAL);
 			storage_storageadd(pl_sd,  i, sd->status.inventory[i].amount);
 		}
 	}

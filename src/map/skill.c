@@ -3380,8 +3380,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				/* 解除する */
 				skill_status_change_end(bl, sc, -1);
 			}
-
-			skill_check_cloaking(bl);
+			//skill_check_cloaking(bl);
 		}
 		break;
 
@@ -3627,7 +3626,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			if(dstsd){
 				for(i=0;i<MAX_INVENTORY;i++){
 					if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0002){
-						pc_unequipitem(dstsd,i,0);
+						pc_unequipitem(dstsd,i,0,BF_SKILL);
 						break;
 					}
 				}
@@ -3650,7 +3649,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			if(dstsd){
 				for(i=0;i<MAX_INVENTORY;i++){
 					if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0020){
-						pc_unequipitem(dstsd,i,0);
+						pc_unequipitem(dstsd,i,0,BF_SKILL);
 						break;
 					}
 				}
@@ -3673,7 +3672,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			if(dstsd){
 				for(i=0;i<MAX_INVENTORY;i++){
 					if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0010){
-						pc_unequipitem(dstsd,i,0);
+						pc_unequipitem(dstsd,i,0,BF_SKILL);
 						break;
 					}
 				}
@@ -3695,7 +3694,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			if(dstsd){
 				for(i=0;i<MAX_INVENTORY;i++){
 					if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0100){
-						pc_unequipitem(dstsd,i,0);
+						pc_unequipitem(dstsd,i,0,BF_SKILL);
 						break;
 					}
 				}
@@ -4184,6 +4183,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,skillid,src->id,0,skill_get_time(skillid,skilllv),0 );
 		break;
 	case ASC_CDP:   // Temporary skill for Create Deadly Poison[Celest]
+		// notes: success rate (from emperium.org) = 20 + [(20*Dex)/50] + [(20*Luk)/100]
 		if(sd) {
 			int eflag;
 			struct item item_tmp;
@@ -7792,6 +7792,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 
 		switch(type){	/* 異常の種類ごとの?理 */
 			case SC_PROVOKE:			/* プロボック */
+			case SC_ENDURE: // celest
 			case SC_CONCENTRATE:		/* 集中力向上 */
 			case SC_BLESSING:			/* ブレッシング */
 			case SC_ANGELUS:			/* アンゼルス */
@@ -7959,6 +7960,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 		case SC_HIDING:
 		case SC_CLOAKING:
 			*option &= ~((type == SC_HIDING) ? 2 : 4);
+			calc_flag = 1;	// orn
 			opt_flag = 1 ;
 			break;
 
@@ -8159,8 +8161,8 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	case SC_ENDURE:	/* インデュア */
 		if(sd && sd->special_state.infinite_endure) {
-			sc_data[type].timer=add_timer( 1000*600+tick,skill_status_change_timer, bl->id, data );
-			sc_data[type].val2=1;
+			sc_data[type].timer=add_timer( 1000*60+tick,skill_status_change_timer, bl->id, data );
+			//sc_data[type].val2=1;
 			return 0;
 		}
 		break;
@@ -8544,6 +8546,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			break;
 		case SC_ENDURE:				/* インデュア */
 			if(tick <= 0) tick = 1000 * 60;
+			calc_flag = 1; // for updating mdef
 			val2 = 7; // [Celest]
 			break;
 		case SC_CONCENTRATE:		/* 集中力向上 */
@@ -8961,9 +8964,11 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			break;
 		case SC_CHASEWALK:
 		case SC_CLOAKING:		/* クロ?キング */
-			calc_flag = 1; // [Celest]
-			if(bl->type == BL_PC)
+			if(bl->type == BL_PC) {
+				calc_flag = 1; // [Celest]
 				val2 = tick;
+				val3 = type==SC_CLOAKING ? 130-val1*3 : 135-val1*5;
+			}
 			else
 				tick = 5000*val1;
 			break;
@@ -9268,18 +9273,33 @@ int skill_check_cloaking(struct block_list *bl)
 
 	nullpo_retr(0, bl);
 
-	if(bl->type == BL_PC && 
-		(battle_config.pc_cloak_check_type&1 || pc_checkskill(sd,AS_CLOAKING)>2))
+	if(bl->type == BL_PC && !battle_config.pc_cloak_check_type) // If it's No it shouldn't be checked
 		return 0;
-	else if(bl->type == BL_MOB && battle_config.monster_cloak_check_type&1)
+	else if(bl->type == BL_MOB && !battle_config.monster_cloak_check_type)
 		return 0;
 	for(i=0;i<sizeof(dx)/sizeof(dx[0]);i++){
 		int c=map_getcell(bl->m,bl->x+dx[i],bl->y+dy[i]);
 		if(c==1 || c==5) end=0;
 	}
 	if(end){
-		skill_status_change_end(bl, SC_CLOAKING, -1);
-		*battle_get_option(bl)&=~4;	/* 念のための?理 */
+		if ((bl->type == BL_PC && pc_checkskill(sd,AS_CLOAKING)<3) || bl->type == BL_MOB) {
+			skill_status_change_end(bl, SC_CLOAKING, -1);
+			*battle_get_option(bl)&=~4;	/* 念のための?理 */
+		}
+		else if (bl->type == BL_PC) {
+			sd->sc_data[SC_CLOAKING].val3 = 130;
+			//sd->speed = sd->speed * sd->sc_data[SC_CLOAKING].val3 /100;
+			//clif_updatestatus(sd,SP_SPEED);
+			pc_calcstatus (sd,0); // better way than calling this everytime?
+		}
+	}
+	else {
+		if (bl->type == BL_PC) {
+			sd->sc_data[SC_CLOAKING].val3 = 103;
+			//sd->speed = sd->speed * sd->sc_data[SC_CLOAKING].val3 /100;
+			//clif_updatestatus(sd,SP_SPEED);
+			pc_calcstatus (sd,0);
+		}
 	}
 	return end;
 }
