@@ -681,7 +681,18 @@ int guild_nextexp(int level)
 }
 
 // ギルドスキルがあるか確認
-int guild_checkskill(struct guild *g,int id){ return g->skill[id-10000].lv; }
+int guild_checkskill(struct guild *g,int id) {
+
+	int idx = id - GD_SKILLBASE;
+
+
+	if(idx < 0 || idx >= MAX_GUILDSKILL)
+
+		return 0;
+
+	return g->skill[idx].lv;
+
+}
 
 // ギルドの情報の再計算
 int guild_calcinfo(struct guild *g)
@@ -691,7 +702,7 @@ int guild_calcinfo(struct guild *g)
 
 	// スキルIDの設定
 	for(i=0;i<MAX_GUILDSKILL;i++)
-		g->skill[i].id=i+10000;
+		g->skill[i].id=i+GD_SKILLBASE;
 
 	// ギルドレベル
 	if(g->guild_lv<=0) g->guild_lv=1;
@@ -709,7 +720,7 @@ int guild_calcinfo(struct guild *g)
 	g->next_exp = guild_nextexp(g->guild_lv);
 
 	// メンバ上限（ギルド拡張適用）
-	g->max_member=16+guild_checkskill(g,10004)*2; // Updated max_members [PoW]
+	g->max_member = 16 + guild_checkskill(g, GD_EXTENSION) * 2; // Updated max_members [PoW]
 
 	// 平均レベルとオンライン人数
 	g->average_lv=0;
@@ -1047,7 +1058,7 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 	g->average_lv=master->lv;
 	g->castle_id=-1;
 	for(i=0;i<MAX_GUILDSKILL;i++)
-		g->skill[i].id=i+10000;
+		g->skill[i].id=i + GD_SKILLBASE;
 	
 	// Save to sql
 	printf("Create initialize OK!\n");
@@ -1381,11 +1392,11 @@ int mapif_parse_GuildSkillUp(int fd,int guild_id,int skill_num,int account_id)
 {
 	// Could make some improvement in speed, because only change guild_position
 	struct guild *g=guild_pt;
-	int idx=skill_num-10000;
+	int idx = skill_num - GD_SKILLBASE;
 
 	inter_guild_fromsql(guild_id,g);
 
-	if(g==NULL || skill_num<10000)
+	if(g == NULL || idx < 0 || idx >= MAX_GUILDSKILL)
 		return 0;
 	//printf("GuildSkillUp\n");
 	
