@@ -2900,6 +2900,8 @@ int atcommand_go(
 	       { "louyang.gat",  217,  40  },	//	14=Lou Yang
 	       { "new_1-1.gat",   53, 111  },	//	15=Start point
 	       { "sec_pri.gat",   23,  61  },	//	16=Prison
+           { "jawaii.gat",   249, 127  },	//  17=Jawaii
+		   { "ayothaya.gat", 151, 117  },	//  18=Ayothaya
 	};
 
 	nullpo_retr(-1, sd);
@@ -2925,7 +2927,8 @@ int atcommand_go(
 		clif_displaymessage(fd, " 0=Prontera         7=Lutie         14=Lou Yang");
 		clif_displaymessage(fd, " 1=Morroc           8=Comodo        15=Start point");
 		clif_displaymessage(fd, " 2=Geffen           9=Yuno          16=Prison");
-		clif_displaymessage(fd, " 3=Payon           10=Amatsu");
+		clif_displaymessage(fd, " 3=Payon           10=Amatsu        17=Jawaii");
+		clif_displaymessage(fd, "                                    18=Ayothaya");
 		return -1;
 	} else {
 		// get possible name of the city and add .gat if not in the name
@@ -2980,6 +2983,12 @@ int atcommand_go(
 		           strncmp(map_name, "prison.gat", 3) == 0 || // name of the position (3 first characters)
 		           strncmp(map_name, "jails.gat", 3) == 0) { // name of the position
 			town = 16;
+		} else if (strncmp(map_name, "jawaii.gat", 3) == 0 || // 3 first characters
+		           strncmp(map_name, "jawai.gat", 3) == 0) { // writing error (3 first characters)
+			town = 17;
+		} else if (strncmp(map_name, "ayothaya.gat", 4) == 0 || // 3 first characters
+		           strncmp(map_name, "ayotaya.gat", 4) == 0) { // writing error (3 first characters)
+			town = 18;
 		}
 
 		if (town >= -3 && town <= -1) {
@@ -7601,11 +7610,14 @@ atcommand_rain(
 	int effno = 0;
 	nullpo_retr(-1, sd);
 	effno = 161;
-	if (effno < 0 || map[sd->bl.m].flag.rain)
-		return -1;
-
-	map[sd->bl.m].flag.rain=1;
-	clif_specialeffect(&sd->bl,effno,2);
+	if (map[sd->bl.m].flag.rain) {
+		map[sd->bl.m].flag.rain=0;
+		clif_displaymessage(fd, "The rain has stopped.");
+	} else {
+		map[sd->bl.m].flag.rain=1;
+		clif_specialeffect(&sd->bl,effno,2);
+		clif_displaymessage(fd, "It is made to rain.");		
+	}
 	return 0;
 }
 /*==========================================
@@ -7620,11 +7632,15 @@ atcommand_snow(
 	int effno = 0;
 	effno = 162;
 	nullpo_retr(-1, sd);
-	if (effno < 0 || map[sd->bl.m].flag.snow)
-		return -1;
-
-	map[sd->bl.m].flag.snow=1;
-	clif_specialeffect(&sd->bl,effno,2);
+	if (map[sd->bl.m].flag.snow) {
+		map[sd->bl.m].flag.snow=0;
+		clif_displaymessage(fd, "Snow has stopped falling.");
+	} else {
+		map[sd->bl.m].flag.snow=1;
+		clif_specialeffect(&sd->bl,effno,2);
+		clif_displaymessage(fd, "It is made to snow.");
+	}
+	
 	return 0;
 }
 
@@ -7640,11 +7656,14 @@ atcommand_sakura(
 	int effno = 0;
 	effno = 163;
 	nullpo_retr(-1, sd);
-	if (effno < 0 || map[sd->bl.m].flag.sakura)
-		return -1;
-
-	map[sd->bl.m].flag.sakura=1;
-	clif_specialeffect(&sd->bl,effno,2);
+	if (map[sd->bl.m].flag.sakura) {
+		map[sd->bl.m].flag.sakura=0;
+		clif_displaymessage(fd, "Cherry tree leaves is made to fall.");
+	} else {
+		map[sd->bl.m].flag.sakura=1;
+		clif_specialeffect(&sd->bl,effno,2);
+		clif_displaymessage(fd, "Cherry tree leaves is made to fall.");
+	}
 	return 0;
 }
 
@@ -7660,11 +7679,14 @@ atcommand_fog(
 	int effno = 0;
 	effno = 233;
 	nullpo_retr(-1, sd);
-	if (effno < 0 || map[sd->bl.m].flag.fog)
-		return -1;
-	
-	map[sd->bl.m].flag.fog=1;
-	clif_specialeffect(&sd->bl,effno,2);
+	if (map[sd->bl.m].flag.fog) {
+		map[sd->bl.m].flag.fog=0;
+		clif_displaymessage(fd, "The fog has gone.");
+	} else {
+		map[sd->bl.m].flag.fog=1;
+		clif_specialeffect(&sd->bl,effno,2);
+		clif_displaymessage(fd, "Fog hangs over.");
+	}
 
 	return 0;
 }
@@ -7681,11 +7703,15 @@ atcommand_leaves(
 	int effno = 0;
 	effno = 333;
 	nullpo_retr(-1, sd);
-	if (effno < 0 || map[sd->bl.m].flag.leaves)
-		return -1;
+	if (map[sd->bl.m].flag.leaves) {
+		map[sd->bl.m].flag.leaves=0;
+		clif_displaymessage(fd, "Leaves no longer fall.");
+	} else {
+		map[sd->bl.m].flag.leaves=1;
+		clif_specialeffect(&sd->bl,effno,2);
+		clif_displaymessage(fd, "Fallen leaves fall.");
+	}
 
-	map[sd->bl.m].flag.leaves=1;
-	clif_specialeffect(&sd->bl,effno,2);
 	return 0;
 }
 
@@ -7698,14 +7724,14 @@ atcommand_clearweather(
    const int fd, struct map_session_data* sd,
    const char* command, const char* message)
 {
-	int effno = 0;
+	//int effno = 0;
 	nullpo_retr(-1, sd);
 	map[sd->bl.m].flag.rain=0;
 	map[sd->bl.m].flag.snow=0;
 	map[sd->bl.m].flag.sakura=0;
 	map[sd->bl.m].flag.fog=0;
 	map[sd->bl.m].flag.leaves=0;
-	clif_specialeffect(&sd->bl,effno,2);
+	//clif_specialeffect(&sd->bl,effno,2); // not required. [celest]
 	return 0;
 } 
 

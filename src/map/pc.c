@@ -1559,15 +1559,18 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->paramb[5]+= 5;
 		}
 		if(sd->sc_data[SC_MARIONETTE].timer!=-1){
-			sd->paramb[0]-= sd->status.str/2;	// bonuses not included
-			sd->paramb[1]-= sd->status.agi/2;
-			sd->paramb[2]-= sd->status.vit/2;
-			sd->paramb[3]-= sd->status.int_/2;
-			sd->paramb[4]-= sd->status.dex/2;
-			sd->paramb[5]-= sd->status.luk/2;
+			struct map_session_data *psd = map_id2sd(sd->sc_data[SC_MARIONETTE2].val3);
+			if (psd) {	// if partner is found
+				sd->paramb[0]-= sd->status.str/2;	// bonuses not included
+				sd->paramb[1]-= sd->status.agi/2;
+				sd->paramb[2]-= sd->status.vit/2;
+				sd->paramb[3]-= sd->status.int_/2;
+				sd->paramb[4]-= sd->status.dex/2;
+				sd->paramb[5]-= sd->status.luk/2;
+			}
 		}
 		else if(sd->sc_data[SC_MARIONETTE2].timer!=-1){
-			struct map_session_data *psd = (struct map_session_data *)map_id2bl(sd->sc_data[SC_MARIONETTE2].val3);
+			struct map_session_data *psd = map_id2sd(sd->sc_data[SC_MARIONETTE2].val3);
 			if (psd) {	// if partner is found
 				sd->paramb[0] += sd->status.str+psd->status.str/2 > 99 ? 99-sd->status.str : psd->status.str/2;
 				sd->paramb[1] += sd->status.agi+psd->status.agi/2 > 99 ? 99-sd->status.agi : psd->status.agi/2;
@@ -4080,6 +4083,7 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 		sd->bl.y = y;
 		if(moveblock) map_addblock(&sd->bl);
 
+	#if 0
 		if (sd->status.guild_id > 0) {
 			struct skill_unit *su;
 			if (sd->sc_data[SC_LEADERSHIP].val4 && (su=(struct skill_unit *)sd->sc_data[SC_LEADERSHIP].val4)) {
@@ -4095,6 +4099,7 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 				skill_unit_move_unit_group(su->group,sd->bl.m,dx,dy);
 			}
 		}
+	#endif
 
 		map_foreachinmovearea(clif_pcinsight,sd->bl.m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,0,sd);
 		sd->walktimer = -1;
@@ -4198,6 +4203,22 @@ int pc_walktoxy(struct map_session_data *sd,int x,int y)
 		sd->state.change_walk_target=1;
 	} else {
 		pc_walktoxy_sub(sd);
+	}
+
+	if (sd->sc_data && sd->status.guild_id > 0) {
+		struct skill_unit *su;
+		if (sd->sc_data[SC_LEADERSHIP].val4 && (su=(struct skill_unit *)sd->sc_data[SC_LEADERSHIP].val4)) {
+			skill_unit_move_unit_group(su->group,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
+		}
+		if (sd->sc_data[SC_GLORYWOUNDS].val4 && (su=(struct skill_unit *)sd->sc_data[SC_GLORYWOUNDS].val4)) {
+			skill_unit_move_unit_group(su->group,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
+		}
+		if (sd->sc_data[SC_SOULCOLD].val4 && (su=(struct skill_unit *)sd->sc_data[SC_SOULCOLD].val4)) {
+			skill_unit_move_unit_group(su->group,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
+		}
+		if (sd->sc_data[SC_HAWKEYES].val4 && (su=(struct skill_unit *)sd->sc_data[SC_HAWKEYES].val4)) {
+			skill_unit_move_unit_group(su->group,sd->bl.m,(x - sd->bl.x),(y - sd->bl.y));
+		}
 	}
 
 	return 0;
@@ -7450,13 +7471,16 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 	if ((battle_config.natural_heal_weight_rate > 100 || sd->weight*100/sd->max_weight < battle_config.natural_heal_weight_rate) &&
 		!pc_isdead(sd) && 
 		!pc_ishiding(sd) && 
-		!(sd->sc_data[SC_POISON].timer != -1 && sd->sc_data[SC_SLOWPOISON].timer == -1) &&
-		sd->sc_data[SC_BERSERK].timer == -1 ) {
+	//-- cannot regen for 5 minutes after using Berserk --- [Celest]
+		DIFF_TICK (gettick(), sd->canregen_tick)>=0 &&
+		(sd->sc_data && !(sd->sc_data[SC_POISON].timer != -1 && sd->sc_data[SC_SLOWPOISON].timer == -1) &&
+		sd->sc_data[SC_BERSERK].timer == -1 )) {
 		pc_natural_heal_hp(sd);
 		if( sd->sc_data && sd->sc_data[SC_EXTREMITYFIST].timer == -1 &&	//阿修羅?態ではSPが回復しない
 			sd->sc_data[SC_DANCING].timer == -1 && //ダンス?態ではSPが回復しない
 			sd->sc_data[SC_BERSERK].timer == -1 )   //バ?サ?ク?態ではSPが回復しない
 			pc_natural_heal_sp(sd);
+		sd->canregen_tick = gettick();
 	} else {
 		sd->hp_sub = sd->inchealhptick = 0;
 		sd->sp_sub = sd->inchealsptick = 0;

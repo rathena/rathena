@@ -1,4 +1,20 @@
 Date	Added
+12/15
+        * Skill Updates [celest]
+          - Corrected traps to last longer in GvG
+          - Some minor changes to Hiding, Cloaking and Chasewalk to prevent it from
+            not working if sc_data is null
+          - Corrected an error in Cannibalize
+          - Updated Marionette Control to check its range from the partner
+          - Updated Berserk to disable hp and sp regen for 5 minutes after the skill
+        * Changed the weather gm commands to be able to toggle on and off. For example,
+          use @snow once to turn it on, reuse it again to turn it off. [celest]
+        * Added Jawaii and Ayothaya to @go list [celest]
+        * Changed the default values for ranged, magic and misc damage rate in
+          battle_athena to 60, 50 and 60 [celest]
+        * Removed redundant 'berserkdamagetick' from map_session_data [celest]
+        * Added changes to map.h according to Shinomori [celest]
+
 12/14
 	* Changed "Map-server can't connect to char-server" message to reduce output spamming and set it to
 	  display only once [MC Cameri]

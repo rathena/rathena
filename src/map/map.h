@@ -212,10 +212,11 @@ struct map_session_data {
 	unsigned int canact_tick;
 	unsigned int canmove_tick;
 	unsigned int canlog_tick;
+	unsigned int canregen_tick;
 	int hp_sub,sp_sub;
 	int inchealhptick,inchealsptick,inchealspirithptick,inchealspiritsptick;
 // -- moonsoul (new tick for berserk self-damage)
-	int berserkdamagetick;
+//	int berserkdamagetick;
 	int fame;
 
 	short view_class;
@@ -481,8 +482,8 @@ enum { ATK_LUCKY=1,ATK_FLEE,ATK_DEF};	// 囲まれペナルティ計算用
 
 struct map_data {
 	char name[24];
-	char *alias; // [MouseJstr]
 	unsigned char *gat;	// NULLなら下のmap_data_other_serverとして扱う
+	char *alias; // [MouseJstr]	
 	struct block_list **block;
 	struct block_list **block_mob;
 	int *block_count,*block_mob_count;

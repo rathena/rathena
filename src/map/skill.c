@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/12/13 7:22:51 PM Celestia $
+// $Id: skill.c,v 1.8 2004/12/15 8:56:46 PM Celestia $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -3579,14 +3579,12 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			int sc=SkillStatusChangeTable[skillid];
 			clif_skill_nodamage(src,bl,skillid,-1,1);
-			if( tsc_data ){
-				if( tsc_data[sc].timer==-1 )
-				/* 付加する */
-				skill_status_change_start(bl,sc,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
-			else
+			if(tsc_data && tsc_data[sc].timer!=-1 )
 				/* 解除する */
 				skill_status_change_end(bl, sc, -1);
-		}
+			else
+				/* 付加する */
+				skill_status_change_start(bl,sc,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
 		}
 		break;
 
@@ -3595,14 +3593,12 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			int sc=SkillStatusChangeTable[skillid];
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if( tsc_data ){
-				if( tsc_data[sc].timer==-1 )
-				/* 付加する */
-				skill_status_change_start(bl,sc,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
-			else
+			if(tsc_data && tsc_data[sc].timer!=-1 )
 				/* 解除する */
 				skill_status_change_end(bl, sc, -1);
-			}
+			else
+				/* 付加する */
+				skill_status_change_start(bl,sc,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
 			//skill_check_cloaking(bl);
 		}
 		break;
@@ -3612,14 +3608,12 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			int sc=SkillStatusChangeTable[skillid];
 			clif_skill_nodamage(src,bl,skillid,-1,1);
-			if( tsc_data ){
-				if( tsc_data[sc].timer==-1 )
-					/* 付加する */
-					skill_status_change_start(bl,sc,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
-				else
-					/* 解除する */
-					skill_status_change_end(bl, sc, -1);
-			}
+			if(tsc_data && tsc_data[sc].timer!=-1 )
+				/* 解除する */
+				skill_status_change_end(bl, sc, -1);
+			else
+				/* 付加する */
+				skill_status_change_start(bl,sc,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
 		}
 		break;
 
@@ -5060,7 +5054,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 			mx = x;// + (rand()%10 - 5);
 			my = y;// + (rand()%10 - 5);
 			
-			id=mob_once_spawn(sd,"this",mx,my,"--ja--", summons[skilllv] ,1,"");
+			id=mob_once_spawn(sd,"this",mx,my,"--ja--", summons[skilllv-1] ,1,"");
 			if( (md=(struct mob_data *)map_id2bl(id)) !=NULL ){
 				md->master_id=sd->bl.id;
 				md->hp=2210+skilllv*200;
@@ -5359,6 +5353,8 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case HT_SANDMAN:			/* サンドマン */
 	case HT_CLAYMORETRAP:		/* クレイモア?トラップ */
 		limit=skill_get_time(skillid,skilllv);
+		// longer trap times in WOE [celest]
+		if (map[src->m].flag.gvg) limit *= 4;
 		range=2;
 		break;
 	case HT_SKIDTRAP:			/* スキッドトラップ */
@@ -5369,6 +5365,9 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case HT_FREEZINGTRAP:		/* フリ?ジングトラップ */
 	case HT_BLASTMINE:			/* ブラストマイン */
 		limit=skill_get_time(skillid,skilllv);
+		// longer trap times in WOE [celest]
+		if (skillid != PF_SPIDERWEB && map[src->m].flag.gvg)
+			limit *= 4;
 		range=1;
 		break;
 
@@ -7115,7 +7114,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			int c=0;
 			int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
 			int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill);
-			int mob_class = (skill==AM_CANNIBALIZE)? summons[lv] :1142;
+			int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
 			if(battle_config.pc_land_skill_limit && maxcount>0) {
 				map_foreachinarea(skill_check_condition_mob_master_sub ,sd->bl.m, 0, 0, map[sd->bl.m].xs, map[sd->bl.m].ys, BL_MOB, sd->bl.id, mob_class,&c );
 				if(c >= maxcount){
@@ -8670,7 +8669,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 				break;
 			case SC_BERSERK:			/* バ?サ?ク */
 				calc_flag = 1;
-				clif_status_change(bl,SC_INCREASEAGI,0);	/* アイコン消去 */
+				clif_status_change(bl,SC_INCREASEAGI,0);	/* アイコン消去 */					
 				break;
 			case SC_DEVOTION:		/* ディボ?ション */
 				{
@@ -9292,6 +9291,21 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 				return 0;
 		}
 		break;
+
+	case SC_MARIONETTE:		/* マリオネットコントロ?ル */
+	case SC_MARIONETTE2:
+		{
+			struct block_list *pbl = map_id2bl(sc_data[type].val3);
+			if (pbl && battle_check_range(bl, pbl, 7) &&
+				(sc_data[type].val2 -= 1000)>0) {
+				sc_data[type].timer = add_timer(
+					1000 + tick, skill_status_change_timer,
+					bl->id, data);
+					return 0;
+			}				
+		}
+		break;
+
 	case SC_LEADERSHIP:
 	case SC_GLORYWOUNDS:
 	case SC_SOULCOLD:
@@ -10038,10 +10052,11 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_BERSERK:		/* バ?サ?ク */
 			if(sd){
 				sd->status.hp = sd->status.max_hp * 3;
-				sd->status.sp = 0;				
+				sd->status.sp = 0;
 				clif_updatestatus(sd,SP_HP);
 				clif_updatestatus(sd,SP_SP);
-				clif_status_change(bl,SC_INCREASEAGI,1);	/* アイコン表示 */				
+				clif_status_change(bl,SC_INCREASEAGI,1);	/* アイコン表示 */
+				sd->canregen_tick = gettick() + 300000;
 			}
 			*opt3 |= 128;
 			tick = 10000;
@@ -10060,6 +10075,10 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 
 		case SC_MARIONETTE:		/* マリオネットコントロ?ル */
 		case SC_MARIONETTE2:
+			val2 = tick;
+			if (!val3)
+				return 0;
+			tick = 1000;
 			calc_flag = 1;
 			*opt3 |= 1024;
 			break;
