@@ -14,7 +14,7 @@
 //= to set the cost variable to whatever you want the fee to be.
 //============================================================ 
 prontera.gat,132,217,5	script	Banker	109,{
-set @cost,0;
+set @cost,500;
 mes "[Banker]";
 mes "Welcome to the First Bank of Prontera. How can I help you today?";
 next;

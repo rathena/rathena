@@ -702,6 +702,7 @@
 1720,Bow_of_Rudra,Rudra's Bow,4,20,0,1200,150,,5,0,1705992,2,34,4,48,11,{},{ bonus bAtkEle,6; bonus bInt,5; skill 35,1; skill 28,1; bonus2 bResEff,Eff_Poison,5000; bonus2 bResEff,Eff_Curse,5000; bonus2 bResEff,Eff_Silence,5000; bonus2 bResEff,Eff_Confusion,5000; bonus2 bResEff,Eff_Blind,5000; }
 1721,Repeating_Crossbow,Repeating Crossbow,4,89000,0,2000,95,,9,1,133184,2,34,3,65,11,{},{}
 1722,Ballista,Ballista,4,20,0,3500,145,,5,0,1574912,2,34,4,77,11,{},{}
+
 // Arrows
 1750,Arrow,Arrow,10,1,0,1,25,,,,1706056,2,32768,,1,,{},{}
 1751,Silver_Arrow,Silver Arrow,10,3,0,2,30,,,,1706056,2,32768,,1,,{},{ bonus bAtkEle,6; }
@@ -724,6 +725,7 @@
 1768,Sleep_Arrow,Sleep Arrow,10,3,0,3,1,,,,1706056,2,32768,,1,,{},{ bonus2 bAddEff,Eff_Sleep,500; }
 1769,Silence_Arrow,Mute Arrow,10,3,0,3,1,,,,1706056,2,32768,,1,,{},{ bonus2 bAddEff,Eff_Silence,500; }
 1770,Iron_Arrow,Iron Arrow,10,2,0,1,30,,,,1706056,2,32768,,1,,{},{}
+
 // Knuckles
 1801,Waghnakh,Waghnakh,4,8000,0,400,30,,1,3,33024,2,2,1,1,12,{},{}
 1802,Waghnakh_,Waghnakh,4,8000,0,400,30,,1,4,33024,2,2,1,1,12,{},{}
