@@ -71,7 +71,7 @@
 				AdditionalIncludeDirectories="..\src\common;..\src\map;..\src\zlib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_WIN32;PACKETVER=6;TXT_ONLY;NEW_006b;__WIN32;LOCALZLIB"
 				RuntimeLibrary="4"
-				UsePrecompiledHeader="3"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="3"/>

@@ -44,15 +44,12 @@ Global
 		{D356871D-58E1-450B-967A-E4E9646175AF}.Debug.ActiveCfg = Debug|Win32
 		{D356871D-58E1-450B-967A-E4E9646175AF}.Debug.Build.0 = Debug|Win32
 		{D356871D-58E1-450B-967A-E4E9646175AF}.Release.ActiveCfg = Release|Win32
-		{D356871D-58E1-450B-967A-E4E9646175AF}.Release.Build.0 = Release|Win32
 		{D356871D-58E1-450B-967A-E5E9646175AF}.Debug.ActiveCfg = Debug|Win32
 		{D356871D-58E1-450B-967A-E5E9646175AF}.Debug.Build.0 = Debug|Win32
 		{D356871D-58E1-450B-967A-E5E9646175AF}.Release.ActiveCfg = Release|Win32
-		{D356871D-58E1-450B-967A-E5E9646175AF}.Release.Build.0 = Release|Win32
 		{D356871D-58E1-450B-967A-E6E9646175AF}.Debug.ActiveCfg = Debug|Win32
 		{D356871D-58E1-450B-967A-E6E9646175AF}.Debug.Build.0 = Debug|Win32
 		{D356871D-58E1-450B-967A-E6E9646175AF}.Release.ActiveCfg = Release|Win32
-		{D356871D-58E1-450B-967A-E6E9646175AF}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
