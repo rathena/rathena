@@ -2297,8 +2297,11 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		break;
 
 	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
-			map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,0,
-				BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+			map_foreachinpath (skill_attack_area,src->m,					// function, map
+					src->x,src->y,											// source xy
+					bl->x,bl->y,											// target xy
+					2,0,													// range, type
+					BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);	// varargs		
 		break;
 
 	case PA_PRESSURE:	/* プレッシャ? */

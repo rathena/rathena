@@ -661,7 +661,7 @@ void map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y
 * For checking a path between two points (x0, y0) and (x1, y1)
 *------------------------------------------------------------
  */
-void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int length,int type,...) 
+void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int type,...)
 {
 /*	va_list ap;
 	double deltax = 0.0;
