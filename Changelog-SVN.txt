@@ -1,6 +1,9 @@
 Date	Added
 
 03/09
+        * Some changes in sig_dump to allow Cygwin produce stackdumps upon crash again,
+          thanks to Ser [celest]
+        * Changed the default stackdump creation folder from /save to /log [celest]
         * Fixed a typo in TXT login server logging, thanks to Skyer / eAthenaC [celest]
         * Added HP and SP rate underflow checking [celest]
         * Added stop auto attacking if no arrows were equipped [celest]

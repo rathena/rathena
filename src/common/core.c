@@ -9,7 +9,7 @@
 #include <signal.h>
 #include <string.h>
 #ifdef DUMPSTACK
-	#ifndef _WIN32	// HAVE_EXECINFO_H
+	#ifndef CYGWIN	// HAVE_EXECINFO_H
 		#include <execinfo.h>
 	#endif
 #endif
@@ -100,6 +100,9 @@ static void sig_proc(int sn)
  *	Dumps the stack using glibc's backtrace
  *-----------------------------------------
  */
+#ifdef CYGWIN 
+	#define sig_dump SIG_DFL	// allow cygwin's default dumper utility to handle this
+#else
 static void sig_dump(int sn)
 {
 	#ifdef DUMPSTACK
@@ -113,7 +116,7 @@ static void sig_dump(int sn)
 
 		// search for a usable filename
 		do {
-			sprintf(tmp,"save/stackdump_%04d.txt", ++no);
+			sprintf(tmp,"log/stackdump_%04d.txt", ++no);
 		} while((fp = fopen(tmp,"r")) && (fclose(fp), no < 9999));
 		// dump the trace into the file
 		if ((fp = fopen (tmp,"w")) != NULL) {
@@ -122,11 +125,8 @@ static void sig_dump(int sn)
 			fprintf(fp,"Stack trace:\n");
 			size = backtrace (array, 20);
 			stack = backtrace_symbols (array, size);
-
 			for (no = 0; no < size; no++) {
-
 				fprintf(fp, "%s\n", stack[no]);
-
 			}
 			fprintf(fp,"End of stack trace\n");
 
@@ -134,10 +134,12 @@ static void sig_dump(int sn)
 			aFree(stack);
 		}
 	#endif
+	//cygwin_stackdump ();
 	// When pass the signal to the system's default handler
 	compat_signal(sn, SIG_DFL);
 	raise(sn);
 }
+#endif
 
 int get_svn_revision(char *svnentry) { // Warning: minor syntax checking
 	char line[1024];
