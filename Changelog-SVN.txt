@@ -1,5 +1,8 @@
 Date	Added
 
+03/28
+	* Re-fixed the SQL syntax crash in logging [celest]
+
 03/27
 	* Fixed AutospellWhenHit effect to only work on melee attacks [celest]
 	* Fixed AddEffWhenHit effect to only work on melee attacks [celest]
