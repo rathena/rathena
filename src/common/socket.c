@@ -35,6 +35,10 @@ int fd_max;
 int rfifo_size = 65536;
 int wfifo_size = 65536;
 
+#ifdef TWILIGHT
+#define NSOCKET
+#endif
+
 #ifndef TCP_FRAME_LEN
 #define TCP_FRAME_LEN 1053
 #endif
