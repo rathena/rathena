@@ -37,7 +37,7 @@
 533,Grape_Juice,Grape Juice,0,250,0,40,,,,,10477567,2,,,,,{ itemheal 0,rand(15,24); },{}
 534,Carrot_Juice,Carrot Juice,0,20,0,40,,,,,10477567,2,,,,,{ itemheal rand(27,32),0; },{}
 535,Pumkin,Pumpkin,0,15,0,20,,,,,10477567,2,,,,,{ itemheal 19,0; },{}
-536,Ice_Cream,Ice Cream,0,150,0,80,,,,,10477567,2,,,,,{ itemheal rand(105,144),0; },{}
+536,Ice_Cream,Ice Cream,0,150,0,80,,,,,10477567,2,,,,,{ itemheal rand(105,144),0; if (rand(100)<3) goto FR; end; FR: sc_start SC_Freeze,10000,0; },{}
 537,Pet_Food,Pet Food,0,1000,0,10,,,,,10477567,2,,,,,{ itemheal rand(50,89),0; },{}
 538,Well-baked_Cookie,Well-baked Cookie,0,1000,0,30,,,,,10477567,2,,,,,{ itemheal rand(160,199),0; },{}
 539,Piece_of_Cake,Piece of Cake,0,3000,0,100,,,,,10477567,2,,,,,{ itemheal rand(270,329),0; },{}
@@ -148,7 +148,7 @@
 675,Silver_Coin,Silver Coin,2,20,0,40,,,,,0,3,,,,,{},{}
 676,Silver_Coin_Pouch,Silver Coin Pouch,2,20,0,400,,,,,0,3,,,,,{},{}
 677,Platinum_Coin,Platinum Coin,2,20,0,40,,,,,0,3,,,,,{},{}
-678,Deadly_Poison_Bottle,Deadly Poison Bottle,2,20,0,100,,,,,10477567,2,,,,,{ sc_start 193,60000,0; },{}
+678,Deadly_Poison_Bottle,Deadly Poison Bottle,2,20,0,100,,,,,10477567,2,,,,,{ if(Class!=4013) goto Not_ASC; sc_start SC_Poison,600000,0; sc_start SC_SpeedPot0,30,0; end; Not_ASC: percentheal -100,0; },{}
 679,Recall_Pills,Recall Pills,2,20,0,300,,,,,0,3,,,,,{},{}
 680,Carnation,Carnation,2,20,0,1000,,,,,0,3,,,,,{},{}
 681,Wedding_Photo_Album,Wedding_Photo_Album,2,20,0,10,,,,,0,3,,,,,{},{}

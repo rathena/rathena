@@ -1888,11 +1888,12 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			aspd_rate += sd->sc_data[SC_DONTFORGETME].val1*3 + sd->sc_data[SC_DONTFORGETME].val2 + (sd->sc_data[SC_DONTFORGETME].val3>>16);
 			sd->speed= sd->speed*(100+sd->sc_data[SC_DONTFORGETME].val1*2 + sd->sc_data[SC_DONTFORGETME].val2 + (sd->sc_data[SC_DONTFORGETME].val3&0xffff))/100;
 		}
-		if(	sd->sc_data[i=SC_SPEEDPOTION2].timer!=-1 ||
+		if(	sd->sc_data[i=SC_SPEEDPOTION3].timer!=-1 ||
+			sd->sc_data[i=SC_SPEEDPOTION2].timer!=-1 ||
 			sd->sc_data[i=SC_SPEEDPOTION1].timer!=-1 ||
 			sd->sc_data[i=SC_SPEEDPOTION0].timer!=-1)	// ? 速ポ?ション
 			aspd_rate -= sd->sc_data[i].val2;
-		if(sd->sc_data[SC_WINDWALK].timer!=-1)	//ウィンドウォ?ク時はLv*2%減算
+		if(sd->sc_data[SC_WINDWALK].timer!=-1 && sd->sc_data[SC_INCREASEAGI].timer==-1)	//ウィンドウォ?ク時はLv*2%減算
 			sd->speed -= sd->speed *(sd->sc_data[SC_WINDWALK].val1*2)/100;
 		if(sd->sc_data[SC_CARTBOOST].timer!=-1)	// カ?トブ?スト
 		sd->speed -= (DEFAULT_WALK_SPEED * 20)/100;
@@ -2162,7 +2163,7 @@ int pc_calcspeed (struct map_session_data *sd)
 		if(sd->sc_data[SC_QUAGMIRE].timer!=-1){
 			sd->speed = sd->speed*3/2;
 		}
-		if(sd->sc_data[SC_WINDWALK].timer!=-1) {
+		if(sd->sc_data[SC_WINDWALK].timer!=-1 && sd->sc_data[SC_INCREASEAGI].timer==-1) {
 			sd->speed -= sd->speed *(sd->sc_data[SC_WINDWALK].val1*2)/100;
 		}
 		if(sd->sc_data[SC_CARTBOOST].timer!=-1) {

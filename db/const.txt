@@ -252,6 +252,7 @@ SC_Blind	136
 SC_SpeedPot0	37
 SC_SpeedPot1	38
 SC_SpeedPot2	39
+SC_SpeedPot3	40
 SC_ATKPot	185
 SC_MATKPot	186
 SC_EncPoison	6

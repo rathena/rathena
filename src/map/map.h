@@ -407,6 +407,7 @@ struct mob_data {
 	} state;
 	int timer;
 	short to_x,to_y;
+	short target_dir;
 	short speed;
 	int hp;
 	int target_id,attacked_id;

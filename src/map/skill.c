@@ -8667,6 +8667,7 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			case SC_SPEEDPOTION0:		/* ?速ポ?ション */
 			case SC_SPEEDPOTION1:
 			case SC_SPEEDPOTION2:
+			case SC_SPEEDPOTION3:
 			case SC_APPLEIDUN:			/* イドゥンの林檎 */
 			case SC_RIDING:
 			case SC_BLADESTOP_WAIT:
@@ -9500,7 +9501,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 
 	if(sc_data[type].timer != -1){	/* すでに同じ異常になっている場合タイマ解除 */
 		if(sc_data[type].val1 > val1 && type != SC_COMBO && type != SC_DANCING && type != SC_DEVOTION &&
-			type != SC_SPEEDPOTION0 && type != SC_SPEEDPOTION1 && type != SC_SPEEDPOTION2
+			type != SC_SPEEDPOTION0 && type != SC_SPEEDPOTION1 && type != SC_SPEEDPOTION2 && type != SC_SPEEDPOTION3
 						 && type != SC_ATKPOT && type != SC_MATKPOT) // added atk and matk potions [Valaris]
 			return 0;
 		if ((type >=SC_STAN && type <= SC_BLIND) || type == SC_DPOISON)
@@ -9553,8 +9554,9 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			calc_flag = 1;
 			if(sc_data[SC_DECREASEAGI].timer!=-1 )
 				skill_status_change_end(bl,SC_DECREASEAGI,-1);
-			if(sc_data[SC_WINDWALK].timer!=-1 )	/* ウインドウォ?ク */
-				skill_status_change_end(bl,SC_WINDWALK,-1);
+			// the effect will still remain [celest]
+//			if(sc_data[SC_WINDWALK].timer!=-1 )	/* ウインドウォ?ク */
+//				skill_status_change_end(bl,SC_WINDWALK,-1);
 			break;
 		case SC_DECREASEAGI:		/* 速度減少 */
 			if (bl->type == BL_PC)	// Celest
@@ -9840,6 +9842,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_SPEEDPOTION0:		/* ?速ポ?ション */
 		case SC_SPEEDPOTION1:
 		case SC_SPEEDPOTION2:
+		case SC_SPEEDPOTION3:
 			calc_flag = 1;
 			tick = 1000 * tick;
 			val2 = 5*(2+type-SC_SPEEDPOTION0);

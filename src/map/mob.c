@@ -928,6 +928,7 @@ int mob_spawn(int id)
 	md->to_x=md->bl.x=x;
 	md->to_y=md->bl.y=y;
 	md->dir=0;
+	md->target_dir=0;
 
 	map_addblock(&md->bl);
 
@@ -1492,17 +1493,28 @@ static int mob_randomwalk(struct mob_data *md,int tick)
 	speed=battle_get_speed(&md->bl);
 	if(DIFF_TICK(md->next_walktime,tick)<0){
 		int i,x,y,c,d=12-md->move_fail_count;
+		int mask[8][2] = {{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1}};
 		if(d<5) d=5;
 		for(i=0;i<retrycount;i++){	// Search of a movable place
 			int r=rand();
-			x=md->bl.x+r%(d*2+1)-d;
-			y=md->bl.y+r/(d*2+1)%(d*2+1)-d;
+			x=r%(d*2+1)-d;
+			y=r/(d*2+1)%(d*2+1)-d;
+			if (md->target_dir){
+				if (x<0) x=0-x;
+				if (y<0) y=0-y;
+				x *= mask[md->target_dir-1][0];
+				y *= mask[md->target_dir-1][1];
+			}
+			x+=md->bl.x;
+			y+=md->bl.y;
+
 			if((c=map_getcell(md->bl.m,x,y))!=1 && c!=5 && mob_walktoxy(md,x,y,1)==0){
 				md->move_fail_count=0;
 				break;
 			}
 			if(i+1>=retrycount){
 				md->move_fail_count++;
+				md->target_dir = 0;
 				if(md->move_fail_count>1000){
 					if(battle_config.error_log)
 						printf("MOB cant move. random spawn %d, class = %d\n",md->bl.id,md->class);
@@ -2278,6 +2290,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			mobskill_use_id(md,&md->bl,skillidx);//Ž©”š‰r¥ŠJŽn
 			md->state.special_mob_ai++;
 		}
+		if (md->master_id==src->id)
+			md->target_dir=map_calc_dir(src,md->bl.x,md->bl.y)+1;
 	}
 
 	if(md->hp>0){

@@ -931,7 +931,7 @@ int battle_get_speed(struct block_list *bl)
 			if(sc_data[SC_CURSE].timer!=-1)
 				speed = speed + 450;
 			//ウィンドウォーク時はLv*2%減算
-			if(sc_data[SC_WINDWALK].timer!=-1)
+			if(sc_data[SC_WINDWALK].timer!=-1 && sc_data[SC_INCREASEAGI].timer==-1)
 				speed -= (speed*(sc_data[SC_WINDWALK].val1*2))/100;
 			if(sc_data[SC_SLOWDOWN].timer!=-1)
 				speed = speed*150/100;
@@ -990,7 +990,7 @@ int battle_get_adelay(struct block_list *bl)
 			if(sc_data[SC_STEELBODY].timer!=-1)	// 金剛
 				aspd_rate += 25;
 			//増速ポーション使用時は減算
-			if(	sc_data[i=SC_SPEEDPOTION2].timer!=-1 || sc_data[i=SC_SPEEDPOTION1].timer!=-1 || sc_data[i=SC_SPEEDPOTION0].timer!=-1)
+			if(	sc_data[i=SC_SPEEDPOTION3].timer!=-1 || sc_data[i=SC_SPEEDPOTION2].timer!=-1 || sc_data[i=SC_SPEEDPOTION1].timer!=-1 || sc_data[i=SC_SPEEDPOTION0].timer!=-1)
 				aspd_rate -= sc_data[i].val2;
 			//ディフェンダー時は加算
 			if(sc_data[SC_DEFENDER].timer != -1)
@@ -1037,7 +1037,7 @@ int battle_get_amotion(struct block_list *bl)
 				aspd_rate += sc_data[SC_DONTFORGETME].val1*3 + sc_data[SC_DONTFORGETME].val2 + (sc_data[SC_DONTFORGETME].val3>>16);
 			if(sc_data[SC_STEELBODY].timer!=-1)	// 金剛
 				aspd_rate += 25;
-			if(	sc_data[i=SC_SPEEDPOTION2].timer!=-1 || sc_data[i=SC_SPEEDPOTION1].timer!=-1 || sc_data[i=SC_SPEEDPOTION0].timer!=-1)
+			if(	sc_data[i=SC_SPEEDPOTION3].timer!=-1 || sc_data[i=SC_SPEEDPOTION2].timer!=-1 || sc_data[i=SC_SPEEDPOTION1].timer!=-1 || sc_data[i=SC_SPEEDPOTION0].timer!=-1)
 				aspd_rate -= sc_data[i].val2;
 			if(sc_data[SC_DEFENDER].timer != -1)
 				amotion += (550 - sc_data[SC_DEFENDER].val1*50);
