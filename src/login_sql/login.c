@@ -8,25 +8,38 @@
 #include <winsock.h>
 #pragma lib <libmysql.lib>
 #else
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <winsock2.h>
+#include <time.h>
+void Gettimeofday(struct timeval *timenow)
+{
+	time_t t;
+	t = clock();
+	timenow->tv_usec = t;
+	timenow->tv_sec = t / CLK_TCK;
+	return;
+}
+#define gettimeofday(timenow, dummy) Gettimeofday(timenow)
+#pragma comment(lib,"libmysql.lib")
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
 #include <arpa/inet.h>
+#include <unistd.h>
+#endif
 #endif
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <netinet/in.h>
-#include <sys/time.h>
 #include <time.h>
-#include <sys/ioctl.h>
 #include <sys/stat.h> // for stat/lstat/fstat
-#include <unistd.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h>
-#include <arpa/inet.h>
 
 //add include for DBMS(mysql)
 #include <mysql.h>
