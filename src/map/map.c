@@ -1521,14 +1521,16 @@ struct MAP_CACHE_INFO {
 	int compressed_len; // zilb通せるようにする為の予約
 }; // 56 byte
 
-struct {
-	struct MAP_CACHE_HEAD {
-		int sizeof_header;
-		int sizeof_map;
-		// 上の２つ改変不可
-		int nmaps; // マップの個数
-		int filesize;
-	} head;
+struct MAP_CACHE_HEAD {
+	int sizeof_header;
+	int sizeof_map;
+	// 上の２つ改変不可
+	int nmaps; // マップの個数
+	int filesize;
+};
+
+struct map_cache_ {
+	struct MAP_CACHE_HEAD head;
 	struct MAP_CACHE_INFO *map;
 	FILE *fp;
 	int dirty;

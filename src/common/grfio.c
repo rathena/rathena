@@ -656,7 +656,7 @@ void* grfio_read(char *fname)
  *	Resource filename decode
  *------------------------------------------
  */
-static unsigned char * decode_filename(unsigned char *buf,int len)
+static char * decode_filename(unsigned char *buf,int len)
 {
 	int lop;
 	for(lop=0;lop<len;lop+=8) {
@@ -665,7 +665,7 @@ static unsigned char * decode_filename(unsigned char *buf,int len)
 		BitConvert4(&buf[lop]);
 		BitConvert(&buf[lop],BitSwapTable2);
 	}
-	return buf;
+	return (char*)buf;
 }
 
 /*==========================================
@@ -678,7 +678,7 @@ static int grfio_entryread(char *gfname,int gentry)
 	int grf_size,list_size;
 	unsigned char grf_header[0x2e];
 	int lop,entry,entrys,ofs,grf_version;
-	unsigned char *fname;
+	char *fname;
 	unsigned char *grf_filelist;
 
 	fp = fopen(gfname,"rb");
@@ -723,13 +723,13 @@ static int grfio_entryread(char *gfname,int gentry)
 			type = grf_filelist[ofs2+12];
 			if( type!=0 ){	// Directory Index ... skip
 				fname = decode_filename(grf_filelist+ofs+6,grf_filelist[ofs]-6);
-				if(strlen((const char *) fname)>sizeof(aentry.fn)-1){
+				if(strlen(fname)>sizeof(aentry.fn)-1){
 					printf("file name too long : %s\n",fname);
 					aFree(grf_filelist);
 					exit(1);
 				}
 				srclen=0;
-				if((period_ptr=strrchr((const char *) fname,'.'))!=NULL){
+				if((period_ptr=strrchr(fname,'.'))!=NULL){
 					for(lop=0;lop<4;lop++) {
 						if(strcmpi(period_ptr,".gnd\0.gat\0.act\0.str"+lop*5)==0)
 							break;
@@ -750,7 +750,7 @@ static int grfio_entryread(char *gfname,int gentry)
 				aentry.srcpos         = getlong(grf_filelist+ofs2+13)+0x2e;
 				aentry.cycle          = srccount;
 				aentry.type           = type;
-				strncpy(aentry.fn, (const char *) fname,sizeof(aentry.fn)-1);
+				strncpy(aentry.fn, fname,sizeof(aentry.fn)-1);
 #ifdef	GRFIO_LOCAL
 				aentry.gentry         = -(gentry+1);	// As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
@@ -777,13 +777,13 @@ static int grfio_entryread(char *gfname,int gentry)
 			return 4;
 		}
 
-		rBuf = (unsigned char *) aCallocA( rSize , 1);	// Get a Read Size
+		rBuf = (unsigned char *)aCallocA( rSize , 1);	// Get a Read Size
 		if (rBuf==NULL) {
 			fclose(fp);
 			printf("out of memory : grf compress entry table buffer\n");
 			return 3;
 		}
-		grf_filelist = (unsigned char *) aCallocA( eSize , 1);	// Get a Extend Size
+		grf_filelist = (unsigned char *)aCallocA( eSize , 1);	// Get a Extend Size
 		if (grf_filelist==NULL) {
 			aFree(rBuf);
 			fclose(fp);
@@ -803,13 +803,14 @@ static int grfio_entryread(char *gfname,int gentry)
 			int ofs2,srclen,srccount,type;
 			FILELIST aentry;
 
-			fname = grf_filelist+ofs;
-			if (strlen((const char *) fname)>sizeof(aentry.fn)-1) {
+			fname = (char*)(grf_filelist+ofs);
+			if (strlen(fname)>sizeof(aentry.fn)-1) {
 				printf("grf : file name too long : %s\n",fname);
 				aFree(grf_filelist);
 				exit(1);
 			}
-			ofs2 = ofs+strlen(grf_filelist+ofs)+1;
+			//ofs2 = ofs+strlen((char*)(grf_filelist+ofs))+1;
+			ofs2 = ofs+strlen(fname)+1;
 			type = grf_filelist[ofs2+12];
 			if(type==1 || type==3 || type==5) {
 				srclen=getlong(grf_filelist+ofs2);

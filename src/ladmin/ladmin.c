@@ -3316,11 +3316,11 @@ int parse_fromlogin(int fd) {
 			memcpy(md5key, RFIFOP(fd,4), RFIFOW(fd,2) - 4);
 			md5key[sizeof(md5key)-1] = '0';
 			if (passenc == 1) {
-				strncpy(md5str, RFIFOP(fd,4), RFIFOW(fd,2) - 4);
+				strncpy(md5str, (const char*)RFIFOP(fd,4), RFIFOW(fd,2) - 4);
 				strcat(md5str, loginserveradminpassword);
 			} else if (passenc == 2) {
 				strncpy(md5str, loginserveradminpassword, sizeof(loginserveradminpassword));
-				strcat(md5str, RFIFOP(fd,4));
+				strcat(md5str, (const char*)RFIFOP(fd,4));
 			}
 			MD5_String2binary(md5str, md5bin);
 			WFIFOW(login_fd,0) = 0x7918; // Request for administation login (encrypted password)
@@ -3815,7 +3815,7 @@ int parse_fromlogin(int fd) {
 		case 0x7947:	// answer of an account name search
 			if (RFIFOREST(fd) < 30)
 				return 0;
-			if (strcmp(RFIFOP(fd,6), "") == 0) {
+			if (strcmp((const char*)RFIFOP(fd,6), "") == 0) {
 				if (defaultlanguage == 'F') {
 					printf("Impossible de trouver le nom du compte [%d]. Le compte n'existe pas.\n", RFIFOL(fd,2));
 					ladmin_log("Impossible de trouver le nom du compte [%d]. Le compte n'existe pas." RETCODE, RFIFOL(fd,2));
@@ -4032,7 +4032,7 @@ int parse_fromlogin(int fd) {
 			connect_until_time = (time_t)RFIFOL(fd,140);
 			ban_until_time = (time_t)RFIFOL(fd,144);
 			memset(memo, '\0', sizeof(memo));
-			strncpy(memo, RFIFOP(fd,150), RFIFOW(fd,148));
+			strncpy(memo, (const char*)RFIFOP(fd,150), RFIFOW(fd,148));
 			if (RFIFOL(fd,2) == -1) {
 				if (defaultlanguage == 'F') {
 					printf("Impossible de trouver le compte [%s]. Le compte n'existe pas.\n", parameters);

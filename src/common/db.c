@@ -42,18 +42,20 @@ static void free_dbn(struct dbn* add_dbn)
 }
 #endif
 
+// maybe change the void* to const char* ???
 static int strdb_cmp(struct dbt* table,void* a,void* b)
 {
 	if(table->maxlen)
-		return strncmp(a,b,table->maxlen);
-	return strcmp(a,b);
+		return strncmp((const char*)a,(const char*)b,table->maxlen);
+	return strcmp((const char*)a,(const char*)b);
 }
 
+// maybe change the void* to unsigned char* ???
 static unsigned int strdb_hash(struct dbt* table,void* a)
 {
 	int i;
 	unsigned int h;
-	unsigned char *p=a;
+	unsigned char *p = (unsigned char*)a;
 
 	i=table->maxlen;
 	if(i==0) i=0x7fffffff;
@@ -131,14 +133,14 @@ void * db_search2(struct dbt *table, const char *key)
 {
 	int i,sp;
 	struct dbn *p,*pn,*stack[64];
-        int slen = strlen(key);
+    int slen = strlen(key);
 
 	for(i=0;i<HASH_SIZE;i++){
 		if((p=table->ht[i])==NULL)
 			continue;
 		sp=0;
 		while(1){
-                        if (strnicmp(key, p->key, slen) == 0)
+                        if (strnicmp(key, (const char*)p->key, slen) == 0)
                            return p->data;
 			if((pn=p->left)!=NULL){
 				if(p->right){

@@ -152,7 +152,7 @@ int char_log(char *fmt, ...) {
 				fprintf(logfp, RETCODE);
 			else {
 				gettimeofday(&tv, NULL);
-				strftime(tmpstr, 24, "%d-%m-%Y %H:%M:%S", localtime(&(tv.tv_sec)));
+				strftime(tmpstr, 24, "%d-%m-%Y %H:%M:%S", localtime((const time_t*)&(tv.tv_sec)));
 				sprintf(tmpstr + 19, ".%03d: %s", (int)tv.tv_usec / 1000, fmt);
 				vfprintf(logfp, tmpstr, ap);
 			}
@@ -2971,7 +2971,7 @@ int parse_console(char *buf) {
 }
 
 // 全てのMAPサーバーにデータ送信（送信したmap鯖の数を返す）
-int mapif_sendall(char *buf, unsigned int len) {
+int mapif_sendall(unsigned char *buf, unsigned int len) {
 	int i, c;
 
 	c = 0;
@@ -2987,7 +2987,7 @@ int mapif_sendall(char *buf, unsigned int len) {
 }
 
 // 自分以外の全てのMAPサーバーにデータ送信（送信したmap鯖の数を返す）
-int mapif_sendallwos(int sfd, char *buf, unsigned int len) {
+int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	int i, c;
 
 	c = 0;
@@ -3002,7 +3002,7 @@ int mapif_sendallwos(int sfd, char *buf, unsigned int len) {
 	return c;
 }
 // MAPサーバーにデータ送信（map鯖生存確認有り）
-int mapif_send(int fd, char *buf, unsigned int len) {
+int mapif_send(int fd, unsigned char *buf, unsigned int len) {
 	int i;
 
 	if (fd >= 0) {

@@ -186,7 +186,7 @@ int login_log(char *fmt, ...) {
 			else {
 				va_start(ap, fmt);
 				gettimeofday(&tv, NULL);
-				strftime(tmpstr, 24, date_format, localtime(&(tv.tv_sec)));
+				strftime(tmpstr, 24, date_format, localtime((const time_t*)&(tv.tv_sec)));
 				sprintf(tmpstr + strlen(tmpstr), ".%03d: %s", (int)tv.tv_usec / 1000, fmt);
 				vfprintf(log_fp, tmpstr, ap);
 				va_end(ap);
@@ -326,14 +326,14 @@ int check_ipmask(unsigned int ip, const unsigned char *str) {
 	unsigned int mask = 0, i = 0, m, ip2, a0, a1, a2, a3;
 	unsigned char *p = (unsigned char *)&ip2, *p2 = (unsigned char *)&mask;
 
-	if (sscanf(str, "%d.%d.%d.%d/%n", &a0, &a1, &a2, &a3, &i) != 4 || i == 0)
+	if (sscanf((const char*)str, "%d.%d.%d.%d/%n", &a0, &a1, &a2, &a3, &i) != 4 || i == 0)
 		return 0;
 	p[0] = a0; p[1] = a1; p[2] = a2; p[3] = a3;
 
-	if (sscanf(str+i, "%d.%d.%d.%d", &a0, &a1, &a2, &a3) == 4) {
+	if (sscanf((const char*)str+i, "%d.%d.%d.%d", &a0, &a1, &a2, &a3) == 4) {
 		p2[0] = a0; p2[1] = a1; p2[2] = a2; p2[3] = a3;
 		mask = ntohl(mask);
-	} else if (sscanf(str+i, "%d", &m) == 1 && m >= 0 && m <= 32) {
+	} else if (sscanf((const char*)(str+i), "%d", &m) == 1 && m >= 0 && m <= 32) {
 		for(i = 0; i < m && i < 32; i++)
 			mask = (mask >> 1) | 0x80000000;
 	} else {
@@ -372,7 +372,7 @@ int check_ip(unsigned int ip) {
 
 	for(i = 0; i < access_allownum; i++) {
 		access_ip = access_allow + i * ACO_STRSIZE;
-		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, access_ip)) {
+		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, (unsigned char*)access_ip)) {
 			if(access_order == ACO_ALLOW_DENY)
 				return 1; // With 'allow, deny' (deny if not allow), allow has priority
 			flag = ACF_ALLOW;
@@ -382,7 +382,7 @@ int check_ip(unsigned int ip) {
 
 	for(i = 0; i < access_denynum; i++) {
 		access_ip = access_deny + i * ACO_STRSIZE;
-		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, access_ip)) {
+		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, (unsigned char*)access_ip)) {
 			//flag = ACF_DENY; // not necessary to define flag
 			return 0; // At this point, if it's 'deny', we refuse connection.
 		}
@@ -420,7 +420,7 @@ int check_ladminip(unsigned int ip) {
 
 	for(i = 0; i < access_ladmin_allownum; i++) {
 		access_ip = access_ladmin_allow + i * ACO_STRSIZE;
-		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, access_ip)) {
+		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, (unsigned char*)access_ip)) {
 			return 1;
 		}
 	}
@@ -431,7 +431,7 @@ int check_ladminip(unsigned int ip) {
 //-----------------------------------------------------
 // Function to suppress control characters in a string.
 //-----------------------------------------------------
-int remove_control_chars(unsigned char *str) {
+int remove_control_chars(char *str) {
 	int i;
 	int change = 0;
 
@@ -448,9 +448,9 @@ int remove_control_chars(unsigned char *str) {
 //---------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
 //---------------------------------------------------
-int e_mail_check(unsigned char *email) {
+int e_mail_check(char *email) {
 	char ch;
-	unsigned char* last_arobas;
+	char* last_arobas;
 
 	// athena limits
 	if (strlen(email) < 3 || strlen(email) > 39)

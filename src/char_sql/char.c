@@ -1219,11 +1219,11 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 
 	// Check Authorised letters/symbols in the name of the character
 	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
-		for (i = 0; i < strlen(dat); i++)
+		for (i = 0; i < strlen(const char*dat); i++)
 			if (strchr(char_name_letters, dat[i]) == NULL)
 				return -1;
 	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
-		for (i = 0; i < strlen(dat); i++)
+		for (i = 0; i < strlen(const char*)dat); i++)
 			if (strchr(char_name_letters, dat[i]) != NULL)
 				return -1;
 	} // else, all letters/symbols are authorised (except control char removed before)
@@ -2763,7 +2763,7 @@ int parse_char(int fd) {
 				if (server_fd[i] < 0)
 					break;
 			}
-			if (i == MAX_MAP_SERVERS || strcmp(RFIFOP(fd,2), userid) || strcmp(RFIFOP(fd,26), passwd)) {
+			if (i == MAX_MAP_SERVERS || strcmp((const char*)RFIFOP(fd,2), userid) || strcmp((const char*)RFIFOP(fd,26), passwd)) {
 				WFIFOB(fd,2) = 3;
 				WFIFOSET(fd, 3);
 			} else {
@@ -2851,7 +2851,7 @@ int parse_console(char *buf) {
 }
 
 // MAP send all
-int mapif_sendall(char *buf, unsigned int len) {
+int mapif_sendall(unsigned char *buf, unsigned int len) {
 	int i, c;
 	int fd;
 
@@ -2867,7 +2867,7 @@ int mapif_sendall(char *buf, unsigned int len) {
 	return c;
 }
 
-int mapif_sendallwos(int sfd, char *buf, unsigned int len) {
+int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	int i, c;
 	int fd;
 
@@ -2883,7 +2883,7 @@ int mapif_sendallwos(int sfd, char *buf, unsigned int len) {
 	return c;
 }
 
-int mapif_send(int fd, char *buf, unsigned int len) {
+int mapif_send(int fd, unsigned char *buf, unsigned int len) {
 	int i;
 
 	if (fd >= 0) {

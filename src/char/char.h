@@ -20,9 +20,9 @@ struct mmo_map_server{
 int search_character_index(char* character_name);
 char * search_character_name(int index);
 
-int mapif_sendall(char *buf, unsigned int len);
-int mapif_sendallwos(int fd,char *buf, unsigned int len);
-int mapif_send(int fd,char *buf, unsigned int len);
+int mapif_sendall(unsigned char *buf, unsigned int len);
+int mapif_sendallwos(int fd,unsigned char *buf, unsigned int len);
+int mapif_send(int fd,unsigned char *buf, unsigned int len);
 
 int char_log(char *fmt, ...);
 

@@ -1177,8 +1177,8 @@ int parse_login(int fd) {
 
 			printf("client connection request %s from %d.%d.%d.%d\n", RFIFOP(fd, 6), p[0], p[1], p[2], p[3]);
 
-			account.userid = RFIFOP(fd, 6);
-			account.passwd = RFIFOP(fd, 30);
+			account.userid = (char*)RFIFOP(fd, 6);
+			account.passwd = (char*)RFIFOP(fd, 30);
 #ifdef PASSWORDENC
 			account.passwdenc= (RFIFOW(fd,0)==0x64)?0:PASSWORDENC;
 #else
@@ -1186,7 +1186,7 @@ int parse_login(int fd) {
 #endif
 			result=mmo_auth(&account, fd);
 
-		jstrescapecpy(t_uid,RFIFOP(fd, 6));
+		jstrescapecpy(t_uid,(char*)RFIFOP(fd, 6));
 		if(result==-1){
 		    int gm_level = isGM(account.account_id);
             if (min_level_to_connect > gm_level) {
@@ -1392,8 +1392,8 @@ int parse_login(int fd) {
 					printf("server connection request %s @ %d.%d.%d.%d:%d (%d.%d.%d.%d)\n",
 						RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58),
 						p[0], p[1], p[2], p[3]);
-				account.userid = RFIFOP(fd, 2);
-				account.passwd = RFIFOP(fd, 26);
+				account.userid = (char*)RFIFOP(fd, 2);
+				account.passwd = (char*)RFIFOP(fd, 26);
 				account.passwdenc = 0;
 				server_name = RFIFOP(fd,60);
 				result = mmo_auth(&account, fd);
