@@ -136,6 +136,7 @@ int char_id_count = 150000;
 struct mmo_charstatus *char_dat;
 int char_num,char_max;
 int max_connect_user = 0;
+int gm_allow_level = 99;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int start_zeny = 500;
 int start_weapon = 1201;
@@ -1522,6 +1523,10 @@ int parse_tologin(int fd) {
 //							printf("max_connect_user (unlimited) -> accepted.\n");
 //						else
 //							printf("count_users(): %d < max_connect_user (%d) -> accepted.\n", count_users(), max_connect_user);
+						sd->connect_until_time = (time_t)RFIFOL(fd,47);
+						// send characters to player
+						mmo_char_send006b(i, sd);
+					} else if(isGM(sd->account_id) >= gm_allow_level) {
 						sd->connect_until_time = (time_t)RFIFOL(fd,47);
 						// send characters to player
 						mmo_char_send006b(i, sd);
@@ -3167,6 +3172,10 @@ int char_config_read(const char *cfgName) {
 			max_connect_user = atoi(w2);
 			if (max_connect_user < 0)
 				max_connect_user = 0; // unlimited online players
+		} else if(strcmpi(w1, "gm_allow_level") == 0) {
+			gm_allow_level = atoi(w2);
+			if(gm_allow_level < 0)
+				gm_allow_level = 99;
 		} else if (strcmpi(w1, "check_ip_flag") == 0) {
 			check_ip_flag = config_switch(w2);
 		} else if (strcmpi(w1, "autosave_time") == 0) {

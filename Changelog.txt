@@ -1,5 +1,7 @@
 Date	Added
 01/01
+	* Added a char config that allows GMs that have a certain level or above to 
+	  bypass the server's user limit [Codemaster]
 	* Changed some create arrow outputs for new kRO 12/21/04 patch [Aria]
 	* Fixed some respawn delays of MVP/Miniboss monsters. Redo Umbala/Niflheim fields, added missing mobs, corrected
 	  monsters quantity. In Niflheim fixed wrong Lord of Death monster ID. [Lupus]
