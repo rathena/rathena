@@ -206,6 +206,7 @@ ATCOMMAND_FUNC(trade); // by MouseJstr
 ATCOMMAND_FUNC(send); // by davidsiaw
 ATCOMMAND_FUNC(setbattleflag); // by MouseJstr
 ATCOMMAND_FUNC(unmute); // [Valaris]
+ATCOMMAND_FUNC(clearweather); // Dexity
 ATCOMMAND_FUNC(uptime); // by MC Cameri
 ATCOMMAND_FUNC(changesex); // by MC Cameri
 ATCOMMAND_FUNC(mute); // celest
@@ -455,6 +456,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Send,				"@send",			60, atcommand_send },
 	{ AtCommand_SetBattleFlag,		"@setbattleflag",	60, atcommand_setbattleflag },
 	{ AtCommand_UnMute,				"@unmute",			60, atcommand_unmute }, // [Valaris]
+	{ AtCommand_Clearweather,         "@clearweather",   99, atcommand_clearweather }, // Dexity 
 	{ AtCommand_UpTime,				"@uptime",			 0, atcommand_uptime }, // by MC Cameri
 	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri
 	{ AtCommand_Mute,				"@mute",			99, atcommand_mute }, // [celest]
@@ -7686,6 +7688,27 @@ atcommand_leaves(
 	clif_specialeffect(&sd->bl,effno,2);
 	return 0;
 }
+
+/*==========================================
+ * Clearing Weather Effects by Dexity
+ *------------------------------------------
+ */
+int
+atcommand_clearweather(
+   const int fd, struct map_session_data* sd,
+   const char* command, const char* message)
+{
+	int effno = 0;
+	nullpo_retr(-1, sd);
+	map[sd->bl.m].flag.rain=0;
+	map[sd->bl.m].flag.snow=0;
+	map[sd->bl.m].flag.sakura=0;
+	map[sd->bl.m].flag.fog=0;
+	map[sd->bl.m].flag.leaves=0;
+	clif_specialeffect(&sd->bl,effno,2);
+	return 0;
+} 
+
 /*==========================================
  * 
  *------------------------------------------

@@ -187,6 +187,7 @@ enum AtCommandType {
 	AtCommand_Send,
 	AtCommand_SetBattleFlag,
 	AtCommand_UnMute,
+	AtCommand_Clearweather, // by Dexity
 	AtCommand_UpTime, // by MC Cameri
 	AtCommand_ChangeSex, // by MC Cameri
 	AtCommand_Mute, // [celest]

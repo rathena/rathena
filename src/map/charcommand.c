@@ -42,6 +42,7 @@ CCMD_FUNC(option);
 CCMD_FUNC(save);
 CCMD_FUNC(stats_all);
 CCMD_FUNC(reset);
+CCMD_FUNC(spiritball);
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -70,6 +71,7 @@ static CharCommandInfo charcommand_info[] = {
 	{ CharCommandReset,					"#reset",					60, charcommand_reset },
 	{ CharCommandSave,					"#save",					60, charcommand_save },
 	{ CharCommandStatsAll,				"#statsall",				40, charcommand_stats_all },
+	{ CharCommandSpiritball,			"#spiritball",				40, charcommand_spiritball },
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -248,8 +250,8 @@ int charcommand_config_read(const char *cfgName) {
 			charcommand_config_read(w2);
 		else if (strcmpi(w1, "command_symbol") == 0 && w2[0] > 31 &&
 		         w2[0] != '/' && // symbol of standard ragnarok GM commands
-		         w2[0] != '%' && // symbol of party chat speaking
-				 w2[0] != '@')	 // symbol for @commands
+		         w2[0] != '%'	// symbol of party chat speaking
+			)
 			command_symbol = w2[0];
 	}
 	fclose(fp);
@@ -701,3 +703,44 @@ int charcommand_stats_all(const int fd, struct map_session_data* sd, const char*
 	return 0;
 }
 
+/*==========================================
+ * CharSpiritBall Function by PalasX
+ *------------------------------------------
+ */
+int charcommand_spiritball(const int fd, struct map_session_data* sd,const char* command, const char* message)
+{
+	struct map_session_data *pl_sd;
+	char character[100];
+	int spirit = 0;
+
+	memset(character, '\0', sizeof(character));
+
+	if(!message || !*message || sscanf(message, "%d %99[^\n]", &spirit, character) < 2 || spirit < 0 || spirit > 1000) {
+		clif_displaymessage(fd, "Usage: @spiritball <number: 0-1000>) <CHARACTER_NAME>.");
+		return -1;
+	}
+
+	if((pl_sd = map_nick2sd(character)) != NULL) {
+		if (spirit >= 0 && spirit <= 0x7FFF) {
+			if (pl_sd->spiritball != spirit || spirit > 999) {
+				if (pl_sd->spiritball > 0)
+					pc_delspiritball(pl_sd, pl_sd->spiritball, 1);
+				pl_sd->spiritball = spirit;
+				clif_spiritball(pl_sd);
+				// no message, player can look the difference
+				if (spirit > 1000)
+					clif_displaymessage(fd, msg_table[204]); // WARNING: more than 1000 spiritballs can CRASH your server and/or client!
+			} else {
+				clif_displaymessage(fd, msg_table[205]); // You already have this number of spiritballs.
+				return -1;
+			}
+		} else {
+			clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
+			return -1;
+		}
+	} else {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+	return 0;
+}

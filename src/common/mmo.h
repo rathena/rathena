@@ -129,7 +129,7 @@ struct mmo_charstatus {
 	short head_top,head_mid,head_bottom;
 
 	char name[24];
-	unsigned char base_level,job_level;
+	unsigned int base_level,job_level;
 	short str,agi,vit,int_,dex,luk;
 	unsigned char char_num,sex;
 

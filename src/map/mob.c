@@ -4185,7 +4185,8 @@ void mob_reload(void)
 static int mob_read_sqldb(void)
 {
 	char line[1024];
-	int i,class,ln=0;
+	int i,class;
+	long unsigned int ln=0;
 	char *str[55],*p,*np;
 	
 	memset(mob_db,0,sizeof(mob_db));

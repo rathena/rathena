@@ -1,5 +1,10 @@
 Date	Added
 12/14
+	* common/mmo.h: changed base_level and job_level to unsigned int to increase max levels [Codemaster]
+	* char/char.c: added a NULL check for the file in parse_friend_txt [Codemaster]
+	* map/atcommand.c/.h: added @clearweather (thanks to Dexity) [Codemaster]
+	* map/charcommand.c/.h: added #spiritball [Codemaster]
+	* map/mob.c: fixed a compiler warning (ln was an int and was supposed to be an unsigned long int) [Codemaster]
         * Added nullpo_retb to nullpo.c - does a break; if null [celest]
         * Replaced some parts in skill.c with nullpo checks [celest]
         * Corrected some typos - penaly -> penalty [celest]

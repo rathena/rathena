@@ -577,6 +577,9 @@ int parse_friend_txt(struct mmo_charstatus *p)
 	
 	// Open the file and look for the ID
 	fp = fopen(friends_txt, "r");
+
+	if(fp == NULL)
+		return 1;
 	
 
 	while(fgets(line, sizeof(line)-1, fp)) {
