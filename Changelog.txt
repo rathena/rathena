@@ -1,4 +1,6 @@
 Date	Added
+01/13
+        * Tided up/fixed some mobs [Lupus]
 01/12
         * Implemented Vending Log [Lupus]
 	  TODO: use log option to log only important deals (much money, rare items, etc)
