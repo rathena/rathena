@@ -84,12 +84,18 @@ morocc_in.gat,76,163,4	script	Alchemist	64,{
 		emotion 20;
 		next;
 		mes "[Marius]";
+		mes "For us to make you a ^3355FF'Binoculars'^000000, we will need:";
+		mes "^3355FF50.000 Zeny,";
+		mes "100 Steel,";
+		mes "and 1 Geek Glasses.^000000.";
+		next;
+		mes "[Marius]";
 		mes "Oh c'mon! Don't be a jerk! What I'm talking about is REALLY COOL!!";
 		close;
 
 	M_Make:
 		mes "[Marius]";
-		if(countitem(2243) < 1) || (countitem(999) < 100) goto sL_NotEnuf;
+		if((countitem(2243) < 1) || (countitem(999) < 100) || (Zeny < 50000)) goto sL_NotEnuf;
 		mes "Gr~~~~eat ! You'll definitely enjoy a pair of these!";
 		next;
 		mes "[Marius]";
@@ -107,7 +113,7 @@ morocc_in.gat,76,163,4	script	Alchemist	64,{
 
 		sL_NotEnuf:
 			mes "Argggghhhhhhh !! You didn't bring enough items!! You need:";
-			mes "^3355FF1 pair of Geek Glasses, and 100 Steel^000000.";
+			mes "^3355FF1 pair of Geek Glasses, 50.000 Zeny and 100 Steel^000000.";
 			emotion 6;
 			close;
 
