@@ -250,6 +250,9 @@ int buildin_failedremovecards(struct script_state *st);
 int buildin_marriage(struct script_state *st);
 int buildin_wedding_effect(struct script_state *st);
 int buildin_divorce(struct script_state *st);
+int buildin_ispartneron(struct script_state *st);
+int buildin_getpartnerid(struct script_state *st);
+int buildin_warppartner(struct script_state *st);
 int buildin_getitemname(struct script_state *st);
 int buildin_makepet(struct script_state *st);
 int buildin_getexp(struct script_state *st);
@@ -467,6 +470,9 @@ struct {
 	{buildin_marriage,"marriage","s"},
 	{buildin_wedding_effect,"wedding",""},
 	{buildin_divorce,"divorce",""},
+	{buildin_ispartneron,"ispartneron",""},
+	{buildin_getpartnerid,"getpartnerid",""},
+	{buildin_warppartner,"warppartner","sii"},
 	{buildin_getitemname,"getitemname","i"},
 	{buildin_makepet,"makepet","i"},
 	{buildin_getexp,"getexp","ii"},
@@ -5446,6 +5452,56 @@ int buildin_divorce(struct script_state *st)
 		push_val(st->stack,C_INT,0);
 		return 0;
 	}
+	push_val(st->stack,C_INT,1);
+	return 0;
+}
+
+int buildin_ispartneron(struct script_state *st)
+{
+	struct map_session_data *sd=script_rid2sd(st);
+	struct map_session_data *p_sd=NULL;
+
+	if(sd==NULL || !pc_ismarried(sd) ||
+            ((p_sd=map_nick2sd(map_charid2nick(sd->status.partner_id))) == NULL)) {
+		push_val(st->stack,C_INT,0);
+		return 0;
+	}
+
+	push_val(st->stack,C_INT,1);
+	return 0;
+}
+
+int buildin_getpartnerid(struct script_state *st)
+{
+    struct map_session_data *sd=script_rid2sd(st);
+    if (sd == NULL) {
+        push_val(st->stack,C_INT,0);
+        return 0;
+    }
+
+    push_val(st->stack,C_INT,sd->status.partner_id);
+    return 0;
+}
+
+int buildin_warppartner(struct script_state *st)
+{
+	int x,y;
+	char *str;
+	struct map_session_data *sd=script_rid2sd(st);
+	struct map_session_data *p_sd=NULL;
+
+	if(sd==NULL || !pc_ismarried(sd) ||
+            ((p_sd=map_nick2sd(map_charid2nick(sd->status.partner_id))) == NULL)) {
+		push_val(st->stack,C_INT,0);
+		return 0;
+	}
+
+        str=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	x=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	y=conv_num(st,& (st->stack->stack_data[st->start+4]));
+
+        pc_setpos(p_sd,str,x,y,0);
+
 	push_val(st->stack,C_INT,1);
 	return 0;
 }

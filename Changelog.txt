@@ -4,6 +4,8 @@ SVN: $Rev$
 
 Date	Added
 12/30
+        * Added ispartneron, getpartnerid, and warppartner script
+          commands to properly support jawaii NPC's (SVN 880) [MouseJstr]
         * Moved supernovice guardian angel messages to msg_athena.conf [celest]
 
 12/29
