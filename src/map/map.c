@@ -1085,7 +1085,13 @@ int map_quit(struct map_session_data *sd) {
 	chrif_char_offline(sd);
 #endif
 
-	numdb_erase(id_db,sd->bl.id);
+	{
+		void *p = numdb_search(charid_db,sd->status.char_id);
+		if(p) {
+			numdb_erase(charid_db,sd->status.char_id);
+			free(p);
+		}
+	} 
 	strdb_erase(nick_db,sd->status.name);
 	numdb_erase(charid_db,sd->status.char_id);
 
