@@ -870,8 +870,9 @@ int guild_notice_changed(int guild_id,const char *mes1,const char *mes2)
 // ギルドエンブレム変更
 int guild_change_emblem(struct map_session_data *sd,int len,const char *data)
 {
-	nullpo_retr(0, sd);
 	struct guild *g = NULL;
+
+	nullpo_retr(0, sd);
 
 	if ((g = guild_search(sd->status.guild_id)) && guild_checkskill(g, GD_GLORYGUILD)>0)
 		return intif_guild_emblem(sd->status.guild_id,len,data);

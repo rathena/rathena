@@ -2762,12 +2762,8 @@ int atcommand_go(
 	char output[200];
 	int m;
 
-	if(map[sd->bl.m].flag.nogo) {
-		clif_displaymessage(sd->fd,"You can not use @go on this map.");
-		return 0;
-	}
 
-	struct { char map[16]; int x,   y; } data[] = {
+	const struct { char map[16]; int x,   y; } data[] = {
 	       { "prontera.gat", 156, 191  },	//	 0=Prontera
 	       { "morocc.gat",   156,  93  },	//	 1=Morroc
 	       { "geffen.gat",   119,  59  },	//	 2=Geffen
@@ -2786,6 +2782,11 @@ int atcommand_go(
 	       { "new_1-1.gat",   53, 111  },	//	15=Start point
 	       { "sec_pri.gat",   23,  61  },	//	16=Prison
 	};
+
+	if(map[sd->bl.m].flag.nogo) {
+		clif_displaymessage(sd->fd,"You can not use @go on this map.");
+		return 0;
+	}
 
 	memset(map_name, '\0', sizeof(map_name));
 	memset(output, '\0', sizeof(output));
@@ -7198,6 +7199,7 @@ atcommand_skilltree(const int fd, struct map_session_data* sd,
   struct pc_base_job s_class;
   char target[255], *tbl;
   char output[255];
+  struct skill_tree_entry *ent;
 
   if (!message || !*message)
     return -1;
@@ -7235,7 +7237,7 @@ atcommand_skilltree(const int fd, struct map_session_data* sd,
     return 0;
   }
 
-  struct skill_tree_entry *ent = &skill_tree[s][c][skillidx];
+  ent = &skill_tree[s][c][skillidx];
 
   for(j=0;j<5;j++) 
     if( ent->need[j].id &&
@@ -7690,8 +7692,10 @@ atcommand_identify(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	nullpo_retr(-1, sd);
 	int i,num;
+
+	nullpo_retr(-1, sd);
+
 	for(i=num=0;i<MAX_INVENTORY;i++){
 		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].identify!=1){
 			num++;

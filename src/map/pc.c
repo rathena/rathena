@@ -3464,9 +3464,11 @@ int pc_item_repair(struct map_session_data *sd,int idx)
 {
 	int flag=1, material;
 	int materials[5] = { 0, 1002, 998, 999, 756 };
+	struct item *item;
 
 	nullpo_retr(0, sd);
-	struct item *item = &sd->status.inventory[idx];
+
+	item = &sd->status.inventory[idx];
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(item->nameid > 0 && item->attribute == 1 ) {
@@ -3501,9 +3503,10 @@ int pc_item_refine(struct map_session_data *sd,int idx)
 {
 	int flag = 1, i = 0, count = 0, ep = 0, per, refine;
 	int material[5] = { 0, 1010, 1011, 984, 984 };
+	struct item *item;
 	
 	nullpo_retr(0, sd);
-	struct item *item = &sd->status.inventory[idx];
+	item = &sd->status.inventory[idx];
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(item->nameid > 0 && itemdb_type(item->nameid)==4) {

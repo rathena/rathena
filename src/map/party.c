@@ -590,7 +590,11 @@ int party_exp_share(struct party *p,int map,int base_exp,int job_exp,int zeny)
 		return 0;
 	for(i=0;i<MAX_PARTY;i++)
 		if((sd=p->member[i].sd)!=NULL && sd->bl.m==map) {
+#ifdef TWILIGHT
+			pc_gainexp(sd,base_exp,job_exp);
+#else
 			pc_gainexp(sd,base_exp/c+1,job_exp/c+1);
+#endif
 			if(battle_config.zeny_from_mobs) // zeny from mobs [Valaris]
 				pc_getzeny(sd,zeny/c+1);
 		}

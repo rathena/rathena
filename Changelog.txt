@@ -1,5 +1,6 @@
 Date	Added
 12/1
+	- Make it build against gcc 2.95 [MouseJstr]
 	- Changed #define MAX_PET_DB to 300, it's easier for people adding new pets like this. [Nas]
         * Skill Updates [celest]
           - Updated Poison React
