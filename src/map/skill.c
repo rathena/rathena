@@ -1781,7 +1781,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 
 	map_freeblock_lock();
 	/* ?ç€Ç…É_ÉÅ?ÉW?óùÇçsÇ§ */
-	if(skillid != KN_BOWLINGBASH || flag)
+	if(skillid || flag)
 		battle_damage(src,bl,damage,0);
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(battle_get_mode(bl)&0x20) && !map[src->m].flag.gvg ) {
 		int s_lv = battle_get_lv(src),t_lv = battle_get_lv(bl);
@@ -1863,7 +1863,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		if(hp || sp) pc_heal(sd,hp,sp);
 	}
 
-	if((skillid != KN_BOWLINGBASH || flag) && rdamage > 0)
+	if((skillid || flag) && rdamage > 0)
 		battle_damage(bl,src,rdamage,0);
 
 	if(attack_type&BF_WEAPON && sc_data && sc_data[SC_AUTOCOUNTER].timer != -1 && sc_data[SC_AUTOCOUNTER].val4 > 0) {
@@ -7408,9 +7408,7 @@ int skill_castfix( struct block_list *bl, int time )
 		nullpo_retr(0, md=(struct mob_data*)bl);
 		skill = md->skillid;
 		lv = md->skilllv;
-	}
-
-	else { 
+	} else { 
 		nullpo_retr(0, sd=(struct map_session_data*)bl);
 		skill = sd->skillid;
 		lv = sd->skilllv;
@@ -7470,12 +7468,17 @@ int skill_delayfix( struct block_list *bl, int time )
 
 	sc_data = battle_get_sc_data(bl);
 
+	// instant cast attack skills depend on aspd as delay [celest]
+	if (time <= 0 && skill_db[skill].skill_type == BF_WEAPON)
+		time = battle_get_adelay (bl)/2;
+
 	if(sd) {
 		if(battle_config.delay_dependon_dex &&	/* dexÇÃâeãøÇåvéZÇ∑ÇÈ */
-			skill_get_delaynodex(skill, lv) > 0)
+			!skill_get_delaynodex(skill, lv))	// if skill casttime is allowed to be reduced by dex
 			time=time*(battle_config.castrate_dex_scale - battle_get_dex(bl))/battle_config.castrate_dex_scale;
-		time=time*battle_config.delay_rate/100;
 	}
+	
+	time=time*battle_config.delay_rate/100;
 
 	/* ÉuÉâÉMÇÃéç */
 	if(sc_data && sc_data[SC_POEMBRAGI].timer!=-1 )
@@ -7807,11 +7810,6 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	if( casttime<=0 )	/* ârè•ÇÃñ≥Ç¢Ç‡ÇÃÇÕÉLÉÉÉìÉZÉãÇ≥ÇÍÇ»Ç¢ */
 		sd->state.skillcastcancel=0;
 
-	// instant cast attack skills depend on aspd as delay [celest]
-	if (delay <= 0 && skill_db[skill_num].skill_type == BF_WEAPON) {
-		delay = (battle_get_adelay (&sd->bl)/2) * battle_config.delay_rate / 100;
-	}
-
 	sd->skilltarget	= target_id;
 /*	sd->cast_target_bl	= bl; */
 	sd->skillx		= 0;
@@ -7953,11 +7951,6 @@ int skill_use_pos( struct map_session_data *sd,
 	if( casttime<=0 )	/* ârè•ÇÃñ≥Ç¢Ç‡ÇÃÇÕÉLÉÉÉìÉZÉãÇ≥ÇÍÇ»Ç¢ */
 		sd->state.skillcastcancel=0;
 
-	// instant cast attack skills depend on aspd as delay [celest]
-	if (delay <= 0 && skill_db[skill_num].skill_type == BF_WEAPON) {
-		delay = (battle_get_adelay (&sd->bl)/2) * battle_config.delay_rate / 100;
-	}
-	
 	sd->skilltarget	= 0;
 /*	sd->cast_target_bl	= NULL; */
 	tick=gettick();

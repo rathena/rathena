@@ -1,4 +1,15 @@
 Date	Added
+01/07
+        * Added Filougarou's fix for Bowling Bash causing it to only display damage, 
+          but doesn't do any - thanks! [celest]
+        * Set delay_dependon_dex in battle_athena to 'no' by default [celest]
+
+          Note: Just to clarify things, on official servers dex is not supposed to 
+                reduce skill delays, only Poem of Bragi and Berzebub card does!
+
+        * Fixed typo in skill_delayfix - reduce delays only if delaynodex was *not* set,
+          sorry ^^; [celest]
+
 01/06
 	* Fixed various memory corruptions causing crashes (SVN 925) [MouseJstr]
 	* Fixed typo in src/map/map.c causing compile 
