@@ -196,16 +196,8 @@ Problem:	Guilds DB
 Assigned:	N/A
 Progress:	0%
 
-Problem:	Double Connection Bug still exist. Sometimes people can't re-connect till the server reboot
-Assigned:	N/A
-Progress:	0%
-
 Problem:	You can put in Cart goods more than Cart Max Weight limit allows
-Assigned:	N/A
-Progress:	0%
-
-Problem:	SCRIPT CRASH BUG
-		When you use INN - you instantly disconnects or server crashes
+		(it's an old good bug about Named / Unnamed Stackable items)
 Assigned:	N/A
 Progress:	0%
 
@@ -214,10 +206,6 @@ Assigned:	N/A
 Progress:	0%
 
 Problem:	Lord Kaho Horns supposedly disappear when equipped.
-Assigned:	N/A
-Progress:	0%
-
-Problem:	Berzebub, etc cards don't decrease aftercast delays
 Assigned:	N/A
 Progress:	0%
 
@@ -231,3 +219,11 @@ Notes:          I *still* need to know which version is the client, because prob
                 course however) in my laptop can login ^^;
                 It would be even better if you could send me the client in question so
                 i can test it.
+
+Problem:	Ruwatch DOESN't work! But Sight does work.
+Assigned:	N/A
+Progress:	0%
+
+Problem:	Fire Pillar doesn't consume GEMS!
+Assigned:	N/A
+Progress:	0%
