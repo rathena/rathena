@@ -2139,6 +2139,9 @@ int mob_timer_delete(int tid, unsigned int tick, int id, int data)
 	nullpo_retr(0, bl);
 
 	md = (struct mob_data *)bl;
+//for Alchemist CANNIBALIZE [Lupus]
+
+
 	mob_catch_delete(md,3);
 	return 0;
 }

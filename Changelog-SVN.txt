@@ -1,6 +1,10 @@
 Date	Added
 
 03/27
+	* Added flexible Filter to the Monster Drops logging [Lupus]
+	   - Now you can choose what types of items either to log or not.
+	   - You can also log expensive items (you can set the min logging price)
+	* Optimized a bit ATCommands.c functions (inspired by Freya) [Lupus]
 	* Added missing parenthesis in my Improve Dodge code, not giving +4/lv to proper jobs [DracoRPG]
 	* Added all released cards into monsters drops and Old Card Album [Lupus]
 03/25
