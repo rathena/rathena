@@ -765,11 +765,8 @@ static int mob_timer(int tid,unsigned int tick,int id,int data)
 		break;
 	}
 	map_freeblock_unlock();
-	if (md->timer == -1) {
+	if (md->timer == -1)
 		mob_changestate(md,MS_WALK,0);
-		if (md->timer == -1) 
-			printf("mob_timer : mob %x STILL has no timer\n", md);
-	}
 	return 0;
 }
 
