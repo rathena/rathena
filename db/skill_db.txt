@@ -145,7 +145,7 @@
 143,0,6,4,0,1,1,1,no,0,1,0,none,0	//NV_TRICKDEAD#?んだふり#
 144,0,0,0,0,0,1,0,no,0,1,0,none,0	//SM_MOVINGRECOVERY#移動時HP回復#
 145,0,0,0,0,0,1,0,no,0,1,0,weapon,0	//SM_FATALBLOW#?所攻撃#
-146,0,0,0,0,0,1,0,no,0,1,0,weapon,0	//SM_AUTOBERSERK#オ?トバ?サ?ク#
+146,0,6,4,0,1,1,1,no,0,1,0,weapon,0	//SM_AUTOBERSERK#オ?トバ?サ?ク#
 147,0,0,4,0,1,1,0,no,0,1,0,weapon,0	//AC_MAKINGARROW#矢作成#
 148,-3,6,1,0,2,1,1,no,0,1,0,weapon,6	//AC_CHARGEARROW#?ャ?ジアロ?#
 149,8,6,1,2,0,1,1,no,0,1,0,weapon,0	//TF_SPRINKLESAND#砂まき#
@@ -439,7 +439,7 @@
 402,8,6,1,0,1,10,1,no,0,0,0,none,0	//PF_MINDBREAKER#?インドブレ?カ?#
 403,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//PF_MEMORIZE#メモライズ#
 404,3,6,2,2,1,5,1,yes,0,256,1,magic,0	//PF_FOGWALL#フォグウォ?ル#
-405,3,6,2,0,1,5,1,no,0,128,2,misc,0	//PF_SPIDERWEB#スパイ??ウェッブ#
+405,3,6,2,0,1,1,1,no,0,128,2,misc,0	//PF_SPIDERWEB#スパイ??ウェッブ#
 406,-1,6,1,0,2,10,1,no,33,0,0,weapon,0	//ASC_METEORASSAULT#メテオアサルト#
 407,0,6,4,0,1,10,0,no,0,0,0,none,0	//ASC_CDP#デッドリ??イズン製造#
 408,0,0,4,0,1,1,1,yes,0,0,0,magic,0	//WE_BABY##

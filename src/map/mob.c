@@ -2295,7 +2295,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		mob_unlocktarget((struct mob_data *)src,tick);
 
 	/* ソウルドレイン */
-	if(sd && (skill=pc_checkskill(sd,HW_SOULDRAIN))>0){
+	if(sd && sd->state.attack_type == BF_MAGIC && (skill=pc_checkskill(sd,HW_SOULDRAIN))>0){
 		clif_skill_nodamage(src,&md->bl,HW_SOULDRAIN,skill,1);
 		sp = (battle_get_lv(&md->bl))*(65+15*skill)/100;
 		if(sd->status.sp + sp > sd->status.max_sp)
@@ -2529,7 +2529,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		int log_mvp[2] = {0};
 		int j;
 		int mexp;
-		temp = ((double)mob_db[md->class].mexp * (double)battle_config.mvp_exp_rate * (9.+(double)count)/1000.);
+		temp = ((double)mob_db[md->class].mexp * (9.+(double)count)/10.);	//[Gengar] 
 		mexp = (temp > 2147483647.)? 0x7fffffff:(int)temp;
 		if(mexp < 1) mexp = 1;
 		clif_mvp_effect(mvp_sd);					// エフェクト

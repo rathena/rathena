@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/3    * corrected Spider Web's maximum level [celest]
+        * Removed Soul Drain from Professor's skill tree [celest]
 
 12/2    * Updated skill tree prerequisites for the new kRO skills [celest]
 

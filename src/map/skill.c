@@ -1,4 +1,4 @@
-// $Id: skill.c,v 1.8 2004/12/2 12:58:19 AM Celestia Exp $
+// $Id: skill.c,v 1.8 2004/12/3 7:53:42 PM Celestia Exp $
 /* スキル?係 */
 
 #include <stdio.h>
@@ -114,7 +114,7 @@ int SkillStatusChangeTable[]={	/* skill.hのenumのSC_***とあわせること */
 	SC_SPLASHER,		/* ベナムスプラッシャ? */
 	-1,
 	SC_TRICKDEAD,		/* 死んだふり */
-	-1,-1,-1,-1,-1,-1,
+	-1,-1,SC_AUTOBERSERK,-1,-1,-1,
 /* 150- */
 	-1,-1,-1,-1,-1,
 	SC_LOUD,			/* ラウドボイス */
@@ -3218,6 +3218,19 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		skill_status_change_start(src,SC_BLOCKSKILL,skilllv,0,skillid,0,10000,0 );
 		break;
 		
+	case SM_AUTOBERSERK:	// Celest
+		{
+			struct status_change *tsc_data = battle_get_sc_data(bl);
+			int sc=SkillStatusChangeTable[skillid];
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			if( tsc_data ){
+				if( tsc_data[sc].timer==-1 )
+					skill_status_change_start(bl,sc,skilllv,0,0,0,0,0);
+				else
+					skill_status_change_end(bl, sc, -1);
+			}
+		}
+		break;
 	
 	case AS_ENCHANTPOISON: // Prevent spamming [Valaris]
 		if(bl->type==BL_PC) {
@@ -3693,6 +3706,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			skill_status_change_start(bl,SC_STONE,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		else if(sd)
 			clif_skill_fail(sd,skillid,0,0);
+		if (dstmd)
+			mob_target(dstmd,src,skill_get_range(skillid,skilllv));
 		break;
 
 	case NV_FIRSTAID:			/* ?急手? */
@@ -8542,6 +8557,10 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			case SC_REGENERATION:
 				calc_flag = 1;
 				break;
+			case SC_AUTOBERSERK:
+				if (sc_data[SC_PROVOKE].timer != -1)
+					skill_status_change_end(bl,SC_PROVOKE,-1);
+				break;
 			case SC_BERSERK:			/* バ?サ?ク */
 				calc_flag = 1;
 				clif_status_change(bl,SC_INCREASEAGI,0);	/* アイコン消去 */
@@ -8870,6 +8889,7 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 
 	case SC_ENDURE:	/* インデュア */
+	case SC_AUTOBERSERK: // Celest
 		if(sd && sd->special_state.infinite_endure) {
 			sc_data[type].timer=add_timer( 1000*60+tick,skill_status_change_timer, bl->id, data );
 			//sc_data[type].val2=1;
@@ -9304,6 +9324,14 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			if(tick <= 0) tick = 1000 * 60;
 			calc_flag = 1; // for updating mdef
 			val2 = 7; // [Celest]
+			break;
+		case SC_AUTOBERSERK:
+			{
+				tick = 60*1000;
+				if (bl->type == BL_PC && sd->status.hp<sd->status.max_hp>>2 &&
+					(sc_data[SC_PROVOKE].timer==-1 || sc_data[SC_PROVOKE].val2==0))
+					skill_status_change_start(bl,SC_PROVOKE,10,1,0,0,0,0);
+			}
 			break;
 		case SC_CONCENTRATE:		/* 集中力向上 */
 			calc_flag = 1;

@@ -1,4 +1,4 @@
-// $Id: skill.h,v 1.5 2004/11/26 5:47:12 PM Celestia Exp $
+// $Id: skill.h,v 1.5 2004/12/3 7:53:26 PM Celestia $
 #ifndef _SKILL_H_
 #define _SKILL_H_
 
@@ -326,6 +326,7 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_BROKNARMOR		=32,
 	SC_BROKNWEAPON		=33,
 	SC_SLOWDOWN			=45, // for skill slowdown
+	SC_AUTOBERSERK		=46,
 	SC_SIGHTTRASHER		=73,
 //	SC_BASILICA			=125, // 125 is the same id as joint break
 	SC_BASILICA			=102, // temporarily use this before an actual id is found [celest]
@@ -343,18 +344,18 @@ enum {	// struct map_session_data の status_changeの番?テ?ブル
 	SC_SPELLBREAKER		=192,
 	SC_DPOISON			=193, /* 猛毒 */
 	SC_BLOCKSKILL		=194, // for disallowing the use of a skill for a time period
+	SC_LEADERSHIP		=196,
+	SC_GLORYWOUNDS		=197,
+	SC_SOULCOLD			=198,
+	SC_HAWKEYES			=199,
+	SC_BATTLEORDERS		=200,
+	SC_REGENERATION		=201,
+	SC_PRESERVE         =202,
 
 // [Celest]
-	SC_BLEEDING			= 124, // Temporarily same id as headcrush	
-	SC_MOONLIT			= 195,
-	SC_LEADERSHIP		= 196,
-	SC_GLORYWOUNDS		= 197,
-	SC_SOULCOLD			= 198,
-	SC_HAWKEYES			= 199,
-	SC_BATTLEORDERS		= 200,
-	SC_REGENERATION		= 201,
-	SC_PRESERVE         = 202,
-
+	SC_BLEEDING			= 124, // Temporarily same id as headcrush
+	SC_MOONLIT			=195,
+	
 // -- testing various SC effects
 //	SC_AURABLADE			=81,
 //	SC_CONCENTRATION		=83,
