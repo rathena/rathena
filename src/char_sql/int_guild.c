@@ -48,6 +48,8 @@ int _erase_guild(void *key, void *data, va_list ap) {
         free(castle);
         db_erase(castle_db_, key);
     }
+
+    return 0;
 }
 
 // Save guild into sql
@@ -162,7 +164,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 			if(mysql_query(&mysql_handle, tmp_sql) ) {
 				printf("DB server Error (delete `guild_castle`)- %s\n", mysql_error(&mysql_handle) );
 			}			
-                        db_foreach(_guild_castle_, _erase_guild, g->guild_id);
+                        db_foreach(castle_db_, _erase_guild, g->guild_id);
 		}
 	}
 
@@ -1333,7 +1335,7 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 		printf("DB server Error (delete `guild_position`)- %s\n", mysql_error(&mysql_handle) );
 	}
 
-        db_foreach(_guild_castle_, _erase_guild, guild_id);
+        db_foreach(castle_db_, _erase_guild, guild_id);
 	
 	//printf("- Update guild %d of char\n",guild_id);
 	sprintf(tmp_sql, "UPDATE `%s` SET `guild_id`='0' WHERE `guild_id`='%d'",char_db, guild_id);

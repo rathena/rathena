@@ -1,5 +1,7 @@
 Date	Added
 12/27
+	* Fixed a bug in the guild_castle persistance code
+	  in char_sql.  What was I smoking?  (SVN: 816) [MouseJstr]
         * Corrected a bad error in itemdb_read_itemslottable [celest]
         * Corrected wrong logging of text in int_guild.c, thanks to Alex14 [celest]
         * Summoned monsters will not give exp and items [celest]
