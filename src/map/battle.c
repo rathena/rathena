@@ -2398,7 +2398,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 			if(sc_data[SC_TRUESIGHT].timer!=-1)	// トゥルーサイト
 			damage += damage*(2*sc_data[SC_TRUESIGHT].val1)/100;
 			if(sc_data[SC_BERSERK].timer!=-1)	// バーサーク
-				damage += damage*50/100;
+				damage += damage*2;
 		}
 
 		if(skill_num>0){
@@ -2970,7 +2970,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 				cri <<= 1;
 		}
 
-		if(skill_num == SN_SHARPSHOOTING)
+		if(skill_num == SN_SHARPSHOOTING && rand()%100 < 50)
 			cri += 200;
 	}
 
@@ -3091,8 +3091,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 			damage2 += damage2*(2*sc_data[SC_TRUESIGHT].val1)/100;
 		}
 			if(sc_data[SC_BERSERK].timer!=-1){	// バーサーク
-				damage += damage*50/100;
-				damage2 += damage2*50/100;
+				damage += damage*2;
+				damage2 += damage2*2;
 			}
 		}
 
@@ -4657,7 +4657,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			}         
 		}
 		if(t_sc_data && t_sc_data[SC_BLADESTOP_WAIT].timer != -1){
-			if (!(src->type = BL_MOB && mob_db[((struct mob_data *)src)->class].mode&0x32)) {
+			if (!(src->type == BL_MOB && mob_db[((struct mob_data *)src)->class].mode&0x20)) {
 				int lv = t_sc_data[SC_BLADESTOP_WAIT].val1;
 				skill_status_change_end(target,SC_BLADESTOP_WAIT,-1);
 				skill_status_change_start(src,SC_BLADESTOP,lv,1,(int)src,(int)target,skill_get_time2(MO_BLADESTOP,lv),0);
@@ -4702,6 +4702,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 {
 	int s_p,s_g,t_p,t_g;
 	struct block_list *ss=src;
+	struct status_change *sc_data;
+	struct status_change *tsc_data;
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, target);
@@ -4724,6 +4726,13 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		return -1;
 
 	if(target->type == BL_PC && ((struct map_session_data *)target)->invincible_timer != -1)
+		return -1;
+
+	// Celest
+	sc_data = battle_get_sc_data(src);
+	tsc_data = battle_get_sc_data(target);
+	if ((sc_data && sc_data[SC_BASILICA].timer != -1) ||
+		(tsc_data && tsc_data[SC_BASILICA].timer != -1))
 		return -1;
 
 	if(target->type == BL_SKILL) {

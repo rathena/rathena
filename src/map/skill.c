@@ -2760,7 +2760,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			if (sd){
 				s_class = pc_calc_base_job(sd->status.class);
 				if((skill=pc_checkskill(sd,HP_MEDITATIO))>0) // メディテイティオ
-					heal += heal*(skill*2/100);
+					heal += heal*skill*2/100;
 				if(sd && dstsd && sd->status.partner_id == dstsd->status.char_id && s_class.job == 23 && sd->status.sex == 0) //自分も?象もPC、?象が自分のパ?トナ?、自分がスパノビ、自分が♀なら
 					heal = heal*2;	//スパノビの嫁が旦那にヒ?ルすると2倍になる
 			}
@@ -3479,7 +3479,29 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		break;
 
 	case HP_BASILICA:			/* バジリカ */
-		skill_status_change_start(src,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0);		
+		{
+			// cancel Basilica if already in effect
+			struct status_change *sc_data = battle_get_sc_data(src);
+			if(sc_data && sc_data[SC_BASILICA].timer != -1){
+				struct skill_unit *su;
+				if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
+					struct skill_unit_group *sg;
+					if ((sg = su->group) && sg->src_id == sd->bl.id) {
+						skill_status_change_end(src,SC_BASILICA,-1);
+						skill_delunitgroup (sg);
+						break;
+					}
+				}
+			} else {
+				// otherwise allow casting
+				skill_status_change_start(src,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
+				skill_clear_unitgroup(src);
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
+			}
+		}
+		break;
+
 	case PA_GOSPEL:				/* ゴスペル */
 		skill_clear_unitgroup(src);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -3673,21 +3695,21 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			
 			if(tsc_data && tsc_data[SC_CP_WEAPON].timer != -1 )
-			break;
-		strip_per = 5+2*skilllv+strip_fix/5;
-		strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
-		if(rand()%100 < strip_per){
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
-			if(dstsd){
-				for(i=0;i<MAX_INVENTORY;i++){
-					if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0002){
-						pc_unequipitem(dstsd,i,0,BF_SKILL);
-						break;
+				break;
+			strip_per = 5+2*skilllv+strip_fix/5;
+			strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
+			if(rand()%100 < strip_per){
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
+				if(dstsd){
+					for(i=0;i<MAX_INVENTORY;i++){
+						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0002){
+							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							break;
+						}
 					}
 				}
 			}
-		}
 		}
 		break;
 
@@ -3696,21 +3718,21 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			
 			if(tsc_data && tsc_data[SC_CP_SHIELD].timer != -1 )
-			break;
-		strip_per = 5+2*skilllv+strip_fix/5;
-		strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
-		if(rand()%100 < strip_per){
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
-			if(dstsd){
-				for(i=0;i<MAX_INVENTORY;i++){
-					if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0020){
-						pc_unequipitem(dstsd,i,0,BF_SKILL);
-						break;
+				break;
+			strip_per = 5+2*skilllv+strip_fix/5;
+			strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
+			if(rand()%100 < strip_per){
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
+				if(dstsd){
+					for(i=0;i<MAX_INVENTORY;i++){
+						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0020){
+							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							break;
+						}
 					}
 				}
 			}
-		}
 		}
 		break;
 
@@ -3719,21 +3741,21 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			
 			if(tsc_data && tsc_data[SC_CP_ARMOR].timer != -1 )
-			break;
-		strip_per = 5+2*skilllv+strip_fix/5;
-		strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
-		if(rand()%100 < strip_per){
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
-			if(dstsd){
-				for(i=0;i<MAX_INVENTORY;i++){
-					if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0010){
-						pc_unequipitem(dstsd,i,0,BF_SKILL);
-						break;
+				break;
+			strip_per = 5+2*skilllv+strip_fix/5;
+			strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
+			if(rand()%100 < strip_per){
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
+				if(dstsd){
+					for(i=0;i<MAX_INVENTORY;i++){
+						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0010){
+							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							break;
+						}
 					}
 				}
 			}
-		}
 		}
 		break;
 	case RG_STRIPHELM:			/* ストリップヘルム */
@@ -3741,21 +3763,21 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			struct status_change *tsc_data = battle_get_sc_data(bl);
 			
 			if(tsc_data && tsc_data[SC_CP_HELM].timer != -1 )
-			break;
-		strip_per = 5+2*skilllv+strip_fix/5;
-		strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
-		if(rand()%100 < strip_per){
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
-			if(dstsd){
-				for(i=0;i<MAX_INVENTORY;i++){
-					if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0100){
-						pc_unequipitem(dstsd,i,0,BF_SKILL);
-						break;
+				break;
+			strip_per = 5+2*skilllv+strip_fix/5;
+			strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
+			if(rand()%100 < strip_per){
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,strip_time,0 );
+				if(dstsd){
+					for(i=0;i<MAX_INVENTORY;i++){
+						if(dstsd->status.inventory[i].equip && dstsd->status.inventory[i].equip & 0x0100){
+							pc_unequipitem(dstsd,i,0,BF_SKILL);
+							break;
+						}
 					}
 				}
 			}
-		}
 		}
 		break;
 	/* PotionPitcher */
@@ -6770,14 +6792,18 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 			if (skill_num == sd->sc_data[SC_BLOCKSKILL].val3)
 				return 0;
 
-		if (sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
+		if (sc_data[SC_BASILICA].timer != -1) { // Disallow all other skills in Basilica [celest]
 			struct skill_unit *su;
 			if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
 				struct skill_unit_group *sg;
+				// if caster is the owner of basilica
 				if ((sg = su->group) && sg->src_id == sd->bl.id) {
-					skill_status_change_end(&sd->bl,SC_BASILICA,-1);
-					skill_delunitgroup (sg);
-				}
+					// skill_status_change_end(&sd->bl,SC_BASILICA,-1);
+					// skill_delunitgroup (sg);
+					if (skill_num != HP_BASILICA) return 0;
+				} // otherwise...
+				else
+					return 0;
 			}
 		}		
 	}
@@ -7073,10 +7099,14 @@ int skill_use_pos( struct map_session_data *sd,
 			struct skill_unit *su;
 			if ((su = (struct skill_unit *)sc_data[SC_BASILICA].val4)) {
 				struct skill_unit_group *sg;
+				// if caster is the owner of basilica
 				if ((sg = su->group) && sg->src_id == sd->bl.id) {
-					skill_status_change_end(&sd->bl,SC_BASILICA,-1);
-					skill_delunitgroup (sg);
-				}
+					// skill_status_change_end(&sd->bl,SC_BASILICA,-1);
+					// skill_delunitgroup (sg);
+					if (skill_num != HP_BASILICA) return 0;
+				} // otherwise...
+				else
+					return 0;
 			}
 		}
 	}
@@ -9504,44 +9534,44 @@ void skill_stop_dancing(struct block_list *src, int flag)
 	nullpo_retv(src);
 
 	sc_data=battle_get_sc_data(src);
-	if(sc_data && sc_data[SC_DANCING].timer==-1)
-		return;
-	group=(struct skill_unit_group *)sc_data[SC_DANCING].val2; //ダンスのスキルユニットIDはval2に入ってる
-	if(group && src->type==BL_PC && sc_data && sc_data[SC_DANCING].val4){ //合奏中?
-		struct map_session_data* dsd=map_id2sd(sc_data[SC_DANCING].val4); //相方のsd取得
-		if(flag){ //ログアウトなど片方が落ちても演奏が??される
-			if(dsd && src->id == group->src_id){ //グル?プを持ってるPCが落ちる
-				group->src_id=sc_data[SC_DANCING].val4; //相方にグル?プを任せる
-				if(flag&1) //ログアウト
-				dsd->sc_data[SC_DANCING].val4=0; //相方の相方を0にして合奏終了→通常のダンス?態
-				if(flag&2) //ハエ飛びなど
-					return; //合奏もダンス?態も終了させない＆スキルユニットは置いてけぼり
-			}else if(dsd && dsd->bl.id == group->src_id){ //相方がグル?プを持っているPCが落ちる(自分はグル?プを持っていない)
-				if(flag&1) //ログアウト
-				dsd->sc_data[SC_DANCING].val4=0; //相方の相方を0にして合奏終了→通常のダンス?態
-				if(flag&2) //ハエ飛びなど
-					return; //合奏もダンス?態も終了させない＆スキルユニットは置いてけぼり
-			}
-			skill_status_change_end(src,SC_DANCING,-1);//自分のステ?タスを終了させる
-			//そしてグル?プは消さない＆消さないのでステ?タス計算もいらない？
-			return;
-		}else{
-			if(dsd && src->id == group->src_id){ //グル?プを持ってるPCが止める
-				skill_status_change_end((struct block_list *)dsd,SC_DANCING,-1);//相手のステ?タスを終了させる
-			}
-			if(dsd && dsd->bl.id == group->src_id){ //相方がグル?プを持っているPCが止める(自分はグル?プを持っていない)
+	if(sc_data && sc_data[SC_DANCING].timer != -1) {
+		group=(struct skill_unit_group *)sc_data[SC_DANCING].val2; //ダンスのスキルユニットIDはval2に入ってる
+		if(group && src->type==BL_PC && sc_data && sc_data[SC_DANCING].val4){ //合奏中?
+			struct map_session_data* dsd=map_id2sd(sc_data[SC_DANCING].val4); //相方のsd取得
+			if(flag){ //ログアウトなど片方が落ちても演奏が??される
+				if(dsd && src->id == group->src_id){ //グル?プを持ってるPCが落ちる
+					group->src_id=sc_data[SC_DANCING].val4; //相方にグル?プを任せる
+					if(flag&1) //ログアウト
+					dsd->sc_data[SC_DANCING].val4=0; //相方の相方を0にして合奏終了→通常のダンス?態
+					if(flag&2) //ハエ飛びなど
+						return; //合奏もダンス?態も終了させない＆スキルユニットは置いてけぼり
+				}else if(dsd && dsd->bl.id == group->src_id){ //相方がグル?プを持っているPCが落ちる(自分はグル?プを持っていない)
+					if(flag&1) //ログアウト
+					dsd->sc_data[SC_DANCING].val4=0; //相方の相方を0にして合奏終了→通常のダンス?態
+					if(flag&2) //ハエ飛びなど
+						return; //合奏もダンス?態も終了させない＆スキルユニットは置いてけぼり
+				}
 				skill_status_change_end(src,SC_DANCING,-1);//自分のステ?タスを終了させる
+				//そしてグル?プは消さない＆消さないのでステ?タス計算もいらない？
+				return;
+			}else{
+				if(dsd && src->id == group->src_id){ //グル?プを持ってるPCが止める
+					skill_status_change_end((struct block_list *)dsd,SC_DANCING,-1);//相手のステ?タスを終了させる
+				}
+				if(dsd && dsd->bl.id == group->src_id){ //相方がグル?プを持っているPCが止める(自分はグル?プを持っていない)
+					skill_status_change_end(src,SC_DANCING,-1);//自分のステ?タスを終了させる
+				}
 			}
 		}
+		if(flag&2 && group && src->type==BL_PC){ //ハエで飛んだときとかはユニットも飛ぶ
+			struct map_session_data *sd = (struct map_session_data *)src;
+			skill_unit_move_unit_group(group, sd->bl.m,(sd->to_x - sd->bl.x),(sd->to_y - sd->bl.y));
+			return;
+		}
+		skill_delunitgroup(group);
+		if(src->type==BL_PC)
+			pc_calcstatus((struct map_session_data *)src,0);
 	}
-	if(flag&2 && group && src->type==BL_PC){ //ハエで飛んだときとかはユニットも飛ぶ
-		struct map_session_data *sd = (struct map_session_data *)src;
-		skill_unit_move_unit_group(group, sd->bl.m,(sd->to_x - sd->bl.x),(sd->to_y - sd->bl.y));
-		return;
-	}
-	skill_delunitgroup(group);
-	if(src->type==BL_PC)
-		pc_calcstatus((struct map_session_data *)src,0);
 }
 
 /*==========================================

@@ -601,7 +601,7 @@ static int mob_attack(struct mob_data *md,unsigned int tick,int data)
 		md->state.targettype = NONE_ATTACKABLE;
 		return 0;
 	}
-	if(tsd && !(mode&0x20) && (tsd->sc_data[SC_TRICKDEAD].timer != -1 ||
+	if(tsd && !(mode&0x20) && (tsd->sc_data[SC_TRICKDEAD].timer != -1 || tsd->sc_data[SC_BASILICA].timer != -1 ||
 		 ((pc_ishiding(tsd) || tsd->state.gangsterparadise) && !((race == 4 || race == 6) && !tsd->perfect_hiding) ) ) ) {
 		md->target_id=0;
 		md->state.targettype = NONE_ATTACKABLE;		
@@ -1174,8 +1174,8 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
 		return 0;
 
 	if(mode&0x20 ||	// Coercion is exerted if it is MVPMOB.
-		(sc_data && sc_data[SC_TRICKDEAD].timer == -1 &&
-		 ( (option && !(*option&0x06) ) || race==4 || race==6) ) ){
+		(sc_data && sc_data[SC_TRICKDEAD].timer == -1 && sc_data[SC_BASILICA].timer == -1 &&
+		 ( (option && !(*option&0x06) ) || race==4 || race==6) ) ) {
 		if(bl->type == BL_PC) {
 			nullpo_retr(0, sd = (struct map_session_data *)bl);
 			if(sd->invincible_timer != -1 || pc_isinvisible(sd))
@@ -1240,7 +1240,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			)
 		{
 			if(mode&0x20 ||
-				(tsd->sc_data[SC_TRICKDEAD].timer == -1 &&
+				(tsd->sc_data[SC_TRICKDEAD].timer == -1 && tsd->sc_data[SC_BASILICA].timer == -1 &&
 				((!pc_ishiding(tsd) && !tsd->state.gangsterparadise) || ((race == 4 || race == 6) && !tsd->perfect_hiding) ))){	// 妨害がないか判定
 				if( mob_can_reach(smd,bl,12) && 		// 到達可能性判定
 					rand()%1000<1000/(++(*pcc)) ){	// 範囲内PCで等確率にする
@@ -1428,7 +1428,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 
 			race=mob_db[md->class].race;
 			if(mode&0x20 ||
-				(sd->sc_data[SC_TRICKDEAD].timer == -1 &&
+				(sd->sc_data[SC_TRICKDEAD].timer == -1 && sd->sc_data[SC_BASILICA].timer == -1 &&
 				( (!pc_ishiding(sd) && !sd->state.gangsterparadise) || ((race == 4 || race == 6) && !sd->perfect_hiding) ) ) ){	// 妨害がないか判定
 
 				md->target_id=sd->bl.id;
@@ -1642,7 +1642,9 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			if(tsd || tmd) {
 				if(tbl->m != md->bl.m || tbl->prev == NULL || (dist=distance(md->bl.x,md->bl.y,tbl->x,tbl->y))>=md->min_chase)
 					mob_unlocktarget(md,tick);	// 別マップか、視界外
-				else if( tsd && !(mode&0x20) && (tsd->sc_data[SC_TRICKDEAD].timer != -1 || ((pc_ishiding(tsd) || tsd->state.gangsterparadise) && !((race == 4 || race == 6) && !tsd->perfect_hiding) )) )
+				else if( tsd && !(mode&0x20) && (tsd->sc_data[SC_TRICKDEAD].timer != -1 || tsd->sc_data[SC_BASILICA].timer != -1 ||
+					((pc_ishiding(tsd) || tsd->state.gangsterparadise) &&
+					!((race == 4 || race == 6) && !tsd->perfect_hiding) )) )
 					mob_unlocktarget(md,tick);	// スキルなどによる策敵妨害
 				else if(!battle_check_range(&md->bl,tbl,mob_db[md->class].range)){
 					// 攻撃範囲外なので移動

@@ -71,8 +71,8 @@ Assigned:	N/A
 Progess:	0%
 
 Problem:	Monk's Skill ROOT instantly reboots server
-Assigned:	N/A
-Progess:	0%
+Assigned:	Celest
+Progess:	100%? (Notes: Typo... my bad, sorry ^^; )
 
 Problem:	Sage's Area Skills (Delu.,Vulcano, etc) if casted on the same area (or overlap each other) instantly reboots server. use @gvgon when test. Don't test it towns
 Assigned:	N/A

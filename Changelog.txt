@@ -1,5 +1,9 @@
 Date	Added
 11/21
+        * Skill updates: [Celest]
+          - Updated Basilica, Sharp Shooting, Berserk, Meditatio (Thanks to DracoRPG!)
+          - Fixed a typo with Blade Stop that was causing crashes, sorry. ^^;
+          - Reverted changes to Cloaking, ours is already more updated! ^_^
 	* @alive, @raisemap, @raise now display the resurrection skill animation [MC Cameri]
 	* @charpetrename(AtCommand) is now #petrename(CharCommand) [MC Cameri]
 	* @charjob/(AtCommand) is now #jobchange(CharCommand) [MC Cameri]
@@ -9,6 +13,7 @@ Date	Added
 	  - Less congestion in atcommand.c
 	  - Port commands that start with @char to #, example:
 		~ @charoption will now be #option
+
 11/20
 	* Added str_lower() function to atcommand.c (from OA). [MC Cameri]
 	* Simplified @charchangesex to @charchangesex [player], your sex is changed to the opposite one [MC Cameri]
@@ -25,7 +30,6 @@ Date	Added
 	* Added @whozeny. Shows list of top 50 online players and their zeny sorted from highest to lowest. [Valaris]
 	* Added @happyhappyjoyjoy. Makes all players on server do a random emote. [Valaris]
 	* Removed -funroll-loops from compile, thanks to kashy for pointing out the problems caused by this. (Do not re-add!) [Valaris]
-	* Skill updates [celest]
 	* Added check for max vending_max_value when reading config [kobra_k88]
 	* Skill updates [celest]
           - Napalm vulcan, Enchant Deadly Poison, Slow Poison (based on jAthena 1066)

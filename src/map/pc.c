@@ -1452,9 +1452,9 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->speed = sd->speed *125/100;
 		if(sd->sc_data[SC_CLOAKING].timer!=-1) {
 			sd->critical_rate += 100; // critical increases
-			//sd->speed = sd->speed * (sd->sc_data[SC_CLOAKING].val3-sd->sc_data[SC_CLOAKING].val1*3) /100;
-			//clocking speed descreases normally
-			sd->speed = (sd->speed*(76+(sd->sc_data[SC_CLOAKING].val1*3)))/100; // Fixed by MiKa & Asa [Lupus]
+			sd->speed = sd->speed * (sd->sc_data[SC_CLOAKING].val3-sd->sc_data[SC_CLOAKING].val1*3) /100;
+			// Ours is accurate enough - refer skill_check_cloaking. ^^
+			//sd->speed = (sd->speed*(76+(sd->sc_data[SC_CLOAKING].val1*3)))/100; // Fixed by MiKa & Asa [Lupus]
 		}
 			//sd->speed = (sd->speed*(76+(sd->sc_data[SC_INCREASEAGI].val1*3)))/100;
 		if(sd->sc_data[SC_CHASEWALK].timer!=-1)
@@ -1696,10 +1696,10 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		sd->nhealsp = sd->nhealsp*sd->sprecov_rate/100;
 		if(sd->nhealsp < 1) sd->nhealsp = 1;
 	}
-	if((skill=pc_checkskill(sd,HP_MEDITATIO)) > 0) { // メディテイティオはSPRではなく自然回復にかかる
+	/* if((skill=pc_checkskill(sd,HP_MEDITATIO)) > 0) { // f?fffBfefCfefBfI,I'SPR,A*,I',E`,｡ｩZ((c)｡ｮR｢ｶn~.ｩｫ,E',(c),(c),e'
 		sd->nhealsp += 3*skill*(sd->status.max_sp)/100;
 		if(sd->nhealsp > 0x7fff) sd->nhealsp = 0x7fff;
-	}
+		} Increase natural SP regen instead of colossal SP Recovery effect [DracoRPG]*/
 
 	// 種族耐性（これでいいの？ ディバインプロテクションと同じ?理がいるかも）
 	if( (skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0 ){ // ドラゴノロジ?
@@ -1937,7 +1937,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 			sd->mdef = sd->mdef2 = 0;
 			sd->flee -= sd->flee*50/100;
 			aspd_rate -= 30;
-			sd->base_atk *= 3;
+			//sd->base_atk *= 3;
 		}
 		if(sd->sc_data[SC_KEEPING].timer!=-1)
 			sd->def = 100;
@@ -6733,15 +6733,17 @@ struct map_session_data *pc_get_partner(struct map_session_data *sd)
 static int natural_heal_tick,natural_heal_prev_tick,natural_heal_diff_tick;
 static int pc_spheal(struct map_session_data *sd)
 {
-	int a;
+	int a, skill;
 	struct guild_castle *gc = NULL;
 
 	nullpo_retr(0, sd);
 
 	a = natural_heal_diff_tick;
 	if(pc_issit(sd)) a += a;
-	if( sd->sc_data[SC_MAGNIFICAT].timer!=-1 )	// マグニフィカ?ト
-	a += a;
+	if (sd->sc_data[SC_MAGNIFICAT].timer!=-1)	// マグニフィカ?ト
+		a += a;
+	 if((skill = pc_checkskill(sd,HP_MEDITATIO)) > 0) //Increase natural SP regen with Meditatio [DracoRPG]
+		a += a*skill*3/100;
 
 	gc=guild_mapname2gc(sd->mapname);	// Increased guild castle regen [Valaris]
 	if(gc)	{
