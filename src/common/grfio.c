@@ -614,7 +614,7 @@ static int grfio_entryread(char *gfname,int gentry)
 
 	fp = fopen(gfname,"rb");
 	if(fp==NULL) {
-		sprintf(tmp_output,"GRF Data File not found: '\033[1;29m%s\033[0;0m'.\n",gfname);
+		sprintf(tmp_output,"GRF Data File not found: '"CL_WHITE"%s"CL_RESET"'.\n",gfname);
 		ShowWarning(tmp_output);
 		return 1;	// 1:not found error
 	}
@@ -926,7 +926,7 @@ void grfio_init(char *fname)
 		}
 
 		fclose(data_conf);
-		sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n",fname);
+		sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n",fname);
 		ShowStatus(tmp_output);
 	} // end of reading grf-files.txt
 

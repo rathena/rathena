@@ -384,7 +384,7 @@ static int itemdb_readdb(void)
 			id->equip_script = parse_script(p,lines);
 		}
 		fclose(fp);
-		sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,filename[i]);
+		sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,filename[i]);
 		ShowStatus(tmp_output);
 	}
 	return 0;
@@ -460,7 +460,7 @@ static int itemdb_read_randomitem()
 			ln++;
 		}
 		fclose(fp);
-		sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",*pc,fn);
+		sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",*pc,fn);
 		ShowStatus(tmp_output);
 	}
 
@@ -510,7 +510,7 @@ static int itemdb_read_itemavail(void)
 		ln++;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,"db/item_avail.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"db/item_avail.txt");
 	ShowStatus(tmp_output);
 	return 0;
 }
@@ -552,7 +552,7 @@ static int itemdb_read_itemnametable(void)
 		p++;
 	}
 	free(buf);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","data\\idnum2itemdisplaynametable.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\idnum2itemdisplaynametable.txt");
 	ShowStatus(tmp_output);
 
 	return 0;
@@ -588,7 +588,7 @@ static int itemdb_read_cardillustnametable(void)
 		p++;
 	}
 	free(buf);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","data\\num2cardillustnametable.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\num2cardillustnametable.txt");
 	ShowStatus(tmp_output);
 
 	return 0;
@@ -633,7 +633,7 @@ static int itemdb_read_noequip(void)
 
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,"db/item_noequip.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"db/item_noequip.txt");
 	ShowStatus(tmp_output);
 	return 0;
 }
@@ -781,7 +781,7 @@ static int itemdb_read_sqldb(void)
 			{
 				printf("Database server error (retrieving rows from %s): %s\n", item_db_db, mysql_error(&mmysql_handle));
 			}
-			sprintf(tmp_output,"Done reading '\033[1;29m%lu\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",(unsigned long) mysql_num_rows(sql_res),item_db_db);
+			sprintf(tmp_output,"Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",(unsigned long) mysql_num_rows(sql_res),item_db_db);
 			ShowStatus(tmp_output);
 		}
 		else

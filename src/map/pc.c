@@ -834,7 +834,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	//printf("pc: OnPCLogin event done. (%d events)\n", npc_event_doall("OnPCLogin") );
 	if (npc_name2id("PCLoginEvent")) {
 		run_script(npc_name2id("PCLoginEvent")->u.scr.script,0,sd->bl.id,npc_name2id("PCLoginEvent")->bl.id); // PCLoginNPC
-		ShowStatus("Event '\033[1;29mPCLoginEvent\033[0;0m' executed.\n");
+		ShowStatus("Event '"CL_WHITE"PCLoginEvent"CL_RESET"' executed.\n");
 	}
 	// Send friends list
 	clif_friends_list_send(sd);
@@ -7755,7 +7755,7 @@ int pc_readdb(void)
 			break;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/exp.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/exp.txt");
 	ShowStatus(tmp_output);
 
 	// JOB補正?値１
@@ -7790,7 +7790,7 @@ int pc_readdb(void)
 			break;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/job_db1.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/job_db1.txt");
 	ShowStatus(tmp_output);
 
 	// JOBボ?ナス
@@ -7819,7 +7819,7 @@ int pc_readdb(void)
 			break;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/job_db2.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/job_db2.txt");
 	ShowStatus(tmp_output);
 
 	// JOBボ?ナス2 ?生職用
@@ -7844,7 +7844,7 @@ int pc_readdb(void)
 			break;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/job_db2-2.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/job_db2-2.txt");
 	ShowStatus(tmp_output);
 
 	// スキルツリ?
@@ -7886,7 +7886,7 @@ int pc_readdb(void)
 		}
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_tree.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/skill_tree.txt");
 	ShowStatus(tmp_output);
 
 	// ?性修正テ?ブル
@@ -7933,7 +7933,7 @@ int pc_readdb(void)
 		}
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/attr_fix.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/attr_fix.txt");
 	ShowStatus(tmp_output);
 
 	// サイズ補正テ?ブル
@@ -7963,7 +7963,7 @@ int pc_readdb(void)
 		i++;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/size_fix.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/size_fix.txt");
 	ShowStatus(tmp_output);
 
 	// 精?デ?タテ?ブル
@@ -8000,7 +8000,7 @@ int pc_readdb(void)
 		i++;
 	}
 	fclose(fp); //Lupus. close this file!!!
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/refine_db.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/refine_db.txt");
 	ShowStatus(tmp_output);
 
 	return 0;
@@ -8042,7 +8042,7 @@ static void pc_statpointdb(void)
 	buf_stat = (char *) malloc (end + 1);
 	l = fread(buf_stat,1,end,stp);
 	fclose(stp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/statpoint.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/statpoint.txt");
 	ShowStatus(tmp_output);
 //	printf("read db/statpoint.txt done (size=%d)\n",l);
 

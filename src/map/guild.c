@@ -128,7 +128,7 @@ static int guild_read_castledb(void)
 		ln++;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",ln,"db/castle_db.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"db/castle_db.txt");
 	ShowStatus(tmp_output);
 	return 0;
 }

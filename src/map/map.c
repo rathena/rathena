@@ -1209,7 +1209,7 @@ void map_removenpc(void) {
         }
     }
 
-    sprintf(tmp_output,"Successfully removed and freed from memory '\033[1;29m%d\033[0;0m' NPCs.\n",n);
+    sprintf(tmp_output,"Successfully removed and freed from memory '"CL_WHITE"%d"CL_RESET"' NPCs.\n",n);
 	ShowStatus(tmp_output);
 }
 
@@ -2014,14 +2014,14 @@ int log_sql_init(void){
     mysql_init(&mmysql_handle);
 
 	//DB connection start
-	printf("\033[1;29m[SQL]\033[0;0m: Connecting to Log Database \033[1;29m%s\033[0;0m At \033[1;29m%s\033[0;0m...\n",log_db,log_db_ip);
+	printf(""CL_WHITE"[SQL]"CL_RESET": Connecting to Log Database "CL_WHITE"%s"CL_RESET" At "CL_WHITE"%s"CL_RESET"...\n",log_db,log_db_ip);
 	if(!mysql_real_connect(&mmysql_handle, log_db_ip, log_db_id, log_db_pw,
 		log_db ,log_db_port, (char *)NULL, 0)) {
 			//pointer check
-			printf("\033[1;29m[SQL Error]\033[0;0m: %s\n",mysql_error(&mmysql_handle));
+			printf(""CL_WHITE"[SQL Error]"CL_RESET": %s\n",mysql_error(&mmysql_handle));
 			exit(1);
 	} else {
-		printf("\033[1;29m[SQL]\033[0;0m: Successfully \033[1;32mconnected\033[0;0m to Database \033[1;29m%s\033[0;0m.\n", log_db);
+		printf(""CL_WHITE"[SQL]"CL_RESET": Successfully '"CL_GREEN"connected"CL_RESET"' to Database '"CL_WHITE"%s"CL_RESET"'.\n", log_db);
 	}
 
 	return 0;
@@ -2261,6 +2261,8 @@ void do_final(void) {
 void map_helpscreen(int flag) {
 	puts("Usage: map-server [options]");
 	puts("Options:");
+	puts(CL_WHITE"  Commands\t\t\tDescription"CL_RESET);
+	puts("---------------------------------------------");
 	puts("  --help, --h, --?, /?		Displays this help screen");
 	puts("  --map-config <file>		Load map-server configuration from <file>");
 	puts("  --battle-config <file>	Load battle configuration from <file>");
@@ -2279,13 +2281,13 @@ void map_helpscreen(int flag) {
 }
 
 void map_versionscreen(int flag) {
-	printf("\033[1;29m" "eAthena version %d.%02d.%02d, Athena Mod version %d" "\033[0;0m\n",
+	printf("CL_WHITE" "eAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n",
 		ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION,
 		ATHENA_MOD_VERSION);
-	puts("\033[1;32m" "Website/Forum:" "\033[0;0m" "\thttp://eathena.deltaanime.net/");
-	puts("\033[1;32m" "Download URL:" "\033[0;0m" "\thttp://eathena.systeminplace.net/");
-	puts("\033[1;32m" "IRC Channel:" "\033[0;0m" "\tirc://irc.deltaanime.net/#athena");
-	puts("\nOpen \033[1;29mreadme.html\033[0;0m for more information.");
+	puts(CL_GREEN "Website/Forum:" "CL_RESET" "\thttp://eathena.deltaanime.net/");
+	puts(CL_GREEN "Download URL:" "CL_RESET" "\thttp://eathena.systeminplace.net/");
+	puts(CL_GREEN "IRC Channel:" "CL_RESET" "\tirc://irc.deltaanime.net/#athena");
+	puts("\nOpen "CL_WHITE"readme.html"CL_RESET" for more information.");
 	if (ATHENA_RELEASE_FLAG) ShowNotice("This version is not for release.\n");
 	if (flag) exit(1);
 }
@@ -2457,7 +2459,7 @@ int do_init(int argc, char *argv[]) {
 	if (imalive_on)
 		add_timer_interval(gettick()+10, imalive_timer,0,0,imalive_time*1000);
 
-	sprintf(tmp_output,"Server is '\033[1;32mready\033[0m' and listening on port '\033[1;29m%d\033[0;0m'.\n\n", map_port);
+	sprintf(tmp_output,"Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
 	ShowStatus(tmp_output);
 
 	ticks = gettick();

@@ -11588,7 +11588,7 @@ int skill_readdb(void)
 			skill_db[i].blewcount[k]=(split2[k])? atoi(split2[k]):atoi(split2[0]);
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_db.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/skill_db.txt");
 	ShowStatus(tmp_output);
 
 	fp=fopen("db/skill_require_db.txt","r");
@@ -11728,7 +11728,7 @@ int skill_readdb(void)
 		skill_db[i].amount[9]=atoi(split[29]);
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_require_db.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/skill_require_db.txt");
 	ShowStatus(tmp_output);
 
 	/* キャスティングデ?タベ?ス */
@@ -11793,7 +11793,7 @@ int skill_readdb(void)
 			skill_db[i].upkeep_time2[k]=(split2[k])? atoi(split2[k]):atoi(split2[0]);
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_cast_db.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/skill_cast_db.txt");
 	ShowStatus(tmp_output);
 
 	/* 製造系スキルデ?タベ?ス */
@@ -11837,7 +11837,7 @@ int skill_readdb(void)
 				break;
 		}
 		fclose(fp);
-		sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",k,filename[m]);
+		sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,filename[m]);
 		ShowStatus(tmp_output);
 	}
 
@@ -11876,7 +11876,7 @@ int skill_readdb(void)
 			break;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",k,"db/create_arrow_db.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,"db/create_arrow_db.txt");
 	ShowStatus(tmp_output);
 
 	memset(skill_abra_db,0,sizeof(skill_abra_db));
@@ -11910,7 +11910,7 @@ int skill_readdb(void)
 			break;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%d\033[0;0m' entries in '\033[1;29m%s\033[0;0m'.\n",k,"db/abra_db.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,"db/abra_db.txt");
 	ShowStatus(tmp_output);
 
 	fp=fopen("db/skill_castnodex_db.txt","r");
@@ -11945,7 +11945,7 @@ int skill_readdb(void)
 			skill_db[i].castnodex[k]=(split2[k])? atoi(split2[k]):atoi(split2[0]);
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_castnodex_db.txt");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/skill_castnodex_db.txt");
 	ShowStatus(tmp_output);
 
 	fp=fopen("db/skill_nocast_db.txt","r");
@@ -11975,7 +11975,7 @@ int skill_readdb(void)
 		k++;
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '\033[1;29m%s\033[0;0m'.\n","db/skill_nocast_db");
+	sprintf(tmp_output,"Done reading '"CL_WHITE"%s"CL_RESET"'.\n","db/skill_nocast_db");
 	ShowStatus(tmp_output);
 
 	return 0;

@@ -23,7 +23,7 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 			break;
 /*	//Do we really need this now? [MC Cameri]
 		case MSG_SQL: //Bright Violet (For dumping out anything related with SQL)
-			strcpy(prefix,"\033[1;35m[SQL]\033[0;0m:");
+			strcpy(prefix,CL_MAGENTA"[SQL]"CL_RESET":");
 			break;
 */
 		case MSG_INFORMATION: //Bright White (Variable information)
@@ -60,7 +60,7 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 		FILE *fp;
 		fp=fopen(OUTPUT_MESSAGES_LOG,"a");
 		if (fp == NULL)	{
-			printf("\033[1;31m[Error]\033[0;0m: Could not open \033[1;29m%s\033[0;0m, file not found.\n",OUTPUT_MESSAGES_LOG);
+			printf(CL_RED"[Error]"CL_RESET": Could not open '"CL_WHITE"%s"CL_RESET"', file not found.\n",OUTPUT_MESSAGES_LOG);
 			fflush(stdout);
 			return;
 		}
