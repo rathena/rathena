@@ -183,7 +183,6 @@ int pc_delinvincibletimer(struct map_session_data *sd) {
 
 static int pc_spiritball_timer(int tid,unsigned int tick,int id,int data) {
 	struct map_session_data *sd;
-	int i;
 
 	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
 		return 1;
@@ -193,22 +192,24 @@ static int pc_spiritball_timer(int tid,unsigned int tick,int id,int data) {
 			printf("spirit_timer %d != %d\n",sd->spirit_timer[0],tid);
 		return 0;
 	}
-	sd->spirit_timer[0]=-1;
-	for(i=1;i<sd->spiritball;i++) {
-		sd->spirit_timer[i-1] = sd->spirit_timer[i];
-		sd->spirit_timer[i] = -1;
-	}
-	sd->spiritball--;
-	if(sd->spiritball < 0)
+
+	if(sd->spiritball <= 0) {
+		if(battle_config.error_log)
+			printf("Spiritballs are already 0 when pc_spiritball_timer gets called");
 		sd->spiritball = 0;
+		return 0;
+	}
+
+	sd->spiritball--;
+	memcpy( &sd->spirit_timer[0], &sd->spirit_timer[1], sizeof(sd->spirit_timer[0]) * sd->spiritball );
+	sd->spirit_timer[sd->spiritball]=-1;
+
 	clif_spiritball(sd);
 
 	return 0;
 }
 
 int pc_addspiritball(struct map_session_data *sd,int interval,int max) {
-	int i;
-
 	nullpo_retr(0, sd);
 
 	if(max > MAX_SKILL_LEVEL)
@@ -217,16 +218,10 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max) {
 		sd->spiritball = 0;
 
 	if(sd->spiritball >= max) {
-		if(sd->spirit_timer[0] != -1) {
+		if(sd->spirit_timer[0] != -1) 
 			delete_timer(sd->spirit_timer[0],pc_spiritball_timer);
-			sd->spirit_timer[0] = -1;
-		}
-		for(i=1;i<max;i++) {
-			sd->spirit_timer[i-1] = sd->spirit_timer[i];
-			sd->spirit_timer[i] = -1;
-		}
-	}
-	else
+		memcpy( &sd->spirit_timer[0], &sd->spirit_timer[1], sizeof(sd->spirit_timer[0]) * (sd->spiritball - 1));
+	} else
 		sd->spiritball++;
 
 	sd->spirit_timer[sd->spiritball-1] = add_timer(gettick()+interval,pc_spiritball_timer,sd->bl.id,0);

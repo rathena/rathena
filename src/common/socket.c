@@ -62,6 +62,10 @@ void set_defaultparse(int (*defaultparse)(int))
 	default_func_parse = defaultparse;
 }
 
+void set_nonblocking(int fd, int yes) {
+	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
+}
+
 static void setsocketopts(int fd)
 {
 	int yes = 1; // reuse fix
@@ -70,7 +74,7 @@ static void setsocketopts(int fd)
 #ifdef SO_REUSEPORT
 	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof yes);
 #endif
-	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
+	set_nonblocking(fd, yes);
 
 	setsockopt(fd, SOL_SOCKET, SO_SNDBUF, (char *) &wfifo_size , sizeof(rfifo_size ));
 	setsockopt(fd, SOL_SOCKET, SO_RCVBUF, (char *) &rfifo_size , sizeof(rfifo_size ));

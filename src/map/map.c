@@ -2489,7 +2489,7 @@ static int cleanup_sub(struct block_list *bl, va_list ap) {
 
         switch(bl->type) {
         case BL_PC:
-            map_delblock(bl); // There is something better...
+            map_quit((struct map_session_data *) bl);
             break;
         case BL_NPC:
             npc_delete((struct npc_data *)bl);
@@ -2522,9 +2522,13 @@ void do_final(void) {
 	if(map[map_id].m)
 		map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, 0, 0);
     }
+
 #ifndef TXT_ONLY
     chrif_char_reset_offline();
 #endif
+
+    chrif_flush_fifo();
+
     for (i = 0; i < fd_max; i++)
         delete_session(i);
 

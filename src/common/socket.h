@@ -91,6 +91,7 @@ int do_parsepacket(void);
 void do_socket(void);
 
 extern void flush_fifos();
+extern void set_nonblocking(int fd, int yes);
 
 int start_console(void);
 

@@ -943,6 +943,21 @@ int chrif_char_offline(struct map_session_data *sd)
  * Tell char-server to reset all chars offline [Wizputer]
  *-----------------------------------------
  */
+int chrif_flush_fifo(void) {
+	if (char_fd < 1)
+		return -1;
+
+	set_nonblocking(char_fd, 0);
+	flush_fifos();
+	set_nonblocking(char_fd, 1);
+
+	return 0;
+}
+
+/*=========================================
+ * Tell char-server to reset all chars offline [Wizputer]
+ *-----------------------------------------
+ */
 int chrif_char_reset_offline(void) {
 	if (char_fd < 1)
 		return -1;

@@ -33,4 +33,6 @@ int check_connect_char_server(int tid, unsigned int tick, int id, int data);
 
 int do_init_chrif(void);
 
+int chrif_flush_fifo(void);
+
 #endif

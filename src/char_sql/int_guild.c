@@ -1235,12 +1235,14 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 {
 	// Could speed up by manipulating only guild_member
 	struct guild * g= inter_guild_fromsql(guild_id);
-	int i,alv,c;
+	int i,alv,c, idx;
 
 	if(g==NULL||g->guild_id<=0)
 		return 0;
 	
 	g->connect_member=0;
+
+	idx = -1;
 	
 	for(i=0,alv=0,c=0;i<g->max_member;i++){
 		if(	g->member[i].account_id==account_id &&
@@ -1250,6 +1252,7 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 			g->member[i].lv=lv;
 			g->member[i].class=class;
 			mapif_guild_memberinfoshort(g,i);
+			idx = i;
 		}
 		if( g->member[i].account_id>0 ){
 			alv+=g->member[i].lv;
@@ -1260,8 +1263,14 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 	}
 	// 平均レベル
 	g->average_lv=alv/c;
-	
-	inter_guild_tosql(g,3); // Change guild & guild_member
+
+	sprintf(tmp_sql, "UPDATE `%s` SET `connect_member`=%d,`average_lv`=%d WHERE `guild_id`='%d'", guild_db,  g->connect_member, g->average_lv,  g->guild_id);
+	if(mysql_query(&mysql_handle, tmp_sql) ) 
+	  printf("DB server Error: %s - %s\n", tmp_sql, mysql_error(&mysql_handle) );
+
+	sprintf(tmp_sql, "UPDATE `%s` SET `online`=%d,`lv`=%d,`class`=%d WHERE `char_id`=%d", guild_member_db, g->member[idx].online, g->member[idx].lv, g->member[idx].class, g->member[idx].char_id);
+	if(mysql_query(&mysql_handle, tmp_sql) ) 
+	  printf("DB server Error: %s - %s\n", tmp_sql, mysql_error(&mysql_handle) );
 	
 	return 0;
 }
@@ -1385,21 +1394,34 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 	}
 	switch(type){
 	case GMI_POSITION:	// 役職
-		g->member[i].position=*((int *)data);
-		break;
-	case GMI_EXP:	{	// EXP
-			int exp,oldexp=g->member[i].exp;
-			exp=g->member[i].exp=*((unsigned int *)data);
-			g->exp+=(exp-oldexp);
-			guild_calcinfo(g);	// Lvアップ判断
-			mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,4);
-		}break;
+	  {
+	    g->member[i].position=*((int *)data);
+	    mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
+	    inter_guild_tosql(g,3); // Change guild & guild_member
+	    break;
+	  }
+	case GMI_EXP:	
+	  {	// EXP
+	    int exp,oldexp=g->member[i].exp;
+	    exp=g->member[i].exp=*((unsigned int *)data);
+	    g->exp+=(exp-oldexp);
+	    guild_calcinfo(g);	// Lvアップ判断
+	    mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,4);
+	    mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
+
+	    sprintf(tmp_sql, "UPDATE `%s` SET `guild_lv`=%d,`connect_member`=%d,`max_member`=%d,`average_lv`=%d,`exp`=%d,`next_exp`=%d,`skill_point`=%d WHERE `guild_id`='%d'", guild_db, g->guild_lv, g->connect_member, g->max_member, g->average_lv, g->exp, g->next_exp, g->skill_point, g->guild_id);
+	    if(mysql_query(&mysql_handle, tmp_sql) ) 
+	      printf("DB server Error: %s - %s\n", tmp_sql, mysql_error(&mysql_handle) );
+
+	    sprintf(tmp_sql, "UPDATE `%s` SET `exp`=%d  WHERE `char_id`=%d", guild_member_db, g->member[i].exp, g->member[i].char_id);
+	    if(mysql_query(&mysql_handle, tmp_sql) ) 
+	      printf("DB server Error: %s - %s\n", tmp_sql, mysql_error(&mysql_handle) );
+	    break;
+	  }
 	default:
-		printf("int_guild: GuildMemberInfoChange: Unknown type %d\n",type);
-		break;
+	  printf("int_guild: GuildMemberInfoChange: Unknown type %d\n",type);
+	  break;
 	}
-	mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
-	inter_guild_tosql(g,3); // Change guild & guild_member
 	return 0;
 }
 

@@ -1,5 +1,26 @@
 Date	Added
 12/26
+	* @mapexit (and do_final) now persist all data to the
+	  char server before exiting to eliminate storage/inventory
+	  inconsistancies.. [MouseJstr]  (SVN 793)
+	* Some cleanup of spiritball memory management [MouseJstr] 
+	* Dramatic performance work for exp updates to sql.  Previously, [MouseJstr]
+	  when u killed a mob (in party share), it would cause the char_server to 
+
+	  	1) Delete all guilds for all members of your party
+	  	2) Re-create all guilds for all members of your party with the new exp
+	     		values.
+
+          Now it just generates 2 sql statements per party member,  
+
+		1) update the guild exp, 
+		2) update the guild_member exp.
+
+
+      		src/common/socket.c src/common/socket.h src/char_sql/char.c 
+		src/char_sql/int_guild.c src/map/chrif.h src/map/pc.c 
+		src/map/map.c src/map/chrif.c
+
         * Disabled import charcommand_conf.txt by default [celest]
         * Added Bitmap File system from jA 1086 - automatically generates a cache
           from maps in the GRF to speed up loading. You can enable/disable it with
