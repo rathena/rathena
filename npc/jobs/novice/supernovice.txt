@@ -32,8 +32,8 @@ aldeba_in.gat,223,167,3	script	Tozel	709,{
 	mes "How does that sound?";
 	next;
 	menu "I'm sold!",-,"Super Novice is Super Stupid",L_Stupid,"Well, to make an informed choice...",L_Well;
-        if(JobLevel < 10) goto L_LowSkill;
-        if(BaseLevel < 45) goto L_Lowlevel;
+	if(JobLevel < 10) goto L_LowSkill;
+	if(BaseLevel < 45) goto L_Lowlevel;
 	if(SkillPoint != 0) goto L_StillSk; 
 	mes "[Tozel]";
 	mes "Wonderful!";
@@ -86,8 +86,8 @@ L_Well:
 	close;
 
 L_Start2:
-	   if(countitem(938) < 30) goto L_ItemError;
-	   if(countitem(907) < 30) goto L_ItemError;
+	if(countitem(938) < 30) goto L_ItemError;
+	if(countitem(907) < 30) goto L_ItemError;
 	mes "[Tozel]";
 	mes "Well, your performance seems to be uh...common, but that's good enough for us!";
 	mes "Welcome to the Novice Guild!";
@@ -100,10 +100,10 @@ L_Start2:
 	mes "- Tozel's uncommon demeanor catches you off guard, -";
 	mes "- leaving you speechless! -";
 	next;
-	   jobchange 23;
-	   delitem 938,30;
-	   delitem 907,30;
-	   getitem 2339,1;
+	jobchange 23;
+	delitem 938,30;
+	delitem 907,30;
+	getitem 2339,1;
 	mes "[Tozel]";
 	mes "Hahahah!  Were you surprised?!";
 	mes "Just because we're common people doesn't mean we can't be misfits sometimes!";
@@ -114,7 +114,7 @@ L_Start2:
 	mes "[Tozel]";
 	mes "Now you're a part of Kima's legacy!";
 	mes "Please continue his good (but common) name.";
-        set job_snovice,2;
+	set job_snovice,2;
 	close;
 
 L_LowSkill:
@@ -143,7 +143,7 @@ L_ItemError:
 	mes "[Tozel]";
 	mes "You need to find thirty each of";
 	mes "^FF0000  Sticky Muscus^000000 and";
-      	mes "^FF0000  Resin^000000.";
+	mes "^FF0000  Resin^000000.";
 	close;
 
 L_Twice:
@@ -156,7 +156,6 @@ L_Twice:
 	mes "Go, then, and live a common and unexceptional life, in order to bring respect to our guild.";
 	close;
 L_Otherjob:
-
 	mes "[Tozel]";
 	mes "Hey!  You're not a man of common heritage!";
 	mes "I'm Tozel, the master of the Novice Guild.";
@@ -173,8 +172,8 @@ L_Otherjob:
 
 // -- Totaly Useless :) --
 aldeba_in.gat,216,169,5	script	Serei	86,{
-         if(Class == 23) goto L_Supernovice;
-         if(Class != 0) goto L_Otherjob;
+	if(Class == 23) goto L_Supernovice;
+	if(Class != 0) goto L_Otherjob;
 	mes "[Serei]";
 	mes "You're pretty common.";
 	mes "A common man should live a happy life.";
@@ -210,8 +209,8 @@ L_Otherjob:
 
 // -- Car Rental --
 aldebaran.gat,54,238,5	script	Kafra	117,{
-	   if(Class != 23) goto L_Otherjob;
-	   if(checkcart(0) == 1) goto L_GotCart;
+	if(Class != 23) goto L_Otherjob;
+	if(checkcart(0) == 1) goto L_GotCart;
 	mes "[Kafra]";
 	mes "Oh, a Super Novice!";
 	mes "You're annoyed that the other Kafras won't lend you a cart?";
@@ -231,7 +230,6 @@ aldebaran.gat,54,238,5	script	Kafra	117,{
 	mes "Do you want me to lend you a cart?";
 	next;
 	menu "Lend me a cart",-,"Not Necessary",L_End;
-
 	mes "[Kafra]";
 	mes "Since I'm secretly lending you a cart,";
 	mes "I can't ensure you have the Push Cart skill.";
@@ -240,7 +238,7 @@ aldebaran.gat,54,238,5	script	Kafra	117,{
 	next;
 	menu "I heard you the first time!",-,"Uhhh...wait a minute...",L_End;
 	if(Zeny < 1900) goto L_Error;
-	   set Zeny,Zeny-1900;
+	set Zeny,Zeny-1900;
 	if(getskilllv(39)==0) goto L_End;
 	setcart;
 	mes "[Kafra]";
