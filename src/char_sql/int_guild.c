@@ -720,7 +720,7 @@ int guild_calcinfo(struct guild *g)
 	g->next_exp = guild_nextexp(g->guild_lv);
 
 	// メンバ上限（ギルド拡張適用）
-	g->max_member = 16 + guild_checkskill(g, GD_EXTENSION) * 2; // Updated max_members [PoW]
+	g->max_member = 16 + guild_checkskill(g, GD_EXTENSION) * 6; //  Guild Extention skill - adds by 6 people per level to Max Member [Lupus]
 
 	// 平均レベルとオンライン人数
 	g->average_lv=0;
