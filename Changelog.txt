@@ -1,4 +1,5 @@
 Date	Added
+12/11	* Warps Update : Added ayothaya warps in ./npc/warps/ and in map_athena.conf [Nana]
 11/11
 	* Skill Updates : (Need to revise skill_cast_db.txt for new updates)
 		( Sharp Shooting, Sword Reject, Chain Crush Combo, Tiger Knuckle Fist,
