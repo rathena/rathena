@@ -1,5 +1,7 @@
 Date	Added
 12/13
+	* Skill timers for skills with id's higher then 450 were
+	  corrupting memory [MouseJstr]
 	* Increased max skills to 650 from 450 fixing MANY crashes [MouseJstr]
 	* Creating Guild events were reading beyond supplied guild names ,
 	  causing crashes [MouseJstr
