@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include "showmsg.h"
 #include "malloc.h"
 
 char tmp_output[1024] = {"\0"};
 
-int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
+int _ShowMessage(enum msg_type flag, const char *string, ...){ // by MC Cameri
 	/* 
 		_ShowMessage MUST be used instead of printf as of 10/24/2004.
 		Return: 0 = Successful, 1 = Failed.
@@ -14,6 +15,9 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 //	int ret = 0;
 	char prefix[40];
 	char *output;
+	va_list ap;
+	
+	va_start(ap, string);
 	if (strlen(string) <= 0) {
 		ShowError("Empty string passed to _ShowMessage().\n");
 		return 1;
@@ -57,10 +61,12 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 		strcpy(output,prefix);
 		strcat(output," ");
 		strcat(output,string);
-		printf(output);
+		vprintf(output, ap);
 		fflush(stdout);
 		aFree(output);
 	}
+
+	va_end(ap);
 /*
 	if ((core_config.debug_output_level > -1) && (flag >= core_config.debug_output_level)) {
 		FILE *fp;

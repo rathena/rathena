@@ -20,52 +20,108 @@ extern char tmp_output[1024];
 
 enum msg_type {MSG_STATUS, MSG_SQL, MSG_INFORMATION,MSG_NOTICE,MSG_WARNING,MSG_DEBUG,MSG_ERROR,MSG_FATALERROR};
 
-extern int _ShowMessage(const char *string, enum msg_type flag);
+extern int _ShowMessage(enum msg_type flag, const char *string, ...);
 
+#if __GNUC__ >= 2
+/* GCC用 */
 /* MSG_XX */
-	#define ShowMsg(string,flag) _ShowMessage(string,flag)
-//	#define DisplayMsg(string,flag) _ShowMessage(string,flag)
-//	#define ShowMessage(string,flag) _ShowMessage(string,flag)
+	#define ShowMsg(flag,string...) _ShowMessage(flag, ## string)
+//	#define DisplayMsg(flag,string,...) _ShowMessage(flag, ## string)
+//	#define ShowMessage(flag,string,...) _ShowMessage(flag, ## string)
 
 /* MSG_STATUS */
-	#define ShowStatus(string) _ShowMessage(string,MSG_STATUS)
-//	#define DisplayStatus(string) _ShowMessage(string,MSG_STATUS)
+	#define ShowStatus(string...) _ShowMessage(MSG_STATUS, ## string)
+//	#define DisplayStatus(string...) _ShowMessage(MSG_STATUS, ## string)
 
 /* MSG_SQL*/
-	#define ShowSQL(string) _ShowMessage(string,MSG_SQL)
-//	#define DisplaySQL(string) _ShowMessage(string,MSG_SQL)
+	#define ShowSQL(string...) _ShowMessage(MSG_SQL, ## string)
+//	#define DisplaySQL(string...) _ShowMessage(MSG_SQL, ## string)
 
 /* MSG_INFORMATION */
-	#define ShowInfo(string) _ShowMessage(string,MSG_INFORMATION)
-//	#define DisplayInfo(string) _ShowMessage(string,MSG_INFORMATION)
-//	#define ShowInformation(string) _ShowMessage(string,MSG_INFORMATION)
-//	#define DisplayInformation(string) _ShowMessage(string,MSG_INFORMATION)
+	#define ShowInfo(string...) _ShowMessage(MSG_INFORMATION, ## string)
+//	#define DisplayInfo(string...) _ShowMessage(MSG_INFORMATION, ## string)
+//	#define ShowInformation(string...) _ShowMessage(MSG_INFORMATION, ## string)
+//	#define DisplayInformation(string...) _ShowMessage(MSG_INFORMATION, ## string)
 
 /* MSG_NOTICE */
-	#define ShowNotice(string) _ShowMessage(string,MSG_NOTICE)
-//	#define DisplayNotice(string) _ShowMessage(string,MSG_NOTICE)
+	#define ShowNotice(string...) _ShowMessage(MSG_NOTICE, ## string)
+//	#define DisplayNotice(string...) _ShowMessage(MSG_NOTICE, ## string)
 
 /* MSG_WARNING */
-	#define ShowWarning(string) _ShowMessage(string,MSG_WARNING)
-//	#define DisplayWarning(string) _ShowMessage(string,MSG_WARNING)
-//	#define Warn(string) _ShowMessage(string,MSG_WARNING)
+	#define ShowWarning(string...) _ShowMessage(MSG_WARNING, ## string)
+//	#define DisplayWarning(string...) _ShowMessage(MSG_WARNING, ## string)
+//	#define Warn(string...) _ShowMessage(MSG_WARNING, ## string)
 
 /* MSG_DEBUG */
-	#define ShowDebug(string) _ShowMessage(string,MSG_DEBUG)
-	#define DisplayDebug(string) _ShowMessage(string,MSG_DEBUG)
-	#define Debug(string) _ShowMessage(string,MSG_DEBUG)
-	#define printDebug() _ShowMessage(striing,MSG_DEBUG)
+	#define ShowDebug(string...) _ShowMessage(MSG_DEBUG, ## string)
+//	#define DisplayDebug(string,...) _ShowMessage(MSG_DEBUG, ## string)
+//	#define Debug(string,...) _ShowMessage(MSG_DEBUG, ## string)
+//	#define printDebug() _ShowMessage(MSG_DEBUG, ## string)
 
 /* MSG_ERROR */
-	#define ShowError(string) _ShowMessage(string,MSG_ERROR)
-//	#define DisplayError(string) _ShowMessage(string,MSG_ERROR)
-//	#define OutputError(string) _ShowMessage(string,MSG_ERROR)
+	#define ShowError(string...) _ShowMessage(MSG_ERROR, ## string)
+//	#define DisplayError(string...) _ShowMessage(MSG_ERROR, ## string)
+//	#define OutputError(string...) _ShowMessage(MSG_ERROR, ## string)
 
 /* MSG_FATALERROR */
-	#define ShowFatalError(string) _ShowMessage(string,MSG_FATALERROR)
-//	#define DisplayFatalError(string) _ShowMessage(string,MSG_ERROR)
-//	#define Terminate(string) _ShowMessage(string,MSG_FATALERROR)
-//	#define Kill(string) _ShowMessage(string,MSG_FATALERROR)
-//	#define AbortEx(string) _ShowMessage(string,MSG_FATALERROR)
+	#define ShowFatalError(string...) _ShowMessage(MSG_FATALERROR, ## string)
+//	#define DisplayFatalError(string...) _ShowMessage(MSG_ERROR, ## string)
+//	#define Terminate(string...) _ShowMessage(MSG_FATALERROR, ## string)
+//	#define Kill(string...) _ShowMessage(MSG_FATALERROR, ## string)
+//	#define AbortEx(string...) _ShowMessage(MSG_FATALERROR, ## string)
+
+// 可変引数マクロに関する条件コンパイル
+#elif __STDC_VERSION__ >= 199901L
+/* C99に対応 */
+
+/* MSG_XX */
+	#define ShowMsg(flag,string...) _ShowMessage(flag, string, __VA_ARGS__)
+//	#define DisplayMsg(flag,string,...) _ShowMessage(flag, string, __VA_ARGS__)
+//	#define ShowMessage(flag,string,...) _ShowMessage(flag, string, __VA_ARGS__)
+
+/* MSG_STATUS */
+	#define ShowStatus(string...) _ShowMessage(MSG_STATUS, string, __VA_ARGS__)
+//	#define DisplayStatus(string...) _ShowMessage(MSG_STATUS, string, __VA_ARGS__)
+
+/* MSG_SQL*/
+	#define ShowSQL(string...) _ShowMessage(MSG_SQL, string, __VA_ARGS__)
+//	#define DisplaySQL(string...) _ShowMessage(MSG_SQL, string, __VA_ARGS__)
+
+/* MSG_INFORMATION */
+	#define ShowInfo(string...) _ShowMessage(MSG_INFORMATION, string, __VA_ARGS__)
+//	#define DisplayInfo(string...) _ShowMessage(MSG_INFORMATION, string, __VA_ARGS__)
+//	#define ShowInformation(string...) _ShowMessage(MSG_INFORMATION, string, __VA_ARGS__)
+//	#define DisplayInformation(string...) _ShowMessage(MSG_INFORMATION, string, __VA_ARGS__)
+
+/* MSG_NOTICE */
+	#define ShowNotice(string...) _ShowMessage(MSG_NOTICE, string, __VA_ARGS__)
+//	#define DisplayNotice(string...) _ShowMessage(MSG_NOTICE, string, __VA_ARGS__)
+
+/* MSG_WARNING */
+	#define ShowWarning(string...) _ShowMessage(MSG_WARNING, string, __VA_ARGS__)
+//	#define DisplayWarning(string...) _ShowMessage(MSG_WARNING, string, __VA_ARGS__)
+//	#define Warn(string...) _ShowMessage(MSG_WARNING, string, __VA_ARGS__)
+
+/* MSG_DEBUG */
+	#define ShowDebug(string...) _ShowMessage(MSG_DEBUG, MSGSTRING)
+//	#define DisplayDebug(string,...) _ShowMessage(MSG_DEBUG, string, __VA_ARGS__)
+//	#define Debug(string,...) _ShowMessage(MSG_DEBUG, string, __VA_ARGS__)
+//	#define printDebug() _ShowMessage(MSG_DEBUG, string, __VA_ARGS__)
+
+/* MSG_ERROR */
+	#define ShowError(string...) _ShowMessage(MSG_ERROR, string, __VA_ARGS__)
+//	#define DisplayError(string...) _ShowMessage(MSG_ERROR, string, __VA_ARGS__)
+//	#define OutputError(string...) _ShowMessage(MSG_ERROR, string, __VA_ARGS__)
+
+/* MSG_FATALERROR */
+	#define ShowFatalError(string...) _ShowMessage(MSG_FATALERROR, string, __VA_ARGS__)
+//	#define DisplayFatalError(string...) _ShowMessage(MSG_ERROR, string, __VA_ARGS__)
+//	#define Terminate(string...) _ShowMessage(MSG_FATALERROR, string, __VA_ARGS__)
+//	#define Kill(string...) _ShowMessage(MSG_FATALERROR, string, __VA_ARGS__)
+//	#define AbortEx(string...) _ShowMessage(MSG_FATALERROR, string, __VA_ARGS__)
+
+#else
+
+#endif
 
 #endif
