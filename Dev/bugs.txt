@@ -154,3 +154,7 @@ Problem:	Guilds BUG (it isn't related to the scripts, because noone change them 
 		When some guild SEIZE any castle, then Castle N 1 becomes their own, too (not M 0, but M 1)
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Storage BUGS! Items doubles/clones again any kinds of items! (due to "latest storage fix")
+Assigned:	N/A
+Progress:	0%
