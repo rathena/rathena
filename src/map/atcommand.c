@@ -176,7 +176,6 @@ ACMD_FUNC(chardisguise); // Kalaspuff
 ACMD_FUNC(charundisguise); // Kalaspuff
 ACMD_FUNC(email); // by Yor
 ACMD_FUNC(effect);//by Apple
-ACMD_FUNC(character_storage_list); // by Yor
 ACMD_FUNC(character_cart_list); // by Yor
 ACMD_FUNC(addwarp); // by MouseJstr
 ACMD_FUNC(follow); // by MouseJstr
@@ -422,7 +421,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_EMail,				"@email",			 0, atcommand_email }, // by Yor
 	{ AtCommand_Effect,				"@effect",			40, atcommand_effect }, // by Apple
 //	{ AtCommand_Char_Item_List,		"@charitemlist",	40, atcommand_character_item_list }, // by Yor, now #itemlist
-	{ AtCommand_Char_Storage_List,	"@charstoragelist",	40, atcommand_character_storage_list }, // by Yor
+//	{ AtCommand_Char_Storage_List,	"@charstoragelist",	40, atcommand_character_storage_list }, // by Yor, now #storagelist
 	{ AtCommand_Char_Cart_List,		"@charcartlist",	40, atcommand_character_cart_list }, // by Yor
 	{ AtCommand_Follow,				"@follow",			10, atcommand_follow }, // by MouseJstr
 	{ AtCommand_AddWarp,			"@addwarp",			20, atcommand_addwarp }, // by MouseJstr
@@ -6729,91 +6728,6 @@ int atcommand_effect(
 				clif_displaymessage(pl_sd->fd, msg_table[229]); // Your effect has changed.
 			}
 		}
-	}
-
-	return 0;
-}
-
-/*==========================================
- * @charstoragelist <character>: Displays the items list of a player's storage.
- *------------------------------------------
- */
-int
-atcommand_character_storage_list(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	struct storage *stor;
-	struct map_session_data *pl_sd;
-	struct item_data *item_data, *item_temp;
-	int i, j, count, counter, counter2;
-	char character[100], output[200], outputtmp[200];
-	nullpo_retr(-1, sd);
-
-	memset(character, '\0', sizeof(character));
-	memset(output, '\0', sizeof(output));
-	memset(outputtmp, '\0', sizeof(outputtmp));
-
-	if (!message || !*message || sscanf(message, "%99[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: @charitemlist <char name>).");
-		return -1;
-	}
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can look items only lower or same level
-			if((stor = account2storage2(pl_sd->status.account_id)) != NULL) {
-				counter = 0;
-				count = 0;
-				for (i = 0; i < MAX_STORAGE; i++) {
-					if (stor->storage[i].nameid > 0 && (item_data = itemdb_search(stor->storage[i].nameid)) != NULL) {
-						counter = counter + stor->storage[i].amount;
-						count++;
-						if (count == 1) {
-							sprintf(output, "------ Storage items list of '%s' ------", pl_sd->status.name);
-							clif_displaymessage(fd, output);
-						}
-						if (stor->storage[i].refine)
-							sprintf(output, "%d %s %+d (%s %+d, id: %d)", stor->storage[i].amount, item_data->name, stor->storage[i].refine, item_data->jname, stor->storage[i].refine, stor->storage[i].nameid);
-						else
-							sprintf(output, "%d %s (%s, id: %d)", stor->storage[i].amount, item_data->name, item_data->jname, stor->storage[i].nameid);
-						clif_displaymessage(fd, output);
-						memset(output, '\0', sizeof(output));
-						counter2 = 0;
-						for (j = 0; j < item_data->slot; j++) {
-							if (stor->storage[i].card[j]) {
-								if ((item_temp = itemdb_search(stor->storage[i].card[j])) != NULL) {
-									if (output[0] == '\0')
-										sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-									else
-										sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-									strcat(output, outputtmp);
-								}
-							}
-						}
-						if (output[0] != '\0') {
-							output[strlen(output) - 2] = ')';
-							output[strlen(output) - 1] = '\0';
-							clif_displaymessage(fd, output);
-						}
-					}
-				}
-				if (count == 0)
-					clif_displaymessage(fd, "No item found in the storage of this player.");
-				else {
-					sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
-					clif_displaymessage(fd, output);
-				}
-			} else {
-				clif_displaymessage(fd, "This player has no storage.");
-				return 0;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
 	}
 
 	return 0;

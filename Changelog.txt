@@ -1,5 +1,6 @@
 Date	Added
 12/17
+	* Added #storagelist, removed @charstoragelist [MC Cameri]
 	* db.c: Fixed probs with OnInit, OnTime, and etc NPC probs
 	  Just reverted it back. [Lupus]
 	* Fixed warning message in db.c line 445 [MC Cameri]

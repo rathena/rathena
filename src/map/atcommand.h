@@ -158,7 +158,7 @@ enum AtCommandType {
 	AtCommand_Hatch,
 	AtCommand_Effect, // by Apple
 // 	AtCommand_Char_Item_List, // by Yor, now #itemlist
-	AtCommand_Char_Storage_List, // by Yor
+//	AtCommand_Char_Storage_List, // by Yor, now #storagelist
 	AtCommand_Char_Cart_List, // by Yor
 	AtCommand_AddWarp, // by MouseJstr
 	AtCommand_Follow, // by MouseJstr

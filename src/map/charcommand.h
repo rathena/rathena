@@ -14,6 +14,7 @@ enum CharCommandType {
 	CharCommandSpiritball,
 	CharCommandItemList,
 	CharCommandEffect,
+	CharCommandStorageList,
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
