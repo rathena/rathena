@@ -1,19 +1,23 @@
 Date	Added
-11/18   * Added flag to pc_unequipitem (thanks to DracoRPG for suggestion) [celest]
-        * Skill updates [celest]
-          - Updated Cloaking (thanks to orn), Endure
-        * Modified pc_attack to fix monster npc's not working in certain exes, thanks
-          to leinsirk10 [celest]
 
-11/17   
+11/18
+	* Added flag to pc_unequipitem (thanks to DracoRPG for suggestion) [celest]
+	* Skill updates [celest]
+	  - Updated Cloaking (thanks to orn), Endure
+	* Modified pc_attack to fix monster npc's not working in certain exes, thanks
+	  to leinsirk10 [celest]
+	* Moved mapflags organized by type to main mapflag folder and removed "type" folder.
+	  Removed mapflags organized by location.[kobra_k88]
+
+11/17
 	* Added stub-handler for packet 0x3090 into char_sql [MouseJstr]
 	* Fixed a crash in the afm reading/closing code [MouseJstr]
 	* Added skill_steal_type to battle_athena.conf for the new (but unconfirmed) 
-          stealing formula [celest]
-        * Skill updates: [celest]
-          - Removed annoying skill fail messages from rogue's Snatcher
-          - Add sc_data check for firewall and fogwall
-          - Fixed Berserk (99% hopefully? ^_^)
+	  stealing formula [celest]
+	* Skill updates: [celest]
+	  - Removed annoying skill fail messages from rogue's Snatcher
+	  - Add sc_data check for firewall and fogwall
+	  - Fixed Berserk (99% hopefully? ^_^)
 
 11/16
 	* Fix for compiling against gcc 2.95 [MouseJstr]
@@ -24,19 +28,19 @@ Date	Added
 	* Fixed 2 bugs in DELITEM script command. [Lupus]
 	  - added deleting priority: If you have some items with the same ID and want to delete some of them, then
 	    at first it'll delete common items then, if necessary, delete the rest items but upgraded/named/with cards. [Lupus]
-        * Added checks for Perfect hiding [celest]
-        * Modified level 0 skill check to allow auto blitz beat and steal. [celest]
-        * Added constant BaseJob. [celest] Usage: For example, instead of
-             If (Class==12) || (Class==4012) || (Class==4035)
-          you can use
-             If (BaseJob==12) or If (BaseJob==Job_Assassin)
-        * Added 'indoors' mapflag : When in-doors players will not be affected by Night [celest]
-        * Skill updates [celest]
-          - Assumptio is now disabled in GvG maps.
-          - Changed cloaking checks a bit.
-          - Tidied up some parts of skill.c abit. ;P
-        * Added pk_min_level option in battle_athena.conf. Change this to define the
-          minimum level players can attack others when pk_mode is on. [celest]
+	* Added checks for Perfect hiding [celest]
+	* Modified level 0 skill check to allow auto blitz beat and steal. [celest]
+	* Added constant BaseJob. [celest] Usage: For example, instead of
+	     If (Class==12) || (Class==4012) || (Class==4035)
+	  you can use
+	     If (BaseJob==12) or If (BaseJob==Job_Assassin)
+	* Added 'indoors' mapflag : When in-doors players will not be affected by Night [celest]
+	* Skill updates [celest]
+	  - Assumptio is now disabled in GvG maps.
+	  - Changed cloaking checks a bit.
+	  - Tidied up some parts of skill.c abit. ;P
+	* Added pk_min_level option in battle_athena.conf. Change this to define the
+	  minimum level players can attack others when pk_mode is on. [celest]
 
 11/15
 	* Added a Database Changelog.txt File, use it for any changes inside the db folder. [shadowlady]
@@ -59,13 +63,13 @@ Date	Added
 	  -Skill estimation will show monsters current level (instead of reading from db).
 	  -Will display level 99 aura if and when a monster hits level 99.
 	  -They will not go higher than level 99.
-        * Fixed maximum skill levels not following skill tree [celest]
-        * Updated HP/SP for baby classes [celest]
-        * Corrected pc_calc_base_job [celest]
-        * Skill updates [celest]
-         - Marionette Control (70%), Berserk (thanks to DracoRPG)
-        * Modified pc_jobchange code to work with new pc_calc_base_job [celest]
-        * Corrected skill_tree_get_max, sorry >.< [celest]
+	* Fixed maximum skill levels not following skill tree [celest]
+	* Updated HP/SP for baby classes [celest]
+	* Corrected pc_calc_base_job [celest]
+	* Skill updates [celest]
+	 - Marionette Control (70%), Berserk (thanks to DracoRPG)
+	* Modified pc_jobchange code to work with new pc_calc_base_job [celest]
+	* Corrected skill_tree_get_max, sorry >.< [celest]
 
 11/14
 	* Made the Advance jobchangers to kRO standars with the following;
@@ -91,13 +95,13 @@ Date	Added
 	* Updated & Optimized TXT Login from FREYA. (need to do SQL now) [Codemaster]
 	* Removed compile warnings in intif.c. [Valaris]
 	* Fixed chrif_changesex and @changesex, now uses packet 0x3000. [MC Cameri]
-        * Updated some skills, credits to orn and midas. [celest]
-          - Magnum Break, Throw Stone, Sprinkle Sand, Magic Power, Memorise, Quagmire,
-            Spider Web, Reject Sword, assassin's Dodge, Demonbane, Divine Protection.
-          - Firewall, Quagmire, Fog Wall (100%), Marionette Control (30%), Sandman, 
-            Claymore Trap
-          - Adjusted some mob skills for mod support.
-        * Fixed weight increase when riding. [celest]
+	* Updated some skills, credits to orn and midas. [celest]
+	  - Magnum Break, Throw Stone, Sprinkle Sand, Magic Power, Memorise, Quagmire,
+	    Spider Web, Reject Sword, assassin's Dodge, Demonbane, Divine Protection.
+	  - Firewall, Quagmire, Fog Wall (100%), Marionette Control (30%), Sandman, 
+	    Claymore Trap
+	  - Adjusted some mob skills for mod support.
+	* Fixed weight increase when riding. [celest]
 
 11/12
 	* added folder: /save-tmpl, removed folder /save
