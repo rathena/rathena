@@ -4437,6 +4437,8 @@ static void atcommand_raise_sub(struct map_session_data* sd)
 		clif_updatestatus(sd, SP_HP);
 		clif_updatestatus(sd, SP_SP);
 		clif_resurrection(&sd->bl, 1);
+		if (battle_config.pc_invincible_time > 0)
+			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 		clif_displaymessage(sd->fd, msg_table[63]); // Mercy has been shown.
 	}
 }
@@ -7579,7 +7581,7 @@ atcommand_changesex(
 {
 
 //	char sex[200], output[200];
-	int isex = (sd->status.sex+1)%2;
+//	int isex = (sd->status.sex+1)%2;
 /*
 	if (!message || !*message)
 		return -1;
@@ -7597,7 +7599,7 @@ atcommand_changesex(
 	}
 */
 //	if (isex != sd->sex) {
-		chrif_changesex(sd->status.account_id, isex);
+		chrif_changesex(sd->status.account_id, ((sd->status.sex+1)%2));
 //	} else {
 //		sprintf(output,msg_table[460],(isex == 0)?"female":"male");
 //		clif_displaymessage(fd,output);
