@@ -46,6 +46,10 @@
 #include "memwatch.h"
 #endif
 
+
+// maybe put basic macros to somewhere else
+#define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
+
 unsigned long ticks = 0; // by MC Cameri
 
 #ifndef TXT_ONLY
@@ -152,10 +156,10 @@ struct charid2nick {
 	int req_id;
 };
 
-// «Ş«Ã«×«­«ã«Ã«·«å××éÄ«Õ«é«°(map_athana.conf?ªÎread_map_from_cacheªÇò¦ïÒ)
+// «Ş«Ã«×«­«ã«Ã«·«å××éÄ«Õ«é«°(map_athana.conf?ªÎread_map_from_cacheªÇò¦E)
 // 0:××éÄª·ªÊª¤ 1:Şª?õêÜÁğí 2:?õêÜÁğí
 int  map_read_flag = READ_FROM_GAT;
-char map_cache_file[256]="db/map.info"; // «Ş«Ã«×«­«ã«Ã«·«å«Õ«¡«¤«ëÙ£
+char map_cache_file[256]="db/map.info"; // «Ş«Ã«×«­«ã«Ã«·«å«Õ«¡«¤«E£
 
 char motd_txt[256] = "conf/motd.txt";
 char help_txt[256] = "conf/help.txt";
@@ -397,7 +401,7 @@ int map_count_oncell(int m, int x, int y) {
 	return count;
 }
 /*
- * «»«ëß¾ªÎõÌôøªËÌ¸ªÄª±ª¿«¹«­«ë«æ«Ë«Ã«ÈªòÚ÷ª¹
+ * «»«E¾ªÎõÌôøªËÌ¸ªÄª±ª¿«¹«­«Eæ«Ë«Ã«ÈªòÚ÷ª¹
  */
 struct skill_unit *map_find_skill_unit_oncell(int m,int x,int y,int skill_id)
 {
@@ -657,8 +661,9 @@ void map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y
 * For checking a path between two points (x0, y0) and (x1, y1)
 *------------------------------------------------------------
  */
-void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int type,...) {
-	va_list ap;
+void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int length,int type,...) 
+{
+/*	va_list ap;
 	double deltax = 0.0;
 	double deltay = 0.0;
 	int t, bx, by;
@@ -707,6 +712,15 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 	}
 
 	if (type == 0 || type != BL_MOB)
+
+
+this here is  wrong, 
+there is no check if x0<x1 and y0<y1 
+but this is not valid in 3 of 4 cases, 
+so in this case here you check only blocks when shooting to a positive direction
+shooting in other directions just do nothing like the skill has failed
+if you want to keep this that way then check and swap x0,y0 with x1,y1
+
 		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
 			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++){
 				bl = map[m].block[bx+by*map[m].bxs];
@@ -754,6 +768,322 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 	aFree (xs);
 	aFree (ys);
  	va_end(ap);	
+
+*/
+
+/*
+//////////////////////////////////////////////////////////////
+//
+// sharp shooting 1
+//
+//////////////////////////////////////////////////////////////
+// problem: 
+// finding targets standing on and within some range of a line
+// (t1,t2 t3 and t4 get hit)
+//
+//     target 1
+//      x t4
+//     t2
+// t3 x
+//   x
+//  S
+//////////////////////////////////////////////////////////////
+// solution 1 (straight forward, but a bit calculation expensive)
+// calculating perpendiculars from quesionable mobs to the straight line
+// if the mob is hit then depends on the distance to the line
+// 
+// solution 2 (complex, need to handle many cases, but maybe faster)
+// make a formula to deside if a given (x,y) is within a shooting area
+// the shape can be ie. rectangular or triangular
+// if the mob is hit then depends on if the mob is inside or outside the area
+// I'm not going to implement this, but if somebody is interested
+// in vector algebra, it might be some fun 
+
+//////////////////////////////////////////////////////////////
+// possible shooting ranges (I prefer the second one)
+//////////////////////////////////////////////////////////////
+//
+//  ----------------                     ------
+//  ----------------               ------------
+// Sxxxxxxxxxxxxxxxxtarget    Sxxxxxxxxxxxxxxxxtarget
+//  ----------------               ------------
+//  ----------------                      -----
+//
+// the original code implemented the left structure
+// might be not that realistic, so I changed to the other one
+// I take "range" as max distance from the line
+//////////////////////////////////////////////////////////////
+
+	va_list ap;
+	int i, blockcount = bl_list_count;
+	struct block_list *bl;
+	int c1,c2;
+
+///////////
+	double deltax,deltay;
+	double k,kfact,knorm;
+	double v1,v2,distance;
+	double xm,ym,rd;
+	int bx,by,bx0,bx1,by0,by1;
+//////////////
+	// no map
+	if(m < 0) return;
+
+	// xy out of range
+	if (x0 < 0) x0 = 0;
+	if (y0 < 0) y0 = 0;
+	if (x1 >= map[m].xs) x1 = map[m].xs-1;
+	if (y1 >= map[m].ys) y1 = map[m].ys-1;
+
+	///////////////////////////////
+	// stuff for a linear equation in xy coord to calculate 
+	// the perpendicular from a block xy to the straight line
+	deltax = (x1-x0);
+	deltay = (y1-y0);
+	kfact = (deltax*deltax+deltay*deltay);	// the sqare length of the line
+	knorm = -deltax*x0-deltay*y0;			// the offset vector param
+
+//printf("(%i,%i)(%i,%i) range: %i\n",x0,y0,x1,y1,range);
+
+	if(kfact==0) return; // shooting at the standing position should not happen
+	kfact = 1/kfact; // divide here and multiply in the loop
+
+	range *= range; // compare with range^2 so we can skip a sqrt and signs
+
+	///////////////////////////////
+	// prepare shooting area check
+	xm = (x1+x0)/2.0;
+	ym = (y1+y0)/2.0;// middle point on the shooting line
+	// the sqared radius of a circle around the shooting range
+	// plus the sqared radius of a block
+	rd = (x0-xm)*(x0-xm) + (y0-ym)*(y0-ym) + (range*range)
+					+BLOCK_SIZE*BLOCK_SIZE/2;
+	// so whenever a block midpoint is within this circle
+	// some of the block area is possibly within the shooting range
+
+	///////////////////////////////
+	// what blocks we need to test
+	// blocks covered by the xy position of begin and end of the line
+	bx0 = x0/BLOCK_SIZE;
+	bx1 = x1/BLOCK_SIZE;
+	by0 = y0/BLOCK_SIZE;
+	by1 = y1/BLOCK_SIZE;
+	// swap'em for a smallest-to-biggest run
+	if(bx0>bx1)	swap(bx0,bx1);
+	if(by0>by1)	swap(by0,by1);
+
+	// enlarge the block area by a range value and 1
+	// so we can be sure to process all blocks that might touch the shooting area
+	// in this case here with BLOCK_SIZE=8 and range=2 it will be only enlarged by 1
+	// but I implement it anyway just in case that ranges will be larger 
+	// or BLOCK_SIZE smaller in future
+	i = (range/BLOCK_SIZE+1);//temp value
+	if(bx0>i)				bx0 -=i; else bx0=0;
+	if(by0>i)				by0 -=i; else by0=0;
+	if(bx1+i<map[m].bxs)	bx1 +=i; else bx1=map[m].bxs-1;
+	if(by1+i<map[m].bys)	by1 +=i; else by1=map[m].bys-1;
+
+
+//printf("run for (%i,%i)(%i,%i)\n",bx0,by0,bx1,by1);
+	for(bx=bx0; bx<=bx1; bx++)
+	for(by=by0; by<=by1; by++)
+	{	// block xy
+		c1  = map[m].block_count[bx+by*map[m].bxs];		// number of elements in the block
+		c2  = map[m].block_mob_count[bx+by*map[m].bxs];	// number of mobs in the mob block
+		if( (c1==0) && (c2==0) ) continue;				// skip if nothing in the blocks
+
+//printf("block(%i,%i) %i %i\n",bx,by,c1,c2);fflush(stdout);
+		// test if the mid-point of the block is too far away
+		// so we could skip the whole block in this case 
+		v1 = (bx*BLOCK_SIZE+BLOCK_SIZE/2-xm)*(bx*BLOCK_SIZE+BLOCK_SIZE/2-xm)
+			+(by*BLOCK_SIZE+BLOCK_SIZE/2-ym)*(by*BLOCK_SIZE+BLOCK_SIZE/2-ym);
+//printf("block(%i,%i) v1=%f rd=%f\n",bx,by,v1,rd);fflush(stdout);		
+		// check for the worst case scenario
+		if(v1 > rd)	continue;
+
+		// it seems that the block is at least partially covered by the shooting range
+		// so we go into it
+		if(type==0 || type!=BL_MOB) {
+  			bl = map[m].block[bx+by*map[m].bxs];		// a block with the elements
+			for(i=0;i<c1 && bl;i++,bl=bl->next){		// go through all elements
+				if( bl && ( !type || bl->type==type ) && bl_list_count<BL_LIST_MAX )
+				{
+					// calculate the perpendicular from block xy to the straight line
+					k = kfact*(deltax*bl->x + deltay*bl->y + knorm);
+					// check if the perpendicular is within start and end of our line
+					if(k>=0 && k<=1)
+					{	// calculate the distance
+						v1 = deltax*k+x0 - bl->x;
+						v2 = deltay*k+y0 - bl->y;
+						distance = v1*v1+v2*v2;
+						// triangular shooting range
+						if( distance <= range*k )
+							bl_list[bl_list_count++]=bl;
+					}
+				}
+			}//end for elements
+		}
+
+		if(type==0 || type==BL_MOB) {
+			bl = map[m].block_mob[bx+by*map[m].bxs];	// and the mob block
+			for(i=0;i<c2 && bl;i++,bl=bl->next){
+				if(bl && bl_list_count<BL_LIST_MAX) {
+					// calculate the perpendicular from block xy to the straight line
+					k = kfact*(deltax*bl->x + deltay*bl->y + knorm);
+//printf("mob: (%i,%i) k=%f ",bl->x,bl->y, k);
+					// check if the perpendicular is within start and end of our line
+					if(k>=0 && k<=1)
+					{
+						 v1 = deltax*k+x0 - bl->x;
+						 v2 = deltay*k+y0 - bl->y;
+						 distance = v1*v1+v2*v2;
+//printf("dist: %f",distance);
+						 // triangular shooting range
+						 if( distance <= range*k )
+						 {
+//printf("  hit");
+							bl_list[bl_list_count++]=bl;
+						 }
+					}
+//printf("\n");
+				}
+			}//end for mobs
+		}
+	}//end for(bx,by)
+
+
+	if(bl_list_count>=BL_LIST_MAX) {
+		if(battle_config.error_log)
+			printf("map_foreachinarea: *WARNING* block count too many!\n");
+	}
+
+	va_start(ap,type);
+	map_freeblock_lock();	// ƒƒ‚ƒŠ‚©‚ç‚Ì‰ğ•ú‚ğ‹Ö~‚·‚é
+
+	for(i=blockcount;i<bl_list_count;i++)
+		if(bl_list[i]->prev)	// —L?‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+			func(bl_list[i],ap);
+
+	map_freeblock_unlock();	// ‰ğ•ú‚ğ‹–‰Â‚·‚é
+	va_end(ap);
+	
+	bl_list_count = blockcount;
+
+*/
+
+
+//////////////////////////////////////////////////////////////
+//
+// sharp shooting 2
+//
+//////////////////////////////////////////////////////////////
+// problem: 
+// finding targets standing exactly on a line
+// (only t1 and t2 get hit)
+//
+//     target 1
+//      x t4
+//     t2
+// t3 x
+//   x
+//  S
+//////////////////////////////////////////////////////////////
+	va_list ap;
+	int i, blockcount = bl_list_count;
+	struct block_list *bl;
+	int c1,c2;
+
+	//////////////////////////////////////////////////////////////
+	// linear parametric equation
+	// x=(x1-x0)*t+x0; y=(y1-y0)*t+y0; t=[0,1]
+	//////////////////////////////////////////////////////////////
+	// linear equation for finding a single line between (x0,y0)->(x1,y1)
+	// independent of the given xy-values
+	double deltax = (x1-x0);
+	double deltay = (y1-y0);
+	double dx = 0.0;
+	double dy = 0.0;
+	int bx=-1;	// initialize block coords to some impossible value
+	int by=-1;
+
+	int t;
+	///////////////////////////////
+	// find maximum runindex
+	int tmax = abs(y1-y0);
+	if(tmax  < abs(x1-x0))	
+		tmax = abs(x1-x0);
+	// pre-calculate delta values for x and y destination
+	// should speed up cause you don't need to divide in the loop
+	if(tmax>0)
+	{
+		dx = ((double)(x1-x0)) / ((double)tmax);
+		dy = ((double)(y1-y0)) / ((double)tmax);
+	}
+	// go along the index
+	for(t=0; t<=tmax; t++)
+	{	// xy-values of the line including start and end point
+		int x = (int)floor(deltax * (double)t +0.5)+x0;
+		int y = (int)floor(deltay * (double)t +0.5)+y0;
+
+		// check the block index of the calculated xy
+		if( (bx!=x/BLOCK_SIZE) || (by!=y/BLOCK_SIZE) )
+		{	// we have reached a new block
+			// so we store the current block coordinates
+			bx = x/BLOCK_SIZE;
+			by = y/BLOCK_SIZE;
+
+			// and process the data
+			c1  = map[m].block_count[bx+by*map[m].bxs];		// number of elements in the block
+			c2  = map[m].block_mob_count[bx+by*map[m].bxs];	// number of mobs in the mob block
+			if( (c1==0) && (c2==0) ) continue;				// skip if nothing in the block
+
+			if(type==0 || type!=BL_MOB) {
+				bl = map[m].block[bx+by*map[m].bxs];		// a block with the elements
+				for(i=0;i<c1 && bl;i++,bl=bl->next){		// go through all elements
+					if( bl && ( !type || bl->type==type ) && bl_list_count<BL_LIST_MAX )
+					{	
+						// check if block xy is on the line
+						if( (bl->x-x0)*(y1-y0) == (bl->y-y0)*(x1-x0) )
+						// and if it is within start and end point
+						if( ((x0<=x1)&&(x0<=bl->x)&&(bl->x<=x1) || (x0>=x1)&&(x0>=bl->x)&&(bl->x>=x1)) &&
+							((y0<=y1)&&(y0<=bl->y)&&(bl->y<=y1) || (y0>=y1)&&(y0>=bl->y)&&(bl->y>=y1)) )
+							bl_list[bl_list_count++]=bl;
+					}
+				}//end for elements
+			}
+
+			if(type==0 || type==BL_MOB) {
+				bl = map[m].block_mob[bx+by*map[m].bxs];	// and the mob block
+				for(i=0;i<c2 && bl;i++,bl=bl->next){
+					if(bl && bl_list_count<BL_LIST_MAX) {
+						// check if mob xy is on the line
+						if( (bl->x-x0)*(y1-y0) == (bl->y-y0)*(x1-x0) )
+						// and if it is within start and end point
+						if( ((x0<=x1)&&(x0<=bl->x)&&(bl->x<=x1) || (x0>=x1)&&(x0>=bl->x)&&(bl->x>=x1)) &&
+							((y0<=y1)&&(y0<=bl->y)&&(bl->y<=y1) || (y0>=y1)&&(y0>=bl->y)&&(bl->y>=y1)) )
+							bl_list[bl_list_count++]=bl;
+					}
+				}//end for mobs
+			}	
+		}
+	}//end for index
+
+	if(bl_list_count>=BL_LIST_MAX) {
+		if(battle_config.error_log)
+			printf("map_foreachinarea: *WARNING* block count too many!\n");
+	}
+
+	va_start(ap,type);
+	map_freeblock_lock();	// ƒƒ‚ƒŠ‚©‚ç‚Ì‰ğ•ú‚ğ‹Ö~‚·‚é
+
+	for(i=blockcount;i<bl_list_count;i++)
+		if(bl_list[i]->prev)	// —L?‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+			func(bl_list[i],ap);
+
+	map_freeblock_unlock();	// ‰ğ•ú‚ğ‹–‰Â‚·‚é
+	va_end(ap);
+	
+	bl_list_count = blockcount;
 }
 
 /*==========================================
