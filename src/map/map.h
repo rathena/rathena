@@ -331,6 +331,7 @@ struct map_session_data {
 	int last_skillid,last_skilllv;		// Added by RoVeRT
 
 	unsigned char change_level; // [celest]
+	int autoloot; //by Upa-Kun
 
 #ifndef TXT_ONLY
 	int mail_counter;	// mail counter for mail system [Valaris]

@@ -236,6 +236,7 @@ enum AtCommandType {
 	AtCommand_UndisguiseAll,
 	AtCommand_DisguiseAll,
 	AtCommand_ChangeLook,
+	AtCommand_AutoLoot, //by Upa-Kun
 
 	// end
 	AtCommand_Unknown,

@@ -1,5 +1,8 @@
 Date	Added
 
+01/31
+	* Added at(@) command @autoloot, which turns autoloot on or off for the
+	  player who uses it [Upa-Kun]
 01/29
 	* Fixed Storage Bug with Named Stackable items. Thanks to Nimion [Lupus]
 		e.g. Arrows, Iron, Elemental stones, etc...

@@ -210,6 +210,7 @@ ACMD_FUNC(gmotd); // Added by MC Cameri, created by davidsiaw
 ACMD_FUNC(misceffect); // by MC Cameri
 ACMD_FUNC(mobsearch);
 ACMD_FUNC(cleanmap);
+ACMD_FUNC(autoloot);  // by Upa-Kun
 
 #ifndef TXT_ONLY
 ACMD_FUNC(checkmail); // [Valaris]
@@ -526,6 +527,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_UndisguiseAll,		"@undisguiseall",	99,	atcommand_undisguiseall },
 	{ AtCommand_DisguiseAll,		"@disguiseall",	99,	atcommand_disguiseall },
 	{ AtCommand_ChangeLook,		"@changelook",	99,	atcommand_changelook },
+	{ AtCommand_AutoLoot,		"@autoloot",	10,	atcommand_autoloot }, // Upa-Kun
 
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
@@ -7533,6 +7535,31 @@ atcommand_changelook(const int fd, struct map_session_data* sd,
 
 	return 0;
 }
+
+/*==========================================
+ *Turns on/off AutoLoot for a specific player
+ *------------------------------------------
+ *by Upa-Kun
+ */
+int
+atcommand_autoloot(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	nullpo_retr(-1, sd);
+	if (sd->autoloot) 
+	{
+		sd->autoloot = 0;
+		clif_displaymessage(fd, "Autoloot is now off.");
+	}
+	else 
+	{
+		sd->autoloot = 1;
+		clif_displaymessage(fd, "Autoloot is now on.");
+	}
+	return 0;  
+}   
+
 
 /*==========================================
  * It is made to rain.
