@@ -1,5 +1,9 @@
 Date	Added
 
+03/19
+        * Fixed day and night settings not ignored even if they are set to 0,
+          my bad ^^; [celest]
+
 03/18
         * Fixed a crash when freeing memory of pets [celest]
         * Added Cygwin support to the -DDUMPSTACK option, and changed its format
