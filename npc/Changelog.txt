@@ -35,6 +35,9 @@ Other Ppl
 
 Date		Added
 ======
+11/14
+	* - Fixed niflheim kafra. [shadow]
+
 11/13
 	* - Translated and Fixed momotaro.txt event [shadow]
 	* - Deleted folder other/old which was empty [MC Cameri]
