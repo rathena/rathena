@@ -2297,62 +2297,8 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		break;
 
 	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
-		{
-		#if 0	// temporarily keeping this block for future reference [celest]
-			/*int dx, dy, wx = 0, wy = 0;
-			int weight, num = 0;
-			int x1 = src->x, y1 = src->y;
-			int x0 = bl->x, y0 = bl->y;
-			int *xs, *ys;
-
-			dx = (x1 - x0);
-			if (dx < 0) {
-				swap(x0, x1);
-				swap(y0, y1);
-				dx = -dx;
-			}
-			dy = (y1 - y0);
-			weight = dx > abs(dy) ? dx : abs(y1 - y0);
-			xs = (int *)aCallocA(weight, sizeof(int));
-			ys = (int *)aCallocA(weight, sizeof(int));
-			while ((x0 != x1 || y0 != y1) && num < skill_get_range(skillid,skilllv)) { // fixed [Shinomori]
-				wx += dx;
-				wy += dy;
-				if (wx >= weight) {
-					wx -= weight; x0 ++;
-				}
-				if (wy >= weight) {
-					wy -= weight; y0 ++;
-				} else if (wy < 0) {
-					wy += weight; y0 --;
-				}
-				if (x0 == x1) {
-					if (dy > 0) { y0++; }
-					else { y0--; }
-				}
-				//xs[number] = x0;
-				//ys[number] = y0
-				printf ("%d - %d %d\n", weight, x0, y0);
-				//map_foreachinarea (skill_attack_area,src->m,x0,y0,x0,y0,0,
-						//BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
-				num++;	// make sure it doesn't run infinitely
-			}
-			//for num = 0; num < weight; num++
-			//map_foreach skill attack area
-			//if last of xs || ys != x y, manually skill attack
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			aFree (xs);
-			aFree (ys);*/
-		#endif
-
-		#if 0	// change 0 to 1 to switch to the this system [celest]
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		#else
-			map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
-				2,skill_get_range(skillid,skilllv),0,
+			map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,0,
 				BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
-		#endif
-		}
 		break;
 
 	case PA_PRESSURE:	/* プレッシャ? */

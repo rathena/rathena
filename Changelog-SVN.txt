@@ -1,5 +1,9 @@
 Date	Added
 
+02/12
+        * Removed old code for Sharp Shooting (still a little buggy) [celest]
+        * Merged Shinomori's code into map_foreachinpath [celest]
+
 02/11
         * mob.c fixed doubling entries in DROPS LOG, optimized [Lupus]
         * item_noequip.txt now you can disable named consumable items

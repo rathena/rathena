@@ -8,6 +8,7 @@
 #else
 #include <netdb.h>
 #endif
+#include <math.h>
 
 #include "core.h"
 #include "timer.h"
@@ -656,14 +657,15 @@ void map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y
 * For checking a path between two points (x0, y0) and (x1, y1)
 *------------------------------------------------------------
  */
-void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int length,int type,...) {
+void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int type,...) {
 	va_list ap;
-	int bx,by;
-	struct block_list *bl=NULL;
-	int blockcount=bl_list_count,i,c;
-	double s;
-	int in;	// slope, interception
-
+	double deltax = 0.0;
+	double deltay = 0.0;
+	int t, bx, by;
+	int *xs, *ys;
+	int blockcount = bl_list_count, i, c;
+	struct block_list *bl = NULL;
+	
 	if(m < 0)
 		return;
 	va_start(ap,type);
@@ -672,30 +674,19 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 	if (x1 >= map[m].xs) x1 = map[m].xs-1;
 	if (y1 >= map[m].ys) y1 = map[m].ys-1;
 
-//	y = ax + c	// ugh, algebra! xp
-//	x = (y - c) / a
-	if (x0 == x1) {
-		s = 999; in = 0;
-	} else if (y0 == y1) {
-		s = 0; in = y0;
-	} else {
-		s = (double)(y1 - y0)/(double)(x1 - x0);
-		in = y0 - s * x0;
-	}
-	//printf ("%lf %d\n", s, in);
-// I'm not finished thinking on it
-// but first it might better use a parameter equation
-// x=(x1-x0)*t+x0; y=(y1-y0)*t+y0; t=[0,1]
-// would not need special case aproximating for infinity/zero slope
-// so maybe this way:
-/*
-	double deltax = 0.0;
-	double deltay = 0.0;
-	int t;
+	// I'm not finished thinking on it
+	// but first it might better use a parameter equation
+	// x=(x1-x0)*t+x0; y=(y1-y0)*t+y0; t=[0,1]
+	// would not need special case aproximating for infinity/zero slope
+	// so maybe this way:
+
 	// find maximum runindex
 	int tmax = abs(y1-y0);
-	if(tmax < abs(x1-x0))	
+	if(tmax < abs(x1-x0))
 		tmax = abs(x1-x0);
+
+	xs = (int *)aCallocA(tmax + 1, sizeof(int));
+	ys = (int *)aCallocA(tmax + 1, sizeof(int));
 
 	// pre-calculate delta values for x and y destination
 	// should speed up cause you don't need to divide in the loop
@@ -711,9 +702,9 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 		int y = (int)floor(deltay * (double)t +0.5)+y0;
 		// the xy pairs of points in line between x0y0 and x1y1 
 		// including start and end point
-		printf("%i\t%i\n",x,y);
+		xs[t] = x;
+		ys[t] = y;		
 	}
- */
 
 	if (type == 0 || type != BL_MOB)
 		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
@@ -721,15 +712,12 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 				bl = map[m].block[bx+by*map[m].bxs];
 				c = map[m].block_count[bx+by*map[m].bxs];
 				for(i=0;i<c && bl;i++,bl=bl->next){
-					if(bl && type && bl->type!=type)
-						continue;
 					if(bl) {
-						if (((s == 999 && bl->x == x0) ||
-							(s == 0 && in == y0 && bl->y == y0) ||
-							abs(s * bl->x + in - bl->y) <= range ||
-							abs((bl->y - in)/s - bl->x) <= range) &&
-							bl_list_count<BL_LIST_MAX)
-							bl_list[bl_list_count++]=bl;
+						if (type && bl->type!=type)
+							continue;
+						for(t=0; t<=tmax; t++)
+							if(bl->x==xs[t] && bl->y==ys[t] && bl_list_count<BL_LIST_MAX)
+								bl_list[bl_list_count++]=bl;
 					}
 				}
 			}
@@ -741,12 +729,9 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 				c = map[m].block_mob_count[bx+by*map[m].bxs];
 				for(i=0;i<c && bl;i++,bl=bl->next){
 					if(bl) {
-						if (((s == 999 && bl->x == x0) ||
-							(s == 0 && in == y0 && bl->y == y0) ||
-							abs(s * bl->x + in - bl->y) <= range ||
-							abs((bl->y - in)/s - bl->x) <= range) &&
-							bl_list_count<BL_LIST_MAX)
-							bl_list[bl_list_count++]=bl;
+						for(t=0; t<=tmax; t++)
+							if(bl->x==xs[t] && bl->y==ys[t] && bl_list_count<BL_LIST_MAX)
+								bl_list[bl_list_count++]=bl;
 					}
 				}
 			}
@@ -765,8 +750,10 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 
 	map_freeblock_unlock();	// ‰ð•ú‚ð‹–‰Â‚·‚é
 
-	va_end(ap);
 	bl_list_count = blockcount;
+	aFree (xs);
+	aFree (ys);
+ 	va_end(ap);	
 }
 
 /*==========================================
