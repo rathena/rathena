@@ -2,7 +2,8 @@ Date	Added
 11/11
 	* Skill Updates : (Need to revise skill_cast_db.txt for new updates)
 		( Sharp Shooting, Sword Reject, Chain Crush Combo, Tiger Knuckle Fist,
-		Head Crush, Arrow Vulcan, HP COnversion) Thanks to DracoRPG. [shadow]
+		Head Crush, Arrow Vulcan, HP COnversion) Thanks to DracoRPG. 
+		Fixed Devotion use requeriments. Thanks to Orn.	[shadow]
 11/10	
 =======
 11/11
