@@ -1,5 +1,10 @@
 Date	Added
 12/22
+        * Check if the player has been authentified by the char server before
+          clearing any timers in map_quit [celest]
+        * Added eventtimercount and timerskill_count - check these before clearing
+          or deleting timers [celest]
+        * Added sc_count check in skill_stop_dancing [celest]
         * Translated the japanese part in battle_athena.conf [celest]
         * Added ignore the new skill delays when chaining monk combos [celest]
 

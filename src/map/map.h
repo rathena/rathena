@@ -210,6 +210,7 @@ struct map_session_data {
 	struct skill_unit_group skillunit[MAX_SKILLUNITGROUP];
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	struct skill_timerskill skilltimerskill[MAX_SKILLTIMERSKILL];
+	unsigned short timerskill_count; // [celest]
 	int cloneskill_id,cloneskill_lv;
 	int potion_hp,potion_sp,potion_per_hp,potion_per_sp;
 
@@ -319,6 +320,7 @@ struct map_session_data {
 
 	char eventqueue[MAX_EVENTQUEUE][50];
 	int eventtimer[MAX_EVENTTIMER];
+	unsigned short eventcount; // [celest]
 
 	int last_skillid,last_skilllv;		// Added by RoVeRT
 	

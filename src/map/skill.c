@@ -2036,6 +2036,10 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 	nullpo_retr(0, skl);
 
 	skl->timer = -1;
+	if (sd) {
+		sd->timerskill_count--;
+	}
+
 	if(skl->target_id) {
 		struct block_list tbl;
 		target = map_id2bl(skl->target_id);
@@ -2162,6 +2166,7 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 				sd->skilltimerskill[i].y = y;
 				sd->skilltimerskill[i].type = type;
 				sd->skilltimerskill[i].flag = flag;
+				sd->timerskill_count++;
 
 				return 0;
 			}
@@ -2226,10 +2231,15 @@ int skill_cleartimerskill(struct block_list *src)
 	if(src->type == BL_PC) {
 		struct map_session_data *sd = (struct map_session_data *)src;
 		nullpo_retr(0, sd);
+
+		if (sd->timerskill_count <= 0)
+			return 0;
+
 		for(i=0;i<MAX_SKILLTIMERSKILL;i++) {
 			if(sd->skilltimerskill[i].timer != -1) {
 				delete_timer(sd->skilltimerskill[i].timer, skill_timerskill);
 				sd->skilltimerskill[i].timer = -1;
+				sd->timerskill_count--;
 			}
 		}
 	}
@@ -10460,11 +10470,13 @@ void skill_stop_dancing(struct block_list *src, int flag)
 {
 	struct status_change* sc_data;
 	struct skill_unit_group* group;
+	short* sc_count;
 
 	nullpo_retv(src);
 	nullpo_retv(sc_data = battle_get_sc_data(src));
+	nullpo_retv(sc_count = battle_get_sc_count(src));
 
-	if(sc_data[SC_DANCING].timer != -1) {
+	if((*sc_count)>0 && sc_data[SC_DANCING].timer != -1) {
 		group=(struct skill_unit_group *)sc_data[SC_DANCING].val2; //ダンスのスキルユニットIDはval2に入ってる
 		if(group && src->type==BL_PC && sc_data && sc_data[SC_DANCING].val4){ //合奏中?
 			struct map_session_data* dsd=map_id2sd(sc_data[SC_DANCING].val4); //相方のsd取得

@@ -785,6 +785,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 		sd->spirit_timer[i] = -1;
 	for(i = 0; i < MAX_SKILLTIMERSKILL; i++)
 		sd->skilltimerskill[i].timer = -1;
+	sd->timerskill_count=0;
 
 	memset(&sd->dev,0,sizeof(struct square));
 	for(i = 0; i < 5; i++) {
@@ -837,6 +838,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	memset(sd->eventqueue, 0, sizeof(sd->eventqueue));
 	for(i = 0; i < MAX_EVENTTIMER; i++)
 		sd->eventtimer[i] = -1;
+	sd->eventcount=0;
 
 	// ˆÊ’u‚ÌÝ’è
 	if (pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, 0) != 0) {
@@ -6746,6 +6748,7 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 		memcpy(evname,name,24);
 		sd->eventtimer[i]=add_timer(gettick()+tick,
 			pc_eventtimer,sd->bl.id,(int)evname);
+		sd->eventcount++;
 	}
 
 	return 0;
@@ -6761,11 +6764,15 @@ int pc_deleventtimer(struct map_session_data *sd,const char *name)
 
 	nullpo_retr(0, sd);
 
+	if (sd->eventcount <= 0)
+		return 0;
+
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i]!=-1 && strcmp(
 			(char *)(get_timer(sd->eventtimer[i])->data), name)==0 ){
 				delete_timer(sd->eventtimer[i],pc_eventtimer);
 				sd->eventtimer[i]=-1;
+				sd->eventcount--;
 				break;
 		}
 
@@ -6801,6 +6808,9 @@ int pc_cleareventtimer(struct map_session_data *sd)
 	int i;
 
 	nullpo_retr(0, sd);
+
+	if (sd->eventcount <= 0)
+		return 0;
 
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i]!=-1 ){

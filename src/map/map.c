@@ -986,7 +986,10 @@ int map_quit(struct map_session_data *sd) {
 	else
 		storage_storage_quit(sd);	// 倉庫を開いてるなら保存する
 
-	skill_castcancel(&sd->bl,0);	// 詠唱を中?する
+	// check if we've been authenticated [celest]
+	if (sd->state.auth)
+		skill_castcancel(&sd->bl,0);	// 詠唱を中?する
+	
 	skill_stop_dancing(&sd->bl,1);// ダンス/演奏中?
 
 	if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中の終了はHPを100に
@@ -995,13 +998,18 @@ int map_quit(struct map_session_data *sd) {
 	skill_status_change_clear(&sd->bl,1);	// ステ?タス異常を解除する
 	skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
 	skill_cleartimerskill(&sd->bl);
-	pc_stop_walking(sd,0);
-	pc_stopattack(sd);
-	pc_delinvincibletimer(sd);
+
+	// check if we've been authenticated [celest]
+	if (sd->state.auth) {
+		pc_stop_walking(sd,0);
+		pc_stopattack(sd);
+		pc_delinvincibletimer(sd);
+	}
 	pc_delspiritball(sd,sd->spiritball,1);
 	skill_gangsterparadise(sd,0);
 
-	pc_calcstatus(sd,4);
+	if (sd->state.auth)
+		pc_calcstatus(sd,4);
 //	skill_clear_unitgroup(&sd->bl);	// [Sara-chan]
 
 	clif_clearchar_area(&sd->bl,2);
