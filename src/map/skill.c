@@ -12052,7 +12052,8 @@ int skill_readdb(void)
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-
+		if(split[0]==NULL)
+			continue;
 		i=atoi(split[0]);
 		if (i>=10000 && i<10015) // for guild skills [Celest]
 			i -= 9500;
