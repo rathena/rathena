@@ -816,8 +816,10 @@ extern char *GRF_PATH_FILENAME;
 #ifndef TXT_ONLY
 
 // MySQL
+#ifdef __WIN32
 #include <my_global.h>
 #include <my_sys.h>
+#endif
 #include <mysql.h>
 
 void char_online_check(void); // [Valaris]

@@ -2,6 +2,8 @@
 Date	Added
 
 03/31
+        * Removed some #include's causing warnings on some platforms
+          [SVN 1360: MouseJstr]
 	* Fixed a bug with InitTimer/StopTimer, thanks to ilpalazzo-sama
 	* Set 'undead_detect_type' to 0 by default, thanks to Dino9021
 	* Fixed Enchant Poison / Deadly Poison having too high poisoning chance
