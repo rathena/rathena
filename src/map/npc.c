@@ -1702,7 +1702,9 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		char srcname[128];
 		struct npc_data *nd2;
 		if( sscanf(w2,"duplicate(%[^)])",srcname)!=1 ){
-			printf("bad duplicate name! : %s",w2);
+			printf("\n");
+			snprintf(tmp_output,sizeof(tmp_output),"Bad duplicate name! : %s",w2);
+			ShowWarning(tmp_output);
 			return 0;
 		}
 		if( (nd2=npc_name2id(srcname))==NULL ){

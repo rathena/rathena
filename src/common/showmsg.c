@@ -35,8 +35,9 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 		case MSG_WARNING: //Bright Yellow
 			strcpy(prefix,CL_YELLOW"[Warning]"CL_RESET":");
 			break;
-		case MSG_DEBUG:
+		case MSG_DEBUG: //Bright Cyan, important stuff!
 			strcpy(prefix,CL_CYAN"[Debug]"CL_RESET":");
+			break;
 		case MSG_ERROR: //Bright Red  (Regular errors)
 			strcpy(prefix,CL_RED"[Error]"CL_RESET":");
 			break;
@@ -47,16 +48,20 @@ int _ShowMessage(const char *string, enum msg_type flag){ // by MC Cameri
 			ShowError("In function _ShowMessage() -> Invalid flag passed.\n");
 			return 1;
 	}
+	if (!(flag == MSG_DEBUG && !SHOW_DEBUG_MSG)) {
 	output = (char*)malloc(sizeof(char)*(strlen(prefix)+strlen(string)+2)); // +2: space and a \0
 	if (output == NULL) {
 		return 1;
 //		exit(1); // Kill server? Deadly
 	}
+	
 	strcpy(output,prefix);
 	strcat(output," ");
 	strcat(output,string);
 	printf(output);
 	fflush(stdout);
+	free(output);
+	}
 /*
 	if ((core_config.debug_output_level > -1) && (flag >= core_config.debug_output_level)) {
 		FILE *fp;

@@ -2378,7 +2378,7 @@ int do_init(int argc, char *argv[]) {
           if (ptr[0] == 192 && ptr[1] == 168)
             printf("\nFirewall detected.. \n    edit lan_support.conf and map_athena.conf\n\n");
         }
-
+	if (SHOW_DEBUG_MSG) ShowNotice("Server running in '"CL_WHITE"Debug Mode"CL_RESET"'.\n");
 	battle_config_read(BATTLE_CONF_FILENAME);
 	msg_config_read(MSG_CONF_NAME);
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
@@ -2470,7 +2470,6 @@ int do_init(int argc, char *argv[]) {
 	ShowStatus(tmp_output);
 
 	ticks = gettick();
-
 
 	return 0;
 }
