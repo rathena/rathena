@@ -1586,7 +1586,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 {
 	int x,y,dir=0,m,xs=0,ys=0,class=0;	// [Valaris] thanks to fov
 	char mapname[24];
-	char *srcbuf=NULL,*script;
+	char *srcbuf=NULL,*script=NULL;
 	int srcsize=65536;
 	int startline=0;
 	char line[1024];
