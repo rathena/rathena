@@ -6,6 +6,7 @@ Date	Added
           upgrade your mysql as a result of the new adoption system.  Thank you
              -MouseJstr
 
+	* Fixed SQL char server crashing when loading the item_db, my bad ^^; [celest]
         * More ANSI C++/C conformance fixes [SVN 1334: MouseJstr]
 	* Added auto save guild data (only guardian HP and owner guild ID for now,
 	  both cached) every 5 minutes during WOE [celest]

@@ -3438,11 +3438,11 @@ int do_init(int argc, char **argv){
 
 	printf("charserver configuration reading done.....\n");
 
-	//Read ItemDB
-	do_init_itemdb();
-
 	inter_init((argc > 2) ? argv[2] : inter_cfgName); // inter server √ ±‚»≠
 	printf("interserver configuration reading done.....\n");
+
+	//Read ItemDB
+	do_init_itemdb();
 
 	printf("start char server initializing.....\n");
 	mmo_char_sql_init();
