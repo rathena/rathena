@@ -4394,8 +4394,13 @@ struct Damage  battle_calc_misc_attack(
 		}
 		break;
 	case SN_FALCONASSAULT:			/* ファルコンアサルト */
+#ifdef TWILIGHT
+ 		skill = pc_checkskill(sd,HT_BLITZBEAT);
+                damage=(100+50*skill_lv+(dex/10+int_/2+skill*3+40)*2) * 2;
+#else
 		skill = pc_checkskill(sd,HT_STEELCROW); // Celest 
 		damage=((150+50*skill_lv)*(dex/10+int_/2+skill*3+40)*2)/100;
+#endif
 		break;
 	}
 
@@ -4958,7 +4963,7 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 	if( range>0 && range < arange )	{// 遠すぎる
 // be lenient if the skill was cast before we have moved to the correct position [Celest]
 		if (src->type != BL_PC ||
-			(src->type == BL_PC && ((struct map_session_data *)bl)->walktimer != -1 &&
+			(bl->type == BL_PC && ((struct map_session_data *)bl)->walktimer != -1 &&
 			!((arange-=battle_config.skill_range_leniency)<=range)))
 			return 0;
 	}

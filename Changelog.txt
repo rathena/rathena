@@ -1,5 +1,7 @@
 Date	Added
 12/3
+	* hacked the frozen mob issue [MouseJstr]
+	* Fixed a battle_range crash [MouseJstr]
         * Updated Stone Curse, Soul Drain, Auto Berserk [celest]
         * Added a fix for MVP exp being multiplied twice by Gengar
 

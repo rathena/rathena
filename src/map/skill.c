@@ -8891,7 +8891,11 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_ENDURE:	/* ƒCƒ“ƒfƒ…ƒA */
 	case SC_AUTOBERSERK: // Celest
 		if(sd && sd->special_state.infinite_endure) {
+#ifdef TWILIGHT
+			sc_data[type].timer=add_timer( 1000*600+tick,skill_status_change_timer, bl->id, data );
+#else
 			sc_data[type].timer=add_timer( 1000*60+tick,skill_status_change_timer, bl->id, data );
+#endif
 			//sc_data[type].val2=1;
 			return 0;
 		}
