@@ -673,7 +673,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd->skillitem = -1;
 	sd->skillitemlv = -1;
 	sd->invincible_timer = -1;
-
+	
 	sd->deal_locked = 0;
 	sd->trade_partner = 0;
 
@@ -687,9 +687,8 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd->canmove_tick = tick;
 	sd->canregen_tick = tick;
 	sd->attackabletime = tick;
-
+	sd->reg_num = 0;
 	sd->doridori_counter = 0;
-
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 
 #ifndef TXT_ONLY // mail system [Valaris]
@@ -5602,13 +5601,6 @@ int pc_setreg(struct map_session_data *sd,int reg,int val)
 	}
 	sd->reg_num++;
 	sd->reg = (struct script_reg *) aRealloc(sd->reg, sizeof(*(sd->reg)) * sd->reg_num);
-	if (sd->reg == NULL){
-		printf("out of memory : pc_setreg\n");
-		exit(1);
-	}
-/*	memset(sd->reg + (sd->reg_num - 1) * sizeof(*(sd->reg)), 0,
-		sizeof(*(sd->reg)));
-*/
 	sd->reg[i].index = reg;
 	sd->reg[i].data = val;
 

@@ -586,6 +586,9 @@ struct skill_unit_group_tickset *skill_unitgrouptickset_search(struct block_list
 int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int tick);
 int skill_unit_effect(struct block_list *bl,va_list ap);
 
+int enchant_eff[5] = { 10, 14, 17, 19, 20 };
+int deluge_eff[5] = { 5, 9, 12, 14, 15 };
+
 // [MouseJstr] - skill ok to cast? and when?
 int skillnotok(int skillid, struct map_session_data *sd)
 {	

@@ -9,7 +9,7 @@
 //= Lupus
 //= kobra_k88 (2.0)
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ===============================================
@@ -25,6 +25,7 @@
 //= 2.2b This version uses arrays for the teleport option.
 //= Rearranged next statements to make menu transitions smoother. [kobra_k88]
 //= 2.3 Removed SAVE from Niflheim. [Lupus]
+//= 2.4 Allow Super novices to rent carts, thanks to HawkMoon
 //============================================================ 
 
 
@@ -182,7 +183,7 @@ function	script	F_KafTele	{
 
 // Cart Function ========================================================
 function	script	F_KafCart	{
-	if(callfunc("Is_Merc_Class") == 0) goto sL_CantRent;
+	if(callfunc("Is_Merc_Class") == 0 && callfunc("Is_Super_Class") == 0) goto sL_CantRent;
 	if(getskilllv(39)==0) goto sL_NeedSkill;
 	if(checkcart(0) == 1) goto sL_GotCart;
 	if(getarg(0) == 2) goto L_Guild;

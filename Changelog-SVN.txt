@@ -2,6 +2,8 @@
 Date	Added
 
 04/06
+	* Fixed a crash in clif_send when checking packet version, thanks to Alex14
+	* Fixed a crash in Deluge, Volcano and Violent Gale, thanks to Alex14
 	* Skip partner checking when calculating status with Marionette Control on [celest]
 	* Fixed plagiarised skills become unuseable after saving character [celest]
 	* Fixed double skill fail messages for stone curse, thanks to wind

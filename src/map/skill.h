@@ -82,6 +82,9 @@ struct skill_abra_db {
 };
 extern struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
+extern int enchant_eff[5];
+extern int deluge_eff[5];
+
 struct block_list;
 struct map_session_data;
 struct skill_unit;

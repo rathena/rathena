@@ -1215,7 +1215,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 				sd->status.max_hp = battle_config.max_hp;
 		}
 		if(sd->sc_data[SC_DELUGE].timer!=-1 && sd->def_ele==1){	// デリュ?ジ
-			sd->status.max_hp += sd->status.max_hp*sd->sc_data[SC_DELUGE].val3/100;
+			sd->status.max_hp += sd->status.max_hp * deluge_eff[sd->sc_data[SC_DELUGE].val1-1]/100;
 			if(sd->status.max_hp < 0 || sd->status.max_hp > battle_config.max_hp)
 				sd->status.max_hp = battle_config.max_hp;
 		}
@@ -3335,19 +3335,19 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_VOLCANO:
 			calc_flag = 1;
 			val3 = val1*10;
-			val4 = val1>=5?20: (val1==4?19: (val1==3?17: ( val1==2?14:10 ) ) );
+			//val4 = val1>=5?20: (val1==4?19: (val1==3?17: ( val1==2?14:10 ) ) );
 			break;
 		case SC_DELUGE:
 			calc_flag = 1;
-			val3 = val1>=5?15: (val1==4?14: (val1==3?12: ( val1==2?9:5 ) ) );
-			val4 = val1>=5?20: (val1==4?19: (val1==3?17: ( val1==2?14:10 ) ) );
+			//val3 = val1>=5?15: (val1==4?14: (val1==3?12: ( val1==2?9:5 ) ) );
+			//val4 = val1>=5?20: (val1==4?19: (val1==3?17: ( val1==2?14:10 ) ) );
 			if (sc_data[SC_FOGWALL].timer != -1 && sc_data[SC_BLIND].timer != -1)
 				status_change_end(bl,SC_BLIND,-1);
 			break;
 		case SC_VIOLENTGALE:
 			calc_flag = 1;
 			val3 = val1*3;
-			val4 = val1>=5?20: (val1==4?19: (val1==3?17: ( val1==2?14:10 ) ) );
+			//val4 = val1>=5?20: (val1==4?19: (val1==3?17: ( val1==2?14:10 ) ) );
 			break;
 
 		case SC_SPEARSQUICKEN:		/* スピアクイッケン */

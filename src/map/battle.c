@@ -289,23 +289,29 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		//属性場のダメージ増加
 		if(sc_data[SC_VOLCANO].timer!=-1){	// ボルケーノ
 			if(flag&BF_SKILL && skill_get_pl(skill_num)==3)
-				damage += damage*sc_data[SC_VOLCANO].val4/100;
+				//damage += damage*sc_data[SC_VOLCANO].val4/100;
+				damage += damage * enchant_eff[sc_data[SC_VOLCANO].val1-1] /100;
 			else if(!flag&BF_SKILL && status_get_attack_element(bl)==3)
-				damage += damage*sc_data[SC_VOLCANO].val4/100;
+				//damage += damage*sc_data[SC_VOLCANO].val4/100;
+				damage += damage * enchant_eff[sc_data[SC_VOLCANO].val1-1] /100;
 		}
 
 		if(sc_data[SC_VIOLENTGALE].timer!=-1){	// バイオレントゲイル
 			if(flag&BF_SKILL && skill_get_pl(skill_num)==4)
-				damage += damage*sc_data[SC_VIOLENTGALE].val4/100;
+				//damage += damage*sc_data[SC_VIOLENTGALE].val4/100;
+				damage += damage * enchant_eff[sc_data[SC_VIOLENTGALE].val1-1] /100;
 			else if(!flag&BF_SKILL && status_get_attack_element(bl)==4)
-				damage += damage*sc_data[SC_VIOLENTGALE].val4/100;
+				//damage += damage*sc_data[SC_VIOLENTGALE].val4/100;
+				damage += damage * enchant_eff[sc_data[SC_VIOLENTGALE].val1-1] /100;
 		}
 
 		if(sc_data[SC_DELUGE].timer!=-1){	// デリュージ
 			if(flag&BF_SKILL && skill_get_pl(skill_num)==1)
-				damage += damage*sc_data[SC_DELUGE].val4/100;
+				//damage += damage*sc_data[SC_DELUGE].val4/100;
+				damage += damage * enchant_eff[sc_data[SC_DELUGE].val1-1] /100;
 			else if(!flag&BF_SKILL && status_get_attack_element(bl)==1)
-				damage += damage*sc_data[SC_DELUGE].val4/100;
+				//damage += damage*sc_data[SC_DELUGE].val4/100;
+				damage += damage * enchant_eff[sc_data[SC_DELUGE].val1-1] /100;
 		}
 
 		if(sc_data[SC_ENERGYCOAT].timer!=-1 && damage>0  && flag&BF_WEAPON){	// エナジーコート

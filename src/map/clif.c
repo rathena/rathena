@@ -442,6 +442,8 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 				if ((sd = g->member[i].sd) != NULL) {
 					if (type == GUILD_WOS && sd->bl.id == bl->id)
 						continue;
+					if (sd->packet_ver > MAX_PACKET_VER)
+						continue;
 					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 						memcpy(WFIFOP(sd->fd,0), buf, len);
 						WFIFOSET(sd->fd,len);
