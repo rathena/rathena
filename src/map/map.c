@@ -2132,7 +2132,6 @@ int map_delmap(char *mapname) {
 }
 
 static int map_ip_set_ = 0;
-static int bind_ip_set_ = 0;
 static int char_ip_set_ = 0;
 
 /*==========================================
