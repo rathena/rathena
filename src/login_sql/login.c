@@ -163,7 +163,7 @@ void add_online_user(int account_id) {
 		printf("add_online_user: memory allocation failure (malloc)!\n");
 		exit(0);
 	}
-	p = &account_id;
+    *p = account_id;
     numdb_insert(online_db, account_id, p);
 }
 

@@ -2755,21 +2755,25 @@ void do_final(void) {
 	do_final_itemdb();
 	//check SQL save progress.
 	//wait until save char complete
-	printf("waiting until char saving complete...\n");
-	do {
-		sleep (0);
-	}while (save_flag != 0);
 
 	set_all_offline();
 
+	flush_fifos_for_final();
+
 	sprintf(tmp_sql,"DELETE FROM `ragsrvinfo");
-	if (mysql_query(&mysql_handle, tmp_sql)) {
+	if (mysql_query(&mysql_handle, tmp_sql)) 
 		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
+
+	if(gm_account)  {
+		free(gm_account);
+		gm_account = 0;
 	}
 
-	if(gm_account) free(gm_account);
+	if(char_dat)  {
+		free(char_dat);
+		char_dat = 0;
+	}
 
-	if(char_dat) free(char_dat);
 	delete_session(login_fd);
 	delete_session(char_fd);
 

@@ -121,8 +121,10 @@ static int send_from_fifo(int fd)
 	int len;
 
 	//printf("send_from_fifo : %d\n",fd);
-	if(session[fd]->eof)
+	if(session[fd]->eof || session[fd]->wdata == 0)
 		return -1;
+	if (session[fd]->wdata_size == 0)
+		return 0;
 
 #ifdef _WIN32
 	len=send(fd, session[fd]->wdata,session[fd]->wdata_size, 0);
@@ -146,6 +148,15 @@ static int send_from_fifo(int fd)
 		session[fd]->eof=1;
 	}
 	return 0;
+}
+
+void flush_fifos_for_final() 
+{
+	int i;
+	for(i=0;i<fd_max;i++)
+		if(session[i] != NULL && 
+		   session[i]->func_send == send_from_fifo)
+			send_from_fifo(i);
 }
 
 static int null_parse(int fd)

@@ -90,6 +90,8 @@ int do_sendrecv(int next);
 int do_parsepacket(void);
 void do_socket(void);
 
+extern void flush_fifos_for_final();
+
 int start_console(void);
 
 void set_defaultparse(int (*defaultparse)(int));

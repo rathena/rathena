@@ -84,3 +84,7 @@ Problem:        Changing email and Broadcast both use the same packets / Packet 
 Notes:          Refer to char.c line 2272 and line 2416, intif.c line 107, chrif.c line 377
 Assigned:       N/A
 Progress:       0%
+
+Problem:	Sanctuary heal emp during WoE?
+Assigned:       N/A
+Progress:       0%

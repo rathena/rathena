@@ -1,5 +1,13 @@
 Date	Added
 11/28
+	* Fixed a crash in login_sql/login.c [MouseJstr]
+	* made common/socket.c more crash resistant [MouseJstr]
+	* Added flush_fifos to socket.c so that we can make sure everything
+	  has been sent before we shut the process down [MouseJstr]
+	* Modified src/char_sql/char.c to flush fifos on exit [MouseJstr]
+	* Fixed a crash in src/map/map.c shutdown where it would
+	  use the char_fd session after it was alrady cleaned up [MouseJstr]
+	* removed conf-templ/atcommand_athena.conf.orig [MouseJstr]
 	* removed a USE from sql-files/main.sql that should not be there [MouseJstr]
 	* Changed MSG_INFO color to bright white, since bright blue want so bright... [MC Cameri]
 	* Made Map Removed: %d string be displayed only if there were maps removed. [MC Cameri]

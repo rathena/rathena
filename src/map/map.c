@@ -2159,6 +2159,10 @@ void do_final(void) {
 		map_foreachinarea(cleanup_sub, map_id, 0, 0, map[map_id].xs, map[map_id].ys, 0, 0);
     }
 
+#ifndef TXT_ONLY
+    chrif_char_reset_offline();
+#endif
+
     for (i = 0; i < fd_max; i++) 
         delete_session(i);
 
@@ -2181,8 +2185,8 @@ void do_final(void) {
 	do_final_itemdb();
 	do_final_storage();
         do_final_guild();
+
 #ifndef TXT_ONLY
-	chrif_char_reset_offline();
     map_sql_close();
 #endif /* not TXT_ONLY */
 }
