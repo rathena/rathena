@@ -254,6 +254,7 @@ ACMD_FUNC(sound);
 ACMD_FUNC(undisguiseall);
 ACMD_FUNC(disguiseall);
 ACMD_FUNC(changelook);
+ACMD_FUNC(mobinfo);	//by Lupus
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -528,7 +529,9 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_DisguiseAll,		"@disguiseall",	99,	atcommand_disguiseall },
 	{ AtCommand_ChangeLook,		"@changelook",	99,	atcommand_changelook },
 	{ AtCommand_AutoLoot,		"@autoloot",	10,	atcommand_autoloot }, // Upa-Kun
-
+	{ AtCommand_MobInfo,		"@mobinfo",	1,	atcommand_mobinfo }, // [Lupus]
+	{ AtCommand_MobInfo,		"@monsterinfo",	1,	atcommand_mobinfo }, // [Lupus]
+	{ AtCommand_MobInfo,		"@mi",	1,	atcommand_mobinfo }, // [Lupus]
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
 };
@@ -8910,6 +8913,100 @@ int atcommand_refreshonline(
 
 	char_online_check();
 
+	return 0;
+}
+
+/*==========================================
+ * Show Monster DB Info   v 1.0
+ * originally by [Lupus] eAthena
+ *------------------------------------------
+ */
+int atcommand_mobinfo(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message) {
+	static char msize[3][8]={"Small","Medium","Large"};
+	static char mrace[12][12]={"Formless","Undead","Beast","Plant","Insect","Fish","Demon","Demi-Human","Angel","Dragon","Boss","Non-Boss"};
+	static char melement[11][12]={"None","Neutral","Water","Earth","Fire","Wind","Poison","Holy","Dark","Ghost","Undead"};
+	char monster[100];
+	char output[200];
+	char output2[200];
+	struct item_data *item_data;
+	int mob_id;
+	int i,j;
+
+	nullpo_retr(-1, sd);
+	memset(monster, '\0', sizeof(monster));
+	memset(output, '\0', sizeof(output));
+
+	if (!message || !*message ||
+	     sscanf(message, "%99s", monster) < 1) {
+		clif_displaymessage(fd, msg_table[143]); // Give a monster name/id please.
+		return -1;
+	}
+	// If monster identifier/name argument is a name
+	if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
+		mob_id = mobdb_checkid(atoi(monster));
+
+	if (mob_id == 0) {
+		clif_displaymessage(fd, msg_table[40]); // Invalid monster ID or name.
+		return -1;
+	}
+	sprintf(output, "N:%04i '%s'/'%s' %s", 
+		mob_id,mob_db[mob_id].name,mob_db[mob_id].jname, mob_db[mob_id].mexp?"MVP!":"");
+	clif_displaymessage(fd, output);
+	sprintf(output, " Level:%i  HP:%i  SP:%i  Base EXP:%i  Job EXP:%i",
+		mob_db[mob_id].lv, mob_db[mob_id].max_hp, mob_db[mob_id].max_sp, mob_db[mob_id].base_exp, mob_db[mob_id].job_exp);
+	clif_displaymessage(fd, output);
+	sprintf(output, " DEF:%i  MDEF:%i  STR:%i  AGI:%i  VIT:%i  INT:%i  DEX:%i  LUK:%i", 
+		mob_db[mob_id].def, mob_db[mob_id].mdef, mob_db[mob_id].str, mob_db[mob_id].agi, mob_db[mob_id].vit, mob_db[mob_id].int_, mob_db[mob_id].dex, mob_db[mob_id].luk);
+	clif_displaymessage(fd, output);
+	if (mob_db[mob_id].element<20) {
+		//Element - None, Level 0
+		i = 0; j = 0;
+	} else {
+		i = mob_db[mob_id].element%20+1;
+		j = mob_db[mob_id].element/20;
+	}
+	sprintf(output, " ATK:%i~%i  Range:%i~%i~%i  Size:%s  Race:%s  Element:%s(%i Lv)", 
+		mob_db[mob_id].atk1,mob_db[mob_id].atk2, mob_db[mob_id].range, mob_db[mob_id].range2 ,mob_db[mob_id].range3,
+		msize[mob_db[mob_id].size],mrace[mob_db[mob_id].race], melement[i],j);
+	clif_displaymessage(fd, output);
+	if (mob_db[mob_id].mexp) {
+		//if MVP, then
+		sprintf(output, " MVP Bonus EXP:%i  %02.02f%%", 
+			mob_db[mob_id].mexp, (float)mob_db[mob_id].mexpper / 100);
+		clif_displaymessage(fd, output);
+
+		strcpy(output," MVP Items:");
+		for (i=0; i<3; i++) {
+			if ( mob_db[mob_id].mvpitem[i].nameid<=0 || mob_db[mob_id].mvpitem[i].p<=0)
+				continue;
+			if( (item_data = itemdb_search(mob_db[mob_id].mvpitem[i].nameid)) == NULL)
+				continue;
+
+			sprintf(output2, " - %s  %02.02f%%", 
+				item_data->name, (float)mob_db[mob_id].mvpitem[i].p / 100);
+			strcat(output,output2);
+		}
+		clif_displaymessage(fd, output);
+	}
+	strcpy(output," Drops:");
+	j=0;
+	for (i=0; i<8; i++) {
+		if ( mob_db[mob_id].dropitem[i].nameid<=0 || mob_db[mob_id].dropitem[i].p<=0)
+			continue;
+		if( (item_data = itemdb_search(mob_db[mob_id].dropitem[i].nameid)) == NULL)
+			continue;
+		sprintf(output2, " - %s  %02.02f%%", 
+			item_data->name, (float)mob_db[mob_id].dropitem[i].p / 100);
+		strcat(output,output2);
+		if (++j>=3) {
+			j=0;
+			clif_displaymessage(fd, output);
+			strcpy(output," ");
+		}
+	}
+	clif_displaymessage(fd, output);
 	return 0;
 }
 

@@ -1,5 +1,12 @@
 Date	Added
 
+02/06
+	* Coded new command: @MOBINFO <monster name|monster N> [Lupus]
+	  the command has also 2 aliases: @monsterinfo, @mi
+	  It shows all Monster stats, Element, Race and stuff
+	  It shows all items with their drop chance
+	  It also shows MVP bonuses (MVP EXP, MVP Drops)	
+
 02/05
 	* increased the max_files allowed in a grf [1054: MouseJstr]
 	* Changed the way char deletion works for SQL [1051: Ajarn]
