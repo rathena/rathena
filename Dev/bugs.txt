@@ -139,3 +139,14 @@ Assigned:       N/A
 Progress:       0%
 
                 spawn mob 1600..
+
+                also
+
+                add a flag to the monsters defs
+                for example
+                1002,1039 // makes a poring a bapho
+                if it's like that nothing happens
+                but if you do this
+                1002,1039,1 // makes a poring a big bapho  
+                1002,1039,2 // makes a poring a small bapho
+                effect id or something
