@@ -30,6 +30,7 @@
 #include "chrif.h"
 #include "clif.h"
 #include "pc.h"
+#include "status.h"
 #include "npc.h"
 #include "itemdb.h"
 #include "chat.h"
@@ -695,7 +696,7 @@ static int clif_set0078(struct map_session_data *sd, unsigned char *buf) {
 
 		WBUFW(buf,0) = 0x78;
 		WBUFL(buf,2) = sd->bl.id;
-		WBUFW(buf,6) = battle_get_speed(&sd->bl);
+		WBUFW(buf,6) = status_get_speed(&sd->bl);
 		WBUFW(buf,8) = sd->opt1;
 		WBUFW(buf,10) = sd->opt2;
 		WBUFW(buf,12) = sd->status.option;
@@ -707,7 +708,7 @@ static int clif_set0078(struct map_session_data *sd, unsigned char *buf) {
 		WBUFB(buf,49) = 5;
 		WBUFB(buf,50) = 5;
 		WBUFB(buf,51) = 0;
-		WBUFW(buf,52) = ((level = battle_get_lv(&sd->bl)) > battle_config.max_lv) ? battle_config.max_lv : level;
+		WBUFW(buf,52) = ((level = status_get_lv(&sd->bl)) > battle_config.max_lv) ? battle_config.max_lv : level;
 
 		return packet_len_table[0x78];
 	}
@@ -785,7 +786,7 @@ static int clif_set0078(struct map_session_data *sd, unsigned char *buf) {
 	WBUFB(buf,49) = 5;
 	WBUFB(buf,50) = 5;
 	WBUFB(buf,51) = sd->state.dead_sit;
-	WBUFW(buf,52) = ((level = battle_get_lv(&sd->bl)) > battle_config.max_lv) ? battle_config.max_lv : level;
+	WBUFW(buf,52) = ((level = status_get_lv(&sd->bl)) > battle_config.max_lv) ? battle_config.max_lv : level;
 
 	return packet_len_table[0x1d8];
 #endif
@@ -804,7 +805,7 @@ static int clif_set007b(struct map_session_data *sd,unsigned char *buf) {
 
 		WBUFW(buf,0)=0x7b;
 		WBUFL(buf,2)=sd->bl.id;
-		WBUFW(buf,6)=battle_get_speed(&sd->bl);
+		WBUFW(buf,6)=status_get_speed(&sd->bl);
 		WBUFW(buf,8)=sd->opt1;
 		WBUFW(buf,10)=sd->opt2;
 		WBUFW(buf,12)=sd->status.option;
@@ -816,7 +817,7 @@ static int clif_set007b(struct map_session_data *sd,unsigned char *buf) {
 		WBUFB(buf,55)=0;
 		WBUFB(buf,56)=5;
 		WBUFB(buf,57)=5;
-		WBUFW(buf,58)=((level = battle_get_lv(&sd->bl))>battle_config.max_lv)? battle_config.max_lv:level;
+		WBUFW(buf,58)=((level = status_get_lv(&sd->bl))>battle_config.max_lv)? battle_config.max_lv:level;
 
 		return packet_len_table[0x7b];
 	}
@@ -975,7 +976,7 @@ static int clif_mob0078(struct mob_data *md, unsigned char *buf)
 
 	WBUFW(buf,0)=0x78;
 	WBUFL(buf,2)=md->bl.id;
-	WBUFW(buf,6)=battle_get_speed(&md->bl);
+	WBUFW(buf,6)=status_get_speed(&md->bl);
 	WBUFW(buf,8)=md->opt1;
 	WBUFW(buf,10)=md->opt2;
 	WBUFW(buf,12)=md->option;
@@ -1009,7 +1010,7 @@ static int clif_mob0078(struct mob_data *md, unsigned char *buf)
 	WBUFB(buf,48)|=md->dir&0x0f;
 	WBUFB(buf,49)=5;
 	WBUFB(buf,50)=5;
-	WBUFW(buf,52)=((level = battle_get_lv(&md->bl))>battle_config.max_lv)? battle_config.max_lv:level;
+	WBUFW(buf,52)=((level = status_get_lv(&md->bl))>battle_config.max_lv)? battle_config.max_lv:level;
 
 	return packet_len_table[0x78];
 }
@@ -1027,7 +1028,7 @@ static int clif_mob007b(struct mob_data *md, unsigned char *buf) {
 
 	WBUFW(buf,0)=0x7b;
 	WBUFL(buf,2)=md->bl.id;
-	WBUFW(buf,6)=battle_get_speed(&md->bl);
+	WBUFW(buf,6)=status_get_speed(&md->bl);
 	WBUFW(buf,8)=md->opt1;
 	WBUFW(buf,10)=md->opt2;
 	WBUFW(buf,12)=md->option;
@@ -1062,7 +1063,7 @@ static int clif_mob007b(struct mob_data *md, unsigned char *buf) {
 	WBUFPOS2(buf,50,md->bl.x,md->bl.y,md->to_x,md->to_y);
 	WBUFB(buf,56)=5;
 	WBUFB(buf,57)=5;
-	WBUFW(buf,58)=((level = battle_get_lv(&md->bl))>battle_config.max_lv)? battle_config.max_lv:level;
+	WBUFW(buf,58)=((level = status_get_lv(&md->bl))>battle_config.max_lv)? battle_config.max_lv:level;
 
 	return packet_len_table[0x7b];
 }
@@ -1156,7 +1157,7 @@ static int clif_pet0078(struct pet_data *pd, unsigned char *buf) {
 	WBUFB(buf,48)|=pd->dir&0x0f;
 	WBUFB(buf,49)=0;
 	WBUFB(buf,50)=0;
-	WBUFW(buf,52)=((level = battle_get_lv(&pd->bl))>battle_config.max_lv)? battle_config.max_lv:level;
+	WBUFW(buf,52)=((level = status_get_lv(&pd->bl))>battle_config.max_lv)? battle_config.max_lv:level;
 
 	return packet_len_table[0x78];
 }
@@ -1199,7 +1200,7 @@ static int clif_pet007b(struct pet_data *pd, unsigned char *buf) {
 	WBUFPOS2(buf,50,pd->bl.x,pd->bl.y,pd->to_x,pd->to_y);
 	WBUFB(buf,56)=0;
 	WBUFB(buf,57)=0;
-	WBUFW(buf,58)=((level = battle_get_lv(&pd->bl))>battle_config.max_lv)? battle_config.max_lv:level;
+	WBUFW(buf,58)=((level = status_get_lv(&pd->bl))>battle_config.max_lv)? battle_config.max_lv:level;
 
 	return packet_len_table[0x7b];
 }
@@ -2884,13 +2885,13 @@ int clif_changeoption(struct block_list* bl)
 
 	nullpo_retr(0, bl);
 
-	option = *battle_get_option(bl);
-	sc_data = battle_get_sc_data(bl);
+	option = *status_get_option(bl);
+	sc_data = status_get_sc_data(bl);
 
 	WBUFW(buf,0) = 0x119;
 	WBUFL(buf,2) = bl->id;
-	WBUFW(buf,6) = *battle_get_opt1(bl);
-	WBUFW(buf,8) = *battle_get_opt2(bl);
+	WBUFW(buf,6) = *status_get_opt1(bl);
+	WBUFW(buf,8) = *status_get_opt2(bl);
 	WBUFW(buf,10) = option;
 	WBUFB(buf,12) = 0;	// ??
 
@@ -2908,9 +2909,9 @@ int clif_changeoption(struct block_list* bl)
 	for(i=0;i<sizeof(omask)/sizeof(omask[0]);i++){
 		if( option&omask[i] ){
 			if( sc_data[scnum[i]].timer==-1)
-				skill_status_change_start(bl,scnum[i],0,0,0,0,0,0);
+				status_change_start(bl,scnum[i],0,0,0,0,0,0);
 		} else {
-			skill_status_change_end(bl,scnum[i],-1);
+			status_change_end(bl,scnum[i],-1);
 		}
 	}
 
@@ -3695,7 +3696,7 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	sc_data = battle_get_sc_data(dst);
+	sc_data = status_get_sc_data(dst);
 
 	if(type != 4 && dst->type == BL_PC && ((struct map_session_data *)dst)->special_state.infinite_endure)
 		type = 9;
@@ -4191,7 +4192,7 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 	if(range < 0) {
 		range = skill_get_range(id,sd->status.skill[skillid].lv);
 		if(range < 0)
-			range = battle_get_range(&sd->bl) - (range + 1);
+			range = status_get_range(&sd->bl) - (range + 1);
 		WFIFOW(fd,12)= range;
 	} else
 		WFIFOW(fd,12)= range;
@@ -4228,7 +4229,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
 			range = skill_get_range(id,sd->status.skill[i].lv);
 			if(range < 0)
-				range = battle_get_range(&sd->bl) - (range + 1);
+				range = status_get_range(&sd->bl) - (range + 1);
 			WFIFOW(fd,len+10)= range;
 			memset(WFIFOP(fd,len+12),0,24);
 			if(!(skill_get_inf2(id)&0x01) || battle_config.quest_skill_learn == 1 || (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill) )
@@ -4263,7 +4264,7 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
 	WFIFOW(fd,6) = skill_get_sp(skill_num,sd->status.skill[skill_num].lv);
 	range = skill_get_range(skill_num,sd->status.skill[skill_num].lv);
 	if(range < 0)
-		range = battle_get_range(&sd->bl) - (range + 1);
+		range = status_get_range(&sd->bl) - (range + 1);
 	WFIFOW(fd,8) = range;
 	//WFIFOB(fd,10) = (sd->status.skill[skill_num].lv < skill_get_max(sd->status.skill[skill_num].id)) ? 1 : 0;
 	WFIFOB(fd,10) = (sd->status.skill[skill_num].lv < skill_tree_get_max(sd->status.skill[skill_num].id, sd->status.class_)) ? 1 : 0;
@@ -4355,7 +4356,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	sc_data = battle_get_sc_data(dst);
+	sc_data = status_get_sc_data(dst);
 
 	if(type != 5 && dst->type == BL_PC && ((struct map_session_data *)dst)->special_state.infinite_endure)
 		type = 9;
@@ -4410,7 +4411,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	sc_data = battle_get_sc_data(dst);
+	sc_data = status_get_sc_data(dst);
 
 	if(type != 5 && dst->type == BL_PC && ((struct map_session_data *)dst)->special_state.infinite_endure)
 		type = 9;
@@ -4639,10 +4640,10 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 	WBUFW(buf, 4)=md->level;
 	WBUFW(buf, 6)=mob_db[md->class_].size;
 	WBUFL(buf, 8)=md->hp;
-	WBUFW(buf,12)=battle_get_def2(&md->bl);
+	WBUFW(buf,12)=status_get_def2(&md->bl);
 	WBUFW(buf,14)=mob_db[md->class_].race;
-	WBUFW(buf,16)=battle_get_mdef2(&md->bl) - (mob_db[md->class_].vit>>1);
-	WBUFW(buf,18)=battle_get_elem_type(&md->bl);
+	WBUFW(buf,16)=status_get_mdef2(&md->bl) - (mob_db[md->class_].vit>>1);
+	WBUFW(buf,18)=status_get_elem_type(&md->bl);
 	for(i=0;i<9;i++)
 		WBUFB(buf,20+i)= battle_attr_fix(100,i+1,md->def_ele);
 
@@ -5116,7 +5117,7 @@ int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv,const ch
 	WFIFOW(fd,10)=skill_get_sp(skillid,skilllv);
 	range = skill_get_range(skillid,skilllv);
 	if(range < 0)
-		range = battle_get_range(&sd->bl) - (range + 1);
+		range = status_get_range(&sd->bl) - (range + 1);
 	WFIFOW(fd,12)=range;
 	strncpy((char*)WFIFOP(fd,14),name,24);
 	WFIFOB(fd,38)=0;
@@ -7529,13 +7530,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->status.hp<sd->status.max_hp>>2 && pc_checkskill(sd,SM_AUTOBERSERK)>0 &&
 		(sd->sc_data[SC_PROVOKE].timer==-1 || sd->sc_data[SC_PROVOKE].val2==0 ))
 		// オートバーサーク発動
-		skill_status_change_start(&sd->bl,SC_PROVOKE,10,1,0,0,0,0);
+		status_change_start(&sd->bl,SC_PROVOKE,10,1,0,0,0,0);
 
 //	if(time(&timer) < ((weddingtime=pc_readglobalreg(sd,"PC_WEDDING_TIME")) + 3600))
-//		skill_status_change_start(&sd->bl,SC_WEDDING,0,weddingtime,0,0,36000,0);
+//		status_change_start(&sd->bl,SC_WEDDING,0,weddingtime,0,0,36000,0);
 
 	if(battle_config.muting_players && sd->status.manner < 0)
-		skill_status_change_start(&sd->bl,SC_NOCHAT,0,0,0,0,0,0);
+		status_change_start(&sd->bl,SC_NOCHAT,0,0,0,0,0,0);
 
 	if (night_flag) {
 		if (battle_config.night_darkness_level > 0 && !map[sd->bl.m].flag.indoors)
@@ -7554,16 +7555,16 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// option
 	clif_changeoption(&sd->bl);
 	if(sd->sc_data[SC_TRICKDEAD].timer != -1)
-		skill_status_change_end(&sd->bl,SC_TRICKDEAD,-1);
+		status_change_end(&sd->bl,SC_TRICKDEAD,-1);
 	if(sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
-		skill_status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
+		status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 	if(sd->special_state.infinite_endure && sd->sc_data[SC_ENDURE].timer == -1)
-		skill_status_change_start(&sd->bl,SC_ENDURE,10,1,0,0,0,0);
+		status_change_start(&sd->bl,SC_ENDURE,10,1,0,0,0,0);
 	for(i=0;i<MAX_INVENTORY;i++){
 		if(sd->status.inventory[i].equip && sd->status.inventory[i].equip & 0x0002 && sd->status.inventory[i].attribute==1)
-			skill_status_change_start(&sd->bl,SC_BROKNWEAPON,0,0,0,0,0,0);
+			status_change_start(&sd->bl,SC_BROKNWEAPON,0,0,0,0,0,0);
 		if(sd->status.inventory[i].equip && sd->status.inventory[i].equip & 0x0010 && sd->status.inventory[i].attribute==1)
-			skill_status_change_start(&sd->bl,SC_BROKNARMOR,0,0,0,0,0,0);
+			status_change_start(&sd->bl,SC_BROKNARMOR,0,0,0,0,0,0);
 	}
 
 	map_foreachinarea(clif_getareachar,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,0,sd);
@@ -7961,7 +7962,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 				sd->state.snovice_flag = 3;
 			else if (sd->state.snovice_flag == 3) {
 				int i;
-				skill_status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],1,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,1),0 );
+				status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],1,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,1),0 );
 				for(i=0;i<5;i++)
 					pc_addspiritball(sd,skill_get_time(MO_CALLSPIRITS,1),5);
 				sd->state.snovice_flag = 0;
@@ -8031,7 +8032,7 @@ void clif_changed_dir(struct block_list *bl) {
 	WBUFL(buf,2) = bl->id;
 	if (sd)
 		WBUFW(buf,6) = sd->head_dir;
-	WBUFB(buf,8) = battle_get_dir(bl);
+	WBUFB(buf,8) = status_get_dir(bl);
 	if (sd && sd->disguise > 23 && sd->disguise < 4001) // mob disguises [Valaris]
 		clif_send(buf, packet_len_table[0x9c], &sd->bl, AREA);
 	else
@@ -8610,9 +8611,9 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 	index = RFIFOW(fd,2)-2;
 
 	/*if(sd->status.inventory[index].attribute == 1 && sd->sc_data && sd->sc_data[SC_BROKNWEAPON].timer!=-1)
-		skill_status_change_end(&sd->bl,SC_BROKNWEAPON,-1);
+		status_change_end(&sd->bl,SC_BROKNWEAPON,-1);
 	if(sd->status.inventory[index].attribute == 1 && sd->sc_data && sd->sc_data[SC_BROKNARMOR].timer!=-1)
-		skill_status_change_end(&sd->bl,SC_BROKNARMOR,-1);
+		status_change_end(&sd->bl,SC_BROKNARMOR,-1);
 	if(sd->sc_count && ( sd->sc_data[SC_BLADESTOP].timer!=-1 || sd->sc_data[SC_BERSERK].timer!=-1 ))
 		return;*/
 
@@ -10062,10 +10063,10 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 			WFIFOSET(dstfd,packet_len_table[0x14b]);
 			dstsd->status.manner -= limit;
 			if(dstsd->status.manner < 0)
-				skill_status_change_start(bl,SC_NOCHAT,0,0,0,0,0,0);
+				status_change_start(bl,SC_NOCHAT,0,0,0,0,0,0);
 			else{
 				dstsd->status.manner = 0;
-				skill_status_change_end(bl,SC_NOCHAT,-1);
+				status_change_end(bl,SC_NOCHAT,-1);
 			}
 		printf("name:%s type:%d limit:%d manner:%d\n",dstsd->status.name,type,limit,dstsd->status.manner);
 		}
@@ -10263,7 +10264,7 @@ void clif_parse_sn_explosionspirits(int fd, struct map_session_data *sd)
 		}
 		if(s_class.job == 23 && sd->status.base_exp > 0 && nextbaseexp > 0 && (int)((double)1000*sd->status.base_exp/nextbaseexp)%100==0){
 			clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,5,1);
-			skill_status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],5,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,5),0 );
+			status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],5,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,5),0 );
 		}
 	}
 	return;

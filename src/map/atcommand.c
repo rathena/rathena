@@ -17,6 +17,7 @@
 #include "itemdb.h"
 #include "map.h"
 #include "pc.h"
+#include "status.h"
 #include "skill.h"
 #include "mob.h"
 #include "pet.h"
@@ -1935,7 +1936,7 @@ int atcommand_option(
 	}
 
 	clif_changeoption(&sd->bl);
-	pc_calcstatus(sd, 0);
+	status_calc_pc(sd, 0);
 	clif_displaymessage(fd, msg_table[9]); // Options changed.
 
 	return 0;
@@ -2079,7 +2080,7 @@ int atcommand_jobchange(
 					sd->status.class_ = sd->view_class = 4015;
 				sd->status.option &= ~0x0020;
 				clif_changeoption(&sd->bl);
-				pc_calcstatus(sd, 0);
+				status_calc_pc(sd, 0);
 			}
 		} else {
 			if (!pc_isriding(sd)) {
@@ -2461,7 +2462,7 @@ int atcommand_baselevelup(
 		clif_updatestatus(sd, SP_BASELEVEL);
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
 		clif_updatestatus(sd, SP_STATUSPOINT);
-		pc_calcstatus(sd, 0);
+		status_calc_pc(sd, 0);
 		pc_heal(sd, sd->status.max_hp, sd->status.max_sp);
 		clif_misceffect(&sd->bl, 0);
 		clif_displaymessage(fd, msg_table[21]); // Base level raised.
@@ -2482,7 +2483,7 @@ int atcommand_baselevelup(
 		sd->status.base_level += level;
 		clif_updatestatus(sd, SP_BASELEVEL);
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
-		pc_calcstatus(sd, 0);
+		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_table[22]); // Base level lowered.
 	}
 
@@ -2528,7 +2529,7 @@ int atcommand_joblevelup(
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
 		sd->status.skill_point += level;
 		clif_updatestatus(sd, SP_SKILLPOINT);
-		pc_calcstatus(sd, 0);
+		status_calc_pc(sd, 0);
 		clif_misceffect(&sd->bl, 1);
 		clif_displaymessage(fd, msg_table[24]); // Job level raised.
 	} else {
@@ -2547,7 +2548,7 @@ int atcommand_joblevelup(
 				sd->status.skill_point = 0;
 			clif_updatestatus(sd, SP_SKILLPOINT);
 		} // to add: remove status points from skills
-		pc_calcstatus(sd, 0);
+		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_table[25]); // Job level lowered.
 	}
 
@@ -3864,7 +3865,7 @@ int atcommand_param(
 		*status[index] = new_value;
 		clif_updatestatus(sd, SP_STR + index);
 		clif_updatestatus(sd, SP_USTR + index);
-		pc_calcstatus(sd, 0);
+		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_table[42]); // Stat changed.
 	} else {
 		if (value < 0)
@@ -3909,7 +3910,7 @@ int atcommand_stat_all(
 			*status[index] = new_value;
 			clif_updatestatus(sd, SP_STR + index);
 			clif_updatestatus(sd, SP_USTR + index);
-			pc_calcstatus(sd, 0);
+			status_calc_pc(sd, 0);
 			count++;
 		}
 	}
@@ -4057,9 +4058,9 @@ int atcommand_petfriendly(
 					if ((sd->pet.intimate > 0 && t <= 0) ||
 					    (sd->pet.intimate <= 0 && t > 0)) {
 						if (sd->bl.prev != NULL)
-							pc_calcstatus(sd, 0);
+							status_calc_pc(sd, 0);
 						else
-							pc_calcstatus(sd, 2);
+							status_calc_pc(sd, 2);
 					}
 				}
 				clif_displaymessage(fd, msg_table[182]); // Pet friendly value changed!
@@ -4673,7 +4674,7 @@ int atcommand_character_baselevel(
 				clif_updatestatus(pl_sd, SP_BASELEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
 				clif_updatestatus(pl_sd, SP_STATUSPOINT);
-				pc_calcstatus(pl_sd, 0);
+				status_calc_pc(pl_sd, 0);
 				pc_heal(pl_sd, pl_sd->status.max_hp, pl_sd->status.max_sp);
 				clif_misceffect(&pl_sd->bl, 0);
 				clif_displaymessage(fd, msg_table[65]); // Character's base level raised.
@@ -4694,7 +4695,7 @@ int atcommand_character_baselevel(
 				pl_sd->status.base_level += level;
 				clif_updatestatus(pl_sd, SP_BASELEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
-				pc_calcstatus(pl_sd, 0);
+				status_calc_pc(pl_sd, 0);
 				clif_displaymessage(fd, msg_table[66]); // Character's base level lowered.
 			}
 		} else {
@@ -4755,7 +4756,7 @@ int atcommand_character_joblevel(
 				clif_updatestatus(pl_sd, SP_NEXTJOBEXP);
 				pl_sd->status.skill_point += level;
 				clif_updatestatus(pl_sd, SP_SKILLPOINT);
-				pc_calcstatus(pl_sd, 0);
+				status_calc_pc(pl_sd, 0);
 				clif_misceffect(&pl_sd->bl, 1);
 				clif_displaymessage(fd, msg_table[68]); // character's job level raised.
 			} else {
@@ -4774,7 +4775,7 @@ int atcommand_character_joblevel(
 						pl_sd->status.skill_point = 0;
 					clif_updatestatus(pl_sd, SP_SKILLPOINT);
 				} // to add: remove status points from skills
-				pc_calcstatus(pl_sd, 0);
+				status_calc_pc(pl_sd, 0);
 				clif_displaymessage(fd, msg_table[69]); // Character's job level lowered.
 			}
 		} else {
@@ -7909,7 +7910,7 @@ int atcommand_unmute(
 	if((pl_sd=map_nick2sd((char *) message)) != NULL) {
 		if(pl_sd->sc_data[SC_NOCHAT].timer!=-1) {
 			pl_sd->status.manner = 0; // have to set to 0 first [celest]
-			skill_status_change_end(&pl_sd->bl,SC_NOCHAT,-1);
+			status_change_end(&pl_sd->bl,SC_NOCHAT,-1);
 			clif_displaymessage(sd->fd,"Player unmuted");
 		}
 		else
@@ -7985,7 +7986,7 @@ int atcommand_mute(
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		pl_sd->status.manner -= manner;
 		if(pl_sd->status.manner < 0)
-			skill_status_change_start(&pl_sd->bl,SC_NOCHAT,0,0,0,0,0,0);
+			status_change_start(&pl_sd->bl,SC_NOCHAT,0,0,0,0,0,0);
 	}
 	else {
 		clif_displaymessage(fd, msg_table[3]); // Character not found.

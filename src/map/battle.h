@@ -63,50 +63,6 @@ int battle_weapon_attack( struct block_list *bl,struct block_list *target,
 
 // 各種パラメータを得る
 int battle_counttargeted(struct block_list *bl,struct block_list *src,int target_lv);
-int battle_get_class(struct block_list *bl);
-int battle_get_dir(struct block_list *bl);
-int battle_get_lv(struct block_list *bl);
-int battle_get_range(struct block_list *bl);
-int battle_get_hp(struct block_list *bl);
-int battle_get_max_hp(struct block_list *bl);
-int battle_get_str(struct block_list *bl);
-int battle_get_agi(struct block_list *bl);
-int battle_get_vit(struct block_list *bl);
-int battle_get_int(struct block_list *bl);
-int battle_get_dex(struct block_list *bl);
-int battle_get_luk(struct block_list *bl);
-int battle_get_hit(struct block_list *bl);
-int battle_get_flee(struct block_list *bl);
-int battle_get_def(struct block_list *bl);
-int battle_get_mdef(struct block_list *bl);
-int battle_get_flee2(struct block_list *bl);
-int battle_get_def2(struct block_list *bl);
-int battle_get_mdef2(struct block_list *bl);
-int battle_get_baseatk(struct block_list *bl);
-int battle_get_atk(struct block_list *bl);
-int battle_get_atk2(struct block_list *bl);
-int battle_get_speed(struct block_list *bl);
-int battle_get_adelay(struct block_list *bl);
-int battle_get_amotion(struct block_list *bl);
-int battle_get_dmotion(struct block_list *bl);
-int battle_get_element(struct block_list *bl);
-int battle_get_attack_element(struct block_list *bl);
-int battle_get_attack_element2(struct block_list *bl);  //左手武器属性取得
-#define battle_get_elem_type(bl)	(battle_get_element(bl)%10)
-#define battle_get_elem_level(bl)	(battle_get_element(bl)/10/2)
-int battle_get_party_id(struct block_list *bl);
-int battle_get_guild_id(struct block_list *bl);
-int battle_get_race(struct block_list *bl);
-int battle_get_size(struct block_list *bl);
-int battle_get_mode(struct block_list *bl);
-int battle_get_mexp(struct block_list *bl);
-
-struct status_change *battle_get_sc_data(struct block_list *bl);
-short *battle_get_sc_count(struct block_list *bl);
-short *battle_get_opt1(struct block_list *bl);
-short *battle_get_opt2(struct block_list *bl);
-short *battle_get_opt3(struct block_list *bl);
-short *battle_get_option(struct block_list *bl);
 
 enum {
 	BCT_NOENEMY	=0x00000,

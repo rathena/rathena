@@ -1,8 +1,19 @@
 Date	Added
 
 01/26
-        * Removed my changes to /stable/Makefile that i've accidentally commited, sorry
-          ^^; [celest]
+        * Added status.c and status.h of jA 1091 update and moved some functions into
+          the new source files:
+          -- skill_status_change_  ->  status_change_
+          -- battle_get_  ->  status_get_
+          -- pc_calc_  ->  status_calc_
+          -- pc_getrefinebonus and pc_percentrefinery  ->  status_getrefinebonus and
+             status_percentrefinery
+
+        * Updated auto_counter_type's description in battle_athena, thanks to 
+          akusarujin for pointing it out [celest]
+        * Removed some unnecessary skill level checks in battle.c [celest]
+        * Removed my changes to /stable/Makefile which has libGC enabled by default
+          that i've accidentally commited, sorry ^^; [celest]
         * Removed an unnecessary "cloneskill_lv" from map_session_data [celest]
 	* Removed WATER.TXT (this file wasn't used at all. There's no such mapflag as WATER even). [Lupus]
 	* Added Water Height of New Yuno Fileds 9 and 11.

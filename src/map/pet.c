@@ -9,6 +9,7 @@
 #include "nullpo.h"
 #include "malloc.h"
 #include "pc.h"
+#include "status.h"
 #include "map.h"
 #include "intif.h"
 #include "clif.h"
@@ -202,7 +203,7 @@ static int pet_attack(struct pet_data *pd,unsigned int tick,int data)
 
 	pd->target_lv = battle_weapon_attack(&pd->bl,&md->bl,tick,0);
 
-	pd->attackabletime = tick + battle_get_adelay(&pd->bl);
+	pd->attackabletime = tick + status_get_adelay(&pd->bl);
 
 	pd->timer=add_timer(pd->attackabletime,pet_timer,pd->bl.id,0);
 	pd->state.state=MS_ATTACK;
@@ -310,7 +311,7 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
 
 	Assert((pd->msd == 0) || (pd->msd->pd == pd));
 
-	if(bl && pd && bl->type == BL_MOB && sd->pet.intimate > 900 && sd->pet.hungry > 0 && pd->class_ != battle_get_class(bl)
+	if(bl && pd && bl->type == BL_MOB && sd->pet.intimate > 900 && sd->pet.hungry > 0 && pd->class_ != status_get_class(bl)
 		&& pd->state.state != MS_DELAY) {
 		mode=mob_db[pd->class_].mode;
 		race=mob_db[pd->class_].race;
@@ -518,9 +519,9 @@ static int pet_hungry(int tid,unsigned int tick,int id,int data)
 			sd->pet.intimate = 0;
 			if(battle_config.pet_status_support && t > 0) {
 				if(sd->bl.prev != NULL)
-					pc_calcstatus(sd,0);
+					status_calc_pc(sd,0);
 				else
-					pc_calcstatus(sd,2);
+					status_calc_pc(sd,2);
 			}
 		}
 		clif_send_petdata(sd,1,sd->pet.intimate);
@@ -672,9 +673,9 @@ int pet_return_egg(struct map_session_data *sd)
 		}
 		if(battle_config.pet_status_support && sd->pet.intimate > 0) {
 			if(sd->bl.prev != NULL)
-				pc_calcstatus(sd,0);
+				status_calc_pc(sd,0);
 			else
-				pc_calcstatus(sd,2);
+				status_calc_pc(sd,2);
 		}
 		// ƒ‹[ƒg‚µ‚½Item‚ğ—‚Æ‚³‚¹‚é
 		pet_lootitem_drop(pd,sd);
@@ -821,9 +822,9 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 	}
 	if(battle_config.pet_status_support && sd->pet.intimate > 0) {
 		if(sd->bl.prev != NULL)
-			pc_calcstatus(sd,0);
+			status_calc_pc(sd,0);
 		else
-			pc_calcstatus(sd,2);
+			status_calc_pc(sd,2);
 	}
 
 	return 0;
@@ -995,7 +996,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 	else {
 		pc_delitem(sd,index,1,0);
 		sd->pet.equip = sd->pd->equip = nameid;
-		pc_calcstatus(sd,0);
+		status_calc_pc(sd,0);
 		clif_pet_equip(sd->pd,nameid);
 	}
 
@@ -1016,7 +1017,7 @@ int pet_unequipitem(struct map_session_data *sd)
 
 	nameid = sd->pet.equip;
 	sd->pet.equip = sd->pd->equip = 0;
-	pc_calcstatus(sd,0);
+	status_calc_pc(sd,0);
 	clif_pet_equip(sd->pd,0);
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = nameid;
@@ -1069,9 +1070,9 @@ int pet_food(struct map_session_data *sd)
 		sd->pet.intimate = 0;
 		if(battle_config.pet_status_support && t > 0) {
 			if(sd->bl.prev != NULL)
-				pc_calcstatus(sd,0);
+				status_calc_pc(sd,0);
 			else
-				pc_calcstatus(sd,2);
+				status_calc_pc(sd,2);
 		}
 	}
 	else if(sd->pet.intimate > 1000)
@@ -1096,7 +1097,7 @@ static int pet_randomwalk(struct pet_data *pd,int tick)
 
 	Assert((pd->msd == 0) || (pd->msd->pd == pd));
 
-	speed = battle_get_speed(&pd->bl);
+	speed = status_get_speed(&pd->bl);
 
 	if(DIFF_TICK(pd->next_walktime,tick) < 0){
 		int i,x,y,c,d=12-pd->move_fail_count;
@@ -1201,7 +1202,7 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 					pet_unlocktarget(pd);
 				else {
 					i=0;
-					pd->speed = battle_get_speed(&pd->bl);
+					pd->speed = status_get_speed(&pd->bl);
 					do {
 						if(i==0) {	// Å‰‚ÍAEGIS‚Æ“¯‚¶•û–@‚ÅŒŸõ
 							dx=md->bl.x - pd->bl.x;
@@ -1285,14 +1286,14 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 		else {
 			if(dist <= 3 || (pd->timer != -1 && pd->state.state == MS_WALK && distance(pd->to_x,pd->to_y,sd->bl.x,sd->bl.y) < 3) )
 				return 0;
-			pd->speed = battle_get_speed(&pd->bl);
+			pd->speed = status_get_speed(&pd->bl);
 			pet_calc_pos(pd,sd->bl.x,sd->bl.y,sd->dir);
 			if(pet_walktoxy(pd,pd->to_x,pd->to_y))
 				pet_randomwalk(pd,tick);
 		}
 	}
 	else {
-		pd->speed = battle_get_speed(&pd->bl);
+		pd->speed = status_get_speed(&pd->bl);
 		if(pd->state.state == MS_ATTACK)
 			pet_stopattack(pd);
 		pet_randomwalk(pd,tick);
@@ -1492,7 +1493,7 @@ int pet_recovery_timer(int tid,unsigned int tick,int id,int data)
 		return 0;
 
 	if(sd->sc_data[pd->skilltype].timer != -1)
-		skill_status_change_end(&sd->bl,pd->skilltype,-1);
+		status_change_end(&sd->bl,pd->skilltype,-1);
 
 	pd->skillbonustimer=add_timer(gettick()+pd->skilltimer*1000,pet_recovery_timer,sd->bl.id,0);
 	
@@ -1543,7 +1544,7 @@ int pet_mag_timer(int tid,unsigned int tick,int id,int data)
 
 	if(sd->status.hp < sd->status.max_hp * pd->skilltype/100 && sd->status.sp < sd->status.max_sp * pd->skillduration/100) {
 		clif_skill_nodamage(&pd->bl,&sd->bl,PR_MAGNIFICAT,pd->skillval,1);
-		skill_status_change_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],pd->skillval,0,0,0,skill_get_time(PR_MAGNIFICAT,pd->skillval),0 );
+		status_change_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],pd->skillval,0,0,0,skill_get_time(PR_MAGNIFICAT,pd->skillval),0 );
   	}
 	
 	pd->skillbonustimer=add_timer(gettick()+pd->skilltimer*1000,pet_mag_timer,sd->bl.id,0);

@@ -15,6 +15,7 @@
 #include "itemdb.h"
 #include "map.h"
 #include "pc.h"
+#include "status.h"
 #include "skill.h"
 #include "mob.h"
 #include "pet.h"
@@ -319,7 +320,7 @@ int charcommand_jobchange(
 							pl_sd->status.class_ = pl_sd->view_class = 4015;
 						pl_sd->status.option &= ~0x0020;
 						clif_changeoption(&pl_sd->bl);
-						pc_calcstatus(pl_sd, 0);
+						status_calc_pc(pl_sd, 0);
 					}
 				} else {
 					if (!pc_isriding(sd)) {
@@ -433,9 +434,9 @@ int charcommand_petfriendly(
 						if ((pl_sd->pet.intimate > 0 && t <= 0) ||
 						    (pl_sd->pet.intimate <= 0 && t > 0)) {
 							if (pl_sd->bl.prev != NULL)
-								pc_calcstatus(pl_sd, 0);
+								status_calc_pc(pl_sd, 0);
 							else
-								pc_calcstatus(pl_sd, 2);
+								status_calc_pc(pl_sd, 2);
 						}
 					}
 					clif_displaymessage(pl_sd->fd, msg_table[182]); // Pet friendly value changed!
@@ -612,7 +613,7 @@ int charcommand_option(
 				}
 			}
 			clif_changeoption(&pl_sd->bl);
-			pc_calcstatus(pl_sd, 0);
+			status_calc_pc(pl_sd, 0);
 			clif_displaymessage(fd, msg_table[58]); // Character's options changed.
 		} else {
 			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.

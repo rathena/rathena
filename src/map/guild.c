@@ -13,6 +13,7 @@
 #include "battle.h"
 #include "npc.h"
 #include "pc.h"
+#include "status.h"
 #include "map.h"
 #include "mob.h"
 #include "intif.h"
@@ -995,7 +996,7 @@ int guild_skillup(struct map_session_data *sd,int skill_num,int flag)
 		g->skill[idx].lv < guild_skill_get_max(skill_num) ){
 		intif_guild_skillup(g->guild_id,skill_num,sd->status.account_id,flag);
 	}
-	pc_calcstatus (sd, 0); // Celest
+	status_calc_pc (sd, 0); // Celest
 
 	return 0;
 }

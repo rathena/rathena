@@ -7,6 +7,7 @@
 
 #define OPTION_MASK 0xd7b8
 #define CART_MASK 0x788
+#define STATE_BLIND 0x10
 
 #define pc_setdead(sd) ((sd)->state.dead_sit = 1)
 #define pc_setsit(sd) ((sd)->state.dead_sit = 2)
@@ -44,6 +45,7 @@ int pc_checkskill(struct map_session_data *sd,int skill_id);
 int pc_checkallowskill(struct map_session_data *sd);
 int pc_checkequip(struct map_session_data *sd,int pos);
 
+int pc_calc_skilltree(struct map_session_data *sd);
 int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd);
 
 int pc_checkoverhp(struct map_session_data*);
@@ -79,8 +81,6 @@ int pc_dropitem(struct map_session_data*,int,int);
 
 int pc_checkweighticon(struct map_session_data *sd);
 
-int pc_calcstatus(struct map_session_data*,int);
-int pc_calcspeed(struct map_session_data*); // [Celest]
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);
 int pc_bonus3(struct map_session_data *sd,int,int,int,int);
@@ -146,7 +146,6 @@ int pc_readaccountreg(struct map_session_data*,char*);
 int pc_setaccountreg(struct map_session_data*,char*,int);
 int pc_readaccountreg2(struct map_session_data*,char*);
 int pc_setaccountreg2(struct map_session_data*,char*,int);
-int pc_percentrefinery(struct map_session_data *sd,struct item *item);
 
 int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name);
 int pc_deleventtimer(struct map_session_data *sd,const char *name);

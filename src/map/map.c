@@ -22,6 +22,7 @@
 #include "intif.h"
 #include "npc.h"
 #include "pc.h"
+#include "status.h"
 #include "mob.h"
 #include "chat.h"
 #include "itemdb.h"
@@ -1011,7 +1012,7 @@ int map_quit(struct map_session_data *sd) {
 	if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中の終了はHPを100に
 		sd->status.hp = 100;
 
-	skill_status_change_clear(&sd->bl,1);	// ステ?タス異常を解除する
+	status_change_clear(&sd->bl,1);	// ステ?タス異常を解除する
 	skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
 	skill_cleartimerskill(&sd->bl);
 
@@ -1025,7 +1026,7 @@ int map_quit(struct map_session_data *sd) {
 	skill_gangsterparadise(sd,0);
 
 	if (sd->state.auth)
-		pc_calcstatus(sd,4);
+		status_calc_pc(sd,4);
 //	skill_clear_unitgroup(&sd->bl);	// [Sara-chan]
 
 	clif_clearchar_area(&sd->bl,2);
@@ -2808,6 +2809,7 @@ int do_init(int argc, char *argv[]) {
 	do_init_mob();	// npcの初期化時?でmob_spawnして、mob_dbを?照するのでinit_npcより先
 	do_init_script();
 	do_init_pc();
+	do_init_status();
 	do_init_party();
 	do_init_guild();
 	do_init_storage();

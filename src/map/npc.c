@@ -15,6 +15,7 @@
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
+#include "status.h"
 #include "itemdb.h"
 #include "script.h"
 #include "mob.h"
@@ -1117,8 +1118,8 @@ static int calc_next_walk_step(struct npc_data *nd)
 	if(nd->walkpath.path_pos>=nd->walkpath.path_len)
 		return -1;
 	if(nd->walkpath.path[nd->walkpath.path_pos]&1)
-		return battle_get_speed(&nd->bl)*14/10;
-	return battle_get_speed(&nd->bl);
+		return status_get_speed(&nd->bl)*14/10;
+	return status_get_speed(&nd->bl);
 }
 
 
@@ -1327,7 +1328,7 @@ int npc_stop_walking(struct npc_data *nd,int type)
 	if(type&0x01)
 		clif_fixnpcpos(nd);
 	if(type&0x02) {
-		int delay=battle_get_dmotion(&nd->bl);
+		int delay=status_get_dmotion(&nd->bl);
 		unsigned int tick = gettick();
 		if(nd->canmove_tick < tick)
 			nd->canmove_tick = tick + delay;

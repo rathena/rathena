@@ -24,6 +24,7 @@
 #include "chrif.h"
 #include "itemdb.h"
 #include "pc.h"
+#include "status.h"
 #include "script.h"
 #include "storage.h"
 #include "mob.h"
@@ -3028,7 +3029,7 @@ int buildin_getequippercentrefinery(struct script_state *st)
 	sd=script_rid2sd(st);
 	i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0)
-		push_val(st->stack,C_INT,pc_percentrefinery(sd,&sd->status.inventory[i]));
+		push_val(st->stack,C_INT,status_percentrefinery(sd,&sd->status.inventory[i]));
 	else
 		push_val(st->stack,C_INT,0);
 
@@ -4274,7 +4275,7 @@ int buildin_sc_start(struct script_state *st)
 	if (bl != 0) {
 		if(bl->type == BL_PC && ((struct map_session_data *)bl)->state.potionpitcher_flag)
 			bl = map_id2bl(((struct map_session_data *)bl)->skilltarget);
-		skill_status_change_start(bl,type,val1,0,0,0,tick,0);
+		status_change_start(bl,type,val1,0,0,0,tick,0);
 	}
 	return 0;
 }
@@ -4298,7 +4299,7 @@ int buildin_sc_start2(struct script_state *st)
 	if(bl->type == BL_PC && ((struct map_session_data *)bl)->state.potionpitcher_flag)
 		bl = map_id2bl(((struct map_session_data *)bl)->skilltarget);
 	if(rand()%10000 < per)
-	skill_status_change_start(bl,type,val1,0,0,0,tick,0);
+	status_change_start(bl,type,val1,0,0,0,tick,0);
 	return 0;
 }
 
@@ -4314,7 +4315,7 @@ int buildin_sc_end(struct script_state *st)
 	bl = map_id2bl(st->rid);
 	if(bl->type == BL_PC && ((struct map_session_data *)bl)->state.potionpitcher_flag)
 		bl = map_id2bl(((struct map_session_data *)bl)->skilltarget);
-	skill_status_change_end(bl,type,-1);
+	status_change_end(bl,type,-1);
 //	if(battle_config.etc_log)
 //		printf("sc_end : %d %d\n",st->rid,type);
 	return 0;
@@ -4336,10 +4337,10 @@ int buildin_getscrate(struct script_state *st)
 	else
 		bl = map_id2bl(st->rid);
 
-	luk = battle_get_luk(bl);
-	sc_def_mdef2=100 - (3 + battle_get_mdef(bl) + luk/3);
-	sc_def_vit2=100 - (3 + battle_get_vit(bl) + luk/3);
-	sc_def_int2=100 - (3 + battle_get_int(bl) + luk/3);
+	luk = status_get_luk(bl);
+	sc_def_mdef2=100 - (3 + status_get_mdef(bl) + luk/3);
+	sc_def_vit2=100 - (3 + status_get_vit(bl) + luk/3);
+	sc_def_int2=100 - (3 + status_get_int(bl) + luk/3);
 	sc_def_luk2=100 - (3 + luk);
 
 	if(type==SC_STONE || type==SC_FREEZE)

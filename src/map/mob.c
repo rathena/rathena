@@ -13,6 +13,7 @@
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
+#include "status.h"
 #include "mob.h"
 #include "guild.h"
 #include "itemdb.h"
@@ -449,8 +450,8 @@ static int calc_next_walk_step(struct mob_data *md)
 	if(md->walkpath.path_pos>=md->walkpath.path_len)
 		return -1;
 	if(md->walkpath.path[md->walkpath.path_pos]&1)
-		return battle_get_speed(&md->bl)*14/10;
-	return battle_get_speed(&md->bl);
+		return status_get_speed(&md->bl)*14/10;
+	return status_get_speed(&md->bl);
 }
 
 static int mob_walktoxy_sub(struct mob_data *md);
@@ -634,9 +635,9 @@ static int mob_attack(struct mob_data *md,unsigned int tick,int data)
 	md->target_lv = battle_weapon_attack(&md->bl,tbl,tick,0);
 
 	if(!(battle_config.monster_cloak_check_type&2) && md->sc_data[SC_CLOAKING].timer != -1)
-		skill_status_change_end(&md->bl,SC_CLOAKING,-1);
+		status_change_end(&md->bl,SC_CLOAKING,-1);
 
-	md->attackabletime = tick + battle_get_adelay(&md->bl);
+	md->attackabletime = tick + status_get_adelay(&md->bl);
 
 	md->timer=add_timer(md->attackabletime,mob_timer,md->bl.id,0);
 	md->state.state=MS_ATTACK;
@@ -693,7 +694,7 @@ int mob_changestate(struct mob_data *md,int state,int type)
 		if(i>0 && i<2000)
 			md->timer=add_timer(md->attackabletime,mob_timer,md->bl.id,0);
 		else if(type) {
-			md->attackabletime = tick + battle_get_amotion(&md->bl);
+			md->attackabletime = tick + status_get_amotion(&md->bl);
 			md->timer=add_timer(md->attackabletime,mob_timer,md->bl.id,0);
 		}
 		else {
@@ -712,7 +713,7 @@ int mob_changestate(struct mob_data *md,int state,int type)
 		// Since it died, all aggressors' attack to this mob is stopped.
 		clif_foreachclient(mob_stopattacked,md->bl.id);
 		skill_unit_out_all(&md->bl,gettick(),1);
-		skill_status_change_clear(&md->bl,2);	// ステータス異常を解除する
+		status_change_clear(&md->bl,2);	// ステータス異常を解除する
 		skill_clear_unitgroup(&md->bl);	// 全てのスキルユニットグループを削除する
 		skill_cleartimerskill(&md->bl);
 		if(md->deletetimer!=-1)
@@ -996,10 +997,10 @@ int mob_spawn(int id)
 	memset(md->skillunit,0,sizeof(md->skillunit));
 	memset(md->skillunittick,0,sizeof(md->skillunittick));
 
-	md->hp = battle_get_max_hp(&md->bl);
+	md->hp = status_get_max_hp(&md->bl);
 	if(md->hp<=0){
 		mob_makedummymobdb(md->class_);
-		md->hp = battle_get_max_hp(&md->bl);
+		md->hp = status_get_max_hp(&md->bl);
 	}
 
 	clif_spawnmob(md);
@@ -1067,7 +1068,7 @@ int mob_stop_walking(struct mob_data *md,int type)
 	if(type&0x01)
 		clif_fixmobpos(md);
 	if(type&0x02) {
-		int delay=battle_get_dmotion(&md->bl);
+		int delay=status_get_dmotion(&md->bl);
 		unsigned int tick = gettick();
 		if(md->canmove_tick < tick)
 			md->canmove_tick = tick + delay;
@@ -1169,8 +1170,8 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
 	nullpo_retr(0, md);
 	nullpo_retr(0, bl);
 
-	sc_data = battle_get_sc_data(bl);
-	option = battle_get_option(bl);
+	sc_data = status_get_sc_data(bl);
+	option = status_get_option(bl);
 	race=mob_db[md->class_].race;
 
 	if(!md->mode)
@@ -1502,7 +1503,7 @@ static int mob_randomwalk(struct mob_data *md,int tick)
 
 	nullpo_retr(0, md);
 
-	speed=battle_get_speed(&md->bl);
+	speed=status_get_speed(&md->bl);
 	if(DIFF_TICK(md->next_walktime,tick)<0){
 		int i,x,y,c,d=12-md->move_fail_count;
 		int mask[8][2] = {{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1}};
@@ -2110,7 +2111,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	nullpo_retr(0, md); //srcはNULLで呼ばれる場合もあるので、他でチェック
 
-	max_hp = battle_get_max_hp(&md->bl);
+	max_hp = status_get_max_hp(&md->bl);
 
 	if(src && src->type == BL_PC) {
 		sd = (struct map_session_data *)src;
@@ -2289,9 +2290,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	}	// end addition [Valaris]
 
 	if(md->option&2 )
-		skill_status_change_end(&md->bl, SC_HIDING, -1);
+		status_change_end(&md->bl, SC_HIDING, -1);
 	if(md->option&4 )
-		skill_status_change_end(&md->bl, SC_CLOAKING, -1);
+		status_change_end(&md->bl, SC_CLOAKING, -1);
 
 	if(md->state.special_mob_ai == 2){//スフィアーマイン
 		int skillidx=0;
@@ -2321,7 +2322,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	memset(tmpsd,0,sizeof(tmpsd));
 	memset(pt,0,sizeof(pt));
 
-	max_hp = battle_get_max_hp(&md->bl);
+	max_hp = status_get_max_hp(&md->bl);
 
 	if(src && src->type == BL_MOB)
 		mob_unlocktarget((struct mob_data *)src,tick);
@@ -2329,7 +2330,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	/* ソウルドレイン */
 	if(sd && sd->state.attack_type == BF_MAGIC && (skill=pc_checkskill(sd,HW_SOULDRAIN))>0){
 		clif_skill_nodamage(src,&md->bl,HW_SOULDRAIN,skill,1);
-		sp = (battle_get_lv(&md->bl))*(65+15*skill)/100;
+		sp = (status_get_lv(&md->bl))*(65+15*skill)/100;
 		if(sd->status.sp + sp > sd->status.max_sp)
 			sp = sd->status.max_sp - sd->status.sp;
 		sd->status.sp += sp;
@@ -2530,7 +2531,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		if(sd && sd->state.attack_type == BF_WEAPON) {
 			for(i=0;i<sd->monster_drop_item_count;i++) {
 				struct delay_item_drop *ditem;
-				int race = battle_get_race(&md->bl);
+				int race = status_get_race(&md->bl);
 				if(sd->monster_drop_itemid[i] <= 0)
 					continue;
 				if(sd->monster_drop_race[i] & (1<<race) ||
@@ -2684,11 +2685,11 @@ int mob_class_change(struct mob_data *md,int *value)
 	class_ = value[rand()%count];
 	if(class_<=1000 || class_>MAX_MOB_DB) return 0;
 
-	max_hp = battle_get_max_hp(&md->bl);
+	max_hp = status_get_max_hp(&md->bl);
 	hp_rate = md->hp*100/max_hp;
 	clif_mob_class_change(md,class_);
 	md->class_ = class_;
-	max_hp = battle_get_max_hp(&md->bl);
+	max_hp = status_get_max_hp(&md->bl);
 	if(battle_config.monster_class_change_full_recover==1) {
 		md->hp = max_hp;
 		memset(md->dmglog,0,sizeof(md->dmglog));
@@ -2738,7 +2739,7 @@ int mob_class_change(struct mob_data *md,int *value)
  */
 int mob_heal(struct mob_data *md,int heal)
 {
-	int max_hp = battle_get_max_hp(&md->bl);
+	int max_hp = status_get_max_hp(&md->bl);
 
 	nullpo_retr(0, md);
 
@@ -3079,7 +3080,7 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 			return 0;
 	}
 	if(md->skillid != NPC_EMOTION)
-		md->last_thinktime=tick + battle_get_adelay(&md->bl);
+		md->last_thinktime=tick + status_get_adelay(&md->bl);
 
 	if((bl = map_id2bl(md->skilltarget)) == NULL || bl->prev==NULL){ //スキルターゲットが存在しない
 		//printf("mobskill_castend_id nullpo\n");//ターゲットがいないときはnullpoじゃなくて普通に終了
@@ -3089,12 +3090,12 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 		return 0;
 
 	if(md->skillid == PR_LEXAETERNA) {
-		struct status_change *sc_data = battle_get_sc_data(bl);
+		struct status_change *sc_data = status_get_sc_data(bl);
 		if(sc_data && (sc_data[SC_FREEZE].timer != -1 || (sc_data[SC_STONE].timer != -1 && sc_data[SC_STONE].val2 == 0)))
 			return 0;
 	}
 	else if(md->skillid == RG_BACKSTAP) {
-		int dir = map_calc_dir(&md->bl,bl->x,bl->y),t_dir = battle_get_dir(bl);
+		int dir = map_calc_dir(&md->bl,bl->x,bl->y),t_dir = status_get_dir(bl);
 		int dist = distance(md->bl.x,md->bl.y,bl->x,bl->y);
 		if(bl->type != BL_SKILL && (dist == 0 || map_check_dir(dir,t_dir)))
 			return 0;
@@ -3104,7 +3105,7 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 		return 0;
 	range = skill_get_range(md->skillid,md->skilllv);
 	if(range < 0)
-		range = battle_get_range(&md->bl) - (range + 1);
+		range = status_get_range(&md->bl) - (range + 1);
 	if(range + battle_config.mob_skill_add_range < distance(md->bl.x,md->bl.y,bl->x,bl->y))
 		return 0;
 
@@ -3122,7 +3123,7 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 		break;
 	case 1:// 支援系
 		if(!mob_db[md->class_].skill[md->skillidx].val[0] &&
-			(md->skillid==AL_HEAL || (md->skillid==ALL_RESURRECTION && bl->type != BL_PC)) && battle_check_undead(battle_get_race(bl),battle_get_elem_type(bl)) )
+			(md->skillid==AL_HEAL || (md->skillid==ALL_RESURRECTION && bl->type != BL_PC)) && battle_check_undead(status_get_race(bl),status_get_elem_type(bl)) )
 			skill_castend_damage_id(&md->bl,bl,md->skillid,md->skilllv,tick,0);
 		else
 			skill_castend_nodamage_id(&md->bl,bl,md->skillid,md->skilllv,tick,0);
@@ -3236,7 +3237,7 @@ int mobskill_castend_pos( int tid, unsigned int tick, int id,int data )
 
 	range = skill_get_range(md->skillid,md->skilllv);
 	if(range < 0)
-		range = battle_get_range(&md->bl) - (range + 1);
+		range = status_get_range(&md->bl) - (range + 1);
 	if(range + battle_config.mob_skill_add_range < distance(md->bl.x,md->bl.y,md->skillx,md->skilly))
 		return 0;
 	md->skilldelay[md->skillidx]=tick;
@@ -3300,7 +3301,7 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 	// 射程と障害物チェック
 	range = skill_get_range(skill_id,skill_lv);
 	if(range < 0)
-		range = battle_get_range(&md->bl) - (range + 1);
+		range = status_get_range(&md->bl) - (range + 1);
 	if(!battle_check_range(&md->bl,target,range))
 		return 0;
 
@@ -3312,7 +3313,7 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 
 	switch(skill_id){	/* 何か特殊な処理が必要 */
 	case ALL_RESURRECTION:	/* リザレクション */
-		if(target->type != BL_PC && battle_check_undead(battle_get_race(target),battle_get_elem_type(target))){	/* 敵がアンデッドなら */
+		if(target->type != BL_PC && battle_check_undead(status_get_race(target),status_get_elem_type(target))){	/* 敵がアンデッドなら */
 			forcecast=1;	/* ターンアンデットと同じ詠唱時間 */
 			casttime=skill_castfix(&md->bl, skill_get_cast(PR_TURNUNDEAD,skill_lv) );
 		}
@@ -3358,7 +3359,7 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 	md->skillidx	= skill_idx;
 
 	if(!(battle_config.monster_cloak_check_type&2) && md->sc_data[SC_CLOAKING].timer != -1 && md->skillid != AS_CLOAKING)
-		skill_status_change_end(&md->bl,SC_CLOAKING,-1);
+		status_change_end(&md->bl,SC_CLOAKING,-1);
 
 	if( casttime>0 ){
 		md->skilltimer =
@@ -3417,7 +3418,7 @@ int mobskill_use_pos( struct mob_data *md,
 	bl.y = skill_y;
 	range = skill_get_range(skill_id,skill_lv);
 	if(range < 0)
-		range = battle_get_range(&md->bl) - (range + 1);
+		range = status_get_range(&md->bl) - (range + 1);
 	if(!battle_check_range(&md->bl,&bl,range))
 		return 0;
 
@@ -3447,7 +3448,7 @@ int mobskill_use_pos( struct mob_data *md,
 	md->skilllv		= skill_lv;
 	md->skillidx	= skill_idx;
 	if(!(battle_config.monster_cloak_check_type&2) && md->sc_data[SC_CLOAKING].timer != -1)
-		skill_status_change_end(&md->bl,SC_CLOAKING,-1);
+		status_change_end(&md->bl,SC_CLOAKING,-1);
 	if( casttime>0 ){
 		md->skilltimer =
 			add_timer( gettick()+casttime, mobskill_castend_pos, md->bl.id, 0 );
@@ -3553,7 +3554,7 @@ int mobskill_use(struct mob_data *md,unsigned int tick,int event)
 	nullpo_retr(0, md);
 	nullpo_retr(0, ms = mob_db[md->class_].skill);
 
-	max_hp = battle_get_max_hp(&md->bl);
+	max_hp = status_get_max_hp(&md->bl);
 
 	if(battle_config.mob_skill_use == 0 || md->skilltimer != -1)
 		return 0;
