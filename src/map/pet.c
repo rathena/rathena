@@ -1650,7 +1650,7 @@ int read_petdb()
 			pet_db[j].script = NULL;
 			if((np=strchr(p,'{'))==NULL)
 				continue;
-			pet_db[j].script = parse_script(np,lines);
+			pet_db[j].script = parse_script((unsigned char *) np,lines);
 			j++;
 		}
 		fclose(fp);

@@ -281,7 +281,7 @@ void do_final_msg();
 char *estr_lower(char *str);
 
 char * job_name(int class_);
-int e_mail_check(unsigned char *email);
+int e_mail_check(char *email);
 
 #endif
 

@@ -645,8 +645,8 @@ int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 //	if(battle_config.etc_log)
 //		printf("intif_parse_wismessage: %d %s %s %s\n",id,RFIFOP(fd,6),RFIFOP(fd,30),RFIFOP(fd,54) );
 
-	sd=map_nick2sd(RFIFOP(fd,32));	// 送信先を探す
-	if(sd!=NULL && strcmp(sd->status.name, RFIFOP(fd,32)) == 0){
+	sd=(struct map_session_data *) map_nick2sd((char *) RFIFOP(fd,32));	// 送信先を探す
+	if(sd!=NULL && strcmp((char *) sd->status.name, (char *) RFIFOP(fd,32)) == 0){
 /*
 		for(i=0;i<MAX_WIS_REFUSAL;i++){	//拒否リストに名前があるかどうか判定してあれば拒否
 			if(strcmp(sd->wis_refusal[i],RFIFOP(fd,8))==0){
@@ -664,7 +664,7 @@ int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 		else{
 */
 		else {
-			wisp_source = RFIFOP(fd,8); // speed up [Yor]
+			wisp_source = (char *) RFIFOP(fd,8); // speed up [Yor]
 			for(i=0;i<MAX_IGNORE_LIST;i++){   //拒否リストに名前があるかどうか判定してあれば拒否
 				if(strcmp(sd->ignore[i].name, wisp_source)==0){
 					break;
@@ -689,7 +689,7 @@ int intif_parse_WisEnd(int fd) {
 
 	if (battle_config.etc_log)
 		printf("intif_parse_wisend: player: %s, flag: %d\n", RFIFOP(fd,2), RFIFOB(fd,26)); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-	sd = map_nick2sd(RFIFOP(fd,2));
+	sd = (struct map_session_data *)map_nick2sd((char *) RFIFOP(fd,2));
 	if (sd != NULL)
 		clif_wis_end(sd->fd, RFIFOB(fd,26));
 
@@ -702,7 +702,7 @@ int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B
 	struct map_session_data *pl_sd;
 	char Wisp_name[24];
         char mbuf[255];
-	char *message = ((RFIFOW(fd,2) - 30) >= sizeof(mbuf)) ? (char *) aMallocA((RFIFOW(fd,2) - 30)) : mbuf;
+	char *message = (char *) (((RFIFOW(fd,2) - 30) >= sizeof(mbuf)) ? (char *) aMallocA((RFIFOW(fd,2) - 30)) : mbuf);
 
 	min_gm_level = (int)RFIFOW(fd,28);
 	memcpy(Wisp_name, RFIFOP(fd,4), 24);
@@ -711,7 +711,7 @@ int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B
 	message[sizeof(message) - 1] = '\0';
 	// information is sended to all online GM
 	for (i = 0; i < fd_max; i++)
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth)
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth)
 			if (pc_isGM(pl_sd) >= min_gm_level)
 				clif_wis_message(i, Wisp_name, message, strlen(message) + 1);
 
@@ -831,7 +831,7 @@ int intif_parse_PartyCreated(int fd)
 {
 	if(battle_config.etc_log)
 		printf("intif: party created\n");
-	party_created(RFIFOL(fd,2),RFIFOB(fd,6),RFIFOL(fd,7),RFIFOP(fd,11));
+	party_created(RFIFOL(fd,2), RFIFOB(fd,6),RFIFOL(fd,7),(char *) RFIFOP(fd,11));
 	return 0;
 }
 // パーティ情報
@@ -871,7 +871,7 @@ int intif_parse_PartyMemberLeaved(int fd)
 {
 	if(battle_config.etc_log)
 		printf("intif: party member leaved %d %d %s\n",RFIFOL(fd,2),RFIFOL(fd,6),RFIFOP(fd,10));
-	party_member_leaved(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOP(fd,10));
+	party_member_leaved(RFIFOL(fd,2),RFIFOL(fd,6),(char *) RFIFOP(fd,10));
 	return 0;
 }
 // パーティ解散通知
@@ -885,7 +885,7 @@ int intif_parse_PartyMove(int fd)
 {
 //	if(battle_config.etc_log)
 //		printf("intif: party move %d %d %s %d %d\n",RFIFOL(fd,2),RFIFOL(fd,6),RFIFOP(fd,10),RFIFOB(fd,26),RFIFOW(fd,27));
-	party_recv_movemap(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOP(fd,10),RFIFOB(fd,26),RFIFOW(fd,27));
+	party_recv_movemap(RFIFOL(fd,2),RFIFOL(fd,6),(char *) RFIFOP(fd,10),RFIFOB(fd,26),RFIFOW(fd,27));
 	return 0;
 }
 // パーティメッセージ
@@ -893,7 +893,7 @@ int intif_parse_PartyMessage(int fd)
 {
 //	if(battle_config.etc_log)
 //		printf("intif_parse_PartyMessage: %s\n",RFIFOP(fd,12));
-	party_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),RFIFOP(fd,12),RFIFOW(fd,2)-12);
+	party_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),(char *) RFIFOP(fd,12),RFIFOW(fd,2)-12);
 	return 0;
 }
 
@@ -934,7 +934,7 @@ int intif_parse_GuildMemberAdded(int fd)
 int intif_parse_GuildMemberLeaved(int fd)
 {
 	guild_member_leaved(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),
-		RFIFOP(fd,55),RFIFOP(fd,15));
+		(char *) RFIFOP(fd,55), (char *) RFIFOP(fd,15));
 	return 0;
 }
 
@@ -1011,25 +1011,25 @@ int intif_parse_GuildSkillUp(int fd)
 int intif_parse_GuildAlliance(int fd)
 {
 	guild_allianceack(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOL(fd,14),
-		RFIFOB(fd,18),RFIFOP(fd,19),RFIFOP(fd,43));
+		RFIFOB(fd,18),(char *) RFIFOP(fd,19),(char *) RFIFOP(fd,43));
 	return 0;
 }
 // ギルド告知変更通知
 int intif_parse_GuildNotice(int fd)
 {
-	guild_notice_changed(RFIFOL(fd,2),RFIFOP(fd,6),RFIFOP(fd,66));
+	guild_notice_changed(RFIFOL(fd,2),(char *) RFIFOP(fd,6),(char *) RFIFOP(fd,66));
 	return 0;
 }
 // ギルドエンブレム変更通知
 int intif_parse_GuildEmblem(int fd)
 {
-	guild_emblem_changed(RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8),RFIFOP(fd,12));
+	guild_emblem_changed(RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8), (char *)RFIFOP(fd,12));
 	return 0;
 }
 // ギルド会話受信
 int intif_parse_GuildMessage(int fd)
 {
-	guild_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),RFIFOP(fd,12),RFIFOW(fd,2)-12);
+	guild_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),(char *) RFIFOP(fd,12),RFIFOW(fd,2)-12);
 	return 0;
 }
 // ギルド城データ要求返信
@@ -1118,7 +1118,7 @@ int intif_parse(int fd)
 	}
 	// 処理分岐
 	switch(cmd){
-	case 0x3800:	clif_GMmessage(NULL,RFIFOP(fd,4),packet_len-4,0); break;
+	case 0x3800:	clif_GMmessage(NULL,(char *) RFIFOP(fd,4),packet_len-4,0); break;
 	case 0x3801:	intif_parse_WisMessage(fd); break;
 	case 0x3802:	intif_parse_WisEnd(fd); break;
 	case 0x3803:	mapif_parse_WisToGM(fd); break;

@@ -36,6 +36,7 @@ static const int packet_len_table[0x20] = {
 	-1,-1,10, 6,11,-1, 0, 0,	// 2b10-2b17
 };
 
+int chrif_connected;
 int char_fd = -1;
 int srvinfo;
 static char char_ip_str[16];

@@ -2905,7 +2905,7 @@ int buildin_getequipname(struct script_state *st)
 	}else{
 		sprintf(buf,"%s-[%s]",pos[num-1],pos[10]);
 	}
-	push_str(st->stack,C_STR,buf);
+	push_str(st->stack,C_STR,(unsigned char *) buf);
 
 	return 0;
 }
@@ -3668,7 +3668,7 @@ int buildin_gettimestr(struct script_state *st)
 	strftime(tmpstr,maxlen,fmtstr,localtime(&now));
 	tmpstr[maxlen]='\0';
 
-	push_str(st->stack,C_STR,tmpstr);
+	push_str(st->stack,C_STR,(unsigned char *) tmpstr);
 	return 0;
 }
 
@@ -4178,7 +4178,7 @@ int buildin_getusersname(struct script_state *st)
 	int i=0,disp_num=1;
 	
 	for (i=0;i<fd_max;i++)
-		if(session[i] && (pl_sd=session[i]->session_data) && pl_sd->state.auth){
+		if(session[i] && (pl_sd=(struct map_session_data *) session[i]->session_data) && pl_sd->state.auth){
 			if( !(battle_config.hide_GM_session && pc_isGM(pl_sd)) ){
 				if((disp_num++)%10==0)
 					clif_scriptnext(script_rid2sd(st),st->oid);
@@ -4725,13 +4725,13 @@ int buildin_getwaitingroomstate(struct script_state *st)
 	case 33: val=(cd->users >= cd->trigger); break;
 
 	case 4:
-		push_str(st->stack,C_CONSTSTR,cd->title);
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) cd->title);
 		return 0;
 	case 5:
-		push_str(st->stack,C_CONSTSTR,cd->pass);
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) cd->pass);
 		return 0;
 	case 16:
-		push_str(st->stack,C_CONSTSTR,cd->npc_event);
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) cd->npc_event);
 		return 0;
 	}
 	push_val(st->stack,C_INT,val);
@@ -4763,7 +4763,7 @@ int buildin_warpwaitingpc(struct script_state *st)
 	for(i=0;i<n;i++){
 		struct map_session_data *sd=cd->usersd[0];	// リスト先頭のPCを次々に。
 
-		mapreg_setreg(add_str("$@warpwaitingpc")+(i<<24),sd->bl.id);
+		mapreg_setreg(add_str((unsigned char *) "$@warpwaitingpc")+(i<<24),sd->bl.id);
 
 		if(strcmp(str,"Random")==0)
 			pc_randomwarp(sd,3);
@@ -4776,7 +4776,7 @@ int buildin_warpwaitingpc(struct script_state *st)
 		}else
 			pc_setpos(sd,str,x,y,0);
 	}
-	mapreg_setreg(add_str("$@warpwaitingpcnum"),n);
+	mapreg_setreg(add_str((unsigned char *) "$@warpwaitingpcnum"),n);
 	return 0;
 }
 /*==========================================
@@ -5019,7 +5019,7 @@ int buildin_pvpon(struct script_state *st)
 			return 0;
 
 		for(i=0;i<fd_max;i++){	//人数分ループ
-			if(session[i] && (pl_sd=session[i]->session_data) && pl_sd->state.auth){
+			if(session[i] && (pl_sd=(struct map_session_data *) session[i]->session_data) && pl_sd->state.auth){
 				if(m == pl_sd->bl.m && pl_sd->pvp_timer == -1) {
 					pl_sd->pvp_timer=add_timer(gettick()+200,pc_calc_pvprank_timer,pl_sd->bl.id,0);
 					pl_sd->pvp_rank=0;
@@ -5049,7 +5049,7 @@ int buildin_pvpoff(struct script_state *st)
 			return 0;
 
 		for(i=0;i<fd_max;i++){	//人数分ループ
-			if(session[i] && (pl_sd=session[i]->session_data) && pl_sd->state.auth){
+			if(session[i] && (pl_sd=(struct map_session_data *) session[i]->session_data) && pl_sd->state.auth){
 				if(m == pl_sd->bl.m) {
 					clif_pvpset(pl_sd,0,0,2);
 					if(pl_sd->pvp_timer != -1) {
@@ -5178,8 +5178,8 @@ int buildin_agitcheck(struct script_state *st)
 		if (agit_flag==0) push_val(st->stack,C_INT,0);
 	} else {
 		sd=script_rid2sd(st);
-		if (agit_flag==1) pc_setreg(sd,add_str("@agit_flag"),1);
-		if (agit_flag==0) pc_setreg(sd,add_str("@agit_flag"),0);
+		if (agit_flag==1) pc_setreg(sd,add_str((unsigned char *) "@agit_flag"),1);
+		if (agit_flag==0) pc_setreg(sd,add_str((unsigned char *) "@agit_flag"),0);
 	}
 	return 0;
 }
@@ -5210,9 +5210,9 @@ int buildin_getcastlename(struct script_state *st)
 		}
 	}
 	if(buf)
-	push_str(st->stack,C_STR,buf);
+	push_str(st->stack,C_STR,(unsigned char *) buf);
 	else
-		push_str(st->stack,C_CONSTSTR,"");
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
 	return 0;
 }
 
@@ -5672,21 +5672,21 @@ int buildin_strmobinfo(struct script_state *st)
 	case 1:
 		{
 			char *buf;
-			buf=aCallocA(24, 1);
+			buf=(char *) aCallocA(24, 1);
 //			buf=mob_db[class_].name;
 // for string assignments you would need to go for c++ [Shinomori]
 			strcpy(buf,mob_db[class_].name);
-			push_str(st->stack,C_STR,buf);
+			push_str(st->stack,C_STR,(unsigned char *) buf);
 			break;
 		}
 	case 2:
 		{
 			char *buf;
-			buf=aCallocA(24, 1);
+			buf=(char *) aCallocA(24, 1);
 //			buf=mob_db[class_].jname;
 // for string assignments you would need to go for c++ [Shinomori]
 			strcpy(buf,mob_db[class_].jname);
-			push_str(st->stack,C_STR,buf);
+			push_str(st->stack,C_STR,(unsigned char *) buf);
 			break;
 		}
 	case 3:
@@ -5771,7 +5771,7 @@ int buildin_getitemname(struct script_state *st)
 	item_name=(char *)aCallocA(24,sizeof(char));
 
 	strncpy(item_name,i_data->jname,23);
-	push_str(st->stack,C_STR,item_name);
+	push_str(st->stack,C_STR,(unsigned char *) item_name);
 	return 0;
 }
 
@@ -5854,20 +5854,20 @@ int buildin_getinventorylist(struct script_state *st)
 	if(!sd) return 0;
 	for(i=0;i<MAX_INVENTORY;i++){
 		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount > 0){
-			pc_setreg(sd,add_str("@inventorylist_id")+(j<<24),sd->status.inventory[i].nameid);
-			pc_setreg(sd,add_str("@inventorylist_amount")+(j<<24),sd->status.inventory[i].amount);
-			pc_setreg(sd,add_str("@inventorylist_equip")+(j<<24),sd->status.inventory[i].equip);
-			pc_setreg(sd,add_str("@inventorylist_refine")+(j<<24),sd->status.inventory[i].refine);
-			pc_setreg(sd,add_str("@inventorylist_identify")+(j<<24),sd->status.inventory[i].identify);
-			pc_setreg(sd,add_str("@inventorylist_attribute")+(j<<24),sd->status.inventory[i].attribute);
-			pc_setreg(sd,add_str("@inventorylist_card1")+(j<<24),sd->status.inventory[i].card[0]);
-			pc_setreg(sd,add_str("@inventorylist_card2")+(j<<24),sd->status.inventory[i].card[1]);
-			pc_setreg(sd,add_str("@inventorylist_card3")+(j<<24),sd->status.inventory[i].card[2]);
-			pc_setreg(sd,add_str("@inventorylist_card4")+(j<<24),sd->status.inventory[i].card[3]);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_id")+(j<<24),sd->status.inventory[i].nameid);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_amount")+(j<<24),sd->status.inventory[i].amount);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_equip")+(j<<24),sd->status.inventory[i].equip);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_refine")+(j<<24),sd->status.inventory[i].refine);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_identify")+(j<<24),sd->status.inventory[i].identify);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_attribute")+(j<<24),sd->status.inventory[i].attribute);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_card1")+(j<<24),sd->status.inventory[i].card[0]);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_card2")+(j<<24),sd->status.inventory[i].card[1]);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_card3")+(j<<24),sd->status.inventory[i].card[2]);
+			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_card4")+(j<<24),sd->status.inventory[i].card[3]);
 			j++;
 		}
 	}
-	pc_setreg(sd,add_str("@inventorylist_count"),j);
+	pc_setreg(sd,add_str((unsigned char *) "@inventorylist_count"),j);
 	return 0;
 }
 
@@ -5878,13 +5878,13 @@ int buildin_getskilllist(struct script_state *st)
 	if(!sd) return 0;
 	for(i=0;i<MAX_SKILL;i++){
 		if(sd->status.skill[i].id > 0 && sd->status.skill[i].lv > 0){
-			pc_setreg(sd,add_str("@skilllist_id")+(j<<24),sd->status.skill[i].id);
-			pc_setreg(sd,add_str("@skilllist_lv")+(j<<24),sd->status.skill[i].lv);
-			pc_setreg(sd,add_str("@skilllist_flag")+(j<<24),sd->status.skill[i].flag);
+			pc_setreg(sd,add_str((unsigned char *) "@skilllist_id")+(j<<24),sd->status.skill[i].id);
+			pc_setreg(sd,add_str((unsigned char *)"@skilllist_lv")+(j<<24),sd->status.skill[i].lv);
+			pc_setreg(sd,add_str((unsigned char *)"@skilllist_flag")+(j<<24),sd->status.skill[i].flag);
 			j++;
 		}
 	}
-	pc_setreg(sd,add_str("@skilllist_count"),j);
+	pc_setreg(sd,add_str((unsigned char *) "@skilllist_count"),j);
 	return 0;
 }
 
@@ -6211,7 +6211,7 @@ int buildin_recovery(struct script_state *st)
 	int i = 0;
 	for (i = 0; i < fd_max; i++) {
 		if (session[i]){
-			struct map_session_data *sd = session[i]->session_data;
+			struct map_session_data *sd = (struct map_session_data *) session[i]->session_data;
 			if (sd && sd->state.auth) {
 				sd->status.hp = sd->status.max_hp;
 				sd->status.sp = sd->status.max_sp;
@@ -6251,7 +6251,7 @@ int buildin_getpetinfo(struct script_state *st)
 				break;
 			case 2:
 				if(sd->pet.name)
-					push_str(st->stack,C_STR,sd->pet.name);
+					push_str(st->stack,C_STR,(unsigned char *) sd->pet.name);
 				else
 					push_val(st->stack,C_INT,0);
 				break;
@@ -6348,8 +6348,8 @@ int buildin_select(struct script_state *st)
 		sd->state.menu_or_input=0;
 		st->state=END;
 	} else {
-		pc_setreg(sd,add_str("l15"),sd->npc_menu);
-		pc_setreg(sd,add_str("@menu"),sd->npc_menu);
+		pc_setreg(sd,add_str((unsigned char *) "l15"),sd->npc_menu);
+		pc_setreg(sd,add_str((unsigned char *) "@menu"),sd->npc_menu);
 		sd->state.menu_or_input=0;
 		push_val(st->stack,C_INT,sd->npc_menu);
 	}
@@ -6595,14 +6595,14 @@ int buildin_getsavepoint(struct script_state *st)
         sd=script_rid2sd(st);
 
         type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-        mapname=aCallocA(24, 1);
+        mapname=(char *) aCallocA(24, 1);
 
         x=sd->status.save_point.x;
         y=sd->status.save_point.y;
         strncpy(mapname,sd->status.save_point.map,24);
         switch(type){
             case 0:
-                push_str(st->stack,C_STR,mapname);
+                push_str(st->stack,C_STR,(unsigned char *) mapname);
                 break;
             case 1:
                 push_val(st->stack,C_INT,x);
@@ -6664,7 +6664,7 @@ int buildin_getmapxy(struct script_state *st){
 
 //??????????? >>>  Possible needly check function parameters on C_STR,C_INT,C_INT <<< ???????????//
 	type=conv_num(st,& (st->stack->stack_data[st->start+5]));
-	mapname=aCallocA(24, 1);
+	mapname=(char *) aCallocA(24, 1);
 
         switch (type){
             case 0:                                             //Get Character Position
@@ -7397,7 +7397,7 @@ int run_script_main(char *script,int pos,int rid,int oid,struct script_state *st
 
 	rerun_pos=st->pos;
 	for(st->state=0;st->state==0;){
-		switch(c=get_com(script,&st->pos)){
+		switch(c= get_com((unsigned char *) script,&st->pos)){
 		case C_EOL:
 			if(stack->sp!=st->defsp){
 				if(battle_config.error_log)
@@ -7407,7 +7407,7 @@ int run_script_main(char *script,int pos,int rid,int oid,struct script_state *st
 			rerun_pos=st->pos;
 			break;
 		case C_INT:
-			push_val(stack,C_INT,get_num(script,&st->pos));
+			push_val(stack,C_INT,get_num((unsigned char *) script,&st->pos));
 			break;
 		case C_POS:
 		case C_NAME:
@@ -7418,7 +7418,7 @@ int run_script_main(char *script,int pos,int rid,int oid,struct script_state *st
 			push_val(stack,c,0);
 			break;
 		case C_STR:
-			push_str(stack,C_CONSTSTR,script+st->pos);
+			push_str(stack,C_CONSTSTR,(unsigned char *) (script+st->pos));
 			while(script[st->pos++]);
 			break;
 		case C_FUNC:
@@ -7578,7 +7578,7 @@ int mapreg_setregstr(int num,const char *str)
 {
 	char *p;
 
-	if( (p=numdb_search(mapregstr_db,num))!=NULL )
+	if( (p=(char *) numdb_search(mapregstr_db,num))!=NULL )
 		aFree(p);
 
 	if( str==NULL || *str==0 ){
@@ -7618,14 +7618,14 @@ static int script_load_mapreg()
 			}
 			p=(char *)aCallocA(strlen(buf2) + 1,sizeof(char));
 			strcpy(p,buf2);
-			s=add_str(buf1);
+			s= add_str((unsigned char *) buf1);
 			numdb_insert(mapregstr_db,(i<<24)|s,p);
 		}else{
 			if( sscanf(line+n,"%d",&v)!=1 ){
 				printf("%s: %s broken data !\n",mapreg_txt,buf1);
 				continue;
 			}
-			s=add_str(buf1);
+			s= add_str((unsigned char *) buf1);
 			numdb_insert(mapreg_db,(i<<24)|s,v);
 		}
 	}

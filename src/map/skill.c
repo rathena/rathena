@@ -5261,7 +5261,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	group->interval=interval;
 	if(skillid==HT_TALKIEBOX ||
 	   skillid==RG_GRAFFITI){
-		group->valstr=aCallocA(80, 1);
+		group->valstr=(char *) aCallocA(80, 1);
 		if(group->valstr==NULL){
 			printf("skill_castend_map: out of memory !\n");
 			exit(1);
@@ -5878,7 +5878,7 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 					src->bl.x,src->bl.y,1);
 			if(group == NULL)
 				return 0;
-			group->valstr=aCallocA(24, 1);
+			group->valstr=(char *) aCallocA(24, 1);
 			if(group->valstr==NULL){
 				printf("skill_unit_onlimit: out of memory !\n");
 				exit(1);
@@ -8563,7 +8563,7 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int
 			group->skill_id!=HT_CLAYMORETRAP && group->skill_id!=HT_BLASTMINE)
 		return 0;
 
-	m_flag = malloc(sizeof(int)*group->unit_count);
+	m_flag = (int *) aMalloc(sizeof(int)*group->unit_count);
 	memset(m_flag,0,sizeof(int)*group->unit_count);// 移動フラグ
 	// 先にフラグを全部決める
 	//    m_flag
@@ -9524,7 +9524,7 @@ static int skill_read_skillspamount(void)
 	struct skill_db *skill = NULL;
 	int s, idx, new_flag=1, level=1, sp=0;
 
-	buf=grfio_reads("data\\leveluseskillspamount.txt",&s);
+	buf=(char *) grfio_reads("data\\leveluseskillspamount.txt",&s);
 
 	if(buf==NULL)
 		return -1;

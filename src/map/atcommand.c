@@ -552,8 +552,8 @@ static AtCommandInfo atcommand_info[] = {
  * Generic variables
  *-----------------------------------------
  */
-unsigned char atcmd_output[200];
-unsigned char atcmd_player_name[100];
+char atcmd_output[200];
+char atcmd_player_name[100];
 
 /*====================================================
  * This function return the name of the job (by [Yor])
@@ -674,9 +674,9 @@ char * msg_txt(int msg_number) {
 //------------------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid). by [Yor]
 //------------------------------------------------------------
-int e_mail_check(unsigned char *email) {
+int e_mail_check(char *email) {
 	char ch;
-	unsigned char* last_arobas;
+	char* last_arobas;
 
 	// athena limits
 	if (strlen(email) < 3 || strlen(email) > 39)
@@ -1241,7 +1241,7 @@ int atcommand_who(
 	count = 0;
 	GM_level = pc_isGM(sd);
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			pl_GM_level = pc_isGM(pl_sd);
 			if (!((battle_config.hide_GM_session || (pl_sd->status.option & OPTION_HIDE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
 				memcpy(player_name, pl_sd->status.name, 24);
@@ -1299,7 +1299,7 @@ int atcommand_who2(
 	count = 0;
 	GM_level = pc_isGM(sd);
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			pl_GM_level = pc_isGM(pl_sd);
 			if (!((battle_config.hide_GM_session || (pl_sd->status.option & OPTION_HIDE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
 				memcpy(player_name, pl_sd->status.name, 24);
@@ -1363,7 +1363,7 @@ int atcommand_who3(
 	count = 0;
 	GM_level = pc_isGM(sd);
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			pl_GM_level = pc_isGM(pl_sd);
 			if (!((battle_config.hide_GM_session || (pl_sd->status.option & OPTION_HIDE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
 				memcpy(player_name, pl_sd->status.name, 24);
@@ -1433,7 +1433,7 @@ int atcommand_whomap(
 	count = 0;
 	GM_level = pc_isGM(sd);
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			pl_GM_level = pc_isGM(pl_sd);
 			if (!((battle_config.hide_GM_session || (pl_sd->status.option & OPTION_HIDE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
 				if (pl_sd->bl.m == map_id) {
@@ -1492,7 +1492,7 @@ int atcommand_whomap2(
 	count = 0;
 	GM_level = pc_isGM(sd);
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			pl_GM_level = pc_isGM(pl_sd);
 			if (!((battle_config.hide_GM_session || (pl_sd->status.option & OPTION_HIDE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
 				if (pl_sd->bl.m == map_id) {
@@ -1557,7 +1557,7 @@ int atcommand_whomap3(
 	count = 0;
 	GM_level = pc_isGM(sd);
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			pl_GM_level = pc_isGM(pl_sd);
 			if (!((battle_config.hide_GM_session || (pl_sd->status.option & OPTION_HIDE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
 				if (pl_sd->bl.m == map_id) {
@@ -1628,7 +1628,7 @@ int atcommand_whogm(
 	count = 0;
 	GM_level = pc_isGM(sd);
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			pl_GM_level = pc_isGM(pl_sd);
 			if (pl_GM_level > 0) {
 				if (!((battle_config.hide_GM_session || (pl_sd->status.option & OPTION_HIDE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
@@ -1697,7 +1697,7 @@ int atcommand_whozeny(
 
 	count = 0;
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 				memcpy(player_name, pl_sd->status.name, 24);
 				for (j = 0; player_name[j]; j++)
 					player_name[j] = tolower(player_name[j]);
@@ -1716,7 +1716,7 @@ int atcommand_whozeny(
 		for (i = 0; i < fd_max; i++) {
 			if(!zeny[c])
 				continue;
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && zeny[c] && counted[i]==0) {
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && zeny[c] && counted[i]==0) {
 				if(pl_sd->status.zeny==zeny[c]) {
 					sprintf(atcmd_output, "Name: %s | Zeny: %d", pl_sd->status.name, pl_sd->status.zeny);
 					clif_displaymessage(fd, atcmd_output);
@@ -1754,7 +1754,7 @@ int atcommand_happyhappyjoyjoy(
 	nullpo_retr(-1, sd);
 
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			e=rand()%40;
 			if(e==34)
 				e = 0;
@@ -2668,7 +2668,7 @@ int atcommand_pvpoff(
 		map[sd->bl.m].flag.pvp = 0;
 		clif_send0199(sd->bl.m, 0);
 		for (i = 0; i < fd_max; i++) {	//l”•ªƒ‹[ƒv
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 				if (sd->bl.m == pl_sd->bl.m) {
 					clif_pvpset(pl_sd, 0, 0, 2);
 					if (pl_sd->pvp_timer != -1) {
@@ -2708,7 +2708,7 @@ int atcommand_pvpon(
 		map[sd->bl.m].flag.pvp = 1;
 		clif_send0199(sd->bl.m, 1);
 		for (i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 				if (sd->bl.m == pl_sd->bl.m && pl_sd->pvp_timer == -1) {
 					pl_sd->pvp_timer = add_timer(gettick() + 200,
 						pc_calc_pvprank_timer, pl_sd->bl.id, 0);
@@ -4480,7 +4480,7 @@ int atcommand_night(
 	if (night_flag != 1) {
 		night_flag = 1; // 0=day, 1=night [Yor]
 		for(i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && !map[sd->bl.m].flag.indoors) {
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && !map[sd->bl.m].flag.indoors) {
 				//pl_sd->opt2 |= STATE_BLIND;
 				//clif_changeoption(&pl_sd->bl);
 				if (battle_config.night_darkness_level > 0)
@@ -4516,7 +4516,7 @@ int atcommand_day(
 	if (night_flag != 0) {
 		night_flag = 0; // 0=day, 1=night [Yor]
 		for(i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 				if (battle_config.night_darkness_level > 0)
 					clif_refresh (pl_sd);
 				else {
@@ -4547,7 +4547,7 @@ int atcommand_doom(
 	nullpo_retr(-1, sd);
 	clif_specialeffect(&sd->bl,450,2);
 	for(i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && i != fd &&
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && i != fd &&
 		    pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can doom only lower or same gm level
 			pc_damage(NULL, pl_sd, pl_sd->status.hp + 1);
 			clif_displaymessage(pl_sd->fd, msg_table[61]); // The holy messenger has given judgement.
@@ -4571,7 +4571,7 @@ int atcommand_doommap(
 	nullpo_retr(-1, sd);
 	clif_specialeffect(&sd->bl,450,3);
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && i != fd && sd->bl.m == pl_sd->bl.m &&
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && i != fd && sd->bl.m == pl_sd->bl.m &&
 		    pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can doom only lower or same gm level
 			pc_damage(NULL, pl_sd, pl_sd->status.hp + 1);
 //			clif_specialeffect(&pl_sd->bl,450,1);
@@ -4616,7 +4616,7 @@ int atcommand_raise(
 
 	for (i = 0; i < fd_max; i++) {
 		if (session[i])
-			atcommand_raise_sub(session[i]->session_data);
+			atcommand_raise_sub((struct map_session_data *) session[i]->session_data);
 	}
 	clif_displaymessage(fd, msg_table[64]); // Mercy has been granted.
 
@@ -4637,7 +4637,7 @@ int atcommand_raisemap(
 	nullpo_retr(-1, sd);
 
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && sd->bl.m == pl_sd->bl.m)
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && sd->bl.m == pl_sd->bl.m)
 			atcommand_raise_sub(pl_sd);
 	}
 	clif_displaymessage(fd, msg_table[64]); // Mercy has been granted.
@@ -4841,7 +4841,7 @@ int atcommand_kickall(
 	nullpo_retr(-1, sd);
 
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth &&
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth &&
 		    pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kick only lower or same gm level
 			if (sd->status.account_id != pl_sd->status.account_id)
 				clif_GM_kick(sd, pl_sd, 0);
@@ -5184,7 +5184,7 @@ int atcommand_mapexit(
 	nullpo_retr(-1, sd);
 
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 			if (sd->status.account_id != pl_sd->status.account_id)
 				clif_GM_kick(sd, pl_sd, 0);
 		}
@@ -5469,7 +5469,7 @@ int atcommand_recallall(
 
 	count = 0;
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && sd->status.account_id != pl_sd->status.account_id &&
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && sd->status.account_id != pl_sd->status.account_id &&
 		    pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
 				count++;
@@ -5519,7 +5519,7 @@ int atcommand_guildrecall(
 	    (g = guild_search(atoi(message))) != NULL) {
 		count = 0;
 		for (i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth &&
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth &&
 			    sd->status.account_id != pl_sd->status.account_id &&
 			    pl_sd->status.guild_id == g->guild_id) {
 				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
@@ -5574,7 +5574,7 @@ int atcommand_partyrecall(
 	    (p = party_search(atoi(message))) != NULL) {
 		count = 0;
 		for (i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth &&
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth &&
 			    sd->status.account_id != pl_sd->status.account_id &&
 			    pl_sd->status.party_id == p->party_id) {
 				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
@@ -5742,7 +5742,7 @@ int atcommand_mapinfo(
 	clif_displaymessage(fd, atcmd_output);
 	chat_num = 0;
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth &&
+		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth &&
 		    (cd = (struct chat_data*)map_id2bl(pl_sd->chatID))) {
 			chat_num++;
 		}
@@ -5781,7 +5781,7 @@ int atcommand_mapinfo(
 	case 1:
 		clif_displaymessage(fd, "----- Players in Map -----");
 		for (i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && strcmp(pl_sd->mapname, atcmd_player_name) == 0) {
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && strcmp(pl_sd->mapname, atcmd_player_name) == 0) {
 				sprintf(atcmd_output, "Player '%s' (session #%d) | Location: %d,%d",
 				        pl_sd->status.name, i, pl_sd->bl.x, pl_sd->bl.y);
 				clif_displaymessage(fd, atcmd_output);
@@ -5812,7 +5812,7 @@ int atcommand_mapinfo(
 	case 3:
 		clif_displaymessage(fd, "----- Chats in Map -----");
 		for (i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth &&
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth &&
 			    (cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) &&
 			    strcmp(pl_sd->mapname, atcmd_player_name) == 0 &&
 			    cd->usersd[0] == pl_sd) {
@@ -6483,7 +6483,7 @@ int atcommand_disguiseall(
 	    (mob_id >= 813 && mob_id <= 834) || // NPC
 	    (mob_id > 1000 && mob_id < 1582)) { // monsters
 		for(i=0; i < fd_max; i++) {
-			if(session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+			if(session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 				if(pc_isriding(pl_sd)) { // temporary prevention of crash caused by peco + disguise, will look into a better solution [Valaris]
 					clif_displaymessage(fd, msg_table[227]); // Cannot wear disguise while riding a Peco.
 				} else {
@@ -6536,7 +6536,7 @@ int atcommand_undisguiseall(
 	nullpo_retr(-1, sd);
 
 	for(i=0; i < fd_max; i++) {
-		if(session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && pl_sd->disguise) {
+		if(session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && pl_sd->disguise) {
 			clif_clearchar(&pl_sd->bl, 9);
 			pl_sd->disguise = 0;
 			pc_setpos(pl_sd, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y, 3);
@@ -6751,7 +6751,7 @@ int atcommand_effect(
 	}
 	else{
 		for (i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth) {
 				clif_specialeffect(&pl_sd->bl, type, flag);
 				clif_displaymessage(pl_sd->fd, msg_table[229]); // Your effect has changed.
 			}
@@ -8259,7 +8259,7 @@ int charid2sessionid(int charid)
    struct map_session_data *pl_sd = NULL;
 
    for(i=0;i<fd_max;i++){
-      if(session[i] && (pl_sd=session[i]->session_data) && pl_sd->state.auth){
+      if(session[i] && (pl_sd= (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth){
          if (pl_sd->status.char_id==charid) { session_id = i; break; }
       }
    }
@@ -8274,7 +8274,7 @@ int accountid2sessionid(int accountid)
    struct map_session_data *pl_sd = NULL;
 
    for(i=0;i<fd_max;i++){
-      if(session[i] && (pl_sd=session[i]->session_data) && pl_sd->state.auth){
+      if(session[i] && (pl_sd= (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth){
          if (pl_sd->status.account_id==accountid) { session_id = i; break; }
       }
    }
@@ -8310,7 +8310,7 @@ int atcommand_jumptoid(
 
    if ((session_id=charid2sessionid(cid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
             clif_displaymessage(fd, msg_table[247]);
             return -1;
@@ -8363,7 +8363,7 @@ int atcommand_jumptoid2(
 
    if ((session_id=accountid2sessionid(aid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
             clif_displaymessage(fd, msg_table[247]);
             return -1;
@@ -8415,7 +8415,7 @@ int atcommand_recallid(
 
    if ((session_id=charid2sessionid(cid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level
             if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
                clif_displaymessage(fd, msg_table[247]);
@@ -8472,7 +8472,7 @@ int atcommand_recallid2(
 
    if ((session_id=accountid2sessionid(aid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level
             if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 				clif_displaymessage(fd, msg_table[247]);
@@ -8528,7 +8528,7 @@ int atcommand_kickid(
 
    if ((session_id=charid2sessionid(cid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) // you can kick only lower or same gm level
             clif_GM_kick(sd, pl_sd, 1);
          else {
@@ -8575,7 +8575,7 @@ int atcommand_kickid2(
 
    if ((session_id=accountid2sessionid(aid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) // you can kick only lower or same gm level
             clif_GM_kick(sd, pl_sd, 1);
          else {
@@ -8622,7 +8622,7 @@ int atcommand_reviveid(
 
    if ((session_id=charid2sessionid(cid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          pl_sd->status.hp = pl_sd->status.max_hp;
          pc_setstand(pl_sd);
          if (battle_config.pc_invincible_time > 0)
@@ -8672,7 +8672,7 @@ int atcommand_reviveid2(
 
    if ((session_id=accountid2sessionid(aid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          pl_sd->status.hp = pl_sd->status.max_hp;
          pc_setstand(pl_sd);
          if (battle_config.pc_invincible_time > 0)
@@ -8722,7 +8722,7 @@ int atcommand_killid(
 
    if ((session_id=charid2sessionid(cid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same level
             pc_damage(NULL, pl_sd, pl_sd->status.hp + 1);
             clif_displaymessage(fd, msg_table[14]); // Character killed.
@@ -8770,7 +8770,7 @@ int atcommand_killid2(
 
    if ((session_id=accountid2sessionid(aid))!=0)
    {
-      if ((pl_sd = session[session_id]->session_data) != NULL) {
+      if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same level
             pc_damage(NULL, pl_sd, pl_sd->status.hp + 1);
             clif_displaymessage(fd, msg_table[14]); // Character killed.
@@ -8815,7 +8815,7 @@ atcommand_charkillableid(
 
    if ((session_id=charid2sessionid(cid))!=0)
    {
-      if((pl_sd=session[session_id]->session_data) == NULL)
+      if((pl_sd= (struct map_session_data *) session[session_id]->session_data) == NULL)
                    return -1;
 
       pl_sd->special_state.killable = !pl_sd->special_state.killable;
@@ -8856,7 +8856,7 @@ atcommand_charkillableid2(
 
    if ((session_id=accountid2sessionid(aid))!=0)
    {
-      if((pl_sd=session[session_id]->session_data) == NULL)
+      if((pl_sd= (struct map_session_data *) session[session_id]->session_data) == NULL)
                    return -1;
 
       pl_sd->special_state.killable = !pl_sd->special_state.killable;

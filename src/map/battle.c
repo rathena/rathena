@@ -3966,7 +3966,7 @@ int battle_config_switch(const char *str) {
 
 static const struct {
 	char str[128];
-	int *val;
+	void *val;
 } battle_data[] = {
 	{ "warp_point_debug",                  &battle_config.warp_point_debug			},
 	{ "enemy_critical",                    &battle_config.enemy_critical			},
@@ -4210,7 +4210,7 @@ int battle_set_value(char *w1, char *w2) {
 	int i;
 	for(i = 0; i < sizeof(battle_data) / (sizeof(battle_data[0])); i++)
 		if (strcmpi(w1, battle_data[i].str) == 0) {
-			*battle_data[i].val = battle_config_switch(w2);
+			*((unsigned int *) battle_data[i].val) = battle_config_switch(w2);
 			return 1;
 		}
 	return 0;

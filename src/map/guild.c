@@ -158,7 +158,7 @@ void do_init_guild(void)
 // 検索
 struct guild *guild_search(int guild_id)
 {
-	return numdb_search(guild_db,guild_id);
+	return (struct guild *) numdb_search(guild_db,guild_id);
 }
 int guild_searchname_sub(void *key,void *data,va_list ap)
 {
@@ -179,7 +179,7 @@ struct guild* guild_searchname(char *str)
 }
 struct guild_castle *guild_castle_search(int gcid)
 {
-	return numdb_search(castle_db,gcid);
+	return (struct guild_castle *) numdb_search(castle_db,gcid);
 }
 
 // mapnameに対応したアジトのgcを返す
@@ -336,7 +336,7 @@ int guild_created(int account_id,int guild_id)
 			struct guild *g;
 			sd->status.guild_id=guild_id;
 			sd->guild_sended=0;
-			if((g=numdb_search(guild_db,guild_id))!=NULL){
+			if((g=(struct guild *) numdb_search(guild_db,guild_id))!=NULL){
 				printf("guild: id already exists!\n");
 				exit(1);
 			}
@@ -386,7 +386,7 @@ int guild_check_member(const struct guild *g)
 	nullpo_retr(0, g);
 
 	for(i=0;i<fd_max;i++){
-		if(session[i] && (sd=session[i]->session_data) && sd->state.auth){
+		if(session[i] && (sd=(struct map_session_data *) session[i]->session_data) && sd->state.auth){
 			if(sd->status.guild_id==g->guild_id){
 				int j,f=1;
 				for(j=0;j<MAX_GUILD;j++){	// データがあるか
@@ -412,7 +412,7 @@ int guild_recv_noinfo(int guild_id)
 	int i;
 	struct map_session_data *sd;
 	for(i=0;i<fd_max;i++){
-		if(session[i] && (sd=session[i]->session_data) && sd->state.auth){
+		if(session[i] && (sd=(struct map_session_data *) session[i]->session_data) && sd->state.auth){
 			if(sd->status.guild_id==guild_id)
 				sd->status.guild_id=0;
 		}
@@ -428,7 +428,7 @@ int guild_recv_info(struct guild *sg)
 
 	nullpo_retr(0, sg);
 
-	if((g=numdb_search(guild_db,sg->guild_id))==NULL){
+	if((g=(struct guild *) numdb_search(guild_db,sg->guild_id))==NULL){
 		g=(struct guild *)aCalloc(1,sizeof(struct guild));
 		numdb_insert(guild_db,sg->guild_id,g);
 		before=*sg;
@@ -479,7 +479,7 @@ int guild_recv_info(struct guild *sg)
 	}
 
 	// イベントの発生
-	if( (ev=numdb_search(guild_infoevent_db,sg->guild_id))!=NULL ){
+	if( (ev=(struct eventlist *)numdb_search(guild_infoevent_db,sg->guild_id))!=NULL ){
 		numdb_erase(guild_infoevent_db,sg->guild_id);
 		while(ev){
 			npc_event_do(ev->name);
@@ -948,7 +948,7 @@ int guild_payexp(struct map_session_data *sd,int exp)
 	if( (exp2=exp*per/100)<=0 )
 		return 0;
 
-	if( (c=numdb_search(guild_expcache_db,sd->status.char_id))==NULL ){
+	if( (c=(struct guild_expcache *) numdb_search(guild_expcache_db,sd->status.char_id))==NULL ){
 		c=(struct guild_expcache *)aCallocA(1,sizeof(struct guild_expcache));
 		c->guild_id=sd->status.guild_id;
 		c->account_id=sd->status.account_id;
@@ -972,7 +972,7 @@ int guild_getexp(struct map_session_data *sd,int exp)
 	if(sd->status.guild_id==0 || (g=guild_search(sd->status.guild_id))==NULL )
 		return 0;
 
-	if( (c=numdb_search(guild_expcache_db,sd->status.char_id))==NULL ){
+	if( (c=(struct guild_expcache *) numdb_search(guild_expcache_db,sd->status.char_id))==NULL ){
 		c=(struct guild_expcache *)aCallocA(1,sizeof(struct guild_expcache));
 		c->guild_id=sd->status.guild_id;
 		c->account_id=sd->status.account_id;
@@ -1377,7 +1377,7 @@ int guild_addcastleinfoevent(int castle_id,int index,const char *name)
 
 	ev=(struct eventlist *)aCalloc(1,sizeof(struct eventlist));
 	memcpy(ev->name,name,sizeof(ev->name));
-	ev->next=numdb_search(guild_castleinfoevent_db,code);
+	ev->next=(struct eventlist *) numdb_search(guild_castleinfoevent_db,code);
 	numdb_insert(guild_castleinfoevent_db,code,ev);
 	return 0;
 }
@@ -1422,7 +1422,7 @@ int guild_castledataloadack(int castle_id,int index,int value)
 		printf("guild_castledataloadack ERROR!! (Not found index=%d)\n", index);
 		return 0;
 	}
-	if( (ev=numdb_search(guild_castleinfoevent_db,code))!=NULL ){
+	if( (ev=(struct eventlist *) numdb_search(guild_castleinfoevent_db,code))!=NULL ){
 		numdb_erase(guild_castleinfoevent_db,code);
 		while(ev){
 			npc_event_do(ev->name);
@@ -1668,7 +1668,7 @@ int guild_isallied(struct guild *g, struct guild_castle *gc)
 
 static int guild_db_final(void *key,void *data,va_list ap)
 {
-	struct guild *g=data;
+	struct guild *g=(struct guild *) data;
 
 	aFree(g);
 
@@ -1676,7 +1676,7 @@ static int guild_db_final(void *key,void *data,va_list ap)
 }
 static int castle_db_final(void *key,void *data,va_list ap)
 {
-	struct guild_castle *gc=data;
+	struct guild_castle *gc=(struct guild_castle *) data;
 
 	aFree(gc);
 
@@ -1684,7 +1684,7 @@ static int castle_db_final(void *key,void *data,va_list ap)
 }
 static int guild_expcache_db_final(void *key,void *data,va_list ap)
 {
-	struct guild_expcache *c=data;
+	struct guild_expcache *c=(struct guild_expcache *) data;
 
 	aFree(c);
 
@@ -1692,7 +1692,7 @@ static int guild_expcache_db_final(void *key,void *data,va_list ap)
 }
 static int guild_infoevent_db_final(void *key,void *data,va_list ap)
 {
-	struct eventlist *ev=data;
+	struct eventlist *ev=(struct eventlist *) data;
 
 	aFree(ev);
 
