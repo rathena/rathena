@@ -287,6 +287,7 @@ int buildin_getsavepoint(struct script_state *st);	//Lorky [Lupus]
 int buildin_npcspeed(struct script_state *st); // [Valaris]
 int buildin_npcwalkto(struct script_state *st); // [Valaris]
 int buildin_npcstop(struct script_state *st); // [Valaris]
+int buildin_getmapxy(struct script_state *st);  //get map position for player/npc/pet/mob by Lorky [Lupus]
 
 
 void push_val(struct script_stack *stack,int type,int val);
@@ -490,11 +491,12 @@ struct {
 	{buildin_npctalk,"npctalk","*"}, // [Valaris]
 	{buildin_hasitems,"hasitems","*"}, // [Valaris]
 	{buildin_mobcount,"mobcount","ss"},
-    {buildin_getlook,"getlook","i"},                
-    {buildin_getsavepoint,"getsavepoint","i"},
-    {buildin_npcspeed,"npcspeed","i"}, // [Valaris]
+	{buildin_getlook,"getlook","i"},                
+	{buildin_getsavepoint,"getsavepoint","i"},
+	{buildin_npcspeed,"npcspeed","i"}, // [Valaris]
 	{buildin_npcwalkto,"npcwalkto","ii"}, // [Valaris]
 	{buildin_npcstop,"npcstop",""}, // [Valaris]
+	{buildin_getmapxy,"getmapxy","siii*"},	//by Lorky [Lupus]
 	{NULL,NULL,NULL},
 };
 int buildin_message(struct script_state *st); // [MouseJstr]
@@ -5990,6 +5992,165 @@ int buildin_getsavepoint(struct script_state *st)
                 push_val(st->stack,C_INT,y);
                 break;
         }
+        return 0;
+}
+
+/*==========================================
+  * Get position for  char/npc/pet/mob objects. Added by Lorky
+  *
+  *     int getMapXY(MapName$,MaxX,MapY,type,[CharName$]);
+  *             where type:
+  *                     MapName$ - String variable for output map name
+  *                     MapX     - Integer variable for output coord X
+  *                     MapY     - Integer variable for output coord Y
+  *                     type     - type of object
+  *                                0 - Character coord
+  *                                1 - NPC coord
+  *                                2 - Pet coord
+  *                                3 - Mob coord (not released)
+  *                     CharName$ - Name object. If miss or "this" the current object
+  *
+  *             Return:
+  *                     0        - success
+  *                     -1       - some error, MapName$,MapX,MapY contains unknown value.
+  *------------------------------------------
+*/
+int buildin_getmapxy(struct script_state *st){
+	struct map_session_data *sd=NULL;
+        struct npc_data *nd;
+        struct pet_data *pd;
+
+	int num;
+	char *name;
+	char prefix;
+
+	int x,y,type;
+	char *mapname;
+
+        if( st->stack->stack_data[st->start+2].type!=C_NAME ){
+                printf("script: buildin_getmapxy: not mapname variable\n");
+                push_val(st->stack,C_INT,-1);
+                return 0;
+        }
+        if( st->stack->stack_data[st->start+3].type!=C_NAME ){
+                printf("script: buildin_getmapxy: not mapx variable\n");
+                push_val(st->stack,C_INT,-1);
+                return 0;
+        }
+        if( st->stack->stack_data[st->start+4].type!=C_NAME ){
+                printf("script: buildin_getmapxy: not mapy variable\n");
+                push_val(st->stack,C_INT,-1);
+                return 0;
+        }
+
+//??????????? >>>  Possible needly check function parameters on C_STR,C_INT,C_INT <<< ???????????//
+	type=conv_num(st,& (st->stack->stack_data[st->start+5]));
+	mapname=calloc(24, 1);
+
+        switch (type){
+            case 0:                                             //Get Character Position
+                    if( st->end>st->start+6 )
+                        sd=map_nick2sd(conv_str(st,& (st->stack->stack_data[st->start+6])));
+                    else
+                        sd=script_rid2sd(st);
+
+                    if ( sd==NULL ) {                   //wrong char name or char offline
+                        push_val(st->stack,C_INT,-1);
+                        return 0;
+                    }
+
+
+                    x=sd->bl.x;
+                    y=sd->bl.y;
+                    strncpy(mapname,sd->mapname,24);
+                    printf(">>>>%s %d %d\n",mapname,x,y);
+                    break;
+            case 1:                                             //Get NPC Position
+                    if( st->end > st->start+6 )
+                        nd=npc_name2id(conv_str(st,& (st->stack->stack_data[st->start+6])));
+                    else
+                        nd=(struct npc_data *)map_id2bl(st->oid);
+
+                    if ( nd==NULL ) {                   //wrong npc name or char offline
+                        push_val(st->stack,C_INT,-1);
+                        return 0;
+                    }
+
+                    x=nd->bl.x;
+                    y=nd->bl.y; 
+                    strncpy(mapname,map[nd->bl.m].name,24);
+                    printf(">>>>%s %d %d\n",mapname,x,y);
+                    break;
+            case 2:                                             //Get Pet Position
+                    if( st->end>st->start+6 )
+                        sd=map_nick2sd(conv_str(st,& (st->stack->stack_data[st->start+6])));
+                    else
+                        sd=script_rid2sd(st);
+
+                    if ( sd==NULL ) {                   //wrong char name or char offline
+                        push_val(st->stack,C_INT,-1);
+                        return 0;
+                    }
+
+                    pd=sd->pd;
+
+                    if(pd==NULL){                       //ped data not found
+                        push_val(st->stack,C_INT,-1);
+                        return 0;
+                    }
+                    x=pd->bl.x;
+                    y=pd->bl.y; 
+                    strncpy(mapname,map[pd->bl.m].name,24);
+
+                    printf(">>>>%s %d %d\n",mapname,x,y);
+                    break;
+
+            case 3:                                             //Get Mob Position
+                        push_val(st->stack,C_INT,-1);
+                        return 0;
+            default:                                            //Wrong type parameter
+                        push_val(st->stack,C_INT,-1);
+                        return 0;
+        }
+
+     //Set MapName$
+        num=st->stack->stack_data[st->start+2].u.num;
+        name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+        prefix=*name;
+
+        if( prefix!='$' )
+            sd=script_rid2sd(st);
+        else
+            sd=NULL;
+
+        set_reg(sd,num,name,(void*)mapname);
+
+     //Set MapX
+        num=st->stack->stack_data[st->start+3].u.num;
+        name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+        prefix=*name;
+
+        if( prefix!='$' )
+            sd=script_rid2sd(st);
+        else
+            sd=NULL;
+        set_reg(sd,num,name,(void*)x);
+
+
+     //Set MapY
+        num=st->stack->stack_data[st->start+4].u.num;
+        name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+        prefix=*name;
+
+        if( prefix!='$' )
+            sd=script_rid2sd(st);
+        else
+            sd=NULL;
+
+        set_reg(sd,num,name,(void*)y);
+
+     //Return Success value
+        push_val(st->stack,C_INT,0);
         return 0;
 }
 

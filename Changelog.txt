@@ -1,5 +1,7 @@
 Date	Added
 11/08
+	* Added new script command: getMapXY(MapName$,MaxX,MapY,type,[CharName$]) by Lorky [Lupus]
+	  Get position for char/npc/pet/mob objects.
 	* Attempted to fix the mob bug (still haven't :( ). Still updated mob.c/clif.c/chrif.c according to jA 1057. [Codemaster]
 	* Fixed item_cardalbum.txt: Removed extra column which mad all albums empty [Lupus]
 11/07
