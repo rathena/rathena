@@ -362,6 +362,8 @@ int clif_send(unsigned char *buf, int len, struct block_list *bl, int type) {
 		if (p) {
 			for(i=0;i<MAX_PARTY;i++){
 				if ((sd = p->member[i].sd) != NULL) {
+					if ((session[sd->fd] == NULL) || (session[sd->fd]->session_data == NULL))
+						continue;
 					if (sd->bl.id == bl->id && (type == PARTY_WOS ||
 					    type == PARTY_SAMEMAP_WOS || type == PARTY_AREA_WOS))
 						continue;
