@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -21,8 +21,8 @@ cmd_fild01.gat,0,0,0,0	monster	Shining Plant	1083,1,1800000,1800000,1
 
 //(cmd_fild02.gat)*
 cmd_fild02.gat,0,0,0,0	monster	Mobster	1313,1,0,0,0
-cmd_fild02.gat,200,130,150,40	monster	Seal	1317,16,180000,0,0
-cmd_fild02.gat,93,82,40,80	monster	Seal	1317,4,180000,0,0
+cmd_fild02.gat,200,130,150,40	monster	Seal	1317,16,0,0,0
+cmd_fild02.gat,93,82,40,80	monster	Seal	1317,4,0,0,0
 cmd_fild02.gat,0,0,0,0	monster	Galapago	1391,20,0,0,0
 cmd_fild02.gat,342,134,50,50	monster	Alligator	1271,5,0,0,0
 cmd_fild02.gat,122,119,50,40	monster	Alligator	1271,5,0,0,0
