@@ -11,8 +11,7 @@
 #include <string.h>
 
 
-extern int debug_mysql_query(MYSQL *mysql, const char *q);
-#define mysql_query(_x, _y)  debug_mysql_query(_x, _y)
+#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
 
 static struct party *party_pt;
 static int party_newid=100;

@@ -13,8 +13,7 @@
 #include "memwatch.h"
 #endif
 
-extern int debug_mysql_query(MYSQL *mysql, const char *q);
-#define mysql_query(_x, _y)  debug_mysql_query(_x, _y)
+#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
 
 #define MAX_RANDITEM	2000
 

@@ -42,6 +42,8 @@
 #include "memwatch.h"
 #endif
 
+#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
+
 char char_db[256] = "char";
 char cart_db[256] = "cart_inventory";
 char inventory_db[256] = "inventory";
@@ -3045,7 +3047,8 @@ int do_init(int argc, char **argv){
 #undef mysql_query
 int             STDCALL mysql_query(MYSQL *mysql, const char *q);
 
-int debug_mysql_query(MYSQL *mysql, const char *q) {
-	printf("DEBUG_MYSQL: %s\n", q);
-	return mysql_query(mysql, q);
+int debug_mysql_query(char *file, int line, void *mysql, const char *q) {
+        printf("sql: %s:%d# %s\n", file, line, q);
+        return mysql_query((MYSQL *) mysql, q);
 }
+
