@@ -169,6 +169,8 @@ Problem:	Wedding skills fully donate SP/HP from thin air (even when the donor ha
 Assigned:	N/A
 Progress:	0%
 
-Problem:	Bash, Counterattack, Grand Cross, etc stopped working on the latest SVN (they write "skill failed")
+Problem:	Bash, Counterattack, Grand Cross, Monk's Combo, etc
+		stopped working on the latest SVN (they write "skill failed")
+		some delays appered
 Assigned:	N/A
 Progress:	0%
