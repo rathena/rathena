@@ -231,7 +231,7 @@ L_NonNov:
 	emotion 1;
 	close;
 L_Start:
-	if(FIRSTAID==1 && countitem(930)==0) goto L_Aid;
+	if(FIRSTAID==1 && countitem(930)==0 && got_bandage!=1) goto L_Aid;
 	if(PLAYDEAD==1 && countitem(7039)==0) goto L_Play;
 	mes "Hello.  I'm here to provide help to newbies like you.  If there is anything in particular that you need assistance with just let me know.";
 	close;
@@ -239,6 +239,7 @@ L_Aid:
 	mes "So Nurse Aid sent you huh.  She's a great nurse, you should feel very fortunate that she is helping you out.  Here take this.";
 	next;
 	getitem 930,1;
+	set got_bandage,1;
 	mes "[Newbie Assistant]";
 	mes "You'll need it in order for her to teach you her exellent healing technique.";
 	next;
