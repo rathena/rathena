@@ -35,6 +35,7 @@ Other Ppl
 Date		Added
 ======
 12/30
+	* Fixed typo in priest.txt. [Mass Zero]
 	* Fixed some missing stuff, made monk.txt loading [Lupus]
 12/29
         * Added Dino9021's monk job quest script - still need checking before adding to
