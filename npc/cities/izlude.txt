@@ -25,7 +25,7 @@ izlude.gat,125,116,1	script	Welcome Sign	111,{
 // Sign: Marina -----------------------------------------------------------------
 izlude.gat,179,183,1	script	Izlude Marina	111,{
   mes "~sign reads...~";
-  mes "Take a boat ride to the city of Alberta or to the island of Byalan.";
+  mes "Take a boat ride to the city of Alberta or to the island of Bybalan.";
   close;
 }
 
@@ -88,14 +88,14 @@ izlude.gat,135,78,2	script	Charfri	91,{
 	mes "[Charfri]";
 	if(@TEMP != 0) goto L_R0;
 	mes "Some people insult our city by reffering to it as just being the satellite city of Prontera.... but Izlude is actually an excellent city.";
-	mes "It's home to the Izlude Swordsman Association and is situated next to the sea and the beautiful island of Byalan.";
+	mes "It's home to the Izlude Swordsman Association and is situated next to the sea and the beautiful island of Bybalan.";
 	next;
 	mes "[Charfri]";
-	mes "You'll have to board on a ship at the port to get to Byalan Island.  There is a dangerous dungeon on the island, so don't go there if you plan on wandering around aimlessly.";
+	mes "You'll have to board on a ship at the port to get to Bybalan Island.  There is a dangerous dungeon on the island, so don't go there if you plan on wandering around aimlessly.";
 	close;
 
 	L_R0:
-		mes "Though it is very beautiful, the Byalan Island has a mysterious dungeon extending deep under the sea.";
+		mes "Though it is very beautiful, the Bybalan Island has a mysterious dungeon extending deep under the sea.";
 		next;
 		mes "[Charfri]";
 		mes "People who've been there have said that some parts of the dungeon are actually underwater.";
@@ -516,7 +516,7 @@ izlude.gat,201,181,2	script	Sailor	100,{
 	mes "[Sailor]";
 	mes "Hey Everybody, Attention! Come and Ride the Wind on a Fantastic Ship!!! Come on! Hurry up!";
 	next;
-	menu "Byalan Island -> 150 Zeny.",-,"Alberta Marina -> 500 Zeny.",L1,"Cancel",LEnd;
+	menu "Bybalan Island -> 150 Zeny.",-,"Alberta Marina -> 500 Zeny.",L1,"Cancel",LEnd;
 	
 		if(Zeny < 150) goto sl_NoZeny;
 		set Zeny, Zeny - 150;
