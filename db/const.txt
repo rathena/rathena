@@ -220,6 +220,7 @@ bAgiVit			1074
 bAgiDexStr		1075
 bPerfectHide		1076
 bDisguise		1077
+bClassChange	1078
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
@@ -229,6 +230,7 @@ bNoWeaponDamage	2004
 bNoGemStone	2005
 bNoCastCancel2	2006
 bInfiniteEndure	2007
+
 
 Eff_Stone	0
 Eff_Freeze	1

@@ -5,18 +5,23 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
-11/21	* added mob stats: 1027,Raptice [Lupus]
+11/21
+	* added bClassChange to const.txt and added bClassChange,50; to azoth (.5% chance to transform monster into another.) [Valaris]
+	* added mob stats: 1027,Raptice [Lupus]
 
-11/20   - Added deadly poison bottle to produce_db.txt [celest]
+11/20
+	- Added deadly poison bottle to produce_db.txt [celest]
         - Edited ASC_CDP in skill_require_db.txt
         - Edited ASC_EDP in skill_cast_db.txt
 
-11/17   - Corrected max level for cloaking in skill_tree.txt [celest]
+11/17
+	- Corrected max level for cloaking in skill_tree.txt [celest]
 
 11/16
-	item 7110 fixed name -> Broken Sword (part of Bongun quest) [Lupus]
+	- Item 7110 fixed name -> Broken Sword (part of Bongun quest) [Lupus]
 	
-11/16   - Added BaseJob to const.txt [celest]
+11/16   
+	- Added BaseJob to const.txt [celest]
 
 11/15
 	- Minor fix on wedding skills, to use 15% of SP/HP . [shadowlady]

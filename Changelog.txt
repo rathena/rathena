@@ -1,5 +1,6 @@
 Date	Added
 11/21
+	* Added bClassChange,%; Has random chance to turn monster into another monster. [Valaris]
 	* Re-Fixed Trade/Vending exploit [Lupus]
 	* Fixed @whozeny. [Valaris]
 	* Added rest of mapflags to const.txt. [Valaris]

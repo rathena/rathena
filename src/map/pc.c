@@ -2436,6 +2436,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->unbreakable += val;
 		}
 		break;
+	case SP_CLASSCHANGE: // [Valaris]
+		if(sd->state.lr_flag !=2){
+			sd->classchange=val;
+		}
+		break;
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus: unknown type %d %d !\n",type,val);
@@ -2620,8 +2625,8 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag !=2){
 			sd->random_attack_increase_add = type2;
 			sd->random_attack_increase_per += val;
+		}	
 		break;
-		}	// end addition
 	default:
 		if(battle_config.error_log)
 			printf("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);

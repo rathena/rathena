@@ -518,7 +518,7 @@
 1232,Assassin_Dagger,Assasin Dagger,4,20,,600,140,,1,0,4096,2,2,4,36,1,{},{ bonus bMaxHPrate,20; bonus bMaxSPrate,15; bonus bAspdAddRate,2; bonus bAtkEle,7; },,
 1233,Exercise,Excorcise,4,20,,700,90,,1,0,2055918,2,2,4,36,1,{},{ bonus bIgnoreDefRace,6; bonus2 bSubRace,6,5; bonus2 bSubRace,7,-10; },
 1234,Moonlight_Sword,Walgwanggum,4,20,,700,50,,1,0,2055918,2,2,4,36,1,{},{ bonus bMaxSPrate,10; bonus2 bSPDrainRate,10000,1; },,,,,
-1235,Azoth,Azoth,4,20,,700,110,,1,0,262144,2,2,4,36,1,{},{},,,,,,
+1235,Azoth,Azoth,4,20,,700,110,,1,0,262144,2,2,4,36,1,{},{ bonus bClassChange,50; },,,,,,
 1236,Sucsamad,Sucsamad,4,20,,800,140,,1,0,2055918,2,2,4,36,1,{},{ bonus2 bAddEle,2,10; bonus2 bAddEle,4,10; bonus bUnbreakable,100; },,
 1237,Grimtooth_,Grimtooth,4,20,,800,180,,1,0,2055918,2,2,4,36,1,{},{ bonus bFlee,10; bonus bFlee2,5; bonus bDefRate,-50; bonus bDef2Rate,-50; },,
 1238,Zeny_Knife,Zeny Knife,4,20,,1200,64,,1,0,2055918,2,2,3,40,1,{},{ bonus bGetZenyNum,100; },,,,,
