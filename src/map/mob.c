@@ -565,11 +565,11 @@ static int mob_attack(struct mob_data *md,unsigned int tick,int data)
 		return 0;
 
 	if(tsd){
-		if( pc_isdead(tsd) || tsd->invincible_timer != -1 ||  pc_isinvisible(tsd) || md->bl.m != tbl->m || tbl->prev == NULL || distance(md->bl.x,md->bl.y,tbl->x,tbl->y)>=13 ){
-		md->target_id=0;
-		md->state.targettype = NONE_ATTACKABLE;
-		return 0;
-	}
+		if(pc_isdead(tsd) || tsd->invincible_timer != -1 ||  pc_isinvisible(tsd) || md->bl.m != tbl->m || tbl->prev == NULL || distance(md->bl.x,md->bl.y,tbl->x,tbl->y)>=13 ){
+			md->target_id=0;
+			md->state.targettype = NONE_ATTACKABLE;
+			return 0;
+		}
 	}
 	if(tmd){
 		if(md->bl.m != tbl->m || tbl->prev == NULL || distance(md->bl.x,md->bl.y,tbl->x,tbl->y)>=13){
@@ -581,7 +581,7 @@ static int mob_attack(struct mob_data *md,unsigned int tick,int data)
 
 
 	if(!md->mode)
-	mode=mob_db[md->class].mode;
+		mode=mob_db[md->class].mode;
 	else
 		mode=md->mode;
 
@@ -795,11 +795,10 @@ int mob_walktoxy(struct mob_data *md,int x,int y,int easy)
 	md->state.walk_easy = easy;
 	md->to_x=x;
 	md->to_y=y;
-	if(md->state.state == MS_WALK) {
+	if(md->state.state == MS_WALK)
 		md->state.change_walk_target=1;
-	} else {
+	else
 		return mob_walktoxy_sub(md);
-	}
 
 	return 0;
 }
@@ -850,14 +849,12 @@ int mob_setdelayspawn(int id)
 	spawntime2=md->last_deadtime+md->spawndelay2;
 	spawntime3=gettick()+5000;
 	// spawntime = max(spawntime1,spawntime2,spawntime3);
-	if(DIFF_TICK(spawntime1,spawntime2)>0){
+	if(DIFF_TICK(spawntime1,spawntime2)>0)
 		spawntime=spawntime1;
-	} else {
+	else
 		spawntime=spawntime2;
-	}
-	if(DIFF_TICK(spawntime3,spawntime)>0){
+	if(DIFF_TICK(spawntime3,spawntime)>0)
 		spawntime=spawntime3;
-	}
 
 	add_timer(spawntime,mob_delayspawn,id,0);
 	return 0;
@@ -924,7 +921,7 @@ int mob_spawn(int id)
 	md->move_fail_count = 0;
 
 	if(!md->speed)
-	md->speed = mob_db[md->class].speed;
+		md->speed = mob_db[md->class].speed;
 	md->def_ele = mob_db[md->class].element;
 	md->master_id=0;
 	md->master_dist=0;
@@ -936,6 +933,13 @@ int mob_spawn(int id)
 	md->next_walktime = tick+rand()%50+5000;
 	md->attackabletime = tick;
 	md->canmove_tick = tick;
+
+	md->guild_id = 0;
+	if (md->class >= 1285 && md->class <= 1288) {
+		struct guild_castle *gc=guild_mapname2gc(map[md->bl.m].name);
+		if(gc)
+			md->guild_id = gc->guild_id;
+	}
 	
 	md->sg_count=0;
 	md->deletetimer=-1;
@@ -1062,7 +1066,7 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range)
 
 	//=========== guildcastle guardian no search start===========
 	//when players are the guild castle member not attack them !
-	if(md->class == 1285 || md->class == 1286 || md->class == 1287){
+	if(md->class >= 1285 && md->class <= 1287){
 		struct map_session_data *sd;
 		struct guild *g=NULL;
 		struct guild_castle *gc=guild_mapname2gc(map[bl->m].name);
@@ -1071,11 +1075,9 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range)
 			return 0;  // end addition [Valaris]
 	
 		if(bl && bl->type == BL_PC){
-			if((sd=(struct map_session_data *)bl) == NULL){
-				printf("mob_can_reach nullpo\n");
+			nullpo_retr(0, sd=(struct map_session_data *)bl);
+			if(!gc)
 				return 0;
-			}
-				
 			if(gc && sd && sd->status.guild_id && sd->status.guild_id>0) {
 			g=guild_search(sd->status.guild_id);	// don't attack guild members [Valaris]
 				if(g && g->guild_id > 0 && g->guild_id == gc->guild_id)
@@ -1143,11 +1145,11 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
 	option = battle_get_option(bl);
 	race=mob_db[md->class].race;
 
-	if(!md->mode){
+	if(!md->mode)
 		mode=mob_db[md->class].mode;
-	}else{
+	else
 		mode=md->mode;
-	}
+
 	if(!(mode&0x80)) {
 		md->target_id = 0;
 		return 0;
@@ -1264,11 +1266,11 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	nullpo_retr(0, md=va_arg(ap,struct mob_data *));
 	nullpo_retr(0, itc=va_arg(ap,int *));
 
-	if(!md->mode){
-	mode=mob_db[md->class].mode;
-	}else{
+	if(!md->mode)
+		mode=mob_db[md->class].mode;
+	else
 		mode=md->mode;
-	}
+	
 
 	if( !md->target_id && mode&0x02){
 		if(!md->lootitem || (battle_config.monster_loot_type == 1 && md->lootitem_count >= LOOTITEM_SIZE) )
@@ -1536,7 +1538,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	}
 
 	if(!md->mode)
-	mode=mob_db[md->class].mode;
+		mode=mob_db[md->class].mode;
 	else
 		mode=md->mode;
 
@@ -1603,7 +1605,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 						  md->bl.x-AREA_SIZE*2,md->bl.y-AREA_SIZE*2,
 						  md->bl.x+AREA_SIZE*2,md->bl.y+AREA_SIZE*2,
 						  BL_PC,md,&i);
-	}
+		}
 	}
 
 	// The item search of a route monster
@@ -1650,10 +1652,10 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 							if(i==0){	// 最初はAEGISと同じ方法で検索
 								dx=tbl->x - md->bl.x;
 								dy=tbl->y - md->bl.y;
-							if(dx<0) dx++;
-							else if(dx>0) dx--;
-							if(dy<0) dy++;
-							else if(dy>0) dy--;
+								if(dx<0) dx++;
+								else if(dx>0) dx--;
+								if(dy<0) dy++;
+								else if(dy>0) dy--;
 							}else{	// だめならAthena式(ランダム)
 								dx=tbl->x - md->bl.x + rand()%3 - 1;
 								dy=tbl->y - md->bl.y + rand()%3 - 1;
@@ -1661,10 +1663,10 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	/*						if(path_search(&md->walkpath,md->bl.m,md->bl.x,md->bl.y,md->bl.x+dx,md->bl.y+dy,0)){
 								dx=tsd->bl.x - md->bl.x;
 								dy=tsd->bl.y - md->bl.y;
-							if(dx<0) dx--;
-							else if(dx>0) dx++;
-							if(dy<0) dy--;
-							else if(dy>0) dy++;
+								if(dx<0) dx--;
+								else if(dx>0) dx++;
+								if(dy<0) dy--;
+								else if(dy>0) dy++;
 						}*/
 						ret=mob_walktoxy(md,md->bl.x+dx,md->bl.y+dy,0);
 						i++;
@@ -1686,7 +1688,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 						return 0; // 既に攻撃中
 				mob_changestate(md,MS_ATTACK,attack_type);
 
-/*					if(mode&0x08){	// リンクモンスター
+/*				if(mode&0x08){	// リンクモンスター
 					map_foreachinarea(mob_ai_sub_hard_linksearch,md->bl.m,
 						md->bl.x-13,md->bl.y-13,
 						md->bl.x+13,md->bl.y+13,
@@ -1703,24 +1705,24 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 						mob_stop_walking(md,1);	// 歩行中なら停止
 				}else if(dist){
 					if(!(mode&1)){	// 移動しないモード
-					mob_unlocktarget(md,tick);
-					return 0;
-				}
+						mob_unlocktarget(md,tick);
+						return 0;
+					}
 					if( !mob_can_move(md) )	// 動けない状態にある
-					return 0;
+						return 0;
 					md->state.skillstate=MSS_LOOT;	// ルート時スキル使用
-				mobskill_use(md,tick,-1);
+					mobskill_use(md,tick,-1);
 //					if(md->timer != -1 && (DIFF_TICK(md->next_walktime,tick)<0 || distance(md->to_x,md->to_y,tbl->x,tbl->y)<2) )
 					if(md->timer != -1 && md->state.state!=MS_ATTACK && (DIFF_TICK(md->next_walktime,tick)<0 || distance(md->to_x,md->to_y,tbl->x,tbl->y) <= 0))
 						return 0; // 既に移動中
-				md->next_walktime=tick+500;
+					md->next_walktime=tick+500;
 					dx=tbl->x - md->bl.x;
 					dy=tbl->y - md->bl.y;
-/*				if(path_search(&md->walkpath,md->bl.m,md->bl.x,md->bl.y,md->bl.x+dx,md->bl.y+dy,0)){
+/*					if(path_search(&md->walkpath,md->bl.m,md->bl.x,md->bl.y,md->bl.x+dx,md->bl.y+dy,0)){
 						dx=tbl->x - md->bl.x;
 						dy=tbl->y - md->bl.y;
-				}*/
-				ret=mob_walktoxy(md,md->bl.x+dx,md->bl.y+dy,0);
+					}*/
+					ret=mob_walktoxy(md,md->bl.x+dx,md->bl.y+dy,0);
 					if(ret)
 						mob_unlocktarget(md,tick);// 移動できないのでタゲ解除（IWとか？）
 				}else{	// アイテムまでたどり着いた
