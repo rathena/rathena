@@ -35,6 +35,9 @@ Other Ppl
 Date		Added
 ======
 
+03/23
+	* WOE 1.3 Now you can't install Guardians during WOE [Lupus]
+	* Set only Storage/Cancel to Kafra in Niflheim. [Lupus]
 03/22
 	* Moved position for Marx Hansen to payon_in03, thanks to Dino9021 [celest]
 03/18

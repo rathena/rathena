@@ -9,7 +9,7 @@
 //= Lupus
 //= kobra_k88 (2.0)
 //===== Current Version: ===================================== 
-//= 2.2b
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ===============================================
@@ -24,7 +24,7 @@
 //= 2.2a Minor changes to function calls.  Using agruments. Added Guild options. [kobra_k88]
 //= 2.2b This version uses arrays for the teleport option.
 //= Rearranged next statements to make menu transitions smoother. [kobra_k88]
-//= Fixed typo >_< [Aria]
+//= 2.3 Removed SAVE from Niflheim. [Lupus]
 //============================================================ 
 
 
@@ -44,8 +44,7 @@ function	script	F_Kafra	{
 
 	if(getarg(0)==2) menu "-Use Storage",M_Storage, "-Use Guild Storage",M_GStorage, "-Rent a Cart",M_Cart, "-Use Teleport Service",M_Teleport, "-Cancel",M_End;
 
-	if(getarg(1)==1) menu "-Save",M_Save, "-Use Storage",M_Storage, "-Rent a Cart",M_Cart, "-Kafra Pass",M_Pass, "-Other Information Check",M_Info,
-			"-Cancel",M_End;
+	if(getarg(1)==1) menu "-Use Storage",M_Storage, "-Cancel",M_End;
 
 	menu	"-Save",M_Save, "-Use Storage",M_Storage, "-Use Teleport Service",M_Teleport, "-Rent a Cart",M_Cart, "-Kafra Pass",M_Pass, 
 		"-Other Information Check",M_Info, "-Cancel",M_End;
