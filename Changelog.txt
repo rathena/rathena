@@ -1,4 +1,7 @@
 Date	Added
+11/24
+	* Fixed char-txt crashing when closing, Codemaster free()'s. [MC Cameri]
+
 11/23
 	* Fixed script loading small/large monsters. [Valaris]
 	* @charoption is now #option [MC Cameri]

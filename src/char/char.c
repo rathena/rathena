@@ -3315,12 +3315,13 @@ int flush_timer(int tid, unsigned int tick, int id, int data){
 
 void do_final(void) {
 	int i;
-
+	printf("Terminating server.\n");
 	// write online players files with no player
 	for(i = 0; i < online_players_max; i++) {
 		online_chars[i].char_id = -1;
 		online_chars[i].server = -1;
 	}
+
 	create_online_files();
 	if(online_chars) free(online_chars);
 
@@ -3334,7 +3335,7 @@ void do_final(void) {
 	delete_session(char_fd);
 
 	for(i = 0; i < fd_max; i++)
-		if(session[i]->session_data) free(session[i]->session_data);
+		if(session[i] != NULL) free(session[i]);
 
 	char_log("----End of char-server (normal end with closing of all files)." RETCODE);
 }
