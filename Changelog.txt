@@ -1,3 +1,5 @@
+Last Changed: $LastChangedDate$ SVN: $Rev$
+
 Date	Added
 12/29
 	* Fix account register wipe issue (SVN 868) [MouseJstr]
