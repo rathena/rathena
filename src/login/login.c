@@ -1025,7 +1025,6 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email) {
 	if (auth_num >= auth_max) {
 		auth_max += 256;
 		auth_dat = (struct auth_dat*)aRealloc(auth_dat, sizeof(struct auth_dat) * auth_max);
-		memset(auth_dat, 0, sizeof(struct auth_dat) * auth_max);
 	}
 
 	memset(&auth_dat[i], '\0', sizeof(struct auth_dat));
