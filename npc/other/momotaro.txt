@@ -1,0 +1,439 @@
+//=====================================================================
+//MOMOTAROevent
+//=====================================================================
+amatsu.gat,223,235,4	script	出版社職員	763,{
+	if (event_momo == 10) goto Lfin;
+	if ((event_momo >= 1) && (event_momo <= 4)) goto Lget;
+	mes "[出版社職員]";
+	mes "こんにちは～";
+	mes "村に代々伝わる昔話のみを";
+	mes "扱う私ども^009CFFツルカメ出版社^000000では";
+	mes "老若男女を問わず人気の昔話";
+	mes "^009CFF<モモタロ>^000000をなんと……";
+	next;
+	mes "[出版社職員]";
+	mes "百万部！発行することが";
+	mes "できたんです。";
+	mes "その記念に、^3163FFモモタロ体験館^000000を";
+	mes "設立しました。";
+	next;
+	mes "[出版社職員]";
+	mes "実際モモタロ話の主人公になって";
+	mes "小鬼を退治できちゃうのです。";
+	mes "景品もありますよ！";
+	next;
+	menu "モモタロって何？",-,"ぜひ体験したいです！",L1,"私は忙しいので……",L2;
+		mes "[出版社職員]";
+		mes "！ モモタロ話を知らないなんて";
+		mes "流行に鈍感なお人ですね……";
+		mes "それでは私がお話しましょう……";
+		next;
+		mes "[出版社職員]";
+		mes "昔々、年老いた夫婦が暮らして";
+		mes "いました……夫婦はとても仲が";
+		mes "良かったのですが、子供が";
+		mes "いなかったのです……";
+		next;
+		mes "[出版社職員]";
+		mes "ある日、お婆さんが川で洗濯して";
+		mes "いると、大きな桃が流れてきたのです。";
+		mes "すぐに桃を引き上げて、家に帰って";
+		mes "お爺さんと割ってみると……";
+		mes "その中からなんと！";
+		mes "赤ん坊が現れたのです。";
+		next;
+		mes "[出版社職員]";
+		mes "お爺さんとお婆さんはたいそう";
+		mes "びっくりしましたが、その赤ん坊を";
+		mes "自分たちの子として育てることに";
+		mes "したのです。";
+		next;
+		mes "[出版社職員]";
+		mes "その子はすくすくと育ち、";
+		mes "数日後にはもう、すっかり";
+		mes "たくましい少年になったのです。";
+		next;
+		mes "[出版社職員]";
+		mes "その子の名前は<モモタロ>";
+		mes "と名づけられ、当時村人を";
+		mes "苦しめていた小鬼を退治する";
+		mes "ために旅に出たのです……";
+		next;
+		mes "[出版社職員]";
+		mes "道中で会った^3163FF猿、雉、犬^000000を";
+		mes "仲間にして、とうとう最後には";
+		mes "みごと小鬼を退治して";
+		mes "お爺さんとお婆さんと幸せに";
+		mes "暮らしたそうな…… -完-";
+		next;
+		mes "[出版社職員]";
+		mes "どうです？";
+		mes "百万部のおもしろさは！";
+		close;
+L1:
+		mes "[出版社職員]";
+		mes "む！威勢の良いお方ですね！";
+		mes "私まで元気になりそうです。";
+		mes "では、この申込書へ記入を……";
+		next;
+		mes "[出版社職員]";
+		mes "……";
+		mes "……ふむふむ……";
+		mes "……はい！良いです！";
+		mes "それでは早速……";
+		mes "<モモタロ体験館>!!";
+		mes "楽しんできてください";
+		next;
+		warp "ama_test",52,35;
+		break;
+L2:
+		mes "[出版社職員]";
+		mes "景品も出るんですが……(ボソッ)";
+		close;
+Lget:
+	mes "[出版社職員]";
+	mes "どうです、楽しんでいただけ";
+	mes "ましたか？";
+	mes "ひっそりと準備してきた";
+	mes "体験館ですが、少しでも";
+	mes "楽しい時間を過ごせていただけ";
+	mes "たら幸いです。";
+	next;
+	if (event_momo == 1) getitem 627,1;
+	if (event_momo == 2) getitem 629,1;
+	if (event_momo == 3) getitem 625,1;
+//アムムト成功後不明
+	if (event_momo == 4) getitem 629,1;
+	set event_momo,10;
+	mes "[出版社職員]";
+	mes "では、私どもが用意した粗品を";
+	mes "進呈いたしましょう。";
+	mes "今後とも昔話が";
+	mes "広く愛されますように……";
+	close;
+Lfin:
+	mes "[出版社職員]";
+	mes "良い天気ですねぇ……";
+	mes "こんな日は布団を干したくなります。";
+	close;
+}
+//=====================================================================
+ama_test.gat,52,44,4	script	待機室担当者	109,{
+	mes "[サトシ]";
+	mes "<モモタロ体験館>に";
+	mes "ようこそ！";
+	next;
+	mes "[サトシ]";
+	mes "私は<モモタロ体験館>の";
+	mes "控室担当、サトシと申します。";
+	next;
+	mes "[サトシ]";
+	mes "元々は出版社で働いていた";
+	mes "のですが……人が足りなくて";
+	mes "急に派遣されてしまいました……";
+	mes "でも、よかったです！";
+	mes "こんなふうにぼーっとしながら";
+	mes "挑戦する人を見物できるんですから。";
+	next;
+	mes "[サトシ]";
+	mes "……";
+	mes "いやいや、冗談ですよ……";
+	mes "(汗をぬぐう)";
+	next;
+	mes "[サトシ]";
+	mes "では、体験館について";
+	mes "ご説明をさしあげます。";
+	next;
+	mes "[サトシ]";
+	mes "一応、モモタロの話については";
+	mes "外の職員から伺ってますよね？";
+	next;
+	menu "はい",L1,"いいえ",-;
+		mes "[控室担当]";
+		mes "あんですと？";
+		mes "ここまで来て話を知らないと？";
+		mes "……";
+		mes "モモタロファンとして";
+		mes "認めることはできませんな……";
+		next;
+		mes "[控室担当]";
+		mes "外の職員から話を聞いてきなさい。";
+		mes "それからです……";
+		mes "さようなら～";
+		next;
+		warp "amatsu.gat",223,230;
+		break;
+L1:
+		mes "[サトシ]";
+		mes "ふふ……";
+		mes "モモタロの話は、私どもの";
+		mes "出版社の自慢作です！";
+		mes "最高傑作でしょう？";
+		mes "ハハハッ!!!";
+		next;
+		mes "[サトシ]";
+		mes "……フムフム";
+		next;
+		mes "[サトシ]";
+		mes "体験館のルールは簡単です。";
+		mes "中に入ってモモタロのように";
+		mes "勇ましく!!! 小鬼を退治すれば";
+		mes "良いんです。";
+		mes "そう、勇ましく!!!!! です。";
+		next;
+		mes "[サトシ]";
+		mes "そして、注意事項が";
+		mes "三つあります。";
+		next;
+		mes "[サトシ]";
+		mes "一つ目、";
+		mes "当体験館は一度でもクリアされると";
+		mes "また入ることができません。";
+		mes "その点に気をつけてください。";
+		next;
+		mes "[サトシ]";
+		mes "二つ目、";
+		mes "体験館内にはペットを";
+		mes "連れていかないでください。";
+		mes "もしペットを連れていらっしゃったら";
+		mes "卵に変えてからお入りください。";
+		next;
+		mes "[サトシ]";
+		mes "最後の注意事項、";
+		mes "体験館は一人あたり6分間";
+		mes "の制限時間があります。";
+		next;
+		mes "[サトシ]";
+		mes "さぁ、それでは控室チャットに";
+		mes "入って順番をお待ちください。";
+		mes "健闘を祈ります!!!";
+		close;
+OnInit:
+	waitingroom "体験館控室",1,"待機室担当者::OnMax";
+	break;
+OnMax:
+	doevent "roomt";
+	warpwaitingpc "ama_test.gat",50,83;
+	disablenpc "待機室担当者";
+	disablenpc "管理人";
+	enablenpc "お婆さん";
+	enablenpc "お爺さん";
+	break;
+}
+ama_test.gat,49,93,4	script	お爺さん	766,{
+	close;
+}
+ama_test.gat,50,93,4	script	お婆さん	761,{
+	mes "[お婆さん]";
+	mes "フォーー!?";
+	next;
+	mes "[お婆さん]";
+	mes "お爺さん、";
+	mes "私のお金、どこへいったか";
+	mes "知らないかい？";
+	next;
+	mes "[お爺さん]";
+	mes "婆さんや……村長様が言うには、";
+	mes "このごろ小鬼が人からお金を";
+	mes "盗むようになって村中大騒ぎ";
+	mes "なんじゃよ……";
+	next;
+	mes "[お婆さん]";
+	mes "キィィィ……！";
+	next;
+	mes "[お爺さん]";
+	mes "そこかしこでその話で持ちきりじゃ……";
+	next;
+	mes "[お爺さん]";
+	mes "そこでモモタロよ……";
+	next;
+	mes "[お爺さん]";
+	mes "お前も知っているように";
+	mes "ここの連中は臆病者ばかりで";
+	mes "小鬼を退治する力もない……";
+	mes "モモタロ、おまえに頼みたい";
+	mes "のじゃ……";
+	next;
+	mes "[お婆さん]";
+	mes "モモタロ……";
+	mes "この婆がお前のためにと";
+	mes "^3355ffこの世で一番美味しい赤ポーション";
+	mes "を持たせてやりたかったが……";
+	mes "全部作るのを失敗してしもうた……^000000";
+	next;
+	mes "[お婆さん]";
+	mes "すまないね……モモタロや……";
+	next;
+	mes "[お婆さん・お爺さん]";
+	mes "それでは頼んだぞ……";
+	disablenpc "お婆さん";
+	disablenpc "お爺さん";
+	set @mobdie,0;
+	monster "ama_test.gat",47,101,"小鬼",1110,1,"mobcount";
+	monster "ama_test.gat",51,101,"小鬼",1110,1,"mobcount";
+	monster "ama_test.gat",55,101,"小鬼",1110,1,"mobcount";
+	monster "ama_test.gat",55,97,"小鬼",1110,1,"mobcount";
+	monster "ama_test.gat",55,93,"小鬼",1110,1,"mobcount";
+	monster "ama_test.gat",53,91,"小鬼",1110,1,"mobcount";
+	monster "ama_test.gat",49,91,"小鬼",1110,1,"mobcount";
+	monster "ama_test.gat",45,96,"小鬼",1110,1,"mobcount";
+	monster "ama_test.gat",45,99,"小鬼",1110,1,"mobcount";
+	close;
+}
+ama_test.gat,50,100,4	script	管理人	762,{
+	mes "[管理人]";
+	mes "ホホッやるな……";
+	mes "私はここの管理人をしておるが……";
+	mes "おぬしただものではないな？";
+	mes "なかなか驚いたぞ。";
+	next;
+	mes "[管理人]";
+	mes "話の中のモモタロが";
+	mes "この世に現れるとはな！";
+	mes "ホホホホホ！";
+	next;
+	menu "余裕でしたね",L1,"くだらない……",L2;
+L1:
+	mes "[管理人]";
+	mes "ホッホッホ……";
+	mes "あまり調子に乗るでない……";
+	mes "私がおぬしほどの時は";
+	mes "小鬼など指で軽くひねって";
+	mes "くれたわ……ホホホ……";
+	next;
+	mes "[管理人]";
+	mes "……";
+	mes "冗談じゃ。";
+	next;
+	mes "[管理人]";
+	mes "それじゃ、モモタロ体験館を";
+	mes "楽しんでくれたかな？";
+	mes "最初に会った職員と話せば";
+	mes "我々が用意した景品とくれるだろう。";
+	next;
+	mes "[管理人]";
+	mes "何はともあれ、その強き心を";
+	mes "失うなかれ！";
+	next;
+	set event_momo,1;
+	deltimer "roomt";
+	disablenpc "管理人";
+	enablenpc "待機室担当者";
+	warp "amatsu.gat",223,230;
+	break;
+L2:
+	mes "[管理人]";
+	mes "!!!!!";
+	mes "……ホ…ホホホ……";
+	mes "おもしろい奴だな……";
+	mes "よし……";
+	mes "私から一つ提案がある。";
+	next;
+	mes "[管理人]";
+	mes "本来なら今すぐお前を";
+	mes "叩き出すところだが……";
+	mes "おぬしの本当の実力が知りたい";
+	mes "からな……ホホホ。";
+	mes "まるで私の若かりし頃を見るようだ。";
+	mes "ホホホホッ";
+	next;
+	mes "[管理人]";
+	mes "どうだ？私から一度機会を";
+	mes "与えよう。一度挑戦したら";
+	mes "^3355ff二度と挑戦できない^000000が……";
+	mes "次はおぬしでも難しいだろう。";
+	next;
+	menu "もう充分です",L2_1,"挑戦してみます",L2_2;
+L2_1:
+	mes "[管理人]";
+	mes "ホホ……";
+	mes "おぬしも前の戦いで疲れておるか。";
+	mes "まぁいい……モモタロ体験館は楽しんでくれたかな？";
+	mes "最初に会った職員と話せば";
+	mes "我々が用意した景品をくれるだろう。";
+	next;
+	mes "[管理人]";
+	mes "何はともあれ、その強き心を";
+	mes "失うなかれ！";
+	next;
+	set event_momo,2;
+	deltimer "roomt";
+	disablenpc "管理人";
+	enablenpc "待機室担当者";
+	warp "amatsu.gat",223,230;
+	break;
+L2_2:
+	mes "[管理人]";
+	mes "ホホホ、ますます気に入ったぞ！";
+	mes "最後の決戦だ。";
+	mes "おぬしの実力を遺憾なく";
+	mes "発揮するように！";
+	monster "ama_test.gat",35,103,"鬼",1301,1,"mobcount2";
+	monster "ama_test.gat",56,111,"鬼",1301,1,"mobcount2";
+	monster "ama_test.gat",40,91,"鬼",1301,1,"mobcount2";
+	disablenpc "管理人";
+	set event_momo,3;
+	close;
+Onstart:
+	mes "[管理人]";
+	mes "ホホ……";
+	close;
+}
+//=======================================MobCount===============================-
+ama_test.gat,0,1,0	script	mobcount	-1,{
+	if (@mobdie == 8) goto Lfin;
+	set @mobdie,@mobdie+1;
+	set @mobrand,rand(4);
+	if (@mobrand == 1) goto Lrand2;
+	if (@mobrand == 2) goto Lrand3;
+	if (@mobrand == 3) goto Lrand4;
+Lrand1:
+	areaannounce "ama_test.gat",30,78,68,120,"DOKEBI: オラはナニモシテナイ！",8;break;
+Lrand2:
+	areaannounce "ama_test.gat",30,78,68,120,"DOKEBI: ゴメンナサイゴメンナサイ",8;break;
+Lrand3:
+	areaannounce "ama_test.gat",30,78,68,120,"DOKEBI: アーー…",8;break;
+Lrand4:
+	areaannounce "ama_test.gat",30,78,68,120,"DOKEBI: 不意打ちかー…",8;break;
+Lfin:
+	areaannounce "ama_test.gat",30,78,68,120,"DOKEBI: ゴオオオオ……",8;
+	enablenpc "管理人";
+	doevent "管理人::Onstart";
+	break;
+}
+//=======================================MobCount2==============================-
+ama_test.gat,50,101,0	script	mobcount2	-1,{
+	if (@mobdie2 == 2) goto Lfin;
+	set @mobdie2,@mobdie2+1;
+	areaannounce "ama_test.gat",30,78,68,120,"AMMUT: ぐおおおお…",8;break;
+Lfin:
+	set event_momo,4;
+	deltimer "roomt";
+	enablenpc "待機室担当者";
+	warp "amatsu.gat",223,230;
+	break;
+}
+//=======================================TIMER==================================-
+ama_test.gat,50,102,0	script	roomt	-1,{
+	deltimer "roomt";
+	mapannounce "ama_test.gat","今から制限時間は６分間です。",8;
+	addtimer 180000,"roomt::On180000";
+	break;
+On180000:
+	deltimer "roomt";
+	mapannounce "ama_test.gat","あと三分です。",8;
+	addtimer 120000,"roomt::On300000";
+	break;
+On300000:
+	deltimer "roomt";
+	mapannounce "ama_test.gat","あと一分。",8;
+	addtimer 60000,"roomt::On360000";
+	break;
+On360000:
+	mapannounce "ama_test.gat","ピ- ピ- ピ- 持ち時間が無くなりました。",8;
+	deltimer "roomt";
+	disablenpc "管理人";
+	enablenpc "待機室担当者";
+	areawarp "ama_test.gat",30,78,68,120,"amatsu.gat",223,230;
+	break;
+}

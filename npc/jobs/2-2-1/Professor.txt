@@ -1,0 +1,61 @@
+//Professor Made by Evera/Lorri
+//Fixed by PoW
+valkyrie.gat,53,47,4	script	Professor	743,{
+	if (readparam(12) != 0) goto Lskpt;
+	if ((readparam(11) >= 99) && (readparam(19) == 16) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
+	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
+	if ((readparam(19) == 4003) && (readparam(55) >= 40)) goto Lh2;
+	if ((readparam(19) == 4003) && (readparam(55) < 40)) goto LCem;
+	if (readparam(19) == 4017) goto Lcrazy;
+	mes "[Professor]";
+	mes "Hello";
+	mes "Knowledge is the key.";
+	close;
+Lnovice:
+	mes "[Professor]";
+	mes "You seem smart. Hm. Do you wish to persue your dream of knowledge and become a professor like me?";
+	mes "There is a catch though, you have to go back through novice and mage.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lh1:
+	mes "[Professor]";
+	mes "Ready to become a high mage?";
+	menu "Yes",Lh12,"No",Lcancel;
+Lh12:
+	mes "[Professor]";
+	mes "Read this book, you'll be enchanted by its magic";
+	next;
+	jobchange 26;// Job: Job_Mage_High
+	close;
+Lh2:
+	mes "[Professor]";
+	mes "It appears as your intelligence quota surpasses mine. Will you become a professor";
+	menu "Yes",Lh22,"No",Lcancel;
+Lh22:
+	mes "[Professor]";
+	mes "Read this book, you'll be enchanted by its magic";
+	jobchange 40;// Job: Job_Professor
+	close;
+Lcrazy:
+	mes "[Professor]";
+	mes "Your intelligence will surpass many other unfortunate souls who have not found truth in a book.";
+	close;
+Lskpt:
+	mes "[Professor]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "[Professor]";
+	mes "You're not ready to go to the next level";
+	close;	
+Lcancel:
+	mes "Bye";
+	close;
+}

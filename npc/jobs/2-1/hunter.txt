@@ -1,0 +1,1250 @@
+//===== eAthena Script ======================================= 
+//= Hunter Job Quest
+//===== By: ================================================== 
+//= EREMES THE CANIVALIZER (Aegis).
+//= Translated by yoshiki (Aegis)
+//= Converted by kobra_k88
+//= Further bugfixed and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.7
+//===== Compatible With: ===================================== 
+//= eAthena 1.0
+//===== Description: ========================================= 
+//= Hunter Job Quest converted from aegis script
+//===== Additional Comments: ================================= 
+//= v1.0 Fully working.
+//= v1.1 Changed global variable names to unique ones.
+//= v1.2 - 1.3 Updates for eAthena +Knight2,Crusader2 fix
+//= v1.4 Rollback from the wrong Kashy's fix
+//= v1.5 Fixed items quest fork bug [Lupus]
+//= v1.6 Fixed items quest bug: added extra condition [Lupus]
+//= v1.7 Fixed skillpoints check bug [Lupus]
+//============================================================ 
+
+
+
+// Please add this warp to your warp/s script/s if it is not already there, or you can enable it here
+//in_hunter.gat,100,13,0	warp	hnt_to_payfild10	1,2,pay_fild10,145,250
+
+
+//<================================ Guildsman: Warps you to guild =======================================>\\
+pay_fild10.gat,148,251,4	script	Hunter Guildsman	98,{
+	warp "in_hunter.gat",100,18;
+	end;
+}
+
+
+//<====================================== Job Changer ========================================>\\
+in_hunter.gat,99,99,4	script	Hunter Sharon	727,
+{
+	if(Class==Job_Archer) goto L_Start;
+	if(Class==Job_Hunter) goto L_Hunt;
+	if(callfunc("Is_Bow_Class")) goto L_Other;
+	if(callfunc("Is_Sword_Class")) goto L_Swo;
+	if(callfunc("Is_Magic_Class")) goto L_Mage;
+	if(callfunc("Is_Thief_Class")) goto L_Thf;
+	if(callfunc("Is_Holy_Class")) goto L_Aco;
+	if(callfunc("Is_Merc_Class")) goto L_Merc;
+
+L_Nov:
+	mes "[Hunter Sharon]";
+	mes "What's a novice like you doing here? Leave, we have nothing for you.";
+	emotion 1;
+	close;
+L_Swo:
+	mes "[Hunter Sharon]";
+	mes "A follower of the way of the blade! We have nothing for you here so please leave.";
+	close;
+L_Mage:
+	mes "[Hunter Sharon]";
+	mes "Hello mage type person.  If you have no business here, please leave,";
+	close;
+L_Aco:
+	mes "[Hunter Sharon]";
+	mes "Good day, religious zealot! It's nice to meet you and all, but you have no buisiness here.";
+	close;
+L_Merc:
+	mes "[Hunter Sharon]";
+	mes "Hey, how's buisiness? Perhaps if you want to sell something, go back to town.";
+	close;
+L_Thf:
+	mes "[Hunter Sharon]";
+	mes "Eeep! There's nothing to steal here!! Leave us alone..... go rob an old lady or something......";
+	emotion 23;
+	close;
+L_Hunt:
+	mes "[Hunter Sharon]";
+	mes "What up! "+strcharinfo(0)+" Why did you come back? Falcon run away or something? Te hehe.";
+	emotion 18;
+	next;
+	mes "[Hunter Sharon]";
+	mes "I hope you didn't think you could get free stuff from us just because your part of our guild now......";
+	close;
+L_Other:
+	mes "[Hunter Sharon]";
+	mes "What are YOU doing her? Did you come to do a little song and dance... ke.. keke....kekekeHahahahhaha!!!";
+	emotion 18;
+	close;
+
+
+L_Start:
+	mes "[Hunter Sharon]";
+	if(HNTR_Q == 1) goto L_Test2;
+	if(HNTR_Q == 2) goto L_Test3;
+	if(HNTR_Q == 3) goto L_Change;
+	if(HNTR_Q2 == 1) goto L_ReTest;
+	mes "Hey archer!! Hmmm....... You look like you've trained pretty hard.... I take it you're here to be a hunter!";
+	next;
+	menu "Of course!",M_0, "What are the requirements",M_1, "Not right now.",M_End;
+
+	M_0:
+		mes "[Hunter Sharon]";
+		mes "Heh, I knew it.  First fill out this application form.";
+		next;
+		mes "(you fill out the form and hand it back)";
+		next;
+		mes "[Hunter Sharon]";
+		if(JobLevel < 40) goto sL_LowLvl;
+		if(JobLevel == 50) goto sL_HighLvl;
+		set JBLVL, 40;
+		mes "Looks good.  Let me start off by introducing myself.  My name is Sharon, nice to meet you.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "Before I explain the process of becoming a Hunter, I'd like to do a short interview with you.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "Do you want to do the interview now?";
+		next;
+		menu "Yeah, let's begin.",L_Test, "Nah, I'll come back in a bit.",M_End;
+
+		sL_LowLvl:
+			mes "Hmm... It looks like you'll need more training.  To become a Hunter, you will have to have a great amount of experience.";
+			next;
+			mes "[Hunter Sharon]";
+			mes "Having a ^5533FFjob level of 40^000000 is what is required of all Hunter candidates.  Please continue your training and good luck.";
+			close;
+		sL_HighLvl:
+			mes "Well, well now!  A high level archer.... very nice!  You must have trained really hard.";
+			emotion 5;
+			next;
+			mes "[Hunter Sharon]";
+			mes "My name is Sharon, nice to meet you.  Before I explain the process of becoming a Hunter, I'd like to do a short interview with you.";
+			next;
+			set JBLVL, 50;
+			goto L_Test;
+	M_1:
+		mes "[Hunter Sharon]";
+		mes "The requirements?";
+		mes "1. Be a archer";
+		mes "2. Have a job level of at least 40";
+		mes "3. Pass all of the tests";
+		next;
+		mes "[Hunter Sharon]";
+		mes "If you trained hard enough, you shouldn't have any problems becoming a Hunter.";
+		close;
+	
+	M_End:
+		mes "[Hunter Sharon]";
+		mes "Ok, I'll see you later.";
+		close;
+
+
+	L_ReTest:
+		mes "[Hunter Sharon]";
+		mes "Hmm.. what's this? So you wanna do the interview again? Very well.  Hopefully you'll do better this time.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "Okay, let's start!";
+		next;
+	L_Test:
+		set @score, 0;
+		mes "[Hunter Sharon]";
+		mes "I'm going to ask you some simple questions to get a feel for who you are and why you want to become a Hunter.";
+		mes "Relax and answer the questions honestly and thoughtfully.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "You've been an training for a while, and now you're running out of ideas about where to go hunt.  What should you do?";
+		next;
+		menu "Walk around screaming, 'Where should i go hunt!?'",M_1b, "Ask someone politely.",-, "Just explore.",-;
+
+			set @score, @score + 10;
+		M_1b:
+	
+		mes "[Hunter Sharon]";
+		mes "Okay, so you picked your hunting spot! You plan to go to the Sograt Desert to hunt Hodes.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "But you're in Payon! How do you get to the desert?";
+		next;
+		menu "Go beg priests for warps",M_2b, "Kafra warp",-, "Walk there with a friend",-;
+
+			set @score, @score + 10;
+		M_2b:
+	
+		mes "[Hunter Sharon]";
+		mes "There are no priests around, all your friends are busy, and you don't have enough money for a kafra warp.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "How do you get the money?";
+		next;
+		menu "Beg",M_3b, "Sell useless items",-, "Go hunting in a nearby field",-;
+
+			set @score, @score + 10;
+		M_3b:
+
+		mes "[Hunter Sharon]";
+		mes "You somehow get to the desert, but now you feel too weak to hunt hodes.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "What do you do now??";
+		next;
+		menu "Go cliff hunting.",M_4b, "Go rest at Morroc.",-, "Start shooting the hodes that other people are attacking.",M_4b;
+
+			set @score, @score + 10;
+		M_4b:
+
+		mes "[Hunter Sharon]";
+		mes "It's too much, you can't do it. You go to Morroc.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "By the time you return to town, you have no hp left, but you see a priest.  How do you ask for a heal?";
+		next;
+		menu "If it's ok, can i have a heal please?",-, "Heal please.",M_5b, "heal plz",M_5b;
+
+			set @score, @score + 10;
+		M_5b:
+
+		mes "[Hunter Sharon]";
+		mes "While hunting, you find a rare item. You go to the market to sell it, and find lots of people and chat rooms.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "What do you do to sell the item quicker?";
+		next;
+		menu "Go into preexisting chat rooms and ask",M_6b, "Make your own chat room.",-, "See if anyone is buying.",-;
+
+			set @score, @score + 10;
+		M_6b:
+
+		mes "[Hunter Sharon]";
+		mes "After a while, a person starts to beg you. What do you do?";
+		next;
+		menu "Give some items and money",M_7b, "Ignore that person",M_7b, "Tell them where to level and make money.",-;
+
+			set @score, @score + 10;
+		M_7b:
+
+		mes "[Hunter Sharon]";
+		mes "You decide to go hunting in the woods.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "But you find someone who's lost. What do you do?";
+		next;
+		menu "Give him/her directions.",-, "Personally escort him/her.",-, "Ignore that person.",M_8b;
+
+			set @score, @score + 10;
+		M_8b:
+
+		mes "[Hunter Sharon]";
+		mes "You take the person to a safe place and resume hunting.  While hunting, you see someone fighting a mvp!";
+		next;
+		mes "[Hunter Sharon]";
+		mes "What do you do?";
+		next;
+		menu "Watch and attack if asked for help.",-, "Start attacking.",M_9b, "Return to town in panic.",M_9b;
+
+			set @score, @score + 10;
+		M_9b:
+
+		mes "[Hunter Sharon]";
+		mes "Now you're done hunting for the day.";
+		next;
+		mes "[Hunter Sharon]";
+		mes "You find a rare item on the street while going back to town.  What do you do?";
+		next;
+		menu "Finders keepers.",M_10b, "Try to find owner.",-, "Walk past it.",-;
+
+			set @score, @score + 10;
+		M_10b:
+
+	L_Score:
+		mes "[Hunter Sharon]";
+		mes "Now we're done!!";
+		next;
+		if(@score < 90) goto sL_Failed;
+		if(@score < 100) goto sL_90;
+
+		sL_100:
+			mes "[Hunter Sharon]";
+			mes "Great! Based on the answers you gave, you seem to be just the type of person we're looking for.";
+			emotion 21;
+			next;
+			mes "[Hunter Sharon]";
+			mes "With your kind of additude and values, you should have no problems becoming a Hunter.";
+			next;
+			goto L_Test2;
+		sL_90:
+			mes "[Hunter Sharon]";
+			mes "You didn't do as well as I hoped, but I'll pass you.... Though I don't know what the guild master will think of you....";
+			next;
+			mes "[Hunter Sharon]";
+			mes "Work hard on the next test.  Make Sharon happy, okies?";
+			next;
+			goto L_Test2;
+		sL_Failed:
+			mes "[Hunter Sharon]";
+			mes "I.......don't think I can pass you..... The way you live your life is...... well... unexecptable for a Hunter candidate.";
+			emotion 4;
+			next;
+			mes "[Hunter Sharon]";
+			mes "Think carefully about my questions and your answers.  Working well with people is just as important as loving nature.";
+			set HNTR_Q2, 1;
+			close;
+
+L_Test2:
+	mes "What you have to do next is go see ^5533FFMr. Demon Hunter^000000 over there to my left.  He'll tell you about the second test.";
+	next;
+	mes "[Hunter Sharon]";
+	mes "Good luck!";
+	set HNTR_Q, 1;
+	set HNTR_Q2, 0;
+	close;
+
+L_Test3:
+	mes "Hmmm? The guild master? Oh, he's out right now.";
+	emotion 20;
+	next;
+	mes "[Hunter Sharon]";
+	mes "If I remember correctly, he should be somewhere in Archer Village.  I think he had to talk with someone in the ^5533FFArcher Guild^000000.";
+	close;
+
+L_Change:
+	if(skillpoint > 0) goto sL_SkPoints;
+	if(countitem(1007) < 1) goto sL_NotRdy;
+	mes "Huh? Did you pass the test?";
+	next;
+	mes "[Hunter Sharon]";
+	mes "Congratulations!!";
+	emotion 21;
+	next;
+	mes "[Hunter Sharon]";
+	mes "Now I can change you into a Hunter!";
+	next;
+	mes "[Hunter Sharon]";
+	mes "There you go! You look great in the hunter outfit";
+	jobchange Job_HUNTER;
+	emotion 21;
+	next;
+	mes "[Hunter Sharon]";
+	mes "Now, for working so hard, the guild has a small reward for you.";
+	if(JBLVL == 50) getitem 1718, 1;
+	if(JBLVL == 40) getitem 1710, 1;
+	callfunc "F_ClearJobVar";		// clears all job variables for the current player
+	next;
+	mes "[Hunter Sharon]";
+	mes "Do all of us here a favor, act responsibly, and love and respect nature! Good luck on your journey and remember you are always welcome here!";
+	next;
+	close;
+
+	sL_SkPoints:
+		mes "You still have skill points left over.  Speak with me after you've used them up.";
+		close;
+	sL_NotRdy:
+		mes "[Hunter Sharon]";
+	       	mes "Hmmm, I received news of your success.... But you don't seem to have the ^5533FFNecklace of Wisdom^000000 as proof.";
+		emotion 20;
+		next;
+		mes "[Hunter Sharon]";
+	       	mes "You will need the Necklace of Wisdom to become a Hunter.  If you don't have it you will have to start the test over.";
+		next;
+		menu "Um... I've got it.... somewhere....",-, "Heh heh.... I must have misplaced it.....",sM_ReStart;
+
+			mes "[Hunter Sharon]";
+			mes "Well then go get it!";
+			emotion 6;
+			close;
+		sM_ReStart:
+			mes "[Hunter Sharon]";
+			mes "..... That's just pathetic....... Have fun re-doing the ENTIRE TEST!";
+			emotion 32;
+			set HNTR_Q, 0;
+			set HNTR_Q2, 0;
+	       		close;
+}
+
+
+//<=========================== Demon Hunter: Second Test ===============================>\\
+in_hunter.gat,55,99,7	script	Demon Hunter	732,
+{
+	if(Class == Job_Archer) goto L_Arc;
+	if(Class == Job_Hunter) goto L_Hnt;
+
+L_Other:
+	mes "[Demon Hunter]";
+	mes "They call me the Demon Hunter.  What's that? You want to know why I'm called that?......";
+	next;
+	mes "[Demon Hunter]";
+	mes "heh... heh.... heh.....";
+	next;
+	mes "[Demon Hunter]";
+	mes "For your safety... it's best that you DON'T find out.....";
+	emotion 29;
+	close;
+
+L_Hnt:
+	mes "[Demon Hunter]";
+	mes "Look at you! Nice and spiffy in that Hunter's outfit.  How does it feel?  Good I bet.  Well good luck to you.";
+	emotion 0;
+	close;
+
+L_Arc:
+	mes "[Demon Hunter]";
+	if(HNTR_Q == 1 && HNTR_Q2 > 0) goto L_Check; //Fixed [Lupus]
+	if(HNTR_Q == 1) goto L_Start;
+	if(HNTR_Q == 2) goto L_Test3;
+	if(HNTR_Q == 3) goto L_Done;
+	mes "You'll have to speak with ^5533FFHunter Sharon^000000 first, if you want to become a hunter.";
+	close;
+L_Start:
+	mes "Hello, I'm the test examiner they call the Demon Hunter.  Is ^5566FF"+strcharinfo(0)+"^000000 your name?";
+	next;
+	menu "Yes",M_Yes, "Uhhh.... no",M_No;
+
+	M_Yes:
+		mes "[Demon Hunter]";
+		mes "Good.  Because we make the arrows used during some of the tests, we also need the materials to make those arrows.";
+		next;
+		mes "[Demon Hunter]";
+		mes "If you haven't noticed already, our guild is NOT as wealthy as some of the others.  I mean we're in the middle of the freaking forest for pete sake....";
+		emotion 7;
+		next;
+		mes "[Demon Hunter]";
+		mes "Ehem... Like I was saying earlier we need certain materials to make our arrows.  That is where Hunter wanna be's like you come in handy.";
+		mes "For this test you will have to gather the materials needed for making our arrows.";
+		next;
+		mes "[Demon Hunter]";
+		mes "Let's see... the items you need to gather are.....";
+		next;
+		set HNTR_Q2, rand(1,5);
+		if(HNTR_Q2 == 2) goto sL_2;
+		if(HNTR_Q2 == 3) goto sL_3;
+		if(HNTR_Q2 == 4) goto sL_4;
+		if(HNTR_Q2 == 5) goto sL_5;
+
+		sL_1:
+			mes "[Demon Hunter]";
+			mes "^5533FF20 Bill of Birds^000000 for arrow heads.";
+			mes "^5533FF5 Skel-Bones^000000 used here and there.";
+			mes "and ^5533FF20 green herbs^000000.";
+			goto L_Cont;
+		sL_2:
+			mes "[Demon Hunter]";
+			mes "^5533FF7 Venom Canine.";
+			mes "20 Animal Skins.";
+			mes "and 15 red herbs^000000.";
+			goto L_Cont;
+		sL_3:
+			mes "[Demon Hunter]";
+			mes "^5533FF3 Dokaebi Horns";
+			mes "3 Pieces of Egg Shell.";
+			mes "and 10 Feathers^000000.";
+			goto L_Cont;
+		sL_4:
+			mes "[Demon Hunter]";
+			mes "^5533FF20 Rainbow Shells";
+			mes "20 Chrysalis";
+			mes "9 Yellow Herbs^000000";
+			goto L_Cont;
+		sL_5:
+			mes "[Demon Hunter]";
+			mes "^5533FF20 Tooths of Bat.";
+			mes "20 Sticky Mucus.";
+			mes "and 5 Bears foot skin^000000";
+
+		L_Cont:
+		next;
+		mes "[Demon Hunter]";
+		mes "When you get all of the items return!";
+		close;
+
+	M_No:
+		mes "[Demon Hunter]";
+		mes "Stop playing around "+strcharinfo(0)+", that's your name, right?";
+		menu "Yes",M_Yes, "uhhh no",sM_End;
+	
+		sM_End:
+			mes "[Demon Hunter]";
+			mes "DON'T you mess around with me! If you're gonna fool around then LEAVE!";
+			emotion 32;
+			warp "pay_fild10.gat", 133, 235;
+			end;
+
+L_Check:
+	mes "Yes?";
+	next;
+	if(HNTR_Q2 == 1) goto L_1;
+	if(HNTR_Q2 == 2) goto L_2;
+	if(HNTR_Q2 == 3) goto L_3;
+	if(HNTR_Q2 == 4) goto L_4;
+	if(HNTR_Q2 == 5) goto L_5;
+
+	L_1:
+		if(countitem(925)<20 || countitem(932)<5 || countitem(511)<20) goto sL_1;
+		delitem 925, 20;
+		delitem 932, 5;
+		delitem 511, 20;
+		goto L_End;
+	L_2:
+		if(countitem(937)<7 || countitem(919)<20 || countitem(507)<15) goto sL_2;				
+		delitem 937, 7;
+		delitem 919, 20;
+		delitem 507, 15;
+		goto L_End;
+	L_3:
+		if(countitem(1021)<3 || countitem(7032)<3 || countitem(949)<10) goto sL_3;	
+		delitem 1021, 3;
+		delitem 7032, 3;
+		delitem 949, 10;
+		goto L_End;
+	L_4:
+		if(countitem(1013)<20 || countitem(915)<20 || countitem(508)<9) goto sL_4;			
+		delitem 1013, 20;
+		delitem 915, 20;
+		delitem 508, 9;
+		goto L_End;
+	L_5:
+		if(countitem(913)<20 || countitem(938)<20 || countitem(948)<5) goto sL_5;
+		delitem 913, 20;
+		delitem 938, 20;
+		delitem 948, 5;
+
+	L_End:
+		mes "[Demon Hunter]";
+		mes "Good job.  You brought all the necesarry items.  Now go find the ^5533FFGuild Master^000000.";
+		mes "I think he's somewhere in the ^5533FFArcher Guild^000000.  He'll give you your final test.  Good luck.";
+		set HNTR_Q, 2;
+		set HNTR_Q2, 0;
+		close;
+
+L_Test3:
+	mes "Huh? Can't you find the guild master? He should be in the ^5533FFArcher Guild in Archer village^000000.  Go find him.";
+	emotion 20;
+	close;
+
+L_Done:
+	mes "Ah, you passed the test! Congrats, go see Sharin now.";
+	close;
+
+}
+
+
+//<=============================== Guild Master: Last Test =================================>\\
+payon_in02.gat,21,31,1	script	Guild Master	59,
+{
+	if(Class == Job_Archer) goto L_Archer;
+	if(Class == Job_Hunter) goto L_Hnt;
+
+L_Other:
+	mes "[Hunter]";
+	mes "Is there something you want of me? I'm have some buisiness to take care of, so please be quiet.";
+	emotion 20;
+	close;
+
+L_Hnt:
+	mes "[Guild Master]";
+	mes "Ah, it's you again, "+strcharinfo+"! Good to see you're well.  Me?  I'm still busy as usual.";
+	next;
+	mes "[Guild Master]";
+	mes "Well I've gota get back to work.  Stay safe.";
+	close;
+
+L_Archer:
+	mes "[Guild Master]";
+	if(HNTR_Q == 1) goto L_Test2;
+	if(HNTR_Q == 2) goto L_Start;
+	if(HNTR_Q == 3) goto L_Done;
+	mes "You want to be a hunter bad, don't you? In my days, I worked for over a month to become a hunter, hehe.";
+	next;
+	mes "[Guild Master]";
+	mes "If you don't have anything else I suggest you go back to the guild!";
+	close;
+
+L_Start:
+	if(HNTR_Q2 == 1) goto L_ReTest;
+	if(HNTR_Q2 == 2) goto L_Passed;
+	mes "So, you've come to take the test?  I see.... well then, do you have any questions before we get started?";
+	M_Menu:
+	next;
+	menu "What's the test about?",M_0, "Anything I should know?",M_1, "Start the test.",M_Start;
+
+	M_0:
+		mes "[Guild Master]";
+		mes "This is a test of speed, agility, and target recogniton.  You will be warped to a room full of monsters.";
+		mes "You will have to ^5533FFkill 4^000000 of those monsters but not just any 4.  You will need to kill the ones called, ^5533FFJob Change Monster^000000.";
+		next;
+		mes "[Guild Master]";
+		mes "Kill the wrong one and you will fail the test.  To make things even harder, we have set traps all over the room.";
+		mes "Stepping on a trap will also result in failure.";
+		next;
+		mes "[Guild Master]";
+		mes "One more important note.... You must complete the test within ^FF55333 minutes^000000.";
+		next;
+		mes "[Guild Master]";
+		mes "This will teach you the important abilities a hunter needs, mobilitiy and tracking.";
+		goto M_Menu;
+	M_1:
+		mes "[Guild Master]";
+		mes "Only one person can take the test at time.  If someone is currently taking the test, just enter the chat room and wait.";
+		mes "You will automatically be warped to the testing room when the other player either finishes or fails.";
+		next;
+		mes "[Guild Master]";
+		mes "Make sure you aim carefully.  There will be a lot of monsters and you don't want to hit the wrong one.";
+		mes "Keeping track of the monsters' names will be very important in this test.";
+		next;
+		mes "[Guild Master]";
+		mes "And ALWAYS watch your step!  There are traps everywhere!";
+		goto M_Menu;
+	M_Start:
+		if (countitem(1751) <= 5) callsub sF_GetArrows;
+		mes "[Guild Master]";
+		mes "Good luck, I'll send you to the test room now.";
+		next;
+		set HNTR_Q2, 1;
+		savepoint "payon_in02.gat", 16, 26;
+		warp "job_hunte.gat", 176, 22;
+		end;
+
+		sF_GetArrows:
+			mes "[Guild Master]";
+			mes "This is where your hard work in the 2nd test payed off.  Here are some arrows, made with the items you collected.";
+ 			getitem 1751, 200;
+			next;
+			return;
+
+L_ReTest:
+	mes "Ah, you're one of the archers that failed.  Here, let me heal you wounds...";
+	next;
+	mes "[Guild Master]";
+	mes "You're ready right?";
+	percentheal 100,100;
+	goto M_Menu;
+
+L_Passed:
+	mes "I see you suceeded. Great job! Now I will give you the proof of your success, the ^5533FFNecklace of Wisdom^000000.";
+	emotion 21;
+	next;
+	mes "[Guild Master]";
+	mes "Here you go.  Make sure you show this to Hunter Sharon or you WON'T be able to become a Hunter.";
+	getitem 1007,1;
+	next;
+	mes "[Guild Master]";
+	mes "Anyway, I've got some work left to do here so I'll see you later.";
+	set HNTR_Q, 3;
+	set HNTR_Q2, 0;
+	close;
+
+L_Test2:
+	mes "Yes? What would a archer want from me? The guild didn't send me a msg about you.";
+	mes "Did you talk to the guild recruiters and get all the items needed? You have to get them the items first.";
+	close;
+L_Done:
+	mes "Hmm? What is it? Don't waste your time here, go on and become a Hunter already....";
+	close;
+
+}
+
+
+// Test Guide ====================================================
+job_hunte.gat,178,32,5	script	Hunter Test Guide::HntTG	107,{
+
+L_Start:
+	mes "[Test Guide]";
+	mes "Welcome to the Hunter's testing arena.";
+	next;
+	menu "Take the test.",-, "I changed my mind.",M_End;
+
+		mes "[Test Guide]";
+		mes "Please enter the waiting room after hearing my explaination.";
+		next;
+		mes "[Test Guide]";
+		mes "You will be warped into room with traps and monsters.  Avoid the traps and kill the monsters.  Once you do, a switch will appear";
+		next;
+		mes "[Test Guide]";
+		mes "Use the switch to open an exit out of the arena.  You will have 3 minutes to complete the test.";
+		next;
+		mes "[Test Guide]";
+		mes "If you get knocked out, get caught in a trap, or run out of time, you will fail the test and have to start over again.";
+		next;
+		mes "[Test Guide]";
+		mes "Don't worry about arrows, we'll provide them.  So, if you're ready, go to the waiting room.";
+		close;
+	M_End:
+		mes "[Test Guide]";
+		mes "Alright, I'll send you back to Payon.  Hopefully I'll see you again later.  Don't forget to save!";
+		warp "payon_in02.gat", 16, 26;
+		end;
+
+OnInit:
+	waitingroom "Hunter Test Waiting Room", 8,"HntTG::OnStart",1;
+	end;
+
+OnStart:
+	set $@HntUsers, getareausers("job_hunte.gat", 50, 64, 123, 143);
+	if ($@HntUsers > 0) end;			// stops the rest of the script from running if there is somebody taking the test
+
+	if ((getwaitingroomstate(33)) == 0) end;			// stops the rest of the script from running if there is no one in the waiting room
+	killmonsterall "job_hunte.gat";
+	warpwaitingpc "job_hunte.gat", 90, 67;
+	donpcevent "Ev_HntRm";
+	end;
+
+}
+
+
+// Ev_HntRm: Test room --------------------------------------------------------
+job_hunte.gat,1,1,1	script	Ev_HntRm	-1,{
+
+	disablenpc "SwitchHnt";
+	disablenpc "ExitHnt";
+	set $@HntMob, 4;
+	// Real Monsters
+	monster "job_hunte.gat",67,80,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte.gat",114,78,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1"; 
+	monster "job_hunte.gat",89,127,"Job Change Monster",1002,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte.gat",53,73,"Job Change Monster",1041,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte.gat",125,70,"Job Change Monster",1016,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte.gat",90,92,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1";
+	donpcevent "Ev_HntRm2";
+	initnpctimer "TimerHnt";
+	end;
+
+OnMyMobDead1:
+	set $@HntMob, $@HntMob - 1;
+	if($@HntMob != 0) end;
+
+	stopnpctimer "TimerHnt";
+	killmonsterall "job_hunte.gat";
+	enablenpc "SwitchHnt";
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]: Great job! Go use the switch now!",8;
+	set HNTR_Q2, 2;
+	end;
+
+}
+
+// Ev_HntRm2: Spawns the Decoy Monsters ----------------------------------------
+job_hunte.gat,1,1,1	script	Ev_HntRm2	-1,{
+
+	// Decoy Monsters
+	monster "job_hunte.gat",85,100,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",72,102,"Test Monster",1041,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",108,103,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",88,127,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",125,69,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat", 77, 112,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",53, 106,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",53, 73,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",125, 70,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",90, 91,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",67, 80,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",77, 112,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",53, 106,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",53, 73,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",125, 70,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",90, 91,"Test Monster",1041,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",85, 100,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",72, 102,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",108, 103,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",77, 112,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",112, 139,"Vinnie Paul",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",112, 139,"Dimeback Darrel",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",112, 139,"Rex",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",112, 139,"Phillip Angelmo",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",90, 91,"Anolian",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",53, 73,"monster sample",1002,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",53, 106,"I'm not the one you want >_>",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",77, 112,"SPARE ME~",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",72, 102,"Don't hurt me!",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte.gat",108, 103,"aspd 184",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	end;
+
+OnMyMobDead2:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]: You killed the wrong monster! You have failed the test!",8;
+	addtimer 3000, "TimerHnt::OnTimer196000";
+	end;
+}
+
+// Test Timer -----------------------------------------------------------------
+job_hunte.gat,1,1,1	script	TimerHnt	-1,{
+
+
+OnTimer500:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]: Remember, you need to kill the 'Job Change Monsters'!",8;
+	end;
+OnTimer4000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]: Don't forget to AVOID the TRAPS!!!",8;
+	end;
+OnTimer10000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  ******The clock will start now! 3 minutes left! ****** ",8;
+	donpcevent "HntTG::OnStart";
+	end;
+OnTimer40000:
+	donpcevent "HntTG::OnStart";
+	end;
+OnTimer70000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  ****** 2 minutes left! ****** ",8;
+	donpcevent "HntTG::OnStart";
+	end;
+OnTimer100000:
+	donpcevent "HntTG::OnStart";
+	end;
+OnTimer130000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  ****** 1 minute left! ****** ",8;
+	donpcevent "HntTG::OnStart";
+	end;
+OnTimer160000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  ****** 30 sec left! ****** ",8;
+	donpcevent "HntTG::OnStart";
+	end;
+OnTimer185000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  5 . . . .",8;
+	donpcevent "HntTG::OnStart";
+	end;
+OnTimer186000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  4. . . .",8;
+	end;
+OnTimer187000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  3. . .",8;
+	end;
+OnTimer188000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  2. .",8;
+	end;
+OnTimer189000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  1...",8;
+	end;
+OnTimer190000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  0! ",8;
+	end;
+OnTimer193000:
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  You ran out of time! You can challenge again later!.",8;
+	end;
+OnTimer196000:
+	stopnpctimer;
+	areawarp "job_hunte.gat", 50, 64, 123, 143, "payon_in02.gat", 16, 26;
+	killmonsterall "job_hunte.gat";
+	donpcevent "HntTG::OnStart";
+	end;
+}
+
+// SwitchHnt ------------------------------------------------------
+job_hunte.gat,93,101,1	script	SwitchHnt	723,
+{
+	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  *** The exit has been activated! You have 30 sec. to find the exit!! *** ",8;
+	enablenpc "ExitHnt";
+	addtimer 30000, "TimerHnt::OnTimer196000";
+	close;
+}
+
+// ExitHnt -----------------------------------------------------------
+job_hunte.gat,89,139,1	script	ExitHnt	45,2,2,{
+
+	deltimer "TimerHnt::OnTimer196000";
+	warp "payon_in02.gat", 16, 26;
+	killmonsterall "job_hunte.gat";
+	donpcevent "HntTG::OnStart";
+	end;
+}
+
+
+// Hunter Test Traps =======================================
+
+job_hunte.gat,52,140,1	script	1-1::HntTrap	139,0,1,{
+	stopnpctimer "TimerHnt";
+	warp "payon_in02.gat", 16, 26;
+	killmonsterall "job_hunte.gat";
+	donpcevent "HntTG::OnStart";
+	end;
+}
+
+job_hunte.gat,53,140,1	duplicate(HntTrap)	1-2	139,0,1
+job_hunte.gat,54,141,1	duplicate(HntTrap)	1-3	139,0,0
+job_hunte.gat,55,141,1	duplicate(HntTrap)	1-4	139,0,0
+job_hunte.gat,55,140,1	duplicate(HntTrap)	1-5	139,0,0
+job_hunte.gat,54,140,1	duplicate(HntTrap)	1-6	139,0,0
+job_hunte.gat,52,138,1	duplicate(HntTrap)	1-7	139,0,0
+job_hunte.gat,53,138,1	duplicate(HntTrap)	1-8	139,0,0
+job_hunte.gat,62,140,1	duplicate(HntTrap)	2-1	139,0,1
+job_hunte.gat,63,140,1	duplicate(HntTrap)	2-2	139,0,1
+job_hunte.gat,64,140,1	duplicate(HntTrap)	2-3	139,0,0
+job_hunte.gat,64,141,1	duplicate(HntTrap)	2-4	139,0,0
+job_hunte.gat,65,140,1	duplicate(HntTrap)	2-5	139,0,0
+job_hunte.gat,65,141,1	duplicate(HntTrap)	2-6	139,0,0
+job_hunte.gat,62,138,1	duplicate(HntTrap)	2-7	139,0,0
+job_hunte.gat,63,138,1	duplicate(HntTrap)	2-8	139,0,0
+job_hunte.gat,72,140,1	duplicate(HntTrap)	3-1	139,0,1
+job_hunte.gat,73,140,1	duplicate(HntTrap)	3-2	139,0,1
+job_hunte.gat,72,138,1	duplicate(HntTrap)	3-3	139,0,0
+job_hunte.gat,72,138,1	duplicate(HntTrap)	3-4	139,0,0
+job_hunte.gat,78,140,1	duplicate(HntTrap)	4-1	139,0,0
+job_hunte.gat,78,141,1	duplicate(HntTrap)	4-2	139,0,0
+job_hunte.gat,79,140,1	duplicate(HntTrap)	4-3	139,0,0
+job_hunte.gat,79,141,1	duplicate(HntTrap)	4-4	139,0,0
+job_hunte.gat,82,138,1	duplicate(HntTrap)	5-1	139,0,0
+job_hunte.gat,82,139,1	duplicate(HntTrap)	5-2	139,0,0
+job_hunte.gat,83,138,1	duplicate(HntTrap)	5-3	139,0,0
+job_hunte.gat,83,139,1	duplicate(HntTrap)	5-4	139,0,0
+job_hunte.gat,99,138,1	duplicate(HntTrap)	6-1	139,1,0
+job_hunte.gat,99,139,1	duplicate(HntTrap)	6-2	139,1,0
+job_hunte.gat,101,138,1	duplicate(HntTrap)	6-3	139,0,0
+job_hunte.gat,101,139,1	duplicate(HntTrap)	6-4	139,0,0
+job_hunte.gat,106,140,1	duplicate(HntTrap)	7-1	139,0,1
+job_hunte.gat,107,140,1	duplicate(HntTrap)	7-2	139,0,1
+job_hunte.gat,106,138,1	duplicate(HntTrap)	7-3	139,0,0
+job_hunte.gat,107,138,1	duplicate(HntTrap)	7-4	139,0,0
+job_hunte.gat,112,140,1	duplicate(HntTrap)	8-1	139,0,0
+job_hunte.gat,112,141,1	duplicate(HntTrap)	8-2	139,0,0
+job_hunte.gat,113,140,1	duplicate(HntTrap)	8-3	139,0,0
+job_hunte.gat,113,141,1	duplicate(HntTrap)	8-4	139,0,0
+job_hunte.gat,116,140,1	duplicate(HntTrap)	9-1	139,0,0
+job_hunte.gat,116,141,1	duplicate(HntTrap)	9-2	139,0,0
+job_hunte.gat,117,140,1	duplicate(HntTrap)	9-3	139,0,0
+job_hunte.gat,117,141,1	duplicate(HntTrap)	9-4	139,0,0
+job_hunte.gat,120,138,1	duplicate(HntTrap)	10-1	139,0,0
+job_hunte.gat,120,139,1	duplicate(HntTrap)	10-2	139,0,0
+job_hunte.gat,121,138,1	duplicate(HntTrap)	10-3	139,0,0
+job_hunte.gat,121,139,1	duplicate(HntTrap)	10-4	139,0,0
+job_hunte.gat,126,139,1	duplicate(HntTrap)	11-1	139,0,2
+job_hunte.gat,127,139,1	duplicate(HntTrap)	11-2	139,0,2
+job_hunte.gat,126,136,1	duplicate(HntTrap)	11-3	139,0,0
+job_hunte.gat,127,136,1	duplicate(HntTrap)	11-4	139,0,0
+job_hunte.gat,52,134,1	duplicate(HntTrap)	12-1	139,0,1
+job_hunte.gat,53,134,1	duplicate(HntTrap)	12-2	139,0,1
+job_hunte.gat,52,132,1	duplicate(HntTrap)	12-3	139,0,0
+job_hunte.gat,53,132,1	duplicate(HntTrap)	12-4	139,0,0
+job_hunte.gat,124,130,1	duplicate(HntTrap)	13-1	139,0,0
+job_hunte.gat,124,131,1	duplicate(HntTrap)	13-2	139,0,0
+job_hunte.gat,125,130,1	duplicate(HntTrap)	13-3	139,0,0
+job_hunte.gat,125,131,1	duplicate(HntTrap)	13-4	139,0,0
+job_hunte.gat,64,128,1	duplicate(HntTrap)	14-1	139,0,0
+job_hunte.gat,64,129,1	duplicate(HntTrap)	14-2	139,0,0
+job_hunte.gat,65,128,1	duplicate(HntTrap)	14-3	139,0,0
+job_hunte.gat,65,129,1	duplicate(HntTrap)	14-4	139,0,0
+job_hunte.gat,68,126,1	duplicate(HntTrap)	15-1	139,0,0
+job_hunte.gat,68,127,1	duplicate(HntTrap)	15-2	139,0,0
+job_hunte.gat,69,126,1	duplicate(HntTrap)	15-3	139,0,0
+job_hunte.gat,69,127,1	duplicate(HntTrap)	15-4	139,0,0
+job_hunte.gat,75,128,1	duplicate(HntTrap)	16-1	139,1,0
+job_hunte.gat,75,129,1	duplicate(HntTrap)	16-2	139,1,0
+job_hunte.gat,77,128,1	duplicate(HntTrap)	16-3	139,0,0
+job_hunte.gat,77,129,1	duplicate(HntTrap)	16-4	139,0,0
+job_hunte.gat,82,126,1	duplicate(HntTrap)	17-1	139,0,0
+job_hunte.gat,82,127,1	duplicate(HntTrap)	17-2	139,0,0
+job_hunte.gat,83,126,1	duplicate(HntTrap)	17-3	139,0,0
+job_hunte.gat,83,127,1	duplicate(HntTrap)	17-4	139,0,0
+job_hunte.gat,96,128,1	duplicate(HntTrap)	18-1	139,0,0
+job_hunte.gat,96,129,1	duplicate(HntTrap)	18-2	139,0,0
+job_hunte.gat,97,128,1	duplicate(HntTrap)	18-3	139,0,0
+job_hunte.gat,97,129,1	duplicate(HntTrap)	18-4	139,0,0
+job_hunte.gat,100,126,1	duplicate(HntTrap)	19-1	139,0,0
+job_hunte.gat,100,127,1	duplicate(HntTrap)	19-2	139,0,0
+job_hunte.gat,101,126,1	duplicate(HntTrap)	19-3	139,0,0
+job_hunte.gat,101,127,1	duplicate(HntTrap)	19-4	139,0,0
+job_hunte.gat,106,128,1	duplicate(HntTrap)	20-1	139,0,0
+job_hunte.gat,106,129,1	duplicate(HntTrap)	20-2	139,0,0
+job_hunte.gat,107,128,1	duplicate(HntTrap)	20-3	139,0,0
+job_hunte.gat,107,129,1	duplicate(HntTrap)	20-4	139,0,0
+job_hunte.gat,112,126,1	duplicate(HntTrap)	21-1	139,0,0
+job_hunte.gat,112,127,1	duplicate(HntTrap)	21-2	139,0,0
+job_hunte.gat,113,126,1	duplicate(HntTrap)	21-3	139,0,0
+job_hunte.gat,113,127,1	duplicate(HntTrap)	21-4	139,0,0
+job_hunte.gat,126,126,1	duplicate(HntTrap)	22-1	139,0,0
+job_hunte.gat,126,127,1	duplicate(HntTrap)	22-2	139,0,0
+job_hunte.gat,127,126,1	duplicate(HntTrap)	22-3	139,0,0
+job_hunte.gat,127,127,1	duplicate(HntTrap)	22-4	139,0,0
+job_hunte.gat,52,122,1	duplicate(HntTrap)	23-1	139,0,1
+job_hunte.gat,52,122,1	duplicate(HntTrap)	23-2	139,0,1
+job_hunte.gat,53,120,1	duplicate(HntTrap)	23-3	139,1,0
+job_hunte.gat,54,121,1	duplicate(HntTrap)	23-4	139,0,0
+job_hunte.gat,55,121,1	duplicate(HntTrap)	23-5	139,0,0
+job_hunte.gat,55,120,1	duplicate(HntTrap)	23-6	139,0,0
+job_hunte.gat,66,120,1	duplicate(HntTrap)	24-1	139,0,0
+job_hunte.gat,66,121,1	duplicate(HntTrap)	24-2	139,0,0
+job_hunte.gat,67,120,1	duplicate(HntTrap)	24-3	139,0,0
+job_hunte.gat,67,121,1	duplicate(HntTrap)	24-4	139,0,0	
+job_hunte.gat,114,118,1	duplicate(HntTrap)	25-1	139,0,0
+job_hunte.gat,114,119,1	duplicate(HntTrap)	25-2	139,0,0
+job_hunte.gat,115,118,1	duplicate(HntTrap)	25-3	139,0,0
+job_hunte.gat,115,119,1	duplicate(HntTrap)	25-4	139,0,0
+job_hunte.gat,124,120,1	duplicate(HntTrap)	26-1	139,0,1
+job_hunte.gat,125,120,1	duplicate(HntTrap)	26-2	139,0,1
+job_hunte.gat,124,118,1	duplicate(HntTrap)	26-3	139,0,0
+job_hunte.gat,125,118,1	duplicate(HntTrap)	26-4	139,0,0
+job_hunte.gat,66,116,1	duplicate(HntTrap)	27-1	139,0,0
+job_hunte.gat,66,117,1	duplicate(HntTrap)	27-2	139,0,0
+job_hunte.gat,67,116,1	duplicate(HntTrap)	27-3	139,0,0
+job_hunte.gat,67,117,1	duplicate(HntTrap)	27-4	139,0,0
+job_hunte.gat,76,114,1	duplicate(HntTrap)	28-1	139,0,0
+job_hunte.gat,76,115,1	duplicate(HntTrap)	28-2	139,0,0
+job_hunte.gat,77,114,1	duplicate(HntTrap)	28-3	139,0,0
+job_hunte.gat,77,115,1	duplicate(HntTrap)	28-4	139,0,0
+job_hunte.gat,82,116,1	duplicate(HntTrap)	29-1	139,0,0
+job_hunte.gat,82,117,1	duplicate(HntTrap)	29-2	139,0,0
+job_hunte.gat,83,116,1	duplicate(HntTrap)	29-3	139,0,0
+job_hunte.gat,83,117,1	duplicate(HntTrap)	29-4	139,0,0
+job_hunte.gat,86,114,1	duplicate(HntTrap)	30-1	139,0,0
+job_hunte.gat,86,115,1	duplicate(HntTrap)	30-2	139,0,0
+job_hunte.gat,87,114,1	duplicate(HntTrap)	30-3	139,0,0
+job_hunte.gat,87,115,1	duplicate(HntTrap)	30-4	139,0,0
+job_hunte.gat,92,115,1	duplicate(HntTrap)	31-1	139,1,0
+job_hunte.gat,92,114,1	duplicate(HntTrap)	31-2	139,1,0
+job_hunte.gat,90,115,1	duplicate(HntTrap)	31-3	139,0,0
+job_hunte.gat,102,116,1	duplicate(HntTrap)	32-1	139,0,0
+job_hunte.gat,102,117,1	duplicate(HntTrap)	32-2	139,0,0
+job_hunte.gat,103,116,1	duplicate(HntTrap)	32-3	139,0,0
+job_hunte.gat,103,117,1	duplicate(HntTrap)	32-4	139,0,0
+job_hunte.gat,114,114,1	duplicate(HntTrap)	33-1	139,0,0
+job_hunte.gat,114,115,1	duplicate(HntTrap)	33-2	139,0,0
+job_hunte.gat,115,114,1	duplicate(HntTrap)	33-3	139,0,0
+job_hunte.gat,115,115,1	duplicate(HntTrap)	33-4	139,0,0
+job_hunte.gat,54,110,1	duplicate(HntTrap)	34-1	139,0,1
+job_hunte.gat,55,110,1	duplicate(HntTrap)	34-2	139,0,1
+job_hunte.gat,54,108,1	duplicate(HntTrap)	34-3	139,0,0
+job_hunte.gat,55,108,1	duplicate(HntTrap)	34-4	139,0,0
+job_hunte.gat,64,112,1	duplicate(HntTrap)	35-1	139,0,0
+job_hunte.gat,64,113,1	duplicate(HntTrap)	35-2	139,0,0
+job_hunte.gat,65,112,1	duplicate(HntTrap)	35-3	139,0,0
+job_hunte.gat,65,113,1	duplicate(HntTrap)	35-4	139,0,0
+job_hunte.gat,80,110,1	duplicate(HntTrap)	36-1	139,0,0
+job_hunte.gat,80,111,1	duplicate(HntTrap)	36-2	139,0,0
+job_hunte.gat,81,110,1	duplicate(HntTrap)	36-3	139,0,0
+job_hunte.gat,81,111,1	duplicate(HntTrap)	36-4	139,0,0
+job_hunte.gat,90,108,1	duplicate(HntTrap)	37-1	139,0,6
+job_hunte.gat,91,108,1	duplicate(HntTrap)	37-2	139,0,5
+job_hunte.gat,91,102,1	duplicate(HntTrap)	37-3	139,0,0
+job_hunte.gat,98,109,1	duplicate(HntTrap)	38-1	139,0,2
+job_hunte.gat,99,109,1	duplicate(HntTrap)	38-2	139,0,2
+job_hunte.gat,103,109,1	duplicate(HntTrap)	38-3	139,3,0
+job_hunte.gat,103,108,1	duplicate(HntTrap)	38-4	139,3,0
+job_hunte.gat,97,106,1	duplicate(HntTrap)	39-1	139,2,0
+job_hunte.gat,96,107,1	duplicate(HntTrap)	39-2	139,1,0
+job_hunte.gat,94,108,1	duplicate(HntTrap)	39-3	139,0,1
+job_hunte.gat,95,109,1	duplicate(HntTrap)	39-4	139,0,0
+job_hunte.gat,95,108,1	duplicate(HntTrap)	40-1	139,0,0
+job_hunte.gat,94,106,1	duplicate(HntTrap)	40-2	139,0,0
+job_hunte.gat,96,102,1	duplicate(HntTrap)	40-3	139,0,3
+job_hunte.gat,97,102,1	duplicate(HntTrap)	40-4	139,0,3
+job_hunte.gat,95,98,1	duplicate(HntTrap)	41-1	139,2,0
+job_hunte.gat,94,99,1	duplicate(HntTrap)	42-1	139,1,0
+job_hunte.gat,92,98,1	duplicate(HntTrap)	43-1	139,0,0
+job_hunte.gat,112,110,1	duplicate(HntTrap)	44-1	139,0,0
+job_hunte.gat,112,111,1	duplicate(HntTrap)	44-2	139,0,0
+job_hunte.gat,113,110,1	duplicate(HntTrap)	44-3	139,0,0
+job_hunte.gat,113,111,1	duplicate(HntTrap)	44-4	139,0,0
+job_hunte.gat,126,108,1	duplicate(HntTrap)	45-1	139,0,1
+job_hunte.gat,127,108,1	duplicate(HntTrap)	45-2	139,0,1
+job_hunte.gat,126,106,1	duplicate(HntTrap)	45-3	139,0,0
+job_hunte.gat,126,106,1	duplicate(HntTrap)	45-4	139,0,0
+job_hunte.gat,53,102,1	duplicate(HntTrap)	46-1	139,1,1
+job_hunte.gat,55,102,1	duplicate(HntTrap)	46-2	139,0,1
+job_hunte.gat,53,100,1	duplicate(HntTrap)	46-3	139,1,0
+job_hunte.gat,55,100,1	duplicate(HntTrap)	46-4	139,0,0
+job_hunte.gat,64,106,1	duplicate(HntTrap)	47-1	139,0,0
+job_hunte.gat,64,107,1	duplicate(HntTrap)	47-2	139,0,0
+job_hunte.gat,65,106,1	duplicate(HntTrap)	47-3	139,0,0
+job_hunte.gat,65,107,1	duplicate(HntTrap)	47-4	139,0,0
+job_hunte.gat,66,100,1	duplicate(HntTrap)	48-1	139,0,0
+job_hunte.gat,66,101,1	duplicate(HntTrap)	48-2	139,0,0
+job_hunte.gat,67,100,1	duplicate(HntTrap)	48-3	139,0,0
+job_hunte.gat,67,101,1	duplicate(HntTrap)	48-4	139,0,0
+job_hunte.gat,86,106,1	duplicate(HntTrap)	49-1	139,0,1
+job_hunte.gat,87,106,1	duplicate(HntTrap)	49-2	139,0,1
+job_hunte.gat,82,104,1	duplicate(HntTrap)	49-3	139,5,0
+job_hunte.gat,81,105,1	duplicate(HntTrap)	49-4	139,4,0
+job_hunte.gat,76,105,1	duplicate(HntTrap)	50-1	139,0,0
+job_hunte.gat,76,104,1	duplicate(HntTrap)	50-2	139,0,0
+job_hunte.gat,78,101,1	duplicate(HntTrap)	50-3	139,0,2
+job_hunte.gat,79,101,1	duplicate(HntTrap)	50-4	139,0,2
+job_hunte.gat,76,99,1	duplicate(HntTrap)	51-1	139,10
+job_hunte.gat,77,98,1	duplicate(HntTrap)	51-2	139,2,0
+job_hunte.gat,74,99,1	duplicate(HntTrap)	51-3	139,0,0
+job_hunte.gat,74,98,1	duplicate(HntTrap)	51-4	139,0,0
+job_hunte.gat,82,100,1	duplicate(HntTrap)	53-1	139,0,0
+job_hunte.gat,82,101,1	duplicate(HntTrap)	53-2	139,0,0
+job_hunte.gat,83,100,1	duplicate(HntTrap)	53-3	139,0,0
+job_hunte.gat,83,101,1	duplicate(HntTrap)	53-4	139,0,0
+job_hunte.gat,106,104,1	duplicate(HntTrap)	54-1	139,0,0
+job_hunte.gat,106,105,1	duplicate(HntTrap)	54-2	139,0,0
+job_hunte.gat,107,104,1	duplicate(HntTrap)	54-3	139,0,0
+job_hunte.gat,107,105,1	duplicate(HntTrap)	54-4	139,0,0
+job_hunte.gat,112,104,1	duplicate(HntTrap)	55-1	139,0,1
+job_hunte.gat,113,104,1	duplicate(HntTrap)	55-2	139,0,1
+job_hunte.gat,112,102,1	duplicate(HntTrap)	55-3	139,0,0
+job_hunte.gat,113,102,1	duplicate(HntTrap)	55-4	139,0,0
+job_hunte.gat,54,92,1	duplicate(HntTrap)	56-1	139,0,0
+job_hunte.gat,54,93,1	duplicate(HntTrap)	56-2	139,0,0
+job_hunte.gat,55,92,1	duplicate(HntTrap)	56-3	139,0,0
+job_hunte.gat,55,93,1	duplicate(HntTrap)	56-4	139,0,0
+job_hunte.gat,52,90,1	duplicate(HntTrap)	56-5	139,0,0
+job_hunte.gat,52,91,1	duplicate(HntTrap)	56-6	139,0,0
+job_hunte.gat,53,90,1	duplicate(HntTrap)	56-7	139,0,0
+job_hunte.gat,53,91,1	duplicate(HntTrap)	56-8	139,0,0
+job_hunte.gat,64,92,1	duplicate(HntTrap)	57-1	139,0,0
+job_hunte.gat,64,93,1	duplicate(HntTrap)	57-2	139,0,0
+job_hunte.gat,65,92,1	duplicate(HntTrap)	57-3	139,0,0
+job_hunte.gat,65,93,1	duplicate(HntTrap)	57-4	139,0,0
+job_hunte.gat,76,94,1	duplicate(HntTrap)	58-1	139,0,0
+job_hunte.gat,76,95,1	duplicate(HntTrap)	58-2	139,0,0
+job_hunte.gat,77,94,1	duplicate(HntTrap)	58-3	139,0,0
+job_hunte.gat,77,95,1	duplicate(HntTrap)	58-4	139,0,0
+job_hunte.gat,78,92,1	duplicate(HntTrap)	59-1	139,0,0
+job_hunte.gat,78,93,1	duplicate(HntTrap)	59-2	139,0,0
+job_hunte.gat,79,92,1	duplicate(HntTrap)	59-3	139,0,0
+job_hunte.gat,79,93,1	duplicate(HntTrap)	59-4	139,0,0
+job_hunte.gat,86,92,1	duplicate(HntTrap)	60-1	139,0,0
+job_hunte.gat,86,93,1	duplicate(HntTrap)	60-2	139,0,0
+job_hunte.gat,87,92,1	duplicate(HntTrap)	60-3	139,0,0
+job_hunte.gat,87,93,1	duplicate(HntTrap)	60-4	139,0,0
+job_hunte.gat,90,96,1	duplicate(HntTrap)	61-1	139,0,0
+job_hunte.gat,90,97,1	duplicate(HntTrap)	61-2	139,0,0
+job_hunte.gat,91,96,1	duplicate(HntTrap)	61-3	139,0,0
+job_hunte.gat,91,97,1	duplicate(HntTrap)	61-4	139,0,0
+job_hunte.gat,99,95,1	duplicate(HntTrap)	62-1	139,1,0
+job_hunte.gat,99,94,1	duplicate(HntTrap)	62-2	139,1,0
+job_hunte.gat,101,94,1	duplicate(HntTrap)	62-3	139,0,1
+job_hunte.gat,100,93,1	duplicate(HntTrap)	62-4	139,0,0
+job_hunte.gat,100,92,1	duplicate(HntTrap)	63-1	139,0,0
+job_hunte.gat,101,92,1	duplicate(HntTrap)	63-2	139,0,0
+job_hunte.gat,102,98,1	duplicate(HntTrap)	64-1	139,0,0
+job_hunte.gat,102,99,1	duplicate(HntTrap)	64-2	139,0,0
+job_hunte.gat,103,98,1	duplicate(HntTrap)	64-3	139,0,0
+job_hunte.gat,103,99,1	duplicate(HntTrap)	64-4	139,0,0
+job_hunte.gat,102,90,1	duplicate(HntTrap)	65-1	139,0,0
+job_hunte.gat,102,91,1	duplicate(HntTrap)	65-2	139,0,0
+job_hunte.gat,103,90,1	duplicate(HntTrap)	65-3	139,0,0
+job_hunte.gat,103,91,1	duplicate(HntTrap)	65-4	139,0,0
+job_hunte.gat,114,96,1	duplicate(HntTrap)	66-1	139,0,0
+job_hunte.gat,114,97,1	duplicate(HntTrap)	66-2	139,0,0
+job_hunte.gat,115,96,1	duplicate(HntTrap)	66-3	139,0,0
+job_hunte.gat,115,97,1	duplicate(HntTrap)	66-4	139,0,0
+job_hunte.gat,112,90,1	duplicate(HntTrap)	67-1	139,0,0
+job_hunte.gat,112,91,1	duplicate(HntTrap)	67-2	139,0,0
+job_hunte.gat,113,90,1	duplicate(HntTrap)	67-3	139,0,0
+job_hunte.gat,113,91,1	duplicate(HntTrap)	67-4	139,0,0
+job_hunte.gat,125,97,1	duplicate(HntTrap)	68-1	139,1,0
+job_hunte.gat,125,96,1	duplicate(HntTrap)	68-2	139,1,0
+job_hunte.gat,127,96,1	duplicate(HntTrap)	68-3	139,0,0
+job_hunte.gat,127,97,1	duplicate(HntTrap)	68-4	139,0,0
+job_hunte.gat,52,86,1	duplicate(HntTrap)	69-1	139,0,0
+job_hunte.gat,52,87,1	duplicate(HntTrap)	69-2	139,0,0
+job_hunte.gat,53,86,1	duplicate(HntTrap)	69-3	139,0,0
+job_hunte.gat,53,87,1	duplicate(HntTrap)	69-4	139,0,0
+job_hunte.gat,66,88,1	duplicate(HntTrap)	70-1	139,0,0
+job_hunte.gat,66,89,1	duplicate(HntTrap)	70-2	139,0,0
+job_hunte.gat,67,88,1	duplicate(HntTrap)	70-3	139,0,0
+job_hunte.gat,67,89,1	duplicate(HntTrap)	70-4	139,0,0
+job_hunte.gat,114,84,1	duplicate(HntTrap)	71-1	139,0,0
+job_hunte.gat,114,85,1	duplicate(HntTrap)	71-2	139,0,0
+job_hunte.gat,115,84,1	duplicate(HntTrap)	71-3	139,0,0
+job_hunte.gat,115,85,1	duplicate(HntTrap)	71-4	139,0,0
+job_hunte.gat,126,86,1	duplicate(HntTrap)	72-1	139,0,0
+job_hunte.gat,126,87,1	duplicate(HntTrap)	72-2	139,0,0
+job_hunte.gat,127,86,1	duplicate(HntTrap)	72-3	139,0,0
+job_hunte.gat,127,87,1	duplicate(HntTrap)	72-4	139,0,0
+job_hunte.gat,54,80,1	duplicate(HntTrap)	73-1	139,0,1
+job_hunte.gat,55,80,1	duplicate(HntTrap)	73-2	139,0,1
+job_hunte.gat,55,80,1	duplicate(HntTrap)	73-3	139,0,0
+job_hunte.gat,55,78,1	duplicate(HntTrap)	73-4	139,0,0
+job_hunte.gat,64,82,1	duplicate(HntTrap)	74-1	139,0,1
+job_hunte.gat,65,82,1	duplicate(HntTrap)	74-2	139,0,1
+job_hunte.gat,64,80,1	duplicate(HntTrap)	74-3	139,0,0
+job_hunte.gat,65,80,1	duplicate(HntTrap)	74-4	139,0,0
+job_hunte.gat,66,78,1	duplicate(HntTrap)	75-1	139,0,0
+job_hunte.gat,66,79,1	duplicate(HntTrap)	75-2	139,0,0
+job_hunte.gat,67,78,1	duplicate(HntTrap)	75-3	139,0,0
+job_hunte.gat,67,79,1	duplicate(HntTrap)	75-4	139,0,0
+job_hunte.gat,74,78,1	duplicate(HntTrap)	76-1	139,0,0
+job_hunte.gat,74,79,1	duplicate(HntTrap)	76-2	139,0,0
+job_hunte.gat,75,78,1	duplicate(HntTrap)	76-3	139,0,0
+job_hunte.gat,75,79,1	duplicate(HntTrap)	76-4	139,0,0
+job_hunte.gat,78,80,1	duplicate(HntTrap)	77-1	139,0,0
+job_hunte.gat,78,81,1	duplicate(HntTrap)	77-2	139,0,0
+job_hunte.gat,79,80,1	duplicate(HntTrap)	77-3	139,0,0
+job_hunte.gat,79,81,1	duplicate(HntTrap)	77-4	139,0,0
+job_hunte.gat,82,78,1	duplicate(HntTrap)	78-1	139,0,0
+job_hunte.gat,82,79,1	duplicate(HntTrap)	78-2	139,0,0
+job_hunte.gat,83,78,1	duplicate(HntTrap)	78-3	139,0,0
+job_hunte.gat,83,79,1	duplicate(HntTrap)	78-4	139,0,0
+job_hunte.gat,94,78,1	duplicate(HntTrap)	79-1	139,0,0
+job_hunte.gat,94,79,1	duplicate(HntTrap)	79-2	139,0,0
+job_hunte.gat,95,78,1	duplicate(HntTrap)	79-3	139,0,0
+job_hunte.gat,95,79,1	duplicate(HntTrap)	79-4	139,0,0
+job_hunte.gat,101,80,1	duplicate(HntTrap)	80-1	139,1,0
+job_hunte.gat,101,81,1	duplicate(HntTrap)	80-2	139,1,0
+job_hunte.gat,103,81,1	duplicate(HntTrap)	80-3	139,0,0
+job_hunte.gat,103,80,1	duplicate(HntTrap)	80-4	139,0,0
+job_hunte.gat,104,78,1	duplicate(HntTrap)	81-1	139,0,0
+job_hunte.gat,104,79,1	duplicate(HntTrap)	81-2	139,0,0
+job_hunte.gat,105,78,1	duplicate(HntTrap)	81-3	139,0,0
+job_hunte.gat,105,79,1	duplicate(HntTrap)	81-4	139,0,0
+job_hunte.gat,110,78,1	duplicate(HntTrap)	82-1	139,0,0
+job_hunte.gat,110,79,1	duplicate(HntTrap)	82-2	139,0,0
+job_hunte.gat,111,78,1	duplicate(HntTrap)	82-3	139,0,0
+job_hunte.gat,111,79,1	duplicate(HntTrap)	82-4	139,0,0
+job_hunte.gat,114,80,1	duplicate(HntTrap)	83-1	139,0,0
+job_hunte.gat,114,81,1	duplicate(HntTrap)	83-2	139,0,0
+job_hunte.gat,115,80,1	duplicate(HntTrap)	83-3	139,0,0
+job_hunte.gat,115,81,1	duplicate(HntTrap)	83-4	139,0,0
+job_hunte.gat,124,78,1	duplicate(HntTrap)	84-1	139,0,0
+job_hunte.gat,124,79,1	duplicate(HntTrap)	84-2	139,0,0
+job_hunte.gat,125,78,1	duplicate(HntTrap)	84-3	139,0,0
+job_hunte.gat,125,79,1	duplicate(HntTrap)	84-4	139,0,0
+job_hunte.gat,126,82,1	duplicate(HntTrap)	85-1	139,0,0
+job_hunte.gat,126,83,1	duplicate(HntTrap)	85-2	139,0,0
+job_hunte.gat,127,82,1	duplicate(HntTrap)	85-3	139,0,0
+job_hunte.gat,127,83,1	duplicate(HntTrap)	85-4	139,0,0
+job_hunte.gat,52,68,1	duplicate(HntTrap)	86-1	139,0,1
+job_hunte.gat,53,68,1	duplicate(HntTrap)	86-2	139,0,1
+job_hunte.gat,52,66,1	duplicate(HntTrap)	86-3	139,0,0
+job_hunte.gat,53,66,1	duplicate(HntTrap)	86-4	139,0,0
+job_hunte.gat,54,70,1	duplicate(HntTrap)	87-1	139,0,1
+job_hunte.gat,55,70,1	duplicate(HntTrap)	87-2	139,0,1
+job_hunte.gat,54,68,1	duplicate(HntTrap)	87-3	139,0,0
+job_hunte.gat,55,68,1	duplicate(HntTrap)	87-4	139,0,0
+job_hunte.gat,59,66,1	duplicate(HntTrap)	88-1	139,1,0
+job_hunte.gat,59,67,1	duplicate(HntTrap)	88-2	139,1,0
+job_hunte.gat,61,67,1	duplicate(HntTrap)	88-3	139,0,0
+job_hunte.gat,61,66,1	duplicate(HntTrap)	88-4	139,0,0
+job_hunte.gat,68,68,1	duplicate(HntTrap)	89-1	139,0,1
+job_hunte.gat,69,68,1	duplicate(HntTrap)	89-2	139,0,1
+job_hunte.gat,68,66,1	duplicate(HntTrap)	89-3	139,0,0
+job_hunte.gat,69,66,1	duplicate(HntTrap)	89-4	139,0,0
+job_hunte.gat,76,66,1	duplicate(HntTrap)	90-1	139,0,0
+job_hunte.gat,76,67,1	duplicate(HntTrap)	90-2	139,0,0
+job_hunte.gat,77,66,1	duplicate(HntTrap)	90-3	139,0,0
+job_hunte.gat,77,67,1	duplicate(HntTrap)	90-4	139,0,0
+job_hunte.gat,82,68,1	duplicate(HntTrap)	91-1	139,0,0
+job_hunte.gat,82,69,1	duplicate(HntTrap)	91-2	139,0,0
+job_hunte.gat,83,68,1	duplicate(HntTrap)	91-3	139,0,0
+job_hunte.gat,83,69,1	duplicate(HntTrap)	91-4	139,0,0
+job_hunte.gat,96,66,1	duplicate(HntTrap)	92-1	139,0,0
+job_hunte.gat,96,67,1	duplicate(HntTrap)	92-2	139,0,0
+job_hunte.gat,97,66,1	duplicate(HntTrap)	92-3	139,0,0
+job_hunte.gat,97,67,1	duplicate(HntTrap)	92-4	139,0,0
+job_hunte.gat,100,68,1	duplicate(HntTrap)	93-1	139,0,0
+job_hunte.gat,100,69,1	duplicate(HntTrap)	93-2	139,0,0
+job_hunte.gat,101,68,1	duplicate(HntTrap)	93-3	139,0,0
+job_hunte.gat,101,69,1	duplicate(HntTrap)	93-4	139,0,0
+job_hunte.gat,107,66,1	duplicate(HntTrap)	94-1	139,1,0
+job_hunte.gat,107,67,1	duplicate(HntTrap)	94-2	139,1,0
+job_hunte.gat,109,67,1	duplicate(HntTrap)	94-3	139,0,0
+job_hunte.gat,109,66,1	duplicate(HntTrap)	94-4	139,0,0
+job_hunte.gat,117,69,1	duplicate(HntTrap)	95-1	139,1,0
+job_hunte.gat,117,68,1	duplicate(HntTrap)	95-2	139,1,0
+job_hunte.gat,119,69,1	duplicate(HntTrap)	95-3	139,0,0
+job_hunte.gat,119,68,1	duplicate(HntTrap)	95-4	139,0,0
+job_hunte.gat,124,66,1	duplicate(HntTrap)	96-1	139,0,0
+job_hunte.gat,124,67,1	duplicate(HntTrap)	96-2	139,0,0
+job_hunte.gat,125,66,1	duplicate(HntTrap)	96-3	139,0,0
+job_hunte.gat,125,67,1	duplicate(HntTrap)	96-4	139,0,0
+job_hunte.gat,126,70,1	duplicate(HntTrap)	97-1	139,0,0
+job_hunte.gat,126,71,1	duplicate(HntTrap)	97-2	139,0,0
+job_hunte.gat,127,70,1	duplicate(HntTrap)	97-3	139,0,0
+job_hunte.gat,127,71,1	duplicate(HntTrap)	97-4	139,0,0

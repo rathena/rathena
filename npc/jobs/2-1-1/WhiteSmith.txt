@@ -1,0 +1,60 @@
+//Whitesmith Made by Evera/Lorri
+valkyrie.gat,44,50,6	script	Whitesmith	731,{
+	if ((readparam(11) >= 99) && (readparam(19) == 10) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
+	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
+	if ((readparam(19) == 4006) && (readparam(55) >= 40)) goto Lh2;
+	if ((readparam(19) == 4006) && (readparam(55) < 40)) goto LCem;
+	if (readparam(19) == 4010) goto Lcrazy;
+	if (readparam(12) != 0) goto Lskpt;
+	mes "[Whitesmith]";
+	mes "Hello";
+	mes "I am not currently available for forging, please ask another forger.";
+	close;
+Lnovice:
+	mes "[Whitesmith]";
+	mes "Hm. You weild your hammer pretty good. You wanna become a whitesmith?";
+	mes "There is a catch though, you have to go back through novice and merchant.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lh1:
+	mes "[Whitesmith]";
+	mes "Ready to become a high merchant?";
+	menu "Yes",Lh12,"No",Lcancel;
+Lh12:
+	mes "[Whitesmith]";
+	mes "You're on your way to making upgraded items.";
+	next;
+	jobchange 29;// Job: Job_Merchant_High
+	close;
+Lh2:
+	mes "[Whitesmith]";
+	mes "Hey, you've grown a lot. Will you become a whitesmith?";
+	menu "Yes",Lh22,"No",Lcancel;
+Lh22:
+	mes "[Whitesmith]";
+	mes "The magic enchants and suppresses you.";
+	jobchange 34;// Job: Job_Whitesmith
+	close;
+Lcrazy:
+	mes "[Whitesmith]";
+	mes "Hm. You look like me.";
+	close;
+Lskpt:
+	mes "[Whitesmith]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "[Whitesmith]";
+	mes "You're not ready to go to the next level";
+	close;	
+Lcancel:
+	mes "Bye";
+	close;
+}

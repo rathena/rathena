@@ -1,0 +1,106 @@
+//===== eAthena Script ======================================= 
+//= 2nd Bank of Prontera ( with daily 0.01% income! )
+//===== By: ================================================== 
+//= Lupus (1.0)
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena 1.x
+//===== Description: ========================================= 
+//= A bank which has an interest %
+//===== Additional Comments: ================================= 
+// Look for this formula and setup your Bank daily % interest
+// #kafrabank/1000 = 0.1% of interest per day
+// #kafrabank/100  =  1%  of interest per day
+// #kafrabank/10   =  10% of interest per day
+//============================================================ 
+
+prontera.gat,131,190,1	script	Bank Clerk	112,{  
+ cutin "kafra_06",2;
+ mes"[Manya]";
+ mes strcharinfo(0)+", welcome to the 2nd Bank of Prontera!";
+
+ set @kb_int,(gettime(6)*31)+gettime(5); //today's number
+ set @income,0;
+//calculate %
+ if (#kafrabank<=0 || #kb_int>=@kb_int) goto L_NoIncomeToday;
+ set @income,(#kafrabank/1000)*(@kb_int-#kb_int); //@income == % of the summ
+L_NoIncomeToday:
+ set #kb_int,@kb_int; //reset days timer
+  
+ if(#kafrabank==0) mes "We could open you an account.";
+ if(@income>0) mes "Today's income ^135445" + @income + "^000000 zeny.";
+ set #kafrabank,#kafrabank+@income;
+ if(#kafrabank>0) mes "Your account: ^135445" + #kafrabank + "^000000 zeny.";
+ mes "What would you like?";
+ next;
+ if(#kafrabank==0) menu "-Open a bank account",-,"-Quit",B_EXIT2;
+ if(#kafrabank>0) menu "-Deposit money",-,"-Withdraw money",M_WITHDRAW,"-Quit",B_EXIT2;
+
+ mes"[Manya]";
+ mes "Please, tell me how much zeny you would like to deposit.";
+ next;
+ input @kafrabank;
+  
+ if(@kafrabank<1000) goto L_LESS_1000;
+ if(@kafrabank>1000000) goto L_TOO_BIG_AMOUNT;
+ if(@kafrabank>zeny) goto L_NOT_ENOUGH;
+ set zeny,zeny-@kafrabank;
+ set #kafrabank,#kafrabank+@kafrabank;
+ mes"[Manya]";
+ mes "You've made a deposit of ^135445" + @kafrabank + "z^000000.";
+ 
+ goto B_EXIT;
+
+M_WITHDRAW:  
+ if(#kafrabank==0) goto L_ZERO_ACCOUNT;
+ mes"[Manya]";
+ mes "Your account: ^135445" + #kafrabank + "^000000 zeny.";
+ mes "How much zeny would you like to withdraw?";
+ next;
+ input @kafrabank;
+  
+ if(@kafrabank<1) goto B_EXIT2;
+ if(@kafrabank>1000000) goto L_TOO_BIG_AMOUNT;
+ if(@kafrabank>#kafrabank) goto L_NOT_ENOUGH;
+ set #kafrabank,#kafrabank-@kafrabank;
+ set zeny,zeny+@kafrabank;
+ mes"[Manya]";
+ mes "Here is your ^135445" + @kafrabank + "z^000000, put your sign here...";
+ goto B_EXIT;
+  
+L_NOT_ENOUGH:  
+ mes"[Manya]";
+ mes "You don't have enough zeny for this operation.";
+ next;
+ goto B_EXIT2;
+
+L_ZERO_ACCOUNT:  
+ mes"[Manya]";
+ mes "You don't have any zeny on your account!";
+ next;
+ goto B_EXIT2;
+
+L_TOO_BIG_AMOUNT:  
+ mes"[Manya]";
+ mes "Sorry. The maximum deposit you can make on a time is 1,000,000 zeny.";
+ next;
+ goto B_EXIT2;
+
+L_LESS_1000:  
+ mes"[Manya]";
+ mes "We're sorry, the minimum amount of zeny you can deposit is 1,000 zeny.";
+ next;
+ goto B_EXIT2;
+  
+B_EXIT:
+ mes "Very well... Come again soon!";
+ next;
+
+B_EXIT2:  
+ mes"[Manya]";
+ mes "Thank you for using our Bank Service. We hope to see you again soon.";
+ cutin "kafra_06",255;
+ close;
+ 
+}

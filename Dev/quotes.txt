@@ -1,0 +1,148 @@
+ADD UR QUOTES HERE FOR DEV EDITION NPCS!
+Remember to add map, coords, and sprite number!
+
+NEW 10-21-04!
+Add Biography areas
+-Real name
+-Age
+-Where u live
+-What u do here
+-Why ur here
+-and ur own small self intro.
+
+Completed people: MC Cameri, Aria, david, mouse
+
+
+Also put some coords so that u walk around
+//************************************\\
+
+davidsiaw
+- put me in payon next to kawaii no kafra with npc sprite no. 1002
+- [davidsiaw]
+- Wud are you looking at?
+- baka...
+- next;
+- [davidsiaw]
+- *drops 100 Mjolnirs on the floor
+- There ya go ;)
+
+Aria
+prontera.gat,156,179,4	script	Aria	805,{
+151,175-OMGWTFBBQ
+152,182-So its u -> 0
+... That did not look right
+158,177-OMGITSJEEBUS!#!@%!
+164,176-Evera died. I guess.
+147,176-I CLICK THE BUTTON AND THEY DON'T DIE!
+155,172-RO? wtf?
+Oh yeah.
+165,171-omgnoob. DIE!
+157,176-WooT!
+[@Aria] is that why u bought windows
+[@Aria] cuz bill has red hair
+bio
+Okay, I'm Evera's brother, Aria <- small sentence self-intro
+^FF00FFAge^000000: 13 years <-age
+^FF00FFWhat I do^000000: Graphics and NPCs <-wtf u do
+^FF00FFWhy I'm here^000000: Cuz eAthena ROX <-y
+
+Anyway, here. I get to talk about myself now <-ur own bio
+I'm from California, and I wub MMORPGS
+So yeah that's it. GO EA!
+
+Shinigami 
+-imma n00b
+-lol
+-:P
+-Shinigami stabs Azndragon
+-there you go bitches
+-watashi wa Shinigami desu
+-huh?, wtf?
+
+Lord
+-Me + ebil = bad me + ebil + power = omg .... 
+<@Wishy> me + you = you get owns 
+<@Lord> Me + Revenge = You Got owned 
+<@Wishy> Me > You 
+<@Lord> No i own you in bed :3 
+<@Wishy> ...
+
+Codemaster
+"Everything begins with Nu and everything ends with Nu. 
+This is the truth! This is my belief... at least for now." 
+	- Mysteries of Life Volume 184. Chapter 26.
+
+MouseJstr
+
+"The only difference between a hurricane and skydiving is 
+which direction the tree's come at you from.."
+
+"Wanna be a GM?  Write me a C routine that reverses a string
+ in place.."
+
+"Wanna be a GM?  Write me a C routine that finds me the highest
+ bit set in a network order 32 bit integer..."
+
+"I am the dark angel of eAthena.. withen weeks of my arrival,
+ almost everybody was gone or dead..  fear me..."
+
+Lupus, I demand you rewrite yours..
+
+MC Cameri
+morroc.gat,160,97,4	script	MC Cameri	706,{
+-I'm the @command guy from oa...
+-Can't tell you my name.
+-16 years
+-Dominican Republic, in the caribbean.
+-Mostly work on @commands for GMs...
+-Because I like programming...
+-I'm a senior student, programmer, body builder(yes, I lift weights), etc.
+160,95-I owns you all, under my commands. *lol*
+162,95-I forgot what my script, what do I have to say again? *_*U
+164,95-¿Donde estoy? *wonders* (<-- Means, where am I?)
+164,97-Are you guys my friends?
+164,99-My mom told me not to talk to strangers. *stares*
+162,99-How can you be SO ugly!?
+160,99-I need a friend to play with =(. *sobs*
+160,97-I've been kicking this rock for as long as I can remember.
+160,95-My computer just broke, and I don't know how to format. *sobs*
+
+Darkchild
+
+// Place me Next to Valaris (ELSE I DO IT MYSELF :P)
+- I think Aria Has A Lot To Do
+- The Darkness Within
+- Watch Out For Trucks, They Tend To Drive You Down
+- Who Am I? Really? Shure!
+- GAH!
+- Everyone Lubs Me! (I Hope!)
+- I Lub Everyone!
+  As Long As They Are Female
+  Hot....
+  Goodlooking
+  Big Boobs
+  Nice Ass
+  And Workship Me!
+- Wannabe GM? Host Your Own Server
+- kRO is €20 A Month! Sick Bastards!
+
+Biography:
+	mes "Okay, So I'm Darkchild.......";
+	mes "^FF00FFAge^000000: 17 years";
+	mes "^FF00FFWhat I do^000000: Writing Biography";
+	mes "^FF00FFWhy I'm here^000000: I Have NO Idea";
+	next;
+	mes "Ehm Well..... Whats There To Say About Me.......?";
+	mes "I Dunno.... As Long As You Love Me.........";
+	mes "Well Okay, A Lil Bit Then:";
+	mes "I'm From The Netherlands And Doing Some Wacko Collega Atm";
+	mes "More? WTF? YOU WANT MORE? GO BLOW URSELF!";
+	next;
+// let it do an npc event on Valaris
+
+// His Npc Event:
+	npctalk "DARKCHILD, DON'T YOU SHOUT AT POOR LIL N00BIEZ!!!";
+
+// Back 2 Me :P
+	npctalk "Sorry Valaris";
+	npctalk "(He Is Da Man!)";

@@ -1,0 +1,223 @@
+//===== eAthena Script ======================================= 
+//= Yuno Guides
+//===== By: ================================================== 
+//= KitsuneStarwind, usul, kobra_k88
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Edited Miss Yoon text. Added town soldiers by usul. Edited town soldiers
+//= and added map location option for them. [kobra_k88]
+//============================================================ 
+
+
+
+//=====================================================================================
+yuno.gat,153,47,4	script	Yuno Guide	700,{ 
+	mes "[Miss Yoon]"; 
+	mes "A place that understands the present and envisions the future............"; 
+	mes "This is Yuno, the city of Sages.  Welcome to Yuno.";
+	set @name$,"[Miss Yoon]";
+	next;
+	callfunc "F_YunoLoc",2;
+}
+
+//=====================================================================
+yuno.gat,333,182,2	script	Yuno Soldier	105,
+{
+	cutin "prt_soldier",2;
+	set @name$, "[Yuno Soldier]";
+	set @menu1$, "^5533FF'Dagger of Counter'^000000.....";
+	callfunc "F_YunoLoc",0;
+	mes "[Yuno Soldier]";
+	mes "Among the Sage class weapons, there is a dagger called ^5533FF'The Dagger of Counter'^000000.";
+	mes "It increases the chances for landing a critical attack and can only be used by Sages.";
+	next;
+	mes "[Yuno Soldier]";
+	mes "Not only is this dagger very useful but it is very stylish as well.";
+	callfunc "F_YunoLoc",1;
+}
+
+//=====================================================================
+yuno.gat,264,320,2	script	Yuno Soldier	105,
+{
+	cutin "prt_soldier",2;
+	set @name$, "[Yuno Soldier]";
+	set @menu1$, "Holy shield, ^5533FF'Sacred Mission'^000000.....";
+	callfunc "F_YunoLoc",0;
+	mes "[Yuno Soldier]";
+	mes "There is a holy shield named ^5533FF'Sacred Mission'^000000, that can only be used by Cusadors.";
+	mes "The shield itself is long and narrow and has the wings of an angel engraved on its front.";
+	next;
+	mes "[Yuno Soldier]";
+	mes "This shield is especially effective against the undead and other demonic monsters.";
+	callfunc "F_YunoLoc",1;
+}
+
+//=====================================================================
+yuno.gat,228,292,2	script	Yuno Soldier	105,
+{
+	cutin "prt_soldier",2;
+	set @name$, "[Yuno Soldier]";
+	set @menu1$, "^FF3355'False Angel'^000000.....";
+	callfunc "F_YunoLoc",0;
+	mes "[Yuno Soldier]";
+	mes "Near Yuno, there lives a fallen angel known as ^FF3355''False Angel'^000000.";
+	mes "It pretends to be a real angel by blessing adventurers, but then it stabs them in the back afterwards.";
+	next;
+	mes "[Yuno Soldier]";
+	mes "Do not be fooled by its beautifull appereance, otherwise you will find yourself in great peril.";
+	callfunc "F_YunoLoc",1;
+}
+
+//=====================================================================
+yuno.gat,164,283,4	script	Yuno Soldier	105,
+{
+	cutin "prt_soldier",2;
+	set @name$, "[Yuno Soldier]";
+	set @menu1$, "^FF3355'Geographer'^000000.....";
+	callfunc "F_YunoLoc",0;
+	mes "[Yuno Soldier]";
+	mes "There is a monster called the ^FF3355'Geographer'^000000 that looks like a flower in bloom.";
+	mes "Although it is planted firmly into the ground, this creature has the ability to extend itself a great distance.";
+	next;
+	mes "[Yuno Soldier]";
+	mes "Its name comes from a story about a poor geographer who was eaten by one of these monsters while studying.";
+	mes "Unless you want to end up like that poor geographer, I suggest you stay away from these creatures.";
+	callfunc "F_YunoLoc",1;
+}
+
+//=====================================================================
+yuno.gat,151,283,4	script	Yuno Soldier	105,
+{
+	cutin "prt_soldier",2;
+	set @name$, "[Yuno Soldier]";
+	set @menu1$, "^FF3355'Lava Golem'^000000.....";
+	callfunc "F_YunoLoc",0;
+	mes "[Yuno Soldier]";
+	mes "There is a monster called the ^FF3355'Lava Golem'^000000.";
+	mes "It is made out of stone heart that gained magical powers while being swept away by molten lava.";
+	next;
+	mes "[Yuno Soldier]";
+	mes "The lava that dripps down its body is so hot that it can melt weapons and armor made out of even the highest quality steel.";
+	next;
+	mes "[Yuno Soldier]";
+	mes "Be very careful if you ever encounter this monster.  Before you know it your equipment will become nothing more than metled pieces of junk.";
+	mes "More importantly, the damage it will inflict on you will turn you into a...... well I think you get the point......";
+	callfunc "F_YunoLoc",1;
+}
+
+//=====================================================================
+yuno.gat,164,228,4	script	Yuno Soldier	105,
+{
+	cutin "prt_soldier",2;
+	set @name$, "[Yuno Soldier]";
+	set @menu1$, "Killer ^FF3355'Goats'^000000.....";
+	callfunc "F_YunoLoc",0;
+	mes "[Yuno Soldier]";
+	mes "^FF3355'Goats'^000000 are monsters that used to be antelopes that lived high up the montains of Yuno.";
+	mes "No one has ever survived a direct hit from a Goat's mighty horns.";
+	next;
+	mes "[Yuno Soldier]";
+	mes "As fierce as those horns are, the legs of a Goat are also to be feared.  They are tough and strong because of all of the climbing Goats do.";
+	callfunc "F_YunoLoc",1;
+}
+
+//=====================================================================
+yuno.gat,151,228,4	script	Yuno Soldier	105,
+{
+	cutin "prt_soldier",2;
+	set @name$, "[Yuno Soldier]";
+	set @menu1$, "Large Jellopy.....";
+	callfunc "F_YunoLoc",0;
+	mes "[Yuno Soldier]";
+	mes "Have you ever seen that extraordinarily large jellopy?? It's huuuuge!!! It's a very, very, large and shiny jellopy!!";
+	emotion 1;
+	callfunc "F_YunoLoc",1;
+}
+
+
+//======================================================================
+function	script	F_YunoLoc	{
+
+	if(getarg(0) == 1) goto M_Menu;
+	if(getarg(0) == 2) menu "View city locations.",M_0, "End conversation.",M_End;
+	mes @name$;
+	mes "Welcome to Yuno, the city of noble-mindedness.";
+	M_Menu:
+	next;
+	menu "View city locations.",M_0, @menu1$,M_1, "End conversation.",M_End;
+
+	M_0:
+		mes @name$;
+		mes "Please choose a building to view...";
+		sM_Menu:
+		next;
+		menu 	"Armory",sM_1, "Tool Dealer",sM_2, "Sage Castle",sM_3, "Street of Book Stores",sM_4, "Yuphero Plaza",sM_5,
+			"Library of the Republic",sM_6, "Schwheicherbil Magic Academy",sM_7, "Museum of Monsters",sM_8,
+			"Wipe all indications from mini-map",sM_Wipe, "Cancel",M_End;
+
+		sM_1: 
+			mes @name$;
+			mes "This is the Weapon and Armor Shop.";
+			viewpoint 1,117,135,1,0xFF0000;
+			goto sM_Menu; 
+		sM_2: 
+			mes @name$;
+			mes "This is the Tool Dealer.";
+			viewpoint 1,163,189,2,0xFFFF00;
+			goto sM_Menu;
+		sM_3: 
+			mes @name$;
+			mes "Sage Castle is where Mages can go to become Sages.";
+			viewpoint 1,89,320,3,0xff00FF;
+			goto sM_Menu; 
+		sM_4: 
+			mes @name$;
+			mes "The Street of Books.  This is where you will find the largest selection of books for sale";
+			viewpoint 1,196,138,4,0x00ff00;
+			goto sM_Menu;
+		sM_5: 
+			mes @name$;
+			mes "Yuphero Plaza is the main gathering place in Yuno.";
+			viewpoint 1,157,327,5,0x00ffff;
+			goto sM_Menu;
+		sM_6: 
+			mes "[Miss Yoon]"; 
+			mes "The Library of Republic houses an extensive collection of important historical books.";
+			viewpoint 1,335,204,6,0x0000ff;
+			goto sM_Menu;
+		sM_7:
+			mes @name$;
+			mes "The Shchweicherbil Magic Academy is a prestigous school where Mages study to become Sages.";
+			viewpoint 1,323,280,7,0xFFCCFF;
+			goto sM_Menu;
+		sM_8:
+			mes @name$;
+			mes "The Museum of Monsters contains many exhibits of the monsters found throughout Rune Midgard.";
+			viewpoint 1,278,291,8,0xFFFFFF;
+			goto sM_Menu;
+		sM_Wipe:
+			viewpoint 2,117,135,1,0xFF0000;
+			viewpoint 2,163,189,2,0xFFFF00;
+			viewpoint 2,89,320,3,0xff00FF;
+			viewpoint 2,196,138,4,0x00ff00;
+			viewpoint 2,157,327,5,0x00ffff;
+			viewpoint 2,335,204,6,0x0000ff;
+			viewpoint 2,323,280,7,0xFFCCFF;
+			viewpoint 2,278,291,8,0xFFFFFF;
+			mes @name$; 
+			mes "All indications have been wiped.";
+			cutin "prt_soldier",255;
+			close;
+	M_1:
+		return;
+	M_End:
+		mes @name$;
+		mes "Have a nice day.";
+		cutin "prt_soldier",255;
+		close;
+}

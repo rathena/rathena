@@ -1,0 +1,89 @@
+//Made by Evera/Lorri
+valkyrie.gat,53,56,4	script	Gypsy	101,{
+if (sex==1) goto Lmale;
+if (readparam(12) != 0) goto Lskpt;
+if ((BaseLevel >= 99) && (readparam(19) == 20) && (readparam(55) >= 50)) goto Lnovice;
+if ((readparam(19) == 24) && (joblevel >= 10)) goto Larcher;
+if ((readparam(19) == 27) && (joblevel >= 40)) goto Lgypsy2;
+if ((readparam(19) == 27) && (joblevel < 40)) goto Lgypsy3;
+if (readparam(19) == 44) goto Lomg;
+
+Lnovice:
+mes "[Gypsy]";
+mes "Hey you there! Are you a dancer?";
+mes "There's a secret I wanna tell you.. You can get even more dances if you become a Gypsy! So do you wanna be a gypsy?";
+menu 
+"Yes",Lyes,"No way, you crazy?",Lcancel;
+Lyes:
+		mes "Hmm...?";
+		next;
+		mes "Alright, do you know the requirements? You have to be strong and adept at battling and dancing.";
+		mes "Level 99 and Job Level 50!";
+		mes "You have to be a dancer ofcourse";
+		mes "You sure you want to become a gypsy? You'll go back to a 1/1 novice...";
+		menu "Yes",Lnyes,"No",Lano;	
+			
+Lmale:
+		mes "[Gypsy]";
+		mes "Shoo! Boys!";
+		close;
+							
+Lnyes:
+if (readparam(12) != 0) goto Lskpt;
+		mes "Come back in 10 job levels then. Good luck!";
+		jobchange 24;// Job: Job_Novice_High
+		resetlvl(1);
+		close;
+					
+Larcher:
+		mes "[Gypsy]";
+		mes "You can almost dance!";
+		mes "Change into a high archer?";
+		menu "Yes",Layes,"No",Lano;
+				
+Layes:
+if (readparam(12) != 0) goto Lskpt;
+		mes "Hurry up and get 40 job levels!";
+		jobchange 27;// Job: Job_Archer_High
+		close;
+					
+
+					
+Lgypsy2:
+		mes "I will now dance a magical dance for you.";
+		mes "One last chance, do you truly want to become a gypsy?";
+		menu "..Yes",Lcyes,"Not yet...",Lano;
+				
+Lcyes:
+if (readparam(12) != 0) goto Lskpt;
+		mes "Congratulations! You are now a gypsy";
+		jobchange 44;// Job: Job_Gypsy
+		next;
+		mes "[Gypsy]";
+		mes "Don't outdo yourself";
+		close;
+							
+Lskpt:
+		mes "[Gypsy]";
+		mes "You need to use those skillpoints up first.";
+		close;
+				
+Lgypsy3:
+		mes "[Gypsy]";
+		mes "Doesn't look like you're sufficient for the job";
+		close;				
+
+Lano:
+		mes "Well, goodbye!";
+		close;
+
+Lcancel:
+		mes "[Gypsy]";
+		mes "Well bye then..";
+		close;
+
+Lomg:
+		mes "[Gypsy]";
+		mes "Wait.. Haven't I seen you before?";
+		close;	
+}

@@ -1,0 +1,62 @@
+//Lord Knight Made by Evera/Lorri
+//Fixed by PoW
+valkyrie.gat,44,39,6	script	Lord Knight	56,{
+	if ((readparam(11) >= 99) && (readparam(19) == 7) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(11) >= 99) && (readparam(19) == 13) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lhsword;
+	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
+	if ((readparam(19) == 4002) && (readparam(55) >= 40)) goto Lhkni;
+	if ((readparam(19) == 4002) && (readparam(55) < 40)) goto LCem;
+	if (readparam(19) == 4008) goto Lcrazy;
+	if (readparam(12) != 0) goto Lskpt;
+	mes "[Lord Knight]";
+	mes "Hello";
+	mes "It's a nice day, isnt it?";
+	close;
+Lnovice:
+	mes "[Lord Knight]";
+	mes "The honor a knight carries is high, but there is something beyond that. The lord knight.";
+	mes "You come back to become a High Swordsman, then become a Lord Knight.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lhsword:
+	mes "[Lord Knight]";
+	mes "Ready to become a high swordsman??";
+	menu "Yes",Lhsword2,"No",Lcancel;
+Lhsword2:
+	mes "[Lord Knight]";
+	mes "By the vow of my sword, here is the one bestowed upon with the truthful heart";
+	next;
+	jobchange 25;// Job: Job_Swordman_High
+	close;
+Lhkni:
+	mes "[Lord Knight]";
+	mes "The final step in a knight's quest for honor. Will you become a lord knight?";
+	menu "Yes",Lhkni2,"No",Lcancel;
+Lhkni2:
+	mes "[Lord Knight]";
+	mes "By the vow of my sword, here is the one bestowed upon with the truthful heart";
+	jobchange 31;// Job: Job_Lord_Knight
+	close;
+Lcrazy:
+	mes "[Lord Knight]";
+	mes "Nice day isn't it?";
+	close;
+Lskpt:
+	mes "[Lord Knight]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "[Lord Knight]";
+	mes "You're not ready to go to the next level";
+	close;	
+Lcancel:
+	mes "Bye";
+	close;
+}

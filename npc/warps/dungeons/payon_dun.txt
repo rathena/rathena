@@ -1,0 +1,37 @@
+//===== eAthena Script ======================================= 
+//= Payon Cave Warps
+//===== By: ================================================== 
+//= Nana (1.0)
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= Any eAthena Mod
+//===== Description: ========================================= 
+//= Payon Dungeon Warps
+//===== Additional Comments: ================================= 
+//= No Comment
+//============================================================ 
+
+//= Payon Cave ===============================================
+pay_dun00.gat,184,33,0	warp	payd01	2,7,pay_dun01.gat,19,33	
+pay_dun00.gat,21,186,0	warp	pay005	2,2,pay_arche.gat,39,131	
+pay_dun01.gat,15,33,0	warp	payd01-1	2,6,pay_dun00.gat,181,33	
+pay_dun01.gat,286,25,0	warp	payd02	2,7,pay_dun02.gat,19,63	
+pay_dun02.gat,137,128,0	warp	payd03	4,1,pay_dun03.gat,155,159	
+pay_dun02.gat,16,63,0	warp	payd02-1	2,7,pay_dun01.gat,283,28	
+pay_dun03.gat,155,161,0	warp	payd03-1	2,1,pay_dun02.gat,137,126	
+pay_dun03.gat,127,62,4	script	payd04r	45,2,2,{
+	set @r,rand(4);
+	if(@r==0) goto w1;
+	if(@r==1) goto w2;
+	if(@r==2) goto w3;
+	if(@r==3) goto w4;
+	w1:	warp "pay_dun04.gat",201,204; break;
+	w2:	warp "pay_dun04.gat",193,43; break;
+	w3:	warp "pay_dun04.gat",43,40; break;
+	w4:	warp "pay_dun04.gat",34,202; break;
+}		
+pay_dun04.gat,191,41,0	warp	payd04-2	1,1,pay_dun03.gat,125,62	
+pay_dun04.gat,202,206,0	warp	payd04-3	1,1,pay_dun03.gat,125,62	
+pay_dun04.gat,32,204,0	warp	payd04-4	2,1,pay_dun03.gat,125,62	
+pay_dun04.gat,40,37,0	warp	payd04-1	2,2,pay_dun03.gat,125,62	

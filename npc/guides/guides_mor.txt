@@ -1,0 +1,121 @@
+//===== eAthena Script ======================================= 
+//= Morroc Guides
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena  0.5.2 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Fully working.  Added a guide at every exit.
+//= v1.1 Now using duplicate command.
+//============================================================
+
+
+
+
+
+// North ------------------------------------------------
+morocc.gat,153,286,6	script	Guide#1::Guide	707,{
+	cutin "moc_soldier",2;
+	mes "[Morroc Soldier]";
+	mes "Welcome to Morroc, the Desert Frontier!";
+	next;
+	mes "[Morroc Soldier]";
+	mes "We are here to help you find your way.  Please feel free to speak to us anytime you need help.";
+M_Menu:
+	next;
+	menu "View Buildings",M_1, "Notice",M_2, "Cancel",M_End;
+
+	M_1:
+		mes "[Morroc Soldier]";
+		mes "Do you want me to leave indications on the Mini-Map?";
+		next;
+		menu "No Thanks",sM_1a,"Yes Please",sM_1b;
+		
+		sM_1a:
+			set @COMPASS_CHECK,0;
+			goto L_Cont;
+
+		sM_1b:
+			set @COMPASS_CHECK,1;
+
+		L_Cont:
+		mes "[Morroc Soldier]";
+		mes "Please choose a building to view.";
+		next;
+	sM_Menu:
+		menu "^FF0000Thief Guild^000000",M_1_1, "Armory",M_1_2, "Inn",M_1_3, "Pub",M_1_4, "Mercenary Guild",M_1_5,
+			"Wipe all indications from mini-map.",M_1_6, "Cancel",M_End;
+
+		M_1_1:
+			mes "[Morocc Soldier]";
+			mes "The 'Thief Guild'.... I hear that it's the place to go if you want to be a Thief.....";
+			viewpoint 1,24,297,1,0xFF0000;
+			goto sL_Wipe;
+		M_1_2:
+			mes "[Morocc Soldier]";
+			mes "Head over to the 'Armory' to equip yourself with a variety of weapons and armor.";
+			viewpoint 1,253,56,2,0xFF00FF;
+			goto sL_Wipe;
+		M_1_3:
+			mes "[Morocc Soldier]";
+			mes "In Morroc there are 2 'Inn's' located in the South and NorthEastern parts of town.";
+			viewpoint 1,274,269,3,0xFF00FF;
+			viewpoint 1,197,66,4,0xFF00FF;
+			goto sL_Wipe;
+		M_1_4:
+			mes "[Morocc Soldier]";
+			mes "The 'Pub' is located to the NorthWest of town.";
+			viewpoint 1,52,259,5,0xFF00FF;
+			goto sL_Wipe;
+		M_1_5:
+			mes "[Morocc Soldier]";
+			mes "The 'Mercenary Guild' is in the Eastern corner of town.";
+			viewpoint 1,284,171,6,0x00FF00;
+			goto sL_Wipe;
+		M_1_6:
+			set @COMPASS_CHECK, 2;
+
+		sL_Wipe:
+			if(@COMPASS_CHECK != 2) next;	// avoids a double 'next' when 'wipe indications' is chosen
+			if(@COMPASS_CHECK == 1) goto sM_Menu;
+			viewpoint 2,24,297,1,0xFF0000;
+			viewpoint 2,253,56,2,0xFF00FF;
+			viewpoint 2,274,269,3,0xFF00FF;
+			viewpoint 2,197,66,4,0xFF00FF;
+			viewpoint 2,52,259,5,0xFF00FF;
+			viewpoint 2,284,171,6,0x00FF00;
+			if (@COMPASS_CHECK == 0) goto sM_Menu;
+			mes "[Morroc Soldier]";
+			mes "All indications have been removed";
+			cutin "moc_soldier",255;
+			close;
+
+	M_2:
+		mes "[Morroc Soldier]";
+		mes "We upgraded the Location Guide to the Newest Digital Style.  We hope you like this gorgeous new system.";
+		next;
+		mes "[Morroc Soldier]";
+		mes "Don't forget to refer to the Mini-Map on the Upper-Right corner of your screen.";
+		next;
+		mes "[Morroc Soldier]";
+		mes "If you can't see the Mini-Map, just hit ^0000ff'ctrl+tab'^000000 or Click the ^0000ff'map'^000000 button in the Basic Information Window";
+		mes "Remeber to use the ^ff0000+,-^000000 buttons to adjust the map to your liking.";
+		goto M_Menu;
+
+	M_End:
+		mes "[Morocc Soldier]";
+		mes "Good by for now.";
+		cutin "moc_soldier",255;
+		close;
+}
+
+// South --------------------------------------------
+morocc.gat,162,97,6	duplicate(Guide)	Guide#2	707
+// West --------------------------------------------
+morocc.gat,28,161,6	duplicate(Guide)	Guide#3	707
+// East  --------------------------------------------
+morocc.gat,294,203,9	duplicate(Guide)	Guide#4	707

@@ -1,0 +1,64 @@
+// $Id: IceCream.txt,v 1.1.1.1 2004/09/10 17:26:42 MagicalTux Exp $
+//===== eAthena Script =======================================
+//= Ice Cream Maker
+//===== By: ==================================================
+//= KOOK SWU
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= eAthena 1.0
+//===== Description: =========================================
+//= A man makes you ice-cream
+//===== Additional Comments: =================================
+//= 1.1 Optimized, changed overlapping coords in Alberta [Lupus]
+//============================================================
+
+//ALBERTA
+alberta.gat,120,45,2	script	Ice Cream Maker::IceCreamer	85,{
+	mes "[Ice Cream Maker]";
+	mes "Fresh Ice Cream made with snow from Lutie!";
+	mes "Enjoy it now, it won't be on sale for long!";
+	mes "^0000FF100 Zeny^000000 Ice Cream,";
+	mes "Ice Cream!";
+	next;
+	menu "Gimme Ice Cream!",-,"Cancel Trade",L_End;
+	
+		mes "[Ice Cream Maker]";
+		mes "Fresh Ice Cream made with snow from Lutie!";
+		mes "Everyone wants our delicious ice cream, but we have limited amount,";
+		mes "so you can only purchase 5 at a time!!";
+		next;
+		input @input;
+		if(@input<1) goto L_inpC;
+		if(@input>5) goto L_inpM;
+		if(Zeny< @input*100) goto L_NoZ;
+		getitem 536,@input;
+		set Zeny,Zeny-100*@input;
+		mes "[Ice Cream Maker]";
+		mes "Here you go  " +@input+ "  Ice Cream for you.";
+		close;
+		
+		L_inpC:
+			mes "[Ice Cream Maker]";
+			mes "Deal is canceled.";
+			close;
+		L_inpM:
+			mes "[Ice Cream Maker]";
+			mes "Sorry, but you can only buy 5 at a time.";
+			close;
+		L_NoZ:
+			mes "[Ice Cream Maker]";
+			mes "Sorry, but you need more money.";
+			close;
+	L_End:
+		mes "[Ice Cream Maker]";
+		mes "Are you sure you don't want any?";
+		mes "I won't be selling it for long, and once I run out, there won't be anymore!!!";
+		close;
+}
+
+//MORROC FIELD
+moc_fild16.gat,88,304,4	duplicate(IceCreamer)	Ice Cream Maker#2	85
+
+//MORROC
+morocc.gat,160,144,4	duplicate(IceCreamer)	Ice Cream Maker#3	85

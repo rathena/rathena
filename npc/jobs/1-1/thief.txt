@@ -1,0 +1,443 @@
+//===== eAthena Script =======================================
+//= Thief Job Quest
+//===== By: ==================================================
+//= eAthena dev team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena 7.15 +
+//===== Description: =========================================
+//= <Description>
+//===== Additional Comments: =================================
+//= Fully working
+//============================================================
+
+
+// == Monsters ==
+//Spawn is included in this file so make shure its not elsewhere to!
+job_thief1.gat,0,0,0,0	monster	Orange Mushroom	1182,180,0,0,0
+job_thief1.gat,0,0,0,0	monster	Fabre	1184,50,0,0,0
+job_thief1.gat,0,0,0,0	monster	Chonchon	1183,50,0,0,0
+job_thief1.gat,0,0,0,0	monster	Spore	1014,30,0,0,0
+
+
+// == NPCs ==
+// -- Interviewer --
+moc_prydb1.gat,39,129,5	script	Thief Guide	69,
+{
+	if(Class== Job_Thief) goto L_JobThief;
+	if(Class == Job_Novice) goto L_Start;
+
+L_JobOther:
+	mes "[Thief Guide]";
+	if(Class==1 || Class==7 || Class==14) goto L_Swordman;
+	if(Class==2 || Class==9 || Class==16) goto L_Mage;
+	if(Class==3 || Class==11 || Class==19 || Class==20) goto L_Archer;
+	if(Class==4 || Class==8 || Class==15) goto L_Acolyte;
+	if(Class==5 || Class==10 || Class==18) goto L_Merchant;
+
+		mes "You already have a job.  Stop bothering me and go help out some newbies or something.";
+		emotion 21;
+		close;
+	L_Acolyte:
+		mes "What the heck...? Ohhhhhh~GOD... PORING's worshipper, Acolyte...";
+		mes "So why aren't you in church praying, instead of wandering about here, huh?";
+		close;
+	L_Archer:
+		mes "What the heck...? Hahahaha~are you a 'Kill Stealing' Archer...?";
+		emotion 18;
+		close;
+	L_Mage:
+		mes "What the heck...? Ehhh??? A Circus Sideshow? Make a fire without a Matchstick, will ya?";
+		emotion 19;
+		close;
+
+	L_Merchant:
+		mes "What the heck...? Eeeeeek~Merchant Scammer here...!!!! I am gonna report you to the GM!!!";
+		emotion 0;
+		close;
+	L_Swordman:
+		mes "What the heck...? Meh!~Here's another 'Bash' head.  Do me a favor... why don't you go 'BASH', yourself in the head.  Ha!";
+		emotion 29;
+		close;
+
+L_JobThief:
+	mes "[Thief Guide]";
+	mes "You're already a thief.....  What do you want from me... go away!";
+	emotion 4;
+	close;
+
+L_Start:
+	if(job_thief_q==2) goto L_1;
+	if(job_thief_q==1) goto L_Back;
+
+	mes "[Thief Guide]";
+	if(Sex == 0)mes "Heh... You look like a well to do boy... what brought you down to this rat hole?";
+	if(Sex == 1)mes "Heh... You look like a well to do girl... what brought you down to this rat hole?";
+	next;
+M_Menu:
+	menu "'I didn't come here for the atomosphere.....",M_0,"Me? I'm just looking around...",M_End;
+
+		M_0:
+		mes "[Thief Guide]";
+		mes "Hmph... you sound a little cocky....  Ya know, being a Thief isn't all it's cracked up to be....";
+		mes "That reminds me.... I must have been at lvl 9 or 10.... it was my first robbery....";
+		next;
+		mes "[Thief Guide]";
+		mes "Hahahaha... I can still remember the look on that guy's face...";
+		emotion 18;
+		next;
+		mes "[Thief Guide]";
+		mes "But anyways... I assume you're here to become a thief...";
+		next;
+		menu "-You got it.",sM_0a, "-Nope.  Just wasting your time. ^ ^",sM_0b, "-Why did you steal from that man?",sM_0c;
+
+		sM_0a:
+			goto L_Test;
+		sM_0b:
+			mes "[Thief Guide]";
+			mes "Wow... thanks... now get the HELL OUTA HERE!!";
+			emotion 6;
+			close;
+		sM_0c:
+			mes "[Thief Guide]";
+			mes "Eh? Me?... Well... I really had no other choice at the time.... It was either I stole or I starved.";
+			mes "I really couldn't go hungry another day.";
+			close;
+	M_End:
+		mes "[Thief Guide]";
+		mes "Must you people keep wasting my time!!?";
+		emotion 32;
+		close;
+
+	L_Test:
+		mes "[Thief Guide]";
+		mes "Ok then.  First, fill out this application form.";
+		next;
+		mes "(you fill out the form and hand it back)";
+		next;
+		if(JobLevel < 10) goto sL_Joblvl;
+
+		mes "[Thief Guide]";
+		mes "Alrighty ^ff0000"+ strcharinfo(0) + "^000000, if that IS your real name..... looks like you've got quite a 'record' here.";
+		mes "Let's see.... aggravated assualt... felony larson..... hmm....";
+		next;
+		mes "[Thief Guide]";
+		mes "Ah, here we go...... you've got the job and skill requirements to become a Thief.  Now all you gota do is pass the Morroc Thief Test.";
+		next;
+
+		L_Explain:
+		mes "[Thief Guide]";
+		mes "   The test will require you to ^ff0000'sneak'^000000 into ^ff0000'Shibu's Farm'^000000, and ^ff0000'steal'^000000 some ^aaaa00'Mushrooms'^000000.";
+		mes "   There are ^ff00002^000000 kinds of ^aaaa00Mushrooms^000000 on the farm, ^ffbb00Orange Net Mushrooms^000000 and ^ffbb00Orange Gooey Mushrooms^000000.";
+		next;
+		mes "[Thief Guide]";
+		mes "'Shibu' just happens to be the worst merchant scammer in Morroc, in case your wondering why he's our target.";
+		next;
+		mes "[Thief Guide]";
+		mes "   Bring the Mushrooms back here and someone will give you a score based on the type, and the amount of mushrooms you get.";
+		mes "   1 Orange Net Mushroom = ^0000ff3 points^000000 while 1 Orange Gooey Mushroom = ^0000ff1 point^000000.  You need 25 points to pass the test.";
+		next;
+		mes "[Thief Guide]";
+		mes "   In order to get into Shibu's Farm you'll need to talk to one of our 'associates'.  You can find him just ouside of this pyramid standing near some columns.";
+		mes "   He goes by the name ^ddcc00'Irrelevant Man'^000000.";
+		next;
+		mes "[Thief Guide]";
+		mes "   Here are his exact coordinates just in case you are 'directionaly challenged': '^FF0000141, 125^000000'.";
+		mes  "  Find him and he'll show you a secrect way into the Farm.";
+		next;
+		mes "[Thief Guide]";
+		mes "   This sounds easy but ^009900do you know there are Monsters which keep Mushrooms from the robbery^000000?";				//had to leave the engrish in, it was to good not too.  d^_^b
+		mes "   Please ^0000ffget yourself out of the Fairy Tales^000000 and ^ff0000'Brace up your nerves. That will be the toughest experience to you^000000.";
+		next;
+		mes "[Thief Guide]";
+		mes "   So, I will give you one tip. ^ff0000Elaborate the Strategy^000000 before you going inside the Farm.";
+		next;
+		mes "[Thief Guide]";
+		mes "   Try to steal the mushrooms as quickly as you can.  You may even have to ^0000ffunequip some weapons or armor^000000.";
+		mes "   You don't want to get killed while doing this... at the very least try to give me the mushrooms first.... then you can go get yourself killed... HA!";
+		next;
+		mes "[Thief Guide]";
+		mes "   If you don't have any questions... then GET moving!";
+		emotion 27;
+		set job_thief_q,1;
+		close;
+
+		sL_JobLvl:
+			mes "[Thief Guide]";
+			mes "Err I can see how ambitious you are......but we can't hand a gun to a baby only for that? Come back when you learn all Basic Skills.";
+			close;
+
+	L_Back:
+		if(countitem(1069)>0 || countitem(1070)>0) goto sL_1;//Items: Orange_Net_Mushroom, Orange_Gooey_Mushroom_,
+
+		sL_0:
+			mes "[Thief Guide]";
+			mes "..... What are you doing here? You're supposed to be gathering mushrooms remember??";
+			mes "Don't tell me you forget what to do??? Jeeze... do you want me to explain it to you one more time?......";
+			emotion 20;
+			next;
+			menu "Heh.. yeah I guess..",sM_1a, "Nope.",sM_1b;
+
+			sM_1a:
+				mes "[Thief Guide]";
+				mes "(~sigh~) There's always someone who gets left behind.... This is the last time so listen CAREFULLY!!....";
+				emotion 32;
+				next;
+				goto L_Explain;
+			sM_1b:
+				mes "[Thief Guide]";
+				mes ".... Then what is it??? Do you have something to tell me? YOUR the one who came TO ME...";
+				mes "What... you wanna a piece of me?? HUH!!??";
+				emotion 7;
+				close;
+
+		sL_1:
+			mes "[Thief Guide]";
+			mes "What? You actually went and stole some mushrooms?? Are you some kinda idiot?";
+			mes "Haha... I can't believe you listened to me..... ";
+			emotion 1;
+			next;
+			mes "[Thief Guide]";
+			mes ".... Psych!! Just kidding... heheheh! Speak with the guy next to me about rating the mushrooms you swiped.";
+			emotion 18;
+			close;
+
+	L_1:
+		mes "[Thief Guide]";
+		mes "So how was the Mushroom Farm.  Did ya have much fun?";
+		next;
+		menu "Yeah, kinda Cool.",M_Cool,"It was horrible.",M_Not;
+
+		M_Cool:
+			mes "[Thief Guide]";
+			mes "   Wow! I like you! Fabulous! Everyone before you was `S@#$ Bloody As#$%^&s'.";
+			next;
+			mes "[Thief Guide]";
+			mes "...... You won't take my place, will you? If you have any ambition like that, I will kick your ^ff0000'ASS OUT OF YOUR BUTT'^000000!";	//this is just too much lol.
+			emotion 0;
+			next;
+			mes "[Thief Guide]";
+			mes "   Still, in order to pass the test you need to go get some mushrooms.";
+			close;
+		M_Not:
+			mes "[Thief Guide]";
+			mes "   I know what ya mean.  I was there before and it was awfull.  All those smelly mushrooms and aggressive monsters.";
+			next;
+			mes "[Thief Guide]";
+			mes "   Eeewww! Yuuuckk! Still, in order to pass the test you need to go get some mushrooms.";
+			emotion 16;
+			close;
+}
+
+
+// -- Test Grader --
+moc_prydb1.gat,42,133,2	script	Comrade Brad	118,
+{
+	if(Class == 0) goto L_Novice;
+	if(Class == 6) goto L_Thief;
+
+L_Other:
+	mes "[Brad]";
+	mes "Hey~ Hey~!! You don't look like a Thief.  What the heck? You'd BETTER NOT be trying to start someting on THIEF TERRITORY!!";
+	emotion 23;
+	close;
+L_Thief:
+	mes "[Brad]";
+	mes "We don't have any Special events for Thieves yet.  Come back some other time, alright?";
+	close;
+
+L_Novice:
+	mes "[Comrade Brad]";
+	if((job_thief_q == 2) && ((countitem(1069) > 0) || (countitem(1070) > 0))) goto L_4;//Items: Orange_Net_Mushroom, Orange_Gooey_Mushroom_,
+	if(job_thief_q >= 1) goto L_3;
+
+	mes "Errr? What's matter newbie? If you want to be a theif, speak to the girl beside me.";
+	close;
+L_3:
+	mes "Go get some mushrooms so that I can grade them ok.";
+	close;
+L_4:
+	mes "Good.  You got some mushrooms from that crooked merchant Shibu";
+	next;
+
+	set @mushrm1,countitem(1069)*3;//Items: Orange_Net_Mushroom,
+	set @mushrm2,countitem(1070);//Items: Orange_Gooey_Mushroom_,
+	set @TotMush,@mushrm1 + @mushrm2;
+	set @money_thief,((countitem(1069) * 5) + (countitem(1070)* 2)) + 200;//Items: Orange_Net_Mushroom, Orange_Gooey_Mushroom_,
+
+	mes "[Comrade Brad]";
+	mes "Let's see you got:";
+	mes "^0000ff"+countitem(1069)+"^000000 Orange Net Mushrooms for ^ffbb00"+@mushrm1+"^000000 points,";//Items: Orange_Net_Mushroom,
+	mes "^0000ff"+countitem(1070)+"^000000 Orange Gooey Mushrooms for ^ffbb00"+@mushrm2+"^000000 points,";//Items: Orange_Gooey_Mushroom_,
+	mes "Giving you a total score of ^ff0000"+@TotMush+"^000000.";
+	next;
+	if (@TotMush > 25) goto L_High;
+	if (@TotMush == 25) goto L_Medium;
+
+		mes "[Comrade Brad]";
+		mes "Meh!.... looks like you failed.  C'mon!  You can do better than that!  Go get some more mushrooms!!!";
+		close;
+
+	L_Medium:
+		mes "[Comrade Brad]";
+		mes "Good. You passed the Test.";
+		next;
+		goto L_Final;
+
+	L_High:
+		mes "[Comrade Brad]";
+		mes "Ooooh.  Above 25, kewl.  You passed the Test!";
+		next;
+
+	L_Final:
+		mes "[Comrade Brad]";
+		mes "Congratulations ^ff0000"+strcharinfo(0)+"^000000, you passed the official Thief Test!  You can now become a Thief!!";
+		emotion 21;
+		next;
+		if(SkillPoint > 0) goto sL_SkPoint;
+		delitem 1069, countitem(1069);//Items: Orange_Net_Mushroom,
+		delitem 1070, countitem(1070);//Items: Orange_Gooey_Mushroom_,
+		JobChange 6;// Job: Job_Thief
+		set job_thief_q,0;
+		mes "[Comrade Brad]";
+		mes "Here's a small reward for your hard work.  Spend it any way you want to.";
+		next;
+		set Zeny,Zeny+@money_thief;
+		mes "[Comrade Brad]";
+		mes "From now on you must act, think, and even smell like a Theif.";
+		mes "You are one of us now, which means you have the trust and freindship of Thieves all over Rune Midgard";
+		next;
+		mes "[Comrade Brad]";
+		mes "However, If you bring disgrace to our Guild, or ever betray us, we will not hesitate to have you......";
+		mes "how shall I say..... ^ff0000'REMOVED'^000000 from the Thief Guild.";
+		emotion 29;
+		next;
+		mes "[Comrade Brad]";
+		mes "Good luck and always remeber the ^0000cc'Theif Motto'^000000: ^ff0000DON'T Get Caught^000000l!";
+		close;
+
+		sL_SkPoint:
+			mes "[Comrade Brad]";
+			mes "But before that happens please use up all of your skill points ok?";
+			close;
+
+}
+
+
+// -- Irrelevant Man --
+moc_ruins.gat,141,125,3	script	Irrelevant Man	118,
+{
+	if(Class == 6) goto L_Thief;
+	if(Class == 0) goto L_Novice;
+
+L_Other:
+	if(@s_flag==1) goto L_1b;
+	if(@s_flag==2) goto L_1c;
+	if(@s_flag==3) goto L_1d;
+	if(@s_flag==4) goto L_1e;
+	set @s_flag, 0;
+
+	L_1a:
+		mes "[Irrelevant Man]";
+		mes "Howdy~ Howdy. What a Wonderful day today,isn't it?";
+		mes "I feel like going on a 'Picnic' in the Pyramids with a couple freinds of mine today.";
+		set @s_flag, @s_flag+1;
+		close;
+	L_1b:
+		mes "[Irrelevant Man]";
+		mes "'Lalalala, Home sweet Home.'";
+		mes "I like this saying.  Home Sweet Home....";
+		set @s_flag, @s_flag+1;
+		close;
+	L_1c:
+		mes "[Irrelevant Man]";
+		mes "...... I could fly if I fell off............ ";
+		set @s_flag, @s_flag+1;
+		close;
+	L_1d:
+		mes "[Irrelevant Man]";
+		mes ".......Hmm?.....";
+		next;
+		mes "[Irrelevent Man]";
+		mes "Hey!! DON'T LOOK AT ME like that! I'M NOT some WACKO okay!!!";
+		set @s_flag, @s_flag+1;
+		emotion 6;
+		close;
+	L_1e:
+		mes "[Irrelevant Man]";
+		mes "Dude! I got nothin to say with you!  Mind your own business!  Sheesh!!";
+		emotion 32;
+		close;
+
+L_Thief:
+	mes "[Irrelevant Man]";
+	mes "Yah Hoo! Look at you! You became a Kool Thief!";
+	emotion 21;
+	next;
+	mes "[Irrelevant Man]";
+	mes "Don't worry about Shibu's Farm.  Let the newbies handle that.  Why don't ya go out and kill some stronger monsters.";
+	close;
+
+L_Novice:
+	if(job_thief_q==2) goto L_3;
+	if(job_thief_q==1) goto L_2;
+	mes "[Irrelevant Man]";
+	mes "Hey!! Novice! Want to be Stronger and more Powerful!? Do you like hiding and sneeking around?";
+	mes "If so, Join the Thief Guild! You are always welcome! Join now!";
+	next;
+	mes "[Irrelevant Man]";
+	mes "You can get more information in the 1st floor basement of the Pyramid!";
+	close;
+L_2:
+	mes "[Irrelevant Man]";
+	mes "Pssst......Pssst......hey you!  You look like your gonna take the ^ff0000'Test'^000000.  Am I right?";
+	next;
+	mes "[Irrelevant Man]";
+	mes "Lets see here.....(checks his list).... you're ^ff0000"+ strcharinfo(0) +"^000000 right?  Good.";
+	next;
+	mes "[Irrelevant Man]";
+	mes "Ok! I'm gonna show you the way in but keep quite.  I can't guarantee your safety so watch your back.";
+	next;
+
+	L_Warp:
+	set @TEMP,rand(5);
+	set job_thief_q,2;
+	if(@TEMP != 0) goto warpL03a;
+		warp "job_thief1.gat",228,106;
+		close;
+	warpL03a:
+		if(@TEMP != 1) goto warpL03b;
+		warp "job_thief1.gat",38,50;
+		close;
+	warpL03b:
+		if(@TEMP != 2) goto warpL03c;
+		warp "job_thief1.gat",66,331;
+		close;
+	warpL03c:
+		if(@TEMP != 3) goto warpL03d;
+		warp "job_thief1.gat",196,331;
+		close;
+	warpL03d:
+		warp "job_thief1.gat",309,234;
+		close;
+
+L_3:
+	mes "[Irrelevant Man]";
+	mes "Muhahahaha~~ WHAT???~~ You HAVEN'T PASSED the Test yet? Are you some sort of Idiot!! Kakakaka!!";
+	emotion 18;
+	next;
+	mes "[Irrelevant Man]";
+	mes "Just kidding..... NOT!!.  Anywho I'll let ya back in!";
+	next;
+	menu "Ready",M_Yes,"Not yet",M_No;
+
+	M_Yes:
+		goto L_Warp;
+
+	M_No:
+		mes "[Irrelevant Man]";
+		mes "Ok, let me know when you are.";
+		close;
+
+}

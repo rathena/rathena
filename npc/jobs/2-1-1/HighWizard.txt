@@ -1,0 +1,60 @@
+//High Wizard Made by Evera/Lorri
+valkyrie.gat,44,47,6	script	High Wizard	735,{
+	if ((readparam(11) >= 99) && (readparam(19) == 9) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
+	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
+	if ((readparam(19) == 4003) && (readparam(55) >= 40)) goto Lh2;
+	if ((readparam(19) == 4003) && (readparam(55) < 40)) goto LCem;
+	if (readparam(19) == 4010) goto Lcrazy;
+	if (readparam(12) != 0) goto Lskpt;
+	mes "[High Wizard]";
+	mes "Hello";
+	mes "The magic surrounds you.";
+	close;
+Lnovice:
+	mes "[High Wizard]";
+	mes "Hey you! It appears that your intelligence is very high. Would you like to become a high wizard like me?";
+	mes "There is a catch though, you have to go back through novice and mage.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lh1:
+	mes "[High Wizard]";
+	mes "Ready to become a high mage?";
+	menu "Yes",Lh12,"No",Lcancel;
+Lh12:
+	mes "[High Wizard]";
+	mes "The magic enchants and suppresses you.";
+	next;
+	jobchange 26;// Job: Job_Mage_High
+	close;
+Lh2:
+	mes "[High Wizard]";
+	mes "The magic grows strong in you. You appear ready. Will you become a high wizard?";
+	menu "Yes",Lh22,"No",Lcancel;
+Lh22:
+	mes "[High Wizard]";
+	mes "The magic enchants and suppresses you.";
+	jobchange 33;// Job: Job_High_Wizard
+	close;
+Lcrazy:
+	mes "[High Wizard]";
+	mes "I cannot bestow you with more of my magic.";
+	close;
+Lskpt:
+	mes "[High Wizard]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "[High Wizard]";
+	mes "You're not ready to go to the next level";
+	close;	
+Lcancel:
+	mes "Bye";
+	close;
+}

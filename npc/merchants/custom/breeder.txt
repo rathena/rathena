@@ -1,0 +1,67 @@
+//Peco Peco breeder for Knight by Darkchild v1.1
+//FIXED checkriding/cart/falcon funcs [Lupus]
+
+prontera.gat,122,200,1	script	Universal Rental Npc	726,{
+mes "[Universal Rental Npc]";
+mes "Hi, here you can rent Carts, Falcons or Pecopecos.";
+next;
+L_Menu:
+menu "Rent a Cart",L_Cart,"Rent a Falcon",L_Falcon,"Rent a Pecopeco",L_Peco,"Quit",L_Quit;
+close;
+L_Cart:
+if(Class == 5 && checkcart(0) == 0) goto L_Cart_Ok;
+if(Class == 10 && checkcart(0) == 0) goto L_Cart_Ok;
+if(Class == 18 && checkcart(0) == 0) goto L_Cart_Ok;
+if(Class == 4006 && checkcart(0) == 0) goto L_Cart_Ok;
+if(Class == 4011 && checkcart(0) == 0) goto L_Cart_Ok;
+if(Class == 4019 && checkcart(0) == 0) goto L_Cart_Ok;
+if(getskilllv(39)<1) goto L_Need_Skill;
+mes "[Universal Rental Npc]";
+mes "Sorry " + strcharinfo(0) + " but I only rent carts to Merchants, Blacksmiths and Alchimists who have enough skills to handle a cart.";
+close;
+L_Cart_Ok:
+	setcart;
+	goto L_Quit2;
+L_Need_Skill:
+mes "[Universal Rental Npc]";
+mes "Sorry you don't have the required skill to rent a cart.";
+close;
+L_Falcon:
+	if(Class == 11 && checkfalcon(0) == 0) goto L_falc;
+	if(Class == 4012 && checkfalcon(0) == 0) goto L_falc;
+	if(getskilllv(127)<1) goto L_Need_Skill2;
+	mes "[Universal Rental Npc]";
+	mes "Sorry " + strcharinfo(0) + " but I only rent falcons to Hunters who the ability to handle 'em.";
+	close;
+	L_falc:
+		setfalcon;
+		goto L_Quit2;
+L_Need_Skill2:
+mes "[Universal Rental Npc]";
+mes "Sorry you don't have the required skill to own a Falcon.";
+close;
+L_Peco:
+if (Class == 7 && checkriding(0) == 0) goto L_Peco_Ok;
+if (Class == 14 && checkriding(0) == 0) goto L_Peco_Ok;
+if (Class == 4008 && checkriding(0) == 0) goto L_Peco_Ok;
+if (Class == 4015 && checkriding(0) == 0) goto L_Peco_Ok;
+if(getskilllv(63)<1) goto L_Need_Skill3;
+mes "[Universal Rental Npc]";
+mes "Sorry" + strcharinfo(0) + "but I only rent pecopecos to Knight and Crusader who have the ability to handle 'em";
+close;
+L_Peco_Ok:
+setriding;
+goto L_Quit2;
+L_Need_Skill3:
+mes "[Universal Rental Npc]";
+mes "Sorry you don't have the required skill to ride a Peco Peco.";
+close;
+L_Quit:
+mes "[Universal Rental Npc]";
+mes strcharinfo(0) + ", please come back when you are ready to rent something.";
+close;
+L_Quit2:
+mes "[Universal Rental Npc]";
+mes strcharinfo(0) + ", please come again when you want another...";
+close;
+}

@@ -1,0 +1,736 @@
+<html>
+<head><title>eAthena 1.0 Final Readme</title>
+<meta http-equiv="expires" content="-1">
+<meta http-equiv="pragma" content="no-cache" />
+<meta name="author" content="eAthena Development Team">
+<meta name="description" content="eAthena, ro server emulator">
+<meta name="keywords" content="eathena, ro, ragnarok online, server emulator, server software">
+<link href="./1final.css" media="screen" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td height="82" align="left" colspan="19">
+			<img src="./banner.jpg" width="393" height="82">
+		</td>
+	</tr>
+	<tr height="36">
+		<td width="175" height="36">
+			<img src="./grnlefttab.jpg" width="175" height="36">
+		</td>
+		<td height="36" background="./grntabbg.jpg" class="tab">
+			<a href="../readme.html"><b>Intro</b><font color="#698069">duction</font>
+		</td>
+		<td>
+			<img src="./btwngreentab.jpg" width="18" height="36">
+		</td>
+		<td height="36" background="./grntabbg.jpg" class="tab">
+			<a href="./changelog.html"><b>Change</b><font color="#698069">log</font></a>
+		</td>
+		<td>
+			<img src="./btwngreentab.jpg" width="20" height="36">
+		</td>
+		<td height="36" background="./grntabbg.jpg" class="tab">
+			<a href="./features.html"><b>Features</b></a>
+		</td>
+		<td>
+			<img src="./btwngreentab.jpg" width="20" height="36">
+		</td>
+		<td height="36" background="./grntabbg.jpg" class="tab">
+			<a href="./Npcfeatures.html"><b>Npc</b><font color="#698069">features</font></a>
+		</td>
+		<td>
+			<img src="./btwngreentab.jpg" width="20" height="36">
+		</td>
+		<td height="36" background="./grntabbg.jpg" class="tab">
+			<a href="./settingup.html"><b>Setting</b><font color="#698069">up</font></a>
+		</td>
+		<td>
+			<img src="./grnwhttab.jpg" width="20" height="36">
+		</td>
+		<td height="36" background="./whttabbg.jpg" class="tab">
+			<b>GM</b><font color="#698069">commands</font>
+		</td>
+		<td>
+			<img src="./readmerighttab.jpg" width="20" height="36">
+		</td>
+		<td height="36" background="./grntabbg.jpg" class="tab">
+			<a href="./faq.html"><b>FAQ</b></a>
+		</td>
+		<td>
+			<img src="./btwngreentab.jpg" width="20" height="36">
+		</td>
+		<td height="36" background="./grntabbg.jpg" class="tab">
+			<a href="./support.html"><b>Support</b><font color="#698069">sites</font></a>
+		</td>
+		<td>
+			<img src="./grntabfinalright.jpg" width="12" height="36">
+		</td>
+		<td background="./topcontentbg.jpg" width="100%" height="37" rowspan="2">
+		</td>
+		<td rowspan="3">
+			<img src="./toprightcontent.jpg" width="12" height="46">
+		</td>
+	</tr>
+	<tr height="1">
+		<td colspan="19" bgcolor="#FCFCFC">
+		</td>
+	</tr>
+	<tr height="9">
+		<td colspan="19" bgcolor="#FCFCFC">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="18" bgcolor="#FCFCFC" class="header">
+			GM Command List
+		</td>
+		<td background="./rightcontentbg.jpg" width="12" rowspan="2">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="18" bgcolor="#FCFCFC" class="content">
+<font face="Verdana" size="2"><span class="GMCommandTitle">ANNOUNCEMENT COMMANDS</span>
+<span class="GMCommand">/b &lt;message&gt;<br>@broadcast &lt;message&gt;</span>
+Lets you make a GM global announcement with your name
+
+<span class="GMCommand">/nb &lt;message&gt;<br>@kamu &lt;message&gt;</span>
+Lets you make a GM global announcement withouth your name
+
+<span class="GMCommand">@kamib &lt;message&gt;<br>/bb &lt;message&gt;</span>
+Lets you make a GM global announcement withouth your name in blue
+
+<span class="GMCommandTitle">INFORMATION COMMANDS</span>
+<span class="GMCommand">@who [match_text]</span>									<br>Lists who is currently online in your server and their location. [match_text] is optional				<br><br><span
+ class="GMCommand">@who2 [match_text]								</span>
+Lists who is currently online in your server and their job.  [match_text] is optional				
+
+<span class="GMCommand">@who3 [match_text]</span>								<br>Lists who is currently online in your server and their party/guild.  [match_text] is optional<br><br><span
+ class="GMCommand">@whomap [map]</span>										<br>Display a listing of who is online and where in a specifical map<br><br><span
+ class="GMCommand">@whomap2 [map]</span>									<br>Display a listing of who is online and their job in a specifical map<br><br><span
+ class="GMCommand">@whomap3 [map]</span>									<br>Display a listing of who is online and their party/guild in a specifical map<br><br><span
+ class="GMCommand">@whogm [match_text]</span>									<br>Like @who+@who2+who3, but only for GM. [match_text] is optional				<br><br><span
+ class="GMCommand">@where &lt;char name&gt;</span>
+Tells you the location of a character
+
+<span class="GMCommand">@charstatsall</span>
+  	Displays stats of all characters.
+  	 
+<span class="GMCommand">@charitemlist &lt;char name&gt;</span>
+  	Displays all items of a player.
+  	 
+<span class="GMCommand">@charstoragelist &lt;char name&gt;</span>
+  	Displays all items of a player's storage.
+  	 
+<span class="GMCommand">@charcartlist &lt;char name&gt;</span>
+  	Displays all items of a player's cart.
+<span class="GMCommand">@uptime</span><br>Displays how long the map-server has been running.<br><br>
+<span class="GMCommand">@time<br>@date<br>@server_date<br>@serverdate<br>@server_time<br>@servertime</span>
+Display the date/time of the server
+
+<span class="GMCommand">@idsearch &lt;part_of_item_name&gt;</span>
+Search all items that name have part_of_item_name
+
+<span class="GMCommand">@ignorelist</span>
+Displays your ignore list
+
+<span class="GMCommand">@mapinfo [&lt;1-3&gt; [map]]</span>
+Give information about a map (general info +: 0: no more, 1: players, 2: NPC, 3: shops/chat).
+
+<span class="GMCommandTitle">CONTROL COMMANDS</span>
+<span class="GMCommand">@die</span>
+Kill yourself :)
+
+<span class="GMCommand">@alive</span>
+Revive yourself from death
+
+<span class="GMCommand">@kill &lt;char name&gt;</span>
+Kills specified character name
+
+<span class="GMCommand"></span><span class="GMCommand">@save</span>
+Sets save point as current location
+
+<span class="GMCommand">@load</span>
+Warps you to your save point (a.k.a. butterfly wing)
+
+<span class="GMCommand">@warp &lt;map name&gt; &lt;x&gt; &lt;y&gt;<br>@rura &lt;map name&gt; &lt;x&gt; &lt;y&gt;<br>@mapmove &lt;map name&gt; &lt;x&gt; &lt;y&gt;<br>/mm &lt;map name&gt; &lt;x&gt; &lt;y&gt;<br>/mapmove &lt;map name&gt; &lt;x&gt; &lt;y&gt;</span>
+Warps you to the selected position
+Example:
+@warp morocc 150 160 -&gt; Warps you to Morroc (X:150, Y:160)
+@rura prontera 50 80 -&gt; Warps you to Prontera (X:50, Y:80)
+
+
+<span class="GMCommand">@rura+ &lt;map name&gt; &lt;x&gt; &lt;y&gt; &lt;char name&gt;<br>@charwarp &lt;map name&gt; &lt;x&gt; &lt;y&gt; &lt;char name&gt;<br>#banish &lt;map name&gt; &lt;x&gt; &lt;y&gt; &lt;char name&gt;</span>
+Warps the selected character to the selected position
+Example:
+@charwarp morocc 150 160 Sora -&gt; Warps the character 'Sora' to Morroc (X:150, Y:160)
+@rura+ prontera 50 80 Haley -&gt; Warps the character 'Haley' to Prontera (X:50, Y:80)
+
+<span class="GMCommand">@jump [x [y]]</span>
+Teleports you randomly in the map (a.k.a. fly wing). Or to the specified location with x and y.
+
+<span class="GMCommand">/shift &lt;char name&gt;<br>@jumpto &lt;char name&gt;<br>@warpto &lt;char name&gt;<br>@goto &lt;char name&gt;</span>
+Warps you to selected character
+
+<span class="GMCommand">@go &lt;number/city_name&gt;</span>
+Warps you to a set city:</font></pre>
+<table id="table1" border="1" width="90%">
+  <tbody>
+    <tr>
+      <td width="25%"><font face="Verdana" size="2">-3: (Memo Point 2)</font></td>
+      <td width="25%"><font face="Verdana" size="2">2: Geffen</font></td>
+      <td width="25%"><font face="Verdana" size="2">7: Lutie</font></td>
+      <td width="25%"><font face="Verdana" size="2">12: Umbala</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font face="Verdana" size="2">-2: (Memo Point 1)</font></td>
+      <td width="25%"><font face="Verdana" size="2">3: Payon </font> </td>
+      <td width="25%"><font face="Verdana" size="2">8: Comodo</font></td>
+      <td width="25%"><font face="Verdana" size="2">13: Niflheim</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font face="Verdana" size="2">-1: (Memo Point 0)</font></td>
+      <td width="25%"><font face="Verdana" size="2">4: Alberta</font></td>
+      <td width="25%"><font face="Verdana" size="2">9: Yuno</font></td>
+      <td width="25%"><font face="Verdana" size="2">14: Louyang</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font face="Verdana" size="2">0: Prontera</font></td>
+      <td width="25%"><font face="Verdana" size="2">5: Izlude</font></td>
+      <td width="25%"><font face="Verdana" size="2">10: Amatsu</font></td>
+      <td width="25%"><font face="Verdana" size="2">15: Start Point</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font face="Verdana" size="2">1: Morroc</font></td>
+      <td width="25%"><font face="Verdana" size="2">6: Al de Baran</font></td>
+      <td width="25%"><font face="Verdana" size="2">11: Gon Ryun</font></td>
+      <td width="25%"><font face="Verdana" size="2">16: Prison/Jail</font></td>
+    </tr>
+  </tbody>
+</table>
+<pre class="style1"><font face="Verdana"><span class="GMCommand">/hide<br>@hide</span>
+GM Hide. Perfect hide that's totally invisible.
+
+<span class="GMCommand">@heal [&lt;HP&gt; &lt;HP&gt;]</span>
+Heals the desired amount of HP and SP. No value specified will do a full heal.
+
+<span class="GMCommand">@storage </span>
+Opens storage
+
+<span class="GMCommand">/recall &lt;char name&gt;<br>@recall &lt;char name&gt;</span>
+Recalls target character to you.
+
+<span class="GMCommand">@recallall</span>
+Recalls everyone on the server to you.
+
+<span class="GMCommand">@guildrecall &lt;guild_name/id&gt;</span>
+Warps all online character of a guild to you.
+
+<span class="GMCommand">@partyrecall &lt;party_name/id&gt;</span>
+Warps all online character of a party to you.
+
+<span class="GMCommand">@revive &lt;char name&gt;</span>
+Revives target character.
+
+<span class="GMCommand">@killmonster</span>
+Kills all spawned monsters on maps
+
+<span class="GMCommandTitle">SPAWNING COMMANDS</span>
+<span class="GMCommand">/item &lt;item_name&gt;<br></span>Gives you 1 of the desired monster<span
+ class="GMCommand">
+
+@item &lt;item name or ID&gt; &lt;quantity&gt;</span>
+Gives you the desired item with the desired quantity
+
+<span class="GMCommand">/monster &lt;monster_name&gt;</span><span
+ class="faqlist">
+Spawns 1 of the desired monster
+
+</span><span class="GMCommand"><font size="2">@spawn &lt;monster_name_or_monster_ID&gt; [&lt;quantity&gt; [&lt;desired_monster_name&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]]<br>@monster &lt;monster_name_or_monster_ID&gt; [&lt;quantity&gt; [&lt;desired_monster_name&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]]<br>@summon &lt;monster_name_or_monster_ID&gt; [&lt;quantity&gt; [&lt;desired_monster_name&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]]</font></span><font
+ size="2"><span class="faqlist">
+</span><span class="GMCommand">@monster2 &lt;desired_monster_name&gt; &lt;monster_name_or_monster_ID&gt; [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]<br>OR<br>@spawn "desired monster name" &lt;monster_name_or_monster_ID&gt; [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]<br>@monster "desired monster name" &lt;monster_name_or_monster_ID&gt; [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]<br>@summon "desired monster name" &lt;monster_name_or_monster_ID&gt; [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]<br>@monster2 "desired monster name" &lt;monster_name_or_monster_ID&gt; [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]<br>OR<br>@spawn &lt;monster_name_or_monster_ID&gt; "desired monster name" [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]<br>@monster &lt;monster_name_or_monster_ID&gt; "desired monster name" [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]<br>@summon &lt;monster_name_or_monster_ID&gt; "desired monster name" [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]<br>@monster2 &lt;monster_name_or_monster_ID&gt; "desired monster name" [&lt;quantity&gt; [&lt;x coord&gt; [&lt;y coord&gt;]]]</span>
+</font>
+Spawns the desired monster with any desired name, quantity and x and y location (if specified).
+There 2 last forms can use spaces for desired names (between the "").
+
+<span class="GMCommandTitle">MAP OPTIONS COMMANDS</span>
+
+<span class="GMCommand">@pvpon</span>
+Turns pvp on on the current map
+<span class="GMCommand">@pvpoff</span>
+Turns pvp off on the current map
+<span class="GMCommand">@gvgon</span>
+Turns gvg on on the current map. This does NOT enable War of Emperium.
+<span class="GMCommand">@gvgoff  </span>
+Turns gvg off on the current map. This does NOT disable War of Emperium.
+
+<span class="GMCommandTitle">CHARACTER CONTROL COMMANDS</span>
+<span class="GMCommand">@baselvlup &lt;number of levels&gt;</span>
+<span class="GMCommand">@lvup &lt;number of levels&gt;<br>@blevel &lt;number of levels&gt;</span>
+Raises your base level the desired number of levels. The max is 99 (unless you change it in battle_athena.conf).
+
+<span class="GMCommand">@joblvlup &lt;number of levels&gt;</span>
+<span class="GMCommand">@joblvup &lt;number of levels&gt;<br>@jlevel &lt;number of levels&gt;</span>
+Raises your job level the desired number of levels. The max is 50 for 1st and 2nd class, and 70 for advanced classes.
+
+<span class="GMCommand">@job &lt;job ID&gt;<br>@jobchange &lt;job ID&gt;</span>
+Changes your job to the job assigned to the ID</font></pre>
+<table id="table2" border="1" width="90%">
+  <tbody>
+    <tr>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">0:
+Novice</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">6:
+Thief</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">12:
+Assassin</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">18:
+Alchemist</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">1:
+Swordsman</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">7:
+Knight</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">13:
+Knight w/ Peco</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">19:
+Bard</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">2:
+Mage</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">8:
+Priest</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">14:
+Crusader</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">20:
+Dancer</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">3:
+Archer</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">9:
+Wizard</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">15:
+Monk</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">21:
+Crusader w/ Peco</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">4:
+Acolyte</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">10:
+Blacksmith</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">16:
+Sage</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">22:
+Wedding</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">5:
+Merchant</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">11:
+Hunter</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">17:
+Rogue</font></td>
+      <td width="25%"><font style="font-size: 11pt;" face="Verdana">23:
+Super Novice</font></td>
+    </tr>
+  </tbody>
+</table>
+<table id="table3" border="1" width="90%">
+  <tbody>
+    <tr>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">24/4001:
+Novice High</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">31/4007:
+Thief High</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">40/4013:
+Assassin Cross</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">46/4019:
+Creator</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">25/4002:
+Swordsman High</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">35/4008:
+Lord Knight</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">41/4014:
+Lord Knight w/ Peco</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">47/4020:
+Clown</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">26/4003:
+Mage High</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">36/4009:
+High Priest</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">42/4015:
+Paladin</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">48/4021:
+Gypsy</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">28/4004:
+Archer High</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">37/4010:
+High Wizard</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">43/4016:
+Champion</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">49/4022:
+Paladin w/ Peco</font></td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">29/4005:
+Acolyte High</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">38/4011:
+Whitesmith</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">44/4017:
+Professor</font></td>
+      <td width="25%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">30/4006:
+Merchant High</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">39/4012:
+Sniper</font></td>
+      <td width="25%"><font style="font-size: 9pt;" face="Verdana">45/4018:
+Stalker</font></td>
+      <td width="25%">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<pre class="style1"><font face="Verdana"><span class="GMCommand">@option &lt;param1&gt; &lt;param2&gt; &lt;param3&gt;</span>
+Changes options for your character
+	&lt;param1&gt;		&lt;param2&gt; (Stackable)		&lt;param3&gt; (Stackable)
+	01 Petrified	01 Poison			01 Sight
+	02 Frozen		02 Cursed			02 Hide
+	03 Stunned	04 Silenced		04 Cloak
+	04 Sleeping	08 ???			08 Level 1 Cart
+	06 ???		16 Darkness		16 Falcon
+						32 (Depreciated)
+						64 GM Perfect Hide
+						128 Level 2 Cart
+						256 Level 3 Cart
+						512 Level 4 Cart
+						1024 Level 5 Cart
+						2048 Orc Head
+						4096 Wedding Sprites
+						8192 Ruwach
+
+<span class="GMCommand">@mountpeco</span>
+Will (un)mount on a peco. (Class is required, but not skill)
+
+<span class="GMCommand">@speed &lt;1-1000&gt;</span>
+Changes you walking speed.
+1(Fastest)&lt;---140(Default)-----------------&gt;1000(Slowest)
+
+<span class="GMCommand">@disguise &lt;monster_name_or_monster_ID&gt;</span>
+Change your appearence to other players to a mob.
+
+<span class="GMCommand">@undisguise</span>
+Restore your normal appearance.
+
+<span class="GMCommand">@model &lt;hair ID&gt; &lt;hair color&gt; &lt;clothes color&gt;</span>
+Changes your characters appearance (Hair type, Hair Colour and/or Clothes Colour)
+	Hair ID (0-17)		Hair Colour (0-8)	Clothes Colour (0-4)
+				0 Default		0 Default
+				1 Blonde		1 Red
+				2 Purple		2 Green
+				3 Brown		3 White
+				4 Green		4 Brown
+				5 Blue
+				6 White
+				7 Black
+				8 Red
+				
+<span class="GMCommand">@effect &lt;effect_id&gt; [flag]</span>
+  	Give an efect to your character.
+
+<span class="GMCommand">@stpoint &lt;number of points&gt;</span>
+Gives you the desired number of stat points.
+
+<span class="GMCommand">@skpoint &lt;number of points&gt;</span>
+Gives you the desired number of skill points.
+
+<span class="GMCommand">@zeny &lt;amount&gt;</span>
+Gives you desired amount of Zeny.
+
+<span class="GMCommand">@str &lt;amount&gt;<br>@agi &lt;amount&gt;<br>@vit &lt;amount&gt;<br>@int &lt;amount&gt;<br>@dex &lt;amount&gt;<br>@luk &lt;amount&gt;</span>
+Adds desired amount to any stat. For example "@str 10" raises your str by 10
+
+<span class="GMCommand">@spiritball &lt;number&gt;</span>
+Number  1-1000
+Gives you monk "spirit spheres" like from the skill "Call Spirits"
+(If the number you use is &gt; 1000, your server may become instable or crash). 1000 Lags Your Client
+
+<span class="GMCommand">@memo [memo_position]</span>
+set/change a memo location (no position: display memo points).
+
+<span class="GMCommand">@questskill &lt;id&gt;</span>
+Gives you the specified quest skill
+
+<span class="GMCommand">@lostskill &lt;id&gt;</span>
+Takes away the specified quest skill from you
+
+Quest Skill ID:
+  Novice
+  142  Emergency Care
+  143  Act dead
+  Swordsman
+  144  Moving HP Recovery
+  145  Attack Weak Point
+  146  Auto Berserk
+  Archer
+  147  Arrow Creation
+  148  Charge Arrows
+  Thief
+  149  Throw Sand
+  150  Back Sliding
+  151  Take Stone
+  152  Stone Throw
+  Merchant
+  153  Cart Revolution
+  154  Change Cart
+  155  Crazy Uproar/Loud Voice
+  Acolyte
+  156  Holy Light
+  Magician
+  157  Energy Coat
+
+<span class="GMCommand">@email &lt;actual@email&gt; &lt;new@email&gt;</span>
+to change your e-mail (characters protection)
+ 
+<span class="GMCommandTitle">GUILD/WoE CONTROL COMMANDS</span>
+<span class="GMCommand">@guildlvup/@guildlvlup &lt;# of levels&gt;</span>
+Raise Guild by desired number of levels
+
+<span class="GMCommand">@guild &lt;Desired Guild Name&gt;</span>
+Creates a guild with the disered name (Spaces are allow, no need to use "")
+
+<span class="GMCommand">@agitstart</span>
+Starts Guild Wars (War of Emperium)
+
+<span class="GMCommand">@agitend</span>
+Ends Guild Wars (War of Emperium)
+
+<span class="GMCommandTitle">EQUIPMENT COMMANDS</span>
+<span class="GMCommand">@refine &lt;position&gt; &lt;+/-amount&gt;</span>
+Upgrades equipment at the position specified (Stackable)
+0 - All
+1 - Lower Head
+2 - Right Hand
+4 - Robe/Garment
+8 - Left Accessory
+16 - Body/Armor
+32 - Left Hand
+64 - Feet
+128 - Right Accessory
+256 - Top Head
+512 - Mid Head
+
+Example:
+@refine 34 10 - Refines a 2 handed weapon to +10
+@refine 16 4 - Refines the body/armor to +4
+
+<span class="GMCommand">@produce &lt;equip name or equip ID&gt; &lt;element&gt; &lt;# of very's&gt;</span>
+Element: 0 None 1 Ice 2 Earth 3 Fire 4 Wind
+# of very's: 0 None 1 Very Strong 2 Very Very Strong 3 Very Very Very Strong
+
+Example: @produce 1163 3 3 - Produces a Very Very Very Strong (Your Nick)'s Fire Claymore
+
+<span class="GMCommandTitle">PET COMMANDS</span>
+<span class="GMCommand">@makeegg &lt;ID&gt;</span>
+Gives pet egg for monster ID in pet DB
+
+<span class="GMCommand">@petfriendly &lt;#&gt;</span>
+Set pet friendly amount (0-1000) 0  Min, 1000  Max
+
+<span class="GMCommand">@pethungry &lt;#&gt;</span>
+Set pet hungry amount (0-100) 0  Min, 100  Max
+
+<span class="GMCommand">@petrename</span>
+Re-enable pet rename
+
+<span class="GMCommand">@hatch</span>
+Brings up the hatch pet menu
+
+<span class="GMCommandTitle">REMOTE CHAR COMMANDS</span>
+<span class="GMCommand">@charwarp &lt;map name&gt; &lt;x&gt; &lt;y&gt; &lt;char name&gt;</span>
+Warps character to location of choice
+Example:
+@charwarp morocc 150 160 TestChar -&gt; Warps TestChar to Morroc (X:150, Y:160)
+
+<span class="GMCommand">@charstats &lt;char name&gt;</span>
+Displays the character's stats.
+
+<span class="GMCommand">@charignorelist &lt;char name&gt;</span>
+Displays ignore list of the player
+
+<span class="GMCommand">@inall &lt;char name&gt;</span>
+Allows all wispers for the player
+
+<span class="GMCommand">@exall &lt;char name&gt;</span>
+Blocks all wispers for the player
+
+<span class="GMCommand">@charoption &lt;param1&gt; &lt;param2&gt; &lt;param3&gt; &lt;char name&gt;</span>
+Does the same as the @option command only to target character.
+
+<span class="GMCommand">@charmountpeco &lt;charname&gt;</span>
+Give/remove to a player a peco (Class is required, but not skill).
+
+<span class="GMCommand">@charpetrename &lt;charname&gt;</span>
+Re-enable pet rename to a player.
+
+<span class="GMCommand">@charsave &lt;map&gt; &lt;x&gt; &lt;y&gt; &lt;char name&gt;</span>
+Changes the target player's respawn point.
+
+<span class="GMCommand">@charbaselvl &lt;#&gt; &lt;char name&gt;</span>
+Change a character's base level.
+
+<span class="GMCommand">@charjlvl &lt;#&gt; &lt;char name&gt;</span>
+Change a character's job level.
+
+<span class="GMCommand">@charjob &lt;job ID&gt; &lt;char name&gt;<br>@charjobchange &lt;job ID&gt; &lt;char name&gt;</span>
+Changes target character's job.
+
+<span class="GMCommand">@charzeny &lt;amount&gt; &lt;char name&gt;</span>
+Give/take a player's Zeny
+
+<span class="GMCommand">@charstpoint &lt;amount&gt; &lt;char name&gt;</span>
+Give/take a player's stat points
+
+<span class="GMCommand">@charskpoint &lt;amount&gt; &lt;char name&gt;</span>
+give/take a player's skill points
+
+<span class="GMCommand">@charquestskill &lt;#&gt; &lt;char name&gt;</span>
+Gives to a player the specified quest skill.
+
+<span class="GMCommand">@charlostskill &lt;#&gt; &lt;char name&gt;</span>
+Takes away the specified quest skill from the player.
+
+<span class="GMCommand">@chardelitem &lt;item_name_or_ID&gt; &lt;quantity&gt; &lt;char name&gt;</span>
+Remove items from a character
+
+<span class="GMCommand">@charmodel &lt;hair type&gt; &lt;hair color&gt; &lt;clothes color&gt; &lt;char name&gt;</span>
+Changes a player's model
+
+<span class="GMCommand">@chardisguise &lt;monster_name_or_monster_ID&gt; &lt;char name&gt;</span>
+Changes disguise of a player
+
+<span class="GMCommand">@charundisguise &lt;char name&gt;</span>
+Cancels disguise of a player
+
+<span class="GMCommand">@charreset &lt;char name&gt;</span>
+Resets the character
+
+<span class="GMCommand">@chardyeclothes &lt;#&gt; &lt;char name&gt;</span>
+Changes a player's clothes colour
+
+<span class="GMCommand">@chardyehair &lt;#&gt; &lt;char name&gt;</span>
+Changes a player's hair colour
+
+<span class="GMCommand">@charstylehair &lt;#&gt; &lt;char name&gt;</span>
+Changes a player's hair style
+
+<span class="GMCommand">@charchangesex &lt;name&gt;</span>
+Changes sex of a player (all characters of the account)
+
+<span class="GMCommand">@charblock &lt;name&gt;</span>
+Blocks definitively a account
+
+<span class="GMCommand">@charunblock &lt;name&gt;</span>
+<span class="GMCommand">@unblock &lt;name&gt;</span>
+Unblocks a account
+
+<span class="GMCommand">@charban &lt;time&gt; &lt;name&gt;</span>
+Ban temporarily a account
+ time usage: adjustement (+/- value) and element (y/a, m, d/j, h, mn, s)
+ Example: @ban +1m-2mn1s-6y testplayer
+
+<span class="GMCommand">@charunban &lt;name&gt;<br>@unban &lt;name&gt;<br>@unbanish &lt;name&gt;<br>@uncharbanish &lt;name&gt;</span>
+Unban a account
+
+<span class="GMCommand">@jail &lt;char_name&gt;</span>
+Sends specified character in jails
+
+<span class="GMCommand">@unjail &lt;charname&gt;<br>@discharge &lt;char_name&gt;</span>
+Discharges specified character/prisoner
+
+<span class="GMCommandTitle">MASS CONTROL COMMANDS</span>
+<span class="GMCommand">@night</span>
+All characters are in darkness
+
+<span class="GMCommand">@day</span>
+@option 00 00 00 are used on all characters
+
+<span class="GMCommand">@doom</span>
+Kills all NON GM chars on the server.
+
+<span class="GMCommand">@doommap</span>
+Kills all non GM characters on the map.
+
+<span class="GMCommand">@raise</span>
+Resurrects all characters on the server.
+
+<span class="GMCommand">@raisemap</span>
+Resurrects all characters on the map.
+
+<span class="GMCommand">@kick &lt;charname&gt;</span>
+Kicks specified character off the server
+
+<span class="GMCommand">@kickall</span>
+Kick all characters off the server
+
+<span class="GMCommandTitle">OTHER COMMANDS</span>
+<span class="GMCommand">@gat<br>@packet</span>
+Unknown
+
+<span class="GMCommandTitle">Server Control Commands</span>
+<span class="GMCommand">@reloadscript<br></span>Reloads all the scripts for the server<span
+ class="GMCommand">
+
+@reloaditemdb</span>
+Reloads the itemdb
+
+<span class="GMCommand">@reloadgmdb</span>
+Reload GM levels
+
+<span class="GMCommand">@mapexit</span>
+Kick all players and shut down map-server.
+
+<span class="GMCommand">@reloadmobdb</span>
+Reload monster database
+
+<span class="GMCommand">@reloadskilldb</span>
+Reload skills definition database
+
+<span class="GMCommand">@enablenpc &lt;NPC_name&gt;</span>
+Enable a NPC
+
+<span class="GMCommand">@disablenpc &lt;NPC_name&gt;</span>
+Disable a NPC</font>
+</pre>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="18" background="./btmcontentbg.jpg" height="12" align="left">
+			<img src="./btmleftcontent.jpg" height="12" width="13">
+		</td>
+		<td>
+			<img src="./btmrightcontent.jpg" height="12 width="12">
+		</td>
+	</tr>
+	<tr>
+		<td height="10">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="19" bgcolor="#E2F0E2">
+			&copy; Content Copyright 2004 eAthena Development team<br>
+			&copy; Design Copyright 2004 Aria
+		</td>
+	</tr>
+</table>
+</body>
+</html>

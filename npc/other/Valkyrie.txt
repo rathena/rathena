@@ -1,0 +1,50 @@
+//1.1 label fixed [Lupus]
+
+yuno_in02.gat,93,207,0	script	Heaven's Door	111,{
+	if (Class < 7) goto L_Can;
+		mes "[The writing on the paper]";
+		mes "You have found the entrance to the temple.";
+		mes "This path is only open to those who are born again.";
+		mes "Only heroes can open new paths.";
+		next;
+		mes "[The writing on the paper]";
+		mes "The area for heroes has been completed,";
+		mes "You cannot be immortal, but in this land...";
+		mes "Heroes are able to.";
+		next;
+		mes "[The writing on the paper]";
+		mes "The area for heroes has been completed,";
+		mes "You cannot be immortal, but in this land...";
+		mes "Heroes are able to.";
+		next;
+		menu "Continue reading",-,"Stop reading",L_Can;
+			mes "[The writing on the paper]";
+			mes "Heaven and the closest palce,";
+			mes "In the Valkyrie's temple you shall find the path";
+			mes "A normal mortal cannot live for ever.";
+			next;
+			warp "valkyrie",48,8;
+			close;
+L_Can:
+		mes "[The writing on the paper]";
+		mes "....................";
+		close;
+
+}
+
+valkyrie.gat,48,86,6	script	Valkyrie	811,{
+	if (class > 7) goto L_Rest;
+	mes "[Valkyrie]";
+	mes "Welcome to Valhalla.";
+	mes "But, you have not been invited yet.";
+	mes "Leave here without leaving a trace.";
+	mes "Glory to the Swordsmans!";
+	warp "yuno_in02",93,205;
+	close;
+L_Rest:
+	mes "[Valkyrie]";
+	mes "Welcome to Valhalla.";
+	mes "Take plenty of rest while you are here.";
+	mes "Honor and glory to the Swordsmans";
+	close;
+}

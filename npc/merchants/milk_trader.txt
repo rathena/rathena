@@ -1,0 +1,63 @@
+//===== eAthena Script ======================================= 
+//= Milk Trader
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= trades bottles for milk
+//===== Additional Comments: ================================= 
+//= Fully working
+//= 1.1 Negative input bug fixed [Lupus]
+//============================================================ 
+
+
+
+
+// Milk Trader -------------------------------------------------------------
+prontera.gat,71,131,7	script	Milk Trader	86,{
+	mes "[Milk Trader]";
+	mes "If you bring me an empty bottle and 15 zeny, I will exchange it for 1 bottle of milk.";
+	next;
+	menu "-Exchange all empty bottles",M_0, "-Let me set the amount.",M_1, "-Cancel",M_End;
+
+	M_0:
+		if(countitem(713) < 1) goto L_NoBottle;
+		if(Zeny < 15) goto L_NoZeny;
+
+		sL_GetMilk:
+			if(countitem(713)<1 || Zeny<15) goto M_End;
+			getitem 519,1;
+			delitem 713,1;
+			set Zeny, Zeny - 15;
+			goto sL_GetMilk;
+
+	M_1:
+		set @INPUT,0;
+		input @INPUT;
+		if(@INPUT < 1 ) goto M_End;
+		if(countitem(713) < @INPUT) goto L_NoBottle;
+		if(Zeny < (@INPUT*15)) goto L_NoZeny;
+		getitem 519, @INPUT;
+		delitem 713, @INPUT;
+		set Zeny, Zeny - (@INPUT*15);
+		goto M_End;
+
+	M_End:
+		mes "[Milk Trader]";
+		mes "Come back anytime.";
+		close;
+
+	L_NoBottle:
+		mes "[Milk Trader]";
+		mes "Ok, empty bottle please! Empty Bottle!!";
+		mes "... Aww.. you don't have enough...?";
+		close;
+
+	L_NoZeny:
+		mes "[Milk Trader]";
+		mes "You need more money.";
+		close;
+}

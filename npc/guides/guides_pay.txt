@@ -1,0 +1,193 @@
+//===== eAthena Script ======================================= 
+//= Payon Guides
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= eAthena  0.5.2 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Fully working
+//= v1.1 Now using duplicate command.
+//= New Payon Locations [Darkchild]
+//============================================================
+
+
+
+
+payon.gat,148,213,4	script	Guide	708,{
+	cutin "pay_soldier",2;
+	mes "[Payon Soldier]";
+	mes "Welcome to Payon, the peacefull city hidden in the forest!.";
+	next;
+	mes "[Payon Soldier]";
+	mes "We are here to help you find your way.  Please feel free to speak to us anytime you need help.";
+M_Menu:
+	next;
+	menu "View Buildings",M_1, "Notice",M_2, "Cancel",M_End;
+
+	M_1:
+		mes "[Payon Soldier]";
+		mes "Do you want me to leave indications on the Mini-Map?";
+		next;
+		menu "No Thanks",sM_1a,"Yes Please",sM_1b;
+		
+		sM_1a:
+			set @COMPASS_CHECK,0;
+			goto L_Cont;
+
+		sM_1b:
+			set @COMPASS_CHECK,1;
+
+		L_Cont:
+		mes "[Payon Soldier]";
+		mes "Please choose a building to view.";
+		next;
+	sM_Menu:
+		menu 	"^FF0000Archer Guild^000000",M_1_1, "Armory",M_1_2, "Item Shop",M_1_3, "Inn",M_1_4, "Central Palace",M_1_5,
+			"Wipe all indications from mini-map.",M_1_6, "Cancel",M_End;
+
+   M_1_1: 
+         mes "[Payon Soldier]"; 
+         mes "The 'Archer Guild' is located in Archer Village.  Go there if you want to be an archer."; 
+         viewpoint 1,227,323,1,0xFF0000; 
+         goto sL_Wipe; 
+      M_1_2: 
+         mes "[Payon Soldier]"; 
+         mes "The 'Armory' is located a bit West of the middle of the town."; 
+         viewpoint 1,138,158,2,0xFF00FF; 
+         goto sL_Wipe; 
+      M_1_3: 
+         mes "[Payon Soldier]"; 
+         mes "The 'Item Shop' is located to the south."; 
+         viewpoint 1,161,95,3,0xFF00FF; 
+         goto sL_Wipe; 
+      M_1_4: 
+         mes "[Payon Soldier]"; 
+         mes "The 'Inn' is located in the SouthEastern part of the town."; 
+         viewpoint 1,219,117,4,0xFF00FF; 
+         goto sL_Wipe; 
+      M_1_5: 
+         mes "[Payon Soldier]"; 
+         mes "The 'Central Palace' is the home of the Payon Royal Family.  Mind your manners when you enter the palace."; 
+         viewpoint 1,156,243,5,0x00FF00; 
+         goto sL_Wipe; 
+      M_1_6: 
+         set @COMPASS_CHECK, 2; 
+
+      sL_Wipe: 
+         if(@COMPASS_CHECK != 2) next;   // avoids a double 'next' when 'wipe indications' is chosen 
+         if(@COMPASS_CHECK == 1) goto sM_Menu; 
+         viewpoint 2,227,323,1,0xFF0000; 
+         viewpoint 2,138,158,2,0xFF00FF; 
+         viewpoint 2,161,95,3,0xFF00FF; 
+         viewpoint 2,219,117,4,0xFF00FF; 
+         viewpoint 2,156,243,5,0x00FF00; 
+         if (@COMPASS_CHECK == 0) goto sM_Menu; 
+         mes "[Payon Soldier]"; 
+         mes "All indications have been removed"; 
+         cutin "pay_soldier",255; 
+         close;
+
+	M_2:
+		mes "[Payon Soldier]";
+		mes "We upgraded the Location Guide to the Newest Digital Style.  We hope you like this gorgeous new system.";
+		next;
+		mes "[Payon Soldier]";
+		mes "Don't forget to refer to the Mini-Map on the Upper-Right corner of your screen.";
+		next;
+		mes "[Payon Soldier]";
+		mes "If you can't see the Mini-Map, just hit ^0000ff'ctrl+tab'^000000 or Click the ^0000ff'map'^000000 button in the Basic Information Window";
+		mes "Remeber to use the ^ff0000+,-^000000 buttons to adjust the map to your liking.";
+		goto M_Menu;
+
+	M_End:
+		mes "[Payon Soldier]";
+		mes "Bon Voyage, Wanderer.";
+		cutin "pay_soldier",255;
+		close;
+}
+
+// Archer Village ----------------------------------------------------------------
+pay_arche.gat,85,30,2	script	Guide	708,{
+	cutin "pay_soldier",2;
+	mes "[Payon Soldier]";
+	mes "Welcome to Payon, the peacefull city hidden in the forest!.";
+	next;
+	mes "[Payon Soldier]";
+	mes "We are here to help you find your way.  Please feel free to speak to us anytime you need help.";
+M_Menu:
+	next;
+	menu "View Buildings",M_1, "Notice",M_2, "Cancel",M_End;
+
+	M_1:
+		mes "[Payon Soldier]";
+		mes "Do you want me to leave indications on the Mini-Map?";
+		next;
+		menu "No Thanks",sM_1a,"Yes Please",sM_1b;
+		
+		sM_1a:
+			set @COMPASS_CHECK,0;
+			goto L_Cont;
+
+		sM_1b:
+			set @COMPASS_CHECK,1;
+
+		L_Cont:
+		mes "[Payon Soldier]";
+		mes "Please choose a building to view.";
+		next;
+	sM_Menu:
+		menu 	"^FF0000Archer Guild^000000",M_1_1, "Item Shop",M_1_2, "^0000FFPayon Cave^000000",M_1_3,
+			"Wipe all indications from mini-map.",M_1_4, "Cancel",M_End;
+
+		M_1_1:
+			mes "[Payon Soldier]";
+			mes "The 'Archer Guild' located in the NorthEastern part of Archer Village.  Go there to become an Archer";
+			viewpoint 1,144,164,1,0xFF0000;
+			goto sL_Wipe;
+		M_1_2:
+			mes "[Payon Soldier]";
+			mes "The 'Item Shop' is located in the Northwest corner of the Archer Village.";
+			viewpoint 1,71,156,2,0xFF00FF;
+			goto sL_Wipe;
+		M_1_3:
+			mes "[Payon Soldier]";
+			mes "The 'Payon Cave' is filled with zombies and monsters.  Becarefull when you enter.";
+			viewpoint 1,34,132,3,0x0000FF;
+			goto sL_Wipe;
+		M_1_4:
+			set @COMPASS_CHECK, 2;
+
+		sL_Wipe:
+			if(@COMPASS_CHECK != 2) next;	// avoids a double 'next' when 'wipe indications' is chosen
+			if(@COMPASS_CHECK == 1) goto sM_Menu;
+			viewpoint 2,144,164,1,0xFF0000;
+			viewpoint 2,71,156,2,0xFF00FF;
+			viewpoint 2,34,132,3,0x0000FF;
+			if (@COMPASS_CHECK == 0) goto sM_Menu;
+			mes "[Payon Soldier]";
+			mes "All indications have been removed";
+			cutin "pay_soldier",255;
+			goto M_Menu;
+
+	M_2:
+		mes "[Payon Soldier]";
+		mes "We upgraded the Location Guide to the Newest Digital Style.  We hope you like this gorgeous new system.";
+		next;
+		mes "[Payon Soldier]";
+		mes "Don't forget to refer to the Mini-Map on the Upper-Right corner of your screen.";
+		next;
+		mes "[Payon Soldier]";
+		mes "If you can't see the Mini-Map, just hit ^0000ff'ctrl+tab'^000000 or Click the ^0000ff'map'^000000 button in the Basic Information Window";
+		mes "Remeber to use the ^ff0000+,-^000000 buttons to adjust the map to your liking.";
+		goto M_Menu;
+
+	M_End:
+		mes "[Payon Soldier]";
+		mes "Bon Voyage, Wanderer.";
+		cutin "pay_soldier",255;
+		close;
+}

@@ -1,0 +1,82 @@
+//===== eAthena Script ======================================= 
+//= Niflheim Guide
+//===== By: ================================================== 
+//= 
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= 1.1 Fixed location command format [Lupus]
+//============================================================ 
+
+
+//=====================================================================================
+niflheim.gat,186,190,5	script	Wandering Man	798,{
+	mes "[Wandering Man]";
+	mes "Why are you in this scary city? I guess you lost your way too, heh.";
+	mes "I was attracted here by the tall trees, but still can't find my way out after so long...";
+	next;
+	mes "[Wandering Man]";
+	mes "But instead i have become familiar with the village surroundings,";
+	mes "perhaps it may be useful for escaping sometimes.";
+	next;
+	menu "Enquire locations",-,"Wipe indications",L_MENU_2,"Cancel",L_end;
+		mes "[Wandering Man]";
+		mes "Where do you want to know about?";
+		next;
+		menu "Witch's Hut",M_Magic,"Equipment Shop",M_item,"Weapon Shop",M_weapon,"Inn",M_hotel,"Cancel",L_cancel;
+
+		M_Magic:
+		viewpoint 1,255,194,1,0xFF3366;
+		mes "[Wandering Man]";
+		mes "In Niflheim lives a terrible witch,";
+		mes "you'll see her house right ^FF3366there^000000,";
+		mes "it was so scary i fled right after going in!";
+		close;
+
+		M_item:  
+		viewpoint 1,219,198,2,0xCC6600;
+		mes "[Wandering Man]";
+		mes "The equipment shop should be over ^CC6600here^000000";
+		mes "they sell several items not available to the outside world.";
+		close;
+
+		M_weapon:
+		viewpoint 1,219,170,3,0x66FF33;
+		mes "[Wandering Man]";
+		mes "The weapon shop should be over ^66FF33here^000000";
+		mes "they sell several items not available to the outside world.";
+		close;
+
+		M_hotel:
+		viewpoint 1,189,210,4,0x3366FF;
+		mes "[Wandering Man]";
+		mes "^3366FFThat^000000 would be the inn,";
+		mes "occasionally the spirits throw a party in there.";
+		close;
+
+		L_cancel:
+		mes "[Wandering Man]";
+		mes "To remove all indications of the minimap";
+		mes "come back and talk to me again.";
+		close;
+  
+	L_MENU_2:
+	viewpoint 2,255,194,1,0xFF3366;
+	viewpoint 2,219,198,2,0xCC6600;
+	viewpoint 2,219,170,3,0x66FF33;
+	viewpoint 2,189,210,4,0x3366FF;
+	mes "[Wandering Man]";
+	mes "I removed all the indications,";
+	mes "If you still need any directions, come back and talk to me again.";
+	close;
+
+	L_end: 
+	mes "[Wandering Man]";
+	mes "Wandering around by yourself is dangerous...";
+	mes "please take care.";
+	close;
+}

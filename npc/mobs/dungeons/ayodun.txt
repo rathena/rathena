@@ -1,0 +1,31 @@
+//===== eAthena Script =======================================
+//= Ayothana Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//=
+//============================================================
+
+//(ayothana dungeon 01)?
+ayo_dun01.gat,0,0,0,0	monster	Skeleton Archer	1016,40,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Skeleton Soldier	1028,25,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Pirate Skeleton	1071,40,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Skeleton	1076,20,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Orc Skeleton	1152,25,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Skeleton Worker	1169,30,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Skeleton Prisoner	1196,30,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Skeleton General	1290,15,0,0,0
+
+//(ayothana dungeon 02)?
+ayo_dun02.gat,0,0,0,0	monster	Succubus	1370,20,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Skeleton Soldier	1028,25,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Anubis	1098,40,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Drainliar	1111,25,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Rafflesia	1162,20,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Skeleton General	1290,15,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Blue Plant	1079,10,360000,180000,1
+ayo_dun02.gat,0,0,0,0	monster	Evil Snake Lord	1418,2,3200000,400000,1

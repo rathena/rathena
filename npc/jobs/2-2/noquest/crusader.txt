@@ -1,0 +1,54 @@
+//Crusader NPC for Athena by DiaDz
+//1.1 Added SkillPoint check [Lupus]
+
+//Crusader prt_in 88 103
+prt_in.gat,88,103,3	script	Crusader Trainer	752,{
+	if(Class==14) goto crus;
+	if(Class !=1) goto notsword;
+
+	mes "[Crusader Trainer]";
+mes "Welcome Have you come to Join our ranks?.";
+       next;
+       mes "[Crusader Trainer]";
+       mes "How may I be of Service to you?";
+       next;
+       menu "Change Job into a Crusader.",case1,"The Requirements.",case2,"Quit.",case3;
+        		case1:
+        			if(JobLevel < 40) goto notlvl;
+					mes "[Crusader Trainer]";	
+					if(SkillPoint > 0) mes "You need to use up all of your skill points before I can make you a Crusader.";
+					if(SkillPoint > 0) close;
+	                		mes "Welcome to the Crusaders Guild";
+					jobchange 14;// Job: Job_Crusader
+       					close;
+        			
+						notlvl:
+        				mes "[Crusader Trainer]";
+        				mes "you need to be at least Job level 40";
+        				close;
+
+        		case2:
+        			mes "[Crusader Trainer]";
+        			mes "You need to be a Swordsman of Job Level 40 to become a Crusader";
+        			next;
+        			mes "[Crusader Trainer]";	
+        			mes "We are destined to protect all who live in Midgard";
+				close;
+        		
+        		case3:
+	        		mes "[Crusader Trainer]";
+	        		mes "Please come again sometime";
+	        		close;
+        	
+	crus:
+		mes "[Crusader Trainer]";
+		mes "You are already a Mighty Crusader";
+		mes "May the Blessings of the Gods go with you";
+		close;
+	
+	notsword: 
+		mes "[Crusader Trainer]";
+		mes "I'm sorry but there is nothing I can help you with.";
+		mes "Only stout Swordsman can follow the holy path in order to become a 'Crusader'.";
+		close;
+}

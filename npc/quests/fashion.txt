@@ -1,0 +1,70 @@
+//--------------Daily Job Quest---------------\\ 
+
+izlude.gat,135,96,5	script	Fashion Glasses Quest	76,{
+	mes "[Fashionable Glasses Quest]"; 
+	mes "Hi, today's quest is...."; 
+	mes "Ah, the ^CC6633Fashionable Glasses ^000000Quest!"; 
+	next; 
+	menu "Requirements",Bl,"Make Item",B2,"Cancel",Cancel; 
+
+	B2: 
+	mes "[Fashionable Glasses Quest]";
+	mes "Good good, let me just check"; 
+	if(countitem(2276)<1)goto NoMake;
+	if(countitem(716)<20)goto NoMake;
+	if (countitem(1003)<25) goto NoMake; 
+	next;
+
+	mes "[Fashionable Glasses Quest]";
+	mes "Give me a second.....";
+
+	delitem 2276,1;
+	delitem 716,20;
+	delitem 1003,25;
+
+	getitem 5047,1;
+
+	mes "[Fashionable Glasses Quest]";
+	mes "Ok done!";
+	close;
+
+
+	NoMake:
+	mes "[Fashionable Glasses Quest]";
+	mes "You don't have the requirements.";
+	mes "Please come back another time...";
+	close;
+
+	Bl: 
+	mes "Ok all you have to do is";
+	mes "collect-"; 
+	mes "^CC66331 Eagle Eyes^000000"; 
+	mes "^CC663320 Red Gemstones^000000"; 
+	mes "and ^CC663325 Coal^000000";
+	next;
+
+	menu "Accept",Acc,"Leave",Leave;
+
+	Acc:
+	mes "When you are done, bring the items to me,";
+	mes "Ok good luck finding those items.";
+	Close;
+
+	Leave:
+	mes "[Fashionable Glasses Quest]";
+	mes "Maybe another time?";
+	Close;
+
+	Cancel:
+	mes "[Fashionable Glasses Quest]";
+	mes "Aw, what a shame";
+	mes "Giving up already?";
+	mes "Oh well maybe you will";
+	mes "participate in tommorow's";
+	mes "quest.";
+Close;
+}
+
+
+
+

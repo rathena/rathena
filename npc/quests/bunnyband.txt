@@ -1,0 +1,102 @@
+//===== eAthena Script ======================================= 
+//= Bunny Band Quest
+//===== By: ================================================== 
+//= eAthena Dev Team
+//===== Current Version: ===================================== 
+//= v1.1
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= v1.1 using duplicate command
+//============================================================ 
+
+
+
+
+// Prontera ------------------------------------------------------------------------------------------------------------------------------------------
+prontera.gat,146,87,6	script	Kafra Corp. Rep.#1::KCRep	83,
+{
+	mes "[Kafra Corp. Rep.]";
+	if (BUNYBND == 1) goto L_Check;
+	mes "^529DFFSpecial Event, ^FF0000Bunny Band ^529DFFQuest!!^000000";
+	next;
+	menu "Information.",M_Info,  "Join.",M_Join, "Cancel.",M_End;
+
+	M_Info:
+		mes "[Kafra Corp. Rep.]";
+		mes "To thank our customers for using the Kafra Corp. Services, we have prepapred a small event for them.....";
+		next;
+		mes "[Kafra Corp. Rep.]";
+		mes "The ^FF0000Bunny Band ^529DFFQuest!!^000000.  (Sponsered by: The Alberta Merchant Assosiation.)";
+		mes "This quest allows players to obtain the ultra-rare ^FF0000Bunny Band^000000!!";
+		next;
+		mes "[Kafra Corp. Rep.]";
+		mes "All you have to do is collect a number of items and bring them to a Kafra Corp. Rep. such as myself.";
+		mes "We will then carefully hand make a Bunny Band for you on the spot!";
+		next;
+		mes "[Kafra Corp. Rep.]";
+		mes "Here are the items that you will need for the Bunny Band.";
+		mes "^5555FF100 Feather^000000,";
+		mes "^5555FF1 Four Leaf Clover^000000,";
+		mes "^5555FF1 Pearl^000000,";
+		mes "^5555FF1 Kitty Band^000000.";
+		next;
+		mes "[Kafra Corp. Rep.]";
+		mes "When you've collected all of the items, just speak with any Kafra Corp. Rep. like myself.";
+		mes "We can be found in every town across Rune Midgard.";
+		close;
+
+	M_Join:
+
+		mes "[Kafra Corp. Rep.]";
+		mes "Thank you for participating in the event.  Please come back when you have gathered all of the items.";
+		set BUNYBND, 1;
+		close;
+
+	M_End:
+		mes "[Kafra Corp. Rep.]";
+		mes "Have a nice day.";
+		close;
+
+	L_Check:
+		if(countitem(949)<100 || countitem(706)<1 || countitem(722)<1 || countitem(2213)<1) goto sL_NoItems;
+
+		mes "Wow!! Well-Done, well-done! You've got every single item!! I will make the Bunny Band for you right away....";
+		emotion 21;
+		next;
+		mes "~ a few minutes later ~";
+		delitem 949,100;
+		delitem 706,1;
+		delitem 722,1;
+		delitem 2213,1;
+		next;
+		mes "[Kafra Corp. Rep.]";
+		mes "Tah dah!!! Here is your ^FF0000Bunny Band^000000... Please take it!";
+		getitem 2214,1;
+		next;
+		mes "[Kafra Corp. Rep.]";
+		mes "We appreciate your participation in this special event.  Thank you and enjoy your Bunny Band!.";
+		close;
+
+		sL_NoItems:
+			mes "Here are the items that you will need for the Bunny Band.";
+			mes "^5555FF100 Feather^000000,";
+			mes "^5555FF1 Four Leaf Clover^000000,";
+			mes "^5555FF1 Pearl^000000,";
+			mes "^5555FF1 Kitty Band^000000.";
+			close;
+
+}
+
+
+// Geffen ------------------------------------------------------------------------------------------------------------------------------------------
+geffen.gat,116,62,2	duplicate(KCRep)	Kafra Corp. Rep.#2	83,
+// Morroc ------------------------------------------------------------------------------------------------------------------------------------------
+morocc.gat,154,97,4	duplicate(KCRep)	Kafra Corp. Rep.#3	83,
+// Alberta ------------------------------------------------------------------------------------------------------------------------------------------
+alberta.gat,26,229,1	duplicate(KCRep)	Kafra Corp. Rep.#4	83,
+// Payon ------------------------------------------------------------------------------------------------------------------------------------------
+payon.gat,184,104,4	duplicate(KCRep)	Kafra Corp. Rep.#5	83,
+

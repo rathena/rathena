@@ -1,0 +1,41 @@
+//===== eAthena Script =======================================
+//= Heal Npc
+//===== By: ==================================================
+//= Lotsa People (1.x)
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= eAthena 0.1+;
+//===== Description: =========================================
+//= Poring Which Heals For Free
+//===== Additional Comments: =================================
+//= 2.0 By Darkchild, Duplicates And Changed A Bit
+//= you can replace this script file by heal_payment.txt
+//= if you want that players have to pay their healings.
+//============================================================
+
+prontera.gat,150,184,5	script	Healring#h1-1::Healring	1002,{
+	mes "[Healring]";
+	mes "Booooiiing!!";
+	next;
+	menu "Heal",-,"Quit",CANCEL;
+		heal 30000,30000;
+		mes "[Healring]";
+		mes "Boooing! Booiing Boing! (Healed! Have fun!)";
+		close;
+	CANCEL:
+	mes "[Healring]";
+	mes "Boing Boing! (Bye Bye!)";
+	close;
+}
+
+morocc.gat,159,96,5	duplicate(Healring)	Healring#h1-2	1002
+geffen.gat,121,61,5	duplicate(Healring)	Healring#h1-3	1002
+payon.gat,180,105,5	duplicate(Healring)	Healring#h1-4	1002
+alberta.gat,185,144,5	duplicate(Healring)	Healring#h1-5	1002
+aldebaran.gat,134,123,5	duplicate(Healring)	Healring#h1-6	1002
+izlude.gat,125,118,5	duplicate(Healring)	Healring#h1-7	1002
+xmas.gat,149,136,5	duplicate(Healring)	Healring#h1-8	1002
+comodo.gat,188,162,5	duplicate(Healring)	Healring#h1-9	1002
+amatsu.gat,200,80,5	duplicate(Healring)	Healring#h1-10	1002
+gonryun.gat,164,130,5	duplicate(Healring)	Healring#h1-1	1002

@@ -1,0 +1,557 @@
+//===== eAthena Script ======================================= 
+//= Morroc Town
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.3b
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Fully working
+//= Fixed Lapidary sprite, Implemented ANTHELL trigger
+//= (in both NPC/Warps) [Lupus]. Removed it from NPC and put in Warp
+//= 1.3 Removed some NPC due to Assassin Job Quest [kobra_k88]
+//= 1.3b mobs name corrected [Lupus]
+//============================================================
+
+
+//==================================================== Town of Morroc ====================================================\\
+
+// Old Scholar ===============================
+morocc_in.gat,112,122,2	script	Old Scholar	61,{
+	mes "[Old Scholar]";
+	mes "I've devoted my Life to researching the Pyramids.  Although I not found anything significant yet, I am confindent that I will find the Tomb of Ancient King, Osiris!";
+	next;
+	mes "[Old Scholar]";
+	mes "It is within the largest of the Morroc Pyramids, that the Greatest King in History sleeps the eternal sleep.  That is... if my memory serves me correctly......";
+	close;
+}
+
+// Drunk Man =================================
+morocc.gat,44,180,8	script	Drunk Man	89,{
+	mes "[Drunk Man]";
+	mes "Heh Heh... (Hiccup)! Oh, Are you new here? Nice to meet ya, Buddy! So how was your trip?";
+	mes "This was predestined that you and I meet here, I tell you what (Hiccup). Let me tell you something I just heard from the pub....";
+	next;
+	mes "[Drunk Man]";
+	mes "It's rumored that there is a special Dagger that can bring great fortune to its owner.";
+	mes "There is a well-know Thief in Rune-Midgard that possesses this Dagger, and has never been caught";
+	next;
+	mes "[Drunk Man]";
+	mes "What I would give to get my hands something like that(Hiccup).  But only in my dreams....";
+	next;
+	mes "[Drunk Man]";
+	mes "How about you? Why don't you Look for it? It shouldn't be a problem for someone as brave as yourself?";
+	mes "Kekeke keke(Hiccup)! Buy me a drink later if you ever find that dagger.  Promise me, alright?(Hiccup!)";
+	emotion 20;
+	close;
+}
+
+// Towner =================================
+morocc.gat,68,260,8	script	Towner	99,{
+	mes "[Towner]";
+	mes "Those giant, Triangular Buildings North West of town are called Pyramids... They have been there for thousands and thousands of years.";
+	next;
+	mes "[Towner]";
+	mes "Nobody knows when and why they were built or who built them.  All we know for sure is that there are tons of Horrendous Monsters inside of them.";
+	next;
+	mes "[Towner]";
+	mes "I think you'd better stay away from them.  The monsters in the Pyramid LOVE to feed on strangers.  Kekekekek...";
+	close;
+}
+
+// Ant Man Akira =============================
+morocc.gat,76,75,4	script	Ant Man Akira	47,{
+	mes "[Ant Man Akira]";
+	mes "About 1 map north and 3 maps east of Morroc, there lies the entrance to a cave known as ^ff0000ANTHELL^000000 ...";
+M_Menu:
+	next;
+	menu "'Anthell ?'",M_Anthell,"Ants?",M_Ants,"End conversation",M_End;
+	
+	M_Anthell:
+		mes "[Ant Man Akira]";
+		mes "Anthell gets it's name from the fact that the cave is home to the largest colony of giant ants in Rune-Midgard.";
+		mes "There are litterally thousands of ants performing work for the colony while their queens lay hundreds and hundreds of eggs.";
+		next;
+		mes "[Ant Man Akira]";
+		mes "Many people go there to traine because of the numerous amounts of ant eggs.  But be carefull...";
+		next;
+		mes "[Ant Man Akira]";
+		mes "Attack an ant by mistake, and you'll find yourself surrounded by a swarm of them before you can even use a fly wing!";
+		emotion 0;
+		goto M_Menu;
+	M_Ants:
+		mes "[Ant Man Akira]";
+		mes "There are 3 different kinds of Ant, each with a unique color and name.  Each one has a different role in the colony.";
+		mes "Andres are white, Pieres are green, and Deniros are red colored.  Their differences are not merely cosmetic however.";
+		next;
+		mes "[Ant Man Akira]";
+		mes "Andres are the weakest of the ants while Deniros are the most fiercesome of the ants.  Pieres lay somewhere in the middle.";
+		next;
+		mes "[Ant Man Akira]";
+		mes "Becarefull when your around them.  If you hit 1 Andre the other Andres in the area with swarm and attack you.";
+		mes "The same goes for Deniros and Pieres.  You should also know that ants are looters so watchout for your items.";
+		goto M_Menu;
+	M_End:
+		mes "[Ant Man Akira]";
+		mes "Before you go, let me tell you about Giearths.  They are not ants but they live in Anthell.  Don't underestimate them because of their small size.";
+		mes "They are extremely tough and should only be handled by high level wariors.";
+		next;
+		mes "[Ant Man Akira]";
+		mes "Well see ya around.";
+		close;
+}
+
+// Poring Lady Syvia ==================================
+morocc.gat,79,111,2	script	Poring Lady Syvia	700,{
+	mes "[Poring Lady Syvia]";
+	mes "All over Rune-Midgard you can see lots of cute monsters such as Spores, the musroom type creature....";
+	next;
+	mes "[Poring Lady Syvia]";
+	mes "Or Pickys, desert chicks that wear egg shells on their heads and jump around in the Morrc Desert..!";
+	mes "However you can't deny that the ^FF8888Poring^000000 is the cutest and most popular creature in all of Rune-Midgard.";
+	next;
+	mes "[Poring Lady Syvia]";
+	mes "Although everybody knows about the common pink Poring, there are 2 Rare porings that live near Prontera and are getting a lot of attention.";
+	next;
+	mes "[Poring Lady Syvia]";
+	mes "They are the ^ffaa00Angeling^000000 and the ^5555ffGhostring^000000";
+M_Menu:
+	next;
+	menu "Angeling?",M_Angel,"Ghostring?",M_Ghost,"Quit Conversation",M_Quit;
+	
+	M_Angel:
+		mes "[Poring Lady Syvia]";
+		mes "The Angeling is a poring with angel wings.  It is rarely seen but it is quite a sight.  Don't not be fooled by it's angelic look however.";
+		mes "It is a high level monster armed with the Holy property.  It is immune to almost all magic attacks except those of the neutral & shadow property.";
+		next;
+		mes "[Poring Lady Syvia]";
+		mes "Physical attacks are definately the way to go against these monsters.";
+		next;
+		mes "[Poring Lady Syvia]";
+		mes "Don't I know a lot about porings?  Quite frankly I'm in love with them.... =P";
+		goto M_Menu;
+
+	M_Ghost:
+		mes "[Poring Lady Syvia]";
+		mes "The Ghostring is an evil ghost poring.  It is rarely seen and luckly so.";
+		next;
+		mes "[Poring Lady Syvia]";
+		mes "It is a high-level monster armed with the ghost property.  This makes it immume to physical attacks.  So Archers, Swordsman, and Thieves beware!";
+		mes "Only weapons with elemental properites will work on Ghostrings.  Of course magic attacks work very well on them also.";
+		next;
+		mes "[Poring Lady Syvia]";
+		mes "Don't I know a lot about porings?  Quite frankly I'm in love with them.... =P";
+		goto M_Menu;
+
+	M_Quit:
+		mes "[Poring Lady Syvia]";
+		mes "OMG!";
+		emotion 23;
+		next;
+		mes "[Poring Lady Syvia]";
+		mes "You dare dismiss a poring expert such as myself? I am proud of my knowledge about all things poring!!";
+		next;
+		mes "[Poring Lady Syvia]";
+		mes "Hmf!";
+		emotion 32;
+		close;
+}
+
+// Slayer Kid ====================================
+morocc.gat,123,58,4	script	Slayer Kid	118,{
+	mes "[Slayer Kid]";
+	mes ".... An expert in hand to hand combat who polishes off enemies quickly and quietly....";
+	next;
+	mes "[Slayer Kid]";
+	mes "That is the ^ff00ffAssassin^000000!!";
+M_Menu:
+	next;
+	menu "Hmm??",M_0,"Where can I find the Assassin Clan?",M_1,"End conversation",M_End;
+	
+	M_0:
+		mes "[Slayer Kid]";
+		mes "Assassins are a secretive group of elite killers.  People say Assassins are highly trained in 'eliminating' their targets without leaving a trace.";
+		next;
+		mes "[Slayer Kid]";
+		mes "It's been 3 months since I left home to search for the Assassin clan.... Just where are they??!!!";
+		goto M_Menu;
+	M_1:
+		mes "[Slayer Kid]";
+		mes "People say that if you go 2 maps on the east of Morroc, then 2 maps south, you'll be able to find the Assassin Clan.";
+		next;
+		mes "[Slayer Kid]";
+		mes "If you are granted an Assassin Cross, the emblem of the clan master, you will be allowed to become an Assassin.";
+		mes "The Assassin Cross is a high honor and is given to the best Assassin among Assassins!";
+		next;
+		mes "[Slayer Kid]";
+		mes "To tell you the truth however... I don't think they the clan really exists...";
+		next;
+		mes "[Slayer Kid]";
+		mes "I've been searching for them for over 3 months now and nothing.  It seems almost impossible for me to become an Assassin now......";
+		goto M_Menu;
+	M_End:
+		close;
+
+}
+
+// Lapidary =======================================
+morocc.gat,150,50,8	script	Lapidary	99,{
+	mes "[Lapidary]";
+	mes "The Queen of Jewelry is the Diamond.  No one can deny its beautiful appearance.  That's why it cost so much to buy...";
+	next;
+	mes "[Lapidary]";
+	mes "Many factors increase its value, with the most important factor being size.";
+	next;
+	mes "[Lapidary]";
+	mes "A high quality Diamond should be perfect and not chipped or cracked in any way.";
+	close;
+}
+
+// Uncle Dimitrii ==========================================
+morocc.gat,180,155,4	script	Uncle Dimitri	49,{
+	mes "[Uncle Dimitrii]";
+	mes "The avarage temperature in the Morroc Desert is many times higher than anywhere else in the Rune-Midgard Kingdom.";
+	next;
+	mes "[Uncle Dimitrii]";
+	mes "Be carefull of where you choose to sit down and rest.  Choose the wrong spot and your butt may catch on fire!!";
+M_Menu:
+	next;
+	menu "About the Desert sand",M_1,"About the remedy for Fatigue",M_2,"End conversation",M_End;
+	
+	M_1:
+		mes "[Uncle Dimitri]";
+		mes ". . . . . Well";
+		next;
+		mes "[Uncle Dimitri]";
+		mes "It's SUPPOSED to be HOT!!! But it actually isn't really that hot.....";
+		next;
+		mes "[Uncle Dimitri]";
+		mes "For some odd reason the sand in the Morroc desert doesn't conduct as much heat as the sand in other deserts.";
+		mes "Instead of being scorching hot, the sand just feels warm.... so it's ok for you to sit down for a good rest";
+		next;
+		mes "[Uncle Dimitri]";
+		mes "So everybody can recover their HP and SP without fear of catching on fire.";
+		goto M_Menu;
+	M_2:
+		mes "[Uncle Dimitri]";
+		mes "Aaaaahhh!!!!";
+		next;
+		mes "[Uncle Dimitri]";
+		mes "Nothing beats desert fatigue like a couple of potions! The ^ff0000Red^000000 ones are especially populare because of their low cost and light weight.";
+		next;
+		mes "[Uncle Dimitri]";
+		mes "They only recover a small amount of hp, but combined with a dip in a desert oasis, a couple ^ff0000Reds^000000 are all you need.";
+		goto M_Menu;
+	M_End:
+		mes "[Uncle Dimitri]";
+		mes "Did you know that you can get ^0000bb'Milk'^000000 from a 'PecoPeco's Egg'? I wonder how that works......?";
+		close;
+}
+
+// Trader Joe =====================================
+morocc.gat,208,85,7	script	Trader Joe	83,{
+	mes "[Trader Joe]";
+	mes "I earn a living as a Trader so I'm constantly traveling between Morroc and Prontera.";
+	mes "I can't even count how many times I've been across the Hot, Dry desert.";
+	next;
+	mes "[Trader Joe]";
+	mes "One day, while I was out in the Desert, I unexpectedly ran out of water and became extremely thirsty.";
+	mes "I was desperate so I decided to try to get some water out of a cactus when.......";
+	next;
+	mes "[Trader Joe]";
+	mes "ALL OF THE SUDDEN!!! The cactus let out this LOUD SCREAM and started to SHOOT its NEEDLES at me!!";
+	emotion 23;
+	next;
+	mes "[Trader Joe]";
+	mes "It was THE WORST experience of my ENTIRE LIFE.";
+	next;
+	mes "[Trader Joe]";
+	mes "I figured out later that it wasn't a normal cactus that attacked me but it was ^00cc00Muka^000000, the cactus monster.";
+	next;
+	mes "[Trader Joe]";
+	mes "So be carefull the next time you're out in the desert.  You don't want to make the same mistake I made. (~Sigh~)";
+	close;
+}
+
+// Fly Man Armani ===============================
+morocc.gat,234,273,3	script	Fly Man Armani	54,{
+	mes "[Fly Man Armani]";
+	mes "I SAW IT!! I SAW IT!!!";
+	emotion 5;
+	next;
+	mes "[Fly Man Armani]";
+	mes "I saw the rare ^ff0000Dragon Fly^000000 just North of here! It was incredible!!";
+	next;
+	menu "What... Dragon Fly?!",M_0,"So what?",M_1;
+	
+	M_0:
+		mes "[Fly Man Armani]";
+		mes "It is the boss of desert flies and its much stronger than any other ordanary fly.";
+		mes "It's a rare sight to behold, and for anybody strong enough and lucky enough to defeat it.... ";
+		next;
+		mes "[Fly Man Armani]";
+		mes "The Dragon Fly may even drop an UTLRA RARE item called a ^0000ddClip^000000!";
+		mes "Clips are items that you can attach to weapons, armor, and almost everykind of accessory.";
+		next;
+		mes "[Fly Man Armani]";
+		mes "Clips are ^ffaa00slotted^000000 and therefore you can insert cards into them.  That's what makes them so valuable.";
+		mes "It seems like everyone is yearning for a clip these days.";
+		next;
+		mes "[Fly Man Armani]";
+		mes "Say.... why don't YOU challenge the Dragon Fly?";
+		emotion 20;
+		close;
+	M_1:
+		mes "[Fly Man Armani]";
+		mes "SO WHAT!!??";
+		emotion 23;
+		next;
+		mes "[Fly Man Armani]";
+		mes "Do you dare underestimate the Dragon Fly??  Bleh! It may be a fly, but I gaurantee you THIS FLY is more than you can handle!";
+		emotion 32;
+		next;
+		mes "[Fly Man Armani]";
+		mes "No matter.  If you ARE fortunate enough to run into it, you'll quickly see what I mean.  Afterall, it IS the FLY of ALL FLIES!!!!";
+		next;
+		mes "[Fly Man Armani]";
+		mes "^ff0000Dragon Fly^000000.  Remeber this name well!!";
+		close;
+}
+
+// Uncle Phlanette ================================
+morocc.gat,277,213,4	script	Uncle Phlanette	48,{
+	mes "[Uncle Phlanette]";
+	mes "Morroc is a highly dry region surrounded by desert.  There isn't a place as hot or dry as Morroc anywhere in Rune-Midgard.";
+M_Menu:
+	next;
+	menu "Desert Story",M_0,"Quit Coversation",M_End;
+	
+	M_0:
+		mes "[Uncle Phlanette]";
+		mes "Let me tell you a little about the desert.....";
+		next;
+		mes "[Uncle Phlanette]";
+		mes "You see the desert is a place that is bare of vegetation due to low rainfall and a high evaporation rate.";
+		mes "Even so there are plants that seem to thrive in the desert.  And where there are plants, there are animals.";
+		next;
+		mes "[Uncle Phlanette]";
+		mes "So even with the high temperatutres, and limited water, living creatures still find a way to survive in the desert."; 
+		next;
+		mes "[Uncle Phlanette]";
+		mes "Unfortunately, for unkown reasons, some of the plants and animals in the desert have turned into dangerous monsters.";
+		mes "The ^00cc00'Mukas'^000000 are one of those mosters.  They were originaly cactus plants.";
+		goto M_Menu;
+	M_End:
+		mes "[Uncle Phlanette]";
+		mes "Sand HERE! Sand THERE! Sand EVERYWHERE!!!!";
+		emotion 0;
+		next;
+		mes "[Uncle Phlanette]";
+		mes "(~Sigh~) I'm SICK and TIRED of this sand and desert...";
+		next;
+		mes "[Uncle Phlantette]";
+		mes "Morroc......!! I HATE YOU!!!!!!";
+		emotion 32;
+		close;
+}
+
+// ZAKA ============================================
+morocc.gat,203,30,4	script	ZAKA	99,{
+	if(comodo_npc == 17) goto cmd_npc17;
+	if(comodo_npc == 18) goto cmd_npc18;
+	if(comodo_npc == 19) goto cmd_npc19;
+	if(comodo_npc == 20) goto cmd_npc20;
+	if(comodo_npc == 21) goto cmd_npc21;
+	if(comodo_npc == 22) goto cmd_npc22;
+
+	mes "[ZAKA]";
+	mes "...... The sun sets over another day.  The moon rises to take it's nightly place.";
+	mes "As darkness creeps across the desert, the people of Morroc huddle together.";
+	mes "The never ending well is the life blood of the wandering nomads..... This is Morroc....";
+	next;
+	mes "[ZAKA]";
+	mes "Eh hem.... Say... Have you ever heard of the ^FF4444Doomed Swords^000000, or ^5555FFSwords of Power^000000?";
+	mes "It is believed that these swords are so powerful that whoever weilds them could rule the world!";
+	next;
+	mes "[ZAKA]";
+	mes "The three swords I speak of are the ^5555FFMysteltainn, Ogre Tooth, and Executioner^000000.";
+	next;
+	mes "[ZAKA]";
+	mes "These swords are hidden somewhere in this world.... have you seen any?";
+	close;
+
+	cmd_npc17:
+		mes "[ZAKA]";
+		mes ". . . . .";
+		next;
+		mes "[ZAKA]";
+		mes "! ! ! ! ! ! !";
+		next;
+		mes "[ZAKA]";
+		mes "Isn't that ?! That tablet?!";
+		mes "^3355FF`Tablet of Power'^000000";
+		mes "Right?!";
+		mes "Wha ! !";
+		next;
+		mes "[ZAKA]";
+		mes "Who are you? Why do you possess the 'Tablet of Power'?";
+		mes "Bah, nevermind, it doesn't matter who you are.";
+		mes "Whoever possesses the 'Tablet of Power' is a natural-born leader.";
+		next;
+		mes "[ZAKA]";
+		mes "Well, we are one of the wanderers of Morroc.";
+		mes "It is tradition and duty to make the possessor of^3355FF` Tablet of Power '^000000";
+		mes "a ^3355FF`Book of the Tiresome Sheep'^000000";
+		next;
+		mes "[ZAKA]";
+		mes "I will craft you a 'Book of the Tiresome Sheep', only for your personal use.";
+		mes "As you might have expected, I will need various ingredients to make you the book.";
+		next;
+		mes "[ZAKA]";
+		mes "The first thing will need are two ^3355FF`Snake Scale'^000000 , please bring them to me.";
+		set comodo_npc,18;
+		close;
+	cmd_npc18:
+		if(countitem(926) > 1) goto SoS;
+		mes "[ZAKA]";
+		mes "If you want the 'Book of the Tiresome Sheep', I will need two pieces of snake scales.";
+		close;
+
+		SoS:		
+			mes "Gives Zaka two^3355FF`Scales of Snakes'^000000";
+			delitem 926,2;
+			set comodo_npc,19;
+			next;
+			mes "[ZAKA]";
+			mes "Now I can construct the basic layout of the book witht the snake scales, but I now need 1 piece of";
+			mes "^3355FF`Scale Shell'^000000 in order to block only negative energies from the book.";
+			close;
+	cmd_npc19:
+		if(countitem(936) > 0) goto ScSh;
+		mes "[ZAKA]";
+		mes "Please bring me the next ingredient needed for the 'Book of the Tiresome Sheep', I will need one";
+		mes "^3355FF`Scale Shell'^000000 ??";
+		mes ". . . . .";
+		close;
+
+		ScSh:
+			mes "Gives^3355FF`Scale Shell^000000";
+			mes "to Zaka";
+			delitem 936,1;
+			set comodo_npc,20;
+			next;
+			mes "[ZAKA]";
+			mes "Alright, good.";
+			mes "Next, I will need one piece of ^3355FF`Shining Scale'^000000 in order to distribute the magical power equally throughout the book.";
+			next;
+			mes "[ZAKA]";
+			mes "While you are getting the scale, I will continue to the next phase of crafting, good luck.";
+			close;
+	cmd_npc20:
+		if(countitem(954) > 0) goto ShSc;
+		mes "[ZAKA]";
+		mes "In order to finish crafting the 'Book of the Tiresome Sheep', I will need you to gather me one piece of ^3355FF`Shining Scale'^000000, okay?";
+		close;
+
+		ShSc:
+			mes "Gives^3355FF`Shining Scale'^000000";
+			mes "to Zaka";
+			delitem 954,1;
+			set comodo_npc,21;
+			next;
+			mes "[ZAKA]";
+			mes "Great job!";
+			mes "Finally, the last ingredient I need is one ^3355FF`Stinky Scale'^000000 to complete the book, please bring it to me";
+			close;
+	cmd_npc21:
+		if(countitem(959) > 0) goto RoSc;
+		mes "[ZAKA]";
+		mes "All I need to craft the 'Book of the Tiresome Sheep' is one piece of stinky scale now, please bring one to me.";
+		close;
+
+		RoSc:
+			mes "Gives^3355FF`Stinky Scale'^000000";
+			mes "to Zaka";
+			delitem 959,1;
+			next;
+			mes "[ZAKA]";
+			mes "Ooo. this is all I need to finish up the book, thank you.";
+			next;
+			mes "^3355FF-Zaka is working hard in-^000000";
+			mes "^3355FF-finalizing the book-^000000";
+			next;
+			mes "^3355FF- You receive the Book of-^000000";
+			mes "^3355FF- the Tiresome Sheep from Zaka-^000000";
+			set comodo_npc,22;
+			next;
+			mes "[ZAKA]";
+			mes "There, that's for you..";
+			mes "I guess you have the required items to summon and use the Doomed Swords.";
+			mes "But if you are really going to use the Doomed Swords please go talk to Won, a wandering swordsman, he might have some important advice.";
+			next;
+			mes "[ZAKA]";
+			mes "Legend has it that Won's sword fighting skills is already at god-like level, and he is also one of the ten most influential people in the world.";
+			next;
+			mes "[Zaka]";
+			mes "Right now, he might be training inside Comodo Town, so you might be able to find him there.";
+			close;
+	cmd_npc22:
+		mes "[ZAKA]";
+		mes "The wandering swordsman ^3355FF`Won'^000000";
+		mes "should be training somwhere in Comodo, look for him very carefully.";
+		close;
+}
+
+//<================================================== Assassin Guild ====================================================>\\
+
+// Hashisid ====================================
+moc_fild16.gat,199,212,4	script	Hashisid	48,{
+	mes "[Hashisid]";
+	mes "For Assassins, it is important not to look a target in the eye.  If a target is smart, he/she may be able to tell what you're up too.";
+	next;
+	menu "About Assassins",M_0,"Quit Conversation",M_End;
+	
+	M_0:
+		mes "[Hashisid]";
+		mes "Let me tell you a little bit about Assassins";
+		next;
+		mes "[Hashisid]";
+		mes "Assassin's are hired to infiltrate, gather intellegence, and even commit murder without being seen or heard.";
+		mes "Stealth and speed are vital to Assassins.  Assassins live in the shadows and never get praise or congratulations.";
+		next;
+		mes "[Hashisid]";
+		mes "It's their job to go unoticed.  Though an Assassin may seem like a cruel and heartless individual....";
+		mes "An Assassin will never do any harm to an innocent being.  The main purpose of the Assassin to seek out and destroy evil forces!";
+		close;
+	M_End:
+		close;
+}
+
+//==================================================
+// Assassin Guild Guards
+//===================================================
+
+moc_fild16.gat,195,281,4	script	Assassin Guardian#1::SinGuard	707,
+{
+	mes "[Assassin Guardian]";
+	if(Class == Job_Assassin) mes "Welcome.";
+	if(Class == Job_Assassin) close;
+
+	set @temp, rand(1,4);
+	if(@temp == 1) mes "........";
+	if(@temp == 2) mes "Hmmm..........";
+	if(@temp == 3) mes "Hmmm... you shouldn't be here.....";
+	if(@temp == 4) mes "You're trespassing on forbidden grounds.......";
+	close;
+}
+
+moc_fild16.gat,204,281,4	duplicate(SinGuard)	Assassin Guardian#2	707
+moc_fild16.gat,207,281,4	duplicate(SinGuard)	Assassin Guardian#3	707
+moc_fild16.gat,216,281,4	duplicate(SinGuard)	Assassin Guardian#4	707
+moc_fild16.gat,200,231,4	duplicate(SinGuard)	Assassin Guardian#5	707
+moc_fild16.gat,211,231,4	duplicate(SinGuard)	Assassin Guardian#6	707
+moc_fild16.gat,200,257,4	duplicate(SinGuard)	Assassin Guardian#7	707
+moc_fild16.gat,211,257,4	duplicate(SinGuard)	Assassin Guardian#8	707

@@ -1,0 +1,70 @@
+//Assasin Cross Made by Evera/Lorri
+valkyrie.gat,44,58,6	script	Assassin Cross	725,{
+	if ((readparam(11)>=99) && (readparam(19)==12) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(19)==4001) && (readparam(55) >= 10)) goto Lhtheif;
+	if ((readparam(19)==4001) && (readparam(55) < 10)) goto LCem;
+	if ((readparam(19)==4007) && (readparam(55) >= 40)) goto Lhsin;
+	if ((readparam(19)==4007)  && (readparam(55) < 40)) goto LCem;
+	if ((readparam(19)) && (readparam(19))) goto LCongrats;
+	if (readparam(19)==4013) goto Lcrazy;
+	if (readparam(12) != 0) goto Lskpt;
+	mes "[Assasin Cross]";
+	mes "Who are you?";
+	mes "Meet all the req. first.";
+	close;
+Lnovice:
+	mes "[Assasin Cross]";
+	mes "Now, here's the deal. I change you into a High Novice.";
+	mes "You come back to become a High Theif, then become an Assassin Cross.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lhtheif:
+	mes "[Assasin Cross]";
+	mes "Wanna become a High Theif?";
+	menu "Yes",Lhtheif2,"No",Lcancel;
+Lhtheif2:
+	mes "[Assasin Cross]";
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 30;// Job: Job_Thief_High
+	close;
+Lhsin:
+	mes "[Assasin Cross]";
+	mes "Ready to become a Assassin Cross?";
+	menu "Yes",Lhsin2,"No",Lcancel;
+Lhsin2:
+	mes "[Assasin Cross]";
+	mes "We shall start the ceremony....";
+	jobchange 36;// Job: Job_Assassin_Cross
+	close;
+Lcrazy:
+	mes "[Assassin Cross]";
+	mes "We shall start the ceremony....";
+	next;
+	mes "[Assassin Cross]";
+	mes "You've already gone to the next level";
+	close;
+Lskpt:
+	mes "[Assasin Cross]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "We shall start the ceremony....";
+	next;
+	mes "[Assassin Cross]";
+	mes "You're not ready to go to the next level";
+	close;
+LCongrats:
+	mes "Congratulations on your victory.";
+	mes "May you and others have honor and glory!";
+	close;
+Lcancel:
+	mes "Bye";
+	close;
+}

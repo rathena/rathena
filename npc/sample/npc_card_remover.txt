@@ -1,0 +1,197 @@
+// Card removal NPC by TyrNemesis^ 日本語訳：胡蝶蘭
+prt_in.gat,28,73,4	script	賢い老女	78,{
+
+UPGRADEROOT:
+//	mes "[Wise Old Woman]";
+//	mes "Good day, young one. I have the power to remove cards that you have compounded onto your equipment. Does this idea please you?";
+	mes "[賢い老女]";
+	mes "いい天気だね、若いの。";
+	mes "ところで、アタシは武具に装着している";
+	mes "カードを取り外す力を持っているけど、";
+	mes "力を貸そうかね？";
+	next;
+//	menu "Yes, it does.",REMOVEMENU,
+//	     "What do you charge?",REMOVEPRICE,
+//	     "No thanks.",CLOSEOUT;
+	menu "お願いします。",REMOVEMENU,
+	     "いくらかかるんですか？",REMOVEPRICE,
+	     "必要ないです。",CLOSEOUT;
+
+REMOVEPRICE:
+//	mes "[Wise Old Woman]";
+//	mes "I charge a flat fee of 200000 zeny, plus 25000 zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
+	mes "[賢い老女]";
+	mes "そうだね、";
+	mes "まず基本料金として^4040FF200000z^000000。";
+	mes "そしてカード１枚につき^4040FF25000z^000000貰うよ。";
+	mes "あとは、魔法を使うために^4040FF星のかけら^000000と";
+	mes "^4040FFイエロージェムストーン^000000が１つずつ必要だよ。";
+	next;
+//	menu "Very well. Let's do it.",REMOVEMENU,
+//	     "No thanks.",CLOSEOUT;
+	menu "お願いします。",REMOVEMENU,
+	     "必要ないです。",CLOSEOUT;
+
+REMOVEMENU:
+//	mes "[Wise Old Woman]";
+//	mes "Very well. Which item shall I examine for you?";
+	mes "[賢い老女]";
+	mes "よしよし。";
+	mes "どの武具のカードを取り外すんだね？";
+	next;
+//	menu "I changed my mind.",CLOSEOUT,
+	menu "やっぱりやめます。",CLOSEOUT,
+	     getequipname(1),-,
+	     getequipname(2),-,
+	     getequipname(3),-,
+	     getequipname(4),-,
+	     getequipname(5),-,
+	     getequipname(6),-,
+	     getequipname(7),-,
+	     getequipname(8),-,
+	     getequipname(9),-,
+	     getequipname(10),-;
+	set @part,@menu-1;
+	if(getequipcardcnt(@part) == 0) goto DENYCARDCOUNT;
+	set @cardcount,getequipcardcnt(@part);
+//	if(@cardcount > 1) goto CARDNUMMULTIMSG;
+//	mes "[Wise Old Woman]";
+//	mes "This item has " + @cardcount + " card compounded on it. To perform my magic, I will need 225000 zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
+//	goto CARDNUMPOSTMSG;
+//CARDNUMMULTIMSG:
+//	mes "[Wise Old Woman]";
+//	mes "This item has " + @cardcount + " cards compounded on it. To perform my magic, I will need " + (200000+(@cardcount * 25000)) + " zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
+	mes "[賢い老女]";
+	mes "この武具には" + @cardcount + "つカードがついてるね。";
+	mes "^0000FF" + (200000+(@cardcount * 25000)) + "z^000000と^0000FF星のかけら^000000と^0000FFイエロージェムストーン^000000が必要だよ。";
+//CARDNUMPOSTMSG:
+	next;
+//	menu "Very well. Do it.",REMOVECARDWARNING,
+//	     "Never mind.",CLOSEOUT;
+	menu "わかりました、お願いします。",REMOVECARDWARNING,
+	     "やっぱりやめます。",CLOSEOUT;
+
+REMOVECARDWARNING:
+//	mes "[Wise Old Woman]";
+//	mes "Before I begin, I must warn you--I may fail. If I do, I may destroy the cards, the item, or both. I do not give refunds. That being said, which is more important to you: The cards, or the item?";
+	mes "[賢い老女]";
+	mes "おっと言い忘れるところだったね。";
+	mes "この魔法はとても難しいから、";
+	mes "^FF4040失敗するかもしれない^000000のさ。";
+	mes "失敗したらカードか武具、あるいは";
+	mes "その両方が^FF4040破壊されてしまう^000000かも";
+	mes "しれないんだよ。";
+	next;
+	mes "[賢い老女]";
+	mes "失敗しても^FF4040返金はしない^000000から、";
+	mes "一応聞いて置くけど、比べるなら";
+	mes "カードと武具のどっちが大切だい？";
+	next;
+//	menu "I changed my mind about this.",CLOSEOUT,
+//	     "The item.",PRIORITYITEM,
+//	     "The cards.",PRIORITYCARD;
+	menu "それならやめます。",CLOSEOUT,
+	     "武具の方が大切です。",PRIORITYITEM,
+	     "カードの方が大切です",PRIORITYCARD;
+
+PRIORITYITEM:
+	set @failtype,1;
+	goto REMOVECARD;
+
+PRIORITYCARD:
+	set @failtype,2;
+	goto REMOVECARD;
+
+REMOVECARD:
+//	mes "[Wise Old Woman]";
+//	mes "Very well. I shall begin.";
+	mes "[賢い老女]";
+	mes "よし、始めるよ。";
+	next;
+	if((zeny < (200000+(@cardcount * 25000))) || (countitem(1000) < 1) || (countitem(715) < 1)) goto DENYMATERIAL;
+	set zeny,zeny - (200000+(@cardcount * 25000));
+	delitem 1000,1;
+	delitem 715,1;
+
+// Replace the constants in the next 3 lines with failure chance values defined in refine_db.txt
+// First value = Total failure chance (item and cards destroyed)
+// Second value = Partial failure chance (one or the other is destroyed, player decides which one is safe)
+// Third value = Harmless failure chance (all that's lost is your investment)
+
+	set @failchance,rand(100);
+	if(@failchance < 2) goto FAILREMOVECARD0;
+	if((@failchance < 6) && (@failtype == 1)) goto FAILREMOVECARD1;
+	if((@failchance < 6) && (@failtype == 2)) goto FAILREMOVECARD2;
+	if(@failchance < 10) goto FAILREMOVECARD3;
+	successremovecards @part;
+//	mes "[Wise Old Woman]";
+//	mes "The process was a success. Here are your cards and your item. Farewell.";
+	mes "[賢い老女]";
+	mes "うまくいったよ。";
+	mes "これらが武具とアイテムさ。じゃあね。";
+	close;
+
+FAILREMOVECARD0:
+//	mes "[Wise Old Woman]";
+//	mes "The process was a total failure. I am afraid the item and the cards were destroyed.";
+	mes "[賢い老女]";
+	mes "残念だけど完全に失敗したよ。";
+	mes "武具もカードも壊れてしまった。";
+	failedremovecards @part,0;
+	close;
+
+FAILREMOVECARD1:
+//	mes "[Wise Old Woman]";
+//	mes "While I have managed to remove the cards from the item, they were destroyed in the process. The item, however, is okay.";
+	mes "[賢い老女]";
+	mes "頑張ったけどね、";
+	mes "カードのほうは全部壊れてしまったよ。";
+	mes "でも武具の方は無事だったよ。";
+	failedremovecards @part,1;
+	close;
+
+FAILREMOVECARD2:
+//	mes "[Wise Old Woman]";
+//	mes "Most unfortunate. I succeeded at removing the cards, but the item itself was destroyed in the process.";
+	mes "[賢い老女]";
+	mes "不運だったね。";
+	mes "カードを取り外すのはうまくいったけど";
+	mes "武具が壊れてしまったよ。";
+	failedremovecards @part,2;
+	close;
+
+FAILREMOVECARD3:
+//	mes "[Wise Old Woman]";
+//	mes "I have failed to remove the cards. Luckily, however, both the item and the cards are still okay.";
+	mes "[賢い老女]";
+	mes "カードを取り外すのに失敗したよ。";
+	mes "でも、不幸中の幸いさ。";
+	mes "武具もカードも無事だよ。";
+	failedremovecards @part,3;
+	close;
+
+DENYCARDCOUNT:
+//	mes "[Wise Old Woman]";
+//	mes "Young one... There are no cards compounded on this item. I can do nothing with it, I'm afraid.";
+	mes "[賢い老女]";
+	mes "若いの、カードがついてないよ。";
+	mes "それじゃアタシの出番はないさ。";
+	close;
+
+DENYMATERIAL:
+//	mes "[Wise Old Woman]";
+//	mes "You do not have all the items I require to work my magic, child. Come again when you do.";
+	mes "[賢い老女]";
+	mes "必要なアイテムが足りないようだね。";
+	mes "アイテムを揃えてもう一度来な。";
+	close;
+
+CLOSEOUT:
+//	mes "[Wise Old Woman]";
+//	mes "Very well. Return at once if you seek my services.";
+	mes "[賢い老女]";
+	mes "わかったよ。";
+	mes "アタシの力が必要ならいつでも来な。";
+	close;
+
+}

@@ -1,0 +1,60 @@
+//===== eAthena Script =======================================
+//= Yuno Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= 1.1 fixed tabs, names [Lupus]
+//============================================================
+
+//(yuno_fild04.gat)*
+yuno_fild04.gat,0,0,0,0	monster	Goat	1372,40,0,0,0
+yuno_fild04.gat,0,0,0,0	monster	Sleeper	1386,5,0,0,0
+yuno_fild04.gat,0,0,0,0	monster	The Paper	1375,3,0,0,0
+yuno_fild04.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
+yuno_fild04.gat,0,0,0,0	monster	Driller	1380,10,0,0,0
+yuno_fild04.gat,0,0,0,0	monster	Poring	1002,20,0,0,0
+yuno_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
+yuno_fild04.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
+yuno_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,10,360000,180000,1
+yuno_fild04.gat,0,0,0,0	monster	Harpy	1376,1,0,0,0
+
+//(yuno_fild03.gat)*
+yuno_fild03.gat,0,0,0,0	monster	Goat	1372,60,0,0,0
+yuno_fild03.gat,0,0,0,0	monster	Sleeper	1386,30,0,0,0
+yuno_fild03.gat,0,0,0,0	monster	The Paper	1375,3,0,0,0
+yuno_fild03.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
+yuno_fild03.gat,0,0,0,0	monster	Demon Pungus	1378,30,0,0,0
+yuno_fild03.gat,0,0,0,0	monster	Red Plant	1078,15,180000,90000,1
+yuno_fild03.gat,0,0,0,0	monster	Shining Plant	1083,2,1800000,900000,1
+yuno_fild03.gat,0,0,0,0	monster	Blue Plant	1079,4,360000,180000,1
+yuno_fild03.gat,0,0,0,0	monster	Yellow Plant	1081,20,360000,180000,1
+yuno_fild03.gat,0,0,0,0	monster	Harpy	1376,2,0,0,0
+
+//(yuno_fild02.gat)*
+yuno_fild02.gat,0,0,0,0	monster	Sleeper	1386,10,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Grand Peco	1369,70,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	The Paper	1375,1,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Driller	1380,30,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Dustiness	1114,20,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Poring	1002,20,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Red Plant	1078,20,180000,90000,1
+yuno_fild02.gat,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
+yuno_fild02.gat,0,0,0,0	monster	Blue Plant	1079,3,360000,180000,1
+yuno_fild02.gat,0,0,0,0	monster	Yellow Plant	1081,20,360000,180000,1
+yuno_fild02.gat,0,0,0,0	monster	Archangeling	1388,1,3600000,1800000,1
+
+//(yuno_fild01.gat)*
+yuno_fild01.gat,0,0,0,0	monster	Grand Peco	1369,3,0,0,0
+yuno_fild01.gat,0,0,0,0	monster	Dustiness	1114,50,0,0,0
+yuno_fild01.gat,0,0,0,0	monster	Poporing	1031,20,0,0,0
+yuno_fild01.gat,0,0,0,0	monster	Poring	1002,20,0,0,0
+yuno_fild01.gat,0,0,0,0	monster	Green Plant	1080,20,180000,90000,1
+yuno_fild01.gat,0,0,0,0	monster	Red Plant	1078,15,180000,90000,1
+yuno_fild01.gat,0,0,0,0	monster	Shining Plant	1083,3,1800000,900000,1
+yuno_fild01.gat,0,0,0,0	monster	Blue Plant	1079,2,360000,180000,1
+yuno_fild01.gat,0,0,0,0	monster	Yellow Plant	1081,23,360000,180000,1

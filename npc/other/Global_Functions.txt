@@ -1,0 +1,80 @@
+//===== eAthena Script ======================================= 
+//= Global Functions
+//===== By: ================================================== 
+//= Lupus, kobra_k88
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0
+//===== Description: ========================================= 
+//= <Description> 
+//===== Additional Comments: ================================= 
+//= Added F_ClearJobVar - on getting a new job it clears all Job Quest variables
+//= Removed individual job check functions as they were redundant [kobra_k88]
+//============================================================ 
+
+
+//=========================================
+// Function that clears job quest variables
+//=========================================
+function	script	F_ClearJobVar	{
+	// Misc ---------------------------------
+	set JBLVL,0;
+	// First Class Jobs ---------------------
+	set job_acolyte_q,0; set job_acolyte_q2,0;
+	set job_archer_q,0;
+	set job_magician_q,0;
+	set job_merchant_q,0; set job_merchant_q2,0; set job_merchant_q3,0;
+	set job_sword_q,0; set job_sword_q2,0;
+	set job_thief_q,0;
+	// 2-1 Jobs ------------------------------
+	set ASSIN_Q,0; set ASSIN_Q2,0;
+	set BSMITH_Q,0; set BSMITH_Q2,0;
+	set HNTR_Q,0; set HNTR_Q2,0;
+	set KNIGHT_Q,0; set KNIGHT_Q2,0;
+	set PRIEST_Q,0; set PRIEST_Q2,0; set PRIEST_Q3,0;
+	set WIZ_Q,0; set WIZ_Q2,0;
+	// 2-2 Jobs ------------------------------
+	set ROGUE_Q,0; set ROGUE_Q2,0;
+	set ALCH_Q,0; set ALCH_Q2,0;
+	return;
+}
+
+//=====================================================
+// Functions used to check a players job class
+//----------------------------------------------------
+// HOW TO USE:
+// i.e. We need all holy classes but monks
+// if ( callfunc("Is_Holy_Class") && callfunc("Is_Monk")==0 ) goto L_Start;
+//=======================================================
+
+//------------------------------------------------------
+//returns 1 if the player is either Aco,Monk or Priest, 0 otherwise
+function	script	Is_Holy_Class	{
+	return ( Class==Job_Acolyte || Class==Job_Priest || Class==Job_Monk || Class==4005 || Class==4009 || Class==4016 );
+}
+//------------------------------------------------------
+//returns 1 if the player is either Archer,Hunter,Bard,Dancer, 0 otherwise
+function	script	Is_Bow_Class	{
+	return ( Class==Job_Archer || Class==Job_Hunter || Class==Job_Bard || Class==Job_Dancer || Class==4004 || Class==4012 || Class==4020 || Class==4021);
+}
+//------------------------------------------------------
+//returns 1 if the player is either Mage,Wizard,Sage, 0 otherwise
+function	script	Is_Magic_Class	{
+	return ( Class==Job_Mage || Class==Job_Wizard || Class==Job_Sage || Class==4003 || Class==4010 || Class==4017 );
+}
+//----------------------------------------------------
+//returns 1 if the player is either Merchant,Blacksmith,Alchemist, 0 otherwise
+function	script	Is_Merc_Class	{
+	return ( Class==Job_Merchant || Class==Job_Blacksmith || Class==Job_Alchem || Class==4006 || Class==4011 || Class==4019 );
+}
+//------------------------------------------------------
+//returns 1 if the player is either Thief,Assassin,Rogue, 0 otherwise
+function	script	Is_Thief_Class	{
+	return ( Class==Job_Thief || Class==Job_Assassin || Class==Job_Rogue || Class==4007 || Class==4013 || Class==4018 );
+}
+//-----------------------------------------------------
+//returns 1 if the player is either Swordsman,Knight,Crusader, 0 otherwise
+function	script	Is_Sword_Class	{
+	return ( Class==Job_Swordman || Class==Job_Knight || Class==Job_Knight2 || Class==Job_Crusader || Class==Job_Crusader2 || Class==4002 || Class==4008 || Class==4014 || Class==4015 || Class==4022 );
+}

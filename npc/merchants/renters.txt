@@ -1,0 +1,155 @@
+//===== eAthena Script ======================================= 
+//= Renters
+//===== By: ================================================== 
+//= kobra_k88, mod by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= PecoPeco Breeder, Grand PecoPeco Breeder, Falcon tamer scripts
+//===== Additional Comments: ================================= 
+//= Fully working
+//= Added another Falcon Master into the Hunters Guild [Lupus]
+//= 1.2: replaced checkoption(x) with checkriding,checkfalcon [Lupus]
+//= 1.3: Added support for Lord_Knight(2),Paladin(2) and Sniper.
+//============================================================ 
+
+// PecoPeco Breeder (for Knights)-------------------------------------------
+prontera.gat,61,338,3	script	PecoPeco Breeder	86,{
+	mes "[PecoPeco Breeder]";
+	if(Class == Job_Knight || Class == Job_Knight2 || Class == 4008 || Class == Job_Lord_Knight || Class == Job_Lord_Knight2) goto L_Start;
+	mes "I'm a PecoPeco breeder and I rent out PecoPeco's for^4444FF Knights ^000000to ride on.";
+	close;
+
+L_Start:
+	mes "Good day.  Would you like to ride a PecoPeco?";
+	next;
+	mes "[PecoPeco Breeder]";
+	mes "You can rent one PecoPeco for 2500 Zeny, provided that you have the PecoPeco Riding skill.";
+	next;
+	menu "Lend me a trusty steed!... err... bird!",M_0,"Hmm...It's a bit too expensive.",M_1;
+
+	M_0:
+		if(getskilllv(63) == 0) goto sL_NeedSkill;
+		if(Zeny < 2500) goto sL_Zeny;
+		if(checkriding(0) != 0) goto sL_GotPeco;
+		set Zeny, Zeny - 2500;
+		setriding;
+		mes "Thank you and good day.";
+		emotion 15;
+		close;
+
+		sL_NeedSkill:
+			mes "[PecoPeco Breeder]";
+			mes  "As I mentioned earlier, you need the^3333FF Riding ^000000skill in order to rent a PecoPeco.";
+			close;
+		sL_Zeny:
+			mes "[PecoPeco Breeder]";
+			mes "As I said before it will be 2500z. Come back when you aquire enough zeny.";
+			close;
+		sL_GotPeco:
+			mes "[PecoPeco Breeder]";
+			mes "Umm... aren't you already riding a PecoPeco??....";
+			emotion 20;
+			close;
+	M_1:
+		mes "[PecoPeco Breeder]";
+		mes "Alright.  Good day to you.";
+		close;
+
+}
+
+// Grand PecoPeco Breeder (for Crusaders)-------------------------------------------
+prontera.gat,238,312,5	script	Grand PecoPeco Breeder	86,{
+	mes "[Grand PecoPeco Breeder]";
+	if(Class == Job_Crusader || Class == Job_Crusader2 || Class == 4015 || Class == Job_Paladin || Class == Job_Paladin2 ) goto L_Start;
+
+	mes "I'm a Grand PecoPeco breeder and I rent out Grand PecoPeco's for^4444FF Crusaders ^000000to ride on.";
+	close;
+
+L_Start:
+	mes "Good day.  Would you like to ride a Grand PecoPeco?";
+	next;
+	mes "[Grand PecoPeco Breeder]";
+	mes "You can rent one Grand PecoPeco for 2500 Zeny, provided that you have the PecoPeco Riding skill.";
+	next;
+	menu "Lend me a trusty steed!... err... bird!",M_0,"Hmm...It's a bit too expensive.",M_1;
+
+	M_0:
+		if(getskilllv(63) == 0) goto sL_NeedSkill;
+		if(Zeny < 2500) goto sL_Zeny;
+		if(checkriding(0) != 0) goto sL_GotPeco;
+		set Zeny, Zeny - 2500;
+		setriding;
+		mes "Thank you and good day.";
+		emotion 15;
+		close;
+
+		sL_NeedSkill:
+			mes "[Grand PecoPeco Breeder]";
+			mes  "As I mentioned earlier, you need the^3333FF Riding ^000000skill in order to rent a Grand PecoPeco.";
+			close;
+		sL_Zeny:
+			mes "[Grand PecoPeco Breeder]";
+			mes "As I said before it will be 2500z. Come back when you aquire enough zeny.";
+			close;
+		sL_GotPeco:
+			mes "[Grand PecoPeco Breeder]";
+			mes "Umm... aren't you already riding a Grand PecoPeco??....";
+			emotion 20;
+			close;
+	M_1:
+		mes "[Grand PecoPeco Breeder]";
+		mes "Alright.  Good day to you.";
+		close;
+
+}
+
+// Falcon Master--------------------------------------------------------------
+in_hunter.gat,146,100,2	script	Falcon Master	59,{
+	mes "[Falcon Master]";
+	mes "Hellooooo, I am the Falcon Master.";
+	next;
+	menu "Speak with him",M_0, "Politely back away",M_End;
+
+	M_0:
+		mes "[Falcon Master]";
+		mes "I can train a Falcon for you, but you need to be a Hunter and have mastered the ^5555FF'Falcon Taming' skill^000000.";
+		next;
+		menu "Ok",sM_0, "No thanks",M_End;
+
+		sM_0:
+			if(Class != Job_Hunter && Class != 4012 && Class != Job_Sniper) goto sL_NotHunter;
+
+			if(checkfalcon(0) != 0) goto sL_GotFalc;
+			if(getskilllv(127)==0) goto sL_NoSkill;
+			mes "[Falcon Master]";
+			mes "It looks like you meet all the requirements to handle a Falcon.  Here you are";
+			setfalcon;
+			next;
+			mes "[Falcon Master]";
+			mes "Please take very good care of it.  It will prove to be a valuble companion.";
+			close;
+			
+			sL_NotHunter:
+				mes "[Falcon Master]";
+				mes "As I said, Falcons can only be given to Hunters.  Falcons are very picky about who they travel with you know.";
+				close;
+			sL_GotFalc:
+				mes "[Falcon Master]";
+				mes "You can only have 1 Falcon at a time.";
+				close;
+			sL_NoSkill:
+				mes "[Falcon Master]";
+				mes "I'm sorry but you do not have the Falcon Taming skill.  Please come back when you have learned it.";
+				close;
+	M_End:
+		mes "[Falcon Master]";
+		mes "Have a nice day.";
+		close;
+}
+
+//Not Supposed To Be One In Payon!
+//Coordinate IS Correct For New Payon Map Though IF You Enable It
+//payon_in01.gat,206,175,4	duplicate(Falcon Master)	Falcon Master	59

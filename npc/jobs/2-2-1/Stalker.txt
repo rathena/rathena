@@ -1,0 +1,59 @@
+//Stalker Made by Evera/Lorri
+valkyrie.gat,53,58,4	script	Stalker	747,{
+	if (readparam(12) != 0) goto Lskpt;
+	if ((readparam(11) >= 99) && (Class == 18) && (JobLevel >= 50)) goto Lnovice;
+	if ((Class == 4001) && (readparam(55) >= 10)) goto Lh1;
+	if ((Class == 4001) && (readparam(55) < 10)) goto LCem;
+	if ((Class == 4007) && (readparam(55) >= 40)) goto Lh2;
+	if ((Class == 4007) && (readparam(55) < 40)) goto LCem;
+	if (Class == 4018) goto Lcrazy;
+	mes "[Stalker]";
+	mes "...";
+	close;
+Lnovice:
+	mes "[Stalker]";
+	mes "Hm. You seem like a person that would be interested. Would you want to become a stalker?";
+	mes "There is a catch though, you have to go back through novice and theif.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lh1:
+	mes "[Stalker]";
+	mes "Ready to become a theif?";
+	menu "Yes",Lh12,"No",Lcancel;
+Lh12:
+	mes "[Stalker]";
+	mes "Hmf.";
+	next;
+	jobchange 30;// Job: Job_Thief_High
+	close;
+Lh2:
+	mes "[Stalker]";
+	mes "Hm. You're ready. Become a stalker?";
+	menu "Yes",Lh22,"No",Lcancel;
+Lh22:
+	mes "[Stalker]";
+	mes "Hmf.";
+	jobchange 41;// Job: Job_Stalker
+	close;
+Lcrazy:
+	mes "[Stalker]";
+	mes "I'm done with you.";
+	close;
+Lskpt:
+	mes "[Stalker]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "[Stalker]";
+	mes "You're not ready to go to the next level";
+	close;	
+Lcancel:
+	mes "Bye";
+	close;
+}

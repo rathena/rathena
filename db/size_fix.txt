@@ -1,0 +1,7 @@
+// Database for size fix for weapon damage.
+
+//It is size compensation at the time of usual.
+//Base,a dagger, a sword, both swords, a spear, both spears, an ax, both axes, a stick, ?, a cane, a bow, a fist, a musical instrument, a whip, a book, Qatar
+100,100, 75, 75, 75, 75, 50, 50, 75,100,100,100,100, 75, 75,100, 75,	// Size: Small
+100, 75,100, 75, 75, 75, 75, 75,100,100,100,100, 75,100,100,100,100,	// Size: Medium
+100, 50, 75,100,100,100,100,100,100,100,100, 75, 50, 75, 50, 50, 75,	// Size: Large

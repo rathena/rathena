@@ -1,0 +1,1446 @@
+//===== eAthena Script ======================================= 
+//= Wizard Job Quest
+//===== By: ================================================== 
+//= ?? (Aegis)
+//= Translated by yoshiki
+//= converted by kobra_k88
+//= Further bugfixed and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena 1.0
+//===== Description: ========================================= 
+//= Wizard job quest converted from aegis script, plus my own RO screenies.
+//===== Additional Comments: ================================= 
+//= v1.1 Now using the initnpctimer command, donpcevent,
+//= and new waitingroom event commands.  No more addtimer spamming.
+//= No longer have to talk to the npc to take the test.  Just enter the chat room.
+//= v1.2 Changed global variable names to unique ones.
+//= v1.3 Rollback from the wrong Kashy's fix
+//= v1.3a Fixed issue with duplicating monsters thx to Bison.[kobra_k88]
+//============================================================ 
+
+
+
+//<=================== Some dog =========================>
+gef_tower.gat,107,35,5	script	Some Dog	81,
+{
+	if(Class == Job_Mage) goto L_JobMage;
+	if(callfunc("Is_Magic_Class")) goto L_Magic;
+	if(callfunc("Is_Holy_Class")) goto L_Holy;
+L_Other:
+	mes "[Dog]";
+	mes "Sheesh....... Why would someone who can't even cast a single spell come all the way up here???";
+	next;
+	mes "[Dog]";
+	mes "If you're that bored, do the world a favor and climb to the top of this building from the outside, then do some acrobatics....";
+	emotion 32;
+	next;
+	mes "[Dog]";
+	mes "~WOOF~ Get lost! I don't have time for people like you!!";
+	emotion 27;
+	close;
+L_Holy:
+	mes "[Dog]";
+	mes "Eeek! What's a holy type person doing up here?  I thought you people didn't like magic....";
+	mes "You religious types are always calling it the 'dark arts'......... ooooh scary!!!...... ~grrr!~WOOF!~";
+	close;
+L_Magic:
+	mes "[Dog]";
+	mes "Ah! High level magic users, welcome.  It's always nice to see experienced magic users around here.";
+	mes "Actually it's nice to see them anywhere! ~Woof!~";
+	close;
+
+L_JobMage:
+	mes "[Dog]";
+	mes "Ah... I know what you're about to say.... You want to become a Wizard right?";
+	next;
+	mes "[Dog]";
+	mes "Speak with Catherine.  She'll help you out.";
+	next;
+	mes "[Dog]";
+	mes "If you want to know more about the job change process for Wizards, I can be of help.";
+	next;
+	menu "..................",M_0, "A dog is talking to me......",M_1;
+
+	M_0:
+		mes "[Dog]";
+		mes "~Woof~ What is it? Why are you looking at me like that?? Is this the first time you've seen a dog talk?";
+		emotion 1;
+		mes "[Dog]";
+		mes "~Woof~ I suppose it's not that common to see a talking dog..... ~Woof~..... Yeah, it is a rare site actually.....";
+		next;
+		mes "[Dog]";
+		mes "~GRRRR!!~.... Hey! Stop GAWKING at me for goodness sake!! ~WOOOF~";
+		emotion 6;
+		next;
+
+		L_Cont:
+		mes "[Dog]";
+		mes "My name is Maria Splodofska.  Just call me Maria.  I'm assisting candidates for the Wizard class.";
+		next;
+		mes "[Maria]";
+		mes "~Woof~ You see, the reason I became a dog was.... I was helping my boyfriend with his experiment in preperation for his Final.";
+		mes "He is studying for a Magic Degree.  Well, before I knew what happened he accidentally turned me into a dog.....";
+		next;
+		mes "[Maria]";
+		mes "~Grrrrr~ In a couple of months the chemicals should wear off and I should return to normal.  Well theoretically speaking anyhow.";
+		next;
+		mes "[Maria]";
+		mes "Uh, anyways..... where were we?";
+		emotion 20;
+		next;
+		mes "[Maria]";
+		mes "Like I said before, if you want to become a Wizard you must first speak with Catherine.";
+		mes "She just recently became a Wizard so she should be a great help.";
+		next;
+		mes "[Maria]";
+		mes "I can tell you more about the job changing process, but I wouldn't want to take up anymore of your time.";
+		mes "That is unless, you want me to go on about what's in store for Wizards to be?.........";
+		next;
+		menu "Yes, please continue.",sM_0, "No, it's ok.",sM_1, "A talking dog......",sM_2;
+
+		sM_0:
+			mes "Maria]";
+			mes "Ok then.  Let me explain the process for becoming a Wizard to you....";
+			next;
+			mes "[Maria]";
+			mes "There are 3 Tests in the Wizard job change process.  The ^5555FF1st Test^000000 will require you to collect a number of ^FF5555magic items^000000.";
+			next;
+			mes "[Maria]";
+			mes "Catherine will give you that test.  She will ask to you collect either a variety of ^5555FFGemstones^000000, or ^5555FFElemental Ores^000000.";
+			next;
+			mes "[Maria]";
+			mes "The ^5555FF2nd Test^000000 will be administered by the, ever gloomy Raul, in the corner over there.";
+			mes "It is a multiple choice Q&A exam about the different aspects of magic.";
+			next;
+			mes "[Maria]";
+			mes "The exam will consist of 10 questions.  If you miss any of those questions you will fail the exam.";
+			next;
+			mes "[Maria]";
+			mes "Raul will also administer the ^5555FF3rd Test^000000.  This is the last test and it requires that defeat a series of monsters.";
+			mes "There will be three rooms each filled with monsters of a specific elemental attribute.";
+			next;
+			mes "[Maria]";
+			mes "It is up to you to figure what spells work best on which monsters.";
+			next;
+			mes "[Maria]";
+			mes "Well, that's all I can tell you.  Go ahead and apply now.";
+			close;
+		sM_1:
+			mes "[Maria]";
+			mes "Oh, ok.  Go ahead and apply and do your best.";
+			close;
+		sM_2:
+			mes "[Maria]";
+			mes "I'M NOT A DOG!!! ~ ARROOOOOOOOOWWWWW!!!! ~";
+			emotion 6;
+			next;
+			mes "[Maria]";
+			mes "Dang it! I hope you FAIL!! Now go get lost!";
+			emotion 27;
+			next;
+			warp "gef_dun00.gat",54,23;
+			end;
+	M_1:
+		mes "[Dog]";
+		mes "~WOOF~Woof~woof~ You DON'T have to state the obvious! I KNOW I'm a dog!";
+		emotion 32;
+		next;
+		goto L_Cont;
+
+}
+
+
+//<=========================================== Registrar and Examiner Catherine Medichi ==============================================>\\
+gef_tower.gat,111,37,4	script	Catherine Medichi	68,
+{
+	mes "[Catherine Medichi]";
+	if(Class == Job_Wizard) goto L_Wizard;
+	if(Class == Job_Novice) goto L_Novice;
+	if(Class == Job_Mage) goto L_Mage;
+L_Other:
+	mes "Hmm? What brings you all the way up here? If you have nothing to do here, please leave.";
+	mes "This place is for wizards only. =P";
+	next;
+	mes "[Catherine Medichi]";
+	mes "Try not to fall as you go back down....";
+	close;
+L_Novice:
+	mes "Awwww, a little novice!  How cute! This place is for Wizards only though.";
+	emotion 14;
+	next;
+	mes "[Catherine Medichi]";
+	mes "If you're interested in magic, the ^0000FFMagician's Guild^000000 is the place for you.";
+	close;
+L_Wizard:
+	mes "What do you need fellow Wizard? If it's nothing, please leave...";
+	next;
+	mes "[Catherine Medichi]";
+	if(sex==1) mes "... Of course, if your here to ask me out... (*giggles*)....";
+	if(sex==0) mes "If you get yourself a boyfriend, feel free to drop by and show him off. XD";
+	emotion 3;
+	close;
+
+L_Mage:
+	if(WIZ_Q == 2) goto L_Test2;
+	if(WIZ_Q == 3) goto L_Test3;
+	if(WIZ_Q == 4) goto L_Done;
+	if(WIZ_Q2 > 0) goto L_Test1;
+
+	mes "My name's Catherine Medichi, and I just became a Wizard.  Relax, you can call me Catherine.";
+	next;
+	mes "[Catherine Medichi]";
+	mes "What brings you all the way up here? You want to be a wizard, right?";
+	next;
+	menu "Of course!",M_0a, "The requirements",M_0b,"Not really",M_0End;
+
+	M_0a:
+		mes "[Catherine Medichi]";
+		mes "Please fill out this application form first.";
+		next;
+		mes "(you fill out the form and hand it back)";
+		next;
+		if(JobLevel < 40) goto sL_JobLvl;
+		if(JobLevel == 50) goto sL_Job50;
+
+		mes "[Catherine]";
+		mes "Alright ^ff0000"+strcharinfo(0)+"^000000, it looks like you have everything in order.";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Now let me tell you about the test.  It is divided into 3 parts.";
+		mes "- The 1st part involves the collecting of a number of magical items,";
+		mes "- the 2nd part is a Q&A exam,";
+		mes "- and the 3rd section is our favorite, the field exam.";
+		next;
+		mes "[Catherine Medichi]";
+		mes "People with a job lvl of 50 can skip the first test. They have already worked hard enough.";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Now for the first part of the test.  This requires the gathering of a number of magic items.";
+		next;
+		set WIZ_Q2, rand(1,2);
+
+		mes "[Catherine Medichi]";
+		mes "The items you need to bring are:";
+		if(WIZ_Q2 == 2) goto R_2;
+
+		R_1:
+			mes "- 10 ^ff0000Red gemstones^000000";
+			mes "- 10 ^0000ffBlue gemstones^000000";
+			mes "- and 10 ^ddcc11Yellow gemstones^000000.";
+			goto L_Cont0;
+
+		R_2:
+			mes "5 ^0000ffCrystal Blues^000000,";
+			mes "5 ^009900Green Lives^000000,";
+			mes "5 ^ff0000Red Bloods^000000,";
+			mes "and 5 ^ddcc11Wind of Verdures^000000.";
+
+		L_Cont0:
+		next;
+		mes "[Catherine Medichi]";
+		mes "This test isn't THAT hard, so get going!";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Good luck! I'll be waiting!";
+		set WIZ_Q, 1;
+		close;
+
+		sL_JobLvl:
+			mes "[Catherine Medichi]";
+			mes "Hey, I told you already. You have to have at least job lvl 40.";
+			mes "Don't you remember me telling you that?";
+			close;
+
+		sL_Job50:
+			mes "[Catherine Medichi]";
+			mes "Wow! You're at job level 50! You must have worked really hard! I'm impressed!";
+			next;
+			mes "[Catherine Medichi]";
+			mes "Okay, I'll record that you're job 50. You get to skip the first test, but you still got 2 left.";
+			next;
+			mes "[Catherine Medichi]";
+			mes "Now, talk to that man in the corner for the test. It's hard, so be careful.";
+			set WIZ_Q, 2;
+			close;
+
+	M_0b:
+		mes "[Catherine Medichi]";
+		mes "Even though many people want to become Wizards, only those with a job level of 40 can qualify.";
+		mes "Anyone with a job level less then that wouldn't have enough magic power to become a Wizard.";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Then there is the matter of the Wizard's Test.  The test is made up of 3 sections.";
+		mes "Each section focuses on different asspects of Wizardry.";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Once you pass the test you'll be a Wizard just like me. Yay!";
+		mes "Unfortunately a lot people have trouble with the test and never quite make it.(*sighs*)";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Maybe you'll have better luck.";
+		close;
+
+	M_0End:
+		mes "[Catherine Medichi]";
+		mes "What? You came up here for nothing!?";
+		emotion 1;
+		close;
+
+
+	L_Test1:
+		mes "Did you get all of the items? Let's see......";
+		next;
+		mes "[Catherine Medichi]";
+		if(WIZ_Q2 == 1) goto sL_Gems;
+		if(WIZ_Q2 == 2) goto sL_Ores;
+
+		sL_Gems:
+			if (countitem(716)<10 || countitem(717)<10 || countitem(715)<10) goto ssL_NotDone;
+			mes "Great! You've brought everything! The guild will use these well.";
+			next;
+			delitem 716, 10;
+			delitem 717, 10;
+			delitem 715, 10;
+			goto ssL_Done;
+
+		sL_Ores:
+			if (countitem(991)<4 || countitem(993)<4 || countitem(990)<4 || countitem(992)<4) goto ssL_NotDone;
+			mes "Great! You've found them all! The guild will use them well.";
+			next;
+			delitem 991, 5;
+			delitem 993, 5;
+			delitem 990, 5;
+			delitem 992, 5;
+
+			ssL_Done:
+				mes "[Catherine Medichi]";
+				mes "Congrats, you passed the first test.";
+				mes "Don't relax yet, you still got 2 tests left.";
+				emotion 21;
+				next;
+				mes "[Catherine Medichi]";
+				mes "Now talk to the man in the corner for the tests.";
+				mes "It's pretty hard, so be carefull.";
+				set WIZ_Q, 2;
+				set WIZ_Q2, 0;
+				close;
+
+			ssL_NotDone:
+				mes "It seems you didn't bring everything that's needed.";
+				next;
+				mes "[Catherine Medichi]";
+				mes "It's hard work to get all the way up here so make sure you have all of the right items okay?";
+				next;
+				mes "[Catherine Medichi]";
+				mes "You need:";
+				if(WIZ_Q2 == 1) goto R_1;
+				if(WIZ_Q2 == 2) goto R_2;
+				close;
+
+	L_Test2:
+		if(WIZ_Q2 == 1)goto sL_Failed2;
+		mes "Hey, did you go talk to the man? No? You can't just become a wizard by getting items.";
+		next;
+		mes "[Catherine Medichi]";
+		mes "There are 2 more tests left.  I'll be waiting, so go finish them.";
+		close;
+
+		sL_Failed2:
+			mes "Huh?? You failed the Q&A test!?";
+			emotion 1;
+			next;
+			mes "[Catherine Medichi]";
+			mes "You want to be a wizard and you can't answer a couple of questions?? Sheesh.";
+			emotion 4;
+			next;
+			mes "[Catherine Medichi]";
+			mes "Well, do you want big sis to give you a hint? If you do, go buy me ^0099001 apple juice^000000.  I'm a bit thirsty. =P";
+			next;
+			menu "Can I have a hint?",M_1a, "I can pass on my own!",M_1b;
+
+			M_1a:
+				if (countitem(531) < 1) goto sL_NoJuice;
+				delitem 531, 1;
+
+				mes "[Catherine Medichi]";
+				mes "Mmmmmmmmmmmmm, apple juice. ~gulp~gulp~";
+				next;
+				mes "[Catherine Medichi]";
+				mes "Thanks, I'll give you the hint now.";
+				next;
+				mes "[Catherine Medichi]";
+				mes "The man gives you 3 major types of questions, about:";
+				mes "- ^ff0000spells^000000,";
+				mes "- ^ff0000monsters^000000,";
+				mes "- and ^ff0000the caster^000000.";
+				next;
+				mes "[Catherine Medichi]";
+				mes "It's up to him to pick the questions.";
+				next;
+				mes "[Catherine Medichi]";
+				mes "Ya know... if he got a hair cut and shaved, he might look cool...";
+				mes "But obviously he wouln't do it....";
+				next;
+				mes "[Catherine Medichi]";
+				mes "Anyways, about his questions on spells, there are obviously some on spells you've learned.";
+				next;
+				mes "[Catherine Medichi]";
+				mes "There are also questions about spells you DON'T know much about, so go ask some Wizards for that info.";
+				next;
+				mes "[Catherine Medichi]";
+				mes "There are also places out there with lots of information about spells, such as www.emperium.org.";
+				mes "You can probably find other sites as well.";
+				next;
+				mes "[Catherine Medichi]";
+				mes "As far as the questions on monsters go, you COULD fight them to learn about them... OR...";
+				next;
+				mes "[Catherine Medichi]";
+				mes "... If I remember correctly, there's a libary in Prontera that has lots of information on monsters.";
+				mes "You could just go there and read about them.";
+				next;
+				mes "[Catherine Medichie]";
+				mes "Now, about the questions about the caster.... You're on your own for this one..";
+				mes "Why? Because YOU ARE the caster!";
+				next;
+				mes "[Catherine Medichi]";
+				mes "If you don't know anything about yourself, how would a stranger like me know?";
+				next;
+				mes "[Catherine Medichi]";
+				mes "Well good luck! Mister Examiner is waiting!";
+				close;
+
+				sL_NoJuice:
+					mes "[Catherine Medichi]";
+					mes "Well, if you want hints, I need apple juice!.  Otherwise, you're on your own =P.";
+					close;
+
+			M_1b:
+				mes "[Catherine Medichi]";
+				mes "That's right! Tests are meant to be done alone! That's definatly the way a Wizard should think!";
+				next;
+				mes "[Catherine Medichi]";
+				mes "Good luck! Mister Examiner is waiting!";
+				close;
+
+	L_Test3:
+		if(WIZ_Q2 == 1) goto sL_Failed3;
+		mes "He he, I could hear you in there working hard on those questions.";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Good job, only one test left! Finish that and you'll be a wizard!";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Good luck! The examiner's waiting!";
+		close;
+
+		sL_Failed3:
+			mes "Why did you come out during the test? I never thought you were that weak...";
+			next;
+			if(sex==1) goto ssL_M3;
+			if(sex==0) goto ssL_F3;
+
+			ssL_M3:
+				mes "[Catherine Medichi]";
+				mes "How could a powerful mage like you get beaten so easily!! Go back in and try harder.";
+				close;
+
+			ssL_F3:
+				mes "[Catherine Medichi]";
+				mes "You can't act all weak, just because you're a girl! If you want to be a wizard, go and pass the test!";
+				next;
+				mes "[Catherine Medichi]";
+				mes "I thought it was hard too, but it wasn't enough to make me quit! You just have to face hardship sometimes!";
+				close;
+
+
+	L_Done:
+		if(SkillPoint > 0) mes "You need to use up all of your skill points before I can make you a Wizard.";
+		if(SkillPoint > 0) close;
+
+		mes "Great! You finished all of the tests! Congrats, congrats, congrats!!";
+		emotion 21;
+		next;
+		mes "[Catherine Medichi]";
+		mes "Ack, I'm wasting time, I better change you!";
+		next;
+		callfunc "F_ClearJobVar";		// clears all job variables for the current player
+		JobChange Job_Wizard;
+
+		mes "[Catherine Medichi]";
+		mes "Now you're a wizard! Act responsibly!";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Make sure when you cast a spell, you know exactly what's going to happen!";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Don't do stupid things like casting in the middle of town!";
+		mes "It causes lag and magic is supposed to be used on monsters anyways!";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Become mightier by partying with others! Oh yea, here's a present!";
+		next;
+		mes "[Catherine Medichi]";
+		mes "(Rustle Rustle)";
+		next;
+		getitem 505, 6;
+		mes "[Catherine Medichi]";
+		mes "Use them wisely. It's a present from me, so you better use them all!";
+		next;
+		mes "[Catherine Medichi]";
+		mes "Well my fellow Wizard, take care and have a great life!";
+		close;
+}
+
+
+//<================================================ Examiner: Raul Expagarus ==================================================>\\
+gef_tower.gat,102,24,3	script	Raul Expagarus	735,
+{
+	mes "[Raul Expagarus]";
+	if(Class == Job_Mage) goto L_Mage;
+	if(Class == Job_Wizard) goto L_Wizard;
+	if(callfunc("Is_Holy_Class")) goto L_Holy;
+	if(Class == Job_Novice) goto L_Novice;
+L_Other:
+	mes "Ugh, I don't feel good....I feel like I'm trapped in ice........";
+	next;
+	mes "[Raul Expagarus]";
+	mes "Who're you?! Leave!";
+	emotion 0;
+	close;
+L_Novice:
+	mes "What's a little kid like you doing here? Get out!!";
+	emotion 0;
+	next;
+	warp "geffen.gat",120,110;
+	close;
+L_Holy:
+	mes "Leave holy ones!";
+	mes "Magic is considered to be a power that is not from God.......";
+	next;
+	mes "[Raul Expagarus]";
+	mes "Besides, I'm not feeling too good.  So Leave now!";
+	close;
+L_Wizard:
+	mes "Cough Cough, what can I do for you? Hmmm... you're a magic user too...";
+	next;
+	mes "[Raul Expagarus]";
+	if(sex==1) goto L_M;
+	if(sex==0) goto L_F;
+
+	L_M:
+		mes "If you're not responsible, you might accidently learn useless spells.";
+		mes "Instead of that, you might want to focus on learning spells you'll be using now.";
+		next;
+		mes "[Raul Expagarus]";
+		mes "In a fight for love, you might become crippled hehe.";
+		close;
+
+	L_F:
+		mes "If you're not responsible, you might accidently learn useless spells.";
+		mes "You should learn a spell with all of your heart or not learn it at all.";
+		next;
+		mes "[Raul Expagarus]";
+		mes "If you don't wish to study like that............... Heh, then go be a housewife.";
+		close;
+
+L_Mage:
+	if(WIZ_Q == 1) goto L_NotRdy;
+	if(WIZ_Q == 2) goto L_Test2;
+	if(WIZ_Q == 3) goto L_Test3;
+	if(WIZ_Q == 4) goto L_Done;
+
+		mes "Cough, I don't have any time to talk.";
+		next;
+		mes "[Raul Expagarus]";
+		mes "Sorry, but please leave.";
+		close;
+
+	L_NotRdy:
+		mes "Heh, a wizard trainee eh?!";
+		next;
+		mes "[Raul Expagarus]";
+		mes "You COULD just stay as a mage and live a pretty decent life.....";
+		next;
+		mes "[Raul Expagarus]";
+		mes "Then again, wizards ARE much more high class.....";
+		close;
+
+	L_Done:
+		mes "Congratulations on finishing the final test!  You have now finished all of the Wizards tests and are ready to become a Wizard!";
+		emotion 21;
+		next;
+		mes "[Raul Expagarus]";
+		mes "Go speak to Catherine to become a Wizard.  But be careful! Magic is a powerfull force and can easily destroy you!!";
+		close;
+
+	L_Test2:
+		if(WIZ_Q2 == 1) goto sL_ReTest2;
+
+		mes "I see you've passed the 1st test.  My name is Raul Expagarus,  I'm your test examiner.";
+		next;
+		mes "[Raul Expagarus]";
+		mes "It's not too late! You can still return to a peaceful life in town if you wish.";
+		next;
+		mes "[Raul Expagarus]";
+		mes "You probably have no clue how dangerous it is to use magic.";
+		next;
+		menu "You're right.  I quit.",M_0a, "I want to take test!",M_0b;
+
+		sL_ReTest2:
+			mes "Hmph, you want to try again?";
+			next;
+			mes "[Raul Expagarus]";
+			mes "How can you hate a peaceful life so much?";
+			next;
+			mes "[Raul Expagarus]";
+			mes "Be that way! If you miss one question, you fail! What do you say!?";
+			emotion 32;
+			next;
+			menu "I want to live in peace..........",M_0a, "I want to try again.",M_0b;
+
+		M_0a:
+			mes "[Raul Expagarus]";
+			mes "Good choice, cough cough.  Being a Wizard is a difficult job, and magic is not meant to be used by mere mortals.........";
+			next;
+			mes "[Raul Expagarus]";
+			mes "Go down the tower and don't look back.  Use the magic you have now and live a peaceful life.";
+			close;
+
+		M_0b:
+			mes "[Raul Expagarus]";
+			mes "Hmph, we'll see how GREAT you do.";
+			next;
+			mes "[Raul Expagarus]";
+			mes "Lets start the test! If you miss one question, you're screwed! HA!";
+			emotion 29;
+			next;
+			mes "[Raul Expagarus]";
+			mes "10 questions, get them right! I won't tell you the correct answer for the ones you miss.";
+			next;
+			set @SCORE,0;
+			set @temp,rand(0,2);
+			if(@temp == 1) goto R_1;
+			if(@temp == 2) goto R_2;
+
+			//Spell Quiz
+			R_0:
+				mes "[Raul Expagarus]";
+				mes "Cough, here are the questions!";
+				next;
+				mes "[Raul Expagarus]";
+				mes "1. What ISN'T required for fire wall?";
+				next;
+				menu "Fire Bolt Lv 4",sM0_0b, "Fire Ball Lv 5",sM0_0b, "Sight Lv 1",sM0_0b, "Napalm Beat Lv 4",sM0_0a;
+
+				sM0_0a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_0b:
+
+				mes "[Raul Expagarus]";
+				mes "2. What happens to a monster's element after it's frozen by Frost Diver?";
+				next;
+				menu "Changes to Water",sM0_1a, "Changes to Earth",sM0_1b, "Changes to Fire",sM0_1b, "Changes to Wind",sM0_1b;
+
+				sM0_1a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_1b:
+
+				mes "[Raul Expagarus]";
+				mes "3. When you max out Napalm Beat, how many times matk will the dmg be?";
+				next;
+				menu "1.6x",sM0_2b, "1.7x",sM0_2a, "2x",sM0_2b, "20x",sM0_2b;
+
+				sM0_2a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_2b:
+
+				mes "[Raul Expagarus]";
+				mes "4. What item is required for stone curse?";
+				next;
+				menu "Red Blood",sM0_3b, "Blue Gem",sM0_3b, "Yellow Gem",sM0_3b, "Red Gem",sM0_3a;
+
+				sM0_3a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_3b:
+
+				mes "[Raul Expagarus]";
+				mes "5. What isn't required for Safety Wall?";
+				next;
+				menu "Napalm Beat Lv 4",sM0_4b, "Soul Strike Lv 5",sM0_4b, "SP Recovery Lv. 6",sM0_4b, "Ice Wall Lv 7",sM0_4a;
+
+				sM0_4a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_4b:
+
+				mes "[Raul Expagarus]";
+				mes "6. How much SP will you regain every 10 sec with lvl 7 SP Rec.?";
+				next;
+				menu "14",sM0_5b, "21",sM0_5a, "28",sM0_5b, "35",sM0_5b;
+
+				sM0_5a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_5b:
+
+				mes "[Raul Expagarus]";
+				mes "7. You have 50% SP, how much dmg will Energy Coat reduce and how much sp will it use?";
+				next;
+				menu "dmg 18%, SP1.5%",sM0_6b, "dmg18%, SP2%",sM0_6a, "dmg 24%, SP1.5%",sM0_6b, "dmg 24%, SP2%",sM0_6b;
+
+				sM0_6a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_6b:
+
+				mes "[Raul Expagarus]";
+				mes "8. Lvl 6 Safety Wall sp consumtion, and number of hits absorbed?";
+				next;
+				menu "SP 40, 6hits",sM0_7b, "SP 35, 6hits",sM0_7b, "SP 40, 7hits",sM0_7a, "SP 35, 7hits",sM0_7b;
+
+				sM0_7a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_7b:
+
+				mes "[Raul Expagarus]";
+				mes "9. Lv. 10 Thunder Storm's Sp Consume";
+				next;
+				menu "84",sM0_8b, "74",sM0_8a, "64",sM0_8b, "54",sM0_8b;
+
+				sM0_8a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_8b:
+
+				mes "[Raul Expagarus]";
+				mes "10. What would be a good skill to use in Byalan Dungeon?";
+				next;
+				menu "Lightning Bolt",sM0_9a, "Fire Bolt",sM0_9b, "Ice Bolt",sM0_9b, "Sight",sM0_9b;
+
+				sM0_9a:
+					set @SCORE, @SCORE + 10;
+
+				sM0_9b:
+				goto L_Cont0;
+
+			//Monster Quiz
+			R_1:
+				mes "[Raul Expagarus]";
+				mes "1. What drops a slot guard?";
+				next;
+				menu "Thief Bug",sM1_0b, "Peco Peco",sM1_0b, "Pupa",sM1_0a, "Mace Kobold",sM1_0b;
+
+				sM1_0a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_0b:
+
+				mes "[Raul Expagarus]";
+				mes "2. Which monster is the easiest for magicians?";
+				next;
+				menu "Flora",sM1_1a, "Gierth",sM1_1b, "Golem",sM1_1b, "Myst",sM1_1b;
+
+				sM1_1a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_1b:
+
+				mes "[Raul Expagarus]";
+				mes "3. What monster is completly immune to Stone Curse?";
+				next;
+				menu "Elder Willow",sM1_2b, "Evil Druid",sM1_2a, "Baek-Ryuhn-Oak",sM1_2b, "Marc",sM1_2b;
+
+				sM1_2a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_2b:
+:
+				mes "[Raul Expagarus]";
+				mes "4. How much dmg do you do with a wind spell to a Water 3 monster?";
+				next;
+				menu "125%",sM1_3b, "150%",sM1_3b, "175%",sM1_3b, "200%",sM1_3a;
+
+				sM1_3a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_3b:
+
+				mes "[Raul Expagarus]";
+				mes "5. Baby Desert Wolves vs Familiar, which one wins?";
+				next;
+				menu "Baby Desert Wolf",sM1_4a, "Farmiliar",sM1_4b, "Tie",sM1_4b, "Don't Know",sM1_4b;
+
+				sM1_4a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_4b:
+
+				mes "[Raul Expagarus]";
+				mes "6. Which monster can't be tamed as a pet?";
+				next;
+				menu "Poporing",sM1_5b, "Roda Frog",sM1_5a, "Smokie",sM1_5b, "Poison Spore",sM1_5b;
+
+				sM1_5a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_5b:
+
+				mes "[Raul Expagarus]";
+				mes "7. Which monster is weak against fire?.";
+				next;
+				menu "Knife Goblin",sM1_6b, "Mace Goblin",sM1_6b, "Flail Goblin",sM1_6b, "Hammer Goblin",sM1_6a;
+
+				sM1_6a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_6b:
+
+				mes "[Raul Expagarus]";
+				mes "8. Which monster has the highest magic def?";
+				next;
+				menu "Horong",sM1_7b, "ChonChon",sM1_7b, "Andre",sM1_7b, "Caramel",sM1_7a;
+
+				sM1_7a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_7b:
+
+				mes "[Raul Expagarus]";
+				mes "9. Pick the monster that doesn't belong.";
+				next;
+				menu "Poring",sM1_8b, "Mastering",sM1_8b, "Ghostring",sM1_8b, "Spore",sM1_8a;
+
+				sM1_8a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_8b:
+
+				mes "[Raul Expagarus]";
+				mes "10. Which is not a undead?";
+				next;
+				menu "Drake",sM1_9b, "Megalodon",sM1_9b, "Deviace",sM1_9a, "Khalitzburg",sM1_9b;
+
+				sM1_9a:
+					set @SCORE, @SCORE + 10;
+
+				sM1_9b:
+				goto L_Cont0;
+
+			//Wizard Quiz
+			R_2:
+				mes "[Raul Expagarus]";
+				mes "1. What is the most important stat for a Wizard?";
+				next;
+				menu "INT",sM2_0a, "AGI",sM2_0b, "DEX",sM2_0b, "VIT",sM2_0b;
+
+				sM2_0a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_0b:
+
+				mes "[Raul Expagarus]";
+				mes "2. Which element doesn't have a bolt spell?";
+				next;
+				menu "water",sM2_1b, "earth",sM2_1a, "fire",sM2_1b, "wind",sM2_1b;
+
+				sM2_1a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_1b:
+
+				mes "[Raul Expagarus]";
+				mes "3. What is NOT a characteristic of a Wizard?";
+				next;
+				menu "Weak physical abilites",sM2_2b, "Distance Attacks",sM2_2b, "Good money maker",sM2_2a, "High Magic Def",sM2_2b;
+
+				sM2_2a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_2b:
+
+				mes "[Raul Expagarus]";
+				mes "4. Which town is the home of Wizards?";
+				next;
+				menu "Prontera",sM2_3b, "Morroc",sM2_3b, "Alberta",sM2_3b, "Geffen",sM2_3a;
+
+				sM2_3a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_3b:
+
+				mes "[Raul Expagarus]";
+				mes "5. Which card has nothing to do with INT?";
+				next;
+				menu "Andre Card",sM2_4b, "Soldier Andre Card",sM2_4a, "Baby Desert Wolf Card",sM2_4b, "Elder Willow Card",sM2_4b;
+
+				sM2_4a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_4b:
+
+				mes "[Raul Expagarus]";
+				mes "6. What is superior about the mage class compared to others?";
+				next;
+				menu "Close Range Combat",sM2_5b, "High Dodge",sM2_5b, "Dance Skills",sM2_5b, "Magical Power",sM2_5a;
+
+				sM2_5a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_5b:
+
+				mes "[Raul Expagarus]";
+				mes "7. What is the INT bonus at job lvl 40?";
+				next;
+				menu "8",sM2_6b, "7",sM2_6b, "6",sM2_6b, "5",sM2_6a;
+
+				sM2_6a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_6b:
+
+				mes "[Raul Expagarus]";
+				mes "8. Which Item can't be equiped by mages?";
+				next;
+				menu "Knife",sM2_7b, "Cap",sM2_7a, "Sandel",sM2_7b, "Eye of Dullahan",sM2_7b;
+
+				sM2_7a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_7b:
+
+				mes "[Raul Expagarus]";
+				mes "9. During the mage test, which stone is NOT one of the Catalysts?";
+				next;
+				menu "Yellow Gemstone",sM2_8b, "Red Gemstone",sM2_8b, "Blue Gemstone",sM2_8b, "Red Blood",sM2_8a;
+
+				sM2_8a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_8b:
+
+				mes "[Raul Expagarus]";
+				mes "10. Which card has nothing to do with magic?";
+				next;
+				menu "Marduk Card",sM2_9b, "Baek-Rhyun-Oak Card",sM2_9a, "Willow Card",sM2_9b, "Maya Card",sM2_9b;
+
+				sM2_9a:
+					set @SCORE, @SCORE + 10;
+
+				sM2_9b:
+
+
+			L_Cont0:
+			mes "[Raul Expagarus]";
+			mes "Well that's the end of the test.  When you get some time afterwards, go get something to eat okay.";
+			next;
+			mes "[Raul Expagarus]";
+			mes "Anyway, here is your score: ^ff0000"+@SCORE+"^000000 points.";
+			next;
+			mes "[Raul Expagarus]";
+			if(@SCORE == 100) goto sL_Pass100;
+			if(@SCORE == 90) goto sL_Pass90;
+
+			sL_Failed:
+				set WIZ_Q2, 1;
+				mes "Hmf... You failed, go study some more.";
+				next;
+				mes "[Raul Expagarus]";
+				mes "You're a long way away.  With that low of an intelligence, you have no chance of surviving as a wizard.";
+				close;
+
+			sL_Pass90:
+				set WIZ_Q, 3;
+				set WIZ_Q2, 0;
+				mes "Hmm, you've missed one question, but I'll let you pass.";
+				next;
+				mes "[Raul Expagarus]";
+				mes "Don't relax yet! There is still a 3rd test left.  While we prepare for the next test, sit and rest a bit.";
+				close;
+
+			sL_Pass100:
+				set WIZ_Q, 3;
+				set WIZ_Q2, 0;
+				mes "Wonderful! You've passed the 2nd test.";
+				next;
+				mes "[Raul Expagarus]";
+				mes "Don't relax yet! There is still a 3rd test left.  While we prepare for the next test, sit and rest a bit.";
+				close;
+
+
+	L_Test3:
+		if(WIZ_Q2 == 1) goto sL_ReTest3;
+		mes "Got some rest? Good.  Now, let's start the last test.";
+		next;
+		mes "[Raul Expagarus]";
+		mes "I'll make a quick explanation of the test, want to hear it?";
+		next;
+		menu "No thank you.",M_1a, "Please go on",M_1b;
+
+		M_1a:
+			mes "[Raul Expagarus]";
+			mes "Ignorant fool! Fine, go die if you wish! Your corpse will be left as food for the monsters.";
+			emotion 23;
+			next;
+			mes "[Raul Expagarus]";
+			mes "I'll send you now... By the way, have fun getting slaughtered!";
+			next;
+			savepoint "gef_tower.gat",106,29;
+			warp "job_wiz.gat",57,154;
+			end;
+
+		M_1b:
+			mes "[Raul Expagarus]";
+			mes "Good choice.  Listen carefully.";
+			next;
+			mes "[Raul Expagarus]";
+			mes "The is a test of your ability to fight monsters of varying elemental properites.";
+			mes "There will be 3 different rooms, each containing monsters of a different elemental property.";
+			next;
+			mes "[Raul Expagarus]";
+			mes "There will be the Room of Water which will have monsters of the water property, followed by the ";
+			mes "Room of Earth with earth property monsters, and finally the Room of Fire with fire property monsters.";
+			next;
+			mes "[Raul Expagarus]";
+			mes "You will have 3 minutes for each room.  You must kill all of the monsters in the room to be able to advance to the next room.";
+			next;
+			mes "[Raul Expagarus]";
+			mes "If you use that right spells you should be able to finish the test rather easily.  That's all there is to it.";
+			next;
+			mes "[Raul Expagarus]";
+			mes "You look a little frightened.... give up now and you can return to town.....";
+			next;
+			menu "I have no fear! Give me the test!",sM_a, "... tooo scaaarryy... lemme go home(*sob*sob*)",sM_b;
+
+			sM_a:
+				mes "[Raul Expagarus]";
+				mes "Kid, you have courage.  We'll start right away!";
+				next;
+				set WIZ_Q2, 1;
+				savepoint "gef_tower.gat",106,29;
+				warp "job_wiz.gat",57,154;
+				end;
+
+			sM_b:
+				mes "[Raul Expagarus]";
+				mes "Good choice.  Have a nice peaceful life!";
+				warp "geffen.gat",120,110;
+				end;
+
+		sL_ReTest3:
+			mes "You want to take the test AGAIN!? You love magic THAT much!?";
+			emotion 1;
+			next;
+			mes "[Raul Expagarus]";
+			mes "You failed last time, so it's time for a quiz! If you don't want to take it, TOO BAD!.";
+			next;
+			mes "[Raul Expagarus]";
+			mes "Let's start.";
+			next;
+			set @SCORE, 0;
+
+			mes "[Raul Expagarus]";
+			mes "1. Which monster doesn't exist?";
+			next;
+			menu "Mantis",sM_0b, "Cunner Tooth",sM_0a, "Giearth",sM_0b, "Caramel",sM_0b;
+
+			sM_0a:
+				set @SCORE, @SCORE + 20;
+
+			sM_0b:
+
+			mes "[Raul Expagarus]";
+			mes "2. Which monster is NOT a animal type?";
+			next;
+			menu "Yoyo",sM_1b, "Bigfoot",sM_1b, "Metaller",sM_1b, "Zerom",sM_1a;
+
+			sM_1a:
+				set @SCORE, @SCORE + 20;
+
+			sM_1b:
+
+			mes "[Raul Expagarus]";
+			mes "3. Which monster has no cast sense?";
+			next;
+			menu "Marina",sM_2a, "Vitata",sM_2b, "Scorpion",sM_2b, "Giearth",sM_2b;
+
+			sM_2a:
+				set @SCORE, @SCORE + 20;
+
+			sM_2b:
+
+			mes "[Raul Expagarus]";
+			mes "4. What's a good spell to use on Marin Spheres?";
+			next;
+			menu "Cold Bolt",sM_3b, "Fire Bolt",sM_3b, "Lightning Bolt",sM_3a, "Stone Curse",sM_3b;
+
+			sM_3a:
+			set @SCORE, @SCORE + 20;
+
+			sM_3b:
+
+			mes "[Raul Expagarus]";
+			mes "5. Which monster can move?";
+			next;
+			menu "Hydra",sM_4b, "Mandragora",sM_4b, "Greatest General",sM_4b, "Frilldora",sM_4a;
+
+			sM_4a:
+				set @SCORE, @SCORE + 20;
+
+			sM_4b:
+
+			mes "[Raul Expagarus]";
+			mes "Your score is ^ff0000" +@SCORE+ "^000000 pts.";
+			next;
+			mes "[Raul Expagarus]";
+			if (@SCORE >= 80) goto sL_Passed3;
+
+			sL_Failed3:
+				mes "You Failed! Go study some more!";
+				next;
+				mes "[Raul Expagarus]";
+				mes "You aren't fit to be a wizard, why do you think you failed!?";
+				close;
+
+			sL_Passed3:
+				if (@SCORE == 100) mes "If you're so smart, why couldn't you pass the test the first time?";
+				if (@SCORE == 80) mes "Kehe, almost perfect.  I'll let you try again.";
+			next;
+			menu "Let's start!",M_2a, "Explain the test again please.",M_1b;
+
+			M_2a:
+				mes "[Raul Expagarus]";
+				mes "I won't help you even if you die this time.  Don't come crying to me if you fail again.... hehe.";
+				next;
+				percentheal 100,100;
+				mes "[Raul Expagarus]";
+				mes "I'll send you to the arena now.  Have fun getting your butt whooped!";
+				next;
+				savepoint "gef_tower.gat",106,29;
+				warp "job_wiz.gat",55,156;
+				end;
+}
+
+
+<====================================================== Test Arena ========================================================>\\
+// Test Guide  ---------------------------------------------------------------------------------
+job_wiz.gat,50,165,4	script	Wizard Test Guide::WzTG	123,
+{
+	mes "[Test Guide]";
+	mes "Welcome.  I will be your guide for the Wizard Test.";
+	next;
+	menu "I would like to take the test.",M_0, "I would like to leave.",M_1;
+
+	M_0:
+		mes "[Test Guide]";
+		mes "As you have been told you will have 3 minutes to finish each portion of the test.";
+		mes "I will periodically announce how much time you have left for each room on a minute by minute basis.";
+		next;
+		mes "[Test Guide]";
+		mes "Please enter the 'Wizard Test Waiting Room' when you are ready to take the test.";
+		mes "When the testing room is ready you will be automatically warped there and the exam will begin.";
+		next;
+		mes "[Test Guide]";
+		mes "Good luck!";
+		close;
+	M_1:
+		mes "[Test Guide]";
+		mes "I see.  I will send you back.";
+		next;
+		warp "gef_tower.gat",106, 35;
+		end;
+
+OnInit:
+	waitingroom "Wizard Test Waiting Room",8,"WzTG::OnStart",1;
+	end;
+
+OnStart:
+	set $@WzUsers, getareausers("job_wiz.gat", 98, 154, 129, 185);			// get user count for first lvl
+	set $@WzUsers, $@WzUsers + getareausers("job_wiz.gat", 100, 82, 131, 113);		// get user count for second lvl + first lvl
+	set $@WzUsers, $@WzUsers + getareausers("job_wiz.gat", 30, 82, 61, 113);		// get user count for third lvl + second lvl + first lvl
+	if ($@WzUsers > 0) end;
+
+	if ((getwaitingroomstate(33)) == 0) end;		// finds out if there is anyone in the waiting room
+	disablenpc "waterwrp";		//disables the warps
+	disablenpc "waterwarpW";
+	disablenpc "waterwarpN";
+	disablenpc "waterwarpS";
+	disablenpc "earthwrp";
+	disablenpc "earthwarpW";
+	disablenpc "earthwarpN";
+	disablenpc "earthwarpS";
+	disablenpc "firewrp";
+	disablenpc "firewarpN";
+	disablenpc "firewarpW";
+	disablenpc "firewarpS";
+	killmonsterall "job_wiz.gat";		//makes sure there are no left over mobs from other testers
+	warpwaitingpc "job_wiz.gat",114,169;
+	donpcevent "WaterRm";
+	end;
+}
+
+// Room of Water  -----------------------------------------------------------------------------
+job_wiz.gat,1,1,1	script	WaterRm	-1,
+{
+	set $@WzRm, 1;		// used to determine which map area(room) to make time announcements in
+	set $@WzMOB, 8;		//used as a counter for the monsters that are summoned
+	monster "job_wiz.gat",109,174,"Phen",1158,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz.gat",118,174,"Kukre",1070,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz.gat",98,170,"Kukre",1070,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz.gat",109,165,"Vadon",1066,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz.gat",118,165,"Cornutus",1067,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz.gat",101,157,"Marina",1141,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz.gat",126,157,"Marin",1242,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz.gat",129,170,"Obeaune",1044,1,"WaterRm::OnMyMobDead1";
+	initnpctimer "TimerWz";
+	end;
+
+OnMyMobDead1:		//when a monster dies this portion of script is run
+	set $@WzMOB, $@WzMOB - 1;
+	if ($@WzMOB > 0) end;
+
+	stopnpctimer "TimerWz";
+	set $@WzMOB, 0;
+	addtimer 2000, "WaterRm::OnTimer2000";
+	end;
+
+OnTimer2000:
+	set $@WzMOB, 5;
+	areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: You must now defeat the door gaurds! Hurry!",8;
+	monster "job_wiz.gat",114,169,"Marine Sphere",1142,1,"WaterRm::OnMyMobDead2";
+	monster "job_wiz.gat",112,169,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
+	monster "job_wiz.gat",116,169,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
+	monster "job_wiz.gat",114,171,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
+	monster "job_wiz.gat",114,167,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
+	setnpctimer 120000, "TimerWz";
+	startnpctimer "TimerWz";
+	end;
+
+OnMyMobDead2:
+	set $@WzMOB, $@WzMOB - 1;
+	if ($@WzMOB > 0) end;
+
+	stopnpctimer "TimerWz";
+	set $@WzMOB, 0;
+	areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: Well done.  You have completed the Room of Water.  Get ready for the Room of Earth.",8;
+	percentheal 100,100;
+	enablenpc "waterwrp";
+	enablenpc "waterwarpW";
+	enablenpc "waterwarpN";
+	enablenpc "waterwarpS";
+	initnpctimer "waterwrp";		// warps the player after 30 secs even if they don't enter the warps
+	end;
+}
+
+// Room of Earth -----------------------------------------------------------------------------------------------
+job_wiz.gat,1,1,1	script	EarthRm	-1,
+{
+	set $@WzRm, 2;
+	set $@WzMOB, 10;
+	monster "job_wiz.gat",111,102,"Yoyo",1057,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",120,102, "Deniro",1105,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",111,102, "Caramel",1103,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",120,102,"Hode",1127,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",111,93,"Savage",1166,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",120,93,"Giearth",1121,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",107,98,"Bigfoot",1160,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",124,98,"Orc Warrior",1023,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",104,86,"Vitata",1176,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz.gat",127,86,"Mantis",1139,1,"EarthRm::OnMyMobDead1";
+	initnpctimer "TimerWz";
+	end;
+
+OnMyMobDead1:
+	set $@WzMOB, $@WzMOB - 1;
+	if ($@WzMOB > 0) end;
+
+	stopnpctimer "TimerWz";
+	addtimer 2000, "EarthRm::OnTimer2000";
+	set $@WzMOB, 0;
+	end;
+
+OnTimer2000:
+	set $@WzMOB, 7;
+	areaannounce "job_wiz.gat", 100, 82, 131, 113, "[Test Guide]: You now must defeat the door gaurds! Hurry!.",8;
+	monster "job_wiz.gat",116,97,"Flora",1118,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz.gat",114,95,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz.gat",118,95,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz.gat",114,99,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz.gat",118,99,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz.gat",116,94,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz.gat",116,100,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	setnpctimer 120000, "TimerWz";
+	startnpctimer "TimerWz";
+	end;
+
+OnMyMobDead2:
+	set $@WzMOB, $@WzMOB - 1;
+	if ($@WzMOB > 0) end;
+
+	stopnpctimer "TimerWz";
+	set $@WzMOB, 0;
+	areaannounce "job_wiz.gat", 100, 82, 131, 113, "[Test Guide]: Well done.  You have completed the Room of Earth.  Get ready for the Room of Fire.",8;
+	percentheal 100,100;
+	enablenpc "earthwrp";
+	enablenpc "earthwarpN";
+	enablenpc "earthwarpW";
+	enablenpc "earthwarpS";
+	initnpctimer "earthwrp";
+	end;
+}
+
+// Room of Fire ------------------------------------------------------------------------------------------------------------
+job_wiz.gat,1,1,1	script	FireRm	-1,
+{
+	set $@WzRm, 3;
+	set $@WzMOB, 8;
+	monster "job_wiz.gat",58,110,"Zerom",1178,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz.gat",33,110,"Flail Goblin",1123,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz.gat",40,103,"Scorpion",1001,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz.gat",51,103,"Frilldora",1119,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz.gat",40,92,"Peco Peco",1019,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz.gat",51,92,"Elder Willow",1033,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz.gat",37,89,"Metaller",1058,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz.gat",54,89,"Desert Wolf",1106,1,"FireRm::OnMyMobDead1";
+	initnpctimer "TimerWz";
+	end;
+
+OnMyMobDead1:
+	set $@WzMOB, $@WzMOB - 1;
+	if ($@WzMOB > 0) end;
+
+	stopnpctimer "TimerWz";
+	addtimer 2000, "FireRm::OnTimer2000";
+	set $@WzMOB, 0;
+	end;
+
+OnTimer2000:
+	set $@WzMOB, 3;
+	areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: You now must defeat the door gaurds! Hurry!.",8;
+	monster "job_wiz.gat",44,99,"Greatest General",1277,1,"FireRm::OnMyMobDead2";
+	monster "job_wiz.gat",43,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
+	monster "job_wiz.gat",45,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
+	setnpctimer 120000, "TimerWz";
+	startnpctimer "TimerWz";
+	end;
+
+OnMyMobDead2:
+	set $@WzMOB, $@WzMOB - 1;
+	if ($@WzMOB > 0) end;
+
+	stopnpctimer "TimerWz";
+	set $@WzMOB, 0;
+	set WIZ_Q, 4;
+	set WIZ_Q2, 0;
+	areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: Well done. You have completed the Room of Fire and the entire test.",0;
+	enablenpc "firewrp";
+	enablenpc "firewarpN";
+	enablenpc "firewarpW";
+	enablenpc "firewarpS";
+	initnpctimer "firewrp";
+	end;
+}
+
+
+// Timer -----------------------------------------------------------------------------------------------
+job_wiz.gat,1,1,1	script	TimerWz	-1,
+{
+
+OnTimer1000:
+	if($@WzRm==1) areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: Room of Water, testing will begin.",8;
+	if($@WzRm==2) areaannounce "job_wiz.gat", 100, 82, 131, 113, "[Test Guide]: Room of Earth, testing will begin.",8;
+	if($@WzRm==3) areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: Room of Fire, testing will begin.",8;
+	end;
+OnTimer4000:
+	set $@WzTime$, "You have 3 minutes to defeat all of the monsters in this room starting now!";
+	donpcevent "WzTG::OnStart";		//checks to see if anyone is still in the room, in case of logout or KO
+	callsub AnnounceWz;
+OnTimer34000:
+	donpcevent "WzTG::OnStart";
+	end;
+OnTimer64000:
+	set $@WzTime$, "You have 2 minutes left!";
+	donpcevent "WzTG::OnStart";
+	callsub AnnounceWz;
+OnTimer94000:
+	donpcevent "WzTG::OnStart";
+	end;
+OnTimer124000:
+	set $@WzTime$, "You have 1 minute left!";
+	donpcevent "WzTG::OnStart";
+	callsub AnnounceWz;
+OnTimer154000:
+	set $@WzTime$, "You have 30 seconds left!";
+	donpcevent "WzTG::OnStart";
+	callsub AnnounceWz;
+OnTimer174000:
+	set $@WzTime$, "You have 10 seconds left!";
+	callsub AnnounceWz;
+OnTimer184000:
+	set $@WzTime$, "Time is up.  You have failed the test.";
+	callsub AnnounceWz;
+OnTimer188000:
+	stopnpctimer;
+	if($@WzRm==1) areawarp "job_wiz.gat", 98, 154, 129, 185, "gef_tower.gat",106, 35;
+	if($@WzRm==2) areawarp "job_wiz.gat", 100, 82, 131, 113, "gef_tower.gat",106, 35;
+	if($@WzRm==3) areawarp "job_wiz.gat", 30, 82, 61, 113, "gef_tower.gat",106, 35;
+	killmonsterall "job_wiz.gat";
+	donpcevent "WzTG::OnStart";
+	end;
+
+AnnounceWz:
+	if($@WzRm==1) areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: "+$@WzTime$+".",8;
+	if($@WzRm==2) areaannounce "job_wiz.gat", 100, 82, 131, 113, "[Test Guide]: "+$@WzTime$+".",8;
+	if($@WzRm==3) areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: "+$@WzTime$+".",8;
+	end;
+}
+
+
+// Warps ------------------------------------------------------------------------------------------
+
+// Water
+job_wiz.gat,129,169,1	script	waterwarpE::waterwrp	45,1,1,{
+
+OnTimer30000:
+	stopnpctimer "waterwrp";
+	areawarp "job_wiz.gat", 98, 154, 129, 185, "job_wiz.gat",116,98;
+	donpcevent "EarthRm";
+	end;
+}
+job_wiz.gat,98,169,1	duplicate(waterwrp)	waterwarpW	45,1,1
+job_wiz.gat,114,185,1	duplicate(waterwrp)	waterwarpN	45,1,1
+job_wiz.gat,114,154,1	duplicate(waterwrp)	waterwarpS	45,1,1
+
+
+// Earth
+job_wiz.gat,131,98,1	script	earthwarpE::earthwrp	45,1,1,{
+
+OnTimer30000:
+	stopnpctimer "earthwrp";
+	areawarp "job_wiz.gat", 100, 82, 131, 113, "job_wiz.gat",47,98;
+	donpcevent "FireRm";
+	end;
+}
+job_wiz.gat,100,98,1	duplicate(earthwrp)	earthwarpW	45,1,1
+job_wiz.gat,116,82,1	duplicate(earthwrp)	earthwarpN	45,1,1
+job_wiz.gat,116,113,1	duplicate(earthwrp)	earthwarpS	45,1,1
+
+
+// Fire
+job_wiz.gat,61,97,1	script	firewarpE::firewrp	45,1,1,{
+
+OnTimer30000:
+	stopnpctimer "firewrp";
+	areawarp "job_wiz.gat", 30, 82, 61, 113, "gef_tower.gat",106,35;
+	donpcevent "WzTG::OnStart";
+	end;
+}
+job_wiz.gat,30,97,1	duplicate(firewrp)	firewarpW	45,1,1
+job_wiz.gat,46,113,1	duplicate(firewrp)	firewarpN	45,1,1
+job_wiz.gat,46,82,1	duplicate(firewrp)	firewarpS	45,1,1

@@ -1,0 +1,43 @@
+// for mobs
+// mob_id,sprite_id,equip #
+// Use another mob's sprite for a monster.  0 for sprite will disable mob.
+// 1001-2000 must be used for now as any other ID is invalid.
+// Mob must have an equipment it's pet counterpart can use or it will cause problems.  If no equip use 0.
+// The following if a player sprite is used
+// MobID,SpriteID,Sex,Hair,Hair_Color,Weapon,Shield,Head_Top,Head_Middle,Head_Bottom,Option,Dye_Color
+
+//1002,1039	//Poring,Baphomet (Make Porings look like Baphomet)
+
+// eAthena Dev Team
+1900,12,1,1,1,16,0,67,12,54,16,1
+1901,6,1,1,1,1,2,67,12,54,0,1
+1920,1047,0
+1921,1093,0
+
+// eAthena Custom Equipped Mobs
+1970,1002,10013
+1971,1011,10002
+1972,1014,10017
+1973,1019,10010
+1974,1023,10009
+1975,1026,10008
+1976,1029,10006
+1977,1031,10013
+1978,1035,10002
+1979,1042,10002
+1980,1049,10012
+1981,1052,10014
+1982,1056,10019
+1983,1057,10018
+1984,1058,10014
+1985,1063,10007
+1986,1077,10017
+1987,1101,10001
+1988,1107,10003
+1989,1109,10004
+1990,1110,10005
+1991,1113,10013
+1992,1155,10011
+1993,1167,10015
+1994,1170,10016
+1995,1188,10020

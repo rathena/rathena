@@ -1,0 +1,1105 @@
+// ---- MVP ARENA!!!!!! By Darkchild with 16 diff MVP's inside
+// --- NPC in prontera
+prontera.gat,154,197,3	script	MVP Warper	768,{
+mes "[ ^0065DFMVP Warper^000000 ]";
+mes "Would you like to go to the MVP Arena ?...";
+menu "Yes!",L_MVP,"No thanks.",L_No;
+
+L_MVP:
+warp "quiz_00",44,24;
+close;
+L_No:
+close;
+}
+// --- Inside the Arena
+// --- NPC's That explains thigns
+quiz_00.gat,49,31,4	script	MVP Arena Guide	778,{
+menu "Intro",L_Intro,"I want to go back",L_Leave,"Heal me please",L_Heal,"Cancel",L_Cancel;
+
+L_Intro:
+mes "[ ^0065DFMVP Arena Guide^000000 ]";
+mes "Welcome and behold this sacred place, Here you will find out if you truly have what it takes to call yourself a warrior, and a Team mate.";
+next;
+mes "Here in [ ^0065DFSvRO^000000 ] we like to be a family, and as a family you learn you must help and assist one-another, so if you want to survive you should learn to Co-operate.";
+next;
+mes "There are Plenty of rooms with MVP's in them so don't all fight over the one room just cause you think it's the only one, just move to the next one.";
+next;
+mes "If you can't get along, and there is too much complaining about people stealing MVP kills and items... then this place will be removed.";
+next;
+mes "Now the npc's are in groups of monsters, there are 4 different mvps per each npc, i wont tell you which it's a surprise hehe.";
+next;
+mes "Good luck, Live long and Prosper!.";
+close;
+
+L_Leave:
+warp "prontera",156,179;
+close;
+
+L_Heal:
+Heal 32500,32500;
+close;
+
+L_Cancel:
+close;
+}
+
+// --- The first Alpha-MVP warper
+quiz_00.gat,56,31,4	script	Alpha MVP	770,{
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "I am the first Keeper, are you ready?.";
+menu "Yes!",L_Yes,"Urrr No.",L_No;
+
+L_Yes:
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Which Arena you want to go to??";
+	menu "Arena 1 [" + getmapusers("pvp_n_1-2.gat") + " / 50]",Larena1,
+	"Arena 2 [" + getmapusers("pvp_n_2-2.gat") + " / 50]",Larena2,
+	"Arena 3 [" + getmapusers("pvp_n_3-2.gat") + " / 15]",Larena3,
+	"Arena 4 [" + getmapusers("pvp_n_4-2.gat") + " / 15]",Larena4,
+	"Arena 5 [" + getmapusers("pvp_n_5-2.gat") + " / 15]",Larena5,
+	"Arena 6 [" + getmapusers("pvp_n_2-2.gat") + " / 15]",Larena6,
+	"Arena 7 [" + getmapusers("pvp_n_3-2.gat") + " / 15]",Larena7,
+	"Arena 8 [" + getmapusers("pvp_n_4-2.gat") + " / 15]",Larena8,
+	"Quit",Lcancel;
+
+L_No:
+close;
+
+Larena1:
+if (getmapusers("pvp_n_1-2.gat") > 49) goto Lsorry;
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_1-2",102,102;
+close;
+
+Larena2:
+if (getmapusers("pvp_n_2-2.gat") > 49) goto Lsorry;
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_2-2",102,102;
+close;
+
+Larena3:
+if (getmapusers("pvp_n_3-2.gat") > 14) goto Lsorry;
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_3-2",102,102;
+close;
+
+Larena4:
+if (getmapusers("pvp_n_4-2.gat") > 14) goto Lsorry;
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_4-2",102,102;
+close;
+
+Larena5:
+if (getmapusers("pvp_n_5-2.gat") > 14) goto Lsorry;
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_5-2",102,102;
+close;
+
+Larena6:
+if (getmapusers("pvp_n_6-2.gat") > 14) goto Lsorry;
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_6-2",102,102;
+close;
+
+Larena7:
+if (getmapusers("pvp_n_7-2.gat") > 14) goto Lsorry;
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_7-2",102,102;
+close;
+
+Larena8:
+if (getmapusers("pvp_n_8-2.gat") > 14) goto Lsorry;
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_8-2",102,102;
+close;
+
+Lsorry:
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "Sorry but this Arena is already full, maybe you can try another one!";
+close;
+}
+
+// --- The first Beta-MVP warper
+quiz_00.gat,58,31,4	script	Beta MVP	773,{
+mes "[ ^0065DFAlpha MVP^000000 ]";
+mes "I am the first Keeper, are you ready?.";
+menu "Yes!",L_Yes,"Urrr No.",L_No;
+
+L_Yes:
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Which Arena you want to go to??";
+	menu "Arena 1 [" + getmapusers("pvp_n_1-3.gat") + " / 50]",Larena1,
+	"Arena 2 [" + getmapusers("pvp_n_2-3.gat") + " / 15]",Larena2,
+	"Arena 3 [" + getmapusers("pvp_n_3-3.gat") + " / 15]",Larena3,
+	"Arena 4 [" + getmapusers("pvp_n_4-3.gat") + " / 15]",Larena4,
+	"Arena 5 [" + getmapusers("pvp_n_5-3.gat") + " / 15]",Larena5,
+	"Arena 6 [" + getmapusers("pvp_n_2-3.gat") + " / 15]",Larena6,
+	"Arena 7 [" + getmapusers("pvp_n_3-3.gat") + " / 15]",Larena7,
+	"Arena 8 [" + getmapusers("pvp_n_4-3.gat") + " / 15]",Larena8,
+	"Quit",Lcancel;
+
+L_No:
+close;
+
+Larena1:
+if (getmapusers("pvp_n_1-3.gat") > 49) goto Lsorry;
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_1-3",102,102;
+close;
+
+Larena2:
+if (getmapusers("pvp_n_2-3.gat") > 14) goto Lsorry;
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_2-3",102,102;
+close;
+
+Larena3:
+if (getmapusers("pvp_n_3-3.gat") > 14) goto Lsorry;
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_3-3",102,102;
+close;
+
+Larena4:
+if (getmapusers("pvp_n_4-3.gat") > 14) goto Lsorry;
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_4-3.gat",102,102;
+close;
+
+Larena5:
+if (getmapusers("pvp_n_5-3.gat") > 14) goto Lsorry;
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_5-3.gat",102,102;
+close;
+
+Larena6:
+if (getmapusers("pvp_n_6-3.gat") > 14) goto Lsorry;
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_6-3.gat",102,102;
+close;
+
+Larena7:
+if (getmapusers("pvp_n_7-3.gat") > 14) goto Lsorry;
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_7-3.gat",102,102;
+close;
+
+Larena8:
+if (getmapusers("pvp_n_8-3.gat") > 14) goto Lsorry;
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_8-3.gat",102,102;
+close;
+
+Lsorry:
+mes "[ ^0065DFBeta MVP^000000 ]";
+mes "Sorry but this Arena is already full, maybe you can try another one!";
+close;
+}
+
+
+// --- The first Theta-MVP warper
+quiz_00.gat,60,31,4	script	Theta MVP	774,{
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "I am the first Keeper, are you ready?.";
+menu "Yes!",L_Yes,"Urrr No.",L_No;
+
+L_Yes:
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Which Arena you want to go to??";
+	menu "Arena 1 [" + getmapusers("pvp_n_1-4.gat") + " / 50]",Larena1,
+	"Arena 2 [" + getmapusers("pvp_n_2-4.gat") + " / 15]",Larena2,
+	"Arena 3 [" + getmapusers("pvp_n_3-4.gat") + " / 15]",Larena3,
+	"Arena 4 [" + getmapusers("pvp_n_4-4.gat") + " / 15]",Larena4,
+	"Arena 5 [" + getmapusers("pvp_n_5-4.gat") + " / 15]",Larena5,
+	"Arena 6 [" + getmapusers("pvp_n_2-4.gat") + " / 15]",Larena6,
+	"Arena 7 [" + getmapusers("pvp_n_3-4.gat") + " / 15]",Larena7,
+	"Arena 8 [" + getmapusers("pvp_n_4-4.gat") + " / 15]",Larena8,
+	"Quit",Lcancel;
+
+L_No:
+close;
+
+Larena1:
+if (getmapusers("pvp_n_1-4.gat") > 49) goto Lsorry;
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_1-4.gat",102,102;
+close;
+
+Larena2:
+if (getmapusers("pvp_n_2-4.gat") > 14) goto Lsorry;
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_2-4.gat",102,102;
+close;
+
+Larena3:
+if (getmapusers("pvp_n_3-4.gat") > 14) goto Lsorry;
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_3-4.gat",102,102;
+close;
+
+Larena4:
+if (getmapusers("pvp_n_4-4.gat") > 14) goto Lsorry;
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_4-4.gat",102,102;
+close;
+
+Larena5:
+if (getmapusers("pvp_n_5-4.gat") > 14) goto Lsorry;
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_5-4.gat",102,102;
+close;
+
+Larena6:
+if (getmapusers("pvp_n_6-4.gat") > 14) goto Lsorry;
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_6-4.gat",102,102;
+close;
+
+Larena7:
+if (getmapusers("pvp_n_7-4.gat") > 14) goto Lsorry;
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_7-4.gat",102,102;
+close;
+
+Larena8:
+if (getmapusers("pvp_n_8-4.gat") > 14) goto Lsorry;
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_8-4.gat",102,102;
+close;
+
+Lsorry:
+mes "[ ^0065DFTheta MVP^000000 ]";
+mes "Sorry but this Arena is already full, maybe you can try another one!";
+close;
+}
+
+
+// --- The first Epsilon-MVP warper
+quiz_00.gat,62,31,4	script	Epsilon MVP	776,{
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "I am the first Keeper, are you ready?.";
+menu "Yes!",L_Yes,"Urrr No.",L_No;
+
+L_Yes:
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Which Arena you want to go to??";
+	menu "Arena 1 [" + getmapusers("pvp_n_1-5.gat") + " / 50]",Larena1,
+	"Arena 2 [" + getmapusers("pvp_n_2-5.gat") + " / 15]",Larena2,
+	"Arena 3 [" + getmapusers("pvp_n_3-5.gat") + " / 15]",Larena3,
+	"Arena 4 [" + getmapusers("pvp_n_4-5.gat") + " / 15]",Larena4,
+	"Arena 5 [" + getmapusers("pvp_n_5-5.gat") + " / 15]",Larena5,
+	"Arena 6 [" + getmapusers("pvp_n_2-5.gat") + " / 15]",Larena6,
+	"Arena 7 [" + getmapusers("pvp_n_3-5.gat") + " / 15]",Larena7,
+	"Arena 8 [" + getmapusers("pvp_n_4-5.gat") + " / 15]",Larena8,
+	"Quit",Lcancel;
+
+L_No:
+close;
+
+Larena1:
+if (getmapusers("pvp_n_1-5.gat") > 49) goto Lsorry;
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_1-5.gat",102,102;
+close;
+
+Larena2:
+if (getmapusers("pvp_n_2-5.gat") > 14) goto Lsorry;
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_2-5.gat",102,102;
+close;
+
+Larena3:
+if (getmapusers("pvp_n_3-5.gat") > 14) goto Lsorry;
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_3-5.gat",102,102;
+close;
+
+Larena4:
+if (getmapusers("pvp_n_4-5.gat") > 14) goto Lsorry;
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_4-5.gat",102,102;
+close;
+
+Larena5:
+if (getmapusers("pvp_n_5-5.gat") > 14) goto Lsorry;
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_5-5.gat",102,102;
+close;
+
+Larena6:
+if (getmapusers("pvp_n_6-5.gat") > 14) goto Lsorry;
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_6-5.gat",102,102;
+close;
+
+Larena7:
+if (getmapusers("pvp_n_7-5.gat") > 14) goto Lsorry;
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_7-5.gat",102,102;
+close;
+
+Larena8:
+if (getmapusers("pvp_n_8-5.gat") > 14) goto Lsorry;
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Here you go!";
+warp "pvp_n_8-5.gat",102,102;
+close;
+
+Lsorry:
+mes "[ ^0065DFEpsilon MVP^000000 ]";
+mes "Sorry but this Arena is already full, maybe you can try another one!";
+close;
+}
+
+
+// ---- Inside MVP-Arena NPC's
+// --- Alpha-MVP #1
+pvp_n_1-2.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_2-2",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera",156,179;
+		close;
+}
+
+// --- Alpha-MVP #2
+pvp_n_2-2.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_3-2",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera",156,179;
+		close;
+}
+// --- Alpha-MVP #3
+pvp_n_3-2.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_4-2.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Alpha-MVP #4
+pvp_n_4-2.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_5-2.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Alpha-MVP #5
+pvp_n_5-2.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+		L_Next:
+		warp "pvp_n_6-2.gat",102,102;
+		close;
+
+		L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Alpha-MVP #6
+pvp_n_6-2.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_7-2.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Alpha-MVP #7
+pvp_n_7-2.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_8-2.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Alpha-MVP #8
+pvp_n_8-2.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Beta-MVP #1
+pvp_n_1-3.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_2-3.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+
+// --- Beta-MVP #2
+pvp_n_2-3.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_3-3.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Beta-MVP #3
+pvp_n_3-3.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_4-3.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Beta-MVP #4
+pvp_n_4-3.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_5-3.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Beta-MVP #5
+pvp_n_5-3.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+		L_Next:
+		warp "pvp_n_6-3.gat",102,102;
+		close;
+
+		L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Beta-MVP #6
+pvp_n_6-3.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_7-3.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Beta-MVP #7
+pvp_n_7-3.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_8-3.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Beta-MVP #8
+pvp_n_8-3.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Theta-MVP #1
+pvp_n_1-4.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_2-4.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+
+// --- Theta-MVP #2
+pvp_n_2-4.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_3-4.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Theta-MVP #3
+pvp_n_3-4.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_4-4.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Theta-MVP #4
+pvp_n_4-4.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_5-4.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Theta-MVP #5
+pvp_n_5-4.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+		L_Next:
+		warp "pvp_n_6-4.gat",102,102;
+		close;
+
+		L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Theta-MVP #6
+pvp_n_6-4.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_7-4.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Theta-MVP #7
+pvp_n_7-4.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_8-4.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Theta-MVP #8
+pvp_n_8-4.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Epsilon-MVP #1
+pvp_n_1-5.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_2-5.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+
+// --- Epsilon-MVP #2
+pvp_n_2-5.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_3-5.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Epsilon-MVP #3
+pvp_n_3-5.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_4-5.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Epsilon-MVP #4
+pvp_n_4-5.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_5-5.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Epsilon-MVP #5
+pvp_n_5-5.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+		L_Next:
+		warp "pvp_n_6-5.gat",102,102;
+		close;
+
+		L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Epsilon-MVP #6
+pvp_n_6-5.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_7-5.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Epsilon-MVP #7
+pvp_n_7-5.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Next:
+		warp "pvp_n_8-5.gat",102,102;
+		close;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+// --- Epsilon-MVP #8
+pvp_n_8-5.gat,100,100,4	script	MVP-Protector	727,{
+	mes "[ ^0065DFMVP-Protector^000000 ]";
+	mes "How do you need help?.";
+	menu "Heal Please",L_Heal,"Leave",L_Leave;
+
+	L_Heal:
+		Heal 32500,32500;
+		close;
+
+	L_Leave:
+		warp "prontera.gat",156,179;
+		close;
+}
+
+// ---- Monsters for the MVP-Arena
+
+// --- Alpha-MVP Maps
+// --- First Alpha-MVP area
+pvp_n_1-2.gat,0,0,0,0	monster	Eddga	1115,3,60000,66000
+pvp_n_1-2.gat,0,0,0,0	monster	Mistress	1059,1,60000,66000
+// --- Second Alpha-MVP area
+pvp_n_2-2.gat,0,0,0,0	monster	Mistress	1059,3,60000,66000
+pvp_n_2-2.gat,0,0,0,0	monster	Moonlight	1150,1,60000,66000
+// --- Third Alpha-MVP area
+pvp_n_3-2.gat,0,0,0,0	monster	Mistress	1059,1,60000,66000
+pvp_n_3-2.gat,0,0,0,0	monster	Moonlight	1150,2,60000,66000
+pvp_n_3-2.gat,0,0,0,0	monster	Maya	1147,1,60000,66000
+// --- Fourth Alpha-MVP area
+pvp_n_4-2.gat,0,0,0,0	monster	Eddga	1115,1,60000,66000
+pvp_n_4-2.gat,0,0,0,0	monster	Mistress	1059,1,60000,66000
+pvp_n_4-2.gat,0,0,0,0	monster	Moonlight	1150,1,60000,66000
+pvp_n_4-2.gat,0,0,0,0	monster	Maya	1147,1,60000,66000
+// --- Fifth Alpha-MVP area
+pvp_n_5-2.gat,0,0,0,0	monster	Eddga	1115,1,60000,66000
+pvp_n_5-2.gat,0,0,0,0	monster	Mistress	1059,2,60000,66000
+pvp_n_5-2.gat,0,0,0,0	monster	Moonlight	1150,1,60000,66000
+pvp_n_5-2.gat,0,0,0,0	monster	Maya	1147,2,60000,66000
+// --- Sixth Alpha-MVP area
+pvp_n_6-2.gat,0,0,0,0	monster	Eddga	1115,2,60000,66000
+pvp_n_6-2.gat,0,0,0,0	monster	Mistress	1059,3,60000,66000
+pvp_n_6-2.gat,0,0,0,0	monster	Moonlight	1150,1,60000,66000
+pvp_n_6-2.gat,0,0,0,0	monster	Maya	1147,2,60000,66000
+// --- Seventh Alpha-MVP area
+pvp_n_7-2.gat,0,0,0,0	monster	Eddga	1115,3,60000,66000
+pvp_n_7-2.gat,0,0,0,0	monster	Mistress	1059,3,60000,66000
+pvp_n_7-2.gat,0,0,0,0	monster	Moonlight	1150,2,60000,66000
+pvp_n_7-2.gat,0,0,0,0	monster	Maya	1147,2,60000,66000
+// --- Eighth Alpha-MVP area
+pvp_n_8-2.gat,0,0,0,0	monster	Eddga	1115,3,60000,66000
+pvp_n_8-2.gat,0,0,0,0	monster	Mistress	1059,3,60000,66000
+pvp_n_8-2.gat,0,0,0,0	monster	Moonlight	1150,3,60000,66000
+pvp_n_8-2.gat,0,0,0,0	monster	Maya	1147,3,60000,66000
+
+// --- Beta-MVP Maps
+// --- First Beta-MVP area
+pvp_n_1-3.gat,0,0,0,0	monster	Phreeoni	1159,3,60000,66000
+pvp_n_1-3.gat,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+// --- Second Beta-MVP area
+pvp_n_2-3.gat,0,0,0,0	monster	Phreeoni	1159,2,60000,66000
+pvp_n_3-3.gat,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_2-3.gat,0,0,0,0	monster	Orc Hero	1087,1,60000,66000
+// --- Third Beta-MVP area
+pvp_n_3-3.gat,0,0,0,0	monster	Phreeoni	1159,1,60000,66000
+pvp_n_3-3.gat,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_3-3.gat,0,0,0,0	monster	Orc Hero	1087,1,60000,66000
+pvp_n_3-3.gat,0,0,0,0	monster	Orc Lord	1190,1,60000,66000
+// --- Fourth Beta-MVP area
+pvp_n_4-3.gat,0,0,0,0	monster	Phreeoni	1159,2,60000,66000
+pvp_n_4-3.gat,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_4-3.gat,0,0,0,0	monster	Orc Hero	1087,1,60000,66000
+pvp_n_4-3.gat,0,0,0,0	monster	Orc Lord	1190,1,60000,66000
+// --- Fifth Beta-MVP area
+pvp_n_5-3.gat,0,0,0,0	monster	Phreeoni	1159,1,60000,66000
+pvp_n_5-3.gat,0,0,0,0	monster	Turtle General	1312,2,60000,66000
+pvp_n_5-3.gat,0,0,0,0	monster	Orc Hero	1087,2,60000,66000
+pvp_n_5-3.gat,0,0,0,0	monster	Orc Lord	1190,1,60000,66000
+// --- Sixth Beta-MVP area
+pvp_n_6-3.gat,0,0,0,0	monster	Phreeoni	1159,2,60000,66000
+pvp_n_6-3.gat,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_6-3.gat,0,0,0,0	monster	Orc Hero	1087,2,60000,66000
+pvp_n_6-3.gat,0,0,0,0	monster	Orc Lord	1190,2,60000,66000
+// --- Seventh Beta-MVP area
+pvp_n_7-3.gat,0,0,0,0	monster	Phreeoni	1159,3,60000,66000
+pvp_n_7-3.gat,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_7-3.gat,0,0,0,0	monster	Orc Hero	1087,2,60000,66000
+pvp_n_7-3.gat,0,0,0,0	monster	Orc Lord	1190,3,60000,66000
+// --- Eighth Beta-MVP area
+pvp_n_8-3.gat,0,0,0,0	monster	Phreeoni	1159,3,60000,66000
+pvp_n_8-3.gat,0,0,0,0	monster	Turtle General	1312,3,60000,66000
+pvp_n_8-3.gat,0,0,0,0	monster	Orc Hero	1087,3,60000,66000
+pvp_n_8-3.gat,0,0,0,0	monster	Orc Lord	1190,3,60000,66000
+
+// --- Theta-MVP Maps
+// --- First Theta-MVP area
+pvp_n_1-4.gat,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_1-4.gat,0,0,0,0	monster	Osiris	1038,1,60000,66000
+// --- Second Theta-MVP area
+pvp_n_2-4.gat,0,0,0,0	monster	Drake	1112,2,60000,66000
+pvp_n_2-4.gat,0,0,0,0	monster	Osiris	1038,1,60000,66000
+pvp_n_2-4.gat,0,0,0,0	monster	Doppelganger	1046,1,60000,66000
+// --- Third Theta-MVP area
+pvp_n_3-4.gat,0,0,0,0	monster	Drake	1112,1,60000,66000
+pvp_n_3-4.gat,0,0,0,0	monster	Osiris	1038,1,60000,66000
+pvp_n_3-4.gat,0,0,0,0	monster	Doppelganger	1046,1,60000,66000
+pvp_n_3-4.gat,0,0,0,0	monster	Lord of Death	1373,1,60000,66000
+// --- Fourth Theta-MVP area
+pvp_n_4-4.gat,0,0,0,0	monster	Drake	1112,2,60000,66000
+pvp_n_4-4.gat,0,0,0,0	monster	Osiris	1038,1,60000,66000
+pvp_n_4-4.gat,0,0,0,0	monster	Doppelganger	1046,2,60000,66000
+pvp_n_4-4.gat,0,0,0,0	monster	Lord of Death	1373,1,60000,66000
+// --- Fifth Theta-MVP area
+pvp_n_5-4.gat,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_5-4.gat,0,0,0,0	monster	Osiris	1038,2,60000,66000
+pvp_n_5-4.gat,0,0,0,0	monster	Doppelganger	1046,2,60000,66000
+pvp_n_5-4.gat,0,0,0,0	monster	Lord of Death	1373,1,60000,66000
+// --- Sixth Theta-MVP area
+pvp_n_6-4.gat,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_6-4.gat,0,0,0,0	monster	Osiris	1038,2,60000,66000
+pvp_n_6-4.gat,0,0,0,0	monster	Doppelganger	1046,2,60000,66000
+pvp_n_6-4.gat,0,0,0,0	monster	Lord of Death	1373,2,60000,66000
+// --- Seventh Theta-MVP area
+pvp_n_7-4.gat,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_7-4.gat,0,0,0,0	monster	Osiris	1038,2,60000,66000
+pvp_n_7-4.gat,0,0,0,0	monster	Doppelganger	1046,3,60000,66000
+pvp_n_7-4.gat,0,0,0,0	monster	Lord of Death	1373,2,60000,66000
+// --- Eighth Theta-MVP area
+pvp_n_8-4.gat,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_8-4.gat,0,0,0,0	monster	Osiris	1038,3,60000,66000
+pvp_n_8-4.gat,0,0,0,0	monster	Doppelganger	1046,3,60000,66000
+pvp_n_8-4.gat,0,0,0,0	monster	Lord of Death	1373,3,60000,66000
+
+// --- Epsilon-MVP Maps
+// --- First Epsilon-MVP area
+pvp_n_1-5.gat,0,0,0,0	monster	Incantation Samurai	1492,3,60000,66000
+pvp_n_1-5.gat,0,0,0,0	monster	Pharoh	1157,1,60000,66000
+// --- First Epsilon-MVP area
+pvp_n_2-5.gat,0,0,0,0	monster	Incantation Samurai	1492,2,60000,66000
+pvp_n_2-5.gat,0,0,0,0	monster	Pharoh	1157,1,60000,66000
+pvp_n_2-5.gat,0,0,0,0	monster	Dark Lord	1272,1,60000,66000
+// --- First Epsilon-MVP area
+pvp_n_3-5.gat,0,0,0,0	monster	Incantation Samurai	1492,1,60000,66000
+pvp_n_3-5.gat,0,0,0,0	monster	Pharoh	1157,1,60000,66000
+pvp_n_3-5.gat,0,0,0,0	monster	Dark Lord	1272,1,60000,66000
+pvp_n_3-5.gat,0,0,0,0	monster	Baphomet	1039,1,60000,66000
+// --- First Epsilon-MVP area
+pvp_n_4-5.gat,0,0,0,0	monster	Incantation Samurai	1492,3,60000,66000
+pvp_n_4-5.gat,0,0,0,0	monster	Pharoh	1157,1,60000,66000
+pvp_n_4-5.gat,0,0,0,0	monster	Dark Lord	1272,1,60000,66000
+pvp_n_4-5.gat,0,0,0,0	monster	Baphomet	1039,1,60000,66000
+// --- First Epsilon-MVP area
+pvp_n_5-5.gat,0,0,0,0	monster	Incantation Samurai	1492,2,60000,66000
+pvp_n_5-5.gat,0,0,0,0	monster	Pharoh	1157,2,60000,66000
+pvp_n_5-5.gat,0,0,0,0	monster	Dark Lord	1272,2,60000,66000
+pvp_n_5-5.gat,0,0,0,0	monster	Baphomet	1039,1,60000,66000
+// --- First Epsilon-MVP area
+pvp_n_6-5.gat,0,0,0,0	monster	Incantation Samurai	1492,2,60000,66000
+pvp_n_6-5.gat,0,0,0,0	monster	Pharoh	1157,2,60000,66000
+pvp_n_6-5.gat,0,0,0,0	monster	Dark Lord	1272,2,60000,66000
+pvp_n_6-5.gat,0,0,0,0	monster	Baphomet	1039,1,60000,66000
+// --- First Epsilon-MVP area
+pvp_n_7-5.gat,0,0,0,0	monster	Incantation Samurai	1492,2,60000,66000
+pvp_n_7-5.gat,0,0,0,0	monster	Pharoh	1157,2,60000,66000
+pvp_n_7-5.gat,0,0,0,0	monster	Dark Lord	1272,2,60000,66000
+pvp_n_7-5.gat,0,0,0,0	monster	Baphomet	1039,2,60000,66000
+// --- First Epsilon-MVP area
+pvp_n_8-5.gat,0,0,0,0	monster	Incantation Samurai	1492,3,60000,66000
+pvp_n_8-5.gat,0,0,0,0	monster	Pharoh	1157,2,60000,66000
+pvp_n_8-5.gat,0,0,0,0	monster	Dark Lord	1272,2,60000,66000
+pvp_n_8-5.gat,0,0,0,0	monster	Baphomet	1039,2,60000,66000

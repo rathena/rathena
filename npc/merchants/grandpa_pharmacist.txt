@@ -1,0 +1,186 @@
+//===== eAthena Script ======================================= 
+//= Grandpa Pharmacist
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= trade in items for potions
+//===== Additional Comments: ================================= 
+//= Fully working
+//= 1.1 Negative input bug fixed [Lupus]
+//============================================================ 
+
+
+
+
+alberta_in.gat,16,28,4	script	Grampa Pharmacist	61,
+{
+	set @count, 0;
+
+	mes "[Grampa Pharmacist]";
+	mes "Hmmm... what do you want...?";
+	next;
+	menu "Make Potion",M_Make, "Talk",M_Talk, "Information",M_Info, "Cancel",M_End;
+	
+	M_Make:
+		if(countitem(713) < 1) goto ssL_NdBottle;
+		mes "[Grampa Pharmacist]";
+		mes "Did you prepare all the items needed? If so what potion do you want?";
+		M_Menu:
+		next;
+		menu 	"Red Potion",M_0, "Orange Potion",M_1, "Yellow Potion",M_2, "White Potion",M_3, "Blue Potion",M_4, "Green Potion",M_5,
+			"Nah, I change my mind.",M_End;
+		
+		M_0:
+			set @pot$, "red";
+			set @pot, 501;
+			set @item1, 507;
+			set @zeny, 3;
+			goto sL_Make;
+		M_1:
+			if(countitem(507)<1 || countitem(508)<1) goto ssL_NdHerbs;
+			if(Zeny < 5) goto ssL_NdZeny;
+			set @pot$, "orange";
+			set @pot, 502;
+			mes "[Grampa Pharmacist]";
+			mes "How many?";
+			next;
+			menu "As many as possible.",sM_1a, "I will set the amount.",sM_1b, "Nah, forget about it",M_Menu;
+
+			sM_1a:
+				if(countitem(507)<1 || countitem(508)<1 || countitem(713)<1 || Zeny< 5) goto ssL_End;
+				set @count, @count +1;
+				delitem 507, 1;
+				delitem 508, 1;
+				delitem 713, 1;
+				set Zeny, Zeny - 5;
+				goto sM_1a;
+
+			sM_1b:
+				input @count;
+				if(@count<1) goto ssL_NdNegative;
+				if(countitem(507)<@count || countitem(508)<@count) goto ssL_NdHerbs;
+				if(countitem(713) < @count) goto ssL_NdBottle;
+				if(Zeny<(5*@count)) goto ssL_NdZeny;
+				delitem 507, @count;
+				delitem 508, @count;
+				delitem 713, @count;
+				set Zeny, Zeny - (@zeny*@count);
+				goto ssL_End;
+
+		M_2:
+			set @pot$, "yellow";
+			set @pot, 503;
+			set @item1, 508;
+			set @zeny, 10;
+			goto sL_Make;
+		M_3:
+			set @pot$, "white";
+			set @pot, 504;
+			set @item1, 509;
+			set @zeny, 20;
+			goto sL_Make;
+		M_4:
+			set @pot$, "blue";
+			set @pot, 505;
+			set @item1, 510;
+			set @zeny, 30;
+			goto sL_Make;
+		M_5:
+			set @pot$, "green";
+			set @pot, 506;
+			set @item1, 511;
+			set @zeny, 3;
+
+		sL_Make:
+			if(countitem(@item1) < 2) goto ssL_NdHerbs;
+			if(Zeny < @zeny) goto ssL_NdZeny;
+
+			mes "[Grampa Pharmacist]";
+			mes "How many?";
+			next;
+			menu "As many as possible.",sM_0a, "I will set the amount.",sM_0b, "Nah, forget about it",M_Menu;
+
+			sM_0a:
+				if((countitem(@item1) < 2) || (countitem(713) < 1) || (Zeny < @zeny)) goto ssL_End;
+				set @count, @count +1;
+				delitem @item1, 2;
+				delitem 713, 1;
+				set Zeny, Zeny - @zeny;
+				goto sM_0a;
+				
+			sM_0b:
+				input @count;
+				if(@count<1) goto ssL_NdNegative;
+				if(countitem(@item1) < (2*@count)) goto ssL_NdHerbs;
+				if(countitem(713) < @count) goto ssL_NdBottle;
+				if(Zeny < (@zeny*@count)) goto ssL_NdZeny;
+				delitem @item1, (2*@count);
+				delitem 713, @count;
+				set Zeny, Zeny - (@zeny*@count);
+
+			ssL_End:
+				mes "[Grampa Pharmacist]";
+				mes "Here are your "+@pot$+" potions.";
+				getitem @pot, @count;
+				close;
+
+			ssL_NdBottle:
+				mes "[Grampa Pharmacist]";
+				mes "You don't have enough empty tubes to put the medicine in you idiot!!";
+				close;
+
+			ssL_NdHerbs:
+				mes "[Grampa Pharmacist]";
+				mes "You rascal! What did you expect from me? You didn't even bring all of the right herbs!";
+				mes "Get lost!";
+				close;
+
+			ssL_NdNegative:
+				mes "[Grampa Pharmacist]";
+				mes "You dirty cheater!  What did you expect from me?  Next time set positive amount of the potions!";
+				mes "Get off!";
+				close;
+
+			ssL_NdZeny:
+				mes "[Gramp Pharmacist]";
+				mes "You don't have enough zeny for potions.";
+				close;
+
+	M_Talk:
+		mes "[Grampa Pharmacist]";
+		mes "The right type of medicinal Herbs can replenish a person's HP or SP.";
+		mes "~Sigh~ I'm starting to reminisce about my youth.... a sign that I must be getting old.....";
+		next;
+		mes "[Grampa Pharmacist]";
+		mes "Anyways, a potion is merely an, 'easy to use', form of medicinal Herbs..... nothing more and nothing less.";
+		close;
+	M_Info:
+		mes "[Grampa Pharmacist]";
+		mes "~Sigh~... you young ones can be quite bothersome... Fine, I will explain to you how potions work....";
+		next;
+		mes "[Grampa Pharmacist]";
+		mes "Though the bennefits from consuming the various Herbs found around Rune-Midgard are great......";
+		mes "By refining them into potions, the effects of the Herbs are dramatically enhanced.";
+		next;
+		mes "[Grampa Pharmacist]";
+		mes "The process of refining herbs into potions is a special one that I created.  For a small fee I can make any potion you desire.";
+		next;
+		mes "[Grampa Pharmacist]";
+		mes "^FF5533Red Potion^000000 - 2 Red Herbs, 1 Empty Bottle, 2 Zeny fee.";
+		mes "^FF8000Orange Potion^000000 - 1 Red Herb, 1 Yellow Herb, 1 Empty Bottle, 5 Zeny fee.";
+		mes "^E8CF20Yellow Potion^000000 - 2 Yellow Herbs, 1 Empty Bottle, 10 Zeny fee.";
+		next;
+		mes "[Grampa Pharmacist]";
+		mes "^999999White Potion^000000 -  2 White Herbs, 1 Empty Bottle, 20 Zeny fee.";
+		mes "^3355FFBlue Potion^000000 - 2 Blue Herbs, 1 Empty Bottle, 30 Zeny fee.";
+		mes "^00B000Green Potion^000000 - 2 Green Herbs, 1 Empty Bottle, 3 Zeny fee.";
+		close;
+	M_End:
+		mes "[Grampa Pharmacist]";
+		mes "Didn't you have something to say?!";
+		close;
+}

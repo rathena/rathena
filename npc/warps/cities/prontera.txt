@@ -1,0 +1,102 @@
+//===== Athena Script ========================================
+//= Prontera Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//= Nana (1.2)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Prontera
+//===== Additional Comments: =================================
+//= No Comment!
+//============================================================
+
+//= Prontera City ============================================
+prontera.gat,107,215,0	warp	prt01	2,2,prt_in.gat,240,139
+prontera.gat,120,267,0	warp	prt02	2,2,prt_in.gat,180,97
+prontera.gat,133,183,0	warp	prt03	2,2,prt_in.gat,50,105
+prontera.gat,134,221,0	warp	prt04	1,1,prt_in.gat,131,71
+prontera.gat,156,22,0	warp	prt001	3,2,prt_fild08.gat,170,375
+prontera.gat,156,360,0	warp	prt005	4,2,prt_castle.gat,102,20
+prontera.gat,177,221,0	warp	prt05	2,2,prt_in.gat,168,128
+prontera.gat,179,184,0	warp	prt06	2,2,prt_in.gat,60,73
+prontera.gat,192,267,0	warp	prt07	2,2,prt_in.gat,178,55
+prontera.gat,204,192,0	warp	prt08	2,2,prt_in.gat,68,134
+prontera.gat,208,154,0	warp	prt09	2,2,prt_in.gat,172,29
+prontera.gat,22,203,0	warp	prt002	2,3,prt_fild05.gat,367,205
+prontera.gat,237,317,0	warp	prt004	2,2,prt_church.gat,100,60
+prontera.gat,289,203,0	warp	prt003	2,3,prt_fild06.gat,27,193
+prontera.gat,42,67,0	warp	prt10	2,2,prt_in.gat,44,29
+prontera.gat,45,346,0	warp	prt11	2,2,prt_in.gat,80,110
+prontera.gat,73,100,0	warp	prt12	1,1,prt_in.gat,208,176
+prontera.gat,74,90,0	warp	prt13	2,2,prt_in.gat,248,170
+prontera.gat,84,89,0	warp	prt14-1	1,1,prt_in.gat,282,176
+prt_in.gat,135,71,0	warp	prt04-1	1,2,prontera.gat,136,219
+prt_in.gat,168,124,0	warp	prt05-1	2,1,prontera.gat,174,218
+prt_in.gat,172,33,0	warp	prt09-1	2,1,prontera.gat,205,157
+prt_in.gat,181,55,0	warp	prt07-1	1,2,prontera.gat,192,264
+prt_in.gat,183,97,0	warp	prt02-1	1,2,prontera.gat,120,264
+prt_in.gat,208,179,0	warp	prt12-1	3,1,prontera.gat,76,102
+prt_in.gat,217,163,0	warp	prt15	1,3,prt_in.gat,236,163
+prt_in.gat,234,163,0	warp	prt15-1	1,3,prt_in.gat,215,163
+prt_in.gat,240,141,0	warp	prt01-1	3,1,prontera.gat,107,218
+prt_in.gat,248,173,0	warp	prt13-1	3,2,prontera.gat,77,93
+prt_in.gat,254,113,0	warp	prt16	3,2,prt_in.gat,256,134
+prt_in.gat,256,131,0	warp	prt16-1	2,2,prt_in.gat,254,110
+prt_in.gat,263,163,0	warp	prt17	1,3,prt_in.gat,276,163
+prt_in.gat,274,163,0	warp	prt17-1	1,3,prt_in.gat,261,163
+prt_in.gat,280,68,0	warp	w472	6,6,prontera.gat,147,287
+prt_in.gat,281,36,0	warp	w473	6,6,prontera.gat,147,287
+prt_in.gat,282,100,0	warp	w471	6,6,prontera.gat,147,287
+prt_in.gat,282,179,0	warp	prt14	3,1,prontera.gat,87,91
+prt_in.gat,285,130,0	warp	w470	6,6,prontera.gat,147,287
+prt_in.gat,37,65,0	warp	prt18	1,3,prt_in.gat,51,65
+prt_in.gat,47,29,0	warp	prt10-1	2,1,prontera.gat,46,67
+prt_in.gat,48,65,0	warp	prt18-1	1,3,prt_in.gat,34,65
+prt_in.gat,53,105,0	warp	prt03-1	1,2,prontera.gat,136,186
+prt_in.gat,60,77,0	warp	prt06-1	2,1,prontera.gat,175,188
+prt_in.gat,68,130,0	warp	prt08-1	2,1,prontera.gat,204,188
+prt_in.gat,69,65,0	warp	prt19	1,3,prt_in.gat,85,65
+prt_in.gat,70,143,0	warp	prt20	2,1,prt_in.gat,70,165
+prt_in.gat,70,162,0	warp	prt20-1	2,1,prt_in.gat,70,140
+prt_in.gat,80,113,0	warp	prt11-1	2,1,prontera.gat,48,343
+prt_in.gat,82,65,0	warp	prt19	1,3,prt_in.gat,66,65
+
+//= Prontera Church ==========================================
+prt_church.gat,100,56,0	warp	prtch001	7,1,prontera.gat,234,314
+prt_church.gat,109,81,0	warp	prtch01	1,2,prt_church.gat,172,19
+prt_church.gat,168,19,0	warp	prtch01-1	1,2,prt_church.gat,105,81
+prt_church.gat,31,19,0	warp	prtch02	1,2,prt_church.gat,94,81
+prt_church.gat,90,81,0	warp	prtch02-1	1,2,prt_church.gat,27,19
+
+
+
+//= Prontera Castle ===========================================
+prt_castle.gat,102,129,0	warp	prtca01	3,2,prt_castle.gat,102,143
+prt_castle.gat,102,140,0	warp	prtca01-1	3,2,prt_castle.gat,102,126
+prt_castle.gat,102,16,0	warp	prtca001	6,2,prontera.gat,156,356
+prt_castle.gat,102,181,0	warp	prtca002	6,2,prt_gld.gat,159,28
+prt_castle.gat,102,73,0	warp	prtca02	3,2,prt_castle.gat,102,91
+prt_castle.gat,102,88,0	warp	prtca02-1	3,2,prt_castle.gat,102,70
+prt_castle.gat,113,107,0	warp	prtca03	2,3,prt_castle.gat,134,107
+prt_castle.gat,121,29,0	warp	prtca04	1,1,prt_castle.gat,148,29
+prt_castle.gat,130,107,0	warp	prtca03-1	2,3,prt_castle.gat,110,107
+prt_castle.gat,135,153,0	warp	prtca05	1,1,prt_castle.gat,167,145
+prt_castle.gat,144,29,0	warp	prtca04-1	2,2,prt_castle.gat,117,29
+prt_castle.gat,149,113,0	warp	prtca06	1,1,prt_castle.gat,175,113
+prt_castle.gat,164,145,0	warp	prtca05-1	1,1,prt_castle.gat,132,153
+prt_castle.gat,170,138,0	warp	prtca07	3,2,prt_castle.gat,176,118
+prt_castle.gat,172,113,0	warp	prtca06-1	1,1,prt_castle.gat,146,113
+prt_castle.gat,176,121,0	warp	prtca07-1	3,2,prt_castle.gat,170,141
+prt_castle.gat,28,121,0	warp	prtca08	2,2,prt_castle.gat,40,141
+prt_castle.gat,31,113,0	warp	prtca09	1,1,prt_castle.gat,58,113
+prt_castle.gat,40,138,0	warp	prtca08-1	3,2,prt_castle.gat,28,118
+prt_castle.gat,45,145,0	warp	prtca10	1,1,prt_castle.gat,72,153
+prt_castle.gat,54,113,0	warp	prtca09-1	1,1,prt_castle.gat,27,113
+prt_castle.gat,59,29,0	warp	prtca11	2,2,prt_castle.gat,85,29
+prt_castle.gat,68,153,0	warp	prtca10-1	1,1,prt_castle.gat,42,145
+prt_castle.gat,75,107,0	warp	prtca12	2,3,prt_castle.gat,95,107
+prt_castle.gat,82,29,0	warp	prtca11-1	1,1,prt_castle.gat,56,29
+prt_castle.gat,92,107,0	warp	prtca12-1	2,3,prt_castle.gat,72,107

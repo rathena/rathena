@@ -1,0 +1,122 @@
+//Made by Veev for eAthena
+valkyrie.gat,53,54,4z	script	Clown	741,{
+
+mes "[Clown]";
+mes "Well, would you like to sing a song...?";
+mes "But I'll start the song off for you...";
+goto cmenu;
+
+	cmenu:
+	menu "I'm not here to sing.",nosing,"Alright...",alright;
+	
+		nosing:
+		mes "[Clown]";
+		mes "Really?... I see. What brings you here then?";
+		menu "I would like to become a Clown",clown,"Nothing...",nothing;
+		
+			clown:
+			mes "[Clown]";
+			mes "Hmm... Let me make sure you are clown-material...";
+			next;
+			if (sex==0) goto female;
+			if (SkillPoint != 0) goto useskpt;
+			if ((BaseLevel >= 99) && (Class == 19) && (readparam(55) >= 50)) goto highnovice;
+			if ((Class == 4001) && (readparam(55) >= 10)) goto higharcher;
+			if ((Class == 4004) && (readparam(55) >= 40)) goto turnclown;
+			if ((Class == 4004) && (readparam(55) < 40)) goto toolowha;
+			if (Class == 4020) goto alreadyclown;
+			mes "Sorry, but you can't become a clown just yet...";
+			close;
+			
+				female:
+				mes "[Clown]";
+				mes "This job is only for guys... Maybe you should talk to the Gypsy...";
+				close;
+			
+				highnovice:
+				mes "[Clown]";
+				mes "You are on the right track... But first I need to turn you into a High Novice...";
+				mes "Would you like to become a High Novice now?";
+				menu "Yes",hn_yes,"No",hn_no;
+				
+					hn_yes:
+					mes "[Clown]";
+					mes "This will only be a second...";
+					jobchange 24;// Job: Job_Novice_High
+					resetlvl(1);
+					close;
+					
+					hn_no:
+					mes "[Clown]";
+					mes "Come back later if you want to change...";
+					close;
+					
+				higharcher:
+				mes "[Clown]";
+				mes "Even closer to clown now!";
+				mes "Wanna change into a High Archer now?";
+				menu "Yes",ha_yes,"No",ha_no;
+				
+					ha_yes:
+					mes "[Clown]";
+					mes "After this step, you'll be a clown in no time!";
+					jobchange 27;// Job: Job_Archer_High
+					close;
+					
+					ha_no:
+					mes "[Clown]";
+					mes "Well... You can always come back.";
+					close;
+					
+				turnclown:
+				mes "[Clown]";
+				mes "My favorite part of this job! This is exciting!";
+				mes "I'll change you into a Clown now.";
+				menu "Alright!",tc_yes,"Not yet...",tc_no;
+				
+					tc_yes:
+					mes "[Clown]";
+					mes "I love this job!";
+					jobchange 43;// Job: Job_Clown
+					next;
+					mes "[Clown]";
+					mes "Have fun!";
+					close;
+					
+					tc_no:
+					mes "[Clown]";
+					mes "Well... That kinda ruined my day...";
+					close;
+					
+				alreadyclown:
+				mes "[Clown]";
+				mes "You are already a Clown!";
+				mes "Move out of the way and let other people become one";
+				close;
+					
+				useskpt:
+				mes "[Clown]";
+				mes "You need to use those skillpoitns up first.";
+				close;
+				
+				towlowha:
+				mes "[Clown]";
+				mes "Aww, you aren't ready yet! Please come back again when you are ready.";
+				close;	
+				
+			nothing:
+			mes "[Clown]";
+			mes "Sigh...";
+			close;				
+			
+		alright:
+		mes "[Clown]";
+		if (class != 19) goto notbard;
+		mes "Actually you know what... Maybe another time... You don't look like a singer...";
+		close;
+		
+		notbard:
+		mes "[Clown]";
+		mes "... Nice try, but you aren't a Bard... Go bother someone else.";
+		close;	
+}

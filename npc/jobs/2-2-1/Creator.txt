@@ -1,0 +1,61 @@
+//Creator Made by Evera/Lorri 1.1
+
+valkyrie.gat,53,50,6	script	Creator	122,{
+	if (readparam(12) != 0) goto Lskpt;
+	if ((readparam(11) >= 99) && (readparam(19) == 18) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
+	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
+	if ((readparam(19) == 4006) && (readparam(55) >= 40)) goto Lh2;
+	if ((readparam(19) == 4006) && (readparam(55) < 40)) goto LCem;
+	if (readparam(19) == 4019) goto Lcrazy;
+	mes "[Creator]";
+	mes "Hello";
+	mes "Sorry, no potions for sale.";
+	close;
+Lnovice:
+	mes "[Creator]";
+	mes "Hm. You seem to have extensive knowledge in chemistry. Would you like to become a creator?";
+	mes "There is a catch though, you have to go back through novice and merchant.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lh1:
+	mes "[Creator]";
+	mes "Ready to become a high merchant?";
+	menu "Yes",Lh12,"No",Lcancel;
+Lh12:
+	mes "[Creator]";
+	mes "Here, take this potion.";
+	next;
+	jobchange 29;// Job: Job_Merchant_High
+	close;
+Lh2:
+	mes "[Creator]";
+	mes "You knowledge unbounds you. Will you become a professor?";
+	menu "Yes",Lh22,"No",Lcancel;
+Lh22:
+	mes "[Creator]";
+	mes "Here, take this potion.";
+	jobchange Job_Creator; //42
+	close;
+Lcrazy:
+	mes "[Creator]";
+	mes "Hm. You look like me.";
+	close;
+Lskpt:
+	mes "[Creator]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "[Creator]";
+	mes "You're not ready to go to the next level";
+	close;	
+Lcancel:
+	mes "Bye";
+	close;
+}

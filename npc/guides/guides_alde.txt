@@ -1,0 +1,116 @@
+//===== eAthena Script ======================================= 
+//= Al De Baran Guides
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.0a
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Corrected building locations and descriptions
+//============================================================
+
+
+
+
+aldebaran.gat,139,63,4	script	Soldier	105,{
+	cutin "prt_soldier",2;
+	mes "[Al De Baran Guard]";
+	mes "Welcome to Al De Baran, the home of the lovely Kafras!";
+	next;
+	mes "[Al De Baran Guard]";
+	mes "We are here to help you find your way.  Please feel free to speak to us anytime.";
+M_Menu:
+	next;
+	menu "View Buildings",M_1, "Notice",M_2, "Cancel",M_End;
+
+	M_1:
+		mes "[Al De Baran Guard]";
+		mes "Do you want me to leave indications on the Mini-Map?";
+		next;
+		menu "No Thanks",sM_1a,"Yes Please",sM_1b;
+		
+		sM_1a:
+			set @COMPASS_CHECK,0;
+			goto L_Cont;
+
+		sM_1b:
+			set @COMPASS_CHECK,1;
+
+		L_Cont:
+		mes "[Al De Baran Guard]";
+		mes "Please choose a building to view.";
+		next;
+	sM_Menu:
+		menu 	"^FF0000Kafra Main Office^000000",sM_2a, "Armory",sM_2b, "Item Shop",sM_2c, "Pub",sM_2d,
+			"^00AAFFSorcerer Guild (Closed)^000000",sM_2e, "^DDAA00Chemical Academy^000000",sM_2f,
+			"Wipe all indications from mini-map",sM_2g, "Cancel", M_End;
+
+		sM_2a:
+			mes "[Al De Baran Guard]";
+			mes "The 'Kafra Main Office' is the place where you can redeem your special researve points.";
+			viewpoint 1,56,225,1,0xFF0000;
+			goto sL_Wipe;
+		sM_2b:
+			mes "[Al De Baran Guard]";
+			mes "Go to the 'Armory' to buy weapons and armor.";
+			viewpoint 1,72,194,2,0x0000FF;
+			goto sL_Wipe;
+		sM_2c:
+			mes "[Al De Baran Guard]";
+			mes "The 'Item Shop' has all sort of usefull tools for you to buy.";
+			viewpoint 1,197,68,3,0x00FF00;
+			goto sL_Wipe;
+		sM_2d:
+			mes "[Al De Baran Guard]";
+			mes "Stop by the 'Pub' to relax and have a drink.";
+			viewpoint 1,231,107,4,0xFF00FF;
+			goto sL_Wipe;
+		sM_2e:
+			mes "[Al De Baran Guard]";
+			mes "The 'Sorcerer Guild' is closed right now.";
+			//viewpoint 1,48,198,5,0x00AAFF;
+			goto sL_Wipe;
+		sM_2f:
+			mes "[Al De Baran Guard]";
+			mes "The ^DDAA00'Chemical Academy'^000000 is where Merchants go to become Alchemists.";
+			viewpoint 1,58,61,6,0xDDAA00;
+			goto sL_Wipe;
+		sM_2g:
+			set @COMPASS_CHECK, 2;
+
+		sL_Wipe:
+			if(@COMPASS_CHECK != 2) next;
+			if(@COMPASS_CHECK == 1) goto sM_Menu;
+			viewpoint 2,56,225,1,0xFF0000;
+			viewpoint 2,72,194,2,0x0000FF;
+			viewpoint 2,197,68,3,0x00FF00;
+			viewpoint 2,231,107,4,0xFF00FF;
+			viewpoint 2,48,198,5,0x00AAFF;
+			viewpoint 2,58,61,6,0xDDAA00;
+			if (@COMPASS_CHECK == 0) goto sM_Menu;
+			mes "[Al De Baran Guard]";
+			mes "All indications have been removed";
+			cutin "prt_soldier",255;
+			close;
+
+	M_2:
+		mes "[Al De Baran Guard]";
+		mes "We upgraded the Location Guide to the Newest Digital Style.  We hope you like this gorgeous new system.";
+		next;
+		mes "[Al De Baran Guard]";
+		mes "Don't forget to refer to the Mini-Map on the Upper-Right corner of your screen.";
+		next;
+		mes "[Al De Baran Guard]";
+		mes "If you can't see the Mini-Map, just hit ^0000ff'ctrl+tab'^000000 or Click the ^0000ff'map'^000000 button in the Basic Information Window";
+		mes "Remeber to use the ^ff0000+,-^000000 buttons to adjust the map to your liking.";
+		goto M_Menu;
+
+	M_End:
+		mes "[Al De Baran Guard]";
+		mes "Good day.";
+		cutin "prt_soldier",255;
+		close;
+}

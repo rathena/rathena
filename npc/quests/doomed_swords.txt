@@ -1,0 +1,297 @@
+//===== eAthena Script ======================================= 
+//= Doomed Swords Quest
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.1 
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= 
+//===== Additional Comments: ================================= 
+//=95% done
+//= 1.1 Fixed items count check. For all 3 swords... [Lupus]
+//============================================================ 
+
+
+
+
+
+// Executioner --------------------------------------------------------------------
+izlude_in.gat,173,88,2	script	Nain	102,
+{
+	if(DOOMED_SWORD == 1 ) goto L_1;
+
+	mes "[Nain]";
+	mes "I was once told a legend about a powerfull sword that was used only for executions.";
+	next;
+	mes "[Nain]";
+	mes "For years and years, this mighty sword was used to be-head heinous criminals, but it also took the lives of great warriors as well.";
+	mes "It is said that the overtime the government became corrupt and hence innocent lives fell victim to the sword.";
+	next;
+	mes "[Nain]";
+	mes "This caused the sword to become corrupted with an emense evil power making it almost impossible to weild.";
+	mes "Those who did try to weild it became possed with an dark aura that drove them to blood lust.";
+	next;
+	mes "[Nain]";
+	mes "This ancient civilization eventually collapsed and faded away.  The powerfull sword also vanished.";
+	mes "The sword would later be named the ^ff0000Executioner^000000.  An appropriate name considering its history.";
+	next;
+	mes "[Nain]";
+	mes "Recently there have been rumors of a Legendary Blacksmith that has the skill to re-create the lost sword.";
+	next;
+	mes "[Nain]";
+	mes "Just thinking about it sends shivers down my spine.";
+	mes "No matter how powerfull a sword it is, to think that it is possessed with thousands and thousands of angry ghosts...";
+	mes "I would rather see the Doomed sword stay lost to history.";
+	if(DOOMED_SWORD == 0 ) goto L_0;
+	close;
+
+L_0:
+	next;
+	mes"[Nain]";
+	mes "Say,.... are you really interested in this sword?";
+	next;
+	menu "Yes",M_Yes,"Not really",M_No;
+	
+	M_Yes:
+		set DOOMED_SWORD,1;
+		mes "[Nain]";
+		mes "You should speak with ^0000bbRupeto^000000 then.  He seems to know alot about the ^00aa00Legendary Blacksmith^000000.";
+		mes "You can find him inside the Pub.  With his help you may even be able to track down the Legendary Blacksmith.  Good luck.";
+		close;
+	
+	M_No:
+		mes "[Nain]";
+		mes "Oh, I see.";
+		close;
+
+L_1:
+	mes "[Nain]";
+	mes "Wow! So you're gonna try to re-create the legendary, doomed sword Executioner? You should becarefull though, that's one powerfull sword.";
+	close;
+}
+
+// Grimtooth ------------------------------------------------------------------------
+morocc.gat,281,178,8	script	Cetsu	97,
+{
+	if(DOOMED_SWORD ==2 ) goto L_1;
+
+	mes "[Cetsu]";
+	mes "It is rumored that there was once a dagger made out of the tooth of an ogre.  This made the dagger much stronger than those made out of steel.";
+	mes "It became known as the ^ff0000Grimtooth^000000.  What made the Grimtooth truly special was the fact that it was enchanted with a magic spell.";
+	next;
+	mes "[Cetsu]";
+	mes "Many have tried to re-create the Grimtooth but have faild.  Only one blacksmith, who once lived in Prontera, knows how to do this.";
+	next;
+	mes "[Cetsu]";
+	mes "Unfortunalety he left Prontera long ago and has not been seen since...";
+	if(DOOMED_SWORD ==0 ) goto L_0;
+	close;
+
+L_0:
+	next;
+	mes"[Cetsu]";
+	mes "Say,.... are you really interested in this dagger?";
+	next;
+	menu "Yes",M_Yes,"Not really",M_No;
+	
+	M_Yes:
+		set DOOMED_SWORD,2;
+		mes "[Cetsu]";
+		mes "You should speak with ^0000bbRupeto^000000 then.  He seems to know alot about the ^00aa00Legendary Blacksmith^000000.";
+		mes "You can find him inside the Pub.  With his help you may even be able to track down the Legendary Blacksmith.  Good luck.";
+		close;
+	
+	M_No:
+		mes "[Cetsu]";
+		mes "Oh, I see.";
+		close;
+
+L_1:
+	mes "[Cetsu]";
+	mes "Wow! So you're gonna try to re-create the legendary, doomed dagger Grimtooth? You should becarefull though, that's one powerfull dagger.";
+	close;
+}
+
+// Mysteltain ----------------------------------------------------------------
+prontera.gat,197,188,4	script	Veeyop	50,
+{
+	if(DOOMED_SWORD ==3 ) goto L_1;
+
+	mes "[Veeyop]";
+	mes "Have you ever heard of a doomed sword, ^ff0000Mysteltain^000000? It's named after ^0000bba legendary Young Twig^000000 that was used to murder Balder, the God of Light...";
+	mes "According to the legend, it was a weak, little twig. Other than that I know nothing more of the sword.";
+	next;
+	mes "[Veeyop]";
+	mes "Whatever the legend may be, people say there is a way to re-construct the legendary sword.";
+	mes "I've heard that there was once a Blacksmith who had the knowledge to re-create the legendary sword living in Prontera.";
+	mes "Unfortunately he's disapeared from this town.  Anywho its just heresay.";
+	if(DOOMED_SWORD ==0 ) goto L_0;
+	close;
+
+L_0:
+	next;
+	mes"[Veeyop]";
+	mes "Say,.... are you really interested in this sword?";
+	next;
+	menu "Yes",M_Yes,"Not really",M_No;
+	
+	M_Yes:
+		set DOOMED_SWORD,3;
+		mes "[Veeyop]";
+		mes "You should speak with ^0000bbRupeto^000000 then.  He seems to know alot about the ^00aa00Legendary Blacksmith^000000.";
+		mes "You can find him inside the Pub.  With his help you may even be able to track down the Legendary Blacksmith.  Good luck.";
+		close;
+	
+	M_No:
+		mes "[Veeyop]";
+		mes "Oh, I see.";
+		close;
+
+L_1:
+	mes "[Veeyop]";
+	mes "Wow! So you're gonna try to re-create the legendary, doomed sword Mysteltain? You should becarefull though, that's one powerfull sword.";
+	close;
+}
+
+// Rupeto ---------------------------------------------------------
+prt_in.gat,169,16,3	script	Rupeto	86,
+{
+	if(DOOMED_SWORD > 0) goto L_0;
+	mes "[Rupeto]";
+	mes "Hello.";
+	close;
+
+L_0:
+	mes "[Rupeto]";
+	mes "Looking for the Legendary Blacksmith? Go to the payon field just east of the town of Payon.";
+	mes "I think its payon field 8 or 9.";
+	close;
+}
+
+// Legendary Blacksmith ----------------------------------------------
+pay_fild08.gat,217,273,4	script	Legendary Blacksmith	63,
+{
+
+if(DOOMED_SWORD == 1) goto L_Executioner;
+if(DOOMED_SWORD == 2) goto L_Grimtooth;
+if(DOOMED_SWORD == 3) goto L_Mysteltain;
+
+mes "[Legendary Blacksmith]";
+mes "I wonder what's going on in ^ff0000Prontera^000000?  It's been so long since I've been there.";
+close;
+
+L_Executioner:	//1169
+	if(countitem(7017)>=2 && countitem(7024)>=10 && countitem(1008)>=3 && countitem(609)>=50 && countitem(714)>=1) goto L_GetExec;
+	mes "[Legendary Blacksmith]";
+	mes "So you're interested in making the legendary Executioner Sword heh?.....";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "It's been sometime since I've forged any weapons,... but since it is a special challenge for me to make this sword.....";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "I'll do it! I will re-create the Executioner Sword! I must warn you however, this is a very powerfull and dangerous sword.  Be carefull.";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "For the Executioner Sword I will need the following items:";
+	mes "- ^0000ff2 Executioners Mitten^000000";		//7017
+	mes "- ^0000ff10 Bloody Edge^000000";		//7024
+	mes "- ^0000ff3 Necklace of Oblivion^000000";		//1008
+	mes "- ^0000ff50 Amulet^000000";			//609
+	mes "- and ^0000ff1 Emperium^000000";		//714
+	close;
+
+	L_GetExec:
+		mes "[Legendary Blacksmith]";
+		mes "Good! You have brought me all the necessary items.  Please wait a moment while I forge the Executioner Sword.";
+		next;
+		mes "(cling-clang!~ klonk!~ klank!~ cling-clang!)";
+		next;
+		mes "[Legendary Blacksmith]";
+		mes "Phew! Once again a perfect sword! Hahaha! Here you are my friend, enjoy.";
+		getitem 1169,1;
+		set DOOMED_SWORD,0;
+		delitem 7017,2;
+		delitem 7024,10;
+		delitem 1008,3;
+		delitem 609,50;
+		delitem 714,1;
+		close;
+
+
+L_Grimtooth:	//1237
+	if(countitem(7023)>=10 && countitem(724)>=5 && countitem(7002)>=100 && countitem(7022)>=1 && countitem(714)>=1) goto L_GetGrim;
+	mes "[Legendary Blacksmith]";
+	mes "So you're interested in making the legendary Grimtooth Dagger heh?.....";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "It's been sometime since I've forged any weapons,... but since it is a special challenge for me to make this dagger.....";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "I'll do it! I will re-create the Grimtooth Dagger! I must warn you however, this is a very powerfull and dangerous dagger.  Be carefull.";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "For the Grimtooth Dagger I will need the following items:";
+	mes "- ^0000ff10 Blade Lost in Darkness^000000";		//7023
+	mes "- ^0000ff5 Cursed Ruby^000000";			//724
+	mes "- ^0000ff100 Ogre Tooth^000000";			//7002
+	mes "- ^0000ff1 Old Hilt^000000";				//7022
+	mes "- and ^0000ff1 Emperium^000000";
+	close;
+
+	L_GetGrim:
+		mes "[Legendary Blacksmith]";
+		mes "Good! You have brought me all the necessary items.  Please wait a moment while I forge the Grimtooth Dagger.";
+		next;
+		mes "(cling-clang!~ klonk!~ klank!~ cling-clang!)";
+		next;
+		mes "[Legendary Blacksmith]";
+		mes "Phew! Once again a perfect dagger! Hahaha! Here you are my friend, enjoy.";
+		getitem 1237,1;
+		set DOOMED_SWORD,0;
+		delitem 7023,10;
+		delitem 724,5;
+		delitem 7002,100;
+		delitem 7022,1;
+		delitem 714,1;
+		close;
+
+L_Mysteltain:	//1138
+	if(countitem(7021)>=1 && countitem(7019)>=1 && countitem(7020)>=1 && countitem(7018)>=1 && countitem(714)>=1) goto L_GetMyst;
+	mes "[Legendary Blacksmith]";
+	mes "So you're interested in making the legendary Mysteltain Sword heh?.....";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "It's been sometime since I've forged any weapons,... but since it is a special challenge for me to make this sword.....";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "I'll do it! I will re-create the Mysteltain Sword! I must warn you however, this is a very powerfull and dangerous sword.  Be carefull.";
+	next;
+	mes "[Legendary Blacksmith]";
+	mes "For the Mysteltain Sword I will need the following items:";
+	mes "- ^0000ff1 Foolishness of the Blind^000000";		//7021
+	mes "- ^0000ff1 Loki's Whispers^000000";			//7019
+	mes "- ^0000ff1 Mother's Nightmare^000000";			//7020
+	mes "- ^0000ff1 Young Twig^000000";			//7018
+	mes "- and ^0000ff1 Emperium^000000";
+	close;
+	
+	L_GetMyst:
+		mes "[Legendary Blacksmith]";
+		mes "Good! You have brought me all the necessary items.  Please wait a moment while I forge the Mysteltain Sword.";
+		next;
+		mes "(cling-clang!~ klonk!~ klank!~ cling-clang!)";
+		next;
+		mes "[Legendary Blacksmith]";
+		mes "Phew! Once again a perfect sword! Hahaha! Here you are my friend, enjoy.";
+		getitem 1138,1;
+		set DOOMED_SWORD,0;
+		delitem 7021,1;
+		delitem 7019,1;
+		delitem 7020,1;
+		delitem 7018,1;
+		delitem 714,1;
+		close;
+
+}

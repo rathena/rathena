@@ -1,0 +1,42 @@
+//===== eAthena Script =======================================
+//= Niflheim Temporary Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= 1.1 commented the town mobs
+//============================================================
+
+//niflheim
+//niflheim.gat,0,0,0,0	monster	Lord Of Death	1373,1,3600000,1800000,1
+//niflheim.gat,0,0,0,0	monster	Gibbet	1503,10,0,0,0
+//niflheim.gat,0,0,0,0	monster	Dullahan	1504,10,0,0,0
+//niflheim.gat,0,0,0,0	monster	Loli Ruri	1505,8,0,0,0
+//niflheim.gat,0,0,0,0	monster	Disguise	1506,15,0,0,0
+//niflheim.gat,0,0,0,0	monster	Bloody Murderer	1507,2,0,0,0
+//niflheim.gat,0,0,0,0	monster	Quve	1508,10,0,0,0
+//niflheim.gat,0,0,0,0	monster	Lude	1509,20,0,0,0
+//niflheim.gat,0,0,0,0	monster	Hylozoist	1510,8,0,0,0
+
+//nif_fild01)?
+nif_fild01.gat,0,0,0,0	monster	Gibbet	1503,10,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Dullahan	1504,10,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Loli Ruri	1505,8,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Disguise	1506,15,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Bloody Murderer	1507,2,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Quve	1508,10,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Lude	1509,20,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Hylozoist	1510,8,0,0,0
+
+//nif_fild02)?
+nif_fild02.gat,0,0,0,0	monster	Gibbet	1503,10,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Dullahan	1504,10,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Loli Ruri	1505,8,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Disguise	1506,15,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Bloody Murderer	1507,2,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Quve	1508,10,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Lude	1509,20,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Hylozoist	1510,8,0,0,0

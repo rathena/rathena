@@ -1,0 +1,16 @@
+//===== eAthena Script =======================================
+//= Lutie Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//=
+//============================================================
+
+//xmas_fild01
+xmas_fild01.gat,0,0,0,0	monster	Marin	1242,35,0,0,0
+xmas_fild01.gat,0,0,0,0	monster	Sasquatch	1243,20,0,0,0
+xmas_fild01.gat,0,0,0,0	monster	Garm	1252,1,3600000,7200000,0

@@ -1,0 +1,70 @@
+//===== eAthena Script =======================================
+//= Map Flags for GvG Arenas
+//===== By: ==================================================
+//= eAthena Dev Team
+//===== Current Version: =====================================
+//= 1.1a
+//===== Compatible With: =====================================
+//=
+//===== Description: =========================================
+//= gvg: Turns on GvG mode
+//= pvp_noparty: Disables attacking own party member
+//= nobranch: No Dead Branching allowed.
+//= nomemo: No Warp Portal Memory Point allowed.
+//= nopenalty: No Exp. penalty when player dies.
+//= nosave: No saving respawn point allowed. Use SavePoint to use the
+//=         players previous savepoint, or choose one manually.
+//= noteleport: No Teleporting allowed.  No f-wings or b-wings.
+//===== Additional Comments: =================================
+//=
+//============================================================
+
+// GvG ===================
+guild_vs1.gat	mapflag	gvg
+guild_vs2.gat	mapflag	gvg
+guild_vs3.gat	mapflag	gvg
+guild_vs4.gat	mapflag	gvg
+guild_vs5.gat	mapflag	gvg
+
+// PvP No Party =================
+guild_vs1.gat	mapflag	pvp_noparty
+guild_vs2.gat	mapflag	pvp_noparty
+guild_vs3.gat	mapflag	pvp_noparty
+guild_vs4.gat	mapflag	pvp_noparty
+guild_vs5.gat	mapflag	pvp_noparty
+
+// No Branch =====================
+// gvg flag prevents dead_branch usage as well [Lupus]
+//guild_vs1.gat	mapflag	nobranch
+//guild_vs2.gat	mapflag	nobranch
+//guild_vs3.gat	mapflag	nobranch
+//guild_vs4.gat	mapflag	nobranch
+//guild_vs5.gat	mapflag	nobranch
+
+// No Warp Memory =================
+guild_vs1.gat	mapflag	nomemo
+guild_vs2.gat	mapflag	nomemo
+guild_vs3.gat	mapflag	nomemo
+guild_vs4.gat	mapflag	nomemo
+guild_vs5.gat	mapflag	nomemo
+
+// No Penalty ===================
+guild_vs1.gat	mapflag	nopenalty
+guild_vs2.gat	mapflag	nopenalty
+guild_vs3.gat	mapflag	nopenalty
+guild_vs4.gat	mapflag	nopenalty
+guild_vs5.gat	mapflag	nopenalty
+
+// No Save =================
+guild_vs1.gat	mapflag	nosave	SavePoint
+guild_vs2.gat	mapflag	nosave	SavePoint
+guild_vs3.gat	mapflag	nosave	SavePoint
+guild_vs4.gat	mapflag	nosave	SavePoint
+guild_vs5.gat	mapflag	nosave	SavePoint
+
+// No Teleport ===================
+guild_vs1.gat	mapflag	noteleport
+guild_vs2.gat	mapflag	noteleport
+guild_vs3.gat	mapflag	noteleport
+guild_vs4.gat	mapflag	noteleport
+guild_vs5.gat	mapflag	noteleport

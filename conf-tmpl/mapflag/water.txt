@@ -1,0 +1,54 @@
+// 水の設定。
+// waterは水ありでall_waterは全て水だと判断するマップ。
+
+mjolnir_12.gat	mapflag	water
+mjolnir_02.gat	mapflag	water
+glast_01.gat	mapflag	water
+gef_fild04.gat	mapflag	water
+prt_fild02.gat	mapflag	water
+prt_fild01.gat	mapflag	water
+prt_fild00.gat	mapflag	water
+gef_fild00.gat	mapflag	water
+gef_fild07.gat	mapflag	water
+gef_fild13.gat	mapflag	water
+gef_fild09.gat	mapflag	water
+gef_fild01.gat	mapflag	water
+prt_fild05.gat	mapflag	water
+gef_fild03.gat	mapflag	water
+gef_fild10.gat	mapflag	water
+prt_fild10.gat	mapflag	water
+pay_arche.gat	mapflag	water
+moc_ruins.gat	mapflag	water
+comodo.gat	mapflag	water
+cmd_fild01.gat	mapflag	water
+cmd_fild02.gat	mapflag	water
+cmd_fild03.gat	mapflag	water
+cmd_fild04.gat	mapflag	water
+cmd_fild05.gat	mapflag	water
+moc_fild11.gat	mapflag	water
+ama_fild01.gat	mapflag	water
+
+iz_dun00.gat	mapflag	water
+iz_dun01.gat	mapflag	water
+iz_dun02.gat	mapflag	water
+//iz_dun03.gat	mapflag	all_water
+//iz_dun04.gat	mapflag	all_water
+treasure01.gat	mapflag	water
+treasure02.gat	mapflag	water
+mjo_dun01.gat	mapflag	water
+orcsdun02.gat	mapflag	water
+pay_dun01.gat	mapflag	water
+pay_dun02.gat	mapflag	water
+pay_dun03.gat	mapflag	water
+prt_sewb2.gat	mapflag	water
+prt_sewb3.gat	mapflag	water
+gl_prison1.gat	mapflag	water
+alde_dun03.gat	mapflag	water
+alde_dun04.gat	mapflag	water
+beach_dun.gat	mapflag	water
+beach_dun2.gat	mapflag	water
+beach_dun3.gat	mapflag	water
+tur_dun01.gat	mapflag	water
+gld_dun02.gat	mapflag	water
+gld_dun03.gat	mapflag	water
+gld_dun04.gat	mapflag	water

@@ -1,0 +1,62 @@
+//Paladin Made by Evera/Lorri
+//Fixed by PoW
+valkyrie.gat,53,39,4	script	Paladin	752,{
+	if (SkillPoint != 0) goto Lskpt;
+	if ((readparam(11) >= 99) && (readparam(19) == 14) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(11) >= 99) && (readparam(19) == 21) && (readparam(55) >= 50)) goto Lnovice; 
+	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
+	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
+	if ((readparam(19) == 4002) && (readparam(55) >= 40)) goto Lh2;
+	if ((readparam(19) == 4002) && (readparam(55) < 40)) goto LCem;
+	if (readparam(19) == 4015) goto Lcrazy;
+	mes "[Paladin]";
+	mes "Hello";
+	mes "God will always be there to help.";
+	close;
+Lnovice:
+	mes "[Paladin]";
+	mes "Your holy aura is strong. Will you become a paladin?";
+	mes "There is a catch though, you have to go back through novice and merchant.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lh1:
+	mes "[Paladin]";
+	mes "Ready to become a high swordsman?";
+	menu "Yes",Lh12,"No",Lcancel;
+Lh12:
+	mes "[Paladin]";
+	mes "By the holy resovoir in this blessed sword, I crown you.";
+	next;
+	jobchange 25;// Job: Job_Swordman_High
+	close;
+Lh2:
+	mes "[Paladin]";
+	mes "Your holy aura is extremely high. You are ready. Will you become a paladin?";
+	menu "Yes",Lh22,"No",Lcancel;
+Lh22:
+	mes "[Paladin]";
+	mes "By the holy resovoir in this blessed sword, I crown you.";
+	jobchange 38;// Job: Job_Paladin
+	close;
+Lcrazy:
+	mes "[Paladin]";
+	mes "God has helped you very much.";
+	close;
+Lskpt:
+	mes "[Paladin]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "[Paladin]";
+	mes "You're not ready to go to the next level";
+	close;	
+Lcancel:
+	mes "Bye";
+	close;
+}

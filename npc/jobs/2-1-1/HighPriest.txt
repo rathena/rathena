@@ -1,0 +1,61 @@
+//High Priest Made by Evera/Lorri
+valkyrie.gat,44,42,6	script	High Priest	60,{
+	if ((readparam(11) >= 99) && (readparam(19) == 8) && (readparam(55) >= 50)) goto Lnovice;
+	if ((readparam(19) == 4001) && (readparam(55) >= 10)) goto Lh1;
+	if ((readparam(19) == 4001) && (readparam(55) < 10)) goto LCem;
+	if ((readparam(19) == 4005) && (readparam(55) >= 40)) goto Lh2;
+	if ((readparam(19) == 4005) && (readparam(55) < 40)) goto LCem;
+	if (readparam(19) == 4009) goto Lcrazy;
+	if (readparam(12) != 0) goto Lskpt;
+	mes "[High Priest]";
+	mes "Hello";
+	mes "God bless you.";
+	close;
+Lnovice:
+	mes "[High Priest]";
+	mes "Hi! I'm a little different from you, have you noticed?";
+	mes "If you devote yourself entirely you can be just like me.";
+	mes "There is a catch though, you have to go back through novice and acolyte.";
+	mes "You wanna do it?";
+	menu "Yes",Lnovice2,"No",Lcancel;
+Lnovice2:
+	mes "We shall start the ceremony....";
+	next;
+	jobchange 24;// Job: Job_Novice_High
+	resetlvl(1);
+	close;
+Lh1:
+	mes "[High Priest]";
+	mes "Ready to become a high acolyte?";
+	menu "Yes",Lh12,"No",Lcancel;
+Lh12:
+	mes "[High Priest]";
+	mes "God please bestow this enlightened soul with a drip of your mighty power.";
+	next;
+	jobchange 28;// Job: Job_Acolyte_High
+	close;
+Lh2:
+	mes "[High Priest]";
+	mes "Your holy power grows stronger. Will you become a high priest?";
+	menu "Yes",Lh22,"No",Lcancel;
+Lh22:
+	mes "[High Priest]";
+	mes "God please bestow this enlightened soul with a drip of your mighty power.";
+	jobchange 32;// Job: Job_High_Priest
+	close;
+Lcrazy:
+	mes "[High Priest]";
+	mes "Nice day isn't it?";
+	close;
+Lskpt:
+	mes "[High Priest]";
+	mes "Use your skillpoints first";
+	close;
+LCem:
+	mes "[High Priest]";
+	mes "You're not ready to go to the next level";
+	close;	
+Lcancel:
+	mes "Bye";
+	close;
+}

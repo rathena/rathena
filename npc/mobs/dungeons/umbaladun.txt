@@ -1,0 +1,25 @@
+//===== eAthena Script =======================================
+//= Umbala Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//=
+//============================================================
+
+
+//(um_dun01.gat)?
+um_dun01.gat,0,0,0,0	monster	Stainer	1174,35,0,0,0
+um_dun01.gat,0,0,0,0	monster	Dustiness	1114,15,0,0,0
+um_dun01.gat,0,0,0,0	monster	Wooden Fighter	1499,30,0,0,0
+um_dun01.gat,0,0,0,0	monster	Stone Shooter	1495,20,0,0,0 
+
+//(um_dun02.gat)?
+um_dun02.gat,0,0,0,0	monster	Wooden Fighter	1499,35,0,0,0
+um_dun02.gat,0,0,0,0	monster	Wooden Shooter	1498,25,0,0,0
+um_dun02.gat,0,0,0,0	monster	Dryad	1493,10,0,0,0
+um_dun02.gat,0,0,0,0	monster	Wooden Golem	1497,25,0,0,0
+um_dun02.gat,0,0,0,0	monster	Stone Shooter	1495,25,0,0,0

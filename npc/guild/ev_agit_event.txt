@@ -1,0 +1,41 @@
+//===== eAthena Script =======================================
+//= War of Emperium - WoE Auto-Start
+//===== By: ==================================================
+//= kalen (1.0)
+//= 1.1 by Akaru and ho|yAnge|
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= eAthena 0.1+; RO Episode 4+
+//===== Description: =========================================
+//= Auto Start for War of Emperium
+//=============================================
+//= gettime(3): Gets hour (24 hour time)
+//= gettime(4): Use it if you only want to have WoE start on 
+//= certain days.
+//= 1=Monday, 2=Tuesday, 3=Wednesday, 4=Thursday, etc.
+//===== Additional Comments: =================================
+//= v1.1a changed OnInit to OnAgitInit.[kobra_k88]
+//= v1.2 added gettime checks. removed $AgitStarted var.[kobra_k88]
+//============================================================
+
+// Auto Start Agit NPC
+- script Agit_Event -1,{
+	end;
+
+OnAgitInit:
+	if(gettime(3) >= 21 || gettime(3) < 11) goto L_Stop;
+
+OnClock1100:
+//	if(gettime(4)!=1 || gettime(4)!=3 || gettime(4)!=6) end;
+	Announce "The War Of Emperium has begun!",8;
+	AgitStart;
+	Break;
+
+OnClock2100:
+L_Stop:
+//	if(gettime(4)!=1 || gettime(4)!=3 || gettime(4)!=6) end;
+	Announce "The War Of Emperium is over!",8;
+	AgitEnd;
+	Break;
+}

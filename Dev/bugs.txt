@@ -1,0 +1,51 @@
+Problem:	Adding the new guild skills causes it to crash?
+Assigned:	N/A
+Progess:	0%
+
+Problem:	2-2-1 classes are regarded as Novicies by the game server. NPCs aren't taking them as thier jobs but if you the the NPC to do something for a novice class it works with the 2-2-1 like renters. Also if some one becomes high novice, if they use jobra they can become first jobs like a swordsman.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Stats nor skills don't downgrade when your level gets reverted due to exp loss.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	You can hit yourself with your own spider web.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Pre skill requirements for new skills are wrong it makes you use 49 skills points before you can get the newer skills.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Monster hp view only shows but does not go down with a hit.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Monsters always freeze, when hit they don't move but 2 mins later they move.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Mobs don't attack
+Assigned:	N/A
+Progess:	0%
+
+Problem:	When u spawn ~300 mobs (and more or less) then do @killmonster then some mobs freeze on the screen (have no names, don't move, etc)
+Assigned:	N/A
+Progess:	0%
+
+Problem:	With 1025 client, some NPC sprites look different (i.e. Black Jack's NPC sprite)
+Assigned:	N/A
+Progess:	0%
+
+Problem:	On any crash - servers don't free their ports. It doesn't let reload the same servers faster.
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Thiefs can steal ZENY / items from TREASURE chests!!baaaah!! and Guardians! 
+Assigned:	N/A
+Progess:	0%
+
+Problem:	Joker card 4139 lets anyone to steal money / zeny. Just like he's a thief. It shoul;d be revised - success rates lowered and "steal item" disabled
+Assigned:	N/A
+Progess:	0%

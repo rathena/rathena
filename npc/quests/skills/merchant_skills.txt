@@ -1,0 +1,308 @@
+//===== eAthena Script =======================================
+//= Merchant Skills Quests
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.1a
+//===== Compatible With: =====================================
+//= eAthena 7.15 +
+//===== Description: =========================================
+//= <Description> 
+//===== Additional Comments: =================================
+//= Fully working
+//= v1.1 Bug fixes
+//= v1.a Now using functions found in "Global_Functions.txt"
+//= for class checks.[kobra_k88]
+//============================================================
+
+
+
+
+//--------------------------------------- Necko: Crazy Uproar--------------------------------\\
+alberta.gat,89,96,5	script	Necko	139,0,4,
+{
+	mes "[!?]";
+	mes "Muahahahahhhahahahahhahah!!";
+	mes "Pukakakakakkakakakakakakaka!!";
+	close;
+}
+
+alberta.gat,83,96,5	script	Necko	98,
+{
+	mes "[Necko]";
+	if (callfunc("Is_Merc_Class")) goto L_Start;
+
+L_Other:
+	mes "Necko's store is closed right now.  Come back later..... Hehe....";
+	close;
+
+L_Start:
+	if (getskilllv(155)>0) goto L_GotSkill;
+	if (CRAZYROAR == 1) goto L_GetSkill;
+	mes "Oh! Did you come here because you were intrigued by my boisterous voice? My voice is quite loud, isn't it?";
+	mes "Afterall you did hear it from a far off distance.";
+	emotion 1;
+	next;
+	mes "[Necko]";
+	mes "I'll let you in on something....... My voice is more than just loud..... it's actually quite unique......";
+	next;
+	mes "[Necko]";
+	if(Class==Job_Merchant && JobLevel < 15) goto L_JobLvl;
+	mes "You see, I know a skill that lets me shout in a way that actually helps me.... It is the ^3355FFCrazy Uproar^000000 skill!!!";
+	emotion 5;
+	next;
+	mes "[Necko]";
+	mes "Crazy Uproar uses your loud voice to boost your battle spirit!";
+	mes "The skill requires ^FF55338 sp^000000 to use and inturn you will recieve an additional ^3355FF4 STR for 5 min^000000!!";
+	next;
+	mes "[Necko]";
+	mes "This skill is very usefull.  To learn it you must learn the essentials of sound.  There was a singer in Payon that taught sound theory.......";
+	next;
+	mes "[Necko]";
+	mes "Unfortunately that person passed away so you can no longer learn those essentials..............";
+	mes "Aww.... you look disappointed.... Do you really want to learn Crazy Uproar??";
+	next;
+	mes "[Necko]";
+	mes "Hmm..... I will teach you then, that is, if you trully wish to learn.  You will have to train your vocal cords.";
+	mes "You will also need to gather these items:";
+	next;
+	mes "[Necko]";
+	mes "- ^3355FF7 Pearls,";
+	mes "- 1Banana juice,";
+	mes "- 50 Mushroom spores^000000.";
+	next;
+	mes "[Necko]";
+	mes "Come back when you are ready! I think I shall do a little vocal training myself........";
+	mes "Bbooowuuuuuuuuuuuuuuuuuuuuuuuuuh!!";
+	set CRAZYROAR, 1;
+	close;
+
+	L_JobLvl:
+		mes "Once you've reached a ^3355FFjob level of 15^000000 come back and see me.  I'll tell you all about the secrect to my voice.....";
+		next;
+		mes "[Necko]";
+		mes "Uahahahahahahhahahahahahaha!";
+		mes "Kyukwakakakakkakakakakakkakaka!";
+		close;
+
+L_GetSkill:
+	if ((countitem(722)<7) || (countitem(532)<1) || (countitem(921)<50)) goto L_Items;
+	mes "Oh You've gathered the items! Very good, very good.  Now it's time to start your training.....";
+	next;
+	mes "[Necko]";
+	mes "Repeat after me: Fa fa fa fa fa.... So so so so so..... La la la la la.... Mi mi mi mi mi mi......";
+	next;
+	mes "~several hours later~";
+	next;
+	mes "[Necko]";
+	mes "Raaaaaawwwwrrrrrrrrrrr!....... Ha ha!! Execellent.  Your voice is now finely tuned for ^3355FFCrazy Uproar^000000.  Good job.";
+	delitem 722,7;
+	delitem 532,1;
+	delitem 921,50;
+	skill 155,1,0;
+	set CRAZYROAR, 0;
+	emotion 21;
+	close;
+
+	L_Items:
+	 	mes "You need to get these items for Crazy Uproar:";
+		mes "- ^3355FF7 Pearls,";
+		mes "- 1Banana juice,";
+		mes "- 50 Mushroom spores^000000.";
+		close;
+
+L_GotSkill:
+	mes "Hello again.  I can tell by the sound of your mighty voice that you are becoming very good at Crazy Uproar.";
+	close;
+}
+
+
+//----------------------------------------- Charlron: Change cart ---------------------------------\\
+alberta.gat,119,221,6	script	Charlron	107,
+{
+	mes "[Charlron]";
+	if (callfunc("Is_Merc_Class")) goto L_Start;
+L_Other:
+	mes "I am a merchant that deals in many things.  My name is Charlron.  If you ever find anything interesting, come back and try to negotiate a deal with me.";
+	close;
+L_Start:
+	if (getskilllv(154)>0) goto L_GotSkill;
+	if (CHANGECART == 1) goto L_GetSkill;
+	mes "Welcome young one.  Is selling fun for you? I am the merchant Charlron.";
+	next;
+	mes "[Charlron]";
+	mes "Aren't you tired of your old, and plain looking cart? Well I can help.";
+	next;
+	mes "[Charlon]";
+	mes "I have been doing some research on cart design recently and have come up with some new and interesting designs for the cart.";
+	next;
+	mes "[Charlon]";
+	mes "I can change the way your cart looks for you.  Of course some conditions need to be met......";
+	next;
+	mes "[Charlron]";
+	if (Class==Job_Merchant && JobLevel < 30) goto L_JobLvl;
+	mes "First you will need to bring me these items:";
+	mes "^3355FF50 Trunks,";
+	mes "20 Animal Skin,";
+	mes "10 Iron^000000.";
+	set CHANGECART, 1;
+	close;
+
+	L_JobLvl:
+		mes "I'm a pretty famous merchant, so I don't really do business with beginners but..........";
+		mes "Once you've reached ^3355FFjob level 30^000000 I may consider doing business with you.";
+		close;
+
+L_GetSkill:
+	if ((countitem(1019)<50) || (countitem(998)<10) || (countitem(919)<20)) goto L_Items;
+	mes "Oh good, you have all of the items.  Well here you are..... Hmm?... Oh these are the design sheets for your cart.";
+	mes "Now that you have the proper materials, just follow these guides to make your cart look spectactular.";
+	//delitem 1019,50;
+	//delitem 998,10;
+	//delitem 919,20;
+	skill 154,1,0;
+	set CHANGECART, 0;
+	mes "[Charlron]";
+	mes "Good luck, see you around";
+	close;
+
+	L_Items:
+		mes "Come back when you've brought me these items:";
+		mes "^3355FF50 Trunks,";
+		mes "20 Animal Skin,";
+		mes "10 Iron^000000.";
+		close;
+L_GotSkill:
+	mes "Heh heh... It's nice to see fancy looking carts like yours on the streets of town.  Well back to the drawing board....";
+	close;
+
+}
+
+
+//-------------------------====-------- Gershuan: Cart Revolution ---------------------------------\\
+alberta.gat,232,106,6	script	Gershaun	57,
+{
+	if (callfunc("Is_Merc_Class")) goto L_Start;
+
+L_Other:
+	mes "[Gershaun]";
+	mes "If it doesn't work, make it work!";
+	mes "If it doesn't work, make it work!";
+	mes "If it doesn't work, make it work!";
+	close;
+
+L_Start:
+	if (getskilllv(153)>0) goto L_GotSkill;
+	if (CARTREVO == 1) goto L_GetSkill;
+	mes "[Gershaun]";
+	mes "Hmm... a young merchant.  You must use carts too right? Since to have to do all of that vending.....  But is that all you use your cart for?";
+	emotion 20;
+	next;
+	mes "[Gershaun]";
+	mes "I researched some ways of using the cart differently.  One way involved cooking ramen and another involved jump-roping (don't ask).";
+	mes "Still none of my new ideas were satisfactory.";
+	next;
+	menu "I know what you mean.",M_0, "......???",M_1;
+
+	M_0:
+		mes "[Gershuan]";
+		mes "You KNOW what I MEAN!! HOW the HECK would YOU KNOW what I MEAN????";
+		emotion 23;
+		close;
+	M_1:
+		mes "[Gershuan]";
+		mes "In despair, I wandered through the fields with my cart.  Day after day I did this.... I was in a daze....";
+		next;
+		mes "[Gershuan]";
+		mes "Then I crossed paths with a very strong monster! I knew immediately that my life was in danger!";
+		mes "I thought to myself, 'Why me! A weaponless, amorless merchant!?'";
+		emotion 0;
+		next;
+		mes "[Gershuan]";
+		mes "I was scared to death... hoping that this would not be the end of me.  With what strength I had left, I tried a desperation move.....";
+		emotion 19;
+		next;
+		mes "[Gershuan]";
+		mes "I used my cart to attack the monster!!";
+		emotion 0;
+		next;
+		mes "[Gershuan]";
+		mes "Just like that the monster was defeated!! Finally I had found another exellent use for the cart! A WEAPON!!!";
+		next;
+		mes "[Gershuan]";
+		mes "I called my new found discovery ^3355FF'Cart Revolution'^000000!";
+		mes "By using ^FF553312 sp^000000 you can spin your cart around your body doing major damage to an enemy!";
+		emotion 5;
+		next;
+		mes "[Gershuan]";
+		mes "The heavier your cart is, the more damage it will do.  Would you like to learn this skill?";
+		next;
+		menu "Yes!!",sM_0, "Actually I want to learn some sushi skills...",sM_1;
+
+		sM_0:
+			mes "[Gershuan]";
+			if (Class==Job_Merchant && JobLevel < 35) goto ssL_LowLvl;
+			mes "Ok! I will give you the special training for Cart Revolution.  The first thing you will have to do is bring me these items:";
+			mes "^3355FF30 Sticky Mucus,";
+			mes "20 Fly wings,";
+			mes "15 Iron,";
+			mes "5 Tentacles,";
+			mes "2 Grape Juice^000000.";
+			next;
+			mes "[Gershuan]";
+			mes "Come back when you have all of these items.  Good luck.";
+			set CARTREVO, 1;
+			close;
+
+			ssL_LowLvl:
+				mes "[Gershuan]";
+				mes "Ok! I will give you the special training for Cart Revolution.";
+				mes "But first you will have to get yourself to a ^3355FFjob level of 35^000000! After you've done that, then we can talk.";
+				close;
+
+		sM_1:
+			mes "[Sushi King Gershuan]";
+			mes "Stupid!! You're waaay to young to even try your hand at sushi!!";
+			emotion 6;
+			close;
+
+L_GetSkill:
+	if ((countitem(533)<2) || (countitem(998)<15) || (countitem(938)<30) || (countitem(601)<20) || (countitem(962)<5)) goto sM_0;
+	mes "[Gershaun]";
+	mes "It's Good to see you again.  I'm glad you were able to get all of the items.  Take a minute to prepare, for your training is about to take place....";
+	next;
+	mes "[Gershuan]";
+	mes "First make sure your feet are shoulder width apart.  Balance is key! Now get into a good crouch... grasp the handles of the cart firmly but not too tight...";
+	next;
+	mes "[Gershuan]";
+	mes "NOW SWING!!!";
+	next;
+	mes "[Gershuan]";
+	mes "Eh....... that was terrible.... Okay, lets try again.....";
+	emotion 4;
+	next;
+	mes "~many hours later~";
+	next;
+	mes "[Gershuan]";
+	mes "YES!!! FINALLY! I could REALLY FEEL the power in that swing!";
+	mes "Give yourself a good pat on the back becuase you have just mastered Cart Revolution!";
+	emotion 21;
+	next;
+	delitem 533,2;
+	delitem 998,15;
+	delitem 938,30;
+	delitem 601,20;
+	delitem 962,5;
+	skill 153,1,0;
+	set CARTREVO, 0;
+	mes "[Gershuan]";
+	mes "Take care of yourself and remember to fill that cart up so that it can do some major damage.";
+	emotion 29;
+	close;
+
+L_GotSkill:
+	mes "[Gershaun]";
+	mes "So how do you like cart revolution? Remeber, the ^3355FFheavier^000000 the cart, the ^3355FFgreater^000000 the damge.";
+	close;
+
+}
