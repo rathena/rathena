@@ -670,8 +670,7 @@ aldeba_in.gat,156,179,4	script	Master	61,{
 }
 
 // RS125 ------------------------------------------------------------------------
-aldeba_in.gat,234,241,4	script	RS125	48,
-{
+aldeba_in.gat,234,241,4	script	RS125	48,{
 	mes "[RS125]";
 	mes "Even if my first name is not human, and my manner of speech is not very eloquent, please don't be afraid of me.";
 	mes "I'm actually a warm hearted person.";
