@@ -153,6 +153,29 @@ int GM_num = 0;
 
 int console = 0;
 
+char prev_query[65535];
+
+//----------------------------------------------
+//SQL Commands ( Original by Clownisius ) [Edit: Wizputer]
+//----------------------------------------------
+
+void sql_query(char* query,char function[32]) {
+	if(mysql_query(&mysql_handle, query)){
+		printf("---------- SQL error report ----------\n");
+		printf("MySQL Server Error: %s\n", mysql_error(&mysql_handle));
+		printf("Query: %s\n", query);
+		printf("In function: %s \n", function);
+		printf("\nPrevious query: %s\n", prev_query);
+//		if (strcmp(mysql_error(&mysql_handle),"CR_COMMANDS_OUT_OF_SYNC") !=0) printf(" - =  Shutting down Char Server  = - \n\n");
+		printf("-------- End SQL Error Report --------\n");
+//		printf("Uncontrolled param: %s",&mysql_handle);
+//		if (strcmp(mysql_error(&mysql_handle),"CR_COMMANDS_OUT_OF_SYNC") !=0) exit(1);
+	}
+	
+	strcpy(prev_query,query);
+
+}
+
 //-----------------------------------------------------
 // Function to suppress control characters in a string.
 //-----------------------------------------------------
@@ -209,136 +232,92 @@ void read_gm_account(void) {
 
 //=====================================================================================================
 int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
-	int i=0,party_exist,guild_exist;
+	int i=0;
 	int eqcount=1;
-	int noteqcount=1;
 	char temp_str[32];
 
 	struct itemtemp mapitem;
 	if (char_id!=p->char_id) return 0;
 
 	save_flag = p->char_id;
+	
+	#ifdef DEBUG
 	printf("(\033[1;32m%d\033[0m) %s \trequest save char data - ",char_id,char_dat[0].name);
-
-
-
-//for(testcount=1;testcount<50;testcount++){//---------------------------test count--------------------
-//	printf("test count : %d\n", testcount);
-//	eqcount=1;
-//	noteqcount=1;
-//	dbeqcount=1;
-//	dbnoteqcount=1;
-//-----------------------------------------------------------------------------------------------------
+	#endif
 
 //=========================================map  inventory data > memory ===============================
 	//map inventory data
 	for(i=0;i<MAX_INVENTORY;i++){
 		if(p->inventory[i].nameid>0){
-			if(itemdb_isequip(p->inventory[i].nameid)==1){
-				mapitem.equip[eqcount].flag=0;
-				mapitem.equip[eqcount].id = p->inventory[i].id;
-				mapitem.equip[eqcount].nameid=p->inventory[i].nameid;
-				mapitem.equip[eqcount].amount = p->inventory[i].amount;
-				mapitem.equip[eqcount].equip = p->inventory[i].equip;
-				mapitem.equip[eqcount].identify = p->inventory[i].identify;
-				mapitem.equip[eqcount].refine = p->inventory[i].refine;
-				mapitem.equip[eqcount].attribute = p->inventory[i].attribute;
-				mapitem.equip[eqcount].card[0] = p->inventory[i].card[0];
-				mapitem.equip[eqcount].card[1] = p->inventory[i].card[1];
-				mapitem.equip[eqcount].card[2] = p->inventory[i].card[2];
-				mapitem.equip[eqcount].card[3] = p->inventory[i].card[3];
-				eqcount++;
-			}
-			else if(itemdb_isequip(p->inventory[i].nameid)==0){
-				mapitem.notequip[noteqcount].flag=0;
-				mapitem.notequip[noteqcount].id = p->inventory[i].id;
-				mapitem.notequip[noteqcount].nameid=p->inventory[i].nameid;
-				mapitem.notequip[noteqcount].amount = p->inventory[i].amount;
-				mapitem.notequip[noteqcount].equip = p->inventory[i].equip;
-				mapitem.notequip[noteqcount].identify = p->inventory[i].identify;
-				mapitem.notequip[noteqcount].refine = p->inventory[i].refine;
-				mapitem.notequip[noteqcount].attribute = p->inventory[i].attribute;
-				mapitem.notequip[noteqcount].card[0] = p->inventory[i].card[0];
-				mapitem.notequip[noteqcount].card[1] = p->inventory[i].card[1];
-				mapitem.notequip[noteqcount].card[2] = p->inventory[i].card[2];
-				mapitem.notequip[noteqcount].card[3] = p->inventory[i].card[3];
-				noteqcount++;
-			}
+			mapitem.equip[eqcount].flag=0;
+			mapitem.equip[eqcount].id = p->inventory[i].id;
+			mapitem.equip[eqcount].nameid=p->inventory[i].nameid;
+			mapitem.equip[eqcount].amount = p->inventory[i].amount;
+			mapitem.equip[eqcount].equip = p->inventory[i].equip;
+			mapitem.equip[eqcount].identify = p->inventory[i].identify;
+			mapitem.equip[eqcount].refine = p->inventory[i].refine;
+			mapitem.equip[eqcount].attribute = p->inventory[i].attribute;
+			mapitem.equip[eqcount].card[0] = p->inventory[i].card[0];
+			mapitem.equip[eqcount].card[1] = p->inventory[i].card[1];
+			mapitem.equip[eqcount].card[2] = p->inventory[i].card[2];
+			mapitem.equip[eqcount].card[3] = p->inventory[i].card[3];
+			eqcount++;
 		}
 	}
-	//printf("- Save item data to MySQL!\n");
-	memitemdata_to_sql(mapitem, eqcount, noteqcount, p->char_id,TABLE_INVENTORY);
-
+	
+	memitemdata_to_sql2(mapitem, eqcount, p->char_id,TABLE_INVENTORY);
+	
+    #ifdef DEBUG
+	printf("Char [%s] - Save item data to SQL!\n",p->name);
+	#endif
+	
 //=========================================map  cart data > memory ====================================
 	eqcount=1;
-	noteqcount=1;
 
 	//map cart data
 	for(i=0;i<MAX_CART;i++){
 		if(p->cart[i].nameid>0){
-			if(itemdb_isequip(p->cart[i].nameid)==1){
-				mapitem.equip[eqcount].flag=0;
-				mapitem.equip[eqcount].id = p->cart[i].id;
-				mapitem.equip[eqcount].nameid=p->cart[i].nameid;
-				mapitem.equip[eqcount].amount = p->cart[i].amount;
-				mapitem.equip[eqcount].equip = p->cart[i].equip;
-				mapitem.equip[eqcount].identify = p->cart[i].identify;
-				mapitem.equip[eqcount].refine = p->cart[i].refine;
-				mapitem.equip[eqcount].attribute = p->cart[i].attribute;
-				mapitem.equip[eqcount].card[0] = p->cart[i].card[0];
-				mapitem.equip[eqcount].card[1] = p->cart[i].card[1];
-				mapitem.equip[eqcount].card[2] = p->cart[i].card[2];
-				mapitem.equip[eqcount].card[3] = p->cart[i].card[3];
-				eqcount++;
-			}
-			else if(itemdb_isequip(p->cart[i].nameid)==0){
-				mapitem.notequip[noteqcount].flag=0;
-				mapitem.notequip[noteqcount].id = p->cart[i].id;
-				mapitem.notequip[noteqcount].nameid=p->cart[i].nameid;
-				mapitem.notequip[noteqcount].amount = p->cart[i].amount;
-				mapitem.notequip[noteqcount].equip = p->cart[i].equip;
-				mapitem.notequip[noteqcount].identify = p->cart[i].identify;
-				mapitem.notequip[noteqcount].refine = p->cart[i].refine;
-				mapitem.notequip[noteqcount].attribute = p->cart[i].attribute;
-				mapitem.notequip[noteqcount].card[0] = p->cart[i].card[0];
-				mapitem.notequip[noteqcount].card[1] = p->cart[i].card[1];
-				mapitem.notequip[noteqcount].card[2] = p->cart[i].card[2];
-				mapitem.notequip[noteqcount].card[3] = p->cart[i].card[3];
-				noteqcount++;
-			}
+			mapitem.equip[eqcount].flag=0;
+			mapitem.equip[eqcount].id = p->cart[i].id;
+			mapitem.equip[eqcount].nameid=p->cart[i].nameid;
+			mapitem.equip[eqcount].amount = p->cart[i].amount;
+			mapitem.equip[eqcount].equip = p->cart[i].equip;
+			mapitem.equip[eqcount].identify = p->cart[i].identify;
+			mapitem.equip[eqcount].refine = p->cart[i].refine;
+			mapitem.equip[eqcount].attribute = p->cart[i].attribute;
+			mapitem.equip[eqcount].card[0] = p->cart[i].card[0];
+			mapitem.equip[eqcount].card[1] = p->cart[i].card[1];
+			mapitem.equip[eqcount].card[2] = p->cart[i].card[2];
+			mapitem.equip[eqcount].card[3] = p->cart[i].card[3];
+			eqcount++;
 		}
 	}
 
-	//printf("- Save cart data to MySQL!\n");
-	memitemdata_to_sql(mapitem, eqcount, noteqcount, p->char_id,TABLE_CART);
+	memitemdata_to_sql2(mapitem, eqcount, p->char_id,TABLE_CART);
+	
+	#ifdef DEBUG
+    printf("Char [%s] - Save cart data to SQL!\n",p->name);
+    #endif
 
-//=====================================================================================================
-
-//}//---------------------------test count------------------------------
 	//check party_exist
-	party_exist=0;
 	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `party_id` = '%d'",party_db, p->party_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	sql_row = mysql_fetch_row(sql_res);
-	if (sql_row) party_exist = atoi(sql_row[0]);
+	sql_query(tmp_sql,"mmo_char_tosql");
+	
+	if((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) 
+	    if(!atoi(sql_row[0]))
+	        p->party_id=0;
+	        
 	mysql_free_result(sql_res);
 
 	//check guild_exist
-	guild_exist=0;
 	sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `guild_id` = '%d'",guild_db, p->guild_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	sql_row = mysql_fetch_row(sql_res);
-	if (sql_row) guild_exist = atoi(sql_row[0]);
+	sql_query(tmp_sql,"mmo_char_tosql");
+	
+	if((sql_res = mysql_store_result(&mysql_handle)) && (sql_row = mysql_fetch_row(sql_res))) 
+	    if(!atoi(sql_row[0]))
+	        p->guild_id=0;
+	        
 	mysql_free_result(sql_res);
-
-	if (guild_exist==0) p->guild_id=0;
-	if (party_exist==0) p->party_id=0;
 
 	//sql query
 	//`char`( `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`, //9
@@ -366,71 +345,126 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		p->save_point.map, p->save_point.x, p->save_point.y, p->partner_id, p->account_id, p->char_id
 	);
 
-	if(mysql_query(&mysql_handle, tmp_sql)) {
-			printf("DB server Error (update `char`)- %s\n", mysql_error(&mysql_handle));
-	}
-
-	//printf("- Save memo data to MySQL!\n");
-	//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",memo_db, p->char_id);
-	if(mysql_query(&mysql_handle, tmp_sql)) {
-			printf("DB server Error (delete `memo`)- %s\n", mysql_error(&mysql_handle));
-	}
-
-	//insert here.
+	sql_query(tmp_sql,"mmo_char_tosql");
+	
+	#ifdef DEBUG
+	printf("Char [%s] - Saved Char data to SQL!\n",p->name);
+	#endif
+	
+	sprintf(tmp_sql,"REPLACE INTO `%s`(`char_id`,`map`,`x`,`y`) VALUES ",memo_db);
 	for(i=0;i<10;i++){
-		if(p->memo_point[i].map[0]){
-			sprintf(tmp_sql,"INSERT INTO `%s`(`char_id`,`map`,`x`,`y`) VALUES ('%d', '%s', '%d', '%d')",
-				memo_db, char_id, p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
-			if(mysql_query(&mysql_handle, tmp_sql))
-				printf("DB server Error (insert `memo`)- %s\n", mysql_error(&mysql_handle));
-		}
+	    if(i)
+ 	        sprintf(tmp_sql,"%s,",tmp_sql);
+ 	        
+		if(p->memo_point[i].map[0])
+			sprintf(tmp_sql,"%s('%d', '%s', '%d', '%d')",tmp_sql,
+				char_id, p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
 	}
+	
+	sql_query(tmp_sql,"mmo_char_tosql");
+	
+	#ifdef DEBUG
+	printf("Char [%s] - Saved memo data to SQL!\n",p->name);
+	#endif
 
-	//printf("- Save skill data to MySQL!\n");
-	//`skill` (`char_id`, `id`, `lv`)
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",skill_db, p->char_id);
-	if(mysql_query(&mysql_handle, tmp_sql)) {
-			printf("DB server Error (delete `skill`)- %s\n", mysql_error(&mysql_handle));
-	}
-	//printf("- Insert skill \n");
-	//insert here.
+	sprintf(tmp_sql,"REPLACE INTO `%s`(`char_id`, `id`, `lv`) VALUES ",skill_db);
 	for(i=0;i<MAX_SKILL;i++){
 		if(p->skill[i].id){
 			if (p->skill[i].id && p->skill[i].flag!=1) {
-				sprintf(tmp_sql,"INSERT delayed INTO `%s`(`char_id`, `id`, `lv`) VALUES ('%d', '%d','%d')",
-					skill_db, char_id, p->skill[i].id, (p->skill[i].flag==0)?p->skill[i].lv:p->skill[i].flag-2);
-				if(mysql_query(&mysql_handle, tmp_sql)) {
-					printf("DB server Error (insert `skill`)- %s\n", mysql_error(&mysql_handle));
-				}
+			    if(i)
+ 	               sprintf(tmp_sql,"%s,",tmp_sql);
+ 	               
+				sprintf(tmp_sql,"%s('%d', '%d','%d')",tmp_sql,
+					char_id, p->skill[i].id, (p->skill[i].flag==0)?p->skill[i].lv:p->skill[i].flag-2);
 			}
 		}
 	}
+	
+	sql_query(tmp_sql,"mmo_char_tosql");
+	
+	#ifdef DEBUG
+	printf("Char [%s] - Save skill data to SQL!\n",p->name);
+	#endif
 
-
-	//printf("- Save global_reg_value data to MySQL!\n");
-	//`global_reg_value` (`char_id`, `str`, `value`)
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, p->char_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-			printf("DB server Error (delete `global_reg_value`)- %s\n", mysql_error(&mysql_handle));
-	}
-
-	//insert here.
+	sprintf(tmp_sql,"REPLACE INTO `%s`(`char_id`, `str`, `value`) VALUES ",reg_db);
 	for(i=0;i<p->global_reg_num;i++){
 		if (p->global_reg[i].str) {
 			if(p->global_reg[i].value !=0){
-					sprintf(tmp_sql,"INSERT INTO `%s` (`char_id`, `str`, `value`) VALUES ('%d', '%s','%d')",
-					         reg_db, char_id, jstrescapecpy(temp_str,(unsigned char*)p->global_reg[i].str), p->global_reg[i].value);
-					if(mysql_query(&mysql_handle, tmp_sql)) {
-						printf("DB server Error (insert `global_reg_value`)- %s\n", mysql_error(&mysql_handle));
-					}
+			    if(i)
+ 	               sprintf(tmp_sql,"%s,",tmp_sql);
+                
+                sprintf(tmp_sql,"%s('%d', '%s','%d')",tmp_sql,
+				        char_id, jstrescapecpy(temp_str,(unsigned char*)p->global_reg[i].str), p->global_reg[i].value);
 			}
 		}
 	}
-	printf("saving char is done.\n");
+	
+	sql_query(tmp_sql,"mmo_char_tosql");
+	
+	#ifdef DEBUG
+	printf("Char [%s] - Save global reg data to SQL!\n",p->name);
+	printf("Char [%s] - Saving char is done.\n",p->name);
+	#endif
+	
 	save_flag = 0;
 
 	return 0;
+}
+
+int memitemdata_to_sql2(struct itemtemp mapitem, int eqcount, int char_id, int tableswitch){
+	//equ
+	int i;
+	char tablename[16];
+	char selectoption[16];
+
+	switch (tableswitch){
+	case TABLE_INVENTORY:
+		sprintf(tablename,"%s",inventory_db);
+		sprintf(selectoption,"char_id");
+		break;
+	case TABLE_CART:
+		sprintf(tablename,"%s",cart_db);
+		sprintf(selectoption,"char_id");
+		break;
+	case TABLE_STORAGE:
+		sprintf(tablename,"%s",storage_db);
+		sprintf(selectoption,"account_id");
+		break;
+	case TABLE_GUILD_STORAGE:
+		sprintf(tablename,"%s",guild_storage_db);
+		sprintf(selectoption,"guild_id");
+		break;
+	}
+	
+	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `%s`='%d'",tablename,selectoption,char_id);
+	sql_query(tmp_sql,"memitemdata_to_sql");
+	
+	//==============================================Memory data > SQL ===============================
+    
+	sprintf(tmp_sql,"INSERT INTO `%s` (`%s`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`card0`,`card1`,`card2`,`card3`) VALUES ",tablename,selectoption);
+	
+    for(i=1;i<eqcount;i++){
+		if(mapitem.equip[i].flag == 1) break;
+		
+	    if(i!=1)
+	        sprintf(tmp_sql,"%s,",tmp_sql);
+				        
+		sprintf(tmp_sql,"%s('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",tmp_sql,char_id,
+				mapitem.equip[i].nameid, mapitem.equip[i].amount, mapitem.equip[i].equip, mapitem.equip[i].identify, 
+                mapitem.equip[i].refine,mapitem.equip[i].attribute, mapitem.equip[i].card[0],mapitem.equip[i].card[1], 
+                mapitem.equip[i].card[2],mapitem.equip[i].card[3]);
+
+                mapitem.equip[i].flag=1;
+	}
+		
+	sql_query(tmp_sql,"memitemdata_to_sql");
+	
+	#ifdef DEBUG
+	printf("Char [%d] - Saved Eqip Item Data to SQL!\n",char_id);
+	#endif
+		
+
+    return 0;
 }
 
 int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int char_id, int tableswitch){
@@ -510,6 +544,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 	if((eqcount==1) && (dbeqcount==1)){//printf("%s Equip Empty\n",tablename);
 	//item empty
 	} else {
+
 		for(i=1;i<eqcount;i++){
 			for(j=1;j<dbeqcount;j++){
 				if(mapitem.equip[i].flag==1) break;
@@ -543,7 +578,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 
 		for(i=1;i<dbeqcount;i++){
 			//printf("dbitem.equip[i].flag = %d , dbitem.equip[i].id = %d\n",dbitem.equip[i].flag,dbitem.equip[i].id);
-			if (dbitem.equip[i].flag == 0) {
+			if (!(dbitem.equip[i].flag == 1)) {
 				sprintf(tmp_sql,"DELETE from `%s` where `id`='%d'",tablename , dbitem.equip[i].id);
 				//printf("%s", tmp_sql);
 				if(mysql_query(&mysql_handle, tmp_sql))
@@ -551,7 +586,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 			}
 		}
 		for(i=1;i<eqcount;i++){
-			if(mapitem.equip[i].flag==0){
+			if(!(mapitem.equip[i].flag==1)){
 				sprintf(tmp_sql,"INSERT INTO `%s`(`%s`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)"
 				" VALUES ( '%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 				tablename, selectoption,  char_id, mapitem.equip[i].nameid, mapitem.equip[i].amount, mapitem.equip[i].equip, mapitem.equip[i].identify, mapitem.equip[i].refine,
@@ -623,7 +658,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 
 		for(i=1;i<dbnoteqcount;i++){
 			//printf("dbitem.notequip[i].flag = %d , dbitem.notequip[i].id = %d\n",dbitem.notequip[i].flag,dbitem.notequip[i].id);
-			if(dbitem.notequip[i].flag==0){
+			if(!(dbitem.notequip[i].flag==1)){
 				sprintf(tmp_sql,"DELETE from `%s` where `id`='%d'", tablename, dbitem.notequip[i].id);
 				//printf("%s", tmp_sql);
 				if(mysql_query(&mysql_handle, tmp_sql))
@@ -631,7 +666,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 			}
 		}
 		for(i=1;i<noteqcount;i++){
-			if(mapitem.notequip[i].flag==0) {
+			if(!(mapitem.notequip[i].flag==1)){
 				sprintf(tmp_sql,"INSERT INTO `%s`( `%s`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)"
 				" VALUES ('%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 				tablename ,selectoption , char_id, mapitem.notequip[i].nameid, mapitem.notequip[i].amount, mapitem.notequip[i].equip, mapitem.notequip[i].identify, mapitem.notequip[i].refine,
