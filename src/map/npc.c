@@ -1513,15 +1513,21 @@ static int npc_parse_shop(char *w1,char *w2,char *w3,char *w4)
 
 	while (p && pos < max) {
 		int nameid,value;
+		struct item_data *id;
 		p++;
 		if (sscanf(p, "%d:%d", &nameid, &value) != 2)
 			break;
 		nd->u.shop_item[pos].nameid = nameid;
-		if (value < 0) {
-			struct item_data *id = itemdb_search(nameid);
+		id = itemdb_search(nameid);
+		if (value < 0)			
 			value = id->value_buy;
-		}
 		nd->u.shop_item[pos].value = value;
+		// check for bad prices that can possibly cause exploits
+		if (value*75/100 < id->value_sell*124/100) {
+			sprintf (tmp_output, "Item %s [%d] buying:%d < selling:%d\n",
+				id->name, id->nameid, value*75/100, id->value_sell*124/100);
+			ShowWarning (tmp_output);
+		}
 		pos++;
 		p=strchr(p,',');
 	}

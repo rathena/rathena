@@ -326,13 +326,29 @@ static int itemdb_readdb(void)
 			memcpy(id->name,str[1],24);
 			memcpy(id->jname,str[2],24);
 			id->type=atoi(str[3]);
-			// buy≠sell*2 は item_value_db.txt で指定してください。
-			if (atoi(str[5])) {		// sell値を優先とする
-				id->value_buy=atoi(str[5])*2;
-				id->value_sell=atoi(str[5]);
-			} else {
-				id->value_buy=atoi(str[4]);
-				id->value_sell=atoi(str[4])/2;
+
+			{
+				int buy = atoi(str[4]), sell = atoi(str[5]);
+				// if buying price > selling price * 2 consider it valid and don't change it [celest]
+				if (buy && sell && buy > sell*2){
+					id->value_buy = buy;
+					id->value_sell = sell;
+				} else {
+					// buy≠sell*2 は item_value_db.txt で指定してください。
+					if (sell) {		// sell値を優先とする
+						id->value_buy = sell*2;
+						id->value_sell = sell;
+					} else {
+						id->value_buy = buy;
+						id->value_sell = buy/2;
+					}
+				}
+				// check for bad prices that can possibly cause exploits
+				if (id->value_buy*75/100 < id->value_sell*124/100) {
+					sprintf (tmp_output, "Item %s [%d] buying:%d < selling:%d\n",
+						id->name, id->nameid, id->value_buy*75/100, id->value_sell*124/100);
+					ShowWarning (tmp_output);
+				}
 			}
 			id->weight=atoi(str[6]);
 			id->atk=atoi(str[7]);

@@ -1,6 +1,10 @@
 Date	Added
 
 02/03
+        * When loading shop scripts automatically check if the prices can be exploited
+          with OC/DC [celest]
+        * If the buying price provided in item_db.txt is above 2x higher than selling
+          price for an item no need to reset and redetermine the buying price [celest]
         * Fixed a mistake that was causing Ruwach to only work in PvP and PvM [celest]
         * Added DracoRPG's code for Joint Beat effects, thanks! [celest]
 
