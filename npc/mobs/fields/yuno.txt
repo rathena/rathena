@@ -30,7 +30,7 @@ yuno_fild01.gat,0,0,0,0	monster	Yellow Plant	1081,20,360000,180000,1
 
 yuno_fild02.gat,0,0,0,0	monster	Sageworm	1281,5,0,0,0
 yuno_fild02.gat,0,0,0,0	monster	Dustiness	1114,15,0,0,0
-yuno_fild02.gat,0,0,0,0	monster	Kind of Beetle	1494,15,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Beetle King	1494,15,0,0,0
 yuno_fild02.gat,0,0,0,0	monster	Horn		1128,35,0,0,0
 yuno_fild02.gat,0,0,0,0	monster	Stainer	1174,25,0,0,0
 yuno_fild02.gat,0,0,0,0	monster	Wild Rose	1261,15,0,0,0

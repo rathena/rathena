@@ -35,6 +35,7 @@ Other Ppl
 Date		Added
 ======
 02/16
+	* Fixed Wootan and Beetle King names in the spawn files [Lupus]
         * Fixed a typo in quests/all_quest.txt, thanks to hongmei [celest]
         * Fixed treasure chests spawn in the castles. (had to simplify some code and unroll some loops) [Lupus]
 
