@@ -395,6 +395,27 @@ int mapif_account_reg_reply(int fd,int account_id)
 	return 0;
 }
 
+int mapif_send_gmaccounts()
+{
+	int i, len = 4;
+	unsigned char buf[32000];
+
+	// forward the gm accounts to the map server
+	len = 4;
+	WBUFW(buf,0) = 0x2b15;
+				
+	for(i = 0; i < GM_num; i++) {
+		WBUFL(buf, len) = gm_account[i].account_id;
+		WBUFB(buf, len+4) = (unsigned char)gm_account[i].level;
+		len += 5;
+	}
+	WBUFW(buf, 2) = len;
+	mapif_sendall(buf, len);
+
+	return 0;
+}
+
+
 //--------------------------------------------------------
 
 // Existence check of WISP data

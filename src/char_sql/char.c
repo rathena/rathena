@@ -267,6 +267,7 @@ void read_gm_account(void) {
 	}
 
 	mysql_free_result(lsql_res);
+	mapif_send_gmaccounts();
 }
 
 // Insert friends list
@@ -1750,7 +1751,6 @@ int parse_tologin(int fd) {
 			if (RFIFOREST(fd) < 7)
 				return 0;
 			{
-				unsigned char buf[32000];
 				int new_level = 0;
 				for(i = 0; i < GM_num; i++)
 					if (gm_account[i].account_id == RFIFOL(fd,2)) {
@@ -1779,20 +1779,11 @@ int parse_tologin(int fd) {
 					}
 				}
 				if (new_level == 1) {
-					int len;
 					printf("From login-server: receiving a GM account information (%d: level %d).\n", RFIFOL(fd,2), (int)RFIFOB(fd,6));
+					mapif_send_gmaccounts();
+
 					//create_online_files(); // not change online file for only 1 player (in next timer, that will be done
 					// send gm acccounts level to map-servers
-					len = 4;
-					WBUFW(buf,0) = 0x2b15;
-				
-					for(i = 0; i < GM_num; i++) {
-						WBUFL(buf, len) = gm_account[i].account_id;
-						WBUFB(buf, len+4) = (unsigned char)gm_account[i].level;
-						len += 5;
-					}
-					WBUFW(buf, 2) = len;
-					mapif_sendall(buf, len);
 				}
 			}
 			RFIFOSKIP(fd,7);
