@@ -1,11 +1,16 @@
 	Post here any database changes ok guys? [shadowlady]
 
 	==== progress ====
-	Ayathoya mobs == Added but using poring stats ( ? )
-	Ayathoya items == Added but no effect ( all are "etc" itens)
+	
+	Ayathoya mobs == 5% Added but using poring stats ( ? )
+	Einboroch mobs == 0%
+	Ayathoya items == 70% Added but no effect ( all are "etc" itens)
+	Einboroch items == 5%
 	Skill databases == celest working on them i believe.
 
 03/29
+	* Some optimizatons, added missing skill to Electric Guitar [Lupus]
+	* Added new items (thanx to Landarma) [Lupus]
 	* Added effedcts to Spring Rabbit, Galapago, Sea Otter Cards [Lupus]
 	  It seems that item heal rate doesn't work yet
 03/27
