@@ -4222,9 +4222,12 @@ int buildin_sc_start(struct script_state *st)
 		bl = map_id2bl(conv_num(st,& (st->stack->stack_data[st->start+5])));
 	else
 	bl = map_id2bl(st->rid);
-	if(bl->type == BL_PC && ((struct map_session_data *)bl)->state.potionpitcher_flag)
-		bl = map_id2bl(((struct map_session_data *)bl)->skilltarget);
-	skill_status_change_start(bl,type,val1,0,0,0,tick,0);
+	
+	if (bl != 0) {
+		if(bl->type == BL_PC && ((struct map_session_data *)bl)->state.potionpitcher_flag)
+			bl = map_id2bl(((struct map_session_data *)bl)->skilltarget);
+		skill_status_change_start(bl,type,val1,0,0,0,tick,0);
+	}
 	return 0;
 }
 

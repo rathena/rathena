@@ -1,5 +1,8 @@
 Date	Added
 12/24
+	* Fixed a scripting crash (SVN: 780) [MouseJstr]
+	* removed @changesex and @charchangesex until we can
+	  fix it properly [MouseJstr]
 	* Fixed item-dup bug in storage and cart [MouseJstr]
 	* @skilltree was looking outside of the particular class
 	  of the char to see if they could do a skill [MouseJstr]

@@ -382,7 +382,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_StatAll,			"@statsall",		60, atcommand_stat_all },
 	{ AtCommand_StatAll,			"@allstats",		60, atcommand_stat_all }, // by fritz
 	{ AtCommand_StatAll,			"@allstat",			60, atcommand_stat_all }, // by fritz
-	{ AtCommand_CharChangeSex,		"@charchangesex",	60, atcommand_char_change_sex }, // by Yor
+//	{ AtCommand_CharChangeSex,		"@charchangesex",	60, atcommand_char_change_sex }, // by Yor
 	{ AtCommand_CharBlock,			"@block",			60, atcommand_char_block }, // by Yor
 	{ AtCommand_CharBlock,			"@charblock",		60, atcommand_char_block }, // by Yor
 	{ AtCommand_CharBan,			"@ban",				60, atcommand_char_ban }, // by Yor
@@ -457,7 +457,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_UnMute,				"@unmute",			60, atcommand_unmute }, // [Valaris]
 	{ AtCommand_Clearweather,         "@clearweather",   99, atcommand_clearweather }, // Dexity 
 	{ AtCommand_UpTime,				"@uptime",			 0, atcommand_uptime }, // by MC Cameri
-	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri
+//	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri
 	{ AtCommand_Mute,				"@mute",			99, atcommand_mute }, // [celest]
 	{ AtCommand_Mute,				"@red",				99, atcommand_mute }, // [celest]
 	{ AtCommand_WhoZeny,			"@whozeny",			20, atcommand_whozeny }, // [Valaris]

@@ -1,7 +1,7 @@
 Mainly because I'm (Ajarn) tired... and not too sure about these, or future ones even...
 I'll report GDB's here. MouseJstr, this is mainly for you.
 
-svn 770:
+svn 770:  Fixed
 -----------------
 #0  buildin_sc_start (st=0xbfbfea30) at script.c:4225
 4225            if(bl->type == BL_PC && ((struct map_session_data *)bl)->state.potionpitcher_flag)
