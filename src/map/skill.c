@@ -3061,7 +3061,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case LK_BERSERK:		/* バ?サ?ク */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_status_change_start(bl,SkillStatusChangeTable[skillid],skilllv,0,0,0,skill_get_time(skillid,skilllv),0 );
-		sd->status.hp = sd->status.max_hp * 3;
+		//sd->status.hp = sd->status.max_hp * 3;
 		break;
 	case MC_CHANGECART:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -7852,7 +7852,6 @@ int skill_status_change_end(struct block_list* bl, int type, int tid)
 			case SC_BERSERK:			/* バ?サ?ク */
 				calc_flag = 1;
 				clif_status_change(bl,SC_INCREASEAGI,0);	/* アイコン消去 */
-				skill_status_change_end(bl,SC_ENDURE,-1);
 				break;
 			case SC_DEVOTION:		/* ディボ?ション */
 				{
@@ -8353,8 +8352,8 @@ int skill_status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 	case SC_BERSERK:		/* バ?サ?ク */
 		if(sd){		/* HPが100以上なら?? */
-			if( (sd->status.hp - sd->status.hp/100) > 100 ){	// 5% every 10 seconds [DracoRPG]
-				sd->status.hp -= sd->status.hp*5/100;
+			if( (sd->status.hp - sd->status.max_hp*5/100) > 100 ){	// 5% every 10 seconds [DracoRPG]
+				sd->status.hp -= sd->status.max_hp*5/100;	// changed to max hp [celest]
 				clif_updatestatus(sd,SP_HP);
 				sc_data[type].timer = add_timer(	/* タイマ?再設定 */
 					10000+tick, skill_status_change_timer,
@@ -9076,13 +9075,14 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			break;
 		case SC_BERSERK:		/* バ?サ?ク */
 			if(sd){
-				sd->status.sp = 0;
+				sd->status.hp = sd->status.max_hp * 3;
+				sd->status.sp = 0;				
+				clif_updatestatus(sd,SP_HP);
 				clif_updatestatus(sd,SP_SP);
-				clif_status_change(bl,SC_INCREASEAGI,1);	/* アイコン表示 */
-				skill_status_change_start(bl,SC_ENDURE,10,0,0,0,tick,0 );	// celest
+				clif_status_change(bl,SC_INCREASEAGI,1);	/* アイコン表示 */				
 			}
 			*opt3 |= 128;
-			tick = 1000;
+			tick = 10000;
 			calc_flag = 1;
 			break;
 		case SC_ASSUMPTIO:		/* アスムプティオ */

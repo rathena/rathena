@@ -4,6 +4,7 @@ Date	Added
         * Skill updates: [celest]
           - Removed annoying skill fail messages from rogue's Snatcher
           - Add sc_data check for firewall and fogwall
+          - Fixed Berserk (99% hopefully? ^_^)
 
 11/16
 	* Fix for compiling against gcc 2.95 [MouseJstr]

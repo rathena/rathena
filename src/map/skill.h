@@ -332,10 +332,12 @@ enum {	// struct map_session_data ÇÃ status_changeÇÃî‘çÜÉeÅ[ÉuÉã
 	SC_MINDBREAKER		=191,
 	SC_SPELLBREAKER		=192,
 
-	SC_EDP				= 114, // [Celest]
-	SC_MARIONETTE2      = 122, // marionette target
-	SC_BLEEDING         = 124, // temporarily same id as headcrush
-	SC_POISON2			= 193, // for EDP
+// [Celest]
+	SC_EDP				= 114, // 
+	SC_MARIONETTE2      = 122, // Marionette target
+	SC_BLEEDING         = 124, // Temporarily same id as headcrush
+	SC_POISON2			= 193, // for EDP -- notes: Not implemented since damage unknown yet
+	SC_GRIMTOOTH        = 194, // for grimtooth's slowdown
 
 // -- testing various SC effects
 //	SC_AURABLADE			=81,

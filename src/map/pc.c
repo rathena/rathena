@@ -1626,9 +1626,9 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		sd->status.max_hp = sd->status.max_hp * 3;
 		// sd->status.hp = sd->status.hp * 3;
 		if(sd->status.max_hp > battle_config.max_hp) // removed negative max hp bug by Valaris
-		sd->status.max_hp = battle_config.max_hp;
+			sd->status.max_hp = battle_config.max_hp;
 		if(sd->status.hp > battle_config.max_hp) // removed negative max hp bug by Valaris
-		sd->status.hp = battle_config.max_hp;
+			sd->status.hp = battle_config.max_hp;
 	}
 	if(s_class.job == 23 && sd->status.base_level >= 99){
 		sd->status.max_hp = sd->status.max_hp + 2000;
@@ -1923,7 +1923,9 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		if(sd->sc_data[SC_BERSERK].timer!=-1) {	//All Def/MDef reduced to 0 while in Berserk [DracoRPG]
 			sd->def = sd->def2 = 0;
 			sd->mdef = sd->mdef2 = 0;
-			 sd->flee -= sd->flee*50/100;
+			sd->flee -= sd->flee*50/100;
+			aspd_rate -= 30;
+			sd->base_atk *= 3;
 		}
 		if(sd->sc_data[SC_KEEPING].timer!=-1)
 			sd->def = 100;
@@ -4976,7 +4978,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	}
 
 	// •à ‚¢‚Ä‚¢‚½‚ç‘«‚ðŽ~‚ß‚é
-	if(sd->sc_data[SC_ENDURE].timer == -1 && !sd->special_state.infinite_endure)
+	if(sd->sc_data[SC_ENDURE].timer == -1 && sd->sc_data[SC_BERSERK].timer && !sd->special_state.infinite_endure)
 		pc_stop_walking(sd,3);
 	else if(sd->sc_data[SC_ENDURE].timer != -1 && src->type==BL_MOB)   // [Celest]
 		if((--sd->sc_data[SC_ENDURE].val2) <= 0)
@@ -6845,7 +6847,8 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
-	if (sd->sc_data[SC_TRICKDEAD].timer != -1)		// Modified by RoVeRT
+	if (sd->sc_data[SC_TRICKDEAD].timer != -1 ||	// Modified by RoVeRT
+		sd->sc_data[SC_BERSERK].timer != -1)
 		return 0;
 
 	if(pc_checkoversp(sd)) {
@@ -7010,7 +7013,8 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 		sd->hp_sub = sd->inchealhptick = 0;
 		sd->sp_sub = sd->inchealsptick = 0;
 	}
-	if((skill = pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0 && !pc_ishiding(sd) && sd->sc_data[SC_POISON].timer == -1 && sd->sc_data[SC_BERSERK].timer == -1){
+	if((skill = pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0 && !pc_ishiding(sd) &&
+		sd->sc_data[SC_POISON].timer == -1 && sd->sc_data[SC_BERSERK].timer == -1){
 		pc_spirit_heal_hp(sd,skill);
 		pc_spirit_heal_sp(sd,skill);
 	}
