@@ -8,6 +8,7 @@ Date	Added
 	  set to 'no' [celest]
 	* Fixed @monsterbig/@monstersmall not working [celest]
 	* Fixed @killmonster2 not working [celest]
+	* Fixed a typo in my fix for Stalk / Tunnel Drive increasing instead of decreasing speed, sorry [DracoRPG]
 
 03/24
 	* Added some mapflags for new towns [Lupus]
