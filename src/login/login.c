@@ -1209,7 +1209,9 @@ int parse_fromchar(int fd) {
 	for(id = 0; id < MAX_SERVERS; id++)
 		if (server_fd[id] == fd)
 			break;
-	if (id == MAX_SERVERS || session[fd]->eof) {
+	if (id == MAX_SERVERS)
+		session[fd]->eof = 1;
+	if(session[fd]->eof) {
 		if (id < MAX_SERVERS) {
 			printf("Char-server '%s' has disconnected.\n", server[id].name);
 			login_log("Char-server '%s' has disconnected (ip: %s)." RETCODE,
