@@ -51,3 +51,18 @@ I (Ajarn) have loads of ideas. I might as well put them here. If no one does the
    hear: ....." and "ajarn says: ..." This way you can do #4 to a
    person, and then this, without following them, and get the same
    effect. 
+
+6) We need another file for item_db.txt to keep there your custom items
+   We already have the same thing is for mobs (mob_db2.txt)
+	Why don't we use it?
+
+
+
+How to implement those ideas:
+
+[Lupus]
+1) You can make a script. Put OnTouch Area in the jail... when a banned person gets into jails, you set a global VAR.
+ Then use PCLoginEvent.txt to check TIME/DATE and free that poor person when it's OK.
+ So it's pretty easy to make with scripting. And even more... some private servers already have such scripts
+ and even make the prisoners gather some mushrums and stuff, to get them off the jail faster
+ PLUS: you should count time only when the player is in PRISON. Don't count when he's off-line 8)
