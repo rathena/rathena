@@ -8774,8 +8774,6 @@ int skill_produce_mix( struct map_session_data *sd,
 			else if(nameid == 7139) // Glistening Coat
 				make_per += 500 + pc_checkskill(sd,AM_CP_WEAPON)*100 + pc_checkskill(sd,AM_CP_SHIELD)*100 +
 					pc_checkskill(sd,AM_CP_ARMOR)*100 + pc_checkskill(sd,AM_CP_HELM)*100;
-			else
-				make_per = 1000 + sd->status.base_level*30 + sd->paramc[3]*20 + sd->paramc[4]*15 + pc_checkskill(sd,AM_LEARNINGPOTION)*100 + pc_checkskill(sd,AM_PHARMACY)*300;			
 		} else if (skill_produce_db[idx].req_skill == ASC_CDP) {
 			make_per = 2000 + 40*sd->paramc[4] + 20*sd->paramc[5];			
 		} else {
