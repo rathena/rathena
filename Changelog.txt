@@ -1,6 +1,8 @@
 Date	Added
 
 01/27
+        * Kick all characters when the char server disconnects from the map
+          server [celest]
         * Added @changelook command for spriters to test view ID's [celest]
         * Added a check to Pneuma to prevent crashing [celest]
         * Tweaked garbage collection code after feedback from users

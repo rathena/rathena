@@ -992,6 +992,27 @@ int chrif_char_online(struct map_session_data *sd)
 	return 0;
 }
 
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int chrif_disconnect_sub(struct map_session_data* sd,va_list va) {
+	clif_authfail_fd(sd->fd,1);
+	map_quit(sd);
+	return 0;
+}
+
+int chrif_disconnect(int fd) {
+	if(fd == char_fd) {
+		char_fd = -1;
+		sprintf(tmp_output,"Map Server disconnected from Char Server.\n\n");
+		ShowWarning(tmp_output);
+		clif_foreachclient(chrif_disconnect_sub);
+		chrif_connected = 0;
+	}
+	close(fd);
+	return 0;
+}
 
 /*==========================================
  *
@@ -1003,13 +1024,8 @@ int chrif_parse(int fd)
 	// only char-server can have an access to here.
 	// so, if it isn't the char-server, we disconnect the session (fd != char_fd).
 	if (fd != char_fd || session[fd]->eof) {
-		if (fd == char_fd) {
-			if (chrif_connected == 1) {
-				sprintf(tmp_output,"Map Server disconnected from Char Server.\n\n");
-				ShowWarning(tmp_output);
-				chrif_connected=0;
-			}
-			char_fd = -1;
+		if (fd == char_fd && chrif_connected == 1) {
+			chrif_disconnect (fd);
 //			check_connect_char_server(0, 0, 0, 0);
 		}
 		close(fd);
