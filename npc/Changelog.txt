@@ -34,9 +34,9 @@ Other Ppl
 
 Date		Added
 ======
-<<<<<<< .mine
+
 11/20
-	* Fixed spawns on umbala fields [shadow]
+	* Fixed spawns on umbala fields, Fixed spawn point of Amon Ra in morroc pyramids B2 [shadow]
 11/21
 	* niflheim.txt: some typos in some variables fixed (thx 2 Dr.Evil) [Lupus]
 
