@@ -2505,9 +2505,9 @@ int parse_console(char *buf) {
     
     printf("Type of command: %s || Command: %s \n",type,command);
     
-    free(buf);
-    free(type);
-    free(command);
+    if(buf) free(buf);
+    if(type) free(type);
+    if(command) free(command);
     
     return 0;
 }
@@ -2683,10 +2683,9 @@ void do_final(void) {
 		printf("DB server Error (insert `char`)- %s\n", mysql_error(&mysql_handle));
 	}
 
-	if (gm_account != NULL)
-		free(gm_account);
+	if(gm_account) free(gm_account);
 
-	free(char_dat);
+	if(char_dat) free(char_dat);
 	delete_session(login_fd);
 	delete_session(char_fd);
 
