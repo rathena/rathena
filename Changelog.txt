@@ -1,5 +1,7 @@
 Date	Added
-11/17   * Added skill_steal_type to battle_athena.conf for the new (but unconfirmed) 
+11/17   
+	* Fixed a crash in the afm reading/closing code [MouseJstr]
+	* Added skill_steal_type to battle_athena.conf for the new (but unconfirmed) 
           stealing formula [celest]
         * Skill updates: [celest]
           - Removed annoying skill fail messages from rogue's Snatcher

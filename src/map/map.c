@@ -1642,6 +1642,7 @@ int map_readallmap(void) {
                          }
                       }
 	    }
+	    if (afm_file != NULL) 
 		fclose(afm_file);
 	}
 
