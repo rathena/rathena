@@ -70,7 +70,7 @@ Problem:	Wierd login-server bug on sql, it displays that the server is full when
 Assigned:	N/A
 Progress:	0%
 
-Problem:	Login-Server is now crashing when you close it using ^C, Ctrl+C(on windows), it only does that if login was connected with char-server.
+Problem:	Login-Txt is now crashing when you close it using ^C, Ctrl+C(on windows), it only does that if login was connected with char-server.
 Assigned:	N/A
 Progress:	0
 
