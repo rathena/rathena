@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== eAthena Script =======================================
 //= Posture Fix Hat Quest
 //===== By: ================================================== 
 //= Halca (1.0)
@@ -8,13 +8,13 @@
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
-//= Campus Hat (Posture Fix Hat) quest.
+//= Posture Fix Hat quest.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text
 //=	fixed wrong items ID [Lupus]
 //============================================================
 
-pay_in01.gat,171,142,5	script	Nan Hyang	814,{
+payon.gat,155,115,5	script	Nan Hyang	814,{
  If (getequipisequiped(5073)) GOTO L_GOOD;
  If (Class == 0) GOTO L_NOVICE;
  mes "[Nan Hyang]";
@@ -22,9 +22,9 @@ pay_in01.gat,171,142,5	script	Nan Hyang	814,{
  mes "You need to correct it immediately!";
  next;
  mes "[Nan Hyang]";
- mes "I could correct it for you If you brought me some materials to make you a Campus Hat.";
+ mes "I could correct it for you If you brought me some materials to make you a Posture Fix Hat.";
  next;
- menu "Make me a Campus Hat.",-,"What do I need to get?",M_REQ,"No thanks!",M_EXIT;
+ menu "Please, make me one.",-,"What do I need to get?",M_REQ,"No thanks!",M_EXIT;
 
  If ((countitem(1550) <1) || (countitem(2285) < 1 )) GOTO L_NOITEM;//Items: Book, Apple o' Archer,
  mes "[Nan Hyang]";
@@ -32,7 +32,7 @@ pay_in01.gat,171,142,5	script	Nan Hyang	814,{
  next;
  delitem 1550,1;//Items: Book,
  delitem 2285,1;//Items: Apple o' Archer,
- getitem 5073,1;//Items: Campus Hat,
+ getitem 5073,1;//Items: Posture Fix Hat,
  mes "[Nan Hyang]";
  mes "Hehe, well, maybe you will become more careful, or your sense will become balanced.";
  close;

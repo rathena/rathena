@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== eAthena Script =======================================1
 //= Neris (New Hat Quests)
 //===== By: ================================================== 
 //= Halca (1.0)
@@ -13,11 +13,12 @@
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
 //============================================================
 
-yuno.gat,21,17,7	script	Neris	806,{
+
+yuno.gat,353,282,7	script	Neris	806,{
  mes "[Neris]";
  mes "So, whatcha want then?";
  next;
- menu "Big Golden Bell.",M_LGB,"Crown of Mistress.",M_COM,"Crown of Ancient Queen.",M_COAQ,"Nothing, thanks.",M_EXIT;
+ menu "Golden Bells.",M_LGB,"Crown of Mistress.",M_COM,"Crown of Ancient Queen.",M_COAQ,"Nothing, thanks.",M_EXIT;
 
 M_LGB:
  mes "[Neris]";
@@ -27,7 +28,7 @@ M_LGB:
  mes "[Neris]";
  mes "Looks pretty cute when you wear it.";
  mes "So... what can I do for you?";
- menu "Make me the golden bell!",-,"What do I need to make it?",M_REQL,"Nothing, thanks.",M_EXIT;
+ menu "Make me Golden Bells!",-,"What do I need to make it?",M_REQL,"Nothing, thanks.",M_EXIT;
 
  if ((countitem(10016) < 1) || (countitem(714) < 1) || (countitem(969) < 3) || (Zeny < 1000)) GOTO L_NOITEM;//Items: Golden Bell, Emperium, Gold,
  mes "[Neris]";
@@ -37,7 +38,7 @@ M_LGB:
  delitem 714,1;//Items: Emperium,
  delitem 969,3;//Items: Gold,
  set Zeny,Zeny-1000;
- getitem 5091,1;//Items: Big Golden Bell,
+ getitem 5091,1;//Items: Golden Bells,
  mes "[Neris]";
  mes "Thanks, and bye!";
  close;

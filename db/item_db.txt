@@ -1299,7 +1299,7 @@
 5083,Back_Ribbon,Back Ribbon,5,20,0,200,,1,,0,10477567,0,256,,45,167,{},{ bonus bMdef,10; }
 5084,Lazy_Raccoon_Hat,Lazy Racoon Hat,5,20,0,500,,1,,0,10477567,2,256,,0,168,{},{ bonus2 bResEff,Eff_Sleep,2000; }
 5085,Small_Twin_Ribbons,Small Twin Ribbons,5,20,0,100,,1,,0,10477567,0,512,,45,169,{},{}
-5086,Alarm_Mask,Alarm Mask¡5,20,0,100,,2,,0,10477567,2,513,,0,170,{},{ bonus2 bResEff,Eff_Blind,5000; }
+5086,Alarm_Mask,Alarm Mask,5,20,0,100,,2,,0,10477567,2,513,,0,170,{},{ bonus2 bResEff,Eff_Blind,5000; }
 5087,Expressionless_Mask,Expressionless Mask,5,20,0,100,,1,,0,10477567,2,513,,0,171,{},{}
 5088,Surprised_Mask,Surprised Mask,5,20,0,100,,1,,0,10477567,2,513,,0,172,{},{}
 5089,Annoyed_Mask,Annoyed Mask,5,20,0,100,,1,,0,10477567,2,513,,0,173,{},{}

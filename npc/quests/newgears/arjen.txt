@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== eAthena Script =======================================
 //= X-Shaped Hairpin, Bandage & Flower Hairpin Quests
 //===== By: ================================================== 
 //= Halca (1.0)
@@ -13,7 +13,8 @@
 //= 1.2 Fixed wrong labels, wrong items ID. [Lupus]
 //============================================================
 
-gef_tower.gat,128,148,6	script	Arjen	807,{
+//86
+geffen.gat,128,148,6	script	Arjen	807,{ 
  mes "[Arjen]";
  mes "What item information do you require?";
  next;
@@ -82,7 +83,7 @@ M_2:
  next;
  delitem 930,500;//Items: Rotten Bandage,
  delitem 970,1;//Items: Alcohol,
- getitem 5070,1;//Items: Bandage,
+ getitem 5063,1;//Items: Bandage,
  mes "[Arjen]";
  mes "Thanks! Hope that cures your aches!";
  close;

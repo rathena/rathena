@@ -14,7 +14,7 @@
 //=	added missing delitem, fixed names, item amount [Lupus]
 //============================================================
 
-morroc.gat,234,77,6	script	Traveler	807,{
+morocc.gat,274,79,6	script	Traveler	807,{ 
  mes "[Traveler]";
  if (Class == 0) GOTO L_NOVICE;
  mes "What kind of hat do you want from me?";
@@ -49,7 +49,7 @@ M_N2:
  mes "Gimme 1 Rotten Fish,";
  mes "300 Rotten Scales,";
  mes "50 Sashimi,";
- mes "1 Tail of a Fish,";
+ mes "1 Fish Tail,";
  mes "and 100 Sticky Mucus";
  next;
  mes "[Traveler]";

@@ -25,6 +25,7 @@ pay_dun04.gat,204,152,2	script	Nine Tail	1180,{
 	mes "[Nine Tail]";
 	mes "Fine then. If I make one for you, will you go away?";
 	mes "You realize that it requires 999 Nine Tails to make, do you?";
+	next;
 	menu "Sure.",M_MAKE,"Nah.",-;
 
 	mes "[Nine Tail]";

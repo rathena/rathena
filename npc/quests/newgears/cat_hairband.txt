@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== eAthena Script =======================================1
 //= Cat Hairband Quest
 //===== By: ================================================== 
 //= Halca (1.0)
@@ -8,19 +8,20 @@
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
-//= Seperate Black Cat Ears (Cat Hairband) quest.
+//= Seperate Cat Hairband quest.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text,
 //=	fixed zeny amount [Lupus]
 //============================================================
 
-pay_cast01.gat,110,160,4	KoneKone	819,{
+
+payon_in01.gat,62,10,4	KoneKone	819,{
  mes "[KoneKone]";
  mes "Don't you just love cats? the way they have the pointy,";
  mes "sticky ears and stuff, they're just so cute!";
  next;
  mes "[KoneKone]";
- mes "Hehe... well, I decided, I would make a Black Cat Ears!";
+ mes "Hehe... well, I decided, I would make a Cat Hairband!";
  mes "It is modeled on my most favourite of cat... BLACK!";
  mes "Of course, I got the idea from Hwikebain!";
  next;
@@ -52,7 +53,7 @@ L_NOITEM:
 
 M_REQ:
  mes "[KoneKone]";
- mes "For the ^670000Black Cat Ears^000000, the following items are needed:";
+ mes "For the ^670000Cat Hairband^000000, the following items are needed:";
  next;
  mes "[KoneKone]";
  mes "1 Kitty Band,";

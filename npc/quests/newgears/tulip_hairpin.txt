@@ -13,7 +13,7 @@
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
 //============================================================
 
-prontera.gat,84,189,6	script	Ses	815,{
+geffen.gat,84,189,6	script	Ses	815,{ 
  mes "[Ses]";
  If (Class == 0) GOTO L_NOVICE;
  mes "Woo, hello! Fruit fruit!";

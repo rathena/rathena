@@ -13,7 +13,7 @@
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
 //============================================================
 
-prontera.gat,66,87,6	script	Aipo	819,{
+geffen.gat,66,87,6	script	Aipo	819,{
  mes "[Aipo]";
  If (Class == 0) GOTO L_NOVICE;
  mes "Heeeeee.";

@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== eAthena Script =======================================1
 //= Hat Seller (New Hat Quests)
 //===== By: ================================================== 
 //= Halca (1.0)
@@ -20,13 +20,13 @@ xmas_in.gat,123,131,4	script	Hat Seller	806,{
  mes "What hat would you like information on?";
  mes "I can make all the hats I mention here";
  next;
- menu "Pointy Cap",M_1,"Straw Hat",M_2,"Cowboy Hat",M_3,"Sombrero",M_4,"Furry Hat",M_5,"Quit",M_EXIT;
+ menu "Party Hat",M_1,"Straw Hat",M_2,"Cowboy Hat",M_3,"Sombrero",M_4,"Furry Hat",M_5,"Quit",M_EXIT;
 
 M_1:
  mes "[Hat Seller]";
  mes "Okay well, for this item I require:";
  mes "1 Santa's Hat,";
- mes "100 String Paper,";
+ mes "100 Slick Paper,";
  mes "100 Oiled Paper.";
  next;
  mes "[Hat Seller]";
@@ -34,9 +34,9 @@ M_1:
  next;
  menu "Yes.",-,"No.",M_EXIT;
  
- if ((countitem(2236) < 1) || (countitem(7111) < 100) || (countitem(7151) < 100)) GOTO L_NOITEM;//Items: Santa's Hat, String Paper, Oiled Paper,
+ if ((countitem(2236) < 1) || (countitem(7111) < 100) || (countitem(7151) < 100)) GOTO L_NOITEM;//Items: Santa's Hat, Slick Paper, Oiled Paper,
  delitem 2236,1;//Items: Santa's Hat,
- delitem 7111,100;//Items: String Paper,
+ delitem 7111,100;//Items: Slick Paper,
  delitem 7151,100;//Items: Oiled Paper,
  getitem 5060,1;//Items: Pointy Cap,
  mes "[Hat Seller]";
@@ -124,7 +124,7 @@ M_4:
 M_5:
  mes "[Hat Seller]";
  mes "For this item I require:";
- mes "1 Cap,";
+ mes "1 Slotted Cap,";
  mes "300 Skin of the Black Bear.";
  next;
  mes "[Hat Seller]";
@@ -133,10 +133,10 @@ M_5:
  next;
  menu "Yes.",-,"No.",M_EXIT;
 
- if ((countitem(2227) < 1) || (countitem(7161) < 300)) GOTO L_NOITEM;//Items: Cap, Skin of the Black Bear,
+ if ((countitem(2227) < 1) || (countitem(7161) < 300)) GOTO L_NOITEM;//Items: Cap, Bear Skin,
  delitem 2227,1;//Items: Cap,
- delitem 7161,300;//Items: Skin of the Black Bear,
- getitem 5076,1;//Items: Furry Hat,
+ delitem 7161,300;//Items: Bear Skin,
+ getitem 5076,1;//Items: Wool Hat,
  mes "[Hat Seller]";
  mes "There you go... bye.";
  close;

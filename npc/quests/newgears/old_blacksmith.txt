@@ -73,7 +73,7 @@ M_EOA:
  mes "[Old Blacksmith]";
  mes "Okay, and here you go.";
  next;
- getitem 5074,1;//Items: Horns of Succubus,
+ getitem 5074,1;//Items: Ears of Angel,
  mes "[Old Blacksmith]";
  mes "Enjoy it!";
  close;

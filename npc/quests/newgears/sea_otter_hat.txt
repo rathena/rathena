@@ -8,7 +8,7 @@
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
-//= Seperate Seo Otter Hat quest.
+//= Seperate Sea Otter Hat quest.
 //===== Additional Comments: ================================= 
 //= 1.2 Fixed wrong labels, added missing text [Lupus]
 //============================================================
