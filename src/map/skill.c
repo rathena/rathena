@@ -5145,7 +5145,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		break;
 	case BA_APPLEIDUN:			/* イドゥンの林檎 */
 		if(src->type == BL_PC)
-			val1 = ((pc_checkskill((struct map_session_data *)src,BA_MUSICALLESSON))&0xffff)<<16;
+			val1 = pc_checkskill((struct map_session_data *)src,BA_MUSICALLESSON)&0xffff;
 		val2 |= (status_get_vit(src))&0xffff;
 		val3 = 0;//回復用タイムカウンタ(6秒?に1?加)
 		break;

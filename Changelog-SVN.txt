@@ -1,5 +1,9 @@
 Date	Added
 
+03/07
+        * Fixed Apple of Idun reading the wrong skill level and giving too much HP
+          [celest]
+
 03/06
 	* Added new anti-hacker trade protection from Freya. [Lupus]
 	  It also auto-ban hackers and broadcasts messages to all GMs. Good work, Yor!
