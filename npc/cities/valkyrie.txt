@@ -1,6 +1,7 @@
 // Valkyrie Replacement after kRO.
 // The Jobquest from kRO on how to advance to a Reborn class.
 // Made by: Nana
+// 1.01 bugfixex by Lupus
 
 
 // -== Warp's needed! ==-
@@ -9,8 +10,8 @@ valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
 
 // -== Book of Ymir (Heavens Door) ==-
 yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
-	if(@valkyrie_Q == 1) goto L_Faded;
-	if(@valkyrie_Q == 2) goto L_Start;
+	if(valkyrie_Q == 1) goto L_Faded;
+	if(valkyrie_Q == 2) goto L_Start;
 	mes "[Book of Ymir]";
 	mes ". . . . .";
 	close;
@@ -46,7 +47,7 @@ L_Start:
 	mes "[Book og Ymir]";
 	mes "*As you close the book a strange ray of light sourounds you and you suddently feel light. Everything around you fades away and all you can see left is white before you pass out.*";
 	warp "valkyrie",48,9;
-	set @valkyrie_Q,0;
+	set valkyrie_Q,0;
 	close;
 }
 
@@ -77,7 +78,7 @@ pay_now:
 	mes "[Librarian]";
 	mes "Go now, into Heart of Ymir";
 	mes "There, you'll find the last pice of information before you can open the book.";
-	set @valkyrie_Q,1;
+	set valkyrie_Q,1;
 	set zeny,zeny-1285000;
 	close;
 
@@ -90,9 +91,9 @@ accurate_z:
 
 // -== The Heart of Ymir ==-
 yuno_in05.gat,80,44,0	script	Heart of Ymir	803,{
-	if(@valkyrie_Q < 1) goto not_applicable;
-	if(@valkyrie_Q == 1) goto L_Listen;
-	if(@valkyrie_Q == 1) goto L_Done;
+	if(valkyrie_Q < 1) goto not_applicable;
+	if(valkyrie_Q == 1) goto L_Listen;
+	if(valkyrie_Q == 2) goto L_Done;
 	mes "[Heart of Ymir]";
 	mes "The book wont open.";
 	close;
@@ -113,7 +114,7 @@ L_Listen:
 	mes "Aeons passed and the Sages grew stronger in both min and forces. Until they all were feared throughout the monsters world.";
 	mes "Now, after listening to my words of wisdom, please advance to the Book of Ymir and give yourself in to god's light.";
 	mes "If you are pure of heart and have no evil intentions, the gates of dawn will open for you and take you in...";
-	set @valkyrie_Q,2;
+	set valkyrie_Q,2;
 	close;
 
 L_Done:
