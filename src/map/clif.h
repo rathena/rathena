@@ -1,27 +1,17 @@
-// $Id: clif.h,v 1.4 2004/09/25 05:32:18 MouseJstr Exp $
+// $Id: clif.h 1952 2004-10-23 14:05:01Z Yor $
 #ifndef _CLIF_H_
 #define _CLIF_H_
 
-#include <sys/types.h>
-
-#ifdef _WIN32
-#include <winsock.h>
+#ifdef __WIN32
 typedef unsigned int in_addr_t;
 #else
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
 
 #include "map.h"
-
-#define MAX_PACKET_DB			0x220
-
-struct packet_db {
-	short len;
-	void (*func)();
-	short pos[20];
-};
 
 void clif_setip(char*);
 void clif_setport(int);
@@ -98,9 +88,9 @@ int clif_changechatstatus(struct chat_data*);	// chat
 void clif_emotion(struct block_list *bl,int type);
 void clif_talkiebox(struct block_list *bl,char* talkie);
 void clif_wedding_effect(struct block_list *bl);
-void clif_sitting(struct map_session_data *sd);
+//void clif_sitting(int fd, struct map_session_data *sd);
 //void clif_callpartner(struct map_session_data *sd);
-//void clif_sitting(struct map_session_data *sd);
+void clif_sitting(struct map_session_data *sd);
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *name,int type);
 
 // trade

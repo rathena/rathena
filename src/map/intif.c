@@ -623,20 +623,26 @@ int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 //		printf("intif_parse_wismessage: %d %s %s %s\n",id,RFIFOP(fd,6),RFIFOP(fd,30),RFIFOP(fd,54) );
 	
 	sd=map_nick2sd(RFIFOP(fd,32));	// 送信先を探す
-	if(sd!=NULL){
+	if(sd!=NULL && strcmp(sd->status.name, RFIFOP(fd,32)) == 0){
+/*
 		for(i=0;i<MAX_WIS_REFUSAL;i++){	//拒否リストに名前があるかどうか判定してあれば拒否
 			if(strcmp(sd->wis_refusal[i],RFIFOP(fd,8))==0){
 				j++;
 				break;
 			}
 		}
-		if(sd->wis_all)
-			intif_wis_replay(id,3);	// 受信拒否
+*/
+		if(sd->ignoreAll == 1)
+			intif_wis_replay(RFIFOL(fd,4), 2);	// 受信拒否
+/*
 		else if(j>0)
 			intif_wis_replay(id,2);	// 受信拒否
+
 		else{
+*/
+		if(i == MAX_IGNORE_LIST) {
 			clif_wis_message(sd->fd,RFIFOP(fd,8),RFIFOP(fd,56),RFIFOW(fd,2)-56);
-			intif_wis_replay(id,0);	// 送信成功
+			intif_wis_replay(RFIFOL(fd,4),0);	// 送信成功
 		}
 	}else
 		intif_wis_replay(id,1);	// そんな人いません

@@ -31,7 +31,7 @@
 #define MAX_LEVEL 255
 #define MAX_WALKPATH 48
 #define MAX_DROP_PER_MAP 48
-#define MAX_WIS_REFUSAL 14
+#define MAX_IGNORE_LIST 80
 
 #define DEFAULT_AUTOSAVE_INTERVAL 60*1000
 
@@ -179,8 +179,10 @@ struct map_session_data {
 	char npc_str[256];
 	unsigned int chatID;
 
-	char wis_refusal[MAX_WIS_REFUSAL][24];	//Refuse Whispers
-	int wis_all;	//Ignore all Whispers
+	struct{
+		char name[24];
+	} ignore[MAX_IGNORE_LIST];
+	int ignoreAll;
 
 	int attacktimer;
 	int attacktarget;
