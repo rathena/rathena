@@ -378,7 +378,13 @@ Problem:	PArty EXP shar Exploit.
 		3. Re-enter with a LOW-LEVEL character from your account 
 		4. now finish the mobs or... let someone do it.
 		5. u get all your HIGH-LEVEL exp!!!
-		6. fukko!!!
 			Why does it look at ACCOUNT ID ? instead of the CHAR ID ?
+Assigned:	N/A
+Progress:	0%
+
+Problem:	ICE WALL
+		1. It again lets you freeze mobs and yourself inside of the wall...
+		2. When you set a diagonal wall - in its middle sometimes a segment's dropped. So monsters can walk trough it.
+		WHY?
 Assigned:	N/A
 Progress:	0%
