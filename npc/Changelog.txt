@@ -34,6 +34,8 @@ Other Ppl
 
 Date		Added
 ======
+12/18
+	* Readded my own npc [Aria]
 11/27
 	* Added some Lou Yang NPC's [Mass Zero]
 	* Get Freya fixes of crusader.txt (announce->areaannounce), Mr.Smile(removed vulgar words) [Lupus]
