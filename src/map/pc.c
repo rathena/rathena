@@ -838,7 +838,10 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 						break;
 					}
 				}
-				clif_displaymessage(sd->fd, buf);
+				if (battle_config.motd_type)
+					clif_disp_onlyself(sd,buf,strlen(buf));
+				else
+					clif_displaymessage(sd->fd, buf);
 			}
 			fclose(fp);
 		}

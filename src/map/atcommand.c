@@ -2884,7 +2884,7 @@ int atcommand_go(
 				return -1;
 			}
 		} else if (town >= 0 && town < (int)(sizeof(data) / sizeof(data[0]))) {
-			m = map_mapname2mapid(data[town].map);
+			m = map_mapname2mapid((char *)data[town].map);
 			if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 				clif_displaymessage(fd, "You are not authorised to warp you to this destination map.");
 				return -1;
@@ -2893,7 +2893,7 @@ int atcommand_go(
 				clif_displaymessage(fd, "You are not authorised to warp you from your actual map.");
 				return -1;
 			}
-			if (pc_setpos(sd, data[town].map, data[town].x, data[town].y, 3) == 0) {
+			if (pc_setpos(sd, (char *)data[town].map, data[town].x, data[town].y, 3) == 0) {
 				clif_displaymessage(fd, msg_table[0]); // Warped.
 			} else {
 				clif_displaymessage(fd, msg_table[1]); // Map not found.

@@ -5213,6 +5213,7 @@ static const struct {
 	{ "skill_steal_rate",       &battle_config.skill_steal_rate}, // [celest]
 	{ "night_darkness_level",   &battle_config.night_darkness_level}, // [celest]
 	{ "skill_range_leniency",   &battle_config.skill_range_leniency}, // [celest]
+	{ "motd_type",              &battle_config.motd_type}, // [celest]
 
 //SQL-only options start
 #ifndef TXT_ONLY 
@@ -5443,6 +5444,7 @@ void battle_set_defaults() {
 	battle_config.skill_steal_rate = 100;
 	battle_config.night_darkness_level = 9;
 	battle_config.skill_range_leniency = 1;
+	battle_config.motd_type = 0;
 
 	battle_config.castrate_dex_scale = 150;
 
@@ -5566,8 +5568,13 @@ void battle_validate_conf() {
 	if (battle_config.night_darkness_level > 10) // Celest
 		battle_config.night_darkness_level = 10;
 
-	if (battle_config.skill_range_leniency <= 0) // Celest
+	if (battle_config.skill_range_leniency < 0) // Celest
 		battle_config.skill_range_leniency = 0;
+	
+	if (battle_config.motd_type < 0)
+		battle_config.motd_type = 0;
+	else if (battle_config.motd_type > 1)
+		battle_config.motd_type = 1;
 
 	if (battle_config.vending_max_value > 10000000 || battle_config.vending_max_value<=0) // Lupus & Kobra_k88
 		battle_config.vending_max_value = 10000000;
