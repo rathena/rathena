@@ -1091,7 +1091,7 @@ int map_quit(struct map_session_data *sd) {
 			numdb_erase(charid_db,sd->status.char_id);
 			free(p);
 		}
-	} 
+	}
 	strdb_erase(nick_db,sd->status.name);
 	numdb_erase(charid_db,sd->status.char_id);
 	numdb_erase(id_db,sd->bl.id);
@@ -1421,7 +1421,7 @@ int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 			return m->gat[j];
 		default:
 			return 0;
-	}	
+	}
 }
 
 /*==========================================
@@ -1701,7 +1701,7 @@ static int map_cache_write(struct map_data *m)
 				len_new = m->xs * m->ys;
 				write_buf = (char *) m->gat;
 				map_cache.map[i].compressed     = 0;
-				map_cache.map[i].compressed_len = 0;	
+				map_cache.map[i].compressed_len = 0;
 			}
 			if(len_new <= len_old) {
 				// ƒTƒCƒY‚ª“¯‚¶‚©¬‚³‚­‚È‚Á‚½‚Ì‚ÅêŠ‚Í•Ï‚í‚ç‚È‚¢
@@ -2133,6 +2133,7 @@ int map_delmap(char *mapname) {
 
 static int map_ip_set_ = 0;
 static int char_ip_set_ = 0;
+//static int bind_ip_set_ = 0;
 
 /*==========================================
  * Console Command Parser [Wizputer]
@@ -2261,6 +2262,15 @@ int map_config_read(char *cfgName) {
 					sprintf(w2, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 				}
 				clif_setip(w2);
+			} else if (strcmpi(w1, "bind_ip") == 0) {
+				//bind_ip_set_ = 1;
+				h = gethostbyname (w2);
+				if (h != NULL) {
+					snprintf(tmp_output,sizeof(tmp_output),"Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+					ShowInfo(tmp_output);
+					sprintf(w2, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
+				}
+				clif_setbindip(w2);
 			} else if (strcmpi(w1, "map_port") == 0) {
 				clif_setport(atoi(w2));
 				map_port = (atoi(w2));
