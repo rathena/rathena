@@ -1,5 +1,6 @@
 Date	Added
 01/07
+        * Added the below-mentioned alive packet to SQL's char and login [celest]
         * Enabled login server 'anti-freeze' by default as a temporary solution
           to char-login disconnection [celest]
         * The TXT char server was rejecting login's "i'm alive" packet and disconnecting

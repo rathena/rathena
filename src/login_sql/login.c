@@ -629,6 +629,10 @@ int char_anti_freeze_system(int tid, unsigned int tick, int id, int data) {
 //			printf("char_anti_freeze_system: server #%d '%s', flag: %d.\n", i, server[i].name, server_freezeflag[i]);
 			if (server_freezeflag[i]-- < 1) {// Char-server anti-freeze system. Counter. 5 ok, 4...0 freezed
 				session[server_fd[i]]->eof = 1;
+			} else {
+				// send alive packet to check connection
+				WFIFOW(server_fd[i],0) = 0x2718;
+				WFIFOSET(server_fd[i],2);
 			}
 		}
 	}
