@@ -3499,7 +3499,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		{
 			struct status_change *tsc_data = status_get_sc_data(bl);
 			int sc=SkillStatusChangeTable[skillid];
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			clif_skill_nodamage(src,bl,skillid,-1,1);
 			if(tsc_data && tsc_data[sc].timer!=-1 )
 				/* ‰ğœ‚·‚é */
 				status_change_end(bl, sc, -1);

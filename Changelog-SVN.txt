@@ -1,5 +1,12 @@
 Date	Added
 
+03/11
+        * Added Breaker's magic damage to be blockable by Pneuma, thanks to DracoRPG
+          [celest]
+        * Corrected 1206Sakexe's packet detection, thanks to Yor / Freya [celest]
+        * When casting cloaking stop displaying the skill title after its finished,
+          thanks to Battitude [celest]
+
 03/09
         * Some changes in sig_dump to allow Cygwin produce stackdumps upon crash again,
           thanks to Ser [celest]
