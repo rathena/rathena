@@ -38,6 +38,7 @@ Date		Added
 ======
 
 03/31
+	* Payon : new NPCs scripted as far as I could and old ones updated (all from iRO) [DracoRPG]
 	* Corrected a G_GRYPHON spawn in umbala field to GRYPHON, thanks to CrasherZero
 03/29
 	* Corrected Amatsu warp points, thanks to Dino9021

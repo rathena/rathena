@@ -5,8 +5,9 @@
 //= Darkchild (1.1)
 //= Muad Dib (1.2)
 //= Darkchild (1.3)
+//= DracoRPG (1.5)
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
@@ -14,6 +15,7 @@
 //===== Additional Comments: ================================= 
 //= Most Credits To Muad Dib, Some Stuff By Me
 //= 1.4 - Corrected a few typos
+//= 1.5 - Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
 //============================================================ 
 
 payon.gat,190,115,0	script	Lady	90,{
@@ -553,7 +555,7 @@ L_Menu3:
 	close;	
 }
 
-payon_in01.gat,144,9,2	script	Monster Scholar	98,{
+payon.gat,132,235,2	script	Monster Scholar	98,{
 	mes "[Monster Scholar Vuicokk]";
 	mes "Nice to meet you. I am Vuicokk the cholar in the monster research organization of Rune Midgard.";
 	mes "Do you have any questions about monsters of Rune Midgard?";
@@ -615,20 +617,53 @@ L_End:
 	close;
 }
 
-payon_in03.gat,100,186,4	script	Chief	120,{
-	   if(BaseLevel > 30) goto L_Menu1;
-	   set @R_SEL_NUM,rand(2); 
-	   if(@R_SEL_NUM != 0) goto T_TALK0; 
-	mes "[Palace Guardsman]";
-	mes "Hey hey! Show your respect to the chief!";
-	close;
-T_TALK0:
-	   if(@R_SEL_NUM != 1) goto T_TALK2;
-	mes "[Palace Guardsman]";
-	mes "Hey! I said...";
+payon.gat,158,246,4	script	Guardsman	708,{}
+payon.gat,158,245,4	script	PayonGuard1TriggerArea	139,3,2,{
+	mes "[Guardsman]";
+	mes "This is the Central Palace of Payon. This place is open to the public, but in accordance with our laws, you must behave in an orderly fashion while inside.";
 	next;
+	mes "[Guardsman]";
+	mes "In the interest of protecting the peace, we will disarm your equipment once you enter.";
+	mes "Your cooperation is";
+	mes "much appreciated.";
+	close;
+}
+
+payon_in03.gat,96,116,4	script	Chief Guardsman	708,{}
+payon_in03.gat,96,117,4	script	PayonGuard2TriggerArea	139,3,2,{
+	mes "[Chief Guardsman]";
+	mes "What brings";
+	mes "you here?";
+	next;
+	mes "[Chief Guardsman]";
+	mes "I can see you are none of the Payon locals. I would just like to remind you to conduct yourself in an orderly manner. Remember, you are a guest here.";
+	next;
+	nude;
+	mes "[Chief Guardsman]";
+	mes "In the interest of protecting the public peace, I will disarm your equipment. Thank you for your cooperation.";
+	close;
+}
+
+payon_in03.gat,102,185,4	script	Guard	708,{
+	mes "[Guard]";
+	mes "Hey...!";
+	mes "You're not";
+	mes "allowed here!";
+	mes "Go back outside!";
+	close;
+}
+
+payon_in03.gat,99,190,4	script	Chief	120,{}
+payon_in03.gat,99,189,4	script	PayonChiefAreaTrigger	139,2,1,{
+	if(BaseLevel > 30) goto T_LEVEL; //couldn't test, so left it, but a little bit changed
+	mes "[Guard]";
+	mes "Hey...";
+	mes "Hey...!";
+	mes "Show your respect";
+	mes "to our chief!";
+	close;
+T_LEVEL:
 	mes "[Chief]";
-	mes "That's fine, I am ok. It's been a long time since I talked to such young people.";
 	next;
 	menu "Please tell me about Payon.",L_Menu1,"Where the guards come from?",L_Menu2,"Please tell me about the cave.",L_Menu3,"I am wondering what archer does.",L_Menu4,"I am wondering what hunter does.",L_Menu5;
 L_Menu1:
@@ -688,136 +723,245 @@ L_Menu5:
 	mes "Even though it was all the go on the first place, trapping is a really dangerous skill, we hardly approve the youth to be hunters.";
 	next;
 	mes "[Chief]";
-	mes "People who have enough responsibility on themselves can challange on the class.";
+	mes "People who have enough responsibility on themselves can challenge on the class.";
 	close;
 	next;
-T_TALK2:
-	   if(@R_SEL_NUM != 3) goto T_TALK3;
-	mes "[Chief]";
-	mes "Tired... I'd better take a rest then. Take care of yourself.";
-	close;
-T_TALK3:
-	mes "[Palace Guardsman]";
-	mes "The Chief is taking a rest. Would you mind if I ask you to come back later?";
-	close;
-}
-
-payon.gat,160,246,4	script	Palace Guardsman	708,{
-	mes "[Place Guardsman]";
-	mes "Halt!";
-	next;
-	mes "[Palace Guardsman]";
-	mes "You are about to enter the Royal Palace, home of the Payon Royal Family.  You must be at your best behavior at all times while in the palace.";
-	next;
-	mes "[Palace Guardsman]";
-	mes "I will need to disarm you for the time being.  If you do not cooperate you will not be able to enter the Palace";
-	nude;
-//nude; will disarm you
-	next;
-	   warp "payon_in03.gat",98,118;
-	close;
-}
-
-payon.gat,151,246,4	script	Palace Guardsman	708,{
-	mes "[Palace Guardsman]";
-	mes ".............";
-	close;
-}
-
-payon_in03.gat,102,116,4	script	Palace Guardsman	708,{
-	mes "[Place Guardsman]";
-	mes "What brings you here?";
-	   emotion 1;
-	next;
-	mes "[Palace Guardsman]";
-	mes "I can see that you are not from around here.  I suggest that you behave yourself while you are here.";
-	mes "We will not tolerate any direspectfull or abberant behavior.";
-	close;
-}
-
-payon_in03.gat,95,116,4	script	Palace Guardsman	708,{
-	mes "[Palace Guardsman]";
-	mes ".............";
-	close;
-}
-
-payon_in03.gat,92,157,4	script	Palace Guardsman	708,{
-	mes "[Palace Guardsman]";
-	mes ".............";
-	close;
-}
-
-payon_in03.gat,107,157,4	script	Palace Guard Chief	708,{
-	   if(BaseLevel < 30) goto L_Less;
-	mes "[Palace Guard Chief]";
-	mes "I see that you are a well trained warrior.  You may have the privalege of speaking with the Elder Chief.  But remember to be respectfull to him at all times!!!";
-	next;
-	mes "[Palace Guard Chief]";
-	mes "If NOT......(cracks his nuckles)....!!!";
-	   emotion 29;
-	close;
-L_Less:
-	mes "[Palace Guard Chief]";
-	mes "Halt.  Only mighty warriors are worthy to speak face to face with the Elder Chief.  You still need to train more";
-	next;
-	mes "[Palace Guard Chief]";
-	mes "Please leave";
-	next;
-	   warp "payon_in03.gat",99,129;
-	close;
 }
 
 payon.gat,160,185,0	script	Billboard	111,{
 	mes "^993333- The Billboard Reads -^000000";
       mes "Welcome, and enjoy your stay in";
-      mes "the beautiful town of payon.";
+      mes "the beautiful town of Payon.";
       close;
 }
 
-// New kRO Npc's
-
-payon.gat,173,238,4	script	Unknown	740,{
-	mes "[Unknown]";
-	mes "This is a new kRO Npc";
-	mes "This Npc hasn't been translated yet";
-	mes "If by accident you know what this npc is and could translate it";
-	mes "Please contact Darkchild (eAthena Dev)";
+payon.gat,173,238,4	script	Jade	754,{
+	mes "[Jade]";
+	mes "Bring me two";
+	mes "Gemstones of the";
+	mes "same color, and I will";
+	mes "change them to Gemstones";
+	mes "of a different color.";
+	next;
+	menu "Blue Gemstones into Red ones!",L_BlueToRed,"Red Gemstones into Yellow ones!",L_RedToYellow,"Yellow Gemstones into Blue ones!",L_YellowToBlue;
+	L_BlueToRed:
+	if(countitem(717) >= 2) goto L_BlueToRedOK;
+	mes "[Jade]";
+	mes "Hah...!";
+	mes "You're kidding me, right?";
+	mes "I can't provide you with this";
+	mes "service if you don't";
+	mes "give me at least";
+	mes "2 Blue Gemstones!";
+	close;
+	L_BlueToRedOK:
+	mes "[NPC]";
+	mes "This NPC is under scripting.";
+	mes "DracoRPG";
+	close;
+	L_RedToYellow:
+	if(countitem(716) >= 2) goto L_RedtoYellowOK;
+	mes "[Jade]";
+	mes "Hah...!";
+	mes "You're kidding me, right?";
+	mes "I can't provide you with this";
+	mes "service if you don't";
+	mes "give me at least";
+	mes "2 Red Gemstones!";
+	close;
+	L_RedToYellowOK:
+	mes "[NPC]";
+	mes "This NPC is under scripting.";
+	mes "DracoRPG";
+	close;
+	L_YellowToBlue:
+	if(countitem(715) >= 2) goto L_YellowToBlueOK;
+	mes "[Jade]";
+	mes "Hah...!";
+	mes "You're kidding me, right?";
+	mes "I can't provide you with this";
+	mes "service if you don't";
+	mes "give me at least";
+	mes "2 Yellow Gemstones!";
+	close;
+	L_YellowToBlueOK:
+	mes "[NPC]";
+	mes "This NPC is under scripting.";
+	mes "DracoRPG";
 	close;
 }
 
-payon_in03.gat,75,129,4	script	Unknown	704,{
-	mes "[Unknown]";
-	mes "This is a new kRO Npc";
-	mes "This Npc hasn't been translated yet";
-	mes "If by accident you know what this npc is and could translate it";
-	mes "Please contact Darkchild (eAthena Dev)";
+//Need to find out ALL fortunes he can tell for each answer, and whether they are random or given in a certain order...
+payon_in03.gat,117,128,4	script	Fortune Teller	704,{
+	mes "[Lhimetorra]";
+	mes "You're an adventurer of this";
+	mes "world... " + strcharinfo(0) + ", right? So, what can an old person like me do for you?";
+	next;
+	menu "I would like a tarot card reading.",-,"What's a tarot card reading?",L_Info;
+	mes "[Lhimetorra]";
+	mes "Is that so...?";
+	mes "Well, if you want a monster card reading, you must first show me your faith. Otherwise, the spirits will grow angry and place a curse on you.";
+	next;
+	mes "[Lhimetorra]";
+	mes "So, would you like a monster card reading?";
+	next;
+	menu "Yes.",-,"I would like to think over it once more.",L_No;
+	mes "[Lhimetorra]";
+	mes "Then...";
+	mes "Please pay your fee with all of your sincerity.";
+	next;
+	input @fee;
+	if((@fee < 0) || (@fee > Zeny)) goto L_FeeNotOK;
+	if(@fee > 0) goto L_FeeOK;
+	mes "[Lhimetorra]";
+	mes "Ah...?!";
+	mes "You have angered the monster spirits!";
+	close;
+	L_FeeNotOK:
+	mes "[Lhimetorra]";
+	mes "There's no need to overdo it! Just give with all your heart... *Tsk";
+	mes "tsk*";
+	close;
+	L_FeeOK:
+	set Zeny,Zeny-@fee;
+	mes "[Lhimetorra]";
+	mes "I accept your heart and your";
+	mes "devotion with my gratitude.";
+	mes "Thoughts are more important than the amount when paying a fortune teller.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Then, I will begin to tell the";
+	mes "fortune of your wish. Concentrate";
+	mes "on yourself...";
+	next;
+	mes "[Lhimetorra]";
+	mes "...";
+	mes "Clear your mind...";
+	next;
+	mes "[Lhimetorra]";
+	mes "...";
+	mes "Once you have emptied your mind, think of the thing you most wish to know.";
+	next;
+	mes "[Lhimetorra]";
+	menu "(I would like to know my love fortune.)",L_AskLove,"(How rich will I be?)",L_AskMoney,"(I need advice about my future.)",L_AskFuture,"(Can I get a warning of any dangers awaiting?)",L_AskDangers;
+	L_AskLove:
+	mes "[Lhimetorra]";
+	mes "I see it... I see a sign of";
+	mes "love...";
+	next;
+	set @TEMP,rand(5);
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Can't you hear the cry of the card? It is suffering. Love is like that.";
+	if(@TEMP == 1) mes "His navel is very pretty. You have to meet someone with that type of navel to be happy.";
+	if(@TEMP == 2) mes "Hmm. How about giving a cute puppy as a gift? One with a round nose.";
+	if(@TEMP == 2) mes "Then they will surely be happy.";
+	if(@TEMP == 3) mes "No matter how fearful the bull may be, if it has a nose ring, it has already been tamed by humans. No matter how astonishing that person may be, taming is your resposiblity.";
+	if(@TEMP == 4) mes "Who is he so fiercely gazing at with those grand muscles? He is looking at someone else for sure.";
+	if(@TEMP == 5) mes "They may seem dreary and ominous, but their attire is spotless. They show devotion to the other.";
+	if(@TEMP == 5) mes "Even though you are not satisfied with your love right now, take a look at they attire.";
+	next;
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "So don't be upset about it!";
+	if(@TEMP == 1) mes "Ok? Keep that in mind~";
+	if(@TEMP == 2) mes "But can't help if they don't";
+	if(@TEMP == 2) mes "like puppies.";
+	if(@TEMP == 3) mes "Approach them with more sincerity and consideration.";
+	if(@TEMP == 4) mes "Don't get sidetracked and look elsewhere! You will be cursed!";
+	if(@TEMP == 5) mes "If it is carefully worn, their";
+	if(@TEMP == 5) mes "heart for you can be seen in it as well..";
+	next;
+	mes "[Lhimetorra]";
+	mes "You seeked advice about love.";
+	mes "Even if you may not pleased with it, consider it calmly and make an effort to find true happiness.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Then...";
+	close;
+	L_AskMoney:
+	mes "[Lhimetorra]";
+	mes "Ooh... something about your future is starting to show...";
+	next;
+	set @TEMP,rand(2);
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Do you know what a joker's specialty is? It is tricking others and making money. Be wary of the joker.";
+	if(@TEMP == 1) mes "The Skeleton says that you can make money by going north. Go north.";	
+	if(@TEMP == 2) mes "A knight values honor more than fortune. They consider discussing wealth itself dirty not worthy. How would you be able to as such a knight a fortune about wealth?";
+	next;
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Jokers do not exist in one form. They will aim for your money in several different ways.";
+	if(@TEMP == 1) mes "There must be great fortune in that direction.";
+	if(@TEMP == 2) mes "The knight says that a new road of life will open once you look away from fortune.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Most people are curious about money.";
+	mes "It is a very humanly and common curiosity. Cards are very stingy about fortunes regarding wealth.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Therefore, getting a fortune like this is considered being lucky. Use this fortune to prosper.";
+	close;
+	L_AskFuture:
+	mes "[Lhimetorra]";
+	mes "Future... the card that sees the future is beginning to speak...... Prepare yourself...";
+	next;
+	set @TEMP,rand(0);
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Jack says you may be frustrated in the future.";
+	if(@TEMP == 0) mes "He says to overcome the frustration, it is necessary to think of happy thoughts.";
+	next;
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "Meaning your future will become a battle between happiness and frustration...";
+	next;
+	mes "[Lhimetorra]";
+	mes "Speaking of the future is as dangerous act.";
+	mes "Humans may face disaster if speaking of the future carelessly. That's why we ask cards about the future.";
+	next;
+	mes "[Lhimetorra]";
+	mes "Your fortune is a rather good one. There are some in this world who get more horrible fortunes.";
+	mes "Use this fortune as a support in your life. Ok?";
+	close;
+	L_AskDangers:
+	mes "[Lhimetorra]";
+	mes "Someone that knows of the dangers you do not, will warn you in the";
+	mes "form of cards... so listen";
+	mes "carefully-!";
+	next;
+	set @TEMP,rand(0);
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "The pirate is warning you of your beauty. Don't show off your beauty too much. Pirates are very jealous of aparence, as well.";
+	next;
+	mes "[Lhimetorra]";
+	if(@TEMP == 0) mes "A warning is always a useful fortune. You can never lose anything.";
+	next;
+	mes "[Lhimetorra]";
+	mes "I hope you will able to avoid misfortune with this warning.";
+	mes "Then...";
+	close;
+	L_No:
+	mes "[Lhimetorra]";
+	mes "Ok then. Young adventurer, may luck be with you.";
+	close;
+	L_Info:
+	mes "[Lhimetorra]";
+	mes "Monster card reading uses the cards of familiar monsters around us to get advice about our future, love and many other things.";
+	mes "A fortuneteller like me takes a question from a person and asks the card. The card answers and I tell the person.";
+	next;
+	mes "[Lhimetorra]";
+	mes "You should get no more than one card reading a day, and don't get one often since the cards can get angry or confused.";
+	mes "Also, it can have a bad influence on your life, too!";
+	next;
+	mes "[Lhimetorra]";
+	mes "And... one more thing.";
+	mes "A card reading is only a";
+	mes "reading... No matter how";
+	mes "extraordinary the result may be,";
+	mes "don't get too caught up with it.";
+	mes "Bear that in mind.";
 	close;
 }
 
-payon_in03.gat,117,128,4	script	Unknown	704,{
-	mes "[Unknown]";
-	mes "This is a new kRO Npc";
-	mes "This Npc hasn't been translated yet";
-	mes "If by accident you know what this npc is and could translate it";
-	mes "Please contact Darkchild (eAthena Dev)";
+payon_in03.gat,131,7,4	script	Hunter	59,{
+	mes "[Hunter]";
+	mes "...Can I help you?";
+	mes "I'm here for official business and am busy at the moment. If you'll excuse me...";
 	close;
 }
-
-payon_in03.gat,118,119,8	script	Unknown	101,{
-	mes "[Unknown]";
-	mes "This is a new kRO Npc";
-	mes "This Npc hasn't been translated yet";
-	mes "If by accident you know what this npc is and could translate it";
-	mes "Please contact Darkchild (eAthena Dev)";
-	close;
-}
-
-payon_in03.gat,131,7,4	script	Unknown	59,{
-	mes "[Unknown]";
-	mes "This is a new kRO Npc";
-	mes "This Npc hasn't been translated yet";
-	mes "If by accident you know what this npc is and could translate it";
-	mes "Please contact Darkchild (eAthena Dev)";
-	close;
-}
-
