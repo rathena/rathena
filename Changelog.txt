@@ -5,6 +5,7 @@ Date	Added
 	    at first it'll delete common items then, if necessary, delete the rest items but upgraded/named/with cards. [Lupus]
 
 11/15
+	* Added a Database Changelog.txt File, use it for any changes inside the db folder. [shadowlady]
 	* Added GM Command Logs & Added TXT Logs + TXT Log Options [Codemaster]
 	* Added spawning of monsters at specific level by adding ,# after the spawn name. [Valaris]
 	  mobs_level_up option should be on when using this.
