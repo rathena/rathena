@@ -46,6 +46,11 @@
 #endif
 
 #define SCRIPT_BLOCK_SIZE 256
+
+#define FETCH(n, t) \
+		if(st->end>st->start+(n)) \
+			(t)=conv_num(st,&(st->stack->stack_data[st->start+(n)]));
+
 enum { LABEL_NEXTLINE=1,LABEL_START };
 static unsigned char * script_buf;
 static int script_pos,script_size;
@@ -301,6 +306,8 @@ int buildin_logmes(struct script_state *st); // [Lupus]
 int buildin_summon(struct script_state *st); // [celest]
 int buildin_isnight(struct script_state *st); // [celest]
 int buildin_isday(struct script_state *st); // [celest]
+int buildin_isequipped(struct script_state *st); // [celest]
+int buildin_isequippedcnt(struct script_state *st); // [celest]
 
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
@@ -528,6 +535,8 @@ struct {
 	{buildin_summon,"summon","si*"}, // summons a slave monster [Celest]
 	{buildin_isnight,"isnight",""}, // check whether it is night time [Celest]
 	{buildin_isday,"isday",""}, // check whether it is day time [Celest]
+	{buildin_isequipped,"isequipped","i*"}, // check whether another item/card has been equipped [Celest]
+	{buildin_isequippedcnt,"isequippedcnt","i*"}, // check how many items/cards are being equipped [Celest]
 	{NULL,NULL,NULL},
 };
 int buildin_message(struct script_state *st); // [MouseJstr]
@@ -6549,6 +6558,117 @@ int buildin_isday(struct script_state *st)
 	return 0;
 }
 
+/*================================================
+ * Check whether another item/card has been
+ * equipped - used for 2/15's cards patch [celest]
+ *------------------------------------------------
+ */
+int buildin_isequipped(struct script_state *st)
+{
+	struct map_session_data *sd;
+	int i, j, k, id = 1;
+	int ret = -1;
+
+	sd = script_rid2sd(st);
+	
+	for (i=0; id!=0; i++) {
+		int flag = 0;
+	
+		FETCH (i+2, id) else id = 0;
+		if (id <= 0)
+			continue;
+		
+		for (j=0; j<10; j++) {
+			int index, type;
+			index = sd->equip_index[j];
+			if(index < 0) continue;
+			if(j == 9 && sd->equip_index[8] == index) continue;
+			if(j == 5 && sd->equip_index[4] == index) continue;
+			if(j == 6 && (sd->equip_index[5] == index || sd->equip_index[4] == index)) continue;
+			type = itemdb_type(id);
+			
+			if(sd->inventory_data[index]) {
+				if (type == 4 || type == 5) {
+					if (sd->inventory_data[index]->nameid == id)
+						flag = 1;
+				} else if (type == 6) {
+					for(k=0; k<sd->inventory_data[index]->slot; k++) {
+						if (sd->status.inventory[index].card[0]!=0x00ff &&
+							sd->status.inventory[index].card[0]!=0x00fe &&
+							sd->status.inventory[index].card[0]!=(short)0xff00 &&
+							sd->status.inventory[index].card[k] == id) {
+							flag = 1;
+							break;
+						}
+					}
+				}
+				if (flag) break;
+			}
+		}
+		if (ret == -1)
+			ret = flag;
+		else
+			ret &= flag;
+		if (!ret) break;
+	}
+	
+	push_val(st->stack,C_INT,ret);
+	return 0;
+}
+
+/*================================================
+ * Check how many items/cards in the list are
+ * equipped - used for 2/15's cards patch [celest]
+ *------------------------------------------------
+ */
+int buildin_isequippedcnt(struct script_state *st)
+{
+	struct map_session_data *sd;
+	int i, j, k, id = 1;
+	int ret = 0;
+
+	sd = script_rid2sd(st);
+	
+	for (i=0; id!=0; i++) {
+		FETCH (i+2, id) else id = 0;
+		if (id <= 0)
+			continue;
+		
+		for (j=0; j<10; j++) {
+			int index, type, flag = 0;
+			index = sd->equip_index[j];
+			if(index < 0) continue;
+			if(j == 9 && sd->equip_index[8] == index) continue;
+			if(j == 5 && sd->equip_index[4] == index) continue;
+			if(j == 6 && (sd->equip_index[5] == index || sd->equip_index[4] == index)) continue;
+			type = itemdb_type(id);
+			
+			if(sd->inventory_data[index]) {
+				if (type == 4 || type == 5) {
+					if (sd->inventory_data[index]->nameid == id)
+						flag = 1;
+				} else if (type == 6) {
+					for(k=0; k<sd->inventory_data[index]->slot; k++) {
+						if (sd->status.inventory[index].card[0]!=0x00ff &&
+							sd->status.inventory[index].card[0]!=0x00fe &&
+							sd->status.inventory[index].card[0]!=(short)0xff00 &&
+							sd->status.inventory[index].card[k] == id) {
+							flag = 1;
+							break;
+						}
+					}
+				}				
+				if (flag) {
+					ret++;
+					break;
+				}
+			}
+		}
+	}
+	
+	push_val(st->stack,C_INT,ret);
+	return 0;
+}
 //
 // é¿çsïîmain
 //

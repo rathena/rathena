@@ -1,5 +1,16 @@
 Date	Added
 
+02/17
+        * Added 2 new script commands to support 2/15's cards patch... most of the
+          effects in kRO should be available now ^^ [celest]
+
+          - isequipped(...): Accepts a list of item ID's and checks whether all of
+                             the items/cards have been equipped.
+          - isequippedcnt(...): Same as above, except it returns how many of the items
+                                are being equipped
+
+          Example: if(isequipped(4002,4004,4006)) bonus bStr,1;
+
 02/16
 	* Char SQL: Fixed the Whisper chat on splittet mapservers (i think now all features work!) [Sirius]
 
