@@ -1,5 +1,7 @@
 Date	Added
 
+02/18
+	* Added some new cards effects. (check DB\changelog.txt) [Lupus]
 02/17
 	* Now all mobs have 10 drops slots. the last one is used for Cards Drops [Lupus]
 	  Don't forget to update your SQL files (Drop Log: logs.sql and db_tables.sql
