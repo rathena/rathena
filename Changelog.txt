@@ -1,6 +1,8 @@
 Date	Added
 12/02
 	* Fixed int state in SQL login.c [Wizputer]
+	* Moved init of send_users_tologin timer to when char connects to login [Wizputer]
+
 11/30
 	* "Beautified" sql login-server [Wizputer]
 

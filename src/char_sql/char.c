@@ -68,6 +68,8 @@ char login_db_level[32] = "level";
 
 int lowest_gm_level = 1;
 
+int user_count_timer;
+
 unsigned char *SQL_CONF_NAME = "conf/inter_athena.conf";
 
 struct mmo_map_server server[MAX_MAP_SERVERS];
@@ -1072,6 +1074,24 @@ int count_users(void) {
 	return 0;
 }
 
+int send_users_tologin(int tid, unsigned int tick, int id, int data) {
+	int users = count_users();
+	char buf[16];
+
+	if (login_fd > 0 && session[login_fd]) {
+		// send number of user to login server
+		WFIFOW(login_fd,0) = 0x2714;
+		WFIFOL(login_fd,2) = users;
+		WFIFOSET(login_fd,6);
+	}
+	// send number of players to all map-servers
+	WBUFW(buf,0) = 0x2b00;
+	WBUFL(buf,2) = users;
+	mapif_sendall(buf, 6);
+
+	return 0;
+}
+
 int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	int i, j, found_num = 0;
 	struct mmo_charstatus *p = NULL;
@@ -1180,6 +1200,7 @@ int parse_tologin(int fd) {
 	if(session[fd]->eof) {
 		if (fd == login_fd) {
 			printf("Char-server can't connect to login-server (connection #%d).\n", fd);
+			delete_timer(user_count_timer,send_users_tologin);
 			login_fd = -1;
 		}
 		close(fd);
@@ -1214,6 +1235,10 @@ int parse_tologin(int fd) {
 						break;
 				if (i == MAX_MAP_SERVERS)
 					printf("Awaiting maps from map-server.\n");
+					
+				// send USER COUNT PING to login server.
+				printf("add interval tic (send_users_tologin)....\n");
+				user_count_timer = add_timer_interval(gettick() + 10, send_users_tologin, 0, 0, 5 * 1000);
 			}
 			RFIFOSKIP(fd, 3);
 			break;
@@ -2580,24 +2605,6 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len) {
 	return 0;
 }
 
-int send_users_tologin(int tid, unsigned int tick, int id, int data) {
-	int users = count_users();
-	char buf[16];
-
-	if (login_fd > 0 && session[login_fd]) {
-		// send number of user to login server
-		WFIFOW(login_fd,0) = 0x2714;
-		WFIFOL(login_fd,2) = users;
-		WFIFOSET(login_fd,6);
-	}
-	// send number of players to all map-servers
-	WBUFW(buf,0) = 0x2b00;
-	WBUFL(buf,2) = users;
-	mapif_sendall(buf, 6);
-
-	return 0;
-}
-
 int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
 	if (login_fd <= 0 || session[login_fd] == NULL) {
 		printf("Attempt to connect to login-server...\n");
@@ -3003,10 +3010,6 @@ int do_init(int argc, char **argv){
 	// send ALIVE PING to login server.
 	printf("add interval tic (check_connect_login_server)....\n");
 	i = add_timer_interval(gettick() + 10, check_connect_login_server, 0, 0, 10 * 1000);
-
-	// send USER COUNT PING to login server.
-	printf("add interval tic (send_users_tologin)....\n");
-	i = add_timer_interval(gettick() + 10, send_users_tologin, 0, 0, 5 * 1000);
 
 	//no need to set sync timer on SQL version.
 	//printf("add interval tic (mmo_char_sync_timer)....\n");
