@@ -1,4 +1,8 @@
 Date	Added
+
+12/19
+	* Fixed some SQL queries crashing char server [davidsiaw]
+
 12/18
 	* Added several PID GM commands, thanks to Dino9021 [nsstrunks]
 	* Storage was merging items incorrectly [Mousejstr]

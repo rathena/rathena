@@ -62,6 +62,7 @@ char guild_storage_db[256] = "guild_storage";
 char party_db[256] = "party";
 char pet_db[256] = "pet";
 char login_db[256] = "login";
+char friend_db[256] = "friends";
 
 char login_db_account_id[32] = "account_id";
 char login_db_level[32] = "level";
@@ -262,12 +263,35 @@ void read_gm_account(void) {
 	mysql_free_result(lsql_res);
 }
 
+// Insert friends list
+void insert_friends(int char_id_count){
+	int i;
+	char *tmp_p = tmp_sql;
+
+	tmp_p += sprintf(tmp_p, "REPLACE INTO `%s` (`id`, `account_id`",friend_db);
+
+	for (i=0;i<20;i++)
+		tmp_p += sprintf(tmp_p, ", `friend_id%d`, `name%d`", i, i);
+
+	tmp_p += sprintf(tmp_p, ") VALUES (NULL, '%d'", char_id_count);
+
+	for (i=0;i<20;i++)
+		tmp_p += sprintf(tmp_p, ", '0', ''");
+
+	tmp_p += sprintf(tmp_p, ")");
+
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		printf("DB server Error (insert `friend`)- %s\n", mysql_error(&mysql_handle));
+	}
+}
+
 //=====================================================================================================
 int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	int i=0,party_exist,guild_exist;
 	int eqcount=1;
 	int noteqcount=1;
-	char temp_str[32];
+	char temp_str[1024];
+	char *tmp_p = tmp_sql;
 
 	struct itemtemp mapitem;
 	if (char_id!=p->char_id) return 0;
@@ -482,6 +506,23 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 			}
 		}
 	}
+
+	// Friends list 
+	// account_id, friend_id0, name0, ...
+	
+	tmp_p += sprintf(tmp_p, "REPLACE INTO `%s` (`id`, `account_id`",friend_db);
+
+	for (i=0;i<20;i++)
+		tmp_p += sprintf(tmp_p, ", `friend_id%d`, `name%d`", i, i);
+
+	tmp_p += sprintf(tmp_p, ") VALUES (NULL, '%d'", char_id);
+
+	for (i=0;i<20;i++)
+		tmp_p += sprintf(tmp_p, ", '%d', '%s'", p->friend_id[i], p->friend_name[i]);
+
+	tmp_p += sprintf(tmp_p, ")");
+	mysql_query(&mysql_handle, tmp_sql);
+
 	printf("saving char is done.\n");
 	save_flag = 0;
 
@@ -723,6 +764,7 @@ int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int
 //=====================================================================================================
 int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	int i, n;
+	char *tmp_p = tmp_sql;
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 
@@ -912,11 +954,57 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p, int online){
 	}
 	p->global_reg_num=i;
 
+	//Friends List Load
+
+	for(i=0;i<20;i++) {
+		p->friend_id[i] = 0;
+		sprintf(p->friend_name[i], "");
+	}
+
+	tmp_p += sprintf(tmp_p, "SELECT `id`, `account_id`");
+
+	for(i=0;i<20;i++)
+		tmp_p += sprintf(tmp_p, ", `friend_id%d`, `name%d`", i, i);
+
+	tmp_p += sprintf(tmp_p, " FROM `%s` WHERE `account_id`='%d' ", friend_db, char_id);
+
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		printf("DB server Error (select `friends list`)- %s\n", mysql_error(&mysql_handle));
+	}
+
+	sql_res = mysql_store_result(&mysql_handle);
+	sql_row = mysql_fetch_row(sql_res);
+
+	i=mysql_num_rows(sql_res);
+
+	printf("mysql: %d\n",i);
+	
+	// Create an entry for the character if it doesnt already have one
+	if(!i) {
+
+		insert_friends(char_id);
+
+	} else {
+
+		if (sql_res) {
+			for(i=0;i<20;i++) {
+				//printf("\nLOL\n");
+				p->friend_id[i] = atoi(sql_row[i*2 +2]);
+				sprintf(p->friend_name[i], "%s", sql_row[i*2 +3]);
+			}
+			mysql_free_result(sql_res);
+		}
+	}
+
+	printf("friends ");
+
+	//-- end friends list load --
+
 	if (online) {
 		set_char_online(char_id,p->account_id);
 	}
 
-	printf("global_reg]\n");	//ok. all data load successfuly!
+	printf("character data loaded]\n");	//ok. all data load successfuly!
 
 	//printf("char cloade");
 
@@ -980,6 +1068,7 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 	struct char_session_data *sd;
 	char t_name[100];
 	int i;
+
 	//aphostropy error check! - fixed!
 	jstrescapecpy(t_name, dat);
 	printf("making new char -");
@@ -1092,6 +1181,10 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		printf("DB server Error (update `char`)- %s\n", mysql_error(&mysql_handle));
 	}
+
+	// Insert friends list
+	insert_friends(char_id_count);
+
 	printf("making new char success - id:(\033[1;32m%d\033[0m\tname:\033[1;32%s\033[0m\n", char_id_count, t_name);
 	return char_id_count;
 }
