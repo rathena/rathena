@@ -3076,7 +3076,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 		else
 			damage2 += atkmin_ ;
 		if(sd->atk_rate != 100 || sd->weapon_atk_rate != 0) {
-			if (((struct map_session_data *)bl)->status.weapon < 16) {
+			if (sd->status.weapon < 16) {
 				damage = (damage * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
 				damage2 = (damage2 * (sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]))/100;
 			}
