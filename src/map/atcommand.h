@@ -193,11 +193,15 @@ enum AtCommandType {
 	AtCommand_Send,
 	AtCommand_SetBattleFlag,
 	AtCommand_UnMute,
-	AtCommand_UpTime,
-	AtCommand_ChangeSex,
+	AtCommand_UpTime, // by MC Cameri
+	AtCommand_ChangeSex, // by MC Cameri
 	AtCommand_Mute, // [celest]
-	AtCommand_WhoZeny, // [Valaris]
+	AtCommand_WhoZeny, // [Valaris] <-- LOL...(MC Cameri) worth it.
 	AtCommand_HappyHappyJoyJoy, // [Valaris]
+	AtCommand_Refresh, // by MC Cameri
+	AtCommand_PetId, // by MC Cameri
+	AtCommand_Identify, // by MC Cameri
+
 	// SQL-only commands start
 #ifndef TXT_ONLY 
 	AtCommand_CheckMail, // [Valaris]

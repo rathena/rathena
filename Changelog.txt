@@ -1,5 +1,9 @@
 Date	Added
 11/20
+	* Added str_lower() function to atcommand.c (from OA). [MC Cameri]
+	* Simplified @charchangesex to @charchangesex [player], your sex is changed to the opposite one [MC Cameri]
+	* Added @refresh, which is like a @jumpto <<yourself>>. [MC Cameri]
+	* Added @petid <pet name> to find pet names, useful when you dont know which pets have eggs. [MC Cameri]
 	* Added an effect_list in docs/ for descriptions, free to add onto that later. [spira]
           - Attempt to find new skill effects.
 	* Added "nogo" mapflag to prevent the use of @go on a specified map. [Valaris]

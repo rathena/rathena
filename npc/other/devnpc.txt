@@ -65,16 +65,16 @@ OnInit:
 
 // MC Cameri =========================================================>\\
 morocc.gat,160,97,4	script	MC Cameri	706,{
- 	npcspeed 50;
+ 	npcspeed 100;
 	mes "[MC Cameri]";
 	mes "I'm the @command guy from oA...";
-	mes "^FF00FFReal Name^000000: Can't tell you my name";
-	mes "^FF00FFAge^000000: 16 years";
-	mes "^FF00FFWhere I live^000000: Dominican Republic, in the caribbean";
+	mes "^FF8040Real Name^000000: Can't tell you my name";
+	mes "^FF8040Age^000000: 16 years";
+	mes "^FF8040Where I live^000000: Dominican Republic, in the caribbean";
 	next;
 	mes "[MC Cameri]";
-	mes "^FF00FFWhat I Do^000000: mostly working on @commands for GMs...";
-	mes "^FF00FFWhy I'm here^000000: Because I like programming...";
+	mes "^FF8040What I Do^000000: mostly working on @commands for GMs...";
+	mes "^FF8040Why I'm here^000000: Because I like programming...";
 	next;
 	mes "[MC Cameri]";
 	mes "I'm a senior student, programmer, body builder(yes, I lift weights), etc.";
@@ -102,11 +102,11 @@ Lquote0:
 	setnpctimer 0;
 	break;
 Lquote1:
-	npctalk "160,95-I owns you all, under my commands. *lol*";
+	npctalk "I owns you all, under my commands. *lol*";
 	setnpctimer 0;
 	break;
 Lquote2:
-	npctalk "I forgot what my script, what do I have to say again? *_*U";
+	npctalk "I forgot my script, what do I have to say again? *_*U";
 	setnpctimer 0;
 	break;
 Lquote3:

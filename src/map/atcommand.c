@@ -217,6 +217,9 @@ ATCOMMAND_FUNC(unmute); // [Valaris]
 ATCOMMAND_FUNC(uptime); // by MC Cameri
 ATCOMMAND_FUNC(changesex); // by MC Cameri
 ATCOMMAND_FUNC(mute); // celest
+ATCOMMAND_FUNC(refresh); // by MC Cameri
+ATCOMMAND_FUNC(petid); // by MC Cameri
+ATCOMMAND_FUNC(identify);
 
 #ifndef TXT_ONLY
 ATCOMMAND_FUNC(checkmail); // [Valaris]
@@ -467,10 +470,14 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_UnMute,				"@unmute",			60, atcommand_unmute }, // [Valaris]
 	{ AtCommand_UpTime,				"@uptime",			 0, atcommand_uptime }, // by MC Cameri
 	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri
-	{ AtCommand_Mute,		        "@mute",	        99, atcommand_mute }, // [celest]
-	{ AtCommand_Mute,		        "@red",	            99, atcommand_mute }, // [celest]
-	{ AtCommand_WhoZeny,			"@whozeny",		20, atcommand_whozeny }, // [Valaris]
-	{ AtCommand_HappyHappyJoyJoy,			"@happyhappyjoyjoy",		40, atcommand_happyhappyjoyjoy }, // [Valaris]
+	{ AtCommand_Mute,				"@mute",			99, atcommand_mute }, // [celest]
+	{ AtCommand_Mute,				"@red",				99, atcommand_mute }, // [celest]
+	{ AtCommand_WhoZeny,			"@whozeny",			20, atcommand_whozeny }, // [Valaris]
+	{ AtCommand_HappyHappyJoyJoy,	"@happyhappyjoyjoy",40, atcommand_happyhappyjoyjoy }, // [Valaris]
+	{ AtCommand_Refresh,	        "@refresh",			 0, atcommand_refresh }, // by MC Cameri
+	{ AtCommand_PetId,	    	    "@petid",			40, atcommand_petid }, // by MC Cameri
+	{ AtCommand_Identify,	   	    "@identify",		40, atcommand_identify }, // by MC Cameri
+
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
 	{ AtCommand_ListMail,			"@listmail",		 1, atcommand_listmail }, // [Valaris]
@@ -563,6 +570,20 @@ char * job_name(int class) {
 	case 4045: return "Super Baby";
 	}
 	return "Unknown Job";
+}
+
+/*==========================================
+ * str_lower (replace strlwr, non ANSI function that doesn't exist in all C compilator)
+ *------------------------------------------
+ */
+char *str_lower(char *str)
+{
+	int i;
+
+	for (i=0; str[i]; i++)
+		if ((str[i] >= 65) && (str[i] <= 90))
+			str[i] += 32;
+	return str;
 }
 
 // compare function for sorting high to lowest
@@ -1096,7 +1117,7 @@ int atcommand_jumpto(
 	memset(character, '\0', sizeof character);
 	if (sscanf(message, "%99[^\n]", character) < 1)
 		return -1;
-	if(strncmp(sd->status.name,character,24)==0)
+	if(strncmp(sd->status.name,character,24)==0) //Yourself mate? Tsk tsk tsk.
 		return -1;
 
 	intif_jumpto(sd->status.account_id,character);
@@ -6600,7 +6621,7 @@ int atcommand_disguise(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int mob_id;
+	int mob_id = 0;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter a Monster/NPC name/id (usage: @disguise <monster_name_or_monster_ID>).");
@@ -7046,7 +7067,7 @@ atcommand_character_storage_list(
 				}
 			} else {
 				clif_displaymessage(fd, "This player has no storage.");
-				return -1;
+				return 0;
 			}
 		} else {
 			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
@@ -7859,31 +7880,7 @@ atcommand_changesex(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-
-//	char sex[200], output[200];
-//	int isex = (sd->status.sex+1)%2;
-/*
-	if (!message || !*message)
-		return -1;
-	memset(sex, '\0', sizeof(sex));
-	if(sscanf(message, "%99[^\n]", sex) < 1)
-		return -1;
-	str_lower(sex);
-	if (strcmp(sex,"0") == 0 || strcmp(sex,"f") == 0 || strcmp(sex,"female") == 0) {
-		isex = 0;
-	} else if (strcmp(sex,"1") == 0 || strcmp(sex,"m") == 0 || strcmp(sex,"male") == 0) {
-		isex = 1;
-	} else {
-		clif_displaymessage(fd,msg_table[456]);
-		return 0;
-	}
-*/
-//	if (isex != sd->sex) {
-		chrif_changesex(sd->status.account_id, ((sd->status.sex+1)%2));
-//	} else {
-//		sprintf(output,msg_table[460],(isex == 0)?"female":"male");
-//		clif_displaymessage(fd,output);
-//	}
+	chrif_changesex(sd->status.account_id, ((sd->status.sex+1)%2));
 	return 0;
 }
 
@@ -7914,6 +7911,91 @@ int atcommand_mute(
 		return -1;
 	}
 
+	return 0;
+}
+
+/*==========================================
+ * @refresh (like @jumpto <<yourself>>)
+ *------------------------------------------
+ */
+int atcommand_refresh(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+
+	nullpo_retr(-1, sd);
+	pc_setpos(sd, sd->mapname, sd->bl.x, sd->bl.y, 3);
+	return 0;
+}
+
+/*==========================================
+ * @petid <part of pet name>
+ * => Displays a list of matching pets.
+ *------------------------------------------
+ */
+int
+atcommand_petid(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char searchtext[100];
+	char temp0[100];
+	char temp1[100];
+	int cnt = 0, i = 0;
+	
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message)
+		return -1;
+	if (sscanf(message, "%99s", searchtext) < 1)
+		return -1;
+	str_lower(searchtext);
+	snprintf(temp0, sizeof(temp0), "Search results for: %s", searchtext);
+	clif_displaymessage(fd,temp0);
+	while (i < MAX_PET_DB) {
+		strcpy(temp1,pet_db[i].name);
+		strcpy(temp1, str_lower(temp1));
+		strcpy(temp0,pet_db[i].jname);
+		strcpy(temp0, str_lower(temp1));
+		if (strstr(temp1, searchtext) || strstr(temp0, searchtext) ) {
+  			snprintf(temp0, sizeof(temp0), "ID: %i -- Name: %s", pet_db[i].class,
+     			pet_db[i].jname);
+  			if (cnt >= 100) { // Only if there are custom pets
+	  			clif_displaymessage(fd, "Be more specific, can't send more than"
+					" 100 results.");
+			} else {
+				clif_displaymessage(fd, temp0);
+			}
+    		cnt++;
+		}
+	i++;
+	}
+	snprintf(temp0, sizeof(temp0),"%i pets have '%s' in their name.", cnt, searchtext);
+	clif_displaymessage(fd, temp0);
+	return 0;
+}
+
+/*==========================================
+ * @identify
+ * => GM's magnifier.
+ *------------------------------------------
+ */
+int
+atcommand_identify(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	nullpo_retr(-1, sd);
+	int i,num;
+	for(i=num=0;i<MAX_INVENTORY;i++){
+		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].identify!=1){
+			num++;
+		}
+	}
+	if (num > 0) {
+		clif_item_identify_list(sd);	
+	} else {
+		clif_displaymessage(fd,"There are no items to appraise.");
+	}
 	return 0;
 }
 
