@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
-//= 2nd Bank of Prontera ( with daily 0.01% income! )
+//= The 2nd Bank of Prontera ( with daily 0.01% income! )
 //===== By: ================================================== 
 //= Lupus (1.0)
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.x
 //===== Description: ========================================= 
@@ -15,6 +15,8 @@
 // #kafrabank/10   =  10% of interest per day
 //
 // 1.1 Added log of bank operation -> logmes "some info";
+// 1.2 Set max income to 100,000z. It would help to avoid
+//	zeny exploits when you change DATE at your server
 //============================================================ 
 
 prontera.gat,131,190,1	script	Bank Clerk::bankg	833,{  
@@ -25,7 +27,9 @@ prontera.gat,131,190,1	script	Bank Clerk::bankg	833,{
  set @income,0;
 //calculate %
  if (#kafrabank<=0 || #kb_int>=@kb_int) goto L_NoIncomeToday;
- set @income,(#kafrabank/1000)*(@kb_int-#kb_int); //@income == % of the summ
+ set @income,(#kafrabank/1000)*(@kb_int-#kb_int); //@income == % of the sum
+//max income constant:
+ if (@income>100000) set @income,100000;
 L_NoIncomeToday:
  set #kb_int,@kb_int; //reset days timer
   
@@ -35,7 +39,7 @@ L_NoIncomeToday:
  if(#kafrabank>0) mes "Your account: ^135445" + #kafrabank + "^000000 zeny.";
  mes "What would you like?";
  next;
- if(#kafrabank==0) menu "-Open a bank account",-,"-Quit",B_EXIT2;
+ if(#kafrabank==0) menu "-Open an account",-,"-Quit",B_EXIT2;
  if(#kafrabank>0) menu "-Deposit money",-,"-Withdraw money",M_WITHDRAW,"-Quit",B_EXIT2;
 
  mes"[Maniss]";
