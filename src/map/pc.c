@@ -4311,6 +4311,7 @@ int pc_walktoxy(struct map_session_data *sd,int x,int y)
 
 	sd->to_x=x;
 	sd->to_y=y;
+	sd->idletime = time(0);
 
 	if(sd->walktimer != -1 && sd->state.change_walk_target==0){
 		// 現在?いている最中の目的地?更なのでマス目の中心に?た暫ﾉ
@@ -4643,6 +4644,9 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 	sd=map_id2sd(id);
 	if(sd == NULL)
 		return 0;
+
+	sd->idletime = time(0);
+
 	if(sd->attacktimer != tid){
 		if(battle_config.error_log)
 			printf("pc_attack_timer %d != %d\n",sd->attacktimer,tid);
@@ -4755,11 +4759,14 @@ int pc_attack(struct map_session_data *sd,int target_id,int type)
 	struct block_list *bl;
 	int d;
 
+
 	nullpo_retr(0, sd);
 
 	bl=map_id2bl(target_id);
 	if(bl==NULL)
 		return 1;
+
+	sd->idletime = time(0);
 	
 	if(bl->type==BL_NPC) { // monster npcs [Valaris]
 		//npc_click(sd,RFIFOL(sd->fd,2));

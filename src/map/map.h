@@ -185,6 +185,7 @@ struct map_session_data {
 	char *npc_stackbuf;
 	char npc_str[256];
 	unsigned int chatID;
+	unsigned long idletime;
 
 	struct{
 		char name[24];
