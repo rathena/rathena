@@ -9958,11 +9958,11 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 		case SC_BERSERK:
 			calc_flag=1;
 			break;
-*/
 		case SC_ASSUMPTIO:
 			if(sc_data[SC_KYRIE].timer!=-1 )
 				skill_status_change_end(bl,SC_KYRIE,-1);
-				break;
+				break;*/
+
 		case SC_WINDWALK:		/* ウインドウォ?ク */
 			calc_flag = 1;
 			val2 = (val1 / 2); //Flee上昇率
@@ -9982,6 +9982,9 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			break;
 
 		case SC_ASSUMPTIO:		/* アスムプティオ */
+			if(sc_data[SC_KYRIE].timer!=-1 )
+				skill_status_change_end(bl,SC_KYRIE,-1);
+				break;
 			*opt3 |= 2048;
 			break;
 

@@ -8,6 +8,7 @@ Date	Added
           - Added some new monster skills based on jA mod 1077
         * Changed @job to accept text job names - For example: @job wizard, @job high
           priestess, @job super baby [celest]
+        * Added sc_data check for pc_damage [celest]
 
 12/8
 	* Fixed @rings [MouseJstr]
