@@ -1,6 +1,7 @@
 Date	Added
 
 12/20
+	* Updated npcs_list.txt [Ajarn]
 	* If last_pos.x or .y == 0, set to start point [MouseJstr]
 	* Fixed map loading. If a map was not found, it would remove the next map in the list [Ajarn]
 	* Moddified some *_athena.conf's (my typos and some inncorect default values) [Ajarn]

@@ -85,9 +85,10 @@ npc: npc/jobs/2-1/assassin.txt
 npc: npc/jobs/2-2/rogue.txt
 npc: npc/jobs/2-2/alchemist.txt
 npc: npc/jobs/2-2/sage.txt
+npc: npc/jobs/2-2/crusader.txt
 
 //2-2 Without Quest
-npc: npc/jobs/2-2/noquest/crusader.txt
+//npc: npc/jobs/2-2/noquest/crusader.txt
 npc: npc/jobs/2-2/noquest/dancer-bard.txt
 npc: npc/jobs/2-2/noquest/monk.txt
 
@@ -238,7 +239,7 @@ npc: npc/kafras/kafras_new.txt
 //npc: npc/events/xmas.txt
 //npc: npc/events/alchemist.txt
 //npc: npc/events/twintowers.txt
-npc: npc/events/custom/uneasy_cemetery.txt
+//npc: npc/events/custom/uneasy_cemetery.txt
 //npc: npc/events/custom/draculax.txt
 
 
@@ -277,7 +278,8 @@ npc: npc/other/Global_Functions.txt
 //npc: npc/merchants/custom/dye.txt
 
 // Dev NPCs
-npc: npc/other/devnpc.txt
+//npc: npc/other/devnpc.txt
+// Unofficial poetry
 npc: npc/other/poetry/ayothaya.txt
 
 //-------------------------- MC Cameri's NPCs ----------------------------
