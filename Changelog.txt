@@ -1,5 +1,7 @@
 Date	Added
 12/9
+	* Moved a map_freeblock_unlock() around to eliminate a 
+	  crash [MouseJstr]
 	* Fixed how players are cleaned up when they disconnected
 	  during authentication [MouseJstr]
 	* Adjusted some messages in @marry [MouseJstr]

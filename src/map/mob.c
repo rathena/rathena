@@ -764,9 +764,11 @@ static int mob_timer(int tid,unsigned int tick,int id,int data)
 			printf("mob_timer : %d ?\n",md->state.state);
 		break;
 	}
-	map_freeblock_unlock();
+
 	if (md->timer == -1)
 		mob_changestate(md,MS_WALK,0);
+
+	map_freeblock_unlock();
 	return 0;
 }
 
