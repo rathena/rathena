@@ -402,7 +402,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	if(class_ == 1288 || class_ == 1287 || class_ == 1286 || class_ == 1285) {
 //	if(class_ == 1288) {
-		if(class_ == 1288 && (flag&BF_SKILL || skill_num == ASC_BREAKER))
+		if(class_ == 1288 && (flag&BF_SKILL || skill_num == ASC_BREAKER || skill_num == PA_SACRIFICE))
 			damage=0;
 		if(src->type == BL_PC) {
 			struct guild *g=guild_search(((struct map_session_data *)src)->status.guild_id);
@@ -2436,6 +2436,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 			hitrate = 1000000;
 			s_ele = 0;
 			s_ele_ = 0;
+			skill_num = PA_SACRIFICE;
+			//clif_skill_nodamage(src,target,skill_num,skill_lv,1);	// this doesn't show effect either.. hmm =/
 			sc_data[SC_SACRIFICE].val2 --;
 			if (sc_data[SC_SACRIFICE].val2 == 0)
 				status_change_end(src, SC_SACRIFICE,-1);

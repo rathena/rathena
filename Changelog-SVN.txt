@@ -1,6 +1,9 @@
 Date	Added
 
 03/25
+	* Some minor changes to Sacrifice in battle.c [celest]
+	* Set the Emperium to be immune to Sacrifice [celest]
+	* Set the Emperium to be have max status effects immunity [celest]
 	* Fixed indoorsrwstable.txt reading even when 'indoors_override_grffile' is
 	  set to 'no' [celest]
 	* Fixed @monsterbig/@monstersmall not working [celest]

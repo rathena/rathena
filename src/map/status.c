@@ -2978,9 +2978,13 @@ int status_get_sc_def(struct block_list *bl, int type)
 		break;
 	}
 
-	if(bl->type == BL_MOB && sc_def < 50)
-		sc_def = 50;
-	else if(bl->type == BL_PC) {
+	if(bl->type == BL_MOB) {
+		struct mob_data *md = (struct mob_data *)bl;
+		if (md && md->class_ == 1288)
+			return 0;
+		if (sc_def < 50)
+			sc_def = 50;
+	} else if(bl->type == BL_PC) {
 		struct status_change* sc_data = status_get_sc_data(bl);
 		if (sc_data && sc_data[SC_GOSPEL].timer != -1 &&
 			sc_data[SC_GOSPEL].val4 == BCT_PARTY &&
