@@ -25,10 +25,12 @@
 1018,Creamy,1000000
 1019,PecoPeco,1000000
 1020,Mandragora,1000000
+//1022,Werewolf,1000000
 1023,Orc Warrior,1000000
 1024,Worm Tail,1000000
 1025,Boa,1000000
 1026,Munak,1000000
+1027,Raptice,1000000
 1028,Skeleton Soldier,1000000
 1029,Isis,1000000
 1030,Anacondaq,1000000
@@ -323,11 +325,11 @@
 //1418,Evil Snake Lord,1000000
 //1492,Incantation Samurai,1000000
 1493,Dryad,1000000
-1494,Kind of Beetle,1000000
+1494,Beetle King,1000000
 1495,Stone Shooter,1000000
 1497,Wooden Golem,1000000
-1498,Wooden Shooter,1000000
-1499,Wooden Fighter,1000000
+1498,Wootan Shooter,1000000
+1499,Wootan Fighter,1000000
 1500,Parasite,1000000
 1502,Fire Poring,1000000
 1503,Gibbet,1000000
