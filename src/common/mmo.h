@@ -54,6 +54,8 @@
 #define MIN_CLOTH_COLOR battle_config.min_cloth_color
 #define MAX_CLOTH_COLOR battle_config.max_cloth_color
 
+#define MIN_CHAR_ID 150000 // shouldn't ever be changed, the client requires this min value [Ajarn]
+
 // for produce
 #define MIN_ATTRIBUTE 0
 #define MAX_ATTRIBUTE 4
@@ -265,8 +267,8 @@ struct guild_castle {
 	int Ghp4;
 	int Ghp5;
 	int Ghp6;
-	int Ghp7;	
-	int GID0;	
+	int Ghp7;
+	int GID0;
 	int GID1;
 	int GID2;
 	int GID3;
