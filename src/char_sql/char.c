@@ -1767,16 +1767,13 @@ int parse_tologin(int fd) {
 						gm_account[GM_num].level = (int)RFIFOB(fd,6);
 						new_level = 1;
 						GM_num++;
-						if (GM_num >= 4000) {
+						if (GM_num >= 4000)
 							printf("***WARNING: 4000 GM accounts found. Next GM accounts are not readed.\n");
-							char_log("***WARNING: 4000 GM accounts found. Next GM accounts are not readed." RETCODE);
-						}
 					}
 				}
 				if (new_level == 1) {
 					int len;
 					printf("From login-server: receiving a GM account information (%d: level %d).\n", RFIFOL(fd,2), (int)RFIFOB(fd,6));
-					char_log("From login-server: receiving a GM account information (%d: level %d)." RETCODE, RFIFOL(fd,2), (int)RFIFOB(fd,6));
 					//create_online_files(); // not change online file for only 1 player (in next timer, that will be done
 					// send gm acccounts level to map-servers
 					len = 4;

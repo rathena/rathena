@@ -1,6 +1,7 @@
 Date	Added
 
 03/17
+        * Fixed compile errors in SQL char.c [celest]
 	* Added ~86 new cards. Fixed new cards bugs, optimized [Lupus] thanks to Indiona,Landarma
 	* Removed nullpo warning from trade.c (my prev anti-spoof protection) [Lupus]
         * Added the new Einbroch/Einbech maps to maps_athena.conf [celest]
