@@ -166,7 +166,8 @@ int is_user_online(int account_id) {
 		return 0;
 
 	p = (int*)numdb_search(online_db, account_id);
-	printf("Acccount %d\n",*p);
+        if (p != NULL)
+	    printf("Acccount %d\n",*p);
 	
 	return (p != NULL);
 }

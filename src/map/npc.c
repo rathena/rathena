@@ -1624,7 +1624,7 @@ int npc_convertlabel_db(void *key,void *data,va_list ap)
 	
 	// here we check if the label fit into the buffer
 	if (strlen(lname)>23) { 
-		printf("npc_parse_script: label name longer than 23 chars! '%s'\n", lname);
+		printf("npc_parse_script: label name longer than 23 chars! '%s'\n (%s)", lname, current_file);
 		exit(1);
 	}
 	memcpy(lst[num].name,lname,strlen(lname)+1); //including EOS
@@ -1849,7 +1849,7 @@ why allocing 50 chars ?
 why checking here? 
 lname is identical to nd->u.scr.label_list[i].name which is only 24 chars so check for strlen should be 23
 			if (strlen(lname)>24) {
-				printf("npc_parse_script: label name error !\n");
+				printf("npc_parse_script: label name error (%s) !\n", current_file);
 				exit(1);
 			}else{
 				//struct event_data *ev2;
@@ -1871,7 +1871,7 @@ wouldn't it be easier just not to insert the new duplicate event, it is a duplic
 			// and already overwritten if this is here is reached
 			// I leave the check anyway but place it correctly to npc_convertlabel_db
 			if (strlen(lname)>23) { 
-				printf("npc_parse_script: label name longer than 23 chars! '%s'\n", lname);
+				printf("npc_parse_script: label name longer than 23 chars! '%s' (%s)\n", lname, current_file);
 				exit(1);
 			}else{
 				struct event_data *ev;
@@ -1889,7 +1889,7 @@ wouldn't it be easier just not to insert the new duplicate event, it is a duplic
 				// remember the label is max 50 chars + eos; see the strdb_init below
 				ev2 = (struct event_data *)strdb_search(ev_db,buf);
 				if(ev2 != NULL) {
-					printf("npc_parse_script : duplicate event %s\n",buf);
+					printf("npc_parse_script : duplicate event %s (%s)\n",buf, current_file);
 					
 					// just skip the label insertion and free the alloced buffer
 					aFree(buf);

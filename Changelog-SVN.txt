@@ -2,6 +2,8 @@
 Date	Added
 
 04/06
+        * Improved error messages during npc parsing [MouseJstr]
+        * Fixed a crash in login_sql [MouseJstr]
 	* Added logs filters in more logs [Lupus]
 	  now you can set individual bit-mask filter for each log file
 		Example: (drops log)
