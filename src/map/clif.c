@@ -4041,7 +4041,9 @@ int clif_moboutsight(struct block_list *bl,va_list ap)
 	nullpo_retr(0, ap);
 	nullpo_retr(0, md=va_arg(ap,struct mob_data*));
 
-	if(bl->type==BL_PC && (sd = (struct map_session_data*) bl)){
+	if(bl->type==BL_PC 
+	  && ((sd = (struct map_session_data*) bl) != NULL) 
+	  && session[sd->fd] != NULL) {
 		clif_clearchar_id(md->bl.id,0,sd->fd);
 	}
 
@@ -4061,7 +4063,9 @@ int clif_mobinsight(struct block_list *bl,va_list ap)
 	nullpo_retr(0, ap);
 
 	md=va_arg(ap,struct mob_data*);
-	if(bl->type==BL_PC && (sd = (struct map_session_data *)bl)){
+	if(bl->type==BL_PC 
+	  && ((sd = (struct map_session_data*) bl) != NULL) 
+	  && session[sd->fd] != NULL) {
 		clif_getareachar_mob(sd,md);
 	}
 
@@ -4081,7 +4085,9 @@ int clif_petoutsight(struct block_list *bl,va_list ap)
 	nullpo_retr(0, ap);
 	nullpo_retr(0, pd=va_arg(ap,struct pet_data*));
 
-	if(bl->type==BL_PC && (sd = (struct map_session_data*) bl)){
+	if(bl->type==BL_PC 
+	  && ((sd = (struct map_session_data*) bl) != NULL) 
+	  && session[sd->fd] != NULL) {
 		clif_clearchar_id(pd->bl.id,0,sd->fd);
 	}
 
@@ -4098,7 +4104,9 @@ int clif_npcoutsight(struct block_list *bl,va_list ap)
 	nullpo_retr(0, ap);
 	nullpo_retr(0, nd=va_arg(ap,struct npc_data*));
 
-	if(bl->type==BL_PC && (sd = (struct map_session_data*) bl)){
+	if(bl->type==BL_PC 
+	  && ((sd = (struct map_session_data*) bl) != NULL) 
+	  && session[sd->fd] != NULL) {
 		clif_clearchar_id(nd->bl.id,0,sd->fd);
 	}
 
@@ -4118,7 +4126,9 @@ int clif_petinsight(struct block_list *bl,va_list ap)
 	nullpo_retr(0, ap);
 
 	pd=va_arg(ap,struct pet_data*);
-	if(bl->type==BL_PC && (sd = (struct map_session_data *)bl)){
+	if(bl->type==BL_PC 
+	  && ((sd = (struct map_session_data*) bl) != NULL) 
+	  && session[sd->fd] != NULL) {
 		clif_getareachar_pet(sd,pd);
 	}
 
@@ -4135,7 +4145,9 @@ int clif_npcinsight(struct block_list *bl,va_list ap)
 	nullpo_retr(0, ap);
 
 	nd=va_arg(ap,struct npc_data*);
-	if(bl->type==BL_PC && (sd = (struct map_session_data *)bl)){
+	if(bl->type==BL_PC 
+	  && ((sd = (struct map_session_data*) bl) != NULL) 
+	  && session[sd->fd] != NULL) {
 		clif_getareachar_npc(sd,nd);
 	}
 

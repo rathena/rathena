@@ -1,5 +1,6 @@
 Date	Added
 12/6
+	* fixed a server crash in mobinsite [MouseJstr]
 	* fixed a server crash in party sharing exp [MouseJstr]
 	* fixed a server crash in BS_FINDINGORE [MouseJstr]
         * Updated Chase Walk [celest]
