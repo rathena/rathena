@@ -119,7 +119,7 @@
 640,Shining_Stone,Shining Stone,2,3000,0,50,,,,,10477567,2,,,,,{ pet 1155; },{},,
 641,Contract_in_Shadow,Contracts in Shadow,2,100,0,50,,,,,10477567,2,,,,,{ pet 1109; },{},,
 642,Book_of_Devil,Book of Devil,2,1800,0,50,,,,,10477567,2,,,,,{ pet 1101; },{},,
-643,Pet_Incubator,Pet Incubator,2,3000,,30,,,,,10477567,2,,,,,{ if((countitem(9030)<1)&&(countitem(9031)<1)&&(countitem(9032)<1)&&(countitem(9033)<1)&&(countitem(9034)<1)&&(countitem(9035)<1)&&(countitem(9036)<1)&&(countitem(9037)<1)&&(countitem(9038)<1)&&(countitem(9039)<1)) bpet; },{},,
+643,Pet_Incubator,Pet Incubator,2,3000,,30,,,,,10477567,2,,,,,{ bpet; },{},,
 
 // Misc Items
 //===================================================================
@@ -147,7 +147,7 @@
 675,Silver_Coin,Silver Coin,2,20,0,40,,,,,0,3,,,,,{},{}
 676,Silver_Coin_Pouch,Silver Coin Pouch,2,20,0,400,,,,,0,3,,,,,{},{}
 677,Platinum_Coin,Platinum Coin,2,20,0,40,,,,,0,3,,,,,{},{}
-678,Deadly_Poison_Bottle,Deadly Poison Bottle,2,20,0,100,,,,,0,3,,,,,{},{}
+678,Deadly_Poison_Bottle,Deadly Poison Bottle,2,20,0,100,,,,,10477567,2,,,,,{ if((Class>35)&&(Class<37)) mes "j0?"; close; },{}
 679,Recall_Pills,Recall Pills,2,20,0,300,,,,,0,3,,,,,{},{}
 680,Carnation,Carnation,2,20,0,1000,,,,,0,3,,,,,{},{}
 681,Wedding_Photo_Album,Wedding_Photo_Album,2,20,0,10,,,,,0,3,,,,,{},{}
@@ -1128,7 +1128,7 @@
 4126,Minorous_Card,Minorous Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddSize,2,15; bonus bBaseAtk,5; }
 4127,Nightmare_Card,Nightmare Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bResEff,Eff_Sleep,10000; bonus bAgi,1; }
 4128,Golden_Bug_Card,Golden Bug Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bNoMagicDamage,0; bonus bUseSPrate,100; }
-4129,Baphomet__Card,Baphomet  Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bHit,-10; bonus bSplashRange,1; }
+4129,Baphomet__Card,Baphomet Jr Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bAgi,3; bonus bCritical,1; }
 4130,Scorpion_King_Card,Scorpion King Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEle,9,20; }
 4131,Moonlight_Flower_Card,Moonlight Flower Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bSpeedRate,25; }
 4132,Mistress_Card,Mistress Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bNoGemStone,0; bonus bUseSPrate,25; }
