@@ -56,10 +56,6 @@ Problem:	When athena is run in linux it creates core files which takes 300 megs.
 Assigned:	N/A
 Progess:	0%
 
-Problem:	Char server and Map server crash when you recall some one.
-Assigned:	N/A
-Progess:	0% 
-
 Problem:	Sage's Area Skills (Delu.,Vulcano, etc) if casted on the same area (or overlap each other) instantly reboots server. use @gvgon when test. Don't test it towns
 Assigned:	N/A
 Progess:	0%
@@ -83,6 +79,6 @@ Problem:	AFM Maps not loading coords correctly, players appearing outside bounda
 Assigned:	N/A
 Progress:	0%
 
-Problem:	Wierd login-server bug on sql, it displays that the server is full when map-server crashes.
+Problem:	Wierd login-server bug on sql, it displays that the server is full when map-server crashes, has something to do with anti double login feature?
 Assigned:	N/A
 Progress:	0%
