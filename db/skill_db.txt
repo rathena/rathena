@@ -91,7 +91,7 @@
 89,8,6,2,1,1,10,1,yes,0,0,0,magic,2	//WZ_STORMGUST#ストームガスト#
 90,8,8,1,2,0,5,1:2:3:4:5,yes,0,0,0,magic,0	//WZ_EARTHSPIKE#アーススパイク#
 91,8,8,2,2,0,5,1:2:3:4:5,yes,0,0,0,magic,0	//WZ_HEAVENDRIVE#ヘヴンズドライブ#
-92,8,6,2,2,1,5,1,yes,0,0,0,magic,0	//WZ_QUAGMIRE#クァグマイア#
+92,8,6,2,2,1,5,1,yes,0,0,3,magic,0	//WZ_QUAGMIRE#クァグマイア#
 93,8,6,1,0,1,1,1,yes,0,0,0,magic,0	//WZ_ESTIMATION#モンスター情報#
 94,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//BS_IRON#鉄製造#
 95,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//BS_STEEL#鋼鉄製造#

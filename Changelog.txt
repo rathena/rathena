@@ -3,6 +3,9 @@ Date	Added
 	* Updated & Optimized TXT Login from FREYA. (need to do SQL now) [Codemaster]
 	* Removed compile warnings in intif.c. [Valaris]
 	* Fixed chrif_changesex and @changesex, now uses packet 0x3000. [MC Cameri]
+        * Updated some skills, credits to orn and midas. [celest]
+          - Magnum Break, Throw Stone, Sprinkle Sand, Magic Power, Memorise, Quagmire,
+            Spider Web, Reject Sword, and assassin's Dodge.
 
 11/12
 	* added folder: /save-tmpl, removed folder /save

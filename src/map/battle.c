@@ -1565,7 +1565,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		// リジェクトソード
 		if(sc_data[SC_REJECTSWORD].timer!=-1 && damage > 0 && flag&BF_WEAPON &&
 		  ((src->type==BL_PC && ((struct map_session_data *)src)->status.weapon == (1 || 2 || 3)) || src->type==BL_MOB )){
-			if(rand()%100 < (10+5*sc_data[SC_REJECTSWORD].val1)){ //反射確率は10+5*Lv
+			if(rand()%100 < (15*sc_data[SC_REJECTSWORD].val1)){ //反射確率は15*Lv
 				damage = damage*50/100;
 				battle_damage(bl,src,damage,0);
 				//ダメージを与えたのは良いんだが、ここからどうして表示するんだかわかんねぇ
@@ -1575,6 +1575,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 					skill_status_change_end(bl, SC_REJECTSWORD, -1);
 			}
 		}
+		if(sc_data[SC_SPIDERWEB].timer!=-1 && damage > 0)	// [Celest]
+			if ((flag&BF_SKILL && skill_get_pl(skill_num)==3) ||
+				(!flag&BF_SKILL && battle_get_attack_element(src)==3)) {
+				damage<<=1;
+				skill_status_change_end(bl, SC_SPIDERWEB, -1);
+			}
 	}
 
 	if(class == 1288 || class == 1287 || class == 1286 || class == 1285) {
@@ -1644,7 +1650,8 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 
 	// デーモンベイン(+3 ～ +30) vs 不死 or 悪魔 (死人は含めない？)
 	if((skill = pc_checkskill(sd,AL_DEMONBANE)) > 0 && (battle_check_undead(race,battle_get_elem_type(target)) || race==6) )
-		damage += (skill * 3);
+		damage += (skill*(int)(3+(sd->status.base_level+1)*0.05));	// submitted by orn
+		//damage += (skill * 3);
 
 	// ビーストベイン(+4 ～ +40) vs 動物 or 昆虫
 	if((skill = pc_checkskill(sd,HT_BEASTBANE)) > 0 && (race==2 || race==4) )
@@ -2588,7 +2595,8 @@ static struct Damage battle_calc_mob_weapon_attack(
 				t_def = def2*8/10;
 				if(battle_check_undead(s_race,battle_get_elem_type(src)) || s_race==6)
 					if(tsd && (skill=pc_checkskill(tsd,AL_DP)) > 0 )
-						t_def += skill*3;
+						t_def += skill* (int) (3 + (tsd->status.base_level+1)*0.04);	// submitted by orn
+						//t_def += skill*3;
 
 				vitbonusmax = (t_vit/20)*(t_vit/20)-1;
 				if(battle_config.monster_defense_type) {

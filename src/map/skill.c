@@ -1035,12 +1035,12 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			skill_status_change_start(bl,SC_SLEEP,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 	case TF_SPRINKLESAND:	/* 砂まき */
-		if( rand()%100 < 15*sc_def_int/100 )
+		if( rand()%100 < 20*sc_def_int/100 )
 			skill_status_change_start(bl,SC_BLIND,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 
 	case TF_THROWSTONE:		/* 石投げ */
-		if( rand()%100 < 5*sc_def_vit/100 )
+		if( rand()%100 < 7*sc_def_vit/100 )
 			skill_status_change_start(bl,SC_STAN,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 
@@ -2106,6 +2106,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	if(skilllv <= 0) return 0;
 
 	struct map_session_data *sd=NULL;
+	struct status_change *sc_data = battle_get_sc_data(src);
 	int i;
 
 	nullpo_retr(1, src);
@@ -2359,6 +2360,8 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 				bl->m,x-ar,y-ar,x+ar,y+ar,0,
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
+			if (skillid == SM_MAGNUM)	// fire element for 10 seconds
+				skill_status_change_start(src,SC_FLAMELAUNCHER,0,0,0,0,10000,0);
 		}
 		break;
 
@@ -2623,6 +2626,10 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	default:
 		map_freeblock_unlock();
 		return 1;
+	}
+	if(sc_data) {
+		if (sc_data[SC_MAGICPOWER].timer != -1 && skillid != HW_MAGICPOWER)	//マジックパワ?の?果終了
+			skill_status_change_end(src,SC_MAGICPOWER,-1);
 	}
 	map_freeblock_unlock();
 
@@ -6333,6 +6340,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			}
 		}
 		break;
+	case WZ_QUAGMIRE:
 	case MG_FIREWALL:		/* ファイアーウォール */
 	case WZ_FIREPILLAR: // celest 
 		/* 数制限 */
@@ -6841,7 +6849,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 
 	//メモライズ状態ならキャストタイムが1/3
 	if(sc_data && sc_data[SC_MEMORIZE].timer != -1 && casttime > 0){
-		casttime = casttime/3;
+		casttime = casttime/2;
 		if((--sc_data[SC_MEMORIZE].val2)<=0)
 			skill_status_change_end(&sd->bl, SC_MEMORIZE, -1);
 	}
@@ -6894,8 +6902,8 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	}
 
 	//マジックパワーの効果終了
-	if(sc_data && sc_data[SC_MAGICPOWER].timer != -1 && skill_num != HW_MAGICPOWER)
-		skill_status_change_end(&sd->bl,SC_MAGICPOWER,-1);
+	//if(sc_data && sc_data[SC_MAGICPOWER].timer != -1 && skill_num != HW_MAGICPOWER)
+	//	skill_status_change_end(&sd->bl,SC_MAGICPOWER,-1);	// moved
 
 	return 0;
 }

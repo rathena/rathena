@@ -1677,7 +1677,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 		if(sd->status.class==12||sd->status.class==17||sd->status.class==4013||sd->status.class==4018)
 			sd->flee += skill*4;
 		if(sd->status.class==12||sd->status.class==4013)
-			sd->speed -= sd->speed *(skill*.5)/100;
+			sd->speed -= sd->speed *(skill*1.5)/100;
 	}
 	if( (skill=pc_checkskill(sd,MO_DODGE))>0 )	// Œ©Ø‚è
 		sd->flee += (skill*3)>>1;
