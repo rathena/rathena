@@ -637,13 +637,14 @@ int pc_break_equip(struct map_session_data *sd, unsigned short where)
 			item=sd->inventory_data[i];
 			sd->status.inventory[i].attribute = 1;
 			pc_unequipitem(sd,i,0);
+			sprintf(output, "%s has broken.",item->jname);
+			clif_emotion(&sd->bl,23);
+			clif_displaymessage(sd->fd, output);
+			clif_equiplist(sd);
 			break;
 		}
 	}
-	sprintf(output, "%s has broken.",item->jname);
-	clif_emotion(&sd->bl,23);
-	clif_displaymessage(sd->fd, output);
-	clif_equiplist(sd);
+
 	return 0;
 }
 
