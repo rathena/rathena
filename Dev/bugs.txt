@@ -57,3 +57,7 @@ Progess:	0%
 Problem:	[mob attacks againsts players wearing ghostring armor do full damage mob_ghostring_fix: yes] Does not work, does nothing.
 Assigned:	N/A
 Progess:	0%
+
+Problem:	If two clients using the same account the server will crash and it allows people to dupe using the trade bug, one person trades over and item relogs it saves and the other person doesn't, they crash server both of them end up with the item.
+Assigned:	N/A
+Progess:	0%
