@@ -234,9 +234,7 @@ int SkillStatusChangeTable[]={	/* skill.hのenumのSC_***とあわせること */
 	SC_GOSPEL,
 /* 370- */
 	-1,-1,-1,-1,-1,-1,-1,-1,
-
 	SC_EDP,
-
 	-1,
 /* 380- */
 	SC_TRUESIGHT,
@@ -1080,7 +1078,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 				if(pc_steal_item(sd,bl))
 					clif_skill_nodamage(src,bl,TF_STEAL,skill2,1);
 				else if (battle_config.display_snatcher_skill_fail)
-					clif_skill_fail(sd,skillid,0,0); // it's annoying! =p [Celest]
+					clif_skill_fail(sd,skillid,0,0);
 			}
 		// エンチャントデットリ?ポイズン(猛毒?果)
 		if (sd && sd->sc_data[SC_EDP].timer != -1 && rand() % 10000 < sd->sc_data[SC_EDP].val2 * sc_def_vit) {
@@ -1151,7 +1149,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			struct status_change *sc_data = battle_get_sc_data(bl);
 			if(sc_data) {
 				sc_data[SC_FREEZE].val3++;
-				if(sc_data[SC_FREEZE].val3 >= 3 && rand()%1000 < skilllv*sc_def_mdef/100)
+				if(sc_data[SC_FREEZE].val3 >= 3)
 					skill_status_change_start(bl,SC_FREEZE,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 			}
 		}
@@ -3592,11 +3590,11 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			clif_skill_nodamage(src,bl,skillid,-1,1);
 			if( tsc_data ){
 				if( tsc_data[sc].timer==-1 )
-				/* 付加する */
-				skill_status_change_start(bl,sc,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
-			else
-				/* 解除する */
-				skill_status_change_end(bl, sc, -1);
+					/* 付加する */
+					skill_status_change_start(bl,sc,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
+				else
+					/* 解除する */
+					skill_status_change_end(bl, sc, -1);
 			}
 		}
 		break;
@@ -7343,7 +7341,9 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	if( sd->opt1>0 )
 		return 0;
 	if(sc_data){
-		if(sc_data[SC_CHASEWALK].timer != -1) return 0;
+		// allow to use only Chasewalk [celest]
+		if(sc_data[SC_CHASEWALK].timer != -1 && skill_num != ST_CHASEWALK)
+			return 0;
 		if(sc_data[SC_VOLCANO].timer != -1){
 			if(skill_num==WZ_ICEWALL) return 0;
 		}
