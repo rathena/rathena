@@ -37,6 +37,10 @@ Other Ppl
 Date		Added
 ======
 
+03/28
+	* Corrected Yuno warp points, thanks to Dino9021
+	* Added Yuno warps to the Aldebaran kafra NPC, thanks to Dino9021
+
 03/27
 	* Fixed Ant Hell warps, thanks to Dino9021
 	* Corrected positions for Thief and Archer quest skills NPCs, thanks to Dino9021

@@ -1,6 +1,7 @@
 Date	Added
 
 03/28
+	* Fixed Auto Berserk activating by itself when changing maps [celest]
 	* Re-fixed the SQL syntax crash in logging [celest]
 
 03/27

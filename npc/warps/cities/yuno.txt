@@ -13,7 +13,7 @@
 //============================================================
 
 //= Yuno City ================================================
-yuno.gat,158,15,0	warp	yun-yunfild	1,1,yuno_fild04.gat,231,209
+yuno.gat,158,15,0	warp	yun-yunfild	1,1,yuno_fild04.gat,231,284
 yuno.gat,117,135,0	warp	yun01	1,1,yuno_in01.gat,116,37
 yuno_in01.gat,116,40,0	warp	yun02	1,1,yuno.gat,120,138
 yuno.gat,48,105,0	warp	yun03	1,1,yuno_in01.gat,37,176

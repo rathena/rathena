@@ -24,7 +24,7 @@ yuno_fild03.gat,19,79,0	warp	yunfild04	1,1,yuno_fild04.gat,373,84
 yuno_fild04.gat,375,84,0	warp	yunfild04-1	1,1,yuno_fild03.gat,21,79
 yuno_fild03.gat,20,155,0	warp	yunfild05	1,1,yuno_fild04.gat,373,150
 yuno_fild04.gat,375,150,0	warp	yunfild05-1	1,1,yuno_fild03.gat,22,155
-yuno_fild04.gat,231,211,0	warp	yunfild-yun	1,1,yuno.gat,158,17
+yuno_fild04.gat,231,288,0	warp	yunfild-yun	1,1,yuno.gat,158,17
 yuno_fild03.gat,32,139,0	warp	yunfild-mag01	1,1,mag_dun01.gat,126,68
 
 //= New Yuno Fields ==========================================

@@ -165,6 +165,7 @@ function	script	F_KafTele	{
 		if (@wrpD$[@num] == "Comodo Pharos Lighthouse") warp "cmd_fild07.gat", 127, 134;
 		if (@wrpD$[@num] == "Orc Dungeon") warp "gef_fild10.gat", 52, 326;
 		if (@wrpD$[@num] == "Umbala") warp "umbala.gat", 130, 130;
+		if (@wrpD$[@num] == "Yuno") warp "yuno.gat", 157, 123;
 		close2;		// this part safegaurds against errors/typos
 		set zeny, zeny + @wrpP[@num];
 		cutin "", 255;
