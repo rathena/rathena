@@ -14,10 +14,11 @@
 
 #include <time.h>
 
-#include "socket.h"
-#include "timer.h"
-#include "malloc.h"
-#include "lock.h"
+#include "../common/socket.h"
+#include "../common/timer.h"
+#include "../common/malloc.h"
+#include "../common/lock.h"
+#include "../common/db.h"
 
 #include "map.h"
 #include "clif.h"
@@ -31,15 +32,14 @@
 #include "npc.h"
 #include "pet.h"
 #include "intif.h"
-#include "db.h"
 #include "skill.h"
 #include "chat.h"
 #include "battle.h"
 #include "party.h"
 #include "guild.h"
-#include "lock.h"
 #include "atcommand.h"
 #include "log.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -847,7 +847,11 @@ static void disp_error_message(const char *mes,const unsigned char *pos)
 			*lineend=0;
 		}
 		if(lineend==NULL || pos<lineend){
-			printf("%s line %d : ",mes,line);
+			if (current_file) {
+				printf("%s in "CL_WHITE"\'%s\'"CL_RESET" line "CL_WHITE"\'%d\'"CL_RESET" : ", mes, current_file, line);
+			} else {
+				printf("%s line "CL_WHITE"\'%d\'"CL_RESET" : ", mes, line);
+			}
 			for(i=0;(linestart[i]!='\r') && (linestart[i]!='\n') && linestart[i];i++){
 				if(linestart+i!=pos)
 					printf("%c",linestart[i]);

@@ -1,6 +1,8 @@
 Date	Added
 
 03/17
+        * Added display script filename when a script error is found while parsing
+          [celest]
         * Added 2 char-server packets to support Freya's login server [celest]
         * Rewrite on Full Strip [celest]
 	* Fixed heap corrupion in map.c caused while loading maps 

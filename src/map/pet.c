@@ -1588,6 +1588,7 @@ int read_petdb()
 	char line[1024];
 	int i;
 	int j=0;
+	int lines;
 	char *filename[]={"db/pet_db.txt","db/pet_db2.txt"};
 	
 	memset(pet_db,0,sizeof(pet_db));
@@ -1599,7 +1600,9 @@ int read_petdb()
 			printf("can't read %s\n",filename[i]);
 			return -1;
 		}
+		lines = 0;
 		while(fgets(line,1020,fp)){
+			lines++;
 			int nameid,i;
 			char *str[32],*p,*np;
 
@@ -1647,7 +1650,7 @@ int read_petdb()
 			pet_db[j].script = NULL;
 			if((np=strchr(p,'{'))==NULL)
 				continue;
-			pet_db[j].script = parse_script(np,0);
+			pet_db[j].script = parse_script(np,lines);
 			j++;
 		}
 		fclose(fp);

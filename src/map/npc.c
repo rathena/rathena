@@ -35,7 +35,7 @@ struct npc_src_list {
 	struct npc_src_list * next;
 //	struct npc_src_list * prev; //[Shinomori]
 	char name[4];
-} ;
+};
 
 static struct npc_src_list *npc_src_first=NULL;
 static struct npc_src_list *npc_src_last=NULL;
@@ -44,7 +44,7 @@ static int npc_warp=0;
 static int npc_shop=0;
 static int npc_script=0;
 static int npc_mob=0;
-
+char *current_file = NULL;
 int npc_get_new_npc_id(void){ return npc_id++; }
 
 static struct dbt *ev_db;
@@ -2435,6 +2435,7 @@ int do_init_npc(void)
 			printf("file not found : %s\n",nsl->name);
 			exit(1);
 		}
+		current_file=nsl->name;
 		lines=0;
 		while(fgets(line,1020,fp)) {
 			char w1[1024],w2[1024],w3[1024],w4[1024],mapname[1024];
@@ -2488,6 +2489,7 @@ int do_init_npc(void)
 			}
 		}
 		fclose(fp);
+		current_file = NULL;
 		printf("\r");
 		ShowStatus("Loading NPCs... Working: ");
 		if (last_time != time(0)) {
@@ -2511,7 +2513,7 @@ int do_init_npc(void)
 		CL_WHITE"%d"CL_RESET"' Scripts\n\t-'"
 		CL_WHITE"%d"CL_RESET"' Mobs\n",
 		npc_id-START_NPC_NUM,"",npc_warp,npc_shop,npc_script,npc_mob);
-	ShowInfo(tmp_output);
+	ShowInfo(tmp_output);	
 
 	add_timer_func_list(npc_walktimer,"npc_walktimer"); // [Valaris]
 	add_timer_func_list(npc_event_timer,"npc_event_timer");
