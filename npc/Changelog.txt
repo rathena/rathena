@@ -34,6 +34,11 @@ Other Ppl
 
 Date		Added
 ======
+
+02/28
+	* warps/louyang.txt: Added 2 escapes from 2 mountains 018,019 [Lupus]
+	  Some players used to stuck there after warps
+
 02/27
 	* Fixed some bugs in Monk Job Quest. Now it's fully passable. [Lupus]
 	  Going to brush it up a bit later. First have to re-check Crusader+Assassin+Rogue quests ^_-
