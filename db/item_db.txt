@@ -75,6 +75,7 @@
 571,Fortune_Candy_Cane,Fortune Candy Cane,0,20,0,40,,,,,10477567,2,,,,{ itemheal rand(105,144),0; },{}
 572,Fortune_Cookie,Fortune Cookie,0,15,0,30,,,,,10477567,2,,,,{ itemheal rand(45,64),0; },{}
 573,Chocolate_Drink,Chocolate Drink,0,20,0,150,,,,,10477567,2,,,,{ itemheal rand(105,144),0; },{}
+574,Egg,Egg,0,0,,30,,,,,10477567,2,,,,,{ itemheal rand(16,21),0; },{}
 
 // Usable Items
 //===================================================================
@@ -1025,6 +1026,8 @@
 2639,Purification_Sachet,Occult Incense,5,20,0,100,,0,,,10477567,2,136,,0,,{},{ bonus bAgi,1; bonus bInt,1; }
 2640,Kafra_Ring,Kafra Ring,5,20,0,200,,,,,10477567,2,136,,,,{},{ bonus bStr,1; bonus bAgi,1; bonus bInt,1; bonus bLuk,1; }
 2641,Fashion_Hip_Sack,Fashion Hip Sack,5,20,0,700,,0,,0,263200,2,136,,50,,{},{ bonus bStr,2; }
+2642,Celines_Ring,Celine's Ring,5,,,100,,0,,0,10477567,2,136,,,,{},{}
+2643,Celines_Ring_,Celine's Ring,5,,,100,,0,,0,10477567,2,136,,,,{},{}
 
 // Cards
 //===================================================================
@@ -1180,7 +1183,7 @@
 // New Cards
 // //OK = Tested, Works fine. //??OK = looks right, but not properly tested yet
 //===================================================================
-4149,Gargoyle_Card,Gargoyle Card,6,20,0,10,,,,,,,,,,,{},{}
+4149,Gargoyle_Card,Gargoyle Card,6,20,0,10,,,,,,,2,,,,{},{ dispbottom "Gagoyle OK:"; dispbottom isequipped(4149); dispbottom isequippedcnt(4149); dispbottom cardscnt(4149); } //For test purposes only
 4150,Goat_Card,Goat Card,6,20,0,10,,,,,,,,,,,{},{}
 4151,Gajomart_Card,Gajomart Card,6,20,0,10,,,,,,,,,,,{},{}
 4152,Galapago_Card,Galapago Card,6,20,0,10,,,,,,,136,,,,{},{} //missing bItemHealRate,ListItems or kind & bRandomDrop,Item1,Chance,Item2,Chance,etc
@@ -1463,7 +1466,8 @@
 5097,Annual_Commemoration_Hat,Annual Commemoration Hat,5,20,0,30,,3,,0,10477567,2,256,,0,166,{},{ bonus bAllStats,3; }
 5098,Tiger_Mask,Tiger Mask,5,20,0,400,,2,,,10477567,2,768,,,181,{},{ bonus bStr,3; bonus bMaxHP,100; }
 5100,Sale_Sign,Sale Sign,5,20,0,800,,1,,0,10477567,2,256,,75,183,{},{ bonus bStr,1; bonus bAgi,1; bonus bLuk,1; }
-5101,Takius_Blindfold,Takius' Blindfold,5,,,100,,1,,0,10477567,2,512,,,184,{},{}
+5101,Takius_Blindfold,Takius' Blindfold,5,,,100,,,,0,10477567,2,512,,,184,{},{}
+5102,Round_Eyes,Round Eyes,5,,,100,,,,0,10477567,2,512,,,185,{},{}
 
 // Misc items
 //===================================================================
@@ -1772,6 +1776,17 @@
 7302,Krathong,Krathong,3,20,0,10,,,,,,,,,,,{},{}
 7303,Rice_Bag,Rice Straw Bag,3,20,0,800,,,,,,,,,,,{},{}
 
+// 2005
+7304,Witchs_Spellbook,Witch's Spellbook,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7305,Unknown_item,Authority of 9 worlds,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7306,Piece_of_Soul,Piece of Soul,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7307,Whisper_of_Soul,Whisper of Soul,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7308,Witchs_Potion,Witch's Potion,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7309,Crows_Wing,Crow's Wing,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7310,Peco_Coupon,Pecopeco Free Coupon,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7311,Airship_Coupon,Airship Free Coupon,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+7312,Jubile,Jubilaeum,3,,,10,0,0,0,0,0,0,0,0,0,0,0,{},{}
+
 7500,THG_Membership,THG Membership,3,20,0,10,,,,,,,,,,,{},{}
 7501,Token_Bag,Token Bag,3,20,0,10,,,,,,,,,,,{},{}
 
@@ -1878,3 +1893,10 @@
 12016,Speed_Increasing_Potion,Inc.Speed Potion,2,1000,0,100,,,,,10477567,2,,,,,{},{}
 12017,Speed_Decreasing_Potion,Dec.Speed Potion,2,1000,0,100,,,,,10477567,2,,,,,{},{}
 12018,Fire_Cracker,Fire Cracker,2,250,0,20,,,,,10477567,2,,,,,{ misceffect(256); },{}
+
+// 2005
+12019,Sacred_Egg,Sacred_Egg,2,,,150,,,,,10477567,2,,,,,{},{} //Acts like Yggdra 
+
+
+
+
