@@ -7853,15 +7853,15 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		int next = pc_nextbaseexp(sd)>0 ? pc_nextbaseexp(sd) : sd->status.base_exp;
 		if ((sd->status.base_exp*100/next)%10 == 0) {
 			estr_lower(RFIFOP(fd,4));
-			if (sd->state.snovice_flag == 0 && strstr(RFIFOP(fd,4), "guardian angel, can you hear my voice? ^^;"))
+			if (sd->state.snovice_flag == 0 && strstr(RFIFOP(fd,4), msg_txt(540)))
 				sd->state.snovice_flag = 1;
 			else if (sd->state.snovice_flag == 1) {
-				sprintf(message, "my name is %s, and i'm a super novice~", sd->status.name);
+				sprintf(message, msg_txt(541), sd->status.name);
 				estr_lower(message);
 				if (strstr(RFIFOP(fd,4), message))
 					sd->state.snovice_flag = 2;
 			}
-			else if (sd->state.snovice_flag == 2 && strstr(RFIFOP(fd,4), "please help me~ t.t"))
+			else if (sd->state.snovice_flag == 2 && strstr(RFIFOP(fd,4), msg_txt(542)))
 				sd->state.snovice_flag = 3;
 			else if (sd->state.snovice_flag == 3) {
 				int i;

@@ -3,6 +3,9 @@ $LastChangedDate: 2004-12-30 00:22:54 -0500 (Thu, 30 Dec 2004)$
 SVN: $Rev$
 
 Date	Added
+12/30
+        * Moved supernovice guardian angel messages to msg_athena.conf [celest]
+
 12/29
 	* Fix account register wipe issue (SVN 868) [MouseJstr]
 	* Double storage/lag exploit fixed (SVN 867) [MouseJstr]
