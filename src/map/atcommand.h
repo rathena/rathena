@@ -216,6 +216,7 @@ enum AtCommandType {
 	AtCommand_Marry, // by MouseJstr
 	AtCommand_Divorce, // by MouseJstr
 	AtCommand_Rings, // by MouseJstr
+	AtCommand_Grind, // by MouseJstr
 	
 	// end
 	AtCommand_Unknown,

@@ -1,5 +1,6 @@
 # $Id: Makefile 158 2004-10-01 03:45:15Z PoW $
 
+# CC = /usr/local/bin/gcc -fbounds-checking -pipe
 CC = gcc -pipe
 PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT
 #PACKETDEF = -DPACKETVER=5 -DNEW_006b

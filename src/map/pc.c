@@ -5408,7 +5408,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	if (sd->sc_data) {
 		if (sd->sc_data[SC_ENDURE].timer == -1 && sd->sc_data[SC_BERSERK].timer == -1 && !sd->special_state.infinite_endure)
 			pc_stop_walking(sd,3);
-		else if(sd->sc_data[SC_ENDURE].timer != -1 && src->type==BL_MOB && (--sd->sc_data[SC_ENDURE].val2) <= 0)
+		else if(sd->sc_data[SC_ENDURE].timer != -1 && (src != NULL && src->type==BL_MOB) && (--sd->sc_data[SC_ENDURE].val2) <= 0)
 			skill_status_change_end(&sd->bl, SC_ENDURE, -1);
 	} else
 		pc_stop_walking(sd,3);

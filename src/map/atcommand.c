@@ -233,6 +233,8 @@ ACMD_FUNC(marry); // by MouseJstr
 ACMD_FUNC(divorce); // by MouseJstr
 ACMD_FUNC(rings); // by MouseJstr
 
+ACMD_FUNC(grind); // by MouseJstr
+
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
  *------------------------------------------
@@ -483,6 +485,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Marry,		"@marry",	40, atcommand_marry }, // [MouseJstr]
 	{ AtCommand_Divorce,		"@divorce",	40, atcommand_divorce }, // [MouseJstr]
 	{ AtCommand_Rings,		"@rings",	40, atcommand_rings }, // [MouseJstr]
+	{ AtCommand_Grind,		"@grind",	40, atcommand_grind }, // [MouseJstr]
 
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
@@ -2160,7 +2163,6 @@ int atcommand_alive(
 	return 0;
 	} 
 	return -1;
-	
 }
 
 /*==========================================
@@ -7492,6 +7494,44 @@ atcommand_rings(const int fd, struct map_session_data* sd,
   clif_displaymessage(fd, "You have rings!  Give them to the lovers.");
 
   return 0;
+}
+
+/*==========================================
+ * @grind by [MouseJstr]
+ *------------------------------------------
+ */
+int
+atcommand_grind(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd = NULL;
+	int skillnum;
+	int inf;
+	char target[255];
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message)
+		return -1;
+	if(sscanf(message, "%s", target) != 1) {
+		clif_displaymessage(fd, "Usage: @grind  <target>");
+		return -1;
+	}
+	if((pl_sd=map_nick2sd(target)) == NULL) 
+		return -1;
+
+	for (skillnum = 1; skillnum < 500; skillnum++) {
+		sd->status.sp = sd->status.max_sp;
+		atcommand_alive(fd, sd, command, message);
+
+		inf = skill_get_inf(skillnum);
+
+		if ((inf == 2) || (inf == 1))
+			skill_use_pos(sd, pl_sd->bl.x+5, pl_sd->bl.y+5, skillnum, 1);
+		else
+			skill_use_id(sd, pl_sd->bl.id, skillnum, 1);
+	}
+
+	return 0;
 }
 
 /*==========================================
