@@ -5807,7 +5807,7 @@ int clif_hpmeter(struct map_session_data *sd)
 	WBUFW(buf2,8)=(sd->status.max_hp > 0x7fff)? 0x7fff:sd->status.max_hp;
 	for(i=0;i<fd_max;i++){
 		if(session[i] && (md=session[i]->session_data) && md->state.auth &&
-			md->bl.m == md->bl.m && pc_isGM(md) && sd != md){
+			md->bl.m == sd->bl.m && pc_isGM(md) && sd != md){
 			memcpy(WFIFOP(i,0),buf2,packet_len_table[0x106]);
 			WFIFOSET(i,packet_len_table[0x106]);
 		}

@@ -1,5 +1,7 @@
 Date	Added
 12/22
+        * Fixed frost diver not working ... my bad =p [celest]
+        * Corrected typo in clif_hpmeter - md -> sd [celest]
         * Check if the player has been authentified by the char server before
           clearing any timers in map_quit [celest]
         * Added eventtimercount and timerskill_count - check these before clearing

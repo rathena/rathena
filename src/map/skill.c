@@ -2627,8 +2627,8 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		rate = rate<=5?5:rate;
 		if (sc_data && sc_data[SC_FREEZE].timer != -1) {
 			skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
-		} else if (sd) {
-			clif_skill_fail(sd,skillid,0,0);
+			if (sd)
+				clif_skill_fail(sd,skillid,0,0);
 			break;
 		}
 		damage = skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
@@ -10024,7 +10024,7 @@ int skill_status_change_start(struct block_list *bl, int type, int val1, int val
 			if(val1>5) //ƒŒƒxƒ‹‚ª5ˆÈã‚Ìê‡‚Í25?‚É§ŒÀ(1?–Ú‚Í‚·‚Å‚É‘Å‚Á‚Ä‚é‚Ì‚Å-1)
 				val3=5*5-1;
 			else
-			val3= (val1|1)*(val1|1)-1;
+				val3= (val1|1)*(val1|1)-1;
 			break;
 
 		/* ƒXƒLƒ‹‚¶‚á‚È‚¢/ŠÔ‚É?ŒW‚µ‚È‚¢ */
