@@ -310,7 +310,7 @@ struct map_session_data {
 	int vender_id;
 	int vend_num;
 	char message[80];
-	struct vending vending[12];
+	struct vending vending[MAX_VENDING];
 
 	int catch_target_class;
 	struct s_pet pet;
