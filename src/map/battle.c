@@ -5481,6 +5481,10 @@ void battle_validate_conf() {
 	
 	if (battle_config.night_darkness_level > 10) // Celest
 		battle_config.night_darkness_level = 10;
+
+	if (battle_config.vending_max_value > 10000000 || battle_config.vending_max_value<=0) // Lupus & Kobra_k88
+		battle_config.vending_max_value = 10000000;
+
 }
 
 /*==========================================

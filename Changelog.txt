@@ -1,5 +1,7 @@
 Date	Added
-11/20   * Skill updates [celest]
+11/20   
+	* Added check for max vending_max_value when reading config [kobra_k88]
+	* Skill updates [celest]
           - Napalm vulcan, Enchant Deadly Poison, Slow Poison (based on jAthena 1066)
           - Create Deadly Poison, thanks to DracoRPG!
           - Added effect for Meteor Assault
