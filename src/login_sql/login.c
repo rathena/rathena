@@ -300,7 +300,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 	char ip[16];
 	
 	int encpasswdok = 0;
-	int state = atoi(sql_row[9]);
+	int state;
 	
 	#ifdef PASSWORDENC
 	char logbuf[1024], *p = logbuf;
@@ -362,6 +362,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 	// Check status
 
 	account->ban_until_time = atol(sql_row[8]);
+	state = atoi(sql_row[9]);
 
 	if (state == -3) {
 		//id is banned
