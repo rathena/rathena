@@ -165,7 +165,7 @@ static void display_title(void)
 	// \033[1m : use bold for font
 	printf("\033[2J"); // clear screen and go up/left (0, 0 position in text)
 	printf("\033[37;44m          (=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=)\033[K\033[0m\n"); // white writing (37) on blue background (44), \033[K clean until end of file
-	printf("\033[0;44m          (\033[1;33m        (c)2004 eAthena Development Team presents        \033[0;44m)\033[K\033[0m\n"); // yellow writing (33)
+	printf("\033[0;44m          (\033[1;33m        (c)2005 eAthena Development Team presents        \033[0;44m)\033[K\033[0m\n"); // yellow writing (33)
 	printf("\033[0;44m          (\033[1m       ______  __    __                                  \033[0;44m)\033[K\033[0m\n"); // 1: bold char, 0: normal char
 	printf("\033[0;44m          (\033[1m      /\\  _  \\/\\ \\__/\\ \\                     v%2d.%02d.%02d   \033[0;44m)\033[K\033[0m\n", ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION); // 1: bold char, 0: normal char
 	printf("\033[0;44m          (\033[1m    __\\ \\ \\_\\ \\ \\ ,_\\ \\ \\___      __    ___      __      \033[0;44m)\033[K\033[0m\n"); // 1: bold char, 0: normal char
@@ -178,7 +178,7 @@ static void display_title(void)
 	printf("\033[0;44m          (\033[1m ( e | n | g | l | i | s | h ) ( A | t | h | e | n | a ) \033[0;44m)\033[K\033[0m\n"); // 1: bold char, 0: normal char
 	printf("\033[0;44m          (\033[1m  \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/   \\_/ \\_/ \\_/ \\_/ \\_/ \\_/  \033[0;44m)\033[K\033[0m\n"); // 1: bold char, 0: normal char
 	printf("\033[0;44m          (\033[1m                                                         \033[0;44m)\033[K\033[0m\n"); // yellow writing (33)
-	printf("\033[0;44m          (\033[1;33m  Advanced Fusion Maps (c) 2003-2004 The Fusion Project  \033[0;44m)\033[K\033[0m\n"); // yellow writing (33)
+	printf("\033[0;44m          (\033[1;33m  Advanced Fusion Maps (c) 2003-2005 The Fusion Project  \033[0;44m)\033[K\033[0m\n"); // yellow writing (33)
 	printf("\033[37;44m          (=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=)\033[K\033[0m\n\n"); // reset color
 	
 	if ((revision = get_svn_revision(".svn\\entries"))>0) {
