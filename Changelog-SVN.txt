@@ -1,6 +1,7 @@
 Date	Added
 
 03/23
+        * Adjusted my trade fix [1280: MouseJstr]
         * Fixed possible memory corruption in storage if number of guilds
           in database exceeds the max server can support [1278 : MouseJstr]
         * Fixed @mapexit to properly flush the fifo's before shutting

@@ -220,8 +220,8 @@ void trade_tradeok(struct map_session_data *sd) {
 
 	// check items
 	for(trade_i = 0; trade_i < 10; trade_i++) {
-		if (((sd->deal_item_index[trade_i]-2) < 0) ||
-		    (sd->deal_item_amount[trade_i] > sd->status.inventory[sd->deal_item_index[trade_i]-2].amount) ||
+		if ((((sd->deal_item_index[trade_i]-2) >= 0) &&
+		    (sd->deal_item_amount[trade_i] > sd->status.inventory[sd->deal_item_index[trade_i]-2].amount)) ||
 		    (sd->deal_item_amount[trade_i] < 0)) {
 			trade_tradecancel(sd);
 			return;
