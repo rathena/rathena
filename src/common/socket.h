@@ -90,7 +90,7 @@ int do_sendrecv(int next);
 int do_parsepacket(void);
 void do_socket(void);
 
-extern void flush_fifos_for_final();
+extern void flush_fifos();
 
 int start_console(void);
 

@@ -150,7 +150,7 @@ static int send_from_fifo(int fd)
 	return 0;
 }
 
-void flush_fifos_for_final() 
+void flush_fifos() 
 {
 	int i;
 	for(i=0;i<fd_max;i++)
