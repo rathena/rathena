@@ -62,7 +62,7 @@ int storage_fromstr(char *str,struct storage *p)
 		if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6],
-		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[11], &len) == 12) {
+		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[10], &len) == 12) {
 			p->storage[i].id = tmp_int[0];
 			p->storage[i].nameid = tmp_int[1];
 			p->storage[i].amount = tmp_int[2];
@@ -144,7 +144,7 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 	if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6],
-		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[11], &len) == 12) {
+		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[10], &len) == 12) {
 			p->storage[i].id = tmp_int[0];
 			p->storage[i].nameid = tmp_int[1];
 			p->storage[i].amount = tmp_int[2];

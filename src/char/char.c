@@ -479,7 +479,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p) {
 		if (sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		    &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		    &tmp_int[4], &tmp_int[5], &tmp_int[6],
-		    &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[11], &len) == 12) {
+		    &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[10], &len) == 12) {
 			// do nothing, it's ok
 		} else if (sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		          &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
@@ -509,7 +509,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p) {
 		if (sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		    &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		    &tmp_int[4], &tmp_int[5], &tmp_int[6],
-		    &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[11], &len) == 12) {
+		    &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[10], &len) == 12) {
 			// do nothing, it's ok
 		} else if (sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		           &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
@@ -685,7 +685,7 @@ int mmo_char_init(void) {
 				char_log("Out of memory: mmo_char_init (realloc of char_dat)." RETCODE);
 				exit(1);
 			}
-			online_chars = realloc(online_chars, sizeof(int) * char_max);
+			online_chars = realloc(online_chars, sizeof(struct online_chars) * char_max);
 			if (!online_chars) {
 				printf("Out of memory: mmo_char_init (realloc of online_chars).\n");
 				char_log("Out of memory: mmo_char_init (realloc of online_chars)." RETCODE);

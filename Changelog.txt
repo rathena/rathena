@@ -1,5 +1,7 @@
 Date	Added
 11/20
+	* Fixed crash with upgrading TXT and having more than 256 accounts. [Valaris]
+	* TXT upgrades will convert broken flag to attribute column. [Valaris]
 	* Prevent use of emotion packet to display red mute emote. [Valaris]
 	* Initialized "day" variable in npc.c. [Valaris]
 	* Added @whozeny. Shows list of top 50 online players and their zeny sorted from highest to lowest. [Valaris]
