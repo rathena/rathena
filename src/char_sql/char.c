@@ -2032,7 +2032,7 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 			if (RFIFOW(fd,4) != server[id].users)
-				printf("map user: %d\n", RFIFOW(fd,4));
+				printf("[UserCount]: %d (Server: %d)\n", RFIFOW(fd,4), id);
 			server[id].users = RFIFOW(fd,4);
 			if(anti_freeze_enable)
 				server_freezeflag[id] = 5; // Map anti-freeze system. Counter. 5 ok, 4...0 freezed
