@@ -1607,7 +1607,7 @@
 7191,Paper_Lantern,Paper Lantern,3,20,,10,,,,,,,,,,,{},{}
 7192,Pin_Wheel,Pin Wheel,3,20,,10,,,,,,,,,,,{},{}
 7193,Germinated_Seed,Germinated Seed,3,20,,10,,,,,,,,,,,{},{}
-7194,Blade_of_Grass,Blade of Grass,3,20,,10,,,,,,,,,,,{},{}
+7194,Soft_Grass_Leaf,Soft Grass Leaf,3,20,,10,,,,,,,,,,,{},{}
 7195,Slingshot,Slingshot,3,20,,10,,,,,,,,,,,{},{}
 7196,Shoulder_Guard,Shoulder Guard,3,20,,10,,,,,,,,,,,{},{}
 7197,Durable_Vine,Durable Vine,3,20,,10,,,,,,,,,,,{},{}
