@@ -1,5 +1,10 @@
 Date	Added
 
+03/06
+	* Added new anti-hacker trade protection from Freya. [Lupus]
+	  It also auto-ban hackers and broadcasts messages to all GMs. Good work, Yor!
+	* Misc fixes. [Lupus]
+	  2Shino: BTW Some players can't re-connect to the server. Due to the updated session checks in chrif.c
 03/05
 	* Reversed drop_rate0item option, corrected MVP Drop rate (thanks to Freya) [Lupus]
 03/04

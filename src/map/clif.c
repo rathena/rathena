@@ -7947,18 +7947,18 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 
 		// information is sended to all online GM
 		sprintf(message, "Hack on global message (normal message): character '%s' (account: %d) uses another name.", sd->status.name, sd->status.account_id);
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message, strlen(message) + 1);
+		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message);
 		if (strlen((char*)RFIFOP(fd,4)) == 0)
 			strcpy(message, " This player sends a void name and a void message.");
 		else
 			sprintf(message, " This player sends (name:message): '%s'.", RFIFOP(fd,4));
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message, strlen(message) + 1);
+		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message);
 		// message about the ban
 		if (battle_config.ban_spoof_namer > 0)
 			sprintf(message, " This player has been banned for %d minute(s).", battle_config.ban_spoof_namer);
 		else
 			sprintf(message, " This player hasn't been banned (Ban option is disabled).");
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message, strlen(message) + 1);
+		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message);
 
 		// if we ban people
 		if (battle_config.ban_spoof_namer > 0) {
@@ -7994,15 +7994,15 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		int next = pc_nextbaseexp(sd)>0 ? pc_nextbaseexp(sd) : sd->status.base_exp;
 		if (next > 0 && (sd->status.base_exp*100/next)%10 == 0) {
 			estr_lower((char*)RFIFOP(fd,4));
-			if (sd->state.snovice_flag == 0 && strstr((char*)RFIFOP(fd,4), msg_txt(540)))
+			if (sd->state.snovice_flag == 0 && strstr((char*)RFIFOP(fd,4), msg_txt(504)))
 				sd->state.snovice_flag = 1;
 			else if (sd->state.snovice_flag == 1) {
-				sprintf(message, msg_txt(541), sd->status.name);
+				sprintf(message, msg_txt(505), sd->status.name);
 				estr_lower(message);
 				if (strstr((char*)RFIFOP(fd,4), message))
 					sd->state.snovice_flag = 2;
 			}
-			else if (sd->state.snovice_flag == 2 && strstr((char*)RFIFOP(fd,4), msg_txt(542)))
+			else if (sd->state.snovice_flag == 2 && strstr((char*)RFIFOP(fd,4), msg_txt(506)))
 				sd->state.snovice_flag = 3;
 			else if (sd->state.snovice_flag == 3) {
 				int i;
@@ -10193,7 +10193,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 					clif_wis_message(fd, wisp_server_name, "This player is already blocked.", strlen("This player is already blocked.") + 1);
 					if (strcmp(wisp_server_name, nick) == 0) { // to found possible bot users who automaticaly ignore people.
 						sprintf(output, "Character '%s' (account: %d) has tried AGAIN to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
-						intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output, strlen(output) + 1);
+						intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
 					}
 					return;
 				} else if (pos == -1 && sd->ignore[i].name[0] == '\0')
@@ -10206,7 +10206,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 				WFIFOSET(fd, packet_len_table[0x0d1]);
 				if (strcmp(wisp_server_name, nick) == 0) { // to found possible bot users who automaticaly ignore people.
 					sprintf(output, "Character '%s' (account: %d) has tried to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
-					intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output, strlen(output) + 1);
+					intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
 					// send something to be inform and force bot to ignore twice... If GM receiving block + block again, it's a bot :)
 					clif_wis_message(fd, wisp_server_name, "Add me in your ignore list, doesn't block my wisps.", strlen("Add me in your ignore list, doesn't block my wisps.") + 1);
 				}
@@ -10216,7 +10216,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 				clif_wis_message(fd, wisp_server_name, "You can not block more people.", strlen("You can not block more people.") + 1);
 				if (strcmp(wisp_server_name, nick) == 0) { // to found possible bot users who automaticaly ignore people.
 					sprintf(output, "Character '%s' (account: %d) has tried to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
-					intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output, strlen(output) + 1);
+					intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
 				}
 			}
 		// allow action (we remove all same nicks if they exist)

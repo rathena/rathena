@@ -285,10 +285,11 @@ extern struct Battle_Config {
 	int day_duration; // added by [Yor]
 	int night_duration; // added by [Yor]
 	int ban_spoof_namer; // added by [Yor]
+	int ban_hack_trade; // added by [Yor]
 	int hack_info_GM_level; // added by [Yor]
 	int any_warp_GM_min_level; // added by [Yor]
 	int packet_ver_flag; // added by [Yor]
-	int muting_players; // added by [Apple]
+	int muting_players; // added by [PoW]
 	
 	int min_hair_style; // added by [MouseJstr]
 	int max_hair_style; // added by [MouseJstr]
