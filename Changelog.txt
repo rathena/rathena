@@ -1,6 +1,9 @@
 Date	Added
 
 11/18
+        * *Hopefully* fixed the skill tree problem where you have to use 49 skill 
+          points first before 2nd job skills will show... please report any bugs found
+          with it, thank you. [celest]
 	* Added flag to pc_unequipitem (thanks to DracoRPG for suggestion) [celest]
 	* Skill updates [celest]
 	  - Updated Cloaking (thanks to orn), Endure

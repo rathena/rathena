@@ -707,6 +707,8 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 
 	sd->doridori_counter = 0;
 
+	sd->change_level = pc_readglobalreg(sd,"jobchange_level");	
+
 #ifndef TXT_ONLY // mail system [Valaris]
 	if(battle_config.mail_system)
 		sd->mail_counter = 0;
@@ -913,7 +915,8 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		if(skill_point < 9)
 			c = 0;
 		//else if((sd->status.skill_point >= sd->status.job_level && skill_point < 58) && ((c > 6 && c < 23) || (c > 4007 && c < 4023) || (c > 4029 && c < 4045))) {
-		else if ((sd->status.skill_point >= sd->status.job_level && skill_point < 58) && (c > 6 && c < 23)) {
+		//else if ((sd->status.skill_point >= sd->status.job_level && skill_point < 58) && (c > 6 && c < 23)) {
+		else if ((sd->status.skill_point >= sd->status.job_level && skill_point < sd->change_level+8) && (c > 6 && c < 23)) {
 			switch(c) {
 				case 7:
 				case 14:
@@ -5602,12 +5605,12 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	int i;
 	int b_class = 0;
 	//ì]ê∂Ç‚ó{éqÇÃèÍçáÇÃå≥ÇÃêEã∆ÇéZèoÇ∑ÇÈ
-	//struct pc_base_job s_class = pc_calc_base_job(sd->status.class);
+	struct pc_base_job s_class = pc_calc_base_job(sd->status.class);
 	
 	nullpo_retr(0, sd);
 
 	if (upper < 0 || upper > 2) //åªç›ì]ê∂Ç©Ç«Ç§Ç©ÇîªífÇ∑ÇÈ
-		upper = pc_calc_upper (sd->status.class);
+		upper = s_class.upper;
 	
 	b_class = job;	//í èÌêEÇ»ÇÁjobÇªÇÃÇ‹ÇÒÇ‹
 	if (job < 23) {
@@ -5615,7 +5618,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 			b_class += 4001;
 		else if (upper == 2)	//ó{éqÇ…åãç•ÇÕÇ»Ç¢ÇØÇ«Ç«Ç§ÇπéüÇ≈èRÇÁÇÍÇÈÇ©ÇÁÇ¢Ç¢Ç‚
 			b_class += 4023;
-	} else if (job == 23)	{
+	} else if (job == 23) {
 		if (upper == 1)	//ì]ê∂Ç…ÉXÉpÉmÉrÇÕë∂ç›ÇµÇ»Ç¢ÇÃÇ≈Ç®ífÇË
 			return 1;
 		else if (upper == 2)
@@ -5625,10 +5628,20 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	} else if ((job >= 69 && job < 4001) || (job > 4045))
 		return 1;
 
+	job = pc_calc_base_job2 (b_class); // check base class [celest]
+
 	if((sd->status.sex == 0 && job == 19) || (sd->status.sex == 1 && job == 20) ||
-		(sd->status.sex == 0 && job == 4020) || (sd->status.sex == 1 && job == 4021) ||
+		// not needed [celest]
+		//(sd->status.sex == 0 && job == 4020) || (sd->status.sex == 1 && job == 4021) ||
 		job == 22 || sd->status.class == b_class) //ÅäÇÕÉoÅ[ÉhÇ…Ç»ÇÍÇ»Ç¢ÅAÅâÇÕÉ_ÉìÉTÅ[Ç…Ç»ÇÍÇ»Ç¢ÅAåãç•àﬂè÷Ç‡Ç®ífÇË
 		return 1;
+
+	// check if we are changing from 1st to 2nd job
+	if (s_class.job > 0 && s_class.job < 7 && job >= 7 && job <= 21)
+		sd->change_level = sd->status.job_level;
+	else
+		sd->change_level = 0;
+	pc_setglobalreg (sd, "jobchange_level", sd->change_level);		
 	
 	sd->status.class = sd->view_class = b_class;
 

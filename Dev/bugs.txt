@@ -15,8 +15,8 @@ Assigned:	N/A
 Progess:	0%
 
 Problem:	Pre skill requirements for new skills are wrong it makes you use 49 skills points before you can get the newer skills.
-Assigned:	N/A
-Progess:	0%
+Assigned:	Celest
+Progess:	~90% (Notes: not sure if it causes problems, need more testing =p)
 
 Problem:	Monster hp view only shows but does not go down with a hit.
 Assigned:	N/A

@@ -311,7 +311,9 @@ struct map_session_data {
 
 	int last_skillid,last_skilllv;		// Added by RoVeRT
 	short sg_count;
-	
+
+	unsigned char change_level; // [celest]
+
 #ifndef TXT_ONLY
 	int mail_counter;	// mail counter for mail system [Valaris]
 #endif
