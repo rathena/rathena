@@ -708,3 +708,8 @@ Assignee	None
 Notes		None
 
 **********
+61.
+Description	Make a battle_config option to cause, if a user is logged in and somebody tries to log in again, it logs them both out...
+Status:		Pending
+Assignee	None
+Notes		None
