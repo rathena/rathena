@@ -1,5 +1,6 @@
 Date	Added
 12/24
+	* Fixed item-dup bug in storage and cart [MouseJstr]
 	* @skilltree was looking outside of the particular class
 	  of the char to see if they could do a skill [MouseJstr]
 	* Fixed a calc_skill_tree bug where too many skills were

@@ -55,16 +55,13 @@ Assigned:	N/A
 Progress:	0%
 
 Problem:	Item duping bug in storage...
-Assigned:	N/A
-Progress:	0%
+Assigned:	MouseJstr
+Progress:	100%
 	
 	Let's say you have 200 arrows and 100 Rosiotti arrow, you'll put 100 and 50 in storage
 	And you should end when you log back in with 100 of each on you and 100 and 50 in storage
 	Gain 50
 	Repeat
-
-	Lupus: heh i fixid similiar bug in DELITEM script command. i think it's the same bug in other function
-	so i'm in charge 
 
 Problem:	~40+ players connected.. and soon can't re-connect, they can enter password, but never see "select character" screen.
 Assigned:	N/A
@@ -150,5 +147,5 @@ Progress:	0%
 
 Problem:	When you have UNNAMED Arrows and Named Arrows in the storage and take some arrows then it change amount of other items.
 		It happens because server doesn't recognize Named and Unnamed Stockable items (Elemental Gems, Iron, Steel, Holy Water, Arrows)
-Assigned:	N/A
-Progress:	0%
+Assigned:	MouseJstr
+Progress:	100%

@@ -3213,9 +3213,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 	if(!itemdb_isequip2(data)){
 		// ? 備品ではないので、?所有品なら個?のみ?化させる
 		for(i=0;i<MAX_INVENTORY;i++)
-		if(sd->status.inventory[i].nameid == item_data->nameid &&
-			sd->status.inventory[i].card[0] == item_data->card[0] && sd->status.inventory[i].card[1] == item_data->card[1] &&
-			sd->status.inventory[i].card[2] == item_data->card[2] && sd->status.inventory[i].card[3] == item_data->card[3]) {
+		if(compare_item(&sd->status.inventory[i], item_data)) {
 			if(sd->status.inventory[i].amount+amount > MAX_AMOUNT)
 				return 5;
 			sd->status.inventory[i].amount+=amount;
@@ -3450,9 +3448,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 	if(!itemdb_isequip2(data)){
 		// ? 備品ではないので、?所有品なら個?のみ?化させる
 		for(i=0;i<MAX_CART;i++){
-			if(sd->status.cart[i].nameid==item_data->nameid &&
-				sd->status.cart[i].card[0] == item_data->card[0] && sd->status.cart[i].card[1] == item_data->card[1] &&
-				sd->status.cart[i].card[2] == item_data->card[2] && sd->status.cart[i].card[3] == item_data->card[3]){
+			if(compare_item(&sd->status.cart[i], item_data)) {
 				if(sd->status.cart[i].amount+amount > MAX_AMOUNT)
 					return 1;
 				sd->status.cart[i].amount+=amount;

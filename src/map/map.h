@@ -695,6 +695,7 @@ void map_deliddb(struct block_list *bl);
 int map_foreachiddb(int (*)(void*,void*,va_list),...);
 void map_addnickdb(struct map_session_data *);
 struct map_session_data * map_nick2sd(char*);
+int compare_item(struct item *a, struct item *b);
 
 // gatŠÖ˜A
 int map_getcell(int,int,int);
