@@ -1,5 +1,6 @@
 Date	Added
 12/27
+        * Corrected a bad error in itemdb_read_itemslottable [celest]
         * Corrected wrong logging of text in int_guild.c, thanks to Alex14 [celest]
         * Summoned monsters will not give exp and items [celest]
         * Added the 6 new Yuno fields to maps_athena.conf [celest]
