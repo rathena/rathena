@@ -1,6 +1,8 @@
 Date	Added
 
 03/29
+	* Added auto create 'save' folder from 'save-tmpl' when compiling for the
+	  first time, thanks to Jbain
 	* Fixed 'use_sql_db' not read properly in SQL char server, thanks to Wallex
 	* Added three fields to mmo_charstatus - father/mother/child
 	  needed for adoption system [veider]

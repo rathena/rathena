@@ -81,6 +81,8 @@ all: conf txt
 conf:
 	cp -r conf-tmpl conf
 	rm -rf conf/.svn conf/*/.svn
+	cp -r save-tmpl save
+	rm -rf save/.svn
 
 txt : src/common/GNUmakefile src/login/GNUmakefile src/char/GNUmakefile src/map/GNUmakefile src/ladmin/GNUmakefile conf
 	cd src ; cd common ; $(MAKE) $(MKDEF) $@ ; cd ..
