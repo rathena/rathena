@@ -132,3 +132,5 @@ let mob stats vary a little bit - every mob shouldn't be the exact same. if it's
 versa.
 
 have a monster be able to use its drops, and not drop it. like a poring using an apple.
+
+davidsiaw: About that last line, now the player finds a 4 slot pike and a poring takes it and uses it against him... hmm won't that be a lil... frustrating?
