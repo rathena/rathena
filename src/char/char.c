@@ -269,7 +269,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p) {
 	  "\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 	  "\t%s,%d,%d\t%s,%d,%d,%d\t",
 	  p->char_id, p->account_id, p->char_num, p->name, //
-	  p->class, p->base_level, p->job_level,
+	  p->class_, p->base_level, p->job_level,
 	  p->base_exp, p->job_exp, p->zeny,
 	  p->hp, p->max_hp, p->sp, p->max_sp,
 	  p->str, p->agi, p->vit, p->int_, p->dex, p->luk,
@@ -397,7 +397,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p) {
 	p->char_id = tmp_int[0];
 	p->account_id = tmp_int[1];
 	p->char_num = tmp_int[2];
-	p->class = tmp_int[3];
+	p->class_ = tmp_int[3];
 	p->base_level = tmp_int[4];
 	p->job_level = tmp_int[5];
 	p->base_exp = tmp_int[6];
@@ -947,7 +947,7 @@ int make_new_char(int fd, unsigned char *dat) {
 	char_dat[i].account_id = sd->account_id;
 	char_dat[i].char_num = dat[30];
 	strcpy(char_dat[i].name, dat);
-	char_dat[i].class = 0;
+	char_dat[i].class_ = 0;
 	char_dat[i].base_level = 1;
 	char_dat[i].job_level = 1;
 	char_dat[i].base_exp = 0;
@@ -1156,12 +1156,12 @@ void create_online_files(void) {
 						break;
 					case 4: // by job (and job level)
 						for(k = 0; k < players; k++)
-							if (char_dat[j].class < char_dat[id[k]].class ||
+							if (char_dat[j].class_ < char_dat[id[k]].class_ ||
 							   // if same job, we sort by job level.
-							   (char_dat[j].class == char_dat[id[k]].class &&
+							   (char_dat[j].class_ == char_dat[id[k]].class_ &&
 							    char_dat[j].job_level < char_dat[id[k]].job_level) ||
 							   // if same job and job level, we sort by job exp.
-							   (char_dat[j].class == char_dat[id[k]].class &&
+							   (char_dat[j].class_ == char_dat[id[k]].class_ &&
 							    char_dat[j].job_level == char_dat[id[k]].job_level &&
 							    char_dat[j].job_exp < char_dat[id[k]].job_exp)) {
 								for(l = players; l > k; l--)
@@ -1302,7 +1302,7 @@ void create_online_files(void) {
 				}
 				// displaying of the job
 				if (online_display_option & 6) {
-					char * jobname = job_name(char_dat[j].class);
+					char * jobname = job_name(char_dat[j].class_);
 					if ((online_display_option & 6) == 6) {
 						fprintf(fp2, "        <td>%s %d/%d</td>\n", jobname, char_dat[j].base_level, char_dat[j].job_level);
 						fprintf(fp, "%-18s %3d/%3d ", jobname, char_dat[j].base_level, char_dat[j].job_level);
@@ -1436,7 +1436,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOW(fd,j+46) = (p->sp > 0x7fff) ? 0x7fff : p->sp;
 		WFIFOW(fd,j+48) = (p->max_sp > 0x7fff) ? 0x7fff : p->max_sp;
 		WFIFOW(fd,j+50) = DEFAULT_WALK_SPEED; // p->speed;
-		WFIFOW(fd,j+52) = p->class;
+		WFIFOW(fd,j+52) = p->class_;
 		WFIFOW(fd,j+54) = p->hair;
 		WFIFOW(fd,j+56) = p->weapon;
 		WFIFOW(fd,j+58) = p->base_level;
@@ -1717,7 +1717,7 @@ int parse_tologin(int fd) {
 			if (acc > 0) {
 				for (i = 0; i < char_num; i++) {
 					if (char_dat[i].account_id == acc) {
-						int jobclass = char_dat[i].class;
+						int jobclass = char_dat[i].class_;
 						char_dat[i].sex = sex;
 						auth_fifo[i].sex = sex;
 						if (jobclass == 19 || jobclass == 20 ||
@@ -1725,11 +1725,11 @@ int parse_tologin(int fd) {
 						    jobclass == 4042 || jobclass == 4043) {
 							// job modification
 							if (jobclass == 19 || jobclass == 20) {
-								char_dat[i].class = (sex) ? 19 : 20;
+								char_dat[i].class_ = (sex) ? 19 : 20;
 							} else if (jobclass == 4020 || jobclass == 4021) {
-								char_dat[i].class = (sex) ? 4020 : 4021;
+								char_dat[i].class_ = (sex) ? 4020 : 4021;
 							} else if (jobclass == 4042 || jobclass == 4043) {
-								char_dat[i].class = (sex) ? 4042 : 4043;
+								char_dat[i].class_ = (sex) ? 4042 : 4043;
 							}
 							// remove specifical skills of classes 19, 4020 and 4042
 							for(j = 315; j <= 322; j++) {
@@ -2730,7 +2730,7 @@ int parse_char(int fd) {
 			WFIFOW(fd,2+46) = (char_dat[i].sp > 0x7fff) ? 0x7fff : char_dat[i].sp;
 			WFIFOW(fd,2+48) = (char_dat[i].max_sp > 0x7fff) ? 0x7fff : char_dat[i].max_sp;
 			WFIFOW(fd,2+50) = DEFAULT_WALK_SPEED; // char_dat[i].speed;
-			WFIFOW(fd,2+52) = char_dat[i].class;
+			WFIFOW(fd,2+52) = char_dat[i].class_;
 			WFIFOW(fd,2+54) = char_dat[i].hair;
 
 			WFIFOW(fd,2+58) = char_dat[i].base_level;

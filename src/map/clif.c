@@ -973,21 +973,21 @@ static int clif_mob0078(struct mob_data *md, unsigned char *buf)
 	WBUFW(buf,8)=md->opt1;
 	WBUFW(buf,10)=md->opt2;
 	WBUFW(buf,12)=md->option;
-	WBUFW(buf,14)=mob_get_viewclass(md->class);
-	if((mob_get_viewclass(md->class) <= 23) || (mob_get_viewclass(md->class) == 812) || (mob_get_viewclass(md->class) >= 4001)) {
-		WBUFW(buf,12)|=mob_db[md->class].option;
-		WBUFW(buf,16)=mob_get_hair(md->class);
-		WBUFW(buf,18)=mob_get_weapon(md->class);
-		WBUFW(buf,20)=mob_get_head_buttom(md->class);
-		WBUFW(buf,22)=mob_get_shield(md->class);
-		WBUFW(buf,24)=mob_get_head_top(md->class);
-		WBUFW(buf,26)=mob_get_head_mid(md->class);
-		WBUFW(buf,28)=mob_get_hair_color(md->class);
-		WBUFW(buf,30)=mob_get_clothes_color(md->class);	//Add for player monster dye - Valaris
-		WBUFB(buf,45)=mob_get_sex(md->class);
+	WBUFW(buf,14)=mob_get_viewclass(md->class_);
+	if((mob_get_viewclass(md->class_) <= 23) || (mob_get_viewclass(md->class_) == 812) || (mob_get_viewclass(md->class_) >= 4001)) {
+		WBUFW(buf,12)|=mob_db[md->class_].option;
+		WBUFW(buf,16)=mob_get_hair(md->class_);
+		WBUFW(buf,18)=mob_get_weapon(md->class_);
+		WBUFW(buf,20)=mob_get_head_buttom(md->class_);
+		WBUFW(buf,22)=mob_get_shield(md->class_);
+		WBUFW(buf,24)=mob_get_head_top(md->class_);
+		WBUFW(buf,26)=mob_get_head_mid(md->class_);
+		WBUFW(buf,28)=mob_get_hair_color(md->class_);
+		WBUFW(buf,30)=mob_get_clothes_color(md->class_);	//Add for player monster dye - Valaris
+		WBUFB(buf,45)=mob_get_sex(md->class_);
 	}
 
-	if (md->class >= 1285 && md->class <= 1287 && md->guild_id) {	// Added guardian emblems [Valaris]
+	if (md->class_ >= 1285 && md->class_ <= 1287 && md->guild_id) {	// Added guardian emblems [Valaris]
 		struct guild *g;
 		struct guild_castle *gc=guild_mapname2gc(map[md->bl.m].name);
 		if (gc && gc->guild_id > 0) {
@@ -1025,23 +1025,23 @@ static int clif_mob007b(struct mob_data *md, unsigned char *buf) {
 	WBUFW(buf,8)=md->opt1;
 	WBUFW(buf,10)=md->opt2;
 	WBUFW(buf,12)=md->option;
-	WBUFW(buf,14)=mob_get_viewclass(md->class);
-	if ((mob_get_viewclass(md->class) < 24) || (mob_get_viewclass(md->class) > 4000)) {
-		WBUFW(buf,12)|=mob_db[md->class].option;
-		WBUFW(buf,16)=mob_get_hair(md->class);
-		WBUFW(buf,18)=mob_get_weapon(md->class);
-		WBUFW(buf,20)=mob_get_head_buttom(md->class);
+	WBUFW(buf,14)=mob_get_viewclass(md->class_);
+	if ((mob_get_viewclass(md->class_) < 24) || (mob_get_viewclass(md->class_) > 4000)) {
+		WBUFW(buf,12)|=mob_db[md->class_].option;
+		WBUFW(buf,16)=mob_get_hair(md->class_);
+		WBUFW(buf,18)=mob_get_weapon(md->class_);
+		WBUFW(buf,20)=mob_get_head_buttom(md->class_);
 		WBUFL(buf,22)=gettick();
-		WBUFW(buf,26)=mob_get_shield(md->class);
-		WBUFW(buf,28)=mob_get_head_top(md->class);
-		WBUFW(buf,30)=mob_get_head_mid(md->class);
-		WBUFW(buf,32)=mob_get_hair_color(md->class);
-		WBUFW(buf,34)=mob_get_clothes_color(md->class);	//Add for player monster dye - Valaris
-		WBUFB(buf,49)=mob_get_sex(md->class);
+		WBUFW(buf,26)=mob_get_shield(md->class_);
+		WBUFW(buf,28)=mob_get_head_top(md->class_);
+		WBUFW(buf,30)=mob_get_head_mid(md->class_);
+		WBUFW(buf,32)=mob_get_hair_color(md->class_);
+		WBUFW(buf,34)=mob_get_clothes_color(md->class_);	//Add for player monster dye - Valaris
+		WBUFB(buf,49)=mob_get_sex(md->class_);
 	} else
 		WBUFL(buf,22)=gettick();
 
-		if(md->class >= 1285 && md->class <= 1287 && md->guild_id)	{	// Added guardian emblems [Valaris]
+		if(md->class_ >= 1285 && md->class_ <= 1287 && md->guild_id)	{	// Added guardian emblems [Valaris]
 			struct guild *g;
 			struct guild_castle *gc=guild_mapname2gc(map[md->bl.m].name);
 			if(gc && gc->guild_id > 0){
@@ -1075,8 +1075,8 @@ static int clif_npc0078(struct npc_data *nd, unsigned char *buf) {
 	WBUFW(buf,0)=0x78;
 	WBUFL(buf,2)=nd->bl.id;
 	WBUFW(buf,6)=nd->speed;
-	WBUFW(buf,14)=nd->class;
-	if ((nd->class == 722) && (nd->u.scr.guild_id > 0) && ((g=guild_search(nd->u.scr.guild_id)) != NULL)) {
+	WBUFW(buf,14)=nd->class_;
+	if ((nd->class_ == 722) && (nd->u.scr.guild_id > 0) && ((g=guild_search(nd->u.scr.guild_id)) != NULL)) {
 		WBUFL(buf,22)=g->emblem_id;
 		WBUFL(buf,26)=g->guild_id;
 	}
@@ -1099,8 +1099,8 @@ static int clif_npc007b(struct npc_data *nd, unsigned char *buf) {
 	WBUFW(buf,0)=0x7b;
 	WBUFL(buf,2)=nd->bl.id;
 	WBUFW(buf,6)=nd->speed;
-	WBUFW(buf,14)=nd->class;
-	if ((nd->class == 722) && (nd->u.scr.guild_id > 0) && ((g=guild_search(nd->u.scr.guild_id)) != NULL)) {
+	WBUFW(buf,14)=nd->class_;
+	if ((nd->class_ == 722) && (nd->u.scr.guild_id > 0) && ((g=guild_search(nd->u.scr.guild_id)) != NULL)) {
 		WBUFL(buf,22)=g->emblem_id;
 		WBUFL(buf,26)=g->guild_id;
 	}
@@ -1127,18 +1127,18 @@ static int clif_pet0078(struct pet_data *pd, unsigned char *buf) {
 	WBUFW(buf,0)=0x78;
 	WBUFL(buf,2)=pd->bl.id;
 	WBUFW(buf,6)=pd->speed;
-	WBUFW(buf,14)=mob_get_viewclass(pd->class);
-	if((mob_get_viewclass(pd->class) < 24) || (mob_get_viewclass(pd->class) > 4000)) {
-		WBUFW(buf,12)=mob_db[pd->class].option;
-		WBUFW(buf,16)=mob_get_hair(pd->class);
-		WBUFW(buf,18)=mob_get_weapon(pd->class);
-		WBUFW(buf,20)=mob_get_head_buttom(pd->class);
-		WBUFW(buf,22)=mob_get_shield(pd->class);
-		WBUFW(buf,24)=mob_get_head_top(pd->class);
-		WBUFW(buf,26)=mob_get_head_mid(pd->class);
-		WBUFW(buf,28)=mob_get_hair_color(pd->class);
-		WBUFW(buf,30)=mob_get_clothes_color(pd->class);	//Add for player pet dye - Valaris
-		WBUFB(buf,45)=mob_get_sex(pd->class);
+	WBUFW(buf,14)=mob_get_viewclass(pd->class_);
+	if((mob_get_viewclass(pd->class_) < 24) || (mob_get_viewclass(pd->class_) > 4000)) {
+		WBUFW(buf,12)=mob_db[pd->class_].option;
+		WBUFW(buf,16)=mob_get_hair(pd->class_);
+		WBUFW(buf,18)=mob_get_weapon(pd->class_);
+		WBUFW(buf,20)=mob_get_head_buttom(pd->class_);
+		WBUFW(buf,22)=mob_get_shield(pd->class_);
+		WBUFW(buf,24)=mob_get_head_top(pd->class_);
+		WBUFW(buf,26)=mob_get_head_mid(pd->class_);
+		WBUFW(buf,28)=mob_get_hair_color(pd->class_);
+		WBUFW(buf,30)=mob_get_clothes_color(pd->class_);	//Add for player pet dye - Valaris
+		WBUFB(buf,45)=mob_get_sex(pd->class_);
 	} else {
 		WBUFW(buf,16)=0x14;
 		if((view = itemdb_viewid(pd->equip)) > 0)
@@ -1169,19 +1169,19 @@ static int clif_pet007b(struct pet_data *pd, unsigned char *buf) {
 	WBUFW(buf,0)=0x7b;
 	WBUFL(buf,2)=pd->bl.id;
 	WBUFW(buf,6)=pd->speed;
-	WBUFW(buf,14)=mob_get_viewclass(pd->class);
-	if((mob_get_viewclass(pd->class) < 24) || (mob_get_viewclass(pd->class) > 4000)) {
-		WBUFW(buf,12)=mob_db[pd->class].option;
-		WBUFW(buf,16)=mob_get_hair(pd->class);
-		WBUFW(buf,18)=mob_get_weapon(pd->class);
-		WBUFW(buf,20)=mob_get_head_buttom(pd->class);
+	WBUFW(buf,14)=mob_get_viewclass(pd->class_);
+	if((mob_get_viewclass(pd->class_) < 24) || (mob_get_viewclass(pd->class_) > 4000)) {
+		WBUFW(buf,12)=mob_db[pd->class_].option;
+		WBUFW(buf,16)=mob_get_hair(pd->class_);
+		WBUFW(buf,18)=mob_get_weapon(pd->class_);
+		WBUFW(buf,20)=mob_get_head_buttom(pd->class_);
 		WBUFL(buf,22)=gettick();
-		WBUFW(buf,26)=mob_get_shield(pd->class);
-		WBUFW(buf,28)=mob_get_head_top(pd->class);
-		WBUFW(buf,30)=mob_get_head_mid(pd->class);
-		WBUFW(buf,32)=mob_get_hair_color(pd->class);
-		WBUFW(buf,34)=mob_get_clothes_color(pd->class);	//Add for player pet dye - Valaris
-		WBUFB(buf,49)=mob_get_sex(pd->class);
+		WBUFW(buf,26)=mob_get_shield(pd->class_);
+		WBUFW(buf,28)=mob_get_head_top(pd->class_);
+		WBUFW(buf,30)=mob_get_head_mid(pd->class_);
+		WBUFW(buf,32)=mob_get_hair_color(pd->class_);
+		WBUFW(buf,34)=mob_get_clothes_color(pd->class_);	//Add for player pet dye - Valaris
+		WBUFB(buf,49)=mob_get_sex(pd->class_);
 	} else {
 		WBUFW(buf,16)=0x14;
 		if ((view = itemdb_viewid(pd->equip)) > 0)
@@ -1285,11 +1285,11 @@ int clif_spawnpc(struct map_session_data *sd) {
 			clif_guild_emblem(sd,g);
 	}	// end addition [Valaris]
 
-	if (sd->status.class==13 || sd->status.class==21 || sd->status.class==4014 || sd->status.class==4022)
+	if (sd->status.class_==13 || sd->status.class_==21 || sd->status.class_==4014 || sd->status.class_==4022)
 		pc_setoption(sd,sd->status.option|0x0020); // [Valaris]
 
-	if ((pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0) && (sd->status.class==7 ||
-	    sd->status.class==14 || sd->status.class==4008 || sd->status.class==4015))
+	if ((pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0) && (sd->status.class_==7 ||
+	    sd->status.class_==14 || sd->status.class_==4008 || sd->status.class_==4015))
 		pc_setriding(sd); // update peco riders for people upgrading athena [Valaris]
 
 
@@ -1318,7 +1318,7 @@ int clif_spawnnpc(struct npc_data *nd)
 
 	nullpo_retr(0, nd);
 
-	if(nd->class < 0 || nd->flag&1 || nd->class == INVISIBLE_CLASS)
+	if(nd->class_ < 0 || nd->flag&1 || nd->class_ == INVISIBLE_CLASS)
 		return 0;
 
 	memset(buf,0,packet_len_table[0x7c]);
@@ -1326,7 +1326,7 @@ int clif_spawnnpc(struct npc_data *nd)
 	WBUFW(buf,0)=0x7c;
 	WBUFL(buf,2)=nd->bl.id;
 	WBUFW(buf,6)=nd->speed;
-	WBUFW(buf,20)=nd->class;
+	WBUFW(buf,20)=nd->class_;
 	WBUFPOS(buf,36,nd->bl.x,nd->bl.y);
 
 	clif_send(buf,packet_len_table[0x7c],&nd->bl,AREA);
@@ -1348,7 +1348,7 @@ int clif_spawnmob(struct mob_data *md)
 
 	nullpo_retr(0, md);
 
-	if (mob_get_viewclass(md->class) > 23 ) {
+	if (mob_get_viewclass(md->class_) > 23 ) {
 		memset(buf,0,packet_len_table[0x7c]);
 
 		WBUFW(buf,0)=0x7c;
@@ -1357,7 +1357,7 @@ int clif_spawnmob(struct mob_data *md)
 		WBUFW(buf,8)=md->opt1;
 		WBUFW(buf,10)=md->opt2;
 		WBUFW(buf,12)=md->option;
-		WBUFW(buf,20)=mob_get_viewclass(md->class);
+		WBUFW(buf,20)=mob_get_viewclass(md->class_);
 		WBUFPOS(buf,36,md->bl.x,md->bl.y);
 		clif_send(buf,packet_len_table[0x7c],&md->bl,AREA);
 	}
@@ -1365,8 +1365,8 @@ int clif_spawnmob(struct mob_data *md)
 	len = clif_mob0078(md,buf);
 	clif_send(buf,len,&md->bl,AREA);
 
-	if (mob_get_equip(md->class) > 0) // mob equipment [Valaris]
-		clif_mob_equip(md,mob_get_equip(md->class));
+	if (mob_get_equip(md->class_) > 0) // mob equipment [Valaris]
+		clif_mob_equip(md,mob_get_equip(md->class_));
 
 	if(md->size==2) // tiny/big mobs [Valaris]
 		clif_specialeffect(&md->bl,423,0);
@@ -1389,13 +1389,13 @@ int clif_spawnpet(struct pet_data *pd)
 
 	nullpo_retr(0, pd);
 
-	if (mob_get_viewclass(pd->class) >= MAX_PC_CLASS) {
+	if (mob_get_viewclass(pd->class_) >= MAX_PC_CLASS) {
 		memset(buf,0,packet_len_table[0x7c]);
 
 		WBUFW(buf,0)=0x7c;
 		WBUFL(buf,2)=pd->bl.id;
 		WBUFW(buf,6)=pd->speed;
-		WBUFW(buf,20)=mob_get_viewclass(pd->class);
+		WBUFW(buf,20)=mob_get_viewclass(pd->class_);
 		WBUFPOS(buf,36,pd->bl.x,pd->bl.y);
 
 		clif_send(buf,packet_len_table[0x7c],&pd->bl,AREA);
@@ -3552,7 +3552,7 @@ void clif_getareachar_npc(struct map_session_data* sd,struct npc_data* nd)
 	int len;
 	nullpo_retv(sd);
 	nullpo_retv(nd);
-	if(nd->class < 0 || nd->flag&1 || nd->class == INVISIBLE_CLASS)
+	if(nd->class_ < 0 || nd->flag&1 || nd->class_ == INVISIBLE_CLASS)
 		return;
 	if(nd->state.state == MS_WALK){
 		len = clif_npc007b(nd,WFIFOP(sd->fd,0));
@@ -3580,8 +3580,8 @@ int clif_movemob(struct mob_data *md)
 	len = clif_mob007b(md,buf);
 	clif_send(buf,len,&md->bl,AREA);
 
-	if(mob_get_equip(md->class) > 0) // mob equipment [Valaris]
-		clif_mob_equip(md,mob_get_equip(md->class));
+	if(mob_get_equip(md->class_) > 0) // mob equipment [Valaris]
+		clif_mob_equip(md,mob_get_equip(md->class_));
 
 	if(md->size==2) // tiny/big mobs [Valaris]
 		clif_specialeffect(&md->bl,423,0);
@@ -3739,8 +3739,8 @@ void clif_getareachar_mob(struct map_session_data* sd,struct mob_data* md)
 		WFIFOSET(sd->fd,len);
 	}
 
-	if(mob_get_equip(md->class) > 0) // mob equipment [Valaris]
-		clif_mob_equip(md,mob_get_equip(md->class));
+	if(mob_get_equip(md->class_) > 0) // mob equipment [Valaris]
+		clif_mob_equip(md,mob_get_equip(md->class_));
 
 	if(md->size==2) // tiny/big mobs [Valaris]
 		clif_specialeffect(&md->bl,423,0);
@@ -3976,7 +3976,7 @@ int clif_pcoutsight(struct block_list *bl,va_list ap)
 		}
 		break;
 	case BL_NPC:
-		if( ((struct npc_data *)bl)->class != INVISIBLE_CLASS )
+		if( ((struct npc_data *)bl)->class_ != INVISIBLE_CLASS )
 			clif_clearchar_id(bl->id,0,sd->fd);
 		break;
 	case BL_MOB:
@@ -4191,7 +4191,7 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 	memset(WFIFOP(fd,14),0,24);
 	if(!(skill_get_inf2(id)&0x01) || battle_config.quest_skill_learn == 1 || (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill) )
 		//WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_get_max(id) && sd->status.skill[skillid].flag ==0 )? 1:0;
-		WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_tree_get_max(id, sd->status.class) && sd->status.skill[skillid].flag ==0 )? 1:0;
+		WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_tree_get_max(id, sd->status.class_) && sd->status.skill[skillid].flag ==0 )? 1:0;
 	else
 		WFIFOB(fd,38) = 0;
 	WFIFOSET(fd,packet_len_table[0x147]);
@@ -4226,7 +4226,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 			memset(WFIFOP(fd,len+12),0,24);
 			if(!(skill_get_inf2(id)&0x01) || battle_config.quest_skill_learn == 1 || (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill) )
 				//WFIFOB(fd,len+36)= (sd->status.skill[i].lv < skill_get_max(id) && sd->status.skill[i].flag ==0 )? 1:0;
-				WFIFOB(fd,len+36)= (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class) && sd->status.skill[i].flag ==0 )? 1:0;
+				WFIFOB(fd,len+36)= (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_) && sd->status.skill[i].flag ==0 )? 1:0;
 			else
 				WFIFOB(fd,len+36) = 0;
 			len+=37;
@@ -4259,7 +4259,7 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
 		range = battle_get_range(&sd->bl) - (range + 1);
 	WFIFOW(fd,8) = range;
 	//WFIFOB(fd,10) = (sd->status.skill[skill_num].lv < skill_get_max(sd->status.skill[skill_num].id)) ? 1 : 0;
-	WFIFOB(fd,10) = (sd->status.skill[skill_num].lv < skill_tree_get_max(sd->status.skill[skill_num].id, sd->status.class)) ? 1 : 0;
+	WFIFOB(fd,10) = (sd->status.skill[skill_num].lv < skill_tree_get_max(sd->status.skill[skill_num].id, sd->status.class_)) ? 1 : 0;
 	WFIFOSET(fd,packet_len_table[0x10e]);
 
 	return 0;
@@ -4623,13 +4623,13 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 		return 0;
 
 	WBUFW(buf, 0)=0x18c;
-	WBUFW(buf, 2)=mob_get_viewclass(md->class);
+	WBUFW(buf, 2)=mob_get_viewclass(md->class_);
 	WBUFW(buf, 4)=md->level;
-	WBUFW(buf, 6)=mob_db[md->class].size;
+	WBUFW(buf, 6)=mob_db[md->class_].size;
 	WBUFL(buf, 8)=md->hp;
 	WBUFW(buf,12)=battle_get_def2(&md->bl);
-	WBUFW(buf,14)=mob_db[md->class].race;
-	WBUFW(buf,16)=battle_get_mdef2(&md->bl) - (mob_db[md->class].vit>>1);
+	WBUFW(buf,14)=mob_db[md->class_].race;
+	WBUFW(buf,16)=battle_get_mdef2(&md->bl) - (mob_db[md->class_].vit>>1);
 	WBUFW(buf,18)=battle_get_elem_type(&md->bl);
 	for(i=0;i<9;i++)
 		WBUFB(buf,20+i)= battle_attr_fix(100,i+1,md->def_ele);
@@ -5831,7 +5831,7 @@ int clif_update_mobhp(struct mob_data *md)
 	WBUFL(buf,2) = md->bl.id;
 
 	memcpy(WBUFP(buf,6), md->name, 24);
-	sprintf(mobhp, "hp: %d/%d", md->hp, mob_db[md->class].max_hp);
+	sprintf(mobhp, "hp: %d/%d", md->hp, mob_db[md->class_].max_hp);
 	WBUFW(buf, 0) = 0x195;
 	memcpy(WBUFP(buf,30), mobhp, 24);
 	WBUFL(buf,54) = 0;
@@ -6023,7 +6023,7 @@ int clif_pet_emotion(struct pet_data *pd,int param)
 		if(sd->petDB->talk_convert_class < 0)
 			return 0;
 		else if(sd->petDB->talk_convert_class > 0) {
-			param -= (pd->class - 100)*100;
+			param -= (pd->class_ - 100)*100;
 			param += (sd->petDB->talk_convert_class - 100)*100;
 		}
 	}
@@ -6501,7 +6501,7 @@ int clif_guild_memberlist(struct map_session_data *sd)
 		WFIFOW(fd,c*104+12)=m->hair;
 		WFIFOW(fd,c*104+14)=m->hair_color;
 		WFIFOW(fd,c*104+16)=m->gender;
-		WFIFOW(fd,c*104+18)=m->class;
+		WFIFOW(fd,c*104+18)=m->class_;
 		WFIFOW(fd,c*104+20)=m->lv;
 		WFIFOL(fd,c*104+22)=m->exp;
 		WFIFOL(fd,c*104+26)=m->online;
@@ -7439,10 +7439,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if(sd->state.connect_new) {
 		sd->state.connect_new = 0;
-		if(sd->status.class != sd->view_class)
+		if(sd->status.class_ != sd->view_class)
 			clif_changelook(&sd->bl,LOOK_BASE,sd->view_class);
 		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 900)
-			clif_pet_emotion(sd->pd,(sd->pd->class - 100)*100 + 50 + pet_hungry_val(sd));
+			clif_pet_emotion(sd->pd,(sd->pd->class_ - 100)*100 + 50 + pet_hungry_val(sd));
 
 /*						Stop players from spawning inside castles [Valaris]					*/
 
@@ -7753,7 +7753,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 			nullpo_retv(md);
 
 			memcpy(WFIFOP(fd,6), md->name, 24);
-			if (md->class >= 1285 && md->class <= 1288 && md->guild_id) {
+			if (md->class_ >= 1285 && md->class_ <= 1288 && md->guild_id) {
 				struct guild *g;
 				struct guild_castle *gc = guild_mapname2gc(map[md->bl.m].name);
 				if (gc && gc->guild_id > 0 && (g = guild_search(gc->guild_id)) != NULL) {
@@ -7767,7 +7767,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 				}
 			} else if (battle_config.show_mob_hp == 1) {
 				char mobhp[50];
-				sprintf(mobhp, "hp: %d/%d", md->hp, mob_db[md->class].max_hp);
+				sprintf(mobhp, "hp: %d/%d", md->hp, mob_db[md->class_].max_hp);
 				WFIFOW(fd, 0) = 0x195;
 				memcpy(WFIFOP(fd,30), mobhp, 24);
 				WFIFOB(fd,54) = 0;
@@ -7849,7 +7849,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 	WFIFOSET(fd, WFIFOW(fd,2));
 
 	// Celest
-	if (pc_calc_base_job2 (sd->status.class) == 23 ) {
+	if (pc_calc_base_job2 (sd->status.class_) == 23 ) {
 		int next = pc_nextbaseexp(sd)>0 ? pc_nextbaseexp(sd) : sd->status.base_exp;
 		if ((sd->status.base_exp*100/next)%10 == 0) {
 			estr_lower(RFIFOP(fd,4));
@@ -8680,17 +8680,17 @@ void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 {
 	if(pc_isriding(sd)) {	// jobchange when removing peco [Valaris]
-		if(sd->status.class==13)
-			sd->status.class=sd->view_class=7;
+		if(sd->status.class_==13)
+			sd->status.class_=sd->view_class=7;
 
-		if(sd->status.class==21)
-			sd->status.class=sd->view_class=14;
+		if(sd->status.class_==21)
+			sd->status.class_=sd->view_class=14;
 
-		if(sd->status.class==4014)
-			sd->status.class=sd->view_class=4008;
+		if(sd->status.class_==4014)
+			sd->status.class_=sd->view_class=4008;
 
-		if(sd->status.class==4022)
-			sd->status.class=sd->view_class=4015;
+		if(sd->status.class_==4022)
+			sd->status.class_=sd->view_class=4015;
 	}
 
 	pc_setoption(sd,0);
@@ -10011,7 +10011,7 @@ void clif_parse_sn_explosionspirits(int fd, struct map_session_data *sd)
 {
 	if(sd){
 		int nextbaseexp=pc_nextbaseexp(sd);
-		struct pc_base_job s_class = pc_calc_base_job(sd->status.class);
+		struct pc_base_job s_class = pc_calc_base_job(sd->status.class_);
 		if (battle_config.etc_log){
 			if(nextbaseexp != 0)
 				printf("SuperNovice explosionspirits!! %d %d %d %d\n",sd->bl.id,s_class.job,sd->status.base_exp,(int)((double)1000*sd->status.base_exp/nextbaseexp));

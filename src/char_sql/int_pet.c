@@ -39,11 +39,11 @@ int inter_pet_tosql(int pet_id, struct s_pet *p) {
 	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) 
 		//row reside -> updating
 		sprintf(tmp_sql, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%d',`equip`='%d',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incuvate`='%d' WHERE `pet_id`='%d'",
-			pet_db, p->class, t_name, p->account_id, p->char_id, p->level, p->egg_id,
+			pet_db, p->class_, t_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate, p->pet_id);
 	else //no row -> insert
 		sprintf(tmp_sql,"INSERT INTO `%s` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`) VALUES ('%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			pet_db, pet_id, p->class, t_name, p->account_id, p->char_id, p->level, p->egg_id,
+			pet_db, pet_id, p->class_, t_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate);
 	mysql_free_result(sql_res) ; //resource free
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
@@ -72,7 +72,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet *p){
 		sql_row = mysql_fetch_row(sql_res);
 		
 		p->pet_id = pet_id;
-		p->class = atoi(sql_row[1]);
+		p->class_ = atoi(sql_row[1]);
 		memcpy(p->name, sql_row[2],24);
 		p->account_id = atoi(sql_row[3]);
 		p->char_id = atoi(sql_row[4]);
@@ -215,7 +215,7 @@ int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short
 		pet_pt->account_id = account_id;
 		pet_pt->char_id = char_id;
 	}
-	pet_pt->class = pet_class;
+	pet_pt->class_ = pet_class;
 	pet_pt->level = pet_lv;
 	pet_pt->egg_id = pet_egg_id;
 	pet_pt->equip = pet_equip;

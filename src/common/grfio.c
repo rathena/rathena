@@ -284,7 +284,7 @@ static void decode_des_etc(BYTE *buf,int len,int type,int cycle)
  *	Grf data decode sub : zip
  *------------------------------------------
  */
-int decode_zip(char *dest, unsigned long* destLen, const char* source, unsigned long sourceLen)
+int decode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen)
 {
 	z_stream stream;
 	int err;
@@ -294,7 +294,7 @@ int decode_zip(char *dest, unsigned long* destLen, const char* source, unsigned 
 	/* Check for source > 64K on 16-bit machine: */
 	if ((uLong)stream.avail_in != sourceLen) return Z_BUF_ERROR;
 
-	stream.next_out = dest;
+	stream.next_out = (Bytef*) dest;
 	stream.avail_out = (uInt)*destLen;
 	if ((uLong)stream.avail_out != *destLen) return Z_BUF_ERROR;
 
@@ -315,7 +315,7 @@ int decode_zip(char *dest, unsigned long* destLen, const char* source, unsigned 
 	return err;
 }
 
-int encode_zip(char *dest, unsigned long* destLen, const char* source, unsigned long sourceLen) {
+int encode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen) {
 	z_stream stream;
 	int err;
 
@@ -324,7 +324,7 @@ int encode_zip(char *dest, unsigned long* destLen, const char* source, unsigned 
 	/* Check for source > 64K on 16-bit machine: */
 	if ((uLong)stream.avail_in != sourceLen) return Z_BUF_ERROR;
 
-	stream.next_out = dest;
+	stream.next_out = (Bytef*) dest;
 	stream.avail_out = (uInt)*destLen;
 	if ((uLong)stream.avail_out != *destLen) return Z_BUF_ERROR;
 
@@ -382,7 +382,7 @@ FILELIST *filelist_find(char *fname)
 {
 	int hash;
 
-	for(hash=filelist_hash[filehash(fname)];hash>=0;hash=filelist[hash].next) {
+	for(hash=filelist_hash[filehash((unsigned char *) fname)];hash>=0;hash=filelist[hash].next) {
 		if(strcmpi(filelist[hash].fn,fname)==0)
 			break;
 	}
@@ -421,7 +421,7 @@ static FILELIST* filelist_add(FILELIST *entry)
 
 	memcpy( &filelist[filelist_entrys], entry, sizeof(FILELIST) );
 
-	hash = filehash(entry->fn);
+	hash = filehash((unsigned char *) entry->fn);
 	filelist[filelist_entrys].next = filelist_hash[hash];
 	filelist_hash[hash] = filelist_entrys;
 
@@ -576,7 +576,7 @@ void* grfio_reads(char *fname, int *size)
 				lentry.declen = ftell(in);
 			}
 			fseek(in,0,0);	// SEEK_SET
-			buf2 = calloc(lentry.declen+1024, 1);
+			buf2 = (unsigned char *) aCalloc(lentry.declen+1024, 1);
 			if (buf2==NULL) {
 				printf("file read memory allocate error : declen\n");
 				goto errret;
@@ -598,7 +598,7 @@ void* grfio_reads(char *fname, int *size)
 		}
 	}
 	if (entry!=NULL && entry->gentry>0) {	// Archive[GRF] File Read
-		buf = calloc(entry->srclen_aligned+1024, 1);
+		buf = (unsigned char *) aCalloc(entry->srclen_aligned+1024, 1);
 		if (buf==NULL) {
 			printf("file read memory allocate error : srclen_aligned\n");
 			goto errret;
@@ -614,7 +614,7 @@ void* grfio_reads(char *fname, int *size)
 		fseek(in,entry->srcpos,0);
 		fread(buf,1,entry->srclen_aligned,in);
 		fclose(in);
-		buf2=calloc(entry->declen+1024, 1);
+		buf2 = (unsigned char *) aCalloc(entry->declen+1024, 1);
 		if (buf2==NULL) {
 			printf("file decode memory allocate error\n");
 			goto errret;
@@ -694,7 +694,7 @@ static int grfio_entryread(char *gfname,int gentry)
 	grf_size = ftell(fp);
 	fseek(fp,0,0);	// SEEK_SET
 	fread(grf_header,1,0x2e,fp);
-	if(strcmp(grf_header,"Master of Magic") || fseek(fp,getlong(grf_header+0x1e),1)){	// SEEK_CUR
+	if(strcmp((const char *) grf_header,"Master of Magic") || fseek(fp,getlong(grf_header+0x1e),1)){	// SEEK_CUR
 		fclose(fp);
 		printf("%s read error\n",gfname);
 		return 2;	// 2:file format error
@@ -704,7 +704,7 @@ static int grfio_entryread(char *gfname,int gentry)
 
 	if (grf_version==0x01) {	//****** Grf version 01xx ******
 		list_size = grf_size-ftell(fp);
-		grf_filelist = calloc(list_size, 1);
+		grf_filelist = (unsigned char *) aCalloc(list_size, 1);
 		if(grf_filelist==NULL){
 			fclose(fp);
 			printf("out of memory : grf_filelist\n");
@@ -725,13 +725,13 @@ static int grfio_entryread(char *gfname,int gentry)
 			type = grf_filelist[ofs2+12];
 			if( type!=0 ){	// Directory Index ... skip
 				fname = decode_filename(grf_filelist+ofs+6,grf_filelist[ofs]-6);
-				if(strlen(fname)>sizeof(aentry.fn)-1){
+				if(strlen((const char *) fname)>sizeof(aentry.fn)-1){
 					printf("file name too long : %s\n",fname);
 					free(grf_filelist);
 					exit(1);
 				}
 				srclen=0;
-				if((period_ptr=strrchr(fname,'.'))!=NULL){
+				if((period_ptr=strrchr((const char *) fname,'.'))!=NULL){
 					for(lop=0;lop<4;lop++) {
 						if(strcmpi(period_ptr,".gnd\0.gat\0.act\0.str"+lop*5)==0)
 							break;
@@ -752,7 +752,7 @@ static int grfio_entryread(char *gfname,int gentry)
 				aentry.srcpos         = getlong(grf_filelist+ofs2+13)+0x2e;
 				aentry.cycle          = srccount;
 				aentry.type           = type;
-				strncpy(aentry.fn,fname,sizeof(aentry.fn)-1);
+				strncpy(aentry.fn, (const char *) fname,sizeof(aentry.fn)-1);
 #ifdef	GRFIO_LOCAL
 				aentry.gentry         = -(gentry+1);	// As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
@@ -779,13 +779,13 @@ static int grfio_entryread(char *gfname,int gentry)
 			return 4;
 		}
 
-		rBuf = calloc( rSize , 1);	// Get a Read Size
+		rBuf = (unsigned char *) aCalloc( rSize , 1);	// Get a Read Size
 		if (rBuf==NULL) {
 			fclose(fp);
 			printf("out of memory : grf compress entry table buffer\n");
 			return 3;
 		}
-		grf_filelist = calloc( eSize , 1);	// Get a Extend Size
+		grf_filelist = (unsigned char *) aCalloc( eSize , 1);	// Get a Extend Size
 		if (grf_filelist==NULL) {
 			free(rBuf);
 			fclose(fp);
@@ -806,7 +806,7 @@ static int grfio_entryread(char *gfname,int gentry)
 			FILELIST aentry;
 
 			fname = grf_filelist+ofs;
-			if (strlen(fname)>sizeof(aentry.fn)-1) {
+			if (strlen((const char *) fname)>sizeof(aentry.fn)-1) {
 				printf("grf : file name too long : %s\n",fname);
 				free(grf_filelist);
 				exit(1);
@@ -927,7 +927,7 @@ int grfio_add(char *fname)
 		}
 	}
 	len = strlen( fname );
-	buf = calloc(len+1, 1);
+	buf = aCalloc(len+1, 1);
 	if (buf==NULL) {
 		printf("out of memory : gentry\n");
 		exit(1);

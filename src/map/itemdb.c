@@ -158,7 +158,7 @@ struct item_data* itemdb_search(int nameid)
 	id->weight=10;
 	id->sex=2;
 	id->elv=0;
-	id->class=0xffffffff;
+	id->class_=0xffffffff;
 	id->flag.available=0;
 	id->flag.value_notdc=0;  //ˆê‰žEEE
 	id->flag.value_notoc=0;
@@ -339,7 +339,7 @@ static int itemdb_readdb(void)
 			id->def=atoi(str[8]);
 			id->range=atoi(str[9]);
 			id->slot=atoi(str[10]);
-			id->class=atoi(str[11]);
+			id->class_=atoi(str[11]);
 			id->sex=atoi(str[12]);
 			if(id->equip != atoi(str[13])){
 				id->equip=atoi(str[13]);
@@ -814,7 +814,7 @@ static int itemdb_read_sqldb(void)
 				id->def		= (sql_row[8] != NULL)		? atoi(sql_row[8])	: 0;
 				id->range	= (sql_row[9] != NULL)		? atoi(sql_row[9])	: 0;
 				id->slot	= (sql_row[10] != NULL)		? atoi(sql_row[10])	: 0;
-				id->class	= (sql_row[11] != NULL)		? atoi(sql_row[11])	: 0;
+				id->class_	= (sql_row[11] != NULL)		? atoi(sql_row[11])	: 0;
 				id->sex		= (sql_row[12] != NULL)		? atoi(sql_row[12])	: 0;
 				id->equip	= (sql_row[13] != NULL)		? atoi(sql_row[13])	: 0;
 				id->wlv		= (sql_row[14] != NULL)		? atoi(sql_row[14])	: 0;

@@ -831,7 +831,7 @@ static int atmobsearch_sub(struct block_list *bl,va_list ap)
 	
 	md = (struct mob_data *)bl;
 	
-	if(md && fd && (mob_id==-1 || (md->class==mob_id))){
+	if(md && fd && (mob_id==-1 || (md->class_==mob_id))){
 		snprintf(output, sizeof output, "%2d[%3d:%3d] %s",
 				++number,bl->x, bl->y,md->name);
 		clif_displaymessage(fd, output);
@@ -1285,9 +1285,9 @@ int atcommand_who2(
 					player_name[j] = tolower(player_name[j]);
 				if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
 					if (pl_GM_level > 0)
-						sprintf(output, "Name: %s (GM:%d) | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_GM_level, pl_sd->status.base_level, job_name(pl_sd->status.class), pl_sd->status.job_level);
+						sprintf(output, "Name: %s (GM:%d) | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_GM_level, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
 					else
-						sprintf(output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class), pl_sd->status.job_level);
+						sprintf(output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
 					clif_displaymessage(fd, output);
 					count++;
 				}
@@ -1478,9 +1478,9 @@ int atcommand_whomap2(
 			if (!((battle_config.hide_GM_session || (pl_sd->status.option & OPTION_HIDE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
 				if (pl_sd->bl.m == map_id) {
 					if (pl_GM_level > 0)
-						sprintf(output, "Name: %s (GM:%d) | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_GM_level, pl_sd->status.base_level, job_name(pl_sd->status.class), pl_sd->status.job_level);
+						sprintf(output, "Name: %s (GM:%d) | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_GM_level, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
 					else
-						sprintf(output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class), pl_sd->status.job_level);
+						sprintf(output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
 					clif_displaymessage(fd, output);
 					count++;
 				}
@@ -1621,7 +1621,7 @@ int atcommand_whogm(
 					if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
 						sprintf(output, "Name: %s (GM:%d) | Location: %s %d %d", pl_sd->status.name, pl_GM_level, pl_sd->mapname, pl_sd->bl.x, pl_sd->bl.y);
 						clif_displaymessage(fd, output);
-						sprintf(output, "       BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.base_level, job_name(pl_sd->status.class), pl_sd->status.job_level);
+						sprintf(output, "       BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
 						clif_displaymessage(fd, output);
 						g = guild_search(pl_sd->status.guild_id);
 						if (g == NULL)
@@ -1884,30 +1884,30 @@ int atcommand_option(
 	}
 	sd->status.option = param3;
 	// fix pecopeco display
-	if (sd->status.class == 13 || sd->status.class == 21 || sd->status.class == 4014 || sd->status.class == 4022) {
+	if (sd->status.class_ == 13 || sd->status.class_ == 21 || sd->status.class_ == 4014 || sd->status.class_ == 4022) {
 		if (!pc_isriding(sd)) { // sd have the new value...
-			if (sd->status.class == 13)
-				sd->status.class = sd->view_class = 7;
-			else if (sd->status.class == 21)
-				sd->status.class = sd->view_class = 14;
-			else if (sd->status.class == 4014)
-				sd->status.class = sd->view_class = 4008;
-			else if (sd->status.class == 4022)
-				sd->status.class = sd->view_class = 4015;
+			if (sd->status.class_ == 13)
+				sd->status.class_ = sd->view_class = 7;
+			else if (sd->status.class_ == 21)
+				sd->status.class_ = sd->view_class = 14;
+			else if (sd->status.class_ == 4014)
+				sd->status.class_ = sd->view_class = 4008;
+			else if (sd->status.class_ == 4022)
+				sd->status.class_ = sd->view_class = 4015;
 		}
 	} else {
 		if (pc_isriding(sd)) { // sd have the new value...
 			if (sd->disguise > 0) { // temporary prevention of crash caused by peco + disguise, will look into a better solution [Valaris] (code added by [Yor])
 				sd->status.option &= ~0x0020;
 			} else {
-				if (sd->status.class == 7)
-					sd->status.class = sd->view_class = 13;
-				else if (sd->status.class == 14)
-					sd->status.class = sd->view_class = 21;
-				else if (sd->status.class == 4008)
-					sd->status.class = sd->view_class = 4014;
-				else if (sd->status.class == 4015)
-					sd->status.class = sd->view_class = 4022;
+				if (sd->status.class_ == 7)
+					sd->status.class_ = sd->view_class = 13;
+				else if (sd->status.class_ == 14)
+					sd->status.class_ = sd->view_class = 21;
+				else if (sd->status.class_ == 4008)
+					sd->status.class_ = sd->view_class = 4014;
+				else if (sd->status.class_ == 4015)
+					sd->status.class_ = sd->view_class = 4022;
 				else
 					sd->status.option &= ~0x0020;
 			}
@@ -2049,14 +2049,14 @@ int atcommand_jobchange(
 		// fix pecopeco display
 		if ((job != 13 && job != 21 && job != 4014 && job != 4022)) {
 			if (pc_isriding(sd)) {
-				if (sd->status.class == 13)
-					sd->status.class = sd->view_class = 7;
-				if (sd->status.class == 21)
-					sd->status.class = sd->view_class = 14;
-				if (sd->status.class == 4014)
-					sd->status.class = sd->view_class = 4008;
-				if (sd->status.class == 4022)
-					sd->status.class = sd->view_class = 4015;
+				if (sd->status.class_ == 13)
+					sd->status.class_ = sd->view_class = 7;
+				if (sd->status.class_ == 21)
+					sd->status.class_ = sd->view_class = 14;
+				if (sd->status.class_ == 4014)
+					sd->status.class_ = sd->view_class = 4008;
+				if (sd->status.class_ == 4022)
+					sd->status.class_ = sd->view_class = 4015;
 				sd->status.option &= ~0x0020;
 				clif_changeoption(&sd->bl);
 				pc_calcstatus(sd, 0);
@@ -2280,9 +2280,9 @@ int atcommand_item(
 		for (i = 0; i < number; i += get_count) {
 			// if pet egg
 			if (pet_id >= 0) {
-				sd->catch_target_class = pet_db[pet_id].class;
+				sd->catch_target_class = pet_db[pet_id].class_;
 				intif_create_pet(sd->status.account_id, sd->status.char_id,
-				                 pet_db[pet_id].class, mob_db[pet_db[pet_id].class].lv,
+				                 pet_db[pet_id].class_, mob_db[pet_db[pet_id].class_].lv,
 				                 pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate,
 				                 100, 0, 1, pet_db[pet_id].jname);
 			// if not pet egg
@@ -2480,7 +2480,7 @@ int atcommand_joblevelup(
 	int up_level = 50, level;
 	struct pc_base_job s_class;
 	nullpo_retr(-1, sd);
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 
 	if (!message || !*message || (level = atoi(message)) == 0) {
 		clif_displaymessage(fd, "Please, enter a level adjustement (usage: @joblvup/@jlevel/@joblvlup <number of levels>).");
@@ -2492,7 +2492,7 @@ int atcommand_joblevelup(
 	// super novices can go up to 99 [celest]
 	else if (s_class.job == 23)
 		up_level += 49;
-	else if (sd->status.class > 4007 && sd->status.class < 4023)
+	else if (sd->status.class_ > 4007 && sd->status.class_ < 4023)
 		up_level += 20;
 
 	if (level > 0) {
@@ -2748,7 +2748,7 @@ int atcommand_model(
 		hair_color >= MIN_HAIR_COLOR && hair_color <= MAX_HAIR_COLOR &&
 		cloth_color >= MIN_CLOTH_COLOR && cloth_color <= MAX_CLOTH_COLOR) {
 		//•ž‚ÌF•ÏX
-		if (cloth_color != 0 && sd->status.sex == 1 && (sd->status.class == 12 ||  sd->status.class == 17)) {
+		if (cloth_color != 0 && sd->status.sex == 1 && (sd->status.class_ == 12 ||  sd->status.class_ == 17)) {
 			//•ž‚ÌF–¢ŽÀ‘•E‚Ì”»’è
 			clif_displaymessage(fd, msg_table[35]); // You can't use this command with this class.
 			return -1;
@@ -2814,7 +2814,7 @@ int atcommand_hair_style(const int fd, struct map_session_data* sd, const char* 
 	}
 
 	if (hair_style >= MIN_HAIR_STYLE && hair_style <= MAX_HAIR_STYLE) {
-		if (hair_style != 0 && sd->status.sex == 1 && (sd->status.class == 12 || sd->status.class == 17)) {
+		if (hair_style != 0 && sd->status.sex == 1 && (sd->status.class_ == 12 || sd->status.class_ == 17)) {
 			clif_displaymessage(fd, msg_table[35]); // You can't use this command with this class.
 			return -1;
 		} else {
@@ -2860,7 +2860,7 @@ int atcommand_hair_color(const int fd, struct map_session_data* sd, const char* 
 	}
 
 	if (hair_color >= MIN_HAIR_COLOR && hair_color <= MAX_HAIR_COLOR) {
-		if (hair_color != 0 && sd->status.sex == 1 && (sd->status.class == 12 || sd->status.class == 17)) {
+		if (hair_color != 0 && sd->status.sex == 1 && (sd->status.class_ == 12 || sd->status.class_ == 17)) {
 			clif_displaymessage(fd, msg_table[35]); // You can't use this command with this class.
 			return -1;
 		} else {
@@ -3976,10 +3976,10 @@ int atcommand_makeegg(
 	if (pet_id < 0)
 		pet_id = search_petDB_index(id, PET_EGG);
 	if (pet_id >= 0) {
-		sd->catch_target_class = pet_db[pet_id].class;
+		sd->catch_target_class = pet_db[pet_id].class_;
 		intif_create_pet(
 			sd->status.account_id, sd->status.char_id,
-			pet_db[pet_id].class, mob_db[pet_db[pet_id].class].lv,
+			pet_db[pet_id].class_, mob_db[pet_db[pet_id].class_].lv,
 			pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate,
 			100, 0, 1, pet_db[pet_id].jname);
 	} else {
@@ -4711,14 +4711,14 @@ int atcommand_character_joblevel(
 	}
 
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		pl_s_class = pc_calc_base_job(pl_sd->status.class);
+		pl_s_class = pc_calc_base_job(pl_sd->status.class_);
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change job level only lower or same gm level
 			if (pl_s_class.job == 0)
 				max_level -= 40;
 			// super novices can go up to 99 [celest]
 			else if (pl_s_class.job == 23)
 				max_level += 49;
-			else if (pl_sd->status.class > 4007 && pl_sd->status.class < 4023)
+			else if (pl_sd->status.class_ > 4007 && pl_sd->status.class_ < 4023)
 				max_level += 20;
 
 			if (level > 0) {
@@ -5316,7 +5316,7 @@ int atcommand_charmodel(
 
 			if (cloth_color != 0 &&
 			    pl_sd->status.sex == 1 &&
-			    (pl_sd->status.class == 12 ||  pl_sd->status.class == 17)) {
+			    (pl_sd->status.class_ == 12 ||  pl_sd->status.class_ == 17)) {
 				clif_displaymessage(fd, msg_table[35]); // You can't use this command with this class.
 				return -1;
 			} else {
@@ -5782,7 +5782,7 @@ int atcommand_mapinfo(
 			default: strcpy(direction, "Unknown"); break;
 			}
 			sprintf(output, "NPC %d: %s | Direction: %s | Sprite: %d | Location: %d %d",
-			        ++i, nd->name, direction, nd->class, nd->bl.x, nd->bl.y);
+			        ++i, nd->name, direction, nd->class_, nd->bl.x, nd->bl.y);
 			clif_displaymessage(fd, output);
 		}
 		break;
@@ -5826,15 +5826,15 @@ int atcommand_mount_peco(
 	}
 
 	if (!pc_isriding(sd)) { // if actually no peco
-		if (sd->status.class == 7 || sd->status.class == 14 || sd->status.class == 4008 || sd->status.class == 4015) {
-			if (sd->status.class == 7)
-				sd->status.class = sd->view_class = 13;
-			else if (sd->status.class == 14)
-				sd->status.class = sd->view_class = 21;
-			else if (sd->status.class == 4008)
-				sd->status.class = sd->view_class = 4014;
-			else if (sd->status.class == 4015)
-				sd->status.class = sd->view_class = 4022;
+		if (sd->status.class_ == 7 || sd->status.class_ == 14 || sd->status.class_ == 4008 || sd->status.class_ == 4015) {
+			if (sd->status.class_ == 7)
+				sd->status.class_ = sd->view_class = 13;
+			else if (sd->status.class_ == 14)
+				sd->status.class_ = sd->view_class = 21;
+			else if (sd->status.class_ == 4008)
+				sd->status.class_ = sd->view_class = 4014;
+			else if (sd->status.class_ == 4015)
+				sd->status.class_ = sd->view_class = 4022;
 			pc_setoption(sd, sd->status.option | 0x0020);
 			clif_displaymessage(fd, msg_table[102]); // Mounted Peco.
 		} else {
@@ -5842,14 +5842,14 @@ int atcommand_mount_peco(
 			return -1;
 		}
 	} else {
-		if (sd->status.class == 13)
-			sd->status.class = sd->view_class = 7;
-		else if (sd->status.class == 21)
-			sd->status.class = sd->view_class = 14;
-		else if (sd->status.class == 4014)
-			sd->status.class = sd->view_class = 4008;
-		else if (sd->status.class == 4022)
-			sd->status.class = sd->view_class = 4015;
+		if (sd->status.class_ == 13)
+			sd->status.class_ = sd->view_class = 7;
+		else if (sd->status.class_ == 21)
+			sd->status.class_ = sd->view_class = 14;
+		else if (sd->status.class_ == 4014)
+			sd->status.class_ = sd->view_class = 4008;
+		else if (sd->status.class_ == 4022)
+			sd->status.class_ = sd->view_class = 4015;
 		pc_setoption(sd, sd->status.option & ~0x0020);
 		clif_displaymessage(fd, msg_table[214]); // Unmounted Peco.
 	}
@@ -5883,15 +5883,15 @@ int atcommand_char_mount_peco(
 		}
 
 		if (!pc_isriding(pl_sd)) { // if actually no peco
-			if (pl_sd->status.class == 7 || pl_sd->status.class == 14 || pl_sd->status.class == 4008 || pl_sd->status.class == 4015) {
-				if (pl_sd->status.class == 7)
-					pl_sd->status.class = pl_sd->view_class = 13;
-				else if (pl_sd->status.class == 14)
-					pl_sd->status.class = pl_sd->view_class = 21;
-				else if (pl_sd->status.class == 4008)
-					pl_sd->status.class = pl_sd->view_class = 4014;
-				else if (pl_sd->status.class == 4015)
-					pl_sd->status.class = pl_sd->view_class = 4022;
+			if (pl_sd->status.class_ == 7 || pl_sd->status.class_ == 14 || pl_sd->status.class_ == 4008 || pl_sd->status.class_ == 4015) {
+				if (pl_sd->status.class_ == 7)
+					pl_sd->status.class_ = pl_sd->view_class = 13;
+				else if (pl_sd->status.class_ == 14)
+					pl_sd->status.class_ = pl_sd->view_class = 21;
+				else if (pl_sd->status.class_ == 4008)
+					pl_sd->status.class_ = pl_sd->view_class = 4014;
+				else if (pl_sd->status.class_ == 4015)
+					pl_sd->status.class_ = pl_sd->view_class = 4022;
 				pc_setoption(pl_sd, pl_sd->status.option | 0x0020);
 				clif_displaymessage(fd, msg_table[216]); // Now, this player mounts a peco.
 			} else {
@@ -5899,14 +5899,14 @@ int atcommand_char_mount_peco(
 				return -1;
 			}
 		} else {
-			if (pl_sd->status.class == 13)
-				pl_sd->status.class = pl_sd->view_class = 7;
-			else if (pl_sd->status.class == 21)
-				pl_sd->status.class = pl_sd->view_class = 14;
-			else if (pl_sd->status.class == 4014)
-				pl_sd->status.class = pl_sd->view_class = 4008;
-			else if (pl_sd->status.class == 4022)
-				pl_sd->status.class = pl_sd->view_class = 4015;
+			if (pl_sd->status.class_ == 13)
+				pl_sd->status.class_ = pl_sd->view_class = 7;
+			else if (pl_sd->status.class_ == 21)
+				pl_sd->status.class_ = pl_sd->view_class = 14;
+			else if (pl_sd->status.class_ == 4014)
+				pl_sd->status.class_ = pl_sd->view_class = 4008;
+			else if (pl_sd->status.class_ == 4022)
+				pl_sd->status.class_ = pl_sd->view_class = 4015;
 			pc_setoption(pl_sd, pl_sd->status.option & ~0x0020);
 			clif_displaymessage(fd, msg_table[218]); // Now, this player has not more peco.
 		}
@@ -7175,7 +7175,7 @@ atcommand_skilltree(const int fd, struct map_session_data* sd,
   if((pl_sd=map_nick2sd(target)) == NULL) 
     return -1;
 
-  s_class = pc_calc_base_job(pl_sd->status.class);
+  s_class = pc_calc_base_job(pl_sd->status.class_);
   c = s_class.job;
   s = s_class.upper;
 
@@ -7620,7 +7620,7 @@ atcommand_summon(
 	if((md=(struct mob_data *)map_id2bl(id))){
 		md->master_id=sd->bl.id;
 		md->state.special_mob_ai=1;
-		md->mode=mob_db[md->class].mode|0x04;
+		md->mode=mob_db[md->class_].mode|0x04;
 		md->deletetimer=add_timer(tick+60000,mob_timer_delete,id,0);
 		clif_misceffect2(&md->bl,344);
 	}
@@ -7894,7 +7894,7 @@ atcommand_petid(const int fd, struct map_session_data* sd,
 		strcpy(temp0,pet_db[i].jname);
 		strcpy(temp0, estr_lower(temp1));
 		if (strstr(temp1, searchtext) || strstr(temp0, searchtext) ) {
-  			snprintf(temp0, sizeof(temp0), "ID: %i -- Name: %s", pet_db[i].class,
+  			snprintf(temp0, sizeof(temp0), "ID: %i -- Name: %s", pet_db[i].class_,
      			pet_db[i].jname);
   			if (cnt >= 100) { // Only if there are custom pets
 	  			clif_displaymessage(fd, "Be more specific, can't send more than"

@@ -4,6 +4,7 @@
 
 #include "strlib.h"
 #include "utils.h"
+#include "malloc.h"
 
 //-----------------------------------------------
 // string lib.

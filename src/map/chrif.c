@@ -606,7 +606,7 @@ int chrif_changedsex(int fd)
 	sd = map_id2sd(acc);
 	if (acc > 0) {
 		if (sd != NULL && sd->status.sex != sex) {
-			s_class = pc_calc_base_job(sd->status.class);
+			s_class = pc_calc_base_job(sd->status.class_);
 			if (sd->status.sex == 0) {
 				sd->status.sex = 1;
 				sd->sex = 1;
@@ -641,9 +641,9 @@ int chrif_changedsex(int fd)
 				clif_updatestatus(sd, SP_SKILLPOINT);
 				// change job if necessary
 				if (s_class.job == 20 || s_class.job == 4021 || s_class.job == 4043)
-					sd->status.class -= 1;
+					sd->status.class_ -= 1;
 				else if (s_class.job == 19 || s_class.job == 4020 || s_class.job == 4042)
-					sd->status.class += 1;
+					sd->status.class_ += 1;
 			}
 			// save character
 			chrif_save(sd);

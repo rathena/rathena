@@ -6,7 +6,7 @@
 #define PETLOOT_SIZE	20 // [Valaris]
 
 struct pet_db {
-	int	class;
+	int	class_;
 	char name[24],jname[24];
 	int itemID;
 	int EggID;

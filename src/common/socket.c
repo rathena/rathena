@@ -200,8 +200,8 @@ static int connect_client(int listen_fd)
 #endif
 
 	CREATE(session[fd], struct socket_data, 1);
-	CREATE(session[fd]->rdata, char, rfifo_size);
-	CREATE(session[fd]->wdata, char, wfifo_size);
+	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
+	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
 
 	session[fd]->max_rdata   = rfifo_size;
 	session[fd]->max_wdata   = wfifo_size;
@@ -339,8 +339,8 @@ int make_connection(long ip,int port)
 	FD_SET(fd,&readfds);
 
 	CREATE(session[fd], struct socket_data, 1);
-	CREATE(session[fd]->rdata, char, rfifo_size);
-	CREATE(session[fd]->wdata, char, wfifo_size);
+	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
+	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
 
 	session[fd]->max_rdata  = rfifo_size;
 	session[fd]->max_wdata  = wfifo_size;
@@ -374,11 +374,11 @@ int realloc_fifo(int fd,int rfifo_size,int wfifo_size)
 {
 	struct socket_data *s=session[fd];
 	if( s->max_rdata != rfifo_size && s->rdata_size < rfifo_size){
-		RECREATE(s->rdata, char, rfifo_size);
+		RECREATE(s->rdata, unsigned char, rfifo_size);
 		s->max_rdata  = rfifo_size;
 	}
 	if( s->max_wdata != wfifo_size && s->wdata_size < wfifo_size){
-		RECREATE(s->wdata, char, wfifo_size);
+		RECREATE(s->wdata, unsigned char, wfifo_size);
 		s->max_wdata  = wfifo_size;
 	}
 	return 0;

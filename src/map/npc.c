@@ -853,7 +853,7 @@ int npc_checknear(struct map_session_data *sd,int id)
 		return 1;
 	}
 	
-	if (nd->class<0)	// イベント系は常にOK
+	if (nd->class_<0)	// イベント系は常にOK
 		return 0;
 
 	// エリア判定
@@ -1022,7 +1022,7 @@ int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 	}
 
 	//商人経験値
-/*	if ((sd->status.class == 5) || (sd->status.class == 10) || (sd->status.class == 18)) {
+/*	if ((sd->status.class_ == 5) || (sd->status.class_ == 10) || (sd->status.class_ == 18)) {
 		z = z * pc_checkskill(sd,MC_DISCOUNT) / ((1 + 300 / itemamount) * 4000) * battle_config.shop_exp;
 		pc_gainexp(sd,0,z);
 	}*/
@@ -1082,7 +1082,7 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 	}
 
 	//商人経験値
-/*	if ((sd->status.class == 5) || (sd->status.class == 10) || (sd->status.class == 18)) {
+/*	if ((sd->status.class_ == 5) || (sd->status.class_ == 10) || (sd->status.class_ == 18)) {
 		z = z * pc_checkskill(sd,MC_OVERCHARGE) / ((1 + 500 / itemamount) * 4000) * battle_config.shop_exp ;
 		pc_gainexp(sd,0,z);
 	}*/
@@ -1449,9 +1449,9 @@ int npc_parse_warp(char *w1,char *w2,char *w3,char *w4)
 
 	nd->chat_id=0;
 	if (!battle_config.warp_point_debug)
-		nd->class=WARP_CLASS;
+		nd->class_=WARP_CLASS;
 	else
-		nd->class=WARP_DEBUG_CLASS;
+		nd->class_=WARP_DEBUG_CLASS;
 	nd->speed=200;
 	nd->option = 0;
 	nd->opt1 = 0;
@@ -1535,7 +1535,7 @@ static int npc_parse_shop(char *w1,char *w2,char *w3,char *w4)
 	nd->dir = dir;
 	nd->flag = 0;
 	memcpy(nd->name, w3, 24);
-	nd->class = atoi(w4);
+	nd->class_ = atoi(w4);
 	nd->speed = 200;
 	nd->chat_id = 0;
 	nd->option = 0;
@@ -1732,7 +1732,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 	nd->bl.id=npc_get_new_npc_id();
 	nd->dir = dir;
 	nd->flag=0;
-	nd->class=class;
+	nd->class_=class;
 	nd->speed=200;
 	nd->u.scr.script=script;
 	nd->u.scr.src_id=src_id;
@@ -1743,7 +1743,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 	nd->opt3 = 0;
 	nd->walktimer=-1;
 
-	//printf("script npc %s %d %d read done\n",mapname,nd->bl.id,nd->class);
+	//printf("script npc %s %d %d read done\n",mapname,nd->bl.id,nd->class_);
 	npc_script++;
 	nd->bl.type=BL_NPC;
 	nd->bl.subtype=SCRIPT;
@@ -1965,7 +1965,7 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 		memcpy(md->name,w3,24);
 
 		md->n = i;
-		md->base_class = md->class = class;
+		md->base_class = md->class_ = class;
 		md->bl.id=npc_get_new_npc_id();
 		md->m =m;
 		md->x0=x;

@@ -269,7 +269,7 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 
 	nullpo_retr(0, sd);
 
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 
 	//-----------------------
 	// 死亡した
@@ -308,7 +308,7 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 
 	/* removed exp penalty on spawn [Valaris] */
 
-	if(type&2 && sd->status.class != 0 && battle_config.zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty) {
+	if(type&2 && sd->status.class_ != 0 && battle_config.zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty) {
 		int zeny = (int)((double)sd->status.zeny * (double)battle_config.zeny_penalty / 10000.);
 		if(zeny < 1) zeny = 1;
 		sd->status.zeny -= zeny;
@@ -447,7 +447,7 @@ int pc_equippoint(struct map_session_data *sd,int n)
 
 	nullpo_retr(0, sd);
 
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 
 	if(sd->inventory_data[n]) {
 		ep = sd->inventory_data[n]->equip;
@@ -569,14 +569,14 @@ int pc_isequip(struct map_session_data *sd,int n)
 //			 as it allows all advanced classes to equip items their normal versions
 //			 could equip)
 //
-	if(((sd->status.class==13 || sd->status.class==4014) && ((1<<7)&item->class) == 0) || // have mounted classes use unmounted equipment [Valaris]
-  	  ((sd->status.class==21 || sd->status.class==4022) && ((1<<14)&item->class) == 0))
+	if(((sd->status.class_==13 || sd->status.class_==4014) && ((1<<7)&item->class_) == 0) || // have mounted classes use unmounted equipment [Valaris]
+  	  ((sd->status.class_==21 || sd->status.class_==4022) && ((1<<14)&item->class_) == 0))
 		return 0;
-	if(sd->status.class!=13 && sd->status.class!=4014 && sd->status.class!=21 && sd->status.class!=4022)
-	if((sd->status.class<=4000 && ((1<<sd->status.class)&item->class) == 0) || (sd->status.class>4000 && sd->status.class<4023 && ((1<<(sd->status.class-4001))&item->class) == 0) ||
-		(sd->status.class>=4023 && ((1<<(sd->status.class-4023))&item->class) == 0))
+	if(sd->status.class_!=13 && sd->status.class_!=4014 && sd->status.class_!=21 && sd->status.class_!=4022)
+	if((sd->status.class_<=4000 && ((1<<sd->status.class_)&item->class_) == 0) || (sd->status.class_>4000 && sd->status.class_<4023 && ((1<<(sd->status.class_-4001))&item->class_) == 0) ||
+		(sd->status.class_>=4023 && ((1<<(sd->status.class_-4023))&item->class_) == 0))
 		return 0;
-//	if(((1<<sd->status.class)&item->class) == 0)
+//	if(((1<<sd->status.class_)&item->class_) == 0)
 //		return 0;
 	if(map[sd->bl.m].flag.pvp && (item->flag.no_equip==1 || item->flag.no_equip==3))
 		return 0;
@@ -735,7 +735,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	sd->bl.prev = sd->bl.next = NULL;
 
 	sd->weapontype1 = sd->weapontype2 = 0;
-	sd->view_class = sd->status.class;
+	sd->view_class = sd->status.class_;
 	sd->speed = DEFAULT_WALK_SPEED;
 	sd->state.dead_sit = 0;
 	sd->dir = 0;
@@ -984,7 +984,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 	c = s_class.job;
 	//s = (s_class.upper==1) ? 1 : 0 ; //?生以外は通常のスキル？
 	s = s_class.upper;
@@ -1193,7 +1193,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	nullpo_retr(0, sd);
 
 	//?生や養子の場合の元の職業を算出する
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 
 	b_speed = sd->speed;
 	b_max_hp = sd->status.max_hp;
@@ -1220,7 +1220,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	b_mdef = sd->mdef;
 	b_mdef2 = sd->mdef2;
 	b_class = sd->view_class;
-	sd->view_class = sd->status.class;
+	sd->view_class = sd->status.class_;
 	b_base_atk = sd->base_atk;
 
 	pc_calc_skilltree(sd);	// スキルツリ?の計算
@@ -1847,12 +1847,12 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 
 	//Flee上昇
 	if( (skill=pc_checkskill(sd,TF_MISS))>0 ){	// 回避率?加
-		if(sd->status.class==6||sd->status.class==4007 || sd->status.class==23){
+		if(sd->status.class_==6||sd->status.class_==4007 || sd->status.class_==23){
 			sd->flee += skill*3;
 		}
-		if(sd->status.class==12||sd->status.class==17||sd->status.class==4013||sd->status.class==4018)
+		if(sd->status.class_==12||sd->status.class_==17||sd->status.class_==4013||sd->status.class_==4018)
 			sd->flee += skill*4;
-		if(sd->status.class==12||sd->status.class==4013)
+		if(sd->status.class_==12||sd->status.class_==4013)
 			sd->speed -= sd->speed *(skill*1.5)/100;
 	}
 	if( (skill=pc_checkskill(sd,MO_DODGE))>0 )	// 見切り
@@ -2211,7 +2211,7 @@ int pc_calcspeed (struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 
 	b_speed = sd->speed;
 	sd->speed = DEFAULT_WALK_SPEED ;
@@ -3371,12 +3371,12 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 	if(item->elv > 0 && sd->status.base_level < item->elv)
 		return 0;
-	if(((sd->status.class==13 || sd->status.class==4014) && ((1<<7)&item->class) == 0) || // have mounted classes use unmounted items [Valaris]
-		((sd->status.class==21 || sd->status.class==4022) && ((1<<14)&item->class) == 0))
+	if(((sd->status.class_==13 || sd->status.class_==4014) && ((1<<7)&item->class_) == 0) || // have mounted classes use unmounted items [Valaris]
+		((sd->status.class_==21 || sd->status.class_==4022) && ((1<<14)&item->class_) == 0))
 		return 0;
-	if(sd->status.class!=13 && sd->status.class!=4014 && sd->status.class!=21 && sd->status.class!=4022)
-	if((sd->status.class<=4000 && ((1<<sd->status.class)&item->class) == 0) || (sd->status.class>4000 && sd->status.class<4023 && ((1<<(sd->status.class-4001))&item->class) == 0) ||
-	  (sd->status.class>=4023 && ((1<<(sd->status.class-4023))&item->class) == 0))
+	if(sd->status.class_!=13 && sd->status.class_!=4014 && sd->status.class_!=21 && sd->status.class_!=4022)
+	if((sd->status.class_<=4000 && ((1<<sd->status.class_)&item->class_) == 0) || (sd->status.class_>4000 && sd->status.class_<4023 && ((1<<(sd->status.class_-4001))&item->class_) == 0) ||
+	  (sd->status.class_>=4023 && ((1<<(sd->status.class_-4023))&item->class_) == 0))
 		return 0;
 
 #ifndef TXT_ONLY
@@ -3730,25 +3730,25 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		int i,skill,rate,itemid,flag, count;
 		struct mob_data *md;
 		md=(struct mob_data *)bl;
-		if(!md->state.steal_flag && mob_db[md->class].mexp <= 0 && !(mob_db[md->class].mode&0x20) &&
-			(!(md->class>1324 && md->class<1364))) // prevent stealing from treasure boxes [Valaris]
+		if(!md->state.steal_flag && mob_db[md->class_].mexp <= 0 && !(mob_db[md->class_].mode&0x20) &&
+			(!(md->class_>1324 && md->class_<1364))) // prevent stealing from treasure boxes [Valaris]
 		{
 			if (md->sc_data && (md->sc_data[SC_STONE].timer != -1 || md->sc_data[SC_FREEZE].timer != -1))
 				return 0;
 			skill = battle_config.skill_steal_type == 1
-				? (sd->paramc[4] - mob_db[md->class].dex)/2 + pc_checkskill(sd,TF_STEAL)*6 + 10
-				: sd->paramc[4] - mob_db[md->class].dex + pc_checkskill(sd,TF_STEAL)*3 + 10;
+				? (sd->paramc[4] - mob_db[md->class_].dex)/2 + pc_checkskill(sd,TF_STEAL)*6 + 10
+				: sd->paramc[4] - mob_db[md->class_].dex + pc_checkskill(sd,TF_STEAL)*3 + 10;
 
 			if(0 < skill)
 			{
 				for(count = 8; count <= 8 && count != 0; count--)
 				{
 					i = rand()%8;
-					itemid = mob_db[md->class].dropitem[i].nameid;
+					itemid = mob_db[md->class_].dropitem[i].nameid;
 
 					if(itemid > 0 && itemdb_type(itemid) != 6)
 					{
-						rate = (mob_db[md->class].dropitem[i].p / battle_config.item_rate_common * 100 * skill)/100;
+						rate = (mob_db[md->class_].dropitem[i].p / battle_config.item_rate_common * 100 * skill)/100;
 						
 						if(rand()%10000 < rate)
 						{
@@ -3796,9 +3796,9 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *bl)
 			if (md->sc_data && (md->sc_data[SC_STONE].timer != -1 || md->sc_data[SC_FREEZE].timer != -1))
 				return 0;
 			skill = pc_checkskill(sd,RG_STEALCOIN)*10;
-			rate = skill + (sd->status.base_level - mob_db[md->class].lv)*3 + sd->paramc[4]*2 + sd->paramc[5]*2;
+			rate = skill + (sd->status.base_level - mob_db[md->class_].lv)*3 + sd->paramc[4]*2 + sd->paramc[5]*2;
 			if(rand()%1000 < rate) {
-				pc_getzeny(sd,mob_db[md->class].lv*10 + rand()%100);
+				pc_getzeny(sd,mob_db[md->class_].lv*10 + rand()%100);
 				md->state.steal_coin_flag = 1;
 				return 1;
 			}
@@ -4859,7 +4859,7 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	if(sd->status.base_exp >= next && next > 0){
-		struct pc_base_job s_class = pc_calc_base_job(sd->status.class);
+		struct pc_base_job s_class = pc_calc_base_job(sd->status.class_);
 
 		// base側レベルアップ?理
 		sd->status.base_exp -= next;
@@ -4989,12 +4989,12 @@ int pc_nextbaseexp(struct map_session_data *sd)
 	if(sd->status.base_level>=MAX_LEVEL || sd->status.base_level<=0)
 		return 0;
 
-	if(sd->status.class==0) i=0;
-	else if(sd->status.class<=6) i=1;
-	else if(sd->status.class<=22) i=2;
-	else if(sd->status.class==23) i=3;
-	else if(sd->status.class==4001) i=4;
-	else if(sd->status.class<=4007) i=5;
+	if(sd->status.class_==0) i=0;
+	else if(sd->status.class_<=6) i=1;
+	else if(sd->status.class_<=22) i=2;
+	else if(sd->status.class_==23) i=3;
+	else if(sd->status.class_==4001) i=4;
+	else if(sd->status.class_<=4007) i=5;
 	else i=6;
 
 	return exp_table[i][sd->status.base_level-1];
@@ -5013,12 +5013,12 @@ int pc_nextjobexp(struct map_session_data *sd)
 	if(sd->status.job_level>=MAX_LEVEL || sd->status.job_level<=0)
 		return 0;
 
-	if(sd->status.class==0) i=7;
-	else if(sd->status.class<=6) i=8;
-	else if(sd->status.class<=22) i=9;
-	else if(sd->status.class==23) i=10;
-	else if(sd->status.class==4001) i=11;
-	else if(sd->status.class<=4007) i=12;
+	if(sd->status.class_==0) i=7;
+	else if(sd->status.class_<=6) i=8;
+	else if(sd->status.class_<=22) i=9;
+	else if(sd->status.class_==23) i=10;
+	else if(sd->status.class_==4001) i=11;
+	else if(sd->status.class_<=4007) i=12;
 	else i=13;
 
 	return exp_table[i][sd->status.job_level-1];
@@ -5037,12 +5037,12 @@ int pc_nextbaseafter(struct map_session_data *sd)
 	if(sd->status.base_level>=MAX_LEVEL || sd->status.base_level<=0)
 		return 0;
 
-	if(sd->status.class==0) i=0;
-	else if(sd->status.class<=6) i=1;
-	else if(sd->status.class<=22) i=2;
-	else if(sd->status.class==23) i=3;
-	else if(sd->status.class==4001) i=4;
-	else if(sd->status.class<=4007) i=5;
+	if(sd->status.class_==0) i=0;
+	else if(sd->status.class_<=6) i=1;
+	else if(sd->status.class_<=22) i=2;
+	else if(sd->status.class_==23) i=3;
+	else if(sd->status.class_==4001) i=4;
+	else if(sd->status.class_<=4007) i=5;
 	else i=6;
 
 	return exp_table[i][sd->status.base_level];
@@ -5061,12 +5061,12 @@ int pc_nextjobafter(struct map_session_data *sd)
 	if(sd->status.job_level>=MAX_LEVEL || sd->status.job_level<=0)
 		return 0;
 
-	if(sd->status.class==0) i=7;
-	else if(sd->status.class<=6) i=8;
-	else if(sd->status.class<=22) i=9;
-	else if(sd->status.class==23) i=10;
-	else if(sd->status.class==4001) i=11;
-	else if(sd->status.class<=4007) i=12;
+	if(sd->status.class_==0) i=7;
+	else if(sd->status.class_<=6) i=8;
+	else if(sd->status.class_<=22) i=9;
+	else if(sd->status.class_==23) i=10;
+	else if(sd->status.class_==4001) i=11;
+	else if(sd->status.class_<=4007) i=12;
 	else i=13;
 
 	return exp_table[i][sd->status.job_level];
@@ -5104,7 +5104,7 @@ int pc_statusup(struct map_session_data *sd,int type)
 		
 	nullpo_retr(0, sd);
 
-	max = (pc_calc_upper(sd->status.class)==2) ? 80 : battle_config.max_parameter;
+	max = (pc_calc_upper(sd->status.class_)==2) ? 80 : battle_config.max_parameter;
 
 	need=pc_need_status_point(sd,type);
 	if(type<SP_STR || type>SP_LUK || need<0 || need>sd->status.status_point){
@@ -5259,7 +5259,7 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 	if( sd->status.skill_point>0 &&
 		sd->status.skill[skill_num].id!=0 &&
 		//sd->status.skill[skill_num].lv < skill_get_max(skill_num) ) - celest
-		sd->status.skill[skill_num].lv < skill_tree_get_max(skill_num, sd->status.class) )
+		sd->status.skill[skill_num].lv < skill_tree_get_max(skill_num, sd->status.class_) )
 	{
 		sd->status.skill[skill_num].lv++;
 		sd->status.skill_point--;
@@ -5285,7 +5285,7 @@ int pc_allskillup(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 	c = s_class.job;
 	s = (s_class.upper==1) ? 1 : 0 ; //?生以外は通常のスキル？
 
@@ -5313,7 +5313,7 @@ int pc_allskillup(struct map_session_data *sd)
 			if(sd->status.skill[id].id==0 && (!(skill_get_inf2(id)&0x01) || battle_config.quest_skill_learn) ) {
 				sd->status.skill[id].id = id;	// celest
 				// sd->status.skill[id].lv=skill_get_max(id);
-				sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class);	// celest				
+				sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class_);	// celest				
 			}
 		}
 	}
@@ -5351,7 +5351,7 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 	sd->status.int_=1;
 	sd->status.dex=1;
 	sd->status.luk=1;
-	if(sd->status.class == 4001)
+	if(sd->status.class_ == 4001)
 		sd->status.status_point=88;
 	}
 
@@ -5416,7 +5416,7 @@ int pc_resetstate(struct map_session_data* sd)
 
 //	New statpoint table used here - Dexity
 	sd->status.status_point = atoi (statp[sd->status.base_level - 1]);
-	if(sd->status.class >= 4001 && sd->status.class <= 4024)
+	if(sd->status.class_ >= 4001 && sd->status.class_ <= 4024)
 		sd->status.status_point+=40;
 //	End addition 
 
@@ -5504,7 +5504,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	nullpo_retr(0, sd);
 
 	//?生や養子の場合の元の職業を算出する
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 	// ?に死んでいたら無?
 	if(pc_isdead(sd))
 		return 0;
@@ -5612,7 +5612,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		}
 
 	if(battle_config.death_penalty_type>0) { // changed penalty options, added death by player if pk_mode [Valaris]
-		if(sd->status.class != 0 && !map[sd->bl.m].flag.nopenalty && !map[sd->bl.m].flag.gvg){ // only novices will recieve no penalty
+		if(sd->status.class_ != 0 && !map[sd->bl.m].flag.nopenalty && !map[sd->bl.m].flag.gvg){ // only novices will recieve no penalty
 			if(battle_config.death_penalty_type==1 && battle_config.death_penalty_base > 0)
 				sd->status.base_exp -= (double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000;
 				if(battle_config.pk_mode && src && src->type==BL_PC)
@@ -5748,7 +5748,7 @@ int pc_readparam(struct map_session_data *sd,int type)
 	int val=0;
 	struct pc_base_job s_class;
 	
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 
 	nullpo_retr(0, sd);
 
@@ -5772,7 +5772,7 @@ int pc_readparam(struct map_session_data *sd,int type)
 		if(val>=24 && val < 45)
 			val+=3978;
 		else
-		val= sd->status.class;
+		val= sd->status.class_;
 		break;
 	case SP_BASEJOB:
 		val= s_class.job;
@@ -5850,7 +5850,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 
 	nullpo_retr(0, sd);
 
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 
 	switch(type){
 	case SP_BASELEVEL:
@@ -5873,7 +5873,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		// super novices can go up to 99 [celest]
 		else if (s_class.job == 23)
 			up_level += 49;
-		else if (sd->status.class >= 4008 && sd->status.class <= 4022)
+		else if (sd->status.class_ >= 4008 && sd->status.class_ <= 4022)
 			up_level += 20;
 		if (val >= sd->status.job_level) {
 			if (val > up_level)val = up_level;
@@ -6160,7 +6160,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	int i;
 	int b_class = 0;
 	//?生や養子の場合の元の職業を算出する
-	struct pc_base_job s_class = pc_calc_base_job(sd->status.class);
+	struct pc_base_job s_class = pc_calc_base_job(sd->status.class_);
 	
 	nullpo_retr(0, sd);
 
@@ -6188,7 +6188,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	if((sd->status.sex == 0 && job == 19) || (sd->status.sex == 1 && job == 20) ||
 		// not needed [celest]
 		//(sd->status.sex == 0 && job == 4020) || (sd->status.sex == 1 && job == 4021) ||
-		job == 22 || sd->status.class == b_class) //♀はバ?ドになれない、♂はダンサ?になれない、結婚衣裳もお?り
+		job == 22 || sd->status.class_ == b_class) //♀はバ?ドになれない、♂はダンサ?になれない、結婚衣裳もお?り
 		return 1;
 
 	// check if we are changing from 1st to 2nd job
@@ -6203,7 +6203,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 
 	pc_setglobalreg (sd, "jobchange_level", sd->change_level);		
 	
-	sd->status.class = sd->view_class = b_class;
+	sd->status.class_ = sd->view_class = b_class;
 
 	sd->status.job_level=1;
 	sd->status.job_exp=0;
@@ -6369,17 +6369,17 @@ int pc_setriding(struct map_session_data *sd)
 	if((pc_checkskill(sd,KN_RIDING)>0)){ // ライディングスキル所持
 		pc_setoption(sd,sd->status.option|0x0020);
 
-		if(sd->status.class==7)
-			sd->status.class=sd->view_class=13;
+		if(sd->status.class_==7)
+			sd->status.class_=sd->view_class=13;
 		
-		if(sd->status.class==14)
-			sd->status.class=sd->view_class=21;
+		if(sd->status.class_==14)
+			sd->status.class_=sd->view_class=21;
 		
-		if(sd->status.class==4008)
-			sd->status.class=sd->view_class=4014;
+		if(sd->status.class_==4008)
+			sd->status.class_=sd->view_class=4014;
 		
-		if(sd->status.class==4015)
-			sd->status.class=sd->view_class=4022;
+		if(sd->status.class_==4015)
+			sd->status.class_=sd->view_class=4022;
 	}
 
 	return 0;
@@ -6857,7 +6857,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 	// 二刀流?理
 	if ((pos==0x22) // 一?、?備要求箇所が二刀流武器かチェックする
 	 &&	(id->equip==2)	// ? 手武器
-	 &&	(pc_checkskill(sd, AS_LEFT) > 0 || pc_calc_base_job2(sd->status.class) == 12) ) // 左手修?有
+	 &&	(pc_checkskill(sd, AS_LEFT) > 0 || pc_calc_base_job2(sd->status.class_) == 12) ) // 左手修?有
 	{
 		int tpos=0;
 		if(sd->equip_index[8] >= 0)
@@ -7234,7 +7234,7 @@ int pc_ismarried(struct map_session_data *sd)
  */
 int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd)
 {
-	if(sd == NULL || dstsd == NULL || sd->status.partner_id > 0 || dstsd->status.partner_id > 0 || pc_calc_upper(sd->status.class)==2)
+	if(sd == NULL || dstsd == NULL || sd->status.partner_id > 0 || dstsd->status.partner_id > 0 || pc_calc_upper(sd->status.class_)==2)
 		return -1;
 	sd->status.partner_id=dstsd->status.char_id;
 	dstsd->status.partner_id=sd->status.char_id;
@@ -7503,7 +7503,7 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 
 	if(sd->nshealsp > 0) {
 		if(sd->inchealsptick >= battle_config.natural_heal_skill_interval && sd->status.sp < sd->status.max_sp) {
-			struct pc_base_job s_class = pc_calc_base_job(sd->status.class);
+			struct pc_base_job s_class = pc_calc_base_job(sd->status.class_);
 			if(sd->doridori_counter && s_class.job == 23)
 				bonus = sd->nshealsp*2;
 			else

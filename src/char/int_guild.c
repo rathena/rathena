@@ -45,7 +45,7 @@ int inter_guild_tostr(char *str, struct guild *g) {
 		len += sprintf(str + len, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\t%s\t",
 		               m->account_id, m->char_id,
 		               m->hair, m->hair_color, m->gender,
-		               m->class, m->lv, m->exp, m->exp_payper, m->position,
+		               m->class_, m->lv, m->exp, m->exp_payper, m->position,
 		               ((m->account_id > 0) ? m->name : "-"));
 	}
 	// –ðE
@@ -138,7 +138,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 		m->hair = tmp_int[2];
 		m->hair_color = tmp_int[3];
 		m->gender = tmp_int[4];
-		m->class = tmp_int[5];
+		m->class_ = tmp_int[5];
 		m->lv = tmp_int[6];
 		m->exp = tmp_int[7];
 		m->exp_payper = tmp_int[8];
@@ -767,7 +767,7 @@ int mapif_guild_memberinfoshort(struct guild *g, int idx) {
 	WBUFL(buf,10) = g->member[idx].char_id;
 	WBUFB(buf,14) = g->member[idx].online;
 	WBUFW(buf,15) = g->member[idx].lv;
-	WBUFW(buf,17) = g->member[idx].class;
+	WBUFW(buf,17) = g->member[idx].class_;
 	mapif_sendall(buf, 19);
 	return 0;
 }
@@ -1101,7 +1101,7 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd, int guild_id, int account_id,
 		if (g->member[i].account_id == account_id && g->member[i].char_id == char_id) {
 			g->member[i].online = online;
 			g->member[i].lv = lv;
-			g->member[i].class = class;
+			g->member[i].class_ = class;
 			mapif_guild_memberinfoshort(g, i);
 		}
 		if (g->member[i].account_id > 0) {

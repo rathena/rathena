@@ -229,7 +229,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 			       g->guild_id,
 			       m->account_id,m->char_id,
 			       m->hair,m->hair_color,m->gender,
-			       m->class,m->lv,m->exp,m->exp_payper,m->online,m->position,
+			       m->class_,m->lv,m->exp,m->exp_payper,m->online,m->position,
 			       0,0,
 			       jstrescapecpy(t_member,m->name));
 
@@ -405,7 +405,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 			m->hair=atoi(sql_row[3]);
 			m->hair_color=atoi(sql_row[4]);
 			m->gender=atoi(sql_row[5]);
-			m->class=atoi(sql_row[6]);
+			m->class_=atoi(sql_row[6]);
 			m->lv=atoi(sql_row[7]);
 			m->exp=atoi(sql_row[8]);
 			m->exp_payper=atoi(sql_row[9]);
@@ -908,7 +908,7 @@ int mapif_guild_memberinfoshort(struct guild *g,int idx)
 	WBUFL(buf,10)=g->member[idx].char_id;
 	WBUFB(buf,14)=g->member[idx].online;
 	WBUFW(buf,15)=g->member[idx].lv;
-	WBUFW(buf,17)=g->member[idx].class;
+	WBUFW(buf,17)=g->member[idx].class_;
 	mapif_sendall(buf,19);
 	return 0;
 }
@@ -1283,7 +1283,7 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 			
 			g->member[i].online=online;
 			g->member[i].lv=lv;
-			g->member[i].class=class;
+			g->member[i].class_=class;
 			mapif_guild_memberinfoshort(g,i);
 			idx = i;
 		}
@@ -1303,7 +1303,7 @@ int mapif_parse_GuildChangeMemberInfoShort(int fd,int guild_id,
 	if(mysql_query(&mysql_handle, tmp_sql) ) 
 	  printf("DB server Error: %s - %s\n", tmp_sql, mysql_error(&mysql_handle) );
 
-	sprintf(tmp_sql, "UPDATE `%s` SET `online`=%d,`lv`=%d,`class`=%d WHERE `char_id`=%d", guild_member_db, g->member[idx].online, g->member[idx].lv, g->member[idx].class, g->member[idx].char_id);
+	sprintf(tmp_sql, "UPDATE `%s` SET `online`=%d,`lv`=%d,`class`=%d WHERE `char_id`=%d", guild_member_db, g->member[idx].online, g->member[idx].lv, g->member[idx].class_, g->member[idx].char_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) 
 	  printf("DB server Error: %s - %s\n", tmp_sql, mysql_error(&mysql_handle) );
 	

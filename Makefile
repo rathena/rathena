@@ -1,6 +1,7 @@
 # $Id: Makefile 158 2004-10-01 03:45:15Z PoW $
 
 CC = gcc -pipe
+# CC = gcc -pipe -x c++
 # CC = gcc -pipe -DGCOLLECT
 # CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
 

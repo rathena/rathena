@@ -6,6 +6,7 @@
 #include "db.h"
 #include "mmo.h"
 #include "utils.h"
+#include "malloc.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"

@@ -309,14 +309,14 @@ int charcommand_jobchange(
 				// fix pecopeco display
 				if ((job != 13 && job != 21 && job != 4014 && job != 4022)) {
 					if (pc_isriding(sd)) {
-						if (pl_sd->status.class == 13)
-							pl_sd->status.class = pl_sd->view_class = 7;
-						if (pl_sd->status.class == 21)
-							pl_sd->status.class = pl_sd->view_class = 14;
-						if (pl_sd->status.class == 4014)
-							pl_sd->status.class = pl_sd->view_class = 4008;
-						if (pl_sd->status.class == 4022)
-							pl_sd->status.class = pl_sd->view_class = 4015;
+						if (pl_sd->status.class_ == 13)
+							pl_sd->status.class_ = pl_sd->view_class = 7;
+						if (pl_sd->status.class_ == 21)
+							pl_sd->status.class_ = pl_sd->view_class = 14;
+						if (pl_sd->status.class_ == 4014)
+							pl_sd->status.class_ = pl_sd->view_class = 4008;
+						if (pl_sd->status.class_ == 4022)
+							pl_sd->status.class_ = pl_sd->view_class = 4015;
 						pl_sd->status.option &= ~0x0020;
 						clif_changeoption(&pl_sd->bl);
 						pc_calcstatus(pl_sd, 0);
@@ -502,7 +502,7 @@ int charcommand_stats(
 			{ "Zeny - %d",  pl_sd->status.zeny },
 			{ NULL, 0 }
 		};
-		sprintf(job_jobname, "Job - %s %s", job_name(pl_sd->status.class), "(level %d)");
+		sprintf(job_jobname, "Job - %s %s", job_name(pl_sd->status.class_), "(level %d)");
 		sprintf(output, msg_table[53], pl_sd->status.name); // '%s' stats:
 		clif_displaymessage(fd, output);
 		for (i = 0; output_table[i].format != NULL; i++) {
@@ -582,30 +582,30 @@ int charcommand_option(
 			pl_sd->opt2 = opt2;
 			pl_sd->status.option = opt3;
 			// fix pecopeco display
-			if (pl_sd->status.class == 13 || pl_sd->status.class == 21 || pl_sd->status.class == 4014 || pl_sd->status.class == 4022) {
+			if (pl_sd->status.class_ == 13 || pl_sd->status.class_ == 21 || pl_sd->status.class_ == 4014 || pl_sd->status.class_ == 4022) {
 				if (!pc_isriding(pl_sd)) { // pl_sd have the new value...
-					if (pl_sd->status.class == 13)
-						pl_sd->status.class = pl_sd->view_class = 7;
-					else if (pl_sd->status.class == 21)
-						pl_sd->status.class = pl_sd->view_class = 14;
-					else if (pl_sd->status.class == 4014)
-						pl_sd->status.class = pl_sd->view_class = 4008;
-					else if (pl_sd->status.class == 4022)
-						pl_sd->status.class = pl_sd->view_class = 4015;
+					if (pl_sd->status.class_ == 13)
+						pl_sd->status.class_ = pl_sd->view_class = 7;
+					else if (pl_sd->status.class_ == 21)
+						pl_sd->status.class_ = pl_sd->view_class = 14;
+					else if (pl_sd->status.class_ == 4014)
+						pl_sd->status.class_ = pl_sd->view_class = 4008;
+					else if (pl_sd->status.class_ == 4022)
+						pl_sd->status.class_ = pl_sd->view_class = 4015;
 				}
 			} else {
 				if (pc_isriding(pl_sd)) { // pl_sd have the new value...
 					if (pl_sd->disguise > 0) { // temporary prevention of crash caused by peco + disguise, will look into a better solution [Valaris] (code added by [Yor])
 						pl_sd->status.option &= ~0x0020;
 					} else {
-						if (pl_sd->status.class == 7)
-							pl_sd->status.class = pl_sd->view_class = 13;
-						else if (pl_sd->status.class == 14)
-							pl_sd->status.class = pl_sd->view_class = 21;
-						else if (pl_sd->status.class == 4008)
-							pl_sd->status.class = pl_sd->view_class = 4014;
-						else if (pl_sd->status.class == 4015)
-							pl_sd->status.class = pl_sd->view_class = 4022;
+						if (pl_sd->status.class_ == 7)
+							pl_sd->status.class_ = pl_sd->view_class = 13;
+						else if (pl_sd->status.class_ == 14)
+							pl_sd->status.class_ = pl_sd->view_class = 21;
+						else if (pl_sd->status.class_ == 4008)
+							pl_sd->status.class_ = pl_sd->view_class = 4014;
+						else if (pl_sd->status.class_ == 4015)
+							pl_sd->status.class_ = pl_sd->view_class = 4022;
 						else
 							pl_sd->status.option &= ~0x0020;
 					}
@@ -701,7 +701,7 @@ int charcommand_stats_all(const int fd, struct map_session_data* sd, const char*
 			else
 				sprintf(gmlevel, " ");
 
-			sprintf(output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d) | HP: %d/%d | SP: %d/%d", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class), pl_sd->status.job_level, pl_sd->status.hp, pl_sd->status.max_hp, pl_sd->status.sp, pl_sd->status.max_sp);
+			sprintf(output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d) | HP: %d/%d | SP: %d/%d", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level, pl_sd->status.hp, pl_sd->status.max_hp, pl_sd->status.sp, pl_sd->status.max_sp);
 			clif_displaymessage(fd, output);
 			sprintf(output, "STR: %d | AGI: %d | VIT: %d | INT: %d | DEX: %d | LUK: %d | Zeny: %d %s", pl_sd->status.str, pl_sd->status.agi, pl_sd->status.vit, pl_sd->status.int_, pl_sd->status.dex, pl_sd->status.luk, pl_sd->status.zeny, gmlevel);
 			clif_displaymessage(fd, output);
@@ -1061,9 +1061,9 @@ int charcommand_item(
 				for (i = 0; i < number; i += get_count) {
 					// if pet egg
 					if (pet_id >= 0) {
-						sd->catch_target_class = pet_db[pet_id].class;
+						sd->catch_target_class = pet_db[pet_id].class_;
 						intif_create_pet(sd->status.account_id, sd->status.char_id,
-						                 pet_db[pet_id].class, mob_db[pet_db[pet_id].class].lv,
+						                 pet_db[pet_id].class_, mob_db[pet_db[pet_id].class_].lv,
 						                 pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate,
 						                 100, 0, 1, pet_db[pet_id].jname);
 					// if not pet egg

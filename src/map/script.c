@@ -3666,10 +3666,10 @@ int buildin_makepet(struct script_state *st)
 	if (pet_id < 0)
 		pet_id = search_petDB_index(id, PET_EGG);
 	if (pet_id >= 0 && sd) {
-		sd->catch_target_class = pet_db[pet_id].class;
+		sd->catch_target_class = pet_db[pet_id].class_;
 		intif_create_pet(
 			sd->status.account_id, sd->status.char_id,
-			pet_db[pet_id].class, mob_db[pet_db[pet_id].class].lv,
+			pet_db[pet_id].class_, mob_db[pet_db[pet_id].class_].lv,
 			pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate,
 			100, 0, 1, pet_db[pet_id].jname);
 	}
@@ -4426,13 +4426,13 @@ int buildin_changesex(struct script_state *st) {
 	if (sd->status.sex == 0) {
 		sd->status.sex = 1;
 		sd->sex = 1;
-		if (sd->status.class == 20 || sd->status.class == 4021)
-			sd->status.class -= 1;
+		if (sd->status.class_ == 20 || sd->status.class_ == 4021)
+			sd->status.class_ -= 1;
 	} else if (sd->status.sex == 1) {
 		sd->status.sex = 0;
 		sd->sex = 0;
-		if(sd->status.class == 19 || sd->status.class == 4020)
-			sd->status.class += 1;
+		if(sd->status.class_ == 19 || sd->status.class_ == 4020)
+			sd->status.class_ += 1;
 	}
 	chrif_char_ask_name(-1, sd->status.name, 5, 0, 0, 0, 0, 0, 0); // type: 5 - changesex
 	chrif_save(sd);
@@ -4978,7 +4978,7 @@ int buildin_maprespawnguildid_sub(struct block_list *bl,va_list ap)
 			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);	// end addition [Valaris]
 	}
 	if(md && flag&4){
-		if(md->class < 1285 || md->class > 1288)
+		if(md->class_ < 1285 || md->class_ > 1288)
 			mob_delete(md);
 	}
 	return 0;

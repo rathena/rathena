@@ -30,7 +30,7 @@ int inter_pet_tostr(char *str,struct s_pet *p)
 		p->intimate = 1000;
 
 	len=sprintf(str,"%d,%d,%s\t%d,%d,%d,%d,%d,%d,%d,%d,%d",
-		p->pet_id,p->class,p->name,p->account_id,p->char_id,p->level,p->egg_id,
+		p->pet_id,p->class_,p->name,p->account_id,p->char_id,p->level,p->egg_id,
 		p->equip,p->intimate,p->hungry,p->rename_flag,p->incuvate);
 
 	return 0;
@@ -52,7 +52,7 @@ int inter_pet_fromstr(char *str,struct s_pet *p)
 		return 1;
 	
 	p->pet_id = tmp_int[0];
-	p->class = tmp_int[1];
+	p->class_ = tmp_int[1];
 	memcpy(p->name,tmp_str,24);
 	p->account_id = tmp_int[2];
 	p->char_id = tmp_int[3];
@@ -225,7 +225,7 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 		p->account_id = account_id;
 		p->char_id = char_id;
 	}
-	p->class = pet_class;
+	p->class_ = pet_class;
 	p->level = pet_lv;
 	p->egg_id = pet_egg_id;
 	p->equip = pet_equip;

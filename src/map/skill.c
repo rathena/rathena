@@ -2969,7 +2969,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			if( dstsd && dstsd->special_state.no_magic_damage )
 				heal=0;	/* ?金蟲カ?ド（ヒ?ル量０） */
 			if (sd){
-				s_class = pc_calc_base_job(sd->status.class);
+				s_class = pc_calc_base_job(sd->status.class_);
 				if((skill=pc_checkskill(sd,HP_MEDITATIO))>0) // メディテイティオ
 					heal += heal*skill*2/100;
 				if(sd && dstsd && sd->status.partner_id == dstsd->status.char_id && s_class.job == 23 && sd->status.sex == 0) //自分も?象もPC、?象が自分のパ?トナ?、自分がスパノビ、自分が♀なら
@@ -3157,8 +3157,8 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if (dstmd){
 			for(i=0;i<MAX_PET_DB;i++){
-				if(dstmd->class == pet_db[i].class){
-					pet_catch_process1(sd,dstmd->class);
+				if(dstmd->class_ == pet_db[i].class_){
+					pet_catch_process1(sd,dstmd->class_);
 					break;
 				}
 			}
@@ -3391,7 +3391,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case CR_DEVOTION:		/* ディボ?ション */
 		if(sd && dstsd){
 			//?生や養子の場合の元の職業を算出する
-			struct pc_base_job dst_s_class = pc_calc_base_job(dstsd->status.class);
+			struct pc_base_job dst_s_class = pc_calc_base_job(dstsd->status.class_);
 
 			int lv = sd->status.base_level-dstsd->status.base_level;
 			lv = (lv<0)?-lv:lv;
@@ -3457,7 +3457,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		}else if(sd && dstmd){ //?象がモンスタ?の場合
 			//20%の確率で?象のLv*2のSPを回復する。成功したときはタ?ゲット(σ?Д?)σ????!!
 			if(rand()%100<20){
-				i=2*mob_db[dstmd->class].lv;
+				i=2*mob_db[dstmd->class_].lv;
 				mob_target(dstmd,src,0);
 			}
 		}
@@ -4303,7 +4303,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case NPC_PROVOCATION:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if(md)
-			clif_pet_performance(src,mob_db[md->class].skill[md->skillidx].val[0]);
+			clif_pet_performance(src,mob_db[md->class_].skill[md->skillidx].val[0]);
 		break;
 
 	case NPC_HALLUCINATION:
@@ -4372,18 +4372,18 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case NPC_SUMMONSLAVE:		/* 手下召喚 */
 	case NPC_SUMMONMONSTER:		/* MOB召喚 */
 		if(md)
-			mob_summonslave(md,mob_db[md->class].skill[md->skillidx].val,skilllv,(skillid==NPC_SUMMONSLAVE)?1:0);
+			mob_summonslave(md,mob_db[md->class_].skill[md->skillidx].val,skilllv,(skillid==NPC_SUMMONSLAVE)?1:0);
 		break;
 
 	case NPC_TRANSFORMATION:
 	case NPC_METAMORPHOSIS:
 		if(md)
-			mob_class_change(md,mob_db[md->class].skill[md->skillidx].val);
+			mob_class_change(md,mob_db[md->class_].skill[md->skillidx].val);
 		break;
 
 	case NPC_EMOTION:			/* エモ?ション */
 		if(md)
-			clif_emotion(&md->bl,mob_db[md->class].skill[md->skillidx].val[0]);
+			clif_emotion(&md->bl,mob_db[md->class_].skill[md->skillidx].val[0]);
 		break;
 
 	case NPC_DEFENDER:
@@ -6837,14 +6837,14 @@ static int skill_check_condition_char_sub(struct block_list *bl,va_list ap)
 	nullpo_retr(0, c=va_arg(ap,int *));
 	nullpo_retr(0, ssd=(struct map_session_data*)src);
 
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 	//チェックしない設定ならcにありえない大きな?字を返して終了
 	if(!battle_config.player_skill_partner_check){	//本?はforeachの前にやりたいけど設定適用箇所をまとめるためにここへ
 		(*c)=99;
 		return 0;
 	}
 
-	ss_class = pc_calc_base_job(ssd->status.class);
+	ss_class = pc_calc_base_job(ssd->status.class_);
 
 	switch(ssd->skillid){
 	case PR_BENEDICTIO:				/* 聖?降福 */
@@ -6898,7 +6898,7 @@ static int skill_check_condition_use_sub(struct block_list *bl,va_list ap)
 	nullpo_retr(0, c=va_arg(ap,int *));
 	nullpo_retr(0, ssd=(struct map_session_data*)src);
 
-	s_class = pc_calc_base_job(sd->status.class);
+	s_class = pc_calc_base_job(sd->status.class_);
 	
 	//チェックしない設定ならcにありえない大きな?字を返して終了
 	if(!battle_config.player_skill_partner_check){	//本?はforeachの前にやりたいけど設定適用箇所をまとめるためにここへ
@@ -6906,7 +6906,7 @@ static int skill_check_condition_use_sub(struct block_list *bl,va_list ap)
 		return 0;
 	}
 
-	ss_class = pc_calc_base_job(ssd->status.class);
+	ss_class = pc_calc_base_job(ssd->status.class_);
 	skillid=ssd->skillid;
 	skilllv=ssd->skilllv;
 	//if(skilllv <= 0) return 0;
@@ -6967,7 +6967,7 @@ static int skill_check_condition_mob_master_sub(struct block_list *bl,va_list ap
 	nullpo_retr(0, mob_class=va_arg(ap,int));
 	nullpo_retr(0, c=va_arg(ap,int *));
 
-	if(md->class==mob_class && md->master_id==src_id)
+	if(md->class_==mob_class && md->master_id==src_id)
 		(*c)++;
 	return 0;
 }
@@ -7782,7 +7782,7 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 		clif_skillcasting( &sd->bl, sd->bl.id, target_id, 0,0, skill_num,casttime);
 
 		/* 詠唱反?モンスタ? */
-		if( bl->type==BL_MOB && (md=(struct mob_data *)bl) && mob_db[md->class].mode&0x10 &&
+		if( bl->type==BL_MOB && (md=(struct mob_data *)bl) && mob_db[md->class_].mode&0x10 &&
 			md->state.state!=MS_ATTACK && sd->invincible_timer == -1){
 				md->target_id=sd->bl.id;
 				md->state.targettype = ATTACKABLE;
