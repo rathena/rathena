@@ -20,9 +20,6 @@
 
 static struct dbt *guild_db_;
 static struct dbt *castle_db_;
-static struct dbt *guild_expcache_db_;
-static struct dbt *guild_infoevent_db_;
-static struct dbt *guild_castleinfoevent_db_;
 
 static struct guild *guild_pt;
 static struct guild *guild_pt2;
@@ -668,9 +665,6 @@ int inter_guild_sql_init()
 
         guild_db_=numdb_init();
         castle_db_=numdb_init();
-        guild_expcache_db_=numdb_init();
-        guild_infoevent_db_=numdb_init();
-        guild_castleinfoevent_db_=numdb_init();
 
 	printf("interserver guild memory initialize.... (%d byte)\n",sizeof(struct guild));
 	guild_pt = (struct guild*)aCalloc(sizeof(struct guild), 1);
@@ -709,9 +703,6 @@ int inter_guild_sql_init()
 	return 0;
 }
 
-int guild_expcache_db_final (void *k, void *data, va_list ap) { return 0; }
-int guild_infoevent_db_final (void *k, void *data, va_list ap) { return 0; }
-int guild_castleinfoevent_db_final (void *k, void *data, va_list ap) { return 0; }
 int guild_db_final (void *k, void *data, va_list ap)
 {
 	struct guild *g = (struct guild *) data;
@@ -732,9 +723,6 @@ void inter_guild_sql_final()
 	
 	numdb_final(guild_db_, guild_db_final);
 	numdb_final(castle_db_, castle_db_final);
-	numdb_final(guild_expcache_db_, guild_expcache_db_final);
-	numdb_final(guild_infoevent_db_, guild_infoevent_db_final);
-	numdb_final(guild_castleinfoevent_db_, guild_castleinfoevent_db_final);
 
 	return;
 }
