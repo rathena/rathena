@@ -779,7 +779,13 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 		sd->eventtimer[i] = -1;
 
 	// ˆÊ’u‚ÌÝ’è
-	pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, 0);
+	if (pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, 0) != 0) {
+		if(battle_config.error_log) {
+			char buf[32];
+			sprintf(buf, "Last_point_map %s not found\n", sd->status.last_point.map);
+			ShowError (buf);
+		}
+	}
 
 	// pet
 	if (sd->status.pet_id > 0)
@@ -3765,11 +3771,17 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 
 	memcpy(mapname,mapname_org,24);
 	mapname[16]=0;
-	if(strstr(mapname,".gat")==NULL && strlen(mapname)<16){
+	if(strstr(mapname,".gat")==NULL && strstr(mapname,".afm")==NULL && strlen(mapname)<16){
 		strcat(mapname,".gat");
 	}
 
-	m=map_mapname2mapid(mapname);
+	// If we can't find the .gat map try .afm instead [celest]
+	if ((m=map_mapname2mapid(mapname))<0) {
+		char afm_name[16] = "";
+		strncpy(afm_name, mapname, strlen(mapname) - 4);
+		strcat(afm_name, ".afm");
+		m=map_mapname2mapid(afm_name);
+	}
 	if(m<0){
 		if(sd->mapname[0]){
 			int ip,port;

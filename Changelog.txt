@@ -1,5 +1,7 @@
 Date	Added
 12/9
+        * Fixed players unable to move in AFM maps [celest]
+        * Added error message if a player's last map couldn't be found [celest]
 	* Moved a map_freeblock_unlock() around to eliminate a 
 	  crash [MouseJstr]
 	* Fixed how players are cleaned up when they disconnected
