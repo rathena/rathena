@@ -1,5 +1,7 @@
 Date	Added
 01/05
+        * Added /mapflag/noreturn.txt for disabling butterfly wings (not fly wings)
+          [celest]
         * Fixed skill_require_db reading somehow getting corrupted if weapons usable
           for the skill is more than 20, thus causing the skills to fail everytime 
           [celest]
