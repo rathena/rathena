@@ -2,11 +2,12 @@
 Date	Added
 
 03/30
+        * Began sql projects for VC7 [1349: MouseJstr]
         * text char-server and login-server now build using VC7.  You
           can use the eAthena.sln solution to build all three.  These
           are currently just the text versions of the servers.  I have
           not added projects yet to build the sql versions.  
-          [SVN: 1357 MouseJstr]
+          [SVN: 1347 MouseJstr]
         * Made the map-server build cleanly using Microsoft Visual
           Studio.. entirely native code without any cygwin dependency
           [SVN: 1345 MouseJstr]

@@ -11,6 +11,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "char-server_txt", "vcproj\c
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "char-server_sql", "vcproj\char-server_sql.vcproj", "{D356871D-58E1-450B-967A-E4E9646175AF}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "login-server_sql", "vcproj\login-server_sql.vcproj", "{D356871D-58E1-450B-967A-E5E9646175AF}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "map-server_sql", "vcproj\map-server_sql.vcproj", "{D356871D-58E1-450B-967A-E6E9646175AF}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -29,6 +41,18 @@ Global
 		{D356871D-58E1-450B-967A-E3E9646175AF}.Debug.Build.0 = Debug|Win32
 		{D356871D-58E1-450B-967A-E3E9646175AF}.Release.ActiveCfg = Release|Win32
 		{D356871D-58E1-450B-967A-E3E9646175AF}.Release.Build.0 = Release|Win32
+		{D356871D-58E1-450B-967A-E4E9646175AF}.Debug.ActiveCfg = Debug|Win32
+		{D356871D-58E1-450B-967A-E4E9646175AF}.Debug.Build.0 = Debug|Win32
+		{D356871D-58E1-450B-967A-E4E9646175AF}.Release.ActiveCfg = Release|Win32
+		{D356871D-58E1-450B-967A-E4E9646175AF}.Release.Build.0 = Release|Win32
+		{D356871D-58E1-450B-967A-E5E9646175AF}.Debug.ActiveCfg = Debug|Win32
+		{D356871D-58E1-450B-967A-E5E9646175AF}.Debug.Build.0 = Debug|Win32
+		{D356871D-58E1-450B-967A-E5E9646175AF}.Release.ActiveCfg = Release|Win32
+		{D356871D-58E1-450B-967A-E5E9646175AF}.Release.Build.0 = Release|Win32
+		{D356871D-58E1-450B-967A-E6E9646175AF}.Debug.ActiveCfg = Debug|Win32
+		{D356871D-58E1-450B-967A-E6E9646175AF}.Debug.Build.0 = Debug|Win32
+		{D356871D-58E1-450B-967A-E6E9646175AF}.Release.ActiveCfg = Release|Win32
+		{D356871D-58E1-450B-967A-E6E9646175AF}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
