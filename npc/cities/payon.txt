@@ -6,13 +6,14 @@
 //= Muad Dib (1.2)
 //= Darkchild (1.3)
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
 //= (New) Payon City Npcs
 //===== Additional Comments: ================================= 
 //= Most Credits To Muad Dib, Some Stuff By Me
+//= 1.4 - Corrected a few typos
 //============================================================ 
 
 payon.gat,190,115,0	script	Lady	90,{
@@ -82,23 +83,25 @@ payon_in01.gat,180,7,0	script	Waitress	90,{
 	next;
 	mes "[Waitress]";
 	mes "Where can I find the right person who is a really hot, sexy hunk, and who can take me out of this small place?";
-	   check Gender = 1,-,LStartF;
-  	mes "[Waitress]";
-  	mes "Hello, mister?";
+	if(Sex == 0) goto LStartF;
+	mes "[Waitress]";
+	mes "Hello, mister?";
+	goto L_Start;
 LStartF:
    	mes "[Waitress]";
    	mes "Hello, lady?";
+L_Start:
 	next;
 	mes "[Waitress]";
 	mes "Grandma the fortuneteller told me that I would meet great luck in the near future!"; 
 	mes "But look at me, what's wrong with me!! I am leaving a managable life everyday!!";
 	mes "Oh..boy. What a dumb wishy-washy person I am.";
-	   emotion 6;
+	emotion 6;
 	next;
 	mes "[Waitress]";
 	mes "I am so sorry, I should haven't said this to you. Now I am acting like i'm stupid.";  
  	mes "I am sorry dear, please forgive my misbehaviour.";
-	   emotion 4;
+	emotion 4;
 	next;
 	mes "[Waitress]";
 	mes "So, how may I help you? ";
@@ -124,7 +127,7 @@ L_Menu2:
 	   emotion 5;
  	next;
 	mes "[Waitress]";
-	mes "On the first place, she stayed here to mind her business, but ever since the chief recognized her talent, she's stayed in the central palace."
+	mes "On the first place, she stayed here to mind her business, but ever since the chief recognized her talent, she's stayed in the central palace.";
 	mes "You'd better go to there if you want to see her.";
 	close;
 L_Menu3:
@@ -165,16 +168,18 @@ payon.gat,193,116,1	script	Woman	66,{
 	mes "Hmm... you look as strong as a Rocker! How many monsters have you killed?";
 	mes "Let me tell you about a place where you can go train and become even stronger.";
 	   emotion 20;
+	goto L_Start;
 LStartF:
 	mes "Miss, how many monsters have you killed?";
 	mes "I know a very good place for you to go train and get good monster drops.";
 	   emotion 20;
+L_Start:
     	next;
     	mes "[Woman]";
 	mes "I know of a cave near Archer Village.  Just take the exit north of town and follow the path to your left.";
     	mes "The cave is full of monsters and their spawn rate is very high.  Does it sound interesting to you?";
       next;
-      menu "It sounds dangerous."L_Menu1,"I think I need to fully prepare for that place.",L_Menu2,"Lady, you wear nice clothing~",L_Menu3;
+      menu "It sounds dangerous.",L_Menu1,"I think I need to fully prepare for that place.",L_Menu2,"Lady, you wear nice clothing~",L_Menu3;
 L_Menu1:
 	mes "[Woman]";
 	mes "Oh don't be such a coward! It's just a simple cave filled with normal monsters.  Archer Village is near by so you shouldn't be worried~ hohoho~";
@@ -214,12 +219,14 @@ payon.gat,190,119,5	script	Woman	66,{
 	mes "Anyway, you look like a new face.  Are you new in town?";
 	next;
 	mes "[Jim's Mother]";
-	  if(Sex == 0) goto LStartF;
+	if(Sex == 0) goto LStartF;
 	mes "... Oh, you have broad shoulders ... tehehe! Will you go out with me? I'd like to make you a nice dinner...(bats eyelashes)";
-	   emotion 30;
+	emotion 30;
+	goto L_Menu;
 LStartF:
 	mes "Don't you think your dress is too lousy?";
 	mes "I don't like young ladies pounce up.";
+L_Menu:
 	next;
 	menu "Fortune Telling?",L_Menu1,"...Good Bye.",L_Menu2;
 L_Menu1:
@@ -401,7 +408,7 @@ L_case:
 	menu "Cave?!",L_para1,"Chief?",L_para2,"Oh man I hate this stupid town~",L_para3;
 L_para1:
 	mes "[Archer Wolt]";
-	mes "Head north of town, you can see the cave I told you about."
+	mes "Head north of town, you can see the cave I told you about.";
 	mes "Inside there, you will encounter lots of ugly monsters such as bastard looking like a bat or the walking dead.";
 	mes "If we let them out of the place, they would invade our town. We frequently clean up the cave.";
 	next;

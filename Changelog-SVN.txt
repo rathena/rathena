@@ -1,6 +1,8 @@
 Date	Added
 
 03/17
+        * Added 2 char-server packets to support Freya's login server [celest]
+        * Rewrite on Full Strip [celest]
 	* Fixed heap corrupion in map.c caused while loading maps 
 	  [SVN 1241: MouseJstr]
         * Re-fixed compile error in map.c -- sorry ^^; [celest]

@@ -1703,6 +1703,35 @@ int parse_tologin(int fd) {
 			RFIFOSKIP(fd,2);
 			break;
 
+		// Receiving authentification from Freya-type login server (to avoid char->login->char)
+		case 0x2719:
+			if (RFIFOREST(fd) < 18)
+				return 0;
+			// to conserv a maximum of authentification, search if account is already authentified and replace it
+			// that will reduce multiple connection too
+			for(i = 0; i < AUTH_FIFO_SIZE; i++)
+				if (auth_fifo[i].account_id == RFIFOL(fd,2))
+					break;
+			// if not found, use next value
+			if (i == AUTH_FIFO_SIZE) {
+				if (auth_fifo_pos >= AUTH_FIFO_SIZE)
+					auth_fifo_pos = 0;
+				i = auth_fifo_pos;
+				auth_fifo_pos++;
+			}
+			//printf("auth_fifo set (auth #%d) - account: %d, secure: %08x-%08x\n", i, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10));
+			auth_fifo[i].account_id = RFIFOL(fd,2);
+			auth_fifo[i].char_id = 0;
+			auth_fifo[i].login_id1 = RFIFOL(fd,6);
+			auth_fifo[i].login_id2 = RFIFOL(fd,10);
+			auth_fifo[i].delflag = 2; // 0: auth_fifo canceled/void, 2: auth_fifo received from login/map server in memory, 1: connection authentified
+			auth_fifo[i].char_pos = 0;
+			auth_fifo[i].connect_until_time = 0; // unlimited/unknown time by default (not display in map-server)
+			auth_fifo[i].ip = RFIFOL(fd,14);
+			//auth_fifo[i].map_auth = 0;
+			RFIFOSKIP(fd,18);
+			break;
+
 		case 0x2721:	// gm reply
 			if (RFIFOREST(fd) < 10)
 				return 0;
@@ -1963,6 +1992,64 @@ int parse_tologin(int fd) {
 			mapif_sendall(buf, RFIFOW(fd,2));
 		  }
 			RFIFOSKIP(fd,RFIFOW(fd,2));
+			break;
+
+		// Receive GM accounts [Freya login server packet by Yor]
+		case 0x2733:
+		// add test here to remember that the login-server is Freya-type
+		// sprintf (login_server_type, "Freya");
+			if (RFIFOREST(fd) < 7)
+				return 0;
+			{
+				unsigned char buf[32000];
+				int new_level = 0;
+				for(i = 0; i < GM_num; i++)
+					if (gm_account[i].account_id == RFIFOL(fd,2)) {
+						if (gm_account[i].level != (int)RFIFOB(fd,6)) {
+							gm_account[i].level = (int)RFIFOB(fd,6);
+							new_level = 1;
+						}
+						break;
+					}
+				// if not found, add it
+				if (i == GM_num) {
+					// limited to 4000, because we send information to char-servers (more than 4000 GM accounts???)
+					// int (id) + int (level) = 8 bytes * 4000 = 32k (limit of packets in windows)
+					if (((int)RFIFOB(fd,6)) > 0 && GM_num < 4000) {
+						if (GM_num == 0) {
+							gm_account = (struct gm_account*)aMalloc(sizeof(struct gm_account));
+						} else {
+							gm_account = (struct gm_account*)aRealloc(gm_account, sizeof(struct gm_account) * (GM_num + 1));						
+						}
+						gm_account[GM_num].account_id = RFIFOL(fd,2);
+						gm_account[GM_num].level = (int)RFIFOB(fd,6);
+						new_level = 1;
+						GM_num++;
+						if (GM_num >= 4000) {
+							printf("***WARNING: 4000 GM accounts found. Next GM accounts are not readed.\n");
+							char_log("***WARNING: 4000 GM accounts found. Next GM accounts are not readed." RETCODE);
+						}
+					}
+				}
+				if (new_level == 1) {
+					int len;
+					printf("From login-server: receiving a GM account information (%d: level %d).\n", RFIFOL(fd,2), (int)RFIFOB(fd,6));
+					char_log("From login-server: receiving a GM account information (%d: level %d)." RETCODE, RFIFOL(fd,2), (int)RFIFOB(fd,6));
+					//create_online_files(); // not change online file for only 1 player (in next timer, that will be done
+					// send gm acccounts level to map-servers
+					len = 4;
+					WBUFW(buf,0) = 0x2b15;
+				
+					for(i = 0; i < GM_num; i++) {
+						WBUFL(buf, len) = gm_account[i].account_id;
+						WBUFB(buf, len+4) = (unsigned char)gm_account[i].level;
+						len += 5;
+					}
+					WBUFW(buf, 2) = len;
+					mapif_sendall(buf, len);
+				}
+			}
+			RFIFOSKIP(fd,7);
 			break;
 
 		default:

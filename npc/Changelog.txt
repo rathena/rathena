@@ -35,6 +35,9 @@ Other Ppl
 Date		Added
 ======
 
+03/17
+        * Fixed more typos in /cities/payon.txt, thanks to TheUltimateEnd [celest]
+
 03/16
         * Fixed some typos in /cites/payon.txt, thanks to Hibiki [celest]
 

@@ -1247,7 +1247,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		return 0;
 	if(src->type == BL_PC && pc_isdead((struct map_session_data *)src)) //術者？がPCですでに死んでいたら何もしない
 		return 0;
-	if(dsrc->type == BL_PC && pc_isdead((struct map_session_data *)dsrc)) //術者？がPCですでに死んでいたら何もしない
+	if(src != dsrc && dsrc->type == BL_PC && pc_isdead((struct map_session_data *)dsrc)) //術者？がPCですでに死んでいたら何もしない
 		return 0;
 	if(bl->type == BL_PC && pc_isdead((struct map_session_data *)bl)) //?象がPCですでに死んでいたら何もしない
 		return 0;
@@ -2751,7 +2751,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	struct mob_data *md=NULL;
 	struct mob_data *dstmd=NULL;
 	int i,abra_skillid=0,abra_skilllv;
-	int sc_def_vit,sc_def_mdef,strip_time,strip_per;
+	int sc_def_vit,sc_def_mdef;
 	int sc_dex,sc_luk;
 	//クラスチェンジ用ボスモンスタ?ID
 	int changeclass[]={1038,1039,1046,1059,1086,1087,1112,1115
@@ -3777,10 +3777,12 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 	case RG_STRIPSHIELD:		/* ストリップシールド */
 	case RG_STRIPARMOR:			/* ストリップアーマー */
 	case RG_STRIPHELM:			/* ストリップヘルム */
-	case ST_FULLSTRIP:	// Celest
 	{
-		struct status_change *tsc_data = status_get_sc_data(bl);
-		int scid, cp_scid = 0, equip, strip_fix, strip_num = 0;
+		struct status_change *tsc_data;
+		int strip_time, strip_per, strip_fix;
+		int scid, cp_scid = 0, equip;
+
+		tsc_data = status_get_sc_data(bl);
 		scid = SkillStatusChangeTable[skillid];
 		switch (skillid) {
 			case RG_STRIPWEAPON:
@@ -3799,17 +3801,13 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				equip = EQP_HELM;
 				cp_scid = SC_CP_HELM;
 				break;
-			case ST_FULLSTRIP:
-				equip = EQP_WEAPON | EQP_SHIELD | EQP_ARMOR | EQP_HELM;
-				strip_num = 3;
-				break;
 			default:
 				map_freeblock_unlock();
 				return 1;
 		}
 
 		if (tsc_data && (tsc_data[scid].timer != -1 || tsc_data[cp_scid].timer != -1))
-				break;
+			break;
 		if (dstsd && dstsd->unstripable_equip & equip)
 			break;
 
@@ -3824,8 +3822,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			for (i=0;i<MAX_INVENTORY;i++) {
 				if (dstsd->status.inventory[i].equip && (dstsd->status.inventory[i].equip & equip)){
 					pc_unequipitem(dstsd,i,3);
-					if ((--strip_num) <= 0)
-						break;
+					break;
 				}
 			}
 			if (i == MAX_INVENTORY)
@@ -3834,6 +3831,43 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
 		status_change_start(bl,scid,skilllv,0,0,0,strip_time,0 );
+		break;
+	}
+	case ST_FULLSTRIP:	// Celest
+	{
+		struct status_change *tsc_data;
+		int i, j, strip_time, strip_per, strip_fix;
+		int equip[4] = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM };
+		int scid[4] = { SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM };
+		int cp_scid[4] = { SC_CP_WEAPON, SC_CP_SHIELD, SC_CP_ARMOR, SC_CP_HELM };
+		
+		tsc_data = status_get_sc_data(bl);
+		strip_fix = status_get_dex(src) - status_get_dex(bl);
+		if(strip_fix < 0)
+			strip_fix = 0;
+		strip_per = 5+2*skilllv+strip_fix/5;
+		if (rand()%100 >= strip_per)
+			break;
+		strip_time = skill_get_time(skillid,skilllv)+strip_fix/2;
+
+		for (i=0; i<4; i++) {
+			if (dstsd) {
+				if (tsc_data && (tsc_data[scid[i]].timer != -1 || tsc_data[cp_scid[i]].timer != -1))
+					continue;
+				if (dstsd->unstripable_equip & equip[i])
+					continue;
+				for (j=0; j<MAX_INVENTORY; j++) {
+					if (dstsd->status.inventory[j].equip && (dstsd->status.inventory[j].equip & equip[i])){
+						pc_unequipitem(dstsd,j,3);
+						break;
+					}
+				}
+				if (j == MAX_INVENTORY)
+					continue;
+			}
+			status_change_start(bl,scid[i],skilllv,0,0,0,strip_time,0 );
+		}
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	}
 
