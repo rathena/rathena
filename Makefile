@@ -34,10 +34,10 @@ ifeq ($(findstring /,$(MYSQLFLAG_CONFIG)), /)
 MYSQLFLAG_VERSION = $(shell $(MYSQLFLAG_CONFIG) --version | sed s:\\..*::) 
 endif
 
-ifeq ($(findstring 5,$(MYSQLFLAG_VERSION)), 5)
-MYSQLFLAG_CONFIG_ARGUMENT = --include
-endif
 ifeq ($(findstring 4,$(MYSQLFLAG_VERSION)), 4)
+MYSQLFLAG_CONFIG_ARGUMENT = --cflags
+endif
+ifeq ($(findstring 5,$(MYSQLFLAG_VERSION)), 5)
 MYSQLFLAG_CONFIG_ARGUMENT = --include
 endif
 ifndef MYSQLFLAG_CONFIG_ARGUMENT
