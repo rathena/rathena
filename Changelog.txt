@@ -1,5 +1,6 @@
 Date	Added
 12/26
+        * Disabled import charcommand_conf.txt by default [celest]
         * Added Bitmap File system from jA 1086 - automatically generates a cache
           from maps in the GRF to speed up loading. You can enable/disable it with
           read_map_from_bitmap in map_athena.conf. Note: AFM maps will override this
