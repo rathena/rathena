@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/28
+        * Removed Roguemaster's Bow adding steal chance, thanks Draco [celest]
+
 12/26
         * Added item_db2.txt - would be more convenient to store custom items in a
           separate db [celest]
