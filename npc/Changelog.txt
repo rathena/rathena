@@ -31,6 +31,7 @@ Other Ppl
 Date		Added
 ======
 11/07
+	* - Fixed platinum_skill.txt, now advanced classes get quest skills. [shadow]
 	* - lutie.txt: Edited text, updated/corrected triggers for the Jack Frost quest.
 	  - comodo.txt, morocc.txt, doomed_swords.txt: Implemented all of the triggers for
 	    the Doomed Swords quest based on mRO's version.  Now the quest is much longer.
