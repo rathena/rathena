@@ -1043,8 +1043,8 @@ if you want to keep this that way then check and swap x0,y0 with x1,y1
 						// check if block xy is on the line
 						if( (bl->x-x0)*(y1-y0) == (bl->y-y0)*(x1-x0) )
 						// and if it is within start and end point
-						if( ((x0<=x1)&&(x0<=bl->x)&&(bl->x<=x1) || (x0>=x1)&&(x0>=bl->x)&&(bl->x>=x1)) &&
-							((y0<=y1)&&(y0<=bl->y)&&(bl->y<=y1) || (y0>=y1)&&(y0>=bl->y)&&(bl->y>=y1)) )
+						if( (((x0<=x1)&&(x0<=bl->x)&&(bl->x<=x1)) || ((x0>=x1)&&(x0>=bl->x)&&(bl->x>=x1))) &&
+							(((y0<=y1)&&(y0<=bl->y)&&(bl->y<=y1)) || ((y0>=y1)&&(y0>=bl->y)&&(bl->y>=y1))) )
 							bl_list[bl_list_count++]=bl;
 					}
 				}//end for elements
@@ -1057,8 +1057,8 @@ if you want to keep this that way then check and swap x0,y0 with x1,y1
 						// check if mob xy is on the line
 						if( (bl->x-x0)*(y1-y0) == (bl->y-y0)*(x1-x0) )
 						// and if it is within start and end point
-						if( ((x0<=x1)&&(x0<=bl->x)&&(bl->x<=x1) || (x0>=x1)&&(x0>=bl->x)&&(bl->x>=x1)) &&
-							((y0<=y1)&&(y0<=bl->y)&&(bl->y<=y1) || (y0>=y1)&&(y0>=bl->y)&&(bl->y>=y1)) )
+						if( (((x0<=x1)&&(x0<=bl->x)&&(bl->x<=x1)) || ((x0>=x1)&&(x0>=bl->x)&&(bl->x>=x1))) &&
+							(((y0<=y1)&&(y0<=bl->y)&&(bl->y<=y1)) || ((y0>=y1)&&(y0>=bl->y)&&(bl->y>=y1))) )
 							bl_list[bl_list_count++]=bl;
 					}
 				}//end for mobs
