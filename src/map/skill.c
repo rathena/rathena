@@ -1804,13 +1804,11 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			&& !(skillid > NPC_PIERCINGATT && skillid < NPC_SUMMONMONSTER)
 			&& !(skillid > NPC_SELFDESTRUCTION2 && skillid < NPC_UNDEADATTACK)){
 			//?に?んでいるスキルがあれば該?スキルを消す
-			if (tsd->cloneskill_id && tsd->cloneskill_lv && tsd->status.skill[tsd->cloneskill_id].flag==13){
+			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag==13){
 				tsd->status.skill[tsd->cloneskill_id].id=0;
-				tsd->status.skill[tsd->cloneskill_id].lv=0;
 				tsd->status.skill[tsd->cloneskill_id].flag=0;
 			}
 			tsd->cloneskill_id=skillid;
-			tsd->cloneskill_lv=skilllv;
 			tsd->status.skill[skillid].id=skillid;
 			tsd->status.skill[skillid].lv=(pc_checkskill(tsd,RG_PLAGIARISM) > skill_get_max(skillid))?
 							skill_get_max(skillid):pc_checkskill(tsd,RG_PLAGIARISM);

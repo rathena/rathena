@@ -5,7 +5,7 @@ CC = gcc -pipe
 # CC = gcc -pipe -DDMALLOC -DDMALLOC_FUNC_CHECK
 # CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
 
-# GCLIB = -L/usr/local/lib -lgc
+# GCLIB = -lgc
 GCLIB =
 # GCLIB = -ldmalloc
 

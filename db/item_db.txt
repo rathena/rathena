@@ -538,7 +538,7 @@
 1239,Poison_Knife,Poison Knife,4,20,0,800,64,,1,0,2055918,2,2,3,65,1,{},{ bonus bAtkEle,5; bonus2 bAddEff,Eff_Poison,3000; }
 1240,Princess_Knife,Princess Knife,4,20,0,400,84,,1,0,2055918,2,2,4,1,1,{},{ bonus bAllStats,1; }
 1241,Cursed_Dagger,Cursed Dagger,4,20,0,400,55,,1,0,66052,2,2,4,85,1,{},{ bonus2 bAddEff,Eff_Curse,500; }
-1242,Counter_Dagger,Counter Dagger,4,20,0,550,75,,1,0,66052,2,2,4,55,1,{},{ bonus bCritical,90; bonus3 bAutoSpell,61,1,25; }
+1242,Counter_Dagger,Counter Dagger,4,20,0,550,140,,1,0,66052,2,2,4,55,1,{},{ bonus bCritical,90; bonus3 bAutoSpell,61,1,25; }
 1243,Main_Gauche_For_Novice,Novice Main Gauche,4,20,0,1,45,,1,0,8388609,2,2,1,1,1,{},{}
 // Katars
 1250,Jur,Jur,4,19500,0,800,125,,1,2,4096,2,34,2,18,16,{},{}

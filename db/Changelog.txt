@@ -5,6 +5,10 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+01/26
+        * Updated Counter dagger's attack, thanks to Poki#3
+        * Added ayo_fild02 to nomemo mapflag list
+
 01/13
         * Fixed drops of Taoist Hermit, added drops rates to JOKER (all rates were 0%)
 	  Removed 0.01% Chances of all Apple drops plugs

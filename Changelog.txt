@@ -1,6 +1,9 @@
 Date	Added
 
 01/26
+        * Removed my changes to /stable/Makefile that i've accidentally commited, sorry
+          ^^; [celest]
+        * Removed an unnecessary "cloneskill_lv" from map_session_data [celest]
 	* Removed WATER.TXT (this file wasn't used at all. There's no such mapflag as WATER even). [Lupus]
 	* Added Water Height of New Yuno Fileds 9 and 11.
 	  Now Water Ball works there as should. Wizards could levelup on sleepers, too. [Lupus]

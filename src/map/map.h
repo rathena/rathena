@@ -217,7 +217,7 @@ struct map_session_data {
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	struct skill_timerskill skilltimerskill[MAX_SKILLTIMERSKILL];
 	unsigned short timerskill_count; // [celest]
-	int cloneskill_id,cloneskill_lv;
+	int cloneskill_id;
 	int potion_hp,potion_sp,potion_per_hp,potion_per_sp;
 
 	int invincible_timer;

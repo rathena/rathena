@@ -9,6 +9,7 @@
 // Towns  ====================
 ayo_in01.gat	mapflag	nomemo
 ayo_in02.gat	mapflag	nomemo
+ayo_fild02.gat	mapflag	nomemo
 alb2trea.gat	mapflag	nomemo
 alb_ship.gat	mapflag	nomemo
 alberta_in.gat	mapflag	nomemo
