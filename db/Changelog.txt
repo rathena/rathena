@@ -4,7 +4,10 @@
 	Ayathoya mobs == Added but using poring stats ( ? )
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
-
+01/04
+        * item name fix Daydric Card -> Raydric Card [Lupus]
+	  Changed weight of Durian,Ramadan,Realgar Wine.
+	  Added effect to Durian fruit
 01/01
         * Included Mages and Wizards to be able to use berserk potions [celest]
 	* Changed some create arrow outputs for new kRO 12/21/04 patch [Aria]
@@ -20,7 +23,7 @@
           separate db [celest]
 
 12/21
-        * Added prices to the Quiers ( = 500* arrow price), fixed few item names
+        * Added prices to Arrow Quviers ( = 500* arrow price), fixed few item names
 	  (removed '_' from jNAME column), fixed HP amount in Novices Red Potion [Lupus]
 12/21
         * Added the new Quivers, updated Horse Crest [celest]

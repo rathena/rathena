@@ -53,7 +53,7 @@
 549,Yam,Hot Potato,0,180,0,80,,,,,10477567,2,,,,,{ itemheal rand(50,99),0; },{}
 550,Rice_Cake,Rice Popper,0,20,5,10,,,,,10477567,2,,,,,{ itemheal rand(10,14),0; },{}
 551,Sushi,Sushi,0,20,0,50,,,,,10477567,2,,,,,{ itemheal rand(50,60),0; },{}
-552,Ketupat,Ketupat,0,20,0,10,,,,,10477567,2,,,,,{ itemheal rand(100,200),0; },{}
+552,Ketupat,Ketupat,0,100,0,10,,,,,10477567,2,,,,,{ itemheal rand(100,200),0; },{}
 553,Dumpling,Dumpling,0,20,0,50,,,,,10477567,2,,,,,{ itemheal rand(39,68),0; },{}
 554,Mochi,Mochi,0,100,0,80,,,,,10477567,2,,,,,{ itemheal rand(100,200),0; },{}
 556,Rolled_Rice,Rolled Rice,0,20,0,10,,,,,10477567,3,,,,,{ itemheal rand(10,50),0; },{}
@@ -67,8 +67,8 @@
 564,Meat_Dumpling,Meat Dumpling,0,20,0,30,,,,,0,2,,,,,{ itemheal rand(175,234),0; },{}
 565,Vita_500_Bottle,Vita 500,0,2000,0,30,,,,,10477567,2,,,,,{ itemheal 500,0; },{}
 566,Tom_Yum_Goong,Tom Yum Goong,0,20,150,0,,,,,10477567,2,,,,,{ itemheal rand(100,200),0; },{}
-567,Prawn,Prawn,0,20,40,0,,,,,10477567,3,,,,,{ itemheal rand(50,100),0; },{}
-568,Lemon,Lemon,0,20,40,0,,,,,0,3,,,,,{},{}
+567,Prawn,Prawn,0,20,0,20,,,,,10477567,3,,,,,{ itemheal rand(50,100),0; },{}
+568,Lemon,Lemon,0,20,0,20,,,,,0,3,,,,,{},{}
 569,Novice's_Red_Potion,Novices Red Potion,0,50,0,70,,,,,10477567,2,,,,,{ itemheal rand(45,64),0; },{}
 
 // Usable Items
@@ -153,10 +153,10 @@
 679,Recall_Pills,Recall Pills,2,20,0,300,,,,,0,3,,,,,{},{}
 680,Carnation,Carnation,2,20,0,1000,,,,,0,3,,,,,{},{}
 681,Wedding_Photo_Album,Wedding Photo Album,2,20,0,10,,,,,0,3,,,,,{},{}
-682,Realgar_Wine,Realgar Wine,2,20,0,50,,,,,10477567,2,,,,,{ sc_start SC_ATKPOT,30,30; },{}
+682,Realgar_Wine,Realgar Wine,2,20,0,100,,,,,10477567,2,,,,,{ sc_start SC_ATKPOT,30,30; },{}
 683,Exorcize_Herb,Exorcize Herb,2,20,0,50,,,,,10477567,2,,,,,{ sc_start SC_MATKPOT,30,30; },{}
-684,Durian,Durian,2,20,0,10,,,,,0,3,,,,,{},{}
-685,Ramadan,Ramadan,2,20,10,10,,,,,0,3,,,,,{},{}
+684,Durian,Durian,2,20,0,30,,,,,0,3,,,,,{},{ sc_start SC_ATKPOT,30,10; SC_MATKPOT,30,10; }
+685,Ramadan,Ramadan,2,20,10,300,,,,,0,3,,,,,{},{}
 
 // Scrolls
 686,Earth_Spike_3,Earth Spike Level 3,2,0,0,10,0,0,0,0,10477567,2,0,0,0,0,{ itemskill 90,3,"Earth Spike Level 3"; },{}
@@ -1017,7 +1017,7 @@
 2637,Silver_Christmas_Ring,Silver Xmas Ring,5,20,0,0,,0,,0,10477567,2,136,,0,,{},{}
 2638,Exorcize_Sachet,Exorcize Sachet,5,20,0,100,,0,,,10477567,2,136,,0,,{},{ bonus bStr,1; bonus bLuk,1; }
 2639,Purification_Sachet,Purification Sachet,5,20,0,100,,0,,,10477567,2,136,,0,,{},{ bonus bAgi,1; bonus bInt,1; }
-2640,Kafra_Ring,Kafra Ring,5,20,0,10,,,,,10477567,2,136,,,,{},{ bonus bStr,1; bonus bAgi,1; bonus bInt,1; bonus bLuk,1; }
+2640,Kafra_Ring,Kafra Ring,5,20,0,200,,,,,10477567,2,136,,,,{},{ bonus bStr,1; bonus bAgi,1; bonus bInt,1; bonus bLuk,1; }
 
 // Cards
 //===================================================================
@@ -1153,7 +1153,7 @@
 4130,Scorpion_King_Card,Scorpion King Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEle,9,20; }
 4131,Moonlight_Flower_Card,Moonlight Flower Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bSpeedRate,25; }
 4132,Mistress_Card,Mistress Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bNoGemStone,0; bonus bUseSPrate,25; }
-4133,Daydric_Card,Daydric Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bSubEle,0,20; }
+4133,Raydric_Card,Raydric Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bSubEle,0,20; }
 4134,Dracula_Card,Dracula Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bSpDrainRate,1,5; }
 4135,Orc_Lord_Card,Orc Lord Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bShortWeaponDamageReturn,30; }
 4136,Khalitzburg_Card,Khalitzburg Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubRace,6,30; }
