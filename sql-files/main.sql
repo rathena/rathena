@@ -451,7 +451,6 @@ CREATE TABLE `storage` (
   KEY `account_id` (`account_id`)
 ) TYPE=MyISAM; 
 
-USE `ragnarok`;
 CREATE TABLE `friends` (
   `id` int(11) NOT NULL auto_increment,
   `account_id` int(11) NOT NULL default '0',
