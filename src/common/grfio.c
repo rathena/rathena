@@ -25,11 +25,11 @@
 #include <ctype.h>
 #include <sys/stat.h>
 
-#include "utils.h"
 #include "grfio.h"
-#include "mmo.h"
-#include "showmsg.h"
-#include "malloc.h"
+#include "../common/utils.h"
+#include "../common/mmo.h"
+#include "../common/showmsg.h"
+#include "../common/malloc.h"
 
 #ifdef _WIN32
 	#ifdef LOCALZLIB
@@ -41,9 +41,9 @@
 		#define zlib_deflate     deflate
 		#define zlib_deflateEnd  deflateEnd
 	#else
-		#include <windows.h>
 		#include "../lib/zlib_win32.h"
-		HINSTANCE zlib_dll;
+		#include "../common/dll.h"
+		DLL zlib_dll;
 		#define zlib_inflateInit(strm) zlib_inflateInit_((strm),ZLIB_VERSION, sizeof(z_stream))
 		#define zlib_deflateInit(strm, level) zlib_deflateInit_((strm),(level),ZLIB_VERSION,sizeof(z_stream))
 
@@ -984,7 +984,7 @@ void grfio_final(void)
 
 #ifdef _WIN32
 	#ifndef LOCALZLIB
-		FreeLibrary(zlib_dll);
+		DLL_CLOSE(zlib_dll);
 		zlib_inflateInit_ = NULL;
 		zlib_inflate      = NULL;
 		zlib_inflateEnd   = NULL;
@@ -1006,13 +1006,13 @@ void grfio_init(char *fname)
 #ifdef _WIN32
 	#ifndef LOCALZLIB
 	if(!zlib_dll) {
-		zlib_dll = LoadLibrary("zlib.dll");
-		(FARPROC)zlib_inflateInit_ = GetProcAddress(zlib_dll,"inflateInit_");
-		(FARPROC)zlib_inflate      = GetProcAddress(zlib_dll,"inflate");
-		(FARPROC)zlib_inflateEnd   = GetProcAddress(zlib_dll,"inflateEnd");
-		(FARPROC)zlib_deflateInit_ = GetProcAddress(zlib_dll,"deflateInit_");
-		(FARPROC)zlib_deflate      = GetProcAddress(zlib_dll,"deflate");
-		(FARPROC)zlib_deflateEnd   = GetProcAddress(zlib_dll,"deflateEnd");
+		zlib_dll = DLL_OPEN ("zlib.dll");
+		DLL_SYM (zlib_inflateInit_, zlib_dll, "inflateInit_");
+		DLL_SYM (zlib_inflate,      zlib_dll, "inflate");
+		DLL_SYM (zlib_inflateEnd,   zlib_dll, "inflateEnd");
+		DLL_SYM (zlib_deflateInit_, zlib_dll, "deflateInit_");
+		DLL_SYM (zlib_deflate,      zlib_dll, "deflate");
+		DLL_SYM (zlib_deflateEnd,   zlib_dll, "deflateEnd");
 		if(zlib_dll == NULL) {
 			MessageBox(NULL,"Can't load zlib.dll","grfio.c",MB_OK);
 			exit(1);
