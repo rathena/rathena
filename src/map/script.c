@@ -1148,7 +1148,7 @@ static void read_constdb(void)
  * スクリプトの解析
  *------------------------------------------
  */
-unsigned char* parse_script(unsigned char *src,int line)
+char* parse_script(unsigned char *src,int line)
 {
 	unsigned char *p,*tmpp;
 	int i;
@@ -6875,7 +6875,7 @@ int run_func(struct script_state *st)
  * スクリプトの実行メイン部分
  *------------------------------------------
  */
-int run_script_main(unsigned char *script,int pos,int rid,int oid,struct script_state *st,unsigned char *rootscript)
+int run_script_main(char *script,int pos,int rid,int oid,struct script_state *st,char *rootscript)
 {
 	int c,rerun_pos;
 	int cmdcount=script_config.check_cmdcount;
@@ -7009,17 +7009,17 @@ int run_script_main(unsigned char *script,int pos,int rid,int oid,struct script_
  * スクリプトの実行
  *------------------------------------------
  */
-int run_script(unsigned char *script,int pos,int rid,int oid)
+int run_script(char *script,int pos,int rid,int oid)
 {
 	struct script_stack stack;
 	struct script_state st;
 	struct map_session_data *sd=map_id2sd(rid);
-	unsigned char *rootscript=script;
+	char *rootscript=script;
 
 	if(script==NULL || pos<0)
 		return -1;
 
-	if(sd && sd->npc_stackbuf && sd->npc_scriptroot==(char*)rootscript){
+	if(sd && sd->npc_stackbuf && sd->npc_scriptroot==rootscript){
 		// 前回のスタックを復帰
 		script=sd->npc_script;
 		stack.sp=sd->npc_stack;

@@ -1652,8 +1652,8 @@ int map_cache_read(struct map_data *m) {
 
 static int map_cache_write(struct map_data *m) {
 	int i;
-	unsigned long len_new , len_old;
-	char *write_buf;
+	unsigned long len_new, len_old;
+	unsigned char *write_buf;
 	if(!map_cache.fp) { return 0; }
 	for(i = 0;i < map_cache.head.nmaps ; i++) {
 		if(!strcmp(m->name,map_cache.map[i].fn)) {
@@ -1669,7 +1669,7 @@ static int map_cache_write(struct map_data *m) {
 			if(map_read_flag >= READ_FROM_BITMAP_COMPRESSED) {
 				// ˆ³k•Û‘¶
 				// ‚³‚·‚ª‚É‚Q”{‚É–c‚ê‚é–‚Í‚È‚¢‚Æ‚¢‚¤–‚Å
-				write_buf = (char*)aMallocA(m->xs * m->ys * 2);
+				write_buf = (unsigned char*)aMallocA(m->xs * m->ys * 2);
 				len_new = m->xs * m->ys * 2;
 				encode_zip(write_buf,&len_new,m->gat,m->xs * m->ys);
 				map_cache.map[i].compressed     = 1;
@@ -1706,7 +1706,7 @@ static int map_cache_write(struct map_data *m) {
 		if(map_cache.map[i].fn[0] == 0) {
 			// V‚µ‚¢êŠ‚É“o˜^
 			if(map_read_flag >= READ_FROM_BITMAP_COMPRESSED) {
-				write_buf = (char*)aMallocA(m->xs * m->ys * 2);
+				write_buf = (unsigned char*)aMallocA(m->xs * m->ys * 2);
 				len_new = m->xs * m->ys * 2;
 				encode_zip(write_buf,&len_new,m->gat,m->xs * m->ys);
 				map_cache.map[i].compressed     = 1;
@@ -1929,7 +1929,7 @@ static int map_readmap(int m,char *fn, char *alias, int *map_cache, int maxmap) 
 		struct gat_1cell {float high[4]; int type;} *p=NULL;
 		// read & convert fn
 		// again, might not need to be unsigned char
-		gat = grfio_read(fn);
+		gat = (char*)grfio_read(fn);
 		if(gat==NULL) {
 			return -1;
 			// ‚³‚·‚ª‚Éƒ}ƒbƒv‚ª“Ç‚ß‚È‚¢‚Ì‚Í‚Ü‚¸‚¢‚Ì‚ÅI—¹‚·‚é

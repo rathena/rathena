@@ -510,7 +510,7 @@ enum {
 
 struct map_data {
 	char name[24];
-	char *gat;	// NULLなら下のmap_data_other_serverとして扱う
+	unsigned char *gat;	// NULLなら下のmap_data_other_serverとして扱う
 	char *alias; // [MouseJstr]
 	int *gat_fileused[MAX_CELL_TYPE+1+1]; //もしビットマップを使うならこちらを使う、
 						//上のgatはキャストされてgat_fileused[0]に指す
@@ -563,7 +563,7 @@ struct map_data {
 };
 struct map_data_other_server {
 	char name[24];
-	char *gat;	// NULL固定にして判断
+	unsigned char *gat;	// NULL固定にして判断
 	unsigned long ip;
 	unsigned int port;
 };

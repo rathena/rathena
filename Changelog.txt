@@ -1,11 +1,15 @@
 Date	Added
 
 01/23
+	* Reverted back some of the char* changes [SVN 969] [Ajarn]
+	* Changed parse_script to now return char* [SVN 969] [Ajarn] 
+	* Converted run_script and run_script_main from unsigned char* to char*
+	  [SVN 969] [Ajarn]
 	* Forgot a couple small changes [SVN 35] [Ajarn]
 	* Changed map_data.gat and map_data_other_server.gat from unsigned char*
 	  to char* (this might be needed, because of unicode or something, please
 	  correct me if I'm wrong) [SVN 34] [Ajarn]
-	* Converted decode_zip, enconde_zip, remove_control_chars, mapif_sendall*,
+	* Converted decode_zip, encode_zip, remove_control_chars, mapif_sendall*,
 	  and e_mail_check to use char* instead of unsigned char* (again, please test)
 	  [SVN 34] [Ajarn]
         * Modified skill unit group checking in skill_unit_onplace that might have
@@ -18,7 +22,7 @@ Date	Added
 	* Fixed an error that was in my last commit (optimising g++ build) [SVN 29]
 	  [Ajarn]
 	* Made strlib functions char*, instead of unsigned char*. Strings are meant
-	  to be char. (Shouldn't break anyhting, but might, please test this for me)
+	  to be char. (Shouldn't break anything, but might, please test this for me)
 	  [SVN 26] [Ajarn]
 	* Added cast for TXT version [SVN 25] [Ajarn]
 	* Added cast from allocation calls, from void* to intended type [SVN 24] [Ajarn]

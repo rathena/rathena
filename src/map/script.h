@@ -32,8 +32,8 @@ struct script_state {
 	int defsp,new_pos,new_defsp;
 };
 
-unsigned char * parse_script(unsigned char *,int);
-int run_script(unsigned char *,int,int,int);
+char * parse_script(unsigned char *,int);
+int run_script(char *,int,int,int);
 
 struct dbt* script_get_label_db();
 struct dbt* script_get_userfunc_db();
