@@ -9,6 +9,9 @@ Date	Added
 	* Fixed @monsterbig/@monstersmall not working [celest]
 	* Fixed @killmonster2 not working [celest]
 	* Fixed a typo in my fix for Stalk / Tunnel Drive increasing instead of decreasing speed, sorry [DracoRPG]
+	* Rewrote a little bit Improve Dodge [DracoRPG]
+	   - The speed bonus does not effect when Cloaked
+	   - Assassins & Rogues get +4 Flee/lv, but all other jobs can get +3/lv if they have the skill (not only Thiefs & Super Novices)
 
 03/24
 	* Added some mapflags for new towns [Lupus]

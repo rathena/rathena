@@ -1034,11 +1034,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	//Fleeã¸
 	if( (skill=pc_checkskill(sd,TF_MISS))>0 ){	// ‰ñ”ð—¦?‰Á
-		if(sd->status.class_==6||sd->status.class_==4007 || sd->status.class_==23)
-			sd->flee += skill*3;
-		else if(sd->status.class_==12||sd->status.class_==17||sd->status.class_==4013||sd->status.class_==4018)
-			sd->flee += skill*4;
-		if(sd->status.class_==12||sd->status.class_==4013)
+		sd->flee += skill*(sd->status.class_==12 || sd->status.class_==17 || sd->status.class_==4013 || sd->status.class_==4018 ? 4 : 3);
+		if((sd->status.class_==12 || sd->status.class_==4013) && (sd->sc_count && sd->sc_data[SC_CLOAKING].timer==-1))
 			sd->speed -= (short)(skill*1.5/100 * DEFAULT_WALK_SPEED);
 	}
 	if( (skill=pc_checkskill(sd,MO_DODGE))>0 )	// Œ©Ø‚è
