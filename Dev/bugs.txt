@@ -79,3 +79,10 @@ Problem:	Sage's Area Skills (Delu.,Vulcano, etc) if casted on the same area (or 
 Assigned:	N/A
 Progess:	0%
 
+Problem:	@job/#job turns you into 2-2-1 and not into any other jobs
+Assigned:	N/a
+Progess:	0%
+
+Problem:	@disguise has no death sprite so the client crashes when you die, a solution would be that upon death before the sprites change you're undisguised.
+Assigned:	N/a
+Progess:	0%
