@@ -1,8 +1,8 @@
 Date	Added
 
 03/13
-        * Fixed some new cards (some % were divided by 100, some cards had no bonuses due to misplaced arguments
-	  and due to usage BONUS instead of BONUS2, etc) [Lupus]
+        * Fixed 23 new cards (some effects chances were divided by 100, some cards had no bonuses
+	  due to misplaced arguments, usage BONUS instead of BONUS2, etc) [Lupus]
 
 03/12
         * Fixed Status Recovery dealing too short blind time on undead [celest]
