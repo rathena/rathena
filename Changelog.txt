@@ -6,10 +6,14 @@ Date	Added
         * Skill Updates [celest]
           - Modified Weapon Refine - should only +1 every time.
           - Updated Berserk, Chase Walk, Slim Pitcher
-          - Added skill_range_leniency
+          - Added skill_range_leniency : In some cases when moving to cast a skill the 
+            exe will a send a UseSkill packet before the server has moved us to the 
+            correct position, causing it to fail. Leaving this at 1 should be enough.
+          - Fixed a bug that was causing monsters not to move towards the target
         * Added check for clif.c in case the server didn't realise we've died [celest]
         * Added a fix for @npcmove by JohnC and Fredzilla
-        * Added motd_type [celest]
+        * Added motd_type : Set this to 1 if your clients have langtype problems and 
+          can't display the motd properly[celest]
         * Edited atcommand.c to fix compile warnings [celest]
 
 12/1
