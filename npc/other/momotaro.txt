@@ -1,5 +1,5 @@
 //=====================================================================
-//MOMOTARO event (translated thanks to Shinomori)
+//MOMOTARO event
 //=====================================================================
 amatsu.gat,223,235,4	script	Publisher	763,{
 	if (event_momo > 4) goto Lfin;
@@ -90,10 +90,12 @@ Lget:
 Lfin:
 	mes "[Publisher]";
 	mes "We have a nice weather today, don't we...... It is a perfect day to dry the futon.";
+	set event_momo,event_momo+1;
+	if (event_momo == 20) set event_momo,0;
 	close;
 }
 //=====================================================================
-ama_test.gat,52,44,4	script	Waiting Room Staff	109,{
+ama_test.gat,52,44,4	script	Event Hall Staff	109,{
 	mes "[Satoshi]";
 	mes "Welcome to the Momotaro Event Hall";
 	next;
@@ -157,7 +159,7 @@ L1:
 		mes "Well then, Please enter the Waiting Room Chat and wait for your turn. I wish you a good fight.";
 		close;
 OnInit:
-	waitingroom "Event Hall Waiting Room",1,"Waiting Room Staff::OnMax";
+	waitingroom "Event Hall Waiting Room",1,"Event Hall Staff::OnMax";
 //modification
 //do clear everything in case of somebody got stuck in the hall
 	areawarp "ama_test.gat",30,78,68,120,"amatsu.gat",223,230;
@@ -174,7 +176,7 @@ OnMax:
 	initnpctimer "roomtimer";
 //end modification
 	warpwaitingpc "ama_test.gat",50,83;
-	disablenpc "Waiting Room Staff";
+	disablenpc "Event Hall Staff";
 	disablenpc "Manager";
 	enablenpc "Grandfather";
 	enablenpc "Grandmother";
@@ -276,7 +278,7 @@ L1:
 //	deltimer "roomt";
 //end modification
 	disablenpc "Manager";
-	enablenpc "Waiting Room Staff";
+	enablenpc "Event Hall Staff";
 	warp "amatsu.gat",223,230;
 	break;
 L2:
@@ -337,8 +339,9 @@ LWarpOut:
 	next;
 	warp "amatsu.gat",223,230;
 	disablenpc "Manager";
-	enablenpc "Waiting Room Staff";
-	donpcevent "Waiting Room Staff::OnInit";
+	stopnpctimer "roomtimer";
+	enablenpc "Event Hall Staff";
+	donpcevent "Event Hall Staff::OnInit";
 	break;
 Onstart:
 	mes "[Manager]";
@@ -365,7 +368,7 @@ Lfin:
 	areaannounce "ama_test.gat",30,78,68,120,"Small Demon: Uhhaaa......",8;
 	addtimer 5000, "mobcount2::OnTimer5000";
 //modification
-	stopnpctimer "roomtimer";
+//	stopnpctimer "roomtimer";
 	end;
 //	enablenpc "Manager";
 //	doevent "Manager::Onstart";
@@ -376,7 +379,7 @@ Lfin:
 ama_test.gat,50,101,0	script	mobcount2	-1,{
 	if (@mobdie2 == 2) goto Lfin;
 	set @mobdie2,@mobdie2+1;
-	areaannounce "ama_test.gat",30,78,68,120,"Am Mut: Uhaaa...",8;break;
+	areaannounce "ama_test.gat",30,78,68,120,"Demon: Uhaaa...",8;break;
 Lfin:
 	set event_momo,4;
 //modification
@@ -416,7 +419,7 @@ OnTimer5000:
 //On360000:
 //	mapannounce "ama_test.gat","Hohoho - Time limit is exceeded.",8;
 //	disablenpc "Manager";
-//	enablenpc "Waiting Room Staff";
+//	enablenpc "Event Hall Staff";
 //	areawarp "ama_test.gat",30,78,68,120,"amatsu.gat",223,230;
 //	break;
 //}
@@ -437,7 +440,8 @@ OnTimer360000:
 	mapannounce "ama_test.gat","Hohoho - Time limit is exceeded.",8;
 	areawarp "ama_test.gat",30,78,68,120,"amatsu.gat",223,230;
 	disablenpc "Manager";
-	enablenpc "Waiting Room Staff";
-	donpcevent "Waiting Room Staff::OnInit";
+	enablenpc "Event Hall Staff";
+	donpcevent "Event Hall Staff::OnInit";
 	end;
 }
+//end modification
