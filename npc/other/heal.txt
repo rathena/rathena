@@ -19,7 +19,7 @@ prontera.gat,150,184,5	script	Healring#h1-1::Healring	1002,{
 	mes "Booooiiing!!";
 	next;
 	menu "Heal",-,"Quit",CANCEL;
-		heal 30000,30000;
+		percentheal 100,100;
 		mes "[Healring]";
 		mes "Boooing! Booiing Boing! (Healed! Have fun!)";
 		close;
