@@ -34,6 +34,10 @@ Other Ppl
 
 Date		Added
 ======
+02/13
+        * Added midas's fixes for bugs in the novice training ground and the custom
+          jobchanger script [celest]
+
 10/02
         * Fixed Wizard job quest (made only one agressive mob in the last room) [Lupus]
 

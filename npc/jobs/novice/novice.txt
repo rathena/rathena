@@ -294,8 +294,8 @@ new_1-2.gat,81,110,4	script	Newbie Instructor	84,{
 		mes "[Newbie Instructor]";
 		mes "Right-clicking on a character leads you to see individual menu including Trade command.";
 		mes "When left-clicking on Trade menu, ^FF0000'Trade window'^000000 pops up. That's the way you can exchange ^FF0000items or zeny, Ragnarok currency^000000 with another character.";
-		mes "There are 2 different buttons on the bottom of trade window, one is ´OK´ the other is ´Cancel´.";
-		mes "Press ´OK´ if you are ready or ´Cancel´ if you want to cancel the deal.";
+		mes "There are 2 different buttons on the bottom of trade window, one is OK, the other is Cancel.";
+		mes "Press OK if you are ready or Cancel if you want to cancel the deal.";
 		next;
 		mes "[Newbie Instructor]";
 		mes "Let's check the ^FF0000'Chat Window'^000000 on the bottom of game screen, which allows you to chat with others. It is devided into 2 parts, you can enter a ^FF0000character name you want to whisper^000000 at the left part.";
@@ -305,7 +305,7 @@ new_1-2.gat,81,110,4	script	Newbie Instructor	84,{
 		next;
 		mes "[Newbie Instructor]";
 		mes "The following text tells you more about the 'Character View'.";
-		mes "When you drag mouse from right to left with the right mouse button held down, the character view rotates (360°).";
+		mes "When you drag mouse from right to left with the right mouse button held down, the character view rotates (360?.";
 		mes "Holding down the 'Ctrl' key and the right mouse button while dragging the mouse up and down, makes the view ^FF0000Zooming in and out toward the character^000000.";
 		mes "Holding down the 'Shift' key and the right mouse button while dragging the mouse up and down, controls the angle of the view ^FF0000for fixed range^000000.";
 		next;
@@ -1257,18 +1257,18 @@ new_1-4.gat,100,29,4	script	Helper	54,{
 		mes "Bye!";
 		next;
 		if (@TEMP != 0) goto L0a;
-			warp "new_1-4.gat",94,56;
+			warp "new_1-4.gat",94,63;
 			close;
 		L0a:
 			if (@TEMP != 1) goto L0b;
-			warp "new_1-4.gat",98,56;
+			warp "new_1-4.gat",99,63;
 			close;
 		L0b:
 			if (@TEMP != 2) goto L0c;
-			warp "new_1-4.gat",102,56;
+			warp "new_1-4.gat",100,58;
 			close;
 		L0c:
-			warp "new_1-4.gat",106,56;
+			warp "new_1-4.gat",98,62;
 			close;
 
 	L1:

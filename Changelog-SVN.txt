@@ -1,6 +1,8 @@
 Date	Added
 
 02/13
+        * Added Wallex's changes to only evoke script_rid2sd if agitcheck(1) is used
+          [celest]
         * Merged jA's equipment breaking system into the current one, and corrected
           items with unbreakable effects in the item_db [celest]
           - "bonus bUnbreakable,[chance];" changed to

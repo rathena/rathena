@@ -492,8 +492,8 @@ LSecondClass2:
 	     	close;
 
 	LBardDancer:
-		if(sex==0) goto LBard;
-		if(sex==1) goto LDancer;
+		if(sex==0) goto LDancer;
+		if(sex==1) goto LBard;
 
 	LBard:
 		if(class !=3) goto LNotArch3;
