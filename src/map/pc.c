@@ -963,9 +963,9 @@ int pc_calc_skilltree(struct map_session_data *sd)
             do {
                 flag=0;
                 for(i=0;(id=skill_tree[s][c][i].id)>0;i++){
+                    int j,f=1;
                     if(skill_get_inf2(id))
                         continue;
-                    int j,f=1;
                     if(!battle_config.skillfree) {
                         for(j=0;j<5;j++) {
                             if( skill_tree[s][c][i].need[j].id &&
@@ -980,9 +980,9 @@ int pc_calc_skilltree(struct map_session_data *sd)
                     }
                 }
                 for(i=0;(id=skill_tree[s][s_class.job][i].id)>0;i++){
+                    int j,f=1;
                     if(!skill_get_inf2(id))
                         continue;
-                    int j,f=1;
                     if(!battle_config.skillfree) {
                         for(j=0;j<5;j++) {
                             if( skill_tree[s][s_class.job][i].need[j].id &&

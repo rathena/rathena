@@ -36,10 +36,6 @@ int fd_max;
 int rfifo_size = 65536;
 int wfifo_size = 65536;
 
-#ifdef TWILIGHT
-#define NSOCKET
-#endif
-
 #ifndef TCP_FRAME_LEN
 #define TCP_FRAME_LEN 1053
 #endif
@@ -61,7 +57,6 @@ void set_defaultparse(int (*defaultparse)(int))
 	default_func_parse = defaultparse;
 }
 
-#ifdef NSOCKET
 static void setsocketopts(int fd)
 {
 	int yes = 1; // reuse fix
@@ -76,7 +71,6 @@ static void setsocketopts(int fd)
 	setsockopt(fd, SOL_SOCKET, SO_RCVBUF, (char *) &rfifo_size , sizeof(rfifo_size ));
 }
 
-#endif /* NSOCKET */
 /*======================================
  *	CORE : Socket Sub Function
  *--------------------------------------
@@ -172,9 +166,6 @@ static int connect_client(int listen_fd)
 	struct sockaddr_in client_address;
 	int len;
 	int result;
-#ifndef NSOCKET
-	int yes = 1; // reuse fix
-#endif /* not NSOCKET */
 
 	//printf("connect_client : %d\n",listen_fd);
 
@@ -183,15 +174,7 @@ static int connect_client(int listen_fd)
 	fd=accept(listen_fd,(struct sockaddr*)&client_address,&len);
 	if(fd_max<=fd) fd_max=fd+1;
 
-#ifndef NSOCKET
-	setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,(char *)&yes,sizeof yes);
-#ifdef SO_REUSEPORT
-	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof yes);
-#endif
-	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
-#else /* NSOCKET */
 	setsocketopts(fd);
-#endif /* NSOCKET */
 
 	if(fd==-1)
 		perror("accept");
@@ -227,9 +210,6 @@ int make_listen_port(int port)
 	struct sockaddr_in server_address;
 	int fd;
 	int result;
-#ifndef NSOCKET
-	int yes = 1; // reuse fix
-#endif /* not NSOCKET */
 
 	fd = socket( AF_INET, SOCK_STREAM, 0 );
 	if(fd_max<=fd) fd_max=fd+1;
@@ -243,15 +223,7 @@ int make_listen_port(int port)
 	result = fcntl(fd, F_SETFL, O_NONBLOCK);
 #endif
 
-#ifndef NSOCKET
-	setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,(char *)&yes,sizeof yes);
-#ifdef SO_REUSEPORT
-	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof yes);
-#endif
-	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
-#else /* NSOCKET */
 	setsocketopts(fd);
-#endif /* NSOCKET */
 
 	server_address.sin_family      = AF_INET;
 	server_address.sin_addr.s_addr = htonl( INADDR_ANY );
@@ -333,24 +305,12 @@ int make_connection(long ip,int port)
 	struct sockaddr_in server_address;
 	int fd;
 	int result;
-#ifndef NSOCKET
-	int yes = 1; // reuse fix
-#endif /* not NSOCKET */
 
 	fd = socket( AF_INET, SOCK_STREAM, 0 );
-#ifndef NSOCKET
-	if(fd_max<=fd) fd_max=fd+1;
-	setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,(char *)&yes,sizeof yes);
-#ifdef SO_REUSEPORT
-	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof yes);
-#endif
-	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
-#else /* NSOCKET */
 	if(fd_max<=fd) 
 		fd_max=fd+1;
 
 	setsocketopts(fd);
-#endif /* NSOCKET */
 
 	server_address.sin_family = AF_INET;
 	server_address.sin_addr.s_addr = ip;
@@ -418,10 +378,8 @@ int realloc_fifo(int fd,int rfifo_size,int wfifo_size)
 int WFIFOSET(int fd,int len)
 {
 	struct socket_data *s=session[fd];
-#ifdef NSOCKET
 	if (s == NULL  || s->wdata == NULL)
 		return 0;
-#endif /* NSOCKET */
 	if( s->wdata_size+len+16384 > s->max_wdata ){
 		unsigned char *sin_addr = (unsigned char *)&s->client_addr.sin_addr;
 		realloc_fifo(fd,s->max_rdata, s->max_wdata <<1 );
@@ -429,10 +387,8 @@ int WFIFOSET(int fd,int len)
 	}
 	s->wdata_size=(s->wdata_size+(len)+2048 < s->max_wdata) ?
 		 s->wdata_size+len : (printf("socket: %d wdata lost !!\n",fd),s->wdata_size);
-#ifdef NSOCKET
 	if (s->wdata_size > (TCP_FRAME_LEN)) 
 		send_from_fifo(fd);
-#endif /* NSOCKET */
 	return 0;
 }
 

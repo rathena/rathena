@@ -5228,10 +5228,11 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	int i,count=1,limit=10000,val1=0,val2=0;
 	int target=BCT_ENEMY,interval=1000,range=0;
 	int dir=0,aoe_diameter=0;	// -- aoe_diameter (moonsoul) added for sage Area Of Effect skills
+	struct status_change *sc_data;
 
 	nullpo_retr(0, src);
 
-	struct status_change *sc_data = battle_get_sc_data(src);	// for firewall and fogwall - celest
+	sc_data = battle_get_sc_data(src);	// for firewall and fogwall - celest
 
 	switch(skillid){	/* ê›íË */
 
