@@ -811,9 +811,12 @@ int skill_count_target(struct block_list *bl, va_list ap );
 
 // [MouseJstr] - skill ok to cast? and when?
 int skillnotok(int skillid, struct map_session_data *sd) {
+	
 	if (sd == 0)
-		return 0;
-
+		//return 0; 
+		return 1;
+	// I think it was meant to be "no skills allowed when not a valid sd"
+	
 	if (!(skillid >= 10000 && skillid < 10015))
 		if ((skillid > MAX_SKILL) || (skillid < 0))
 			return 1;
@@ -976,7 +979,12 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
 
-	//if(skilllv <= 0) return 0;
+	if(skillid < 0) 
+	{	// remove the debug print when this case is finished
+		printf("skill_additional_effect: skillid=%i\ncall: %p %p %i %i %i %i",skillid,
+						src, bl,skillid,skilllv,attack_type,tick);
+		return 0;
+	}
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
 	if (src->type == BL_PC){
@@ -2212,7 +2220,12 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 	struct status_change *sc_data = status_get_sc_data(src);
 	int i;
 
-	if(skillid < 0)	return 0;
+	if(skillid < 0)	
+	{	// remove the debug print when this case is finished
+		printf("skill_castend_damage_id: skillid=%i\ncall: %p %p %i %i %i %i",skillid,
+						src, bl,skillid,skilllv,tick,flag);
+		return 0;
+	}
 	if(skillid > 0 && skilllv <= 0) return 0;
 
 	nullpo_retr(1, src);
@@ -2876,7 +2889,12 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				,1157,1159,1190,1272,1312,1373,1492};
 	int poringclass[]={1002};
 
-	//if(skilllv <= 0) return 0;
+	if(skillid < 0) 
+	{	// remove the debug print when this case is finished
+		printf("skill_castend_damage_id: skillid=%i\ncall: %p %p %i %i %i %i",skillid,
+						src, bl,skillid,skilllv,tick,flag);
+		return 0;
+	}
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 
 	nullpo_retr(1, src);

@@ -1,6 +1,9 @@
 Date	Added
 
 02/13
+        * added an @autoloot switch that Upa-kun has forgotten [Shinomori]
+        * changed pet_skillattack_timer and corrected the poison spore attack
+        * tighter check's on "unknown skill" error; but added prints to trace it
         * Added Wallex's changes to only evoke script_rid2sd if agitcheck(1) is used
           [celest]
         * Merged jA's equipment breaking system into the current one, and corrected

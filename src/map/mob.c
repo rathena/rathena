@@ -2049,7 +2049,7 @@ static int mob_delay_item_drop2(int tid,unsigned int tick,int id,int data)
 			}
 		} else
 		#endif
-		if(battle_config.item_auto_get){
+		if(battle_config.item_auto_get || ditem->first_sd->autoloot){//Autoloot added by Upa-Kun
 			drop_flag = 0;
 			if((flag = pc_additem(ditem->first_sd,&ditem->item_data,ditem->item_data.amount))){
 				clif_additem(ditem->first_sd,0,0,flag);

@@ -1577,19 +1577,22 @@ int pet_skillattack_timer(int tid,unsigned int tick,int id,int data)
 	}
 
 	if(md && rand()%100 < sd->pet.intimate*pd->skilltimer/100 ) {
-		if(pd->skilltype==6 || pd->skilltype==176) {
+		switch(pd->skilltype)
+		{
+		case SM_PROVOKE:
+		//case NPC_POISON: poison is not handled there
 			skill_castend_nodamage_id(&pd->bl,&md->bl,pd->skilltype,pd->skillval,tick,0);
-		}
-		
-		else if(pd->skilltype==110){
+			break;
+		case BS_HAMMERFALL:
 			skill_castend_pos2(&pd->bl,md->bl.x,md->bl.y,pd->skilltype,pd->skillval,tick,0);
-		}
-		
-		else if(pd->skilltype==91) {
+			break;
+		case WZ_HEAVENDRIVE:
 			skill_castend_pos2(&pd->bl,md->bl.x,md->bl.y,pd->skilltype,pd->skillval+rand()%100,tick,0);
-		}	
-		else 
+			break;
+		default:
 			skill_castend_damage_id(&pd->bl,&md->bl,pd->skilltype,pd->skillval,tick,0);
+			break;
+		}
 		pd->skillbonustimer=add_timer(gettick()+1000,pet_skillattack_timer,sd->bl.id,0);
 		return 0;
 	}
