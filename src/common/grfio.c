@@ -32,21 +32,36 @@
 #include "malloc.h"
 
 #ifdef _WIN32
-	#include <windows.h>
-	#include "../lib/zlib_win32.h"
-	HINSTANCE zlib_dll;
-	#define zlib_inflateInit(strm) zlib_inflateInit_((strm),ZLIB_VERSION, sizeof(z_stream))
-	#define zlib_deflateInit(strm, level) zlib_deflateInit_((strm),(level),ZLIB_VERSION,sizeof(z_stream))
+	#ifdef LOCALZLIB
+		#include "../lib/zlib/zlib.h"
+		#define zlib_inflateInit inflateInit
+		#define zlib_inflate     inflate
+		#define zlib_inflateEnd  inflateEnd
+		#define zlib_deflateInit deflateInit
+		#define zlib_deflate     deflate
+		#define zlib_deflateEnd  deflateEnd
+	#else
+		#include <windows.h>
+		#include "../lib/zlib_win32.h"
+		HINSTANCE zlib_dll;
+		#define zlib_inflateInit(strm) zlib_inflateInit_((strm),ZLIB_VERSION, sizeof(z_stream))
+		#define zlib_deflateInit(strm, level) zlib_deflateInit_((strm),(level),ZLIB_VERSION,sizeof(z_stream))
 
-	int (WINAPI* zlib_inflateInit_) (z_streamp strm, const char *version, int stream_size);
-	int (WINAPI* zlib_inflate) (z_streamp strm, int flush);
-	int (WINAPI* zlib_inflateEnd) (z_streamp strm);
+		int (WINAPI* zlib_inflateInit_) (z_streamp strm, const char *version, int stream_size);
+		int (WINAPI* zlib_inflate) (z_streamp strm, int flush);
+		int (WINAPI* zlib_inflateEnd) (z_streamp strm);
 
-	int (WINAPI* zlib_deflateInit_) (z_streamp strm, int level, const char *version, int stream_size);
-	int (WINAPI* zlib_deflate) (z_streamp strm, int flush);
-	int (WINAPI* zlib_deflateEnd) (z_streamp strm);
+		int (WINAPI* zlib_deflateInit_) (z_streamp strm, int level, const char *version, int stream_size);
+		int (WINAPI* zlib_deflate) (z_streamp strm, int flush);
+		int (WINAPI* zlib_deflateEnd) (z_streamp strm);
+	#endif
 #else
-	#include <zlib.h>
+	#ifdef LOCALZLIB
+		#include "zlib/zlib.h"
+	#else
+		#include <zlib.h>
+	#endif
+
 	#define zlib_inflateInit inflateInit
 	#define zlib_inflate     inflate
 	#define zlib_inflateEnd  inflateEnd
@@ -966,6 +981,16 @@ void grfio_final(void)
 	}
 	gentry_table = NULL;
 	gentry_entrys = gentry_maxentry = 0;
+
+#ifdef _WIN32
+	#ifndef LOCALZLIB
+		FreeLibrary(zlib_dll);
+		zlib_inflateInit_ = NULL;
+		zlib_inflate      = NULL;
+		zlib_inflateEnd   = NULL;
+	#endif
+#endif
+
 }
 
 /*==========================================
@@ -979,6 +1004,7 @@ void grfio_init(char *fname)
 	int result = 0, result2 = 0, result3 = 0, result4 = 0;
 
 #ifdef _WIN32
+	#ifndef LOCALZLIB
 	if(!zlib_dll) {
 		zlib_dll = LoadLibrary("zlib.dll");
 		(FARPROC)zlib_inflateInit_ = GetProcAddress(zlib_dll,"inflateInit_");
@@ -992,6 +1018,7 @@ void grfio_init(char *fname)
 			exit(1);
 		}
 	}
+	#endif
 #endif
 
 	data_conf = fopen(fname, "r");

@@ -403,12 +403,13 @@ int map_count_oncell(int m, int x, int y) {
 /*
  * ｫｻｫ・ｾｪﾎｪﾋﾌｸｪﾄｪｱｪｿｫｹｫｭｫ・讚ﾋｫﾃｫﾈｪｹ
  */
-struct skill_unit *map_find_skill_unit_oncell(int m,int x,int y,int skill_id)
+struct skill_unit *map_find_skill_unit_oncell(struct block_list *target,int x,int y,int skill_id,struct skill_unit *out_unit)
 {
-	int bx,by;
+	int m,bx,by;
 	struct block_list *bl;
 	int i,c;
 	struct skill_unit *unit;
+	m = target->m;
 
 	if (x < 0 || y < 0 || (x >= map[m].xs) || (y >= map[m].ys))
 		return NULL;
@@ -421,7 +422,10 @@ struct skill_unit *map_find_skill_unit_oncell(int m,int x,int y,int skill_id)
 		if (bl->x != x || bl->y != y || bl->type != BL_SKILL)
 			continue;
 		unit = (struct skill_unit *) bl;
-		if (unit->alive && unit->group->skill_id == skill_id)
+		if (unit==out_unit || !unit->alive ||
+				!unit->group || unit->group->skill_id!=skill_id)
+			continue;
+		if (battle_check_target(&unit->bl,target,unit->group->target_flag)>0)
 			return unit;
 	}
 	return NULL;
@@ -1622,7 +1626,7 @@ struct map_session_data * map_nick2sd(char *nick) {
 struct block_list * map_id2bl(int id)
 {
 	struct block_list *bl=NULL;
-	if(id<sizeof(objects)/sizeof(objects[0]))
+	if(id >= 0 && id < sizeof(objects)/sizeof(objects[0]))
 		bl = objects[id];
 	else
 		bl = (struct block_list*)numdb_search(id_db,id);
@@ -1826,7 +1830,7 @@ int map_getcell(int m,int x,int y,cell_t cellchk)
 
 int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 {
-	int j;
+	int type;
 	nullpo_ret(m);
 
 	if(x<0 || x>=m->xs-1 || y<0 || y>=m->ys-1)
@@ -1834,24 +1838,28 @@ int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 		if(cellchk==CELL_CHKNOPASS) return 1;
 		return 0;
 	}
-	j=x+y*m->xs;
+	type = m->gat[x+y*m->xs];
+	if (cellchk<0x10)
+		type &= CELL_MASK;
 
 	switch(cellchk)
 	{
 		case CELL_CHKPASS:
-			return (m->gat[j] != 1 && m->gat[j] != 5);
+			return (type!=1 && type!=5);
 		case CELL_CHKNOPASS:
-			return (m->gat[j] == 1 || m->gat[j] == 5);
+			return (type==1 || type==5);
 		case CELL_CHKWALL:
-			return (m->gat[j] == 1);
-		case CELL_CHKNPC:
-			return (m->gat[j]&0x80);
+			return (type==1);
 		case CELL_CHKWATER:
-			return (m->gat[j] == 3);
+			return (type==3);
 		case CELL_CHKGROUND:
-			return (m->gat[j] == 5);
+			return (type==5);
 		case CELL_GETTYPE:
-			return m->gat[j];
+			return type;
+		case CELL_CHKNPC:
+			return (type&CELL_NPC);
+		case CELL_CHKBASILICA:
+			return (type&CELL_BASILICA);
 		default:
 			return 0;
 	}
@@ -1868,10 +1876,20 @@ void map_setcell(int m,int x,int y,int cell)
 		return;
 	j=x+y*map[m].xs;
 
-	if (cell == CELL_SETNPC)
-		map[m].gat[j] |= 0x80;
-	else
-		map[m].gat[j] = cell;
+	switch (cell) {
+		case CELL_SETNPC:
+			map[m].gat[j] |= CELL_NPC;
+			break;
+		case CELL_SETBASILICA:
+			map[m].gat[j] |= CELL_BASILICA;
+			break;
+		case CELL_CLRBASILICA:
+			map[m].gat[j] &= ~CELL_BASILICA;
+			break;
+		default:
+			map[m].gat[j] = (map[m].gat[j]&~CELL_MASK) + cell;
+			break;
+	}
 }
 
 /*==========================================
@@ -1889,17 +1907,91 @@ int map_setipport(char *name,unsigned long ip,int port) {
 		mdos->gat  = NULL;
 		mdos->ip   = ip;
 		mdos->port = port;
+		mdos->map  = NULL;
 		strdb_insert(map_db,mdos->name,mdos);
-	} else {
-		if(md->gat){ // local -> check data
-			if(ip!=clif_getip() || port!=clif_getport()){
-				printf("from char server : %s -> %08lx:%d\n",name,ip,port);
-				return 1;
-			}
-		} else { // update
-			mdos=(struct map_data_other_server *)md;
+	} else if(md->gat){
+		if(ip!=clif_getip() || port!=clif_getport()){
+			// 読み込んでいたけど、担当外になったマップ
+			mdos=(struct map_data_other_server *)aCalloc(1,sizeof(struct map_data_other_server));
+			memcpy(mdos->name,name,24);
+			mdos->gat  = NULL;
 			mdos->ip   = ip;
 			mdos->port = port;
+			mdos->map  = md;
+			strdb_insert(map_db,mdos->name,mdos);
+			// printf("from char server : %s -> %08lx:%d\n",name,ip,port);
+		} else {
+			// 読み込んでいて、担当になったマップ（何もしない）
+			;
+		}
+	} else {
+		mdos=(struct map_data_other_server *)md;
+		if(ip == clif_getip() && port == clif_getport()) {
+			// 自分の担当になったマップ
+			if(mdos->map == NULL) {
+				// 読み込んでいないので終了する
+				printf("map_setipport : %s is not loaded.\n",name);
+				exit(1);
+			} else {
+				// 読み込んでいるので置き換える
+				md = mdos->map;
+				free(mdos);
+				strdb_insert(map_db,md->name,md);
+			}
+		} else {
+			// 他の鯖の担当マップなので置き換えるだけ
+			mdos->ip   = ip;
+			mdos->port = port;
+		}
+	}
+	return 0;
+}
+
+/*==========================================
+ * 他鯖管理のマップを全て削除
+ *------------------------------------------
+ */
+int map_eraseallipport_sub(void *key,void *data,va_list va) {
+	struct map_data_other_server *mdos = (struct map_data_other_server*)data;
+	if(mdos->gat == NULL && mdos->map == NULL) {
+		strdb_erase(map_db,key);
+		free(mdos);
+	}
+	return 0;
+}
+
+int map_eraseallipport(void) {
+	strdb_foreach(map_db,map_eraseallipport_sub);
+	return 1;
+}
+
+/*==========================================
+ * 他鯖管理のマップをdbから削除
+ *------------------------------------------
+ */
+int map_eraseipport(char *name,unsigned long ip,int port)
+{
+	struct map_data *md;
+	struct map_data_other_server *mdos;
+//	unsigned char *p=(unsigned char *)&ip;
+
+	md=strdb_search(map_db,name);
+	if(md){
+		if(md->gat) // local -> check data
+			return 0;
+		else {
+			mdos=(struct map_data_other_server *)md;
+			if(mdos->ip==ip && mdos->port == port) {
+				if(mdos->map) {
+					// このマップ鯖でも読み込んでいるので移動できる
+					return 1; // 呼び出し元で chrif_sendmap() をする
+				} else {
+					strdb_erase(map_db,name);
+					free(mdos);
+				}
+//				if(battle_config.etc_log)
+//					printf("erase map %s %d.%d.%d.%d:%d\n",name,p[0],p[1],p[2],p[3],port);
+			}
 		}
 	}
 	return 0;
@@ -2043,7 +2135,7 @@ static void map_cache_close(void)
 		fwrite(map_cache.map,map_cache.head.nmaps,sizeof(struct map_cache_info),map_cache.fp);
 	}
 	fclose(map_cache.fp);
-	free(map_cache.map);
+	aFree(map_cache.map);
 	map_cache.fp = NULL;
 	return;
 }
@@ -2085,16 +2177,16 @@ int map_cache_read(struct map_data *m)
 				if(fread(buf,1,size_compress,map_cache.fp) != size_compress) {
 					// なぜかファイル後半が欠けてるので読み直し
 					printf("fread error\n");
-					m->xs = 0; m->ys = 0; m->gat = NULL;
-					free(m->gat); free(buf);
+					free(m->gat); m->xs = 0; m->ys = 0; m->gat = NULL;
+					free(buf);
 					return 0;
 				}
 				dest_len = m->xs * m->ys;
 				decode_zip(m->gat,&dest_len,buf,size_compress);
 				if(dest_len != map_cache.map[i].xs * map_cache.map[i].ys) {
 					// 正常に解凍が出来てない
-					m->xs = 0; m->ys = 0; m->gat = NULL;
-					free(m->gat); free(buf);
+					free(m->gat); m->xs = 0; m->ys = 0; m->gat = NULL;
+					free(buf);
 					return 0;
 				}
 				free(buf);
@@ -3069,7 +3161,7 @@ void do_final(void) {
     strdb_final(nick_db, nick_db_final);
     numdb_final(charid_db, charid_db_final);
 
-
+	do_final_chrif(); // この内部でキャラを全て切断する
 	do_final_script();
 	do_final_itemdb();
 	do_final_storage();

@@ -477,8 +477,11 @@ int guild_recv_info(struct guild *sg)
 	// ƒCƒxƒ“ƒg‚Ì”­¶
 	if( (ev=numdb_search(guild_infoevent_db,sg->guild_id))!=NULL ){
 		numdb_erase(guild_infoevent_db,sg->guild_id);
-		for(;ev;ev2=ev->next,aFree(ev),ev=ev2){
+		while(ev){
 			npc_event_do(ev->name);
+			ev2=ev->next;
+			aFree(ev);
+			ev=ev2;
 		}
 	}
 
@@ -1400,8 +1403,11 @@ int guild_castledataloadack(int castle_id,int index,int value)
 	}
 	if( (ev=numdb_search(guild_castleinfoevent_db,code))!=NULL ){
 		numdb_erase(guild_castleinfoevent_db,code);
-		for(;ev;ev2=ev->next,aFree(ev),ev=ev2){
+		while(ev){
 			npc_event_do(ev->name);
+			ev2=ev->next;
+			aFree(ev);
+			ev=ev2;
 		}
 	}
 	return 1;

@@ -496,10 +496,16 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 		dx = dirx[md->dir];
 		dy = diry[md->dir];
 
-		if(map_getcell(md->bl.m,x+dx,y+dy,CELL_CHKNOPASS)) {
+		if (map_getcell(md->bl.m,x+dx,y+dy,CELL_CHKBASILICA) && !(status_get_mode(&md->bl)&0x20)) {
+			mob_stop_walking(md,1);
+			return 0;
+		}
+
+		if (map_getcell(md->bl.m,x+dx,y+dy,CELL_CHKNOPASS)) {
 			mob_walktoxy_sub(md);
 			return 0;
 		}
+
 		if (skill_check_basilica (&md->bl,x+dx,y+dy) ||
 			skill_check_moonlit (&md->bl,x+dx,y+dy)) {
 			mob_walktoxy_sub(md);
@@ -515,18 +521,18 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 		if(md->min_chase>13)
 			md->min_chase--;
 
+		skill_unit_move(&md->bl,tick,0);
 		if(moveblock) map_delblock(&md->bl);
 		md->bl.x = x;
 		md->bl.y = y;
 		if(moveblock) map_addblock(&md->bl);
+		skill_unit_move(&md->bl,tick,1);
 
 		map_foreachinmovearea(clif_mobinsight,md->bl.m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,BL_PC,md);
 		md->state.state=MS_IDLE;
 
 		if(md->option&4)
 			skill_check_cloaking(&md->bl);
-
-		skill_unit_move(&md->bl,tick,1);	// スキルユニットの検査
 	}
 	if((i=calc_next_walk_step(md))>0){
 		i = i>>1;
@@ -712,7 +718,7 @@ int mob_changestate(struct mob_data *md,int state,int type)
 		md->last_deadtime=gettick();
 		// Since it died, all aggressors' attack to this mob is stopped.
 		clif_foreachclient(mob_stopattacked,md->bl.id);
-		skill_unit_out_all(&md->bl,gettick(),1);
+		skill_unit_move(&md->bl,gettick(),0);
 		status_change_clear(&md->bl,2);	// ステータス異常を解除する
 		skill_clear_unitgroup(&md->bl);	// 全てのスキルユニットグループを削除する
 		skill_cleartimerskill(&md->bl);
@@ -789,11 +795,21 @@ static int mob_timer(int tid,unsigned int tick,int id,int data)
 static int mob_walktoxy_sub(struct mob_data *md)
 {
 	struct walkpath_data wpd;
+	int x,y;
+	static int dirx[8]={0,-1,-1,-1,0,1,1,1};
+	static int diry[8]={1,1,0,-1,-1,-1,0,1};
 
 	nullpo_retr(0, md);
 
 	if(path_search(&wpd,md->bl.m,md->bl.x,md->bl.y,md->to_x,md->to_y,md->state.walk_easy))
 		return 1;
+	x = md->bl.x+dirx[wpd.path[0]];
+	y = md->bl.y+diry[wpd.path[0]];
+	if (map_getcell(md->bl.m,x,y,CELL_CHKBASILICA) && !(status_get_mode(&md->bl)&0x20)) {
+		md->state.change_walk_target=0;
+		return 1;
+	}
+
 	memcpy(&md->walkpath,&wpd,sizeof(wpd));
 
 	md->state.change_walk_target=0;
@@ -909,7 +925,7 @@ int mob_spawn(int id)
 	md->last_spawntime=tick;
 	if( md->bl.prev!=NULL ){
 //		clif_clearchar_area(&md->bl,3);
-		skill_unit_out_all(&md->bl,gettick(),1);
+//		skill_unit_move(&md->bl,tick,0);
 		map_delblock(&md->bl);
 	}
 	else
@@ -938,8 +954,6 @@ int mob_spawn(int id)
 	md->to_y=md->bl.y=y;
 	md->dir=0;
 	md->target_dir=0;
-
-	map_addblock(&md->bl);
 
 	memset(&md->state,0,sizeof(md->state));
 	md->attacked_id = 0;
@@ -1002,6 +1016,9 @@ int mob_spawn(int id)
 		mob_makedummymobdb(md->class_);
 		md->hp = status_get_max_hp(&md->bl);
 	}
+
+	map_addblock(&md->bl);
+	skill_unit_move(&md->bl,tick,1);
 
 	clif_spawnmob(md);
 
@@ -2876,6 +2893,7 @@ int mob_warpslave(struct mob_data *md,int x, int y)
 int mob_warp(struct mob_data *md,int m,int x,int y,int type)
 {
 	int i=0,xs=0,ys=0,bx=x,by=y;
+	int tick = gettick();
 
 	nullpo_retr(0, md);
 
@@ -2889,7 +2907,7 @@ int mob_warp(struct mob_data *md,int m,int x,int y,int type)
 			return 0;
 		clif_clearchar_area(&md->bl,type);
 	}
-	skill_unit_out_all(&md->bl,gettick(),1);
+	skill_unit_move(&md->bl,tick,0);
 	map_delblock(&md->bl);
 
 	if(bx>0 && by>0){	// 位置指定の場合周囲９セルを探索
@@ -2928,6 +2946,7 @@ int mob_warp(struct mob_data *md,int m,int x,int y,int type)
 	}
 
 	map_addblock(&md->bl);
+	skill_unit_move(&md->bl,tick,1);
 	if(type>0)
 	{
 		clif_spawnmob(md);
@@ -3241,59 +3260,16 @@ int mobskill_castend_pos( int tid, unsigned int tick, int id,int data )
 			return 0;
 	}
 
-	if(battle_config.monster_skill_reiteration == 0) {
-		range = -1;
-		switch(md->skillid) {
-			case MG_SAFETYWALL:
-			case WZ_FIREPILLAR:
-			case HT_SKIDTRAP:
-			case HT_LANDMINE:
-			case HT_ANKLESNARE:
-			case HT_SHOCKWAVE:
-			case HT_SANDMAN:
-			case HT_FLASHER:
-			case HT_FREEZINGTRAP:
-			case HT_BLASTMINE:
-			case HT_CLAYMORETRAP:
-			case PF_SPIDERWEB:		/* スパイダーウェッブ */
-				range = 0;
-				break;
-			case AL_PNEUMA:
-			case AL_WARP:
-				range = 1;
-				break;
-		}
-		if(range >= 0) {
-			if(skill_check_unit_range(md->bl.m,md->skillx,md->skilly,range,md->skillid) > 0)
-				return 0;
-		}
-	}
-	if(battle_config.monster_skill_nofootset) {
-		range = -1;
-		switch(md->skillid) {
-			case WZ_FIREPILLAR:
-			case HT_SKIDTRAP:
-			case HT_LANDMINE:
-			case HT_ANKLESNARE:
-			case HT_SHOCKWAVE:
-			case HT_SANDMAN:
-			case HT_FLASHER:
-			case HT_FREEZINGTRAP:
-			case HT_BLASTMINE:
-			case HT_CLAYMORETRAP:
-			case AM_DEMONSTRATION:
-			case PF_SPIDERWEB:		/* スパイダーウェッブ */
-				range = 1;
-				break;
-			case AL_WARP:
-				range = 0;
-				break;
-		}
-		if(range >= 0) {
-			if(skill_check_unit_range2(md->bl.m,md->skillx,md->skilly,range) > 0)
-				return 0;
-		}
-	}
+	if (!battle_config.monster_skill_reiteration &&
+			skill_get_unit_flag(md->skillid)&UF_NOREITERATION &&
+			skill_check_unit_range(md->bl.m,md->skillx,md->skilly,md->skillid,md->skilllv))
+		return 0;
+
+	if(battle_config.monster_skill_nofootset &&
+			skill_get_unit_flag(md->skillid)&UF_NOFOOTSET &&
+			skill_check_unit_range2(md->bl.m,md->skillx,md->skilly,md->skillid,md->skilllv))
+		return 0;
+
 
 	if(battle_config.monster_land_skill_limit) {
 		maxcount = skill_get_maxcount(md->skillid);

@@ -140,6 +140,7 @@ static int pc_invincible_timer(int tid,unsigned int tick,int id,int data) {
 		return 0;
 	}
 	sd->invincible_timer=-1;
+	skill_unit_move(&sd->bl,tick,1);
 
 	return 0;
 }
@@ -160,6 +161,7 @@ int pc_delinvincibletimer(struct map_session_data *sd) {
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
 		sd->invincible_timer = -1;
 	}
+	skill_unit_move(&sd->bl,gettick(),1);
 	return 0;
 }
 
@@ -2244,7 +2246,12 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 		i = pc_search_inventory(sd,0);
 		if(i >= 0) {
 			memcpy(&sd->status.inventory[i],item_data,sizeof(sd->status.inventory[0]));
-			sd->status.inventory[i].amount=amount;
+			if(itemdb_isequip2(data)){
+				sd->status.inventory[i].amount=1;
+				amount=1;
+			} else {
+				sd->status.inventory[i].amount=amount;
+			}
 			sd->inventory_data[i]=data;
 			clif_additem(sd,i,amount,0);
 		}
@@ -2480,7 +2487,12 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		for(i=0;i<MAX_CART;i++){
 			if(sd->status.cart[i].nameid==0){
 				memcpy(&sd->status.cart[i],item_data,sizeof(sd->status.cart[0]));
-				sd->status.cart[i].amount=amount;
+				if(itemdb_isequip2(data)){
+					sd->status.inventory[i].amount=1;
+					amount=1;
+				} else {
+					sd->status.inventory[i].amount=amount;
+				}
 				sd->cart_num++;
 				clif_cart_additem(sd,i,amount,0);
 				break;
@@ -2877,6 +2889,13 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 			status_change_end(&sd->bl,SC_BLADESTOP,-1);
 		if(sd->sc_data[SC_DANCING].timer!=-1) // clear dance effect when warping [Valaris]
 			skill_stop_dancing(&sd->bl,0);
+		if (sd->sc_data[SC_BASILICA].timer!=-1) {
+			int i;
+			for (i=0;i<MAX_SKILLUNITGROUP;i++)
+				if (sd->skillunit[i].skill_id==HP_BASILICA)
+					skill_delunitgroup(&sd->skillunit[i]);
+			status_change_end(&sd->bl,SC_BASILICA,-1);
+		}
 	}
 
 	if(sd->status.option&2)
@@ -2910,7 +2929,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 			int ip,port;
 			if(map_mapname2ipport(mapname,&ip,&port)==0){
 				skill_stop_dancing(&sd->bl,1);
-				skill_unit_out_all(&sd->bl,gettick(),1);
+				skill_unit_move(&sd->bl,gettick(),0);
 				clif_clearchar_area(&sd->bl,clrtype&0xffff);
 				skill_gangsterparadise(sd,0);
 				map_delblock(&sd->bl);
@@ -2966,7 +2985,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 	}
 
 	if(sd->mapname[0] && sd->bl.prev != NULL){
-		skill_unit_out_all(&sd->bl,gettick(),1);
+		skill_unit_move(&sd->bl,gettick(),0);
 		clif_clearchar_area(&sd->bl,clrtype&0xffff);
 		skill_gangsterparadise(sd,0);
 		map_delblock(&sd->bl);
@@ -3199,10 +3218,12 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 		x += dx;
 		y += dy;
 
+		skill_unit_move(&sd->bl,tick,0);
 		if(moveblock) map_delblock(&sd->bl);
 		sd->bl.x = x;
 		sd->bl.y = y;
 		if(moveblock) map_addblock(&sd->bl);
+		skill_unit_move(&sd->bl,tick,1);
 
 	#if 0
 		if (sd->status.guild_id > 0) {
@@ -3250,19 +3271,14 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 			if (sd->sc_data[SC_DEVOTION].val1)
 				skill_devotion2(&sd->bl,sd->sc_data[SC_DEVOTION].val1);
 
-			if (sd->sc_data[SC_BASILICA].timer != -1) { // Basilica cancels if caster moves [celest]
-				struct skill_unit *su;
-				if ((su = (struct skill_unit *)sd->sc_data[SC_BASILICA].val4)) {
-					struct skill_unit_group *sg;
-					if ((sg = su->group) && sg->src_id == sd->bl.id) {
-						status_change_end(&sd->bl,SC_BASILICA,-1);
-						skill_delunitgroup (sg);
-					}
-				}
+			if (sd->sc_data[SC_BASILICA].timer!=-1) { // Basilica cancels if caster moves [celest]
+				int i;
+				for (i=0;i<MAX_SKILLUNITGROUP;i++)
+					if (sd->skillunit[i].skill_id==HP_BASILICA)
+						skill_delunitgroup(&sd->skillunit[i]);
+				status_change_end(&sd->bl,SC_BASILICA,-1);
 			}
 		}
-
-		skill_unit_move(&sd->bl,tick,1);	// スキルユニットの?査
 
 		if(map_getcell(sd->bl.m,x,y,CELL_CHKNPC))
 			npc_touch_areanpc(sd,sd->bl.m,x,y);
@@ -3420,7 +3436,8 @@ int pc_randomwalk(struct map_session_data *sd,int tick)
 int pc_movepos(struct map_session_data *sd,int dst_x,int dst_y)
 {
 	int moveblock;
-	int dx,dy,dist;
+	int dx,dy;
+	int tick = gettick();
 
 	struct walkpath_data wpd;
 
@@ -3433,16 +3450,17 @@ int pc_movepos(struct map_session_data *sd,int dst_x,int dst_y)
 
 	dx = dst_x - sd->bl.x;
 	dy = dst_y - sd->bl.y;
-	dist = distance(sd->bl.x,sd->bl.y,dst_x,dst_y);
 
 	moveblock = ( sd->bl.x/BLOCK_SIZE != dst_x/BLOCK_SIZE || sd->bl.y/BLOCK_SIZE != dst_y/BLOCK_SIZE);
 
 	map_foreachinmovearea(clif_pcoutsight,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,dx,dy,0,sd);
 
+	skill_unit_move(&sd->bl,tick,0);
 	if(moveblock) map_delblock(&sd->bl);
 	sd->bl.x = dst_x;
 	sd->bl.y = dst_y;
 	if(moveblock) map_addblock(&sd->bl);
+	skill_unit_move(&sd->bl,tick,1);
 
 	map_foreachinmovearea(clif_pcinsight,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,-dx,-dy,0,sd);
 
@@ -3458,8 +3476,6 @@ int pc_movepos(struct map_session_data *sd,int dst_x,int dst_y)
 
 	if(sd->status.option&4)	// クロ?キングの消滅?査
 		skill_check_cloaking(&sd->bl);
-
-	skill_unit_move(&sd->bl,gettick(),dist+7);	// スキルユニットの?査
 
 	if(map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
@@ -3781,7 +3797,7 @@ int pc_attack(struct map_session_data *sd,int target_id,int type)
 		return 0;
 	}
 
-	if(!battle_check_target(&sd->bl,bl,BCT_ENEMY))
+	if(battle_check_target(&sd->bl,bl,BCT_ENEMY) <= 0)
 		return 1;
 	if(sd->attacktimer != -1)
 		pc_stopattack(sd);
@@ -4612,7 +4628,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	skill_castcancel(&sd->bl,0);	// 詠唱の中止
 	clif_clearchar_area(&sd->bl,1);
 	pc_setdead(sd);
-	skill_unit_out_all(&sd->bl,gettick(),1);
+	skill_unit_move(&sd->bl,gettick(),0);
 	if(sd->sc_data[SC_BLADESTOP].timer!=-1)//白刃は事前に解除
 		status_change_end(&sd->bl,SC_BLADESTOP,-1);
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter); //死にカウンタ?書き?み
@@ -4967,7 +4983,21 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->status.status_point = val;
 		break;
 	case SP_ZENY:
-		sd->status.zeny = val;
+		if(val <= MAX_ZENY) {
+			// MAX_ZENY 以下なら代入
+			sd->status.zeny = val;
+		} else {
+			if(sd->status.zeny > val) {
+				// Zeny が減少しているなら代入
+				sd->status.zeny = val;
+			} else if(sd->status.zeny <= MAX_ZENY) {
+				// Zeny が増加していて、現在の値がMAX_ZENY 以下ならMAX_ZENY
+				sd->status.zeny = MAX_ZENY;
+			} else {
+				// Zeny が増加していて、現在の値がMAX_ZENY より下なら増加分を無視
+				;
+			}
+		}
 		break;
 	case SP_BASEEXP:
 		if(pc_nextbaseexp(sd) > 0) {
@@ -5761,6 +5791,7 @@ int pc_setaccountreg2(struct map_session_data *sd,char *reg,int val)
 int pc_eventtimer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd=map_id2sd(id);
+	char *p = (char *)data;
 	int i;
 	if(sd==NULL)
 		return 0;
@@ -5768,11 +5799,11 @@ int pc_eventtimer(int tid,unsigned int tick,int id,int data)
 	for(i=0;i<MAX_EVENTTIMER;i++){
 		if( sd->eventtimer[i]==tid ){
 			sd->eventtimer[i]=-1;
-			npc_event(sd,(const char *)data,0);
+			npc_event(sd,p,0);
 			break;
 		}
 	}
-	aFree((void *)data);
+	aFree(p);
 	if(i==MAX_EVENTTIMER) {
 		if(battle_config.error_log)
 			printf("pc_eventtimer: no such event timer\n");
@@ -5795,8 +5826,9 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 		if( sd->eventtimer[i]==-1 )
 			break;
 	if(i<MAX_EVENTTIMER){
-		char *evname=(char *)aMallocA((strlen(name)+1)*sizeof(char));
-		memcpy(evname,name,(strlen(name)+1));
+		char *evname=strdup(name);
+		//char *evname=(char *)aMallocA((strlen(name)+1)*sizeof(char));
+		//memcpy(evname,name,(strlen(name)+1));
 		sd->eventtimer[i]=add_timer(gettick()+tick,
 			pc_eventtimer,sd->bl.id,(int)evname);
 		sd->eventcount++;
@@ -5819,12 +5851,15 @@ int pc_deleventtimer(struct map_session_data *sd,const char *name)
 		return 0;
 
 	for(i=0;i<MAX_EVENTTIMER;i++)
-		if( sd->eventtimer[i]!=-1 && strcmp(
-			(char *)(get_timer(sd->eventtimer[i])->data), name)==0 ){
+		if( sd->eventtimer[i]!=-1 ) {
+			char *p = (char *)(get_timer(sd->eventtimer[i])->data);
+			if(strcmp(p, name)==0) {
 				delete_timer(sd->eventtimer[i],pc_eventtimer);
 				sd->eventtimer[i]=-1;
 				sd->eventcount--;
+				free(p);
 				break;
+			}
 		}
 
 	return 0;
@@ -5865,8 +5900,10 @@ int pc_cleareventtimer(struct map_session_data *sd)
 
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i]!=-1 ){
+			char *p = (char *)(get_timer(sd->eventtimer[i])->data);
 			delete_timer(sd->eventtimer[i],pc_eventtimer);
 			sd->eventtimer[i]=-1;
+			free(p);
 		}
 
 	return 0;

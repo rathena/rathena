@@ -196,6 +196,8 @@ enum AtCommandType {
 	AtCommand_MiscEffect, // by MC Cameri
 	AtCommand_MobSearch,
 	AtCommand_CleanMap,
+	AtCommand_NpcTalk,
+	AtCommand_PetTalk,
 
 	// SQL-only commands start
 #ifndef TXT_ONLY

@@ -1,7 +1,7 @@
 all: login-server
 txt: login-server
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/lock.o ../common/malloc.o ../common/showmsg.o ../common/strlib.o
+COMMON_OBJ = ../common/obj/core.o ../common/obj/socket.o ../common/obj/timer.o ../common/obj/db.o ../common/obj/lock.o ../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/strlib.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/version.h ../common/db.h ../common/lock.h ../common/malloc.h ../common/showmsg.h ../common/strlib.h
 
 login-server: login.o md5calc.o $(COMMON_OBJ)

@@ -59,15 +59,17 @@ int battle_counttargeted(struct block_list *bl,struct block_list *src,int target
 
 // ダメージの遅延
 struct battle_delay_damage_ {
-	struct block_list *src,*target;
+	struct block_list *src;
+	int target;
 	int damage;
 	int flag;
 };
 int battle_delay_damage_sub(int tid,unsigned int tick,int id,int data)
 {
 	struct battle_delay_damage_ *dat=(struct battle_delay_damage_ *)data;
-	if( dat && map_id2bl(id)==dat->src && dat->target->prev!=NULL)
-		battle_damage(dat->src,dat->target,dat->damage,dat->flag);
+	struct block_list *target=map_id2bl(dat->target);
+	if( dat && map_id2bl(id)==dat->src && target && target->prev!=NULL)
+		battle_damage(dat->src,target,dat->damage,dat->flag);
 	aFree(dat);
 	return 0;
 }
@@ -80,7 +82,7 @@ int battle_delay_damage(unsigned int tick,struct block_list *src,struct block_li
 
 
 	dat->src=src;
-	dat->target=target;
+	dat->target=target->id;
 	dat->damage=damage;
 	dat->flag=flag;
 	add_timer(tick,battle_delay_damage_sub,src->id,(int)dat);
@@ -256,7 +258,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			flag&BF_SHORT && skill_num != NPC_GUIDEDATTACK) {
 			// セーフティウォール
 			struct skill_unit *unit;
-			unit = map_find_skill_unit_oncell(bl->m,bl->x,bl->y,MG_SAFETYWALL);
+			unit = (struct skill_unit *)sc_data[SC_SAFETYWALL].val2;
 			if (unit) {
 				if (unit->group && (--unit->group->val2)<=0)
 					skill_delunit(unit);
@@ -3501,7 +3503,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		if(sd && sd->splash_range > 0 && (wd.damage > 0 || wd.damage2 > 0) )
 			skill_castend_damage_id(src,target,0,-1,tick,0);
 		map_freeblock_lock();
-		battle_damage(src,target,(wd.damage+wd.damage2),0);
+		battle_delay_damage(tick+wd.amotion,src,target,(wd.damage+wd.damage2),0);
 		if(target->prev != NULL &&
 			(target->type != BL_PC || (target->type == BL_PC && !pc_isdead((struct map_session_data *)target) ) ) ) {
 			if(wd.damage > 0 || wd.damage2 > 0) {
@@ -3652,7 +3654,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		}
 
 		if(rdamage > 0)
-			battle_damage(target,src,rdamage,0);
+			battle_delay_damage(tick+wd.amotion,src,target,rdamage,0);
 		if(t_sc_data && t_sc_data[SC_AUTOCOUNTER].timer != -1 && t_sc_data[SC_AUTOCOUNTER].val4 > 0) {
 			if(t_sc_data[SC_AUTOCOUNTER].val3 == src->id)
 				battle_weapon_attack(target,src,tick,0x8000|t_sc_data[SC_AUTOCOUNTER].val1);

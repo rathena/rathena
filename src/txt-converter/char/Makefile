@@ -1,7 +1,7 @@
 all: char-converter
 sql: char-converter
 
-COMMON_OBJ = ../../common/core.o ../../common/socket.o ../../common/timer.o ../../common/grfio.o ../../common/db.o ../../common/lock.o ../../common/nullpo.o ../../common/malloc.o ../../common/showmsg.o ../../common/strlib.o
+COMMON_OBJ = ../../common/obj/core.o ../../common/obj/socket.o ../../common/obj/timer.o ../../common/obj/grfio.o ../../common/obj/db.o ../../common/obj/lock.o ../../common/obj/nullpo.o ../../common/obj/malloc.o ../../common/obj/showmsg.o ../../common/obj/strlib.o
 
 char-converter: char-converter.o $(COMMON_OBJ)
 	$(CC) -o ../../../$@ $^ $(LIB_S)

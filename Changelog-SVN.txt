@@ -1,5 +1,25 @@
 Date	Added
 
+02/23
+        * Corrected Spiral Pierce's hits in the skill_db [celest]
+        * Moved /common/*.o into a obj folder when compiling [celest]
+        * Updated core and map server to jA 1094~1115 [celest]
+          - Added End_of_exam's Memory Manager for detecting memory problems.
+            To enable remove the // in malloc.c line 11
+               // #define USE_MEMMGR
+          - Added @npctalk and @pettalk
+          - Added support for jA's local zlib
+          - Fixed a bug with path search long
+          - Updated malloc.c to support Memwatch
+          - Added DB data loss detection
+          - Added db/skill_unit_db.txt
+          - Updated skill unit system
+          - Changed Waterball to the new timerskill system
+          ~ For more detailed logs check 'Readme-jap' (knowledge in japanese required,
+            obviously ^^;)
+          Please test if there's any skills that might have suddenly stopped working,
+          thanks ^^;
+
 02/22
 	* Revised New Cards, added missing effects, fixed bugs [Lupus]
 	  ~20 cards to check left 8) But in 22 Feb some new cards have been announced T__T'

@@ -273,7 +273,7 @@ int path_search_long(int m,int x0,int y0,int x1,int y1)
 	else
 		weight = abs(y1 - y0);
 
-	while (x0 != x1 && y0 != y1) {
+	while (x0 != x1 || y0 != y1) {
 		if (map_getcellp(md,x0,y0,CELL_CHKWALL))
 			return 0;
 		wx += dx;

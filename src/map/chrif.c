@@ -1011,6 +1011,8 @@ int chrif_disconnect(int fd) {
 		ShowWarning(tmp_output);
 		clif_foreachclient(chrif_disconnect_sub);
 		chrif_connected = 0;
+		// 他のmap 鯖のデータを消す
+		map_eraseallipport();
 	}
 	close(fd);
 	return 0;
@@ -1144,6 +1146,15 @@ int check_connect_char_server(int tid, unsigned int tick, int id, int data) {
 #endif /* not TXT_ONLY */
 	}
 	if (chrif_isconnect()) displayed = 0;
+	return 0;
+}
+/*==========================================
+ * 終了
+ *------------------------------------------
+ */
+int do_final_chrif(void)
+{
+	delete_session(char_fd);
 	return 0;
 }
 

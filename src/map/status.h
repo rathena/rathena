@@ -111,7 +111,7 @@ enum {	// struct map_session_data ‚Ì status_change‚Ì”Ô?ƒe?ƒuƒ‹
 //-- 137-139
 	SC_SAFETYWALL		= 140,
 	SC_PNEUMA			= 141,
-	SC_WATERBALL		= 142,
+//-- 142
 	SC_ANKLE			= 143,
 	SC_DANCING			= 144,
 	SC_KEEPING			= 145,

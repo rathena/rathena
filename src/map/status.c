@@ -31,14 +31,17 @@ int SkillStatusChangeTable[]={	/* status.hのenumのSC_***とあわせること */
 	-1, 1,-1,
 /* 10- */
 	SC_SIGHT,			/* サイト */
-	-1,-1,-1,-1,
+	-1,
+	SC_SAFETYWALL,		/* セーフティーウォール */
+	-1,-1,-1,
 	SC_FREEZE,			/* フロストダイバ? */
 	SC_STONE,			/* スト?ンカ?ス */
 	-1,-1,-1,
 /* 20- */
 	-1,-1,-1,-1,
 	SC_RUWACH,			/* ルアフ */
-	-1,-1,-1,-1,
+	SC_PNEUMA,			/* ニューマ */
+	-1,-1,-1,
 	SC_INCREASEAGI,		/* 速度?加 */
 /* 30- */
 	SC_DECREASEAGI,		/* 速度減少 */
@@ -3585,15 +3588,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_ANKLE:
 			break;
 
-		/* ウォ?タ?ボ?ル */
-		case SC_WATERBALL:
-			tick=150;
-			if(val1>5) //レベルが5以上の場合は25?に制限(1?目はすでに打ってるので-1)
-				val3=5*5-1;
-			else
-				val3= (val1|1)*(val1|1)-1;
-			break;
-
 		/* スキルじゃない/時間に?係しない */
 		case SC_RIDING:
 			calc_flag = 1;
@@ -4358,21 +4352,6 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				break;
 			sc_data[type].timer=add_timer( 1000+tick,status_change_timer, bl->id, data );
 			return 0;
-		}
-		break;
-
-	case SC_WATERBALL:	/* ウォ?タ?ボ?ル */
-		{
-			struct block_list *target=map_id2bl(sc_data[type].val2);
-			if (!target || !target->prev)
-				break;	// target has been killed in previous hits, no need to raise an alarm ^^;
-			// nullpo_retb(target);
-			// nullpo_retb(target->prev);
-			skill_attack(BF_MAGIC,bl,bl,target,WZ_WATERBALL,sc_data[type].val1,tick,0);
-			if((--sc_data[type].val3)>0) {
-				sc_data[type].timer=add_timer( 150+tick,status_change_timer, bl->id, data );
-				return 0;
-			}
 		}
 		break;
 

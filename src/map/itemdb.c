@@ -379,8 +379,10 @@ static int itemdb_readdb(void)
 			id->equip_script = parse_script((unsigned char *) p,lines);
 		}
 		fclose(fp);
-		sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,filename[i]);
-		ShowStatus(tmp_output);
+		if (ln > 0) {
+			sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,filename[i]);
+			ShowStatus(tmp_output);
+		}
 		ln=0;	// reset to 0
 	}
 	return 0;
@@ -456,8 +458,10 @@ static int itemdb_read_randomitem()
 			ln++;
 		}
 		fclose(fp);
-		sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",*pc,fn);
-		ShowStatus(tmp_output);
+		if (*pc > 0) {
+			sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",*pc,fn);
+			ShowStatus(tmp_output);
+		}
 	}
 
 	return 0;
@@ -699,8 +703,10 @@ static int itemdb_read_noequip(void)
 
 	}
 	fclose(fp);
-	sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"db/item_noequip.txt");
-	ShowStatus(tmp_output);
+	if (ln > 0) {
+		sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,"db/item_noequip.txt");
+		ShowStatus(tmp_output);
+	}	
 	return 0;
 }
 

@@ -20,7 +20,7 @@
 #define MAX_STATUSCHANGE 210
 #define MAX_SKILLUNITGROUP 32
 #define MAX_MOBSKILLUNITGROUP 8
-#define MAX_SKILLUNITGROUPTICKSET 128
+#define MAX_SKILLUNITGROUPTICKSET 32
 #define MAX_SKILLTIMERSKILL 32
 #define MAX_MOBSKILLTIMERSKILL 10
 #define MAX_MOBSKILL 32
@@ -85,13 +85,13 @@ struct skill_unit_group {
 	int src_id;
 	int party_id;
 	int guild_id;
-	int map,range;
+	int map;
 	int target_flag;
 	unsigned int tick;
 	int limit,interval;
 
 	int skill_id,skill_lv;
-	int val1,val2;
+	int val1,val2,val3;
 	char *valstr;
 	int unit_id;
 	int group_id;
@@ -582,6 +582,7 @@ struct map_data_other_server {
 	unsigned char *gat;	// NULLŒÅ’è‚É‚µ‚Ä”»’f
 	unsigned long ip;
 	unsigned int port;
+	struct map_data* map;
 };
 
 struct flooritem_data {
@@ -646,20 +647,29 @@ enum {
 	LOOK_BASE,LOOK_HAIR,LOOK_WEAPON,LOOK_HEAD_BOTTOM,LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HAIR_COLOR,LOOK_CLOTHES_COLOR,LOOK_SHIELD,LOOK_SHOES
 };
 
+// CELL
+#define CELL_MASK		0x0f
+#define CELL_NPC		0x80	// NPCƒZƒ‹
+#define CELL_BASILICA	0x40	// BASILICAƒZƒ‹
 /*
- * map_getcell()ªÇŞÅéÄªµªìªë«Õ«é«°
+ * map_getcell()‚Åg—p‚³‚ê‚éƒtƒ‰ƒO
  */
 typedef enum { 
-	CELL_CHKWALL=1,		// Ûú(«»«ë«¿«¤«×1)
-	CELL_CHKWATER=3,	// â©íŞ(«»«ë«¿«¤«×3)
-	CELL_CHKGROUND=5,	// ò¢Øüî¡úªÚª(«»«ë«¿«¤«×5)
-	CELL_CHKNPC=0x80,	// «¿«Ã«Á«¿«¤«×ªÎNPC(«»«ë«¿«¤«×0x80«Õ«é«°)
-	CELL_CHKPASS,		// ÷×Î¦Ê¦Òö(«»«ë«¿«¤«×1,5ì¤èâ)
-	CELL_CHKNOPASS,		// ÷×Î¦ÜôÊ¦(«»«ë«¿«¤«×1,5)
-	CELL_GETTYPE		// «»«ë«¿«¤«×ªòÚ÷ª¹
+	CELL_CHKWALL=0,		// •Ç(ƒZƒ‹ƒ^ƒCƒv1)
+	CELL_CHKWATER,		// …ê(ƒZƒ‹ƒ^ƒCƒv3)
+	CELL_CHKGROUND,		// ’n–ÊáŠQ•¨(ƒZƒ‹ƒ^ƒCƒv5)
+	CELL_CHKPASS,		// ’Ê‰ß‰Â”\(ƒZƒ‹ƒ^ƒCƒv1,5ˆÈŠO)
+	CELL_CHKNOPASS,		// ’Ê‰ß•s‰Â(ƒZƒ‹ƒ^ƒCƒv1,5)
+	CELL_GETTYPE,		// ƒZƒ‹ƒ^ƒCƒv‚ğ•Ô‚·
+	CELL_CHKNPC=0x10,	// ƒ^ƒbƒ`ƒ^ƒCƒv‚ÌNPC(ƒZƒ‹ƒ^ƒCƒv0x80ƒtƒ‰ƒO)
+	CELL_CHKBASILICA,	// ƒoƒWƒŠƒJ(ƒZƒ‹ƒ^ƒCƒv0x40ƒtƒ‰ƒO)
 } cell_t;
-// map_setcell()ªÇŞÅéÄªµªìªë«Õ«é«°
-#define CELL_SETNPC	0x80	// «¿«Ã«Á«¿«¤«×ªÎNPCªò«»«Ã«È
+// map_setcell()‚Åg—p‚³‚ê‚éƒtƒ‰ƒO
+enum {
+	CELL_SETNPC=0x10,	// ƒ^ƒbƒ`ƒ^ƒCƒv‚ÌNPC‚ğƒZƒbƒg
+	CELL_SETBASILICA,	// ƒoƒWƒŠƒJ‚ğƒZƒbƒg
+	CELL_CLRBASILICA,	// ƒoƒWƒŠƒJ‚ğƒNƒŠƒA
+};
 
 struct chat_data {
 	struct block_list bl;
@@ -718,7 +728,7 @@ void map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int 
 int map_countnearpc(int,int,int);
 //blockŠÖ˜A‚É’Ç‰Á
 int map_count_oncell(int m,int x,int y);
-struct skill_unit *map_find_skill_unit_oncell(int m,int x,int y,int skill_id);
+struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int x,int y,int skill_id,struct skill_unit *);
 // ˆê“IobjectŠÖ˜A
 int map_addobject(struct block_list *);
 int map_delobject(int);
@@ -747,6 +757,7 @@ int map_mapname2mapid(char*);
 int map_mapname2ipport(char*,int*,int*);
 int map_setipport(char *name,unsigned long ip,int port);
 int map_eraseipport(char *name,unsigned long ip,int port);
+int map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
 int map_foreachiddb(int (*)(void*,void*,va_list),...);

@@ -9,6 +9,7 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
+#include "../common/db.h"
 
 #include "log.h"
 #include "clif.h"
@@ -210,6 +211,8 @@ ACMD_FUNC(gmotd); // Added by MC Cameri, created by davidsiaw
 ACMD_FUNC(misceffect); // by MC Cameri
 ACMD_FUNC(mobsearch);
 ACMD_FUNC(cleanmap);
+ACMD_FUNC(npctalk);
+ACMD_FUNC(pettalk);
 ACMD_FUNC(autoloot);  // by Upa-Kun
 
 #ifndef TXT_ONLY
@@ -484,6 +487,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_MiscEffect,			"@misceffect",		50, atcommand_misceffect }, // by MC Cameri
 	{ AtCommand_MobSearch,			"@mobsearch",		 0, atcommand_mobsearch },
 	{ AtCommand_CleanMap,			"@cleanmap",		 0, atcommand_cleanmap },
+	{ AtCommand_NpcTalk,			"@npctalk",			 0,	atcommand_npctalk },
+	{ AtCommand_PetTalk,			"@pettalk",			 0,	atcommand_pettalk },
 
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
@@ -1743,8 +1748,8 @@ int atcommand_whozeny(
 		clif_displaymessage(fd, output);
 	}
 
-	free(zeny);
-	free(counted);
+	aFree(zeny);
+	aFree(counted);
 
 	return 0;
 }
@@ -7786,6 +7791,49 @@ atcommand_cleanmap(
 					  sd->bl.x+AREA_SIZE*2,sd->bl.y+AREA_SIZE*2,
 					  BL_ITEM,sd,&i);
 	clif_displaymessage(fd, "All dropped items have been cleaned up.");
+	return 0;
+}
+
+/*==========================================
+ * NPC/PET‚É˜b‚³‚¹‚é
+ *------------------------------------------
+ */
+int
+atcommand_npctalk(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char name[100],mes[100];
+	struct npc_data *nd;
+
+	if (sscanf(message, "%s %99[^\n]", name, mes) < 2)
+		return -1;
+
+	if (!(nd = npc_name2id(name)))
+		return -1;
+	
+	clif_message(&nd->bl, mes);
+	return 0;
+}
+int
+atcommand_pettalk(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char mes[100],temp[100];
+	struct pet_data *pd;
+
+	nullpo_retr(-1, sd);
+
+	if(!sd->status.pet_id || !(pd=sd->pd))
+		return -1;
+
+	if (sscanf(message, "%99[^\n]", mes) < 1)
+		return -1;
+
+	snprintf(temp, sizeof temp ,"%s : %s",sd->pet.name,mes);
+	clif_message(&pd->bl, temp);
+
 	return 0;
 }
 

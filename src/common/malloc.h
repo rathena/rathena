@@ -59,15 +59,19 @@
 	void* aMalloc_( size_t size, const char *file, int line, const char *func );
 	void* aCalloc_( size_t num, size_t size, const char *file, int line, const char *func );
 	void* aRealloc_( void *p, size_t size, const char *file, int line, const char *func );
+	void  aFree_( void *p, const char *file, int line, const char *func );
+	void* aStrdup_( const void *p, const char *file, int line, const char *func );
 
 #	define aMalloc(n) aMalloc_(n,ALC_MARK)
 #	define aMallocA(n) aMalloc_(n,ALC_MARK)
 #	define aCalloc(m,n) aCalloc_(m,n,ALC_MARK)
 #	define aCallocA(m,n) aCalloc_(m,n,ALC_MARK)
 #	define aRealloc(p,n) aRealloc_(p,n,ALC_MARK)
-#	define aFree(ptr) free(ptr)
-#	define aStrdup(ptr) strdup(ptr)
+#	define aStrdup(p) aStrdup_(p,ALC_MARK)
+#	define aFree(p) do { aFree_(p,ALC_MARK); if(p != NULL) { p = NULL; } } while(0)
 
 #endif
+
+int do_init_memmgr(const char* file);
 
 #endif

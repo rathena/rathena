@@ -25,6 +25,12 @@ struct skill_db {
 	int castnodex[MAX_SKILL_LEVEL];
 	int delaynodex[MAX_SKILL_LEVEL];
 	int nocast;
+	int unit_id[2];
+	int unit_layout_type[MAX_SKILL_LEVEL];
+	int unit_range;
+	int unit_interval;
+	int unit_target;
+	int unit_flag;
 };
 extern struct skill_db skill_db[MAX_SKILL_DB];
 
@@ -34,6 +40,24 @@ struct skill_name_db {
         char *desc; // description that shows up for search's
 };
 extern const struct skill_name_db skill_names[];
+
+#define MAX_SKILL_UNIT_LAYOUT	50
+#define MAX_SQUARE_LAYOUT		5	// 11*11のユニット配置が最大
+#define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
+struct skill_unit_layout {
+	int count;
+	int dx[MAX_SKILL_UNIT_COUNT];
+	int dy[MAX_SKILL_UNIT_COUNT];
+};
+
+enum {
+	UF_DEFNOTENEMY		= 0x0001,	// defnotenemy 設定でBCT_NOENEMYに切り替え
+	UF_NOREITERATION	= 0x0002,	// 重複置き禁止 
+	UF_NOFOOTSET		= 0x0004,	// 足元置き禁止
+	UF_NOOVERLAP		= 0x0008,	// ユニット効果が重複しない
+	UF_DANCE			= 0x0100,	// ダンススキル
+	UF_ENSEMBLE			= 0x0200,	// 合奏スキル
+};
 
 // アイテム作成デ?タベ?ス
 struct skill_produce_db {
@@ -87,6 +111,7 @@ int skill_get_unit_id(int id,int flag);
 int	skill_get_inf2( int id );
 int	skill_get_maxcount( int id );
 int	skill_get_blewcount( int id ,int lv );
+int	skill_get_unit_flag( int id );
 int	skill_tree_get_max( int id, int b_class );	// Celest
 
 // スキルの使用
@@ -110,10 +135,6 @@ int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	int count,int skillid,int skilllv,int unit_id);
 int skill_delunitgroup(struct skill_unit_group *group);
-
-struct skill_unit_group_tickset *skill_unitgrouptickset_search(struct block_list *bl,struct skill_unit_group *sg);
-int skill_unitgrouptickset_delete(struct block_list *bl,struct skill_unit_group *sg);
-
 int skill_clear_unitgroup(struct block_list *src);
 
 int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,
@@ -121,12 +142,12 @@ int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,
 
 int skill_castfix( struct block_list *bl, int time );
 int skill_delayfix( struct block_list *bl, int time );
-int skill_check_unit_range(int m,int x,int y,int range,int skillid);
-int skill_check_unit_range2(int m,int x,int y,int range);
+int skill_check_unit_range(int m,int x,int y,int skillid, int skilllv);
+int skill_check_unit_range2(int m,int x,int y,int skillid, int skilllv);
 // -- moonsoul	(added skill_check_unit_cell)
 int skill_check_unit_cell(int skillid,int m,int x,int y,int unit_id);
 int skill_unit_out_all( struct block_list *bl,unsigned int tick,int range);
-int skill_unit_move( struct block_list *bl,unsigned int tick,int range);
+int skill_unit_move(struct block_list *bl,unsigned int tick,int flag);
 int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int dy);
 
 struct skill_unit_group *skill_check_dancing( struct block_list *src );
@@ -151,7 +172,6 @@ void skill_devotion_end(struct map_session_data *md,struct map_session_data *sd,
 // その他
 int skill_check_cloaking(struct block_list *bl);
 int skill_type_cloaking(struct block_list *bl);
-int skill_is_danceskill(int id);
 
 // ステ?タス異常
 int skill_encchant_eremental_end(struct block_list *bl, int type);
