@@ -1596,7 +1596,9 @@ int parse_tologin(int fd) {
 
 	// only login-server can have an access to here.
 	// so, if it isn't the login-server, we disconnect the session (fd != login_fd).
-	if (fd != login_fd || session[fd]->eof) {
+	if (fd != login_fd)
+		session[fd]->eof = 1;
+	if(session[fd]->eof) {
 		if (fd == login_fd) {
 			printf("Char-server can't connect to login-server (connection #%d).\n", fd);
 			login_fd = -1;
@@ -2486,7 +2488,9 @@ int parse_char(int fd) {
 	struct char_session_data *sd;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 
-	if (login_fd < 0 || session[fd]->eof) { // disconnect any player (already connected to char-server or coming back from map-server) if login-server is diconnected.
+	if (login_fd < 0)
+		session[fd]->eof = 1;
+	if(session[fd]->eof) { // disconnect any player (already connected to char-server or coming back from map-server) if login-server is diconnected.
 		if (fd == login_fd)
 			login_fd = -1;
 		close(fd);
