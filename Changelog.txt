@@ -1,5 +1,9 @@
 Date	Added
 01/05
+        * Set 'droprate0item''s default to 'yes' so that items with 0 rate will never
+          drop [celest]
+        * Look at item type other than item ID as well to check whether it is a card
+          in card-related script commands - better support for custom items [celest]
         * Reset all skill variables if the skill fails so certain skills can't be
           abused (such as Warp, thanks to Alex14 for pointing it out) [celest]
         * Added /mapflag/noreturn.txt for disabling butterfly wings (not fly wings)

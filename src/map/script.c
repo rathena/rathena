@@ -5215,9 +5215,9 @@ int buildin_getequipcardcnt(struct script_state *st)
 		return 0;
 	}
 	do{
-		if( (sd->status.inventory[i].card[c-1] > 4000) &&
-			(sd->status.inventory[i].card[c-1] < 5000)){
-
+		if( (sd->status.inventory[i].card[c-1] > 4000 &&
+			sd->status.inventory[i].card[c-1] < 5000) ||
+			itemdb_type(sd->status.inventory[i].card[c-1]) == 6){	// [Celest]
 			push_val(st->stack,C_INT,(c));
 			return 0;
 		}
@@ -5244,8 +5244,9 @@ int buildin_successremovecards(struct script_state *st)
 		return 0;
 	}
 	do{
-		if( (sd->status.inventory[i].card[c-1] > 4000) &&
-			(sd->status.inventory[i].card[c-1] < 5000)){ 
+		if( (sd->status.inventory[i].card[c-1] > 4000 &&
+			sd->status.inventory[i].card[c-1] < 5000) ||
+			itemdb_type(sd->status.inventory[i].card[c-1]) == 6){	// [Celest]
 
 			cardflag = 1;
 			item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].card[c-1];
@@ -5297,8 +5298,9 @@ int buildin_failedremovecards(struct script_state *st)
 		return 0;
 	}
 	do{
-		if(( sd->status.inventory[i].card[c-1] > 4000) &&
-			 (sd->status.inventory[i].card[c-1] < 5000)){
+		if( (sd->status.inventory[i].card[c-1] > 4000 &&
+			sd->status.inventory[i].card[c-1] < 5000) ||
+			itemdb_type(sd->status.inventory[i].card[c-1]) == 6){	// [Celest]
 			 
 			cardflag = 1; 
 
