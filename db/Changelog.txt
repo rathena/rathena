@@ -9,6 +9,7 @@
 	Skill databases == celest working on them i believe.
 
 04/04
+	* Re-added MDEF +15 to Resting Cat [DracoRPG]
 	* Added Sunglasses & Glasses into OBB, added slotted Sunglasses & Glasses into OVB [Lupus]
 04/03
 	* Doppelganger Card gives only 10% ASPD bonus (from Aegis) [DracoRPG]

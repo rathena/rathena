@@ -1435,7 +1435,7 @@
 5055,Novice_Eggshell,Novice Eggshell,5,20,0,10,,3,,0,8388609,2,256,,0,101,{},{}
 5056,Seed_Of_Love,Seed Of Love,5,20,0,200,,0,,0,10477567,2,256,,0,140,{},{}
 5057,Black_Cat_Ears,Black Cat Ears,5,20,0,200,,2,,0,10477567,2,256,,45,141,{},{}
-5058,Resting_Cat,Resting Cat,5,20,0,500,,1,,0,10477567,2,256,,0,142,{},{ bonus2 bResEff,Eff_Curse,3000; }
+5058,Resting_Cat,Resting Cat,5,20,0,500,,1,,0,10477567,2,256,,0,142,{},{ bonus bMDef,15; bonus2 bResEff,Eff_Curse,3000; }
 5059,Bear_Hat,Bear Hat,5,20,0,800,,3,,0,10477567,2,256,,50,143,{},{}
 5060,Pointy_Cap,Pointy Cap,5,20,0,300,,3,,0,10477567,2,256,,0,144,{},{ bonus bLuk,1; }
 5061,Flower_Hairpin,Flower Hairpin,5,20,0,100,,1,,0,10477567,2,256,,0,145,{},{}

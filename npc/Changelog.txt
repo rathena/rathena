@@ -34,6 +34,7 @@ Date		Added
 ======
 
 04/04
+	* Finished Payon's Gemstone Exchanger, thanks to Dino9021 [DracoRPG]
 	* Added Deviling in the "Poring Island" map pay_fild04, 2 hours respawn [Lupus]
 04/03
 	* Finished Valkyrie. Now it correctly works. Valhallana reborns players to High Novices. [Lupus]

@@ -7,7 +7,7 @@
 //= Darkchild (1.3)
 //= DracoRPG (1.5)
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.5b
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= Most Credits To Muad Dib, Some Stuff By Me
 //= 1.4 - Corrected a few typos
 //= 1.5 - Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
+//= 1.5b - Used Dino9021's script for the Gemstone exchanger [DracoRPG]
 //============================================================ 
 
 payon.gat,190,115,0	script	Lady	90,{
@@ -735,63 +736,110 @@ payon.gat,160,185,0	script	Billboard	111,{
       close;
 }
 
-payon.gat,173,238,4	script	Jade	754,{
-	mes "[Jade]";
-	mes "Bring me two";
-	mes "Gemstones of the";
-	mes "same color, and I will";
-	mes "change them to Gemstones";
-	mes "of a different color.";
-	next;
-	menu "Blue Gemstones into Red ones!",L_BlueToRed,"Red Gemstones into Yellow ones!",L_RedToYellow,"Yellow Gemstones into Blue ones!",L_YellowToBlue;
-	L_BlueToRed:
-	if(countitem(717) >= 2) goto L_BlueToRedOK;
-	mes "[Jade]";
-	mes "Hah...!";
-	mes "You're kidding me, right?";
-	mes "I can't provide you with this";
-	mes "service if you don't";
-	mes "give me at least";
-	mes "2 Blue Gemstones!";
-	close;
-	L_BlueToRedOK:
-	mes "[NPC]";
-	mes "This NPC is under scripting.";
-	mes "DracoRPG";
-	close;
-	L_RedToYellow:
-	if(countitem(716) >= 2) goto L_RedtoYellowOK;
-	mes "[Jade]";
-	mes "Hah...!";
-	mes "You're kidding me, right?";
-	mes "I can't provide you with this";
-	mes "service if you don't";
-	mes "give me at least";
-	mes "2 Red Gemstones!";
-	close;
-	L_RedToYellowOK:
-	mes "[NPC]";
-	mes "This NPC is under scripting.";
-	mes "DracoRPG";
-	close;
-	L_YellowToBlue:
-	if(countitem(715) >= 2) goto L_YellowToBlueOK;
-	mes "[Jade]";
-	mes "Hah...!";
-	mes "You're kidding me, right?";
-	mes "I can't provide you with this";
-	mes "service if you don't";
-	mes "give me at least";
-	mes "2 Yellow Gemstones!";
-	close;
-	L_YellowToBlueOK:
-	mes "[NPC]";
-	mes "This NPC is under scripting.";
-	mes "DracoRPG";
-	close;
+payon.gat,173,238,5 script Jade 754,{
+mes "[Jade]";
+mes "Bring me two";
+mes "Gemstones of the";
+mes "same color, and I will";
+mes "change them to Gemstones";
+mes "of a different color.";
+next;
+
+menu "Blue Gemstones into Red ones!",L_BlueToRed,"Red Gemstones into Yellow ones!",L_RedToYellow,"Yellow Gemstones into Blue ones!",L_YellowToBlue;
+
+L_BlueToRed:
+ set @SourceGemstones$,"Blue";
+ set @SourceGemstonesID,717;
+ set @TargetGemstones$,"Red";
+ set @TargetGemstonesID,716;
+ goto L_BeginExchange;
+
+L_RedToYellow:
+ set @SourceGemstones$,"Red";
+ set @SourceGemstonesID,716;
+ set @TargetGemstones$,"Yellow";
+ set @TargetGemstonesID,715;
+ goto L_BeginExchange;
+
+L_YellowToBlue:
+ set @SourceGemstones$,"Yellow";
+ set @SourceGemstonesID,715;
+ set @TargetGemstones$,"Blue";
+ set @TargetGemstonesID,717;
+ goto L_BeginExchange;
+
+L_BeginExchange:
+ if(countitem(@SourceGemstonesID) >= 2) goto L_ExchangeOK;
+ mes "[Jade]";
+ mes "Hah...!";
+ mes "You're kidding me, right?";
+ mes "I can't give you "+@TargetGemstones$+" Gemstones";
+ mes "if you don't give me at least";
+ mes "2 "+"+@SourceGemstones$+"+" Gemstones!";
+ close;
+
+L_ExchangeOK:
+ set @ExchangeCount,countitem(@SourceGemstonesID)/2;
+ mes "[Jade]";
+ mes "This may Exchange "+@ExchangeCount+" "+@TargetGemstones$+" Gemstones";
+ mes "How many do you want?";
+ next;
+ menu "Exchange all",L_ExchangeAll,"I want to set a number",L_PointCount,"Cancel",L_Cancel;
+
+L_ExchangeAll:
+ if(countitem(@SourceGemstonesID) < 2) goto L_ExchangeNo;
+ delitem @SourceGemstonesID,@ExchangeCount*2;
+ getitem @TargetGemstonesID,@ExchangeCount;
+ goto L_ExchangeDone;
+
+L_PointCount:
+ mes "[Jade]";
+ mes "How many do you want?";
+ mes "Limit is '100'";
+ next;
+L_InputPointCount:
+ input @number;
+ if(@number < 0) goto L_ExchangeNo;
+ if(@number > 100) goto L_ExchangeAbove;
+ if(@number > @ExchangeCount) goto L_ExchangeNotEnough;
+ delitem @SourceGemstonesID,@number*2;
+ getitem @TargetGemstonesID,@number;
+ goto L_ExchangeDone;
+
+L_ExchangeNo:
+ mes "[Jade]";
+ mes "Hmmm... Very funny...";
+ close;
+
+L_ExchangeAbove:
+ mes "[Jade]";
+ mes "Hmmm... Please don't set a number above '100'";
+ next;
+ goto L_InputPointCount;
+
+L_ExchangeNotEnough:
+ mes "[Jade]";
+ mes "Hmmm... The "+@SourceGemstones$+" Gemstones you have";
+ mes "is not enough for "+@number+" "+@TargetGemstones$+" Gemstones.";
+ mes "Please set a new number";
+ next;
+ goto L_InputPointCount;
+
+L_ExchangeDone:
+ mes "[Jade]";
+ mes "Here, This is the "+@TargetGemstones$+" Gemstones you need...";
+ mes "Come back to me when you need more";
+ mes "...mmm? Is there something on my face?";
+ close;
+
+L_Cancel:
+ mes "[Jade]";
+ mes "OK, Very well... Come back if you need anything.";
+ mes "I'll Exchange it for you anytime.";
+ close;
 }
 
-//Need to find out ALL fortunes he can tell for each answer, and whether they are random or given in a certain order...
+//Need to find out ALL fortunes he can tell for each answer...
 payon_in03.gat,117,128,4	script	Fortune Teller	704,{
 	mes "[Lhimetorra]";
 	mes "You're an adventurer of this";
