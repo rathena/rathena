@@ -807,6 +807,14 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 			status_change_start(bl,SC_STAN,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 
+	case AS_GRIMTOOTH:
+		if (bl->type == BL_MOB) {
+			struct status_change *sc_data = status_get_sc_data(bl);
+			if (sc_data && sc_data[SC_SLOWDOWN].timer == -1)
+				status_change_start(bl,SC_SLOWDOWN,0,0,0,0,1000,0);
+		}
+		break;
+
 	case HT_FREEZINGTRAP:	/* フリ?ジングトラップ */
 		rate=skilllv*3+35;
 		if(rand()%100 < rate*sc_def_mdef/100)
@@ -2346,17 +2354,11 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		if(flag&1){
 			/* 個別にダメ?ジを?える */
 			if(bl->id!=skill_area_temp[1]){
-				int dist=0;
 				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,
-					0x0500|dist  );
-				if (bl->type == BL_MOB && skillid == AS_GRIMTOOTH) {
-					struct status_change *sc_data = status_get_sc_data(bl);
-					if (sc_data && sc_data[SC_SLOWDOWN].timer == -1)
-						status_change_start(bl,SC_SLOWDOWN,0,0,0,0,1000,0);
-				}
+					0x0500);				
 			}
 		} else {
-			int ar;
+			int ar = 1;
 			int x = bl->x, y = bl->y;
 			switch (skillid) {
 				case AC_SHOWER:
@@ -2364,9 +2366,6 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 					break;
 				case NPC_SPLASHATTACK:
 					ar=3;
-					break;
-				default:
-					ar=1;
 					break;
 			}
 
@@ -2384,13 +2383,20 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 		break;
 
 	case SM_MAGNUM:			/* マグナムブレイク [celest] */
-		{
-			int dist = 0;
+		if(flag&1 && bl->id != skill_area_temp[1]){
 			int dx = abs( bl->x - skill_area_temp[2] );
 			int dy = abs( bl->y - skill_area_temp[3] );
-			dist = ((dx>dy)?dx:dy);
-			map_foreachinarea (skill_attack_area,src->m,src->x-1,src->y-1,src->x+1,src->y+1,0,
-				BF_WEAPON,src,src,skillid,skilllv,tick,0x0500|dist,BCT_ENEMY);
+			int dist = ((dx>dy)?dx:dy);
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,
+				0x0500|dist);
+		} else {
+			skill_area_temp[1]=src->id;
+			skill_area_temp[2]=src->x;
+			skill_area_temp[3]=src->y;
+			map_foreachinarea(skill_area_sub,
+				src->m,src->x-2,src->y-2,src->x+2,src->y+2,0,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+				skill_castend_damage_id);
 			status_change_start (src,SC_FLAMELAUNCHER,0,0,0,0,10000,0);
 			clif_skill_nodamage (src,src,skillid,skilllv,1);
 		}

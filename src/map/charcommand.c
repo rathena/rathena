@@ -32,7 +32,7 @@
 
 static char command_symbol = '#';
 
-extern char msg_table[1000][256]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
+extern char *msg_table[1000]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
 #define CCMD_FUNC(x) int charcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 
@@ -1067,8 +1067,8 @@ int charcommand_item(
 				for (i = 0; i < number; i += get_count) {
 					// if pet egg
 					if (pet_id >= 0) {
-						sd->catch_target_class = pet_db[pet_id].class_;
-						intif_create_pet(sd->status.account_id, sd->status.char_id,
+						pl_sd->catch_target_class = pet_db[pet_id].class_;
+						intif_create_pet(pl_sd->status.account_id, pl_sd->status.char_id,
 						                 (short)pet_db[pet_id].class_, (short)mob_db[pet_db[pet_id].class_].lv,
 						                 (short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
 						                 100, 0, 1, pet_db[pet_id].jname);
@@ -1077,8 +1077,8 @@ int charcommand_item(
 						memset(&item_tmp, 0, sizeof(item_tmp));
 						item_tmp.nameid = item_id;
 						item_tmp.identify = 1;
-						if ((flag = pc_additem((struct map_session_data*)sd, &item_tmp, get_count)))
-							clif_additem((struct map_session_data*)sd, 0, 0, flag);
+						if ((flag = pc_additem(pl_sd, &item_tmp, get_count)))
+							clif_additem(pl_sd, 0, 0, flag);
 					}
 				}
 				clif_displaymessage(fd, msg_table[18]); // Item created.

@@ -1,6 +1,8 @@
 Date	Added
 
 03/29
+	* Updated damage calculation for Magnum Break [celest]
+	* Fixed #item not working properly, thanks to TripleOxygen
         * Fixed a lot of compile time problems with our mixed C++/C
           conformance [1328: MouseJstr]
         * Fixed use of storage variable to conform to ANSI C spec 

@@ -740,7 +740,8 @@ static struct Damage battle_calc_pet_weapon_attack(
 				hitrate = (hitrate*(100+5*skill_lv))/100;
 				break;
 			case SM_MAGNUM:		// マグナムブレイク
-				damage = damage*(5*skill_lv + (wflag?65:115))/100;
+				damage = damage*(wflag > 1 ? 5*skill_lv+115 : 30*skill_lv+100)/100;
+				hitrate = (hitrate*(100+10*skill_lv))/100;
 				break;
 			case MC_MAMMONITE:	// メマーナイト
 				damage = damage*(100+ 50*skill_lv)/100;
@@ -1236,7 +1237,8 @@ static struct Damage battle_calc_mob_weapon_attack(
 				hitrate = (hitrate*(100+5*skill_lv))/100;
 				break;
 			case SM_MAGNUM:		// マグナムブレイク
-				damage = damage*(5*skill_lv +(wflag?65:115))/100;
+				damage = damage*(wflag > 1 ? 5*skill_lv+115 : 30*skill_lv+100)/100;
+				hitrate = (hitrate*(100+10*skill_lv))/100;
 				break;
 			case MC_MAMMONITE:	// メマーナイト
 				damage = damage*(100+ 50*skill_lv)/100;
@@ -1965,8 +1967,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 				hitrate = (hitrate*(100+5*skill_lv))/100;
 				break;
 			case SM_MAGNUM:		// マグナムブレイク
-				damage = damage*(5*skill_lv +(wflag?65:115) )/100;
-				damage2 = damage2*(5*skill_lv +(wflag?65:115) )/100;
+				// 20*skill level+100? i think this will do for now [based on jRO info]
+				damage = damage*(wflag > 1 ? 5*skill_lv+115 : 30*skill_lv+100)/100;
+				damage2 = damage2*(wflag > 1 ? 5*skill_lv+115 : 30*skill_lv+100)/100;
+				hitrate = (hitrate*(100+10*skill_lv))/100;
 				break;
 			case MC_MAMMONITE:	// メマーナイト
 				damage = damage*(100+ 50*skill_lv)/100;
