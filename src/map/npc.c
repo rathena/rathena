@@ -1998,7 +1998,6 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 			md->base_class = md->class = class;
 		}
 
-		md->base_class = md->class = class;
 		md->bl.id=npc_get_new_npc_id();
 		md->m =m;
 		md->x0=x;
@@ -2012,9 +2011,9 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4)
 		md->timer = -1;
 		md->target_id=0;
 		md->attacked_id=0;
-		md->speed=mob_db[class].speed;
+		md->speed=mob_db[md->base_class].speed;
 
-		if (mob_db[class].mode&0x02)
+		if (mob_db[md->base_class].mode&0x02)
 			md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 		else
 			md->lootitem=NULL;
