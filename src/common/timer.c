@@ -292,7 +292,17 @@ int do_timer(unsigned int tick) {
 }
 
 void timer_final() {
-	//FREE(timer_data);
-	aFree(timer_data);
+	struct timer_func_list* tfl = tfl_root, *tfl2;
+
+	while (tfl) {
+		tfl2 = tfl;
+		aFree(tfl->name);
+		aFree(tfl);
+		tfl = tfl2->next;
+	}
+	
+	if (timer_data) aFree(timer_data);
+	if (timer_heap) aFree(timer_heap);
+	if (free_timer_list) aFree(free_timer_list);
 }
 
