@@ -1,7 +1,7 @@
 Date	Added
 
 01/23
-	* Reverted back some of the char* changes [SVN 969] [Ajarn]
+	* Reverted back some of the char* changes [SVN 970] [Ajarn]
 	* Changed parse_script to now return char* [SVN 969] [Ajarn] 
 	* Converted run_script and run_script_main from unsigned char* to char*
 	  [SVN 969] [Ajarn]

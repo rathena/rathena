@@ -1939,7 +1939,7 @@ static int map_readmap(int m,char *fn, char *alias, int *map_cache, int maxmap) 
 
 		xs=map[m].xs=*(int*)(gat+6);
 		ys=map[m].ys=*(int*)(gat+10);
-		map[m].gat = (char *)aCallocA(s = map[m].xs * map[m].ys,sizeof(char));
+		map[m].gat = (unsigned char *)aCallocA(s = map[m].xs * map[m].ys,sizeof(unsigned char));
 		wh=map_waterheight(map[m].name);
 		for(y=0;y<ys;y++){
 			p=(struct gat_1cell*)(gat+y*xs*20+14);
