@@ -398,3 +398,10 @@ Problem:	Party EXP share bug
 			* SQL parties have been fixed in Freya (but the whole file int_party.c has been rewritten there)
 Assigned:	N/A
 Progress:	0%
+
+Problem:	Guilds Breaking
+		When you BREAK your guild and then someone re-creates another guild with the same Name
+		Then new GULD would have LEVEL, EXP, STATS of the broken guild
+			Probably it isn't being deleted from memory.
+Assigned:	N/A
+Progress:	0%

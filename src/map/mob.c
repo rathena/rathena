@@ -903,7 +903,7 @@ int mob_setdelayspawn(int id)
 
 	spawntime1=md->last_spawntime+md->spawndelay1;
 	spawntime2=md->last_deadtime+md->spawndelay2;
-	spawntime3=gettick()+5000;
+	spawntime3=gettick()+5000+rand()%5000; //Lupus
 	// spawntime = max(spawntime1,spawntime2,spawntime3);
 	if(DIFF_TICK(spawntime1,spawntime2)>0)
 		spawntime=spawntime1;

@@ -1669,15 +1669,15 @@ int status_get_max_hp(struct block_list *bl)
 			if(battle_config.mobs_level_up) // mobs leveling up increase [Valaris]
 				max_hp += (md->level - mob_db[md->class_].lv) * status_get_vit(bl);
 
-			if(mob_db[md->class_].mexp > 0) {
+			if(mob_db[md->class_].mexp > 0) { //MVP Monsters
 				if(battle_config.mvp_hp_rate != 100) {
 					double hp = (double)max_hp * battle_config.mvp_hp_rate / 100.0;
 					max_hp = (hp > 0x7FFFFFFF ? 0x7FFFFFFF : (int)hp);
 				}
 			}
-			else {
-				if(battle_config.mvp_hp_rate != 100) {
-					double hp = (double)max_hp * battle_config.mvp_hp_rate / 100.0;
+			else {	//Common MONSTERS
+				if(battle_config.monster_hp_rate != 100) {
+					double hp = (double)max_hp * battle_config.monster_hp_rate / 100.0;
 					max_hp = (hp > 0x7FFFFFFF ? 0x7FFFFFFF : (int)hp);
 				}
 			}
@@ -1687,11 +1687,11 @@ int status_get_max_hp(struct block_list *bl)
 			nullpo_retr(1, pd = (struct pet_data*)bl);
 			max_hp = mob_db[pd->class_].max_hp;
 
-			if(mob_db[pd->class_].mexp > 0) {
+			if(mob_db[pd->class_].mexp > 0) { //MVP Monsters 
 				if(battle_config.mvp_hp_rate != 100)
 					max_hp = (max_hp * battle_config.mvp_hp_rate)/100;
 			}
-			else {
+			else {	//Common MONSTERS
 				if(battle_config.monster_hp_rate != 100)
 					max_hp = (max_hp * battle_config.monster_hp_rate)/100;
 			}
