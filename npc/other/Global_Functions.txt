@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@ function	script	F_ClearJobVar	{
 	// 2-2 Jobs ------------------------------
 	set ROGUE_Q,0; set ROGUE_Q2,0;
 	set ALCH_Q,0; set ALCH_Q2,0;
+	set MONK_Q,0;
 	return;
 }
 
