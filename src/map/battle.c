@@ -2911,7 +2911,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 				cri <<= 1;
 		}
 
-		if(skill_num == SN_SHARPSHOOTING && rand()%100 < 50)
+		if(skill_num == SN_SHARPSHOOTING)
 			cri += 200;
 	}
 
