@@ -1,8 +1,8 @@
 all: char-server_sql
 sql: char-server_sql
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/malloc.o ../common/showmsg.o
-COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/db.h ../common/malloc.h ../common/showmsg.h
+COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/malloc.o ../common/showmsg.o ../common/utils.o
+COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/db.h ../common/malloc.h ../common/showmsg.h ../common/utils.h
 
 char-server_sql: char.o inter.o int_party.o int_guild.o int_storage.o int_pet.o strlib.o itemdb.o $(COMMON_OBJ)
 	$(CC) -o ../../$@ $^ $(LIB_S)

@@ -885,7 +885,7 @@ int mmo_char_sql_init(void) {
 	// for char-server session only
 	mysql_init(&mysql_handle);
 	printf("Connect DB server....(char server)\n");
-	if(!mysql_real_connect(&mysql_handle, char_server_ip, char_server_id, char_server_pw, char_server_db ,char_server_port, (char *)NULL, 0)) {
+	if(!mysql_real_connect(&mysql_handle, char_server_ip, char_server_id, char_server_pw, char_server_db ,char_server_port, (char *)NULL, CLIENT_MULTI_STATEMENTS)) {
 		// SQL connection pointer check
 		printf("%s\n",mysql_error(&mysql_handle));
 		exit(1);

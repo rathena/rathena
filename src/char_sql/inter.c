@@ -265,7 +265,7 @@ int inter_init(const char *file)
 	mysql_init(&mysql_handle);
 	printf("Connect Character DB server.... (Character Server)\n");
 	if(!mysql_real_connect(&mysql_handle, char_server_ip, char_server_id, char_server_pw,
-		char_server_db ,char_server_port, (char *)NULL, 0)) {
+		char_server_db ,char_server_port, (char *)NULL, CLIENT_MULTI_STATEMENTS)) {
 			//pointer check
 			printf("%s\n",mysql_error(&mysql_handle));
 			exit(1);

@@ -111,16 +111,15 @@ void str_lower(char *name)
 // Allocate a StringBuf  [MouseJstr]
 struct StringBuf * StringBuf_Malloc() 
 {
-	StringBuf * ret = (struct StringBuf *) malloc(sizeof(struct StringBuf));
+	struct StringBuf * ret = (struct StringBuf *) malloc(sizeof(struct StringBuf));
 	StringBuf_Init(ret);
 	return ret;
 }
 
 // Initialize a previously allocated StringBuf [MouseJstr]
-void StringBuf_Init(struct StringBuf * sbuf) 
+void StringBuf_Init(struct StringBuf * sbuf)  {
 	sbuf->max_ = 1024;
 	sbuf->ptr_ = sbuf->buf_ = (char *) malloc(sbuf->max_ + 1);
-{
 }
 
 // printf into a StringBuf, moving the pointer [MouseJstr]
@@ -177,12 +176,12 @@ void StringBuf_Destroy(struct StringBuf *sbuf)
 void StringBuf_Free(struct StringBuf *sbuf) 
 {
 	StringBuf_Destroy(sbuf);
-	free(sbuf)buf;
+	free(sbuf);
 }
 
 // Return the built string from the StringBuf [MouseJstr]
 char * StringBuf_Value(struct StringBuf *sbuf) 
 {
 	*sbuf->ptr_ = '\0';
-	return sbuf->base_;
+	return sbuf->buf_;
 }
