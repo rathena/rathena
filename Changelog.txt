@@ -1,6 +1,8 @@
 Date	Added
 
 02/05
+        * optimizing OnTouch event name generation [Shinomori]
+        * fixing Celests Sharp Shooting [Shinomori]
         * Updated Sharp Shooting AoE code, thanks to Neodis / k-Athena [celest]
           - Update: Adapt jA's path_search algorithm and removed the need of struct
             'dev' in map_session_data

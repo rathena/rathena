@@ -69,23 +69,25 @@ int npc_enable_sub( struct block_list *bl, va_list ap )
 {
 	struct map_session_data *sd;
 	struct npc_data *nd;
-	char *name=(char *)aCallocA(50,sizeof(char));
+	//char *name=(char *)aCallocA(50,sizeof(char)); // fixed [Shinomori]
 
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
 	nullpo_retr(0, nd=va_arg(ap,struct npc_data *));
 	if(bl->type == BL_PC && (sd=(struct map_session_data *)bl)){
+		char name[50]; // need 24 + 9 for the "::OnTouch"
 
 		if (nd->flag&1)	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
 			return 1;
 
-		memcpy(name,nd->name,50);
 		if(sd->areanpc_id==nd->bl.id)
 			return 1;
 		sd->areanpc_id=nd->bl.id;
-		npc_event(sd,strcat(name,"::OnTouch"),0);
+
+		sprintf(name,"%s::OnTouch", nd->name);
+		npc_event(sd,name,0);
 	}
-	aFree(name);
+	//aFree(name);
 	return 0;
 }
 int npc_enable(const char *name,int flag)
@@ -825,15 +827,18 @@ int npc_touch_areanpc(struct map_session_data *sd,int m,int x,int y)
 		break;
 	case SCRIPT:
 		{
-			char *name=(char *)aCallocA(50,sizeof(char));
+			//char *name=(char *)aCallocA(50,sizeof(char));  // fixed [Shinomori]
+			char name[50]; // need 24 max + 9 for "::OnTouch"
 
-			memcpy(name,map[m].npc[i]->name,50);
-			if(sd->areanpc_id==map[m].npc[i]->bl.id)
+			if(sd->areanpc_id == map[m].npc[i]->bl.id)
 				return 1;
-			sd->areanpc_id=map[m].npc[i]->bl.id;
-			if(npc_event(sd,strcat(name,"::OnTouch"),0)>0)
+			sd->areanpc_id = map[m].npc[i]->bl.id;
+
+			sprintf(name,"%s::OnTouch", map[m].npc[i]->name);
+
+			if( npc_event(sd,name,0)>0 )
 				npc_click(sd,map[m].npc[i]->bl.id);
-			aFree(name);
+			//aFree(name);
 			break;
 		}
 	}

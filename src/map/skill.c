@@ -2310,7 +2310,7 @@ int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int s
 			}
 			dy = (y1 - y0);
 			weight = dx > abs(dy) ? dx : abs(y1 - y0);
-			while ((x0 != x1 || y0 != y1) && num < skill_get_range(skillid)) {
+			while ((x0 != x1 || y0 != y1) && num < skill_get_range(skillid,skilllv)) { // fixed [Shinomori]
 				wx += dx;
 				wy += dy;
 				if (wx >= weight) {
