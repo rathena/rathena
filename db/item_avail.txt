@@ -5,5 +5,5 @@
 661,7047	//Flapping_Apron,Alice's_Apron
 9026,720	//Alice_Egg,Aquamarine
 9027,723	//Zherlthsh_Egg,Ruby
-2237,2240	//Bandit_Beard",2240 BEARD
-
+2237,2241	//Bandit_Beard",2240 BEARD
+2240,2241
