@@ -99,6 +99,7 @@ int min_level_to_connect = 0; // minimum level of player/GM (0: player, 1-99: gm
 int check_ip_flag = 1; // It's to check IP of a player between login-server and char-server (part of anti-hacking system)
 int check_client_version = 0; //Client version check ON/OFF .. (sirius)
 int client_version_to_connect = 20; //Client version needed to connect ..(sirius)
+int register_users_online = 1;
 
 MYSQL mysql_handle;
 
@@ -154,6 +155,8 @@ struct dbt *online_db;
 //-----------------------------------------------------
 
 void add_online_user(int account_id) {
+    if(register_users_online <= 0)
+	return;
     int *p;
     p = (int*)aMalloc(sizeof(int));
     if (p == NULL) {
@@ -165,6 +168,8 @@ void add_online_user(int account_id) {
 }
 
 int is_user_online(int account_id) {
+    if(register_users_online <= 0)
+	return 0;
     int *p;
 
 	p = (int*)numdb_search(online_db, account_id);
@@ -175,6 +180,8 @@ int is_user_online(int account_id) {
 }
 
 void remove_online_user(int account_id) {
+    if(register_users_online <= 0)
+	return;
     int *p;
     p = (int*)numdb_erase(online_db,account_id);
     aFree(p);
@@ -600,7 +607,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 		return 2; // 2 = This ID is expired
 	}
 
-	if ( is_user_online(atol(sql_row[0])) ) {
+	if ( is_user_online(atol(sql_row[0])) && register_users_online > 0) {
 	        printf("User [%s] is already online - Rejected.\n",sql_row[1]);
 #ifndef TWILIGHT
 		return 3; // Rejected
@@ -1735,6 +1742,9 @@ int login_config_read(const char *cfgName){
 			    if(strcmpi(w2,"off") == 0 || strcmpi(w2,"no") == 0 )
 			        case_sensitive = 0;
         }
+		else if(strcmpi(w1, "register_users_online") == 0) {
+			register_users_online = config_switch(w2);
+		}
  	}
 	fclose(fp);
 	printf ("End reading configuration...\n");
