@@ -1,4 +1,6 @@
 Date	Added
+12/21
+	* Removed conf/npcs_list.txt, and placed it in npc/npcs_athena.conf
 
 12/20
 	* Fixed npc_parse_mob with large/tiny monsters causing
