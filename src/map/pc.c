@@ -797,7 +797,7 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	//スパノビ用死にカウンターのスクリプト変数からの読み出しとsdへのセット
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
 
-	if (night_flag == 1) {
+	if (night_flag == 1 && !map[sd->bl.m].flag.indoors) {
 		char tmpstr[1024];
 		strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
@@ -5208,6 +5208,9 @@ int pc_readparam(struct map_session_data *sd,int type)
 		else
 		val= sd->status.class;
 		break;
+	case SP_BASEJOB:
+		val= s_class.job;
+		break;
 	case SP_UPPER:
 		val= s_class.upper;
 		break;
@@ -7184,7 +7187,7 @@ int map_night_timer(int tid, unsigned int tick, int id, int data) { // by [yor]
 			strcpy(tmpstr, msg_txt(503)); // The night has fallen...
 			night_flag = 1; // 0=day, 1=night [Yor]
 			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+				if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth  && !map[pl_sd->bl.m].flag.indoors) {
 					pl_sd->opt2 |= STATE_BLIND;
 					clif_changeoption(&pl_sd->bl);
 					clif_wis_message(pl_sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);

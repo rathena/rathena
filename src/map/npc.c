@@ -2099,7 +2099,10 @@ static int npc_parse_mapflag(char *w1,char *w2,char *w3,char *w4)
 	}	
 	else if (strcmpi(w3,"rain")==0) { // rain [Valaris]
 		map[m].flag.rain=1;
-	}	
+	}
+	else if (strcmpi(w3,"indoors")==0) { // celest
+		map[m].flag.indoors=1;
+	}
 	
 	return 0;
 }

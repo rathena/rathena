@@ -4498,7 +4498,7 @@ int atcommand_night(
 	if (night_flag != 1) {
 		night_flag = 1; // 0=day, 1=night [Yor]
 		for(i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth) {
+			if (session[i] && (pl_sd = session[i]->session_data) && pl_sd->state.auth && !map[sd->bl.m].flag.indoors) {
 				pl_sd->opt2 |= STATE_BLIND;
 				clif_changeoption(&pl_sd->bl);
 				clif_displaymessage(pl_sd->fd, msg_table[59]); // Night has fallen.

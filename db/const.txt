@@ -99,6 +99,7 @@ Hp		5	1
 MaxHp		6	1
 Sp		7	1
 MaxSp		8	1
+BaseJob		119	1
 
 bMaxHP		6
 bMaxSP		8

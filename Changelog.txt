@@ -6,6 +6,11 @@ Date	Added
 	    at first it'll delete common items then, if necessary, delete the rest items but upgraded/named/with cards. [Lupus]
         * Added checks for Perfect hiding [celest]
         * Modified level 0 skill check to allow auto blitz beat and steal. [celest]
+        * Added constant BaseJob. [celest] Usage: For example, instead of
+             If (Class==12) || (Class==4012) || (Class==4035)
+          you can use
+             If (BaseJob==12) or If (BaseJob==Job_Assassin)
+        * Added 'indoors' mapflag : When in-doors players will not be affected by Night [celest]
 
 11/15
 	* Added a Database Changelog.txt File, use it for any changes inside the db folder. [shadowlady]
