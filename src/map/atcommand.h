@@ -120,11 +120,7 @@ enum AtCommandType {
 	AtCommand_ReloadItemDB,
 	AtCommand_ReloadMobDB,
 	AtCommand_ReloadSkillDB,
-#ifndef TXT_ONLY
-	AtCommand_Rehash,
-#else /* TXT_ONLY */
 	AtCommand_ReloadScript,
-#endif /* TXT_ONLY */
 	AtCommand_ReloadGMDB,
 	AtCommand_MapInfo,
 	AtCommand_Dye,
@@ -217,6 +213,7 @@ enum AtCommandType {
 	AtCommand_Divorce, // by MouseJstr
 	AtCommand_Rings, // by MouseJstr
 	AtCommand_Grind, // by MouseJstr
+	AtCommand_Grind2, // by MouseJstr
 
 	AtCommand_JumpToId, // by Dino9021
 	AtCommand_JumpToId2, // by Dino9021

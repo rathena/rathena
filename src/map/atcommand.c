@@ -226,6 +226,7 @@ ACMD_FUNC(divorce); // by MouseJstr
 ACMD_FUNC(rings); // by MouseJstr
 
 ACMD_FUNC(grind); // by MouseJstr
+ACMD_FUNC(grind2); // by MouseJstr
 
 ACMD_FUNC(jumptoid); // by Dino9021
 ACMD_FUNC(jumptoid2); // by Dino9021
@@ -482,7 +483,8 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Marry,		"@marry",	40, atcommand_marry }, // [MouseJstr]
 	{ AtCommand_Divorce,		"@divorce",	40, atcommand_divorce }, // [MouseJstr]
 	{ AtCommand_Rings,		"@rings",	40, atcommand_rings }, // [MouseJstr]
-	{ AtCommand_Grind,		"@grind",	40, atcommand_grind }, // [MouseJstr]
+	{ AtCommand_Grind,		"@grind",	99, atcommand_grind }, // [MouseJstr]
+	{ AtCommand_Grind2,		"@grind2",	99, atcommand_grind2 }, // [MouseJstr]
 
 	{ AtCommand_JumpToId,       "@jumptoid",  20, atcommand_jumptoid }, // [Dino9021]
 	{ AtCommand_JumpToId,       "@warptoid",  20, atcommand_jumptoid }, // [Dino9021]
@@ -7315,6 +7317,26 @@ atcommand_grind(const int fd, struct map_session_data* sd,
 
 	return 0;
 }
+
+/*==========================================
+ * @grind2 by [MouseJstr]
+ *------------------------------------------
+ */
+int
+atcommand_grind2(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int i, x, y, id;
+
+	for (i =  1000; i <2000; i++) {
+		x = sd->bl.x + (rand() % 10 - 5);
+		y = sd->bl.y + (rand() % 10 - 5);
+		id = mob_once_spawn(sd, "this", x, y, "--ja--", i, 1, "");
+	}
+
+	return 0;
+}
+
 
 /*==========================================
  * It is made to rain.

@@ -1040,8 +1040,10 @@ int map_quit(struct map_session_data *sd) {
 		sd->alive_timer = 0;
 	}
 
-	if( sd->npc_stackbuf && sd->npc_stackbuf != NULL)
+	if( sd->npc_stackbuf && sd->npc_stackbuf != NULL) {
 		free( sd->npc_stackbuf );
+		sd->npc_stackbuf = NULL;
+	}
 
 	map_delblock(&sd->bl);
 
