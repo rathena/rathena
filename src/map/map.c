@@ -1655,7 +1655,6 @@ static int map_readmap(int m,char *fn, char *alias) {
  *------------------------------------------
  */
 int map_readallmap(void) {
-	ShowStatus("Loading Maps...\n");
 	int i,maps_removed=0;
 	char fn[256];
 	char c = '-';
@@ -1664,6 +1663,8 @@ int map_readallmap(void) {
 #ifdef USE_AFM
 	FILE *afm_file;
 #endif
+
+	ShowStatus("Loading Maps...\n");
 
 	// 先に全部のャbプの存在を確認
 	for(i=0;i<map_num;i++){
@@ -2287,7 +2288,6 @@ void map_versionscreen(int flag) {
  *------------------------------------------------------
  */
 int do_init(int argc, char *argv[]) {
-	chrif_connected = 0;
 	int i;
 	FILE *data_conf;
 	char line[1024], w1[1024], w2[1024];
@@ -2303,6 +2303,9 @@ int do_init(int argc, char *argv[]) {
 	unsigned char *SCRIPT_CONF_NAME = "conf/script_athena.conf";
 	unsigned char *MSG_CONF_NAME = "conf/msg_athena.conf";
 	unsigned char *GRF_PATH_FILENAME = "conf/grf-files.txt";
+
+	chrif_connected = 0;
+
 	srand(gettick());
 
 	for (i = 1; i < argc ; i++) {

@@ -1,5 +1,6 @@
 Date	Added
 12/15
+	* Fixed more compile errors gcc 2.95 [MouseJstr]
         * Removed log files from svn... they will be created when
           needed [MouseJstr]
         * Removed unused var in src/map/map.c:107 [MouseJstr]

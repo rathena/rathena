@@ -1,7 +1,7 @@
 all: login-converter
 sql: login-converter
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o
+COMMON_OBJ = ../../common/core.o ../../common/socket.o ../../common/timer.o ../../common/grfio.o ../../common/db.o ../../common/lock.o ../../common/nullpo.o ../../common/malloc.o ../../common/showmsg.o
 
 COMMON_H = ../../common/core.h ../../common/socket.h ../../common/timer.h ../../common/mmo.h ../../common/version.h ../../common/db.h ../../common/malloc.h
 

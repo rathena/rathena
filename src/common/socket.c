@@ -105,16 +105,6 @@ static int recv_to_fifo(int fd)
 		session[fd]->rdata_size+=len;
 	} else if(len<=0){
 		// value of connection is not necessary the same
-//		if (fd == 4)			// Removed [Yor]
-//			printf("Char-Server Has Disconnected.\n");
-//		else if (fd == 5)		// Removed [Yor]
-//			printf("Attempt To Log In Successful.\n");
-//		else if (fd == 7)		// Removed [Yor]
-//			printf("Char-Server Has Disconnected.\n");
-//		else if (fd == 8)		// Removed [Valaris]
-//			printf("%s has logged off your server.\n",RFIFOP(fd,6));	// Removed [Valaris]
-
-//		else if (fd != 8)	// [Valaris]
 //		printf("set eof : connection #%d\n", fd);
 		session[fd]->eof=1;
 	}

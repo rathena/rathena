@@ -1578,10 +1578,11 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if(sc_data[SC_AUTOGUARD].timer != -1 && damage > 0 && flag&BF_WEAPON) {
 			if(rand()%100 < sc_data[SC_AUTOGUARD].val2) {
+				int delay;
+
 				damage = 0;
 				clif_skill_nodamage(bl,bl,CR_AUTOGUARD,sc_data[SC_AUTOGUARD].val1,1);
 				// different delay depending on skill level [celest]
-				int delay;
 				if (sc_data[SC_AUTOGUARD].val1 <= 5)
 					delay = 300;
 				else if (sc_data[SC_AUTOGUARD].val1 > 5 && sc_data[SC_AUTOGUARD].val1 <= 9)
