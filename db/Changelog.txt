@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/27
+	* Added all released cards into monsters drops and OCA [Lupus]
+	* Minor Items, Monsters fixes [Lupus]
 03/26
 	* Fixed some incorrect create arrow entries, thanks to boredpoo
 

@@ -1,5 +1,7 @@
 Date	Added
 
+03/27
+	* Added all released cards into monsters drops and Old Card Album [Lupus]
 03/25
 	* Some minor changes to Sacrifice in battle.c [celest]
 	* Set the Emperium to be immune to Sacrifice [celest]
