@@ -18,7 +18,7 @@ yuno.gat,246,51,4	script	Old Blacksmith	813,{
  mes "Well then my good man!";
  mes "What can I do for you?";
  next;
- menu "Give me the ears of a devil!",M_EOD,"Give me the ears of an angel!",M_EOA,"Nothing, thanks",M_EXIT;
+ menu "Give me the Ears of Devil!",M_EOD,"Give me the Ears of Angel!",M_EOA,"Nothing, thanks",M_EXIT;
 
 M_EOD:
  mes "[Old Blacksmith]";
@@ -27,12 +27,12 @@ M_EOD:
  next;
  menu "Dont care, make me the Item!",-,"What are the requirements?",M_EODREQ,"Nothing",M_EXIT;
 
- if ((countitem(5038) < 1) || (countitem(2286) < 1) || (Zeny < 20000)) GOTO L_NOITEM_EOD;//Items: Deviruchi Hat, Elven Ears,
+ if ((countitem(2255) < 1) || (countitem(2286) < 1) || (Zeny < 20000)) GOTO L_NOITEM_EOD;//Items: Evil Wing, Elven Ears,
  mes "[Old Blacksmith]";
  mes "Wow, never thought a little fella like you could get tha.t";
  mes "Bwahaha, ok.";
  next;
- delitem 5038,1;//Items: Deviruchi Hat,
+ delitem 2255,1;//Items: Evil Wing,
  delitem 2286,1;//Items: Elven Ears,
  set Zeny,Zeny-20000;
  getitem 5068,1;//Items: Ears Of Demon,
@@ -48,7 +48,7 @@ L_NOITEM_EOD:
 M_EODREQ:
  mes "[Old Blacksmith]";
  mes "Well, let's see...";
- mes "I need something for the evil, that be a Deviruchi Cap,";
+ mes "I need something for the evil, that be an Evil Wing,";
  mes "I also need the ears for the base of it, Elven Ears would be OK,";
  mes "Last of all, I need 20,000 Zeny for me troubles.";
  next;

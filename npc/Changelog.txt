@@ -31,6 +31,7 @@ Other Ppl
 Date		Added
 ======
 12/08
+	* Changed ingredients of Ears of Demon Quest: Deviruchi Hat -> Evil Wing [Lupus]
 	* Added translated shop names for the Extended Shop, I'unno who made it. o.O; [Mass Zero]
         * Changed Lord of Death spawn intervals to 90 minutes based on jRO [celest]
         * Added nomemo flags for Niflheim and some maps [celest]
