@@ -3226,8 +3226,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 				break;
 			case MC_CARTREVOLUTION:	// カートレボリューション
 				if(sd->cart_max_weight > 0 && sd->cart_weight > 0) {
-					damage = ( damage*(150 + sd->cart_weight/80) )/100;	//fixed CARTREV damage [Lupus]
-					damage2 = ( damage2*(150 + sd->cart_weight/80) )/100;
+					damage = ( damage*(150 + sd->cart_weight/800) )/100;	//fixed CARTREV damage [Lupus] // should be 800, not 80... weight is *10 ^_- [celest]
+					damage2 = ( damage2*(150 + sd->cart_weight/800) )/100;
 					//damage = (damage*(150 + pc_checkskill(sd,BS_WEAPONRESEARCH) + (sd->cart_weight*100/sd->cart_max_weight) ) )/100;
 					//damage2 = (damage2*(150 + pc_checkskill(sd,BS_WEAPONRESEARCH) + (sd->cart_weight*100/sd->cart_max_weight) ) )/100;
 				}

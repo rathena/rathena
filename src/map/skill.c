@@ -4410,13 +4410,13 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			   (su->group->unit_id != 0x92)){ //?‚ðŽæ‚è•Ô‚·
 				if(sd){
 					if(battle_config.skill_removetrap_type == 1){
-					for(i=0;i<10;i++) {
-						if(skill_db[su->group->skill_id].itemid[i] > 0){
-							memset(&item_tmp,0,sizeof(item_tmp));
-							item_tmp.nameid = skill_db[su->group->skill_id].itemid[i];
-							item_tmp.identify = 1;
-							if(item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,skill_db[su->group->skill_id].amount[i]))){
-								clif_additem(sd,0,0,flag);
+						for(i=0;i<10;i++) {
+							if(skill_db[su->group->skill_id].itemid[i] > 0){
+								memset(&item_tmp,0,sizeof(item_tmp));
+								item_tmp.nameid = skill_db[su->group->skill_id].itemid[i];
+								item_tmp.identify = 1;
+								if(item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,skill_db[su->group->skill_id].amount[i]))){
+									clif_additem(sd,0,0,flag);
 									map_addflooritem(&item_tmp,skill_db[su->group->skill_id].amount[i],sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 								}
 							}
@@ -7096,7 +7096,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case DC_THROWARROW:
 	case SN_SHARPSHOOTING:
 	case CG_ARROWVULCAN:
-		if(sd->equip_index[10] <= 0) {
+		if(sd->equip_index[10] < 0) {
 			clif_arrow_fail(sd,0);
 			return 0;
 		}
@@ -7493,11 +7493,12 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 			struct guild *g;
 			if (!sd->status.guild_id)
 				return 0;
-			if (!(g = guild_search(sd->status.guild_id)))
+			if ((g = guild_search(sd->status.guild_id)) == NULL)
 				return 0;
 			if (strcmp(sd->status.name,g->master))
 				return 0;
-			if (skill_lv <= 0) skill_lv = 1;
+			skill_lv = guild_checkskill(g, skill_num);
+			if (skill_lv <= 0) return 0;
 		}
 		break;
 	}

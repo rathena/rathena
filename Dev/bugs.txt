@@ -54,20 +54,16 @@ Progess:	0%
 Problem:	Sage's Area Skills (Delu.,Vulcano, etc) if casted on the same area (or overlap each other) instantly reboots server. use @gvgon when test. Don't test it towns
 Assigned:	N/A
 Progess:	0%
+Notes:          Never heard of this being reported again... fixed maybe? [Celest]
 
 Problem:        Changing email and Broadcast both use the same packets / Packet 0x3000 assigned to changing email instead of broadcasting?
 Notes:          Refer to char.c line 2272 and line 2416, intif.c line 107, chrif.c line 377
 Assigned:       N/A
 Progress:       0%
 
-Problem:	Sanctuary heal emp during WoE?
-Assigned:       N/A
-Progress:       0%
-Note:           Isn't sanctuary supposed to be able to heal the emperium? [celest]
-
 Problem:	AFM Maps not loading coords correctly, players appearing outside boundaries of the maps.
 Assigned:	N/A
-Progress:	0%
+Progress:	100% (Fixed, i hope. ;p [Celest])
 
 Problem:	Wierd login-server bug on sql, it displays that the server is full when map-server crashes, has something to do with anti double login feature?
 Assigned:	N/A
@@ -78,8 +74,8 @@ Assigned:	MC Cameri
 Progress:	100%
 
 Problem:	Storm Gust doesn't freeze mobs / players
-Assigned:	N/A
-Progress:	0%
+Assigned:	Celest
+Progress:	100% (Should be working now.)
 
 Problem:	MVP cast spells w/o showing "prepare cast line"
 Assigned:	N/A
@@ -88,7 +84,8 @@ Progress:	0%
 Problem:	Line 130 in item_db.txt is giving error.
 Note:		This is the whole line: 658,Tribal_Solidarity,Tribal Solidarity,2,1000,0,500,,,,,10477567,2,,,,,{ guildgetexp rand(1,10000); },{}
 Assigned:	N/A
-Progress:	0%
+Progress:	-
+Notes:          It's a new script command, you need to compile with an updated script.c. [celest]
 
 Problem:	Item duping bug in storage...
 Assigned:	N/A
