@@ -1,5 +1,6 @@
 Date	Added
 11/22
+	* Added a few free()'s so that I am sure it freed the allocated memory (char & login) [Codemaster]
 	* Changed monsters_ignore_gm option to a level value. [Valaris]
 	  (accounts greater than or equal to this setting won't be attacked by aggressives.)
 	* Fixed mapflag #s and constants for setmapflag and remove mapflag. [Valaris]
