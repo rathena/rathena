@@ -610,7 +610,8 @@ int pet_remove_map(struct map_session_data *sd)
 			pet_hungry_timer_delete(sd);
 		clif_clearchar_area(&sd->pd->bl,0);
 		map_delblock(&sd->pd->bl);
-		free(sd->pd->lootitem);
+		if (sd->pd->lootitem)
+			aFree(sd->pd->lootitem);
 		map_deliddb(&sd->pd->bl);
 	}
 	return 0;

@@ -1,6 +1,10 @@
 Date	Added
 
 03/18
+        * Fixed a crash when freeing memory of pets [celest]
+        * Added Cygwin support to the -DDUMPSTACK option, and changed its format
+          to "<server type><number>.stackdump", thanks to Ser [celest]
+        * Removed duplicate fopen in login_log [celest]
         * Don't log SQL char actions if log_char is not enabled in char_athena.conf
           [celest]
         * Updated shop_exp's calculation to give more exp, thanks to tcdiem [celest]

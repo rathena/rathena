@@ -26,6 +26,10 @@
 #include "memwatch.h"
 #endif
 
+char server_type[24];
+int runflag = 1;
+unsigned long ticks = 0; // by MC Cameri
+char pid_file[256];
 static void (*term_func)(void)=NULL;
 
 /*======================================
@@ -100,42 +104,58 @@ static void sig_proc(int sn)
  *	Dumps the stack using glibc's backtrace
  *-----------------------------------------
  */
-#ifdef CYGWIN 
-	#define sig_dump SIG_DFL	// allow cygwin's default dumper utility to handle this
-#else
-static void sig_dump(int sn)
-{
-	#ifdef DUMPSTACK
-		FILE *fp;
-		void* array[20];
-
-		char **stack;
-		size_t size;		
-		int no = 0;
-		char tmp[256];
-
-		// search for a usable filename
-		do {
-			sprintf(tmp,"log/stackdump_%04d.txt", ++no);
-		} while((fp = fopen(tmp,"r")) && (fclose(fp), no < 9999));
-		// dump the trace into the file
-		if ((fp = fopen (tmp,"w")) != NULL) {
-
-			fprintf(fp,"Exception: %s\n", strsignal(sn));
-			fprintf(fp,"Stack trace:\n");
-			size = backtrace (array, 20);
-			stack = backtrace_symbols (array, size);
-			for (no = 0; no < size; no++) {
-				fprintf(fp, "%s\n", stack[no]);
-			}
-			fprintf(fp,"End of stack trace\n");
-
-			fclose(fp);
-			aFree(stack);
-		}
+#ifndef DUMPSTACK
+	#define sig_dump SIG_DFL
+#else	
+	#ifdef CYGWIN
+		#define FOPEN_ freopen
+		extern void cygwin_stackdump();
+	#else
+		#define FOPEN_(fn,m,s) fopen(fn,m)
 	#endif
-	//cygwin_stackdump ();
-	// When pass the signal to the system's default handler
+extern const char *strsignal(int);
+void sig_dump(int sn)
+{	
+	FILE *fp;
+	char file[256];
+	int no = 0;
+	
+	#ifndef CYGWIN
+		void* array[20];
+		char **stack;
+		size_t size;
+	#endif
+
+	// search for a usable filename
+	do {
+		sprintf (file, "log/%s%04d.stackdump", server_type, ++no);
+	} while((fp = fopen(file,"r")) && (fclose(fp), no < 9999));
+	// dump the trace into the file
+
+	if ((fp = FOPEN_(file, "w", stderr)) != NULL) {
+		printf ("Dumping stack... ");
+		fprintf(fp, "Exception: %s \n", strsignal(sn));
+		fflush (fp);
+
+
+	#ifdef CYGWIN		
+		cygwin_stackdump ();
+	#else
+		fprintf(fp, "Stack trace:\n");
+		size = backtrace (array, 20);
+		stack = backtrace_symbols (array, size);
+		for (no = 0; no < size; no++) {
+			fprintf(fp, "%s\n", stack[no]);
+		}
+		fprintf(fp,"End of stack trace\n");
+		aFree(stack);
+	#endif
+
+		printf ("Done.\n");
+		fflush(stdout);
+		fclose(fp);		
+	}
+	// Pass the signal to the system's default handler
 	compat_signal(sn, SIG_DFL);
 	raise(sn);
 }
@@ -201,11 +221,6 @@ static void display_title(void)
  *	CORE : MAINROUTINE
  *--------------------------------------
  */
-
-int runflag = 1;
-unsigned long ticks = 0; // by MC Cameri
-char pid_file[256];
-char server_type[24];
 
 void pid_delete(void) {
 	unlink(pid_file);
@@ -289,7 +304,7 @@ int main(int argc,char **argv)
 
 	display_title();
 
-#ifndef BCHECK
+#ifdef USE_MEMMGR
 	do_init_memmgr(argv[0]); // ˆê”ÔÅ‰‚ÉŽÀs‚·‚é•K—v‚ª‚ ‚é
 #endif
 

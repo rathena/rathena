@@ -189,7 +189,6 @@ int login_log(char *fmt, ...) {
 		if(!log_fp)
 			log_fp = fopen(login_log_filename, "a");
 
-		log_fp = fopen(login_log_filename, "a");
 		if (log_fp) {
 			if (fmt[0] == '\0') // jump a line if no message
 				fprintf(log_fp, RETCODE);
