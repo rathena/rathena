@@ -5,6 +5,12 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+01/07
+        * Added midas' fix for Hammerfall and Adrenaline Rush [celest]
+        * Added 'bDelayrate' and changed Phen card, Marduk Card and Berzebub Card's
+          effects to use this instead of bCastrate (which was reducing casting time,
+          not delay time) [celest]
+
 01/05
         * Added DracoRPG's changes [celest]
           - changed Gungnir to wind element

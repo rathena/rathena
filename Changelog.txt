@@ -1,5 +1,9 @@
 Date	Added
 01/07
+        * Added 'bDelayrate' and changed Phen card, Marduk Card and Berzebub Card's
+          effects to use this instead of bCastrate (which was reducing casting time,
+          not delay time) [celest]
+        * Some tidying up of skill_castfix and skill_delayfix [celest]
         * Added Filougarou's fix for Bowling Bash causing it to only display damage, 
           but doesn't do any - thanks! [celest]
         * Set delay_dependon_dex in battle_athena to 'no' by default [celest]

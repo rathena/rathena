@@ -1097,7 +1097,7 @@
 4074,BigFoot_Card,BigFoot Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bSubRace,4,30; }
 4075,Argos_Card,Argos Card,6,20,0,10,,,,,,,32,,,,{},{ bonus2 bResEff,Eff_Stone,2000; bonus bDef,1; }
 4076,Magnolia_Card,Magnolia Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddEff,Eff_Curse,500; bonus bBaseAtk,5; }
-4077,Phen_Card,Phen Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bNoCastCancel,0; bonus bCastrate,25; }
+4077,Phen_Card,Phen Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bNoCastCancel,0; bonus bDelayrate,25; }
 4078,Savage_Card,Savage Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bVit,3; }
 4079,Mantis_Card,Mantis Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bStr,3; }
 4080,Flora_Card,Flora Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace,5,20; }
@@ -1132,7 +1132,7 @@
 4109,Jakk_Card,Jakk Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bSubEle,3,30; bonus bFlee,5; }
 4110,Ghoul_Card,Ghoul Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bResEff,Eff_Poison,2000; bonus bDef,1; }
 4111,Strouf_Card,Strouf Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bAddRace,6,20; }
-4112,Marduk_Card,Marduk Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bResEff,Eff_Silence,10000; }
+4112,Marduk_Card,Marduk Card,6,20,0,10,,,,,,,769,,,,{},{ bonus2 bResEff,Eff_Silence,10000; bonus bDelayrate,-5; }
 4113,Marionette_Card,Marionette Card,6,20,0,10,,,,,,,4,,,,{},{ bonus2 bSubEle,8,30; bonus bFlee,5; }
 4114,Argiope_Card,Argiope Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bDefEle,5; bonus bDef,1; }
 4115,Hunter_Fly_Card,Hunter Fly Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bHpDrainRate,3,15; }
@@ -1165,7 +1165,7 @@
 4142,Doppelganger_Card,Doppelganger Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAspdRate,15; }
 4143,Orc_Hero_Card,Orc Hero Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bVit,3; bonus2 bResEff,Eff_Stan,10000; }
 4144,Osiris_Card,Osiris Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bRestartFullRecover,0; }
-4145,Berzebub_Card,Berzebub Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bCastrate,-30; bonus bMaxSPrate,-15; bonus bMaxHPrate,-5; }
+4145,Berzebub_Card,Berzebub Card,6,20,0,10,,,,,,,136,,,,{},{ bonus bDelayrate,-30; bonus bMaxSPrate,-15; bonus bMaxHPrate,-5; }
 4146,Maya_Card,Maya Card,6,20,0,10,,,,,,,32,,,,{},{ bonus bMagicDamageReturn,30; }
 4147,Baphomet_Card,Baphomet Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bHit,-10; bonus bSplashRange,1; }
 4148,Pharaoh_Card,Pharaoh Card,6,20,0,10,,,,,,,769,,,,{},{ bonus bUseSPrate,-30; }
@@ -1181,7 +1181,7 @@
 4158,Dark_Priest_Card,Dark Priest Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bUseSPrate,-15; }
 4159,Punk_Card,Punk Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bUseSPrate,-5; }
 4160,Zherlthsh_Card,Zherlthsh Card,6,20,0,10,,,,,,,4,,,,{},{ bonus bUseSPrate,-10; }
-4161,Mysteltainn_Card,Mysteltainn Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bAtk,30; bonus bMaxHPrate,-22; bonus bCastrate,-10; }
+4161,Mysteltainn_Card,Mysteltainn Card,6,20,0,10,,,,,,,64,,,,{},{ bonus bAtk,30; bonus bMaxHPrate,-22; bonus bDelayrate,-10; }
 4162,Tirfing_Card,Tirfing Card,6,20,0,10,,,,,,,2,,,,{},{ bonus bAgi,3; bonus bFlee,10; }
 4163,Executioner_Card,Executioner Card,6,20,0,10,,,,,,,2,,,,{},{ bonus2 bRandomAttackIncrease,300, 4; }
 4164,Anolian_Card,Anolian Card,6,20,0,10,,,,,,,16,,,,{},{ bonus bStr,2; }

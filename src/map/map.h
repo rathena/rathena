@@ -240,7 +240,7 @@ struct map_session_data {
 	int watk,watk2,atkmods[3];
 	int def,def2,mdef,mdef2,critical,matk1,matk2;
 	int atk_ele,def_ele,star,overrefine;
-	int castrate,hprate,sprate,dsprate;
+	int castrate,delayrate,hprate,sprate,dsprate;
 	int addele[10],addrace[12],addsize[3],subele[10],subrace[12];
 	int addeff[10],addeff2[10],reseff[10];
 	int watk_,watk_2,atkmods_[3],addele_[10],addrace_[12],addsize_[3];	//ìÒìÅó¨ÇÃÇΩÇﬂÇ…í«â¡
@@ -616,11 +616,11 @@ enum {
 	SP_DISGUISE,SP_CLASSCHANGE, // 1077-1078
 	SP_HP_DRAIN_VALUE,SP_SP_DRAIN_VALUE, // 1079-1080
 	SP_WEAPON_ATK,SP_WEAPON_ATK_RATE, // 1081-1082
+	SP_DELAYRATE,	// 1083
 
 	SP_RESTART_FULL_RECORVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
-	SP_NO_CASTCANCEL2,SP_INFINITE_ENDURE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, 
-	SP_UNBREAKABLE_SHIELD, // 2006-2011
-	SP_LONG_ATK_RATE // 2012 - celest
+	SP_NO_CASTCANCEL2,SP_INFINITE_ENDURE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
+	SP_UNBREAKABLE_SHIELD, SP_LONG_ATK_RATE // 2011-2012
 };
 
 enum {

@@ -7398,7 +7398,6 @@ int skill_castfix( struct block_list *bl, int time )
 	struct map_session_data *sd = NULL;
 	struct mob_data *md; // [Valaris]
 	struct status_change *sc_data;
-	int dex;
 	int castrate=100;
 	int skill,lv;
 
@@ -7417,7 +7416,6 @@ int skill_castfix( struct block_list *bl, int time )
 	if(lv <= 0) return 0;
 
 	sc_data = battle_get_sc_data(bl);
-	dex=battle_get_dex(bl);
 
 	if (skill > MAX_SKILL_DB || skill < 0)
 	    return 0;
@@ -7430,11 +7428,9 @@ int skill_castfix( struct block_list *bl, int time )
 	if(time==0)
 		return 0;
 	if (sd) {
-		if(skill_get_castnodex(skill, lv) > 0)
+		if(!skill_get_castnodex(skill, lv) > 0) {
 			castrate=((struct map_session_data *)bl)->castrate;
-		else {
-			castrate=((struct map_session_data *)bl)->castrate;
-			time=time*castrate*(battle_config.castrate_dex_scale - dex)/(battle_config.castrate_dex_scale * 100);
+			time=time*castrate*(battle_config.castrate_dex_scale - battle_get_dex(bl))/(battle_config.castrate_dex_scale * 100);
 			time=time*battle_config.cast_rate/100;
 		}
 	}
@@ -7455,6 +7451,7 @@ int skill_delayfix( struct block_list *bl, int time )
 	struct status_change *sc_data;
 	struct map_session_data *sd = NULL;
 	int skill,lv = 0;
+	int delayrate=100;
 	
 	nullpo_retr(0, bl);
 
@@ -7473,12 +7470,14 @@ int skill_delayfix( struct block_list *bl, int time )
 		time = battle_get_adelay (bl)/2;
 
 	if(sd) {
+		delayrate=((struct map_session_data *)bl)->delayrate;
+
 		if(battle_config.delay_dependon_dex &&	/* dex‚Ì‰e‹¿‚ğŒvZ‚·‚é */
 			!skill_get_delaynodex(skill, lv))	// if skill casttime is allowed to be reduced by dex
-			time=time*(battle_config.castrate_dex_scale - battle_get_dex(bl))/battle_config.castrate_dex_scale;
+			time=time*delayrate*(battle_config.castrate_dex_scale - battle_get_dex(bl))/(battle_config.castrate_dex_scale * 100);
+
+		time=time*battle_config.delay_rate/100;
 	}
-	
-	time=time*battle_config.delay_rate/100;
 
 	/* ƒuƒ‰ƒM‚Ì */
 	if(sc_data && sc_data[SC_POEMBRAGI].timer!=-1 )

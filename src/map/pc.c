@@ -1296,6 +1296,7 @@ int pc_calcstatus(struct map_session_data* sd,int first)
 	sd->hprate=battle_config.hp_rate;
 	sd->sprate=battle_config.sp_rate;
 	sd->castrate=100;
+	sd->delayrate=100;
 	sd->dsprate=100;
 	sd->base_atk=0;
 	sd->arrow_atk=0;
@@ -2721,6 +2722,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_LONG_ATK_RATE:
 		if(sd->status.weapon == 11 && sd->state.lr_flag != 2)
 			sd->atk_rate += val;
+		break;
+	case SP_DELAYRATE:
+		if(sd->state.lr_flag != 2)
+			sd->delayrate+=val;
 		break;
 	default:
 		if(battle_config.error_log)

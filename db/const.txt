@@ -215,6 +215,9 @@ bDisguise		1077
 bClassChange	1078
 bHPDrainValue	1079
 bSPDrainValue	1080
+bWeaponAtk	1081
+bWeaponAtkRate	1082
+bDelayrate	1083
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
