@@ -597,7 +597,9 @@ int parse_fromchar(int fd){
 		if (server_fd[id] == fd)
 			break;
 
-	if (id == MAX_SERVERS || session[fd]->eof) {
+	if (id == MAX_SERVERS)
+		session[fd]->eof = 1;
+	if(session[fd]->eof) {
 		if (id < MAX_SERVERS) {
 			printf("Char-server '%s' has disconnected.\n", server[id].name);
 			server_fd[id] = -1;
