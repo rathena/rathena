@@ -5943,8 +5943,8 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 			if(sc_data) {
 				if (sc_data[type].timer==-1)
 					status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
-				else if((unit2=(struct skill_unit *)sc_data[type].val2) && unit2 != src ){
-					if(DIFF_TICK(sg->tick,unit2->group->tick)>0 )
+				else if((unit2 = (struct skill_unit *)sc_data[type].val2) && unit2 != src){
+					if(unit2->group && DIFF_TICK(sg->tick,unit2->group->tick) > 0)
 						status_change_start(bl,type,sg->skill_lv,(int)src,0,0,0,0);
 					ts->tick-=sg->interval;
 				}

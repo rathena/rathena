@@ -252,6 +252,7 @@ ACMD_FUNC(charkillableid2);  // by Dino9021
 ACMD_FUNC(sound);
 ACMD_FUNC(undisguiseall);
 ACMD_FUNC(disguiseall);
+ACMD_FUNC(changelook);
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -524,6 +525,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Sound,		"@sound",	40,	atcommand_sound },
 	{ AtCommand_UndisguiseAll,		"@undisguiseall",	99,	atcommand_undisguiseall },
 	{ AtCommand_DisguiseAll,		"@disguiseall",	99,	atcommand_disguiseall },
+	{ AtCommand_ChangeLook,		"@changelook",	99,	atcommand_changelook },
 
 // add new commands before this line
 	{ AtCommand_Unknown,             NULL,                1, NULL }
@@ -7503,6 +7505,34 @@ atcommand_grind2(const int fd, struct map_session_data* sd,
 	return 0;
 }
 
+/*==========================================
+ * @changelook by [Celest]
+ *------------------------------------------
+ */
+int
+atcommand_changelook(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int i, j = 0, k = 0;
+	int pos[6] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES };
+
+	if((i = sscanf(message, "%d %d", &j, &k)) < 1) {
+		clif_displaymessage(fd, "Usage: @changelook [<position>] <view id> -- [] = optional");
+		clif_displaymessage(fd, "Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield");
+		return -1;
+	} else if (i == 2) {
+		if (j < 1) j = 1;
+		else if (j > 6) j = 6;	// 6 = Shoes - for beta clients only perhaps
+		j = pos[j - 1];
+	} else if (i == 1) {	// position not defined, use HEAD_TOP as default
+		k = j;	// swap
+		j = LOOK_HEAD_TOP;
+	}
+
+	clif_changelook(&sd->bl,j,k);
+
+	return 0;
+}
 
 /*==========================================
  * It is made to rain.

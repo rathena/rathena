@@ -235,6 +235,7 @@ enum AtCommandType {
 	AtCommand_Sound,
 	AtCommand_UndisguiseAll,
 	AtCommand_DisguiseAll,
+	AtCommand_ChangeLook,
 
 	// end
 	AtCommand_Unknown,
