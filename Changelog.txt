@@ -1,5 +1,7 @@
 Date	Added
 12/7
+	* Added GUILDCACHE #define to int_guild.c for testing performance
+	  effects [MouseJstr]
         * Skill Updates [celest]
           - Arrow Shower, Double Strafing, Charge Arrow, Throw Arrow, Sharp Shooting,
             Arrow Vulcan, and Musical Strike now take arrows when used
