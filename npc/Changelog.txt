@@ -34,7 +34,9 @@ Date		Added
 ======
 
 04/06
-	* Allow super novices to rent carts from the Kafra, thanks to HawkMoon
+	* removed previous "fix". Please, never submit "fixes" w/o checking. [Lupus]
+	  that guy didn't know about a special SN Kafra from supernovice.txt file.
+	* fixed payon's gemstones exchanger [Lupus]
 	* Set PCLoginEvent.txt to disabled by default [celest]
 04/04
 	* Changed "set @TEMP,rand(0);" to set "@TEMP,0;" in the Payon Fortune Teller script [DracoRPG]
