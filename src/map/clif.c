@@ -7955,7 +7955,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 	// Celest
 	if (pc_calc_base_job2 (sd->status.class_) == 23 ) {
 		int next = pc_nextbaseexp(sd)>0 ? pc_nextbaseexp(sd) : sd->status.base_exp;
-		if ((sd->status.base_exp*100/next)%10 == 0) {
+		if (next > 0 && (sd->status.base_exp*100/next)%10 == 0) {
 			estr_lower((char*)RFIFOP(fd,4));
 			if (sd->state.snovice_flag == 0 && strstr((char*)RFIFOP(fd,4), msg_txt(540)))
 				sd->state.snovice_flag = 1;

@@ -4518,7 +4518,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	if (s_class.job == 23) {
 		if ((i=pc_nextbaseexp(sd))<=0)
 			i=sd->status.base_exp;
-		if ((j=sd->status.base_exp*1000/i)>=990 && j<=1000)
+		if (i>0 && (j=sd->status.base_exp*1000/i)>=990 && j<=1000)
 			sd->state.snovice_flag = 4;
 	}
 

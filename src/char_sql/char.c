@@ -173,7 +173,9 @@ void set_char_online(int char_id, int account_id) {
 		}
     }
 
-    WFIFOW(login_fd,0) = 0x272b;
+    if (login_fd <= 0 || session[login_fd]->eof)
+		return;
+	WFIFOW(login_fd,0) = 0x272b;
 	WFIFOL(login_fd,2) = account_id;
 	WFIFOSET(login_fd,6);
 

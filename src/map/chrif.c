@@ -112,6 +112,8 @@ int chrif_save(struct map_session_data *sd)
 	memcpy(WFIFOP(char_fd,12), &sd->status, sizeof(sd->status));
 	WFIFOSET(char_fd, WFIFOW(char_fd,2));
 
+	storage_storage_save(sd); // to synchronise storage with character [Yor]
+
 	return 0;
 }
 
