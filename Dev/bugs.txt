@@ -204,3 +204,8 @@ Problem:	You can put in Cart goods more than Cart Max Weight limit allows
 		Assigned:	N/A
 Progress:	0%
 
+Problem:	SCRIPT CRASH BUG
+		When you use INN - you instantly disconnects or server crashes
+		Assigned:	N/A
+Progress:	0%
+
