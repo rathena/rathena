@@ -1,6 +1,7 @@
 Date	Added
 
 02/28
+        * Fixed SQL Castle saving bugs [Lupus]
         * Corrected Tiger Fist, Chain Crush, and Palm Push Strike damage, thanks to
           Eskadron [celest]
         * Updated Endure to be usable in GvG, but only gives the mdef bonus [celest]

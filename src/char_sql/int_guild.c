@@ -327,7 +327,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	char *pstr;
 	struct guild *g;
 
-	if (guild_id==0) return 0;
+	if (guild_id<=0) return 0;
 
 	g = (struct guild*)numdb_search(guild_db_,guild_id);
 	if (g != NULL)
@@ -522,7 +522,7 @@ static int _set_guild_castle(void *key, void *data, va_list ap) {
 // Save guild_castle to sql
 int inter_guildcastle_tosql(struct guild_castle *gc){
 
-	if(gc->castle_id == 0 || gc->guild_id == 0){
+	if(gc->castle_id < 0 || gc->guild_id <= 0){ //fixed bug! gc->castle_id can be == 0 (for the 1st castle it's == 0) [Lupus]
 		return 0;
 	}
 	printf("[Guild Castle]: Save..");
@@ -535,11 +535,11 @@ int inter_guildcastle_tosql(struct guild_castle *gc){
 	}
 
 	sql_res = mysql_store_result(&mysql_handle);
-	if(sql_res){
-		if(mysql_num_rows(sql_res) != 0){
+	if(sql_res!=NULL){ //fixed [Lupus]
+		if(mysql_num_rows(sql_res) > 0){
 			//okay .. guild is existable
 			mysql_free_result(sql_res);
-			sprintf(tmp_sql, "UPDATE `%s` SET `guild_id` = '%d', `economy` = '%d', `defense` = '%d', `triggerE` = '%d', `triggerD` = '%d', `nextTime` = '%d', `payTime` = '%d', `createTime` = '%d', `visibleC` = '%d', `visibleG0` = '%d', `visibleG1` = '%d', `visibleG2` = '%d', `visibleG3` = '%d', `visibleG4` = '%d', `visibleG5` = '%d', `visibleG6` = '%d', `visibleG7` = '%d', `gHP0` = '%d', `gHP1` = '%d', `gHP2` = '%d', `gHP3` = '%d', `gHP4` = '%d', `gHP5` = '%d', `gHP6` = '%d', `gHP7` = '%d' WHERE `castle_id` = '%d'", guild_castle_db, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC, gc->visibleG0, gc->visibleG1, gc->visibleG2, gc->visibleG3, gc->visibleG4, gc->visibleG5,	gc->visibleG6, gc->visibleG7, gc->Ghp0, gc->Ghp1, gc->Ghp2, gc->Ghp3, gc->Ghp4, gc->Ghp5, gc->Ghp6, gc->Ghp7, gc->castle_id);
+			sprintf(tmp_sql, "UPDATE `%s` SET `guild_id` = '%d', `economy` = '%d', `defense` = '%d', `triggerE` = '%d', `triggerD` = '%d', `nextTime` = '%d', `payTime` = '%d', `createTime` = '%d', `visibleC` = '%d', `visibleG0` = '%d', `visibleG1` = '%d', `visibleG2` = '%d', `visibleG3` = '%d', `visibleG4` = '%d', `visibleG5` = '%d', `visibleG6` = '%d', `visibleG7` = '%d', `gHP0` = '%d', `gHP1` = '%d', `gHP2` = '%d', `gHP3` = '%d', `gHP4` = '%d', `gHP5` = '%d', `gHP6` = '%d', `gHP7` = '%d' WHERE `castle_id` = '%d'", guild_castle_db, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC, gc->visibleG0, gc->visibleG1, gc->visibleG2, gc->visibleG3, gc->visibleG4, gc->visibleG5,gc->visibleG6, gc->visibleG7, gc->Ghp0, gc->Ghp1, gc->Ghp2, gc->Ghp3, gc->Ghp4, gc->Ghp5, gc->Ghp6, gc->Ghp7, gc->castle_id);
 			if(mysql_query(&mysql_handle, tmp_sql)){
 				printf(" fail, DB ERROR: %s\n", mysql_error(&mysql_handle));
 				return 0;
