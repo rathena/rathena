@@ -1692,16 +1692,25 @@ static int skill_check_unit_range2_sub( struct block_list *bl,va_list ap )
 
 int skill_check_unit_range2(int m,int x,int y,int skillid, int skilllv)
 {
-	int c = 0;
-	int range = skill_get_unit_range(skillid);
-	int layout_type = skill_get_unit_layout_type(skillid,skilllv);
-	if (layout_type==-1 || layout_type>MAX_SQUARE_LAYOUT) {
-		printf("skill_check_unit_range2: unsupported layout type %d for skill %d\n",layout_type,skillid);
-		return 0;
+	int c = 0, range;
+	
+	switch (skillid) {	// to be expanded later
+	case WZ_ICEWALL:
+		range = 2;
+		break;
+	default:
+		{
+			int layout_type = skill_get_unit_layout_type(skillid,skilllv);
+			if (layout_type==-1 || layout_type>MAX_SQUARE_LAYOUT) {
+				printf("skill_check_unit_range2: unsupported layout type %d for skill %d\n",layout_type,skillid);
+				return 0;
+			}
+			// とりあえず正方形のユニットレイアウトのみ対応
+			range = skill_get_unit_range(skillid) + layout_type;
+		}
+		break;
 	}
 
-	// とりあえず正方形のユニットレイアウトのみ対応
-	range += layout_type;
 	map_foreachinarea(skill_check_unit_range2_sub,m,
 			x-range,y-range,x+range,y+range,0,&c,skillid);
 

@@ -1,7 +1,10 @@
 Date	Added
 
 03/08
-        * Speedup inventory and storage saving, thanks to Ilpalazzo-sama [celest]
+        * Fixes Icewall can be directly cast on players and monsters -- also removes
+          the 'unsupported layout' message [celest]
+        * Added the new turbo_room and alde_tt to the maps config [celest]
+        * Speedup SQL inventory and storage saving, thanks to Ilpalazzo-sama [celest]
         * Reverted a jA change in event loading [celest]
 
 03/07
