@@ -1,6 +1,7 @@
 Date	Added
 
 02/12
+        * Changed default map cache path from db/map.info to save/mapinfo.txt [celest]
         * Removed old code for Sharp Shooting (still a little buggy) [celest]
         * Merged Shinomori's code into map_foreachinpath [celest]
 
