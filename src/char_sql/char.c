@@ -1190,15 +1190,18 @@ int mmo_char_sql_init(void) {
 	} else
 		printf("set char_id_count: %d.......\n",char_id_count);
 
-	sprintf(tmp_sql , "REPLACE INTO `%s` SET `online`=0", char_db);
+	//sprintf(tmp_sql , "REPLACE INTO `%s` SET `online`=0", char_db);   //OLD QUERY ! BUGGED
+	sprintf(tmp_sql, "UPDATE `%s` SET `online` = '0'", char_db);//fixed the on start 0 entrys!
 	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 
-	sprintf(tmp_sql , "REPLACE INTO `%s` SET `online`=0", guild_member_db);
+	//sprintf(tmp_sql , "REPLACE INTO `%s` SET `online`=0", guild_member_db); //OLD QUERY ! BUGGED
+        sprintf(tmp_sql, "UPDATE `%s` SET `online` = '0'", guild_member_db);//fixed the 0 entrys in start ..
 	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 
-	sprintf(tmp_sql , "REPLACE INTO `%s` SET `connect_member`=0", guild_db);
+	//sprintf(tmp_sql , "REPLACE INTO `%s` SET `connect_member`=0", guild_db); //OLD QUERY BUGGED!
+	sprintf(tmp_sql, "UPDATE `%s` SET `connect_member` = '0'", guild_db);//fixed the 0 entrys in start.....
 	if (mysql_query(&mysql_handle, tmp_sql))
 		printf("DB server Error - %s\n", mysql_error(&mysql_handle));
 
@@ -3381,6 +3384,39 @@ int do_init(int argc, char **argv){
 	   	start_console();
 	}
 
+	//Cleaning the tables for NULL entrys @ startup [Sirius]
+         //Chardb clean
+        	printf("Cleaning the '%s' table...", char_db);
+         sprintf(tmp_sql,"DELETE FROM `%s` WHERE `account_id` = '0'", char_db);
+         if(mysql_query(&mysql_handle, tmp_sql)){
+           //error on clean
+            printf(" fail.\n");
+         }else{
+            printf(" done.\n");
+         }
+
+         //guilddb clean
+         printf("Cleaning the '%s' table...", guild_db);
+         sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_lv` = '0' AND `max_member` = '0' AND `exp` = '0' AND `next_exp` = '0' AND `average_lv` = '0'", guild_db);
+         if(mysql_query(&mysql_handle, tmp_sql)){
+          //error on clean
+            printf(" fail.\n");
+         }else{
+            printf(" done.\n");
+         }
+
+         //guildmemberdb clean
+         printf("Cleaning the '%s' table...", guild_member_db);
+         sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '0' AND `account_id` = '0' AND `char_id` = '0'", guild_member_db);
+         if(mysql_query(&mysql_handle, tmp_sql)){
+          //error on clean
+            printf(" fail.\n");
+         }else{
+            printf(" done.\n");
+         }
+
+
+
 	printf("char server init func end (now unlimited loop start!)....\n");
 	printf("The char-server is \033[1;32mready\033[0m (Server is listening on the port %d).\n\n", char_port);
 	return 0;
@@ -3394,5 +3430,4 @@ int debug_mysql_query(char *file, int line, void *mysql, const char *q) {
 #endif
         return mysql_query((MYSQL *) mysql, q);
 }
-
 

@@ -1,6 +1,7 @@
 Date	Added
 
 02/06
+	* NULL entries for guild data fixed [Credit to Sirius] [1060: Ajarn]
 	* Login server uses  login_db_userid and login_db_user_pass for 
 	  queries now [Credit to Sirius] [1059: Ajarn]
 	* Login server can now check clientversion in clientinfo
