@@ -34,6 +34,8 @@ Other Ppl
 
 Date		Added
 ======
+2/1
+        * The 'Lothar' NPC was asking for the wrong items, corrected thanks to Death's Mage
 01/01/05
 	* Fixed some respawn delays of MVP/Miniboss monsters. Redo Umbala/Niflheim fields, added missing mobs, corrected
 	  monsters quantity. In Niflheim fixed wrong Lord of Death monster ID. [Lupus]

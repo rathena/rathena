@@ -54,8 +54,7 @@ NEXT_0:
 				JOB:
 						mes "[^000080Lothar^000000]";
 						mes "All right, let me take a look at you first.";
-					next;
-						mes "[^000080Lothar^000000]";
+					next;						
 					if (readparam(55) != 50) goto SKIP;
 							set JLCC,1;
 							set Job_CR,5;
@@ -103,10 +102,10 @@ NEXT_0:
 										mes "- 10 ^FF0000Mementos^000000";
 										close;
 								IT:
-										mes "- 10 ^FF0000Decayed Nail^000000";
-										mes "- 10 ^FF0000Danggies^000000";
-										mes "- 10 ^FF0000Stinky Scales^000000";
-										mes "- 10 ^FF0000Mementos^000000";
+										mes "- 10 ^FF0000Skel-Bones^000000";
+										mes "- 10 ^FF0000Orc Claws^000000";
+										mes "- 1 ^FF0000Ball 'n Chain^000000";
+										mes "- 10 ^FF0000Danggie^000000";
 										close;
 				
 				ASK:
