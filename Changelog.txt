@@ -1,5 +1,7 @@
 Date	Added
 11/27
+	* Fixed a few map crashes when char-server crashes [Wizputer]
+	* Added fix of 0x2aff and 0x2af8 flooding [Wizputer - thanks Toster] 
 	* Fixed Map crash when person uses global message hacks [Wizputer]
 	* Fixed online system, online column works and prevent double login at the login server [Wizputer]
 	* Fixed some compile time errors associated with showmsg [MouseJstr]
