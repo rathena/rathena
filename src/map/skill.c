@@ -7618,7 +7618,10 @@ int skill_use_id( struct map_session_data *sd, int target_id,
 	range = skill_get_range(skill_num,skill_lv);
 	if(range < 0)
 		range = battle_get_range(&sd->bl) - (range + 1);
-	if(!battle_check_range(&sd->bl,bl,range + 1) )
+	// be lenient if the skill was cast before we have moved to the correct position [Celest]
+	if (sd->walktimer != -1)
+		range += battle_config.skill_range_leniency;
+	if(!battle_check_range(&sd->bl,bl,range) )
 		return 0;
 
 	if(bl->type==BL_PC) {
