@@ -66,3 +66,7 @@ Problem:	The skill tree's max skill lvl is not read/used.
 Assigned:	N/A
 Progess:	0%
 
+Problem:	Cannot connect to map server when logging in in both txt and sql on svn.
+Assigned:	N/A
+Progess:	0%
+
