@@ -4046,7 +4046,7 @@ struct Damage battle_calc_weapon_attack(
 				}
 			}
 			if(sd->sc_data[SC_OVERTHRUST].timer!=-1) {
-				breakrate = 20*sd->sc_data[SC_OVERTHRUST].val1;
+				breakrate = 10*sd->sc_data[SC_OVERTHRUST].val1;
 			//if(wd.type==0x0a) //removed! because CRITS don't affect on breaking chance [Lupus]
 			//	breakrate*=2;
 				if(rand()%10000 < breakrate*battle_config.equipment_break_rate/100 || breakrate >= 10000) {

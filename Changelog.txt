@@ -1,5 +1,7 @@
 Date	Added
 12/28
+        * Reduced weapon breaking chance for Overthrust, thanks Draco - i almost
+          forgot to add this update [celest]
 	* added checks into the skill code to prevent proxy's/bots
 	  from crashing the server by using skillid's that
 	  are WAY out of range (SVN 841) [MouseJstr]
