@@ -7690,7 +7690,9 @@ atcommand_uptime(
 	seconds -= (seconds/minute>0)?(seconds/minute)*minute:0;
 	
         snprintf(output, sizeof(output), msg_table[245], days, hours, minutes, seconds);
+
 	clif_displaymessage(fd,output);
+
 	return 0;
 }
 

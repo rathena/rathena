@@ -1,5 +1,7 @@
 Date	Added
 12/23
+        * Corrected the file types of several files in the SVN tree to
+          fix the newline issues [MouseJstr]
 	* Updated mapflags (added missing payon_in03,ayo_in01,ayo_in02, que_god01, que_god02) [Lupus]
         * Updated Sacrifice : it's now self-activating, and lasts for 5 attacks [celest]
         * Fixed compile errors in party.c [celest]
