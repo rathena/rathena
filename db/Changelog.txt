@@ -5,6 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "etc" itens)
 	Skill databases == celest working on them i believe.
 
+03/18
+	* Added ~86 new cards. Fixed, optimized [Lupus]
+		Thanks to Indiona,Landarma. Gosh, I had to fix some bugz ^_-
 03/16
 	* Added new items. Thanks to Landarma [Lupus]
 03/15

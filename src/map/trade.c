@@ -76,8 +76,8 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 			npc_event_dequeue(target_sd);
 
 		//close STORAGE window if it's open. It protects from spooffing packets [Lupus]
-		nullpo_retv(stor=account2storage2(sd->status.account_id));
-		if(stor->storage_status == 1) {
+		stor=account2storage2(sd->status.account_id);
+		if(stor!=NULL && stor->storage_status == 1) {
 			if (sd->state.storage_flag) //is it Guild Storage or Common
 				storage_guild_storageclose(sd);
 			else

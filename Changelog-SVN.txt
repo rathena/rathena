@@ -1,6 +1,8 @@
 Date	Added
 
 03/17
+	* Added ~86 new cards. Fixed new cards bugs, optimized [Lupus] thanks to Indiona,Landarma
+	* Removed nullpo warning from trade.c (my prev anti-spoof protection) [Lupus]
         * Added the new Einbroch/Einbech maps to maps_athena.conf [celest]
         * Added display script filename when a script error is found while parsing
           [celest]
