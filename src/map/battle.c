@@ -620,6 +620,8 @@ static struct Damage battle_calc_pet_weapon_attack(
 	int flag,dmg_lv=0;
 	int t_mode=0,t_race=0,t_size=1,s_race=0,s_ele=0;
 	struct status_change *t_sc_data;
+	int div_flag=0;	// 0: total damage is to be divided by div_
+					// 1: damage is distributed,and has to be multiplied by div_ [celest]
 
 	//return前の処理があるので情報出力部のみ変更
 	if( target == NULL || pd == NULL ){ //srcは内容に直接触れていないのでスルーしてみる
@@ -661,7 +663,11 @@ static struct Damage battle_calc_pet_weapon_attack(
 	hitrate=status_get_hit(src) - flee + 80;
 
 	type=0;	// normal
-	div_ = 1; // single attack
+	if (skill_num > 0) {
+		div_ = skill_get_num(skill_num,skill_lv);
+		if (div_ < 1) div_ = 1;	//Avoid the rare case where the db says div_ is 0 and below
+	}
+	else div_ = 1; // single attack
 
 	luk=status_get_luk(src);
 
@@ -735,7 +741,6 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case AC_DOUBLE:	// ダブルストレイフィング
 				damage = damage*(180+ 20*skill_lv)/100;
-				div_=2;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case AC_SHOWER:	// アローシャワー
@@ -750,7 +755,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 				damage = damage*(100+ 10*skill_lv)/100;
 				hitrate = hitrate*(100+5*skill_lv)/100;
 				div_=t_size+1;
-				damage*=div_;
+				div_flag = 1;
 				break;
 			case KN_SPEARSTAB:	// スピアスタブ
 				damage = damage*(100+ 15*skill_lv)/100;
@@ -783,7 +788,6 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case AS_SONICBLOW:	// ソニックブロウ
 				damage = damage*(300+ 50*skill_lv)/100;
-				div_=8;
 				break;
 			case TF_SPRINKLESAND:	// 砂まき
 				damage = damage*125/100;
@@ -793,8 +797,7 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			// 以下MOB
 			case NPC_COMBOATTACK:	// 多段攻撃
-				div_=skill_get_num(skill_num,skill_lv);
-				damage *= div_;
+				div_flag = 1;
 				break;
 			case NPC_RANDOMATTACK:	// ランダムATK攻撃
 				damage = damage*(50+rand()%150)/100;
@@ -842,7 +845,6 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case CR_HOLYCROSS:	// ホーリークロス
 				damage = damage*(100+ 35*skill_lv)/100;
-				div_=2;
 				break;
 			case CR_GRANDCROSS:
 				hitrate= 1000000;
@@ -859,7 +861,6 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case MO_FINGEROFFENSIVE:	//指弾
 				damage = damage * (125 + 25 * skill_lv) / 100;
-				div_ = 1;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;   //orn
 				break;
 			case MO_INVESTIGATE:	// 発 勁
@@ -875,7 +876,6 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case MO_CHAINCOMBO:	// 連打掌
 				damage = damage*(150+ 50*skill_lv)/100;
-				div_=4;
 				break;
 			case MO_COMBOFINISH:	// 猛龍拳
 				damage = damage*(240+ 60*skill_lv)/100;
@@ -893,14 +893,12 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case CH_CHAINCRUSH:	// 連柱崩撃
 				damage = damage*(400+ 100*skill_lv)/100;
-				div_=skill_get_num(skill_num,skill_lv);
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
 				damage = damage*(200+ 100*skill_lv)/100;
 				break;
 			case LK_SPIRALPIERCE:			/* スパイラルピアース */
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
-				div_=5;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				if(target->type == BL_PC)
 					((struct map_session_data *)target)->canmove_tick = gettick() + 1000;
@@ -921,11 +919,14 @@ static struct Damage battle_calc_pet_weapon_attack(
 				break;
 			case CG_ARROWVULCAN:			/* アローバルカン */
 				damage = damage*(200+100*skill_lv)/100;
-				div_=9;
 				break;
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
 				damage = damage*(200+20*skill_lv)/100;
 				break;
+			}
+			if (div_flag && div_ > 1) {	// [Skotlex]
+				damage *= div_;
+				damage2 *= div_;
 			}
 		}
 
@@ -1061,6 +1062,8 @@ static struct Damage battle_calc_mob_weapon_attack(
 	struct status_change *sc_data,*t_sc_data;
 	short *sc_count;
 	short *option, *opt1, *opt2;
+	int div_flag=0;	// 0: total damage is to be divided by div_
+					// 1: damage is distributed,and has to be multiplied by div_ [celest]
 
 	//return前の処理があるので情報出力部のみ変更
 	if( src == NULL || target == NULL || md == NULL ){
@@ -1129,7 +1132,10 @@ static struct Damage battle_calc_mob_weapon_attack(
 	hitrate=status_get_hit(src) - flee + 80;
 
 	type=0;	// normal
-	div_ = 1; // single attack
+	if (skill_num > 0) {
+		div_ = skill_get_num(skill_num,skill_lv);
+		if (div_ < 1) div_ = 1;	//Avoid the rare case where the db says div_ is 0 and below
+	} else div_ = 1; // single attack
 
 	luk=status_get_luk(src);
 
@@ -1230,7 +1236,6 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case AC_DOUBLE:	// ダブルストレイフィング
 				damage = damage*(180+ 20*skill_lv)/100;
-				div_=2;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case AC_SHOWER:	// アローシャワー
@@ -1243,9 +1248,9 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case KN_PIERCE:	// ピアース
 				damage = damage*(100+ 10*skill_lv)/100;
-				hitrate=hitrate*(100+5*skill_lv)/100;
-				div_=t_size+1;
-				damage*=div_;
+				hitrate = hitrate*(100+5*skill_lv)/100;
+				div_ = t_size+1;
+				div_flag = 1;
 				break;
 			case KN_SPEARSTAB:	// スピアスタブ
 				damage = damage*(100+ 15*skill_lv)/100;
@@ -1285,7 +1290,6 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case AS_SONICBLOW:	// ソニックブロウ
 				damage = damage*(300+ 50*skill_lv)/100;
-				div_=8;
 				break;
 			case TF_SPRINKLESAND:	// 砂まき
 				damage = damage*125/100;
@@ -1295,8 +1299,7 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			// 以下MOB
 			case NPC_COMBOATTACK:	// 多段攻撃
-				div_=skill_get_num(skill_num,skill_lv);
-				damage *= div_;
+				div_flag = 1;
 				break;
 			case NPC_RANDOMATTACK:	// ランダムATK攻撃
 				damage = damage*(50+rand()%150)/100;
@@ -1344,7 +1347,6 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case CR_HOLYCROSS:	// ホーリークロス
 				damage = damage*(100+ 35*skill_lv)/100;
-				div_=2;
 				break;
 			case CR_GRANDCROSS:
 				hitrate= 1000000;
@@ -1361,7 +1363,6 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case MO_FINGEROFFENSIVE:	//指弾
 				damage = damage * (125 + 25 * skill_lv) / 100;
-				div_ = 1;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;   //orn
 				break;
 			case MO_INVESTIGATE:	// 発 勁
@@ -1377,7 +1378,6 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case MO_CHAINCOMBO:	// 連打掌
 				damage = damage*(150+ 50*skill_lv)/100;
-				div_=4;
 				break;
 			case BA_MUSICALSTRIKE:	// ミュージカルストライク
 				damage = damage*(60+ 40 * skill_lv)/100;
@@ -1395,14 +1395,12 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case CH_CHAINCRUSH:	// 連柱崩撃
 				damage = damage*(400+ 100*skill_lv)/100;
-				div_=skill_get_num(skill_num,skill_lv);
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
 				damage = damage*(200+ 100*skill_lv)/100;
 				break;
 			case LK_SPIRALPIERCE:			/* スパイラルピアース */
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
-				div_=5;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				if(tsd)
 					tsd->canmove_tick = gettick() + 1000;
@@ -1423,11 +1421,14 @@ static struct Damage battle_calc_mob_weapon_attack(
 				break;
 			case CG_ARROWVULCAN:			/* アローバルカン */
 				damage = damage*(200+100*skill_lv)/100;
-				div_=9;
 				break;
 			case AS_SPLASHER:		/* ベナムスプラッシャー */
 				damage = damage*(200+20*skill_lv)/100;
 				break;
+			}
+			if (div_flag && div_ > 1) {	// [Skotlex]
+				damage *= div_;
+				damage2 *= div_;
 			}
 		}
 
@@ -1617,6 +1618,8 @@ static struct Damage battle_calc_pc_weapon_attack(
 	int watk,watk_,cardfix,t_ele;
 	int da=0,i,t_class,ac_flag = 0;
 	int idef_flag=0,idef_flag_=0;
+	int div_flag=0;	// 0: total damage is to be divided by div_
+					// 1: damage is distributed,and has to be multiplied by div_ [celest]
 
 	//return前の処理があるので情報出力部のみ変更
 	if( src == NULL || target == NULL || sd == NULL ){
@@ -1695,7 +1698,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 	hitrate=status_get_hit(src) - flee + 80; //命中率計算
 
 	type=0;	// normal
-	div_ = 1; // single attack
+	if (skill_num > 0) {
+		div_=skill_get_num(skill_num,skill_lv);
+		if (div_ < 1) div_ = 1;	//Avoid the rare case where the db says div_ is 0 and below
+	} else div_ = 1; // single attack
 
 	dex=status_get_dex(src); //DEX
 	luk=status_get_luk(src); //LUK
@@ -1955,7 +1961,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 				}
 				damage = damage*(180+ 20*skill_lv)/100;
 				damage2 = damage2*(180+ 20*skill_lv)/100;
-				div_=2;
 				if(sd->arrow_ele > 0) {
 					s_ele = sd->arrow_ele;
 					s_ele_ = sd->arrow_ele;
@@ -1998,8 +2003,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 				damage2 = damage2*(100+ 10*skill_lv)/100;
 				hitrate=hitrate*(100+5*skill_lv)/100;
 				div_=t_size+1;
-				damage*=div_;
-				damage2*=div_;
+				div_flag=1;
 				break;
 			case KN_SPEARSTAB:	// スピアスタブ
 				damage = damage*(100+ 15*skill_lv)/100;
@@ -2054,7 +2058,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 				hitrate+=30; // hitrate +30, thanks to midas
 				damage = damage*(300+ 50*skill_lv)/100;
 				damage2 = damage2*(300+ 50*skill_lv)/100;
-				div_=8;
 				break;
 			case TF_SPRINKLESAND:	// 砂まき
 				damage = damage*125/100;
@@ -2074,9 +2077,7 @@ static struct Damage battle_calc_pc_weapon_attack(
 				break;
 			// 以下MOB
 			case NPC_COMBOATTACK:	// 多段攻撃
-				div_=skill_get_num(skill_num,skill_lv);
-				damage *= div_;
-				damage2 *= div_;
+				div_flag=1;
 				break;
 			case NPC_RANDOMATTACK:	// ランダムATK攻撃
 				damage = damage*(50+rand()%150)/100;
@@ -2137,7 +2138,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case CR_HOLYCROSS:	// ホーリークロス
 				damage = damage*(100+ 35*skill_lv)/100;
 				damage2 = damage2*(100+ 35*skill_lv)/100;
-				div_=2;
 				break;
 			case CR_GRANDCROSS:
 				hitrate= 1000000;
@@ -2159,16 +2159,13 @@ static struct Damage battle_calc_pc_weapon_attack(
 				no_cardfix = 1;
 				break;
 			case MO_FINGEROFFENSIVE:	//指弾
+				damage = damage * (125 + 25 * skill_lv) / 100;
+				damage2 = damage2 * (125 + 25 * skill_lv) / 100;
 				if(battle_config.finger_offensive_type == 0) {
-					damage = damage * (125 + 25 * skill_lv) / 100 * sd->spiritball_old;
-					damage2 = damage2 * (125 + 25 * skill_lv) / 100 * sd->spiritball_old;
 					div_ = sd->spiritball_old;
+					div_flag = 1;
 				}
-				else {
-					damage = damage * (125 + 25 * skill_lv) / 100;
-					damage2 = damage2 * (125 + 25 * skill_lv) / 100;
-					div_ = 1;
-				}
+				else div_ = 1;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;   //orn
 				break;
 			case MO_INVESTIGATE:	// 発 勁
@@ -2192,7 +2189,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case MO_CHAINCOMBO:	// 連打掌
 				damage = damage*(150+ 50*skill_lv)/100;
 				damage2 = damage2*(150+ 50*skill_lv)/100;
-				div_=4;
 				break;
 			case MO_COMBOFINISH:	// 猛龍拳
 				damage = damage*(240+ 60*skill_lv)/100;
@@ -2229,7 +2225,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case CH_CHAINCRUSH:	// 連柱崩撃
 				damage = damage*(100+ 60*skill_lv)/100;
 				damage2 = damage2*(100+ 60*skill_lv)/100;
-				div_=skill_get_num(skill_num,skill_lv);
 				break;
 			case CH_PALMSTRIKE:	// 猛虎硬派山
 				damage = damage*(50+ 100*skill_lv)/100;
@@ -2238,7 +2233,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case LK_SPIRALPIERCE:			/* スパイラルピアース */
 				damage = damage*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
 				damage2 = damage2*(100+ 50*skill_lv)/100; //増加量が分からないので適当に
-				div_=5;
 				flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				if(tsd)
 					tsd->canmove_tick = gettick() + 1000;
@@ -2265,7 +2259,6 @@ static struct Damage battle_calc_pc_weapon_attack(
 			case CG_ARROWVULCAN:			/* アローバルカン */
 				damage = damage*(200+100*skill_lv)/100;
 				damage2 = damage2*(200+100*skill_lv)/100;
-				div_=9;
 				if(sd->arrow_ele > 0) {
 					s_ele = sd->arrow_ele;
 					s_ele_ = sd->arrow_ele;
@@ -2324,6 +2317,10 @@ static struct Damage battle_calc_pc_weapon_attack(
 					flag=(flag&~BF_RANGEMASK)|BF_LONG;
 				}
 				break;
+			}
+			if (div_flag && div_ > 1) {	// [Skotlex]
+				damage *= div_;
+				damage2 *= div_;
 			}
 		}
 		if(da == 2) { //三段掌が発動しているか
