@@ -155,3 +155,7 @@ Problem:	The last line of NPC files isn't read, or is mis-handled
 Assigned:	N/A
 Progress:	0%
 Note:		An example of this would be to make the last line of your NPC you right curly bracket - the } - and then try to run the server with that NPC - the map server will whine about it.
+
+Problem:	Berserk disallows you to talk and never turns off
+Assigned:	N/A
+Progress:	0%
