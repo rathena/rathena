@@ -165,13 +165,8 @@ Problem:	There are many empty entries of newly created characters in Char DB Tab
 Assigned:	N/A
 Progress:	0%
 
+IMPORTANT: = NEVERENDING SOURCE OF SP/HP
 Problem:	Wedding skills fully donate SP/HP even when the donor has 1 SP / HP (when player has low amount of Max SP/HP)
-Assigned:	N/A
-Progress:	0%
-
-Problem:	Bash, Counterattack, Grand Cross, Monk's Combo, etc
-		stopped working on the latest SVN (they write "skill failed")
-		some delays appered
 Assigned:	N/A
 Progress:	0%
 
@@ -201,6 +196,10 @@ Problem:	Guilds DB
 Progress:	0%
 
 Problem:	Double Connection Bug still exist. Sometimes people can't re-connect till the server reboot
+		Assigned:	N/A
+Progress:	0%
+
+Problem:	You can put in Cart goods more than Cart Max Weight limit allows
 		Assigned:	N/A
 Progress:	0%
 
