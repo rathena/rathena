@@ -1128,7 +1128,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl,int s
 // -- moonsoul (stun ability of new champion skill tigerfist)
 //
 	case CH_TIGERFIST:
-		if( rand()%100 < (5 + skilllv*5)*sc_def_vit/100 )
+		if( rand()%100 < (10 + skilllv*10)*sc_def_vit/100 )
 			skill_status_change_start(bl,SC_STAN,skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 
@@ -4039,7 +4039,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 			int conv_hp=0,conv_sp=0;
 			conv_hp=sd->status.hp/10; //Šî–{‚ÍHP‚Ì10%
 			sd->status.hp -= conv_hp; //HP‚ğŒ¸‚ç‚·
-			conv_sp=conv_hp*20*skilllv/100;
+			conv_sp=conv_hp*10*skilllv/100;
 			conv_sp=(sd->status.sp+conv_sp>sd->status.max_sp)?sd->status.max_sp-sd->status.sp:conv_sp;
 			sd->status.sp += conv_sp; //SP‚ğ‘‚â‚·
 			pc_heal(sd,-conv_hp,conv_sp);
