@@ -953,9 +953,7 @@ int atcommand_send(
 			WBUFW(buf,0)=0x18f;
 		case 4:
 			WBUFW(buf,0)=0x190;
-		}
-		
-		
+		}		
 	}
 	return 0;
 }
@@ -3604,11 +3602,11 @@ int atcommand_gat(
 	for (y = 2; y >= -2; y--) {
 		sprintf(output, "%s (x= %d, y= %d) %02X %02X %02X %02X %02X",
 		         map[sd->bl.m].name,   sd->bl.x - 2, sd->bl.y + y,
-		         map_getcell(sd->bl.m, sd->bl.x - 2, sd->bl.y + y),
-		         map_getcell(sd->bl.m, sd->bl.x - 1, sd->bl.y + y),
-		         map_getcell(sd->bl.m, sd->bl.x,     sd->bl.y + y),
-		         map_getcell(sd->bl.m, sd->bl.x + 1, sd->bl.y + y),
-		         map_getcell(sd->bl.m, sd->bl.x + 2, sd->bl.y + y));
+ 				map_getcell(sd->bl.m, sd->bl.x - 2, sd->bl.y + y,CELL_CHKTYPE),
+ 				map_getcell(sd->bl.m, sd->bl.x - 1, sd->bl.y + y,CELL_CHKTYPE),
+ 				map_getcell(sd->bl.m, sd->bl.x,     sd->bl.y + y,CELL_CHKTYPE),
+ 				map_getcell(sd->bl.m, sd->bl.x + 1, sd->bl.y + y,CELL_CHKTYPE),
+	 			map_getcell(sd->bl.m, sd->bl.x + 2, sd->bl.y + y,CELL_CHKTYPE));
 		clif_displaymessage(fd, output);
 	}
 

@@ -168,17 +168,13 @@ static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int dir,i
  */
 static int can_place(struct map_data *m,int x,int y,int flag)
 {
-	int c;
-
 	nullpo_retr(0, m);
 
-	c=read_gatp(m,x,y);
-
-	if(c==1)
-		return 0;
-	if(!(flag&0x10000) && c==5)
-		return 0;
-	return 1;
+	if(map_getcellp(m,x,y,CELL_CHKPASS))
+		return 1;
+	else if((flag&0x10000)&&map_getcellp(m,x,y,CELL_CHKHIGH))
+		return 1;
+	return 0;
 }
 
 /*==========================================
@@ -262,7 +258,7 @@ int path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int 
 	if(!map[m].gat)
 		return -1;
 	md=&map[m];
-	if(x1<0 || x1>=md->xs || y1<0 || y1>=md->ys || (i=read_gatp(md,x1,y1))==1 || i==5)
+	if(x1<0 || x1>=md->xs || y1<0 || y1>=md->ys || map_getcellp(md,x1,y1,CELL_CHKNOPASS))
 		return -1;
 
 	// easy

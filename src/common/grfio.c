@@ -586,7 +586,7 @@ errret:
 	if (buf!=NULL) free(buf);
 	if (buf2!=NULL) free(buf2);
 	if (in!=NULL) fclose(in);
-	exit(1);	//return NULL;
+	return NULL;
 }
 
 /*==========================================
@@ -964,9 +964,9 @@ void grfio_init(char *fname)
 
 	if (strcmp(data_dir, "") == 0)		    // Id data_dir doesn't exist
 		result4 = 1;	                    // Data directory
-
+/*
 	if (result != 0 && result2 != 0 && result3 != 0 && result4 != 0) {
 		printf("not grf file readed exit!!\n");
 		exit(1);	// It ends, if a resource cannot read one.
-	}
+	}*/
 }

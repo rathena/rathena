@@ -150,6 +150,25 @@ struct charid2nick {
 	int req_id;
 };
 
+//各マップごとの最小限情報を入れるもの、READ_FROM_BITMAP用
+/*typedef struct{
+	char fn[32];//ファイル名
+	int xs,ys; //幅と高さ
+	int sizeinint;//intでの大きさ、1intに32セルの情報が入てる
+	int celltype[MAX_CELL_TYPE];//マップごとにそのタイプのセルがあれば対応する数字が入る、なければ1
+						//(タイプ1そのものは0と同じ配列gat_fileused[0]に
+	long pos[MAX_CELL_TYPE];//ビットマップファイルでの場所、読み出す時に使う
+} CELL_INFO;*/
+
+//#define READ_FROM_GAT 0 //gatファイルから
+//#define READ_FROM_BITMAP 1 //ビットマップファイルから
+int  map_read_flag = READ_FROM_GAT;//上の判定フラグ,どっちを使うかはmap_athana.conf内のread_map_from_bitmapで指定
+					//0ならばREAD_FROM_GAT,1ならばREAD_FROM_BITMAP
+int map_getcell(int,int x,int y,CELL_CHK cellchk);
+int map_getcellp(struct map_data* m,int x,int y,CELL_CHK cellchk);
+
+char map_bitmap_filename[256]="db/map.info";//ビットマップファイルのデフォルトパス
+
 char motd_txt[256] = "conf/motd.txt";
 char help_txt[256] = "conf/help.txt";
 
@@ -769,7 +788,7 @@ int map_clearflooritem_timer(int tid,unsigned int tick,int id,int data) {
  *------------------------------------------
  */
 int map_searchrandfreecell(int m,int x,int y,int range) {
-	int free_cell,i,j,c;
+	int free_cell,i,j;
 
 	for(free_cell=0,i=-range;i<=range;i++){
 		if(i+y<0 || i+y>=map[m].ys)
@@ -777,7 +796,7 @@ int map_searchrandfreecell(int m,int x,int y,int range) {
 		for(j=-range;j<=range;j++){
 			if(j+x<0 || j+x>=map[m].xs)
 				continue;
-			if((c=read_gat(m,j+x,i+y))==1 || c==5)
+			if(map_getcell(m,j+x,i+y,CELL_CHKNOPASS))
 				continue;
 			free_cell++;
 		}
@@ -791,7 +810,7 @@ int map_searchrandfreecell(int m,int x,int y,int range) {
 		for(j=-range;j<=range;j++){
 			if(j+x<0 || j+x>=map[m].xs)
 				continue;
-			if((c=read_gat(m,j+x,i+y))==1 || c==5)
+			if(map_getcell(m,j+x,i+y,CELL_CHKNOPASS))
 				continue;
 			if(free_cell==0){
 				x+=j;
@@ -1340,23 +1359,77 @@ int map_calc_dir( struct block_list *src,int x,int y) {
 
 // gat系
 /*==========================================
- * (m,x,y)の?態を調べる
+ * (m,x,y)の状態を調べる
  *------------------------------------------
  */
-int map_getcell(int m,int x,int y) {
-	if(x<0 || x>=map[m].xs-1 || y<0 || y>=map[m].ys-1)
-		return 1;
-	return map[m].gat[x+y*map[m].xs];
+
+int map_getcell(int m,int x,int y,CELL_CHK cellchk)
+{
+	return (m < 0 || m > MAX_MAP_PER_SERVER) ? 0 : map_getcellp(&map[m],x,y,cellchk);
+}
+
+int map_getcellp(struct map_data* m,int x,int y,CELL_CHK cellchk)
+{
+	int j;
+	nullpo_ret(m);
+	if(x<0 || x>=m->xs-1 || y<0 || y>=m->ys-1)
+	{
+		if(cellchk==CELL_CHKNOPASS) return 1;
+		return 0;
+	}
+	j=x+y*m->xs;
+
+	switch(cellchk)
+	{
+		case CELL_CHKTOUCH:
+			if(m->gat[j]&0x80) return 1;return 0;
+		case CELL_CHKWATER:
+			if(m->gat[j]==3) return 1;return 0;
+		case CELL_CHKHIGH:
+			if(m->gat[j]==5) return 1;return 0;
+		case CELL_CHKPASS:
+			if(m->gat[j]!=1&&m->gat[j]!=5) return 1; return 0;
+		case CELL_CHKNOPASS:
+			if(m->gat[j]==1||m->gat[j]==5) return 1; return 0;
+		case CELL_CHKTYPE:
+			return m->gat[j];
+		default: return 0;
+	}	
+	return 0;
 }
 
 /*==========================================
- * (m,x,y)の?態をtにする
+ * (m,x,y)の状態を設定する
  *------------------------------------------
  */
-int map_setcell(int m,int x,int y,int t) {
+int map_setcell(int m,int x,int y,CELL_SET cellset)
+{
+	int i,j;
+		
 	if(x<0 || x>=map[m].xs || y<0 || y>=map[m].ys)
-		return t;
-	return map[m].gat[x+y*map[m].xs]=t;
+		return 0;
+	j=x+y*map[m].xs;
+	switch(cellset)
+	{
+	case CELL_SETTOUCH:
+		return map[m].gat[j]|=0x80;
+		break;
+	case CELL_SETWATER://3
+		i=3;break;
+	case CELL_SETPASS://0
+		i=0;break;
+	case CELL_SETNOPASS://gat_fileused[0](READ_FROM_BITMAP)か1(READ_FROM_GAT)
+		i=1;break;
+	case CELL_SETHIGH://5
+		i=5;break;
+	case CELL_SETNOHIGH://5
+		i=5;break;
+	default:
+		return 0;
+	}
+	map[m].gat[j]=i;
+
+	return 1;
 }
 
 /*==========================================
@@ -1439,6 +1512,178 @@ static void map_readwater(char *watertxt) {
 		n++;
 	}
 	fclose(fp);
+}
+/*==========================================
+* マップキャッシュに追加する
+*===========================================*/
+
+// マップキャッシュの最大値
+#define MAX_CAHCE_MAX 768
+
+//各マップごとの最小限情報を入れるもの、READ_FROM_BITMAP用
+struct MAP_CACHE_INFO {
+	char fn[32];//ファイル名
+	int xs,ys; //幅と高さ
+	int water_height;
+	int pos;  // データが入れてある場所
+	int compressed;     // zilb通せるようにする為の予約
+	int compressed_len; // zilb通せるようにする為の予約
+}; // 56 byte
+
+struct {
+	struct MAP_CACHE_HEAD {
+		int sizeof_header;
+		int sizeof_map;
+		// 上の２つ改変不可
+		int nmaps; // マップの個数
+		int filesize;
+	} head;
+	struct MAP_CACHE_INFO *map;
+	FILE *fp;
+	int dirty;
+} map_cache;
+
+static int map_cache_open(char *fn);
+static void map_cache_close(void);
+static int map_cache_read(struct map_data *m);
+static int map_cache_write(struct map_data *m);
+
+static int map_cache_open(char *fn) {
+	atexit(map_cache_close);
+	if(map_cache.fp) {
+		map_cache_close();
+	}
+	map_cache.fp = fopen(fn,"r+b");
+	if(map_cache.fp) {
+		fread(&map_cache.head,1,sizeof(struct MAP_CACHE_HEAD),map_cache.fp);
+		fseek(map_cache.fp,0,SEEK_END);
+		if(
+			map_cache.head.sizeof_header == sizeof(struct MAP_CACHE_HEAD) &&
+			map_cache.head.sizeof_map    == sizeof(struct MAP_CACHE_INFO) &&
+			map_cache.head.filesize      == ftell(map_cache.fp)
+		) {
+			// キャッシュ読み込み成功
+			map_cache.map = aMalloc(sizeof(struct MAP_CACHE_INFO) * map_cache.head.nmaps);
+			fseek(map_cache.fp,sizeof(struct MAP_CACHE_HEAD),SEEK_SET);
+			fread(map_cache.map,sizeof(struct MAP_CACHE_INFO),map_cache.head.nmaps,map_cache.fp);
+			return 1;
+		}
+		fclose(map_cache.fp);
+	} else {
+		map_read_flag = CREATE_BITMAP;		
+	}		
+	// 読み込みに失敗したので新規に作成する
+	map_cache.fp = fopen(fn,"wb");
+	if(map_cache.fp) {
+		memset(&map_cache.head,0,sizeof(struct MAP_CACHE_HEAD));
+		map_cache.map   = aCalloc(sizeof(struct MAP_CACHE_INFO),MAX_CAHCE_MAX);
+		map_cache.head.nmaps         = MAX_CAHCE_MAX;
+		map_cache.head.sizeof_header = sizeof(struct MAP_CACHE_HEAD);
+		map_cache.head.sizeof_map    = sizeof(struct MAP_CACHE_INFO);
+
+		map_cache.head.filesize  = sizeof(struct MAP_CACHE_HEAD);
+		map_cache.head.filesize += sizeof(struct MAP_CACHE_INFO) * map_cache.head.nmaps;
+
+		map_cache.dirty = 1;
+		return 1;
+	}
+	return 0;
+}
+
+static void map_cache_close(void) {
+	if(!map_cache.fp) { return; }
+	if(map_cache.dirty) {
+		fseek(map_cache.fp,0,SEEK_SET);
+		fwrite(&map_cache.head,1,sizeof(struct MAP_CACHE_HEAD),map_cache.fp);
+		fwrite(map_cache.map,map_cache.head.nmaps,sizeof(struct MAP_CACHE_INFO),map_cache.fp);
+	}
+	fclose(map_cache.fp);
+	free(map_cache.map);
+	map_cache.fp = NULL;
+	return;
+}
+
+int map_cache_read(struct map_data *m) {
+	int i;
+	if(!map_cache.fp) { return 0; }
+	for(i = 0;i < map_cache.head.nmaps ; i++) {
+		if(!strcmp(m->name,map_cache.map[i].fn)) {
+			if(map_cache.map[i].water_height != map_waterheight(m->name)) {
+				// 水場の高さが違うので読み直し
+				return 0;
+			} else if(map_cache.map[i].compressed) {
+				// 圧縮ファイルは未対応
+				return 0;
+			} else {
+				int size = map_cache.map[i].xs * map_cache.map[i].ys;
+				m->xs = map_cache.map[i].xs;
+				m->ys = map_cache.map[i].ys;
+				m->gat = (unsigned char *)aCalloc(m->xs * m->ys,sizeof(unsigned char));
+				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
+				if(fread(m->gat,1,size,map_cache.fp) == size) {
+					// 成功
+					return 1;
+				} else {
+					// なぜかファイル後半が欠けてるので読み直し
+					m->xs = 0;
+					m->ys = 0;
+					free(m->gat);
+					m->gat = NULL;
+					return 0;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
+static int map_cache_write(struct map_data *m) {
+	int i;
+	if(!map_cache.fp) { return 0; }
+	for(i = 0;i < map_cache.head.nmaps ; i++) {
+		if(!strcmp(m->name,map_cache.map[i].fn)) {
+			// 同じエントリーがあれば上書き
+			if(
+				map_cache.map[i].xs == m->xs && map_cache.map[i].ys == m->ys &&
+				!map_cache.map[i].compressed
+			) {
+				// 幅と高さ同じで圧縮してないなら場所は変わらない
+				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
+				fwrite(m->gat,m->xs,m->ys,map_cache.fp);
+			} else {
+				// 幅と高さが違うなら新しい場所に登録
+				int size = m->xs * m->ys;
+				fseek(map_cache.fp,map_cache.head.filesize,SEEK_SET);
+				fwrite(m->gat,1,size,map_cache.fp);
+				map_cache.map[i].pos = map_cache.head.filesize;
+				map_cache.map[i].xs  = m->xs;
+				map_cache.map[i].ys  = m->ys;
+				map_cache.head.filesize += size;
+			}
+			map_cache.map[i].water_height = map_waterheight(m->name);
+			map_cache.dirty = 1;
+			return 0;
+		}
+	}
+	// 同じエントリが無ければ書き込める場所を探す
+	for(i = 0;i < map_cache.head.nmaps ; i++) {
+		if(map_cache.map[i].fn[0] == 0) {
+			// 新しい場所に登録
+			int size = m->xs * m->ys;
+			strncpy(map_cache.map[i].fn,m->name,sizeof(map_cache.map[0].fn));
+			fseek(map_cache.fp,map_cache.head.filesize,SEEK_SET);
+			fwrite(m->gat,1,size,map_cache.fp);
+			map_cache.map[i].pos = map_cache.head.filesize;
+			map_cache.map[i].xs  = m->xs;
+			map_cache.map[i].ys  = m->ys;
+			map_cache.map[i].water_height = map_waterheight(m->name);
+			map_cache.head.filesize += size;
+			map_cache.dirty = 1;
+			return 0;
+		}
+	}
+	// 書き込めなかった
+	return 1;
 }
 
 #ifdef USE_AFM
@@ -1587,28 +1832,20 @@ static int map_readafm(int m,char *fn) {
 #endif
 
 /*==========================================
- * マップ1枚?み?み
- *------------------------------------------
- */
-static int map_readmap(int m,char *fn, char *alias) {
+ * マップ1枚読み込み
+ * ===================================================*/
+static int map_readmap(int m,char *fn, char *alias, int *map_cache) {
 	unsigned char *gat="";
-	int s;
-	int x,y,xs,ys;
-	struct gat_1cell {float high[4]; int type;} *p=NULL;
-	int wh;
+	size_t size;
+	
 	int i;
 	int e = 0;
-
-	size_t size;
 	char progress[21] = "                    ";
-	// read & convert fn
-	gat=grfio_read(fn);
-	if(gat==NULL)
-		return -1;
+
 	//printf("\rLoading Maps [%d/%d]: %-50s  ",m,map_num,fn);
 	if (map_num) { //avoid map-server crashing if there are 0 maps
-	printf("\r");
-	ShowStatus("Progress: ");
+		printf("\r");
+		ShowStatus("Progress: ");
 		i=m*20/420;
 		printf("[");
 		for (e=0;e<i;e++) progress[e] = '#';
@@ -1616,32 +1853,52 @@ static int map_readmap(int m,char *fn, char *alias) {
 		printf("] Working: [");
 		fflush(stdout);
 	}
+
+	if(map_cache_read(&map[m])) {
+		// キャッシュから読み込めた
+		(*map_cache)++;
+	} else {
+		int s;
+		int wh;
+		int x,y,xs,ys;
+		struct gat_1cell {float high[4]; int type;} *p=NULL;	
+		// read & convert fn
+		gat=grfio_read(fn);
+		if(gat==NULL) {
+			return -1;
+			// さすがにマップが読めないのはまずいので終了する
+			//printf("Can't load map %s\n",fn);
+			//exit(1);
+		}
+	
+		xs=map[m].xs=*(int*)(gat+6);
+		ys=map[m].ys=*(int*)(gat+10);
+		map[m].gat = (unsigned char *)aCalloc(s = map[m].xs * map[m].ys,sizeof(unsigned char));
+		wh=map_waterheight(map[m].name);
+		for(y=0;y<ys;y++){
+			p=(struct gat_1cell*)(gat+y*xs*20+14);
+			for(x=0;x<xs;x++){
+				if(wh!=NO_WATER && p->type==0){
+					// 水場判定
+					map[m].gat[x+y*xs]=(p->high[0]>wh || p->high[1]>wh || p->high[2]>wh || p->high[3]>wh) ? 3 : 0;
+				} else {
+					map[m].gat[x+y*xs]=p->type;
+				}
+				p++;
+			}
+		}
+		map_cache_write(&map[m]);
+		free(gat);
+	}
+
 	map[m].m=m;
-	xs=map[m].xs=*(int*)(gat+6);
-	ys=map[m].ys=*(int*)(gat+10);
-	map[m].gat = (unsigned char *)aCalloc(s = map[m].xs * map[m].ys,sizeof(unsigned char));
 	map[m].npc_num=0;
 	map[m].users=0;
 	memset(&map[m].flag,0,sizeof(map[m].flag));
 	if(battle_config.pk_mode)
 		map[m].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
-	wh=map_waterheight(map[m].name);
-	for(y=0;y<ys;y++){
-		p=(struct gat_1cell*)(gat+y*xs*20+14);
-		for(x=0;x<xs;x++){
-			if(wh!=NO_WATER && p->type==0){
-				// 水場判定
-				map[m].gat[x+y*xs]=(p->high[0]>wh || p->high[1]>wh || p->high[2]>wh || p->high[3]>wh) ? 3 : 0;
-			} else {
-				map[m].gat[x+y*xs]=p->type;
-			}
-			p++;
-		}
-	}
-	free(gat);
-
-	map[m].bxs=(xs+BLOCK_SIZE-1)/BLOCK_SIZE;
-	map[m].bys=(ys+BLOCK_SIZE-1)/BLOCK_SIZE;
+	map[m].bxs=(map[m].xs+BLOCK_SIZE-1)/BLOCK_SIZE;
+	map[m].bys=(map[m].ys+BLOCK_SIZE-1)/BLOCK_SIZE;
 	size = map[m].bxs * map[m].bys * sizeof(struct block_list*);
 	map[m].block = (struct block_list **)aCalloc(1,size);
 	map[m].block_mob = (struct block_list **)aCalloc(1,size);
@@ -1671,18 +1928,31 @@ int map_readallmap(void) {
 #ifdef USE_AFM
 	FILE *afm_file;
 #endif
+	int map_cache = 0;
+	
+	// マップキャッシュを開く
+	if(map_read_flag == READ_FROM_BITMAP) {
+		map_cache_open(map_bitmap_filename);
+	}
 
-	ShowStatus("Loading Maps...\n");
+	sprintf(tmp_output, "Loading Maps%s...\n",
+		(map_read_flag == CREATE_BITMAP ? " (Generating Map Cache)" :
+		map_read_flag == READ_FROM_BITMAP ? " (w/ Map Cache)" :
+		map_read_flag == READ_FROM_AFM ? " (w/ AFM)" : ""));
+	ShowStatus(tmp_output);
 
 	// 先に全部のャbプの存在を確認
 	for(i=0;i<map_num;i++){
+
 #ifdef USE_AFM
 		char afm_name[256] = "";
 		char *p;
-		strncpy(afm_name, map[i].name, strlen(map[i].name) - 4);
-		strcat(afm_name, ".afm");
+		if(!strstr(map[i].name,".afm")) {
+		// check if it's necessary to replace the extension - speeds up loading abit
+			strncpy(afm_name, map[i].name, strlen(map[i].name) - 4);
+			strcat(afm_name, ".afm");
+		}
 		map[i].alias = NULL;
-
 		sprintf(fn,"%s\\%s",afm_dir,afm_name);
 		for(p=&fn[0];*p!=0;p++) if (*p=='\\') *p = '/';	// * At the time of Unix
 
@@ -1705,7 +1975,7 @@ int map_readallmap(void) {
 				map[i].alias = NULL;
 
 			sprintf(fn,"data\\%s",map[i].name);
-			if(map_readmap(i,fn, p) == -1) {
+			if(map_readmap(i,fn, p, &map_cache) == -1) {
 				map_delmap(map[i].name);
 				maps_removed++;
 				i--;
@@ -1729,6 +1999,12 @@ int map_readallmap(void) {
 	printf("\r");
 	snprintf(tmp_output,sizeof(tmp_output),"Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps.%30s\n",map_num,"");
 	ShowInfo(tmp_output);
+	
+	map_cache_close();
+	if(map_read_flag == CREATE_BITMAP) {
+		map_read_flag = READ_FROM_BITMAP;
+	}
+	
 	if (maps_removed) {
 		snprintf(tmp_output,sizeof(tmp_output),"Maps Removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);
 		ShowNotice(tmp_output);
@@ -1937,6 +2213,11 @@ int map_config_read(char *cfgName) {
 				strcpy(help_txt, w2);
 			} else if (strcmpi(w1, "mapreg_txt") == 0) {
 				strcpy(mapreg_txt, w2);
+			}else if(strcmpi(w1,"read_map_from_bitmap")==0){
+				if (atoi(w2) == 1)
+					map_read_flag = READ_FROM_BITMAP;
+				else
+					map_read_flag = READ_FROM_GAT;
 			} else if (strcmpi(w1, "import") == 0) {
 				map_config_read(w2);
 			} else if (strcmpi(w1, "console") == 0) {
@@ -2125,6 +2406,13 @@ int sql_config_read(char *cfgName)
 			strcpy(log_db_pw, w2);
 		} else if(strcmpi(w1,"log_db_port")==0) {
 			log_db_port = atoi(w2);
+		}else if(strcmpi(w1,"read_map_from_bitmap")==0){
+			if (atoi(w2) == 1)
+				map_read_flag = READ_FROM_BITMAP;
+			else
+				map_read_flag = READ_FROM_GAT;
+		}else if(strcmpi(w1,"map_bitmap_path")==0){
+			strncpy(map_bitmap_filename,w2,255);
 		//support the import command, just like any other config
 		} else if(strcmpi(w1,"import")==0){
 			sql_config_read(w2);
@@ -2250,7 +2538,10 @@ void do_final(void) {
     numdb_final(charid_db, charid_db_final);
 
 	for(i=0;i<=map_num;i++){
-		if(map[i].gat) free(map[i].gat);
+		if(map[i].gat) {	
+			free(map[i].gat);
+			map[i].gat=NULL;
+		}
 		if(map[i].block) free(map[i].block);
 		if(map[i].block_mob) free(map[i].block_mob);
 		if(map[i].block_count) free(map[i].block_count);
@@ -2350,8 +2641,10 @@ int do_init(int argc, char *argv[]) {
 		else if (strcmp(argv[i],"--sql_config") == 0 || strcmp(argv[i],"--sql-config") == 0)
 		    SQL_CONF_NAME = argv[i+1];
 		else if (strcmp(argv[i],"--log_config") == 0 || strcmp(argv[i],"--log-config") == 0)
-		    LOG_CONF_NAME = argv[i+1];
+		    LOG_CONF_NAME = argv[i+1];		
 #endif /* not TXT_ONLY */
+		else if (strcmp(argv[i],"--run_once") == 0)	// close the map-server as soon as its done.. for testing [Celest]
+			runflag = 0;
 	}
 
 	map_config_read(MAP_CONF_NAME);

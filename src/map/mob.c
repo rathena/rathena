@@ -216,7 +216,7 @@ int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
 	int x0,int y0,int x1,int y1,
 	const char *mobname,int class,int amount,const char *event)
 {
-	int x,y,i,c,max,lx=-1,ly=-1,id=0;
+	int x,y,i,max,lx=-1,ly=-1,id=0;
 	int m;
 
 	if(strcmp(mapname,"this")==0)
@@ -235,7 +235,7 @@ int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
 		do{
 			x=rand()%(x1-x0+1)+x0;
 			y=rand()%(y1-y0+1)+y0;
-		}while( ( (c=map_getcell(m,x,y))==1 || c==5)&& (++j)<max );
+		} while (map_getcell(m,x,y,CELL_CHKNOPASS) && (++j)<max);
 		if(j>=max){
 			if(lx>=0){	// ŒŸõ‚ÉŽ¸”s‚µ‚½‚Ì‚ÅˆÈ‘O‚É•¦‚¢‚½êŠ‚ðŽg‚¤
 				x=lx;
@@ -243,6 +243,7 @@ int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
 			}else
 				return 0;	// Å‰‚É•¦‚­êŠ‚ÌŒŸõ‚ðŽ¸”s‚µ‚½‚Ì‚Å‚â‚ß‚é
 		}
+		if(x==0||y==0) printf("xory=0, x=%d,y=%d,x0=%d,y0=%d\n",x,y,x0,y0);
 		id=mob_once_spawn(sd,mapname,x,y,mobname,class,1,event);
 		lx=x;
 		ly=y;
@@ -461,7 +462,7 @@ static int mob_walktoxy_sub(struct mob_data *md);
 static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 {
 	int moveblock;
-	int i,ctype;
+	int i;
 	static int dirx[8]={0,-1,-1,-1,0,1,1,1};
 	static int diry[8]={1,1,0,-1,-1,-1,0,1};
 	int x,y,dx,dy;
@@ -486,8 +487,7 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 
 		x = md->bl.x;
 		y = md->bl.y;
-		ctype = map_getcell(md->bl.m,x,y);
-		if(ctype == 1 || ctype == 5) {
+		if(map_getcell(md->bl.m,x,y,CELL_CHKNOPASS)) {
 			mob_stop_walking(md,1);
 			return 0;
 		}
@@ -495,8 +495,7 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 		dx = dirx[md->dir];
 		dy = diry[md->dir];
 
-		ctype = map_getcell(md->bl.m,x+dx,y+dy);
-		if(ctype == 1 || ctype == 5) {
+		if(map_getcell(md->bl.m,x+dx,y+dy,CELL_CHKNOPASS)) {
 			mob_walktoxy_sub(md);
 			return 0;
 		}
@@ -925,7 +924,7 @@ int mob_spawn(int id)
 			y=md->y0+rand()%(md->ys+1)-md->ys/2;
 		}
 		i++;
-	} while(((c=map_getcell(md->bl.m,x,y))==1 || c==5) && i<50);
+	} while(map_getcell(md->bl.m,x,y,CELL_CHKNOPASS) && i<50);
 
 	if(i>=50){
 //		if(battle_config.error_log==1)
@@ -1517,7 +1516,7 @@ static int mob_randomwalk(struct mob_data *md,int tick)
 			x+=md->bl.x;
 			y+=md->bl.y;
 
-			if((c=map_getcell(md->bl.m,x,y))!=1 && c!=5 && mob_walktoxy(md,x,y,1)==0){
+			if((map_getcell(md->bl.m,x,y,CELL_CHKPASS)) && mob_walktoxy(md,x,y,1)==0){
 				md->move_fail_count=0;
 				break;
 			}
@@ -2782,7 +2781,7 @@ int mob_warpslave(struct mob_data *md,int x, int y)
  */
 int mob_warp(struct mob_data *md,int m,int x,int y,int type)
 {
-	int i=0,c,xs=0,ys=0,bx=x,by=y;
+	int i=0,xs=0,ys=0,bx=x,by=y;
 
 	nullpo_retr(0, md);
 
@@ -2803,7 +2802,7 @@ int mob_warp(struct mob_data *md,int m,int x,int y,int type)
 		xs=ys=9;
 	}
 
-	while( ( x<0 || y<0 || ((c=read_gat(m,x,y))==1 || c==5) ) && (i++)<1000 ){
+	while( ( x<0 || y<0 || map_getcell(m,x,y,CELL_CHKNOPASS)) && (i++)<1000 ){
 		if( xs>0 && ys>0 && i<250 ){	// Žw’èˆÊ’u•t‹ß‚Ì’Tõ
 			x=bx+rand()%xs-xs/2;
 			y=by+rand()%ys-ys/2;
@@ -2906,14 +2905,14 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int flag)
 		class = value[k];
 		if(class<=1000 || class>MAX_MOB_DB) continue;
 		for(;amount>0;amount--){
-			int x=0,y=0,c=0,i=0;
+			int x=0,y=0,i=0;
 			md=(struct mob_data *)aCalloc(1,sizeof(struct mob_data));
 			if(mob_db[class].mode&0x02)
 				md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 			else
 				md->lootitem=NULL;
 
-			while((x<=0 || y<=0 || (c=map_getcell(m,x,y))==1 || c==5 ) && (i++)<100){
+			while((x<=0 || y<=0 || map_getcell(m,x,y,CELL_CHKNOPASS)) && (i++)<100){
 				x=rand()%9-4+bx;
 				y=rand()%9-4+by;
 			}
@@ -3611,24 +3610,24 @@ int mobskill_use(struct mob_data *md,unsigned int tick,int event)
 					continue;
 				// Ž©•ª‚ÌŽüˆÍ
 				if( ms[i].target>=MST_AROUND1 ){
-					int bx=x, by=y, i=0, c, m=bl->m, r=ms[i].target-MST_AROUND1;
+					int bx=x, by=y, i=0, m=bl->m, r=ms[i].target-MST_AROUND1;
 					do{
 						bx=x + rand()%(r*2+3) - r;
 						by=y + rand()%(r*2+3) - r;
 					}while( ( bx<=0 || by<=0 || bx>=map[m].xs || by>=map[m].ys ||
-						((c=read_gat(m,bx,by))==1 || c==5) ) && (i++)<1000);
+						map_getcell(m,bx,by,CELL_CHKNOPASS)) && (i++)<1000);
 					if(i<1000){
 						x=bx; y=by;
 					}
 				}
 				// ‘ŠŽè‚ÌŽüˆÍ
 				if( ms[i].target>=MST_AROUND5 ){
-					int bx=x, by=y, i=0, c, m=bl->m, r=(ms[i].target-MST_AROUND5)+1;
+					int bx=x, by=y, i=0,m=bl->m, r=(ms[i].target-MST_AROUND5)+1;
 					do{
 						bx=x + rand()%(r*2+1) - r;
 						by=y + rand()%(r*2+1) - r;
 					}while( ( bx<=0 || by<=0 || bx>=map[m].xs || by>=map[m].ys ||
-						((c=read_gat(m,bx,by))==1 || c==5) ) && (i++)<1000);
+						map_getcell(m,bx,by,CELL_CHKNOPASS)) && (i++)<1000);
 					if(i<1000){
 						x=bx; y=by;
 					}

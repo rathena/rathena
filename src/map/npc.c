@@ -1126,7 +1126,7 @@ static int calc_next_walk_step(struct npc_data *nd)
 static int npc_walk(struct npc_data *nd,unsigned int tick,int data)
 {
 	int moveblock;
-	int i,ctype;
+	int i;
 	static int dirx[8]={0,-1,-1,-1,0,1,1,1};
 	static int diry[8]={1,1,0,-1,-1,-1,0,1};
 	int x,y,dx,dy;
@@ -1151,8 +1151,7 @@ static int npc_walk(struct npc_data *nd,unsigned int tick,int data)
 
 		x = nd->bl.x;
 		y = nd->bl.y;
-		ctype = map_getcell(nd->bl.m,x,y);
-		if(ctype == 1 || ctype == 5) {
+		if(map_getcell(nd->bl.m,x,y,CELL_CHKNOPASS)) {
 			npc_stop_walking(nd,1);
 			return 0;
 		}
@@ -1160,8 +1159,7 @@ static int npc_walk(struct npc_data *nd,unsigned int tick,int data)
 		dx = dirx[nd->dir];
 		dy = diry[nd->dir];
 
-		ctype = map_getcell(nd->bl.m,x+dx,y+dy);
-		if(ctype == 1 || ctype == 5) {
+		if(map_getcell(nd->bl.m,x+dx,y+dy,CELL_CHKNOPASS)) {
 			npc_walktoxy_sub(nd);
 			return 0;
 		}
@@ -1468,11 +1466,9 @@ int npc_parse_warp(char *w1,char *w2,char *w3,char *w4)
 
 	for(i=0;i<ys;i++) {
 		for(j=0;j<xs;j++) {
-			int t;
-			t=map_getcell(m,x-xs/2+j,y-ys/2+i);
-			if (t==1 || t==5)
+			if(map_getcell(m,x-xs/2+j,y-ys/2+i,CELL_CHKNOPASS))
 				continue;
-			map_setcell(m,x-xs/2+j,y-ys/2+i,t|0x80);
+			map_setcell(m,x-xs/2+j,y-ys/2+i,CELL_SETTOUCH);
 		}
 	}
 
@@ -1698,11 +1694,9 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 
 			for(i=0;i<ys;i++) {
 				for(j=0;j<xs;j++) {
-					int t;
-					t=map_getcell(m,x-xs/2+j,y-ys/2+i);
-					if (t==1 || t==5)
+					if(map_getcell(m,x-xs/2+j,y-ys/2+i,CELL_CHKNOPASS))
 						continue;
-					map_setcell(m,x-xs/2+j,y-ys/2+i,t|0x80);
+					map_setcell(m,x-xs/2+j,y-ys/2+i,CELL_SETTOUCH);
 				}
 			}
 		}

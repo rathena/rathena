@@ -1,5 +1,11 @@
 Date	Added
 12/26
+        * Added Bitmap File system from jA 1086 - automatically generates a cache
+          from maps in the GRF to speed up loading. You can enable/disable it with
+          read_map_from_bitmap in map_athena.conf. Note: AFM maps will override this
+          cache [celest]
+        * Added --run_once flag for the map server for testing purposes - closes itself
+          when everything is done loading [celest]
         * Added some code for Moonlit Petals and Basilica [celest]
 
 12/24

@@ -203,7 +203,7 @@ static int pet_attack(struct pet_data *pd,unsigned int tick,int data)
 static int pet_walk(struct pet_data *pd,unsigned int tick,int data)
 {
 	int moveblock;
-	int i,ctype;
+	int i;
 	int x,y,dx,dy;
 
 	nullpo_retr(0, pd);
@@ -235,8 +235,7 @@ static int pet_walk(struct pet_data *pd,unsigned int tick,int data)
 		dx = dirx[pd->dir];
 		dy = diry[pd->dir];
 
-		ctype = map_getcell(pd->bl.m,x+dx,y+dy);
-		if(ctype == 1 || ctype == 5) {
+		if(map_getcell(pd->bl.m,x+dx,y+dy,CELL_CHKNOPASS)){
 			pet_walktoxy_sub(pd);
 			return 0;
 		}
@@ -1058,7 +1057,7 @@ static int pet_randomwalk(struct pet_data *pd,int tick)
 			int r=rand();
 			x=pd->bl.x+r%(d*2+1)-d;
 			y=pd->bl.y+r/(d*2+1)%(d*2+1)-d;
-			if((c=map_getcell(pd->bl.m,x,y))!=1 && c!=5 && pet_walktoxy(pd,x,y)==0){
+			if((map_getcell(pd->bl.m,x,y,CELL_CHKPASS))&&( pet_walktoxy(pd,x,y)==0)){
 				pd->move_fail_count=0;
 				break;
 			}
