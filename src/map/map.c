@@ -33,6 +33,7 @@
 #include "guild.h"
 #include "pet.h"
 #include "atcommand.h"
+#include "charcommand.h"
 #include "nullpo.h"
 #include "socket.h"
 #include "log.h"
@@ -2214,6 +2215,7 @@ int do_init(int argc, char *argv[]) {
 	unsigned char *MAP_CONF_NAME = "conf/map_athena.conf";
 	unsigned char *BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
 	unsigned char *ATCOMMAND_CONF_FILENAME = "conf/atcommand_athena.conf";
+	unsigned char *CHARCOMMAND_CONF_FILENAME = "conf/charcommand_athena.conf";
 	unsigned char *SCRIPT_CONF_NAME = "conf/script_athena.conf";
 	unsigned char *MSG_CONF_NAME = "conf/msg_athena.conf";
 	unsigned char *GRF_PATH_FILENAME = "conf/grf-files.txt";
@@ -2230,6 +2232,8 @@ int do_init(int argc, char *argv[]) {
 			BATTLE_CONF_FILENAME = argv[i+1];
 		else if (strcmp(argv[i],"--atcommand_config") == 0)
 			ATCOMMAND_CONF_FILENAME = argv[i+1];
+		else if (strcmp(argv[i],"--charcommand_config") == 0)
+			CHARCOMMAND_CONF_FILENAME = argv[i+1];
 		else if (strcmp(argv[i],"--script_config") == 0)
 			SCRIPT_CONF_NAME = argv[i+1];
 		else if (strcmp(argv[i],"--msg_config") == 0)
@@ -2272,6 +2276,7 @@ int do_init(int argc, char *argv[]) {
         
 	battle_config_read(BATTLE_CONF_FILENAME);
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
+	charcommand_config_read(CHARCOMMAND_CONF_FILENAME);
 	script_config_read(SCRIPT_CONF_NAME);
 	msg_config_read(MSG_CONF_NAME);
 #ifndef TXT_ONLY

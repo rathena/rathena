@@ -37,6 +37,7 @@
 #include "script.h"
 #include "skill.h"
 #include "atcommand.h"
+#include "charcommand.h"
 #include "intif.h"
 #include "battle.h"
 #include "mob.h"
@@ -7608,7 +7609,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 	char *buf;
 
 	nullpo_retv(sd);
-
+	if (is_charcommand(fd, sd, RFIFOP(fd,4),0)!= CharCommand_None) return;
 	if ((is_atcommand(fd, sd, RFIFOP(fd,4), 0) != AtCommand_None) ||
 	    (sd->sc_data && 
 	    (sd->sc_data[SC_BERSERK].timer != -1 || //バーサーク時は会話も不可
@@ -7935,7 +7936,8 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	gm_command = (char*)aCalloc(strlen(RFIFOP(fd,28)) + 28, sizeof(char)); // 24+3+(RFIFOW(fd,2)-28)+1 or 24+3+(strlen(RFIFOP(fd,28))+1 (size can be wrong with hacker)
 
 	sprintf(gm_command, "%s : %s", sd->status.name, RFIFOP(fd,28));
-	if ((is_atcommand(fd, sd, gm_command, 0) != AtCommand_None) ||
+	if ((is_charcommand(fd, sd, gm_command, 0) != CharCommand_None) ||
+		(is_atcommand(fd, sd, gm_command, 0) != AtCommand_None) ||
 	    (sd && sd->sc_data && 
 	     (sd->sc_data[SC_BERSERK].timer!=-1 || //バーサーク時は会話も不可
 	      sd->sc_data[SC_NOCHAT].timer != -1))) //チャット禁止
@@ -9160,7 +9162,8 @@ void clif_parse_PartyChangeOption(int fd, struct map_session_data *sd) {
  */
 void clif_parse_PartyMessage(int fd, struct map_session_data *sd) {
 	nullpo_retv(sd);
-
+	if (is_charcommand(fd, sd, RFIFOP(fd,4), 0) != CharCommand_None)
+		return;	
 	if (is_atcommand(fd, sd, RFIFOP(fd,4), 0) != AtCommand_None)
 		return;
 	if(sd->sc_data &&
@@ -9370,7 +9373,8 @@ void clif_parse_GuildExplusion(int fd,struct map_session_data *sd) {
  */
 void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
 	nullpo_retv(sd);
-
+	if (is_charcommand(fd, sd, RFIFOP(fd, 4), 0) != CharCommand_None)
+		return;
 	if (is_atcommand(fd, sd, RFIFOP(fd, 4), 0) != AtCommand_None)
 		return;
 	if(sd->sc_data &&

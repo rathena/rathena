@@ -1,4 +1,9 @@
 Date	Added
+11/21
+	* Added charcommand.c/.h for the following reasons: [MC Cameri]
+	  - Less congestion in atcommand.c
+	  - Port commands that start with @char to #, example:
+		~ @charoption will now be #option
 11/20
 	* Added str_lower() function to atcommand.c (from OA). [MC Cameri]
 	* Simplified @charchangesex to @charchangesex [player], your sex is changed to the opposite one [MC Cameri]
