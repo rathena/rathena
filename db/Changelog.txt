@@ -5,6 +5,8 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/6    * Changed spiritball requirements for Chain Crush to 1, thanks to MaoMao of cAthena
+
 12/5    * Edited skill_nocast_db - the skills should be useable outside GvG maps even
           if woe is on [celest]
 
