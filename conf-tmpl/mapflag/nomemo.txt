@@ -2,7 +2,7 @@
 //= Map flags that disable warp portal memory
 //===== By: ==================================================
 //= eAthena Dev Team
-//= 1.1 [Lupus]
+//= 1.2 [Lupus]
 //===== Current Version: =====================================
 
 
@@ -57,6 +57,10 @@ yuno_fild02.gat	mapflag	nomemo
 yuno_in01.gat	mapflag	nomemo
 yuno_in02.gat	mapflag	nomemo
 yuno_in03.gat	mapflag	nomemo
+que_sign01.gat	mapflag	nomemo
+ein_in01.gat	mapflag	nomemo
+airport.gat	mapflag	nomemo
+airplane.gat	mapflag	nomemo
 
 
 // Job quests ================
@@ -213,6 +217,11 @@ xmas_dun01.gat	mapflag	nomemo
 xmas_dun02.gat	mapflag	nomemo
 // Yggdrasil Tree Dun --------
 yggdrasil01.gat	mapflag	nomemo
+// Old Geffenia --------------
+gefenia01.gat	mapflag	nomemo
+gefenia02.gat	mapflag	nomemo
+gefenia03.gat	mapflag	nomemo
+gefenia04.gat	mapflag	nomemo
 
 // Guild Castles =============
 //alde_gld.gat	mapflag	nomemo

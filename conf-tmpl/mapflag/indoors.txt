@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0 
+//= 1.1 [Lupus]
 //===== Compatible With: =====================================
 //=
 //===== Description: =========================================
@@ -51,3 +51,7 @@ que_god01.gat	mapflag	indoors
 que_god02.gat	mapflag	indoors
 ayo_in01.gat	mapflag	indoors
 ayo_in02.gat	mapflag	indoors
+que_sign01.gat	mapflag	indoors
+ein_in01.gat	mapflag	indoors
+airport.gat	mapflag	indoors
+airplane.gat	mapflag	indoors

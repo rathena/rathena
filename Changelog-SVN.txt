@@ -1,6 +1,7 @@
 Date	Added
 
 03/24
+	* Added some mapflags for new towns [Lupus]
 	* Added timer.c optimization / timers sort fix. 'no freezing mobs anymore' Thanx 2 Yor/Freya [Lupus]
 	* Added 'map_charid2id' [celest]
 	* Changed monster damage logging to save char ID's for the most time -- also

@@ -2,7 +2,7 @@
 //= Map flags that disable dead branching
 //===== By: ==================================================
 //= eAthena Dev Team
-//= 1.1 [Lupus]
+//= 1.2 [Lupus]
 //===== Current Version: =====================================
 
 // Cities ================>\\
@@ -43,6 +43,10 @@ yuno_in01.gat	mapflag	nobranch
 yuno_in03.gat	mapflag	nobranch
 yuno_in04.gat	mapflag	nobranch
 yuno_in05.gat	mapflag	nobranch
+que_sign01.gat	mapflag	nobranch
+ein_in01.gat	mapflag	nobranch
+airport.gat	mapflag	nobranch
+airplane.gat	mapflag	nobranch
 
 // Job Quests ====================
 sword_1-1.gat	mapflag	nobranch
