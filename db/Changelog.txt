@@ -6,6 +6,7 @@
 	Skill databases == celest working on them i believe.
 
 03/22
+	* Added new items. Thanks to Landarma [Lupus]
 	* skill CANNIBALIZE: fixed its upkeep time [Lupus]
         * Added Rafflesia into Dead Branch monsters list, removen all MVPs from there [Lupus]
 	  DBs never supposed to call MVPs!!! Only Sages Hocus Pocus could make
