@@ -167,7 +167,8 @@ Progress:	0%
 
 Problem:	Potion Pitcher skill should be able to target yourself.
 Assigned:	N/A
-Progress:	0%
+Progress:	-
+Notes:          Gravity disabled that some time ago ;P
 
 Problem:	There are many empty entries of newly created characters in Char DB Table (missing names)
 Assigned:	N/A
