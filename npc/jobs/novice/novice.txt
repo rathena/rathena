@@ -102,7 +102,6 @@ new_1-2.gat,100,29,4	script	Usher	86,{
 	mes "[Usher]";
 	mes "Welcome to the ^FF0000Training Ground^000000 .";
 	mes "Please choose ^0099FFIntroduction^000000 first if you need to check detailed information about Training Ground.";
-	Lmenu:
 	next;
 	menu "Sign Up on the Training Ground.",Lsign,"Direct Access to Ragnarok.",Ldirect,"^0099FFIntroduction.^000000",Lintro,"Cancel.",Lcancel;
 
@@ -201,7 +200,9 @@ new_1-2.gat,100,29,4	script	Usher	86,{
 		mes "[Usher]";
 		mes "If you want to apply on the Training Ground, Please choose 'Sign Up on the Training Ground'.";
 		mes "if you not, choose 'Direct Access to Ragnarok'.";
-		goto Lmenu;
+		next;
+		menu "Sign Up on the Training Ground.",Lsign,"Direct Access to Ragnarok.",Ldirect,"^0099FFIntroduction.^000000",Lintro,"Cancel.",Lcancel;
+		close;
 
 	Lcancel:
 		mes "[Usher]";
