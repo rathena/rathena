@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 0.5.2 +
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 
 //= v1.1 Fixed arena names for Nightmare mode.  Added room limit check.
+//= v1.2 Fixed the bug that you aways savepoint in geffen.
 //============================================================ 
 
 
@@ -83,7 +84,287 @@ alberta_in.gat, 22, 146,4	script	PvP Narrator#1::PvPNarr	84,
 		mes "Remember these rules well as they can help to ensure your victory.";
 		goto M_Menu;
 	M_3:
-		savepoint "geffen_in.gat",64,60;
+		savepoint "alberta_in.gat",24,143;
+		mes "[PvP Narrator]";
+		mes "Your position has been saved.";
+		close;
+}
+
+payon_in01.gat,173,109,3	script	PvP Narrator#1::PvPNarr	84,
+{
+	mes "[PvP Narrator]";
+	mes "Hello and welcome! I am in charge of explaining the PvP mode to all of those who inquire.  I am the PvP Narrator!";
+	M_Menu:
+	next;
+	menu "What is PvP?",M_0, "What are the PvP modes?",M_1, "What are the rules for PvP?",M_2, "Save position.",M_3;
+
+	M_0:
+		mes "[PvP Narrator]";
+		mes "PvP is short for 'Player versus Player'! It is a unique play mode that allows players to duel other players!";
+		next;
+		mes "[PvP Narrator]";
+		mes "If you're interested just speak with the ^5533FFGate Keeper'^000000.  He will let you into the PvP square.";
+		next;
+		mes "[PvP Narrator]";
+		mes "That IS, IF you have at least a base level of 31 and you have 500 zeny to pay for the enterance fee.";
+		mes "Those are the requirements to participate in PvP.";
+		goto M_Menu;
+	M_1:
+		mes "[PvP Narrator]";
+		mes "There are 2 PvP modes to choose from.";
+		mes "One is called ^5533FF'Yoyo'^000000 Mode and the other is called ^5533FF'Nightmare'^000000 Mode.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Yoyo mode essentially lets you play risk free.  You can experience the thrill of PvP without any restrictions or penalties.";
+		mes "It is recomended that you practice your skills in this mode before you move on.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Nightmare Mode is very dangerous! Please use caution when trying this mode of play.";
+		mes "You will lose some of your real EXP if you are defeated.  There is also the small chance that you will drop some items and equipment.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Of course if you win, the rewards can be great!! Even so you should really think twice before you attempt Nightmare Mode.";
+		mes "Anyways, good luck.";
+		goto M_Menu;
+	M_2:
+		mes "[PvP Narrator]";
+		mes "Before you enter any actual PvP areana, you must first choose your level of ability based on your base level.";
+		mes "You will do this in the pre-fight room.  There will be a row of narrators, each one representing a set of player levels.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Speak to the narrator that represents your base level.  You will then be asked to choose from five different fight maps.";
+		mes "You will be able to see how many people are currently participating in any given map.";
+		next;
+		mes "[PvP Narrator]";
+		mes "This will be represented by the 'Attendee/Total' figure in the corner of the screen.  There is a limit to how many can play on a map.";
+		mes "There is a hidden EXP value in PvP mode.  This EXP will only apply inside of the PvP zone and not outside.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Every one will recieve a base EXP of 5 points when they first start.  If you win a match your EXP with increase by 1 point.";
+		mes "If you loose your EXP will drop by 5 points, so be carefull!";
+		next;
+		mes "[PvP Narrator]";
+		mes "If you are defeated and your EXP is equal to or less than 0, you will be removed from the PvP arena.";
+		mes "If your EXP is more than 0 than you may continue fighting and even get help from healers.";
+		next;
+		mes "[PvP Narrator]";
+		mes "The fighting commands inside of PvP are the same as outside.  Just remember that you won't be able to save inside a PvP arena.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Remember these rules well as they can help to ensure your victory.";
+		goto M_Menu;
+	M_3:
+		savepoint "payon_in01",169,108;
+		mes "[PvP Narrator]";
+		mes "Your position has been saved.";
+		close;
+}
+
+prt_in.gat,56,140,4	script	PvP Narrator#1::PvPNarr	84,
+{
+	mes "[PvP Narrator]";
+	mes "Hello and welcome! I am in charge of explaining the PvP mode to all of those who inquire.  I am the PvP Narrator!";
+	M_Menu:
+	next;
+	menu "What is PvP?",M_0, "What are the PvP modes?",M_1, "What are the rules for PvP?",M_2, "Save position.",M_3;
+
+	M_0:
+		mes "[PvP Narrator]";
+		mes "PvP is short for 'Player versus Player'! It is a unique play mode that allows players to duel other players!";
+		next;
+		mes "[PvP Narrator]";
+		mes "If you're interested just speak with the ^5533FFGate Keeper'^000000.  He will let you into the PvP square.";
+		next;
+		mes "[PvP Narrator]";
+		mes "That IS, IF you have at least a base level of 31 and you have 500 zeny to pay for the enterance fee.";
+		mes "Those are the requirements to participate in PvP.";
+		goto M_Menu;
+	M_1:
+		mes "[PvP Narrator]";
+		mes "There are 2 PvP modes to choose from.";
+		mes "One is called ^5533FF'Yoyo'^000000 Mode and the other is called ^5533FF'Nightmare'^000000 Mode.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Yoyo mode essentially lets you play risk free.  You can experience the thrill of PvP without any restrictions or penalties.";
+		mes "It is recomended that you practice your skills in this mode before you move on.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Nightmare Mode is very dangerous! Please use caution when trying this mode of play.";
+		mes "You will lose some of your real EXP if you are defeated.  There is also the small chance that you will drop some items and equipment.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Of course if you win, the rewards can be great!! Even so you should really think twice before you attempt Nightmare Mode.";
+		mes "Anyways, good luck.";
+		goto M_Menu;
+	M_2:
+		mes "[PvP Narrator]";
+		mes "Before you enter any actual PvP areana, you must first choose your level of ability based on your base level.";
+		mes "You will do this in the pre-fight room.  There will be a row of narrators, each one representing a set of player levels.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Speak to the narrator that represents your base level.  You will then be asked to choose from five different fight maps.";
+		mes "You will be able to see how many people are currently participating in any given map.";
+		next;
+		mes "[PvP Narrator]";
+		mes "This will be represented by the 'Attendee/Total' figure in the corner of the screen.  There is a limit to how many can play on a map.";
+		mes "There is a hidden EXP value in PvP mode.  This EXP will only apply inside of the PvP zone and not outside.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Every one will recieve a base EXP of 5 points when they first start.  If you win a match your EXP with increase by 1 point.";
+		mes "If you loose your EXP will drop by 5 points, so be carefull!";
+		next;
+		mes "[PvP Narrator]";
+		mes "If you are defeated and your EXP is equal to or less than 0, you will be removed from the PvP arena.";
+		mes "If your EXP is more than 0 than you may continue fighting and even get help from healers.";
+		next;
+		mes "[PvP Narrator]";
+		mes "The fighting commands inside of PvP are the same as outside.  Just remember that you won't be able to save inside a PvP arena.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Remember these rules well as they can help to ensure your victory.";
+		goto M_Menu;
+	M_3:
+		savepoint "prt_in",54,137;
+		mes "[PvP Narrator]";
+		mes "Your position has been saved.";
+		close;
+}
+
+morocc_in.gat,144,138,4	script	PvP Narrator#1::PvPNarr	84,
+{
+	mes "[PvP Narrator]";
+	mes "Hello and welcome! I am in charge of explaining the PvP mode to all of those who inquire.  I am the PvP Narrator!";
+	M_Menu:
+	next;
+	menu "What is PvP?",M_0, "What are the PvP modes?",M_1, "What are the rules for PvP?",M_2, "Save position.",M_3;
+
+	M_0:
+		mes "[PvP Narrator]";
+		mes "PvP is short for 'Player versus Player'! It is a unique play mode that allows players to duel other players!";
+		next;
+		mes "[PvP Narrator]";
+		mes "If you're interested just speak with the ^5533FFGate Keeper'^000000.  He will let you into the PvP square.";
+		next;
+		mes "[PvP Narrator]";
+		mes "That IS, IF you have at least a base level of 31 and you have 500 zeny to pay for the enterance fee.";
+		mes "Those are the requirements to participate in PvP.";
+		goto M_Menu;
+	M_1:
+		mes "[PvP Narrator]";
+		mes "There are 2 PvP modes to choose from.";
+		mes "One is called ^5533FF'Yoyo'^000000 Mode and the other is called ^5533FF'Nightmare'^000000 Mode.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Yoyo mode essentially lets you play risk free.  You can experience the thrill of PvP without any restrictions or penalties.";
+		mes "It is recomended that you practice your skills in this mode before you move on.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Nightmare Mode is very dangerous! Please use caution when trying this mode of play.";
+		mes "You will lose some of your real EXP if you are defeated.  There is also the small chance that you will drop some items and equipment.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Of course if you win, the rewards can be great!! Even so you should really think twice before you attempt Nightmare Mode.";
+		mes "Anyways, good luck.";
+		goto M_Menu;
+	M_2:
+		mes "[PvP Narrator]";
+		mes "Before you enter any actual PvP areana, you must first choose your level of ability based on your base level.";
+		mes "You will do this in the pre-fight room.  There will be a row of narrators, each one representing a set of player levels.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Speak to the narrator that represents your base level.  You will then be asked to choose from five different fight maps.";
+		mes "You will be able to see how many people are currently participating in any given map.";
+		next;
+		mes "[PvP Narrator]";
+		mes "This will be represented by the 'Attendee/Total' figure in the corner of the screen.  There is a limit to how many can play on a map.";
+		mes "There is a hidden EXP value in PvP mode.  This EXP will only apply inside of the PvP zone and not outside.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Every one will recieve a base EXP of 5 points when they first start.  If you win a match your EXP with increase by 1 point.";
+		mes "If you loose your EXP will drop by 5 points, so be carefull!";
+		next;
+		mes "[PvP Narrator]";
+		mes "If you are defeated and your EXP is equal to or less than 0, you will be removed from the PvP arena.";
+		mes "If your EXP is more than 0 than you may continue fighting and even get help from healers.";
+		next;
+		mes "[PvP Narrator]";
+		mes "The fighting commands inside of PvP are the same as outside.  Just remember that you won't be able to save inside a PvP arena.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Remember these rules well as they can help to ensure your victory.";
+		goto M_Menu;
+	M_3:
+		savepoint "morocc_in",141,140;
+		mes "[PvP Narrator]";
+		mes "Your position has been saved.";
+		close;
+}
+
+geffen_in.gat, 67,63,4	script	PvP Narrator#1::PvPNarr	84,
+{
+	mes "[PvP Narrator]";
+	mes "Hello and welcome! I am in charge of explaining the PvP mode to all of those who inquire.  I am the PvP Narrator!";
+	M_Menu:
+	next;
+	menu "What is PvP?",M_0, "What are the PvP modes?",M_1, "What are the rules for PvP?",M_2, "Save position.",M_3;
+
+	M_0:
+		mes "[PvP Narrator]";
+		mes "PvP is short for 'Player versus Player'! It is a unique play mode that allows players to duel other players!";
+		next;
+		mes "[PvP Narrator]";
+		mes "If you're interested just speak with the ^5533FFGate Keeper'^000000.  He will let you into the PvP square.";
+		next;
+		mes "[PvP Narrator]";
+		mes "That IS, IF you have at least a base level of 31 and you have 500 zeny to pay for the enterance fee.";
+		mes "Those are the requirements to participate in PvP.";
+		goto M_Menu;
+	M_1:
+		mes "[PvP Narrator]";
+		mes "There are 2 PvP modes to choose from.";
+		mes "One is called ^5533FF'Yoyo'^000000 Mode and the other is called ^5533FF'Nightmare'^000000 Mode.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Yoyo mode essentially lets you play risk free.  You can experience the thrill of PvP without any restrictions or penalties.";
+		mes "It is recomended that you practice your skills in this mode before you move on.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Nightmare Mode is very dangerous! Please use caution when trying this mode of play.";
+		mes "You will lose some of your real EXP if you are defeated.  There is also the small chance that you will drop some items and equipment.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Of course if you win, the rewards can be great!! Even so you should really think twice before you attempt Nightmare Mode.";
+		mes "Anyways, good luck.";
+		goto M_Menu;
+	M_2:
+		mes "[PvP Narrator]";
+		mes "Before you enter any actual PvP areana, you must first choose your level of ability based on your base level.";
+		mes "You will do this in the pre-fight room.  There will be a row of narrators, each one representing a set of player levels.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Speak to the narrator that represents your base level.  You will then be asked to choose from five different fight maps.";
+		mes "You will be able to see how many people are currently participating in any given map.";
+		next;
+		mes "[PvP Narrator]";
+		mes "This will be represented by the 'Attendee/Total' figure in the corner of the screen.  There is a limit to how many can play on a map.";
+		mes "There is a hidden EXP value in PvP mode.  This EXP will only apply inside of the PvP zone and not outside.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Every one will recieve a base EXP of 5 points when they first start.  If you win a match your EXP with increase by 1 point.";
+		mes "If you loose your EXP will drop by 5 points, so be carefull!";
+		next;
+		mes "[PvP Narrator]";
+		mes "If you are defeated and your EXP is equal to or less than 0, you will be removed from the PvP arena.";
+		mes "If your EXP is more than 0 than you may continue fighting and even get help from healers.";
+		next;
+		mes "[PvP Narrator]";
+		mes "The fighting commands inside of PvP are the same as outside.  Just remember that you won't be able to save inside a PvP arena.";
+		next;
+		mes "[PvP Narrator]";
+		mes "Remember these rules well as they can help to ensure your victory.";
+		goto M_Menu;
+	M_3:
+		savepoint "geffen_in",64,60;
 		mes "[PvP Narrator]";
 		mes "Your position has been saved.";
 		close;
@@ -173,19 +454,19 @@ sF_Move:
 }
 
 // Geffen ===================================================>\\
-geffen_in.gat, 67,63,4	duplicate(PvPNarr)	PvP Narrator#2	84
+//geffen_in.gat, 67,63,4	duplicate(PvPNarr)	PvP Narrator#2	84
 geffen_in.gat, 63,63,4	duplicate(GateKeep)	Gate Keeper#2	83
 
 // Morroc ===================================================>\\
-morocc_in.gat,144,138,4	duplicate(PvPNarr)	PvP Narrator#3	84
+//morocc_in.gat,144,138,4	duplicate(PvPNarr)	PvP Narrator#3	84
 morocc_in.gat, 144,142,4	duplicate(GateKeep)	Gate Keeper#3	83
 
 // Payon ===================================================>\\
-payon_in01.gat,6,55,4	duplicate(PvPNarr)	PvP Narrator#5	84
-payon_in01.gat,10,54,4	duplicate(GateKeep)	Gate Keeper#5	83
+//payon_in01.gat,173,109,3	duplicate(PvPNarr)	PvP Narrator#5	84
+payon_in01.gat,175,106,3	duplicate(GateKeep)	Gate Keeper#5	83
 
 // Prontera =================================================>\\
-prt_in.gat,56,140,4	duplicate(PvPNarr)	PvP Narrator#6	84
+//prt_in.gat,56,140,4	duplicate(PvPNarr)	PvP Narrator#6	84
 prt_in.gat,52,140,4	duplicate(GateKeep)	Gate Keeper#6	83
 
 
