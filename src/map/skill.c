@@ -3238,7 +3238,7 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 				break;
 			}
 		}
-		if(skilllv < 4 && rand()%100 > (60+skilllv*10) ) {
+		if(skilllv < 5 && rand()%100 > (60+skilllv*10) ) { //fixed by Lupus (4 -> 5) or else it has 100% success even at lv4
 			clif_skill_fail(sd,skillid,0,0);
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
 			if(bl->type==BL_PC && battle_config.equipment_breaking) {
@@ -11942,7 +11942,7 @@ int skill_readdb(void)
 				p=strchr(p,',');
 				if(p) *p++=0;
 			}
-			if(split[0]==NULL)
+			if(split[0]==0) //fixed by Lupus
 				continue;
 			i=atoi(split[0]);
 			if(i<=0)
@@ -11983,7 +11983,7 @@ int skill_readdb(void)
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(split[0]==NULL)
+		if(split[0]==0) //fixed by Lupus
 			continue;
 		i=atoi(split[0]);
 		if(i<=0)
@@ -12020,7 +12020,7 @@ int skill_readdb(void)
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(split[0]==NULL)
+		if(split[0]==0) //fixed by Lupus
 			continue;
 		i=atoi(split[0]);
 		if(i<=0)
@@ -12052,7 +12052,7 @@ int skill_readdb(void)
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(split[0]==NULL)
+		if(split[0]==0) //fixed by Lupus
 			continue;
 		i=atoi(split[0]);
 		if (i>=10000 && i<10015) // for guild skills [Celest]
@@ -12100,7 +12100,7 @@ int skill_readdb(void)
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(split[0]==NULL)
+		if(split[0]==0) //fixed by Lupus
 			continue;
 		i=atoi(split[0]);
 		if (i>=10000 && i<10015) // for guild skills [Celest]
