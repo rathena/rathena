@@ -38,6 +38,8 @@ Date		Added
 11/15
 	* - Fixed xmas.txt X-mas event, now you get a gift box when yuo first talk to Santa. [shadow]
 
+11/14	
+	* - Added the total new set of Advance Jobchangers after kRO description and screenshots. [Nana]
 11/14
 	* - Fixed niflheim kafra. [shadow]
 
