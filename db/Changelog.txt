@@ -5,7 +5,9 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
-12/18   * Found one missing item N 569, looks like red Potion. Added a temp plug
+12/18   
+	* Fixed screwed drops of Kapha (someone removed one number and all data was shifted) [Lupus]
+	* Found one missing item N 569, looks like red Potion. Added a temp plug
 	  fixed typo bolt -> Bolt in one scroll [Lupus]
 	BTW I made a TXT Resources merger (it helps merge clients resources itemdesc,etc)
 	so if u need it just tell me
