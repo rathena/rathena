@@ -16,6 +16,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
+#include <errno.h>
 #endif
 
 #include <fcntl.h>
@@ -147,7 +148,7 @@ static int send_from_fifo(int fd)
 		} else {
 			session[fd]->wdata_size=0;
 		}
-	} else {
+	} else if (errno != EAGAIN) {
 		printf("set eof :%d\n",fd);
 		session[fd]->eof=1;
 	}

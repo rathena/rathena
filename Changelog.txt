@@ -1,4 +1,7 @@
 Date	Added
+12/14
+	* Fixed how socket handles EAGIN errors (retry instead of
+	  disconnecting) [MouseJstr]
 12/13
         * Skill Updates [celest]
           - Added the new 'Throw Tomahawk' skill (Requires Sakexe1129 or newer) 
