@@ -1,5 +1,6 @@
 Date	Added
 11/15
+	* Added GM Command Logs & Added TXT Logs + TXT Log Options [Codemaster]
 	* Added spawning of monsters at specific level by adding ,# after the spawn name. [Valaris]
 	  mobs_level_up option should be on when using this.
 	  (Example: {ama_dun01.gat,0,0,0,0	monster	Shinobi,99	1401,1,0,0,0} to spawn a level 99 shinobi.)
