@@ -1,6 +1,10 @@
 Date	Added
 
 02/23
+        * Added bAddItemHealRate [celest]
+        * Fixed a crash if adding an offline player to a party, thanks to Alex14
+          [celest]
+        * Fixed a crash with Warp [celest]
 	* New Cards: Some fixes, revisions, additions [Lupus]
         * Fixed char server crash when sending wisp with a "'" in the names [celest]
         * Fixed Backstab not checking for and consuming arrows [celest]

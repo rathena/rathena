@@ -5030,6 +5030,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	int target,interval,range,unit_flag;
 	struct skill_unit_layout *layout;
 	struct status_change *sc_data;
+	int active_flag=1;
 
 	nullpo_retr(0, src);
 
@@ -5060,6 +5061,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		val1=skilllv+6;
 		if(flag==0)
 			limit=2000;
+		active_flag=0;
 		break;
 
 	case PR_SANCTUARY:			/* サンクチュアリ */
@@ -5264,7 +5266,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 					break;
 				}
 			}
-			if (range==0)
+			if (range==0 && active_flag)
 				map_foreachinarea(skill_unit_effect,unit->bl.m
 					,unit->bl.x,unit->bl.y,unit->bl.x,unit->bl.y
 					,0,&unit->bl,gettick(),1);
@@ -8059,12 +8061,10 @@ int skill_encchant_eremental_end(struct block_list *bl,int type)
 /* クロ?キング?査（周りに移動不可能地?があるか） */
 int skill_check_cloaking(struct block_list *bl)
 {
+	struct map_session_data *sd = NULL;
 	static int dx[]={ 0, 1, 0, -1, -1,  1, 1, -1}; //optimized by Lupus
 	static int dy[]={-1, 0, 1,  0, -1, -1, 1,  1};
 	int end=1,i;
-
-	//missing sd [Found by Celest, commited by Aria]
-	struct map_session_data *sd=(struct map_session_data *)bl;
 
 	nullpo_retr(0, bl);
 
@@ -8072,6 +8072,11 @@ int skill_check_cloaking(struct block_list *bl)
 		return 0;
 	else if(bl->type == BL_MOB && !battle_config.monster_cloak_check_type)
 		return 0;
+
+	//missing sd [Found by Celest, commited by Aria]
+	if (bl->type == BL_PC)
+		sd=(struct map_session_data *)bl;
+
 	for(i=0;i<sizeof(dx)/sizeof(dx[0]);i++){
 		if(map_getcell(bl->m,bl->x+dx[i],bl->y+dy[i],CELL_CHKNOPASS)) {
 			end=0;
@@ -8079,17 +8084,16 @@ int skill_check_cloaking(struct block_list *bl)
 		}
 	}
 	if(end){
-		if ((bl->type == BL_PC && pc_checkskill(sd,AS_CLOAKING)<3) || bl->type == BL_MOB) {
+		if ((sd && pc_checkskill(sd,AS_CLOAKING)<3) || bl->type == BL_MOB) {
 			status_change_end(bl, SC_CLOAKING, -1);
-			*status_get_option(bl)&=~4;	/* 念のための?理 */
 		}
-		else if (bl->type == BL_PC && sd->sc_data[SC_CLOAKING].val3 != 130) {
+		else if (sd && sd->sc_data[SC_CLOAKING].val3 != 130) {
 			sd->sc_data[SC_CLOAKING].val3 = 130;
 			status_calc_speed (sd);
 		}
 	}
 	else {
-		if (bl->type == BL_PC && sd->sc_data[SC_CLOAKING].val3 != 103) {
+		if (sd && sd->sc_data[SC_CLOAKING].val3 != 103) {
 			sd->sc_data[SC_CLOAKING].val3 = 103;
 			status_calc_speed (sd);
 		}

@@ -186,3 +186,9 @@ bonus3 bSPDrainValue,n,x,y;		When attacking there is a n% chance to either
 bonus4 bAutoSpellWhenHit,x,y,n,i;	n% chance to cast skill x of level y when
                                         being hit by physical close range damage
                                         i:0=cast on self  1=cast on enemy
+
+//---- 2/22 new card effects ----
+
+bonus2 bAddItemHealRate,n,x;		Increases HP recovered by n type items by x%
+                                        n:1=potions 2=herbs 3=fruits 4=meat 5=candy
+                                          6=juice 7=sashimi

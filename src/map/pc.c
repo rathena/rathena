@@ -1855,6 +1855,10 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->subsize[type2]+=val;
 		break;
+	case SP_ADD_ITEM_HEAL_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->itemhealrate[type2 - 1] += val;
+		break;
 
 	default:
 		if(battle_config.error_log)
@@ -2421,17 +2425,18 @@ int pc_isUseitem(struct map_session_data *sd,int n)
  */
 int pc_useitem(struct map_session_data *sd,int n)
 {
-	int nameid,amount;
+	int amount;
 
 	nullpo_retr(1, sd);
 
 	if(n >=0 && n < MAX_INVENTORY) {
-		nameid = sd->status.inventory[n].nameid;
+		sd->itemid = sd->status.inventory[n].nameid;
 		amount = sd->status.inventory[n].amount;
 		if(sd->status.inventory[n].nameid <= 0 ||
 			sd->status.inventory[n].amount <= 0 ||
 			sd->sc_data[SC_BERSERK].timer!=-1 ||
 			sd->sc_data[SC_MARIONETTE].timer!=-1 ||
+			(pc_issit(sd) && (sd->itemid == 605 || sd->itemid == 606)) ||
 			//added item_noequip.txt items check by Maya&[Lupus]
 			(map[sd->bl.m].flag.pvp && (sd->inventory_data[n]->flag.no_equip&1) ) || // PVP
 			(map[sd->bl.m].flag.gvg && (sd->inventory_data[n]->flag.no_equip>1) ) || // GVG
@@ -2439,6 +2444,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 			clif_useitemack(sd,n,0,0);
 			return 1;
 		}
+		
 		if(sd->inventory_data[n])
 			run_script(sd->inventory_data[n]->use_script,0,sd->bl.id,0);
 
@@ -2902,7 +2908,7 @@ int pc_setpos(struct map_session_data *sd,char *mapname_org,int x,int y,int clrt
 		status_change_end(&sd->bl, SC_HIDING, -1);
 	if(sd->status.option&4)
 		status_change_end(&sd->bl, SC_CLOAKING, -1);
-	if(sd->status.option&16386)
+	if(sd->status.option&16384)
 		status_change_end(&sd->bl, SC_CHASEWALK, -1);
 
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
@@ -4588,7 +4594,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		status_change_end(&sd->bl, SC_HIDING, -1);
 	if(sd->status.option&4)
 		status_change_end(&sd->bl, SC_CLOAKING, -1);
-	if(sd->status.option&16386)
+	if(sd->status.option&16384)
 		status_change_end(&sd->bl, SC_CHASEWALK, -1);
 
 	if(sd->status.hp>0){
@@ -5124,7 +5130,7 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
  */
 int pc_itemheal(struct map_session_data *sd,int hp,int sp)
 {
-	int bonus;
+	int bonus, type = 0;
 //	if(battle_config.battle_log)
 //		printf("heal %d %d\n",hp,sp);
 
@@ -5147,19 +5153,33 @@ int pc_itemheal(struct map_session_data *sd,int hp,int sp)
 		if(sp > 0)
 			sp = 0;
 	}
+
+	if (sd->itemid >= 501 && sd->itemid <= 505)
+		type = 1;	// potions
+	else if (sd->itemid >= 507 && sd->itemid <= 510)
+		type = 2;	// herbs
+	else if (sd->itemid >= 512 && sd->itemid <= 516)
+		type = 3;	// fruits
+	else if (sd->itemid == 517 || sd->itemid == 528)
+		type = 4;	// meat
+	else if (sd->itemid == 529 || sd->itemid == 530)
+		type = 5;	// candy
+	else if (sd->itemid >= 531 && sd->itemid <= 534)
+		type = 6;	// juice
+	else if (sd->itemid == 544 || sd->itemid == 551)
+		type = 7;	// sashimi
+
 	if(hp > 0) {
-		bonus = (sd->paramc[2]<<1) + 100 + pc_checkskill(sd,SM_RECOVERY)*10;
-		if(bonus != 100)
-			hp = hp * bonus / 100;
-		bonus = 100 + pc_checkskill(sd,AM_LEARNINGPOTION)*5;
+		bonus = (sd->paramc[2]<<1) + 100 + pc_checkskill(sd,SM_RECOVERY)*10
+			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
+		if (type > 0)
+			bonus += sd->itemhealrate[type - 1];
 		if(bonus != 100)
 			hp = hp * bonus / 100;
 	}
 	if(sp > 0) {
-		bonus = (sd->paramc[3]<<1) + 100 + pc_checkskill(sd,MG_SRECOVERY)*10;
-		if(bonus != 100)
-			sp = sp * bonus / 100;
-		bonus = 100 + pc_checkskill(sd,AM_LEARNINGPOTION)*5;
+		bonus = (sd->paramc[3]<<1) + 100 + pc_checkskill(sd,MG_SRECOVERY)*10
+			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
 		if(bonus != 100)
 			sp = sp * bonus / 100;
 	}

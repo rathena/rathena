@@ -250,11 +250,13 @@ int party_reply_invite(struct map_session_data *sd,int account_id,int flag)
 // ƒp[ƒeƒB‚ª’Ç‰Á‚³‚ê‚½
 int party_member_added(int party_id,int account_id,int flag)
 {
-	struct map_session_data *sd= map_id2sd(account_id),*sd2;
-	if(sd==NULL && flag==0){
-		if(battle_config.error_log)
-			printf("party: member added error %d is not online\n",account_id);
-		intif_party_leave(party_id,account_id); // ƒLƒƒƒ‰‘¤‚É“o˜^‚Å‚«‚È‚©‚Á‚½‚½‚ß’E‘Þ—v‹‚ðo‚·
+	struct map_session_data *sd = map_id2sd(account_id),*sd2;
+	if(sd == NULL){
+		if (flag == 0) {
+			if(battle_config.error_log)
+				printf("party: member added error %d is not online\n",account_id);
+			intif_party_leave(party_id,account_id); // ƒLƒƒƒ‰‘¤‚É“o˜^‚Å‚«‚È‚©‚Á‚½‚½‚ß’E‘Þ—v‹‚ðo‚·
+		}
 		return 0;
 	}
 	sd2=map_id2sd(sd->party_invite_account);
