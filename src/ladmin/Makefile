@@ -2,8 +2,8 @@ all: ladmin
 txt: ladmin
 sql: ladmin
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/malloc.o ../common/showmsg.o
-COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/version.h ../common/db.h ../common/malloc.h ../common/showmsg.h
+COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/malloc.o ../common/showmsg.o ../common/strlib.o
+COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/version.h ../common/db.h ../common/malloc.h ../common/showmsg.h ../common/strlib.h
 
 ladmin: ladmin.o md5calc.o $(COMMON_OBJ)
 	$(CC) -o ../../$@ ladmin.o md5calc.o $(COMMON_OBJ)

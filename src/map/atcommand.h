@@ -143,7 +143,7 @@ enum AtCommandType {
 	AtCommand_RepairAll, // [Valaris]
 	AtCommand_GuildRecall, // by Yor
 	AtCommand_PartyRecall, // by Yor
-//	AtCommand_Nuke,	// [Valaris]
+	AtCommand_Nuke,	// [Valaris]
 	AtCommand_Enablenpc,
 	AtCommand_Disablenpc,
 	AtCommand_ServerTime, // by Yor

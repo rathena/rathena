@@ -34,7 +34,7 @@
 #include <stdarg.h>
 
 #include "char.h"
-#include "strlib.h"
+#include "../common/strlib.h"
 #include "itemdb.h"
 #include "inter.h"
 #include "db.h"

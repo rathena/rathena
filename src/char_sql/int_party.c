@@ -4,7 +4,7 @@
 //
 
 #include "char.h"
-#include "strlib.h"
+#include "../common/strlib.h"
 #include "socket.h"	
 #include <stdio.h>
 #include <stdlib.h>

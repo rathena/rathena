@@ -18,7 +18,7 @@
 #define STORAGE_MEMINC	16
 	
 #include "char.h"
-#include "strlib.h"
+#include "../../common/strlib.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"

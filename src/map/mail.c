@@ -6,9 +6,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "socket.h"
-#include "timer.h"
-#include "nullpo.h"
+#include "../common/strlib.h"
+#include "../common/socket.h"
+#include "../common/timer.h"
+#include "../common/nullpo.h"
 
 #include "map.h"
 #include "clif.h"

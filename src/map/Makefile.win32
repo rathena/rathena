@@ -23,7 +23,7 @@ LINKOPT = /debug /SUBSYSTEM:CONSOLE
 # OPT = /O2
 CFLAGS =  $(OPT) /nologo /I../common /I$(ZLIBDIR) $(PACKETDEF) /D_WIN32
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o
+COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o ../common/strlib.o
 LIBS = "WSOCK32.LIB"
 
 # "WSOCK32.LIB" "USER32.LIB" "ADVAPI32.LIB" "MSVCRT.LIB" "OLDNAMES.LIB" "KERNEL32.LIB"
@@ -86,7 +86,7 @@ sqlobj/party.o: party.c party.h clif.h intif.h pc.h map.h battle.h ../common/db.
 sqlobj/vending.o: vending.c vending.h clif.h itemdb.h map.h pc.h log.h ../common/mmo.h ../common/showmsg.h
 sqlobj/guild.o: guild.c guild.h storage.h battle.h clif.h intif.h pc.h npc.h map.h ../common/db.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 sqlobj/pet.o: pet.c pet.h map.h clif.h chrif.h intif.h pc.h itemdb.h battle.h mob.h npc.h script.h ../common/db.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
-sqlobj/mail.o: mail.c mail.h ../common/showmsg.h
+sqlobj/mail.o: mail.c mail.h ../common/showmsg.h ../common/strlib.h ../common/utils.h
 sqlobj/log.o: log.c log.h map.h ../common/nullpo.h
 
 clean:

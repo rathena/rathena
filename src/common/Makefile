@@ -9,6 +9,7 @@ lock.o: lock.h showmsg.h
 nullpo.o: nullpo.c nullpo.h showmsg.h
 malloc.o: malloc.c malloc.h showmsg.h
 showmsg.o: showmsg.c showmsg.h
+strlib.o: strlib.c strlib.h utils.h
 
 clean:
 	rm -f *.o

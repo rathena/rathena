@@ -38,6 +38,7 @@ struct TimerData *get_timer(int tid);
 int do_timer(unsigned int tick);
 
 int add_timer_func_list(int (*)(int,unsigned int,int,int),char*);
+void do_final_timer(void);
 char* search_timer_func_list(int (*)(int,unsigned int,int,int));
 
 extern void timer_final();

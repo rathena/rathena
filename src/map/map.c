@@ -2236,6 +2236,7 @@ void do_final(void) {
         delete_session(i);
 
     map_removenpc();
+    //do_final_timer(); (we used timer_final() instead)
     timer_final();
 
     numdb_final(id_db, id_db_final);

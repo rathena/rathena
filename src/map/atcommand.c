@@ -163,7 +163,7 @@ ACMD_FUNC(partyspy); // [Syrus22]
 ACMD_FUNC(repairall); // [Valaris]
 ACMD_FUNC(guildrecall); // by Yor
 ACMD_FUNC(partyrecall); // by Yor
-//ACMD_FUNC(nuke); // [Valaris]
+ACMD_FUNC(nuke); // [Valaris]
 ACMD_FUNC(enablenpc);
 ACMD_FUNC(disablenpc);
 ACMD_FUNC(servertime); // by Yor
@@ -414,7 +414,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_RepairAll,			"@repairall",		60, atcommand_repairall }, // [Valaris]
 	{ AtCommand_GuildRecall,		"@guildrecall",		60, atcommand_guildrecall }, // by Yor
 	{ AtCommand_PartyRecall,		"@partyrecall",		60, atcommand_partyrecall }, // by Yor
-//	{ AtCommand_Nuke,				"@nuke",			60, atcommand_nuke }, // [Valaris]
+	{ AtCommand_Nuke,				"@nuke",			60, atcommand_nuke }, // [Valaris]
 	{ AtCommand_Enablenpc,			"@enablenpc",		80, atcommand_enablenpc }, // []
 	{ AtCommand_Disablenpc,			"@disablenpc",		80, atcommand_disablenpc }, // []
 	{ AtCommand_ServerTime,			"@time",			 0, atcommand_servertime }, // by Yor
@@ -6111,7 +6111,7 @@ int atcommand_repairall(
 	return 0;
 }
 
-/* Removed @nuke for now in favor of alchemist marine sphere skill [Valaris]
+// Removed @nuke for now in favor of alchemist marine sphere skill [Valaris]
 int atcommand_nuke(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
@@ -6142,7 +6142,7 @@ int atcommand_nuke(
 
 	return 0;
 }
-*/
+
 
 /*==========================================
  *

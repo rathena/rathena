@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 #include "char.h"
-#include "strlib.h"
+#include "../common/strlib.h"
 #include "inter.h"
 #include "int_party.h"
 #include "int_guild.h"

@@ -1,6 +1,9 @@
 Date	Added
 
 12/20
+	* Updated makefiles to new strlib locations [Codemaster]
+	* Moved strlib.h and strlib.c into the common directory [Codemaster]
+	* Updated a bit of jA 1081 - it's not completly updated yet!!! [Codemaster]
 	* Fixed some gcc 2.95 problems [MouseJstr]
 	* Speedups in socket code [MouseJstr]
 	* made samesex weddings work and give out correct ring [MouseJstr]

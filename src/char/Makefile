@@ -1,8 +1,8 @@
 all: char-server
 txt: char-server
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/lock.o ../common/malloc.o ../common/showmsg.o
-COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/db.h ../common/lock.h ../common/timer.h ../common/malloc.h ../common/showmsg.h
+COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/db.o ../common/lock.o ../common/malloc.o ../common/showmsg.o ../common/strlib.o
+COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/db.h ../common/lock.h ../common/timer.h ../common/malloc.h ../common/showmsg.h ../common/strlib.h
 char-server: char.o inter.o int_party.o int_guild.o int_storage.o int_pet.o $(COMMON_OBJ)
 	$(CC) -o ../../$@ $>
 

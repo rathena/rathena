@@ -5,7 +5,7 @@
 
 
 #include "char.h"
-#include "strlib.h"
+#include "../common/strlib.h"
 #include "int_storage.h"
 #include "inter.h"
 #include "int_guild.h"

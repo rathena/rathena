@@ -3,7 +3,7 @@
 // SQL conversion by Jioh L. Jung
 //
 #include "char.h"
-#include "strlib.h"
+#include "../common/strlib.h"
 
 #include <stdio.h>
 #include <stdlib.h>

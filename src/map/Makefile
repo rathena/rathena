@@ -10,7 +10,7 @@ txtobj:
 sqlobj:
 	mkdir sqlobj
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o ../common/utils.o
+COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o ../common/utils.o ../common/strlib.o
 LIBS = -lz -lm
 
 map-server: txtobj/map.o txtobj/chrif.o txtobj/clif.o txtobj/pc.o txtobj/npc.o txtobj/chat.o txtobj/path.o txtobj/itemdb.o txtobj/mob.o txtobj/script.o txtobj/storage.o txtobj/skill.o txtobj/atcommand.o txtobj/charcommand.o txtobj/battle.o txtobj/intif.o txtobj/trade.o txtobj/party.o txtobj/vending.o txtobj/guild.o txtobj/pet.o $(COMMON_OBJ)
@@ -67,7 +67,7 @@ sqlobj/party.o: party.c party.h clif.h intif.h pc.h map.h battle.h ../common/db.
 sqlobj/vending.o: vending.c vending.h clif.h itemdb.h map.h pc.h log.h ../common/mmo.h ../common/showmsg.h
 sqlobj/guild.o: guild.c guild.h storage.h battle.h clif.h intif.h pc.h npc.h map.h ../common/db.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 sqlobj/pet.o: pet.c pet.h map.h clif.h chrif.h intif.h pc.h itemdb.h battle.h mob.h npc.h script.h ../common/db.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
-sqlobj/mail.o: mail.c mail.h ../common/showmsg.h
+sqlobj/mail.o: mail.c mail.h ../common/showmsg.h ../common/strlib.h ../common/utils.h
 sqlobj/log.o: log.c log.h map.h ../common/nullpo.h
 sqlobj/charcommand.o: charcommand.c charcommand.h itemdb.h pc.h map.h skill.h clif.h mob.h intif.h battle.h storage.h guild.h pet.h log.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 

@@ -44,7 +44,7 @@ void Gettimeofday(struct timeval *timenow)
 //add include for DBMS(mysql)
 #include <mysql.h>
 
-#include "strlib.h"
+#include "../common/strlib.h"
 #include "timer.h"
 /*
 #include "timer.h"
