@@ -640,7 +640,7 @@ LPaladin2:
 
 LClown:
 	if(class !=4004) goto LNotArch4;
-	goto LBard2;
+	goto LClown2;
 
 LNotArch4:
 	mes "[ ^0065DFJobra^000000 ]";
@@ -680,7 +680,7 @@ LNotMerc5:
 	mes "Ummm... no, you gotta be a Merchant High first...";
 	close;
 
-L:Cre2:
+LCre2:
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Cool! Go make some potions! Open a Pharmacy! yeah yeah yeah! ^_^";
 	jobchange 42;// Job: Job_Creator
