@@ -1,5 +1,6 @@
 Date	Added
 01/05
+        * Optimised PCLoginEvent activation a bit [celest]
         * Set 'droprate0item''s default to 'yes' so that items with 0 rate will never
           drop [celest]
         * Look at item type other than item ID as well to check whether it is a card

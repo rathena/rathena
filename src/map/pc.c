@@ -891,10 +891,14 @@ int pc_authok(int id, int login_id2, time_t connect_until_time, struct mmo_chars
 	else
 		sprintf(tmp_output,"Character '"CL_WHITE"%s"CL_RESET"' logged in. (Account ID: '"CL_WHITE"%d"CL_RESET"').\n", sd->status.name, sd->status.account_id);
 	ShowInfo(tmp_output);
-	//printf("pc: OnPCLogin event done. (%d events)\n", npc_event_doall("OnPCLogin") );
-	if (npc_name2id("PCLoginEvent")) {
-		run_script(npc_name2id("PCLoginEvent")->u.scr.script,0,sd->bl.id,npc_name2id("PCLoginEvent")->bl.id); // PCLoginNPC
-		ShowStatus("Event '"CL_WHITE"PCLoginEvent"CL_RESET"' executed.\n");
+
+	{
+		struct npc_data *npc;
+		//printf("pc: OnPCLogin event done. (%d events)\n", npc_event_doall("OnPCLogin") );
+		if ((npc = npc_name2id("PCLoginEvent"))) {
+			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLoginNPC
+			ShowStatus("Event '"CL_WHITE"PCLoginEvent"CL_RESET"' executed.\n");
+		}
 	}
 	// Send friends list
 	clif_friends_list_send(sd);
