@@ -70,7 +70,7 @@ CREATE TABLE `char` (
   PRIMARY KEY  (`char_id`),
   KEY `party_id` (`party_id`),
   KEY `guild_id` (`guild_id`)
-) TYPE=MyISAM; 
+) TYPE=MyISAM AUTO_INCREMENT=15000; 
 
 # Database: Ragnarok
 # Table: 'charlog'
