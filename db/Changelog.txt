@@ -1,8 +1,8 @@
 	Post here any database changes ok guys? [shadowlady]
 
 	==== progress ====
-	Atothala mobs == Added but using poring stats ( ? )
-	Ayothala items == Added but no effect ( all are "ect" itens)
+	Ayathoya mobs == Added but using poring stats ( ? )
+	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
 11/16
