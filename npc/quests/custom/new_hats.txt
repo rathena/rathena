@@ -561,7 +561,7 @@ prontera.gat,141,172,5	script 	Jac	107,{
 			next;
 			if(countitem(2248)<1) goto L_ITEM_15;//Items: Western Grace,
 			if(countitem(7030)<108) goto L_ITEM_15;//Items: Claw of Desert Wolf,
-			if(countitem(7100)<100) goto L_ITEM_15;//Items: Sharpened Leaf,
+			if(countitem(7194)<100) goto L_ITEM_15;//Items: Soft Grass Leaf,
 			if(countitem(7120)<4) goto L_ITEM_15;//Items: Burning Horseshoe,
 			mes "[Jac]";
 			mes "Wow!! Well done! Finally you have gathered all items needed!";
@@ -570,7 +570,7 @@ prontera.gat,141,172,5	script 	Jac	107,{
    			next;
 			delitem 2248,1;//Items: Western Grace,
 			delitem 7030,108;//Items: Claw of Desert Wolf,
-			delitem 7100,100;//Items: Sharpened Leaf,
+			delitem 7194,100;//Items: Soft Grass Leaf,
 			delitem 7120,4;//Items: Burning Horseshoe,
 			mes "[Jac]";
 			mes "Tah Dah!!!^FF0000Cowboy Hat^000000...! Please Take it!";
@@ -593,8 +593,8 @@ prontera.gat,141,172,5	script 	Jac	107,{
 			mes "[Jac]";
 			mes "1 Western Grace";
 			mes "108 Claw of Desert Wolf";
-			mes "100 Sharpened Leaf ";
-			mes "4 Burning Horseshoe";
+			mes "100 Soft Grass Leaf drop by Parasite (Umbala Map)";
+			mes "4 Burning Horseshoe drop by Nightmare Terror (Magma Dungeon)";
 			mes "...Did you know this already?";
 			close;
 	L1_16:
