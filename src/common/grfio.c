@@ -96,7 +96,7 @@ typedef struct {
 //Since char defines *FILELIST.gentry, the maximum which can be added by grfio_add becomes by 127 pieces.
 
 #define	GENTRY_LIMIT	127
-#define	FILELIST_LIMIT	32768	// temporary maximum, and a theory top maximum are 2G.
+#define	FILELIST_LIMIT	65536	// temporary maximum, and a theory top maximum are 2G.
 
 static FILELIST *filelist;
 static int	filelist_entrys;
