@@ -1410,8 +1410,7 @@
 5093,Nun_Hat_,Nun Hat,5,20,,300,,5,,0,33024,0,768,,65,177,{},{ bonus bMaxSP,100; }
 5094,Orc_Hero_Helm,Orc Hero Helm,5,20,,900,,5,,0,2088958,2,768,,55,178,{},{ bonus bStr,2; bonus bVit,1; }
 5096,Assassin_Mask_,Assassin Mask,5,20,,100,,0,,0,4096,2,1,,70,180,{},{},,,
-5097,Annual_Commemoration_Hat,Annual Commemoration Hat,3,20,,10,,,,,,,,,,,{},{}
-
+5097,Annual_Commemoration_Hat,Annual Commemoration Hat,5,,,30,,3,,0,10477567,2,256,,0,166,{},{ bonus2 bAllStats,3; }
 
 // Misc items
 7001,Mold_Powder,Mould Powder,3,680,,10,,,,,,,,,,,{},{}
