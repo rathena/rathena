@@ -5,6 +5,10 @@
 	Ayathoya items == Added but no effect ( all are "ect" itens)
 	Skill databases == celest working on them i believe.
 
+12/26
+        * Added item_db2.txt - would be more convenient to store custom items in a
+          separate db [celest]
+
 12/21
         * Added prices to the Quiers ( = 500* arrow price), fixed few item names
 	  (removed '_' from jNAME column), fixed HP amount in Novices Red Potion [Lupus]

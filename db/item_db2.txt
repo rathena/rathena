@@ -1,0 +1,6 @@
+//ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Gender,Loc,wLV,eLV,View,{UseScript},{EquipScript}
+//Elements: 0 Nothing, 1 Water, 2 Earth ,3 Fire, 4 Wind, 5 Poison, 6 Saint, 7 Darkness, 8 Sense, 9 Immortality
+
+// Custom Items go here
+//=============================================================
+0,DEFAULT,Default,0,20,,10,,,,,0,2,0,0,,,{},{}
