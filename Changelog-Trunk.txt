@@ -1,0 +1,7 @@
+Date	Added
+
+04/07
+        * Switched to G++ as the default [MouseJstr]
+	* Enabled PCRE on by default [MouseJstr]
+	* cleaned up svn:ignore properties [MouseJstr]
+	* cleaned up svn:eol-style properties [MouseJstr]

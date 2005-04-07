@@ -387,7 +387,7 @@ int npc_chat_sub(struct block_list *bl, va_list ap)
             int offsets[20];
             char buf[255];
             // perform pattern match
-            int r = pcre_exec(e->pcre_, e->pcre_extra_, msg, len, 0, 
+            int r = pcre_exec(e->pcre_, e->pcre_extra_, (char *) msg, len, 0, 
                 0, offsets, sizeof(offsets) / sizeof(offsets[0]));
             if (r >= 0) {
                 // save out the matched strings
