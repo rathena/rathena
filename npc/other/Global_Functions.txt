@@ -88,5 +88,5 @@ function	script	Is_Sword_Class	{
 //-----------------------------------------------------
 // returns 1 if the player is either Super Novice or Super Baby, 0 otherwise
 function	script	Is_Super_Class	{
-	return ( Class==Job_Super_Baby || Class==Job_SuperNovice )
+	return ( Class==Job_Super_Baby || Class==Job_SuperNovice );
 }
