@@ -2,10 +2,15 @@
 //= Map flags that disable warp portal memory
 //===== By: ==================================================
 //= eAthena Dev Team
+//= 1.2 [Lupus]
 //===== Current Version: =====================================
 
 
-// Towns  ==================>\\
+// Towns  ====================
+ayo_in01.gat	mapflag	nomemo
+ayo_in02.gat	mapflag	nomemo
+ayo_fild02.gat	mapflag	nomemo
+alb2trea.gat	mapflag	nomemo
 alb_ship.gat	mapflag	nomemo
 alberta_in.gat	mapflag	nomemo
 aldeba_in.gat	mapflag	nomemo
@@ -13,6 +18,9 @@ ama_in01.gat	mapflag	nomemo
 ama_in02.gat	mapflag	nomemo
 cmd_in01.gat	mapflag	nomemo
 cmd_in02.gat	mapflag	nomemo
+gef_fild06.gat	mapflag	nomemo
+gef_fild08.gat	mapflag	nomemo
+gef_fild12.gat	mapflag	nomemo
 gef_tower.gat	mapflag	nomemo
 geffen_in.gat	mapflag	nomemo
 gon_test.gat	mapflag	nomemo
@@ -24,23 +32,38 @@ lou_in01.gat	mapflag	nomemo
 lou_in02.gat	mapflag	nomemo
 moc_castle.gat	mapflag	nomemo
 morocc_in.gat	mapflag	nomemo
+mjolnir_01.gat	mapflag	nomemo
+mjolnir_07.gat	mapflag	nomemo
+mjolnir_10.gat	mapflag	nomemo
+niflheim.gat	mapflag	nomemo
 nif_in.gat	mapflag	nomemo
 new_1-1.gat	mapflag	nomemo
 new_1-2.gat	mapflag	nomemo
 new_1-3.gat	mapflag	nomemo
 new_1-4.gat	mapflag	nomemo
+pay_fild05.gat	mapflag	nomemo
 payon_in01.gat	mapflag	nomemo
 payon_in02.gat	mapflag	nomemo
+payon_in03.gat	mapflag	nomemo
 prt_castle.gat	mapflag	nomemo
 prt_church.gat	mapflag	nomemo
 prt_in.gat	mapflag	nomemo
 um_in.gat	mapflag	nomemo
+um_fild01.gat	mapflag	nomemo
+um_fild02.gat	mapflag	nomemo
+um_fild03.gat	mapflag	nomemo
 xmas_in.gat	mapflag	nomemo
+yuno_fild02.gat	mapflag	nomemo
 yuno_in01.gat	mapflag	nomemo
 yuno_in02.gat	mapflag	nomemo
 yuno_in03.gat	mapflag	nomemo
+que_sign01.gat	mapflag	nomemo
+ein_in01.gat	mapflag	nomemo
+airport.gat	mapflag	nomemo
+airplane.gat	mapflag	nomemo
 
-// Job quests ===================
+
+// Job quests ================
 sword_1-1.gat	mapflag	nomemo
 sword_2-1.gat	mapflag	nomemo
 sword_3-1.gat	mapflag	nomemo
@@ -61,6 +84,11 @@ monk_test.gat	mapflag	nomemo
 monk_in.gat	mapflag	nomemo
 in_rogue.gat	mapflag	nomemo
 job_sage.gat	mapflag	nomemo
+
+// Special Quests Places =====
+que_god01.gat	mapflag	nomemo
+que_god02.gat	mapflag	nomemo
+
 
 // Dungeons =================
 alde_dun01.gat	mapflag	nomemo
@@ -187,10 +215,15 @@ um_dun02.gat	mapflag	nomemo
 // Toy Factory ---------------
 xmas_dun01.gat	mapflag	nomemo
 xmas_dun02.gat	mapflag	nomemo
-// Yggdrasil Tree Dun -------
+// Yggdrasil Tree Dun --------
 yggdrasil01.gat	mapflag	nomemo
+// Old Geffenia --------------
+gefenia01.gat	mapflag	nomemo
+gefenia02.gat	mapflag	nomemo
+gefenia03.gat	mapflag	nomemo
+gefenia04.gat	mapflag	nomemo
 
-// Guild Castles ===============
+// Guild Castles =============
 //alde_gld.gat	mapflag	nomemo
 aldeg_cas01.gat	mapflag	nomemo
 aldeg_cas02.gat	mapflag	nomemo
@@ -220,14 +253,14 @@ gefg_cas03.gat	mapflag	nomemo
 gefg_cas04.gat	mapflag	nomemo
 gefg_cas05.gat	mapflag	nomemo
 
-// GvG Arenas =================
+// GvG Arenas ================
 guild_vs1.gat	mapflag	nomemo
 guild_vs2.gat	mapflag	nomemo
 guild_vs3.gat	mapflag	nomemo
 guild_vs4.gat	mapflag	nomemo
 guild_vs5.gat	mapflag	nomemo
 
-// Arenas ====================>\\
+// Arenas ====================
 arena_room.gat	mapflag	nomemo
 force_1-1.gat	mapflag	nomemo
 force_1-2.gat	mapflag	nomemo
@@ -267,7 +300,7 @@ wizard_1-1.gat	mapflag	nomemo
 wizard_2-1.gat	mapflag	nomemo
 wizard_3-1.gat	mapflag	nomemo
 
-// PvP Arenas ===================
+// PvP Arenas ================
 pvp_y_room.gat	mapflag	nomemo
 pvp_y_1-1.gat	mapflag	nomemo
 pvp_y_1-2.gat	mapflag	nomemo

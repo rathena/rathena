@@ -3,13 +3,15 @@
 //===== By: ================================================== 
 //= Usnul
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
 //= Clothes dyer with standard palletes
 //===== Additional Comments: ================================= 
 //= Fully working
+//= 2.1 Shortened some labels to make this script loading,
+//= Added Black+White Colors desc [Lupus]
 //============================================================ 
 
 
@@ -70,7 +72,7 @@ Male_dye:
 		if(Class==7 || Class==14) goto L_Knight_Crus_M;
 		if(Class==8 || Class==15) goto L_Priest_Monk_M;
 		if(Class==9 || Class==11 || Class==19 || Class==23) goto L_Wiz_Hunt_Bard_SN_M;
-		if(Class==10 || Class==18) goto L_BlackSmith_Alchemist_M;
+		if(Class==10 || Class==18) goto L_Bls_Alch_M;
 //		if(Class==12) goto L_Assassin_M;
 		if(Class==17) goto L_Rogue_M;
 	
@@ -119,7 +121,7 @@ Male_dye:
 		set @green, 3;
 		set @black, 4;
 		menu "- Red",L_Dye_Red,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
-	L_BlackSmith_Alchemist_M:
+	L_Bls_Alch_M:
 		set @red, 1;
 		set @green, 2;
 		set @white, 3;
@@ -151,9 +153,9 @@ Female_dye:
 		if(Class==7 || Class==14) goto L_Knight_Crus_F;
 		if(Class==8) goto L_Priest_F;
 		if(Class==9 || Class==16) goto L_Wiz_Sage_F;
-		if(Class==10 || Class==18) goto L_BlackSmith_Alchemist_F;
+		if(Class==10 || Class==18) goto L_Bls_Alch_F;
 		if(Class==11 || Class==20) goto L_Hunt_Dancer_F;
-		if(Class==12 || Class==17) goto L_Assassin_Rogue_F;
+		if(Class==12 || Class==17) goto L_As_Rog_F;
 		if(Class==23) goto L_SN_F;
 	
 	//1 Class
@@ -201,13 +203,13 @@ Female_dye:
 		set @green, 3;
 		set @violet, 4;
 		menu "- Red",L_Dye_Red,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Violet",L_Dye_Violet,"- Cancel",L_End;
-	L_BlackSmith_Alchemist_F:
+	L_Bls_Alch_F:
 		set @red, 1;
 		set @green, 2;
 		set @violet, 3;
 		set @black, 4;
 		menu "- Red",L_Dye_Red,"- Green",L_Dye_Green,"- Violet",L_Dye_Violet,"- Black",L_Dye_Black,"- Cancel",L_End;
-	L_Assassin_Rogue_F:
+	L_As_Rog_F:
 		set @red, 1;
 		set @yellow, 2;
 		set @white, 3;
@@ -320,6 +322,8 @@ L_Dye_Yellow:
 		mes " - ^FF8800Orange^000000: 10000 zeny, 1 Orange Dyestuff";
 		mes " - ^4422FFBlue^000000: 10000 zeny, 1 CobaltBlue Dyestuff";
 		mes " - ^009500Green^000000: 10000 zeny, 1 DarkGreen Dyestuff";
+		mes " - Black: 10000 zeny, 1 Black Dyestuff";
+		mes " - White: 10000 zeny, 1 White Dyestuff";
 		goto M_Menu;
 
 	L_End:

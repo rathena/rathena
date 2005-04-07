@@ -23,9 +23,7 @@
 //=======================================================================================================//
 //						Doll Quest
 //=======================================================================================================//
-alberta.gat,117,134,8	script	Elin	96,
-{
-	
+alberta.gat,117,134,8	script	Elin	96,{
 	mes "[Elin]";
 	if(Sex == 0) mes "Hello, miss. Since you're a girl, you must like dolls, don't you?";
 	if(Sex == 1) mes "Hello, mister. Hmm, since you're a boy, you don't like dolls, do you?";
@@ -382,8 +380,7 @@ alberta_in.gat,122,53,4	script	Cherokee	47,{
 //=======================================================================================================//
 //			Bao Bao, Cresent Hairpin, Fashionbale Glasses, Heart Hairpin
 //=======================================================================================================//
-alberta.gat,120,53,3	script	Zic	51,
-{
+alberta.gat,120,53,3	script	Zic	51,{
 	mes "[Zic]";
 	mes "Yay! A cool breeze! That's why I love the sea!!";
 	emotion 2;
@@ -503,8 +500,7 @@ alberta.gat,120,53,3	script	Zic	51,
 //=======================================================================================================//
 //				Hat of Sun God, Sunday Hat, Mage Hat, Magician Hat
 //=======================================================================================================//
-alberta.gat,135,79,3	script	Tempestra	71,
-{
+alberta.gat,135,79,3	script	Tempestra	71,{
 	mes "[Tempestra]";
 	mes "Ah...... Such a cool breeze.  It's good to be next to the sea.  I think it was the right choice for me to take a break from my business and come here.";
 	emotion 2;

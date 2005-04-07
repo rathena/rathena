@@ -3,6 +3,10 @@
 #define _MOB_H_
 
 #define MAX_RANDOMMONSTER 3
+#define MAX_MOB_RACE_DB 6
+#define MAX_MOB_DB 2000		/* Change this to increase the table size in your mob_db to accomodate
+				numbers more than 2000 for mobs if you want to (and know what you're doing).
+				Be sure to note that 4001 to 4047 are for advanced classes. */
 
 struct mob_skill {
 	short state;
@@ -26,9 +30,10 @@ struct mob_db {
 	int str,agi,vit,int_,dex,luk;
 	int range,range2,range3;
 	int size,race,element,mode;
+	short race2;	// celest
 	int speed,adelay,amotion,dmotion;
 	int mexp,mexpper;
-	struct { int nameid,p; } dropitem[8];
+	struct { int nameid,p; } dropitem[10]; //8 -> 10 Lupus
 	struct { int nameid,p; } mvpitem[3];
 	int view_class,sex;
 	short hair,hair_color,weapon,shield,head_top,head_mid,head_buttom,option,clothes_color; // [Valaris]
@@ -72,32 +77,35 @@ enum {
 };
 
 enum {
-	MSS_IDLE,	// ë“ã@
-	MSS_WALK,	// à⁄ìÆ
-	MSS_ATTACK,	// çUåÇ
-	MSS_DEAD,	// éÄñS
-	MSS_LOOT,	// ÉãÅ[Ég
-	MSS_CHASE,	// ìÀåÇ
+	MSS_IDLE,	// ?@
+	MSS_WALK,	// ?
+	MSS_ATTACK,	// U
+	MSS_DEAD,	// S
+	MSS_LOOT,	// [g
+	MSS_CHASE,	// ?
 };
 
 int mobdb_searchname(const char *str);
 int mobdb_checkid(const int id);
 int mob_once_spawn(struct map_session_data *sd,char *mapname,
-	int x,int y,const char *mobname,int class,int amount,const char *event);
+	int x,int y,const char *mobname,int class_,int amount,const char *event);
 int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
 	int x0,int y0,int x1,int y1,
-	const char *mobname,int class,int amount,const char *event);
+	const char *mobname,int class_,int amount,const char *event);
 
 int mob_spawn_guardian(struct map_session_data *sd,char *mapname,	// Spawning Guardians [Valaris]
-	int x,int y,const char *mobname,int class,int amount,const char *event,int guardian);	// Spawning Guardians [Valaris]
+	int x,int y,const char *mobname,int class_,int amount,const char *event,int guardian);	// Spawning Guardians [Valaris]
 
 
 int mob_walktoxy(struct mob_data *md,int x,int y,int easy);
+//int mob_randomwalk(struct mob_data *md,int tick);
+//int mob_can_move(struct mob_data *md);
 
 int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_stop_walking(struct mob_data *md,int type);
 int mob_stopattack(struct mob_data *);
 int mob_spawn(int);
+int mob_setdelayspawn(int);
 int mob_damage(struct block_list *,struct mob_data*,int,int);
 int mob_changestate(struct mob_data *md,int state,int type);
 int mob_heal(struct mob_data*,int);
@@ -116,8 +124,9 @@ short mob_get_clothes_color(int);	//player mob dye [Valaris]
 int mob_get_equip(int); // mob equip [Valaris]
 int do_init_mob(void);
 
+void mob_unload(struct mob_data *md);
+int mob_remove_map(struct mob_data *md, int type);
 int mob_delete(struct mob_data *md);
-int mob_catch_delete(struct mob_data *md,int type);
 int mob_timer_delete(int tid, unsigned int tick, int id, int data);
 
 int mob_deleteslave(struct mob_data *md);
@@ -132,6 +141,7 @@ int mobskill_event(struct mob_data *md,int flag);
 int mobskill_castend_id( int tid, unsigned int tick, int id,int data );
 int mobskill_castend_pos( int tid, unsigned int tick, int id,int data );
 int mob_summonslave(struct mob_data *md2,int *value,int amount,int flag);
+int mob_countslave(struct mob_data *md);
 
 int mob_gvmobcheck(struct map_session_data *sd, struct block_list *bl);
 void mob_reload(void);

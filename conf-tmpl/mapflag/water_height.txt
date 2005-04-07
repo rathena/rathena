@@ -1,5 +1,5 @@
 // …ê‚Ì‚‚³‚ğİ’è
-//water_height.txt—AthenaDBŒv‰æ 2004/03/31 18:52:09 +0900 (JST)
+//water_height.txt eAthenaDB 2005/03/25 18:52:09 +0900 (JST)
 
 xmas.gat	3
 mjolnir_01.gat	0
@@ -66,3 +66,6 @@ gefg_cas05.gat	5
 prtg_cas05.gat	13
 tur_dun01.gat	-65
 ama_fild01.gat	5
+yuno_fild09.gat	10
+yuno_fild11.gat	-19
+//sec_in02.gat 5 dunno what value

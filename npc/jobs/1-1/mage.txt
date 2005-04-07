@@ -3,20 +3,21 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena 1.0 +
 //===== Description: ========================================= 
 //= <Description> 
 //===== Additional Comments: ================================= 
 //= Fully working
 //= 1.1 Fixed input ingridients bug [Lupus]
+//= v1.2 Added instant job change for High Novice [Lupus]
 //============================================================ 
 
 
 // -- Expert Mage -- 
-geffen_in.gat,164,124,4	script	Expert Mage	123,
-{
+geffen_in.gat,164,124,4	script	Expert Mage	123,{
+	callfunc "F_ToHigh",26,"High Mage",33,"High Wizard",157,0,0,0,"Expert Mage";
 	if(Class==Job_Novice && job_magician_q >= 1) goto L_BeMage;
 
 	mes "[Expert Mage]";
@@ -148,8 +149,7 @@ L_BeMage:
 }
 
 // -- Solutions Guide Book --
-geffen_in.gat,177,112,1	script	Solutions Guide Book	111,
-{
+geffen_in.gat,177,112,1	script	Solutions Guide Book	111,{
 	mes "[Solutions Guide Book]";
 	mes "I belong to Geffen Magic Academy.  Please handle with care.";
 	next;
@@ -249,8 +249,7 @@ geffen_in.gat,177,112,1	script	Solutions Guide Book	111,
 }
 
 // -- Mixing Machine --
-geffen_in.gat,164,112,1	script	Mixing Machine	111,
-{
+geffen_in.gat,164,112,1	script	Mixing Machine	111,{
 	mes "[Mixing Machine]";
 	mes "This is the unique Mixing Machine designed only for making magic solutions.  It is the property of the Geffen Magic Academy.";
 	next;

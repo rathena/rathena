@@ -23,8 +23,7 @@
 //*********************************************************************************************************************************************************************************\\
 //============================================ Father Thomas: Job changer, Test 1 =============================================\\
 //*********************************************************************************************************************************************************************************\\
-prt_church.gat,16,41,4	script	Father Thomas	60,
-{
+prt_church.gat,16,41,4	script	Father Thomas	60,{
 	mes "[Father Thomas]";
 	if (class == Job_Novice) goto L_Novice;
 	if (class == Job_Priest) goto L_Priest;
@@ -37,21 +36,21 @@ L_Other:
 	mes "Please feel free to rest, the church is the safest place in this world.";
 	next;
 	mes "[Father Thomas]";
-	mes "I hope god will bless you.";
+	mes "I hope God will bless you.";
 	close;
 
 L_Novice:
 	mes "May God bless you, child.  This is the Prontera Church.  What are you here for?";
 	next;
-	menu "I want to become an acolyote.",M_0a, "I want to become a ^5533FFPriest^000000.",M_0b, "Iam just walking around.",M_0End;
+	menu "I want to become an Acolyte.",M_0a, "I want to become a ^5533FFPriest^000000.",M_0b, "I'm just walking around.",M_0End;
 
 	M_0a:
 		mes "[Father Thomas]";
-		mes "Haha.. so you want to become an Acolyote eh? To apply to become an Acolyote, please go to the room opposite of here.";
+		mes "Haha.. so you want to become an Acolyte eh? To apply to become an Acolyte, please go to the room opposite of here.";
 		close;
 	M_0b:
 		mes "[Father Thomas]";
-		mes "Haha...in order to become a priest you must first become an Acolyote.  To become an Acolyote, go to the room opposite of here.";
+		mes "Haha...in order to become a priest you must first become an Acolyte.  To become an Acolyte, go to the room opposite of here.";
 		close;
 	M_0End:
 		mes "[Father Thomas]";
@@ -62,7 +61,7 @@ L_Novice:
 		close;
 
 L_Priest:
-	mes "God bless you, child.  You are here again because you listened to god's orders.";
+	mes "God bless you, child.  You are here again because you listened to God's orders.";
 	next;
 	mes "[Father Thomas]";
 	mes "I don't know if God's sons and daughters are going on the path of light or the path of darkness... I can only pray for the best.";
@@ -70,11 +69,11 @@ L_Priest:
 	mes "[Father Thomas]";
 	mes "So why are you here today?";
 	next;
-	menu "I just wanted to see how you were.",M_1a, "I am here to help the Acolytes.",M_1b, "Life is really hard... I was wondering if you could help.",M_1End;
+	menu "I just wanted to see how you were.",M_1a, "I'm here to help the Acolytes.",M_1b, "Life is really hard... I was wondering if you could help.",M_1End;
 
 	M_1a:
 		mes "[Father Thomas]";
-		mes "Oh, well I am fine thank you.  Please send my regards to all of the other Priests, and Priestess.";
+		mes "Oh, well I'm fine thank you.  Please send my regards to all of the other Priests, and Priestess.";
 		next;
 		mes "[Father Thomas]";
 		mes "We, the ones who follow the devine path, are here for one reason.... to obey Gods orders.";
@@ -157,7 +156,7 @@ L_Start:
 		mes "Oh... so you want to become a priest?  God bless you for your determination.";
 		next;
 		mes "[Father Thomas]";
-		mes "I am Father Thomas.  I am in charge of protecting Prontera from the evil spirits that plague the lands of Rune Midgard.";
+		mes "I'm Father Thomas.  I'm in charge of protecting Prontera from the evil spirits that plague the lands of Rune Midgard.";
 		next;
 		mes "[Father Thomas]";
 		mes "Please fill out this application form so that I can review your qualifications for becoming a Preist.";
@@ -184,7 +183,7 @@ L_Start:
 		goto L_Test1;
 
 		sL_LowLvl:
-			mes "I am sorry but you cannot become a Priest at this moment.  You need to have a job level of at least 40.";
+			mes "I'm sorry but you cannot become a Priest at this moment.  You need to have a job level of at least 40.";
 			next;
 			mes "[Father Thomas]";
 			mes "Please strengthen your faith in God by performing more good deeds.";
@@ -192,7 +191,7 @@ L_Start:
 			close;
 
 		sL_HighLvl:
-			mes "Wow, your already at job lvl 50.  I am amazed at your dedication and hard work!";
+			mes "Wow, your already at job lvl 50.  I'm amazed at your dedication and hard work!";
 			emotion 0;
 			next;
 			mes "[Father Thomas]";
@@ -224,11 +223,11 @@ L_Start:
 		close;
 	M_2End:
 		mes "[Father Thomas]";
-		mes "Oh is that the case?... Well I am fine thank you.";
+		mes "Oh is that the case?... Well I'm fine thank you.";
 		mes "Please don't forget your duties as an Acolyte, and be carefull not to stray off the path to salvation.";
 		next;
 		mes "[Father Thomas]";
-		mes "I hope you will visit again soon, and please tell me how the other Acolytes are doing.  May god be by your side...";
+		mes "I hope you will visit again soon, and please tell me how the other Acolytes are doing.  May God be by your side...";
 		close;
 
 
@@ -369,7 +368,7 @@ L_Change:
 	if (JBLVL == 50) getitem 1551, 1;
 	callfunc "F_ClearJobVar";		// clears all job variables for the current player
 	mes "[Father Thomas]";
-	mes "Here, take this book as a reward for successfully completing the tests.  This book will help you understand more about god.";
+	mes "Here, take this book as a reward for successfully completing the tests.  This book will help you understand more about God.";
 	next;
 	mes "[Father Thomas]";
 	mes "I hope you can help serve as a role model for young Acolytes all over Rune Midgard.";
@@ -490,7 +489,7 @@ L_Start:
 	mes "So you know why your here right?  Your next test will be to overcome a series of trials involving the darkest of evils.";
 	mes "Do you understand what this means?";
 	next;
-	menu "Yes, I do.",-, "No, i don't quiet know it..?",M_1b;
+	menu "Yes, I do.",-, "No, I don't quite know it..?",M_1b;
 
 		mes "[Father Peter]";
 		mes "Wow, your' pretty smart, but i think its better for you to listen to the things i got to say.";
@@ -509,7 +508,7 @@ L_Start:
 	next;
 	mes "[Father Peter]";
 	mes "There's a lot of evil in this world.";
-	mes "The evil usually tease people that prey to god.";
+	mes "The evil usually tease people that prey to God.";
 	next;
 	mes "[Father Peter]";
 	mes "We priests are supposed to get rid of all the evil!";
@@ -709,7 +708,7 @@ L_Priest:
 	mes "Hey, whats priest like you doing in a place like this? go back to town. You like wasting you time here eh?";
 	next;
 	mes "[Deviruchi]";
-	mes "I feel happy today, so i'll spare you, now go.  Next time you come, iam gonna take to you down.";
+	mes "I feel happy today, so i'll spare you, now go.  Next time you come, I'm gonna take to you down.";
 	close;
 
 L_Aco:
@@ -717,7 +716,7 @@ L_Aco:
 	mes "Hey, isn't that a acolyte? i haven't seen one in ages.  Looks like you're going to become a priest soon...";
 	next;
 	mes "[Deviruchi]";
-	mes "I can tell how sad it is to become a servant of god.  I think its weird that you're here.";
+	mes "I can tell how sad it is to become a servant of God.  I think its weird that you're here.";
 	next;
 	mes "[Deviruchi]";
 	mes "The path your walking is going to be difficult.  Isn't there better jobs you can be?";
@@ -728,7 +727,7 @@ L_Aco:
 	mes "[Deviruchi]";
 	mes "I'll give you an advice, you should give up now.  The tests will be hard, and the path you're gonna walk will be difficult.";
 	next;
-	menu "Yea, Iam going to give up.",-, "Devil, Be gone NOW!.",M_1a;
+	menu "Yea, I'm going to give up.",-, "Devil, Be gone NOW!.",M_1a;
 
 		mes "[Deviruchi]";
 		mes "Yeap thats a good choice, you don't have to come to this place again! Since you decided to give up, i'll give you a present.";
@@ -740,7 +739,7 @@ L_Aco:
 		end;
 	M_1a:
 		mes "[Deviruchi]";
-		mes "Oh.. Iam so scared..hahaha.  Don't be like this, listen to what i have to say.";
+		mes "Oh.. I'm so scared..hahaha.  Don't be like this, listen to what i have to say.";
 		next;
 		mes "[Deviruchi]";
 		mes "If you give up now, i'll give you a nice gift.  This gift is so hard to find.";
@@ -841,7 +840,7 @@ L_Aco:
 			mes "okay fine, i'll spare you today.";
 			next;
 			mes "[Doppelganger]";
-			mes "If i see you next time, iam gonna make you die painfully.";
+			mes "If i see you next time, I'm gonna make you die painfully.";
 			disablenpc "Doppel_Trig";
 			disablenpc "Doppel";
 			donpcevent "PrstTest2_2::OnCheck";
@@ -875,7 +874,7 @@ L_Aco:
 	mes "[Dark Lord]";
 	mes "Even more annoying than ants you humans, leave and stop bothering me!";
 	next;
-	menu "Iam sorry, please spare me.",-, "Devil, Be GONE!.",M_1c;
+	menu "I'm sorry, please spare me.",-, "Devil, Be GONE!.",M_1c;
 
 		mes "[Dark Lord]";
 		mes "Don't come here again!";
@@ -902,7 +901,7 @@ L_Aco:
 			mes "So you decided to stay eh? you pesky human, killing you will dirty my hands.";
 			next;
 			mes "[Dark Lord]";
-			mes "If i see you again, iam gonna kill you.";
+			mes "If i see you again, I'm gonna kill you.";
 			disablenpc "Dark_Trig";
 			disablenpc "Dark Lord";
 			donpcevent "PrstTest2_2::OnCheck";
@@ -1134,8 +1133,7 @@ AnnouncePrst:
 //**********************************************************************************************************************************************************************************\\
 //================================================= Sister Cecile: Test 3 =====================================================\\
 //**********************************************************************************************************************************************************************************\\
-prt_church.gat,27,24,4	script	Sister Cecile	79,
-{
+prt_church.gat,27,24,4	script	Sister Cecile	79,{
 	mes "[Sister Cecile]";
 	if(Class == Job_Priest) goto L_Prst;
 	if(Class == Job_Acolyte) goto L_Aco;
@@ -1144,7 +1142,7 @@ prt_church.gat,27,24,4	script	Sister Cecile	79,
 L_Other:
 	mes "This is the Prontera Church, what can I help you with?";
 	next;
-	menu "Please tell me about priests.",-, "Iam just walking around.",M_End0;
+	menu "Please tell me about priests.",-, "I'm just walking around.",M_End0;
 
 		mes "[Sister Cecile]";
 		mes "Priests are servants of God.  They have special powers that allow them to help anyone in need of assistance.";
@@ -1167,7 +1165,7 @@ L_Nov:
 	mes "God bless you, my child. The Prontera Church welcomes you.";
 	next;
 	mes "[Sister Cecile]";
-	mes "Have you choose your job yet? Do you want to be one of god's helpers?";
+	mes "Have you choose your job yet? Do you want to be one of God's helpers?";
 	mes "Becoming an Acolyte and helping people is very good thing.";
 	next;
 	mes "[Sister Cecile]";
@@ -1195,14 +1193,14 @@ L_Aco:
 	if(sex == 0) mes "God bless you, sister.";
 	mes "Why are you here?";
 	next;
-	menu "I want to become a priest.",-, "Iam just wondering around.",M_End1;
+	menu "I want to become a priest.",-, "I'm just wondering around.",M_End1;
 
 		mes "[Sister Cecile]";
 		mes "Oh so you want to become a priest?";
 		mes "A lot of acolytes want to become priests.";
 		next;
 		mes "[Sister Cecile]";
-		mes "My name is Sister Cecile, Iam responsible for helping acolytes become priests.";
+		mes "My name is Sister Cecile, I'm responsible for helping acolytes become priests.";
 		next;
 		mes "[Sister Cecile]";
 		mes "Because I was born and raised here, I've seen a lot of people become Priests over the years.";
@@ -1235,7 +1233,7 @@ L_Start:
 	next;
 L_Test3:
 	mes "[Sister Cecile]";
-	mes "From today on, do you wish to help the god for all eternity?";
+	mes "From today on, do you wish to help the God for all eternity?";
 	next;
 	menu "Yes.",M_2a, "No.",-;
 
@@ -1251,12 +1249,12 @@ L_Test3:
 	M_2a:
 
 	mes "[Sister Cecile]";
-	mes "Will you use god's power for your own profit?";
+	mes "Will you use God's power for your own profit?";
 	next;
 	menu "Yes",-, "No.",M_2b;
 
 		mes "[Sister Cecile]";
-		mes "No, that doesn't work, if you use god's power to do what you wish, you're just like a theif.";
+		mes "No, that doesn't work, if you use God's power to do what you wish, you're just like a theif.";
 		mes "How can you become a good priest if you think like that?";
 		next;
 		mes "[Sister Cecile]";
@@ -1288,7 +1286,7 @@ L_Test3:
 	menu "Yes.",M_2d, "No.",-;
 
 		mes "[Sister Cecile]";
-		mes "No, thats not what god thinks.";
+		mes "No, thats not what God thinks.";
 		mes "If we can sacrafice ourselves for something that helps the world, its worth it.";
 		next;
 		mes "[Sister Cecile]";
@@ -1307,7 +1305,7 @@ L_Test3:
 		mes "If you talk bad, you don't deserver to be a priest.";
 		next;
 		mes "[Sister Cecile]";
-		mes "even if your god's best servant.";
+		mes "even if your God's best servant.";
 		mes "You don't have the right to bad-talk.";
 		close;
 

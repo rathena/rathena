@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version 6.0+
 //===== Description: =========================================
 //= Warp Points for Lou Yang
 //===== Additional Comments: =================================
-//= No comment!
+//= 1.1 Added 2 escapes from 2 mountains 018,019 [Lupus]
+//=     Some players used to stuck there after warps
 //============================================================
 
 //= Lou Yang Town ============================================
@@ -44,5 +45,5 @@ lou_in02.gat,121,32,0	warp	louwarp014a	3,3,louyang.gat,317,173
 lou_in02.gat,71,28,0	warp	louwarp015a	3,3,louyang.gat,130,57
 lou_in02.gat,189,74,0	warp	louwarp007a	3,3,louyang.gat,309,76
 lou_fild01.gat,232,357,0	warp	louwarp001a	3,3,louyang.gat,217,26
-
-
+louyang.gat,90,253,0	warp	louwarp018	3,3,louyang.gat,94,268
+lou_fild01.gat,181,171,0	warp	louwarp019	3,3,lou_fild01.gat,194,169

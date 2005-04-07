@@ -26,8 +26,7 @@ yuno.gat,153,47,4	script	Yuno Guide	700,{
 }
 
 //=====================================================================
-yuno.gat,333,182,2	script	Yuno Soldier	105,
-{
+yuno.gat,333,182,2	script	Yuno Soldier	105,{
 	cutin "prt_soldier",2;
 	set @name$, "[Yuno Soldier]";
 	set @menu1$, "^5533FF'Dagger of Counter'^000000.....";
@@ -42,8 +41,7 @@ yuno.gat,333,182,2	script	Yuno Soldier	105,
 }
 
 //=====================================================================
-yuno.gat,264,320,2	script	Yuno Soldier	105,
-{
+yuno.gat,264,320,2	script	Yuno Soldier	105,{
 	cutin "prt_soldier",2;
 	set @name$, "[Yuno Soldier]";
 	set @menu1$, "Holy shield, ^5533FF'Sacred Mission'^000000.....";
@@ -58,8 +56,7 @@ yuno.gat,264,320,2	script	Yuno Soldier	105,
 }
 
 //=====================================================================
-yuno.gat,228,292,2	script	Yuno Soldier	105,
-{
+yuno.gat,228,292,2	script	Yuno Soldier	105,{
 	cutin "prt_soldier",2;
 	set @name$, "[Yuno Soldier]";
 	set @menu1$, "^FF3355'False Angel'^000000.....";
@@ -74,8 +71,7 @@ yuno.gat,228,292,2	script	Yuno Soldier	105,
 }
 
 //=====================================================================
-yuno.gat,164,283,4	script	Yuno Soldier	105,
-{
+yuno.gat,164,283,4	script	Yuno Soldier	105,{
 	cutin "prt_soldier",2;
 	set @name$, "[Yuno Soldier]";
 	set @menu1$, "^FF3355'Geographer'^000000.....";
@@ -91,8 +87,7 @@ yuno.gat,164,283,4	script	Yuno Soldier	105,
 }
 
 //=====================================================================
-yuno.gat,151,283,4	script	Yuno Soldier	105,
-{
+yuno.gat,151,283,4	script	Yuno Soldier	105,{
 	cutin "prt_soldier",2;
 	set @name$, "[Yuno Soldier]";
 	set @menu1$, "^FF3355'Lava Golem'^000000.....";
@@ -111,8 +106,7 @@ yuno.gat,151,283,4	script	Yuno Soldier	105,
 }
 
 //=====================================================================
-yuno.gat,164,228,4	script	Yuno Soldier	105,
-{
+yuno.gat,164,228,4	script	Yuno Soldier	105,{
 	cutin "prt_soldier",2;
 	set @name$, "[Yuno Soldier]";
 	set @menu1$, "Killer ^FF3355'Goats'^000000.....";
@@ -127,8 +121,7 @@ yuno.gat,164,228,4	script	Yuno Soldier	105,
 }
 
 //=====================================================================
-yuno.gat,151,228,4	script	Yuno Soldier	105,
-{
+yuno.gat,151,228,4	script	Yuno Soldier	105,{
 	cutin "prt_soldier",2;
 	set @name$, "[Yuno Soldier]";
 	set @menu1$, "Large Jellopy.....";

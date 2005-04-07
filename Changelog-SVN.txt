@@ -1,0 +1,453 @@
+
+Date	Added
+
+04/07
+	* Readded @disablenpc (not the same as @hidenpc) [celest]
+	* Fixed @reloadscript not removing old NPC's and monsters first [celest]
+	* Some changes in mob and NPC unloading [celest]
+	* Changed the original @disablenpc to @hidenpc [celest]
+	* Fixed HP Conversion to properly not reduce HP if SP is full [celest]
+	* Updated Defender -- should reduce walking speed, and does not reduce attack speed
+	  at level 5 [celest]
+
+04/06
+	* Fixed a crash in clif_send when checking packet version, thanks to Alex14
+	* Fixed a crash in Deluge, Volcano and Violent Gale, thanks to Alex14
+	* Skip partner checking when calculating status with Marionette Control on [celest]
+	* Fixed plagiarised skills become unuseable after saving character [celest]
+	* Fixed double skill fail messages for stone curse, thanks to wind
+	* Added modulus by zero check to rand(), thanks to starlon
+        * Improved error messages during npc parsing [MouseJstr]
+        * Fixed a crash in login_sql [MouseJstr]
+	* Added logs filters in more logs [Lupus]
+	  now you can set individual bit-mask filter for each log file
+		Example: (drops log)
+		log_drop: 1 = logs ANY items
+		log_drop: 332 = logs only Healing items, Cards and those items which price is >= price_items_log
+
+04/05
+	* Fixed damage reflecting (silly typo xP) [celest]
+	* Fixed Backstab to not have a push back effect [celest]
+	* Fixed auto spell to not taking SP, thanks to Hekate
+	* Fixed Sanctuary to have proper healing count, thanks to Hekate
+	* Simplified Valaris' online_timer [celest]
+	* Updated Fogwall, Spiderweb, and HP Conversion, thanks to redcard [celest]
+	* Adding saving character online/offline for TXT char and login (unfinished)
+	* Added SERVER_TYPE to core for future plugins support [celest]
+	* Added support for the UPNP plugin to release port mappings and re-close firewall
+	  ports on shutdown [celest]
+
+04/04
+        * Some work on re-enabling trade and storage logging [MouseJstr]
+	* Updated showmsg with Shinomori's improvements [celest]
+        * Fix showmsg for Visual Studio [MouseJstr]
+	* Update base code for the UPNP plugin loading [celest]
+	* Removed anti-freeze system for login and char -- Shinomori's update would
+	  be enough to keep inter connections alive [celest]
+
+04/03
+	* integrating anti freeze system to status update [Shinomori]
+	* Fixed impossible drops at 0.01% chance [Lupus]
+	* Fixed some variable declarations in SQL login.c causing compilation errors [veider]
+	* Added NetBSD support into Makefile (Still lots of warrnings during compilation [veider]
+	* Finished Valkyrie. Now it correctly works. Valhallana reborns players to High Novices. [Lupus]
+	  (added missed kRO condition: to reborn, player shouldn't have money nor items(equipment) )
+	  Then Valhallana warps just reborn players to the home city of their main job.
+	  On Job Level 10 of High Novice they can get 1st Advanced Job from correct 1-1 job quests NPC.
+	  They'll get there all learnt skill quests.
+	  On reaching 45 Job Level they may visit Valkyrie and get 2-2-1 / 2-1-1 class (3rd Job)
+	  from a correct NPC.
+	* Fixed SKILL POINTS exploit in Assassin Job Quest [Lupus]
+
+04/02
+	* Added bonuses bUnstripable[Weapon|Armor|Helm|Shield]
+	  instead of just bUnstripable that worked only for armor [DracoRPG]
+	* Updated Tiger Knucke Fist's 'fixed state' effect [celest]
+	* Allowed people to enable/disable using the online column via 
+	  'register_users_online' in the login_athena.conf [Codemaster]
+	* Added the 3 baby skills WE_BABY, CALLBABY and CALLPARENT [celest]
+	* Some tidying up in skill.c [celest]
+
+04/01
+	* Updated ShowMessage functions to use vprintf [celest]
+	* Fixed a potential crash in pc_walk in Win32 builds [celest]
+	* Added bAddEffWhenHitShort and changed bAddEffWhenHit back to all physical
+	  damage [celest]
+
+03/31
+        * Fixed memory corruption during shutdown via the script_buf
+          [SVN 1370: MouseJstr]
+        * Added some useful filename info to the script parser so that
+          it is easier to figure out what is going on [SVN 1370:
+          MouseJstr]
+        * updated the visual studio projects a little bit [SVN 1370:
+          MouseJstr] 
+        * fixed memory corruption in mapif_guild_info:int_guild.c
+          [SVN 1367: MouseJstr]
+	* Fixed common/lock.c (problem with unistd.h include) [Codemaster]
+        * Added father/mother/child fields to mmo_char_tostr() and
+          mmo_char_fromstr() [veider]
+        * Added exp sharing between family members for TXT version [veider]
+        * Added char_married() and char_child() to TXT version [veider]
+        * Fixed memory corruption associated with afm files [SVN 1363: MouseJstr]
+        * More pedantic g++ fixes so that it builds without any and
+          all warnings [SVN 1362: MouseJstr]
+        * Removed some #include's causing warnings on some platforms
+          [SVN 1360: MouseJstr]
+	* Fixed a bug with InitTimer/StopTimer, thanks to ilpalazzo-sama
+	* Set 'undead_detect_type' to 0 by default, thanks to Dino9021
+	* Fixed Enchant Poison / Deadly Poison having too high poisoning chance
+	* Reverted the pc_remove_map() change temporarily
+	* Added back up old files in 'save' before saving new data -- also fixes
+	  'Access denied' errors when saving in TXT
+
+03/30
+        * sql native vc7 projects now build/link [1351: MouseJstr]
+        * Began sql projects for VC7 [1349: MouseJstr]
+        * text char-server and login-server now build using VC7.  You
+          can use the eAthena.sln solution to build all three.  These
+          are currently just the text versions of the servers.  I have
+          not added projects yet to build the sql versions.  
+          [SVN: 1347 MouseJstr]
+        * Made the map-server build cleanly using Microsoft Visual
+          Studio.. entirely native code without any cygwin dependency
+          [SVN: 1345 MouseJstr]
+	* Fixed @reloadgmdb in SQL -- after reloading ask the char to forward the new
+	  accounts back to the map [celest]
+	* Added base code for loading Ser's UPNP plugin [celest]
+	* Added 'idle_no_share' to battle_athena.conf [celest]
+	* updated map server to jA1137~1159
+	  - Added @reloadatcommand, @reloadbattleconf, @reloadstatusdb, @reloadpcdb
+
+	  (Note: You should copy the latest msg_athena.conf from conf-tmpl and replace
+	  your current one EVERYTIME it's updated to prevent it from crashing when it
+	  can't find the newer messages!)
+
+	  - Updated packet DB to support /item and /monster
+	  - Added pc_remove_map()
+	  - Added 2 new mobs skills: NPC_RUNAWAY and RECALL
+	  - Updated BioCannibalize
+	  - Updated Hammerfall, Meteor Shower and Lord of Vermillion -- when MvP's
+	    cast them they should have much more range
+	  - Some other skill tweaks
+	  - Added item_findingore.txt
+	* Some tidying up in mob.c and skill.c [celest]
+
+03/29
+        * Please make sure to use the stable/sql-files/upgrade_svn1315.sql to
+          upgrade your mysql as a result of the new adoption system.  Thank you
+             -MouseJstr
+
+        * More ANSI C++/C conformance fixes [SVN 1341: MouseJstr]
+	* Fixed SQL char server crashing when loading the item_db, my bad ^^; [celest]
+        * More ANSI C++/C conformance fixes [SVN 1334: MouseJstr]
+	* Added auto save guild data (only guardian HP and owner guild ID for now,
+	  both cached) every 5 minutes during WOE [celest]
+	* Updated damage calculation for Magnum Break [celest]
+	* Fixed #item not working properly, thanks to TripleOxygen
+        * Fixed a lot of compile time problems with our mixed C++/C
+          conformance [1328: MouseJstr]
+        * Fixed use of storage variable to conform to ANSI C spec 
+          [1327: MouseJstr]
+        * Added CIA-bot to the #athena channel [MouseJstr]
+	* Some tidying up in mail.c [celest]
+	* Added an invalid pointer check in clif_displaymessage [celest]
+	* Added sql upgrade file in sql-files for svn1315's update [celest]
+	* Added auto create 'save' folder from 'save-tmpl' when compiling for the
+	  first time, thanks to Jbain
+	* Fixed 'use_sql_db' not read properly in SQL char server, thanks to Wallex
+	* Changed db/const.txt to have right baby jobs IDs [veider]
+	* Added three fields to mmo_charstatus - father/mother/child
+	  needed for adoption system [veider]
+	* Added adoption support to charserver SQL version [veider]
+	* Added atcommand_adopt - create a family of three [veider]
+	* Added to char_commands showexp/showdelay so that
+	  players could remove some messages [veider]
+	* Added percent to "Experience Gained" message [veider]
+	* Added adoption system support to party_check_exp_share()
+	  so that parents can share exp with child [veider]
+
+03/28
+	* Fixed Auto Berserk activating by itself when changing maps [celest]
+	* Re-fixed the SQL syntax crash in logging [celest]
+
+03/27
+	* Fixed AutospellWhenHit effect to only work on melee attacks [celest]
+	* Fixed AddEffWhenHit effect to only work on melee attacks [celest]
+	* Moved guardian hostility checking and monster_ignore_gm check to battle.c --
+	  processed earlier, and more appropiate [celest]
+	* Fixed a SQL syntax crash when logging character names with "'" in them
+	  [celest]
+	* Added use dynamic allocation when loading the msg_table [celest]
+	* Fixed some memory leaks with the new timer changes [celest]
+	* Refresh the client when day comes to get rid of the night effect (if
+	  night_darkness_level was used) [celest]
+	* Changed @refresh to fake map loading, but without teleporting side effect
+	  (skill delays reset, extra load on server etc)[celest]
+	* Updated SQL file for the item_db, thanks to Zoc
+	* Fixed the 'show_mob_hp' option not updating when a monster is healed, thanks
+	  to leinsirk10
+	* Added flexible Filter to the Monster Drops logging [Lupus]
+	   - Now you can choose what types of items either to log or not.
+	   - You can also log expensive items (you can set the min logging price)
+	* Optimized a bit ATCommands.c functions (inspired by Freya) [Lupus]
+	* Added missing parenthesis in my Improve Dodge code, not giving +4/lv to proper jobs [DracoRPG]
+	* Added all released cards into monsters drops and Old Card Album [Lupus]
+
+03/25
+	* Fixed a typo in my fix for Stalk / Tunnel Drive increasing instead of decreasing speed, sorry [DracoRPG]
+	* Rewrote a little bit Improve Dodge [DracoRPG]
+	   - The speed bonus does not effect when Cloaked
+	   - Assassins & Rogues get +4 Flee/lv, but all other jobs can get +3/lv
+	     if they have the skill (not only Thiefs & Super Novices)
+	* Some minor changes to Sacrifice in battle.c [celest]
+	* Set the Emperium to be immune to Sacrifice [celest]
+	* Set the Emperium to be have max status effects immunity [celest]
+	* Fixed indoorsrwstable.txt reading even when 'indoors_override_grffile' is
+	  set to 'no' [celest]
+	* Fixed @monsterbig/@monstersmall not working [celest]
+	* Fixed @killmonster2 not working [celest]
+
+03/24
+	* Updated obj_del to delete all GNUMakeFile and .o files + compiled exes [DracoRPG]
+	* Fixed a typo in Stalk / Tunnel Drive speed calculation [DracoRPG]
+	* Added some mapflags for new towns [Lupus]
+	* Added timer.c optimization / timers sort fix. 'no freezing mobs anymore' Thanx 2 Yor/Freya [Lupus]
+	* Added 'map_charid2id' [celest]
+	* Changed monster damage logging to save char ID's for the most time -- also
+	  fixes an exp bug, thanks to Super Novice / Ezhik [celest]
+	* Implemented 'event_script_type' -- no changes at '0', at '1' script events
+	  will work according to Qamera's original mod
+	  For more info please refer to his thread:
+	  http://www.eathena.deltaanime.net/board/index.php?showtopic=13305&hl=
+	* Set Emsolute Develop as a learnable skill [celest]
+	* Updated 'require_glory_guild' [celest]
+	  - the skill is only acquirable if this is set to 'yes', otherwise it will not
+	    appear in the guild skill tree. Default is changed to 'no'.
+	* Allow monsters to cast skills near themselves even when monster_nofootset
+	  is set to 'yes' -- they're only not allowed to cast near players [celest]
+	* Print number of online users in online.txt/.html even if there's only 1 user
+	  online [celest]
+
+03/23
+        * Adjusted my trade fix [1280: MouseJstr]
+        * Fixed possible memory corruption in storage if number of guilds
+          in database exceeds the max server can support [1278 : MouseJstr]
+        * Fixed @mapexit to properly flush the fifo's before shutting
+          server down to help insure all the char data is properly flushed
+          [1278: MouseJstr]
+        * Fixed trade exploit/crash from invalid data being sent
+          [1278: MouseJstr]
+        * Possible use of uninitialized data used during mob walk 
+          calculation resulting in radical mob movement or crash
+          [1278: MouseJstr]
+	* Fixed some --addrace variables' sizes [celest]
+	* Added' require_glory_guild' - sets whether changing guild emblems require
+	  the Glory of Guild skill [celest]
+	* Fixed alot of memory leaks [celest]
+	* Added stray memory cleaning routine to db.c [celest]
+	* Fixed some compile errors, sorry xP [celest]
+	* Corrected potion creation success chances, thanks to Avaj and DracoRPG
+	* Removed some unused potion creation code, thanks to DracoRPG
+	* Updated Joint Beat's effect, thanks to DracoRPG
+
+03/22
+	* Fixed Alchemist's CANNIBALIZE, now it summons correct # of plants. With their real HP [Lupus]
+	* Updated @reloadmobdb, @reloadskilldb, @reloaditemdb [celest]
+	* Some tidying up in @reloadscript (more work needed) [celest]
+	* Moved some gm command messages to msg_athena.conf [celest]
+	* Removed skill_range_leniency [celest]
+	* Removed enable_upper_class [celest]
+	* Removed riding_weight [celest]
+        * Added signal handler for SIGPIPE [celest]
+	* Updated Frost Joke to affect everyone else in PvP/GvG, thanks to veider
+	* Corrected Detect Trap range to be based on level, thanks to veider
+	* Updated Tunnel Drive's movement speed, thanks to veider
+	* Removed cdp_rate, suggested by leinsirk10
+	* Fixed a typo in Acid Terror, thanks to leinsirk10
+	* Fixed some typos/memory leak in script cleaning up, thanks to leinsirk10
+	* Added gm_can_drop_lv limitations for trading and opening storage, thanks to
+          Dino9021
+	* Changed shop_exp's calculation to use 0.01% increments, suggested by tcdiem
+        * Refixed "--en/ja--" usage in 'monster' script not working properly, thanks
+          to sbilly
+
+03/21
+        * Moved /tool and /webserver to under /src and added 'make tools' and 'make
+          webserver' [celest]
+        * Removed ladmin compiling from 'make sql' [celest]
+
+03/20
+        * Don't register the day/night timers if any one is set to 0 [celest]
+	* Fixed @storage / @gstorage ATcommands thanks2 Yor/Freya [Lupus]
+        * Added 4 new card effects from 3/15's patch -- check item_bonus.txt [celest]
+        * Added 'enable_ip_rules' to packet_athena.conf [celest]
+        * Updated socket debug messages to be more readable [celest]
+	* Added a sql upgrader to handle the mob_db changes to assist
+	  in migrating to the newer SVN servers [MouseJstr]
+
+03/19
+        * Added getrefine() for 3/15's card patch -- returns the refined number
+          of the current item [celest]
+        * Fixed day and night settings not ignored even if they are set to 0,
+          my bad ^^; [celest]
+
+03/18
+        * Fixed a crash when freeing memory of pets [celest]
+        * Added Cygwin support to the -DDUMPSTACK option, and changed its format
+          to "<server type><number>.stackdump", thanks to Ser [celest]
+        * Removed duplicate fopen in login_log [celest]
+        * Don't log SQL char actions if log_char is not enabled in char_athena.conf
+          [celest]
+        * Updated shop_exp's calculation to give more exp, thanks to tcdiem [celest]
+        * Fixed the bDamageWhenUnequip effect dealing damage when unequipping unrelated
+          items [celest]
+        * Fixed compile errors in SQL char.c [celest]
+
+03/17
+	* Added ~86 new cards. Fixed new cards bugs, optimized [Lupus] thanks to Indiona,Landarma
+	* Removed nullpo warning from trade.c (my prev anti-spoof protection) [Lupus]
+        * Added the new Einbroch/Einbech maps to maps_athena.conf [celest]
+        * Added display script filename when a script error is found while parsing
+          [celest]
+        * Added 2 char-server packets to support Freya's login server [celest]
+        * Rewrite on Full Strip [celest]
+	* Fixed heap corrupion in map.c caused while loading maps 
+	  [SVN 1241: MouseJstr]
+        * Re-fixed compile error in map.c -- sorry ^^; [celest]
+        * trade.c fixed possibility of STORAGE+TRADE spooffing dupe [Lupus]
+	  Now, on accepting trade your active Storage window closes. (Either Common or Guils Storage)
+		thanx to Sergey for the exploit test and report
+03/16
+        * map.c fixed compilation error [Lupus]
+        * Updated jA's dummy socket to mod1137 [celest]
+        * Added jA's ddos protection system -- check packet_athena.conf [celest]
+        * Moved stall_time's reading from inter_athena.conf to packet_athena.conf
+
+03/15
+        * Fixed a compile warning in pc.c [celest]
+        * Updated Soul Breaker's damage display, by DracoRPG [celest]
+
+03/14
+        * Fixed @marry and @divorce. Also added Wedding music+confetti effect to @marry [Lupus]
+		- @marry Player1,Player2
+		(don't miss the COMMA ',' betwin the names)
+		- @divorce Player
+		(in @divorce use any name from the couple)
+        * Added auto convert advanced job and baby class sprite ID's in mob_avail.txt
+          to correct format [celest]
+        * Added SC_Speedup cannot be stacked with Increase Agility [celest]
+
+03/13
+        * Added PvP/GvG check for Tiger Knuckle fist [celest]
+        * Fixed Pressure reducing the target's SP twice, thanks to deepin [celest]
+        * Fixed SQL logging not checking if its supposed to use SQL or TXT logs, thanks
+          to Alex14 [celest]
+        * Fixed 23 new cards (some effects chances were divided by 100, some cards had no bonuses
+	  due to misplaced arguments, usage BONUS instead of BONUS2, etc) [Lupus]
+
+03/12
+        * Fixed Status Recovery dealing too short blind time on undead [celest]
+        * Fixed mobs not affected by Blind status [celest]
+        * Added an invalid id check check in map_id2sd [celest]
+        * Added sd check in clif_send [celest]
+        * Fixed usage of mvp_hp_rate and monster_hp_rate. MVP rate was used for common monsters [Lupus]
+	* Added additional random respawn delay for instant respawning monsters (0..5 seconds) [Lupus]
+		- Should be made as an option of battle_athena.conf
+
+03/11
+        * Speedup player autosaving -- don't save guild castle data at the same time,
+          thanks to Alex14 [celest]
+        * Optimised guild castle saving when autosaving player data, thanks to Yor /
+          Freya (UPDATE: view above)
+        * Added sd check in mob_damage, thanks to sbilly [celest]
+        * Added Sage enchanting skills can only be cast on party members [celest]
+        * Fixed Magic Power not working for ground-targeted skills [celest]
+        * Fixed Frost Diver having double freezing chances [celest]
+        * Added Breaker's magic damage to be blockable by Pneuma, thanks to DracoRPG
+          [celest]
+        * Corrected 1206Sakexe's packet detection, thanks to Yor / Freya [celest]
+        * When casting cloaking stop displaying the skill title after its finished,
+          thanks to Battitude [celest]
+
+03/09
+        * Some changes in sig_dump to allow Cygwin produce stackdumps upon crash again,
+          thanks to Ser [celest]
+        * Changed the default stackdump creation folder from /save to /log [celest]
+        * Fixed a typo in TXT login server logging, thanks to Skyer / eAthenaC [celest]
+        * Added HP and SP rate underflow checking [celest]
+        * Added stop auto attacking if no arrows were equipped [celest]
+	* Added new script command: 'cardscnt'. It returns N of inserted cards in the same weapon. [Lupus]
+	  Now I can start fixing CARDS COMBO exploits. And it's possible to fix old cards power abuse, too.
+		e.g. Assassins can equip 2 4-slot weapons and have HUGE card bonuses.
+		It's said that you can have only ONE bonus per hand...
+	* Fixed and tested script command 'isequippedcnt'. It didn't return real value [Lupus]
+	  Here's an easy way to test all items:
+		4149,Gargoyle_Card,Gargoyle Card,6,20,0,10,,,,,,,2,,,,{},{ dispbottom "Gagoyle OK:"; dispbottom isequipped(4149); dispbottom isequippedcnt(4149); dispbottom cardscnt(4149); }
+	* Fixed "nice char save by the fountain of Prontera"; People (Helpers, GMs) did abuse their power and [Lupus]
+	  used to @jail friend / @unjail friend. To make his save point in the middle of the Prontera.
+	  So I made @unjail save coords to 0,0 (on unjail it makes player's save point to appear always in a random place of Prontera)
+		You can use this query to "Clear nice save point of all jail/unjail abusers friends"
+		SQL QUERY: update ragnarok.char set save_x = 0, save_y = 0 where (save_map = 'prontera.gat' and save_y = 191)
+03/08
+        * Added chance for Enchant Poison to poison enemy, and reduced Deadly Poison
+          chance [celest]
+        * Compacted some code for Deadly Poison [celest]
+        * Added DracoRPG's code for Soul Breaker - the magic attack part should work
+          as it should now, thanks! ^^ [celest]
+        * Reverted the reverted jA event change but this time without bugs (hopefully) [Shinomori]
+        * corrected status_change_timer as far as I understand the functionality
+          (better have a look at it, Celest), added a some security to prevent pending timers
+        * moved two variable declarations to scope start (mob.c and skill.c)
+        * Fixes Icewall can be directly cast on players and monsters -- also removes
+          the 'unsupported layout' message [celest]
+        * Added the new turbo_room and alde_tt to the maps config [celest]
+        * Speedup SQL inventory and storage saving, thanks to Ilpalazzo-sama [celest]
+        * Reverted a jA change in event loading [celest]
+
+03/07
+        * Added uptime logging support whenever the server closes, to enable change
+          the 0 to 1 in core.c [celest]
+                #define LOG_UPTIME 0
+          To-do: Add this as an option to log config
+        * Fixed 'make clean' not removing the .o files in /common [celest]
+        * Removed some unused code for Breaker and temporarily set Emperium to be
+          immune to Breaker [celest]
+
+        * Updated core and map-server to jA 1115~1137 [celest]
+          - Added monster_delay_damage to battle conf
+          - Increased some default settings in script conf
+          - Updated Brandish Spear, Soul Change, Soul Burn
+          - Updated Body Relocation (shorter distance)
+          - Added monster skill NPC_EXPLOSIONSPIRITS
+          - Corrected Mindbreaker level to 5
+          - Updated Meteor Assault to instant-cast
+          - Added command @users - shows the percentage of users in all maps
+          - Don't save status if the player is set for disconnection
+          - Added free block lock-checking system
+          - Added saving the processes' ID into [xx-server.pid]
+          - Fixed a memory leak with duplicate script labels
+          + For more detailed logs check 'Readme-jap'
+
+        * Fixed a typo in Volcano, thanks to Ilpalazzo-sama [celest]
+        * Fixed Apple of Idun reading the wrong skill level and giving too much HP
+          [celest]
+
+03/06
+	* Added new anti-hacker trade protection from Freya. [Lupus]
+	  It also auto-ban hackers and broadcasts messages to all GMs. Good work, Yor!
+	* Misc fixes. [Lupus]
+	  2Shino: BTW Some players can't re-connect to the server. Due to the updated session checks in chrif.c
+         actually impossible, because the checks handle the connection with the char server, not with users
+         anyway, I checked again and rearranged code but functionality is still the same and valid [Shinomori]
+03/05
+	* Reversed drop_rate0item option, corrected MVP Drop rate (thanks to Freya) [Lupus]
+03/04
+	* Fixed SQL Guild Castle Saving (now fully working, tested on 100 players during WOE) [Lupus]
+03/02
+	* Fixed SQL Guild Castle Saving (partial, yet it doesn't clear GuildID when you abandon a castle) [Lupus]
+	  + added 2 fixes by POW (Mac Guild Position fix, Max Guild Members fix)
+	* Fixed Emotion Flood (by Yor) [Lupus]
+        * SQL: Fixed temporary ban. Now banned players can enter the server when the ban time is over. [Lupus]
+	  It wasn't working because STATE hasn't been cleared properly.
+	  Also fixed wrong client messages (ban reasons: Banned by GM / Temp ban till DATE).

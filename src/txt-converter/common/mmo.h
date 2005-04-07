@@ -29,11 +29,11 @@
 #define MAX_STORAGE 300
 #define MAX_GUILD_STORAGE 1000
 #define MAX_PARTY 12
-#define MAX_GUILD 56	// increased max guild members to accomodate for +2 increase for extension levels [Valaris]
-#define MAX_GUILDPOSITION 56	// increased max guild positions to accomodate for all members [Valaris]
+#define MAX_GUILD 16+10*6	// increased max guild members to accomodate for +6 increase for extension levels [Lupus]
+#define MAX_GUILDPOSITION 20	// increased max guild positions to accomodate for all members [Valaris]
 #define MAX_GUILDEXPLUSION 32
 #define MAX_GUILDALLIANCE 16
-#define MAX_GUILDSKILL	8
+#define MAX_GUILDSKILL	15 // increased max guild skills because of new skills [Sara-chan]
 #define MAX_GUILDCASTLE 24	// increased to include novice castles [Valaris]
 #define MAX_GUILDLEVEL 50
 
@@ -87,7 +87,7 @@ struct s_pet {
 	int account_id;
 	int char_id;
 	int pet_id;
-	short class;
+	short class_;
 	short level;
 	short egg_id;//pet egg id
 	short equip;//pet equip name_id
@@ -105,7 +105,7 @@ struct mmo_charstatus {
 
 	int base_exp,job_exp,zeny;
 
-	short class;
+	short class_;
 	short status_point,skill_point;
 	int hp,max_hp,sp,max_sp;
 	short option,karma,manner;
@@ -135,14 +135,14 @@ struct storage {
 	int account_id;
 	short storage_status;
 	short storage_amount;
-	struct item storage[MAX_STORAGE];
+	struct item storage_[MAX_STORAGE];
 };
 
 struct guild_storage {
 	int guild_id;
 	short storage_status;
 	short storage_amount;
-	struct item storage[MAX_GUILD_STORAGE];
+	struct item storage_[MAX_GUILD_STORAGE];
 };
 
 struct map_session_data;
@@ -168,7 +168,7 @@ struct party {
 
 struct guild_member {
 	int account_id, char_id;
-	short hair,hair_color,gender,class,lv;
+	short hair,hair_color,gender,class_,lv;
 	int exp,exp_payper;
 	short online,position;
 	int rsv1,rsv2;
@@ -237,8 +237,8 @@ struct guild_castle {
 	int Ghp4;
 	int Ghp5;
 	int Ghp6;
-	int Ghp7;	
-	int GID0;	
+	int Ghp7;
+	int GID0;
 	int GID1;
 	int GID2;
 	int GID3;

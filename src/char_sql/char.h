@@ -40,11 +40,14 @@ enum {
 struct itemtemp{
 	struct itemtmp equip[MAX_GUILD_STORAGE],notequip[MAX_GUILD_STORAGE];
 };
-int memitemdata_to_sql(struct itemtemp mapitem, int eqcount, int noteqcount, int char_id,int tableswitch);
-int memitemdata_to_sql2(struct itemtemp mapitem, int eqcount, int char_id,int tableswitch);
+int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id,int tableswitch);
 int mapif_sendall(unsigned char *buf,unsigned int len);
 int mapif_sendallwos(int fd,unsigned char *buf,unsigned int len);
 int mapif_send(int fd,unsigned char *buf,unsigned int len);
+
+int char_nick2id (char *name);
+int char_married(int pl1,int pl2);
+int char_child(int parent_id, int child_id);
 
 extern int autosave_interval;
 extern char db_path[];
@@ -68,11 +71,13 @@ extern char guild_storage_db[256];
 extern char party_db[256];
 extern char pet_db[256];
 
-int db_use_sqldbs; // added for sql item_db read for char server [Valaris]
+extern int db_use_sqldbs; // added for sql item_db read for char server [Valaris]
 extern char login_db_level[32];
 extern char login_db_account_id[32];
 
 extern int lowest_gm_level;
+extern int GM_num;
+extern struct gm_account *gm_account;
 
 extern int debug_mysql_query(char *file, int line, void *mysql, const char *q);
 

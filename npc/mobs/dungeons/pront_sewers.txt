@@ -41,4 +41,4 @@ prt_sewb4.gat,0,0,0,0	monster	Thief Bug Female	1053,20,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Thief Bug Male	1054,70,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Thief Bug Egg	1048,10,0,0,0
-prt_sewb4.gat,0,0,0,0	monster	Golden Thief Bug	1086,1,3600000,7200000,0
+prt_sewb4.gat,0,0,0,0	monster	Golden Thief Bug	1086,1,3600000,3600000,0

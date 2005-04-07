@@ -1,89 +1,19 @@
-// Advance Class jobchanger after kRO Normals.
-// Checks if the player have any questskills, cart\falcon, level and such.
-// Made by Nana.
+//===== eAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= v1.1 Made all into functions, additional checks, etc. [Lupus]
+//============================================================ 
 
 // -== Champion ==-
 valkyrie.gat,53,42,4	script	Champion	52,{
-	if(getskilllv(156) > 0) set @qsk;
-	if(checkcart(0) > 0) goto L_Cart;
-	if(readparam(12) > 0) goto Skill_Points;
-	if(readparam(19) >= 4008) goto L_Advance;
-	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
-	if((readparam(19) == 4005) && (readparam(55) >= 45)) goto L_HACO;
-	if(readparam(19) < 7) goto L_Class;
-	if(readparam(19) == 4001) goto L_Class1;
-	if(readparam(19) == 4005) goto L_Class;
-	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
-	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
-	mes "[Champion]";
-	mes "Hi there...";
-	close;
-
-L_Change:
-	mes "[Champion]";
-	mes "Hello there "+strcharinfo(0)+"!";
-	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of Champion,";
-	mes "I wish you good fortune in the near future!";
-	jobchange 24;
-	resetlvl(1);
-	close;
-
-L_Cart:
-	mes "[Champion]";
-	mes "Please un-equip that cart before continuing.";
-	close;
-
-L_Class1:
-	mes "[Champion]";
-	mes "You're not ready to become an Acolyte High yet...";
-	close;
-
-L_Class:
-	mes "[Champion]";
-	mes "You've come far to get here. unfortunately, you're not ready to become an Champion yet.";
-	close;
-
-L_Levels:
-	mes "[Champion]";
-	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an Champion";
-	close;
-
-L_HNov:
-	mes "[Champion]";
-	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
-	mes "Must great fortune follow you!";
-	jobchange 28;
-	next;
-	mes "[Champion]";
-	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
-	next;
-	if(@qsk > 0) goto qsk;
-	next;
-qsk:
-	skill 156,1,0;
-	set @qsk,0;
-	goto L_HNov_2;
-	close;
-
-L_HNov_2:
-	mes "[Champion]";
-	mes "Now when the formalities are fixed, I congratulate you on your Advancement to Acolyte High";
-	close;
-L_HACO:
-	mes "[Champion]";
-	mes "Congratulations!";
-	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an Champion!";
-	jobchange 39;
-	close;
-
-Skill_Points:
-	mes "[Champion]";
-	mes "Please use all of your skillpoints before proceeding.";
-	close;
-
-L_Advance:
-	mes "[Champion]";
-	mes "Hey there! You are already an Reborn. You cannot reach any higher";
-	mes "*whistles*";
-	close;
+	callfunc "F_Rebirth",28,"Acolyte High",39,"Champion",156,0,0,0;
 }

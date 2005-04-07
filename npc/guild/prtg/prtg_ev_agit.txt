@@ -16,7 +16,7 @@
 
 // Castle 1 ================================================================
 prtg_cas01.gat,197,197,0	script	Agit_Pt01	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "prtg_cas01.gat",0,"::OnRecvCastlePt01";
 	end;
 OnRecvCastlePt01:
@@ -39,7 +39,7 @@ OnAgitEnd:
 
 // Castle 2 ================================================================
 prtg_cas02.gat,158,174,0	script	Agit_Pt02	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "prtg_cas02.gat",0,"::OnRecvCastlePt02";
 	end;
 OnRecvCastlePt02:
@@ -62,7 +62,7 @@ OnAgitEnd:
 
 // Castle 3 ================================================================
 prtg_cas03.gat,17,221,0	script	Agit_Pt03	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "prtg_cas03.gat",0,"::OnRecvCastlePt03";
 	end;
 OnRecvCastlePt03:
@@ -85,7 +85,7 @@ OnAgitEnd:
 
 // Castle 4 ================================================================
 prtg_cas04.gat,292,14,0	script	Agit_Pt04	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "prtg_cas04.gat",0,"::OnRecvCastlePt04";
 	end;
 OnRecvCastlePt04:
@@ -108,7 +108,7 @@ OnAgitEnd:
 
 // Castle 5 ================================================================
 prtg_cas05.gat,266,266,0	script	Agit_Pt05	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "prtg_cas05.gat",0,"::OnRecvCastlePt05";
 	end;
 OnRecvCastlePt05:

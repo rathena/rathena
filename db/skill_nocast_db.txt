@@ -7,11 +7,10 @@
 // 8 - Cannot be used when WoE is on
 // 16 - Cannot be used in PK Mode maps
 // Example: 8,6 = Endure cannot be used in PvP and GvG maps (2+4)
-8,12
-26,12
-27,12
-87,12
-150,12
-361,12
-362,12
-389,12
+26,4	//AL_TELEPORT
+27,4	//AL_WARP
+87,4	//WZ_ICEWALL
+150,4	//TF_BACKSLIDING
+214,4	//RG_RAID
+361,4	//HP_ASSUMPTIO
+362,4	//HP_BASILICA

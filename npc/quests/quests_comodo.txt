@@ -21,8 +21,7 @@
 //============================================================================================//
 // Cross Hat, Bulb Hairband, Striped Hairband, Blue Hairband
 //==================================================
-comodo.gat,227,158,4	script	Hair Ornament Girl	700,
-{
+comodo.gat,227,158,4	script	Hair Ornament Girl	700,{
 	mes "[Hair Ornament Girl]";
 	if(sex==1)mes "Oh, hi.  Do you need to buy a present for a friend, your mother, or maybe your girl friend? Then get her a Hair Band! It's the best gift you can get her.";
 	if(sex==0)mes "Oh, hi.  Do you need to buy a present for a friend, your mother, or maybe yourself? Then get a Hair Band! It's the best gift you can give, or get.";
@@ -117,8 +116,7 @@ M_Menu:
 //===================================================================================================//
 // 'Mine Helmet', 'Parcel Hat', 'Money Loser's Grief', 'Phantom of the Opera Mask'
 //===============================================================//
-comodo.gat,274,137,5	script	Mari Isac	702,
-{
+comodo.gat,274,137,5	script	Mari Isac	702,{
 	mes "[Mari Isac]";
 	mes "I travel all over the world and get to hear many interesting stories from the people I meet.";
 	mes "Sometimes they even teach me how to make special items";

@@ -22,32 +22,27 @@
 //==========================================================================
 
 // Alberta -----------------------------------------
-alberta_in.gat, 22, 146,4	script	PvP Narrator#1	84,
-{
+alberta_in.gat,22,146,4	script	PvP Narrator#1	84,{
 	callfunc "F_PvPNarr", "alberta_in.gat", 24, 143;
 	end;
 }
 // Payon -------------------------------------
-payon_in01.gat,173,109,3	script	PvP Narrator#2	84,
-{
+payon_in01.gat,173,109,3	script	PvP Narrator#2	84,{
 	callfunc "F_PvPNarr", "payon_in01.gat", 169, 108;
 	end;
 }
 // Prontera -------------------------------------
-prt_in.gat,56,140,4	script	PvP Narrator#3	84,
-{
+prt_in.gat,56,140,4	script	PvP Narrator#3	84,{
 	callfunc "F_PvPNarr", "prt_in.gat", 54, 137;
 	end;
 }
 // Morocc --------------------------------------
-morocc_in.gat,144,138,4	script	PvP Narrator#4	84,
-{
+morocc_in.gat,144,138,4	script	PvP Narrator#4	84,{
 	callfunc "F_PvPNarr", "morocc_in.gat", 141, 140;
 	end;
 }
 // Geffen --------------------------------------
-geffen_in.gat, 67,63,4	script	PvP Narrator#5	84,
-{
+geffen_in.gat, 67,63,4	script	PvP Narrator#5	84,{
 	callfunc "F_PvPNarr", "geffen_in.gat", 64, 60;
 	end;
 }
@@ -134,8 +129,7 @@ function	script	F_PvPNarr	{
 //==========================================================================
 
 // Alberta -----------------------------------
-alberta_in.gat, 26,146,4	script	Gate Keeper#1::GateKeep	83,
-{
+alberta_in.gat, 26,146,4	script	Gate Keeper#1::GateKeep	83,{
 	mes "[Gate Keeper]";
 	mes "Hi.  I'm glad to be of service.  I will open the PvP fight square for you!";
 	mes "If you have any questions about the PvP modes or rules, please ask the Narrator.....";

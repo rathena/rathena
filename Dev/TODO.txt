@@ -33,28 +33,6 @@ Notes:      	Will work with just mob_id/name specified (ie @monster poring)
 
 
 **********
-3.
-Description:	Fix Ghostring Card
-
-Status:     	Done
-
-Assignee:   	MouseJstr
-
-Notes:      	battle_config flag to disable ghosty armor 
-                protecting you from mobs
-
-**********
-4.
-Description:	Add nomagic mapflag/@skilloff/@skillon
-
-Status:     	Done
-
-Assignee:   	MouseJstr
-
-Notes:      	NONE
-
-
-**********
 5.
 Description:	Checking help.txt (main directory, conf directory, doc directory) with atcommand.c
 
@@ -451,46 +429,6 @@ Assignee:   	Yor
 Notes:      	NONE
 
 **********
-37.
-Description:	@killer - enables a @gm to hit a player outside of pvp
-
-Status:     	Done
-
-Assignee:   	MouseJstr
-
-Notes:
-
-**********
-38.
-Description:	atcommand scripts - script @atcommands`
-
-Status:     	Pending
-
-Assignee:   	MouseJstr
-
-Notes:      	
-
-**********
-40.
-Description:	@addwarp - create a static warp to a target location
-
-Status:     	Done
-
-Assignee:   	MouseJstr
-
-Notes:      	
-**********
-41.
-Description:	@movenpc 
-   - manipulate npc's at runtime
-
-Status:     	Done
-
-Assignee:   	MouseJstr
-
-Notes:      	handling npc's with the same name on multiple maps 
-                requires thoughts
-**********
 42.
 Description:	@uptime - how long as the server been up?
 
@@ -513,27 +451,6 @@ Assignee:   	MouseJstr
 
 Notes
 **********
-44.
-Description:	Fix GTB card
-
-Status:     	Done
-
-Assignee:   	MouseJstr
-
-Notes:  battle_config command that controls just how magic resistant 
-        you raelly are
-**********
-45.
-Description:	gm @follow command
-
-Status:     	Done
-
-Assignee:   	MouseJstr
-
-Notes:  follows players, including warping to them... lets you do
-        a gm hide and grab a cup of coffee while watching a player
-        do bad things..
-**********
 47.
 Description:	different max aspd for players and GM's
 
@@ -542,15 +459,6 @@ Status:     	Pending
 Assignee:   	MouseJstr
 
 Notes:
-**********
-48.
-Description:	Configurable max num castles for a guild
-
-Status:     	Done
-
-Assignee:   	MouseJstr
-
-Notes:          We limit each guild to 3 castles on my server
 *********
 49
 Description:    Add @chareffect - Done [MouseJstr]
@@ -695,16 +603,120 @@ Notes:		http://forums.emperium.org/viewtopic.php?t=44856
 
 ********
 59.
-Description	Add a function where usable item bonuses cannot stack. Eg, an item that gives you +1 str when used again does not total to +2 str.
+Description	Add a function where usable item bonuses
+	cannot stack. Eg, an item that gives you +1 str when used
+	again does not total to +2 str.
 Status		Pending
 Assignee	None
 Notes		None
 
-**********
+                **********
 60.
-Description	Make it possible to set the selling price of an item in a shop npc. If a selling price is not present it uses the item_db and this can be selectable by battleconf
+Description	Make it possible to set the selling
+	price of an item in a shop npc. If a selling price is not
+	present it uses the item_db and this can be selectable
+	by battleconf
 Status		Pending
 Assignee	None
 Notes		None
 
 **********
+61.
+Description	Make a battle_config option to cause, if
+	a user is logged in and somebody tries to log in again,
+	it logs them both out...
+Status:		Pending
+Assignee	None
+Notes		None
+***
+62.
+Description	Make a battle_config option to disable auto-muting
+Status:		Pending
+***
+63.
+Description	Can't unmute auto-muted people
+Status:		Pending
+Assignee	None
+Notes		None
+***
+64.
+Description	Wedding skill recall.. should only have one active at a time
+Status:		Pending
+Assignee	None
+Notes		None
+***
+65.
+Description	Wedding skill recall should work in noskill zone
+Status:		Pending
+Assignee	None
+Notes		None
+***
+66.
+Description	re-add a better packet_db implementation
+Status:		Pending
+Assignee	nsstrunks
+Notes		None
+***
+67.
+Description	the char server is a fricken dog...
+Status:		Pending
+Assignee	MouseJstr
+Notes		None
+***
+68.
+Description	add no_mob_drops as a map flag
+Status:		Pending
+Assignee	None
+Notes		so that mobs don't drop shit in pvp arena's
+***
+69.
+Description	add MvM map flag
+Status:		Pending
+Assignee	None
+Notes		for allowing a monster on monster arena
+***
+70.
+Description	Redo the gm help files
+Status		Pending
+Assignee	MC_Cameri
+Notes		Do this after all @char commands are converted to # to
+avoid any problems.
+**
+71.
+Description	Make a way for NPC's to retrieve and set battle_flags
+Status		Pending
+Assignee	MouseJstr
+**
+72.
+Description	Add a @rates command to summerize the current rates
+Status		Pending
+Assignee	MouseJstr
+**
+73.
+Description	Added file based logging for all item movements
+Status		Pending
+Assignee	
+
+All trades, storage movements, drops, purchases, creates, etc.. log it
+all to a text file.
+**
+74.
+Description	Add a spy-file
+Status		Pending
+Assignee	
+
+All conversations.. broken out by who says them and who can hear
+them.. to a text file
+**
+75.
+Description	Make NPC's able to actually CAST a spell
+Status		Pending
+Assignee
+**
+76.
+Description	Add IP based masks for restricting GM powers
+Status		Pending
+Assignee
+
+Stealing my name/pass does not give you my powers
+**

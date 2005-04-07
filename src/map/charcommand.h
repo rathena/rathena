@@ -11,6 +11,15 @@ enum CharCommandType {
 	CharCommandOption,
 	CharCommandSave,
 	CharCommandStatsAll,
+	CharCommandSpiritball,
+	CharCommandItemList,
+	CharCommandEffect,
+	CharCommandStorageList,
+	CharCommandItem, // by MC Cameri
+	CharCommandWarp,
+	CharCommandZeny,
+	CharCommandShowDelay,
+	CharCommandShowExp,
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */

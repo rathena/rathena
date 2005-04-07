@@ -15,25 +15,28 @@ txtobj:
 sqlobj:
 	mkdir sqlobj
 
-ZLIBDIR = C:/eathena/zlib122
-PACKETDEF = -DPACKETVER=5 -DNEW_006b -D__WIN32
+ZLIBDIR = ../zlib
+PACKETDEF = -DPACKETVER=6 -DNEW_006b -D__WIN32 -DLOCALZLIB
 # OPT = /MDd /D_DEBUG
 OPT = 
 LINKOPT = /debug /SUBSYSTEM:CONSOLE
 # OPT = /O2
 CFLAGS =  $(OPT) /nologo /I../common /I$(ZLIBDIR) $(PACKETDEF) /D_WIN32
 
-COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o
+COMMON_OBJ = ../common/core.o ../common/socket.o ../common/timer.o ../common/grfio.o ../common/db.o ../common/lock.o ../common/nullpo.o ../common/malloc.o ../common/showmsg.o ../common/strlib.o ../common/utils.o
+
 LIBS = "WSOCK32.LIB"
 
 # "WSOCK32.LIB" "USER32.LIB" "ADVAPI32.LIB" "MSVCRT.LIB" "OLDNAMES.LIB" "KERNEL32.LIB"
 
-TXTOBJS = txtobj/map.o txtobj/chrif.o txtobj/clif.o txtobj/pc.o txtobj/npc.o txtobj/chat.o txtobj/path.o txtobj/itemdb.o txtobj/mob.o txtobj/script.o txtobj/storage.o txtobj/skill.o txtobj/atcommand.o txtobj/battle.o txtobj/intif.o txtobj/trade.o txtobj/party.o txtobj/vending.o txtobj/guild.o txtobj/pet.o $(COMMON_OBJ) $(ZLIBDIR)/inflate.o $(ZLIBDIR)/adler32.o $(ZLIBDIR)/crc32.o $(ZLIBDIR)/inftrees.o $(ZLIBDIR)/zutil.o $(ZLIBDIR)/inffast.o
+TXTOBJS = txtobj/map.o txtobj/chrif.o txtobj/clif.o txtobj/pc.o txtobj/status.o txtobj/npc.o txtobj/npc_chat.o txtobj/chat.o txtobj/path.o txtobj/itemdb.o txtobj/mob.o txtobj/script.o txtobj/storage.o txtobj/skill.o txtobj/atcommand.o txtobj/charcommand.o txtobj/battle.o txtobj/intif.o txtobj/trade.o txtobj/party.o txtobj/vending.o txtobj/guild.o txtobj/pet.o txtobj/log.o $(COMMON_OBJ) $(ZLIBDIR)/inflate.o $(ZLIBDIR)/deflate.o  $(ZLIBDIR)/trees.o $(ZLIBDIR)/adler32.o $(ZLIBDIR)/compress.o $(ZLIBDIR)/crc32.o $(ZLIBDIR)/inftrees.o $(ZLIBDIR)/zutil.o $(ZLIBDIR)/inffast.o
+
+SQLOBJS = sqlobj/map.o sqlobj/chrif.o sqlobj/clif.o sqlobj/pc.o sqlobj/status.o sqlobj/npc.o sqlobj/npc_chat.o sqlobj/chat.o sqlobj/path.o sqlobj/itemdb.o sqlobj/mob.o sqlobj/script.o sqlobj/storage.o sqlobj/skill.o sqlobj/atcommand.o sqlobj/charcommand.o sqlobj/battle.o sqlobj/intif.o sqlobj/trade.o sqlobj/party.o sqlobj/vending.o sqlobj/guild.o sqlobj/pet.o sqlobj/log.o $(COMMON_OBJ) $(ZLIBDIR)/inflate.o $(ZLIBDIR)/adler32.o $(ZLIBDIR)/crc32.o $(ZLIBDIR)/inftrees.o $(ZLIBDIR)/zutil.o $(ZLIBDIR)/inffast.o
 
 map-server: $(TXTOBJS)
 	link $(LINKOPT) /out:../../$@.exe $(TXTOBJS) $(LIBS)
 
-map-server_sql: sqlobj/map.o sqlobj/chrif.o sqlobj/clif.o sqlobj/pc.o sqlobj/npc.o sqlobj/chat.o sqlobj/path.o sqlobj/itemdb.o sqlobj/mob.o sqlobj/script.o sqlobj/storage.o sqlobj/skill.o sqlobj/atcommand.o sqlobj/battle.o sqlobj/intif.o sqlobj/trade.o sqlobj/party.o sqlobj/vending.o sqlobj/guild.o sqlobj/pet.o sqlobj/mail.o $(COMMON_OBJ)
+map-server_sql: $(SQLOBJS)
 	link $(LINKOPT) /out:../../$@.exe $> $(LIBS)
 
 txtobj/%.o: %.c
@@ -86,7 +89,7 @@ sqlobj/party.o: party.c party.h clif.h intif.h pc.h map.h battle.h ../common/db.
 sqlobj/vending.o: vending.c vending.h clif.h itemdb.h map.h pc.h log.h ../common/mmo.h ../common/showmsg.h
 sqlobj/guild.o: guild.c guild.h storage.h battle.h clif.h intif.h pc.h npc.h map.h ../common/db.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
 sqlobj/pet.o: pet.c pet.h map.h clif.h chrif.h intif.h pc.h itemdb.h battle.h mob.h npc.h script.h ../common/db.h ../common/socket.h ../common/timer.h ../common/mmo.h ../common/showmsg.h
-sqlobj/mail.o: mail.c mail.h ../common/showmsg.h
+sqlobj/mail.o: mail.c mail.h ../common/showmsg.h ../common/strlib.h ../common/utils.h
 sqlobj/log.o: log.c log.h map.h ../common/nullpo.h
 
 clean:

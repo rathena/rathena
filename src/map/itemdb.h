@@ -12,7 +12,7 @@ struct item_data {
 	int value_buy;
 	int value_sell;
 	int type;
-	int class;
+	int class_;
 	int sex;
 	int equip;
 	int weight;
@@ -33,6 +33,7 @@ struct item_data {
 		unsigned no_equip : 3;
 		unsigned no_drop : 1;
 		unsigned no_use : 1;
+		unsigned no_refine : 1;	// [celest]
 	} flag;
 	int view_id;
 };

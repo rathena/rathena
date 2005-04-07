@@ -96,8 +96,8 @@ treasure01.gat,89,160,0,0	monster	Hydra	1068,1,305000,100000,1
 treasure01.gat,89,161,0,0	monster	Hydra	1068,1,300000,100000,1
 treasure01.gat,0,0,0,0	monster	Kukre	1070,10,0,0,1
 treasure01.gat,21,165,5,9	monster	Kukre	1070,10,300000,150000,1
-treasure01.gat,162,58,0,0	monster	Penomena	1216,1,900000,450000,0
-treasure01.gat,168,59,0,0	monster	Wanderer	1208,1,1800000,900000,0
+treasure01.gat,162,58,0,0	monster	Penomena	1216,1,900000,900000,0
+treasure01.gat,168,59,0,0	monster	Wanderer	1208,1,1800000,1800000,0
 
 //(treasure02.gat)*
 treasure02.gat,23,142,1,1	monster	Marionette	1143,1,200000,100000,1
@@ -137,5 +137,5 @@ treasure02.gat,108,57,0,0	monster	Hydra	1068,1,300000,100000,1
 treasure02.gat,95,57,0,0	monster	Hydra	1068,1,300000,100000,1
 treasure02.gat,96,57,0,0	monster	Hydra	1068,1,300000,100000,1
 treasure02.gat,0,0,0,0	monster	Kukre	1070,20,0,0,1
-treasure02.gat,0,0,0,0	monster	Ghostring	1120,1,1800000,900000,1
-treasure02.gat,101,151,8,8	monster	Drake	1112,1,3600000,7200000,1
+treasure02.gat,0,0,0,0	monster	Ghostring	1120,1,3600000,3600000,1
+treasure02.gat,101,151,8,8	monster	Drake	1112,1,7200000,7200000,1

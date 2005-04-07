@@ -1,12 +1,17 @@
-# $Id: Makefile 158 2004-10-01 03:45:15Z PoW $
 
 CC = gcc -pipe
+# CC = gcc -pipe -DPCRE_SUPPORT
+# CC = g++ --pipe
+# CC = gcc -pipe -DGCOLLECT
+# CC = gcc -pipe -DDMALLOC -DDMALLOC_FUNC_CHECK
+# CC = /usr/local/bin/gcc -fbounds-checking -pipe -DBCHECK
 
-ifdef DEBUG
-PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT -DDEBUG
-else
+# GCLIB = -lgc
+# GCLIB = -L/usr/local/lib -lpcre
+GCLIB =
+# GCLIB = -ldmalloc
+
 PACKETDEF = -DPACKETVER=6 -DNEW_006b -DSO_REUSEPORT
-endif
 #PACKETDEF = -DPACKETVER=5 -DNEW_006b
 #PACKETDEF = -DPACKETVER=4 -DNEW_006b
 #PACKETDEF = -DPACKETVER=3 -DNEW_006b
@@ -20,15 +25,20 @@ MAKE = gmake
 else
 MAKE = make
 endif
+ifeq ($(findstring NetBSD,$(PLATFORM)), NetBSD)
+MAKE = gmake
+endif
 
-OPT = -g -O2 -ffast-math
+OPT = -g -O2 -ffast-math -Wall -Wno-sign-compare
+# OPT += -DDUMPSTACK -rdynamic
 
 ifeq ($(findstring CYGWIN,$(PLATFORM)), CYGWIN)
 OS_TYPE = -DCYGWIN
-CFLAGS = $(OPT) -Wall -DFD_SETSIZE=4096 -I../common $(PACKETDEF) $(OS_TYPE)
+CFLAGS =  $(OPT) -DFD_SETSIZE=4096 -I../common $(PACKETDEF) $(OS_TYPE)
 else
 OS_TYPE =
-CFLAGS = $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
+CFLAGS =  $(OPT) -I../common $(PACKETDEF) $(OS_TYPE)
+# CFLAGS = -DTWILIGHT  $(OPT) -Wall -I../common $(PACKETDEF) $(OS_TYPE)
 endif
 
 MYSQLFLAG_INCLUDE_DEFAULT = /usr/local/include/mysql
@@ -39,10 +49,10 @@ ifeq ($(findstring /,$(MYSQLFLAG_CONFIG)), /)
 MYSQLFLAG_VERSION = $(shell $(MYSQLFLAG_CONFIG) --version | sed s:\\..*::) 
 endif
 
-ifeq ($(findstring 5,$(MYSQLFLAG_VERSION)), 5)
-MYSQLFLAG_CONFIG_ARGUMENT = --include
-endif
 ifeq ($(findstring 4,$(MYSQLFLAG_VERSION)), 4)
+MYSQLFLAG_CONFIG_ARGUMENT = --cflags
+endif
+ifeq ($(findstring 5,$(MYSQLFLAG_VERSION)), 5)
 MYSQLFLAG_CONFIG_ARGUMENT = --include
 endif
 ifndef MYSQLFLAG_CONFIG_ARGUMENT
@@ -63,17 +73,19 @@ else
 LIB_S = $(LIB_S_DEFAULT)
 endif
 
-MYLIB = CC="$(CC)" CFLAGS="$(CFLAGS) $(MYSQLFLAG_INCLUDE)" LIB_S="$(LIB_S)"
+MYLIB = CC="$(CC)" CFLAGS="$(CFLAGS) $(MYSQLFLAG_INCLUDE)" LIB_S="$(LIB_S) $(GCLIB)"
 
 endif
 
-MKDEF = CC="$(CC)" CFLAGS="$(CFLAGS)"
+MKDEF = CC="$(CC)" CFLAGS="$(CFLAGS)" LIB_S="$(GCLIB)"
 
 all: conf txt
 
 conf:
 	cp -r conf-tmpl conf
 	rm -rf conf/.svn conf/*/.svn
+	cp -r save-tmpl save
+	rm -rf save/.svn
 
 txt : src/common/GNUmakefile src/login/GNUmakefile src/char/GNUmakefile src/map/GNUmakefile src/ladmin/GNUmakefile conf
 	cd src ; cd common ; $(MAKE) $(MKDEF) $@ ; cd ..
@@ -84,21 +96,25 @@ txt : src/common/GNUmakefile src/login/GNUmakefile src/char/GNUmakefile src/map/
 
 
 ifdef SQLFLAG
-sql: src/common/GNUmakefile src/login_sql/GNUmakefile src/char_sql/GNUmakefile src/map/GNUmakefile src/ladmin/GNUmakefile src/txt-converter/login/GNUmakefile src/txt-converter/char/GNUmakefile conf
+sql: src/common/GNUmakefile src/login_sql/GNUmakefile src/char_sql/GNUmakefile src/map/GNUmakefile src/txt-converter/login/GNUmakefile src/txt-converter/char/GNUmakefile conf
 	cd src ; cd common ; $(MAKE) $(MKDEF) $@ ; cd ..
 	cd src ; cd login_sql ; $(MAKE) $(MYLIB) $@ ; cd ..
 	cd src ; cd char_sql ; $(MAKE) $(MYLIB) $@ ; cd ..
 	cd src ; cd map ; $(MAKE) $(MYLIB) $@ ; cd ..
-	cd src ; cd ladmin ; $(MAKE) $(MKDEF) $@ ; cd ..
-	cd src ; cd txt-converter ; cd login ; $(MAKE) $(MYLIB) $@ ; cd ..
-	cd src ; cd txt-converter ; cd char ; $(MAKE) $(MYLIB) $@ ; cd ..
+	cd src ; cd txt-converter ; cd login ; $(MAKE) $(MYLIB) ; cd ..
+	cd src ; cd txt-converter ; cd char ; $(MAKE) $(MYLIB) ; cd ..
 else
 sql:
 	$(MAKE) CC="$(CC)" OPT="$(OPT)" SQLFLAG=1 $@
 endif
 
-debug-sql:
-	$(MAKE) CC="$(CC)" OPT="$(OPT)" DEBUG=1 sql
+
+tools:
+	cd src ; cd tool && $(MAKE) $(MKDEF) && cd ..
+
+webserver:
+	cd src ; cd webserver && $(MAKE) $(MKDEF) && cd ..
+
 
 clean: src/common/GNUmakefile src/login/GNUmakefile src/char/GNUmakefile src/map/GNUmakefile src/ladmin/GNUmakefile src/txt-converter/login/GNUmakefile src/txt-converter/char/GNUmakefile
 	cd src ; cd common ; $(MAKE) $(MKDEF) $@ ; cd ..
@@ -110,16 +126,6 @@ clean: src/common/GNUmakefile src/login/GNUmakefile src/char/GNUmakefile src/map
 	cd src ; cd ladmin ; $(MAKE) $(MKDEF) $@ ; cd ..
 	cd src ; cd txt-converter ; cd login ; $(MAKE) $(MKLIB) $@ ; cd ..
 	cd src ; cd txt-converter ; cd char ; $(MAKE) $(MKLIB) $@ ; cd ..
-	cd src ; cd webserver; $(MAKE) $(MKDEF) $@ ; cd ..
-
-tools:
-	cd tool && $(MAKE) $(MKDEF) && cd ..
-	$(CC) -o setupwizard setupwizard.c
-webserver:
-	cd src ; cd webserver ; $(MAKE) $(MKDEF) $@ ; cd ..
-
-#webserver: src/webserver/GNUmakefile
-	
 
 src/common/GNUmakefile: src/common/Makefile
 	sed -e 's/$$>/$$^/' src/common/Makefile > src/common/GNUmakefile
@@ -139,5 +145,3 @@ src/txt-converter/login/GNUmakefile: src/txt-converter/login/Makefile
 	sed -e 's/$$>/$$^/' src/txt-converter/login/Makefile > src/txt-converter/login/GNUmakefile
 src/txt-converter/char/GNUmakefile: src/txt-converter/char/Makefile
 	sed -e 's/$$>/$$^/' src/txt-converter/char/Makefile > src/txt-converter/char/GNUmakefile
-src/webserver/GNUmakefile: src/webserver/Makefile
-	sed -e 's/$$>/$$^/' src/webserver/Makefile > src/webserver/GNUmakefile

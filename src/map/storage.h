@@ -5,7 +5,6 @@
 #include "mmo.h"
 
 int storage_storageopen(struct map_session_data *sd);
-int storage_storageopen2(struct map_session_data *sd,struct map_session_data *pl_sd);
 int storage_storageadd(struct map_session_data *sd,int index,int amount);
 int storage_storageget(struct map_session_data *sd,int index,int amount);
 int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount);
@@ -18,6 +17,7 @@ struct storage *account2storage2(int account_id);
 int storage_delete(int account_id);
 int storage_storage_quit(struct map_session_data *sd);
 int storage_storage_save(struct map_session_data *sd);
+void storage_storage_dirty(struct map_session_data *sd);
 
 struct guild_storage *guild2storage(int guild_id);
 int guild_storage_delete(int guild_id);

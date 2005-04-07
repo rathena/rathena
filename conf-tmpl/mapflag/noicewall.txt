@@ -5,8 +5,11 @@
 //=============================================================
 //= noicewall: Disables Icewall skill.
 //= To disable Icewall on a specific map add the mapname here.
+//= 1.2 [Lupus]
 //============================================================
 
+ayo_in01.gat	mapflag	noicewall
+ayo_in02.gat	mapflag	noicewall
 alberta_in.gat	mapflag	noicewall
 alberta.gat	mapflag	noicewall
 alde_alche.gat	mapflag	noicewall
@@ -34,6 +37,7 @@ morocc_in.gat	mapflag	noicewall
 morocc.gat	mapflag	noicewall
 payon_in01.gat	mapflag	noicewall
 payon_in02.gat	mapflag	noicewall
+payon_in03.gat	mapflag	noicewall
 payon.gat	mapflag	noicewall
 pay_arche.gat	mapflag noicewall
 prt_are_in.gat	mapflag	noicewall
@@ -58,3 +62,7 @@ yuno.gat	mapflag	noicewall
 gon_test.gat	mapflag	noicewall
 nif_in.gat	mapflag	noicewall
 louyang.gat	mapflag	noicewall
+que_sign01.gat	mapflag	noicewall
+ein_in01.gat	mapflag	noicewall
+airport.gat	mapflag	noicewall
+airplane.gat	mapflag	noicewall

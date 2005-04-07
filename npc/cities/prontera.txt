@@ -60,8 +60,7 @@ prontera.gat,78,150,3	script	Dairenne	90,{
 }
 
 // Merideth --------------------------------------------------------------
-prontera.gat,106,117,6	script	Merideth	91,
-{
+prontera.gat,106,117,6	script	Merideth	91,{
 	mes "[Merideth]";
 	mes "The weather was nice on my day off, so my family and I decided to have a picnic.";
 	mes "We chose to go to a somewhat secluded area and were amazed at what we saw."; 
@@ -112,8 +111,7 @@ prontera.gat,160,133,2	script	YuPi	102,{
 }
 
 // Shuger -------------------------------------------------------------
-prontera.gat,102,287,5	script	Shuger	98,
-{
+prontera.gat,102,287,5	script	Shuger	98,{
 	mes "[Shuger]";
 	mes "In the fields outside of town, there are pink monsters called '^FF8888Porings^000000'.";
 	mes "Though they are cute and do not harm people, they are notorious looters.  They will absorb any item that they find on the ground.";
@@ -388,8 +386,7 @@ prt_church.gat,103,76,2	script	Garnet	67,{
 
 // ----------------------------------------------------------------------------------------------- PUB -----------------------------------------------------------------------------------------------------\\
 // Sir Michael (West End Pub)
-prt_in.gat,26,30,1	script	Sir Michael	54,
-{
+prt_in.gat,26,30,1	script	Sir Michael	54,{
 	mes "[Sir Michael]";
 	mes "I dunno if you'll ever believe me, but I saw the WEIRDEST thing down in the ^5555FFCulvert Sewers^000000.";
 	mes "I've been training in the 3rd level of the sewers for a long time now, so there's nothing about that area that I don't know.";

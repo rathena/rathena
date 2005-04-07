@@ -3,6 +3,7 @@
 #define _INT_PARTY_H_
 
 int inter_party_init();
+void inter_party_final();
 int inter_party_save();
 
 int inter_party_parse_frommap(int fd);

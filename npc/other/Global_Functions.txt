@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@ function	script	F_ClearJobVar	{
 	// 2-2 Jobs ------------------------------
 	set ROGUE_Q,0; set ROGUE_Q2,0;
 	set ALCH_Q,0; set ALCH_Q2,0;
+	set MONK_Q,0;
 	return;
 }
 
@@ -83,4 +84,9 @@ function	script	Is_Thief_Class	{
 // Lord Knight,Paladin, 0 otherwise
 function	script	Is_Sword_Class	{
 	return ( Class==Job_Swordman || Class==Job_Knight || Class==Job_Knight2 || Class==Job_Crusader || Class==Job_Crusader2 || Class==4002 || Class==4008 || Class==4014 || Class==4015 || Class==4022 );
+}
+//-----------------------------------------------------
+// returns 1 if the player is either Super Novice or Super Baby, 0 otherwise
+function	script	Is_Super_Class	{
+	return ( Class==Job_Super_Baby || Class==Job_SuperNovice );
 }

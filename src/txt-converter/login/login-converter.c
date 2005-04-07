@@ -40,7 +40,7 @@ struct {
   int sex,delflag;
 } auth_fifo[AUTH_FIFO_SIZE];
 int auth_fifo_pos=0;
-struct {
+struct auth_dat_ {
 	int account_id, sex;
 	char userid[24], pass[24], lastlogin[24];
 	int logincount;
@@ -72,7 +72,7 @@ char db_server_logindb[32] = "ragnarok";
 int isGM(int account_id)
 {
 	struct gm_account *p;
-	p = numdb_search(gm_account_db,account_id);
+	p = (struct gm_account*)numdb_search(gm_account_db,account_id);
 	if( p == NULL)
 		return 0;
 	return p->level;
@@ -95,7 +95,7 @@ int read_gm_account()
 		if(line[0] == '/' || line[1] == '/' || line[2] == '/')
 			continue;
 
-		p=malloc(sizeof(struct gm_account));
+		p = (struct gm_account*)malloc(sizeof(struct gm_account));
 		if(p==NULL){
 			printf("gm_account: out of memory!\n");
 			exit(0);
@@ -145,7 +145,7 @@ int mmo_auth_init(void)
 
 
 	fp=fopen("save/account.txt","r");
-	auth_dat=malloc(sizeof(auth_dat[0])*256);
+	auth_dat = (struct auth_dat_*)malloc(sizeof(auth_dat[0])*256);
 	auth_max=256;
 	if(fp==NULL)
 		return 0;
@@ -233,6 +233,10 @@ int login_config_read(const char *cfgName){
 		else if(strcmpi(w1,"db_server_logindb")==0){
 			strcpy(db_server_logindb, w2);
 			printf ("set db_server_logindb : %s\n",w2);
+		}
+		//support the import command, just like any other config
+		else if(strcmpi(w1,"import")==0){
+			login_config_read(w2);
 		}
 	}
 	fclose(fp);

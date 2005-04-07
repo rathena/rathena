@@ -16,7 +16,7 @@
 
 // Castle 1 ================================================================
 aldeg_cas01.gat,216,24,0	script	Agit_A01	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "aldeg_cas01.gat",0,"::OnRecvCastleA01";
 	end;
 OnRecvCastleA01:
@@ -39,7 +39,7 @@ OnAgitEnd:
 
 // Castle 2 ================================================================
 aldeg_cas02.gat,214,24,0	script	Agit_A02	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "aldeg_cas02.gat",0,"::OnRecvCastleA02";
 	end;
 OnRecvCastleA02:
@@ -62,7 +62,7 @@ OnAgitEnd:
 
 // Castle 3 ================================================================
 aldeg_cas03.gat,206,32,0	script	Agit_A03	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "aldeg_cas03.gat",0,"::OnRecvCastleA03";
 	end;
 OnRecvCastleA03:
@@ -85,7 +85,7 @@ OnAgitEnd:
 
 // Castle 4 ================================================================
 aldeg_cas04.gat,36,218,0	script	Agit_A04	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "aldeg_cas04.gat",0,"::OnRecvCastleA04";
 	end;
 OnRecvCastleA04:
@@ -108,7 +108,7 @@ OnAgitEnd:
 
 // Castle 5 ================================================================
 aldeg_cas05.gat,28,102,0	script	Agit_A05	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "aldeg_cas05.gat",0,"::OnRecvCastleA05";
 	end;
 OnRecvCastleA05:

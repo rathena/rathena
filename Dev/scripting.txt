@@ -8,3 +8,23 @@ Assignee	- The nickname of the person whom is assigned the task
 Notes		- Miscellaneous notes concerning the task
 
 --------------------------
+
+Description:	-Thief Test its not working correctly
+Type:		-Quest
+Status:		-Pending
+Assignee:	-N/A
+
+--------------------------
+
+Description:	- Some one needs to check the item_db there are alot of errors.
+Type:		- DB
+Status:		- Pending
+Assignee:	- N/A
+
+--------------------------
+
+Description:	- Changing into "High" class are supposed to give you 100 stat
+		- points. It currently only gives you 88.
+Type:		- Jobchanger
+Stats:		- Pending
+Assignee:	- N/A

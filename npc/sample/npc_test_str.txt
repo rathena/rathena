@@ -1,17 +1,17 @@
-// 文字列変数のテスト
-prontera.gat,164,188,1	script	文字列テスト	112,{
-	set @str$, "文字列１";
-	mes "文字列変数：" + @str$ ;
-	mes "確認：" + @str$ + " ...OK?";
+// Some Test Example
+prontera.gat,164,188,1	script	sTrInG2compare	112,{
+	set @str$, "StRiNg1";
+	mes "sTrInG2 isn't equal to " + @str$ ;
+	mes "Our Var is equal to " + @str$ + " ...OK?";
 	next;
-	mes "比較～eqOK：" + (@str$=="文字列１");
-	mes "比較～eqNG：" + (@str$=="文字列");
-	mes "比較～neOK：" + (@str$!="00000");
-	mes "比較～neNG：" + (@str$!="文字列１");
-	mes "比較～gtOK：" + ("aab">"aaa");
-	mes "比較～ltNG：" + ("aab"<"aaa");
+	mes "Comparision eqOK：" + (@str$=="StRiNg1");
+	mes "Comparision eqNG：" + (@str$=="sTrInG2");
+	mes "Comparision neOK：" + (@str$!="00000");
+	mes "Comparision neNG：" + (@str$!="StRiNg1");
+	mes "Comparision gtOK：" + ("aab">"aaa");
+	mes "Comparision ltNG：" + ("aab"<"aaa");
 	next;
 	input @str2$;
-	mes "入力データは " + @str2$ + " です。";
+	mes "You've entered '" + @str2$ + "' string.";
 	close;
 }

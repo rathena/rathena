@@ -93,7 +93,7 @@ payg_cas05.gat,277,249,3	script	Najarf	55,{
 	if(@GDnum==10) guardian "payg_cas05.gat",51,258,"Soldier Guardian",1287,1,"Guardian_Py05::OnGuardianDied",0; 
 	if(@GDnum==11) guardian "payg_cas05.gat",286,235,"Soldier Guardian",1287,1,"Guardian_Py05::OnGuardianDied",1; 
 	if(@GDnum==12) guardian "payg_cas05.gat",282,277,"Soldier Guardian",1287,1,"Guardian_Py05::OnGuardianDied",2;
-	if(@GDnum==13) guardian "payg_cas05.gat",46,273,"Archer Guardian",1285,1,"Guardian_Py05::OnGuardianDied",3; 
+	if(@GDnum==13) guardian "payg_cas05.gat",18,281,"Archer Guardian",1285,1,"Guardian_Py05::OnGuardianDied",3; 
 	if(@GDnum==14) guardian "payg_cas05.gat",289,256,"Archer Guardian",1285,1,"Guardian_Py05::OnGuardianDied",4; 
 	if(@GDnum==15) guardian "payg_cas05.gat",275,42,"Knight Guardian",1286,1,"Guardian_Py05::OnGuardianDied",5; 
 	if(@GDnum==16) guardian "payg_cas05.gat",254,9,"Knight Guardian",1286,1,"Guardian_Py05::OnGuardianDied",6; 

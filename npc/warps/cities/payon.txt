@@ -5,7 +5,7 @@
 //= Darkchild (1.1)
 //= Nana (1.3)
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3.1
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
@@ -134,4 +134,4 @@ payon_in03.gat,27,172,0	 	warp	payonwarp086	2,2,payon_in03.gat,27,157
 payon_in01.gat,86,9,0		warp	payonwarp087	2,2,payon.gat,266,152
 payon.gat,270,152,0		warp	payonwarp088	2,2,payon_in01.gat,90,9
 payon_in01.gat,107,71,0		warp	payonwarp089	2,2,payon_in01.gat,96,37
-payon_in01.gat,93,37,0		warp	payonwarp090	2,2,payon_in01.gat,103,71
+payon_in01.gat,93,37,0		warp	payonwarp090	2,2,payon_in01.gat,104,71

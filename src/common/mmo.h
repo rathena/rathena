@@ -7,6 +7,20 @@
 #include <time.h>
 #include "utils.h" // _WIN32
 
+#if ! defined(Assert)
+#if defined(RELEASE)
+#define Assert(EX)
+#else
+// extern "C" {
+#include <assert.h>
+// }
+#if defined(_WIN32)
+#include <crtdbg.h>
+#endif
+#define Assert(EX) assert(EX)
+#endif
+#endif /* ! defined(Assert) */
+
 #ifdef CYGWIN
 // txtやlogなどの書き出すファイルの改行コード
 #define RETCODE	"\r\n"	// (CR/LF：Windows系)
@@ -29,7 +43,7 @@
 #define MAX_AMOUNT 30000
 #define MAX_ZENY 1000000000	// 1G zeny
 #define MAX_CART 100
-#define MAX_SKILL 450
+#define MAX_SKILL 650
 #define GLOBAL_REG_NUM 96
 #define ACCOUNT_REG_NUM 16
 #define ACCOUNT_REG2_NUM 16
@@ -39,7 +53,7 @@
 #define MAX_STORAGE 300
 #define MAX_GUILD_STORAGE 1000
 #define MAX_PARTY 12
-#define MAX_GUILD 36	// increased max guild members to accomodate for +2 increase for extension levels [Valaris] (removed) [PoW]
+#define MAX_GUILD 16+10*6	// increased max guild members to accomodate for +6 increase for extension levels [Lupus]
 #define MAX_GUILDPOSITION 20	// increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
 #define MAX_GUILDEXPLUSION 32
 #define MAX_GUILDALLIANCE 16
@@ -53,8 +67,6 @@
 #define MAX_HAIR_COLOR battle_config.max_hair_color
 #define MIN_CLOTH_COLOR battle_config.min_cloth_color
 #define MAX_CLOTH_COLOR battle_config.max_cloth_color
-
-#define MIN_CHAR_ID 150000 // shouldn't ever be changed, the client requires this min value [Ajarn]
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -102,7 +114,7 @@ struct s_pet {
 	int account_id;
 	int char_id;
 	int pet_id;
-	short class;
+	short class_;
 	short level;
 	short egg_id;//pet egg id
 	short equip;//pet equip name_id
@@ -117,10 +129,13 @@ struct mmo_charstatus {
 	int char_id;
 	int account_id;
 	int partner_id;
+	int father;
+	int mother;
+	int child;
 
 	int base_exp,job_exp,zeny;
 
-	short class;
+	short class_;
 	short status_point,skill_point;
 	int hp,max_hp,sp,max_sp;
 	short option,karma,manner;
@@ -131,7 +146,7 @@ struct mmo_charstatus {
 	short head_top,head_mid,head_bottom;
 
 	char name[24];
-	unsigned char base_level,job_level;
+	unsigned int base_level,job_level;
 	short str,agi,vit,int_,dex,luk;
 	unsigned char char_num,sex;
 
@@ -154,17 +169,18 @@ struct mmo_charstatus {
 };
 
 struct storage {
+	int dirty;
 	int account_id;
 	short storage_status;
 	short storage_amount;
-	struct item storage[MAX_STORAGE];
+	struct item storage_[MAX_STORAGE];
 };
 
 struct guild_storage {
 	int guild_id;
 	short storage_status;
 	short storage_amount;
-	struct item storage[MAX_GUILD_STORAGE];
+	struct item storage_[MAX_GUILD_STORAGE];
 };
 
 struct map_session_data;
@@ -185,13 +201,13 @@ struct party {
 	int party_id;
 	char name[24];
 	int exp;
-	int item;
+	int item, itemc;
 	struct party_member member[MAX_PARTY];
 };
 
 struct guild_member {
 	int account_id, char_id;
-	short hair,hair_color,gender,class,lv;
+	short hair,hair_color,gender,class_,lv;
 	int exp,exp_payper;
 	short online,position;
 	int rsv1,rsv2;
@@ -267,8 +283,8 @@ struct guild_castle {
 	int Ghp4;
 	int Ghp5;
 	int Ghp6;
-	int Ghp7;
-	int GID0;
+	int Ghp7;	
+	int GID0;	
 	int GID1;
 	int GID2;
 	int GID3;
@@ -313,23 +329,25 @@ enum {
 	GD_DEVELOPMENT=10014,
 };
 
-#ifndef _WIN32
-#ifndef strcmpi
-#define strcmpi strcasecmp
-#endif
-#ifndef stricmp
-#define stricmp strcasecmp
-#endif
-#ifndef strncmpi
-#define strncmpi strncasecmp
-#endif
-#ifndef strnicmp
-#define strnicmp strncasecmp
-#endif
-#ifndef strrchr
-#define strrchr rindex
-#endif
-
+#ifndef __WIN32
+	#ifndef strcmpi
+		#define strcmpi strcasecmp
+	#endif
+	#ifndef stricmp
+		#define stricmp strcasecmp
+	#endif
+	#ifndef strncmpi
+		#define strncmpi strncasecmp
+	#endif
+	#ifndef strnicmp
+		#define strnicmp strncasecmp
+	#endif
+#else
+	#define snprintf _snprintf
+	#define vsnprintf _vsnprintf
+	#ifndef strncmpi
+		#define strncmpi strnicmp
+	#endif
 #endif
 
 #endif	// _MMO_H_

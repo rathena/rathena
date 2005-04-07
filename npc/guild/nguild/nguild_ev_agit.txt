@@ -15,7 +15,7 @@
 
 // Castle 1 ================================================================
 nguild_alde.gat,0,0,0	script	Agit_N01	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "nguild_alde.gat",0,"::OnRecvCastleN01";
 	end;
 OnRecvCastleN01:
@@ -38,7 +38,7 @@ OnAgitEnd:
 
 // Castle 2 ================================================================
 nguild_gef.gat,0,0,0	script	Agit_N02	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "nguild_gef.gat",0,"::OnRecvCastleN02";
 	end;
 OnRecvCastleN02:
@@ -61,7 +61,7 @@ OnAgitEnd:
 
 // Castle 3 ================================================================
 nguild_pay.gat,0,0,0	script	Agit_N03	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "nguild_pay.gat",0,"::OnRecvCastleN03";
 	end;
 OnRecvCastleN03:
@@ -84,7 +84,7 @@ OnAgitEnd:
 
 // Castle 4 ================================================================
 nguild_prt.gat,0,0,0	script	Agit_N04	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "nguild_prt.gat",0,"::OnRecvCastleN04";
 	end;
 OnRecvCastleN04:

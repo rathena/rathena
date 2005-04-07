@@ -1,8 +1,10 @@
 #include <string.h>
 #include "utils.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
+#include <stdlib.h>
+#include "malloc.h"
+#include "mmo.h"
 
 void dump(unsigned char *buffer, int num)
 {
@@ -111,7 +113,7 @@ void str_lower(char *name)
 // Allocate a StringBuf  [MouseJstr]
 struct StringBuf * StringBuf_Malloc() 
 {
-	struct StringBuf * ret = (struct StringBuf *) malloc(sizeof(struct StringBuf));
+	struct StringBuf * ret = (struct StringBuf *) aMallocA(sizeof(struct StringBuf));
 	StringBuf_Init(ret);
 	return ret;
 }
@@ -119,7 +121,7 @@ struct StringBuf * StringBuf_Malloc()
 // Initialize a previously allocated StringBuf [MouseJstr]
 void StringBuf_Init(struct StringBuf * sbuf)  {
 	sbuf->max_ = 1024;
-	sbuf->ptr_ = sbuf->buf_ = (char *) malloc(sbuf->max_ + 1);
+	sbuf->ptr_ = sbuf->buf_ = (char *) aMallocA(sbuf->max_ + 1);
 }
 
 // printf into a StringBuf, moving the pointer [MouseJstr]
@@ -142,7 +144,7 @@ int StringBuf_Printf(struct StringBuf *sbuf,const char *fmt,...)
 		/* Else try again with more space. */
 		sbuf->max_ *= 2; // twice the old size
 		off = sbuf->ptr_ - sbuf->buf_;
-		sbuf->buf_ = (char *) realloc(sbuf->buf_, sbuf->max_ + 1);
+		sbuf->buf_ = (char *) aRealloc(sbuf->buf_, sbuf->max_ + 1);
 		sbuf->ptr_ = sbuf->buf_ + off;
 	}
 }
@@ -156,7 +158,7 @@ int StringBuf_Append(struct StringBuf *buf1,const struct StringBuf *buf2)
 	if (size2 >= buf1_avail)  {
 		int off = buf1->ptr_ - buf1->buf_;
 		buf1->max_ += size2;
-		buf1->buf_ = (char *) realloc(buf1->buf_, buf1->max_ + 1);
+		buf1->buf_ = (char *) aRealloc(buf1->buf_, buf1->max_ + 1);
 		buf1->ptr_ = buf1->buf_ + off;
 	}
 
@@ -168,7 +170,7 @@ int StringBuf_Append(struct StringBuf *buf1,const struct StringBuf *buf2)
 // Destroy a StringBuf [MouseJstr]
 void StringBuf_Destroy(struct StringBuf *sbuf) 
 {
-	free(sbuf->buf_);
+	aFree(sbuf->buf_);
 	sbuf->ptr_ = sbuf->buf_ = 0;
 }
 
@@ -176,7 +178,7 @@ void StringBuf_Destroy(struct StringBuf *sbuf)
 void StringBuf_Free(struct StringBuf *sbuf) 
 {
 	StringBuf_Destroy(sbuf);
-	free(sbuf);
+	aFree(sbuf);
 }
 
 // Return the built string from the StringBuf [MouseJstr]

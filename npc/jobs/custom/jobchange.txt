@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena Scripting Team
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= Athena Version RC1+
 //===== Description: =========================================
@@ -12,24 +12,27 @@
 //===== Additional Comments: =================================
 //Added missing param into resetlevel [Lupus]
 //Remade Adv. Classes Menu. [shadowlady]
+//Fixed some bugs, by midas
 //============================================================
 
 prontera.gat,160,186,6	script	Jobchanger	94,{
+cutin "kafra_01",2;
 mes "[ ^0065DFJobra^000000 ]";
-mes "Sup? I'm the insanely cool and supra-l337 jobchanger thingy for Athena! First of all, what class would you like to change into (must meet preliminary requirements for each class..)";
+mes "Sup? I'm the insanely cool and uber cute jobchanger thingy for eAthena! First of all, what class would you like to change into (must meet preliminary requirements for each class..)?";
 next;
-menu "First Class",LFirstClass,"Second Class (2-1)",LSecondClass,"Alternate Second Class (2-2)",LSecondClass2,"Novice High",LNovice2,"Advance First Class",Ladvclasses,"Advance Second Class",Ladvclasses,"Super Novice",LSuperNovice;
+menu "First Class",LFirstClass,"Second Class (2-1)",LSecondClass,"Alternate Second Class (2-2)",LSecondClass2,"Novice High",LNovice2,"Advance First Class",Llevelcheck,"Advance Second Class",Llevelcheck,"Super Novice",LSuperNovice;
 LNovice2:
-	if ((readparam(11) >= 99)  && (readparam(55) >= 50) || (readparam(19) > 20)) goto Lchange;
+	if ((readparam(11) >= 99) && (readparam(55) >= 50) || ((readparam(19) > 20) && (readparam(19) != 23))) goto Lchange;
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Ummmm, excuse me... o.O...";
-	mes "You don't MEET the class requirements...";
-	mes "Hey! You're not ready! Get away, punk! *rolls eyes*";
-	mes "Only 2nd Classes and Alternate 2nd Classes can change into the Novice High... jeeze.";
+	mes "Hey! You don't MEET the class requirements...";
+	mes "You're not ready! Get away, punk! *rolls eyes*";
+	mes "Only the bravest and highest level 2nd Classes and Alternate 2nd Classes can change into the Novice High... jeeze.";
 	cutin "kafra_01",255;
 	close;
 
 Lchange:
+	if ((readparam(19) >= 46) && (readparam(19) <= 68)) goto Babynochange;
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "We shall start the ceremony....";
 	next;
@@ -42,6 +45,12 @@ Lchange:
 	cutin "kafra_01",255;
 	close;
 
+Babynochange:
+	mes "[ ^0065DFJobra^000000 ]";
+	mes "Sorry little one, baby classes can't change to Novice High. They would loose their cuteness and their parents won't allow it.";
+	cutin "kafra_01",255;
+	close;
+
 Llevelcheck:
 	if(readparam(55) >= 45 || readparam(19) == 4001 && readparam(55) >= 10) goto Ladvclasses;
 	mes "[ ^0065DFJobra^000000 ]";
@@ -50,8 +59,9 @@ Llevelcheck:
 	close;
 
 Ladvclasses:
+	if(SkillPoint != 0) goto Lskillpt;
 //Lord Knight & Paladin
-	if(oldclass == 7 && readparam(19) == 4001 || oldclass == 14 && readparam(19) == 4001) goto Lswordsmanhigh;
+	if(oldclass == 7 && readparam(19) == 4001 || oldclass == 13 && readparam(19) == 4001 || oldclass == 14 && readparam(19) == 4001 || oldclass == 21 && readparam(19) == 4001) goto Lswordsmanhigh;
 	if(readparam(19) == 4002 && oldclass == 7) goto Llordknight;
 	if(readparam(19) == 4002 && oldclass == 14) goto Lpaladin;
 //Assassin Cross & Stalker
@@ -75,11 +85,82 @@ Ladvclasses:
 	if(oldclass == 9 && readparam(19) == 4001 || oldclass == 16 && readparam(19) == 4001) goto Lhighmage;
 	if(readparam(19) == 4003 && oldclass == 9) goto Lhighwizard;
 	if(readparam(19) == 4003 && oldclass == 16) goto Lprofessor;
+	if ( oldclass == 0 && readparam(19) >=  4001) goto Nooldclasset;
 	mes "[ ^0065DFJobra^000000 ]";
-	mes "Please... Remove your cart, leave your falcon and get off your peco before.";
+	mes "Please... Remove your cart, leave your falcon and get off your peco before you change.";
 	mes "[" + readparam(19) + "] [" + oldclass + "]";
 	cutin "kafra_01",255;
 	close;
+//Lord Knight & Paladin
+	Nooldclasset:
+	mes "[ ^0065DFJobra^000000 ]";
+	mes "Say, what were you before you were reborn?";
+	if (readparam(19) == 4001) goto Ishnov;
+	if (readparam(19) == 4002) goto Ishsword;
+	if (readparam(19) == 4003) goto Ishmage;
+	if (readparam(19) == 4004 && Sex == 0) goto Isharcherf;
+	if (readparam(19) == 4004 && Sex == 1) goto Isharcherm;
+	if (readparam(19) == 4005) goto Ishacco;
+	if (readparam(19) == 4006) goto Ishmerch;
+	if (readparam(19) == 4002) goto Ishthief;
+
+	Ishnov:
+		menu "Knight",Wasknight,"Priest",Waspriest,"Wizard",Waswizard,"Blacksmith",Wasblacksmith,"Hunter",Washunter,"Assasin",Wasassa,"Crusader",Wascrusader,"Monk",Wasmonk,"Sage",Wassage,"Rogue",Wasrogue,"Alchemist",Wasalche,"Bard",Wasbard,"Dancer",Wasdancer;
+	Ishsword:
+  	menu "Knight",Wasknight,"Crusader",Wascrusader;
+	Ishmage:
+		menu "Wizard",Waswizard,"Sage",Wassage;
+	Isharcherf:	
+		menu "Hunter",Washunter,"Dancer",Wasdancer;
+	Isharcherm:
+		menu "Hunter",Washunter,"Bard",Wasbard;
+	Ishacco:
+		menu "Priest",Waspriest,"Monk",Wasmonk;
+	Ishmerch:
+		menu "Blacksmith",Wasblacksmith,"Alchemist",Wasalche;
+  Ishthief:
+  	menu "Assasin",Wasassa,"Rogue",Wasrogue;
+// now finally the setting of oldclass
+		Wasknight:
+		set oldclass,7;
+		goto Ladvclasses;
+		Waspriest:
+		set oldclass,8;
+		goto Ladvclasses;
+		Waswizard:
+		set oldclass,9;
+		goto Ladvclasses;
+		Wasblacksmith:
+		set oldclass,10;
+		goto Ladvclasses;
+		Washunter:
+		set oldclass,11;
+		goto Ladvclasses;
+		Wasassa:
+		set oldclass,12;
+		goto Ladvclasses;
+		Wascrusader:
+		set oldclass,14;
+		goto Ladvclasses;
+		Wasmonk:
+		set oldclass,15;
+		goto Ladvclasses;
+		Wassage:
+		set oldclass,16;
+		goto Ladvclasses;
+		Wasrogue:
+		set oldclass,17;
+		goto Ladvclasses;
+		Wasalche:
+		set oldclass,18;
+		goto Ladvclasses;
+		Wasbard:
+		set oldclass,19;
+		goto Ladvclasses;
+		Wasdancer:
+		set oldclass,20;
+		goto Ladvclasses;
+		
 //Lord Knight & Paladin
 Lswordsmanhigh:
 	mes "[ ^0065DFJobra^000000 ]";
@@ -103,7 +184,7 @@ Llordknight:
 
 Lpaladin:
 	mes "[ ^0065DFJobra^000000 ]";
-	mes "Mmmmm, I always liked Paladins.. their Broad Shoulders always turned me on....";
+	mes "Mmmmm, I always liked Paladins.. their broad shoulders always turned me on....";
 	next;
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Go Forth On Your Mission To Serve God";
@@ -224,12 +305,12 @@ Lwhitesmith:
 	close;
 Lcreator:
 	mes "[ ^0065DFJobra^000000 ]";
-	mes "Create potions for the swordmen of Rune-Midgart";
+	mes "Create potions for the brave heros of Rune-Midgart";
 	cutin "kafra_01",255;
 	jobchange 42;
 	close;
 //High Wizard & Professor
-Lmagehigh:
+Lhighmage:
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Nice, now you can finally wield the power of ^2200DFM^7600F9A^AF00FBN^DA00DFA^000000, your spiritual energy!!!";
 	cutin "kafra_01",255;
@@ -262,27 +343,32 @@ LFirstClass:
 	menu "Swordsman",LSword,"Mage",LMage,"Thief",LThief,"Merchant",LMerc,"Acolyte",LAco,"Archer",LArch,"Cancel",LCancel;
 
 Lnovice:
+	cutin "kafra_01",255;
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Ummmm, excuse me... o.O...";
 	mes "You don't LOOK like a novice...";
-	mes "Hey! You're no novice! Get away, punk! *rolls eyes*";
+	mes "Hey! You're no novice! Get away, punk!";
+	mes "*rolls eyes*";
 	mes "Only NOVICES can change into the First Job... jeeze.";
 	cutin "kafra_01",255;
 	close;
 
 Lskillpt:
+	cutin "kafra_01",255;
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Please use up all your skill points before changing into the next job! ";
 	cutin "kafra_01",255;
 	close;
 
 Ljobten:
+	cutin "kafra_01",255;
 	mes "[ ^0065DFJobra^000000 ]";
 	mes "Ugh, you need to have at least a Job Level of 10 before changing into the first class... go kill some porings or something.. >.>'";
 	cutin "kafra_01",255;
 	close;
 
 LSword:
+	cutin "kafra_01",255;
 	mes "[ ^0065DFJobra^000000 ]";
  	mes "Wow, fantastic! Doesn't all that hard work feel like its paid off? *kekeke* I see the ^B70004BLOOD of Porings^000000 on your hands! You truly are fit for the ^0005CESwordsman^000000 job! ^_^";
 	cutin "kafra_01",255;
@@ -354,8 +440,8 @@ LSecondClass:
 		mes "[ ^0065DFJobra^000000 ]";
 		mes "Yes! You are ready to become... a Knight! ";
 		mes "Go save a Damsel in Distress or something..";
-		cutin "kafra_01",255;
 		jobchange 7;// Job: Job_Knight
+		cutin "kafra_01",255;
 		close;
 
 
@@ -492,8 +578,8 @@ LSecondClass2:
 	     	close;
 
 	LBardDancer:
-		if(sex==0) goto LBard;
-		if(sex==1) goto LDancer;
+		if(sex==0) goto LDancer;
+		if(sex==1) goto LBard;
 
 	LBard:
 		if(class !=3) goto LNotArch3;

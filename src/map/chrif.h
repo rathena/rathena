@@ -9,6 +9,8 @@ void chrif_setport(int);
 
 int chrif_isconnect(void);
 
+extern int chrif_connected;
+
 int chrif_authreq(struct map_session_data *);
 int chrif_save(struct map_session_data*);
 int chrif_charselectreq(struct map_session_data *);
@@ -23,9 +25,15 @@ int chrif_saveaccountreg2(struct map_session_data *sd);
 int chrif_reloadGMdb(void);
 int chrif_ragsrvinfo(int base_rate,int job_rate, int drop_rate);
 int chrif_char_offline(struct map_session_data *sd);
+int chrif_char_reset_offline(void);
+int chrif_char_online(struct map_session_data *sd);
 int chrif_changesex(int id, int sex);
 int chrif_chardisconnect(struct map_session_data *sd);
+int check_connect_char_server(int tid, unsigned int tick, int id, int data);
 
+int do_final_chrif(void);
 int do_init_chrif(void);
+
+int chrif_flush_fifo(void);
 
 #endif

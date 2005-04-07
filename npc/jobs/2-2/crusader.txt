@@ -54,8 +54,7 @@ NEXT_0:
 				JOB:
 						mes "[^000080Lothar^000000]";
 						mes "All right, let me take a look at you first.";
-					next;
-						mes "[^000080Lothar^000000]";
+					next;						
 					if (readparam(55) != 50) goto SKIP;
 							set JLCC,1;
 							set Job_CR,5;
@@ -103,10 +102,10 @@ NEXT_0:
 										mes "- 10 ^FF0000Mementos^000000";
 										close;
 								IT:
-										mes "- 10 ^FF0000Decayed Nail^000000";
-										mes "- 10 ^FF0000Danggies^000000";
-										mes "- 10 ^FF0000Stinky Scales^000000";
-										mes "- 10 ^FF0000Mementos^000000";
+										mes "- 10 ^FF0000Skel-Bones^000000";
+										mes "- 10 ^FF0000Orc Claws^000000";
+										mes "- 1 ^FF0000Ball 'n Chain^000000";
+										mes "- 10 ^FF0000Danggie^000000";
 										close;
 				
 				ASK:
@@ -1015,7 +1014,7 @@ job_cru.gat,23,42,0	script	Test_2	139,8,8,{
 
 		if (Job_CR != 6) goto EXIT;
 				set @CR_etmp,1;
-				areaannounce "job_cru.gat",0,0,23,42 "Please endure here and go to exit",8;
+				areaannounce "job_cru.gat",0,0,23,42,"Please endure here and go to exit",8;
 
 				monster "job_cru.gat",10,43,"Ghoul",1423,1,"dead";
 				monster "job_cru.gat",14,47,"Khalitzburg",1438,1,"dead";

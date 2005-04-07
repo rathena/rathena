@@ -1,13 +1,263 @@
 	Post here any database changes ok guys? [shadowlady]
 
 	==== progress ====
-	Ayathoya mobs == Added but using poring stats ( ? )
-	Ayathoya items == Added but no effect ( all are "ect" itens)
+	
+	Ayothaya mobs == 90% All have correct stats now ?
+	Einbroch mobs == 5% Added but using poring stats
+	Ayothaya items == 70% Added but no effect ( all are "etc" itens)
+	Einbroch items == 5%
 	Skill databases == celest working on them i believe.
 
+
+04/06
+	* Added Einbrook monsters and drops, thanx to Landarma [Lupus]
+04/05
+	* Some items fixes [DracoRPG]
+	  - added missing "Neko Mimi" hat #5099, thanks to Neko2
+	  - fixed Wedding Rings item types, thank to nimrod
+	* Removed Evil Wings drops from Mini Demon,Deviruchi,Archangeling and put it into Deviling [Lupus]
+	  according to kRO "Evil Wings" are dropped by Deviling only
+	  Deviling items drop chances aren't correct yet
+	* Fixed skill tree entries for Vulcan Arrow, and Throw Arrow for gypsies,
+	  thanks to Hekate
+04/04
+	* Removed required skills for Berserk (only job level 50 is needed) [DracoRPG]
+	* Re-added MDEF +15 to Resting Cat [DracoRPG]
+	* Added Sunglasses & Glasses into OBB, added slotted Sunglasses & Glasses into OVB [Lupus]
+04/03
+	* Doppelganger Card gives only 10% ASPD bonus (from Aegis) [DracoRPG]
+04/02
+	* More new cards and fixes [DracoRPG]
+	  - added Acolyte, Archer and Merchant sets effects
+	  - added Turtle General Card effect
+	  - corrected Job_Super_Novice -> Job_SuperNovice for Lude and Quve Cards
+	  - autospell weapons (except Fireblend, Ice Falchion and Electric Guitar)
+	    give no more the skill so it can't be used when you want
+04/01
+	* New cards updates and additions [DracoRPG]
+	  - added Mage and Swordman sets effects
+	  - added Whisper Boss Card (not found the ID -> commented out)
+	  - activated Turtle General Card but effect not yet scripted
+	  - updated some effects from 3/17 patch
+03/31
+	* Updated/added some new card effects [DracoRPG]
+	* Reverted Berzebub card to reduce casting rate
+	* Corrected some item effects, thanks to digigp and htm
+	* Updated some cards effects from 3/25 patch [DracoRPG]
+	* Updated freeze time for Frost Diver and Frost Nova
+	* Updated cast time for Preserve, thanks to Neko2
+03/29
+	* Some optimizatons, added missing skill to Electric Guitar [Lupus]
+	* Added new items (thanx to Landarma) [Lupus]
+	* Added effects to Spring Rabbit, Galapago, Sea Otter Cards [Lupus]
+	  It seems that item heal rate doesn't work yet
+03/27
+	* Re-Updated MOB DB with correct file now 8) [Lupus]
+	* Added all released cards into monsters drops and OCA [Lupus]
+	* Minor Items, Monsters fixes [Lupus]
+03/26
+	* Fixed some incorrect create arrow entries, thanks to boredpoo
+
+03/25
+	* Added Einbrook's mobs, thanks to RodneyJ for their IDs [Lupus]
+	* Removed some extra 0's in the item_db, thanks to Zoc
+	* Corrected some item effects according to the mentoned earlier doc [Lupus]
+03/24
+	* Corrected exp table entries for level 11 and 99, thanks to Dino9021
+	* Corrected some item effects according to the newly found Aegis Zone Server [DracoRPG]
+
+03/22
+	* Corrected some typos in the items DB, thanks to Zoc [celest]
+	* Added new items. Thanks to Landarma [Lupus]
+	* skill CANNIBALIZE: fixed its upkeep time [Lupus]
+        * Added Rafflesia into Dead Branch monsters list, removen all MVPs from there [Lupus]
+	  DBs never supposed to call MVPs!!! Only Sages Hocus Pocus could make
+	  a MVP from Alchemyst's Floras. (eA Hocus implementation doesn't support it yet)
+03/21
+        * Corrected exp table entries for Super Novice, thanks to Dino9021 [celest]
+
+03/19
+	* changed all cards to 'getrefine' function [Lupus]
+	* used 'cardscnt' instead of 'isequipped' in Crab Card.
+		  It's a weapon compunding card. So it used to give up to
+		  6 bonuses! on Assassin with 4 4-slotted weapons.
+		  Now it lets you get up to 2x bonuses per hand.
+		  Should be fixed more. already got idea 8)
+		All the similar cards should be fixed in the same way.
+        * Fixed missing END; in new cards, some optimizatons [Lupus]
+03/18
+        * Updated item prices for Niflheim drops [celest]
+        * Updated some Ayothaya mob stats [celest]
+        * Fixed Incantation Samurai card reducing HP too quickly - the time should
+          be in milliseconds ^^; [celest]
+	* Added ~86 new cards. Fixed, optimized [Lupus]
+		Thanks to Indiona,Landarma. Gosh, I had to fix some bugz ^_-
+03/16
+	* Added new items. Thanks to Landarma [Lupus]
+03/15
+        * Fixed pricing for Claw, thanks to Dino9021 [celest]
+03/09
+	* Added new items. Thanks to Landarma [Lupus]
+02/23
+	* New Cards: Some fixes, revisions, additions [Lupus]
+	  According to the latest news:
+	  Fixed Tirfing, Mysteltainn (swapped enemy sizes of the cards bonuses)
+	  Added bonus: Munak+Bongun+Hyegun Cards -> +1 Allstats
+	  Added Alice Card placement. (also added it for Spring Rabbit, Galapago, Otter) And put Alice Card into OCA 
+		can't add new effects for 22 Fed Update Cards yet.
+	  All the cards by 22Feb have been revised, but not all tested.
+02/21
+	* Added new item: Takius' Blindfold. thanks to Landarma [Lupus]
+	* Revised New Cards, added missing effects, fixed bugs [Lupus]
+	  ~20 cards to check left 8) But in 22 Feb some new cards have been announced T__T'
+	* Added actual item_db.sql into sql-files. [Lupus]
+	* item_db.txt: Added missing fields / removed extra fields from some new items V__V' [Lupus]
+	* More monsters name fixes (GIANT_HONET -> GIANT_HORNET , etc) [Lupus]
+	* Added actual mob_db.sql into sql-files. If you use SQL Mob DB then update it [Lupus]
+
+02/19
+	* Added released cards into the monsters drops. Fixed couple card names [Lupus]
+	  (Arc Angeling -> Archangeling)
+
+02/18
+        * Added more new cards effects (thanks to DracoRPG at this time) [Lupus]
+	  added missing bonus 'bAllStats' into doc/item_bonus.txt
+        * Changed Goblin Leader Card to using bAddRace2 -- each player can only save
+          10 AddDamageClass, so this would save some space for other cards ^^ [celest]
+	* Started adding new cards effects. Also big thanks to Landarma [Lupus]
+
+02/17
+	* Added 4 columns into mob_db.txt & mob_db2.txt [Lupus]
+	  If you were using SQL MOB DB, then update your SQL DB and import all data
+	  from mob_db.txt mob_db2.txt
+	* Fixed some mobs drops Whisper + Boss Whissper had wrong drops %%  [Lupus]
+	  and Whisper had 0% Card drop...Also fixed all MVP mobs (MVP bonuses were shifted...
+	  MVP EXP was missing, etc)
+        * Corrected Parrying lasting time, thanks to p14333 and krc2k for pointing it
+          out [celest]
+
+02/11
+	NOTE: Get rid of old cards on your server!!! IDs: 4149-4332
+	  before using of this item_db.txt (some cards have changed their IDs)
+	  and it could cause ALIEN cards in your players equipment 8))
+		i.g. a weapon compounding CARDS inserted in armor, etc...
+        * item_db.txt Massive update: [Lupus]
+	  - Added all new missing items (up to st.Valentine's Day Event)
+	  - Added new cards 4149-4332, sorted them and set their sripts.
+	  - Fixed some names, typos, weigths and prices
+	* Commented out old custom cards from Old_Card_Album.txt till we brush them up [Lupus]
+	* Removed old custom cards from MOBs drops [Lupus]
+	  thanks to Landarma(new items templates) Poki#3(removing cards from drops)
+        * Updated Soul Breaker cast and delay time, thanks to matthias [celest]
+        * Updated Chain Crush to require level 2 Tiger Fist, thanks to matthias for
+          pointing it out [celest]
+
+02/05
+        * item_db.txt Added prices to all Magic Scrolls and to Horse Crest,
+	  added +100-1000 Zeny effect to Gold Coin (it's used in st.Patric event)
+	  not sure in Zeny amount, tough. [Lupus]
+	* mob_db.txt Kind of Beetle -> Beetle King. [Lupus]
+
+01/26
+        * Updated Counter dagger's attack, thanks to Poki#3
+        * Added ayo_fild02 to nomemo mapflag list
+
+01/13
+        * Fixed drops of Taoist Hermit, added drops rates to JOKER (all rates were 0%)
+	  Removed 0.01% Chances of all Apple drops plugs
+	  Tided up mob_db/mob_db2, removed extra tail delimiters (,,,,,,) [Lupus]
+01/07
+        * Added midas' fix for Hammerfall and Adrenaline Rush [celest]
+        * Added 'bDelayrate' and changed Phen card, Marduk Card and Berzebub Card's
+          effects to use this instead of bCastrate (which was reducing casting time,
+          not delay time) [celest]
+01/05
+        * Added DracoRPG's changes [celest]
+          - changed Gungnir to wind element
+          - changed Damascus to cannot be broken
+01/04
+        * item name fix Daydric Card -> Raydric Card [Lupus]
+	  Changed weight of Durian,Ramadan,Realgar Wine.
+	  Added effect to Durian fruit
+01/01
+        * Included Mages and Wizards to be able to use berserk potions [celest]
+	* Changed some create arrow outputs for new kRO 12/21/04 patch [Aria]
+
+12/29
+        * Corrected Bloody Axe's weight - 400 > 4000 [celest]
+        * Removed Bandit's Beard from item_avail.txt [celest]
+12/28
+        * Removed Roguemaster's Bow adding steal chance, thanks Draco [celest]
+
+12/26
+        * Added item_db2.txt - would be more convenient to store custom items in a
+          separate db [celest]
+
+12/21
+        * Added prices to Arrow Quviers ( = 500* arrow price), fixed few item names
+	  (removed '_' from jNAME column), fixed HP amount in Novices Red Potion [Lupus]
+12/21
+        * Added the new Quivers, updated Horse Crest [celest]
+12/20
+        * removed extra {},,,,,,, from each tailing [Lupus]
+        * Corrected job requirements for some garments [celest]
+        * Corrected skill tree requirements for 3 Peco Lord knight skills [celest]
+        * Updated item 569 -> it's a Red potion given to novices if they pass the
+          training grounds test [celest]
 12/18
 	* Lord Knight's Concentration can now be used with any weapon [Aria]
 	* Changed few God-items to fit kRO 12/7/04 Patch [Aria]
+          - Reverted by Celest (sorry, but it's already updated ^^;)
+	* Fixed screwed drops of Kapha (someone removed one number and all data was shifted) [Lupus]
+	* Found one missing item N 569, looks like red Potion. Added a temp plug
+	  fixed typo bolt -> Bolt in one scroll [Lupus]
+	BTW I made a TXT Resources merger (it helps merge clients resources itemdesc,etc)
+	so if u need it just tell me
+
+12/17   * Added effect for Deadly poison bottle and Ice cream [celest]
+
+12/15   * Updated Steel Body, Thunderstorm, Investigate and Magic Crasher, thanks
+          to midas
+        * Removed elunium and oridecon from produce_db, thanks to Draco
+
+12/14   * Changed 'Parasite' to non-moving [celest]
+
+12/12   * Removed unuseable skills from skill_tree.txt [celest]
+
+12/11   * Corrected item_db - Wedding rings should give all 3 skills [celest]
+
+12/9    * Removed some unused skills from skill_tree.txt [celest]
+
+12/8    * Capitalised horn_Card in item_db [celest]
+
+12/7    * Fixed some item names (and swpped names of Alarm Mask and Expressionless Mask) [Lupus]
+	* Added effect for Bow Thimble, Archer Skeleton Card and Tribal Solidarity [celest]
+        * Updated Sleipnir, Brisingamen, Mjolnir, Megingord, Counter Dagger,
+          Poison Knife [celest]
+        * Updated SP requirements for Full Strip, Full Chemical Protection, Cannibalize [celest]
+        * Corrected some item_db typos, thanks to DracoRPG
+
+12/6    * Changed spiritball requirements for Chain Crush to 1, thanks to MaoMao of cAthena
+
+12/5    * Edited skill_nocast_db - the skills should be useable outside GvG maps even
+          if woe is on [celest]
+
+12/3    * corrected Spider Web's maximum level [celest]
+        * Removed Soul Drain from Professor's skill tree [celest]
+        * Updated Stunner's job - Acolytes and monks should be able to use it too! [celest]
+
+12/2    * Updated skill tree prerequisites for the new kRO skills [celest]
+
+12/1    * Updated Poison React, Soul Change, Soul Burn [celest]
+
+11/30   * Corrected bUnbreakable value in const.txt [celest]
+        * updated skill_cast_db for Meltdown and Tiger Knuckle Fist [celest]
+
+11/29   * Updated skill_db for Quagmire, Fog Wall [celest]
+
+11/28	* Fixed Wedding rings placement 2->136 [Lupus]
+	* Fixed mob Amon Ra stats/drops [shadow]
+
 11/27	* Fixed some drain rates, fixed Balmung, Mjolnir, fixed all maces (for right jobs) [shadow]
 
 11/26	* Fixed Abrakadabra (3 Yellow Gemstones -> Yellow Gemstones 2).

@@ -8,6 +8,9 @@ void* grfio_read(char*);		// GRFIO data file read
 void* grfio_reads(char*,int*);	// GRFIO data file read & size get
 int grfio_size(char*);			// GRFIO data file size get
 
+int decode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen);
+int encode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen);
+
 // Accessor to GRF filenames
 char *grfio_setdatafile(const char *str);
 char *grfio_setadatafile(const char *str);

@@ -13,7 +13,7 @@ void do_final_party(void);
 struct party *party_search(int party_id);
 struct party* party_searchname(char *str);
 
-int party_create(struct map_session_data *sd,char *name);
+int party_create(struct map_session_data *sd,char *name, int item, int item2);
 int party_created(int account_id,int fail,int party_id,char *name);
 int party_request_info(int party_id);
 int party_invite(struct map_session_data *sd,int account_id);

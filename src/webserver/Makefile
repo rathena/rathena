@@ -1,32 +1,20 @@
-CC = gcc -pipe
-MAKE = make
-OPT = -g -O2 -ffast-math
+all:
+	#Generate framework...
+	$(CC) -c parse.c
+	$(CC) -c generate.c
+	$(CC) -c htmlstyle.c
+	$(CC) -c logs.c
+	
+	#Generate "pages"...
+	cd pages && $(CC) -c about.c && cd ..
+	cd pages && $(CC) -c sample.c && cd ..
+	cd pages && $(CC) -c notdone.c && cd ..
 
-ifeq ($(findstring CYGWIN,$(PLATFORM)), CYGWIN)
-CFLAGS = $(OPT) -Wall -I../common
-else
-CFLAGS = $(OPT) -Wall -I../common
-endif
-
-OBJ  = main.o webserver.o ../common/showmsg.o
-LINKOBJ  = main.o webserver.o ../common/showmsg.o
-
-all: clean webserver run
+	#Building the server...
+	$(CC) -o webserver main.c parse.o generate.o htmlstyle.o \
+	logs.o pages/about.o pages/sample.o pages/notdone.o
 
 clean:
-	rm -f *.o webserver.exe ../common/showmsg.o
-
-webserver: main.o webserver.o ../common/showmsg.o
-	$(CC) $(OPT) -o "Webserver.exe" $(OBJ)
-
-main.o: main.c
-	$(CC) $(OPT) -c main.c -o main.o $(CFLAGS)
-
-webserver.o: webserver.c
-	$(CC) $(OPT) -c webserver.c -o webserver.o $(CFLAGS)
-
-../common/showmsg.o: ../common/showmsg.c
-	$(CC) $(OPT) -c ../common/showmsg.c -o ../common/showmsg.o $(CFLAGS)
-
-run:
-	./webserver
+	rm -f *.o
+	rm -f pages/*.o
+	rm -f webserver

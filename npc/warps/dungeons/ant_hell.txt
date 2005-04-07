@@ -19,7 +19,7 @@ anthell01.gat,35,267,0	script	ant001	45,1,1,{
 	moc15:	warp "moc_fild15.gat",251,248; break;
 }
 anthell02.gat,171,169,0	script	ant001	45,1,2,{
-	if(!anthell==0) goto moc15;
+	if(anthell==0) goto moc15;
 	moc04:	warp "moc_fild04.gat",213,327; break;
 	moc15:	warp "moc_fild15.gat",251,248; break;
 }

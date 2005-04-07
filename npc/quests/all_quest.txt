@@ -501,7 +501,7 @@ LCancel6:
 Headset:
 	mes "[Quest Assistant]";
 	mes "These are Articles needed for my Grandfather's masterpiece.";
-	mes "^3355FF100 Steel^000000";
+	mes "^3355FF40 Steel^000000";
 	mes "^3355FF1 Oridecon^000000";
 	mes "^3355FF1 Alchol^000000";
 	mes "^3355FF1 Coal^000000";

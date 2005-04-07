@@ -2,9 +2,12 @@
 //= Map flags that disable dead branching
 //===== By: ==================================================
 //= eAthena Dev Team
+//= 1.2 [Lupus]
 //===== Current Version: =====================================
 
 // Cities ================>\\
+ayo_in01.gat	mapflag	nobranch
+ayo_in02.gat	mapflag	nobranch
 alb_ship.gat	mapflag	nobranch
 alberta_in.gat	mapflag	nobranch
 aldeba_in.gat	mapflag	nobranch
@@ -30,6 +33,7 @@ new_1-4.gat	mapflag	nobranch
 nif_in.gat	mapflag	nobranch
 payon_in01.gat	mapflag	nobranch
 payon_in02.gat	mapflag	nobranch
+payon_in03.gat	mapflag	nobranch
 prt_castle.gat	mapflag	nobranch
 prt_church.gat	mapflag	nobranch
 prt_in.gat	mapflag	nobranch
@@ -39,6 +43,10 @@ yuno_in01.gat	mapflag	nobranch
 yuno_in03.gat	mapflag	nobranch
 yuno_in04.gat	mapflag	nobranch
 yuno_in05.gat	mapflag	nobranch
+que_sign01.gat	mapflag	nobranch
+ein_in01.gat	mapflag	nobranch
+airport.gat	mapflag	nobranch
+airplane.gat	mapflag	nobranch
 
 // Job Quests ====================
 sword_1-1.gat	mapflag	nobranch
@@ -61,6 +69,10 @@ monk_test.gat	mapflag	nobranch
 monk_in.gat	mapflag	nobranch
 in_rogue.gat	mapflag	nobranch
 job_sage.gat	mapflag	nobranch
+
+// Special Quests Places =========
+que_god01.gat	mapflag	noteleport
+que_god02.gat	mapflag	noteleport
 
 // Guild Castles ==================
 //alde_gld.gat	mapflag	nobranch

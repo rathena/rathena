@@ -17,8 +17,7 @@
 //================================================================================//
 // 					Castle 1
 //================================================================================//
-prontera.gat,155,190,4	script	Creamhilt#p1-1::Creamhilt	722,
-{
+prontera.gat,155,190,4	script	Creamhilt#p1-1::Creamhilt	722,{
 	callfunc "F_Flags","Prontera","prtg_cas01",97,174;
 	close;
 
@@ -49,8 +48,7 @@ prtg_cas01.gat,45,46,4	duplicate(Creamhilt)	Creamhilt#p1-16	722
 //================================================================================//
 // 					Castle 2
 //================================================================================//
-prontera.gat,146,194,3	script	Sbanhealt#p2-1::Sbanhealt	722,
-{
+prontera.gat,146,194,3	script	Sbanhealt#p2-1::Sbanhealt	722,{
 	callfunc "F_Flags","Prontera","prtg_cas02",71,36;
 	close;
 
@@ -84,8 +82,7 @@ prtg_cas02.gat,162,161,4	duplicate(Sbanhealt)	Sbanhealt#p2-18	722
 //================================================================================//
 // 					Castle 3
 //================================================================================//
-prontera.gat,143,203,2	script	Lazrigees#p3-1::Lazrigees	722,
-{
+prontera.gat,143,203,2	script	Lazrigees#p3-1::Lazrigees	722,{
 	callfunc "F_Flags","Prontera","prtg_cas03",45,99;
 	close;
 
@@ -116,8 +113,7 @@ prtg_cas03.gat,165,201,4	duplicate(Lazrigees)	Lazrigees#p3-16	722
 //================================================================================//
 // 					Castle 4
 //================================================================================//
-prontera.gat,167,203,6	script	Squagul#p4-1::Squagul	722,
-{
+prontera.gat,167,203,6	script	Squagul#p4-1::Squagul	722,{
 	callfunc "F_Flags","Prontera","prtg_cas04",259,265;
 	close;
 
@@ -149,8 +145,7 @@ prtg_cas04.gat,263,27,4	duplicate(Squagul)	Squagul#p4-16	722
 //================================================================================//
 // 					Castle 5
 //================================================================================//
-prontera.gat,165,194,5	script	Guindull#p5-1::Guindull	722,
-{
+prontera.gat,165,194,5	script	Guindull#p5-1::Guindull	722,{
 	callfunc "F_Flags","Prontera","prtg_cas05",34,30;
 	close;
 

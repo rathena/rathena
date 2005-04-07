@@ -1,18 +1,26 @@
 // $Id: db.c,v 1.2 2004/09/23 14:43:06 MouseJstr Exp $
-// #define MALLOC_DBN
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "db.h"
 #include "mmo.h"
 #include "utils.h"
+#include "malloc.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
 #endif
 
-#define ROOT_SIZE 4096
+//#define MALLOC_DBN
+
+// Backup cleaning routine in case the core doesn't do so properly,
+// only enabled if malloc_dbn is not defined.
+// As a temporary solution the root of the problem should still be found and fixed
+struct dbn *head;
+struct dbn *tail;
+
 #ifdef MALLOC_DBN
+#define ROOT_SIZE 4096
 static struct dbn *dbn_root[512], *dbn_free;
 static int dbn_root_rest=0,dbn_root_num=0;
 
@@ -39,20 +47,50 @@ static void free_dbn(struct dbn* add_dbn)
 	add_dbn->parent = dbn_free;
 	dbn_free = add_dbn;
 }
+
+void exit_dbn(void)
+{
+	int i;
+
+	for (i=0;i<dbn_root_num;i++)
+		if (dbn_root[i])
+			aFree(dbn_root[i]);
+
+	dbn_root_rest=0;
+	dbn_root_num=0;
+
+	return;
+}
+#else
+void exit_dbn(void)
+{
+	int i = 0;
+	struct dbn *p = head, *p2;
+	while (p) {		
+		p2 = p->next;
+		aFree(p);
+		p = p2;
+		i++;
+	}
+	//printf ("freed %d stray dbn\n", i);
+	return;
+}
 #endif
 
+// maybe change the void* to const char* ???
 static int strdb_cmp(struct dbt* table,void* a,void* b)
 {
 	if(table->maxlen)
-		return strncmp(a,b,table->maxlen);
-	return strcmp(a,b);
+		return strncmp((const char*)a,(const char*)b,table->maxlen);
+	return strcmp((const char*)a,(const char*)b);
 }
 
+// maybe change the void* to unsigned char* ???
 static unsigned int strdb_hash(struct dbt* table,void* a)
 {
 	int i;
 	unsigned int h;
-	unsigned char *p=a;
+	unsigned char *p = (unsigned char*)a;
 
 	i=table->maxlen;
 	if(i==0) i=0x7fffffff;
@@ -62,7 +100,7 @@ static unsigned int strdb_hash(struct dbt* table,void* a)
 	return h;
 }
 
-struct dbt* strdb_init(int maxlen)
+struct dbt* strdb_init_(int maxlen,const char *file,int line)
 {
 	int i;
 	struct dbt* table;
@@ -74,6 +112,9 @@ struct dbt* strdb_init(int maxlen)
 	table->maxlen=maxlen;
 	for(i=0;i<HASH_SIZE;i++)
 		table->ht[i]=NULL;
+	table->alloc_file = file;
+	table->alloc_line = line;
+	table->item_count = 0;
 	return table;
 }
 
@@ -95,7 +136,7 @@ static unsigned int numdb_hash(struct dbt* table,void* a)
 	return (unsigned int)a;
 }
 
-struct dbt* numdb_init(void)
+struct dbt* numdb_init_(const char *file,int line)
 {
 	int i;
 	struct dbt* table;
@@ -107,6 +148,9 @@ struct dbt* numdb_init(void)
 	table->maxlen=sizeof(int);
 	for(i=0;i<HASH_SIZE;i++)
 		table->ht[i]=NULL;
+	table->alloc_file = file;
+	table->alloc_line = line;
+	table->item_count = 0;
 	return table;
 }
 
@@ -130,14 +174,14 @@ void * db_search2(struct dbt *table, const char *key)
 {
 	int i,sp;
 	struct dbn *p,*pn,*stack[64];
-        int slen = strlen(key);
+    int slen = strlen(key);
 
 	for(i=0;i<HASH_SIZE;i++){
 		if((p=table->ht[i])==NULL)
 			continue;
 		sp=0;
 		while(1){
-                        if (strnicmp(key, p->key, slen) == 0)
+                        if (strnicmp(key, (const char*)p->key, slen) == 0)
                            return p->data;
 			if((pn=p->left)!=NULL){
 				if(p->right){
@@ -345,6 +389,29 @@ static void db_rebalance_erase(struct dbn *z,struct dbn **root)
 	}
 }
 
+void db_free_lock(struct dbt *table) {
+	table->free_lock++;
+}
+
+void db_free_unlock(struct dbt *table) {
+	if(--table->free_lock == 0) {
+		int i;
+		for(i = 0; i < table->free_count ; i++) {
+			db_rebalance_erase(table->free_list[i].z,table->free_list[i].root);
+			if(table->cmp == strdb_cmp) {
+				aFree(table->free_list[i].z->key);
+			}
+#ifdef MALLOC_DBN
+			free_dbn(table->free_list[i].z);
+#else
+			aFree(table->free_list[i].z);
+#endif
+			table->item_count--;
+		}
+		table->free_count = 0;
+	}
+}
+
 struct dbn* db_insert(struct dbt *table,void* key,void* data)
 {
 	struct dbn *p,*priv;
@@ -354,10 +421,33 @@ struct dbn* db_insert(struct dbt *table,void* key,void* data)
 	for(c=0,priv=NULL ,p = table->ht[hash];p;){
 		c=table->cmp(table,key,p->key);
 		if(c==0){ // replace
-                        if (table->release)
-                            table->release(p, 3);
+			if (table->release)
+				table->release(p, 3);
+			if(p->deleted) {
+				// 削除されたデータなので、free_list 上の削除予定を消す
+				int i;
+				for(i = 0; i < table->free_count ; i++) {
+					if(table->free_list[i].z == p) {
+						memmove(
+							&table->free_list[i],
+							&table->free_list[i+1],
+							sizeof(struct db_free)*(table->free_count - i - 1)
+						);
+						break;
+					}
+				}
+				if(i == table->free_count || table->free_count <= 0) {
+					printf("db_insert: cannnot find deleted db node.\n");
+				} else {
+					table->free_count--;
+					if(table->cmp == strdb_cmp) {
+						aFree(p->key);
+					}
+				}
+			}
 			p->data=data;
 			p->key=key;
+			p->deleted = 0;
 			return p;
 		}
 		priv=p;
@@ -382,6 +472,17 @@ struct dbn* db_insert(struct dbt *table,void* key,void* data)
 	p->key   = key;
 	p->data  = data;
 	p->color = RED;
+	p->deleted = 0;
+	p->prev = NULL;
+	p->next = NULL;
+	if (head == NULL)
+		head = tail = p;
+	else {
+		p->prev = tail;
+		tail->next = p;
+		tail = p;
+	}
+
 	if(c==0){ // hash entry is empty
 		table->ht[hash] = p;
 		p->color = BLACK;
@@ -397,6 +498,8 @@ struct dbn* db_insert(struct dbt *table,void* key,void* data)
 			db_rebalance(p,&table->ht[hash]);
 		}
 	}
+	table->item_count++;
+	
 	return p;
 }
 
@@ -419,29 +522,69 @@ void* db_erase(struct dbt *table,void* key)
 	if(!p)
 		return NULL;
 	data=p->data;
-	db_rebalance_erase(p,&table->ht[hash]);
-#ifdef MALLOC_DBN
-	free_dbn(p);
-#else
-	free(p);
-#endif
+	if(table->free_lock) {
+		if(table->free_count == table->free_max) {
+			table->free_max += 32;
+			table->free_list = (struct db_free*)realloc(table->free_list,sizeof(struct db_free) * table->free_max);
+		}
+		table->free_list[table->free_count].z    = p;
+		table->free_list[table->free_count].root = &table->ht[hash];
+		table->free_count++;
+		p->deleted = 1;
+		p->data    = NULL;
+		if(table->cmp == strdb_cmp) {
+			if(table->maxlen) {
+				char *key = (char*)malloc(table->maxlen);
+				memcpy(key,p->key,table->maxlen);
+				p->key = key;
+			} else {
+				p->key = strdup((const char*)p->key);
+			}
+		}
+	} else {
+		db_rebalance_erase(p,&table->ht[hash]);
+		if (p->prev)
+			p->prev->next = p->next;
+		else
+			head = p->next;
+		if (p->next)
+			p->next->prev = p->prev;
+		else
+			tail = p->prev;
+
+	#ifdef MALLOC_DBN
+		free_dbn(p);
+	#else
+		aFree(p);
+	#endif
+		table->item_count--;
+	}
 	return data;
 }
 
 void db_foreach(struct dbt *table,int (*func)(void*,void*,va_list),...)
 {
 	int i,sp;
+	int count = table->item_count;
 	// red-black treeなので64個stackがあれば2^32個ノードまで大丈夫
 	struct dbn *p,*pn,*stack[64];
 	va_list ap;
 
 	va_start(ap,func);
+	db_free_lock(table);
 	for(i=0;i<HASH_SIZE;i++){
 		if((p=table->ht[i])==NULL)
 			continue;
 		sp=0;
 		while(1){
-			func(p->key,p->data,ap);
+			//reverted it back. sorry that brought thios bug from Freya [Lupus]
+			//if (!p->data) {
+			//	printf("Warning: no data for key %d in db_foreach (db.c) !\n",(int)p->key);
+			//} else {
+			if(!p->deleted)
+				func(p->key, p->data, ap);
+			count--;
+			//}
 			if((pn=p->left)!=NULL){
 				if(p->right){
 					stack[sp++]=p->right;
@@ -458,6 +601,13 @@ void db_foreach(struct dbt *table,int (*func)(void*,void*,va_list),...)
 			}
 		}
 	}
+	db_free_unlock(table);
+	if(count) {
+		printf(
+			"db_foreach : data lost %d item(s) allocated from %s line %d\n",
+			count,table->alloc_file,table->alloc_line
+		);
+	}
 	va_end(ap);
 }
 
@@ -468,12 +618,13 @@ void db_final(struct dbt *table,int (*func)(void*,void*,va_list),...)
 	va_list ap;
 
 	va_start(ap,func);
+	db_free_lock(table);
 	for(i=0;i<HASH_SIZE;i++){
 		if((p=table->ht[i])==NULL)
 			continue;
 		sp=0;
 		while(1){
-			if(func)
+			if(func && !p->deleted)
 				func(p->key,p->data,ap);
 			if((pn=p->left)!=NULL){
 				if(p->right){
@@ -488,14 +639,24 @@ void db_final(struct dbt *table,int (*func)(void*,void*,va_list),...)
 					pn=stack[--sp];
 				}
 			}
+			if (p->prev)
+				p->prev->next = p->next;
+			else
+				head = p->next;
+			if (p->next)
+				p->next->prev = p->prev;
+			else
+				tail = p->prev;
 #ifdef MALLOC_DBN
 			free_dbn(p);
 #else
-			free(p);
+			aFree(p);
 #endif
 			p=pn;
 		}
 	}
-	free(table);
+	db_free_unlock(table);
+	aFree(table->free_list);
+	aFree(table);
 	va_end(ap);
 }

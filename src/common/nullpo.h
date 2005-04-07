@@ -87,6 +87,8 @@
 #define nullpo_retr(ret, t) \
 	if (nullpo_chk(NLP_MARK, (void *)(t))) {return(ret);}
 
+#define nullpo_retb(t) \
+	if (nullpo_chk(NLP_MARK, (void *)(t))) {break;}
 
 // 可変引数マクロに関する条件コンパイル
 #if __STDC_VERSION__ >= 199901L
@@ -100,6 +102,9 @@
 #define nullpo_retr_f(ret, t, fmt, ...) \
 	if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) {return(ret);}
 
+#define nullpo_retb_f(t, fmt, ...) \
+	if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) {break;}
+
 #elif __GNUC__ >= 2
 /* GCC用 */
 #define nullpo_ret_f(t, fmt, args...) \
@@ -110,6 +115,9 @@
 
 #define nullpo_retr_f(ret, t, fmt, args...) \
 	if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ## args)) {return(ret);}
+
+#define nullpo_retb_f(t, fmt, args...) \
+	if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ## args)) {break;}
 
 #else
 
@@ -127,6 +135,7 @@
 #define nullpo_ret(t) if((t)){;}
 #define nullpo_retv(t) if((t)){;}
 #define nullpo_retr(ret, t) if((t)){;}
+#define nullpo_retb(t) if((t)){;}
 
 // 可変引数マクロに関する条件コンパイル
 #if __STDC_VERSION__ >= 199901L
@@ -134,12 +143,14 @@
 #define nullpo_ret_f(t, fmt, ...) if((t)){;}
 #define nullpo_retv_f(t, fmt, ...) if((t)){;}
 #define nullpo_retr_f(ret, t, fmt, ...) if((t)){;}
+#define nullpo_retb_f(t, fmt, ...) if((t)){;}
 
 #elif __GNUC__ >= 2
 /* GCC用 */
 #define nullpo_ret_f(t, fmt, args...) if((t)){;}
 #define nullpo_retv_f(t, fmt, args...) if((t)){;}
 #define nullpo_retr_f(ret, t, fmt, args...) if((t)){;}
+#define nullpo_retb_f(t, fmt, args...) if((t)){;}
 
 #else
 /* その他の場合・・・ orz */

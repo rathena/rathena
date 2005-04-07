@@ -3,13 +3,14 @@
 //===== By: =================================================================================
 //= Keichii and edited by DarkChild
 //===== Current Version: ====================================================================
-//= 2.0 
+//= 2.1 
 //===== Compatible With: ====================================================================
 //= Any eAthena Version
 //===== Description: ========================================================================
 //= Single NPC that assigns quests skills for all classes.
 //===== Additional Comments: ================================================================
 //= Added advanced classes by ShadowLady.
+//= Added baby clases by Midas
 //===========================================================================================
 prontera.gat,128,200,6	script	Platinum Skill NPC	94,{
 mes "[Platinum Skill NPC]";
@@ -18,13 +19,14 @@ next;
 menu "Yes",Lgetskills,"No",Lnogetskills;
 
 Lgetskills:
-if ((Class==Job_Novice) || (Class==4001)) goto Lskillsnovice;
-if ((Class==Job_Swordman) || (Class==7) || (Class==Job_Knight2) || (Class==14)|| (Class==Job_Crusader2) || (Class==4002) || (Class==4008) || (Class==Job_Lord_Knight2) || (Class==4015) || (Class==Job_Paladin2)) goto Lskillsswordie;
-if ((Class==Job_Mage) || (Class==9) || (Class==16) || (Class==4003) || (Class==4010) || (Class==4017)) goto Lskillsmage;
-if ((Class==Job_Archer) || (Class==11) || (Class==19) || (Class==20) || (Class==4004) || (Class==4012) || (Class==4020) || (Class==4021)) goto Lskillsarcher;
-if ((Class==Job_Acolyte) || (Class==8) || (Class==15) || (Class==4005) || (Class==4009) || (Class==4016)) goto Lskillsaco;
-if ((Class==Job_Merchant) || (Class==10) || (Class==18) || (Class==4006) || (Class==4011) || (Class==4019)) goto Lskillsmerchie;
-if ((Class==Job_Thief) || (Class==12) || (Class==17) || (Class==4007) || (Class==4013) || (Class==4018)) goto Lskillsthief;
+if ((Class==0) || (Class==Job_Baby) || (Class==4001)) goto Lskillsnovice;
+if ((Class==Job_SuperNovice) || (Class==Job_Super_Baby)) goto Lskillssnovice;
+if ((Class==Job_Swordman) || (Class==7) || (Class==13) || (Class==14)|| (Class==21) || (Class==Job_Baby_Swordman) || (Class==Job_Baby_Knight) || (Class==Job_Baby_Knight2) || (Class==Job_Baby_Crusader) || (Class==Job_Baby_Crusader2)) || (Class==4002) || (Class==4008) || (Class==Job_Lord_Knight2) || (Class==4015) || (Class==Job_Paladin2)  goto Lskillsswordie;
+if ((Class==Job_Mage) || (Class==Job_Baby_Mage) || (Class==Job_Baby_Wizard) || (Class==Job_Baby_Sage) || (Class==9) || (Class==16) || (Class==4003) || (Class==4010) || (Class==4017)) goto Lskillsmage;
+if ((Class==Job_Archer) || (Class==11) || (Class==19) || (Class==20) || (Class==49) ||  (Class==65) || (Class==66) ||(Class==4004) || (Class==4012) || (Class==4020) || (Class==4021)) goto Lskillsarcher;
+if ((Class==Job_Acolyte) || (Class==8) || (Class==15) || (Class==50) || (Class==54) || (Class==61) || (Class==4005) || (Class==4009) || (Class==4016)) goto Lskillsaco;
+if ((Class==Job_Merchant) || (Class==10) || (Class==18) || (Class==51) || (Class==56) || (Class==64) || (Class==4006) || (Class==4011) || (Class==4019)) goto Lskillsmerchie;
+if ((Class==Job_Thief) || (Class==12) || (Class==17) || (Class==52) || (Class==58) || (Class==63) || (Class==4007) || (Class==4013) || (Class==4018)) goto Lskillsthief;
 Lskillsnovice:
 mes "[Platinum Skill NPC]";
 mes "I see that you are a Novice. I will now add the special skills available to the Novice job.";
@@ -32,6 +34,14 @@ skill 142,1,0;
 skill 143,1,0;
 mes " ";
 mes "You now have all the special skills available to the Novice job.";
+next;
+goto LskillsEND;
+Lskillssnovice:
+mes "[Platinum Skills]";
+mes "I see that you are a Super Novice. I will now add the special skills available to your job.";
+skill 142,1,0; //Snovices don't have play dead, do they?
+mes " ";
+mes "You now have all the special skills available to your Novice job.";
 next;
 goto LskillsEND;
 Lskillsswordie:

@@ -41,9 +41,9 @@ cmd_fild03.gat,0,0,0,0	monster	Anolian	1206,60,0,0,0
 cmd_fild03.gat,0,0,0,0	monster	Pest	1256,30,0,0,0
 cmd_fild03.gat,0,0,0,0	monster	Rotar Zairo	1392,30,0,0,0
 cmd_fild03.gat,0,0,0,0	monster	Poporing	1031,10,0,0,0
-cmd_fild03.gat,0,0,0,0	monster	Toad	1089,1,1800000,1500000,0
-cmd_fild03.gat,0,0,0,0	monster	Shining Plant	1083,3,1800000,1800000,1
-cmd_fild03.gat,0,0,0,0	monster	Mutant Dragonoid	1262,1,3600000,2000000,0
+cmd_fild03.gat,0,0,0,0	monster	Toad	1089,1,3600000,1800000,1
+cmd_fild03.gat,0,0,0,0	monster	Shining Plant	1083,3,3600000,1800000,1
+cmd_fild03.gat,0,0,0,0	monster	Mutant Dragonoid	1262,1,7200000,3600000,1
 
 //(cmd_fild04.gat)*
 cmd_fild04.gat,221,120,120,40	monster	Sea Otter	1323,20,0,0,0

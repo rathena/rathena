@@ -2,9 +2,10 @@
 #define _INTER_H_
 
 int inter_init(const char *file);
+void inter_final();
 int inter_parse_frommap(int fd);
 int inter_mapif_init(int fd);
-
+int mapif_send_gmaccounts();
 
 int inter_check_length(int fd,int length);
 
@@ -23,6 +24,11 @@ extern char tmp_sql[65535];
 extern MYSQL_RES* 	sql_res ;
 extern MYSQL_ROW	sql_row ;
 extern int 	sql_cnt;
+
+extern MYSQL lmysql_handle;
+extern char tmp_lsql[65535];
+extern MYSQL_RES* 	lsql_res ;
+extern MYSQL_ROW	lsql_row ;
 
 extern int char_server_port;
 extern char char_server_ip[32];

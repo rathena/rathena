@@ -28,11 +28,11 @@ int storage_tostr(char *str,struct storage *p)
 	str_p += sprintf(str_p,"%d,%d\t",p->account_id,p->storage_amount);
 
 	for(i=0;i<MAX_STORAGE;i++)
-		if( (p->storage[i].nameid) && (p->storage[i].amount) ){
+		if( (p->storage_[i].nameid) && (p->storage_[i].amount) ){
 			str_p += sprintf(str_p,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d ",
-				p->storage[i].id,p->storage[i].nameid,p->storage[i].amount,p->storage[i].equip,
-				p->storage[i].identify,p->storage[i].refine,p->storage[i].attribute,
-				p->storage[i].card[0],p->storage[i].card[1],p->storage[i].card[2],p->storage[i].card[3]);
+				p->storage_[i].id,p->storage_[i].nameid,p->storage_[i].amount,p->storage_[i].equip,
+				p->storage_[i].identify,p->storage_[i].refine,p->storage_[i].attribute,
+				p->storage_[i].card[0],p->storage_[i].card[1],p->storage_[i].card[2],p->storage_[i].card[3]);
 			f++;
 		}
 
@@ -56,49 +56,49 @@ int storage_fromstr(char *str,struct storage *p)
 	if(set!=2)
 		return 1;
 	if(str[next]=='\n' || str[next]=='\r')
-		return 0;	
+		return 0;
 	next++;
 	for(i=0;str[next] && str[next]!='\t';i++){
 		if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6],
 		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[10], &len) == 12) {
-			p->storage[i].id = tmp_int[0];
-			p->storage[i].nameid = tmp_int[1];
-			p->storage[i].amount = tmp_int[2];
-			p->storage[i].equip = tmp_int[3];
-			p->storage[i].identify = tmp_int[4];
-			p->storage[i].refine = tmp_int[5];
-			p->storage[i].attribute = tmp_int[6];
-			p->storage[i].card[0] = tmp_int[7];
-			p->storage[i].card[1] = tmp_int[8];
-			p->storage[i].card[2] = tmp_int[9];
-			p->storage[i].card[3] = tmp_int[10];
+			p->storage_[i].id = tmp_int[0];
+			p->storage_[i].nameid = tmp_int[1];
+			p->storage_[i].amount = tmp_int[2];
+			p->storage_[i].equip = tmp_int[3];
+			p->storage_[i].identify = tmp_int[4];
+			p->storage_[i].refine = tmp_int[5];
+			p->storage_[i].attribute = tmp_int[6];
+			p->storage_[i].card[0] = tmp_int[7];
+			p->storage_[i].card[1] = tmp_int[8];
+			p->storage_[i].card[2] = tmp_int[9];
+			p->storage_[i].card[3] = tmp_int[10];
 			next += len;
 			if (str[next] == ' ')
-				next++;	
+				next++;
 		}
 
 		else if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6],
 		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &len) == 11) {
-			p->storage[i].id = tmp_int[0];
-			p->storage[i].nameid = tmp_int[1];
-			p->storage[i].amount = tmp_int[2];
-			p->storage[i].equip = tmp_int[3];
-			p->storage[i].identify = tmp_int[4];
-			p->storage[i].refine = tmp_int[5];
-			p->storage[i].attribute = tmp_int[6];
-			p->storage[i].card[0] = tmp_int[7];
-			p->storage[i].card[1] = tmp_int[8];
-			p->storage[i].card[2] = tmp_int[9];
-			p->storage[i].card[3] = tmp_int[10];
+			p->storage_[i].id = tmp_int[0];
+			p->storage_[i].nameid = tmp_int[1];
+			p->storage_[i].amount = tmp_int[2];
+			p->storage_[i].equip = tmp_int[3];
+			p->storage_[i].identify = tmp_int[4];
+			p->storage_[i].refine = tmp_int[5];
+			p->storage_[i].attribute = tmp_int[6];
+			p->storage_[i].card[0] = tmp_int[7];
+			p->storage_[i].card[1] = tmp_int[8];
+			p->storage_[i].card[2] = tmp_int[9];
+			p->storage_[i].card[3] = tmp_int[10];
 			next += len;
 			if (str[next] == ' ')
-				next++;	
+				next++;
 		}
-		
+
 		else return 1;
 	}
 	return 0;
@@ -111,11 +111,11 @@ int guild_storage_tostr(char *str,struct guild_storage *p)
 	str_p+=sprintf(str,"%d,%d\t",p->guild_id,p->storage_amount);
 
 	for(i=0;i<MAX_GUILD_STORAGE;i++)
-		if( (p->storage[i].nameid) && (p->storage[i].amount) ){
+		if( (p->storage_[i].nameid) && (p->storage_[i].amount) ){
 			str_p += sprintf(str_p,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d ",
-				p->storage[i].id,p->storage[i].nameid,p->storage[i].amount,p->storage[i].equip,
-				p->storage[i].identify,p->storage[i].refine,p->storage[i].attribute,
-				p->storage[i].card[0],p->storage[i].card[1],p->storage[i].card[2],p->storage[i].card[3]);
+				p->storage_[i].id,p->storage_[i].nameid,p->storage_[i].amount,p->storage_[i].equip,
+				p->storage_[i].identify,p->storage_[i].refine,p->storage_[i].attribute,
+				p->storage_[i].card[0],p->storage_[i].card[1],p->storage_[i].card[2],p->storage_[i].card[3]);
 			f++;
 		}
 
@@ -138,49 +138,49 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 	if(set!=2)
 		return 1;
 	if(str[next]=='\n' || str[next]=='\r')
-		return 0;	
+		return 0;
 	next++;
 	for(i=0;str[next] && str[next]!='\t';i++){
 	if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6],
 		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[10], &len) == 12) {
-			p->storage[i].id = tmp_int[0];
-			p->storage[i].nameid = tmp_int[1];
-			p->storage[i].amount = tmp_int[2];
-			p->storage[i].equip = tmp_int[3];
-			p->storage[i].identify = tmp_int[4];
-			p->storage[i].refine = tmp_int[5];
-			p->storage[i].attribute = tmp_int[6];
-			p->storage[i].card[0] = tmp_int[7];
-			p->storage[i].card[1] = tmp_int[8];
-			p->storage[i].card[2] = tmp_int[9];
-			p->storage[i].card[3] = tmp_int[10];
+			p->storage_[i].id = tmp_int[0];
+			p->storage_[i].nameid = tmp_int[1];
+			p->storage_[i].amount = tmp_int[2];
+			p->storage_[i].equip = tmp_int[3];
+			p->storage_[i].identify = tmp_int[4];
+			p->storage_[i].refine = tmp_int[5];
+			p->storage_[i].attribute = tmp_int[6];
+			p->storage_[i].card[0] = tmp_int[7];
+			p->storage_[i].card[1] = tmp_int[8];
+			p->storage_[i].card[2] = tmp_int[9];
+			p->storage_[i].card[3] = tmp_int[10];
 			next += len;
 			if (str[next] == ' ')
-				next++;	
+				next++;
 		}
 
 		else if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%n",
 		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		      &tmp_int[4], &tmp_int[5], &tmp_int[6],
 		      &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &len) == 11) {
-			p->storage[i].id = tmp_int[0];
-			p->storage[i].nameid = tmp_int[1];
-			p->storage[i].amount = tmp_int[2];
-			p->storage[i].equip = tmp_int[3];
-			p->storage[i].identify = tmp_int[4];
-			p->storage[i].refine = tmp_int[5];
-			p->storage[i].attribute = tmp_int[6];
-			p->storage[i].card[0] = tmp_int[7];
-			p->storage[i].card[1] = tmp_int[8];
-			p->storage[i].card[2] = tmp_int[9];
-			p->storage[i].card[3] = tmp_int[10];
+			p->storage_[i].id = tmp_int[0];
+			p->storage_[i].nameid = tmp_int[1];
+			p->storage_[i].amount = tmp_int[2];
+			p->storage_[i].equip = tmp_int[3];
+			p->storage_[i].identify = tmp_int[4];
+			p->storage_[i].refine = tmp_int[5];
+			p->storage_[i].attribute = tmp_int[6];
+			p->storage_[i].card[0] = tmp_int[7];
+			p->storage_[i].card[1] = tmp_int[8];
+			p->storage_[i].card[2] = tmp_int[9];
+			p->storage_[i].card[3] = tmp_int[10];
 			next += len;
 			if (str[next] == ' ')
-				next++;	
+				next++;
 		}
-		
+
 		else return 1;
 	}
 	return 0;
@@ -190,9 +190,9 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 struct storage *account2storage(int account_id)
 {
 	struct storage *s;
-	s=numdb_search(storage_db,account_id);
+	s= (struct storage *) numdb_search(storage_db,account_id);
 	if(s == NULL) {
-		s = calloc(sizeof(struct storage), 1);
+		s = (struct storage *) aCalloc(sizeof(struct storage), 1);
 		if(s==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);
@@ -208,9 +208,9 @@ struct guild_storage *guild2storage(int guild_id)
 {
 	struct guild_storage *gs = NULL;
 	if(inter_guild_search(guild_id) != NULL) {
-		gs=numdb_search(guild_storage_db,guild_id);
+		gs= (struct guild_storage *) numdb_search(guild_storage_db,guild_id);
 		if(gs == NULL) {
-			gs = calloc(sizeof(struct guild_storage), 1);
+			gs = (struct guild_storage *) aCalloc(sizeof(struct guild_storage), 1);
 			if(gs==NULL){
 				printf("int_storage: out of memory!\n");
 				exit(0);
@@ -242,7 +242,7 @@ int inter_storage_init()
 	}
 	while(fgets(line,65535,fp)){
 		sscanf(line,"%d",&tmp_int);
-		s=calloc(sizeof(struct storage), 1);
+		s = (struct storage*)aCalloc(sizeof(struct storage), 1);
 		if(s==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);
@@ -254,7 +254,7 @@ int inter_storage_init()
 		}
 		else{
 			printf("int_storage: broken data [%s] line %d\n",storage_txt,c);
-			free(s);
+			aFree(s);
 		}
 		c++;
 	}
@@ -270,7 +270,7 @@ int inter_storage_init()
 	}
 	while(fgets(line,65535,fp)){
 		sscanf(line,"%d",&tmp_int);
-		gs=calloc(sizeof(struct guild_storage), 1);
+		gs = (struct guild_storage*)aCalloc(sizeof(struct guild_storage), 1);
 		if(gs==NULL){
 			printf("int_storage: out of memory!\n");
 			exit(0);
@@ -282,13 +282,29 @@ int inter_storage_init()
 		}
 		else{
 			printf("int_storage: broken data [%s] line %d\n",guild_storage_txt,c);
-			free(gs);
+			aFree(gs);
 		}
 		c++;
 	}
 	fclose(fp);
 
 	return 0;
+}
+
+int storage_db_final (void *k, void *data, va_list ap) {
+	struct storage *p = (struct storage *) data;
+	if (p) aFree(p);
+	return 0;
+}
+int guild_storage_db_final (void *k, void *data, va_list ap) {
+	struct guild_storage *p = (struct guild_storage *) data;
+	if (p) aFree(p);
+	return 0;
+}
+void inter_storage_final() {
+	numdb_final(storage_db, storage_db_final);
+	numdb_final(guild_storage_db, guild_storage_db_final);
+	return;
 }
 
 int inter_storage_save_sub(void *key,void *data,va_list ap)
@@ -348,15 +364,15 @@ int inter_guild_storage_save()
 // 倉庫データ削除
 int inter_storage_delete(int account_id)
 {
-	struct storage *s = numdb_search(storage_db,account_id);
+	struct storage *s = (struct storage *) numdb_search(storage_db,account_id);
 	if(s) {
 		int i;
 		for(i=0;i<s->storage_amount;i++){
-			if(s->storage[i].card[0] == (short)0xff00)
-				inter_pet_delete(*((long *)(&s->storage[i].card[2])));
+			if(s->storage_[i].card[0] == (short)0xff00)
+				inter_pet_delete(*((long *)(&s->storage_[i].card[2])));
 		}
 		numdb_erase(storage_db,account_id);
-		free(s);
+		aFree(s);
 	}
 	return 0;
 }
@@ -364,15 +380,15 @@ int inter_storage_delete(int account_id)
 // ギルド倉庫データ削除
 int inter_guild_storage_delete(int guild_id)
 {
-	struct guild_storage *gs = numdb_search(guild_storage_db,guild_id);
+	struct guild_storage *gs = (struct guild_storage *) numdb_search(guild_storage_db,guild_id);
 	if(gs) {
 		int i;
 		for(i=0;i<gs->storage_amount;i++){
-			if(gs->storage[i].card[0] == (short)0xff00)
-				inter_pet_delete(*((long *)(&gs->storage[i].card[2])));
+			if(gs->storage_[i].card[0] == (short)0xff00)
+				inter_pet_delete(*((long *)(&gs->storage_[i].card[2])));
 		}
 		numdb_erase(guild_storage_db,guild_id);
-		free(gs);
+		aFree(gs);
 	}
 	return 0;
 }

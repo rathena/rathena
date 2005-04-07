@@ -202,8 +202,7 @@ alberta.gat,131,139,4	script	Drunken old man	709,{
 }
 
 // Soda Man ----------------------------------------------------
-alberta.gat,90,71,3	script	Soda Man	89,
-{
+alberta.gat,90,71,3	script	Soda Man	89,{
 	mes "[Soda Man]";
 	mes "Ummm.... delicious....";
 	emotion 33;
@@ -362,8 +361,7 @@ alb2trea.gat,39,50,5	script	Sailor	100,{
 
 //<====================================================== Turtle Island ========================================================>\\
 // Gotanblue --------------------------------------------------------------------------
-alberta.gat,247,123,5	script	Gotanblue	709,
-{
+alberta.gat,247,123,5	script	Gotanblue	709,{
 	if(TURTLE == 1) goto L_Turtle;
 	mes "[Gotanblue]";
 	mes "Ha ha! The sea seems endless!! We cannot begin to grasp it's size merely by gazing at it from land....";
@@ -533,8 +531,7 @@ M_Menu:
 }
 
 // Turtle Grandpa -------------------------------------------------------------------
-alberta_in.gat,23,104,2	script	Turtle Grandpa	120,
-{
+alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 	mes "[Turtle Grandpa]";
 	mes "~Buuurrrpp!!!~ Oops...";
 	emotion 4;
@@ -646,8 +643,7 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,
 }
 
 // Letter of an explorer (on Turtle Grandpa's desk)------------------------------------------------------------------
-alberta_in.gat,17,101,1	script	Letter of an explorer	111,
-{
+alberta_in.gat,17,101,1	script	Letter of an explorer	111,{
 	mes "~ The letter reads... ~";
 	mes "- O/X/XOVX -";
 	mes "If you find this letter, it means that our expidition to Turtle Island has failed.  Please inform the others...";
@@ -670,8 +666,7 @@ alberta_in.gat,17,101,1	script	Letter of an explorer	111,
 }
 
 // Jornadan Niliria ------------------------------------------------------------------------
-alberta.gat,248,90,1	script	Jornadan Niliria	121,
-{
+alberta.gat,248,90,1	script	Jornadan Niliria	121,{
 	mes "[Jornadan Niliria]";
 	mes "Sometimes I think that the world around me is ever changing.";
 	mes "When I view the land it seems different, when I look up at the sky it too seems different....";
@@ -729,8 +724,7 @@ alberta.gat,248,90,1	script	Jornadan Niliria	121,
 }
 
 // Jornadan's Voyage Log -------------------------------------------------
-alberta.gat,247,93,1	script	A Voyage Log	111,
-{
+alberta.gat,247,93,1	script	A Voyage Log	111,{
 	if(JORNADAN == 1) goto L_Treasure;
 	mes "[A Voyage Log]";
 	mes "= 03:20 am =";
@@ -852,8 +846,7 @@ L_Treasure:
 }
 
 // Burried treasure --------------------------------------------------------------------
-turn_dun01,160,80,1	script	Skull Stone	111,
-{
+turn_dun01,160,80,1	script	Skull Stone	111,{
 	if(SKULLKEY == 1) goto L_OpenBox;
 	mes "^5555FF(It's a frightening stone tomb with horrible skull on it.)^000000";
 	close;

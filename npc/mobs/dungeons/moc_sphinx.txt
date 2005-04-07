@@ -41,4 +41,4 @@ in_sphinx5.gat,0,0,0,0	monster	Sidewinder	1037,20,0,0,0
 in_sphinx5.gat,0,0,0,0	monster	Pasana	1154,30,0,0,0
 in_sphinx5.gat,0,0,0,0	monster	Mimic	1191,7,600000,300000,1
 in_sphinx5.gat,0,0,0,0	monster	Marduk	1140,30,0,0,0
-in_sphinx5.gat,0,0,0,0	monster	Pharaoh	1157,1,3600000,1800000,1
+in_sphinx5.gat,0,0,0,0	monster	Pharaoh	1157,1,3600000,3600000,1

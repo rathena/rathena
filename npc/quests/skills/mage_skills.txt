@@ -15,8 +15,7 @@
 
 
 
-geffen_in.gat,151,119,4	script	BLIZZARDRISS	71,
-{
+geffen_in.gat,151,119,4	script	BLIZZARDRISS	71,{
 	mes "[BLIZZARDRISS]";
 	if(callfunc("Is_Magic_Class")) goto L_Start;
 

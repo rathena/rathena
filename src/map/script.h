@@ -2,6 +2,22 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+extern struct Script_Config {
+	int warn_func_no_comma;
+	int warn_cmd_no_comma;
+	int warn_func_mismatch_paramnum;
+	int warn_cmd_mismatch_paramnum;
+	int check_cmdcount;
+	int check_gotocount;
+
+	int event_script_type;
+	char* die_event_name;
+	char* kill_event_name;
+	char* login_event_name;
+	char* logout_event_name;
+	int event_requires_trigger;
+} script_config;
+
 struct script_data {
 	int type;
 	union {
@@ -23,8 +39,12 @@ struct script_state {
 	int defsp,new_pos,new_defsp;
 };
 
-unsigned char * parse_script(unsigned char *,int);
-int run_script(unsigned char *,int,int,int);
+char * parse_script(unsigned char *,int);
+int run_script(char *,int,int,int);
+
+int set_var(struct map_session_data *sd, char *name, void *val);
+int conv_num(struct script_state *st,struct script_data *data);
+char* conv_str(struct script_state *st,struct script_data *data);
 
 struct dbt* script_get_label_db();
 struct dbt* script_get_userfunc_db();

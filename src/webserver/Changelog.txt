@@ -1,3 +1,0 @@
-Date	Added
-12/3	
-	* Creation of eAthena Web Server v2 [MC Cameri]

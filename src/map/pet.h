@@ -2,11 +2,11 @@
 #ifndef _PET_H_
 #define _PET_H_
 
-#define MAX_PET_DB	100
+#define MAX_PET_DB	300
 #define PETLOOT_SIZE	20 // [Valaris]
 
 struct pet_db {
-	int	class;
+	int	class_;
 	char name[24],jname[24];
 	int itemID;
 	int EggID;
@@ -55,15 +55,15 @@ int pet_food(struct map_session_data *sd);
 int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd);
 int pet_delay_item_drop2(int tid,unsigned int tick,int id,int data);
 int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap);
-int pet_skill_bonus(struct map_session_data *sd,struct pet_data *pd,int type,int val,int duration,int timer,int data); 
 int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
-int pet_skill_bonus_duration(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_recovery_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_mag_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_heal_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_skillattack_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 
+int read_petdb();
 int do_init_pet(void);
+int do_final_pet(void);
 
 #endif
 

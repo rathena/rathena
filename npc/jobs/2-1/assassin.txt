@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena RC4
 //===== Description: ========================================= 
@@ -12,12 +12,13 @@
 //===== Additional Comments: ================================= 
 //= v1.0 Used some dialogue from the aegis Assassin script translated By: Pgro Team (OwNaGe)
 //= Also converted the booby traps from the aegis script.[kobra_k88]
-//=v1.1 Made adjustments to ontouch npcs to work with the new "ontouch" functionality.
+//= v1.1 Made adjustments to ontouch npcs to work with the new "ontouch" functionality.
 //= Fixed some duplicate npc names.  Added missing waitingroom triggers.
 //= Fixed warp in "TimerSin", was supposed to be an areawarp.
 //= For some reason sometimes the "Nameless One" would have message windows
 //= without controls.  Changed the doevent that triggers him to an
 //= addtimer and that seemed make the prob. go away[kobra_k88]
+//= 1.2 Fixed WRONG skillpoint check! [Lupus]
 //============================================================ 
 
 
@@ -147,7 +148,7 @@ L_Failed2:
 	end;
 
 L_Change:
-	if (skpoint > 0) goto L_SkPoints;
+	if (skillpoint > 0) goto L_SkPoints;
 	if(countitem(1008) < 1) goto L_NoNecklace;
 	mes "Ah... the Necklace of Oblivion..... that means that the Guild Master has accepted you into the Assassin clan.";
 	next;
@@ -1169,16 +1170,14 @@ OnFailed:
 }
 
 // Observer ===========================>\\
-in_moc_16.gat,62,153,1	script	Observer	55,
-{
+in_moc_16.gat,62,153,1	script	Observer	55,{
 	mes "[Observer]";
 	mes "Don't mind me, I'm just here to see how well you do on your test.....";
 	close;
 }
 
 // Warp ==============================>\\
-in_moc_16.gat,87,137,0	script	sinWarp1	45,2,1,
-{
+in_moc_16.gat,87,137,0	script	sinWarp1	45,2,1,{
 OnTimer30000:
 	killmonsterall "in_moc_16.gat";
 	enablenpc "Thomas";
@@ -1187,8 +1186,7 @@ OnTimer30000:
 }
 
 // Booby Traps ========================>\\
-in_moc_16.gat,68,158,0	script	01_1::SinTrap	139,0,0,
-{
+in_moc_16.gat,68,158,0	script	01_1::SinTrap	139,0,0,{
 	stopnpctimer "TimerSin";
 	warp "in_moc_16.gat", 19, 161;
 	killmonsterall "in_moc_16.gat";
@@ -1434,8 +1432,7 @@ OnTimer188000:
 //=============================================//
 // Warp
 //=============================================//
-in_moc_16.gat,182,169,1	script	sinWarp3	45,1,1,
-{
+in_moc_16.gat,182,169,1	script	sinWarp3	45,1,1,{
 	if(getareausers(("in_moc_16.gat"),148,74,187,117) > 0) goto L_Wait;
 	disablenpc "Huey#End";
 	disablenpc "Kai#End";
@@ -1457,8 +1454,7 @@ in_moc_16.gat,182,169,1	script	sinWarp3	45,1,1,
 //==============================================//
 
 // Start Trigger ------------------------------------------------------------------
-in_moc_16.gat,167,114,3	script	guildmaster_Trig#0	139,4,0,
-{
+in_moc_16.gat,167,114,3	script	guildmaster_Trig#0	139,4,0,{
 		mes "[Guild Master]";
 		mes "Welcome ^5533FF" + strcharinfo(0) + "^000000.  This is my private room.";
 		next;
@@ -1476,8 +1472,7 @@ in_moc_16.gat,167,114,3	script	guildmaster_Trig#0	139,4,0,
 }
 
 // Guild Master -----------------------------------------------------------------------------
-in_moc_16.gat,149,80,4	script	Guild Master	106,1,1,
-{
+in_moc_16.gat,149,80,4	script	Guild Master	106,1,1,{
 	end;
 
 OnTouch:
@@ -1834,20 +1829,17 @@ sF_Questions2:
 //=============================================//
 // Maze Triggers
 //=============================================//
-in_moc_16.gat,170,90,0	script	maze_trig#1	139,0,0,
-{
+in_moc_16.gat,170,90,0	script	maze_trig#1	139,0,0,{
 	mes "[Guild Master]";
 	mes "There's no way to walk there, try another way.";
 	close;
 }
-in_moc_16.gat,150,85,0	script	maze_trig#2	139,0,0,
-{
+in_moc_16.gat,150,85,0	script	maze_trig#2	139,0,0,{
 	mes "[Guild Master]";
 	mes ".... Getting warmer.... you're almost there.....";
 	close;
 }
-in_moc_16.gat,153,85,0	script	maze_trig#3	139,0,0,
-{
+in_moc_16.gat,153,85,0	script	maze_trig#3	139,0,0,{
 	mes "[Guild Master]";
 	mes "You can't walk there..";
 	mes "Good, your almost there, keep walking.";
@@ -1855,39 +1847,33 @@ in_moc_16.gat,153,85,0	script	maze_trig#3	139,0,0,
 	mes "you got to turn a round in order to get in.";
 	close;
 }
-in_moc_16.gat,160,85,0	script	maze_trig#4	139,0,0,
-{
+in_moc_16.gat,160,85,0	script	maze_trig#4	139,0,0,{
 	mes "[Guild Master]";
 	mes "There's no way to walk there, try another way.";
 	close;
 }
-in_moc_16.gat,175,89,0	script	maze_trig#5	139,0,0,
-{
+in_moc_16.gat,175,89,0	script	maze_trig#5	139,0,0,{
 	mes "[Guild Master]";
 	mes "That way leads to Botogun..";
 	mes "What are going to do there?";
 	close;
 }
-in_moc_16.gat,164,88,0	script	maze_trig#6	139,0,0,
-{
+in_moc_16.gat,164,88,0	script	maze_trig#6	139,0,0,{
 	mes "[Guild Master]";
 	mes "Good.... you're on the right track.";
 	close;
 }
-in_moc_16.gat,149,95,0	script	maze_trig#7	139,0,0,
-{
+in_moc_16.gat,149,95,0	script	maze_trig#7	139,0,0,{
 	mes "[Guild Master]";
 	mes "Good, you found the path.";
 	close;
 }
-in_moc_16.gat,180,101,0	script	maze_trig#8	139,0,0,
-{
+in_moc_16.gat,180,101,0	script	maze_trig#8	139,0,0,{
 	mes "[Guild Master]";
 	mes "... It looks like that's not that way...";
 	close;
 }
-in_moc_16.gat,186,107,0	script	maze_trig#9	139,0,0,
-{
+in_moc_16.gat,186,107,0	script	maze_trig#9	139,0,0,{
 	mes "[Guild Master]";
 	mes "...Not that way either...";
 	close;
@@ -1897,8 +1883,7 @@ in_moc_16.gat,186,107,0	script	maze_trig#9	139,0,0,
 //================================================//
 // Decoy Chief
 //================================================//
-in_moc_16.gat,186,81,0	script	Guild Master#2	55,
-{
+in_moc_16.gat,186,81,0	script	Guild Master#2	55,{
 	mes "[Guild Master Botogun]";
 	mes "I'm sorry but I am not the person in charge here.";
 	mes "The real Guild Chief is on the other side.";

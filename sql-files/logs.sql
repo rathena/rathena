@@ -25,6 +25,8 @@ CREATE TABLE `droplog` (
   `item6` int(11) NOT NULL default '0',
   `item7` int(11) NOT NULL default '0',
   `item8` int(11) NOT NULL default '0',
+  `item9` int(11) NOT NULL default '0',
+  `itemCard` int(11) NOT NULL default '0',
   `map` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`drop_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -151,4 +153,17 @@ CREATE TABLE `atcommandlog` (
   `map` varchar(20) NOT NULL default '',
   `command` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`atcommand_id`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+#Database: log
+#Table: npclog
+CREATE TABLE `npclog` (
+  `npc_id` mediumint(9) unsigned NOT NULL auto_increment,
+  `npc_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `account_id` int(11) unsigned NOT NULL default '0',
+  `char_id` int(11) unsigned NOT NULL default '0',
+  `char_name` varchar(30) NOT NULL default '',
+  `map` varchar(20) NOT NULL default '',
+  `mes` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`npc_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;

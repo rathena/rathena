@@ -1,5 +1,3 @@
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `ragnarok`;
-USE `ragnarok`;
 CREATE TABLE `mail` (
   `message_id` int(11) NOT NULL auto_increment,
   `to_account_id` int(11) NOT NULL default '0',

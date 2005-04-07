@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.0 
+//= 1.1
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena 1.0 +
 //===== Description: ========================================= 
 //= <Description> 
 //===== Additional Comments: ================================= 
 //= Fully working.  I have created a custom warp to get into the test room so disable
 //= the one in your warp script or scripts.  It is this warp: "izlude_in.gat",40,170.
+//= v1.1 Added instant job change for High Novice [Lupus]
 //============================================================ 
 
 
@@ -39,8 +40,7 @@ sword_1-1.gat,200,63,0,0	monster	Fabre	1184,2,0,0,0
 
 // == Warp ==
 // -- Warp to test room --
-izlude_in.gat,62,170,0	script	w1039	45,1,1,
-{
+izlude_in.gat,62,170,0	script	w1039	45,1,1,{
 	if(Class==Job_Novice && job_sword_q > 0) warp "izlude_in.gat",40,170;
 	if(job_sword_q == 0) doevent "Swordsman::OnStart";
 	end;
@@ -49,8 +49,8 @@ izlude_in.gat,62,170,0	script	w1039	45,1,1,
 
 // == Npcs ==
 // -- Master Swordsman --
-izlude_in.gat,74,172,5	script	Master Swordsman	119,
-{
+izlude_in.gat,74,172,5	script	Master Swordsman	119,{
+	callfunc "F_ToHigh",25,"Swordman High",31,"Lord Knight",144,145,146,0,"Master Swordsman";
 	mes "[Master Swordsman]";
 	if(Class==Job_Novice && job_sword_q == 2) goto L_Done;
 	mes "Welcome to the Swordsman Association! So.. What business brings you to us?";

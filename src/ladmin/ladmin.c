@@ -6,27 +6,42 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include <sys/types.h>
+#include <time.h>
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
+void Gettimeofday(struct timeval *timenow)
+{
+	time_t t;
+	t = clock();
+	timenow->tv_usec = t;
+	timenow->tv_sec = t / CLK_TCK;
+	return;
+}
+#define gettimeofday(timenow, dummy) Gettimeofday(timenow)
+#else
 #include <sys/socket.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <netinet/in.h>
 #include <sys/time.h> // gettimeofday
-#include <time.h>
 #include <sys/ioctl.h>
 #include <unistd.h> // close
+#include <arpa/inet.h> // inet_addr
+#include <netdb.h> // gethostbyname
+#endif
+#include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h> // str*
-#include <arpa/inet.h> // inet_addr
-#include <netdb.h> // gethostbyname
 #include <stdarg.h> // valist
 #include <ctype.h> // tolower
 
-#include "core.h"
-#include "socket.h"
+#include "../common/strlib.h"
+#include "../common/core.h"
+#include "../common/socket.h"
 #include "ladmin.h"
-#include "version.h"
-#include "mmo.h"
+#include "../common/version.h"
+#include "../common/mmo.h"
 
 #ifdef PASSWORDENC
 #include "md5calc.h"
@@ -266,7 +281,7 @@ int ladmin_log(char *fmt, ...) {
 			fprintf(logfp, RETCODE);
 		else {
 			gettimeofday(&tv, NULL);
-			strftime(tmpstr, 24, date_format, localtime(&(tv.tv_sec)));
+			strftime(tmpstr, 24, date_format, localtime((const time_t*)&(tv.tv_sec)));
 			sprintf(tmpstr + strlen(tmpstr), ".%03d: %s", (int)tv.tv_usec / 1000, fmt);
 			vfprintf(logfp, tmpstr, ap);
 		}
@@ -275,23 +290,6 @@ int ladmin_log(char *fmt, ...) {
 
 	va_end(ap);
 	return 0;
-}
-
-//-----------------------------------------------------
-// Function to suppress control characters in a string.
-//-----------------------------------------------------
-int remove_control_chars(unsigned char *str) {
-	int i;
-	int change = 0;
-
-	for(i = 0; str[i]; i++) {
-		if (str[i] < 32) {
-			str[i] = '_';
-			change = 1;
-		}
-	}
-
-	return change;
 }
 
 //---------------------------------------------
@@ -367,9 +365,9 @@ int verify_accountname(char* account_name) {
 //---------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
 //---------------------------------------------------
-int e_mail_check(unsigned char *email) {
+int e_mail_check(char *email) {
 	char ch;
-	unsigned char* last_arobas;
+	char* last_arobas;
 
 	// athena limits
 	if (strlen(email) < 3 || strlen(email) > 39)
@@ -3252,7 +3250,7 @@ int parse_fromlogin(int fd) {
 	}
 
 //	printf("parse_fromlogin : %d %d %d\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
-	sd = session[fd]->session_data;
+	sd = (struct char_session_data*)session[fd]->session_data;
 
 	while(RFIFOREST(fd) >= 2) {
 		switch(RFIFOW(fd,0)) {
@@ -3302,11 +3300,11 @@ int parse_fromlogin(int fd) {
 			memcpy(md5key, RFIFOP(fd,4), RFIFOW(fd,2) - 4);
 			md5key[sizeof(md5key)-1] = '0';
 			if (passenc == 1) {
-				strncpy(md5str, RFIFOP(fd,4), RFIFOW(fd,2) - 4);
+				strncpy(md5str, (const char*)RFIFOP(fd,4), RFIFOW(fd,2) - 4);
 				strcat(md5str, loginserveradminpassword);
 			} else if (passenc == 2) {
 				strncpy(md5str, loginserveradminpassword, sizeof(loginserveradminpassword));
-				strcat(md5str, RFIFOP(fd,4));
+				strcat(md5str, (const char*)RFIFOP(fd,4));
 			}
 			MD5_String2binary(md5str, md5bin);
 			WFIFOW(login_fd,0) = 0x7918; // Request for administation login (encrypted password)
@@ -3801,7 +3799,7 @@ int parse_fromlogin(int fd) {
 		case 0x7947:	// answer of an account name search
 			if (RFIFOREST(fd) < 30)
 				return 0;
-			if (strcmp(RFIFOP(fd,6), "") == 0) {
+			if (strcmp((const char*)RFIFOP(fd,6), "") == 0) {
 				if (defaultlanguage == 'F') {
 					printf("Impossible de trouver le nom du compte [%d]. Le compte n'existe pas.\n", RFIFOL(fd,2));
 					ladmin_log("Impossible de trouver le nom du compte [%d]. Le compte n'existe pas." RETCODE, RFIFOL(fd,2));
@@ -4018,7 +4016,7 @@ int parse_fromlogin(int fd) {
 			connect_until_time = (time_t)RFIFOL(fd,140);
 			ban_until_time = (time_t)RFIFOL(fd,144);
 			memset(memo, '\0', sizeof(memo));
-			strncpy(memo, RFIFOP(fd,150), RFIFOW(fd,148));
+			strncpy(memo, (const char*)RFIFOP(fd,150), RFIFOW(fd,148));
 			if (RFIFOL(fd,2) == -1) {
 				if (defaultlanguage == 'F') {
 					printf("Impossible de trouver le compte [%s]. Le compte n'existe pas.\n", parameters);
@@ -4258,8 +4256,8 @@ int ladmin_config_read(const char *cfgName) {
 
 		line[sizeof(line)-1] = '\0';
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
-			remove_control_chars(w1);
-			remove_control_chars(w2);
+			remove_control_chars((unsigned char *) w1);
+			remove_control_chars((unsigned char *) w2);
 
 			if(strcmpi(w1,"login_ip")==0){
 				struct hostent *h = gethostbyname (w2);

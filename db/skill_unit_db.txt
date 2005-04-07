@@ -1,0 +1,80 @@
+// ID,unit ID,unit ID 2,layout,range,interval,target,flag
+//
+// layout = -1:special, 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
+// target = friend / party / all / enemy
+// flag 0x001(UF_DEFNOTENEMY)		Affected by 'defunit_not_enemy'
+//      0x002(UF_NOREITERRATION)	Spell cannot be stacked
+//      0x004(UF_NOFOOTSET)		Spell cannot be cast near/on players
+//      0x008(UF_NOOVERLAP)		Spell effects do not overlap
+// 		0x100(UF_DANCE)		Dance skill
+//		0x200(UF_ENSEMBLE)	Ensemble skill
+// 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near players
+//
+// Notes:
+// ------
+//    0x89,0x8a,0x8b 表示無し
+//    0x9a 炎属性の詠唱みたいなエフェクト
+//    0x9b 水属性の詠唱みたいなエフェクト
+//    0x9c 風属性の詠唱みたいなエフェクト
+//    0x9d 白い小さなエフェクト
+//
+//
+//    u1   u2 lay  r intr target  flag
+//
+ 12,0x7e,    ,  0, 0,  -1,all,   0x003	//MG_SAFETYWALL#セイフティウォール
+ 18,0x7f,    , -1, 0,   1,enemy, 0x000	//MG_FIREWALL#ファイアーウォール
+ 21,0x86,    ,  0, 1,1000,enemy, 0x008	//MG_THUNDERSTORM#サンダーストーム
+ 25,0x85,    ,  1, 0,  -1,all,   0x003	//AL_PNEUMA#ニューマ
+ 27,0x81,0x80,  0, 0,  -1,all,   0x006	//AL_WARP#ワープポータル
+ 70,0x83,    , -1, 1,1000,all,   0x000	//PR_SANCTUARY#サンクチュアリ
+ 79,0x84,    , -1, 1,3000,enemy, 0x000	//PR_MAGNUS#マグヌスエクソシズム
+ 80,0x87,0x88,  0, 1,2000,enemy, 0x002	//WZ_FIREPILLAR#ファイアーピラー
+ 83,0x86,    ,  0, 3,1000,enemy, 0x000	//WZ_METEOR#メテオストーム
+ 85,0x86,    ,  0, 6,1000,enemy, 0x008	//WZ_VERMILION#ロードオブヴァーミリオン
+ 87,0x8d,    , -1, 0,  -1,all,   0x004	//WZ_ICEWALL#アイスウォール
+ 88,0x86,    ,  0, 2,1000,enemy, 0x000	//WZ_FROSTNOVA#フロストノヴァ
+ 89,0x86,    ,  0, 5, 450,enemy, 0x000	//WZ_STORMGUST#ストームガスト
+ 91,0x86,    ,  0, 2,1000,enemy, 0x000	//WZ_HEAVENDRIVE#ヘヴンズドライブ
+ 92,0x8e,    ,  2, 0,  -1,enemy, 0x000	//WZ_QUAGMIRE#クァグマイア
+115,0x90,    ,  0, 1,1000,enemy, 0x006	//HT_SKIDTRAP#スキッドトラップ
+116,0x93,    ,  0, 1,1000,enemy, 0x006	//HT_LANDMINE#ランドマイン
+117,0x91,    ,  0, 1,1000,enemy, 0x006	//HT_ANKLESNARE#アンクルスネア
+118,0x94,    ,  0, 1,1000,enemy, 0x006	//HT_SHOCKWAVE#ショックウェーブトラップ
+119,0x95,    ,  0, 2,1000,enemy, 0x006	//HT_SANDMAN#サンドマン
+120,0x96,    ,  0, 1,1000,enemy, 0x006	//HT_FLASHER#フラッシャー
+121,0x97,    ,  0, 1,1000,enemy, 0x006	//HT_FREEZINGTRAP#フリージングトラップ
+122,0x8f,    ,  0, 1,1000,enemy, 0x006	//HT_BLASTMINE#ブラストマイン
+123,0x98,    ,  0, 2,1000,enemy, 0x006	//HT_CLAYMORETRAP#クレイモアトラップ
+125,0x99,    ,  0, 1,1000,all,   0x002	//HT_TALKIEBOX#トーキーボックス
+140,0x92,    , -1, 0,1000,enemy, 0x000	//AS_VENOMDUST#ベナムダスト
+220,0xb0,    ,  0, 0,  -1,all,   0x002	//RG_GRAFFITI#グラフィティ
+229,0xb1,    ,  0, 1,1000,enemy, 0x000	//AM_DEMONSTRATION#デモンストレーション
+254,0x86,    , -1, 0, 300,enemy, 0x000	//CR_GRANDCROSS#グランドクロス
+285,0x9a,    ,  3, 0, -1,all,   0x000	//SA_VOLCANO#ボルケーノ
+286,0x9b,    ,  3, 0, -1,all,   0x000	//SA_DELUGE#デリュージ
+287,0x9c,    ,  3, 0, -1,all,   0x000	//SA_VIOLENTGALE#バイオレントゲイル
+288,0x9d,    ,  3, 0, -1,all,   0x000	//SA_LANDPROTECTOR#ランドプロテクター
+306,0x9e,    ,  4, 0,  -1,all,   0x300	//BD_LULLABY#子守歌
+307,0x9f,    ,  4, 0,  -1,party, 0x300	//BD_RICHMANKIM#ニヨルドの宴
+308,0xa0,    ,  4, 0,  -1,enemy, 0x300	//BD_ETERNALCHAOS#永遠の混沌
+309,0xa1,    ,  4, 0,  -1,party, 0x300	//BD_DRUMBATTLEFIELD#戦太鼓の響き
+310,0xa2,    ,  4, 0,  -1,party, 0x300	//BD_RINGNIBELUNGEN#ニーベルングの指輪
+311,0xa3,    ,  4, 0,  -1,all,   0x300	//BD_ROKISWEIL#ロキの叫び
+312,0xa4,    ,  4, 0,  -1,party, 0x300	//BD_INTOABYSS#深淵の中に
+313,0xa5,    ,  4, 0,  -1,party, 0x300	//BD_SIEGFRIED#不死身のジークフリード
+317,0xa6,    ,  3, 0,  -1,enemy, 0x100	//BA_DISSONANCE#不協和音
+319,0xa7,    ,  3, 0,  -1,friend,0x100	//BA_WHISTLE#口笛
+320,0xa8,    ,  3, 0,  -1,friend,0x100	//BA_ASSASSINCROSS#夕陽のアサシンクロス
+321,0xa9,    ,  3, 0,  -1,friend,0x100	//BA_POEMBRAGI#ブラギの詩
+322,0xaa,    ,  3, 0,  -1,friend,0x100	//BA_APPLEIDUN#イドゥンの林檎
+325,0xab,    ,  3, 0,  -1,enemy, 0x100	//DC_UGLYDANCE#自分勝手なダンス
+327,0xac,    ,  3, 0,  -1,friend,0x100	//DC_HUMMING#ハミング
+328,0xad,    ,  3, 0,  -1,enemy, 0x100,0	//DC_DONTFORGETME#私を忘れないで…
+329,0xae,    ,  3, 0,  -1,friend,0x100,0	//DC_FORTUNEKISS#幸運のキス
+330,0xaf,    ,  3, 0,  -1,party, 0x100,0	//DC_SERVICEFORYOU#サービスフォーユー
+336,0xb2,    ,  0,-1,  -1,all,   0x000,0	//WE_CALLPARTNER#あなたに逢いたい
+339,0x86,    , -1, 0, 300,enemy, 0x000,0	//NPC_DARKGRANDCROSS#闇グランドクロス
+362,0xb4,    ,  0, 3, 300,all,   0x000,0	//HP_BASILICA#バジリカ
+369,0xb3,    , -1, 0,10000,all,  0x000,0	//PA_GOSPEL#ゴスペル
+404,0xb6,    , -1, 0,  -1,all,   0x000,0	//PF_FOGWALL#フォグウォール
+405,0xb7,    ,  0, 1,1000,enemy, 0x006,0	//PF_SPIDERWEB#スパイダーウェッブ

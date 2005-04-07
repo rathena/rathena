@@ -7,6 +7,9 @@
 
 #define OPTION_MASK 0xd7b8
 #define CART_MASK 0x788
+#define STATE_BLIND 0x10
+
+#define MAX_SKILL_TREE 51
 
 #define pc_setdead(sd) ((sd)->state.dead_sit = 1)
 #define pc_setsit(sd) ((sd)->state.dead_sit = 2)
@@ -37,14 +40,19 @@ int pc_authfail(int);
 int pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 
-int pc_breakweapon(struct map_session_data *sd); // weapon breaking [Valaris]
-int pc_breakarmor(struct map_session_data *sd); // armor breaking [Valaris]
+int pc_break_equip(struct map_session_data *, unsigned short);
+#define pc_breakweapon(sd)	(pc_break_equip(sd, EQP_WEAPON))
+#define pc_breakarmor(sd)	(pc_break_equip(sd, EQP_ARMOR))
+#define pc_breakshield(sd)	(pc_break_equip(sd, EQP_SHIELD))
+#define pc_breakhelm(sd)	(pc_break_equip(sd, EQP_HELM))
 
 int pc_checkskill(struct map_session_data *sd,int skill_id);
 int pc_checkallowskill(struct map_session_data *sd);
 int pc_checkequip(struct map_session_data *sd,int pos);
 
+int pc_calc_skilltree(struct map_session_data *sd);
 int pc_calc_skilltree_normalize_job(int c, struct map_session_data *sd);
+int pc_clean_skilltree(struct map_session_data *sd);
 
 int pc_checkoverhp(struct map_session_data*);
 int pc_checkoversp(struct map_session_data*);
@@ -57,6 +65,8 @@ int pc_setpos(struct map_session_data*,char*,int,int,int);
 int pc_setsavepoint(struct map_session_data*,char*,int,int);
 int pc_randomwarp(struct map_session_data *sd,int type);
 int pc_memo(struct map_session_data *sd,int i);
+int pc_randomwalk(struct map_session_data*,int tick);
+int pc_remove_map(struct map_session_data *sd,int clrtype);
 
 int pc_checkadditem(struct map_session_data*,int,int);
 int pc_inventoryblank(struct map_session_data*);
@@ -78,12 +88,13 @@ int pc_dropitem(struct map_session_data*,int,int);
 
 int pc_checkweighticon(struct map_session_data *sd);
 
-int pc_calcstatus(struct map_session_data*,int);
-int pc_calcspeed(struct map_session_data*); // [Celest]
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);
 int pc_bonus3(struct map_session_data *sd,int,int,int,int);
+int pc_bonus4(struct map_session_data *sd,int,int,int,int,int);
 int pc_skill(struct map_session_data*,int,int,int);
+
+int pc_blockskill_start (struct map_session_data*,int,int);	// [celest]
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
@@ -117,7 +128,7 @@ int pc_resetlvl(struct map_session_data*,int type);
 int pc_resetstate(struct map_session_data*);
 int pc_resetskill(struct map_session_data*);
 int pc_equipitem(struct map_session_data*,int,int);
-int pc_unequipitem(struct map_session_data*,int,int,int);
+int pc_unequipitem(struct map_session_data*,int,int);
 int pc_checkitem(struct map_session_data*);
 int pc_useitem(struct map_session_data*,int);
 
@@ -145,7 +156,6 @@ int pc_readaccountreg(struct map_session_data*,char*);
 int pc_setaccountreg(struct map_session_data*,char*,int);
 int pc_readaccountreg2(struct map_session_data*,char*);
 int pc_setaccountreg2(struct map_session_data*,char*,int);
-int pc_percentrefinery(struct map_session_data *sd,struct item *item);
 
 int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name);
 int pc_deleventtimer(struct map_session_data *sd,const char *name);
@@ -158,10 +168,16 @@ int pc_calc_pvprank_timer(int tid,unsigned int tick,int id,int data);
 int pc_ismarried(struct map_session_data *sd);
 int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd);
 int pc_divorce(struct map_session_data *sd);
+int pc_adoption(struct map_session_data *sd,struct map_session_data *dstsd,struct map_session_data *jasd);
 struct map_session_data *pc_get_partner(struct map_session_data *sd);
+struct map_session_data *pc_get_father(struct map_session_data *sd);
+struct map_session_data *pc_get_mother(struct map_session_data *sd);
+struct map_session_data *pc_get_child(struct map_session_data *sd);
+
 int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);
-
+int pc_break_equip(struct map_session_data *sd, unsigned short where);
+int pc_candrop(struct map_session_data *sd,int item_id);
 
 struct pc_base_job{
 	int job; //E‹ÆA‚½‚¾‚µ“]¶E‚â—{qE‚Ìê‡‚ÍŒ³‚ÌE‹Æ‚ğ•Ô‚·(”pƒvƒŠ¨ƒvƒŠ)
@@ -174,12 +190,15 @@ int pc_calc_base_job2(int b_class);	// Celest
 int pc_calc_upper(int b_class);
 
 struct skill_tree_entry {
-	int id;
-	int max;
+	short id;
+	unsigned char max;
+	unsigned char joblv;
 	struct {
-		short id,lv;
-	} need[6];
-} skill_tree[3][MAX_PC_CLASS][100];	// Celest
+		short id;
+		unsigned char lv;
+	} need[5];
+}; // Celest
+extern struct skill_tree_entry skill_tree[3][25][MAX_SKILL_TREE];
 
 int pc_read_gm_account(int fd);
 int pc_setinvincibletimer(struct map_session_data *sd,int);
@@ -187,13 +206,17 @@ int pc_delinvincibletimer(struct map_session_data *sd);
 int pc_addspiritball(struct map_session_data *sd,int,int);
 int pc_delspiritball(struct map_session_data *sd,int,int);
 
+int pc_eventtimer(int tid,unsigned int tick,int id,int data); // for npc_dequeue 
+
+int pc_readdb(void);
 int do_init_pc(void);
+void do_final_pc(void);
 
 enum {ADDITEM_EXIST,ADDITEM_NEW,ADDITEM_OVERAMOUNT};
 
 // timer for night.day
-int day_timer_tid;
-int night_timer_tid;
+extern int day_timer_tid;
+extern int night_timer_tid;
 int map_day_timer(int,unsigned int,int,int); // by [yor]
 int map_night_timer(int,unsigned int,int,int); // by [yor]
 

@@ -199,7 +199,6 @@ OnInit:
 }
 
 //Aria\\
-Aria
 prontera.gat,156,179,4	script	Aria	805,{
  	npcspeed 150;
 	mes "[Aria]";
@@ -229,10 +228,14 @@ Lariatalk:
 
 Lquote0:
 	npctalk "OMGWTFBBQ";
-
+	break;
 Lquote1:
 	npctalk "So its u -> 0";
 	npctalk "... That did not look right";
+	break;
+Lquote2:
+	npctalk "????";
+	break;
 
 Lquote3:
 	npctalk "OMGITSJEEBUS!#!@%!";

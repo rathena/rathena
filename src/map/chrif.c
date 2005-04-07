@@ -23,6 +23,7 @@
 #include "npc.h"
 #include "pc.h"
 #include "nullpo.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -35,20 +36,22 @@ static const int packet_len_table[0x20] = {
 	-1,-1,10, 6,11,-1, 0, 0,	// 2b10-2b17
 };
 
-int char_fd;
+int chrif_connected;
+int char_fd = -1;
 int srvinfo;
 static char char_ip_str[16];
 static int char_ip;
 static int char_port = 6121;
 static char userid[24], passwd[24];
-static int chrif_state;
+static int chrif_state = 0;
+static int char_init_done = 0;
 
 // 設定ファイル読み込み関係
 /*==========================================
  *
  *------------------------------------------
  */
-void chrif_setuserid(char *id) 
+void chrif_setuserid(char *id)
 {
 	strncpy(userid, id, 24);
 }
@@ -57,7 +60,7 @@ void chrif_setuserid(char *id)
  *
  *------------------------------------------
  */
-void chrif_setpasswd(char *pwd) 
+void chrif_setpasswd(char *pwd)
 {
 	strncpy(passwd, pwd, 24);
 }
@@ -66,7 +69,7 @@ void chrif_setpasswd(char *pwd)
  *
  *------------------------------------------
  */
-void chrif_setip(char *ip) 
+void chrif_setip(char *ip)
 {
 	strncpy(char_ip_str, ip, 16);
 	char_ip = inet_addr(char_ip_str);
@@ -76,7 +79,7 @@ void chrif_setip(char *ip)
  *
  *------------------------------------------
  */
-void chrif_setport(int port) 
+void chrif_setport(int port)
 {
 	char_port = port;
 }
@@ -85,7 +88,7 @@ void chrif_setport(int port)
  *
  *------------------------------------------
  */
-int chrif_isconnect(void) 
+int chrif_isconnect(void)
 {
 	return chrif_state == 2;
 }
@@ -94,11 +97,11 @@ int chrif_isconnect(void)
  *
  *------------------------------------------
  */
-int chrif_save(struct map_session_data *sd) 
+int chrif_save(struct map_session_data *sd)
 {
 	nullpo_retr(-1, sd);
 
-	if (char_fd < 0)
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	pc_makesavestatus(sd);
@@ -110,6 +113,8 @@ int chrif_save(struct map_session_data *sd)
 	memcpy(WFIFOP(char_fd,12), &sd->status, sizeof(sd->status));
 	WFIFOSET(char_fd, WFIFOW(char_fd,2));
 
+	storage_storage_save(sd); // to synchronise storage with character [Yor]
+
 	return 0;
 }
 
@@ -117,7 +122,7 @@ int chrif_save(struct map_session_data *sd)
  *
  *------------------------------------------
  */
-int chrif_connect(int fd) 
+int chrif_connect(int fd)
 {
 	WFIFOW(fd,0) = 0x2af8;
 	memcpy(WFIFOP(fd,2), userid, 24);
@@ -134,13 +139,13 @@ int chrif_connect(int fd)
  * マップ送信
  *------------------------------------------
  */
-int chrif_sendmap(int fd) 
+int chrif_sendmap(int fd)
 {
 	int i;
 
 	WFIFOW(fd,0) = 0x2afa;
 	for(i = 0; i < map_num; i++)
-                if (map[i].alias[0] != '\0') // [MouseJstr] map aliasing
+                if (map[i].alias != '\0') // [MouseJstr] map aliasing
 		    memcpy(WFIFOP(fd,4+i*16), map[i].alias, 16);
 		else
 		    memcpy(WFIFOP(fd,4+i*16), map[i].name, 16);
@@ -165,7 +170,7 @@ int chrif_recvmap(int fd)
 	ip = RFIFOL(fd,4);
 	port = RFIFOW(fd,8);
 	for(i = 10, j = 0; i < RFIFOW(fd,2); i += 16, j++) {
-		map_setipport(RFIFOP(fd,i), ip, port);
+		map_setipport((char*)RFIFOP(fd,i), ip, port);
 //		if (battle_config.etc_log)
 //			printf("recv map %d %s\n", j, RFIFOP(fd,i));
 	}
@@ -179,11 +184,14 @@ int chrif_recvmap(int fd)
  * マップ鯖間移動のためのデータ準備要求
  *------------------------------------------
  */
-int chrif_changemapserver(struct map_session_data *sd, char *name, int x, int y, int ip, short port) 
+int chrif_changemapserver(struct map_session_data *sd, char *name, int x, int y, int ip, short port)
 {
 	int i, s_ip;
 
 	nullpo_retr(-1, sd);
+
+	if( !sd || char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
 
 	s_ip = 0;
 	for(i = 0; i < fd_max; i++)
@@ -213,7 +221,7 @@ int chrif_changemapserver(struct map_session_data *sd, char *name, int x, int y,
  * マップ鯖間移動ack
  *------------------------------------------
  */
-int chrif_changemapserverack(int fd) 
+int chrif_changemapserverack(int fd)
 {
 	struct map_session_data *sd = map_id2sd(RFIFOL(fd,2));
 
@@ -226,7 +234,7 @@ int chrif_changemapserverack(int fd)
 		pc_authfail(sd->fd);
 		return 0;
 	}
-	clif_changemapserver(sd, RFIFOP(fd,18), RFIFOW(fd,34), RFIFOW(fd,36), RFIFOL(fd,38), RFIFOW(fd,42));
+	clif_changemapserver(sd, (char*)RFIFOP(fd,18), RFIFOW(fd,34), RFIFOW(fd,36), RFIFOL(fd,38), RFIFOW(fd,42));
 
 	return 0;
 }
@@ -235,19 +243,28 @@ int chrif_changemapserverack(int fd)
  *
  *------------------------------------------
  */
-int chrif_connectack(int fd) 
+int chrif_connectack(int fd)
 {
 	if (RFIFOB(fd,2)) {
 		printf("Connected to char-server failed %d.\n", RFIFOB(fd,2));
 		exit(1);
 	}
-	printf("Connected to char-server (connection #%d).\n", fd);
+	sprintf(tmp_output,"Successfully connected to Char Server (Connection: '"CL_WHITE"%d"CL_RESET"').\n",fd);
+	ShowStatus(tmp_output);
 	chrif_state = 1;
+	chrif_connected=1;
 
 	chrif_sendmap(fd);
 
-	printf("chrif: OnCharIfInit event done. (%d events)\n", npc_event_doall("OnCharIfInit"));
-	printf("chrif: OnInterIfInit event done. (%d events)\n", npc_event_doall("OnInterIfInit"));
+	sprintf(tmp_output,"Event '"CL_WHITE"OnCharIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnCharIfInit"));
+	ShowStatus(tmp_output);
+	sprintf(tmp_output,"Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
+	ShowStatus(tmp_output);
+	if(!char_init_done) {
+		char_init_done = 1;
+		sprintf(tmp_output,"Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInitOnce"));
+		ShowStatus(tmp_output);
+	}
 
 	// <Agit> Run Event [AgitInit]
 //	printf("NPC_Event:[OnAgitInit] do (%d) events (Agit Initialize).\n", npc_event_doall("OnAgitInit"));
@@ -259,7 +276,7 @@ int chrif_connectack(int fd)
  *
  *------------------------------------------
  */
-int chrif_sendmapack(int fd) 
+int chrif_sendmapack(int fd)
 {
 	if (RFIFOB(fd,2)) {
 		printf("chrif : send map list to char server failed %d\n", RFIFOB(fd,2));
@@ -277,13 +294,15 @@ int chrif_sendmapack(int fd)
  *
  *------------------------------------------
  */
-int chrif_authreq(struct map_session_data *sd) 
+int chrif_authreq(struct map_session_data *sd)
 {
 	int i;
 
 	nullpo_retr(-1, sd);
 
-	if (!sd || !char_fd || !sd->bl.id || !sd->login_id1)
+	if(!sd || !sd->bl.id || !sd->login_id1)
+		return -1;
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	for(i = 0; i < fd_max; i++)
@@ -305,13 +324,15 @@ int chrif_authreq(struct map_session_data *sd)
  *
  *------------------------------------------
  */
-int chrif_charselectreq(struct map_session_data *sd) 
+int chrif_charselectreq(struct map_session_data *sd)
 {
 	int i, s_ip;
 
 	nullpo_retr(-1, sd);
 
-	if(!sd || !char_fd || !sd->bl.id || !sd->login_id1)
+	if( !sd || !sd->bl.id || !sd->login_id1 )
+		return -1;
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	s_ip = 0;
@@ -335,9 +356,11 @@ int chrif_charselectreq(struct map_session_data *sd)
  * キャラ名問い合わせ
  *------------------------------------------
  */
-int chrif_searchcharid(int char_id) 
+int chrif_searchcharid(int char_id)
 {
-	if (!char_id)
+	if( !char_id )
+		return -1;
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b08;
@@ -351,10 +374,13 @@ int chrif_searchcharid(int char_id)
  * GMに変化要求
  *------------------------------------------
  */
-int chrif_changegm(int id, const char *pass, int len) 
+int chrif_changegm(int id, const char *pass, int len)
 {
 	if (battle_config.etc_log)
 		printf("chrif_changegm: account: %d, password: '%s'.\n", id, pass);
+
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b0a;
 	WFIFOW(char_fd,2) = len + 8;
@@ -369,10 +395,13 @@ int chrif_changegm(int id, const char *pass, int len)
  * Change Email
  *------------------------------------------
  */
-int chrif_changeemail(int id, const char *actual_email, const char *new_email) 
+int chrif_changeemail(int id, const char *actual_email, const char *new_email)
 {
 	if (battle_config.etc_log)
 		printf("chrif_changeemail: account: %d, actual_email: '%s', new_email: '%s'.\n", id, actual_email, new_email);
+
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b0c;
 	WFIFOL(char_fd,2) = id;
@@ -394,8 +423,11 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email)
  *   5: changesex
  *------------------------------------------
  */
-int chrif_char_ask_name(int id, char * character_name, short operation_type, int year, int month, int day, int hour, int minute, int second) 
+int chrif_char_ask_name(int id, char * character_name, short operation_type, int year, int month, int day, int hour, int minute, int second)
 {
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
+
 	WFIFOW(char_fd, 0) = 0x2b0e;
 	WFIFOL(char_fd, 2) = id; // account_id of who ask (for answer) -1 if nobody
 	memcpy(WFIFOP(char_fd,6), character_name, 24);
@@ -419,7 +451,10 @@ int chrif_char_ask_name(int id, char * character_name, short operation_type, int
  *------------------------------------------
  */
 int chrif_changesex(int id, int sex) {
-	WFIFOW(char_fd,0) = 0x3000;
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
+
+	WFIFOW(char_fd,0) = 0x2b11;
 	WFIFOW(char_fd,2) = 9;
 	WFIFOL(char_fd,4) = id;
 	WFIFOB(char_fd,8) = sex;
@@ -444,7 +479,7 @@ int chrif_changesex(int id, int sex) {
  *   3: login-server offline
  *------------------------------------------
  */
-int chrif_char_ask_name_answer(int fd) 
+int chrif_char_ask_name_answer(int fd)
 {
 	int acc;
 	struct map_session_data *sd;
@@ -547,7 +582,7 @@ int chrif_char_ask_name_answer(int fd)
  * End of GM change (@GM) (modified by Yor)
  *------------------------------------------
  */
-int chrif_changedgm(int fd) 
+int chrif_changedgm(int fd)
 {
 	int acc, level;
 	struct map_session_data *sd = NULL;
@@ -573,7 +608,7 @@ int chrif_changedgm(int fd)
  * 性別変化終了 (modified by Yor)
  *------------------------------------------
  */
-int chrif_changedsex(int fd) 
+int chrif_changedsex(int fd)
 {
 	int acc, sex, i;
 	struct map_session_data *sd;
@@ -586,7 +621,7 @@ int chrif_changedsex(int fd)
 	sd = map_id2sd(acc);
 	if (acc > 0) {
 		if (sd != NULL && sd->status.sex != sex) {
-			s_class = pc_calc_base_job(sd->status.class);
+			s_class = pc_calc_base_job(sd->status.class_);
 			if (sd->status.sex == 0) {
 				sd->status.sex = 1;
 				sd->sex = 1;
@@ -597,7 +632,7 @@ int chrif_changedsex(int fd)
 			// to avoid any problem with equipment and invalid sex, equipment is unequiped.
 			for (i = 0; i < MAX_INVENTORY; i++) {
 				if (sd->status.inventory[i].nameid && sd->status.inventory[i].equip)
-					pc_unequipitem((struct map_session_data*)sd, i, 0, BF_NORMAL);
+					pc_unequipitem((struct map_session_data*)sd, i, 2);
 			}
 			// reset skill of some job
 			if (s_class.job == 19 || s_class.job == 4020 || s_class.job == 4042 ||
@@ -621,15 +656,15 @@ int chrif_changedsex(int fd)
 				clif_updatestatus(sd, SP_SKILLPOINT);
 				// change job if necessary
 				if (s_class.job == 20 || s_class.job == 4021 || s_class.job == 4043)
-					sd->status.class -= 1;
+					sd->status.class_ -= 1;
 				else if (s_class.job == 19 || s_class.job == 4020 || s_class.job == 4042)
-					sd->status.class += 1;
+					sd->status.class_ += 1;
 			}
 			// save character
 			chrif_save(sd);
 			sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
 			                 // do same modify in login-server for the account, but no in char-server (it ask again login_id1 to login, and don't remember it)
-			clif_displaymessage(sd->fd, "Your sex has been changed (need disconexion by the server)...");
+			clif_displaymessage(sd->fd, "Your sex has been changed (need disconnection by the server)...");
 			clif_setwaitclose(sd->fd); // forced to disconnect for the change
 		}
 	} else {
@@ -645,10 +680,13 @@ int chrif_changedsex(int fd)
  * アカウント変数保存要求
  *------------------------------------------
  */
-int chrif_saveaccountreg2(struct map_session_data *sd) 
+int chrif_saveaccountreg2(struct map_session_data *sd)
 {
 	int p, j;
 	nullpo_retr(-1, sd);
+
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
 
 	p = 8;
 	for(j = 0; j < sd->status.account_reg2_num; j++) {
@@ -671,7 +709,7 @@ int chrif_saveaccountreg2(struct map_session_data *sd)
  * アカウント変数通知
  *------------------------------------------
  */
-int chrif_accountreg2(int fd) 
+int chrif_accountreg2(int fd)
 {
 	int j, p;
 	struct map_session_data *sd;
@@ -693,7 +731,7 @@ int chrif_accountreg2(int fd)
  * 離婚情報同期要求
  *------------------------------------------
  */
-int chrif_divorce(int char_id, int partner_id) 
+int chrif_divorce(int char_id, int partner_id)
 {
 	struct map_session_data *sd = NULL;
 
@@ -719,7 +757,7 @@ int chrif_divorce(int char_id, int partner_id)
  * Disconnection of a player (account has been deleted in login-server) by [Yor]
  *------------------------------------------
  */
-int chrif_accountdeletion(int fd) 
+int chrif_accountdeletion(int fd)
 {
 	int acc;
 	struct map_session_data *sd;
@@ -731,7 +769,7 @@ int chrif_accountdeletion(int fd)
 	if (acc > 0) {
 		if (sd != NULL) {
 			sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
-			clif_displaymessage(sd->fd, "Your account has been deleted (disconnexion)...");
+			clif_displaymessage(sd->fd, "Your account has been deleted (disconnection)...");
 			clif_setwaitclose(sd->fd); // forced to disconnect for the change
 		}
 	} else {
@@ -746,7 +784,7 @@ int chrif_accountdeletion(int fd)
  * Disconnection of a player (account has been banned of has a status, from login-server) by [Yor]
  *------------------------------------------
  */
-int chrif_accountban(int fd) 
+int chrif_accountban(int fd)
 {
 	int acc;
 	struct map_session_data *sd;
@@ -820,7 +858,7 @@ int chrif_chardisconnect(struct map_session_data *sd)
 {
 	nullpo_retr(-1, sd);
 
-	if(char_fd<=0)
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0)=0x2b18;
@@ -836,10 +874,11 @@ int chrif_chardisconnect(struct map_session_data *sd)
  * Receiving GM accounts and their levels from char-server by [Yor]
  *------------------------------------------
  */
-int chrif_recvgmaccounts(int fd) 
+int chrif_recvgmaccounts(int fd)
 {
-	printf("From login-server: receiving of %d GM accounts information.\n", pc_read_gm_account(fd));
-
+	sprintf(tmp_output,"From login-server: receiving information of '"CL_WHITE"%d"CL_RESET"' GM accounts.\n", pc_read_gm_account(fd));
+	ShowInfo(tmp_output);
+	memset(tmp_output,'\0',sizeof(tmp_output));
 	return 0;
 }
 
@@ -847,8 +886,10 @@ int chrif_recvgmaccounts(int fd)
  * Request to reload GM accounts and their levels: send to char-server by [Yor]
  *------------------------------------------
  */
-int chrif_reloadGMdb(void) 
+int chrif_reloadGMdb(void)
 {
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
 
 	WFIFOW(char_fd,0) = 0x2af7;
 	WFIFOSET(char_fd, 2);
@@ -860,11 +901,14 @@ int chrif_reloadGMdb(void)
  * Send rates and motd to char server [Wizputer]
  *------------------------------------------
  */
- int chrif_ragsrvinfo(int base_rate, int job_rate, int drop_rate) 
+ int chrif_ragsrvinfo(int base_rate, int job_rate, int drop_rate)
 {
 	char buf[256];
 	FILE *fp;
 	int i;
+
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b16;
 	WFIFOW(char_fd,2) = base_rate;
@@ -897,14 +941,62 @@ int chrif_reloadGMdb(void)
  *-----------------------------------------
  */
 
-int chrif_char_offline(struct map_session_data *sd) 
+int chrif_char_offline(struct map_session_data *sd)
 {
-	if (char_fd < 0)
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
 		return -1;
 
 	WFIFOW(char_fd,0) = 0x2b17;
 	WFIFOL(char_fd,2) = sd->status.char_id;
-	WFIFOSET(char_fd,6);
+	WFIFOL(char_fd,6) = sd->status.account_id;
+	WFIFOSET(char_fd,10);
+
+	return 0;
+}
+
+/*=========================================
+ * Tell char-server to reset all chars offline [Wizputer]
+ *-----------------------------------------
+ */
+int chrif_flush_fifo(void) {
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
+
+	set_nonblocking(char_fd, 0);
+	flush_fifos();
+	set_nonblocking(char_fd, 1);
+
+	return 0;
+}
+
+/*=========================================
+ * Tell char-server to reset all chars offline [Wizputer]
+ *-----------------------------------------
+ */
+int chrif_char_reset_offline(void) {
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
+
+	WFIFOW(char_fd,0) = 0x2b18;
+	WFIFOSET(char_fd,2);
+
+	return 0;
+}
+
+/*=========================================
+ * Tell char-server charcter is online [Wizputer]
+ *-----------------------------------------
+ */
+
+int chrif_char_online(struct map_session_data *sd)
+{
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() )
+		return -1;
+
+	WFIFOW(char_fd,0) = 0x2b19;
+	WFIFOL(char_fd,2) = sd->status.char_id;
+	WFIFOL(char_fd,6) = sd->status.account_id;
+	WFIFOSET(char_fd,10);
 
 	return 0;
 }
@@ -913,16 +1005,39 @@ int chrif_char_offline(struct map_session_data *sd)
  *
  *------------------------------------------
  */
-int chrif_parse(int fd) 
+int chrif_disconnect_sub(struct map_session_data* sd,va_list va) {
+	clif_authfail_fd(sd->fd,1);
+	map_quit(sd);
+	return 0;
+}
+
+int chrif_disconnect(int fd) {
+	if(fd == char_fd) {
+		char_fd = 0;
+		sprintf(tmp_output,"Map Server disconnected from Char Server.\n\n");
+		ShowWarning(tmp_output);
+		clif_foreachclient(chrif_disconnect_sub);
+		chrif_connected = 0;
+		// 他のmap 鯖のデータを消す
+		map_eraseallipport();
+	}
+	close(fd);
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int chrif_parse(int fd)
 {
 	int packet_len, cmd;
-
 	// only char-server can have an access to here.
 	// so, if it isn't the char-server, we disconnect the session (fd != char_fd).
 	if (fd != char_fd || session[fd]->eof) {
-		if (fd == char_fd) {
-			printf("Map-server can't connect to char-server (connection #%d).\n", fd);
-			char_fd = -1;
+		if (fd == char_fd && chrif_connected == 1) {
+			chrif_disconnect (fd);
+//			check_connect_char_server(0, 0, 0, 0);
 		}
 		close(fd);
 		delete_session(fd);
@@ -956,11 +1071,11 @@ int chrif_parse(int fd)
 		case 0x2afb: chrif_sendmapack(fd); break;
 		case 0x2afd: pc_authok(RFIFOL(fd,4), RFIFOL(fd,8), (time_t)RFIFOL(fd,12), (struct mmo_charstatus*)RFIFOP(fd,16)); break;
 		case 0x2afe: pc_authfail(RFIFOL(fd,2)); break;
-		case 0x2b00: map_setusers(RFIFOL(fd,2)); break;
+		case 0x2b00: map_setusers(fd); break;
 		case 0x2b03: clif_charselectok(RFIFOL(fd,2)); break;
 		case 0x2b04: chrif_recvmap(fd); break;
 		case 0x2b06: chrif_changemapserverack(fd); break;
-		case 0x2b09: map_addchariddb(RFIFOL(fd,2), RFIFOP(fd,6)); break;
+		case 0x2b09: map_addchariddb(RFIFOL(fd,2), (char*)RFIFOP(fd,6)); break;
 		case 0x2b0b: chrif_changedgm(fd); break;
 		case 0x2b0d: chrif_changedsex(fd); break;
 		case 0x2b0f: chrif_char_ask_name_answer(fd); break;
@@ -991,12 +1106,12 @@ int send_users_tochar(int tid, unsigned int tick, int id, int data) {
 	int users = 0, i;
 	struct map_session_data *sd;
 
-	if (char_fd <= 0 || session[char_fd] == NULL)
+	if( char_fd < 1 || session[char_fd] == NULL || !chrif_isconnect() ) // Thanks to Toster
 		return 0;
 
 	WFIFOW(char_fd,0) = 0x2aff;
 	for (i = 0; i < fd_max; i++) {
-		if (session[i] && (sd = session[i]->session_data) && sd->state.auth &&
+		if (session[i] && (sd = (struct map_session_data*)session[i]->session_data) && sd->state.auth &&
 		    !((battle_config.hide_GM_session || (sd->status.option & OPTION_HIDE)) && pc_isGM(sd))) {
 			WFIFOL(char_fd,6+4*users) = sd->status.char_id;
 			users++;
@@ -1015,14 +1130,19 @@ int send_users_tochar(int tid, unsigned int tick, int id, int data) {
  *------------------------------------------
  */
 int check_connect_char_server(int tid, unsigned int tick, int id, int data) {
+	static int displayed = 0;
 	if (char_fd <= 0 || session[char_fd] == NULL) {
-		printf("Attempt to connect to char-server...\n");
+		if (!displayed) {
+			ShowStatus("Attempting to connect to Char Server. Please wait.\n");
+			displayed = 1;
+		}
 		chrif_state = 0;
 		char_fd = make_connection(char_ip, char_port);
 		session[char_fd]->func_parse = chrif_parse;
 		realloc_fifo(char_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 
 		chrif_connect(char_fd);
+		chrif_connected = chrif_isconnect();
 #ifndef TXT_ONLY
 		srvinfo = 0;
 	} else {
@@ -1032,7 +1152,16 @@ int check_connect_char_server(int tid, unsigned int tick, int id, int data) {
 		}
 #endif /* not TXT_ONLY */
 	}
-
+	if (chrif_isconnect()) displayed = 0;
+	return 0;
+}
+/*==========================================
+ * 終了
+ *------------------------------------------
+ */
+int do_final_chrif(void)
+{
+	delete_session(char_fd);
 	return 0;
 }
 

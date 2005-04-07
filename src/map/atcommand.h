@@ -112,20 +112,20 @@ enum AtCommandType {
 	AtCommand_CharSkReset,
 	AtCommand_CharStReset,
 	//by chbrules
-	AtCommand_CharModel, 
+	AtCommand_CharModel,
 	AtCommand_CharSKPoint,
-	AtCommand_CharSTPoint, 
-	AtCommand_CharZeny,
+	AtCommand_CharSTPoint,
+//	AtCommand_CharZeny, //now #zeny
 	AtCommand_RecallAll,
 	AtCommand_ReloadItemDB,
 	AtCommand_ReloadMobDB,
 	AtCommand_ReloadSkillDB,
-#ifndef TXT_ONLY
-	AtCommand_Rehash,
-#else /* TXT_ONLY */
 	AtCommand_ReloadScript,
-#endif /* TXT_ONLY */
 	AtCommand_ReloadGMDB,
+	AtCommand_ReloadAtcommand,
+	AtCommand_ReloadBattleConf,
+	AtCommand_ReloadStatusDB,
+	AtCommand_ReloadPcDB,
 	AtCommand_MapInfo,
 	AtCommand_Dye,
 	AtCommand_Hstyle,
@@ -143,8 +143,9 @@ enum AtCommandType {
 	AtCommand_RepairAll, // [Valaris]
 	AtCommand_GuildRecall, // by Yor
 	AtCommand_PartyRecall, // by Yor
-//	AtCommand_Nuke,	// [Valaris]
+	AtCommand_Nuke,	// [Valaris]
 	AtCommand_Enablenpc,
+	AtCommand_Hidenpc,
 	AtCommand_Disablenpc,
 	AtCommand_ServerTime, // by Yor
 	AtCommand_CharDelItem, // by Yor
@@ -157,8 +158,8 @@ enum AtCommandType {
 	AtCommand_EMail, // by Yor
 	AtCommand_Hatch,
 	AtCommand_Effect, // by Apple
-	AtCommand_Char_Item_List, // by Yor
-	AtCommand_Char_Storage_List, // by Yor
+// 	AtCommand_Char_Item_List, // by Yor, now #itemlist
+//	AtCommand_Char_Storage_List, // by Yor, now #storagelist
 	AtCommand_Char_Cart_List, // by Yor
 	AtCommand_AddWarp, // by MouseJstr
 	AtCommand_Follow, // by MouseJstr
@@ -168,10 +169,7 @@ enum AtCommandType {
 	AtCommand_NpcMove, // by MouseJstr
 	AtCommand_Killable, // by MouseJstr
 	AtCommand_CharKillable, // by MouseJstr
-	AtCommand_Chareffect, // by MouseJstr
-	AtCommand_Chardye, // by MouseJstr
-	AtCommand_Charhairstyle, // by MouseJstr
-	AtCommand_Charhaircolor, // by MouseJstr
+//	AtCommand_Chareffect, // by MouseJstr, now #effect
 	AtCommand_Dropall, // by MouseJstr
 	AtCommand_Chardropall, // by MouseJstr
 	AtCommand_Storeall, // by MouseJstr
@@ -190,6 +188,7 @@ enum AtCommandType {
 	AtCommand_Send,
 	AtCommand_SetBattleFlag,
 	AtCommand_UnMute,
+	AtCommand_Clearweather, // by Dexity
 	AtCommand_UpTime, // by MC Cameri
 	AtCommand_ChangeSex, // by MC Cameri
 	AtCommand_Mute, // [celest]
@@ -200,9 +199,14 @@ enum AtCommandType {
 	AtCommand_Identify, // by MC Cameri
 	AtCommand_Gmotd, // Added by MC Cameri, created by davidsiaw
 	AtCommand_MiscEffect, // by MC Cameri
+	AtCommand_MobSearch,
+	AtCommand_CleanMap,
+	AtCommand_NpcTalk,
+	AtCommand_PetTalk,
+	AtCommand_Users,
 
 	// SQL-only commands start
-#ifndef TXT_ONLY 
+#ifndef TXT_ONLY
 	AtCommand_CheckMail, // [Valaris]
 	AtCommand_ListMail, // [Valaris]
 	AtCommand_ListNewMail, // [Valaris]
@@ -210,12 +214,40 @@ enum AtCommandType {
 	AtCommand_SendMail, // [Valaris]
 	AtCommand_DeleteMail, // [Valaris]
 	AtCommand_SendPriorityMail, // [Valaris]
-	AtCommand_Sound, // [Valaris]	
+//	AtCommand_Sound, // [Valaris]
 	AtCommand_RefreshOnline, // [Valaris]
 	// SQL-only commands end
 #endif
 	AtCommand_SkillTree, // by MouseJstr
-	
+	AtCommand_Marry, // by MouseJstr
+	AtCommand_Divorce, // by MouseJstr
+	AtCommand_Rings, // by MouseJstr
+	AtCommand_Grind, // by MouseJstr
+	AtCommand_Grind2, // by MouseJstr
+
+	AtCommand_DMStart, // by MouseJstr
+	AtCommand_DMTick, // by MouseJstr
+
+	AtCommand_JumpToId, // by Dino9021
+	AtCommand_JumpToId2, // by Dino9021
+	AtCommand_RecallId, // by Dino9021
+	AtCommand_RecallId2, // by Dino9021
+	AtCommand_KickId, // by Dino9021
+	AtCommand_KickId2, // by Dino9021
+	AtCommand_ReviveId, // by Dino9021
+	AtCommand_ReviveId2, // by Dino9021
+	AtCommand_KillId, // by Dino9021
+	AtCommand_KillId2, // by Dino9021
+	AtCommand_CharKillableId, // by Dino9021
+	AtCommand_CharKillableId2, // by Dino9021
+	AtCommand_Sound,
+	AtCommand_UndisguiseAll,
+	AtCommand_DisguiseAll,
+	AtCommand_ChangeLook,
+	AtCommand_AutoLoot, //by Upa-Kun
+	AtCommand_MobInfo, //by Lupus
+        AtCommand_Adopt, // by Veider
+
 	// end
 	AtCommand_Unknown,
 	AtCommand_MAX
@@ -235,6 +267,7 @@ AtCommandType
 is_atcommand(const int fd, struct map_session_data* sd, const char* message, int gmlvl);
 
 AtCommandType atcommand(
+	struct map_session_data *sd,
 	const int level, const char* message, AtCommandInfo* info);
 int get_atcommand_level(const AtCommandType type);
 
@@ -248,11 +281,12 @@ int atcommand_recall(const int fd, struct map_session_data* sd, const char* comm
 
 int atcommand_config_read(const char *cfgName);
 int msg_config_read(const char *cfgName);
+void do_final_msg();
 
 char *estr_lower(char *str);
 
-char * job_name(int class);
-int e_mail_check(unsigned char *email);
+char * job_name(int class_);
+int e_mail_check(char *email);
 
 #endif
 

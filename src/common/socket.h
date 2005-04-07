@@ -5,24 +5,31 @@
 
 #include <stdio.h>
 
-#ifdef _WIN32
+#ifdef __WIN32
 #include <winsock.h>
 #else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #endif
+#include <time.h>
+#include "malloc.h"
+
+extern time_t tick_;
+extern time_t stall_time_;
 
 // define declaration
 
-#define RFIFOP(fd,pos) (session[fd]->rdata+session[fd]->rdata_pos+(pos))
-#define RFIFOB(fd,pos) (*(unsigned char*)(session[fd]->rdata+session[fd]->rdata_pos+(pos)))
-#define RFIFOW(fd,pos) (*(unsigned short*)(session[fd]->rdata+session[fd]->rdata_pos+(pos)))
-#define RFIFOL(fd,pos) (*(unsigned int*)(session[fd]->rdata+session[fd]->rdata_pos+(pos)))
-//#define RFIFOSKIP(fd,len) ((session[fd]->rdata_size-session[fd]->rdata_pos-(len)<0) ? (fprintf(stderr,"too many skip\n"),exit(1)) : (session[fd]->rdata_pos+=(len)))
-#define RFIFOREST(fd) (session[fd]->rdata_size-session[fd]->rdata_pos)
-#define RFIFOFLUSH(fd) (memmove(session[fd]->rdata,RFIFOP(fd,0),RFIFOREST(fd)),session[fd]->rdata_size=RFIFOREST(fd),session[fd]->rdata_pos=0)
 #define RFIFOSPACE(fd) (session[fd]->max_rdata-session[fd]->rdata_size)
+#define RFIFOP(fd,pos) (session[fd]->rdata+session[fd]->rdata_pos+(pos))
+// use function instead of macro.
+#define RFIFOB(fd,pos) (*(unsigned char*)RFIFOP(fd,pos))
+#define RFIFOW(fd,pos) (*(unsigned short*)RFIFOP(fd,pos))
+#define RFIFOL(fd,pos) (*(unsigned int*)RFIFOP(fd,pos))
+#define RFIFOREST(fd)  (session[fd]->rdata_size-session[fd]->rdata_pos)
+#define RFIFOFLUSH(fd) (memmove(session[fd]->rdata,RFIFOP(fd,0),RFIFOREST(fd)),session[fd]->rdata_size=RFIFOREST(fd),session[fd]->rdata_pos=0)
+//#define RFIFOSKIP(fd,len) ((session[fd]->rdata_size-session[fd]->rdata_pos-(len)<0) ? (fprintf(stderr,"too many skip\n"),exit(1)) : (session[fd]->rdata_pos+=(len)))
+
 #define RBUFP(p,pos) (((unsigned char*)(p))+(pos))
 #define RBUFB(p,pos) (*(unsigned char*)RBUFP((p),(pos)))
 #define RBUFW(p,pos) (*(unsigned short*)RBUFP((p),(pos)))
@@ -30,9 +37,9 @@
 
 #define WFIFOSPACE(fd) (session[fd]->max_wdata-session[fd]->wdata_size)
 #define WFIFOP(fd,pos) (session[fd]->wdata+session[fd]->wdata_size+(pos))
-#define WFIFOB(fd,pos) (*(unsigned char*)(session[fd]->wdata+session[fd]->wdata_size+(pos)))
-#define WFIFOW(fd,pos) (*(unsigned short*)(session[fd]->wdata+session[fd]->wdata_size+(pos)))
-#define WFIFOL(fd,pos) (*(unsigned int*)(session[fd]->wdata+session[fd]->wdata_size+(pos)))
+#define WFIFOB(fd,pos) (*(unsigned char*)WFIFOP(fd,pos))
+#define WFIFOW(fd,pos) (*(unsigned short*)WFIFOP(fd,pos))
+#define WFIFOL(fd,pos) (*(unsigned int*)WFIFOP(fd,pos))
 // use function instead of macro.
 //#define WFIFOSET(fd,len) (session[fd]->wdata_size = (session[fd]->wdata_size+(len)+2048 < session[fd]->max_wdata) ? session[fd]->wdata_size+len : session[fd]->wdata_size)
 #define WBUFP(p,pos) (((unsigned char*)(p))+(pos))
@@ -54,6 +61,7 @@ struct socket_data{
 	unsigned char *rdata,*wdata;
 	int max_rdata,max_wdata;
 	int rdata_size,wdata_size;
+	time_t rdata_tick;
 	int rdata_pos;
 	struct sockaddr_in client_addr;
 	int (*func_recv)(int);
@@ -80,6 +88,7 @@ extern int fd_max;
 // Function prototype declaration
 
 int make_listen_port(int);
+int make_listen_bind(long,int);
 int make_connection(long,int);
 int delete_session(int);
 int realloc_fifo(int fd,int rfifo_size,int wfifo_size);
@@ -89,6 +98,9 @@ int RFIFOSKIP(int fd,int len);
 int do_sendrecv(int next);
 int do_parsepacket(void);
 void do_socket(void);
+
+extern void flush_fifos();
+extern void set_nonblocking(int fd, int yes);
 
 int start_console(void);
 

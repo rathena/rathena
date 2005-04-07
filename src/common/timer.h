@@ -3,6 +3,12 @@
 #ifndef	_TIMER_H_
 #define	_TIMER_H_
 
+#ifdef __WIN32
+/* We need winsock lib to have timeval struct - windows is weirdo */
+#define __USE_W32_SOCKETS
+#include <windows.h>
+#endif
+
 #define BASE_TICK 5
 
 #define TIMER_ONCE_AUTODEL 1
@@ -25,6 +31,10 @@ struct TimerData {
 
 // Function prototype declaration
 
+#ifdef __WIN32
+void gettimeofday(struct timeval *t, void *dummy);
+#endif
+
 unsigned int gettick_nocache(void);
 unsigned int gettick(void);
 
@@ -40,6 +50,6 @@ int do_timer(unsigned int tick);
 int add_timer_func_list(int (*)(int,unsigned int,int,int),char*);
 char* search_timer_func_list(int (*)(int,unsigned int,int,int));
 
-extern void timer_final();
+void timer_final();
 
 #endif	// _TIMER_H_

@@ -9,6 +9,7 @@
 #include "nullpo.h"
 #include "malloc.h"
 #include "pc.h"
+#include "status.h"
 #include "map.h"
 #include "intif.h"
 #include "clif.h"
@@ -20,6 +21,7 @@
 #include "npc.h"
 #include "script.h"
 #include "skill.h"
+#include "showmsg.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -48,6 +50,8 @@ static int calc_next_walk_step(struct pet_data *pd)
 {
 	nullpo_retr(0, pd);
 
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
 	if(pd->walkpath.path_pos>=pd->walkpath.path_len)
 		return -1;
 	if(pd->walkpath.path[pd->walkpath.path_pos]&1)
@@ -58,6 +62,8 @@ static int calc_next_walk_step(struct pet_data *pd)
 static int pet_performance_val(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
+
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
 
 	if(sd->pet.intimate > 900)
 		return (sd->petDB->s_perfor > 0)? 4:3;
@@ -70,6 +76,8 @@ static int pet_performance_val(struct map_session_data *sd)
 int pet_hungry_val(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
+
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
 
 	if(sd->pet.hungry > 90)
 		return 4;
@@ -89,6 +97,8 @@ static int pet_can_reach(struct pet_data *pd,int x,int y)
 
 	nullpo_retr(0, pd);
 
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
 	if( pd->bl.x==x && pd->bl.y==y )	// 同じマス
 		return 1;
 
@@ -105,6 +115,8 @@ static int pet_calc_pos(struct pet_data *pd,int tx,int ty,int dir)
 	int i,j=0,k;
 
 	nullpo_retr(0, pd);
+
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
 
 	pd->to_x = tx;
 	pd->to_y = ty;
@@ -161,23 +173,27 @@ static int pet_attack(struct pet_data *pd,unsigned int tick,int data)
 
 	nullpo_retr(0, pd);
 
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
 	pd->state.state=MS_IDLE;
 
 	md=(struct mob_data *)map_id2bl(pd->target_id);
 	if(md == NULL || md->bl.type != BL_MOB || pd->bl.m != md->bl.m || md->bl.prev == NULL ||
-		distance(pd->bl.x,pd->bl.y,md->bl.x,md->bl.y) > 13) {
+		distance(pd->bl.x,pd->bl.y,md->bl.x,md->bl.y) > 13 || 
+		(!agit_flag && md->class_ >= 1285 && md->class_ <= 1288)) // Cannot attack Guardians outside of WoE
+	{
 		pd->target_id=0;
 		return 0;
 	}
 
-	mode=mob_db[pd->class].mode;
-	race=mob_db[pd->class].race;
-	if(mob_db[pd->class].mexp <= 0 && !(mode&0x20) && (md->option & 0x06 && race != 4 && race != 6) ) {
+	mode=mob_db[pd->class_].mode;
+	race=mob_db[pd->class_].race;
+	if(mob_db[pd->class_].mexp <= 0 && !(mode&0x20) && (md->option & 0x06 && race != 4 && race != 6) ) {
 		pd->target_id=0;
 		return 0;
 	}
 
-	range = mob_db[pd->class].range + 1;
+	range = mob_db[pd->class_].range + 1;
 	if(distance(pd->bl.x,pd->bl.y,md->bl.x,md->bl.y) > range)
 		return 0;
 	if(battle_config.monster_attack_direction_change)
@@ -187,7 +203,7 @@ static int pet_attack(struct pet_data *pd,unsigned int tick,int data)
 
 	pd->target_lv = battle_weapon_attack(&pd->bl,&md->bl,tick,0);
 
-	pd->attackabletime = tick + battle_get_adelay(&pd->bl);
+	pd->attackabletime = tick + status_get_adelay(&pd->bl);
 
 	pd->timer=add_timer(pd->attackabletime,pet_timer,pd->bl.id,0);
 	pd->state.state=MS_ATTACK;
@@ -202,10 +218,12 @@ static int pet_attack(struct pet_data *pd,unsigned int tick,int data)
 static int pet_walk(struct pet_data *pd,unsigned int tick,int data)
 {
 	int moveblock;
-	int i,ctype;
+	int i;
 	int x,y,dx,dy;
 
 	nullpo_retr(0, pd);
+
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
 
 	pd->state.state=MS_IDLE;
 	if(pd->walkpath.path_pos >= pd->walkpath.path_len || pd->walkpath.path_pos != data)
@@ -234,8 +252,7 @@ static int pet_walk(struct pet_data *pd,unsigned int tick,int data)
 		dx = dirx[pd->dir];
 		dy = diry[pd->dir];
 
-		ctype = map_getcell(pd->bl.m,x+dx,y+dy);
-		if(ctype == 1 || ctype == 5) {
+		if(map_getcell(pd->bl.m,x+dx,y+dy,CELL_CHKNOPASS)){
 			pet_walktoxy_sub(pd);
 			return 0;
 		}
@@ -273,6 +290,8 @@ int pet_stopattack(struct pet_data *pd)
 {
 	nullpo_retr(0, pd);
 
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
 	pd->target_id=0;
 	if(pd->state.state == MS_ATTACK)
 		pet_changestate(pd,MS_IDLE,0);
@@ -290,15 +309,17 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
 
 	pd = sd->pd;
 
-	if(bl && pd && bl->type == BL_MOB && sd->pet.intimate > 900 && sd->pet.hungry > 0 && pd->class != battle_get_class(bl)
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
+	if(bl && pd && bl->type == BL_MOB && sd->pet.intimate > 900 && sd->pet.hungry > 0 && pd->class_ != status_get_class(bl)
 		&& pd->state.state != MS_DELAY) {
-		mode=mob_db[pd->class].mode;
-		race=mob_db[pd->class].race;
+		mode=mob_db[pd->class_].mode;
+		race=mob_db[pd->class_].race;
 		md=(struct mob_data *)bl;
 		if(md->bl.type != BL_MOB || pd->bl.m != md->bl.m || md->bl.prev == NULL ||
 			distance(pd->bl.x,pd->bl.y,md->bl.x,md->bl.y) > 13)
 			return 0;
-		if(mob_db[pd->class].mexp <= 0 && !(mode&0x20) && (md->option & 0x06 && race!=4 && race!=6) )
+		if(mob_db[pd->class_].mexp <= 0 && !(mode&0x20) && (md->option & 0x06 && race!=4 && race!=6) )
 			return 0;
 		if(!type) {
 			rate = sd->petDB->attack_rate;
@@ -330,6 +351,8 @@ int pet_changestate(struct pet_data *pd,int state,int type)
 	int i;
 
 	nullpo_retr(0, pd);
+
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
 
 	if(pd->timer != -1)
 		delete_timer(pd->timer,pet_timer);
@@ -368,6 +391,8 @@ static int pet_timer(int tid,unsigned int tick,int id,int data)
 	if(pd == NULL || pd->bl.type != BL_PET)
 		return 1;
 
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
 	if(pd->timer != tid){
 		if(battle_config.error_log)
 			printf("pet_timer %d != %d\n",pd->timer,tid);
@@ -403,6 +428,8 @@ static int pet_walktoxy_sub(struct pet_data *pd)
 
 	nullpo_retr(0, pd);
 
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
 	if(path_search(&wpd,pd->bl.m,pd->bl.x,pd->bl.y,pd->to_x,pd->to_y,0))
 		return 1;
 	memcpy(&pd->walkpath,&wpd,sizeof(wpd));
@@ -422,6 +449,8 @@ int pet_walktoxy(struct pet_data *pd,int x,int y)
 
 	nullpo_retr(0, pd);
 
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
 	if(pd->state.state == MS_WALK && path_search(&wpd,pd->bl.m,pd->bl.x,pd->bl.y,x,y,0))
 		return 1;
 
@@ -440,6 +469,8 @@ int pet_walktoxy(struct pet_data *pd,int x,int y)
 int pet_stop_walking(struct pet_data *pd,int type)
 {
 	nullpo_retr(0, pd);
+
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
 
 	if(pd->state.state == MS_WALK || pd->state.state == MS_IDLE) {
 		pd->walkpath.path_len=0;
@@ -461,9 +492,12 @@ static int pet_hungry(int tid,unsigned int tick,int id,int data)
 	struct map_session_data *sd;
 	int interval,t;
 
+
 	sd=map_id2sd(id);
 	if(sd==NULL)
 		return 1;
+
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
 
 	if(sd->pet_hungry_timer != tid){
 		if(battle_config.error_log)
@@ -485,9 +519,9 @@ static int pet_hungry(int tid,unsigned int tick,int id,int data)
 			sd->pet.intimate = 0;
 			if(battle_config.pet_status_support && t > 0) {
 				if(sd->bl.prev != NULL)
-					pc_calcstatus(sd,0);
+					status_calc_pc(sd,0);
 				else
-					pc_calcstatus(sd,2);
+					status_calc_pc(sd,2);
 			}
 		}
 		clif_send_petdata(sd,1,sd->pet.intimate);
@@ -510,11 +544,11 @@ int search_petDB_index(int key,int type)
 	int i;
 
 	for(i=0;i<MAX_PET_DB;i++) {
-		if(pet_db[i].class <= 0)
+		if(pet_db[i].class_ <= 0)
 			continue;
 		switch(type) {
 			case PET_CLASS:
-				if(pet_db[i].class == key)
+				if(pet_db[i].class_ == key)
 					return i;
 				break;
 			case PET_CATCH:
@@ -556,26 +590,29 @@ int pet_remove_map(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
+
 	if(sd->status.pet_id && sd->pd) {
 
 		struct pet_data *pd=sd->pd; // [Valaris]
 		if(pd->skillbonustimer!=-1) pd->skillbonustimer=-1;
-		if(pd->skillbonusduration!=-1) pd->skillbonusduration=-1;
-		if(pd->skilltype !=-1) pd->skilltype=-1;
-		if(pd->skillval !=-1) pd->skillval=-1;
+		pd->skilltype=0;
+		pd->skillval=0;
 		if(pd->skilltimer!=-1) pd->skilltimer=-1;
-		if(pd->skillduration!=-1) pd->skillduration=-1;
-		if(pd->skillbonustype!=-1) pd->skillbonustype=-1;
-		if(pd->skillbonusval!=-1) pd->skillbonusval=-1;
-		if(sd->perfect_hiding==1) sd->perfect_hiding=0;	// end additions		
+		pd->state.skillbonus=-1;
+		pd->skillduration=0;
+		pd->skillbonustype=0;
+		pd->skillbonusval=0;
+		if(sd->perfect_hiding==1) sd->perfect_hiding=0;	// end additions
 
 		pet_changestate(sd->pd,MS_IDLE,0);
 		if(sd->pet_hungry_timer != -1)
 			pet_hungry_timer_delete(sd);
 		clif_clearchar_area(&sd->pd->bl,0);
 		map_delblock(&sd->pd->bl);
+		if (sd->pd->lootitem)
+			aFree(sd->pd->lootitem);
 		map_deliddb(&sd->pd->bl);
-		map_freeblock(sd->pd);
 	}
 	return 0;
 }
@@ -598,6 +635,8 @@ int pet_performance(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 	nullpo_retr(0, pd=sd->pd);
 
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
+
 	pet_stop_walking(pd,2000<<8);
 	clif_pet_performance(&pd->bl,rand()%pet_performance_val(sd) + 1);
 	// ルートしたItemを落とさせる
@@ -613,8 +652,11 @@ int pet_return_egg(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
+
 	if(sd->status.pet_id && sd->pd) {
-		struct pet_data *pd=sd->pd;
+		// ルートしたItemを落とさせる
+		pet_lootitem_drop(sd->pd,sd);
 		pet_remove_map(sd);
 		sd->status.pet_id = 0;
 		sd->pd = NULL;
@@ -634,12 +676,10 @@ int pet_return_egg(struct map_session_data *sd)
 		}
 		if(battle_config.pet_status_support && sd->pet.intimate > 0) {
 			if(sd->bl.prev != NULL)
-				pc_calcstatus(sd,0);
+				status_calc_pc(sd,0);
 			else
-				pc_calcstatus(sd,2);
+				status_calc_pc(sd,2);
 		}
-		// ルートしたItemを落とさせる
-		pet_lootitem_drop(pd,sd);
 
 		intif_save_petdata(sd->status.account_id,&sd->pet);
 		pc_makesavestatus(sd);
@@ -659,13 +699,15 @@ int pet_data_init(struct map_session_data *sd)
 
 	nullpo_retr(1, sd);
 
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
+
 	if(sd->status.account_id != sd->pet.account_id || sd->status.char_id != sd->pet.char_id ||
 		sd->status.pet_id != sd->pet.pet_id) {
 		sd->status.pet_id = 0;
 		return 1;
 	}
 
-	i = search_petDB_index(sd->pet.class,PET_CLASS);
+	i = search_petDB_index(sd->pet.class_,PET_CLASS);
 	if(i < 0) {
 		sd->status.pet_id = 0;
 		return 1;
@@ -682,7 +724,7 @@ int pet_data_init(struct map_session_data *sd)
 	pd->bl.y = pd->to_y;
 	pd->bl.id = npc_get_new_npc_id();
 	memcpy(pd->name,sd->pet.name,24);
-	pd->class = sd->pet.class;
+	pd->class_ = sd->pet.class_;
 	pd->equip = sd->pet.equip;
 	pd->dir = sd->dir;
 	pd->speed = sd->petDB->speed;
@@ -696,8 +738,12 @@ int pet_data_init(struct map_session_data *sd)
 	pd->move_fail_count = 0;
 	pd->next_walktime = pd->attackabletime = pd->last_thinktime = gettick();
 	pd->msd = sd;
-
+	
 	map_addiddb(&pd->bl);
+
+	// initialise
+	pd->state.skillbonus = -1;
+	run_script(pet_db[i].script,0,sd->bl.id,0);
 
 	if(sd->pet_hungry_timer != -1)
 		pet_hungry_timer_delete(sd);
@@ -718,6 +764,8 @@ int pet_data_init(struct map_session_data *sd)
 int pet_birth_process(struct map_session_data *sd)
 {
 	nullpo_retr(1, sd);
+
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
 
 	if(sd->status.pet_id && sd->pet.incuvate == 1) {
 		sd->status.pet_id = 0;
@@ -747,6 +795,8 @@ int pet_birth_process(struct map_session_data *sd)
 	clif_pet_equip(sd->pd,sd->pet.equip);
 	clif_send_petstatus(sd);
 
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
+
 	return 0;
 }
 
@@ -766,7 +816,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 		pet_birth_process(sd);
 	else {
 		pet_data_init(sd);
-		if(sd->bl.prev != NULL) {
+		if(sd->pd && sd->bl.prev != NULL) {
 			map_addblock(&sd->pd->bl);
 			clif_spawnpet(sd->pd);
 			clif_send_petdata(sd,0,0);
@@ -777,9 +827,9 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 	}
 	if(battle_config.pet_status_support && sd->pet.intimate > 0) {
 		if(sd->bl.prev != NULL)
-			pc_calcstatus(sd,0);
+			status_calc_pc(sd,0);
 		else
-			pc_calcstatus(sd,2);
+			status_calc_pc(sd,2);
 	}
 
 	return 0;
@@ -823,27 +873,28 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 		return 1;
 	}
 
-	i = search_petDB_index(md->class,PET_CLASS);
-	if(md == NULL || md->bl.type != BL_MOB || md->bl.prev == NULL || i < 0 || sd->catch_target_class != md->class) {
+	i = search_petDB_index(md->class_,PET_CLASS);
+	if(md == NULL || md->bl.type != BL_MOB || md->bl.prev == NULL || i < 0 || sd->catch_target_class != md->class_) {
 		clif_pet_rulet(sd,0);
 		return 1;
 	}
 
 	//target_idによる敵→卵判定
 //	if(battle_config.etc_log)
-//		printf("mob_id = %d, mob_class = %d\n",md->bl.id,md->class);
+//		printf("mob_id = %d, mob_class = %d\n",md->bl.id,md->class_);
 		//成功の場合
-	pet_catch_rate = (pet_db[i].capture + (sd->status.base_level - mob_db[md->class].lv)*30 + sd->paramc[5]*20)*(200 - md->hp*100/mob_db[md->class].max_hp)/100;
+	pet_catch_rate = (pet_db[i].capture + (sd->status.base_level - mob_db[md->class_].lv)*30 + sd->paramc[5]*20)*(200 - md->hp*100/mob_db[md->class_].max_hp)/100;
 	if(pet_catch_rate < 1) pet_catch_rate = 1;
 	if(battle_config.pet_catch_rate != 100)
 		pet_catch_rate = (pet_catch_rate*battle_config.pet_catch_rate)/100;
 
 	if(rand()%10000 < pet_catch_rate) {
-		mob_catch_delete(md,0);
+		mob_remove_map(md,0);
+		mob_setdelayspawn(md->bl.id);
 		clif_pet_rulet(sd,1);
 //		if(battle_config.etc_log)
 //			printf("rulet success %d\n",target_id);
-		intif_create_pet(sd->status.account_id,sd->status.char_id,pet_db[i].class,mob_db[pet_db[i].class].lv,
+		intif_create_pet(sd->status.account_id,sd->status.char_id,pet_db[i].class_,mob_db[pet_db[i].class_].lv,
 			pet_db[i].EggID,0,pet_db[i].intimate,100,0,1,pet_db[i].jname);
 	}
 	else
@@ -869,7 +920,7 @@ int pet_get_egg(int account_id,int pet_id,int flag)
 			tmp_item.nameid = pet_db[i].EggID;
 			tmp_item.identify = 1;
 			tmp_item.card[0] = 0xff00;
-			*((long *)(&tmp_item.card[1])) = pet_id;
+			tmp_item.card[1] = pet_id;
 			tmp_item.card[3] = sd->pet.rename_flag;
 			if((ret = pc_additem(sd,&tmp_item,1))) {
 				clif_additem(sd,0,0,ret);
@@ -913,7 +964,7 @@ int pet_change_name(struct map_session_data *sd,char *name)
 	
 	nullpo_retr(1, sd);
 
-	if(sd->pet.rename_flag == 1 && battle_config.pet_rename == 0)
+	if((sd->pd == NULL) || (sd->pet.rename_flag == 1 && battle_config.pet_rename == 0))
 		return 1;
 
 	for(i=0;i<24 && name[i];i++){
@@ -951,7 +1002,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 	else {
 		pc_delitem(sd,index,1,0);
 		sd->pet.equip = sd->pd->equip = nameid;
-		pc_calcstatus(sd,0);
+		status_calc_pc(sd,0);
 		clif_pet_equip(sd->pd,nameid);
 	}
 
@@ -972,7 +1023,7 @@ int pet_unequipitem(struct map_session_data *sd)
 
 	nameid = sd->pet.equip;
 	sd->pet.equip = sd->pd->equip = 0;
-	pc_calcstatus(sd,0);
+	status_calc_pc(sd,0);
 	clif_pet_equip(sd->pd,0);
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = nameid;
@@ -990,6 +1041,8 @@ int pet_food(struct map_session_data *sd)
 	int i,k,t;
 
 	nullpo_retr(1, sd);
+
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
 
 	if(sd->petDB == NULL)
 		return 1;
@@ -1023,9 +1076,9 @@ int pet_food(struct map_session_data *sd)
 		sd->pet.intimate = 0;
 		if(battle_config.pet_status_support && t > 0) {
 			if(sd->bl.prev != NULL)
-				pc_calcstatus(sd,0);
+				status_calc_pc(sd,0);
 			else
-				pc_calcstatus(sd,2);
+				status_calc_pc(sd,2);
 		}
 	}
 	else if(sd->pet.intimate > 1000)
@@ -1048,7 +1101,9 @@ static int pet_randomwalk(struct pet_data *pd,int tick)
 
 	nullpo_retr(0, pd);
 
-	speed = battle_get_speed(&pd->bl);
+	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+
+	speed = status_get_speed(&pd->bl);
 
 	if(DIFF_TICK(pd->next_walktime,tick) < 0){
 		int i,x,y,c,d=12-pd->move_fail_count;
@@ -1057,7 +1112,7 @@ static int pet_randomwalk(struct pet_data *pd,int tick)
 			int r=rand();
 			x=pd->bl.x+r%(d*2+1)-d;
 			y=pd->bl.y+r/(d*2+1)%(d*2+1)-d;
-			if((c=map_getcell(pd->bl.m,x,y))!=1 && c!=5 && pet_walktoxy(pd,x,y)==0){
+			if((map_getcell(pd->bl.m,x,y,CELL_CHKPASS))&&( pet_walktoxy(pd,x,y)==0)){
 				pd->move_fail_count=0;
 				break;
 			}
@@ -1065,7 +1120,7 @@ static int pet_randomwalk(struct pet_data *pd,int tick)
 				pd->move_fail_count++;
 				if(pd->move_fail_count>1000){
 					if(battle_config.error_log)
-						printf("PET cant move. hold position %d, class = %d\n",pd->bl.id,pd->class);
+						printf("PET cant move. hold position %d, class = %d\n",pd->bl.id,pd->class_);
 					pd->move_fail_count=0;
 					pet_changestate(pd,MS_DELAY,60000);
 					return 0;
@@ -1105,6 +1160,8 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 
 	sd = pd->msd;
 
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
+
 	if(pd->bl.prev == NULL || sd == NULL || sd->bl.prev == NULL)
 		return 0;
 
@@ -1136,22 +1193,22 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 				pet_randomwalk(pd,tick);
 		}
 		else if(pd->target_id - MAX_FLOORITEM > 0) {
-			mode=mob_db[pd->class].mode;
-			race=mob_db[pd->class].race;
+			mode=mob_db[pd->class_].mode;
+			race=mob_db[pd->class_].race;
 			md=(struct mob_data *)map_id2bl(pd->target_id);
 			if(md == NULL || md->bl.type != BL_MOB || pd->bl.m != md->bl.m || md->bl.prev == NULL ||
 				distance(pd->bl.x,pd->bl.y,md->bl.x,md->bl.y) > 13)
 				pet_unlocktarget(pd);
-			else if(mob_db[pd->class].mexp <= 0 && !(mode&0x20) && (md->option & 0x06 && race!=4 && race!=6) )
+			else if(mob_db[pd->class_].mexp <= 0 && !(mode&0x20) && (md->option & 0x06 && race!=4 && race!=6) )
 				pet_unlocktarget(pd);
-			else if(!battle_check_range(&pd->bl,&md->bl,mob_db[pd->class].range)){
+			else if(!battle_check_range(&pd->bl,&md->bl,mob_db[pd->class_].range)){
 				if(pd->timer != -1 && pd->state.state == MS_WALK && distance(pd->to_x,pd->to_y,md->bl.x,md->bl.y) < 2)
 					return 0;
 				if( !pet_can_reach(pd,md->bl.x,md->bl.y))
 					pet_unlocktarget(pd);
 				else {
 					i=0;
-					pd->speed = battle_get_speed(&pd->bl);
+					pd->speed = status_get_speed(&pd->bl);
 					do {
 						if(i==0) {	// 最初はAEGISと同じ方法で検索
 							dx=md->bl.x - pd->bl.x;
@@ -1235,14 +1292,14 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 		else {
 			if(dist <= 3 || (pd->timer != -1 && pd->state.state == MS_WALK && distance(pd->to_x,pd->to_y,sd->bl.x,sd->bl.y) < 3) )
 				return 0;
-			pd->speed = battle_get_speed(&pd->bl);
+			pd->speed = status_get_speed(&pd->bl);
 			pet_calc_pos(pd,sd->bl.x,sd->bl.y,sd->dir);
 			if(pet_walktoxy(pd,pd->to_x,pd->to_y))
 				pet_randomwalk(pd,tick);
 		}
 	}
 	else {
-		pd->speed = battle_get_speed(&pd->bl);
+		pd->speed = status_get_speed(&pd->bl);
 		if(pd->state.state == MS_ATTACK)
 			pet_stopattack(pd);
 		pet_randomwalk(pd,tick);
@@ -1326,13 +1383,12 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 						clif_additem(sd,0,0,flag);
 						map_addflooritem(&ditem->item_data,ditem->item_data.amount,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
 					}
-					free(ditem);
+					aFree(ditem);
 				}
 				else
 					add_timer(gettick()+540+i,pet_delay_item_drop2,(int)ditem,0);
 			}
-			pd->lootitem=NULL;
-			pd->lootitem=(struct item *)aCalloc(PETLOOT_SIZE,sizeof(struct item));
+			memset(pd->lootitem,0,LOOTITEM_SIZE * sizeof(struct item));
 			pd->lootitem_count = 0;
 			pd->lootitem_weight = 0;
 			pd->lootitem_timer = gettick()+10000;	//	10*1000msの間拾わない
@@ -1349,7 +1405,7 @@ int pet_delay_item_drop2(int tid,unsigned int tick,int id,int data)
 
 	map_addflooritem(&ditem->item_data,ditem->item_data.amount,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
 
-	free(ditem);
+	aFree(ditem);
 	return 0;
 }
 
@@ -1357,29 +1413,13 @@ int pet_delay_item_drop2(int tid,unsigned int tick,int id,int data)
  * pet bonus giving skills [Valaris]
  *------------------------------------------
  */ 
-
-int pet_skill_bonus(struct map_session_data *sd,struct pet_data *pd,int type,int val,int duration,int timer,int data)
-{
-	if(pd==NULL || sd==NULL)
-		return 1;
-
-	pd->skillbonustype=type;
-	pd->skillbonusval=val;
-	pd->skillduration=duration;
-	pd->skilltimer=timer;
-
-	pd->skillbonustimer=add_timer(gettick()+pd->skilltimer*1000,pet_skill_bonus_timer,sd->bl.id,0);
-
-	return 0;
-
-}
-
 int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 {
-	struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
+	struct map_session_data *sd=map_id2sd(id);
 	struct pet_data *pd;
+	int timer = 0;
 	
-	if(sd==NULL || sd->bl.type!=BL_PC)
+	if(sd==NULL)
 		return 1;
 	
 	pd=sd->pd;
@@ -1390,38 +1430,26 @@ int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 	if(pd->skillbonustimer != tid)
 		return 0;
 
-	pd->skillbonustimer=-1;
+	// determine the time for the next timer
+	if (pd->state.skillbonus == 0) {
+		// pet bonuses are not active at the moment, so,
+		pd->state.skillbonus = 1;
+		timer = pd->skillduration;	// the duration for pet bonuses to be in effect
+	} else if (pd->state.skillbonus == 1) {
+		// pet bonuses are already active, so,
+		pd->state.skillbonus = 0;
+		timer = pd->skilltimer;	// the duration which pet bonuses will be reactivated again
+	}
+
+	if (pd->state.skillbonus == 1 && sd->petDB)
+		run_script(sd->petDB->script,0,sd->bl.id,0);
+
+	// add/remove our bonuses, which will be handled by sd->petbonus[]
+	status_calc_pc(sd, 0);
+
+	// wait for the next timer
+	if (timer) pd->skillbonustimer=add_timer(gettick()+timer,pet_skill_bonus_timer,sd->bl.id,0);
 	
-	pc_bonus(sd,pd->skillbonustype,pd->skillbonusval);
-	if(pd->skillbonustype < 56) clif_updatestatus(sd,pd->skillbonustype);
-	pd->skillbonusduration=add_timer(gettick()+pd->skillduration*1000,pet_skill_bonus_duration,sd->bl.id,0);
-	
-	return 0;
-}
-
-int pet_skill_bonus_duration(int tid,unsigned int tick,int id,int data)
-{
-	struct map_session_data *sd=(struct map_session_data*)map_id2bl(id);
-	struct pet_data *pd;
-
-	if(sd==NULL || sd->bl.type!=BL_PC)
-		return 1;
-
-	pd=sd->pd;
-
-	if(pd==NULL || pd->bl.type!=BL_PET)
-		return 1;
-
-	if(pd->skillbonusduration != tid)
-		return 0;
-
-	pd->skillbonusduration=-1;
-
-	pc_bonus(sd,pd->skillbonustype,-pd->skillbonusval);
-	if(pd->skillbonustype < 56) clif_updatestatus(sd,pd->skillbonustype);
-
-	pet_skill_bonus(sd,pd,pd->skillbonustype,pd->skillbonusval,pd->skillduration,pd->skilltimer,0);
-
 	return 0;
 }
 
@@ -1442,7 +1470,7 @@ int pet_recovery_timer(int tid,unsigned int tick,int id,int data)
 		return 0;
 
 	if(sd->sc_data[pd->skilltype].timer != -1)
-		skill_status_change_end(&sd->bl,pd->skilltype,-1);
+		status_change_end(&sd->bl,pd->skilltype,-1);
 
 	pd->skillbonustimer=add_timer(gettick()+pd->skilltimer*1000,pet_recovery_timer,sd->bl.id,0);
 	
@@ -1493,7 +1521,7 @@ int pet_mag_timer(int tid,unsigned int tick,int id,int data)
 
 	if(sd->status.hp < sd->status.max_hp * pd->skilltype/100 && sd->status.sp < sd->status.max_sp * pd->skillduration/100) {
 		clif_skill_nodamage(&pd->bl,&sd->bl,PR_MAGNIFICAT,pd->skillval,1);
-		skill_status_change_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],pd->skillval,0,0,0,skill_get_time(PR_MAGNIFICAT,pd->skillval),0 );
+		status_change_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],pd->skillval,0,0,0,skill_get_time(PR_MAGNIFICAT,pd->skillval),0 );
   	}
 	
 	pd->skillbonustimer=add_timer(gettick()+pd->skilltimer*1000,pet_mag_timer,sd->bl.id,0);
@@ -1527,19 +1555,22 @@ int pet_skillattack_timer(int tid,unsigned int tick,int id,int data)
 	}
 
 	if(md && rand()%100 < sd->pet.intimate*pd->skilltimer/100 ) {
-		if(pd->skilltype==6 || pd->skilltype==176) {
+		switch(pd->skilltype)
+		{
+		case SM_PROVOKE:
+		//case NPC_POISON: poison is not handled there
 			skill_castend_nodamage_id(&pd->bl,&md->bl,pd->skilltype,pd->skillval,tick,0);
-		}
-		
-		else if(pd->skilltype==110){
+			break;
+		case BS_HAMMERFALL:
 			skill_castend_pos2(&pd->bl,md->bl.x,md->bl.y,pd->skilltype,pd->skillval,tick,0);
-		}
-		
-		else if(pd->skilltype==91) {
+			break;
+		case WZ_HEAVENDRIVE:
 			skill_castend_pos2(&pd->bl,md->bl.x,md->bl.y,pd->skilltype,pd->skillval+rand()%100,tick,0);
-		}	
-		else 
+			break;
+		default:
 			skill_castend_damage_id(&pd->bl,&md->bl,pd->skilltype,pd->skillval,tick,0);
+			break;
+		}
 		pd->skillbonustimer=add_timer(gettick()+1000,pet_skillattack_timer,sd->bl.id,0);
 		return 0;
 	}
@@ -1557,9 +1588,11 @@ int read_petdb()
 {
 	FILE *fp;
 	char line[1024];
-	int i;
+	int nameid,i,k; 
 	int j=0;
+	int lines;
 	char *filename[]={"db/pet_db.txt","db/pet_db2.txt"};
+	char *str[32],*p,*np;
 	
 	memset(pet_db,0,sizeof(pet_db));
 	for(i=0;i<2;i++){
@@ -1570,20 +1603,21 @@ int read_petdb()
 			printf("can't read %s\n",filename[i]);
 			return -1;
 		}
+		lines = 0;
 		while(fgets(line,1020,fp)){
-			int nameid,i;
-			char *str[32],*p,*np;
+			
+			lines++;
 
 			if(line[0] == '/' && line[1] == '/')
 				continue;
 
-			for(i=0,p=line;i<20;i++){
+			for(k=0,p=line;k<20;k++){
 				if((np=strchr(p,','))!=NULL){
-					str[i]=p;
+					str[k]=p;
 					*np=0;
 					p=np+1;
 				} else {
-					str[i]=p;
+					str[k]=p;
 					p+=strlen(p);
 				}
 			}
@@ -1593,7 +1627,7 @@ int read_petdb()
 				continue;
 		
 			//MobID,Name,JName,ItemID,EggID,AcceID,FoodID,"Fullness (1回の餌での満腹度増加率%)","HungryDeray (/min)","R_Hungry (空腹時餌やり親密度増加率%)","R_Full (とても満腹時餌やり親密度減少率%)","Intimate (捕獲時親密度%)","Die (死亡時親密度減少率%)","Capture (捕獲率%)",(Name)
-			pet_db[j].class = nameid;
+			pet_db[j].class_ = nameid;
 			memcpy(pet_db[j].name,str[1],24);
 			memcpy(pet_db[j].jname,str[2],24);
 			pet_db[j].itemID=atoi(str[3]);
@@ -1618,11 +1652,12 @@ int read_petdb()
 			pet_db[j].script = NULL;
 			if((np=strchr(p,'{'))==NULL)
 				continue;
-			pet_db[j].script = parse_script(np,0);
+			pet_db[j].script = parse_script((unsigned char *) np,lines);
 			j++;
 		}
 		fclose(fp);
-		printf("read %s done (count=%d)\n",filename[i],j);
+		sprintf(tmp_output,"Done reading '"CL_WHITE"%d"CL_RESET"' pets in '"CL_WHITE"%s"CL_RESET"'.\n",j,filename[i]);
+		ShowStatus(tmp_output);
 	}
 	return 0;
 }
@@ -1639,7 +1674,6 @@ int do_init_pet(void)
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");
 	add_timer_func_list(pet_skill_bonus_timer,"pet_skill_bonus_timer"); // [Valaris]
-	add_timer_func_list(pet_skill_bonus_duration,"pet_skill_bonus_duration"); // [Valaris]
 	add_timer_func_list(pet_recovery_timer,"pet_recovery_timer"); // [Valaris]
 	add_timer_func_list(pet_mag_timer,"pet_mag_timer"); // [Valaris]
 	add_timer_func_list(pet_heal_timer,"pet_heal_timer"); // [Valaris]
@@ -1649,3 +1683,12 @@ int do_init_pet(void)
 	return 0;
 }
 
+int do_final_pet(void) {
+	int i;
+	for(i = 0;i < MAX_PET_DB; i++) {
+		if(pet_db[i].script) {
+			aFree(pet_db[i].script);
+		}
+	}
+	return 0;
+}

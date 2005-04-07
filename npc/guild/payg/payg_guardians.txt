@@ -94,7 +94,7 @@ OnAgitInit:
 	if (GetCastleData("payg_cas05.gat",10) == 1) guardian "payg_cas05.gat",51,258,"Soldier Guardian",1287,1,"Guardian_Py05::OnGuardianDied",0;
 	if (GetCastleData("payg_cas05.gat",11) == 1) guardian "payg_cas05.gat",286,235,"Soldier Guardian",1287,1,"Guardian_Py05::OnGuardianDied",1;
 	if (GetCastleData("payg_cas05.gat",12) == 1) guardian "payg_cas05.gat",282,277,"Soldier Guardian",1287,1,"Guardian_Py05::OnGuardianDied",2;
-	if (GetCastleData("payg_cas05.gat",13) == 1) guardian "payg_cas05.gat",46,273,"Archer Guardian",1285,1,"Guardian_Py05::OnGuardianDied",3;
+	if (GetCastleData("payg_cas05.gat",13) == 1) guardian "payg_cas05.gat",18,281,"Archer Guardian",1285,1,"Guardian_Py05::OnGuardianDied",3;
 	if (GetCastleData("payg_cas05.gat",14) == 1) guardian "payg_cas05.gat",289,256,"Archer Guardian",1285,1,"Guardian_Py05::OnGuardianDied",4;
 	if (GetCastleData("payg_cas05.gat",15) == 1) guardian "payg_cas05.gat",275,42,"Knight Guardian",1286,1,"Guardian_Py05::OnGuardianDied",5;
 	if (GetCastleData("payg_cas05.gat",16) == 1) guardian "payg_cas05.gat",254,9,"Knight Guardian",1286,1,"Guardian_Py05::OnGuardianDied",6;

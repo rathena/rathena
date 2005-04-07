@@ -47,7 +47,7 @@ int inter_send_packet_length[] = {
 int inter_recv_packet_length[] = {
 	-1,-1, 7,-1, -1, 6, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,
-	72, 6,52,14, 10,29, 6,-1, 34, 0, 0, 0,  0, 0,  0, 0,
+	74, 6,52,14, 10,29, 6,-1, 34, 0, 0, 0,  0, 0,  0, 0,
 	-1, 6,-1, 0, 55,19, 6,-1, 14,-1,-1,-1, 14,19,186,-1,
 	 5, 9, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
@@ -114,7 +114,7 @@ int inter_accreg_init() {
 	while(fgets(line, sizeof(line)-1, fp)){
 		line[sizeof(line)-1] = '\0';
 
-		reg = calloc(sizeof(struct accreg), 1);
+		reg = (struct accreg*)aCalloc(sizeof(struct accreg), 1);
 		if (reg == NULL) {
 			printf("inter: accreg: out of memory!\n");
 			exit(0);
@@ -123,7 +123,7 @@ int inter_accreg_init() {
 			numdb_insert(accreg_db, reg->account_id, reg);
 		} else {
 			printf("inter: accreg: broken data [%s] line %d\n", accreg_txt, c);
-			free(reg);
+			aFree(reg);
 		}
 		c++;
 	}
@@ -261,6 +261,29 @@ int inter_init(const char *file) {
 	return 0;
 }
 
+// finalize
+int accreg_db_final (void *k, void *data, va_list ap) {	
+	struct accreg *p = (struct accreg *) data;
+	if (p) aFree(p);
+	return 0;
+}
+int wis_db_final (void *k, void *data, va_list ap) {
+	struct WisData *p = (struct WisData *) data;
+	if (p) aFree(p);
+	return 0;
+}
+void inter_final() {
+	numdb_final(accreg_db, accreg_db_final);
+	numdb_final(wis_db, wis_db_final);
+
+	inter_party_final();
+	inter_guild_final();
+	inter_storage_final();
+	inter_pet_final();
+
+	return;
+}
+
 // マップサーバー接続
 int inter_mapif_init(int fd) {
 	inter_guild_mapif_init(fd);
@@ -272,13 +295,13 @@ int inter_mapif_init(int fd) {
 // sended packets to map-server
 
 // GMメッセージ送信
-int mapif_GMmessage(unsigned char *mes, int len) {
-	unsigned char buf[len];
+int mapif_GMmessage(unsigned char *mes, int len, int sfd) {
+	unsigned char buf[2048];
 
 	WBUFW(buf,0) = 0x3800;
 	WBUFW(buf,2) = len;
 	memcpy(WBUFP(buf,4), mes, len - 4);
-	mapif_sendall(buf, len);
+	mapif_sendallwos(sfd, buf, len);
 //	printf("inter server: GM:%d %s\n", len, mes);
 
 	return 0;
@@ -286,7 +309,7 @@ int mapif_GMmessage(unsigned char *mes, int len) {
 
 // Wisp/page transmission to all map-server
 int mapif_wis_message(struct WisData *wd) {
-	unsigned char buf[56 + wd->len];
+	unsigned char buf[2048];
 
 	WBUFW(buf, 0) = 0x3801;
 	WBUFW(buf, 2) = 56 + wd->len;
@@ -314,7 +337,7 @@ int mapif_wis_end(struct WisData *wd, int flag) {
 
 // アカウント変数送信
 int mapif_account_reg(int fd, unsigned char *src) {
-	unsigned char buf[WBUFW(src,2)];
+	unsigned char buf[2048];
 
 	memcpy(WBUFP(buf,0),src,WBUFW(src,2));
 	WBUFW(buf, 0) = 0x3804;
@@ -325,7 +348,7 @@ int mapif_account_reg(int fd, unsigned char *src) {
 
 // アカウント変数要求返信
 int mapif_account_reg_reply(int fd,int account_id) {
-	struct accreg *reg = numdb_search(accreg_db,account_id);
+	struct accreg *reg = (struct accreg*)numdb_search(accreg_db,account_id);
 
 	WFIFOW(fd,0) = 0x3804;
 	WFIFOL(fd,4) = account_id;
@@ -366,12 +389,12 @@ int check_ttl_wisdata() {
 		wis_delnum = 0;
 		numdb_foreach(wis_db, check_ttl_wisdata_sub, tick);
 		for(i = 0; i < wis_delnum; i++) {
-			struct WisData *wd = numdb_search(wis_db, wis_dellist[i]);
+			struct WisData *wd = (struct WisData*)numdb_search(wis_db, wis_dellist[i]);
 			printf("inter: wis data id=%d time out : from %s to %s\n", wd->id, wd->src, wd->dst);
 			// removed. not send information after a timeout. Just no answer for the player
 			//mapif_wis_end(wd, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 			numdb_erase(wis_db, wd->id);
-			free(wd);
+			aFree(wd);
 		}
 	} while(wis_delnum >= WISDELLIST_MAX);
 
@@ -383,7 +406,7 @@ int check_ttl_wisdata() {
 
 // GMメッセージ送信
 int mapif_parse_GMmessage(int fd) {
-	mapif_GMmessage(RFIFOP(fd,4), RFIFOW(fd,2));
+	mapif_GMmessage(RFIFOP(fd,4), RFIFOW(fd,2), fd);
 
 	return 0;
 }
@@ -403,7 +426,7 @@ int mapif_parse_WisRequest(int fd) {
 	}
 
 	// search if character exists before to ask all map-servers
-	if ((index = search_character_index(RFIFOP(fd,28))) == -1) {
+	if ((index = search_character_index((char*)RFIFOP(fd,28))) == -1) {
 		unsigned char buf[27];
 		WBUFW(buf, 0) = 0x3802;
 		memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), 24);
@@ -413,9 +436,9 @@ int mapif_parse_WisRequest(int fd) {
 	} else {
 		// to be sure of the correct name, rewrite it
 		memset(RFIFOP(fd,28), 0, 24);
-		strncpy(RFIFOP(fd,28), search_character_name(index), 24);
+		strncpy((char*)RFIFOP(fd,28), search_character_name(index), 24);
 		// if source is destination, don't ask other servers.
-		if (strcmp(RFIFOP(fd,4),RFIFOP(fd,28)) == 0) {
+		if (strcmp((char*)RFIFOP(fd,4),(char*)RFIFOP(fd,28)) == 0) {
 			unsigned char buf[27];
 			WBUFW(buf, 0) = 0x3802;
 			memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), 24);
@@ -423,7 +446,7 @@ int mapif_parse_WisRequest(int fd) {
 			mapif_send(fd, buf, 27);
 		} else {
 
-			wd = (struct WisData *)calloc(sizeof(struct WisData), 1);
+			wd = (struct WisData *)aCalloc(sizeof(struct WisData), 1);
 			if (wd == NULL){
 				printf("inter: WisRequest: out of memory !\n");
 				return 0;
@@ -450,7 +473,7 @@ int mapif_parse_WisRequest(int fd) {
 // Wisp/page transmission result
 int mapif_parse_WisReply(int fd) {
 	int id = RFIFOL(fd,2), flag = RFIFOB(fd,6);
-	struct WisData *wd = numdb_search(wis_db, id);
+	struct WisData *wd = (struct WisData*)numdb_search(wis_db, id);
 
 	if (wd == NULL)
 		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
@@ -458,7 +481,7 @@ int mapif_parse_WisReply(int fd) {
 	if ((--wd->count) <= 0 || flag != 1) {
 		mapif_wis_end(wd, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 		numdb_erase(wis_db, id);
-		free(wd);
+		aFree(wd);
 	}
 
 	return 0;
@@ -466,7 +489,7 @@ int mapif_parse_WisReply(int fd) {
 
 // Received wisp message from map-server for ALL gm (just copy the message and resends it to ALL map-servers)
 int mapif_parse_WisToGM(int fd) {
-	unsigned char buf[RFIFOW(fd,2)]; // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
+	unsigned char buf[2048]; // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
 
 	memcpy(WBUFP(buf,0), RFIFOP(fd,0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3803;
@@ -478,10 +501,10 @@ int mapif_parse_WisToGM(int fd) {
 // アカウント変数保存要求
 int mapif_parse_AccReg(int fd) {
 	int j, p;
-	struct accreg *reg = numdb_search(accreg_db, RFIFOL(fd,4));
+	struct accreg *reg = (struct accreg*)numdb_search(accreg_db, RFIFOL(fd,4));
 
 	if (reg == NULL) {
-		if ((reg = calloc(sizeof(struct accreg), 1)) == NULL) {
+		if ((reg = (struct accreg*)aCalloc(sizeof(struct accreg), 1)) == NULL) {
 			printf("inter: accreg: out of memory !\n");
 			exit(0);
 		}

@@ -144,7 +144,7 @@ pay_dun04.gat,136,111,0,0	monster	Sohee	1170,2,300000,100000,1
 pay_dun04.gat,0,0,0,0	monster	Dokebi	1110,40,0,0,0
 pay_dun04.gat,0,0,0,0	monster	Skeleton Soldier	1028,10,0,0,0
 pay_dun04.gat,0,0,0,0	monster	Skeleton Archer	1016,20,0,0,0
-pay_dun04.gat,0,0,0,0	monster	White Plant	1082,6,600000,300000,1
-pay_dun04.gat,120,120,10,10	monster	Shining Plant	1083,2,1800000,900000,1
-pay_dun04.gat,120,115,0,0	monster	Moonlight Flower	1150,1,3600000,7200000,1
+pay_dun04.gat,0,0,0,0	monster	White Plant	1082,6,180000,180000,1
+pay_dun04.gat,120,120,10,10	monster	Shining Plant	1083,2,1800000,1800000,1
+pay_dun04.gat,120,115,0,0	monster	Moonlight Flower	1150,1,3600000,3600000,1
 pay_dun04.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1

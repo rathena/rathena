@@ -1,0 +1,24 @@
+// 鉱石発見スキルでドロップされる鉱石
+// item ID, Jname (dummy), 確率を 1 万倍 (100% なら 1000000)
+// 0 はデフォルト項目
+0,Iron Ore,1002
+714,Emperium,30000
+756,Rough Oridecon,200000
+757,Rough Elunium,200000
+969,Gold,20000
+984,Oridecon,100000
+985,Elunium,100000
+990,Red Blood,300000
+991,Crystal Blue,300000
+992,Wind of Verdure,300000
+993,Green Live,300000
+994,Flame Heart,150000
+995,Mystic Frozen,150000
+996,Rough Wind,150000
+997,Great Nature,150000
+998,Iron,800000
+999,Steel,500000
+1002,Iron Ore,1000000
+1003,Coal,600000
+1010,Phracon,950000
+1011,Emveretarcon,550000

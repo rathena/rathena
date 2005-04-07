@@ -220,8 +220,7 @@ L_GotOra:
 //========================================================================================//
 //			Derivuchi Cap(Hat of Petite Diablo), Helm of Angel
 //========================================================================================//
-payon_in01.gat,56,12,4	script	Young Man	89,
-{
+payon_in01.gat,56,12,4	script	Young Man	89,{
 	mes "[Young Man]";
 	mes "What is it?............";
 	next;

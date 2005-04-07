@@ -16,7 +16,7 @@
 
 // Castle 1 ================================================================
 payg_cas01.gat,139,139,0	script	Agit_Py01	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "payg_cas01.gat",0,"::OnRecvCastlePy01";
 	end;
 OnRecvCastlePy01:
@@ -39,7 +39,7 @@ OnAgitEnd:
 
 // Castle 2 ================================================================
 payg_cas02.gat,39,25,0	script	Agit_Py02	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "payg_cas02.gat",0,"::OnRecvCastlePy02";
 	end;
 OnRecvCastlePy02:
@@ -62,7 +62,7 @@ OnAgitEnd:
 
 // Castle 3 ================================================================
 payg_cas03.gat,269,265,0	script	Agit_Py03	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "payg_cas03.gat",0,"::OnRecvCastlePy03";
 	end;
 OnRecvCastlePy03:
@@ -85,7 +85,7 @@ OnAgitEnd:
 
 // Castle 4 ================================================================
 payg_cas04.gat,271,29,0	script	Agit_Py04	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "payg_cas04.gat",0,"::OnRecvCastlePy04";
 	end;
 OnRecvCastlePy04:
@@ -108,7 +108,7 @@ OnAgitEnd:
 
 // Castle 5 ================================================================
 payg_cas05.gat,30,30,0	script	Agit_Py05	-1,{
-OnInterIfInit:
+OnInterIfInitOnce:
 	GetCastleData "payg_cas05.gat",0,"::OnRecvCastlePy05";
 	end;
 OnRecvCastlePy05:

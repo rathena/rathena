@@ -3,21 +3,22 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
-//= eAthena 0.5.2 +, dev mod 1009 +
+//= eAthena 1.0 +
 //===== Description: ========================================= 
 //= <Description> 
 //===== Additional Comments: ================================= 
 //= v1.0 Fully working.
 //= v1.1 Added function calls for Priest Quest.
 //= v1.2 Fixed Marthilda, Yosuke bugs. [Lupus]
+//= v1.3 Added instant job change for High Novice [Lupus]
 //============================================================ 
 
 
 // -- Father Mareusis --
-prt_church.gat,184,41,4	script	"Father Mareusis"	60,
-{
+prt_church.gat,184,41,4	script	"Father Mareusis"	60,{
+	callfunc "F_ToHigh",28,"Acolyte High",32,"High Priest",156,0,0,0,"Father Mareusis";
 	mes "[Father Mareusis]";
 	if(Class==Job_Novice && job_acolyte_q > 0) goto L_Check;
 	mes "What is it you are looking for?";

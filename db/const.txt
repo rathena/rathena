@@ -44,28 +44,28 @@ Job_Clown	43
 Job_Gypsy	44
 Job_Paladin2	45
 Job_Baby	46
-Job_Baby_Swordman	47
-Job_Baby_Mage	48
-Job_Baby_Archer	49
-Job_Baby_Acolyte	50
-Job_Baby_Merchant	51
-Job_Baby_Thief	52
-Job_Baby_Knight	53
-Job_Baby_Priest	54
-Job_Baby_Wizard	55
-Job_Baby_Blacksmith	56
-Job_Baby_Hunter	57
-Job_Baby_Assassin	58
-Job_Baby_Knight2	59
-Job_Baby_Crusader	60
-Job_Baby_Monk	61
-Job_Baby_Sage	62
-Job_Baby_Rogue	63
-Job_Baby_Alchem	64
-Job_Baby_Bard	65
-Job_Baby_Dancer	66
-Job_Baby_Crusader2	67
-Job_Super_Baby	68
+Job_Baby_Swordman	4024
+Job_Baby_Mage	4025
+Job_Baby_Archer	4026
+Job_Baby_Acolyte	4027
+Job_Baby_Merchant	4028
+Job_Baby_Thief	4029
+Job_Baby_Knight	4030
+Job_Baby_Priest	4031
+Job_Baby_Wizard	4032
+Job_Baby_Blacksmith	4033
+Job_Baby_Hunter		4034
+Job_Baby_Assassin	4035
+Job_Baby_Knight2	4036
+Job_Baby_Crusader	4037
+Job_Baby_Monk	4038
+Job_Baby_Sage	4039
+Job_Baby_Rogue	4040
+Job_Baby_Alchem	4041
+Job_Baby_Bard	4042
+Job_Baby_Dancer	4043
+Job_Baby_Crusader2	4044
+Job_Super_Baby	4045
 
 mf_nomemo	0
 mf_noteleport	1
@@ -110,6 +110,8 @@ MaxHp		6	1
 Sp		7	1
 MaxSp		8	1
 BaseJob		119	1
+Karma		4	1
+Manner		5	1
 
 bMaxHP		6
 bMaxSP		8
@@ -131,8 +133,8 @@ bFlee		50
 bFlee2		51
 bCritical	52
 bAspd		53
-bFame		57
-bUnbreakable	58
+bFame		59
+bUnbreakable	60
 
 bAtkRange	1000
 bAtkEle		1001
@@ -213,6 +215,11 @@ bAgiDexStr		1075
 bPerfectHide		1076
 bDisguise		1077
 bClassChange	1078
+bHPDrainValue	1079
+bSPDrainValue	1080
+bWeaponAtk	1081
+bWeaponAtkRate	1082
+bDelayrate	1083
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
@@ -222,6 +229,36 @@ bNoWeaponDamage	2004
 bNoGemStone	2005
 bNoCastCancel2	2006
 bInfiniteEndure	2007
+bUnbreakableWeapon	2008
+bUnbreakableArmor	2009
+bUnbreakableHelm	2010
+bUnbreakableShield	2011
+bLongAtkRate	2012
+bCritAtkRate	2013
+bCriticalAddRace	2014
+bNoRegen	2015
+bAddEffWhenHit	2016
+bAutoSpellWhenHit	2017
+bSkillAtk	2018
+bUnstripable	2019
+bAddDamageByClass	2020
+bSPGainValue	2021
+bIgnoreDefMob	2022
+bHPLossRate	2023
+bAddRace2	2024
+bHPGainValue	2025
+bSubSize	2026
+bDamageWhenUnequip	2027
+bAddItemHealRate	2028
+bLoseSPWhenUnequip	2029
+bExpAddRace	2030
+bSPGainRace	2031
+bSPSubRace2	2032
+bAddEffWhenHitShort	2033
+bUnstripableWeapon	2034
+bUnstripableArmor	2035
+bUnstripableHelm	2036
+bUnstripableShield	2037
 
 
 Eff_Stone	0
@@ -233,6 +270,7 @@ Eff_Curse	5
 Eff_Silence	6
 Eff_Confusion	7
 Eff_Blind	8
+Eff_Bleeding	9
 
 SC_Stone	128
 SC_Freeze	129
@@ -243,9 +281,12 @@ SC_Curse	133
 SC_Silence	134
 SC_Confusion	135
 SC_Blind	136
+SC_Bleeding	124
 SC_SpeedPot0	37
 SC_SpeedPot1	38
 SC_SpeedPot2	39
+SC_SpeedPot3	40
+SC_SpeedUp0	41
 SC_ATKPot	185
 SC_MATKPot	186
 SC_EncPoison	6
@@ -254,5 +295,3 @@ SC_Flame	90
 SC_Frost	91
 SC_Lightning	92
 SC_Seismic	93
-SC_Bleeding	124
-SC_BlockSkill	194

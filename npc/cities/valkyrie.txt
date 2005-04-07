@@ -1,7 +1,19 @@
-// Valkyrie Replacement after kRO.
-// The Jobquest from kRO on how to advance to a Reborn class.
-// Made by: Nana
-// 1.01 bugfixex by Lupus
+//===== eAthena Script ======================================= 
+//= Valkyrie Realm
+//===== By: ==================================================
+//= Nana, fixes by Poki
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= The Jobquest from kRO on how to advance to a Reborn class.
+//===== Additional Comments: ================================= 
+//= v1.1 Made all into functions,additional checks,quest skills,
+//= now Valhallana can return you back. She also makes reborn
+//= process only when you got no Zeny/items (as in kRO) [Lupus]
+//============================================================ 
 
 
 // -== Warp's needed! ==-
@@ -10,13 +22,13 @@ valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
 
 // -== Book of Ymir (Heavens Door) ==-
 yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
-	if(valkyrie_Q == 1) goto L_Faded;
-	if(valkyrie_Q == 2) goto L_Start;
 	mes "[Book of Ymir]";
+	if(valkyrie_Q == 1) goto L_FADED;
+	if(valkyrie_Q == 2) goto L_START;
 	mes ". . . . .";
 	close;
 
-L_Faded:
+L_FADED:
 	mes "[Book of Ymir]";
 	mes "*The book opens as you aproach it*";
 	next;
@@ -27,7 +39,7 @@ L_Faded:
 	mes "*After reading the two first pages you turn the other page, and watches the words fade away as you try to read them...";
 	close;
 
-L_Start:
+L_START:
 	mes "[Book of Ymir]";
 	mes "*The book opens as you aproach it*";
 	next;
@@ -44,68 +56,63 @@ L_Start:
 	mes "[Book of Ymir]";
 	mes "And only after then, the decended ones will aprove you to the highest obedience.. Into the warmth of Valkyrie, you will be welcomed by the gods themself.";
 	next;
-	mes "[Book og Ymir]";
+	mes "[Book of Ymir]";
 	mes "*As you close the book a strange ray of light sourounds you and you suddently feel light. Everything around you fades away and all you can see left is white before you pass out.*";
 	warp "valkyrie",48,9;
-	set valkyrie_Q,0;
 	close;
 }
 
 // -== The Librarian that watches the "Book of Ymir" ==-
 yuno_in02.gat,91,176,5	script	Librarian	754,{
-	if(readparam(19) >= 7) goto L_Pay;
 	mes "[Librarian]";
+	if(valkyrie_Q>0) goto L_DONE;
+	if(Class >= 7) goto L_PAY;
 	mes "Have a look around, but dont touch the book. Only a few chosen one can read its wise words.";
 	close;
 
-L_Pay:
-	mes "[Librarian]";
+L_PAY:
 	mes "You seem like a worthy human.";
 	mes "I, the 78th Librarian of the secret order sworn to protect this book wont thread lightly on you.";
 	mes "In order to let me allow you to view into this wonderous book, you have to do two things for me.";
 	next;
 	mes "[Librarian]";
-	mes "One. You have to pay me 1,285,000 zeny. Remember that you need the accurate amount. Not over or under 1,285,000z.";
+	mes "One. You have to pay me 1,285,000 Zeny. Remember that you need the accurate amount. Not over or under 1,285,000z.";
 	mes "Two. You have to venture deep inside of Yuno castle, into the Heart of Ymir.";
 	mes "Remember that you cannot view the book unless you have done this.";
 	mes "Now go, brave one.";
-	menu "Pay now",pay_now,"Close",-;
-	close;
+	menu "Pay now",-,"Close",M_EXIT;
 
-pay_now:
-	if(readparam(20) < 1285000) goto accurate_z;
-	if(readparam(20) > 1285000) goto accurate_z;
+	if(Zeny != 1285000) goto L_WRONGZ;
 	mes "[Librarian]";
 	mes "Go now, into Heart of Ymir";
 	mes "There, you'll find the last pice of information before you can open the book.";
 	set valkyrie_Q,1;
-	set zeny,zeny-1285000;
+	set Zeny,0;
 	close;
 
-accurate_z:
+L_WRONGZ:
 	mes "[Librarian]";
-	mes "You didnt bring me the accurate number of zeny i wanted. Bring me back only 1,285,000 zeny!";
+	mes "You didnt bring me the accurate number of zeny I wanted. Bring me back only 1,285,000 zeny!";
 	mes "Not more, nor less.";
+	close;
+
+L_DONE:
+	mes "Why? You have already paid me.";
+	mes "Now go and look for the Book of Ymir.";
+M_EXIT:
 	close;
 }
 
 // -== The Heart of Ymir ==-
 yuno_in05.gat,80,44,0	script	Heart of Ymir	803,{
-	if(valkyrie_Q < 1) goto not_applicable;
-	if(valkyrie_Q == 1) goto L_Listen;
-	if(valkyrie_Q == 2) goto L_Done;
 	mes "[Heart of Ymir]";
-	mes "The book wont open.";
-	close;
-
-not_applicable:
-	mes "[Heart of Ymir]";
+	if(valkyrie_Q == 1) goto L_LISTEN;
+	if(valkyrie_Q == 2) goto L_DONE;
 	mes "The book wont open.";
 	mes "It seems like you have to pay the Librarian to open this book first!";
 	close;
 
-L_Listen:
-	mes "[Heart of Ymir]";
+L_LISTEN:
 	mes "Thus upon hard times and our self esteem is at it's lowest, then is when our faith have to be the strongest.";
 	mes "For aeon's the secret guardians of the path to heaven has protected the sacret gate from evil spirits entering it.";
 	mes "Thus, the bonds became to weaken over time.. Thats when the Legion of Sages started recruiting and making young, brave, quick minded mages, sages, teaching them the laws and propositions of our world.";
@@ -117,8 +124,7 @@ L_Listen:
 	set valkyrie_Q,2;
 	close;
 
-L_Done:
-	mes "[Heart of Ymir]";
+L_DONE:
 	mes "I have nothing more to teach you, nor to tell you.";
 	close;
 }
@@ -128,22 +134,317 @@ yuno_in02.gat,90,77,4	script	Researcher	744,{
 	mes "[Researcher]";
 	mes "Argh, where is it!?";
 	mes "They said that it would be around here somewhere..";
-	mes "Maybe i have to look deeper into this castle..";
+	mes "Maybe I have to look deeper into this castle..";
+	emotion 1;
 	close;
 }
 
 // -== Valhallana ==-
-valkyrie.gat,48,86,6	script	Valkyrie	811,{
-	if(readparam(19) < 7) goto L_cannot;
-	mes "[Valhallana]";
-	mes "Welcome to Valkyrie "+strcharinfo(0)+", from this point of, there is no returning back.";
 	mes "Please go over there, to the person representing your class.";
 	mes "Good Luck.";
+	mes "You don't belong here yet.";
+}
+
+// -== Valhallana ==-
+valkyrie.gat,48,86,6	script	Valkyrie	811,{
+	if(Class == 23) goto L_SN;
+	if(Class >= 24) goto L_ALREADY;
+	if(BaseLevel >= 99 && JobLevel >= 50 && Class >= 7) goto L_CHANGE;
+	if(Class < 7) goto L_NOTHING;
+
+	mes "[Valhallana]";
+	mes "You need 99 Base Level and 50 Job Level.";
+	mes "Also you must get rid of all of your money and items.";
+	next;
+	goto L_NOTHING;
+
+L_SN:
+	mes "[Valhallana]";
+	mes "Welcome to Valkyrie "+strcharinfo(0)+".";
+	mes "I see, you have followed a hard way of Super Novice.";
+	next;
+	mes "[Valhallana]";
+	mes "I am sorry, but I can't help you.";
+	emotion 17;
+	next;
+	goto L_NOTHING;
+
+L_ALREADY:
+	mes "[Valhallana]";
+	mes "You have been reborn already. I can't help you more.";
+	next;
+//	goto L_NOTHING;
+
+L_NOTHING:
+	mes "[Valhallana]";
+	mes "Do you wish to go back in Your world?";
+	next;
+	menu "Yes",L_Y,"No",-;
+
+	mes "[Valhallana]";
+	mes "As you wish...";
 	close;
 
-L_cannot:
+L_Y:
 	mes "[Valhallana]";
-	mes "You don't belong here yet.";
-	warp "prontera",100,100;
+	mes "As you wish...";
+	next;
+	warp "yuno_in02.gat",93,204;
+	close;
+
+L_CHANGE:
+	mes "[Valhallana]";
+	mes "Welcome to Valkyrie "+strcharinfo(0)+", from this point of, there is no returning back.";
+	next;
+	if(Zeny || Weight) goto L_ZENYITEMS;
+	if(checkcart(0)) goto L_CART;
+	if(checkfalcon(0)) goto L_FALCON;
+	if(checkriding(0)) goto L_PECO;
+	if(skillpoint > 0) goto L_SKILLPNTS;
+
+	mes "[Valhallana]";
+	mes "Let's start your reincarnation ceremony...";
+	next;
+
+	set ADVJOB,Class+4001; //memo the target 3rd Job ID
+
+//	callfunc "F_ToHigh",25,"Swordman High",31,"Lord Knight",144,145,146,0;
+//	callfunc "F_ToHigh",28,"Acolyte High",32,"High Priest",156,0,0,0;
+//	callfunc "F_ToHigh",26,"High Mage",33,"High Wizard",157,0,0,0;
+//	callfunc "F_ToHigh",29,"Merchant High",34,"White Smith",153,154,155,0;
+//	callfunc "F_ToHigh",27,"High Archer",35,"Sniper",147,148,0,0;
+//	callfunc "F_ToHigh",30,"Theif High",36,"Assassin Cross",149,150,151,152;
+//	callfunc "F_ToHigh",25,"Swordman High",38,"Paladin",144,145,146,0;
+//	callfunc "F_ToHigh",28,"Acolyte High",39,"Champion",156,0,0,0;
+//	callfunc "F_ToHigh",26,"High Mage",40,"Professor",157,0,0,0;
+//	callfunc "F_ToHigh",30,"Theif High",41,"Stalker",149,150,151,152;
+//	callfunc "F_ToHigh",29,"Merchant High",42,"Creator",153,154,155,0;
+//	callfunc "F_ToHigh",27,"High Archer",43,"Clown",147,148,0,0;
+//	callfunc "F_ToHigh",27,"High Archer",44,"Gypsy",147,148,0,0;
+
+	if( getskilllv(144) || getskilllv(156) || getskilllv(157) || getskilllv(153) || getskilllv(147) || getskilllv(149) ) set QSK1,1;
+	if( getskilllv(145) || getskilllv(154) || getskilllv(148) || getskilllv(150) ) set QSK2,1;
+	if( getskilllv(146) || getskilllv(155) || getskilllv(151) ) set QSK3,1;
+	if( getskilllv(152) ) set QSK4,1;
+	mes "[Valhallana]";
+	mes "Done...";
+	mes "Good luck.";
+	jobchange 24; //Novice High
+	resetlvl(1);
+	next;
+	if(ADVJOB == Job_Assassin + 4001 || ADVJOB == Job_Rogue + 4001 ) goto L_Mor;
+	if(ADVJOB == Job_Blacksmith + 4001 || ADVJOB == Job_Alchem + 4001 ) goto L_Alb;
+	if(ADVJOB == Job_Hunter + 4001 || ADVJOB == Job_Bard + 4001 || ADVJOB == Job_Dancer + 4001 ) goto L_Pay;
+	if(ADVJOB == Job_Knight + 4001 || ADVJOB == Job_Crusader + 4001 ) goto L_Izl;
+	if(ADVJOB == Job_Priest + 4001 || ADVJOB == Job_Monk + 4001 ) goto L_Pro;
+	if(ADVJOB == Job_Wizard + 4001 || ADVJOB == Job_Sage + 4001 ) goto L_Gef;
+	goto L_Pro;
+
+L_ZENYITEMS:
+	mes "[Valhallana]";
+	mes "Your money and items do rope you to your routine life.";
+	mes "You should get rid of them.";
+	close;
+
+L_CART:
+	mes "[Valhallana]";
+	mes "Please, drop your cart. And we'll continue.";
+	close;
+
+L_FALCON:
+	mes "[Valhallana]";
+	mes "Please, free your Falcon. And we'll continue.";
+	close;
+
+L_PECO:
+	mes "[Valhallana]";
+	mes "Please, free your Pecopeco. And we'll continue.";
+	close;
+
+L_SKILLPNTS:
+	mes "[Valhallana]";
+	mes "You will need to use up all of your skill points if you want me to continue.";
+	close;
+
+L_Mor:
+	savepoint "morocc.gat",160,94;
+	warp "morocc.gat",160,94;
+	close;
+
+L_Alb:
+	savepoint "alberta.gat",116,57;
+	warp "alberta.gat",116,57;
+	close;
+
+L_Pay:
+	savepoint "payon.gat",155,90;
+	warp "payon.gat",155,90;
+	close;
+
+L_Izl:
+	savepoint "izlude.gat",94,103;
+	warp "izlude.gat",94,103;
+	close;
+
+L_Pro:
+	savepoint "prontera.gat",273,354;
+	warp "prontera.gat",273,354;
+	close;
+
+L_Gef:
+	savepoint "geffen.gat",120,100;
+	warp "geffen.gat",120,100;
+	close;
+}
+
+// function HIGH NOVICE -> HIGH 1
+//getarg(0) - High Job ID
+//getarg(1) - High Job Name
+//getarg(2) - 3rd Job ID
+//getarg(3) - 3rd Job Name
+//getarg(4) - Quest Skill N? You can pass 0, if there's no Quest Skill
+//getarg(5) - Quest Skill N?
+//getarg(6) - Quest Skill N?
+//getarg(7) - Quest Skill N?
+//getarg(8) - current NPC's name
+
+function	script	F_ToHigh	{
+	if(Class == 3977+getarg(0) ) goto L_WELCOME; //3rd Job
+	if(Class >= 4008) goto L_ALREADY; //already advanced class
+	if(Class == 4001 && ADVJOB == (3977+getarg(2))) goto L_GETHIGH; //High Novice -> High XXXX
+	return; //this char doesn't want to get HIGH class
+
+L_GETHIGH:
+	mes "["+getarg(8)+"]";
+	if(JobLevel < 10) goto L_NOTREADY;
+	if(checkcart(0)) goto L_CART;
+	if(checkfalcon(0)) goto L_FALCON;
+	if(checkriding(0)) goto L_PECO;
+	if(skillpoint > 0) goto L_SKILLPNTS;
+
+	mes "Hello there "+strcharinfo(0)+"!";
+	mes "You've made a brave choice in coming here to be reborn and stepping forth into the advanced ranks,";
+	mes "Now... close your eyes.";
+	next;
+	mes "["+getarg(8)+"]";
+	mes "Open your eyes.";
+	mes "You have become a "+getarg(1)+".";
+	jobchange getarg(0); //High Class
+	next;
+	if (!(QSK1 || QSK2 || QSK3 || QSK4)) goto L_NO_QSKILL;
+	mes "["+getarg(8)+"]";
+	mes "Let me just add in the missing Quest Skills you lost under the Reborn process, "+strcharinfo(0)+".";
+	next;
+//return learnt quest skills
+	if (getarg(4)) skill getarg(4),QSK1,0;
+	set SQK1,0;
+	if (getarg(5)) skill getarg(5),QSK2,0;
+	set SQK2,0;
+	if (getarg(6)) skill getarg(6),QSK3,0;
+	set SQK3,0;
+	if (getarg(7)) skill getarg(7),QSK4,0;
+	set SQK4,0;
+
+L_NO_QSKILL:
+	mes "["+getarg(8)+"]";
+	mes "I wish you good fortune in the near future!";
+	emotion 46;
+	close;
+
+L_NOTREADY:
+	mes "You are not ready to become a "+getarg(1)+".";
+	mes "You have to raise your Job Level to 10.";
+	emotion 0;
+	close;
+
+L_SKILLPNTS:
+	mes "You will need to use up all of your skill points if you want me to continue.";
+	emotion 20;
+	close;
+
+L_CART:
+	mes "Please, drop your cart. And we'll continue.";
+	emotion 20;
+	close;
+
+L_FALCON:
+	mes "Please, free your Falcon. And we'll continue.";
+	emotion 20;
+	close;
+
+L_PECO:
+	mes "Please, free your Pecopeco. And we'll continue.";
+	emotion 20;
+	close;
+
+L_WELCOME:
+	mes "["+getarg(8)+"]";
+	mes "You are welcome, "+strcharinfo(0)+"!";
+	mes "We always glad to see here a "+getarg(1)+"!";
+	close;
+
+L_ALREADY:
+	mes "["+getarg(8)+"]";
+	mes "It's such a big honor to salute envoys of Valhalla.";
+	mes "Come again.";
+	emotion 2;
+	close;
+}
+
+// function GET 3rd JOB
+//getarg(0) - High Job ID
+//getarg(1) - High Job Name
+//getarg(2) - 3rd Job ID
+//getarg(3) - 3rd Job Name
+function	script	F_Rebirth	{
+	mes "["+getarg(3)+"]";
+	if(Class >= 4008) goto L_ALREADY; //already advanced class
+	if(Class == (3977+getarg(0)) && ADVJOB == (3977+getarg(2))) goto L_GET3RD; //Hight XXXX -> 3rd Job
+	mes "Go talk to either Valhallana or my collegues...";
+	emotion 17;
+	close;
+
+L_GET3RD:
+	if(JobLevel < 45) goto L_NOTREADY;
+	if(checkcart(0)) goto L_CART;
+	if(checkfalcon(0)) goto L_FALCON;
+	if(checkriding(0)) goto L_PECO;
+	if(skillpoint > 0) goto L_SKILLPNTS;
+
+	mes "Congratulations!";
+	mes "You have trained well. Now stroll here as a "+getarg(3)+"!";
+	jobchange getarg(2); //Rebirth Class
+	set ADVJOB,0;
+	close;
+
+L_NOTREADY:
+	mes "You have went so far to get here. But I am sorry, you aren't quite ready to become a "+getarg(3)+".";
+	mes "You need at least Job Level 45 or higher.";
+	emotion 0;
+	close;
+
+L_SKILLPNTS:
+	mes "You will need to use up all of your skill points if you want me to continue.";
+	emotion 20;
+	close;
+
+L_CART:
+	mes "Please, drop your cart. And we'll continue.";
+	emotion 20;
+	close;
+
+L_FALCON:
+	mes "Please, free your Falcon. And we'll continue.";
+	emotion 20;
+	close;
+
+L_PECO:
+	mes "Please, free your Pecopeco. And we'll continue.";
+	emotion 20;
+	close;
+
+L_ALREADY:
+	mes "Well, hello there! You have been reborn once, there is no second chance.";
+	emotion 2;
 	close;
 }

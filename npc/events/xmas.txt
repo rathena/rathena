@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any version of eAthena
 //===== Description: =========================================
@@ -13,15 +13,18 @@
 //= This npc will disable, the current Santa Claus npc.
 //===== Additional Comments: =================================
 //= Fixed the spawns [shadowlady]
+//= 1.1 Added Xmas Jakk, fixed 2 exploits, fixed reward Box ID [Lupus]
 //============================================================
 
 
 xmas_in.gat,100,96,4	script	Father Christmas::Santa2	718,{
 	mes "[Santa Claus]";
-	if(event_xmas == 1) goto L_Start;
-	mes "Merry Christmas! I have a gift for you! Ho Ho Ho!";
-	getitem 664,1;
-	set event_xmas,1;
+	if(#event_xmas > 0 && #event_xmas < 30 ) goto L_Start;
+	mes "Merry Christmas!";
+	if(Class==0 || #event_xmas>=30 ) close; //anti exploit protection
+	mes "I have a gift for you! Ho Ho Ho!";
+	getitem rand(664,667),1; //gives one of 4 gift boxes
+	set #event_xmas,#event_xmas+1;
 	close;
 
 L_Start:
@@ -72,12 +75,13 @@ L_Start:
 	M_1:
 		mes "[Santa Claus]";
 		if(countitem(7034) < 3) goto L_NotEnuf;
+		delitem 7034,3;
 		mes "Seems you've been doing a";
 		mes "good job of taking down those";
 		mes "fake Santas.  Keep it up!";
 		next;
-		delitem 7034,3;
-		getitem 664,1;
+		getitem 644,1; //Gift Box Prototype
+		set #event_xmas,#event_xmas+1;
 		mes "[Santa Claus]";
 		mes "There's your reward.";
 		mes "If you get 3 more, I'll give you another.";
@@ -87,8 +91,7 @@ L_Start:
 		L_NotEnuf:
 			mes "You don't have enough socks as proof.";
 			mes "Go take down those evil Santas";
-			mes "and get more for me and I'll";
-			mes "reward you.";
+			mes "and get more for me and I'll reward you.";
 			close;
 	M_End:
 		mes "[Santa Claus]";
@@ -256,3 +259,6 @@ cmd_fild06.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 cmd_fild07.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 cmd_fild08.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 cmd_fild09.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
+
+gef_dun01.gat,0,0,0,0	monster	Xmas Jakk	1244,5,0,0,0
+gefenia02.gat,0,0,0,0	monster	Xmas Jakk	1244,5,0,0,0

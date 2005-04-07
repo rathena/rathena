@@ -15,8 +15,7 @@
 //============================================================
 
 
-geffen.gat,95,201,3	script	Shilo	50,
-{
+geffen.gat,95,201,3	script	Shilo	50,{
 	mes "[Shilo]";
 	if(easter_Q == 1) goto L_Check;
 	mes "*Sigh*...... Where is my sister!?";

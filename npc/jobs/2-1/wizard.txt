@@ -6,7 +6,7 @@
 //= converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.3c
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -18,13 +18,14 @@
 //= v1.2 Changed global variable names to unique ones.
 //= v1.3 Rollback from the wrong Kashy's fix
 //= v1.3a Fixed issue with duplicating monsters thx to Bison.[kobra_k88]
+//= v1.3b changed one Horong to Frilldora (now 3rd room contains 1 agressive mob.)
+//= v1.3c more simplified fire room - removed agressive Desert Wolf. Got it from Freya [Lupus]
 //============================================================ 
 
 
 
 //<=================== Some dog =========================>
-gef_tower.gat,107,35,5	script	Some Dog	81,
-{
+gef_tower.gat,107,35,5	script	Some Dog	81,{
 	if(Class == Job_Mage) goto L_JobMage;
 	if(callfunc("Is_Magic_Class")) goto L_Magic;
 	if(callfunc("Is_Holy_Class")) goto L_Holy;
@@ -153,8 +154,7 @@ L_JobMage:
 
 
 //<=========================================== Registrar and Examiner Catherine Medichi ==============================================>\\
-gef_tower.gat,111,37,4	script	Catherine Medichi	68,
-{
+gef_tower.gat,111,37,4	script	Catherine Medichi	68,{
 	mes "[Catherine Medichi]";
 	if(Class == Job_Wizard) goto L_Wizard;
 	if(Class == Job_Novice) goto L_Novice;
@@ -495,8 +495,7 @@ L_Mage:
 
 
 //<================================================ Examiner: Raul Expagarus ==================================================>\\
-gef_tower.gat,102,24,3	script	Raul Expagarus	735,
-{
+gef_tower.gat,102,24,3	script	Raul Expagarus	735,{
 	mes "[Raul Expagarus]";
 	if(Class == Job_Mage) goto L_Mage;
 	if(Class == Job_Wizard) goto L_Wizard;
@@ -1130,8 +1129,7 @@ L_Mage:
 
 <====================================================== Test Arena ========================================================>\\
 // Test Guide  ---------------------------------------------------------------------------------
-job_wiz.gat,50,165,4	script	Wizard Test Guide::WzTG	123,
-{
+job_wiz.gat,50,165,4	script	Wizard Test Guide::WzTG	123,{
 	mes "[Test Guide]";
 	mes "Welcome.  I will be your guide for the Wizard Test.";
 	next;
@@ -1186,8 +1184,7 @@ OnStart:
 }
 
 // Room of Water  -----------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	WaterRm	-1,
-{
+job_wiz.gat,1,1,1	script	WaterRm	-1,{
 	set $@WzRm, 1;		// used to determine which map area(room) to make time announcements in
 	set $@WzMOB, 8;		//used as a counter for the monsters that are summoned
 	monster "job_wiz.gat",109,174,"Phen",1158,1,"WaterRm::OnMyMobDead1";
@@ -1239,8 +1236,7 @@ OnMyMobDead2:
 }
 
 // Room of Earth -----------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	EarthRm	-1,
-{
+job_wiz.gat,1,1,1	script	EarthRm	-1,{
 	set $@WzRm, 2;
 	set $@WzMOB, 10;
 	monster "job_wiz.gat",111,102,"Yoyo",1057,1,"EarthRm::OnMyMobDead1";
@@ -1296,10 +1292,9 @@ OnMyMobDead2:
 }
 
 // Room of Fire ------------------------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	FireRm	-1,
-{
+job_wiz.gat,1,1,1	script	FireRm	-1,{
 	set $@WzRm, 3;
-	set $@WzMOB, 8;
+	set $@WzMOB, 7;
 	monster "job_wiz.gat",58,110,"Zerom",1178,1,"FireRm::OnMyMobDead1";
 	monster "job_wiz.gat",33,110,"Flail Goblin",1123,1,"FireRm::OnMyMobDead1";
 	monster "job_wiz.gat",40,103,"Scorpion",1001,1,"FireRm::OnMyMobDead1";
@@ -1307,7 +1302,6 @@ job_wiz.gat,1,1,1	script	FireRm	-1,
 	monster "job_wiz.gat",40,92,"Peco Peco",1019,1,"FireRm::OnMyMobDead1";
 	monster "job_wiz.gat",51,92,"Elder Willow",1033,1,"FireRm::OnMyMobDead1";
 	monster "job_wiz.gat",37,89,"Metaller",1058,1,"FireRm::OnMyMobDead1";
-	monster "job_wiz.gat",54,89,"Desert Wolf",1106,1,"FireRm::OnMyMobDead1";
 	initnpctimer "TimerWz";
 	end;
 
@@ -1324,8 +1318,8 @@ OnTimer2000:
 	set $@WzMOB, 3;
 	areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: You now must defeat the door gaurds! Hurry!.",8;
 	monster "job_wiz.gat",44,99,"Greatest General",1277,1,"FireRm::OnMyMobDead2";
-	monster "job_wiz.gat",43,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
-	monster "job_wiz.gat",45,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
+	monster "job_wiz.gat",43,99,"Hode",1127,1,"FireRm::OnMyMobDead2";
+	monster "job_wiz.gat",45,99,"Hode",1127,1,"FireRm::OnMyMobDead2";
 	setnpctimer 120000, "TimerWz";
 	startnpctimer "TimerWz";
 	end;
@@ -1349,8 +1343,7 @@ OnMyMobDead2:
 
 
 // Timer -----------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	TimerWz	-1,
-{
+job_wiz.gat,1,1,1	script	TimerWz	-1,{
 
 OnTimer1000:
 	if($@WzRm==1) areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: Room of Water, testing will begin.",8;

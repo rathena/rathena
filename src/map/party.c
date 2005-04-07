@@ -30,7 +30,7 @@ int party_send_xyhp_timer(int tid,unsigned int tick,int id,int data);
  */
 static int party_db_final(void *key,void *data,va_list ap)
 {
-	free(data);
+	aFree(data);
 	return 0;
 }
 void do_final_party(void)
@@ -49,7 +49,7 @@ void do_init_party(void)
 // 検索
 struct party *party_search(int party_id)
 {
-	return numdb_search(party_db,party_id);
+	return (struct party *) numdb_search(party_db,party_id);
 }
 int party_searchname_sub(void *key,void *data,va_list ap)
 {
@@ -69,12 +69,12 @@ struct party* party_searchname(char *str)
 	return p;
 }
 // 作成要求
-int party_create(struct map_session_data *sd,char *name)
+int party_create(struct map_session_data *sd,char *name,int item,int item2)
 {
 	nullpo_retr(0, sd);
 
 	if(sd->status.party_id==0)
-		intif_create_party(sd,name);
+		intif_create_party(sd,name,item,item2);
 	else
 		clif_party_created(sd,2);
 	return 0;
@@ -91,7 +91,7 @@ int party_created(int account_id,int fail,int party_id,char *name)
 	if(fail==0){
 		struct party *p;
 		sd->status.party_id=party_id;
-		if((p=numdb_search(party_db,party_id))!=NULL){
+		if((p=(struct party *) numdb_search(party_db,party_id))!=NULL){
 			printf("party: id already exists!\n");
 			exit(1);
 		}
@@ -121,7 +121,7 @@ int party_check_member(struct party *p)
 	nullpo_retr(0, p);
 
 	for(i=0;i<fd_max;i++){
-		if(session[i] && (sd=session[i]->session_data) && sd->state.auth){
+		if(session[i] && (sd=(struct map_session_data *) session[i]->session_data) && sd->state.auth){
 			if(sd->status.party_id==p->party_id){
 				int j,f=1;
 				for(j=0;j<MAX_PARTY;j++){	// パーティにデータがあるか確認
@@ -149,7 +149,7 @@ int party_recv_noinfo(int party_id)
 	int i;
 	struct map_session_data *sd;
 	for(i=0;i<fd_max;i++){
-		if(session[i] && (sd=session[i]->session_data) && sd->state.auth){
+		if(session[i] && (sd=(struct map_session_data *) session[i]->session_data) && sd->state.auth){
 			if(sd->status.party_id==party_id)
 				sd->status.party_id=0;
 		}
@@ -164,7 +164,7 @@ int party_recv_info(struct party *sp)
 	
 	nullpo_retr(0, sp);
 
-	if((p=numdb_search(party_db,sp->party_id))==NULL){
+	if((p=(struct party *) numdb_search(party_db,sp->party_id))==NULL){
 		p=(struct party *)aCalloc(1,sizeof(struct party));
 		numdb_insert(party_db,sp->party_id,p);
 		
@@ -175,7 +175,7 @@ int party_recv_info(struct party *sp)
 	
 	for(i=0;i<MAX_PARTY;i++){	// sdの設定
 		struct map_session_data *sd = map_id2sd(p->member[i].account_id);
-		p->member[i].sd=(sd!=NULL && sd->status.party_id==p->party_id)?sd:NULL;
+		p->member[i].sd=(sd!=NULL && sd->status.party_id==p->party_id && !sd->state.waitingdisconnect)?sd:NULL;
 	}
 
 	clif_party_info(p,-1);
@@ -250,11 +250,13 @@ int party_reply_invite(struct map_session_data *sd,int account_id,int flag)
 // パーティが追加された
 int party_member_added(int party_id,int account_id,int flag)
 {
-	struct map_session_data *sd= map_id2sd(account_id),*sd2;
-	if(sd==NULL && flag==0){
-		if(battle_config.error_log)
-			printf("party: member added error %d is not online\n",account_id);
-		intif_party_leave(party_id,account_id); // キャラ側に登録できなかったため脱退要求を出す
+	struct map_session_data *sd = map_id2sd(account_id),*sd2;
+	if(sd == NULL){
+		if (flag == 0) {
+			if(battle_config.error_log)
+				printf("party: member added error %d is not online\n",account_id);
+			intif_party_leave(party_id,account_id); // キャラ側に登録できなかったため脱退要求を出す
+		}
 		return 0;
 	}
 	sd2=map_id2sd(sd->party_invite_account);
@@ -417,7 +419,7 @@ int party_recv_movemap(int party_id,int account_id,char *map,int online,int lv)
 	
 	for(i=0;i<MAX_PARTY;i++){	// sd再設定
 		struct map_session_data *sd= map_id2sd(p->member[i].account_id);
-		p->member[i].sd=(sd!=NULL && sd->status.party_id==p->party_id)?sd:NULL;
+		p->member[i].sd=(sd!=NULL && sd->status.party_id==p->party_id && !sd->state.waitingdisconnect)?sd:NULL;
 	}
 
 	party_send_xy_clear(p);	// 座標再通知要請
@@ -481,6 +483,7 @@ int party_send_message(struct map_session_data *sd,char *mes,int len)
 	if(sd->status.party_id==0)
 		return 0;
 	intif_party_message(sd->status.party_id,sd->status.account_id,mes,len);
+        party_recv_message(sd->status.party_id,sd->status.account_id,mes,len);
 	return 0;
 }
 
@@ -583,16 +586,23 @@ int party_exp_share(struct party *p,int map,int base_exp,int job_exp,int zeny)
 
 	nullpo_retr(0, p);
 	
-	for(i=c=0;i<MAX_PARTY;i++)
-		if((sd=p->member[i].sd)!=NULL && sd->bl.m==map)
+	for (i=c=0; i < MAX_PARTY; i++)
+		if ((sd = p->member[i].sd) != NULL && p->member[i].online && sd->bl.m == map /*&& session[sd->fd] != NULL*/)	// should be done in socket.c
 			c++;
-	if(c==0)
+
+	if(c == 0)
 		return 0;
-	for(i=0;i<MAX_PARTY;i++)
-		if((sd=p->member[i].sd)!=NULL && sd->bl.m==map) {
-			pc_gainexp(sd,base_exp/c+1,job_exp/c+1);
-			if(battle_config.zeny_from_mobs) // zeny from mobs [Valaris]
-				pc_getzeny(sd,zeny/c+1);
+	for (i = 0; i < MAX_PARTY; i++)
+		if ((sd = p->member[i].sd) != NULL && p->member[i].online && sd->bl.m == map /*&& session[sd->fd] != NULL*/) {
+			if (battle_config.idle_no_share && (/* pc_issit(sd) || */ sd->chatID || (sd->idletime < (tick_ - 120))))
+				continue;
+		#ifdef TWILIGHT
+			pc_gainexp(sd,base_exp,job_exp);
+		#else
+			pc_gainexp(sd,(base_exp/c)+1,(job_exp/c)+1);
+		#endif
+			if (battle_config.zeny_from_mobs) // zeny from mobs [Valaris]
+				pc_getzeny(sd,(zeny/c)+1);
 		}
 	return 0;
 }

@@ -48,7 +48,7 @@ void vending_vendinglistreq(struct map_session_data *sd,int id)
  */
 void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned char *p)
 {
-	int i, j, w, z, new = 0, blank, vend_list[12];
+	int i, j, w, z, new_ = 0, blank, vend_list[12];
 	short amount, index;
 	struct map_session_data *vsd = map_id2sd(id);
 
@@ -99,8 +99,8 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		case ADDITEM_EXIST:
 			break;
 		case ADDITEM_NEW:
-			new++;
-			if (new > blank)
+			new_++;
+			if (new_ > blank)
 				return;	// 種類数超過
 			break;
 		case ADDITEM_OVERAMOUNT:
@@ -112,6 +112,7 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		clif_tradecancelled(vsd);
 		return;
 	}
+
 	pc_payzeny(sd, z);
 	pc_getzeny(vsd, z);
 	for(i = 0; 8 + 4 * i < len; i++) {
@@ -122,6 +123,13 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		vsd->vending[vend_list[i]].amount -= amount;
 		pc_cart_delitem(vsd, index, amount, 0);
 		clif_vendingreport(vsd, index, amount);
+
+		//log added by Lupus
+		if(log_config.vend > 0) {
+			log_vend(sd,vsd, index, amount, z); // for Item + Zeny. log.
+			//we log ZENY only with the 1st item. Then zero it for the rest items 8).
+			z = 0;
+		}
 	}
 }
 
@@ -141,11 +149,14 @@ void vending_openvending(struct map_session_data *sd,int len,char *message,int f
 	}
 
 	if (flag) {
-		for(i = 0; 85 + 8 * i < len; i++) {
+		for(i = 0; (85 + 8 * i < len) && (i < MAX_VENDING); i++) {
 			sd->vending[i].index = *(short*)(p+8*i)-2;
 			sd->vending[i].amount = *(short*)(p+2+8*i);
 			sd->vending[i].value = *(int*)(p+4+8*i);
-			if(sd->vending[i].value>battle_config.vending_max_value)sd->vending[i].value=battle_config.vending_max_value;
+			if(sd->vending[i].value > battle_config.vending_max_value)
+				sd->vending[i].value=battle_config.vending_max_value;
+			else if(sd->vending[i].value == 0)
+				sd->vending[i].value = 1000000;	// auto set to 1 million [celest]
 			// カート内のアイテム数と販売するアイテム数に相違があったら中止
 			if(pc_cartitem_amount(sd, sd->vending[i].index, sd->vending[i].amount) < 0 || sd->vending[i].value < 0) { // fixes by Valaris and fritz
 				clif_skill_fail(sd, MC_VENDING, 0, 0);

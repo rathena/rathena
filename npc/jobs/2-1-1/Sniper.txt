@@ -1,104 +1,19 @@
-// Advance Class jobchanger after kRO Normals.
-// Checks if the player have any questskills, cart\falcon, level and such.
-// Made by Nana.
+//===== eAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= v1.1 Made all into functions, additional checks, etc. [Lupus]
+//============================================================ 
 
 // -== Sniper ==-
 valkyrie.gat,44,55,6	script	Sniper	727,{
-	if(getskilllv(147) > 0) set @qsk,1;
-	if(getskilllv(148) > 0) set @qsk1,1;
-	if(checkfalcon(0) > 0) goto L_Falcon;
-	if(checkcart(0) > 0) goto L_Cart;
-	if(readparam(12) > 0) goto Skill_Points;
-	if(readparam(19) >= 4008) goto L_Advance;
-	if((readparam(19) == 4001) && (readparam(55) >= 10)) goto L_HNov;
-	if((readparam(19) == 4004) && (readparam(55) >= 45)) goto L_HARC;
-	if(readparam(19) < 7) goto L_Class;
-	if(readparam(19) == 4001) goto L_Class1;
-	if(readparam(19) == 4004) goto L_Class;
-	if((readparam(11) >= 99) && (readparam(55) >= 50) && (readparam(19) >= 7)) goto L_Change;
-	if((readparam(11) < 99) && (readparam(55) < 50)) goto L_Levels;
-	mes "[Sniper]";
-	mes "Hi there...";
-	close;
-
-L_Change:
-	mes "[Sniper]";
-	mes "Hello there "+strcharinfo(0)+"!";
-	mes "You've made a brave choice in coming here to be reborn and stepping forth into the ranks of Sniper,";
-	mes "I wish you good fortune in the near future!";
-	jobchange 24;
-	resetlvl(1);
-	close;
-
-L_Cart:
-	mes "[Sniper]";
-	mes "Please un-equip that cart before continuing.";
-	close;
-
-L_Class1:
-	mes "[Sniper]";
-	mes "You're not ready to become an High Archer yet.";
-	close;
-
-L_Class:
-	mes "[Sniper]";
-	mes "You've come far to get here. unfortunately, you're not ready to become an Sniper yet.";
-	close;
-
-L_Levels:
-	mes "[Sniper]";
-	mes "You're doing great! keep up the good work. You'll eventually get to the point where you can be an Sniper";
-	close;
-
-L_HNov:
-	mes "[Sniper]";
-	mes "Tread lightly ahead as you're about to enter the distinguished world of Ragnarok.";
-	mes "Must great fortune follow you!";
-	jobchange 27;
-	next;
-	mes "[Sniper]";
-	mes "Let me just add in the missing Quest Skills you lost under the Reborn process if you had any, "+strcharinfo(0)+".";
-	next;
-	if(@qsk > 0) goto qsk;
-	if(@qsk1 > 0) goto qsk1;
-	if(@qsk2 > 0) goto qsk2;
-	if(@qsk3 > 0) goto qsk3;
-	next;
-qsk:
-	skill 147,1,0;
-	set @qsk,0;
-	if(@qsk1 > 0) goto qsk1;
-	goto L_HNov_2;
-qsk1:
-	skill 148,1,0;
-	set @qsk1,0;
-	if(@qsk > 0) goto qsk;
-	goto L_HNov_2;
-
-L_HNov_2:
-	mes "[Sniper]";
-	mes "Now when the formalities are fixed, I congratulate you on your Advancement to High Archer";
-	close;
-L_HARC:
-	mes "[Sniper]";
-	mes "Congratulations!";
-	mes "You're not finally after alot of hard work, able to enter the halls of Valkyrie as an Sniper!";
-	jobchange 35;
-	close;
-
-Skill_Points:
-	mes "[Sniper]";
-	mes "Please use all of your skillpoints before proceeding.";
-	close;
-
-L_Advance:
-	mes "[Sniper]";
-	mes "Hey there! You are already an Reborn. You cannot reach any higher";
-	mes "*whistles*";
-	close;
-
-L_Falcon:
-	mes "[Sniper]";
-	mes "Please take your Falcon off before proceeding "+strcharinfo(0)+".";
-	close;
+	callfunc "F_Rebirth",27,"High Archer",35,"Sniper",147,148,0,0;
 }

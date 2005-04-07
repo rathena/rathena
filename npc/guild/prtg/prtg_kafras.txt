@@ -36,7 +36,7 @@ OnRecvCastlePt02:
 
 
 // Castle 3 ========================
-//prtg_cas03.gat,181,215,4	script	Kafra Service#Pt03	117,
+//prtg_cas03.gat,181,215,4	script	Kafra Service#Pt03	117,{
 prtg_cas03.gat,39,99,4	script	Kafra Service#Pt03	117,{
 	callfunc "F_GKafra", "prtg_cas03", "Prontera";
 	end;

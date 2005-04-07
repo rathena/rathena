@@ -1,0 +1,69 @@
+//===== eAthena Script =======================================
+//= Posture Fix Hat Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Posture Fix Hat quest.
+//===== Additional Comments: ================================= 
+//= 1.2 Fixed wrong labels, added missing text
+//=	fixed wrong items ID [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
+//============================================================
+
+payon_in01.gat,143,8,5	script	Nan Hyang	814,{
+ If (getequipisequiped(5073)) GOTO L_GOOD;
+ If (Class == 0) GOTO L_NOVICE;
+ mes "[Nan Hyang]";
+ mes "Tut tut! you have terrible posture!";
+ mes "You need to correct it immediately!";
+ next;
+ mes "[Nan Hyang]";
+ mes "I could correct it for you If you brought me some materials to make you a Posture Fix Hat.";
+ next;
+ menu "Please, make me one.",-,"What do I need to get?",M_REQ,"No thanks!",M_EXIT;
+
+ If ((countitem(1550) <1) || (countitem(2285) < 1 )) GOTO L_NOITEM;//Items: Book, Apple o' Archer,
+ mes "[Nan Hyang]";
+ mes "Ahh at last, someone who is serious!";
+ delitem 1550,1;//Items: Book,
+ delitem 2285,1;//Items: Apple o' Archer,
+ next;
+ getitem 5073,1;//Items: Posture Fix Hat,
+ mes "[Nan Hyang]";
+ mes "Hehe, well, maybe you will become more careful, or your sense will become balanced.";
+ close;
+
+M_REQ:
+ mes "[Nan Hyang]";
+ mes "What I require is very simple...";
+ next;
+ mes "[Nan Hyang]";
+ mes "1 Book.";
+ mes "And 1 Apple o' Archer to balance on it.";
+ close;
+
+L_NOITEM:
+ mes "[Nan Hyang]";
+ mes "At least be serious, you dont have enough items!";
+ mes "Come back when you wish to learn posture.";
+ close;
+
+L_GOOD:
+ mes "[Nan Hyang]";
+ mes "Ah, that's it! good to see you are willing to learn!";
+ close;
+
+L_NOVICE:
+ mes "Hi! Could you visit me next week?";
+ next;
+
+M_EXIT:
+ mes "[Nan Hyang]";
+ mes "Good day to you.";
+ close;
+}

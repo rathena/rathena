@@ -19,8 +19,7 @@
 
 
 //<======================== Roberto: Arrow crafting =========================>\\
-morocc.gat,121,109,5	script	Roberto	88,
-{
+morocc.gat,121,109,5	script	Roberto	88,{
 	mes "[Roberto]";
 	if (callfunc("Is_Bow_Class")) goto L_Start;
 
@@ -143,8 +142,7 @@ L_LowLvl:
 
 
 //<============================== Arrow Repel ===============================>\\
-payon.gat,190,176,5	script	Jason	88,
-{
+payon.gat,103,63,5	script	Jason	88,{
 	mes "[Jason]";
 	if (callfunc("Is_Bow_Class")) goto L_Start;
 

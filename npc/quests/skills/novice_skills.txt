@@ -16,8 +16,7 @@
 
 
 //<---------------------------------------------------------------------------------------------- Nurse Aid: First Aid NPC ---------------------------------------------------------------------------->\\
-prt_in.gat,235,133,4	script	Nurse Aid	90,
-{
+prt_in.gat,235,133,4	script	Nurse Aid	90,{
 	mes "[Nurse Aid]";
 	if(FIRSTAID == 1) goto L_GetAid;
 	if(getskilllv(142)>0) goto L_GotAid;
@@ -91,8 +90,7 @@ L_GotAid:
 
 
 //<-------------------------------------------------------------------------------------------------- Bulma: Play Dead -------------------------------------------------------------------------------------------->\\
-prt_in.gat,73,87,2	script	Bulma	98,
-{
+prt_in.gat,73,87,2	script	Bulma	98,{
 	mes "[Bulma]";
 	if(Class == Job_Novice) goto L_Novice;
 
@@ -221,8 +219,7 @@ L_GotSkill:
 
 
 //Newbie Assistant------------------------------------------------------------------------------
-prt_castle.gat,174,147,2	script	Newbie Assistant	84,
-{
+prt_castle.gat,174,147,2	script	Newbie Assistant	84,{
 	mes "[Newbie Assistant]";
 	if(Class == Job_Novice) goto L_Start;
 

@@ -26,8 +26,7 @@
 //=========================================================
 // Christopher: Geffen Blacksmith
 //=========================================================
-geffen_in.gat,110,172,2	script	Christopher	63,
-{
+geffen_in.gat,110,172,2	script	Christopher	63,{
 	mes "[Christopher Guillenrow]";
 	mes "Welcome to Christopher's Workshop.  Ye can find all yer forging equipment here.  So what can I help ye with?";
 	M_Menu:
@@ -746,7 +745,7 @@ function	script	repairmain	{
 	REPAIR1:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -758,7 +757,7 @@ function	script	repairmain	{
 	REPAIR2:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -770,7 +769,7 @@ function	script	repairmain	{
 	REPAIR3:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -782,7 +781,7 @@ function	script	repairmain	{
 	REPAIR4:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -794,7 +793,7 @@ function	script	repairmain	{
 	REPAIR5:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -806,7 +805,7 @@ function	script	repairmain	{
 	REPAIR6:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -818,7 +817,7 @@ function	script	repairmain	{
 	REPAIR7:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -830,7 +829,7 @@ function	script	repairmain	{
 	REPAIR8:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -842,7 +841,7 @@ function	script	repairmain	{
 	REPAIR9:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;
@@ -854,7 +853,7 @@ function	script	repairmain	{
 	REPAIR10:
 		mes "[" + @name$ + "]";
 		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and @repairprice Zeny.";
+		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
 		menu "Yes",-,"No",L_CANCEL_2;

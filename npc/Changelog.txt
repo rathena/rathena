@@ -9,23 +9,21 @@ Darkchild
 	* Monk Quest - Botting An Acolyte Atm
 Lupus
 	* looking for exploits, optimization, bugs hunt
-
+	* Adding new cards, checking/adding mobs/items
 kobra_k88
 	* Optimize WoE
-Aria
-	* Debugging/Overlooking NPCs.
-	* Making misc npcs
-	* Making the "Dev edition" npcs =D - 80% - Final layout finished, need more devs to put their quotes in.
 Shinigami
 	* Organizing/Optmizing/Checking for Typo in all NPCs.
 Mass Zero
 	* Novice Training Ground.
 	* (Probably unofficial) Lou Yang NPC's, mobs, etc...
-Shadowlady
-	* Marriage (Fix, optimization) ?%
-
 MC Cameri
 	* Bank NPC - Now 100% done for new payon
+	* Warper NPC - 100%, fixed memory consumption problem
+	* Heal NPC - 100%
+DracoRPG
+	* New Novice Training Grounds - In progress with Riotblade's help
+	* Towns Message Boards - Recruited Riotblade to work on them ^^
 
 Other Ppl	
 	* Their Work?
@@ -34,15 +32,194 @@ Other Ppl
 
 Date		Added
 ======
-12/18
-	* Readded my own npc [Aria]
-11/27
-	* Added some Lou Yang NPC's [Mass Zero]
+
+04/06
+	* removed previous "fix". Please, never submit "fixes" w/o checking. [Lupus]
+	  that guy didn't know about a special SN Kafra from supernovice.txt file.
+	* fixed payon's gemstones exchanger [Lupus]
+	* Set PCLoginEvent.txt to disabled by default [celest]
+04/04
+	* Changed "set @TEMP,rand(0);" to set "@TEMP,0;" in the Payon Fortune Teller script [DracoRPG]
+	  We'll have to get all the fortunes, but they are more than 200...
+	* Finished Payon's Gemstone Exchanger, thanks to Dino9021 [DracoRPG]
+	* Added Deviling in the "Poring Island" map pay_fild04, 2 hours respawn [Lupus]
+04/03
+	* Finished Valkyrie. Now it correctly works. Valhallana reborns players to High Novices. [Lupus]
+	  (added missed kRO condition: to reborn, player shouldn't have money nor items(equipment) )
+	  Then Valhallana warps just reborn players to the home city of their main job.
+	  On Job Level 10 of High Novice they can get 1st Advanced Job from correct 1-1 job quests NPC.
+	  They'll get there all learnt skill quests.
+	  On reaching 45 Job Level they may visit Valkyrie and get 2-2-1 / 2-1-1 class (3rd Job)
+	  from a correct NPC.
+	* Fixed SKILL POINTS exploit in Assassin Job Quest [Lupus]
+03/31
+	* Payon : new NPCs scripted as far as I could and old ones updated (all from iRO) [DracoRPG]
+	* Corrected a G_GRYPHON spawn in umbala field to GRYPHON, thanks to CrasherZero
+03/29
+	* Corrected Amatsu warp points, thanks to Dino9021
+03/28
+	* Corrected Yuno warp points, thanks to Dino9021
+	* Added Yuno warps to the Aldebaran kafra NPC, thanks to Dino9021
+
+03/27
+	* Fixed Ant Hell warps, thanks to Dino9021
+	* Corrected positions for Thief and Archer quest skills NPCs, thanks to Dino9021
+
+03/24
+	* Added support for Emsolute Develop in the guild manager script [celest]
+	* Fixed the custom jobchanger allowing Super Novices to change to high novice,
+	  thanks to CavaCava
+03/23
+	* WOE 1.3 Now you can't install Guardians during WOE [Lupus]
+	* Set only Storage/Cancel to Kafra in Niflheim. [Lupus]
+03/22
+	* Moved position for Marx Hansen to payon_in03, thanks to Dino9021 [celest]
+03/18
+        * Reduced label name length in heal_payment.txt [celest]
+        * Added Sara-chan's Einbroch/Einbech city warps [celest]
+
+03/17
+        * Fixed more typos in /cities/payon.txt, thanks to TheUltimateEnd [celest]
+
+03/16
+        * Fixed some typos in /cites/payon.txt, thanks to Hibiki [celest]
+
+03/15
+        * Fixed some typos in shops.txt, thanks to Dino9021 [celest]
+        * Fixed some bugs in the 32 new hats script, the custom jobchanger and platinum
+          skills script, thanks to midas [celest]
+
+03/11
+        * Reverted the Moving HP skill quest change, thanks to DracoRPG [celest]
+
+03/07
+        * Fixed a typo in high mage job changing, thanks to hongmei [celest]
+
+03/03
+	* Fixed Moving HP skill quest
+
+02/28
+	* warps/louyang.txt: Added 2 escapes from 2 mountains 018,019 [Lupus]
+	  Some players used to stuck there after warps
+
+02/27
+	* Fixed some bugs in Monk Job Quest. Now it's fully passable. [Lupus]
+	  Going to brush it up a bit later. First have to re-check Crusader+Assassin+Rogue quests ^_-
+02/26
+	* Now players can reach Guilds Dungeons only trough their own captured castles. [Lupus]
+		Before they coulkd enter the dungeons vie unoccupied castles. Thanks 2Ishizu-chan for fix
+02/16
+	* Fixed 1 payon castle guardian spawn coords
+	* Fixed Wootan and Beetle King names in the spawn files [Lupus]
+        * Fixed a typo in quests/all_quest.txt, thanks to hongmei [celest]
+        * Fixed treasure chests spawn in the castles. (had to simplify some code and unroll some loops) [Lupus]
+
+02/13
+        * Added midas's fixes for bugs in the novice training ground and the custom
+          jobchanger script [celest]
+
+10/02
+        * Fixed Wizard job quest (made only one agressive mob in the last room) [Lupus]
+
+01/10
+        * Fixed some typos and exploits in the Blacksmith and Hunter job quest,
+          thanks to Riotblade and nonox
+01/09/05
+	* Modified guild war scripts to fix a bug for duplicate guild storages. [Codemaster & Ajarn]
+8/1
+        * Added the new Yuno field warps by Sara-chan [celest]
+
+2/1
+        * Added missing Spore Doll to the Kaho Horns NPC (God... this was reported
+          months ago)
+        * The 'Lothar' NPC was asking for the wrong items, corrected thanks to Death's Mage
+01/01/05
+	* Fixed some respawn delays of MVP/Miniboss monsters. Redo Umbala/Niflheim fields, added missing mobs, corrected
+	  monsters quantity. In Niflheim fixed wrong Lord of Death monster ID. [Lupus]
+12/30
+	* Fixed typo in priest.txt. [Mass Zero]
+	* Fixed some missing stuff, made monk.txt loading [Lupus]
+12/29
+        * Added Dino9021's monk job quest script - still need checking before adding to
+          scripts list [celest]
+        * Added gvg mapflags to the guild dungeons, and removed 4 items from 
+          item_avail.txt, thanks Poki [celest]
+	* Translated npc/sample/npc_extend_shop.txt [MC Cameri]
+	* Translated npc/sample/bank_test.txt [MC Cameri]
+        * Fixed respawn delay of Toad and Golden Thief Bug (it was the actual_delay/2). Mob placement files should be revised again [Lupus]
+
+12/27
+        * kafra_bank.txt added an extra exploit protection [Lupus]
+        * kafra_bank.txt was missing an npc label [celest]
+	* Reverted gldfunc_dunsw.txt back. Some people report RC5 bugs, which have been fixed some months ago.
+	  Next time always CHECK and READ the code, before implementing some stupid "fixes" from the forums 8) Peace [Lupus]
+	  PS I'm reverting more guild files soon, to make them show the flags.
+
+12/24
+	* Fixed Whitesmith.txt, was on top of another npc [Ajarn]
+
+12/23
+	* Added logs into kafra_bank.txt (it keeps logs of all bank operations! Very handy to find abusers/cheaters) [Lupus]
+
+12/22
+	* Added Arrow Quivers to the scrolls_arrows.txt and removed some rare arrows from the shop [Lupus]
+	* Corrected a typo in other/pvp.txt [Ajarn]
+
+12/21
+	* Corrected position of start { in a crap load of scripts. [Ajarn]
+		- jA decided that it had to be on the definition line
+		- So, if it wasn't, the next script wouldn't load
+        * Corrected script errors in devnpc.txt [celest]
+	
+12/20	
+	* Addded npcs_athena.conf, OA style [MC Cameri]
+        * made samesex marriages give out the correct rings [MouseJstr]
+	* Changed $progress -> $@progress in wedding.txt (shadowlady put in comments but didn't add to code) [Aria]
+	* xmas.txt: Added Xmas Jakk, fixed 2 possible items exploits, fixed reward Box ID [Lupus]
+12/18	
+	* My NPC is back in action [Aria]
+	* Added 2 temp kRO shops which sell Arrows, Magic Scrolls. Prices,coords, sprites are unsure, but exploitless [Lupus]
+
+12/12	
+	* Added Town Inn's counting in my npc/other/mc_cameri/warper.txt [MC Cameri]
+
+12/11	
+	* Fixed memory consumption in npc/other/mc_cameri/warper.txt [MC Cameri]
+
+12/10
+	* Added npc/other/mc_cameri/warper.txt, a warp npc just like warper2.txt that shows how many people are on each map. [MC Cameri]
+	* Newgearquests (14 files of 16) fixed possible exploits, added a missing close; 
+	  According to kro, changed ingredients of Indead Hairband quest [Lupus]
+12/08
+	* Changed ingredients of Ears of Demon Quest: Deviruchi Hat -> Evil Wing [Lupus]
+	* Added translated shop names for the Extended Shop, I'unno who made it. o.O; [Mass Zero]
+        * Changed Lord of Death spawn intervals to 90 minutes based on jRO [celest]
+        * Added nomemo flags for Niflheim and some maps [celest]
+        * Corrected Niflheim shops and Morroc jewel merchant - should sell Ruby
+          instead of Pearl [celest]
+
+12/07	
+	* Added npc/other/mc_cameri/heal.txt, a heal npc that is as simple as one click healing [MC Cameri]
+	* Fixed Al De Baran to Mjolnir warp in Al De Baran [MC Cameri]
+	* Fixed all Newgear quests: arjen.txt,back_ribbon.txt,bear_hat.txt,burning_blood_bandana.txt,cat_hairband.txt
+		fox_mask.txt,hat_seller.txt,indian_headband.txt,mask_of_alarm.txt,mushroom_hairband.txt,neris.txt
+		old_blacksmith.txt,posture_fix_hat.txt,sea_otter_hat.txt,traveler.txt,tulip_hairpin.txt [Lupus]
+	* Fixed missing labels, missing delitem, wrong zeny amount, wrong items id, spelling [Lupus]
+	* Added Fox Mask quest. [Mass Zero]
+
+12/06	* Added seperate quests for the new headgears, missing Fox Mask and Orc Hero Helm. (I'll so 'em ASAP.) [Mass Zero]
+
+11/30   * Added Lutie shops
+        * Corrected some typos, thanks to leinsirk10
+
+11/28	* Added missing Niflheim monsters [shadow]
+
+11/27	* Added some Lou Yang NPC's [Mass Zero]
 	* Get Freya fixes of crusader.txt (announce->areaannounce), Mr.Smile(removed vulgar words) [Lupus]
-11/23
-	* - Fixed repairman prices (5k)(someone need to check if it requires a steel) [shadow]
-11/22
-	* - Now wedding merchant sells tuxedos for 43k, implemented a easier way to change prices of weddings.
+
+11/23	* - Fixed repairman prices (5k)(someone need to check if it requires a steel) [shadow]
+
+11/22	* - Now wedding merchant sells tuxedos for 43k, implemented a easier way to change prices of weddings.
 	  - Fixed wrong label calling on jobchange.txt.
 	  - Fixed a timer on momotaro.txt and translated tougijou.txt. Thanks to Shinomori .[shadow]
 11/20

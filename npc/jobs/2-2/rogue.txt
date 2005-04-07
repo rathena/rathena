@@ -596,8 +596,7 @@ L_Done:
 //===========================================================
 
 //------------------------------------------------------------------------------
-in_rogue.gat,272,136,3	script	Hermanthorn Jr.	85,
-{
+in_rogue.gat,272,136,3	script	Hermanthorn Jr.	85,{
 	mes "[Hermanthorn Jr.]";
 	mes "Huh? Wha.... who are you?! You're not from the Rogue guild!! Get out of here!";
 	emotion 1;
@@ -739,18 +738,15 @@ sF_Password:
 // Guildsman
 //===============================================
 //---------------------------------------------------------------------------
-in_rogue.gat,244,39,4	script	Aragham Junior	99,
-{
+in_rogue.gat,244,39,4	script	Aragham Junior	99,{
 	callfunc "F_RogueTest4", "Aragham Junior", 245, 27;
 }
 //---------------------------------------------------------------------------
-in_rogue.gat,152,27,6	script	Hollgrehen Junior	85,
-{
+in_rogue.gat,152,27,6	script	Hollgrehen Junior	85,{
 	callfunc "F_RogueTest4", "Hollgrehen Junior", 160, 32;
 }
 //---------------------------------------------------------------------------
-in_rogue.gat,183,105,4	script	Antonio Junior	88,
-{
+in_rogue.gat,183,105,4	script	Antonio Junior	88,{
 	callfunc "F_RogueTest4", "Antonio Junior", 175, 107;
 }
 
@@ -814,8 +810,7 @@ L_Restart:
 //================================================
 // Monster Spawns
 //================================================
-in_rogue.gat,15,185,0	script	rogue_mob1	139,8,0,
-{
+in_rogue.gat,15,185,0	script	rogue_mob1	139,8,0,{
 	monster "in_rogue.gat",14,188,"Zombie",1015,1;
 	monster "in_rogue.gat",15,188,"Zombie",1015,1;
 	monster "in_rogue.gat",16,188,"Zombie",1015,1;
@@ -824,8 +819,7 @@ in_rogue.gat,15,185,0	script	rogue_mob1	139,8,0,
 	monster "in_rogue.gat",16,189,"Zombie",1015,1;
 	end;
 }
-in_rogue.gat,15,245,0	script	rogue_mob2	139,8,0,
-{
+in_rogue.gat,15,245,0	script	rogue_mob2	139,8,0,{
 	monster "in_rogue.gat",14,247,"Mummy",1041,1;
 	monster "in_rogue.gat",15,247,"Mummy",1041,1;
 	monster "in_rogue.gat",16,247,"Mummy",1041,1;
@@ -834,8 +828,7 @@ in_rogue.gat,15,245,0	script	rogue_mob2	139,8,0,
 	monster "in_rogue.gat",16,248,"Mummy",1041,1;
 	end;
 }
-in_rogue.gat,15,328,0	script	rogue_mob3	139,8,0,
-{
+in_rogue.gat,15,328,0	script	rogue_mob3	139,8,0,{
 	monster "in_rogue.gat",14,331,"Zombie",1015,1;
 	monster "in_rogue.gat",15,331,"Zombie",1015,1;
 	monster "in_rogue.gat",16,331,"Zombie",1015,1;
@@ -844,65 +837,55 @@ in_rogue.gat,15,328,0	script	rogue_mob3	139,8,0,
 	monster "in_rogue.gat",16,332,"Zombie",1015,1;
 	end;
 }
-in_rogue.gat,35,342,0	script	rogue_mob4	139,0,8,
-{
+in_rogue.gat,35,342,0	script	rogue_mob4	139,0,8,{
 	monster "in_rogue.gat",38,340,"Mummy",1041,1;
 	monster "in_rogue.gat",37,342,"Abyss Knight",1219,1;
 	monster "in_rogue.gat",39,342,"Ghoul",1036,1;
 	monster "in_rogue.gat",38,344,"Mummy",1041,1;
 	end;
 }
-in_rogue.gat,57,306,0	script	rogue_mob5	139,4,0,
-{
+in_rogue.gat,57,306,0	script	rogue_mob5	139,4,0,{
 	monster "in_rogue.gat",59,301,"Khalitzburg",1132,1;
 	end;
 }
-in_rogue.gat,96,333,0	script	rogue_mob6	139,0,4,
-{
+in_rogue.gat,96,333,0	script	rogue_mob6	139,0,4,{
 	monster "in_rogue.gat",92,325,"Khalitzburg",1132,1;
 	end;
 }
-in_rogue.gat,139,313,0	script	rogue_mob7	139,4,0,
-{
+in_rogue.gat,139,313,0	script	rogue_mob7	139,4,0,{
 	monster "in_rogue.gat",139,309,"Abyss Knight",1219,1;
 	end;
 }
-in_rogue.gat,135,246,0	script	rogue_mob8	139,0,4,
-{
+in_rogue.gat,135,246,0	script	rogue_mob8	139,0,4,{
 	monster "in_rogue.gat",139,245,"Zombie",1015,2;
 	monster "in_rogue.gat",139,246,"Zombie",1015,2;
 	monster "in_rogue.gat",139,247,"Zombie",1015,2;
 	end;
 }
-in_rogue.gat,62,302,0	script	rogue_mob9	139,0,4,
-{
+in_rogue.gat,62,302,0	script	rogue_mob9	139,0,4,{
 	monster "in_rogue.gat",57,305,"Khalitzburg",1132,1;
 	end;
 }
-in_rogue.gat,199,218,0	script	rogue_mob10	139,0,8,
-{
+in_rogue.gat,199,218,0	script	rogue_mob10	139,0,8,{
 	monster "in_rogue.gat",157,218,"Zombie",1015,10;
 	monster "in_rogue.gat",157,218,"Abyss Knight",1219,1;
 	monster "in_rogue.gat",157,218,"Ghoul",1036,1;
 	monster "in_rogue.gat",157,218,"Archer Skeleton",1016,1;
 	end;
 }
-in_rogue.gat,86,187,0	script	rogue_mob11	139,0,8,
-{
+in_rogue.gat,86,187,0	script	rogue_mob11	139,0,8,{
 	monster "in_rogue.gat",88,186,"Mummy",1041,1;
 	monster "in_rogue.gat",88,187,"Mummy",1041,1;
 	monster "in_rogue.gat",88,188,"Mummy",1041,1;
 	end;
 }
-in_rogue.gat,225,187,0	script	rogue_mob12	139,0,8,
-{
+in_rogue.gat,225,187,0	script	rogue_mob12	139,0,8,{
 	monster "in_rogue.gat",232,191,"Abyss Knight",1219,1;
 	monster "in_rogue.gat",233,190,"Abyss Knight",1219,1;
 	monster "in_rogue.gat",234,189,"Abyss Knight",1219,1;
 	end;
 }
-in_rogue.gat,252,320,0	script	rogue_mob13	139,0,8,
-{
+in_rogue.gat,252,320,0	script	rogue_mob13	139,0,8,{
 	monster "in_rogue.gat",252,319,"Mummy",1041,1;
 	monster "in_rogue.gat",252,321,"Mummy",1041,1;
 	monster "in_rogue.gat",252,319,"Ghoul",1036,1;
@@ -915,8 +898,7 @@ in_rogue.gat,252,320,0	script	rogue_mob13	139,0,8,
 //================================================
 // End Warp
 //================================================
-in_rogue.gat,370,320,0	script	rogue04	45,1,1,
-{
+in_rogue.gat,370,320,0	script	rogue04	45,1,1,{
 	set ROGUE_Q, 5;
 	killmonsterall "in_rogue.gat";
 	warp "in_rogue.gat",378,113;
@@ -926,8 +908,7 @@ in_rogue.gat,370,320,0	script	rogue04	45,1,1,
 //================================================
 // Timer: Keeps monsters from overspawning
 //================================================
-- script RogueTest3 -1,
-{
+- script RogueTest3 -1,{
 	end;
 
 OnMinute10:

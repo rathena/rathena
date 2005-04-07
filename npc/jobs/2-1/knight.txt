@@ -25,8 +25,7 @@
 
 
 //<------------------------------------------------------------------------------------ Chivalry Captain Herman------------------------------------------------------------------------------------------>\\
-prt_in.gat,88,101,3	script	Chivalry Captain Herman	56,
-{
+prt_in.gat,88,101,3	script	Chivalry Captain Herman	56,{
 	if (Class == Job_Swordman && KNIGHT_Q > 0) goto L_Check;
 
 	mes "[Chivalry Captain Herman]";
@@ -225,8 +224,7 @@ L_Check:
 
 
 //<--------------------------------------------------------------------------------- Sir Andrew Syloc (1st test) ------------------------------------------------------------------------------------------>\\
-prt_in.gat,75,107,4	script	SIr Andrew Syloc	65,
-{
+prt_in.gat,75,107,4	script	Sir Andrew Syloc	65,{
 	mes "[Sir Andrew Syloc]";
 	if (Class == Job_Knight) goto L_Knight;
 	if (Class == Job_Novice) goto L_Novice;
@@ -384,8 +382,7 @@ L_Check:
 
 
 //<------------------------------------------------------------------------------ Sir James Syracuse (2nd Test) ----------------------------------------------------------------------------------------->\\
-prt_in.gat,71,91,6	script	Sir James Syracuse	65,
-{
+prt_in.gat,71,91,6	script	Sir James Syracuse	65,{
 	mes "[Sir James Syracuse]";
 	if (class == Job_Knight) goto L_Knight;
 	if (class == Job_Novice) goto L_Novice;
@@ -724,8 +721,7 @@ L_Test:
 
 //<--------------------------------------------------------------------------------- Sir Windsor (3rd Test) -------------------------------------------------------------------------------------------------->\\
 // Sir Windsor ---------------------------------------------------------
-prt_in.gat,79,94,3	script	Sir Windsor#1	733,
-{
+prt_in.gat,79,94,3	script	Sir Windsor#1	733,{
 	mes "[Sir Windsor]";
 	if(Class == Job_Knight) goto L_Knight;
 	if(Class == Job_Novice) goto L_Novice;
@@ -793,8 +789,7 @@ L_Done:
 
 
 // Waiting Room ---------------------------------------------------------------------------
-job_knt.gat,89,110,4,	script	Sir Windsor#2::SW2	733,
-{
+job_knt.gat,89,110,4,	script	Sir Windsor#2::SW2	733,{
 	mes "[Sir Windsor]";
 	mes ".........."; 
 	next;
@@ -885,8 +880,7 @@ OnStart:
 }
 
 // First Level ---------------------------------------------------------
-job_knt.gat,1,1,1	script	KntLvl1	-1,
-{
+job_knt.gat,1,1,1	script	KntLvl1	-1,{
 	set $@KntRm, 1;
 	set $@KntMob,12;
 	monster "job_knt.gat",39,150,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
@@ -917,8 +911,7 @@ OnMyMobDead:
 
 
 // Second Level ---------------------------------------------------------
-job_knt.gat,1,1,1	script	KntLvl2	-1,
-{
+job_knt.gat,1,1,1	script	KntLvl2	-1,{
 	set $@KntRm, 2;
 	set $@KntMob,12;
 	monster "job_knt.gat",53,52,"Frilldora",1119,1,"KntLvl2::OnMyMobDead";
@@ -950,8 +943,7 @@ OnMyMobDead:
 }
 
 // Third Level ---------------------------------------------------------------
-job_knt.gat,1,1,1	script	KntLvl3	-1,
-{
+job_knt.gat,1,1,1	script	KntLvl3	-1,{
 	set $@KntRm, 3;
 	set $@KntMob,7;
 	monster "job_knt.gat",136,152,"Knife Goblin Bro",1122,1,"KntLvl3::OnMyMobDead";
@@ -979,8 +971,7 @@ OnMyMobDead:
 }
 
 // Timer --------------------------------------------------------------------------------
-job_knt.gat,1,1,1	script	TimerKnt	-1,
-{
+job_knt.gat,1,1,1	script	TimerKnt	-1,{
 
 OnTimer2000:
 	set $@KntTime$, "You have 3 minutes...";
@@ -1032,8 +1023,7 @@ AnnounceKnt:
 
 
 //<------------------------------------------------------------------------------------ Lady Amy Beatris (4th Test) ---------------------------------------------------------------------------------------------->\\
-prt_in.gat,69,107,5	script	Lady Amy Beatris	728,
-{
+prt_in.gat,69,107,5	script	Lady Amy Beatris	728,{
 	mes "[Lady Amy Beatris]";
 	if (class == Job_Knight) goto L_Knight;
 	if (class == Job_Novice) goto L_Novice;
@@ -1348,8 +1338,7 @@ M_Menu:
 
 
 //<------------------------------------------------------------------------------------------- Sir Edmund (5th Test) --------------------------------------------------------------------------------------------->\\
-prt_in.gat,70,99,5	script	Sir Edmund	734,
-{
+prt_in.gat,70,99,5	script	Sir Edmund	734,{
 	mes "[Sir Edmund]";
 	if (class == Job_Knight) goto L_Knight;
 	if (class == Job_Swordman) goto L_Sword;
@@ -1456,8 +1445,7 @@ L_Test:
 }
 
 // Test -----------------------------
-job_knt.gat,1,1,1	script	ev_Test	-1,
-{
+job_knt.gat,1,1,1	script	ev_Test	-1,{
 	killmonster "job_knt.gat","ev_Test::OnMyMobDead";
 	monster "job_knt.gat",141,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
 	monster "job_knt.gat",145,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
@@ -1504,8 +1492,7 @@ OnTimerWarp:
 
 
 //<------------------------------------------------------------------------------------------ Sir Grey (Final Test) ------------------------------------------------------------------------------------------------------>\\
-prt_in.gat,87,90,3	script	Sir Grey	119,
-{
+prt_in.gat,87,90,3	script	Sir Grey	119,{
 	mes "[Sir Grey]";
 	if (class == Job_Knight) goto L_Knight;
 	if (class == Job_Novice) goto L_Novice;
@@ -1854,5 +1841,4 @@ M_Menu:
 
 	M_End:
 		close;
-		
 }

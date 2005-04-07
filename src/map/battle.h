@@ -63,50 +63,6 @@ int battle_weapon_attack( struct block_list *bl,struct block_list *target,
 
 // 各種パラメータを得る
 int battle_counttargeted(struct block_list *bl,struct block_list *src,int target_lv);
-int battle_get_class(struct block_list *bl);
-int battle_get_dir(struct block_list *bl);
-int battle_get_lv(struct block_list *bl);
-int battle_get_range(struct block_list *bl);
-int battle_get_hp(struct block_list *bl);
-int battle_get_max_hp(struct block_list *bl);
-int battle_get_str(struct block_list *bl);
-int battle_get_agi(struct block_list *bl);
-int battle_get_vit(struct block_list *bl);
-int battle_get_int(struct block_list *bl);
-int battle_get_dex(struct block_list *bl);
-int battle_get_luk(struct block_list *bl);
-int battle_get_hit(struct block_list *bl);
-int battle_get_flee(struct block_list *bl);
-int battle_get_def(struct block_list *bl);
-int battle_get_mdef(struct block_list *bl);
-int battle_get_flee2(struct block_list *bl);
-int battle_get_def2(struct block_list *bl);
-int battle_get_mdef2(struct block_list *bl);
-int battle_get_baseatk(struct block_list *bl);
-int battle_get_atk(struct block_list *bl);
-int battle_get_atk2(struct block_list *bl);
-int battle_get_speed(struct block_list *bl);
-int battle_get_adelay(struct block_list *bl);
-int battle_get_amotion(struct block_list *bl);
-int battle_get_dmotion(struct block_list *bl);
-int battle_get_element(struct block_list *bl);
-int battle_get_attack_element(struct block_list *bl);
-int battle_get_attack_element2(struct block_list *bl);  //左手武器属性取得
-#define battle_get_elem_type(bl)	(battle_get_element(bl)%10)
-#define battle_get_elem_level(bl)	(battle_get_element(bl)/10/2)
-int battle_get_party_id(struct block_list *bl);
-int battle_get_guild_id(struct block_list *bl);
-int battle_get_race(struct block_list *bl);
-int battle_get_size(struct block_list *bl);
-int battle_get_mode(struct block_list *bl);
-int battle_get_mexp(struct block_list *bl);
-
-struct status_change *battle_get_sc_data(struct block_list *bl);
-short *battle_get_sc_count(struct block_list *bl);
-short *battle_get_opt1(struct block_list *bl);
-short *battle_get_opt2(struct block_list *bl);
-short *battle_get_opt3(struct block_list *bl);
-short *battle_get_option(struct block_list *bl);
 
 enum {
 	BCT_NOENEMY	=0x00000,
@@ -115,6 +71,7 @@ enum {
 	BCT_NOPARTY	=0x50000,
 	BCT_ALL		=0x20000,
 	BCT_NOONE	=0x60000,
+	BCT_SELF	=0x60000,
 };
 
 int battle_check_undead(int race,int element);
@@ -174,7 +131,6 @@ extern struct Battle_Config {
 	int skillup_limit;
 	int wp_rate;
 	int pp_rate;
-	int cdp_rate;
 	int monster_active_enable;
 	int monster_damage_delay_rate;
 	int monster_loot_type;
@@ -212,12 +168,17 @@ extern struct Battle_Config {
 	int natural_heal_skill_interval;
 	int natural_heal_weight_rate;
 	int item_name_override_grffile;
+	int indoors_override_grffile;	// [Celest]
+	int skill_sp_override_grffile;	// [Celest]
+	int cardillust_read_grffile;
+	int item_equip_override_grffile;
+	int item_slots_override_grffile;
 	int arrow_decrement;
 	int max_aspd;
 	int max_hp;
 	int max_sp;
 	int max_lv;
-	int max_parameter;
+	unsigned int max_parameter;
 	int max_cart_weight;
 	int pc_skill_log;
 	int mob_skill_log;
@@ -229,12 +190,12 @@ extern struct Battle_Config {
 	int undead_detect_type;
 	int pc_auto_counter_type;
 	int monster_auto_counter_type;
-	int agi_penaly_type;
-	int agi_penaly_count;
-	int agi_penaly_num;
-	int vit_penaly_type;
-	int vit_penaly_count;
-	int vit_penaly_num;
+	int agi_penalty_type;
+	int agi_penalty_count;
+	int agi_penalty_num;
+	int vit_penalty_type;
+	int vit_penalty_count;
+	int vit_penalty_num;
 	int player_defense_type;
 	int monster_defense_type;
 	int pet_defense_type;
@@ -253,10 +214,9 @@ extern struct Battle_Config {
 	int mob_changetarget_byskill;
 	int pc_attack_direction_change;
 	int monster_attack_direction_change;
-	int pc_undead_nofreeze;
 	int pc_land_skill_limit;
 	int monster_land_skill_limit;
-	int party_skill_penaly;
+	int party_skill_penalty;
 	int monster_class_change_full_recover;
 	int produce_item_name_input;
 	int produce_potion_name_input;
@@ -271,7 +231,6 @@ extern struct Battle_Config {
 //	int pet_lootitem; // removed [Valaris]
 //	int pet_weight; // removed [Valaris]
 	int show_steal_in_same_party;
-	int enable_upper_class;
 	int pet_attack_attr_none;
 	int mob_attack_attr_none;
 	int mob_ghostring_fix;
@@ -287,7 +246,7 @@ extern struct Battle_Config {
 	int prevent_logout;	// Added by RoVeRT
 
 	int alchemist_summon_reward;	// [Valaris]
-	int maximum_level;
+	unsigned int maximum_level;
 	int drops_by_luk;
 	int monsters_ignore_gm;
 	int equipment_breaking;
@@ -297,8 +256,8 @@ extern struct Battle_Config {
 	int pk_mode;
 	int show_mob_hp;  // end additions [Valaris]
 
-	int agi_penaly_count_lv;
-	int vit_penaly_count_lv;
+	int agi_penalty_count_lv;
+	int vit_penalty_count_lv;
 
 	int gx_allhit;
 	int gx_cardfix;
@@ -312,18 +271,25 @@ extern struct Battle_Config {
 	int skill_removetrap_type;
 	int disp_experience;
 	int castle_defense_rate;
-	int riding_weight;
 	int backstab_bow_penalty;
+	int hp_rate;
+	int sp_rate;
+	int gm_can_drop_lv;
+	int disp_hpmeter;
+	int bone_drop;
+	int monster_damage_delay;
 
+// eAthena additions
 	int night_at_start; // added by [Yor]
 	int day_duration; // added by [Yor]
 	int night_duration; // added by [Yor]
 	int ban_spoof_namer; // added by [Yor]
+	int ban_hack_trade; // added by [Yor]
 	int hack_info_GM_level; // added by [Yor]
 	int any_warp_GM_min_level; // added by [Yor]
 	int packet_ver_flag; // added by [Yor]
-	int muting_players; // added by [Apple]
-
+	int muting_players; // added by [PoW]
+	
 	int min_hair_style; // added by [MouseJstr]
 	int max_hair_style; // added by [MouseJstr]
 	int min_hair_color; // added by [MouseJstr]
@@ -336,10 +302,17 @@ extern struct Battle_Config {
 
 	int zeny_from_mobs; // [Valaris]
 	int mobs_level_up; // [Valaris]
-	int pk_min_level; // [celest]
+	unsigned int pk_min_level; // [celest]
 	int skill_steal_type; // [celest]
 	int skill_steal_rate; // [celest]
 	int night_darkness_level; // [celest]
+	int motd_type; // [celest]
+	int allow_atcommand_when_mute; // [celest]
+	int finding_ore_rate; // orn
+	int exp_calc_type;
+	int min_skill_delay_limit;
+	int require_glory_guild;
+	int idle_no_share;
 
 #ifndef TXT_ONLY /* SQL-only options */
 	int mail_system; // [Valaris]

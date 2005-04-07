@@ -146,3 +146,26 @@ Biography:
 // Back 2 Me :P
 	npctalk "Sorry Valaris";
 	npctalk "(He Is Da Man!)";
+
+nsstrunks
+// Off on my own somewhere lol. In a town that no one visits ;)
+- General Dev, do whatever I feel like at the time
+- Real name unknown, just call me nsstrunks ;)
+- 16 years old
+- Off on my own most of the time
+- Willing to help as long as your not annoying ;)
+- *goes off into own world*
+
+Ajarn
+-------
+Real name: Ajarn?
+Age: 15
+Place: MN, USA
+Whatsa I doa: Coder/Bug Reporter extremest
+Whysa I here: Freya is slow, and they don't listen to me =(
+Into: "There isn't mush to me... I've been programming since I was 11, doing it as a hooby. I can't spell 
+half the time, and the other half of the time my keyboarding sucks. I'm just here for the ride, and to get 
+eA rolling along even faster.
+
+Ohh, I also have an eye for mistakes, since I make them so much..."
+

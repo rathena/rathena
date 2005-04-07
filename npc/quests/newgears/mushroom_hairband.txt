@@ -1,0 +1,59 @@
+//===== eAthena Script =======================================
+//= Mushroom Hairband Quest
+//===== By: ================================================== 
+//= Halca (1.0)
+//= Mass Zero (1.1)
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= Any eAthena Version.
+//===== Description: ========================================= 
+//= Seperate Mushroom Hairband quest.
+//===== Additional Comments: ================================= 
+//= 1.2 Fixed wrong labels, added missing text [Lupus]
+//= 1.3 Fixed possible exploit [Lupus]
+//============================================================
+
+geffen.gat,66,87,6	script	Aipo	819,{
+ mes "[Aipo]";
+ If (Class == 0) GOTO L_NOVICE;
+ mes "Heeeeee.";
+ next;
+ mes "[Aipo]";
+ mes "Have you ever wondered what you would look like with a ^000080Mushroom Hairband^000000?";
+ mes "Well, I can make you one If you like, just give me 300 Mushroom Spores!";
+ next;
+ mes "[Aipo]";
+ mes "This wondrous item grew in the depths of a gave and needs the spores for the final";
+ mes "materials neededm";
+ mes "Want me to make it for you?";
+ next;
+ menu "Yes! Now make me the item!",-,"No, thanks!",M_EXIT;
+
+ if (countitem(921) < 300) GOTO L_NOITEM;//Items: Mushroom Spore,
+ mes "[Aipo]";
+ mes "Wow! Thanks! Lemme make the item then.";
+ delitem 921,300;//Items: Mushroom Spore,
+ next;
+ mes "[Aipo]";
+ mes "Okay, thanks for the items, now yours in return!";
+ next;
+ getitem 5082,1;//Items: Mushroom Hairband,
+ mes "[Aipo]";
+ mes "Thanks again! Bye!";
+ close;
+
+L_NOITEM:
+ mes "[Aipo]";
+ mes "You don't have enough Mushroom Spores... sorry!";
+ close;
+
+L_NOVICE:
+ mes "I love musrooms. I wanna be their master one day...";
+ close;
+
+M_EXIT:
+ mes "[Aipo]";
+ mes "Well, I'm always here If you change your mind!";
+ close;
+}

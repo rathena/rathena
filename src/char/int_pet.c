@@ -30,7 +30,7 @@ int inter_pet_tostr(char *str,struct s_pet *p)
 		p->intimate = 1000;
 
 	len=sprintf(str,"%d,%d,%s\t%d,%d,%d,%d,%d,%d,%d,%d,%d",
-		p->pet_id,p->class,p->name,p->account_id,p->char_id,p->level,p->egg_id,
+		p->pet_id,p->class_,p->name,p->account_id,p->char_id,p->level,p->egg_id,
 		p->equip,p->intimate,p->hungry,p->rename_flag,p->incuvate);
 
 	return 0;
@@ -41,18 +41,18 @@ int inter_pet_fromstr(char *str,struct s_pet *p)
 	int s;
 	int tmp_int[16];
 	char tmp_str[256];
-	
+
 	memset(p,0,sizeof(struct s_pet));
-	
+
 //	printf("sscanf pet main info\n");
 	s=sscanf(str,"%d,%d,%[^\t]\t%d,%d,%d,%d,%d,%d,%d,%d,%d",&tmp_int[0],&tmp_int[1],tmp_str,&tmp_int[2],
 		&tmp_int[3],&tmp_int[4],&tmp_int[5],&tmp_int[6],&tmp_int[7],&tmp_int[8],&tmp_int[9],&tmp_int[10]);
 
 	if(s!=12)
 		return 1;
-	
+
 	p->pet_id = tmp_int[0];
-	p->class = tmp_int[1];
+	p->class_ = tmp_int[1];
 	memcpy(p->name,tmp_str,24);
 	p->account_id = tmp_int[2];
 	p->char_id = tmp_int[3];
@@ -88,7 +88,7 @@ int inter_pet_init()
 	if( (fp=fopen(pet_txt,"r"))==NULL )
 		return 1;
 	while(fgets(line,sizeof(line),fp)){
-		p=calloc(sizeof(struct s_pet), 1);
+		p = (struct s_pet*)aCalloc(sizeof(struct s_pet), 1);
 		if(p==NULL){
 			printf("int_pet: out of memory!\n");
 			exit(0);
@@ -100,13 +100,24 @@ int inter_pet_init()
 			numdb_insert(pet_db,p->pet_id,p);
 		}else{
 			printf("int_pet: broken data [%s] line %d\n",pet_txt,c);
-			free(p);
+			aFree(p);
 		}
 		c++;
 	}
 	fclose(fp);
 //	printf("int_pet: %s read done (%d pets)\n",pet_txt,c);
 	return 0;
+}
+
+int pet_db_final (void *k, void *data, va_list ap) {
+	struct s_pet *p = (struct s_pet *) data;
+	if (p) aFree(p);
+	return 0;
+}
+void inter_pet_final()
+{
+	numdb_final(pet_db, pet_db_final);
+	return;
 }
 
 int inter_pet_save_sub(void *key,void *data,va_list ap)
@@ -136,7 +147,7 @@ int inter_pet_save()
 int inter_pet_delete(int pet_id)
 {
 	struct s_pet *p;
-	p = numdb_search(pet_db,pet_id);
+	p = (struct s_pet *) numdb_search(pet_db,pet_id);
 	if( p == NULL)
 		return 1;
 	else {
@@ -210,7 +221,7 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 	short pet_equip,short intimate,short hungry,char rename_flag,char incuvate,char *pet_name)
 {
 	struct s_pet *p;
-	p=malloc(sizeof(struct s_pet));
+	p= (struct s_pet *) aMalloc(sizeof(struct s_pet));
 	if(p==NULL){
 		printf("int_pet: out of memory !\n");
 		mapif_pet_created(fd,account_id,NULL);
@@ -225,7 +236,7 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 		p->account_id = account_id;
 		p->char_id = char_id;
 	}
-	p->class = pet_class;
+	p->class_ = pet_class;
 	p->level = pet_lv;
 	p->egg_id = pet_egg_id;
 	p->equip = pet_equip;
@@ -242,18 +253,18 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 		p->intimate = 0;
 	else if(p->intimate > 1000)
 		p->intimate = 1000;
-	
+
 	numdb_insert(pet_db,p->pet_id,p);
-	
+
 	mapif_pet_created(fd,account_id,p);
-	
+
 	return 0;
 }
 
 int mapif_load_pet(int fd,int account_id,int char_id,int pet_id)
 {
 	struct s_pet *p;
-	p=numdb_search(pet_db,pet_id);
+	p=(struct s_pet *)numdb_search(pet_db,pet_id);
 	if(p!=NULL) {
 		if(p->incuvate == 1) {
 			p->account_id = p->char_id = 0;
@@ -280,9 +291,9 @@ int mapif_save_pet(int fd,int account_id,struct s_pet *data)
 	}
 	else{
 		pet_id = data->pet_id;
-		p=numdb_search(pet_db,pet_id);
+		p=(struct s_pet *)numdb_search(pet_db,pet_id);
 		if(p == NULL) {
-			p=malloc(sizeof(struct s_pet));
+			p=(struct s_pet *)aMalloc(sizeof(struct s_pet));
 			if(p==NULL){
 				printf("int_pet: out of memory !\n");
 				mapif_save_pet_ack(fd,account_id,1);
@@ -292,7 +303,7 @@ int mapif_save_pet(int fd,int account_id,struct s_pet *data)
 			p->pet_id = data->pet_id;
 			if(p->pet_id == 0)
 				data->pet_id = p->pet_id = pet_newid++;
-			numdb_insert(pet_db,p->pet_id,p);		
+			numdb_insert(pet_db,p->pet_id,p);
 		}
 		if(data->hungry < 0)
 			data->hungry = 0;
@@ -322,7 +333,7 @@ int mapif_delete_pet(int fd,int pet_id)
 int mapif_parse_CreatePet(int fd)
 {
 	mapif_create_pet(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOW(fd,10),RFIFOW(fd,12),RFIFOW(fd,14),RFIFOW(fd,16),RFIFOL(fd,18),
-		RFIFOL(fd,20),RFIFOB(fd,22),RFIFOB(fd,23),RFIFOP(fd,24));
+		RFIFOL(fd,20),RFIFOB(fd,22),RFIFOB(fd,23),(char*)RFIFOP(fd,24));
 	return 0;
 }
 
