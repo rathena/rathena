@@ -1247,9 +1247,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->speed = (sd->speed * 125) / 100;
 		}
 		if(sd->sc_data[SC_DEFENDER].timer != -1) {
-			sd->aspd += (550 - sd->sc_data[SC_DEFENDER].val1*50);
-			// removed as of 12/14's patch [celest]
-			//sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
+			//sd->aspd += (550 - sd->sc_data[SC_DEFENDER].val1*50);
+			aspd_rate += (25 - sd->sc_data[SC_DEFENDER].val1*5);
+			sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
 		}
 		if(sd->sc_data[SC_ENCPOISON].timer != -1)
 			sd->addeff[4] += sd->sc_data[SC_ENCPOISON].val2;
@@ -1528,8 +1528,7 @@ int status_calc_speed (struct map_session_data *sd)
 			sd->speed = (sd->speed * 125) / 100;
 		}
 		if(sd->sc_data[SC_DEFENDER].timer != -1) {
-			// removed as of 12/14's patch [celest]
-			//sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
+			sd->speed = (sd->speed * (155 - sd->sc_data[SC_DEFENDER].val1*5)) / 100;
 		}
 		if( sd->sc_data[SC_DANCING].timer!=-1 ){
 			sd->speed = (int) ((double)sd->speed * (6.- 0.4 * pc_checkskill(sd, ((s_class.job == 19) ? BA_MUSICALLESSON : DC_DANCINGLESSON))));
@@ -2514,9 +2513,8 @@ int status_get_speed(struct block_list *bl)
 			if(sc_data[SC_STEELBODY].timer!=-1)
 				speed = speed*125/100;
 			//ディフェンダー時は加算
-			// removed as of 12/14's patch [celest]
-			/*if(sc_data[SC_DEFENDER].timer!=-1)
-				speed = (speed * (155 - sc_data[SC_DEFENDER].val1*5)) / 100;*/
+			if(sc_data[SC_DEFENDER].timer!=-1)
+				speed = (speed * (155 - sc_data[SC_DEFENDER].val1*5)) / 100;
 			//踊り状態は4倍遅い
 			if(sc_data[SC_DANCING].timer!=-1 )
 				speed *= 6;
@@ -2596,7 +2594,8 @@ int status_get_adelay(struct block_list *bl)
 				aspd_rate -= sc_data[i].val2;
 			//ディフェンダー時は加算
 			if(sc_data[SC_DEFENDER].timer != -1)
-				adelay += (1100 - sc_data[SC_DEFENDER].val1*100);
+				aspd_rate += (25 - sc_data[SC_DEFENDER].val1*5);
+				//adelay += (1100 - sc_data[SC_DEFENDER].val1*100);
 			if(sc_data[SC_GOSPEL].timer!=-1 &&
 				sc_data[SC_GOSPEL].val4 == BCT_ENEMY &&
 				sc_data[SC_GOSPEL].val3 == 8)
@@ -2652,7 +2651,8 @@ int status_get_amotion(struct block_list *bl)
 			if(	sc_data[i=SC_SPEEDPOTION3].timer!=-1 || sc_data[i=SC_SPEEDPOTION2].timer!=-1 || sc_data[i=SC_SPEEDPOTION1].timer!=-1 || sc_data[i=SC_SPEEDPOTION0].timer!=-1)
 				aspd_rate -= sc_data[i].val2;
 			if(sc_data[SC_DEFENDER].timer != -1)
-				amotion += (550 - sc_data[SC_DEFENDER].val1*50);
+				aspd_rate += (25 - sc_data[SC_DEFENDER].val1*5);
+				//amotion += (550 - sc_data[SC_DEFENDER].val1*50);
 		}
 		if(aspd_rate != 100)
 			amotion = amotion*aspd_rate/100;

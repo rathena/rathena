@@ -4380,17 +4380,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case PF_HPCONVERSION:			/* ライフ置き換え */
 		clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 		if (sd) {
-			int conv_hp, conv_sp;
-			conv_hp = sd->status.max_hp / 10; //基本はHPの10%
-			//sd->status.hp -= conv_hp; //HPを減らす
-			conv_sp = conv_hp * 10 * skilllv / 100;
-			if (sd->status.sp + conv_sp > sd->status.max_sp)
-				conv_hp = sd->status.max_sp - sd->status.sp;
-			if (pc_checkoversp(sd))
-				conv_hp = conv_sp = 0;
-			//sd->status.sp += conv_sp; //SPを?やす
-			pc_heal(sd, -conv_hp, conv_sp);
-			clif_heal(sd->fd, SP_SP, conv_sp);
+			int hp, sp;
+			hp = sd->status.max_hp / 10; //基本はHPの10%
+			sp = hp * 10 * skilllv / 100;
+			if (sd->status.sp + sp > sd->status.max_sp)
+				sp = sd->status.max_sp - sd->status.sp;
+			// we need to check with the sp that was taken away when casting too
+			if (sd->status.sp + skill_get_sp(skillid, skilllv) >= sd->status.max_sp)
+				hp = sp = 0;
+			pc_heal(sd, -hp, sp);
+			clif_heal(sd->fd, SP_SP, sp);
+			clif_updatestatus(sd, SP_SP);
 		}
 		break;
 	case HT_REMOVETRAP:				/* リム?ブトラップ */
