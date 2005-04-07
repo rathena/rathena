@@ -3,9 +3,6 @@
 
 #include <stdlib.h>
 
-// 独自メモリマネージャを使用する場合、次のコメントを外してください。
-// #define USE_MEMMGR
-
 #if defined(DMALLOC)
 
 #	include "dmalloc.h"
@@ -75,10 +72,6 @@
 
 #endif
 
-#ifndef USE_MEMMGR
-	#define do_init_memmgr(file)
-#else
-	int do_init_memmgr(const char* file);
-#endif
+int do_init_memmgr(const char* file);
 
 #endif

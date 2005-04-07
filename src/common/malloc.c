@@ -8,7 +8,7 @@
 #endif
 
 // 独自メモリマネージャを使用する場合、次のコメントを外してください。
-// #define USE_MEMMGR
+//#define USE_MEMMGR
 
 #if !defined(DMALLOC) && !defined(GCOLLECT) && !defined(BCHECK) && !defined(USE_MEMMGR)
 
@@ -314,14 +314,14 @@ void* aRealloc_(void *memblock, size_t size, const char *file, int line, const c
 	}
 }
 
-void* aStrdup_(const void* string, const char *file, int line, const char *func ) {
-	if(string == NULL) {
+char* aStrdup_(const void *p, const char *file, int line, const char *func ) {
+	if(p == NULL) {
 		return NULL;
 	} else {
-		int  len = strlen(string);
-		char *p  = (char *)aMalloc_(len + 1,file,line,func);
-		memcpy(p,string,len+1);
-		return p;
+		int  len = strlen(p);
+		char *string  = (char *)aMalloc_(len + 1,file,line,func);
+		memcpy(string,p,len+1);
+		return string;
 	}
 }
 
@@ -536,12 +536,13 @@ static void memmer_exit(void) {
 		fclose(fp);
 	}
 }
+#endif
 
 int do_init_memmgr(const char* file) {
-	sprintf(memmer_logfile,"%s.log",file);
-	atexit(memmer_exit);
-	printf("memmgr: initialised: %s\n",memmer_logfile);
+	#ifdef USE_MEMMGR
+		sprintf(memmer_logfile,"%s.log",file);
+		atexit(memmer_exit);
+		printf("memmgr: initialised: %s\n",memmer_logfile);
+	#endif
 	return 0;
 }
-
-#endif
