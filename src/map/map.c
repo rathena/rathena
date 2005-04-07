@@ -3131,10 +3131,10 @@ int cleanup_sub(struct block_list *bl, va_list ap) {
             map_quit((struct map_session_data *) bl);
             break;
         case BL_NPC:
-            npc_delete((struct npc_data *)bl);
+            npc_unload((struct npc_data *)bl);
             break;
         case BL_MOB:
-            mob_delete((struct mob_data *)bl);
+            mob_unload((struct mob_data *)bl);
             break;
         case BL_PET:
             pet_remove_map((struct map_session_data *)bl);

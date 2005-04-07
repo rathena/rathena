@@ -242,12 +242,11 @@ int clif_foreachclient(int (*func)(struct map_session_data*, va_list),...)
  */
 int clif_send_sub(struct block_list *bl, va_list ap)
 {
-	unsigned char *buf;
-	int len;
 	struct block_list *src_bl;
-	int type;
 	struct map_session_data *sd;
-
+	unsigned char *buf;
+	int len, type;
+	
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
 	nullpo_retr(0, sd = (struct map_session_data *)bl);
@@ -259,20 +258,23 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 
 	switch(type) {
 	case AREA_WOS:
-		if (bl && bl == src_bl)
+		if (bl == src_bl)
 			return 0;
 		break;
 	case AREA_WOC:
-		if ((sd && sd->chatID) || (bl && bl == src_bl))
+		if (sd->chatID || bl == src_bl)
 			return 0;
 		break;
 	case AREA_WOSC:
-		if ((sd) && sd->chatID && sd->chatID == ((struct map_session_data*)src_bl)->chatID)
-			return 0;
+		{
+			struct map_session_data *ssd = (struct map_session_data *)src_bl;
+			if (ssd && sd->chatID && sd->chatID == ssd->chatID)
+				return 0;
+		}
 		break;
 	}
 
-	if ((sd != NULL) && (session[sd->fd] != NULL)) {
+	if (session[sd->fd] != NULL) {
 		if (WFIFOP(sd->fd,0) == buf) {
 			printf("WARNING: Invalid use of clif_send function\n");
 			printf("         Packet x%4x use a WFIFO of a player instead of to use a buffer.\n", WBUFW(buf,0));
@@ -10686,10 +10688,16 @@ static int clif_parse(int fd) {
 
 	// get packet version before to parse
 	packet_ver = 0;
-	if (sd)
+	if (sd) {
 		packet_ver = sd->packet_ver;
+		if (packet_ver < 0 || packet_ver > MAX_PACKET_VER) {	// unusual, but just in case
+			close(fd);
+			session[fd]->eof = 1;
+			printf("clif_parse: session #%d, bad packet version -> disconnected.\n", fd);
+			return 0;
+		}
 	// check authentification packet to know packet version
-	else {
+	} else {
 		// packet DB
 		if (IS_PACKET_DB_VER (cmd)) {
 			if (RFIFOREST(fd) >= packet_db[clif_config.packet_db_ver][cmd].len &&

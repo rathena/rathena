@@ -914,7 +914,8 @@ int mob_spawn(int id)
 	struct mob_data *md;
 	struct block_list *bl;
 
-	nullpo_retr(-1, bl=map_id2bl(id));
+	//nullpo_retr(-1, bl=map_id2bl(id));
+	bl=map_id2bl(id);
 
 	if(!bl || !bl->type || bl->type!=BL_MOB)
 		return -1;
@@ -2106,23 +2107,15 @@ static int mob_delay_item_drop2(int tid,unsigned int tick,int id,int data)
  * mob data is erased.
  *------------------------------------------
  */
-int mob_delete(struct mob_data *md)
+void mob_unload(struct mob_data *md)
 {
-	nullpo_retr(1, md);
-
-	if(md->bl.prev == NULL)
-		return 1;
-	mob_changestate(md,MS_DEAD,0);
-	clif_clearchar_area(&md->bl,1);
-	map_delblock(&md->bl);
-	if(mob_get_viewclass(md->class_) <= 1000)
-		clif_clearchar_delay(gettick()+3000,&md->bl,0);
-	mob_deleteslave(md);
-	mob_setdelayspawn(md->bl.id);
-	return 0;
+	nullpo_retv(md);
+	mob_remove_map(md, 0);
+	map_deliddb(&md->bl);
+	aFree(md);
+	md = NULL;
 }
-
-int mob_catch_delete(struct mob_data *md,int type)
+int mob_remove_map(struct mob_data *md, int type)
 {
 	nullpo_retr(1, md);
 
@@ -2131,17 +2124,32 @@ int mob_catch_delete(struct mob_data *md,int type)
 	mob_changestate(md,MS_DEAD,0);
 	clif_clearchar_area(&md->bl,type);
 	map_delblock(&md->bl);
+	if (md->lootitem){
+		aFree(md->lootitem);
+		md->lootitem = NULL;
+	}
+
+	return 0;
+}
+int mob_delete(struct mob_data *md)
+{
+	nullpo_retr(1, md);
+
+	mob_remove_map(md, 1);
+	if (mob_get_viewclass(md->class_) <= 1000)
+		clif_clearchar_delay(gettick()+3000,&md->bl,0);
+	mob_deleteslave(md);
 	mob_setdelayspawn(md->bl.id);
 	return 0;
 }
-
 int mob_timer_delete(int tid, unsigned int tick, int id, int data)
 {
 	struct mob_data *md=(struct mob_data *)map_id2bl(id);
 	nullpo_retr(0, md);
 
 //for Alchemist CANNIBALIZE [Lupus]
-	mob_catch_delete(md,3);
+	mob_remove_map(md, 3);
+	mob_setdelayspawn(md->bl.id);
 	return 0;
 }
 

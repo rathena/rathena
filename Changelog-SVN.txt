@@ -1,6 +1,15 @@
 
 Date	Added
 
+04/07
+	* Readded @disablenpc (not the same as @hidenpc) [celest]
+	* Fixed @reloadscript not removing old NPC's and monsters first [celest]
+	* Some changes in mob and NPC unloading [celest]
+	* Changed the original @disablenpc to @hidenpc [celest]
+	* Fixed HP Conversion to properly not reduce HP if SP is full [celest]
+	* Updated Defender -- should reduce walking speed, and does not reduce attack speed
+	  at level 5 [celest]
+
 04/06
 	* Fixed a crash in clif_send when checking packet version, thanks to Alex14
 	* Fixed a crash in Deluge, Volcano and Violent Gale, thanks to Alex14

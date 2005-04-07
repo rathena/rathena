@@ -61,7 +61,7 @@ Llevelcheck:
 Ladvclasses:
 	if(SkillPoint != 0) goto Lskillpt;
 //Lord Knight & Paladin
-	if(oldclass == 7 && readparam(19) == 4001 || oldclass == 14 && readparam(19) == 4001) goto Lswordsmanhigh;
+	if(oldclass == 7 && readparam(19) == 4001 || oldclass == 13 && readparam(19) == 4001 || oldclass == 14 && readparam(19) == 4001 || oldclass == 21 && readparam(19) == 4001) goto Lswordsmanhigh;
 	if(readparam(19) == 4002 && oldclass == 7) goto Llordknight;
 	if(readparam(19) == 4002 && oldclass == 14) goto Lpaladin;
 //Assassin Cross & Stalker

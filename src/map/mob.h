@@ -105,6 +105,7 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_stop_walking(struct mob_data *md,int type);
 int mob_stopattack(struct mob_data *);
 int mob_spawn(int);
+int mob_setdelayspawn(int);
 int mob_damage(struct block_list *,struct mob_data*,int,int);
 int mob_changestate(struct mob_data *md,int state,int type);
 int mob_heal(struct mob_data*,int);
@@ -123,8 +124,9 @@ short mob_get_clothes_color(int);	//player mob dye [Valaris]
 int mob_get_equip(int); // mob equip [Valaris]
 int do_init_mob(void);
 
+void mob_unload(struct mob_data *md);
+int mob_remove_map(struct mob_data *md, int type);
 int mob_delete(struct mob_data *md);
-int mob_catch_delete(struct mob_data *md,int type);
 int mob_timer_delete(int tid, unsigned int tick, int id, int data);
 
 int mob_deleteslave(struct mob_data *md);
