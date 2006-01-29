@@ -1,7 +1,0 @@
-// The equipment/items restriction file 
-// here equipment at PvP and GvG 
-// where it is possible to restrict, the prescribed form: <item id>,<mode>
-// mode = 1- So with PvP restriction, 2- GvG restriction, 3- PvP and GvG which restriction 
-
-//1201,1 you can't use KNIFE(ID 1201) on PvP
-//608,3 you can't use Yggdrasil Seed(ID 608) on both PvP & GvG

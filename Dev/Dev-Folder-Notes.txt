@@ -1,3 +1,0 @@
-- This folder and all files inside it must be deleted before any distribution
-- This folder is meant for developers only
-- Use this folder to contain notes, todo, testcases, problems, etc

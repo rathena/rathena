@@ -1,5 +1,0 @@
-data: C:\Program Files\Gravity\RO\data.grf
-sdata: C:\Program Files\Gravity\RO\sdata.grf
-//adata: C:\Program Files\Gravity\RO\adata.grf
-//data_dir: C:\Program Files\Gravity\RO\
-//afm_dir: afm
