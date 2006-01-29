@@ -27,6 +27,7 @@
 
 =========================
 01/29
+	* Updated drops of Vesper [MasterOfMuppets]
 	* Changed the range of NPC_PETRIFYATTACK from 1 to 7 [MasterOfMuppets]
 	* Added monster skills to the odin temple monsters [MasterOfMuppets]
 	* Updated Vesper's and orc baby's monster skills [MasterOfMuppets]
