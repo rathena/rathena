@@ -1,0 +1,23 @@
+// Forbidden Skills Database
+//
+// Structure of Database:
+// SkillID,Flag
+//
+// Legend for 'Flag' field (bitmask):
+//  1 = Cannot be used in normal maps
+//  2 = Cannot be used in PvP maps
+//  4 = Cannot be used in GvG maps
+//  8 = Cannot be used when WoE is on
+//  16 = Cannot be used in PK Mode maps
+//
+// Example:
+// 8,6 = Endure cannot be used in PvP and GvG maps (2+4)
+
+26,4	//AL_TELEPORT
+27,4	//AL_WARP
+87,4	//WZ_ICEWALL
+150,4	//TF_BACKSLIDING
+361,4	//HP_ASSUMPTIO
+362,4	//HP_BASILICA
+488,19	//CG_HERMODE
+491,4	//CR_CULTIVATION

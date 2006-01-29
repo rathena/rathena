@@ -1,0 +1,57 @@
+// for mobs
+// mob_id,sprite_id,equip #
+// Use another mob's sprite for a monster.  0 for sprite will disable mob.
+// Mob must have an equipment it's pet counterpart can use or it will cause problems.  If no equip use 0.
+// The following if a player sprite is used
+// MobID,SpriteID,Sex,Hair,Hair_Color,Weapon,Shield,Head_Top,Head_Middle,Head_Bottom,Option,Dye_Color
+// Use Item ID for weapons and shields, not View ID.
+
+//1002,1039	//Poring,Baphomet (Make Porings look like Baphomet)
+
+//Crusader quest monsters with poring stats
+1910,1036,0
+1911,1132,0
+1912,1257,0
+1913,1164,0
+1914,1276,0
+
+// Easter Event Monsters
+1920,1047,0
+1921,1093,0
+
+// eAthena Dev Team
+// Valaris
+1900,4013,1,1,1,1254,0,67,12,54,16,1
+// Valaris Worshiper
+1901,6,1,1,1,1219,2101,67,12,54,0,1
+// MC Cameri
+1902,14,1,6,6,1101,2105,0,0,0,32,3
+// Poki#3
+1903,4012,1,21,0,1720,0,102,184,57,16,0
+
+// eAthena Custom Equipped Mobs
+1970,1002,10013
+1971,1011,10002
+1972,1014,10017
+1973,1019,10010
+1974,1023,10009
+1975,1026,10008
+1976,1029,10006
+1977,1031,10013
+1978,1035,10002
+1979,1042,10002
+1980,1049,10012
+1981,1052,10014
+1982,1056,10019
+1983,1057,10018
+1984,1063,10007
+1985,1077,10017
+1986,1101,10001
+1987,1107,10003
+1988,1109,10004
+1989,1110,10005
+1990,1113,10013
+1991,1155,10011
+1992,1167,10015
+1993,1170,10016
+1994,1188,10020

@@ -1,0 +1,96 @@
+//===== eAthena Script ======================================= 
+//= Lighthalzen Airport Staff
+//===== By: ================================================== 
+//= L0ne_W0lf, Muad_Dib
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3000+
+//===== Description: ========================================= 
+//= Lighthalzen Airport Staff
+//===== Additional Comments: ================================= 
+//= 1.0 Cloned from einbroch.txt [Justin84]
+//============================================================
+
+
+lhz_airport.gat,126,43,4	script	Airport Staff#1::AirportL	90,{
+	mes "[Airport Staff]";
+	mes "Welcome to the Airport.";
+	mes "How may I help you?";
+	next;
+	menu "Board the Airship",-,"Cancel",L_Cancel;
+
+	mes "[Airport Staff]";
+	mes "The Airship boarding fee";
+	mes "is 1,200 zeny, but if you've";
+	mes "got a Free Ticket for Airship,"; 
+	mes "the fee will be waived. Will";
+	mes "you board the Airship?";
+	next;
+	menu "Yes",-,"No",L_Cancel;
+
+		if(countitem(7311) > 0) goto GotTicket;
+		if(zeny < 1200) goto L_NoZeny;
+		set Zeny,zeny-1200;
+		warp "lhz_airport.gat",148,51;
+		close;
+
+	GotTicket:
+		delitem 7311,1;
+		warp "lhz_airport.gat",148,51;
+		close;
+
+	L_NoZeny:
+		mes "[Airport Staff]";
+		mes "You don't have enough zeny.";
+		close;
+
+	L_Cancel:
+		mes "[Airport Staff]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close;
+}
+
+lhz_airport.gat,143,43,4	duplicate(AirportL)	Airport Staff#2	90,{
+// script Airport_Staff_In;
+}
+lhz_airport.gat,156,43,4	duplicate(AirportL)	Airport Staff#3	90,{
+// script Airport_Staff_In;
+}
+
+lhz_airport.gat,126,51,4	script	Airport Staff#4::AirportL2	90,{
+	mes "[Airport Staff]";
+	mes "Welcome~";
+	mes "Please head this";
+	mes "way to board the Airship.";
+	next;
+	menu "Exit to Main Terminal",-,"Cancel",L_Cancel;
+
+		mes "[Airport Staff]";
+		mes "If you leave the";
+		mes "main terminal, you'll";
+		mes "have to pay the admission";
+		mes "fee again in order to board";
+		mes "the Airship. Are you sure";
+		mes "that you want to exit?";
+		next;
+		menu "Yes",-,"No",L_Cancel;
+
+			warp "lhz_airport.gat",142,40;
+			close;
+
+	L_Cancel:
+		mes "[Airport Staff]";
+		mes "Alright, thank you";
+		mes "for your patronage";
+		mes "and I hope you have";
+		mes "a pleasant flight~";
+		close;
+}
+
+lhz_airport.gat,143,51,4	duplicate(AirportL2)	Airport Staff#5	90,{
+}
+
+lhz_airport.gat,156,51,4	duplicate(AirportL2)	Airport Staff#6	90,{
+}

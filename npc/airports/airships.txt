@@ -1,0 +1,439 @@
+//===== eAthena Script ======================================= 
+//= The Airship System Script
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 0.1
+//===== Compatible With: ===================================== 
+//= eAthena SVN 3422+(Requires jA Script System)
+//===== Description: ========================================= 
+//= The Airship System used in the official servers, however this
+//= one is still about 25% custom and is missing some npcs.
+//===== Additional Comments: ================================= 
+//= 0.1 Added first version, it might be a little buggy [MasterOfMuppets]
+//= 0.1a Fixed the Airport Staff#Iz which was [MasterOfMuppets]
+//= 	 warping you to the same location as Airport Staff#Ein
+//============================================================ 
+
+//============================================================ 
+//= The Airship System (Yuno -> Hugel -> Einbroch -> Lighthalzen -> repeat)
+//============================================================ 
+
+airplane.gat,243,74,4	script	#AirshipWarp-1	45,2,2{
+OnTouch:
+	if($airplanelocation == 1)warp "einbroch.gat",90,275;
+	if($airplanelocation == 2)warp "yuno.gat",85,265;
+	if($airplanelocation == 3)warp "lighthalzen.gat",302,75;
+	if($airplanelocation == 4)warp "hugel.gat",182,150;
+	end;
+
+OnHide:
+	misceffect 16;
+	end;
+OnUnhide:
+	misceffect 215;
+	end;
+}
+
+airplane.gat,243,29,4	script	#AirshipWarp-2	45,2,2{
+OnTouch:
+	if($airplanelocation == 1)warp "einbroch.gat",90,275;
+	if($airplanelocation == 2)warp "yuno.gat",85,265;
+	if($airplanelocation == 3)warp "lighthalzen.gat",302,75;
+	if($airplanelocation == 4)warp "hugel.gat",182,150;
+	end;
+
+OnHide:
+	misceffect 16;
+	end;
+OnUnhide:
+	misceffect 215;
+	end;
+}
+
+airplane.gat,1,1,0	script	EinYuno_Airship	-1,{
+OnInit:
+while(1)
+{
+	initnpctimer;
+	setnpctimer 0;
+	set $airplanelocation,0;
+	donpcevent "#AirshipWarp-1::OnHide";
+	donpcevent "#AirshipWarp-2::OnHide";
+	disablenpc "#AirshipWarp-1";
+	disablenpc "#AirshipWarp-2";
+	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Hugel.",1,0xBA55D3;
+	end;
+OnTimer15000:
+	mapannounce "airplane.gat","We are heading to Hugel.",1,0xBA55D3;
+	end;
+OnTimer30000:
+	mapannounce "airplane.gat","We will arrive in Hugel shortly.",1,0xBA55D3;
+	end;
+OnTimer45000:
+	set $airplanelocation,4;
+	enablenpc "#AirshipWarp-1";
+	enablenpc "#AirshipWarp-2";
+	donpcevent "#AirshipWarp-1::OnUnhide";
+	donpcevent "#AirshipWarp-2::OnUnhide";	
+	mapannounce "airplane.gat","Welcome to Hugel. Have a safe trip.",1,0xBA55D3;
+	end;
+OnTimer55000:
+	mapannounce "airplane.gat","Currently we are in Hugel. The Airship will leave shortly.",1,0xBA55D3;
+	end;
+OnTimer65000:
+	set $airplanelocation,0;
+	donpcevent "#AirshipWarp-1::OnHide";
+	donpcevent "#AirshipWarp-2::OnHide";
+	disablenpc "#AirshipWarp-1";
+	disablenpc "#AirshipWarp-2";
+	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Einbroch.",1,0x00FF00;
+	end;
+OnTimer80000:
+	mapannounce "airplane.gat","We are heading to Einbroch.",1,0x00FF00;
+	end;
+OnTimer95000:
+	mapannounce "airplane.gat","We will arrive in Einbroch shortly.",1,0x00FF00;
+	end;
+OnTimer110000:
+	set $airplanelocation,1;
+	enablenpc "#AirshipWarp-1";
+	enablenpc "#AirshipWarp-2";
+	donpcevent "#AirshipWarp-1::OnUnhide";
+	donpcevent "#AirshipWarp-2::OnUnhide";
+	mapannounce "airplane.gat","Welcome to Einbroch. Have a safe trip.",1,0x00FF00;
+	end;
+OnTimer120000:
+	mapannounce "airplane.gat","Currently we are in Einbroch. The Airship will take off shortly.",1,0x00FF00;
+	end;
+OnTimer130000:
+	set $airplanelocation,0;
+	donpcevent "#AirshipWarp-1::OnHide";
+	donpcevent "#AirshipWarp-2::OnHide";
+	disablenpc "#AirshipWarp-1";
+	disablenpc "#AirshipWarp-2";
+	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Lighthalzen.",1,0xFF6347;
+	end;
+OnTimer145000:
+	mapannounce "airplane.gat","We are heading to Lighthalzen.",1,0xFF6347;
+	end;
+OnTimer160000:
+	mapannounce "airplane.gat","We will arrive in Lighthalzen shortly.",1,0xFF6347;
+	end;
+OnTimer175000:
+	set $airplanelocation,3;
+	enablenpc "#AirshipWarp-1";
+	enablenpc "#AirshipWarp-2";
+	donpcevent "#AirshipWarp-1::OnUnhide";
+	donpcevent "#AirshipWarp-2::OnUnhide";
+	mapannounce "airplane.gat","Welcome to Lighthalzen. Have a safe trip.",1,0xFF6347;
+	end;
+OnTimer185000:
+	mapannounce "airplane.gat","Currently we are in Lighthalzen. The Airship will leave shortly.",1,0xFF6347;
+	end;
+OnTimer195000:
+	set $airplanelocation,0;
+	donpcevent "#AirshipWarp-1::OnHide";
+	donpcevent "#AirshipWarp-2::OnHide";
+	disablenpc "#AirshipWarp-1";
+	disablenpc "#AirshipWarp-2";
+	mapannounce "airplane.gat","The Airship is now taking off. Our next destination is Yuno.",1,0x70DBDB;
+	end;
+OnTimer210000:
+	mapannounce "airplane.gat","We are heading to Yuno.",1,0x70DBDB;
+	end;
+OnTimer225000:
+	mapannounce "airplane.gat","We will arrive in Yuno shortly.",1,0x70DBDB;
+	end;
+OnTimer240000:
+	set $airplanelocation,2;
+	enablenpc "#AirshipWarp-1";
+	enablenpc "#AirshipWarp-2";
+	donpcevent "#AirshipWarp-1::OnUnhide";
+	donpcevent "#AirshipWarp-2::OnUnhide";
+	mapannounce "airplane.gat","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
+	end;
+OnTimer250000:
+	mapannounce "airplane.gat","Currently we are in Yuno. The Airship will leave shortly.",1,0x70DBDB;
+	end;
+OnTimer260000:
+	stoptimer;
+}
+}
+
+//C4644E
+
+//============================================================ 
+//= Some normal NPCS (airplane.gat)
+//============================================================ 
+
+airplane.gat,240,64,5	script	Exit	857,{
+
+end;
+
+}
+
+airplane.gat,247,64,5	duplicate(Exit)	Exit	857
+
+airplane.gat,240,39,1	duplicate(Exit)	Exit	857
+
+airplane.gat,247,39,1	duplicate(Exit)	Exit	857
+
+airplane.gat,100,69,2	script	Airship Crew	852,{
+
+	mes "[Airship Crew]";
+	mes "If we've landed at";
+	mes "your destination and";
+	mes "you'd like to leave the";
+	mes "Airship, please use the";
+	mes "stairs up ahead. Thank";
+	mes "you for you patronage.";
+	close;
+
+}
+
+//============================================================ 
+//= The Airship System (Yuno -> Izlude -> Repeat)
+//============================================================ 
+
+airplane_01.gat,243,74,4	script	#AirshipWarp-3	45,2,2{
+OnTouch:
+	if($airplanelocation2 == 1)warp "izlude.gat",202,56;
+	if($airplanelocation2 == 2)warp "yuno.gat",20,265;
+	end;
+
+OnHide:
+	misceffect 16;
+	end;
+OnUnhide:
+	misceffect 215;
+	end;
+}
+
+airplane_01.gat,243,29,4	script	#AirshipWarp-4	45,2,2{
+OnTouch:
+	if($airplanelocation2 == 1)warp "izlude.gat",202,56;
+	if($airplanelocation2 == 2)warp "yuno.gat",20,265;
+
+OnHide:
+	misceffect 16;
+	end;
+OnUnhide:
+	misceffect 215;
+	end;
+}
+
+airplane_01.gat,1,1,0	script	YunoIzl_Airship	-1,{
+OnInit:
+while(1)
+{
+	initnpctimer;
+	setnpctimer 0;
+	set $airplanelocation2,0;
+	donpcevent "#AirshipWarp-3::OnHide";
+	donpcevent "#AirshipWarp-4::OnHide";
+	disablenpc "#AirshipWarp-3";
+	disablenpc "#AirshipWarp-4";
+	mapannounce "airplane_01.gat","The Airship is leaving the ground. Our next destination is Izlude.",1,0x00FF00;
+	end;
+OnTimer15000:
+	mapannounce "airplane_01.gat","We are heading to Izlude.",1,0x00FF00;
+	end;
+OnTimer30000:
+	mapannounce "airplane_01.gat","We will arrive in Izlude shortly.",1,0x00FF00;
+	end;
+OnTimer45000:
+	set $airplanelocation2,1;
+	enablenpc "#AirshipWarp-3";
+	enablenpc "#AirshipWarp-4";
+	donpcevent "#AirshipWarp-3::OnUnhide";
+	donpcevent "#AirshipWarp-4::OnUnhide";	
+	mapannounce "airplane_01.gat","Welcome to Izlude. Have a safe trip.",1,0x00FF00;
+	end;
+OnTimer55000:
+	mapannounce "airplane_01.gat","Currently we are in Izlude. The Airship will leave shortly.",1,0x00FF00;
+	end;
+OnTimer65000:
+	set $airplanelocation2,0;
+	donpcevent "#AirshipWarp-3::OnHide";
+	donpcevent "#AirshipWarp-4::OnHide";
+	disablenpc "#AirshipWarp-3";
+	disablenpc "#AirshipWarp-4";
+	mapannounce "airplane_01.gat","The Airship is leaving the ground. Our next destination is Yuno.",1,0x70DBDB;
+	end;
+OnTimer80000:
+	mapannounce "airplane_01.gat","We are heading to Yuno.",1,0x70DBDB;
+	end;
+OnTimer95000:
+	mapannounce "airplane_01.gat","We will arrive in Yuno shortly.",1,0x70DBDB;
+	end;
+OnTimer110000:
+	set $airplanelocation2,2;
+	enablenpc "#AirshipWarp-3";
+	enablenpc "#AirshipWarp-4";
+	donpcevent "#AirshipWarp-3::OnUnhide";
+	donpcevent "#AirshipWarp-4::OnUnhide";
+	mapannounce "airplane_01.gat","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
+	end;
+OnTimer120000:
+	mapannounce "airplane_01.gat","Currently we are in Yuno. The Airship will take off shortly.",1,0x70DBDB;
+	end;
+OnTimer130000:
+	stoptimer;
+}
+}
+
+//============================================================ 
+//= Some normal NPCS (airplane_01.gat)
+//============================================================ 
+
+airplane_01.gat,240,64,5	duplicate(Exit)	Exit	857
+
+airplane_01.gat,247,64,5	duplicate(Exit)	Exit	857
+
+airplane_01.gat,240,39,1	duplicate(Exit)	Exit	857
+
+airplane_01.gat,247,39,1	duplicate(Exit)	Exit	857
+
+airplane_01.gat,100,69,2	duplicate(Airship Crew)	Airship Crew	852
+
+//============================================================ 
+//= The Izlude Airship Staff
+//============================================================
+
+izlude.gat,201,54,3	script	Airship Staff#izl	91,{
+
+	mes "[Airship Staff]";
+	mes "Welcome to the Izlude Airship.";
+	mes "How may I help you?";
+	next;
+	menu "Board the Airship",-,"Cancel",L_Cancel;
+
+		mes "[Airship Staff]";
+		mes "The Airship boarding fee";
+		mes "is 1,200 zeny, but if you've";
+		mes "got a Free Ticket for Airship,"; 
+		mes "the fee will be waived. Will";
+		mes "you board the Airship?";
+		next;
+		menu "Yes",-,"No",L_Cancel;
+
+		if(countitem(7311) > 0) goto L_GotTicket;
+		if(Zeny < 1200) goto L_NoZeny;
+			set Zeny, Zeny - 1200;
+			warp "airplane_01.gat",224,64;
+			close;
+
+		L_GotTicket:
+			delitem 7311,1;
+			warp "airplane_01.gat",224,64;
+			close;
+
+	L_NoZeny:
+		mes "[Airship Staff]";
+		mes "You don't have enough zeny.";
+		close;
+
+	L_Cancel:
+		mes "[Airship Staff]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close;
+}
+
+//============================================================ 
+//= The Hugel Airship Staff
+//============================================================
+
+hugel.gat,182,150,3	script	Airship Staff#hu	91,{
+
+	mes "[Airship Staff]";
+	mes "Welcome to the Schwartzwald Republic's Airship.";
+	mes "How may I help you?";
+	next;
+	menu "Board the Airship",-,"Cancel",L_Cancel;
+
+		mes "[Airship Staff]";
+		mes "The Airship boarding fee";
+		mes "is 1,200 zeny, but if you've";
+		mes "got a Free Ticket for Airship,"; 
+		mes "the fee will be waived. Will";
+		mes "you board the Airship?";
+		next;
+		menu "Yes",-,"No",L_Cancel;
+
+		if(countitem(7311) > 0) goto L_GotTicket;
+		if(Zeny < 1200) goto L_NoZeny;
+			set Zeny, Zeny - 1200;
+			warp "airplane.gat",224,64;
+			close;
+
+		L_GotTicket:
+			delitem 7311,1;
+			warp "airplane.gat",224,64;
+			close;
+
+	L_NoZeny:
+		mes "[Airship Staff]";
+		mes "You don't have enough zeny.";
+		close;
+
+	L_Cancel:
+		mes "[Airship Staff]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close;
+}
+
+//============================================================ 
+//= Yuno Airport NPCs
+//============================================================
+
+y_airport.gat,144,63,4	script	Airport Staff#Ein	91,{
+
+	mes "[Airship Staff]";
+	mes "Good day!";
+	mes "Would you like to go";
+	mes "to ^FF0000Einbroch^000000,^FF0000Hugel^000000 or";
+	mes "^FF0000Lighthalzen^000000?";
+	next;
+	menu "Yes.",s_Warp,"No.",-;
+
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
+
+s_Warp:
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close2;
+	warp "yuno.gat",57,240;
+	end;
+
+}
+	
+y_airport.gat,141,63,4	script	Airport Staff#Izl	91,{
+
+	mes "[Airship Staff]";
+	mes "Good day!";
+	mes "Would you like to go";
+	mes "to ^FF0000Izlude^000000?";
+	next;
+	menu "Yes.",s_Warp,"No.",-;
+
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
+
+s_Warp:
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close2;
+	warp "yuno.gat",50,240;
+	end;
+
+}

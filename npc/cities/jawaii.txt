@@ -1,0 +1,771 @@
+//===== eAthena script =======================================
+//= Jawaii (The Lovers Paradise) Town script
+//===== By: ==================================================
+//= jAthena (1.0)
+//= DNett123 (1.1 - 1.5)
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= Latest eAthena SVN
+//===== Description: =========================================
+//= Jawaii Town Npcs
+//===== Additional Comments: =================================
+//= 1.0 - Done By jAthena
+//= 1.1 - Rough Translation [DNett123]
+//= 1.2 - Started Grammer Corrections [DNett123]
+//= 1.3 - Some Edits Thanks To Vidar & Fusion [DNett123]
+//= 1.4 - Edited Dancer, Thanks ceskil [DNett123]
+//= 1.5 - Fixed Script, and spelling errors, some thanks to Sparkles [DNett123]
+//= 1.6 - Final corrections (not complete), thanks to the public, and DNett123!
+//= 1.6c - added missing monsters. Still 1 type is missing [Lupus]
+//= 1.7 – Fixed a lot of typo’s [Nexon]
+//= 1.8 - Removed monster spawns, added aegis ep 8.5 spawns to npc/mobs/fields/jawaii.txt [MasterOfMuppets]
+//= 2.0 - Updated the npcs according to iRO [MasterOfMuppets]
+//============================================================
+
+//===== Shop: ================================================
+jawaii.gat,186,174,2	shop	Jawaii Dealer	85,536:150
+
+//===== Jawaii Scripts ===================================
+jawaii.gat,141,200,3	script	Attendant#Sweetness Suite	798,{
+	
+	mes "[Alowawu]";
+	mes "Welcome.";
+	mes "This is the Sweetness suite.";
+	mes "I have cleaned and tidy up the place.";
+	mes "So please feel free to use it.";
+	next;
+	mes "[Alowawu]";
+	mes "The rental is 1000 zeny per person.";
+	mes "If you give it to me,";
+	mes "I'll transfer you inside.";
+	mes "There's no other way to get inside directly.";
+	next;
+	mes "[Alowawu]";
+	mes "I'll help you with the baggages,";
+	mes "or else, my boss will";
+	mes "beat me up with Triple Blows.";
+	mes "That really hurts.";
+	next;
+	menu "Use it",-,"Cancel",s_Cancel;
+			if(Zeny > 999)
+{
+				mes "[Alowawu]";
+				mes "Thank you.";
+				mes "I'll open a portal for you right now.";
+				mes "Have a nice stay";
+				close2;
+				set Zeny,Zeny - 1000;
+				warp "jawaii_in.gat",116,64;
+				end;
+}
+			else
+{
+				mes "[Alowawu]";;
+				mes "Ah. Dear customer,";
+				mes "you don't have enough zeny to pay for the room.";
+				mes "I can't let you in. Or else,";
+				mes "my boss with get angry and hit me with Triple Blows.";
+				close;
+}
+s_Cancel:
+			mes "[Alowawu]";
+			mes "Haha, this room is better than others.";
+			mes "Believe, it's nice and clean.";
+			mes "If you have any change of mind,";
+			mes "just come and find me.";
+			close;
+}
+
+jawaii.gat,108,199,5	script	Attendant#Classic_Suite	74,{
+	
+	mes "[Poyi Oland]";
+	mes "Welcome.";
+	mes "This is the Classic suite with two rooms.";
+	mes "It's totally perfect for both of you!";
+	mes "Although the appearances of the houses look alike,";
+	mes "the interior is totally different!";
+	next;
+	mes "[Poyi Oland]";
+	mes "The rental is 1000 zeny per person.";
+	mes "and we're on a post paid basis!";
+	mes "Since you're here on a trip,";
+	mes "I suggest that you choose a better room!";
+	next;
+	mes "[Poyi Oland]";
+	mes "If you ever need anything, just call us.";
+	mes "We'll be at your service immediately.";
+	next;
+	menu "Use",-,"Cancel",s_Cancel;
+
+			if (Zeny > 999)
+{
+				mes "[Poyi Oland]";
+				mes "Thank you for using.";
+				mes "Please enjoy your stay.";
+				close2;
+				set Zeny,Zeny - 1000;
+				warp "jawaii_in.gat",132,107;
+				end;
+}
+			else
+{
+				mes "[Poyi Oland]";
+				mes "I'm sorry!";
+				mes "You do not have enough zeny.";
+				mes "Please confirm your zeny and come again!";
+				close;
+}
+s_Cancel:
+			mes "[Poyi Oland]";
+			mes "So, please come again after you've confirmed it.";
+			mes "Presence of any guest is always welcomed.";
+			close;
+}
+
+jawaii.gat,107,189,5	script	Attendant#Honeymoon Suite	93,{
+	
+	mes "[Saroki Lania]";
+	mes "...This is the Honeymoon suite and the cost is 1000 zeny.";
+	next;
+	mes "[Saroki Lania]";
+	mes "...Do you want to go in?";
+	next;
+	mes "[Poyi Oland]";
+	mes "If you ever need anything, just call us.";
+	mes "We'll be at your service immediately.";
+	next;
+	menu "Yes",-,"Cancel",s_Cancel;
+
+			if(Zeny > 999)
+{
+				mes "[Saroki Lania]";
+				mes "...Please come in.";
+				close2;
+				set Zeny,Zeny - 1000;
+				warp "jawaii_in.gat",86,117;
+				end;
+}
+			else
+{
+				mes "[Saroki Lania]";
+				mes "...Not enough zeny?";
+				close;
+}
+s_Cancel:
+			mes "[Saroki Lania]";
+			mes "...Ok then.";
+			close;
+}
+jawaii.gat,112,173,7	script	Attendant#Villa Suite	93,{
+	
+	mes "[Lakers Lania]";
+	mes "Saroki, this is rude.";
+	mes "Can't you treat the customer nicely?";
+	mes "This will make them feel uneasy. Oh, customer!";
+	mes "Welcome. Are you here on a trip?";
+	next;
+	mes "[Lakers Lania]";
+	mes "This is the Villa suite.";
+	mes "It is as comfortable as your home.";
+	mes "The rental is only 1000 zeny.";
+	next;
+	mes "[Lakers Lania]";
+	mes "If you want to use it, I can serve you right now.";
+	mes "What do you think?";
+	next;
+	menu "Use it",-,"Cancel",s_Cancel;
+			if(Zeny > 999)
+{
+				mes "[Lakers Lania]";
+				mes "Thanks and rest well.";
+				mes "I hope you'll enjoy your trip.";
+				close2;
+				set Zeny,Zeny - 1000;
+				warp "jawaii_in.gat",87,75;
+				end;
+}
+			else
+{
+				mes "[Lakers Lania]";
+				mes "Oh, you don't have enough zeny for the stay...?";
+				mes "Maybe you can ask from your partner.";
+				mes "Huhuhuhu-";
+				close;
+}
+s_Cancel:
+			mes "[Lakers Lania]";
+			mes "Hmm, maybe you can try the honeymoon suite beside us.";
+			mes "Although Saroki is not sociable,";
+			mes "the room is a true masterpiece!";
+			close;
+}
+
+jawaii.gat,122,263,5	script	Sailor#Alberta	100,{
+
+	mes "[Sailor]";
+	mes "This ship will bring you back to Alberta.";
+	mes "do you enjoy your stay at Jawaii?";
+	mes "Please make sure that,";
+	mes "you haven't left out anything.";
+	next;
+	mes "[Sailor]";
+	mes "Well then, are you ready to return to Alberta?";
+	next;
+	menu "Yes, I am",-,"Cancel",s_Cancel;
+
+			mes "[Sailor]";
+			mes "Anchors away! Next stop! Alberta!!";
+			close2;
+			warp "alberta.gat",192,157;
+			end;
+
+s_Cancel:
+			mes "[Sailor]";
+			mes "Well then, spend a little more time before you leave!";
+			mes "It's not like you can come here everyday!";
+			close;
+}
+
+jawaii.gat,239,112,7	script	Sailor#Jawaii2	100,{
+
+	mes "[Sailor]";
+	mes "This ship will bring you back to Izlude Island.";
+	mes "do you enjoy your stay at Jawaii?";
+	mes "Please make sure that,";
+	mes "you haven't left out anything.";
+	next;
+	mes "[Sailor]";
+	mes "Well then, are you ready to return to Izlude Island?";
+	next;
+	menu "Yes, I am",-,"Cancel",s_Cancel;
+
+			mes "[Sailor]";
+			mes "Anchors away! Next stop! Izlude Island!!";
+			close2;
+			warp "izlude",176,182;
+			end;
+		
+s_Cancel:
+			mes "[Sailor]";
+			mes "Well then, spend a little more time before you leave!";
+			mes "It's not like you can come here everyday!";
+			close;
+}
+
+jawaii.gat,220,235,3	script	Jawaii Citizen#Love Bo	724,{
+
+	mes "[JawaJawa]";
+	mes "Do you know where is the most beautiful place in Jawaii?";
+	mes "It's the 'Island of Love',";
+	mes "located at the north of Jawaii.";
+	mes "Since the water is shallow,";
+	mes "you'll be able to reach there if you're careful.";
+	next;
+	mes "[JawaJawa]";
+	mes "It's also a suitable place for a couple to relax and spend some quality time.";
+	mes "If you sit there alone,";
+	mes "you'll look like a castaway,";
+	mes "stranded on a deserted island!";
+	next;
+	mes "[JawaJawa]";
+	mes "Well, of course you can play Castaway";
+	mes "with the letter in empty bottle!";
+	mes "But don't that look pathetic?";
+	close;
+}
+
+jawaii.gat,239,146,3	script	Jawaii Citizen#Explain1	100,{
+	
+	mes "[WaiiWaii]";
+	mes "Welcome to Jawaii!";
+	mes "What would a marriage be without a honeymoon?";
+	mes "At this place,";
+	mes "you can ignore the threat from those pathetic dateless losers.";
+	next;
+	mes "[WaiiWaii]";
+	mes "You might encounter some monsters here.";
+	mes "But as long as you leave them alone, it will be fine!";
+	mes "They have inhabited this place for a long time,";
+	mes "so you can just take them a part of the view.";
+	close;
+}
+
+jawaii.gat,168,247,5	script	Jawaii Citizen#Explain2	724,{
+
+	mes "[WajaWaja]";
+	mes "The hostels are located at the west.";
+	mes "Every room has a different environment.";
+	mes "So choose the one suitable for you.";
+	mes "It would be better if you ask the staff there.";
+	next;
+	mes "[WajaWaja]";
+	mes "Please use the ship at the northwest";
+	mes "and southeast if you want to go back.";
+	mes "There're boats scheduled to";
+	mes "Alberta and Izlude Island.";
+	close;
+}
+
+jawaii.gat,165,121,1	script	Jawaii Citizen#Explain3	724,{
+
+	mes "[IwaIwa]";
+	mes "Jawaii~ Isn't this island of happiness great?";
+	mes "You can just lay down";
+	mes "and do nothing for the whole day.";
+	mes "That what Jawaii is meant for.";
+	next;
+	mes "[IwaIwa]";
+	mes "This is the stage,";
+	mes "wher they hold a performance sometimes.";
+	mes "Do you want to go up there and sing us a song?";
+	mes "Jawaii~ Island of Happiness.";
+	close;
+}
+
+jawaii_in.gat,43,115,0	script	Customer#jaw_1	97,{
+
+	mes "[Boogie]";
+	mes "uhOh....Oh my! How do I come to a place like this?";
+	mes "Everyone here is filled with happiness!";
+	next;
+	mes "[Boogie]";
+	mes "But for a dateless person like me, it just makes me look more like a loser!!";
+	mes "You, you must have felt the same too, right?";
+	next;
+	mes "[Boogie]";
+	mes "Urgh....";
+	mes "Boss, give me another shot!";
+	close;
+}
+
+jawaii_in.gat,41,106,3	script	Customer#Kyle Jeet	98,{
+
+	mes "[Kyle Jeet]";
+	mes "Eat and eat...!!";
+	mes "Drink! Drink...!!";
+	next;
+	mes "[Kyle Jeet]";
+	mes "We are released...!";
+	mes "from being a couple in hell...!";
+	mes "to a healthy and precious single in heaven...!";
+	close;
+}
+
+jawaii_in.gat,15,104,0	script	Field Attendant#jawaii	80,{
+
+	mes "[Attendant]";
+	mes "....Well, I don't know what's your purpose of coming here.";
+	//Emotion?
+	next;
+	mes "[Attendant]";
+	mes "If you try to disturb those people in happiness,";
+	mes "Get a drink from the bar tender and go away after you finish it!";
+	next;
+	menu "I am the great single!!",-,"...I just came to congratulate...",s_Cong;
+
+		mes "[Attendant]";
+		mes "How selfish of you...";
+		mes "You should congratulate those happy couples!";
+		mes "Whether you are single of married, don't cause any troube!!";
+		next;
+		mes "[Attendant]";
+		mes "Or else, get married and come here for honeymoon. I'll be glad to serve you.";
+		close;
+s_Cong:
+		mes "[Attendant]";
+		mes "....? What? You're here to celebrate?";
+		mes "Oh my god! I'm so sorry! How rude of me!";
+		mes "Please rest well then~";
+		close;
+}
+
+jawaii_in.gat,28,124,0	script	Bartender#jaw	46,{
+
+	set @drinkcount,0;
+	mes "[Bartender]";
+	mes "Welcome, dear customer.";
+	mes "So, what's your order?";
+	next;
+	Loopback:
+		menu "Today's special",-,"Nimi",s_Nimi,"Refreshing",s_Refreshing,"Misa",s_Misa,"Magnificent Blue",s_Magn;
+
+			if(@drinkcount >= 4)
+{
+				mes "[Bartender]";
+				mes "You have taken a lot of drinks. Do you still want to continue?";
+				next;
+				input @jawaiitstring$;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Boss, because of ";
+				mes @jawaiitstring$;
+				mes "I'm not feeling well...";
+				next;
+				mes "[Bartender]";
+				mes "....Here, this is my recommendation, ^0000FF`Special J&J screw file driver ver.¨¤«×¾¹'^000000 ";
+				mes "It's on the house.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Thank you, boss...";
+				percentheal -100,0;
+				close;
+}
+			else
+{
+				set @randomdrink,rand(1,4);
+				if(@randomdrink == 1)
+{
+					mes "[Bartender]";
+					mes "Well...How about this..?";
+					set Zeny,Zeny - 100;
+					next;
+					mes "[Bartender]";
+					mes "I recommend this ^0000FF`Hot Kiss Assault'^000000¡A";
+					mes "a mixture of sweet scent with the unique scarlet color that bring great passions.";
+					next;
+					mes "You receive a sugar coated overturned triangular glass. -";
+					mes "It is releasing a great amount of sweet scent.-";
+					mes "Although the scent is attractive, it seems dangerous. -";
+					next;
+					mes "[Bartender]";
+					mes "The first encounter is the most important stage.";
+					mes "The feeling of sugar jumping in your mouth is totally awesome.";
+					next;
+					mes "Adjust the direction you sip the drink and taste it slowly.";
+					percentheal -20,0;
+					specialeffect2 38;
+					set @drinkcount,@drinkcount + 1;
+					next;
+					mes "[" + strcharinfo(0) + "]";
+					mes "Boss...Give me another shot...";
+					next;
+}
+				else if(@randomdrink == 2)
+{
+					mes "[Bartender]";
+					mes "How about this one?";
+					next;
+					mes "[Bartender]";
+					mes "I recommend this ^0000FF`Black Siberian Double Shot'^000000 ";
+					mes "A drink that let you feel the power of Russia and the greatness of land.";
+					next;
+					mes "- You look at the mixture of ice cube and black liquid.-";
+					mes "- Although the scent is sweet-";
+					mes "- You find a slight scent of male after shave.-";
+					next;
+					mes "[Bartender]";
+					mes "It's suitable to taste it bits by bits due to its strong taste.";
+					mes "It is a special mixture loved by the Siberians.";
+					next;
+					mes "- You feel the scent and drink it bits by bits. -";
+					percentheal -20,0;
+					specialeffect2 63; //Fire Ivy?
+					set @drinkcount,@drinkcount + 1;
+					next;
+					mes "[" + strcharinfo(0) + "]";
+					mes "Boss...Give me another shot...";
+					next;
+}
+				else if(@randomdrink == 3)
+{
+					mes "[Bartender]";
+					mes "Let me recommend...";
+					next;
+					mes "[Bartender]";
+					mes "I recommend this ^0000FF`White Hot Magarita'^000000 ";
+					mes "The sour scent of lemon is really special, especially when you feel the soul of a Mexican within!";
+					next;
+					mes "- You receive an overturned triangular glass coated with lemon juice.-";
+					mes "- It is releasing a sweet and sour scent.-";
+					mes "- As attractive as it looks, you cannot ignore the danger behind it.";
+					next;
+					mes "[Bartender]";
+					mes "The sweet and refreshing taste make it popular among the girls,";
+					mes "especially when it contains the sensation of a Mexican.";
+					next;
+					mes "- You can imagine yourself wearing a Mexican Sombrero-";
+					mes "- and drinking this cocktail! -";
+					percentheal -20,0;
+					specialeffect2 17;
+					set @drinkcount,@drinkcount + 1;
+					next;
+					mes "[" + strcharinfo(0) + "]";
+					mes "Boss...Give me another shot...";
+					next;
+}
+				else if(randomdrink == 4)
+{
+					mes "[Bartender]";
+					mes "Hmm... How about this?";
+					next;
+					mes "[Bartender]";
+					mes "I recommend this ^0000FF`Barcardi 151 Barcelona Crusade'^000000";
+					mes "It's a pirate cocktail with a lot of memories";
+					next;
+					mes "-You look at the yellow liquid in the small glass. -";
+					mes "-Although it looks like you can finish it in 1 sip, -";
+					mes "-it looks like a really dangerous drink. -";
+					next;
+					mes "[Bartender]";
+					mes "This flaming baby will burn you up.";
+					mes "Finish it in one sip to feel the burning sensation.";
+					next;
+					mes "- You finish it in one sip. -";
+					percentheal -20,0;
+					specialeffect2 171;
+					set @drinkcount,@drinkcount + 1;
+					next;
+					mes "[" + strcharinfo(0) + "]";
+					mes "Boss...Give me another shot...";
+					next;
+}
+}
+
+s_Nimi:
+			if(@drinkcount >= 5)
+{
+				mes "[Bartender]";
+				mes "...I'll buy you a drink.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "...Thanks ...Boss...";
+				percentheal -100,0;
+				close;
+}
+			else
+{
+				mes "[Bartender]";
+				mes "Here, try this.";
+				set Zeny,Zeny - 100;
+				next;
+				mes "[Bartender]";
+				mes "If you want to show your interest to a girld, choose this!";
+				mes "With the special and strong scent,";
+				mes "it makes  you look like a special person too.";
+				next;
+				mes "- You receive a simple looking glass containing white liquid-";
+				mes "- Although there's a slight scent of sweetness, it tastes sour -";
+				mes "- And it makes you want to shout out loud. - ";
+				next;
+				mes "[Bartender]";
+				mes "A lot of people say taht mixed taste of sweet and bitter is like the taste of life.";
+				mes "So it's best for you to taste it with the tip of your tounge.";
+				next;
+				mes "- Drink it from the tip of  your tounge -";
+				next;
+				mes "-And it makes me feel.... Bang !!' -";
+				percentheal -10,0;
+				specialeffect2 18;
+				set @drinkcount,@drinkcount + 1;
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Boss...Give me another shot...";
+				next;
+}
+s_Refreshing:
+			if (@drinkcount >= 5)
+{
+				mes "[Bartender]";
+				mes "...I'll buy you a drink.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "...Thanks ...Boss...";
+				percentheal -100,0;
+				close;
+}
+			else
+{
+				mes "[Bartender]";
+				mes "Here, try this!";
+				set Zeny,Zeny - 100;
+				next;
+				mes "[Bartender]";
+				mes "This one tastes like an old friend.";
+				mes "The more you drink, the better you'll feel.";
+				mes "You can drink it whenever, wherever and with whoever you want.";
+				next;
+				mes "- The tasty looking blue liquid is served to you. -";
+				mes "- Contained in a fancy looking glass, -";
+				mes "- it gives excitement to your nostril with the sour yet sweet scent. -";
+				next;
+				mes "[Bartender]";
+				mes "Don't just take one shot of this.";
+				mes "It will get better the more you drink it!";
+				next;
+				mes "- Your mouth is filled with the sour yet sweet scent after you finish the drink in 3 sips-";
+				mes "- It's really a special blend... -";
+				percentheal -10,0;
+				specialeffect2 84; //Magnificat?
+				set @drinkcount,@drinkcount + 1;
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Boss...Give me another shot...";
+				next;
+}
+s_Misa:
+			if (@drinkcount >= 5)
+{
+				mes "[Bartender]";
+				mes "...I'll buy you a drink.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "...Thanks ...Boss...";
+				percentheal -100,0;
+				close;
+}
+			else
+{
+				mes "[Bartender]";
+				mes "Here, try this!";
+				set Zeny,Zeny - 100;
+				next;
+				mes "[Bartender]";
+				mes "This one tastes like an old friend.";
+				mes "The more you drink, the better you'll feel.";
+				mes "You can drink it whenever, wherever and with whoever you want.";
+				next;
+				mes "- The tasty looking blue liquid is served to you. -";
+				mes "- Contained in a fancy looking glass, -";
+				mes "- it gives excitement to your nostril with the sour yet sweet scent. -";
+				next;
+				mes "[Bartender]";
+				mes "Don't just take one shot of this.";
+				mes "It will get better the more you drink it!";
+				next;
+				mes "- Your mouth is filled with the sour yet sweet scent after you finish the drink in 3 sips-";
+				mes "- It's really a special blend... -";
+				percentheal -10,0;
+				specialeffect2 97;
+				set @drinkcount,@drinkcount + 1;
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Boss...Give me another shot...";
+				next;
+}
+
+s_Magn:
+			if (@drinkcount >= 5)
+{
+				mes "[Bartender]";
+				mes "...I'll buy you a drink.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "...Thanks ...Boss...";
+				percentheal -100,0;
+				close;
+}
+			else
+{
+				mes "[Bartender]";
+				mes "Here, try this.";
+				set Zeny,Zeny - 100;
+				next;
+				mes "[Bartender]";
+				mes "This is recommended for those who miss the glorious memories of the pass...";
+				mes "For those who starts a war to preserve the peace...";
+				mes "And of course... For those who fake the truth of history.";
+				next;
+				mes "- You receive a brown liquid in a shaking bottle. -";
+				mes "- You feel the heavy and thick scent like the machines oil. -";
+				mes "- Scent of fireworks? No, it's a little different than that... -";
+				next;
+				mes "[Bartender]";
+				mes "It might look a lot but you better finish it in 1 sip.";
+				mes "You'll lose its taste if you drink it too slow.";
+				next;
+				mes "- Grabbing the Shake bottle, you immediately finish it.-";
+				next;
+				mes "- And it feels like you're hit by a canon.-";
+				percentheal -10,0;
+				specialeffect2 132;
+				set @drinkcount,@drinkcount + 1;
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Boss...Give me another shot...";
+				next;
+}
+goto Loopback;
+}
+
+jawaii_in.gat,25,94,5	script	Attendant#jaw1	724,{
+
+	mes "[Attendant Teleteer]";
+	mes "Welcome to the Inn of Jawaii~";
+	mes "I hope you'll enjoy your stay here...";
+	mes "But don't get drunk and cause any trouble!";
+	close;
+}
+
+jawaii_in.gat,25,96,5	script	Attendant#jaw2	724,{
+
+	mes "[Attendant PoYi]";
+	mes "Welcome to the Inn of Jawaii~";
+	mes "I hope you'll enjoy yourself~";
+	mes "But, don't get jealous and criticize people who are blessed with happiness!";
+	close;
+}
+
+jawaii_in.gat,25,98,5	script	Attendant#jaw3	724,{
+
+	mes "[Attendant Poppy]";
+	mes "Welcome to the Inn of Jawaii~";
+	next;
+	mes "[Attendant Poppy]";
+	mes "May I ask....are you from a foreign land?";
+	mes "You're still single, right?";
+	mes "I am a good cook too, will you consider me?";
+	mes "How about that? Huh?";
+	close;
+}
+
+jawaii_in.gat,25,100,5	script	Attendant#jaw4	724,{
+
+	mes "[Attendant Ether]";
+	mes "Welcome to the Inn of Jawaii~";
+	mes "Criticizing, no! Discouraging, no!";
+	mes "Get drunk, no! Congratulate, YES!";
+	close;
+}
+
+jawaii_in.gat,30,94,4	script	Attendant#jaw5	724,{
+
+	mes "[Attendant Donna]";
+	mes "Welcome to the Inn of Jawaii~";
+	mes "......Oh no.....";
+	mes "...Welcome! But please don't get drunk and cause trouble again! ";
+	close;
+}
+
+jawaii_in.gat,30,96,4	script	Attendant#jaw6	724,{
+
+	mes "[Attendant Ken]";
+	mes "Welcome to the Inn of Jawaii~";
+	mes "It's ok for you to relax, but...";
+	mes "Please control yourself...";
+	close;
+}
+
+jawaii_in.gat,30,98,4	script	Attendant#jaw7	724,{
+
+	mes "[Attendant Emater]";
+	mes "Welcome to the Inn of Jawaii~";
+	next;
+	mes "[Attendant Emater]";
+	mes "...You're like a wandering soul.";
+	mes "This place is not suitable for you!";
+	mes "Well, as long as you like it,";
+	mes "have fun but please don't cause any trouble~";
+	close;
+}
+
+jawaii_in.gat,30,100,4	script	Attendant#jaw8	724,{
+
+	mes "[Attendant GoYa]";
+	mes "Welcome to the Inn of Jawaii~";
+	next;
+	mes "[Attendant GoYa]";
+	mes "Just like a story with a chapter missing,";
+	mes "you look disgusting.";
+	mes "Find yourself a partner so that you can enjoy your adventure~";
+	close;
+}

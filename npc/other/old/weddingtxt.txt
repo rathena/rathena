@@ -1,0 +1,277 @@
+//UNFINISHED! need to set names and give rings!
+//Made by AppleGirl and Evera/Lorri.
+//PROPERTY OF eATHENA! OTHER ATHENAS DON'T TOUCH THIS!
+//Note: permanent variables event_marriage. 0=nothing done yet 1=m registered 2=f registered 3=m before ring 4=f before ring 5=m married 6=f married
+
+prt_church.gat,99,125,8	script	Tristan the Third	108,{
+mes "[Thristan the Third]";
+if(event_marriage == 0) goto Lreg;
+if(event_marriage == 1) goto Lmale;
+if(event_marriage == 2) goto Lfemale;
+if(event_marriage == 3) && (countitem(2634)<1) || (event_marriage == 3) && (getequipname(136) == 2634) goto Lmcere;
+if(event_marriage == 4) && (countitem(2635)<1) || (event_marriage == 4) && (getequipname(136) == 2635) goto Lfcere;
+if(event_marriage >= 5) goto Lhappy;
+//else goto Lhappy;
+//if(even
+Lreg:
+mes "If you wish to get married you must first register";
+Lmale:
+if (getequipname(16) == 7170) goto Lmale2;
+if (getequipname(16) != 7170) goto Lmale3;
+mes "OmG1! H4X0Rz!1";
+close;
+Lmale2:
+if (zeny >= 30000) goto Lmale4;
+if (zeny <= 29999) goto Lmale3;
+mes "OmG1! H4X0Rz!1";
+close;
+//NOTE! Triggers to save/respond names aren't done!
+Lmale4:
+	mes "Hello, how are you doing this wonderful day? Ah. I see you've registered to marry";
+	mes "Do you wish to marry?";
+menu
+"yes",Lmyes,"No",Lcancel;
+Lmyes:
+//enable for input; can't be done with current script.c
+//	mes"What is your bride's name?";
+//	input @namemale;
+	next;
+	mes "I will now collect your ^FF00FFmoney^000000.";
+	set Zeny, Zeny-30000;
+	next;
+//enable for input; can't be done with current script.c
+//	input @namemale;
+	mes "Here is the ring. Please put it on your bride's hand";
+	mes "By the holy power invested in me..";
+	mes "I now pronounce you husband and wife!";
+	mes "you may now kiss the bride.";
+	emotion 46;
+//enable for setvariable
+	set event_marriage,3;
+	getitem 2634,1;
+	close;
+Lmale3:
+	mes "Hm, have you forgotten to bring your ^FF00FFTuxedo^000000 or ^FF00FFmoney^000000?";
+	mes "Have a good look for it.";
+	mes "Because you must bring it in order to get married.";
+	mes "If you have it right now, please show me";
+close;
+Lfemale:
+if (zeny >= 20000) goto Lfemale4;
+if (zeny <= 19999) goto Lfemale3;
+mes "OmG1! H4X0Rz!1";
+close;
+Lfemale4:
+	mes "Hello, how are you doing this wonderful day? Ah. I see you've registered to marry";
+	mes "Do you wish to marry?";
+menu
+"yes",Lfyes,"No",Lcancel;
+Lfyes:
+//enable for input; can't be done with current script.c
+//	mes "What is your groom's name?";
+//	input @namefemale;
+	next;
+	mes "I will now collect your ^FF00FFmoney^000000.";
+	set Zeny, Zeny-20000;
+	next;
+//enable for input; can't be done with current script.c
+	input @namefemale;
+	mes "Here is the ring. Please put it on your groom's hand";
+	mes "By the holy power invested in me..";
+	mes "I now pronounce you husband and wife!";
+//enable for setvariable
+	set event_marriage,4;
+	getitem 2635,1;
+	close;
+Lfemale3:
+	mes "Hm, have you forgotten to bring your ^FF00FFWedding Veil^000000, ^FF00FFWedding Dress^000000, or ^FF00FFMoney^000000?";
+	mes "Have a good look for it.";
+	mes "Because you must bring it in order to get married.";
+	mes "If you have it right now, please show me";
+close;
+Lmcere:
+	mes "By the holy power invested in me..";
+	mes "I now pronounce you husband and wife!";
+	mes "you may now kiss the bride.";
+	emotion 46;
+	set event_marriage,5;
+close;
+Lfcere:
+	
+	mes "By the holy power invested in me..";
+	mes "I now pronounce you husband and wife!";
+	emotion 46;
+	set event_marriage,6;
+close;
+Lhappy:
+mes "I hope your marriage is happy and successful!";
+close;
+Lcancel:
+mes "A true pity. I hope to see you another time.";
+close;
+}
+prt_church.gat,95,100,3	script	Mary	71,{
+mes "[Mary Happy]";
+if(event_marriage == 0) goto Lstart;
+if(event_marriage != 0) goto Lhappy;
+mes "OmG1! H4X0Rz!1";
+close;
+Lstart:
+mes "Getting married bring a lot of joy.";
+mes "By any chance, you you want to get engaged with someone?";
+next;
+menu "Explain the principles of Marrige",Lprinciples,"How does the marrige system work.",Lsystem,"I want to get married with someone.",Lmarried,"I live solo forever!",Lsolo;
+
+Lprinciples:
+	mes "[Mary Happy]";
+	mes "His Majesty King Tristan III of the Rune Midgard Kingdom will be officiating this wedding, with the intent of blessing all the people through his noble message.";
+	next;
+	mes "[Mary Happy]";
+	mes "Although His Majesty has a rather busy agenda, for the sake of newly married couples, he has personally come here, to the Prontera Church.";   
+	mes "It is the favor of our King that everyone would live happily ever after.";
+	next;
+	mes "[Mary Happy]";
+	mes "The proposal must be done with prudence and courtesy.";
+	mes "Once the wedlocks have been made, they cannot be undone.";
+	mes "The two who are united in marriage must be with the other forever until the day they leave this world.";
+	next;
+	mes "[Mary Happy]";
+	mes "Also, males only with females, and females only with males can be wed.  Although there may be those who desire a homosexual or bestial marriage... it is not approved.";
+	next;
+	mes "[Mary Happy]";
+	mes "If there is a significant other whom you want to spend the rest of your life with, then don't be shy to propose.";
+	mes "Wishing for many blessings upon couples who wish to live happily ever after..";
+	close;
+Lsystem:
+	mes "[Mary Happy]";
+	mes "First make sure both players a registered to get married.";
+	mes "Obviously, you must know each other to get married?";
+	mes "If both have registered, and you must be on the same party.";
+	mes "Then talk to Thristan the Third.";
+	next;
+	mes "[Mary Happy]";
+	mes "You must go to Thristan the Third,";
+	mes "and the male must talk to him first.";
+	mes "And you must tell him the girl";
+	mes "you wish to get married with.";
+	mes "Be sure to tell him exactly who you want to marry.";
+	next;
+	mes "[Mary Happy]";
+	mes "After the male has spoken, next the female must talk.";
+	mes "Then when both of you have spoken each others names,";
+	mes "Thristan the third will read out both of your names.";
+	next;
+	mes "[Mary Happy]";
+	mes "After you have got married,";
+	mes "you will both recive a ring of marrige.";
+	mes "And as soon as both of you wear these rings,";
+	mes "you will be forever married with each other.";
+	mes "You can also be refused of a lasting marrige.";
+	mes "But, dont be sad.";
+	next;
+	mes "[Mary Happy]";
+	mes "If there are many people that wish to get married,";
+	mes "So please keep to the order you register.";
+	mes "Thristan does not do multiple marriges at once.";
+	mes "He will only see one couple at a time.";
+	next;
+	mes "[Mary Happy]";
+	mes "Lastly, you must put forth your name quickly";
+	mes "to Thristan the third.";
+	mes "After the male has said yes to marrage ";
+	mes "the female has 3 minutes to reply.";
+	mes "Or you shall forever never be able";
+	mes "to get married.";
+	next;
+	mes "[Mary Happy]";
+	mes "An easy way to write down the each others name,";
+	mes "Send a message to each other";
+	mes "then in the private message window press up";
+	next;
+//o_O who removed this part? we use a diff system now
+//	mes "[Mary Happy]";
+//	mes "Then it will show the other persons name.";
+//	mes "If you press ctrl + C that name will be saved.";
+//	mes "Next time you need that name";
+//	mes "you can press shift + insert.";
+//	mes "Then you will get that name quickly and easily.";
+//	next;
+//	mes "[Mary Happy]";
+//	mes "You should have a go at using this method.";
+//	mes "Remeber, Press ctrl +  C to save that name.";
+//	next;
+//	input @nametest;
+	mes "[Mary Happy]";
+	mes "Hopefully you will remember this method.";
+	mes "If you ever decide to get married.";
+	mes "Remember to register.";
+Lmarried:
+	mes "[Mary Happy]";
+	mes "If you wish to get married you must first register.";
+	mes "Male is ^FF00FF30,000^000000 zeny and female is ^FF00FF20,000^000000 zeny";
+	mes "Both male and female must have registered,";
+	mes "and both must have paid fees,";
+	mes "and the female must have a wedding veil.";
+	next;
+	mes "[Mary Happy]";
+	mes "If both people have paid and meet recquirements";
+	mes "you are able to get married strait away.";
+	mes "Do you wish to register to get married?";
+	menu "Yes",LYes,"No",LNo;
+LYes:
+//add check for sex and if veil and tuxedo and wedding dress
+if (Sex == 1) goto Lmale;
+if (Sex == 0) goto Lfemale;
+Lmale:
+if (getequipname(16) == 7170) goto Lmale2;
+if (getequipname(16) != 7170) goto Lmale3;
+mes "[Mary Happy]";
+mes "OmG1! H4X0Rz!1";
+close;
+Lmale2:
+if (zeny >= 30000) goto Lmale4;
+if (zeny <= 29999) goto Lmale3;
+mes "[Mary Happy]";
+mes "OmG1! H4X0Rz!1";
+close;
+Lmale4:
+	set event_marriage,1;
+	mes "[Mary Happy]";
+	mes "You are now registered =) go talk to his majesty, King Tristan III for your marriage.";
+close;
+Lmale3:
+	mes "[Mary Happy]";
+	mes "Hm, have you forgotten to bring your ^FF00FFTuxedo^000000 or ^FF00FFmoney^000000?";
+	mes "Have a good look for it.";
+	mes "Because you must bring it in order to get married.";
+	mes "If you have it right now, please show me";
+close;
+
+Lfemale:
+if (getequipname(16) == 2338) && (getequipname(256) == 2206) goto Lfemale2;
+if (getequipname(16) != 2338) || (getequipname(256) == 2206) goto Lfemale3;
+mes "[Mary Happy]";
+mes "OmG1! H4X0Rz!1";
+Lfemale2:
+if (zeny >= 20000) goto Lfemale4;
+if (zeny <= 19999) goto Lfemale3;
+mes "[Mary Happy]";
+mes "OmG1! H4X0Rz!1";
+Lfemale4:
+	set event_marriage,2;
+	mes "[Mary Happy]";
+	mes "You are now registered =) go talk to his majesty, King Tristan III for your marriage.";
+Lfemale3:
+	mes "[Mary Happy]";
+	mes "Hm, have you forgotten to bring your ^FF00FFWedding Veil^000000, ^FF00FFWedding Dress^000000, or ^FF00FFMoney^000000?";
+	mes "Have a good look for it.";
+	mes "Because you must bring it in order to get married.";
+	mes "If you have it right now, please show me";
+close;
+LNo:	
+	mes "I hope you have a wonderful day!";
+close;
+Lhappy:
+	mes "I hope your marriage is happy and successful!";
+close;
+}

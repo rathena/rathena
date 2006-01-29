@@ -1,0 +1,588 @@
+//===== eAthena Script ======================================= 
+//= Juno Monster Museum
+//===== By: ================================================== 
+//= Muad_Dib (The Prometheus Project)
+//===== Current Version: ===================================== 
+//= 1.1a
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= Juno Monster Museum - Non Player Character Locations
+//= - Information about various monsters
+//===== Additional Comments: ================================= 
+// 07/06/05 : Added 1st Version. [Muad_Dib]
+//= Adapted to eAthena Scripting Language by [Lance] 
+//= 1.1a Fixed typos [Haplo]
+//============================================================ 
+
+
+yuno_in03.gat,33,17,3	script	Guide of Monster Museum	67,{
+	mes "[Shenya]";
+	mes "Welcome.";
+	mes "You are in the Monster Museum.";
+	next;
+	menu "What is the Monster Museum?",-,"Tip for observing monsters",L_Tip;
+	mes "[Shenya]";
+	mes "Our Monster Museum is a splendid achievement of Schwarz Project which was secretly";
+	mes "accomplished by many sages from Svychervile Academy who were working in Midgard.";
+	next;
+	mes "[Shenya]";
+	mes "Because of their effort, you can easily observe rare monsters of Midgard in here.";
+	next;
+	mes "[Shenya]";
+	mes "Monsters are in the transparent cylinders, which were part of Schwarz Project. The cylinders protects you from the monsters.";
+	next;
+	mes "[Shenya]";
+	mes "Talk to me if you need help.";
+	close;
+L_Tip:
+	mes "[Shenya]";
+	mes "Check 'opaque' in the option key (ALT+O) to observe monsters more clearly.";
+	next;
+	mes "[Shenya]";
+	mes "Talk to me if you need help.";
+	close;
+}
+
+//yuno_in03.gat,32,102,1	script	Biology Professor	755,{
+//	mes "[Ruthy Celsus]";
+//	mes "Hmm? What is it? Do you want to take a look at monsters?";
+//	next;
+//	mes "[Ruthy Celsus]";
+//	mes "It is okay to look at them, but do not touch nor make noises.";
+//	mes "There are many dangerous stuff here, so be careful.";
+//	next;
+//	mes "[Ruthy Celsus]";
+//	mes "And also tell me if you catch rare monsters.";
+//	mes "I will buy your info at high price.";
+//	close;
+//}
+
+yuno_in03.gat,36,21,3	script	Deviace	1108,{
+	end;
+}
+
+yuno_in03.gat,33,21,1	script	#Deviace	111,{
+	mes " ";
+	mes "- Scientific Name : Deviace";
+	mes "- Size : Medium";
+	mes "- Property : Water";
+	next;
+	mes "- Description : ";
+	mes "It has sucking-disks on top of its round body and lives in the deep ocean.";
+	mes "In spite of its fearsome appearance, Deviace is calm and do not attack others first.";
+	next;
+	mes "However, you should be aware of it because once Deviace gets mad, it casts magic of high level.";
+	close;
+}
+
+yuno_in03.gat,36,27,3	script	Fur Seal	1317,{
+	end;
+}
+
+yuno_in03.gat,33,27,1	script	#Fur Seal	111,{
+	mes " ";
+	mes "- Scientific Name : Fur Seal";
+	mes "- Size : Medium";
+	mes "- Property : Water";
+	next;
+	mes "- Description : ";
+	mes "They put on an extra hide to cover it's soft skin.";
+	mes "Also, their hides are used to make winter clothes.";
+	close;
+}
+
+yuno_in03.gat,36,33,3	script	Sage Worm	1281,{
+	end;
+}
+
+yuno_in03.gat,33,33,1	script	#Sage Worm	111,{
+	mes " ";
+	mes "- Scientific Name : Sage Worm";
+	mes "- Size : Small";
+	mes "- Property : Neutral";
+	next;
+	mes "- Description : ";
+	mes "It's bottom looks like an animal, but the upper body looks like an old scholar.";
+	mes "Sage Worm has weak strength but its intelligence is extraordinary high. They often cures other's critical status.";
+	next;
+	mes "As expected, they live nearby books or bookcases.";
+	close;
+}
+
+yuno_in03.gat,39,39,3	script	Penomena	1216,{
+	end;
+}
+
+yuno_in03.gat,38,39,1	script	#Penomena	111,{
+	mes " ";
+	mes "- Scientific Name : Penomena";
+	mes "- Size : Medium";
+	mes "- Property : Poison";
+	next;
+	mes "- Description : ";
+	mes "It has a strong venom and lives in deep oceans or deep tunnels.";
+	mes "Penomena has a similar appearance as Hydra but it moves with small dendrites on the sucking-disk.";
+	next;
+	mes "Also, its many long tentacles with strong venom are threatening opponents in the distance.";
+	close;
+}
+
+yuno_in03.gat,39,44,3	script	Galapago	1391,{
+	end;
+}
+
+yuno_in03.gat,37,44,1	script	#Galapago	111,{
+	mes " ";
+	mes "- Scientific Name : Galapago";
+	mes "- Size : Small";
+	mes "- Property : Earth";
+	next;
+	mes "- Description : ";
+	mes "This monster is a bird, but can't fly because of its heavy weight.";
+	mes "They are always equipped with sunglasses and a bottle of drinking water because they are weak against sunlights.";
+	next;
+	mes "They show greedy on items but, when a stranger appears, they cooperate together to attack the stranger.";
+	close;
+}
+
+yuno_in03.gat,38,50,3	script	PecoPeco Egg	1047,{
+	end;
+}
+
+yuno_in03.gat,34,54,3	script	Thief Bug Egg	1048,{
+	end;
+}
+
+yuno_in03.gat,12,50,3	script	Ant Egg	1097,{
+	end;
+}
+
+yuno_in03.gat,10,45,5	script	Assaulter	1315,{
+	end;
+}
+
+yuno_in03.gat,12,45,1	script	#Assaulter	111,{
+	mes " ";
+	mes "- Scientific Name : Assaulter";
+	mes "- Size : Medium";
+	mes "- Property : Wind";
+	next;
+	mes "- Description : ";
+	mes "Unlike the other turtles in the Turtle Island, this warrior monster stands on two legs.";
+	mes "It always carries a large shuriken on its back. Its body is very agile and has a fast attack speed.";
+	next;
+	mes "Distinctively, when it is in danger, Assaulter summons another self and attacks together.";
+	mes "Their weapons do strong damage, but also their piercing long nails are really threatening.";
+	close;
+}
+
+yuno_in03.gat,10,39,5	script	Alice	1275,{
+	end;
+}
+
+yuno_in03.gat,12,39,1	script	#Alice	111,{
+	mes " ";
+	mes "- Scientific Name : Alice";
+	mes "- Size : Medium";
+	mes "- Property : Neutral";
+	next;
+	mes "- Description : ";
+	mes "It is a robot that was made to serve duties in the castle, and is still there.";
+	mes "Alice is made of hard metal and no one knows what makes her move till this day.";
+	close;
+}
+
+yuno_in03.gat,15,33,5	script	Violy	1390,{
+	end;
+}
+
+yuno_in03.gat,19,33,1	script	#Violy	111,{
+	mes " ";
+	mes "- Scientific Name : Violy";
+	mes "- Size : Medium";
+	mes "- Property : Neutral";
+	next;
+	mes "- Description : ";
+	mes "Girly monster with blond hair.";
+	mes "She always plays her violin. You will suffer from the high frequency of her music.";
+	close;
+}
+
+yuno_in03.gat,15,27,5	script	Chepet	1250,{
+	end;
+}
+
+yuno_in03.gat,19,27,1	script	#Chepet	111,{
+	mes " ";
+	mes "- Scientific Name : Chepet";
+	mes "- Size : Medium";
+	mes "- Property : Fire";
+	next;
+	mes "- Description : ";
+	mes "It looks like a girl possessed by an evil monster, but it is the evil monster which fools people with its appearance.";
+	next;
+	mes "Chepet ignites a fire with its large match stick. Is a rare monster because of their small numbers, they live in a limited habitat.";
+	close;
+}
+
+yuno_in03.gat,15,21,5	script	Raydric	1163,{
+	end;
+}
+
+yuno_in03.gat,19,21,1	script	#Raydric	111,{
+	mes " ";
+	mes "- Scientific Name : Raydric";
+	mes "- Size : Large";
+	mes "- Property : Darkness";
+	next;
+	mes "- Description : ";
+	mes "Soldiers with armor who have no body. According to old studies,";
+	mes "the souls of soldiers who once guarded castles were bound to their armor by curses.";
+	next;
+	mes "They have fast movement speed and strong attacks as guards of the castle.";
+	close;
+}
+
+yuno_in03.gat,46,96,3	script	Owl Duke	1320,{
+	end;
+}
+
+yuno_in03.gat,44,96,1	script	#Owl Duke	111,{
+	mes " ";
+	mes "- Scientific Name : Owl Duke";
+	mes "- Size : Large";
+	mes "- Property : Neutral";
+	next;
+	mes "- Description : ";
+	mes "An owl with a Duke costume. It's massive body and elegant outfit are appalling.";
+	mes "Owl Duke looks like a bird but is a devil with a large feet and sharp talon.";
+	next;
+	mes "It approaches the enemy silently and casts strong lightning magic.";
+	mes "It's moves are full of dignity just like a Duke.";
+	close;
+}
+
+yuno_in03.gat,48,100,3	script	Marine Sphere	1142,{
+	end;
+}
+
+yuno_in03.gat,46,101,1	script	#Marine Sphere	111,{
+	mes " ";
+	mes "- Scientific Name : Marine Sphere";
+	mes "- Size : Small";
+	mes "- Property : Water";
+	next;
+	mes "- Description : ";
+	mes "Drifting sphere in the ocean, it is known as <Bomb of the Ocean> because of its explosiveness.";
+	mes "The structure of the inner sphere is simple, only a tendon and a detonator, however its explosion is very powerful.";
+	next;
+	mes "If there are other Marine Spheres during the explosion, all of them will explode sequentially.";
+	close;
+}
+
+yuno_in03.gat,48,104,3	script	Mandragora	1020,{
+	end;
+}
+
+yuno_in03.gat,46,105,1	script	#Mandragora	111,{
+	mes " ";
+	mes "- Scientific Name : Mandragora";
+	mes "- Size : Medium";
+	mes "- Property : Earth";
+	next;
+	mes "- Description : ";
+	mes "Man-eating plant that can eat every living thing.";
+	mes "Mandragora pokes the victim by using its long tentacle and put it in its giant tube.";
+	next;
+	mes "On the surface of the Mandragora's tube there is a skull pattern, so the Mandragora pretends to be poisonous but it isn't.";
+	mes "The tube contains a digestive fluid of unique fragrance, which have a very strong smell to attract the prey.";
+	close;
+}
+
+yuno_in03.gat,48,108,3	script	Geographer	1368,{
+	end;
+}
+
+yuno_in03.gat,46,108,1	script	#Geographer	111,{
+	mes " ";
+	mes "- Scientific Name : Geographer";
+	mes "- Size : Medium";
+	mes "- Property : Earth";
+	next;
+	mes "- Description : ";
+	mes "Man-eating plant that looks like a sunflower.";
+	mes "It disguise itself as an ordinary flower and hunt preys approaching near by.";
+	next;
+	mes "Although its cousin Mandragora digest it's food in the tube,";
+	mes "Geographer chews food because it doesn't have a tube.";
+	next;
+	mes "Geographer's root is very tough to support the large upper parts of the body.";
+	close;
+}
+
+yuno_in03.gat,48,112,3	script	Rafflesia	1162,{
+	end;
+}
+
+yuno_in03.gat,46,112,1	script	#Rafflesia	111,{
+	mes " ";
+	mes "- Scientific Name : Rafflesia";
+	mes "- Size : Small";
+	mes "- Property : Earth";
+	next;
+	mes "- Description : ";
+	mes "Somehow, this monster is an endangered species.";
+	mes "Remaining Rafflesias are very few in a limited habitat,";
+	mes "so they are under special protection.";
+	next;
+	mes "Because there aren't many Rafflesias, researches are not doing well.";
+	mes "A few scholars are researching to artificially culture them.";
+	close;
+}
+
+yuno_in03.gat,48,116,3	script	Stem Worm	1215,{
+	end;
+}
+
+yuno_in03.gat,45,116,1	script	#Stem Worm	111,{
+	mes " ";
+	mes "- Scientific Name : Stem Worm";
+	mes "- Size : Medium";
+	mes "- Property : Wind";
+	next;
+	mes "- Description : ";
+	mes "This is a mutation of Worm Tail. It has a round grizzled grey body with a small head.";
+	mes "The hide is made of thin scales, and from the center of the body it's hide is divided into two pieces.";
+	next;
+	mes "The straight stem on the center of it's back looks like a tail.";
+	mes "Stem Worm use this stem to whip others.";
+	close;
+}
+
+yuno_in03.gat,44,120,3	script	Succubus	1370,{
+	end;
+}
+
+yuno_in03.gat,42,120,1	script	#Succubus	111,{
+	mes " ";
+	mes "- Scientific Name : Succubus";
+	mes "- Size : Medium";
+	mes "- Property : Darkness";
+	next;
+	mes "- Description : ";
+	mes "Devil who seduces people with a beautiful appearance. The male form is called Incubus and the female form is called Succubus.";
+	mes "They pick and seduce confused or weak-minded people to wreck them.";
+	close;
+}
+
+yuno_in03.gat,39,124,3	script	Ancient Mummy	1297,{
+	end;
+}
+
+yuno_in03.gat,39,122,1	script	#Ancient Mummy	111,{
+	mes " ";
+	mes "- Scientific Name : Ancient Mummy";
+	mes "- Size : Medium";
+	mes "- Property : Undead";
+	next;
+	mes "- Description : ";
+	mes "With a glimpse you can see that this ancient mummy is very old.";
+	mes "He is wrapped with worn-out bandages.";
+	mes "By looking at his luxurious snake headpiece,";
+	next;
+	mes "we can guess that he was high class and somehow revived from the dead.";
+	mes "As he is stuck in a mummy form for so long time, he brutally kills living things.";
+	close;
+}
+
+yuno_in03.gat,35,124,3	script	Sleeper	1386,{
+	end;
+}
+
+yuno_in03.gat,35,122,1	script	#Sleeper	111,{
+	mes " ";
+	mes "- Scientific Name : Sleeper";
+	mes "- Size : Medium";
+	mes "- Property : Earth";
+	next;
+	mes "- Description : ";
+	mes "Formless sandy monster.";
+	mes "It burrows itself in the ground and rise when people are walking near by.";
+	next;
+	mes "Sleepers are smaller than Sandmen and they attack indirectly by making sandy winds rather than direct attacks.";
+	close;
+}
+
+yuno_in03.gat,31,124,3	script	Megalodon	1064,{
+	end;
+}
+
+yuno_in03.gat,31,122,1	script	#Megalodon	111,{
+	mes " ";
+	mes "- Scientific Name : Megalodon";
+	mes "- Size : Medium";
+	mes "- Property : Undead";
+	next;
+	mes "- Description : ";
+	mes "This monster is made out of bones of dead fish.";
+	mes "It peacefully wanders around waterside because they didn't completely lose their old memory.";
+	next;
+	mes "It has no flesh but bones and stinky scales because it was revived from once decayed corpses.";
+	close;
+}
+
+yuno_in03.gat,28,124,5	script	Rideword	1195,{
+	end;
+}
+
+yuno_in03.gat,28,122,1	script	#Rideword	111,{
+	mes " ";
+	mes "- Scientific Name : Rideword";
+	mes "- Size : Small";
+	mes "- Property : Neutral";
+	next;
+	mes "- Description : ";
+	mes "It is a magic book with sharp teeth and is controlled by magic powers.";
+	mes "Rideword has no intelligence or feelings and was born to kill living things.";
+	close;
+}
+
+yuno_in03.gat,24,124,3	script	Blazzer	1367,{
+	end;
+}
+
+yuno_in03.gat,24,122,1	script	#Blazzer	111,{
+	mes " ";
+	mes "- Scientific Name : Blazzer";
+	mes "- Size : Medium";
+	mes "- Property : Fire";
+	next;
+	mes "- Description : ";
+	mes "Burning flame which floats around lava as a cloud.";
+	mes "The blaze comes out of hard rock and the surface is extremely hot.";
+	next;
+	mes "Some scholars believe that Blazzer was the origin of a volcanic eruption but it is only a hypothesis.";
+	mes "It attacks travelers with a noxious gas from it's mouth.";
+	close;
+}
+
+yuno_in03.gat,18,122,5	script	Incubus	1374,{
+	end;
+}
+
+yuno_in03.gat,19,120,1	script	#Incubus	111,{
+	mes " ";
+	mes "- Scientific Name : Incubus";
+	mes "- Size : Medium";
+	mes "- Property : Darkness";
+	next;
+	mes "- Description : ";
+	mes "Devil who seduces people a beautiful appearance. Male form is called Incubus and female form is called Succubus.";
+	mes "They pick and seduce confused or weak-minded people to wreck them.";
+	close;
+}
+
+yuno_in03.gat,16,116,5	script	Dragon Tail	1321,{
+	end;
+}
+
+yuno_in03.gat,18,116,1	script	#Dragon Tail	111,{
+	mes " ";
+	mes "- Scientific Name : Dragon Tail";
+	mes "- Size : Medium";
+	mes "- Property : Wind";
+	next;
+	mes "- Description : ";
+	mes "Insect with thick stings on its tail from the Dragonfly family.";
+	mes "It sucks up blood of victims with its sting, and the Dragon Tail's hypnotoxine puts enemies to sleep.";
+	close;
+}
+
+yuno_in03.gat,16,111,5	script	Arclouse	1194,{
+	end;
+}
+
+yuno_in03.gat,18,111,1	script	#Arclouse	111,{
+	mes " ";
+	mes "- Scientific Name : Arclouse";
+	mes "- Size : Medium";
+	mes "- Property : Earth";
+	next;
+	mes "- Description : ";
+	mes "It is a monster with a hard shell and roles itself to attack enemies.";
+	mes "Usually, Arclouses are found in groups and they are very agile. Their movement speed is as fast as a well-trained PecoPeco.";
+	close;
+}
+
+yuno_in03.gat,16,108,5	script	Tri-Joint	1279,{
+	end;
+}
+
+yuno_in03.gat,18,108,1	script	#Tri-Joint	111,{
+	mes " ";
+	mes "- Scientific Name : Tri-Joint";
+	mes "- Size : Small";
+	mes "- Property : Earth";
+	next;
+	mes "- Description : ";
+	mes "A monster called 'living fossil' because it has been existing from ancient times to today.";
+	mes "Tri Joint's body is covered with hard shells, and advanced feelers replaced degenerated eyes.";
+	next;
+	mes "It moves fast in dark caves.";
+	mes "Recently, as their fossils were found in deep caves,";
+	mes "studies on evolution of Midgard organisms are speeding up.";
+	close;
+}
+
+yuno_in03.gat,16,104,5	script	Thief Bug Male	1054,{
+	end;
+}
+
+yuno_in03.gat,18,104,1	script	#Thief Bug Male	111,{
+	mes " ";
+	mes "- Scientific Name : Thief Bug Male";
+	mes "- Size : Medium";
+	mes "- Property : Darkness";
+	next;
+	mes "- Description : ";
+	mes "This is a fully grown Thief Bug with bigger size than others and of blue color.";
+	mes "Like other Thief Bugs, it is very agile and collect items.";
+	next;
+	mes "Male Thief Bugs protects it's family with strong attacks.";
+	close;
+}
+
+yuno_in03.gat,16,100,5	script	Caterpillar	1300,{
+	end;
+}
+
+yuno_in03.gat,18,100,1	script	#Caterpillar	111,{
+	mes " ";
+	mes "- Scientific Name : Caterpillar";
+	mes "- Size : Small";
+	mes "- Property : Earth";
+	next;
+	mes "- Description : ";
+	mes "Because of a long buried life, it can barely use it's eyes,";
+	mes "but it has numerous feelers and a lighting antenna to move around.";
+	next;
+	mes "There is a hypothesis that Caterpillar is the larva of Creamy Fear, the mutation of Creamy.";
+	close;
+}
+
+yuno_in03.gat,18,96,5	script	Wanderer	1208,{
+	end;
+}
+
+yuno_in03.gat,20,96,1	script	#Wanderer	111,{
+	mes " ";
+	mes "- Scientific Name : Wanderer";
+	mes "- Size : Medium";
+	mes "- Property : Wind";
+	next;
+	mes "- Description : ";
+	mes "Sword master revived by dark magic. By looking at his magnificent swordsmanship, we guess that he was a very skillful swordsman before.";
+	mes "As soon as he draws his sword, his opponents are sliced by him.";
+	close;
+}

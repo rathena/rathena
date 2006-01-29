@@ -1,0 +1,68 @@
+//===== Athena Script ========================================
+//= Odin Temple Warp Script
+//===== By: ==================================================
+//= birkiczd  (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Odin Temple
+//===== Additional Comments: =================================
+//= 1.1 Move the Saylor from Hugel.txt here. [Poki#3]
+//=	Hako's Sprite, cords and price is official. The text is not.
+//============================================================
+
+odin_tem01.gat,378,181,0	warp	odin01	1,1,odin_tem02.gat,22,181
+odin_tem02.gat,20,181,0	warp	odin02	1,1,odin_tem01.gat,376,181
+odin_tem01.gat,384,334,0	warp	odin03	1,1,odin_tem02.gat,23,334
+odin_tem02.gat,20,334,0	warp	odin04	1,1,odin_tem01.gat,381,334
+odin_tem02.gat,152,350,0	warp	odin05	1,1,odin_tem03.gat,121,51
+odin_tem03.gat,122,48,0	warp	odin06	1,1,odin_tem02.gat,153,347
+odin_tem02.gat,259,374,0	warp	odin07	1,1,odin_tem03.gat,249,35
+odin_tem03.gat,249,33,0	warp	odin08	1,1,odin_tem02.gat,262,371
+
+hugel.gat,209,109,1	script	Sailor Hako	709,{
+	mes "[Sailor Hako]";
+	mes "Hello stranger. I'm the only person that offers a unique trip to the cursed Odin Islands.";
+	mes "One of the strongest monsters known to man live there, so no wonder. Ha, ha, ha~!";
+	next;
+	mes "[Sailor Hako]";
+	mes "Anyway I'm planing a trip right now. I'll let you tag along for a measly 800 zeny. You dig?";
+	next;
+	menu "Yeah, I dig.",-,"No, thanks.",L_No;
+	mes "[Sailor Hako]";
+	if (Zeny < 800) goto L_Zeny;
+	set Zeny, Zeny-800;
+	mes "All aboard!";
+	next;
+	warp "odin_tem01.gat",100,145;
+	end;
+
+L_Zeny:
+	mes "Who are ya trying to kid? You're poor like a church mouse!";
+	mes "Come back whey you make some cash, and I'll let you hike along";
+	close;
+
+L_No:
+	mes "[Sailor Hako]";
+	mes "Suit yourself. Se ya!";
+	close;
+}
+
+odin_tem01.gat,93,146,3	script	Sailor Hako	709,{
+	mes "[Sailor Hako]";
+	mes "So how is it? Not to hard for ya? Wanna to go back to Hugel?";
+	next;
+	menu "Yeah...",-,"Nope.",L_No;
+	mes "[Sailor Hako]";
+	mes "All aboard!";
+	next;
+	warp "hugel.gat",205,108;
+	end;
+
+L_No:
+	mes "[Sailor Hako]";
+	mes "Suit yourself.";
+	close;
+}

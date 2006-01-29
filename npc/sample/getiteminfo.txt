@@ -1,0 +1,16 @@
+//by Lupus
+
+prontera.gat,156,179,6	script	test_getiteminfo	117,{
+	mes "Please enter an item ID (501 ... 14000)";
+	input @value;
+//WOW! this line uses INTERNAL function of your client to show item name by its ID!
+// ^nItemID^XXXX -> Item Name
+	mes "Item ID: "+@value+" ^nItemID^"+@value;
+	mes "Current Item info:";
+	set @id,0;
+L_LOOP:
+	mes " getiteminfo("+@value+","+@id+") = "+getiteminfo(@value,@id);
+	set @id,@id+1;
+	if(@id<14) goto L_LOOP;
+	close;
+}

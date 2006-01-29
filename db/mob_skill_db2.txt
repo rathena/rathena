@@ -1,0 +1,238 @@
+// Custom mob skills
+//MOB_ID, a unused dummy character sequence (for information only), STATE, SKILL_ID, SKILL_LV,
+// rate (10000 = 100%), casttime, delay, cancelable, a target, a condition type, a condition value,
+// a value 1, a value 2, a value 3, a value 4, a value 5, emotion
+//Example
+//1001,Poring@TF_POISON,attack,52,3,100,1500,10000,no,target,always,0,,,,,7
+//
+//rate refers to the chance of the skill being casted when the condition is fulfilled.
+//delay is the time in milliseconds that has to be pass before recasting the same skill.
+//
+//STATE:
+// any / idle (in standby) / walk (in movement) / dead (on killed) / loot /
+// attack / angry (like attack, except player has not attacked mob yet) /
+// chase (following target, after being attacked) / follow (following
+// target, without being attacked)
+//
+//target: The target of the skill can be: target (when a PC is targetted) / self / friend / master
+// (the following are for ground-skills, a random target tile is selected from
+// the specified area):
+// around1 (3x3 area around self) / around2 (5x5 area around self) /
+// around3 (7x7 area around self) / around4 (9x9 area around self) /
+// around5 (3x3 area around target) / around6 (5x5 area around target) /
+// around7 (7x7 area around target) / around8 (9x9 area around target) /
+// around (11x11 area around self)
+//
+//conditions: (condition type) (value which specifies a condition value)
+//	always			uncondtional
+//	myhpltmaxrate		when the mob's hp drops to a certain %
+//	mystatuson		If the mob has any abnormalities in status (condition value),
+//	mystatusoff		If the mob has ended any abnormalities in status (condition value),
+//	friendhpltmaxrate	when the mobs' friend's hp drops to a certain %
+//	friendstatuson		If the friend has any abnormalities in status (condition value),
+//	friendstatusoff		If the friend has ended any abnormalities in status (condition value),
+//	attackpcgt		Attack PC becomes more than the  number of specification
+//	attackpcge		Attack PC becomes equal or more than the number of specification.
+//	slavelt			when the number of slaves is lower than the original number of specification.
+//	slavele			when the number of slaves is lower or equal than the original number of specification.
+//	closedattacked		when melee attacked (close range attack)
+//	longrangeattacked	when long ranged attacked (like bows and far range weapons)
+//	skillused		when a skill is used on the mob
+//	afterskill		after the mob used certain skill.
+//	casttargeted		when a target is in cast range.
+//	rudeattacked		when a target is rude attacked
+//
+// The character's state which can be specified to be a condition value by the statuson/statusoff system
+//	anybad		any type of state change
+//	stone		condition of being in stone state
+//	freeze		condition of being in frozen state
+//	stan		condition of being in stunned state
+//	sleep		condition of being in sleep state
+//	poison		condition of being in poisoned state
+//	curse		condition of being in cursed state
+//	silence		condition of being in silenced state
+//	confusion		condition of being in confusion state
+//	blind		condition of being in blind state
+//	hiding		condition of being in hidden state
+//	sight		condition of being in unhidden state
+
+// eAthena Dev Team
+1900,Valaris@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1900,Valaris@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,
+1900,Valaris@KN_BRANDISHSPEAR,attack,57,10,2000,500,5000,no,target,always,0,,,,,,29
+1900,Valaris@MO_BODYRELOCATION,chase,264,1,200,200,1000,yes,target,always,0,,,,,,
+1900,Valaris@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
+1900,Valaris@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1900,Valaris@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1900,Valaris@NPC_DARKBREATH,attack,202,5,2000,800,5000,no,target,always,0,,,,,,29
+1900,Valaris@NPC_DARKSTRIKE,chase,340,10,200,0,1000,yes,target,always,0,,,,,,
+1900,Valaris@NPC_GUIDEDATTACK,attack,172,5,500,0,20000,no,target,always,0,,,,,,
+1900,Valaris@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
+1900,Valaris@NPC_SUMMONSLAVE,attack,196,6,10000,700,10000,no,self,slavele,3,1902,,,,,
+1900,Valaris@NPC_SUMMONSLAVE,idle,196,6,10000,700,10000,no,self,slavele,3,1902,,,,,
+1900,Valaris@WZ_VERMILION,attack,85,10,2000,500,2000,no,target,always,0,,,,,,29
+1900,Valaris@WZ_VERMILION,chase,85,10,200,500,2000,no,target,always,0,,,,,,29
+1900,Valaris@WZ_VERMILION,chase,85,10,500,500,2000,no,target,skillused,18,,,,,,29
+1901,Valaris's Worshipper@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1901,Valaris's Worshipper@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,29
+1901,Valaris's Worshipper@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,6
+1901,Valaris's Worshipper@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1901,Valaris's Worshipper@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,6,1173,,,,
+1901,Valaris's Worshipper@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1901,Valaris's Worshipper@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,29
+1901,Valaris's Worshipper@NPC_HALLUCINATION,chase,207,1,50,500,5000,yes,target,always,0,,,,,,29
+1901,Valaris's Worshipper@SA_DISPELL,attack,289,1,0,0,30000,yes,target,always,0,,,,,,29
+1902,MC Cameri@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1902,MC Cameri@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,
+1902,MC Cameri@KN_BRANDISHSPEAR,attack,57,10,2000,500,5000,no,target,always,0,,,,,,29
+1902,MC Cameri@MO_BODYRELOCATION,chase,264,1,200,200,1000,yes,target,always,0,,,,,,
+1902,MC Cameri@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
+1902,MC Cameri@NPC_DARKBREATH,attack,202,5,2000,800,5000,no,target,always,0,,,,,,29
+1902,MC Cameri@NPC_DARKSTRIKE,chase,340,10,200,0,1000,yes,target,always,0,,,,,,
+1902,MC Cameri@NPC_GUIDEDATTACK,attack,172,5,500,0,20000,no,target,always,0,,,,,,
+1902,MC Cameri@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
+1902,MC Cameri@WZ_VERMILION,attack,85,10,2000,500,2000,no,target,always,0,,,,,,29
+1902,MC Cameri@WZ_VERMILION,chase,85,10,200,500,2000,no,target,always,0,,,,,,29
+1902,MC Cameri@WZ_VERMILION,chase,85,10,500,500,2000,no,target,skillused,18,,,,,,29
+1903,Poki#3@AC_DOUBLE,attack,46,10,500,1000,5000,no,target,always,0,,,,,,
+1903,Poki#3@AC_SHOWER,attack,47,8,2000,1000,5000,no,target,attackpcgt,2,,,,,,
+1903,Poki#3@BS_MAXIMIZE,chase,114,5,500,1000,5000,no,self,always,0,,,,,,
+1903,Poki#3@BS_MAXIMIZE,attack,114,5,500,1000,5000,no,self,always,0,,,,,,
+1903,Poki#3@NPC_AGIUP,chase,350,5,2500,0,5000,no,self,always,0,,,,,,
+1903,Poki#3@NPC_POWERUP,attack,349,5,500,0,30000,yes,self,myhpltmaxrate,30,,,,,,
+1903,Poki#3@SN_SHARPSHOOTING,attack,382,5,500,1000,5000,no,target,always,0,,,,,,
+1903,Poki#3@HT_SKIDTRAP,idle,115,5,50,0,5000,yes,self,always,0,,,,,,29
+1903,Poki#3@HT_FREEZINGTRAP,idle,120,5,50,0,300000,yes,self,always,0,,,,,,
+1903,Poki#3@HT_FREEZINGTRAP,idle,121,5,50,0,300000,yes,self,always,0,,,,,,
+1903,Poki#3@AC_CHARGEARROW,attack,148,1,500,0,5000,yes,target,always,0,,,,,,
+1903,Poki#3@HT_FLASHER,idle,120,5,50,0,300000,yes,self,always,0,,,,,,
+1903,Poki#3@NPC_SUMMONSLAVE,idle,196,5,10000,2000,120000,no,self,slavele,1,1659,1660,1661,1662,1663,0
+1903,Poki#3@NPC_CALLSLAVE,attack,352,1,2000,0,10000,yes,target,always,0,,,,,,
+1903,Poki#3@NPC_CALLSLAVE,idle,352,1,2000,0,10000,yes,self,always,0,,,,,,
+1903,Poki#3@NPC_CHANGEWATER,attack,162,1,10000,2000,600000,no,self,myhpltmaxrate,30,,,,,,
+1903,Poki#3@NPC_CHANGETELEKINESIS,attack,169,1,500,2000,5000,no,self,myhpltmaxrate,10,,,,,,7
+1903,Poki#3@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+
+// eAthena's Custom Equipped Mobs
+1970,Poring@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1970,Poring@NPC_WATERATTACK,attack,184,1,2000,0,5000,yes,target,always,0,,,,,,
+1971,ChonChon@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
+1972,Spore@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,1,,,,,
+1972,Spore@NPC_PROVOCATION,chase,194,1,20,0,5000,yes,target,always,0,,,,,,19
+1972,Spore@NPC_SLEEPATTACK,attack,182,1,500,0,5000,yes,target,always,0,,,,,,
+1972,Spore@NPC_WATERATTACK,attack,184,1,2000,0,5000,yes,target,always,0,,,,,,
+1973,PecoPeco@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,0,,,,,,6
+1973,PecoPeco@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,6,,,,,
+1973,PecoPeco@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
+1973,PecoPeco@NPC_PROVOCATION,chase,194,1,20,0,5000,yes,target,always,0,,,,,,19
+1974,Orc Warrior@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1974,Orc Warrior@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,,,,,,
+1974,Orc Warrior@NPC_EMOTION,follow,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1974,Orc Warrior@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,27,,,,,
+1974,Orc Warrior@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,32,2181,,,,
+1974,Orc Warrior@NPC_GROUNDATTACK,angry,185,2,500,500,5000,no,target,always,0,,,,,,6
+1974,Orc Warrior@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,6
+1974,Orc Warrior@NPC_SMOKING,idle,195,1,50,0,36000000,yes,self,always,0,,,,,,9
+1975,Munak@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1975,Munak@NPC_EMOTION,follow,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1975,Munak@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,1,2181,,,,
+1975,Munak@NPC_STUNATTACK,angry,179,2,500,1500,5000,no,target,always,0,,,,,,6
+1975,Munak@NPC_STUNATTACK,attack,179,2,500,1500,5000,no,target,always,0,,,,,,6
+1976,Isis@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,6
+1976,Isis@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
+1976,Isis@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1976,Isis@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,6,149,,,,
+1977,Poporing@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1977,Poporing@NPC_POISON,attack,176,2,500,800,5000,no,target,always,0,,,,,,
+1977,Poporing@NPC_POISONATTACK,attack,188,1,2000,0,5000,yes,target,always,0,,,,,,
+1978,Hunter Fly@AL_TELEPORT,idle,26,1,50,0,5000,yes,self,always,0,,,,,,
+1978,Hunter Fly@NPC_BLOODDRAIN,angry,199,1,500,0,5000,yes,target,always,0,,,,,,2
+1978,Hunter Fly@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,2
+1978,Hunter Fly@NPC_COMBOATTACK,angry,171,1,500,700,5000,no,target,always,0,,,,,,6
+1978,Hunter Fly@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,6
+1978,Hunter Fly@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1978,Hunter Fly@NPC_EMOTION,follow,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1978,Hunter Fly@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,9,2181,,,,
+1978,Hunter Fly@NPC_WINDATTACK,angry,187,1,2000,0,5000,yes,target,always,0,,,,,,
+1978,Hunter Fly@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
+1979,Steel ChonChon@NPC_SILENCEATTACK,attack,178,2,500,700,5000,no,target,always,0,,,,,,
+1979,Steel ChonChon@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
+1980,Picky@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1980,Picky@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
+1981,Rocker@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1981,Rocker@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
+1982,Smokie@AL_HEAL,idle,28,5,10000,0,5000,yes,self,mystatuson,hiding,,,,,,2
+1982,Smokie@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1982,Smokie@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,6
+1982,Smokie@NPC_PROVOCATION,chase,194,1,20,0,5000,yes,target,always,0,,,,,,19
+1982,Smokie@TF_HIDING,attack,51,1,500,500,5000,no,self,myhpltmaxrate,50,,,,,,19
+1983,Yoyo@AM_POTIONPITCHER,idle,231,1,50,1500,5000,yes,self,always,0,,,,,,
+1983,Yoyo@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1983,Yoyo@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
+1983,Yoyo@NPC_PROVOCATION,chase,194,1,20,0,5000,yes,target,always,0,,,,,,19
+1983,Yoyo@SM_PROVOKE,chase,6,10,50,600,5000,yes,target,always,0,,,,,,
+1983,Yoyo@TF_THROWSTONE,chase,152,1,200,0,5000,yes,target,always,0,,,,,,6
+1984,Lunatic@AL_HEAL,idle,28,1,10,2000,60000,yes,self,always,0,,,,,,
+1984,Lunatic@NPC_PROVOCATION,idle,194,1,2,0,0,yes,self,always,0,,,,,,
+1985,Poison Spore@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1985,Poison Spore@NPC_EMOTION,follow,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1985,Poison Spore@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,1,2181,,,,
+1985,Poison Spore@NPC_POISON,angry,176,3,500,800,5000,no,target,always,0,,,,,,6
+1985,Poison Spore@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,6
+1985,Poison Spore@NPC_POISONATTACK,angry,188,1,2000,0,5000,yes,target,always,0,,,,,,
+1985,Poison Spore@NPC_POISONATTACK,attack,188,1,2000,0,5000,yes,target,always,0,,,,,,
+1986,Baphomet Jr.@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1986,Baphomet Jr.@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,29
+1986,Baphomet Jr.@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,6
+1986,Baphomet Jr.@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1986,Baphomet Jr.@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,6,1173,,,,
+1986,Baphomet Jr.@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1986,Baphomet Jr.@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,29
+1986,Baphomet Jr.@NPC_HALLUCINATION,chase,207,1,50,500,5000,yes,target,always,0,,,,,,29
+1986,Baphomet Jr.@SA_DISPELL,attack,289,1,0,0,30000,yes,target,always,0,,,,,,29
+1987,Baby Desert Wolf@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1987,Baby Desert Wolf@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
+1988,Deviruchi@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1988,Deviruchi@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,29
+1988,Deviruchi@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
+1988,Deviruchi@NPC_DARKTHUNDER,attack,341,3,500,1500,5000,yes,target,always,0,,,,,,29
+1988,Deviruchi@NPC_DARKTHUNDER,chase,341,3,50,1500,5000,yes,target,always,0,,,,,,29
+1988,Deviruchi@NPC_ENERGYDRAIN,attack,200,1,500,0,5000,yes,target,myhpltmaxrate,30,,,,,,19
+1988,Deviruchi@NPC_ENERGYDRAIN,chase,200,1,50,0,5000,yes,target,myhpltmaxrate,30,,,,,,19
+1989,Dokebi@BS_ADRENALINE,attack,111,1,500,1500,5000,no,self,always,0,,,,,,
+1989,Dokebi@BS_ADRENALINE,chase,111,1,50,1500,5000,no,self,always,0,,,,,,6
+1989,Dokebi@MC_MAMMONITE,attack,42,5,500,800,5000,no,target,always,0,,,,,,8
+1989,Dokebi@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
+1989,Dokebi@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1990,Drops@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1990,Drops@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
+1991,Petit@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1991,Petit@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,7,149,,,,
+1991,Petit@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1991,Petit@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
+1991,Petit@NPC_TELEKINESISATTACK,chase,191,5,50,0,5000,yes,target,always,0,,,,,,
+1992,Savage Babe@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,19,,,,,
+1992,Savage Babe@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
+1993,Sohee@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,28,,,,,
+1993,Sohee@NPC_STOP,attack,342,1,500,0,30000,yes,target,always,0,,,,,,9
+1993,Sohee@NPC_SUICIDE,attack,175,1,500,0,5000,yes,target,myhpltmaxrate,80,,,,,,
+1993,Sohee@NPC_WATERATTACK,attack,184,3,500,500,5000,no,target,always,0,,,,,,6
+1994,Bon Gun@KN_SPEARSTAB,attack,58,5,500,800,5000,no,target,always,0,,,,,,
+1994,Bon Gun@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,0
+
+
+//Custom Fire Poring. Warning, Colides with META_DENIRO
+//1239,Fire Poring@AL_HEAL,idle,28,10,10000,0,2000,yes,self,always,0,,,,,,4
+//1239,Fire Poring@AL_HEAL,walk,28,10,10000,0,2000,yes,self,always,0,,,,,,4
+//1239,Fire Poring@AL_TELEPORT,attack,26,1,1000,5000,60000,no,self,myhpltmaxrate,30,,,,,,
+//1239,Fire Poring@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+//1239,Fire Poring@NPC_DARKBLESSING,attack,203,1,1000,2000,5000,no,target,always,0,,,,,,18
+//1239,Fire Poring@NPC_SUMMONSLAVE,attack,196,16,10000,2000,10000,no,self,slavele,3,1491,1431,1433,,,18
+//1239,Fire Poring@NPC_SUMMONSLAVE,idle,196,16,10000,2000,10000,no,self,slavele,3,1491,1431,1433,,,18
+//1239,Fire Poring@RG_INTIMIDATE,attack,219,5,1000,0,3000,yes,target,always,0,,,,,,
+//1239,Fire Poring@RG_STRIPARMOR,attack,217,5,2000,0,3000,yes,target,always,0,,,,,,
+//1239,Fire Poring@RG_STRIPHELM,attack,218,5,2000,0,3000,yes,target,always,0,,,,,,
+//1239,Fire Poring@RG_STRIPSHIELD,attack,216,5,2000,0,3000,yes,target,always,0,,,,,,
+//1239,Fire Poring@RG_STRIPWEAPON,attack,215,5,2000,0,3000,yes,target,always,0,,,,,,
+
+// Here you can place your custom mob skills

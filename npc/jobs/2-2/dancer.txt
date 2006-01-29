@@ -1,0 +1,1040 @@
+//===== eAthena Script ======================================= 
+//= Dancer Job Quest
+//===== By: ==================================================
+//= Kalen - Original jAthena
+//= Fredzilla - Converted
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= eAthena Final
+//===== Description: ========================================= 
+//= Dancer job quest based off a jAthena script and other sources for clarity
+//===== Additional Comments: ================================= 
+//= 1.5 Added Baby Class Support [Fredzilla]
+//= 1.1 Removed the warp I left here my accident, added a check for using 
+//=     Improved Concentration and arrow shower, people could get away with it
+//=     [Fredzilla]
+//= 1.0 I tried to keep as much the same from the Jap version as possible
+//=     this turned out to be quite hard, but on the whole it is the same script
+//=     I have added some new things, and changed some of the used commands,
+//=     along with some optimization. [Fredzilla]
+//= 1.6 Added a func which prevent advanced classes passing
+//= 2nd Job Quests again. It also guides adv classes where
+//= to go. [Lupus]
+//============================================================
+
+//= Warning Warp to escape the quest if need be
+job_duncer.gat,69,165,1	script	wwarp	45,1,1,{
+	mes "[Warning]";
+	mes "This is the way out, this will cancel your quest if you leave";
+	next;
+	menu "Leave the quest",-,"Cancel",L_Can;
+	Warp	"comodo.gat",193,149;
+L_Can:
+	close;
+}
+//= Warp man, takes you to the quest map (Comodo Theater)
+comodo.gat,193,151,4	script	Bor Robin	86,{
+	callfunc "F_BlockHigh",27,"High Archer",44,"Gypsy","Bor Robin";
+
+	mes "[Bor Robin]";
+	mes "Well...... alot of people seem to be coming here lately.";
+	mes " ";
+	mes "They used to become dancers instantaneously.";
+	mes "I seen right before my eyes, more than I could count.";
+	mes "Now only people who are worthly can become dancers.";
+	next;
+	mes "[Bor Robin]";
+	mes "Becoming a dancer in these times would bring you true happiness.";
+	mes "It would be great to see more dancers around.";
+	next;
+	mes "[Bor Robin]";
+	mes "I can take you to the Comodo Theater if you want.";
+	mes " ";
+	mes "What have you got to say?";
+	next;
+	menu "Can you take me to the Theater?",L1,"I want to Leave",-;
+		mes "[Bor Robin]";
+		mes "Come back when you feel ready.";
+		close;
+L1:
+		mes "[Bor Robin]";
+		mes "I will take you now.";
+		close2;
+		warp "job_duncer.gat",70,49;
+		end;
+}
+//= 1st quest NPC, asks for Items and/or money, then passes you onto the next NPC
+job_duncer.gat,43,93,4	script	Aire	724,{
+	if ((basejob == 3) && (Sex == 0)) goto Larcher;
+	if (basejob == 20) goto Ldancer;
+	if (Upper==1) goto LUpper1;
+	mes "[Aire]";
+	mes "Hi "+strcharinfo(0)+", you are only allowed to stay in this room any where else is off limits to you.";
+	mes "";
+	next;
+	mes "[Aire]";
+	mes "We can't just let anyone become a dancer, there is no reason other than this for people to be here.";
+	next;
+	mes "[Aire]";
+	mes "You can stay and watch the dance stage if you want to, there might be an audition going on.";
+	mes "See you later.";
+	close;
+Ldancer:
+	mes "[Aire]";
+	mes "Nice to see you return.";
+	mes "How have you been recently?";
+	mes "Have you been bringing many people joy?";
+	close;
+Larcher:
+	if (Upper == 1) goto LUpper1;
+	if (DANC_Q == 1) goto LStart2;
+	if (DANC_Q == 2) goto LItem1;
+	if (DANC_Q == 3) goto LItem2;
+	if (DANC_Q == 4) goto LItem3;
+	if ((DANC_Q == 5) || (DANC_Q == 6)) goto LStart3;
+	if (DANC_Q >= 7) goto LStart4;
+	mes "[Aire]";
+	mes "Welcome to our Theater.";
+	mes "This is where various dances are taught.";
+	next;
+	mes "[Aire]";
+	mes "Sightseers visit from all other the place, to watch the dancers.";
+	next;
+	mes "[Aire]";
+	mes "We can also train new dancers here, obviously for a price, we dont want to go out of business.";
+	next;
+	mes "[Aire]";
+	mes "You must first fill in the application form.";
+	mes "All you have to do is write in your details.";
+	next;
+	mes "[Aire]";
+	mes "So what do you say?";
+	mes "Are you proposing you become a dancer? or will you be leaving like many before you.";
+	next;
+	menu "Fill in the form",L1,"Leave",-;
+		mes "[Aire]";
+		mes "If you do reconcider please return to me.";
+		mes "See you later.";
+		close;
+L1:
+		if (JobLevel < 40) goto Llowlv;
+		mes "[Aire]";
+		mes "So you are ready to start you journey!";
+		mes "Please enter in the application form which is there.";
+		next;
+		mes "......";
+		next;
+		mes "......Filling in information......";
+		next;
+		mes "......";
+		next;
+		mes "[Aire]";
+		mes "Your name......";
+		mes strcharinfo(0)+"......";
+		mes "That is a cute name!";
+		next;
+		mes "[Aire]";
+		mes "You will need to do a little waiting.";
+		mes "The form is being read be the dancing schools teacher.";
+		next;
+		mes "[Aire]";
+		mes "When you have time for the next part or your journey talk to me again";	
+		set DANC_Q,1;
+		close;
+LStart2:
+	mes "[Aire]";
+	mes "You proposal has been accepted, but you still need to bring some items, and maybe zeny to cover the bill of our school.";
+	next;
+	mes "[Aire]";
+	mes "Lets see what items you will need to bring to cover your bill.";
+	mes " ";
+	mes "Ok...";
+	next;
+//3 Random sets
+	mes "[Aire]";
+	set @itemset, rand(1,3);
+	if (@itemset == 2) goto ItemSet2;
+	if (@itemset == 3) goto ItemSet3;
+
+	mes "The cost for the lesson will be :-";
+	mes "^0000FF10,000 Zeny^000000";
+	mes "A pair of ^0000FFUnslotted Shoes^000000";
+	mes "^0000FF20 Sticky Mucus^000000";
+	mes "^0000FF5 Red Potions^000000";
+	mes "^0000FF3 Jellopy^000000";
+	next;
+	mes "[Aire]";
+	mes "When you have all these, I can prepare the lesson for you.";
+	mes " ";
+	mes "Come an speak to me again when you are ready.";
+	set DANC_Q,2;
+	close;
+ItemSet2:
+	mes "The cost for the lesson will be :-";
+	mes "^0000FF10,000 Zeny^000000";
+	mes "A pair of ^0000FFUnslotted Boots^000000";
+	mes "^0000FF5 earthworm skins^000000";
+	next;
+	mes "[Aire]";
+	mes "When you have all these, I can prepare the lesson for you.";
+	mes " ";
+	mes "Come an speak to me again when you are ready.";
+	set DANC_Q,3;
+	close;
+ItemSet3:
+	mes "The cost for the lesson will be :-";
+	mes "A pair of ^0000FFUnslotted Sandals^000000";
+	mes "^0000FF2 Clam Shells^000000";
+	mes "^0000FF5 Yellow Potions^000000";
+	mes "^0000FF20 Jellopy^000000";
+	mes "^0000FF10 Black Hair^000000";
+	next;
+	mes "[Aire]";
+	mes "When you have all these, I can prepare the lesson for you.";
+	mes "Come an speak to me again when you are ready.";
+	set DANC_Q,4;
+	close;
+
+LItem1:
+	if ((Countitem(938) >= 20) && (Countitem(501) >= 5) && (Countitem(909) >= 3) && (Countitem(2403) >= 1) && (Zeny >= 10000)) goto LItem1OK;
+	mes "[Aire]";
+	mes "Something is wrong here.";
+	mes "Seems you dont have enough items, we need everything that was asked for.";
+	mes "They are all necessary for you to be taught.";
+	mes "Incase you have forgoten, please bring.";
+	next;
+	mes "[Aire]";
+	mes "^0000FF10000 Zeny^000000";
+	mes "A pair of ^0000FFUnslotted Shoes^000000";
+	mes "^0000FF20 Sticky Mucus^000000";
+	mes "^0000FF5 Red Potions^000000";
+	mes "^0000FF3 Jellopy^000000";
+	next;
+	mes "[Aire]";
+	mes "Dont forget to get everything.";
+	mes "What are you waiting for?";
+	mes "see you back here soon";
+	close;
+LItem2:
+	if ((Countitem(1055) >= 5) && (Countitem(2405) >= 1) && (Zeny >= 10000)) goto LItem2OK;
+	mes "Something is wrong here.";
+	mes "Seems you dont have enough items, we need everything that was asked for.";
+	mes "They are all necessary for you to be taught.";
+	mes "Incase you have forgoten, please bring.";
+	next;
+	mes "[Aire]";
+	mes "^0000FF10000 Zeny^000000";
+	mes "A pair of ^0000FFUnslotted Boots^000000";
+	mes "^0000FF5 earthworm skins^000000";
+	next;
+	mes "[Aire]";
+	mes "Dont forget to get everything.";
+	mes "What are you waiting for?";
+	mes "see you back here soon";
+	close;
+LItem3:
+	if ((Countitem(965) >= 2) && (Countitem(503) >= 5) && (Countitem(909) >= 20) && (Countitem(1020) >= 10) && (Countitem(2401) >= 1)) goto LItem3OK;
+	mes "Something is wrong here.";
+	mes "Seems you dont have enough items, we need everything that was asked for.";
+	mes "They are all necessary for you to be taught.";
+	mes "Incase you have forgoten, please bring.";
+	next;
+	mes "[Aire]";
+	mes "A pair of ^0000FFUnslotted Sandals^000000";
+	mes "^0000FF2 Clam Shells^000000";
+	mes "^0000FF5 Yellow Potions^000000";
+	mes "^0000FF20 Jellopy^000000";
+	mes "^0000FF10 Black Hair^000000";
+	next;
+	mes "[Aire]";
+	mes "Dont forget to get everything.";
+	mes "What are you waiting for?";
+	mes "see you back here soon";
+	close;
+LItem1OK:
+	mes "[Aire]";
+	mes "Lets see here, oh you brought everything.";
+	mes "I accept your payment!";
+	set Zeny,Zeny-10000;
+	delitem 938,20;
+	delitem 501,5;
+	delitem 909,3;
+	delitem 2403,1;
+	next;
+	goto LStart3;
+LItem2OK:
+	mes "[Aire]";
+	mes "Lets see here, oh you brought everything.";
+	mes "I accept your payment!";
+	set Zeny,Zeny-10000;
+	delitem 1055,5;
+	delitem 2405,1;
+	next;
+	goto LStart3;
+LItem3OK:
+	mes "[Aire]";
+	mes "Lets see here, oh you brought everything.";
+	mes "I accept your payment!";
+	delitem 965,2;
+	delitem 503,5;
+	delitem 909,20;
+	delitem 1020,10;
+	delitem 2401,1;
+	next;
+LStart3:
+	mes "[Aire]";
+	mes "Now the cost of the training is out of that way, we need you to participate in an interview, and pass a small test to be worthy of becoming a dancer.";
+	next;
+	mes "[Aire]";
+	mes "Your interview and test will be performed by ^0000FF'Bijou'^000000.";
+	mes "Please go and see her as soon as posible.";
+	if (DANC_Q < 5) set DANC_Q,5;
+	close;
+LStart4:
+	mes "[Aire]";
+	mes "Practicing enthusiastically, that cute dance.";
+	mes "When you have completed your training please show me!";
+	close;
+Llowlv:
+	mes "[Aire]";
+	mes "Huh......";
+	mes "I am very sorry, but you have not met our minimun job lvl requirments.";
+	next;
+	mes "[Aire]";
+	mes "You need to be at least above Job Lvl 40.";
+	mes "Please return when you are Job Lvl 40 or higher.";
+	mes "Dont tell anyone I told you this, if you complete the training as a dancer and you are Job Lvl 50 you get an extra gift from us.";
+	mes "Enjoy your day.";
+	close;
+LUpper1:
+	mes "[Aire]";
+	mes "It's such a big honor to salute envoys of Valhalla.";
+	mes "Come again.";
+	emotion 2;
+	close;
+
+}
+//= 2nd "Quest" and Job changer for after the 3rd Quest
+job_duncer.gat,95,93,4	script	Bijou	101,{
+	if ((basejob == 3) && (Sex == 0)) goto LArcher;
+	if (basejob == 20) goto LDancer;
+	mes "[Bijou]";
+	mes "Welcome to our Dance Theater, there are many dancers around here.";
+	next;
+	mes "[Bijou]";
+	mes "Unfortunatally for you I have already retired from being a dancer, but I stay here to train new dancers.";
+	next;
+	mes "[Bijou]";
+	mes "The hardest part of becoming a dancing is the physical test of timing and speed, it is done at the stage.";
+	mes "";
+	mes "I then call out direction to the trainee, and they need to follow they to the letter.";
+	mes "If they complete that test they come back to me for the final part of there training, and they leave as a dancer.";
+	close;
+LDancer:
+	mes "[Bijou]";
+	mes "What have you be doing today?";
+	next;
+	mes "[Bijou]";
+	mes "Go and bring joy to all ther others that you see.";
+	mes "Making impression on the many people.";
+	mes "Help other as much as possible.";
+	mes "Dont forget your training.";
+	mes "See you again soon!";
+	close;
+LArcher:
+	if (Skillpoint != 0) goto LErrorA;
+	if (DANC_Q == 5) goto Ltest1;
+	if (DANC_Q == 6) goto Ltest2;
+	if ((DANC_Q == 7) || (DANC_Q == 8)) goto LStart2;
+	if (DANC_Q == 10) goto Ljobchange;
+	mes "[Bijou]";
+	mes "So you want to become a dancer, eh?";
+	next;
+	mes "[Bijou]";
+	mes "Well, it seems you havent paid anything towards it yet.";
+	mes "First you need to fill in an application, and be accepted.";
+	mes "Once accepted you will need to find payment, they can be all items, or some items and zeny.";
+	mes "The person you need to go and talk to about this is 'Aire' she is the other side of the stage.";
+	mes "When everything is ok with her come back to me.";
+	close;
+LErrorA:
+	mes "[Bijou]";
+	mes "You still seem to have skill points.";
+	mes "Untill you use all of your point you cannot change jobs.";
+	close;
+Ltest1:
+	mes "[Bijou]";
+	mes "So you want to become a dancer, eh?";
+	next;
+	mes "[Bijou]";
+	mes "......You have already paid I see, so we can now continue.";
+	next;
+	mes "[Bijou]";
+	mes "Before I can let you become a Dancer I need to test you mental attitude, this is done through a simple test.";
+	mes "It is multiple choice and alot of them are common sence, well common for someone that has the mental attitude to become a dancer.";
+	next;
+	mes "[Bijou]";
+	mes "There is a total of 10 questions, for each one you get correct you are awarded 10 points.";
+	mes " ";
+	mes "There are some answers that will reduce your final score, try and avoid answering them wrong.";
+	next;
+	goto LsetQ;
+Ltest2:
+	mes "[Bijou]";
+	if(DANC_Q == 6) mes "Back for another try?";
+	mes "Good luck to you, now let the test begin.";
+	next;
+LsetQ:
+	set @rand,rand(2);
+	set @dcpoint,0;
+	if (@rand == 1) goto LQuestion2;
+//-------
+LQuestion1:
+	mes "[Bijou]";
+	mes "1.";
+	mes "^00FF00Subject:^000000 Dancer + bard combination playing skill.";
+	mes "What is the effect of ^777777'Classical Pluck/Lokis Veil'^000000 ?";
+	next;
+	menu "Attack power of the level 4 weapon improves",L1_2,"Double the damage is done",L1_2,"Makes skills and magics unusable",-,"Attack speed rises",L1_2;
+		set @dcpoint,@dcpoint+10;
+L1_2:
+//I am unsure about the translated meaning on Question 2, I tried to adapt it with my own question, 
+//I will put a asterisk (*) next to all I have done this for, I done this so other people who might understand it better can correct it.
+	mes "[Bijou]";
+	mes "2.";
+	mes "^00FF00Subject:^000000 After Dancing.";
+	mes "After you have finished using an Ensemble skill with a partner what should you never do?";
+	next;
+	menu "Use words of appreciation towards the partner",L1_3,"The dance is praised",L1_3,"Invite the partner to dance again",L1_3,"You tell the partner they did an insufficient job",-;
+		set @dcpoint,@dcpoint+10;
+L1_3:
+// *
+	mes "[Bijou]";
+	mes "3.";
+	mes "^00FF00Subject:^000000 Before Dancing";
+	mes "When a partner activates the incorrect dance what should you do?";
+	next;
+	menu "Smile and just continue to dance",L1_4,"Point out the mistake",-,"Cancel the dance and walk away",L1_4,"Hide your smerk",L1_4;
+		set @dcpoint,@dcpoint+10;
+L1_4:
+	mes "[Bijou]";
+	mes "4.";
+	mes "^00FF00Subject:^000000 General Knowledge.";
+	mes "What is the name of the village where you can designate the change of your occupation to that of a dancer?";
+	next;
+	menu "Prontera",L1_5,"Morroc",L1_5,"Al De Baran",L1_5,"Comodo",-;
+		set @dcpoint,@dcpoint+10;
+L1_5:
+	mes "[Bijou]";
+	mes "5.";
+	mes "^00FF00Subject:^000000 Places around Comodo.";
+	mes "How many caves are directally connect to Comodo Village?";
+	next;
+	menu "1",L1_6,"2",L1_6,"3",-,"4",L1_6;
+		set @dcpoint,@dcpoint+10;
+L1_6:
+	mes "[Bijou]";
+	mes "6.";
+	mes "^00FF00Subject:^000000 Pet's.";
+	mes "Which of the following is not able to be tamed?";
+	next;
+	menu "Isis",L1_7,"Argiope",-,"Dokebi",L1_7,"Deviruchi",L1_7;
+		set @dcpoint,@dcpoint+10;
+L1_7:
+	mes "[Bijou]";
+	mes "7.";
+	mes "^00FF00Subject:^000000 General Knowledge.";
+	mes "Who is the best dancer?";
+	next;
+	menu strcharinfo(0),L1_7a,"Bijou",-,"Isis",L1_8,"Flora",L1_8;
+		set @dcpoint,@dcpoint+10;
+		goto L1_8;
+	L1_7a:
+		set @dcpoint,@dcpoint-100;
+		mes ".........";
+		next;
+L1_8:
+// *
+	mes "[Bijou]";
+	mes "8.";
+	mes "^00FF00Subject:^000000 Places around Comodo.";
+	mes "What is one of the main attractions of Comodo?";
+	next;
+	menu "A Church",L1_9,"Exceptionally good shops",L1_9,"The best chicken you can get anywhere",L1_9,"The Casino",-;
+		set @dcpoint,@dcpoint+10;
+L1_9:
+	mes "[...]";
+	mes "9.";
+	mes "^00FF00Subject:^000000 General Knowledge.";
+	mes "What is my name?";
+	next;
+	menu "Gijou",L1_10,"Bijon",L1_10,"Bijou",-,"Bojou",L1_10;
+		set @dcpoint,@dcpoint+10;
+// *
+L1_10:
+	mes "[Bijou]";
+	mes "10.";
+	mes "^00FF00Subject:^000000 Dancer + bard combination playing skill.";
+	mes "What is the effect of ^777777'Lullaby'^000000 ?";
+	next;
+	menu "Put enemy to sleep, in a 5x5 area",Lcheckpt,"Put enemy to sleep, in a 9x9 area",-,"Stun the enemy, in a 5x5 area",Lcheckpt,"Stun the enemy, in a 9x9 area",Lcheckpt;
+		set @dcpoint,@dcpoint+10;
+		goto Lcheckpt;
+//-------
+LQuestion2:
+	mes "[Bijou]";
+	mes "1.";
+	mes "^00FF00Subject:^000000 Dancer skill.";
+	mes "What is the effect of ^777777'Dancing Lessons'^000000? ";
+	next;
+	menu "Your INT is increased",L2_2,"The damage of whip type attacks are raised",-,"The damage of rod type attacks are raised",L2_2,"The damage of ranged type attacks are raised",L2_2;
+		set @dcpoint,@dcpoint+10;
+L2_2:
+	mes "[Bijou]";
+	mes "2.";
+	mes "^00FF00Subject:^000000 Dance Type.";
+	mes "While doing this type of dance, you wear special shoes that make loud sounds";
+	mes "What is this type of dancing called?";
+	next;
+	menu "Tap dance",-,"Improved Concentration",L2_3,"Tango",L2_3,"Salsa",L2_3;
+		set @dcpoint,@dcpoint+10;
+L2_3:
+	mes "[Bijou]";
+	mes "3.";
+	mes "^00FF00Subject:^000000 Dancer feature.";
+	mes "Choose the thing a dancer cannot do";
+	next;
+	menu "Perform Dances",L2_4,"Attack at a long range",L2_4,"Use a Whip",L2_4,"Use a 2-Handed Sword",-;
+		set @dcpoint,@dcpoint+10;
+L2_4:
+	mes "[Bijou]";
+	mes "4.";
+	mes "^00FF00Subject:^000000 General Knowledge.";
+	mes "What is the town where dancers stay the most?";
+	next;
+	menu "Al De Baran",L2_5,"Yuno",L2_5,"Morroc",L2_5,"Comodo",-;
+		set @dcpoint,@dcpoint+10;
+L2_5:
+	mes "[Bijou]";
+	mes "5.";
+	mes "^00FF00Subject:^000000 General Knowledge.";
+	mes "What person can perfrom the most beautiful dances?";
+	next;
+	menu strcharinfo(0),L2_5a,"Bijou",-,"Isis",L2_6,"Emralhandas",L2_6;
+		set @dcpoint,@dcpoint+10;
+		goto L2_6;
+	L2_5a:
+		set @dcpoint,@dcpoint-100;
+L2_6:
+	mes "[Bijou]";
+	mes "6.";
+	mes "^00FF00Subject:^000000 Dancer feature.";
+	mes "The dancer, in comparison with other occupations, has what advantage?";
+	next;
+	menu "Physical strength",L2_7,"Performing skill power",L2_7,"Dance Capability",-,"Magic Capability",L2_7;
+		set @dcpoint,@dcpoint+10;
+L2_7:
+	mes "[Bijou]";
+	mes "7.";
+	mes "^00FF00Subject:^000000 Places around Comodo.";
+	mes "What is the Casino managers name?";
+	next;
+	menu "Martine",L2_8,"Roberto",L2_8,"Moo",-,"Deniroz",L2_8;
+		set @dcpoint,@dcpoint+10;
+L2_8:
+	mes "[Bijou]";
+	mes "8.";
+	mes "^00FF00Subject:^000000 Dancer feature.";
+	mes "As for the item which the dancer cannot equip?";
+	next;
+	menu "Hair band of cat",L2_9,"Two-handed Sword",-,"Sandals",L2_9,"Earring",L2_9;
+		set @dcpoint,@dcpoint+10;
+L2_9:
+	mes "[Bijou]";
+	mes "9.";
+	mes "^00FF00Subject:^000000 Opinion.";
+	mes "Do you think this test is boring?";
+	next;
+	menu "It is",L2_10,"Give me more questions",-;
+		set @dcpoint,@dcpoint+10;
+L2_10:
+	mes "[Bijou]";
+	mes "10.";
+	mes "^00FF00Subject:^000000 Places around Comodo.";
+	mes "How many lighthouses exist on Comodo Island?";
+	next;
+	menu "1",-,"2",Lcheckpt,"3",Lcheckpt;
+		set @dcpoint,@dcpoint+10;
+		goto Lcheckpt;
+//-------
+Lcheckpt:
+	mes "[Bijou]";
+	mes "You have now completed the test, lets see how you did......";
+	next;
+		mes "[Bijou]";
+		mes "You got a total of "+@dcpoint+" points......";
+	if ((@dcpoint >= 80) && (DANC_Q == 5)) goto LpointOK;
+	if ((@dcpoint >= 70) && (DANC_Q == 6)) goto LpointOK;
+		mes "I am going to need to disqualify you, cause you didnt reach the required ammount.";
+		next;
+		mes "[Bijou]";
+		mes "You are allowed to take the test again if you like, for no extra charge.";
+		if (DANC_Q==5) mes "Next time you take the test I will lower the ammount of points you need to pass, to make it easier for you.";
+		mes "Better luck next time, see you around!";
+		set DANC_Q,6;
+		close;
+	LpointOK:
+		if (@dcpoint == 100) mes "That is amazing, 100% correct.";
+		if (@dcpoint != 100) mes "Even though you didnt get all the questions right, you have still passed.";
+		next;
+		mes "[Bijou]";
+		mes "The next thing you need to do is pass a phyical test, of speed and timing";
+		mes "when you are ready for this test talk to me again, I can also tell you more about the test before you take it.";
+		set DANC_Q,7;
+		close;
+LStart2:
+	mes "[Bijou]";
+	mes "Are you ready for this test? or do you want me to talk you through it first?";
+	next;
+	menu "Please Explain it to me",-,"Take me to the test area",Lwarp;
+		mes "[Bijou]";
+		mes "Think of this more as an audition than a test.";
+		mes "We give you ^0000FF1 minute^000000 to impress us.";
+		next;
+		mes "[Bijou]";
+		mes "There can only be ^0000FFone person^000000 at a time dancing on the stage.";
+		next;
+		mes "[Bijou]";
+		mes "If there are people are infront of you stay in the ^0000FFwaiting room^000000 untill you hear the person infront of you has past or fails their test.";
+		next;
+		mes "[Bijou]";
+		mes "Click in the window above the waiting room guide to get sent to the dance stage, if there is someone already on the stage it will not allow you to enter, you will need to wait.";
+		next;
+		mes "[Bijou]";
+		mes "When you get put onto the stage get into a ^0000FFposition which can look around the whole stage^000000.";
+		next;
+		mes "[Bijou]";
+		mes "Once you get onto the stage I will annouce that the time has started.";
+		mes "Then I will start calling out directions for you to take.";
+		next;
+		mes "[Bijou]";
+		mes "You then need to follow them directions as quickly as possible.";
+		mes "^FF0000[ < ]^000000 = Move to the left";
+		mes "^FF0000[ > ]^000000 = Move to the right";
+		mes "^FF0000[ * ]^000000 = Go back to the center of the stage";
+		mes "^FF0000[ \\/ ]^000000 = Move down towards the front of the stage";
+		mes "^FF0000[ /\\ ]^000000 = Move up towards the back of the stage";
+		next;
+		mes "[Bijou]";
+		mes "There are some other things you will need to do, so just be ready will your skills and bow just incase.";
+		next;
+		mes "[Bijou]";
+		mes "Dont worry if you have no experience of dance, that is what this is for, so you dont need to worry.";
+		close;
+	Lwarp:
+		mes "[Bijou]";
+		mes "I will take you back stage so you can take you test!";
+		set DANC_Q,8;
+		close2;
+		warp "job_duncer.gat",104,109;
+		end;
+Ljobchange:
+	mes "[Bijou]";
+	mes "You have done great, you have passed all the tests we have set out for you.";
+	next;
+	mes "[Bijou]";
+	mes "I now think you have sufficient knowledge to become a dancer now!";
+	next;
+	mes "[Bijou]";
+	mes "Now...... please relax as we finish our training here.";
+	next;
+	mes "[Bijou]";
+	mes "It will be your job to bring joy to all the people in Rune Midgard.";
+	next;
+	if (JobLevel == 50) set @item,1;
+	if (JobLevel != 50) set @item,0;
+	mes "[Bijou]";
+	mes "Watch each time you dance from now on.";
+	next;
+	callfunc "Job_Change",Job_Dancer;
+	callfunc "F_ClearJobVar";
+	mes "[Bijou]";
+	mes "The enjoyment of the people watching you perform......";
+	next;
+	mes "[Bijou]";
+	mes "This is present from me!";
+	if (@item == 0) getitem 1950,1;
+	if (@item == 0) mes "Now take this Rope, and be the best dancer you can be!";	
+	if (@item == 1) getitem 1953,1;
+	if (@item == 1) mes "Since you are very experienced I have given you a Line, instead of a simple Rope the normal people would get.";
+	if (@item == 1) mes "Now take you Line, and be the best dancer you can be!";
+	close;
+
+}
+//=Start of the 3rd quest is here, once complete you go back to Bijou to change job
+job_duncer.gat,32,152,6	script	Guide::dancew	69,{
+	close;
+OnWarp:
+	warpwaitingpc "job_duncer.gat",70,112,1;
+	disablewaitingroomevent;
+	initnpctimer "jobDq";
+	end;
+OnInit:
+	waitingroom "Dance lesson waiting room",20,"dancew::OnWarp",1;
+	end;
+}
+job_duncer.gat,0,0,0	script	jobDq	-1,{
+	end;
+OnTimer1000:
+	mapannounce "job_duncer.gat","Bijou: The test begins, Total time allowed is 1 minute.",8;
+	end;
+OnTimer3000:
+	mapannounce "job_duncer.gat","Bijou: Step Up! [ /\\ ]",8;
+	callsub L_SUB1,2000;
+	end;
+OnTimer7000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: To the bottom.  [ \\/ ]",8;
+	callsub L_SUB5,2000;
+	end;
+OnTimer11000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: To the left.  [ < ]",8;
+	callsub L_SUB2,2000;
+	end;
+OnTimer15000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: Go to the right. [ > ]",8;
+	callsub L_SUB4,2000;
+	end;
+OnTimer19000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: Return to the middle. [ * ]",8;
+	callsub L_SUB3,3000;
+	end;
+OnTimer21000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: Stay still!",8;
+	end;
+OnTimer26000:
+	set @skillcheck,Sp;
+	mapannounce "job_duncer.gat","Bijou: Use 'Improved Concentration'!",8;
+	end;
+OnTimer29000:
+	if (@skillcheck==Sp) goto OnTimer80000;
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: To the left.  [ < ]",8;
+	callsub L_SUB2,2000;
+	end;
+OnTimer33000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: To the bottom.  [ \\/ ]",8;
+	end;
+OnTimer35000:
+	mapannounce "job_duncer.gat","Bijou: Directly the right! [ > ]",8;
+	callsub L_SUB4,3000;
+	end;
+OnTimer38000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: Stay still!",8;
+	end;
+OnTimer41000:
+	mapannounce "job_duncer.gat","Bijou: The left * center * right * top [ < ] [ * ] [ > ] [ /\\ ]",8;
+	callsub L_SUB1,0;
+	end;
+OnTimer47000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: To the right.  [ > ] ",8;
+	callsub L_SUB4,3000;
+	end;
+OnTimer50000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: The left * center * down * up:   [ < ] [ * ] [ \\/ ] [ /\\ ] ",8;
+	callsub L_SUB1,0;
+	end;
+OnTimer56000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: Once again, the left * center * down * up:  [ < ] [ * ] [ \\/ ] [ /\\ ]",8;
+	callsub L_SUB1,0;
+	end;
+OnTimer62000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: Down!  [ \\/ ]",8;
+	callsub L_SUB5,2500;
+	end;
+OnTimer65000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: To the left!  [ < ]",8;
+	callsub L_SUB2,2500;
+	end;
+OnTimer68000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou: Return to the middle. [ * ]",8;
+	callsub L_SUB3,2500;
+	end;
+OnTimer71000:
+	donpcevent "::OnDE1";
+	mapannounce "job_duncer.gat","Bijou:  Kill the monster using Arrow Shower!",8;
+	set @skillcheck,Sp;
+	monster "job_duncer.gat",69,106,"Poring",1002,1,"jddie";
+	end;
+OnTimer76000:
+	killmonsterall "job_duncer.gat";
+	end;
+OnTimer80000:
+	mapannounce "job_duncer.gat","Dancer: You was a bit too slow, sorry you have failed.",8;
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	disablenpc "middletile";
+	if (getareausers("job_duncer.gat",68,106,70,114) != 0) areawarp "job_duncer.gat",68,106,70,114,"job_duncer.gat",69,102;
+	if (getareausers("job_duncer.gat",65,109,73,111) != 0) areawarp "job_duncer.gat",65,109,73,111,"job_duncer.gat",69,102;
+	stopnpctimer;
+	enablewaitingroomevent "dancew";
+	end;
+L_SUB1:
+	disablenpc "lefttile";
+	disablenpc "middletile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	setnpctimer getarg(0),"jdt1";
+	startnpctimer "jdt1";
+	return;
+L_SUB2:
+	disablenpc "uppertile";
+	disablenpc "middletile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	setnpctimer getarg(0),"jdt2";
+	startnpctimer "jdt2";
+	return;
+L_SUB3:
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	setnpctimer getarg(0),"jdt3";
+	startnpctimer "jdt3";
+	return;
+L_SUB4:
+	disablenpc "lefttile";
+	disablenpc "middletile";
+	disablenpc "uppertile";
+	disablenpc "lowertile";
+	setnpctimer getarg(0),"jdt4";
+	startnpctimer "jdt4";
+	return;
+L_SUB5:
+	disablenpc "lefttile";
+	disablenpc "middletile";
+	disablenpc "righttile";
+	disablenpc "uppertile";
+	setnpctimer getarg(0),"jdt5";
+	startnpctimer "jdt5";
+	return;
+}
+job_duncer.gat,0,0,0	script	jddie	-1,{
+	if (@skillcheck==Sp) set @check,1;
+	if (@check==0) mapannounce "job_duncer.gat","Dancer: Well done, you were very skillful, and have passed the test.",8;
+	if (@check==1) mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" the failed to use arrow shower to kill the monster",8;
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	disablenpc "middletile";
+	if (@check==0)	set DANC_Q,10;
+	stopnpctimer "jobDq";
+	enablewaitingroomevent "dancew";
+	if (@check==1)	set @check,0;
+	warp "job_duncer.gat",69,102;
+	end;
+}
+job_duncer.gat,63,110,4	script	Back dancer #1::jdt1	724,{
+	end;
+OnTimer5000:
+	enablenpc "lefttile";
+	enablenpc "middletile";
+	enablenpc "righttile";
+	enablenpc "lowertile";
+	stopnpctimer;
+	end;
+OnDE1:
+	emotion	21;
+	end;
+OnDE2:
+	emotion 23;
+	end;
+}
+job_duncer.gat,66,113,4	script	Back dancer #2::jdt2	724,{
+	end;
+OnTimer5000:
+	enablenpc "uppertile";
+	enablenpc "middletile";
+	enablenpc "righttile";
+	enablenpc "lowertile";
+	stopnpctimer;
+	end;
+OnDE1:
+	emotion	21;
+	end;
+OnDE2:
+	emotion 23;
+	end;
+}
+job_duncer.gat,72,113,4	script	Back dancer #3::jdt3	724,{
+	end;
+OnTimer5000:
+	enablenpc "lefttile";
+	enablenpc "uppertile";
+	enablenpc "righttile";
+	enablenpc "lowertile";
+	stopnpctimer;
+	end;
+OnDE1:
+	emotion	21;
+	end;
+OnDE2:
+	emotion 23;
+	end;
+}
+job_duncer.gat,75,110,4	script	Back dancer #4::jdt4	724,{
+	end;
+OnTimer5000:
+	enablenpc "lefttile";
+	enablenpc "middletile";
+	enablenpc "uppertile";
+	enablenpc "lowertile";
+	stopnpctimer;
+	end;
+OnDE1:
+	emotion	21;
+	end;
+OnDE2:
+	emotion 23;
+	end;
+}
+job_duncer.gat,75,110,4	script	jdt5	139,{
+	end;
+OnTimer5000:
+	enablenpc "lefttile";
+	enablenpc "middletile";
+	enablenpc "righttile";
+	enablenpc "uppertile";
+	stopnpctimer;
+	end;
+}
+job_duncer.gat,69,113,4	script	uppertile	139,1,1,{
+	end;
+OnTouch:
+	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" the failed to make it in time.",8;
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	disablenpc "middletile";
+	enablewaitingroomevent "dancew";
+	stopnpctimer "jobDq";
+	areawarp "job_duncer.gat",68,112,70,114,"job_duncer.gat",69,102;
+	donpcevent "::OnDE2";
+	end;
+OnDE1:
+OnInit:
+	disablenpc "uppertile";
+	end;
+}
+job_duncer.gat,66,110,4	script	lefttile	139,1,1,{
+	end;
+OnTouch:
+	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" the failed to make it in time.",8;
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	disablenpc "middletile";
+	enablewaitingroomevent "dancew";
+	stopnpctimer "jobDq";
+	areawarp "job_duncer.gat",65,109,67,111,"job_duncer.gat",69,102;
+	donpcevent "::OnDE2";
+	end;
+OnDE1:
+OnInit:
+	disablenpc "lefttile";
+	end;
+}
+job_duncer.gat,69,110,4	script	middletile	139,1,1,{
+	end;
+OnTouch:
+	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" the failed to make it in time.",8;
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	disablenpc "middletile";
+	enablewaitingroomevent "dancew";
+	stopnpctimer "jobDq";
+	areawarp "job_duncer.gat",68,109,70,111,"job_duncer.gat",69,102;
+	donpcevent "::OnDE2";
+	end;
+OnDE1:
+OnInit:
+	disablenpc "middletile";
+	end;
+}
+job_duncer.gat,72,110,4	script	righttile	139,1,1,{
+	end;
+OnTouch:
+	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" the failed to make it in time.",8;
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	disablenpc "middletile";
+	enablewaitingroomevent "dancew";
+	stopnpctimer "jobDq";
+	areawarp "job_duncer.gat",71,109,73,111,"job_duncer.gat",69,102;
+	donpcevent "::OnDE2";
+	end;
+OnDE1:
+OnInit:
+	disablenpc "righttile";
+	end;
+}
+job_duncer.gat,69,107,4	script	lowertile	139,1,1,{
+	end;
+OnTouch:
+	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" the failed to make it in time.",8;
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	disablenpc "middletile";
+	enablewaitingroomevent "dancew";
+	stopnpctimer "jobDq";
+	areawarp "job_duncer.gat",68,106,70,108,"job_duncer.gat",69,102;
+	donpcevent "::OnDE2";
+	end;
+OnDE1:
+OnInit:
+	disablenpc "lowertile";
+	end;
+}
+//= Some test NPC, activate these if you wanna try out the dance portion of the quest
+//==================================================================
+//job_duncer.gat,69,105,4	script	TestDE1	98,{donpcevent "::OnDE1"; close;}
+//job_duncer.gat,69,110,4	script	TestDE2	98,{donpcevent "::OnDE2"; close;}
+//job_duncer.gat,66,100,4	script	WarpTilesON	98,{disablenpc "uppertile";disablenpc "lefttile";disablenpc "middletile";disablenpc "righttile";disablenpc "lowertile";close;}
+//job_duncer.gat,72,100,4	script	WarpTilesOFF	98,{enablenpc "uppertile";enablenpc "lefttile";enablenpc "middletile";enablenpc "righttile";enablenpc "lowertile";close;}
+//==================================================================
+//job_duncer.gat,69,102,4	script	Tester NPC	100,{
+//	mes "[TEST]";
+//	mes "want to take the dancing test?";
+//	next;
+//	menu "Yes",Lgo,"No",-;
+//		close;
+//Lgo:
+//	warp "job_duncer.gat",70,112;
+//	initnpctimer "jobDq";
+//	end;
+//}

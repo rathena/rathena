@@ -1,0 +1,142 @@
+//===== eAthena Script ===========
+//= New Kafras
+//===== By: =========================
+//= eAthena Dev Team
+//===== Current Version: ===================
+//= 2.6
+//===== Compatible With: =====================
+//= eAthena 1.0
+//===== Description: ============================================
+//= Description of argument settings for callfunc "F_Kafra".
+//=  arg(0): When set at 0 the default Kafra message is displayed.
+//=    When set to 1 the Niflhiem Kafra message is displayed.
+//=    When set to 2 the Guild Kafra message is displayed. 
+//=  arg(1): Set to 1 to disable teleport menu option.  Otherwise set to 0.
+//=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
+//===== Additional Comments: ==============================================
+//= v1.1 Now using functions
+//= v2.1 Added Niflheim Kafra by Dizzy
+//= v2.1b Minor changes to function calls.  Using arguments.
+//= This version uses arrays .[kobra_k88]
+//= 2.2 Added Louyang Kafra, fixed other kafras not saving players coords [Lupus]
+//= 2.3 Added temp Amatsu + Ayothaya Kafra (wrong coords and sprite) [Lupus]
+//= 2.4 Added correct Ayothaya, Louyang & Amatsu Kafras. [Lupus]
+//= 2.5 Added 2 Einbroch Kafras. [Lupus]
+//= 2.6 Added the Einbech Kafra [MasterOfMuppets]
+//= 2.7 Added the Lighthalzen Kafras [MasterOfMuppets]
+//= 2.7b Chanced the Sprite of the Einbech Kafra. [Poki#3]
+//==========================================================================
+
+// Amatsu ------------------------------------------------------------------
+amatsu.gat,102,149,4	script	Kafra	116,{
+	cutin "kafra_02",2;
+	callfunc "F_Kafra",3,3,1;
+
+	M_Save:
+		savepoint "amatsu.gat",116,94;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Ayothaya ----------------------------------------------------------------
+ayothaya.gat,212,169,5	script	Kafra	116,{
+	cutin "kafra_02",2;
+	callfunc "F_Kafra",4,3,1;
+
+	M_Save:
+		savepoint "ayothaya.gat",149,69;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Einbech -----------------------------------------------------------------
+
+einbech.gat,181,131,5	script	Kafra	860,{
+	cutin "kafra_08",2;
+	callfunc "F_Kafra",0,4,1;
+
+	M_Save:
+		savepoint "einbech.gat",181,124;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Einbroch (North-East) ---------------------------------------------------
+einbroch.gat,242,205,4	script	Kafra	115,{
+	cutin "kafra_03",2;
+	callfunc "F_Kafra",0,4,1;
+
+	M_Save:
+		savepoint "einbroch.gat",240,197;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Einbroch (East) ---------------------------------------------------------
+einbroch.gat,59,203,4	script	Kafra	117,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,4,1;
+
+	M_Save:
+		savepoint "einbroch.gat",240,197;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Gonryun -----------------------------------------------------------------
+gonryun.gat,159,122,4	script	Kafra	116,{
+	cutin "kafra_02",2;
+	callfunc "F_KafSetYun";
+	callfunc "F_Kafra",0,0,1;
+
+	M_Save:
+		savepoint "gonryun.gat",160,62;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Lighthalzen--------------------------------------------------------------
+
+//Outside the hotel
+lighthalzen.gat,164,100,3	script	Kafra	860,{
+	cutin "kafra_08",2;
+	callfunc "F_Kafra",0,4,1;
+
+	M_Save:
+		savepoint "lighthalzen.gat",162,82;
+		callfunc "F_KafEnd",0,1;
+}
+
+//Inside the hotel
+lhz_in02.gat,237,284,4	script	Kafra	861,{
+	cutin "kafra_09",2;
+	callfunc "F_Kafra",0,4,1;
+
+	M_Save:
+		savepoint "lighthalzen.gat",162,82;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Louyang -----------------------------------------------------------------
+louyang.gat,210,104,5	script	Kafra	117,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",4,3,1;
+
+	M_Save:
+		savepoint "louyang.gat",217,92;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Umbala Kafra ------------------------------------------------------------
+umbala.gat,128,133,4	script	Kafra	115,{
+	cutin "kafra_03",2;
+	callfunc "F_KafSetYun";
+	callfunc "F_Kafra",0,0,1;
+
+	M_Save:
+		savepoint "umbala.gat",126,131;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Niflheim ----------------------------------------------------------------
+niflheim.gat,202,180,3	script	Kafra	791,{
+	callfunc "F_Kafra",1,2,1;
+//this SAVE isn't used. Niflheim Kafra doesn't SAVE
+	M_Save:
+		savepoint "niflheim.gat",192,182;
+		callfunc "F_KafEnd",1,1;
+}

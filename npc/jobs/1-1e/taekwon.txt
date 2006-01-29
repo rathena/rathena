@@ -1,0 +1,71 @@
+//===== eAthena Script ======================================= 
+//= Taekwon Job Quest
+//===== By: ================================================== 
+//= Lupus
+//===== Current Version: ===================================== 
+//= 0.3
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= 
+//===== Additional Comments: ================================= 
+//= 0.1 Now it's just a questless temp NPC 
+//= We use CLASS instead of BASEJOB to protect from Advanced/Baby Classes
+//= 0.3 Updated The Job Qusts due to SG / SL Job Quests [Lupus]
+//============================================================ 
+
+
+payon.gat,146,87,7	script	Taekwon	764,{
+	mes "[Taekwon]";
+	if(Class==Job_Novice) goto L_Check;
+	if(Class==Job_Soul_Linker || Class==Job_Star_Gladiator){
+		mes "That's all for now. You know your way. Be brave!";
+		mes "I'm staying here and looking forward to the new hope of the Rune-Midgart Kingdom.";
+		close;
+	}
+	if(Class==Job_Taekwon){
+		mes "Hello, my brother Taekwon!";
+		if(JobLevel<40) {
+			mes "On achieving Job Level 40 visit me again...";
+			emotion e_go;
+			close;
+		}
+		mes "You've became much stronger... Now tell me your way?";
+		next;
+		menu "I choose the way of Stars...",-,"I prefer the way of Soul...",M_SOUL,"I've none.",M_NOTHING;
+
+		warp "job_star.gat",166,21;	//SG
+		end;
+	M_SOUL:
+		warp "job_star.gat",99,22;	//SL
+		end;
+		
+	}
+	mes "Good day. I'm a Taekwon Guild Master.";
+	emotion 1;
+	close;
+
+L_Check:
+	mes "Hi, brave Novice!";
+	mes "Waht do you want?";
+	next;
+	menu "I want to be a Taekwon",-,"Nothing.",M_NOTHING;
+
+	mes "[Taekwon]";
+	if(JobLevel<10 || SkillPoint) {
+		mes "You have to learn all the basic skills and reach 10 Job Level.";
+		emotion e_sry;
+		close;
+	}
+
+	jobchange Job_Taekwon;
+	callfunc "F_ClearJobVar";
+	mes "Congratulations!";
+	close;
+
+M_NOTHING:
+	mes "[Taekwon]";
+	mes "Then... see you soon.";
+	close;	
+
+}

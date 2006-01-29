@@ -1,0 +1,37 @@
+//===== eAthena Script =======================================
+//= Map flags that disable warpto
+//===== By: ==================================================
+//= eAthena Dev Team
+//= v 1.1
+//===== Current Version: =====================================
+
+// Guild Castles ========================
+//alde_gld.gat	mapflag	nowarpto
+aldeg_cas01.gat	mapflag	nowarpto
+aldeg_cas02.gat	mapflag	nowarpto
+aldeg_cas03.gat	mapflag	nowarpto
+aldeg_cas04.gat	mapflag	nowarpto
+aldeg_cas05.gat	mapflag	nowarpto
+gefg_cas01.gat	mapflag	nowarpto
+gefg_cas02.gat	mapflag	nowarpto
+gefg_cas03.gat	mapflag	nowarpto
+gefg_cas04.gat	mapflag	nowarpto
+gefg_cas05.gat	mapflag	nowarpto
+//pay_gld.gat	mapflag	nowarpto
+payg_cas01.gat	mapflag	nowarpto
+payg_cas02.gat	mapflag	nowarpto
+payg_cas03.gat	mapflag	nowarpto
+payg_cas04.gat	mapflag	nowarpto
+payg_cas05.gat	mapflag	nowarpto
+//prt_gld.gat	mapflag	nowarpto
+prtg_cas01.gat	mapflag	nowarpto
+prtg_cas02.gat	mapflag	nowarpto
+prtg_cas03.gat	mapflag	nowarpto
+prtg_cas04.gat	mapflag	nowarpto
+prtg_cas05.gat	mapflag	nowarpto
+//Novice Guild
+n_castle.gat	mapflag	nowarpto
+nguild_alde.gat	mapflag	nowarpto
+nguild_gef.gat	mapflag	nowarpto
+nguild_pay.gat	mapflag	nowarpto
+nguild_prt.gat	mapflag	nowarpto

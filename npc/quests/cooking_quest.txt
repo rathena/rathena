@@ -1,0 +1,600 @@
+//===== eAthena Script ======================================= 
+//= Cooking Quest
+//===== By: ================================================== 
+//= Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= eAthena 1.0+
+//===== Description: ========================================= 
+//= Official Cooking Quest
+//===== Additional Comments: ================================= 
+//= 1.1 Fixed wrong item ID, added missing ";, optimized [Lupus]
+//= 1.1a minor bugfix, thx 2 Irmin [Lupus]
+//= 1.2 Fixed exploit, some typos [Lupus]
+//= 1.3 Fixed wrong label [Lupus] 1.3a updated to Reddozen's changes
+//= 1.3b Fixed wrong id, fixed Puch quest, added more Pouch Quest
+//= dialogues [Lupus]
+//= 1.4 Fixed spelling, added some dialoguesm optimized
+//= fixed bugs. Tested, fully working [Lupus]
+//= 1.5 More fixes [Lupus]
+//============================================================ 
+
+prt_castle.gat,43,30,6	script	Chef Apprentice	878,{
+
+	mes "[Chef's Apprentice]";
+
+	if(cooking == 1) goto L_Remind;
+
+	if(cooking == 2){
+		mes "I see you passed the test.";
+		mes "Good job!";
+		next;
+		mes "[Chef's Apprentice]";
+		mes "This book would be quite helpful for a novice chef.";
+		getitem 7472, 1;//Items: Lv1 Cookbook,
+		set cook_book, 7472;
+		set cooking, 3;
+		close;
+	}
+
+	if(cooking == 3){
+		mes "Hi there. Is there something";
+		mes "that I can help you with?";
+		next;
+		menu "Buy Supplies",M_BuySupply, "Talk about cooking",L_Cook_Talk, "Leave",L_No_Talk;		
+
+		M_BuySupply:
+			mes "[Chef's Apprentice]";
+			mes "Outdoor Cooking Set - 500z each";
+			mes " How many?";
+			input @amount;
+			if(@amount < 1) goto ER_Invalid;
+			if(@amount > 100) goto ER_TooMuch;
+			if(@amount*500 > Zeny) goto ER_Zeny;
+			set Zeny, Zeny-(@amount*500);
+			getitem 12125, @amount;//Items: Outdoor Cooker,
+			next;
+			mes "[Chef's Apprentice]";
+			mes "Enjoy!";
+			close;
+
+		L_Cook_Talk:
+			mes "[Chef's Apprentice]";
+			mes "You passed the test,";
+			mes "but were your results";
+			mes "worth while?";
+			next;
+			menu "Taste my food",-, "No, it was horrible",L_Taste_End;
+
+			mes "[Chef's Apprentice]";
+			mes "I don't know about that.";
+			mes "It may not be safe...";
+			next;
+			menu "Please taste it",-, "You're probably right",L_Taste_End;
+
+			mes "[Chef's Apprentice]";
+			mes "Why would I want to try";
+			mes "the food of a novice chef?";
+			next;
+			menu "Please try",-, "Yeah, I'm too new at this",L_Taste_End;
+
+			mes "[Chef's Apprentice]";
+			mes "I'll make a deal with you.";
+			mes "if you cook me one of every";
+			mes "Lv 1 food, then I'll try";
+			mes "your Cooking...";
+			next;
+			menu "Agree",-, "Refuse",L_Taste_End;
+
+			mes "[Chef's Apprentice]";
+			mes "You'll need to make all";
+			mes "six foods. Let me know";
+			mes "when you're finished.";
+			set cooking, 4;
+			close;
+
+		L_Taste_End:
+			mes "[Chef's Apprentice]";
+			mes "Come back when you feel";
+			mes "more confident.";
+			close;
+
+		L_No_Talk:
+			mes "[Chef's Apprentice]";
+			mes "Come back to vist anytime!";
+			mes "Have a good day.";
+			close;
+	}
+
+	if(cooking == 4){
+		if(countitem(12056)
+			&& countitem(12061)
+			&& countitem(12046)
+			&& countitem(12066)
+			&& countitem(12041)
+			&& countitem(12051)) {//Items: Frog Spawn Soup, Grape Juice with Honey, Grape Juice and Tea, Fried Monkey Tail, Boiled Locust, Steamed Crab Pincer,
+
+			delitem 12056, 1;//Items: Frog Spawn Soup,
+			delitem 12061, 1;//Items: Grape Juice with Honey,
+			delitem 12046, 1;//Items: Grape Juice and Tea,
+			delitem 12066, 1;//Items: Fried Monkey Tail,
+			delitem 12041, 1;//Items: Boiled Locust,
+			delitem 12051, 1;//Items: Steamed Crab Pincer,
+
+			mes "What!? Through already?";
+			mes "Let me see what you've made";
+			next;
+
+			mes "[Chef's Apprentice]";
+			mes "Great job, but there's";
+			mes "still one thing that I need";
+			mes "you to do. Talk to a friend";
+			mes "of mine in Payon. We used";
+			mes "to study together.";
+			next;
+			mes "[Chef's Apprentice]";
+			mes "Take him this ^000080Leather Pouch^000000,";
+			mes "and I'll put in a good word";
+			mes "for you with my teacher.";
+
+			getitem 7432, 1;//Items: Leather Pouch,
+			set cooking, 5;
+		} else {
+			mes "Please come back when you've cooked";
+			mes "all the Lv 1 foods.";
+			next;
+			menu "Buy Supplies",M_BuySupply, "Leave",L_No_Talk;		
+		}
+		close;
+	}
+
+	if(cooking == 5){
+		mes "Please, don't forget to";
+		mes "hand my ^000080Leather Pouch^000000";
+		mes "to my friend in Payon.";
+		next;
+		mes "[Chef's Apprentice]";
+		mes "Well... Is there something";
+		mes "that I can help you with?";
+		next;
+		menu "Buy Supplies",-, "Leave",L_No_Talk2;
+
+			mes "[Chef's Apprentice]";
+			mes "Outdoor Cooking Set - 500z each.";
+			mes " How many?";
+			input @amount;
+			if(@amount < 1) goto ER_Invalid;
+			if(@amount > 100) goto ER_TooMuch;
+			if(@amount*500 > Zeny) goto ER_Zeny;
+			set Zeny, Zeny-(@amount*500);
+			getitem 12125, @amount;//Items: Outdoor Cooker,
+
+			next;
+			mes "[Chef's Apprentice]";
+			mes "Enjoy!";
+			close;
+
+		L_No_Talk2:
+			mes "[Chef's Apprentice]";
+			mes "Come back to vist anytime!";
+			mes "Have a good day.";
+			close;
+	}
+
+	if(cooking == 6){
+		mes "Thank you for taking that";
+		mes "pouch to my friend! Take";
+		mes "this as a gift.";
+		set cooking, 7;
+		getitem 12126, 10;//Items: Home Cooking Set,
+		next;
+		mes "[Chef's Apprentice]";
+		mes "Come back later if you";
+		mes "need anything else!";
+		close;
+	}
+
+	if(cooking == 7){
+		mes "Welcome back. What";
+		mes "would you like to do?";
+		next;
+		menu "Buy Supplies",-, "Just visiting",L_Leave3;
+
+				mes "[Chef's Apprentice]";
+				mes "What would you like?";
+				next;
+				menu "Outdoor Cooking Set - 500z each",-, "Home Cooking Set - 1,000z",L_HomeCooking, "Never Mind",L_Leave3;
+
+				set @price, 500;
+				set @tool, 12125;
+				goto L_Cooking_Tools4;
+
+			L_HomeCooking:
+				set @price, 1000;
+				set @tool, 12126;
+
+		L_Cooking_Tools4:
+			mes "[Chef's Apprentice]";
+			mes " How many?";
+			input @amount;
+			if(@amount < 1) goto ER_Invalid;
+			if(@amount > 100) goto ER_TooMuch;
+			if(@amount*@price > Zeny) goto ER_Zeny;
+			set Zeny, Zeny-(@amount*@price);
+			getitem @tool, @amount;
+
+			next;
+			mes "[Chef's Apprentice]";
+			mes "Enjoy!";
+			close;		
+
+		L_Leave3:
+			mes "[Chef's Apprentice]";
+			mes "Come back to vist anytime!";
+			mes "Have a good day.";
+			close;
+	}			
+			
+	mes "Hi there. What can I";
+	mes "do for you?";
+	next;
+	menu "Just looking around",-, "I want to learn to cook",ap_2;
+
+		mes "[Chef's Apprentice]";
+		mes "Feel free to look around";
+		mes "as much as you like.";
+		mes "Just don't disturb my";
+		mes "teacher.";
+		close;
+
+	ap_2:
+		if(baseLevel < 50){
+			mes "[Chef's Apprentice]";
+			mes "You should train a little";
+			mes "more before trying something";
+			mes "as hard as cooking";
+			close;
+		}
+
+		set cooking, 1;
+		mes "[Chef's Apprentice]";
+	L_Remind:
+		mes "So you want to learn to";
+		mes "cook huh? Well, if you";
+		mes "think you can handle it,";
+		mes "just talk to my teacher.";
+		next;
+		mes "[Chef's Apprentice]";
+		mes "Just don't forget your";
+		mes "^000080Chef's Hat^000000 or Sharle";
+		mes "will yell at you.";
+		close;
+
+	ER_Zeny:
+		next;
+		mes "[Chef's Apprentice]";
+		mes "You don't have enough zeny.";
+		close;
+
+	ER_TooMuch:
+		next;
+		mes "[Chef's Apprentice]";
+		mes "You can't by that much at a time!.";
+		mes "You don't have to buy it all at once.";
+		close;
+	ER_Invalid:
+		next;
+		mes "[Chef's Apprentice]";
+		mes "You can't buy negative amounts of cooking";
+		mes "equipment. Please buy a valid amount.";
+		close;
+}
+
+
+payon.gat,209,127,4	script	Cooking Friend	88,{
+	mes "[Cooking Friend]";
+	if(cooking == 5){
+		if(countitem(7432)) {
+			delitem 7432, 1;//Items: Leather Pouch,
+			mes "I see my friend sent you";
+			mes "to give me something.";
+			set cooking, 6;
+			emotion e_thx;
+		} else {
+			mes "What? My friend sent you";
+			mes "just to say Hello?";
+			emotion e_hmm;
+		}
+		mes "Thank you for your";
+		mes "trouble. Tell him I said,";
+		mes "Hello.";
+		close;
+	}
+	mes "Hello, how are you?";
+	close;
+}
+
+
+prt_castle.gat,45,35,4	script	Sharle	886,{
+	mes "[Sharle]";
+	if(cooking && getequipid(1) != 5026) goto L_No_Uniform; //Item: Chef's Hat
+	if(cooking == 7)goto L_Cooking_7;
+	if(first_cooking)goto L_First_Cooking;
+
+	if(cooking == 1){
+		mes "So you want to learn how to cook?";
+		next;
+		menu "Yes",M_GetQuest, "No",M_End;
+	}
+
+	mes "What a great day to bake some";
+	mes "wonderfull treats!";
+	close;
+
+	M_GetQuest:
+		mes "[Sharle]";
+		mes "Ok. Let's try to cook something together.";
+		set first_cooking,rand(1,6);
+
+	L_First_Cooking:
+		mes "I'm lack of special ingredients,";
+		mes "bring me:";
+		if(first_cooking == 1){
+			set @item1, 577;
+			set @item1a, 1;
+			set @item2, 908;
+			set @item2a, 10;
+			set @item3, 1024;
+			set @item3a, 1;
+			set @food1, 12056;
+
+			mes "1 Grain, 10 Spawn, and";
+			mes "1 Squid Ink.";
+		}
+
+		if(first_cooking == 2){
+			set @item1, 518;
+			set @item1a, 1;
+			set @item2, 514;
+			set @item2a, 2;
+			set @item3, 501;
+			set @item3a, 1;
+			set @food1, 12061;
+
+			mes "1 Honey, 2 Grapes, and";
+			mes "1 Red Potion.";
+		}
+
+		if(first_cooking == 3){
+			set @item1, 514;
+			set @item1a, 3;
+			set @item2, 501;
+			set @item2a, 2;
+			set @item3, 0;
+			set @item3a, 0;
+			set @food1, 12046;
+
+			mes "3 Grapes and 2 Red Potions.";
+		}
+
+		if(first_cooking == 4){
+			set @item1, 942;
+			set @item1a, 5;
+			set @item2, 7031;
+			set @item2a, 1;
+			set @item3, 7457;
+			set @item3a, 1;
+			set @food1, 12066;
+
+			mes "5 Yoyo Tails, 1 Old Frying Pan, and";
+			mes "1 Cooking Oil.";
+		}
+
+		if(first_cooking == 5){
+			set @item1, 940;
+			set @item1a, 5;
+			set @item2, 7031;
+			set @item2a, 1;
+			set @item3, 7457;
+			set @item3a, 1;
+			set @food1, 12041;
+
+			mes "5 Grasshopper Legs, 1 Old Frying Pan, and";
+			mes "1 Cooking Oil.";
+		}
+
+		if(first_cooking == 6){
+			set @item1, 960;
+			set @item1a, 10;
+			set @item2, 511;
+			set @item2a, 10;
+			set @item3, 503;
+			set @item3a, 1;
+			set @food1, 12051;
+
+			mes "10 Nippers, 10 Green Herbs, and";
+			mes "1 Yellow Potion.";
+		}
+
+		if(countitem(@item1) < @item1a || countitem(@item2) < @item2a || countitem(@item3) < @item3a) close;
+
+		delitem @item1, @item1a;
+		delitem @item2, @item2a;
+		delitem @item3, @item3a;
+		next;
+		set cooking, 2;
+
+		mes "[Sharle]";
+		mes "Great Job!";
+		mes "You can now purchase";
+		mes "Outdoor Cooking Sets.";
+		getitem @food1, 1;
+		set first_cooking, 0;
+		close;
+
+	L_Cooking_7:
+		mes "Would you like to check";
+		mes "out my ^800000Cookbooks^000000?";
+		next;
+		menu "Yes",-, "No", M_End2, "Return Book", M_ReturnBook;
+
+		mes "[Sharle]";
+		if(cook_book){
+			mes "You'll have to give me back the";
+			mes "first book I loaned you if you";
+			mes "would like to check out a new book.";
+			mes "Would you like to trade books?";
+			next;
+			menu "Yes",-, "No",M_End2;
+
+			if(countitem(cook_book)==0){
+				mes "What? You don't have the book I loaned you?";
+				mes "It was a ^800000"+getitemname(cook_book)+"^000000.";
+				emotion e_sry;
+				close;
+			} 
+		}
+		mes "[Sharle]";
+		mes "Which book would you like?";
+		next;
+		menu "^800000Lv 1 Cookbook",b_1, "Lv 2 Cookbook",b_2, "Lv 3 Cookbook",b_3, "Lv 4 Cookbook",b_4, "Lv 5 Cookbook",b_5, "^000000Leave",M_End2;
+
+	b_1:
+		mes "[Sharle]";
+		mes "You will need:";
+		mes "10 Pumpkins";
+		next;
+		if(countitem(535) < 10) goto L_No_Items;//Items: Pumpkin,
+		delitem 535, 10;//Items: Pumpkin,
+		set @checkout, 7472;
+		mes "And I see you have";
+		mes "what you need!";
+		next;
+		goto b_trade;
+
+	b_2:
+		mes "[Sharle]";
+		mes "You will need:";
+		mes "5 well-baked cookies";
+		next;
+		if(countitem(538) < 5) goto L_No_Items;//Items: Well-baked Cookie,
+		delitem 538, 5;//Items: Well-baked Cookie,
+		set @checkout, 7473;
+		mes "And I see you have";
+		mes "what you need!";
+		next;
+		goto b_trade;
+
+	b_3:
+		mes "[Sharle]";
+		mes "You will need:";
+		mes "5 Sushi";
+		next;
+		if(countitem(551) < 5) goto L_No_Items;//Items: Sushi,
+		delitem 551, 5;//Items: Sushi,
+		set @checkout, 7474;
+		mes "And I see you have";
+		mes "what you need!";
+		next;
+		goto b_trade;
+
+	b_4:
+		mes "[Sharle]";
+		mes "You will need:";
+		mes "5 Dumplings";
+		next;
+		if(countitem(553) < 5) goto L_No_Items;//Items: Dumpling,
+		delitem 553, 5;//Items: Dumpling,
+		set @checkout, 7475;
+		mes "And I see you have";
+		mes "what you need!";
+		next;
+		goto b_trade;
+
+	b_5:
+		mes "[Sharle]";
+		mes "You will need:";
+		mes "10 shoots";
+		next;
+		if(countitem(711) < 10) goto L_No_Items;//Items: Shoot,
+		delitem 711, 10;//Items: Shoot,
+		set @checkout, 7476;
+		mes "And I see you have";
+		mes "what you need!";
+		next;
+		goto b_trade;
+
+	b_trade:
+		mes "[Sharle]";
+		mes "If you find you need a new book,";
+		mes "you're welcome to come back and";
+		mes "trade.";
+
+		if(cook_book){
+			if(countitem(cook_book)==0){
+				mes "What? You don't have the book I loaned you?";
+				mes "It was a ^800000"+getitemname(cook_book)+"^000000.";
+				emotion e_sry;
+				close;
+			} 
+			delitem cook_book,1;
+			mes "Have fun, and good luck!";
+		} else {
+			mes "Good luck! I hope you learn a lot!";
+		}
+		getitem @checkout,1;
+		set cook_book, @checkout;
+		close;
+
+	M_End:
+		mes "[Sharle]";
+		mes "That's fine with me, come back";
+		mes "when you want to cook.";
+		close;
+
+	M_End2:
+		mes "[Sharle]";
+		mes "Well, I'm here whenever you'd like";
+		mes "to learn. Just make sure you're";
+		mes "ready.";
+		close;
+
+	M_ReturnBook:
+		if(cook_book == 0){
+			mes "[Sharle]";
+			mes "You haven't borrowed any books.";
+			emotion e_hmm;
+			close;
+		}
+
+		if(countitem(cook_book)==0){
+			mes "What? You don't have the book I loaned you?";
+			mes "It was a ^800000"+getitemname(cook_book)+"^000000.";
+			emotion e_sry;
+			close;
+		} 
+		delitem cook_book,1;
+		set cook_book, 0;
+		mes "[Sharle]";
+		mes "Returning the book already?";
+		mes "did you learn what you wanted";
+		mes "to know?";
+		emotion e_what;
+		close;
+
+	L_No_Items:
+		mes "[Sharle]";
+		mes "So come back when";
+		mes "you have the items";
+		mes "that you need.";
+		close;
+
+	L_No_Uniform:
+		mes "How dare you disrespect me";
+		mes "by showing up out of uniform.";
+		mes "Come back when you have your";
+		mes "uniform on.";
+		emotion e_bzz;
+		close;	
+}

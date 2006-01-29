@@ -1,0 +1,123 @@
+//===== eAthena Script =======================================
+//= Orc Hero Helm Quest
+//===== By: ================================================== 
+//= DracoRPG (1.0)
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= Any eAthena Version with gmcommand function
+//===== Description: ========================================= 
+//= Orc Hero Helm quest
+//===== Additional Comments: ================================= 
+//= Only needed items and sprite/name are official
+//= 1.1 fixed items exploit [Lupus]
+//============================================================
+
+gef_fild10.gat,131,274,4	script	Orc Warrior	1023,{
+	if(ORC_HERO_HELM_Q==1) goto Q1;
+	if(ORC_HERO_HELM_Q==2) goto Q2;
+	if(ORC_HERO_HELM_Q==3) goto Q3;
+	if(ORC_HERO_HELM_Q==4) goto Q4;
+	emotion 6;
+	mes "[Orc Warrior]";
+	mes "What does an human here? Cheeit!";
+	mes "Here are only true Orc Warriors! Get out of our village!";
+	next;
+	menu "Hey, I'm as strong as you are!",Q0,"Leave before he gets angry...",-;
+	close;
+Q0:
+	mes "[Orc Warrior]";
+	mes "Humph! As strong as an orc? I dun think so!";
+	mes "If you're able to prove it to me... I'll reward ya with the hat of the true warriors...";
+	mes "The ^ff0000Orc Hero Helm^000000! Cheeit!";
+	next;
+	mes "[Orc Warrior]";
+	mes "But you'll need to show me your strength and courage before.";
+	mes "First bring me back 10,000 Jellopies to prove your determination! Cheeit!";
+	set ORC_HERO_HELM_Q,1;
+	set ORC_HERO_HELM_Q2,0;
+	close;
+Q1:
+	mes "[Orc Warrior]";
+	mes "Then, ya're back! Let's see whether you've got what I asked ya to find!";
+	next;
+	mes "[Orc Warrior]";
+	set @temp,countitem(909);
+	if(ORC_HERO_HELM_Q2+@temp>10000) set @temp,10000-ORC_HERO_HELM_Q2;
+	set ORC_HERO_HELM_Q2,ORC_HERO_HELM_Q2+@temp;
+	delitem 909,@temp;
+	if(ORC_HERO_HELM_Q2==0) goto Q1_noitem;
+	if(ORC_HERO_HELM_Q2==10000) goto Q1_allitem;
+	mes "Ya've brought me " + @temp + " Jellopies this time. This makes a total of " + ORC_HERO_HELM_Q2 + " Jellopies. Remember, I want 10,000 of 'em!";
+	close;
+Q1_allitem:
+	mes "I see that ya've more courage that I imagined. Cheeit!";
+	mes "But it's not finished! Now I want to test your strength. Go and fight our warriors, and get 100 Orcish Vouchers from 'em!";
+	set ORC_HERO_HELM_Q,2;
+	set ORC_HERO_HELM_Q2,0;
+	close;
+Q1_noitem:
+	emotion 6;
+	mes "Cheeit! I told ya to bring me back 10,000 Jellopies, and you don't have even one!";
+	close;
+Q2:
+	mes "[Orc Warrior]";
+	if(countitem(931)<100) goto Q2_noitem;
+	delitem 931,100;
+	mes "Ya managed to get those Orcish Vouchers? Cheeit! Maybe I didn't ask ya to bring me enough of 'em!";
+	mes "Go and find 10,000 more Orcish Vouchers!";
+	set ORC_HERO_HELM_Q,3;
+	set ORC_HERO_HELM_Q2,0;
+	close;
+Q2_noitem:
+	emotion 6;
+	mes "Ya couldn't win against my brother warriors ? Stay away until ya find those 100 Orcish Vouchers! Cheeit!";
+	close;
+Q3:
+	mes "[Orc Warrior]";
+	set @temp,countitem(931);
+	if(ORC_HERO_HELM_Q2+@temp>10000) set @temp,10000-ORC_HERO_HELM_Q2;
+	set ORC_HERO_HELM_Q2,ORC_HERO_HELM_Q2+@temp;
+	delitem 931,@temp;
+	if(ORC_HERO_HELM_Q2==0) goto Q3_noitem;
+	if(ORC_HERO_HELM_Q2==10000) goto Q3_allitem;
+	mes "Good, ya've come with " + @temp + " Orcish Vouchers. With all those ya brought previously, it goes up to " + ORC_HERO_HELM_Q2 + " Orcish Vouchers on the 10,000 I want!";
+	close;
+Q3_allitem:
+	mes "Humph! Ya're really a powerful warrior! Maybe ya deserve to wear the Orc Hero Helm.";
+	mes "For the moment, take those items. Keep 'em well, ya'll need 'em to make your helm!";
+	set ORC_HERO_HELM_Q,4;
+	set ORC_HERO_HELM_Q2,0;
+	getitem 2299,1;
+	getitem 968,1;
+	next;
+	mes "[Orc Warrior]";
+	mes "Now, ya'll have to fight our best warlords and heroes! Bring me 100 Heroic Emblems and I'll give ya your helm.";
+	close;
+Q3_noitem:
+	emotion 6;
+	mes "Bringing me back at least one of those 10,000 Orcish Vouchers is too hard for ya, poor human? Go out of there, then! Cheeit!";
+	close;
+Q4:
+	mes "[Orc Warrior]";
+	mes "Have ya fighted the best warriors among us, and brought me 100 Heroic Emblems as a token?";
+	mes "And don't forget the Orc Helm I gave ya, I need it too. Cheeit!";
+	next;
+	mes "[Orc Warrior]";
+	if(countitem(968)<100 || countitem(2299)<1) goto Q4_noitem;
+	delitem 968,100;
+	delitem 2299,1;
+	mes "Ya got all of them! Cheeit! Ya're a true warrior, one of our heroes!";
+	mes "I'll make your Orc Hero Helm to prove your strength and valour!";
+	next;
+	mes "[Orc Warrior]";
+	getnameditem 5094,strcharinfo(0);
+	set ORC_HERO_HELM_Q,0;
+	logmes "Quest: Got Orc Hero Helm";
+	mes "Here ya are! Wear it and be proud to be one of the mightiest Orc Heroes! Cheeit!";
+	close;
+Q4_noitem:
+	emotion 6;
+	mes "No? Ya miss items... I was sure that ya weren't really a hero!";
+	close;
+}

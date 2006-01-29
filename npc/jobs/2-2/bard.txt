@@ -1,0 +1,476 @@
+//===== eAthena Script ======================================= 
+//= Bard Job Quest
+//===== By: ==================================================
+//= Muad_Dib(The Prometheus Project), Lupus
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= eAthena Final
+//===== Description: ========================================= 
+//= Bard job quest based off a Prometheus Project script 
+//= and other sources for clarity
+//===== Additional Comments: =================================
+// 07/06/05 : Added 1st Version. [Muad_Dib]
+// Converted to eAthena format by Dr.Evil
+// Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0 
+// 1.1 Optimized, changed some stuff, fixed some bugs [Lupus]
+// 1.1a minor song test fix [Lupus]
+// 1.2 Fixed wrong item ID, added missing commands [Lupus]
+// 1.3 Updated flower sub-quest according to official [Lupus]
+// 1.4 Changed priority for the gifts. Now you can win the 1st
+// prize, too. Added Izidor flower [Lupus]
+//============================================================
+
+
+comodo.gat,226,123,5	script	Wandering Bard	741,{
+	callfunc "F_BlockHigh",27,"High Archer",43,"Clown","Wandering Bard";
+	
+	if (BARD_Q == 1) goto L_BQ1;
+	if (BARD_Q == 2) goto L_BQ2;
+	if (BARD_Q == 3) goto L_SINGING;
+	if (BARD_Q == 4) goto L_BQ4;
+	if (BaseJob == Job_Bard) goto L_CLOSE;
+	if (BaseJob == Job_Archer && Sex == 1) goto L_ARCHER;
+
+	mes "[Lalo]";
+	mes "It's a fine day to sing eh.";
+	close;
+
+L_ARCHER:
+	mes "[Lalo]";
+	mes "Hi! Delightful Archer.";
+	mes "How can a wanderer like me help you?";
+	next;
+	menu "You have a nice voice.",-,"Could you sing for me, please?",M_1,"Nothing",M_NOTHING;
+
+	mes "[Lalo]";
+	mes "Hoho, your voice is rather nice as well?";
+	mes "Ever think about singing?";
+	next;
+	menu "Of course!",-,"I can't quite possibly...",M_ICANT;
+
+	mes "[Lalo]";
+	mes "Haha, nice attitude. You have to be";
+	mes "like that to become a Bard.";
+	mes "I'll help you become a Bard then.";
+	next;
+	if(JobLevel >= 40) goto L_GONOW;
+	mes "[Lalo]";
+	mes "But before that... you need to be";
+	mes "at least base 40 to be a Bard.";
+	next;
+	mes "[Lalo]";
+	mes "Just come back again ok.";
+	close;
+
+L_GONOW:
+	set JBLVL, JobLevel; // used to determine what item to get at the end
+	mes "[Lalo]";
+	mes "But before that... do you think you can bring me a Flower?";
+	mes "I need to smell the scent of a";
+	mes "Flower to feel like teaching.";
+	next;
+	mes "[Lalo]"; 
+	mes "It doesn't really matter which Flower, but try to bring one that I like.";
+	mes "And don't just buy any random Flower, Ok?";
+	set BARD_Q,1;
+	close;
+
+M_ICANT:
+	mes "[Lalo]";
+	mes "Haha, what a timid one.";
+	mes "Don't think so little of yourself.";
+	next;
+	mes "[Lalo]";
+	mes "You have plenty of talent.";
+	mes "Come again if you change your mind.";
+	close;
+
+M_1:
+	mes "[Lalo]";
+	mes "A song... let's see.";
+	mes "Ok, I got one...";
+	next;
+	mes "[Lalo]";
+	mes "I'll sing... Drums of War.";
+	mes "*ehem... *cough... gag... mememememe...";
+	mes "1, 2, 3, 4...";
+	next;
+	mes "[Lalo]";
+	mes "The sound of the horses galloping over the horizon";
+	mes "The dust that covers the distant sun.";
+	mes "Where thousands of eyes open in the night sky";
+	mes "The castle's fire will burn with power.";
+	next;
+	mes "[Lalo]";
+	mes "I can hear... the beating of my heart.";
+	mes "I can feel... the blood rushing through my veins.";
+	mes "... and the weight of my armor.";
+	mes "I can see... my enemies.";
+	next;
+	mes "[Lalo]";
+	mes "Louder, louder louder...";
+	mes "Give strength to the warriors!";
+	mes "Higher, higher, higher...";
+	mes "This day will never come again!";
+	next;
+	mes "[Lalo]";
+	mes "Shake the sky and roar the through the land.";
+	mes "Make my heart pound again!";
+	mes "Let the trumpets sound, and castle walls ring.";
+	mes "This moment will never come again!";
+	next;
+	mes "[Lalo]";
+	mes "Hmm.. that's always a good song to sing.";
+	mes "How it was it? Dont you think it's a nice song?";
+	next;
+	menu "Yes, it was really nice",-,"No, not really...",M_NO;
+
+	mes "[Lalo]";
+	mes "Thanks! If you enjoyed my song, it";
+	mes "makes me happy, too.";
+	next;
+	mes "[Lalo]";
+	mes "It would be nice if more people";
+	mes "went around and sang...";
+	mes "Well, its quite ok as it is now...";
+	mes "hmmhmmm.";
+	close;
+
+M_NO:
+	mes "[Lalo]";
+	mes "Hmmm... Did I loose my senses I'll ";
+	mes "have to try harder.";
+	mes "Anyways... Thanks for listening.";
+	close;
+
+M_NOTHING:
+	mes "[Lalo]";
+	mes "Oh not requesting a song when you";
+	mes "run into a Bard isn't very polite.";
+	mes "Well...can't help it since you";
+	mes "look like you're in a hurry";
+	mes "anyways.";
+	next;
+	mes "[Lalo]";
+	mes "Hunting is good... but you can't";
+	mes "forget to relax once in a while.";
+	mes "Youth is short and wont come again";
+	mes "once it passes by..";
+	close;
+
+L_BQ1:
+	mes "[Lalo]";
+	mes "Welcome! Archer friend.";
+	mes "Did you bring a Flower? Let me see.";
+	next;
+	if(countitem(1032) >= 1) goto L_UGLYFLOWER; //Items: Maneater_Blossom,
+	if(countitem(703) >= 1) goto L_FLOWER1; //Items: Hinalle,
+L_NEXT2:
+	if(countitem(708) >= 1) goto L_FLOWER2; //Items: Ment,
+L_NEXT3:
+	if(countitem(629) >= 1) goto L_FLOWER3; //Items: Singing_Flower,
+L_NEXT4:
+	if(countitem(710) >= 1) goto L_FLOWER4; //Items: Illusion_Flower,
+L_NEXT5:
+	if(countitem(748) >= 1) goto L_FLOWER5; //Items: Witherless_Rose,
+L_NEXT6:
+	if(countitem(709) >= 1) goto L_FLOWER6; //Item: Izidor
+L_NEXT7:
+	if(countitem(712) < 1) goto M_NOTHAVE; //Item: Flower//Items: Flower,
+
+	mes "[Lalo]";
+	mes "Eh? This is just a normal flower.";
+	mes "I like it... but it's not enough.";
+	mes "Please bring me a different flower.";
+	close;
+
+L_UGLYFLOWER:
+	mes "[Lalo]";
+	mes "What is it?! Please, back off and put it away from my face.";
+	mes "I do really hate maneater blossoms!!!";
+	mes "THEY ARE SO UGLY!";
+	emotion 23;
+	close;
+
+M_NOTHAVE:
+	mes "[Lalo]";
+	mes "Well suit your self.";
+	mes "I dont like that flower anyway.";
+	close;
+
+L_FLOWER1:
+	mes "[Lalo]";
+	mes "Can I have that Hinalle?";
+	next;
+	menu "Yes",-,"No",L_NEXT2;
+	if(countitem(703) < 1) goto M_NOTHAVE;
+	delitem 703,1;	//Items: Hinalle,
+	goto L_GOOD;
+
+L_FLOWER2:
+	mes "[Lalo]";
+	mes "Can I have that Ment?";
+	next;
+	menu "Yes",-,"No",L_NEXT3;
+	if(countitem(708) < 1) goto M_NOTHAVE;
+	delitem 708,1;	//Items: Ment,
+	goto L_GOOD;
+
+L_FLOWER3:
+	mes "[Lalo]";
+	mes "Can I have that Singing Flower?";
+	next;
+	menu "Yes",-,"No",L_NEXT4;
+	if(countitem(629) < 1) goto M_NOTHAVE;
+	delitem 629,1;	//Items: Singing_Flower,
+	goto L_GOOD;
+
+L_FLOWER4:
+	mes "[Lalo]";
+	mes "Can I have that Illusion Flower?";
+	next;
+	menu "Yes",-,"No",L_NEXT5;
+	if(countitem(710) < 1) goto M_NOTHAVE;
+	delitem 710,1;	//Items: Illusion_Flower,
+	goto L_GOOD;
+
+L_FLOWER5:
+	mes "[Lalo]";
+	mes "Can I have that Witherless Rose?";
+	next;
+	menu "Yes",-,"No",L_NEXT6;
+	if(countitem(748) < 1) goto M_NOTHAVE;
+	delitem 748,1;	//Items: Witherless_Rose,
+	goto L_GOOD;
+
+L_FLOWER6:
+	mes "[Lalo]";
+	mes "Can I have that Izidor?";
+	next;
+	menu "Yes",-,"No",L_NEXT7;
+	if(countitem(709) < 1) goto M_NOTHAVE;
+	delitem 709,1;	//Items: Izidor
+
+L_GOOD:
+	mes "[Lalo]";
+	mes "It doesn't have a scent but it's a";
+	mes "very moderate cute flower.";
+	mes "The leaves gave me strength when I";
+	mes "used to fall.";
+	mes "I really like this flower, thank you.";
+	next;
+	mes "[Lalo]";
+	mes "As I promised, I'll help you become a Bard.";
+	mes "But it's not easy my friend. Haha!";
+	next;
+	mes "[Lalo]";
+	mes "It is important to get to know";
+	mes "lot of people to learn how to sing.";
+	mes "You must also keep up with all the";
+	mes "things going on different villages...";
+	next;
+	mes "[Lalo]";
+	mes "There's a talking snowman in a town called Lutie.";
+	mes "Go there and bring back a present.";
+	next;
+	mes "[Lalo]";
+	mes "If you become friends with Jack";
+	mes "Frost, you will receive something.";
+	mes "And also talk to townspeople";
+	mes "while you're at it...";
+	set BARD_Q,2;
+	close;
+L_BQ2:
+	if (xmas_npc == 11) goto L_BQ3; //this var is set in LUTIE.TXT
+	mes "[Lalo]";
+	mes "I'm waiting for the good news.";
+	mes "For now go to Lutie and make";
+	mes "friends with Jack Frost.";
+	close;
+L_BQ3:
+	mes "[Lalo]";
+	mes "How was the trip? Did you meet a lot of people?";
+	mes "You should have more important than a gift.";
+	set BARD_Q,3;
+	next;
+L_SINGING:
+	mes "[Lalo]";
+	mes "Then, do you want to try singing...?";
+	mes "I'll sing a short melody...";
+	mes "and you try after.";
+	next;
+	mes "[Lalo]";
+	mes "Here I go.";
+	mes "Ehem *clears throat*";
+	mes "1, 2, 3, 4";
+	next;
+	mes "[Lalo]";
+//this should text input
+	mes "All Gods never age.";
+	mes "The ever so beautiful Goddess";
+	mes "Eden,";
+	mes "Beatuful and graceful Goddess";
+	mes "Eden,";
+	mes "Odin's daugther-in-law and Bragis";
+	mes "wife";
+	mes "Her sweet apples in her basket,";
+	mes "All thanks to her sweet apples.";
+	
+	set @score,0;
+	next;
+	mes "[Lalo]";
+	mes "Now you try...";
+	next;
+	
+	menu "All Gods never age.",-,"All Gods never age?",M_S2,"All Gods never age,",M_S2,"Are Gods never age?",M_S2;
+	
+	set @score,@score+10;
+
+M_S2:
+	menu "The ever so beautiful Goddess,",M_S3,"The ever so beautiful Goddess.",M_S3,"The never beautiful Goddess.",M_S3,"The ever so beautiful Goddess",-;
+	
+	set @score,@score+10;
+
+M_S3:	
+	menu "Odins,",M_S4,"Odin.",M_S4,"Odin,",M_S4,"Eden,",-;
+	
+	set @score,@score+10;
+M_S4:
+	menu "Very beatuful Goddess",M_S5,"Beatuful and Graceful Goddess",M_S5,"Beatuful and graceful Goddess",-,"Beatuful and the graceful Goddess",M_S5;
+	
+	set @score,@score+10;
+M_S5:
+	menu "Eden.",M_S6,"Odins,",M_S6,"Eden,",-,"Edens,",M_S6;
+	
+	set @score,@score+10;
+M_S6:
+	menu "Brags daugther-in-law and Odin's",M_S7,"Brags and Odin's daugther-in-law",M_S7,"Odin's daugther-in-law and Bragis",-,"Odin's daugther-in-law and Brags",M_S7;
+	
+	set @score,@score+10;
+M_S7:
+	menu "whales",M_S8,"wifes",M_S8,"wife",-,"waffels",M_S8;
+	
+	set @score,@score+10;
+M_S8:
+	menu "Her sweet apple in her basket,",M_S9,"Her sweet apple in her basket",M_S9,"Her sweet apples in her basket,",-;
+	
+	set @score,@score+10;
+M_S9:
+	menu "All thanks to her sweet apple!",M_S10,"All thanks to her sweet apples.",-,"All thanks to her sweet apples!",M_S10;
+	
+	set @score,@score+10;
+M_S10:
+	next;
+	if(@score >= 90) goto L_GOODWORK;
+	mes "[Lalo]";
+	mes "Oy, You got the lyrics wrong!";
+	mes "Can't you even sing along...?";
+	next;
+	mes "[Lalo]";
+	mes "Your pronunciation is very unclear.";
+	mes "Do a better job next time.";
+	close;
+	
+L_GOODWORK:
+	set BARD_Q,4;
+	mes "[Lalo]";
+	mes "Wonderful! Finish it in one try!";
+	mes "You can become a great Bard.";
+	next;
+	mes "[Lalo]";
+	mes "Do you want to just change jobs now?";
+	mes "Or do you want a present?";
+	next;
+	menu "Just change my job please.",-,"I'd be thankful for a present.",M_PRESENTPLZ;
+	
+	if(skillpoint != 0) goto L_SKILLSLEFT;
+	goto L_CHANGE;
+
+M_PRESENTPLZ:
+	mes "[Lalo]";
+	mes "Hmmm...very well, bring some trunks.";
+	mes "It doesn't matter what kind, as";
+	mes "long they are ^FF000060 of the same kind^000000...";
+	next;
+	mes "[Lalo]";
+	mes "I will give you a gift once you";
+	mes "bring them have a safe trip.";
+	close;
+
+L_SKILLSLEFT:
+	mes "[Lalo]";
+	mes "Hmmm... you seems to have some skill points left.";
+	mes "Use them all and come back to me again.";
+	close;
+
+L_BQ4:
+	set @gift,0;
+	if (countitem(1019) >= 60) set @gift,5;	// Trunk//Items: Trunk,
+	if (countitem(1068) >= 60) set @gift,4;	// Barren_Trunk//Items: Barren_Trunk,
+	if (countitem(1067) >= 60) set @gift,3;	// Solid_Trunk//Items: Solid_Trunk,
+	if (countitem(1066) >= 60) set @gift,2;	// Fine-grained_Trunk//Items: Fine-grained_Trunk,
+	if (JBLVL == 50 && countitem(1066) >=60) set @gift,1;	// Fine-grained_Trunk//Items: Fine-grained_Trunk,
+
+	if (@gift!=0) goto L_CHANGE;
+
+	mes "[Lalo]";
+	mes "Mmm? Seems like you haven't prepared all trunks yet?";
+	mes "Do you want to just change jobs anyways?";	
+	next;
+	menu "Yes",L_CHANGE,"Wait, not yet",-;
+
+	mes "[Lalo]";
+	mes "Ok I'll just wait here.";
+	close;
+
+L_CHANGE:
+	if(skillpoint != 0) goto L_SKILLSLEFT;
+	callfunc "Job_Change",Job_Bard;
+	callfunc "F_ClearJobVar";
+
+	mes "[Lalo]";
+	if (@gift==0) goto L_NOGIFT;
+
+	mes "Good job. I will make you a";
+	mes "job change with this souvenir.";
+	mes "Wait just a moment.";
+	next;
+	mes "Scrape Scrape Tang Tang";
+	mes "Squeak Squeak Scratch Scratch";
+	next;
+
+	switch(@gift){
+		case 1:
+			delitem 1066,60;	//Fine-grained_Trunk + 50 JobLvl --> Harp [2]
+			getitem 1910,1;
+			break;
+		case 2:
+			delitem 1066,60;	//Fine-grained_Trunk --> Lute [2]
+			getitem 1905,1;
+			break;
+		case 3:
+			delitem 1067,60;	//Solid_Trunk --> Mandolin [2]
+			getitem 1903,1;
+			break;
+		case 4:
+			delitem 1068,60;	//Barren_Trunk --> Mandolin [2]
+			getitem 1903,1;
+			break;
+		case 5:
+			delitem 1019,60;	//Trunk --> Violin [3]
+			getitem 1901,1;
+	}
+
+	emotion e_grat;
+	mes "[Lalo]";
+	mes "Here you go, a souvenir. It is";
+	mes "useful when you sing.";
+L_NOGIFT:
+	mes "Hope you sing happy songs.";
+	next;
+L_CLOSE:
+	mes "[Lalo]";
+	mes "See you next time!";
+	close;
+}

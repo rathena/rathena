@@ -1,0 +1,11 @@
+// item id,sprite id
+// Client will use sprite ID to display particular item.
+// If 0 is used then item will be disabled.
+2240,2241 //Beard - Grampa Beard
+
+//Treasure Hunters Quest Items
+//use these aliases if your game client doesn't support them normally
+//7950,7021
+//7951,7042
+//1998,1250
+//1999,1472

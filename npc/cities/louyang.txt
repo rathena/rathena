@@ -1,0 +1,1728 @@
+//===== eAthena Script ======================================= 
+//= Louyang City NPC's 
+//===== By: ================================================== 
+//= Vidar (1.0)
+//= Mass Zero (1.1)
+//= Dino9021, roughly translated by Celest (1.2)
+//= Mass Zero (1.3)
+//= MasterOfMuppets (2.0)
+//===== Current Version: ===================================== 
+//= 2.2
+//===== Compatible With: ===================================== 
+//= Any eAthena Version
+//===== Description: ========================================= 
+//= Official NPC's for Louyang city.
+//===== Additional Comments: ================================= 
+//= Originally made for Vidar
+//= 1.2 - Added official warp NPC's
+//= 1.3 - Fixed gramatical errors. (Like wtf's with the weird
+//	  texts celest? xD)
+//= 2.0 - Completely rewrote the current scripts based on iRO.
+//        Added the 'Shouting Quest' and the 'Medicine Quest'
+//= 2.1 Optimized, made quest vars unique [Lupus]
+//= 2.1a minor fix, 2.1b Fixed Typo’s [Nexon]
+//= 2.2 Fixed exploits [Lupus]
+//= 2.2a Updated the color codes a little and fixed the shouting quest
+//=	 to broadcast green text.
+//= 2.2b A small fix to the shout quest npc in louyang field not warping you
+//=	 back up to the tower if you died or teleported out of there. [MasterOfMuppets]
+//= 2.3 A small fix, the code is so messy I can't believe I scripted it >.< [MasterOfMuppets]
+//============================================================
+
+alberta.gat,245,45,4	script	Girl	815,{
+	mes "[Girl]";
+	mes "La la la la~";
+	mes "I feel so good today~";
+	mes "I'm in the mood to go";
+	mes "on a picnic somewhere~";
+	mes "La la la la~";
+	next;
+	menu "About Louyang.",-,"Go to Louyang.",M_GOTO,"Cancel.",M_CANCEL;
+
+	mes "[Girl]";
+	mes "Oh, are you";
+	mes "Interested in Louyang?";
+	mes "It's a nice place to";
+	mes "visit for travelers.";
+	next;
+	mes "[Girl]";
+	mes "Louyang has a long history";
+	mes "with stories of ancient magic and warriors. It's also rumored that many evil beasts roam the Louyang area";
+	next;
+	mes "[Girl]";
+	mes "You can find cure-all medicines, mysterious occurrences, and martial artists all in one place!";
+	next;
+	mes "[Girl]";
+	mes "I used to train in the martial arts every morning back when I was in Louyang. I might not look like it, but I'm pretty strong!";
+	next;
+	mes "[Girl]";
+	mes "If you want to visit";
+	mes "Louyang, feel free to";
+	mes "tell me. Just give me";
+	mes "some Zeny and we'll go~";
+	close;
+
+M_GOTO:
+	mes "[Girl]";
+	mes "I'll guide you to";
+	mes "Louyang right away.";
+	mes "For my service, I am";
+	mes "accepting 10,000 zeny";
+	next;
+	mes "[Girl]";
+	mes "So, are you ready?";
+	next;
+	menu "Sure",-,"Cancel",M_CANCEL2;
+
+	if(Zeny < 10000) goto L_NOZENY;
+	mes "[Girl]";
+	mes "Okay~";
+	mes "Ready!";
+	mes "Have fun!";
+	close2;
+	set Zeny,Zeny-10000;
+	warp "lou_fild01.gat",190,101;
+	end;
+
+L_NOZENY:
+	mes "[Girl]";
+	mes "...";
+	mes "You don't seem";
+	mes "to have 10,100 zeny...";
+	mes "Go get some money first!";
+	close;
+
+M_CANCEL:
+	mes "[Girl]";
+	mes "Oh...";
+	mes "Have a good day!";
+	close;
+
+M_CANCEL2:
+	mes "[Girl]";
+	mes "Oh...";
+	mes "It's so disappointing to hear you say that.";
+	mes "Well, have a good day!";
+	close;
+}
+
+lou_fild01.gat,190,100,1	script	Girl	815,{
+	mes "[Girl]";
+	mes "You'd like to go back to Alberta?";
+	next;
+	menu "Go back to Alberta.",-,"Cancel.",M_CANCEL;
+
+	mes "[Girl]";
+	mes "I hope to";
+	mes "see you again!";
+	mes "Bye bye!";
+	close2;
+	warp "alberta.gat",235,45;
+	end;
+
+M_CANCEL:
+	mes "[Girl]";
+	mes "If you like this area, why don't you stay and enjoy the food and the sights!";
+	next;
+	mes "[Girl]";
+	mes "And by sights...";
+	mes "I mean girls!";
+	mes "Tee hee~";
+	close;
+}
+
+louyang.gat,224,104,4	script	Representative	818,{
+	mes "[Representative]";
+	mes "Welcome to Louyang,";
+	mes "an ancient land with";
+	mes "a history full of tales";
+	mes "of bravery.";
+	next;
+	mes "[Representative]";
+	mes "We now provide an ocean lane to accommodate foreign travelers and intercultural exchange from which all can benefit.";
+	next;	
+	mes "[Representative]";
+	mes "Louyang is famous for it's elaborate history, as well as specialties that are unique to this nation. Please take your time and enjoy your stay.";
+	next;
+	menu "Ask Building Locations.",-,"Remove all marks from mini-map.",M_REMOVE,"Cancel",M_CANCEL;
+	
+	mes "[Representative]";
+	mes "Where would you like to go?";
+	menu "Dragon castle",-,"Doctor's Office",M_DOC,"The City Hall",M_CHALL,"The Weapon Shop",M_WEP,"The Tool Shop",M_TOOL,"The Tavern",M_TAVERN;
+
+	mes "[Representative]";
+	mes "The Dragon Castle is located at ^FFCCFF+^000000.";
+	mes "It is where all the nobles reside,";
+	mes "including our lord.";
+	next;
+	viewpoint 1,218,252,1,0xFFCCFF;
+	mes "[Representative]";
+	mes "Since you're an outsider, I guess it would be appropriate for you to visit our lord first.";
+	close;
+
+M_DOC:
+	mes "[Representative]";
+	mes "We have a very skillful doctor";
+	mes "You can find her office at ^FFFF00+^000000.";
+	next;
+	viewpoint 1,263,93,2,0xFFFF00;
+	mes "[Representative]";
+	mes "It is said that there";
+	mes "is no disease she cannot cure.";
+	mes "Well, I can't guarantee if that's true or not.";
+	close;
+
+M_CHALL:
+	mes "[Representative]";
+	mes "We have a City Hall where the federal government operates.";
+	mes "It is located at ^AFAFAF+^000000.";
+	next;
+	viewpoint 1,310,79,3,0xAFAFAF;
+	mes "[Representative]";
+	mes "If you have any problems, you should talk with the employees in City Hall.";
+	close;
+
+M_WEP:
+	mes "[Representative]";
+	mes "The Weapon Shop is located at ^00FF00+^000000.";
+	next;
+	viewpoint 1,145,175,4,0x00FF00;
+	mes "[Representative]";
+	mes "You will see marvelous weapons forged by the well-experienced blacksmiths of Louyang.";
+	close;
+
+M_TOOL:
+	mes "[Representative]";
+	mes "The Tool Shop is located at ^0000FF+^000000.";
+	next;
+	viewpoint 1,136,97,5,0x0000FF;
+	mes "[Representative]";
+	mes "Knowing your enemy is half the battle!";
+	mes "It's also safer to prepare yourself than the be sorry later. Why don't you go check their supplies?";
+	close;
+
+M_TAVERN:
+	mes "[Representative]";
+	mes "When you get tired during your trip, I suggest that you visit the Tavern. It's located at ^00FF00+^000000.";
+	next;
+	viewpoint 1,279,168,6,0x00FF00;
+	close;
+
+M_REMOVE:
+	viewpoint 2,218,252,1,0xFFCCFF;
+	viewpoint 2,263,93,2,0xFFFF00;
+	viewpoint 2,310,79,3,0xAFAFAF;
+	viewpoint 2,145,175,4,0x00FF00;
+	viewpoint 2,136,97,5,0x0000FF;
+	viewpoint 2,279,168,6,0x00FF00;
+	mes "[Representative]";
+	mes "Done! All the marks on your mini-map are erased. Feel free to ask me about building location whenever you need to.";
+	close;
+
+M_CANCEL:
+	mes "[Representative]";
+	mes "I understand that you want to explore Louyang and see the sights for youself. Alright then,";
+	mes "Take care!";
+	close;
+}
+
+louyang.gat,213,214,4	script	Soldier	825,{
+	mes "[Soldier]";
+	mes "Welcome to louyang, a city with a long and colorful history.";
+	next;
+	mes "[Soldier]";
+	mes "Recently we've developed an ocean lane to accommodate positive exchange with foreign nations.";
+	next;	
+	mes "[Soldier]";
+	mes "Louyang is well-known for various specialties in addition to its right. Here you can find many things unique to our land.";
+	next;
+	mes "[Soldier]";
+	mes "Please take your time and we invite you to enjoy your trip here in Louyang.";
+	next;	
+	menu "Ask Building Locations.",-,"Remove all marks from mini-map.",M_REMOVE,"Cancel",M_CANCEL;
+	
+	mes "[Soldier]";
+	mes "Where would you like to go?";
+	menu "Dragon castle",-,"Doctor's Office",M_DOC,"The City Hall",M_CHALL,"The Weapon Shop",M_WEP,"The Tool Shop",M_TOOL,"The Tavern",M_TAVERN;
+
+	mes "[Soldier]";
+	mes "The Dragon Castle is located at ^FFCCFF+^000000.";
+	mes "It is where all the nobles reside,";
+	mes "including our lord.";
+	next;
+	viewpoint 1,218,252,1,0xFFCCFF;
+	mes "[Soldier]";
+	mes "Since you're an outsider, I guess it would be appropriate for you to visit our lord first.";
+	close;
+
+M_DOC:
+	mes "[Soldier]";
+	mes "We have a very skillful doctor";
+	mes "You can find her office at ^FFFF00+^000000.";
+	next;
+	viewpoint 1,263,93,2,0xFFFF00;
+	mes "[Soldier]";
+	mes "It is said that there";
+	mes "is no disease she cannot cure.";
+	mes "Well, I can't guarantee if that's true or not.";
+	close;
+
+M_CHALL:
+	mes "[Soldier]";
+	mes "We have a City Hall where the federal government operates.";
+	mes "It is located at ^AFAFAF+^000000.";
+	next;
+	viewpoint 1,310,79,3,0xAFAFAF;
+	mes "[Soldier]";
+	mes "If you have any problems, you should talk with the employees in City Hall.";
+	close;
+
+M_WEP:
+	mes "[Soldier]";
+	mes "The Weapon Shop is located at ^00FF00+^000000.";
+	next;
+	viewpoint 1,145,175,4,0x00FF00;
+	mes "[Soldier]";
+	mes "You will see marvelous weapons forged by the well-experienced blacksmiths of Louyang.";
+	close;
+
+M_TOOL:
+	mes "[Soldier]";
+	mes "The Tool Shop is located at ^0000FF+^000000.";
+	next;
+	viewpoint 1,136,97,5,0x0000FF;
+	mes "[Soldier]";
+	mes "Knowing your enemy is half the battle!";
+	mes "It's also safer to prepare yourself than the be sorry later. Why don't you go check their supplies?";
+	close;
+
+M_TAVERN:
+	mes "[Soldier]";
+	mes "When you get tired during your trip, I suggest that you visit the Tavern. It's located at ^00FF00+^000000.";
+	next;
+	viewpoint 1,279,168,6,0x00FF00;
+	close;
+
+M_REMOVE:
+	viewpoint 2,218,252,1,0xFFCCFF;
+	viewpoint 2,263,93,2,0xFFFF00;
+	viewpoint 2,310,79,3,0xAFAFAF;
+	viewpoint 2,145,175,4,0x00FF00;
+	viewpoint 2,136,97,5,0x0000FF;
+	viewpoint 2,279,168,6,0x00FF00;
+	mes "[Soldier]";
+	mes "Done! All the marks on your mini-map are erased. Feel free to ask me about building location whenever you need to.";
+	close;
+
+M_CANCEL:
+	mes "[Soldier]";
+	mes "I guess it's fun sometimes to go exploring on your own. Take care.";
+	close;
+}
+
+lou_fild01.gat,195,177,4	script	Jiu Lian Bu	819,{
+	if(QL_SOUP2) goto L_DONE;
+	if(QL_SOUPQUEST)goto L_WHERE;
+	if(QL_GOTFAKESOUP) goto L_FAKE;
+	if(QL_GOTDRAGONSOUP) goto L_SOUP;
+	if(QL_ACCEPTSOUP) goto L_GORESTA;
+	mes "[Jiu Lian Bu]";
+	mes "Hey~";
+	mes "What's up?";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "I don't like hanging around too many people, so I came here. Listening to this strean really puts my mind to ease.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "No offense, but I'm upset";
+	mes "at the sheer number of tourists coming over to Louyang";
+	mes "Sure, I can understand that our town is attractive and has beautiful sights.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "But I just can't stand crowds of people. People gather like sheep to any place they hear is popular, and that really bugs me!";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Speaking of which, there's even";
+	mes "a place in Louyang that's just like";
+	mes "that. Man, I hate that restaurant!";
+	next;
+	menu "What restaurant?",-,"Ignore him.",M_IGNORE;
+
+	mes "[Jiu Lian Bu]";
+	mes "In the east side of Louyang, there's a restaurant built on a pond. It's been around for a long time, selling food for ridiculous prices!";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Oh sure, the food and flavors";
+	mes "there have a long history, but I";
+	mes "don't think that justifies how they";
+	mes "charge their patrons!";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "As a young man";
+	mes "who loves his town,";
+	mes "I can't let them manipulate my";
+	mes "people like that!";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "But everyone here already knows who I am, so I can't do anything! I've already had one too many, shall we say, 'incidents' with the people living here already.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "I've been caught for tagging walls, shoplifting, camming, stealing a few girlfriends... So yeah, I'm not exactly known as a sterling citizen.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Say, wait a minute. The local";
+	mes "people around here aren't too";
+	mes "familiar with you. Hmmm...";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Would you sneak into that restaurant and steal the ^3131FFDragon Soup Broth^000000 for me?";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "The Dragon Soup Broth is the";
+	mes "backbone for the restaurant";
+	mes "owner's secret recipe.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "But they've been cheating their";
+	mes "customers by watering that broth";
+	mes "down and selling it for a";
+	mes "ridiculous price! Serves them right";
+	mes "if their secrets were stolen!";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "If you can steal some of the broth,";
+	mes "I'll pay you back. Whaddaya say?";
+	next;
+	menu "I'll do it!",-,"No, stealing is wrong.",M_NO;
+
+	mes "[Jiu Lian Bu]";
+	mes "Great!";
+	mes "I knew you'd";
+	mes "see things my way!";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Okay, the restaurant is at the East side of Louyang. But you got to be careful. The workers there watch over that broth like freakin' hawks!";
+	set QL_ACCEPTSOUP,1;
+	close;
+
+M_NO:
+	mes "[Jiu Lian Bu]";
+	mes "Stealing?";
+	mes "You may have";
+	mes "a point there.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "But then, that restaurant has been doing that to their customers for years! So, technically. we'd just be stealing back.";
+	close;	
+
+M_IGNORE:
+	mes "[Jiu Lian Bu]";
+	mes "That join isn't even that great. I mean, it's so obvious that they rip off their customers! Dragon Soup?! More like... Dragon Crap Soup!";
+	close;
+
+L_GORESTA:
+	mes "[Jiu Lian Bu]";
+	mes "Huh...?";
+	mes "Whoa, I thought you were on you way to the restaurant. You better get a move on.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Alright then, pal. Make sure the";
+	mes "guys who work there don't catch you. Good luck~";
+	close;
+
+L_FAKE:
+	mes "[Jiu Lian Bu]";
+	mes "Wow! You made it!";
+	mes "Let me see...";
+	next;
+	mes "^445BA7Jiu Lian Bu takes a hearty sip of the broth you've managed to steal for him.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Ohhhh man....";
+	mes "This is so not Dragon Soup Broth. Sorry, but would you go and try to get it again?";
+	close;
+	set QL_GOTFAKESOUP,0;
+
+L_SOUP:
+	mes "[Jiu Lian Bu]";
+	mes "Wow! You made it!";
+	mes "Let me see...";
+	next;
+	mes "^445BA7Jiu Lian Bu takes a hearty sip of the broth you've managed to steal for him.";
+	next;	
+	mes "Ooooh. Ooh yeah.";
+	mes "This is the stuff.";
+	mes "Muhahahahahaha~!";
+	mes "This'll put the chef";
+	mes "in agony for a while!";
+	next;
+	set QL_GOTDRAGONSOUP,0;
+	set QL_ACCEPTSOUP,0;
+	set QL_SOUPQUEST,1;
+	mes "[Jiu Lian Bu]";
+	mes "Good job, chum! Heh heh heh, because you risked your neck for me, I'm gonna show you an awesome place! Just follow me~";
+	close2;
+	warp "lou_fild01.gat",180,171;
+	end;
+
+L_DONE:
+	mes "[Jiu Lian Bu]";
+	mes "Hey~";
+	mes "So how ya been, ya smooth criminal?";
+	mes "You want to visit that place again?";
+	next;
+	menu "Sure, let's go~",-,"Nah, maybe next time.",M_NAH;
+
+	mes "[Jiu Lian Bu]";
+	mes "Alright~";
+	mes "Let's get";
+	mes "a groove on.";
+	close2;
+	warp "lou_fild01.gat",180,171;
+	end;
+
+M_NAH:
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Not in the mood, eh?";
+	mes "No prob. But feel free";
+	mes "to come see me whenever";
+	mes "you want.";
+	close;
+L_WHERE:
+	mes "[Jiu Lian Bu]";
+	mes "Hey where did you go?";
+	mes "Come up again and I'll";
+	mes "give you your reward.";
+	close2;
+	warp "lou_fild01.gat",180,171;
+	end;
+}
+
+lou_fild01.gat,175,174,4	script	Jiu Lian Bu	819,{
+	if(QL_SOUPQUEST < 1) goto L_DOQUEST;
+	if(QL_SOUP2 < 1) goto L_1STTIME;
+	mes "[Jiu Lian Bu]";
+	mes "So...";
+	mes "Whaddya want to do?";
+	emotion 18;
+	next;
+	menu "Shout.",-,"Leave.",M_LEAVE;
+
+	mes "[Jiu Lian Bu]";
+	mes "Ready~!";
+	mes "Say it out loud!";
+	next;
+	input @loushout$;
+	mapannounce "lou_fild01.gat","'" + strcharinfo(0) + "' shouts: " + @loushout$ ,1,0x9CFF00;
+	mes "[" + strcharinfo(0) + "]";
+	mes @loushout$;
+	close;
+	
+M_LEAVE:
+	mes "[Jiu Lian Bu]";
+	mes "Ahhh...";
+	mes "Alright, let's";	
+	mes "get a groove on.";
+	close2;
+	warp "lou_fild01.gat",197,174;
+	end;
+
+L_DOQUEST:
+	mes "[Jiu Lian Bu]";
+	mes "Who are you?";
+	mes "Get off my turf!";
+	close2;
+	warp "lou_fild01.gat",197,174;
+	end;
+
+L_1STTIME:
+	mes "[Jiu Lian Bu]";
+	mes "So...";
+	mes "Whaddya think?";
+	mes "Prettiest place in Louyang, isn't it?";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Whenever I'm depressed or need to relax, I just sit here and enjoy the breeze. It helps me forget all my worries.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Heh heh, the best part is, this place is far away from my older siste. Man, that woman can nag, nag, nag, all day long.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Why don't you sit down and close your eyes, and feel that soothing wind. It's pretty refreshing";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Also...";
+	mes "I'm a little";
+	mes "embarrassed to";
+	mes "say this but...";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "I'm the kind of guy who speaks his mind. If there's something you just wanna say, but can't, it's kind of like poison in your mind.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "You know what I'm talking about, right? If you bottle something up inside of you, it just causes you anxiety you don't need.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "So..";
+	mes "This is what you do.";
+	mes "Clench your first, take";
+	mes "a deep breath.";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "And just yell";
+	mes "Whatever you want!";
+	mes "If you don't know";
+	mes "the words, just";
+	mes "screaming will do.";
+	mes "Let everything out!";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "Ready~!";
+	mes "Say it out loud!";
+	next;
+	input @loushout$;
+	mapannounce "lou_fild01.gat","'" + strcharinfo(0) + "' shouts: " + @loushout$ ,1,0x9CFF00;
+	mes "[" + strcharinfo(0) + "]";
+	mes @loushout$;
+	set QL_SOUP2,1;
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "So, how do you feel?";
+	mes "Don't you feel better now? Hahaha~";
+	next;
+	mes "[Jiu Lian Bu]";
+	mes "So from now on, whenever you";
+	mes "want to relieve yourself of stress,";
+	mes "come see me and we'll come back to";
+	mes "this place. Call it my way of";
+	mes "saying thanks.";
+	close;	
+}
+
+lou_in02.gat,61,175,2	script	Employee	818,2,2{
+	mes "[Ya Hua]";
+	mes "^6A6A6A*Yawn...*";
+	close;
+
+OnTouch:
+	if(QL_GOTDRAGONSOUP == 1 || QL_GOTFAKESOUP == 1) goto S_CAUGHT;
+	end;
+
+S_CAUGHT:
+	mes "[Ya Hua]";
+	mes "^6A6A6A*Yawn...*";
+	mes "^000000Eyelids...";
+	mes "Getting...";
+	mes "Heavier...";
+	next;
+	mes "[Ya Hua]";
+	mes "Wait a sec...";
+	mes "Are you a thief?!";
+	mes "Get out of here!!";
+	if(QL_GOTFAKESOUP == 1) set QL_GOTFAKESOUP,0;
+	if(QL_GOTDRAGONSOUP == 1) set QL_GOTDRAGONSOUP,0;
+	next;
+	mes "^3131FFYou have failed";
+	mes "^3131FFto steal the pot.";
+	close;
+}
+
+lou_in02.gat,54,174,6	script	Employee	822,{
+	mes "[Chang Pai]";
+	mes "^6A6A6A*Yawn...*";
+	close;
+}
+
+lou_in02.gat,50,185,4	script	Pot	111,{
+	if(QL_SOUPQUEST == 1) goto L_EMPTY;
+	if(QL_ACCEPTSOUP < 1) goto L_NORMAL;
+	mes "^3131FFBeneath the shadows, you find a large pot filled with dark, red liquid. What do you want to do?";
+	next;
+	menu "Take the pot.",-,"Look for another pot.",M_LOOK;
+
+	if (QL_GOTDRAGONSOUP == 1) set QL_GOTDRAGONSOUP,0;
+	mes "^3131FFYou take a careful look around. It wouldn't be wise to steal this now if anyone is watching.";
+	next;
+	mes "^3131FFSince the restaurant is closed, the whole place is completely quiet. The employees are all asleep.";
+	next;
+	mes "^3131FFYou carefully lift the pot, and although it's heavy, you think you can carry it.";
+	next;
+	mes "^3131FFAll you have";
+	mes "^3131FFto do now is get";
+	mes "^3131FFaway from this restaurant";
+	mes "^3131FFwithout getting caught...";
+	set QL_GOTFAKESOUP,1;
+	close;
+
+M_LOOK:
+	mes "^3131FFYou decide to";
+	mes "look for another pot.";
+	close;
+
+L_NORMAL:
+	mes "[Chef]";
+	mes "Ah...";
+	mes "Please, do not";
+	mes "touch the pots!";
+	close;
+
+L_EMPTY:
+	mes "^3131FFYou found a pot, however it's empty.";
+	close;
+}
+
+lou_in02.gat,49,185,4	script	Pot	111,{
+	if(QL_SOUPQUEST == 1) goto L_EMPTY;
+	if(QL_ACCEPTSOUP < 1) goto L_NORMAL;
+	mes "^3131FFBeneath the shadows, you find a large pot filled with dark, red liquid. What do you want to do?";
+	next;
+	menu "Take the pot.",-,"Look for another pot.",M_LOOK;
+
+	if (QL_GOTFAKESOUP == 1) set QL_GOTFAKESOUP,0;
+	mes "^3131FFYou take a careful look around. It wouldn't be wise to steal this now if anyone is watching.";
+	next;
+	mes "^3131FFSince the restaurant is closed, the whole place is completely quiet. The employees are all asleep.";
+	next;
+	mes "^3131FFYou carefully lift the pot, and although it's heavy, you think you can carry it.";
+	next;
+	mes "^3131FFAll you have";
+	mes "^3131FFto do now is get";
+	mes "^3131FFaway from this restaurant";
+	mes "^3131FFwithout getting caught...";
+	set QL_GOTDRAGONSOUP,1;
+	close;
+
+M_LOOK:
+	mes "^3131FFYou decide to";
+	mes "look for another pot.";
+	close;
+
+L_NORMAL:
+	mes "[Chef]";
+	mes "Ah...";
+	mes "Please, do not";
+	mes "touch the pots!";
+	close;
+
+L_EMPTY:
+	mes "^3131FFYou found an empty pot.";
+	close;
+}
+
+louyang.gat,261,123,4	script	Chi Wu Ping	824,{
+	mes "[Chi Wu Ping]";
+	mes "I don't feel good...";
+	mes "So... Totally out of it...";
+	next;
+	mes "[Chi Wu Ping]";
+	mes "Oh, my aching body!";
+	mes "All my muscles are sore...";
+	mes "There's only one thing that could";
+	mes "cure all of this agonizing...";
+	mes "pain...";
+	next;
+	mes "[Chi Wu Ping]";
+	mes "Hey kid~!";
+	mes "You don't look like a local!";
+	mes "Why don't you follow the road ahead";
+	mes "and check out the big restaurant?";
+	next;
+	mes "[Chi Wu Ping]";
+	mes "The soup that they sell there is probably the healthiest food you can ever find.";
+	next;
+	mes "[Chi Wu Ping]";
+	mes "I guess you could eat";
+	mes "some of that soup";
+	mes "for your health.";
+	close;
+}
+
+lou_in02.gat,62,183,4	script	Chef	820,{
+	if(QL_SOUPQUEST == 1) goto L_FINISHED;
+	mes "[Wang Shi Long]";
+	mes "Hello, are you";
+	mes "one of our customers?";
+	mes "I am Wang Shi Long";
+	mes "the chef of this restaurant.";
+	next;
+	mes "[Wang Shi Long]";
+	mes "My family has server food";
+	mes "to Lord Bai Long for a long time.";
+	mes "This restaurant has been handed";
+	mes "down the family line, and I am the successor~";
+	next;
+	mes "[Wang Shi Long]";
+	mes "Our specialty, Dragon Soup,";
+	mes "won especially high praise from";
+	mes "Lord Bai Long, who is known for";
+	mes "his extremely discerning sense of taste.";
+	next;
+	mes "[Wang Shi Long]";
+	mes "I'm also proud to say that we cook";
+	mes "with only the freshest and highest";
+	mes "quality ingredients.";	
+	next;	
+	mes "[Wang Shi Long]";
+	mes "We've always been popular in";
+	mes "Louyang for hundreds and hundreds";
+	mes "of years because of our high";
+	mes "quality gourmet cuisine.";
+	next;
+	mes "[Wang Shi Long]";
+	mes "In this dry and hot weather,";
+	mes "Dragon Soup is the best food for";
+	mes "any appetite. I suggest that you";
+	mes "try a bowl. You'll be quite";
+	mes "pleased!";
+	close;
+
+L_FINISHED:
+	mes "[Wang Shi Long]";
+	mes "^6A6A6A*Moans and Cries*^000000";
+	mes "I guess this is it...!";
+	mes "The end of my family's glory.";
+	mes "Someone stole the base broth";
+	mes "of my Dragon Soup!";
+	next;
+	mes "[Wang Shi Long]";
+	mes "What should I do, now?";
+	mes "Without Dragon Soup, my family's";
+	mes "restaurant will now just be like";
+	mes "all the others...";
+	close;
+}
+
+lou_in02.gat,42,186,4	script	Liu Jia Lim	816,{
+	if(QL_SOUPQUEST == 1) goto L_FINISHED;
+	mes "[Liu Jia Lim]";
+	mes "Do you know what's the best dish at this restaurant? It's Dragon Soup! They've been selling it here for as long as this restaurant has been around";
+	next;
+	mes "[Liu Jia Lim]";
+	mes "It's delicate taste comes from a broth extracted from pure meat that doesn't contain any fat. So it's also a very popular diet food for the ladies.";
+	next;
+	mes "It's tasty and really good for your health. Why don't you order a bowl? I've never known anyone to taste Dragon Soup and not love it!";
+	close;
+
+L_FINISHED:
+	mes "[Liu Jia Lim]";
+	mes "Do you know what was this restaurant's best dish throughout all of its history? Dragon Soup!";
+	next;
+	mes "[Liu Jia Lim]";
+	mes "It's delicate taste comes from a broth extracted from pure meat that doesn't contain any fat. So it's also a very popular diet food for the ladies.";
+	next;
+	mes "[Liu Jia Lim]";
+	mes "I'm not sure what happened, but people say this restaurant no longer sells Dragon Soup.";
+	mes "Was it because of the price...?";
+	close;
+}
+
+lou_in02.gat,43,169,8	script	Jiang Rong	827,{
+	mes "[Jiang Rong]";
+	mes "Dragon Soup is known for its spicy";
+	mes "yea sweet and refreshing taste.";
+	next;
+	mes "[Jiang Rong]";
+	mes "It's made with all sorts of";
+	mes "medicinal herbs, so it's good";
+	mes "for your health as well";
+	next;
+	mes "[Jiang Rong]";
+	mes "Dragon Soup draws out the";
+	mes "unnecessary heat created inside";
+	mes "the body and circulates the blood.";
+	mes "So it helps optimize the body'";
+	mes "functions and promotes longevity.";
+	next;
+	mes "[Jiang Rong]";
+	mes "I've eaten Dragon Soup regularly";
+	mes "ever since I was young. Look at me,";
+	mes "don't you think I look so healthy";
+	mes "considering my age?";
+	close;
+}
+
+lou_in02.gat,76,181,2	script	Employee	822,{
+	mes "[Huang Jia Xian]";
+	mes "Ehhhh...";
+	mes "Forgive me...";
+	mes "....................";
+	mes "...Zzzzz...Zzzz...";
+	close;
+}
+
+lou_in02.gat,80,173,2	script	Li Min	746,{
+	if(QL_SOUPQUEST == 1) goto L_FINISHED;
+	mes "[Li Min]";
+	mes "Well, I don't really";
+	mes "live here in Louyang.";
+	mes "Still, I come here often";
+	mes "enough to visit.";
+	next;
+	mes "[Li Min]";
+	mes "I just returned";
+	mes "because I've got";
+	mes "a huge craving for the";
+	mes "food I tasted here";
+	mes "a while ago.";
+	next;
+	mes "[Li Min]";
+	mes "For some reason, I can't forget it.";
+	mes "I can't get it out of my mind!";
+	next;
+	mes "[Li Min]";
+	mes "The taste, the texture.";
+	mes "The sweetness, melting down into my";
+	mes "mouth, and it's tempting scent";
+	mes "lingering on my lips...";
+	next;
+	mes "[Li Min]";
+	mes "Ummmmm...";
+	mes "Royal Jelly!";
+	mes "It makes my";
+	mes "mouth water~";
+	close;
+
+L_FINISHED:
+	mes "[Li Min]";
+	mes "^6A6A6A*Sigh*^000000 I am so disappointed. I came";
+	mes "all the way down here to taste the";
+	mes "food! I can't believe they don't";
+	mes "sell it anymore!";
+	next;
+	mes "[Li Min]";
+	mes "The worst part is that I'm already";
+	mes "addicted to the taste! ^6A6A6A*Sob...*^000000";
+	close;
+}
+
+lou_in02.gat,58,183,4	script	Chef Assistant	823,{
+	mes "[Jin Wei Ling]";
+	mes "I used to be";
+	mes "an enthusiastic";
+	mes "martial artist.";
+	next;
+	mes "[Jin Wei Ling]";
+	mes "Although I became an";
+	mes "assistant chef for a living, I";
+	mes "always think of myself as a martial";
+	mes "artist first.";
+	next;
+	mes "[Jin Wei Ling]";
+	mes "So, I decided to reflect the spirit";
+	mes "of the martial arts into my";
+	mes "cooking. We are often very busy";
+	mes "when there are many customers.";
+	next;
+	mes "[Jin Wei Ling]";
+	mes "When we're busy I can use my";
+	mes "martial arts to cook cuisine much";
+	mes "more quickly! Hahaha~ Martial arts";
+	mes "can be very practical!";
+	next;
+	mes "[Jin Wei Ling]";
+	mes "Waaa-!!!!";
+	misceffect 55;
+	next;
+	mes "[Jin Wei Ling]";
+	mes "Waaa Taah-!!!!!";
+	misceffect 11;
+	next;
+	mes "[Jin Wei Ling]";
+	mes "Waaa...";
+	mes "Waa Taaah-!!!!!";
+	misceffect 121;
+	next;
+	mes "[Jin Wei Ling]";
+	mes "^3131FF*Chop chop chop chop chop*^000000";
+	donpcevent "Lounpc::OnEffect";	
+	next;
+	mes "[Jin Wei Ling]";
+	emotion 21;
+	mes "Hahahaha! Look at these perfect";
+	mes "vegetable slices! Muhahahaha!!";
+	mes "I will continue to hone my martial";
+	mes "arts through cooking!";
+	close;
+}
+
+lou_in02.gat,58,181,2	script	Lounpc	139,{
+OnEffect:
+	misceffect 122;
+	end;
+}
+
+louyang.gat,174,150,4	script	Liu Chi Ling	815,{
+	if(QL_SOUPQUEST == 1) goto L_RUMOR;
+	mes "[Jiu Chi Ling]";
+	mes "I'm worried about my brother.";
+	mes "He's young, rebellious and doesn't";
+	mes "listen to anybody...";
+	next;
+	mes "[Jiu Chi Ling]";
+	mes "He just left the";
+	mes "house while he was";
+	mes "complaining about";
+	mes "that restaurant...";
+	next;
+	mes "[Jiu Chi Ling]";
+	mes "^6A6A6A*Sigh~~*^000000";
+	mes "I'm not going to let him get";
+	mes "away this time!";
+	close;
+
+L_RUMOR:
+	mes "[Jiu Chi Ling]";
+	mes "There's a strange rumor going";
+	mes "around that the restaurant is no";
+	mes "longer selling Dragon Soup...";
+	next;
+	mes "[Jiu Chi Ling]";
+	mes "Do you think";
+	mes "my brother did";
+	mes "something bad again!?";
+	mes "I hope not! If he did...";
+	mes "What am I supposed to do?!";
+	close;
+}
+
+lou_in02.gat,210,47,8	script	City Hall Officer	825,{
+	if(QL_GOTCOMPROP == 1)goto L_BEENTOHIM;
+	if(QL_LOUBRIBE == 1)goto L_OFFICER;
+	if(QL_BEENTOSTORAGE == 1)goto L_QUEST;
+	mes "[Jin Chiyuan]";
+	mes "^6A6A6A*Yawn~*^000000";
+	mes "Gosh, this hot weather is such a pain. Oh? You look like a tourist. Are you enjoying your stay?";
+	next;
+	mes "[Jin Chiyuan]";
+	mes "Although we've been having bad weather recently, there are many good places to visit in Louyang. I hope you have a good time.";
+	close;	
+
+L_QUEST:
+	mes "[Jin Chiyuan]";
+	mes "Hm? A Rune-Midgardian? Now, how may I help you?";
+	next;
+	menu "I need a document.",-,"I just dropped by",M_DROP;
+
+	mes "[Jin Chiyuan]";
+	mes "Ah, you do?";
+	mes "Unfortunately, there are many people waiting in line to procure goverment forms, so it will take a while to handle your request.";
+	next;
+	mes "[Jin Chiyuan]";
+	mes "^6A6A6A*whispers*";
+	mes "^2A2A2AWell, there is a way that you can, shall we say, expedite our processing of your request...^000000";
+	next;
+	menu "Huh? Come again?",-,"A little zeny to cut the red tape, eh?",M_BRIBE;
+
+	mes "[Jin Chiyuan]";
+	mes "^6A6A6A*Ahem!*^000000 Nothing.";
+	mes "Nothing of importance. Now, I'm very busy, so if you would go fill the application over there...";
+	close;
+
+M_BRIBE:
+	input @loubribe;
+	if(@loubribe < 10000)goto L_POOR;
+	if(zeny < @loubribe)goto L_NOTENOUGH;
+	set Zeny, Zeny - @loubribe;
+	set QL_LOUBRIBE,1;
+	mes "[Jin Chiyuan]";
+	mes "What...?!";
+	mes "That's not what I meant, but if you insist on donating to our government...";
+	next;
+	mes "[Jin Chiyuan]";	
+	mes "^6A6A6A*Whispers*";
+	mes "^2A2A2AWhen you go upstairs, another officer will give you the document you want.^6A6A6A *Ahem* ^000000Louyang thanks you!";
+	close;
+
+L_POOR:
+	mes "[Jin Chiyuan]";
+	mes "Good lord,";
+	mes "What are you thinking? What am I, a beggar?! That's a poor excuse for a bribe!";
+	next;
+	emotion 32;
+	mes "[Jin Chiyuan]";
+	mes "I mean...";
+	mes "How dare you bribe an officer of the law! I hope other outsiders are not like you! Please leave immediately.";
+	close;
+
+M_DROP:
+	mes "[Jin Chiyuan]";
+	mes "Oh well...";
+	mes "Let me tell you that this is not a good time for tourists. I hope you don't wander into places you're not supposed to be.";
+	next;
+	mes "[Jin Chiyuan]";
+	mes "Quite frankly,";
+	mes "it's a dangerous climate for curiosity right now. Please, be careful.";
+	close;
+
+L_NOTENOUGH:
+	mes "[Jin Chiyuan]";
+	mes "You don't even have that much money.";
+	close;
+
+L_OFFICER:
+	mes "[Jin Chiyuan]";
+	mes "Haven't you met the officer I told you about? I've contacted him about the matter, so you may meet him upstairs.";
+	next;
+	mes "[Jin Chiyuan]";
+	mes "Hahahaha...";
+	mes "Take care,";
+	mes "Rune-Midgardian.";
+	close;
+
+L_BEENTOHIM:
+	emotion 18;
+	mes "[Jin Chiyuan]";
+	mes "Ah~";
+	mes "You met him,";
+	mes "didn't you?";
+	mes "Hahaha...";
+	mes "Enjoy your stay";
+	mes "in Louyang!";
+	close;
+}
+
+lou_in02.gat,156,38,8	script	Studying Officer	822,{
+	if(QL_GOTCOMPROP == 1)goto L_RANT2;
+	if(QL_LOUBRIBE == 1)goto L_BRIBED;
+	if(QL_BEENTOSTORAGE == 1)goto L_RANT;
+	mes "[Huang Zhishu]";
+	mes ".....";
+	mes "^6A6A6A*Mumble mumble*^000000";
+	next;
+	mes "^3131FFHe appears to be rummaging around for some documents and takes no notice of you.";
+	next;
+	menu "Excuse me.",-,"Pass him.",M_PASS;
+	
+	mes "[Huang Zhishu]";
+	mes "Hmmm...?";
+	mes "Well...";
+	mes "...";
+	mes "I see...";
+	mes "^6A6A6A*Mumble mumble...*^000000";
+	close;
+
+M_PASS:
+	mes "[Huang Zhishu]";
+	mes ".....";
+	mes "^6A6A6A*Mumble mumble*^000000";
+	close;
+
+L_RANT:
+	mes "[Huang Zhishu]";
+	mes "Books contain the spirit and ideas of their authors. Any work of are can be considered a window into the soul of its creator.";
+	next;
+	mes "[Huang Zhishu]";
+	mes "^6A6A6A*Mumble mumble...*^000000";
+	mes "Hmm... I see...";
+	mes "Ah, I see....";
+	mes "^6A6A6A*Mumble mumble...*^000000";
+	close;
+
+L_BRIBED:
+	mes "^3131FF*Rummage rummage...*^000000";
+	next;
+	menu "Sorry about that.",-,"I came to pick up my documents.",L_DOCU;
+
+	mes "[Huang Zhishu]";
+	mes "Apology accepted.";
+	mes "Hmmm....";
+	mes "Oh I see, I see...";
+	next;
+	emotion 0;
+	mes "^3131FF*Rummage rummage...*";
+	mes "^3131FF..........";
+	close;	
+
+L_DOCU:
+	mes "[Huang Zhishu]";
+	mes "Huh?";
+	mes "Ah...";
+	mes "You're the one I'm waiting for. So what kind of document did you need?";
+	input @loudocument$;
+	next;
+	mes "[Huang Zhishu]";
+	mes "Let's see now.";
+	mes "You want..";
+	mes "a " + @loudocument$ + "?";
+	next;
+	if(@loudocument$ != "Communication Proposal")goto L_WHAT;
+	mes "[Huang Zhishu]";
+	mes "Now where did I put that? You want a Communication Proposal, huh? I think I'll need some time to find it. Ah, right. I think I know where I put that.";
+	next;
+	mes "...";
+	next;
+	mes "...";
+	mes "......";
+	next;
+	mes "...";
+	mes "......";
+	mes ".........";
+	next;
+	mes "...";
+	mes "......";
+	mes ".........";
+	mes "............";
+	next;
+	mes "...";
+	mes "......";
+	mes ".........";
+	mes "............";
+	mes "...............";
+	next;
+	mes "[Huang Zhishu]";
+	mes "Here it is. Someone asked me for the same document a few days ago so I was able to find it again pretty easily. I hope it's useful to you.";			
+	set QL_GOTCOMPROP,1;
+	set QL_LOUBRIBE,0;
+	set QL_BEENTOSTORAGE,0;
+	close;
+
+L_WHAT:
+	mes "[Huang Zhishu]";
+	mes "Huh?";
+	mes "Wha...";
+	next;
+	mes "[Huang Zhishu]";
+	mes "I'm sorry but I don't think we have that one. You might want to check the name of the document once more, and then come back to me.";
+	close;
+
+L_RANT2:
+	emotion 33;
+	mes "[Huang Zhishu]";
+	mes "Hmmm...?";
+	mes "Do you think I need to go outside more often? Well, I guess for some reason, I don't feel well. I guess I really should get some fresh air.";
+	mes "^6A6A6A*Yawn...*^000000";
+	next;
+	mes "[Huang Zhishu]";
+	mes "But you should get out more often yourself! It's not a good idea to always stay home. If you don't get some exercise when you're young, it could affect your health later.";
+	close;
+}
+
+lou_in02.gat,248,166,2	script	Tool Shop Master	824,{
+	if(QL_GOTHERB == 1)goto L_HERB;
+	if(QL_TOOLMASTER == 1)goto L_STORAGE;
+	if(QL_DOCQUEST == 1)goto L_QUEST;
+L_HERB:
+	mes "[Wang Chuiyi]";
+	mes "My business hasn't been doing well recently. And what is wrong with this weather? I don't know what's going on with the world...";
+	close;
+
+L_QUEST:
+	mes "[Wang Chuiyi]";
+	mes "Darn it!";
+	mes "I hate this";
+	mes "weather...!";
+	next;
+	emotion 1;
+	mes "[Wang Chuiyi]";
+	mes "Um? Can I help";
+	mes "you with anything?";
+	next;
+	menu "I'm here to get something for the doctor...",-,"I agree, the weather really is bad.",M_WEATHER;
+
+	mes "[Wang Chuiyi]";
+	mes "Huh?";
+	mes "An errand for the doctor? She must have run out of medicine again. Go ahead and check the storage.";
+	next;
+	mes "[Wang Chuiyi]";
+	mes "You can find the storage on the opposite side of this building. There, you'll see a guy named Jiang Xiayou. Go ahead and ask him for the stuff you need.";
+	set QL_TOOLMASTER,1;
+	close;
+
+M_WEATHER:
+	mes "[Wang Chuiyi]";
+	mes "Tell me about it. This weather keeps stressing me out. Damn, I don't think I'll live very long if I keep getting aggravated like this by the weather...";
+	close;
+
+L_STORAGE:
+	mes "[Wang Chuiyi]";
+	mes "You can find the storage on the opposite side of this building. There, you'll see a guy named Jiang Xiayou. Go ahead and ask him for the stuff you need.";
+	close;
+}
+
+lou_in02.gat,201,166,5	script	Storage Keeper	819,{
+	if(QL_GOTCOMPROP == 1)goto L_FINALLY;
+	if(QL_BEENTOSTORAGE == 1)goto L_LAZY;
+	if(QL_TOOLMASTER == 1)goto L_QUEST;
+	mes "[Jiang Xiayou]";
+	mes "^6A6A6A*Yawn...*^000000";
+	mes "This is boring...";
+	mes "So boring, it's ridiculous. I don't want to waste any more time here, I've got important things to do...";
+	close;
+
+L_QUEST:
+	mes "[Jiang Xiayou]";
+	mes "Huh?";
+	mes "What, what are you doing here? If you don't need anything, you better get a move on.";
+	next;
+	menu "Sorry about that.",-,"It's hot isn't it?",M_HOT,"I'm on an errand for the doctor.",M_ERRAND;
+
+	mes "[Jiang Xiayou]";
+	mes "That's right!";
+	mes "You don't mess with a person in this hot weather! Now, go away. Can't you see I'm busy!";
+	close;
+
+M_HOT:
+	mes "[Jiang Xiayou]";
+	mes "You don't have to ask me that. I can feel if for myself! Now, I got a bunch of things to take care of, so quit bugging me. Damn, it's hot!";
+	close;
+
+M_ERRAND:
+	mes "[Jiang Xiayou]";
+	emotion 0;
+	mes "Oh yeah?";
+	mes "Well, why didn't you say so? Let's see.";
+	mes "Hmmm...";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "Actually, could you help me out first? Don't worry, it's not so hard but it's pretty important for me. Once you help me out, I'll get what you need.";
+	next;
+	menu "Um, what is it?",-,"Sorry, I'm busy.",L_BUSY;
+
+	mes "[Jiang Xiayou]";
+	mes "Cool, thanks. I have to go get some official documents from City Hall, but I can't leave this storage area since no one can take over my shift.";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "So I want you to go get the documents from City Hall for me. I don't think it'll take much of your time.";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "Just go east from here and look for the building that looks sort of like it was made in gauge form. That's City Hall.";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "I don't get why the government spent so much money making that building, but anyway, I hope you can do that for me.";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "Oh, I almost forgot.";
+	mes "You have to ask for a specific type of document, so let me tell you right now.";
+	next;
+	mes "[Jiang Xiayou]";	
+	mes "This is important,";
+	mes "so don't forget this.";
+	mes "When the guy asks what you need, you tell him: '^FF0000Communication Proposal^000000' Just like that?";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "If you don't specify the documents you need, they won't give you anything. So be careful and don't forget!";
+	set QL_BEENTOSTORAGE,1;
+	close;
+
+L_BUSY:
+	mes "[Jiang Xiayou]";
+	mes "Bah~!";
+	mes "Forget it, then!";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "The medicines you're looking for might be around here. so look around. If it weren't for the doctor, I wouldn't even let you hang around, you know that?";
+	close;
+
+L_LAZY:
+	mes "[Jiang Xiayou]";
+	mes "Huh?";
+	mes "Haven't you gone to City Hall yet?";
+	mes "What a lazy ass";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "Shouldn't you hurry to get that medicine to the doc? We're talking a man's life at stake, that mean anything to you?";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "I guess you're";
+	mes "the forgetful type...";
+	mes "When the guy asks what you need, you tell him:";
+	mes "'^FF0000Communication Proposal^000000'.";
+	next;
+	mes "[Jiang Xiayou]";
+	mes "Just like that.";
+	mes "Now, go to it, tiger.";
+	close;
+
+L_FINALLY:
+	mes "[Jiang Xiayou]";
+	mes "You finally brought it! Haha, I just got everything you need, too. Let me see...";
+	mes "Yup this is it!";
+	mes "Good, good...";
+	next;
+	mes "^3131FF*Rummage rummage...*";
+	mes "^3131FF......";
+	next;
+	menu "Excuse me.",-;
+	mes "[Jiang Xiayou]";
+	mes "Huh?";
+	mes "Ah....";
+	mes "Haha...";
+	mes "Sorry about";
+	mes "that. Hahaha~";
+	next;
+	getitem	7252,1; //Herbal Medicine
+	mes "[Jiang Xiayou]";
+	mes "Ah! Here you go. Even if it was kind of annoying to do, I guess we gotta help each other, right? Alright then, I'll see ya around.";
+	set QL_GOTHERB,1;
+	set QL_BEENTOSTORAGE,0;
+	set QL_GOTCOMPROP,0;
+	set QL_TOOLMASTER,0;
+	close;
+}
+
+louyang.gat,274,136,4	script	Powerful-looking guy	819,{
+	mes "[Akiira]";
+	mes "I am practicing my 'Claw of";
+	mes "Dragon.' I not only need to use the";
+	mes "power of my fists, I must also";
+	mes "condition myself spiritually.";
+	next;
+	mes "[Akiira]";
+	mes "Every martial art requires";
+	mes "spiritual training since the";
+	mes "mind controls the body.";
+	mes "If you've trained yourself";
+	mes "spiritually, you can easily";
+	mes "use any part of the body!";
+	next;
+	mes "[Akiira]";
+	mes "If you are considering";
+	mes "studying the martial arts, you";
+	mes "should first attain knowledge";
+	mes "before jumping into the";
+	mes "physical training.";
+	next;
+	mes "[Akiira]";
+	mes "Learn about the martial arts";
+	mes "and meditate on life's truths.";
+	mes "First, you must find peace of mind";
+	mes "before you can hope to master the";
+	mes "mind and body.";
+	close;
+}
+
+louyang.gat,276,136,4	script	Fist Master	819,{
+	mes "[Zhiang Xiau Ji]";
+	mes "Finally...";
+	mes "I have mastered";
+	mes "the 'Claw of Draon!'";
+	next;
+	mes "[Zhiang Xiau Ji]";
+	mes "Although there are eight basic";
+	mes "steps, I had to learn the history";
+	mes "of this art, and meditate, focusing";
+	mes "on my spiritual improvement,";
+	mes "for three years";
+	next;
+	mes "[Zhiang Xiau Ji]";
+	mes "After that, my master finally";
+	mes "started to give me the physical";
+	mes "training so I could use the eight";
+	mes "steps of the Claw of Dragon. I've";
+	mes "devoted myself to this art for thirty years.";
+	next;
+	mes "[Zhiang Xiau Ji]";
+	mes "I'm very proud that I've";
+	mes "mastered this art ten years earlier";
+	mes "than I expected. Now I need to";
+	mes "study this form and improve it by";
+	mes "correcting its weak points and";
+	mes "enhancing its strengths.";
+	next;
+	mes "[Zhiang Xiau Ji]";
+	mes "I guess that would take me about";
+	mes "ten years. But I'm not disheartened";
+	mes "by that at all.";
+	next;
+	mes "[Zhiang Xiau Ji]";
+	mes "When you're learning a martial art,";
+	mes "you can't rush yourself and learn";
+	mes "everything in a short period of";
+	mes "time. It's impossible! Plus, that";
+	mes "isn't the essence of ?";
+	close;	
+}
+
+louyang.gat,272,133,0	script	Trainee::trainees	819,{
+	set $talk,rand(12);
+	if($talk == 1) goto L_QUOT1;
+	if($talk == 2) goto L_QUOT2;
+	if($talk == 3) goto L_QUOT3;
+	if($talk == 4) goto L_QUOT4;
+	if($talk == 5) goto L_QUOT5;
+	if($talk == 6) goto L_QUOT6;
+	if($talk == 7) goto L_QUOT7;
+	if($talk == 8) goto L_QUOT8;
+	if($talk == 9) goto L_QUOT9;
+	if($talk == 10) goto L_QUOT10;
+	if($talk == 11) goto L_QUOT11;
+L_QUOT0:
+	mes "[Trainee]";
+	mes "Aha~!";
+	mes "Hai~!!";
+	mes "Huh...";
+	close;
+L_QUOT1:
+	mes "[Trainee]";
+	mes "Woh~!";
+	mes "Hai~!!";
+	mes "Huh huh...";
+	close;
+L_QUOT2:
+	mes "[Trainee]";
+	mes "Kyaa~";
+	mes "Yah~~!!";
+	mes ".......";
+	close;
+L_QUOT3:
+	mes "[Trainee]";
+	mes "Hu~!";
+	mes "Hu hu~~!!";
+	mes "Hu...";
+	close;
+L_QUOT4:
+	mes "[Trainee]";
+	mes "Wah?!";
+	mes "Ahchiu~~!!";
+	mes "Wah...";
+	close;
+L_QUOT5:
+	mes "[Trainee]";
+	mes "Yaah~";
+	mes "...!";
+	mes "........!!";
+	close;
+L_QUOT6:
+	mes "[Trainee]";
+	mes "Chongchiu!!";
+	mes "Hu~~!!";
+	mes "Hwooh~~";
+	close;
+L_QUOT7:
+	mes "[Trainee]";
+	mes "Zhua loh~!";
+	mes ".....";
+	mes "Hu";
+	close;
+L_QUOT8:
+	mes "[Trainee]";
+	mes "One hit~!";
+	mes "Hai~!!";
+	mes "Yah~!!";
+	close;
+L_QUOT9:
+	mes "[Trainee]";
+	mes "Ai yah..";
+	mes "Yaahah~~";
+	mes "(rolls around)......";
+	close;
+L_QUOT10:
+	mes "[Trainee]";
+	mes "Niu ah...";
+	mes "One~~!!";
+	mes "Two~~!!!";
+	close;
+L_QUOT11:
+	mes "[Trainee]";
+	mes "Yeeah~!";
+	mes "Ah I’m so tired~~!!";
+	mes "(faints).....";
+	close;
+}
+
+louyang.gat,272,131,0	duplicate(trainees)	Trainee#2	819
+louyang.gat,272,129,0	duplicate(trainees)	Trainee#3	819
+louyang.gat,274,133,0	duplicate(trainees)	Trainee#4	819
+louyang.gat,274,131,0	duplicate(trainees)	Trainee#5	819
+louyang.gat,274,129,0	duplicate(trainees)	Trainee#6	819
+louyang.gat,276,133,0	duplicate(trainees)	Trainee#7	819
+louyang.gat,276,131,0	duplicate(trainees)	Trainee#8	819
+louyang.gat,276,129,0	duplicate(trainees)	Trainee#9	819
+louyang.gat,278,133,0	duplicate(trainees)	Trainee#10	819
+louyang.gat,278,131,0	duplicate(trainees)	Trainee#11	819
+louyang.gat,278,129,0	duplicate(trainees)	Trainee#12	819
+
+lou_in02.gat,265,69,4	script	Doctor	814,{
+	if(QL_DOCQUEST == 1) goto L_MED;
+	if(QL_DOCQUEST == 2) goto L_RANT;
+	if(QL_DOCQUEST == 3) goto L_CHECKITM;
+	if(QL_DOC1STTIME == 1) goto L_QUEST;
+	mes "[Hua Tuo]";
+	mes "There are many pressure points on the human body. Ever since ancient times, it has been believed that each pressure point was limited to its role and functions.";
+	next;
+	mes "[Hua Tuo]";
+	mes "However, as I studied and experimented with every pressure point, I came to the conclusion that the use of pressure points, depending on the circumstances, can produce different results.";
+	next;
+	mes "[Hua Tuo]";
+	mes "Few pressure points tend to show the same symptoms, regardless of the problem. Most of the time, the effects of pressure points will differ depending on the body's health or time of day.";
+	next;
+	mes "[Hua Tuo]";
+	mes "For instance, the pressure point located on the upper side of the navel is the most vulnerable point.";
+	next;
+	mes "[Hua Tuo]";
+	mes "If pressed the wrong way, it can cause death. But between 5:15 am and 7:15 am, it's just a weak point.";
+	set QL_DOC1STTIME,1;
+	close;
+				
+L_QUEST:
+	mes "[Hua Tuo]";
+	mes "Hmmm...";
+	mes "I'm in trouble";
+	next;
+	emotion 19;
+	mes "[Hua Tuo]";
+	mes "I cannot do anything without my medicine. But one of my patients needs immediate treatment and I can't leave the office...";
+	next;
+	menu "I can help you",-,"What a shame!",M_SHAME;
+
+	mes "[Hua Tuo]";
+	mes "Huh...?";
+	mes "Are...";
+	mes "Are you serious?";
+	next;
+	mes "[Hua Tuo]";
+	mes "This won't take much effort, but it may be too much to ask of you, especially since we have just met.";
+	next;
+	menu "If you feel burdened...",-,"I don't mind, I'd be glad to help.",M_HELP2;
+
+	mes "[Hua Tuo]";
+	mes "Thank you so";
+	mes "much for saying that.";
+	mes "I feel very uncomfortable asking a favor of someone I have only just met.";
+	next;
+	emotion 15;
+	mes "[Hua Tuo]";
+	mes "However, I will ask you if we meet another time. Now, if you'll excuse me...";
+	close;
+
+M_HELP2:
+	mes "[Hua Tuo]";
+	mes "Hmm, I see.";
+	mes "Well then, let me";
+	mes "ask a favor of you.";
+	next;
+	mes "[Hua Tuo]";
+	mes "As you heard earlier, I need a special medicine to treat this patient. However, I'm running out of the medicine I need.";
+	next;
+	mes "[Hua Tuo]";
+	mes "I will need you to get it for me since I cannot leave the patients that are waiting for me right now.";
+	next;
+	mes "[Hua Tuo]";
+	mes "^6A6A6A*Sigh*^000000";
+	mes "Misfortunes always seem to occur one after another, don't they? My staff is currently too busy doing other errands.";
+	next;
+	mes "[Hua Tuo]";		
+	mes "Please visit the";
+	mes "Tool Shop in town and bring me the medicine that I need. Master will understand if you tell him you've been sent by me.";
+	next;
+	mes "[Hua Tuo]";
+	mes "I am sorry for causing you so much trouble, but if you'll excuse me, I have other patients waiting. Please hurry back with the medicine!";
+	set QL_DOCQUEST,1;
+	close;
+
+M_SHAME:
+	mes "[Hua Tuo]";
+	mes "^6A6A6A*Sigh*^000000 For some reason, I never seem to have enough in stock. Is there no one I can ask to help me?";
+	close;
+
+L_MED:
+	if(countitem(7252) == 0)goto L_NOMED;
+	delitem 7252,1; //Herbal Medicine
+	mes "[Hua Tuo]";
+	mes "Ah, finally...";
+	mes "You've brought what I need. Thank you so much, it's such a relief to have this medicine on hand again.";
+	next;
+	mes "[Hua Tuo]";
+	mes "I apologize in advance, but may I ask you for another favor? I am asking for your help once, since I know I can depend on you. Of course, I will compensate you for your trouble.";
+	next;
+	menu "I'm sorry...",L_DONE,"No problem.",-;
+
+	mes "[Hua Tuo]";
+	mes "Thank you, thank you so much!";
+	mes "I've just run out of other medicines that my patients will be needing. I don't need too much, but you would be doing me a great favor.";
+	next;		
+	mes "[Hua Tuo]";
+	mes "The medicines I need are ^0000FF2 Claw of Panther^000000 which supports the bones, ^0000FF10 Very Hard Peach^000000 which strengthens the muscle, ^0000FF5 Poisonous Toad Skin which replenishes the skin...";
+	next;
+	mes "[Hua Tuo]";
+	mes "^0000FF20 Brown Root^000000 which regulates the heart, ^0000FF10 Sprout^000000 which eases the abdomen and ^0000FF5 Honey Jar^000000 which provides nutrition.";
+	next;		
+	mes "[Hua Tuo]";
+	mes "I hope you've memorized it all.";
+	mes "Once again, that's...";
+	set QL_DOCQUEST,3;
+	next;
+L_INGREDIENT:
+	mes "[Hua Tuo]";
+	mes "^3131FF2 Claw of Panther^000000,";
+	mes "^3131FF10 Very Hard Peach^000000,";
+	mes "^3131FF5 Poisonous Toad Skin^000000,";
+	mes "^3131FF20 Brown Root^000000,";
+	mes "^3131FF10 Sprout^000000 and";
+	mes "^3131FF5 Honey Jar^000000.";
+	close;	
+
+L_DONE:
+	mes "[Hua Tuo]";
+	mes "Alright...";
+	mes "I understand.";
+	mes "But thank you for helping me out. please take this...";
+	next;
+	mes "[Hua Tuo]";
+	mes "It's not much, but this medicine is an old family secret. I hope that it will be of use to you in dangerous situations.";
+	getitem 679,2; //Pilule
+	next;
+	mes "[Hua Tuo]";
+	mes "Well then, I will see you around. Once again, I'd like to thank you for your help.";
+	set QL_GOTHERB,0;
+	set QL_DOC1STTIME,0;
+	set QL_DOCQUEST,2;
+	close;
+
+L_NOMED:
+	mes "[Hua Tuo]";	
+	mes "You haven't gotten the medicine yet...? I hope you can get it as soon as possible...";
+	close;
+
+L_RANT:
+	mes "[Hua Tuo]";
+	mes "Being strong as a person is not defined as mere physical strength.";
+	next;
+	mes "[Hua Tuo]";
+	mes "Factors such as intelligence, experience and knowledge are also considered when judging one's strength.";
+	next;
+	mes "[Hua Tuo]";
+	mes "Let's say you're very strong and given the most powerful weapon.";
+	next;
+	mes "[Hua Tuo]";
+	mes "If you don't know how to use the weapon's power, you will not be strong... You will be weak.";
+	next;
+	mes "[Hua Tuo]";
+	mes "When the tools or weapons overwhelm your capabilities, the worst situations result.";
+	close;
+
+L_CHECKITM:
+	if(countitem(7172) < 2)goto L_NOTENOUGH; //Claw of Panther
+	if(countitem(7164) < 10)goto L_NOTENOUGH; //Very Hard Peach
+	if(countitem(7155) < 5)goto L_NOTENOUGH; //Poisonous Toad Skin
+	if(countitem(7188) < 20)goto L_NOTENOUGH; //Brown Root
+	if(countitem(7193) < 10)goto L_NOTENOUGH; //Sprout
+	if(countitem(7121) < 5)goto L_NOTENOUGH; //Honey Jar
+	delitem 7172,2; //Claw of Panther
+	delitem 7164,10; //Very Hard Peach
+	delitem 7155,5; //Poisonous Toad Skin
+	delitem 7188,20; //Brown Root
+	delitem 7193,10; //Sprout
+	delitem 7121,5; //Honey Jar
+	//These following dialogs are made up, I didn't finish the quest =/
+	mes "[Hua Tuo]";
+	mes "Thank you so much, now I can treat my patients.";
+	next;
+	mes "[Hua Tuo]";
+	mes "Ah...";
+	mes "Of course!";
+	mes "Here's your reward. Use this medicine when you feel weary.";
+	getitem 679,5; //Pilule
+	set QL_GOTHERB,0;
+	set QL_DOC1STTIME,0;
+	set QL_DOCQUEST,2;
+	close;
+	
+L_NOTENOUGH:
+	mes "[Hua Tuo]";
+	mes "Hmm....";
+	mes "Unfortunately, you haven't collected everything that I need yet. Once again, please gather...";
+	next;
+	goto L_INGREDIENT;
+}

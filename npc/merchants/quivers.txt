@@ -1,0 +1,147 @@
+//===== eAthena Script ========================================
+//= Arrow Quiver Event
+//===== By: ==================================================
+//= Muad_Dib (Prometheus Project)
+//===== Current Version: =====================================
+//= 1.0b
+//===== Compatible With: =====================================
+//= eAthena 1.0+
+//===== Description: =========================================
+//= Turns arrows into Arrow Quivers.
+//===== Additional Comments: =================================
+//= 07/06/05 : Added 1st Version. [Muad_Dib]
+//= Converted to eAthena format by Dr.Evil
+//= added prize to quest - 500 Zeny
+//= Fixed a few spelling errors. [Nexon]
+//============================================================
+
+
+payon_in01.gat,5,134,4	script	Inventor Jaax	89,{
+	mes "[Inventor Jaax]";
+	mes "My name is Jaax.";
+	mes "Without ego, I can";
+	mes "sat that I am perhaps the";
+	mes "^996600greatest inventor of our time.^000000";
+	next;
+	mes "[Inventor Jaax]";
+	mes "This time, I've";
+	mes "created something";
+	mes "truly extraordinary. I call them...";
+	mes "^996600Magic Quivers^000000 !! This will be";
+	mes "remembered in history as an";
+	mes "arrow revolution!";
+	next;
+	mes "[Inventor Jaax]";
+	mes "I've studied magic and quivers for";
+	mes "years, working night and day until";
+	mes "I finally figured out how to condense";
+	mes "arrows with magic! With magic";
+	mes "quivers, you'll be carrying more";
+	mes "arrows, but with less weight!";
+	next;
+	mes "[Inventor Jaax]";
+	mes "Would you like to try using one of";
+	mes "my arrow quivers? I have no doubt";
+	mes "that someone like you can";
+	mes "appreciate my genius!";
+	next;
+
+	menu "Arrow Quiver",-,"Iron Arrow Quiver",Q2,"Steel Arrow Quiver",Q3,"Oridecon Arrow Quiver",Q4,"Fire Arrow Quiver",Q5,"Silver Arrow Quiver",Q6,"Wind Arrow Quiver",Q7,"Stone Arrow Quiver",Q8,"Crystal Arrow Quiver",Q9,"Shadow Arrow Quiver",Q10,"Immaterial Arrow Quiver",Q11,"Rusty Arrow Quiver",Q12;
+
+// Arguments
+//===========
+		callsub sF_Make, 1750,500,12004, "Arrow Quiver";
+			goto M_Menu;
+Q2:
+		callsub sF_Make, 1770,500,12005, "Iron Arrow Quiver";
+			goto M_Menu;
+Q3:
+		callsub sF_Make, 1753,500,12006, "Steel Arrow Quiver";
+			goto M_Menu;
+Q4:
+		callsub sF_Make, 1765,500,12007, "Oridecon Arrow Quiver";
+			goto M_Menu;
+Q5:
+		callsub sF_Make, 1752,500,12008, "Fire Arrow Quiver";
+			goto M_Menu;
+Q6:
+		callsub sF_Make, 1751,500,12009, "Silver Arrow Quiver";
+			goto M_Menu;
+Q7:
+		callsub sF_Make, 1755,500,12010, "Wind Arrow Quiver";
+			goto M_Menu;
+Q8:
+		callsub sF_Make, 1756,500,12011, "Stone Arrow Quiver";
+			goto M_Menu;
+Q9:
+		callsub sF_Make, 1754,500,12012, "Crystal Arrow Quiver";
+			goto M_Menu;
+Q10:
+		callsub sF_Make, 1767,500,12013, "Shadow Arrow Quiver";
+			goto M_Menu;
+Q11:
+		callsub sF_Make, 1757,500,12014, "Immaterial Arrow Quiver";
+			goto M_Menu;
+Q12:
+		callsub sF_Make, 1762,500,12015, "Rusty Arrow Quiver";
+			goto M_Menu;
+
+// Subfunction for making quivers
+//================================
+sF_Make:
+	set @arrownum,500;
+	if(countitem(getarg(0)) < @arrownum) goto L_NdArrows;
+	if(Zeny < getarg(1)) goto L_NdZeny;
+	mes "[Inventor Jaax]";
+	mes "What do you want me to do?";
+	next;
+	menu "Give me as many as you can.",-, "I want to set the amount.",sM_0b, "Nevermind",M_End;
+
+		set @amount,100;
+		if(zeny/getarg(1) < @amount) set @amount, zeny/getarg(1);
+		if(countitem(getarg(0))/@arrownum < @amount) set @amount, countitem(getarg(0))/@arrownum;
+		if(@amount > 0) goto L_End;
+		mes "[Inventor Jaax]";
+		mes "Jeez... you don't even have the right items.....";
+		close;
+		
+	sM_0b:
+		input @amount;
+		if(@amount<1 || @amount>100) goto L_BadAmnt;
+		if(countitem(getarg(0))/@arrownum < @amount) goto L_NdArrows;
+		if(Zeny < (getarg(1)*@amount)) goto L_NdZeny;
+
+	L_End:
+		mes "[Inventor Jaax]";
+		mes "There you go~!";
+		mes "Here are your " +getarg(3)+ ".";
+		delitem getarg(0), (@amount*@arrownum);
+		set Zeny, Zeny - (getarg(1)*@amount);
+		getitem getarg(2), @amount;
+		close;
+
+	L_NdArrows:
+		mes "[Inventor Jaax]";
+		mes "Sorry, but you need 500 Arrows and 500 Zeny to make 1 Arrow Quiver.";
+		close;
+		
+	L_NdZeny:
+		mes "[Inventor Jaax]";
+		mes "You don't have enough zeny for that many.";
+		close;
+
+	L_BadAmnt:
+		mes "[Inventor Jaax]";
+		mes "Please choose a number between 1 and 100.";	
+		close;
+
+L_Come:
+	mes "[Inventor Jaax]";
+	mes "Please, come again whenever you want too.";
+	close;
+M_End:
+	mes "[Inventor Jaax]";
+	mes "Sure, no problem.";
+	mes "Come back any time.";
+	close;
+}

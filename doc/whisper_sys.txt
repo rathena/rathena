@@ -1,0 +1,29 @@
+Adapted from: http://eathena.deltaanime.net/board/index.php?showtopic=42659
+Copied by: Massdriller
+Post made by: lordalfa
+
+As requested by MassDriller, I made this piece of code to allow you to whisper your NPCS and let them execute some commands for you.
+
+An example of what you can do with it, before you eventually go on reading.
+
+Let's say you prepared a special NPC called NPCCommander.
+You whisper to NPCCommander in Game with formatted instructions like these:
+
+//============================================================
+
+[To NPCCommander]       Report,Killstealing,Lordalfa
+
+//============================================================
+
+Now what happens is that this code allows you to trigger a Label called "OnWhisperGlobal" into that NPC and execute some code, passing it The values you just input.
+
+Values will be passed into Temp string Variables called @whispervar0$, @whispervar1$ and so on..
+In the example above:
+
+@whispervar0$ would contain the word "Report"
+@whispervar1$ would contain the word "KillStealing"
+@whispervar2$ would contain the word "Lordalfa"
+
+so you might prepare the NPC Label to process these Variables and give Executing Character a Feedback ( via dispbottom "message" for example )
+
+Now , it's allowed to use up to 10 commands in a Row, separed by "," character, they will be splitted and passed to the NPC Label in their respective variables, for you to process them.

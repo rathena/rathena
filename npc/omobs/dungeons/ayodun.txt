@@ -1,0 +1,24 @@
+//===== eAthena Script =======================================
+//= Ayothana Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= Currently using euRO data provided by Ishizu
+//= 1.2 Moved Tao Gunka to west cave of Comodo [Lupus]
+//============================================================
+
+//=== Ayothana Dungeon #1 ===
+ayo_dun01.gat,0,0,0,0	monster	Whisper	1179,10,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Ghoul	1036,30,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Kraben	1587,5,0,0,0
+ayo_dun01.gat,0,0,0,0	monster	Leaf Cat	1586,60,0,0,0
+
+//=== Ayothana Dungeon #2 ===
+ayo_dun02.gat,0,0,0,0	monster	Whisper	1179,20,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Kraben	1587,20,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Tamruan	1584,70,0,0,0
+ayo_dun02.gat,0,0,0,0	monster	Lady Tany	1688,1,3600000,1800000,1

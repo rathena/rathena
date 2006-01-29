@@ -1,0 +1,19 @@
+// スキル所得テスト
+
+// skill スキルID ,スキルLV [,フラグ];
+//	フラグは省略可能、省略時は１。
+//	フラグ=1でカードなどの一時的な所得、
+//	フラグ=2でクエストなどによる恒久的な所得(skill_tree.txtに依存)
+
+prontera.gat,157,182,0	script	スキル所得テスト	116,{
+	mes "スキル所得テスト";
+	menu "応急処置所得",L_GETSKILL142,"死んだ振り所得",L_GETSKILL143,"やめる",L_YAME;
+L_GETSKILL142:
+	skill 142,1,0;
+	close;
+L_GETSKILL143:
+	skill 143,1,0;
+	close;
+L_YAME:
+	close;
+}

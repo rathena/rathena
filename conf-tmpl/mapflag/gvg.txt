@@ -1,0 +1,56 @@
+//===== eAthena Script =======================================
+//= GvG On Map Flags
+//===== By: ==================================================
+//= eAthena Dev Team
+//===== Current Version: =====================================
+//= 1.2
+//===== Description: =========================================
+//= gvg: Turns on GvG mode (same as PvP except Guilds are
+//=      automatically allied)
+//= gvg_castle: Describes castle maps for WoE.
+//===== Additional Comments: =================================
+//= 1.2 Updated with new meanings of gvg and gvg_castle
+//= 1.1 Added Novice Guild Castles
+//============================================================
+
+// GvG Arenas =============
+guild_vs1.gat	mapflag	gvg
+guild_vs2.gat	mapflag	gvg
+guild_vs3.gat	mapflag	gvg
+guild_vs4.gat	mapflag	gvg
+guild_vs5.gat	mapflag	gvg
+
+// Guild Castles ==========
+aldeg_cas01.gat	mapflag	gvg_castle
+aldeg_cas02.gat	mapflag	gvg_castle
+aldeg_cas03.gat	mapflag	gvg_castle
+aldeg_cas04.gat	mapflag	gvg_castle
+aldeg_cas05.gat	mapflag	gvg_castle
+gefg_cas01.gat	mapflag	gvg_castle
+gefg_cas02.gat	mapflag	gvg_castle
+gefg_cas03.gat	mapflag	gvg_castle
+gefg_cas04.gat	mapflag	gvg_castle
+gefg_cas05.gat	mapflag	gvg_castle
+payg_cas01.gat	mapflag	gvg_castle
+payg_cas02.gat	mapflag	gvg_castle
+payg_cas03.gat	mapflag	gvg_castle
+payg_cas04.gat	mapflag	gvg_castle
+payg_cas05.gat	mapflag	gvg_castle
+prtg_cas01.gat	mapflag	gvg_castle
+prtg_cas02.gat	mapflag	gvg_castle
+prtg_cas03.gat	mapflag	gvg_castle
+prtg_cas04.gat	mapflag	gvg_castle
+prtg_cas05.gat	mapflag	gvg_castle
+
+// Novice Guild Castles ===
+//n_castle.gat	mapflag	gvg_castle
+nguild_alde.gat	mapflag	gvg_castle
+nguild_gef.gat	mapflag	gvg_castle
+nguild_pay.gat	mapflag	gvg_castle
+nguild_prt.gat	mapflag	gvg_castle
+
+// Guild Dungeons =========
+gld_dun01.gat	mapflag	gvg_dungeon
+gld_dun02.gat	mapflag	gvg_dungeon
+gld_dun03.gat	mapflag	gvg_dungeon
+gld_dun04.gat	mapflag	gvg_dungeon

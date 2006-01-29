@@ -1,0 +1,24 @@
+//===== eAthena Script =======================================
+//= Map flags that disable gaining EXP
+//===== By: ==================================================
+//= eAthena Dev Team
+//= 1.2 [Lupus]
+//= 1.3 [massdriller]
+//= 1.4 Lupus
+//= 1.5 Lorky
+//===== Current Version: =====================================
+// 15.06.2005 :: Lorky	:: First release
+//============================================================
+
+// Location for Job's Quests
+job_thief1.gat	mapflag	noexp
+sword_1-1.gat	mapflag	noexp
+in_moc_16.gat	mapflag	noexp
+job_hunte.gat	mapflag	noexp
+job_knt.gat	mapflag	noexp
+job_prist.gat	mapflag	noexp
+job_wiz.gat	mapflag	noexp
+job_cru.gat	mapflag	noexp
+monk_test.gat	mapflag	noexp
+in_rogue.gat	mapflag	noexp
+job_sage.gat	mapflag	noexp

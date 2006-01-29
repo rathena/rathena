@@ -1,0 +1,272 @@
+//===== eAthena Script ======================================= 
+//= Prontera Guides
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= eAthena  0.5.2 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Fully working
+//= v1.1 Now using duplicate command.
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks [MasterOfMuppets]
+//=     to Muad_Dib
+//============================================================
+
+
+prontera.gat,154,187,4	script	Guide::Prt_Guide	105,{
+	cutin "prt_soldier",2;
+	mes "[Prontera Guide]";
+	mes "Welcome to Prontera,";
+	mes "the beautiful capital of the";
+	mes "Run-Midgard Kingdom. If";
+	mes "you have questions or need";
+	mes "help find something in the";
+	mes "city, don't hesitate to ask.";
+L_MENU:
+	next;
+	menu "City Guide",L_CITY,"Remove Marks from Mini-Map",L_REMOVE,"Notice",L_NOTICE,"Cancel",L_END;
+L_CITY:
+	mes "[Prontera Guide]";
+  	mes "Please select";
+  	mes "a location from";
+  	mes "the following menu.";
+  	mes "Would you like me";
+ 	mes "to mark locations";
+  	mes "on your Mini-Map?";
+  	next;
+  	menu "Yes.",L_YES,"No.",L_NO;
+L_NO:
+  		set @COMPASS_CHECK,0;
+	goto L_CONT;
+L_YES:
+  		set @COMPASS_CHECK,1;
+L_CONT:
+L_MENU_2:
+	menu "Swordman Association",L_SWORD,"^0000FFSanctuary^000000",L_SANCTUARY,"Prontera Chivalry",L_CHIVALRY,"Weapon Shop",L_WEAPON,"Tool Shop",L_TOOL,"Inn",L_INN,"Trading Post",L_TRADING,"Pub",L_PUB,"Library",L_LIBRARY,"Job Agency",L_JOB,"Prontera Castle",L_CASTLE,"City Hall",L_HALL,"Cancel",-;
+	mes "[Prontera Guide]";
+ 	mes "Pleas ask me to Remove";
+ 	mes "Marks from Mini-Map if you";
+ 	mes "no longer wish to have the";
+ 	mes "location marks displayed";
+ 	mes "on your Mini-Map.";
+ 	goto L_MENU;
+L_SWORD:
+	mes "[Prontera Guide]";
+	mes "The Swordman Association,";
+	mes "which handles Job Changes";
+	mes "to the Swordman class, has";
+	mes "moved to Izlude. This facility";
+	mes "is just an empty building now.";
+	viewpoint 1,237,41,1,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_SANCTUARY:
+	mes "[Prontera Guide]";
+	mes "The Prontera Sanctuary";
+	mes "handles Job Changes to";
+	mes "the Acolyte class, and can";
+	mes "be found in the northeast";
+	mes "corner of Prontera.";
+	viewpoint 1,236,316,2,0xFF0000;
+	next; 
+	goto L_WIPE;
+L_CHIVALRY:
+	mes "[Prontera Guide]";
+	mes "The Prontera Chivalry,";
+	mes "which is responsible for";
+	mes "the safety of our capital, is";
+	mes "in Prontera's northwest corner.";
+	viewpoint 1,46,345,3,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_WEAPON:
+	mes "[Prontera Guide]";
+	mes "The Weapon Shop";
+	mes "is located northeast";
+	mes "of the central fountain.";
+	viewpoint 1,175,220,4,0xFF00FF;
+	next; 
+	goto L_WIPE;
+L_TOOL:
+	mes "[Prontera Guide]";
+	mes "The Tool Shop";
+	mes "is located northwest";
+	mes "of the central fountain.";
+	viewpoint 1,134,221,5,0xFF00FF;
+	next; 
+	goto L_WIPE;
+L_INN:
+	mes "[Prontera Guide]";
+	mes "The Inns in Prontera are";
+	mes "located both to the east";
+	mes "and west of Prontera's";
+	mes "central fountain area.";
+	viewpoint 1,204,214,6,0xFF00FF;
+	viewpoint 1,107,192,7,0xFF00FF;
+	next; 
+	goto L_WIPE;
+L_TRADING:
+	mes "[Prontera Guide]";
+	mes "The Trading Post";
+	mes "can be found southeast";
+	mes "from the central fountain.";
+	viewpoint 1,179,184,8,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_PUB:
+	mes "[Prontera Guide]";
+	mes "The Pub is located";
+	mes "southeast of the fountain,";
+	mes "behind the Trading Post.";
+	viewpoint 1,208,154,9,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_LIBRARY:
+	mes "[Prontera Guide]";
+	mes "If you head north from";
+	mes "the central fountain, you'll";
+	mes "find an empty area in which";
+	mes "both branches of the Prontera";
+	mes "Library can be accessed if you";
+	mes "head towards the east or west.";
+	viewpoint 1,120,267,10,0x00FF00;
+	viewpoint 1,192,267,11,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_JOB:
+	mes "[Prontera Guide]";
+	mes "The Job Agency is";
+	mes "just southwest of the";
+	mes "central fountain area.";
+	viewpoint 1,133,183,12,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_CASTLE:
+	mes "[Prontera Guide]";
+	mes "The Prontera Castle is";
+	mes "located at the northern";
+	mes "sector of this city. You can";
+	mes "go to fields that are north";
+	mes "of Prontera by going through";
+	mes "the castle's rear exit.";
+	viewpoint 1,156,360,13,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_HALL:
+	mes "[Prontera Guide]";
+	mes "The City Hall";
+	mes "is located in the";
+	mes "southwest corner";
+	mes "in our city of Prontera.";
+	viewpoint 1,75,91,14,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_WIPE:
+ 		if(@COMPASS_CHECK == 1)goto L_MENU_2;
+		viewpoint 2,237,41,1,0x00FF00;
+		viewpoint 2,236,316,2,0xFF0000;
+		viewpoint 2,46,345,3,0x00FF00;
+		viewpoint 2,175,220,4,0xFF00FF;
+		viewpoint 2,8,134,5,0xFF00FF;
+		viewpoint 2,204,214,6,0xFF00FF;
+		viewpoint 2,107,192,7,0xFF00FF;
+		viewpoint 2,179,184,8,0x00FF00;
+		viewpoint 2,208,154,9,0x00FF00;
+		viewpoint 2,120,267,10,0x00FF00;
+		viewpoint 2,192,267,11,0x00FF00;
+		viewpoint 2,133,183,12,0x00FF00;
+		viewpoint 2,156,360,13,0x00FF00;
+		viewpoint 2,75,91,14,0x00FF00;
+	goto L_MENU_2;
+L_REMOVE:
+		viewpoint 2,237,41,1,0x00FF00;
+		viewpoint 2,236,316,2,0xFF0000;
+		viewpoint 2,46,345,3,0x00FF00;
+		viewpoint 2,175,220,4,0xFF00FF;
+		viewpoint 2,8,134,5,0xFF00FF;
+		viewpoint 2,204,214,6,0xFF00FF;
+		viewpoint 2,107,192,7,0xFF00FF;
+		viewpoint 2,179,184,8,0x00FF00;
+		viewpoint 2,208,154,9,0x00FF00;
+		viewpoint 2,120,267,10,0x00FF00;
+		viewpoint 2,192,267,11,0x00FF00;
+		viewpoint 2,133,183,12,0x00FF00;
+		viewpoint 2,156,360,13,0x00FF00;
+		viewpoint 2,75,91,14,0x00FF00;
+  	goto L_MENU;
+L_NOTICE:
+ 	mes "[Prontera Guide]";
+ 	mes "Advances in sorcery and";
+ 	mes "technology have allowed";
+ 	mes "us to update our information";
+ 	mes "system, enabling up to mark";
+  	mes "locations on your Mini-Map";
+  	mes "for easier navigation.";
+  	next;
+  	mes "[Prontera Guide]";
+  	mes "Your Mini-Map is located";
+  	mes "in the upper right corner";
+  	mes "of the screen. If you can't";
+  	mes "see it, press the Ctrl + Tab";
+  	mes "keys or click the 'Map' button";
+  	mes "in your Basic Information Window.";
+  	next;
+  	mes "[Prontera Guide]";
+ 	mes "On your Mini-Map,";
+  	mes "click on the '+' and '-'";
+ 	mes "symbols to zoom in and";
+  	mes "out of your Mini-Map. We"; 
+ 	mes "hope you enjoy your travels";
+ 	mes "here in the city of Prontera.";
+ 	goto L_MENU;
+L_END:
+ 	mes "[Prontera Guide]";
+ 	mes "Well, adventurer...";
+ 	mes "I hope your journeys";
+	mes "through Rune-Midgard";
+	mes "are both fun and save.";
+	cutin "prt_soldier",255; 
+ 	close;
+}
+
+// East ----------------------------------------------------
+prontera.gat,282,208,2	duplicate(Prt_Guide)	Guide#2	105
+//West --------------------------------------------------
+prontera.gat,29,200,6	duplicate(Prt_Guide)	Guide#3	105
+// South -----------------------------------------------------
+prontera.gat,160,29,0	duplicate(Prt_Guide)	Guide#4	105
+// North -----------------------------------------------
+prontera.gat,151,330,4	duplicate(Prt_Guide)	Guide#5	105
+
+
+// Guard -----------------------------------------------------
+prontera.gat,160,330,4	script	Guard#1::Prt_Guard	105,{
+	mes "[Guard]";
+	mes "Welcome to Prontera.";
+	close;
+}
+
+prontera.gat,229,104,5	duplicate(Prt_Guard)	Guard#2	105
+prontera.gat,223,98,8	duplicate(Prt_Guard)	Guard#3	105
+prontera.gat,52,344,5	duplicate(Prt_Guard)	Guard#4	105
+prontera.gat,47,339,5	duplicate(Prt_Guard)	Guard#5	105
+
+
+//---------------------------------------------------------------------------------------- Prontera Maze ----------------------------------------------------------------------------------\\
+prt_maze02.gat,100,69,4	script	Guard	105,{
+	mes "[Guard]";
+	mes "Hey, I don't get your point but I say you should go home and rest rather than go inside the forest.  Don't you know the 'Demon' lurks there?";
+	mes "Naturally, Nobody came back on the hoof so I am not sure whether it really exists or not... well, Do as you want, dude.  I'm not your mother.";
+	close;
+}
+prt_maze02.gat,110,69,4	script	Guard	105,{
+	mes "[Guard]";
+	mes "Phew...That geek who went inside last time never returned either.";
+	mes "I tried to stop him so many times but he never took me seriously.  He told me he needed herbs.";
+	mes "If I were him, I would never give up my life for stupid herbs.";
+	close;
+}

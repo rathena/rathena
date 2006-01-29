@@ -1,0 +1,41 @@
+//===== eAthena Script =======================================
+//= Abyss Lake Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= 1.0 Real spawns  by Poki#3 [Nexon]
+//============================================================
+
+//Abyss Lakes Underground Cave Flor 1
+abyss_01.gat,0,0,0,0	monster	Penomena	1216,20,30000,0,0
+abyss_01.gat,0,0,0,0	monster	Mimic	1191,20,0,0,0
+abyss_01.gat,0,0,0,0	monster	Ancient Mimic	1699,1,0,0,0
+abyss_01.gat,0,0,0,0	monster	Novus	1715,10,0,0,0
+abyss_01.gat,0,0,0,0	monster	Ferus	1717,20,0,0,0
+abyss_01.gat,0,0,0,0	monster	Hydro­	1720,1,1800000,0,0
+
+//Abyss Lakes Underground Cave Flor 2
+abyss_02.gat,0,0,0,0	monster	Ancient Mimic	1699,10,0,0,0
+abyss_02.gat,0,0,0,0	monster	Dragon Egg	1721,5,0,0,0
+abyss_02.gat,0,0,0,0	monster	Acidus	1713,30,0,0,0
+abyss_02.gat,0,0,0,0	monster	Acidus	1716,30,0,0,0
+abyss_02.gat,0,0,0,0	monster	Novus	1715,10,0,0,0
+abyss_02.gat,0,0,0,0	monster	Novus	1718,10,0,0,0
+abyss_02.gat,0,0,0,0	monster	Ferus	1717,30,0,0,0
+abyss_02.gat,0,0,0,0	monster	Hydro­	1720,1,1800000,0,0
+
+//Abyss Lakes Underground Cave Flor 3
+abyss_03.gat,0,0,0,0	monster	Ancient Mimic	1699,20,0,0,0
+abyss_03.gat,0,0,0,0	monster	Dragon Egg	1721,5,0,0,0
+abyss_03.gat,0,0,0,0	monster	Spring Rabbit	1690,10,0,0,0
+abyss_03.gat,0,0,0,0	monster	Acidus	1713,20,0,0,0
+abyss_03.gat,0,0,0,0	monster	Acidus	1716,20,0,0,0
+abyss_03.gat,0,0,0,0	monster	Novus	1715,10,0,0,0
+abyss_03.gat,0,0,0,0	monster	Novus	1718,10,0,0,0
+abyss_03.gat,0,0,0,0	monster	Ferus	1714,20,0,0,0
+abyss_03.gat,0,0,0,0	monster	Hydro­	1720,2,1800000,0,0
+abyss_03.gat,0,0,0,0	monster	Detale	1719,1,3600000,7200000,0

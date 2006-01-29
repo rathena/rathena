@@ -1,0 +1,17 @@
+//Skill-ID,MaxLV,Prerequisite Skill-ID-1,Prerequisite Skill-ID-1-Lv,PrereqSkill-ID-2,PrereqSkill-ID-2-Lv,PrereqSkill-ID-3,PrereqSkill-ID-3-Lv,PrereqSkill-ID-4,PrereqSkill-ID-4-Lv,PrereqSkill-ID-5,PrereqSkill-ID-5-Lv //GUILD SKILLNAME#Skill Name#
+
+10000,1,0,0,0,0,0,0,0,0,0,0	//GD_APPROVAL#Official Guild Approval#
+10001,1,10000,1,0,0,0,0,0,0,0,0	//GD_KAFRACONTRACT#Contract with Kafra#
+10002,1,10000,1,0,0,0,0,0,0,0,0	//GD_GUARDRESEARCH#Guardian Research#
+10003,3,0,0,0,0,0,0,0,0,0,0	//GD_GUARDUP#Strengthen Guardians#
+10004,10,0,0,0,0,0,0,0,0,0,0	//GD_EXTENSION#Guild Extension#
+10005,0,0,0,0,0,0,0,0,0,0,0	//GD_GLORYGUILD#Guilds Glory#
+10006,5,0,0,0,0,0,0,0,0,0,0	//GD_LEADERSHIP#Great Leadership#
+10007,5,0,0,0,0,0,0,0,0,0,0	//GD_GLORYWOUNDS#Glorious Wounds#
+10008,5,10007,1,0,0,0,0,0,0,0,0	//GD_SOULCOLD#Cold Heart#
+10009,5,10006,1,0,0,0,0,0,0,0,0	//GD_HAWKEYES#Sharp Gaze#
+10010,1,10000,1,10004,2,0,0,0,0,0,0	//GD_BATTLEORDER#Battle Command#
+10011,3,10000,1,10004,5,10010,1,0,0,0,0	//GD_REGENERATION#Regeneration#
+10012,1,10011,1,0,0,0,0,0,0,0,0	//GD_RESTORE#Restoration#
+10013,1,10000,1,10002,1,10004,5,10010,1,10011,1	//GD_EMERGENCYCALL#Urgent Call#
+10014,1,0,0,0,0,0,0,0,0,0,0	//GD_DEVELOPMENT#Permanent Development#

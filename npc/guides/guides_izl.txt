@@ -1,0 +1,156 @@
+//===== eAthena Script ======================================= 
+//= Izlude Guides
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Fully working
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks [MasterOfMuppets]
+//=     to Muad_Dib
+//============================================================
+
+izlude.gat,121,87,6	script	Guide	105,{
+	cutin "prt_soldier",2;
+	mes "[Izlude Guide]";
+	mes "Welcome to Izlude,";
+	mes "Prontera's satellite city.";
+	mes "If you need any guidance";
+	mes "around Izlude, feel free";
+	mes "to ask me at anytime.";
+L_MENU:
+	next;
+	menu "City Guide",L_CITY,"Remove Marks from Mini-Map",L_REMOVE,"Notice",L_NOTICE,"Cancel",L_END;
+L_CITY:
+	mes "[Izlude Guide]";
+  	mes "Please select";
+  	mes "a location from";
+  	mes "the following menu.";
+  	mes "Would you like me";
+ 	mes "to mark locations";
+  	mes "on your Mini-Map?";
+  	next;
+  	menu "Yes.",L_YES,"No.",L_NO;
+L_NO:
+  		set @COMPASS_CHECK,0;
+	goto L_CONT;
+L_YES:
+  		set @COMPASS_CHECK,1;
+L_CONT:
+L_MENU_2:
+	menu "^FF0000Swordman Association^000000",L_SWORD,"Swordman Hall",L_HALL,"Arena",L_ARENA,"Izlude Marina",L_MARINA,"Weapon Shop",L_WEAPON,"Tool Shop",L_TOOL,"Cancel",-;
+	mes "[Izlude Guide]";
+ 	mes "Pleas ask me to Remove";
+ 	mes "Marks from Mini-Map if you";
+ 	mes "no longer wish to have the";
+ 	mes "location marks displayed";
+ 	mes "on your Mini-Map.";
+ 	goto L_MENU;
+L_SWORD:
+	mes "[Izlude Guide]";
+	mes "The Swordman Association";
+	mes "is located on an island that is";
+	mes "in west Izlude. If you're thinking";
+	mes "of changing jobs to Swordman,";
+	mes "you should check it out.";
+	viewpoint 1,52,140,1,0xFF0000;
+	next; 
+	goto L_WIPE;
+L_HALL:
+	mes "[Izlude Guide]";
+	mes "The Swordman Hall";
+	mes "is located on the eastern";
+	mes "island connected to Izlude.";
+	viewpoint 1,214,130,2,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_ARENA:
+	mes "[Izlude Guide]";
+	mes "Izlude's famous";
+	mes "Arena is located at the";
+	mes "northern end of Izlude.";
+	viewpoint 1,128,225,3,0x00FF00;
+	next; 
+	goto L_WIPE;
+L_MARINA:
+	mes "[Izlude Guide]";
+	mes "You can find the";
+	mes "Marina in the northeast";
+	mes "part of Izlude. There, you can";
+	mes "ride a ship wich will take you";
+	mes "to Alberta or Byalan Island.";
+	viewpoint 1,200,180,4,0xFF0000;
+	next; 
+	goto L_WIPE;
+L_WEAPON:
+	mes "[Izlude Guide]";
+	mes "You can easily";
+	mes "find the Weapon Shop";
+	mes "in northwest Izlude.";
+	viewpoint 1,111,149,5,0xFF00FF;
+	next; 
+	goto L_WIPE;
+L_TOOL:
+	mes "[Izlude Guide]";
+	mes "The Tool Shop shouldn't";
+	mes "be too hard to find in the";
+	mes "northeast part of Izlude.";
+	viewpoint 1,148,148,6,0xFF00FF;
+	next; 
+	goto L_WIPE;
+L_WIPE:
+ 		if(@COMPASS_CHECK == 1)goto L_MENU_2;
+		viewpoint 2,52,140,1,0xFF0000;
+		viewpoint 2,214,130,2,0x00FF00;
+		viewpoint 2,128,225,3,0x00FF00;
+		viewpoint 2,200,180,4,0xFF0000;
+		viewpoint 2,111,149,5,0xFF00FF;
+		viewpoint 2,148,148,6,0xFF00FF;
+	goto L_MENU_2;
+L_REMOVE:
+		viewpoint 2,52,140,1,0xFF0000;
+		viewpoint 2,214,130,2,0x00FF00;
+		viewpoint 2,128,225,3,0x00FF00;
+		viewpoint 2,200,180,4,0xFF0000;
+		viewpoint 2,111,149,5,0xFF00FF;
+		viewpoint 2,148,148,6,0xFF00FF;
+  	goto L_MENU;
+L_NOTICE:
+ 	mes "[Izlude Guide]";
+ 	mes "Advances in sorcery and";
+ 	mes "technology have allowed";
+ 	mes "us to update our information";
+ 	mes "system, enabling up to mark";
+  	mes "locations on your Mini-Map";
+  	mes "for easier navigation.";
+  	next;
+  	mes "[Izlude Guide]";
+  	mes "Your Mini-Map is located";
+  	mes "in the upper right corner";
+  	mes "of the screen. If you can't";
+  	mes "see it, press the Ctrl + Tab";
+  	mes "keys or click the 'Map' button";
+  	mes "in your Basic Information Window.";
+  	next;
+  	mes "[Izlude Guide]";
+ 	mes "On your Mini-Map,";
+  	mes "click on the '+' and '-'";
+ 	mes "symbols to zoom in and";
+  	mes "out of your Mini-Map. We"; 
+ 	mes "hope you enjoy your travels";
+ 	mes "here in the city of Izlude.";
+ 	goto L_MENU;
+L_END:
+ 	mes "[Izlude Guide]";
+ 	mes "Okay then, feel";
+ 	mes "free to come to me";
+	mes "if you ever geel lost";
+	mes "around Izlude, alright?";
+	cutin "prt_soldier",255; 
+ 	close;
+}

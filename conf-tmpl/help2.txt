@@ -1,0 +1,90 @@
+  1:--- ITEMS CMD ---
+  1:@storage - Opens storage
+ 50:@gstorage - Opens guild storage
+ 60:/item <item_name> - Gives you 1 of the desired item.
+ 60:@item <item name or ID> <quantity> - Gives you the desired item.
+ 60:@item2 <item name or ID> <quantity> <identified_flag> <refine> <broken_flag> <Card1> <Card2> <Card3> <Card4> - Gives you the desired item.
+ 40:@itemreset - Remove all your items.
+ 60:@itemcheck - Check your items with authorised items.
+ 60:@idsearch <part_of_item_name> - Search all items that name have part_of_item_name
+ 60:@refine <equip position> <+/- amount>
+ 60:@produce <equip name or equip ID> <element> <# of very's>
+ 60:	Element: 0=None 1=Ice 2=Earth 3=Fire 4=Wind
+ 60:	You can add up to 3 Star Crumbs and 1 element
+ 60:@repairall - Repair all items of your inventory
+ 40: 
+ 40:--- PVP CMD ---
+ 40:@pvpon - Turns pvp on on the current map
+ 40:@pvpoff - Turns pvp off on the current map
+ 40:@gvgon/@gpvpon - Turns gvg on on the current map
+ 40:@gvgoff/@gpvpoff - Turns gvg off on the current map
+ 60:@agitstart - Starts War of Emperium
+ 60:@agitend - End War of Emperium
+  1: 
+  1:--- GROUPS CMD ---
+  1:@party <party_name> - Create a party.
+ 50:@guild <guild_name> - Create a guild.
+ 60:@guildlvup/@guildlvlup <# of levels> - Raise Guild by desired number of levels
+ 60:@guildrecall <guild_name/id> - Warps all online characters of a guild to you.
+ 60:@partyrecall <party_name/id> - Warps all online characters of a party to you.
+  1: 
+  1:--- PETS CMD ---
+ 60:@hatch - Create a pet from your inventory eggs list.
+ 60:@makeegg <pet_id> - Gives pet egg for monster number in pet DB
+ 40:@petfriendly <#> - Set pet friendly amount (0-1000) 1000 = Max
+ 40:@pethungry <#> - Set pet hungry amount (0-100) 100 = Max
+  1:@petrename - Re-enable pet rename
+ 20: 
+ 20:--- REMOTE CHAR CMD ---
+ 60:@kill <char name> - Kills specified character.
+ 40:@charkillable <char name> - make another character killable
+ 60:@nuke <char name> - Kills specified character (nuclear effect).
+ 60:@chardropall <char name> - throws all a chars possession on the ground
+ 60:@charstoreall <char name> - puts all of anothers charactes possessions in storage
+ 60:/recall/@recall <char name> - Warps target character to you.
+ 80:@recallall - Warps every character online to you.
+ 60:@revive <char name> - Revives target character.
+ 20:@charignorelist <char name> - Displays ignore list of the player
+ 20:@inall <char name> - Allows all wispers for the player
+ 20:@exall <char name> - Blocks all wispers for the player
+ 60:@charblock/@block <name> - Blocks definitively a account
+ 60:@charunblock/@unblock <name> - Unblocks a account
+ 60:@charban/@ban/@banish/@charbanish <time> <name> - Ban temporarily a account
+ 60:	time usage: adjustement (+/- value) and element (y/a, m, d/j, h, mn, s)
+ 60:	Example: @ban +1m-2mn1s-6y testplayer
+ 60:@charunban/@unban/@unbanish/@charunbanish <name> - Unban a account
+ 60:@jail <char_name> - Sends specified character in jails
+ 60:@trade <char_name> - Open a trade window with a another player
+ 20:@kick <charname> - Kicks specified character off the server
+ 99:@kickall - Kick all characters off the server
+ 99:@mapexit - Kick all players and shut down map-server.
+ 80:@doom - Kills all NON GM chars on the server.
+ 80:@doommap - Kills all non GM characters on the map.
+ 80:@raise - Resurrects all characters on the server.
+ 80:@raisemap - Resurrects all characters on the map.
+ 60:@unjail/@discharge <char_name> - Discharges specified character/prisoner
+ 80: 
+ 80:--- ENVIRONMENT CMD ---
+ 80:@night - Uses @option 00 16 00 on all characters. All characters are in darkness.
+ 80:@day - Uses @option 00 00 00 on all characters.
+ 80:@skillon - turn skills on for a map
+ 80:@skilloff - turn skills on for a map
+  0: 
+  0:--- ADMIN CMD ---
+ 99:@reloaditemdb - Reload item database (admin command)
+ 99:@reloadmobdb - Reload monster database (admin command)
+ 99:@reloadskilldb - Reload skills definition database (admin command)
+ 99:@reloadscript - Reload all scripts (admin command)
+ 99:@reloadgmdb - Reload GM levels (admin command)
+ 99:@adjgmlvl - Do a temporary adjustment of the GM level of a player (admin command)
+ 99:@adjcmdlvl - Do a temporary adjustment of the GM level of a command (admin command)
+ 80:@shownpc <NPC_name> - Enable a NPC (admin command)
+ 80:@hidenpc <NPC_name> - Disable a NPC (admin command)
+ 80:@loadnpc <path_to_script> - Load script (admin command)
+ 80:@unloadnpc <NPC_name> - Unload script (admin command)
+ 80: 
+ 99:@gat - For debugging (you inspect around gat)
+ 99:@packet - For debugging (packet variety)
+ 99: 
+100:@GM <password> - it becomes GM!
+  0:@email <actual@email> <new@email> - to change your e-mail (characters protection)

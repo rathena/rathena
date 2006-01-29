@@ -1,0 +1,103 @@
+//===== Athena Script ========================================
+//= Einbroch Warp Script
+//===== By: ==================================================
+//= Sara-chan (1.3), SSUNNY@YOUNG(1.7)
+//===== Current Version: =====================================
+//= 1.7
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points for Einbroch
+//===== Additional Comments: =================================
+//= 1.4 Moved all airports to Airplane Warps [Lupus]
+//= 1.5 Commented out some warps which are not in the official servers [MasterOfMuppets]
+//= 1.6	Removed some duplicate warps [MasterOfMuppets]
+//= 1.7 Updated Warps, work done by SSUNNY@YOUNG in Korean eA site [Vicious]
+//============================================================
+
+//==========================================================================
+// Einbroch - Factory
+//==========================================================================
+einbroch.gat,132,79,0	warp	ein_fa01	1,1,ein_in01.gat,17,213
+ein_in01.gat,13,213,0	warp	ein_fa01a	1,1,einbroch.gat,129,79
+ein_in01.gat,81,198,0	warp	ein_fa02	1,1,einbroch.gat,179,70
+einbroch.gat,179,73,0	warp	ein_fa02a	1,1,ein_in01.gat,81,203
+
+
+//==========================================================================
+//Einbroch - Near Train station
+//==========================================================================
+einbroch.gat,214,263,0	warp	ein_to01	1,1,einbroch.gat,233,315
+einbroch.gat,233,312,0	warp	ein_to01a	1,1,einbroch.gat,214,260
+einbroch.gat,250,263,0	warp	ein_to02	1,1,einbroch.gat,269,315
+einbroch.gat,269,312,0	warp	ein_to02a	1,1,einbroch.gat,250,260
+
+
+//==========================================================================
+//Einbroch - Weapon shop
+//==========================================================================
+einbroch.gat,216,214,0	warp	ein_wp01	1,1,ein_in01.gat,108,17
+ein_in01.gat,108,13,0	warp	ein_wp01a	1,1,einbroch.gat,216,211
+
+
+//=========================================================================
+//Einbroch - Hotel
+//=========================================================================
+einbroch.gat,257,199,0	warp	ein_h01	1,1,ein_in01.gat,198,224
+ein_in01.gat,195,224,0	warp	ein_h01a	1,1,einbroch.gat,254,199
+ein_in01.gat,211,216,0	warp	ein_h02	1,1,ein_in01.gat,274,218
+ein_in01.gat,271,218,0	warp	ein_h02a	1,1,ein_in01.gat,208,216
+ein_in01.gat,211,232,0	warp	ein_h03	1,1,ein_in01.gat,274,232
+ein_in01.gat,271,232,0	warp	ein_h03a	1,1,ein_in01.gat,208,232
+ein_in01.gat,274,246,0	warp	ein_h04	1,1,ein_in01.gat,273,276
+ein_in01.gat,273,273,0	warp	ein_h04a	1,1,ein_in01.gat,274,243
+ein_in01.gat,264,246,0	warp	ein_h05	1,1,ein_in01.gat,231,276
+ein_in01.gat,231,273,0	warp	ein_h05a	1,1,ein_in01.gat,264,243
+ein_in01.gat,274,203,0	warp	ein_h06	1,1,ein_in01.gat,274,173
+ein_in01.gat,274,176,0	warp	ein_h06a	1,1,ein_in01.gat,274,206
+ein_in01.gat,264,203,0	warp	ein_h07	1,1,ein_in01.gat,232,173
+ein_in01.gat,232,176,0	warp	ein_h07a	1,1,ein_in01.gat,264,206
+ein_in01.gat,284,224,0	warp	ein_h08	1,1,ein_in01.gat,177,277
+ein_in01.gat,180,277,0	warp	ein_h08a	1,1,ein_in01.gat,280,224
+
+
+//==========================================================================
+//Einbroch - Building behind the hotel
+//==========================================================================
+einbroch.gat,278,233,0	warp	ein_ho01	1,1,ein_in01.gat,107,95
+ein_in01.gat,103,95,0	warp	ein_ho01a	1,1,einbroch.gat,275,233
+ein_in01.gat,126,88,0	warp	ein_ho02	1,1,ein_in01.gat,100,139
+ein_in01.gat,100,142,0	warp	ein_ho02a	1,1,ein_in01.gat,123,85
+einbroch.gat,290,222,0	warp	ein_ho03	1,1,ein_in01.gat,121,80
+ein_in01.gat,121,77,0	warp	ein_ho03a	1,1,einbroch.gat,290,219
+
+
+//==========================================================================
+//Einbroch - House of Kapetain
+//==========================================================================
+einbroch.gat,129,229,0	warp	ein_kf01	1,1,ein_in01.gat,14,147
+ein_in01.gat,11,147,0	warp	ein_kf01a	1,1,einbroch.gat,126,229
+
+
+//=========================================================================
+//Einbroch - Lab
+//=========================================================================
+ein_in01.gat,286,25,0	warp	ein_lab	1,1,einbroch.gat,54,52
+
+
+//=========================================================================
+//Einbroch - Blacksmith guild
+//=========================================================================
+einbroch.gat,255,107,0	warp	ein_jb01	1,1,ein_in01.gat,14,17
+ein_in01.gat,14,14,0	warp	ein_jb01a	1,1,einbroch.gat,255,110
+ein_in01.gat,39,36,0	warp	ein_jb02	1,1,ein_in01.gat,35,83
+ein_in01.gat,39,85,0	warp	ein_jb02a	1,1,ein_in01.gat,36,36
+
+
+//==========================================================================
+//Einbroch - Field related
+//==========================================================================
+einbroch.gat,157,331,0	warp	ein_fd01	1,1,ein_fild04.gat,184,31
+ein_fild04.gat,184,26,0	warp	ein_fd01a	1,1,einbroch.gat,157,327
+einbroch.gat,150,25,0	warp	ein_fd02	1,1,ein_fild08.gat,164,377
+ein_fild08.gat,164,380,0	warp	ein_fd02a	1,1,einbroch.gat,150,28

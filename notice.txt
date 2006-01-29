@@ -1,0 +1,14 @@
+//Notice\\
+
+This branch, "Stable", might not be stable due to bugs and whatsoever. 
+It is highly recommended, if you have any dobts on using this svn version,
+it is best if you use an eAthena Official Version or use RC5. calling the 
+stable branch stable is an understatement. you have choosen to use it,
+bear with it.
+
+on another note, if you found a bug, it is best if you report it on the eAthena 
+forums as http://eathena.ws/ . If you have made yourself a fix for 
+that piece of faulty/buggy code, why not post it up and we'll add it to the svn.
+who knows, you might be an aspiring dev.
+
+eA Dev Team

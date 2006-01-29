@@ -1,0 +1,214 @@
+//===== eAthena Script ======================================= 
+//= Lighthalzen
+//===== By: ================================================== 
+//= Persian, Vicious_Pucca, Completed by aoa00
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Event for the Mobster respawn
+//===== Additional Comments: ================================= 
+//= Grammar/script check please. This was a quick job.
+//= Things to add: Look at the thread "Lighthalzen Guard" in SVN script
+//= 0.3 Initial Release
+//= 0.5 Added mobsters spawn and Einbroch pollution. Alert lasts either 10 minutes or all mob killed.
+//= 0.6 small bug fixes
+//= 0.9 fix small bug. Added Bio-lab entrance Quest. Added Getting security-card Quest.
+//= 1.0 Patched "mobsters spawn & Alert" like Real-RO.
+//= 1.0a fixed rand(1,10) + comparision. There just can't be 'X < 1' [Lupus]
+//= 1.1 Changed the mobster spawn to g_mobster to prevent exploits [MasterOfMuppets]
+//============================================================ 
+//= aoa's comment
+//= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
+//= In future, Teleport skill is impossible in Lighthalzen.
+//============================================================ 
+
+lighthalzen.gat,1,1,7	script	sneakAddSuber	-1,{
+OnInit:
+	set $@sneakchance, 3; // chance of successful sneak(0 = never, 10 = always)
+	set $@sneakguard, 0; // numbers of people who sneaked past guard
+	set $@threshold, 10; // numbers of sneakers before mob appears
+	set $@mob, 50; 	  // Max respawn numbers of "mobsters"
+	set $@mobcount, 0; // current numbers of "mobsters"
+	set $@lhz_alert, 0; // Alert on Lighthalzen(0 = off, 1 = on)
+	set $@i, 0;
+	
+	end;
+
+OnMinute00:
+OnMinute05:
+OnMinute10:
+OnMinute15:
+OnMinute20:
+OnMinute25:
+OnMinute30:
+OnMinute35:
+OnMinute40:
+OnMinute45:
+OnMinute50:
+OnMinute55:
+	if($@lhz_alert == 0) set $@sneakguard, $@sneakguard + rand(1,3);
+	if($@lhz_alert == 1) set $@sneakguard, $@sneakguard - 1;  // Monsters will die after 5~10 min. (sneakAddSuber)
+	end;
+}
+
+lighthalzen.gat,1,1,7	script	AlertChk	-1,{
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	if($@sneakguard >= $@threshold) goto MakeMob;
+	if($@sneakguard == 0) goto ClearMob;  // Monsters will die after 5~10 min. (sneakAddSuber)
+	setnpctimer 0;
+	end;
+	
+MakeMob:
+	if($@lhz_alert == 1) goto ChkEnd;
+	set $@mobcount, $@mob;
+	mapannounce "lighthalzen.gat","Maintenance Organization of the Public Order: Currently the security of the city has been compromized, We ask the citizens to be more careful. I repeat. We ask the citizens to be more careful.", 1;
+	
+	for( set $@i, 0; $@i < $@mob; set $@i, $@i + 1 ) {
+		monster "lighthalzen.gat",0,0,"Mobster",1592,1,"Mobs::MobKilled";
+	}
+
+	set $@lhz_alert, 1;	
+	set $@sneakguard, 2;   // Monsters will die after 5~10 min. (sneakAddSuber)
+	setnpctimer 0;
+	end;
+	
+ClearMob:
+	if($@lhz_alert == 0) goto ChkEnd;
+	set $@mobcount, 0;
+	mapannounce "lighthalzen.gat","Maintenance organization of the Public Order: We were able to get rid of all the trouble makers in the city. You may relax now.", 1;	
+	killmonster "lighthalzen.gat","Mobs::MobKilled";
+	set $@lhz_alert, 0;
+	set $@sneakguard, 0;
+	setnpctimer 0;
+	end;
+		
+MobKilled:
+	set $@mobcount, $@mobcount - 1;
+	if($@mobcount == 0) goto ClearMob;
+	setnpctimer 0;
+	end;	
+	
+ChkEnd:	
+	setnpctimer 0;
+	end;	
+}
+
+lighthalzen.gat,267,200,3	script	Security Guard	868,{
+
+	if(countitem(7350)>=1) goto Lhzpass1;
+	if($@lhz_alert == 1) goto Lhzstop;
+	if((gettime(2)>00 && gettime(2)<10)) goto LhzTalk2;
+	if((gettime(2)>30 && gettime(2)<40)) goto LhzTalk2;
+	set @LhzTalk,rand(1,10);
+	if(@LhzTalk  < 2 ) goto LhzTalk1;
+
+LhzTalk:
+	mes "[Guard]";
+	mes "Hey! Where do you think you are going?";
+	mes "I can not send nobody to the slum district!";
+	mes "If we let suspecious people like you pass,";
+	mes "there is no point in piece keeping!";
+	close;
+
+LhzTalk1:
+	mes "-Looks like the guard is doing something else";
+	mes "Now is a good time to sneak by.-";
+	next;
+	warp "lighthalzen.gat",297,227;
+	set $@sneakguard, $@sneakguard + 1;
+	close;
+
+LhzTalk2:
+	set @LhzTalk,rand(1,10);
+	if(@LhzTalk  < 2 ) goto LhzTalk;
+	mes "[Guard]";
+	mes "zzZ... zzZ... zzZ...";
+	mes "hmm. hmm... zzZ...";
+	next;
+	mes "-Looks like the guard is sleeping";
+	mes "Now is a good time to sneak by.-";
+	next;
+	warp "lighthalzen.gat",297,227;
+	close;
+
+Lhzpass1:
+	mes "[Guard]";
+	mes "Who are you! ...Hmm? You have a pass?";
+	mes "I'm sorry. You look like an adventurer,";
+	mes "but I guess you got the authority.";
+	mes "You may pass.";
+	next; 
+	warp "lighthalzen.gat",297,227;
+	close;
+
+Lhzstop:
+	mes "[Guard]";
+	mes "Recently, there were too many people sneaking pass us,";
+	mes "so we raised the security level.";
+	mes "Who sneak past us anyway?";
+	mes "It's troublesome...";
+	close;
+}
+
+lighthalzen.gat,294,223,7	script	Security Guard	868,{
+
+	if(countitem(7350)==1) goto Lhzpass1;
+	if($@lhz_alert == 1) goto Lhzstop;
+	if((gettime(2)>00 && gettime(2)<10)) goto LhzTalk2;
+	if((gettime(2)>30 && gettime(2)<40)) goto LhzTalk2;
+	set @LhzTalk,rand(1,10);
+	if(@LhzTalk  < 2 ) goto LhzTalk1;
+
+LhzTalk:
+	mes "[Guard]";
+	mes "Hey! Where do you think you are going?";
+	mes "I can not send nobody to the slum district!";
+	mes "If we let suspecious people like you pass,";
+	mes "there is no point in piece keeping!";
+	close;
+
+LhzTalk1:
+	mes "-Looks like the guard is doing something else";
+	mes "Now is a good time to sneak by.-";
+	next;
+	warp "lighthalzen.gat",264,200;
+	set $@sneakguard, $@sneakguard + 1;
+	close;
+
+LhzTalk2:
+	set @LhzTalk,rand(1,10);
+	if(@LhzTalk  < 2 ) goto LhzTalk;
+	mes "[Guard]";
+	mes "zzZ... zzZ... zzZ...";
+	mes "hmm. hmm... zzZ...";
+	next;
+	mes "-Looks like the guard is sleeping";
+	mes "Now is a good time to sneak by.-";
+	next;
+	warp "lighthalzen.gat",264,200;
+	close;
+
+Lhzpass1:
+	mes "[Guard]";
+	mes "Who are you! ...Hmm? You have a pass?";
+	mes "I'm sorry. You look like an adventurer,";
+	mes "but I guess you got the authority.";
+	mes "You may pass.";
+	next; 
+	warp "lighthalzen.gat",264,200;
+	close;
+
+Lhzstop:
+	mes "[Guard]";
+	mes "Recently, there were too many people sneaking pass us,";
+	mes "so we raised the security level.";
+	mes "Who sneak past us anyway?";
+	mes "It's troublesome...";
+	close;
+}

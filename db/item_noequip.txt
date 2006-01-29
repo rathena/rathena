@@ -1,0 +1,7 @@
+// The equipment/items restriction file 
+// here you define which items may not be used at PvP / GvG 
+// format: <item id>,<mode>
+// mode = 1- restricted in PVP, 2- restricted in GVG, 3- restricted in both PvP and GvG
+
+//1201,1 you can't use KNIFE(ID 1201) on PvP and GvG
+//608,3 you can't use Yggdrasil Seed(ID 608) on both PvP & GvG & WoE Castles

@@ -1,0 +1,320 @@
+//===== Athena Script =======================================
+//= Ayothaya Quests
+//===== By ================================================
+//= Fredzilla
+//===== Version ===========================================
+//= 1.4
+//===== Compatible With ===================================
+//= eAthena 1.0
+//===== Description =======================================
+//= 1 Quests with 2 parts for Ayothaya
+//===== Comments ==========================================
+//= List or Variables used
+//= @fishing - 	Checks for if you have caught a fish or not, 
+//=	       	1/10 chance you will get the wedding ring if 
+//=		you have started that quest.
+//= weddingring - Signifies the start of the wedding ring 
+//=               quest, and used throughout to keep track of 
+//=               progress.
+//= recoveredring - Signifies you have retrieved the ring 
+//=		    and therefore can't just drop the ring and 
+//=		    get the same quest again.
+//= 1.0 - First Release, made with infomation from RagnaInfo
+//= 1.1 - added anti-novice protection [Lupus]
+//= 1.3 - Fixed exploit [Lupus]
+//= 1.4 Updated, more close to the official. Thanks to birkiczd
+//=	Also optimized it again, remove unused global variable [Lupus]
+//=========================================================
+
+ayo_dun02.gat,277,178,1	script	OBB	139,4,4,{
+	if(AyoOBB==1 || weddingring!=3) end;
+	mes "["+strcharinfo(0)+"]";
+	mes "Huh what is this?, not foot prints, this is an Old Blue coloured Box";
+	next;
+	set AyoOBB,1;
+	getitem 603,1;
+	logmes "Q_AYOTH1: got OBB";
+	mes "["+strcharinfo(0)+"]";
+	mes "I think I will keep it";
+	close;
+}
+//Dungeon 1 foot prints x 5
+ayo_dun01.gat,30,149,1	script	Clue	139,5,5,{
+	if(weddingring!=3) end;
+	npctalk "There are some foot prints here, they head off to the East.";
+	set @footprints1,1;
+	close;
+}
+ayo_dun01.gat,70,149,1	script	Clue	139,5,5,{
+	if(weddingring!=3) end;
+	npctalk "There are some more foot prints, they are heading off to the East too!";
+	set @footprints2,1;
+	close;
+}
+ayo_dun01.gat,100,149,1	script	Clue	139,5,5,{
+	if(weddingring!=3) end;
+	npctalk "More foot prints heading to the East, who do they belong too?";
+	set @footprints3,1;
+	close;
+}
+ayo_dun01.gat,190,149,1	script	Clue	139,5,5,{
+	if(weddingring!=3) end;
+	npctalk "More foot prints, but these are going North.";
+	set @footprints4,1;
+	close;
+}
+ayo_dun01.gat,261,263,1	script	Clue	139,5,5,{
+	if(weddingring!=3) end;
+	npctalk "There are some foot prints, they seem to head into that hole there.";
+	set @footprints5,1;
+	close;
+}
+
+//Dungeon 2 foot prints x 4 + 1 fake
+ayo_dun02.gat,222,204,1	script	Clue	139,5,5,{
+	if(weddingring!=3) end;
+	npctalk "Yet more foot prints, they are either going South or West.";
+	set @footprints6,1;
+	close;
+}
+ayo_dun02.gat,169,212,1	script	Clue	139,5,5,{
+	if(weddingring!=3) end;
+	npctalk "Looks like there are foot print going to the West.";
+	set @footprints7,1;
+	close;
+}
+ayo_dun02.gat,129,212,1	script	Clue	139,5,5,{
+	if(weddingring!=3) end;
+	npctalk "Ok these foot prints are either going to the North or West.";
+	set @footprints8,1;
+	close;
+}
+ayo_dun02.gat,79,212,1	script	Clue	139,7,7,{
+	if(weddingring!=3) end;
+	npctalk "These are very new, they are going North.";
+	set @footprints9,1;
+	close;
+}
+//FAKE
+ayo_dun02.gat,245,166,1	script	Clue	139,7,7,{
+	if(weddingring!=3) end;
+	npctalk "Seems something came by this way, to the East.";
+	close;
+}
+
+ayothaya.gat,233,105,7	script	Shuda	838,{
+	mes "[Shuda]";
+	if(BaseLevel<50) {
+		mes "Where is my ring!?!";
+		close;
+	}
+	if(weddingring==2) goto L_Quest2;
+	if(weddingring==3) goto L_OnQ2;
+	if(weddingring==4) goto L_QuestComplete;
+	if(weddingring==5) goto L_QuestOver;
+	if(countitem(7288)>=1) goto L_RingFound;
+	mes "Oh please wont you help me, my partner has gone missing, but not before droping our ^FF0000Engagement Ring^000000 maybe there is a way of ^0000FFfishing^000000 it out of the sea.";
+	set weddingring,1;
+	close;
+L_RingFound:
+	mes "Oh is that my ring!?!";
+	next;
+	mes "[Shuda]";
+	mes "Can I please have it back?";
+	next;
+	menu "Yes, here you go",N_Yes,"No, I found it, it's mine",-;
+	mes "[Shuda]";
+	mes "Think what you want, but that ring is mine, and without it I can never marry my true love.";
+	mes "";
+	mes "Where ever he may be.";
+	close;
+N_Yes:
+	mes "[Shuda]";
+	if(countitem(7288)<1) {
+		mes "Go away, cheater!";
+		close;
+	}
+	delitem 7288,1;
+	mes "Thank you so much, now I have this back maybe my partner will return.";
+	set weddingring,2;
+	next;
+	mes "[Shuda]";
+	mes "Come back to me when you have time, I need you to do something else for me.";
+	close;
+L_Quest2:
+	mes "It seems even though I have my ring back my partner ^FF0000Annon^000000 doesn't seem to want to come back to me";
+	mes "Maybe he has gotten lost somewhere";
+	mes "";
+	mes "Will you please go and look for him";
+	next;
+	menu "Yes, I would be glad to",L_YesQ2,"No, he will come back on his own",-;
+	mes "[Shuda]";
+	mes "Well he might, but I still need someone to find him, I am afraid something might have happened to him.";
+	close;
+L_YesQ2:
+	set weddingring,3;
+	mes "[Shuda]";
+	mes "Oh thank you so much, I think someone in the town might have seen where he went, maybe he can give you a clue";
+	close;
+L_OnQ2:
+	mes "Have you been able to find my love yet?";
+	mes " ";
+	mes "Please hurry.";
+	mes "*tear*";
+	close;
+L_QuestComplete:
+	mes "You have found him ?!?";
+	mes "Then where is he???";
+	next;
+	mes "You explain the situation.";
+	next;
+	mes "[Shuda]";
+	mes "Well, I thought he was my one.";
+	mes "I don't think I will ever find another like him.";
+	mes "*tear*";
+	next;
+	set weddingring,5;
+	mes "[Shuda]";
+	mes "I can understand, but why not come and talk to me about it, we might have been able to talk it out.";
+	close;
+L_QuestOver:
+	mes "Nice to see you again "+strcharinfo(0)+". How have you been?";
+	close;
+}
+
+ayothaya.gat,253,99,3	script	Fisherman	843,{
+	mes "[Dannai]";
+	mes "This place is known to be teeming with fish. The fish here tend to eat anything they find, so it's easy to catch them.";
+	next;
+	mes "[Dannai]";
+	mes "We are providing a fishing rod rental service. Every time you fish, you'll need ^4466771 Monster's Food^000000 to use as bait, and pay a rod rental fee of ^44667750 Zeny^000000.";
+	next;
+	mes "[Dannai]";
+	mes "Would you";
+	mes "like to try?";
+	next;
+	menu "Yes",-,"No",L_No;
+	if(countitem(528) < 1 || zeny < 50) goto L_Fail;
+	delitem 528,1;
+	set zeny,zeny-50;
+	mes "[Fisher Man]";
+	mes "Ok give it a good swing.";
+	mes "Lets see if you got anything.";
+	next;
+	set @fishing, rand(1,10);
+	mes "[Fisher Man]";
+	if(@fishing<5) goto L_Nothing;
+	if(@fishing<10) goto L_Fish;
+	if(@fishing==10) goto L_RingCheck;
+L_No:
+	mes "[Dannai]";
+	mes "Come back anytime.";
+	close;
+L_Fail:
+	mes "[Dannai]";
+	mes "Seems you don't have what I need";
+	mes "Come back when you have some Monster Feed, and 50 zeny.";
+	close;
+L_Nothing:
+	mes "Sorry it seems like you didn't get anything, try again anytime.";
+	close;
+L_Fish:
+	getitem 544,1;
+	mes "Look at this you got yourself a fish, well done.";
+	close;
+L_RingCheck:
+	if(weddingring!=1 || recoveredring==1) goto L_Fish;
+	mes "What is this, some sort of ring!!!";
+	mes "Well I guess since you fished it out you can keep it";
+	next;
+	getitem 7288,1;
+	mes "[Fisher Man]";
+	mes "Come back anytime";
+	set weddingring,0;
+	set recoveredring,1;
+	close;
+}
+
+ayothaya.gat,192,171,4	script	Old Man	824,{
+	mes "[Tham]";
+	if(weddingring==3) goto L_OnQ2;
+	mes "What a nice day it is today, don't you agree?";
+	close;
+L_OnQ2:
+	mes "What! Annon is missing, I only saw him a few minutes ago.";
+	next;
+	mes "[Tham]";
+	mes "He was heading for Ayothaya's dungeon, I thought this kind of odd, and now you say he hasn't come back?!?";
+	mes "I think you should follow him in there, just in case something has happened to him";
+	next;
+	mes "[Tham]";
+	mes "Maybe he has left something inside the dungeon, something that can lead you to him";
+	mes "But thats just me";
+	next;
+	mes "[Tham]";
+	mes "You can get to the dungeon through the old temple, it is one map to the right of here, and down the hill.";
+	close;
+}
+
+ayo_dun02.gat,91,264,4	script	Guy	822,{
+	if(weddingring==4) goto L_QuestComplete;
+	if(weddingring==5) goto L_TalkedShuda;
+	if(weddingring==3 && @footprints1==1 && @footprints2==1 && @footprints3==1 && @footprints4==1 && @footprints5==1 && @footprints6==1 && @footprints7==1 && @footprints8==1 && @footprints9==1) goto L_Groom;
+	mes "[Guy]";
+	mes "She won't find me here,she won't...";
+	close;
+L_Groom:
+	
+	mes "[Annon]";
+	mes "Help me please...";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "^He seems to be injured very bad...";
+	next;
+	menu "Treat his wounds",-,"Leave him alone",L_Go;
+	if(countitem(504) < 1) goto L_Need;
+	delitem 504,1;
+	mes "[Annon]";
+	mes "Who are you";
+	mes "Have you been sent to follow me?";
+	next;
+	mes "[Annon]";
+	mes "So I see now, my ex-partner has sent you to see if I'm OK.";
+	mes " ";
+	mes "Can you go and tell her I'm ok, but I cant go through with the marriage.";
+	next;
+	mes "[Annon]";
+	mes "I cant really give a reason, just tell her that I love her, but not enough to spend the rest of my life with her.";
+	next;
+	mes "[Annon]";
+	mes "I hope she will understand.";
+	mes " ";
+	mes "I guess you will want something in return.";
+	next;
+	mes "[Annon]";
+	mes "I can train you, and make you gain some exp.";
+	mes " ";
+	mes "I will do this now.";
+	next;
+	set BaseExp,BaseExp+100000;
+	set weddingring,4;
+	mes "[Annon]";
+	mes "It is done, please make you way back to Shuda, and please try not to make her cry";
+	close;
+L_Need:
+	mes "["+strcharinfo(0)+"]";
+	mes "I need a White potion to be able to cure him.";
+	close;
+L_Go:
+	mes "["+strcharinfo(0)+"]";
+	mes "Someone else will probably find him.I have other things to do.";
+	close;
+L_QuestComplete:
+	mes "[Annon]";
+	mes "Have you seen Shuda yet?";
+	close;
+L_TalkedShuda:
+	mes "[Annon]";
+	mes "Did she take it OK?";
+	close;
+}

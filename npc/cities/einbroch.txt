@@ -1,0 +1,1513 @@
+//===== eAthena Script ======================================= 
+//= Einbroch Town
+//===== By: ================================================== 
+//= Nexon
+//===== Current Version: ===================================== 
+//= 0.4c
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3000+
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= 0.2 Added some NPCs [MasterOfMuppets]
+//= 0.3 Added a few npcs by reddozen [MasterOfMuppets]
+//= 0.4 Added a crappy quest, have fun guys... [MasterOfMuppets]
+//= 0.4a Added exp bonus for the factory quest, borrowed from a Korean fansite.
+//= 0.4b Added missing close [Komurka]
+//============================================================
+
+
+//== some boards, signs ======================
+einbroch.gat,220,208,5	script	Notice Board	858,{
+	mes "[Weapon Shop Entrance]";
+	close;
+}
+
+einbroch.gat,183,174,5	script	Bulletin Board	858,{
+	mes "East - Weapon Shop, Hotel";
+	mes "South - Factory";
+	mes "Southwest - Airship Repair Shop,";
+	mes "Laboratory";
+	mes "Northwest - Airport";
+	close;
+}
+
+einbroch.gat,244,255,5	script	Bulletin Board	858,{
+	mes " ";
+	mes " Train Station";
+	close;
+}
+	
+einbroch.gat,68,206,5	script	Bulletin Board	858,{
+	mes " ";
+	mes " Airship Airport";
+	close;
+}
+	
+einbroch.gat,162,256,5	script	Bulletin Board	858,{
+	mes "East - Train Station";
+	mes "Southeast - Hotel";
+	mes "South - Weapon Shop, Factory";
+	mes "Southwest - Airport, Airship Repair";
+	mes "Shop, Laboratory";
+	close;
+}
+
+einbroch.gat,235,141,5	script	Bulletin Board	858,{
+	mes "Southwest- Airship Repair Shop,";
+	mes "Laboratory";
+	mes "Northwest- Airport";
+	mes "Northwest- Weapon Shop, Hotel, Train";
+	mes "Station";
+	close;
+}
+
+//===== Town NPC ===========================================
+function	script	Ein_Tower	{
+	mes "["+ @Tower_Name$ +"]";
+	mes "Good day~";
+	mes "I'm " + @Tower_Name$ +", your";
+	mes "guide to exploring";
+	mes "the Einbroch Tower.";
+	next;
+	mes "["+ @Tower_Name$ +"]";
+	mes "Einbroch Tower offers";
+	mes "the best view of our city";
+	mes "and it's a great place to";
+	mes "meet with friends or take";
+	mes "a date. The Einbroch Tower";
+	mes "admission fee is 10 zeny.";
+	next;
+	mes "["+ @Tower_Name$ +"]";
+	mes "Right now, we're offering";
+	mes "a special promotion called";
+	mes "the Apple Combo Set for only";
+	mes "20 zeny. This set includes";
+	mes "Einbroch Tower admission";
+	mes "and an Apple to snack on.";
+	next;
+	menu "Tower Admission Only",s_Tower,"Apple Combo Set",s_Apple,"Cancel",-;
+
+	mes "["+ @Tower_Name$ +"]";
+	mes "I see.";
+	mes "Feel free to";
+	mes "come back any";
+	mes "time. Thank you.";
+	close2;
+	return;
+	
+s_Tower:
+	if(Zeny < 10)goto s_NEnough;
+	set Zeny,Zeny - 10;
+s_Tower2:
+	mes "["+ @Tower_Name$ +"]";
+	mes "Thank you for";
+	mes "using our services.";
+	mes "Let me guide you to";
+	mes "the tower right away.";
+	close2;
+	warp "einbroch.gat",174,204;
+	return;
+	
+s_Apple:
+	if(Zeny < 20)goto s_NEnough;
+	mes "["+ @Tower_Name$ +"]";
+	mes "Before I guide you to";
+	mes "the tower, let me check";
+	mes "your status to insure";
+	mes "your safety before I give";
+	mes "you the Apple Combo Set.";
+	next;
+	set Zeny,Zeny - 20;
+	getitem 512,1;
+	goto s_Tower2;
+	
+s_NEnough:
+	mes "["+ @Tower_Name$ +"]";
+	mes "I'm sorry but you don't";
+	mes "have enough zeny for the";
+	mes "requested service.";
+	close2;
+	return;
+}
+	
+einbroch.gat,176,172,5	script	Khemko	855,{
+	set @Tower_Name$,"Khemko";
+	callfunc "Ein_Tower";
+	end;
+}
+	
+einbroch.gat,218,198,5	script	Mark	855,{
+	set @Tower_Name$,"Mark";
+	callfunc "Ein_Tower";
+	end;
+}
+	
+einbroch.gat,174,228,5	script	Oberu	855,{
+	set @Tower_Name$,"Oberu";
+	callfunc "Ein_Tower";
+	end;
+}
+	
+einbroch.gat,175,196,5	script	Morei	854,{
+	mes "[Morei]";
+	mes "Greetings,";
+	mes "I am Morei,";
+	mes "Assistant Guide";
+	mes "of Einbroch Tower.";
+	next;
+	mes "[Morei]";
+	mes "If you wish to return";
+	mes "to the ground floor,";
+	mes "please let me know.";
+	mes "Would you like to go";
+	mes "back to ground level?";
+	next;
+	menu "Yes.",s_Goback,"No.",-;
+
+	mes "[Morei]";
+	mes "I see.";
+	mes "I hope you";
+	mes "enjoy your time";
+	mes "in Einbroch Tower.";
+	close;
+s_Goback:
+	mes "[Morei]";
+	mes "I see.";
+	mes "Let me lead you";
+	mes "to the ground floor.";
+	mes "Thank you for using";
+	mes "our services.";
+	close2;
+	set @towerwarp,rand(1,3);
+	if(@towerwarp == 0)warp "einbroch.gat",218,196;
+	if(@towerwarp == 1)warp "einbroch.gat",178,172;
+	if(@towerwarp == 3)warp "einbroch.gat",172,228;
+	end;
+}
+	
+einbroch.gat,208,208,3	script	Kesunboss	850,{
+	mes "[Kesunboss]";
+	mes "Lady Calla is the";
+	mes "epitome of elegance,";
+	mes "a veritable goddess";
+	mes "of Einbroch";
+	next;
+	mes "[Kesunboss]";
+	mes "Her gentle voice,";
+	mes "that angelic smile, her";
+	mes "kindness and warmth";
+	mes "towards other people";
+	mes "and above all...";
+	next;
+	mes "[Kesunboss]";
+	mes "Calla's family";
+	mes "is wealthy beyond";
+	mes "imagination! She's";
+	mes "perfect! I don't know who";
+	mes "she'll marry, but he'd be";
+	mes "a lucky gentleman, I'm sure.";
+	next;
+	mes "[Kesunboss]";
+	mes "Lady Calla lives in a magnificent";
+	mes "mansion that makes other houses";
+	mes "look like schacks in comparison.";
+	mes "Head north and then west from";
+	mes "here if you wish to marvel in its";
+	mes "beauty and elegance.";
+	close;
+}
+
+einbroch.gat,232,255,5	script	Khowropher	847,{
+	mes "[Khowropher]";
+	mes "^6A6A6A*Cough cough*^000000";
+	mes "Jiminy! The air here";
+	mes "is so thick and grimy!";
+	mes "And it's worse for us old";
+	mes "people with breathing";
+	mes "problems! ^111111*Haaack*^000000";
+	next;
+	mes "[Khowropher]";
+	mes "I don't care if they keep";
+	mes "building more and more";
+	mes "factories and homes in this";
+	mes "town. Still, I'd like to spend";
+	mes "the rest of my life somewhere";
+	mes "quiet and with clean air...";
+	next;
+	mes "[Khowropher]";
+	mes "Then again, Einbroch is my";
+	mes "hometown and I can't just up";
+	mes "and leave. I suppose it's my";
+	mes "fate to suffer from this fould air";
+	mes "until the day I die.^6A6A6A*Sigh...*";
+	close;
+}
+
+einbroch.gat,259,327,5	script	Leslie	846,{
+	mes "[Leslie]";
+	mes "^6A6A6A*Cough cough*^000000";
+	mes "Laaaand sakes!";
+	next;
+	mes "[Leslie]";
+	mes "An old woman like me";
+	mes "can't breathe this air! How";
+	mes "do people even live in all this";
+	mes "smog? Sure, the air in Einbech";
+	mes "isn't pristine, but the air here in";
+	mes "Einbroch is much worse! ^111111*Cough~!*^000000";
+	next;
+	mes "[Leslie]";
+	mes "I hate coming here";
+	mes "sometimes! The air is";
+	mes "totally polluted and this";
+	mes "city is full of stuck up";
+	mes "pricks! But they sell stuff";
+	mes "here I can't buy back home...";
+	close;
+}
+
+einbroch.gat,232,272,3	script	Train Station Staff::EinbrochTrain	852,{
+	mes "[Staff]";
+	mes "Welcome to";
+	mes "the Train Station.";
+	mes "Trains to Einbech";
+	mes "are always running";
+	mes "so if you miss one,";
+	mes "it's no problem.";
+	next;
+	mes "[Staff]";
+	mes "The fare to board the";
+	mes "train that runs the Einbroch";
+	mes "to Einbech line is 200 zeny.";
+	mes "Would you like to buy a ticket?";
+	next;
+	menu "Yes.",s_Yes,"No.",-,"About the Enviroment...",s_Enviroment;
+
+	mes "[Staff]";
+	mes "Very well, then.";
+	mes "Please enjoy your";
+	mes "stay in Einbroch.";
+	close;
+s_Yes:
+	if(Zeny < 200)goto s_NEnough;
+	mes "[Staff]";
+	mes "Thank you";
+	mes "very much.";
+	mes "Have a safe trip.";
+	mes "^111111*Ahem*^000000 All aboard!";
+	close2;
+	set Zeny,Zeny - 200;
+	warp "einbech.gat",43,215;
+	end;
+s_NEnough:
+	mes "[Staff]";
+	mes "I'm sorry but you";
+	mes "do not have enough";
+	mes "money to pay the fee.";
+	close;
+s_Enviroment:
+	mes "[Staff]";
+	mes "Einbroch is infamous for";
+	mes "its air pollution, no doubt";
+	mes "caused by the industrial";
+	mes "facilities located here.";
+	mes "it's really horrible...";
+	next;
+	mes "[Staff]";
+	mes "Sometimes the air pollution";
+	mes "gets so bad that it becomes";
+	mes "hard to breathe. If you hear";
+	mes "the Einbroch Smog Alert, you";
+	mes "should find shelter immediately!";
+	close;
+}
+	
+einbroch.gat,252,301,3	duplicate(EinbrochTrain)	Train Station Staff	852
+
+einbroch.gat,228,121,5	script	Little Toby	855,{
+	mes "[Little Toby]";
+	mes "Excuse me...";
+	mes "But I'm lost!";
+	mes "I can't find my";
+	mes "mom or dad!";
+	next;
+	mes "[Little Toby]";
+	mes "A-am I at the airport?!";
+	mes "My parents are suposed";
+	mes "to come get me, but I still";
+	mes "haven't found them! We just";
+	mes "moved here, so i dont know";
+	mes "where anything is!";
+	next;
+	mes "[Little Toby]";
+	mes "W-wait!";
+	mes "Where are you";
+	mes "going?! Dont leave";
+	mes "me, I'm all alone...!";
+	close;
+}
+	
+einbroch.gat,229,149,3	script	Sleik	854,{
+	mes "[Sleik]";
+	mes "Surprisingly, we have";
+	mes "a Train Station that everyone";
+	mes "has been calling a victory for";
+	mes "science. I mean, shouldn't we";
+	mes "be more amazed by the airship";
+	next;
+	mes "[Sleik]";
+	mes "Now, if you want to know";
+	mes "where the train actually goes";
+	mes "I wouldn't be able to tell you.";
+	mes "After all, I never rode it. But";
+	mes "still, I guess having our own";
+	mes "Train Station is a good thing";
+	close;
+}
+
+einbroch.gat,236,191,3	script	Tan	855,{
+	mes "[Tan]";
+	mes "All the factories";
+	mes "here in Einbroch are";
+	mes "causing a serious air";
+	mes "pollution problem.";
+	next;
+	mes "[Tan]";
+	mes "I'm an Airship engineer and";
+	mes "everyday, all day long, I deal";
+	mes "with oil stains and all sorts";
+	mes "of pollutants. i'm supprised";
+	mes "I havn't gotten sick yet...";
+	next;
+	mes "[Tan]";
+	mes "Still, I try to be careful";
+	mes "when I can. Whenever I go";
+	mes "out into the city's red fog,";
+	mes "I always wear my Flu Mask.";
+	mes "If you'll be here a while,";
+	mes "you should carry one with you.";
+	close;
+}
+
+einbroch.gat,132,84,3	script	Liotzburg	853,{
+
+if(EinFactory > 13)goto s_Budget2;
+if(EinFactory == 13)goto s_Budget;
+	mes "[Liotzburg]";
+	mes "I'm the plant";
+	mes "superintendant of this";
+	mes "factory. Most of my employees";
+	mes "are diligent workers. I can't say";
+	mes "that of everyone, but overall we're";
+	mes "doing an excellent job. Ha ha ha~!";
+	next;
+	mes "[Liotzburg]";
+	mes "So long as this factory";
+	mes "is well maintained, we won't";
+	mes "have to worry about this city's";
+	mes "safety. The field overseer,";
+	mes "Zelmeto, is also very reliable.";
+	next;
+	mes "[Liotzburg]";
+	mes "I can trust Zelmeto";
+	mes "to look after things,";
+	mes "so there's no need for";
+	mes "me to go inside the factory.";
+	mes "Delegating work is great!";
+	next;
+	mes "[Liotzburg]";
+	mes "Our factory will";
+	mes "continue to develop";
+	mes "and everyone will be";
+	mes "proud of the progress";
+	mes "we're making. Yes, I can";
+	mes "assure you of that!";
+	close;
+s_Budget:
+	mes "[Liotzburg]";
+	mes "Why waste money?";
+	mes "We haven't had any";
+	mes "problems so far! Look,";
+	mes "everything's fine! Why";
+	mes "are you exaggerating";
+	mes "such small details?";
+	next;
+	mes "[Liotzburg]";
+	mes "The field overseer,";
+	mes "Zelmeto, just came by to";
+	mes "ask for a budget increase.";
+	mes "Well, I think he's lying!";
+	mes "Everything's perfect!";
+	if(EinFactory == 13)set EinFactory,14;
+	close;
+s_Budget2:
+	mes "[Liotzburg]";
+	mes "What...?";
+	mes "Factory Repair";
+	mes "budget? No way!";
+	next;
+	goto s_Budget;
+
+}
+
+ein_in01.gat,31,217,3	script	Cendadt	851,{
+
+	mes "[Cendadt]";
+	mes "This factory has a lot";
+	mes "of things that need fixing,";
+	mes "pronto! I'm amazed that";
+	mes "the place is still operating!";
+	next;
+	mes "[Cendadt]";
+	mes "Lucky for us, I head that";
+	mes "some altruistic adventurers";
+	mes "have been donating materials";
+	mes "to help keep this factory from";
+	mes "falling apart... Or worse.";
+	mes "But that's just a rumor.";
+	next;
+	mes "[Cendadt]";
+	mes "^6A6A6A*Sigh*^000000";
+	mes "Even if it is true,";
+	mes "there's nothing no one";
+	mes "here can do. Nobody has";
+	mes "the courage to challenge";
+	mes "the system, you know?";
+	next;
+	mes "[Cendadt]";
+	mes "I...";
+	mes "I better get";
+	mes "back to work";
+	mes "before I get";
+	mes "in trouble...";
+	close;
+}
+
+ein_in01.gat,36,204,3	script	Rombell	851,{
+
+	mes "[Rombell]";
+	mes "It's great that the";
+	mes "factory is making good";
+	mes "business and drawing";
+	mes "in a lot of profit, but I still";
+	mes "have one major convern.";
+	next;
+	mes "[Rombell]";
+	mes "The ammount of pollution";
+	mes "that this place is causing";
+	mes "is horrific! We've got these";
+	mes "machines blowing out toxic";
+	mes "gas all day long! The air";
+	mes "can't be safe for very long...";
+	next;
+	mes "[Rombell]";
+	mes "I mean, the air we're";
+	mes "breathing right now is";
+	mes "pretty foul and things";
+	mes "are only going to get";
+	mes "worse. How can we";
+	mes "solve this problem?";
+	close;
+}
+
+ein_in01.gat,49,202,3	script	Dorf	851,{
+
+	mes "[Dorf]";
+	mes "machines are sooo";
+	mes "convenient. Just look";
+	mes "at this contraption easily";
+	mes "do tasks that'd be tough";
+	mes "for me to finish alone";
+	next;
+	mes "[Dorf]";
+	mes "Now this is what";
+	mes "I call technology!";
+	mes "Sure, it takes effort and";
+	mes "money to make one of";
+	mes "these, but what do I care?";
+	next;
+	mes "[Dorf]";
+	mes "I've got no problems,";
+	mes "so long as this freaking";
+	mes "thing keeps working the";
+	mes "way I want it to!";
+	close;
+}
+
+ein_in01.gat,48,220,3	script	Lowe	851,{
+
+	mes "[Lowe]";
+	mes "...";
+	next;
+	mes "[Lowe]";
+	mes "...";
+	mes "......";
+	next;
+	mes "[Lowe]";
+	mes "...";
+	mes "......";
+	mes ".........";
+	next;
+	mes "[Lowe]";
+	mes "Hey. Why are you";
+	mes "looking at me like";
+	mes "that? There's no idle";
+	mes "chatting allowed at work.";
+	mes "If Canphotii catches";
+	mes "you, you'll be punished";
+	next;
+	mes "[Lowe]";
+	mes "Oh wait...";
+	mes "You don't work here.";
+	mes "I appologize, that kind";
+	mes "of reaction's an old";
+	mes "habit for me, adventurer.";
+	close;
+}
+
+ein_in01.gat,43,253,4	script	Canphotii	852,{
+
+	mes "[Canphotii]";
+	mes "Hustle, hustle!";
+	mes "Pick up the pace!";
+	mes "Anyone working too";
+	mes "slowly will be punished!";
+	next;
+	mes "[Canphotii]";
+	mes "Can't you understand";
+	mes "that?! Now go to your";
+	mes "station and get back to";
+	mes "work! Wait, are you even";
+	mes "an employee? If not, then";
+	mes "stop wandering around!";
+	next;
+	mes "[Canphotii]";
+	mes "You're not supposed";
+	mes "to be able to get in here!";
+	mes "I can't believe they let you";
+	mes "in! This requires extreme";
+	mes "disciplinary action!";
+	close;
+}
+
+ein_in01.gat,68,209,4	script	Khashurantze	852,{
+
+	mes "[Khashurantze]";
+	mes "I'm sorry, but you need";
+	mes "special authority in order";
+	mes "to enter this place. I'll have";
+	mes "to ask you to leave right now.";
+	if(EinFactory > 0)goto L_work;
+	close2;
+	warp "einbroch.gat",179,63;
+	end;
+
+L_work:
+	next;
+	mes "[Khashurantze]";
+	mes "Oh? Mr. Zelmeto asked you to help out?";
+	mes "In that case excuse me.";
+	close;
+}
+
+ein_in01.gat,113,211,3	script	Treinz	851,{
+
+	mes "[Treinz]";
+	mes "If you just pay me money,";
+	mes "I'll be your slave! There's";
+	mes "nothing I won't do! Anything";
+	mes "is fair game. Hell, I'll get buck";
+	mes "naked if you pay me enough.";
+	next;
+	mes "[Treinz]";
+	mes "If you pay me what I'm";
+	mes "worth, I'll work hard at";
+	mes "any task you set me to.";
+	mes "Sure, mining's rough, but";
+	mes "as long as the zeny's coming";
+	mes "in, I'm happy. Heh heh heh~";
+	close;
+}
+
+ein_in01.gat,84,218,3	script	Tsuen	851,{
+
+	mes "[Tsuen]";
+	mes "There was a time";
+	mes "when I dreamed of";
+	mes "being an adventurer,";
+	mes "just like you. But that";
+	mes "was a long time ago...";
+	next;
+	mes "[Tsuen]";
+	mes "Now, I'm nothing but";
+	mes "a factory manager. Still,";
+	mes "even if my job's not that";
+	mes "great, I'm pretty satisifed.";
+	mes "I'm sure people enjoy the";
+	mes "products I oversee and all...";
+	next;
+	mes "[Tsuen]";
+	mes "Maybe my life was meant";
+	mes "to be this way, even if it's";
+	mes "not how I planned it. But the";
+	mes "time will come when I up and";
+	mes "leave and travel the world";
+	mes "once I get my chance!";
+	next;
+	mes "[Tsuen]";
+	mes "I hope the day will";
+	mes "come when I can meet";
+	mes "you out in that big wide";
+	mes "world and greet you as";
+	mes "a fellow adventurer.";
+	close;
+}
+
+ein_in01.gat,85,261,3	script	Zherin	851,{
+
+	mes "[Zherin]";
+	mes "I'm in charge of this";
+	mes "blast furnace which";
+	mes "contains all of this";
+	mes "boiling magma.";
+	next;
+	mes "[Zherin]";
+	mes "Even though it doesn't";
+	mes "require actual labor, this";
+	mes "job is pretty tiring. I've got";
+	mes "to pay careful attention all";
+	mes "the time. It's pretty stressful.";
+	next;
+	mes "[Zherin]";
+	mes "Still, I'm proud of my job";
+	mes "since I have the responsibility";
+	mes "of ensuring employee safety.";
+	mes "Anyway, don't get too close";
+	mes "to the furnace. It won't do if";
+	mes "you get burned on accident!";
+	close;
+}
+
+ein_in01.gat,64,271,3	script	Vonstein	851,{
+
+	mes "[Vonstein]";
+	mes "Staring at this";
+	mes "bubbling hot liquid";
+	mes "metal gives me a good";
+	mes "feeling inside. It's like";
+	mes "that stuff can melt anything!";
+	next;
+	mes "[Vonstein]";
+	mes "Imagine covering an";
+	mes "entire street of people";
+	mes "with that stuff! Bwahah--";
+	mes "Oh, I'm sorry if I'm talking";
+	mes "crazy talk! I'm just kidding~";
+	close;	
+}
+
+ein_in01.gat,33,275,9	script	Pevtatin	848,{
+
+	mes "[Pevtatin]";
+	mes "Good god!";
+	mes "I'm so stressed!";
+	mes "It's been nonstop";
+	mes "since I moved here!";
+	next;
+	mes "[Pevtatin]";
+	mes "The work is tough and";
+	mes "already the boss hates";
+	mes "me! I didn't move here";
+	mes "for this! Still, the pay is";
+	mes "decent so I guess I should";
+	mes "endure just a little longer.";
+	next;
+	mes "[Pevtatin]";
+	mes "Here goes...!";
+	mes "Yo-heave-ho!";
+	mes "Yo-heave-ho~!";
+	close;
+}
+
+ein_in01.gat,87,237,3	script	Dinje	850,{
+
+	mes "[Dinje]";
+	mes "Do you know why a woman";
+	mes "like me has to work in this";
+	mes "factory? I'll tell you why...";
+	next;
+	mes "[Dinje]";
+	mes "My lazy husband, Gesin,";
+	mes "is just lying there on the";
+	mes "ground! So I have to work";
+	mes "in order to support us!";
+	next;
+	mes "[Dinje]";
+	mes "We can't rest for even";
+	mes "a second if we want to save";
+	mes "enough money to become";
+	mes "wealthy and powerful some";
+	mes "day. Don't you understand?";
+	next;
+	mes "[Dinje]";
+	mes "Well, my husband obviously";
+	mes "doesn't! How can he not know";
+	mes "how the real world works?!";
+	mes "Hey, kick his ass for me if";
+	mes "he doesn't wake up soon!";
+	close;
+}
+
+ein_in01.gat,103,238,9	script	Gesin	849,{
+
+	mes "[Gesin]";
+	mes "Arrgh!";
+	mes "This is killing me!";
+	mes "Why should I be rich?!";
+	mes "What's wrong with living";
+	mes "within our means?";
+	next;
+	mes "[Gesin]";
+	mes "I've got no problem";
+	mes "with my current way";
+	mes "of life, but the old ball";
+	mes "and chain disagrees.";
+	mes "Why is she so obsessed";
+	mes "with riches and power?";
+	next;
+	mes "[Gesin]";
+	mes "Well, in any case, I'd";
+	mes "like to help her, but I can't";
+	mes "get up! I'm exhausted and";
+	mes "my body is just overtaxed.";
+	mes "I have no strength at all.";
+	next;
+	mes "[Gesin]";
+	mes "This is horrible~";
+	mes "I should be resting";
+	mes "instead of worrying";
+	mes "about making money...";
+	close;
+}
+
+ein_in01.gat,67,243,3	script	Zelmeto	851,{
+	
+	if(EinFactory > 0)goto s_Switches;
+	mes "[Zelmeto]";
+	mes "Ah, you must be a visitor.";
+	mes "I'm Zelmeto Abellov, the";
+	mes "field overseer. Have you";
+	mes "been in this facility before?";
+	next;
+	mes "[Zelmeto]";
+	mes "This factory plays an";
+	mes "important role in our city";
+	mes "and generates a lot of income.";
+	mes "However, our employess suffer";
+	mes "from a poor work environment.";
+	next;
+	mes "[Zelmeto]";
+	mes "Our superintendant makes a lot";
+	mes "of money and seems content with";
+	mes "the current situation. However, the";
+	mes "rest of the workforce doesn't enjoy";
+	mes "all of the benefits he receives.";
+	mes "[Zelmeto]";
+	mes "Many people have already";
+	mes "quit and there are only a few";
+	mes "people who continue to work";
+	mes "here. So now we're understaffed";
+	mes "and I'm in quite a bind...";
+	next;
+	mes "[Zelmeto]";
+	mes "There are some urgent";
+	mes "tasks I need done, but";
+	mes "there's no way for me";
+	mes "to recruit new workers.";
+	mes "Ah, I'm sorry, I've spoken too";
+	mes "freely about my own problems...";
+	next;
+	menu "You're understaffed?",s_Underst,"No, it's okay.",-;
+
+	mes "[Zelmeto]";
+	mes "Thank you for";
+	mes "your kindness.";
+	mes "And please don't";
+	mes "let anyone know about";
+	mes "anything I just told you.";
+	close;
+
+s_Underst:
+	mes "[Zelmeto]";
+	mes "Yes, we are!";
+	mes "I don't have enough";
+	mes "people to inspect the";
+	mes "factory machines and";
+	mes "determine what kinds";
+	mes "of problems we have.";
+	next;
+	mes "[Zelmeto]";
+	mes "It's a time consuming";
+	mes "task I'd rather do on my";
+	mes "own. However, between that";
+	mes "and managing the workforce,";
+	mes "I don't have enough time...";
+	next;
+	menu "I can help you.",s_Help,"Keep up the good job.",-;
+
+	mes "[Zelmeto]";
+	mes "Well, it's a living.";
+	mes "^6A6A6A*Sigh*^000000 I can put up with";
+	mes "this, but I hope the higher";
+	mes "ups will consider improving";
+	mes "the work environment here...";
+	close;
+
+s_Help:
+	mes "[Zelmeto]";
+	mes "You can help me?";
+	mes "I know something like";
+	mes "this is too much to ask,";
+	mes "but I'll accept any help";
+	mes "anyone offers me. I'm";
+	mes "that desperate.";
+	next;
+	mes "[Zelmeto]";
+	mes "Alright, I'll have you";
+	mes "inspect the machines";
+	mes "in the factory one by one.";
+	mes "It's imperative that we know";
+	mes "what needs to be repaired";
+	mes "and what's working fine";
+	next;
+	mes "[Zelmeto]";
+	mes "First, find the ^FF00002nd control";
+	mes "panel^000000 and determine its";
+	mes "status. I'm fairly certain that";
+	mes "it broke a long time ago, but";
+	mes "it wouldn't hur to make sure.";
+	mes "You should find it easily.";
+	next;
+	mes "[Zelmeto]";
+	mes "When you finish your";
+	mes "inspection, report back";
+	mes "to me so I can tell you";
+	mes "which machine to check";
+	mes "next. Thanks again for";
+	mes "offering to help";
+	set EinFactory,1;
+	close;
+s_Switches:
+	switch(EinFactory)
+{
+	case 1:
+		mes "[Zelmeto]";
+		mes "If you would,";
+		mes "please inspect the";
+		mes "2nd control panel that";
+		mes "seems to have been";
+		mes "broken for a while...";
+		close;
+	break;
+
+	case 2:
+		mes "[Zelmeto]";
+		mes "Huh, I see.";
+		mes "We must do something";
+		mes "about that as soon as";
+		mes "we can. Now, let me tell";
+		mes "you what to check next.";
+		next;
+		mes "[Zelmeto]";
+		mes "There are 3 automatic";
+		mes "pressure governors which";
+		mes "hammer the bent iron plates";
+		mes "from above to flatten them. It";
+		mes "seems that one of them may";
+		mes "have some kind of problem.";
+		next;
+		mes "[Zelmeto]";
+		mes "Please inspect the ^FF0000automatic";
+		mes "pressure governors^000000. Even if the";
+		mes "problem seems small, please";
+		mes "report it to me. I know it might";
+		mes "seem fine now, but I want to";
+		mes "prevent an accident if I can.";
+		next;
+		mes "[Zelmeto]";
+		mes "Thank you";
+		mes "in advance,";
+		mes "adventurer.";
+		set EinFactory,3;
+		close;
+	break;
+
+	case 3:
+		mes "[Zelmeto]";
+		mes "You need to inspect";
+		mes "an automatic pressure";
+		mes "governor. It looks fine,";
+		mes "but sometimes it makes";
+		mes "strange noises.";
+		next;
+		mes "[Zelmeto]";
+		mes "It probably will";
+		mes "be a good idea to";
+		mes "check that machine";
+		mes "more carefully this";
+		mes "time, just in case.";
+		next;
+		mes "[Zelmeto]";
+		mes "Thank you";
+		mes "for helping us,";
+		mes "adventurer.";
+		close;
+	break;
+
+	case 4:
+		mes "[Zelmeto]";
+		mes "What...?";
+		mes "This is worse";
+		mes "than I expected. But";
+		mes "it's good that we know";
+		mes "about these problems";
+		mes "as soon as possible.";
+		next;
+		mes "[Zelmeto]";
+		mes "Don't you worry,";
+		mes "we'll take care of";
+		mes "this. In the meantime,";
+		mes "I'd like you to inspect";
+		mes "the next machine for me.";
+		next;
+		mes "[Zelmeto]";
+		mes "I want you to check";
+		mes "a ^FF0000control panel^000000. It's the";
+		mes "same kind as the one";
+		mes "you just inspected, but";
+		mes "bigger in size.";
+		next;
+		mes "[Zelmeto]";
+		mes "It's located in the";
+		mes "middle of the factory,";
+		mes "so you should be able";
+		mes "to find it. It may be in bad";
+		mes "condition, even though it's";
+		mes "operating fine for now...";
+		next;
+		mes "[Zelmeto]";
+		mes "We need to ensure that";
+		mes "it's stable, reliable and";
+		mes "doesn't pose a threat to";
+		mes "our workforce. Thanks";
+		mes "again, adventurer.";
+		set EinFactory,5;
+		close;
+	break;
+
+	case 5:
+		mes "[Zelmeto]";
+		mes "I'd like you to inspect";
+		mes "the control panel. It's";
+		mes "fairly large and can be";
+		mes "found in the middle of the";
+		mes "factory. You shouldn't have";
+		mes "too much trouble finding it.";
+		close;
+	break;
+
+	case 6:
+		mes "[Zelmeto]";
+		mes "I see...";
+		mes "It's most likely that";
+		mes "there was a short";
+		mes "circuit and most";
+		mes "of the internal devices";
+		mes "were burnt out...";
+		next;
+		mes "[Zelmeto]";
+		mes "Thanks for checking";
+		mes "that out for me. Now,";
+		mes "the next machine I need";
+		mes "you to inspect is different";
+		mes "than the others I've had";
+		mes "you examine.";
+		next;
+		mes "[Zelmeto]";
+		mes "It's a mechanical";
+		mes "hand that transports";
+		mes "small objects. We didn't";
+		mes "really give it a name, but";
+		mes "you should be able to find it.";
+		next;
+		mes "[Zelmeto]";
+		mes "Recently, it seems";
+		mes "that there have been";
+		mes "problems in operating";
+		mes "that machine. If something's";
+		mes "broken, we need to know";
+		mes "and fix it right away.";
+		next;
+		mes "[Zelmeto]";
+		mes "Thanks again";
+		mes "in advance.";
+		set EinFactory,7;
+		close;		
+	break;
+
+	case 7:
+		mes "[Zelmeto]";
+		mes "The machine which";
+		mes "I want you to inspect";
+		mes "this time is a small";
+		mes "sized conveyor.";
+		next;
+		mes "[Zelmeto]";
+		mes "Be sure that you";
+		mes "inspect the small";
+		mes "one, since we also";
+		mes "have a large conveyor";
+		mes "in the factory as well";
+		close;
+	break;
+
+	case 8:
+		mes "[Zelmeto]";
+		mes "Huh?";
+		mes "I'm suprised to hear";
+		mes "that. ^6A6A6A*Sigh*^000000 There's just";
+		mes "too many things that need";
+		mes "fixing. This is terrible...";
+		next;
+		mes "[Zelmeto]";
+		mes "Well, let me worry";
+		mes "about that for now. Please";
+		mes "focus on continuing to inspect";
+		mes "some of the other machines.";
+		next;
+		mes "[Zelmeto]";
+		mes "Now, there's a pipe inside";
+		mes "this factory that I want you";
+		mes "to look at. Many of our pipes";
+		mes "aren't in the best condition,";
+		mes "but this particular one might";
+		mes "be severely damaged.";
+		next;
+		mes "[Zelmeto]";
+		mes "Now, the pipe I want";
+		mes "you to inspect is located";
+		mes "near those large caultrons";
+		mes "of molten metal. You should";
+		mes "be able to find it pretty easily";
+		next;
+		mes "[Zelmeto]";
+		mes "Thanks again";
+		mes "for your help,";
+		mes "adventurer.";
+		set EinFactory,9;
+		close;
+	break;
+
+	case 9:
+		mes "[Zelmeto]";
+		mes "The pipe I want";
+		mes "you to inspect is located";
+		mes "near those large caultrons";
+		mes "of molten metal. You should";
+		mes "be able to find it pretty easily";
+		next;
+		mes "[Zelmeto]";
+		mes "Thanks again";
+		mes "for your help,";
+		mes "adventurer.";
+		close;
+	break;
+
+	case 10:
+		mes "[Zelmeto]";
+		mes "This is";
+		mes "worse than";
+		mes "I imagined...";
+		next;
+		mes "[Zelmeto]";
+		mes "We've got to start";
+		mes "repairs as soon as we";
+		mes "can! Hopefully, we can";
+		mes "resolve this before";
+		mes "any serious problems happen...";
+		next;
+		mes "[Zelmeto]";
+		mes "Alright, the last";
+		mes "thing that you need to";
+		mes "inspect is a ^FF0000large conveyor^000000.";
+		mes "It's similiar to the one you";
+		mes "inspected before, but it's";
+		mes "bigger and more powerful.";
+		next;
+		mes "[Zelmeto]";
+		mes "We have only one of these";
+		mes "machines and it's usually";
+		mes "moved around a lot since";
+		mes "a lot of people in the factory";
+		mes "use it. I really don't know";
+		mes "where it could be now.";
+		next;
+		mes "[Zelmeto]";
+		mes "Still I'm sure that";
+		mes "it's inside the building,";
+		mes "so you should be able to";
+		mes "find it. I hope you can inspect";
+		mes "that conveyor for me soon.";
+		set EinFactory,11;
+		close;
+	break;
+
+	case 11:
+		mes "[Zelmeto]";
+		mes "The machine which";
+		mes "you are supposed to";
+		mes "inspect right now";
+		mes "is a large convyore.";
+		next;
+		mes "[Zelmeto]";
+		mes "Remember that we";
+		mes "also have a small sized";
+		mes "conveyor, so make sure";
+		mes "that you examine the";
+		mes "larger one, alright?";
+		close;
+	break;
+
+	case 12:
+		mes "[Zelmeto]";
+		mes "Well, I figured that both";
+		mes "conveyors would have";
+		mes "similiar problems. We";
+		mes "can fix them at the";
+		mes "same time, but it'll";
+		mes "be a hassle";
+		next;
+		mes "[Zelmeto]";
+		mes "Thank you so much for";
+		mes "your help. Without you,";
+		mes "I'm pretty sure we wouldn't";
+		mes "know about these problems";
+		mes "until it was too late.";
+		next;
+		mes "[Zelmeto]";
+		mes "Now, I've got to make sure";
+		mes "we have enough materials";
+		mes "to make the repairs so that";
+		mes "the machines will be safely";
+		mes "functioning again.";
+		next;
+		mes "[Zelmeto]";
+		mes "First, I better";
+		mes "hurry and request";
+		mes "an increase for the";
+		mes "Factory Repair budget";
+		mes "from our superintendant.";
+		set EinFactory,13;
+		close;
+	break;
+
+	case 13:
+		mes "[Zelmeto]";
+		mes "I've got to report this";
+		mes "to our superintendant";
+		mes "as soon as possible.";
+		next;
+		mes "[Zelmeto]";
+		mes "With any luck, he'll approve";
+		mes "a budget increase so that we";
+		mes "can get all of the materials";
+		mes "needed for the repairs.";
+		close;
+	break;
+
+	case 14:
+		mes "[Zelmeto]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[Zelmeto]";
+		mes "^6A6A6A*Sigh*^000000";
+		mes "My proposal was rejected";
+		mes "by our superintendant. But";
+		mes "maintainance and repairs";
+		mes "are crucial for peak operating";
+		mes "efficiency and worker safety!";
+		next;
+		mes "[Zelmeto]";
+		mes "I'm frustrated and worried.";
+		mes "Maybe nothing will happen";
+		mes "for now, but we've got to";
+		mes "safeguard our future by";
+		mes "regularly maintaining";
+		mes "all of these machines";
+		next;
+		mes "[Zelmeto]";
+		mes "Even possible threats";
+		mes "to the safety of our workers";
+		mes "can't be ignored. Isn't there";
+		mes "something I can do? ^6A6A6A*Sigh*^000000";
+		next;
+		mes "[Zelmeto]";
+		mes "If we can";
+		mes "just get";
+		mes "20 ^FF0000Flexible Tube^000000,";
+		mes "10 ^FF0000Rusty Screw^000000 and";
+		mes "10 ^FF0000Used Iron Plate^000000,";
+		mes "we could make those repairs.";	
+		next;
+		mes "[Zelmeto]";
+		mes "But without funds, there's";
+		mes "no way we can purchase";
+		mes "those items. If something";
+		mes "happens, who's going to";
+		mes "be responsible?";
+		set EinFactory,15;
+		close;
+	break;
+
+	case 15:
+	if(countitem(7325) > 19 && countitem(7317) > 9 && countitem(7319) > 9)goto s_Again;
+		mes "[Zelmeto]";
+		mes "We need";
+		mes "at least";
+		mes "20 ^FF0000Flexible Tube^000000,";
+		mes "10 ^FF0000Rusty Screw^000000 and";
+		mes "10 ^FF0000Used Iron Plate^000000,";
+		mes "to repair this factory.";
+		next;
+		mes "[Zelmeto]";
+		mes "^6A6A6A*Sigh*^000000";
+		mes "But there's no way";
+		mes "we can get all of those";
+		mes "things. Our budget isn't";
+		mes "big enough to cover it.";
+		close;
+	s_Again:
+		mes "[Zelmeto]";
+		mes "Ah, it's you again.";
+		mes "It's shameful letting";
+		mes "other people know about";
+		mes "our miserable situation...";
+		next;
+		mes "[Zelmeto]";
+		mes "There's nothing";
+		mes "worth seeing here,";
+		mes "so there really isn't";
+		mes "a point in you coming to";
+		mes "visit this place anymore.";
+		next;
+		menu "Give him the materials.",s_Give,"Huh.",-;
+
+		mes "[Zelmeto]";
+		mes "^6A6A6A*Sigh*^000000";
+		mes "I'm really worried";
+		mes "about this factory's";
+		mes "future. What is our";
+		mes "superintendant thinking...?";
+		close;
+
+	s_Give:	
+		mes "[Zelmeto]";
+		mes "...Hm?";
+		mes "Aren't these the";
+		mes "materials we need";
+		mes "to make repairs in";
+		mes "the factory? How did";
+		mes "you find all of these?";
+		next;
+		if(countitem(7325) < 20 || countitem(7317) < 10 || countitem(7319) < 10)close;
+		delitem 7325,20;
+		delitem 7317,10;
+		delitem 7319,10;
+		set EinFactory,16;
+		if (BaseLevel < 80) set BaseExp,BaseExp+35000;
+		if ((BaseLevel >= 80) && (BaseLevel < 90)) set BaseExp,BaseExp+88000;
+		if (BaseLevel >= 90) set BaseExp,BaseExp+367000;
+		mes "[Zelmeto]";
+		mes "I don't know how";
+		mes "I can possible pay you";
+		mes "back for this great favor.";
+		mes "I appreciate that you've";
+		mes "stepped forward to help us.";
+		next;
+		mes "[Zelmeto]";
+		mes "Oh...!";
+		mes "In my years of managing,";
+		mes "I've learned the ultimate";
+		mes "motivation techniques. Let";
+		mes "me enhance your motivation";
+		mes "to show you my gratitude.";
+		next;
+		mes "[Zelmeto]";
+		mes "Now...";
+		mes "Just open your mind";
+		mes "and listen to my words";
+		mes "of encouragement";
+		mes "and inspiration...";
+		next;
+		mes "[Zelmeto]";
+		mes "^3131FFWhen the going";
+		mes "gets rough, you've";
+		mes "gotta get rougher!";
+		mes "You gotta climb that";
+		mes "mountain 'cause no one's";
+		mes "gonna climb it for you!";
+		next;
+		mes "[Zelmeto]";
+		mes "^3131FFDon't give it up!";
+		mes "Go for broke!";
+		mes "Losers are quitters";
+		mes "and quitters are losers!";
+		next;
+		mes "[Zelmeto]";
+		mes "^6A6A6A*Whew*";
+		mes "^000000I haven't given that much";
+		mes "inspiration in a while, but";
+		mes "your help was well worth it.";
+		mes "I'm going to start  the repairs, but";
+		mes "once again I'd like to thank you.";
+		close;
+	break;
+
+	case 16:
+		mes "[Zelmeto]";
+		mes "We'll be putting good";
+		mes "use to the materials you";
+		mes "gave me. With your help,";
+		mes "our factory will operate";
+		mes "safely. At least, for just";
+		mes "a little while longer.";
+		close;
+}	
+
+}
+
+ein_in01.gat,50,232,4	script	2nd Control Panel	111,{
+
+if(EinFactory == 1)
+{
+	mes "^3131FFIt's the 2nd control panel";
+	mes "Zelmeto asked you to inspect.";
+	mes "it looks totally broken: screws";
+	mes "are missing, and the iron cover";
+	mes "has been bent open, revealing";
+	mes "a tangled mess of wires inside.";
+	set EinFactory,2;
+	close;
+}
+end;
+}
+
+
+ein_in01.gat,108,217,4	script	3rd Pressure Governor	111,{
+
+if(EinFactory == 3)
+{
+	mes "^3131FFAt first glance, this";
+	mes "pressure governor looks";
+	mes "perfectly fine. But after you";
+	mes "check it more carefully, you";
+	mes "find that it's making strange";
+	mes "grinding noises and a few of";
+	mes "the surface screws are loose.";
+	set EinFactory,4;
+	close;
+}
+end;
+}
+
+ein_in01.gat,61,259,4	script	Main Control Panel	111,{
+
+if(EinFactory == 5)
+{
+	mes "^3131FFThe main control panel";
+	mes "doesn't look like it has";
+	mes "any problems. But after";
+	mes "tapping on its surface,";
+	mes "you hear a disheartening";
+	mes "hollow sound. It looks like";
+	mes "it's missing some parts...";
+	set EinFactory,6;
+	close;
+}
+end;
+}
+ein_in01.gat,47,197,4	script	Conveyor	111,{
+
+if(EinFactory == 7)
+{
+	mes "^3131FFThe conveyor's movements";
+	mes "look jittery and clumsy. The";
+	mes "mechanical arm also doesn't";
+	mes "look powerful enough to bear";
+	mes "the loads that it's carrying. The";
+	mes "screws in the conveyor look";
+	mes "loose and rusted over.";
+	set EinFactory,8;
+	close;
+}
+end;
+}
+
+ein_in01.gat,100,267,4	script	Pipe	111,{
+
+if(EinFactory == 9)
+{
+	mes "^3131FFThe inspection of this";
+	mes "pipe didn't take very long.";
+	mes "It's bloated and worn out";
+	mes "from long durations of";
+	mes "being overloaded with";
+	mes "pressure. It's a wonder";
+	mes "it hasn't exploded yet.";
+	set EinFactory,10;
+	close;
+}
+end;
+}
+
+ein_in01.gat,95,238,4	script	Conveyor	111,{
+
+if(EinFactory == 11)
+{
+	mes "^3131FFThis conveyor seems";
+	mes "to have similiar problems";
+	mes "as its smaller version. Its";
+	mes "movements are awkward,";
+	mes "erratic and weak, and almost";
+	mes "all of its screws are rusted.";
+	set EinFactory,12;
+	close;
+}
+end;
+}
+
+einbroch.gat,188,72,3	script	Keneshiotz	855,{
+
+	mes "[Keneshiotz]";
+	mes "This city is full of sky";
+	mes "high smokestacks and";
+	mes "the droning hum of machines.";
+	next;
+	mes "[Keneshiotz]";
+	mes "Sure, the air is polluted,";
+	mes "but I think it's a fair price";
+	mes "to pay for wealth and a";
+	mes "modern life of comfort.";
+	mes "Screw the environment!";
+	next;
+	mes "[Keneshiotz]";
+	mes "I'd much rather live like";
+	mes "this than end up like those";
+	mes "backwards vagrants in that";
+	mes "filthy Einbech. Don't they";
+	mes "know that money makes";
+	mes "the world go 'round?";
+	close;
+}

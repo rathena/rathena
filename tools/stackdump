@@ -1,0 +1,48 @@
+#!/bin/bash
+
+case "$1" in
+	""|help)
+		echo "Usage 1: ${0##*/} [server-type] [sql]"
+		echo Server type can be map, login, or char. Examples:
+		echo "$ ./${0##*/} map"
+		echo "$ ./${0##*/} login sql"
+		echo
+		echo "Usage 2: ${0##*/} [server-type] [number]"
+		echo Server type has to be the full name of the file. Examples:
+		echo "$ ./${0##*/} map-server 0001"
+		echo "$ ./${0##*/} login-server_sql 0002"
+		echo
+		echo Note: Dump files inside /log will also be scanned.
+		exit
+		;;
+
+	map|char|login)
+		# Check for SQL postfix
+		if [ "$2" = "sql" ]; then
+			sql="_sql"
+		fi
+		STACK="$1-server$sql.exe.stackdump"
+		SERVER="$1-server$sql.exe"
+		;;
+
+	*)
+		STACK="$1$2.stackdump"
+		SERVER="$1.exe"
+		;;
+esac
+
+# Check if file exists.
+# Try looking under '/log' if it isn't
+
+if [ ! -e $STACK ]; then
+	if [ -e log/$STACK ]; then
+		STACK=log/$STACK
+	else
+		echo Error: $STACK not found!
+		exit
+	fi
+fi
+
+# Finally dump the backtrace
+
+awk '/^[0-9]/{print $2}' $STACK | addr2line -f -e $SERVER

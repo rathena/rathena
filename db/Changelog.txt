@@ -1,0 +1,1614 @@
+========================= Items that need fixing/implementing
+	-----These items are scrapped(for now,at least)? No desc in desctable, nor kRO website-----
+	1475,Cavalry_Lance: Missing stats
+	2355,Angel_Protection: Autospell rate is unknown
+	2417,Frico_Shoes: Missing Set bonus, and red,orange,yellow,white potion
+		heal rate 20% increasing bonus(if you want, edit db/item_group_db.txt, then
+		use bonus2 bAddItemHealRate) And I don't know if it's proper name.
+	2418,Boots_of_Vidar: Missing set bonus
+	2420,Second_Advent_of_Angel: Item description is not right, so it needs
+		correction through patch
+	2515,Wing_of_Eagle: the value is unknown, even if the bonus option is increasing speed or
+		speed rate
+	2520,Gebneys_Shoulder: maybe item name is wrong.  it doesn't have its own sprite yet(though file
+	exists)
+	5125,Angel_Kiss,Angel's Kiss: Description miss.  This item is for Novice/Super Novice, like any other
+		'Angel' equipments.
+	5126,Morphicious_Hood: When using magic, it cannot be dispelled(Maybe it works like Phen card)
+	----------
+	4296,Cramp_Card: Temporal Plug: 10z per mob-level on a 3% chance.
+	7458,Fortune_Horn - it's a custom name yet
+	12016,Speed_Increasing_Potion no bonus... Turbo Track race item
+	12017,Speed_Decreasing_Potion no bonus... Turbo Track race item
+	-----
+	2653,Sacrifice_Ring: seems eAthena doesn't have bonus option yet <- explain how this works so I can code it in. [Skotlex]
+		* * * On your death it breaks (BS can fix it), you drop all Equipment (equipped, even the ring). And revive with 1 HP / 1 SP at the place of your death.
+		* * * From where this info is? ... Mine: On your death you'll loose this ring and get 50% HP [Komurka]
+
+=========================
+01/29
+	* Updated some cards according to tests: Icreased a bit chance of Gift Box / OBB /OVB drops [Lupus]
+		Raggler Card Combo(2x), Mimic Card(2x), Mystcase Card(8x)
+	* Updated Mystcase Card: When Raggler Card Cmbo is set, it stops dropping Gift Boxes [Lupus]
+		Because it starts dropping OVBs
+	* Updated the stats, exp, jexp, hp, def, mdef, atk of all the Thanatos tower [MasterOfMuppets]
+	  & Abyss lake monsters and Banana Lady Tanee using information from the official
+	  kRO guide book. Thanks to saycyber21 for the scans. However FERUS and FERUS_ was missing =(
+	* Updated Vesper a bit and changed some drops for the venatus [MasterOfMuppets]
+01/28
+	* Added two missing zeros to Pharaoh's database line, thanks to Persian69 [MasterOfMuppets]
+	* Removed the looting modes of all the Lighthalzen monsters, why were [MasterOfMuppets]
+	  they there anyway o_0
+	* Changed Apocalips_H's jname to Vesper [MasterOfMuppets]
+	- Switched two dimik drops with eachother
+01/27
+	* Updated Branches [Poki#3]
+	* Fixed mob skill entries of AL_PNEUMA for Kiel. [Skotlex]
+	* Updated EXP,JEXP and ATK of the Kiel dungeon monsters. [MasterOfMuppets]
+	* Removed emperium from Pharaoh's drop list. [Kayla]
+	* Added monster skills to the kiel dungeon monsters [MasterOfMuppets]
+	* Changed SKEGGIOLD monster #1755 to SKEGGIOLD_ so you can separate them [MasterOfMuppets]
+
+01/26
+	* Changed Sunflower Pin's DEF from 0 do 1 (27/01 kRO Patch) [Poki#3]
+	* Rearanged the new items in item_db. they should be chacked and placed in the right spot [Poki#3]
+	* Cleared up some Custom Mobs and their skills. [Poki#3]
+	* Changed Fire Poring's ID to 1239 and moved him to mob_db2. [Poki#3]
+	* Changed some Mob Names, based on kRO. [Poki#3]
+	* Ygnizem (Boss) now summons the G_ mobs. This should be done to all MvP's [Poki#3]
+	* Changed Kavac's Range to 9 and Katrinn and Magaleta's Range to 1. [Poki#3]
+	* Added the missing Bazerald drop to Pharaoh at 0.8% [MasterOfMuppets]
+	* Changed ASC_BREAKER range from 9 to 5 cells, according to skill
+	  description available in translation project [Foruken]
+
+01/25
+	* TK_RUN's cast time is now 1 sec (it was previously 5:4:3:2:1 ms, the
+	  heck? someone refix it if it was supposed to be 5000:4000:3000:2000:1000)
+	  [Skotlex]
+	* Fixed a few item scripts (SC_ATKPOT -> SC_ATKPOTION) [Skotlex]
+	* checked mob_skill_db.txt and mob_skill_db2.txt under DOS, removed strange ASCII chars
+	 - hope it's fixed now [Komurka]
+
+01/24
+	* removed unneeded comma in produce_db.txt (someday I'm gonna write parser for eA scripts ~~) [Komurka]
+	* card fix (>77 changed to >=77) thanks to Poki#3 [Komurka]
+
+01/21
+	* Added/removed some commas in mob_skill_db.txt [Komurka]
+	- Added mob_skill_db2.txt
+	* Fixed Chase Walk SP usage (40->10) thanks to poorboy [Komurka]
+	* Fixed Crab Card's Combo Bonus: Wind Element -> Water, thanks to Irmin [Lupus]
+	* Fixed 'Box of Heavy Rain' [Komurka]
+
+01/20
+	* Changed Double Strafe, Arrow Shower and Beast Strafing's delay to be
+	  100ms on top of the normal attack delay. [Skotlex]
+01/19
+	* Updated db/const.txt to contain all SC_ effects as defined in status.h.
+	  Thanks to Ancyker. [Skotlex]
+	- Updated item_db.txt as a few SC_ have had their names changed.
+	- It may be necessary to remove a few entries which make no sense to add,
+	  but that can be done later.
+01/16
+	* Corrected Roundkick's knockback? [Vicious]
+01/14
+	* Mode change on some monsters [Vicious]
+	* Updated Packet DB a bit [Vicious]
+	* Updated the race, size, HP and modes of the Kiel monsters [MasterOfMuppets]
+01/12
+	* Fixed Baby Leopard by.. ppl. [Vicious]
+	* Temp Odin monsters, by Azazel [Vicious]
+	* Zipper Bear Card and Baby Leopard Card do not protect against stripping.
+	  Done by DracoRPG [Vicious]
+01/10
+	* Fixed Mighty Staff to drain 2SP per attack rather than 2% [Skotlex]
+01/09
+	* Refixed GrandCross's script (bonus2->bonus) [Skotlex
+01/08
+	* Changed Grand Cross's script to drain 1 sp per hit rather than 1% [Skotlex]
+	* Added the Kiel dungeon monsters, they have no stats yet though [MasterOfMuppets]
+	* Changed the name of Chung E to Green Maiden [MasterOfMuppets]
+	* Changed the name of Zherlthsh to Zealotus as in iRO, [MasterOfMuppets]
+	  you should thank me for that ;D
+	* Now Mammonite is usable by all weapons. [Skotlex]
+01/07
+	* Santa's Bag type 0->2, some potions type 2->0 [Lupus]
+	* Item DB correction. [Vicious]
+01/05
+	* Fixed item updates by jsk225. [Vicious]
+	* Item updates by Landarma. Need updates. [Vicious]
+01/03
+	* SL_KAUPE skill times info to skill_cast_db. [Skotlex]
+	* Added SL_SWOO, SL_SKE, SL_SKA skill times information to skill_cast_db.
+	  [Skotlex]
+	* Set nk to 2 (splash damage) to Meteor Assault and Raging Thrust [Skotlex]
+01/02
+	* Added active guild skills to skill_castnodex_db [Skotlex]
+01/01
+	* Corrected char name filter? [Vicious]
+12/31
+	* Updated Absorb spirit spheres to be interruptible. [Skotlex]
+	* Updated some mobskills for the einbroch monsters [MasterOfMuppets]
+12/30
+	* Removed some maps from mapflag that were not in either maps_athena nor map_index. [Vicious]
+	* Updated the active guild skill cast times to 5 secs. Now their time2 is
+	  used as cool-down (300000 -> 5 mins). Also made them interruptable. [Skotlex]
+12/28
+	* Added Kahai and Kaite spell times to skill_cast_db [Skotlex]
+	* Removed Guilds Glory from guild skill tree [Komurka]
+	* Moved some THQ items [Komurka]
+	* Fixed duplicate the_sign [DracoRPG]
+	* Fixed 2 name inconstitencies in item_db, thanks to Haplo [DracoRPG]
+	* Added SC_Intravision to Sunshine Box and const list [DracoRPG]
+	* Cleaned up even further, no conflict should occur now [DracoRPG]
+12/27
+	* Reverted Draco's cleanup [Komurka]
+	* Small cleanup in item names [DracoRPG]
+12/24
+	* Changed Dokkaebi to Dokebi, by Harbin [Vicious]
+	* Removed the item requirements for Twilight Pharmacy from
+	  skill_require_db, since the requirements are acquired from produce_db.txt
+	  [Skotlex]
+	* Moved the sell price of the Tuxedo to the buy column (21500->43000) [Skotlex]
+12/23
+	* Corrected the Critical Race bonus of the Sabbath and cleaned up the
+	  script of Morphicious' Hood. [Skotlex]
+	* Added 1 sec cast time to Stone Curse [Komurka]
+	* Added missing Amon Ra skills (he won't be so lame anymore) [Komurka]
+	* Some fixes thx to Poki#3 [Komurka]
+	* Desert Wolf Babe -> Baby Desert Wolf (iRO), thx to Poki#3 [Komurka]
+	* Fixed the drops of RSX 0806, thanks to Poki#3 [MasterOfMuppets]
+12/22
+	* Added back the changebase script to Tuxedo. [Skotlex]
+	* Changed the autospell chance of Lude card from 2% to 20%. [MasterOfMuppets]
+	* Changed pest card to get its additional bonus if you have 77 int or [MasterOfMuppets]
+	  higher instead of 77 and higher.
+12/21
+	* Item_DB update for Tuesday's kRO sakray update. Temp plugs. [Vicious]
+	  - THQ Quest Items needs new item number!!!!
+
+12/20
+	* Set up some basic skill info for SKA/SKE/SWOO [Skotlex]
+	* Moved item requirements for Aqua Benedicta to produce_db. [Skotlex]
+	* A small fix to sucsamad [MasterOfMuppets]
+	* Moved item requirements for Create Deadly Poison from skill_require_db to
+	  produce_db [Skotlex]
+12/19
+	* Jewel sword will now drop jewels as intended, fixed a typo in sucsamad, [MasterOfMuppets]
+	  thanks to Ishizu-chan.
+	* Fixed 1613,Mighty Staff to give 10 str instead of 15. [Kayla]
+12/18
+	* Updated 1725,Wondering Bard's Bow applicable jobs and item bonus [Lupus]
+12/17
+	* Removed 10% Neutral Damage Resistance from Golden Gear [Komurka]
+12/16
+	* Added effects to 12112,Tropical_Sograt and 12113,Vermilion_the_Beach. Thanks to persian69 [Lupus]
+	* Fixed Treasure Box 30 (Payon Castle 5) drops Mage Hat (the green one), where it should drop Magician Hat instead (the cylinder hat), thanks 2Ishuzu-chan
+12/13
+	* Modified a bit a few skills in skill_db to enable mobs to properly use
+	  them. [Skotlex]
+	* Fixed G_BAPHOMET_ to show up as "Baphomet" instead of "Baphomet Jr." [MasterOfMuppets]
+12/12
+	* Slotted Elemental Armors can be worn by anyone except novice. [Vicious]
+	* Updated packet_db for /taekwon [Vicious]
+	* Added SL_KAIZEL data to skill_cast_db.txt/skill_cast_nodex_db.txt [Skotlex]
+	* Updated some KA skill info in skill_db, thanks to Reddozen. [Skotlex]
+	* Fixed some items, such as Kafra Ring. Also updated accessaries.
+	  Novices/Super Novices are not allowed to wear lots of accessaries. [Vicious]
+	* Changed available jobs for some items. If it is wrong job...
+	  Blame Item'o'luper since I used it. XD Doubt it is wrong though. [Vicious]
+	* Changed Marionette's blowcount to 0 rather than 1... [Skotlex]
+	* Added EOL before '//SG_FUSION#Union of the Sun, Moon and Stars#' in skill_tree.txt [Komurka]
+	  Dunno what's wrong but ... before server hasn't been reading SG_FUSION skill at all -.-
+12/11
+	* Corrected again the mvp exp percent of Lighthalzen bosses (max is 10000
+	  = 100%, why was it set to 700000? Made 7000 = 70%) [Skotlex]
+	* TKs, SGs and SLs should now be able to use berserk potions. [MasterOfMuppets]
+	* Added missing quantity value to Herb Tea With Grape Juice and Barbecue, thanks to Haplo [Lupus]
+12/10
+	* Removed V_poring from dead branch, it's a boss monster >.> [MasterOfMuppets]
+	* Added slot to angel's kiss [Kayla]
+	* Updated some items to allow soullinkers wear them, thanks to lunaus [MasterOfMuppets]
+	  for all the work.
+	* Fixed the aftercast delay of lex divina, thanks to marquis007. [MasterOfMuppets]
+	* Updated the sell/buy price of some Homunculus related items [MasterOfMuppets]
+12/09
+	* Made Berserk Pitcher Potion-Pitcher-like. [Vicious]
+	* Fixed 5125, Angel's Kiss. Should be novice only. Good eye Kholdstare! [Kayla]
+	* Updated skill_db and skill_require_db info for Soul Linker skills, thanks
+	  to Reddozen to provide the information. [Skotlex]
+	* Updated skill_db SL skills pl to -2 where appropiate (-2 = take
+	  status-change's element, but not weapon's one -> For Warm Wind) [Skotlex]
+	* Added in skill data for SL_STIN/SL_STUN/SL_SMA [Skotlex]
+	* Updated skill_require_db to enable songs/dances to be performed with
+	  either whips/musical instruments. [Skotlex]
+	* Added a bunch of Soul Linker skills to skill_castnodex_db.txt [Skotlex]
+12/08
+	* View ID changed for Luise's Santa's Hat from 208 to 20 (standard santa's hat) 
+	  because 208 isn't supported yet
+	* Corrected HT_POWER's number of hits (1->2) [Skotlex]
+	* Corrected G_Mobster's element, thanks to Haplo [Skotlex]
+	* Corrected Treasure Box element, now they are Neutral 1. [Skotlex]
+	* Modified Beast Strafing's inf to be a self skill (since it's a combo, it
+	  auto selects target) [Skotlex]
+	* Updated Volet / Blue Box items lists [Lupus]
+	* Fixed 5131,Close_Helmet jobs [Lupus]
+	* Updated Warmth of the Sun / Warmth of the Moon / Warmth of the Star sp usage (20/20/10) [Komurka]
+	* Implemented the script of a few items. Need clarification of a few others
+	  that need implementing (see above comments). [Skotlex]
+	* Updated the element of all treasure boxes to 21 (neutral 1) [Skotlex]
+12/07
+	* Updated inf2 to 2 (NPC skills) to the Abracadabra skills to prevent them
+	  from displaying on the GM-all-skills menu. [Skotlex]
+	* Updated SG_*_WARM skills to have range 1. [Skotlex]
+	* Updated SG skills [Komurka]
+12/06
+	* Updated Berserk Pitcher in skill_require_db and Full Adrenaline Rush in
+	  skill_db as per Reddozen's info. [Skotlex]
+	* Made Garm's Claw shadow property [Harbin]
+	* Added Thanatos to boss list [Harbin]
+12/05
+	* Fixed Succub+Incub Cards combo bonus -> +1 INT, thanks to Playtester [Lupus]
+	* Fixed Wings of Eagle Script (bSpeed no longer exists, it should be
+	  bSpeedRate) [Skotlex]
+	* Fixed Meteor Storm (Was not requiring thunderstorm level 1) [Kayla]
+12/04
+	* Updated SL_SOULLINKER to have inf2 = 512 (cant' cast on self) [Skotlex]
+12/02
+	* Fixed Items according to Taekwon / Soul Linker / Star Gladiator [Lupus]
+	* Changed the requirment of Vulture's Eye for Falcon Assault [MasterOfMuppets]
+	  from 10 to 5, thanks to Haplo.
+	* Fixed two typos in the mob_skill_db, thanks to Zubasa [MasterOfMuppets]
+	* Casting time for soul link [Vicious]
+	* Updated Marine Sphere skills in hopes to make it work correctly.
+12/01
+	* Changed TK_JUMPKICK's inf to self skill (to make it behave like extremity
+	  fist) [Skotlex]
+	* Set Ki Explosion's stun time as time2 in skill_cast_db. [Skotlex]
+	* Lowered the MVP exp bonus from the bio lab dungeon bosses [MasterOfMuppets]
+	- fixed a typo in Erend's exp
+	* Corrected Venom Splasher's countdown duration. [Skotlex]
+	* Implementation of Reddozen's Soul Linker's DB [Vicious]
+11/30
+	* Added the last drops of the Bio lab dungeon bosses [MasterOfMuppets]
+	* Changed the attack range of Rafflesias to 7 [MasterOfMuppets]
+	* Cleaned up the item_db, checked and added the items previously added and
+	  commented by Viccious. [Skotlex]
+	* Cleaned up the mob_db, corrected Lighthalzen Bosses MVP exp rate (the max
+	  is 100%, why did you guys set 70000%? I changed that to 70%) [Skotlex]
+	* Cleaned up job_db2.txt by removing the unnecessary trailing 0's. [Skotlex]
+	* Fixed Antonio's defense (was 100, should be 99) [Kayla]
+	* Fixed CTM card affecting after-cast delay instead of castrate [Vicious]
+	* Fixed phen card affecting your after-cast delay instead of castrate, [MasterOfMuppets]
+	  thanks to andz for pointing it out
+	* Mob_db update, added some more G_mobs and Xmas_Orc, thanks to [MasterOfMuppets]
+	  Muad_dib
+	* Changed the range of NPC_CURSEATTACK and NPC_BLINDATTACK to 7, [MasterOfMuppets]
+	  not sure whether it's supposed to be 7 or 9...
+	* Updated elemental-resist potions in produce_db, thanks to jsk225 [Vicious]
+	* Updated two-handed sword's weapon level in produce_db, thanks to piroJOKE. [Vicious]
+11/29
+	* Updated range of Phantasmic and Charge Arrow. [Skotlex]
+	* Correct ViewID for Cyclops Eye, Updated to-do [Vicious]
+	* Temp plug on new items. Someone check please. :D [Vicious]
+	* Updated skill ranges so that the range specified is always the skill
+	  range regardless of sign. Those with negative range are now used for the
+	  battle_config option skillrange_from_weapon [Skotlex]
+	* Updated Earth Elemental Convertor, thanks to reddozen [Vicious]
+	* Added temp skills to Ayothaya MVP Lady Tany. [Lupus]
+	  Also added her real slaves, thanks to MasterOfMuppets for info
+	* Update produce_db.txt with cooking items coments, thanks to battousai90 [Lupus]
+11/28
+	* Lighthalzen MVP drop update done by MasterOfMuppets - Still need more work. [Vicious]
+	* Reduced the range of Focused Arrow Strike by 10, that range should be
+	  added via the Vulture skill. [Skotlex]
+	* Updated skill ranges for Alchemist and Monk, thanks to Komurka. [Skotlex]
+11/27
+	* Added Sonic Blow to skill_castnodex so that the skill delay applies to
+	  walking as well. [Skotlex]
+	* Fixed Adrenaline2 and Berserk Pitcher's inf2 (were not set to spirit
+	  skill) [Skotlex]
+	* Reverted Ruwach's range to 2. [Skotlex]
+	* Updated skill_db to make all ranged skills with range 8 become 9. Also
+	  explained wtf is "maxcount" in skill_db. [Skotlex]
+	* Fixed SA skills showing up. wtf is "maxcount" in skill_db??? [Vicious]
+11/26
+	* Updated effect boxes, according to RO Magazine [Vicious]
+	* Updated Redemptio(no target, not dex-effected) [Vicious]
+	* Updated blowcount on 2nd class quest skills [Vicious]
+	* Updated sell prices on new items [Vicious]
+	* Updated Great Axe to give +5 skillblown to Mammonite, and BonGun card +5
+	  knockback to Bash [Skotlex]
+	* Changed the range of Blitz Beat and Falcon Assault to 5 [Skotlex]
+	  (Vulture Eye bonus is now applied to these skills)
+11/25
+	* Updated skill ranges of Rogue and Priest skills, thanks to Komurka
+	  for the information. [Skotlex]
+	* Updated skill ranges of Assassin and Crusader skills, thanks to Komurka
+	  for the information. [Skotlex]
+11/24
+	* Updated skill ranges of Hunter and Knight skills, thanks to Komurka for
+	  the packet information. [Skotlex]
+11/22
+	* Lowered the required ammount of oridecon needed to craft gladiuses by 4, [MasterOfMuppets]
+	  thanks to andz for pointing it out.
+	* Updated the Range of Provoke, Bowling Bash. Retouched the range of Spear
+	  Stab to be +2 of current weapon rather than 4. [Skotlex]
+	* Reupdated the mob skill db (some mobs had mode change-target which is
+	  obsolete now) [Skotlex]
+	* Merged in Komurka's latest update to the mob_skill_db.txt [Skotlex]
+	* Updated Firewall's knockback to 2. [Skotlex]
+	* Updated the job bonuses for a bunch of jobs, thanks to Haplo for going
+	  through the kRO job bonus db. [Skotlex]
+	* Fixed g_bloody_butterfly - 1526, thanks to Zoc for finding it [Kayla]
+11/21
+	* Changed a Coma effect. Thanks to Luna. [Nexon]
+	* Updated joblevel stat bonuses of Soullinker and Star Gladiator, thanks to reddozen [MasterOfMuppets]
+	* Massive Reddozen's update of mix-food recipes, also made all Cooking Sets Produce 11; [Lupus]
+	* Made more food/Potion items type 0, fixed typo [Lupus]
+	* Updated rafflesia's mode to make it change-target. [Skotlex]
+11/20
+	* Changed all mixed food type to 0 - FOOD (healing items) [Lupus]
+	* Updated mob_db with the mode data from Kyoki and added mob entries 1521
+	  1581. [Skotlex]
+	* Added that bonus INT to Sage/Baby Sage on Job Level 38 [Skotlex]
+	* Updated the monster DB to use all the new modes, all credits to Kyoki [MasterOfMuppets]
+	* Adjusted drops/speed of the Einbroch monsters according to iRO [MasterOfMuppets]
+	* Fixed Skeleton Manteau not having it's bonuses, thanks to reddozen & vicious_pucca [MasterOfMuppets]
+	* Mjolnir can now only be used by merchant/swordsman classes [MasterOfMuppets]
+11/18
+	* Fixed Tao Gunka's Slaves -> Megaliths again [Lupus]
+	* Fixed the Elemental Resist potions. [Skotlex]
+11/17
+	* Updated the mob skill database to use the new conditions angry and follow [MasterOfMuppets]
+	  now it also changed the modes of monsters using emotes, all credits goes
+	  to Komurka for the database work.
+	* Added 5135,Cyclops_Eye with temp view ID [Lupus]
+	* Changed the drop rate of house auger from lord of death to 0.8% [MasterOfMuppets]
+	* Made Brooch of cursed fortune give +6 crit instead of +6% crit, [MasterOfMuppets]
+	  thanks to vicious_pucca.
+11/15
+	* Replaced all Cards' bAtk bonuses with bBaseAtk, thanks to Vicious_Pucca for pointing it out [Lupus]
+	* Taekwon skill updates [DracoRPG]
+	* Fixed bonus of 2356,Holy_Cloth_of_Benefit, thx to vicious_pucca [Lupus]
+	* Made Arrow Shower a land-based skill. [Skotlex]
+	* Changed Moonlight Petal's range to 3, this is used for the sheltering
+	  range of the skill. [Skotlex]
+	* Updated 2356,Holy_Cloth_of_Benefit effect [Lupus]
+11/14
+	* Added sell price to pot and fixed the shop, thanks to vicious_pucca [MasterOfMuppets]
+	* Updated some more food prices [MasterOfMuppets]
+	- Also added a few of the shops selling food items, pot isn't sold atm though
+	  I'll try to find it's price tomorrow.
+	* Made Ruwach's element Holy as pointed out by k3dt. [Skotlex]
+11/13
+	* Updated some buy prices to food items, thanks to reddozen and vicious_pucca [MasterOfMuppets]
+11/12
+	* Fixed pumpkin hat. Halloween is over, so is the item's status boosts. [Nexon]
+11/09
+	* Fixed alice and zherlths(whatever)s taming items which were swaped [MasterOfMuppets]
+	  thanks to Poki#3 for fixing it.  
+	* Updated metalings drop rates, based on 100 killed metalings [MasterOfMuppets]
+	  in iRO, I will kill more some other time to get more accurate results
+	mob_db.txt update:  [Lupus]
+	- Added Solid Trunks into Willow drops (fixed % rate of other trunks)
+	- Removed ALL slaves cards drops from mini-boss drops
+	- Removed Zorro Mask from goblins drops (added it into Wrapped Masks Box)
+	- Updated some Goblins drops: Added Surprized Mask, Annoyed Mask, Gangsters Mask
+	- all the rest masks you could get from Wrapped Masks Box
+	* Updated the drops of the normal advanced class monsters in lighthalzen. [MasterOfMuppets]
+	  Thanks to reddozen for fine tuning them
+	* Made Maya Purple card to compound on headgear isntead of accessory, [MasterOfMuppets]
+	  thanks to reddozen.
+	- Added red chili to Kraben's monster drops.
+	* Corrected Venom Knife's poison duration. [Skotlex]
+	* Fixed dumpling child card dropping meat and giving an additional heal effect to meat
+	  instead of candy, thanks to Komurka. [MasterOfMuppets]
+	* Added a few monster drops related to cooking, thanks to reddozen and vicious_pucca [MasterOfMuppets]
+	- Cook books 6~10, various ingredients for cooking and legendary cooking set.
+	* Updated db/const.txt as per the new SC changes, thanks to Silent. [Skotlex]
+11/08
+	* Added cook books, lvl 1~5 to item_trade.txt to prevent exploits [MasterOfMuppets]
+	* Updated job_db1.txt information for Taekwon/Star Gladiator and Soul
+	  Linker. Thanks to... Reddozen, I think (data was taken from the Taekwon
+	  Thread) [Skotlex]
+	* Fixed Mobster Card bonus, thanks to tattatheng [Lupus]
+11/07
+	* Copied skills from Jakk to Christmas Jakk which was missing monster skills [MasterOfMuppets]
+	* Added Metaling to mob_poring.txt [MasterOfMuppets]
+	* Updated Mimic Card & Mystcase Card bonuses & Raggler Card [Combo bonus = OVB Drop] chances: [Lupus]
+	  according to kRO formula (found by real tests): chance = 1 * (killed_mob_level/10) + 1
+		PS I've killed tons of mobs and tested these cards [Lupus]
+11/06
+	* Fixed Marse and Rocker cards missing effects [MasterOfMuppets]
+	* Updated item_db2.txt (new format), thanks to Justin84 [Lupus]
+11/05
+	* Changed some item names for preparing the sign quest [MasterOfMuppets]
+	* Reverted Doppelganger's aspd value to 10, it is the correct value [MasterOfMuppets]
+	  do not change it again.
+	* Updated alot of weapons, thanks to reddozen and vicious_pucca [MasterOfMuppets]
+11/04
+	* Added the enchant effect to Cursed water [MasterOfMuppets]
+	- Changed fake angels droprate of cursed water to 3% and added cursed water to
+	  drop from violys at 10%
+	* Added Angel wing to old blue boxes and old violet boxes [MasterOfMuppets]
+11/03
+	* Added slots to Garm's claw, hard covered book and wool cap, thanks to Gyunwoo23
+	- Made shoes unequipable for novices and a small update for the skill DB.
+	* Added Venom Knife requirement to the skill Venom Knife. Still won't check
+	  for a Venom Knife to be equipped as arrow, but it will consume it at least.
+	  [Skotlex]
+	* Made Ki Translation usable on party-mates only (inf2&1024) [Skotlex]
+	* Added empty bottles to the Elemental-resist potions recipes, thanks to reddozen [MasterOfMuppets]
+10/31
+	* More updates to new quest skills. [DracoRPG]
+	* Added Elemental-resist Potions recipe, thanks to RockManEXE. [DracoRPG]
+	* Added Embryo recipe, updated Homonculus skill tree. [DracoRPG]
+	* Many updates about new quest skills. [DracoRPG]
+	* Added missing ()s to Sage's Diary script. [DracoRPG]
+10/30
+	* Updated Venom Knife price -> 50z [Lupus]
+	* Updated const.txt to reflect changes in source, thanks to Silent. [DracoRPG]
+10/29
+	* Added 2nd jobs quest skills to skill_tree. [DracoRPG]
+	* Updated current food recipes and added more of them, at the moment
+	  we'll keep all of them as itemlv 11. [DracoRPG]
+10/28
+	* Changed pole axe's dex bonus to 1, thanks to Maxsia for pointing it out [MasterOfMuppets]
+	* Added apple drop to Ancient mimic to prevent steal exploiting, thanks to Irmin [MasterOfMuppets]
+	* Added a few missing loot sell prices [MasterOfMuppets]
+	* Thanx to Justin84, added misssing names of 2 skills in skill_tree.txt (HW_GANBANTEIN,HW_GRAVITATION) [Lupus]
+10/27
+	* Fixed the ammount of guild exp beeing given by Tribal Solidarity, credits goes to irmin [MasterOfMuppets]
+	* Fixed Glittering Clothes' script. [Skotlex]
+10/24
+	* Added cursed water to be dropped by fake angel [MasterOfMuppets]
+	* Reverted the inf 32 mode for Heaven's Drive and Arrow Shower [Skotlex]
+	* Added Thanatos/Abyss MOb skills and changed some thanatos/abyss mob stats.
+	  Thanks to Vicious_Pucca, Poki#3 and erKURITA. [Nexon]
+	* Added inf 32 (can target traps) to Arrow Shower and Heaven's Drive. I
+	  hope it doesn't messes up the client... but this is how it should be since
+	  those skills CAN hit traps [Skotlex]
+	* Fixed Poison Toad Card - Now equips on Accessory [Kayla]
+	* Changed Investigate's range to 2. [Skotlex]
+	* Added GrimTooth to skill_cast_db, time2 is the duration of the stop
+	effect. [Skotlex]
+10/23
+	* Fixed the Weapon coma rate script of Lord of Death Card [Skotlex]
+	* Fixed type in Moonlight Dagger script. [Skotlex]
+	* Updated Mini Furnace to be produce 21 since that's the new index for
+	   rough material refinements. [Skotlex]
+	* Changed Moonlight dagger to be steal 3 sp per hit, not 3% [Skotlex]
+	* Added healing effect to mixed foods, added produce effect to cooking sets [DracoRPG]
+	* Updated Poring V's mode, thanks to Vicious Pucca. [Skotlex]
+	* Updated castle_db.txt for correct work on /guildbreak [Lupus]
+10/22
+	* Changed Extremity Fist and Investigate's range to 3. [Skotlex]
+	* Bumped Magaleta's heal levels to 9 and 10. [Skotlex]
+10/19
+	* Corrected a bunch of spells that should be "no overlap" in skill_unit_db.
+	  [Skotlex]
+	* Added Arrow Vulcan to skill_castnodex.txt to specify you shouldn't be
+	  able to walk during the skill's delay. [Skotlex]
+	* Gave normal Magaleta a stronger heal (Lv1 is kinda sad...), also made her
+	  cast heal 10 on nearby friends when their HP drops below 60% [Skotlex]
+	* Double bug fix: 4303,Whisper_Boss_Card [Lupus]
+	- Fixed wrong Poki's card desc.. and found.. that we weren't adding 3% MaxHP... but +3
+	* Added new item. Thanks to Landarma. And Fixed an old item stat. [Nexon]
+	* Added a few more loot sell prices to the einbroch items [MasterOfMuppets] 
+	* Corrected NPC_STOP, it should have at least range 1 (currently range 8
+	  for lack of better info) and inf should be 1 (attack skill) not 4
+	  (used on self). Also changed it's time to 10secs as 2sec is really too
+	  low. [Skotlex]
+	* Fixed constants for Karma and Manner in db/const.txt, thanks to orn. [Skotlex]
+10/18
+	* More translations for japanese comments, again thanks to sighel. [MasterOfMuppets]
+	* Updated Thanatos' mode to include boss-type (Thanatos and several of the
+	  mobs in the same dungeon are supposed to be looters? That's what I read
+	  from here). [Skotlex]
+	* Changed DEF of Guard to 3, according to Komurka and andz report
+	  [Foruken]
+
+10/17
+	* Re-fixed Gravition's range to 8. [Skotlex]
+	* Some mob skill updates regarding the advanced classes in Lighthalzen. [Skotlex]
+	- Removed Sanctuary from Magaleta, removed advanced skills from mobs.
+	- Raised Frost Diver's rate for Katrinn, reduced rate of Sight Trasher.
+	* Updated the item_db to use BaseClass comparisons rather than those
+	  callfunc("is class") functions. [Skotlex]
+	* Updated some items so that Atk and Matk potions specify their duration in
+	  ms rather than seconds (standarizes with all other sc_start items) [Skotlex]
+	* Added translations for japanese comments, thanks to sighel. [MasterOfMuppets]
+	  The following files had translations added:
+	- abra_db.txt
+	- attr_fix.txt
+	- exp_guild.txt
+	- skill_cast_db.txt
+	- skill_db.txt
+10/16
+	* Updated some stats of Lady Tanee, thanks to gyunwoo23 [MasterOfMuppets]
+10/15
+	* Fixed 2 mobs having wrong stats. [Nexon]
+10/14
+	* Some changes to Katrinn's mobskills as pointed out by Viccious and
+	  Lonyaph, also changed her mode to aggressive + assist. [Skotlex]
+	* Updated Gravitation's range to 8. [Skotlex]
+	* Corrected mob skill name for Lighthalzen bosses (do not call
+	  NPC_CALLSLAVE 'NPC_SUMMONSLAVE' they are different things) [Skotlex]
+	* Changed Envenom's element to poison... [Skotlex]
+	* Updated Envenom: Range 3, number of hits 1. [Skotlex]
+10/13
+	* Updated the monster skills of the lighthalzen dungeon bosses [MasterOfMuppets]
+	* Updated monsters drops [Lupus]
+	-Evil Snake Lord <- Hellfire,
+	-Inc.Samurai <- Azoth,
+	- Garm <- MVP drop% fix
+	* Lowered ancient mimic's droprate of bloody branch to 0.01% to prevent exploits [MasterOfMuppets]
+	- Fixed Elder's drops a bit
+	* Updated Call Partner's time to 20 secs (after which time the partner is
+	  recalled), also set the skill's unit target to 'noone'. [Skotlex]
+	* Fixed Lude card casting endure on enemies instead of self [MasterOfMuppets]
+10/12
+	* Updated defense, mode, element, speed and attack speed of some Lighthalzen mobs,
+	  per info provided ny Viccious. [Skotlex]
+	* Updated a bit the Lighthalzen mob stats using data provided by Viccious
+	  Pucca [Skotlex]
+	* Updated item_db: Added books to equipable weapons of Star Gladiator,
+	  added Staffs as equipables for Soul Linker, and added to SG the armor they
+	  can wear (boots, manteau, spiky headband and Goat helm, I think). Also made
+	  the Vesper Core accesories equippable only by advanced classes. [Skotlex]
+	* Added Reverse Orcish to skill_cast_db.txt, upkeep time is the orc curse
+	  duration. Set to 20 mins for now. [Skotlex]
+	* Fixed typo AllStat -> Allstats,  thanx 2L0wFlea_sq [Lupus]
+	* Fixed: LunarBow[1]->[2], Coif Req/Jobs, Cinquedia Req/Equip Lvl thanx 2 persian69 [Lupus]
+	* Corrected g_katrinn and g_shecil's element. [Skotlex]
+10/11
+	* Fixed Zherlthsh + Injustice Combo bonus (was giving that bonus 2 times... +1 more bug V_V ) [Lupus]
+	- Checked all combo cards bonuses: There's no similiar bug! ^_-
+	* Updated Ancient Mummy card effect, thanks to irmin for info [Lupus]
+	* Changed Envenom's range to 2. [Skotlex]
+	* Fixed Awakening Potion's usable jobs, I think. [Skotlex]
+	* Updated the whole item_db to allow TaekWon, Star Gladiator and Soul
+	  Linker to use items. [Skotlex]
+	- Weapons were not touched.
+	- The following job_codes were updated to include all 3 new classes:
+	- All Jobs but Novice (2088958 -> 119529470)
+	- All Jobs but novice+acolyte class (2055918 -> 119496430)
+	- All Jobs (10477567 -> 127918079)
+	- All Jobs but acolyte class (10444527 -> 127885039)
+	- Also added them to awakening potion's job listing.
+	- Lupus's previous updated had to be reverted so this replacement worked :P
+	- Someone tell me which weapons these classes could use so I can update that too?
+	* Fixed some item classes restrictions, fixed Concentration Potion, Awakening Potion, thanks to andz [Lupus]
+	- there's one prob left: Cap and Cap_ headgears
+	* Added new items [Landarma]
+10/10
+	* Enabled Poring V and commented out Fire Poring in the mob db. [Skotlex]
+	* Added Poring V to the mob db, altough it is currently commented as it
+	  collides with Fire Poring's ID. [Skotlex]
+	* Corrected ArchAngeling card (needing 78 instead of 77 luk), Maya Card
+	  (magic damage return 30->50%) and Grand Cross (HP Drain -> SP Drain)
+	  [Skotlex]
+	* Changed Mirror Shield's mdef to 5. [Skotlex]
+	* Changed GrandCross's duration to 900ms (changes nothing as the three hits
+	  still happen at 0, 400 and 800ms) [Skotlex]
+10/09
+	* Fixed a few mob skills and mob stats. Thanks to MasterOfMuppets. [Nexon]
+	* Fixed a few items having wrong stats. Thanks to Maud Dib. [Nexon]
+10/08
+	* Added missing ; at Bunny Slippers in item_db.txt. [Mass Zero]
+	* Made a small change to Item_db. [Nexon]
+	* Added Magic Scrolls drops, updated walkspeed of Kaho thanks to  MasterOfMuppets [Lupus]
+10/07
+	* Fixed a small error in Rawrel's stats. [Nexon]
+	* Added a small change to Whikebain's drops. [Nexon]
+	* Updated Mob drops and Lighthalzen exp gain. Thanks to MasterOfMuppets and Viccious_Pucca [Nexon]
+	* Updated Item sell/buy price. [Nexon]
+	* Added a new skill to a mob. [Nexon]
+10/06
+	* Updated the HP level of the normal second class mobs (as per info
+	  provided through Viccious Pucca) [Skotlex]
+	* Added "The Sign" to item_trade.txt (as per info provided through
+	  Viccious), also made it add +5% atk. [Skotlex]
+	* Corrected the item_trade.txt restrictions for Novice Potion (why you
+	  couldn't place it in your cart, or sell it? o.O) [Skotlex]
+	* Corrected G_Magaleta's elemental mode. [Skotlex]
+	* Corrected Envenom's max skill level (7->10), and changed the attribute to
+	  poison. [Skotlex]
+	* Corrected Bloody Butterfly card so it doesn't makes spells
+	  uninterruptable in WoE. [Skotlex]
+	* Added skill data for various skills (second class quest skills and
+	  several Tae-Kwon related jobs. All the info was acquired by Draco from
+	  jA's information. [Skotlex]
+	* Made Spiral Pierce non-interruptable. [Skotlex]
+	* Implemented 4198,Maya_Purple_Card effect. Thanks to jA team! [Lupus]
+	- There's a special Intravision timer also. So that "Box to see hidden mobs" could be implemented now
+10/05
+	* Updated new items from kRO. Thanks to Landarma. [Nexon]
+	* Fixed 2 Mobs, thanks to MasterOfMuppets [Nexon]
+	* Added back Grandcross's 20% HP cost. [Skotlex]
+	* Updated Grandcross's Casting time, and Blast Mine's duration. [Skotlex]
+	* Updated meltdown's cast time to 0.5 at lv1, 1.0 secs at lv 10. Still
+	  unconfirmed, but it's much more likely than the alleged 0.05~0.10secs.
+	  [Skotlex]
+	* Updated #2415,Bunny_Slippers. Thanx to noobs [Lupus]
+10/04
+	* Fixed some items with wrong weight/ stats. Thanks to mrmagoo [Nexon]
+	* Changed Savage Babe Card and Savage Babe to Savage Bebe Card and Savage Bebe. [Nexon]
+	* Removed the flags from Spider Web, now it can be stacked and placed
+	  underneath characters. [Skotlex]
+10/03
+	* Updated Thanatos/Abyss monster info. Still in need of stats. [Nexon]
+	* Updated the skill info on NPC_DARKCROSS [Skotlex]
+	* Updated Lighthalzen mobs and mob skills as per Master of Muppets provided
+	  info. [Skotlex]
+	* Updated Ygnizem's slaves to be the other 5 first classes. [Skotlex]
+10/02
+	* PVP drop item - 7420 Skull... costs 0z. Replaced exploitable bone drop with skull drop [Lupus]
+	* Fixed effect of #5092,Coif (aka Blue Coif) (removed +100 SP) and set its sell price (it's sold in Pront.church) [Lupus]
+10/01
+	* Fixed Effect of #2614,Eye of Dullahan (100% Poison Protection) according to some FAQ and tests [Lupus]
+	- Don't add it into the item desc (that should remain as '....')
+	* Added Orc Baby to Orcs in mob_race2_db [DracoRPG]
+09/30
+	* Changed Acid Terror's bleed time to 120 secs (seems to be the official
+	  value) [Skotlex]
+	* Updated Meteor Assaults upkeep time2. Lv1 is the duration of blind, Lv2
+	  is the duration of stun, and Lv3 is the duration of bleeding. However, the
+	  true duration for these stats is as of yet unknown. [Skotlex]
+09/27
+	* Changed lord of vermillion times to make it hit four times at times 0,
+	  1250ms, 2500ms and 3750ms. [Skotlex]
+	* Fixed Thanatos Mobs. Thanks to andz [Nexon]
+	* Added missing bonus +5 Int to Excalibur [Lupus]
+	* Fixed drop rate of Emperium: [Lupus]
+		Pharaoh 5.5% (there was a typo), Abyss Knight 0.3%, Zherlthsh 0.15%, Gryphon 0.25%
+09/26
+	* Restored sell prices of Feather&Sticky Webfoot, thx to Dr.Evil for note [Lupus]
+	* Updated some Lighthalzen mobs drops and skills, thanks to MasterOfMuppets
+	* Updated Einbroch mobs drops, thanks to MasterOfMuppets
+	* Fixed Tengu Drops (removed 2nd Mr.Smile) [Lupus]
+09/23
+	* Updated Lighthalzen mobs.[Nexon]
+	- Some still need to be implemented.
+	* Updated const.txt with new emotes.[Nexon]
+	- Skotlex told me to.
+09/22
+	* Updated the item_db file, now the sell column is used. Those items that
+	  had buy price 20 and sell price blank now have buy price blanka nd sell
+	  price sell. Likewise, all etc items got their buy price removed and placed
+	  in the sell price column (price halved, obviously) [Skotlex]
+	- I recommend following this new recommendation unless someone comes up
+	  with a better idea (well someone had to use the sell column eventually :P)
+	* Corrected 1562#Textbook on Battlefield: Chance of Bless = 1% [Lupus]
+	- Fixed Banana Hat: Now 3% chance of Provoke lvl3
+	- Bow Thimble doesn't work as it should (core issue, to be revised soon)
+	* Added 2 new items (thanks to Landarma) [Lupus]
+	* According to Einbroch updates, changed Emperium drops: [Lupus]
+		(Mob name, Mob Lvl, Chance%) '-' = Removed drop, '+' = added drop
+		Angelring, 20 0.4		Baphomet, 81 5%		Ghostring, 18 0.3%
+		Orc Zombie, 24 0.01		Requiem, 35 0.01	Shining Plant, 1 0.01
+		+ Abyss Knight, 79 3%	+ Gryphon, 72 2%	+ Maya, 81 4%
+		+ Orc Lord, 74 2.5%		+ Osiris, 78, 3%		+ Pharaoh, 93, 5.5%
+		+ Zherlthsh. 63, 1%
+		- Golden Thief Bug		- Mimic				- Werewolf
+	* Fixed drops of Abyss Knight (2 kinds of Broad Swords) [Lupus]
+	* Added some notes to Lighthalzen Monsters. Should be revised, thanks to persian69 for the info [Lupus]
+09/21
+	* Fixed a few cards having wrong setting. Doppelganger, Mobster, Zherlthsh Cards and others all work correctly now.[Nexon]
+	* Fixed weapons not having correct attributes and status boosters.[Nexon]
+	* Added a few new items, thanks to Landarma.[Nexon]
+	* Added Mr.Smile to 1405#Tengu drops. Also!!! Removed Mr.Smile Quest! [Lupus]
+	* Added Assassin Mask into Inc.Samurai drops (0.4%) [Lupus]
+09/19
+	* Thanks to MasterOfMuppets: Fixed drop rate of minerals [Lupus]
+	- Fixed some Niflheim mobs range and speed, re-fixed Increase Soil walk speed, Kind of Beetle mode.
+	* Thanx to mrmagoo: item #1356, fixed weight. #5126 delayrate change applies to Advanced Classes only [Lupus]
+	- It could be also interpreted as "For Advanced Classes Magic Scills". But then we'd have to add a special flag....
+	* Removed Whisper Card drop from Giant Whisper. Only mini-bosses could carry 2 cards. Now Giant Whisper has its own card [Lupus]
+	- Why Giant Whisper's size - SMALL ? Any info?
+	* Thx2MasterOfMuppets: Fixed some items prices [Lupus]
+	- Sorry, Skotlex, we can't merge OpenOffice Sheets, let's switch them in some TXT format for SVN merging [Lupus]
+09/18
+	* produce_db.txt corrected Halberd / Damascus ingredients [Lupus]
+	  according to 13th Sept kRO desc, thanks to andz
+	* Corrected range of Hunter's Detect skill
+	* Removed Apple-Plugs (512,0%) drops from the monsters [Lupus]
+	* Updated Leaf Cat's walkspeed (now faster, thx2 MasterOfMuppets) [Lupus]
+09/16
+	* Corrected the duration of the resist potions. [Skotlex]
+	* Added constants to const.txt to identify Elements and Race. [Skotlex]
+		^^^^ they are pretty fine [Lupus]
+	* Added effects for Resist Element items. Temporal duration: 3 mins. [Skotlex]
+09/15
+	* Removed inf2 128 (trap) from Quagmire, Sphere Mine and Demonstration as
+	  they are not really traps (all ground based skills with trap mode can be
+	  targetted) [Skotlex]
+	* Updated WE_BABY to cost 10% of Baby's max SP (thanks again to Viccious
+	  Pucca). [Skotlex]
+	* Updated Venom Knife's stats, has the stats of an arrow now and is
+	  equippable only by Assassin. It probably won't work right yet as
+	  eA will demand the sin to use a bow. [Skotlex]
+	* Corrected the base exp requirement for level 99 advanced classes (it's
+	  supposed to be 343210000 exp), thanks to Viccious Pucca. [Skotlex]
+	* Changed uptime2 of dance/song skills, these are now used to determine how
+	  long the effect lasts after you've walked out of the skill's area of
+	  effect, so they were all set to 20 secs. [Skotlex]
+	* Updated 1617,Wand_of_Survival and 1619,Wand_of_Survival__ to give 2 instead of 3 (to DEX and INT) [Lupus]
+09/13
+	* Updated mobs stats (mostly Einbroch) thanks to MasterOfMuppets,Viccious Pucca [Lupus]
+	* Multiplied all drain rates x10 (100% leech rate is now 1000) [Skotlex]
+	* Immaterial sword now drains 30% of target's sp on a 0.1% rate (info from
+	  Viccious Pucca). [Skotlex]
+	* Updated bDrainValue bonuses to be bonus2/bonus3 (they don't take a "rate"
+	  parameter anymore) [Skotlex]
+	* Multiplied all autospell rates x10 (100% casting rate is now 1000) [Skotlex]
+	* Weapons that had autospell rates of 25% have been reduced to 9% (seems to
+	  be that way from the data gathered by Viccious) [Skotlex]
+	* Added Range of Devotion/Sacrifice to skill_db, likewise, added the
+	  effect's duration to skill_cast_db [Skotlex]
+	* Added new monsters with poring stats, thanks to Freya [Lupus]
+	* Added skill_unit flag 0x80 (UF_DUALMODE) for skills that trigger both
+	  interval effects and onout/onplace events (by default, if a skill has a
+	  interval such as Apple of Idun, then the routines when you step in/out of
+	  the skill cells won't be called). Applied flag to Apple of Idun and
+	  Gravitation. [Skotlex]
+	* Changed Basilica's interval to -1. [Skotlex]
+	* Added new items, thanks to Landarma [Lupus]
+09/12
+	* Corrected job_db1 hp-factor for Advanced Classes. [Skotlex]
+	* Updated drops of Myst,Bloody Butterfly,Disguise,Goblin Leader (All thanks to MasterOfMuppets) [Lupus]
+	- Updated items prices
+	- Lighthalzen monsters call up to 5 slaves now, added their drops with temp rates (thanks to Azazel)
+09/11
+	* Fixed target of NPC_KEEPING skills. [Skotlex]
+	* Changed Wand of Hermod's target to ally (party+guildmates) [Skotlex]
+	* Added/Updated some items sell prices (All thanks to MasterOfMuppets) [Lupus]
+	- Added missing slot to Coif_(ex Nuns Hat). Dark Lord now has it as a MVP drop 10%
+	- 1072#KAHO drops burning hearts instead of stone hearts
+	- Added common weapons of Bard/Dancer into OBB/OVVB
+	* Added temp mob skills to all Lighthalzen mobs by Azazel [Lupus]
+	* Increased movement speed of 1516,INCREASE_SOIL (checked it on the official servers) [MasterOfMuppets]
+	* Drooping Cat now can be upgradeable (proved by some official servers) [Lupus]
+	* Temporary made Lighthalzen (Juperos) mobs aggressive to prevent abuse. Till we get their real stats/skills [Lupus]
+	* Fixed some monsters names to Aegis compatible format (should be useful for some spawn/ mobs skills convertors) [Lupus]
+09/10
+	* 2647,Nile_Rose now gives only +10 MaxHP (each event item loses its bonuses after awhile) [Lupus]
+	* Added missing official prices to Louyang (mostly) items. Thanks to MasterOfMuppets [Lupus]
+09/09
+	* Added some of the missing mob skills that Komurka claims don't work on eA
+	  yet. These will be tested and debugged at a later date. [Skotlex]
+	* Small fix to the self-destruction skill of Marine Sphere as pointed out
+	  by Komurka [Skotlex]
+	* Fixed the alchemist related skills for marine sphere from rate 10% to
+	  rate 100% [Skotlex]
+09/08
+	* Fixed some songs/dances's target (changed it from "all  " to "all") [Skotlex]
+	* Readded the mob skills NPC_RANDOMMOVE and NPC_SELFDESTRUCTION to the
+	  Marine Sphere (which were lost on Komurka's last update to mob_skill_db)
+	  [Skotlex]
+	* Since the Lighthalzen mobs don't have accurate stats, but accurate
+	  HP/Atk/Exp, their stats have been bumped to 75 all (and luk 99) to avoid
+	  abusers until their correct stats can be figured out. [Skotlex]
+	* Updated/corrected the header information of skill_db.txt
+	* Reverted LoV and Storm Gust's range to 6 and 5 respectively as
+	  empirically tested by Ishizu [Skotlex]
+09/07
+	* Added new flags to ground units: UF_NOPC, UF_NOMOB, adjusted accordingly
+	  on song/dances that affect everyone except mobs. [Skotlex]
+09/06
+	* Changed in the skill_tree the mysterious value 4 that somehow slipped in
+	  as a skillrequirement for WE_CALLBABY. [Skotlex]
+	* Changed Magic Crasher and Pressure's nk to 0 [Skotlex]
+	  NOTE: nk=2 is for splash damage skills and 1 for "no damage" skills. This
+	  info is never sent to the client, so there's no reason we should deviate
+	  from that convention.
+	* Added effects to new items: [Lupus]
+	  - #12107,Wrapped Mask: You get 1 random mask (Mr.Smile,Mr.Scream,Phantom Opera Mask,all set of Expressionless,Surprised,etc masks)
+	  - #12106,Jewel Case: You get 1 random accessory (Ring,Clip,etc. Rogue's Treasure, Bow Timble, Fashion Hipsack. Excluding some overpowered and quests accessories)
+	  - TEMP PLUG: #12111 Warpped Food: (You get 1 meat, 1 raw fish, 1 fruit)
+	* Added new items, thanks to Landarma [Lupus]
+09/04
+	* Changed B.Something Sacramenti's range from 1 to 9. [Skotlex]
+	  (9 is what I have in the descriptions, and it can't be more wrong than 1
+	  anyway)
+	* Added missing +60 SP bonus to the Quve+Lude Card Combo [Lupus]
+	* Changed Rich Man Kim's target from party to enemy. [Skotlex]
+	  (it is now a SC that inflicts the mob, and when it dies applies on the
+	  exp it gives)
+09/02
+	* Changed Firewall's knockback to 1. [Skotlex]
+09/01
+	* Fixed Taekwon's Fighting Chant max level, thanks to  [DracoRPG]
+	* Added specific status changes for cooked foods' stats bonuses [DracoRPG]
+08/31
+	* Reverted traps to target "enemy", hardcoded to become "all" on gvg
+	  grounds. [Skotlex]
+	* Changed all traps to have target "all" (data from Viccious Pucca) [Skotlex]
+	* Updated SP costs and durations of Assumptio (thanks to Viccious Pucca)
+	  [Skotlex]
+	* Updated range of Lord of Vermillion (changed to 5->11x11) and Storm Gust
+	  (changed to 4->9x9) [Skotlex]
+08/30
+	* Added item groups for Taming Items, Quivers and Scrolls [Skotlex]
+	* Implemented Taming_Item_Giftset, Bundle_of_Spells, First_Aid_Box [Skotlex]
+	* 'Fixed' Cramp Card. Gives +10z per mob level on a 3% success chance. [Skotlex]
+	* Added Violin[4] #1902 into OVB, into Violy Drops (0.1%). Probably some of new drops
+		have chance more than 0.01%, too [Lupus]
+	* Fixed some items names spelling. Thx2Erpirata [Lupus]
+	* Added new items thx 2Landarma. I've made Venom Knife as a ETC item atm. [Lupus]
+08/28
+	* Added job bonuses for Taekwon, thanks to RockmanEXE [DracoRPG]
+	* Changed appearance of some DBs, now they have more friendly (and ENGLISH) headers, this
+	  was initiated by Vedurin whose redesigned and updated skill_cast_db, produce_db and
+	  create_arrow_db are also included in this change, thanks to him ^^ [DracoRPG]
+	* Changed Acid Demonstration's element from fire to neutral. [Skotlex]
+08/27
+	* Cleaned up the item_db.txt file, moved item comments to this file [Skotlex]
+	* Updated const.txt with correct Taekwon-class job IDs [DracoRPG]
+08/25
+	* Updated slots in Sage's diary to 2. [Skotlex]
+	* Updated Mobs drops: Dancing Dragon, Civil Servant, Tao Gunka, Kraben by
+	  MasterOfMuppets [Lupus]
+	* Changed Acid Demonstration from a "weapon" type skill to "misc". [Skotlex]
+	* Updated Demonstration to not stack and not be placeable near enemies. [Skotlex]
+	* Updated max number of spider webs to 3. [Skotlex]
+	* Updated Full Strip's casting time to 0. [Skotlex]
+08/24
+	* Updated Shield Chain's cool-down to 1 sec. [Skotlex]
+	* Updated summon spirit sphere's casting time to 1sec (all over the place
+	it says Zen's casting is twice SSS, and everywhere we also read that Zen's
+	cast is 2 secs, so add both together...) [Skotlex]
+08/23
+	* Fixed Sacrificial Ritual requiring Endure LV5 instead of LV1 [Skotlex]
+	* Updated the mob skill database. When specifying Metamorphosis/Transformation, 
+	  use the skilllv to indicate how many alternatives there are (for example, an
+	  ant egg would use metamorphosis level 3 as it can convert to Andre, Deniro or 
+	  Pierre) [Skotlex]
+	* Set the permilliage (use rate) of Metamorphosis to 50 (0.5%) on all mobs
+	  that had it specified at 0.
+	* Updated the skill delay from Breaker (thanks to Vicious Pucca) [Skotlex]
+	* Lowered Elder Willow's trunk drop rate from 35% to 3.5% [Skotlex]
+	* Changed Ghoul's race from 11 (unknown?) to 1 (undead). [Skotlex]
+	* Updated Deviling's mode to make him count as a boss/miniboss. [Skotlex]
+	* Corrected Spring Rabbit card improving candy-type item healing rates [Skotlex]
+	  (should be meat type since that's what it makes mobs drop)
+	* Updated buy/sell prices of some Louyang Drops (thanks to Ishizu) [Skotlex]
+08/22
+	* Reverted magnum break... it is supposed to be fire element :/ [Skotlex]
+	* Updated casting times and delays of Soul Strike & Napalm Beat, range of
+	  Ruwach/Sight (thanks to Vicious Pucca) [Skotlex]
+	* Updated Magnum Break's element (takes weapon), the fire part is hardcoded. [Skotlex]
+	* Removed the temp plug from Cramp Card as it seems it's way too powerful [DracoRPG]
+	* Updated skill_tree,job_db1 and job_db2 for new system and Taekwon support [DracoRPG]
+	* Moved MVPs from mob_branch.txt to mob_boss.txt (those that had yet to be
+	  moved, that is) [Skotlex]
+	* Added target flag "ally" to skill_unit_db [Skotlex]
+	* Added 0.5 sec delay to Aid Potion, 1 sec casting time & delay to Aid Condensed Potion
+	  (from kRO website, thanks to reddozen and vicious_pucca) [DracoRPG]
+	* Removed UF_NOFOOTSET from Ice Wall (I have several sources for that) [DracoRPG]
+	* Removed slot from nile_rose (All stats +5, event version), added slot to nile_rose_
+	  (MaxHP +10, permanent version) [DracoRPG]
+	* Added complete (except TK_MISSION) Taekwon skill tree & skill DBs entries [DracoRPG]
+08/19
+	* Fixed Double Attack's pl not being -1 (take weapon's element) [Skotlex]
+08/18
+	* Changed sell price of unknown test tube to 0 as it can be abused for a
+	  zeny exploit (thanks to Kayla for pointing it out) [Skotlex]
+	* Changes to Immaterial Sword (drain 1SP, not 1%SP per attack)
+	* Fixed Battleground Textbook, Greatest General Card to cast on yourself
+	  (again) [Skotlex]
+	* Changed Emperium to Holy 1 / Angel [DracoRPG]
+	* Changed (again!) Gloria Domini to 'misc' [DracoRPG]
+	* Changed pl of all 'weapon' attack skills that take weapon's element from '0' to '-1',
+	  according to the new system. Also changed type of various skills. [DracoRPG]
+	* Bah, refixed Owl Duke Card/Enchanted Peach Tree. [Skotlex]
+	  The last value of bonus4 bAutoSpell defines target (0 = self, 1 = enemy)
+	* Added new items, thanks to Landarma [Lupus
+08/17
+	* Changed back Soul Collect/Zen's casting time to 2 sec... [Skotlex]
+	* Changed Gloria Domini & Martyr's Reckogning from 'magic' to 'weapon', Battle Chant from
+	  'magic' to 'misc' [DracoRPG]
+	* Added IDs of Taekwon and its 2nd jobs to const.txt [DracoRPG]
+	* Added and fixed effects of some boxes [DracoRPG]
+	* Changed Heirozoist Card to have same chance as Azoth (3%), seems better [DracoRPG]
+	* Dropped Kobold Archer's Hat drop to 0.01% (it was left to 1% by an accident) [Lupus]
+08/16
+	* Reverted Magnum Break to be self-centered... [Skotlex]
+	* Corrected Teleport cost (thanks to k3dt) [Skotlex]
+	* Updated Heirozoist card to have a 0.1% chance of converting mob class
+	  instead of 0.01% [Skotlex]
+08/15
+	* Changed Magnum break's inf to 1 (normal targetted skill) [Skotlex]
+	* Made Kraben agressive and much faster [Skotlex]
+	  (info from Ishizu)
+	* Updated some Ayothaya loot prices [Skotlex]
+	  (thanks to Ishizu)
+	* Corrected the uptime for SA_AUTOSPELL [Skotlex]
+	  (thanks to HarmonySong)
+08/11
+	* Updated refine items for Damascus (thanks to Ishizu) [Skotlex]
+	* Updated Zen's (Hyper Spirit Sphere) casting time to 3 secs as per the kro
+	  skilldesctable.txt file. [Skotlex]
+	* Updated Guardians to be BOSS types (their mode was changed to 165 from 133) [Skotlex]
+	  Report any problems from this (just make sure you have some sort of
+	  source to rely on).
+08/09
+	* Updated Enchanted Peach Tree, Owl Duke and Greatest General
+	  to have their auto-spell casted on themselves rather than the enemy [Skotlex]
+	  (I don't have the data at hand, so if any of these should actually cast
+	  on the enemy, please correct it).
+	* Updated Battlefield Textbook to cast Bless on yourself, not the enemy. [Skotlex]
+	* Added new mobs, thanks to Death Dealer [Lupus]
+	* Added new items, thanx to Landarma [Lupus]
+	* Fixed Lunar Bow bonus [Lupus]
+	* Added effect to Novice Hood [Lupus]
+	* Fixed Freezer Card combo (was doing Weapon Perfection on the enemy) [Skotlex]
+08/05
+	* Fixed price of Ghost Doll (from Freya)
+	* Reverted Earth Deleter Card to 10SP [Lupus]
+	  HINT! HINT! HINT!
+	  How to check false items/cards bonuses reports? Just open latest korean idnum2itemdesctable.txt
+	  And check numbers in the item desc 8)))
+	* Updated Fireball cast times and delay [Skotlex]
+	* Updated SP cost of Stone Curae [Skotlex]
+08/04
+	* Updated mobs 1006 (Thief Bug Larva), 1393 (G Mummy), 1394 (G Zombie), and
+	  1407 (Dokebi) to be Level 1 and have max HP 1, otherwise the new mob db
+	  loading system will complain about them. [Skotlex]
+	* Added new mobs: Green Iguana, Orc Baby, updated and added some items. Thanks to Landarma [Lupus]
+	  Thanks to Erpirata for pointing me some tiny typos.
+08/02
+	* Reduced Soul Burn's after cast to 0 (the 15sec delay for reusing the
+	  skill is already hardcoded) [Skotlex]
+07/31
+	* Updated throw stone's range to 7, delay 100ms [Skotlex]
+	* Updated Steel Body to require 50% sp [Skotlex]
+07/29
+	* Removed Poison Bottle (item lv256) from produce_db [DracoRPG]
+	* Changed NPC_CURSEATTACK and NPC_ENERGYDRAIN to Dark attribute [DracoRPG]
+	* Changed mobs with NPC_STOP to cast it on target [DracoRPG]
+	* Changed Cart Termination to use "cartboost" state in skill_require_db [DracoRPG]
+	* Modified Hip Shaker/Ugly Dance's unit data to make it work every 3 secs [Skotlex]
+	* Okay, reduced the Call Partner's uptime from 10 secs to 0. [Skotlex]
+	* Changed Soul Collect/Summon Spirit Sphere type from weapon to none. [Skotlex]
+07/28
+	* Added baby skills delays, added them into nocastdex.txt [Lupus]
+	* Updated the Wedding skills: They cost 10% HP/SP and grand 10% HP/SP of
+	  their partner's sp. Also the recall partner skill has a casttime of 20secs
+	  not diminishable by dex. [Skotlex]
+	* Massive skills update (from now updated kRO website) [DracoRPG]
+	  - Blitz Beat : casting time changed to 1.5 sec
+	  - Falcon Assault : casting time / after-cast delay changed to 1 sec / 3 sec
+	  - Focused Arrow Strike : after-cast delay changed to 1.5 sec
+	  - Wind Walker : after-cast delay changed to 2 sec, casting time can be reduced by DEX
+	  - Meteor Assault : casting time / after-cast delay changed to 0.5 sec / 0.5 sec
+	  - Gloria Domini : after-cast delay changed to 2~4 sec
+	* Fixed "Greatest General Card" now casts the correct skill level [Fredzilla]
+07/26
+	* Changed the inf2 of Marionette Control to 512 + 1024 (can't cast on self
+	  + party only) [Skotlex]
+	* Changed the inf2 of Providence/Resistant Souls to 512 (can't cast on self) [Skotlex]
+	* Changed the inf2 of Devotion/Sacrifice to 3524 (512 -can't cast on self- 
+	  + 1024+2048 (party/guild only)) [Skotlex]
+	* Reverted Palm Strike's cast-time to 0 (the skill's code has been updated
+	  so it is not needed now) [Skotlex]
+	* Fixed skill-tree requirements of Soul Burn and Mind Breaker as described
+	  by Ishizu. [Skotlex]
+	* Fixed drop rates of all god-equipment-quest items from Treasure Boxes, they were 10x
+	  too high!! (lowered from '80'=0.8% to '8'=0.08%) [DracoRPG]
+	* Changed Weapon Repair to targetted with range 2 [DracoRPG]
+	* Made real effect of Textbook on Battlefield. Fixed skill ID.[Lupus]
+	* New Items. Thanx to Landarma & Erpirata [Lupus]
+07/25
+	* New items. Thanx to Landarma [Lupus]
+	* Few item names have been fixed. Added drops to Evil Snake Lord, Injustice.
+	  thanks to MasterOfMuppets [Lupus]
+07/24
+	* Changed the endow spell's inf2 to 3072 (party only/guild only) [Skotlex]
+07/20
+	* Changed Bow Thimble damage bonus to 3% (trustworthy-looking ragnainfo source) [DracoRPG]
+	* Removed job_db2-2 and rewritten + UPDATED job_db2 for the new system [DracoRPG]
+07/18
+	* A silly me, Palm Strike's delay before taking effect is 1s, not 1.5 ^^' [Skotlex]
+	* Changed Double Attack's list_num (div) to 2. [Skotlex]
+	* Added Palm Strike to the "skill_castnodex" file. [Skotlex]
+	* Changed Palm Strike's casting time to 1500ms (this value is used as the
+	  delay between doing the skill and the damage taking effect) [Skotlex]
+	* Updated Gospel's uptime2 to 60 secs (that's how long the bonuses should
+	  affect) [Skotlex]
+07/13
+	* Changed Wand of Hermod's skill_unit_setting from 'friend' to 'party' [Skotlex]
+	  (this should make the skill affect only party (and guild?) mates instead
+	  of all players in normal maps)
+07/11
+	* Reduced Einbroch mobs (RSX,Ungoliatnt) call-slave skill chance from 10000 (100%) to (10%) [Lupus]
+	* Added the Loli Ruri card to the magician set [Skotlex]
+	* Changed Guild Castles' names to iRO [DracoRPG]
+07/10
+	* Fixed Lord of Death mob (added house auger), added correct MVP exp to Tao Gunka,
+	  RSX 0806, thanks to MasterOfMuppets [Lupus]
+	* Reduced drop chance of Galapago, Banana Hat, etc hats (acc. the patch) [Lupus]
+	* Due to adding (thanx to Muad_dib) Lighthalzen fields mobs spawn. I had to change
+	  temp Mole stats to Martin. But Mole has its own hat drop [Lupus]
+	* Lighthalzen fields mobs spawn. thanx to Muad_dib
+	* Edited skill_castnodex_db [DracoRPG]
+	  - Enabled DEX-reduced casting time on Blitz Beat, Falcon Assault and Sharp Shooting
+	    (Lupus told me to do, so blame him, not me :p)
+	  - Removed the skills that only had a non-DEX-reduced after-cast delay since DEX
+	    shouldn't reduce after-cast delays anyway (only useful for custom servers who want to
+	    enable delay_dependon_dex but it's not our matter)
+07/09
+	* Fixed SP usage of PALMSTRIKE, SPIRAL PIERCE [Lupus]
+	  I do always open the latest korean patch and get ACTUAL numbers from there ^^
+	* Added delays to Falcon Assault (1 sec for 1lvl,2,3,4,5sec for 5lvl)
+	  according to desc.
+	* Fixed Aura Blade (now requires Magnum Break LV 5) [Lupus]
+	* Updated Palm Strike's sp cost and sphere requirement [Skotlex]
+	  (info provided by ZeroXell)
+	* Fixed Apocalypse (guild) mob id. [Skotlex]
+	* Awakening Potions now cure 'Sleep' [Skotlex]
+
+07/08
+	* Wedding/Adoption skill's inf2 has been changed to 4 (Wedding Skills) [Skotlex]
+	  (Deja vu? Somehow I did not do it last time I said I did)
+	* Added the Adoption skills to the skill_require_db [Skotlex]
+	  They use basic stats for now and sp cost 1 so you can cast it.
+	* Reverted the wedding rings behaviour. [Skotlex]
+	* Wedding/Adoption skill's inf2 has been changed to 4 (Wedding Skills) [Skotlex]
+	* Added the adoption skills to the tree of all classes [Skotlex]
+	  (WE_CALLPARENT, WE_BABY to baby classes, WE_CALLBABY to all others)
+	* Updated the Wedding Rings to give the adoption parent skill. [Skotlex]
+	* Einbroch monsters obtained some new drops, thanx to MasterOfMuppet [Lupus]
+	* Added drops: Super Novice Hat[1]->Mole 0.1%, Soldier Felt Hat[1]->Removal 0.1% [Lupus]
+	* MasterOfMuppet's fixes. According to kRO's website fixed: [Lupus]
+	  ayothaya mobs with elemental attributes, race, size, temp speed and temp modes(ie aggressive, loot e.t.c)
+	  einbroch mobs with elemental attributes, race, size, adjusted atk dmg,def,mdef,exp,jexp
+	* Added Lighthalzen monsters (with poring stats) and Homuculuses(as monsters), thanks to Muad Dib of Fusion.
+	  I've added common stats to Bascojin&Chung_E monsters tough [Lupus]
+	* Fixed Bloody Roar item effect, thanks to Landarma [Lupus]
+	* Fixed Enchanted Peach Tree (Live Tree) Card to autocast Heal on self [DracoRPG]
+	* Added new effect to Winter Cap. thanks to Landarma [Lupus]
+07/07
+	* Changed Marionette's inf2 to 1024 (use only on party) [Skotlex]
+	* Changed Marionette's inf to 16 (targetted support skill) [Skotlex]
+	* Changed Soul-Change's inf2 to 3072 (use on party/guild only) [Skotlex]
+	  Still not sure what's the proper way to enable it on pvp/gvg grounds, though...
+	* Fixed small typo with grandpa_beared thanks to N0_0N3. [massdriller]
+07/06
+	* Made Arrow Vulcan be affected by dex, delay unaffected by dex. [Skotlex]
+	  (from what I read around on the forums, it seems that's how it is)
+	* Made Double Strafe, Arrow Shower cast time be affected by dex, and delay
+	  be unaffected by dex. [Skotlex]
+	  (hey, these two had 0 cast times already, so it was a waste the way it was)
+	* Changed Tao Gunka's mode to 163 (131+32) to make it a boss type mob [Skotlex]
+	* Changed Spider Web's inf to 2 so that it becomes ground-targeted [Skotlex]
+	* Added Novice Red Potion into item_trade.txt db. (can't be traded, etc) [Lupus]
+	* Removed Zealotus Mask drop from Zherlthsh (could be3 made as a quest only. And goes with Player's name prefix) [Lupus]
+	* Added missing Horns of Succubus drop (thx 2Lorky), added Angry Teeth drops to Teddy Bear + Hylozoist [Lupus]
+	* Few fixes in the new_hats_0625.txt quests [Lupus]
+	* Re-Fixed few mobs drops, thanks to MasterOfMuppets [Lupus]
+	* Added missing bonusrate = 1 into Bon Gun's petskillattack2 params [Lupus]
+07/04
+	* Added Marine Card effect,added minerals drops to various monsters (need for official lvl4 weapon quest!) thanks to MasterOfMuppets [Lupus]
+	* Fixed BonGun's pet script. [Skotlex]
+	* Fixed Li Me Mang Ryang Not Equipable bug thanks to vicious_pucca [massdriller]
+07/02
+	* Added missing ';' in Incubus Card script [DracoRPG]
+	* Updated mapflags. Added new hats drops to Kobold Archer, Wootan Fighter, Galapago [Lupus]
+	* Added Li Me Mang Ryang Card to OCA and to the drops [Lupus]
+	* Updated tons of cards, thanx to Landarma
+	  Also fixed misplaced IDs od 4269 Incubus and 4268 Injustice cards [Lupus]
+		(everywhere, including card album, mobs drops, cards-combo bonus)
+!!!!WARNING!!!! check your servers for those cards. Remove them. They have different placements and could cause exploits!
+	* Fixed Succubus+Incubus card-combo bonus exploit. Thx 2DracoRPG [Lupus]
+	* Implemented Increase Soil card (compound to Armor) -50% DMG by Guardians [Lupus]
+	* Added temp plug to Cramp Card (on a mob kill now it gives you 1 zeny) [Lupus]
+	* Added packet_ver 18 by Sara-chan [Lupus]
+
+06/28
+	* Added "gld_dun01.gat  5" to water_height.txt as reported by Manipulator [Skotlex]
+	* Added Dryad Card effect, thx to MasterOfMuppets [Lupus]
+	* Fixed Land Protector's Range to be 7x7,7x7,9x9,9x9,11x11 [Skotlex]
+	* Made Lemon consumable (previous equip_jobs was 0), that was not on
+	  purpose, right? [Skotlex]
+	* Added 2-sec aftercast-delay to sonic blows. Too many complains about double
+	  casting it, and I really don't think it was meant to be doble-castable
+	  either. [Skotlex]
+	* Added effects to new boxes (thanks to Landarma), added these boxes
+	  as drops to new cards (thanks to MasterOfMuppets), fixed Taoist Card
+	  placement [Lupus] TODO: revise all the cards
+06/23
+	* Corrected 3 of the new headgears in item DB, thanks to Ishizu-chan [celest]
+06/20
+	* Fixed some item_db typos [celest]
+	* Updated Thunderstorm range to 2 [celest]
+
+06/18
+	* Reverted Skotlex's work. [Lupus]
+	  all 3 Lances differ by their ID (for quests purposes!)
+	  There are 2 assassin masks: 5054 and 5096. They don't have any slots.
+	  But they differ by applicable jobs: 5054 for Assassins + Priest Class
+		and 5096 is for ANY Thief Class (Thief,Assassin,Roug) + Priest Class
+		Plz, if you want, use ITEM_DB2.TXT for made-up items 8)
+	-- I can't argue on the assassin mask, and it's good that it was fixed. But
+	  which quest uses the Lance (1411)? It must be a quest that is not
+	  currently shipped with eA, because items 1411 and 1412 are NOT used
+	  anywhere inside the NPC directory, and 1410 is only on some shops. I am
+	  curious to know which Quest uses the 1411 lance... 
+	  Plus it doesn't seems to make any sense from a client-side view. "You
+	  need the Lance that Doppel Drops, not another" (even thought they all
+	  look and work exactly the same for the player x.X) [Skotlex]
+	* Changed slot-count for item 1411 (Lance_) from 0 to 1. [Skotlex]
+	  I am not going to believe 0 is the real number for it considering that:
+	  1: You can't get it from any shop. (that id is nowhere in the npc files)
+	  2: Only DoppelGanger drops it, with a 5.5% chance.
+	* Added some new items (by Landarma), fixed recently added ones. [Lupus]
+06/11
+	* Changed Ungoliatnt Assumption skill's target to self from target [Skotlex]
+	* Updated skill_cast_db: Soul-Strike's casting time, Stone Curse's upkeep
+	  time as per the information provided by Midas	[Skotlex]
+	* Changed Sprinkle's Sand range from 8 to 1 (8??? o.O) [Skotlex]
+	* Changed Dark Illusion Card's bonus bDelayrate -> bonus bCastrate [DracoRPG]
+	* Added the new headgears and garments [DracoRPG]
+06/09
+	* Added inf2=64 to Benedictio. 64 now actually stands for "skill needs
+	  other nearby support characters", or as the battle_config calls it
+	  "ensemble skills". [Skotlex]
+	* Removed inf2 of Extremity Fist, it is harcoded for now. Inf2 values 4 and
+	  8 are free for the taking. What should they be for? Partner/Baby skills? [Skotlex]
+	* Added inf2 values: 32 (Dance/Song skills) & 64 (Encore skills).
+	  (Encore skills don't need to be set as 96) [Skotlex]:
+	  - Bard Skills set to inf2 32: BA_WHISTLE, BA_ASSASSINCROSS, BA_POEMBRAGI, BA_APPLEIDUN
+	  - Dancer Skills set to inf2 32: DC_HUMMING, DC_DONTFORGETME,
+	  DC_SERVICEFORYOU, DC_UGLYDANCE
+	  - Encore Skills set to inf2 64: BD_LULLABY, BD_RICHMANKIM,
+	  BD_DRUMBATTLEFIELD, BD_RINGNIBELUL, BD_INTOABYSS, BD_SIEGFRIED
+	  - If I missed any skill, help me correct it, these inf2 values are not yet
+	  used in the code, but that'll change soon.
+	* Added inf2 value 16 for Guild Skills, set all guild skills to have inf2
+	* Readded skills to items Electric Guitar, Firebrand & Ice Falchion [Skotlex]
+	* Some corrections to the skill_db.txt's nk value. [Skotlex]
+	  - Storm Gust: 1->0
+	  - Blitz-Beat: 1->2
+	* Removed magnum break's inf2=16 since it ain't used anywhere. [Skotlex]
+	* Fixed Ayothaya monsters drops and names thx 2 MasterOfMuppets [Lupus]
+06/06
+	* Corrected Ice Falchion, Firebrand, Electric Guitar [Skotlex]
+	  These should not give you a skill-tree, only auto-cast the skill.
+	  Ice Falc also has a 1% chance of freezing yourself.
+	* Removed the 20% HP cost of casting GrandCross.
+06/05
+	* Changed Grandcross/DarkCross's Interval from 300ms to 400ms [Skotlex]
+	  This fixes GX doing 4 hits instead of 3.
+	* Added tons of new items, thanks to Landarma [DracoRPG]
+06/03
+	* Fixed 'Keeping' in the mob skill DB to be cast on self [celest]
+06/01
+	* Optimized a lot of new cards scripts [DracoRPG]
+	* Changed Deviling to receive 50% more damage from ALL elements but neutral, and not only Fire/Earth/Water/Wind [DracoRPG]
+	* Changed doppelganger card aspd bonus to 10% as it should be. [massdriller]
+	* Changed DoppelGanger card's attack speed increase to 30%. [Skotlex]
+	  This card current does not stacks. If anyone knows of a valid source that
+	  says otherwise, open a bug-report so it can be corrected.
+05/29
+	* Moved the card-status listing from item_db.txt to this file [Skotlex]
+	* Added the new column to item_db: refineable to specify which items can be refined. [Skotlex]
+	* Fixed Novices able to wear all "Every class except Novice" headgears, thanks to duduc [DracoRPG]
+05/28
+	* Added emotion constants to const.txt	[Skotlex - R1853]
+	  The constants mirror their command counter part (ie: /meh -> e_meh),
+	  for the most part, except for the following:
+	  e_gasp (/!), e_what (/?), e_cash (/$), e_dots (/...), e_no (/??),
+	  e_hp (need HP), e_hlp (/hp, help emotion),
+	  e_scissors (ctrl+-), e_rock (ctrl+=), e_paper (ctrl+\)
+	  And the following flag-emotions are available:
+	  e_korea, e_indonesia, e_philippines, e_usa, e_brazil
+	  The whole point is being able to do in scripts "emotion e_wah;" instead
+	  of "emotion 16;"
+05/25
+	* Fixed Peach Tree card, thanks to Komurka
+05/20
+	* Updated mob skill DB, thanks to Komurka
+05/17
+	* Corrected typo for sweet potato, thanks to maeki
+	* Switched Tirfing and Mystelltain card effects, thanks to starlon [DracoRPG]
+05/15
+	* Changed Hylozoist's race to demon, thanks to Dino9021
+	* Fixed Gajomart Card, thanks to starlon [DracoRPG]
+	* Added missing 'amount input' packet for Sakexe 05-09 [celest]
+05/12
+	* Added missing 'close storage' packet for Sakexe 05-09 [celest]
+05/11
+	* Updated item_db (all items with use_script "pet" or "itemskill") to use
+	  the new type of item (11: delay-consumed usables) [Skotlex]
+	* Added the new G_ mobs with poring stats, thanks to Komurka
+05/10
+	* Changed 2005-05-09Sakexe's packet version to 17 [celest]
+	* Fixed Merchant Class Card Combo Set bug (it was always ON) [Lupus]
+	* Merchant Class Card Combo Set: added 0.1% Old Purple Box drop [Lupus]
+	* Archer Class Card Combo Set: added +5% EXP bonus on killing Brute [Lupus]
+	* Holy Class Card Combo Set: added +5% EXP bonus on killing Undead/Demon [Lupus]
+
+05/09
+	* Added INT +2 and Unbreakable to Crown of Mistress [DracoRPG]
+	* added Sara-chan's 18th packets update [Lupus]
+	* Added FULLY updated mobs skills DB by Komurka (up to Aegis Zone 8.5) [Lupus]
+	* Fixed drops of Antique Firelock (thanx 2 Freya) [Lupus]
+	* Added skills to Beetle King thanks to MasterOfMuppets [Lupus]
+	* Started updating monsters skills according to the recent servers
+	  thanks to MasterOfMuppets [Lupus]
+05/08
+	* Fixed Whisper Boss card, thanks to sbilly
+	* Updated the packet db (removed some duplicates, corrected some packets),
+	  thanks to glucose
+	* Removed Sword Mastery from Alchemist's skill tree :o [DracoRPG]
+05/06
+	* Fixed some genders for some FOOD. Added some new items into item_db. Thanks 2 Landarma [Lupus]
+05/04
+	* Added 1% Horse Crest drops to Greatest General, Sohee monsters [Lupus]
+	* Added implemented cards into card albums and to mobs drops [Lupus]
+	* Set Mimic Card, Mystcase Card bonus to 0.1% (it was 0.01%, they has been increased to 0.1% due recent patch)
+	  But it isn't 1% for sure
+	? Greatest General Card semms having wrong effect, tough 8) [Lupus]
+05/03
+	* Added missing item drop effects for some new cards [celest]
+	* Fixed Heater Card and Freezer Card [celest]
+05/02
+	* Fixed # of Deviling's slaves [Lupus]
+	* Fixed cards that use getrefine [celest]
+05/01
+	* Fixed skill tree entry for Potion Synthesis, thanks to shadow
+04/30
+	* fixed cards that required bExpAddRace,bSPGainRace,bLoseSPWhenUnequip by MasterOfMuppets [Lupus]
+04/29
+	* Re-added Spiral Pierce to Lord knight's skill tree
+	* Added missing Shield Chain to the skill tree, thanks to Komurka
+	* Fixed Harpy Card and Freezer Card, thanks to Komurka
+04/28
+	* Added effect for Dumpling Child and Hermit Plant card
+	* Changed Crab card to use 'isequipped' and fixed Rideword card
+04/27
+	* Added effect for Solar Sword
+04/26
+	* Fixed some items, thanks to Komurka and shadow
+	* Applied new advanced skills changes from 4/26 patch [DracoRPG]
+	* Reverted Arrow Shower / Double back to 0.1. Sorry! [Lupus]
+	* Started implementing missing card effects [Lupus]
+	* Added more mobs skills, thanx to MasterOfMuppets [Lupus]
+04/25
+	* Fixed Durian and Ramadan, thanks to rollopop
+04/23
+	* Fixed Red Scarf name, thanks to Sasuke [DracoRPG]
+	* Removed some extra 0's in the item_db, thanks to Zoc
+	* Added monsters skills to all Niflheim / Louyang monsters,
+	  changed Garm slaves to Garm Bebe. Thanx to MasterOfMuppets
+	* Fixed Owl Duke Card, now casting IMPOSITIO on the card holder [Lupus]
+	* Panacea,Royal Jelly now remove Hallucination Effect. accord.to 10 May patch [Lupus]
+	* Hallucination Pills (Pellet) cause Hallucination Effect [Lupus]
+
+04/22
+	* Updated effects for Ahura Mazda, Gaia Sword, Freezer Card
+	* Added 4 items of THQ -> item_avail.txt [Lupus]
+	* Removed the Stun effect ????? on Sweet Potato, fixed Assulter Card script not in correct field [DracoRPG]
+	* Minor cards sets fixes [DracoRPG]
+	  - Reverted some wrong Codemaster's if(callfunc("Is_xx_Class"))) => if(callfunc("Is_xx_Class"))==0) changes
+	  - Fixed Thief cards set checking for Merchant class instead of Thief class
+04/20
+	* Added Thief cards set and fixed other ones, now they should all work [DracoRPG]
+	* Added Intravision item bonus [DracoRPG]
+	* Adding supported map cell types to const.txt [celest]
+	* Added summoned Geographers can heal their masters [celest]
+04/19
+	* Corrected skill tree entry for Peco lord knight's Berserk [celest]
+04/17
+	* Fixed "Every job except Novice" armors wearable by Novices [DracoRPG]
+04/16
+	* Corrected job bonuses for novice, super novice and dancer [celest]
+04/15
+	* Removed Raid not allowed in GvG (never seen it anywhere...) [DracoRPG]
+	* Added new items, thanx to Landarma [Lupus]
+04/12
+	* Added monsters skills and slaves to all Einbrook monsters, thx4info2 Landarma [Lupus]
+	* fixed Deviling and Lou-Yang monsters drops, thx2 MasterOfMuppets [Lupus]
+	* Added missing summon slaves to Deviling, Tao Gunka (correct # and type) [Lupus]
+	* Made Deviling, Tao Gunka aggressive (st - according to most DBs, 2nd - it's MVP)
+	* Corrected 1 wrong entry in the create arrow DB, thanks to Komurka
+04/08
+	* Corrected wrong entries in the create arrow DB, thanks to Komurka
+04/07
+	* Fixed materials for forging Lance : 1 Evil Horn -> 2 [DracoRPG]
+	* Fixed Sphinx Hat equip location [DracoRPG]
+04/06
+	* Added Einbrook monsters and drops, thanx to Landarma [Lupus]
+04/05
+	* Some items fixes [DracoRPG]
+	  - added missing "Neko Mimi" hat #5099, thanks to Neko2
+	  - fixed Wedding Rings item types, thank to nimrod
+	* Removed Evil Wings drops from Mini Demon,Deviruchi,Archangeling and put it into Deviling [Lupus]
+	  according to kRO "Evil Wings" are dropped by Deviling only
+	  Deviling items drop chances aren't correct yet
+	* Fixed skill tree entries for Vulcan Arrow, and Throw Arrow for gypsies,
+	  thanks to Hekate
+04/04
+	* Removed required skills for Berserk (only job level 50 is needed) [DracoRPG]
+	* Re-added MDEF +15 to Resting Cat [DracoRPG]
+	* Added Sunglasses & Glasses into OBB, added slotted Sunglasses & Glasses into OVB [Lupus]
+04/03
+	* Doppelganger Card gives only 10% ASPD bonus (from Aegis) [DracoRPG]
+04/02
+	* More new cards and fixes [DracoRPG]
+	  - added Acolyte, Archer and Merchant sets effects
+	  - added Turtle General Card effect
+	  - corrected Job_Super_Novice -> Job_SuperNovice for Lude and Quve Cards
+	  - autospell weapons (except Fireblend, Ice Falchion and Electric Guitar)
+	    give no more the skill so it can't be used when you want
+04/01
+	* New cards updates and additions [DracoRPG]
+	  - added Mage and Swordman sets effects
+	  - added Whisper Boss Card (not found the ID -> commented out)
+	  - activated Turtle General Card but effect not yet scripted
+	  - updated some effects from 3/17 patch
+03/31
+	* Updated/added some new card effects [DracoRPG]
+	* Reverted Berzebub card to reduce casting rate
+	* Corrected some item effects, thanks to digigp and htm
+	* Updated some cards effects from 3/25 patch [DracoRPG]
+	* Updated freeze time for Frost Diver and Frost Nova
+	* Updated cast time for Preserve, thanks to Neko2
+03/29
+	* Some optimizatons, added missing skill to Electric Guitar [Lupus]
+	* Added new items (thanx to Landarma) [Lupus]
+	* Added effects to Spring Rabbit, Galapago, Sea Otter Cards [Lupus]
+	  It seems that item heal rate doesn't work yet
+03/27
+	* Re-Updated MOB DB with correct file now 8) [Lupus]
+	* Added all released cards into monsters drops and OCA [Lupus]
+	* Minor Items, Monsters fixes [Lupus]
+03/26
+	* Fixed some incorrect create arrow entries, thanks to boredpoo
+
+03/25
+	* Added Einbrook's mobs, thanks to RodneyJ for their IDs [Lupus]
+	* Removed some extra 0's in the item_db, thanks to Zoc
+	* Corrected some item effects according to the mentoned earlier doc [Lupus]
+03/24
+	* Corrected exp table entries for level 11 and 99, thanks to Dino9021
+	* Corrected some item effects according to the newly found Aegis Zone Server [DracoRPG]
+
+03/22
+	* Corrected some typos in the items DB, thanks to Zoc [celest]
+	* Added new items. Thanks to Landarma [Lupus]
+	* skill CANNIBALIZE: fixed its upkeep time [Lupus]
+        * Added Rafflesia into Dead Branch monsters list, removen all MVPs from there [Lupus]
+	  DBs never supposed to call MVPs!!! Only Sages Hocus Pocus could make
+	  a MVP from Alchemyst's Floras. (eA Hocus implementation doesn't support it yet)
+03/21
+        * Corrected exp table entries for Super Novice, thanks to Dino9021 [celest]
+
+03/19
+	* changed all cards to 'getrefine' function [Lupus]
+	* used 'cardscnt' instead of 'isequipped' in Crab Card.
+		  It's a weapon compunding card. So it used to give up to
+		  6 bonuses! on Assassin with 4 4-slotted weapons.
+		  Now it lets you get up to 2x bonuses per hand.
+		  Should be fixed more. already got idea 8)
+		All the similar cards should be fixed in the same way.
+        * Fixed missing END; in new cards, some optimizatons [Lupus]
+03/18
+        * Updated item prices for Niflheim drops [celest]
+        * Updated some Ayothaya mob stats [celest]
+        * Fixed Incantation Samurai card reducing HP too quickly - the time should
+          be in milliseconds ^^; [celest]
+	* Added ~86 new cards. Fixed, optimized [Lupus]
+		Thanks to Indiona,Landarma. Gosh, I had to fix some bugz ^_-
+03/16
+	* Added new items. Thanks to Landarma [Lupus]
+03/15
+        * Fixed pricing for Claw, thanks to Dino9021 [celest]
+03/09
+	* Added new items. Thanks to Landarma [Lupus]
+02/23
+	* New Cards: Some fixes, revisions, additions [Lupus]
+	  According to the latest news:
+	  Fixed Tirfing, Mysteltainn (swapped enemy sizes of the cards bonuses)
+	  Added bonus: Munak+Bongun+Hyegun Cards -> +1 Allstats
+	  Added Alice Card placement. (also added it for Spring Rabbit, Galapago, Otter) And put Alice Card into OCA 
+		can't add new effects for 22 Fed Update Cards yet.
+	  All the cards by 22Feb have been revised, but not all tested.
+02/21
+	* Added new item: Takius' Blindfold. thanks to Landarma [Lupus]
+	* Revised New Cards, added missing effects, fixed bugs [Lupus]
+	  ~20 cards to check left 8) But in 22 Feb some new cards have been announced T__T'
+	* Added actual item_db.sql into sql-files. [Lupus]
+	* item_db.txt: Added missing fields / removed extra fields from some new items V__V' [Lupus]
+	* More monsters name fixes (GIANT_HONET -> GIANT_HORNET , etc) [Lupus]
+	* Added actual mob_db.sql into sql-files. If you use SQL Mob DB then update it [Lupus]
+
+02/19
+	* Added released cards into the monsters drops. Fixed couple card names [Lupus]
+	  (Arc Angeling -> Archangeling)
+
+02/18
+        * Added more new cards effects (thanks to DracoRPG at this time) [Lupus]
+	  added missing bonus 'bAllStats' into doc/item_bonus.txt
+        * Changed Goblin Leader Card to using bAddRace2 -- each player can only save
+          10 AddDamageClass, so this would save some space for other cards ^^ [celest]
+	* Started adding new cards effects. Also big thanks to Landarma [Lupus]
+
+02/17
+	* Added 4 columns into mob_db.txt & mob_db2.txt [Lupus]
+	  If you were using SQL MOB DB, then update your SQL DB and import all data
+	  from mob_db.txt mob_db2.txt
+	* Fixed some mobs drops Whisper + Boss Whissper had wrong drops %%  [Lupus]
+	  and Whisper had 0% Card drop...Also fixed all MVP mobs (MVP bonuses were shifted...
+	  MVP EXP was missing, etc)
+        * Corrected Parrying lasting time, thanks to p14333 and krc2k for pointing it
+          out [celest]
+
+02/11
+	NOTE: Get rid of old cards on your server!!! IDs: 4149-4332
+	  before using of this item_db.txt (some cards have changed their IDs)
+	  and it could cause ALIEN cards in your players equipment 8))
+		i.g. a weapon compounding CARDS inserted in armor, etc...
+        * item_db.txt Massive update: [Lupus]
+	  - Added all new missing items (up to st.Valentine's Day Event)
+	  - Added new cards 4149-4332, sorted them and set their sripts.
+	  - Fixed some names, typos, weigths and prices
+	* Commented out old custom cards from Old_Card_Album.txt till we brush them up [Lupus]
+	* Removed old custom cards from MOBs drops [Lupus]
+	  thanks to Landarma(new items templates) Poki#3(removing cards from drops)
+        * Updated Soul Breaker cast and delay time, thanks to matthias [celest]
+        * Updated Chain Crush to require level 2 Tiger Fist, thanks to matthias for
+          pointing it out [celest]
+
+02/05
+        * item_db.txt Added prices to all Magic Scrolls and to Horse Crest,
+	  added +100-1000 Zeny effect to Gold Coin (it's used in st.Patric event)
+	  not sure in Zeny amount, tough. [Lupus]
+	* mob_db.txt Kind of Beetle -> Beetle King. [Lupus]
+
+01/26
+        * Updated Counter dagger's attack, thanks to Poki#3
+        * Added ayo_fild02 to nomemo mapflag list
+
+01/13
+        * Fixed drops of Taoist Hermit, added drops rates to JOKER (all rates were 0%)
+	  Removed 0.01% Chances of all Apple drops plugs
+	  Tided up mob_db/mob_db2, removed extra tail delimiters (,,,,,,) [Lupus]
+01/07
+        * Added midas' fix for Hammerfall and Adrenaline Rush [celest]
+        * Added 'bDelayrate' and changed Phen card, Marduk Card and Berzebub Card's
+          effects to use this instead of bCastrate (which was reducing casting time,
+          not delay time) [celest]
+01/05
+        * Added DracoRPG's changes [celest]
+          - changed Gungnir to wind element
+          - changed Damascus to cannot be broken
+01/04
+        * item name fix Daydric Card -> Raydric Card [Lupus]
+	  Changed weight of Durian,Ramadan,Realgar Wine.
+	  Added effect to Durian fruit
+01/01
+        * Included Mages and Wizards to be able to use berserk potions [celest]
+	* Changed some create arrow outputs for new kRO 12/21/04 patch [Aria]
+
+12/29
+        * Corrected Bloody Axe's weight - 400 > 4000 [celest]
+        * Removed Bandit's Beard from item_avail.txt [celest]
+12/28
+        * Removed Roguemaster's Bow adding steal chance, thanks Draco [celest]
+
+12/26
+        * Added item_db2.txt - would be more convenient to store custom items in a
+          separate db [celest]
+
+12/21
+        * Added prices to Arrow Quviers ( = 500* arrow price), fixed few item names
+	  (removed '_' from jNAME column), fixed HP amount in Novices Red Potion [Lupus]
+12/21
+        * Added the new Quivers, updated Horse Crest [celest]
+12/20
+        * removed extra {},,,,,,, from each tailing [Lupus]
+        * Corrected job requirements for some garments [celest]
+        * Corrected skill tree requirements for 3 Peco Lord knight skills [celest]
+        * Updated item 569 -> it's a Red potion given to novices if they pass the
+          training grounds test [celest]
+12/18
+	* Lord Knight's Concentration can now be used with any weapon [Aria]
+	* Changed few God-items to fit kRO 12/7/04 Patch [Aria]
+          - Reverted by Celest (sorry, but it's already updated ^^;)
+	* Fixed screwed drops of Kapha (someone removed one number and all data was shifted) [Lupus]
+	* Found one missing item N 569, looks like red Potion. Added a temp plug
+	  fixed typo bolt -> Bolt in one scroll [Lupus]
+	BTW I made a TXT Resources merger (it helps merge clients resources itemdesc,etc)
+	so if u need it just tell me
+
+12/17   * Added effect for Deadly poison bottle and Ice cream [celest]
+
+12/15   * Updated Steel Body, Thunderstorm, Investigate and Magic Crasher, thanks
+          to midas
+        * Removed elunium and oridecon from produce_db, thanks to Draco
+
+12/14   * Changed 'Parasite' to non-moving [celest]
+
+12/12   * Removed unuseable skills from skill_tree.txt [celest]
+
+12/11   * Corrected item_db - Wedding rings should give all 3 skills [celest]
+
+12/9    * Removed some unused skills from skill_tree.txt [celest]
+
+12/8    * Capitalised horn_Card in item_db [celest]
+
+12/7    * Fixed some item names (and swpped names of Alarm Mask and Expressionless Mask) [Lupus]
+	* Added effect for Bow Thimble, Archer Skeleton Card and Tribal Solidarity [celest]
+        * Updated Sleipnir, Brisingamen, Mjolnir, Megingord, Counter Dagger,
+          Poison Knife [celest]
+        * Updated SP requirements for Full Strip, Full Chemical Protection, Cannibalize [celest]
+        * Corrected some item_db typos, thanks to DracoRPG
+
+12/6    * Changed spiritball requirements for Chain Crush to 1, thanks to MaoMao of cAthena
+
+12/5    * Edited skill_nocast_db - the skills should be useable outside GvG maps even
+          if woe is on [celest]
+
+12/3    * corrected Spider Web's maximum level [celest]
+        * Removed Soul Drain from Professor's skill tree [celest]
+        * Updated Stunner's job - Acolytes and monks should be able to use it too! [celest]
+
+12/2    * Updated skill tree prerequisites for the new kRO skills [celest]
+
+12/1    * Updated Poison React, Soul Change, Soul Burn [celest]
+
+11/30   * Corrected bUnbreakable value in const.txt [celest]
+        * updated skill_cast_db for Meltdown and Tiger Knuckle Fist [celest]
+
+11/29   * Updated skill_db for Quagmire, Fog Wall [celest]
+
+11/28	* Fixed Wedding rings placement 2->136 [Lupus]
+	* Fixed mob Amon Ra stats/drops [shadow]
+
+11/27	* Fixed some drain rates, fixed Balmung, Mjolnir, fixed all maces (for right jobs) [shadow]
+
+11/26	* Fixed Abrakadabra (3 Yellow Gemstones -> Yellow Gemstones 2).
+	  And of course it would still use 1 Yellow even if you have Mistress Card, etc. [Lupus]
+	  TODO: Abrakadabra should also summon Monsters and even MVP by chance...
+	* Lowered max level of Oridecon Research skill from 10 to 5 [Lupus]
+
+11/25   * Added element effects to const.txt. [celest]
+          Usage example: sc_start SC_Frost,30000,0;
+          to change the weapon element to Water for 30 seconds.
+
+11/23   * Added temporary requirements for the new guild skills [celest]
+
+11/22
+        * Changed weapon requirements for Sharp Shooting [celest]
+	* fixed job_db2.txt (,, -> ,) [Lupus]
+        * Adding 11/23 kRO's new skills [celest]
+	* Slim Potions requires empty test tube, not empty potion bottle *fixed* [shadow]
+
+11/21
+	* added bClassChange to const.txt and added bClassChange,50; to azoth (.5% chance to transform monster into another.) [Valaris]
+	* added mob stats: 1027,Raptice [Lupus]
+
+11/20
+	- Added deadly poison bottle to produce_db.txt [celest]
+        - Edited ASC_CDP in skill_require_db.txt
+        - Edited ASC_EDP in skill_cast_db.txt
+
+11/17
+	- Corrected max level for cloaking in skill_tree.txt [celest]
+
+11/16
+	- Item 7110 fixed name -> Broken Sword (part of Bongun quest) [Lupus]
+	
+11/16   
+	- Added BaseJob to const.txt [celest]
+
+11/15
+	- Minor fix on wedding skills, to use 15% of SP/HP . [shadowlady]
+	-  ?
+
+11/14
+	- Fixed Golden Thief Bug Mode!(+detects hidden) [Lupus]
+	

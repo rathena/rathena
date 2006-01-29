@@ -1,0 +1,39 @@
+//===== eAthena Script =======================================
+//= Hugel City
+//===== By: ==================================================
+//= vicious_pucca, Poki#3
+//===== Current Version: =====================================
+//= 0.1
+//===== Compatible With: =====================================
+//= eAthena 1.0
+//===== Description: =========================================
+//= NPC's for the City of Hugel.
+//===== Additional Comments: =================================
+//= Cords and Sprites are 100% Correct, but the names are not.
+//= Plus no one knows what the NPCs are talking right now :/ [Poki#3]
+//============================================================
+
+//Should be moved later on to Bulletin Boards.txt
+hugel.gat,91,152,4	script	Bulletin Board	837,{end;}
+
+hugel.gat,102,161,3	script	Young Sailor	100,{end;}
+hugel.gat,90,151,3	script	Yoko	893,{end;}
+hu_in01.gat,111,386,4	script	Jino	86,{end;}
+hugel.gat,100,102,3	script	Grandpa Hohi	866,{end;}
+hugel.gat,85,93,3	script	Grandpa Hiho	866,{end;}
+hu_in01.gat,23,311,4	script	Johsh	868,{end;}
+hugel.gat,107,67,3	script	Kiddy the Kid	706,{end;}
+hu_in01.gat,246,107,2	script	Receptionist	53,{end;}
+hu_in01.gat,256,40,2	script	Garud	897,{end;}
+hugel.gat,98,57,3	script	Old Lady	863,{end;}
+hugel.gat,71,82,3	script	Hon Kiki	900,{end;}
+hugel.gat,56,103,2	script	Sarko	709,{end;}
+hugel.gat,68,99,2	script	Billy the Bull	889,{end;}
+hu_in01.gat,26,77,4	script	Bokie	50,{end;}
+hu_in01.gat,18,94,2	script	Katsuki	95,{end;}
+hu_in01.gat,16,20,4	script	Jamie	70,{end;}
+hu_in01.gat,14,11,4	script	Jana	49,{end;}
+hu_in01.gat,19,161,2	script	Matilda	803,{end;}
+hu_in01.gat,18,167,4	script	Gin	86,{end;}
+hugel.gat,169,112,5	script	Sani	892,{end;}
+hu_in01.gat,381,304,5	script	Soldier	105,{end;}

@@ -1,0 +1,105 @@
+//===== eAthena Script =======================================
+//= Healer Script (/w payments)
+//===== By: ==================================================
+//= Yor & abunch of other people
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= NPC heals/regenerates people against zenys
+//===== Additional Comments: =================================
+//= alternative dog with payment.
+//= each HP need 1 zeny
+//= each SP need (baselevel / 5) zenys
+//= calculation is done at start of the script
+//= Added Duplicates And Correct payon Loc [Darkchild]
+//= Some modifications. Added NPC locations. [massdriller]
+//============================================================
+
+prontera.gat,150,184,5	script	Healer#h1-1::Healer	742,{
+	set @tempHp, MaxHp-Hp;
+	set @tempSp, ((MaxSp-Sp) * BaseLevel) / 5;
+	if (@tempHp > 0) goto WOUNDED;
+	if (@tempSp > 0) goto ONLY_REGENERATION;
+
+	mes "[Healer]";
+	mes "Oh?";
+	mes "You do not look like a person in pain.";
+	close;
+
+	WOUNDED:
+		if (@tempSp > 0) goto WITH_REGENERATION;
+		mes "[Healer]";
+		mes "Oh dear, you look really hurt,";
+		mes "I can cure you for: "+@tempHp+" z)";
+		mes "Do you want me to cure you?";
+		next;
+		menu "Healings ("+@tempHp+"z)",HEALINGS,"No, thanks",CANCEL;
+
+	WITH_REGENERATION:
+		mes "[Healer]";
+		mes "Do you want only your HP to be healed? ("+@tempHp+" z)";
+		mes "Do you want only your SP to be healed? ("+@tempSp+" z)?";
+		mes "Or Would you like both? ("+(@tempHp+@tempSp)+" z)";
+		next;
+		menu "Only HP ("+@tempHp+"z)",HEALINGS,"Only SP ("+@tempSp+"z)",REGENERATION,"Both HP & SP ("+(@tempHp+@tempSp)+"z)",HEALINGS_AND_REGEN,"Nothing, thanks",CANCEL;
+
+	ONLY_REGENERATION:
+		mes "[Healer]";
+		mes "So, you only want your SP to heal? ("+@tempSp+" z)";
+		mes "I need to make a living...";
+		next;
+		menu "Regeneration ("+@tempSp+"z)",REGENERATION,"No, thanks",CANCEL;
+
+	HEALINGS:
+		if (Zeny < @tempHp) goto NO_ZENYS;
+		set Zeny, Zeny-@tempHp;
+		heal 30000,0;
+		goto FIN;
+
+	REGENERATION:
+		if (Zeny < @tempSp) goto NO_ZENYS;
+		set Zeny, Zeny-@tempSp;
+		heal 0,30000;
+		goto FIN;
+
+	HEALINGS_AND_REGEN:
+		if (Zeny < (@tempHp+@tempSp)) goto NO_ZENYS;
+		set Zeny, Zeny-(@tempHp+@tempSp);
+		heal 30000,30000;
+		goto FIN;
+
+	NO_ZENYS:
+		mes "[Healer]";
+		mes "Oh dear, you don't look like you have enough zeny.";
+		mes "Sorry, i can't help you.";
+		close;
+
+	FIN:
+		mes "[Healer]";
+		mes "You are Completely Healed.";
+		close;
+
+	CANCEL:
+		mes "[Healer]";
+		mes "Allright. Please come again if you need anything.";
+		close;
+}
+
+
+morocc.gat,159,96,5	duplicate(Healer)	Healer#h2-2	742
+ayothaya.gat,155,111,5	duplicate(Healer)	Healer#h2-3	742
+geffen.gat,121,61,5	duplicate(Healer)	Healer#h2-4	742
+umbala.gat,94,162,5	duplicate(Healer)	Healer#h2-5	742
+payon.gat,180,105,5	duplicate(Healer)	Healer#h2-6	742
+alberta.gat,185,144,5	duplicate(Healer)	Healer#h2-7	742
+aldebaran.gat,134,123,5	duplicate(Healer)	Healer#h2-8	742
+izlude.gat,125,118,5	duplicate(Healer)	Healer#h2-9	742
+xmas.gat,149,136,5	duplicate(Healer)	Healer#h2-10	742
+comodo.gat,188,162,5	duplicate(Healer)	Healer#h2-11	742
+amatsu.gat,200,80,5	duplicate(Healer)	Healer#h2-12	742
+gonryun.gat,164,130,5	duplicate(Healer)	Healer#h2-13	742
+yuno.gat,152,186,5	duplicate(Healer)	Healer#h2-14	742
+niflheim.gat,188,180,5	duplicate(Healer)	Healer#h2-15	742
+louyang.gat,225,103,5	duplicate(Healer)	Healer#h2-16	742

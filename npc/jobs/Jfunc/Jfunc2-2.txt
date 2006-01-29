@@ -1,0 +1,236 @@
+//===== eAthena Script ======================================= 
+//= Global Job Function
+//===== By: ================================================== 
+//= massdriller
+//===== Current Version: ===================================== 
+//= 0.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= Optimised scripts by moving all their checkers here.
+//===== Additional Comments: ================================= 
+//= For 2-2 Job Quests
+//============================================================ 
+
+//Alchemist Check
+function	script	Alc_check	{
+
+	if(BaseJob == Job_Alchem) goto L_Alch;
+	if(BaseJob == Job_Alchem || BaseJob == Job_Alchem) goto L_Other;
+	return;
+
+L_Other:	
+	mes "Welcome to the Alchemist Union.  Ah, I apologize but I'm busy right now.";
+	close;
+L_Alch:
+	mes "Hey there fellow Alchemist.  How's the business going?  Good I hope, well good luck to you.";
+	close;
+}
+
+//Rogue Questions
+function	script	RogQ_check	{
+	savepoint "in_rogue.gat",366,114;
+	set @score, 0;
+	set ROGUE_Q, 1;
+	set @temp, rand(2);
+	if(@temp == 1) goto L_QSet2;
+
+	L_QSet1:
+		mes "[Markie]";
+		mes "1) What is the added flee rate that a Thief recieves when the ^5533FFImprove Dodge^000000 skill is ^5533FFmastered^000000?";
+		next;
+		menu "20",sM1_1, "30",-, "40",sM1_1, "160",sM1_1;
+
+			set @score, @score + 10;
+
+		sM1_1:
+
+		mes "[Markie]";
+		mes "2) Choose a monster that cannot detect a hidden or cloaked character?";
+		next;
+		menu "Mummy",sM1_2, "Worm Tail",-, "Argos",sM1_2, "Soldier Skeleton",sM1_2;
+
+			set @score, @score + 10;
+
+		sM1_2:
+
+		mes "[Markie]";
+		mes "3) Where is the Rogue guild located?";
+		next;
+		menu "Comodo",sM1_3, "Kokomo Beach",sM1_3, "Pharos Lightouse",-, "Morroc",sM1_3;
+
+			set @score, @score + 10;
+
+		sM1_3:
+
+		mes "[Markie]";
+		mes "4) In which of the following towns, can you become a Thief?";
+		next;
+		menu "Comodo",sM1_4, "Lutie",sM1_4, "Alberta",sM1_4, "Morroc",-;
+
+			set @score, @score + 10;
+
+		sM1_4:
+
+		mes "[Markie]";
+		mes "5) Choose the card that does ^FF3355not^000000 have an effect on a players ^5533FFDEX stat^000000...";
+		next;
+		menu "Rocker Card",sM1_5, "Mummy Card",-, "Zerom Card",sM1_5, "Drops",sM1_5;
+
+			set @score, @score + 10;
+
+		sM1_5:
+
+		mes "[Markie]";
+		mes "6) What do you think is cool about being a Rogue?";
+		next;
+		menu "Being a bad ass",sM1_6, "Being a hypocrite",sM1_6, "Being shameless",sM1_6, "Having excellent attack strength",-;
+
+			set @score, @score + 10;
+
+		sM1_6:
+
+		mes "[Markie]";
+		mes "7) At what job level can you change from a Thief to a Rogue?";
+		next;
+		menu "At job lvl 30",sM1_7, "At job lvl 35",sM1_7, "At job lvl 40",-, "At job lvl 50",-;
+
+			set @score, @score + 10;
+
+		sM1_7:
+
+		mes "[Markie]";
+		mes "8) If you wanted to dye your hair a different color, where would you have to go to do that?";
+		next;
+		menu 	"Building in SouthWestern part of Morroc",sM1_8, "Building in SouthWestern part of Prontera",-,
+			"Building in SouthEastern part of Morroc",sM1_8, "Building in NorthEastern part of Prontera",sM1_8;
+
+			set @score, @score + 10;
+
+		sM1_8:
+
+		mes "[Markie]";
+		mes "9) What mushrooms do you need to steal in order to become a Thief?";
+		next;
+		menu "Orange Gooey Mushrooms",-, "Red Hairy Mushrooms",sM1_9, "Orange Net Mushrooms",-, "Orange Sticky Mushrooms",sM1_9;
+
+			set @score, @score + 10;
+
+		sM1_9:
+
+		mes "[Markie]";
+		mes "10) Which of these cards is ^FF3355useless^000000 to a Rogue?";
+		next;
+		menu "Whisper Card",sM1_10, "Elder Willow Card",-, "Zerom Card",sM1_10, "Matyr Card",sM1_10;
+
+			set @score, @score + 10;
+
+		sM1_10:
+		goto L_Score;
+
+
+	L_QSet2:
+		mes "[Markie]";
+		mes "1) What skill do you need to learn before you can learn ^5533FFTunnel Drive^000000?";
+		next;
+		menu "Hiding",-, "Steal",sM2_1, "Improve Dodge",sM2_1, "Bash",sM2_1;
+
+			set @score, @score + 10;
+
+		sM2_1:
+
+		mes "[Markie]";
+		mes "2) How much more of a discount can a Rogue get with the ^5533FFHaggel^000000 skill than a merchant can with the ^5533FFDiscount^000000 skill?";
+		next;
+		menu "3%",sM2_2, "2%",sM2_2, "1%",-, "0%",sM2_2;
+
+			set @score, @score + 10;
+
+		sM2_2:
+
+		mes "[Markie]";
+		mes "3) What is the correct description for the skill ^5533FFMug^000000?";
+		next;
+		menu "Steal Items from players",sM2_3, "Steal Items from monsters",sM2_3, "Steal Zeny from monsters",-, "Steal Zeny from players",sM2_3;
+
+			set @score, @score + 10;
+
+		sM2_3:
+
+		mes "[Markie]";
+		mes "4) How many Rogues are required to activate the skill ^5533FFGangster's Paradise^000000?";
+		next;
+		menu "1 Rogue + 2 Assassins",sM2_4, "2 Rogues + 1 Thief",sM2_4, "4 Thieves",sM2_4, "2 or more Rogues",-;
+
+			set @score, @score + 10;
+
+		sM2_4:
+
+		mes "[Markie]";
+		mes "5) After increasing ^5533FFDivest Helm^000000 to level 5, what other skill becomes available for you learn?";
+		next;
+		menu "Envenom",sM2_5, "Strip Tease",sM2_5, "Venom Splasher",sM2_5, "Divest Shield",-;
+
+			set @score, @score + 10;
+
+		sM2_5:
+
+		mes "[Markie]";
+		mes "6) Choose a skill that allows its user to move while being hidden?";
+		next;
+		menu "Hiding",sM2_6, "Back Slide",sM2_6, "Tunnel Drive",-, "Sand Attack",sM2_6;
+
+			set @score, @score + 10;
+
+		sM2_6:
+
+		mes "[Markie]";
+		mes "7) Choose the card that increases the ^5533FFaccuracy rate^000000 of its owner?";
+		next;
+		menu "Andre",sM2_7, "Familiar",sM2_7, "Mummy",-, "Marina",sM2_7;
+
+			set @score, @score + 10;
+
+		sM2_7:
+
+		mes "[Markie]";
+		mes "8) Choose the monster that receives more damage when attacked by a weapon with a Vadon card attached to it?";
+		mes "(Vadon card inflicts 20% more damage to fire property monsters)";
+		next;
+		menu 	"Vadon",sM2_8, "Deviruchi",sM2_8, "Elder Willow",-, "Baphomet",sM2_8;
+
+			set @score, @score + 10;
+
+		sM2_8:
+
+		mes "[Markie]";
+		mes "9) How much SP does the ^5533FFDouble Attack^000000 skill require when used with a dagger?";
+		next;
+		menu "15 SP",sM2_9, "No SP needed",-, "10 SP",sM2_9, "54 SP",sM2_9;
+
+			set @score, @score + 10;
+
+		sM2_9:
+
+		mes "[Markie]";
+		mes "10) Choose an effective dagger to use in the Byalan Dungeon?";
+		next;
+		menu "Wind Main-Gauche",-, "Ice Main-Gauche",sM2_10, "Earth Main-Gauche",sM2_10, "Fire Main-Gauche",sM2_10;
+
+			set @score, @score + 10;
+
+		sM2_10:
+
+
+	L_Score:
+		mes "[Markie]";
+		mes "Okay, those are all of the questions I have.  Now that wasn't so bad was it sweetie?";
+		mes "I hope you don't mind, but I've been grading your answers.";
+		next;
+		mes "[Markie]";
+		mes "I like to give people scores on their interviews so that they can know how well they did.";
+		mes "It looks like you got a ^FF3355" + @score +"^000000/100............";
+		next;
+		mes "[Markie]";
+		return;
+}

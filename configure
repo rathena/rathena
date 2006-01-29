@@ -1,0 +1,256 @@
+#!/bin/bash
+## NOTE:
+## I know this is not a clean way to check for some stuff
+## and edit the Makefile, but hey, it does work!
+
+#    Configure script for eAthena
+#    Copyright (C) 2005  dontBR
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+# Default variables
+status_mmx="No"
+status_sse="No"
+status_sse2="No"
+status_sse3="No"
+status_pcre="No"
+prefix='/opt/eathena/'
+
+# Functions
+function check_sed {
+	echo -n "Checking for sed... "
+	if [ -f $(which sed) ]; then
+		echo "yes"
+	else
+		echo "Error: sed not found in $PATH"
+		exit 1
+	fi
+}
+
+function check_gcc {
+	echo -n "Checking for gcc... "
+	if [ -f $(which gcc) ]; then
+		echo "yes"
+	else
+		echo "Error: GCC not found in $PATH"
+		exit 1
+	fi
+}
+
+function check_make {
+	echo -n "Checking for (g)make... "
+	if [ -f $(which make) ]; then
+		maker=make
+		echo "yes"
+	else	if [ -f $(which gmake) ]; then
+			maker=gmake
+			echo "yes"
+			else
+			echo "Error: (g)make not found in $PATH"
+			exit 1
+		fi
+	fi
+}
+
+function check_sockets {
+	echo -n "Checking for sockets... "
+	echo "#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+int main(){
+}" > test_sockets.c
+	if $(gcc test_sockets.c -o test_sockets); then
+		echo "yes"
+		rm -f test_sockets.c test_sockets
+	else
+		echo "Error: Unix sockets not found/working."
+		exit 1
+		rm -f test_sockets.c
+	fi
+}
+
+function check_mysql_headers {
+	echo -n "Checking for MySQL headers... "
+	if [ -d /usr/local/lib/mysql ]; then		# Default
+		echo "yes"
+		mysql_headers_path='/usr/local/lib/mysql'
+	else
+		if [ -d /usr/include/mysql ]; then	# Gentoo/Debian/?
+			echo "yes"
+			mysql_headers_path='/usr/include/mysql'
+	else
+		echo "Error: MySQL headers not found."
+		mysql_headers_path='Not found.'
+	fi
+	fi
+}
+
+function optimize {
+	case $@ in
+		mmx )	status_mmx="Yes" ;;
+		sse )	status_sse="Yes" ;;
+		sse2 )	status_sse2="Yes" ;;
+		sse3 )	status_sse3="Yes" ;;
+		all )	status_mmx="Yes"
+			status_sse="Yes"
+			status_sse2="Yes"
+			status_sse3="Yes" ;;
+	esac
+}
+
+function make_changes {
+	if [ "$maker" != "make" ]; then
+		sed -e 's,MAKE = make,MAKE = '$maker',g' Makefile -i
+	fi
+	if [ "$status_mmx" = "Yes" ]; then
+		sed -e 's,# OPT += -mmmx,OPT += -mmmx,g' Makefile -i
+	fi
+	if [ "$status_sse" = "Yes" ]; then
+		sed -e 's,# OPT += -msse,OPT += -msse,g' Makefile -i
+	fi
+	if [ "$status_sse2" = "Yes" ]; then
+		sed -e 's,# OPT += -msse2,OPT += -msse2,g' Makefile -i
+	fi
+	if [ "$status_sse3" = "Yes" ]; then
+		sed -e 's,# OPT += -msse3,OPT += -msse3,g' Makefile -i
+	fi
+	if [ "$status_pcre" = "Yes" ]; then
+		sed -e 's,# OPT += -DPCRE_SUPPORT,OPT += -DPCRE_SUPPORT,g' Makefile -i
+	fi
+	if [ "$mysql_headers_path" != "/usr/local/lib/mysql" ] && [ "$mysql_headers_path" != "Not found." ]; then
+		sed -e 's,LIBS += -L/usr/local/lib/mysql -lmysqlclient,LIBS += -L'$mysql_headers_path' -lmysqlclient,g' Makefile -i
+	fi
+}
+
+function opt_check_pcre {
+	echo -n "Checking for PCRE... "
+	if [ -f /usr/local/lib/pcre.h ]; then
+		echo "yes"
+		status_pcre="Yes"
+	else
+		echo "Error: PCRE not found."
+		status_pcre="No"
+	fi
+}
+
+function make_report {
+	echo "Configuration report:"
+	echo eAthena
+
+	echo
+	echo Enable PCRE support..... : $status_pcre
+	echo
+	echo Enable MMX optimization. : $status_mmx
+	echo Enable SSE optimization. : $status_sse
+	echo Enable SSE2 optimization : $status_sse2
+	echo Enable SSE3 optimization : $status_sse3
+	echo
+	echo MySQL headers path...... : $mysql_headers_path
+	echo
+	echo eAthena will be installed in $prefix
+	echo Please type \'make txt\' or \'make sql\' now to compile eAthena.
+}
+
+function helptext {
+	echo "eAthena Configure Script version 0.1"
+	echo
+	echo "Options:"
+	echo
+	echo "	-h	Display this help message and exit."
+	echo "	-d	Enter debug mode."
+	echo "	-o	Turn on optimization flags."
+	echo "		Supported:"
+	echo "		mmx"
+	echo "		sse"
+	echo "		sse2"
+	echo "		sse3"
+	echo "		all"
+	echo "	-e	Enable PCRE support."
+	echo "	-p	Root directory where eA is going to be installed."
+	echo "		DON'T FORGET THE LAST SLASH!"
+	echo "		For example:"
+	echo "		./configure -p /usr/local/"
+	echo "		This will create /usr/local/bin/login-server,"
+	echo "		/usr/local/etc/eathena/save/account.txt, etc"
+	echo "		Default is /opt/eathena/"
+	echo
+	echo "Report bugs (about the configure script) to dontBR at the eAthena Support Board."
+}
+
+function make_installable {
+	echo	-e ''										>>	Makefile
+	echo	-e 'install:	conf/%.conf conf/%.txt'					>>	Makefile
+	echo	-e '		$(shell mkdir -p '$prefix'bin/)'				>>	Makefile
+	echo	-e '		$(shell mkdir -p '$prefix'etc/eathena/)'			>>	Makefile
+	echo	-e '		$(shell mkdir -p '$prefix'var/log/eathena/)'			>>	Makefile
+	echo	-e '		$(shell mv save '$prefix'etc/eathena/save)'			>>	Makefile
+	echo	-e '		$(shell mv db '$prefix'etc/eathena/db)'			>>	Makefile
+	echo	-e '		$(shell mv conf '$prefix'etc/eathena/conf)'			>>	Makefile
+	echo	-e '		$(shell mv npc '$prefix'etc/eathena/npc)'			>>	Makefile
+	echo	-e '		$(shell mv log/* '$prefix'var/log/eathena/)'			>>	Makefile
+	echo	-e '		$(shell cp *-server* '$prefix'bin/)'				>>	Makefile
+	echo	-e '		$(shell cp ladmin '$prefix'bin/)'				>>	Makefile
+	echo	-e '		$(shell ln -s '$prefix'etc/eathena/save/ '$prefix'bin/)'	>>	Makefile
+	echo	-e '		$(shell ln -s '$prefix'etc/eathena/db/ '$prefix'bin/)'	>>	Makefile
+	echo	-e '		$(shell ln -s '$prefix'etc/eathena/conf/ '$prefix'bin/)'	>>	Makefile
+	echo	-e '		$(shell ln -s '$prefix'etc/eathena/npc/ '$prefix'bin/)'	>>	Makefile
+	echo	-e '		$(shell ln -s '$prefix'var/log/eathena/ '$prefix'bin/log)'	>>	Makefile
+	echo			''								>>	Makefile
+	echo	-e 'bin-clean:'									>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/login-server*)'			>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/char-server*)'				>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/map-server*)'				>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/ladmin)'				>>	Makefile
+	echo	 		''								>>	Makefile
+	echo	-e 'uninstall:'									>>	Makefile
+	echo	-e '		bin-clean'							>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/save)'					>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/db)'					>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/conf)'					>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/npc)'					>>	Makefile
+	echo	-e '		$(shell rm '$prefix'bin/log)'					>>	Makefile
+	echo	-e '		$(shell rm -rf '$prefix'etc/eathena)'				>>	Makefile
+	echo	-e '		$(shell rm -rf '$prefix'var/log/eathena)'			>>	Makefile
+}
+
+
+# Arguments
+while getopts ":hdo:ep:" opt; do
+	case $opt in
+		h )	helptext ; exit ;;
+		d )	set -x ;;
+		o ) 	optimize ${OPTARG} ;;
+		e )	opt_check_pcre ;;
+		p )	prefix=${OPTARG} ; [ -d ${OPTARG} ] || echo "The directory $prefix does not exist. Creating...";;
+	esac
+done
+
+
+# Execution
+echo "eAthena configure script"
+echo "Note: This is ALPHA software! Do NOT use it on a production server!"
+echo
+echo "Checking for dependencies.."
+check_sed
+check_gcc
+check_make
+check_sockets
+check_mysql_headers
+make_changes
+make_installable
+echo
+make_report
+exit

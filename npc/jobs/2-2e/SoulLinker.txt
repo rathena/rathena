@@ -1,0 +1,56 @@
+//===== eAthena Script ======================================= 
+//= Soul Linker Job Quest
+//===== By: ================================================== 
+//= Lupus
+//===== Current Version: ===================================== 
+//= 0.1a
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= 
+//===== Additional Comments: ================================= 
+//= 0.1	Now it's just a temp job quest NPC [Lupus]
+//= 0.1a Small fix in warp [Komurka]
+//============================================================ 
+
+
+job_star.gat,99,13,0	warp	soultopay	1,1,payon.gat,151,85
+
+job_star.gat,99,33,2	script	Soul Linker	764,{
+	mes "[Soul Linker]";
+	if(Class==Job_Taekwon) goto L_Check;
+	if(Class==Job_Soul_Linker){
+		mes "Go forth and help people...";
+		close;
+	}
+	mes "I speak to Taekwons only...";
+	emotion 1;
+	close;
+
+L_Check:
+	mes "Hello!";
+	mes "Are you ready to help your brothers and sisters? Do you want to be a Soul Linker?";
+	next;
+	menu "I want to be a Soul Linker",-,"Not yet.",M_NOTHING;
+
+	mes "[Soul Linker]";
+	if(JobLevel<40 || SkillPoint) {
+		mes "I'm sorry, my friend. You need 40 Job Level and no skill points left.";
+		close;
+	}
+	if(Weight) {
+		mes "Bring me the most valuable thing you have. The only thing!";
+		emotion e_sry;
+		close;
+	}
+
+	jobchange Job_Soul_Linker;
+	callfunc "F_ClearJobVar";
+	mes "Congratulations!";
+	close;
+
+M_NOTHING:
+	mes "[Soul Linker]";
+	mes "I'll wait here. We need more Soul Linkers to protect our brothers and sisters.";
+	close;	
+}

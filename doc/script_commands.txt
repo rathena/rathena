@@ -1,0 +1,4893 @@
+//===== Athena Script =====================================
+//= eAthena Script Commands
+//===== By ================================================
+//= Fredzilla
+//===== Helped By =========================================
+//= Terminal Vertex & Z3R0 - Helped define getmapxy
+//= HappyDenn -  Gave everything to do with getpartymember 
+//=              a great help
+//= Maeki Rika - A section on general concepts and lots of
+//=              other updates and additions.
+//===== Version ===========================================
+//= 2.7
+//=========================================================
+//= 1.0 - First release, filled will as much info as I could
+//=       remember or figure out, most likely there are errors,
+//=       and things I have missed out
+//= 1.1 - Added better discription for "getmapxy"
+//= 1.2b- Added a description for getpartymember 
+//=       (+few spelling mistakes corrected)
+//= 2.0 - +79kb extra stuff and numerous corrections by 
+//=       Maeki Rika.
+//= 2.1 - Small but important corrections, more proofreading.
+//=       Some important discoveries in item functions, the 
+//=       secret of making VVS weapons with 'getitem2' and 
+//=       other news. (Rika again) +10kb :) 
+//= 2.2 - added getItemInfo description [Lupus]
+//= 2.3 - added plenty of info for recent (and not so) script commands I added
+//        [Skotlex]
+//= 2.4 - Explained the upper parameter of jobchange. [Skotlex]
+//= 2.5 - Added pow, sqrt and distance. [Lance]
+//= 2.6 - Added setd and getd. [Lance]
+//= 2.7 - petstat command. [Lance]
+//= 2.7a - delitem2, countitems2 commands [Lupus]
+//= 2.7b - clone command [Skotlex]
+//===== Compatible With ===================================
+//= LOL, can be used by anyone hopefully
+//===== Description =======================================
+//= A reference manual for the eAthena scripting language
+//=========================================================
+
+This document is a reference manual for all the scripting commands and functions 
+available in current eAthena SVN. It is not a simple tutorial. When people tell 
+you to "Read The F***ing Manual", they mean this.
+
+The information was mostly acquired through looking up how things actually work 
+in the source code of the server, which was written by many people over time, 
+and lots of them don't speak English and never left any notes - or are otherwise 
+not available for comments. As such, anything written in here might not be 
+correct, it is only correct to the best of our knowledge, which is limited.
+
+This document is poorly structured and rather messy in general. In fact, further 
+cleaning up and reordering this document is probably pointless, due to upcoming 
+switch to Lua scripting language, which will rid us of most of the problems 
+mentioned herein and make a new manual necessary. But while we have this one, we 
+should make the most of it, and it might be helpful in making sure the new Lua 
+engine can actually do everything useful that the old engine could.
+
+This is not a place to teach you basic programming. This document will not teach 
+you basic programming by itself. It's more of a reference for those who have at 
+least a vague idea of what they want to do and want to know what tools they have 
+available to do it. We've tried to keep it as simple as feasible, but if you 
+don't understand it, getting a clear book on programming in general will help 
+better than yelling around the forum for help.
+
+A little learning never caused anyone's head to explode.
+
+Structure
+---------
+
+The commands and functions are listed in no particular order:
+
+*Name of the command and how to call it.
+
+Descriptive text
+
+    Small example if possible. Will usually be incomplete, it's there just to 
+    give you an idea of how it works in practice.
+
+To find a specific command, use Ctrl+F, (or whatever keys call up a search 
+function in whatever you're reading this with) put an * followed by the command 
+name, and it should find the command description for you.
+
+If you find anything omitted, please respond. :)
+
+Syntax
+------
+
+Throughout this document, wherever a command wants an argument, it is given in 
+<angle brackets>. This doesn't mean you should type the angle brackets. :) If an 
+argument of a command is optional, it is given in {curly brackets}. You've 
+doubtlessly seen this convention somewhere, if you didn't, get used to it, 
+that's how big boys do it. If a command can optionally take an unspecified 
+number of arguments, you'll see a list like this:
+
+command <argument>{,<argument>...<argument>}
+
+This still means they will want to be separated by commas.
+
+Where a command wants a string, it will be given in "quotes", if it's a number, 
+it will be given without them. Normally, you can put an expression, like a bunch 
+of functions or operators returning a value, in (round brackets) instead of most 
+numbers. Round brackets will not always be required, but they're often a good 
+idea.
+
+Wherever you refer to a map name, it's always 'mapname.gat' or 'mapname.afm' if 
+you are using AFM maps, (if you don't know what they are, you aren't using them) 
+and not just 'mapname'. While some commands do know that if you didn't give 
+'.gat', it should add it, it's pretty tricky to tell which ones they are.
+
+Script loading structure
+------------------------
+
+Scripts are loaded by the map server as referenced in the 'conf/map_athena.conf' 
+configuration file, but in the default configuration, it doesn't load any script 
+files itself. Instead, it loads the file 'npc/scripts_main.conf' which itself 
+contains references to other files. The actual scripts are loaded from txt 
+files, which are linked up like this:
+
+npc: <path to a filename>
+
+Any line like this, invoked, ultimately, by 'map_athena.conf' will load up the 
+script contained in this file, which will make the script available. No file 
+will get loaded twice, to prevent possible errors.
+
+Another configuration file option of relevance is:
+
+delnpc: <path to a filename>
+
+This will unload a specifiled script filename from memory, which, while 
+seemingly useless, may sometimes be required.
+
+Whenever '//' is encountered in a line upon reading, everything beyond this on 
+that line is considered to be a comment and is ignored. This works wherever you 
+place it.
+
+Upon loading all the files, the server will execute all the top-level commands 
+in them. No variables exist yet at this point, no commands can be called other 
+than those given in this section. These commands set up the basic server script 
+structure - create NPC objects, spawn monster objects, set map flags, etc. No 
+code is actually executed at this point except them. The top-level commands the 
+scripting are pretty confusing, since they aren't structured like you would 
+expect commands, command name first, but rather, normally start with a map name.
+
+What's more confusing about the top-level commands is that most of them use a 
+tab symbol to divide their arguments.
+
+To prevent problems and confusion, the tab symbols are written as '%TAB%' 
+throughout this document, even though this makes the text a bit less readable. 
+Using an invisible symbol to denote arguments is one of the bad things about 
+this language, but we're stuck with it for now. :)
+
+Here is a list of valid top-level commands:
+
+** Set a map flag:
+
+<map name>%TAB%mapflag%TAB%<flag>
+
+This will, upon loading, set a specified map flag on a map you like. These are 
+normally in files inside 'conf/mapflag' and are loaded first, so by the time the 
+server's up, all the maps have the flags they should have. Map flags determine 
+the behavior of the map regarding various common problems, for a better 
+explanation, see 'setmapflag'.
+
+** Create a permanent monster spawn:
+
+<map name>,<x1>,<y1>,<x2>,<y2>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>,<delay1>,<delay2>,<event>
+
+Map name is the name of the map the monsters will spawn on. x1/y1-y1/y2 is a 
+square of map coordinates which will limit where they will initially spawn. 
+Putting zeros instead of these coordinates will spawn the monsters randomly. 
+It's not certain whether monsters will later be able to venture out of this 
+square when randomly moving or not. (Can anyone confirm?)
+
+Monster name is the name the monsters will have on screen, and has no relation 
+whatsoever to their names anywhere else. It's the mob id that counts, which 
+identifies monster record in 'mob_db.txt' database of monsters. If the mob name 
+is given as "--ja--", the 'japanese name' field from the monster database is 
+used, (which, in eAthena, actually contains an english name) if it's "--en--", 
+it's the 'english name' from the monster database (which contains an uppercase 
+name used to summon the monster with a GM command).
+
+If you add 4000 to the monster ID, the monster will be spawned in a 'big 
+version', (monster size class will increase) and if you add 2000, the 'tiny 
+version' of the monster will be created. This will not, however, make the 
+monster spawn with a bigger or smaller sprite, like with 
+@monstersmall/@monsterbig GM commands. Monster size class relates only to the 
+damage calculation.
+
+Amount is the amount of monsters that will be spawned when this command is 
+executed, it is affected by spawn rates in 'battle_athena.conf'.
+
+Delay1 and delay2 are the monster respawn delays - the first one counts the time 
+since a monster defined in this spawn was last respawned and the second one 
+counts the time since the monster of this spawn was last killed. Whichever turns 
+out to be higher will be used. If the resulting number is smaller than a random 
+value between 5 and 10 seconds, this value will be used instead. (Which is 
+normally the case if both delay values are zero.) If both delay values are -1, 
+the monster will never respawn upon death until the server restarts. The times 
+are given in 1/1000ths of a second.
+
+Level overrides the monster's level from the monster id database, if it is 0, 
+the level from the database is used. 
+
+** Define a warp point
+
+<from map name>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to map name>,<toX>,<toY>
+
+This will define a warp NPC that will warp a player between maps, and while most 
+arguments of that are obvious, some deserve special mention.
+
+SpanX and SpanY will make the warp sensitive to a character who didn't step 
+directly on it, but walked into a zone which is centered on the warp from 
+coordinates and is SpanX in each direction across the X axis and SpanY in each 
+direction across the Y axis.
+
+Warp NPC objects also have a name, because you can use it to refer to them later 
+with 'enablenpc'/'disablenpc' 
+
+Facing of a warp object is irrelevant, it is not used in the code and all 
+current scripts have a zero in there.
+
+** Define an NPC object.
+
+<map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
+<map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
+
+This will place an NPC object on a specified map at the specified location, and 
+is a top-level command you will use the most in your custom scripting. The NPCs 
+are triggered by clicking on them, and/or by walking in their trigger area, if 
+defined, see that below.
+
+Facing is a direction the NPC sprite will face in. Not all NPC sprites have 
+different images depending on the direction you look from, so for some facing 
+will be meaningless. Facings are counted counterclockwise in increments of 45 
+degrees, where 0 means facing towards the top of the map. (So to turn the sprite 
+towards the bottom of the map, you use facing 4, and to make it look southeast 
+it's facing 5.)
+
+Sprite id is the sprite number used to display this particular NPC. For a full 
+list of sprite id numbers see http://kalen.s79.xrea.com/npc/npce.shtml You may 
+also use a monster's ID number instead to display a monster sprite for this NPC. 
+It is possible to use a job sprite as well, but you must first define it as a 
+monster sprite in 'mob_avail.txt', a full description on how to do this is for 
+another manual. A '-1' sprite id will make the NPC invisible (and unclickable). 
+A '111' sprite id will make an NPC which does not have a sprite, but is still 
+clickable, which is useful if you want to make a clickable object of the 3D 
+terrain.
+
+TriggerX and triggerY, if given, will define an area, centered on NPC and 
+spanning triggerX cells in every direction across X and triggerY in every 
+direction across Y. Walking into that area will trigger the NPC. If no 
+'OnTouch:' special label is present in the NPC code, the execution will start 
+from the beginning of the script, otherwise, it will start from the 'OnTouch:' 
+label.
+
+NPC name is kinda special, because it's not only the name of NPC you will see on 
+screen. It's formatted this way:
+
+<Screen name>{#<Extra name identifier>}{::<Label name>}
+
+The extra identifier is there  that you can make an npc with an invisible name 
+(just omit the screen name, but keep the identifier name) and so that you can 
+refer to several NPCs which have the same name on screen, which is useful to 
+make an NPC that relocates depending on special conditions, for example - you 
+define several NPC objects and hide all except one. 
+('Hunter#hunter1','Hunter#hunter2'...) The extra name identifiers will let your 
+code tell them apart.
+
+Label name is used to duplicate NPC objects (more on that below).
+
+The complete NPC name (Screen name + extra identifier) may not exceed 24 
+characters. The label name is counted separately but also limited to 24 
+characters.
+
+The code part is the script code that will execute whenever the NPC is 
+triggered. It may contain commands and function calls, descriptions of which 
+compose most of this document. It has to be in curly brackets, unlike elsewhere 
+where we use curly brackets, these do NOT signify an optional parameter.
+
+** Define an NPC duplicate.
+
+<map name>,<x>,<y>,<facing>%TAB%duplicate(<NPC label>)%TAB%<sprite id>
+<map name>,<x>,<y>,<facing>%TAB%duplicate(<NPC label>)%TAB%<sprite id>,<triggerX>,<triggerY>
+
+This will duplicate an NPC referred to by the label. The duplicate runs the same 
+code as the NPC it refers to, but may have different location, facing and sprite 
+ID. Whether it may actually have it's own size of trigger area is unclear at the 
+moment - if you need that, try it and tell us of the results.
+
+** Define a 'floating' NPC object.
+
+-%TAB%script%TAB%-1,{<code>}
+
+This will define an NPC object not triggerable by normal means. This would 
+normally mean it's pointless since it can't do anything, but there are 
+exceptions, mostly related to running scripts at specified time, which is what 
+these floating NPC objects are for. More on that below.
+
+** Define a shop NPC.
+
+<map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
+
+This will define a shop NPC, which, when triggered (which can only be done by 
+clicking) will cause a shop window to come up. No code whatsoever runs in shop 
+NPCs and you can't change the prices otherwise than by editing the script 
+itself. (No variables even exist at this point of scripting, so don't even 
+bother trying to use them.)
+
+The item id is the number of item in the 'item_db.txt' database. If Price is set 
+to -1, the 'buy price' given in the item database will be used. Otherwise, the 
+price you gave will be used for this item, which is how you create differing 
+prices for items in different shops.
+
+** Define a function object
+
+function%TAB%<function name>%TAB%{<code>}
+
+This will define a function object, callable with the 'callfunc' command (see 
+below). This object will load on every map server separately, so you can get at 
+it from anywhere. It's not possible to call the code in this object by 
+anything other than the 'callfunc' script command.
+
+The code part is the script code that will execute whenever the function is 
+called with 'callfunc'. It has to be in curly brackets, unlike elsewhere where 
+we use curly brackets, these do NOT signify an optional parameter.
+
+** Alter a map cell
+
+<map name>%TAB%setcell%TAB%<type>,<x1>,<y1>,<x2>,<y2>
+
+This is sneaky, and isn't used in any official scripts, but it will let you 
+define an area (x1/y1-x2/y2 square) of a map as having cell type 'type', where 
+type is a number, which, among other things, defines whether the area is 
+walkable or not, whether it has Basilica working in it or not, and some other 
+things. This is a solution just itching for a problem and there's a number of 
+interesting things you could use it for. Further investigation on what types are 
+valid and mean what exactly is pending.
+
+Once an object is defined which has a 'code' field to it's definition, it 
+contains script commands which can actually be triggered and executed. 
+
+What a RID is and why do you need to know
+-----------------------------------------
+
+Most scripting commands and functions will want to request data about a 
+character, store variables referenced to that character, send stuff to the 
+client connected to that specific character. Whenever a script is invoked by a 
+character, it is passed a so-called RID - this is the character ID number of a 
+character that caused the code to execute by clicking on it, walking into it's 
+OnTouch zone, or otherwise.
+
+If you are only writing common NPCs, you don't need to bother with it. However, 
+if you use functions, if you use timers, if you use clock-based script 
+activation, you need to be aware of all cases when a script execution can be 
+triggered without a RID attached. This will make a lot of commands and functions 
+unusable, since they want data from a specific character, want to send stuff to 
+a specific client, want to store variables specific to that character, and they 
+would not know what character to work on if there's no RID.
+
+Unless you use 'attachrid' to explicitly attach a character to the script first.
+
+Whenever we say 'invoking character', we mean 'the character who's RID is 
+attached to the running script. The script function "playerattached" can be
+used to check which is the currently attached player to the script (it will
+return 0 if the there is no player attached or the attached player no longer
+is logged on to the map-server).
+
+Item and pet scripts
+--------------------
+
+Each item in the item database has two special fields - EquipScript and 
+UseScript. The first is script code run every time a character equips the item, 
+with the RID of the equipping character. Every time they unequip an item, all 
+temporary bonuses given by the script commands are cleared, and all the scripts 
+are executed once again to rebuild them. This also happens in several other 
+situations (like upon login) but the full list is currently unknown.
+
+UseScript is a piece of script code run whenever the item is used by a character 
+by doubleclicking on it.
+
+Not all script commands work properly in the item scripts. Where commands and 
+functions are known to be meant specifically for use in item scripts, they are 
+described as such.
+
+Every pet in the pet database has a PetScript field, which determines pet 
+behavior. It is invoked wherever a pet of the specified type is spawned. 
+(hatched from an egg, or loaded from the char server when a character who had 
+that pet following them connects) This may occur in some other situations as 
+well. Don't expect anything other than commands definitely marked as usable in 
+pet scripts to work in there reliably.
+
+Numbers
+-------
+
+Beside the common decimal numbers, which are nothing special whatsoever (though 
+do not expect to use fractions, since ALL numbers are integer in this language), 
+the script engine also handles hexadecimal numbers, which are otherwise 
+identical. Writing a number like '0x<hex digits>' will make it recognised as a 
+hexadecimal value. Notice that 0x10 is equal to 16. Also notice that if you try 
+to 'mes 0x10' it will print '16'.
+
+This is not used much, but it pays to know about it.
+
+Variables and scope
+-------------------
+
+The meat of every programming language is variables - places where you store 
+data. 
+
+Variables are divided into global (not attached to any specific RID, and 
+independent of whoever triggered the object) and local (attached to a specific 
+character object or a specific account object). They are further divided into 
+permanent (they come back when the server resets) and temporary (they only 
+persist until the server dies). This is what's called variable scope. :)
+
+Unlike in more advanced languages, all temporary variables are essentially 
+'global', but not in the sense described above - if one NPC sets a temporary 
+variable, even if it is character based, if that character triggers another NPC 
+object, the variable will still be there, so you should be careful and set the 
+variables you mean to be temporary to something sensible before using them. It 
+also pays to keep variable names descriptive and reasonably long.
+
+Variable scope is defined by a prefix before the variable name:
+
+" "  - Thats right, nothing before a variable, this a permanent variable 
+       attached to the character object.
+"@"  - A temporary version of a character-based variable.
+       SVN versions before 2094 revision and RC5 version will also treat 'l' as 
+       a temporary variable prefix, so bevare of having variable names starting 
+       with 'l', they will also be considered temporary, even if you didn't mean 
+       them to be!
+"$"  - A global permanent variable.
+       They are stored in "save\mapreg.txt" file and are the only kind of 
+       variables stored in a text file in the SQL version.
+"$@" - A global temporary variable.
+       This is important for scripts which are called with no RID attached, that 
+       is, not triggered by a specific character object.
+"#"  - A permanent account-based variable.
+       They are stored with all the account data in "save\accreg.txt" in TXT 
+       versions and in the SQL versions in the 'global_reg_value' table using
+		 type 2.
+"##" - A permanent account-based variable stored by the login server.
+       They are stored in "save\account.txt" and in the SQL versions in the
+		 'global_reg_value' table, using type 1. The only difference you will
+		 note from normal # variables is when you have multiple char-servers
+		 connected to the same login server. The # variables are unique to each
+		 char-server, while the ## variables are shared by all these
+		 char-servers.
+
+Some variables are special, that is, they are already defined for you by the 
+scripting engine. You can see the full list somewhere in 'db/const.txt', which 
+is a file you should read, since it also allows you to replace lots of numbered 
+arguments for many commands with easier to read text. The special variables most 
+commonly used are all permanent character-based variables:
+
+StatusPoint - Amount of status points remaining.
+BaseLevel   - Current base level
+SkillPoint  - Amount of skill points remaining
+Class       - Current job
+Upper       - 1 if the character is an advanced job class.
+Zeny        - Current amount of zeny
+Sex         - Character's gender, 0 if female, 1 if male.
+Weight      - The weight the character currently carries.
+MaxWeight   - The maximum weight the character can carry.
+JobLevel    - Character's job level
+BaseExp     - The amount of base experience points the character has.
+              Notice that it's zero (or close) if the character just got a level.
+JobExp      - Same for job levels
+NextBaseExp - Amount of experience points needed to reach the next base level.
+NextJobExp  - Same for job levels.
+Hp          - Current amount of hit points.
+MaxHp       - Maximum amount of hit points.
+Sp          - Current spell points.
+MaxSp       - Maximum amount of spell points.
+BaseJob     - This is sneaky, apparently meant for baby class support.
+              This will supposedly equal Job_Acolyte regardless of whether the 
+              character is an acolyte or a baby acolyte, for example.
+Karma       - The character's karma. Karma system is not fully functional, but 
+              this doesn't mean this doesn't work at all. Not tested.
+Manner      - The character's manner rating. Becomes negative if the player 
+              utters words forbidden through the use of 'manner.txt' client-side 
+              file.
+
+While these behave as variables, do not always expect to just set them - it is 
+not certain whether this will work for all of them. Whenever there is a command 
+or a function to set something, it's usually preferable to use that instead. The 
+notable exception is Zeny, which you can and often will address directly -
+setting it will make the character own this number of zeny.
+
+All of the above variables store numbers. They can store positive and negative 
+numbers, but only whole numbers (so don't expect to do any fractional math). You 
+can also store a string in a variable, but this means naming it specially to 
+denote it contains text rather than a number:
+
+@variable$ is a temporary string variable.
+$@variable$ is a global temporary string variable.
+
+Etc, etc.
+
+If a variable was never set, it is considered to equal zero (for number 
+variables) or an empty string ("", nothing between the quotes) for string 
+variables. Once you set it to that, the variable is as good as forgotten 
+forever, and no trace remains of it even if it was stored with character or 
+account data.
+
+Arrays
+------
+
+Arrays (in eAthena at least) are essentially a set of variables going under the 
+same name. You can tell between the specific variables of an array with an 
+'array index', a number of a variable in that array:
+
+<variable name>[<array index>]
+
+Variables stored in this way, inside an array, are also called 'array elements'. 
+Arrays are specifically useful for storing a set of similar data (like several 
+item IDs for example) and then looping through it. You can address any array 
+variable as if it was a normal variable:
+
+    set @arrayofnumbers[0],1;
+
+You can also do sneaky things like using a variable (or an expression, or even a 
+value from an another array) to get at an array value:
+
+    set @x,100;
+    set @arrayofnumbers[@x],10;
+    
+This will make @arrayofnumbers[100] equal to 10.
+
+Notice that index numbering always starts with 0. Arrays cannot hold more than 
+128 variables. (So the last one can't have a number higher than 127)
+
+And array indices probably can't be negative. Nobody tested what happens when 
+you try to get a negatively numbered variable from an array, but it's not going 
+to be pretty. :)
+
+Arrays can naturaly store strings:
+
+@menulines$[0] is the 0th element of the @menulines$ array of strings. Notice 
+the '$', normally denoting a string variable, before the square brackets that 
+denotes an array index.
+
+Operators
+---------
+
+Operators are things you can do to variables and numbers. They are either the 
+common mathematical operations or conditional operators
+
++ - will add two numbers. If you try to add two strings, the result will be a 
+    string glued together at the +. You can add a number to a string, and the
+    result will be a string. No other math operators work with strings.
+- - will subtract two numbers.
+* - will multiply two numbers.
+/ - will divide two numbers. Note that this is an integer division, i.e.
+    7/2 is not equal 3.5, it's equal 3.
+% - will give you the remainder of the division. 7%2 is equal to 1.
+
+There are also conditional operators. This has to do with the conditional 
+command 'if' and they are meant to return either 1 if the condition is satisfied 
+and 0 if it isn't. (That's what they call 'boolean' variables. 0 means 'False'. 
+Anything except the zero is 'True' Odd as it is, -1 and -5 and anything below 
+zero will also be True.)
+
+You can compare numbers to each other and you compare strings to each other, but 
+you can not compare numbers to strings.
+
+ ==  - Is true if both sides are equal. For strings, it means they are the same.
+ >=  - True if the first value is equal to, or greater than, the second value.
+ <=  - True if the first value is equal to, or less than, the second value
+ >   - True if the first value greater than the second value
+ <   - True if the first value is less than the second value
+ !=  - True if the first value IS NOT equal to the second one
+
+Examples:
+
+ 1=1 is True.
+ 1<2 is True while 1>2 is False.
+ @x>2 is True if @x is equal to 3. But it isn't true if @x is 2.
+
+Only '==' and '!=' have been tested for comparing strings. Since there's no way 
+to code a seriously complex data structure in this language, trying to sort 
+strings by alphabet would be pointless anyway.
+
+Comparisons can be stacked in the same condition:
+
+ && - Is True if and only if BOTH sides are true.
+      ('1==1 && 2=2' is true. '2=1 && 1=1' is false.)
+ || - Is True if either side of this expression is True.
+
+ 1=1 && 2=2 is True.
+ 1=1 && 2=1 is False.
+ 1=1 || 2=1 is True.
+
+Logical operators work only on numbers:
+
+ << - Left shift.
+ >> - Right shift.
+ &  - And.
+ |  - Or.
+ ^  - Xor.
+
+If you don't know what these five mean, don't bother, you don't need them.
+
+Labels
+------
+
+Within executable script code, some lines can be labels:
+
+<label name>:
+
+Labels are points of reference in your script, which can be used to route 
+execution with 'goto', 'menu' and 'jump_zero' commands, invoked with 'doevent' 
+and 'donpcevent' commands and are otherwise essential. A label's name may not be 
+longer than 22 characters. (23rd is the ':'.) There is some confusion in the 
+source about whether it's 22, 23 or 24 all over the place, so keeping labels 
+under 22 characters could be wise. In addition to labels you name yourself, 
+there are also some special labels which the script engine will start execution 
+from if a special event happens:
+
+OnClock<hour><minute>:
+OnHour<hour>:
+On<weekday><hour><minute>:
+OnDay<month><day>:
+
+This will execute when the server clock hits the specified date or time. Hours 
+and minutes are given in military time. ('0105' will mean 01:05 AM). Weekdays 
+are Sun,Mon,Tue,Wed,Thu,Fri,Sat. Months are 01 to 12, days are 01 to 31. 
+Remember the zero. :)
+
+OnInit:
+OnInterIfInit:
+OnInterIfInitOnce:
+
+OnInit will execute every time the scripts loading is complete, including when 
+they are reloaded with @reloadscript command. OnInterIfInit will execute when 
+the map server connects to a char server, OnInterIfInitOnce will only execute 
+once and will not execute if the map server reconnects to the char server later.
+
+OnAgitStart:
+OnAgitEnd:
+OnAgitInit:
+
+OnAgitStart will run whenever the server shifts into WoE mode, whether it is 
+done with @agitstart GM command or with 'AgitStart' script command. OnAgitEnd 
+will do likewise for the end of WoE. OnAgitInit will run when castle data is 
+loaded from the char-server by the map server.
+
+No RID will be attached while any of the abovementioned labels are triggered, so 
+no character or account-based variables will be accessible, until you attach a 
+RID with 'attachrid' (see below).
+
+OnTouch:
+
+This label will be executed if a trigger area is defined for the NPC object it's 
+in. If it isn't present, the execution will start from the beginning of the NPC 
+code. The RID of the triggering character object will be attached.
+
+PCDieEvent:
+PCKillEvent:
+PCLogoutEvent:
+PCLoginEvent:
+
+These four special labels will be invoked if you have set 'event_script_type' 
+value in your 'script_athena.conf' to 1, and you can change their names by 
+altering the configuration options in 'script_athena.conf'. It's pretty obvious 
+when those will get triggered. For more information, see 
+'npc/sample/PCLoginEvent.txt'
+
+Only the special labels which are not associated with any script command are 
+listed here. There are other kinds of labels which may be triggered in a similar 
+manner, but they are described with their associated commands.
+
+Scripting commands and functions
+--------------------------------
+
+The commands and functions are listed here in no particular order. There's a 
+difference between commands and functions - commands leave no 'return value' 
+which might be used in a conditional statement, as a command argument, or stored 
+in a variable. Calling commands as if they were functions will sometimes work, 
+but is not advised, as this can lead to some hard to track errors. Calling 
+functions as if they were commands will mess up the stack, so 'return' command 
+will not return correctly after this happens in a particular script.
+
+All commands must end with a ';'. Actually, you may expect to have multiple 
+commands on one line if you properly terminate them with a ';', but it's better 
+if you don't, since it is not certain just whether the scripting engine will 
+behave nicely if you do.
+
+-------------------------
+
+*playerattached;
+
+Returns the ID of the player currently attached to the script. It will return
+0 if noone is attached, or if the attached player no longer exists on the map
+server. It is wise to check for the attached player in script functions that
+deal with timers as there's no guarantee the player will still be logged on
+when the timer triggers. Note that the ID of a player is actually their
+account ID.
+
+-------------------------
+
+*mes "<string>";
+
+This command will displays a box on the screen for the invoking character, if no 
+such box is displayed already, and will print the string specified into that 
+box. There is normally no 'close' or 'next' button on this box, unless you 
+create one with 'close' or 'next', and while it's open the player can't do much 
+else, so it's important to create a button later. If the string is empty, it 
+will show up as an empty line.
+
+    mes "Text that will appear in the box";
+
+Inside the string you may put color codes, which will alter the color of the 
+text printed after them. The color codes are all '^<R><G><B>' and contain three 
+hexadecimal numbers representing colors as if they were HTML colors - ^FF0000 is 
+bright red, ^00FF00 is bright green, ^0000FF is bright blue, ^000000 is black. 
+^FF00FF is a pure magenta, but it's also a color that is considered transparent 
+whenever the client is drawing windows on screen, so printing text in that color 
+will have kind of a weird effect. Once you've set a text's color to something, 
+you have to set it back to black unless you want all the rest of the text be in 
+that color:
+
+    mes "This is ^FF0000 red ^000000 and this is ^00FF00 green, ^000000 so.";
+    
+Notice that the text coloring is handled purely by the client. If you use non-
+english characters, the color codes might get screwed if they stick to letters 
+with no intervening space. Separating them with spaces from the letters on 
+either side solves the problem.
+
+---------------------------------------
+
+*goto <label>;
+
+This command will make the script jump to a label, usually used in conjunction 
+with other command, such as "if", but often used on it's own.
+
+           goto Label;
+           mes "This will not be seen";
+    Label:
+           mes "This will be seen";
+
+---------------------------------------
+
+*callfunc "<function>"{,<argument>,...<argument>};
+*callfunc("<function>"{,<argument>,...<argument>})
+
+This command lets you call up a function NPC. A function NPC can be called from 
+any script on any map server. Using the 'return' command it will come back to 
+the place that called it.
+
+    place.gat,50,50,6%TAB%script%TAB%Woman%TAB%115,{
+        mes "[Woman]"
+        mes "Lets see if you win";
+        callfunc "funcNPC";
+        mes "Well done you have won";
+        close;
+    }
+    function%TAB%script%TAB%funcNPC%TAB%{
+        set @win, rand(2);
+        if(@win==0) return;
+        mes "Sorry you lost";
+        end;
+    }
+
+You can pass arguments to your function - values telling it what exactly to do -
+which will be available there with getarg() (see 'getarg')
+Notice that returning is not mandatory, you can end execution right there.
+
+If you want to return a real value from inside your function NPC, it is better 
+to write it in the function form, which will also work and will make the script 
+generally cleaner:
+
+    place.gat,50,50,6%TAB%script%TAB%Man%TAB%115,{
+        mes "[Man]"
+        mes "Gimme a number!";
+        next;
+        input @number;
+        if (callfunc("OddFunc",@number)) mes "It's Odd!";
+        close;
+    }
+    function%TAB%script%TAB%OddFunc%TAB%{
+            if (getarg(0)%2==0) goto ItsEven;
+            return (1);
+        ItsEven:
+            return (0);
+    }
+
+---------------------------------------
+
+*callsub <label name>{,<argument>,...<argument>};
+
+This command will go to a specified label within the current script (do NOT use 
+quotes around it) coming in as if it were a 'callfunc' call, and pass it 
+arguments given, if any, which can be recovered there with 'getarg'. When done 
+there, you should use the 'return' command to go back to the point from where 
+this label was called. This is used when there is a specific thing the script 
+will do over and over, this lets you use the same bit of code as many times as 
+you like, to save space and time, without creating extra NPC objects which are 
+needed with 'callfunc'. A label is not callable in this manner from another 
+script.
+
+           mes "[Woman]"
+           mes "Lets see if you win";
+           callsub Check;
+           mes "Well done you have won";
+    Check:
+           set @win, rand(2);
+           if(@win==0) return;
+           mes "Sorry you lost";
+           
+---------------------------------------
+
+*return {(<value>)};
+
+When you use callsub or callfunc, this command allows you to go back to the 
+calling script. You can optionally return with a value telling the calling 
+program what exactly happened. To get at this value, you will have to use the 
+'set' command:
+
+    set <variable>,callfunc "<your function>"
+
+Note the round brackets. Turns out you have to enclose just about anything in 
+brackets if it isn't a straight number for the return command to work with it:
+
+    return (@x+@y);
+
+Also note that
+
+    if (<condition>) return (<whatever>);
+
+does NOT always work, even though it would make scripts a lot cleaner, and it 
+might be wiser to avoid using it like that.
+
+For an example see 'callfunc' and 'callsub'
+
+---------------------------------------
+
+*getarg(<number>)
+
+This function is used when you use the 'callsub' or 'callfunc' commands. In the 
+call you can specify variables that will make that call different from another 
+one. This function willwill return an argument the function or subroutine was 
+called with, and is the normal way to get them. 
+This is another thing that can let you use the same but of code more than once. 
+
+Argument numbering starts with 0, i.e. the first argument you gave is number 0. 
+If no such argument was given, a zero is returned.
+
+    place.gat,50,50,6%TAB%script%TAB%Woman1%TAB%115,{
+        mes "[Woman]";
+        mes "Lets see if you win";
+        callfunc "funcNPC",2;
+        mes "Well done you have won";
+
+    ...
+
+    place.gat,52,50,6%TAB%script%TAB%Woman2%TAB%115,{
+        mes "[Woman]";
+        mes "Lets see if you win";
+        callfunc "funcNPC",5;
+        mes "Well done you have won";
+
+    ...
+
+    function%TAB%script%TAB%funcNPC%TAB%{
+        set @win, rand(getarg(0));
+        if(@win==0) return;
+        mes "Sorry you lost";
+
+"woman1" NPC object calls the funcNPC. The argument it gives in this call is 
+stated as 2, so when the random number is generated by the 'rand' function, it 
+can only be 0 or 1. Whereas "woman2" gives 5 as the argument number 0 when 
+calling the function, so the random number could be 0, 1, 2, 3 or 4, this makes 
+"woman2" less likely to say the player won. 
+
+You can pass multiple arguments in a function call:
+
+    callfunc "funcNPC",5,4,3;
+
+getarg(0) would be 5, getarg(1) would be 4 and getarg(2) would be 3.
+
+'getarg()' can also be used to carry information back from using the "callfunc" 
+script command, if the 'return' command is set to return a value: 
+
+    place.gat,50,50,6%TAB%script%TAB%Woman%TAB%115,{
+        mes "[Woman]";
+        mes "Lets see if you win";
+        callfunc "funcNPC";
+        mes "Well it seems you have "+getarg(0);
+    }
+    function%TAB%script%TAB%funcNPC%TAB%{
+        set @win, rand(2);
+        if(@win==0) return(won);
+        return(lost);
+    }
+        
+It is, however, better to use 'set' to get this value instead (see 'callfunc') 
+because otherwise you can't call functions from within other functions. (Return 
+values mess up the stack.)        
+
+---------------------------------------
+
+*next;
+
+This command will create a 'next' button in the message window for the invoking 
+character. If no window is currently on screen, it will be created. Used to 
+segment NPC talking, this command is used A LOT. See 'mes'.
+
+    mes "[Woman]";
+    mes "This would appear on the page";
+    next;
+    // This is needed cause it is a new page and the top will now be blank
+    mes "[Woman]";
+    mes "This would appear on the 2nd page";
+
+---------------------------------------
+
+*close;
+
+This command will create a 'close' button in the message window for the invoking 
+character. If no window is currently on screen, it will be created. This is one 
+of the ways to end a speech from an NPC. Once the button is clicked, the NPC 
+script execution will end, and the message box will disappear.
+
+    mes "[Woman]";
+    mes "I am finished talking to you, click the close button";
+    close;
+    mes "This command will not run at all, cause the script has ended.";
+
+---------------------------------------
+
+*close2;
+
+This command will create a 'close' button in the message window for the invoking 
+character. If no window is currently on screen, it will be created. See 'close'. 
+There is one important difference, though - even though the message box will 
+have closed, the script execution will not stop, and commands after 'close2' 
+will still run, meaning an 'end' has to be used to stop the script, unless you 
+make it stop in some other manner.
+
+    mes "[Woman]";
+    mes "I will warp you now";
+    close2;
+    warp "place.gat",50,50;
+    end;
+    
+Don't expect things to run smoothly if you don't make your scripts 'end'.
+
+---------------------------------------
+
+*menu "<menu option>",<label>{,"<menu option>",<label>...};
+
+This command will create a selectable menu for the invoking character. Only one 
+menu can be on screen at the same time.
+
+Depending on what the player picks from the menu, the script execution will 
+continue from the corresponding label. (it's string-label pairs, not label-
+string)
+
+It also sets a special temporary character variable @menu, which contains the 
+number of option the player picked. (Numbering of options starts at 1.)
+
+       menu "I want to Start",L_Start,"I want to end",L_End;
+    L_Start:
+       //If they click "I want to Start" they will end up here
+    L_End:
+       //If they click "I want to end" they will end up here
+
+If a label is '-', the script execution will continue right after the menu 
+command if that option is selected, this can be used to save you time, and 
+optimize big scripts.
+
+        menu "I want to Start",-,"I want to end",L_End;
+        //If they click "I want to Start" they will end up here
+    L_End:
+        //If they click "I want to end" they will end up here
+
+Both these examples will perform the same task.
+
+If you give an empty string as a menu item, the item will not display. This
+can effectively be used to script dynamic menus by using empty string for
+entries that should be unavailable at that time.
+
+You can do it by using arrays, but watch carefully - this trick isn't high 
+wizardry, but minor magic at least. You can't expect to easily duplicate it 
+until you understand how it works.
+
+Create a temporary array of strings to contain your menu items, and populate it 
+with the strings that should go into the menu at this execution, making sure not 
+to leave any gaps. Normally, you do it with a loop and an extra counter, like 
+this:
+
+    setarray @possiblemenuitems$[0],<list of potential menu items>;
+    set @i,0; // That's our loop counter.
+    set @j,0; // That's the menu lines counter.
+
+    makemenuloop:
+
+    // We record the number of option into the list of options actually 
+    // available. That 'condition' is whatever condition that determines whether 
+    // a menu item number @i actually goes into the menu or not.
+
+    if (<condition>) set @menulist$[@j],@possiblemenuitems$[@i];
+
+    // We just copied the string, we do need it's number for later though, so we 
+    // file it away as well.
+    
+    if (<condition>) set @menureference[@j],@i;
+
+    // Since we've just added a menu item into the list, we increment the menu 
+    // lines counter.    
+    
+    if (<condition>) set @j,@j+1;
+
+    // We go on to the next possible menu item.
+
+    set @i,@i+1;
+
+    // And continue looping through the list of possible menu items until it 
+    // ends.
+    
+    if (@i<=getarraysize(@possiblemenuitems)) goto makemenuloop;
+
+
+This will create you an array @menulist$ which contains the text of all items 
+that should actually go into the menu based on your condition, and an array 
+@menureference, which contains their numbers in the list of possible menu items. 
+(Remember, arrays start with 0.) There's less of them than the possible menu 
+items you've defined, but the menu command can handle the empty lines - only if 
+they are last in the list, and if it's made this way, they are. Now comes a 
+dirty trick:
+
+    // X is whatever the most menu items you expect to handle.
+    menu @menulist$[0],-,@menulist$[1],-,....@menulist$[<X>],-;
+
+This calls up a menu of all your items. Since you didn't copy some of the 
+possible menu items into the list, it's end is empty and so no menu items will 
+show up past the end. But this menu call doesn't jump anywhere, it just 
+continues execution right after the menu command. (And it's a good thing it 
+doesn't, cause you can only explicitly define labels to jump to, and how do you 
+know which ones to define if you don't know beforehand which options will end up 
+where in your menu?)
+But how do you figure out which option the user picked? Enter the @menu.
+
+@menu contains the number of option that the user selected from the list, 
+starting with 1 for the first option. You know now which option the user picked 
+and which number in your real list of possible menu items it translated to:
+
+    mes "You selected "+@possiblemenuitems$[@menureference[@menu-1]]+"!";
+
+@menu is the number of option the user picked.
+@menu-1 is the array index for the list of actually used menu items that we 
+made.
+@menureference[@menu-1] is the number of the item in the array of possible menu 
+items that we've saved just for this purpose.
+
+And @possiblemenuitems$[@menureference[@menu-1]] is the string that we used to 
+display the menu line the user picked. (Yes, it's a handful, but it works.)
+
+You can set up a bunch of 'if (@menureference[@menu-1]==X) goto Y' statements to 
+route your execution based on the line selected and still generate a different 
+menu every time, which is handy when you want to, for example, make users select 
+items in any specific order before proceeding, or make a randomly shuffled menu.
+
+Kafra code bundled with the standard distribution uses a similar array-based 
+menu technique for teleport lists, but it's much simpler and doesn't use @menu, 
+probably since that wasn't documented anywhere.
+
+See also 'select', which is probably better in this particular case. Instead of 
+menu, you could use 'select' like this:
+
+    set @dummy,select(@menulist$[0],@menulist$[1],....@menulist$[<X>]);
+    
+For the purposes of the technique described above these two statements are 
+perfectly equivalent.
+
+---------------------------------------
+
+*rand(<number>{,<number>});
+
+This function returns a number, randomly positioned between 0 and the number you 
+specify (if you only specify one) and the two numbers you specify if you give it 
+two.
+
+rand(10) would result in 0,1,2,3,4,5,6,7,8 or 9
+
+rand(2,10) would result in 2,3,4,5,6,7,8,9 or 10
+
+---------------------------------------
+
+*warp "<map name>",<x>,<y>;
+
+This command will take the invoking character to the specifed map, and if 
+wanted, specified coordinates too, but these can be random.
+
+    warp "place.gat",50,55;
+
+This would take them to X 50 Y 55 on the map called "place". If your X and Y 
+coordinates land on an unwalkable map square, it will send the warped character 
+to a random place. Same will happen if they are both zero:
+
+    warp "place.gat",0,0;
+
+Notice that while warping people to coordinates 0,0 will normally get them into 
+a random place, it's not certain to always be so. Darned if I know where this is 
+actually coded, it might be that this happens because square 0,0 is unwalkable 
+on all official maps. If you're using custom maps, beware.
+
+There are also three special 'map names' you can use.
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their savepoint.
+
+---------------------------------------
+
+*areawarp "<from map name>",<x1>,<y1>,<x2>,<y2>,"<to map name>",<x3>,<y3>;
+
+This command is similar to 'warp', however, it will not refer to the invoking 
+character, but instead, all characters within a specified area, defined by the 
+x1/y1-x2/y2 square, will be warped. Nobody outside the area will be affected, 
+including the activating character, if they are outside the area.
+
+    areawarp "place.gat",10,10,120,120,"place2.gat",150,150;
+
+Everyone that is in the area between X 10 Y 10 and X 120 Y 120, in a square 
+shape, on the map called "place", will be affected, and warped to "place2" X 150 
+Y 150
+
+    areawarp "place.gat",10,10,120,120,"place2.gat",0,0;
+
+By using ,0,0; as the destination coordinates it will take all the characters in 
+the affected area to a random set of co-ordinates on "place2".
+
+Like 'warp', areawarp will also explicitly warp characters randomly into the 
+current map if you give the 'to map name' as "Random".
+
+See also 'warp'.
+
+---------------------------------------
+
+*heal <hp>,<sp>;
+
+This command will heal a set amount of HP and/or SP on the invoking character.
+
+    heal 30000,0; // This will heal 30,000 HP
+    heal 0,30000; // This will heal 30,000 SP
+    heal 300,300; // This will heal 300 HP and 300 SP
+
+This command just alters the hit points and spell points of the invoking 
+character and produces no other output whatsoever.
+
+---------------------------------------
+
+*itemheal <hp>,<sp>;
+
+This command works on the invoking character like 'heal', however, it is not 
+normally used in NPC scripts and will not work as expected there, but is used 
+all over in item scripts. 
+
+Unlike 'heal', which just alters hp/sp and doesn't do anything else at all, this 
+command also shows healing animations for potions and other stuff, checks 
+whether the potion was made by a famous alchemist and alters the amount healed, 
+etc, etc. Since which kind of effect is shown depends on what item was used, 
+using it in an NPC script will not have a desired effect.
+
+There is also a nice example on using this with the 'rand' function, to give you 
+a random ammount of healing.
+
+    // This will heal anything thing from 100 to 150 HP and no SP
+    itemheal rand(100,150),0; 
+
+---------------------------------------
+
+*percentheal <hp>,<sp>;
+
+This command will heal the invoking character. It heals the character, but not 
+by a set value - it adds percent of their maximum HP/SP.
+
+    percentheal 100,0; // This will heal 100% HP
+    percentheal 0,100; // This will heal 100% SP
+    percentheal 50,50; // This will heal 50% HP and 50% SP
+
+So the amount that this will heal will depend on the total ammount of HP or SP 
+you have maximum. Like 'heal', this will not call up any animations or effects.
+
+---------------------------------------
+
+*jobchange <job number>{,<upper flag>};
+
+This command will change the job class of the invoking character.
+
+    jobchange 1; // This would change your player into a Swordman
+    jobchange 4002; // This would change your player into a Swordman High
+
+This command does work with numbers, but you can also use job names. The full 
+list of job names and the numbers they correspond to can be found in 
+'db/const.txt'.
+
+    // This would change your player into a Swordman
+    jobchange Job_Swordman; 
+    // This would change your player into a Swordman High
+    jobchange Job_Swordman_High; 
+
+'upper flag' can alternatively be used to specify the type of job one changes
+to. For example, jobchange Job_Swordman,1; will change the character to a high
+swordsman. The upper values are:
+-1 (or when omitted): preserves the current job type.
+0: Normal/standard classes
+1: High/Advanced classes
+2: Baby classes
+
+This command will also set a permanent character-based variable 
+'jobchange_level' which will contain the job level at the time right before 
+changing jobs, which can be checked for later in scripts.
+
+---------------------------------------
+
+*input <variable>;
+
+This command will make an input box pop up on the client connected to the 
+invoking character, to allow entering of a number or a string. This has many 
+uses, one example would be a guessing game, also making use of the 'rand' 
+function:
+
+        mes "[Woman]";
+        mes "Try and guess the number I am thinking of.";
+        mes "The number will be between 1 and 10.";
+        next;
+        set @number, rand(1,10);
+        input @guess;
+        if(@guess==@number) goto L_Correct;
+        mes "[Woman]";
+        mes "Sorry, that wasn't the number I was thinking of.";
+        close;
+    L_Correct:
+        mes "[Woman]";
+        mes "Well done that was the number I was thinking of";
+        close;
+
+If you give the input command a string variable to put the input in, it will 
+allow the player to enter text. Otherwise, only numbers will be allowed.
+
+        mes "[Woman]";
+        mes "Please say HELLO";
+        next;
+        input @var$;
+        if(@var$=="HELLO") goto L_Correct;
+        mes "[Woman]";
+        mes "Sorry you got it wrong";
+        close;
+    L_Correct:
+        mes "[Woman]";
+        mes "Well done you typed it correctly";
+        close;
+
+Notice that in current SVN, you may not input a negative number with this 
+command. This was done to prevent exploits in badly written scripts, which would 
+let people, for example, put negative amounts of zeny into a bank script and 
+recieve free zeny as a result. Unfortunately it limits the uses of the 'input' 
+command quite a bit.
+
+---------------------------------------
+
+*setlook <look type>,<look value>;
+
+This command will alter the look data for the invoking character. It is used 
+mainly for changing the palette used on hair and clothes, you specify which look 
+type you want to change, then the palette you want to use. Make sure you specify 
+a palette number that exists/is usable by the client you use.
+
+    // This will change your hair(6), so that it uses palette 8, what ever your 
+    // palette 8 is your hair will use that colour
+
+    setlook 6,8; 
+
+    // This will change your clothes(7), so they are using palette 1, whatever 
+    // your palette 1 is, your clothes will then use that set of colours.
+    
+    setlook 7,1; 
+
+Here are the possible look types:
+ 
+ 0 - Base sprite
+ 1 - Hairstyle
+ 2 - Weapon
+ 3 - Head bottom
+ 4 - Head top
+ 5 - Head mid
+ 6 - Hair color
+ 7 - Clothes color
+ 8 - Shield
+ 9 - Shoes
+
+Whatever 'shoes' means is anybody's guess, ask Gravity - the client does nothing 
+with this value. It still wants it from the server though, so it is kept, but 
+normally doesn't do a thing.
+ 
+Only the look data for hairstyle, hair color and clothes color are saved to the 
+char server's database and will persist. The rest freely change as the character 
+puts on and removes equipment, changes maps, logs in and out and otherwise you 
+should not expect to set them. In fact, messing with them is generally 
+hazardous, do it at your own risk, it is not tested what will this actually do -
+it won't cause database corruption and probably won't cause a server crash, but 
+it's easy to crash the client with just about anything unusual.
+
+However, it might be an easy way to quickly check for empty view IDs for 
+sprites, which is essential for making custom headgear. 
+
+Since a lot of people have different palettes for hair and clothes, it's 
+impossible to tell you what all the colour numbers are. If you want a serious 
+example, there is a Stylist script inside the default eAthena installation that 
+you can look at, this may help you create a Stylist of your own: 
+'custom\dye.txt'
+
+---------------------------------------
+
+*set <variable>,<expression>;
+
+This command will set a variable to the value that the expression results in. 
+This is the only way to set a variable directly.
+
+This is the most basic script command and is uses a lot whenever you try to do 
+anything more advanced than just printing text into a messagebox.
+
+    set @x,100;
+    
+will make @x equal 100.
+
+    set @x,1+5/8+9;
+    
+will compute 1+5/8+9 (which is, surprisingly, 10 - remember, all numbers are 
+integer in this language) and make @x equal it.
+
+---------------------------------------
+
+*setarray <array name>[<first value>],<value>{,<value>...<value>};
+
+This command will allow you to quickly fill up an array in one go. Check the 
+Kafra scripts in the distribution to see this used a lot.
+
+    setarray @array[0], 100, 200, 300, 400, 500, 600;
+
+First value is the index of the first element of the array to alter. For 
+example:
+
+    setarray @array[0],200,200,200;
+    setarray @array[1],300,150;
+    
+will produce:
+
+ @array[0]=200
+ @array[1]=300
+ @array[2]=150
+
+---------------------------------------
+
+*cleararray <array name>[<first value to alter>],<value>,<number of values to set>;
+
+This command will change many array values at the same time to the same value.
+
+    setarray @array[0], 100, 200, 300, 400, 500, 600;
+    // This will make all 6 values 0
+    cleararray @array[0],0,6;
+    // This will make array element 0 change to 245
+    cleararray @array[0],245,1;
+    // This will make elements 1 and 2 change to 345
+    cleararray @array[1],345,2;
+
+See 'setarray'.
+
+---------------------------------------
+
+*copyarray <to array>[<first value>],<from array>[<first value>],<amount to copy>;
+
+This command lets you quickly shuffle a lot of data between arrays, which is in 
+some cases invaluable.
+
+    setarray @array[0], 100, 200, 300, 400, 500, 600;
+    // So we have made @array[]
+    copyarray @array2[0],@array[2],2;
+    
+    // Now, @array2[0] will be equal to @array[2] (300) and 
+    // @array2[1] will be equal to @array[3].
+
+So using the examples above:
+ @array[0]  = 100
+ @array[1]  = 200
+ @array[2]  = 300
+ @array[3]  = 400
+ @array[4]  = 500
+ @array[5]  = 600
+
+ @array2[0] = 300
+ @array2[1] = 400
+ @array2[2] = 500
+ @array2[3] = 0 
+
+Notice that @array[5] wont be coppied to the second array, and it will return a 
+0.
+
+---------------------------------------
+
+*getarraysize(<array name>);
+
+This function returns the number of values that are contained inside the 
+specified array. Notice that zeros and empty strings at the end of this array 
+are not counted towards this number.
+
+For example:
+
+    setarray @array[0], 100, 200, 300, 400, 500, 600;
+    set @arraysize,getarraysize(@array);
+
+This will make @arraysize == 6. But if you try this:
+
+    setarray @array[0], 100, 200, 300, 400, 500, 600, 0;
+    set @arraysize,getarraysize(@array);
+    
+@arraysize will still equal 6, even though you've set 7 values.    
+
+---------------------------------------
+
+*deletearray <array name>[<first value>],<how much to delete>
+
+This command will delete a specified number of array elements totally from an 
+array, shifting all the elements beyond this towards the beginning.
+
+    // This will delete array element 0, and move all the other array elements 
+    // up one place.
+    deletearray @array[0],1
+
+// This would delete array elements numbered 1, 2 and 3, leave element 0 in its 
+// place, and move the other elements ups, so there are no gaps.
+
+    deletearray @array[1],3
+
+IMPORTANT: deletarray is horribly broken since the earliest days of jAthena. It 
+tends to merrily remove much more variables than it's told to remove, which 
+makes it pretty much useless for anything other than removing an array from 
+memory entirely. This would be very handy, if it always worked. 
+
+---------------------------------------
+
+*getelementofarray(<array name>,<index>);
+
+This function will return an array's element when given an index.
+
+    // This will find the 2nd array value
+    getelementofarray(@array,1)
+
+Pretty pointless now when we have
+
+    @array[1]
+
+which has the same effect.
+
+---------------------------------------
+
+*if (<condition>) <statement>;
+
+This is the basic conditional statement command, and just about the only one 
+available in this scripting language. 
+
+The condition can be any expression. All expressions resulting in a non-zero 
+value will be considered True, including negative values. All expressions 
+resulting in a zero are false.
+
+If the expression results in True, the statement will be executed. If it isn't 
+true, nothing happens and we move on to the next line of the script.
+
+    if (1)  mes "This will always print.";
+    if (0)  mes "And this will never print.";
+    if (5)  mes "This will also always print.";
+    if (-1) mes "Funny as it is, this will also print just fine.";
+
+For more information on conditional operators see the operators section above.
+Anything that is returned by a function can be used in a condition check without 
+bothering to store it in a specific variable:
+
+    if (strcharinfo(0)=="Daniel Jackson") mes "It is true, you are Daniel!";
+
+More examples of using the 'if' command in the real world:
+
+Example 1:
+
+        set @var1,1;
+        input @var2;
+        if(@var1==@var2) goto L_Same;
+        mes "Sorry that is wrong";
+        close;
+    L_Same:
+        close;
+
+Example 2:
+    
+    set @var1,1;
+    input @var2;
+    if(@var1!=@var2) mes "Sorry that is wrong";
+    close;
+
+(Notice examples 1 and 2 have the same effect.)
+
+Example 3:
+
+    set @var1,@var1+1;
+    mes "[Forgetfull Man]";
+    if (@var==1) mes "This is the first time you have talked to me";
+    if (@var==2) mes "This is the second time you have talked to me";
+    if (@var==3) mes "This is the third time you have talked to me";
+    if (@var==4) mes "This is the forth time you have talked to me, but I think I am getting amnesia, I have forgoten about you";
+    if (@var==4) set @var,0;
+    close;
+
+Example 4:
+
+        mes "[Quest Person]";
+        if(countitem(512)>=1) goto L_GiveApple;
+        // The number 512 was found from item_db, it is the item number for the Apple.
+        mes "Can you please bring me an apple?";
+        close;
+    L_GiveApple:
+        mes "Oh an apple, I didnt want it, I just wanted to see one";
+        close;
+
+Example 5:
+
+        mes "[Person Checker]";
+        if($name$!=null) goto L_Check;
+        mes "Please tell me someones name";
+        next;
+        input $name$;
+        set $name2$,strcharinfo(0);
+        mes "[Person Checker]";
+        mes "Thank you";
+    L_Check:
+        if($name$==strcharinfo(0) ) goto L_SameName;
+        mes "[Person Checker]";
+        mes "You are not the person that " +$name2$+ " mentioned";
+    L_End:
+        set $name$,null;
+        set $name2$,null;
+        close;
+    L_SameName:
+        mes "[Person Checker]";
+        mes "You are the person that " +$name2$+ " just mentioned";
+        mes "nice to meet you";
+        goto L_End;
+
+See 'strcharinfo' for explanation of what this function does.
+
+Example 6: Using complex conditions.
+
+        mes "[Multi Checker]";
+        if( (@queststarted==1) && (countitem(512)>=5) ) goto L_MultiCheck;
+        // Only if the quest has been started AND You have 5 apples will it goto "L_MultiCheck"
+        mes "Please get me 5 apples";
+        set @queststarted,1;
+        close;
+    L_MultiCheck:
+        mes "[Multi Checker]";
+        mes "Well done you have started the quest of got me 5 apples";
+        mes "Thank you";
+        set @queststarted,0;
+        delitem 512,5;
+        close;
+
+---------------------------------------
+
+*getitem <item id>,<amount>{,<character ID>};
+*getitem "<item name>",<amount>{,<character ID>};
+
+This command will give a specific amount of specified items to the invoking 
+character. If an optional character ID is specified, and that character is 
+currently online, items will be created in their inventory instead. If they are 
+not online, nothing will happen.
+
+In the first and most commonly used version of this command, tems are referred 
+to by their database ID number found inside 'db/item_db.txt'.
+
+    getitem 502,10 // The person will recieve 10 apples
+    getitem 617,1  // The person will recieve 1 Old Violet Box
+
+Giving an item ID of -1 will give a specified number of random items from the 
+list of those that fall out of Old Blue Box. Unlike in all other cases, these 
+will be unidentified, if they turn out to be equipment. This is exactly what's 
+written in the Old Blue Box's item script.
+
+Other negative IDs also correspond to other random item generating item tables:
+
+Giving an item ID of -2 will produce the effects of Old Violet Box.
+Giving an item ID of -3 will produce the effects of Old Card Album.
+Giving an item ID of -4 will produce the effects of Gift Box.
+Giving an item ID of -5 will produce the effects of Worn Out Scroll, which, in 
+current SVN, drops only Jellopies anyway.
+
+Calling this command with a negative item ID to create a random item will create 
+an entry in the log file for those if such logging is enabled.
+
+You may also create an item by it's name in the 'english name' field in the item 
+database:
+
+    getitem "RED_POTION",10;
+
+Which will do what you'd expect. If it can't find that name in the database, 
+apples will be created anyway. It is often a VERY GOOD IDEA to use it like this.
+
+This used in pretty much all NPC scripts that have to do with items and quite a 
+few item scripts. For more examples check just about any official script.
+
+---------------------------------------
+
+*getitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<character ID>};
+*getitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<character ID>};
+
+This command will give an amount of specified items to the invoking character. 
+If an optional character ID is specified, and that character is currently 
+online, items will be created in their inventory instead. If they are not 
+online, nothing will happen. It works essentially the same as 'getitem' (it even 
+works for negative ID numbers the same way, which is kinda silly) but is a lot 
+more flexible, since it allows you to give the player an item altered with it's 
+specific properties. 
+
+Those parameters that are different from 'getitem' are:
+
+identify    - Whether you want the item to be identified or not, 0 unidentified, 
+              1 identified.
+refine      - For how many plusses will it be refined.
+              It will not let you refine an item higher than +10, if you 
+              specify more it'll still be 10.
+attribute   - Whether the item is broken (1) or not (0) and NOT an elemental 
+              attribute. 
+card1,2,3,4 - If you want a card compound to it, place the card ID number into 
+              the specific card slot. Card ID numbers also found in 
+              'db/item_db.txt'
+
+Card1-card4 values are also used to store name information for named items, as 
+well as the elemental property of weapons and armor. You can create a named item 
+in this manner, however, if you just need a named piece of standard equipment, 
+it is much easier to the 'getnameditem' function instead.
+
+You will need to keep these values if you want to destroy and then perfectly 
+recreate a named item, for this see 'getinventorylist'.
+
+If you still want to try creating a named item with this command because 
+'getnameditem' won't do it for you cause it's too limited, you can do it like 
+this. Careful, minor magic ahead.
+
+    // First, let's get an ID of a character who's name will be on the item.
+    // Only an existing character's name may be there.
+    // Let's assume our character is 'Adam' and find his ID.
+    
+    set @charid,getcharid(0,"Adam");
+
+    // Now we split the character ID number into two portions with a binary
+    // shift operation. If you don't understand what this does, just copy it.
+    
+    set @card3, @charid & 65535;
+    set @card4, @charid >> 16;
+
+    // If you're inscribing non-equipment, @card1 must be 254.
+    // Arrows are also not equipment. :)
+    set @card1,254;
+    
+    // For named equipment, card2 means the Star Crumbs and elemental 
+    // crystals used to make this equipment. For everything else, it's 0.
+     
+    set @card2,0;
+    
+    // Now, let's give the character who invoked the script some 
+    // Adam's Apples:
+    
+    getitem2 512,1,1,0,0,@card1,@card2,@card3,@card4;
+
+This wasn't tested with all possible items, so I can't give any promises, 
+experiment first before relying on it.
+
+To create equipment, continue this example it like this:
+
+    // We've already have card3 and card4 loaded with correct
+    // values so we'll just set up card1 and card2 with data
+    // for an Ice Stiletto.
+
+    // If you're inscribing equipment, @card1 must be 255.
+    set @card1,255;
+    
+    // That's the number of star crumbs in a weapon.
+    set @sc,2;
+    
+    // That's the number of elemental property of the weapon.
+    set @ele,1;
+
+    // And that's the wacky formula that makes them into
+    // a single number.    
+    set @card2,@ele+((@sc*5)<<8);
+
+    // That will make us an Adam's +2 VVS Ice Stiletto:
+    
+    getitem2 1216,1,1,2,0,@card1,@card2,@card3,@card4;
+
+Experiment with the number of star crumbs - I'm not certain just how much will 
+work most and what it depends on. The valid element numbers are:
+
+ 1 - Ice, 2 - Earth 3 - Fire 4 - Wind.
+    
+You can, apparently, even create duplicates of the same pet egg with this 
+command, creating a pet which is the same, but simultaneously exists in two 
+eggs, and may hatch from either, although, I'm not sure what kind of a mess will 
+this really cause.
+
+---------------------------------------
+*groupranditem <group id>;
+
+Returns the item_id of a random item picked from the group specified. The
+different groups and their group number are specified in db/item_group_db.txt
+
+When used in conjunction with other functions, you can get a random item. For
+example, for a random pet lure:
+
+getitem groupranditem(15),1;
+
+---------------------------------------
+
+*makeitem <item id>,<amount>,<X>,<Y>,"<map name>";
+*makeitem "<item name>",<amount>,<X>,<Y>,"<map name>";
+
+This command will create an item lying around on a specified map in the 
+specified location.
+
+ itemid   - Found in 'db/item_db.txt'
+ amount   - Amount you want produced
+ X        - The X coordinate
+ Y        - The Y coordinate
+ map name - The map name.
+
+This item will still disappear just like any other dropped item. Like 'getitem', 
+it also accepts an 'english name' field from the database and creates apples if 
+the name isn't found.
+
+---------------------------------------
+
+*delitem <item id>,<amount>;
+*delitem "<item name>",<amount>;
+
+This command will take a specified amount of items from the invoking character. 
+As all the item commands, this one uses the ID of the item found inside 
+'db/item_db.txt'. The items are destroyed - there is no way an NPC can simply 
+own items and have an inventory of them, other as by destroying and recreating 
+them when needed.
+
+    delitem 502,10 // The person will lose 10 apples
+    delitem 617,1  // The person will lose 1 Old Violet Box
+
+It is always a good idea to to check if the player actually has the item before 
+you take it from them, Otherwise, you could try to delete items which the 
+players don't actually have, which won't fail and won't give an error message, 
+but might open up ways to exploit your script.
+
+Like 'getitem' this command will also accept an 'english name' field from the 
+database. If the name is not found, nothing will be deleted.
+
+---------------------------------------
+
+*delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<character ID>};
+*delitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<character ID>};
+
+This command will take a specified amount of items from the invoking character. 
+Check 'getitem2' to understand its expanded parameters.
+
+---------------------------------------
+
+*enable_items;
+*disable_items;
+
+These commands enable item usage while an npc is running. When enable_items is
+run, items can be used during scripts until disable_items is called. 
+To avoid possible exploits, when enable_items is invoked, it will only enable
+item usage while running that script in particular. Note that if a different
+script also calls enable_items, it will override the last call (so you may
+want to call this command at the start of your script without assuming the
+effect is still in effect).
+
+---------------------------------------
+
+*viewpoint <action>,<x>,<y>,<point number>,<color>;
+
+This command will mark places on the mini map in the client connected to the 
+invoking character. It uses the normal X and Y coordinates from the main map. 
+The colors of the marks are defined using a hexidecimal number, same as the ones 
+used to color text in 'mes' output, but are written as hexadecimal numbers in C. 
+(They look like 0x<six numbers>.)
+
+Action is what you want to do with a point, 1 will set it, while 2 will clear 
+it. Point number is the number of the point - you can have several. If more than 
+one point is drawn at the same coordinates, they will cycle, which can be used 
+to create flashing marks.
+
+    // This command will show a mark at coordinates X 30 Y 40, is mark number 1, 
+    // and will be red.
+    
+    viewpoint 1,30,40,1,0xFF0000;
+
+This will create three points:
+
+    viewpoint 1,30,40,1,0xFF0000;
+    viewpoint 1,35,45,2,0xFF0000;
+    viewpoint 1,40,50,3,0xFF0000;
+
+And this is how you remove them:
+
+    viewpoint 2,30,40,1,0xFF0000;
+    viewpoint 2,35,45,2,0xFF0000;
+    viewpoint 2,40,50,3,0xFF0000;
+    
+The client determines what it does with the points entirely, the server keeps no 
+memory of where the points are set whatsoever.
+
+---------------------------------------
+
+*countitem(<item id>)
+*countitem("<item name>")
+
+This function will return the number of items for the specified item ID that the 
+invoking character has in the inventory.
+
+    mes "[Item Checker]";
+    mes "Hmmm, it seems you have "+countitem(502)+" apples";
+    close;
+
+Like 'getitem', this function will also accept an 'english name' from the 
+database as an argument.
+
+If you want to state the number at the end of a sentence, you can do it by 
+adding up strings:
+
+    mes "[Item Checker]";
+    mes "Hmmm, the total number of apples you are holding is "+countitem("APPLE");
+    close;
+    
+---------------------------------------
+
+*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+
+Expanded version of 'countitem' function, used for created/carded/forged items.
+
+This function will return the number of items for the specified item ID and
+other parameters that the invoking character has in the inventory.
+Check 'getitem2' to understand the arguments of the function.
+    
+---------------------------------------
+
+*checkweight(<item id>,<amount>)
+*checkweight("<item name>",<amount>)
+
+This function will compute and return 1 if the total weight of a specified 
+number of specific items does not exceed the invoking character's carrying 
+capacity, and 0 otherwise. It is important to see if a player can carry the 
+items you expect to give them, failing to do that may open your script up to 
+abuse or create some very unfair errors.
+
+Like 'getitem', this function will also accept an 'english name' from the 
+database as an argument.
+
+    checkweight(502,10) // 10 apples
+
+        if (checkweight(502,10) == 0 ) goto L_OverWeight;
+        getitem 502,10;
+        close;
+    L_OverWeight:
+        mes "Sorry you cannot hold this ammount of apples";
+        close;
+
+Or to put this another way:
+
+        if (checkweight("APPLE",10)) goto L_Getapples;
+        mes "Sorry you cannot hold this ammount of apples";
+        close;
+    L_Getapples:
+        getitem 502,10;
+        close;
+
+Both these examples have the same effect.
+
+---------------------------------------
+
+*readparam(<parameter number>)
+
+This function will return the basic stats of an invoking character, referred to 
+by the parameter number. Instead of a number, you can use a parameter name if it 
+is defined in "db/const.txt".
+
+For reference, in there these things are defined:
+
+StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
+JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
+BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk
+
+All of these also behave as variables, but don't expect to be able to just 'set' 
+all of them - some will not work for various internal reasons.
+
+    // This would return how many status points you haven't spent yet
+    readparam(9)
+
+Using this particular information as a function call is not required. Just 
+putting
+
+    StatusPoint 
+
+will give you the same result, and some of these parameters work just like 
+variables (i.e. you can 'set Zeny,100' to make the character have 100 zeny, 
+destroying whatever zeny they had before, or 'set Zeny,Zeny+100' to give them 
+100 zeny)
+
+You can also use this command to get stat values:
+
+    readparam(bVit)
+    if(readparam(bVit)<=77) goto L_End;
+    mes "Only people with over 77 Vit are reading this";
+L_End:
+    close;
+
+---------------------------------------
+
+*getcharid(<type>{,"<character name>"})
+
+This function will return a unique ID number of the invoking character, or, if a 
+character name is specified, of that character.
+
+Type is the kind of associated ID number required:
+
+ 0 - Character ID number.
+ 1 - Party ID number.
+ 2 - Guild ID number.
+ 3 - Account ID number.
+
+For most purposes other than printing it, a number is better to have than a name 
+(people do horrifying things to their character names).
+
+If the character is not in a party or not in a guild, the function will return 0 
+if guild or party number is requested. If a name is specified and the character 
+is not found, 0 is returned.
+
+If getcharid(0) returns a zero, the script got called not by a character and 
+doesn't have an attached RID. Note that this will cause the map server to
+print "player not attached!" error messages, so it is preferred to use
+"playerattached" to check for the character attached to the script.
+
+if (getcharid(2)) mes "Only members of a guild are allowed beyond this point!";
+
+---------------------------------------
+
+*getpartyname(<party id>)
+
+This function will return the name of a party that has the specified ID number. 
+If there is no such party ID, "null" will be returned.
+
+Lets say the ID of a party was saved as a global variable:
+
+    // This would return the name of the party from the ID stored in a variable
+    mes "You're in the '"+getpartyname($@var)"' party, I know!";
+
+---------------------------------------
+
+*getpartymember <party id>;
+
+Thank you to HappyDenn for all this information.
+
+This command will finds all members of a specified party and returns their names 
+into an array of temporary global variables. There's actually quite a few 
+commands like this which will fill a special variable with data upon execution 
+and not do anything else.
+
+Upon executing this,
+
+$@partymembername$[] is a global temporary stringarray which contains all the 
+                     names of these party members.
+$@partymembercount   is the number of party members that were found.
+
+The party members will (apparently) be found regardless of whether they are 
+online or offline. Note that the names come in no particular order.
+
+Be sure to use $@partymembercount to go through this array, and not 
+'getarraysize', because it is not cleared between runs of 'getpartymember'. If 
+someone with 7 party members invokes this script, the array would have 7 
+elements. But if another person calls up the NPC, and he has a party of 5, the 
+server will not clear the array for you, overwriting the values instead. So in 
+addition to returning the 5 member names, the 6th and 7th elements from the last 
+call remain, and you will get 5+2 members, of which the last 2 don't belong to 
+the new guy's party. $@partymembercount will always contain the correct number, 
+(5) unlike 'getarraysise()' which will return 7 in this case.
+
+Example:
+
+   // get the character's party ID
+       getpartymember(getcharid(1));
+
+   // immediately copy $@partymembercount value to a new variable, since
+   // you don't know when 'getpartymember' will get called again for someone 
+   // else's party, overwriting your global array.
+       set @partymembercount,$@partymembercount;
+
+   // copy $@partymembername array to a new array
+       copyarray @partymembername$[0],$@partymembername$[0],@partymembercount;
+
+   //list the party members in NPC dialog
+       set @count,0;
+   L_DisplayMember:
+       if(@count == @partymembercount) goto L_DisplayMemberEnd;
+       mes (@count + 1) + ". ^0000FF" + @partymembername$[@count] + "^000000";
+       set @count,@count+1;
+       goto L_DisplayMember;
+   L_DisplayMemberEnd:
+       close;
+
+---------------------------------------
+
+*getguildname(<guild id>)
+
+This function returns a guild's name given an ID number. If there is no such 
+guild, "null" will be returned;
+
+   // Would print what ever guild 10007 is, in my case this would return "AlcoROhics"
+   mes "The guild "+GetGuildName(10007)+" are all nice people.";
+
+   // This will do the same as above:
+   set @var,10007;
+   mes "We have some friends in "+GetGuildName(@var)+", you know.";
+
+This is used all over the WoE controlling scripts. You could also use it for a 
+guild-based event.
+
+---------------------------------------
+
+*getguildmaster(<guild id>)
+
+This function return the name of the master of the guild which has the specified 
+ID number. If there is no such guild, "null" will be returned.
+
+// Would return the guild master of guild 10007, whatever that might be.
+// In this example it would return "MissDjax" cause she owns "AlcoROhics" (10007)
+    mes getguildmaster(10007)+" runs "+getguildname(10007);
+
+Can be used to check if the character is the guildmaster of the specified guild.
+
+Maybe you want to make a room only guildmasters can enter:
+
+        set @GID,getcharid(2);
+        if(@GID==0) goto L_NoGuild;
+        if(strcharinfo(0)==getguildmaster(@GID)) goto L_GuildMaster;
+        mes "Sorry you dont own the guild you are in";
+        close;
+    L_NoGuild:
+        mes "Sorry you are not in a guild";
+        close;
+    L_GuildMaster:
+        mes "Welcome guild master of "+GetGuildName(@GID);
+        close;
+
+
+---------------------------------------
+*guildchangegm(<guild id>,<new master's name>)
+
+This function will change the Guild Master of a guild. The ID is the guild's
+id, and the new guildmaster's name must be passed.
+
+Returns 1 on success, 0 otherwise.
+
+---------------------------------------
+*getguildmasterid(<guild id>)
+
+This function will return the character ID number of the guildmaster of the 
+guild specified by the ID. 0 if the character is not a guildmaster of any guild.
+
+---------------------------------------
+
+*strcharinfo(<type>)
+
+This function will return either the name, party name or guild name for the 
+invoking character. Whatever it returns is determined by type.
+
+ 0 - Character's name.
+ 1 - The name of the party they're in if any.
+ 2 - The name of the guild they're in if any.
+ 
+If a character is not a member of any party or guild, an empty string will be 
+returned when requesting that information.
+
+---------------------------------------
+
+*getequipid(<equipment slot>)
+
+This function returns the item ID of the item equipped in the equipment slot 
+specified on the invoking character. If nothing is equpped there, it returns 0. 
+Valid equipment slots are:
+
+1  - Upper head gear
+2  - Armor (Where you keep your Jackets and Robes)
+3  - What is in your Left hand.
+4  - What is in your Right hand.
+5  - The garment slot (Mufflers, Hoods, Manteaus)
+6  - What foot gear the player has on.
+7  - Accessory 1.
+8  - Accessory 2.
+9  - Middle Headgear (masks and glasses)
+10 - Lower Headgear (beards, some masks)
+
+Notice that a few items occupy several equipment slots, and if the character is 
+wearing such an item, 'getequipid' will return it's ID number for either slot.
+
+Can be used to check if you have something equiped, or if you haven't got 
+something equiped:
+
+        if(getequipid(1)==2234) goto L_WearingTiara;
+        mes "Come back when you have a Tiara on";
+        close;
+    L_WearingTiara:
+        mes "What a lovely Tiara you have on";
+        close;
+
+You can also use it to make sure people dont pass a point before removing an 
+item totally from them. Let's say you dont want people to wear Legion Plate 
+armor, but also dont want them to equip if after the check, you would do this:
+
+        if ((getequipid(2) == 2341) || (getequipid(2) == 2342) goto L_EquipedLegionPlate; 
+    // the || is used as an or argument, there is 2341 and 2342 cause there are 
+    // two different legion plate armors, one with a slot one without.
+        if ((countitem(2341) > 0) || (countitem(2432) > 0) goto L_InventoryLegionPlate;
+        mes "I will lets you pass";
+        close2;
+        warp "place.gat",50,50;
+        end;
+    L_EquipedLegionPlate:
+        mes "You are wearing some Legion Plate Armor, please drop that in your stash before continuing";
+        close;
+    L_InventoryLegionPlate:
+        mes "You have some Legion Plate Armor in your inventory, please drop that in your stash before continuing";
+        close;
+
+---------------------------------------
+
+*getequipname(<equpment slot>)
+
+This function will return the name of the item equipped in the specified 
+equipment slot on the invoking character. Almost identical to 'getequipid', good 
+for an NPC to state what your are wearing, or maybe saving as a string variable. 
+See 'getequipid' for a full list of valid equipment slots.
+
+        if (getequipname(1)==0) goto L_No_HeadGear;
+        mes "So you are wearing a "+getequipname(1)+" on your head";
+        close;
+    L_No_HeadGear:
+        mes "You are not wearing any head gear";
+        close;
+
+---------------------------------------
+
+*getbrokenid(<number>)
+
+This function will search the invoking character's inventory for any broken 
+items, and will return their item ID numbers. Since the character may have 
+several broken items, 0 given as an argument will return the first one found, 1 
+will return the second one, etc. Will return 0 if no such item is found.
+
+    // Let's see if they have anything broken:
+        if (getbrokenid(0)==0) goto Skip;
+    // They do, so let's print the name of the first broken item:
+        mes "Oh, I see you have a broken "+getitemname(getbrokenid(0))+" here!";
+    Skip:
+        mes "You don't have anything broken, quit bothering me.";
+
+---------------------------------------
+
+*repair <broken item number>;
+
+This command repairs a broken peice of equipment, using the same list of broken 
+items as available through 'getbrokenid'.
+
+The official scripts seem to use the repair command as a function instead: 
+'repair(<number>)' but it returns nothing on the stack. Probably only Valaris, 
+who made it, can answer why is it so.
+
+---------------------------------------
+
+*getequipisequiped(<equipment slot>)
+
+This functions will return 1 if there is an equipment placed on the specified
+equipment slot and 0 otherwise. For a list of equipment slots 
+see 'getequipid'. Function originally used by the refining NPCs:
+
+    if (getequipisequiped(1)) goto L_equipped;
+        mes "[Refiner]";
+        mes "Do you want me to refine your dumb head?";
+        close;
+    L_equipped:
+        mes "[Refiner]";
+        mes "That's a fine hat you are wearing there...";
+        close;
+
+
+---------------------------------------
+
+*getequipisenableref(<equipment slot>)
+
+Will return 1 if the item equipped on the invoking character in the specified 
+equipment slot is refinable, and 0 if it isn't. For a list of equipment slots 
+see 'getequipid'.
+
+        if (getequipisenableref(1)) goto L_Refine;
+        mes "[Refiner]";
+        mes "I can't refine this hat!...";
+        close;
+    L_Refine:
+        mes "[Refiner]";
+        mes "Ok I can refine this";
+        close;
+
+---------------------------------------
+
+*getequipisidentify(<equipment slot>)
+
+This function will return 1 if an item in the specified equipment slot is 
+identified and 0 if it isn't. Since you can't even equip unidentified equipment, 
+there's a question of whether it can actually end up there, and it will normally 
+return 1 all the time if there is an item in this equipment slot.
+Which is kinda pointless.
+For a list of equipment slots see 'getequipid'.
+
+---------------------------------------
+
+*getequiprefinerycnt(<equipment slot>)
+
+Returns the current number of plusses for the item in the specified equipment 
+slot. For a list of equipment slots see 'getequipid'.
+
+Can be used to check if you have reached a maximum refine value, default for 
+this is +10:
+
+        if(getequiprefinerycnt(1) < 10) goto L_Refine_HeadGear;
+        mes "Sorry, it's not possible to refine hats better than +10";
+        close;
+    L_Refine_HeadGear:
+        mes "I will now upgrade your "+getequipname(1);
+
+---------------------------------------
+
+*getequipweaponlv(<equipment slot>)
+
+This function returns the weapon level for the weapon equipped in the specified 
+equipment slot on the invoking character. For a list of equipment slots see 
+'getequipid'.
+
+Only 3 (Left hand) and 4 (Right hand) normally make sense, since only weapons 
+have a weapon level. You can, however, probably, use this field for other 
+equippable custom items as a flag or something. 
+If no item is equipped in this slot, or if it doesn't have a weapon level 
+according to the database, 0 will be returned.
+
+    if(getequipweaponlv(4)==0) mes "Seems you dont have a weapon on";
+    if(getequipweaponlv(4)==1) mes "You are holding a lvl 1 weapon";
+    if(getequipweaponlv(4)==2) mes "You are holding a lvl 2 weapon";
+    if(getequipweaponlv(4)==3) mes "You are holding a lvl 3 weapon";
+    if(getequipweaponlv(4)==4) mes "You are holding a lvl 4 weapon";
+    if(getequipweaponlv(4)==5) mes "You are holding a lvl 5 weapon, hm, must be a custom design";
+
+Or for the left hand, cause it can hold a weapon or a shield:
+
+        if(getequipid(3)==0) goto L_NothingEquiped;
+        if(getequipweaponlv(3)==0) mes "You are holding a shield, so it doesnt have a level";
+        if(getequipweaponlv(3)==1) mes "You are holding a lvl 1 weapon";
+        if(getequipweaponlv(3)==2) mes "You are holding a lvl 2 weapon";
+        if(getequipweaponlv(3)==3) mes "You are holding a lvl 3 weapon";
+        if(getequipweaponlv(3)==4) mes "You are holding a lvl 4 weapon";
+        if(getequipweaponlv(3)==5) mes "You are holding a lvl 5 weapon, hm, must be a custom design";
+        close;
+    L_NothingEquiped:
+        mes "Seems you have nothing equiped";
+        close;
+
+---------------------------------------
+
+*getequippercentrefinery(<equipment slot>)
+
+This function calculates and returns the percent value chance to successfully 
+refine the item found in the specified equipment slot of the invoking character 
+by +1. The actual formula is beyond the scope of this document, however, it is 
+calculated as if the character was a blacksmith trying to refine this particular 
+weapon, and depends on lots and lots of stuff. For a list of equipment slots see 
+'getequipid'.
+
+These values can be displayed for the player to see, or used to calculate the 
+random change of a refine succeeding or failing and then going through with it 
+(which is what the official NPC refinery scripts use it for)
+
+// This will find a random number from 0 - 99 and if that is equal to or more 
+// than the value recoverd by this command it will go to L_Fail
+    if (getequippercentrefinery(3)<=rand(100)) goto L_Fail;
+
+---------------------------------------
+
+*successrefitem <equipment slot>;
+
+This command will refine an item in the specified equipment slot of the invoking 
+character by +1. For a list of equipment slots see 'getequipid'. This command 
+will not only add the +1, but also display a 'refine success' effect on the 
+character and put appropriate messages into their chat window. It will also give 
+the character fame points if a weapon reached +10 this way, even though these 
+will only take effect for blacksmith who will later forge a weapon.
+
+The official scripts seem to use the 'successrefitem' command as a function 
+instead: 'successrefitem(<number>)' but it returns nothing on the stack. 
+This is since jAthena, so probably nobody knows for sure why is it so.
+
+---------------------------------------
+
+*failedrefitem <equipment slot>;
+
+This command will fail to refine an item in the specified equipment slot of the 
+invoking character. The item will be destroyed. This will also display a 'refine 
+failure' effect on the character and put appropriate messages into their chat 
+window.
+
+The official scripts seem to use the 'failedrefitem' command as a function 
+instead: 'failedrefitem(<number>)' but it returns nothing on the stack. This is 
+since jAthena, so probably nobody knows for sure why is it so.
+
+
+---------------------------------------
+
+*cutin "<filename with no extension>",<position>;
+
+This command will display a picture stored in the GRF file in the client for the 
+player. 
+
+The files are taken from '\data\texture\A_A£AIèIíÑAI´ß\illust' directory in the 
+GRF file. The filename must be given with no extension, '.bmp' is added by the 
+client itself and you can't have any other picture format displayed as a cutin. 
+The biggest one that comes with the client is 400x503 pixels, and the smallest 
+is 303x493 pixels, it is not known how big a picture has to be before the client 
+goes insane. Bright magenta (color FF00FF) is considered to be transparent in 
+these pictures. You can easily add and alter them, but how to do this is outside 
+of the scope of this document.
+
+The position determines just where on screen the picture will appear:
+  0 - bottom left corner
+  1 - bottom middle
+  2 - bottom right corner
+  3 - middle of screen in a movable window with an empty title bar.
+  4 - middle of screen without the window header, but still movable.
+  255 - will remove the cutin previously displayed.
+ 
+Giving an empty string for the filename and 255 for the position will remove all 
+cutin pictures. Any other position value will not cause a script error but will 
+cause the player's client to curl up and die. Only one cutin may be on screen at 
+any given time, any new cutins will replace it.
+
+    // This will display the picture of the 7th kafra,
+    // the one in orange and the mini-skirt :P
+    cutin "kafra_7",2;
+
+    // This will remove the displayed picture.
+    cutin "Kafra_7",255;
+
+    // This will remove all pictures displayed.
+    cutin "",255;
+
+The client comes with those cutin pictures preinstalled which you can use:
+
+mets_alpha  - This is a old fat man, holding a pipe, also with a pocket watch 
+              and cane
+pay_soldier - Wanna take a wild guess, thats right, the Soldiers that appear in 
+              Payon :D
+prt_soldier - Obvious
+ein_soldier - This guy looks cool, you've got to see him ;) This picture is for 
+              the new Einbroch guards
+moc_soldier - Obvious
+gef_soldier - Obvious
+katsua01    - It is not certain who this girl is (There is no sprite coming with 
+katsua02    - the client that seems to match very well) but she is believed to 
+katsua03    - be an NPC in official Comodo. The three pictures give different 
+              facial expressions.
+kafra_01    - Obvious
+kafra_02    - Obvious
+kafra_03    - Obvious
+kafra_04    - Obvious
+kafra_05    - Obvious
+kafra_06    - Obvious
+kafra_07    - Do I need to mention this one again ;)
+
+---------------------------------------
+
+*cutincard <item id>;
+
+This command will display a card picture as a cutin on the client connected to 
+the invoking character, with position number 4 (middle of screen, movable, but 
+no title bar). See 'cutin'. To remove this cutin, use the regular 'cutin' 
+command. Unlike the 'cutin' command, it will not take a filename, but will 
+instead take an item ID. It will then refer to the text file listing card images 
+which is normally found within your server's copy of the GRF file to find the 
+real (korean) filename.
+
+If your server doesn't have that text file in that GRF or can't read it, it 
+probably won't work.
+
+---------------------------------------
+
+*statusup <stat>;
+
+This command will bump a specified stat of the invoking character up by one 
+permanently. Stats are to be given as number, but you can use these constants to 
+replace them:
+
+bStr -  Strength
+bVit -  Vitality
+bInt -  Intelligence
+bAgi -  Agility
+bDex -  Dexterity
+bLuk -  Luck
+
+---------------------------------------
+
+*statusup2 <stat>,<amount>;
+
+This command will bump a specified stat of the invoking character up by the 
+specified amount permanently. The amount can be negative. See 'statusup'.
+
+    // This will decrease a character's Vit forever.
+    statusup bVit,-1;
+
+---------------------------------------
+
+*bonus <bonus type>,<amount>;
+*bonus2 <bonus type>,<amount>;
+*bonus3 <bonus type>,<amount>;
+*bonus4 <bonus type>,<amount>;
+
+These commands are meant to be used in item scripts. They will probably work 
+outside item scripts, but the bonus will not persist for long. They, as 
+expected, refer only to an invoking character.
+
+You can find the full list of possible bonuses and which command to use for each 
+kind in 'doc/item_bonus.txt'.
+
+---------------------------------------
+
+*skill <skill id>,<level>{,<flag>};
+*addtoskill <skill id>,<level>{,<flag>}
+
+These commands will give the invoking character a specified skill. This is also 
+used for item scripts.
+
+Level is obvious. Skill id is the ID number of the skill in question as per 
+'db/skill_db.txt'. It is not known for certain whether this can be used to give 
+a character a monster's skill, but you're welcome to try with the numbers given 
+in 'db/mob_skill_db.txt'.
+
+Flag is 0 if the skill is given permanently (will get written with the character 
+data) or 1 if it is temporary (will be lost eventually, this is meant for card 
+item scripts usage.).  The flag parameter is optional, and defaults to 1 in 
+'skill' and to 2 in 'addtoskill'.
+
+Flag 2 means that the level parameter is to be interpreted as a stackable 
+additional bonus to the skill level. If the character did not have that skill 
+previously, they will now at 0+the level given.
+
+// This will permanently give the character Stone Throw (TF_THROWSTONE,152), at 
+// level 1.
+    skill 152,1,0; 
+
+---------------------------------------
+
+*guildskill <skill id>,<level>{,<flag>}
+
+This command will bump up the specified guild skill by the specified number of 
+levels. This refers to the invoking character and will only work if the invoking 
+character is a member of a guild AND it's guildmaster, otherwise no failure 
+message will be given and no error will occur, but nothing will happen - same 
+about the guild skill trying to exceed the possible maximum. The full list of 
+guild skills is available in 'db/skill_db.txt', these are all the GD_ skills at 
+the end.
+
+The flag parameter is currently not functional and it's a mystery of what it 
+would actually do. (Though probably, like for character skills, it would allow 
+temporary bumping.) Using this command will bump the guild skill up permanently.
+
+// This would give your character's guild one level of Approval (GD_APPROVAL ID 
+// 10000). Notice that if you try to add two levels of Approval, or add
+// Approval when the guild already has it, it will only have one level of 
+// Approval afterwards.
+    guildskill 10000,1,0;
+
+You might want to make a quest for getting a certain guild skill, make it hard 
+enough that all the guild needs to help or something. Doing this for the Glory 
+of the Guild skill, which allows your guild to use an emblem, is a good idea for 
+a fun quest. (Wasting a level point on that is really annoying :D)
+
+---------------------------------------
+
+*getskilllv(<skill id>)
+
+This function returns the level of the specified skill that the invoking 
+character has. If they don't have the skill, 0 will be returned. The full list 
+of character skills is available in 'db/skill_db.txt'.
+
+There are two main uses for this function, it can check whether the character 
+has a skill or not, and it can tell you if the level is high enough.
+
+Example 1:
+
+        f (getskilllv(152)) goto L_HasSkillThrowStone;
+        mes "You dont have Throw Stone";
+        close;
+    L_HasSkillThrowStone:
+        mes "You have got the skill Throw Stone";
+        close;
+
+Example 2:
+
+        if (getskilllv(28) >= 5) goto L_HasSkillHeallvl5orMore;
+        if (getskilllv(28) == 10) goto L_HasSkillHealMaxed;
+        mes "You heal skill is below lvl 5";
+        close;
+    L_HasSkillHeallvl6orMore:
+        mes "Your heal lvl is 5 or more";
+        close;
+    L_HasSkillHealMaxed:
+        mes "Your heal lvl has been maxed";
+        close;
+
+---------------------------------------
+
+*getgdskilllv(<guild id>,<skill id>)
+
+This function retirns the guild skills for the guild with a specified ID exactly 
+as 'getskilllv' does.
+
+---------------------------------------
+
+*basicskillcheck()
+
+This function will return the state of the configuration option 
+'basic_skill_check' in 'battle_athena.conf'. It returns 1 if the option is 
+enabled and 0 if it isn't. If the 'basic_skill_check' option is enabled, which 
+it is by default, characters must have a certain number of basic skill levels to 
+sit, request a trade, use emoticons, etc. Making your script behave differently 
+depending on whether the characters must actually have the skill to do all these 
+things might in some cases be required.
+
+---------------------------------------
+
+*getgmlevel()
+
+This function will return the GM level of the account to which the invoking 
+character belongs. If this is somehow executed from a console command, 99 will 
+be returned, and 0 will be returned if the account has no GM level.
+
+This allows you to make NPC's only accessable for certain GM levels, or behave 
+specially when talked to by GMs.
+
+   if (getgmlevel()) mes "What is your command, your godhood?";
+   if (getgmlevel()) goto Wherever;
+
+---------------------------------------
+
+*end;
+*break;
+
+This command will stop the execution for this particular script. The two 
+versions are prefectly equivalent. It is the normal way to end a script which 
+does not use 'mes'.
+
+        if (BaseLevel<=10) goto L_Lvl10;
+        if (BaseLevel<=20) goto L_Lvl20;
+        if (BaseLevel<=30) goto L_Lvl30;
+        if (BaseLevel<=40) goto L_Lvl40;
+        if (BaseLevel<=50) goto L_Lvl50;
+        if (BaseLevel<=60) goto L_Lvl60;
+        if (BaseLevel<=70) goto L_Lvl70;
+    L_Lvl10:
+        npctalk "Look at that you are still a n00b";
+        end;
+    L_Lvl20:
+        npctalk "Look at that you are getting better, but still a n00b";
+        end;
+    L_Lvl30:
+        npctalk "Look at that you are getting there, you are almost 2nd profession now right???";
+        end;
+    L_Lvl40:
+        npctalk "Look at that you are almost 2nd profession";
+        end;
+
+Without the use if 'end' it would travel through the labels until the end of the 
+script. If you were lvl 10 or less, you would see all the speech lines, the use 
+of 'end' stops this, and ends the script.
+
+---------------------------------------
+
+*checkoption(<option number>)
+*checkoption1(<option number>)
+*checkoption2(<option number>)
+*setoption <option number>;
+
+The 'setoption' series of functions check for a so-called option that is set on 
+the invoking character. 'Options' are used to store status conditions and a lot 
+of other non-permanent character data of the yes-no kind. For most common cases, 
+it is better to use 'checkcart','checkfalcon','checkpeco' and other similar 
+functions, but there are some options which you cannot get at this way. They 
+return 1 if the option is set and 0 if the option is not set.
+
+Option numbers valid for the first version of this command are:
+
+1  - Petrified.
+2  - Frozen.
+3  - Stunned.
+4  - Sleeping.
+32 - Riding a Peco.
+
+'setoption' will set options on the invoking character. There are no second and 
+third versions of this command, so you can only change the 
+petrified/frozen/stunned/sleeping/riding status in this manner.
+
+Option numbers valid for the second version of this command are:
+
+1 - Poisoned.
+2 - Cursed.
+4 - Silenced.
+8 - Blinded (Notice that unless you specfy variable night darkness in the 
+    configuration, all characters will be 'blinded' during the night)
+
+Option numbers valid for the third version of this command are:
+
+1    - Sight in effect.
+2    - Hide in effect.
+4    - Cloaking in effect.
+8    - Falcon present.
+64   - GM Perfect Hide in effect.
+128  - Cart number 2 present.
+256  - Cart number 3 present.
+512  - Cart number 4 present.
+1024 - Cart number 5 present.
+2048 - Orc head present.
+4096 - The character is wearing a wedding sprite.
+8192 - Ruwach is in effect.
+
+Option numbers are bitmasks - add up option numbers to check for all of them 
+being present at the same time in one go.
+
+This is definitely not a complete list of available option flag numbers. Ask a 
+core developer for the full list.
+
+---------------------------------------
+
+*setcart;
+*checkcart()
+
+This command will give the invoking character a cart. The cart given will be 
+cart number 1 and will work regardless of whether the character is a merchant 
+class or not.
+
+The accompanying function will return 1 if the invoking character has a cart 
+(any kind of cart) and 0 if they don't.
+
+    if (checkcart()) mes "But you already have a cart!";
+
+---------------------------------------
+
+*setfalcon;
+*checkfalcon()
+
+This command will give the invoking character a falcon. The falcon will be there 
+regardless of whether the character is a hunter or not. It will (probably) not 
+have any useful effects for non-hunters though.
+
+The accompanying function will return 1 if the invoking character has a falcon 
+and 0 if they don't.
+
+    if (checkfalcon()) mes "But you already have a falcon!";
+
+---------------------------------------
+
+*setriding;
+*checkriding()
+
+This command will give the invoking character a PecoPeco (if they are a Knight 
+series class) or a GrandPeco (if they are a Crusader seriesclass). Unlike 
+'setfalcon' and 'setcart' this will not work at all if they aren't of a class 
+which can ride. This will work if the character doesn't have the riding skill, 
+however.
+
+The accompanying function will return 1 if the invoking character is riding a 
+bird and 0 if they don't.
+
+    if (checkriding()) mes "PLEASE leave your bird outside! No riding birds on the floor here!";
+
+---------------------------------------
+
+*savepoint "<map name>",<x>,<y>;
+*save "<map name>",<x>,<y>;
+
+This command saves a point that the invoking character will return to upon 
+'return to save point' if dead or in some other cases. The two versions are 
+equivalent. Map name, X coordinate and Y coordinate should be perfectly obvious. 
+This ignores any and all map flags, and can make a character respawn where no 
+teleportation is otherwise possible.
+
+    savepoint "place.gat",350,75;
+
+---------------------------------------
+
+*gettimetick(<tick type>)
+
+This function will return the system time in UNIX epoch time (if tick type is 2) 
+or the time since the start of the current day in seconds if tick type is 1.
+Passing 0 will make it return the server's tick, which is a measurement in
+milliseconds used by the server's timer system. The server's tick is an
+unsigned int which loops every ~50 days.
+
+Just in case you don't know, UNIX epoch time is the number of seconds elapsed 
+since 1st of January 1970, and is useful to see, for example, for how long the 
+character has been online with PCLoginEvent and PCLogoutEvent, which could allow 
+you to make an 'online time counted for conviction only' jail script.
+
+---------------------------------------
+
+*gettime(<type>)
+
+This function will return specified information about the current system time.
+
+1 - Seconds (of a minute)
+2 - Minutes (of an hour)
+3 - Hour (of a day)
+4 - Week day (0 for Sunday, 6 is Saturday)
+5 - Day of the month.
+6 - Number of the month
+7 - Year
+
+It will only return numbers.
+
+    if (gettime(4)==6) mes "It's a Saturday. I don't work on Saturdays.";
+
+---------------------------------------
+
+*gettimestr(<format string>,<max length>)
+
+This function will return a string containing time data as specified by the 
+format string.
+
+This uses the C function 'strfmtime', which obeys special format characters. For 
+a full description see, for example, the description of 'strfmtime' at 
+http://www.delorie.com/gnu/docs/glibc/libc_437.html
+All the format characters given in there should properly work.
+Max length is the maximum length of a time string to generate.
+
+The example given in eAthena sample scripts works like this:
+
+  mes gettimestr("%Y-%m/%d %H:%M:%S",21);
+  
+This will print a full date and time like 'YYYY-MM/DD HH:MM:SS'.
+
+---------------------------------------
+
+*openstorage;
+
+This will open a character's Kafra storage window on the client connected to the 
+invoking character. It does not check wherever it is run from, so you can allow 
+any feasible NPC to open a kafra storage. (It's not certain whether this works 
+in item scripts, but if it does, it could be interesting.)
+
+The storage window might not open if a message box or a trade deal is present on 
+screen already, so you should at least make sure the message box is closed 
+before you open storage.
+
+    mes "I will now open your stash for you";
+    close2;
+    openstorage;
+    end;
+
+---------------------------------------
+
+*guildopenstorage()
+
+This function works the same as 'openstorage' but will open a guild storage 
+window instead for the guild storage of the guild the invoking character belongs 
+to. This is a function because it returns a value - 0 if the guild storage was 
+opened successfully and 1 if it wasn't. (Notice, it's a ZERO upon success.) 
+Since guild storage is only accessible to one character at one time, it may fail 
+if another character is accessing the guild storage at the same time.
+
+This will also fail and return 2 if the character does not belong to any guild.
+
+---------------------------------------
+
+*itemskill <skill id>,<skill level>,"<skill name to show>";
+
+This is a command meant for item scripts to replicate single-use skills. It will 
+not work properly in NPC scripts a lot of the time because casting a skill is 
+not allowed when there is a message window or menu on screen. If there isn't one 
+cause you've made sure to run this when they already closed it, it should work 
+just fine and even show a targeting pointer if this is a targeting skill.
+
+// When you use Anodyne, you will cast Endure(8) level 1, 
+// and "Endure" will appear above your head as you use it.
+605,Anodyne,Anodyne,11,2000,0,100,,,,,10477567,2,,,,,{ itemskill 8,1,"Endure"; },{}
+
+
+---------------------------------------
+
+*produce <item level>;
+
+This command will open a crafting window on the client connected to the invoking 
+character. The 'item level' is a number which determines what kind of a crafting 
+window will pop-up. You can see the full list of such item levels in 
+'db/produce_db.txt' which determines what can actually be produced.
+The window will not be empty only if the invoking character can actually produce 
+the items of that type and has the appropriate raw materials in their inventory.
+
+Valid item levels are:
+
+ 1   - Level 1 Weapons
+ 2   - Level 2 Weapons
+ 3   - Level 3 Weapons
+ 16  - Blacksmith's Stones and Metals
+ 32  - Alchemist's Potions
+ 64  - Whitesmith's Coins
+ 123 - Whitesmith's Nuggets
+ 256 - Assassin Cross's Deadly Poison
+
+---------------------------------------
+
+*monster "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"};
+*areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<monster name>",<amount>{,"<event label>"};
+
+This command will spawn a monster on the specified coordinates on the specified 
+map. If the script is invoked by a character, a special map name, "this", will 
+be recognised to mean the name of the map the invoking character is located at. 
+This command works fine in the item scripts.
+
+The same command arguments mean the same things as described above in the 
+beginning of this document when talking about permanent monster spawns. Monsters 
+spawned in this manner will not respawn upon being killed.
+
+Unlike the permanent monster spawns, if the mob id is -1, a random monster will 
+be picked from the entire database according to the rules configured in the 
+server for dead branches. This will work for all other kinds of non-permanent 
+monster spawns.
+
+The only very special thing about this command is an event label, which is an 
+optional parameter. This label is written like '<NPC object name>::<label name>' 
+and upon the monster being killed, it will execute the script inside of the 
+specified NPC object starting from the label given. The RID of the player 
+attached at this execution will be the RID of the killing character.
+
+    monster "place.gat",60,100,"Poring",1002,1,"NPCNAME::Label";
+
+If you do not specify any event label, a label in the NPC object that ran this 
+command, called 'OnMyMobDead:' will execute anyway, if present.
+
+The coordinates of 0,0 will spawn the monster on a random place on the map.
+
+The 'areamonster' command works much like the 'monster' command and is not 
+significantly different, but spawns the monsters within a square defined by 
+x1/y1-x2/y2.
+
+Simple monster killing script:
+
+        <Normal NPC object definition. Let's assume you called him NPCNAME.>
+        mes "[Summon Man]";
+        mes "Want to start the kill?";
+        next;
+        menu "Yes",L_Yes,"No",-;
+        mes "[Summon Man]";
+        mes "Come back later";
+        close;
+    L_Yes:
+        monster "prontera.gat",0,0,"Quest Poring",1002,10,"NPCNAME::L_PoringKilled";
+        // By using 0,0 it will spawn them in a random place.
+        mes "[Summon Man]";
+        mes "Now go and kill all the Poring I summoned";
+        // He summoned ten.
+        close;
+    L_PoringKilled:
+        set $PoringKilled,$PoringKilled+1;
+        if ($PoringKilled==10) goto L_AllDead;
+        end;
+    L_AllDead:
+        announce "Summon Man: Well done all the poring are dead",3;
+        set $PoringKilled,0;
+        end;
+
+For more good examples see just about any official 2-1 or 2-2 job quest script.
+
+---------------------------------------
+
+*killmonster "<map name>","<event label>";
+
+This command will kill all monsters that were spawned with 'monster' or 
+'addmonster' and have a specified event label attached to them. Commonly used to 
+get rid of remaining quest monsters once the quest is complete.
+
+If the label is given as "All", all monsters which have their respawn times set 
+to -1 (like all the monsters summoned with 'monster' or 'areamonster' script 
+command, and all monsters summoned with GM commands, but no other ones - that 
+is, all non-permanent monsters) on the specified map will be killed regardless 
+of the event label value.
+
+---------------------------------------
+
+*killmonsterall "<map name>";
+
+This command will kill all monsters on a specified map name, regardless of how 
+they were spawned or what they are.
+
+---------------------------------------
+*clone "<map name>",<x>,<y>,"<event>",<char id>{,<master_id>{,<mode>{,<flag>,<duration>}}}
+
+This command creates a monster which is a copy of another player. The first
+four arguments serve the same purpose as in the monster script command, The
+<char id> is the character id of the player to clone (player must be online).
+If <master id> is given, the clone will be a 'slave/minion' of it. Master_id
+must be a character id of another online player.
+
+The mode can be specified to determine the behaviour of the clone, it's
+values are the same as the ones used for the mode field in the mob_db. The
+default mode is aggressive, assists, can move, can attack.
+
+Flag can be either zero or one currently. If zero, the clone is a normal
+monster that'll target players, if one, it is considered a summoned monster,
+and as such, it'll target other monsters. Defaults to zero.
+
+The duration specifies how long the clone will live before it is auto-removed.
+Specified in seconds, defaults to no limit (zero).
+
+Returned value is the monster ID of the spawned clone. If command fails,
+returned value is zero.
+
+---------------------------------------
+
+*doevent "<NPC object name>::<event label>";
+
+This command will start a new execution thread in a specified NPC object at the 
+specified label. The execution of the script running this command will not stop. 
+No parameters may be passed with a doevent call.
+
+The script of the NPC object invoked in this manner will run as if it's been 
+invoked by the RID that was active in the script that issued a 'doevent'.
+
+    place.gat,100,100,1%TAB%script%TAB%NPC%TAB%53,{
+        mes "This is what you will see when you click me";
+        close;
+    Label:
+        mes "This is what you will see if the doevent is activated";
+        close;
+    }
+
+    ....
+
+    doevent "NPC::Label";
+
+---------------------------------------
+
+*donpcevent "<event label>";
+
+This command is kinda confusing cause it performs in two completely different 
+ways.
+
+If the event label is phrased like "::<label name>", all NPC objects that have a 
+specified label in them will be invoked as if by a 'doevent', but no RID 
+whatsoever will be attached while they execute.
+
+Otherwise, if the label is given as "<NPC name>::<label name>", a label within 
+the NPC object that runs this command will be called, but as if it was running 
+inside another, specified NPC object. No RID will be attached to it in this case 
+either.
+
+This can be used for making another NPC react to an action that you have done 
+with the NPC that has this command in it, i.e. show an emotion, or say 
+something.
+
+    place.gat,100,100,1%TAB%script%TAB%NPC%TAB%53,{
+        mes "Hey NPC2 copy what I do";
+        close2;
+        set @emo, rand(1,30);
+        donpcevent "NPC2::Emo";
+    Emo:
+        emotion @emo;
+        end;
+    }
+
+    place.gat,102,100,1%TAB%script%TAB%NPC2%TAB%53,{
+        mes "Hey NPC copy what I do";
+        close2;
+        set @emo, rand(1,30);
+        donpcevent "NPC::Emo";
+    Emo:
+        emotion @emo;
+        end;
+    }
+
+This will make both NPC perform the same random emotion from 1 to 30, and the 
+emotion will appear above each of their heads.
+
+---------------------------------------
+
+*addtimer <ticks>,"<NPC object name>::<label>";
+*deltimer "<NPC object name>::<event label>";
+*addtimercount <ticks>,"<NPC object name>::<event label>";
+
+These commands will create, destroy, and delay a countdown timer - 'addtimer' to 
+create, 'deltimer' to destroy and 'addtimercount' to delay it by the specified 
+number of ticks. For all three cases, the event label given is the identifier of 
+that timer.
+
+When this timer runs out, a new execution thread will start in the specified NPC 
+object at the specified label. If no such label is found in the NPC object, it 
+will run as if clicked. In either case, no RID will be attached during 
+execution.
+
+The ticks are given in 1/1000ths of a second.
+
+---------------------------------------
+
+*stoptimer;
+*inittimer;
+*enablearena;
+*disablearena;
+*cmdothernpc "<npc name?>","<command?>";
+
+This set of commands is marked as added by someone going under the nickname 
+'RoVeRT', as mentioned the source code comments, and has to do with timers and 
+scheduling working entirely unlike any other timing commands. It is not certain 
+that they actually even work properly anymore, and most of these read no 
+arguments, though the 'inittimer'/'stoptimer' pair of commands has to do 
+something with an 'OnTimer' label and will probably invoke it and 'cmdothernpc' 
+will execute starting with the label 'OnCommand'. Whatever they actually do, the 
+other commands can most likely do it better. The two arena commands definitely 
+do not do anything useful at all.
+
+None of these commands are used in any scripts bundled with eAthena. Most 
+probably they are deprecated and left in by mistake.
+
+Unless RoVeRT can be found and asked to clarify what these were made for, that 
+is.
+
+---------------------------------------
+
+*initnpctimer{ "<NPC object name>"};
+*stopnpctimer{ "<NPC object name>"};
+*startnpctimer{ "<NPC object name>"};
+*setnpctimer <tick>{,"<NPC object name>"};
+*getnpctimer(<type of information>{,"<NPC object name>"});
+*attachnpctimer {"<character name>"};
+*detachnpctimer {"<NPC object name>"};
+
+This set of commands and functions will create and manage an NPC-object based 
+timer. The NPC object may be declared by name, or the name in all cases may be 
+omitted, in that case this timer will be based in the object the current script 
+is running in.
+
+Why is it actually part of an NPCs structure we aren't sure, but it is, and 
+while 'addtimer'/'deltimer' commands will let you have many different timers 
+referencing different labels in the same NPC, one each and each with their own 
+countdown, 'initnpctimer' can only have one per NPC object. But it can trigger 
+many labels and it can let you know how many were triggered already and how many 
+still remain.
+
+This timer is counting up from 0 in ticks of 1/1000ths of a second each. Upon 
+creating this timer, the execution will not stop, but will happily continue 
+onward. The timer will then invoke new execution threads at labels 
+"OnTimer<time>:" in the NPC object it is attached to. 
+
+To create the timer, use the 'initnpctimer', which will start it running. 
+'stopnpctimer' will pause the timer, without clearing the current tick, while 
+'startnpctimer' will let the paused timer continue.
+
+It is not quite clear whether the new invocations will always have a RID. 
+Apparently, the RID that was in effect when the timer was initialised will still 
+be attached to these executions in some cases, but it's not quite clear -
+experiment with RID-dependent commands, like 'mes', and tell us what happens and 
+who gets the message, if anyone.
+
+Even if they don't have a RID by default, 'attachnpctimer' will allow you to 
+explicitly attach a character's RID to the timer, which will make them the 
+target for all character-referencing commands and functions, not to mention 
+variables. 'detachnpctimer' will make the RID zero, making all character-
+referencing functions fail with an error.
+
+'setnpctimer' will explicitly set the timer to a given tick. To make it useful, 
+you will need the 'getnpctimer' function, which the type of information argument 
+means:
+
+ 0 - Will return the current tick count of the timer.
+ 1 - Will return 1 if there are remaining "OnTimer<ticks>:" labels in the 
+     specified NPC waiting for execution.
+ 2 - Will return the number of times the timer has triggered an "OnTimer<tick>:" 
+     label in the specified NPC.
+
+Example 1:
+
+    <NPC Header> {
+        initnpctimer;
+        npctalk "I cant talk right now, give me 10 seconds";
+        end;
+    OnTimer5000:
+        npctalk "Ok 5 seconds more";
+        end;
+    OnTimer6000:
+        npctalk "4";
+        end;
+    OnTimer7000:
+        npctalk "3";
+        end;
+    OnTimer8000:
+        npctalk "2";
+        end;
+    OnTimer9000:
+        npctalk "1";
+        end;
+    OnTimer10000:
+        stopnpctimer;
+        mes "[Man]";
+        mes "Ok we can talk now";
+    }
+
+Example 2:
+
+    OnTimer15000:
+        set $quote,rand(5);
+        if($quote == 0) goto Lquote0;
+        if($quote == 1) goto Lquote1;
+        if($quote == 2) goto Lquote2;
+        if($quote == 3) goto Lquote3;
+        if($quote == 4) goto Lquote4;
+    Lquote0:
+        npctalk "If 0 is randomly picked you will see this";
+        setnpctimer 0;
+        end;
+    Lquote1:
+        npctalk "If 1 is randomly picked you will see this";
+        setnpctimer 0;
+        end;
+    Lquote2:
+        npctalk "If 2 is randomly picked you will see this";
+        setnpctimer 0;
+        end;
+    Lquote3:
+        npctalk "If 3 is randomly picked you will see this";
+        setnpctimer 0;
+        end;
+    Lquote4:
+        npctalk "If 4 is randomly picked you will see this";
+        setnpctimer 0;
+        end;
+       
+    // This OnInit label will run when the script is loaded, so that the timer 
+    // is initialised immediately as the server starts. It is dropped back to 0 
+    // every time the NPC says something, so it will cycle continiously.
+    OnInit:
+        initnpctimer;
+        end;
+
+Example 3:
+
+    mes "[Man]";
+    mes "I have been waiting "+(getnpctimer(0)/1000)+" seconds for you";
+    // we divide the timer returned by 1000 cause it will be displayed in 
+    // milliseconds otherwise
+    close;
+
+Example 4:
+
+    mes "[Man]";
+    mes "Ok I will let you have 30 sec more";
+    close2;
+    setnpctimer (getnpctimer(0)-30000); 
+    // Notice the 'close2'. If there were a 'next' there the timer would be 
+    // changed only after the player pressed the 'next' button.
+    end;
+
+---------------------------------------
+
+*announce "<text>",<flag>{,<color>}
+
+This command will broadcast a message to all or most players, similar to 
+@kami/@kamib GM commands.
+
+The region the broadcast is heard in and the color the message will come up as 
+will be determined by the flags:
+
+    announce "This will be shown to everyone at all in yellow.",0;
+
+The flag values are coded as constants in db/const.txt to make them easier to use:
+- bc_all: Broadcast message is sent server-wide
+- bc_map: Message is sent to everyone in the same map
+- bc_area: Message is sent to players in the vecinity of the source.
+- bc_self: Message is sent only to current player.
+
+- bc_npc: Broadcast source is the npc, not the player attached to the script
+  (useful when a player is not attached or the message should be sent to those
+  nearby the npc)
+
+- bc_yellow: The default is to send broadcasts in yellow color.
+- bc_blue: Alternate broadcast is displayed in blue color.
+
+The optional parameter, color, allows usage of broadcasts in any custom color.
+The color parameter is a single number which can be in hexadecimal notation.
+For example:
+    announce "This will be shown to everyone at all in yellow.",bc_all,0xFFFF00;
+Will display a global announce in yellow. The color format is in RGB (0xRRGGBB).
+
+Using this for private messages to players is probably not that good an idea,
+but it can be used instead in NPCs to "preview" an announce.
+
+    // This will be a private message to the player using the NPC that made the 
+    // annonucement
+    announce "This is my message just for you",bc_blue|bc_self;
+
+    // This will be shown on everyones screen that is in sight of the NPC.
+    announce "This is my message just for you people here",bc_area;
+
+---------------------------------------
+
+*mapannounce "<map name>","<text>",<flag>[,<color>];
+
+This command will work like 'announce' but will only broadcast to characters 
+currently residing on the specified map. The flag and optional color
+parameters are the same as in 'announce', even though the only ones that make
+sense are the color related ones.
+
+---------------------------------------
+
+*areaannounce "<map name>",<x1>,<y1>,<x2>,<y2>,"<text>",<flag>[,<color>];
+
+This command works like 'announce' but will only broadcast to characters 
+residing in the specified x1/y1-x2/y2 square on the map given. The flags and
+color parameter given are the same as in 'announce', but only the color
+related ones have effect.
+
+    areaannounce "prt_church.gat",0,0,350,350,"God's in his heaven, all right with the world",0;
+
+---------------------------------------
+
+*getusers(<type>)
+
+This function will return a number of users on a map or the whole server. What 
+it returns is specified by Type.
+
+Type is a bitmask, add up to get the effects you want:
+
+  8 - This will count all characters on the same map as the current NPC.
+      (By default, it will count people on the same map as the character)
+  7 - Return the amount of players for the entire server.
+      (By default, only the players on the map will be counted.)
+      
+So 'getusers(0)' will return the number of characters on the same map as the 
+invoking character, while 'getusers(7)' will give the count for entire server.
+
+---------------------------------------
+
+*getmapusers("<map name>")
+
+This function will return the number of users currently located on the specified 
+map.
+
+Currently being used in the PVP scripts to check if a PVP room is full of not, 
+if the number returned it equal to the maximum allowed it will not let you 
+enter.
+
+---------------------------------------
+
+*getareausers("<map name>",<x1>,<y1>,<x2>,<y2>)
+
+This function will return the count of connected characters which are located 
+within the specified area - an x1/y1-x2/y2 square on the specified map.
+
+This is useful for maps that are split into many buildings, such as all the 
+"*_in.gat" maps, due to all the shops and houses.
+
+---------------------------------------
+
+*getareadropitem("<map name>",<x1>,<y1>,<x2>,<y2>,<item>)
+
+This function will count all the items with the specified ID number lying on the 
+ground on the specified map within the x1/y1-x2/y2 square on it and return that 
+number.
+
+This is the only function around where a parameter may be either a string or a 
+number! If it's a number, it means that only the items with that item ID number 
+will be counted. If it is a string, it is assumed to mean the 'english name' 
+field from the item database. If you give it an empty string, or something that 
+isn't found from the item database, it will count items number '512' (apples).
+
+---------------------------------------
+
+*disablenpc "<NPC object name>";
+*enablenpc "<NPC object name>";
+
+These two commands will disable and enable, respectively, an NPC object 
+specified by name. The disabled NPC will disappear from sight and will no longer 
+be triggerable in the normal way. It is not clear whether it will still be 
+accessible through 'donpcevent' and other triggering commands, but it probably 
+will be. You can disable even warp NPCs if you know their object names, which is 
+an easy way to make a map only accessible through walking half the time. Then 
+you 'enablenpc' them back.
+
+You can also use these commands to create the illusion of an NPC switching 
+between several locations, which is often better than actually moving the NPC -
+create one NPC object with a visible and a hidden part to their name, make a few 
+copies, and then disable all except one.
+
+---------------------------------------
+
+*hideonnpc "<NPC object name>";
+*hideoffnpc "<NPC object name>";
+
+These commands will make the NPC object specified display as hidden/visible, 
+even though not actually disabled per se. Hidden as in thief Hide skill, but 
+unfortunately, not detectable by Ruwach or Sight.
+
+As they are now, these commands are pointless, it is suggested to use 
+'disablenpc'/'enablenpc', because these two commands actually unload the NPC 
+sprite location and other accompanying data from memory when it is not used.
+
+---------------------------------------
+
+*sc_start <effect type>,<ticks>,<extra argument>{,<target ID number>};
+*sc_start2 <effect type>,<ticks>,<extra argument>,<percent chance>{,<target ID number>};
+*sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<target ID number>};
+*sc_end <effect type>{,<target ID number>};
+
+These command bestow a status effect on the invoking character. This command is 
+used a lot in the item scripts.
+
+    // This would poison them for 10 min
+    sc_start SC_Poison,600000,0;
+
+Effect type is a number of effect, 'db/const.txt' lists the common (mostly 
+negative) status effect types as constants, starting with 'SC_'. You can also 
+use this to give someone an effect of a player-cast spell:
+
+    // This will bless someone as if with Bless 10:
+    sc_start 10,240000,10;
+    
+Extra argument's meaning differs depending on the effect type, for most effects 
+caused by a player skill the extra argument means the level of the skill that 
+would have been used to create that effect, for others it might have no meaning 
+whatsoever. You can actually bless someone with a 0 bless spell level this way, 
+which is fun, but weird.
+
+The target ID number, if given, will cause the status effect to appear on a 
+specified character, instead of the one attached to the running script. This has 
+not been properly tested.
+
+'sc_start2' is perfectly equivalent, but unlike 'sc_start', a status change 
+effect will only occur with a specified percentage chance. 10000 given as the 
+chance is equivalent to a 100% chance, 0 is a zero.
+
+'sc_start4' is just like sc_start, however it takes four parameters for the
+status change instead of one. What these values are depends on the status
+change in question. For example, elemental armor defense takes the following
+four values:
+- val1 is the first element, val2 is the resistance to the element val1.
+- val3 is the second element, val4 is the resistance to said element.
+eg: sc_start4 SC_DefEle,60000,Ele_Fire,20,Ele_Water,-15;
+
+'sc_end' will remove a specified status effect.
+
+You can see the full list of status effects caused by skills in 
+'src/map/status.h' - they are currently not fully documented, but most of that 
+should be rather obvious.
+
+---------------------------------------
+
+*getscrate(<effect type>,<base rate>{,<target ID number>})
+
+This function will return the chance of a status effect affecting the invoking 
+character, in percent, modified by the their current defense against said 
+status. The 'base rate' is the base chance of the status effect being inflicted, 
+in percent.
+
+    if (rand(100) > getscrate(Eff_Blind, 50)) goto BlindHimNow;
+  
+You can see the full list of available effect types you can possibly inflict in 
+'db/const.txt' under 'Eff_'.
+
+It is pretty certain that addressing the target by an ID number will not 
+currently work due to a bug.
+
+---------------------------------------
+
+*debugmes "<message>";
+
+This command will send the message to the server console (map-server window). It 
+will not be displayed anywhere else.
+
+    debugmes strcharinfo(0)+" has just done this that and the other";
+    // You would see in the map-server window "NAME has just done this that and 
+    // the other"
+
+---------------------------------------
+
+*pet <pet id>;
+
+This command is used in all the item scripts for taming items. Running this 
+command will make the pet catching cursor appear on the client connected to the 
+invoking character, usable on the monsters with the specified pet ID number. It 
+will still work outside an item script.
+
+A full list of pet IDs can be found inside 'db/pet_db.txt'
+
+---------------------------------------
+
+*bpet;
+
+This command opens up a pet hatching window on the client connected to the 
+invoking character. It is used in item script for the pet incubators and will 
+let the player hatch an owned egg. If the character has no eggs, it will just 
+open up an empty incubator window.
+This is still usable outside item scripts.
+
+---------------------------------------
+
+*resetlvl <action type>;
+
+This is a character reset command, meant mostly for rebirth script supporting 
+Advanced jobs, which will reset the invoking character's stats and level 
+depending on the action type given. Valid action types are:
+
+ 1 - Base level 1, Job level 1, 0 skill points, 0 base xp, 0 job xp, wipes the 
+     status effects, sets all stats to 1. If the new job is 'Novice High', give 
+     100 status points, give First Aid and Play Dead skills.
+ 2 - Base level 1, Job level 1, 0 skill points, 0 XP/JXP. Skills and attribute 
+     values are not altered.
+ 3 - Base level 1, base xp 0. Nothing else is changed.
+ 4 - Job level 1, job xp 0. Nothing else is changed.
+
+In all cases it will also unequip everything the character has on.
+
+Even though it doesn't return a value, it is used as a function in the official 
+rebirth scripts. Ask AppleGirl why.
+
+---------------------------------------
+
+*resetstatus;
+
+This is a character reset command, which will reset the stats on the invoking 
+character and give back all the stat points used to raise them previously. 
+Nothing will happen to any other numbers about the character.
+
+Used in reset NPC's (duh!)
+
+---------------------------------------
+
+*resetskill;
+
+This command takes off all the skill points on the invoking character, so they 
+only have Basic Skill blanked out (lvl 0) left, and returns the points for them 
+to spend again. Nothing else will change but the skills. Quest skills will also 
+reset if 'quest_skill_reset' option is set to Yes in 'battle_athena.conf'. If 
+the 'quest_skill_learn' option is set in there, the points in the quest skills 
+will also count towards the total.
+
+Used in reset NPC's (duh!)
+
+---------------------------------------
+
+*changebase <job ID number>;
+
+This will change the appearance of the invoking character to that of a specified 
+job class. Nothing but appearance will change. This command is used in item 
+scripts for "Wedding Dress" and "Tuxedo" so the character like job 22, which is 
+the job number of the wedding sprites.
+
+It would be entered in the equip bonus section of an item
+
+2338,Wedding_Dress,Wedding Dress,5,43000,0,500,,0,,0,2088958,0,16,,0,0,{(This is for use bonus)},{ bonus bMdef,15; changebase 22; },
+
+This command only works when inside item scripts.
+
+---------------------------------------
+
+*changesex;
+
+This command will change the gender for the attached character's account. If it 
+was male, it will become female, if it was female, it will become male. The 
+change will be written to the character server, but there is no way to send this 
+information to the client, so the player will continue to see their character as 
+the gender it previously was. What the other players will see before the 
+relogin is not clear.
+
+If the character currently connected when this command was invoked was a 
+Dancer/Gypsy or Bard/Clown, they will become a Swordman upon 'changesex'. 
+Whatever happens to their skills is not clear. Whatever happens if another 
+character on the same account was a gender-specific class is not clear either, 
+but it's likely that the client will have serious issues with that, since no 
+other characters on the same account will get altered.
+
+There's good reasons to be very careful when using this command.
+
+---------------------------------------
+
+*waitingroom "<chatroom name>",<limit>{,<event label>,<trigger>};
+
+This command will create a chat room, owned by the NPC object running this 
+script and displayed above the NPC sprite.
+The maximum length of a chatroom name is 60 letters.
+
+The limit is the maximum number of people allowed to enter the chat room. If the 
+optional event and trigger parameters are given, the event label 
+("<NPC object name>::<label name>") will be invoked as if with a 'doevent' upon 
+the number of people in the chat room reaching the given triggering amount.
+
+It's funny, but for compatibility with jAthena, you can swap the event label and 
+the trigger parameters, and it will still work.
+
+// The NPC will just show a box above its head that says "Hello World", clicking 
+// it will do nothing, since the limit is zero.
+    waitingroom "Hello World",0;
+
+// The NPC will have a box above its head, it will say "Disco - Waiting Room" 
+// and will have 8 waiting slots. Clicking this will enter the chat room, where 
+// the player will be able to wait until 8 people accumulate. Once this happens, 
+// it will cause the NPC "Bouncer" run the label "OnStart"
+
+    waitingroom "Disco - Waiting Room",8,"Bouncer::OnStart",8;
+
+Creating a waiting room does not stop the execution of the script and it will 
+continue to the next line.
+
+For more examples see the 2-1 and 2-2 job quest scripts which make extensive use 
+of waiting rooms.
+
+---------------------------------------
+
+*delwaitingroom {"<NPC object name"};
+
+This command will delete a waiting room. If no parameter is given, it will 
+delete a waiting room attached to the NPC object running this command, if it is, 
+it will delete a waiting room owned by another NPC object. This is the only way 
+to get rid of a waiting room, nothing else will cause it to disappear.
+
+It's not clear what happens to a waiting room if the NPC is disabled with 
+'disablenpc', by the way.
+
+---------------------------------------
+
+*enablewaitingroomevent {"<NPC object name>"};
+*disablewaitingroomevent {"<NPC object name>"};
+
+This will enable and disable triggering the waiting room event (see 
+'waitingroom') respectively. Optionally giving an NPC object name will do that 
+for a specified NPC object. The chat room will not disappear when triggering is 
+disabled and enabled in this manner and players will not be kicked out of it.
+Enabling a chat room event will also cause it to immediately check whether the 
+number of users in it exceeded the trigger amount and trigger the event 
+accordingly.
+
+Normally, whenever a waiting room was created to make sure that only one 
+character is, for example, trying to pass a job quest trial, and no other 
+characters are present in the room to mess up the script.
+
+---------------------------------------
+
+*getwaitingroomstate(<information type>{,"<NPC object name>"})
+
+This function will return information about the wating room state for the 
+attached waiting room or for a waiting room attached to the specified NPC if 
+any.
+
+The valid information types are:
+
+ 0  - Number of users currently chatting.
+ 1  - Maximum number of users allowed.
+ 2  - Will return 1 if the waiting room has a trigger set.
+      0 otherwise.
+ 3  - Will return 1 if the waiting room is currently disabled.
+      0 otherwise.
+ 4  - The Title of the waiting room (string)
+ 5  - Password of the waiting room, if any. Pointless, since there is no way to 
+      set a password on a waiting room right now.
+ 16 - Event name of the waiting room (string)
+ 32 - Whether or not the waiting room is full.
+ 33 - Whether the amount of users in the waiting room is higher than the trigger 
+      number.
+
+---------------------------------------
+
+*warpwaitingpc "<map name>",<x>,<y>{,<number of people>};
+
+This command will warp the amount of characters equal to the trigger number of 
+the waiting room chat attached to the NPC object running this command to the 
+specified map and coordinates, kicking them out of the chat. Those waiting the 
+longest will get warped first. It can also do a random warp on the same map 
+("Random" instead of map name) and warp to the save point ("SavePoint").
+
+The list of characters to warp is taken from the list of the chat room members. 
+Those not in the chat room will not be considered even if they are talking to 
+the NPC in question. If the number of people is given, exactly this much people 
+will be warped.
+
+This command can also keep track of who just got warped. It does this by setting 
+special variables:
+
+$@warpwaitingpc[] is an array containing the character id numbers of the 
+                  characters who were just warped.
+$@warpwaitingpcnum contains the number of the character it just warped.
+
+See also 'getpartymember' for advice on what to do with those variables.
+
+The obvious way of using this effectively would be to set up a waiting room for 
+two characters to be warped onto a random PVP map for a one-on-one duel, for 
+example.
+
+---------------------------------------
+
+*waitingroomkickall {"<NPC object name>"};
+
+This command would kick everybody out of a specified waiting room chat. IF it 
+was properly linked into the script interpreter which it isn't, even though the 
+code for it is in place. Expect this to become available in upcoming SVN 
+releases.
+
+---------------------------------------
+
+*attachrid(<character ID>)
+*detachrid
+
+A 'RID' is an ID of a character who caused the NPC script to run, as has been 
+explained above in the introduction section. Quite a bit of commands want a RID 
+to work, since they wouldn't know where to send information otherwise. And in 
+quite a few cases the script gets invoked with a RID of zero (like through 
+OnTime special labels). If an NPC script needs this, it can attach a specified 
+character's id to itself. by calling the 'attachrid' function.
+
+'attachrid' returns 1 if the character was found online and 0 if it wasn't.
+
+This could also be used, while running in a script invoked by a character 
+through talking to an NPC, to mess with other characters.
+Detaching the RID will make the RID of the script zero.
+
+---------------------------------------
+
+*isloggedin(<character id>)
+
+This function returns 1 if the specified character is logged in and 0 if they 
+aren't.
+
+---------------------------------------
+
+*setmapflagnosave "<map name>","<alternate map name>",<x>,<y>;
+
+This command sets the 'nosave' flag for the specified map and also gives an 
+alternate respawn-upon-relogin point.
+
+It does not make a map impossible to make a savepoint on as you would normally 
+think, 'savepoint' will still work. It will, however, make the specified map 
+kick the reconnecting players off to the alternate map given to the coordinates 
+specified.
+
+---------------------------------------
+
+*setmapflag "<map name>",<flag>;
+
+This command marks a specified map with a map flag given. Map flags alter the 
+behavior of the map, you can see the list of the available ones in 
+'db/const.txt' under 'mf_'.
+
+The map flags alter the behavior of the map regarding teleporting (mf_nomemo, 
+mf_noteleport, mf_nowarp, mf_nogo) storing location when disconnected 
+(mf_nosave), dead branch usage (mf_nobranch), penalties upon death 
+(mf_nopenalty, mf_nozenypenalty), PVP behavior (mf_pvp, mf_pvp_noparty, 
+mf_pvp_noguild, mf_nopvp), WoE behavior (mf_gvg,mf_gvg_noparty), ability to use 
+skills or open up trade deals (mf_notrade, mf_noskill, mf_noicewall), current 
+weather effects (mf_snow, mf_fog, mf_sakura, mf_leaves, mf_rain, mf_clouds, 
+mf_fireworks) and whether day/night will be in effect on this map (mf_indoors).
+
+---------------------------------------
+
+*removemapflag "<map name>",<flag>;
+
+This command removes a mapflag from a specified map. See 'setmapflag'.
+
+---------------------------------------
+
+*pvpon "<map name>";
+*pvpoff "<map name>";
+
+These commands will turn PVP mode for the specified maps on and off. Beside 
+setting the flags referred to in 'setmapflag', 'pvpon' will also create a PVP 
+timer and ranking as will @pvpon GM command do.
+
+---------------------------------------
+
+*gvgon "<map name>";
+*gvgoff "<map name>";
+
+These commands will turn GVG mode for the specified maps on and off, setting up 
+appropriate map flags. In GVG mode, maps behave as if during the time of WoE, 
+even though WoE itself may or may not actually be in effect. 
+
+---------------------------------------
+
+*emotion <emotion number> <, target>;
+
+This command makes an object display an emoticon sprite above their own as 
+if they were doing that emotion. For a full list of emotion numbers, 
+see 'db/const.txt' under 'e_'. The inobvious ones are 'e_what' (a question mark) 
+and 'e_gasp' (the exclamation mark).
+
+The optional target parameter specifies who will get the emotion on top of
+their head. If 0 (the default if omitted), the NPC in current use will show
+the emotion, if 1, the player that is running the script will display it.
+
+---------------------------------------
+
+*maprespawnguildid "<map name>",<guild id>,<flag>;
+
+This command goes through the specified map and for each player and monster 
+found there does stuff.
+
+Flag is a bitmask (add up numbers to get effects you want)
+ 1 - warp all guild members to their savepoints.
+ 2 - warp all non-guild members to their savepoints.
+ 4 - remove all monsters which are not guardian or emperium.
+
+Flag 7 will, therefore, mean 'wipe all mobs but guardians and the emperium and 
+kick all characters out', which is what the official scripts do upon castle 
+surrender. Upon start of WoE, the scripts do 2 (warp all intruiders out).
+
+Characters not belonging to any guild will warp out regardless of the flag setting.
+
+For examples, check the WoE scripts in the distribution.
+
+---------------------------------------
+
+*agitstart;
+*agitend;
+
+These two commands will start and end War of Emperium.
+
+This is a bit more complex than it sounds, since the commands themselves won't 
+actually do anything interesting, except causing all 'OnAgitStart:' and 
+'OnAgitEnd:' events to run everywhere, respectively, and setting a so-called 
+'agit_flag' which also doesn't do much interesting itself. They are used as 
+simple triggers to run a lot of complex scripts all across the server, and they, 
+in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
+
+---------------------------------------
+
+*agitcheck(0)
+*agitcheck 1;
+
+These function and command will let you check whether the server is currently in 
+the War of Emperium mode. (that is, if 'agit_flag' is set. Even if it is set, 
+doesn't mean that there's even one map in GVG mode somewhere) Calling 
+'agitcheck' as a function (the argument must be zero) will return 1 if WoE is on 
+and 0 if it isn't. Running 'agitcheck' as a command will instead set a local 
+variable @agit_flag to 1 if the server is in WoE mode and 0 if it isn't.
+
+---------------------------------------
+
+*flagemblem <guild id>;
+
+This command only works when run by the NPC objects which have sprite id 722, 
+which is a 3D guild flag sprite. If it isn't, the data will change, but nothing 
+will be seen by anyone. If it is invoked in that manner, the emblem of the 
+specified guild will appear on the flag, though, if any players are watching it 
+at this moment, they will not see the emblem change until they move out of sight 
+of the flag and return.
+
+This is commonly used in official guildwar scripts with a function call which 
+returns a guild id:
+
+// This will change the emblem on the flag to that of the guild that owns
+// "guildcastle"
+
+    flagemblem GetCastleData("guildcastle.gat",1); 
+
+---------------------------------------
+
+*getcastlename("<map name>")
+
+This function returns the name of the castle when given the map name for that 
+castle. The data is read from 'db/castle_db.txt'.
+
+---------------------------------------
+
+*getcastledata("<map name>",<type of data>)
+*setcastledata "<map name>",<type of data>,<value>;
+
+This function returns the castle ownership information for the castle referred 
+to by it's map name. Castle information stored in 'save\castle.txt' for the TXT 
+version of the server and in 'guild_castle' table for the SQL version.
+
+Valid types of data are:
+
+ 0 - Will make the map server request the castle data from the char server, and 
+     always return 0. This, apparently, will also cause indirectly the execution 
+     of an 'OnAgitInit:' event mentioned at the beginning of this document.
+ 1 - Guild ID
+ 2 - Castle Economy score.
+ 3 - Castle Defence score.
+ 4 - Number of times the economy was invested in today.
+ 5 - Number of times the defence was invested in today.
+ 9 - Will return 1 if a Kafra was hired for this castle, 0 otherwise.
+10 - Is 1 if the 1st guardian is present (Soldier Guardian)
+11 - Is 1 if the 2nd guardian is present (Soldier Guardian)
+12 - Is 1 if the 3rd guardian is present (Soldier Guardian)
+13 - Is 1 if the 4th guardian is present (Archer Guardian)
+14 - Is 1 if the 5th guardian is present (Archer Guardian)
+15 - Is 1 if the 6th guardian is present (Knight Guardian)
+16 - Is 1 if the 7th guardian is present (Knight Guardian)
+17 - Is 1 if the 8th guardian is present (Knight Guardian)
+
+18-25 types of data will return current hit point values for guardians 1-8 
+respectively.
+
+The 'setcastledata' command will behave identically, but instead of returning 
+values for the specified types of accessible data, it will alter them and cause 
+them to be sent to the char server for storage. Data type of 0 won't do 
+anything, obviously.
+
+---------------------------------------
+
+*requestguildinfo <guild id>,"<event label>";
+
+This command requests the guild data from the char server and merrily continues 
+with the execution. Whenever the guild information becomes available (which 
+happens instantly if the guild information is already in memory, or later, if it 
+isn't and the map server has to wait for the char server to reply) it will run 
+the specified event as in a 'doevent' call.
+
+---------------------------------------
+
+*getequipcardcnt(<equipment slot>)
+
+This function will return the number of cards that have been compounded onto a 
+specific equipped item for the invoking character. See 'getequipid' for a list 
+of possible equipment slots.
+
+---------------------------------------
+
+*successremovecards <equipment slot>;
+
+This command will remove all cards from the item found in the specified 
+equipment slot of the invoking character, create new card items and give them to 
+the character. If any cards were removed in this manner, it will also show a 
+success effect.
+
+---------------------------------------
+
+*failedremovecards <equipment slot>,<type>;
+
+This command will remove all cards from the item found in the specified 
+equipment slot of the invoking character. 'type' determines what happens to the 
+item and the cards:
+
+ 0 - will destroy both the item and the cards.
+ 1 - will keep the item, but destroy the cards.
+ 2 - will keep the cards, but destroy the item.
+  
+Whatever the type is, it will also show a failure effect on screen.
+
+---------------------------------------
+
+*marriage("<spouse name>");
+
+This function will marry two characters, the invoking character and the one 
+referred to by name given, together, setting them up as each other's marriage 
+partner. No second function call has to be issued (in current SVN at least) to 
+make sure the marriage works both ways. The function returns 1 upon success, or 
+0 if the marriage could not be completed, either because the other character 
+wasn't found or because one of the two characters is already married.
+
+This will do nothing else for the marriage except setting up the spouse ID for 
+both of these characters. No rings will be given and no effects will be shown.
+
+---------------------------------------
+
+*wedding;
+
+This command will call up wedding effects - the music and confetti - centered on 
+the invoking character.
+
+---------------------------------------
+
+*divorce()
+
+This function will un-marry the invoking character from whoever they were 
+married to. Both will no longer be each other's marriage partner, (at least in 
+current SVN, which prevents the cases of multi-spouse problems). It will return 
+1 upon success or 0 if the character was not married at all.
+
+This function will also destroy both wedding rings and send a message to both 
+players, telling them they are now divorced.
+
+---------------------------------------
+
+*ispartneron()
+
+This function returns 1 if the invoking character's marriage partner is 
+currently online and 0 if they are not or if the character has no partner.
+
+---------------------------------------
+
+*getpartnerid()
+
+This function returns the character ID of the invoking character's marriage 
+partner, if any. If the invoking character is not married, it will return 0, 
+which is a quick way to see if they are married:
+
+    if (getpartnerid()) mes "I'm not going to be your girlfriend!";
+    if (getpartnerid()) mes "You're married already!";
+
+---------------------------------------
+
+*warppartner("<map name>",<x>,<y>);
+
+This function will find the invoking character's marriage partner, if any, and 
+warp them to the map and coordinates given. Go kidnap that spouse. :) It will 
+return 1 upon success and 0 if the partner is not online, the character is not 
+married, or if there's no invoking character (no RID). 0,0 will, as usual, 
+normally translate to random coordinates.
+
+---------------------------------------
+
+*adopt "<parent name>","<parent name>","<novice name>";
+*adopt("<parent name>","<parent name>","<novice name>");
+
+This command will set up a novice as a baby of a married couple. All three are 
+referred to by character name. The correct variables are set on all three 
+characters in the same call. The command will unequip anything the novice has 
+equipped and make them a Job_Baby class, as well as send them a 'your job has 
+been changed' message.
+
+Beware of calling this from inside a 'callfunc' function, cause upon successful 
+adoption, this command returns a zero, as if it were a function. This is likely 
+to screw up execution of a 'return' command. You may try to call it as a 
+function instead, but it doesn't return anything upon an error, which may also 
+cause script execution to throw up errors.
+
+Nothing will happen (and nothing will be returned either) if either future 
+parent is below base level 70 and/or if any of the three characters is not found 
+online.
+
+---------------------------------------
+
+*getchildid()
+*getmotherid()
+*getfatherid()
+
+These functions return the characters (shild/mother/father) ID
+
+    if (getmotherid()) mes "Oh... I know your mother's ID:"+getmotherid();
+
+---------------------------------------
+
+*getitemname(<item id>)
+
+Given the database ID number of an item, this function will return the text 
+stored in the 'japanese name' field (which, in eAthena, stores an english name 
+the players would normally see on screen.)
+
+---------------------------------------
+
+*makepet <pet id>;
+
+This command will create a pet egg and put it in the invoking character's 
+inventory. The kind of pet is specified by pet ID numbers listed in 
+'db/pet_db.txt'. The egg is created exactly as if the character just successfuly 
+caught a pet in the normal way.
+
+    // This will make you a poring:
+    makepet 1002;
+
+Notice that you absolutely have to create pet eggs with this command. If you try 
+to give a pet egg with 'getitem', pet data will not be created by the char 
+server and the egg will disappear when anyone tries to hatch it.
+
+---------------------------------------
+
+*getexp <base xp>,<job xp>;
+
+This command will give the invoking character a specified number of base and job 
+experience points. Can be used as a quest reward. Negative amounts of experience 
+were not tested but should work.
+
+    getexp 10000,5000;
+
+You can also use the "set" command with the constants defined in 'db/const.txt':
+
+    // These 2 combined has the same effect as the above command
+    set BaseExp,BaseExp+10000;
+    set JobExp,JobExp+5000;
+
+You can also reduce the ammount of experience points:
+
+    set BaseExp,BaseExp-10000;
+
+---------------------------------------
+
+*getinventorylist;
+
+This command sets a bunch of arrays with a complete list of whatever the 
+invoking character has in their inventory, including all the data needed to 
+recreate these items perfectly if they are destroyed. Here's what you get:
+
+@inventorylist_id[]        - array of item ids.
+@inventorylist_amount[]    - their corresponding item amounts.
+@inventorylist_equip[]     - whether the item is equipped or not.
+@inventorylist_refine[]    - for how much it is refined.
+@inventorylist_identify[]  - whether it's refined.
+@inventorylist_attribute[] - whether it is broken.
+@inventorylist_card1[]     - These four arrays contain card data for the items.
+@inventorylist_card2[]       These data slots are also used to store names
+@inventorylist_card3[]       inscribed on the items, so you can explicitly check
+@inventorylist_card4[]       if the character owns an item made by a specific 
+                             craftsman.
+@inventorylist_count       - the number of items in these lists.
+
+This could be handy to save/restore a character's inventory, since no other 
+command returns such a complete set of data, and could also be the only way to 
+correctly handle an NPC trader for carded and named items who could resell them 
+- since NPC objects cannot own items, so they have to store item data in 
+variables and recreate the items.
+
+Notice that the variables this command generates are all local and numeric. 
+
+---------------------------------------
+
+*getskilllist;
+
+This command sets a bunch of arrays with a complete list of skills the 
+invoking character has. Here's what you get:
+
+@skilllist_id[]   - skill ids.
+@skilllist_lv[]   - skill levels.
+@skilllist_flag[] - see 'skill' for the meaning of skill flags.
+@skilllist_count  - number of skills in the above arrays.
+
+While 'getskillv' is probably more useful for most situations, this is the 
+easiest way to store all the skills and make the character something else for a 
+while. Advanced job for a day? :) This could also be useful to see how many 
+skills a character has.
+
+---------------------------------------
+
+*clearitem;
+
+This command will destroy all items the invoking character has in their 
+inventory. (that includes equipped items) It will not affect anything else, like 
+storage or cart.
+
+---------------------------------------
+
+*classchange <view id>,<type>;
+
+This command is very ancient, it's origins are clouded in mystery. 
+It will send a 'display id change' packet to everyone in the immediate area of 
+the NPC object, which will supposedly make the NPC look like a different sprite, 
+an NPC sprite ID, or a monster ID. This effect is not stored anywhere and will 
+not persist (Which is odd, cause it would be relatively easy to make it do so) 
+and most importantly, will not work at all since this command was broken with 
+the introduction of advanced classes. The code is written with the assumption 
+that the lowest sprite IDs are the job sprites and the anything beyond them is 
+monster and NPC sprites, but since the advanced classes rolled in, they got the 
+ID numbers on the other end of the number pool where monster sprites float.
+
+As a result it is currently impossible to call this command with a valid view 
+id. It will do nothing whatsoever if the view ID is below 4047. Getting it to 
+run will actually just crash the client.
+
+It could be a real gem if it can be gotten to actually do what it's supposed to 
+do, but this will only happen in a later SVN revision.
+
+---------------------------------------
+
+*misceffect <effect number>;
+
+This command, if run from an NPC object that has a sprite, will call up a 
+specified effect number, centered on the NPC sprite. If the running code does 
+not have an object ID (a 'floating' npc) or is not running from an NPC object at 
+all (an item script) the effect will be centered on the character who's RID got 
+attached to the script, if any. For usable item scripts, this command will 
+create an effect centered on the player using the item.
+
+A full list of known effects is found in 'doc/effect_list.txt'. The list of 
+those that actually work may differ greatly between client versions.
+
+---------------------------------------
+
+*soundeffect "<effect filename>",<number>
+*soundeffectall "<effect filename>",<number>
+
+These two commands will play a sound effect to either the invoking character 
+only 'soundeffect' or everyone around ('soundeffectall'). If the running code 
+does not have an object ID (a 'floating' npc) or is not running from an NPC 
+object at all (an item script) the sound will be centered on the character who's 
+RID got attached to the script, if any. If it does, it will be centered on that 
+object. (an NPC sprite)
+
+Effect filename is the filename of the wav in GRF. It must have an extension.
+
+It's not quite certain what the number actually does, it is sent to the client 
+directly, probably it determines which directory of the GRF the effect is played 
+from - the sound effect type. It's certain that giving 0 for the number will 
+play sound files from 'data/wav', but where the other numbers will read from is 
+unclear.
+
+You can add your own effects this way, naturally.
+
+---------------------------------------
+
+*mapwarp "<from map>","<to map>",<x>,<y>;
+
+This command will collect all characters located on the From map and warp them 
+wholesale to the same point on the To map, or randomly distribute them there if 
+the coordinates are zero. "Random" is understood as a special To map name and 
+will mean randomly shuffling everyone on the same map.
+
+---------------------------------------
+
+*mobcount("<map name>","<event label>")
+
+This function will count all the monsters on the specified map that have a given 
+event label and return the number or 0 if it can't find any. Naturally, only 
+monsters spawned with 'monster' and 'areamonster' script commands can be like 
+this.
+
+However, apparently, if you pass this function an empty string for the event 
+label, it should return the total count of normal permanently respawning 
+monsters instead. With the current dynamic mobs system, where mobs are not kept 
+in memory for maps with no actual people playing on them, this will return a 0 
+for any such map.
+
+---------------------------------------
+
+*strmobinfo(<type>,<monster id>);
+
+This function will return information about a monster record in the database, as 
+per 'db/mob_db.txt'. Type is the kind of information returned. Valid types are:
+
+ 1 - 'english name' field in the database, a string.
+ 2 - 'japanese name' field in the database, a string.
+     All other returned values are numbers:
+ 3 - Level.
+ 4 - Maximum HP.
+ 5 - Maximum SP.
+ 6 - Experience reward.
+ 7 - Job experience reward.
+
+---------------------------------------
+
+*guardian "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"};
+
+This command is roughly equivalent to 'monster', but is meant to be used with 
+castle guardian monsters and will only work with them. It will set the guardian 
+characteristics up according to the castle's investment values and otherwise 
+set the things up that only castle guardians need.
+
+---------------------------------------
+
+*guardianinfo(<guardian number>)
+
+This function will return the current hit point value for the specified guardian 
+number, if such guardian is currently installed. This function will only work if 
+the invoking character is on a castle map, and will refer only to the guardians 
+of that castle, regardless of anything else, i.e. whether the character is a 
+member of the guild owning the castle, etc, etc.
+If no guardian is installed in this slot, the function will return -1.
+
+---------------------------------------
+
+* The Pet AI commands
+
+These commands will only work if the invoking character has a pet, and are meant 
+to be executed from pet scripts. They will modify the pet AI decision-making for 
+the current pet of the invoking character, and will NOT have any independent 
+effect by themselves, which is why only one of them each may be in effect at any 
+time for a specific pet. A pet may have 'petloot', 'petskillbonus', 
+'petskillattack' OR 'petpetskillattack2' and 'petskillsupport' OR 'petheal' at 
+the same time. 'petheal' is deprecated and is no longer used in the default pet 
+scripts. 
+
+*petskillbonus <bonus type>,<value>,<duration>,<delay>;
+
+This command will make the pet give a bonus to the owner's stat (bonus type -
+bInt,bVit,bDex,bAgi,bLuk,bStr,bSpeedRate - for a full list, see the values 
+starting with 'b' in 'db/const.txt')
+
+*petrecovery <status type>,<delay>;
+
+This command will make the pet cure a specified status condition. The curing 
+actions will occur once every Delay seconds. For a full list of status 
+conditions that can be cured, see the list of 'SC_' status condition constants 
+in 'db/const.txt'
+
+*petloot <max items>;
+
+This command will turn on pet looting, with a maximum number of items to loot 
+specified. Pet will store items and return them when the maximum is reached or 
+when pet performance is activated.
+
+*petskillsupport <skill id>,<skill level>,<delay>,<percent hp>,<percent sp>;
+*petheal <level>,<delay>,<percent hp>,<percent sp>;
+
+This will make the pet use a specified support skill on the owner whenever the 
+HP and SP are below the given percent values, with a specified delay time 
+between activations. The skill numbers are as per 'db/skill_db.txt'.
+'petheal' works the same as 'petskillsupport' but has the skill ID hardcoded to 
+28 (Heal). This command is deprecated.
+It's not quite certain who's stats will be used for the skills cast, the 
+character's or the pets. Probably, Skotlex can answer that question.
+
+*petskillattack <skill id>,<skill level>,<rate>,<bonusrate>;
+*petskillattack2 <skill id>,<damage>,<number of attacks>,<rate>,<bonusrate>;
+
+These two commands will make the pet cast an attack skill on the enemy the pet's 
+owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'. 
+'petskillattack2' will make the pet cast the skill with a fixed amount of damage 
+inflicted and the specified number of attacks.
+
+All commands with delays and durations will only make the behavior active for 
+the specified duration of seconds, with a delay of the specified number of 
+seconds between activations. Rates are a chance of the effect occuring and are 
+given in percent. 'bonusrate' is added to the normal rate if the pet intimacy is 
+at the maximum possible.
+
+The behavior modified with the abovementioned commands will only be exibited if 
+the pet is loyal and appropriate configuration options are set in 
+'battle_athena.conf'.
+
+Pet scripts in the database normally run whenever a pet of that type hatches 
+from the egg. Other commands usable in item scripts (see 'bonus') will also 
+happily run from pet scripts. Apparently, the pet-specific commands will also 
+work in NPC scripts and modify the behavior of the current pet up until the pet 
+is hatched again. (Which will also occur when the character is logged in again 
+with the pet still out of the egg.) It is not certain for how long the effect of 
+such command running from an NPC script will eventually persist, but apparently, 
+it is possible to usefully employ them in usable item scripts to create pet 
+buffing items.
+
+Nobody tried this before, so you're essentially on your own here.
+
+--------------------------------------
+
+*skilleffect <skill id>,<number>;
+
+This command will display the visual and sound effects of a specified skill (see 
+'db/skill_db.txt' for a full list of skills) on the invoking character's sprite. 
+Nothing but the special effects and animation will happen. If the skill's normal 
+effect displays a floating number, the number given will float up.
+
+    // This will heal the character with 2000 hp, buff with 
+    // Bless 10 and Increase AGI 5, and display appropriate
+    // effects.
+    mes "Blessed be!";
+    skilleffect 28,2000;
+    heal 2000,0;
+    skilleffect 34,0;
+    // That's bless 10.
+    sc_start 10,240000,10;
+    skilleffect 29,0;
+    // That's agi 5
+    sc_start 12,140000,5;
+
+---------------------------------------
+
+*npcskilleffect <skill id>,<number>,<x>,<y>;
+
+This command behaves identically to 'skilleffect', however, the effect will not 
+be centered on the invoking character's sprite, nor on the NPC sprite, if any, 
+but will be centered at map coordinates given on the same map as the invoking 
+character.
+
+---------------------------------------
+
+*specialeffect <effect number>;
+
+This command will display special effect with the given number, centered on the 
+specified NPCs coordinates, if any. For a full list of special effect numbers 
+known see 'doc/effect_list.txt'. Some effect numbers are known not to work in 
+some client releases. (Notably, rain is absent from any client executables 
+released after April 2005.)
+
+---------------------------------------
+
+*specialeffect2 <effect number>;
+
+This command behaves identically to the 'specialeffect', but the effect will be 
+centered on the invoking character's sprite.
+
+---------------------------------------
+
+*nude; 
+
+This command will unequip anything equipped on the invoking character.
+
+It is not required to do this when changing jobs since 'jobchange' will unequip 
+everything not equippable by the new job class anyway.
+
+---------------------------------------
+
+*atcommand "<character name>:<command line>";
+
+This command will run the given command line exactly as if it was typed in from 
+the keyboard by the player connected to the invoking character, and that 
+character belonged to an account which had GM level 99.
+
+Even though the character name and the ':' are not used for anything whatsoever, 
+it is required to give them in this command because it is processed exactly as 
+if typed from the keyboard, and that is how it will arrive into the processing 
+function if it is typed from the keyboard. The character name given must be the 
+same length as the name of the invoking character object, although nothing else 
+is required of it.
+
+    // This will ask the invoker for a character name and then use the '@nuke'
+    // GM command on them, killing them mercilessly.
+    input @player$;
+    gmcommand strcharinfo(0)+":@nuke "+@player$
+
+This command has a lot of good uses, I am sure you can have some fun with this 
+one.
+
+---------------------------------------
+
+*message "<character name>","<message>";
+
+That command will send a message to the chat window of the character specified 
+by name. The text will also appear above the head of that character. It will not 
+be seen by anyone else.
+
+---------------------------------------
+
+*npctalk "<message>";
+
+This command will display a message to the surrounding area as if the NPC object 
+running it was a player talking - that is, above their head and in the chat 
+window. The display name of the NPC will get appended in front of the message to 
+complete the effect.
+
+    // This will make everyone in the area see the NPC greet the character
+    // who just invoked it.
+    npctalk "Hello "+strcharinfo(0)+" how are you";
+
+---------------------------------------
+
+*hasitems(0)
+
+This function will return 1 if the invoking character has anything at all in 
+their inventory and 0 if they do not. Even though the argument is not used for 
+anything, it is required.
+
+---------------------------------------
+
+*getlook(<type>)
+
+This function will return the number for the currentcharacter look value 
+specified by type. See 'setlook' for valid look types.
+
+This can be used to make a certain script behave differently for characters 
+dressed in black. :)
+
+---------------------------------------
+
+*getsavepoint(<information type>)
+
+This function will return information about the invoking character's save point. 
+You can use it to let a character swap between several recorded savepoints. 
+Available information types are:
+
+ 0 - Map name (a string)
+ 1 - X coordinate
+ 2 - Y coordinate
+
+---------------------------------------
+
+*npcspeed <speed value>;
+*npcwalkto <x>,<y>;
+*npcstop;
+
+These commands will make the NPC object in question move around the map. As they 
+currently are, they are a bit buggy and are not useful for much more than making 
+an NPC move randomly around the map. (see 'npc/custom/devnpc.txt' for an example 
+of such usage)
+
+'npcspeed' will set the NPCs walking speed to a specified value. As in the 
+@speed GM command, 200 is the slowest possible speed while 0 is the fastest 
+possible (instant motion). 100 is the default character walking speed.
+'npcwalkto' will start the NPC sprite moving towards the specified coordinates 
+on the same map as it is currently on.
+'npcstop' will stop the motion.
+
+While in transit, the NPC will be clickable, but invoking it will cause it to 
+stop motion, which will make it's coordinates different from what the client 
+computed based on the speed and motion coordinates. The effect is rather 
+unnerving.
+
+Only a few NPC sprites have walking animations, and those that do, do not get 
+the animation invoked when moving the NPC, due to the problem in the npc walking 
+code, which looks a bit silly. You might have better success by defining a job-
+sprite based sprite id in 'db/mob-avail.txt' with this.
+
+---------------------------------------
+
+*getmapxy("<variable for map name>",<variable for x>,<variable for y>,<type>{,"<search string>"})
+
+This function will locate a character object, NPC object or pet's coordinates 
+and place their coordinates into the variables specified when calling it. It 
+will return 0 if the search was successful, and -1 if the parameters given were 
+not variables or the search was not successful.
+
+Type is the type of object to search for:
+
+  0 - Character object
+  1 - NPC object
+  2 - Pet object
+  3 - Monster object.
+  
+While 3 is meant to look for a monster object, no searching will be done if you 
+specify type 3, and the function will always return -1.
+
+The search string is optional. If it is not specified, the location of the 
+invoking character will always be returned for types 0 and 2, the location of 
+the NPC running this function for type 1.
+If a search string is specified, for types 0 and 1, the character or NPC with 
+the specified name will be located. If type is 3, the search will locate the 
+current pet of the character who's name is given in the search string, it will 
+NOT locate a pet by name.
+
+What a mess. Example, a working and tested one now:
+
+    prontera.gat,164,301,3%TAB%script%TAB%Meh%TAB%730,{
+        mes "My name is Meh. I'm here so that Nyah can find me.";
+        close;
+    }
+
+    prontera.gat,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
+        mes "My name is Nyah.";
+        mes "I will now search for Meh all across the world!";
+        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) goto Notfound;
+        mes "And I found him on map "+@mapname$+" at X:"+@mapx+" Y:"+@mapy+" !";
+        close;
+    Notfound:
+        mes "I can't seem to find Meh anywhere!";
+        close;
+   }
+   
+Notice that NPC objects disabled with 'disablenpc' will still be located.
+
+---------------------------------------
+
+*guildgetexp <amount>;
+
+This will give the specified amount of guild experience points to the guild the 
+invoking character belongs to. It will silently fail if they do not belong to 
+any guild.
+
+---------------------------------------
+
+*skilluseid <skill>,<level>;
+*doskill <skill>,<level>;
+*skillusepos <skill>,<level>,<x>,<y>;
+
+These commands will cause the invoking character to use a specified skill at the 
+specified level, as if they had that skill, with their current level and stats. 
+If the skill involves targeting a character, no targeting pointer will come up -
+the invoking character will automatically be the skill target.
+
+'doskill' is an alias for 'skilluseid'.
+
+'skillusepos' will specify a target map square for the skill to be used. If that 
+skill is an area effect skill, it will be centered at the square specified. It 
+will not work if the skill is supposed to be targeted on character or monster.
+
+---------------------------------------
+
+*logmes "<message>";
+
+This command will write the message given to the map server npc log file, as 
+specified in 'conf/log_athena.conf'. In the TXT version of the server, the log 
+file is 'log/npclog.log' by default. In the SQL version, if SQL logging is 
+enabled, the message will go to the 'npclog' table, otherwise, it will go to the 
+same log file.
+
+If logs are not enabled, nothing will happen.
+
+---------------------------------------
+
+*summon "<monster name>",<mob id>{,"<event label>"};
+
+This command will summon a monster. (see also 'monster') Unlike monsters spawned 
+with other commands, this one will set up the monster to fight to protect the 
+invoking character. Monster name and mob id obey the same rules as the one given 
+at the beginning of this document for permanent monster spawns with the 
+exceptions mentioned when describing 'monster' command.
+
+The effect for the skill 'Call Homonuculus' will be displayed centered on the 
+invoking character.
+
+If an event label is given, upon the monster being killed, the event label will 
+run as if by 'donpcevent'.
+
+    // Will summon a dead branch-style monster to fight for the character.
+    summon "--ja--",-1;
+
+---------------------------------------
+
+*isnight()
+*isday()
+
+These functions will return 1 or 0 depending on whether the server is in night 
+mode or day mode. 'isnight' returns 1 if it's night and 0 if it isn't, 'isday' 
+the other way around. They can be used interchangeably, pick the one you like 
+more:
+
+    // These two are equivalent:
+    if (isday()) mes "I only prowl in the night.";
+    if (isnight()!=1) mes "I only prowl in the night.";
+
+---------------------------------------
+
+*isequipped(<id>{,<id>{,<id>{,<id>}}})
+
+This function will return 1 if the invoking character has all of the item 
+IDs given equipped (if card IDs are passed, then it checks if the cards are
+inserted into slots in the equipment they are currently wearing). Theorically
+there is no limit to the number of items that may be tested for at the same time. 
+If even one of the items given is not equipped, 0 will be returned.
+
+    // (Poring,Santa Poring,Poporing,Marin)
+    if (isequipped(4001,4005,4033,4196)) mes "Wow! You're wearing a full complement of possible poring cards!";
+    // (Poring)
+    if (isequipped(4001)) mes "A poring card is useful, don't you think?";
+    
+The function was meant for item scripts to support the cards released by Gravity 
+in February 2005, but it will work just fine in normal NPC scripts.
+
+---------------------------------------
+
+*isequippedcnt(<card id>{,<card id>{,<card id>{,<card id>}}})
+
+This function is similar to 'isequipped', but instead of 1 or 0, it will return 
+the number of cards in the list given that were found on the invoking character.
+
+    if (isequippedcnt(4001,4005,4033,4196)=4) mes "Finally got all four poring cards?";
+
+---------------------------------------
+
+*cardscnt()
+
+This function will return the number of cards inserted into the weapon currently 
+equipped on the invoking character.
+While this function was meant for item scripts, it will work outside them:
+
+    if (cardscnt()==4) mes "So you've stuck four cards into that weapon, think you're cool now?";
+
+---------------------------------------
+
+*getrefine()
+
+This function will return the number of plusses the weapon currently equipped on 
+the invoking character has been refined for.
+While this function was meant for item scripts, it will work outside them:
+
+    if (getrefine()==10) mes "Wow. That's a murder weapon.";
+
+---------------------------------------
+
+*day;
+*night;
+
+These two commands will switch the entire server between day and night mode. 
+Depending on the configuration, it may cause differing client effects. If your 
+server is set to cycle between day and night, it will eventually return to that 
+cycle.
+
+This example will set the night time to start at 03 AM and end at 08 AM, and the 
+nighttime will persist if the server restarts during the night, if the automated 
+day/night switching is turned off in the configuration files. Figure it out on 
+your own:
+
+-%TAB%script%TAB%DayNight%TAB%-1,{
+        
+	end;
+
+OnClock0300:
+    
+OnClock0800:
+    
+OnInit:
+
+        set $@minutesfrommidnight, gettime(3)*60+gettime(2);
+
+        set $@night_start, 180; // 03:00
+        set $@night_end, 480;   // 08:00
+
+        if ($@minutesfrommidnight>=$@night_start && $@minutesfrommidnight<$@night_end) goto StartNight;
+
+        goto StartDay;
+	StartNight:	
+	night;
+	end;
+	StartDay:
+	day;
+	end;	} 
+
+---------------------------------------
+
+*getusersname;
+
+This command will give the invoking character a list of names of the connected 
+characters (including themselves) into an NPC script message window (see 'mes') 
+paging it by 10 names as if with the 'next' command.
+
+You need to put a 'close' after that yourself.
+
+---------------------------------------
+
+*dispbottom "<message>";
+
+This command will send the given message into the invoking character's chat 
+window.
+
+---------------------------------------
+
+*recovery;
+
+This command will revive and restore full HP and SP to all characters currently 
+connected to the server.
+
+---------------------------------------
+
+*getpetinfo(<type>)
+
+This function will return pet information for the pet the invoking character 
+currently has active. Valid types are:
+
+ 0 - Unique pet ID number as stored by the char server and distinguishing it 
+     from all other pets the characters actually have. This value is currently 
+     useless, at most you can use it to tell pets apart reliably.
+ 1 - Pet ID number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
+     is.
+ 2 - Pet name. Will return "null" if there's no pet. 
+ 4 - Pet friendly level (intimacy score). 1000 is full loyalty.
+ 3 - Pet hungry level. 100 is completely full.
+
+---------------------------------------
+
+*checkequipedcard(<card id>)
+
+This function will return 1 if the card specified by it's item ID number is 
+inserted into any equipment they have in their inventory, currently equipped or 
+not.
+
+---------------------------------------
+
+*globalmes "message";
+
+This command will send a message to the chat window of all currently connected 
+characters.
+
+---------------------------------------
+
+*jump_zero (<condition>),<label>;
+
+This command works kinda like an 'if'+'goto' combination in one go. (See 'if'). 
+If the condition is false (equal to zero) this command will immediately jump to 
+the specified label like in 'goto'.
+
+While 'if' is more generally useful, for some cases this could be an 
+optimisation.
+
+---------------------------------------
+
+*select("<option>"{,"<option>"..."<option>"})
+
+This function is a handy replacement for 'menu' for some specific cases where 
+you don't want a complex label structure - like, for example, asking simple yes-
+no questions. It will return the number of menu option picked, starting with 1. 
+Like 'menu', it will also set the variable @menu to contain the option the user 
+picked.
+
+    if (select("Yes","No")==1) mes "You said yes, I know.";
+
+And like 'menu', this command has a problem with empty strings - if some of the 
+option strings given to it are empty, you won't be able to tell which one the 
+user really picked. The number it returns will only make sense if all the empty 
+strings are last in the list of options.
+
+---------------------------------------
+
+*getmapmobs("<map name>")
+
+This function will return the total count of monsters currently located on the 
+specified map. If the map name is given as "this", the map the invoking 
+character is on will be used. If the map is not found, or the invoker is not a 
+character while the map is "this", it will return -1.
+
+---------------------------------------
+
+*unequip <equipment slot>;
+
+This command will unequip whatever is currently equipped in the invoking 
+character's specified equipment slot. For a full list of possible equipment 
+slots see 'getequipid'.
+
+If an item occupies several equipment slots, it will get unequipped from all of 
+them. (Which is a good thing.)
+
+---------------------------------------
+
+*defpattern <set number>,"<regular expression pattern>","<event label>";
+*activatepset <set number>;
+*deactivatepset <set number>;
+*deletepset <set number>;
+
+This set of commands is only available if the server is compiled with regular 
+expressions library enabled. Default compilation and most binary distributions 
+aren't, which is probably bad, since these, while complex to use, are quite 
+fascinating.
+
+They will make the NPC object listen for text spoken publicly by players and 
+match it against regular expression patterns, then trigger labels associated 
+with these regular expression patterns.
+
+Patterns are organised into sets, which are referred to by a set number. You can 
+have multiple sets patterns, and multiple patterns may be active at once. 
+Numbers for pattern sets start at 1.
+
+'defpattern' will associate a given regular expression pattern with an event 
+label. This event will be triggered whenever something a player says is matched 
+by this regular expression pattern, if the pattern is currently active.
+
+'activatepset' will make the pattern set specified active. An active pattern 
+will enable triggering labels defined with 'defpattern', which will not happen 
+by default.
+'deactivatepset' will deactivate a specified pattern set. Giving -1 as a pattern 
+set number in this case will deactivate all pattern sets defined.
+
+'deletepset' will delete a pattern set from memory, so you can create a new 
+pattern set in it's place.
+
+Using regular expressions is high wizardry. But with this high wizardry comes 
+unparallelled power of text manipulation. For an explanation of what a regular 
+expression pattern is, see a few web pages:
+
+http://www.regular-expressions.info/
+http://www.weitz.de/regex-coach/
+
+For an example of this in use, see 'npc\custom\eliza.txt'.
+
+With this you could, for example, automagically punish players for asking for 
+zeny in public places, or alternatively, automagically give them zeny instead if 
+they want it so much.
+
+---------------------------------------
+
+*getstrlen("<string>")
+
+This function will return the length of the string given as an argument. It is 
+useful to check if anything input by the player exceeds name length limits and 
+other length limits and asking them to try to input something else.
+
+---------------------------------------
+
+*charisalpha("<string>",<position>)
+
+This function will return 1 if the character number Position in the given string 
+is a letter, 0 if it isn't a letter but a digit or a space.
+
+---------------------------------------
+
+*getnameditem(<item id>,"<name to inscribe>");
+*getnameditem("<item name>","<name to inscribe>");
+
+This function is equivalent to using 'getitem', however, it will not just give 
+the character an item object, but will also inscribe it with a specified 
+character's name. You may not inscribe items with arbitrary strings, only with 
+names of characters that actually exist. While this isn't said anywhere 
+specifically, apparently, named items may not have cards in them, slots or no -
+these data slots are taken by the character ID who's name is inscribed. Only one 
+remains free and it's not quite clear if a card may be there.
+
+Items that may not be equipped may NOT be inscribed with a name with this 
+function. Which is why this is a function which will return a value - 1 if an 
+item was successfully created and 0 if it wasn't for whatever reason. Like 
+'getitem' this function will also take an 'english name' from the itemdb 
+database as an item name and will return 0 if nothing is found.
+
+---------------------------------------
+
+*getitemslots(<item ID>)
+
+This function will look up the item with the specified ID number in the database 
+and return the number of slots this kind of items has - 0 if they are not 
+slotted. It will also be 0 for all non-equippable items, naturally, unless 
+someone messed up the item database. It will return -1 if there is no such item.
+
+---------------------------------------
+
+*getiteminfo(<item ID>,<type>)
+
+This function will look up the item with the specified ID number in the database 
+and return the info set by TYPE argument.
+It will return -1 if there is no such item.
+
+Valid types are:
+	0 - Buy Price; 1 - Sell Price; 2 - Item Type; 3 - Allowed Classes;
+	3 - maxchance (Max drop chance of this item e.g. 1 = 0.01% , etc..
+		if = 0, then monsters don't drop it at all (rare or a quest item)
+		if = 10000, then this item is sold in NPC shops only
+	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
+	10 - slot; 11 - look; 12 - elv; 13 - wlv;
+
+---------------------------------------
+
+*pow(<number>,<power>)
+
+Returns the result of the calculation.
+
+Example:
+set @i, pow(2,3); // @i will be 8
+
+---------------------------------------
+
+*sqrt(<number>)
+
+Returns square-root of number.
+
+Examlpe:
+set @i, sqrt(25); // @i will be 5
+
+---------------------------------------
+
+*distance(<x0>,<y0>,<x1>,<y1>)
+
+Returns distance between 2 points.
+
+Example:
+set @i, distance(100,200,101,202);
+
+---------------------------------------
+
+*setd "variable name", <value>
+
+Works almost identical as set, just that the variable name is identified as a string, 
+thus can be constructed dynamically.
+
+Example:
+set $var$, "Poring";
+
+setd "$var$", "Poporing";
+mes $var$; // Will return Poporing
+
+setd "$" + $var$ + "123$", "Poporing is cool";
+mes $Poporing123$; // Will return Poporing is cool.
+
+---------------------------------------
+
+*getd("variable name")
+
+Retrieves variable, name can be constructed dynamically. Refer to setd for usage.
+
+Example:
+set @i, getd("$pikachu");
+
+---------------------------------------
+
+*petstat(<flag>)
+
+Returns current pet status, all are integers except name.
+Returns 0 or "" if the player doesn't have pets.
+
+Flags usable >>
+PET_CLASS
+PET_NAME
+PET_LEVEL
+PET_HUNGRY
+PET_INTIMATE
+
+Example:
+set @i, petstat(PET_CLASS);
+
+Whew.
+What's about all of them.
+
+---------------------------------------
+
+*setitemscript(<ItemID>,<"{ new item script }">)
+
+Set a new script bonus to the Item. Very useful for game events.
+
+Example:
+setitemscript 2637,"{ bonus bDamageWhenUnequip,40; if(isequipped(2236)==0)end; if(getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";

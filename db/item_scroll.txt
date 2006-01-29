@@ -1,0 +1,6 @@
+// Worn-Out Scroll Obtainable Items Database
+//
+// Structure of Database:
+// ItemID,DummyName,Rate
+
+0,Jellopy,909

@@ -1,0 +1,104 @@
+//===== eAthena Script =======================================
+//= War of Emperium Managers for Geffen Guild Castles
+//===== By: ==================================================
+//= jAthena - kalen (1.0)
+//= 1.1 by Akaru, ho|yAnge|X, and Valaris
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= eAthena 0.1+; RO Episode 4+
+//===== Description: =========================================
+//= 
+//===== Additional Comments: =================================
+//= v1.2 Optimized with functions.[kobra_k88]
+//============================================================
+
+
+// Castle 1 ==================================================================================
+gefg_cas01.gat,40,48,5	script	Gnaucher	55,{
+	if(callfunc("F_GldManager","Gnaucher","gefg_cas01",155,112,"G01") == 0) close;
+
+	if(@GDnum==10) guardian "gefg_cas01.gat",30,178,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "gefg_cas01.gat",64,180,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",1;
+	if(@GDnum==12) guardian "gefg_cas01.gat",61,25,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",2;
+	if(@GDnum==13) guardian "gefg_cas01.gat",61,44,"Archer Guardian",1285,1,"Guardian_G01::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "gefg_cas01.gat",189,43,"Archer Guardian",1285,1,"Guardian_G01::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "gefg_cas01.gat",51,192,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "gefg_cas01.gat",49,67,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "gefg_cas01.gat",181,14,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",7;
+	mes "[ Gnaucher ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}
+
+
+// Castle 2 ==================================================================================
+gefg_cas02.gat,12,66,5	script	Esmark	55,{
+	if(callfunc("F_GldManager","Esmark","gefg_cas02",141,115,"G02") == 0) close;
+
+	if(@GDnum==10) guardian "gefg_cas02.gat",22,135,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "gefg_cas02.gat",33,40,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",1;
+	if(@GDnum==12) guardian "gefg_cas02.gat",158,11,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",2;
+	if(@GDnum==13) guardian "gefg_cas02.gat",64,140,"Archer Guardian",1285,1,"Guardian_G01::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "gefg_cas02.gat",36,140,"Archer Guardian",1285,1,"Guardian_G01::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "gefg_cas02.gat",166,45,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "gefg_cas02.gat",10,39,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "gefg_cas02.gat",166,35,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",7;
+	mes "[ Esmark ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}
+
+
+// Castle 3 ==================================================================================
+gefg_cas03.gat,106,23,5	script	Jyang	55,{
+	if(callfunc("F_GldManager","Jyang","gefg_cas03",270,290,"G03") == 0) close;
+
+	if(@GDnum==10) guardian "gefg_cas03.gat",101,53,"Soldier Guardian",1287,1,"Guardian_G03::OnGuardianDied",0;
+	if(@GDnum==11) guardian "gefg_cas03.gat",158,40,"Soldier Guardian",1287,1,"Guardian_G03::OnGuardianDied",1;
+	if(@GDnum==12) guardian "gefg_cas03.gat",158,67,"Soldier Guardian",1287,1,"Guardian_G03::OnGuardianDied",2;
+	if(@GDnum==13) guardian "gefg_cas03.gat",229,53,"Archer Guardian",1285,1,"Guardian_G03::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "gefg_cas03.gat",248,53,"Archer Guardian",1285,1,"Guardian_G03::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "gefg_cas03.gat",122,53,"Knight Guardian",1286,1,"Guardian_G03::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "gefg_cas03.gat",243,35,"Knight Guardian",1286,1,"Guardian_G03::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "gefg_cas03.gat",234,33,"Knight Guardian",1286,1,"Guardian_G03::OnGuardianDied",7;
+	mes "[ Jyang ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}
+
+
+// Castle 4 ==================================================================================
+gefg_cas04.gat,73,46,5	script	Kelbany	55,{
+	if(callfunc("F_GldManager","Kelbany","gefg_cas04",116,118,"G04") == 0) close;
+
+	if(@GDnum==10) guardian "gefg_cas04.gat",49,203,"Soldier Guardian",1287,1,"Guardian_G04::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "gefg_cas04.gat",148,50,"Soldier Guardian",1287,1,"Guardian_G04::OnGuardianDied",1;
+	if(@GDnum==12) guardian "gefg_cas04.gat",57,20,"Soldier Guardian",1287,1,"Guardian_G04::OnGuardianDied",2;
+	if(@GDnum==13) guardian "gefg_cas04.gat",34,218,"Archer Guardian",1285,1,"Guardian_G04::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "gefg_cas04.gat",167,42,"Archer Guardian",1285,1,"Guardian_G04::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "gefg_cas04.gat",18,52,"Knight Guardian",1286,1,"Guardian_G04::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "gefg_cas04.gat",50,48,"Knight Guardian",1286,1,"Guardian_G04::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "gefg_cas04.gat",160,66,"Knight Guardian",1286,1,"Guardian_G04::OnGuardianDied",7;
+	mes "[ Kelbany ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}
+
+
+// Castle 5 ==================================================================================
+gefg_cas05.gat,70,52,5	script	Beeor	55,{
+	if(callfunc("F_GldManager","Beeor","gefg_cas05",144,110,"G05") == 0) close;
+
+	if(@GDnum==10) guardian "gefg_cas05.gat",54,149,"Soldier Guardian",1287,1,"Guardian_G05::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "gefg_cas05.gat",80,31,"Soldier Guardian",1287,1,"Guardian_G05::OnGuardianDied",1;
+	if(@GDnum==12) guardian "gefg_cas05.gat",52,32,"Soldier Guardian",1287,1,"Guardian_G05::OnGuardianDied",2;
+	if(@GDnum==13) guardian "gefg_cas05.gat",77,149,"Archer Guardian",1285,1,"Guardian_G05::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "gefg_cas05.gat",65,18,"Archer Guardian",1285,1,"Guardian_G05::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "gefg_cas05.gat",66,54,"Knight Guardian",1286,1,"Guardian_G05::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "gefg_cas05.gat",187,43,"Knight Guardian",1286,1,"Guardian_G05::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "gefg_cas05.gat",167,43,"Knight Guardian",1286,1,"Guardian_G05::OnGuardianDied",7;
+	mes "[ Beeor ]";
+	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	close;
+}

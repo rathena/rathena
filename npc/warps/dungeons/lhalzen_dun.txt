@@ -1,0 +1,75 @@
+//===== Athena Script ========================================
+//= Lighthalzen Dungeon Warp Script
+//===== By: ==================================================
+//= Sara-chan (1.0)
+//===== Current Version: =====================================
+//= 1.6a
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points for Lighthalzen Dungeon
+//===== Additional Comments: =================================
+//= No Comment!
+//= 1.1 Added temp restriction by Azazel [Lupus]
+//= 1.2 Optimized [Lupus]
+//= and fixed 005 and 005a warps coords, thanks to Justin84 
+//= 1.3 Fixed entrance condition check, thanx2Daegaladh [Lupus]
+//= 1.4 Added coords of secret dungeon entrance, thanks to Justin84
+//= proved with screenshots [Lupus]
+//= 1.5a thx2 Justin84, some additions and fixes [Lupus]
+//= 1.5b re-enabled main entrance warp [Lupus] <-reverted 1.5c
+//= 1.6 Updated entrances, added Cube room warps, thanx 2 Justin84
+//= 1.6a Disabled the "Entrance" to lhz_dun01 [Poki#3]
+//============================================================
+
+lhz_dun03.gat,140,139,0	warp	lhz003	1,1,lhz_dun02.gat,150,147
+lhz_dun02.gat,18,150,0	warp	lhz004	1,1,lhz_dun01.gat,18,148
+lhz_dun01.gat,18,146,0	warp	lhz004a	1,1,lhz_dun02.gat,18,148
+lhz_dun02.gat,282,155,0	warp	lhz005	1,1,lhz_dun01.gat,281,152
+lhz_dun01.gat,281,150,0	warp	lhz005a	1,1,lhz_dun02.gat,282,153
+lhz_dun02.gat,148,18,0	warp	lhz006	1,1,lhz_dun01.gat,146,10
+lhz_dun01.gat,148,10,0	warp	lhz006a	1,1,lhz_dun02.gat,150,18
+
+//current entrance
+lhz_dun01.gat,150,290,0	warp	lhz007	1,1,lighthalzen.gat,73,54
+//lighthalzen.gat,73,52,0	warp	lhz007a	1,1,lhz_dun01.gat,150,288
+//This should be only an Exit. This warp doesn't exist on kRO.
+
+//--------------------------Sewage Tube--------------------------
+
+lighthalzen.gat,313,301,0	script	Sewage Tube	111,{
+	mes "The sewage tube which leads to laboratory underground.";
+	next;
+	menu "Enter",M_1,"Do not enter",-;
+	close;
+
+M_1:
+	warp "lhz_cube.gat",231,17;
+	end;
+}
+
+//--------------------------Warp--------------------------
+
+//Cube room <-> Organism test laboratory level 2
+lhz_cube.gat,231,96,0	warp	lhzcube1	1,1,lhz_dun02.gat,220,6
+lhz_dun02.gat,224,6,0	warp	lhzcube2	1,1,lhz_cube.gat,231,90
+
+//Cube room -> Lighthalzen
+lhz_cube.gat,231,12,0	warp	lhzcube3	1,1,lighthalzen.gat,310,302
+lhz_cube.gat,177,96,0	warp	lhzcube4	1,1,lighthalzen.gat,310,302
+
+lhz_dun02.gat,150,149,4	script	lhz-warp	45,2,2,{
+OnTouch:
+	if(Upper != 1 && BaseLevel<95)goto s_Noentry0;
+	if(Upper == 1 && BaseLevel<90)goto s_Noentry1;
+	warp "lhz_dun03",140,137;
+	end;
+
+s_Noentry0:
+	mes "Non-Advanced class characters must be at least base level 95 to enter level 3 of the Bio Lab Dungeon";
+	close; 
+
+s_Noentry1:
+	mes "Advanced class characters must be at least base level 90 to enter level 3 of the Bio Lab Dungeon";
+	close;
+}

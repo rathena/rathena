@@ -1,0 +1,197 @@
+//===== Athena Script =======================================
+//= Old Blue Box Quest
+//===== By ================================================
+//= Celesta, Lupus
+//===== Version ===========================================
+//= 1.6a
+//===== Compatible With ===================================
+//= SVN3000+
+//===== Description =======================================
+//= Official OBB Quest. You can pass it any times you want.
+//= 1.6 Updated, fixed, optimized and translated into English [Lupus]
+//= 1.6a Halved the required items to make an obb, thanks to marquis007 [MasterOfMuppets]
+//===== Description =======================================
+
+alberta.gat,115,204,5	script	Tourist	97,{
+	mes "[Tourist]";
+	if(obb_quest == 1 ) goto L_YES;
+	if(obb_quest == 2 ) goto L_DONE;  
+
+	mes "Hello, stranger!";
+	mes "Could you help me with kinda problem... Then I'd tell you something valuable.";
+	next;
+	mes "[Tourist]";
+	mes "I'm starving. I haven't had an apple since the morning...";
+	mes "Feed me and I'll tell you a secret.";
+	next;
+
+L_MENU:
+	menu "What do you like?",-,"I've got food.",L_FOOD, "See you later.", L_END;
+
+	mes "[Tourist]";
+	mes "Me.. I.. Today I'd like:";
+	mes "20 ^0000FFMeat^000000";
+	mes "20 ^0000FFWell-Baked Cookie^000000";
+	next;
+	goto L_MENU;
+
+L_NO_MEAT:
+	delitem 517,20;//Items: Meat,
+	mes "You know, you're lack of meat...";
+	mes "Please, bring me more...";
+	close;
+
+L_NO_COOK:
+	delitem 538,20;//Items: Well-baked_Cookie,
+	mes "Awww... I just wanna more sweeties!";
+	mes "Please, get me more cookies...";
+	close;
+
+L_FOOD:
+	mes "[Tourist]";
+	mes "Wha?! You brought all the food?";
+	mes "At last!";
+	next;
+	mes "[Tourist]";
+	if(countitem(517)<20) goto L_NO_MEAT;//Items: Meat,
+	delitem 517,20;//Items: Meat,
+	if(countitem(538)<20) goto L_NO_COOK;//Items: Well-baked_Cookie,
+	delitem 538,20;//Items: Well-baked_Cookie,
+	if(rand(10)<7) goto L_HUNGRY;
+	mes "Well... I'm sorta full.";
+	mes "Now listen to me. It's important.";
+	next;
+	mes "[Tourist]";
+	mes "A friend of mine who lives in Morroc, know one old man from Comodo...";
+	next;
+	mes "[Tourist]";
+	mes "That old man might know a secret of strange ancient blue boxes.";
+	set obb_quest, 1;
+	close;
+
+L_HUNGRY:
+	mes "I'm still hungry!";
+	mes "Is it all you got?";
+	close;
+
+L_YES:
+	mes "OK, go to Morroc and find my old pal Jacob,";
+	mes "he'll help you to trace an old man, who might keep a knowledge how to make some blue boxes...";
+	next;
+	mes "[Tourist]";
+	mes "Good luck, my friend.";
+	close;
+
+L_DONE:
+	mes "Have you made any Blue Boxes yet?";
+	next;
+	mes "[Tourist]";
+	mes "Oh... yeah, you've met that Old Greek from Comodo...";
+	close;
+
+L_END:
+	mes "[Tourist]";
+	mes "Well... farewell then.";
+	close;
+}
+
+//second part Jacob
+morocc.gat,267,142,5	script	Jacob	807,{
+	mes "[Jacob]";
+	if(obb_quest == 1 ) goto L_YES;
+	if(obb_quest == 2 ) goto L_DONE;
+	mes "Get off! I'm busy!";
+	if(rand(2))mes "And it's none of your business!";
+	if(rand(2))mes "What Alberta? Huh?! Have I said it aloud? Forget it.";
+	close;
+
+L_YES:
+	mes "Aha! You say you know my old friend from Alberta?";
+	next;
+	mes "[Jacob]";
+	mes "Well, I'm gladly tell you about that weird old man if you bring me";
+	mes "2 ^0000FFNo Recipient^000000";
+	next;
+	menu "Here you are!",-,"I've changed my plans.",L_END;
+
+	mes "[Jacob]";
+	mes "Let me see...";
+	if(countitem(636)<2) goto L_NOITM;//Items: No_Recipient,
+	delitem 636,2;//Items: No_Recipient,
+	mes "Thank you, that's all I need.";
+	emotion 15;
+	next;
+	mes "[Jacob]";
+	set obb_quest, 2;
+L_DONE:
+	mes "Go to Comodo. Somewhere on the beach you'll find Old Greek.";
+	mes "Tell me that you know me and he'll help you.";
+	close;
+
+L_NOITM:
+	mes "Pardon, but I do really need these two ^0000FFNo Recipients^000000.";
+	emotion 20;
+	close;
+
+L_END:
+	mes "[Jacob]";
+	mes "Well, good luck.";
+	close;
+}
+
+//third part
+comodo.gat,41,209,5	script	Old Greek	120,{
+	mes "[Old Greek]";
+	if(obb_quest == 2 ) goto L_YES;
+	if(obb_quest < 2 ) goto  L_LOST;
+
+L_LOST:
+	mes "The KNOWLEDGE! That's the key, my child...";
+	if(rand(2))mes "Wealth doesn't matter.";
+	close;
+
+L_YES:
+	mes "Huh? Jacob send you?";
+	mes "OK, OK... It's true, I still can use old blue prints to make";
+	mes "an ^0000FF Old Blue Box^000000";
+	next;
+
+L_MENU:
+	menu "Make me one.",L_CREATE,"What do you need?",-,"Gooodbye.",L_END;
+
+	mes "[Old Greek]";
+	mes "For an Old Blue Box I need:";
+	mes "50 ^0000FFCyfars^000000";
+	mes "10 ^0000FFBrigans^000000";
+	mes "10 ^0000FFClam Shells^000000";
+	mes "15 ^0000FFCrab Shells^000000";
+	next;
+	goto L_MENU;
+
+L_CREATE:
+	mes "[Old Greek]";
+	mes "Let's see... What have you got...";
+	next;
+L_CREATE2:
+	if(countitem(7053)<50 || countitem(7054)<10 || countitem(965)<10 || countitem(964)<15) goto L_NO;//Items: Cyfar, Brigan, Clam_Shell, Crab_Shell,
+	delitem 7053,50;//Items: Cyfar,
+	delitem 7054,10;//Items: Brigan,
+	delitem 965,10;//Items: Clam_Shell,
+	delitem 964,15;//Items: Crab_Shell,
+	getitem 603,1;//Items: Old_Blue_Box,
+	mes "[Old Greek]";
+	mes "Here's your Box!";
+	emotion 21;
+	next;
+	menu "Make another!",L_CREATE2, "It's enough.",-;
+
+L_END:
+	mes "[Old Greek]";
+	mes "I wish you happy journey, my child.";
+	close;
+
+L_NO:
+	mes "[Old Greek]";
+	mes "Alas, my child. You haven't brought enough materials...";
+	close;
+}

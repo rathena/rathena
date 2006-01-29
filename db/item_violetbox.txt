@@ -1,0 +1,337 @@
+// Old Violet Box Obtainable Items Database
+//
+// Structure of Database:
+// ItemID	DummyName	Rate
+
+0,Guard,2102,
+603,Old Blue Box,20000
+604,Dead Branch,10000
+607,Yggdrasilberry,10000
+608,Yggdrasil Seed,10000
+610,Yggdrasil Leaf,10000
+612,Mini Furnace,10000
+613,Iron Hammer,10000
+614,Golden Hammer,10000
+615,Oridecon Hammer,10000
+701,Ora Ora,10000
+702,Animal Gore,10000
+703,Hinalle,10000
+704,Aloe,10000
+706,Four-Leaf Clover,10000
+707,Singing Plant,10000
+708,Ment,10000
+709,Izidor,10000
+710,Illusion Flower,10000
+714,Emperium,10000
+715,Yellow Gemstone,10000
+716,Red Gemstone,10000
+717,Blue Gemstone,10000
+718,Garnet,10000
+719,Amethyst,10000
+720,Aquamarine,10000
+721,Emerald,10000
+722,Pearl,10000
+723,Ruby,10000
+724,Cursed Ruby,10000
+725,Sardonyx,10000
+726,Sapphire,10000
+727,Opal,10000
+728,Topaz,10000
+729,Zircon,10000
+730,1 Carat Diamond,10000
+731,2 Carat Diamond,10000
+732,3 Carat Diamond,10000
+733,Cracked Diamond,10000
+734,Red Frame,10000
+735,Chung Jah,10000
+736,China,10000
+737,Black Ladle,10000
+738,Pencil Case,10000
+740,Puppet,10000
+741,Poring Doll,10000
+742,Chonchon Doll,10000
+743,Spore Doll,10000
+745,Wedding Bouquet,10000
+747,Crystal Mirror,10000
+748,Witherless Rose,10000
+749,Frozen Rose,10000
+752,Grasshopper Doll,10000
+753,Yoyo Doll,10000
+754,Raccoon Doll,10000
+756,Rough Oridecon,10000
+757,Rough Elunium,10000
+909,Jellopy,10000
+910,Garlet,10000
+911,Scell,10000
+912,Zargon,10000
+931,Orcish Voucher,10000
+934,Memento,10000
+968,Heroic Emblem,10000
+969,Gold,10000
+970,Alcohol,10000
+971,Detrimindexta,10000
+972,Karvodailnirol,10000
+973,Counteragent,10000
+974,Mixture,10000
+975,Scarlet Dyestuff,10000
+976,Lemon Dyestuff,10000
+978,Cobaltblue Dyestuff,10000
+979,Darkgreen Dyestuff,10000
+980,Orange Dyestuff,10000
+981,Violet Dyestuff,10000
+982,White Dyestuff,10000
+983,Black Dyestuff,10000
+984,Oridecon,10000
+985,Elunium,10000
+986,Anvil,10000
+987,Oridecon Anvil,10000
+988,Golden Anvil,10000
+989,Emperium Anvil,10000
+990,Red Blood,10000
+991,Crystal Blue,10000
+992,Wind of Verdure,10000
+993,Green Live,10000
+994,Flame Heart,10000
+995,Mystic Frozen,10000
+996,Rough Wind,10000
+997,Great Nature,10000
+998,Iron,10000
+999,Steel,10000
+1000,Star Crumb,10000
+1001,Star Dust,10000
+1002,Iron Ore,10000
+1003,Coal,10000
+1004,Chivalry Emblem,10000
+1005,Hammer of Blacksmith,10000
+1006,Old Magic Book,10000
+1007,Necklace of Wisdom,10000
+1008,Necklace of Oblivion,10000
+1009,Hand of God,10000
+1010,Phracon,10000
+1011,Emveretarcon,10000
+1102,Sword,10000
+1105,Falchion,10000
+1108,Blade,10000
+1111,Rapier,10000
+1114,Scimiter,10000
+1117,Katana,10000
+1120,Tsurugi,10000
+1125,Ring Pommel Saber,10000
+1127,Saber,10000
+1128,Haedonggum,10000
+1129,Flamberge,10000
+1152,Slayer,10000
+1155,Bastard Sword,10000
+1158,Two-handed Sword,10000
+1162,Broad Sword,10000
+1163,Claymore,10000
+1164,Muramasa,20000
+1202,Knife,10000
+1205,Cutter,10000
+1208,Main Gauche,10000
+1211,Dirk,10000
+1214,Dagger,10000
+1217,Stiletto,10000
+1220,Gladius,10000
+1226,Damascus,10000
+1237,Grimtooth,10000
+1239,Poison Knife,10000
+1251,Jur,10000
+1253,Katar,10000
+1255,Jamadhar,10000
+1261,Infiltrator,10000
+1302,Axe,10000
+1306,War Axe,10000
+1352,Battle Axe,10000
+1355,Hammer,10000
+1358,Buster,10000
+1361,Two-handed Axe,10000
+1402,Javelin,10000
+1405,Spear,10000
+1408,Pike,10000
+1410,Lance,10000
+1452,Guisarme,10000
+1455,Glaive,10000
+1458,Partizan,10000
+1461,Trident,10000
+1464,Halberd,10000
+1502,Club,10000
+1505,Mace,10000
+1508,Smasher,10000
+1511,Flail,10000
+1514,Morning Star,10000
+1517,Sword Mace,10000
+1520,Chain,10000
+1522,Stunner,10000
+1550,Book,10000
+1551,Bible,10000
+1558,Girl's Diary,10000
+1602,Rod,10000
+1605,Wand,10000
+1608,Staff,10000
+1611,Arc Wand,10000
+1613,Mighty Staff,10000
+1702,Bow,10000
+1705,Composite Bow,10000
+1711,Cross Bow,10000
+1713,Arbalest,10000
+1714,Gakkung,10000
+1718,Hunter Bow,10000
+1719,Roguemaster's Bow,10000
+1721,Repeating Crossbow,10000
+1750,Arrow,10000
+1751,Silver Arrow,10000
+1752,Fire Arrow,10000
+1753,Steel Arrow,10000
+1754,Crystal Arrow,10000
+1755,Arrow of Wind,10000
+1756,Stone Arrow,10000
+1757,Immaterial Arrow,10000
+1758,Stun Arrow,10000
+1759,Freeze Arrow,10000
+1760,Flash Arrow,10000
+1761,Curse Arrow,10000
+1762,Rusted Arrow,10000
+1763,Poison Arrow,10000
+1764,Sharp Arrow,10000
+1765,Oridecon Arrow,10000
+1767,Shadow Arrow,10000
+1768,Sleep Arrow,10000
+1769,Mute Arrow,10000
+1770,Iron Arrow,10000
+1802,Waghnakh,10000
+1804,Knuckle Duster,10000
+1806,Hora,10000
+1808,Fist,10000
+1810,Claw,10000
+1812,Finger,10000
+1902,Violin,100
+1904,Mandolin,10000
+1906,Lute,10000
+1908,Guitar,10000
+1910,Harp,100
+1912,Guhmoongoh,10000
+1951,Rope,10000
+1953,Line,10000
+1955,Wire,10000
+1957,Rante Whip,10000
+1959,Tail,10000
+1961,Whip,10000
+1962,Lariat,10000
+2102,Guard,10000
+2104,Buckler,10000
+2106,Shield,10000
+2108,Mirror Shield,10000
+2201,Sunglasses,10000
+2202,Sunglasses,5000
+2203,Glasses,10000
+2204,Glasses,5000
+2207,Fancy Flower,10000
+2209,Ribbon,10000
+2213,Kitty Band,10000
+2215,Flower Band,10000
+2217,Biretta,10000
+2221,Hat,10000
+2223,Turban,10000
+2225,Goggles,10000
+2227,Cap,10000
+2229,Helm,10000
+2231,Gemmed Sallet,10000
+2233,Circlet,10000
+2236,Santa's Hat,10000
+2242,Purple Glasses,10000
+2243,Geek Glasses,10000
+2244,Big Ribbon,10000
+2249,Coronet,10000
+2250,Cute Ribbon,10000
+2251,Monk Hat,10000
+2252,Wizard Hat,1000
+2254,Angel Wing,10000
+2256,Majestic Goat,10000
+2257,Snow Horn,10000
+2258,Spiky Band,10000
+2261,Army Cap,10000
+2262,Pierrot Nose,10000
+2263,Zorro Masque,10000
+2264,Munak Hat,10000
+2265,Gangster Mask,10000
+2266,Iron Cain,10000
+2269,Romantic Flower,10000
+2270,Romantic Leaf,10000
+2271,Jack a Dandy,10000
+2272,Stop Post,10000
+2273,Doctor Band,10000
+2275,Red Bandana,10000
+2276,Eagle Eyes,10000
+2277,Nurse Cap,500
+2279,Bomb Wick,10000
+2284,Antler,10000
+2287,Pirate Bandana,10000
+2289,Poo Poo Hat,10000
+2290,Funeral Hat,10000
+2291,Masquerade,10000
+2293,Pretend Murdered,10000
+2294,Stellar,10000
+2295,Blinker,10000
+2296,Binoculars,10000
+2298,Green Feeler,10000
+2299,Viking Helm,10000
+2302,Cotton Shirt,10000
+2304,Leather Jacket,10000
+2306,Adventurer's Suit,10000
+2308,Mantle,10000
+2310,Coat,10000
+2311,Mink Coat,10000
+2313,Padded Armor,10000
+2315,Chain Mail,10000
+2317,Full Plate,10000
+2318,Lord's Cloth,100
+2322,Silk Robe,10000
+2324,Scapulare,10000
+2326,Saint's Robe,10000
+2329,Wooden Mail,10000
+2331,Tights,10000
+2333,Silver Robe,10000
+2336,Thief Clothes,10000
+2337,Ninja Suit,10000
+2338,Wedding Dress,10000
+2339,Pantie,10000
+2340,Novice Breastplate,10000
+2341,Legion Plate Armor,10000
+2402,Sandals,10000
+2404,Shoes,10000
+2407,Crystal Pumps,10000
+2408,Shackles,10000
+2409,Spiky Heel,10000
+2411,Greaves,10000
+2502,Hood,10000
+2504,Muffler,10000
+2506,Manteau,10000
+2507,Cape of Old Marquess,10000
+2508,Ragamuffin Manteau,10000
+2601,Ring,10000
+2602,Earring,10000
+2603,Necklace,10000
+2604,Glove,10000
+2605,Brooch,10000
+2607,Clip,10000
+2608,Rosary,10000
+2609,Skull Ring,10000
+2610,Gold Ring,10000
+2611,Silver Ring,10000
+2612,Flower Ring,10000
+2613,Diamond Ring,10000
+2617,Celebrant's Mitten,1000
+2621,Ring,100
+2622,Earring,100
+2623,Necklace,100
+2624,Glove,100
+2625,Brooch,100
+2626,Rosary,100
+5008,Puppy Love,10000
+5009,Safety Helmet,10000
+5010,Indian Fillet,10000
+5014,Fin Helm,10000
+5015,Egg Shell,10000
+5020,Kafra's Band,100
+5046,Bongun Hat,10000

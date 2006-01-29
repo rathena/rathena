@@ -1,0 +1,56 @@
+//===== eAthena Script ======================================= 
+//= Star Gladiator Job Quest
+//===== By: ================================================== 
+//= Lupus
+//===== Current Version: ===================================== 
+//= 0.1a
+//===== Compatible With: ===================================== 
+//= eAthena 1.0 +
+//===== Description: ========================================= 
+//= 
+//===== Additional Comments: ================================= 
+//= 0.1 Now it's just a temp job quest NPC [Lupus]
+//= 0.1a Small fix in warp [Komurka]
+//============================================================ 
+
+
+job_star.gat,166,15,0	warp	startopay	1,1,payon.gat,151,85
+
+job_star.gat,166,37,2	script	Star Gladiator	764,{
+	mes "[Star Gladiator]";
+	if(Class==Job_Taekwon) goto L_Check;
+	if(Class==Job_Star_Gladiator){
+		mes "You've chosen the hardest way... But it's your faith...";
+		close;
+	}
+	mes "Are you a Taekwon? No?! Get lost.";
+	emotion 1;
+	close;
+
+L_Check:
+	mes "Hello!";
+	mes "Are you strong enough to protect your sisters and brothers? Do you want to be a Star Gladiator?";
+	next;
+	menu "I want to be a Star Gladiator",-,"Not yet.",M_NOTHING;
+
+	mes "[Star Gladiator]";
+	if(JobLevel<40 || SkillPoint) {
+		mes "I'm sorry, my friend. You need 40 Job Level and no skill points left.";
+		close;
+	}
+	if(Weight<MaxWeight) {
+		mes "You have strong feet... Bring me as much ores, gems and gold as you can... Much More Heavier Than Now!";
+		emotion e_sry;
+		close;
+	}
+
+	jobchange Job_Star_Gladiator;
+	callfunc "F_ClearJobVar";
+	mes "You did it! You are worth!";
+	close;
+
+M_NOTHING:
+	mes "[Star Gladiator]";
+	mes "I'll wait here forever. We need more protectors for our people.";
+	close;	
+}

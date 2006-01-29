@@ -1,0 +1,21 @@
+//===== Athena Script ========================================
+//= Ayothaya Dungeon Warp Script
+//===== By: ==================================================
+//= eAthena Team (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 10+
+//===== Description: =========================================
+//= Warp Points for Ayothaya Dungeon
+//===== Additional Comments: =================================
+//= 1.0 Splitted 2 files [Lupus]
+//= Should some warps be disabled due to Dungeon Quest?
+//============================================================
+
+
+//Dungeon 
+ayo_fild02.gat,285,150,0	warp	ayodunwrp001	2,2,ayo_dun01.gat,275,17
+ayo_dun01.gat,275,14,0	warp	ayodunwrp002	2,2,ayo_fild02.gat,282,150
+ayo_dun02.gat,24,21,0	warp	ayodunwrp003	2,2,ayo_dun01.gat,24,281
+ayo_dun02.gat,275,21,0	warp	ayodunwrp004	2,2,ayo_dun01.gat,24,281

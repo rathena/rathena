@@ -1,0 +1,108 @@
+//===== Athena Script ========================================
+//= Thanatos Tower Warp Script
+//===== By: ==================================================
+//= Bibilol & Moryagorn  (1.0)
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 10+
+//===== Description: =========================================
+//= Warp Points for Thanatos Tower
+//===== Additional Comments: =================================
+//= It's just Temp warps [Lupus]
+//= 1.2 Updated to level tha_t12.gat
+//= 1.3 Some warps changes due to official info [Justin84]
+//= 1.4 Fixed 2 warps [Justin84]
+//= 1.5 Added Thanatos entrance warp. Now you can go in [Justin84]
+//============================================================
+
+// Affiliated Files : tha_statues.txt
+// ^^^^ it's in the custom quests
+
+//Hugel Field 01 -> Thanatos Scene 01
+hu_fild01.gat,139,164,0	script	Thanatos Tower Warper	111,{
+	mes "[Thanatos Tower Warper]";
+	mes "There is no turning back.";
+	mes "Are you sure want to go Thanatos Tower?";
+	next;
+	menu "Yes",-,"No",T_CLOSE;
+
+	warp "tha_scene01.gat",131,224;
+	end;
+
+T_CLOSE:
+	close;
+}
+
+//Thanatos Scene 01 -> Thantos Tower F1
+tha_scene01.gat,144,200,0	warp	tha_scene01	1,1,tha_t01.gat,150,39
+tha_t01.gat,150,32,0	warp	tha_scene02	1,1,tha_scene01.gat,142,200
+
+//Thanatos Tower
+tha_scene01.gat,144,200,0	warp	tha_scene03	1,1,tha_t01.gat,150,39
+tha_t01.gat,150,32,0	warp	tha_scene04	1,1,tha_scene01.gat,142,200
+tha_t01.gat,150,149,0	warp	tha_t02	1,1,tha_t02.gat,150,136
+tha_t02.gat,150,129,0	warp	tha_t01	1,1,tha_t01.gat,150,142
+tha_t02.gat,226,161,0	warp	tha_t03	1,1,tha_t03.gat,220,158
+tha_t03.gat,220,165,0	warp	tha_t02	1,1,tha_t02.gat,226,149
+tha_t03.gat,60,134,0	warp	tha_t04	1,1,tha_t04.gat,59,143
+tha_t04.gat,59,136,0	warp	tha_t03	1,1,tha_t03.gat,59,126
+tha_t04.gat,83,36,0	warp	tha_t05	1,1,tha_t05.gat,62,11
+//According to official info, 5F it is not possible to return to the 4F, so we disable this warp:
+//tha_t05.gat,62,4,0	warp	tha_t04	1,1,tha_t04.gat,90,34
+tha_t05.gat,208,96,0	warp	tha_t06	1,1,tha_t06.gat,119,228
+tha_t05.gat,185,232,0	warp	tha_t06	1,1,tha_t06.gat,119,228
+tha_t05.gat,61,157,0	warp	tha_t06	1,1,tha_t06.gat,119,228
+tha_t06.gat,119,235,0	warp	tha_t05	1,1,tha_t05.gat,61,164
+
+//tha_t06.gat,119,120,0	warp	tha_t07	1,1,tha_t07.gat,35,166
+//Thanatos 6F to 7F
+tha_t06.gat,119,120,4	script	tha_t07warp	45,2,2,{
+	mes "You have to gather 4 types of keys to enter the 7th Floor.";
+	mes "Give me the key of red, yellow, blue & green.";
+	next;
+	menu "Give the keys",-,"Leave",T_CLOSE;
+
+	if(countitem(7421) < 1 || countitem(7422) < 1 || countitem(7423) < 1 || countitem(7424) < 1) goto T_1;
+	delitem 7421,1;
+	delitem 7422,1;
+	delitem 7423,1;
+	delitem 7424,1;
+	warp "tha_t07.gat",35,166;
+	end;
+
+T_1:
+	mes "You don't have enough keys.";
+T_CLOSE:
+	close;
+}
+
+
+tha_t07.gat,28,166,0	warp	tha_t06	1,1,tha_t06.gat,119,127
+tha_t07.gat,112,166,0	warp	tha_t08	1,1,tha_t08.gat,105,44
+tha_t08.gat,112,44,0	warp	tha_t07	1,1,tha_t07.gat,105,166
+tha_t08.gat,26,44,0	warp	tha_t09	1,1,tha_t09.gat,88,145
+tha_t09.gat,93,145,0	warp	tha_t08	1,1,tha_t08.gat,30,44
+tha_t10.gat,171,138,0	warp	tha_t09	1,1,tha_t09.gat,18,97
+tha_t11.gat,93,36,0	warp	tha_t10	1,1,tha_t10.gat,91,130
+tha_t12.gat,16,160,0	warp	tha_t11	1,1,tha_t11.gat,16,160
+
+//Thana_step
+thana_step.gat,12,73,0 warp thana_step1 1,1,tha_t12.gat,128,58
+thana_step.gat,16,16,0 warp thana_step2 1,1,thana_step.gat,32,224
+thana_step.gat,30,224,0 warp thana_step3 1,1,thana_step.gat,19,16
+thana_step.gat,32,166,0 warp thana_step4 1,1,thana_step.gat,184,74
+thana_step.gat,180,74,0 warp thana_step5 1,1,thana_step.gat,36,166
+thana_step.gat,182,16,0 warp thana_step6 1,1,thana_step.gat,184,224
+thana_step.gat,180,224,0 warp thana_step7 1,1,thana_step.gat,185,16
+thana_step.gat,182,166,0 warp thana_step8 1,1,thana_step.gat,73,287
+thana_step.gat,69,287,0 warp thana_step9 1,1,thana_step.gat,186,166
+thana_step.gat,70,371,0 warp thana_step10 1,1,thana_step.gat,170,287
+thana_step.gat,174,287,0 warp thana_step11 1,1,thana_step.gat,74,371 
+
+//Thana_boss
+thana_step.gat,169,371,0	warp	thana_boss	1,1,thana_boss.gat,85,76
+thana_boss.gat,80,76,0	warp	thana_step9	1,1,thana_step.gat,163,371
+thana_boss.gat,62,171,0	warp	thana_step10	1,1,thana_step.gat,163,371
+thana_boss.gat,141,217,0	warp	thana_step11	1,1,thana_step.gat,163,371
+thana_boss.gat,202,75,0	warp	thana_step12	1,1,thana_step.gat,163,371

@@ -1,0 +1,74 @@
+//===== Athena Script ========================================
+//= Airports & Airplanes Warp Script
+//===== By: ==================================================
+//= Sara-chan (1.0), SSUNNY@YOUNG(1.6)
+//===== Current Version: =====================================
+//= 1.61
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points for All Airplanes and Airports
+//===== Additional Comments: =================================
+//= Not really sure where this belongs, feel free to move
+//= it to wherever suits the script better ^^; [Celest]
+//= 1.3 Removed warps dupes from other files.
+//= disabled direct warp to airplane [Lupus]
+//= 1.4 added some warps as recomended by Justin84 [Skotlex]
+//= (those commented are direct warps into the airplanes, left here
+//= temporarily since the NPC isn't quite there yet)
+//= 1.5 Uncomented the airplane warps and remove two unnecessary ones [MasterOfMuppets]
+//= 1.6 Updated Warps, work done by SSUNNY@YOUNG in Korean eA site [Vicious]
+//= 1.61 Corrected the first einbroch warp [Zephiris]
+//============================================================
+
+//==========================================================================
+//Einbroch - Airport
+//==========================================================================
+einbroch.gat,92,280,0	warp	ein_ap01	1,1,airplane.gat,224,64
+einbroch.gat,64,234,0	warp	ein_ap02	1,1,airport.gat,138,51
+airport.gat,142,61,0	warp	ein_ap02a	1,1,einbroch.gat,62,246
+airport.gat,124,13,0	warp	ein_ap03	1,1,airport.gat,19,21
+airport.gat,19,18,0	warp	ein_ap03a	1,1,airport.gat,122,16
+airport.gat,161,13,0	warp	ein_ap04	1,1,airport.gat,47,21
+airport.gat,47,18,0	warp	ein_ap04a	1,1,airport.gat,163,16
+airport.gat,143,14,0	warp	ein_ap05	1,1,einbroch.gat,64,204
+einbroch.gat,64,207,0	warp	ein_ap05a	1,1,airport.gat,143,17
+
+
+// -Lighthalzen Airport-
+lhz_airport.gat,125,14,0	warp	lairp1	1,1,lhz_airport.gat,19,20
+lhz_airport.gat,19,18,0	warp	lairp1a	1,1,lhz_airport.gat,123,14
+lhz_airport.gat,160,14,0	warp	lairp2	1,1,lhz_airport.gat,48,20
+lhz_airport.gat,48,18,0	warp	lairp2a	1,1,lhz_airport.gat,162,14
+lighthalzen.gat,267,76,0	warp	lairp3	1,1,lhz_airport.gat,143,15
+lhz_airport.gat,143,13,0	warp	lairp3a	1,1,lighthalzen.gat,265,76
+lhz_airport.gat,143,63,0	warp	lairp4	1,1,lighthalzen.gat,296,76
+lighthalzen.gat,294,76,0	warp	lairp4a	1,1,lhz_airport.gat,143,60
+lighthalzen.gat,308,76,0	warp	lairp5	1,1,airplane.gat,224,64
+
+
+// -Juno Airport-
+y_airport.gat,125,14,0	warp	jairp1	1,1,y_airport.gat,19,20
+y_airport.gat,19,18,0	warp	jairp1a	1,1,y_airport.gat,123,14
+y_airport.gat,160,14,0	warp	jairp2	1,1,y_airport.gat,48,20
+y_airport.gat,48,18,0	warp	jairp2a	1,1,y_airport.gat,162,14
+yuno.gat,54,217,0	warp	jairp3	1,1,y_airport.gat,143,15
+y_airport.gat,143,13,0	warp	jairp3a	1,1,yuno.gat,54,215
+yuno.gat,52,238,0	warp	jairp4a	1,1,y_airport.gat,143,60
+yuno.gat,55,238,0	warp	jairp5a	1,1,y_airport.gat,143,60
+yuno.gat,8,261,0	warp	jairp6	1,1,airplane_01.gat,224,64
+yuno.gat,97,260,0	warp	jairp7	1,1,airplane.gat,224,64
+
+
+//=========================================================================
+//Airplane
+//=========================================================================
+airplane.gat,254,54,0	warp	air_1wp01	1,1,airplane.gat,91,67
+airplane.gat,87,67,0	warp	air_1wp01a	1,1,airplane.gat,250,54
+airplane.gat,208,53,0	warp	air_1wp02	1,1,airplane.gat,239,160
+airplane.gat,245,160,0	warp	air_1wp02a	1,1,airplane.gat,214,54
+
+airplane_01.gat,254,54,0	warp	air_2wp01	1,1,airplane_01.gat,91,67
+airplane_01.gat,87,67,0	warp	air_2wp01a	1,1,airplane_01.gat,250,54
+airplane_01.gat,208,53,0	warp	air_2wp02	1,1,airplane_01.gat,239,160
+airplane_01.gat,245,160,0	warp	air_2wp02a	1,1,airplane_01.gat,214,54

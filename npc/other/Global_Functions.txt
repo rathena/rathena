@@ -1,0 +1,381 @@
+//===== eAthena Script ======================================= 
+//= Global Functions
+//===== By: ================================================== 
+//= Lupus, kobra_k88
+//===== Current Version: ===================================== 
+//= 1.7
+//===== Compatible With: ===================================== 
+//= eAthena 1.0
+//===== Description: ========================================= 
+//= <Description> 
+//===== Additional Comments: ================================= 
+//= Added F_ClearJobVar - on getting a new job it clears all Job Quest variables
+//= Removed individual job check functions as they were redundant [kobra_k88]
+//= 1.3 Added Job Change Function for Baby/Normal Classes
+//= 1.3b a fix, due to const.txt change [Lupus]
+//= 1.4 Added Is_Taekwon_Class: Taekwondo, Star Knight(Gladiator),Soul Linker [Lupus]
+//= 1.5 Added clear of Bard Quest variables. 1.5a updated [Lupus]
+//= 1.6 Added F_RandMes, F_SexMes, F_Hi, F_Bye functions [Lupus]
+//= Moved here useful function 'getJobName'
+//= 1.7 Added "F_ItemName" function, added a great sample for "F_ItemName"
+//============================================================ 
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Function that clears job quest variables
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	F_ClearJobVar	{
+	// Misc ---------------------------------
+	set JBLVL,0;
+	// First Class Jobs ---------------------
+	set job_acolyte_q,0; set job_acolyte_q2,0;
+	set job_archer_q,0;
+	set job_magician_q,0;
+	set job_merchant_q,0; set job_merchant_q2,0; set job_merchant_q3,0;
+	set job_sword_q,0; set job_sword_q2,0; set SWTEST, 0;
+	set job_thief_q,0;
+	// Super Novice
+	set SUPNOV_Q,0;
+	// 2-1 Jobs ------------------------------
+	set ASSIN_Q,0; set ASSIN_Q2,0;
+	set BSMITH_Q,0; set BSMITH_Q2,0;
+	set HNTR_Q,0; set HNTR_Q2,0;
+	set KNIGHT_Q,0; set KNIGHT_Q2,0;
+	set PRIEST_Q,0; set PRIEST_Q2,0; set PRIEST_Q3,0;
+	set WIZ_Q,0; set WIZ_Q2,0;
+	// 2-2 Jobs ------------------------------
+	set ROGUE_Q,0; set ROGUE_Q2,0;
+	set ALCH_Q,0; set ALCH_Q2,0; set al_morgen,0;
+	set CRUS_Q,0;
+	set MONK_Q,0; set JOB_MONK_C,0;
+	set SAGE_Q,0; set SAGE_Q2,0;
+	set DANC_Q,0;
+	set BARD_Q,0;
+	return;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Used in REBIRTH scripts
+// Class = Internal Class ID
+// BaseJob = Base Job (0..23)
+// Upper : 0 - Default, 1 - Advanced, 2 - Baby
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	Job_Change	{
+	if (Upper==0) jobchange getarg(0); //Change Job For Common
+	if (Upper==2) jobchange getarg(0)+46; //Change Job For Baby Class
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// FOT BACKWISE COMPATIBILITY: Functions used to check a players job class
+// HOW TO USE:
+// i.e. We need all holy classes but monks
+// if ( callfunc("Is_Holy_Class") && callfunc("Is_Monk")==0 ) goto L_Start;
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// returns 1 if the player is either Aco,Monk,Priest,Aco High,High Priest,
+// Champion, 0 otherwise
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	Is_Holy_Class	{
+	return ( BaseJob==Job_Acolyte || BaseJob==Job_Priest || BaseJob==Job_Monk );
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// returns 1 if the player is either Archer,Hunter,Bard,Dancer,Archer High,Sniper,
+// Clown,Gypsy, 0 otherwise
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	Is_Bow_Class	{
+	return ( BaseJob==Job_Archer || BaseJob==Job_Hunter || BaseJob==Job_Bard || BaseJob==Job_Dancer );
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// returns 1 if the player is either Mage,Wizard,Sage,Mage High,High Wizard,
+// Professor, 0 otherwise
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	Is_Magic_Class	{
+	return ( BaseJob==Job_Mage || BaseJob==Job_Wizard || BaseJob==Job_Sage );
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// returns 1 if the player is either Merc,Blacksmith,Alchemist,Merc High,
+// Whitesmith,Creator, 0 otherwise
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	Is_Merc_Class	{
+	return ( BaseJob==Job_Merchant || BaseJob==Job_Blacksmith || BaseJob==Job_Alchem );
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// returns 1 if the player is either Thief,Assassin,Rogue,Thief High, Assassin Cross
+// Stalker, 0 otherwise
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	Is_Thief_Class	{
+	return ( BaseJob==Job_Thief || BaseJob==Job_Assassin || BaseJob==Job_Rogue );
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// returns 1 if the player is either Swordy,Knight,Crusader,Swordy High,
+// Lord Knight,Paladin, 0 otherwise
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	Is_Sword_Class	{
+	return ( BaseJob==Job_Swordman || BaseJob==Job_Knight || BaseJob==Job_Knight2 || BaseJob==Job_Crusader || BaseJob==Job_Crusader2 );
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// returns 1 if the player is either Taekwon, Star Gladiator,Soul Linker, 0 otherwise
+// these classes can't be adopted nor reborn ()
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	Is_Taekwon_Class	{
+	return ( Class==Job_Taekwon || Class==Job_Star_Gladiator || Class==Job_Star_Gladiator2 || Class==Job_Soul_Linker );
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Functions used to spiff up dialoges [Lupus]
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "F_RandMes"
+//////////////////////////////////////////////////////////////////////////////////
+//returns random string
+// Example: check F_Bye or F_Hi functions
+// READ AND THINK: You can use it to pick a random number form list:
+// set @itemIDfromList, callfunc("F_RandMes",8,1129,1222,1163,1357,1360,1522,1811,1410);
+
+function	script	F_RandMes	{
+	return getarg(rand(1,getarg(0)));
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "F_Sex"
+//////////////////////////////////////////////////////////////////////////////////
+//returns 1st string if female, 2nd string otherwise
+// Example: mes callfunc("F_Sex","What a beautiful lady!","What a handsom man!");
+
+function	script	F_SexMes	{
+	return getarg(Sex);
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "F_Hi"
+//////////////////////////////////////////////////////////////////////////////////
+//returns random HELLO message
+
+function	script	F_Hi	{
+	return callfunc("F_RandMes",5,"Hi!","Hello!","Good day!","How are you?","Hello there.");
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "F_Bye"
+//////////////////////////////////////////////////////////////////////////////////
+//returns random BYE message
+
+function	script	F_Bye	{
+	return callfunc("F_RandMes",6,"Bye. See you again.","Later.","Goodbye.","Good luck!","Have a nice day!","Byebye!!!");
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "F_ItemName"
+//////////////////////////////////////////////////////////////////////////////////
+// Returns expanded item name string
+//Argumentss
+// 0 - Item ID
+// 1 - Element N (0=none,1=Ice,2=Earth,3=Fire,4=Wind)
+// 2 - VVS meter 0..3
+// 3 - Refine
+// Example: mes "Show me your "+callfunc("F_ItemName",1201,1,2,5)+"...";
+//  is equal to: mes "Show me your ^000090 +5 VVS Fire Knife ^000000..."
+
+function	script	F_ItemName	{
+	set @t$,"^000090";
+	if(getarg(3)) set @t$,@t$+"+"+getarg(3)+" ";
+	if(getarg(2)==1) set @t$,@t$+"VS ";
+	if(getarg(2)==2) set @t$,@t$+"VVS ";
+	if(getarg(2)==3) set @t$,@t$+"VVVS ";
+	if(getarg(2)>3) set @t$,@t$+getarg(2)+"xVS ";
+	if(getarg(1)==1) set @t$,@t$+"Ice ";
+	if(getarg(1)==2) set @t$,@t$+"Earth ";
+	if(getarg(1)==3) set @t$,@t$+"Fire ";
+	if(getarg(1)==4) set @t$,@t$+"Wind ";
+	if(getarg(1)>4) set @t$,@t$+"Strange ";
+	return @t$+getitemname(getarg(0))+"^000000";
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "getJobName"							//
+// [Usage] : callfunc("getJobName",Class);                                      //
+//////////////////////////////////////////////////////////////////////////////////
+
+function	script	getJobName	{
+	switch(getarg(0)){
+		case Job_Novice:
+			return "Novice";
+		case Job_Swordman:
+			return "Swordman";
+		case Job_Mage:
+			return "Magician";
+		case Job_Archer:
+			return "Archer";
+		case Job_Acolyte:
+			return "Acolyte";
+		case Job_Merchant:
+			return "Merchant";
+		case Job_Thief:
+			return "Thief";
+		case Job_Knight:
+		case Job_Knight2:
+			return "Knight";
+		case Job_Priest:
+			return "Priest";
+		case Job_Wizard:
+			return "Wizard";
+		case Job_Blacksmith:
+			return "Blacksmith";
+		case Job_Hunter:
+			return "Hunter";
+		case Job_Assassin:
+			return "Assassin";
+		case Job_Crusader:
+		case Job_Crusader2:
+			return "Crusader";
+		case Job_Monk:
+			return "Monk";
+		case Job_Sage:
+			return "Sage";
+		case Job_Rogue:
+			return "Rogue";
+		case Job_Alchem:
+			return "Alchemist";
+		case Job_Bard:
+			return "Bard";
+		case Job_Dancer:
+			return "Dancer";
+		case Job_SuperNovice:
+			return "Super Novice";
+		case Job_Gunslinger:
+			return "Gunsligner";
+		case Job_Ninja:
+			return "Ninja";
+		case Job_Xmas:
+			return "Xmas";
+		case Job_Novice_High:
+			return "Novice High";
+		case Job_Swordman_High:
+			return "Swordman High";
+		case Job_Mage_High:
+			return "Magician High";
+		case Job_Archer_High:
+			return "Archer High";
+		case Job_Acolyte_High:
+			return "Acolyte High";
+		case Job_Merchant_High:
+			return "Merchant High";
+		case Job_Thief_High:
+			return "Thief High";
+		case Job_Lord_Knight:
+		case Job_Lord_Knight2:
+			return "Lord Knight";
+		case Job_High_Priest:
+			return "High Priest";
+		case Job_High_Wizard:
+			return "High Wizard";
+		case Job_Whitesmith:
+			return "Whitesmith";
+		case Job_Sniper:
+			return "Sniper";
+		case Job_Assassin_Cross:
+			return "Assassin Cross";
+		case Job_Paladin:
+		case Job_Paladin2:
+			return "Paladin";
+		case Job_Champion:
+			return "Champion";
+		case Job_Professor:
+			return "Professor";
+		case Job_Stalker:
+			return "Stalker";
+		case Job_Creator:
+			return "Creator";
+		case Job_Clown:
+			return "Clown";
+		case Job_Gypsy:
+			return "Gypsy";
+		case Job_Baby:
+			return "Baby";
+		case Job_Baby_Swordman:
+			return "Baby Swordman";
+		case Job_Baby_Mage:
+			return "Baby Magician";
+		case Job_Baby_Archer:
+			return "Baby Archer";
+		case Job_Baby_Acolyte:
+			return "Baby Acolyte";
+		case Job_Baby_Merchant:
+			return "Baby Merchant";
+		case Job_Baby_Thief:
+			return "Baby Thief";
+		case Job_Baby_Knight:
+		case Job_Baby_Knight2:
+			return "Baby Knight";
+		case Job_Baby_Priest:
+			return "Baby Priest";
+		case Job_Baby_Wizard:
+			return "Baby Wizard";
+		case Job_Baby_Blacksmith:
+			return "Baby Blacksmith";
+		case Job_Baby_Hunter:
+			return "Baby Hunter";
+		case Job_Baby_Assassin:
+			return "Baby Assassin";
+		case Job_Baby_Crusader:
+		case Job_Baby_Crusader2:
+			return "Baby Crusader";
+		case Job_Baby_Monk:
+			return "Baby Monk";
+		case Job_Baby_Sage:
+			return "Baby Sage";
+		case Job_Baby_Rogue:
+			return "Baby Rogue";
+		case Job_Baby_Alchem:
+			return "Baby Alchemist";
+		case Job_Baby_Bard:
+			return "Baby Bard";
+		case Job_Baby_Dancer:
+			return "Baby Dancer";
+		case Job_Super_Baby:
+			return "Super Baby";
+		case Job_Taekwon:
+			if(Sex == 0)
+				return "Taekwon Girl";
+			else
+				return "Taekwon Boy";
+		case Job_Star_Gladiator:
+		case Job_Star_Gladiator2:
+			return "Star Gladiator";
+		case Job_Soul_Linker:
+			return "Soul Linker";
+		default:
+			return "omghaxor";
+	}
+}

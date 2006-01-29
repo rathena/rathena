@@ -1,0 +1,44 @@
+//<Skill id>,<Cast: 1 or 0>,<Delay (Optional): 1 or 0>,<Walk Delay(Optional): 1 or 0>
+// Cast: With 1, dex does not affect the skill's cast rate
+// Cast: With 0, dex affects the skill's cast rate
+// Delay: With 1, dex does not affect the skill's delay rate
+// Delay: With 0, dex affects the skill's delay rate
+// Walk Delay: With 1, characters can't move while the skill's delay is active.
+// Walk Delay: With 0, characters can move as soon as the spell finishes casting.
+// Example - 46,1,1 = Double Strafe's casting time and delay is not affected by dex.
+// By default, dex NEVER affects after-cast delay, so no need of putting 'x,0,1' in this file
+
+136,0,0,1 //AS_SONICBLOW
+336,1	//WE_CALLPARTNER
+366,1	//HW_MAGICPOWER
+370,1	//CH_PALMSTRIKE
+394,0,0,1 //CG_ARROWVULCAN
+403,1	//PF_MEMORIZE
+408,1	//WE_BABY
+409,1	//WE_CALLPARENT
+410,1	//WE_CALLBABY
+482,1	//PF_DOUBLECASTING
+445,1 //SL_ALCHEMIST
+447,1 //SL_MONK
+448,1 //SL_STAR
+449,1 //SL_SAGE
+450,1 //SL_CRUSADER
+451,1 //SL_SUPERNOVICE
+452,1 //SL_KNIGHT
+453,1 //SL_WIZARD
+454,1 //SL_PRIEST
+455,1 //SL_BARDDANCER
+456,1 //SL_ROGUE
+457,1 //SL_ASSASIN
+458,1 //SL_BLACKSMITH
+460,1 //SL_HUNTER
+461,1 //SL_SOULLINKER
+462,1 //SL_KAIZEL
+467,1 //SL_STIN
+468,1 //SL_STUN
+469,1 //SL_SMA
+1014,1	//PR_REDEMPTIO
+10010,1	//GD_BATTLEORDER
+10011,1	//GD_REGENERATION
+10012,1	//GD_RESTORE
+10013,1	//GD_EMERGENCYCALL

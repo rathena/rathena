@@ -1,0 +1,58 @@
+//===== eAthena Script ======================================= 
+//= Al De Baran Guides
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Corrected building locations and descriptions
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks [MasterOfMuppets]
+//=     to Muad_Dib
+//============================================================
+
+
+aldebaran.gat,139,63,4	script	Soldier::Alde_Guide	105,{
+	cutin "prt_soldier",2;
+	mes "[Al De Baran Guard]";
+	mes "I'm just an ordinary guard";
+	mes "that you could find in any other";
+	mes "city. I don't think I even have a";
+	mes "name...";
+	next;
+	mes "[Al De Baran Guard]";
+	mes "I am in charge of the Service";
+	mes "Guides from the Al De Baran";
+	mes "Garrison. Let me guide you";
+	mes "through our town!";
+	next;
+	menu "Get location Guide.",-,"End conversation.",L_End;
+		viewpoint 1,57,222,1,0xFF6633;
+		viewpoint 1,73,196,2,0x0000FF;
+		viewpoint 1,224,224,3,0x00FFFF;
+		viewpoint 1,233,106,4,0x515151;
+		viewpoint 1,197,71,5,0x3355FF;
+		viewpoint 1,60,60,6,0xFF5555;
+		mes "^FF6633+^000000 -> Kafra Main Office";
+		mes "^0000FF+^000000 -> Weapon Shop";
+		mes "^00FFFF+^000000 -> Sorcerer Guild (Closed)";
+		mes "^515151+^000000 -> Pub";
+		mes "^3355FF+^000000 -> Item Shop";
+		mes "^FF5555+^000000 -> Chemical Academy";
+		cutin "prt_soldier",255;
+	close;
+L_End:
+	mes "[Al De Baran Guard]";
+	mes "We are sworn to protect Al De";
+	mes "Baran! May the forces of evil";
+	mes "always be crushed by the";
+	mes "righteous fist of good!";
+		cutin "prt_soldier",255;
+	close;
+}
+
+aldebaran.gat,241,136,4	duplicate(Alde_Guide)	Soldier	105

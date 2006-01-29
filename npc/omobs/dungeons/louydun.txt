@@ -1,0 +1,37 @@
+//===== eAthena Script =======================================
+//= Louyang Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= 1.1 Updated by MasterOfMuppets
+//= 1.2 Added Bacsojin and Chung E [MasterOfMuppets]
+//============================================================
+
+//lou_dun01
+lou_dun01.gat,0,0,0,0	monster	Horong	1129,15,0,0,0
+lou_dun01.gat,0,0,0,0	monster	Increase Soil	1516,15,0,0,0
+lou_dun01.gat,215,159,40,80	monster	Sidewinder	1037,10,300000,120000,0
+lou_dun01.gat,215,159,40,80	monster	Li Me Mang Ryang	1517,25,300000,120000,0
+lou_dun01.gat,0,0,0,0	monster	Li Me Mang Ryang	1517,20,0,0,0
+lou_dun01.gat,0,0,0,0	monster	Grizzly	1381,15,0,0,0
+lou_dun01.gat,0,0,0,0	monster	Leib Olmai	1306,1,300000,120000,0
+lou_dun01.gat,197,77,10,10	monster	Black Mushroom	1084,5,0,0,0
+lou_dun01.gat,0,0,0,0	monster	Shining Plant	1083,5,0,0,0
+
+//lou_dun02
+lou_dun02.gat,0,0,0,0	monster	Hyegun	1512,40,300000,120000,0
+lou_dun02.gat,0,0,0,0	monster	Munak	1026,25,0,0,0
+lou_dun02.gat,0,0,0,0	monster	Dancing Dragon	1514,5,0,0,0
+lou_dun02.gat,0,0,0,0	monster	Mimic	1191,5,0,0,0
+
+//lou_dun03
+lou_dun03.gat,0,0,0,0	monster	Hyegun	1512,25,120000,60000,0
+lou_dun03.gat,0,0,0,0	monster	Dancing Dragon	1514,25,120000,60000,0
+lou_dun03.gat,0,0,0,0	monster	Civil Servant	1513,15,0,0,0
+lou_dun03.gat,0,0,0,0	monster	Gajomart	1309,1,300000,120000,0
+lou_dun03.gat,0,0,0,0	monster	Green Maiden	1519,10,0,0,0
+lou_dun03.gat,0,0,0,0	monster	Bacsojin	1518,1,3600000,1800000,1

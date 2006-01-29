@@ -1,0 +1,66 @@
+//=== eAthena Script ====================
+//= War of Emperium Kafras for Prontera Guild Castles
+//=== By: =========================
+//= jAthena - kalen (1.0)
+//= 1.1 by Akaru, ho|yAnge|X, and Valaris
+//=== Current Version: ===================
+//= 1.2
+//=== Compatible With: ===================
+//= eAthena 0.1+; RO Episode 4+
+//=== Description: =====================
+//= Provides Kafra services for guild members of Prontera Castles.
+//= Used in conjuction with function F_Kafra.
+//=== Additional Comments: =================
+//= v1.2 Optimized with functions.[kobra_k88]
+//==============================
+
+
+// Castle 1 ========================
+prtg_cas01.gat,96,173,0	script	Kafra Service#Pt01	117,{
+	callfunc "F_GKafra", "prtg_cas01", "Prontera";
+	end;
+OnRecvCastlePt01:
+	if (GetCastleData("prtg_cas01.gat",9) < 1) disablenpc "Kafra Service#Pt01";
+	end;
+}
+
+
+// Castle 2 ========================
+prtg_cas02.gat,71,36,4	script	Kafra Service#Pt02	117,{
+	callfunc "F_GKafra", "prtg_cas02", "Prontera";
+	end;
+OnRecvCastlePt02:
+	if (GetCastleData("prtg_cas02.gat",9) < 1) disablenpc "Kafra Service#Pt02";
+	end;
+}
+
+
+// Castle 3 ========================
+//prtg_cas03.gat,181,215,4	script	Kafra Service#Pt03	117,{
+prtg_cas03.gat,39,99,4	script	Kafra Service#Pt03	117,{
+	callfunc "F_GKafra", "prtg_cas03", "Prontera";
+	end;
+OnRecvCastlePt03:
+	if (GetCastleData("prtg_cas03.gat",9) < 1) disablenpc "Kafra Service#Pt03";
+	end;
+}
+
+
+// Castle 4 ========================
+prtg_cas04.gat,258,247,4	script	Kafra Service#Pt04	117,{
+	callfunc "F_GKafra", "prtg_cas04", "Prontera";
+	end;
+OnRecvCastlePt04:
+	if (GetCastleData("prtg_cas04.gat",9) < 1) disablenpc "Kafra Service#Pt04";
+	end;
+}
+
+
+// Castle 5 ========================
+prtg_cas05.gat,52,41,4	script	Kafra Service#Pt05	117,{
+	callfunc "F_GKafra", "prtg_cas05", "Prontera";
+	end;
+OnRecvCastlePt05:
+	if (GetCastleData("prtg_cas05.gat",9) < 1) disablenpc "Kafra Service#Pt05";
+	end;
+}

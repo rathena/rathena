@@ -1,0 +1,46 @@
+// Bloody Branch Summonable Monsters Database
+//
+// Structure of Database:
+// MobID,DummyName,Rate
+
+0,Baphomet,1039
+//1022,Werewolf,1000000
+1038,Osiris,1000000
+1039,Baphomet,1000000
+1046,Doppelganger,1000000
+1059,Mistress,1000000
+1086,Golden Thief Bug,1000000
+1087,Orc Hero,1000000
+1112,Drake,1000000
+1115,Eddga,1000000
+1147,Maya,1000000
+1150,Moonlight,1000000
+1157,Pharaoh,1000000
+1159,Phreeoni,1000000
+1190,Orc Lord,1000000
+1251,Stormy Knight,1000000
+1252,Garm,1000000
+1272,Dark Lord,1000000
+1312,Turtle General,1000000
+1373,Lord of Death,1000000
+1389,Dracula,1000000
+1418,Evil Snake Lord,1000000
+1492,Incantation Samurai,1000000
+1511,Amon Ra,1000000
+1518,Bacsojin,1000000
+1583,Tao Gunka,1000000
+1623,RSX 0806,1000000
+1688,Lady Tany,1000000
+1719,Detale,1000000
+
+//== Not "Normal" MvP's.
+//1646,Lord Knight Seyren,1000000
+//1647,Assassin Cross Eremes,1000000
+//1648,Whitesmith Harword,1000000
+//1649,High Priest Magaleta,1000000
+//1650,Sniper Shecil,1000000
+//1651,High Wizard Katrinn,1000000
+//1708,Thanatos,1000000
+//1733,Kiel,1000000
+//1734,Kiel D-01,1000000
+//1751,Valkierie Randgris,1000000

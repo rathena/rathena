@@ -1,0 +1,182 @@
+//===== eAthena Script ======================================= 
+//= Renters
+//===== By: ================================================== 
+//= kobra_k88, mod by Lupus
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= PecoPeco Breeder, Grand PecoPeco Breeder, Falcon tamer scripts
+//===== Additional Comments: ================================= 
+//= Fully working
+//= Added another Falcon Master into the Hunters Guild [Lupus]
+//= 1.2: replaced checkoption(x) with checkriding,checkfalcon [Lupus]
+//= 1.3: Added support Adv Classes + Baby Class [Lupus]
+//= 1.4: Added different prices for normal, advanced and baby classes
+//= but you could set them to the same [Lupus]
+//= 1.5: Fixed spelling mistakes [Nexon]
+//= 1.5a: Small fix (Falcon Taming -> Falcon Mastery) [Komurka]
+//= 1.6: Moved the Falcon Master to Hugel [Poki#3]
+//============================================================ 
+
+// PecoPeco Breeder (for Knights)-------------------------------------------
+prontera.gat,61,338,3	script	PecoPeco Breeder	86,{
+	if(Upper==0) set @price,2500; //Normal Peco - default price
+	if(Upper==1) set @price,4000; //Armored Peco
+	if(Upper==2) set @price,2000; //Baby Peco
+
+	mes "[PecoPeco Breeder]";
+	if(BaseJob == Job_Knight || BaseJob == Job_Knight2 ) goto L_Start;
+	if(Upper==0)mes "I'm a PecoPeco breeder and I rent out PecoPecos for ^4444FF Knights ^000000 to ride on.";
+	if(Upper==1)mes "I'm a PecoPeco breeder and I rent out Armored PecoPecos for ^4444FF Lord Knights ^000000 to ride on.";
+	if(Upper==2)mes "I'm a PecoPeco breeder and I rent out Baby PecoPecos for ^4444FF Baby Knights ^000000 to ride on.";
+	close;
+
+L_Start:
+	if(Upper==0)mes "Good day.  Would you like to ride a PecoPeco?";
+	if(Upper==1)mes "Good day.  Would you like to ride an Armored PecoPeco?";
+	if(Upper==2)mes "Good day.  Would you like to ride a Baby PecoPeco?";
+	next;
+	mes "[PecoPeco Breeder]";
+	mes "You can rent one PecoPeco for "+@price+" Zeny, provided that you have the PecoPeco Riding skill.";
+	next;
+	menu "Lend me a trusty steed!... err... bird!",M_0,"Hmm...It's a bit too expensive.",M_1;
+
+	M_0:
+		if(getskilllv(63) == 0) goto sL_NeedSkill;
+		if(Zeny < @price) goto sL_Zeny;
+		if(checkriding(0) != 0) goto sL_GotPeco;
+		set Zeny, Zeny - @price;
+		setriding;
+		mes "Thank you and good day.";
+		emotion 15;
+		close;
+
+		sL_NeedSkill:
+			mes "[PecoPeco Breeder]";
+			mes  "As I mentioned earlier, you need the ^3333FFRiding^000000 skill in order to rent a PecoPeco.";
+			close;
+		sL_Zeny:
+			mes "[PecoPeco Breeder]";
+			mes "As I said before it will be "+@price+"z. Come back when you have enough zeny.";
+			close;
+		sL_GotPeco:
+			mes "[PecoPeco Breeder]";
+			mes "Umm... aren't you already riding a PecoPeco??....";
+			emotion 20;
+			close;
+	M_1:
+		mes "[PecoPeco Breeder]";
+		mes "Alright.  Good day to you.";
+		close;
+
+}
+
+// Grand PecoPeco Breeder (for Crusaders)-------------------------------------------
+prontera.gat,238,312,5	script	Grand PecoPeco Breeder	86,{
+	if(Upper==0) set @price,3000; //Normal Peco - default price
+	if(Upper==1) set @price,5000; //Armored Peco
+	if(Upper==2) set @price,2500; //Baby Peco
+
+	mes "[Grand PecoPeco Breeder]";
+	if(BaseJob == Job_Crusader || BaseJob == Job_Crusader2 ) goto L_Start;
+	if(Upper==0)mes "I'm a Grand PecoPeco breeder and I rent out Grand PecoPecos for ^4444FF Crusaders^000000 to ride on.";
+	if(Upper==1)mes "I'm a Grand PecoPeco breeder and I rent out Armored Grand PecoPecos for ^4444FF Paladins^000000 to ride on.";
+	if(Upper==2)mes "I'm a Grand PecoPeco breeder and I rent out Baby Grand PecoPecos for ^4444FF Baby Crusaders^000000 to ride on.";
+	close;
+
+L_Start:
+	if(Upper==0)mes "Good day.  Would you like to ride a Grand PecoPeco?";
+	if(Upper==1)mes "Good day.  Would you like to ride an Armored Grand PecoPeco?";
+	if(Upper==2)mes "Good day.  Would you like to ride a Baby Grand PecoPeco?";
+	next;
+	mes "[Grand PecoPeco Breeder]";
+	mes "You can rent one Grand PecoPeco for "+@price+" Zeny, provided that you have the PecoPeco Riding skill.";
+	next;
+	menu "Lend me a trusty steed!... err... bird!",M_0,"Hmm...It's a bit too expensive.",M_1;
+
+	M_0:
+		if(getskilllv(63) == 0) goto sL_NeedSkill;
+		if(Zeny < @price) goto sL_Zeny;
+		if(checkriding(0) != 0) goto sL_GotPeco;
+		set Zeny, Zeny - @price;
+		setriding;
+		mes "Thank you and good day.";
+		emotion 15;
+		close;
+
+		sL_NeedSkill:
+			mes "[Grand PecoPeco Breeder]";
+			mes  "As I mentioned earlier, you need the ^3333FFRiding^000000 skill in order to rent a Grand PecoPeco.";
+			close;
+		sL_Zeny:
+			mes "[Grand PecoPeco Breeder]";
+			mes "As I said before it will be "+@price+"z. Come back when you have enough zeny.";
+			close;
+		sL_GotPeco:
+			mes "[Grand PecoPeco Breeder]";
+			mes "Umm... aren't you already riding a Grand PecoPeco??....";
+			emotion 20;
+			close;
+	M_1:
+		mes "[Grand PecoPeco Breeder]";
+		mes "Alright.  Good day to you.";
+		close;
+
+}
+
+// Falcon Master--------------------------------------------------------------
+hu_in01.gat,375,318,5	script	Falcon Master	59,{
+	if(Upper==0) set @price,800; //Normal Falcon - default price
+	if(Upper==1) set @price,1000; //Scarf Falcon
+	if(Upper==2) set @price,600; //Baby Falcon
+
+	mes "[Falcon Master]";
+	mes "Hellooooo, I am the Falcon Master.";
+	next;
+	menu "Speak with him",M_0, "Politely back away",M_End;
+
+	M_0:
+		mes "[Falcon Master]";
+		if(Upper==0)mes "I can train a Falcon for you, but you need "+@prize+"z and be a Hunter with mastered ^5555FF'Falcon Mastery'^000000 skill.";
+		if(Upper==1)mes "I can train a Scarf Falcon for you, but you need "+@prize+"z and be a Sniper with mastered ^5555FF'Falcon Mastery'^000000 skill.";
+		if(Upper==2)mes "I can train a Baby Falcon for you, but you need "+@prize+"z and be a Baby Hunter with mastered ^5555FF'Falcon Mastery'^000000 skill.";
+		next;
+		menu "Ok",sM_0, "No thanks",M_End;
+
+		sM_0:
+			if(BaseJob != Job_Hunter) goto sL_NotHunter;
+			if(checkfalcon(0) != 0) goto sL_GotFalc;
+			if(Zeny < @price) goto sL_Zeny;
+			if(getskilllv(127)==0) goto sL_NoSkill;
+			set Zeny, Zeny - @price;
+			mes "[Falcon Master]";
+			mes "It looks like you meet all the requirements to handle a Falcon.  Here you are";
+			setfalcon;
+			next;
+			mes "[Falcon Master]";
+			mes "Please take very good care of it.  It will prove to be a valuable companion.";
+			close;
+			
+			sL_NotHunter:
+				mes "[Falcon Master]";
+				mes "As I said, Falcons can only be given to Hunters.  Falcons are very picky about who they travel with you know.";
+				close;
+			sL_GotFalc:
+				mes "[Falcon Master]";
+				mes "You can only have 1 Falcon at a time.";
+				close;
+			sL_NoSkill:
+				mes "[Falcon Master]";
+				mes "I'm sorry but you do not have the Falcon Mastery skill.  Please come back when you have learned it.";
+				close;
+			sL_Zeny:
+				mes "[Falcon Master]";
+				mes "As I said before it will be "+@price+"z. Come back when you aquire enough zeny.";
+				close;
+	M_End:
+		mes "[Falcon Master]";
+		mes "Have a nice day.";
+		close;
+}

@@ -1,0 +1,137 @@
+//===== eAthena Script =======================================
+//= Warper Script
+//===== By: ==================================================
+//= Darkchild
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= Any eAthena Version;
+//===== Description: =========================================
+//= Generic warper...
+//===== Additional Comments: =================================
+//= 1.0 by Darkchild
+//= 1.1 by jabs
+//= 1.2 by Lupus (placement fixed in Amatsu)
+//= 1.3 fixed Louyang label typo, added warp and WARPRA into
+//= Nifleheim. Also sorted all names in alphabet order [Lupus]
+//= 1.4 fixed morroc warp npc overlaying kafra [Aria]
+//= 1.4a Added Ayothaya and Einbroch to list, and town Warpra's [Fredzilla]
+//= 1.4b fixed Izlude warp npc overlaying BBS [Justin84]
+//= 1.5 Added this NPC to more places [Lupus]
+//= 1.6 Rewrote a lot. Changed the sprite, some locations. [Poki#3]
+//= TODO Add an option for selecting the level of the dungeon. [Poki#3]
+//============================================================
+//============================================================
+//= To allow selecting the Level of the Dungeon you want to
+//= Warp to set the @lvlselect variable to 1 (Not implemented yet!)
+//============================================================
+
+-	script	Warp Agent::warpra	859,{
+//	set @lvlselect,0;
+	mes "[Warp Agent]";
+	mes "Hello,";
+	mes "I can teleport you to any Town or Dungeon!";
+	mes "Were do you want to go?";
+	next;
+	menu "To a Town",-,"To a Dungeon",L_dungeon;
+	next;
+	mes "[Warp Agent]";
+	mes "Please select your destination.";
+	next;
+	menu "Alberta",walberta,"Aldebaran",waldebaran,"Amatsu",wamatsu,"Ayothaya",wayothaya,"Comodo",wcomodo,"Einbroch",weinbroch,"Einbech",weinbech,"Geffen",wgeffen,"Gonryun",wgonryun,"Hugel",whugel,"Izlude",wizlude,"Lighthalzen",wlighthalzen,"Louyang",wlouyang,"Lutie",wxmas,"Morroc",wmorroc,"Payon",wpayon,"Prontera",wprontera,"Umbala",wumbala,"Yuno",wyuno;
+L_dungeon:
+	mes "[Warp Agent]";
+	mes "Please select your destination.";
+	next;
+	menu "Abyss Lake",dabbys,"Amatsu Dungeon",damatsu,"Anthell",dant,"Ayothaya Dungeon",dayothaya,"Bibilan Dungeon",dbibilan,"Coal Mine (Dead Pit)",dcoal,"Culvert",dculvert,"Einbech Dungeon",dein,"Glast Heim",dglast,"Gonryun Dungeon",dgonryun,"Juperos",djuperos,"Lighthalzen Bio Lab",dlighthalzen,"Magma Dungeon",dmagma,"Niflheim",dniflheim,"Odin Temple",dodin,"Orc Dungeon",dorc,"Payon Dungeon",dpayon,"Pyramids",dpyramids,"Sphinx",dsphinx,"Sunken Ship",dsunken,"Thanatos Tower",dthanatos,"Turtle Dungeon",dturtle;
+
+
+//----------------Towns----------------\\
+walberta:	warp "alberta.gat",	27,	236;	end;
+waldebaran:	warp "aldebaran.gat",	145,	120;	end;
+wamatsu:	warp "amatsu.gat",	197,	86;	end;
+wayothaya:	warp "ayothaya.gat",	149,	118;	end;
+wcomodo:   	warp "comodo.gat",	188,	161;    end;
+weinbroch:   	warp "einbroch.gat",	64, 	200;	end;
+weinbech:   	warp "einbech.gat",	70, 	95;	end;
+wgeffen:	warp "geffen.gat",	119,	66;	end;
+wgonryun:	warp "gonryun.gat",	150,    130; 	end;
+whugel:   	warp "hugel.gat",	96,	145;    end;
+wizlude:	warp "izlude.gat",	128,	111;	end;
+wlighthalzen:	warp "lighthalzen.gat",	158,	92;	end;
+wlouyang:	warp "louyang.gat",	210,	108;	end;
+wmorroc:	warp "morocc.gat",	159,	93;	end;
+wprontera:	warp "prontera.gat",	156,	187;	end;
+wpayon:		warp "payon.gat",	152,	75;	end;
+wumbala:	warp "umbala.gat",	130,    130; 	end;
+wxmas:		warp "xmas.gat",	148,	131;	end;
+wyuno:   	warp "yuno.gat",	160,	168;    end;
+
+//----------------Dungeons----------------\\
+dabbys:		warp "hu_fild05.gat",	189,	207;	end;
+damatsu:	warp "ama_dun01.gat",	229,	12;	end;
+dant:		warp "moc_fild04.gat",	210,	328;	end;
+dayothaya:	warp "ayo_fild02.gat",	280,	149;	end;
+dbibilan:	warp "izlu2dun.gat",	106,	88;	end;
+dculvert:	warp "prt_sewb1.gat",	126,	248;	end;
+dcoal:		warp "mjolnir_02.gat",	81,	359;	end;
+dein:		warp "einbech.gat",	135,	249;	end;
+dglast:		warp "glast_01.gat",	368,	303;	end;
+dgonryun:	warp "gonryun.gat",	160,    195; 	end;
+djuperos:	warp "yuno_fild07.gat",	218,	176;	end;
+dlighthalzen:	warp "lighthalzen.gat",	158,	285;	end;
+dmagma:		warp "yuno_fild03.gat",	39,	140;	end;
+dniflheim:	warp "niflheim.gat",	35,	161;	end;
+dodin:		warp "odin_tem01.gat",	98,	144;	end;
+dorc:		warp "gef_fild10.gat",	70,	332;	end;
+dpayon:		warp "pay_arche.gat",	43,	132;	end;
+dpyramids:	warp "moc_ruins.gat",	62,	162;	end;
+dsphinx:	warp "moc_fild19.gat",	107,	100;	end;
+dsunken:	warp "alb2trea.gat",	75,	98;	end;
+dthanatos:	warp "tha_scene01.gat",	131,	223;	end;
+dturtle:	warp "tur_dun01.gat",	149,	238;	end;
+}
+
+//----------------Towns----------------\\
+alberta.gat,31,240,4	duplicate(warpra)	Warp Agent	859
+aldebaran.gat,145,118,4	duplicate(warpra)	Warp Agent	859
+amatsu.gat,192,81,1	duplicate(warpra)	Warp Agent	859
+ayothaya.gat,144,117,6	duplicate(warpra)	Warp Agent	859
+comodo.gat,194,158,4	duplicate(warpra)	Warp Agent	859
+einbroch.gat,59,205,4	duplicate(warpra)	Warp Agent	859
+einbroch.gat,243,189,2	duplicate(warpra)	Warp Agent	859
+einbech.gat,135,249,4	duplicate(warpra)	Warp Agent	859
+geffen.gat,115,66,4	duplicate(warpra)	Warp Agent	859
+gonryun.gat,151,130,4	duplicate(warpra)	Warp Agent	859
+izlude.gat,133,117,4	duplicate(warpra)	Warp Agent	859
+lighthalzen.gat,155,79,6	duplicate(warpra)	Warp Agent	859
+louyang.gat,210,106,4	duplicate(warpra)	Warp Agent	859
+morocc.gat,156,95,4	duplicate(warpra)	Warp Agent	859
+prontera.gat,161,192,4	duplicate(warpra)	Warp Agent	859
+payon.gat,182,110,4	duplicate(warpra)	Warp Agent	859
+umbala.gat,132,130,4	duplicate(warpra)	Warp Agent	859
+xmas.gat,150,136,4	duplicate(warpra)	Warp Agent	859
+yuno.gat,137,162,4	duplicate(warpra)	Warp Agent	859
+
+//----------------Dungeons----------------\\
+ama_dun01.gat,233,9,1	duplicate(warpra)	Warp Agent	859
+moc_fild04.gat,207,331,4	duplicate(warpra)	Warp Agent	859
+ayo_fild02.gat,279,154,4	duplicate(warpra)	Warp Agent	859
+izlu2dun.gat,104,82,4	duplicate(warpra)	Warp Agent	859
+prt_sewb1.gat,125,253,4	duplicate(warpra)	Warp Agent	859
+mjolnir_02.gat,85,363,4	duplicate(warpra)	Warp Agent	859
+einbech.gat,81,101,1	duplicate(warpra)	Warp Agent	859
+glast_01.gat,370,308,4	duplicate(warpra)	Warp Agent	859
+yuno_fild03.gat,37,135,4	duplicate(warpra)	Warp Agent	859
+niflheim.gat,32,161,4	duplicate(warpra)	Warp Agent	859
+gef_fild10.gat,71,339,4	duplicate(warpra)	Warp Agent	859
+pay_arche.gat,39,135,4	duplicate(warpra)	Warp Agent	859
+moc_ruins.gat,64,166,4	duplicate(warpra)	Warp Agent	859
+moc_fild19.gat,106,97,4	duplicate(warpra)	Warp Agent	859
+alb2trea.gat,73,101,4	duplicate(warpra)	Warp Agent	859
+tur_dun01.gat,148,239,4	duplicate(warpra)	Warp Agent	859
+lhz_dun01.gat,157,285,4	duplicate(warpra)	Warp Agent	859
+hu_fild05.gat,186,210,4	duplicate(warpra)	Warp Agent	859
+yuno_fild07.gat,221,179,4	duplicate(warpra)	Warp Agent	859
+tha_scene01.gat,139,194,1	duplicate(warpra)	Warp Agent	859
+odin_tem01.gat,96,149,4	duplicate(warpra)	Warp Agent	859
