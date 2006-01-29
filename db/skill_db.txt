@@ -196,7 +196,7 @@
 177,7,6,1,-1,0,10,1,no,0,2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
 178,-1,6,1,-1,0,10,1,no,0,2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
 179,-1,6,1,-1,0,10,1,no,0,2,0,weapon,0	//NPC_STUNATTACK#Stun Attack#
-180,-1,6,1,-1,0,10,1,no,0,2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
+180,7,6,1,-1,0,10,1,no,0,2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
 181,7,6,1,7,0,10,1,no,0,2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
 182,-1,6,1,-1,0,10,1,no,0,2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
 183,-1,6,1,-1,0,10,1,no,0,2,0,weapon,0	//NPC_RANDOMATTACK#Random Attack #

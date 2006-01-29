@@ -27,6 +27,8 @@
 
 =========================
 01/29
+	* Changed the range of NPC_PETRIFYATTACK from 1 to 7 [MasterOfMuppets]
+	* Added monster skills to the odin temple monsters [MasterOfMuppets]
 	* Updated Vesper's and orc baby's monster skills [MasterOfMuppets]
 	* Vesper will now spawn Apocalypses as slaves [MasterOfMuppets]
 	* Lowered the drop rate of peridots by apocalypses, they are no longer minibosses. [MasterOfMuppets]
