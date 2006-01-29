@@ -28,6 +28,8 @@ Nexon
 Date		Added
 ======
 
+01/29
+	* Updated the Juperos dungeon spawns according to ROmap. [MasterOfMuppets]
 01/28
 	* Fixed Warp to Abbys Lake. [Poki#3]
 	* Removed dup warps around Einbroch. [Poki#3]

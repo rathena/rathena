@@ -27,6 +27,9 @@
 
 =========================
 01/29
+	* Updated Vesper's and orc baby's monster skills [MasterOfMuppets]
+	* Vesper will now spawn Apocalypses as slaves [MasterOfMuppets]
+	* Lowered the drop rate of peridots by apocalypses, they are no longer minibosses. [MasterOfMuppets]
 	* Updated some cards according to tests: Icreased a bit chance of Gift Box / OBB /OVB drops [Lupus]
 		Raggler Card Combo(2x), Mimic Card(2x), Mystcase Card(8x)
 	* Updated Mystcase Card: When Raggler Card Cmbo is set, it stops dropping Gift Boxes [Lupus]

@@ -11,34 +11,40 @@
 //= Any Athena/Freya Version
 //===== Additional Comments: =================================
 //= 08/24/05 : Added 1st version. [Muad_Dib]
+//= 01/29/05 : Updated the spawns according to current info [MasterOfMuppets]
 //============================================================
-
-
-//========================================================================================
-// - Juperos Core
-//========================================================================================
-
-jupe_core.gat,0,0,0,0	monster	Archdam	1668,25,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1669,25,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1670,20,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1671,25,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1672,30,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1673,25,0,0,0
-jupe_core.gat,0,0,0,0	monster	Venatu	1675,10,0,0,0
-jupe_core.gat,0,0,0,0	monster	Venatu	1676,15,0,0,0
-jupe_core.gat,0,0,0,0	monster	Venatu	1677,10,0,0,0
-jupe_core.gat,0,0,0,0	monster	Venatu	1678,20,0,0,0
-jupe_core.gat,0,0,0,0	monster	Venatu	1679,10,0,0,0
-jupe_core.gat,0,0,0,0	monster	Apocalips H	1685,1,3600000,1800000,1
 
 //========================================================================================
 // - Juperos 01
 //========================================================================================
 
-juperos_01.gat,0,0,0,0	monster	Hunter Fly	1035,20,0,0,0
-juperos_01.gat,0,0,0,0	monster	Wind Ghost	1263,35,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1675,30,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1676,15,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1677,25,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1678,20,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1679,25,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1676,35,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1677,35,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1678,35,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1679,35,0,0,0
+
+//========================================================================================
+// - Juperos 02
+//========================================================================================
+
+juperos_02.gat,0,0,0,0	monster	Venatu	1676,20,0,0,0
+juperos_02.gat,0,0,0,0	monster	Venatu	1677,20,0,0,0
+juperos_02.gat,0,0,0,0	monster	Venatu	1678,20,0,0,0
+juperos_02.gat,0,0,0,0	monster	Venatu	1679,20,0,0,0
+juperos_02.gat,0,0,0,0	monster	Apocalypse	1365,40,0,0,0
+
+//========================================================================================
+// - Juperos Core
+//========================================================================================
+
+jupe_core.gat,0,0,0,0	monster	Archdam	1668,20,0,0,0
+jupe_core.gat,0,0,0,0	monster	Dimik	1670,12,0,0,0
+jupe_core.gat,0,0,0,0	monster	Dimik	1671,12,0,0,0
+jupe_core.gat,0,0,0,0	monster	Dimik	1672,12,0,0,0
+jupe_core.gat,0,0,0,0	monster	Dimik	1673,12,0,0,0
+jupe_core.gat,0,0,0,0	monster	Venatu	1676,5,0,0,0
+jupe_core.gat,0,0,0,0	monster	Venatu	1677,5,0,0,0
+jupe_core.gat,0,0,0,0	monster	Venatu	1678,5,0,0,0
+jupe_core.gat,0,0,0,0	monster	Venatu	1679,5,0,0,0
+jupe_core.gat,0,0,0,0	monster	Apocalypse	1365,20,0,0,0
+jupe_core.gat,0,0,0,0	monster	Vesper	1685,1,3600000,1800000,1

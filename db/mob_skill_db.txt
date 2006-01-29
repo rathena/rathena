@@ -2978,6 +2978,21 @@
 1682,Removal@SM_BASH,attack,5,5,500,800,5000,no,target,always,0,,,,,,
 1682,Removal@NPC_UNDEADATTACK,attack,347,3,500,500,5000,no,target,always,0,,,,,,
 
+1685,Vesper@NPC_SUMMONSLAVE,attack,196,5,10000,700,60000,no,self,slavele,3,1365,,,,,
+1685,Vesper@NPC_SUMMONSLAVE,chase,196,5,10000,700,60000,no,self,slavele,3,1365,,,,,
+1685,Vesper@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1685,Vesper@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1685,Vesper@WZ_METEOR,attack,83,10,500,0,3000,yes,target,always,0,,,,,,
+1685,Vesper@WZ_METEOR,chase,83,10,1000,0,3000,yes,target,always,0,,,,,,
+1685,Vesper@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,yes,target,always,0,,,,,,
+1685,Vesper@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
+1685,Vesper@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+
+1686,Orc Baby@SM_BASH,angry,5,5,500,0,5000,yes,target,always,0,,,,,,
+1686,Orc Baby@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,
+//I don't know what slaves they have.
+//1686,Orc Baby@NPC_SUMMONSLAVE,chase,196,?,10000,700,60000,no,self,slavele,?,?,,,,,
+
 // Thanatos Tower Mobs
 1700,Observation@RG_INTIMIDATE,attack,219,1,700,0,5000,yes,target,always,0,,,,,,
 1702,Retribution@CR_GRANDCROSS,attack,254,1,2000,0,0,yes,target,always,0,,,,,,
