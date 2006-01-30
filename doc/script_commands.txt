@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 2.7
+//= 2.7c
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -32,6 +32,7 @@
 //= 2.7 - petstat command. [Lance]
 //= 2.7a - delitem2, countitems2 commands [Lupus]
 //= 2.7b - clone command [Skotlex]
+//= 2.7c - disguise / undisguise, query_sql commands [Lupus]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -4839,6 +4840,20 @@ Example:
 set @i, distance(100,200,101,202);
 
 ---------------------------------------
+*query_sql "your MySQL query", <array name>
+
+Returns up to 127 values into array.
+
+Example:
+
+query_sql "SELECT name FROM 'char' ORDER BY fame DESC LIMIT 5", @most_fame_dude;
+mes "Hall Of Fame: TOP5";
+mes "1."+@most_fame_dude[0]; // Will return a person with the biggest fame value.
+mes "2."+@most_fame_dude[1];
+mes "3."+@most_fame_dude[2];
+mes "4."+@most_fame_dude[3];
+mes "5."+@most_fame_dude[4];
+---------------------------------------
 
 *setd "variable name", <value>
 
@@ -4891,3 +4906,32 @@ Set a new script bonus to the Item. Very useful for game events.
 
 Example:
 setitemscript 2637,"{ bonus bDamageWhenUnequip,40; if(isequipped(2236)==0)end; if(getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";
+
+---------------------------------------
+
+*disguise <Monster ID>;
+*undisguise;
+
+This command disgueses current player with a monster sprite.
+The disguise is disappearing on re-login or on 'undisguise' command.
+
+Note: It doesn't work with "Pets with equipment on"
+Note: If u're a Sniper, u'd get an old Falcon over your head
+Note: You can kill yourself with some skills
+Note: Monsters of your type could heal you
+
+Example:
+disquise 1002; //Yay! You're a Poring!!!
+next;
+undisquise; //Yay!!!! You're a human again!!
+
+---------------------------------------
+
+*nude; 
+
+This command will unequip anything equipped on the invoking character.
+
+It is not required to do this when changing jobs since 'jobchange' will unequip 
+everything not equippable by the new job class anyway.
+
+---------------------------------------
