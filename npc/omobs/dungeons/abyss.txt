@@ -16,7 +16,7 @@ abyss_01.gat,0,0,0,0	monster	Mimic	1191,20,0,0,0
 abyss_01.gat,0,0,0,0	monster	Ancient Mimic	1699,1,0,0,0
 abyss_01.gat,0,0,0,0	monster	Novus	1715,10,0,0,0
 abyss_01.gat,0,0,0,0	monster	Ferus	1717,20,0,0,0
-abyss_01.gat,0,0,0,0	monster	Hydro­	1720,1,1800000,0,0
+abyss_01.gat,0,0,0,0	monster	Hydro	1720,1,1800000,0,0
 
 //Abyss Lakes Underground Cave Flor 2
 abyss_02.gat,0,0,0,0	monster	Ancient Mimic	1699,10,0,0,0
@@ -26,7 +26,7 @@ abyss_02.gat,0,0,0,0	monster	Acidus	1716,30,0,0,0
 abyss_02.gat,0,0,0,0	monster	Novus	1715,10,0,0,0
 abyss_02.gat,0,0,0,0	monster	Novus	1718,10,0,0,0
 abyss_02.gat,0,0,0,0	monster	Ferus	1717,30,0,0,0
-abyss_02.gat,0,0,0,0	monster	Hydro­	1720,1,1800000,0,0
+abyss_02.gat,0,0,0,0	monster	Hydro	1720,1,1800000,0,0
 
 //Abyss Lakes Underground Cave Flor 3
 abyss_03.gat,0,0,0,0	monster	Ancient Mimic	1699,20,0,0,0
@@ -37,5 +37,5 @@ abyss_03.gat,0,0,0,0	monster	Acidus	1716,20,0,0,0
 abyss_03.gat,0,0,0,0	monster	Novus	1715,10,0,0,0
 abyss_03.gat,0,0,0,0	monster	Novus	1718,10,0,0,0
 abyss_03.gat,0,0,0,0	monster	Ferus	1714,20,0,0,0
-abyss_03.gat,0,0,0,0	monster	Hydro­	1720,2,1800000,0,0
+abyss_03.gat,0,0,0,0	monster	Hydro	1720,2,1800000,0,0
 abyss_03.gat,0,0,0,0	monster	Detale	1719,1,3600000,7200000,0

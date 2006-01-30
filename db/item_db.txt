@@ -2044,7 +2044,7 @@
 7436,Fragment_of_Agony,Fragment of Agony,3,,753,10,,,,,,,,,,,,,{}
 7437,Fragment_of_Sorrow,Fragment of Sorrow,3,,753,10,,,,,,,,,,,,,{}
 7438,Fragment_of_Hatred,Fragment of Hatred,3,,753,10,,,,,,,,,,,,,{}
-7439,Fragment_of_Dispair,Fragment of Dispair,3,,753,10,,,,,,,,,,,,,{}
+7439,Fragment_of_Despair,Fragment of Despair,3,,753,10,,,,,,,,,,,,,{}
 7440,Red_Feather,Red tinted Feather,3,,667,10,,,,,,,,,,,,,{}
 7441,Blue_Feather,Blue tinted Feather,3,,704,10,,,,,,,,,,,,,{}
 7442,Cursed_Seal,Cursed Seal,3,,666,10,,,,,,,,,,,,,{}

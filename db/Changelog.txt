@@ -28,6 +28,8 @@
 =========================
 
 01/30
+	* Revised the Thanatos Tower and Abyss Lakes monster's skills [MasterOfMuppets]
+	* Added monster drops to the Thanatos Tower and Abyss lake monsters [MasterOfMuppets]
 	* Fixed a lot of item names in item_db ;] [Poki#3]
 	* Fixed Dark Priest Card [Komurka]
 
