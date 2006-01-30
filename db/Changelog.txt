@@ -28,6 +28,7 @@
 =========================
 
 01/30
+	* Fixed a lot of item names in item_db ;] [Poki#3]
 	* Fixed Dark Priest Card [Komurka]
 
 01/29
