@@ -2703,12 +2703,11 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				log_pick(mvp_sd, "P", 0, item.nameid, 1, NULL);
 			}
 
-			if(log_config.mvpdrop > 0)
-				log_mvpdrop(mvp_sd, md->class_, log_mvp);
-				
-				break;
+			break;
 		}
 
+		if(log_config.mvpdrop > 0)
+			log_mvpdrop(mvp_sd, md->class_, log_mvp);
 	}
 
 	} // [MouseJstr]
