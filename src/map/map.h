@@ -1023,6 +1023,7 @@ struct map_data {
 		unsigned nomobloot	: 1; // [Lorky]
 		unsigned nomvploot	: 1; // [Lorky]
 		unsigned nightenabled :1; //For night display. [Skotlex]
+		unsigned restricted	: 1; // [Komurka]
 	} flag;
 	struct point save;
 	struct npc_data *npc[MAX_NPC_PER_MAP];
@@ -1033,6 +1034,7 @@ struct map_data {
 	} drop_list[MAX_DROP_PER_MAP];
 	struct mob_list *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int mob_delete_timer;	// [Skotlex]
+	int zone;	// [Komurka]
 };
 
 struct map_data_other_server {

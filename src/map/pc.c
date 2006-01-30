@@ -590,6 +590,8 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	if(map_flag_gvg(sd->bl.m) && (item->flag.no_equip&2 || !pc_isAllowedCardOn(sd,item->slot,n,2))) //optimized by Lupus
 		return 0; 
+	if(map[sd->bl.m].zone && map[sd->bl.m].flag.restricted && (item->flag.no_equip&map[sd->bl.m].zone || !pc_isAllowedCardOn(sd,item->slot,n,map[sd->bl.m].zone)))
+		return 0;
 	if((item->equip & 0x0002 || item->equip & 0x0020) && item->type == 4 && sd->sc_data[SC_STRIPWEAPON].timer != -1) // Also works with left-hand weapons [DracoRPG]
 		return 0;
 	if(item->equip & 0x0020 && item->type == 5 && sd->sc_data[SC_STRIPSHIELD].timer != -1) // Also works with left-hand weapons [DracoRPG]
@@ -2792,7 +2794,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 			(pc_issit(sd) && (sd->itemid == 605 || sd->itemid == 606)) ||
 			//added item_noequip.txt items check by Maya&[Lupus]
 			(map[sd->bl.m].flag.pvp && (sd->inventory_data[n]->flag.no_equip&1) ) || // PVP
-			(map_flag_gvg(sd->bl.m) && (sd->inventory_data[n]->flag.no_equip>1) ) || // GVG
+			(map_flag_gvg(sd->bl.m) && (sd->inventory_data[n]->flag.no_equip&2) ) || // GVG
+			(map[sd->bl.m].zone && map[sd->bl.m].flag.restricted && (sd->inventory_data[n]->flag.no_equip&map[sd->bl.m].zone)) || // Zone restriction
 			!pc_isUseitem(sd,n) ) {
 			clif_useitemack(sd,n,0,0);
 			return 1;
@@ -7195,14 +7198,22 @@ int pc_checkitem(struct map_session_data *sd)
 		}
 		//?備制限チェック
 		if(sd->status.inventory[i].equip && (map[sd->bl.m].flag.pvp||map[sd->bl.m].flag.gvg) &&
-                 	(it->flag.no_equip&1  || !pc_isAllowedCardOn(sd,it->slot,i,1))){//PVP check for forbiden items. optimized by [Lup$
-				sd->status.inventory[i].equip=0;
-				calc_flag = 1;
-			}else if(sd->status.inventory[i].equip && map_flag_gvg(sd->bl.m) &&
-                       (it->flag.no_equip&2   || !pc_isAllowedCardOn(sd,it->slot,i,2))){//GvG optimized by [Lupus]
-				sd->status.inventory[i].equip=0;
-				calc_flag = 1;
+                 	(it->flag.no_equip&1  || !pc_isAllowedCardOn(sd,it->slot,i,1)))
+		{  //PVP check for forbiden items. optimized by [Lupus]
+			sd->status.inventory[i].equip=0;
+			calc_flag = 1;
+		} else if(sd->status.inventory[i].equip && map_flag_gvg(sd->bl.m) &&
+                       (it->flag.no_equip&2   || !pc_isAllowedCardOn(sd,it->slot,i,2)))
+		{  //GvG optimized by [Lupus]
+			sd->status.inventory[i].equip=0;
+			calc_flag = 1;
+		} else if(sd->status.inventory[i].equip && (map[sd->bl.m].zone) && (map[sd->bl.m].flag.restricted) &&
+			(it->flag.no_equip&map[sd->bl.m].zone))
+		{ // Restricted zone by [Komurka]
+			sd->status.inventory[i].equip=0;
+			calc_flag = 1;
 		}
+
 	}
 
 	pc_setequipindex(sd);

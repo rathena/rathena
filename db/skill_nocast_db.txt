@@ -9,15 +9,46 @@
 //  4 = Cannot be used in GvG maps
 //  8 = Cannot be used when WoE is on
 //  16 = Cannot be used in PK Mode maps
+//  Restricted zones - they're configured by 'restricted <number>' mapflag
+//  32 = Cannot be used in zone 1 maps
+//  64 = Cannot be used in zone 2 maps
+//  128 = Cannot be used in zone 3 maps
+//  256 = Cannot be used in zone 4 maps
+//  512 = Cannot be used in zone 5 maps
+//  1024 = Cannot be used in zone 6 maps
+//  2048 = Cannot be used in zone 7 maps
+
 //
 // Example:
 // 8,6 = Endure cannot be used in PvP and GvG maps (2+4)
 
+//GVG
 26,4	//AL_TELEPORT
 27,4	//AL_WARP
 87,4	//WZ_ICEWALL
 150,4	//TF_BACKSLIDING
 361,4	//HP_ASSUMPTIO
 362,4	//HP_BASILICA
-488,19	//CG_HERMODE
 491,4	//CR_CULTIVATION
+
+//mixed
+488,19	//CG_HERMODE
+
+//Zone 1 - Aldebaran Turbo Track
+219,32 //Snatch
+26,32 //Teleport
+27,32 //Warp portal
+51,32 //Hiding
+135,32 //Cloacking
+389,32 //Stealth
+35,32 //Cure
+87,32 //Ice Wall
+359,32 //Berserk (Frenzy)
+362,32 //Basilica
+395,32 //Sheltering Bliss
+357,32 //Spear Dynamo (Concentration)
+
+//Zone 2 - Jail
+421,64 //TK_JUMPKICK#Flying Side Kick#
+426,64 //TK_HIGHJUMP#Taekwon Jump#
+

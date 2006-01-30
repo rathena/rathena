@@ -716,7 +716,7 @@ int skillnotok(int skillid, struct map_session_data *sd)
 			return 1;
 	}
 
-	if (pc_isGM(sd) >= 20)
+	if (pc_isGM(sd) >= 20 && battle_config.gm_skilluncond)
 		return 0;  // gm's can do anything damn thing they want
 
 	// Check skill restrictions [Celest]
@@ -729,6 +729,10 @@ int skillnotok(int skillid, struct map_session_data *sd)
 	if (agit_flag && skill_get_nocast (skillid) & 8)
 		return 1;
 	if (battle_config.pk_mode && !map[sd->bl.m].flag.nopvp && skill_get_nocast (skillid) & 16)
+		return 1;
+//printf("skill %d, flag restricted=%d, zone=%d, zone*8=%d, skill_get_nocast (skillid)=%d, skill_get_nocast (skillid)&8*zone=%d\n",
+//	skillid,map[sd->bl.m].flag.restricted,map[sd->bl.m].zone,map[sd->bl.m].zone*8, skill_get_nocast (skillid),skill_get_nocast (skillid) & (8*map[sd->bl.m].zone)); 	
+	if(map[sd->bl.m].flag.restricted && map[sd->bl.m].zone && skill_get_nocast (skillid) & (8*map[sd->bl.m].zone))
 		return 1;
 
 	switch (skillid) {

@@ -1,0 +1,20 @@
+//===== eAthena Script =======================================
+//= Map flags that disable certain items/skills configured in
+//= item_noequip.txt and skill_nocast_db.txt
+//===== By: ==================================================
+//= eAthena Dev Team
+//= 1.0 [Komurka]
+//===== Current Version: =====================================
+
+//Aldebaran Turbo Track
+alde_tt02.gat	mapflag	restricted	1
+turbo_n_1.gat	mapflag	restricted	1
+turbo_n_4.gat	mapflag	restricted	1
+turbo_n_8.gat	mapflag	restricted	1
+turbo_n_16.gat	mapflag	restricted	1
+turbo_e_4.gat	mapflag	restricted	1
+turbo_e_8.gat	mapflag	restricted	1
+turbo_e_16.gat	mapflag	restricted	1
+
+//Jail
+sec_pri.gat	mapflag	restricted	2

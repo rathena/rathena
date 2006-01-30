@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/01/30
+	* Added 'restricted' mapflag, based on lordalfa patch [Komurka]
+	- you can set restriction zone on map (see mapflag/restricted.txt)
+	- you can turn off item usage on certain restricted map in item_noequip.txt
+	- you can turn off skill usage on certain restricted map in skill_nocast_db.txt
 	* Moved MVP log code so it can log all MVP, not only when player gets MVP item,
 	  thanks to Hatred_ [Komurka]
 	* One more small fix on 'bSPVanishRate' (hp -> sp) [Komurka]

@@ -34,7 +34,7 @@ struct item_data {
 		unsigned available : 1;
 		unsigned value_notdc : 1;
 		unsigned value_notoc : 1;
-		unsigned no_equip : 3;
+		short no_equip;
 		unsigned no_use : 1;
 		unsigned no_refine : 1;	// [celest]
 		unsigned delay_consume : 1;	// Signifies items that are not consumed inmediately upon double-click [Skotlex]

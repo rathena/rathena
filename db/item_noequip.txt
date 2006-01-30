@@ -1,8 +1,35 @@
 // The equipment/items/cards restriction file 
 // here you define which items may not be used at PvP / GvG 
 // format: <item id>,<mode>
-// mode = 1- restricted in PVP, 2- restricted in GVG, 3- restricted in both PvP and GvG
+// mode
+// 1- restricted in PVP
+// 2- restricted in GVG
+// 3- restricted in both PvP and GvG
+// Restricted zones - they're configured by 'restricted <number>' mapflag
+// 4   - restricted in zone 1
+// 8   - restricted in zone 2
+// 16  - restricted in zone 3
+// 32  - restricted in zone 4
+// 64 -  restricted in zone 5
+// 128 - restricted in zone 6
+// 256 - restricted in zone 7
 
+//Examples:
 //1201,1 you can't use KNIFE(ID 1201) on PvP and GvG
 //608,3 you can't use Yggdrasil Seed(ID 608) on both PvP & GvG & WoE Castles
 //4174,3 Forbid Deviling Card in every PVP or GVG map, and during woes.
+//501,4 you can't use Red Potion on map marked as 'restricted zone 1'
+//502,8 you can't use Orange Potion on map marked as 'restricted zone 2'
+//503,16 you can't use Yellow Potion on map marked as 'restricted zone 3'
+// you can even mix modes
+//519,41 (32+8+1) you can't use Milk on PVP, and maps marked as 'restricted zone 2' and 'restricted zone 4'
+
+
+//Zone 1 - Aldebaran Turbo Track
+601,4 //Fly Wing
+506,4 //Green Potion
+525,4 //Panacea
+
+//Zone 2 - Jail
+601,8 //Fly Wing - not really needed here but ...
+602,8 //Butterfly Wing - also not needed
