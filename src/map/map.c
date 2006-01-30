@@ -1765,7 +1765,7 @@ struct map_session_data** map_getallusers(int *users) {
 		all_sd = aRealloc(all_sd, all_count*sizeof(struct map_session_data*));
 	}
 	*users = pc_db->getall(pc_db,(void**)all_sd,all_count,map_getallpc_sub);
-	if (*users > all_count) //Which should be impossible...
+	if (*users > (signed int)all_count) //Which should be impossible...
 		*users = all_count;
 	return all_sd;
 }
