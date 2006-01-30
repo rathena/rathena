@@ -5946,7 +5946,7 @@ int clif_item_repair_list(struct map_session_data *sd,struct map_session_data *d
 		WFIFOW(fd,2)=c*13+4;
 		WFIFOSET(fd,WFIFOW(fd,2));
 		sd->state.produce_flag = 1;
-		sd->repair_target=dstsd;
+		sd->repair_target=dstsd->bl.id;
 	}else
 		clif_skill_fail(sd,sd->skillid,0,0);
 

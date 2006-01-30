@@ -902,24 +902,29 @@ int intif_parse_LoadStorage(int fd) {
 	struct storage *stor;
 	struct map_session_data *sd;
 	RFIFOHEAD(fd);
-	
-	stor = account2storage( RFIFOL(fd,4));
 
-	if (stor->storage_status == 1) { // Already open.. lets ignore this update
-		if (battle_config.error_log)
-			ShowWarning("intif_parse_LoadStorage: storage received for a client already open\n");
-		return 0;
-	}
-
-	if (RFIFOW(fd,2)-8 != sizeof(struct storage)) {
-		if (battle_config.error_log)
-			ShowError("intif_parse_LoadStorage: data size error %d %d\n", RFIFOW(fd,2)-8, sizeof(struct storage));
-		return 1;
-	}
 	sd=map_id2sd( RFIFOL(fd,4) );
 	if(sd==NULL){
 		if(battle_config.error_log)
 			ShowError("intif_parse_LoadStorage: user not found %d\n",RFIFOL(fd,4));
+		return 1;
+	}
+
+	stor = account2storage( RFIFOL(fd,4));
+
+	if (stor->storage_status == 1) { // Already open.. lets ignore this update
+		if (battle_config.error_log)
+			ShowWarning("intif_parse_LoadStorage: storage received for a client already open (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
+	if (stor->dirty) { // Already have storage, and it has been modified and not saved yet! Exploit! [Skotlex]
+		if (battle_config.error_log)
+			ShowWarning("intif_parse_LoadStorage: received storage for an already modified non-saved storage! (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
+	if (RFIFOW(fd,2)-8 != sizeof(struct storage)) {
+		if (battle_config.error_log)
+			ShowError("intif_parse_LoadStorage: data size error %d %d\n", RFIFOW(fd,2)-8, sizeof(struct storage));
 		return 1;
 	}
 	if(battle_config.save_log)
@@ -952,34 +957,44 @@ int intif_parse_LoadGuildStorage(int fd)
 	int guild_id;
 	RFIFOHEAD(fd);
 	guild_id = RFIFOL(fd,8);
-	if(guild_id > 0) {
-		gstor=guild2storage(guild_id);
-		if(!gstor) {
-			if(battle_config.error_log)
-				ShowWarning("intif_parse_LoadGuildStorage: error guild_id %d not exist\n",guild_id);
-			return 1;
-		}
-		if( RFIFOW(fd,2)-12 != sizeof(struct guild_storage) ){
-			gstor->storage_status = 0;
-			if(battle_config.error_log)
-				ShowError("intif_parse_LoadGuildStorage: data size error %d %d\n",RFIFOW(fd,2)-12 , sizeof(struct guild_storage));
-			return 1;
-		}
-		sd=map_id2sd( RFIFOL(fd,4) );
-		if(sd==NULL){
-			if(battle_config.error_log)
-				ShowError("intif_parse_LoadGuildStorage: user not found %d\n",RFIFOL(fd,4));
-			return 1;
-		}
-		if(battle_config.save_log)
-			ShowInfo("intif_open_guild_storage: %d\n",RFIFOL(fd,4) );
-		memcpy(gstor,RFIFOP(fd,12),sizeof(struct guild_storage));
-		gstor->storage_status = 1;
-		sd->state.storage_flag = 2;
-		clif_guildstorageitemlist(sd,gstor);
-		clif_guildstorageequiplist(sd,gstor);
-		clif_updateguildstorageamount(sd,gstor);
+	if(guild_id <= 0)
+		return 1;
+	sd=map_id2sd( RFIFOL(fd,4) );
+	if(sd==NULL){
+		if(battle_config.error_log)
+			ShowError("intif_parse_LoadGuildStorage: user not found %d\n",RFIFOL(fd,4));
+		return 1;
 	}
+	gstor=guild2storage(guild_id);
+	if(!gstor) {
+		if(battle_config.error_log)
+			ShowWarning("intif_parse_LoadGuildStorage: error guild_id %d not exist\n",guild_id);
+		return 1;
+	}
+	if (gstor->storage_status == 1) { // Already open.. lets ignore this update
+		if (battle_config.error_log)
+			ShowWarning("intif_parse_LoadGuildStorage: storage received for a client already open (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
+	if (gstor->dirty) { // Already have storage, and it has been modified and not saved yet! Exploit! [Skotlex]
+		if (battle_config.error_log)
+			ShowWarning("intif_parse_LoadGuildStorage: received storage for an already modified non-saved storage! (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
+	if( RFIFOW(fd,2)-12 != sizeof(struct guild_storage) ){
+		gstor->storage_status = 0;
+		if(battle_config.error_log)
+			ShowError("intif_parse_LoadGuildStorage: data size error %d %d\n",RFIFOW(fd,2)-12 , sizeof(struct guild_storage));
+		return 1;
+	}
+	if(battle_config.save_log)
+		ShowInfo("intif_open_guild_storage: %d\n",RFIFOL(fd,4) );
+	memcpy(gstor,RFIFOP(fd,12),sizeof(struct guild_storage));
+	gstor->storage_status = 1;
+	sd->state.storage_flag = 2;
+	clif_guildstorageitemlist(sd,gstor);
+	clif_guildstorageequiplist(sd,gstor);
+	clif_updateguildstorageamount(sd,gstor);
 	return 0;
 }
 int intif_parse_SaveGuildStorage(int fd)

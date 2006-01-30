@@ -570,6 +570,7 @@ void initStatusIconChangeTable(void) {
 	StatusIconChangeTable[SC_REJECTSWORD] = SI_REJECTSWORD;
 	StatusIconChangeTable[SC_MARIONETTE] = SI_MARIONETTE;
 	StatusIconChangeTable[SC_MARIONETTE2] = SI_MARIONETTE2;
+	StatusIconChangeTable[SC_BLEEDING] = SI_BLEEDING;
 	StatusIconChangeTable[SC_MOONLIT] = SI_MOONLIT;
 	StatusIconChangeTable[SC_DEVOTION] = SI_DEVOTION;
 	StatusIconChangeTable[SC_STEELBODY] = SI_STEELBODY;

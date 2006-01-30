@@ -818,6 +818,8 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	// Notify everyone that this char logged in [Skotlex].
 	clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
 	
+	//Prevent S. Novices from getting the no-death bonus just yet. [Skotlex]
+	sd->die_counter=-1;
 	sd->feel_level=-1;
 	//Until the reg values arrive, set them to not require trigger...
 	sd->state.event_death = 1;
@@ -906,7 +908,8 @@ int pc_reg_received(struct map_session_data *sd)
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
-	
+	if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+		status_calc_pc(sd, 0); //Check +10 to all stats bonus.
 	if (pc_checkskill(sd, TK_MISSION)) {
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
@@ -5328,7 +5331,8 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 				status_change_end(&sd->bl, SC_GRAVITATION, -1);
 			}
 		}
-
+		if (sd->sc_data[SC_CONFUSION].timer != -1)
+			status_change_end(&sd->bl, SC_CONFUSION, -1);
 	}
 
 	// ‰‰‘t/ƒ_ƒ“ƒX‚Ì’†?

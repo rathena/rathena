@@ -5,6 +5,20 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/01/30
+	* Autoloot now uses the item's base drop chance rather than final drop rate
+	  to determine if it should autoloot the item or not. [Skotlex]
+	* Fixed super novices getting +10 to all stats temporarily when their death
+	  count isn't zero. [Skotlex]
+	* Fixed Kahai displaying HP-SP as the total healed instead of HP [Skotlex]
+	* Cleaned up skill_repairweapon to prevent crashes when the target
+	  vanishes/changes/whatever before the weapon to repair has been selected.
+	  [Skotlex]
+	* Parsing the Storage/Guild Storage from the char server will now fail if the
+	  storage has been modified and not saved yet. [Skotlex]
+	* Being hit now cancels confuse. [Skotlex]
+	* Added back the bleeding icon. [Skotlex]
+	* Fixed Combo Finish Soul Linked Effect being a 11x11 area rather than 5x5
+	  [Skotlex]
 	* Added 'restricted' mapflag, based on lordalfa patch [Komurka]
 	- you can set restriction zone on map (see mapflag/restricted.txt)
 	- you can turn off item usage on certain restricted map in item_noequip.txt

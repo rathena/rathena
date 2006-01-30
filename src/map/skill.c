@@ -902,9 +902,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			if (dstsd && dstsd->status.sp < 5*tsc_data[SC_KAAHI].val1)
 				; //Not enough SP to cast
 			else {
-				rate = battle_heal(bl, bl, 200*tsc_data[SC_KAAHI].val1, -5*tsc_data[SC_KAAHI].val1, 1);
+				battle_heal(bl, bl, 200*tsc_data[SC_KAAHI].val1, -5*tsc_data[SC_KAAHI].val1, 1);
 				if(dstsd && dstsd->fd)
-					clif_heal(dstsd->fd,SP_HP,rate);
+					clif_heal(dstsd->fd,SP_HP,200*tsc_data[SC_KAAHI].val1);
 			}
 		}
 	}
@@ -2732,7 +2732,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		if (!(flag&1) && sc_data && sc_data[SC_SPIRIT].timer != -1 && sc_data[SC_SPIRIT].val2 == SL_MONK)
 		{	//Becomes a splash attack when Soul Linked.
 			map_foreachinarea(skill_area_sub,
-				bl->m,bl->x-5,bl->y-5,bl->x+5,bl->y+5,BL_CHAR,
+				bl->m,bl->x-2,bl->y-2,bl->x+2,bl->y+2,BL_CHAR,
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
 		} else
@@ -9365,39 +9365,41 @@ void skill_repairweapon(struct map_session_data *sd, int idx)
 	int material;
 	int materials[4] = { 1002, 998, 999, 756 };
 	struct item *item;
+	struct map_session_data *target_sd;
 
 	nullpo_retv(sd);
-	nullpo_retv(sd->repair_target);
-
+	target_sd = map_id2sd(sd->repair_target);
+	sd->repair_target = 0;
+	if (!target_sd) //Failed....
+		return;
 	if(idx==0xFFFF) // No item selected ('Cancel' clicked)
 		return;
+	if(idx < 0 || idx >= MAX_INVENTORY)
+		return; //Invalid index??
 
-    item = &sd->repair_target->status.inventory[idx];
+   item = &target_sd->status.inventory[idx];
+	if(item->nameid <= 0 || item->attribute == 0)
+		return; //Again invalid item....
 
-	if(sd!=sd->repair_target && !battle_check_range(&sd->bl,&sd->repair_target->bl,skill_get_range2(&sd->bl, sd->skillid,sd->skilllv))){
+	if(sd!=target_sd && !battle_check_range(&sd->bl,&target_sd->bl,skill_get_range2(&sd->bl, sd->skillid,sd->skilllv))){
 		clif_item_repaireffect(sd,item->nameid,1);
 		return;
 	}
 
-	if(idx >= 0 && idx < MAX_INVENTORY) {
-		if(item->nameid > 0 && item->attribute == 1 ) {
-			if (itemdb_type(item->nameid)==4)
-				material = materials [itemdb_wlv(item->nameid)-1]; // Lv1/2/3/4 weapons consume 1 Iron Ore/Iron/Steel/Rough Oridecon
-			else
-				material = materials [2]; // Armors consume 1 Steel
-			if (pc_search_inventory(sd,material) < 0 ) {
-				clif_skill_fail(sd,sd->skillid,0,0);
-				return;
-			}
-			item->attribute=0;
-			clif_equiplist(sd->repair_target);
-			pc_delitem(sd,pc_search_inventory(sd,material),1,0);
-            clif_item_repaireffect(sd,item->nameid,0);
-            if(sd!=sd->repair_target)
-            	clif_item_repaireffect(sd->repair_target,item->nameid,0);
-			sd->repair_target=NULL;
-		}
+	if (itemdb_type(item->nameid)==4)
+		material = materials [itemdb_wlv(item->nameid)-1]; // Lv1/2/3/4 weapons consume 1 Iron Ore/Iron/Steel/Rough Oridecon
+	else
+		material = materials [2]; // Armors consume 1 Steel
+	if (pc_search_inventory(sd,material) < 0 ) {
+		clif_skill_fail(sd,sd->skillid,0,0);
+		return;
 	}
+	item->attribute=0;
+	clif_equiplist(target_sd);
+	pc_delitem(sd,pc_search_inventory(sd,material),1,0);
+	clif_item_repaireffect(sd,item->nameid,0);
+	if(sd!=target_sd)
+		clif_item_repaireffect(target_sd,item->nameid,0);
 }
 
 /*==========================================

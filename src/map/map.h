@@ -516,7 +516,7 @@ struct map_session_data {
 	//unsigned int skillstatictimer[MAX_SKILL];
 	unsigned short timerskill_count; // [celest]
 	int cloneskill_id;
-	struct map_session_data *repair_target;
+	int repair_target;
 
 	int invincible_timer;
 	unsigned int canact_tick;
