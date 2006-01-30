@@ -4846,13 +4846,17 @@ Returns up to 127 values into array.
 
 Example:
 
-query_sql "SELECT name FROM 'char' ORDER BY fame DESC LIMIT 5", @most_fame_dude;
+query_sql "SELECT name FROM 'char' ORDER BY fame DESC LIMIT 5", @most_fame_dude$;
 mes "Hall Of Fame: TOP5";
-mes "1."+@most_fame_dude[0]; // Will return a person with the biggest fame value.
-mes "2."+@most_fame_dude[1];
-mes "3."+@most_fame_dude[2];
-mes "4."+@most_fame_dude[3];
-mes "5."+@most_fame_dude[4];
+mes "1."+@most_fame_dude$[0]; // Will return a person with the biggest fame value.
+mes "2."+@most_fame_dude$[1];
+mes "3."+@most_fame_dude$[2];
+mes "4."+@most_fame_dude$[3];
+mes "5."+@most_fame_dude$[4];
+
+Note: It is available in SQL version only.
+Note: Use Text$[] array to recieve all data as text.
+
 ---------------------------------------
 
 *setd "variable name", <value>
