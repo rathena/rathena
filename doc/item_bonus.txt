@@ -115,6 +115,7 @@ bonus2 bAddDefClass,n,x;		In monster of class n the damage reduction of x% (only
 bonus2 bAddMDefClass,n,x;		In monster of class n in case of the magical damage reduction and prayer of x% in n occupation the magical damage reduction of x%
 bonus2 bHPDrainRate,n,x;		it obtained to the enemy -- ? ME ? JI -- n % probability -- x % -- HP -- absorption (+ n and x are carried out)
 bonus2 bSPDrainRate,n,x;		it obtained to the enemy -- ? ME ? JI -- n % probability -- x % -- SP -- absorption (+ n and x are carried out)
+bonus2 bSPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's SP (player) amount by x% when attacking
 bonus2 bAddMonsterDropItem,n,x;		When killing any monsters with physical attack, the probability which drops item n +x% (the item which the monster drops unrelated ones)
 									if 'x' is negative value, then it's a part of formula
 										chance = -x*(killed_mob_level/10)+1

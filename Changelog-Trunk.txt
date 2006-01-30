@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/01/30
+	* One more small fix on 'bSPVanishRate' (hp -> sp) [Komurka]
 	* Added bSPVanishRate to const.txt - Dark Priest Card should work now ^^
 	* Implemented bonus2 bSPVanishRate for Dark Priest Card [Komurka]
 	- it isn't finished - I get '[Warning]: pc_bonus2: unknown type 0 50 10!' ><

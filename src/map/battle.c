@@ -3136,7 +3136,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 			if (target && target->type == BL_PC && rand()%1000 < sd->sp_vanish_rate)
 			{
-				sp = tsd->status.hp * sd->sp_vanish_per/100;
+				sp = tsd->status.sp * sd->sp_vanish_per/100;
 				if (sp > 0)
 					pc_heal(tsd, 0, -sp);
 
