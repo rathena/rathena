@@ -554,6 +554,20 @@ int pc_setequipindex(struct map_session_data *sd)
 	return 0;
 }
 
+int pc_isAllowedCardOn(struct map_session_data *sd,int s,int eqindex,int flag)  {
+	int i;
+	struct item_data *data;
+	if (s>0)     {
+			for (i=0;i<s;i++)       {    
+				if ((data = itemdb_search(sd->status.inventory[eqindex].card[i])))    {
+					if (data->flag.no_equip&flag)
+					return 0;
+					}
+			}  
+		}
+	return 1;              
+}
+
 int pc_isequip(struct map_session_data *sd,int n)
 {
 	struct item_data *item;
@@ -572,10 +586,10 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
-	if(map[sd->bl.m].flag.pvp && (item->flag.no_equip&1)) //optimized by Lupus
+	if(map[sd->bl.m].flag.pvp && (item->flag.no_equip&1 || !pc_isAllowedCardOn(sd,item->slot,n,1))) //optimized by Lupus
 		return 0;
-	if(map_flag_gvg(sd->bl.m) && (item->flag.no_equip>1)) //optimized by Lupus
-		return 0;
+	if(map_flag_gvg(sd->bl.m) && (item->flag.no_equip&2 || !pc_isAllowedCardOn(sd,item->slot,n,2))) //optimized by Lupus
+		return 0; 
 	if((item->equip & 0x0002 || item->equip & 0x0020) && item->type == 4 && sd->sc_data[SC_STRIPWEAPON].timer != -1) // Also works with left-hand weapons [DracoRPG]
 		return 0;
 	if(item->equip & 0x0020 && item->type == 5 && sd->sc_data[SC_STRIPSHIELD].timer != -1) // Also works with left-hand weapons [DracoRPG]
@@ -7174,12 +7188,14 @@ int pc_checkitem(struct map_session_data *sd)
 			calc_flag = 1;
 		}
 		//?備制限チェック
-		if(sd->status.inventory[i].equip && (map[sd->bl.m].flag.pvp||map[sd->bl.m].flag.gvg) && (it->flag.no_equip&1)){//PVP check for forbiden items. optimized by [Lupus]
-			sd->status.inventory[i].equip=0;
-			calc_flag = 1;
-		}else if(sd->status.inventory[i].equip && map_flag_gvg(sd->bl.m) && (it->flag.no_equip>1)){//GvG optimized by [Lupus]
-			sd->status.inventory[i].equip=0;
-			calc_flag = 1;
+		if(sd->status.inventory[i].equip && (map[sd->bl.m].flag.pvp||map[sd->bl.m].flag.gvg) &&
+                 	(it->flag.no_equip&1  || !pc_isAllowedCardOn(sd,it->slot,i,1))){//PVP check for forbiden items. optimized by [Lup$
+				sd->status.inventory[i].equip=0;
+				calc_flag = 1;
+			}else if(sd->status.inventory[i].equip && map_flag_gvg(sd->bl.m) &&
+                       (it->flag.no_equip&2   || !pc_isAllowedCardOn(sd,it->slot,i,2))){//GvG optimized by [Lupus]
+				sd->status.inventory[i].equip=0;
+				calc_flag = 1;
 		}
 	}
 
