@@ -1307,7 +1307,7 @@
 4168,Dark_Lord_Card,Dark Lord Card,6,,10,10,,,,,,,,64,,,,,{ bonus4 bAutoSpellWhenHit,83,5,10,0; if(isequipped(4169)==0) end; bonus bMaxHPrate,20; bonus bMaxSPrate,20; }
 4169,Dark_Illusion_Card,Dark Illusion Card,6,,10,10,,,,,,,,769,,,,,{ bonus bMaxHPrate,-10; bonus bMaxSPrate,-10; bonus bCastrate,-10-10*isequipped(4168); }
 4170,Dark_Frame_Card,Dark Frame Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Stone,2000; }
-4171,Dark_Priest_Card,Dark Priest Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bSPDrainRate,30,10,1; if(BaseJob==Job_Sage) bonus bSPGainValue,1; }
+4171,Dark_Priest_Card,Dark Priest Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSPVanishRate,50,10; if(BaseJob==Job_Sage) bonus bSPGainValue,1; }
 4172,The_Paper_Card,The Paper Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,20; bonus2 bSPDrainValue,-1,0; }
 4173,Demon_Pungus_Card,Demon Pungus Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Sleep,2000; }
 4174,Deviling_Card,Deviling Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,50; bonus2 bSubEle,Ele_Water,-50; bonus2 bSubEle,Ele_Earth,-50; bonus2 bSubEle,Ele_Fire,-50; bonus2 bSubEle,Ele_Wind,-50; bonus2 bSubEle,Ele_Poison,-50; bonus2 bSubEle,Ele_Holy,-50; bonus2 bSubEle,Ele_Dark,-50; bonus2 bSubEle,Ele_Ghost,-50; bonus2 bSubEle,Ele_Undead,-50; }

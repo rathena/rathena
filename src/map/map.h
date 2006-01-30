@@ -341,6 +341,7 @@ struct weapon_data {
   	short sp_drain_rate;
   	short sp_drain_per;
   	short sp_drain_value;
+
  	short add_damage_classid[MAX_PC_BONUS];
  	int add_damage_classrate[MAX_PC_BONUS];
   	int add_damage_class_count;
@@ -623,6 +624,8 @@ struct map_session_data {
  	short hp_loss_type;
  	short sp_drain_type;
  	short sp_gain_value, hp_gain_value;
+	short sp_vanish_rate;
+	short sp_vanish_per;	
 	short add_drop_count;
 	unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
  	unsigned short unbreakable_equip; //100% break resistance on certain equipment
@@ -1100,7 +1103,7 @@ enum {
 	SP_SP_GAIN_RACE, SP_SUBRACE2, SP_ADDEFF_WHENHIT_SHORT,	// 2031-2033
 	SP_UNSTRIPABLE_WEAPON,SP_UNSTRIPABLE_ARMOR,SP_UNSTRIPABLE_HELM,SP_UNSTRIPABLE_SHIELD,  // 2034-2037
 	SP_INTRAVISION, SP_ADD_MONSTER_DROP_ITEMGROUP, SP_SP_LOSS_RATE, // 2038-2040
-	SP_ADD_SKILL_BLOW //2041
+	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE //2041
 };
 
 enum {
