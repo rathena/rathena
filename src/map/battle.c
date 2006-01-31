@@ -2441,10 +2441,10 @@ struct Damage battle_calc_magic_attack(
 			flag.imdef = 1;
 			break;
 		case PR_ASPERSIO:
-		case PF_SOULBURN:
 		case HW_GRAVITATION:
 		case ASC_BREAKER:
 			flag.imdef = 1;
+		case PF_SOULBURN: //Does not ignores mdef
 			flag.elefix = 0;
 			flag.cardfix = 0;
 			break;
@@ -2932,6 +2932,46 @@ struct Damage battle_calc_attack(	int attack_type,
 	}
 	return d;
 }
+
+int battle_calc_return_damage(struct block_list *bl, int damage, int flag) {
+	struct map_session_data *sd=NULL;
+	struct status_change *sc_data;
+	int rdamage = 0;
+	
+	if (bl->type == BL_PC) sd = (struct map_session_data*)bl;
+	sc_data = status_get_sc_data(bl);
+
+	if(flag&BF_WEAPON) {
+		if (flag & BF_SHORT) {
+			if (sd && sd->short_weapon_damage_return)
+			{
+				rdamage += damage * sd->short_weapon_damage_return / 100;
+				if(rdamage < 1) rdamage = 1;
+			}
+			if (sc_data && sc_data[SC_REFLECTSHIELD].timer != -1)
+		  	{
+				rdamage += damage * sc_data[SC_REFLECTSHIELD].val2 / 100;
+				if (rdamage < 1) rdamage = 1;
+			}
+		} else if (flag & BF_LONG) {
+			if (sd && sd->long_weapon_damage_return)
+			{
+				rdamage += damage * sd->long_weapon_damage_return / 100;
+				if (rdamage < 1) rdamage = 1;
+			}
+		}
+	} else
+	// magic_damage_return by [AppleGirl] and [Valaris]
+	if(flag&BF_MAGIC)
+	{
+		if(sd && sd->magic_damage_return > 0 )
+		{
+			rdamage += damage * sd->magic_damage_return / 100;
+			if(rdamage < 1) rdamage = 1;
+		}
+	}
+	return rdamage;
+}
 /*==========================================
  * ’Ê?í?UŒ‚?ˆ—?‚Ü‚Æ‚ß
  *------------------------------------------
@@ -2941,7 +2981,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 {
 	struct map_session_data *sd = NULL, *tsd = NULL;
 	struct status_change *sc_data, *tsc_data;
-	int race, ele, damage, rdamage = 0;
+	int race, ele, damage,rdamage=0;
 	struct Damage wd;
 
 	nullpo_retr(0, src);
@@ -3005,55 +3045,46 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		}
 
 	}
-	//Recycled the rdamage variable rather than use a new one... [Skotlex]
-	if(sd && (rdamage = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16) // triple blow works with bows ^^ [celest]
+	//Recycled the damage variable rather than use a new one... [Skotlex]
+	if(sd && (damage = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16) // triple blow works with bows ^^ [celest]
 	{
-		int triple_rate= 30 - rdamage; //Base Rate
+		int triple_rate= 30 - damage; //Base Rate
 		if (sc_data && sc_data[SC_SKILLRATE_UP].timer!=-1 && sc_data[SC_SKILLRATE_UP].val1 == MO_TRIPLEATTACK)
 		{
 			triple_rate+= triple_rate*(sc_data[SC_SKILLRATE_UP].val2)/100;
 			status_change_end(src,SC_SKILLRATE_UP,-1);
 		}
-		if (rand()%100 < triple_rate) return skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,rdamage,tick,0);
+		if (rand()%100 < triple_rate) return skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,damage,tick,0);
 	}
 	else if (sc_data && sc_data[SC_SACRIFICE].timer != -1)
 		return skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,sc_data[SC_SACRIFICE].val1,tick,0);
 			
 	wd = battle_calc_weapon_attack(src,target, 0, 0,0);
-	
-	if ((damage = wd.damage + wd.damage2) > 0 && src != target) {
-		rdamage = 0;
-		if (wd.flag & BF_SHORT) {
-			if (tsd && tsd->short_weapon_damage_return)
-				rdamage += damage * tsd->short_weapon_damage_return / 100;
-			if (tsc_data && tsc_data[SC_REFLECTSHIELD].timer != -1) {
-				rdamage += damage * tsc_data[SC_REFLECTSHIELD].val2 / 100;
-				if (rdamage < 1) rdamage = 1;
-			}
-		} else if (wd.flag & BF_LONG) {
-			if (tsd && tsd->long_weapon_damage_return)
-				rdamage += damage * tsd->long_weapon_damage_return / 100;
-		}
+
+	damage = wd.damage + wd.damage2;
+	if (damage > 0 && src != target) {
+		rdamage = battle_calc_return_damage(target, damage, wd.flag);
 		if (rdamage > 0)
 			clif_damage(src, src, tick, wd.amotion, wd.dmotion, rdamage, 1, 4, 0);
+		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
+		skill_additional_effect(target,src,CR_REFLECTSHIELD, 1,BF_WEAPON,tick);
 	}
-
 
 	clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
 	//“ñ“?—¬?¶Žè‚ÆƒJƒ^?[ƒ‹’ÇŒ‚‚Ìƒ~ƒX•\Ž¦(–³—?‚â‚è?`)
 	if(sd && sd->status.weapon >= 16 && wd.damage2 == 0)
 		clif_damage(src, target, tick+10, wd.amotion, wd.dmotion,0, 1, 0, 0);
 
-	if (sd && sd->splash_range > 0 && (wd.damage > 0 || wd.damage2 > 0))
+	if (sd && sd->splash_range > 0 && damage > 0)
 		skill_castend_damage_id(src, target, 0, -1, tick, 0);
 
 	map_freeblock_lock();
 
-	battle_delay_damage(tick+wd.amotion, src, target, BF_WEAPON, 0, 0, (wd.damage+wd.damage2), wd.dmg_lv, 0);
+	battle_delay_damage(tick+wd.amotion, src, target, BF_WEAPON, 0, 0, damage, wd.dmg_lv, 0);
 
-	if (wd.dmg_lv == ATK_DEF || wd.damage > 0 || wd.damage2 > 0) //Added counter effect [Skotlex]
+	if (wd.dmg_lv == ATK_DEF || damage > 0) //Added counter effect [Skotlex]
 		skill_counter_additional_effect(src, target, 0, 0, BF_WEAPON, tick);
-	if (!status_isdead(target) && (wd.damage > 0 || wd.damage2 > 0)) {
+	if (!status_isdead(target) && damage > 0) {
 		if (sd) {
 			int boss = status_get_mode(target)&MD_BOSS;
 			if (
@@ -3098,7 +3129,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		}
 	}
 	if (sd) {
-		if (wd.flag & BF_WEAPON && src != target && (wd.damage > 0 || wd.damage2 > 0)) {
+		if (wd.flag & BF_WEAPON && src != target && damage > 0) {
 			int hp = 0, sp = 0;
 			if (!battle_config.left_cardfix_to_right) { // “ñ“?—¬?¶ŽèƒJ?[ƒh‚Ì‹zŽûŒnŒø‰Ê‚ð‰EŽè‚É’Ç‰Á‚µ‚È‚¢?ê?‡
 				hp += battle_calc_drain(wd.damage, sd->right_weapon.hp_drain_rate, sd->right_weapon.hp_drain_per, sd->right_weapon.hp_drain_value);

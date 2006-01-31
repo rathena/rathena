@@ -560,8 +560,6 @@ const struct skill_name_db skill_names[] = {
 static const int dirx[8]={0,-1,-1,-1,0,1,1,1};
 static const int diry[8]={1,1,0,-1,-1,-1,0,1};
 
-static int rdamage;
-
 /* ƒXƒLƒ‹ƒf?ƒ^ƒx?ƒX */
 struct skill_db skill_db[MAX_SKILL_DB];
 
@@ -1641,12 +1639,11 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	struct Damage dmg;
 	struct status_change *sc_data;
 	struct map_session_data *sd=NULL, *tsd=NULL;
-	int type,lv,damage;
+	int type,lv,damage,rdamage=0;
 	static int tmpdmg = 0;
 
 	if(skillid > 0 && skilllv <= 0) return 0;
 
-	rdamage = 0;
 	nullpo_retr(0, src);	//Source is the master behind the attack (player/mob/pet)
 	nullpo_retr(0, dsrc); //dsrc is the actual originator of the damage, can be the same as src, or a skill casted by src.
 	nullpo_retr(0, bl); //Target to be attacked.
@@ -1862,36 +1859,9 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				break;
 		}	//Switch End
 	}
-	if(attack_type&BF_WEAPON && damage > 0 && src != bl && src == dsrc)
-	{ //•ŠíƒXƒLƒ‹•ƒ_ƒ?ƒW‚ ‚è•Žg—pŽÒ‚Æ?ÛŽÒ‚ªˆá‚¤•src=dsrc
-		if(dmg.flag&BF_SHORT) { //‹ß‹——£U?ŽžH¦
-			if(tsd && tsd->short_weapon_damage_return > 0)
-			{ //‹ß‹——£U?’µ‚Ë•Ô‚µH¦
-				rdamage += damage * tsd->short_weapon_damage_return / 100;
-				if(rdamage < 1) rdamage = 1;
-			}
-			if(sc_data && sc_data[SC_REFLECTSHIELD].timer != -1) { //ƒŠƒtƒŒƒNƒgƒV?ƒ‹ƒhŽž
-				rdamage += damage * sc_data[SC_REFLECTSHIELD].val2 / 100; //’µ‚Ë•Ô‚µŒvŽZ
-				if(rdamage < 1) rdamage = 1;
-			}
-		}
-		else if(dmg.flag&BF_LONG) { //‰“‹——£U?ŽžH¦
-			if(tsd && tsd->long_weapon_damage_return > 0)
-			{ //‰“‹——£U?’µ‚Ë•Ô‚µH¦
-				rdamage += damage * tsd->long_weapon_damage_return / 100;
-				if(rdamage < 1) rdamage = 1;
-			}
-		}
-	} else
-	// magic_damage_return by [AppleGirl] and [Valaris]
-	if(attack_type&BF_MAGIC && damage > 0 && src != bl && src == dsrc)
-	{
-		if(tsd && tsd->magic_damage_return > 0 )
-		{
-			rdamage += damage * tsd->magic_damage_return / 100;
-			if(rdamage < 1) rdamage = 1;
-		}
-	}
+
+	if (damage > 0 && src != bl && src == dsrc)
+		rdamage = battle_calc_return_damage(bl, damage, dmg.flag);
 
 //•ŠíƒXƒLƒ‹H‚±‚±‚Ü‚Å
 	switch(skillid){
@@ -1966,7 +1936,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if ((skillid || flag) && attack_type&BF_WEAPON && skillid != ASC_BREAKER) {  // do not really deal damage for ASC_BREAKER's 1st attack
-			battle_delay_damage(tick+dmg.amotion,src,bl,attack_type,skillid,skilllv,damage,dmg.dmg_lv,0);
+		battle_delay_damage(tick+dmg.amotion,src,bl,attack_type,skillid,skilllv,damage,dmg.dmg_lv,0);
 	}
 
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(status_get_mode(bl)&MD_BOSS)/* && !map_flag_gvg(src->m)*/) {
@@ -2048,7 +2018,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 
 	map_freeblock_unlock();
 
-	return (dmg.damage+dmg.damage2);	/* ?ƒ_ƒ?‚ð•Ô‚· */
+	return damage;	/* ?ƒ_ƒ?‚ð•Ô‚· */
 }
 
 /*==========================================
@@ -7416,7 +7386,8 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		break;
 
 	case UNT_GRAVITATION:
-		skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);		
+		if (skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0))
+			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MAGIC,tick);
 		break;
 	}
 	if (sg->val3 == HW_MAGICPOWER && ssc_data && ssc_data[SC_MAGICPOWER].timer < 0 && ssc_data[SC_MAGICPOWER].val1 > 0)
