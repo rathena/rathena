@@ -27,12 +27,13 @@
 
 =========================
 
+01/31
+	* Changed Vesper's mode to boss [MasterOfMuppets]
 01/30
 	* Revised the Thanatos Tower and Abyss Lakes monster's skills [MasterOfMuppets]
 	* Added monster drops to the Thanatos Tower and Abyss lake monsters [MasterOfMuppets]
 	* Fixed a lot of item names in item_db ;] [Poki#3]
 	* Fixed Dark Priest Card [Komurka]
-
 01/29
 	* Updated drops of Vesper [MasterOfMuppets]
 	* Changed the range of NPC_PETRIFYATTACK from 1 to 7 [MasterOfMuppets]
