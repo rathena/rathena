@@ -3708,10 +3708,6 @@ static const struct battle_data_short {
 	{ "item_drop_treasure_max",            &battle_config.item_drop_treasure_max },
 	{ "prevent_logout",                    &battle_config.prevent_logout		},	// Added by RoVeRT
 	{ "alchemist_summon_reward",           &battle_config.alchemist_summon_reward	},	// [Valaris]
-	{ "max_base_level",                    &battle_config.max_base_level	},	// [Valaris]
-	{ "max_job_level",                     &battle_config.max_job_level	},
-	{ "max_advanced_job_level",            &battle_config.max_adv_level	},
-	{ "max_super_novice_level",            &battle_config.max_sn_level	},
 	{ "drops_by_luk",                      &battle_config.drops_by_luk	},	// [Valaris]
 	{ "drops_by_luk2",                     &battle_config.drops_by_luk2	},	// [Skotlex]
 	{ "equip_natural_break_rate",          &battle_config.equip_natural_break_rate	},
@@ -4097,10 +4093,6 @@ void battle_set_defaults() {
 	battle_config.item_drop_treasure_min=1;
 	battle_config.item_drop_treasure_max=10000;
 	battle_config.prevent_logout = 10000;	// Added by RoVeRT
-	battle_config.max_base_level = 255;	// Added by Valaris
-	battle_config.max_job_level = 50;
-	battle_config.max_adv_level = 70;
-	battle_config.max_sn_level = 99;
 	battle_config.drops_by_luk = 0;	// [Valaris]
 	battle_config.drops_by_luk2 = 0;
 	battle_config.equip_natural_break_rate = 1;

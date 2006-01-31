@@ -2676,12 +2676,12 @@ int atcommand_baselevelup(
 	}
 
 	if (level > 0) {
-		if (sd->status.base_level == battle_config.max_base_level) {	/* check for max level by Valaris */
+		if (sd->status.base_level == pc_maxbaselv(sd)) {	/* check for max level by Valaris */
 			clif_displaymessage(fd, msg_table[47]); /* Base level can't go any higher. */
 			return -1;
 		}	/* End Addition */
-		if ((unsigned int)level > battle_config.max_base_level || (unsigned int)level > (battle_config.max_base_level - sd->status.base_level)) // fix positiv overflow
-			level = battle_config.max_base_level - sd->status.base_level;
+		if (level > pc_maxbaselv(sd) || level > (pc_maxbaselv(sd) - sd->status.base_level)) // fix positiv overflow
+			level = pc_maxbaselv(sd) - sd->status.base_level;
 		for (i = 1; i <= level; i++)
 			sd->status.status_point += (sd->status.base_level + i + 14) / 5;
 		sd->status.base_level += level;
@@ -2697,7 +2697,7 @@ int atcommand_baselevelup(
 			clif_displaymessage(fd, msg_table[158]); /* Base level can't go any lower. */
 			return -1;
 		}
-		if (level < -(int)battle_config.max_base_level || level < (1 - (int)sd->status.base_level)) /* fix negativ overflow */
+		if (level < -(int)pc_maxbaselv(sd) || level < (1 - (int)sd->status.base_level)) /* fix negativ overflow */
 			level = 1 - sd->status.base_level;
 		if (sd->status.status_point > 0) {
 			for (i = 0; i > level; i--)
@@ -2725,7 +2725,6 @@ int atcommand_joblevelup(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	unsigned int up_level = battle_config.max_job_level;
 	int level=0;
 	nullpo_retr(-1, sd);
 	
@@ -2735,21 +2734,13 @@ int atcommand_joblevelup(
 		clif_displaymessage(fd, "Please, enter a level adjustement (usage: @joblvup/@jlevel/@joblvlup <number of levels>).");
 		return -1;
 	}
-
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE) //Novice
-		up_level = 10;
-	else if ((sd->class_&MAPID_BASEMASK) == MAPID_NOVICE) //S. Novice
-		up_level = battle_config.max_sn_level;
-	else if (sd->class_&JOBL_UPPER && sd->class_&JOBL_2)
-		up_level = battle_config.max_adv_level; //2nd Adv Class
-
 	if (level > 0) {
-		if (sd->status.job_level == up_level) {
+		if (sd->status.job_level == pc_maxjoblv(sd)) {
 			clif_displaymessage(fd, msg_table[23]); // Job level can't go any higher.
 			return -1;
 		}
-		if ((unsigned int)level > up_level || (unsigned int)level > (up_level - sd->status.job_level)) // fix positiv overflow
-			level = up_level - sd->status.job_level;
+		if (level > pc_maxjoblv(sd) || level > (pc_maxjoblv(sd) - sd->status.job_level)) // fix positiv overflow
+			level = pc_maxjoblv(sd) - sd->status.job_level;
 		sd->status.job_level += level;
 		clif_updatestatus(sd, SP_JOBLEVEL);
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
@@ -2763,7 +2754,7 @@ int atcommand_joblevelup(
 			clif_displaymessage(fd, msg_table[159]); // Job level can't go any lower.
 			return -1;
 		}
-		if (level < -(int)up_level || level < (1 - (int)sd->status.job_level)) // fix negativ overflow
+		if (level < -(int)pc_maxjoblv(sd) || level < (1 - (int)sd->status.job_level)) // fix negativ overflow
 			level = 1 - sd->status.job_level;
 		sd->status.job_level += level;
 		clif_updatestatus(sd, SP_JOBLEVEL);

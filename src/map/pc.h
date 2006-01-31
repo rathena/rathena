@@ -116,6 +116,9 @@ int pc_stopattack(struct map_session_data*);
 int pc_follow(struct map_session_data*, int); // [MouseJstr]
 int pc_stop_following(struct map_session_data*);
 
+
+int pc_maxbaselv(struct map_session_data *sd);
+int pc_maxjoblv(struct map_session_data *sd);
 int pc_checkbaselevelup(struct map_session_data *sd);
 int pc_checkjoblevelup(struct map_session_data *sd);
 int pc_gainexp(struct map_session_data*,int,int);

@@ -8814,7 +8814,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	    pc_checkskill(sd,SG_STAR_COMFORT))
 		status_calc_pc(sd,0);
 	
-	if (pc_checkskill(sd, SG_DEVIL) && sd->status.job_level >= battle_config.max_job_level)
+	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobafter(sd))
 		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
 	
 	map_foreachinarea(clif_getareachar,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,BL_ALL,sd);

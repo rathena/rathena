@@ -292,10 +292,6 @@ extern struct Battle_Config {
 	unsigned short prevent_logout;	// Added by RoVeRT
 
 	unsigned short alchemist_summon_reward;	// [Valaris]
-	unsigned short max_base_level;	//Max Base Level [Valaris]
-	unsigned short max_job_level;	//Max job level (normal classes) [Skotlex]
-	unsigned short max_sn_level;	//Max job level (super novice) [Skotlex]
-	unsigned short max_adv_level;	//Max job level (advanced classes) [Skotlex]
 	unsigned short drops_by_luk;
 	unsigned short drops_by_luk2;
 	unsigned short equip_natural_break_rate;	//Base Natural break rate for attacks.
