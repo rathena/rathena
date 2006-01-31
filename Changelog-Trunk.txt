@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/01/31
+	* Cleaned up Summon Slave mob skill to only summon number of missing mobs
+	  to complete the skill level (that is, SS level 5 will always bring the
+	  total count of slaves to 5, never above). [Skotlex]
 	* Fixed being able to Encore skills you no longer have in your tree.
 	  [Skotlex]
 	* Added no HP regen while Bleeding, -25% ATK and ASPD penalties as well.

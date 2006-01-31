@@ -3067,17 +3067,13 @@ int mob_warp(struct mob_data *md,int m,int x,int y,int type)
  */
 int mob_countslave_sub(struct block_list *bl,va_list ap)
 {
-	int id,*c;
+	int id;
 	struct mob_data *md;
 	id=va_arg(ap,int);
-
-	c=va_arg(ap,int *);
+	
 	md = (struct mob_data *)bl;
-
-	if( md->master_id==id ) {
-		(*c)++;
+	if( md->master_id==id )
 		return 1;
-	}
 	return 0;
 }
 
@@ -3087,9 +3083,7 @@ int mob_countslave_sub(struct block_list *bl,va_list ap)
  */
 int mob_countslave(struct block_list *bl)
 {
-	int c=0;
-	map_foreachinmap(mob_countslave_sub, bl->m, BL_MOB,bl->id,&c);
-	return c;
+	return map_foreachinmap(mob_countslave_sub, bl->m, BL_MOB,bl->id);
 }
 /*==========================================
  * Summons amount slaves contained in the value[5] array using round-robin. [adapted by Skotlex]
@@ -3098,7 +3092,7 @@ int mob_countslave(struct block_list *bl)
 int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 {
 	struct mob_data *md;
-	int bx,by,m,count = 0,class_,k;
+	int bx,by,m,count = 0,class_,k=0;
 
 	nullpo_retr(0, md2);
 	nullpo_retr(0, value);
@@ -3112,8 +3106,11 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 
 	while(count < 5 && mobdb_checkid(value[count])) count++;
 	if(count < 1) return 0;
-
-	for(k=0;k<amount;k++) {
+	if (amount > 0 && amount < count) { //Do not start on 0, pick some random sub subset [Skotlex]
+		k = rand()%count;
+		amount+=k; //Increase final value by same amount to preserve total number to summon.
+	}
+	for(;k<amount;k++) {
 		int x=0,y=0,i=0;
 		class_ = value[k%count]; //Summon slaves in round-robin fashion. [Skotlex]
 

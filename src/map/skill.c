@@ -5128,6 +5128,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_SUMMONSLAVE:		/* Žè‰º?¢Š« */
+		if (md) //Only summon remaining slaves
+			skilllv = skilllv - mob_countslave(&md->bl);
 	case NPC_SUMMONMONSTER:		/* MOB?¢Š« */
 		if(md)
 			mob_summonslave(md,md->db->skill[md->skillidx].val,skilllv,skillid);
