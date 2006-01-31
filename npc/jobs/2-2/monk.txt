@@ -19,6 +19,7 @@
 //= to go. [Lupus] 1.7 Fixed warps19/20 [Yor]
 //= 1.8 Fixed bugs. Fixed Green Potion exploit. Getting rid of Jfunc mess [Lupus]
 //= 1.9 Added a missing check in Fuhai and fixed a LOT of Engrish. [Zephiris]
+//= 1.9b Fixed another bug in Fuhai. [Zephiris]
 //============================================================ 
 
 
@@ -152,7 +153,7 @@ monk_in.gat,99,58,4	script	Elder Wuhai	60,{
 	if(MONK_Q == 4) goto Part2;
 	if(MONK_Q >= 5 && MONK_Q < 10) goto Part3;
 	if(MONK_Q >= 10 && countitem(506) > 0) goto Part4;//Items: Green_Potion,
-	if(MONK_Q == 11 && countitem(506) == 0) goto Part5;//Items: Green_Potion,
+	if(MONK_Q >= 10 && countitem(506) == 0) goto Part5;//Items: Green_Potion,
 	if(BaseJob == Job_Monk) goto Part6;
 	if(BaseJob == Job_Acolyte) goto Part7;
 
