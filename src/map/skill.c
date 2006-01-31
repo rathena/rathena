@@ -8833,12 +8833,11 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 		break;
 
 	case BD_ENCORE:					/* アンコ?ル */
-		if (!sd->skillid_dance) { //前回使用した踊りがないとだめ
+		if (!sd->skillid_dance || pc_checkskill(sd, sd->skillid_dance) <= 0) { //Prevent using the dance skill if you no longer have the skill in your tree.
 			clif_skill_fail(sd,skill_num,0,0);
 			return 0;
-		} else {
-			sd->skillid_old = skill_num;
 		}
+		sd->skillid_old = skill_num;
 		break;
 
 	case GD_BATTLEORDER:

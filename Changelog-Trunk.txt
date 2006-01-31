@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/01/31
+	* Fixed being able to Encore skills you no longer have in your tree.
+	  [Skotlex]
+	* Added no HP regen while Bleeding, -25% ATK and ASPD penalties as well.
+	  [Skotlex]
+	* Added VIT reduces duration of confusion. [Skotlex]
+	* Added "onspawn" mob skill condition. [Skotlex]
 	* Changed the exp table format. The new format allows specifying exp tables
 	  for any particular class. Thanks to Playstester for converting the official
 	  exp table to the new format. [Skotlex]

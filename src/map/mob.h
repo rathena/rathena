@@ -85,6 +85,7 @@ enum {
 	MSC_MASTERHPLTMAXRATE,
 	MSC_MASTERATTACKED,
 	MSC_ALCHEMIST,
+	MSC_SPAWN,
 };
 
 //Mob skill states.

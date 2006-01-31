@@ -7779,7 +7779,8 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 			(sd->sc_data[SC_POISON].timer != -1 && sd->sc_data[SC_SLOWPOISON].timer == -1) ||
 			(sd->sc_data[SC_DPOISON].timer != -1 && sd->sc_data[SC_SLOWPOISON].timer == -1) ||
 			sd->sc_data[SC_BERSERK].timer != -1 ||
-			sd->sc_data[SC_TRICKDEAD].timer != -1
+			sd->sc_data[SC_TRICKDEAD].timer != -1 ||
+			sd->sc_data[SC_BLEEDING].timer != -1
 		))
 	) { //Cannot heal neither natural or special.
 		sd->hp_sub = sd->inchealhptick = sd->inchealspirithptick = 0;
@@ -7793,8 +7794,7 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 			pc_natural_heal_hp(sd);
 			if(sd->sc_count && (
 				sd->sc_data[SC_EXTREMITYFIST].timer != -1 ||
-				sd->sc_data[SC_DANCING].timer != -1 ||
-				sd->sc_data[SC_BLEEDING].timer != -1
+				sd->sc_data[SC_DANCING].timer != -1
 			))	//No SP natural heal.
 				sd->sp_sub = sd->inchealsptick = 0;
 			else

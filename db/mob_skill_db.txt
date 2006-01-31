@@ -25,7 +25,8 @@
 // around (11x11 area around self)
 //
 //conditions: (condition type) (value which specifies a condition value)
-//	always			uncondtional
+//	always		unconditional
+//	onspawn		when the mob spawns/respawns.
 //	myhpltmaxrate		when the mob's hp drops to a certain %
 //	mystatuson		If the mob has any abnormalities in status (condition value),
 //	mystatusoff		If the mob has ended any abnormalities in status (condition value),

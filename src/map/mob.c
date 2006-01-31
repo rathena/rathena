@@ -1164,6 +1164,7 @@ int mob_spawn (int id)
 
 	clif_spawnmob(md);
 
+	mobskill_use(md, tick, MSC_SPAWN);
 	return 0;
 }
 
@@ -4516,6 +4517,7 @@ static int mob_readskilldb(void)
 		{	"masterhpltmaxrate",MSC_MASTERHPLTMAXRATE	},
 		{	"masterattacked",	MSC_MASTERATTACKED		},
 		{	"alchemist",		MSC_ALCHEMIST			},
+		{	"onspawn",		MSC_SPAWN},
 	}, cond2[] ={
 		{	"anybad",		-1				},
 		{	"stone",		SC_STONE		},
