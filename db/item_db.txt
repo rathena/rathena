@@ -2336,7 +2336,7 @@
 13005,Angel_Wing_Dagger,Angel Wing Dagger,4,,10,10,0,,1,1,,0,2,,0,0,0,0,{}
 
 
-// Temp Plugs.
+// Temp Plugs. Someone good with the DB's? If so, please re-check the items and place them accordingly.
 
 12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,127918079,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); }
 7516,Green_Keycard,Green Keycard,3,,10,0,,,,,,0,2,,,,,,{}
@@ -2360,6 +2360,6 @@
 //7520,...,
 12135,Green_Ale,Green Ale,2,,10,30,,,,,127918079,7,2,,,,,,{}
 7517,Gold_Coin,Golden Coin,3,,10,100,,,,,,0,2,,,,,,{}
-7516,Summer_Festival_Ticket,Summer Festival Ticket,3,,10,10,,,,,,0,2,,,,,,{}
+7525,Summer_Festival_Ticket,Summer Festival Ticket,3,,10,10,,,,,,0,2,,,,,,{}
 7526,Application,Application,3,,10,0,,,,,,0,2,,,,,,{}
 585,Brusti,Brusti,0,15,,20,,,,,127918079,7,2,,,,,,{ itemheal rand(17,20),0; }						//TODO: Cast Level 3 Magnificat.
