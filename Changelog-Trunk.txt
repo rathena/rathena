@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/01/31
+	* Removed no penelty mapflag for nifilheim. Confirmed on iRO. [Kayla]
 	* Changed default value of gm_cant_drop_max_lvl to 98. Also reworded the
 	  comments for cant_drop_max and min. [Kayla]
 	* Disabled pet skills by default. To my knowledge they are only enabled on
