@@ -10030,15 +10030,15 @@ int skill_enchant_elemental_end (struct block_list *bl, int type)
 int skill_check_cloaking(struct block_list *bl)
 {
 	struct map_session_data *sd = NULL;
+	struct status_change *sc_data;
 	static int dx[] = { 0, 1, 0, -1, -1,  1, 1, -1}; //optimized by Lupus
 	static int dy[] = {-1, 0, 1,  0, -1, -1, 1,  1};
 	int end = 1,i;
 
 	nullpo_retr(1, bl);
 
-	if (bl->type == BL_PC) {
-		nullpo_retr(1, sd = (struct map_session_data *)bl);
-	}
+	if (bl->type == BL_PC)
+		sd = (struct map_session_data *)bl;
 	
 	if ((bl->type == BL_PC && battle_config.pc_cloak_check_type&1) ||
 		(bl->type != BL_PC && battle_config.monster_cloak_check_type&1))
@@ -10053,10 +10053,10 @@ int skill_check_cloaking(struct block_list *bl)
 			end = 0; //No wall check.
 			
 	if(end){
-		if ((sd && pc_checkskill(sd,AS_CLOAKING)<3) || bl->type == BL_MOB) {
+		sc_data = status_get_sc_data(bl);
+		if (sc_data && sc_data[SC_CLOAKING].timer != -1 && sc_data[SC_CLOAKING].val1 < 3) {
 			status_change_end(bl, SC_CLOAKING, -1);
-		}
-		else if (sd && sd->sc_data[SC_CLOAKING].val3 != 130) {
+		} else if (sd && sd->sc_data[SC_CLOAKING].val3 != 130) {
 			status_quick_recalc_speed (sd, AS_CLOAKING, 130, 1);
 		}
 	}

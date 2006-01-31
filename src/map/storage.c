@@ -464,11 +464,8 @@ int storage_guild_storageopen(struct map_session_data *sd)
 		clif_updateguildstorageamount(sd,gstor);
 		return 0;
 	}
-	else {
-		gstor = guild2storage(sd->status.guild_id);
-		gstor->storage_status = 1;
+	else
 		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id);
-	}
 
 	return 0;
 }
