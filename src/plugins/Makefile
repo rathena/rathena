@@ -19,7 +19,7 @@ txt sql all: $(PLUGINS)
 httpd.$(PLUGINEXT): httpd.c
 	$(CC) $(CFLAGS) -shared -o ../../plugins/$@ $< \
 	../common/obj/minimalloc.o ../common/obj/db.o ../common/obj/showmsg.o \
-	../common/obj/utils.o
+	../common/obj/utils.o ../common/obj/ers.o
 	@touch $@
 
 gui.$(PLUGINEXT): ../../plugins/gui.conf
