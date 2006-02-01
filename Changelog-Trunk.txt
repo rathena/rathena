@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
+2006/02/01
+	* Fixed an overflow in grfio causing read problems in Win32 builds [celest]
+	* Changed resnametable loading behaviour - grfio will load from data directory
+	  first, and then from the highest priority grf only if that fails [celest]
+	* Increased grfio filelist limit to 1048576 to avoid problems when loading
+	  too many large grfs [celest]
 2006/01/31
 	* Fixed skill_check_cloak to use the current skill level of the cloaking
 	  skill and not pc_checkskill() to know if a cloaker away from a wall should

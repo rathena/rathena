@@ -61,7 +61,7 @@ typedef struct {
 	int		declen;				// original size
 	int		srcpos;
 	short	next;
-	char	cycle;
+	int	cycle;
 	char	type;
 	char	fn[128-4*5];		// file name
 	char	gentry;				// read grf file select
@@ -75,7 +75,7 @@ typedef struct {
 //Since char defines *FILELIST.gentry, the maximum which can be added by grfio_add becomes by 127 pieces.
 
 #define	GENTRY_LIMIT	127
-#define	FILELIST_LIMIT	65536	// temporary maximum, and a theory top maximum are 2G.
+#define	FILELIST_LIMIT	1048576	// temporary maximum, and a theory top maximum are 2G.
 
 static FILELIST *filelist		= NULL;
 static int	filelist_entrys		= 0;
@@ -84,17 +84,6 @@ static int	filelist_maxentry	= 0;
 static char **gentry_table		= NULL;
 static int gentry_entrys		= 0;
 static int gentry_maxentry		= 0;
-
-#define RESNAME_LIMIT	1024
-#define RESNAME_ADDS	16
-
-typedef struct resname_entry {
-	char	src[64];
-	char	dst[64];
-} Resname;
-static struct resname_entry *localresname = NULL;
-static int resname_entrys		= 0;
-static int resname_maxentrys	= 0;
 
 //----------------------------
 //	file list hash table
@@ -333,78 +322,6 @@ int encode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char*
 	return err;
 }
 
-/*==========================================
-*  Decompress from file source to file dest until stream ends or EOF.
-*  inf() returns Z_OK on success, Z_MEM_ERROR if memory could not be
-*  allocated for processing, Z_DATA_ERROR if the deflate data is
-*  invalid or incomplete, Z_VERSION_ERROR if the version of zlib.h and
-*  the version of the library linked do not match, or Z_ERRNO if there
-*  is an error reading or writing the files.
-*
-*  Version 1.2  9 November 2004  Mark Adler
-*------------------------------------------
-*/
-int decode_file (FILE *source, FILE *dest)
-{
-	int err;
-	unsigned have;
-	z_stream strm;
-	unsigned char in[CHUNK];
-	unsigned char out[CHUNK];
-
-	/* allocate inflate state */
-	strm.zalloc = Z_NULL;
-	strm.zfree = Z_NULL;
-	strm.opaque = Z_NULL;
-	strm.avail_in = 0;
-	strm.next_in = Z_NULL;
-
-	err = inflateInit(&strm);
-	if (err != Z_OK) return 0;	//return err;
-
-	/* decompress until deflate stream ends or end of file */
-	do {
-		strm.avail_in = fread(in, 1, CHUNK, source);
-		if (ferror(source)) {
-			inflateEnd(&strm);
-			return 0;
-		}
-		if (strm.avail_in == 0)
-			break;
-		strm.next_in = in;
-
-		/* run inflate() on input until output buffer not full */
-		do {
-			strm.avail_out = CHUNK;
-			strm.next_out = out;
-			err = inflate(&strm, Z_NO_FLUSH);
-			Assert(err != Z_STREAM_ERROR);  /* state not clobbered */
-			switch (err) {
-			case Z_NEED_DICT:
-				err = Z_DATA_ERROR;     /* and fall through */
-			case Z_DATA_ERROR:
-			case Z_MEM_ERROR:
-				inflateEnd(&strm);
-				//return err;
-				return 0;
-			}
-			have = CHUNK - strm.avail_out;
-			if (fwrite(out, 1, have, dest) != have || ferror(dest)) {
-				inflateEnd(&strm);
-				//return Z_ERRNO;
-				return 0;
-			}
-		} while (strm.avail_out == 0);
-		Assert(strm.avail_in == 0);     /* all input will be used */
-
-		/* done when inflate() says it's done */
-	} while (err != Z_STREAM_END);
-
-	/* clean up and return */
-	inflateEnd(&strm);
-	return err == Z_STREAM_END ? 1 : 0;
-}
-
 /* ===================================
 * Unzips a file. 1: success, 0: error
 * Adapted from miniunz.c [Celest]
@@ -488,7 +405,7 @@ unsigned long grfio_crc32 (const char *buf, unsigned int len)
 }
 
 /***********************************************************
- ***                File List Sobroutines                ***
+ ***                File List Subroutines                ***
  ***********************************************************/
 
 /*==========================================
@@ -520,7 +437,7 @@ static void hashinit(void)
  *	File List : File find
  *------------------------------------------
  */
-FILELIST *filelist_find(char *fname)
+static FILELIST *filelist_find(char *fname)
 {
 	int hash;
 
@@ -546,7 +463,7 @@ static FILELIST* filelist_add(FILELIST *entry)
 	int hash;
 
 	if (filelist_entrys >= FILELIST_LIMIT) {
-		ShowFatalError("filelist limit : filelist_add\n");
+		ShowFatalError("GRF filelist limit reached (filelist_add)!\n");
 		exit(1);
 	}
 
@@ -598,78 +515,6 @@ static void filelist_adjust(void)
 /***********************************************************
  ***                  Grfio Sobroutines                  ***
  ***********************************************************/
-/*==========================================
- * Grfio : Local Resnametable replace
- *------------------------------------------
- */
-static void grfio_resnametable(char *src, char *dest)
-{
-	int lop;
-	if (localresname == NULL ||
-		sscanf(src, "%*5s%s", dest) < 1)
-	{
-		// if not found copy the unresolved name into buffer
-		strcpy(dest, src);
-		return;
-	}
-
-	for (lop = 0; lop < resname_entrys; lop++) {
-		if (strcmpi(localresname[lop].src, dest) == 0) {
-			sprintf(dest, "data\\%s", localresname[lop].dst);
-			return;
-		}
-	}
-
-	return;
-}
-
-/*==========================================
- * Grfio : Local Resnametable Initialize
- *------------------------------------------
- */
-static void grfio_resnameinit (void)
-{
-	FILE *fp;
-	char *p;
-	// max length per entry is 34 in resnametable
-	char w1[64], w2[64], restable[256], line[256];
-
-	sprintf(restable, "%sdata\\resnametable.txt", data_dir);
-	for (p = &restable[0]; *p != 0; p++)
-		if (*p == '\\') *p = '/';
-
-	fp = fopen(restable,"rb");
-	if (fp == NULL) {
-		//ShowError("%s not found (grfio_resnameinit)\n", restable);
-		return;
-	}
-
-	while (fgets(line, sizeof(line) - 1, fp)){
-		if (sscanf(line, "%[^#]#%[^#]#", w1, w2) != 2)
-			continue;
-		// only save up necessary resource files
-		if (strstr(w1, ".gat") == NULL &&
-			strstr(w1, ".txt") == NULL)
-			continue;
-		if (resname_entrys >= RESNAME_LIMIT)
-			break;
-		if (resname_entrys >= resname_maxentrys) {
-			resname_maxentrys += RESNAME_ADDS;
-			localresname = (Resname*) aRealloc (localresname, resname_maxentrys * sizeof(Resname));
-			memset(localresname + (resname_maxentrys - RESNAME_ADDS), '\0', sizeof(Resname) * RESNAME_ADDS);
-		}
-		strcpy(localresname[resname_entrys].src, w1);
-		strcpy(localresname[resname_entrys].dst, w2);
-		resname_entrys++;
-	}
-	fclose(fp);
-
-	// free up unused sections
-	if (resname_maxentrys > resname_entrys) {
-		localresname = (Resname*) aRealloc (localresname, resname_entrys * sizeof(Resname));
-		resname_maxentrys = resname_entrys;
-	}
-}
 
 /*==========================================
  *	Grfio : Resource file size get
@@ -682,12 +527,11 @@ int grfio_size(char *fname)
 	entry = filelist_find(fname);
 
 	if (entry == NULL || entry->gentry < 0) {	// LocalFileCheck
-		char lfname[256], rname[256], *p;
+		char lfname[256], *p;
 		FILELIST lentry;
 		struct stat st;
 
-		grfio_resnametable(fname, rname);
-		sprintf(lfname, "%s%s", data_dir, rname);
+		sprintf(lfname, "%s%s", data_dir, fname);
 
 		for (p = &lfname[0]; *p != 0; p++)
 			if (*p=='\\') *p = '/';	// * At the time of Unix
@@ -719,12 +563,10 @@ void* grfio_reads(char *fname, int *size)
 	entry = filelist_find(fname);
 
 	if (entry == NULL || entry->gentry <= 0) {	// LocalFileCheck
-		char lfname[256], rname[256], *p;
+		char lfname[256], *p;
 		FILELIST lentry;
 
-		// resolve filename into rname
-		grfio_resnametable(fname, rname);
-		sprintf(lfname, "%s%s", data_dir, rname);
+		sprintf(lfname, "%s%s", data_dir, fname);
 		
 		for (p = &lfname[0]; *p != 0; p++)
 			if (*p == '\\') *p = '/';	// * At the time of Unix
@@ -790,15 +632,6 @@ void* grfio_reads(char *fname, int *size)
 }
 
 /*==========================================
- *	Grfio : Resource file read
- *------------------------------------------
- */
-void* grfio_read(char *fname)
-{
-	return grfio_reads(fname, NULL);
-}
-
-/*==========================================
  *	Resource filename decode
  *------------------------------------------
  */
@@ -841,7 +674,7 @@ static int grfio_entryread(char *gfname,int gentry)
 		fseek(fp,getlong(grf_header+0x1e),1))	// SEEK_CUR
 	{
 		fclose(fp);
-		ShowError("%s read error\n",gfname);
+		ShowError("GRF %s read error\n",gfname);
 		return 2;	// 2:file format error
 	}
 
@@ -871,7 +704,7 @@ static int grfio_entryread(char *gfname,int gentry)
 			if (type != 0) {	// Directory Index ... skip
 				fname = decode_filename(grf_filelist+ofs+6, grf_filelist[ofs]-6);
 				if (strlen(fname) > sizeof(aentry.fn) - 1) {
-					ShowFatalError("file name too long : %s\n",fname);
+					ShowFatalError("GRF file name %s is too long\n", fname);
 					aFree(grf_filelist);
 					exit(1);
 				}
@@ -952,7 +785,7 @@ static int grfio_entryread(char *gfname,int gentry)
 
 			fname = (char*)(grf_filelist+ofs);
 			if (strlen(fname) > sizeof(aentry.fn)-1) {
-				ShowFatalError("grf : file name too long : %s\n",fname);
+				ShowFatalError("GRF file name %s is too long\n", fname);
 				aFree(grf_filelist);
 				exit(1);
 			}
@@ -989,7 +822,7 @@ static int grfio_entryread(char *gfname,int gentry)
 
 	} else {	//****** Grf Other version ******
 		fclose(fp);
-		ShowError("not support grf versions : %04x\n",getlong(grf_header+0x2a));
+		ShowError("GRF version %04x not supported\n",getlong(grf_header+0x2a));
 		return 4;
 	}
 
@@ -1004,52 +837,85 @@ static int grfio_entryread(char *gfname,int gentry)
  */
 static void grfio_resourcecheck(void)
 {
-	int size;
-	char *buf, *ptr;
-	char w1[256], w2[256], src[256], dst[256];
+	char w1[256], w2[256], src[256], dst[256], restable[256], line[256];
+	char *ptr, *buf;
 	FILELIST *entry;
+	int size, i = 0;
+	FILE *fp;
 
-	buf = (char *)grfio_reads("data\\resnametable.txt", &size);
-	if (buf == NULL)
-		return;
-	buf[size] = 0;
+	// read resnametable from data directory and return if successful
+	sprintf(restable, "%sdata\\resnametable.txt", data_dir);
+	for (ptr = &restable[0]; *ptr != 0; ptr++)
+		if (*ptr == '\\') *ptr = '/';
 
-	for (ptr = buf; ptr - buf < size;) {
-		if (sscanf(ptr,"%[^#]#%[^#]#",w1,w2) == 2) {
-			if (strstr(w2, "bmp")) {
-				sprintf(src, "data\\texture\\%s", w1);
-				sprintf(dst, "data\\texture\\%s", w2);
-			} else {
+	fp = fopen(restable,"rb");
+	if (fp) {
+		while (fgets(line, sizeof(line) - 1, fp)) {
+			if (sscanf(line, "%[^#]#%[^#]#", w1, w2) == 2 &&
+				// we only need the map names and text files
+				(strstr(w2, ".gat") || strstr(w2, ".txt")))
+			{
 				sprintf(src, "data\\%s", w1);
 				sprintf(dst, "data\\%s", w2);
-			}
-			entry = filelist_find(dst);
-			if (entry != NULL) {
-				FILELIST fentry;
-				memcpy(&fentry, entry, sizeof(FILELIST));
-				strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
-				filelist_modify(&fentry);
-			} else {
-				//ShowError("file not found in data.grf : %s < %s\n",dst,src);
+				entry = filelist_find(dst);
+				// create new entries reusing the original's info
+				if (entry != NULL) {
+					FILELIST fentry;
+					memcpy(&fentry, entry, sizeof(FILELIST));
+					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
+					filelist_modify(&fentry);
+					i++;
+				}
 			}
 		}
-		ptr = strchr(ptr,'\n');	// Next line
-		if (!ptr) break;
-		ptr++;
+		fclose(fp);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", i, "resnametable.txt");
+		return;	// we're done here!
 	}
-	aFree(buf);
-	filelist_adjust();	// Unnecessary area release of filelist
+	
+	// read resnametable from loaded GRF's, only if it cannot be
+	// loaded from the data directory
+	buf = (char *)grfio_reads("data\\resnametable.txt", &size);
+	if (buf) {
+		buf[size] = 0;
+		ptr = buf;
+
+		while (ptr - buf < size) {
+			if (sscanf(ptr, "%[^#]#%[^#]#", w1, w2) == 2 &&
+				(strstr(w2, ".gat") || strstr(w2, ".txt")))
+			{
+				sprintf(src, "data\\%s", w1);
+				sprintf(dst, "data\\%s", w2);
+				entry = filelist_find(dst);
+				if (entry != NULL) {
+					FILELIST fentry;
+					memcpy(&fentry, entry, sizeof(FILELIST));
+					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
+					filelist_modify(&fentry);
+					i++;
+				}
+			}
+			ptr = strchr(ptr,'\n');	// Next line
+			if (!ptr) break;
+			ptr++;
+		}
+		aFree(buf);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", i, "data\\resnametable.txt");
+		return;
+	}
+
+	//ShowWarning("GRF: No resnametable found! Panic?\n");
 }
 
 /*==========================================
  * Grfio : Resource add
  *------------------------------------------
  */
-#define	GENTRY_ADDS	16	// The number increment of gentry_table entries
+#define	GENTRY_ADDS	4	// The number increment of gentry_table entries
 
-int grfio_add(char *fname)
+static int grfio_add(char *fname)
 {
-	int len,result;
+	int len;
 	char *buf;
 
 	if (gentry_entrys >= GENTRY_LIMIT) {
@@ -1067,12 +933,7 @@ int grfio_add(char *fname)
 	strcpy(buf, fname);
 	gentry_table[gentry_entrys++] = buf;
 
-	result = grfio_entryread(fname, gentry_entrys - 1);
-	if (result == 0)
-		// Resource check
-		grfio_resourcecheck();
-
-	return result;
+	return grfio_entryread(fname, gentry_entrys - 1);
 }
 
 /*==========================================
@@ -1095,8 +956,6 @@ void grfio_final(void)
 	}
 	gentry_table = NULL;
 	gentry_entrys = gentry_maxentry = 0;
-
-	if (localresname) aFree(localresname);
 }
 
 /*==========================================
@@ -1139,8 +998,10 @@ void grfio_init(char *fname)
 		//exit(1);	// It ends, if a resource cannot read one.
 	}
 
-	// initialise Resnametable
-	grfio_resnameinit();
+	// Unnecessary area release of filelist
+	filelist_adjust();
+	// Resource check
+	grfio_resourcecheck();
 
 	return;
 }
