@@ -5,6 +5,13 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/01
+	* Trick Dead makes you stop walking now. [Skotlex]
+	* Soul Burn is not affected by Lex Aeterna, not affected by target's cards
+	  neither. [Skotlex]
+	* Freeze and Stone take preference over Benedictio. [Skotlex]
+	* Sleep/Stun/Petrify/Freeze block each other out. [Skotlex]
+	* Fixed areamonster when the passed class is negative. [Skotlex]
+	* Removed the clear screen when launching the server.  [Skotlex]
 	* Integrated the status change variables into a single structure for easier
 	  management. [Skotlex]
 	* Break fall should no longer trigger when inflicted by freeze/stone/etc

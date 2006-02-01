@@ -27,6 +27,8 @@
 
 =========================
 
+02/01
+	* Falcon Assault only does one hit now. [Skotlex]
 01/31
 	* Changed Lady Tany's skills a bit and removed the CANWALK from her mode [MasterOfMuppets]
 	* Changed Vesper's mode to boss [MasterOfMuppets]

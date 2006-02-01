@@ -3326,12 +3326,12 @@ int status_get_element(struct block_list *bl)
 	nullpo_retr(20, bl);
 
 	if(sc && sc->count) {
-		if( sc->data[SC_BENEDICTIO].timer!=-1 )	// 聖体降福
-			return 26;
 		if( sc->data[SC_FREEZE].timer!=-1 )	// 凍結
 			return 21;
 		if( sc->data[SC_STONE].timer!=-1 && sc->data[SC_STONE].val2==0)
 			return 22;
+		if( sc->data[SC_BENEDICTIO].timer!=-1 )	// 聖体降福
+			return 26;
 	}
 	if(bl->type==BL_MOB)	// 10の位＝Lv*2、１の位＝属性
 		return ((struct mob_data *)bl)->def_ele;
@@ -3689,6 +3689,15 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		}
 	}
 
+	if (sc->opt1)
+		switch (type) {
+			case SC_STONE:
+			case SC_FREEZE:
+			case SC_SLEEP:
+			case SC_STAN:
+				return 0; //Cannot override other opt1 status changes. [Skotlex]
+		}
+
 	if((type==SC_FREEZE || type==SC_STONE) && undead_flag && !(flag&1))
 	//I've been informed that undead chars are inmune to stone curse too. [Skotlex]
 		return 0;
@@ -3732,7 +3741,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	}
 
 	if(type==SC_FREEZE || type==SC_STAN || type==SC_SLEEP || type==SC_STOP || type == SC_CONFUSION ||
-		type==SC_CLOSECONFINE || type==SC_CLOSECONFINE2)
+		type==SC_CLOSECONFINE || type==SC_CLOSECONFINE2 || type ==SC_TRICKDEAD)
 		battle_stopwalking(bl,1);
 
 	// クアグマイア/私を忘れないで中は無効なスキル
@@ -4628,16 +4637,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 
 			battle_stopattack(bl);	/* 攻?停止 */
 			skill_stop_dancing(bl);	/* 演奏/ダンスの中? */
-			{	/* 同時に掛からないステ?タス異常を解除 */
-				int i;
-				for(i = SC_STONE; i <= SC_SLEEP; i++){
-					if(sc->data[i].timer != -1){
-						(sc->count)--;
-						delete_timer(sc->data[i].timer, status_change_timer);
-						sc->data[i].timer = -1;
-					}
-				}
-			}
 			if(type == SC_STONE)
 				sc->opt1 = OPT1_STONEWAIT;
 			else

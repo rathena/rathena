@@ -397,7 +397,7 @@
 378,0,6,4,5,1,5,1,no,0,1024,0,weapon,0	//ASC_EDP#Deadly Poison Enchantment#
 379,5,6,1,-1,0,10,1,yes,0,0,0,weapon,0	//ASC_BREAKER#Soul Destroyer#
 380,0,6,4,0,1,10,1,no,0,0,0,weapon,0	//SN_SIGHT#Falcon Eyes#
-381,5,8,1,0,0,5,1:2:3:4:5,yes,0,0,0,misc,0	//SN_FALCONASSAULT#Falcon Assault#
+381,5,8,1,0,0,5,1,yes,0,0,0,misc,0	//SN_FALCONASSAULT#Falcon Assault#
 382,4,8,1,-1,0,5,1,yes,0,0,0,weapon,0	//SN_SHARPSHOOTING#Focused Arrow Strike#
 383,0,6,4,0,1,10,1,yes,0,0,0,weapon,0	//SN_WINDWALK#Wind Walker#
 384,0,0,4,0,1,10,1,yes,0,0,0,weapon,0	//WS_MELTDOWN#Shattering Strike#

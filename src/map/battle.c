@@ -620,7 +620,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 
 		//Now damage increasing effects
-		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE){
+		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN){
 			damage<<=1;
 			if (skill_num != ASC_BREAKER || flag & BF_MAGIC) //Only end it on the second attack of breaker. [Skotlex]
 				status_change_end( bl,SC_AETERNA,-1 );
@@ -2655,7 +2655,8 @@ struct Damage battle_calc_magic_attack(
 			MATK_RATE(cardfix);
 		}
 
-		if (tsd && skill_num != HW_GRAVITATION) { //Card fixes always apply on the target side. [Skotlex]
+		if (tsd && skill_num != HW_GRAVITATION && skill_num != PF_SOULBURN)
+	  	{ //Card fixes always apply on the target side. [Skotlex]
 			short s_race2=status_get_race2(src);
 			short s_class= status_get_class(src);
 			short cardfix=100;
