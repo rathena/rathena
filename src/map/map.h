@@ -305,10 +305,19 @@ struct script_regstr {
 	int index;
 	char data[256];
 };
-struct status_change {
+
+struct status_change_entry {
 	int timer;
 	int val1,val2,val3,val4;
 };
+
+struct status_change {
+	struct status_change_entry data[MAX_STATUSCHANGE];
+	short count;
+	short opt1,opt2,opt3;
+	short option;
+};
+
 struct vending {
 	short index;
 	unsigned short amount;
@@ -469,7 +478,6 @@ struct map_session_data {
 	unsigned short mapindex;
 	short to_x,to_y;
 	short speed,prev_speed;
-	short opt1,opt2,opt3;
 	unsigned char dir,head_dir;
 	unsigned int client_tick,server_tick;
 	struct walkpath_data walkpath;
@@ -664,8 +672,7 @@ struct map_session_data {
 	int regstr_num;
 	struct script_regstr *regstr;
 
-	struct status_change sc_data[MAX_STATUSCHANGE];
-	short sc_count;
+	struct status_change sc;
 	short mission_mobid; //Stores the target mob_id for TK_MISSION
 	short mission_count; //Stores the bounty kill count for TK_MISSION
 	int devotion[5]; //Stores the char IDs of chars devoted to.
@@ -754,13 +761,13 @@ struct npc_data {
 	unsigned char name[NAME_LENGTH];
 	unsigned char exname[NAME_LENGTH];
 	int chat_id;
-	short opt1,opt2,opt3,option;
 	short flag;
 	int walktimer; // [Valaris]
 	short to_x,to_y; // [Valaris]
 	struct walkpath_data walkpath;
 	unsigned int next_walktime;
 	unsigned int canmove_tick;
+	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 
 	struct { // [Valaris]
 		unsigned state : 8;
@@ -829,7 +836,7 @@ struct mob_data {
 		unsigned alchemist: 1;
 		int provoke_flag; // Celest
 	} state;
-	struct status_change sc_data[MAX_STATUSCHANGE];
+	struct status_change sc;
 	struct walkpath_data walkpath;
 	struct guardian_data* guardian_data; 
 	struct item *lootitem;
@@ -854,8 +861,6 @@ struct mob_data {
 	unsigned int last_deadtime,last_spawntime,last_thinktime,last_linktime;
 	short move_fail_count;
 	short lootitem_count;
-	short sc_count;
-	short opt1,opt2,opt3,option;
 	short min_chase;
 	
 	int deletetimer;

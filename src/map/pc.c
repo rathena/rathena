@@ -352,24 +352,31 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
  */
 int pc_can_move(struct map_session_data *sd)
 {
-	if (sd->canmove_tick > gettick() || (sd->opt1 > 0 && sd->opt1 != OPT1_STONEWAIT) ||
-		sd->sc_data[SC_ANKLE].timer != -1 ||
-   	sd->sc_data[SC_AUTOCOUNTER].timer !=-1 ||
-		sd->sc_data[SC_TRICKDEAD].timer !=-1 ||
-		sd->sc_data[SC_BLADESTOP].timer !=-1 ||
-		sd->sc_data[SC_SPIDERWEB].timer !=-1 ||
-		(sd->sc_data[SC_DANCING].timer !=-1 && sd->sc_data[SC_DANCING].val4 && sd->sc_data[SC_LONGING].timer == -1) ||
-		(sd->sc_data[SC_DANCING].timer !=-1 && sd->sc_data[SC_DANCING].val1 == CG_HERMODE) || //cannot move while Hermod is active.
-		(sd->sc_data[SC_GOSPEL].timer !=-1 && sd->sc_data[SC_GOSPEL].val4 == BCT_SELF) ||	// cannot move while gospel is in effect
-		sd->sc_data[SC_STOP].timer != -1 ||
-		sd->sc_data[SC_CLOSECONFINE].timer != -1 ||
-		sd->sc_data[SC_CLOSECONFINE2].timer != -1
-		)
+	
+	if (sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT)
 		return 0;
 
-	if ((sd->status.option & 2) && pc_checkskill(sd, RG_TUNNELDRIVE) <= 0)
+	if ((sd->sc.option & OPTION_HIDE) && pc_checkskill(sd, RG_TUNNELDRIVE) <= 0)
 		return 0;
 	
+	if (DIFF_TICK(sd->canmove_tick, gettick()) > 0)
+		return 0;
+	
+	if (sd->sc.count && (
+		sd->sc.data[SC_ANKLE].timer != -1 ||
+   	sd->sc.data[SC_AUTOCOUNTER].timer !=-1 ||
+		sd->sc.data[SC_TRICKDEAD].timer !=-1 ||
+		sd->sc.data[SC_BLADESTOP].timer !=-1 ||
+		sd->sc.data[SC_SPIDERWEB].timer !=-1 ||
+		(sd->sc.data[SC_DANCING].timer !=-1 && sd->sc.data[SC_DANCING].val4 && sd->sc.data[SC_LONGING].timer == -1) ||
+		(sd->sc.data[SC_DANCING].timer !=-1 && sd->sc.data[SC_DANCING].val1 == CG_HERMODE) || //cannot move while Hermod is active.
+		(sd->sc.data[SC_GOSPEL].timer !=-1 && sd->sc.data[SC_GOSPEL].val4 == BCT_SELF) ||	// cannot move while gospel is in effect
+		sd->sc.data[SC_STOP].timer != -1 ||
+		sd->sc.data[SC_CLOSECONFINE].timer != -1 ||
+		sd->sc.data[SC_CLOSECONFINE2].timer != -1
+	))
+		return 0;
+
 	return 1;
 }
 
@@ -409,6 +416,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 
 	// 死亡?態だったのでhpを1、位置をセ?ブ場所に?更
 	if(!sd->state.waitingdisconnect) {
+		sd->sc.option = sd->sc.option;
 		if(pc_isdead(sd)){
 			pc_setrestartvalue(sd,0);
 			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
@@ -593,28 +601,31 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0; 
 	if(map[sd->bl.m].zone && map[sd->bl.m].flag.restricted && (item->flag.no_equip&map[sd->bl.m].zone || !pc_isAllowedCardOn(sd,item->slot,n,map[sd->bl.m].zone)))
 		return 0;
-	if((item->equip & 0x0002 || item->equip & 0x0020) && item->type == 4 && sd->sc_data[SC_STRIPWEAPON].timer != -1) // Also works with left-hand weapons [DracoRPG]
-		return 0;
-	if(item->equip & 0x0020 && item->type == 5 && sd->sc_data[SC_STRIPSHIELD].timer != -1) // Also works with left-hand weapons [DracoRPG]
-		return 0;
-	if(item->equip & 0x0010 && sd->sc_data[SC_STRIPARMOR].timer != -1)
-		return 0;
-	if(item->equip & 0x0100 && sd->sc_data[SC_STRIPHELM].timer != -1)
-		return 0;
+	if (sd->sc.count) {
+			
+		if((item->equip & 0x0002 || item->equip & 0x0020) && item->type == 4 && sd->sc.data[SC_STRIPWEAPON].timer != -1) // Also works with left-hand weapons [DracoRPG]
+			return 0;
+		if(item->equip & 0x0020 && item->type == 5 && sd->sc.data[SC_STRIPSHIELD].timer != -1) // Also works with left-hand weapons [DracoRPG]
+			return 0;
+		if(item->equip & 0x0010 && sd->sc.data[SC_STRIPARMOR].timer != -1)
+			return 0;
+		if(item->equip & 0x0100 && sd->sc.data[SC_STRIPHELM].timer != -1)
+			return 0;
 
-	if (sd->sc_data[SC_SPIRIT].timer != -1 && sd->sc_data[SC_SPIRIT].val2 == SL_SUPERNOVICE) {
-		//Spirit of Super Novice equip bonuses. [Skotlex]
-		if (sd->status.base_level > 90 && item->equip & 0x301)
-			return 1; //Can equip all helms
-		if (sd->status.base_level > 96 && item->equip & 0x022 && item->type == 4)
-			switch(item->look) { //In weapons, the look determines type of weapon.
-				case 0x01: //Level 4 Knives are equippable.. this means all knives, I'd guess?
-				case 0x02: //All 1H swords
-				case 0x06: //All 1H Axes
-				case 0x08: //All Maces
-				case 0x0a: //All Staffs
-					return 1;
-			}
+		if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_SUPERNOVICE) {
+			//Spirit of Super Novice equip bonuses. [Skotlex]
+			if (sd->status.base_level > 90 && item->equip & 0x301)
+				return 1; //Can equip all helms
+			if (sd->status.base_level > 96 && item->equip & 0x022 && item->type == 4)
+				switch(item->look) { //In weapons, the look determines type of weapon.
+					case 0x01: //Level 4 Knives are equippable.. this means all knives, I'd guess?
+					case 0x02: //All 1H swords
+					case 0x06: //All 1H Axes
+					case 0x08: //All Maces
+					case 0x0a: //All Staffs
+						return 1;
+				}
+		}
 	}
 	//Not equipable by class. [Skotlex]
 	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
@@ -658,7 +669,7 @@ int pc_break_equip(struct map_session_data *sd, unsigned short where)
 		default:
 			return 0;
 	}
-	if (sd->sc_count && sd->sc_data[i].timer != -1)
+	if (sd->sc.count && sd->sc.data[i].timer != -1)
 		return 0;
 
 	for (i = 0; i < 11; i++) {
@@ -755,15 +766,16 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 
 	// ステ?タス異常の初期化
 	for(i = 0; i < MAX_STATUSCHANGE; i++) {
-		sd->sc_data[i].timer=-1;
+		sd->sc.data[i].timer=-1;
 	}
-	sd->sc_count=0;
+	sd->sc.count=0;
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_Hide)))
 		sd->status.option &= (OPTION_MASK | OPTION_INVISIBLE);
 	else
 		sd->status.option &= OPTION_MASK;
 
+	sd->sc.option = sd->status.option; //This is the actual option used in battle.
 	// パ?ティ??係の初期化
 	sd->party_x = -1;
 	sd->party_y = -1;
@@ -1016,7 +1028,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			sd->status.skill[i].flag=0;
 		}
 		else
-		if(sd->sc_data[SC_SPIRIT].timer != -1 && sd->sc_data[SC_SPIRIT].val2 == SL_BARDDANCER && i >= DC_HUMMING && i<= DC_SERVICEFORYOU)
+		if(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_BARDDANCER && i >= DC_HUMMING && i<= DC_SERVICEFORYOU)
 		{ //Enable Bard/Dancer spirit linked skills.
 			if (sd->status.sex) { //Link dancer skills to bard.
 				sd->status.skill[i].id=i;
@@ -1058,7 +1070,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 					f=0; // Do not unlock normal skills when Basic Skills is not maxed out (can happen because of skill reset)
 			}
 			if(sd->status.skill[id].id==0 ){
-				if(sd->sc_data[SC_SPIRIT].timer != -1 && skill_get_inf2(id)&INF2_SPIRIT_SKILL) { //Enable Spirit Skills. [Skotlex]
+				if(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1 && skill_get_inf2(id)&INF2_SPIRIT_SKILL) { //Enable Spirit Skills. [Skotlex]
 					sd->status.skill[id].id=id;
 					sd->status.skill[id].lv=1;
 					sd->status.skill[id].flag=1; //So it is not saved, and tagged as a "bonus" skill.
@@ -1142,17 +1154,17 @@ int pc_checkweighticon(struct map_session_data *sd)
 		flag=2;
 
 	if(flag==1){
-		if(sd->sc_data[SC_WEIGHT50].timer==-1)
+		if(sd->sc.data[SC_WEIGHT50].timer==-1)
 			status_change_start(&sd->bl,SC_WEIGHT50,0,0,0,0,0,0);
 	}else{
-		if(sd->sc_data[SC_WEIGHT50].timer!=-1)
+		if(sd->sc.data[SC_WEIGHT50].timer!=-1)
 			status_change_end(&sd->bl,SC_WEIGHT50,-1);
 	} 
 	if(flag==2){
-		if(sd->sc_data[SC_WEIGHT90].timer==-1)
+		if(sd->sc.data[SC_WEIGHT90].timer==-1)
 			status_change_start(&sd->bl,SC_WEIGHT90,0,0,0,0,0,0);
 	}else{
-		if(sd->sc_data[SC_WEIGHT90].timer!=-1)
+		if(sd->sc.data[SC_WEIGHT90].timer!=-1)
 			status_change_end(&sd->bl,SC_WEIGHT90,-1);
 	}
 	return 0;
@@ -2789,18 +2801,26 @@ int pc_useitem(struct map_session_data *sd,int n)
 		amount = sd->status.inventory[n].amount;
 		if(sd->status.inventory[n].nameid <= 0 ||
 			sd->status.inventory[n].amount <= 0 ||
-			gettick() < sd->canuseitem_tick || //Prevent mass item usage. [Skotlex]
-			sd->sc_data[SC_BERSERK].timer!=-1 ||
-			sd->sc_data[SC_MARIONETTE].timer!=-1 ||
-			sd->sc_data[SC_GRAVITATION].timer!=-1 ||
+			DIFF_TICK(sd->canuseitem_tick, gettick()) > 0 //Prevent mass item usage. [Skotlex]
+		)
+			return 1;
+		if (sd->sc.count && (
+			sd->sc.data[SC_BERSERK].timer!=-1 ||
+			sd->sc.data[SC_MARIONETTE].timer!=-1 ||
+			sd->sc.data[SC_GRAVITATION].timer!=-1 ||
 			//Cannot use Potions/Healing items while under Gospel.
-			(sd->sc_data[SC_GOSPEL].timer!=-1 && sd->sc_data[SC_GOSPEL].val4 != BCT_SELF && sd->inventory_data[n]->type == 0) ||
-			(pc_issit(sd) && (sd->itemid == 605 || sd->itemid == 606)) ||
+			(sd->sc.data[SC_GOSPEL].timer!=-1 && sd->sc.data[SC_GOSPEL].val4 != BCT_SELF && sd->inventory_data[n]->type == 0)
+		)) {
+			clif_useitemack(sd,n,0,0);
+			return 1;
+		}		
+		if ((pc_issit(sd) && (sd->itemid == 605 || sd->itemid == 606)) ||
 			//added item_noequip.txt items check by Maya&[Lupus]
 			(map[sd->bl.m].flag.pvp && (sd->inventory_data[n]->flag.no_equip&1) ) || // PVP
 			(map_flag_gvg(sd->bl.m) && (sd->inventory_data[n]->flag.no_equip&2) ) || // GVG
 			(map[sd->bl.m].zone && map[sd->bl.m].flag.restricted && (sd->inventory_data[n]->flag.no_equip&map[sd->bl.m].zone)) || // Zone restriction
-			!pc_isUseitem(sd,n) ) {
+			!pc_isUseitem(sd,n)
+		) {
 			clif_useitemack(sd,n,0,0);
 			return 1;
 		}
@@ -2822,7 +2842,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		}
 		if(sd->status.inventory[n].card[0]==0x00fe && pc_istop10fame(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST)) {
 		    potion_flag = 2; // Famous player's potions have 50% more efficiency
-			 if (sd->sc_data[SC_SPIRIT].timer != -1 && sd->sc_data[SC_SPIRIT].val2 == SL_ROGUE)
+			 if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_ROGUE)
 				 potion_flag = 3; //Even more effective potions.
 		}
 		sd->canuseitem_tick= gettick() + battle_config.item_use_interval; //Update item use time.
@@ -3035,7 +3055,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 	if(md->state.steal_flag || status_get_mode(bl)&MD_BOSS || md->master_id ||
 		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
 		map[md->bl.m].flag.nomobloot ||        // check noloot map flag [Lorky]
-		md->sc_data[SC_STONE].timer != -1 || md->sc_data[SC_FREEZE].timer != -1 //status change check
+		md->sc.data[SC_STONE].timer != -1 || md->sc.data[SC_FREEZE].timer != -1 //status change check
   )
 		return 0;
 	
@@ -3112,7 +3132,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *bl)
 		int rate,skill;
 		struct mob_data *md=(struct mob_data *)bl;
 		if(md && !md->state.steal_coin_flag) {
-			if (md->sc_data && (md->sc_data[SC_STONE].timer != -1 || md->sc_data[SC_FREEZE].timer != -1))
+			if (md->sc.data && (md->sc.data[SC_STONE].timer != -1 || md->sc.data[SC_FREEZE].timer != -1))
 				return 0;
 			skill = pc_checkskill(sd,RG_STEALCOIN)*10;
 			rate = skill + (sd->status.base_level - md->db->lv)*3 + sd->paramc[4]*2 + sd->paramc[5]*2;
@@ -3188,42 +3208,40 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 
 	m=map_mapindex2mapid(mapindex);
 
-	if (sd->sc_count) {
-		if (sd->sc_data[SC_TRICKDEAD].timer != -1)
+	if (sd->sc.count) {
+		if (sd->sc.data[SC_TRICKDEAD].timer != -1)
 			status_change_end(&sd->bl, SC_TRICKDEAD, -1);
-		if (sd->sc_data[SC_BLADESTOP].timer!=-1)
+		if (sd->sc.data[SC_BLADESTOP].timer!=-1)
 			status_change_end(&sd->bl,SC_BLADESTOP,-1);
-		if (sd->sc_data[SC_RUN].timer!=-1)
+		if (sd->sc.data[SC_RUN].timer!=-1)
 			status_change_end(&sd->bl,SC_RUN,-1);
-		if (sd->sc_data[SC_DANCING].timer!=-1) // clear dance effect when warping [Valaris]
+		if (sd->sc.data[SC_DANCING].timer!=-1) // clear dance effect when warping [Valaris]
 			skill_stop_dancing(&sd->bl);
-		if (sd->sc_data[SC_DEVOTION].timer!=-1)
+		if (sd->sc.data[SC_DEVOTION].timer!=-1)
 			status_change_end(&sd->bl,SC_DEVOTION,-1);
-		if (sd->sc_data[SC_CLOSECONFINE].timer!=-1)
+		if (sd->sc.data[SC_CLOSECONFINE].timer!=-1)
 			status_change_end(&sd->bl,SC_CLOSECONFINE,-1);
-		if (sd->sc_data[SC_CLOSECONFINE2].timer!=-1)
+		if (sd->sc.data[SC_CLOSECONFINE2].timer!=-1)
 			status_change_end(&sd->bl,SC_CLOSECONFINE2,-1);
-		if (sd->sc_data[SC_RUN].timer!=-1)
+		if (sd->sc.data[SC_RUN].timer!=-1)
 			status_change_end(&sd->bl,SC_RUN,-1);
+		if (sd->sc.data[SC_HIDING].timer!=-1)
+			status_change_end(&sd->bl, SC_HIDING, -1);
+		if (sd->sc.data[SC_CLOAKING].timer!=-1)
+			status_change_end(&sd->bl, SC_CLOAKING, -1);
+		if (sd->sc.data[SC_CHASEWALK].timer!=-1)
+			status_change_end(&sd->bl, SC_CHASEWALK, -1);
 		if (sd->bl.m != m) { //Cancel some map related stuff.
-			if (sd->sc_data[SC_WARM].timer != -1)
+			if (sd->sc.data[SC_WARM].timer != -1)
 				status_change_end(&sd->bl,SC_WARM,-1);
-			if (sd->sc_data[SC_SUN_COMFORT].timer != -1)
+			if (sd->sc.data[SC_SUN_COMFORT].timer != -1)
 				status_change_end(&sd->bl,SC_SUN_COMFORT,-1);
-			if (sd->sc_data[SC_MOON_COMFORT].timer != -1)
+			if (sd->sc.data[SC_MOON_COMFORT].timer != -1)
 				status_change_end(&sd->bl,SC_MOON_COMFORT,-1);
-			if (sd->sc_data[SC_STAR_COMFORT].timer != -1)
+			if (sd->sc.data[SC_STAR_COMFORT].timer != -1)
 				status_change_end(&sd->bl,SC_STAR_COMFORT,-1);
 		}
 	}
-
-	if(sd->status.option&OPTION_HIDE)
-		status_change_end(&sd->bl, SC_HIDING, -1);
-	if(pc_iscloaking(sd))
-		status_change_end(&sd->bl, SC_CLOAKING, -1);
-	if(pc_ischasewalk(sd))
-		status_change_end(&sd->bl, SC_CHASEWALK, -1);
-
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
 		pet_stopattack(sd->pd);
 		pet_changestate(sd->pd,MS_IDLE,0);
@@ -3441,7 +3459,7 @@ int pc_run(struct map_session_data *sd, int skilllv, int dir)
 	nullpo_retr(0, sd);
 
 	if (!pc_can_move(sd)) {
-		if(sd->sc_data[SC_RUN].timer!=-1)
+		if(sd->sc.data[SC_RUN].timer!=-1)
 			status_change_end(&sd->bl,SC_RUN,-1);
 		return 0;
 	}
@@ -3462,7 +3480,7 @@ int pc_run(struct map_session_data *sd, int skilllv, int dir)
 
 	//進めない場合　駆け足終了　障害物で止まった場合スパート状態解除
 	if(to_x == sd->bl.x && to_y == sd->bl.y){
-		if(sd->sc_data[SC_RUN].timer!=-1)
+		if(sd->sc.data[SC_RUN].timer!=-1)
 			status_change_end(&sd->bl,SC_RUN,-1);
 	} else
 		pc_walktoxy(sd, to_x, to_y);
@@ -3613,9 +3631,9 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 		if (pc_iscloaking(sd))	// クロ?キングの消滅?査
 			skill_check_cloaking(&sd->bl);
 		/* 被ディボ?ション?査 */
-		if (sd->sc_count) {
-			if (sd->sc_data[SC_DANCING].timer != -1)
-				skill_unit_move_unit_group((struct skill_unit_group *)sd->sc_data[SC_DANCING].val2, sd->bl.m, dx, dy);
+		if (sd->sc.count) {
+			if (sd->sc.data[SC_DANCING].timer != -1)
+				skill_unit_move_unit_group((struct skill_unit_group *)sd->sc.data[SC_DANCING].val2, sd->bl.m, dx, dy);
 		}
 		if (map_getcell(sd->bl.m,x,y,CELL_CHKNPC))
 			npc_touch_areanpc(sd,sd->bl.m,x,y);
@@ -3629,8 +3647,8 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 			i = 1;
 		sd->walktimer = add_timer (tick+i, pc_walk, id, sd->walkpath.path_pos);
 	}
-	else if(sd->sc_data[SC_RUN].timer!=-1) //Keep trying to run.
-		pc_run(sd, sd->sc_data[SC_RUN].val1, sd->sc_data[SC_RUN].val2);
+	else if(sd->sc.data[SC_RUN].timer!=-1) //Keep trying to run.
+		pc_run(sd, sd->sc.data[SC_RUN].val1, sd->sc.data[SC_RUN].val2);
 	else { //Stopped walking. Update to_x and to_y to current location [Skotlex]
 		sd->to_x = sd->bl.x;
 		sd->to_y = sd->bl.y;
@@ -3676,7 +3694,7 @@ int pc_walktoxy (struct map_session_data *sd, int x, int y)
 
 	sd->to_x = x;
 	sd->to_y = y;
-	if (sd->sc_data[SC_CONFUSION].timer != -1) //Randomize the target position
+	if (sd->sc.data[SC_CONFUSION].timer != -1) //Randomize the target position
 		map_random_dir(&sd->bl, &sd->to_x, &sd->to_y);
 	
 	if (sd->walktimer != -1)
@@ -3738,7 +3756,7 @@ int pc_stop_walking (struct map_session_data *sd, int type)
 	sd->to_y = sd->bl.y;
 	if (type & 0x01)
 		clif_fixpos(&sd->bl);
-	if (sd->sc_data[SC_RUN].timer != -1)
+	if (sd->sc.data[SC_RUN].timer != -1)
 		status_change_end(&sd->bl, SC_RUN, -1);
 	return 0;
 }
@@ -3837,36 +3855,36 @@ int pc_checkallowskill(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
-	if(!sd->sc_count)
+	if(!sd->sc.count)
 		return 0;
 	
 	// Skills requiring specific weapon types
-	if(sd->sc_data[SC_TWOHANDQUICKEN].timer!=-1 && !(skill_get_weapontype(KN_TWOHANDQUICKEN)&(1<<sd->status.weapon)))
+	if(sd->sc.data[SC_TWOHANDQUICKEN].timer!=-1 && !(skill_get_weapontype(KN_TWOHANDQUICKEN)&(1<<sd->status.weapon)))
 		status_change_end(&sd->bl,SC_TWOHANDQUICKEN,-1);
-	if(sd->sc_data[SC_ONEHAND].timer!=-1 && !(skill_get_weapontype(KN_ONEHAND)&(1<<sd->status.weapon)))
+	if(sd->sc.data[SC_ONEHAND].timer!=-1 && !(skill_get_weapontype(KN_ONEHAND)&(1<<sd->status.weapon)))
 		status_change_end(&sd->bl,SC_ONEHAND,-1);
-	if(sd->sc_data[SC_AURABLADE].timer!=-1 && !(skill_get_weapontype(LK_AURABLADE)&(1<<sd->status.weapon)))
+	if(sd->sc.data[SC_AURABLADE].timer!=-1 && !(skill_get_weapontype(LK_AURABLADE)&(1<<sd->status.weapon)))
 		// Aura Blade requires any weapon but bare fists
 		status_change_end(&sd->bl,SC_AURABLADE,-1);
-	if(sd->sc_data[SC_PARRYING].timer!=-1 && !(skill_get_weapontype(LK_PARRYING)&(1<<sd->status.weapon)))
+	if(sd->sc.data[SC_PARRYING].timer!=-1 && !(skill_get_weapontype(LK_PARRYING)&(1<<sd->status.weapon)))
 		status_change_end(&sd->bl,SC_PARRYING,-1);
-	if(sd->sc_data[SC_SPEARSQUICKEN].timer!=-1 && !(skill_get_weapontype(CR_SPEARQUICKEN)&(1<<sd->status.weapon)))
+	if(sd->sc.data[SC_SPEARSQUICKEN].timer!=-1 && !(skill_get_weapontype(CR_SPEARQUICKEN)&(1<<sd->status.weapon)))
 		// Spear Quicken requires a Two-handed spear
 		status_change_end(&sd->bl,SC_SPEARSQUICKEN,-1);
-	if(sd->sc_data[SC_ADRENALINE].timer!=-1 && !(skill_get_weapontype(BS_ADRENALINE)&(1<<sd->status.weapon)))
+	if(sd->sc.data[SC_ADRENALINE].timer!=-1 && !(skill_get_weapontype(BS_ADRENALINE)&(1<<sd->status.weapon)))
 		status_change_end(&sd->bl,SC_ADRENALINE,-1);
-	if(sd->sc_data[SC_ADRENALINE2].timer!=-1 && !(skill_get_weapontype(BS_ADRENALINE2)&(1<<sd->status.weapon)))
+	if(sd->sc.data[SC_ADRENALINE2].timer!=-1 && !(skill_get_weapontype(BS_ADRENALINE2)&(1<<sd->status.weapon)))
 		status_change_end(&sd->bl,SC_ADRENALINE2,-1);
-	if( sd->sc_data[SC_SPURT].timer!=-1 && sd->status.weapon)
+	if( sd->sc.data[SC_SPURT].timer!=-1 && sd->status.weapon)
 		// Spurt requires bare hands (feet, in fact xD)
 		status_change_end(&sd->bl,SC_SPURT,-1);
 
 	if(sd->status.shield <= 0) { // Skills requiring a shield
-		if(sd->sc_data[SC_AUTOGUARD].timer!=-1)	// Guard
+		if(sd->sc.data[SC_AUTOGUARD].timer!=-1)	// Guard
 			status_change_end(&sd->bl,SC_AUTOGUARD,-1);
-		if(sd->sc_data[SC_DEFENDER].timer!=-1)	// Defending Aura
+		if(sd->sc.data[SC_DEFENDER].timer!=-1)	// Defending Aura
 			status_change_end(&sd->bl,SC_DEFENDER,-1);
-		if(sd->sc_data[SC_REFLECTSHIELD].timer!=-1) // Shield Reflect
+		if(sd->sc.data[SC_REFLECTSHIELD].timer!=-1) // Shield Reflect
 			status_change_end(&sd->bl,SC_REFLECTSHIELD,-1);
 	}
 	return 0;
@@ -4423,7 +4441,7 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 		map_freeblock_lock();
 		sd->attacktarget_lv = battle_weapon_attack(&sd->bl,bl,tick,0);
 		
-		if(!(battle_config.pc_cloak_check_type&2) && sd->sc_data[SC_CLOAKING].timer != -1)
+		if(!(battle_config.pc_cloak_check_type&2) && sd->sc.data[SC_CLOAKING].timer != -1)
 			status_change_end(&sd->bl,SC_CLOAKING,-1);
 		
 		if(sd->status.pet_id > 0 && sd->pd && sd->petDB && battle_config.pet_attack_support)
@@ -5064,8 +5082,8 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 	sd->status.job_level=1;
 	sd->status.base_exp=sd->status.base_exp=0;
 	sd->status.job_exp=sd->status.job_exp=0;
-	if(sd->status.option !=0)
-		sd->status.option = 0;
+	if(sd->sc.option !=0)
+		sd->sc.option = 0;
 
 	sd->status.str=1;
 	sd->status.agi=1;
@@ -5279,21 +5297,29 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	}
 
 	// ? いていたら足を止める
-	if (sd->sc_data) {
-		if (sd->sc_data[SC_ENDURE].timer != -1 && (src != NULL && src->type == BL_MOB) && !map_flag_gvg(sd->bl.m)) {
-			if (!sd->special_state.infinite_endure && (--sd->sc_data[SC_ENDURE].val2) < 0) 
+	if (sd->sc.count) {
+		if (sd->sc.data[SC_ENDURE].timer != -1 && (src != NULL && src->type == BL_MOB) && !map_flag_gvg(sd->bl.m)) {
+			if (!sd->special_state.infinite_endure && (--sd->sc.data[SC_ENDURE].val2) < 0) 
 				status_change_end(&sd->bl, SC_ENDURE, -1);
 		}
-		if (sd->sc_data[SC_GRAVITATION].timer != -1 &&
-			sd->sc_data[SC_GRAVITATION].val3 == BCT_SELF) {
-			struct skill_unit_group *sg = (struct skill_unit_group *)sd->sc_data[SC_GRAVITATION].val4;
+		if (sd->sc.data[SC_GRAVITATION].timer != -1 &&
+			sd->sc.data[SC_GRAVITATION].val3 == BCT_SELF) {
+			struct skill_unit_group *sg = (struct skill_unit_group *)sd->sc.data[SC_GRAVITATION].val4;
 			if (sg) {
 				skill_delunitgroup(sg);
 				status_change_end(&sd->bl, SC_GRAVITATION, -1);
 			}
 		}
-		if (sd->sc_data[SC_CONFUSION].timer != -1)
+		if (sd->sc.data[SC_CONFUSION].timer != -1)
 			status_change_end(&sd->bl, SC_CONFUSION, -1);
+		if (sd->sc.data[SC_TRICKDEAD].timer != -1)
+			status_change_end(&sd->bl, SC_TRICKDEAD, -1);
+		if (sd->sc.data[SC_HIDING].timer != -1)
+			status_change_end(&sd->bl, SC_HIDING, -1);
+		if (sd->sc.data[SC_CLOAKING].timer != -1)
+			status_change_end(&sd->bl, SC_CLOAKING, -1);
+		if (sd->sc.data[SC_CHASEWALK].timer != -1)
+			status_change_end(&sd->bl, SC_CHASEWALK, -1);
 	}
 
 	// 演奏/ダンスの中?
@@ -5308,20 +5334,11 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	if(sd->status.pet_id > 0 && sd->pd && sd->petDB && battle_config.pet_damage_support)
 		pet_target_check(sd,src,1);
 
-	if (sd->sc_data[SC_TRICKDEAD].timer != -1)
-		status_change_end(&sd->bl, SC_TRICKDEAD, -1);
-	if(sd->status.option&OPTION_HIDE)
-		status_change_end(&sd->bl, SC_HIDING, -1);
-	if(pc_iscloaking(sd))
-		status_change_end(&sd->bl, SC_CLOAKING, -1);
-	if(pc_ischasewalk(sd))
-		status_change_end(&sd->bl, SC_CHASEWALK, -1);
-
 	clif_updatestatus(sd,SP_HP);
 
 	if(sd->status.hp>0){
-		if(sd->status.hp<sd->status.max_hp>>2 && sd->sc_data[SC_AUTOBERSERK].timer != -1 &&
-			(sd->sc_data[SC_PROVOKE].timer==-1 || sd->sc_data[SC_PROVOKE].val2==0 ))
+		if(sd->status.hp<sd->status.max_hp>>2 && sd->sc.data[SC_AUTOBERSERK].timer != -1 &&
+			(sd->sc.data[SC_PROVOKE].timer==-1 || sd->sc.data[SC_PROVOKE].val2==0 ))
 			// オ?トバ?サ?ク?動
 			status_change_start(&sd->bl,SC_PROVOKE,10,1,0,0,0,0);
 
@@ -5354,9 +5371,9 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	pc_stop_walking(sd,0);
 	skill_castcancel(&sd->bl,0);	// 詠唱の中止
 	skill_stop_dancing(&sd->bl); //You should stop dancing when dead... [Skotlex]
-	if (sd->sc_data[SC_GOSPEL].timer != -1 && sd->sc_data[SC_GOSPEL].val4 == BCT_SELF)
+	if (sd->sc.data[SC_GOSPEL].timer != -1 && sd->sc.data[SC_GOSPEL].val4 == BCT_SELF)
 	{	//Remove Gospel [Skotlex]
-		struct skill_unit_group *sg = (struct skill_unit_group *)sd->sc_data[SC_GOSPEL].val3;
+		struct skill_unit_group *sg = (struct skill_unit_group *)sd->sc.data[SC_GOSPEL].val3;
 		if (sg)
 			skill_delunitgroup(sg);
 	}
@@ -5477,7 +5494,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	if(battle_config.death_penalty_type && sd->state.snovice_flag != 4
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
 		&& !map[sd->bl.m].flag.nopenalty && !map_flag_gvg(sd->bl.m)
-		&& !(sd->sc_count && sd->sc_data[SC_BABY].timer!=-1))
+		&& !(sd->sc.count && sd->sc.data[SC_BABY].timer!=-1))
 	{
 			if(battle_config.death_penalty_type==1 && battle_config.death_penalty_base > 0)
 				sd->status.base_exp -= (int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
@@ -5525,7 +5542,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		}
 	}
 	//Clear these data here so that SC_BABY check may work. [Skotlex]
-	resurrect_flag = (sd->sc_data[SC_KAIZEL].timer != -1)?sd->sc_data[SC_KAIZEL].val1:0; //Auto-resurrect later in the code.
+	resurrect_flag = (sd->sc.data[SC_KAIZEL].timer != -1)?sd->sc.data[SC_KAIZEL].val1:0; //Auto-resurrect later in the code.
 	status_change_clear(&sd->bl,0);	// ステ?タス異常を解除する
 	clif_updatestatus(sd,SP_HP);
 	status_calc_pc(sd,0);
@@ -5908,7 +5925,7 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 			sp = 0;
 	}
 
-	if(sd->sc_count && sd->sc_data[SC_BERSERK].timer!=-1) //バ?サ?ク中は回復させないらしい
+	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1) //バ?サ?ク中は回復させないらしい
 		return 0;
 
 	if(hp+sd->status.hp>sd->status.max_hp)
@@ -5929,8 +5946,8 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 	if(sp)
 		clif_updatestatus(sd,SP_SP);
 
-	if(sd->status.hp>=sd->status.max_hp>>2 && sd->sc_data[SC_AUTOBERSERK].timer != -1 &&
-		(sd->sc_data[SC_PROVOKE].timer!=-1 && sd->sc_data[SC_PROVOKE].val2==1 ))
+	if(sd->status.hp>=sd->status.max_hp>>2 && sd->sc.data[SC_AUTOBERSERK].timer != -1 &&
+		(sd->sc.data[SC_PROVOKE].timer!=-1 && sd->sc.data[SC_PROVOKE].val2==1 ))
 			status_change_end(&sd->bl,SC_PROVOKE,-1); //End auto berserk.
 
 	return hp + sp;
@@ -5948,7 +5965,7 @@ int pc_itemheal(struct map_session_data *sd,int hp,int sp)
 
 	nullpo_retr(0, sd);
 
-	if(sd->sc_count && sd->sc_data[SC_GOSPEL].timer!=-1) //バ?サ?ク中は回復させないらしい
+	if(sd->sc.count && sd->sc.data[SC_GOSPEL].timer!=-1) //バ?サ?ク中は回復させないらしい
 		return 0;
 
 	if(pc_checkoverhp(sd)) {
@@ -6141,7 +6158,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 
 	if(pc_isriding(sd)) {	// remove peco status if changing into invalid class [Valaris]
 		if(!(pc_checkskill(sd,KN_RIDING)))
-			pc_setoption(sd,sd->status.option&~OPTION_RIDING);
+			pc_setoption(sd,sd->sc.option&~OPTION_RIDING);
 		else
 			pc_setriding(sd);
 	}
@@ -6255,7 +6272,7 @@ int pc_changelook(struct map_session_data *sd,int type,int val)
 int pc_setoption(struct map_session_data *sd,int type)
 {
 	nullpo_retr(0, sd);
-	if (type&OPTION_RIDING && !(sd->status.option&OPTION_RIDING) && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
+	if (type&OPTION_RIDING && !(sd->sc.option&OPTION_RIDING) && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to mount. [Skotlex]
 		switch (sd->status.class_)
 		{
@@ -6281,7 +6298,7 @@ int pc_setoption(struct map_session_data *sd,int type)
 		clif_status_load(&sd->bl,SI_RIDING,1);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
-	else if (!(type&OPTION_RIDING) && sd->status.option&OPTION_RIDING && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
+	else if (!(type&OPTION_RIDING) && sd->sc.option&OPTION_RIDING && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to dismount.
 		switch (sd->status.class_)
 		{
@@ -6307,22 +6324,22 @@ int pc_setoption(struct map_session_data *sd,int type)
 		clif_status_load(&sd->bl,SI_RIDING,0);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
-	if (type&OPTION_FALCON && !(sd->status.option&OPTION_FALCON)) //Falcon ON
+	if (type&OPTION_FALCON && !(sd->sc.option&OPTION_FALCON)) //Falcon ON
 		clif_status_load(&sd->bl,SI_FALCON,1);
-	else if (!(type&OPTION_FALCON) && sd->status.option&OPTION_FALCON) //Falcon OFF
+	else if (!(type&OPTION_FALCON) && sd->sc.option&OPTION_FALCON) //Falcon OFF
 		clif_status_load(&sd->bl,SI_FALCON,0);
 
 	//SG flying [Komurka]
-	if (type&OPTION_FLYING && !(sd->status.option&OPTION_FLYING)) //Flying ON
+	if (type&OPTION_FLYING && !(sd->sc.option&OPTION_FLYING)) //Flying ON
 	{
 		if (sd->status.class_==JOB_STAR_GLADIATOR) sd->status.class_ = sd->view_class = JOB_STAR_GLADIATOR2;
 	}
-	else if (!(type&OPTION_FLYING) && sd->status.option&OPTION_FLYING) //Flying OFF
+	else if (!(type&OPTION_FLYING) && sd->sc.option&OPTION_FLYING) //Flying OFF
 	{
 		if (sd->status.class_==JOB_STAR_GLADIATOR2) sd->status.class_ = sd->view_class = JOB_STAR_GLADIATOR;
 	}
 
-	sd->status.option=type;
+	sd->sc.option=type;
 	clif_changeoption(&sd->bl);
 	status_calc_pc(sd,0);
 	return 0;
@@ -6341,7 +6358,7 @@ int pc_setcart(struct map_session_data *sd,int type)
 	if (type < 0 || type > 5)
 		return 0; //Never trust the values sent by the client! [Skotlex]
 
-	option = sd->status.option;
+	option = sd->sc.option;
 	for (i = 0; i < 6; i++)
 	{	//This should preserve the current option, only modifying the cart bit.
 		if (i == type)
@@ -6372,7 +6389,7 @@ int pc_setcart(struct map_session_data *sd,int type)
 int pc_setfalcon(struct map_session_data *sd)
 {
 	if(pc_checkskill(sd,HT_FALCON)>0){	// ファルコンマスタリ?スキル所持
-		pc_setoption(sd,sd->status.option|0x0010);
+		pc_setoption(sd,sd->sc.option|0x0010);
 	}
 
 	return 0;
@@ -6385,7 +6402,7 @@ int pc_setfalcon(struct map_session_data *sd)
 int pc_setriding(struct map_session_data *sd)
 {
 	if((pc_checkskill(sd,KN_RIDING)>0)){ // ライディングスキル所持
-		pc_setoption(sd,sd->status.option|OPTION_RIDING);
+		pc_setoption(sd,sd->sc.option|OPTION_RIDING);
 	}
 	return 0;
 }
@@ -6874,7 +6891,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 
 // -- moonsoul (if player is berserk then cannot equip)
 //
-	if(sd->sc_count && sd->sc_data[SC_BERSERK].timer!=-1){
+	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1){
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
@@ -6982,16 +6999,16 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 	status_calc_pc(sd,0);
 
 	if(sd->special_state.infinite_endure) {
-		if(sd->sc_data[SC_ENDURE].timer == -1)
+		if(sd->sc.data[SC_ENDURE].timer == -1)
 			status_change_start(&sd->bl,SC_ENDURE,10,1,0,0,0,0);
 	}
 	else {
-		if(sd->sc_count && sd->sc_data[SC_ENDURE].timer != -1 && sd->sc_data[SC_ENDURE].val2)
+		if(sd->sc.count && sd->sc.data[SC_ENDURE].timer != -1 && sd->sc.data[SC_ENDURE].val2)
 			status_change_end(&sd->bl,SC_ENDURE,-1);
 	}
 
-	if(sd->sc_count) {
-		if (sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
+	if(sd->sc.count) {
+		if (sd->sc.data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 			status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 	}
 
@@ -7013,7 +7030,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 // -- moonsoul	(if player is berserk then cannot unequip)
 //
-	if(!(flag&2) && sd->sc_count && (sd->sc_data[SC_BLADESTOP].timer!=-1 || sd->sc_data[SC_BERSERK].timer!=-1)){
+	if(!(flag&2) && sd->sc.count && (sd->sc.data[SC_BLADESTOP].timer!=-1 || sd->sc.data[SC_BERSERK].timer!=-1)){
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
 	}
@@ -7040,7 +7057,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 			sd->status.weapon = sd->weapontype2;
 			pc_calcweapontype(sd);
 			clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-			if(sd->sc_data[SC_DANCING].timer!=-1) //When unequipping, stop dancing. [Skotlex]
+			if(sd->sc.data[SC_DANCING].timer!=-1) //When unequipping, stop dancing. [Skotlex]
 				skill_stop_dancing(&sd->bl);
 		}
 		if(sd->status.inventory[n].equip & 0x0020) {
@@ -7075,7 +7092,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 	if(flag&1) {
 		status_calc_pc(sd,0);
-		if(sd->sc_count && sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
+		if(sd->sc.count && sd->sc.data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 			status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 	}
 
@@ -7435,11 +7452,11 @@ static int pc_spheal(struct map_session_data *sd)
 	
 	if(pc_issit(sd))
 		a += a;
-	if (sd->sc_count) {
-		if (sd->sc_data[SC_MAGNIFICAT].timer!=-1)	// マグニフィカ?ト
+	if (sd->sc.count) {
+		if (sd->sc.data[SC_MAGNIFICAT].timer!=-1)	// マグニフィカ?ト
 			a += a;
-		if (sd->sc_data[SC_REGENERATION].timer != -1)
-			a *= sd->sc_data[SC_REGENERATION].val1;
+		if (sd->sc.data[SC_REGENERATION].timer != -1)
+			a *= sd->sc.data[SC_REGENERATION].val1;
 	}
 	// Re-added back to status_calc
 	//if((skill = pc_checkskill(sd,HP_MEDITATIO)) > 0) //Increase natural SP regen with Meditatio [DracoRPG]
@@ -7472,11 +7489,11 @@ static int pc_hpheal(struct map_session_data *sd)
 
 	if(pc_issit(sd))
 		a += a;
-	if (sd->sc_count) {
-		if (sd->sc_data[SC_MAGNIFICAT].timer != -1)	// Modified by RoVeRT
+	if (sd->sc.count) {
+		if (sd->sc.data[SC_MAGNIFICAT].timer != -1)	// Modified by RoVeRT
 			a += a;
-		if (sd->sc_data[SC_REGENERATION].timer != -1)
-			a *= sd->sc_data[SC_REGENERATION].val1;
+		if (sd->sc.data[SC_REGENERATION].timer != -1)
+			a *= sd->sc.data[SC_REGENERATION].val1;
 	}
 	if (sd->status.guild_id > 0) {
 		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);	// Increased guild castle regen [Valaris]
@@ -7513,7 +7530,7 @@ static int pc_natural_heal_hp(struct map_session_data *sd)
 
 	if(sd->walktimer == -1) {
 		inc_num = pc_hpheal(sd);
-		if(sd->sc_data[SC_TENSIONRELAX].timer!=-1 ){	// テンションリラックス
+		if(sd->sc.data[SC_TENSIONRELAX].timer!=-1 ){	// テンションリラックス
 			sd->hp_sub += 2*inc_num;
 			sd->inchealhptick += 3*natural_heal_diff_tick;
 		} else {
@@ -7589,7 +7606,7 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 	bsp=sd->status.sp;
 
 	inc_num = pc_spheal(sd);
-	if(sd->sc_data[SC_EXPLOSIONSPIRITS].timer == -1 || (sd->sc_data[SC_SPIRIT].timer!=-1 && sd->sc_data[SC_SPIRIT].val2 == SL_MONK))
+	if(sd->sc.data[SC_EXPLOSIONSPIRITS].timer == -1 || (sd->sc.data[SC_SPIRIT].timer!=-1 && sd->sc.data[SC_SPIRIT].val2 == SL_MONK))
 		sd->sp_sub += inc_num;
 	if(sd->walktimer == -1)
 		sd->inchealsptick += natural_heal_diff_tick;
@@ -7775,12 +7792,12 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 // -- moonsoul (if conditions below altered to disallow natural healing if under berserk status)
 	if (pc_isdead(sd) || pc_ishiding(sd) ||
 	//-- cannot regen for 5 minutes after using Berserk --- [Celest]
-		(sd->sc_count && (
-			(sd->sc_data[SC_POISON].timer != -1 && sd->sc_data[SC_SLOWPOISON].timer == -1) ||
-			(sd->sc_data[SC_DPOISON].timer != -1 && sd->sc_data[SC_SLOWPOISON].timer == -1) ||
-			sd->sc_data[SC_BERSERK].timer != -1 ||
-			sd->sc_data[SC_TRICKDEAD].timer != -1 ||
-			sd->sc_data[SC_BLEEDING].timer != -1
+		(sd->sc.count && (
+			(sd->sc.data[SC_POISON].timer != -1 && sd->sc.data[SC_SLOWPOISON].timer == -1) ||
+			(sd->sc.data[SC_DPOISON].timer != -1 && sd->sc.data[SC_SLOWPOISON].timer == -1) ||
+			sd->sc.data[SC_BERSERK].timer != -1 ||
+			sd->sc.data[SC_TRICKDEAD].timer != -1 ||
+			sd->sc.data[SC_BLEEDING].timer != -1
 		))
 	) { //Cannot heal neither natural or special.
 		sd->hp_sub = sd->inchealhptick = sd->inchealspirithptick = 0;
@@ -7792,9 +7809,9 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
 			sd->sp_sub = sd->inchealsptick = 0;
 		} else { //natural heal
 			pc_natural_heal_hp(sd);
-			if(sd->sc_count && (
-				sd->sc_data[SC_EXTREMITYFIST].timer != -1 ||
-				sd->sc_data[SC_DANCING].timer != -1
+			if(sd->sc.count && (
+				sd->sc.data[SC_EXTREMITYFIST].timer != -1 ||
+				sd->sc.data[SC_DANCING].timer != -1
 			))	//No SP natural heal.
 				sd->sp_sub = sd->inchealsptick = 0;
 			else
@@ -7999,7 +8016,7 @@ int map_night_timer(int tid, unsigned int tick, int id, int data)
 void pc_setstand(struct map_session_data *sd){
 	nullpo_retv(sd);
 
-	if(sd->sc_count && sd->sc_data[SC_TENSIONRELAX].timer!=-1)
+	if(sd->sc.count && sd->sc.data[SC_TENSIONRELAX].timer!=-1)
 		status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
 
 	sd->state.dead_sit = 0;

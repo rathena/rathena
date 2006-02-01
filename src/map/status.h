@@ -460,12 +460,7 @@ int status_get_mode(struct block_list *bl);
 int status_get_mexp(struct block_list *bl);
 int status_get_race2(struct block_list *bl);
 
-struct status_change *status_get_sc_data(struct block_list *bl);
-short *status_get_sc_count(struct block_list *bl);
-short *status_get_opt1(struct block_list *bl);
-short *status_get_opt2(struct block_list *bl);
-short *status_get_opt3(struct block_list *bl);
-short *status_get_option(struct block_list *bl);
+struct status_change *status_get_sc(struct block_list *bl);
 
 int status_get_matk1(struct block_list *bl);
 int status_get_matk2(struct block_list *bl);

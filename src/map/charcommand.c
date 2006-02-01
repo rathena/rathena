@@ -561,8 +561,8 @@ int charcommand_option(
 
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change option only to lower or same level
-			pl_sd->opt1 = opt1;
-			pl_sd->opt2 = opt2;
+			pl_sd->sc.opt1 = opt1;
+			pl_sd->sc.opt2 = opt2;
 			pc_setoption(pl_sd, opt3);
 			clif_displaymessage(fd, msg_table[58]); // Character's options changed.
 		} else {

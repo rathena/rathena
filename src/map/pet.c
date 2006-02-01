@@ -1748,7 +1748,7 @@ int pet_recovery_timer(int tid,unsigned int tick,int id,int data)
 		return 0;
 	}
 
-	if(sd->sc_data && sd->sc_data[pd->recovery->type].timer != -1)
+	if(sd->sc.count && sd->sc.data[pd->recovery->type].timer != -1)
 	{	//Display a heal animation? 
 		//Detoxify is chosen for now.
 		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);

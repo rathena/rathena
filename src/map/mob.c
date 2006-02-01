@@ -463,19 +463,20 @@ int mob_can_move(struct mob_data *md)
 {
 	nullpo_retr(0, md);
 
-	if(DIFF_TICK(md->canmove_tick, gettick()) > 0 || md->skilltimer != -1 || (md->opt1 > 0 && md->opt1 != OPT1_STONEWAIT) || md->option&OPTION_HIDE)
+	if(DIFF_TICK(md->canmove_tick, gettick()) > 0 || md->skilltimer != -1 || (md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT) || md->sc.option&OPTION_HIDE)
 		return 0;
 	// アンクル中で動けないとか
-	if( md->sc_data[SC_ANKLE].timer != -1 || //アンクルスネア
-		md->sc_data[SC_AUTOCOUNTER].timer != -1 || //オートカウンター
-		md->sc_data[SC_BLADESTOP].timer != -1 || //白刃取り
-		md->sc_data[SC_SPIDERWEB].timer != -1 || //スパイダーウェッブ
-		(md->sc_data[SC_DANCING].timer !=-1 && md->sc_data[SC_DANCING].val1 == CG_HERMODE) || //cannot move while Hermod is active.
-		(md->sc_data[SC_GOSPEL].timer !=-1 && md->sc_data[SC_GOSPEL].val4 == BCT_SELF) ||	// cannot move while gospel is in effect
-		md->sc_data[SC_STOP].timer != -1 ||
-		md->sc_data[SC_CLOSECONFINE].timer != -1 ||
-		md->sc_data[SC_CLOSECONFINE2].timer != -1
-		)
+	if(md->sc.count && (
+		md->sc.data[SC_ANKLE].timer != -1 || //アンクルスネア
+		md->sc.data[SC_AUTOCOUNTER].timer != -1 || //オートカウンター
+		md->sc.data[SC_BLADESTOP].timer != -1 || //白刃取り
+		md->sc.data[SC_SPIDERWEB].timer != -1 || //スパイダーウェッブ
+		(md->sc.data[SC_DANCING].timer !=-1 && md->sc.data[SC_DANCING].val1 == CG_HERMODE) || //cannot move while Hermod is active.
+		(md->sc.data[SC_GOSPEL].timer !=-1 && md->sc.data[SC_GOSPEL].val4 == BCT_SELF) ||	// cannot move while gospel is in effect
+		md->sc.data[SC_STOP].timer != -1 ||
+		md->sc.data[SC_CLOSECONFINE].timer != -1 ||
+		md->sc.data[SC_CLOSECONFINE2].timer != -1
+	))
 		return 0;
 
 	return 1;
@@ -565,7 +566,7 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 		map_foreachinmovearea(clif_mobinsight,md->bl.m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,BL_PC,md);
 		md->state.state=MS_IDLE;
 
-		if(md->option&OPTION_CLOAK)
+		if(md->sc.option&OPTION_CLOAK)
 			skill_check_cloaking(&md->bl);
 	}
 	if((i=calc_next_walk_step(md))>0){
@@ -733,12 +734,12 @@ static int mob_attack(struct mob_data *md,unsigned int tick,int data)
 	if( mobskill_use(md,tick,-1) )	// スキル使用
 		return 0;
 
-	if(md->sc_data && md->sc_data[SC_WINKCHARM].timer != -1)
+	if(md->sc.count && md->sc.data[SC_WINKCHARM].timer != -1)
 		clif_emotion(&md->bl, 3);
 	else
 		md->target_lv = battle_weapon_attack(&md->bl,tbl,tick,0);
 
-	if(!(battle_config.monster_cloak_check_type&2) && md->sc_data[SC_CLOAKING].timer != -1)
+	if(!(battle_config.monster_cloak_check_type&2) && md->sc.data[SC_CLOAKING].timer != -1)
 		status_change_end(&md->bl,SC_CLOAKING,-1);
 
 	//Mobs can't move if they can't attack neither.
@@ -941,7 +942,7 @@ int mob_walktoxy(struct mob_data *md,int x,int y,int easy)
 	md->to_x=x;
 	md->to_y=y;
 	
-	if (md->sc_data[SC_CONFUSION].timer != -1) //Randomize target direction.
+	if (md->sc.data[SC_CONFUSION].timer != -1) //Randomize target direction.
 		map_random_dir(&md->bl, &md->to_x, &md->to_y);
 	
 	if(md->state.state == MS_WALK)
@@ -1126,27 +1127,27 @@ int mob_spawn (int id)
 		md->skilltimerskill[i].timer = -1;
 
 	for (i = 0; i < MAX_STATUSCHANGE; i++) {
-		md->sc_data[i].timer = -1;
-		md->sc_data[i].val1 = md->sc_data[i].val2 = md->sc_data[i].val3 = md->sc_data[i].val4 = 0;
+		md->sc.data[i].timer = -1;
+		md->sc.data[i].val1 = md->sc.data[i].val2 = md->sc.data[i].val3 = md->sc.data[i].val4 = 0;
 	}
-	md->sc_count = 0;
-	md->opt1 = md->opt2 = md->opt3 = md->option = 0;
+	md->sc.count = 0;
+	md->sc.opt1 = md->sc.opt2 = md->sc.opt3 = md->sc.option = 0;
 
 	if(md->db->option){ // Added for carts, falcons and pecos for cloned monsters. [Valaris]
 		if(md->db->option & 0x0008)
-			md->option |= 0x0008;
+			md->sc.option |= 0x0008;
 		if(md->db->option & 0x0080)
-			md->option |= 0x0080;
+			md->sc.option |= 0x0080;
 		if(md->db->option & 0x0100)
-			md->option |= 0x0100;
+			md->sc.option |= 0x0100;
 		if(md->db->option & 0x0200)
-			md->option |= 0x0200;
+			md->sc.option |= 0x0200;
 		if(md->db->option & 0x0400)
-			md->option |= 0x0400;
+			md->sc.option |= 0x0400;
 		if(md->db->option & OPTION_FALCON)
-			md->option |= OPTION_FALCON;
+			md->sc.option |= OPTION_FALCON;
 		if(md->db->option & OPTION_RIDING)
-			md->option |= OPTION_RIDING;
+			md->sc.option |= OPTION_RIDING;
 	}
 
 	memset(md->skillunit, 0, sizeof(md->skillunit));
@@ -1598,10 +1599,10 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	}
 
 	// Abnormalities
-	if((md->opt1 > 0 && md->opt1 != OPT1_STONEWAIT) || md->state.state == MS_DELAY || md->sc_data[SC_BLADESTOP].timer != -1)
+	if((md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT) || md->state.state == MS_DELAY || md->sc.data[SC_BLADESTOP].timer != -1)
 		return 0;
 
-	if (md->sc_data && md->sc_data[SC_BLIND].timer != -1)
+	if (md->sc.count && md->sc.data[SC_BLIND].timer != -1)
 		blind_flag = 1;
 
 	mode = status_get_mode(&md->bl);
@@ -2210,9 +2211,13 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		return 0;
 	}
 
-	if(md->sc_count) {
-		if(md->sc_data[SC_CONFUSION].timer != -1)
+	if(md->sc.count) {
+		if(md->sc.data[SC_CONFUSION].timer != -1)
 			status_change_end(&md->bl, SC_CONFUSION, -1);
+		if(md->sc.data[SC_HIDING].timer != -1)
+			status_change_end(&md->bl, SC_HIDING, -1);
+		if(md->sc.data[SC_CLOAKING].timer != -1)
+			status_change_end(&md->bl, SC_CLOAKING, -1);
 	}
 
 	if(damage > max_hp>>2)
@@ -2297,11 +2302,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		}
 	}	// end addition
 
-	if(md->option&OPTION_HIDE)
-		status_change_end(&md->bl, SC_HIDING, -1);
-	if(md->option&OPTION_CLOAK)
-		status_change_end(&md->bl, SC_CLOAKING, -1);
-
 	if(md->special_state.ai == 2 &&	//スフィアーマイン
 		src && md->master_id == src->id)
 	{
@@ -2317,11 +2317,11 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		return damage;
 
 		//Not the most correct way ever, but this is totally custom anyway.... [Skotlex]
-	if (md->sc_data[SC_KAIZEL].timer != -1) {
+	if (md->sc.data[SC_KAIZEL].timer != -1) {
 		max_hp = status_get_max_hp(&md->bl);
-		mob_heal(md, 10*md->sc_data[SC_KAIZEL].val1*max_hp/100);
+		mob_heal(md, 10*md->sc.data[SC_KAIZEL].val1*max_hp/100);
 		clif_resurrection(&md->bl, 1);
-		status_change_start(&md->bl,SkillStatusChangeTable[SL_KAIZEL],10,0,0,0,skill_get_time2(SL_KAIZEL, md->sc_data[SC_KAIZEL].val1),0);
+		status_change_start(&md->bl,SkillStatusChangeTable[SL_KAIZEL],10,0,0,0,skill_get_time2(SL_KAIZEL, md->sc.data[SC_KAIZEL].val1),0);
 		status_change_end(&md->bl,SC_KAIZEL,-1);
 		return damage;
 	}
@@ -2332,7 +2332,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	//changestate will clear all status effects, so we need to know if RICHMANKIM is in effect before then. [Skotlex]
 	//I just recycled ret because it isn't used until much later and I didn't want to add a new variable for it.
-	ret = (md->sc_data[SC_RICHMANKIM].timer != -1)?(25 + 11*md->sc_data[SC_RICHMANKIM].val1):0;
+	ret = (md->sc.data[SC_RICHMANKIM].timer != -1)?(25 + 11*md->sc.data[SC_RICHMANKIM].val1):0;
 	
 	map_freeblock_lock();
 	mob_changestate(md,MS_DEAD,0);
@@ -2990,22 +2990,22 @@ int mob_warp(struct mob_data *md,int m,int x,int y,int type)
 	if(type >= 0) {
 		if(map[md->bl.m].flag.monster_noteleport)
 			return 0;
-		if(md->sc_count) { //Clear a few status changes (taken directly from pc_setpos). [Skotlex]
-			if(md->sc_data[SC_TRICKDEAD].timer != -1)
+		if(md->sc.count) { //Clear a few status changes (taken directly from pc_setpos). [Skotlex]
+			if(md->sc.data[SC_TRICKDEAD].timer != -1)
 				status_change_end(&md->bl, SC_TRICKDEAD, -1);
-			if(md->sc_data[SC_BLADESTOP].timer!=-1)
+			if(md->sc.data[SC_BLADESTOP].timer!=-1)
 				status_change_end(&md->bl,SC_BLADESTOP,-1);
-			if(md->sc_data && md->sc_data[SC_RUN].timer!=-1)
+			if(md->sc.data && md->sc.data[SC_RUN].timer!=-1)
 				status_change_end(&md->bl,SC_RUN,-1);
-			if(md->sc_data[SC_DANCING].timer!=-1)
+			if(md->sc.data[SC_DANCING].timer!=-1)
 				skill_stop_dancing(&md->bl);
-			if (md->sc_data[SC_DEVOTION].timer!=-1)
+			if (md->sc.data[SC_DEVOTION].timer!=-1)
 				status_change_end(&md->bl,SC_DEVOTION,-1);
-			if (md->sc_data[SC_CLOSECONFINE].timer!=-1)
+			if (md->sc.data[SC_CLOSECONFINE].timer!=-1)
 				status_change_end(&md->bl,SC_CLOSECONFINE,-1);
-			if (md->sc_data[SC_CLOSECONFINE2].timer!=-1)
+			if (md->sc.data[SC_CLOSECONFINE2].timer!=-1)
 				status_change_end(&md->bl,SC_CLOSECONFINE2,-1);
-			if (md->sc_data[SC_RUN].timer!=-1)
+			if (md->sc.data[SC_RUN].timer!=-1)
 				status_change_end(&md->bl,SC_RUN,-1);
 		}
 		clif_clearchar_area(&md->bl,type);
@@ -3269,7 +3269,7 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 		break;
 	}
 
-	if (md->sc_count && md->sc_data[SC_MAGICPOWER].timer != -1 && md->skillid != HW_MAGICPOWER)
+	if (md->sc.count && md->sc.data[SC_MAGICPOWER].timer != -1 && md->skillid != HW_MAGICPOWER)
 		status_change_end(&md->bl, SC_MAGICPOWER, -1);
 		
 	if (md->db->skill[md->skillidx].emotion >= 0)
@@ -3398,7 +3398,7 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 	if(!status_check_skilluse(&md->bl, target, skill_id, 0))
 		return 0;
 
-	if(md->sc_data && md->sc_data[SC_WINKCHARM].timer != -1 && target->type == BL_PC) {
+	if(md->sc.count && md->sc.data[SC_WINKCHARM].timer != -1 && target->type == BL_PC) {
 		clif_emotion(&md->bl, 3);
 		return 0;
 	}
@@ -3457,7 +3457,7 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 	md->skilllv		= skill_lv;
 	md->skillidx	= skill_idx;
 
-	if(!(battle_config.monster_cloak_check_type&2) && md->sc_data[SC_CLOAKING].timer != -1 && md->skillid != AS_CLOAKING)
+	if(!(battle_config.monster_cloak_check_type&2) && md->sc.data[SC_CLOAKING].timer != -1 && md->skillid != AS_CLOAKING)
 		status_change_end(&md->bl,SC_CLOAKING,-1);
 
 	if( casttime>0 ){
@@ -3529,7 +3529,7 @@ int mobskill_use_pos( struct mob_data *md,
 	md->skillid		= skill_id;
 	md->skilllv		= skill_lv;
 	md->skillidx	= skill_idx;
-	if(!(battle_config.monster_cloak_check_type&2) && md->sc_data[SC_CLOAKING].timer != -1)
+	if(!(battle_config.monster_cloak_check_type&2) && md->sc.data[SC_CLOAKING].timer != -1)
 		status_change_end(&md->bl,SC_CLOAKING,-1);
 	if( casttime>0 ){
 		md->skilltimer =
@@ -3627,11 +3627,11 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 	if( cond2==-1 ){
 		int j;
 		for(j=SC_COMMON_MIN;j<=SC_COMMON_MAX && !flag;j++){
-			if ((flag=(md->sc_data[j].timer!=-1))) //Once an effect was found, break out. [Skotlex]
+			if ((flag=(md->sc.data[j].timer!=-1))) //Once an effect was found, break out. [Skotlex]
 				break;
 		}
 	}else
-		flag=( md->sc_data[cond2].timer!=-1 );
+		flag=( md->sc.data[cond2].timer!=-1 );
 	if( flag^( cond1==MSC_FRIENDSTATUSOFF ) )
 		(*fr)=md;
 
@@ -3697,15 +3697,15 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					}
 				case MSC_MYSTATUSON:		// status[num] on
 				case MSC_MYSTATUSOFF:		// status[num] off
-					if (!md->sc_data) {
+					if (!md->sc.count) {
 						flag = 0;
 					} else if (ms[i].cond2 == -1) {
 						int j;
 						for (j = SC_COMMON_MIN; j <= SC_COMMON_MAX; j++)
-							if ((flag = (md->sc_data[j].timer != -1)) != 0)
+							if ((flag = (md->sc.data[j].timer != -1)) != 0)
 								break;
 					} else {
-						flag = (md->sc_data[ms[i].cond2].timer != -1);
+						flag = (md->sc.data[ms[i].cond2].timer != -1);
 					}
 					flag ^= (ms[i].cond1 == MSC_MYSTATUSOFF); break;
 				case MSC_FRIENDHPLTMAXRATE:	// friend HP < maxhp%
@@ -3961,7 +3961,7 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 	mob_db_data[class_]->head_top=sd->status.head_top;
 	mob_db_data[class_]->head_mid=sd->status.head_mid;
 	mob_db_data[class_]->head_buttom=sd->status.head_bottom;
-	mob_db_data[class_]->option=sd->status.option;
+	mob_db_data[class_]->option=sd->sc.option;
 	mob_db_data[class_]->clothes_color=sd->status.clothes_color;
 
 	//Skill copy [Skotlex]

@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/01
+	* Integrated the status change variables into a single structure for easier
+	  management. [Skotlex]
+	* Break fall should no longer trigger when inflicted by freeze/stone/etc
+	  [Skotlex]
 	* Fixed an overflow in grfio causing read problems in Win32 builds [celest]
 	* Changed resnametable loading behaviour - grfio will load from data directory
 	  first, and then from the highest priority grf only if that fails [celest]

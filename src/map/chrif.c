@@ -1148,23 +1148,23 @@ int chrif_save_scdata(struct map_session_data *sd)
 	chrif_check(-1);
 	tick = gettick();
 	
-        WFIFOHEAD(char_fd, 14 + SC_MAX*sizeof(struct status_change_data));
+	WFIFOHEAD(char_fd, 14 + SC_MAX*sizeof(struct status_change_data));
 	WFIFOW(char_fd,0) = 0x2b1c;
 	WFIFOL(char_fd,4) = sd->status.account_id;
 	WFIFOL(char_fd,8) = sd->status.char_id;
 	for (i = 0; i < SC_MAX; i++)
 	{
-		if (sd->sc_data[i].timer == -1)
+		if (sd->sc.data[i].timer == -1)
 			continue;
-		timer = get_timer(sd->sc_data[i].timer);
+		timer = get_timer(sd->sc.data[i].timer);
 		if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)
 			continue;
 		data.tick = DIFF_TICK(timer->tick,tick); //Duration that is left before ending.
 		data.type = i;
-		data.val1 = sd->sc_data[i].val1;
-		data.val2 = sd->sc_data[i].val2;
-		data.val3 = sd->sc_data[i].val3;
-		data.val4 = sd->sc_data[i].val4;
+		data.val1 = sd->sc.data[i].val1;
+		data.val2 = sd->sc.data[i].val2;
+		data.val3 = sd->sc.data[i].val3;
+		data.val4 = sd->sc.data[i].val4;
 		memcpy(WFIFOP(char_fd,14 +count*sizeof(struct status_change_data)),
 			&data, sizeof(struct status_change_data));
 		count++;
@@ -1467,7 +1467,7 @@ int send_users_tochar(int tid, unsigned int tick, int id, int data) {
 	WFIFOW(char_fd,0) = 0x2aff;
 	for (i = 0; i < count; i++) {
 		if (all_sd[i] && 
-			!((battle_config.hide_GM_session || (all_sd[i]->status.option & OPTION_INVISIBLE)) && pc_isGM(all_sd[i])))
+			!((battle_config.hide_GM_session || (all_sd[i]->sc.option & OPTION_INVISIBLE)) && pc_isGM(all_sd[i])))
 		{
 			WFIFOL(char_fd,6+8*users) = all_sd[i]->status.account_id;
 			WFIFOL(char_fd,6+8*users+4) = all_sd[i]->status.char_id;

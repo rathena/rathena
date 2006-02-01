@@ -491,14 +491,14 @@ void charsave_save_scdata(int account_id, int char_id, struct status_change* sc_
 			
 	for(i = 0; i < max_sc; i++)
 	{
-		if (sc_data[i].timer == -1)
+		if (sc.data[i].timer == -1)
 			continue;
-		timer = get_timer(sc_data[i].timer);
+		timer = get_timer(sc.data[i].timer);
 		if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)
 			continue;
 		
 		sprintf (tmp_sql, "%s ('%d','%d','%hu','%d','%d','%d','%d','%d'),", tmp_sql, account_id, char_id,
-			i, DIFF_TICK(timer->tick,tick), sc_data[i].val1, sc_data[i].val2, sc_data[i].val3, sc_data[i].val4);
+			i, DIFF_TICK(timer->tick,tick), sc.data[i].val1, sc.data[i].val2, sc.data[i].val3, sc.data[i].val4);
 		
 		count++;
 	}

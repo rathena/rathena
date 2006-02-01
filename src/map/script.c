@@ -4947,7 +4947,7 @@ int buildin_checkoption(struct script_state *st)
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	sd=script_rid2sd(st);
 
-	if(sd->status.option & type){
+	if(sd->sc.option & type){
 		push_val(st->stack,C_INT,1);
 	} else {
 		push_val(st->stack,C_INT,0);
@@ -4967,7 +4967,7 @@ int buildin_checkoption1(struct script_state *st)
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	sd=script_rid2sd(st);
 
-	if(sd->opt1 & type){
+	if(sd->sc.opt1 & type){
 		push_val(st->stack,C_INT,1);
 	} else {
 		push_val(st->stack,C_INT,0);
@@ -4987,7 +4987,7 @@ int buildin_checkoption2(struct script_state *st)
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	sd=script_rid2sd(st);
 
-	if(sd->opt2 & type){
+	if(sd->sc.opt2 & type){
 		push_val(st->stack,C_INT,1);
 	} else {
 		push_val(st->stack,C_INT,0);

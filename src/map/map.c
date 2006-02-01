@@ -1527,16 +1527,16 @@ int map_quit(struct map_session_data *sd) {
 		skill_stop_dancing(&sd->bl);// ダンス/演奏中?
 
 		//Status that are not saved...
-		if(sd->sc_count) {
-			if(sd->sc_data[SC_HIDING].timer!=-1)
+		if(sd->sc.count) {
+			if(sd->sc.data[SC_HIDING].timer!=-1)
 				status_change_end(&sd->bl,SC_HIDING,-1);
-			if(sd->sc_data[SC_CLOAKING].timer!=-1)
+			if(sd->sc.data[SC_CLOAKING].timer!=-1)
 				status_change_end(&sd->bl,SC_CLOAKING,-1);
-			if(sd->sc_data[SC_RUN].timer!=-1)
+			if(sd->sc.data[SC_RUN].timer!=-1)
 				status_change_end(&sd->bl,SC_RUN,-1);
-			if(sd->sc_data[SC_SPURT].timer!=-1)
+			if(sd->sc.data[SC_SPURT].timer!=-1)
 				status_change_end(&sd->bl,SC_SPURT,-1);
-			if(sd->sc_data && sd->sc_data[SC_BERSERK].timer!=-1)
+			if(sd->sc.data[SC_BERSERK].timer!=-1)
 				status_change_end(&sd->bl,SC_BERSERK,-1);
 		}
 		skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
@@ -1557,7 +1557,7 @@ int map_quit(struct map_session_data *sd) {
 			status_calc_pc(sd,4);
 	//	skill_clear_unitgroup(&sd->bl);	// [Sara-chan]
 
-		if (!(sd->status.option & OPTION_INVISIBLE))
+		if (!(sd->sc.option & OPTION_INVISIBLE))
 			clif_clearchar_area(&sd->bl,2);
 
 		chrif_save_scdata(sd); //Save status changes, then clear'em out from memory. [Skotlex]
@@ -1593,7 +1593,7 @@ int map_quit(struct map_session_data *sd) {
 	} else { //Try to free some data, without saving anything (this could be invoked on map server change. [Skotlex]
 		if (sd->bl.prev != NULL)
 		{	//Remove from map...
-			if (!(sd->status.option & OPTION_INVISIBLE))
+			if (!(sd->sc.option & OPTION_INVISIBLE))
 				clif_clearchar_area(&sd->bl,2);
 			map_delblock(&sd->bl);
 		}
