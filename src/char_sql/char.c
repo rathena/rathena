@@ -4143,6 +4143,12 @@ int do_init(int argc, char **argv){
 	char_lan_config_read((argc > 1) ? argv[1] : LAN_CONF_NAME);
 	sql_config_read(SQL_CONF_NAME);
 
+	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
+		ShowError("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
+		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
+		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
+	}
+	
 	ShowInfo("Finished reading the char-server configuration.\n");
 
 	inter_init((argc > 2) ? argv[2] : inter_cfgName); // inter server √ ±‚»≠

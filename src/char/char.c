@@ -4084,6 +4084,12 @@ int do_init(int argc, char **argv) {
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
 	lan_config_read((argc > 1) ? argv[1] : LOGIN_LAN_CONF_NAME);
 
+	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
+		ShowError("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
+		ShowNotice("Please edit your save/account.txt file to create a proper inter-server user/password (gender 'S')\n");
+		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
+	}
+
 	// a newline in the log...
 	char_log("");
 	// moved behind char_config_read in case we changed the filename [celest]
