@@ -59,6 +59,7 @@ int npc_event_doall_id(const unsigned char *name, int id);
 
 int npc_timerevent_start(struct npc_data *nd, int rid);
 int npc_timerevent_stop(struct npc_data *nd);
+void npc_timerevent_quit(struct map_session_data *sd);
 int npc_gettimerevent_tick(struct npc_data *nd);
 int npc_settimerevent_tick(struct npc_data *nd,int newtimer);
 int npc_remove_map(struct npc_data *nd);

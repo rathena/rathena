@@ -491,6 +491,7 @@ struct map_session_data {
 	unsigned char *npc_script,*npc_scriptroot;
 	int  npc_scriptstate;
 	char npc_str[256];
+	int npc_timer_id; //For player attached npc timers. [Skotlex]
 	unsigned int chatID;
 	time_t idletime;
 
@@ -786,7 +787,7 @@ struct npc_data {
 			unsigned char *script;
 			short xs,ys;
 			int guild_id;
-			int timer,timerid,timeramount,nexttimer,rid;
+			int timer,timerid,timeramount,rid;
 			unsigned int timertick;
 			struct npc_timerevent_list *timer_event;
 			int label_list_num;

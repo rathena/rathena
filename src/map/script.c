@@ -5639,6 +5639,7 @@ int buildin_stopnpctimer(struct script_state *st)
 int buildin_getnpctimer(struct script_state *st)
 {
 	struct npc_data *nd;
+	struct map_session_data *sd;
 	int type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	int val=0;
 	if( st->end > st->start+3 )
@@ -5648,7 +5649,18 @@ int buildin_getnpctimer(struct script_state *st)
 
 	switch(type){
 	case 0: val=npc_gettimerevent_tick(nd); break;
-	case 1: val= (nd->u.scr.nexttimer>=0); break;
+	case 1:
+		if (nd->u.scr.rid) {
+			sd = map_id2sd(nd->u.scr.rid);
+			if (!sd) {
+				if(battle_config.error_log)
+					ShowError("buildin_getnpctimer: Attached player not found!\n");
+				break;
+			}
+			val = (sd->npc_timer_id != -1);
+		} else
+			  val= (nd->u.scr.timerid !=-1);
+		break;
 	case 2: val= nd->u.scr.timeramount; break;
 	}
 	push_val(st->stack,C_INT,val);

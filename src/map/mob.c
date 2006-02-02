@@ -620,8 +620,6 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 	if( range>0 && !check_distance_bl(&md->bl, bl, range))
 		return 0;
 
-	dx=abs(bl->x - md->bl.x);
-	dy=abs(bl->y - md->bl.y);
 	// Obstacle judging
 	wpd.path_len=0;
 	wpd.path_pos=0;
@@ -629,10 +627,9 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 	if(path_search(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x,bl->y,easy)!=-1)
 		return 1;
 
-	if(bl->type!=BL_PC && bl->type!=BL_MOB)
-		return 0;
-
 	// It judges whether it can adjoin or not.
+	dx=abs(bl->x - md->bl.x);
+	dy=abs(bl->y - md->bl.y);
 	dx=(dx>0)?1:((dx<0)?-1:0);
 	dy=(dy>0)?1:((dy<0)?-1:0);
 	if(path_search(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x-dx,bl->y-dy,easy)!=-1)

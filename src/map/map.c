@@ -1475,6 +1475,8 @@ int map_quit(struct map_session_data *sd) {
 
 
 	if(!sd->state.waitingdisconnect) {
+		if (sd->npc_timer_id != -1) //Cancel the event timer.
+			npc_timerevent_quit(sd);
 		if (sd->state.event_disconnect) {
 			if (script_config.event_script_type == 0) {
 				struct npc_data *npc;

@@ -786,6 +786,8 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	for(i = 0; i < MAX_EVENTTIMER; i++)
 		sd->eventtimer[i] = -1;
 
+	sd->npc_timer_id = -1;
+	
 	// Moved PVP timer initialisation before set_pos
 	sd->pvp_timer = -1;
 

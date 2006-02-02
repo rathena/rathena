@@ -5,6 +5,15 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/02
+	* Improved the NPC timer system to enable multiple timers going on at a
+	  time with different players attached to each. Now npc event timers are of
+	  two types: attached or global. The global timers don't have a player
+	  attached and can be started/halted by anyone. The character timers have a
+	  player attached, and they can only be stopped by a script that has the same
+	  player attached. [Skotlex]
+	- Now player attached scripts will auto-abort when the atteched player
+	  quits the map server.
+	- Of course, this requires some major testing as it's prone to have bugs...
 	* Applied the Entry Reusage System to the battle delay damage timers.
 	  [Skotlex]
 	* Fixed the map server complain when using the default user/password
