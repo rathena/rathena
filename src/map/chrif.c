@@ -1158,7 +1158,7 @@ int chrif_save_scdata(struct map_session_data *sd)
 #ifndef TXT_ONLY
 	if(charsave_method) //New 'Local' save
 	{
-		charsave_save_scdata(sd->status.account_id, sd->status.char_id, sd->sc_data, MAX_STATUSCHANGE);
+		charsave_save_scdata(sd->status.account_id, sd->status.char_id, sd->sc.data, MAX_STATUSCHANGE);
 		return 0;
 	}
 #endif
