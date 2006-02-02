@@ -418,6 +418,8 @@ extern struct Battle_Config {
 	unsigned short cell_stack_limit; // [Skotlex]
 } battle_config;
 
+void do_init_battle(void);
+void do_final_battle(void);
 extern int battle_config_read(const char *cfgName);
 extern void battle_validate_conf(void);
 extern void battle_set_defaults(void);

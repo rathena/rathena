@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/02
+	* Applied the Entry Reusage System to the battle delay damage timers.
+	  [Skotlex]
 	* Fixed the map server complain when using the default user/password
 	  showing up if you set the new user/pass on the import file. [Skotlex]
 2006/02/01

@@ -11,6 +11,7 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "../common/ers.h"
 
 #include "map.h"
 #include "pc.h"
@@ -28,6 +29,7 @@
 int attr_fix_table[4][10][10];
 
 struct Battle_Config battle_config;
+static struct eri *delay_damage_ers; //For battle delay damage structures.
 
 /*==========================================
  * Ž©•ª‚ðƒ?ƒbƒN‚µ‚Ä‚¢‚éMOB‚Ì?‚ð?‚¦‚é(foreachclient)
@@ -202,7 +204,7 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 		if (!status_isdead(target) && (dat->dmg_lv == ATK_DEF || dat->damage > 0) && dat->attack_type)
 			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type, tick);
 	}
-	aFree(dat);
+	ers_free(delay_damage_ers, dat);
 	return 0;
 }
 
@@ -218,7 +220,7 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
 		return 0;
 	}
-	dat = (struct delay_damage *)aCalloc(1, sizeof(struct delay_damage));
+	dat = ers_alloc(delay_damage_ers, struct delay_damage);
 	dat->src = src;
 	dat->target = target->id;
 	dat->skill_id = skill_id;
@@ -4436,4 +4438,12 @@ int battle_config_read(const char *cfgName)
 	}
 
 	return 0;
+}
+
+void do_init_battle(void) {
+	delay_damage_ers = ers_new((uint32)sizeof(struct delay_damage));
+}
+
+void do_final_battle(void) {
+	ers_destroy(delay_damage_ers);
 }

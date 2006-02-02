@@ -6,9 +6,11 @@
 #include <string.h>
 #include <time.h>
 
-#include "timer.h"
-#include "nullpo.h"
-#include "malloc.h"
+#include "../common/timer.h"
+#include "../common/nullpo.h"
+#include "../common/malloc.h"
+#include "../common/showmsg.h"
+#include "../common/grfio.h"
 
 #include "skill.h"
 #include "map.h"
@@ -25,8 +27,6 @@
 #include "log.h"
 #include "chrif.h"
 #include "guild.h"
-#include "showmsg.h"
-#include "grfio.h"
 #include "date.h"
 
 #define SKILLUNITTIMER_INVERVAL	100

@@ -8,9 +8,11 @@
 #include <math.h>
 #include <time.h>
 
-#include "timer.h"
-#include "nullpo.h"
-#include "malloc.h"
+#include "../common/timer.h"
+#include "../common/nullpo.h"
+#include "../common/malloc.h"
+#include "../common/grfio.h"
+#include "../common/showmsg.h"
 #include "map.h"
 #include "log.h"
 #include "npc.h"
@@ -24,8 +26,6 @@
 #include "pet.h"
 #include "battle.h"
 #include "skill.h"
-#include "grfio.h"
-#include "showmsg.h"
 
 #ifdef _WIN32
 #undef isspace
