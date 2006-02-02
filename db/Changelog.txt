@@ -27,6 +27,9 @@
 
 =========================
 
+02/02
+	* Added Playtester's Odin and Kiel Mobs. Added Valkyrie and missing Honunies. [Poki#3]
+
 02/01
 	* Falcon Assault only does one hit now. [Skotlex]
 01/31

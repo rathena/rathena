@@ -30,10 +30,11 @@
 1518,Bacsojin,1000000
 1583,Tao Gunka,1000000
 1623,RSX 0806,1000000
+1685,Vesper,1000000
 1688,Lady Tany,1000000
 1719,Detale,1000000
 
-//== Not "Normal" MvP's.
+//== Not "Normal" MvP's. (Level 99 or Quest ones)
 //1646,Lord Knight Seyren,1000000
 //1647,Assassin Cross Eremes,1000000
 //1648,Whitesmith Harword,1000000
@@ -43,4 +44,4 @@
 //1708,Thanatos,1000000
 //1733,Kiel,1000000
 //1734,Kiel D-01,1000000
-//1751,Valkierie Randgris,1000000
+//1751,Valkyrie Randgris,1000000
