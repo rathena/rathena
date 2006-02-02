@@ -114,6 +114,23 @@ static int char_init_done = 0;
 void chrif_setuserid(char *id)
 {
 	memcpy(userid, id, NAME_LENGTH);
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+void chrif_setpasswd(char *pwd)
+{
+	memcpy(passwd, pwd, NAME_LENGTH);
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+void chrif_checkdefaultlogin(void)
+{
 	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
 		ShowError("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
 #ifdef TXT_ONLY
@@ -125,23 +142,6 @@ void chrif_setuserid(char *id)
 	}
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-void chrif_setpasswd(char *pwd)
-{
-	memcpy(passwd, pwd, NAME_LENGTH);
-	if (strcmp(userid, "s1")==0 && strcmp(pwd, "p1")==0) {
-		ShowError("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
-#ifdef TXT_ONLY
-		ShowNotice("Please edit your save/account.txt file to create a proper inter-server user/password (gender 'S')\n");
-#else
-		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
-#endif
-		ShowNotice("and then edit your user/password in conf/map_athena.conf (or conf/import/map_conf.txt)\n");
-	}
-}
 
 /*==========================================
  *

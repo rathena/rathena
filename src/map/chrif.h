@@ -14,6 +14,7 @@ struct auth_node{
 
 void chrif_setuserid(char*);
 void chrif_setpasswd(char*);
+void chrif_checkdefaultlogin(void);
 void chrif_setip(char*);
 void chrif_setport(int);
 

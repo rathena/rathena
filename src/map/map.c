@@ -3811,6 +3811,7 @@ int do_init(int argc, char *argv[]) {
 	}
 
 	map_config_read(MAP_CONF_NAME);
+	chrif_checkdefaultlogin();
 
 	if ((naddr_ == 0) && (map_ip_set_ == 0 || char_ip_set_ == 0)) {
 		ShowError("\nUnable to determine your IP address... please edit the map_athena.conf file and set it.\n");
