@@ -5,7 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/01
-	* Fixed typo in chrif.c causing compilation error (sd->sc_data => sd->sc.data) [Valaris]
+	* Fixed compile errors and warning in chrif.c and charsave.c. [Valaris]
 	* Map and char server now will complain if they are run using the default
 	  user/password set. [Skotlex]
 	* Trick Dead makes you stop walking now. [Skotlex]
