@@ -4272,7 +4272,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			else
 				/* •t‰Á‚·‚é */
 			{	//Avoid cloaking with no wall and low skill level. [Skotlex]
-				if (sd && skilllv < 3 && skill_check_cloaking(bl))
+				//Due to the cloaking card, we have to check the wall versus to known skill level rather than the used one. [Skotlex]
+//				if (sd && skilllv < 3 && skill_check_cloaking(bl))
+				if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl))
 					clif_skill_fail(sd,skillid,0,0);
 				else
 					status_change_start(bl,sci,skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
@@ -9839,31 +9841,36 @@ int skill_landprotector(struct block_list *bl, va_list ap )
 	struct skill_unit *unit;
 	struct block_list *src;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-
 	skillid = va_arg(ap,int);
 	alive = va_arg(ap,int *);
 	src = va_arg(ap,struct block_list *);
-	
-	if ((unit = (struct skill_unit *)bl) == NULL || unit->group == NULL)
+	unit = (struct skill_unit *)bl;
+	if (unit == NULL || unit->group == NULL)
 		return 0;
 
-	if (alive && skillid == SA_LANDPROTECTOR && unit->group->skill_id == SA_LANDPROTECTOR
+	if (skillid == SA_LANDPROTECTOR && unit->group->skill_id == SA_LANDPROTECTOR
 		&& battle_check_target(bl, src, BCT_ENEMY) > 0)
 	{	//Check for offensive Land Protector to delete both. [Skotlex]
 		(*alive) = 0;
 		skill_delunit(unit);
-		return 0;
+		return 1;
 	}	
-	if (skillid == SA_LANDPROTECTOR || 
-		skillid == HW_GANBANTEIN)
+
+	if (skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
+		return 0; //Traps cannot be removed by Land Protector/Ganbantein
+	
+	if (skillid == SA_LANDPROTECTOR || skillid == HW_GANBANTEIN ) {
 		skill_delunit(unit);
-	else if (alive && unit->group->skill_id == SA_LANDPROTECTOR)
+	} else
+	if (unit->group->skill_id == SA_LANDPROTECTOR) {
 		(*alive) = 0;
-	else if  (alive && skillid == HP_BASILICA && unit->group->skill_id == HP_BASILICA)
-		(*alive) = 0; //Basilica can't be placed on top of itself to avoid map-cell stacking problems. [Skotlex]
-	return 0;
+	} else
+	if (skillid == HP_BASILICA && unit->group->skill_id == HP_BASILICA) {
+		//Basilica can't be placed on top of itself to avoid map-cell stacking problems. [Skotlex]
+		(*alive) = 0;
+	} else
+		return 0;
+	return 1;
 }
 
 /*==========================================
@@ -9879,11 +9886,14 @@ int skill_ganbatein(struct block_list *bl, va_list ap )
 	if ((unit = (struct skill_unit *)bl) == NULL || unit->group == NULL)
 		return 0;
 
+	if (skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
+		return 0; //Do not remove traps.
+	
 	if (unit->group->skill_id == SA_LANDPROTECTOR)
 		skill_delunit(unit);
 	else skill_delunitgroup(unit->group);
 
-	return 0;
+	return 1;
 }
 
 /*==========================================

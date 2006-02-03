@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/03
+	* Grand Cross/Grand Darkness can no longer get the ignore defense -armor
+	  piercing bonuses from cards. [Skotlex]
+	* Loki's weil is now ignored by bosses. [Skotlex]
+	* Land Protector and Gantantein should now ignore traps. [Skotlex]
+	* Fixed Shinobi card so that it fails when you aren't next to a wall.
+	  [Skotlex]
 	* After a guild master change, the new guild master has his guild skills
 	  blocked for 5 minutes to prevent abuse. [Skotlex]
 	* Fixed txt-converter compilation errors [Komurka]

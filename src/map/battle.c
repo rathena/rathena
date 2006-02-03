@@ -1877,7 +1877,9 @@ static struct Damage battle_calc_weapon_attack(
 			ATK_RATE(skillratio);
 		if(sd)
 		{
-			if (skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE && !flag.cri)
+			if (skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE
+				&& skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS
+			  	&& !flag.cri)
 			{	//Elemental/Racial adjustments
 				char raceele_flag=0, raceele_flag_=0;
 				if(sd->right_weapon.def_ratio_atk_ele & (1<<t_ele) ||
@@ -1900,25 +1902,27 @@ static struct Damage battle_calc_weapon_attack(
 					ATK_RATE2(raceele_flag?(def1 + def2):100, raceele_flag_?(def1 + def2):100);
 			}
 
-			//Ignore Defense?
-			if (!flag.idef && (
-				(tmd && sd->right_weapon.ignore_def_mob & (is_boss(target)?2:1)) ||
-				sd->right_weapon.ignore_def_ele & (1<<t_ele) ||
-				sd->right_weapon.ignore_def_race & (1<<t_race) ||
-				sd->right_weapon.ignore_def_race & (is_boss(target)?1<<10:1<<11)
-			))
-				flag.idef = 1;
+			if (skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS)
+		  	{	//Ignore Defense?
+				if (!flag.idef && (
+					(tmd && sd->right_weapon.ignore_def_mob & (is_boss(target)?2:1)) ||
+					sd->right_weapon.ignore_def_ele & (1<<t_ele) ||
+					sd->right_weapon.ignore_def_race & (1<<t_race) ||
+					sd->right_weapon.ignore_def_race & (is_boss(target)?1<<10:1<<11)
+				))
+					flag.idef = 1;
 
-			if (!flag.idef2 && (
-				(tmd && sd->left_weapon.ignore_def_mob & (is_boss(target)?2:1)) ||
-				sd->left_weapon.ignore_def_ele & (1<<t_ele) ||
-				sd->left_weapon.ignore_def_race & (1<<t_race) ||
-				sd->left_weapon.ignore_def_race & (is_boss(target)?1<<10:1<<11)
-			)) {
-					if(battle_config.left_cardfix_to_right && flag.rh) //Move effect to right hand. [Skotlex]
-						flag.idef = 1;
-					else
-						flag.idef2 = 1;
+				if (!flag.idef2 && (
+					(tmd && sd->left_weapon.ignore_def_mob & (is_boss(target)?2:1)) ||
+					sd->left_weapon.ignore_def_ele & (1<<t_ele) ||
+					sd->left_weapon.ignore_def_race & (1<<t_race) ||
+					sd->left_weapon.ignore_def_race & (is_boss(target)?1<<10:1<<11)
+				)) {
+						if(battle_config.left_cardfix_to_right && flag.rh) //Move effect to right hand. [Skotlex]
+							flag.idef = 1;
+						else
+							flag.idef2 = 1;
+				}
 			}
 		}
 
