@@ -723,10 +723,17 @@ static void report_src(struct script_state *st) {
 	if (!bl) return;
 	switch (bl->type) {
 		case BL_NPC:
-			ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, mapindex_id2name(bl->m), bl->x, bl->y);
+			if (bl->m >=0)
+				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, map[bl->m].name, bl->x, bl->y);
+			else
+				ShowDebug("Source (NPC): %s (invisible/not on a map)\n", ((struct npc_data *)bl)->name);
+				
 		break;
 		default:
-			ShowDebug("Source (Non-NPC): %s (%d,%d)\n", mapindex_id2name(bl->m), bl->x, bl->y);
+			if (bl->m >=0)
+				ShowDebug("Source (Non-NPC): type %d at %s (%d,%d)\n", bl->type, map[bl->m].name, bl->x, bl->y);
+			else
+				ShowDebug("Source (Non-NPC): type %d (invisible/not on a map)\n", bl->type);
 		break;
 	}
 }

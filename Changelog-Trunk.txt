@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/03
+	* Fixed the debug script messages specifying the wrong mapname for NPCs.
+	  [Skotlex]
+	* Now you can't hide from earth elemental attacks (status_check_skilluse).
+	  [Skotlex]
 	* Grand Cross/Grand Darkness can no longer get the ignore defense -armor
 	  piercing bonuses from cards. [Skotlex]
 	* Loki's weil is now ignored by bosses. [Skotlex]

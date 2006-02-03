@@ -726,15 +726,14 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			return 0;
 	}
 
-	if (src) {
-		race = status_get_race(src); 
-	} else { //Ground skill, only earth-elemental skills have detecting-hitting capabilities.
-		race = 0;
-		if(skill_get_pl(skill_num) == 2)
-			mode|= MD_DETECTOR;
-	}
-	hide_flag = flag?OPTION_HIDE:(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK); //If targetting, cloak+hide protect you, otherwise only hiding does.
+	race = src?status_get_race(src):0; 
+	//If targetting, cloak+hide protect you, otherwise only hiding does.
+	hide_flag = flag?OPTION_HIDE:(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK);
 		
+ 	//You cannot hide from ground skills.
+	if(skill_get_pl(skill_num) == 2)
+		hide_flag &= ~OPTION_HIDE;
+	
 	switch (target->type)
 	{
 	case BL_PC:
