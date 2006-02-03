@@ -584,7 +584,7 @@ int party_skill_check(struct map_session_data *sd, int party_id, int skillid, in
 					return 1;
 				break;
 			case AM_TWILIGHT3: //Twilight Pharmacy, Requires Taekwon
-				if ((p_sd->class_&MAPID_NOVICE) == MAPID_TAEKWON
+				if ((p_sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON
 					&& sd->bl.m == p_sd->bl.m)
 					return 1;
 				break;
