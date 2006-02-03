@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/02
+	* Crash fix in npc.c npc_timerevent.
+	  was: struct timer_event_data *ted = (struct timer_event_data*)ted;
+	  changed: 	struct timer_event_data *ted = (struct timer_event_data*)data;
+	  Skotlex, I am assuming it's calling from the passed data var, If I'm wrong
+	  please fix it.  I just know what was there was definitely not correct. [Valaris]
 	* Improved the NPC timer system to enable multiple timers going on at a
 	  time with different players attached to each. Now npc event timers are of
 	  two types: attached or global. The global timers don't have a player

@@ -560,7 +560,7 @@ int npc_timerevent(int tid,unsigned int tick,int id,int data)
 	unsigned int old_tick;
 	struct npc_data* nd=(struct npc_data *)map_id2bl(id);
 	struct npc_timerevent_list *te;
-	struct timer_event_data *ted = (struct timer_event_data*)ted;
+	struct timer_event_data *ted = (struct timer_event_data*)data;
 	struct map_session_data *sd=NULL;
 	
 	if( nd==NULL ){
