@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.0 
+//= 1.1b 
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Added the New Novice Training Grounds, a big thanks [MasterOfMuppets]
 //=	to Dr.Evil who did 90% of the work =)
+//= 1.0b Temp measure to stop exploits. [Vicious]
 //============================================================ 
 
 //====================================================================
@@ -26,6 +27,7 @@ new_1-1.gat,66,114,4	script	Bulletin Board	111,{
 }
 
 new_1-1.gat,53,114,4	script	Shion	727,{
+	if(BaseJob != 0 || Upper==1) goto L_Fail;
 	switch (NEW_MES_FLAG0) {
 	case 0:	mes "[Shion]";
 		mes "Hello there~";
@@ -194,6 +196,13 @@ new_1-1.gat,53,114,4	script	Shion	727,{
 		mes "Now, go for it!";
 		close;
 	}
+	close;
+
+L_Fail:
+	close2;
+	savepoint "prontera.gat",273,354;
+	warp "prontera.gat",273,354;
+	end;
 }
 
 new_1-1.gat,144,116,2	script	Guard	105,{
@@ -225,6 +234,7 @@ new_1-1.gat,144,107,2	script	Guard	105,{
 
 //Receptionist
 new_1-2.gat,100,29,4	script	Receptionist	86,{
+	if(BaseJob != 0 || Upper==1) goto L_Fail;
 	mes "[Training Grounds Receptionist]";
 	mes "Welcome!";
 	mes "You are at the entrance";
@@ -311,6 +321,12 @@ L_loop:
 		close;
 	}
 	goto L_loop;
+	
+L_Fail:
+	close2;
+	savepoint "prontera.gat",273,354;
+	warp "prontera.gat",273,354;
+	end;
 }
 
 //Interfaces Instructor

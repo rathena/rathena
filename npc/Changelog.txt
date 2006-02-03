@@ -28,6 +28,8 @@ Nexon
 Date		Added
 ======
 
+02/03
+	* Temp measure to stop exploit in novice ground. [Vicious]
 01/31
 	* Fixed another bug in the monk quest. [Zephiris]
 01/29
