@@ -3635,6 +3635,24 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	if (!sc || status_isdead(bl))
 		return 0;
 	
+	switch (bl->type)
+	{
+		case BL_PC:
+			sd=(struct map_session_data *)bl;
+			break;
+		case BL_MOB:
+			if (((struct mob_data*)bl)->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL)
+				return 0; //Emperium can't be afflicted by status changes.
+			break;
+		case BL_PET: //Because pets can't have status changes.
+		case BL_SKILL: //These may happen by attacking traps or the like. [Skotlex]
+			return 0;
+		default:
+			if(battle_config.error_log)
+				ShowError("status_change_start: invalid source type (%d)!\n", bl->type);
+			return 0;
+	}
+
 	if(type < 0 || type >= SC_MAX) {
 		if(battle_config.error_log)
 			ShowError("status_change_start: invalid status change (%d)!\n", type);
