@@ -1609,6 +1609,8 @@ int guild_gm_changed(int guild_id, int pos)
 	{
 		clif_displaymessage(g->member[0].sd->fd, "You have become the Guild Master!");
 		g->member[0].sd->state.gmaster_flag = g;
+		//Block his skills for 5 minutes to prevent abuse.
+		guild_block_skill(g->member[0].sd, 300000);
 	}	
 	return 1;
 }

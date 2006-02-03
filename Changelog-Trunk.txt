@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/03
+	* After a guild master change, the new guild master has his guild skills
+	  blocked for 5 minutes to prevent abuse. [Skotlex]
 	* Fixed txt-converter compilation errors [Komurka]
 
 2006/02/02
