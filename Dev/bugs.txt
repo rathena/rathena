@@ -1,0 +1,8 @@
+Reported Bug: It seems cards (somehow) aren't working properly. For instance, 
+		the doppelganger card does not stack properly anymore (although 
+		I think that might be a "fix") and previously I created a 
+		custom card that added 255 to all stats (after checking if the 
+		person was a GM) and this card, as well, has problems: I used 
+		to be able to do 999999 damage with Jupital Thunder and now it 
+		does approximaetly 19000 (perhaps this, too, is a stacking 
+		problem).
