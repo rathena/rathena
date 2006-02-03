@@ -199,6 +199,8 @@ new_1-1.gat,53,114,4	script	Shion	727,{
 	close;
 
 L_Fail:
+	mes "[Shion]";
+	mes "You shouldn't be here.";
 	close2;
 	savepoint "prontera.gat",273,354;
 	warp "prontera.gat",273,354;
@@ -323,6 +325,8 @@ L_loop:
 	goto L_loop;
 	
 L_Fail:
+	mes "[Training Grounds Receptionist]";
+	mes "You shouldn't be here.";
 	close2;
 	savepoint "prontera.gat",273,354;
 	warp "prontera.gat",273,354;
