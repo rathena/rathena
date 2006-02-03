@@ -1,4 +1,4 @@
-﻿// (c) eAthena Dev Team - Licensed under GNU GPL
+// (c) eAthena Dev Team - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include <stdio.h>
@@ -105,7 +105,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct accreg *reg) {
 		&tmp_int[27], &tmp_int[28], &tmp_int[29],
 		&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
 		tmp_str[1], &tmp_int[35], &tmp_int[36],
-		tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39], 
+		tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39],
 		&tmp_int[40], &tmp_int[41], &tmp_int[42], &tmp_int[43], &next)) != 47)
 	{
 		tmp_int[43] = 0;	
@@ -124,7 +124,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct accreg *reg) {
 			&tmp_int[27], &tmp_int[28], &tmp_int[29],
 			&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
 			tmp_str[1], &tmp_int[35], &tmp_int[36], //
-			tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39], 
+			tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39],
 			&tmp_int[40], &tmp_int[41], &tmp_int[42], &next)) != 46)
 		{
 			tmp_int[40] = 0; // father
@@ -270,7 +270,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct accreg *reg) {
 	}
 
 	if (str[next] == '\n' || str[next] == '\r')
-		return 1;	// VKf[^
+		return 1;
 
 	next++;
 
@@ -359,7 +359,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct accreg *reg) {
 
 	next++;
 
-	for(i = 0; str[next] && str[next] != '\t' && str[next] != '\n' && str[next] != '\r'; i++) { // global_regÀÈOÌathena.txtÝ·Ì½ßê'\n'`FbN
+	for(i = 0; str[next] && str[next] != '\t' && str[next] != '\n' && str[next] != '\r'; i++) {
 		if (sscanf(str + next, "%[^,],%s%n", reg->reg[i].str, reg->reg[i].value, &len) != 2) {
 			// because some scripts are not correct, the str can be "". So, we must check that.
 			// If it's, we must not refuse the character, but just this REG value.
@@ -441,7 +441,7 @@ int parse_friend_txt(struct mmo_charstatus *p)
 // Note: Remember to keep this function updated with the one in src/char_sql/char.c [Skotlex]
 // Unneded code was left commented for easier merging of changes.
 // Function by [Ilpalazzo-sama]
- 
+
 int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id, int tableswitch)
 {
 	int i; //, flag, id;
@@ -861,7 +861,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		if(mysql_query(&mysql_handle, tmp_sql)){
 			ShowSQL("DB Error (delete friend): %s\n", mysql_error(&mysql_handle));
 		}
-		  
+		
 		tmp_ptr = tmp_sql;
 		tmp_ptr += sprintf(tmp_ptr, "INSERT INTO `%s` (`char_id`, `friend_id`) VALUES ", friend_db);
 		count = 0;
