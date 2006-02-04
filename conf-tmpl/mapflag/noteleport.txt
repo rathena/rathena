@@ -45,6 +45,7 @@ prt_in.gat	mapflag	noteleport
 um_in.gat	mapflag	noteleport
 xmas_in.gat	mapflag	noteleport
 yuno_in01.gat	mapflag	noteleport
+yuno_in02.gat	mapflag	noteleport
 yuno_in03.gat	mapflag	noteleport
 yuno_in04.gat	mapflag	noteleport
 yuno_in05.gat	mapflag	noteleport

@@ -59,6 +59,7 @@ umbala.gat	mapflag	noicewall
 xmas_in.gat	mapflag	noicewall
 xmas.gat	mapflag	noicewall
 yuno_in01.gat	mapflag	noicewall
+yuno_in02.gat	mapflag	noicewall
 yuno_in03.gat	mapflag	noicewall
 yuno_in04.gat	mapflag	noicewall
 yuno_in05.gat	mapflag	noicewall

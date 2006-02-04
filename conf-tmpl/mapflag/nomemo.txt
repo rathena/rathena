@@ -60,6 +60,8 @@ yuno_fild02.gat	mapflag	nomemo
 yuno_in01.gat	mapflag	nomemo
 yuno_in02.gat	mapflag	nomemo
 yuno_in03.gat	mapflag	nomemo
+yuno_in04.gat	mapflag	nomemo
+yuno_in05.gat	mapflag	nomemo
 yuno.gat	mapflag	nomemo
 que_sign01.gat	mapflag	nomemo
 ein_in01.gat	mapflag	nomemo

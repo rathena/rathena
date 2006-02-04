@@ -28,6 +28,9 @@ Nexon
 Date		Added
 ======
 
+02/05
+	* Added yuno_in02 into noteleport/nomemo, etc map flags. It spoils the quest [Lupus]
+		There's 1 missing mapflag: 'noreturn' (you may use butterfly wings to escape)
 02/03
 	* Implemented the cube room quest [MasterOfMuppets]
 	* Temp measure to stop exploit in novice ground. [Vicious]

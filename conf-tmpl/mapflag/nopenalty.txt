@@ -60,6 +60,7 @@ xmas.gat	mapflag	nopenalty
 xmas_in.gat	mapflag	nopenalty
 yuno.gat	mapflag	nopenalty
 yuno_in01.gat	mapflag	nopenalty
+yuno_in02.gat	mapflag	nopenalty
 yuno_in03.gat	mapflag	nopenalty
 yuno_in04.gat	mapflag	nopenalty
 yuno_in05.gat	mapflag	nopenalty

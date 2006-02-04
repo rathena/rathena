@@ -42,6 +42,7 @@ prt_in.gat	mapflag	nobranch
 um_in.gat	mapflag	nobranch
 xmas_in.gat	mapflag	nobranch
 yuno_in01.gat	mapflag	nobranch
+yuno_in02.gat	mapflag	nobranch
 yuno_in03.gat	mapflag	nobranch
 yuno_in04.gat	mapflag	nobranch
 yuno_in05.gat	mapflag	nobranch

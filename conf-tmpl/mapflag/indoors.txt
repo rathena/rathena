@@ -34,6 +34,7 @@ xmas_in.gat	mapflag	indoors
 cmd_in01.gat	mapflag	indoors
 cmd_in02.gat	mapflag	indoors
 yuno_in01.gat	mapflag	indoors
+yuno_in02.gat	mapflag	indoors
 yuno_in03.gat	mapflag	indoors
 yuno_in04.gat	mapflag	indoors
 yuno_in05.gat	mapflag	indoors
