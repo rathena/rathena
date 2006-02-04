@@ -29,6 +29,7 @@ Date		Added
 ======
 
 02/03
+	* Implemented the cube room quest [MasterOfMuppets]
 	* Temp measure to stop exploit in novice ground. [Vicious]
 01/31
 	* Fixed another bug in the monk quest. [Zephiris]

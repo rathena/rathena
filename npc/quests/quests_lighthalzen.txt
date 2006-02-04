@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -18,6 +18,8 @@
 //= 1.0 Patched "mobsters spawn & Alert" like Real-RO.
 //= 1.0a fixed rand(1,10) + comparision. There just can't be 'X < 1' [Lupus]
 //= 1.1 Changed the mobster spawn to g_mobster to prevent exploits [MasterOfMuppets]
+//= 1.2 Added the cube room quest by DeNy, translated by vicious_pucca. [MasterOfMuppets]
+//=	Thanks to Linuxwolf for a grammar check as well =).
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -212,3 +214,1020 @@ Lhzstop:
 	mes "It's troublesome...";
 	close;
 }
+
+//============================================================
+// Cube Room
+//============================================================
+
+//--------------------------Piciburn--------------------------
+
+lighthalzen.gat,341,224,4	script	Piciburn	868,{
+	if (BaseLevel > 60) goto Lstart;
+	mes "[Piciburn]";
+	mes "Keep moving.";
+	close;
+
+Lstart:
+	if (hzdun == 1) goto L_11;
+	if (piciburn == 7) goto L_10;
+	if (piciburn == 6) goto L_9;
+	if (piciburn == 5) goto L_6;
+	if (piciburn == 4) goto L_4;
+	if (piciburn == 3) goto L_3;
+	if (piciburn == 2) goto L_2;
+	if (piciburn == 1) goto L_1;
+	mes "[Piciburn]";
+	mes "Hmm...? What is it?";
+	mes "I am busy at the moment,";
+	mes "so stop bothering me.";
+	set piciburn,1;
+	close;
+
+L_1:
+	mes "[Piciburn]";
+	mes "I'm getting distracted because";
+	mes "You keep staring at me!";
+	mes "Would you please leave me alone?";
+	set piciburn,piciburn+1;
+	close;
+
+L_2:
+	mes "[Piciburn]";
+	mes "Hmm...? Oh, it's you..";
+	mes "You are really getting on my nerves.";
+	mes "You're weird, you know that?";
+	mes "What is it that you want from me?";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Nothing really...";
+	mes "Just looking around...";
+	mes "What are you doing?";
+	next;
+	mes "[Piciburn]";
+	mes "Oh, man...";
+	mes "If I just needed to show you this,";
+	mes "I wouldn't have got all worked up.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "I know. Haha.";
+	next;
+	mes "[Piciburn]";
+	mes "You really ARE a weird person...";
+	mes "Are you just going to stand there";
+	mes "and keep watching?";
+	next;
+	mes "[Piciburn]";
+	mes "... You're really annoying me!";
+	mes "What do you want from me?!";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "I've aready told you.";
+	mes "I asked what you were doing.";
+	mes "This place is hot and sticky.";
+	next;
+	mes "[Piciburn]";
+	mes "Okay, okay..";
+	mes "I'll tell you what i'm doing,";
+	mes "but would you leave me in peace";
+	mes "if i did? Thanks.";
+	next;
+	mes "[Piciburn]";
+	mes "I'm.. um... doing something illegal...";
+	mes "Don't tell anyone about this!";
+	next;
+	mes "[Piciburn]";
+	mes "I am the only person who can make a route to";
+	mes "the industrial city's -^FF0000Laboratory^000000- or";
+	mes "places normal people wouldn't usually be able to get to.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "The -Laboratory?!!!-";
+	mes "Can you really get people in there?!!!";
+	next;
+	mes "[Piciburn]";
+	mes "Agh! Quieten down! What did i tell you?";
+	mes "I've told you what i do, now will you stop staring at me?";
+	mes "And be quiet~!";
+	mes "You're weird.. ¬_¬";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Ah..Haha.. I'm sorry.";
+	mes "I really want to go there,";
+	mes "so I got excited when I heard you can get people in there";
+	next;
+	mes "[Piciburn]";
+	mes "Hmm? You were planning to get in there?";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Yeah, but i couldn't get in..";
+	next;
+	mes "[Piciburn]";
+	mes "Hmm...";
+	mes "This is troublesome...";
+	mes "I don't usually tell people i cannot";
+	mes "trust how to get into the Laboratory...";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "What do I need to do?";
+	mes "How can I get into the laboratory?";
+	next;
+	mes "[Piciburn]";
+	mes "Geez~, I'm just giving people a route, not sending them there.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Doesn't that mean the same thing?";
+	next;
+	mes "[Piciburn]";
+	mes "What I'm saying is,";
+	mes "I'm giving people the chance to get into the labs.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "You're really talented, huh.";
+	next;
+	mes "[Piciburn]";
+	mes "Hahaha! Damn right.";
+	mes "It's a piece of cake!";
+	mes "...";
+	mes "Actually, now i think about it, it's impossible..";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "How's it impossible?";
+	mes "I haven't say anything yet~..";
+	next;
+	mes "[Piciburn]";
+	mes "Oh come on, you were going to BEG me to send you there~!!!";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Heh...";
+	mes "You really ARE clever.";
+	mes "Well...";
+	mes "Pretty please~~?";
+	next;
+	mes "[Piciburn]";
+	mes "I can never let you in~..";
+	mes "Never ever~!!!";
+	set piciburn,piciburn+1;
+	close;
+
+L_3:
+	mes "[" +strcharinfo(0) + "]";
+	mes "Please?";
+	next;
+	mes "[Piciburn]";
+	mes "No way.";
+	set piciburn,piciburn+1;
+	close;
+
+L_4:
+	mes "[" +strcharinfo(0) + "]";
+	mes "Pleaseeeee?";
+	next;
+	mes "[Piciburn]";
+	mes "No.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Pleaseeeeeeeeeee?";
+	next;
+	mes "[Piciburn]";
+	mes "I don't want to.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Do it!!!";
+	next;
+	mes "[Piciburn]";
+	mes "Never~!!!";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Why are you doing this to me?!!";
+	mes "What do you want from me !?!";
+	next;
+	mes "[Piciburn]";
+	mes "What do I want?";
+	mes "Heh heh.. One billion zeny.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Are you crazy?!";
+	next;
+	mes "[Piciburn]";
+	mes "It's your choice.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Sir, you know I don't have that much money.";
+	mes "Is there anything else you need?";
+	next;
+	mes "[Piciburn]";
+	mes "Hmm...";
+	mes "Okay fine...";
+	mes "Bring me 20 Jellopies.";
+	mes "'Kay?";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "........";
+	mes "So that's what you really wanted to ask me?";
+	next;
+	mes "[Piciburn]";
+	mes "Hahaha...";
+	mes "Yeah~~...";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "........";
+	next;
+	mes "[Piciburn]";
+	mes "So, what're you doing just standing there?";
+	mes "Are you going to do it or not?";
+	next;
+	menu "Definitely!",L_5,"No way! It's impossible!",-;
+
+	mes "[Piciburn]";
+	mes "Ah well, your loss,";
+	mes "Too bad!";
+	mes "Bye now~!!";
+	close;
+
+L_5:
+	mes "[Piciburn]";
+	mes "Okay then, do as I said,";
+	mes "bring me 20 jellopies!";
+	mes "....";
+	mes "What're you waiting for?! GO!!";
+	set piciburn,piciburn+1;
+	close;
+
+L_6:
+	mes "[Piciburn]";
+	mes "Did you get the items?";
+	next;
+	menu "Erm.. No..",-,"Hell yeah!",L_7,"What did you want again..?",L7_1;
+
+	mes "[Piciburn]";
+	mes "Hey, I don't feel like playing around anymore.";
+	mes "If you really want to get there, bring the damn items!";
+	close;
+
+L_7:
+	if (countitem(909) >= 20) goto L_8;
+	mes "[Piciburn]";
+	mes "Are you joking?";
+	mes "If you keep doing this,";
+	mes "I may not keep the promise either.";
+	mes "So go and get them already!";
+	close;
+
+L7_1:
+	mes "[Piciburn]";
+	mes "You're really stupid~!";
+	mes "It's 20 jellopies!";
+	mes "Don't forget this time~";
+	close;
+
+L_8:
+	mes "[Piciburn]";
+	mes "Hmm. You're more reliable than i thought.";
+	mes "Taking this errand into consideration,";
+	mes "i guess you really want to get in there?";
+	next;
+	mes "[Piciburn]";
+	mes "Coming to think of it,";
+	mes "you look different.";
+	mes "Should I say you look more... trustworthy..?";
+	next;
+	mes "[Piciburn]";
+	mes "Well... Anyway...";
+	mes "A promise is a promise.";
+	mes "I will tell you how to get there.";
+	next;
+	mes "[Piciburn]";
+	mes "As I told you earlier, all I can do is";
+	mes "give you the opportunity to get in.";
+	next;
+	mes "[Piciburn]";
+	mes "I used to be a manager working for the lab,";
+	mes "but time moves on, as people do,";
+	mes "and now I am working against the lab.";
+	next;
+	mes "[Piciburn]";
+	mes "Now... Answer honestly on all I ask here on out.";
+	mes "Where i send you all depends on how you answer.";
+	next;
+	mes "[Piciburn]";
+	mes "Somewhere in the place I'm going to send you";
+	mes "There will be things you must find,";
+	mes "So search well.";
+	next;
+	mes "[Piciburn]";
+	mes "Well, when you've made your mind up,";
+	mes "come back and talk to me. Okay?";
+	delitem 909,20;
+	set piciburn,piciburn+1;
+	close;
+
+L_9:
+	mes "[Piciburn]";
+	mes "Hmm... So...";
+	mes "Are you ready to go?";
+	next;
+	menu "No",-,"Yes",L9_1;
+
+	mes "[Piciburn]";
+	mes "Hmm... Not yet, huh...";
+	mes "Well, I guess it is to be expected.";
+	mes "But don't make me wait too long~!";
+	close;
+
+L9_1:
+	mes "[Piciburn]";
+	mes "This is going to be hard~";
+	mes "Let's go!!!";
+	close2;
+	warp "lhz_cube.gat",248,184;
+	set piciburn,piciburn+1;
+	end;
+
+L_10:
+	mes "[Piciburn]";
+	mes "Hah!";
+	mes "You failed in there, right? Hahahaha~.";
+	mes "Are you going to try again? Or is it too tough~";
+	next;
+	menu "No",-,"Yes",L10_1;
+
+	mes "[Piciburn]";
+	mes "It was that hard huh?";
+	mes "Well, come back if you change your mind.";
+	close;
+
+L10_1:
+	mes "[Piciburn]";
+	mes "Okay..";
+	mes "I will send you there again..";
+	mes "Good luck!";
+	close2;
+//	warp "lhz_cube.gat",66,136;
+	warp "lhz_cube.gat",248,184;
+	end;
+
+L_11:
+	mes "[Piciburn]";
+	mes "Oh~ I guess you found the entrance.";
+	mes "I'll tell you now...";
+	mes "If you want to go in there again";
+	next;
+	mes "[Piciburn]";
+	mes "You can get there by a sewer passage a bit south of the town.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "No waiiiii!!";
+	next;
+	mes "[Piciburn]";
+	mes "I know. I know...";
+	mes "It is dirty.";
+	mes "But it's only way in, so don't complain!";
+	next;
+	mes "[Piciburn]";
+	mes "Now, take care of yourself~.";
+	close;
+}
+
+//--------------------------Box--------------------------
+
+lhz_cube.gat,248,179,0	script	Box	111,{
+	if (axe == 1) goto L_2;
+	mes "There is an axe in the box.";
+	next;
+	menu "Take the axe.",L_1,"Leave it alone.",-;
+	close;
+
+L_1:
+	mes "You acquired the ^FF0000axe^000000.";
+	set axe,1;
+	close;
+
+L_2:
+	mes "There is a box that used to contain an ^FF0000axe^000000.";
+	close;
+}
+
+//--------------------------Barrel--------------------------
+
+lhz_cube.gat,237,183,0	script	Barrel	111,{
+	if (ykey == 1) goto L_4;
+	if (box == 1) goto L_2;
+	mes "There is a box that looks weak.";
+	if (axe == 0) close;
+	next;
+	input @axe$;
+
+	if (@axe$ == "axe") goto L_1;
+	mes "There is no change.";
+	close;
+
+L_1:
+	mes "When you break the barrel with an axe,";
+	mes "you see that there's a box inside of it.";
+	next;
+	mes "On top of the box, there's a panel with the numbers 1~9";
+	set box,1;
+	close;
+
+L_2:
+	mes "There is a box with numbers 1~9 on it's surface.";
+	next;
+	input @1number;
+	if (num6 == @1number) set @agree,@agree+1;
+	input @2number;
+	if (num8 == @2number) set @agree,@agree+1;
+	input @3number;
+	if (num1 == @3number) set @agree,@agree+1;
+	input @4number;
+	if (num4 == @4number) set @agree,@agree+1;
+	input @5number;
+	if (num9 == @5number) set @agree,@agree+1;
+	input @6number;
+	if (num2 == @6number) set @agree,@agree+1;
+	input @7number;
+	if (num7 == @7number) set @agree,@agree+1;
+	input @8number;
+	if (num5 == @8number) set @agree,@agree+1;
+	input @9number;
+	if (num3 == @9number) set @agree,@agree+1;
+	if (@agree == 9) goto L_3;
+	mes "There is no change.";
+	close;
+
+L_3:
+	mes "The box opened, making a metallic click.";
+	mes "Within the box, there is 'yellow key'.";
+	next;
+	mes "You acquired '^FF0000yellow key^000000'.";
+	set ykey,1;
+	close;
+
+L_4:
+	mes "This box used to have the '^FF0000yellow key^000000'";
+	mes "The box is now empty.";
+	close;
+}
+
+//--------------------------Drawer--------------------------
+
+lhz_cube.gat,242,201,0	script	Drawer	111,{
+	if (knife == 1) goto L_3;
+	mes "The drawer is locked.";
+	if (redkey == 1) goto L_1;
+	close;
+
+L_1:
+	input @key$;
+	if (@key$ == "red key") goto L_2;
+	mes "The drawer is locked, you need some kind of key.";
+	close;
+
+L_2:
+	mes "The red key fits the lock perfectly,opening the drawer.";
+	mes "You found a 'small knife' inside.";
+	next;
+	mes "You acquired ^FF0000small knife^000000.";
+	set knife,1;
+	close;
+
+L_3:
+	mes "It is the drawer you got ^FF0000small knife^000000 from.";
+	mes "There is nothing inside now.";
+	close;
+}
+
+//--------------------------Documents--------------------------
+
+lhz_cube.gat,237,198,0	script	Documents	111,{
+	if (redkey == 1) goto L_2;
+	mes "There are tons of documents here.";
+	next;
+	menu "Search the documents.",L_1,"Ignore.",-;
+	close;
+
+L_1:
+	mes "As you look through the documents, a 'redkey' falls out.";
+	next;
+	mes "You acquired ^FF0000red key^000000.";
+	set redkey,1;
+	close;
+
+L_2:
+	mes "This is where you acquired ^FF0000red key^000000.";
+	mes "There's nothing else to do here.";
+	close;
+}
+
+//--------------------------Bed--------------------------
+
+lhz_cube.gat,247,198,0	script	Bed	111,{
+	mes "There is a messy bed.";
+	next;
+	menu "Above bed",-,"Below bed",L_1;
+
+	mes "The blanket is messily placed.";
+	mes "There is nothing special here.";
+	close;
+
+L_1:
+	if (quadrangle >= 1) goto L_3;
+	if (srod1 == 1) goto L_2;
+	mes "You look below the bed and see a 'small stick'.";
+	mes "It is within your grasp, but there is";
+	mes "Also another item hidden under the bed, which";
+	mes "You'll need some kind of long item to pull it out.";
+	next;
+	mes "You acquired the '^FF0000small stick^000000'.";
+	mes "It looks like this stick could be combined";
+	mes "With another stick to make it larger.";
+	if (srod2 == 1) goto L1_1;
+	if (srod1 == 0) set srod1,1;
+	if (srod1 == 0) close;
+
+L1_1:
+	set srod1,1;
+	if (@bad == 0) next;
+	mes "It looks similar to the 'small stick' that you";
+	mes "found under the bed.";
+	next;
+	mes "You acquired '^FF0000long stick^000000'.";
+	set rod,1;
+	close;
+
+L_2:
+	set @bed,1;
+	if (rod == 0 && srod1 == 1 && srod2 == 1) goto L1_1;
+	mes "As you look under the bed, you see that there";
+	mes "is a small object covered in dust.";
+	next;
+	input @bed$;
+
+	if (@bed$ == "long stick" && rod == 1) goto L2_1;
+	mes "It looks like you need some kind of long item to";
+	mes "Get the item out, you can't reach it!";
+	close;
+
+L2_1:
+	mes "You used the long stick to pull it out.";
+	next;
+	mes "You acquired '^FF0000cube model^000000'.";
+	set quadrangle,1;
+	close;
+
+L_3:
+	mes "This is the place where you got '^FF0000cube model^000000' from.";
+	mes "There is nothing down here now but dust.";
+	close;
+}
+
+//--------------------------Cup--------------------------
+
+lhz_cube.gat,229,184,0	script	Cup	111,{
+	if (fkey == 1) goto L_2;
+	mes "You see an empty bottle and a cup with something in it.";
+	next;
+	menu "Leave it alone.",-,"Look what is inside.",L_1;
+	close;
+
+L_1:
+	mes "When you look inside, you see a 'rusty key'.";
+	next;
+	mes "You acquired the '^FF0000rusty key^000000'.";
+	set fkey,1;
+	close;
+
+L_2:
+	mes "You got the '^FF0000rusty key^000000' here.";
+	mes "There's nothing but an empty cup and an empty bottle.";
+	close;
+}
+
+//--------------------------Shelf--------------------------
+
+lhz_cube.gat,233,206,0	script	Shelf	111,{
+	if (gkey == 1) goto L_2;
+	mes "There are lots of bottles filled with acids lined up";
+	mes "Along the shelf, they have different labels.";
+	next;
+	input @lathe$;
+
+	if (@lathe$ == "rusty key" && fkey == 1) goto L_1;
+	mes "Nothing happened.";
+	close;
+
+L_1:
+	mes "As you put the 'rusty key' into a bottle, it fizzes";
+	mes "and bubbles, and all the liquid disappears.";
+	mes "All that's left is a clean, green key.";
+	next;
+	mes "You acquired the '^FF0000green key^000000'";
+	set gkey,1;
+	close;
+
+L_2:
+	mes "There is an acid that changed corroded all the rust";
+	mes "off of your key.";
+	next;
+	mes "I don't see anything useful.";
+	close;
+}
+
+//--------------------------Closet--------------------------
+
+lhz_cube.gat,249,191,0	script	Closet	111,{
+	if (polygon >= 1) goto L_4;
+	mes "There is a closet with lots of drawers.";
+	if (gkey == 1) goto L_2;
+	if (gkey == 0) next;
+	menu "Leave it alone.",-,"Open one of the drawers.",L_1;
+	close;
+
+L_1:
+	mes "There's nothing of any interest in this drawer.";
+	close;
+
+L_2:
+	next;
+	input @gkey$;
+
+	if (@gkey$ == "green key") goto L_3;
+	mes "There's nothing of any interest in this drawer.";
+	close;
+
+L_3:
+	mes "You put the 'green key' into a keyhole,";
+	mes "opening one of the locked drawers.";
+	mes "In the drawer, there is a model of";
+	mes "a polygon.";
+	next;
+	mes "'You acquired the ^FF0000polygon model^000000.";
+	set polygon,1;
+	close;
+
+L_4:
+	mes "This is the closet where you got";
+	mes "the 'polygon model' from.";
+	next;
+	mes "The other draws will not open, there's";
+	mes "nothing else to do here.";
+	close;
+}
+
+//--------------------------Desk--------------------------
+
+lhz_cube.gat,234,200,0	script	Desk	111,{
+	mes "There is a desk with lots of objects scattered around.";
+	next;
+	menu "Above the desk",-,"Below the desk",L_1,"Drawer",L_2;
+
+	mes "There are lots of books, papers and";
+	mes "research equipment.";
+	close;
+
+L_1:
+	if (rod == 1 || srod2 == 1) goto L1_2;
+	mes "When you look below the desk,";
+	mes "You see a decent sized stick.";
+	next;
+	mes "You acquired '^FF0000short stick^000000'.";
+	mes "It looks like this stick could be combined";
+	mes "With another stick to make it larger.";
+	if (srod2 == 0) set srod2,1;
+	if (srod2 == 0) close;
+
+L1_1:
+	if (@desk == 0) next;
+	mes "It seems like the decently sized stick can be";
+	mes "combined with the 'short stick' from under the bed.";
+	mes "You put the two end to end, and they click into place.";
+	next;
+	mes "You acquired the '^FF0000long stick^000000'";
+	set rod,1;
+	close;
+
+L1_2:
+	set @desk,1;
+	if (srod1 == 1 && srod2 == 1) goto L1_1;
+	mes "This is where you acquired the '^FF0000short stick^000000'.";
+	mes "There is nothing but dust now.";
+	close;
+
+L_2:
+	mes "It is locked and can't be opened.";
+	close;
+}
+
+//--------------------------Picture--------------------------
+
+lhz_cube.gat,237,206,0	script	Picture	111,{
+	if (num1 > 0) goto L_2;
+	mes "There is a picture on the wall.";
+	next;
+	menu "Move it.",L_1,"Leave it alone.",-;
+	close;
+
+L_1:
+	mes "It does not move.";
+	next;
+	input @knife$;
+
+	if (@knife$ == "small knife" && knife == 1) goto L1_1;
+	mes "Nothing happened.";
+	close;
+
+L1_1:
+	mes "You slid the 'small knife' behind the frame";
+	mes "and used it to twist the picture.";
+	mes "As you turn the frame, the picture detatches and";
+	mes "falls from the wall.";
+	next;
+	set num1,rand(1,9);
+	Lset1:
+	set num2,rand(1,9);
+	if (num1 == num2) goto Lset1;
+	Lset2:
+	set num3,rand(1,9);
+	if (num1 == num3) goto Lset2;
+	if (num2 == num3) goto Lset2;
+	Lset3:
+	set num4,rand(1,9);
+	if (num1 == num4) goto Lset3;
+	if (num2 == num4) goto Lset3;
+	if (num3 == num4) goto Lset3;
+	Lset4:
+	set num5,rand(1,9);
+	if (num1 == num5) goto Lset4;
+	if (num2 == num5) goto Lset4;
+	if (num3 == num5) goto Lset4;
+	if (num4 == num5) goto Lset4;
+	Lset5:
+	set num6,rand(1,9);
+	if (num1 == num6) goto Lset5;
+	if (num2 == num6) goto Lset5;
+	if (num3 == num6) goto Lset5;
+	if (num4 == num6) goto Lset5;
+	if (num5 == num6) goto Lset5;
+	Lset6:
+	set num7,rand(1,9);
+	if (num1 == num7) goto Lset6;
+	if (num2 == num7) goto Lset6;
+	if (num3 == num7) goto Lset6;
+	if (num4 == num7) goto Lset6;
+	if (num5 == num7) goto Lset6;
+	if (num6 == num7) goto Lset6;
+	Lset7:
+	set num8,rand(1,9);
+	if (num1 == num8) goto Lset7;
+	if (num2 == num8) goto Lset7;
+	if (num3 == num8) goto Lset7;
+	if (num4 == num8) goto Lset7;
+	if (num5 == num8) goto Lset7;
+	if (num6 == num8) goto Lset7;
+	if (num7 == num8) goto Lset7;
+	Lset8:
+	set num9,rand(1,9);
+	if (num1 == num9) goto Lset8;
+	if (num2 == num9) goto Lset8;
+	if (num3 == num9) goto Lset8;
+	if (num4 == num9) goto Lset8;
+	if (num5 == num9) goto Lset8;
+	if (num6 == num9) goto Lset8;
+	if (num7 == num9) goto Lset8;
+	if (num8 == num9) goto Lset8;
+	goto L_2;
+
+L_2:
+	mes "There is a number behind the picture.";
+	mes "" + num1 + "3 " + num2 + "6 " + num3 + "9 " + num4 + "4 " + num5 + "8 " + num6 + "1 " + num7 + "7 " + num8 + "2 " + num9 + "5";
+	mes "Perhaps you should write this number down somewhere...";
+	close;
+}
+
+//--------------------------generator--------------------------
+
+lhz_cube.gat,224,192,0	script	Generator	111,{
+	if (machine == 1) goto L_2;
+	mes "The big machine is running, making a huge noise.";
+	mes "There are lots weird symbols and";
+	mes "a small key hole beside them.";
+	next;
+	input @key$;
+
+	if (@key$ == "yellow key" && ykey == 1) goto L_1;
+	mes "There's nothing to do here.";
+	close;
+
+L_1:
+	mes "You insert the 'yellow key' into the keyhole";
+	mes "and twist it.";
+	mes "The machine clicks, and becomes silent.";
+	next;
+	mes "When it was stopped, the lamp next to the bed";
+	mes "also turned off.";
+	set machine,1;
+	close;
+
+L_2:
+	mes "The big machine sits quietly.";
+	close;
+}
+
+//--------------------------Lamp--------------------------
+
+lhz_cube.gat,248,205,0	script	Lamp	111,{
+	if (bkey == 1) goto L_3;
+	if (machine == 1) goto L_1;
+	mes "There is a bright lamp.";
+	mes "Seems like there is something inside";
+	mes "but it is too hot to touch.";
+	mes "It looks like you need to somehow turn the lamp off.";
+	close;
+
+L_1:
+	mes "There is something inside of the bulb.";
+	next;
+	menu "Leave it alone.",-,"Break the bulb.",L_2;
+	close;
+
+L_2:
+	mes "When you break the bulb, a";
+	mes "'black key' falls out.";
+	next;
+	mes "You acquired the '^FF0000black key^000000'.";
+	set bkey,1;
+	close;
+
+L_3:
+	mes "There nothing but a broken bulb.";
+	close;
+}
+
+//--------------------------Box--------------------------
+
+lhz_cube.gat,248,193,0	script	Box	111,{
+	if (countitem(2657) == 1) goto L_5;
+	mes "There is a box with three holes.";
+	next;
+	if (ellipse == 2 && quadrangle == 2 && polygon == 2) goto L_4;
+	menu "Ellipse hole",L_1,"Square hole",L_2,"Polygonal hole",L_3;
+
+L_1:
+	if (ellipse == 2) goto L1_2;
+	input @ellipse$;
+
+	if (@ellipse$ == "ellipse model" && ellipse == 1) goto L1_1;
+	mes "Nothing happened.";
+	close;
+
+L1_1:
+	mes "You inserted the 'ellipse model' into the ellipse-shaped hole.";
+	mes "The box makes a metallic click.";
+	set ellipse,2;
+	close;
+
+L1_2:
+	mes "You've already inserted the 'ellipse model.'";
+	close;
+
+L_2:
+	if (quadrangle == 2) goto L2_2;
+	input @quadrangle$;
+
+	if (@quadrangle$ == "cube model" && quadrangle == 1) goto L2_1;
+	mes "Nothing happened.";
+	close;
+
+L2_1:
+	mes "You inserted the 'cube model' into the square-shaped hole.";
+	mes "The box makes a metallic click.";
+	set quadrangle,2;
+	close;
+
+L2_2:
+	mes "You already inserted the 'square model.'";
+	close;
+
+L_3:
+	if (polygon == 2) goto L3_2;
+	input @polygon$;
+
+	if (@polygon$ == "polygon model" && polygon == 1) goto L3_1;
+	mes "Nothing happened.";
+	close;
+
+L3_1:
+	mes "You inserted the 'polygon model' into the polygonal hole.";
+	mes "The box makes a metallic click.";
+	set polygon,2;
+	close;
+
+L3_2:
+	mes "You've already inserted the 'polygon model.'";
+	close;
+
+L_4:
+	mes "All holes are filled with keymodels.";
+	next;
+	menu "Leave it alone.",-,"Open the box.",L4_1;
+	close;
+
+L4_1:
+	mes "There is a small card inside of it.";
+	next;
+	mes "You acquired the 'Laboratory Key'.";
+	getitem 2657,1;
+	close;
+
+L_5:
+	mes "There is an opened box.";
+	mes "There is nothing inside.";
+	close;
+}
+
+//--------------------------Test tube--------------------------
+
+lhz_cube.gat,224,197,0	script	Test Tube	111,{
+	if (countitem(2657) == 1) goto L_3;
+	if (ellipse >= 1) goto L_2;
+	mes "There is a weird test tube.";
+	mes "It seems like there is something inside.";
+	mes "There' a keyhole and a hole that fits a thin object.";
+	next;
+	input @key$;
+
+	if (@key$ == "black key" && bkey == 1) goto L_1;
+	mes "Nothing happened.";
+	close;
+
+L_1:
+	mes "You inserted the 'black key' and turned it.";
+	mes "The glass window at the front of the machine opened,";
+	mes "Revealing an ellipse model.";
+	next;
+	mes "You acquired the '^FF0000ellipse model^000000'.";
+	set ellipse,1;
+	close;
+
+L_2:
+	mes "This is where you got '^FF0000ellipse model^000000'.";
+	mes "There is a weird symbol on the bottom of the machine.";
+	mes "It looks like it could open as it has hinges on one side.";
+	close;
+
+L_3:
+	mes "There is a rectangular hole in the front of the machine.";
+	next;
+	input @answer$;
+
+	if (@answer$ == "Laboratory Keycard") goto L_4;
+	mes "Nothing happened.";
+	close;
+
+L_4:
+	mes "You inserted the 'Laboratory Keycard' in the hole,";
+	mes "and the stair leading down appeared on the floor.";
+	next;
+	menu "Go down.",L4_1,"Do not go down.",-;
+	close;
+
+L4_1:
+	mes "It connected to a long staircase.";
+	close2;
+	set axe,0;	set ykey,0;	set box,0;	set num1,0;
+	set num2,0;	set num3,0;	set num4,0;	set num5,0;
+	set num6,0;	set num7,0;	set num8,0;	set num9,0;
+	set knife,0;	set redkey,0;	set srod1,0;	set srod2,0;
+	set fkey,0;	set gkey,0;	set polygon,0;	set machine,0;
+	set bkey,0;	set ellipse,0;	set quadrangle,0;	set rod,0;
+	set hzdun,1;
+	warp "lhz_cube.gat",177,13;
+	end;
+}
+
+//--------------------------Sewer Pipe--------------------------
+
+lighthalzen.gat,313,301,0	script	Sewer Pipe	111,{
+	mes "You see some pipes for a sewage system.";
+	if(countitem(2657) == 0 && hzdun == 1)goto s_Find;
+	if(countitem(2657) != 0)goto s_Find;
+	close;
+s_Find:
+	mes "You found the way into the lab.";
+	next;
+	menu "Go in.",L_1,"Do not go in.",-;
+	close;
+
+L_1:
+	warp "lhz_cube.gat",231,17;
+	end;
+}
+
+//--------------------------Warps--------------------------
+
+//Cube room <-> Lighthalzen
+lhz_cube.gat,231,96,0	warp	cube	1,1,lhz_dun02.gat,220,6
+lhz_dun02.gat,224,6,0	warp	cube	1,1,lhz_cube.gat,231,90
+
+//Cube room -> Lighthalzen
+lhz_cube.gat,231,12,0	warp	cube	1,1,lighthalzen.gat,310,302
+lhz_cube.gat,177,96,0	warp	cube	1,1,lighthalzen.gat,310,302
