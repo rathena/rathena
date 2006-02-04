@@ -27,9 +27,11 @@
 
 =========================
 
+02/04
+	* Added monster skills and drops to Plasma(all types), Orc baby, green iguana. Thanks [MasterOfMuppets]
+	  to Tharis for providing the info.
 02/02
 	* Added Playtester's Odin and Kiel Mobs. Added Valkyrie and missing Honunies. [Poki#3]
-
 02/01
 	* Falcon Assault only does one hit now. [Skotlex]
 01/31

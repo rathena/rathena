@@ -2983,8 +2983,6 @@
 
 1686,Orc Baby@SM_BASH,angry,5,5,500,0,5000,yes,target,always,0,,,,,,
 1686,Orc Baby@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,
-//I don't know what slaves they have.
-//1686,Orc Baby@NPC_SUMMONSLAVE,chase,196,?,10000,700,60000,no,self,slavele,?,?,,,,,
 
 1688,Lady Tany@NPC_GUIDEDATTACK,attack,172,3,500,1000,20000,no,target,always,0,,,,,,
 1688,Lady Tany@NPC_DEFENDER,attack,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,
@@ -3003,6 +3001,53 @@
 1688,Lady Tany@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1688,Lady Tany@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1688,Lady Tany@AL_TELEPORT,idle,26,1,1000,0,0,yes,self,rudeattacked,0,,,,,,
+
+1692,Breeze@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,
+1692,Breeze@NPC_COMBOATTACK,attack,171,1,1000,700,5000,no,target,always,0,,,,,,
+1692,Breeze@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
+1692,Breeze@NPC_DEFENDER,angry,205,1,50,0,5000,yes,target,always,0,,,,,,
+1692,Breeze@NPC_DEFENDER,attack,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,
+//1692,Breeze@NPC_CHANGE(I don't know which element)
+
+1693,Plasma(Yellow)@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,
+1693,Plasma(Yellow)@NPC_STUNATTACK,angry,179,3,500,1500,5000,no,target,always,0,,,,,,
+1693,Plasma(Yellow)@NPC_TELEKINESISATTACK,attack,191,5,500,0,5000,yes,target,always,0,,,,,,
+1693,Plasma(Yellow)@MG_SOULSTRIKE,chase,13,9,50,500,5000,yes,target,always,0,,,,,,
+1693,Plasma(Yellow)@MG_SOULSTRIKE,follow,13,9,50,500,5000,yes,target,always,0,,,,,,
+1693,Plasma(Yellow)@MG_NAPALMBEAT,attack,11,10,500,1500,1500,yes,target,always,0,,,,,,
+1693,Plasma(Yellow)@MG_NAPALMBEAT,angry,11,10,500,1500,1500,yes,target,always,0,,,,,,
+
+1694,Plasma(Red)@NPC_SLEEPATTACK,attack,182,3,500,0,5000,yes,target,always,0,,,,,,
+1694,Plasma(Red)@NPC_SLEEPATTACK,angry,182,3,500,0,5000,yes,target,always,0,,,,,,
+1694,Plasma(Red)@NPC_FIREATTACK,attack,186,5,500,500,5000,no,target,always,0,,,,,,
+1694,Plasma(Red)@MG_FIREBALL,chase,17,5,50,800,5000,yes,target,always,0,,,,,,
+1694,Plasma(Red)@MG_FIREBALL,follow,17,5,50,800,5000,yes,target,always,0,,,,,,
+1694,Plasma(Red)@MG_FIREBOLT,attack,19,3,500,1500,5000,yes,target,always,0,,,,,,
+1694,Plasma(Red)@MG_FIREBOLT,angry,19,3,500,1500,5000,yes,target,always,0,,,,,,
+
+1695,Plasma(Green)@MG_STONECURSE,attack,16,10,500,1500,5000,no,target,always,0,,,,,,
+1695,Plasma(Green)@MG_STONECURSE,angry,16,10,500,1500,5000,no,target,always,0,,,,,,
+1695,Plasma(Green)@NPC_GROUNDATTACK,attack,185,5,500,500,5000,no,target,always,0,,,,,,
+1695,Plasma(Green)@WZ_QUAGMIRE,chase,92,5,50,700,5000,no,target,always,0,,,,,,
+1695,Plasma(Green)@WZ_QUAGMIRE,follow,92,5,50,700,5000,no,target,always,0,,,,,,
+1695,Plasma(Green)@WZ_EARTHSPIKE,attack,90,3,500,0,5000,no,target,always,0,,,,,,
+1695,Plasma(Green)@WZ_EARTHSPIKE,angry,90,3,500,0,5000,no,target,always,0,,,,,,
+
+1696,Plasma(Purple)@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,
+1696,Plasma(Purple)@NPC_CURSEATTACK,angry,181,3,500,800,5000,no,target,always,0,,,,,,
+1696,Plasma(Purple)@NPC_DARKNESSATTACK,attack,190,5,500,500,5000,no,target,always,0,,,,,,
+1696,Plasma(Purple)@NPC_DARKSTRIKE,chase,340,5,50,700,5000,yes,target,always,0,,,,,,
+1696,Plasma(Purple)@NPC_DARKSTRIKE,follow,340,5,50,700,5000,yes,target,always,0,,,,,,
+1696,Plasma(Purple)@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
+1696,Plasma(Purple)@NPC_SPLASHATTACK,angry,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
+
+1697,Plasma(Blue)@MG_FROSTDIVER,attack,15,9,500,1000,5000,yes,target,always,0,,,,,,
+1697,Plasma(Blue)@MG_FROSTDIVER,angry,15,9,500,1000,5000,yes,target,always,0,,,,,,
+1697,Plasma(Blue)@NPC_WATERATTACK,attack,184,5,500,500,5000,no,target,always,0,,,,,,
+1697,Plasma(Blue)@WZ_WATERBALL,chase,86,1,50,500,5000,yes,target,always,0,,,,,,
+1697,Plasma(Blue)@WZ_WATERBALL,follow,86,1,50,500,5000,yes,target,always,0,,,,,,
+1697,Plasma(Blue)@MG_COLDBOLT,attack,14,3,500,1500,5000,yes,target,always,0,,,,,,
+1697,Plasma(Blue)@MG_COLDBOLT,angry,14,3,500,1500,5000,yes,target,always,0,,,,,,
 
 // Thanatos Tower Mobs
 1698,Deathword@NPC_SPLASHATTACK,angry,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
@@ -3189,6 +3234,8 @@
 1720,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,2000,240000,no,self,slavele,1,1713,1714,1716,1717,,
 1720,Hydro@NPC_CALLSLAVE,attack,352,1,2000,0,10000,yes,target,always,0,,,,,,
 1720,Hydro@NPC_CALLSLAVE,idle,352,1,2000,0,10000,yes,self,always,0,,,,,,
+
+1721,Dragon Egg@NPC_METAMORPHOSIS,idle,193,1,1,2000,5000,no,self,always,0,1715,1718,,,,
 
 // Kiel dungeon
 1733,Kiel@PR_LEXDIVINA,attack,76,5,500,1000,5000,yes,target,always,0,,,,,,
