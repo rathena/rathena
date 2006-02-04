@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.1 Changed the mobster spawn to g_mobster to prevent exploits [MasterOfMuppets]
 //= 1.2 Added the cube room quest by DeNy, translated by vicious_pucca. [MasterOfMuppets]
 //=	Thanks to Linuxwolf for a grammar check as well =).
+//= 1.2a Moved Biolab entrance to lhz_dun warps. [Vicious]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -1201,24 +1202,6 @@ L4_1:
 	set bkey,0;	set ellipse,0;	set quadrangle,0;	set rod,0;
 	set hzdun,1;
 	warp "lhz_cube.gat",177,13;
-	end;
-}
-
-//--------------------------Sewer Pipe--------------------------
-
-lighthalzen.gat,313,301,0	script	Sewer Pipe	111,{
-	mes "You see some pipes for a sewage system.";
-	if(countitem(2657) == 0 && hzdun == 1)goto s_Find;
-	if(countitem(2657) != 0)goto s_Find;
-	close;
-s_Find:
-	mes "You found the way into the lab.";
-	next;
-	menu "Go in.",L_1,"Do not go in.",-;
-	close;
-
-L_1:
-	warp "lhz_cube.gat",231,17;
 	end;
 }
 

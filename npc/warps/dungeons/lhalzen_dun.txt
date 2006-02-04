@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sara-chan (1.0)
 //===== Current Version: =====================================
-//= 1.6a
+//= 1.6b
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.5b re-enabled main entrance warp [Lupus] <-reverted 1.5c
 //= 1.6 Updated entrances, added Cube room warps, thanx 2 Justin84
 //= 1.6a Disabled the "Entrance" to lhz_dun01 [Poki#3]
+//= 1.6b Updated Sewer Pipe [Vicious]
 //============================================================
 
 lhz_dun03.gat,140,139,0	warp	lhz003	1,1,lhz_dun02.gat,150,147
@@ -35,15 +36,20 @@ lhz_dun01.gat,150,290,0	warp	lhz007	1,1,lighthalzen.gat,73,54
 //lighthalzen.gat,73,52,0	warp	lhz007a	1,1,lhz_dun01.gat,150,288
 //This should be only an Exit. This warp doesn't exist on kRO.
 
-//--------------------------Sewage Tube--------------------------
+//--------------------------Sewer Pipe--------------------------
 
-lighthalzen.gat,313,301,0	script	Sewage Tube	111,{
-	mes "The sewage tube which leads to laboratory underground.";
+lighthalzen.gat,313,301,0	script	Sewer Pipe	111,{
+	mes "You see some pipes for a sewage system.";
+	if(countitem(2657) == 0 && hzdun == 1)goto s_Find;
+	if(countitem(2657) != 0)goto s_Find;
+	close;
+s_Find:
+	mes "You found the way into the lab.";
 	next;
-	menu "Enter",M_1,"Do not enter",-;
+	menu "Go in.",L_1,"Do not go in.",-;
 	close;
 
-M_1:
+L_1:
 	warp "lhz_cube.gat",231,17;
 	end;
 }
