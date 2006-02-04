@@ -2818,7 +2818,7 @@ struct Damage  battle_calc_misc_attack(
 	case SN_FALCONASSAULT:			/* ファルコンアサルト */
 		if( sd==NULL || (skill = pc_checkskill(sd,HT_STEELCROW)) <= 0)
 			skill=0;
-		damage=(dex/10+int_/2+skill*3+40)*2;	//Blitz Beat Damage
+		damage=(dex/10+int_/2+skill*3+40)*2*skill_get_num(HT_BLITZBEAT, skill_lv);   //Blitz Beat Damage
 		damage=damage*(150+70*skill_lv)/100;	//Falcon Assault Modifier
 		if(flag > 1)
 			damage /= flag;
