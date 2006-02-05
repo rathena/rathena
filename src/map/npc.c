@@ -1764,7 +1764,7 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 	nd->flag = 0;
 	memcpy(nd->name, w3, NAME_LENGTH-1);
 	nd->name[NAME_LENGTH-1] = '\0';
-	nd->class_ = m==-1?0:atoi(w4);
+	nd->class_ = m==-1?-1:atoi(w4);
 	nd->speed = 200;
 	
 	nd = (struct npc_data *)aRealloc(nd,

@@ -176,15 +176,15 @@ static int pet_attack(struct pet_data *pd,unsigned int tick,int data)
 
 	target= map_id2bl(pd->target_id);
 
-	if(!status_check_skilluse(&pd->bl, target, 0, 0))
-		return 0;
-	
 	if(target == NULL || pd->bl.m != target->m || target->prev == NULL ||
 		!check_distance_bl(&pd->bl, target, pd->db->range3))
 	{
 		pet_unlocktarget(pd);
 		return 0;
 	}
+
+	if(!status_check_skilluse(&pd->bl, target, 0, 0))
+		return 0;
 
 	range = pd->db->range;
 	if (battle_iswalking(&pd->bl)) range++;

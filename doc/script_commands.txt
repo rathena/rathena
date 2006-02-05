@@ -3384,6 +3384,29 @@ You can see the full list of available effect types you can possibly inflict in
 
 It is pretty certain that addressing the target by an ID number will not 
 currently work due to a bug.
+---------------------------------------
+
+*callshop "<shop name>",<flag>;
+
+This command forces an npc shop to be invoked as if the player clicked on it.
+With normal shops it will not work unless the player is within clicking range,
+but the real use of this script command is together with "invisible shops",
+which are specified in the same way an invisible npc would be specified.
+For example, a generic invisible tool shop could be:
+
+-	shop	INVISIBLE_SHOP	-,611:-1,1750:-1,501:-1,502:-1,503:-1,504:-1,506:-1
+
+Which players cannot click on, but can be invoked using:
+
+callshop "INVISIBLE_SHOP", 0;
+
+The flag values are: 1 invokes the buying window, 2 invokes the selling
+window, any other value invokes the buy/sell dialogue.
+
+The function returns 1 on success, and the script is not automatically
+closed, so be careful to not do any item trading on the same script to prevent
+possible exploits (if possible, use close or close2 before invoking the shop
+itself).
 
 ---------------------------------------
 
