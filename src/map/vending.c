@@ -16,17 +16,20 @@
 #include "battle.h"
 #include "log.h"
 
+#include "irc.h"
+
 /*==========================================
  * ˜I“X•Â½
  *------------------------------------------
 */
 void vending_closevending(struct map_session_data *sd)
 {
-
 	nullpo_retv(sd);
 
 	sd->vender_id=0;
 	clif_closevendingboard(&sd->bl,0);
+	if(use_irc && irc_announce_shop_flag)
+		irc_announce_shop(sd,0);
 }
 
 /*==========================================
@@ -105,11 +108,11 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		z += ((double)vsd->vending[j].value * (double)amount);
 		if (z > (double)sd->status.zeny || z < 0. || z > (double)MAX_ZENY) { // fix positiv overflow (buyer)
 			clif_buyvending(sd, idx, amount, 1); // you don't have enough zeny
-			return; // zenys'<
+			return; // zeny s'<
 		}
 		if (z + (double)vsd->status.zeny > (double)MAX_ZENY) { // fix positiv overflow (merchand)
 			clif_buyvending(sd, idx, vsd->vending[j].amount, 4); // too much zeny = overflow
-			return; // zenys'<
+			return; // zeny s'<
 		}
 		w += itemdb_weight(vsd->status.cart[idx].nameid) * amount;
 		if (w + sd->weight > sd->max_weight) {
@@ -252,9 +255,11 @@ void vending_openvending(struct map_session_data *sd,int len,char *message,int f
 		sd->vender_id = sd->bl.id;
 		sd->vend_num = i;
 		memcpy(sd->message,message, MESSAGE_SIZE-1);
-		if (clif_openvending(sd,sd->vender_id,sd->vending) > 0)
+		if (clif_openvending(sd,sd->vender_id,sd->vending) > 0){
 			clif_showvendingboard(&sd->bl,message,0);
-		else
+			if(use_irc && irc_announce_shop_flag)
+				irc_announce_shop(sd,1);
+		} else
 			sd->vender_id = 0;
 	}
 }

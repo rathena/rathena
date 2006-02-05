@@ -30,6 +30,8 @@
 #include "atcommand.h"
 #include "date.h"
 
+#include "irc.h"
+
 #define MIN_MOBTHINKTIME 100
 #define MIN_MOBLINKTIME 1000
 
@@ -2657,6 +2659,10 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		//end added [Lorky] 
 
 		if(mexp < 1) mexp = 1;
+
+		if(use_irc && irc_announce_mvp_flag)
+			irc_announce_mvp(mvp_sd,md);
+
 		clif_mvp_effect(mvp_sd);					// エフェクト
 		clif_mvp_exp(mvp_sd,mexp);
 		pc_gainexp(mvp_sd,mexp,0);

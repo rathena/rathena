@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/05
+	* Added some of eAIRC bot code, written by me and LittleWolf.
+	  It is disabled and has no configuration options yet, as it is not finished. [Valaris]
 	* Fixed and documented script command "callshop". [Skotlex]
 	* Updated sq;-files/mob_db.sql with current mob_db. [Skotlex]
 	* Updated sql-files/item_db.sql with current item_db. [Skotlex]

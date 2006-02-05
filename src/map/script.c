@@ -48,6 +48,8 @@
 #include "strlib.h"
 #endif
 
+#include "irc.h"
+
 #define SCRIPT_BLOCK_SIZE 256
 
 #define FETCH(n, t) \
@@ -3158,8 +3160,11 @@ int buildin_jobchange(struct script_state *st)
 	if( st->end>st->start+3 )
 		upper=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
-	if ((job >= 0 && job < MAX_PC_CLASS))
+	if ((job >= 0 && job < MAX_PC_CLASS)){
 		pc_jobchange(script_rid2sd(st),job, upper);
+		if(use_irc && irc_announce_jobchange_flag)
+			irc_announce_jobchange(script_rid2sd(st));
+	}
 
 	return 0;
 }

@@ -47,6 +47,7 @@
 
 #include "charsave.h"
 
+#include "irc.h"
 
 // maybe put basic macros to somewhere else
 #define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
@@ -3676,6 +3677,7 @@ void do_final(void) {
 	do_final_pet();
 	do_final_mob();
 	do_final_msg();
+	do_final_irc();
 
 	map_getallusers(NULL); //Clear the memory allocated for this array.
 	
@@ -3872,6 +3874,7 @@ int do_init(int argc, char *argv[]) {
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
 
+	do_init_irc();
 	do_init_atcommand();
 	do_init_battle();
 	do_init_chrif();

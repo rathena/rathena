@@ -51,6 +51,8 @@
 #include "pet.h"
 #include "log.h"
 
+#include "irc.h"
+
 struct Clif_Config {
 	int packet_db_ver;	//Preferred packet version.
 	int connect_cmd[MAX_PACKET_VER + 1]; //Store the connect command for all versions. [Skotlex]
@@ -5541,6 +5543,9 @@ int clif_GMmessage(struct block_list *bl, char* mes, int len, int flag)
 	          (flag == 3) ? SELF :
 	          ALL_CLIENT);
 	if(buf) aFree(buf);
+
+	if(use_irc && irc_announce_flag && !flag)
+		irc_announce(mes);
 
 	return 0;
 }
