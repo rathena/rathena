@@ -27,6 +27,8 @@
 
 =========================
 
+02/05
+	* Merged most of the 'plug' items into the main item_db. [Skotlex]
 02/04
 	* Added monster skills and drops to Plasma(all types), Orc baby, green iguana. Thanks [MasterOfMuppets]
 	  to Tharis for providing the info.
