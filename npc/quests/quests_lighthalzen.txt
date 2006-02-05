@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 
-//= 1.2a
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.2 Added the cube room quest by DeNy, translated by vicious_pucca. [MasterOfMuppets]
 //=	Thanks to Linuxwolf for a grammar check as well =).
 //= 1.2a Moved Biolab entrance to lhz_dun warps. [Vicious]
+//= 1.3 Fixed password bug, fixed endless item exploit, some typos [Lupus]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -104,7 +105,7 @@ ChkEnd:
 
 lighthalzen.gat,267,200,3	script	Security Guard	868,{
 
-	if(countitem(7350)>=1) goto Lhzpass1;
+	if(countitem(7350)>0) goto Lhzpass1;
 	if($@lhz_alert == 1) goto Lhzstop;
 	if((gettime(2)>00 && gettime(2)<10)) goto LhzTalk2;
 	if((gettime(2)>30 && gettime(2)<40)) goto LhzTalk2;
@@ -161,7 +162,7 @@ Lhzstop:
 
 lighthalzen.gat,294,223,7	script	Security Guard	868,{
 
-	if(countitem(7350)==1) goto Lhzpass1;
+	if(countitem(7350)>0) goto Lhzpass1;
 	if($@lhz_alert == 1) goto Lhzstop;
 	if((gettime(2)>00 && gettime(2)<10)) goto LhzTalk2;
 	if((gettime(2)>30 && gettime(2)<40)) goto LhzTalk2;
@@ -482,6 +483,7 @@ L7_1:
 	close;
 
 L_8:
+	delitem 909,20;
 	mes "[Piciburn]";
 	mes "Hmm. You're more reliable than i thought.";
 	mes "Taking this errand into consideration,";
@@ -518,7 +520,6 @@ L_8:
 	mes "[Piciburn]";
 	mes "Well, when you've made your mind up,";
 	mes "come back and talk to me. Okay?";
-	delitem 909,20;
 	set piciburn,piciburn+1;
 	close;
 
@@ -633,6 +634,7 @@ L_1:
 L_2:
 	mes "There is a box with numbers 1~9 on it's surface.";
 	next;
+	set @agree,0;
 	input @1number;
 	if (num6 == @1number) set @agree,@agree+1;
 	input @2number;
@@ -1066,7 +1068,7 @@ L_3:
 //--------------------------Box--------------------------
 
 lhz_cube.gat,248,193,0	script	Box	111,{
-	if (countitem(2657) == 1) goto L_5;
+	if (countitem(2657) > 0 || @gotkey || hzdun) goto L_5;
 	mes "There is a box with three holes.";
 	next;
 	if (ellipse == 2 && quadrangle == 2 && polygon == 2) goto L_4;
@@ -1087,7 +1089,7 @@ L1_1:
 	close;
 
 L1_2:
-	mes "You've already inserted the 'ellipse model.'";
+	mes "You've already inserted the 'ellipse model'.";
 	close;
 
 L_2:
@@ -1105,7 +1107,7 @@ L2_1:
 	close;
 
 L2_2:
-	mes "You already inserted the 'square model.'";
+	mes "You already inserted the 'square model'.";
 	close;
 
 L_3:
@@ -1123,7 +1125,7 @@ L3_1:
 	close;
 
 L3_2:
-	mes "You've already inserted the 'polygon model.'";
+	mes "You've already inserted the 'polygon model'.";
 	close;
 
 L_4:
@@ -1136,6 +1138,7 @@ L4_1:
 	mes "There is a small card inside of it.";
 	next;
 	mes "You acquired the 'Laboratory Key'.";
+	set @gotkey,1;
 	getitem 2657,1;
 	close;
 
@@ -1148,7 +1151,7 @@ L_5:
 //--------------------------Test tube--------------------------
 
 lhz_cube.gat,224,197,0	script	Test Tube	111,{
-	if (countitem(2657) == 1) goto L_3;
+	if (countitem(2657) > 0) goto L_3;
 	if (ellipse >= 1) goto L_2;
 	mes "There is a weird test tube.";
 	mes "It seems like there is something inside.";
@@ -1180,7 +1183,7 @@ L_3:
 	next;
 	input @answer$;
 
-	if (@answer$ == "Laboratory Keycard") goto L_4;
+	if (@answer$ == "Laboratory Keycard" || @answer$ == "keycard") goto L_4;
 	mes "Nothing happened.";
 	close;
 

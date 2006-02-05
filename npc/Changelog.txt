@@ -29,6 +29,7 @@ Date		Added
 ======
 
 02/05
+	* Lighthalzen cube quest: Fixed password bug, fixed endless item exploit, some typos [Lupus]
 	* Added yuno_in02 into noteleport/nomemo, etc map flags. It spoils the quest [Lupus]
 		There's 1 missing mapflag: 'noreturn' (you may use butterfly wings to escape)
 02/03
