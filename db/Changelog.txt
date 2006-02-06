@@ -1,31 +1,36 @@
 ========================= Items that need fixing/implementing
-	-----These items are scrapped(for now,at least)? No desc in desctable, nor kRO website-----
-	1475,Cavalry_Lance: Missing stats
-	2355,Angel_Protection: Autospell rate is unknown
-	2417,Frico_Shoes: Missing Set bonus, and red,orange,yellow,white potion
-		heal rate 20% increasing bonus(if you want, edit db/item_group_db.txt, then
+	----- These items are scrapped (for now, at least). No desc in desc on kRO website -----
+	----- I think we should move them elsewhere. They clog the Changelog up :/ [Poki#3] -----
+	1475 Cavalry Lance: Missing stats
+	2355 Angel Protection: Autospell rate is unknown
+	2417 Frico Shoes: Missing Set bonus and red, orange, yellow, white potion
+		heal rate 20% increasing bonus (if you want, edit db/item_group_db.txt, then
 		use bonus2 bAddItemHealRate) And I don't know if it's proper name.
-	2418,Boots_of_Vidar: Missing set bonus
-	2420,Second_Advent_of_Angel: Item description is not right, so it needs
-		correction through patch
-	2515,Wing_of_Eagle: the value is unknown, even if the bonus option is increasing speed or
-		speed rate
-	2520,Gebneys_Shoulder: maybe item name is wrong.  it doesn't have its own sprite yet(though file
-	exists)
-	5125,Angel_Kiss,Angel's Kiss: Description miss.  This item is for Novice/Super Novice, like any other
-		'Angel' equipments.
-	5126,Morphicious_Hood: When using magic, it cannot be dispelled(Maybe it works like Phen card)
-	----------
-	4296,Cramp_Card: Temporal Plug: 10z per mob-level on a 3% chance.
-	7458,Fortune_Horn - it's a custom name yet
-	12016,Speed_Increasing_Potion no bonus... Turbo Track race item
-	12017,Speed_Decreasing_Potion no bonus... Turbo Track race item
+	2418 Boots of Vidar: Missing set bonus
+	2420 Second Advent of Angel: Item description is not right, so it needs correction through patch
+	2515 Wing of Eagle: the value is unknown, even if the bonus option is increasing speed or speed rate
+	2520 Gebneys Shoulder: maybe item name is wrong. It doesn't have its own sprite yet (though file exists)
+	5125 Angel Kiss: Description miss. This item is for Novice/Super Novice, like any other 'Angel' equipments.
+	5126 Morphicious Hood: When using magic, it cannot be dispelled (Maybe it works like Phen card)
 	-----
-	2653,Sacrifice_Ring: seems eAthena doesn't have bonus option yet <- explain how this works so I can code it in. [Skotlex]
+	4296 Cramp Card: Temporal Plug: 10z per mob-level on a 3% chance.
+	7458 Fortune Horn: It's a custom name ^^;
+	12016 Speed Increasing Potion: no bonus... Turbo Track race item
+	12017 Speed Decreasing Potion: no bonus... Turbo Track race item
+	-----
+	2653 Sacrifice Ring: seems eAthena doesn't have bonus option yet <- explain how this works so I can code it in. [Skotlex]
 		* * * On your death it breaks (BS can fix it), you drop all Equipment (equipped, even the ring). And revive with 1 HP / 1 SP at the place of your death.
 		* * * From where this info is? ... Mine: On your death you'll loose this ring and get 50% HP [Komurka]
+	-----
+	585 Brusti: Should Cast Level 3 Magnificat when used.
+	12136 Women's Bundle: You can get item ID 558, 529, 2668 or 7518.
+	12133 McDonald's Ice Cone: Should Restore 1/2 HP and SP and be usable only once a day.
+	1263 Unholy Touch: Critical Rate - 1
 
 =========================
+
+02/06
+	* Changed Serin's Gold Ring Weight to 0 [Poki#3]
 
 02/05
 	* Merged most of the 'plug' items into the main item_db. [Skotlex]

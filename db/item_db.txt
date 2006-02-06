@@ -86,6 +86,7 @@
 582,Orange,Orange,0,,10,20,,,,,16777215,7,2,,,,,,{ itemheal rand(10,15),rand(10,15); }
 583,Ketupat_,Ketupat,0,,10,150,,,,,16777215,7,2,,,,,,{}
 584,Skewer_Soup,Skewer Soup,0,50,,60,,,,,127918079,7,2,,,,,,{ itemheal rand(45,64),0; }
+585,Brusti,Brusti,0,15,,20,,,,,127918079,7,2,,,,,,{ itemheal rand(17,20),0; }
 
 // Usable Items
 //===================================================================
@@ -1109,7 +1110,7 @@
 2639,Occult_Incense,Occult Incense,5,,10,100,,0,,0,127918079,7,2,136,,0,0,0,{ bonus bAgi,1; bonus bInt,1; }
 2640,Kafra_Ring,Kafra Ring,5,,10,200,,1,,0,127918079,7,2,136,,0,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bInt,1; bonus bLuk,1; bonus bMdef,1; }
 2641,Fashion_Hip_Sack,Fashion Hip Sack,5,,10,700,,0,,0,263200,7,2,136,,50,0,0,{ bonus bStr,2; }
-2642,Serin's_Gold_Ring,Serin's Gold Ring,5,,10,100,,0,,0,127918079,7,2,136,,0,0,0,{}
+2642,Serin's_Gold_Ring,Serin's Gold Ring,5,,10,0,,0,,0,127918079,7,2,136,,0,0,0,{}
 2643,Serin's_Gold_Ring_,Serin's Gold Ring,5,,10,100,,0,,0,127918079,7,2,136,,0,0,0,{}
 2644,The_Sign,The Sign,5,,10,0,,0,,0,127918079,7,2,136,,0,0,0,{ bonus bMatkRate,5; bonus bAtkRate,5; }
 2645,Moonlight_Ring,Moonlight Ring,5,,10,200,,0,,0,135232,7,2,136,,60,0,0,{}
@@ -2341,9 +2342,10 @@
 12130,Cookie_Bag,Cookie Bag,3,,10,70,,,,,127918079,7,2,,,,,,{}
 12131,Lucky_Potion,Lucky Potion,0,,10,100,,,,,127918079,7,2,,,,,,{}
 12132,Santa's_Bag,Santa's Bag,2,,10,200,,,,,127918079,7,2,,,,,,{ sc_start SC_Xmas,600000,0;}
-12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,127918079,7,2,,,,,,{ itemheal rand(45,64),0; }		// Restores one half of maximum HP and SP and lets you forget about the heat.
+12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,127918079,7,2,,,,,,{ itemheal rand(45,64),0; }
 12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,127918079,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); }
 12135,Green_Ale,Green Ale,2,,10,30,,,,,127918079,7,2,,,,,,{}
+12136,Women's_Bundle,Women's Bundle,2,,10,100,,,,,127918079,7,2,,,,,,{}
 
 // More Weapons
 //===================================================================
@@ -2357,9 +2359,7 @@
 
 
 // Temp Plugs. Someone good with the DB's? If so, please re-check the items and place them accordingly.
-12136,Women's_Bundle,Women's Bundle,2,,10,100,,,,,127918079,7,2,,,,,,{}							//you can get item ID 558,529,2668,7518
 //7519,...,,,,,,,,,,,,,,,,,,{}
 //7520,...,,,,,,,,,,,,,,,,,,{}
-585,Brusti,Brusti,0,15,,20,,,,,127918079,7,2,,,,,,{ itemheal rand(17,20),0; }						//TODO: Cast Level 3 Magnificat.
-
-
+//5145,...,,,,,,,,,,,,,,,,,,{}
+//586,...,,,,,,,,,,,,,,,,,,{}
