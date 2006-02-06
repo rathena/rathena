@@ -2907,7 +2907,7 @@ int parse_frommap(int fd) {
 			cid = RFIFOL(fd, 8);
 			count = RFIFOW(fd, 12);
 			
-			p+ = sprintf(p, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", scdata_db);
+			p+= sprintf(p, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", scdata_db);
 			
 			for (i = 0; i < count; i++)
 			{
