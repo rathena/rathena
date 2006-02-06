@@ -117,15 +117,15 @@ int pc_follow(struct map_session_data*, int); // [MouseJstr]
 int pc_stop_following(struct map_session_data*);
 
 
-int pc_maxbaselv(struct map_session_data *sd);
-int pc_maxjoblv(struct map_session_data *sd);
+unsigned int pc_maxbaselv(struct map_session_data *sd);
+unsigned int pc_maxjoblv(struct map_session_data *sd);
 int pc_checkbaselevelup(struct map_session_data *sd);
 int pc_checkjoblevelup(struct map_session_data *sd);
-int pc_gainexp(struct map_session_data*,int,int);
-int pc_nextbaseexp(struct map_session_data *);
-int pc_nextbaseafter(struct map_session_data *); // [Valaris]
-int pc_nextjobexp(struct map_session_data *);
-int pc_nextjobafter(struct map_session_data *); // [Valaris]
+int pc_gainexp(struct map_session_data*,unsigned int,unsigned int);
+unsigned int pc_nextbaseexp(struct map_session_data *);
+unsigned int pc_nextbaseafter(struct map_session_data *); // [Valaris]
+unsigned int pc_nextjobexp(struct map_session_data *);
+unsigned int pc_nextjobafter(struct map_session_data *); // [Valaris]
 int pc_need_status_point(struct map_session_data *,int);
 int pc_statusup(struct map_session_data*,int);
 int pc_statusup2(struct map_session_data*,int,int);

@@ -247,12 +247,12 @@ int send_to_parser(int fd, char *input,char key[2])
 	return total_loops;
 }
 
-void do_final_irc()
+void do_final_irc(void)
 {
 
 }
 
-void do_init_irc()
+void do_init_irc(void)
 {
 	if(!use_irc)
 		return;

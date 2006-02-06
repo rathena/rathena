@@ -2680,7 +2680,7 @@ int atcommand_baselevelup(
 			clif_displaymessage(fd, msg_table[47]); /* Base level can't go any higher. */
 			return -1;
 		}	/* End Addition */
-		if (level > pc_maxbaselv(sd) || level > (pc_maxbaselv(sd) - sd->status.base_level)) // fix positiv overflow
+		if (level > pc_maxbaselv(sd) || level > (pc_maxbaselv(sd) - (int)sd->status.base_level)) // fix positiv overflow
 			level = pc_maxbaselv(sd) - sd->status.base_level;
 		for (i = 1; i <= level; i++)
 			sd->status.status_point += (sd->status.base_level + i + 14) / 5;
@@ -2739,7 +2739,7 @@ int atcommand_joblevelup(
 			clif_displaymessage(fd, msg_table[23]); // Job level can't go any higher.
 			return -1;
 		}
-		if (level > pc_maxjoblv(sd) || level > (pc_maxjoblv(sd) - sd->status.job_level)) // fix positiv overflow
+		if (level > pc_maxjoblv(sd) || level > (pc_maxjoblv(sd) - (int)sd->status.job_level)) // fix positiv overflow
 			level = pc_maxjoblv(sd) - sd->status.job_level;
 		sd->status.job_level += level;
 		clif_updatestatus(sd, SP_JOBLEVEL);
@@ -7633,17 +7633,14 @@ atcommand_autoloot(
 	double drate;
 	nullpo_retr(-1, sd);
 	if (!message || !*message) {
-		if (sd->state.autoloot) {
-			sd->state.autoloot = 0;
-			clif_displaymessage(fd, "Autoloot is now off.");
-			return 0;
-		} else {
-			clif_displaymessage(fd, "Usage: autoloot <max drop-rate to loot>.");
-			return -1;
-		}
+		if (sd->state.autoloot)
+			rate = 0;
+		else
+			rate = 10000;
+	} else {
+		drate = atof(message);
+		rate = (int)(drate*100);
 	}
-	drate = atof(message);
-	rate = (int)(drate*100);
 	if (rate > 10000) rate = 10000;
 	else if (rate < 0) rate = 0;
 	

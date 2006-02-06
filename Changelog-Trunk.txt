@@ -4,6 +4,31 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
+2006/02/06
+	* Venom Splasher update: [Skotlex]
+	- always hits (but splash damage targets can still avoid it)
+	- Being hit does not cancels it,
+	- works at 75% or less of target's HP
+	- being hit normally while under the count has a chance of causing poison.
+	- Damage is +400% + 50*lv%
+	* Using autoloot with no arguments now toggles it between @autoloot 0 and
+	  @autoloot 100%  [Skotlex]
+	* Falcon Assault now takes Blitz Beat lv5 as base damage. [Skotlex]
+	* Fixed pc_makesavestatus not updating status.option correctly. [Skotlex]
+	* Corrected Waterball so that higher levels can do insane amount of hits. [Skotlex]
+	* Altered slave behaviour. No more random walking, will stay within 2 cells
+	  of their master. [Skotlex]
+	* Reverted the Summon Slave behaviour to not adjust level based on number
+	  of current slaves. [Skotlex]
+	* Coma no longer sends SP to 1. [Skotlex]
+	* Updated Meteor so that when level 11 or more is casted, the area over
+	  which meteors fall is tripled. [Skotlex]
+	* Dark elemental characters are now inmune to Curse. [Skotlex]
+	* Fixed sc_data saving to sql buffer building method. Thanks to its_sparky. [Skotlex]
+	* Changed the map zone reading from using pow to a bit shift. [Skotlex]
+	* Experience has now been changed to unsigned int, and is read as such from
+	  the dbs. [Skotlex]
+	* Increased HT_DETECTING seek range to 7x7 [Skotlex]
 2006/02/05
 	* Added some of eAIRC bot code, written by me and LittleWolf.
 	  It is disabled and has no configuration options yet, as it is not finished. [Valaris]

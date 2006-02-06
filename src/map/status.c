@@ -3720,7 +3720,9 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	if((type==SC_FREEZE || type==SC_STONE) && undead_flag && !(flag&1))
 	//I've been informed that undead chars are inmune to stone curse too. [Skotlex]
 		return 0;
-
+	//Dark Elementals are inmune to curse.
+	if(type==SC_CURSE && elem == 7 && !(flag&1))
+		return 0;
 
 	if (type==SC_BLESSING && (bl->type==BL_PC || (!undead_flag && race!=6))) {
 		if (sc->data[SC_CURSE].timer!=-1)
@@ -4451,9 +4453,8 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			break;
 		}
 
-		case SC_COMA: //Coma. Sends a char to 1HP/SP
+		case SC_COMA: //Coma. Sends a char to 1HP
 			battle_damage(NULL, bl, status_get_hp(bl)-1, 0);
-			if (sd) pc_heal(sd,0,-sd->status.sp+1);
 			return 0;
 
 		case SC_CARTBOOST:		/* カ?トブ?スト */

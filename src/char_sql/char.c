@@ -2901,22 +2901,23 @@ int parse_frommap(int fd) {
 #ifdef ENABLE_SC_SAVING
 			int count, aid, cid, i;
 			struct status_change_data data;
+			char *p = tmp_sql;
 			
 			aid = RFIFOL(fd, 4);
 			cid = RFIFOL(fd, 8);
 			count = RFIFOW(fd, 12);
 			
-			sprintf(tmp_sql, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", scdata_db);
+			p+ = sprintf(p, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", scdata_db);
 			
 			for (i = 0; i < count; i++)
 			{
 				memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
-				sprintf (tmp_sql, "%s ('%d','%d','%hu','%d','%d','%d','%d','%d'),", tmp_sql, aid, cid,
+				p += sprintf (p, " ('%d','%d','%hu','%d','%d','%d','%d','%d'),", aid, cid,
 					data.type, data.tick, data.val1, data.val2, data.val3, data.val4);
 			}
 			if (count > 0)
 			{
-				tmp_sql[strlen(tmp_sql)-1] = '\0'; //Remove final comma.
+				*--p = '\0'; //Remove final comma.
 				if (mysql_query(&mysql_handle, tmp_sql)) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);

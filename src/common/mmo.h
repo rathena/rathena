@@ -175,7 +175,8 @@ struct mmo_charstatus {
 	int mother;
 	int child;
 
-	int base_exp,job_exp,zeny;
+	unsigned int base_exp,job_exp;
+	int zeny;
 
 	short class_;
 	short status_point,skill_point;

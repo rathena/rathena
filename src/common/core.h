@@ -5,14 +5,6 @@
 #define	_CORE_H_
 
 //#define SQL_DEBUG //uncomment for debug_mysql_query instead of mysql_real_query
-
-/* REMOVED because these type of function defines with va_args are a GCC feature and won't compile under Windows [Skotlex]
-//Added here, so its avail in 'all' files ..
-#define eprintf(mes, args...) \
-        fprintf(stderr, "%s:%d: "mes"", __FILE__, __LINE__, args);
-#define eprint(mes) \
-	fprintf(stderr, "%s:%d: "mes"", __FILE__, __LINE__);
-*/
 	
 extern int arg_c;
 extern char **arg_v;

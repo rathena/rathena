@@ -1361,6 +1361,9 @@ static struct Damage battle_calc_weapon_attack(
 		if (skill_num && !flag.hit)
 			switch(skill_num)
 			{
+				case AS_SPLASHER: //Reports say it always hits?
+					if (wflag) //Only if you were the one exploding.
+						break;
 				case NPC_GUIDEDATTACK:
 				case RG_BACKSTAP:
 				case AM_ACIDTERROR:
@@ -1775,7 +1778,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 100+100*skill_lv;
 					break;
 				case AS_SPLASHER:
-					skillratio += 100+20*skill_lv;
+					skillratio += 400+50*skill_lv;
 					if (sd)
 						skillratio += 20*pc_checkskill(sd,AS_POISONREACT);
 					if(wflag>1) //FIXME: Splash damage... is this the correct method? [Skotlex]
@@ -2818,7 +2821,7 @@ struct Damage  battle_calc_misc_attack(
 	case SN_FALCONASSAULT:			/* ƒtƒ@ƒ‹ƒRƒ“ƒAƒTƒ‹ƒg */
 		if( sd==NULL || (skill = pc_checkskill(sd,HT_STEELCROW)) <= 0)
 			skill=0;
-		damage=(dex/10+int_/2+skill*3+40)*2*skill_get_num(HT_BLITZBEAT, skill_lv);   //Blitz Beat Damage
+		damage=(dex/10+int_/2+skill*3+40)*2*skill_get_num(HT_BLITZBEAT, 5);   //Blitz Beat lv5 Damage
 		damage=damage*(150+70*skill_lv)/100;	//Falcon Assault Modifier
 		if(flag > 1)
 			damage /= flag;
@@ -3194,8 +3197,6 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			if (tsc->data[SC_POISONREACT].val2 <= 0)
 				status_change_end(target, SC_POISONREACT, -1);
 		}
-		if (tsc->data[SC_SPLASHER].timer != -1)	//‰£‚Á‚½‚Ì‚Å‘Î?Û‚Ìƒxƒiƒ€ƒXƒvƒ‰ƒbƒVƒƒ?[?ó‘Ô‚ð‰ð?œ
-			status_change_end(target, SC_SPLASHER, -1);
 	}
 
 	//SG_FUSION hp penalty [Komurka]

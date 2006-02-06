@@ -754,6 +754,7 @@ int clif_clearchar_id(int id, int type, int fd) {
 	(sd->inventory_data[sd->equip_index[n]]->view_id > 0)?sd->inventory_data[sd->equip_index[n]]->view_id: \
 	sd->status.inventory[sd->equip_index[n]].nameid):0)
 
+#define clif_deadsit(sd) (((sd)->sc.count && (sd)->sc.data[SC_TRICKDEAD].timer != -1)?1:sd->state.dead_sit)
 /*==========================================
  *
  *------------------------------------------
@@ -802,7 +803,7 @@ static int clif_set0078(struct map_session_data *sd, unsigned char *buf) {
 	WBUFB(buf,48)|=sd->dir&0x0f;
 	WBUFB(buf,49)=5;
 	WBUFB(buf,50)=5;
-	WBUFB(buf,51)=sd->state.dead_sit;
+	WBUFB(buf,51)=clif_deadsit(sd);
 	WBUFW(buf,52)=clif_setlevel(sd->status.base_level);
 
 	return packet_len_table[0x78];
@@ -841,7 +842,7 @@ static int clif_set0078(struct map_session_data *sd, unsigned char *buf) {
 	WBUFB(buf,48)|=sd->dir & 0x0f;
 	WBUFB(buf,49)=5;
 	WBUFB(buf,50)=5;
-	WBUFB(buf,51)=sd->state.dead_sit;
+	WBUFB(buf,51)=clif_deadsit(sd);
 	WBUFW(buf,52)=clif_setlevel(sd->status.base_level);
 
 	return packet_len_table[0x1d8];
@@ -870,7 +871,7 @@ static int clif_dis0078(struct map_session_data *sd, unsigned char *buf) {
 	WBUFB(buf,48)|=sd->dir&0x0f;
 	WBUFB(buf,49)=5;
 	WBUFB(buf,50)=5;
-	WBUFB(buf,51)=sd->state.dead_sit;
+	WBUFB(buf,51)=clif_deadsit(sd);
 	WBUFW(buf,52)=0;
 
 	return packet_len_table[0x78];

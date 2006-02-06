@@ -486,8 +486,9 @@ void charsave_save_scdata(int account_id, int char_id, struct status_change* sc_
 	int i,count =0;
 	struct TimerData *timer;
 	unsigned int tick = gettick();
+	char *p = tmp_sql;
 
-	sprintf(tmp_sql, "INSERT INTO `sc_data` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ");
+	p += sprintf(p, "INSERT INTO `sc_data` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ");
 			
 	for(i = 0; i < max_sc; i++)
 	{
@@ -497,14 +498,14 @@ void charsave_save_scdata(int account_id, int char_id, struct status_change* sc_
 		if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)
 			continue;
 		
-		sprintf (tmp_sql, "%s ('%d','%d','%hu','%d','%d','%d','%d','%d'),", tmp_sql, account_id, char_id,
+		p += (p, " ('%d','%d','%hu','%d','%d','%d','%d','%d'),", account_id, char_id,
 			i, DIFF_TICK(timer->tick,tick), sc_data->data[i].val1, sc_data->data[i].val2, sc_data->data[i].val3, sc_data->data[i].val4);
 		
 		count++;
 	}
 	if (count > 0)
 	{
-		tmp_sql[strlen(tmp_sql)-1] = '\0'; //Remove the trailing comma.
+		*--p = '\0'; //Remove the trailing comma.
 		if(mysql_query(&charsql_handle, tmp_sql)){
 			ShowSQL("DB error - %s\n",mysql_error(&charsql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);

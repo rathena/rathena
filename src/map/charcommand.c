@@ -1262,7 +1262,7 @@ int charcommand_baselevel(
 					clif_displaymessage(fd, msg_table[91]); // Character's base level can't go any higher.
 					return 0;
 				}	// End Addition
-				if (level > pc_maxbaselv(pl_sd) || level > (pc_maxbaselv(pl_sd)- pl_sd->status.base_level)) // fix positiv overflow
+				if (level > pc_maxbaselv(pl_sd) || level > (pc_maxbaselv(pl_sd)- (int)pl_sd->status.base_level)) // fix positiv overflow
 					level = pc_maxbaselv(pl_sd) - pl_sd->status.base_level;
 				for (i = 1; i <= level; i++)
 					pl_sd->status.status_point += (pl_sd->status.base_level + i + 14) / 5;
@@ -1333,7 +1333,7 @@ int charcommand_joblevel(
 					clif_displaymessage(fd, msg_table[67]); // Character's job level can't go any higher.
 					return -1;
 				}
-				if (pl_sd->status.job_level + level > pc_maxjoblv(pl_sd))
+				if ((int)pl_sd->status.job_level + level > pc_maxjoblv(pl_sd))
 					level = pc_maxjoblv(pl_sd) - pl_sd->status.job_level;
 				pl_sd->status.job_level += level;
 				clif_updatestatus(pl_sd, SP_JOBLEVEL);

@@ -39,6 +39,7 @@
 #define MOB_LAZYMOVEPERC 50	// Move probability in the negligent mode MOB (rate of 1000 minute)
 #define MOB_LAZYWARPPERC 20	// Warp probability in the negligent mode MOB (rate of 1000 minute)
 
+#define MOB_SLAVEDISTANCE 2	//Distance that slaves should keep from their master.
 //Dynamic mob database, allows saving of memory when there's big gaps in the mob_db [Skotlex]
 struct mob_db *mob_db_data[MAX_MOB_DB+1];
 struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant one is requested.
@@ -1424,18 +1425,23 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		if((!md->target_id || md->state.targettype == NONE_ATTACKABLE) && mob_can_move(md) &&
 			md->master_dist<md->db->range3 && (md->walkpath.path_pos>=md->walkpath.path_len || md->walkpath.path_len==0)){
 			int i=0,dx,dy,ret;
-			if(md->master_dist>AREA_SIZE/2 && DIFF_TICK(md->next_walktime,tick)<3000) { //Allow it to cut down the walk time to chase back. [Skotlex]
+			if(md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0)
+		  	{  //Chase back to Master's area also if standing on top of the master.
 				do {
 					if(i<=5){
 						dx=bl->x - md->bl.x;
 						dy=bl->y - md->bl.y;
-						if(dx<0) dx+=(rand()%-dx)/2; //On the minimum, half the distance between slave/master. [Skotlex]
-						else if(dx>0) dx-=(rand()%dx)/2;
-						if(dy<0) dy+=(rand()%-dy)/2;
-						else if(dy>0) dy-=(rand()%dy)/2;
+						
+						if(dx<0) dx+=rand()%MOB_SLAVEDISTANCE +1;
+						else if(dx>0) dx-=rand()%MOB_SLAVEDISTANCE +1;
+
+						if(dy<0) dy+=rand()%MOB_SLAVEDISTANCE +1;
+						else if(dy>0) dy-=rand()%MOB_SLAVEDISTANCE +1;
+						
 					}else{
-						dx=bl->x - md->bl.x + rand()%11- 5;
-						dy=bl->y - md->bl.y + rand()%11- 5;
+						ret = MOB_SLAVEDISTANCE*2+1;
+						dx=bl->x - md->bl.x + rand()%ret - MOB_SLAVEDISTANCE;
+						dy=bl->y - md->bl.y + rand()%ret - MOB_SLAVEDISTANCE;
 					}
 
 					ret=mob_walktoxy(md,md->bl.x+dx,md->bl.y+dy,0);
@@ -1854,7 +1860,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		return 0;
 
 	// Nothing else to do... except random walking.
-	if (mode&MD_CANMOVE && mob_can_move(md))
+	// Slaves do not random walk! [Skotlex]
+	if (mode&MD_CANMOVE && mob_can_move(md) && !md->master_id)
 	{
 		if (DIFF_TICK(md->next_walktime, tick) > 7000 &&
 			(md->walkpath.path_len == 0 || md->walkpath.path_pos >= md->walkpath.path_len))

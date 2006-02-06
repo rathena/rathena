@@ -41,8 +41,8 @@
 #endif
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP順位計算の間隔
-static int exp_table[MAX_PC_CLASS][2][MAX_LEVEL];
-static int max_level[MAX_PC_CLASS][2];
+static unsigned int exp_table[MAX_PC_CLASS][2][MAX_LEVEL];
+static unsigned int max_level[MAX_PC_CLASS][2];
 static short statp[MAX_LEVEL];
 
 // h-files are for declarations, not for implementations... [Shinomori]
@@ -416,7 +416,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 
 	// 死亡?態だったのでhpを1、位置をセ?ブ場所に?更
 	if(!sd->state.waitingdisconnect) {
-		sd->sc.option = sd->sc.option;
+		sd->status.option = sd->sc.option; //Since the option saved is in 
 		if(pc_isdead(sd)){
 			pc_setrestartvalue(sd,0);
 			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
@@ -4687,11 +4687,11 @@ int pc_checkjoblevelup(struct map_session_data *sd)
  * ??値取得
  *------------------------------------------
  */
-int pc_gainexp(struct map_session_data *sd,int base_exp,int job_exp)
+int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int job_exp)
 {
 	char output[256];
 	float nextbp=0, nextjp=0;
-	int nextb=0, nextj=0;
+	unsigned int nextb=0, nextj=0;
 	nullpo_retr(0, sd);
 
 	if(sd->bl.prev == NULL || pc_isdead(sd))
@@ -4702,14 +4702,10 @@ int pc_gainexp(struct map_session_data *sd,int base_exp,int job_exp)
 
 	if(sd->status.guild_id>0){	// ギルドに上納
 		base_exp-=guild_payexp(sd,base_exp);
-		if(base_exp < 0)
-			base_exp = 0;
 	}
 
 	if(!battle_config.multi_level_up && pc_nextbaseafter(sd) && sd->status.base_exp+base_exp >= pc_nextbaseafter(sd)) {
 		base_exp = pc_nextbaseafter(sd) - sd->status.base_exp;
-		if (base_exp < 0)
-			base_exp = 0;
 	}
 	nextb = pc_nextbaseexp(sd);
 	nextj = pc_nextjobexp(sd);
@@ -4719,21 +4715,16 @@ int pc_gainexp(struct map_session_data *sd,int base_exp,int job_exp)
 		nextjp = (float) job_exp / (float) nextj;
 
 	sd->status.base_exp += base_exp;
-	if(sd->status.base_exp < 0)
-		sd->status.base_exp = 0;
 
 	while(pc_checkbaselevelup(sd)) ;
 
 	clif_updatestatus(sd,SP_BASEEXP);
+	
 	if(!battle_config.multi_level_up && pc_nextjobafter(sd) && sd->status.job_exp+job_exp >= pc_nextjobafter(sd)) {
 		job_exp = pc_nextjobafter(sd) - sd->status.job_exp;
-		if (job_exp < 0)
-			job_exp = 0;
 	}
 
 	sd->status.job_exp += job_exp;
-	if(sd->status.job_exp < 0)
-		sd->status.job_exp = 0;
 
 	while(pc_checkjoblevelup(sd)) ;
 
@@ -4741,11 +4732,11 @@ int pc_gainexp(struct map_session_data *sd,int base_exp,int job_exp)
 
 	if(sd->state.showexp){
 		sprintf(output,
-			"Experienced Gained Base:%d (%.2f%%) Job:%d (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
+			"Experience Gained Base:%d (%.2f%%) Job:%d (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -4753,11 +4744,11 @@ int pc_gainexp(struct map_session_data *sd,int base_exp,int job_exp)
  *------------------------------------------
  */
 
-int pc_maxbaselv(struct map_session_data *sd) {
+unsigned int pc_maxbaselv(struct map_session_data *sd) {
   	return max_level[sd->status.class_][0];
 };
 
-int pc_maxjoblv(struct map_session_data *sd) {
+unsigned int pc_maxjoblv(struct map_session_data *sd) {
   	return max_level[sd->status.class_][1];
 };
 
@@ -4765,7 +4756,7 @@ int pc_maxjoblv(struct map_session_data *sd) {
  * base level側必要??値計算
  *------------------------------------------
  */
-int pc_nextbaseexp(struct map_session_data *sd)
+unsigned int pc_nextbaseexp(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
@@ -4779,7 +4770,7 @@ int pc_nextbaseexp(struct map_session_data *sd)
  * job level側必要??値計算
  *------------------------------------------
  */
-int pc_nextjobexp(struct map_session_data *sd)
+unsigned int pc_nextjobexp(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
@@ -4792,7 +4783,7 @@ int pc_nextjobexp(struct map_session_data *sd)
  * base level after next [Valaris]
  *------------------------------------------
  */
-int pc_nextbaseafter(struct map_session_data *sd)
+unsigned int pc_nextbaseafter(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
@@ -4806,7 +4797,7 @@ int pc_nextbaseafter(struct map_session_data *sd)
  * job level after next [Valaris]
  *------------------------------------------
  */
-int pc_nextjobafter(struct map_session_data *sd)
+unsigned int pc_nextjobafter(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
@@ -8053,6 +8044,22 @@ int pc_split_atoi(char *str,int *val, char sep, int max)
 	return i;
 }
 
+int pc_split_atoui(char *str,unsigned int *val, char sep, int max)
+{
+	int i,j;
+	for (i=0; i<max; i++) {
+		if (!str) break;
+		val[i] = (unsigned int)atof(str);
+		str = strchr(str,sep);
+		if (str)
+			*str++=0;
+	}
+	//Zero up the remaining.
+	for(j=i; j < max; j++)
+		val[j] = 0;
+	return i;
+}
+
 //
 // 初期化物
 //
@@ -8110,7 +8117,7 @@ int pc_readdb(void)
 			max = MAX_LEVEL;
 		}
 		//We send one less and then one more because the last entry in the exp array should hold 0.
-		max_level[job][type] = pc_split_atoi(split[3], exp_table[job][type],',',max-1)+1;
+		max_level[job][type] = pc_split_atoui(split[3], exp_table[job][type],',',max-1)+1;
 		//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
 		//The reasoning behind the -2 is this... if the max level is 5, then the array
 		//should look like this:

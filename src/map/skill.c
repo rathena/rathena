@@ -901,13 +901,23 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				rand() % 100 < tsc->data[SC_EDP].val2 * sc_def_vit / 100)
 				status_change_start(bl,SC_DPOISON,sc->data[SC_EDP].val1,0,0,0,skill_get_time2(ASC_EDP,sc->data[SC_EDP].val1),0);
 		}
-		if (tsc->count && tsc->data[SC_KAAHI].timer != -1) {
-			if (dstsd && dstsd->status.sp < 5*tsc->data[SC_KAAHI].val1)
-				; //Not enough SP to cast
-			else {
-				battle_heal(bl, bl, 200*tsc->data[SC_KAAHI].val1, -5*tsc->data[SC_KAAHI].val1, 1);
-				if(dstsd && dstsd->fd)
-					clif_heal(dstsd->fd,SP_HP,200*tsc->data[SC_KAAHI].val1);
+		if (tsc->count) {
+			if (tsc->data[SC_SPLASHER].timer != -1 &&
+				tsc->data[SC_POISON].timer == -1 &&
+				rand()%100< (2*tsc->data[SC_SPLASHER].val1+10)*sc_def_vit/100
+			) {
+				status_change_start(bl,SC_POISON,tsc->data[SC_SPLASHER].val1,0,0,0,
+					skill_get_time2(tsc->data[SC_SPLASHER].val2,tsc->data[SC_SPLASHER].val1),0);
+			}
+			
+			if(tsc->data[SC_KAAHI].timer != -1) {
+				if (dstsd && dstsd->status.sp < 5*tsc->data[SC_KAAHI].val1)
+					; //Not enough SP to cast
+				else {
+					battle_heal(bl, bl, 200*tsc->data[SC_KAAHI].val1, -5*tsc->data[SC_KAAHI].val1, 1);
+					if(dstsd && dstsd->fd)
+						clif_heal(dstsd->fd,SP_HP,200*tsc->data[SC_KAAHI].val1);
+				}
 			}
 		}
 	}
@@ -3014,10 +3024,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case WZ_WATERBALL:			/* ƒEƒH?ƒ^?ƒ{?ƒ‹ */
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		if (skilllv>1) {
-			int range = skilllv > 5 ? 2 : skilllv/2;
+			int range = skilllv/2;
 			//Rain doesn't affect WATERBALL (Rain has been removed at kRO) [Lupus]
 			//int cnt = (!map[src->m].flag.rain) ? skill_count_water(src,range) - 1 : skill_get_num(skillid,skilllv) - 1;
-			int cnt = (src->type==BL_PC)?skill_count_water(src,range) - 1:(skilllv>3?24:8);
+			int cnt = (src->type==BL_PC)?skill_count_water(src,range) - 1:(range*range-1);
 			if (cnt > 0)
 				skill_addtimerskill(src,tick+150,bl->id,0,0,
 					skillid,skilllv,cnt,flag);
@@ -5086,8 +5096,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_SUMMONSLAVE:		/* Žè‰º?¢Š« */
-		if (md) //Only summon remaining slaves
-			skilllv = skilllv - mob_countslave(&md->bl);
 	case NPC_SUMMONMONSTER:		/* MOB?¢Š« */
 		if(md)
 			mob_summonslave(md,md->db->skill[md->skillidx].val,skilllv,skillid);
@@ -5425,7 +5433,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case AS_SPLASHER:		/* ƒxƒiƒ€ƒXƒvƒ‰ƒbƒVƒƒ? */
-		if(status_get_max_hp(bl)*2/3 < status_get_hp(bl)) { //HP‚ª2/3ˆÈ?ã?‚Á‚Ä‚¢‚½‚çŽ¸”s
+		if(status_get_max_hp(bl)*3/4 < status_get_hp(bl)) { //HP‚ª2/3ˆÈ?ã?‚Á‚Ä‚¢‚½‚çŽ¸”s
 			map_freeblock_unlock();
 			return 1;
 		}
@@ -6227,7 +6235,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 
 	case HT_DETECTING:				/* ƒfƒBƒeƒNƒeƒBƒ“ƒO */
 		map_foreachinarea( status_change_timer_sub,
-			src->m, x-1, y-1, x+1,y+1,BL_CHAR,
+			src->m, x-3, y-3, x+3,y+3,BL_CHAR,
 			src,status_get_sc(src),SC_SIGHT,tick);
 		break;
 
@@ -6279,14 +6287,17 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 
 	case WZ_METEOR:				//ƒ?ƒeƒIƒXƒg?ƒ€
 		{
-			int flag=0;
+			int flag=0, area = 7;
 			if (sc && sc->data[SC_MAGICPOWER].timer != -1)
 				flag = flag|2; //Store the magic power flag for future use. [Skotlex]
+			if (skilllv > skill_get_max(skillid))
+				area = area*3; //Double range area
 			for(i=0;i<2+(skilllv>>1);i++) {
 				int j=0;
 				do {
-					tmpx = x + (rand()%7 - 3);
-					tmpy = y + (rand()%7 - 3);
+					
+					tmpx = x + (rand()%area - area/2);
+					tmpy = y + (rand()%area - area/2);
 					if(tmpx < 0)
 						tmpx = 0;
 					else if(tmpx >= map[src->m].xs)
@@ -6648,11 +6659,11 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			range=2;
 		break;
 	case WZ_METEOR:
-		if (skilllv > 10)			//?L”ÍˆÍƒ?ƒeƒI
+		if (skilllv > skill_get_max(skillid))			//?L”ÍˆÍƒ?ƒeƒI
 			range = 10;
 		break;
 	case WZ_VERMILION:
-		if (skilllv > 10)			//?L”ÍˆÍLOV
+		if (skilllv > skill_get_max(skillid))			//?L”ÍˆÍLOV
 			range = 25;
 		break;
 	case WZ_QUAGMIRE:	//The target changes to "all" if used in a gvg map. [Skotlex]
