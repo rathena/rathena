@@ -29,6 +29,7 @@ Date		Added
 ======
 
 02/07
+	* Added a custom quest for Jewel Case for 99 Base Level Players of 2nd Class [Lupus]
 	* Fixed the spawns that where using the no exp/drop version of Male Thief Bug (Thanks to irmin) [Poki#3]
 
 02/05
