@@ -498,7 +498,7 @@ void charsave_save_scdata(int account_id, int char_id, struct status_change* sc_
 		if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)
 			continue;
 		
-		p += (p, " ('%d','%d','%hu','%d','%d','%d','%d','%d'),", account_id, char_id,
+		p += sprintf(p, " ('%d','%d','%hu','%d','%d','%d','%d','%d'),", account_id, char_id,
 			i, DIFF_TICK(timer->tick,tick), sc_data->data[i].val1, sc_data->data[i].val2, sc_data->data[i].val3, sc_data->data[i].val4);
 		
 		count++;

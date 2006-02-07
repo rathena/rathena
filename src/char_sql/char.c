@@ -3674,10 +3674,8 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
 		session[login_fd]->func_parse = parse_tologin;
 		realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 		WFIFOW(login_fd,0) = 0x2710;
-		memset(WFIFOP(login_fd,2), 0, 24);
-		memcpy(WFIFOP(login_fd,2), userid, strlen(userid) < 24 ? strlen(userid) : 24);
-		memset(WFIFOP(login_fd,26), 0, 24);
-		memcpy(WFIFOP(login_fd,26), passwd, strlen(passwd) < 24 ? strlen(passwd) : 24);
+		memcpy(WFIFOP(login_fd,2), userid, 24);
+		memcpy(WFIFOP(login_fd,26), passwd, 24);
 		WFIFOL(login_fd,50) = 0;
 		WFIFOL(login_fd,54) = char_ip;
 		WFIFOL(login_fd,58) = char_port;
@@ -3989,9 +3987,9 @@ int char_config_read(const char *cfgName) {
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
 		} else if (strcmpi(w1, "userid") == 0) {
-			memcpy(userid, w2, 24);
+			strncpy(userid, w2, 24);
 		} else if (strcmpi(w1, "passwd") == 0) {
-			memcpy(passwd, w2, 24);
+			strncpy(passwd, w2, 24);
 		} else if (strcmpi(w1, "server_name") == 0) {
 			memcpy(server_name, w2, sizeof(server_name));
 			server_name[sizeof(server_name) - 1] = '\0';
