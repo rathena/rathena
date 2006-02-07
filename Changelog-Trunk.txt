@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/06
+	* Fixed startnpctimer starting multiple timers instead of failing when the
+	  npc timer is already running. [Skotlex]
 	* Venom Splasher update: [Skotlex]
 	- always hits (but splash damage targets can still avoid it)
 	- Being hit does not cancels it,
