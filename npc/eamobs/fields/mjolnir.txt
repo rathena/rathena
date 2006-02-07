@@ -217,7 +217,7 @@ mjolnir_11.gat,0,0,0,0	monster	Argiope	1099,10,0,0,0
 mjolnir_11.gat,0,0,0,0	monster	Mandragora	1020,50,0,0,0
 mjolnir_11.gat,0,0,0,0	monster	Flora	1118,60,0,0,0
 mjolnir_11.gat,0,0,0,0	monster	Poporing	1031,10,0,0,0
-mjolnir_11.gat,0,0,0,0	monster	Thief Bug Male	1054,30,0,0,0
+mjolnir_11.gat,0,0,0,0	monster	Thief Bug Male	1021,30,0,0,0
 mjolnir_11.gat,112,276,0,0	monster	Green Plant	1080,1,180000,90000,1
 mjolnir_11.gat,159,283,0,0	monster	Green Plant	1080,1,180000,90000,1
 mjolnir_11.gat,116,240,0,0	monster	Green Plant	1080,1,180000,90000,1

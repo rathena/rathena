@@ -32,7 +32,7 @@ prt_sewb2.gat,0,0,0,0	monster	Tarou	1175,60,0,0,0
 prt_sewb3.gat,0,0,0,0	monster	Thief Bug Egg	1048,10,0,0,0
 prt_sewb3.gat,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
 prt_sewb3.gat,0,0,0,0	monster	Thief Bug Female	1053,65,0,0,0
-prt_sewb3.gat,0,0,0,0	monster	Thief Bug Male	1054,65,0,0,0
+prt_sewb3.gat,0,0,0,0	monster	Thief Bug Male	1021,65,0,0,0
 prt_sewb3.gat,0,0,0,0	monster	Tarou	1175,15,0,0,0
 prt_sewb3.gat,0,0,0,0	monster	Poison Spore	1077,15,0,0,0
 prt_sewb3.gat,0,0,0,0	monster	Familiar	1005,20,0,0,0
@@ -42,7 +42,7 @@ prt_sewb3.gat,0,0,0,0	monster	Familiar	1005,20,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Thief Bug Egg	1048,10,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Thief Bug Female	1053,20,0,0,0
-prt_sewb4.gat,0,0,0,0	monster	Thief Bug Male	1054,70,0,0,0
+prt_sewb4.gat,0,0,0,0	monster	Thief Bug Male	1021,70,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Drainliar	1111,20,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Cramp	1209,5,0,0,0
 prt_sewb4.gat,0,0,0,0	monster	Golden Thief Bug	1086,1,3600000,1800000,1

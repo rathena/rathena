@@ -28,6 +28,9 @@ Nexon
 Date		Added
 ======
 
+02/07
+	* Fixed the spawns that where using the no exp/drop version of Male Thief Bug (Thanks to irmin) [Poki#3]
+
 02/05
 	* Lighthalzen cube quest: Fixed password bug, fixed endless item exploit, some typos [Lupus]
 	* Added yuno_in02 into noteleport/nomemo, etc map flags. It spoils the quest [Lupus]
