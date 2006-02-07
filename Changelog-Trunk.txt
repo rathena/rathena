@@ -5,6 +5,15 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/06
+	* Added a custom exp table that goes up to level 1000 (db/exp2.txt). [Skotlex]
+	- It uses a inverse exponential growth rate to mimic the official exp rate
+	  increase as close as possible.
+	- It overrides the exp level of the last 5~10 official exp values for a
+	  smoother curve.
+	- It's adjusted so that the Lv1000 exp requirement for Advanced Base/2nd
+	  Job is close to the unsigned int limit without going above it (limit is
+	  4294967295 in my system. It goes up to 42k Million on Advanced
+	  Base lv1000, I think)
 	* Fixed startnpctimer starting multiple timers instead of failing when the
 	  npc timer is already running. [Skotlex]
 	* Venom Splasher update: [Skotlex]

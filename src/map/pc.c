@@ -8078,7 +8078,7 @@ int pc_readdb(void)
 {
 	int i,j,k;
 	FILE *fp;
-	char line[16000],*p;
+	char line[24000],*p;
 
 	// •K—v??’l?‚Ý?‚Ý
 	memset(exp_table,0,sizeof(exp_table));
