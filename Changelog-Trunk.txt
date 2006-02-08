@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/07
+	* Removed the max level configs from battle/exp.txt [Skotlex]
+	* Now NPC_POWERUP uses SC_INCATKRATE instead of SC_EXPLOSIONSPIRITS for
+	  enhancing damage. Instead of +1k atk per skilllv, it is +50% atk per
+	  skilllv. [Skotlex]
 	* Fixed char server changing the save/last point to new grounds in certain
 	  situations. [Skotlex]
 	* Fixed SG_STAR_ANGER not getting it's damage bonus at all. [Skotlex]

@@ -2140,8 +2140,6 @@ int status_calc_watk(struct block_list *bl, int watk)
 			watk += watk * 3;
 		if(sc->data[SC_NIBELUNGEN].timer!=-1 && bl->type != BL_PC && (status_get_element(bl)/10)>=8)
 			watk += sc->data[SC_NIBELUNGEN].val2;
-		if(sc->data[SC_EXPLOSIONSPIRITS].timer!=-1 && bl->type != BL_PC)
-			watk += (1000*sc->data[SC_EXPLOSIONSPIRITS].val1);
 		if(sc->data[SC_CURSE].timer!=-1)
 			watk -= watk * 25/100;
 		if(sc->data[SC_STRIPWEAPON].timer!=-1 && bl->type != BL_PC)
@@ -4536,7 +4534,9 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				val4 = gettick(); //Store time at which you started running.
 			calc_flag = 1;
 			break;
-
+		case SC_INCATKRATE:		/* ATK%上昇 */
+			if (bl->type == BL_MOB)
+				sc->opt3 |= 8; //Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
 		case SC_CONCENTRATE:		/* 集中力向上 */
 		case SC_BLESSING:			/* ブレッシング */
 		case SC_ANGELUS:			/* アンゼルス */
@@ -4558,7 +4558,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_INCFLEERATE:		/* FLEE%上昇 */
 		case SC_INCMHPRATE:		/* MHP%上昇 */
 		case SC_INCMSPRATE:		/* MSP%上昇 */
-		case SC_INCATKRATE:		/* ATK%上昇 */
 		case SC_INCMATKRATE:
 		case SC_INCDEFRATE:
 		case SC_INCSTR:
@@ -5196,6 +5195,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		case SC_ENERGYCOAT:			/* エナジ?コ?ト */
 			sc->opt3 &= ~4;
 			break;
+		case SC_INCATKRATE: //Simulated Explosion spirits effect.
+			if (bl->type != BL_MOB)
+				break;
 		case SC_EXPLOSIONSPIRITS:	// 爆裂波動
 			sc->opt3 &= ~8;
 			break;
