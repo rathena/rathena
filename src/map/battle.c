@@ -2004,7 +2004,7 @@ static struct Damage battle_calc_weapon_attack(
 			{	//SG Anger bonus - ATK_ADDRATE [Komurka]
 				static int type[] = { SG_SUN_ANGER, SG_MOON_ANGER, SG_STAR_ANGER };
 				short t_class = status_get_class(target);
-				for (i = 0; i < 2; i++)
+				for (i = 0; i < 3; i++)
 				{
 					if (t_class == sd->hate_mob[i] && (skill = pc_checkskill(sd,type[i])))
 					{
