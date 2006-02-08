@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
+2006/02/08
+	* Fixes to exp2.txt on the novice job exp. Thanks to rollopop. [Skotlex]
+	- Also modified exp2.txt to use the normal max levels by default.
 2006/02/07
 	* Modified battle_check_distance, mobs should no longer find a diagonal
 	  spot on which they lock onto their target, yet fail to attack from. [Skotlex]
