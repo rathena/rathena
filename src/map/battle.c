@@ -3494,19 +3494,16 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
  */
 int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 {
-	int arange;
-
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
 
 	if(src->m != bl->m)	// ˆá‚¤ƒ}ƒbƒv
 		return 0;
-	
-	arange = distance_bl(src, bl);
-	if( range>0 && range < arange)
+
+	if (!check_distance_bl(src, bl, range))
 		return 0;
 
-	if( arange<2 ) //No need for path checking.
+	if(distance_bl(src, bl) < 3) //No need for path checking.
 		return 1;
 
 	// ?áŠQ•¨”»’è
