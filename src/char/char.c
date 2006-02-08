@@ -352,13 +352,14 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 	int i,j;
 	char *str_p = str;
 
+	/* We shouldn't need this anymore... [Skotlex]
 	// on multi-map server, sometimes it's posssible that last_point become void. (reason???) We check that to not lost character at restart.
 	if (!p->last_point.map) {
 		p->last_point.map = mapindex_name2id(MAP_PRONTERA);
 		p->last_point.x = 273;
 		p->last_point.y = 354;
 	}
-
+	*/
 	str_p += sprintf(str_p, "%d\t%d,%d\t%s\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 		"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 		"\t%s,%d,%d\t%s,%d,%d,%d,%d,%d,%d,%d\t",
