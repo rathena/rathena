@@ -4632,7 +4632,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			battle_stopattack(bl);
 			skill_stop_dancing(bl);	/* ‰‰‘t/ƒ_ƒ“ƒX‚Ì’†? */
 			// Cancel cast when get status [LuzZza]
-			if (!sd || sd->skillid != PA_PRESSURE)  //Only Pressure cannot be cancelled.
+			if (battle_config.sc_castcancel)
 				skill_castcancel(bl, 0);
 		case SC_STOP:
 		case SC_CONFUSION:

@@ -5,6 +5,14 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/08
+	* Added battle config option skill_caster_check, which does a
+	  status_checkskilluse on all skill attacks. When enabled (default on) the
+	  caster of the skill is checked on all skill_attacks, which means that
+	  ground spells will make no effect if the caster is unable to fight
+	  (stunned, frozen, etc) [Skotlex]
+	* Added battle config option status_cast_cancel. When enabled (default off)
+	  some status changes (freeze, stone, etc) will cancel your cast. [Skotlex]
+	* Fixed the death exp penalty underflow bug. [Skotlex]
 	* Rewrote/organized status_change_start, it now receives the base rate for
 	  the effect. It handles reducing this rate/duration through natural
 	  resistances and whatever else should reduce it. [Skotlex]

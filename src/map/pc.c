@@ -5489,33 +5489,47 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		&& !map[sd->bl.m].flag.nopenalty && !map_flag_gvg(sd->bl.m)
 		&& !(sd->sc.count && sd->sc.data[SC_BABY].timer!=-1))
 	{
-			if(battle_config.death_penalty_type==1 && battle_config.death_penalty_base > 0)
-				sd->status.base_exp -= (int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
-				if(battle_config.pk_mode && src && src->type==BL_PC)
-					sd->status.base_exp -= (int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
-			else if(battle_config.death_penalty_type==2 && battle_config.death_penalty_base > 0) {
-				if(pc_nextbaseexp(sd) > 0)
-					sd->status.base_exp -= (int) ((double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000);
-					if(battle_config.pk_mode && src && src->type==BL_PC)
-						sd->status.base_exp -= (int) ((double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000);
+		unsigned int base_penalty =0;
+		if (battle_config.death_penalty_base > 0) {
+			switch (battle_config.death_penalty_type) {
+				case 1:
+					base_penalty += (unsigned int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
+				break;
+				case 2:
+					base_penalty = (unsigned int) ((double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000);
+				break;
 			}
-			if(sd->status.base_exp < 0)
-				sd->status.base_exp = 0;
-			clif_updatestatus(sd,SP_BASEEXP);
-
-			if(battle_config.death_penalty_type==1 && battle_config.death_penalty_job > 0)
-				sd->status.job_exp -= (int) ((double)pc_nextjobexp(sd) * (double)battle_config.death_penalty_job/10000);
-					if(battle_config.pk_mode && src && src->type==BL_PC)
-					sd->status.job_exp -= (int) ((double)pc_nextjobexp(sd) * (double)battle_config.death_penalty_job/10000);
-			else if(battle_config.death_penalty_type==2 && battle_config.death_penalty_job > 0) {
-				if(pc_nextjobexp(sd) > 0)
-					sd->status.job_exp -= (int) ((double)sd->status.job_exp * (double)battle_config.death_penalty_job/10000);
-					if(battle_config.pk_mode && src && src->type==BL_PC)
-						sd->status.job_exp -= (int) ((double)sd->status.job_exp * (double)battle_config.death_penalty_job/10000);
+			if(base_penalty) {
+			  	if (battle_config.pk_mode && src && src->type==BL_PC)
+					base_penalty*=2;
+				if(sd->status.base_exp < base_penalty)
+					sd->status.base_exp = 0;
+				else
+					sd->status.base_exp -= base_penalty;
+				clif_updatestatus(sd,SP_BASEEXP);
 			}
-			if(sd->status.job_exp < 0)
-				sd->status.job_exp = 0;
-			clif_updatestatus(sd,SP_JOBEXP);
+		}
+		if(battle_config.death_penalty_job > 0)
+	  	{
+			base_penalty = 0;
+			switch (battle_config.death_penalty_type) {
+				case 1:
+					base_penalty = (unsigned int) ((double)pc_nextjobexp(sd) * (double)battle_config.death_penalty_job/10000);
+				break;
+				case 2:
+					base_penalty = (unsigned int) ((double)sd->status.job_exp * (double)battle_config.death_penalty_job/10000);
+				break;
+			}
+			if(base_penalty) {
+			  	if (battle_config.pk_mode && src && src->type==BL_PC)
+					base_penalty*=2;
+				if(sd->status.job_exp < base_penalty)
+					sd->status.job_exp = 0;
+				else
+					sd->status.job_exp -= base_penalty;
+				clif_updatestatus(sd,SP_JOBEXP);
+			}
+		}
 	}
 	if(src && src->type==BL_MOB) {
 		struct mob_data *md=(struct mob_data *)src;

@@ -416,6 +416,8 @@ extern struct Battle_Config {
 	unsigned short allow_skill_without_day; // [Komurka]
 	unsigned short skill_wall_check; // [Skotlex]
 	unsigned short cell_stack_limit; // [Skotlex]
+	unsigned short skill_caster_check; // [Skotlex]
+	unsigned short sc_castcancel; // [Skotlex]
 } battle_config;
 
 void do_init_battle(void);

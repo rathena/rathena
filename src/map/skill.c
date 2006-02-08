@@ -1543,7 +1543,10 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if(src->prev == NULL || dsrc->prev == NULL || bl->prev == NULL)
 		return 0;
 	//When caster is not the src of attack, this is a ground skill, and as such, do the relevant target checking. [Skotlex]
-	if (src != dsrc && !status_check_skilluse(NULL, bl, skillid, 1))
+	if (
+		(src != dsrc || battle_config.skill_caster_check) &&
+		!status_check_skilluse(battle_config.skill_caster_check?src:NULL, bl, skillid, 1)
+	)
 		return 0;
 	
 	//Note that splash attacks often only check versus the targetted mob, those around the splash area normally don't get checked for being hidden/cloaked/etc. [Skotlex]
