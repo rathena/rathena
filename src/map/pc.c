@@ -306,7 +306,7 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 		sd->status.sp=sd->status.max_sp;
 		if (sd->state.snovice_flag == 4) {
 			sd->state.snovice_flag = 0;
-			status_change_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],1,0,0,0,skill_get_time(MO_STEELBODY,1),0 );
+			status_change_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],100,1,0,0,0,skill_get_time(MO_STEELBODY,1),0 );
 		}
 	}
 	else {
@@ -1157,14 +1157,14 @@ int pc_checkweighticon(struct map_session_data *sd)
 
 	if(flag==1){
 		if(sd->sc.data[SC_WEIGHT50].timer==-1)
-			status_change_start(&sd->bl,SC_WEIGHT50,0,0,0,0,0,0);
+			status_change_start(&sd->bl,SC_WEIGHT50,100,0,0,0,0,0,1);
 	}else{
 		if(sd->sc.data[SC_WEIGHT50].timer!=-1)
 			status_change_end(&sd->bl,SC_WEIGHT50,-1);
 	} 
 	if(flag==2){
 		if(sd->sc.data[SC_WEIGHT90].timer==-1)
-			status_change_start(&sd->bl,SC_WEIGHT90,0,0,0,0,0,0);
+			status_change_start(&sd->bl,SC_WEIGHT90,100,0,0,0,0,0,1);
 	}else{
 		if(sd->sc.data[SC_WEIGHT90].timer!=-1)
 			status_change_end(&sd->bl,SC_WEIGHT90,-1);
@@ -4620,11 +4620,11 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 
 		//スパノビはキリエ、イムポ、マニピ、グロ、サフラLv1がかかる
 		if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE || (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON){
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],1,0,0,0,skill_get_time(PR_KYRIE,1),0 );
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_IMPOSITIO],1,0,0,0,skill_get_time(PR_IMPOSITIO,1),0 );
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],1,0,0,0,skill_get_time(PR_MAGNIFICAT,1),0 );
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_GLORIA],1,0,0,0,skill_get_time(PR_GLORIA,1),0 );
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_SUFFRAGIUM],1,0,0,0,skill_get_time(PR_SUFFRAGIUM,1),0 );
+			status_change_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,1,0,0,0,skill_get_time(PR_KYRIE,1),0 );
+			status_change_start(&sd->bl,SkillStatusChangeTable[PR_IMPOSITIO],100,1,0,0,0,skill_get_time(PR_IMPOSITIO,1),0 );
+			status_change_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],100,1,0,0,0,skill_get_time(PR_MAGNIFICAT,1),0 );
+			status_change_start(&sd->bl,SkillStatusChangeTable[PR_GLORIA],100,1,0,0,0,skill_get_time(PR_GLORIA,1),0 );
+			status_change_start(&sd->bl,SkillStatusChangeTable[PR_SUFFRAGIUM],100,1,0,0,0,skill_get_time(PR_SUFFRAGIUM,1),0 );
 		}
 
 		clif_misceffect(&sd->bl,0);
@@ -5333,7 +5333,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		if(sd->status.hp<sd->status.max_hp>>2 && sd->sc.data[SC_AUTOBERSERK].timer != -1 &&
 			(sd->sc.data[SC_PROVOKE].timer==-1 || sd->sc.data[SC_PROVOKE].val2==0 ))
 			// オ?トバ?サ?ク?動
-			status_change_start(&sd->bl,SC_PROVOKE,10,1,0,0,0,0);
+			status_change_start(&sd->bl,SC_PROVOKE,100,10,1,0,0,0,0);
 
 		sd->canlog_tick = gettick();
 
@@ -5392,7 +5392,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 			if (battle_config.pk_mode && ssd->status.manner >= 0 && battle_config.manner_system) {
 				ssd->status.manner -= 5;
 				if(ssd->status.manner < 0)
-					status_change_start(src,SC_NOCHAT,0,0,0,0,0,0);
+					status_change_start(src,SC_NOCHAT,100,0,0,0,0,0,0);
 
 			// PK/Karma system code (not enabled yet) [celest]
 			// originally from Kade Online, so i don't know if any of these is correct ^^;
@@ -5634,9 +5634,9 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		if(battle_config.pc_invincible_time)
 			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 		if (resurrect_flag)
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],10,0,0,0,skill_get_time2(SL_KAIZEL, resurrect_flag),0);
+			status_change_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,10,0,0,0,skill_get_time2(SL_KAIZEL, resurrect_flag),0);
 		else
-			status_change_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],1,0,0,0,skill_get_time(MO_STEELBODY,1),0 );
+			status_change_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],100,1,0,0,0,skill_get_time(MO_STEELBODY,1),0 );
 		return 0;
 	}
 
@@ -6993,7 +6993,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 
 	if(sd->special_state.infinite_endure) {
 		if(sd->sc.data[SC_ENDURE].timer == -1)
-			status_change_start(&sd->bl,SC_ENDURE,10,1,0,0,0,0);
+			status_change_start(&sd->bl,SC_ENDURE,100,10,1,0,0,0,0);
 	}
 	else {
 		if(sd->sc.count && sd->sc.data[SC_ENDURE].timer != -1 && sd->sc.data[SC_ENDURE].val2)

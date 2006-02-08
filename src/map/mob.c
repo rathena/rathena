@@ -2327,7 +2327,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		max_hp = status_get_max_hp(&md->bl);
 		mob_heal(md, 10*md->sc.data[SC_KAIZEL].val1*max_hp/100);
 		clif_resurrection(&md->bl, 1);
-		status_change_start(&md->bl,SkillStatusChangeTable[SL_KAIZEL],10,0,0,0,skill_get_time2(SL_KAIZEL, md->sc.data[SC_KAIZEL].val1),0);
+		status_change_start(&md->bl,SkillStatusChangeTable[PR_KYRIE],100,10,0,0,0,skill_get_time2(SL_KAIZEL, md->sc.data[SC_KAIZEL].val1),0);
 		status_change_end(&md->bl,SC_KAIZEL,-1);
 		return damage;
 	}

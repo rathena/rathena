@@ -1919,7 +1919,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	/* I don't think there's a need for this here. It should be handled in pc_damage and pc_heal. [Skotlex]
 	if(sd->status.hp<sd->status.max_hp>>2 && sd->sc.data[SC_AUTOBERSERK].timer!=-1 &&
 		(sd->sc.data[SC_PROVOKE].timer==-1 || sd->sc.data[SC_PROVOKE].val2==0) && !pc_isdead(sd))
-		status_change_start(&sd->bl,SC_PROVOKE,10,1,0,0,0,0);
+		status_change_start(&sd->bl,SC_PROVOKE,100,10,1,0,0,0,0);
 	*/
 	calculating = 0;
 	return 0;
@@ -3520,8 +3520,6 @@ int status_isdead(struct block_list *bl)
 int status_isimmune(struct block_list *bl)
 {
 	struct map_session_data *sd = (struct map_session_data *)bl;
-	
-	nullpo_retr(0, bl);
 	if (bl->type == BL_PC) {
 		if (sd->special_state.no_magic_damage)
 			return 1;
@@ -3541,90 +3539,164 @@ struct status_change *status_get_sc(struct block_list *bl)
 	return NULL;
 }
 
+//Returns defense against the specified status change.
+//Return range is 0 (no resist) to 10000 (inmunity)
 int status_get_sc_def(struct block_list *bl, int type)
 {
 	int sc_def;
 	struct status_change* sc;
+	struct map_session_data *sd;
 	nullpo_retr(0, bl);
 	
 	switch (type)
 	{
 	case SP_MDEF1:	// mdef
-		sc_def = 100 - (3 + status_get_mdef(bl) + status_get_luk(bl)/3);
-		break;
-	case SP_MDEF2:	// int
-		sc_def = 100 - (3 + status_get_int(bl) + status_get_luk(bl)/3);
-		break;
-	case SP_DEF1:	// def
-		sc_def = 100 - (3 + status_get_def(bl) + status_get_luk(bl)/3);
-		break;
-	case SP_DEF2:	// vit
-		sc_def = 100 - (3 + status_get_vit(bl) + status_get_luk(bl)/3);
-		break;
-	case SP_LUK:	// luck
-		sc_def = 100 - (3 + status_get_luk(bl));
-		break;
-
 	case SC_STONE:
 	case SC_FREEZE:
-		sc_def = 100 - (3 + status_get_mdef(bl) + status_get_luk(bl)/3);
+	case SC_DECREASEAGI:
+		sc_def = 3 + status_get_mdef(bl) + status_get_luk(bl)/3;
 		break;
+	case SP_MDEF2:	// int
+	case SC_SLEEP:
+	case SC_CONFUSION:
+		sc_def = 3 + status_get_int(bl) + status_get_luk(bl)/3;
+		break;
+	case SP_DEF1:	// def
+		sc_def = 3 + status_get_def(bl) + status_get_luk(bl)/3;
+		break;
+	case SP_DEF2:	// vit
 	case SC_STAN:
 	case SC_POISON:
 	case SC_SILENCE:
-		sc_def = 100 - (3 + status_get_vit(bl) + status_get_luk(bl)/3);
-		break;	
-	case SC_SLEEP:
-	case SC_CONFUSION:
-		sc_def = 100 - (3 + status_get_int(bl) + status_get_luk(bl)/3);
+	case SC_STOP:
+		sc_def = 3 + status_get_vit(bl) + status_get_luk(bl)/3;
+		break;
+	case SP_LUK:	// luck
+		sc_def = 3 + status_get_luk(bl);
 		break;
 	case SC_BLIND:
-		sc_def = 100 - (3 + status_get_int(bl) + status_get_vit(bl)/3);
+		sc_def = 3 + status_get_int(bl) + status_get_vit(bl)/3;
 		break;
 	case SC_CURSE:
-		sc_def = 100 - (3 + status_get_luk(bl) + status_get_vit(bl)/3);
-		break;	
-
-	default:
-		sc_def = 100;
+		sc_def = 3 + status_get_luk(bl) + status_get_vit(bl)/3;
 		break;
+	case SC_COMA:
+		sc_def = 3 + status_get_mdef(bl);
+	default:
+		return 0; //Effect that cannot be reduced? Likely a buff.
 	}
 
 	sc = status_get_sc(bl);
 	if (sc && sc->count)
 	{
 		if (sc->data[SC_SCRESIST].timer != -1)
-			sc_def -= sc->data[SC_SCRESIST].val1; //Status resist
+			sc_def += sc->data[SC_SCRESIST].val1; //Status resist
 		else if (sc->data[SC_SIEGFRIED].timer != -1)
-			sc_def -= sc->data[SC_SIEGFRIED].val2; //Status resistance.
+			sc_def += sc->data[SC_SIEGFRIED].val2; //Status resistance.
 	}
 
+	sc_def*=100; //Send it on the interval 0->10000
 	if(bl->type == BL_MOB) {
 		struct mob_data *md = (struct mob_data *)bl;
 		if (md->class_ == MOBID_EMPERIUM)
 			return 0;
-		if (sc_def < 50)
-			sc_def = 50;
+		if (sc_def > 5000)
+			sc_def = 5000;
 	}
-	return (sc_def < 0) ? 0 : sc_def;
+	sd = bl->type==BL_PC?(struct map_session_data*)bl:NULL;
+	
+	if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX &&
+		sd->reseff[type-SC_COMMON_MIN] > 0)
+		sc_def += sd->reseff[type-SC_COMMON_MIN];
+
+	return sc_def;
 }
 
+//Reduces tick delay based on type and character defenses.
+int status_get_sc_tick(struct block_list *bl, int type, int tick)
+{
+	struct map_session_data *sd;
+	sd = bl->type == BL_PC?(struct map_session_data *)bl:NULL;
+	switch (type) {
+		case SC_DECREASEAGI:		/* 速度減少 */
+			if (sd)	// Celest
+				tick>>=1;
+		break;
+		case SC_ADRENALINE:			/* アドレナリンラッシュ */
+		case SC_ADRENALINE2:
+		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
+		case SC_OVERTHRUST:			/* オ?バ?スラスト */
+			if(sd && pc_checkskill(sd,BS_HILTBINDING)>0)
+				tick += tick / 10;
+		break;
+		case SC_STONE:				/* 石化 */
+			tick = tick-status_get_mdef(bl)*200;
+		break;
+		case SC_FREEZE:				/* 凍結 */
+			tick -= tick*status_get_mdef(bl)/100;
+		break;
+		case SC_STAN:				/* スタン（val2にミリ秒セット） */
+			tick -= tick*status_get_sc_def_vit(bl)/10000;
+		break;
+		case SC_DPOISON:			/* 猛毒 */
+		case SC_POISON:				/* 毒 */
+			tick -= tick*(status_get_vit(bl) + status_get_luk(bl)/5)/100;
+		break;
+		case SC_SILENCE:			/* 沈?（レックスデビ?ナ） */
+		case SC_CONFUSION:
+		case SC_CURSE:
+			tick -= tick * status_get_vit(bl)/100;
+		break;
+		case SC_BLIND:				/* 暗? */
+			if(tick < 1000)
+				tick = 30000;
+			tick -= tick*(status_get_lv(bl)/10 + status_get_int(bl)/15)/100;
+			if (tick < 5000) //Minimum 5 secs?
+				tick = 5000;
+		break;
+		case SC_BLEEDING:
+			tick -= tick*(status_get_lv(bl)/5 +status_get_vit(bl))/100;
+			if(tick < 10000) //Minimum bleed time is 10 secs or this sc does nothing! [Skotlex]
+				tick = 10000;
+		break;
+		case SC_SWOO:
+			if (status_get_mode(bl)&MD_BOSS)
+				tick /= 5; //Reduce skill's duration. But for how long?
+		break;
+		case SC_ANKLE:
+			tick -= status_get_agi(bl)*100;
+			if(status_get_mode(bl)&MD_BOSS) // Lasts 5 times less on bosses
+				tick /= 5;
+		// Minimum trap time of 3+0.03*skilllv seconds [celest]
+		// Changed to 3 secs and moved from skill.c [Skotlex]
+			if (tick < 3000)
+				tick = 3000;
+		break;
+		case SC_STOP:
+		// Unsure of this... but I get a feeling that agi reduces this
+		// (it was on Tiger Fist Code, but at -1 ms per 10 agi....
+			tick -= 100*status_get_agi(bl);
+		break;
+	}
+	return tick;
+}
 /*==========================================
  * Starts a status change.
  * type = type, val1~4 depend on the type.
+ * rate = base success rate. 100 = 100%
  * Tick is base duration
  * flag:
  * &1: Cannot be avoided (it has to start)
  * &2: Tick should not be reduced (by vit, luk, lv, etc)
  * &4: sc_data loaded, no value has to be altered.
+ * &8: rate should not be reduced
  *------------------------------------------
  */
-int status_change_start(struct block_list *bl,int type,int val1,int val2,int val3,int val4,int tick,int flag)
+int status_change_start(struct block_list *bl,int type,int rate,int val1,int val2,int val3,int val4,int tick,int flag)
 {
 	struct map_session_data *sd = NULL;
 	struct status_change* sc;
-	int opt_flag = 0, calc_flag = 0,updateflag = 0, save_flag = 0, race, mode, elem, undead_flag;
-	int scdef = 0;
+	int opt_flag , calc_flag = 0,updateflag = 0, save_flag = 0, race, mode, elem, undead_flag;
 
 	nullpo_retr(0, bl);
 	sc=status_get_sc(bl);
@@ -3641,15 +3713,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			if (((struct mob_data*)bl)->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL)
 				return 0; //Emperium can't be afflicted by status changes.
 			break;
-	/* For more flexibility. Anything that has a sc data, let it through. [Skotlex]
-		case BL_PET: //Because pets can't have status changes.
-		case BL_SKILL: //These may happen by attacking traps or the like. [Skotlex]
-			return 0;
-		default:
-			if(battle_config.error_log)
-				ShowError("status_change_start: invalid source type (%d)!\n", bl->type);
-			return 0;
-	*/
 	}
 
 	if(type < 0 || type >= SC_MAX) {
@@ -3658,120 +3721,162 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		return 0;
 	}
 
+	//Check rate
+	if (!(flag&(4|1))) {
+		if (flag&8) {
+			race = status_get_sc_def(bl, type);
+			if (race)
+				rate -= rate*race/100;
+		} else
+		  	rate*=100; //Pass to 10000 = 100%
+		if (!(rand()%10000 < rate))
+			return 0;
+	}
+	
 	race=status_get_race(bl);
 	mode=status_get_mode(bl);
 	elem=status_get_elem_type(bl);
 	undead_flag=battle_check_undead(race,elem);
 
-	if(type == SC_AETERNA && (sc->data[SC_STONE].timer != -1 || sc->data[SC_FREEZE].timer != -1) )
-		return 0;
-	if(type == SC_OVERTHRUST && sc->data[SC_MAXOVERTHRUST].timer != -1)
-		return 0; //Overthrust can't take effect if under Max Overthrust. [Skotlex]
-	switch(type){
+	//Check for inmunities / sc fails
+	switch (type) {
 		case SC_STONE:
 		case SC_FREEZE:
-			scdef=3+status_get_mdef(bl)+status_get_luk(bl)/3;
-			break;
-		case SC_STAN:
-		case SC_SILENCE:
-		case SC_POISON:
-		case SC_DPOISON:
-			scdef=3+status_get_vit(bl)+status_get_luk(bl)/3;
-			break;
-		case SC_SLEEP:
-		case SC_BLIND:
-			scdef=3+status_get_int(bl)+status_get_luk(bl)/3;
-			break;
-		case SC_CURSE:
-			scdef=3+status_get_luk(bl);
-			break;
-		default:
-			scdef=0;
-	}
-	if(scdef>=100)
-		return 0;
-	
-	if(sd){
-		if(type == SC_ADRENALINE && !(skill_get_weapontype(BS_ADRENALINE)&(1<<sd->status.weapon)))
-			return 0;
-		if(type == SC_ADRENALINE2 && !(skill_get_weapontype(BS_ADRENALINE2)&(1<<sd->status.weapon)))
-			return 0;
-
-		if(SC_COMMON_MIN<=type && type<=SC_COMMON_MAX && !(flag&1)){
-			if(sd->reseff[type-SC_COMMON_MIN] > 0 && rand()%10000<sd->reseff[type-SC_COMMON_MIN]){
-				if(battle_config.battle_log)
-					ShowInfo("PC %d skill_sc_start: status change %d blocked by reseff card (AID: %d).\n",type,bl->id);
+			//I've been informed that undead chars are inmune to stone curse too. [Skotlex]
+			if (undead_flag && !(flag&1))
 				return 0;
-			}
-		}
-	}
-
-	if (sc->opt1)
-		switch (type) {
-			case SC_STONE:
-			case SC_FREEZE:
-			case SC_SLEEP:
-			case SC_STAN:
+		case SC_SLEEP:
+		case SC_STAN:
+			if (sc->opt1)
 				return 0; //Cannot override other opt1 status changes. [Skotlex]
+		break;
+		case SC_CURSE:
+			//Dark Elementals are inmune to curse.
+			if (elem == 7 && !(flag&1))
+				return 0;
+		break;
+		case SC_COMA:
+			//Dark elementals and Demons are inmune to coma.
+			if((elem == 7 || race == 6) && !(flag&1))
+				return 0;
+		break;
+		case SC_AETERNA:
+		  if (sc->data[SC_STONE].timer != -1 || sc->data[SC_FREEZE].timer != -1)
+			  return 0;
+		break;
+		case SC_OVERTHRUST:
+			if (sc->data[SC_MAXOVERTHRUST].timer != -1)
+				return 0; //Overthrust can't take effect if under Max Overthrust. [Skotlex]
+		break;
+		case SC_ADRENALINE:
+		 	if (sd && !(skill_get_weapontype(BS_ADRENALINE)&(1<<sd->status.weapon)))
+				return 0;
+			if (sc->data[SC_QUAGMIRE].timer!=-1 ||
+				sc->data[SC_DONTFORGETME].timer!=-1 ||
+				sc->data[SC_DECREASEAGI].timer!=-1
+			)
+				return 0;
+		break;
+		case SC_ADRENALINE2:
+			if (sd && !(skill_get_weapontype(BS_ADRENALINE2)&(1<<sd->status.weapon)))
+				return 0;
+			if (sc->data[SC_QUAGMIRE].timer!=-1 ||
+				sc->data[SC_DONTFORGETME].timer!=-1 ||
+				sc->data[SC_DECREASEAGI].timer!=-1
+			)
+				return 0;
+		break;
+		case SC_ONEHAND:
+		case SC_TWOHANDQUICKEN:
+			if(sc->data[SC_DECREASEAGI].timer!=-1)
+				return 0;
+		case SC_CONCENTRATE:
+		case SC_INCREASEAGI:
+		case SC_SPEARSQUICKEN:
+		case SC_TRUESIGHT:
+		case SC_WINDWALK:
+		case SC_CARTBOOST:
+		case SC_ASSNCROS:
+			if (sc->data[SC_QUAGMIRE].timer!=-1 || sc->data[SC_DONTFORGETME].timer!=-1)
+				return 0;
+		break;
+		case SC_CLOAKING:
+		//Avoid cloaking with no wall and low skill level. [Skotlex]
+		//Due to the cloaking card, we have to check the wall versus to known skill level rather than the used one. [Skotlex]
+//			if (sd && skilllv < 3 && skill_check_cloaking(bl))
+			if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl))
+				return 0;
+		break;
+	}
+
+	//Check for BOSS resistnces
+	if(mode & MD_BOSS && !(flag&1)) {
+		 if (type>=SC_COMMON_MIN && type <= SC_COMMON_MAX)
+			 return 0;
+		 switch (type) {
+			case SC_BLESSING:
+			  if (!undead_flag || race != 6)
+				  break;
+			case SC_QUAGMIRE:
+			case SC_DECREASEAGI:
+			case SC_SIGNUMCRUCIS:
+			case SC_PROVOKE:
+			case SC_ROKISWEIL:
+			case SC_COMA:
+			case SC_GRAVITATION:
+				return 0;
 		}
-
-	if((type==SC_FREEZE || type==SC_STONE) && undead_flag && !(flag&1))
-	//I've been informed that undead chars are inmune to stone curse too. [Skotlex]
-		return 0;
-	//Dark Elementals are inmune to curse.
-	if(type==SC_CURSE && elem == 7 && !(flag&1))
-		return 0;
-
-	if (type==SC_BLESSING && (bl->type==BL_PC || (!undead_flag && race!=6))) {
-		if (sc->data[SC_CURSE].timer!=-1)
-			status_change_end(bl,SC_CURSE,-1);
-		if (sc->data[SC_STONE].timer!=-1 && sc->data[SC_STONE].val2==0)
-			status_change_end(bl,SC_STONE,-1);
 	}
 
-	if((type == SC_ADRENALINE || type==SC_ADRENALINE2 || type == SC_WEAPONPERFECTION || type == SC_OVERTHRUST) &&
-		sc->data[type].timer != -1 && sc->data[type].val2 && !val2)
-		return 0;
-
-	if(mode & MD_BOSS && !(flag&1) && ( (type>=SC_COMMON_MIN && type <= SC_COMMON_MAX)
-		|| type==SC_QUAGMIRE || type==SC_DECREASEAGI || type==SC_SIGNUMCRUCIS
-	  	|| type==SC_PROVOKE || type==SC_ROKISWEIL || type==SC_COMA
-		|| (type == SC_BLESSING && (undead_flag || race == 6)))){
-		/* ボスには?かない(ただしカ?ドによる?果は適用される) */
-		return 0;
-	}
-
-	if(sc->data[type].timer != -1){	/* すでに同じ異常になっている場合タイマ解除 */
-		if(sc->data[type].val1 > val1 && type != SC_COMBO && type != SC_DANCING && type != SC_DEVOTION &&
-			type != SC_ASPDPOTION0 && type != SC_ASPDPOTION1 && type != SC_ASPDPOTION2 && type != SC_ASPDPOTION3
-			&& type != SC_ATKPOTION && type != SC_MATKPOTION // added atk and matk potions [Valaris]
-		)
-			return 0;
-
-		if ((type >=SC_STAN && type <= SC_BLIND) || type == SC_DPOISON)
-			return 0;/* ?ぎ足しができない?態異常である時は?態異常を行わない */
-
-		if (type == SC_GOSPEL && sc->data[type].val4 == BCT_SELF) //Must not override a casting gospel char.
-			return 0;
-		
+	//Check for overlapping fails
+	if(sc->data[type].timer != -1){
+		switch (type) {
+			case SC_ADRENALINE:
+			case SC_ADRENALINE2:
+			case SC_WEAPONPERFECTION:
+			case SC_OVERTHRUST:
+				if (sc->data[type].val2 && !val2)
+					return 0;
+			break;
+			case SC_GOSPEL:
+				 //Must not override a casting gospel char.
+				if (sc->data[type].val4 == BCT_SELF)
+					return 0;
+			case SC_STAN:
+			case SC_SLEEP:
+			case SC_POISON:
+			case SC_CURSE:
+			case SC_SILENCE:
+			case SC_CONFUSION:
+			case SC_BLIND:
+			case SC_BLEEDING:
+			case SC_DPOISON:
+			case SC_COMBO: //You aren't supposed to change the combo (and it gets turned off when you trigger it)
+				return 0;
+			case SC_DANCING:
+			case SC_DEVOTION:
+			case SC_ASPDPOTION0:
+			case SC_ASPDPOTION1:
+			case SC_ASPDPOTION2:
+			case SC_ASPDPOTION3:
+			case SC_ATKPOTION:
+			case SC_MATKPOTION:
+				break;
+			default:
+				if(sc->data[type].val1 > val1)
+					return 0;
+			}
 		(sc->count)--;
 		delete_timer(sc->data[type].timer, status_change_timer);
 		sc->data[type].timer = -1;
 	}
 
-	if(type==SC_FREEZE || type==SC_STAN || type==SC_SLEEP || type==SC_STOP || type == SC_CONFUSION ||
-		type==SC_CLOSECONFINE || type==SC_CLOSECONFINE2 || type ==SC_TRICKDEAD)
-		battle_stopwalking(bl,1);
-
-	// クアグマイア/私を忘れないで中は無効なスキル
-	if ((sc->data[SC_QUAGMIRE].timer!=-1 || sc->data[SC_DONTFORGETME].timer!=-1) &&
-		(type==SC_CONCENTRATE || type==SC_INCREASEAGI ||
-		type==SC_TWOHANDQUICKEN || type==SC_SPEARSQUICKEN ||
-		type==SC_ADRENALINE || type==SC_ADRENALINE2 ||
-		type==SC_TRUESIGHT || type==SC_WINDWALK ||
-		type==SC_CARTBOOST || type==SC_ASSNCROS || 
-		type==SC_ONEHAND))
-	return 0;
+	//SC duration reduction.
+	if(!(flag&(2|4)) && tick) {
+		tick = status_get_sc_tick(bl, type, tick);
+		if (tick < 0)
+			return 0;
+	}
 
 	switch(type){	/* 異常の種類ごとの?理 */
 		case SC_PROVOKE:			/* プロボック */
@@ -3787,9 +3892,9 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			{
 				if (!(flag&4))
 					tick = 60*1000;
-				if (bl->type == BL_PC && sd->status.hp<sd->status.max_hp>>2 &&
+				if (sd && sd->status.hp<sd->status.max_hp>>2 &&
 					(sc->data[SC_PROVOKE].timer==-1 || sc->data[SC_PROVOKE].val2==0))
-					status_change_start(bl,SC_PROVOKE,10,1,0,0,0,0);
+					status_change_start(bl,SC_PROVOKE,10,10000,1,0,0,0,0);
 			}
 			break;
 		
@@ -3799,8 +3904,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				status_change_end(bl,SC_DECREASEAGI,-1);
 			break;
 		case SC_DECREASEAGI:		/* 速度減少 */
-			if (bl->type == BL_PC && !(tick&2))	// Celest
-				tick>>=1;
 			calc_flag = 1;
 			if(sc->data[SC_INCREASEAGI].timer!=-1 )
 				status_change_end(bl,SC_INCREASEAGI,-1);
@@ -3833,31 +3936,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				status_change_end(bl,SC_ASPDPOTION2,-1);
 			if(sc->data[SC_ASPDPOTION3].timer!=-1)
 				status_change_end(bl,SC_ASPDPOTION3,-1);
-		case SC_TWOHANDQUICKEN:		/* 2HQ */
-			if(sc->data[SC_DECREASEAGI].timer!=-1)
-				return 0;
-			sc->opt3 |= 1;
 			calc_flag = 1;
-			break;
-		case SC_ADRENALINE2:
-		case SC_ADRENALINE:			/* アドレナリンラッシュ */
-			if(sc->data[SC_DECREASEAGI].timer!=-1)
-				return 0;
-			if(bl->type == BL_PC && !(flag&2))
-				if(pc_checkskill(sd,BS_HILTBINDING)>0)
-					tick += tick / 10;
-			calc_flag = 1;
-			break;
-		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
-			if(bl->type == BL_PC && !(flag&2))
-				if(pc_checkskill(sd,BS_HILTBINDING)>0)
-					tick += tick / 10;
-			break;
-		case SC_OVERTHRUST:			/* オ?バ?スラスト */
-			if(bl->type == BL_PC && !(flag&2))
-				if(pc_checkskill(sd,BS_HILTBINDING)>0)
-					tick += tick / 10;
-			sc->opt3 |= 2;
 			break;
 		case SC_MAXOVERTHRUST: //Cancels Normal Overthrust. [Skotlex]
 			if (sc->data[SC_OVERTHRUST].timer != -1)
@@ -3871,11 +3950,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				val2 = tick;
 			}
 			break;
-		case SC_ENCPOISON:			/* エンチャントポイズン */
-			calc_flag = 1;
-			val2=(((val1 - 1) / 2) + 3)*100;	/* 毒付?確率 */
-			skill_enchant_elemental_end(bl,SC_ENCPOISON);
-			break;
 		case SC_EDP:	// [Celest]
 			val2 = val1 + 2;			/* 猛毒付?確率(%) */
 			calc_flag = 1;
@@ -3883,9 +3957,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_POISONREACT:	/* ポイズンリアクト */
 			if (!(flag&4))
 				val2=val1/2 + val1%2; // [Celest]
-			break;
-		case SC_ENERGYCOAT:			/* エナジ?コ?ト */
-			sc->opt3 |= 4;
 			break;
 		case SC_MAGICROD:
 			val2 = val1*20;
@@ -3903,10 +3974,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_MINDBREAKER:
 			calc_flag = 1;
 			if(tick <= 0) tick = 1000;	/* (オ?トバ?サ?ク) */
-		case SC_TRICKDEAD:			/* 死んだふり */
-			if (bl->type == BL_PC) {
-				pc_stopattack(sd);
-			}
 			break;
 		case SC_QUAGMIRE:			/* クァグマイア */
 			calc_flag = 1;
@@ -3939,26 +4006,17 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			if (!(flag&4))
 				val2 = 5;
 			break;
+		case SC_ENCPOISON:			/* エンチャントポイズン */
+			calc_flag = 1;
+			val2=(((val1 - 1) / 2) + 3)*100;	/* 毒付?確率 */
 		case SC_ASPERSIO:			/* アスペルシオ */
-			skill_enchant_elemental_end(bl,SC_ASPERSIO);
-			break;
 		case SC_FIREWEAPON:		/* フレ?ムランチャ? */
-			skill_enchant_elemental_end(bl,SC_FIREWEAPON);
-			break;
 		case SC_WATERWEAPON:		/* フロストウェポン */
-			skill_enchant_elemental_end(bl,SC_WATERWEAPON);
-			break;
 		case SC_WINDWEAPON:	/* ライトニングロ?ダ? */
-			skill_enchant_elemental_end(bl,SC_WINDWEAPON);
-			break;
 		case SC_EARTHWEAPON:		/* サイズミックウェポン */
-			skill_enchant_elemental_end(bl,SC_EARTHWEAPON);
-			break;
 		case SC_SHADOWWEAPON:
-			skill_enchant_elemental_end(bl,SC_SHADOWWEAPON);
-			break;
 		case SC_GHOSTWEAPON:
-			skill_enchant_elemental_end(bl,SC_GHOSTWEAPON);
+			skill_enchant_elemental_end(bl,type);
 			break;
 		case SC_PROVIDENCE:			/* プロヴィデンス */
 			calc_flag = 1;
@@ -3995,35 +4053,12 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_SPEARSQUICKEN:		/* スピアクイッケン */
 			calc_flag = 1;
 			val2 = 20+val1;
-			sc->opt3 |= 1;
 			break;
 
 		case SC_BLADESTOP:		/* 白刃取り */
 			if(val2==2) clif_bladestop((struct block_list *)val3,(struct block_list *)val4,1);
-			sc->opt3 |= 32;
 			break;
 
-		case SC_LULLABY:			/* 子守唄 */
-		case SC_RICHMANKIM:
-		case SC_ROKISWEIL:			/* ロキの叫び */
-		case SC_INTOABYSS:			/* 深淵の中に */
-		case SC_POEMBRAGI:			/* ブラギの詩 */
-		case SC_UGLYDANCE:			/* 自分勝手なダンス */
-			break;
-		case SC_ETERNALCHAOS:		/* エタ?ナルカオス */
-		case SC_DRUMBATTLE:			/* ?太鼓の響き */
-		case SC_NIBELUNGEN:			/* ニ?ベルングの指輪 */
-		case SC_SIEGFRIED:			/* 不死身のジ?クフリ?ド */
-		case SC_WHISTLE:			/* 口笛 */
-		case SC_ASSNCROS:			/* 夕陽のアサシンクロス */
-		case SC_APPLEIDUN:			/* イドゥンの林檎 */
-		case SC_HUMMING:			/* ハミング */
-		case SC_ATKPOTION: // Valaris
-		case SC_MATKPOTION:
-		case SC_FORTUNE:			/* 幸運のキス */
-		case SC_SERVICE4U:			/* サ?ビスフォ?ユ? */
-			calc_flag = 1;
-			break;
 		case SC_DONTFORGETME:		/* 私を忘れないで */
 			calc_flag = 1;
 			if(sc->data[SC_INCREASEAGI].timer!=-1 )	/* 速度上昇解除 */
@@ -4063,12 +4098,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_EXPLOSIONSPIRITS:	// 爆裂波動
 			calc_flag = 1;
 			val2 = 75 + 25*val1;
-			sc->opt3 |= 8;
-			break;
-		case SC_STEELBODY:			// 金剛
-		case SC_SKA:
-			calc_flag = 1;
-			sc->opt3 |= 16;
 			break;
 		case SC_AUTOCOUNTER:
 			val3 = val4 = 0;
@@ -4085,27 +4114,24 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 
 		case SC_XMAS: // Xmas Suit [Valaris]
 		case SC_WEDDING:	//結婚用(結婚衣裳になって?くのが?いとか)
-			{
-				struct map_session_data *sd;
-				if (bl->type == BL_PC && (sd= (struct map_session_data *)bl))
-				{	//Change look.
-					if(type==SC_WEDDING)
-						sd->view_class = JOB_WEDDING;
-					else if(type==SC_XMAS)
-						sd->view_class = JOB_XMAS;
-					clif_changelook(&sd->bl,LOOK_BASE,sd->view_class);
+		if (sd)
+		{	//Change look.
+			if(type==SC_WEDDING)
+				sd->view_class = JOB_WEDDING;
+			else if(type==SC_XMAS)
+				sd->view_class = JOB_XMAS;
+			clif_changelook(&sd->bl,LOOK_BASE,sd->view_class);
 #if PACKETVER < 4
-					clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-					clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
+			clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
+			clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 #else
-					clif_changelook(&sd->bl,LOOK_WEAPON,0);
+			clif_changelook(&sd->bl,LOOK_WEAPON,0);
 #endif
-					if(battle_config.save_clothcolor && sd->status.clothes_color > 0 && 
-						((type==SC_WEDDING && !battle_config.wedding_ignorepalette) || 
-							(type==SC_XMAS && !battle_config.xmas_ignorepalette)))
-						clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
-				}
-			}
+			if(battle_config.save_clothcolor && sd->status.clothes_color > 0 && 
+				((type==SC_WEDDING && !battle_config.wedding_ignorepalette) || 
+					(type==SC_XMAS && !battle_config.xmas_ignorepalette)))
+				clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+		}
 			break;
 		case SC_NOCHAT:	//チャット禁止?態
 			{
@@ -4121,33 +4147,16 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 
 		/* option1 */
 		case SC_STONE:				/* 石化 */
-			if(!(flag&2)) {
-				int sc_def = status_get_mdef(bl)*200;
-				tick = tick - sc_def;
-			}
-			if (!(flag&4))
-				val3 = tick/1000;
-			if(val3 < 1) val3 = 1;
-			if (!(flag&4))
-				tick = 5000;
+			if (flag&4)
+				break;
 			val2 = 1;
+			val3 = tick/1000;
+			if(val3 < 1) val3 = 1;
+			tick = 5000;
 			break;
 		case SC_SLEEP:				/* 睡眠 */
-			if(!(flag&4)) {
+			if(!(flag&4))
 				tick = 30000;//睡眠はステ?タス耐性に?わらず30秒
-			}
-			break;
-		case SC_FREEZE:				/* 凍結 */
-			if(!(flag&2)) {
-				int sc_def = 100 - status_get_mdef(bl);
-				tick = tick * sc_def / 100;
-			}
-			break;
-		case SC_STAN:				/* スタン（val2にミリ秒セット） */
-			if(!(flag&2)) {
-				int sc_def = status_get_sc_def_vit(bl);
-				tick = tick * sc_def / 100;
-			}
 			break;
 
 			/* option2 */
@@ -4180,10 +4189,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			calc_flag = 1;
 			if (flag&4)
 				break;
-			if(!(flag&2)) {
-				int sc_def = 100 - (status_get_vit(bl) + status_get_luk(bl)/5);
-				tick = tick * sc_def / 100;
-			}
 			val3 = tick/1000;
 			if(val3 < 1) val3 = 1;
 			tick = 1000;
@@ -4202,48 +4207,14 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				}
 				break;
 			}
-			if(!(flag&2)) {
-				int sc_def = 100 - status_get_vit(bl);
-				tick = tick * sc_def / 100;
-			}
 			break;
 		case SC_CONFUSION:
-			if(!(flag&2)) {
-				int sc_def = 100 - status_get_vit(bl);
-				tick = tick * sc_def / 100;
-			}
 			clif_emotion(bl,1);
 			break;
-		case SC_BLIND:				/* 暗? */
-			calc_flag = 1;
-			if(!(flag&4) && tick < 1000)
-				tick = 30000;
-			if(!(flag&2)) {
-				int sc_def = 100 - (status_get_lv(bl)/10 + status_get_int(bl)/15);
-				tick = tick*sc_def/100;
-				if (tick < 5000) //Minimum 5 secs?
-					tick = 5000;
-			}
-			break;
-		case SC_CURSE:
-			calc_flag = 1;
-			if(!(flag&2)) {
-				int sc_def = 100 - status_get_vit(bl);
-				tick = tick * sc_def / 100;
-			}
-			break;
-
 		case SC_BLEEDING:
-			if(!(flag&2)) {
-				int sc_def = 100 - (status_get_lv(bl)/5 +status_get_vit(bl));
-				tick = tick * sc_def / 100;
-			}
-			if(!(flag&4) && tick < 10000) //Minimum bleed time is 10 secs or this sc does nothing! [Skotlex]
-				tick = 10000;
 			val4 = tick;
 			tick = 10000;
 			break;
-
 		/* option */
 		case SC_HIDING:		/* ハイディング */
 			calc_flag = 1;
@@ -4298,7 +4269,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 					for (i = 0; i < 5; i++)
 					{	//Pass the status to the other affected chars. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(&tsd->bl,SC_AUTOGUARD,val1,val2,0,0,tick,1);
+							status_change_start(&tsd->bl,SC_AUTOGUARD,10000,val1,val2,0,0,tick,1);
 					}
 			}
 			break;
@@ -4314,14 +4285,9 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 					for (i = 0; i < 5; i++)
 					{	//See if there are devoted characters, and pass the status to them. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(&tsd->bl,SC_DEFENDER,val1,val2,0,0,tick,1);
+							status_change_start(&tsd->bl,SC_DEFENDER,10000,val1,val2,0,0,tick,1);
 					}
 			}
-			break;
-
-		case SC_CONCENTRATION:	/* コンセントレ?ション */
-			sc->opt3 |= 1;
-			calc_flag = 1;
 			break;
 
 		case SC_TENSIONRELAX:	/* テンションリラックス */
@@ -4344,7 +4310,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_JOINTBEAT: // Random break [DracoRPG]
 			calc_flag = 1;
 			val2 = rand()%6;
-			if (val2 == 5) status_change_start(bl,SC_BLEEDING,val1,0,0,0,skill_get_time2(type,val1),0);
+			if (val2 == 5) status_change_start(bl,SC_BLEEDING,10000,val1,0,0,0,skill_get_time2(type,val1),0);
 			break;
 
 		case SC_BERSERK:		/* バ?サ?ク */
@@ -4355,14 +4321,12 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				clif_updatestatus(sd,SP_SP);
 				sd->canregen_tick = gettick() + 300000;
 			}
-			sc->opt3 |= 128;
 			if (!(flag&4))
 				tick = 10000;
 			calc_flag = 1;
 			break;
 
 		case SC_ASSUMPTIO:		/* アスムプティオ */
-			sc->opt3 |= 2048;
 			if(sc->data[SC_KYRIE].timer!=-1)
 				status_change_end(bl,SC_KYRIE,-1);
 			break;
@@ -4372,8 +4336,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				val2 = tick/1000;
 				tick = 1000;
 			}
-			sc->opt3 |= 4096;
-			opt_flag = 1;
 			break;
 
 		case SC_GOSPEL:
@@ -4397,7 +4359,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				return 0;
 			tick = 1000;
 			calc_flag = 1;
-			sc->opt3 |= 1024;
 			break;
 
 		case SC_REJECTSWORD:	/* リジェクトソ?ド */
@@ -4442,10 +4403,12 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			//Ideally, we should calculate the remaining time and use that, but we'll trust that
 			//once the Crusader's status changes, it will reflect on the others. 
 				if (src->sc.data[SC_AUTOGUARD].timer != -1)
-					status_change_start(bl,SC_AUTOGUARD,src->sc.data[SC_AUTOGUARD].val1,0,0,0,
+					status_change_start(bl,SC_AUTOGUARD,10000,
+						src->sc.data[SC_AUTOGUARD].val1,0,0,0,
 						skill_get_time(CR_AUTOGUARD,src->sc.data[SC_AUTOGUARD].val1),0);
 				if (src->sc.data[SC_DEFENDER].timer != -1)
-					status_change_start(bl,SC_DEFENDER,src->sc.data[SC_DEFENDER].val1,0,0,0,
+					status_change_start(bl,SC_DEFENDER,10000,
+						src->sc.data[SC_DEFENDER].val1,0,0,0,
 						skill_get_time(CR_DEFENDER,src->sc.data[SC_DEFENDER].val1),0);
 			}
 			break;
@@ -4470,7 +4433,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				struct status_change *sc2 = src?status_get_sc(src):NULL;
 				if (src && sc2 && sc2->count) {
 					if (sc2->data[SC_CLOSECONFINE].timer == -1) //Start lock on caster.
-						status_change_start(src,SC_CLOSECONFINE,1,0,0,0,tick+1000,0);
+						status_change_start(src,SC_CLOSECONFINE,10000,1,0,0,0,tick+1000,0);
 					else { //Increase count of locked enemies and refresh time.
 						sc2->data[SC_CLOSECONFINE].val1++;
 						delete_timer(sc2->data[SC_CLOSECONFINE].timer, status_change_timer);
@@ -4519,13 +4482,6 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 					break;
 			}
 			break;
-		case SC_SWOO: // [marquis007]
-			if (!(flag&4) && status_get_mode(bl)&MD_BOSS)
-				tick /= 4; //Reduce skill's duration. But for how long?
-//			sc->opt3 |= 8192; //We haven't figured out this value yet...
-			opt_flag = 1;
-			calc_flag = 1;
-			break;
 		case SC_TKDORI:
 			val2 = 11-val1; //Chance to consume: 11-skilllv%
 			break;
@@ -4534,11 +4490,30 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 				val4 = gettick(); //Store time at which you started running.
 			calc_flag = 1;
 			break;
-		case SC_INCATKRATE:		/* ATK%上昇 */
-			if (bl->type == BL_MOB)
-				sc->opt3 |= 8; //Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
+		case SC_BLESSING:
+			if (bl->type==BL_PC || (!undead_flag && race!=6)) {
+				if (sc->data[SC_CURSE].timer!=-1)
+					status_change_end(bl,SC_CURSE,-1);
+				if (sc->data[SC_STONE].timer!=-1 && sc->data[SC_STONE].val2==0)
+					status_change_end(bl,SC_STONE,-1);
+			}
+		case SC_CONCENTRATION:	/* コンセントレ?ション */case SC_ETERNALCHAOS:		/* エタ?ナルカオス */
+		case SC_DRUMBATTLE:			/* ?太鼓の響き */
+		case SC_NIBELUNGEN:			/* ニ?ベルングの指輪 */
+		case SC_SIEGFRIED:			/* 不死身のジ?クフリ?ド */
+		case SC_WHISTLE:			/* 口笛 */
+		case SC_ASSNCROS:			/* 夕陽のアサシンクロス */
+		case SC_APPLEIDUN:			/* イドゥンの林檎 */
+		case SC_HUMMING:			/* ハミング */
+		case SC_ATKPOTION: // Valaris
+		case SC_MATKPOTION:
+		case SC_FORTUNE:			/* 幸運のキス */
+		case SC_SERVICE4U:			/* サ?ビスフォ?ユ? */
+		case SC_ADRENALINE2:
+		case SC_ADRENALINE:			/* アドレナリンラッシュ */
+		case SC_BLIND:				/* 暗? */
+		case SC_CURSE:
 		case SC_CONCENTRATE:		/* 集中力向上 */
-		case SC_BLESSING:			/* ブレッシング */
 		case SC_ANGELUS:			/* アンゼルス */
 		case SC_IMPOSITIO:			/* インポシティオマヌス */
 		case SC_GLORIA:				/* グロリア */
@@ -4558,6 +4533,7 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_INCFLEERATE:		/* FLEE%上昇 */
 		case SC_INCMHPRATE:		/* MHP%上昇 */
 		case SC_INCMSPRATE:		/* MSP%上昇 */
+		case SC_INCATKRATE:		/* ATK%上昇 */
 		case SC_INCMATKRATE:
 		case SC_INCDEFRATE:
 		case SC_INCSTR:
@@ -4584,10 +4560,26 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		case SC_STAR_COMFORT:
 		case SC_FUSION:
 		case SC_SKE:
+		case SC_SWOO: // [marquis007]
+		case SC_STEELBODY:			// 金剛
+		case SC_SKA:
+		case SC_TWOHANDQUICKEN:		/* 2HQ */
 			calc_flag = 1;
 			break;
 
+		case SC_LULLABY:			/* 子守唄 */
+		case SC_RICHMANKIM:
+		case SC_ROKISWEIL:			/* ロキの叫び */
+		case SC_INTOABYSS:			/* 深淵の中に */
+		case SC_POEMBRAGI:			/* ブラギの詩 */
+		case SC_UGLYDANCE:			/* 自分勝手なダンス */
+		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
+		case SC_TRICKDEAD:			/* 死んだふり */
+		case SC_FREEZE:				/* 凍結 */
+		case SC_STAN:				/* スタン（val2にミリ秒セット） */
+		case SC_ENERGYCOAT:			/* エナジ?コ?ト */
 		case SC_SAFETYWALL:
+		case SC_OVERTHRUST:			/* オ?バ?スラスト */
 		case SC_SLOWPOISON: //Slow potion can be activated even if not poisoned.
 		case SC_SUFFRAGIUM:			/* サフラギム */
 		case SC_BENEDICTIO:			/* 聖? */
@@ -4631,6 +4623,31 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 			return 0;
 	}
 
+	//Those that make you stop attacking/walking....
+	switch (type) {
+		case SC_FREEZE:
+		case SC_STAN:
+		case SC_SLEEP:
+		case SC_TRICKDEAD:
+			battle_stopattack(bl);
+			skill_stop_dancing(bl);	/* 演奏/ダンスの中? */
+			// Cancel cast when get status [LuzZza]
+			if (!sd || sd->skillid != PA_PRESSURE)  //Only Pressure cannot be cancelled.
+				skill_castcancel(bl, 0);
+		case SC_STOP:
+		case SC_CONFUSION:
+		case SC_CLOSECONFINE:
+		case SC_CLOSECONFINE2:
+			battle_stopwalking(bl,1);
+		break;
+		case SC_HIDING:
+		case SC_CLOAKING:
+		case SC_CHASEWALK:
+			battle_stopattack(bl);	/* 攻?停止 */
+		break;
+	}
+
+
 	if (bl->type == BL_PC && (battle_config.display_hallucination || type != SC_HALLUCINATION))
 	{
 		if (flag&4)
@@ -4638,80 +4655,118 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 		clif_status_change(bl,StatusIconChangeTable[type],1);
 	}
 
-	/* optionの?更 */
+	// Set option as needed.
+	opt_flag = 1;
 	switch(type){
+		//OPT1
 		case SC_STONE:
 		case SC_FREEZE:
 		case SC_STAN:
 		case SC_SLEEP:
-
-			// Cancel cast when get status [LuzZza]
-			if (bl->type == BL_PC) {
-				struct map_session_data *sd = (struct map_session_data *)bl; //Only Pressure is uninterruptable.
-				if (sd->skilltimer != -1 && sd->skillid != PA_PRESSURE) skill_castcancel(bl, 0);
-			} else
-			if (bl->type == BL_MOB) {
-				if (((struct mob_data *)bl)->skilltimer != -1) skill_castcancel(bl, 0);
-			}	    		
-
-			battle_stopattack(bl);	/* 攻?停止 */
-			skill_stop_dancing(bl);	/* 演奏/ダンスの中? */
 			if(type == SC_STONE)
 				sc->opt1 = OPT1_STONEWAIT;
 			else
 				sc->opt1 = OPT1_STONE + (type - SC_STONE);
-			opt_flag = 1;
 			break;
+		//OPT2
 		case SC_POISON:
 		case SC_CURSE:
 		case SC_SILENCE:
 		case SC_BLIND:
 			sc->opt2 |= 1<<(type-SC_POISON);
-			opt_flag = 1;
 			break;
 		case SC_DPOISON:	// 暫定で毒のエフェクトを使用
 			sc->opt2 |= OPT2_DPOISON;
-			opt_flag = 1;
 			break;
 		case SC_SIGNUMCRUCIS:
 			sc->opt2 |= OPT2_SIGNUMCRUCIS;
-			opt_flag = 1;
 			break;
+		//OPT3
+		case SC_TWOHANDQUICKEN:		/* 2HQ */
+		case SC_SPEARSQUICKEN:		/* スピアクイッケン */
+		case SC_CONCENTRATION:	/* コンセントレ?ション */
+			sc->opt3 |= 1;
+			opt_flag = 0;
+			break;
+		case SC_MAXOVERTHRUST:
+		case SC_OVERTHRUST:			/* オ?バ?スラスト */
+			sc->opt3 |= 2;
+			opt_flag = 0;
+			break;
+		case SC_ENERGYCOAT:			/* エナジ?コ?ト */
+			sc->opt3 |= 4;
+			opt_flag = 0;
+			break;
+		case SC_INCATKRATE:		/* ATK%上昇 */
+			//Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
+			if (bl->type != BL_MOB) {
+				opt_flag = 0;
+				break;
+			}
+		case SC_EXPLOSIONSPIRITS:	// 爆裂波動
+			sc->opt3 |= 8;
+			opt_flag = 0;
+			break;
+		case SC_STEELBODY:			// 金剛
+		case SC_SKA:
+			sc->opt3 |= 16;
+			opt_flag = 0;
+			break;
+		case SC_BLADESTOP:		/* 白刃取り */
+			sc->opt3 |= 32;
+			opt_flag = 0;
+			break;
+		case SC_BERSERK:		/* バ?サ?ク */
+			sc->opt3 |= 128;
+			opt_flag = 0;
+			break;
+		case SC_MARIONETTE:		/* マリオネットコントロ?ル */
+		case SC_MARIONETTE2:
+			sc->opt3 |= 1024;
+			opt_flag = 0;
+			break;
+		case SC_ASSUMPTIO:		/* アスムプティオ */
+			sc->opt3 |= 2048;
+			opt_flag = 0;
+			break;
+		case SC_WARM: //SG skills [Komurka]
+			sc->opt3 |= 4096;
+			opt_flag = 0;
+			break;
+//		case SC_SWOO: // [marquis007]
+//			sc->opt3 |= 8192; //We haven't figured out this value yet...
+//			break;
+			
+		//OPTION
 		case SC_HIDING:
+			sc->option |= OPTION_HIDE;
+			break;
 		case SC_CLOAKING:
-			battle_stopattack(bl);	/* 攻?停止 */
-			sc->option |= ((type==SC_HIDING)?OPTION_HIDE:OPTION_CLOAK);
-			opt_flag =1 ;
+			sc->option |= OPTION_CLOAK;
 			break;
 		case SC_CHASEWALK:
-			battle_stopattack(bl);	/* 攻?停止 */
 			sc->option |= OPTION_CHASEWALK|OPTION_CLOAK;
-			opt_flag =1 ;
 			break;
 		case SC_SIGHT:
 			sc->option |= OPTION_SIGHT;
-			opt_flag = 1;
 			break;
 		case SC_RUWACH:
 			sc->option |= OPTION_RUWACH;
-			opt_flag = 1;
 			break;
 		case SC_WEDDING:
 			sc->option |= OPTION_WEDDING;
-			opt_flag = 1;
 			break;
 		case SC_ORCISH:
 			sc->option |= OPTION_ORCISH;
-			opt_flag = 1;
 			break;
 		case SC_SIGHTTRASHER:
 			sc->option |= OPTION_SIGHTTRASHER;
-			opt_flag = 1;
 			break;
 		case SC_FUSION:
 			sc->option |= OPTION_FLYING;
-			opt_flag = 1;
 			break;
+		default:
+			opt_flag = 0;
 	}
 
 	if(opt_flag)	/* optionの?更 */
@@ -4727,22 +4782,19 @@ int status_change_start(struct block_list *bl,int type,int val1,int val2,int val
 	sc->data[type].timer = add_timer(
 		gettick() + tick, status_change_timer, bl->id, type);
 
-	if(bl->type==BL_PC && calc_flag)
-		status_calc_pc(sd,0);	/* ステ?タス再計算 */
-
-	if(bl->type==BL_PC && save_flag)
-		chrif_save(sd,0); // save the player status
-
-	if(bl->type==BL_PC && updateflag)
-		clif_updatestatus(sd,updateflag);	/* ステ?タスをクライアントに送る */
-
-	if (bl->type==BL_PC && sd->pd)
-		pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
-
-	if(type==SC_RUN && bl->type==BL_PC)
-		pc_run(sd,val1,val2);
-	
-	return 0;
+	if(sd) {
+		if (calc_flag)
+			status_calc_pc(sd,0);	/* ステ?タス再計算 */
+		if(save_flag)
+			chrif_save(sd,0); // save the player status
+		if(updateflag)
+			clif_updatestatus(sd,updateflag);	/* ステ?タスをクライアントに送る */
+		if (sd->pd)
+			pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
+		if (type==SC_RUN)
+			pc_run(sd,val1,val2);
+	}
+	return 1;
 }
 /*==========================================
  * ステータス異常全解除
@@ -4941,7 +4993,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					DIFF_TICK(gettick(), sc->data[type].val4) <= 1000 &&
 					(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
 				)
-					status_change_start(bl,SC_SPURT,sc->data[type].val1,0,0,0,skill_get_time2(TK_RUN, sc->data[type].val1),0);
+					status_change_start(bl,SC_SPURT,10000,sc->data[type].val1,0,0,0,skill_get_time2(TK_RUN, sc->data[type].val1),0);
 				calc_flag = 1;
 			break;
 			case SC_AUTOBERSERK:
@@ -5230,7 +5282,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			status_calc_pc((struct map_session_data *)bl,0);	/* ステ?タス再計算 */
 	}
 
-	return 0;
+	return 1;
 }
 
 
@@ -5292,7 +5344,8 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				sd->status.sp -= sp; // update sp cost [Celest]
 				clif_updatestatus(sd,SP_SP);
 				if ((++sc->data[SC_CHASEWALK].val4) == 1) {
-					status_change_start(bl, SC_INCSTR, 1<<(sc->data[SC_CHASEWALK].val1-1), 0, 0, 0,
+					status_change_start(bl, SC_INCSTR,10000,
+						1<<(sc->data[SC_CHASEWALK].val1-1), 0, 0, 0,
 						(sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_ROGUE?10:1) //SL bonus -> x10 duration
 						*skill_get_time2(ST_CHASEWALK,sc->data[SC_CHASEWALK].val1), 0);
 				}

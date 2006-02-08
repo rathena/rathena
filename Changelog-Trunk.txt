@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/08
+	* Rewrote/organized status_change_start, it now receives the base rate for
+	  the effect. It handles reducing this rate/duration through natural
+	  resistances and whatever else should reduce it. [Skotlex]
 	* Fixes to exp2.txt on the novice job exp. Thanks to rollopop. [Skotlex]
 	- Also modified exp2.txt to use the normal max levels by default.
 2006/02/07

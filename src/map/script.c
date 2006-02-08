@@ -6066,7 +6066,7 @@ int buildin_sc_start(struct script_state *st)
 		val4 = 1; //Mark that this was a thrown sc_effect
 	}
 	if (bl)
-		status_change_start(bl,type,val1,0,0,val4,tick,0);
+		status_change_start(bl,type,100,val1,0,0,val4,tick,0);
 	return 0;
 }
 
@@ -6093,8 +6093,8 @@ int buildin_sc_start2(struct script_state *st)
 		val4 = 1;
 	}
 
-	if(bl && rand()%10000 < per)
-		status_change_start(bl,type,val1,0,0,val4,tick,0);
+	if(bl)
+		status_change_start(bl,type,per/100,val1,0,0,val4,tick,0);
 	return 0;
 }
 
@@ -6124,7 +6124,7 @@ int buildin_sc_start4(struct script_state *st)
 		tick/=2;
 	}
 	if (bl)
-		status_change_start(bl,type,val1,val2,val3,val4,tick,0);
+		status_change_start(bl,type,100,val1,val2,val3,val4,tick,0);
 	return 0;
 }
 
@@ -6153,7 +6153,7 @@ int buildin_sc_end(struct script_state *st)
 int buildin_getscrate(struct script_state *st)
 {
 	struct block_list *bl;
-	int sc_def,type,rate;
+	int sc_def=0,type,rate;
 
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	rate=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -6162,10 +6162,11 @@ int buildin_getscrate(struct script_state *st)
 	else
 		bl = map_id2bl(st->rid);
 
-	sc_def = status_get_sc_def(bl,type);
+	if (bl)
+		sc_def = status_get_sc_def(bl,type);
 
-	rate = rate * sc_def / 100;
-	push_val(st->stack,C_INT,rate);
+	rate = rate*(10000-sc_def)/10000;
+	push_val(st->stack,C_INT,rate<0?0:rate);
 
 	return 0;
 

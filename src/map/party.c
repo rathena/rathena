@@ -567,7 +567,7 @@ int party_skill_check(struct map_session_data *sd, int party_id, int skillid, in
 					&& sd->bl.m == p_sd->bl.m
 					&& pc_checkskill(p_sd,MO_TRIPLEATTACK)) {
 					int rate = 50 +50*skilllv; //+100/150/200% success rate
-					status_change_start(&p_sd->bl,SC_SKILLRATE_UP,MO_TRIPLEATTACK,rate,0,0,skill_get_time(SG_FRIEND, 1),0);
+					status_change_start(&p_sd->bl,SC_SKILLRATE_UP,100,MO_TRIPLEATTACK,rate,0,0,skill_get_time(SG_FRIEND, 1),0);
 				}
 				break;
 			case MO_TRIPLEATTACK: //Increase Counter rate of Star Gladiators
@@ -575,7 +575,7 @@ int party_skill_check(struct map_session_data *sd, int party_id, int skillid, in
 					&& sd->bl.m == p_sd->bl.m
 					&& pc_checkskill(p_sd,TK_COUNTER)) {
 					int rate = 50 +50*pc_checkskill(p_sd,TK_COUNTER); //+100/150/200% success rate
-					status_change_start(&p_sd->bl,SC_SKILLRATE_UP,TK_COUNTER,rate,0,0,skill_get_time(SG_FRIEND, 1),0);
+					status_change_start(&p_sd->bl,SC_SKILLRATE_UP,100,TK_COUNTER,rate,0,0,skill_get_time(SG_FRIEND, 1),0);
 				}
 				break;
 			case AM_TWILIGHT2: //Twilight Pharmacy, requires Super Novice

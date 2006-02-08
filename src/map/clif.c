@@ -5220,7 +5220,7 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,
 	WBUFB(buf,14)=fail;
 	clif_send(buf,packet_len_table[0x11a],src,AREA);
 
-	return 0;
+	return fail;
 }
 
 /*==========================================
@@ -8762,7 +8762,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
 
 	if(battle_config.muting_players && sd->status.manner < 0 && battle_config.manner_system)
-		status_change_start(&sd->bl,SC_NOCHAT,0,0,0,0,0,0);
+		status_change_start(&sd->bl,SC_NOCHAT,100,0,0,0,0,0,0);
 
 // Lance
 	if (script_config.event_script_type == 0) {
@@ -8787,7 +8787,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->sc_data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 		status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 	if(sd->special_state.infinite_endure && sd->sc_data[SC_ENDURE].timer == -1)
-		status_change_start(&sd->bl,SC_ENDURE,10,1,0,0,0,0);
+		status_change_start(&sd->bl,SC_ENDURE,100,10,1,0,0,0,0);
 
 	// Required to eliminate glow bugs because it's executed before clif_changeoption [Lance]
 	//New 'night' effect by dynamix [Skotlex]
@@ -9097,7 +9097,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 				sd->state.snovice_flag = 3;
 			else if (sd->state.snovice_flag == 3) {
 				clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,1);
-				status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],
+				status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],100,
 						17,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,1),0 ); //Lv17-> +50 critical (noted by Poki) [Skotlex]
 				sd->state.snovice_flag = 0;
 			}
@@ -11002,7 +11002,7 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 		{
 			dstsd->status.manner -= limit;
 			if(dstsd->status.manner < 0)
-				status_change_start(bl,SC_NOCHAT,0,0,0,0,0,0);
+				status_change_start(bl,SC_NOCHAT,100,0,0,0,0,0,0);
 			else
 			{
 				dstsd->status.manner = 0;
@@ -11199,7 +11199,7 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd) {
 	sd->doridori_counter = 1;
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON
 		&& sd->state.rest && (level = pc_checkskill(sd,TK_SPTIME)))
-		status_change_start(&sd->bl,SkillStatusChangeTable[TK_SPTIME],level,0,0,0,skill_get_time(TK_SPTIME, level),0);
+		status_change_start(&sd->bl,SkillStatusChangeTable[TK_SPTIME],100,level,0,0,0,skill_get_time(TK_SPTIME, level),0);
 	return;
 }
 /*==========================================
@@ -11217,8 +11217,9 @@ void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 				ShowInfo("SuperNovice explosionspirits!! %d %d %d 000\n",sd->bl.id,sd->status.class_,sd->status.base_exp);
 		}
 		if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_exp > 0 && nextbaseexp > 0 && (int)((double)1000*sd->status.base_exp/nextbaseexp)%100==0){
-			clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,5,1);
-			status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],5,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,5),0 );
+			clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,5,
+				status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],100,
+					5,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,5),0));
 		}
 	}
 	return;

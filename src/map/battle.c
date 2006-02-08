@@ -611,9 +611,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		
 		if(sc->data[SC_DODGE].timer != -1 && !sc->opt1 && (flag&BF_LONG || (sc->data[SC_SPURT].timer != -1 && flag&BF_WEAPON))
 			&& rand()%100 < 20) {
+			if (sd && pc_issit(sd)) pc_setstand(sd); //Stand it to dodge.
 			clif_skill_nodamage(bl,bl,TK_DODGE,1,1);
 			if (sc->data[SC_COMBO].timer == -1)
-				status_change_start(bl, SC_COMBO, TK_JUMPKICK, src->id, 0, 0, 2000, 0);
+				status_change_start(bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 0, 0, 2000, 0);
 			return 0;
 		}
 
@@ -2292,14 +2293,14 @@ static struct Damage battle_calc_weapon_attack(
 				if (target->type == BL_PC)
 					pc_breakweapon((struct map_session_data *)target);
 				else
-					status_change_start(target,SC_STRIPWEAPON,1,75,0,0,breaktime,0);
+					status_change_start(target,SC_STRIPWEAPON,100,1,75,0,0,breaktime,0);
 			}
 			if(rand() % 10000 < breakrate[1] * battle_config.equip_skill_break_rate/100 || breakrate[1] >= 10000) {
 				if (target->type == BL_PC) {
 					struct map_session_data *tsd = (struct map_session_data *)target;
 					pc_breakarmor(tsd);
 				} else
-					status_change_start(target,SC_STRIPSHIELD,1,75,0,0,breaktime,0);
+					status_change_start(target,SC_STRIPSHIELD,100,1,75,0,0,breaktime,0);
 			}
 		}
 	}
@@ -3043,9 +3044,9 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			int duration = skill_get_time2(MO_BLADESTOP,skilllv);
 			status_change_end(target, SC_BLADESTOP_WAIT, -1);
 			clif_damage(src, target, tick, status_get_amotion(src), 1, 0, 1, 0, 0); //Display MISS.
-			status_change_start(target, SC_BLADESTOP, skilllv, 2, (int)target, (int)src, duration, 0);
+			status_change_start(target, SC_BLADESTOP, 100, skilllv, 2, (int)target, (int)src, duration, 0);
 			skilllv = sd?pc_checkskill(sd, MO_BLADESTOP):1;
-			status_change_start(src, SC_BLADESTOP, skilllv, 1, (int)src, (int)target, duration, 0);
+			status_change_start(src, SC_BLADESTOP, 100, skilllv, 1, (int)src, (int)target, duration, 0);
 			return 0;
 		}
 
@@ -3092,12 +3093,15 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	if (!status_isdead(target) && damage > 0) {
 		if (sd) {
 			int boss = status_get_mode(target)&MD_BOSS;
-			if (
-				(sd->weapon_coma_ele[ele] > 0 && rand()%10000 < sd->weapon_coma_ele[ele]) ||
-				(sd->weapon_coma_race[race] > 0 && rand()%10000 < sd->weapon_coma_race[race]) ||
-				(sd->weapon_coma_race[boss?10:11] > 0 && rand()%10000 < sd->weapon_coma_race[boss?10:11])
-			)
-				status_change_start(target, SC_COMA, 0, 0, 0, 0, 0, 0);
+			int rate = 0;
+			if (sd->weapon_coma_ele[ele] > 0)
+				rate+=sd->weapon_coma_ele[ele];
+			if (sd->weapon_coma_race[race] > 0)
+				rate += sd->weapon_coma_race[race];
+			if (sd->weapon_coma_race[boss?10:11] > 0)
+				rate += sd->weapon_coma_race[boss?10:11];
+			if (rate)
+				status_change_start(target, SC_COMA, rate/100, 0, 0, 0, 0, 0, 0);
 		}
 	}
 

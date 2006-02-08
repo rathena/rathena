@@ -479,7 +479,7 @@ int status_get_sc_def(struct block_list *bl, int type);
 #define status_get_sc_def_luk(bl)	(status_get_sc_def(bl, SP_LUK))
 
 // ó‘ÔˆÙíŠÖ˜A skill.c ‚æ‚èˆÚ“®
-int status_change_start(struct block_list *bl,int type,int val1,int val2,int val3,int val4,int tick,int flag);
+int status_change_start(struct block_list *bl,int type,int rate,int val1,int val2,int val3,int val4,int tick,int flag);
 int status_change_end( struct block_list* bl , int type,int tid );
 int status_change_timer(int tid, unsigned int tick, int id, int data);
 int status_change_timer_sub(struct block_list *bl, va_list ap );
