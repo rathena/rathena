@@ -94,8 +94,8 @@ alberta.gat,29,243,4	script	Jainie	53,{
 
 // Carl Orleans -- Valentine Event Chocolate maker ------------------
 prt_castle.gat,54,34,4	script	Carl Orleans	47,{
-	mes "[Carl Orleans]"
-	mes "Yes?"
+	mes "[Carl Orleans]";
+	mes "Yes?";
 	next;
 	menu "I want some hand made chocolate...",-,"I'm lost, sorry to bother you.",M_WAT;
      
