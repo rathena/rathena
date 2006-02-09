@@ -6,6 +6,8 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/02/09
+	* Added setting max_exp_gain_rate which caps how much exp you can get from
+	  a single kill. See battle/exp.txt for details. [Skotlex]
 	* pc_readdb will now cap experience required per level to UINT_MAX, it will
 	  warn if the exp table has exp values above said limit. [Skotlex]
 	* Changed the default of skill_delay_attack_enable to no. [Skotlex]

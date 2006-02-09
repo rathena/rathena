@@ -301,6 +301,7 @@ extern struct Battle_Config {
 	unsigned short equip_skill_break_rate; //Offensive skills break rate
 	unsigned short pet_equip_required;
 	unsigned short multi_level_up;
+	unsigned short max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	unsigned short pk_mode;
 	unsigned short manner_system;
 	unsigned short show_mob_hp;  // end additions [Valaris]

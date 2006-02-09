@@ -4711,13 +4711,30 @@ int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int jo
 		base_exp-=guild_payexp(sd,base_exp);
 	}
 
-	if(sd->state.showexp){
-		nextb = pc_nextbaseexp(sd);
-		nextj = pc_nextjobexp(sd);
+	nextb = pc_nextbaseexp(sd);
+	nextj = pc_nextjobexp(sd);
+	
+		
+	if(sd->state.showexp || battle_config.max_exp_gain_rate){
 		if (nextb > 0)
 			nextbp = (float) base_exp / (float) nextb;
 		if (nextj > 0)
 			nextjp = (float) job_exp / (float) nextj;
+
+		if(battle_config.max_exp_gain_rate) {
+			if (nextbp > battle_config.max_exp_gain_rate/1000.) {
+				//Note that this value should never be greater than the original
+				//base_exp, therefore no overflow checks are needed. [Skotlex]
+				base_exp = (unsigned int)(battle_config.max_exp_gain_rate/1000.*nextb);
+				if (sd->state.showexp)
+					nextbp = (float) base_exp / (float) nextb;
+			}
+			if (nextjp > battle_config.max_exp_gain_rate/1000.) {
+				job_exp = (unsigned int)(battle_config.max_exp_gain_rate/1000.*nextj);
+				if (sd->state.showexp)
+					nextjp = (float) job_exp / (float) nextj;
+			}
+		}
 	}
 	
 	//Overflow checks... think we'll ever really need'em? [Skotlex]
