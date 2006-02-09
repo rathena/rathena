@@ -28,6 +28,9 @@ Nexon
 Date		Added
 ======
 
+02/09
+	* Fixed another issue of Cube Room Quest [Lupus]
+	- Fixed event_6_new_hats.txt wrong ID, thanks to phabyo
 02/07
 	* Added missing semicolons in the valentine's day event and disabled the Dog's year event. [Zephiris]
 	* Added a custom quest for Jewel Case for 99 Base Level Players of 2nd Class [Lupus]
