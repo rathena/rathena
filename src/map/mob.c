@@ -2166,6 +2166,32 @@ int mob_deleteslave(struct mob_data *md)
 	map_foreachinmap(mob_deleteslave_sub, md->bl.m, BL_MOB,md->bl.id);
 	return 0;
 }
+// Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]
+int mob_respawn(int tid, unsigned int tick, int id,int data )
+{
+	struct mob_data *md = (struct mob_data*)map_id2bl(id);
+	if (!md || md->bl.type != BL_MOB)
+		return 0;
+	//Mob must be dead and not in a map to respawn!
+	if (md->bl.prev != NULL || md->state.state != MS_DEAD)
+		return 0;
+
+	md->state.state = MS_IDLE;
+	md->state.skillstate = MSS_IDLE;
+	md->timer = -1;
+	md->last_thinktime = tick;
+	md->next_walktime = tick+rand()%50+5000;
+	md->attackabletime = tick;
+	md->canmove_tick = tick;
+	md->last_linktime = tick;
+
+	map_addblock(&md->bl);
+	mob_heal(md,data*status_get_max_hp(&md->bl)/100);
+	skill_unit_move(&md->bl,tick,1);
+	clif_spawnmob(md);
+	mobskill_use(md, tick, MSC_SPAWN);
+	return 1;
+}
 
 /*==========================================
  * It is the damage of sd to damage to md.
@@ -2324,16 +2350,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	if(md->hp > 0)
 		return damage;
 
-		//Not the most correct way ever, but this is totally custom anyway.... [Skotlex]
-	if (md->sc.data[SC_KAIZEL].timer != -1) {
-		max_hp = status_get_max_hp(&md->bl);
-		mob_heal(md, 10*md->sc.data[SC_KAIZEL].val1*max_hp/100);
-		clif_resurrection(&md->bl, 1);
-		status_change_start(&md->bl,SkillStatusChangeTable[PR_KYRIE],100,10,0,0,0,skill_get_time2(SL_KAIZEL, md->sc.data[SC_KAIZEL].val1),0);
-		status_change_end(&md->bl,SC_KAIZEL,-1);
-		return damage;
-	}
-
 	// ----- ‚±‚±‚©‚çŽ€–Sˆ— -----
 
 	mode = status_get_mode(&md->bl); //Mode will be used for various checks regarding exp/drops.
@@ -2341,10 +2357,22 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	//changestate will clear all status effects, so we need to know if RICHMANKIM is in effect before then. [Skotlex]
 	//I just recycled ret because it isn't used until much later and I didn't want to add a new variable for it.
 	ret = (md->sc.data[SC_RICHMANKIM].timer != -1)?(25 + 11*md->sc.data[SC_RICHMANKIM].val1):0;
-	
+
+	md->state.skillstate = MSS_DEAD;	
+	mobskill_use(md,tick,-1);	//On Dead skill.
+
+	if (md->sc.data[SC_KAIZEL].timer != -1) {
+		//Revive in a bit.
+		max_hp = 10*md->sc.data[SC_KAIZEL].val1; //% of life to rebirth with
+		mob_changestate(md,MS_DEAD,0);
+		clif_clearchar_area(&md->bl,1);
+		map_delblock(&md->bl);
+		add_timer(gettick()+3000, mob_respawn, md->bl.id, max_hp);
+		return damage;
+	}
+
 	map_freeblock_lock();
 	mob_changestate(md,MS_DEAD,0);
-	mobskill_use(md,tick,-1);	// Ž€–SŽžƒXƒLƒ‹
 
 	memset(tmpsd,0,sizeof(tmpsd));
 	memset(pt,0,sizeof(pt));
@@ -5016,6 +5044,7 @@ int do_init_mob(void)
 	add_timer_func_list(mobskill_castend_pos,"mobskill_castend_pos");
 	add_timer_func_list(mob_timer_delete,"mob_timer_delete");
 	add_timer_func_list(mob_spawn_guardian_sub,"mob_spawn_guardian_sub");
+	add_timer_func_list(mob_respawn,"mob_respawn");
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME,mob_ai_hard,0,0,MIN_MOBTHINKTIME);
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,MIN_MOBTHINKTIME*10);
 

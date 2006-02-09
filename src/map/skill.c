@@ -4949,9 +4949,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_REBIRTH:
-		if (md && md->state.state == MS_DEAD) {
-			mob_setdelayspawn (md->bl.id);
-		}
+		//New rebirth System uses Kaizel lv1. [Skotlex]
+		status_change_start(bl,SkillStatusChangeTable[skillid],100,1,0,0,0,skill_get_time(SL_KAIZEL,skilllv),0);
 		break;
 
 	case NPC_DARKBLESSING:

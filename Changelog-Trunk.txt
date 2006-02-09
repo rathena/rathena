@@ -4,8 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
-
 2006/02/09
+	* Added function mob_respawn which makes a mob respawn on spot 3 seconds
+	  after defeat if SC_KAIZEL is active. [Skotlex]
+	* Modified NPC_REBIRTH to use Kaizel level 1. [Skotlex]
 	* Added setting max_exp_gain_rate which caps how much exp you can get from
 	  a single kill. See battle/exp.txt for details. [Skotlex]
 	* pc_readdb will now cap experience required per level to UINT_MAX, it will

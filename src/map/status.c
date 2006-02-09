@@ -131,7 +131,8 @@ int SkillStatusChangeTable[]={
 	-1,
 	SC_STAN,
 	SC_HALLUCINATION,
-	-1,-1,
+	SC_KAIZEL,
+	-1,
 /* 210- */
 	-1,-1,-1,-1,-1,
 	SC_STRIPWEAPON,
