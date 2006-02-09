@@ -29,6 +29,10 @@
 
 =========================
 
+02/09
+	* Modified Magnum break's delay to 0, time1 to 2 secs, time2 to 10 secs.
+	  Time 1 is for the skill reuse delay, and time2 the weapon fire bonus time.
+	  [Skotlex]
 02/06
 	* Changed Serin's Gold Ring Weight to 0 [Poki#3]
 
