@@ -38,7 +38,7 @@ int party_recv_message(int party_id,int account_id,char *mes,int len);
 int party_check_conflict(struct map_session_data *sd);
 int party_skill_check(struct map_session_data *sd, int party_id, int skillid, int skilllv);
 int party_send_xy_clear(struct party *p);
-int party_exp_share(struct party *p,int map,int base_exp,int job_exp,int zeny);
+int party_exp_share(struct party *p,int map,unsigned int base_exp,unsigned int job_exp,int zeny);
 int party_send_dot_remove(struct map_session_data *sd);
 int party_sub_count(struct block_list *bl, va_list ap);
 void party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int type,...);

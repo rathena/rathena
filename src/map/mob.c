@@ -6,6 +6,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
+#include <limits.h>
 
 #include "timer.h"
 #include "socket.h"
@@ -2176,7 +2177,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	struct map_session_data *sd = NULL,*tmpsd[DAMAGELOG_SIZE];
 	struct {
 		struct party *p;
-		int id,base_exp,job_exp,zeny;
+		int id,zeny;
+		unsigned int base_exp,job_exp;
 	} pt[DAMAGELOG_SIZE];
 	int pnum=0;
 	int mvp_damage,max_hp;
@@ -2422,7 +2424,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	// ŒoŒ±’l‚Ì•ª”z
 	for(i=0;i<DAMAGELOG_SIZE;i++){
 		int pid,flag=1,zeny=0;
-		unsigned long base_exp,job_exp;
+		unsigned int base_exp,job_exp;
 		double per;
 		struct party *p;
 		if(tmpsd[i]==NULL || tmpsd[i]->bl.m != md->bl.m || pc_isdead(tmpsd[i]))
@@ -2436,8 +2438,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		if (count>1)	
 			per *= (9.+(double)((count > 6)? 6:count))/10.; //attackers count bonus.
 
-		base_exp = (unsigned long)md->db->base_exp;
-		job_exp = (unsigned long)md->db->job_exp;
+		base_exp = md->db->base_exp;
+		job_exp = md->db->job_exp;
 
 		if (ret)
 			per += per*ret/100.; //SC_RICHMANKIM bonus. [Skotlex]
@@ -2477,21 +2479,24 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				else if(md->special_state.size==2 && zeny >1)
 					zeny*=2;
 			}
-			if(battle_config.mobs_level_up && md->level > md->db->lv) { // [Valaris]
-				base_exp+=(unsigned long) (((md->level-md->db->lv)*((md->db->base_exp))*(battle_config.mobs_level_up_exp_rate/100)));
-				job_exp+=(unsigned long) (((md->level-md->db->lv)*((md->db->job_exp))*(battle_config.mobs_level_up_exp_rate/100)));
-			}
+			if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
+				per+= per*(md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate/100;
 		}
 
 		if (per > 4) per = 4; //Limit gained exp to quadro the mob's exp. [3->4 Komurka]
-		base_exp = (unsigned long)(base_exp*per);
-		job_exp = (unsigned long)(job_exp*per);
-	
-		if (base_exp > 0x7fffffff) base_exp = 0x7fffffff;
-		else if (base_exp < 1) base_exp = 1;
 		
-		if (job_exp > 0x7fffffff) job_exp = 0x7fffffff;
-		else if (job_exp < 1) job_exp = 1;
+		if (base_exp*per > UINT_MAX)
+			base_exp = UINT_MAX;
+		else
+			base_exp = (unsigned int)(base_exp*per);
+
+		if (job_exp*per > UINT_MAX)
+			job_exp = UINT_MAX;
+		else
+			job_exp = (unsigned int)(job_exp*per);
+	
+		if (base_exp < 1) base_exp = 1;
+		if (job_exp < 1) job_exp = 1;
 	
 		//mapflags: noexp check [Lorky]
 		if (map[md->bl.m].flag.nobaseexp == 1)	base_exp=0; 
@@ -2514,14 +2519,16 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 					flag=0;
 				}
 			}else{	// ‚¢‚é‚Æ‚«‚ÍŒö•½
-				if (pt[j].base_exp +base_exp < 0x7fffffff)
+				if (pt[j].base_exp > UINT_MAX - base_exp)
+					pt[j].base_exp=UINT_MAX;
+				else
 					pt[j].base_exp+=base_exp;
+				
+				if (pt[j].job_exp > UINT_MAX - job_exp)
+					pt[j].job_exp=UINT_MAX;
 				else
-					pt[j].base_exp = 0x7fffffff;
-				if (pt[j].job_exp +job_exp < 0x7fffffff)
 					pt[j].job_exp+=job_exp;
-				else
-					pt[j].job_exp = 0x7fffffff;
+				
 				if(battle_config.zeny_from_mobs)
 					pt[j].zeny+=zeny;  // zeny share [Valaris]
 				flag=0;
@@ -4241,14 +4248,20 @@ static int mob_readdb(void)
 			mob_db_data[class_]->max_sp = atoi(str[5]);
 
 			exp = (double)atoi(str[6]) * (double)battle_config.base_exp_rate / 100.;
-			if (exp < 0) exp = 0;
-			else if (exp > 0x7fffffff) exp = 0x7fffffff;
-			mob_db_data[class_]->base_exp = (int)exp;
+			if (exp < 0)
+				mob_db_data[class_]->base_exp = 0;
+			if (exp > UINT_MAX)
+				mob_db_data[class_]->base_exp = UINT_MAX;
+			else
+				mob_db_data[class_]->base_exp = (unsigned int)exp;
 
 			exp = (double)atoi(str[7]) * (double)battle_config.job_exp_rate / 100.;
-			if (exp < 0) exp = 0;
-			else if (exp > 0x7fffffff) exp = 0x7fffffff;
-			mob_db_data[class_]->job_exp = (int)exp;
+			if (exp < 0)
+				mob_db_data[class_]->job_exp = 0;
+			else if (exp > UINT_MAX)
+				mob_db_data[class_]->job_exp = UINT_MAX;
+			else
+			mob_db_data[class_]->job_exp = (unsigned int)exp;
 			
 			mob_db_data[class_]->range=atoi(str[8]);
 			mob_db_data[class_]->atk1=atoi(str[9]);
@@ -4811,14 +4824,20 @@ static int mob_read_sqldb(void)
 				mob_db_data[class_]->max_sp = TO_INT(5);
 
 				exp = (double)TO_INT(6) * (double)battle_config.base_exp_rate / 100.;
-				if (exp < 0) exp = 0;
-				else if (exp > 0x7fffffff) exp = 0x7fffffff;
-				mob_db_data[class_]->base_exp = (int)exp;
+				if (exp < 0)
+					mob_db_data[class_]->base_exp = 0;
+				else if (exp > UINT_MAX)
+					mob_db_data[class_]->base_exp = UINT_MAX;
+				else
+					mob_db_data[class_]->base_exp = (unsigned int)exp;
 
 				exp = (double)TO_INT(7) * (double)battle_config.job_exp_rate / 100.;
-				if (exp < 0) exp = 0;
-				else if (exp > 0x7fffffff) exp = 0x7fffffff;
-				mob_db_data[class_]->job_exp = (int)exp;
+				if (exp < 0)
+					mob_db_data[class_]->job_exp = 0;
+				else if (exp > UINT_MAX)
+					mob_db_data[class_]->job_exp = UINT_MAX;
+				else
+					mob_db_data[class_]->job_exp = (unsigned int)exp;
 				
 				mob_db_data[class_]->range = TO_INT(8);
 				mob_db_data[class_]->atk1 = TO_INT(9);

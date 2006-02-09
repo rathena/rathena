@@ -6,8 +6,19 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/02/09
-	* SQL compile fix (Skotlex, check line 470 in charsave.c,
-	  I've added here rate value = 10000) [Komurka]
+	* Code rewrites in mob_damage and party_exp_even_share for correctly
+	  handling overflow issues. Now uses UINT_MAX for range comparisons, as it
+	  should be. [Skotlex]
+	* Also modified the mob_db reading to use UINT_MAX for exp limits, changed
+	  their exp/job exp fields to unsigned int as well. [Skotlex]
+	* Modified multi_level_up behaviour to work as specified by Kyoki. That is,
+	  on a level up, the max carry-over exp is the exp needed for the previous
+	  level -1. [Skotlex]
+	* Modified the skill attack display of Meteor Assault and the Warm Skills
+	  (I think the caster should no longer do fancy animations now on each hit)
+	  [Skotlex]
+	* Added back water elemental targets being inmune to SC_FREEZE [Skotlex]
+	* SQL compile fix [Komurka]
 
 2006/02/08
 	* Added battle config option skill_caster_check, which does a

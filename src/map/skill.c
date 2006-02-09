@@ -1766,6 +1766,10 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 //ïêäÌÉXÉLÉãÅHÇ±Ç±Ç‹Ç≈
 	switch(skillid){
 	case AS_SPLASHER:
+	case ASC_METEORASSAULT:
+	case SG_SUN_WARM:
+	case SG_MOON_WARM:
+	case SG_STAR_WARM:
 		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
 	case ASC_BREAKER:	// [celest]

@@ -365,7 +365,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 		for (i = 0; i < fd_max; i++) {
 			if (session[i] && (sd = (struct map_session_data *)session[i]->session_data) != NULL && sd->state.auth) {
 				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-                                        WFIFOHEAD(i, len);
+					WFIFOHEAD(i, len);
 					memcpy(WFIFOP(i,0), buf, len);
 					WFIFOSET(i,len);
 				}
@@ -412,7 +412,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 				if (packet_db[cd->usersd[i]->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 					if (cd->usersd[i]->fd >0 && session[cd->usersd[i]->fd]) // Added check to see if session exists [PoW]
 					{
-                                                WFIFOHEAD(cd->usersd[i]->fd,len);
+						WFIFOHEAD(cd->usersd[i]->fd,len);
 						memcpy(WFIFOP(cd->usersd[i]->fd,0), buf, len);
 						WFIFOSET(cd->usersd[i]->fd,len);
 					}
@@ -424,6 +424,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 		for(i=1; i<fd_max; i++) {
 			if(session[i] && (sd = (struct map_session_data*)session[i]->session_data) != NULL &&
 				sd->state.mainchat && sd->fd) {
+					WFIFOHEAD(sd->fd, len);								
 					memcpy(WFIFOP(sd->fd,0), buf, len);
 					WFIFOSET(sd->fd, len);								
 			}
@@ -472,7 +473,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 				if (session[i] && (sd = (struct map_session_data*)session[i]->session_data) != NULL && sd->state.auth && sd->fd && sd->partyspy) {
 					if (sd->partyspy == p->party_id) {
 						if (sd->fd && packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-                                                        WFIFOHEAD(sd->fd,len);
+							WFIFOHEAD(sd->fd,len);
 							memcpy(WFIFOP(sd->fd,0), buf, len);
 							WFIFOSET(sd->fd,len);
 						}
@@ -483,7 +484,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 		break;
 	case SELF:
 		if (sd && sd->fd && packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-                        WFIFOHEAD(sd->fd,len);
+			WFIFOHEAD(sd->fd,len);
 			memcpy(WFIFOP(sd->fd,0), buf, len);
 			WFIFOSET(sd->fd,len);
 		}
@@ -533,7 +534,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 				if (session[i] && (sd = (struct map_session_data*)session[i]->session_data) != NULL && sd->state.auth && sd->fd && sd->guildspy) {
 					if (sd->guildspy == g->guild_id) {
 						if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-                                                        WFIFOHEAD(sd->fd,len);
+							WFIFOHEAD(sd->fd,len);
 							memcpy(WFIFOP(sd->fd,0), buf, len);
 							WFIFOSET(sd->fd,len);
 						}
@@ -8809,7 +8810,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	    pc_checkskill(sd,SG_STAR_COMFORT))
 		status_calc_pc(sd,0);
 	
-	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobafter(sd))
+	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
 	
 	map_foreachinarea(clif_getareachar,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,BL_ALL,sd);

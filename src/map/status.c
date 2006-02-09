@@ -1618,7 +1618,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	// Relative modifiers from passive skills
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0)
 		sd->aspd_rate -= (skill/2);
-	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && !pc_nextjobafter(sd))
+	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && !pc_nextjobexp(sd))
 		sd->aspd_rate -= (skill*3);
 
 	if(pc_isriding(sd))
@@ -3740,8 +3740,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	//Check for inmunities / sc fails
 	switch (type) {
-		case SC_STONE:
 		case SC_FREEZE:
+			if (elem == 1 && !(flag&1))
+				return 0; //Can't freeze water elementals.
+		case SC_STONE:
 			//I've been informed that undead chars are inmune to stone curse too. [Skotlex]
 			if (undead_flag && !(flag&1))
 				return 0;

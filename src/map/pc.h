@@ -123,9 +123,7 @@ int pc_checkbaselevelup(struct map_session_data *sd);
 int pc_checkjoblevelup(struct map_session_data *sd);
 int pc_gainexp(struct map_session_data*,unsigned int,unsigned int);
 unsigned int pc_nextbaseexp(struct map_session_data *);
-unsigned int pc_nextbaseafter(struct map_session_data *); // [Valaris]
 unsigned int pc_nextjobexp(struct map_session_data *);
-unsigned int pc_nextjobafter(struct map_session_data *); // [Valaris]
 int pc_need_status_point(struct map_session_data *,int);
 int pc_statusup(struct map_session_data*,int);
 int pc_statusup2(struct map_session_data*,int,int);

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 #include "../common/timer.h"
 #include "../common/socket.h"
@@ -639,12 +640,11 @@ int party_send_xy_clear(struct party *p)
 }
 
 // exp share and added zeny share [Valaris]
-int party_exp_share(struct party *p,int map,int base_exp,int job_exp,int zeny)
+int party_exp_share(struct party *p,int map,unsigned int base_exp,unsigned int job_exp,int zeny)
 {
 	struct map_session_data* sd[MAX_PARTY];
 	int i;
 	short c, bonus =100; // modified [Valaris]
-	unsigned long base, job;
 
 	nullpo_retr(0, p);
 
@@ -660,15 +660,22 @@ int party_exp_share(struct party *p,int map,int base_exp,int job_exp,int zeny)
 		bonus += (battle_config.party_even_share_bonus*c*(c-1)/10);	//Changed Valaris's bonus switch to an equation [Skotlex]
 	else	//Official kRO/iRO sites state that the even share bonus is 10% per additional party member.
 		bonus += (c-1)*10;
-	base = (unsigned long)(base_exp/c)*bonus/100;
-	job = (unsigned long)(job_exp/c)*bonus/100;
-	if (base > 0x7fffffff)
-		base = 0x7fffffff;
-	if (job > 0x7fffffff)
-		job = 0x7fffffff;
+
+	base_exp/=c;	
+	job_exp/=c;
+	if (base_exp/100 > UINT_MAX/bonus)
+		base_exp= UINT_MAX; //Exp overflow
+	else
+		base_exp = base_exp*bonus/100;
+
+	if (job_exp/100 > UINT_MAX/bonus)
+		job_exp = UINT_MAX;
+	else
+		job_exp = job_exp*bonus/100;
+
 	for (i = 0; i < c; i++)
 	{
-		pc_gainexp(sd[i], base, job);
+		pc_gainexp(sd[i], base_exp, job_exp);
 		if (battle_config.zeny_from_mobs) // zeny from mobs [Valaris]
 			pc_getzeny(sd[i],bonus*zeny/(c*100));
 	}
