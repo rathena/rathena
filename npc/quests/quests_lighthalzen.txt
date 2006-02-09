@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -22,6 +22,9 @@
 //=	Thanks to Linuxwolf for a grammar check as well =).
 //= 1.2a Moved Biolab entrance to lhz_dun warps. [Vicious]
 //= 1.3 Fixed password bug, fixed endless item exploit, some typos [Lupus]
+//= 1.4 Fixed password abuse. When people don't read the password under the picture
+//= 	and enter Zero shit 8) (TODO: I saw some "Sticks" abuses, too.. where you couls skip
+//=	a part of quest...)
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -635,25 +638,25 @@ L_2:
 	mes "There is a box with numbers 1~9 on it's surface.";
 	next;
 	set @agree,0;
-	input @1number;
-	if (num6 == @1number) set @agree,@agree+1;
-	input @2number;
-	if (num8 == @2number) set @agree,@agree+1;
-	input @3number;
-	if (num1 == @3number) set @agree,@agree+1;
-	input @4number;
-	if (num4 == @4number) set @agree,@agree+1;
-	input @5number;
-	if (num9 == @5number) set @agree,@agree+1;
-	input @6number;
-	if (num2 == @6number) set @agree,@agree+1;
-	input @7number;
-	if (num7 == @7number) set @agree,@agree+1;
-	input @8number;
-	if (num5 == @8number) set @agree,@agree+1;
-	input @9number;
-	if (num3 == @9number) set @agree,@agree+1;
-	if (@agree == 9) goto L_3;
+	input @number;
+	if (num6 == @number) set @agree,@agree+1;
+	input @number;
+	if (num8 == @number) set @agree,@agree+1;
+	input @number;
+	if (num1 == @number) set @agree,@agree+1;
+	input @number;
+	if (num4 == @number) set @agree,@agree+1;
+	input @number;
+	if (num9 == @number) set @agree,@agree+1;
+	input @number;
+	if (num2 == @number) set @agree,@agree+1;
+	input @number;
+	if (num7 == @number) set @agree,@agree+1;
+	input @number;
+	if (num5 == @number) set @agree,@agree+1;
+	input @number;
+	if (num3 == @number) set @agree,@agree+1;
+	if (@agree == 9 && num1) goto L_3; //you can't enter correct numbers, till read them under that picture [Lupus]
 	mes "There is no change.";
 	close;
 
