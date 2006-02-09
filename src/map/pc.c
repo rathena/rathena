@@ -8047,10 +8047,22 @@ int pc_split_atoi(char *str,int *val, char sep, int max)
 
 int pc_split_atoui(char *str,unsigned int *val, char sep, int max)
 {
+	static int warning=0;
 	int i,j;
+	float f;
 	for (i=0; i<max; i++) {
 		if (!str) break;
-		val[i] = (unsigned int)atof(str);
+		f = atof(str);
+		if (f < 0)
+			val[i] = 0;
+		else if (f > UINT_MAX) {
+			val[i] = UINT_MAX;
+			if (!warning) {
+				warning = 1;
+				ShowWarning("pc_readdb (exp.txt): Required exp per level is capped to %d\n", UINT_MAX);
+			}
+		} else
+			val[i] = (unsigned int)f;
 		str = strchr(str,sep);
 		if (str)
 			*str++=0;

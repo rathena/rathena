@@ -6,6 +6,8 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/02/09
+	* pc_readdb will now cap experience required per level to UINT_MAX, it will
+	  warn if the exp table has exp values above said limit. [Skotlex]
 	* Changed the default of skill_delay_attack_enable to no. [Skotlex]
 	* Code rewrites in mob_damage and party_exp_even_share for correctly
 	  handling overflow issues. Now uses UINT_MAX for range comparisons, as it
