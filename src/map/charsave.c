@@ -467,7 +467,7 @@ int charsave_load_scdata(int account_id, int char_id)
 				continue;
 			}
 
-			status_change_start(&sd->bl, atoi(sql_row[0]), atoi(sql_row[2]), atoi(sql_row[3]),
+			status_change_start(&sd->bl, atoi(sql_row[0]), 10000, atoi(sql_row[2]), atoi(sql_row[3]),
 				atoi(sql_row[4]), atoi(sql_row[5]), atoi(sql_row[1]), 7);
 		}
 	}
