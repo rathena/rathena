@@ -124,7 +124,7 @@
 105,0,0,0,0,0,1,0,no,0,0,0,weapon,0	//BS_HILTBINDING#Hilt Binding#
 106,0,0,0,0,0,1,0,no,0,0,0,weapon,0	//BS_FINDINGORE#Ore Discovery#
 107,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//BS_WEAPONRESEARCH#Weaponry Research#
-108,2,6,16,0,1,1,1,no,0,0,0,weapon,0	//BS_REPAIRWEAPON#Weapon Repair#
+108,2,6,16,0,1,1,1,yes,0,0,0,weapon,0	//BS_REPAIRWEAPON#Weapon Repair#
 109,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//BS_SKINTEMPER#Skin Tempering#
 110,1,6,2,0,1,5,1,no,0,0,0,weapon,0	//BS_HAMMERFALL#Hammer Fall#
 111,0,6,4,0,1,5,1,no,0,0,0,weapon,0	//BS_ADRENALINE#Adrenaline Rush#
