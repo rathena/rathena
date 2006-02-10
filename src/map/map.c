@@ -1324,18 +1324,18 @@ int map_searchrandfreecell(int m,int *x,int *y,int stack) {
 	int free_cells[9][2];
 
 	for(free_cell=0,i=-1;i<=1;i++){
-		if(i+y<0 || i+y>=map[m].ys)
+		if(i+*y<0 || i+*y>=map[m].ys)
 			continue;
 		for(j=-1;j<=1;j++){
-			if(j+x<0 || j+x>=map[m].xs)
+			if(j+*x<0 || j+*x>=map[m].xs)
 				continue;
-			if(map_getcell(m,j+x,i+y,CELL_CHKNOPASS))
+			if(map_getcell(m,j+*x,i+*y,CELL_CHKNOPASS))
 				continue;
 			//Avoid item stacking to prevent against exploits. [Skotlex]
-			if(stack && map_count_oncell(m,j+x,i+y, BL_ITEM) > stack)
+			if(stack && map_count_oncell(m,j+*x,i+*y, BL_ITEM) > stack)
 				continue;
-			free_cells[free_cell][0] = j+x;
-			free_cells[free_cell++][1] = i+y;
+			free_cells[free_cell][0] = j+*x;
+			free_cells[free_cell++][1] = i+*y;
 		}
 	}
 	if(free_cell==0)

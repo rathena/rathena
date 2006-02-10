@@ -3745,7 +3745,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (elem == 1 && !(flag&1))
 				return 0; //Can't freeze water elementals.
 		case SC_STONE:
-			//I've been informed that undead chars are inmune to stone curse too. [Skotlex]
+			//Undead are inmune to Freeze/Stone
 			if (undead_flag && !(flag&1))
 				return 0;
 		case SC_SLEEP:
@@ -4631,6 +4631,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_FREEZE:
 		case SC_STAN:
 		case SC_SLEEP:
+		case SC_STONE:
+			if (sd && pc_issit(sd)) //Avoid sprite sync problems.
+				pc_setstand(sd);
 		case SC_TRICKDEAD:
 			battle_stopattack(bl);
 			skill_stop_dancing(bl);	/* ‰‰‘t/ƒ_ƒ“ƒX‚Ì’†? */
