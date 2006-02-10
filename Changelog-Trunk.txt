@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/09
+	* Added range checking to mob skill loading of permillage and delay to
+	  prevent overflows. [Skotlex]
+	* Fixed pc_gainexp not working for next level exp requirements above
+	  INT_MAX. [Skotlex]
+	* Fixed the display of @showexp not working right for exp values above
+	  INT_MAX. [Skotlex]
 	* Removed the conf sql code for now.  Maybe will continue later with that project.
 	  Lowered the irc keepalive timer, and added some checks for use_irc that should have been there.
 	  Added a return line \n to the beginning of the title screen. [Valaris]

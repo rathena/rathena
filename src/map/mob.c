@@ -4539,7 +4539,7 @@ static int mob_readskilldb(void)
 {
 	FILE *fp;
 	char line[1024];
-	int i;
+	int i,tmp;
 
 	const struct {
 		char str[32];
@@ -4686,13 +4686,19 @@ static int mob_readskilldb(void)
 			ms->skill_lv= j>battle_config.mob_max_skilllvl ? battle_config.mob_max_skilllvl : j; //we strip max skill level
 
 			//Apply battle_config modifiers to rate (permillage) and delay [Skotlex]
-			ms->permillage=atoi(sp[5]);
+			tmp = atoi(sp[5]);
 			if (battle_config.mob_skill_rate != 100)
-				ms->permillage = ms->permillage*battle_config.mob_skill_rate/100;
+				tmp = tmp*battle_config.mob_skill_rate/100;
+			if (tmp > 10000)
+				ms->permillage= 10000;
+			else
+				ms->permillage= tmp;
 			ms->casttime=atoi(sp[6]);
 			ms->delay=atoi(sp[7]);
 			if (battle_config.mob_skill_delay != 100)
 				ms->delay = ms->delay*battle_config.mob_skill_delay/100;
+			if (ms->delay < 0) //time overflow?
+				ms->delay = INT_MAX;
 			ms->cancel=atoi(sp[8]);
 			if( strcmp(sp[8],"yes")==0 ) ms->cancel=1;
 			ms->target=atoi(sp[9]);
