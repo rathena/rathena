@@ -1365,35 +1365,6 @@ extern char mob_db_db[32];
 extern char mob_db2_db[32];
 extern char login_db[32];
 
-// SQL for databases not supported yet. [Valaris]
-extern int db_use_newsqldbs;
-
-extern char abra_sqldb[32];
-extern char attr_fix_sqldb[32];
-extern char cast_sqldb[32];
-extern char castle_sqldb[32];
-extern char create_arrow_sqldb[32];
-extern char exp_sqldb[32];
-extern char exp_guild_sqldb[32];
-extern char item_bluebox_sqldb[32];
-extern char item_cardalbum_sqldb[32];
-extern char item_giftbox_sqldb[32];
-extern char item_scroll_sqldb[32];
-extern char item_violetbox_sqldb[32];
-extern char job_sqldb1[32];
-extern char mob_boss_sqldb[32];
-extern char mob_branch_sqldb[32];
-extern char mob_poring_sqldb[32];
-extern char mob_skill_sqldb[32];
-extern char pet_sqldb[32];
-extern char produce_sqldb[32];
-extern char refine_sqldb[32];
-extern char size_fix_sqldb[32];
-extern char skill_sqldb[32];
-extern char skill_require_sqldb[32];
-extern char skill_tree_sqldb[32];
-// End [Valaris]
-
 extern char login_db_level[32];
 extern char login_db_account_id[32];
 

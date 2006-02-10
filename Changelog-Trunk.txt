@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/09
+	* Removed the conf sql code for now.  Maybe will continue later with that project.
+	  Lowered the irc keepalive timer, and added some checks for use_irc that should have been there.
+	  Added a return line \n to the beginning of the title screen. [Valaris]
 	* Added function mob_respawn which makes a mob respawn on spot 3 seconds
 	  after defeat if SC_KAIZEL is active. [Skotlex]
 	* Modified NPC_REBIRTH to use Kaizel level 1. [Skotlex]

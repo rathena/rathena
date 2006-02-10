@@ -149,7 +149,7 @@ int irc_keepalive_timer(int tid, unsigned int tick, int id, int data)
 
 	sprintf(send_string,"PRIVMSG %s : ", irc_nick);
 	irc_send(send_string);
-	add_timer(gettick() + 45000, irc_keepalive_timer, 0, 0);
+	add_timer(gettick() + 30000, irc_keepalive_timer, 0, 0);
 	return 0;
 }
 
@@ -270,6 +270,6 @@ void do_init_irc(void)
 
 	add_timer_func_list(irc_connect_timer, "irc_connect_timer");
 	add_timer_func_list(irc_keepalive_timer, "irc_keepalive_timer");
-	add_timer(gettick() + 45000, irc_keepalive_timer, 0, 0);
+	add_timer(gettick() + 30000, irc_keepalive_timer, 0, 0);
 }
 
