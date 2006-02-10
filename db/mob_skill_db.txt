@@ -180,7 +180,7 @@
 1039,Baphomet@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,
 1039,Baphomet@KN_BRANDISHSPEAR,attack,57,10,2000,500,5000,no,target,always,0,,,,,,29
 1039,Baphomet@MO_BODYRELOCATION,chase,264,1,200,200,1000,yes,target,always,0,,,,,,
-1039,Baphomet@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
+1039,Baphomet@NPC_BREAKARMOR,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
 1039,Baphomet@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1039,Baphomet@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1039,Baphomet@NPC_DARKBREATH,attack,202,5,2000,800,5000,no,target,always,0,,,,,,29
@@ -231,7 +231,7 @@
 1046,Doppelganger@CR_AUTOGUARD,attack,249,10,2000,500,300000,no,self,always,0,,,,,,29
 1046,Doppelganger@CR_AUTOGUARD,chase,249,10,200,500,300000,no,self,longrangeattacked,,,,,,,29
 1046,Doppelganger@KN_TWOHANDQUICKEN,attack,60,10,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,6
-1046,Doppelganger@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,yes,target,always,0,,,,,,
+1046,Doppelganger@NPC_BREAKARMOR,attack,344,10,2000,0,5000,yes,target,always,0,,,,,,
 1046,Doppelganger@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1046,Doppelganger@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1046,Doppelganger@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,yes,target,always,0,,,,,,
@@ -383,8 +383,8 @@
 1087,Orc Hero@KN_TWOHANDQUICKEN,attack,60,10,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,6
 1087,Orc Hero@MG_THUNDERSTORM,attack,21,10,2000,1500,5000,no,target,always,0,,,,,,
 1087,Orc Hero@MG_THUNDERSTORM,chase,21,10,10000,1500,5000,no,target,skillused,18,,,,,,
-1087,Orc Hero@NPC_ARMORBRAKE,attack,344,10,2000,500,300000,no,target,always,0,,,,,,6
-1087,Orc Hero@NPC_ARMORBRAKE,chase,344,10,200,500,300000,no,target,always,0,,,,,,6
+1087,Orc Hero@NPC_BREAKARMOR,attack,344,10,2000,500,300000,no,target,always,0,,,,,,6
+1087,Orc Hero@NPC_BREAKARMOR,chase,344,10,200,500,300000,no,target,always,0,,,,,,6
 1087,Orc Hero@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1087,Orc Hero@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1087,Orc Hero@NPC_GROUNDATTACK,attack,185,5,2000,0,5000,no,target,always,0,,,,,,
@@ -500,7 +500,7 @@
 1112,Drake@BS_MAXIMIZE,attack,114,1,500,0,5000,no,self,always,0,,,,,,
 1112,Drake@BS_MAXIMIZE,chase,114,1,50,0,5000,no,self,always,0,,,,,,
 1112,Drake@NPC_AGIUP,attack,350,10,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
-1112,Drake@NPC_ARMORBRAKE,attack,344,10,2000,0,60000,no,target,always,0,,,,,,
+1112,Drake@NPC_BREAKARMOR,attack,344,10,2000,0,60000,no,target,always,0,,,,,,
 1112,Drake@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1112,Drake@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1112,Drake@NPC_GUIDEDATTACK,attack,172,5,500,0,20000,no,target,always,0,,,,,,
@@ -690,7 +690,7 @@
 1147,Maya@AL_TELEPORT,walk,26,1,50,0,5000,yes,self,always,0,,,,,,
 1147,Maya@CR_AUTOGUARD,attack,249,10,500,0,5000,yes,self,always,0,,,,,,
 1147,Maya@KN_BRANDISHSPEAR,attack,57,10,2000,500,5000,no,target,always,0,,,,,,
-1147,Maya@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,6
+1147,Maya@NPC_BREAKARMOR,attack,344,10,2000,0,5000,no,target,always,0,,,,,,6
 1147,Maya@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1147,Maya@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1147,Maya@NPC_GUIDEDATTACK,attack,172,5,500,0,20000,no,target,always,0,,,,,,18
@@ -789,7 +789,7 @@
 1159,Phreeoni@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1159,Phreeoni@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1159,Phreeoni@NPC_GUIDEDATTACK,chase,172,5,50,0,20000,no,target,always,0,,,,,,
-1159,Phreeoni@NPC_HELMBRAKE,attack,345,10,2000,0,5000,no,target,skillused,18,,,,,,
+1159,Phreeoni@NPC_BREAKHELM,attack,345,10,2000,0,5000,no,target,skillused,18,,,,,,
 1159,Phreeoni@NPC_LICK,attack,206,5,2000,0,5000,yes,target,always,0,,,,,,3
 1159,Phreeoni@NPC_PETRIFYATTACK,chase,180,5,200,500,5000,no,target,always,0,,,,,,3
 1159,Phreeoni@NPC_POWERUP,attack,349,5,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,6
@@ -878,7 +878,7 @@
 1190,Orc Lord@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1190,Orc Lord@NPC_GROUNDATTACK,attack,185,5,2000,0,5000,no,target,always,0,,,,,,6
 1190,Orc Lord@NPC_POWERUP,attack,349,5,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,6
-1190,Orc Lord@NPC_SHIELDBRAKE,attack,346,10,2000,0,5000,yes,target,always,0,,,,,,
+1190,Orc Lord@NPC_BREAKSHIELD,attack,346,10,2000,0,5000,yes,target,always,0,,,,,,
 1190,Orc Lord@NPC_SUMMONSLAVE,attack,196,6,10000,700,10000,no,self,slavele,3,1473,,,,,27
 1190,Orc Lord@NPC_SUMMONSLAVE,idle,196,6,10000,700,10000,no,self,slavele,3,1473,,,,,27
 1190,Orc Lord@PR_LEXDIVINA,chase,76,10,10000,0,5000,no,target,skillused,18,,,,,,9
@@ -931,19 +931,19 @@
 1203,Mysteltainn@CR_AUTOGUARD,chase,249,10,200,0,300000,yes,self,longrangeattacked,,,,,,,
 1203,Mysteltainn@NPC_DARKNESSATTACK,attack,190,3,500,500,5000,no,target,always,0,,,,,,6
 1203,Mysteltainn@NPC_GUIDEDATTACK,attack,172,1,500,1000,20000,no,target,always,0,,,,,,29
-1203,Mysteltainn@NPC_SHIELDBRAKE,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
+1203,Mysteltainn@NPC_BREAKSHIELD,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
 1204,Tyrfing@AS_SONICBLOW,attack,136,10,500,800,5000,no,target,always,0,,,,,,18
 1204,Tyrfing@CR_AUTOGUARD,attack,249,10,500,0,300000,yes,self,always,0,,,,,,
 1204,Tyrfing@CR_AUTOGUARD,chase,249,10,200,0,300000,yes,self,longrangeattacked,,,,,,,
 1204,Tyrfing@NPC_DARKNESSATTACK,attack,190,3,500,500,5000,no,target,always,0,,,,,,6
 1204,Tyrfing@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,29,,,,,
-1204,Tyrfing@NPC_HELMBRAKE,attack,345,5,500,0,5000,yes,target,always,0,,,,,,
+1204,Tyrfing@NPC_BREAKHELM,attack,345,5,500,0,5000,yes,target,always,0,,,,,,
 1204,Tyrfing@NPC_PIERCINGATT,attack,158,3,500,0,5000,yes,target,always,0,,,,,,6
 1205,Executioner@BS_MAXIMIZE,attack,114,5,500,1000,5000,no,self,always,0,,,,,,
 1205,Executioner@BS_MAXIMIZE,chase,114,5,50,1000,5000,no,self,always,0,,,,,,
 1205,Executioner@CR_AUTOGUARD,attack,249,10,500,0,300000,yes,self,always,0,,,,,,
 1205,Executioner@CR_AUTOGUARD,chase,249,10,200,0,300000,yes,self,longrangeattacked,,,,,,,
-1205,Executioner@NPC_ARMORBRAKE,attack,344,5,500,0,5000,yes,target,always,0,,,,,,
+1205,Executioner@NPC_BREAKARMOR,attack,344,5,500,0,5000,yes,target,always,0,,,,,,
 1205,Executioner@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
 1206,Anolian@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
 1206,Anolian@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,2,1173,,,,
@@ -997,7 +997,7 @@
 1219,Knight of Abyss@CR_AUTOGUARD,attack,249,10,500,0,300000,yes,self,always,0,,,,,,
 1219,Knight of Abyss@CR_AUTOGUARD,chase,249,10,200,0,300000,yes,self,longrangeattacked,,,,,,,
 1219,Knight of Abyss@KN_BRANDISHSPEAR,attack,57,10,500,1000,5000,no,target,always,0,,,,,,9
-1219,Knight of Abyss@NPC_ARMORBRAKE,attack,344,10,500,0,5000,yes,target,always,0,,,,,,
+1219,Knight of Abyss@NPC_BREAKARMOR,attack,344,10,500,0,5000,yes,target,always,0,,,,,,
 1219,Knight of Abyss@NPC_DARKNESSATTACK,attack,190,5,500,500,5000,no,target,always,0,,,,,,9
 1219,Knight of Abyss@NPC_SUMMONSLAVE,idle,196,2,10000,2000,600000,no,self,slavele,0,1132,,,,,
 1242,Marin@MG_FROSTDIVER,attack,15,5,500,1000,5000,yes,target,always,0,,,,,,
@@ -1080,7 +1080,7 @@
 1252,Garm@NPC_SUMMONSLAVE,idle,196,5,10000,700,10000,no,self,slavele,3,1515,,,,,
 1252,Garm@NPC_WATERATTACK,attack,184,5,2000,0,5000,no,target,always,0,,,,,,6
 1252,Garm@NPC_WATERATTACK,chase,184,5,200,0,5000,no,target,skillused,18,,,,,,6
-1252,Garm@NPC_WEAPONBRAKER,attack,343,10,500,0,30000,no,target,always,0,,,,,,6
+1252,Garm@NPC_BREAKWEAPON,attack,343,10,500,0,30000,no,target,always,0,,,,,,6
 1252,Garm@WZ_STORMGUST,attack,89,10,2000,0,5000,no,target,always,0,,,,,,
 1252,Garm@WZ_STORMGUST,chase,89,10,200,0,5000,no,target,always,0,,,,,,
 1253,Gargoyle@AC_CHARGEARROW,attack,148,1,500,0,5000,yes,target,always,0,,,,,,
@@ -1159,7 +1159,7 @@
 1268,Bloody Knight@KN_BRANDISHSPEAR,attack,57,5,500,1000,5000,no,target,always,0,,,,,,9
 1268,Bloody Knight@NPC_CHANGEFIRE,attack,164,1,10000,2000,600000,no,self,myhpltmaxrate,20,,,,,,
 1268,Bloody Knight@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,9
-1268,Bloody Knight@NPC_WEAPONBRAKER,attack,343,5,500,0,30000,yes,target,always,0,,,,,,
+1268,Bloody Knight@NPC_BREAKWEAPON,attack,343,5,500,0,30000,yes,target,always,0,,,,,,
 1268,Bloody Knight@WZ_METEOR,attack,83,5,2000,1500,5000,no,target,myhpltmaxrate,20,,,,,,
 1268,Bloody Knight@WZ_METEOR,chase,83,5,200,1500,5000,no,target,myhpltmaxrate,20,,,,,,
 1269,Clock@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,6
@@ -1185,7 +1185,7 @@
 1272,Dark Lord@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1272,Dark Lord@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1272,Dark Lord@NPC_DARKBLESSING,attack,203,1,500,800,5000,no,target,always,0,,,,,,9
-1272,Dark Lord@NPC_HELMBRAKE,attack,345,10,2000,500,5000,no,target,always,0,,,,,,
+1272,Dark Lord@NPC_BREAKHELM,attack,345,10,2000,500,5000,no,target,always,0,,,,,,
 1272,Dark Lord@NPC_SUMMONSLAVE,attack,196,3,10000,700,60000,no,self,slavele,3,1302,,,,,
 1272,Dark Lord@NPC_SUMMONSLAVE,idle,196,3,10000,700,60000,no,self,slavele,3,1302,,,,,
 1272,Dark Lord@WZ_METEOR,attack,83,10,5000,500,2000,no,target,always,0,,,,,,
@@ -1236,7 +1236,7 @@
 1283,Chimera@CR_AUTOGUARD,attack,249,5,500,0,300000,yes,self,always,0,,,,,,
 1283,Chimera@CR_AUTOGUARD,chase,249,5,200,0,300000,yes,self,longrangeattacked,,,,,,,
 1283,Chimera@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
-1283,Chimera@NPC_SHIELDBRAKE,attack,346,5,500,0,5000,yes,target,always,0,,,,,,6
+1283,Chimera@NPC_BREAKSHIELD,attack,346,5,500,0,5000,yes,target,always,0,,,,,,6
 1283,Chimera@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
 1283,Chimera@NPC_SUMMONSLAVE,idle,196,4,10000,2000,60000,no,self,slavele,0,1253,,,,,
 1283,Chimera@WZ_HEAVENDRIVE,attack,91,5,500,1200,5000,yes,target,always,0,,,,,,6
@@ -1400,7 +1400,7 @@
 1312,Turtle General@NPC_STUNATTACK,attack,179,5,2000,0,5000,no,target,always,0,,,,,,6
 1312,Turtle General@NPC_SUMMONSLAVE,attack,196,6,10000,700,60000,no,self,slavele,3,1315,1319,1318,1314,1316,
 1312,Turtle General@NPC_SUMMONSLAVE,idle,196,6,10000,700,60000,no,self,slavele,3,1315,1319,1318,1314,1316,
-1312,Turtle General@NPC_WEAPONBRAKER,attack,343,10,500,0,20000,no,target,always,0,,,,,,18
+1312,Turtle General@NPC_BREAKWEAPON,attack,343,10,500,0,20000,no,target,always,0,,,,,,18
 1312,Turtle General@SM_ENDURE,chase,8,1,500,0,10000,yes,self,longrangeattacked,,,,,,,6
 1312,Turtle General@WZ_WATERBALL,attack,86,5,2000,500,20000,no,target,always,0,,,,,,18
 1312,Turtle General@WZ_WATERBALL,chase,86,10,10000,500,5000,no,target,skillused,18,,,,,,
@@ -1808,7 +1808,7 @@
 1418,Evil Snake Lord@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1418,Evil Snake Lord@NPC_DARKBREATH,attack,202,5,2000,800,5000,no,target,always,0,,,,,,29
 1418,Evil Snake Lord@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
-1418,Evil Snake Lord@NPC_SHIELDBRAKE,attack,346,10,2000,0,0,yes,target,always,0,,,,,,2
+1418,Evil Snake Lord@NPC_BREAKSHIELD,attack,346,10,2000,0,0,yes,target,always,0,,,,,,2
 1418,Evil Snake Lord@NPC_STOP,attack,342,1,10000,0,15000,yes,target,always,0,,,,,,2
 1418,Evil Snake Lord@NPC_SUMMONSLAVE,attack,196,5,10000,700,60000,no,self,slavele,2,1412,1412,1416,,,
 1418,Evil Snake Lord@NPC_SUMMONSLAVE,idle,196,5,10000,700,60000,no,self,slavele,2,1412,1412,1416,,,
@@ -2274,13 +2274,13 @@
 1492,Incantation Samurai@AL_TELEPORT,idle,26,1,500,1000,5000,yes,self,myhpltmaxrate,20,,,,,,
 1492,Incantation Samurai@KN_BRANDISHSPEAR,attack,57,10,2000,500,5000,no,target,always,0,,,,,,
 1492,Incantation Samurai@NPC_AGIUP,attack,350,5,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,9
-1492,Incantation Samurai@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
+1492,Incantation Samurai@NPC_BREAKARMOR,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
 1492,Incantation Samurai@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1492,Incantation Samurai@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1492,Incantation Samurai@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,no,target,always,0,,,,,,
 1492,Incantation Samurai@NPC_GUIDEDATTACK,attack,172,5,500,0,20000,no,target,always,0,,,,,,
-1492,Incantation Samurai@NPC_HELMBRAKE,chase,345,10,200,0,5000,no,target,always,0,,,,,,
-1492,Incantation Samurai@NPC_SHIELDBRAKE,attack,346,10,2000,0,5000,no,target,always,0,,,,,,
+1492,Incantation Samurai@NPC_BREAKHELM,chase,345,10,200,0,5000,no,target,always,0,,,,,,
+1492,Incantation Samurai@NPC_BREAKSHIELD,attack,346,10,2000,0,5000,no,target,always,0,,,,,,
 1492,Incantation Samurai@NPC_SUMMONSLAVE,attack,196,5,10000,700,60000,no,self,slavele,2,1401,,,,,
 1492,Incantation Samurai@NPC_SUMMONSLAVE,idle,196,5,10000,700,60000,no,self,slavele,2,1401,,,,,
 1492,Incantation Samurai@RG_INTIMIDATE,attack,219,10,2000,0,60000,no,target,always,0,,,,,,
@@ -2426,7 +2426,7 @@
 1583,Tao Gunka@AL_TELEPORT,chase,26,1,10000,0,0,yes,self,skillused,18,,,,,,
 1583,Tao Gunka@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1583,Tao Gunka@NPC_AGIUP,attack,350,5,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,9
-1583,Tao Gunka@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
+1583,Tao Gunka@NPC_BREAKARMOR,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
 1583,Tao Gunka@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1583,Tao Gunka@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1583,Tao Gunka@NPC_COMBOATTACK,attack,171,10,2000,0,5000,yes,target,always,0,,,,,,7
@@ -2525,7 +2525,7 @@
 1623,RSX 0806@AS_SONICBLOW,attack,136,10,500,800,5000,no,target,always,0,,,,,,
 1623,RSX 0806@BS_HAMMERFALL,attack,110,11,2000,0,5000,yes,target,always,0,,,,,,
 1623,RSX 0806@BS_HAMMERFALL,chase,110,11,2000,0,5000,yes,target,always,0,,,,,,
-1623,RSX 0806@NPC_WEAPONBRAKER,attack,343,5,500,0,30000,yes,target,always,0,,,,,,
+1623,RSX 0806@NPC_BREAKWEAPON,attack,343,5,500,0,30000,yes,target,always,0,,,,,,
 1623,RSX 0806@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
 1623,RSX 0806@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,
 
@@ -2590,7 +2590,7 @@
 
 1636,HARWORD@BS_HAMMERFALL,chase,110,5,2000,0,5000,no,target,always,0,,,,,,0
 1636,HARWORD@BS_HAMMERFALL,attack,110,5,2000,0,5000,no,target,always,0,,,,,,0
-1636,HARWORD@NPC_SHIELDBRAKE,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
+1636,HARWORD@NPC_BREAKSHIELD,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
 1636,HARWORD@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,
 1636,HARWORD@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,
 1636,HARWORD@MC_MAMMONITE,angry,42,5,500,800,5000,no,target,always,0,,,,,,
@@ -2666,7 +2666,7 @@
 1642,G_HARWARD@BS_ADRENALINE,chase,111,1,500,1500,5000,no,self,always,0,,,,,,
 1642,G_HARWARD@BS_ADRENALINE,attack,111,1,500,1500,5000,no,self,always,0,,,,,,
 1642,G_HARWARD@NPC_CRITICALSLASH,attack,170,1,1000,0,30000,no,target,always,0,,,,,,
-1642,G_HARWORD@NPC_SHIELDBRAKE,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
+1642,G_HARWORD@NPC_BREAKSHIELD,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
 1642,G_HARWARD@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,
 1642,G_HARWARD@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,
 1642,G_HARWORD@NPC_POWERUP,attack,349,5,500,0,30000,yes,self,myhpltmaxrate,30,,,,,,
@@ -2746,7 +2746,7 @@
 1648,L_HARWORD@BS_ADRENALINE,chase,111,1,500,1500,5000,no,self,always,0,,,,,,
 1648,L_HARWORD@BS_ADRENALINE,attack,111,1,500,1500,5000,no,self,always,0,,,,,,
 1648,L_HARWORD@NPC_CRITICALSLASH,attack,170,1,1000,0,30000,no,target,always,0,,,,,,
-1648,L_HARWORD@NPC_SHIELDBRAKE,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
+1648,L_HARWORD@NPC_BREAKSHIELD,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
 1648,L_HARWORD@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,
 1648,L_HARWORD@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,
 1648,L_HARWORD@NPC_POWERUP,attack,349,5,500,0,30000,yes,self,myhpltmaxrate,30,,,,,,
@@ -2865,7 +2865,7 @@
 1658,G_Ygnizem@NPC_CHANGEWIND,attack,165,1,10000,2000,600000,no,self,myhpltmaxrate,5,,,,,,
 1658,G_Ygnizem@NPC_CHANGEWATER,attack,162,1,10000,2000,600000,no,self,myhpltmaxrate,20,,,,,,
 1658,G_Ygnizem@KN_TWOHANDQUICKEN,attack,60,10,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,
-1658,G_Ygnizem@NPC_SHIELDBRAKE,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
+1658,G_Ygnizem@NPC_BREAKSHIELD,attack,346,5,500,0,5000,yes,target,always,0,,,,,,
 
 // 1'st Class Slaves
 1659,Whikebain@TF_DOUBLE,attack,48,10,500,0,10000,no,target,always,0,,,,,,
@@ -3140,7 +3140,7 @@
 1708,Thanatos@NPC_SUMMONSLAVE,idle,196,6,10000,700,10000,no,self,slavele,3,1709,1710,1711,1712,,
 1708,Thanatos@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1708,Thanatos@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
-1708,Thanatos@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
+1708,Thanatos@NPC_BREAKARMOR,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
 1708,Thanatos@WZ_HEAVENDRIVE,attack,91,5,500,1200,5000,no,target,always,0,,,,,,
 1708,Thanatos@WZ_HEAVENDRIVE,chase,91,5,500,1200,5000,no,target,always,0,,,,,,
 1708,Thanatos@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
@@ -3210,7 +3210,7 @@
 1719,Detale@BS_MAXIMIZE,attack,114,5,500,1000,5000,no,self,always,0,,,,,,
 1719,Detale@AL_DECAGI,chase,30,10,200,0,300000,no,target,always,0,,,,,,
 1719,Detale@NPC_WATERATTACK,attack,184,5,500,500,5000,no,target,always,0,,,,,,
-1719,Detale@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
+1719,Detale@NPC_BREAKARMOR,attack,344,10,2000,0,5000,no,target,always,0,,,,,,
 1719,Detale@NPC_AGIUP,attack,350,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
 1719,Detale@NPC_AGIUP,chase,350,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
 1719,Detale@WZ_WATERBALL,attack,86,5,1000,0,5000,yes,target,always,0,,,,,,

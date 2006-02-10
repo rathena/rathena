@@ -2578,10 +2578,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case NPC_DARKNESSATTACK:
 	case NPC_TELEKINESISATTACK:
 	case NPC_UNDEADATTACK:
-	case NPC_BREAKARMOR:
-	case NPC_BREAKWEAPON:
-	case NPC_BREAKHELM:
-	case NPC_BREAKSHIELD:
 	case LK_AURABLADE:		/* オ?ラブレ?ド */
 	case LK_SPIRALPIERCE:	/* スパイラルピア?ス */
 	case LK_HEADCRUSH:	/* ヘッドクラッシュ */
@@ -5091,25 +5087,25 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	// Equipment breaking monster skills [Celest]
 	case NPC_BREAKWEAPON:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstsd && battle_config.equip_skill_break_rate)
+		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
 			pc_breakweapon(dstsd);
 		break;
 
 	case NPC_BREAKARMOR:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstsd && battle_config.equip_skill_break_rate)
+		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
 			pc_breakarmor(dstsd);
 		break;
 
 	case NPC_BREAKHELM:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstsd && battle_config.equip_skill_break_rate)
+		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
 			pc_breakhelm(dstsd);
 		break;
 
 	case NPC_BREAKSHIELD:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstsd && battle_config.equip_skill_break_rate)
+		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
 			pc_breakshield(dstsd);
 		break;
 

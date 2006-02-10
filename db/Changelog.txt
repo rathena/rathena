@@ -30,6 +30,8 @@
 =========================
 
 02/10
+	* Changed the max level of the NPC_BREAK skills to 10. Changed their
+	  element to 0 and made them no damage skills. [Skotlex]
 	* Weapon Repair update. SP cost 30, Cast time 7.5 secs, interruptable. [Skotlex]
 02/09
 	* Modified Magnum break's delay to 0, time1 to 2 secs, time2 to 10 secs.
