@@ -5114,8 +5114,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_POWERUP:
-		// +25% attack per skill level? It's a guess... [Skotlex]
-		status_change_start(bl,SC_INCATKRATE,100,25*skilllv,0,0,0,skilllv * 60000,0);
+		// +20% attack per skill level? It's a guess... [Skotlex]
+		status_change_start(bl,SC_INCATKRATE,100,20*skilllv,0,0,0,skilllv * 60000,0);
 		// another random guess xP
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			status_change_start(bl,SC_INCALLSTATUS,100,
