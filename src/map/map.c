@@ -1314,83 +1314,54 @@ int map_clearflooritem_timer(int tid,unsigned int tick,int id,int data) {
 }
 
 /*==========================================
- * (m,x,y)の周?rangeマス?の空き(=侵入可能)cellの
- * ?から適?なマス目の座標をx+(y<<16)で返す
- *
- * 現?range=1でアイテムドロップ用途のみ
+ * (m,x,y) locates a random available free cell around the given coordinates
+ * to place an BL_ITEM object. Scan area is 9x9, returns 1 on success.
+ * x and y are modified with the target cell when successful.
  *------------------------------------------
  */
-int map_searchrandfreecell(int m,int x,int y,int range) {
+int map_searchrandfreecell(int m,int *x,int *y,int stack) {
 	int free_cell,i,j;
-	int* free_cells;
+	int free_cells[9][2];
 
-	if (range < 0)
-		return -1;
-	
-	//FIXME: Would it be quicker to hardcode an array of 9 since this function is always called with range 1?
-	free_cells = aCalloc((2*range+1)*(2*range+1), sizeof(int)); //better use more memory than having to wipe twice the cells. [Skotlex]
-	
-	for(free_cell=0,i=-range;i<=range;i++){
+	for(free_cell=0,i=-1;i<=1;i++){
 		if(i+y<0 || i+y>=map[m].ys)
 			continue;
-		for(j=-range;j<=range;j++){
+		for(j=-1;j<=1;j++){
 			if(j+x<0 || j+x>=map[m].xs)
 				continue;
 			if(map_getcell(m,j+x,i+y,CELL_CHKNOPASS))
 				continue;
-			if(map_count_oncell(m,j+x,i+y, BL_ITEM) > 1) //Avoid item stacking to prevent against exploits. [Skotlex]
+			//Avoid item stacking to prevent against exploits. [Skotlex]
+			if(stack && map_count_oncell(m,j+x,i+y, BL_ITEM) > stack)
 				continue;
-			free_cells[free_cell++] = j+x+((i+y)<<16);
+			free_cells[free_cell][0] = j+x;
+			free_cells[free_cell++][1] = i+y;
 		}
 	}
 	if(free_cell==0)
-	{
-		aFree(free_cells);
-		return -1;
-	}
-	free_cell=free_cells[rand()%free_cell];
-	aFree(free_cells);
-	return free_cell;
-/*
-	for(i=-range;i<=range;i++){
-		if(i+y<0 || i+y>=map[m].ys)
-			continue;
-		for(j=-range;j<=range;j++){
-			if(j+x<0 || j+x>=map[m].xs)
-				continue;
-			if(map_getcell(m,j+x,i+y,CELL_CHKNOPASS))
-				continue;
-			if(map_count_oncell(m,j+x,i+y, BL_ITEM) > 1) //Avoid item stacking to prevent against exploits. [Skotlex]
-				continue;
-			if(free_cell==0){
-				x+=j;
-				y+=i;
-				i=range+1;
-				break;
-			}
-			free_cell--;
-		}
-	}
-
-	return x+(y<<16);
-*/
+		return 0;
+	free_cell = rand()%free_cell;
+	*x = free_cells[free_cell][0];
+	*y = free_cells[free_cell][1];
+	return 1;
 }
 
 /*==========================================
  * (m,x,y)を中心に3x3以?に床アイテム設置
  *
  * item_dataはamount以外をcopyする
+ * type flag: &1 MVP item. &2 do stacking check.
  *------------------------------------------
  */
 int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,struct map_session_data *first_sd,
     struct map_session_data *second_sd,struct map_session_data *third_sd,int type) {
-	int xy,r;
+	int r;
 	unsigned int tick;
 	struct flooritem_data *fitem=NULL;
 
 	nullpo_retr(0, item_data);
 
-	if((xy=map_searchrandfreecell(m,x,y,1))<0)
+	if(!map_searchrandfreecell(m,&x,&y,type&2?1:0))
 		return 0;
 	r=rand();
 
@@ -1398,8 +1369,8 @@ int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,struct 
 	fitem->bl.type=BL_ITEM;
 	fitem->bl.prev = fitem->bl.next = NULL;
 	fitem->bl.m=m;
-	fitem->bl.x=xy&0xffff;
-	fitem->bl.y=(xy>>16)&0xffff;
+	fitem->bl.x=x;
+	fitem->bl.y=y;
 	fitem->bl.id = map_addobject(&fitem->bl);
 	if(fitem->bl.id==0){
 		aFree(fitem);
@@ -1409,21 +1380,21 @@ int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,struct 
 	tick = gettick();
 	if(first_sd) {
 		fitem->first_get_id = first_sd->bl.id;
-		if(type)
+		if(type&1)
 			fitem->first_get_tick = tick + battle_config.mvp_item_first_get_time;
 		else
 			fitem->first_get_tick = tick + battle_config.item_first_get_time;
 	}
 	if(second_sd) {
 		fitem->second_get_id = second_sd->bl.id;
-		if(type)
+		if(type&1)
 			fitem->second_get_tick = tick + battle_config.mvp_item_first_get_time + battle_config.mvp_item_second_get_time;
 		else
 			fitem->second_get_tick = tick + battle_config.item_first_get_time + battle_config.item_second_get_time;
 	}
 	if(third_sd) {
 		fitem->third_get_id = third_sd->bl.id;
-		if(type)
+		if(type&1)
 			fitem->third_get_tick = tick + battle_config.mvp_item_first_get_time + battle_config.mvp_item_second_get_time + battle_config.mvp_item_third_get_time;
 		else
 			fitem->third_get_tick = tick + battle_config.item_first_get_time + battle_config.item_second_get_time + battle_config.item_third_get_time;

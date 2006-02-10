@@ -2593,7 +2593,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		log_pick(sd, "P", 0, sd->status.inventory[n].nameid, -amount, (struct item*)&sd->status.inventory[n]);
 	//Logs
 
-	if (map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, NULL, NULL, NULL, 0) != 0)
+	if (map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, NULL, NULL, NULL, 2) != 0)
 		pc_delitem(sd, n, amount, 0);
 	else
 		clif_delitem(sd,n,0);

@@ -1250,7 +1250,6 @@ int map_clearflooritem_timer(int,unsigned int,int,int);
 int map_removemobs_timer(int,unsigned int,int,int);
 #define map_clearflooritem(id) map_clearflooritem_timer(0,0,id,1)
 int map_addflooritem(struct item *,int,int,int,int,struct map_session_data *,struct map_session_data *,struct map_session_data *,int);
-int map_searchrandfreecell(int,int,int,int);
 
 // ƒLƒƒƒ‰id„ƒLƒƒƒ‰–¼ •ÏŠ·ŠÖ˜A
 void map_addchariddb(int charid,char *name);
