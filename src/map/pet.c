@@ -1087,6 +1087,14 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 
 	nullpo_retr(1, sd);
 
+	md=(struct mob_data*)map_id2bl(target_id);
+	if(!md || md->bl.type != BL_MOB || md->bl.prev == NULL){
+		//Abort capture.
+		sd->catch_target_class = -1;
+		sd->itemid = sd->itemindex = -1;
+		return 1;
+	}
+	
 	if (sd->itemid > 0)
 	{	//Consume the pet lure [Skotlex]
 		if ((i = sd->itemindex) == -1 ||
@@ -1102,13 +1110,6 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 		//Delete the item
 		sd->itemid = sd->itemindex = -1;
 		pc_delitem(sd,i,1,0);
-	}
-	
-	md=(struct mob_data*)map_id2bl(target_id);
-	if(!md || md->bl.type != BL_MOB || md->bl.prev == NULL){
-		clif_pet_rulet(sd,0);
-		sd->catch_target_class = -1;
-		return 1;
 	}
 
 	i = search_petDB_index(md->class_,PET_CLASS);

@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/10
+	* Pet Lures won't be consumed now when used on a non-mob. [Skotlex]
 	* Fixed map_searchrandcell function. [Skotlex]
 	* Modified the NPC_BREAK* skills to break equipment at a 10%*lv rate. [Skotlex]
 	* Modified the drop item routines to perform stacking checks only for
