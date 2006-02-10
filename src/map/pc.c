@@ -5782,9 +5782,9 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 
 	switch(type){
 	case SP_BASELEVEL:
-		if ((val+ sd->status.base_level) > pc_maxbaselv(sd)) //Capping to max
-			val = pc_maxbaselv(sd) - sd->status.base_level;
-		if (val > (int)sd->status.base_level) {
+		if (val > pc_maxbaselv(sd)) //Capping to max
+			val = pc_maxbaselv(sd);
+		if (val > sd->status.base_level) {
 			for (i = 1; i <= (val - (int)sd->status.base_level); i++)
 				sd->status.status_point += (sd->status.base_level + i + 14) / 5 ;
 		}
@@ -5801,22 +5801,15 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		if (val >= (int)sd->status.job_level) {
 			if (val > pc_maxjoblv(sd)) val = pc_maxjoblv(sd);
 			sd->status.skill_point += (val-sd->status.job_level);
-			sd->status.job_level = val;
-			sd->status.job_exp = 0;
-			clif_updatestatus(sd, SP_JOBLEVEL);
-			clif_updatestatus(sd, SP_NEXTJOBEXP);
-			clif_updatestatus(sd, SP_JOBEXP);
 			clif_updatestatus(sd, SP_SKILLPOINT);
-			status_calc_pc(sd, 0);
 			clif_misceffect(&sd->bl, 1);
-		} else {
-			sd->status.job_level = val;
-			sd->status.job_exp = 0;
-			clif_updatestatus(sd, SP_JOBLEVEL);
-			clif_updatestatus(sd, SP_NEXTJOBEXP);
-			clif_updatestatus(sd, SP_JOBEXP);
-			status_calc_pc(sd, 0);
 		}
+		sd->status.job_level = val;
+		sd->status.job_exp = 0;
+		clif_updatestatus(sd, SP_JOBLEVEL);
+		clif_updatestatus(sd, SP_NEXTJOBEXP);
+		clif_updatestatus(sd, SP_JOBEXP);
+		status_calc_pc(sd, 0);
 		clif_updatestatus(sd,type);
 		break;
 	case SP_SKILLPOINT:

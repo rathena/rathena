@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/09
+	* Fixed "set baselevel, X" sending one to a different level than the one
+	  requested. [Skotlex]
 	* Added range checking to mob skill loading of permillage and delay to
 	  prevent overflows. [Skotlex]
 	* Fixed pc_gainexp not working for next level exp requirements above
