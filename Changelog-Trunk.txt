@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/10
+	* Removed #include <lcms.h> from irc.c, since it's unused and some people don't have it. [Valaris]
 	* Changed the default MAX_LEVEL supported by the map server to 1000. [Skotlex]
 	* Pet Lures won't be consumed now when used on a non-mob. [Skotlex]
 	* Fixed map_searchrandcell function. [Skotlex]
