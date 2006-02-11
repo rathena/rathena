@@ -3073,7 +3073,7 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=sd->aspd;
 		break;
 	case SP_ATK1:
-		WFIFOL(fd,4)=sd->base_atk+sd->right_weapon.watk;
+		WFIFOL(fd,4)=sd->base_atk+sd->right_weapon.watk+sd->left_weapon.watk;
 		break;
 	case SP_DEF1:
 		WFIFOL(fd,4)=sd->def;
@@ -3082,7 +3082,7 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=sd->mdef;
 		break;
 	case SP_ATK2:
-		WFIFOL(fd,4)=sd->right_weapon.watk2;
+		WFIFOL(fd,4)=sd->right_weapon.watk2 + sd->left_weapon.watk2;
 		break;
 	case SP_DEF2:
 		WFIFOL(fd,4)=sd->def2;
@@ -3341,8 +3341,8 @@ int clif_initialstatus(struct map_session_data *sd)
 	WBUFB(buf,14)=(sd->status.luk > 255)? 255:sd->status.luk;
 	WBUFB(buf,15)=pc_need_status_point(sd,SP_LUK);
 
-	WBUFW(buf,16) = sd->base_atk + sd->right_weapon.watk;
-	WBUFW(buf,18) = sd->right_weapon.watk2; //atk bonus
+	WBUFW(buf,16) = sd->base_atk + sd->right_weapon.watk + sd->left_weapon.watk;
+	WBUFW(buf,18) = sd->right_weapon.watk2 + sd->left_weapon.watk2; //atk bonus
 	WBUFW(buf,20) = sd->matk1;
 	WBUFW(buf,22) = sd->matk2;
 	WBUFW(buf,24) = sd->def; // def

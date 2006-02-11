@@ -861,9 +861,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	b_hit = sd->hit;
 	b_flee = sd->flee;
 	b_aspd = sd->aspd;
-	b_watk = sd->right_weapon.watk;
+	b_watk = sd->right_weapon.watk + sd->left_weapon.watk;
 	b_def = sd->def;
-	b_watk2 = sd->right_weapon.watk2;
+	b_watk2 = sd->right_weapon.watk2 + sd->left_weapon.watk2;
 	b_def2 = sd->def2;
 	b_flee2 = sd->flee2;
 	b_critical = sd->critical;
@@ -1886,11 +1886,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		clif_updatestatus(sd,SP_FLEE1);
 	if(b_aspd != sd->aspd)
 		clif_updatestatus(sd,SP_ASPD);
-	if(b_watk != sd->right_weapon.watk || b_base_atk != sd->base_atk)
+	if(b_watk != sd->right_weapon.watk + sd->left_weapon.watk || b_base_atk != sd->base_atk)
 		clif_updatestatus(sd,SP_ATK1);
 	if(b_def != sd->def)
 		clif_updatestatus(sd,SP_DEF1);
-	if(b_watk2 != sd->right_weapon.watk2)
+	if(b_watk2 != sd->right_weapon.watk2 + sd->left_weapon.watk2)
 		clif_updatestatus(sd,SP_ATK2);
 	if(b_def2 != sd->def2)
 		clif_updatestatus(sd,SP_DEF2);
