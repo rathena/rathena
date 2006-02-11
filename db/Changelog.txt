@@ -30,6 +30,8 @@
 =========================
 
 02/10
+	* Enchanted Peach Tree supposed to move, thanks to Persian69 [Vicious]
+	* Clock's attack range is 2, thanks to Persian69 [Vicious]
 	* Fixed Valkyrie armors having no effect for Aco class, thanks to
 	  a user from em-24.com [Vicious]
 	* Changed the max level of the NPC_BREAK skills to 10. Changed their
