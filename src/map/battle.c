@@ -1646,7 +1646,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 30*skill_lv;
 					break;
 				case AS_SONICBLOW:
-					skillratio += 200+50*skill_lv;
+					skillratio += 300+40*skill_lv;
 					break;
 				case TF_SPRINKLESAND:
 					skillratio += 30;

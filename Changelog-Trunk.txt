@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/10
+	* Fixed Sonic Blow's damage for lvl 1~9 [Vicious]
 	* The status window will now show the total power of both weapons instead
 	  of just the right-hand weapon for dual wielders. [Skotlex]
 	* Removed #include <lcms.h> from irc.c, since it's unused and some people don't have it. [Valaris]

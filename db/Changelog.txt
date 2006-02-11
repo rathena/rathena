@@ -30,6 +30,8 @@
 =========================
 
 02/10
+	* Fixed Valkyrie armors having no effect for Aco class, thanks to
+	  a user from em-24.com [Vicious]
 	* Changed the max level of the NPC_BREAK skills to 10. Changed their
 	  element to 0 and made them no damage skills. [Skotlex]
 	* Weapon Repair update. SP cost 30, Cast time 7.5 secs, interruptable. [Skotlex]

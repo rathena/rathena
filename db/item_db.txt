@@ -1017,7 +1017,7 @@
 2354,Gebney_Armor,Gebney Armor,5,,10,3500,,7,,0,119529470,7,2,16,,54,1,0,{ bonus bVit,2; bonus bMaxHPrate,10; }
 2355,Angel_Protection,Angel Protection,5,,10,600,,4,,1,8388609,7,2,16,,40,1,0,{ bonus bMdef,20; if(isequipped(2116,2420,2521,5125)==0) end; bonus bMaxHP,900; bonus bMaxSP,100; bonus4 bAutoSpellWhenHit,361,1,20,0; }
 2356,Holy_Cloth_of_Benefit,Holy Cloth of Benefit,5,,10,2500,,5,,1,33024,7,2,16,,70,1,,{ bonus bMdef,5; bonus2 bResEff,Eff_Blind,8000; }
-2357,Valkyrie's_Armor,Valkyrie's Armor,5,,10,2800,,6,,1,119529470,2,2,16,,0,1,0,{ bonus bAllStats,1; bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Acolyte) bonus2 bResEff,Eff_Silence,5000; else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus2 bResEff,Eff_Stan,5000; }
+2357,Valkyrie's_Armor,Valkyrie's Armor,5,,10,2800,,6,,1,119529470,2,2,16,,0,1,0,{ bonus bAllStats,1; bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus2 bResEff,Eff_Silence,5000; else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus2 bResEff,Eff_Stan,5000; }
 
 // Footgears
 //===================================================================
@@ -1041,7 +1041,7 @@
 2418,Boots_of_Vidar,Boots of Vidar,5,,10,650,,4,,0,119529470,7,2,64,,65,1,0,{ bonus bMaxHPrate,9; bonus bMaxSPrate,9; }
 2419,Gebney's_Combat_Boots,Gebney's Combat Boots,5,,10,700,,4,,0,119529470,7,2,64,,54,1,0,{ bonus bMdef,3; bonus bMaxHPrate,5; bonus bMaxSPrate,5; }
 2420,Second_Advent_of_Angel,Second Advent of Angel,5,,10,10,,0,,1,8388609,7,2,64,,0,1,0,{ bonus bMaxHP,100; }
-2421,Valkyrie's_Shoes,Valkyrie's Shoes,5,,10,500,,4,,1,119529470,2,2,64,,0,1,0,{ bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Acolyte) bonus bMaxHP,(BaseLevel*5); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bMaxSP,(JobLevel*2); }
+2421,Valkyrie's_Shoes,Valkyrie's Shoes,5,,10,500,,4,,1,119529470,2,2,64,,0,1,0,{ bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bMaxHP,(BaseLevel*5); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bMaxSP,(JobLevel*2); }
 
 // Garments
 //===================================================================
@@ -1068,7 +1068,7 @@
 2521,Warmth_of_Angel,Warmth of Angel,5,,10,400,,2,,0,8388609,7,2,4,,20,1,0,{ bonus bHPrecovRate,5; }
 2522,Running_Shirt,Running Shirt,5,,10,150,,2,,0,127918079,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)==0) end; bonus bAgi,5; bonus bFlee,10; }
 2523,Running_Shirt_,Running Shirt_,5,,10,150,,2,,1,127918079,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)==0) end; bonus bAgi,5; bonus bFlee,10; }
-2524,Valkyrie's_Manteau,Valkyrie's Manteau,5,,10,500,,3,,1,119529470,2,2,4,,0,1,0,{ bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Acolyte) bonus bFlee2,5+(getequiprefinerycnt(5)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(5)*2);}
+2524,Valkyrie's_Manteau,Valkyrie's Manteau,5,,10,500,,3,,1,119529470,2,2,4,,0,1,0,{ bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bFlee2,5+(getequiprefinerycnt(5)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(5)*2);}
 
 // Accessories
 //===================================================================
