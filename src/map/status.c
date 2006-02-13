@@ -3597,13 +3597,9 @@ int status_get_sc_def(struct block_list *bl, int type)
 	}
 
 	sc_def*=100; //Send it on the interval 0->10000
-	if(bl->type == BL_MOB) {
-		struct mob_data *md = (struct mob_data *)bl;
-		if (md->class_ == MOBID_EMPERIUM)
-			return 0;
-		if (sc_def > 5000)
-			sc_def = 5000;
-	}
+	if(bl->type == BL_MOB && sc_def > 5000)
+		sc_def = 5000; //Are mobs really capped to 50% defense?
+
 	sd = bl->type==BL_PC?(struct map_session_data*)bl:NULL;
 	
 	if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX &&
@@ -3724,12 +3720,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	//Check rate
 	if (!(flag&(4|1))) {
+		rate*=100; //Pass to 10000 = 100%
 		if (flag&8) {
 			race = status_get_sc_def(bl, type);
 			if (race)
-				rate -= rate*race/100;
-		} else
-		  	rate*=100; //Pass to 10000 = 100%
+				rate -= rate*race/10000;
+		}
 		if (!(rand()%10000 < rate))
 			return 0;
 	}
@@ -3742,8 +3738,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	//Check for inmunities / sc fails
 	switch (type) {
 		case SC_FREEZE:
-			if (elem == 1 && !(flag&1))
-				return 0; //Can't freeze water elementals.
 		case SC_STONE:
 			//Undead are inmune to Freeze/Stone
 			if (undead_flag && !(flag&1))

@@ -2208,7 +2208,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	int mvp_damage,max_hp;
 	unsigned int tick = gettick();
 	struct map_session_data *mvp_sd = NULL, *second_sd = NULL,*third_sd = NULL;
-	struct block_list *master = NULL;
 	double temp;
 	struct item item;
 	int ret, mode;
@@ -2490,12 +2489,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			per /=2.;
 		else if(md->special_state.size==2)
 			per *=2.;
-		if(md->master_id) {
-			if(((master = map_id2bl(md->master_id)) && status_get_mode(master)&MD_BOSS) ||	// check if its master is a boss (MVP's and minibosses)
-				md->special_state.ai) { // for summoned creatures [Valaris]
-				per = 0;
-			}
-		} else {
+		if(md->master_id && md->special_state.ai) //New rule: Only player-summoned mobs do not give exp. [Skotlex]
+			per = 0;
+		else {
 			if(battle_config.zeny_from_mobs) {
 				if(md->level > 0) zeny=(int) ((md->level+rand()%md->level)*per); // zeny calculation moblv + random moblv [Valaris]
 				if(md->db->mexp > 0)
@@ -2581,11 +2577,10 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		for (i = 0; i < 10; i++) { // 8 -> 10 Lupus
 			struct delay_item_drop *ditem;
 
-			if ((master && status_get_mode(master) & MD_BOSS) ||	// check if its master is a boss (MVP's and minibosses)
-				(md->special_state.ai &&
-					(battle_config.alchemist_summon_reward == 0 || //Noone gives items
-					(md->class_ != 1142 && battle_config.alchemist_summon_reward == 1) //Non Marine spheres don't drop items
-				)))	// Added [Valaris]
+			if (md->master_id && md->special_state.ai && (
+				battle_config.alchemist_summon_reward == 0 || //Noone gives items
+				(md->class_ != 1142 && battle_config.alchemist_summon_reward == 1) //Non Marine spheres don't drop items
+			))
 				break;	// End
 			//mapflag: noloot check [Lorky]
 			if (map[md->bl.m].flag.nomobloot) break;; 

@@ -2306,7 +2306,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int x,int y,int skill_id,int skill_lv,int type,int flag)
 {
 	int i, max;
-	unsigned short *count=NULL;;
+	unsigned short *count=NULL;
 	struct skill_timerskill *sts = NULL;
 	nullpo_retr(1, src);
 	switch (src->type) {
@@ -5062,7 +5062,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_POWERUP:
 		// +20% attack per skill level? It's a guess... [Skotlex]
-		status_change_start(bl,SC_INCATKRATE,100,20*skilllv,0,0,0,skilllv * 60000,0);
+		status_change_start(bl,SC_INCATKRATE,100,40*skilllv,0,0,0,skilllv * 60000,0);
 		// another random guess xP
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			status_change_start(bl,SC_INCALLSTATUS,100,
