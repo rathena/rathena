@@ -29,6 +29,9 @@
 
 =========================
 
+02/13
+	* Fixed exp.txt for Baby Dancer, thanks to Gepard [Komurka]
+
 02/10
 	* Enchanted Peach Tree supposed to move, thanks to Persian69 [Vicious]
 	* Clock's attack range is 2, thanks to Persian69 [Vicious]
