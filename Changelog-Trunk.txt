@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/12
+	* Some path cleanups meant to get the CELL_NOSTACK mod working better with
+	  path searching and the like. [Skotlex]
 	* Optimized functions skill_addtimerskill/skill_cleartimerskill [Skotlex]
 	* Fixed SC_DANCING for non players (was making dances only last 1 second
 	  for them) [Skotlex]

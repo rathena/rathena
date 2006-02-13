@@ -2160,6 +2160,12 @@ int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 			if (type3 >= battle_config.cell_stack_limit) return 1;
 #endif
 			return (type==1 || type==5 || type2&(CELL_MOONLIT|CELL_ICEWALL));
+		case CELL_CHKSTACK:
+#ifdef CELL_NOSTACK
+			return (type3 >= battle_config.cell_stack_limit);
+#else
+			return 0;
+#endif
 		case CELL_CHKWALL:
 			return (type==1/* || type2&CELL_ICEWALL*/); //Uncomment to prevent sniping/casting through the icewall. [Skotlex]
 		case CELL_CHKWATER:

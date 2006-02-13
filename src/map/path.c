@@ -172,6 +172,11 @@ static int can_place(struct map_data *m,int x,int y,int flag)
 		return 1;
 	if((flag&0x10000)&&map_getcellp(m,x,y,CELL_CHKGROUND))
 		return 1;
+#ifdef CELL_NOSTACK
+	//Special flag for CELL_NOSTACK systems. Returns true when the given cell is stacked. [Skotlex]
+	if((flag&0x30000)&&map_getcellp(m,x,y,CELL_CHKSTACK))
+		return 1;
+#endif
 	return 0;
 }
 
@@ -332,8 +337,17 @@ int path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int 
 	if(!map[m].gat)
 		return -1;
 	md=&map[m];
-	if(x1<0 || x1>=md->xs || y1<0 || y1>=md->ys || map_getcellp(md,x1,y1,CELL_CHKNOPASS))
+
+	if(x1<0 || x1>=md->xs || y1<0 || y1>=md->ys)
 		return -1;
+
+#ifdef CELL_NOSTACK
+	if (map_getcellp(md,x1,y1,CELL_CHKNOPASS) && !map_getcellp(md,x1,y1,CELL_CHKSTACK))
+		return -1;
+#else
+	if (map_getcellp(md,x1,y1,CELL_CHKNOPASS))
+		return -1;
+#endif
 
 	// easy
 	dx = (x1-x0<0) ? -1 : 1;
@@ -366,6 +380,15 @@ int path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int 
 		return 0;
 	}
 	
+#ifdef CELL_NOSTACK
+	//If you fail by 1 cell, consider easy path successful, too. [Skotlex]
+	if (check_distance(x-x1,y-y1,1)) {
+		wpd->path_len=i;
+		wpd->path_pos=0;
+		wpd->path_half=0;
+		return 0;
+	}
+#endif
 	if(flag&1)
 		return -1;
 
