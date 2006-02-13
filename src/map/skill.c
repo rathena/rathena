@@ -1075,20 +1075,20 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				clif_updatestatus(dstsd,SP_SP);
 		}
   		break;
-		case SL_STUN:
-			if (status_get_size(bl)==1) //Only stuns mid-sized mobs.
-				status_change_start(bl,SC_STAN,(30+10*skilllv),skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
-			break;
-		case SG_SUN_WARM:
-		case SG_MOON_WARM:
-		case SG_STAR_WARM:
-			if (dstsd) {
-				dstsd->status.sp -= 5;
-				if(dstsd->status.sp < 0)
-					dstsd->status.sp = 0;
-				clif_updatestatus(dstsd,SP_SP);	
-			}
-			break;
+	case SL_STUN:
+		if (status_get_size(bl)==1) //Only stuns mid-sized mobs.
+			status_change_start(bl,SC_STAN,(30+10*skilllv),skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
+		break;
+	case SG_SUN_WARM:
+	case SG_MOON_WARM:
+	case SG_STAR_WARM:
+		if (dstsd) {
+			dstsd->status.sp -= 5;
+			if(dstsd->status.sp < 0)
+				dstsd->status.sp = 0;
+			clif_updatestatus(dstsd,SP_SP);	
+		}
+		break;
 			
 	/* MOBの追加?果付きスキル */
 	case NPC_PETRIFYATTACK:
@@ -1112,6 +1112,26 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			if(sp < 1) sp = 1;
 			pc_heal(dstsd,0,-sp);
 		}
+		break;
+	// Equipment breaking monster skills [Celest]
+	case NPC_BREAKWEAPON:
+		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
+			pc_breakweapon(dstsd);
+		break;
+
+	case NPC_BREAKARMOR:
+		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
+			pc_breakarmor(dstsd);
+		break;
+
+	case NPC_BREAKHELM:
+		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
+			pc_breakhelm(dstsd);
+		break;
+
+	case NPC_BREAKSHIELD:
+		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
+			pc_breakshield(dstsd);
 		break;
 
 	case CH_TIGERFIST:
@@ -2532,6 +2552,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case NPC_HOLYATTACK:
 	case NPC_DARKNESSATTACK:
 	case NPC_TELEKINESISATTACK:
+	case NPC_BREAKARMOR:
+	case NPC_BREAKHELM:
+	case NPC_BREAKSHIELD:
+	case NPC_BREAKWEAPON:
 	case NPC_UNDEADATTACK:
 	case LK_AURABLADE:		/* オ?ラブレ?ド */
 	case LK_SPIRALPIERCE:	/* スパイラルピア?ス */
@@ -5042,31 +5066,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 
-	// Equipment breaking monster skills [Celest]
-	case NPC_BREAKWEAPON:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
-			pc_breakweapon(dstsd);
-		break;
-
-	case NPC_BREAKARMOR:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
-			pc_breakarmor(dstsd);
-		break;
-
-	case NPC_BREAKHELM:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
-			pc_breakhelm(dstsd);
-		break;
-
-	case NPC_BREAKSHIELD:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
-			pc_breakshield(dstsd);
-		break;
-
 	case NPC_POWERUP:
 		// +20% attack per skill level? It's a guess... [Skotlex]
 		status_change_start(bl,SC_INCATKRATE,100,40*skilllv,0,0,0,skilllv * 60000,0);
@@ -5773,8 +5772,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 	nullpo_retr(0, sd);
 
 //Code cleanup.
-#undef skill_failed
-#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->canact_tick = sd->canmove_tick = tick; }
+#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->canact_tick = sd->canmove_tick = tick; sd->skilltarget = 0; }
 
 	if(sd->skillid != SA_CASTCANCEL && sd->skilltimer != tid )
 	{	/* タイマIDの確認 */
@@ -5904,6 +5902,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 		sd->skilltarget = 0;
 	}
 	return 0;
+#undef skill_failed
 }
 
 /*---------------------------------------------------------------------------- */
@@ -5920,7 +5919,6 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 	nullpo_retr(0, sd);
 
 //Code cleanup.
-#undef skill_failed
 #define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->canact_tick = sd->canmove_tick = tick; }
 
 	if( sd->skilltimer != tid )
@@ -6005,6 +6003,7 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 	if (sd->skillid != AL_WARP)
 		sd->skillid = sd->skilllv = -1; //Clean this up for future references to battle_getcurrentskill. [Skotlex]
 	return 0;
+#undef skill_failed
 }
 
 /*==========================================

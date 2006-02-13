@@ -8146,9 +8146,10 @@ int pc_readdb(void)
 	   //0: x, 1: x, 2: x: 3: x 4: 0 <- last valid value is at 3.
 		while ((i = max_level[job][type]-2) >= 0 && exp_table[job][type][i] <= 0)
 			max_level[job][type]--;
-	
 		if (max_level[job][type] < max) {
-			ShowError("pc_readdb: Specified max %d for job %d, but that job's exp table only goes up to level %d.\n", max, job, max_level[job][type]);
+			ShowWarning("pc_readdb: Specified max %d for job %d, but that job's exp table only goes up to level %d.\n", max, job, max_level[job][type]);
+			ShowNotice("(You may still reach lv %d through scripts/gm-commands)\n");
+			max_level[job][type] = max;
 		}
 //		ShowDebug("%s - Class %d: %d\n", type?"Job":"Base", job, max_level[job][type]);
 		for (i = 1; i < job_count; i++) {
@@ -8158,7 +8159,7 @@ int pc_readdb(void)
 				continue;
 			}
 			memcpy(exp_table[job][type], exp_table[jobs[0]][type], sizeof(exp_table[0][0]));
-			max_level[job][type] = max_level[jobs[0]][type];
+			max_level[job][type] = max;
 //			ShowDebug("%s - Class %d: %d\n", type?"Job":"Base", job, max_level[job][type]);
 		}
 	}

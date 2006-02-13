@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/13
+	* Made the NPC_BREAK* skills attack skills again, their chance of equipment
+	  breaking code was moved to skill_additional_effect. [Skotlex]
+	* Now when the exp table does not has enough data to reach the max level
+	  specified, the max level will not be reduced to enable leveling through
+	  quests/scripts/gm-commands/etc. [Skotlex]
 	* Made Land Protector Block Hammerfall. [Skotlex]
 	* Updated item_db code to stop creating items for every non-existant ID
 	  used. Instead it will complain, and use a dummy item that has the view ID
