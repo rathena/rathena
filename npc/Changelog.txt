@@ -28,6 +28,9 @@ Nexon
 Date		Added
 ======
 
+02/13
+	* Updated the eA custom spawn sets from Playtester: Juperos lv1, Glast heim
+	  Sewers/Underground and Geffen dungeon lv3. [Skotlex]
 02/09
 	* Fixed another issue of Cube Room Quest [Lupus]
 	- Fixed event_6_new_hats.txt wrong ID, thanks to phabyo

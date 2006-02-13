@@ -3587,16 +3587,19 @@ int status_get_sc_def(struct block_list *bl, int type)
 		return 0; //Effect that cannot be reduced? Likely a buff.
 	}
 
+	sc_def*=100; //Send it on the interval 0->10000
+	if (battle_config.sc_def_rate != 100)
+		sc_def = sc_def*battle_config.sc_def_rate/100;
+	
 	sc = status_get_sc(bl);
 	if (sc && sc->count)
 	{
 		if (sc->data[SC_SCRESIST].timer != -1)
-			sc_def += sc->data[SC_SCRESIST].val1; //Status resist
+			sc_def += 100*sc->data[SC_SCRESIST].val1; //Status resist
 		else if (sc->data[SC_SIEGFRIED].timer != -1)
-			sc_def += sc->data[SC_SIEGFRIED].val2; //Status resistance.
+			sc_def += 100*sc->data[SC_SIEGFRIED].val2; //Status resistance.
 	}
 
-	sc_def*=100; //Send it on the interval 0->10000
 	if(bl->type == BL_MOB && sc_def > 5000)
 		sc_def = 5000; //Are mobs really capped to 50% defense?
 
@@ -3726,6 +3729,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (race)
 				rate -= rate*race/10000;
 		}
+		
 		if (!(rand()%10000 < rate))
 			return 0;
 	}

@@ -3828,6 +3828,7 @@ static const struct battle_data_short {
 	{ "allow_skill_without_day",				&battle_config.allow_skill_without_day}, // [Komurka]
 	{ "skill_caster_check",					&battle_config.skill_caster_check },
 	{ "status_cast_cancel",					&battle_config.sc_castcancel },
+	{ "status_def_rate",						&battle_config.sc_def_rate },
 };
 
 static const struct battle_data_int {
@@ -4217,6 +4218,7 @@ void battle_set_defaults() {
 
 	battle_config.skill_caster_check = 1;
 	battle_config.sc_castcancel = 0;
+	battle_config.sc_def_rate = 100;
 }
 
 void battle_validate_conf() {
