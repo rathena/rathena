@@ -6,22 +6,25 @@
 // Licensed under GPL
 // http://prometheus.fnae.net/
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1 (custom spawns)
 //===== Compatible With: =====================================
 //= Any Athena/Freya Version
 //===== Additional Comments: =================================
 //= 08/24/05 : Added 1st version. [Muad_Dib]
 //= 01/29/05 : Updated the spawns according to current info [MasterOfMuppets]
+//= 02/05/05 : Changed to eAthena custom spawns [Playtester]
 //============================================================
 
 //========================================================================================
 // - Juperos 01
 //========================================================================================
 
-juperos_01.gat,0,0,0,0	monster	Venatu	1676,35,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1677,35,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1678,35,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1679,35,0,0,0
+juperos_01.gat,0,0,0,0	monster	Hunter Fly	1035,25,0,0,0
+juperos_01.gat,0,0,0,0	monster	Wind Ghost	1263,15,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1676,25,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1677,25,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1678,25,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1679,25,0,0,0
 
 //========================================================================================
 // - Juperos 02

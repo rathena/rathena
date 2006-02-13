@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/13
+	* Updated the eA custom spawn sets from Playtester: Juperos lv1, Glast heim
+	  Sewers/Underground and Geffen dungeon lv3. [Skotlex]
 	* Pet eggs will now not be deleted from the inventory until they arrive
 	  from the char-server. [Skotlex]
 	* pc_readdb will now print if any classes are missing their exp tables.

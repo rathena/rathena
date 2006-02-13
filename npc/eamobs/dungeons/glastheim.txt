@@ -136,19 +136,19 @@ gl_chyard.gat,0,0,0,0	monster	Dark Lord	1272,1,3600000,1800000,1
 
 //  Glast Heim down 1 ( gl_sew01.gat )
 
-gl_sew01.gat,0,0,0,0	monster	Drainliar	1111,10,0,0,0
+gl_sew01.gat,0,0,0,0	monster	Drainliar	1111,15,0,0,0
 gl_sew01.gat,0,0,0,0	monster	Whisper	1179,30,0,0,0
 gl_sew01.gat,0,0,0,0	monster	Gargoyle	1253,20,0,0,0
-gl_sew01.gat,0,0,0,0	monster	Cramp	1209,10,0,0,0
+gl_sew01.gat,0,0,0,0	monster	Cramp	1209,15,0,0,0
 gl_sew01.gat,0,0,0,0	monster	Wind Ghost	1263,10,0,0,0
 
 //  Glast Heim down 2 ( gl_sew02.gat )
 
-gl_sew02.gat,0,0,0,0	monster	Drainliar	1111,15,0,0,0
+gl_sew02.gat,0,0,0,0	monster	Drainliar	1111,20,0,0,0
 gl_sew02.gat,0,0,0,0	monster	Gargoyle	1253,25,0,0,0
-gl_sew02.gat,0,0,0,0	monster	Cramp	1209,15,0,0,0
+gl_sew02.gat,0,0,0,0	monster	Cramp	1209,20,0,0,0
 gl_sew02.gat,0,0,0,0	monster	Wind Ghost	1263,10,0,0,0
-gl_sew02.gat,0,0,0,0	monster	Anolian	1206,10,0,0,0
+gl_sew02.gat,0,0,0,0	monster	Anolian	1206,15,0,0,0
 
 //  Glast Heim down 3 ( gl_sew03.gat )
 
@@ -162,11 +162,11 @@ gl_sew03.gat,158,7,5,1	monster	Gargoyle	1253,1,3600000,1800000,0
 
 // Glast Heim down 4 ( gl_sew04.gat )
 
-gl_sew04.gat,0,0,0,0	monster	Drainliar	1111,5,0,0,0
+gl_sew04.gat,0,0,0,0	monster	Drainliar	1111,10,0,0,0
 gl_sew04.gat,0,0,0,0	monster	Gargoyle	1253,15,0,0,0
 gl_sew04.gat,0,0,0,0	monster	Wind Ghost	1263,20,0,0,0
-gl_sew04.gat,0,0,0,0	monster	Sting	1207,25,0,0,0
-gl_sew04.gat,0,0,0,0	monster	Anolian	1206,25,0,0,0
+gl_sew04.gat,0,0,0,0	monster	Sting	1207,20,0,0,0
+gl_sew04.gat,0,0,0,0	monster	Anolian	1206,30,0,0,0
 
 // Glast Heim ( gl_step.gat )
 
@@ -262,7 +262,7 @@ gl_dun01.gat,0,0,0,0	monster	Stalactite Golem	1278,20,0,0,0
 
 gl_dun02.gat,0,0,0,0	monster	Gargoyle	1253,15,0,0,0
 gl_dun02.gat,0,0,0,0	monster	Arclouse	1194,15,0,0,0
-gl_dun02.gat,0,0,0,0	monster	Stalactite Golem	1278,15,0,0,0
+gl_dun02.gat,0,0,0,0	monster	Stalactite Golem	1278,10,0,0,0
 gl_dun02.gat,0,0,0,0	monster	Majoruros	1310,25,0,0,0
 
 // Glastheim  

@@ -64,25 +64,11 @@ gef_dun02.gat,58,167,10,10	monster	Shining Plant	1083,1,1800000,900000,1
 gef_dun02.gat,185,83,3,3	monster	Shining Plant	1083,1,1800000,900000,1
 
 // Gef_dun03
-//gef_dun03.gat,0,0,0,0	monster	Baphomet	1039,1,7200000,7200000,1
-//gef_dun03.gat,0,0,0,0	monster	Doppelganger	1046,1,7200000,7200000,1
-gef_dun03.gat,0,0,0,0	monster	Deviruchi	1109,8,0,0,0
-gef_dun03.gat,0,0,0,0	monster	Joker	1131,5,300000,100000,0
-gef_dun03.gat,0,0,0,0	monster	Khalitzburg	1132,2,0,0,0
-gef_dun03.gat,0,0,0,0	monster	Knight of Abyss	1219,2,300000,0,0
-//gef_dun03.gat,0,0,0,0	monster	Gryphon	1259,1,7200000,3600000,1
-gef_dun03.gat,0,0,0,0	monster	Blood Knight	1268,2,300000,0,0
-//gef_dun03.gat,0,0,0,0	monster	Dark Lord	1272,1,7200000,7200000,1
-gef_dun03.gat,0,0,0,0	monster	Alice	1275,3,0,0,0
-//gef_dun03.gat,0,0,0,0	monster	Chimera	1283,1,7200000,7200000,1
-gef_dun03.gat,0,0,0,0	monster	Mini Demon	1292,2,300000,0,0
-gef_dun03.gat,0,0,0,0	monster	Dark Illusion	1302,2,300000,0,0
-gef_dun03.gat,0,0,0,0	monster	Apocalypse	1365,2,300000,0,0
-gef_dun03.gat,0,0,0,0	monster	Succubus	1370,10,0,0,0
-gef_dun03.gat,0,0,0,0	monster	Fake Angel	1371,8,0,0,0
-//gef_dun03.gat,0,0,0,0	monster	Lord of Death	1373,1,7200000,7200000,1
-gef_dun03.gat,0,0,0,0	monster	Incubus	1374,10,0,0,0
-gef_dun03.gat,0,0,0,0	monster	Nightmare Terror	1379,3,0,0,0
-gef_dun03.gat,0,0,0,0	monster	Violy	1390,10,0,0,0
+
+gef_dun03.gat,0,0,0,0	monster	Deviruchi	1109,10,0,0,0
+gef_dun03.gat,0,0,0,0	monster	Wind Ghost	1263,10,0,0,0
+gef_dun03.gat,0,0,0,0	monster	Wraith	1192,20,0,0,0
+gef_dun03.gat,0,0,0,0	monster	Dark Priest	1198,20,0,0,0
+gef_dun03.gat,0,0,0,0	monster	Wraith Dead	1291,10,0,0,0
 gef_dun03.gat,0,0,0,0	monster	Shining Plant	1083,3,1800000,900000,1
 gef_dun03.gat,0,0,0,0	monster	White Plant	1082,10,180000,90000,1
