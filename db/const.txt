@@ -20,6 +20,7 @@ Job_Alchem	18
 Job_Bard	19
 Job_Dancer	20
 Job_Crusader2	21
+Job_Wedding	22
 Job_SuperNovice	23
 Job_Gunslinger	24
 Job_Ninja	25

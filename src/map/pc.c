@@ -8164,6 +8164,15 @@ int pc_readdb(void)
 		}
 	}
 	fclose(fp);
+	for (i = 0; i < MAX_PC_CLASS; i++) {
+		if (!pcdb_checkid(i)) continue;
+		if (i == JOB_WEDDING || i == JOB_XMAS)
+			continue; //Classes that do not need exp tables.
+		if (!max_level[i][0])
+			ShowWarning("Class %s (%d) does not has a base exp table.\n", job_name(i), i);
+		if (!max_level[i][1])
+			ShowWarning("Class %s (%d) does not has a job exp table.\n", job_name(i), i);
+	}
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","exp.txt");
 
 	// ƒXƒLƒ‹ƒcƒŠ?

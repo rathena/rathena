@@ -1032,9 +1032,23 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 		return 1;
 	}
 	memcpy(&sd->pet,p,sizeof(struct s_pet));
-	if(sd->pet.incuvate == 1)
-		pet_birth_process(sd);
-	else {
+	if(sd->pet.incuvate == 1) {
+		if (!pet_birth_process(sd))
+	  	{
+			int i;
+			//Delete egg from inventory. [Skotlex]
+			for (i = 0; i < MAX_INVENTORY; i++) {
+				if(sd->status.inventory[i].card[0] == (short)0xff00 &&
+					p->pet_id == MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2]))
+			  	{
+					pc_delitem(sd,i,1,0);
+					break;
+				}
+			}
+			if(i >= MAX_INVENTORY && battle_config.error_log)
+				ShowError("pet_recv_petdata: Hatched pet (%d:%s), but couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
+		}
+	} else {
 		pet_data_init(sd);
 		if(sd->pd && sd->bl.prev != NULL) {
 			map_addblock(&sd->pd->bl);
@@ -1065,8 +1079,6 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 		if(battle_config.error_log)
 			ShowError("wrong egg item inventory %d\n",egg_index);
 	}
-	pc_delitem(sd,egg_index,1,0);
-
 	return 0;
 }
 

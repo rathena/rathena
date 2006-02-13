@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/13
+	* Pet eggs will now not be deleted from the inventory until they arrive
+	  from the char-server. [Skotlex]
+	* pc_readdb will now print if any classes are missing their exp tables.
+	  Only exception are JOB_WEDDING and JOB_XMAS. [Skotlex]
 	* Made the NPC_BREAK* skills attack skills again, their chance of equipment
 	  breaking code was moved to skill_additional_effect. [Skotlex]
 	* Now when the exp table does not has enough data to reach the max level
