@@ -501,7 +501,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 	//TODO: Perhaps some outs of bounds checking should be placed here?
 	if (bl->type&BL_CHAR)
 		skill_unit_move(bl,tick,2);
-
 	if (moveblock) map_delblock_sub(bl,0);
 #ifdef CELL_NOSTACK
 	else map_delblcell(bl);
@@ -512,8 +511,26 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 #ifdef CELL_NOSTACK
 	else map_addblcell(bl);
 #endif
-	if (bl->type&BL_CHAR)
+	if (bl->type&BL_CHAR) {
+		struct status_change *sc = status_get_sc(bl);
 		skill_unit_move(bl,tick,3);
+		if (sc) {
+			if (sc->option&OPTION_CLOAK)
+				skill_check_cloaking(bl);
+			if (sc->count) {
+				if (sc->data[SC_DANCING].timer != -1) {
+					if (sc->data[SC_DANCING].val1 == CG_MOONLIT) //Cancel Moonlight Petals if moved from casting position. [Skotlex]
+						skill_stop_dancing(bl);
+					else
+						skill_unit_move_unit_group((struct skill_unit_group *)sc->data[SC_DANCING].val2, bl->m, x1-x0, y1-y0);
+				}
+				if (sc->data[SC_CLOSECONFINE].timer != -1)
+					status_change_end(bl, SC_CLOSECONFINE, -1);
+				if (sc->data[SC_CLOSECONFINE2].timer != -1)
+					status_change_end(bl, SC_CLOSECONFINE2, -1);
+			}
+		}
+	}
 	return 0;
 }
 	

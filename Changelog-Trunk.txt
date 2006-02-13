@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
+2006/02/12
+	* Optimized functions skill_addtimerskill/skill_cleartimerskill [Skotlex]
+	* Fixed SC_DANCING for non players (was making dances only last 1 second
+	  for them) [Skotlex]
+	* Modified map_moveblock to handle updating dance's position as well as
+	  ending close confine status effects. [Skotlex]
 2006/02/10
 	* Fixed Sonic Blow's damage for lvl 1~9 [Vicious]
 	* The status window will now show the total power of both weapons instead

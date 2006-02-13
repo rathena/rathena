@@ -570,8 +570,6 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 		map_foreachinmovearea(clif_mobinsight,md->bl.m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,BL_PC,md);
 		md->state.state=MS_IDLE;
 
-		if(md->sc.option&OPTION_CLOAK)
-			skill_check_cloaking(&md->bl);
 	}
 	if((i=calc_next_walk_step(md))>0){
 		i = i>>1;

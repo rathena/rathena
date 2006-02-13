@@ -3634,13 +3634,6 @@ static int pc_walk(int tid,unsigned int tick,int id,int data)
 			-dx, -dy, BL_ALL, sd);
 		sd->walktimer = -1;	// set back so not to disturb future pc_stop_walking calls
 
-		if (pc_iscloaking(sd))	// クロ?キングの消滅?査
-			skill_check_cloaking(&sd->bl);
-		/* 被ディボ?ション?査 */
-		if (sd->sc.count) {
-			if (sd->sc.data[SC_DANCING].timer != -1)
-				skill_unit_move_unit_group((struct skill_unit_group *)sd->sc.data[SC_DANCING].val2, sd->bl.m, dx, dy);
-		}
 		if (map_getcell(sd->bl.m,x,y,CELL_CHKNPC))
 			npc_touch_areanpc(sd,sd->bl.m,x,y);
 		else

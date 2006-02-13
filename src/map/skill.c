@@ -1427,7 +1427,6 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 	struct mob_data *md=NULL;
 	struct pet_data *pd=NULL;
 	struct skill_unit *su=NULL;
-	struct status_change* sc=NULL;
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, target);
@@ -1451,8 +1450,6 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 		default:
 			return 0;
 	}
-	if (target->type != BL_SKILL)
-		sc = status_get_sc(target);
 
 	if (count&0xf00000)
 		dir = (count>>20)&0xf;
@@ -1480,19 +1477,6 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 		map_foreachinmovearea(clif_moboutsight,target->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_PC,md);
 	else if(pd)
 		map_foreachinmovearea(clif_petoutsight,target->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_PC,pd);
-	
-	if (sc && sc->count) {
-		if (sc->data[SC_DANCING].timer != -1) {	//Move the song/dance [Skotlex]
-			if (sc->data[SC_DANCING].val1 == CG_MOONLIT) //Cancel Moonlight Petals if moved from casting position. [Skotlex]
-				skill_stop_dancing(target);
-			else
-				skill_unit_move_unit_group((struct skill_unit_group *)sc->data[SC_DANCING].val2, target->m, dx, dy);
-		}
-		if (sc->data[SC_CLOSECONFINE].timer != -1)
-			status_change_end(target, SC_CLOSECONFINE, -1);
-		if (sc->data[SC_CLOSECONFINE2].timer != -1)
-			status_change_end(target, SC_CLOSECONFINE2, -1);
-	}
 		
 	if(su){
 		skill_unit_move_unit_group(su->group,target->m,dx,dy);
@@ -2321,75 +2305,42 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
  */
 int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int x,int y,int skill_id,int skill_lv,int type,int flag)
 {
-	int i;
-
+	int i, max;
+	unsigned short *count=NULL;;
+	struct skill_timerskill *sts = NULL;
 	nullpo_retr(1, src);
-
-	if(src->type == BL_PC) {
-		struct map_session_data *sd = (struct map_session_data *)src;
-		nullpo_retr(1, sd);
-		for(i=0;i<MAX_SKILLTIMERSKILL;i++) {
-			if(sd->skilltimerskill[i].timer == -1) {
-				sd->skilltimerskill[i].timer = add_timer(tick, skill_timerskill, src->id, i);
-				sd->skilltimerskill[i].src_id = src->id;
-				sd->skilltimerskill[i].target_id = target;
-				sd->skilltimerskill[i].skill_id = skill_id;
-				sd->skilltimerskill[i].skill_lv = skill_lv;
-				sd->skilltimerskill[i].map = src->m;
-				sd->skilltimerskill[i].x = x;
-				sd->skilltimerskill[i].y = y;
-				sd->skilltimerskill[i].type = type;
-				sd->skilltimerskill[i].flag = flag;
-				sd->timerskill_count++;
-
-				return 0;
-			}
-		}
-		return 1;
+	switch (src->type) {
+		case BL_PC:
+			sts = ((struct map_session_data *)src)->skilltimerskill;
+			max = MAX_SKILLTIMERSKILL;
+			count = &((struct map_session_data *)src)->timerskill_count;
+		break;
+		case BL_MOB:
+			sts = ((struct mob_data *)src)->skilltimerskill;
+			max = MAX_MOBSKILLTIMERSKILL;
+		break;
+		case BL_PET:
+			sts = ((struct pet_data *)src)->skilltimerskill;
+			max =  MAX_MOBSKILLTIMERSKILL;
+		break;
+		default:
+			return 1;
 	}
-	else if(src->type == BL_MOB) {
-		struct mob_data *md = (struct mob_data *)src;
-		nullpo_retr(1, md);
-		for(i=0;i<MAX_MOBSKILLTIMERSKILL;i++) {
-			if(md->skilltimerskill[i].timer == -1) {
-				md->skilltimerskill[i].timer = add_timer(tick, skill_timerskill, src->id, i);
-				md->skilltimerskill[i].src_id = src->id;
-				md->skilltimerskill[i].target_id = target;
-				md->skilltimerskill[i].skill_id = skill_id;
-				md->skilltimerskill[i].skill_lv = skill_lv;
-				md->skilltimerskill[i].map = src->m;
-				md->skilltimerskill[i].x = x;
-				md->skilltimerskill[i].y = y;
-				md->skilltimerskill[i].type = type;
-				md->skilltimerskill[i].flag = flag;
-
-				return 0;
-			}
-		}
-		return 1;
-	}
-	else if(src->type == BL_PET) { // [Valaris]
-		struct pet_data *pd = (struct pet_data *)src;
-		nullpo_retr(1, pd);
-		for(i=0;i<MAX_MOBSKILLTIMERSKILL;i++) {
-			if(pd->skilltimerskill[i].timer == -1) {
-				pd->skilltimerskill[i].timer = add_timer(tick, skill_timerskill, src->id, i);
-				pd->skilltimerskill[i].src_id = src->id;
-				pd->skilltimerskill[i].target_id = target;
-				pd->skilltimerskill[i].skill_id = skill_id;
-				pd->skilltimerskill[i].skill_lv = skill_lv;
-				pd->skilltimerskill[i].map = src->m;
-				pd->skilltimerskill[i].x = x;
-				pd->skilltimerskill[i].y = y;
-				pd->skilltimerskill[i].type = type;
-				pd->skilltimerskill[i].flag = flag;
-
-				return 0;
-			}
-		}
-		return 1;
-	}
-	return 1;
+	for(i=0;i<max && sts[i].timer != -1;i++);
+	if (i>=max) return 1;
+	
+	sts[i].timer = add_timer(tick, skill_timerskill, src->id, i);
+	sts[i].src_id = src->id;
+	sts[i].target_id = target;
+	sts[i].skill_id = skill_id;
+	sts[i].skill_lv = skill_lv;
+	sts[i].map = src->m;
+	sts[i].x = x;
+	sts[i].y = y;
+	sts[i].flag = flag;
+	if (count)
+		(*count)++;
+	return 0;
 }
 
 /*==========================================
@@ -2398,42 +2349,42 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
  */
 int skill_cleartimerskill(struct block_list *src)
 {
-	int i;
+	int i, max;
+	unsigned short *count=NULL;
+	struct skill_timerskill *sts = NULL;
 
 	nullpo_retr(0, src);
-
-	if(src->type == BL_PC) {
-		struct map_session_data *sd = (struct map_session_data *)src;
-		nullpo_retr(0, sd);
-
-		if (sd->timerskill_count <= 0)
+	switch (src->type) {
+		case  BL_PC:
+			sts = ((struct map_session_data *)src)->skilltimerskill;
+			max = MAX_SKILLTIMERSKILL;
+			count = &((struct map_session_data *)src)->timerskill_count;
+		break;
+		case BL_MOB:
+			sts = ((struct mob_data *)src)->skilltimerskill;
+			max = MAX_MOBSKILLTIMERSKILL;
+		break;
+		case BL_PET:
+			sts = ((struct pet_data *)src)->skilltimerskill;
+			max =  MAX_MOBSKILLTIMERSKILL;
+		break;
+		default:
 			return 0;
-
-		for(i=0;i<MAX_SKILLTIMERSKILL && sd->timerskill_count > 0;i++) {
-			if(sd->skilltimerskill[i].timer != -1) {
-				delete_timer(sd->skilltimerskill[i].timer, skill_timerskill);
-				sd->skilltimerskill[i].timer = -1;
-				sd->timerskill_count--;
+	}
+		
+	if (count) {
+		for(i=0;i<max && *count > 0;i++) {
+			if(sts[i].timer != -1) {
+				delete_timer(sts[i].timer, skill_timerskill);
+				sts[i].timer = -1;
+				(*count)--;
 			}
 		}
-	}
-	else if(src->type == BL_MOB) {
-		struct mob_data *md = (struct mob_data *)src;
-		nullpo_retr(0, md);
-		for(i=0;i<MAX_MOBSKILLTIMERSKILL;i++) {
-			if(md->skilltimerskill[i].timer != -1) {
-				delete_timer(md->skilltimerskill[i].timer, skill_timerskill);
-				md->skilltimerskill[i].timer = -1;
-			}
-		}
-	}
-	else if(src->type == BL_PET) { // Ya forgot this one, Valaris. [Skotlex]
-		struct pet_data *pd = (struct pet_data *)src;
-		nullpo_retr(1, pd);
-		for(i=0;i<MAX_MOBSKILLTIMERSKILL;i++) {
-			if(pd->skilltimerskill[i].timer != -1) {
-				delete_timer(pd->skilltimerskill[i].timer, skill_timerskill);
-				pd->skilltimerskill[i].timer = -1;
+	} else {
+		for(i=0;i<max;i++) {
+			if(sts[i].timer != -1) {
+				delete_timer(sts[i].timer, skill_timerskill);
+				sts[i].timer = -1;
 			}
 		}
 	}
@@ -9630,31 +9581,27 @@ int skill_attack_area(struct block_list *bl,va_list ap)
  */
 int skill_clear_element_field(struct block_list *bl)
 {
-	struct mob_data *md=NULL;
-	struct map_session_data *sd=NULL;
+	struct skill_unit_group *ug=NULL;
 	int i,max,skillid;
 
 	nullpo_retr(0, bl);
 
 	if (bl->type==BL_MOB) {
 		max = MAX_MOBSKILLUNITGROUP;
-		md = (struct mob_data *)bl;
+		ug = ((struct mob_data *)bl)->skillunit;
 	} else if(bl->type==BL_PC) {
 		max = MAX_SKILLUNITGROUP;
-		sd = (struct map_session_data *)bl;
+		ug = ((struct map_session_data *)bl)->skillunit;
+	} else if(bl->type==BL_PET) {
+		max = MAX_MOBSKILLUNITGROUP;
+		ug = ((struct pet_data*)bl)->skillunit;
 	} else
 		return 0;
 
 	for (i=0;i<max;i++) {
-		if(sd){
-			skillid=sd->skillunit[i].skill_id;
-			if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR)
-				skill_delunitgroup(&sd->skillunit[i]);
-		}else if(md){
-			skillid=md->skillunit[i].skill_id;
-			if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR)
-				skill_delunitgroup(&md->skillunit[i]);
-		}
+		skillid=ug[i].skill_id;
+		if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR)
+			skill_delunitgroup(&ug[i]);
 	}
 	return 0;
 }
@@ -10274,6 +10221,8 @@ struct skill_unit_group_tickset *skill_unitgrouptickset_search(
 		set = ((struct map_session_data *)bl)->skillunittick;
 	else if (bl->type == BL_MOB)
 		set = ((struct mob_data *)bl)->skillunittick;
+	else if (bl->type == BL_PET)
+		set = ((struct pet_data *)bl)->skillunittick;
 	else
 		return 0;
 

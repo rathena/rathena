@@ -5545,7 +5545,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		{
 			int s = 0;
 			int sp = 1;
-			if(sd && (--sc->data[type].val3) > 0) {
+			if (--sc->data[type].val3 <= 0)
+				break;
+			if(sd) {
 				switch(sc->data[type].val1){
 				case BD_RICHMANKIM:				/* ニヨルドの宴 3秒にSP1 */
 				case BD_DRUMBATTLEFIELD:		/* ?太鼓の響き 3秒にSP1 */
@@ -5591,11 +5593,11 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 					if (sd->status.sp <= 0)
 						break;
 				}
-				sc->data[type].timer=add_timer(	/* タイマ?再設定 */
-					1000+tick, status_change_timer,
-					bl->id, data);
-				return 0;
 			}
+			sc->data[type].timer=add_timer(	/* タイマ?再設定 */
+				1000+tick, status_change_timer,
+				bl->id, data);
+			return 0;
 		}
 		break;
 
