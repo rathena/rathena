@@ -29,6 +29,8 @@ static int blue_box_default=0, violet_box_default=0, card_album_default=0, gift_
 
 static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
+struct item_data *dummy_item=NULL; //This is the default dummy item used for non-existant items. [Skotlex]
+
 /*==========================================
  * ñºëOÇ≈åüçıóp
  *------------------------------------------
@@ -198,50 +200,50 @@ static void itemdb_jobid2mapid(unsigned short *bclass, int jobmask)
 		bclass[2] |= 1<<MAPID_TAEKWON;
 }
 
+static void create_dummy_data(void) {
+	if (dummy_item)
+		aFree(dummy_item);
+	
+	dummy_item=(struct item_data *)aCalloc(1,sizeof(struct item_data));
+	dummy_item->nameid=500;
+	dummy_item->weight=1;
+	dummy_item->type=3; //Etc item
+	strncpy(dummy_item->name,"UNKNOWN_ITEM",ITEM_NAME_LENGTH);
+	strncpy(dummy_item->jname,"UNKNOWN_ITEM",ITEM_NAME_LENGTH);
+	dummy_item->view_id = 512; //Use apple sprite.
+}
+
 static void* create_item_data(DBKey key, va_list args) {
 	struct item_data *id;
-	int nameid = key.i;
-
 	id=(struct item_data *)aCalloc(1,sizeof(struct item_data));
-	id->nameid=nameid;
-	id->value_buy=10;
-	id->value_sell=id->value_buy/2;
-	id->weight=10;
-	id->sex=2;
-	id->class_base[0]=0xff;
-	id->class_base[1]=0xff;
-	id->class_base[2]=0xff;
-	id->class_upper=5;
-
-	if(nameid>500 && nameid<600)
-		id->type=0;   //heal item
-	else if(nameid>600 && nameid<700)
-		id->type=2;   //use item
-	else if((nameid>700 && nameid<1100) ||
-			(nameid>7000 && nameid<8000))
-		id->type=3;   //correction
-	else if(nameid>=1750 && nameid<1771)
-		id->type=10;  //arrow
-	else if(nameid>1100 && nameid<2000)
-		id->type=4;   //weapon
-	else if((nameid>2100 && nameid<3000) ||
-			(nameid>5000 && nameid<6000))
-		id->type=5;   //armor
-	else if(nameid>4000 && nameid<5000)
-		id->type=6;   //card
-	else if(nameid>9000 && nameid<10000)
-		id->type=7;   //egg
-	else if(nameid>10000)
-		id->type=8;   //petequip
+	id->nameid = key.i;
+	id->weight=1;
+	id->type=3; //Etc item
 	return id;
 }
+
 /*==========================================
- * DBÇÃåüçı
+ * Loads (and creates if not found) an item from the db.
+ *------------------------------------------
+ */
+struct item_data* itemdb_load(int nameid)
+{
+	return idb_ensure(item_db,nameid,create_item_data);
+}
+
+static void* return_dummy_data(DBKey key, va_list args) {
+	if (battle_config.error_log)
+		ShowWarning("itemdb_search: Item ID %d does not exists in the item_db. Using dummy data.\n", key.i);
+	return dummy_item;
+}
+
+/*==========================================
+ * Loads an item from the db. If not found, it will return the dummy item.
  *------------------------------------------
  */
 struct item_data* itemdb_search(int nameid)
 {
-	return idb_ensure(item_db,nameid,create_item_data);
+	return idb_ensure(item_db,nameid,return_dummy_data);
 }
 
 /*==========================================
@@ -812,10 +814,10 @@ static int itemdb_read_sqldb(void)
 					ln++;
 
 					// ----------
-					id = itemdb_search(nameid);
+					id = itemdb_load(nameid);
 					
-					memcpy(id->name, sql_row[1], ITEM_NAME_LENGTH-1);
-					memcpy(id->jname, sql_row[2], ITEM_NAME_LENGTH-1);
+					memcpy(id->name, sql_row[1], ITEM_NAME_LENGTH);
+					memcpy(id->jname, sql_row[2], ITEM_NAME_LENGTH);
 
 					id->type = atoi(sql_row[3]);
 					if (id->type == 11)
@@ -956,9 +958,9 @@ static int itemdb_readdb(void)
 			ln++;
 
 			//ID,Name,Jname,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Job Upper,Gender,Loc,wLV,eLV,refineable,View
-			id=itemdb_search(nameid);
-			memcpy(id->name, str[1], ITEM_NAME_LENGTH-1);
-			memcpy(id->jname, str[2], ITEM_NAME_LENGTH-1);
+			id=itemdb_load(nameid);
+			memcpy(id->name, str[1], ITEM_NAME_LENGTH);
+			memcpy(id->jname, str[2], ITEM_NAME_LENGTH);
 			id->type=atoi(str[3]);
 			if (id->type == 11)
 			{	//Items that are consumed upon target confirmation
@@ -1075,8 +1077,8 @@ static int itemdb_final_sub (DBKey key,void *data,va_list ap)
 		aFree(id->script);
 		id->script = NULL;
 	}
-	// Whether to clear the item data
-	if (flag)
+	// Whether to clear the item data (exception: do not clear the dummy item data
+	if (flag && id != dummy_item) 
 		aFree(id);
 
 	return 0;
@@ -1092,11 +1094,18 @@ void itemdb_reload(void)
 void do_final_itemdb(void)
 {
 	item_db->destroy(item_db, itemdb_final_sub, 1);
+	if (dummy_item) {
+		if (dummy_item->script)
+			aFree(dummy_item->script);
+		aFree(dummy_item);
+		dummy_item = NULL;
+	}
 }
 
 int do_init_itemdb(void)
 {
 	item_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int)); 
+	create_dummy_data(); //Dummy data item.
 	itemdb_read();
 
 	return 0;

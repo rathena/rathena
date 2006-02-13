@@ -4310,6 +4310,11 @@ static int mob_readdb(void)
 				int rate = 0,rate_adjust,type,ratemin,ratemax;
 				struct item_data *id;
 				mob_db_data[class_]->dropitem[i].nameid=atoi(str[29+i*2]);
+				if (!mob_db_data[class_]->dropitem[i].nameid) {
+					//No drop.
+					mob_db_data[class_]->dropitem[i].p = 0;
+					continue;
+				}
 				type = itemdb_type(mob_db_data[class_]->dropitem[i].nameid);
 				rate = atoi(str[30+i*2]);
 				if (class_ >= 1324 && class_ <= 1363)
@@ -4378,9 +4383,13 @@ static int mob_readdb(void)
 			// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 			for(i=0;i<3;i++){
 				struct item_data *id;
-				int rate=atoi(str[52+i*2]);
 				mob_db_data[class_]->mvpitem[i].nameid=atoi(str[51+i*2]);
-				mob_db_data[class_]->mvpitem[i].p= mob_drop_adjust(rate, battle_config.item_rate_mvp,
+				if (!mob_db_data[class_]->mvpitem[i].nameid) {
+					//No item....
+					mob_db_data[class_]->mvpitem[i].p = 0;
+					continue;
+				}
+				mob_db_data[class_]->mvpitem[i].p= mob_drop_adjust(atoi(str[52+i*2]), battle_config.item_rate_mvp,
 					battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 
 				//calculate and store Max available drop chance of the MVP item
@@ -4892,6 +4901,11 @@ static int mob_read_sqldb(void)
 					int rate = 0, rate_adjust, type, ratemin, ratemax;
 					struct item_data *id;
 					mob_db_data[class_]->dropitem[i].nameid=TO_INT(29+i*2);
+					if (!mob_db_data[class_]->dropitem[i].nameid) {
+						//No drop.
+						mob_db_data[class_]->dropitem[i].p = 0;
+						continue;
+					}
 					type = itemdb_type(mob_db_data[class_]->dropitem[i].nameid);
 					rate = TO_INT(30+i*2);
 					if (class_ >= 1324 && class_ <= 1363)
@@ -4961,6 +4975,11 @@ static int mob_read_sqldb(void)
 				for (i=0; i<3; i++) {
 					struct item_data *id;
 					mob_db_data[class_]->mvpitem[i].nameid = TO_INT(51+i*2);
+					if (!mob_db_data[class_]->mvpitem[i].nameid) {
+						//No item....
+						mob_db_data[class_]->mvpitem[i].p = 0;
+						continue;
+					}
 					mob_db_data[class_]->mvpitem[i].p = mob_drop_adjust(TO_INT(52+i*2),
 						battle_config.item_rate_mvp, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 

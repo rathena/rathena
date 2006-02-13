@@ -5783,7 +5783,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		if ((unsigned int)val > pc_maxbaselv(sd)) //Capping to max
 			val = pc_maxbaselv(sd);
 		if ((unsigned int)val > sd->status.base_level) {
-			for (i = 1; i <= ((unsigned int)val - sd->status.base_level); i++)
+			for (i = 1; i <= (int)((unsigned int)val - sd->status.base_level); i++)
 				sd->status.status_point += (sd->status.base_level + i + 14) / 5 ;
 		}
 		sd->status.base_level = (unsigned int)val;

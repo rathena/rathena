@@ -55,6 +55,7 @@ struct item_group {
 };
 
 struct item_data* itemdb_searchname(const char *name);
+struct item_data* itemdb_load(int nameid);
 struct item_data* itemdb_search(int nameid);
 struct item_data* itemdb_exists(int nameid);
 #define itemdb_type(n) itemdb_search(n)->type

@@ -2680,7 +2680,7 @@ int atcommand_baselevelup(
 			clif_displaymessage(fd, msg_table[47]); /* Base level can't go any higher. */
 			return -1;
 		}	/* End Addition */
-		if (level > pc_maxbaselv(sd) || level > pc_maxbaselv(sd) - sd->status.base_level) // fix positiv overflow
+		if ((unsigned int)level > pc_maxbaselv(sd) || (unsigned int)level > pc_maxbaselv(sd) - sd->status.base_level) // fix positiv overflow
 			level = pc_maxbaselv(sd) - sd->status.base_level;
 		for (i = 1; i <= level; i++)
 			sd->status.status_point += (sd->status.base_level + i + 14) / 5;
@@ -2698,7 +2698,7 @@ int atcommand_baselevelup(
 			return -1;
 		}
 		level*=-1;
-		if (level >= sd->status.base_level)
+		if ((unsigned int)level >= sd->status.base_level)
 			level = sd->status.base_level-1;
 		if (sd->status.status_point > 0) {
 			for (i = 0; i > -level; i--)
@@ -2739,7 +2739,7 @@ int atcommand_joblevelup(
 			clif_displaymessage(fd, msg_table[23]); // Job level can't go any higher.
 			return -1;
 		}
-		if (level > pc_maxjoblv(sd) || level > pc_maxjoblv(sd) - sd->status.job_level) // fix positiv overflow
+		if ((unsigned int)level > pc_maxjoblv(sd) || (unsigned int)level > pc_maxjoblv(sd) - sd->status.job_level) // fix positiv overflow
 			level = pc_maxjoblv(sd) - sd->status.job_level;
 		sd->status.job_level += level;
 		clif_updatestatus(sd, SP_JOBLEVEL);
@@ -2755,7 +2755,7 @@ int atcommand_joblevelup(
 			return -1;
 		}
 		level *=-1;
-		if (level >= sd->status.job_level) // fix negativ overflow
+		if ((unsigned int)level >= sd->status.job_level) // fix negativ overflow
 			level = sd->status.job_level-1;
 		sd->status.job_level -= level;
 		clif_updatestatus(sd, SP_JOBLEVEL);

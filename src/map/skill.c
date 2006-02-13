@@ -3949,6 +3949,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
 			break;
 		}
+		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKLANDPROTECTOR))
+			break; //Land Protector blocks Hammer Fall [Skotlex]
+		
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			status_change_start(bl,SC_STAN,(20 + 10 * skilllv),
 				skilllv,0,0,0,skill_get_time2(skillid,skilllv),0));

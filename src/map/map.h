@@ -853,8 +853,8 @@ struct mob_data {
 	short speed;
 	short attacked_count;
 	short target_lv;
+	unsigned short level;
 	unsigned long tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
-	unsigned int level;
 	int timer;
 	int hp, max_hp;
 	int target_id,attacked_id;
