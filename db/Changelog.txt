@@ -30,6 +30,7 @@
 =========================
 
 02/13
+	* Updated most mobs Summon Skills to use "OnSpawn" conditions. [Poki#3]
 	* Fixed exp.txt for Baby Dancer, thanks to Gepard [Komurka]
 
 02/10

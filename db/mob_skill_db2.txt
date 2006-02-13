@@ -113,6 +113,10 @@
 1903,Poki#3@NPC_CHANGETELEKINESIS,attack,169,1,500,2000,5000,no,self,myhpltmaxrate,10,,,,,,7
 1903,Poki#3@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 
+// Easter Bunny (not in the db?? it's in db2!)
+1921,Easter Bunny@NPC_SUMMONSLAVE,attack,196,5,10000,3000,10000,no,self,slavele,2,1063,,,,,
+1921,Easter Bunny@NPC_SUMMONSLAVE,idle,196,5,5000,2000,40000,no,self,always,2,1920,,,,,
+
 // eAthena's Custom Equipped Mobs
 1970,Poring@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1970,Poring@NPC_WATERATTACK,attack,184,1,2000,0,5000,yes,target,always,0,,,,,,
