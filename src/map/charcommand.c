@@ -523,7 +523,7 @@ int charcommand_reset(
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset a character only for lower or same GM level
 			pc_resetstate(pl_sd);
-			pc_resetskill(pl_sd);
+			pc_resetskill(pl_sd,1);
 			sprintf(output, msg_table[208], character); // '%s' skill and stats points reseted!
 			clif_displaymessage(fd, output);
 		} else {
@@ -1357,12 +1357,12 @@ int charcommand_joblevel(
 				pl_sd->status.job_level -= level;
 				clif_updatestatus(pl_sd, SP_JOBLEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTJOBEXP);
-				if (pl_sd->status.skill_point > 0) {
-					pl_sd->status.skill_point -= level;
-					if (pl_sd->status.skill_point < 0)
-						pl_sd->status.skill_point = 0;
-					clif_updatestatus(pl_sd, SP_SKILLPOINT);
-				} // to add: remove status points from skills
+				if (pl_sd->status.skill_point < level)
+					pc_resetskill(pl_sd, 0); //Need more skill points to substract
+				pl_sd->status.skill_point -= level;
+				if (pl_sd->status.skill_point < 0)
+					pl_sd->status.skill_point = 0;
+				clif_updatestatus(pl_sd, SP_SKILLPOINT);
 				status_calc_pc(pl_sd, 0);
 				clif_displaymessage(fd, msg_table[69]); // Character's job level lowered.
 			}
@@ -1492,7 +1492,7 @@ int charcommand_skreset(
 
 	if ((pl_sd = map_nick2sd(player)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset skill points only lower or same gm level
-			pc_resetskill(pl_sd);
+			pc_resetskill(pl_sd,1);
 			sprintf(tmp_cmdoutput, msg_table[206], player); // '%s' skill points reseted!
 			clif_displaymessage(fd, tmp_cmdoutput);
 		} else {

@@ -2710,7 +2710,6 @@ int atcommand_baselevelup(
 		sd->status.base_level += level;
 		clif_updatestatus(sd, SP_BASELEVEL);
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
-		pc_resetskill(sd);	/* Skills are reset */
 		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_table[22]); /* Base level lowered. */
 	}
@@ -2761,12 +2760,12 @@ int atcommand_joblevelup(
 		sd->status.job_level -= level;
 		clif_updatestatus(sd, SP_JOBLEVEL);
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
-		if (sd->status.skill_point > 0) {
-			sd->status.skill_point -= level;
-			if (sd->status.skill_point < 0)
-				sd->status.skill_point = 0;
-			clif_updatestatus(sd, SP_SKILLPOINT);
-		} // to add: remove status points from skills
+		if (sd->status.skill_point < level)
+			pc_resetskill(sd,0);	//Reset skills since we need to substract more points.
+		sd->status.skill_point -= level;
+		if (sd->status.skill_point < 0)
+			sd->status.skill_point = 0;
+		clif_updatestatus(sd, SP_SKILLPOINT);
 		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_table[25]); // Job level lowered.
 	}

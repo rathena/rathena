@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/13
+	* Modified PA_GOSPEL so that the random damage attack becomes a BF_MISC
+	  attack. [Skotlex]
+	* Added pc_resetskill when lowering job level and there's not enough
+	  skill points to substract. [Skotlex]
 	* Fixed SG_FUSION costing SP to deactivate. [Skotlex]
 	* Some cleaning up at pc_setpos to prevent calling pc_clean_skilltree
 	  [Skotlex]

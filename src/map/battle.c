@@ -2834,7 +2834,10 @@ struct Damage  battle_calc_misc_attack(
 		damagefix=0;
 		aflag = (aflag&~BF_RANGEMASK)|BF_LONG;
 		break;
-
+	case PA_GOSPEL:
+		damage = 1+rand()%9999;
+		aflag = (aflag&~BF_RANGEMASK)|BF_LONG;
+		break;
 	case CR_ACIDDEMONSTRATION:
 		//This equation is not official, but it's the closest to the official one 
 		//that Viccious Pucca and the other folks at the forums could come up with. [Skotlex]

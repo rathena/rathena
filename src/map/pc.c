@@ -5065,13 +5065,8 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 
 	nullpo_retr(0, sd);
 
-	if (type != 3) {
-		for(i=1;i<MAX_SKILL;i++){
-			if (sd->status.skill[i].lv &&
-				!skill_get_inf2(i)&INF2_WEDDING_SKILL) //Do not reset Wedding Skills. [Skotlex]
-				sd->status.skill[i].lv = 0; 
-		}
-	}
+	if (type != 3) //Also reset skills
+		pc_resetskill(sd, 0);
 
 	if(type == 1){
 	sd->status.skill_point=0;
@@ -5142,8 +5137,8 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 		//Send map-change packet to do a level range check and break party settings. [Skotlex]
 		party_send_movemap(sd);
 	}
-	clif_skillinfoblock(sd);
 	status_calc_pc(sd,0);
+	clif_skillinfoblock(sd);
 
 	return 0;
 }
@@ -5205,9 +5200,10 @@ int pc_resetstate(struct map_session_data* sd)
 
 /*==========================================
  * /resetskill
+ * if flag is 1, perform block resync and status_calc call.
  *------------------------------------------
  */
-int pc_resetskill(struct map_session_data* sd)
+int pc_resetskill(struct map_session_data* sd, int flag)
 {
 	int i, skill, inf2;
 	nullpo_retr(0, sd);
@@ -5236,9 +5232,11 @@ int pc_resetskill(struct map_session_data* sd)
 			sd->status.skill[i].lv = 0;
 		}
 	}
-	clif_updatestatus(sd,SP_SKILLPOINT);
-	clif_skillinfoblock(sd);
-	status_calc_pc(sd,0);
+	if (flag) {
+		clif_updatestatus(sd,SP_SKILLPOINT);
+		clif_skillinfoblock(sd);
+		status_calc_pc(sd,0);
+	}
 
 	return 0;
 }

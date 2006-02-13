@@ -6243,7 +6243,7 @@ int buildin_resetskill(struct script_state *st)
 {
 	struct map_session_data *sd;
 	sd=script_rid2sd(st);
-	pc_resetskill(sd);
+	pc_resetskill(sd,1);
 	return 0;
 }
 

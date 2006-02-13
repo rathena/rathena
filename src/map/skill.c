@@ -1756,6 +1756,10 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case SG_STAR_WARM:
 		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
+	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
+		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
+		break;
+
 	case ASC_BREAKER:	// [celest]
 		if (attack_type&BF_WEAPON) { // the 1st attack won't really deal any damage
 			tmpdmg = damage;	// store the temporary weapon damage
@@ -7152,12 +7156,8 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			switch (i)
 			{
 				case 0: // Deal 1~9999 damage
-				{
-					int dmg = rand() % 9999 +1;
-					clif_skill_damage(bl, bl, sg->tick,0,0,dmg,0,CR_HOLYCROSS,1,-1);
-					battle_damage(ss, bl, dmg,0);
+					skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
-				}
 				case 1: // Curse
 					status_change_start(bl,SC_CURSE,100,1,0,0,0,skill_get_time2(sg->skill_id, sg->skill_lv),0);
 					break;
@@ -7861,7 +7861,6 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case PA_GOSPEL:
 	case CR_SHRINK:
 	case TK_RUN:
-	case SG_FUSION:
 		if(sd->sc.data[SkillStatusChangeTable[skill]].timer!=-1)
 			return 1;			/* ‰ð?œ‚·‚é?ê?‡‚ÍSP?Á”ï‚µ‚È‚¢ */
 		break;
@@ -8195,7 +8194,9 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 	case SG_FUSION:
-		if ((sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_STAR) || sd->sc.data[SC_FUSION].timer != -1)
+		if (sd->sc.data[SC_FUSION].timer!=-1)
+			return 1;
+		if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_STAR)
 			break;
 		return 0;
 	}
