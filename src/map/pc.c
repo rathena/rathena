@@ -925,6 +925,7 @@ int pc_reg_received(struct map_session_data *sd)
 	char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
 	char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
 	
+	pc_clean_skilltree(sd); //Clean skill tree before loading reg-based skills
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
 	if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
@@ -3334,12 +3335,6 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 				sd->petDB = NULL;
 				if(battle_config.pet_status_support)
 					status_calc_pc(sd,2);
-				pc_clean_skilltree(sd);
-
-				if (sd->state.storage_flag == 1)
-					storage_storageclose(sd);
-				else if (sd->state.storage_flag == 2)
-					storage_guild_storageclose(sd);
 			}
 			else if(sd->pet.intimate > 0) {
 				pet_stopattack(sd->pd);
@@ -3348,6 +3343,11 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 				map_delblock(&sd->pd->bl);
 			}
 		}
+		if (sd->state.storage_flag == 1)
+			storage_storageclose(sd);
+		else if (sd->state.storage_flag == 2)
+			storage_guild_storageclose(sd);
+
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
 	}
 		
@@ -5065,8 +5065,12 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 
 	nullpo_retr(0, sd);
 
-	for(i=1;i<MAX_SKILL;i++){
-		sd->status.skill[i].lv = 0;
+	if (type != 3) {
+		for(i=1;i<MAX_SKILL;i++){
+			if (sd->status.skill[i].lv &&
+				!skill_get_inf2(i)&INF2_WEDDING_SKILL) //Do not reset Wedding Skills. [Skotlex]
+				sd->status.skill[i].lv = 0; 
+		}
 	}
 
 	if(type == 1){

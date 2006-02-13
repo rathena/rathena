@@ -7861,6 +7861,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case PA_GOSPEL:
 	case CR_SHRINK:
 	case TK_RUN:
+	case SG_FUSION:
 		if(sd->sc.data[SkillStatusChangeTable[skill]].timer!=-1)
 			return 1;			/* ‰ð?œ‚·‚é?ê?‡‚ÍSP?Á”ï‚µ‚È‚¢ */
 		break;

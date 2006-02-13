@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/13
+	* Fixed SG_FUSION costing SP to deactivate. [Skotlex]
+	* Some cleaning up at pc_setpos to prevent calling pc_clean_skilltree
+	  [Skotlex]
+	* Enabled use of TF_HIDING while Cloaked. [Skotlex]
+	* pc_resetstate won't remove wedding skills now [Skotlex]
 	* NPC_POWERUP now gives +40% atk per level. [Skotlex]
 	* Water elementals can be frozen again. [Skotlex]
 	* Fixed the sc_def equation in status_change_start. [Skotlex]
