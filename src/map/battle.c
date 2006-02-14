@@ -1386,7 +1386,7 @@ static struct Damage battle_calc_weapon_attack(
 			}
 		if ((tsc && !flag.hit) &&
 			(tsc->data[SC_SLEEP].timer!=-1 ||
-			tsc->data[SC_STAN].timer!=-1 ||
+			tsc->data[SC_STUN].timer!=-1 ||
 			tsc->data[SC_FREEZE].timer!=-1 ||
 			(tsc->data[SC_STONE].timer!=-1 && tsc->data[SC_STONE].val2==0))
 			)
@@ -2808,7 +2808,7 @@ struct Damage  battle_calc_misc_attack(
 			struct status_change *sc = status_get_sc(target);
 			int hitrate=status_get_hit(bl) - status_get_flee(target) + 80;
 			hitrate = ( (hitrate>95)?95: ((hitrate<5)?5:hitrate) );
-			if(sc && sc->count && (sc->data[SC_SLEEP].timer!=-1 || sc->data[SC_STAN].timer!=-1 ||
+			if(sc && sc->count && (sc->data[SC_SLEEP].timer!=-1 || sc->data[SC_STUN].timer!=-1 ||
 				sc->data[SC_FREEZE].timer!=-1 || (sc->data[SC_STONE].timer!=-1 && sc->data[SC_STONE].val2==0) ) )
 				hitrate = 1000000;
 			if(rand()%100 < hitrate) {

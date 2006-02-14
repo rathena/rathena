@@ -29,6 +29,9 @@
 
 =========================
 
+02/14
+	* Jump Kick and High Jump now depend on the skill state ST_MOVE_ENABLE
+	  [Skotlex]
 02/13
 	* Updated most mobs Summon Skills to use "OnSpawn" conditions. [Poki#3]
 	* Fixed exp.txt for Baby Dancer, thanks to Gepard [Komurka]

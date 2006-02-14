@@ -25,450 +25,9 @@
 #include "script.h"
 #include "showmsg.h"
 
-int SkillStatusChangeTable[]={
-	-1,-1,-1,-1,-1,-1,
-	SC_PROVOKE,
-	SC_WATK_ELEMENT,		//Adds part of your final attack as elemental damage. [Skotlex]
-	SC_ENDURE,
-	-1,
-/* 10- */
-	SC_SIGHT,			/* サイト */
-	-1,
-	SC_SAFETYWALL,		/* セーフティーウォール */
-	-1,-1,-1,
-	SC_FREEZE,			/* フロストダイバ? */
-	SC_STONE,			/* スト?ンカ?ス */
-	-1,-1,
-/* 20- */
-	-1,-1,-1,-1,
-	SC_RUWACH,			/* ルアフ */
-	-1,//SC_PNEUMA, Pneuma is no longer a status change. It is a cell type.
-	-1,-1,-1,
-	SC_INCREASEAGI,		/* 速度?加 */
-/* 30- */
-	SC_DECREASEAGI,		/* 速度減少 */
-	-1,
-	SC_SIGNUMCRUCIS,	/* シグナムクルシス */
-	SC_ANGELUS,			/* エンジェラス */
-	SC_BLESSING,		/* ブレッシング */
-	-1,-1,-1,-1,-1,
-/* 40- */
-	-1,-1,-1,-1,-1,
-	SC_CONCENTRATE,		/* 集中力向上 */
-	-1,-1,-1,-1,
-/* 50- */
-	-1,
-	SC_HIDING,			/* ハイディング */
-	-1,-1,-1,-1,-1,-1,-1,-1,
-/* 60- */
-	SC_TWOHANDQUICKEN,	/* 2HQ */
-	SC_AUTOCOUNTER,
-	-1,-1,-1,-1,
-	SC_IMPOSITIO,		/* インポシティオマヌス */
-	SC_SUFFRAGIUM,		/* サフラギウム */
-	SC_ASPERSIO,		/* アスペルシオ */
-	SC_BENEDICTIO,		/* 聖?降福 */
-/* 70- */
-	-1,
-	SC_SLOWPOISON,
-	-1,
-	SC_KYRIE,			/* キリエエレイソン */
-	SC_MAGNIFICAT,		/* マグニフィカ?ト */
-	SC_GLORIA,			/* グロリア */
-	SC_SILENCE,			/* レックスディビ?ナ */
-	-1,
-	SC_AETERNA,			/* レックスエ?テルナ */
-	-1,
-/* 80- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 90- */
-	-1,-1,
-	SC_QUAGMIRE,		/* クァグマイア */
-	-1,-1,-1,-1,-1,-1,-1,
-/* 100- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 110- */
-	-1,
-	SC_ADRENALINE,		/* アドレナリンラッシュ */
-	SC_WEAPONPERFECTION,/* ウェポンパ?フェクション */
-	SC_OVERTHRUST,		/* オ?バ?トラスト */
-	SC_MAXIMIZEPOWER,	/* マキシマイズパワ? */
-	-1,-1,-1,-1,-1,
-/* 120- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 130- */
-	-1,-1,-1,-1,-1,
-	SC_CLOAKING,		/* クロ?キング */
-	SC_STAN,			/* ソニックブロ? */
-	-1,
-	SC_ENCPOISON,		/* エンチャントポイズン */
-	SC_POISONREACT,		/* ポイズンリアクト */
-/* 140- */
-	SC_POISON,			/* ベノムダスト */
-	SC_SPLASHER,		/* ベナムスプラッシャ? */
-	-1,
-	SC_TRICKDEAD,		/* 死んだふり */
-	-1,-1,
-	SC_AUTOBERSERK,
-	-1,-1,-1,
-/* 150- */
-	-1,-1,-1,-1,-1,
-	SC_LOUD,			/* ラウドボイス */
-	-1,
-	SC_ENERGYCOAT,		/* エナジ?コ?ト */
-	-1,-1,
-/* 160- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 200 */
-	-1,
-	SC_KEEPING,
-	-1,
-	SC_COMA,
-	SC_BARRIER,
-	-1,
-	SC_STAN,
-	SC_HALLUCINATION,
-	SC_KAIZEL,
-	-1,
-/* 210- */
-	-1,-1,-1,-1,-1,
-	SC_STRIPWEAPON,
-	SC_STRIPSHIELD,
-	SC_STRIPARMOR,
-	SC_STRIPHELM,
-	-1,
-/* 220- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 230- */
-	-1,-1,-1,-1,
-	SC_CP_WEAPON,
-	SC_CP_SHIELD,
-	SC_CP_ARMOR,
-	SC_CP_HELM,
-	-1,-1,
-/* 240- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	SC_AUTOGUARD,
-/* 250- */
-	-1,-1,
-	SC_REFLECTSHIELD,
-	-1,-1,
-	SC_DEVOTION,
-	SC_PROVIDENCE,
-	SC_DEFENDER,
-	SC_SPEARSQUICKEN,
-	-1,
-/* 260- */
-	-1,-1,-1,-1,-1,-1,-1,-1,
-	SC_STEELBODY,
-	SC_BLADESTOP_WAIT,
-/* 270- */
-	SC_EXPLOSIONSPIRITS,
-	SC_EXTREMITYFIST,
-	-1,-1,-1,-1,
-	SC_MAGICROD,
-	-1,-1,-1,
-/* 280- */
-	SC_FIREWEAPON,
-	SC_WATERWEAPON,
-	SC_WINDWEAPON,
-	SC_EARTHWEAPON,
-	-1,
-	SC_VOLCANO,
-	SC_DELUGE,
-	SC_VIOLENTGALE,
-	SC_LANDPROTECTOR,
-	-1,
-/* 290- */
-	-1,-1,-1,-1,
-	SC_ORCISH,
-	-1,-1,-1,-1,-1,
-/* 300- */
-	-1,-1,-1,
-	SC_COMA,
-	-1,-1,
-	SC_LULLABY,
-	SC_RICHMANKIM,
-	SC_ETERNALCHAOS,
-	SC_DRUMBATTLE,
-/* 310- */
-	SC_NIBELUNGEN,
-	SC_ROKISWEIL,
-	SC_INTOABYSS,
-	SC_SIEGFRIED,
-	-1,-1,-1,-1,-1,
-	SC_WHISTLE,
-/* 320- */
-	SC_ASSNCROS,
-	SC_POEMBRAGI,
-	SC_APPLEIDUN,
-	-1,-1,
-	SC_UGLYDANCE,
-	-1,
-	SC_HUMMING,
-	SC_DONTFORGETME,
-	SC_FORTUNE,
-/* 330- */
-	SC_SERVICE4U,
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 340- */
-	-1,-1,
-	SC_STOP,
-	-1,-1,-1,-1,-1,-1,-1,
-/* 350- */
-	-1,-1,-1,-1,-1,
-	SC_AURABLADE,
-	SC_PARRYING,
-	SC_CONCENTRATION,
-	SC_TENSIONRELAX,
-	SC_BERSERK,
-/* 360- */
-	-1,
-	SC_ASSUMPTIO,
-	SC_BASILICA,
-	-1,-1,-1,
-	SC_MAGICPOWER,
-	-1,
-	SC_SACRIFICE,
-	SC_GOSPEL,
-/* 370- */
-	-1,-1,-1,-1,-1,-1,-1,-1,
-	SC_EDP,
-	-1,
-/* 380- */
-	SC_TRUESIGHT,
-	-1,-1,
-	SC_WINDWALK,
-	SC_MELTDOWN,
-	-1,-1,
-	SC_CARTBOOST,
-	-1,
-	SC_CHASEWALK,
-/* 390- */
-	SC_REJECTSWORD,
-	-1,-1,-1,-1,
-	SC_MOONLIT,
-	SC_MARIONETTE,
-	-1,
-	SC_BLEEDING,
-	SC_JOINTBEAT,
-/* 400 */
-	-1,-1,
-	SC_MINDBREAKER,
-	SC_MEMORIZE,
-	SC_FOGWALL,
-	SC_SPIDERWEB,
-	-1,-1,
-	SC_BABY,
-	-1,
-/* 410- */
-	-1,
-	SC_RUN,
-	SC_READYSTORM,
-	-1,
-	SC_READYDOWN,
-	-1,
-	SC_READYTURN,
-	-1,
-	SC_READYCOUNTER,
-	-1,
-/* 420- */
-	SC_DODGE,
-	-1,-1,
-	SC_TKDORI,
-	-1,-1,-1,-1,
-	SC_WARM,
-	SC_WARM,
-/* 430- */
-	SC_WARM,
-	SC_SUN_COMFORT,
-	SC_MOON_COMFORT,
-	SC_STAR_COMFORT,
-	-1,-1,-1,-1,-1,-1,
-/* 440- */
-	-1,-1,-1,-1,
-	SC_FUSION,
-	MAPID_ALCHEMIST, // Storing the target job rather than simply SC_SPIRIT simplifies code later on.
-	-1,
-	MAPID_MONK,
-	MAPID_STAR_GLADIATOR,
-	MAPID_SAGE,
-/* 450- */
-	MAPID_CRUSADER,
-	MAPID_SUPER_NOVICE,
-	MAPID_KNIGHT,
-	MAPID_WIZARD,
-	MAPID_PRIEST,
-	MAPID_BARDDANCER,
-	MAPID_ROGUE,
-	MAPID_ASSASSIN,
-	MAPID_BLACKSMITH,
-	SC_ADRENALINE2,
-/* 460- */
-	MAPID_HUNTER,
-	MAPID_SOUL_LINKER,
-	SC_KAIZEL,
-	SC_KAAHI,
-	SC_KAUPE,
-	SC_KAITE,
-	-1,-1,-1,-1,
-/* 470- */
-	SC_SWOO, // [marquis007]
-	SC_SKE,
-	SC_SKA, // [marquis007]
-	-1,-1,
-	SC_PRESERVE,
-	-1,-1,-1,-1,
-/* 480- */
-	-1,-1,
-	SC_DOUBLECAST,
-	-1,
-	SC_GRAVITATION,
-	-1,
-	SC_MAXOVERTHRUST,
-	SC_LONGING,
-	SC_HERMODE,
-	-1,
-/* 490- */
-	-1,-1,-1,-1,
-	SC_SPIRIT,
-	SC_ONEHAND,
-	-1,-1,-1,-1,
-/* 500- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 510- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 520- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 530- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 540- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 550- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 560- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 570- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 580- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 590- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 600- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 610- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 620- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 630- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 640- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 650- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 660- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 670- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 680- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 690- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 700- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 710- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 720- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 730- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 740- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 750- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 760- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 770- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 780- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 790- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 800- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 810- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 820- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 830- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 840- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 850- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 860- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 870- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 880- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 890- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 900- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 910- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 920- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 930- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 940- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 950- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 960- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 970- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 980- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 990- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 1000- */
-	-1,-1,
-	SC_SHRINK,
-	-1,-1,
-	SC_CLOSECONFINE2,
-	SC_SIGHTBLASTER,
-	-1,-1,-1,
-/* 1010- */
-	-1,
-	SC_WINKCHARM,
-	-1,-1,
-	SC_COMA,
-	-1,-1,-1,-1,-1,
-/* 1020- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 1030- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 1040- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 1050- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 1060- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 1070- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 1080- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-/* 1090- */
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-};
-
-int StatusIconChangeTable[SC_MAX];
+int SkillStatusChangeTable[MAX_SKILL]; //Stores the status that should be associated to this skill.
+int StatusIconChangeTable[SC_MAX]; //Stores the icon that should be associated to this status change.
+int StatusSkillChangeTable[SC_MAX]; //Stores the skill that should be considered associated to this status change. 
 
 static int max_weight_base[MAX_PC_CLASS];
 static int hp_coefficient[MAX_PC_CLASS];
@@ -488,122 +47,271 @@ int current_equip_item_index; //Contains inventory index of an equipped item. To
 
 //Initializes the StatusIconChangeTable variable. May seem somewhat slower than directly defining the array,
 //but it is much less prone to errors. [Skotlex]
-void initStatusIconChangeTable(void) {
+void initChangeTables(void) {
 	int i;
 	for (i = 0; i < SC_MAX; i++)
 		StatusIconChangeTable[i] = SI_BLANK;
+	for (i = 0; i < MAX_SKILL; i++)
+		SkillStatusChangeTable[i] = -1;
+	memset(StatusSkillChangeTable, 0, sizeof(StatusSkillChangeTable));
 
-	StatusIconChangeTable[SC_PROVOKE] = SI_PROVOKE;
-	StatusIconChangeTable[SC_ENDURE] = SI_ENDURE;
-	StatusIconChangeTable[SC_TWOHANDQUICKEN] = SI_TWOHANDQUICKEN;
-	StatusIconChangeTable[SC_CONCENTRATE] = SI_CONCENTRATE;
-	StatusIconChangeTable[SC_HIDING] = SI_HIDING;
-	StatusIconChangeTable[SC_CLOAKING] = SI_CLOAKING;
-	StatusIconChangeTable[SC_ENCPOISON] = SI_ENCPOISON;
-	StatusIconChangeTable[SC_POISONREACT] = SI_POISONREACT;
-	StatusIconChangeTable[SC_QUAGMIRE] = SI_QUAGMIRE;
-	StatusIconChangeTable[SC_ANGELUS] = SI_ANGELUS;
-	StatusIconChangeTable[SC_BLESSING] = SI_BLESSING;
-	StatusIconChangeTable[SC_SIGNUMCRUCIS] = SI_SIGNUMCRUCIS;
-	StatusIconChangeTable[SC_INCREASEAGI] = SI_INCREASEAGI;
-	StatusIconChangeTable[SC_DECREASEAGI] = SI_DECREASEAGI;
-	StatusIconChangeTable[SC_SLOWPOISON] = SI_SLOWPOISON;
-	StatusIconChangeTable[SC_IMPOSITIO] = SI_IMPOSITIO;
-	StatusIconChangeTable[SC_SUFFRAGIUM] = SI_SUFFRAGIUM;
-	StatusIconChangeTable[SC_ASPERSIO] = SI_ASPERSIO;
-	StatusIconChangeTable[SC_BENEDICTIO] = SI_BENEDICTIO;
-	StatusIconChangeTable[SC_KYRIE] = SI_KYRIE;
-	StatusIconChangeTable[SC_MAGNIFICAT] = SI_MAGNIFICAT;
-	StatusIconChangeTable[SC_GLORIA] = SI_GLORIA;
-	StatusIconChangeTable[SC_AETERNA] = SI_AETERNA;
-	StatusIconChangeTable[SC_ADRENALINE] = SI_ADRENALINE;
-	StatusIconChangeTable[SC_WEAPONPERFECTION]	= SI_WEAPONPERFECTION;
-	StatusIconChangeTable[SC_OVERTHRUST] = SI_OVERTHRUST;
-	StatusIconChangeTable[SC_MAXIMIZEPOWER] = SI_MAXIMIZEPOWER;
-	StatusIconChangeTable[SC_TRICKDEAD] = SI_TRICKDEAD;
-	StatusIconChangeTable[SC_LOUD] = SI_LOUD;
-	StatusIconChangeTable[SC_ENERGYCOAT] = SI_ENERGYCOAT;
-	StatusIconChangeTable[SC_BROKENARMOR] = SI_BROKENARMOR;
-	StatusIconChangeTable[SC_BROKENWEAPON] = SI_BROKENWEAPON;
-	StatusIconChangeTable[SC_HALLUCINATION] = SI_HALLUCINATION;
-	StatusIconChangeTable[SC_WEIGHT50 ] = SI_WEIGHT50;
-	StatusIconChangeTable[SC_WEIGHT90] = SI_WEIGHT90;
+	//First we define the skill for common ailments. These are used in 
+	//skill_additional_effect through sc cards. [Skotlex]
+	StatusSkillChangeTable[SC_STONE] =     MG_STONECURSE;
+	StatusSkillChangeTable[SC_FREEZE] =    MG_FROSTDIVER;
+	StatusSkillChangeTable[SC_STUN] =      NPC_STUNATTACK;
+	StatusSkillChangeTable[SC_SLEEP] =     NPC_SLEEPATTACK;
+	StatusSkillChangeTable[SC_POISON] =    NPC_POISON;
+	StatusSkillChangeTable[SC_CURSE] =     NPC_CURSEATTACK;
+	StatusSkillChangeTable[SC_SILENCE] =   NPC_SILENCEATTACK;
+	StatusSkillChangeTable[SC_CONFUSION] = DC_WINKCHARM;
+	StatusSkillChangeTable[SC_BLIND] =     NPC_BLINDATTACK;
+	StatusSkillChangeTable[SC_BLEEDING] =  LK_HEADCRUSH;
+	StatusSkillChangeTable[SC_DPOISON] =   NPC_POISON;
+
+#define set_sc(skill, sc, icon) \
+	if (SkillStatusChangeTable[skill]==-1) SkillStatusChangeTable[skill] = sc; \
+	if (StatusSkillChangeTable[sc]==0) StatusSkillChangeTable[sc] = skill; \
+	if (StatusIconChangeTable[sc]==SI_BLANK) StatusIconChangeTable[sc] = icon; 
+	
+	set_sc(SM_BASH,                 SC_STUN,                SI_BLANK);
+	set_sc(SM_PROVOKE,              SC_PROVOKE,             SI_BLANK);
+	set_sc(SM_MAGNUM,               SC_WATK_ELEMENT,        SI_BLANK);
+	set_sc(SM_ENDURE,               SC_ENDURE,              SI_ENDURE);
+	set_sc(MG_SIGHT,                SC_SIGHT,               SI_BLANK);
+	set_sc(MG_SAFETYWALL,           SC_SAFETYWALL,          SI_BLANK);
+	set_sc(MG_FROSTDIVER,           SC_FREEZE,              SI_BLANK);
+	set_sc(MG_STONECURSE,           SC_STONE,               SI_BLANK);
+	set_sc(AL_RUWACH,               SC_RUWACH,              SI_BLANK);
+	set_sc(AL_INCAGI,               SC_INCREASEAGI,         SI_INCREASEAGI);
+	set_sc(AL_DECAGI,               SC_DECREASEAGI,         SI_DECREASEAGI);
+	set_sc(AL_CRUCIS,               SC_SIGNUMCRUCIS,        SI_SIGNUMCRUCIS);
+	set_sc(AL_ANGELUS,              SC_ANGELUS,             SI_ANGELUS);
+	set_sc(AL_BLESSING,             SC_BLESSING,            SI_BLESSING);
+	set_sc(AC_CONCENTRATION,        SC_CONCENTRATE,         SI_CONCENTRATE);
+	set_sc(TF_HIDING,               SC_HIDING,              SI_HIDING);
+	set_sc(TF_POISON,               SC_POISON,              SI_BLANK);
+	set_sc(KN_TWOHANDQUICKEN,       SC_TWOHANDQUICKEN,      SI_TWOHANDQUICKEN);
+	set_sc(KN_AUTOCOUNTER,          SC_AUTOCOUNTER,         SI_BLANK);
+	set_sc(PR_IMPOSITIO,            SC_IMPOSITIO,           SI_IMPOSITIO);
+	set_sc(PR_SUFFRAGIUM,           SC_SUFFRAGIUM,          SI_SUFFRAGIUM);
+	set_sc(PR_ASPERSIO,             SC_ASPERSIO,            SI_ASPERSIO);
+	set_sc(PR_BENEDICTIO,           SC_BENEDICTIO,          SI_BENEDICTIO);
+	set_sc(PR_SLOWPOISON,           SC_SLOWPOISON,          SI_SLOWPOISON);
+	set_sc(PR_KYRIE,                SC_KYRIE,	              SI_KYRIE);
+	set_sc(PR_MAGNIFICAT,           SC_MAGNIFICAT,          SI_MAGNIFICAT);
+	set_sc(PR_GLORIA,               SC_GLORIA,              SI_GLORIA);
+	set_sc(PR_LEXDIVINA,            SC_SILENCE,	           SI_BLANK);
+	set_sc(PR_LEXAETERNA,           SC_AETERNA,             SI_AETERNA);
+	set_sc(WZ_METEOR,               SC_STUN,                SI_BLANK);
+	set_sc(WZ_VERMILION,            SC_BLIND,               SI_BLANK);
+	set_sc(WZ_FROSTNOVA,            SC_FREEZE,              SI_BLANK);
+	set_sc(WZ_STORMGUST,            SC_FREEZE,              SI_BLANK);
+	set_sc(WZ_QUAGMIRE,             SC_QUAGMIRE,            SI_QUAGMIRE);
+	set_sc(BS_ADRENALINE,           SC_ADRENALINE,          SI_ADRENALINE);
+	set_sc(BS_WEAPONPERFECT,        SC_WEAPONPERFECTION,    SI_WEAPONPERFECTION);
+	set_sc(BS_OVERTHRUST,           SC_OVERTHRUST,          SI_OVERTHRUST);
+	set_sc(BS_MAXIMIZE,             SC_MAXIMIZEPOWER,       SI_MAXIMIZEPOWER);
+	set_sc(HT_LANDMINE,             SC_STUN,                SI_BLANK);
+	set_sc(HT_SANDMAN,              SC_SLEEP,               SI_BLANK);
+	set_sc(HT_FLASHER,              SC_BLIND,               SI_BLANK);
+	set_sc(HT_FREEZINGTRAP,         SC_FREEZE,              SI_BLANK);
+	set_sc(AS_CLOAKING,             SC_CLOAKING,	           SI_CLOAKING);
+	set_sc(AS_SONICBLOW,            SC_STUN,	              SI_BLANK);
+	set_sc(AS_GRIMTOOTH,            SC_SLOWDOWN,            SI_BLANK);
+	set_sc(AS_ENCHANTPOISON,        SC_ENCPOISON,	        SI_ENCPOISON);
+	set_sc(AS_POISONREACT,          SC_POISONREACT,         SI_POISONREACT);
+	set_sc(AS_VENOMDUST,            SC_POISON,              SI_BLANK);
+	set_sc(AS_SPLASHER,             SC_SPLASHER,            SI_BLANK);
+	set_sc(NV_TRICKDEAD,            SC_TRICKDEAD,           SI_TRICKDEAD);
+	set_sc(SM_AUTOBERSERK,          SC_AUTOBERSERK,         SI_BLANK);
+	set_sc(TF_SPRINKLESAND,         SC_BLIND,               SI_BLANK);
+	set_sc(TF_THROWSTONE,           SC_STUN,                SI_BLANK);
+	set_sc(MC_LOUD,                 SC_LOUD,                SI_LOUD);
+	set_sc(MG_ENERGYCOAT,           SC_ENERGYCOAT,          SI_ENERGYCOAT);
+	set_sc(NPC_POISON,              SC_POISON,              SI_BLANK);
+	set_sc(NPC_BLINDATTACK,         SC_BLIND,               SI_BLANK);
+	set_sc(NPC_SILENCEATTACK,       SC_SILENCE,             SI_BLANK);
+	set_sc(NPC_STUNATTACK,          SC_STUN,                SI_BLANK);
+	set_sc(NPC_PETRIFYATTACK,       SC_STONE,               SI_BLANK);
+	set_sc(NPC_CURSEATTACK,         SC_CURSE,               SI_BLANK);
+	set_sc(NPC_SLEEPATTACK,         SC_SLEEP,               SI_BLANK);
+	set_sc(NPC_KEEPING,             SC_KEEPING,             SI_BLANK);
+	set_sc(NPC_DARKBLESSING,        SC_COMA,                SI_BLANK);
+	set_sc(NPC_BARRIER,             SC_BARRIER,             SI_BLANK);
+	set_sc(NPC_LICK,                SC_STUN,                SI_BLANK);
+	set_sc(NPC_HALLUCINATION,       SC_HALLUCINATION,       SI_HALLUCINATION);
+	set_sc(NPC_REBIRTH,             SC_KAIZEL,              SI_KAIZEL);
+	set_sc(RG_RAID,                 SC_STUN,                SI_BLANK);
+	set_sc(RG_STRIPWEAPON,          SC_STRIPWEAPON,         SI_STRIPWEAPON);
+	set_sc(RG_STRIPSHIELD,          SC_STRIPSHIELD,         SI_STRIPSHIELD);
+	set_sc(RG_STRIPARMOR,           SC_STRIPARMOR,          SI_STRIPARMOR);
+	set_sc(RG_STRIPHELM,            SC_STRIPHELM,           SI_STRIPHELM);
+	set_sc(AM_ACIDTERROR,           SC_BLEEDING,            SI_BLEEDING);
+	set_sc(AM_CP_WEAPON,            SC_CP_WEAPON,           SI_CP_WEAPON);
+	set_sc(AM_CP_SHIELD,            SC_CP_SHIELD,           SI_CP_SHIELD);
+	set_sc(AM_CP_ARMOR,             SC_CP_ARMOR,            SI_CP_ARMOR);
+	set_sc(AM_CP_HELM,              SC_CP_HELM,             SI_CP_HELM);
+	set_sc(CR_AUTOGUARD,            SC_AUTOGUARD,           SI_AUTOGUARD);
+	set_sc(CR_SHIELDCHARGE,         SC_STUN,                SI_AUTOGUARD);
+	set_sc(CR_REFLECTSHIELD,        SC_REFLECTSHIELD,       SI_REFLECTSHIELD);
+	set_sc(CR_HOLYCROSS,            SC_BLIND,               SI_BLANK);
+	set_sc(CR_GRANDCROSS,           SC_BLIND,               SI_BLANK);
+	set_sc(CR_DEVOTION,             SC_DEVOTION,            SI_DEVOTION);
+	set_sc(CR_PROVIDENCE,           SC_PROVIDENCE,          SI_PROVIDENCE);
+	set_sc(CR_DEFENDER,             SC_DEFENDER,            SI_DEFENDER);
+	set_sc(CR_SPEARQUICKEN,         SC_SPEARSQUICKEN,       SI_SPEARQUICKEN);
+	set_sc(MO_STEELBODY,            SC_STEELBODY,           SI_STEELBODY);
+	set_sc(MO_BLADESTOP,            SC_BLADESTOP_WAIT,      SI_BLANK);
+	set_sc(MO_EXPLOSIONSPIRITS,     SC_EXPLOSIONSPIRITS,    SI_EXPLOSIONSPIRITS);
+	set_sc(MO_EXTREMITYFIST,        SC_EXTREMITYFIST,       SI_BLANK);
+	set_sc(SA_MAGICROD,             SC_MAGICROD,            SI_BLANK);
+	set_sc(SA_AUTOSPELL,            SC_AUTOSPELL,           SI_AUTOSPELL);
+	set_sc(SA_FLAMELAUNCHER,        SC_FIREWEAPON,          SI_FIREWEAPON);
+	set_sc(SA_FROSTWEAPON,          SC_WATERWEAPON,         SI_WATERWEAPON);
+	set_sc(SA_LIGHTNINGLOADER,      SC_WINDWEAPON,          SI_WINDWEAPON);
+	set_sc(SA_SEISMICWEAPON,        SC_EARTHWEAPON,         SI_EARTHWEAPON);
+	set_sc(SA_VOLCANO,              SC_VOLCANO,             SI_BLANK);
+	set_sc(SA_DELUGE,               SC_DELUGE,              SI_BLANK);
+	set_sc(SA_VIOLENTGALE,          SC_VIOLENTGALE,         SI_BLANK);
+	set_sc(SA_LANDPROTECTOR,        SC_LANDPROTECTOR,       SI_BLANK);
+	set_sc(SA_REVERSEORCISH,        SC_ORCISH,              SI_BLANK);
+	set_sc(SA_COMA,                 SC_COMA,                SI_BLANK);
+	set_sc(BD_LULLABY,              SC_LULLABY,             SI_BLANK);
+	set_sc(BD_RICHMANKIM,           SC_RICHMANKIM,          SI_BLANK);
+	set_sc(BD_ETERNALCHAOS,         SC_ETERNALCHAOS,        SI_BLANK);
+	set_sc(BD_DRUMBATTLEFIELD,      SC_DRUMBATTLE,          SI_BLANK);
+	set_sc(BD_RINGNIBELUNGEN,       SC_NIBELUNGEN,          SI_BLANK);
+	set_sc(BD_ROKISWEIL,            SC_ROKISWEIL,           SI_BLANK);
+	set_sc(BD_INTOABYSS,            SC_INTOABYSS,           SI_BLANK);
+	set_sc(BD_SIEGFRIED,            SC_SIEGFRIED,           SI_BLANK);
+	set_sc(BA_FROSTJOKE,            SC_FREEZE,              SI_BLANK);
+	set_sc(BA_WHISTLE,              SC_WHISTLE,             SI_BLANK);
+	set_sc(BA_ASSASSINCROSS,        SC_ASSNCROS,            SI_BLANK);
+	set_sc(BA_POEMBRAGI,            SC_POEMBRAGI,           SI_BLANK);
+	set_sc(BA_APPLEIDUN,            SC_APPLEIDUN,           SI_BLANK);
+	set_sc(DC_UGLYDANCE,            SC_UGLYDANCE,           SI_BLANK);
+	set_sc(DC_SCREAM,               SC_STUN,                SI_BLANK);
+	set_sc(DC_HUMMING,              SC_HUMMING,             SI_BLANK);
+	set_sc(DC_DONTFORGETME,         SC_DONTFORGETME,        SI_BLANK);
+	set_sc(DC_FORTUNEKISS,          SC_FORTUNE,             SI_BLANK);
+	set_sc(DC_SERVICEFORYOU,        SC_SERVICE4U,           SI_BLANK);
+	set_sc(NPC_DARKCROSS,           SC_BLIND,               SI_BLANK);
+	set_sc(NPC_GRANDDARKNESS,       SC_BLIND,               SI_BLANK);
+	set_sc(NPC_STOP,                SC_STOP,                SI_BLANK);
+	set_sc(NPC_BREAKWEAPON,         SC_BROKENWEAPON,        SI_BROKENWEAPON);
+	set_sc(NPC_BREAKARMOR,          SC_BROKENARMOR,         SI_BROKENARMOR);
+	set_sc(LK_AURABLADE,            SC_AURABLADE,           SI_AURABLADE);
+	set_sc(LK_PARRYING,             SC_PARRYING,            SI_PARRYING);
+	set_sc(LK_CONCENTRATION,        SC_CONCENTRATION,       SI_CONCENTRATION);
+	set_sc(LK_TENSIONRELAX,         SC_TENSIONRELAX,        SI_TENSIONRELAX);
+	set_sc(LK_BERSERK,              SC_BERSERK,             SI_BERSERK);
+	set_sc(LK_FURY,                 SC_FURY,                SI_FURY);
+	set_sc(HP_ASSUMPTIO,            SC_ASSUMPTIO,           SI_ASSUMPTIO);
+	set_sc(HP_BASILICA,             SC_BASILICA,            SI_BLANK);
+	set_sc(HW_MAGICPOWER,           SC_MAGICPOWER,          SI_MAGICPOWER);
+	set_sc(PA_SACRIFICE,            SC_SACRIFICE,           SI_BLANK);
+	set_sc(PA_GOSPEL,               SC_GOSPEL,              SI_BLANK);
+	set_sc(CH_TIGERFIST,            SC_STOP,                SI_BLANK);
+	set_sc(ASC_EDP,                 SC_EDP,                 SI_EDP);
+	set_sc(SN_SIGHT,                SC_TRUESIGHT,           SI_TRUESIGHT);
+	set_sc(SN_WINDWALK,             SC_WINDWALK,            SI_WINDWALK);
+	set_sc(WS_MELTDOWN,             SC_MELTDOWN,            SI_MELTDOWN);
+	set_sc(WS_CARTBOOST,            SC_CARTBOOST,           SI_CARTBOOST);
+	set_sc(ST_CHASEWALK,            SC_CHASEWALK,           SI_CHASEWALK);
+	set_sc(ST_REJECTSWORD,          SC_REJECTSWORD,         SI_REJECTSWORD);
+	set_sc(ST_REJECTSWORD,          SC_AUTOCOUNTER,         SI_BLANK);
+	set_sc(CG_MOONLIT,              SC_MOONLIT,             SI_MOONLIT);
+	set_sc(CG_MARIONETTE,           SC_MARIONETTE,          SI_MARIONETTE);
+	set_sc(CG_MARIONETTE,           SC_MARIONETTE2,         SI_MARIONETTE2);
+	set_sc(LK_SPIRALPIERCE,         SC_STOP,                SI_BLANK);
+	set_sc(LK_HEADCRUSH,            SC_BLEEDING,            SI_BLEEDING);
+	set_sc(LK_JOINTBEAT,            SC_JOINTBEAT,           SI_BLANK);
+	set_sc(HW_NAPALMVULCAN,         SC_CURSE,               SI_BLANK);
+	set_sc(PF_MINDBREAKER,          SC_MINDBREAKER,         SI_BLANK);
+	set_sc(PF_MEMORIZE,             SC_MEMORIZE,            SI_BLANK);
+	set_sc(PF_FOGWALL,              SC_FOGWALL,             SI_BLANK);
+	set_sc(PF_SPIDERWEB,            SC_SPIDERWEB,           SI_BLANK);
+	set_sc(WE_BABY,                 SC_BABY,                SI_BLANK);
+	set_sc(TK_RUN,                  SC_RUN,                 SI_BLANK);
+	set_sc(TK_RUN,                  SC_SPURT,               SI_SPURT);
+	set_sc(TK_READYSTORM,           SC_READYSTORM,          SI_READYSTORM);
+	set_sc(TK_READYDOWN,            SC_READYDOWN,           SI_READYDOWN);
+	set_sc(TK_DOWNKICK,             SC_STUN,                SI_BLANK);
+	set_sc(TK_READYTURN,            SC_READYTURN,           SI_READYTURN);
+	set_sc(TK_READYCOUNTER,         SC_READYCOUNTER,        SI_READYCOUNTER);
+	set_sc(TK_DODGE,                SC_DODGE,               SI_DODGE);
+	set_sc(TK_SPTIME,               SC_TKDORI,              SI_BLANK);
+	set_sc(TK_SEVENWIND,            SC_GHOSTWEAPON,         SI_GHOSTWEAPON);
+	set_sc(TK_SEVENWIND,            SC_SHADOWWEAPON,        SI_SHADOWWEAPON);
+	set_sc(SG_SUN_WARM,             SC_WARM,                SI_WARM);
+	set_sc(SG_MOON_WARM,            SC_WARM,                SI_WARM);
+	set_sc(SG_STAR_WARM,            SC_WARM,                SI_WARM);
+	set_sc(SG_SUN_COMFORT,          SC_SUN_COMFORT,         SI_SUN_COMFORT);
+	set_sc(SG_MOON_COMFORT,         SC_MOON_COMFORT,        SI_MOON_COMFORT);
+	set_sc(SG_STAR_COMFORT,         SC_STAR_COMFORT,        SI_STAR_COMFORT);
+	set_sc(SG_FUSION,               SC_FUSION,              SI_BLANK);
+	set_sc(BS_ADRENALINE2,          SC_ADRENALINE2,         SI_ADRENALINE2);
+	set_sc(SL_KAIZEL,               SC_KAIZEL,              SI_KAIZEL);
+	set_sc(SL_KAAHI,                SC_KAAHI,               SI_KAAHI);
+	set_sc(SL_KAUPE,                SC_KAUPE,               SI_KAUPE);
+	set_sc(SL_KAITE,                SC_KAITE,               SI_KAITE);
+	set_sc(SL_STUN,                 SC_STUN,                SI_BLANK);
+	set_sc(SL_SWOO,                 SC_SWOO,                SI_BLANK);
+	set_sc(SL_SKE,                  SC_SKE,                 SI_BLANK);
+	set_sc(SL_SKA,                  SC_SKA,                 SI_BLANK);
+	set_sc(ST_PRESERVE,             SC_PRESERVE,            SI_PRESERVE);
+	set_sc(PF_DOUBLECASTING,        SC_DOUBLECAST,          SI_DOUBLECAST);
+	set_sc(HW_GRAVITATION,          SC_GRAVITATION,         SI_BLANK);
+	set_sc(WS_CARTTERMINATION,      SC_STUN,                SI_BLANK);
+	set_sc(WS_OVERTHRUSTMAX,        SC_MAXOVERTHRUST,       SI_MAXOVERTHRUST);
+	set_sc(CG_LONGINGFREEDOM,       SC_LONGING,             SI_BLANK);
+	set_sc(CG_HERMODE,              SC_HERMODE,             SI_BLANK);
+	set_sc(SL_HIGH,                 SC_SPIRIT,              SI_SPIRIT);
+	set_sc(KN_ONEHAND,              SC_ONEHAND,             SI_ONEHAND);
+	set_sc(CR_SHRINK,               SC_SHRINK,              SI_SHRINK);
+	set_sc(RG_CLOSECONFINE,         SC_CLOSECONFINE2,       SI_CLOSECONFINE2);
+	set_sc(RG_CLOSECONFINE,         SC_CLOSECONFINE,        SI_CLOSECONFINE);
+	set_sc(WZ_SIGHTBLASTER,         SC_SIGHTBLASTER,        SI_SIGHTBLASTER);
+	set_sc(DC_WINKCHARM,            SC_WINKCHARM,           SI_WINKCHARM);
+	set_sc(MO_BALKYOUNG,            SC_STUN,                SI_BLANK);
+
+  	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
+	SkillStatusChangeTable[SL_ALCHEMIST] =   MAPID_ALCHEMIST,
+	SkillStatusChangeTable[SL_MONK] =        MAPID_MONK,
+	SkillStatusChangeTable[SL_STAR] =        MAPID_STAR_GLADIATOR,
+	SkillStatusChangeTable[SL_SAGE] =        MAPID_SAGE,
+	SkillStatusChangeTable[SL_CRUSADER] =    MAPID_CRUSADER,
+	SkillStatusChangeTable[SL_SUPERNOVICE] = MAPID_SUPER_NOVICE,
+	SkillStatusChangeTable[SL_KNIGHT] =      MAPID_KNIGHT,
+	SkillStatusChangeTable[SL_WIZARD] =      MAPID_WIZARD,
+	SkillStatusChangeTable[SL_PRIEST] =      MAPID_PRIEST,
+	SkillStatusChangeTable[SL_BARDDANCER] =  MAPID_BARDDANCER,
+	SkillStatusChangeTable[SL_ROGUE] =       MAPID_ROGUE,
+	SkillStatusChangeTable[SL_ASSASIN] =     MAPID_ASSASSIN,
+	SkillStatusChangeTable[SL_BLACKSMITH] =  MAPID_BLACKSMITH,
+	SkillStatusChangeTable[SL_HUNTER] =      MAPID_HUNTER,
+	SkillStatusChangeTable[SL_SOULLINKER] =  MAPID_SOUL_LINKER,
+
+	//Status that don't have a skill associated.
+	StatusIconChangeTable[SC_WEIGHT50 ] =   SI_WEIGHT50;
+	StatusIconChangeTable[SC_WEIGHT90] =    SI_WEIGHT90;
 	StatusIconChangeTable[SC_ASPDPOTION0] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_ASPDPOTION1] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_ASPDPOTION2] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTION;
-	StatusIconChangeTable[SC_SPEEDUP0] = SI_SPEEDPOTION;
-	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION;
-	StatusIconChangeTable[SC_STRIPWEAPON] = SI_STRIPWEAPON;
-	StatusIconChangeTable[SC_STRIPSHIELD] = SI_STRIPSHIELD;
-	StatusIconChangeTable[SC_STRIPARMOR] = SI_STRIPARMOR;
-	StatusIconChangeTable[SC_STRIPHELM] = SI_STRIPHELM;
-	StatusIconChangeTable[SC_CP_WEAPON] = SI_CP_WEAPON;
-	StatusIconChangeTable[SC_CP_SHIELD] = SI_CP_SHIELD;
-	StatusIconChangeTable[SC_CP_ARMOR] = SI_CP_ARMOR;
-	StatusIconChangeTable[SC_CP_HELM] = SI_CP_HELM;
-	StatusIconChangeTable[SC_AUTOGUARD] = SI_AUTOGUARD;
-	StatusIconChangeTable[SC_REFLECTSHIELD] = SI_REFLECTSHIELD;
-	StatusIconChangeTable[SC_PROVIDENCE] = SI_PROVIDENCE;
-	StatusIconChangeTable[SC_DEFENDER] = SI_DEFENDER;
-	StatusIconChangeTable[SC_AUTOSPELL] = SI_AUTOSPELL;
-	StatusIconChangeTable[SC_SPEARSQUICKEN] = SI_SPEARQUICKEN;
-	StatusIconChangeTable[SC_EXPLOSIONSPIRITS] = SI_EXPLOSIONSPIRITS;
-	StatusIconChangeTable[SC_FURY] = SI_FURY;
-	StatusIconChangeTable[SC_FIREWEAPON] = SI_FIREWEAPON;
-	StatusIconChangeTable[SC_WATERWEAPON] = SI_WATERWEAPON;
-	StatusIconChangeTable[SC_WINDWEAPON] = SI_WINDWEAPON;
-	StatusIconChangeTable[SC_EARTHWEAPON] = SI_EARTHWEAPON;
-	StatusIconChangeTable[SC_AURABLADE] = SI_AURABLADE;
-	StatusIconChangeTable[SC_PARRYING] = SI_PARRYING;
-	StatusIconChangeTable[SC_CONCENTRATION] = SI_CONCENTRATION;
-	StatusIconChangeTable[SC_TENSIONRELAX] = SI_TENSIONRELAX;
-	StatusIconChangeTable[SC_BERSERK] = SI_BERSERK;
-	StatusIconChangeTable[SC_ASSUMPTIO] = SI_ASSUMPTIO;
-	StatusIconChangeTable[SC_GUILDAURA] = SI_GUILDAURA;
-	StatusIconChangeTable[SC_MAGICPOWER] = SI_MAGICPOWER;
-	StatusIconChangeTable[SC_EDP] = SI_EDP;
-	StatusIconChangeTable[SC_TRUESIGHT] = SI_TRUESIGHT;
-	StatusIconChangeTable[SC_WINDWALK] = SI_WINDWALK;
-	StatusIconChangeTable[SC_MELTDOWN] = SI_MELTDOWN;
-	StatusIconChangeTable[SC_CARTBOOST] = SI_CARTBOOST;
-	StatusIconChangeTable[SC_CHASEWALK] = SI_CHASEWALK;
-	StatusIconChangeTable[SC_REJECTSWORD] = SI_REJECTSWORD;
-	StatusIconChangeTable[SC_MARIONETTE] = SI_MARIONETTE;
-	StatusIconChangeTable[SC_MARIONETTE2] = SI_MARIONETTE2;
-	StatusIconChangeTable[SC_BLEEDING] = SI_BLEEDING;
-	StatusIconChangeTable[SC_MOONLIT] = SI_MOONLIT;
-	StatusIconChangeTable[SC_DEVOTION] = SI_DEVOTION;
-	StatusIconChangeTable[SC_STEELBODY] = SI_STEELBODY;
-	StatusIconChangeTable[SC_SPURT] = SI_SPURT;
-	StatusIconChangeTable[SC_SPIRIT] = SI_SPIRIT;
-	StatusIconChangeTable[SC_READYSTORM] = SI_READYSTORM;
-	StatusIconChangeTable[SC_READYDOWN] = SI_READYDOWN;
-	StatusIconChangeTable[SC_READYTURN] = SI_READYTURN;
-	StatusIconChangeTable[SC_READYCOUNTER] = SI_READYCOUNTER;
-	StatusIconChangeTable[SC_DODGE] = SI_DODGE;
-	StatusIconChangeTable[SC_SHADOWWEAPON] = SI_SHADOWWEAPON;
-	StatusIconChangeTable[SC_WARM] = SI_WARM;
-	StatusIconChangeTable[SC_SUN_COMFORT] = SI_SUN_COMFORT;
-	StatusIconChangeTable[SC_MOON_COMFORT] = SI_MOON_COMFORT;
-	StatusIconChangeTable[SC_STAR_COMFORT] = SI_STAR_COMFORT;
-	StatusIconChangeTable[SC_ADRENALINE2] = SI_ADRENALINE2;
-	StatusIconChangeTable[SC_GHOSTWEAPON] = SI_GHOSTWEAPON;
-	StatusIconChangeTable[SC_KAITE] = SI_KAITE;
-	StatusIconChangeTable[SC_KAIZEL] = SI_KAIZEL;
-	StatusIconChangeTable[SC_KAAHI] = SI_KAAHI;
-	StatusIconChangeTable[SC_KAUPE] = SI_KAUPE;
-	StatusIconChangeTable[SC_ONEHAND] = SI_ONEHAND;
-	StatusIconChangeTable[SC_PRESERVE] = SI_PRESERVE;
+	StatusIconChangeTable[SC_SPEEDUP0] =    SI_SPEEDPOTION;
+	StatusIconChangeTable[SC_SPEEDUP1] =    SI_SPEEDPOTION;
+	
+	//Guild skills don't fit due to their range being beyond MAX_SKILL
+	StatusIconChangeTable[SC_GUILDAURA] =    SI_GUILDAURA;
 	StatusIconChangeTable[SC_BATTLEORDERS] = SI_BATTLEORDERS;
-	StatusIconChangeTable[SC_DOUBLECAST] = SI_DOUBLECAST;
-	StatusIconChangeTable[SC_MAXOVERTHRUST] = SI_MAXOVERTHRUST;
-	StatusIconChangeTable[SC_SHRINK] = SI_SHRINK;
-	StatusIconChangeTable[SC_SIGHTBLASTER] = SI_SIGHTBLASTER;
-	StatusIconChangeTable[SC_WINKCHARM] = SI_WINKCHARM;
-	StatusIconChangeTable[SC_CLOSECONFINE] = SI_CLOSECONFINE;
-	StatusIconChangeTable[SC_CLOSECONFINE2] = SI_CLOSECONFINE2;
+#undef set_sc
+
+	if (!battle_config.display_hallucination) //Disable Hallucination.
+		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
 }
+
 /*==========================================
  * 精錬ボーナス
  *------------------------------------------
@@ -3520,13 +3228,12 @@ int status_isdead(struct block_list *bl)
 }
 int status_isimmune(struct block_list *bl)
 {
-	struct map_session_data *sd = (struct map_session_data *)bl;
-	if (bl->type == BL_PC) {
-		if (sd->special_state.no_magic_damage)
-			return 1;
-		if (sd->sc.count && sd->sc.data[SC_HERMODE].timer != -1)
-			return 1;
-	}	
+	struct status_change *sc =status_get_sc(bl);
+	if (bl->type == BL_PC &&
+		((struct map_session_data *)bl)->special_state.no_magic_damage)
+		return 1;
+	if (sc && sc->count && sc->data[SC_HERMODE].timer != -1)
+		return 1;
 	return 0;
 }
 
@@ -3548,6 +3255,34 @@ int status_get_sc_def(struct block_list *bl, int type)
 	struct status_change* sc;
 	struct map_session_data *sd;
 	nullpo_retr(0, bl);
+
+	//Status that are blocked by Golden Thief Bug card or Wand of Hermod
+	if (status_isimmune(bl))
+	switch (type)
+	{
+	case SC_DECREASEAGI:
+	case SC_SILENCE:
+	case SC_COMA:
+	case SC_INCREASEAGI:
+	case SC_BLESSING:
+	case SC_SLOWPOISON:
+	case SC_IMPOSITIO:
+	case SC_AETERNA:
+	case SC_SUFFRAGIUM:
+	case SC_BENEDICTIO:
+	case SC_PROVIDENCE:
+	case SC_KYRIE:
+	case SC_ASSUMPTIO:
+	case SC_ANGELUS:
+	case SC_MAGNIFICAT:
+	case SC_GLORIA:
+	case SC_WINDWALK:
+	case SC_MAGICROD:
+	case SC_HALLUCINATION:
+	case SC_STONE:
+	case SC_QUAGMIRE:
+		return 10000;
+	}
 	
 	switch (type)
 	{
@@ -3566,7 +3301,7 @@ int status_get_sc_def(struct block_list *bl, int type)
 		sc_def = 3 + status_get_def(bl) + status_get_luk(bl)/3;
 		break;
 	case SP_DEF2:	// vit
-	case SC_STAN:
+	case SC_STUN:
 	case SC_POISON:
 	case SC_SILENCE:
 	case SC_STOP:
@@ -3583,6 +3318,7 @@ int status_get_sc_def(struct block_list *bl, int type)
 		break;
 	case SC_COMA:
 		sc_def = 3 + status_get_mdef(bl);
+		break;
 	default:
 		return 0; //Effect that cannot be reduced? Likely a buff.
 	}
@@ -3635,7 +3371,7 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 		case SC_FREEZE:				/* 凍結 */
 			tick -= tick*status_get_mdef(bl)/100;
 		break;
-		case SC_STAN:				/* スタン（val2にミリ秒セット） */
+		case SC_STUN:				/* スタン（val2にミリ秒セット） */
 			tick -= tick*status_get_sc_def_vit(bl)/10000;
 		break;
 		case SC_DPOISON:			/* 猛毒 */
@@ -3747,7 +3483,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (undead_flag && !(flag&1))
 				return 0;
 		case SC_SLEEP:
-		case SC_STAN:
+		case SC_STUN:
 			if (sc->opt1)
 				return 0; //Cannot override other opt1 status changes. [Skotlex]
 		break;
@@ -3843,7 +3579,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				 //Must not override a casting gospel char.
 				if (sc->data[type].val4 == BCT_SELF)
 					return 0;
-			case SC_STAN:
+			case SC_STUN:
 			case SC_SLEEP:
 			case SC_POISON:
 			case SC_CURSE:
@@ -4219,6 +3955,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		/* option */
 		case SC_HIDING:		/* ハイディング */
 			calc_flag = 1;
+			if(sc->data[SC_CLOSECONFINE].timer != -1)
+				status_change_end(bl, SC_CLOSECONFINE, -1);
+			if(sc->data[SC_CLOSECONFINE2].timer != -1)
+				status_change_end(bl, SC_CLOSECONFINE2, -1);
 			if(bl->type == BL_PC && !(flag&4)) {
 				val2 = tick / 1000;		/* 持?時間 */
 				tick = 1000;
@@ -4315,6 +4055,21 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_BERSERK:		/* バ?サ?ク */
+			if(battle_config.berserk_cancels_buffs)
+			{
+				if (sc->data[SC_ONEHAND].timer != -1)
+					status_change_end(bl,SC_ONEHAND,-1);
+				if (sc->data[SC_TWOHANDQUICKEN].timer != -1)
+					status_change_end(bl,SC_TWOHANDQUICKEN,-1);
+				if (sc->data[SC_CONCENTRATION].timer != -1)
+					status_change_end(bl,SC_CONCENTRATION,-1);
+				if (sc->data[SC_PARRYING].timer != -1)
+					status_change_end(bl,SC_PARRYING,-1);
+				if (sc->data[SC_ENDURE].timer != -1)
+					status_change_end(bl,SC_ENDURE,-1);
+				if (sc->data[SC_AURABLADE].timer != -1)
+					status_change_end(bl,SC_AURABLADE,-1);
+			}
 			if(sd && !(flag&4)){
 				sd->status.hp = sd->status.max_hp * 3;
 				sd->status.sp = 0;
@@ -4577,7 +4332,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
 		case SC_TRICKDEAD:			/* 死んだふり */
 		case SC_FREEZE:				/* 凍結 */
-		case SC_STAN:				/* スタン（val2にミリ秒セット） */
+		case SC_STUN:				/* スタン（val2にミリ秒セット） */
 		case SC_ENERGYCOAT:			/* エナジ?コ?ト */
 		case SC_SAFETYWALL:
 		case SC_OVERTHRUST:			/* オ?バ?スラスト */
@@ -4627,7 +4382,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	//Those that make you stop attacking/walking....
 	switch (type) {
 		case SC_FREEZE:
-		case SC_STAN:
+		case SC_STUN:
 		case SC_SLEEP:
 		case SC_STONE:
 			if (sd && pc_issit(sd)) //Avoid sprite sync problems.
@@ -4652,7 +4407,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	}
 
 
-	if (bl->type == BL_PC && (battle_config.display_hallucination || type != SC_HALLUCINATION))
+	if (bl->type == BL_PC)
 	{
 		if (flag&4)
 			clif_status_load(bl,StatusIconChangeTable[type],1); //Sending to owner since they aren't in the map yet. [Skotlex]
@@ -4665,7 +4420,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		//OPT1
 		case SC_STONE:
 		case SC_FREEZE:
-		case SC_STAN:
+		case SC_STUN:
 		case SC_SLEEP:
 			if(type == SC_STONE)
 				sc->opt1 = OPT1_STONEWAIT;
@@ -5173,13 +4928,13 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			}
 
 
-		if (sd && (battle_config.display_hallucination || type != SC_HALLUCINATION))
+		if (sd)
 			clif_status_change(bl,StatusIconChangeTable[type],0);
 
 		switch(type){	/* 正常に?るときなにか?理が必要 */
 		case SC_STONE:
 		case SC_FREEZE:
-		case SC_STAN:
+		case SC_STUN:
 		case SC_SLEEP:
 			sc->opt1 = 0;
 			opt_flag = 1;
@@ -6009,7 +5764,7 @@ int do_init_status(void)
 		exit(1);
 	}
 	add_timer_func_list(status_change_timer,"status_change_timer");
-	initStatusIconChangeTable();
+	initChangeTables();
 	status_readdb();
 	status_calc_sigma();
 	return 0;

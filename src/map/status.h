@@ -11,7 +11,7 @@ enum {
 	//First we enumerate common status ailments which are often used around.
 	SC_STONE = 0,
 	SC_FREEZE,
-	SC_STAN,
+	SC_STUN,
 	SC_SLEEP,
 	SC_POISON,
 	SC_CURSE,
@@ -232,7 +232,8 @@ enum {
 	//
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };
-extern int SkillStatusChangeTable[];
+extern int SkillStatusChangeTable[MAX_SKILL];
+extern int StatusSkillChangeTable[SC_MAX];
 
 //Numerates the Number for the status changes (client-dependent), imported from jA
 enum {
