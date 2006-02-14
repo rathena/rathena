@@ -29,7 +29,9 @@ Date		Added
 ======
 
 02/14
+	* Added a new Fruit Merchant in Hugel. [Poki#3]
 	* New, updated st.Valentine Event with a nice quest and EXP bonuses ^_- [Lupus]
+
 02/13
 	* Updated the eA custom spawn sets from Playtester: Juperos lv1, Glast heim
 	  Sewers/Underground and Geffen dungeon lv3. [Skotlex]

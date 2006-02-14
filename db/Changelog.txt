@@ -30,6 +30,17 @@
 =========================
 
 02/14
+	* Part 1 of Gravitys "Zeny Inflation Control Update" [Poki#3]
+	- All potion type drops from monsters are changed with Herbs (Excluding MvP Monsters).
+		Red Potions -> Red Herb
+		Orange Potion -> Yellow Herb
+		Yellow Potion -> Yellow Herb
+		White Potion -> White Herb
+		Green Potion -> Green Herb
+	- 'Mastela Fruit', dropped by 'Enchanted Peach Tree' monster, will be deleted.
+	   You can buy it in Hugel.
+	- All Awakening Potions replaced with Grapes.
+	- All Berserk Potions replaced by Lemon.
 	* Jump Kick and High Jump now depend on the skill state ST_MOVE_ENABLE
 	  [Skotlex]
 02/13

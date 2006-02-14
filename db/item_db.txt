@@ -27,7 +27,7 @@
 519,Milk,Milk,0,25,,30,,,,,127918079,7,2,,,,,,{ itemheal rand(27,36),0; }
 520,Hinalle_Leaflet,Hinalle Leaflet,0,150,,10,,,,,127918079,7,2,,,,,,{ itemheal rand(175,234),0; }
 521,Aloe_Leaflet,Aloe Leaflet,0,360,,20,,,,,127918079,7,2,,,,,,{ itemheal rand(325,404),0; }
-522,Mastela_Fruit,Mastela Fruit,0,840,,30,,,,,127918079,7,2,,,,,,{ itemheal rand(400,599),0; }
+522,Mastela_Fruit,Mastela Fruit,0,3600,,30,,,,,127918079,7,2,,,,,,{ itemheal rand(400,599),0; }
 523,Holy_Water,Holy Water,0,,10,30,,,,,127918079,7,2,,,,,,{ sc_end SC_Curse; }
 525,Panacea,Panacea,0,500,,100,,,,,127918079,7,2,,,,,,{ sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination; }
 526,Royal_Jelly,Royal Jelly,0,7000,,150,,,,,127918079,7,2,,,,,,{ itemheal rand(325,404),rand(40,59); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination; }
