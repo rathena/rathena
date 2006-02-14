@@ -497,8 +497,10 @@ typedef char	pbool;		/* Mixed prototypes can take char */
 typedef short	pshort;		/* Mixed prototypes can take short int */
 typedef float	pfloat;		/* Mixed prototypes can take float */
 #else
-typedef int	pchar;		/* Mixed prototypes can't take char */
-typedef uint	puchar;		/* Mixed prototypes can't take char */
+//These types already exist in WinNT systems... 
+//...but what do we do about Win9X ones? [Skotlex]
+//typedef int	pchar;		/* Mixed prototypes can't take char */
+//typedef uint	puchar;		/* Mixed prototypes can't take char */
 typedef int	pbool;		/* Mixed prototypes can't take char */
 typedef int	pshort;		/* Mixed prototypes can't take short int */
 typedef double	pfloat;		/* Mixed prototypes can't take float */
