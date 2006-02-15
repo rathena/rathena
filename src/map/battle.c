@@ -3098,7 +3098,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			int boss = status_get_mode(target)&MD_BOSS;
 			int rate = 0;
 			if (sd->weapon_coma_ele[ele] > 0)
-				rate+=sd->weapon_coma_ele[ele];
+				rate += sd->weapon_coma_ele[ele];
 			if (sd->weapon_coma_race[race] > 0)
 				rate += sd->weapon_coma_race[race];
 			if (sd->weapon_coma_race[boss?10:11] > 0)

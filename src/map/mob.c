@@ -1420,34 +1420,30 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			return 0;
 		}
 
-		// Although there is the master, since it is somewhat far, it approaches.
-		if((!md->target_id || md->state.targettype == NONE_ATTACKABLE) && mob_can_move(md) &&
-			md->master_dist<md->db->range3 && (md->walkpath.path_pos>=md->walkpath.path_len || md->walkpath.path_len==0)){
+		// Approach master if within view range, chase back to Master's area also if standing on top of the master.
+		if(md->master_dist<md->db->range3 && (md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
+			mob_can_move(md) && md->state.state == MS_IDLE)
+		{
 			int i=0,dx,dy,ret;
-			if(md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0)
-		  	{  //Chase back to Master's area also if standing on top of the master.
-				do {
-					if(i<=5){
-						dx=bl->x - md->bl.x;
-						dy=bl->y - md->bl.y;
+			do {
+				if(i<=5){
+					dx=bl->x - md->bl.x;
+					dy=bl->y - md->bl.y;
 						
-						if(dx<0) dx+=rand()%MOB_SLAVEDISTANCE +1;
-						else if(dx>0) dx-=rand()%MOB_SLAVEDISTANCE +1;
-
-						if(dy<0) dy+=rand()%MOB_SLAVEDISTANCE +1;
-						else if(dy>0) dy-=rand()%MOB_SLAVEDISTANCE +1;
+					if(dx<0) dx+=rand()%MOB_SLAVEDISTANCE +1;
+					else if(dx>0) dx-=rand()%MOB_SLAVEDISTANCE +1;
+					if(dy<0) dy+=rand()%MOB_SLAVEDISTANCE +1;
+					else if(dy>0) dy-=rand()%MOB_SLAVEDISTANCE +1;
 						
-					}else{
-						ret = MOB_SLAVEDISTANCE*2+1;
-						dx=bl->x - md->bl.x + rand()%ret - MOB_SLAVEDISTANCE;
-						dy=bl->y - md->bl.y + rand()%ret - MOB_SLAVEDISTANCE;
-					}
+				}else{
+					ret = MOB_SLAVEDISTANCE*2+1;
+					dx=bl->x - md->bl.x + rand()%ret - MOB_SLAVEDISTANCE;
+					dy=bl->y - md->bl.y + rand()%ret - MOB_SLAVEDISTANCE;
+				}
 
-					ret=mob_walktoxy(md,md->bl.x+dx,md->bl.y+dy,0);
-					i++;
-				} while(ret && i<10);
-				md->next_walktime=tick+1000;
-			}
+				ret=mob_walktoxy(md,md->bl.x+dx,md->bl.y+dy,0);
+				i++;
+			} while(ret && i<10);
 		}
 	} else if (bl->m != md->bl.m && map_flag_gvg(md->bl.m)) {
 		//Delete the summoned mob if it's in a gvg ground and the master is elsewhere. [Skotlex]

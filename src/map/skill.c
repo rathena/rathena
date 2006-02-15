@@ -2330,7 +2330,7 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 	}
 	for(i=0;i<max && sts[i].timer != -1;i++);
 	if (i>=max) return 1;
-	
+
 	sts[i].timer = add_timer(tick, skill_timerskill, src->id, i);
 	sts[i].src_id = src->id;
 	sts[i].target_id = target;
@@ -2339,6 +2339,7 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 	sts[i].map = src->m;
 	sts[i].x = x;
 	sts[i].y = y;
+	sts[i].type = type;
 	sts[i].flag = flag;
 	if (count)
 		(*count)++;
@@ -2532,11 +2533,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case NPC_HOLYATTACK:
 	case NPC_DARKNESSATTACK:
 	case NPC_TELEKINESISATTACK:
+	case NPC_UNDEADATTACK:
 	case NPC_BREAKARMOR:
+	case NPC_BREAKWEAPON:
 	case NPC_BREAKHELM:
 	case NPC_BREAKSHIELD:
-	case NPC_BREAKWEAPON:
-	case NPC_UNDEADATTACK:
 	case LK_AURABLADE:		/* オ?ラブレ?ド */
 	case LK_SPIRALPIERCE:	/* スパイラルピア?ス */
 	case LK_HEADCRUSH:	/* ヘッドクラッシュ */

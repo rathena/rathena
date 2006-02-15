@@ -75,7 +75,7 @@ void initChangeTables(void) {
 	if (StatusIconChangeTable[sc]==SI_BLANK) StatusIconChangeTable[sc] = icon; 
 	
 	set_sc(SM_BASH,                 SC_STUN,                SI_BLANK);
-	set_sc(SM_PROVOKE,              SC_PROVOKE,             SI_BLANK);
+	set_sc(SM_PROVOKE,              SC_PROVOKE,             SI_PROVOKE);
 	set_sc(SM_MAGNUM,               SC_WATK_ELEMENT,        SI_BLANK);
 	set_sc(SM_ENDURE,               SC_ENDURE,              SI_ENDURE);
 	set_sc(MG_SIGHT,                SC_SIGHT,               SI_BLANK);

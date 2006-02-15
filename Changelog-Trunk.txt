@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 2006/02/14
+	* pc_setinventorydata won't use itemdb_search on empty inventory slots (id
+	  = 0) [Skotlex]
+	* Fixed the icon from Provoke being gone. [Skotlex]
+	* Fixed skill_timerskill (most notable skill broken: water ball doing 1
+	  hit) [Skotlex]
 	* Removed the declaration of puchar and pchar from my_global.h which was
 	  preventing compiles on native win NT systems. Drawback is now Win9X systems
 	  will fail to compile instead... [Skotlex]

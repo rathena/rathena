@@ -490,7 +490,7 @@ int pc_setinventorydata(struct map_session_data *sd)
 
 	for(i=0;i<MAX_INVENTORY;i++) {
 		id = sd->status.inventory[i].nameid;
-		sd->inventory_data[i] = itemdb_search(id);
+		sd->inventory_data[i] = id?itemdb_search(id):NULL;
 	}
 	return 0;
 }
