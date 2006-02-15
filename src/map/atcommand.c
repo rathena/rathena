@@ -2707,7 +2707,7 @@ int atcommand_baselevelup(
 				sd->status.status_point = 0;
 			clif_updatestatus(sd, SP_STATUSPOINT);
 		} /* to add: remove status points from stats */
-		sd->status.base_level += level;
+		sd->status.base_level -= level;
 		clif_updatestatus(sd, SP_BASELEVEL);
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
 		status_calc_pc(sd, 0);
