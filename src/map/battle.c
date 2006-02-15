@@ -3463,15 +3463,22 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			else
 				state |= BCT_ENEMY;
 		}
-		if (state&BCT_ENEMY && battle_config.pk_mode && !map_flag_gvg(m) && s_bl->type == BL_PC && t_bl->type == BL_PC)
+		if (state&BCT_ENEMY && battle_config.pk_mode && !map_flag_gvg(m) &&
+			s_bl->type == BL_PC && t_bl->type == BL_PC)
 		{	//Prevent novice engagement on pk_mode (feature by Valaris)
-			struct map_session_data* sd;
-			if ((sd = (struct map_session_data*)s_bl) &&
-				((sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE || sd->status.base_level < battle_config.pk_min_level))
-				state&=~BCT_ENEMY;
-			else
-			if ((sd = (struct map_session_data*)t_bl) &&
-				((sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE || sd->status.base_level < battle_config.pk_min_level))
+			struct map_session_data* sd = (struct map_session_data*)s_bl,
+			  	*sd2 = (struct map_session_data*)t_bl;
+			if (
+				(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+				(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+				sd->status.base_level < battle_config.pk_min_level ||
+			  	sd2->status.base_level < battle_config.pk_min_level ||
+				(battle_config.pk_level_range && (
+					sd->status.base_level > sd2->status.base_level ?
+					sd->status.base_level - sd2->status.base_level :
+					sd2->status.base_level - sd->status.base_level )
+			  		> battle_config.pk_level_range)
+			)
 				state&=~BCT_ENEMY;
 		}
 	} else { //Non pvp/gvg, check party/guild settings.
@@ -3753,6 +3760,7 @@ static const struct battle_data_short {
 	{ "equip_self_break_rate",             &battle_config.equip_self_break_rate	},
 	{ "equip_skill_break_rate",            &battle_config.equip_skill_break_rate	},
 	{ "pk_mode",                           &battle_config.pk_mode			},  	// [Valaris]
+	{ "pk_level_range",                    &battle_config.pk_level_range	},
 	{ "manner_system",                     &battle_config.manner_system		},  	// [Komurka]
 	{ "pet_equip_required",                &battle_config.pet_equip_required	},	// [Valaris]
 	{ "multi_level_up",                    &battle_config.multi_level_up		}, // [Valaris]
@@ -3827,6 +3835,7 @@ static const struct battle_data_short {
 	
 	{ "skip_teleport_lv1_menu",			&battle_config.skip_teleport_lv1_menu}, // [LuzZza]
 	{ "allow_skill_without_day",			&battle_config.allow_skill_without_day}, // [Komurka]
+	{ "allow_es_magic_player",				&battle_config.allow_es_magic_pc },
 	{ "skill_caster_check",					&battle_config.skill_caster_check },
 	{ "status_cast_cancel",					&battle_config.sc_castcancel },
 	{ "pc_status_def_rate",					&battle_config.pc_sc_def_rate },
@@ -4145,6 +4154,7 @@ void battle_set_defaults() {
 	battle_config.equip_self_break_rate = 100; // [Valaris], adapted by [Skotlex]
 	battle_config.equip_skill_break_rate = 100; // [Valaris], adapted by [Skotlex]
 	battle_config.pk_mode = 0; // [Valaris]
+	battle_config.pk_level_range = 0; // [Skotlex]
 	battle_config.manner_system = 1; // [Valaris]
 	battle_config.pet_equip_required = 0; // [Valaris]
 	battle_config.multi_level_up = 0; // [Valaris]
@@ -4219,6 +4229,7 @@ void battle_set_defaults() {
 	
 	battle_config.skip_teleport_lv1_menu = 0;
 	battle_config.allow_skill_without_day = 0;
+	battle_config.allow_es_magic_pc = 0;
 
 	battle_config.skill_caster_check = 1;
 	battle_config.sc_castcancel = 0;

@@ -2974,7 +2974,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case SL_STIN:
 	case SL_STUN:
 	case SL_SMA:
-		if (sd && bl->type != BL_MOB) {
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			status_change_start(src,SC_STUN,100,skilllv,0,0,0,3000,8);
 			clif_skill_fail(sd,skillid,0,0);
 			break;
@@ -5436,7 +5436,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case SL_SKA: // [marquis007]
-		if (sd && bl->type != BL_MOB) {
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			status_change_start(src,SC_STUN,100,skilllv,0,0,0,3000,8);
 			clif_skill_fail(sd,skillid,0,0);
 			break;
@@ -5451,7 +5451,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 	case SL_SWOO:
-		if (sd && bl->type != BL_MOB) {
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			status_change_start(src,SC_STUN,100,skilllv,0,0,0,3000,8);
 			clif_skill_fail(sd,skillid,0,0);
 			break;
@@ -5462,7 +5462,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case SL_SKE:
-		if (sd && bl->type != BL_MOB) {
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			status_change_start(src,SC_STUN,100,skilllv,0,0,0,3000,8);
 			clif_skill_fail(sd,skillid,0,0);
 			break;

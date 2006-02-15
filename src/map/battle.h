@@ -303,6 +303,8 @@ extern struct Battle_Config {
 	unsigned short multi_level_up;
 	unsigned short max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	unsigned short pk_mode;
+	unsigned short pk_level_range;
+
 	unsigned short manner_system;
 	unsigned short show_mob_hp;  // end additions [Valaris]
 
@@ -415,6 +417,7 @@ extern struct Battle_Config {
 	unsigned short skip_teleport_lv1_menu; // possibility to disable (skip) Teleport Lv1 menu, that have only two lines `Random` and `Cancel` [LuzZza]
 
 	unsigned short allow_skill_without_day; // [Komurka]
+	unsigned short allow_es_magic_pc; // [Skotlex]
 	unsigned short skill_wall_check; // [Skotlex]
 	unsigned short cell_stack_limit; // [Skotlex]
 	unsigned short skill_caster_check; // [Skotlex]
