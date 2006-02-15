@@ -5272,6 +5272,33 @@ static int pc_respawn(int tid,unsigned int tick,int id,int data)
 	}
 	return 0;
 }
+
+/*==========================================
+ * Damages a player's SP, returns remaining SP. [Skotlex]
+ * damage is absolute damage, rate is % damage (100 = 100%)
+ * Returns remaining SP, or -1 if the player did not have enough SP to substract from.
+ *------------------------------------------
+ */
+int pc_damage_sp(struct map_session_data *sd, int damage, int rate)
+{
+	if (!sd->status.sp)
+		return 0;
+	
+	if (rate)
+		damage += (rate*(sd->status.sp-damage)/sd->status.max_sp)/100;
+	
+	if (sd->status.sp >= damage){
+		sd->status.sp -= damage;
+		clif_updatestatus(sd,SP_SP);
+		return sd->status.sp;
+	}
+	if (sd->status.sp) {
+		sd->status.sp = 0;
+		clif_updatestatus(sd,SP_SP);
+		return -1;
+	}
+	return 0;
+}
 /*==========================================
  * pcにダメ?ジを?える
  *------------------------------------------
@@ -5918,14 +5945,11 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 
 	nullpo_retr(0, sd);
 
-	if(pc_checkoverhp(sd)) {
-		if(hp > 0)
-			hp = 0;
-	}
-	if(pc_checkoversp(sd)) {
-		if(sp > 0)
-			sp = 0;
-	}
+	if(hp > 0 && pc_checkoverhp(sd))
+		hp = 0;
+
+	if(sp > 0 && pc_checkoversp(sd))
+		sp = 0;
 
 	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1) //バ?サ?ク中は回復させないらしい
 		return 0;

@@ -970,11 +970,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 
-	case HT_SHOCKWAVE:				//it can't affect mobs, because they have no SP...
-		if(dstsd){
-			dstsd->status.sp -= dstsd->status.sp*(15*skilllv+5)/100;
-			clif_updatestatus(dstsd,SP_SP);
-		}
+	case HT_SHOCKWAVE:	//it can't affect mobs, because they have no SP...
+		if(dstsd)
+			pc_damage_sp(dstsd, 0, 15*skilllv+5);
 		break;
 
 	case HT_SANDMAN:		/* ƒTƒ“ƒhƒ}ƒ“ */
@@ -1025,10 +1023,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case PA_PRESSURE:	/* ƒvƒŒƒbƒVƒƒ? */
-		if (dstsd) {
-			dstsd->status.sp -= dstsd->status.sp * (15 + 5 * skilllv) / 100;
-			clif_updatestatus(dstsd,SP_SP);
-		}
+		if (dstsd)
+			pc_damage_sp(dstsd, 0, 15 +5*skilllv);
 		break;
 
 	case RG_RAID:		/* ƒTƒvƒ‰ƒCƒYƒAƒ^ƒbƒN */
@@ -1054,28 +1050,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	case DC_UGLYDANCE:
 		if (dstsd) {
-				int skill, sp = 5+5*skilllv;
-				if(sd && (skill=pc_checkskill(sd,DC_DANCINGLESSON)))
-				    sp += 5+skill;
-				dstsd->status.sp -= sp;
-				if(dstsd->status.sp<0)
-					dstsd->status.sp=0;
-				clif_updatestatus(dstsd,SP_SP);
+			int skill, sp = 5+5*skilllv;
+			if(sd && (skill=pc_checkskill(sd,DC_DANCINGLESSON)))
+			    sp += 5+skill;
+			pc_damage_sp(dstsd, sp, 0);
 		}
   		break;
 	case SL_STUN:
 		if (status_get_size(bl)==1) //Only stuns mid-sized mobs.
 			status_change_start(bl,SC_STUN,(30+10*skilllv),skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
-		break;
-	case SG_SUN_WARM:
-	case SG_MOON_WARM:
-	case SG_STAR_WARM:
-		if (dstsd) {
-			dstsd->status.sp -= 5;
-			if(dstsd->status.sp < 0)
-				dstsd->status.sp = 0;
-			clif_updatestatus(dstsd,SP_SP);	
-		}
 		break;
 			
 	/* MOB‚Ì’Ç‰Á?‰Ê•t‚«ƒXƒLƒ‹ */
@@ -1245,46 +1228,56 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	//Reports say that autospell effects get triggered on skills and pretty much everything including splash attacks. [Skotlex]
 	//Here we use the nk value to trigger spells only on damage causing skills (otherwise stuff like AL_HEAL will trigger them)
-	if(sd && !status_isdead(bl) && src != bl &&
-		(!skillid || skillid == KN_AUTOCOUNTER || skillid == CR_REFLECTSHIELD || skill_get_nk(skillid)!=NK_NO_DAMAGE)) 
-	{
-		struct block_list *tbl;
-		int i, auto_skillid, auto_skilllv, rate;
-
-		for (i = 0; i < MAX_PC_BONUS; i++) {
-			if (sd->autospell[i].id == 0)
+	if(sd && !status_isdead(bl) && src != bl) {
+		switch (skillid) {
+			case KN_AUTOCOUNTER:
+			case CR_REFLECTSHIELD:
+			case SG_SUN_WARM:
+			case SG_MOON_WARM:
+			case SG_STAR_WARM:
+				rate = 1;
 				break;
+			default:
+				rate = (!skillid || skill_get_nk(skillid)!=NK_NO_DAMAGE);
+		}
+		if (rate) {
+			struct block_list *tbl;
+			int i;
+			for (i = 0; i < MAX_PC_BONUS && sd->autospell[i].id; i++) {
 
-			auto_skillid = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
+				skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
+				//Prevents skill from retriggering themselves. [Skotlex]
+				if (skill == skillid)
+					continue;
 
-			if (auto_skillid == skillid) //Prevents skill from retriggering themselves. [Skotlex]
-				continue;
+				//skill2 reused to store skilllv.
+				skill2 = (sd->autospell[i].lv > 0) ? sd->autospell[i].lv : 1;
+				rate = (!sd->state.arrow_atk) ? sd->autospell[i].rate : sd->autospell[i].rate / 2;
 
-			auto_skilllv = (sd->autospell[i].lv > 0) ? sd->autospell[i].lv : 1;
-			rate = (!sd->state.arrow_atk) ? sd->autospell[i].rate : sd->autospell[i].rate / 2;
-
-			if (rand()%1000 > rate)
-				continue;
-			if (sd->autospell[i].id < 0)
-				tbl = src;
-			else
-				tbl = bl;
-			
-			if (tbl != src && !battle_check_range(src, tbl, skill_get_range2(src, auto_skillid, auto_skilllv)))
-				continue; //Autoskills DO check for target-src range. [Skotlex]
-			
-			if (skill_get_inf(auto_skillid) & INF_GROUND_SKILL)
-				skill_castend_pos2(src, tbl->x, tbl->y, auto_skillid, auto_skilllv, tick, 0);
-			else {
-				switch (skill_get_nk(auto_skillid)) {
-					case NK_NO_DAMAGE:
-						skill_castend_nodamage_id(src, tbl, auto_skillid, auto_skilllv, tick, 0);
-						break;
-					case NK_SPLASH_DAMAGE:
-					default:
-						skill_castend_damage_id(src, tbl, auto_skillid, auto_skilllv, tick, 0);
-						break;
+				if (rand()%1000 > rate)
+					continue;
+				if (sd->autospell[i].id < 0)
+					tbl = src;
+				else
+					tbl = bl;
+				
+				if (tbl != src && !battle_check_range(src, tbl, skill_get_range2(src, skill, skill2)))
+					continue; //Autoskills DO check for target-src range. [Skotlex]
+				
+				if (skill_get_inf(skill) & INF_GROUND_SKILL)
+					skill_castend_pos2(src, tbl->x, tbl->y, skill, skill2, tick, 0);
+				else {
+					switch (skill_get_nk(skill)) {
+						case NK_NO_DAMAGE:
+							skill_castend_nodamage_id(src, tbl, skill, skill2, tick, 0);
+							break;
+						case NK_SPLASH_DAMAGE:
+						default:
+							skill_castend_damage_id(src, tbl, skill, skill2, tick, 0);
+							break;
+					}
 				}
+				break; //Only one auto skill comes off at a time.
 			}
 		}
 	}
@@ -6434,8 +6427,10 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 			val3 = BD_INTOABYSS;	//Store into abyss state, to know it shouldn't give traps back. [Skotlex]
 		if (map_flag_gvg(src->m))
 			limit *= 4; // longer trap times in WOE [celest]
-		if (battle_config.vs_traps_bctall && map_flag_vs(src->m))
-			target = BCT_ALL; //Change target to all [Skotlex]
+		if (battle_config.vs_traps_bctall && map_flag_vs(src->m)
+			&& src->type != BL_MOB) 
+			//Change target to all with the exception of mob traps [Skotlex]
+			target = BCT_ALL;
 		break;
 
 	case SA_LANDPROTECTOR:	/* ƒOƒ‰ƒ“ƒhƒNƒ?ƒX */
@@ -7510,12 +7505,7 @@ static int skill_check_pc_partner(struct map_session_data *sd, int skill_id, int
 				for (i = 0; i < c; i++)
 				{
 					if ((tsd = map_id2sd(p_sd[i])) != NULL)
-					{
-						tsd->status.sp -= 10;
-						if (tsd->status.sp < 0)
-							tsd->status.sp = 0;
-						clif_updatestatus(tsd,SP_SP);
-					}
+						pc_damage_sp(tsd, 10, 0);
 				}
 				return c;
 			case CG_MOONLIT:

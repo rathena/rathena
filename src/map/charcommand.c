@@ -1267,7 +1267,7 @@ int charcommand_baselevel(
 					level = pc_maxbaselv(pl_sd) - pl_sd->status.base_level;
 				for (i = 1; i <= level; i++)
 					pl_sd->status.status_point += (pl_sd->status.base_level + i + 14) / 5;
-				pl_sd->status.base_level += level;
+				pl_sd->status.base_level += (unsigned int)level;
 				clif_updatestatus(pl_sd, SP_BASELEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
 				clif_updatestatus(pl_sd, SP_STATUSPOINT);
@@ -1290,7 +1290,7 @@ int charcommand_baselevel(
 						pl_sd->status.status_point = 0;
 					clif_updatestatus(pl_sd, SP_STATUSPOINT);
 				} // to add: remove status points from stats
-				pl_sd->status.base_level -= level;
+				pl_sd->status.base_level -= (unsigned int)level;
 				clif_updatestatus(pl_sd, SP_BASELEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
 				status_calc_pc(pl_sd, 0);
@@ -1338,7 +1338,7 @@ int charcommand_joblevel(
 				if ((unsigned int)level > pc_maxjoblv(pl_sd) ||
 					pl_sd->status.job_level > pc_maxjoblv(pl_sd) -level)
 					level = pc_maxjoblv(pl_sd) - pl_sd->status.job_level;
-				pl_sd->status.job_level += level;
+				pl_sd->status.job_level += (unsigned int)level;
 				clif_updatestatus(pl_sd, SP_JOBLEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTJOBEXP);
 				pl_sd->status.skill_point += level;
@@ -1354,7 +1354,7 @@ int charcommand_joblevel(
 				level*=-1;
 				if ((unsigned int)level >= pl_sd->status.job_level)
 					level = pl_sd->status.job_level-1;
-				pl_sd->status.job_level -= level;
+				pl_sd->status.job_level -= (unsigned int)level;
 				clif_updatestatus(pl_sd, SP_JOBLEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTJOBEXP);
 				if (pl_sd->status.skill_point < level)

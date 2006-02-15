@@ -419,7 +419,11 @@ extern struct Battle_Config {
 	unsigned short cell_stack_limit; // [Skotlex]
 	unsigned short skill_caster_check; // [Skotlex]
 	unsigned short sc_castcancel; // [Skotlex]
-	unsigned short sc_def_rate; // [Skotlex]
+	unsigned short pc_sc_def_rate; // [Skotlex]
+	unsigned short mob_sc_def_rate;
+	unsigned short pc_max_sc_def;
+	unsigned short mob_max_sc_def;
+
 } battle_config;
 
 void do_init_battle(void);

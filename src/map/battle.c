@@ -609,7 +609,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 		}
 		
-		if(sc->data[SC_DODGE].timer != -1 && !sc->opt1 && (flag&BF_LONG || (sc->data[SC_SPURT].timer != -1 && flag&BF_WEAPON))
+		if(sc->data[SC_DODGE].timer != -1 && !sc->opt1 &&
+			((flag&BF_LONG && flag&BF_WEAPON) || sc->data[SC_SPURT].timer != -1)
 			&& rand()%100 < 20) {
 			if (sd && pc_issit(sd)) pc_setstand(sd); //Stand it to dodge.
 			clif_skill_nodamage(bl,bl,TK_DODGE,1,1);
@@ -651,16 +652,16 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			damage >>=1;
 
 		if(sc->data[SC_ENERGYCOAT].timer!=-1 && flag&BF_WEAPON){
-			if(sd){
+			if(sd && sd->status.max_sp){
 				if(sd->status.sp>0){
-					int per = sd->status.sp * 5 / (sd->status.max_sp + 1);
-					sd->status.sp -= sd->status.sp * (per * 5 + 10) / 1000;
-					if( sd->status.sp < 0 ) sd->status.sp = 0;
-					damage -= damage * ((per+1) * 6) / 100;
-					clif_updatestatus(sd,SP_SP);
+					int per = 100*sd->status.sp / sd->status.max_sp;
+					per /=20; //Uses 20% SP intervals.
+					//SP Cost: 1% + 0.5% per every 20% SP
+					if (pc_damage_sp(sd, (10+5*per)*sd->status.max_sp/10000, 0) <= 0)
+						status_change_end( bl,SC_ENERGYCOAT,-1 );
+					//Reduction: 6% + 6% every 20%
+					damage -= damage * 6 * (1+per) / 100;
 				}
-				if(sd->status.sp<=0)
-					status_change_end( bl,SC_ENERGYCOAT,-1 );
 			}
 			else
 				damage -= damage * (sc->data[SC_ENERGYCOAT].val1 * 6) / 100;
@@ -3824,11 +3825,14 @@ static const struct battle_data_short {
 	{ "duel_autoleave_when_die",			&battle_config.duel_autoleave_when_die}, //[LuzZza]
 	{ "duel_time_interval",					&battle_config.duel_time_interval}, // [LuzZza]
 	
-	{ "skip_teleport_lv1_menu",				&battle_config.skip_teleport_lv1_menu}, // [LuzZza]
-	{ "allow_skill_without_day",				&battle_config.allow_skill_without_day}, // [Komurka]
+	{ "skip_teleport_lv1_menu",			&battle_config.skip_teleport_lv1_menu}, // [LuzZza]
+	{ "allow_skill_without_day",			&battle_config.allow_skill_without_day}, // [Komurka]
 	{ "skill_caster_check",					&battle_config.skill_caster_check },
 	{ "status_cast_cancel",					&battle_config.sc_castcancel },
-	{ "status_def_rate",						&battle_config.sc_def_rate },
+	{ "pc_status_def_rate",					&battle_config.pc_sc_def_rate },
+	{ "mob_status_def_rate",				&battle_config.mob_sc_def_rate },
+	{ "pc_max_status_def",					&battle_config.pc_max_sc_def },
+	{ "mob_max_status_def",					&battle_config.mob_max_sc_def },
 };
 
 static const struct battle_data_int {
@@ -4218,7 +4222,10 @@ void battle_set_defaults() {
 
 	battle_config.skill_caster_check = 1;
 	battle_config.sc_castcancel = 0;
-	battle_config.sc_def_rate = 100;
+	battle_config.pc_sc_def_rate = 100;
+	battle_config.mob_sc_def_rate = 100;
+	battle_config.pc_max_sc_def = 10000;
+	battle_config.mob_max_sc_def = 5000;
 }
 
 void battle_validate_conf() {
@@ -4407,6 +4414,10 @@ void battle_validate_conf() {
 	if (battle_config.mobs_level_up_exp_rate < 1) // [Valaris]
 		battle_config.mobs_level_up_exp_rate = 1;
 
+	if (battle_config.pc_max_sc_def > 10000)
+		battle_config.pc_max_sc_def = 10000;
+	if (battle_config.mob_max_sc_def > 10000)
+		battle_config.mob_max_sc_def = 10000;
 #ifdef CELL_NOSTACK
 	if (battle_config.cell_stack_limit < 1)
 	  	battle_config.cell_stack_limit = 1;

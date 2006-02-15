@@ -1009,12 +1009,25 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		else if(sd->sc.data[SC_MARIONETTE2].timer!=-1){
 			struct map_session_data *psd = map_id2sd(sd->sc.data[SC_MARIONETTE2].val3);
 			if (psd) {	// if partner is found
-				sd->paramb[0] += sd->status.str+psd->status.str/2 > 99 ? 99-sd->status.str : psd->status.str/2;
-				sd->paramb[1] += sd->status.agi+psd->status.agi/2 > 99 ? 99-sd->status.agi : psd->status.agi/2;
-				sd->paramb[2] += sd->status.vit+psd->status.vit/2 > 99 ? 99-sd->status.vit : psd->status.vit/2;
-				sd->paramb[3] += sd->status.int_+psd->status.int_/2 > 99 ? 99-sd->status.int_ : psd->status.int_/2;
-				sd->paramb[4] += sd->status.dex+psd->status.dex/2 > 99 ? 99-sd->status.dex : psd->status.dex/2;
-				sd->paramb[5] += sd->status.luk+psd->status.luk/2 > 99 ? 99-sd->status.luk : psd->status.luk/2;
+				bl = pc_maxparameter(sd); //Cap to max parameter. [Skotlex]
+				if (sd->status.str < bl)
+					sd->paramb[0] += sd->status.str+psd->status.str/2 > bl ?
+						bl-sd->status.str : psd->status.str/2;
+				if (sd->status.agi < bl)
+					sd->paramb[1] += sd->status.agi+psd->status.agi/2 > bl ?
+						bl-sd->status.agi : psd->status.agi/2;
+				if (sd->status.vit < bl)
+					sd->paramb[2] += sd->status.vit+psd->status.vit/2 > bl ?
+						bl-sd->status.vit : psd->status.vit/2;
+				if (sd->status.int_ < bl)
+					sd->paramb[3] += sd->status.int_+psd->status.int_/2 > bl ?
+						bl-sd->status.int_ : psd->status.int_/2;
+				if (sd->status.dex < bl)
+					sd->paramb[4] += sd->status.dex+psd->status.dex/2 > bl ?
+						bl-sd->status.dex : psd->status.dex/2;
+				if (sd->status.luk < bl)
+					sd->paramb[5] += sd->status.luk+psd->status.luk/2 > bl ?
+						bl-sd->status.luk : psd->status.luk/2;
 			}
 		}
 	}
@@ -3286,46 +3299,48 @@ int status_get_sc_def(struct block_list *bl, int type)
 	
 	switch (type)
 	{
+	//Note that stats that are *100/3 were simplified to *33
 	case SP_MDEF1:	// mdef
 	case SC_STONE:
 	case SC_FREEZE:
 	case SC_DECREASEAGI:
-		sc_def = 3 + status_get_mdef(bl) + status_get_luk(bl)/3;
+	case SC_COMA:
+		sc_def = 300 +100*status_get_mdef(bl) +33*status_get_luk(bl);
 		break;
 	case SP_MDEF2:	// int
 	case SC_SLEEP:
 	case SC_CONFUSION:
-		sc_def = 3 + status_get_int(bl) + status_get_luk(bl)/3;
+		sc_def = 300 +100*status_get_int(bl) +33*status_get_luk(bl);
 		break;
 	case SP_DEF1:	// def
-		sc_def = 3 + status_get_def(bl) + status_get_luk(bl)/3;
+		sc_def = 300 +100*status_get_def(bl) +33*status_get_luk(bl);
 		break;
 	case SP_DEF2:	// vit
 	case SC_STUN:
 	case SC_POISON:
 	case SC_SILENCE:
 	case SC_STOP:
-		sc_def = 3 + status_get_vit(bl) + status_get_luk(bl)/3;
+		sc_def = 300 +100*status_get_vit(bl) +33*status_get_luk(bl);
 		break;
 	case SP_LUK:	// luck
-		sc_def = 3 + status_get_luk(bl);
+		sc_def = 300 +100*status_get_luk(bl);
 		break;
 	case SC_BLIND:
-		sc_def = 3 + status_get_int(bl) + status_get_vit(bl)/3;
+		sc_def = 300 +100*status_get_int(bl) +33*status_get_vit(bl);
 		break;
 	case SC_CURSE:
-		sc_def = 3 + status_get_luk(bl) + status_get_vit(bl)/3;
-		break;
-	case SC_COMA:
-		sc_def = 3 + status_get_mdef(bl);
+		sc_def = 300 +100*status_get_luk(bl) +33*status_get_vit(bl);
 		break;
 	default:
 		return 0; //Effect that cannot be reduced? Likely a buff.
 	}
 
-	sc_def*=100; //Send it on the interval 0->10000
-	if (battle_config.sc_def_rate != 100)
-		sc_def = sc_def*battle_config.sc_def_rate/100;
+	if (bl->type == BL_PC) {
+		if (battle_config.pc_sc_def_rate != 100)
+			sc_def = sc_def*battle_config.pc_sc_def_rate/100;
+	} else
+	if (battle_config.mob_sc_def_rate != 100)
+		sc_def = sc_def*battle_config.mob_sc_def_rate/100;
 	
 	sc = status_get_sc(bl);
 	if (sc && sc->count)
@@ -3336,15 +3351,18 @@ int status_get_sc_def(struct block_list *bl, int type)
 			sc_def += 100*sc->data[SC_SIEGFRIED].val2; //Status resistance.
 	}
 
-	if(bl->type == BL_MOB && sc_def > 5000)
-		sc_def = 5000; //Are mobs really capped to 50% defense?
-
 	sd = bl->type==BL_PC?(struct map_session_data*)bl:NULL;
 	
 	if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX &&
 		sd->reseff[type-SC_COMMON_MIN] > 0)
 		sc_def += sd->reseff[type-SC_COMMON_MIN];
 
+	if(bl->type == BL_PC) {
+		if (sc_def > battle_config.pc_max_sc_def)
+			sc_def = battle_config.pc_max_sc_def;
+	} else if (sc_def > battle_config.mob_max_sc_def)
+		sc_def = battle_config.mob_max_sc_def;
+	
 	return sc_def;
 }
 
@@ -3352,6 +3370,9 @@ int status_get_sc_def(struct block_list *bl, int type)
 int status_get_sc_tick(struct block_list *bl, int type, int tick)
 {
 	struct map_session_data *sd;
+	int rate=0, min=0;
+	//If rate is positive, it is a % reduction (10000 -> 100%)
+	//if it is negative, it is an absolute reduction in ms.
 	sd = bl->type == BL_PC?(struct map_session_data *)bl:NULL;
 	switch (type) {
 		case SC_DECREASEAGI:		/* 速度減少 */
@@ -3366,55 +3387,68 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 				tick += tick / 10;
 		break;
 		case SC_STONE:				/* 石化 */
-			tick = tick-status_get_mdef(bl)*200;
+			rate = -200*status_get_mdef(bl);
 		break;
 		case SC_FREEZE:				/* 凍結 */
-			tick -= tick*status_get_mdef(bl)/100;
+			rate = 100*status_get_mdef(bl);
 		break;
 		case SC_STUN:				/* スタン（val2にミリ秒セット） */
-			tick -= tick*status_get_sc_def_vit(bl)/10000;
+			rate = status_get_sc_def_vit(bl);
 		break;
 		case SC_DPOISON:			/* 猛毒 */
 		case SC_POISON:				/* 毒 */
-			tick -= tick*(status_get_vit(bl) + status_get_luk(bl)/5)/100;
+			rate = 100*status_get_vit(bl) + 20*status_get_luk(bl);
 		break;
 		case SC_SILENCE:			/* 沈?（レックスデビ?ナ） */
 		case SC_CONFUSION:
 		case SC_CURSE:
-			tick -= tick * status_get_vit(bl)/100;
+			rate = 100*status_get_vit(bl);
 		break;
 		case SC_BLIND:				/* 暗? */
-			if(tick < 1000)
-				tick = 30000;
-			tick -= tick*(status_get_lv(bl)/10 + status_get_int(bl)/15)/100;
-			if (tick < 5000) //Minimum 5 secs?
-				tick = 5000;
+			rate = 10*status_get_lv(bl) + 7*status_get_int(bl);
+			min = 5000; //Minimum 5 secs?
 		break;
 		case SC_BLEEDING:
-			tick -= tick*(status_get_lv(bl)/5 +status_get_vit(bl))/100;
-			if(tick < 10000) //Minimum bleed time is 10 secs or this sc does nothing! [Skotlex]
-				tick = 10000;
+			rate = 20*status_get_lv(bl) +100*status_get_vit(bl);
+			min = 10000; //Need a min of 10 secs for it to hurt at least once.
 		break;
 		case SC_SWOO:
 			if (status_get_mode(bl)&MD_BOSS)
-				tick /= 5; //Reduce skill's duration. But for how long?
+				tick /= 5; //TODO: Reduce skill's duration. But for how long?
 		break;
 		case SC_ANKLE:
-			tick -= status_get_agi(bl)*100;
 			if(status_get_mode(bl)&MD_BOSS) // Lasts 5 times less on bosses
 				tick /= 5;
+			rate = -100*status_get_agi(bl);
 		// Minimum trap time of 3+0.03*skilllv seconds [celest]
 		// Changed to 3 secs and moved from skill.c [Skotlex]
-			if (tick < 3000)
-				tick = 3000;
+			min = 3000;
 		break;
 		case SC_STOP:
 		// Unsure of this... but I get a feeling that agi reduces this
 		// (it was on Tiger Fist Code, but at -1 ms per 10 agi....
-			tick -= 100*status_get_agi(bl);
+			rate = -100*status_get_agi(bl);
 		break;
 	}
-	return tick;
+	if (rate) {
+		if (bl->type == BL_PC) {
+			if (battle_config.pc_sc_def_rate != 100)
+				rate = rate*battle_config.pc_sc_def_rate/100;
+			if (battle_config.pc_max_sc_def != 10000)
+				min = tick*(10000-battle_config.pc_max_sc_def)/10000;
+		} else {
+			if (battle_config.mob_sc_def_rate != 100)
+				rate = rate*battle_config.mob_sc_def_rate/100;
+			if (battle_config.mob_max_sc_def != 10000)
+				min = tick*(10000-battle_config.mob_max_sc_def)/10000;
+		}
+		
+		if (rate >0)
+			tick -= tick*rate/10000;
+		else
+			tick -= rate;
+	}
+	return tick<min?min:tick;
 }
 /*==========================================
  * Starts a status change.
@@ -4089,8 +4123,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_WARM: //SG skills [Komurka]
 			if (!(flag&4)) {
-				val2 = tick/1000;
-				tick = 1000;
+				val2 = tick/100;
+				tick = 100;
 			}
 			break;
 
@@ -5099,9 +5133,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		if(sd){
 			int sp = 10+sc->data[SC_CHASEWALK].val1*2;
 			if (map_flag_gvg(sd->bl.m)) sp *= 5;
-			if (sd->status.sp > sp){
-				sd->status.sp -= sp; // update sp cost [Celest]
-				clif_updatestatus(sd,SP_SP);
+			if (pc_damage_sp(sd, sp, 0) > 0) {
 				if ((++sc->data[SC_CHASEWALK].val4) == 1) {
 					status_change_start(bl, SC_INCSTR,10000,
 						1<<(sc->data[SC_CHASEWALK].val1-1), 0, 0, 0,
@@ -5163,7 +5195,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			map_foreachinarea( status_change_timer_sub,
 				bl->m, bl->x-sc->data[type].val4, bl->y-sc->data[type].val4, bl->x+sc->data[type].val4,bl->y+sc->data[type].val4,BL_CHAR,
 				bl,sc,type,tick);
-			sc->data[type].timer=add_timer(tick+1000, status_change_timer,bl->id, data);
+			sc->data[type].timer=add_timer(tick+100, status_change_timer,bl->id, data);
 			return 0;
 		}
 		break;
@@ -5339,11 +5371,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				if (s && ((sc->data[type].val3 % s) == 0)) {
 					if (sc->data[SC_LONGING].timer != -1)
 						sp = s;
-					if (sp > sd->status.sp)
-						sp = sd->status.sp;
-					sd->status.sp -= sp;
-					clif_updatestatus(sd,SP_SP);
-					if (sd->status.sp <= 0)
+					if (pc_damage_sp(sd, sp, 0) <= 0)
 						break;
 				}
 			}
@@ -5521,18 +5549,18 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 		}
 		break;
 	case SC_WARM: //SG skills [Komurka]
-		if(battle_check_target( src,bl, BCT_ENEMY ) > 0) {
-			if(sd){
-				if(sd->status.sp<2) {
+		if(sc && sc->data[type].val2 &&
+			battle_check_target( src,bl, BCT_ENEMY ) > 0)
+	 	{
+			if(tsd)
+				//Only damage SP [Skotlex]
+				//	case SG_SUN_WARM:
+				pc_damage_sp(tsd, 60, 0);
+			else { //Otherwise, Knockback attack.
+				if(sd && pc_damage_sp(sd, 2, 0) <= 0)
 					sd->sc.data[type].val2 = 0; //Makes it end on the next tick.
-					break;
-				}
-				sd->status.sp -= 2;
-				clif_updatestatus(sd,SP_SP);	
+				skill_attack(BF_WEAPON,src,src,bl,sc->data[type].val3,sc->data[type].val1,tick,0);
 			}
-			skill_attack(BF_WEAPON,src,src,bl,
-				sc?sc->data[type].val3:SG_SUN_WARM,sc?sc->data[type].val1:1,
-				tick,0);
 		}
 		break;
 	case SC_CLOSECONFINE:

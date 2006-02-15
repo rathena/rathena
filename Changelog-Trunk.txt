@@ -4,6 +4,27 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 2006/02/15
+	* The autospell loop now cancels after one successful cast. This means if
+	  you have 10 autospells with 100% casting rate, only one will come off with
+	  each hit instead of all of them. [Skotlex]
+	* Warm skill update: [Skotlex]
+	- they are type BF_WEAPON, so that they may trigger effect/spell cards.
+	- Changed their element to -1 to carry on weapon's element.
+	- Against player it only damages 60SP per "hit"
+	- Against non-players it is a knockback skill as it was before.
+	- Hit frequency increased to once every 100ms.
+	* TK_DODGE now only dodges ranged weapon attacks, while under Spurt mode
+	  it dodges everything (provide better information if this is not how it
+	  should behave as the current info given is conflicting itself >.<)
+	  [Skotlex]
+	* Cleaned up and expanded the sc_def_rate battle config. The new battle
+	  flags are mob_sc_def_rate, pc_sc_def_rate, mob_max_sc_def, pc_max_sc_def
+	  [Skotlex]
+	* Modified Marionette Control so that the max bonus stats you get is capped
+	  to your server's defined max stats instead of 99. [Skotlex]
+	* Mobs are no longer affected by the vs_traps_bctall switch. [Skotlex]
+	* Added function pc_damage_sp to damage the SP of players, updated code as
+	  necessary. [Skotlex]
 	* Fixed @lvup command adding levels instead of substracting when you
 	  specify a negative quantity. [Skotlex]
 2006/02/14

@@ -138,6 +138,7 @@ int pc_unequipitem(struct map_session_data*,int,int);
 int pc_checkitem(struct map_session_data*);
 int pc_useitem(struct map_session_data*,int);
 
+int pc_damage_sp(struct map_session_data *, int, int);
 int pc_damage(struct block_list *,struct map_session_data*,int);
 int pc_heal(struct map_session_data *,int,int);
 int pc_itemheal(struct map_session_data *sd,int hp,int sp);
