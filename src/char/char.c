@@ -23,6 +23,7 @@ typedef long in_addr_t;
 #include <fcntl.h>
 #include <string.h>
 #include <stdarg.h>
+#include <limits.h>
 
 #include "../common/strlib.h"
 #include "../common/core.h"
@@ -360,7 +361,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		p->last_point.y = 354;
 	}
 	*/
-	str_p += sprintf(str_p, "%d\t%d,%d\t%s\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+	str_p += sprintf(str_p, "%d\t%d,%d\t%s\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 		"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 		"\t%s,%d,%d\t%s,%d,%d,%d,%d,%d,%d,%d\t",
 		p->char_id, p->account_id, p->char_num, p->name, //
@@ -425,18 +426,19 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg, int *reg_num) {
 	char tmp_str[3][128]; //To avoid deleting chars with too long names.
 	int tmp_int[256];
+	unsigned int tmp_uint[2]; //To read exp....
 	int set, next, len, i, j;
 
 	// initilialise character
 	memset(p, '\0', sizeof(struct mmo_charstatus));
 	
 	// If it's not char structure of version 1488 and after
-	if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+	if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 		"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 		"\t%127[^,],%d,%d\t%127[^,],%d,%d,%d,%d,%d,%d,%d%n",
 		&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0],
 		&tmp_int[3], &tmp_int[4], &tmp_int[5],
-		&tmp_int[6], &tmp_int[7], &tmp_int[8],
+		&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
 		&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
 		&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
 		&tmp_int[19], &tmp_int[20],
@@ -450,12 +452,12 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	{
 		tmp_int[43] = 0;	
 		// If it's not char structure of version 1363 and after
-		if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+		if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 			"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 			"\t%127[^,],%d,%d\t%127[^,],%d,%d,%d,%d,%d,%d%n",
 			&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
 			&tmp_int[3], &tmp_int[4], &tmp_int[5],
-			&tmp_int[6], &tmp_int[7], &tmp_int[8],
+			&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
 			&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
 			&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
 			&tmp_int[19], &tmp_int[20],
@@ -471,12 +473,12 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 			tmp_int[41] = 0; // mother
 			tmp_int[42] = 0; // child
 			// If it's not char structure of version 1008 and before 1363
-			if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+			if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 				"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 				"\t%127[^,],%d,%d\t%127[^,],%d,%d,%d%n",
 				&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
 				&tmp_int[3], &tmp_int[4], &tmp_int[5],
-				&tmp_int[6], &tmp_int[7], &tmp_int[8],
+				&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
 				&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
 				&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
 				&tmp_int[19], &tmp_int[20],
@@ -489,12 +491,12 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 			{
 				tmp_int[39] = 0; // partner id
 				// If not char structure from version 384 to 1007
-				if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+				if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 					"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 					"\t%127[^,],%d,%d\t%127[^,],%d,%d%n",
 					&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
 					&tmp_int[3], &tmp_int[4], &tmp_int[5],
-					&tmp_int[6], &tmp_int[7], &tmp_int[8],
+					&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
 					&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
 					&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
 					&tmp_int[19], &tmp_int[20],
@@ -507,12 +509,12 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 				{
 					// It's char structure of a version before 384
 					tmp_int[26] = 0; // pet id
-					set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+					set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 					"\t%d,%d,%d\t%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 					"\t%127[^,],%d,%d\t%127[^,],%d,%d%n",
 					&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
 					&tmp_int[3], &tmp_int[4], &tmp_int[5],
-					&tmp_int[6], &tmp_int[7], &tmp_int[8],
+					&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
 					&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
 					&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
 					&tmp_int[19], &tmp_int[20],
@@ -553,8 +555,8 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->class_ = tmp_int[3];
 	p->base_level = tmp_int[4];
 	p->job_level = tmp_int[5];
-	p->base_exp = tmp_int[6];
-	p->job_exp = tmp_int[7];
+	p->base_exp = tmp_uint[0];
+	p->job_exp = tmp_uint[1];
 	p->zeny = tmp_int[8];
 	p->hp = tmp_int[9];
 	p->max_hp = tmp_int[10];
@@ -1611,9 +1613,9 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		j = offset + (i * 106); // increase speed of code
 
 		WFIFOL(fd,j) = p->char_id;
-		WFIFOL(fd,j+4) = p->base_exp;
+		WFIFOL(fd,j+4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
 		WFIFOL(fd,j+8) = p->zeny;
-		WFIFOL(fd,j+12) = p->job_exp;
+		WFIFOL(fd,j+12) = p->job_exp>LONG_MAX?LONG_MAX:p->job_exp;
 		WFIFOL(fd,j+16) = p->job_level;
 
 		WFIFOL(fd,j+20) = 0;
@@ -3355,9 +3357,9 @@ int parse_char(int fd) {
 			memset(WFIFOP(fd,2), 0, 106);
 
 			WFIFOL(fd,2) = char_dat[i].status.char_id;
-			WFIFOL(fd,2+4) = char_dat[i].status.base_exp;
+			WFIFOL(fd,2+4) = char_dat[i].status.base_exp>LONG_MAX?LONG_MAX:char_dat[i].status.base_exp;
 			WFIFOL(fd,2+8) = char_dat[i].status.zeny;
-			WFIFOL(fd,2+12) = char_dat[i].status.job_exp;
+			WFIFOL(fd,2+12) = char_dat[i].status.job_exp>LONG_MAX?LONG_MAX:char_dat[i].status.job_exp;
 			WFIFOL(fd,2+16) = char_dat[i].status.job_level;
 
 			WFIFOL(fd,2+28) = char_dat[i].status.karma;

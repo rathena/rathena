@@ -27,6 +27,7 @@ typedef long in_addr_t;
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "char.h"
 #include "../common/utils.h"
@@ -463,7 +464,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 		//query
 		sprintf(tmp_sql ,"UPDATE `%s` SET `base_level`='%d', `job_level`='%d',"
-			"`base_exp`='%d', `job_exp`='%d', `zeny`='%d',"
+			"`base_exp`='%u', `job_exp`='%u', `zeny`='%d',"
 			"`max_hp`='%d',`hp`='%d',`max_sp`='%d',`sp`='%d',`status_point`='%d',`skill_point`='%d',"
 			"`str`='%d',`agi`='%d',`vit`='%d',`int`='%d',`dex`='%d',`luk`='%d',"
 			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',"
@@ -862,6 +863,7 @@ int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id, int tab
 //=====================================================================================================
 int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 	int i,j, n;
+	double exp;
 	char t_msg[128];
 	char *str_p = tmp_sql;
 	struct mmo_charstatus *cp;
@@ -905,8 +907,10 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 		p->class_ = atoi(sql_row[4]);
 		p->base_level = atoi(sql_row[5]);
 		p->job_level = atoi(sql_row[6]);
-		p->base_exp = atoi(sql_row[7]);
-		p->job_exp = atoi(sql_row[8]);
+		exp = atof(sql_row[7]);
+		p->base_exp = exp<0?0:(exp>UINT_MAX?UINT_MAX:(unsigned int)exp);
+		exp = atof(sql_row[8]);
+		p->job_exp = exp<0?0:(exp>UINT_MAX?UINT_MAX:(unsigned int)exp);
 		p->zeny = atoi(sql_row[9]);
 		p->str = atoi(sql_row[10]);
 		p->agi = atoi(sql_row[11]);
@@ -1118,7 +1122,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 // 
 int mmo_char_fromsql_short(int char_id, struct mmo_charstatus *p){
 	char t_msg[128];
-
+	double exp;
 	memset(p, 0, sizeof(struct mmo_charstatus));
 	t_msg[0]= '\0';
 	
@@ -1156,8 +1160,10 @@ int mmo_char_fromsql_short(int char_id, struct mmo_charstatus *p){
 		p->class_ = atoi(sql_row[4]);
 		p->base_level = atoi(sql_row[5]);
 		p->job_level = atoi(sql_row[6]);
-		p->base_exp = atoi(sql_row[7]);
-		p->job_exp = atoi(sql_row[8]);
+		exp = atof(sql_row[7]);
+		p->base_exp = exp<0?0:(exp>UINT_MAX?UINT_MAX:(unsigned int)exp);
+		exp = atof(sql_row[8]);
+		p->job_exp = exp<0?0:(exp>UINT_MAX?UINT_MAX:(unsigned int)exp);
 		p->zeny = atoi(sql_row[9]);
 		p->str = atoi(sql_row[10]);
 		p->agi = atoi(sql_row[11]);
@@ -1796,9 +1802,9 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		j = offset + (i * 106); // increase speed of code
 
 		WFIFOL(fd,j) = p->char_id;
-		WFIFOL(fd,j+4) = p->base_exp;
+		WFIFOL(fd,j+4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
 		WFIFOL(fd,j+8) = p->zeny;
-		WFIFOL(fd,j+12) = p->job_exp;
+		WFIFOL(fd,j+12) = p->job_exp>LONG_MAX?LONG_MAX:p->job_exp;
 		WFIFOL(fd,j+16) = p->job_level;
 
 		WFIFOL(fd,j+20) = 0;
@@ -3324,15 +3330,15 @@ int parse_char(int fd) {
 			//mmo_char_fromsql(i, char_dat);
 			i = 0;
 			WFIFOL(fd, 2) = char_dat[i].char_id;
-			WFIFOL(fd,2+4) = char_dat[i].base_exp;
+			WFIFOL(fd,2+4) = char_dat[i].base_exp>LONG_MAX?LONG_MAX:char_dat[i].base_exp;
 			WFIFOL(fd,2+8) = char_dat[i].zeny;
-			WFIFOL(fd,2+12) = char_dat[i].job_exp;
+			WFIFOL(fd,2+12) = char_dat[i].job_exp>LONG_MAX?LONG_MAX:char_dat[i].job_exp;
 			WFIFOL(fd,2+16) = char_dat[i].job_level;
 
 			WFIFOL(fd,2+28) = char_dat[i].karma;
 			WFIFOL(fd,2+32) = char_dat[i].manner;
 
-			WFIFOW(fd,2+40) = 0x30;
+			WFIFOW(fd,2+40) = 0x30; 
 			WFIFOW(fd,2+42) = (char_dat[i].hp > 0x7fff) ? 0x7fff : char_dat[i].hp;
 			WFIFOW(fd,2+44) = (char_dat[i].max_hp > 0x7fff) ? 0x7fff : char_dat[i].max_hp;
 			WFIFOW(fd,2+46) = (char_dat[i].sp > 0x7fff) ? 0x7fff : char_dat[i].sp;
