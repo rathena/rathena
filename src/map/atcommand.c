@@ -2684,7 +2684,7 @@ int atcommand_baselevelup(
 			level = pc_maxbaselv(sd) - sd->status.base_level;
 		for (i = 1; i <= level; i++)
 			sd->status.status_point += (sd->status.base_level + i + 14) / 5;
-		sd->status.base_level += level;
+		sd->status.base_level += (unsigned int)level;
 		clif_updatestatus(sd, SP_BASELEVEL);
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
 		clif_updatestatus(sd, SP_STATUSPOINT);
@@ -2707,7 +2707,7 @@ int atcommand_baselevelup(
 				sd->status.status_point = 0;
 			clif_updatestatus(sd, SP_STATUSPOINT);
 		} /* to add: remove status points from stats */
-		sd->status.base_level -= level;
+		sd->status.base_level -= (unsigned int)level;
 		clif_updatestatus(sd, SP_BASELEVEL);
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
 		status_calc_pc(sd, 0);
@@ -2741,7 +2741,7 @@ int atcommand_joblevelup(
 		}
 		if ((unsigned int)level > pc_maxjoblv(sd) || (unsigned int)level > pc_maxjoblv(sd) - sd->status.job_level) // fix positiv overflow
 			level = pc_maxjoblv(sd) - sd->status.job_level;
-		sd->status.job_level += level;
+		sd->status.job_level += (unsigned int)level;
 		clif_updatestatus(sd, SP_JOBLEVEL);
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
 		sd->status.skill_point += level;
@@ -2757,7 +2757,7 @@ int atcommand_joblevelup(
 		level *=-1;
 		if ((unsigned int)level >= sd->status.job_level) // fix negativ overflow
 			level = sd->status.job_level-1;
-		sd->status.job_level -= level;
+		sd->status.job_level -= (unsigned int)level;
 		clif_updatestatus(sd, SP_JOBLEVEL);
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
 		if (sd->status.skill_point < level)
