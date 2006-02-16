@@ -1578,7 +1578,7 @@ static int clif_pet0078(struct pet_data *pd, unsigned char *buf) {
 		WBUFW(buf,6)=pd->speed;
 		WBUFW(buf,14)=view_class;
 		WBUFW(buf,16)=battle_config.pet_hair_style;
-		if((view_class = itemdb_viewid(pd->equip)) > 0)
+		if(pd->equip && (view_class = itemdb_viewid(pd->equip)) > 0)
 			WBUFW(buf,20)=view_class;
 		else
 			WBUFW(buf,20)=pd->equip;
@@ -1680,7 +1680,7 @@ static int clif_pet007b(struct pet_data *pd, unsigned char *buf) {
 		WBUFW(buf,6)=pd->speed;
 		WBUFW(buf,14)=view_class;
 		WBUFW(buf,16)=battle_config.pet_hair_style;
-		if ((view_class = itemdb_viewid(pd->equip)) > 0)
+		if (pd->equip && (view_class = itemdb_viewid(pd->equip)) > 0)
 			WBUFW(buf,20)=view_class;
 		else
 			WBUFW(buf,20)=pd->equip;
@@ -6958,7 +6958,7 @@ int clif_pet_equip(struct pet_data *pd,int nameid)
 	WBUFW(buf,0)=0x1a4;
 	WBUFB(buf,2)=3;
 	WBUFL(buf,3)=pd->bl.id;
-	if((view = itemdb_viewid(nameid)) > 0)
+	if(nameid && (view = itemdb_viewid(nameid)) > 0)
 		WBUFL(buf,7)=view;
 	else
 		WBUFL(buf,7)=nameid;

@@ -1139,7 +1139,6 @@ typedef enum {
 	CELL_CHKNOPASS,		// 通過不可(セルタイプ1,5)
 	CELL_GETTYPE,		// セルタイプを返す
 	CELL_GETCELLTYPE,
-	CELL_CHKSTACK,
 	CELL_CHKNPC=0x10,	// タッチタイプのNPC(セルタイプ0x80フラグ)
 	CELL_CHKREGEN,		// cells that improve regeneration
 	CELL_CHKPNEUMA,
@@ -1148,6 +1147,7 @@ typedef enum {
 	CELL_CHKLANDPROTECTOR,
 	CELL_CHKMOONLIT,
 	CELL_CHKICEWALL,
+	CELL_CHKSTACK,
 } cell_t;
 // map_setcell()で使用されるフラグ
 enum {
