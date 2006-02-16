@@ -1224,7 +1224,7 @@ int chrif_load_scdata(int fd)
 		memcpy(&data, RFIFOP(fd,14 + i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
 		if (data.tick < 1)
 		{	//Protection against invalid tick values. [Skotlex]
-			ShowWarning("chrif_load_scdata: Received invalid duration (%d ms) for status change %d (character %s)\n", data.tick, sd->status.name);
+			ShowWarning("chrif_load_scdata: Received invalid duration (%d ms) for status change %d (character %s)\n", data.tick, data.type, sd->status.name);
 			continue;
 		}
 		status_change_start(&sd->bl, data.type, 100, data.val1, data.val2, data.val3, data.val4, data.tick, 15);

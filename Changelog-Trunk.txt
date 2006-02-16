@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 2006/02/15
+	* Fixed crash in chrif_load_scdata warning message. [Skotlex]
 	* Fixed pets displaying "strangely" when they did not have their pet armor.
 	  [Skotlex]
 	* Added battle config option pk_level_range for specifying valid level
