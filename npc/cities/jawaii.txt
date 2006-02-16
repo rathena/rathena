@@ -4,7 +4,7 @@
 //= jAthena (1.0)
 //= DNett123 (1.1 - 1.5)
 //===== Current Version: =====================================
-//= 2.0
+//= 2.01
 //===== Compatible With: =====================================
 //= Latest eAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.7 – Fixed a lot of typo’s [Nexon]
 //= 1.8 - Removed monster spawns, added aegis ep 8.5 spawns to npc/mobs/fields/jawaii.txt [MasterOfMuppets]
 //= 2.0 - Updated the npcs according to iRO [MasterOfMuppets]
+//= 2.01 fixed missing @ at randomdrink, thanks to theultramage [Lupus]
 //============================================================
 
 //===== Shop: ================================================
@@ -493,7 +494,7 @@ jawaii_in.gat,28,124,0	script	Bartender#jaw	46,{
 					mes "Boss...Give me another shot...";
 					next;
 }
-				else if(randomdrink == 4)
+				else if(@randomdrink == 4)
 {
 					mes "[Bartender]";
 					mes "Hmm... How about this?";

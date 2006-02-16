@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.5a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -13,7 +13,7 @@
 //= +AntiNovice exploit fix [Lupus] 1.2 added baby novice check
 //= Spellchecked [massdriller]
 //= 1.4 Optimized. Novices > 20 BaseJob can go to Culvert, too [Lupus]
-//= 1.5 Added a Jawaii related npc [MasterOfMuppets]
+//= 1.5a Added a Jawaii related npc [MasterOfMuppets]
 //============================================================
 
 
@@ -675,7 +675,7 @@ s_What:
 s_Five:
 			mes "[Hans Solo]";
 			mes "UhOh... Are you alright?";
-			mes "Come, sing you name here.";
+			mes "Come, sign your name here.";
 			mes "I'll take you to a wonderful place!";
 			next;
 			menu "Sign it",-,"Don't sign it",s_Dont;

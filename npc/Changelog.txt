@@ -28,6 +28,8 @@ Nexon
 Date		Added
 ======
 
+02/16
+	* Fixed Jawai bug and a typo, thanks to theultramage [Lupus]
 02/14
 	* Added a new Fruit Merchant in Hugel. [Poki#3]
 	* New, updated st.Valentine Event with a nice quest and EXP bonuses ^_- [Lupus]
