@@ -46,7 +46,7 @@
 struct skill_db {
 	char *name;
 	char *desc;
-	int range[MAX_SKILL_LEVEL],hit,inf,pl,nk,max;
+	int range[MAX_SKILL_LEVEL],hit,inf,pl,nk,splash[MAX_SKILL_LEVEL],max;
 	int num[MAX_SKILL_LEVEL];
 	int cast[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
 	int upkeep_time[MAX_SKILL_LEVEL],upkeep_time2[MAX_SKILL_LEVEL];

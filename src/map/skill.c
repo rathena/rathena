@@ -590,6 +590,7 @@ int	skill_get_pl( int id ){ skill_get (skill_db[id].pl, id, 1); }
 int	skill_get_nk( int id ){ skill_get (skill_db[id].nk, id, 1); }
 int	skill_get_max( int id ){ skill_chk (id, 1); return (id < 500 || id > 1000) ? skill_db[id].max : guild_skill_get_max(id); }
 int	skill_get_range( int id , int lv ){ skill_chk (id, lv); return (id < 500 || id > 1000) ? skill_db[id].range[lv-1] : 0; }
+int	skill_get_splash( int id , int lv ){ skill_chk (id, lv); return (id < 500 || id > 1000) ? (skill_db[id].splash[lv-1]>=0?skill_db[id].splash[lv-1]:AREA_SIZE) : 0; }
 int	skill_get_hp( int id ,int lv ){ skill_get (skill_db[id].hp[lv-1], id, lv); }
 int	skill_get_sp( int id ,int lv ){ skill_get (skill_db[id].sp[lv-1], id, lv); }
 int	skill_get_zeny( int id ,int lv ){ skill_get (skill_db[id].zeny[lv-1], id, lv); }
@@ -11188,8 +11189,8 @@ int skill_readdb(void)
 		char *split[50];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		j = skill_split_str(line,split,14);
-		if(j < 14 || split[13]==NULL)
+		j = skill_split_str(line,split,15);
+		if(j < 15 || split[14]==NULL)
 			continue;
 
 		i=atoi(split[0]);
@@ -11203,25 +11204,26 @@ int skill_readdb(void)
 		skill_db[i].inf=atoi(split[3]);
 		skill_db[i].pl=atoi(split[4]);
 		skill_db[i].nk=atoi(split[5]);
-		skill_db[i].max=atoi(split[6]);
-		skill_split_atoi(split[7],skill_db[i].num);
+		skill_split_atoi(split[6],skill_db[i].splash);
+		skill_db[i].max=atoi(split[7]);
+		skill_split_atoi(split[8],skill_db[i].num);
 
-		if(strcmpi(split[8],"yes") == 0)
+		if(strcmpi(split[9],"yes") == 0)
 			skill_db[i].castcancel=1;
 		else
 			skill_db[i].castcancel=0;
-		skill_db[i].cast_def_rate=atoi(split[9]);
-		skill_db[i].inf2=atoi(split[10]);
-		skill_db[i].maxcount=atoi(split[11]);
-		if(strcmpi(split[12],"weapon") == 0)
+		skill_db[i].cast_def_rate=atoi(split[10]);
+		skill_db[i].inf2=atoi(split[11]);
+		skill_db[i].maxcount=atoi(split[12]);
+		if(strcmpi(split[13],"weapon") == 0)
 			skill_db[i].skill_type=BF_WEAPON;
-		else if(strcmpi(split[12],"magic") == 0)
+		else if(strcmpi(split[13],"magic") == 0)
 			skill_db[i].skill_type=BF_MAGIC;
-		else if(strcmpi(split[12],"misc") == 0)
+		else if(strcmpi(split[13],"misc") == 0)
 			skill_db[i].skill_type=BF_MISC;
 		else
 			skill_db[i].skill_type=0;
-		skill_split_atoi(split[13],skill_db[i].blewcount);
+		skill_split_atoi(split[14],skill_db[i].blewcount);
 
 		for (j = 0; skill_names[j].id != 0; j++)
 			if (skill_names[j].id == i) {

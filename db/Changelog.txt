@@ -29,6 +29,9 @@
 
 =========================
 
+20/16
+	* Added a new column in the skill_db to specify the
+	  splash-range/area-of-effect of skills. [Skotlex]
 02/14
 	* Part 1 of Gravitys "Zeny Inflation Control Update" [Poki#3]
 	- All potion type drops from monsters are changed with Herbs (Excluding MvP Monsters).
