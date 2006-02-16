@@ -2745,30 +2745,41 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	//Not consumable item
 	if(item->type != 0 && item->type != 2)
 		return 0;
+	if(!item->script) //if it has no script, you can't really consume it!
+		return 0;
 	//Anodyne (can't use Anodyne's Endure at GVG)
-	if((nameid == 605) && map_flag_gvg(sd->bl.m))
+	if(nameid == 605 && map_flag_gvg(sd->bl.m))
 		return 0;
 	//Fly Wing (can't use at GVG and when noteleport flag is on)
 	if(nameid == 601 && (map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m))) {
 		clif_skill_teleportmessage(sd,0);
 		return 0;
 	}
-	//Fly Wing (can't use when you in duel) [LuzZza]
-	if(nameid == 601 && (!battle_config.duel_allow_teleport && sd->duel_group)) {
+	//Fly Wing/Butterfly Wing (can't use when you in duel) [LuzZza]
+	if((nameid == 601 || nameid == 602) && (!battle_config.duel_allow_teleport && sd->duel_group)) {
 		clif_displaymessage(sd->fd, "Duel: Can't use this item in duel.");
 		return 0;
 	}
 	//Butterfly Wing (can't use noreturn flag is on and if duel)
 	if(nameid == 602 && map[sd->bl.m].flag.noreturn)
 		return 0;
-	//BW (can't use when you in duel) [LuzZza]
-	if(nameid == 602 && (!battle_config.duel_allow_teleport && sd->duel_group)) {
-		clif_displaymessage(sd->fd, "Duel: Can't use this item in duel.");
-		return 0;
-	}
 	//Dead Branch & Bloody Branch & Porings Box (can't use at GVG and when nobranch flag is on)
 	if((nameid == 604 || nameid == 12103 || nameid == 12109) && (map[sd->bl.m].flag.nobranch || map_flag_gvg(sd->bl.m)))
 		return 0;
+
+	//Anodyne/Aleovera not usable while sitting.
+	if ((nameid == 605 || nameid == 606) && pc_issit(sd))
+		return 0;
+	  
+	//added item_noequip.txt items check by Maya&[Lupus]
+	if (
+		(map[sd->bl.m].flag.pvp && item->flag.no_equip&1) || // PVP
+		(map_flag_gvg(sd->bl.m) && item->flag.no_equip&2) || // GVG
+		(map[sd->bl.m].zone && map[sd->bl.m].flag.restricted &&
+			item->flag.no_equip&map[sd->bl.m].zone) // Zone restriction
+	)
+		return 0;
+
 	//Gender check
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
@@ -2798,65 +2809,64 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 int pc_useitem(struct map_session_data *sd,int n)
 {
 	int amount;
+	unsigned char *script;
 
 	nullpo_retr(1, sd);
 
-	if(n >=0 && n < MAX_INVENTORY) {
-		unsigned char *script;
-		sd->itemid = sd->status.inventory[n].nameid;
-		sd->itemindex = n;
-		amount = sd->status.inventory[n].amount;
-		if(sd->status.inventory[n].nameid <= 0 ||
-			sd->status.inventory[n].amount <= 0 ||
-			DIFF_TICK(sd->canuseitem_tick, gettick()) > 0 //Prevent mass item usage. [Skotlex]
-		)
-			return 1;
-		if (sd->sc.count && (
-			sd->sc.data[SC_BERSERK].timer!=-1 ||
-			sd->sc.data[SC_MARIONETTE].timer!=-1 ||
-			sd->sc.data[SC_GRAVITATION].timer!=-1 ||
-			//Cannot use Potions/Healing items while under Gospel.
-			(sd->sc.data[SC_GOSPEL].timer!=-1 && sd->sc.data[SC_GOSPEL].val4 != BCT_SELF && sd->inventory_data[n]->type == 0)
-		)) {
-			clif_useitemack(sd,n,0,0);
-			return 1;
-		}		
-		if ((pc_issit(sd) && (sd->itemid == 605 || sd->itemid == 606)) ||
-			//added item_noequip.txt items check by Maya&[Lupus]
-			(map[sd->bl.m].flag.pvp && (sd->inventory_data[n]->flag.no_equip&1) ) || // PVP
-			(map_flag_gvg(sd->bl.m) && (sd->inventory_data[n]->flag.no_equip&2) ) || // GVG
-			(map[sd->bl.m].zone && map[sd->bl.m].flag.restricted && (sd->inventory_data[n]->flag.no_equip&map[sd->bl.m].zone)) || // Zone restriction
-			!pc_isUseitem(sd,n)
-		) {
-			clif_useitemack(sd,n,0,0);
-			return 1;
-		}
-		script = sd->inventory_data[n]->script;
-		amount = sd->status.inventory[n].amount;
-		//Check if the item is to be consumed inmediately [Skotlex]
-		if (sd->inventory_data[n]->flag.delay_consume)
-			clif_useitemack(sd,n,amount,1);
-		else {
-			clif_useitemack(sd,n,amount-1,1);
-
-			//Logs (C)onsumable items [Lupus]
-			if(log_config.pick > 0 ) {
-				log_pick(sd, "C", 0, sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
-			}
-			//Logs
-
-			pc_delitem(sd,n,1,1);
-		}
-		if(sd->status.inventory[n].card[0]==0x00fe && pc_istop10fame(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST)) {
-		    potion_flag = 2; // Famous player's potions have 50% more efficiency
-			 if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_ROGUE)
-				 potion_flag = 3; //Even more effective potions.
-		}
-		sd->canuseitem_tick= gettick() + battle_config.item_use_interval; //Update item use time.
-		run_script(script,0,sd->bl.id,0);
-		potion_flag = 0;
+	if(n <0 || n >= MAX_INVENTORY)
+		return 0;
+	
+	if(!pc_isUseitem(sd,n)) {
+		clif_useitemack(sd,n,0,0);
+		return 1;
 	}
 
+	if(sd->status.inventory[n].nameid <= 0 ||
+		sd->status.inventory[n].amount <= 0)
+		return 1;
+
+	 //Prevent mass item usage. [Skotlex]
+	 if (battle_config.item_use_interval &&
+			DIFF_TICK(sd->canuseitem_tick, gettick()) > 0)
+		return 1;
+
+	if (sd->sc.count && (
+		sd->sc.data[SC_BERSERK].timer!=-1 ||
+		sd->sc.data[SC_MARIONETTE].timer!=-1 ||
+		sd->sc.data[SC_GRAVITATION].timer!=-1 ||
+		//Cannot use Potions/Healing items while under Gospel.
+		(sd->sc.data[SC_GOSPEL].timer!=-1 && sd->sc.data[SC_GOSPEL].val4 != BCT_SELF && sd->inventory_data[n]->type == 0)
+	)) {
+		clif_useitemack(sd,n,0,0);
+		return 1;
+	}	
+	
+	sd->itemid = sd->status.inventory[n].nameid;
+	sd->itemindex = n;
+	amount = sd->status.inventory[n].amount;
+	script = sd->inventory_data[n]->script;
+	//Check if the item is to be consumed inmediately [Skotlex]
+	if (sd->inventory_data[n]->flag.delay_consume)
+		clif_useitemack(sd,n,amount,1);
+	else {
+		clif_useitemack(sd,n,amount-1,1);
+		//Logs (C)onsumable items [Lupus]
+		if(log_config.pick > 0 )
+			log_pick(sd, "C", 0, sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
+		//Logs
+		pc_delitem(sd,n,1,1);
+	}
+	if(sd->status.inventory[n].card[0]==0x00fe &&
+		pc_istop10fame(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
+	{
+	    potion_flag = 2; // Famous player's potions have 50% more efficiency
+		 if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_ROGUE)
+			 potion_flag = 3; //Even more effective potions.
+	}
+	if (battle_config.item_use_interval)
+		sd->canuseitem_tick= gettick() + battle_config.item_use_interval; //Update item use time.
+	run_script(script,0,sd->bl.id,0);
+	potion_flag = 0;
 	return 0;
 }
 
@@ -5954,19 +5964,22 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1) //バ?サ?ク中は回復させないらしい
 		return 0;
 
-	if(hp+sd->status.hp>sd->status.max_hp)
-		hp=sd->status.max_hp-sd->status.hp;
-	if(sp+sd->status.sp>sd->status.max_sp)
-		sp=sd->status.max_sp-sd->status.sp;
+	if(hp > sd->status.max_hp - sd->status.hp)
+		hp = sd->status.max_hp - sd->status.hp;
 	sd->status.hp+=hp;
+		
+	if(sp > sd->status.max_sp - sd->status.sp)
+		sp = sd->status.max_sp - sd->status.sp;
+	sd->status.sp+=sp;
+
 	if(sd->status.hp <= 0) {
 		sd->status.hp = 0;
 		pc_damage(NULL,sd,1);
 		hp = 0;
 	}
-	sd->status.sp+=sp;
 	if(sd->status.sp <= 0)
 		sd->status.sp = 0;
+	
 	if(hp)
 		clif_updatestatus(sd,SP_HP);
 	if(sp)
@@ -5991,17 +6004,11 @@ int pc_itemheal(struct map_session_data *sd,int hp,int sp)
 
 	nullpo_retr(0, sd);
 
-	if(sd->sc.count && sd->sc.data[SC_GOSPEL].timer!=-1) //バ?サ?ク中は回復させないらしい
-		return 0;
+	if(hp > 0 && pc_checkoverhp(sd))
+		hp = 0;
 
-	if(pc_checkoverhp(sd)) {
-		if(hp > 0)
-			hp = 0;
-	}
-	if(pc_checkoversp(sd)) {
-		if(sp > 0)
-			sp = 0;
-	}
+	if(sp > 0 && pc_checkoversp(sd))
+		sp = 0;
 
 	if(hp > 0) {
 		bonus = (sd->paramc[2]<<1) + 100 + pc_checkskill(sd,SM_RECOVERY)*10
@@ -6020,19 +6027,24 @@ int pc_itemheal(struct map_session_data *sd,int hp,int sp)
 		if(bonus != 100)
 			sp = sp * bonus / 100;
 	}
-	if(hp+sd->status.hp>sd->status.max_hp)
-		hp=sd->status.max_hp-sd->status.hp;
-	if(sp+sd->status.sp>sd->status.max_sp)
-		sp=sd->status.max_sp-sd->status.sp;
-	sd->status.hp+=hp;
+	if(hp > sd->status.max_hp - sd->status.hp)
+		sd->status.hp = sd->status.max_hp;
+	else
+		sd->status.hp+=hp;
+		
+	if(sp > sd->status.max_sp - sd->status.sp)
+		sd->status.sp = sd->status.max_sp;
+	else
+		sd->status.sp += sp;
+
 	if(sd->status.hp <= 0) {
 		sd->status.hp = 0;
 		pc_damage(NULL,sd,1);
 		hp = 0;
 	}
-	sd->status.sp+=sp;
 	if(sd->status.sp <= 0)
 		sd->status.sp = 0;
+	
 	if(hp)
 		clif_updatestatus(sd,SP_HP);
 	if(sp)
