@@ -612,7 +612,11 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 			easy = 1;
 			break;
 	}
-
+#ifdef CELL_NOSTACK
+	//In no stack mode, do these path searches ignoring other players as it's just
+	//for reachability judging, not the actual path used. [Skotlex]
+	easy |= 0x30000;
+#endif
 	if( md->bl.m != bl->m)	// ˆá‚¤ƒƒbƒv
 		return 0;
 

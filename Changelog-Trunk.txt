@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 2006/02/16
+	* The battle config options sp_rate and hp_rate are now applied
+	  independently of the same type of bonuses from cards. [Skotlex]
+	* In CELL_NOSTACK mode, mob_canreach will now ignore other players when
+	  checking if there's a path to the player. [Skotlex]
+	* Added RG_RAID to the list of skills that need a status_checkskilluse on
+	  skill_attack. [Skotlex]
+	* Added the mapflag check monster_noteleport to AL_TELEPORT. [Skotlex]
+	* Fixed the sc_def rate not being reduced in status_change_start. [Skotlex]
 	* Changed the include in irc.c from strings.h to string.h, which fixes a
 	  bunch of compilation warnings here... [Skotlex]
 	* Updated the SQL login/char servers to let the mysql server grant the new

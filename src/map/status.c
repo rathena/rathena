@@ -610,8 +610,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	// these are not zeroed. [zzo]
 
 	sd->speed = DEFAULT_WALK_SPEED;
-	sd->hprate=battle_config.hp_rate;
-	sd->sprate=battle_config.sp_rate;
+	sd->hprate=100;
+	sd->sprate=100;
 	sd->castrate=100;
 	sd->delayrate=100;
 	sd->dsprate=100;
@@ -1386,12 +1386,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	// Apply relative modifiers from equipment
 	if(sd->hprate!=100)
 		sd->status.max_hp = sd->status.max_hp * sd->hprate/100;
+	if(battle_config.hp_rate != 100)
+		sd->status.max_hp = sd->status.max_hp * battle_config.hp_rate/100;
 
 	if(sd->status.max_hp > battle_config.max_hp)
 		sd->status.max_hp = battle_config.max_hp;
+	if(sd->status.max_hp <= 0) sd->status.max_hp = 1;
 	if(sd->status.hp>sd->status.max_hp)
 		sd->status.hp=sd->status.max_hp;
-	if(sd->status.max_hp <= 0) sd->status.max_hp = 1;
 
 	// Basic natural HP regeneration value
 	sd->nhealhp = 1 + (sd->paramc[2]/5) + (sd->status.max_hp/200);
@@ -1443,7 +1445,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	// Apply relative modifiers from equipment
 	if(sd->sprate!=100)
 		sd->status.max_sp = sd->status.max_sp * sd->sprate/100;
-
+	if(battle_config.sp_rate != 100)
+		sd->status.max_sp = sd->status.max_sp * battle_config.sp_rate/100;
+	
 	if(sd->status.max_sp > battle_config.max_sp)
 		sd->status.max_sp = battle_config.max_sp;
 	if(sd->status.sp>sd->status.max_sp)
@@ -3494,7 +3498,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	//Check rate
 	if (!(flag&(4|1))) {
 		rate*=100; //Pass to 10000 = 100%
-		if (flag&8) {
+		if (!(flag&8)) {
 			race = status_get_sc_def(bl, type);
 			if (race)
 				rate -= rate*race/10000;

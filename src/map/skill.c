@@ -1525,7 +1525,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		return 0;
 	
 	//Note that splash attacks often only check versus the targetted mob, those around the splash area normally don't get checked for being hidden/cloaked/etc. [Skotlex]
-	if ((skill_get_nk(skillid) == NK_SPLASH_DAMAGE || skillid == ASC_METEORASSAULT || skillid == SN_SHARPSHOOTING)
+	if ((skill_get_nk(skillid) == NK_SPLASH_DAMAGE || skillid == ASC_METEORASSAULT || skillid == SN_SHARPSHOOTING || skillid == RG_RAID)
 		&& !status_check_skilluse(dsrc, bl, skillid, 1))
 		return 0;
 
@@ -3163,7 +3163,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	if(status_isdead(bl) && skillid != NPC_REBIRTH && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO)
 		return 1;
 
-	if (skillid >= 0 && skillid < sizeof(SkillStatusChangeTable)/sizeof(SkillStatusChangeTable[0]))
+	if (skillid > 0 && skillid < MAX_SKILL)
 		type = SkillStatusChangeTable[skillid];
 //Shouldn't be needed, skillnotok's return value is highly unlikely to have changed after you started casting. [Skotlex]
 //	if (sd && skillnotok(skillid, sd)) // [MouseJstr]
@@ -4344,7 +4344,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_warppoint(sd,skillid,"Random",
 					mapindex_id2name(sd->status.save_point.map),"","");
 			}
-		} else if(dstmd)
+		} else if(dstmd && !map[sd->bl.m].flag.monster_noteleport)
 			mob_warp(dstmd,-1,-1,-1,3);
 		break;
 
