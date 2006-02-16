@@ -14,7 +14,6 @@
 #include "../common/showmsg.h"
 
 static struct party *party_pt;
-static int party_newid = 100;
 static struct dbt *party_db_;
 
 int mapif_party_broken(int party_id,int flag);
@@ -46,15 +45,15 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id);
 #define PS_BREAK 0x20
 
 // Save party to mysql
-int inter_party_tosql(int party_id,struct party *p, int flag, int index)
+int inter_party_tosql(struct party *p, int flag, int index)
 {
 	// 'party' ('party_id','name','exp','item','leader_id','leader_char')
 	char t_name[NAME_LENGTH*2]; //Required for jstrescapecpy [Skotlex]
-	int party_exist = 0;
-	if (p == NULL || party_id == 0 || p->party_id == 0 || party_id != p->party_id) {
-		ShowError("Party pointer or party_id error (id: %d)\n", party_id);
+	int party_id;
+	if (p == NULL || p->party_id == 0)
 		return 0;
-	}
+	party_id = p->party_id;
+
 #ifdef NOISY
 	ShowInfo("Save party request ("CL_BOLD"%d"CL_RESET" - %s).\n", party_id, p->name);
 #endif
@@ -77,30 +76,21 @@ int inter_party_tosql(int party_id,struct party *p, int flag, int index)
 		return 1;
 	}
 
-	if(flag&PS_CREATE) {
-		//Create party, first check if ID exists.
-		sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `party_id`='%d'", party_db, party_id); // TBR
+	if(flag&PS_CREATE) { //Create party
+		sprintf(tmp_sql, "INSERT INTO `%s` "
+			"(`name`, `exp`, `item`, `leader_id`, `leader_char`) "
+			"VALUES ('%s', '%d', '%d', '%d', '%d')",
+			party_db, t_name, p->exp, p->item, p->member[index].account_id, p->member[index].char_id);
 		if (mysql_query(&mysql_handle, tmp_sql)) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			return 0;
-		}
-		sql_res = mysql_store_result(&mysql_handle);
-		if (sql_res != NULL && mysql_num_rows(sql_res) > 0) {
-			sql_row = mysql_fetch_row(sql_res);
-			party_exist =  atoi (sql_row[0]);
-		}
-		mysql_free_result(sql_res);
-		if (party_exist) { //TODO: Can't we just use an index, and then retrieve the new party's index from SQL? [Skotlex]
-			ShowError("inter_party_tosql: Creating party with already existing ID %d!\n", party_id);
 			aFree(p); //Free party, couldn't create it.
 			return 0;
 		}
-		sprintf(tmp_sql, "INSERT INTO `%s`  (`party_id`, `name`, `exp`, `item`, `leader_id`, `leader_char`) VALUES ('%d', '%s', '%d', '%d', '%d', '%d')",
-			party_db, party_id, t_name, p->exp, p->item, p->member[index].account_id, p->member[index].char_id);
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		if(mysql_field_count(&mysql_handle) == 0 &&
+			mysql_insert_id(&mysql_handle) != 0)
+			party_id = p->party_id = mysql_insert_id(&mysql_handle);
+		else { //Failed to retrieve ID??
 			aFree(p); //Free party, couldn't create it.
 			return 0;
 		}
@@ -227,9 +217,7 @@ struct party *inter_party_fromsql(int party_id)
 	return p;
 }
 
-int inter_party_sql_init(){
-	int i;
-
+int inter_party_sql_init(void){
 	//memory alloc
 	party_db_ = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	party_pt = (struct party*)aCalloc(sizeof(struct party), 1);
@@ -237,33 +225,6 @@ int inter_party_sql_init(){
 		ShowFatalError("inter_party_sql_init: Out of Memory!\n");
 		exit(1);
 	}
-	sprintf (tmp_sql , "SELECT count(*) FROM `%s`", party_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	sql_row = mysql_fetch_row(sql_res);
-	ShowStatus("total party data -> '%s'.......\n",sql_row[0]);
-	i = atoi (sql_row[0]);
-	mysql_free_result(sql_res);
-
-	if (i > 0) {
-		//set party_newid
-		sprintf (tmp_sql , "SELECT max(`party_id`) FROM `%s`", party_db);
-		if(mysql_query(&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-
-		sql_res = mysql_store_result(&mysql_handle) ;
-
-		sql_row = mysql_fetch_row(sql_res);
-		party_newid = atoi (sql_row[0])+1;
-		mysql_free_result(sql_res);
-	}
-
-	ShowDebug("set party_newid: %d.......\n", party_newid);
 
 	/* Uncomment the following if you want to do a party_db cleanup (remove parties with no members) on startup.[Skotlex]
 	ShowStatus("cleaning party table...\n");
@@ -278,7 +239,7 @@ int inter_party_sql_init(){
 	return 0;
 }
 
-void inter_party_sql_final()
+void inter_party_sql_final(void)
 {
 	party_db_->destroy(party_db_, NULL);
 	aFree(party_pt);
@@ -355,7 +316,7 @@ int party_check_empty(struct party *p)
 	}
 	// If there is no member, then break the party
 	mapif_party_broken(p->party_id,0);
-	inter_party_tosql(p->party_id,p, PS_BREAK, 0);
+	inter_party_tosql(p, PS_BREAK, 0);
 	return 1;
 }
 
@@ -539,7 +500,6 @@ int mapif_parse_CreateParty(int fd, int account_id, int char_id, char *name, cha
 	}
 	p= aCalloc(1, sizeof(struct party));
 	
-	p->party_id=party_newid++;
 	memcpy(p->name,name,NAME_LENGTH);
 	p->exp=0;
 	p->item=(item?1:0)|(item2?2:0);
@@ -553,7 +513,8 @@ int mapif_parse_CreateParty(int fd, int account_id, int char_id, char *name, cha
 	p->member[0].online=1;
 	p->member[0].lv=lv;
 
-	if (inter_party_tosql(p->party_id,p,PS_CREATE|PS_ADDMEMBER,0)) {
+	p->party_id=-1;//New party.
+	if (inter_party_tosql(p,PS_CREATE|PS_ADDMEMBER,0)) {
 		mapif_party_created(fd,account_id,char_id,p);
 		mapif_party_info(fd,p);
 	} else //Failed to create party.
@@ -606,7 +567,7 @@ int mapif_parse_PartyAddMember(int fd, int party_id, int account_id, int char_id
 			if(flag)
 				mapif_party_optionchanged(fd,p,0,0);
 
-			inter_party_tosql(party_id, p, PS_ADDMEMBER, i);
+			inter_party_tosql(p, PS_ADDMEMBER, i);
 			return 0;
 		}
 	}
@@ -630,7 +591,7 @@ int mapif_parse_PartyChangeOption(int fd,int party_id,int account_id,int exp,int
 		p->exp=0;
 	}
 	mapif_party_optionchanged(fd,p,account_id,flag);
-	inter_party_tosql(party_id, p, PS_BASIC, 0);
+	inter_party_tosql(p, PS_BASIC, 0);
 	return 0;
 }
 // パーティ脱退要求
@@ -669,7 +630,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 		}
 		//Party gets deleted on the check_empty call below.
 	} else {
-		inter_party_tosql(party_id,p,PS_DELMEMBER,i);
+		inter_party_tosql(p,PS_DELMEMBER,i);
 		memset(&p->member[i], 0, sizeof(struct party_member));
 	}
 		
@@ -714,7 +675,7 @@ int mapif_parse_BreakParty(int fd,int party_id)
 
 	if(!p)
 		return 0;
-	inter_party_tosql(party_id,p,PS_BREAK,0);
+	inter_party_tosql(p,PS_BREAK,0);
 	mapif_party_broken(fd,party_id);
 	return 0;
 }
@@ -745,7 +706,7 @@ int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id
 			p->member[i].leader = 0;
 		if(p->member[i].account_id == account_id && p->member[i].char_id == char_id) {
 			p->member[i].leader = 1;
-			inter_party_tosql(party_id,p,PS_LEADER, i);
+			inter_party_tosql(p,PS_LEADER, i);
 		}
 	}
 	return 1;

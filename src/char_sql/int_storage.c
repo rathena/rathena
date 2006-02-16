@@ -176,7 +176,7 @@ int guild_storage_fromsql(int guild_id, struct guild_storage *p){
 
 //---------------------------------------------------------
 // storage data initialize
-int inter_storage_sql_init(){
+int inter_storage_sql_init(void){
 
 	//memory alloc
 	ShowDebug("interserver storage memory initialize....(%d byte)\n",sizeof(struct storage));
@@ -188,7 +188,7 @@ int inter_storage_sql_init(){
 	return 1;
 }
 // storage data finalize
-void inter_storage_sql_final()
+void inter_storage_sql_final(void)
 {
 	if (storage_pt) aFree(storage_pt);
 	if (guild_storage_pt) aFree(guild_storage_pt);	 

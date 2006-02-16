@@ -64,7 +64,6 @@ void Gettimeofday(struct timeval *timenow)
 //-----------------------------------------------------
 // global variable
 //-----------------------------------------------------
-int account_id_count = START_ACCOUNT_NUM;
 int server_num;
 int new_account_flag = 0; //Set from config too XD [Sirius]
 int bind_ip_set_ = 0;
@@ -369,29 +368,6 @@ int mmo_auth_sqldb_init(void) {
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
 	}
-	if (new_account_flag)
-	{	//Check if the next new account will need to have it's ID set (to avoid bad DBs which would otherwise insert
-		//new accounts with account_ids of less than 2M [Skotlex]
-		sprintf(tmp_sql, "SELECT max(`%s`) from `%s`", login_db_account_id, login_db);
-		if(mysql_query(&mysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		} else {
-			MYSQL_RES* 	sql_res;
-			MYSQL_ROW	sql_row;
-			
-			sql_res = mysql_store_result(&mysql_handle) ;
-			if (sql_res)
-			{
-				if (mysql_num_rows(sql_res) > 0 &&
-					(sql_row = mysql_fetch_row(sql_res)) != NULL &&
-					sql_row[0] != NULL && atoi(sql_row[0]) >= account_id_count)
-				//Ok, chars already exist, no need to use this.
-					account_id_count = 0;
-				mysql_free_result(sql_res);
-			}
-		}
-	}
 	return 0;
 }
 
@@ -490,10 +466,7 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 
 	ShowInfo("New account: user: %s with passwd: %s sex: %c\n", account->userid, user_password, sex);
 
-	if (account_id_count) //Force new Account ID
-		sprintf(tmp_sql, "INSERT INTO `%s` (`%s`, `%s`, `%s`, `sex`, `email`) VALUES ('%d', '%s', '%s', '%c', '%s')", login_db, login_db_account_id, login_db_userid, login_db_user_pass, account_id_count, account->userid, user_password, sex, "a@a.com");
-	else
-		sprintf(tmp_sql, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`) VALUES ('%s', '%s', '%c', '%s')", login_db, login_db_userid, login_db_user_pass, account->userid, user_password, sex, "a@a.com");
+	sprintf(tmp_sql, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`) VALUES ('%s', '%s', '%c', '%s')", login_db, login_db_userid, login_db_user_pass, account->userid, user_password, sex, "a@a.com");
 		
 	if(mysql_query(&mysql_handle, tmp_sql)){
 		//Failed to insert new acc :/
@@ -502,9 +475,25 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 		return 1;
 	}
 
-	if (account_id_count) //Clear it or all new accounts will try to use the same id :P
-		account_id_count = 0;
-
+	if(mysql_field_count(&mysql_handle) == 0 &&
+		mysql_insert_id(&mysql_handle) < START_ACCOUNT_NUM) {
+		//Invalid Account ID! Must update it.
+		int id = mysql_insert_id(&mysql_handle);
+		sprintf(tmp_sql, "UPDATE `%s` SET `%s`='%d' WHERE `%s`='%d'", login_db, login_db_account_id, START_ACCOUNT_NUM, login_db_account_id, id);
+		if(mysql_query(&mysql_handle, tmp_sql)){
+			ShowError("New account %s has an invalid account ID [%d] which could not be updated (account_id must be %d or higher).", account->userid, id, START_ACCOUNT_NUM);
+			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			//Just delete it and fail.
+			sprintf(tmp_sql, "DELETE FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, id);
+			if(mysql_query(&mysql_handle, tmp_sql)){
+				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			}
+			return 1;
+		}
+		ShowNotice("Updated New account %s's ID %d->%d (account_id must be %d or higher).", account->userid, id, START_ACCOUNT_NUM, START_ACCOUNT_NUM);
+	}
 	if(tick > new_reg_tick)
 	{	//Update the registration check.
 		num_regs=0;
@@ -817,8 +806,8 @@ int mmo_auth( struct mmo_account* account , int fd){
 	account->sex = sql_row[5][0] == 'S' ? 2 : sql_row[5][0]=='M';
 	account->level = atoi(sql_row[10]) > 99 ? 99 : atoi(sql_row[10]); // as was in isGM() [zzo]
 
-	if (account->sex != 2 && account->account_id < 700000)
-		ShowWarning("Account %s has account id %d! Account IDs must be over 700000 to work properly!\n", account->userid, account->account_id);
+	if (account->sex != 2 && account->account_id < START_ACCOUNT_NUM)
+		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", account->userid, account->account_id, START_ACCOUNT_NUM);
 	sprintf(tmpsql, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount` +1, `last_ip`='%s'  WHERE %s  `%s` = '%s'",
 	        login_db, ip, case_sensitive ? "BINARY" : "", login_db_userid, sql_row[1]);
 	mysql_free_result(sql_res) ; //resource free

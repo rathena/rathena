@@ -180,7 +180,7 @@ int inter_accreg_fromsql(int account_id,int char_id, struct accreg *reg, int typ
 }
 
 // Initialize
-int inter_accreg_sql_init()
+int inter_accreg_sql_init(void)
 {
 	CREATE(accreg_pt, struct accreg, 1);
 	return 0;
@@ -397,7 +397,7 @@ int inter_sql_test (void)
 }
 
 // finalize
-void inter_final() {
+void inter_final(void) {
 	wis_db->destroy(wis_db, NULL);
 
 	inter_guild_sql_final();
@@ -552,7 +552,7 @@ int check_ttl_wisdata_sub(DBKey key, void *data, va_list ap) {
 	return 0;
 }
 
-int check_ttl_wisdata() {
+int check_ttl_wisdata(void) {
 	unsigned long tick = gettick();
 	int i;
 

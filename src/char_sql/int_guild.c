@@ -24,8 +24,6 @@ static struct dbt *guild_db_;
 
 struct guild_castle castles[MAX_GUILDCASTLE];
 
-static int guild_newid=30000;
-
 static int guild_exp[100];
 
 #define GS_BASIC 0x01
@@ -113,7 +111,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	char emblem_data[4096];
 	int i=0;
 
-	if (g->guild_id<=0) return -1;
+	if (g->guild_id<=0 && g->guild_id != -1) return 0;
 	
 #ifdef NOISY
 	ShowInfo("Save guild request ("CL_BOLD"%d"CL_RESET" - flag 0x%x).",g->guild_id, flag);
@@ -123,33 +121,25 @@ int inter_guild_tosql(struct guild *g,int flag)
 	
 	t_info[0]='\0';
 	// Insert new guild to sqlserver
-	if (flag&GS_BASIC){
+	if (flag&GS_BASIC || g->guild_id == -1){
 		int len=0;
-		char updateflag=1;
 		strcat(t_info, " guild");
-		
-		// Check if the guild exists.
-		sprintf(tmp_sql,"SELECT guild_id FROM `%s` WHERE guild_id='%d'",guild_db, g->guild_id);
-		if(mysql_query(&mysql_handle, tmp_sql) ) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			updateflag = 0; //Assume insert?
-		} else {
-			sql_res = mysql_store_result(&mysql_handle) ;
-		   if (sql_res==NULL || mysql_num_rows(sql_res)<=0) { //Guild does not exists
-				updateflag = 0;
-			}
-			mysql_free_result(sql_res);	//Don't need it anymore...
-		}
-			
-		//printf("- Insert guild %d to guild\n",g->guild_id);
+					
 		for(i=0;i<g->emblem_len;i++){
 			len+=sprintf(emblem_data+len,"%02x",(unsigned char)(g->emblem_data[i]));
 			//printf("%02x",(unsigned char)(g->emblem_data[i]));
 		}
 		emblem_data[len] = '\0';
 		//printf("- emblem_len = %d \n",g->emblem_len);
-		if (updateflag) {
+		if (g->guild_id == -1) //Insert
+			sprintf(tmp_sql,"INSERT INTO `%s` "
+				"(`name`,`master`,`guild_lv`,`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,`emblem_len`,`emblem_id`,`emblem_data`,`char_id`) "
+				"VALUES ('%s', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d')",
+				guild_db,t_name,jstrescapecpy(t_master,g->master),
+				g->guild_lv,g->connect_member,g->max_member,g->average_lv,g->exp,g->next_exp,g->skill_point,
+				jstrescapecpy(t_mes1,g->mes1),jstrescapecpy(t_mes2,g->mes2),g->emblem_len,g->emblem_id,emblem_data,
+				g->member[0].char_id);
+		else //Update
 			sprintf(tmp_sql,"UPDATE `%s` SET"
 				" `guild_id`=%d, `name`='%s', `master`='%s',`guild_lv`=%d, `connect_member`=%d,`max_member`=%d, "
 				"`average_lv`=%d,`exp`=%d,`next_exp`=%d,`skill_point`=%d,`mes1`='%s',`mes2`='%s',"
@@ -158,22 +148,18 @@ int inter_guild_tosql(struct guild *g,int flag)
 				g->guild_lv,g->connect_member,g->max_member,g->average_lv,g->exp,g->next_exp,g->skill_point,
 				jstrescapecpy(t_mes1,g->mes1),jstrescapecpy(t_mes2,g->mes2),g->emblem_len,g->emblem_id,emblem_data,
 				g->member[0].char_id, g->guild_id);
-				//printf(" %s\n",tmp_sql);
-				
-		} else {
-			sprintf(tmp_sql,"INSERT INTO `%s` "
-				"(`guild_id`, `name`,`master`,`guild_lv`,`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,`emblem_len`,`emblem_id`,`emblem_data`,`char_id`) "
-				"VALUES ('%d', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d')",
-				guild_db, g->guild_id,t_name,jstrescapecpy(t_master,g->master),
-				g->guild_lv,g->connect_member,g->max_member,g->average_lv,g->exp,g->next_exp,g->skill_point,
-				jstrescapecpy(t_mes1,g->mes1),jstrescapecpy(t_mes2,g->mes2),g->emblem_len,g->emblem_id,emblem_data,
-				g->member[0].char_id);
-				//printf(" %s\n",tmp_sql);
-						
-		}
+		
 		if(mysql_query(&mysql_handle, tmp_sql) ) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			if (g->guild_id == -1)
+				return 0; //Failed to create guild!
+		} else if (g->guild_id == -1) { //New guild
+			if(mysql_field_count(&mysql_handle) == 0 &&
+				mysql_insert_id(&mysql_handle) != 0)
+				g->guild_id = mysql_insert_id(&mysql_handle);
+			else
+				return 0; //Failed to get ID??
 		}
 	}
 
@@ -306,7 +292,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 
 	if (save_log)
 		ShowInfo("Saved guild (%d - %s):%s\n",g->guild_id,g->name,t_info);
-	return 0;
+	return 1;
 }
 
 // Read guild from sql
@@ -632,7 +618,7 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 
 
 // Read exp_guild.txt
-int inter_guild_ReadEXP()
+int inter_guild_ReadEXP(void)
 {
 	int i;
 	FILE *fp;
@@ -747,34 +733,13 @@ int inter_guild_CharOffline(int char_id, int guild_id) {
 }
 
 // Initialize guild sql
-int inter_guild_sql_init()
+int inter_guild_sql_init(void)
 {
-	int i;
-
 	//Initialize the guild cache
    guild_db_= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 
    //Read exp file
 	inter_guild_ReadEXP();
-	
-	//Set the new guild ID
-	sprintf (tmp_sql , "SELECT max(`guild_id`) FROM `%s`",guild_db);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		exit(0);
-	}
-
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if(sql_res) {
-   	sql_row = mysql_fetch_row(sql_res);
-   	if(sql_row[0]) {
-      	if((i = atoi(sql_row[0])) != 0) {
-      	   guild_newid = i+1;
-   	   }
-      }
-	   mysql_free_result(sql_res);
-   }
    
 	add_timer_func_list(guild_save_timer, "guild_save_timer");
 	add_timer(gettick() + 10000, guild_save_timer, 0, 0);
@@ -791,7 +756,7 @@ static int guild_db_final(DBKey key, void *data, va_list ap)
 	return 0;
 }
 
-void inter_guild_sql_final()
+void inter_guild_sql_final(void)
 {
 	guild_db_->destroy(guild_db_, guild_db_final);
 	return;
@@ -1226,13 +1191,7 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 	}
 	g = (struct guild *)aMalloc(sizeof(struct guild));
 	memset(g,0,sizeof(struct guild));
-	g->guild_id=guild_newid++;
-	if (inter_guild_fromsql(g->guild_id) != NULL) {
-		ShowWarning("mapif_parse_CreateGuild: New Guild ID [%d] already exists!\n", g->guild_id);
-		mapif_guild_created(fd,account_id,NULL);
-		aFree(g);
-		return 0;
-	}
+
 	memcpy(g->name,name,NAME_LENGTH);
 	memcpy(g->master,master->name,NAME_LENGTH);
 	memcpy(&g->member[0],master,sizeof(struct guild_member));
@@ -1248,10 +1207,17 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 	g->average_lv=master->lv;
 	for(i=0;i<MAX_GUILDSKILL;i++)
 		g->skill[i].id=i + GD_SKILLBASE;
-	//Add to cache
+	g->guild_id= -1; //Request to create guild.
+	if (!inter_guild_tosql(g,GS_BASIC|GS_POSITION|GS_SKILL)) {
+		//Failed to Create guild....
+		ShowError("Failed to create Guild %s (Guild Master: %s)\n", g->name, g->master);
+		mapif_guild_created(fd,account_id,NULL);
+		aFree(g);
+		return 0;
+	}
 	ShowInfo("Created Guild %d - %s (Guild Master: %s)\n", g->guild_id, g->name, g->master);
+	//Add to cache
 	idb_put(guild_db_, g->guild_id, g);
-	inter_guild_tosql(g,GS_BASIC|GS_POSITION|GS_SKILL); //Better save the whole guild right now.
 
 	// Report to client
 	mapif_guild_created(fd,account_id,g);

@@ -13,9 +13,6 @@
 #include "../common/showmsg.h"
 
 struct s_pet *pet_pt;
-static int pet_newid = 100;
-
-
 
 #ifndef SQL_DEBUG
 
@@ -32,8 +29,6 @@ int inter_pet_tosql(int pet_id, struct s_pet *p) {
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)
 	char t_name[NAME_LENGTH*2];
 
-//	ShowInfo("Saving pet (%d)...\n",pet_id);
-
 	jstrescapecpy(t_name, p->name);
 
 	if(p->hungry < 0)
@@ -44,30 +39,34 @@ int inter_pet_tosql(int pet_id, struct s_pet *p) {
 		p->intimate = 0;
 	else if(p->intimate > 1000)
 		p->intimate = 1000;
-	sprintf(tmp_sql,"SELECT * FROM `%s` WHERE `pet_id`='%d'",pet_db, pet_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0)
-		//row reside -> updating
+	if (pet_id == -1) //New pet.
+		sprintf(tmp_sql,"INSERT INTO `%s` "
+			"(`class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`) "
+			"VALUES ('%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+			pet_db, p->class_, t_name, p->account_id, p->char_id, p->level, p->egg_id,
+			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate);
+
+	else	//Update pet.
 		sprintf(tmp_sql, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%d',`equip`='%d',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incuvate`='%d' WHERE `pet_id`='%d'",
 			pet_db, p->class_, t_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate, p->pet_id);
-	else //no row -> insert
-		sprintf(tmp_sql,"INSERT INTO `%s` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`) VALUES ('%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			pet_db, pet_id, p->class_, t_name, p->account_id, p->char_id, p->level, p->egg_id,
-			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate);
-	mysql_free_result(sql_res) ; //resource free
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		return 0;
+	} else if (pet_id == -1) { //New pet inserted.
+		if(mysql_field_count(&mysql_handle) == 0 &&
+			mysql_insert_id(&mysql_handle) != 0) {
+			p->pet_id = pet_id = mysql_insert_id(&mysql_handle);
+		} else {
+			ShowError("inter_pet_tosql: Failed to retrieve new pet_id for '%s'. Pet creation aborted.\n", p->name);
+			return 0;
+		}
 	}
 
 	if (save_log)
 		ShowInfo("Pet saved %d - %s.\n", pet_id, p->name);
-	return 0;
+	return 1;
 }
 
 int inter_pet_fromsql(int pet_id, struct s_pet *p){
@@ -119,45 +118,12 @@ int inter_pet_fromsql(int pet_id, struct s_pet *p){
 }
 //----------------------------------------------
 
-int inter_pet_sql_init(){
-	int i;
-
+int inter_pet_sql_init(void){
 	//memory alloc
-	ShowDebug("interserver pet memory initialize.... (%d byte)\n",sizeof(struct s_pet));
 	pet_pt = (struct s_pet*)aCalloc(sizeof(struct s_pet), 1);
-
-	sprintf (tmp_sql , "SELECT count(*) FROM `%s`", pet_db);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		exit(0);
-	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	sql_row = mysql_fetch_row(sql_res);
-	ShowStatus("total pet data: '%s'\n",sql_row[0]);
-	i = atoi (sql_row[0]);
-	mysql_free_result(sql_res);
-
-	if (i > 0) {
-		//set pet_newid
-		sprintf (tmp_sql , "SELECT max(`pet_id`) FROM `%s`",pet_db );
-		if(mysql_query(&mysql_handle, tmp_sql) ) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-
-		sql_res = mysql_store_result(&mysql_handle) ;
-
-		sql_row = mysql_fetch_row(sql_res);
-		pet_newid = atoi (sql_row[0])+1; //should SET MAX existing PET ID + 1 [Lupus]
-		mysql_free_result(sql_res);
-	}
-
-	ShowDebug("set pet_newid: %d.\n",pet_newid);
-
 	return 0;
 }
-void inter_pet_sql_final(){
+void inter_pet_sql_final(void){
 	if (pet_pt) aFree(pet_pt);
 	return;
 }
@@ -233,7 +199,6 @@ int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short
 	short pet_equip, short intimate, short hungry, char rename_flag, char incuvate, char *pet_name){
 
 	memset(pet_pt, 0, sizeof(struct s_pet));
-	pet_pt->pet_id = pet_newid++;
 	memcpy(pet_pt->name, pet_name, NAME_LENGTH-1);
 	if(incuvate == 1)
 		pet_pt->account_id = pet_pt->char_id = 0;
@@ -259,9 +224,11 @@ int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short
 	else if(pet_pt->intimate > 1000)
 		pet_pt->intimate = 1000;
 
-	inter_pet_tosql(pet_pt->pet_id,pet_pt);
-
-	mapif_pet_created(fd, account_id, pet_pt);
+	pet_pt->pet_id = -1; //Signal NEW pet.
+	if (inter_pet_tosql(pet_pt->pet_id,pet_pt))
+		mapif_pet_created(fd, account_id, pet_pt);
+	else	//Failed...
+		mapif_pet_created(fd, account_id, NULL);
 
 	return 0;
 }

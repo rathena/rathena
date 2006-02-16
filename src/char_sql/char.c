@@ -127,7 +127,6 @@ int auth_fifo_pos = 0;
 
 int check_ip_flag = 1; // It's to check IP of a player between char-server and other servers (part of anti-hacking system)
 
-int char_id_count = START_CHAR_NUM;
 struct mmo_charstatus *char_dat;
 int char_num,char_max;
 int max_connect_user = 0;
@@ -1213,9 +1212,6 @@ int mmo_char_fromsql_short(int char_id, struct mmo_charstatus *p){
 }
 //==========================================================================================================
 int mmo_char_sql_init(void) {
-	int charcount;
-
-
 	ShowInfo("Begin Initializing.......\n");
 	char_db_= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA, sizeof(int));
 	// memory initialize
@@ -1225,44 +1221,11 @@ int mmo_char_sql_init(void) {
 	CREATE(char_dat, struct mmo_charstatus, 2);
 
 	memset(char_dat, 0, sizeof(struct mmo_charstatus)*2);
-
-	//Check for max id (in case new chars would get their IDs set below 150K) [Skotlex]
-	sprintf(tmp_sql , "SELECT max(`char_id`) FROM `%s`", char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	} else {
-		sql_res = mysql_store_result(&mysql_handle);
-		if (sql_res)
-		{
-			if (mysql_num_rows(sql_res) > 0 &&
-				(sql_row = mysql_fetch_row(sql_res)) != NULL &&
-				sql_row[0] != NULL && atoi(sql_row[0]) >= char_id_count)
-				char_id_count = 0;	//No need for setting the char id.
-			mysql_free_result(sql_res);
-		}
-	}
-
-	sprintf(tmp_sql, "SELECT `char_id` FROM `%s`", char_db);
-	if(mysql_query(&mysql_handle, tmp_sql)){
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}else{
-		sql_res = mysql_store_result(&mysql_handle);
-		if(sql_res){
-			charcount = (int)mysql_num_rows(sql_res);
-			ShowStatus("total char data -> '%d'.......\n", charcount);
-			mysql_free_result(sql_res);
-		}else{
-			ShowStatus("total char data -> '0'.......\n");
-		}
-	}
-
 	if(char_per_account == 0){
 	  ShowStatus("Chars per Account: 'Unlimited'.......\n");
-        }else{
-          ShowStatus("Chars per Account: '%d'.......\n", char_per_account);
-        }
+	}else{
+		ShowStatus("Chars per Account: '%d'.......\n", char_per_account);
+	}
 
 	//the 'set offline' part is now in check_login_conn ...
 	//if the server connects to loginserver
@@ -1440,15 +1403,7 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 
 	//New Querys [Sirius]
 	//Insert the char to the 'chardb' ^^
-	if (char_id_count) //Force initial char id. [Skotlex]
-		sprintf(tmp_sql, "INSERT INTO `%s` (`char_id`,`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
-			"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
-			"'%d', '%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-			char_db, char_id_count, sd->account_id , dat[30] , t_name, start_zeny, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29],
-			(40 * (100 + dat[26])/100) , (40 * (100 + dat[26])/100 ),  (11 * (100 + dat[27])/100), (11 * (100 + dat[27])/100), dat[33], dat[31],
-			mapindex_id2name(start_point.map), start_point.x, start_point.y, mapindex_id2name(start_point.map), start_point.x, start_point.y);
-	else
-		sprintf(tmp_sql, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
+	sprintf(tmp_sql, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 			"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 			"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 			char_db, sd->account_id , dat[30] , t_name, start_zeny, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29],
@@ -1459,51 +1414,19 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		return -2; //No, stop the procedure!
 	}
-
-	if (char_id_count) //Clear this out for future inserts.
-		char_id_count = 0;
-
 	//Now we need the charid from sql!
-	sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' AND `name` = '%s'", char_db, sd->account_id , dat[30] , t_name);
-	if(mysql_query(&mysql_handle, tmp_sql)){
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		//delete the char ..(no trash in DB!)
+	if(mysql_field_count(&mysql_handle) == 0 &&
+		mysql_insert_id(&mysql_handle) > 0)
+		char_id = mysql_insert_id(&mysql_handle);
+	else {
+		//delete the char ..(no trash in DB!) but how is this possible?
 		sprintf(tmp_sql, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' AND `name` = '%s'", char_db, sd->account_id, dat[30], t_name);
 		if(mysql_query(&mysql_handle, tmp_sql)){
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
 		return -2; //XD end of the (World? :P) .. charcreate (denied)
-	} else {
-		//query ok -> get the data!
-		sql_res = mysql_store_result(&mysql_handle);
-		if(sql_res){
-			sql_row = mysql_fetch_row(sql_res);
-			char_id = sql_row?atoi(sql_row[0]):0; //char id :)
-			mysql_free_result(sql_res);
-			if(char_id <= 0){
-				ShowError("failed (get char id..) CHARID (%d) wrong!\n", char_id);
-				sprintf(tmp_sql, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' AND `name` = '%s'", char_db, sd->account_id, dat[30], t_name);
-				if(mysql_query(&mysql_handle, tmp_sql)){
-					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-				}
-				return -2; //charcreate denied ..
-			}
-		}else{
-			//prevent to crash (if its false, and we want to free -> segfault :)
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			sprintf(tmp_sql, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' AND `name` = '%s'", char_db, sd->account_id, dat[30], t_name);
-			if(mysql_query(&mysql_handle, tmp_sql)){
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-			return -2; //end ...... -> charcreate failed :)
-		}
 	}
-
 	//Give the char the default items
 	//`inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
 	if (start_weapon > 0) { //add Start Weapon (Knife?)
@@ -1511,12 +1434,6 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 		if (mysql_query(&mysql_handle, tmp_sql)){
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			sprintf(tmp_sql, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' AND `name` = '%s'", char_db, sd->account_id, dat[30], t_name);
-			if(mysql_query(&mysql_handle, tmp_sql)){
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-			return -2;//end XD
 		}
 	}
 	if (start_armor > 0) { //Add default armor (cotton shirt?)
@@ -1524,17 +1441,6 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 		if (mysql_query(&mysql_handle, tmp_sql)){
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			sprintf(tmp_sql, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' AND `name` = '%s'", char_db, sd->account_id, dat[30], t_name);
-			if(mysql_query(&mysql_handle, tmp_sql)){
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-			sprintf(tmp_sql, "DELETE FROM `%s` WHERE `char_id` = '%d'", inventory_db, char_id);
-			if(mysql_query(&mysql_handle, tmp_sql)){
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-			return -2; //end....
 		}
 	}
 
