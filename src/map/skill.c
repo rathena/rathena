@@ -4335,14 +4335,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(sd->skilllv == 1)
-				if(!battle_config.skip_teleport_lv1_menu) // possibility to skip menu [LuzZza]
+			if(skilllv == 1) {
+				// possibility to skip menu [LuzZza]
+				if(!battle_config.skip_teleport_lv1_menu &&
+					sd->skillid == AL_TELEPORT) //If skillid is not teleport, this was auto-casted! [Skotlex]
 					clif_skill_warppoint(sd,skillid,"Random","","","");
 				else
 					pc_randomwarp(sd,3);
-			else {
-				clif_skill_warppoint(sd,skillid,"Random",
-					mapindex_id2name(sd->status.save_point.map),"","");
+			} else {
+				if (sd->skillid == AL_TELEPORT)
+					clif_skill_warppoint(sd,skillid,"Random",
+						mapindex_id2name(sd->status.save_point.map),"","");
+				else //Autocasted Teleport level 2??
+					pc_setpos(sd,sd->status.save_point.map,
+						sd->status.save_point.x,sd->status.save_point.y,3);
 			}
 		} else if(dstmd && !map[sd->bl.m].flag.monster_noteleport)
 			mob_warp(dstmd,-1,-1,-1,3);
