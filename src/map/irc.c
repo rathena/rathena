@@ -6,7 +6,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <ctype.h>
-#include <strings.h>
+#include <string.h>
 
 #include "../common/core.h"
 #include "../common/socket.h"
