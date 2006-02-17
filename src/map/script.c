@@ -9854,8 +9854,9 @@ void op_2str(struct script_state *st,int op,int sp1,int sp2)
 		break;
 	}
 
-	push_val(st->stack,C_INT,a);
-
+	// Because push_val() overwrite stack_data[sp1], C_STR on stack_data[sp1] won't be freed.
+	// So, call push_val() after freeing strings. [jA1783]
+	// push_val(st->stack,C_INT,a);
 	if(st->stack->stack_data[sp1].type==C_STR)
 	{
 		aFree(s1);
@@ -9866,6 +9867,7 @@ void op_2str(struct script_state *st,int op,int sp1,int sp2)
 		aFree(s2);
 		st->stack->stack_data[sp2].type=C_INT;
 	}
+	push_val(st->stack,C_INT,a);
 }
 /*==========================================
  * “ñ€‰‰Zq(”’l)

@@ -1927,7 +1927,7 @@ int parse_tologin(int fd) {
 		  {
 			int acc, sex;
 			unsigned char buf[16];
-
+			MYSQL_RES* sql_res2; //Needed because it is used inside inter_guild_CharOffline; [Skotlex]
 			acc = RFIFOL(fd,2);
 			sex = RFIFOB(fd,6);
 			RFIFOSKIP(fd, 7);
@@ -1937,9 +1937,9 @@ int parse_tologin(int fd) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 				}
-				sql_res = mysql_store_result(&mysql_handle);
+				sql_res2 = mysql_store_result(&mysql_handle);
 
-				while(sql_res && (sql_row = mysql_fetch_row(sql_res))) {
+				while(sql_res2 && (sql_row = mysql_fetch_row(sql_res2))) {
 						int char_id, guild_id, jobclass, skill_point, class_;
 						char_id = atoi(sql_row[0]);
 						jobclass = atoi(sql_row[1]);
@@ -1968,6 +1968,7 @@ int parse_tologin(int fd) {
 								while(( sql_row = mysql_fetch_row(sql_res))) {
 									skill_point += atoi(sql_row[0]);
 								}
+								mysql_free_result(sql_res);
 							}
 							sprintf(tmp_sql, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330'",skill_db, char_id);
 							if (mysql_query(&mysql_handle, tmp_sql)) {
@@ -1990,6 +1991,8 @@ int parse_tologin(int fd) {
 						if (guild_id)	//If there is a guild, update the guild_member data [Skotlex]
 							inter_guild_sex_changed(guild_id, acc, char_id, sex);
 					}
+					if (sql_res2)
+						mysql_free_result(sql_res2);
 				}
 				// disconnect player if online on char-server
 				for(i = 0; i < fd_max; i++) {
@@ -2348,6 +2351,7 @@ int parse_frommap(int fd) {
 					memcpy(WFIFOP(fd, 14+count*sizeof(struct status_change_data)), &data, sizeof(struct status_change_data));
 					count++;
 				}
+				mysql_free_result(sql_res);
 				if (count > 0)
 				{
 					WFIFOW(fd, 2) = 14 + count*sizeof(struct status_change_data);
@@ -2681,6 +2685,7 @@ int parse_frommap(int fd) {
 				if (acc != -1) {
 					WFIFOSET(fd, 34);
 				}
+				mysql_free_result(sql_res);
 			}
 		  }
 			RFIFOSKIP(fd, 44);
