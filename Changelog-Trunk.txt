@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/17
+	* Added an upgrade_svn file that should fix the party table by making the
+	  party_id auto-incremental. Apply this or new parties will always fail!
+	  [Skotlex]
 	* Changed around the included files in irc.c to see if it compiles under
 	  Win32 native. [Skotlex]
 	* Char-SQL server updates: [Skotlex]
