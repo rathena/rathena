@@ -4327,7 +4327,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case AL_TELEPORT:			/* テレポ?ト */
 		if(sd) {
-			if (map[sd->bl.m].flag.noteleport) {	/* テレポ禁止 */
+			if (map[bl->m].flag.noteleport) {	/* テレポ禁止 */
 				clif_skill_teleportmessage(sd,0);
 				break;
 			}
@@ -4351,7 +4351,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					pc_setpos(sd,sd->status.save_point.map,
 						sd->status.save_point.x,sd->status.save_point.y,3);
 			}
-		} else if(dstmd && !map[sd->bl.m].flag.monster_noteleport)
+		} else if(dstmd && !map[bl->m].flag.monster_noteleport)
 			mob_warp(dstmd,-1,-1,-1,3);
 		break;
 
