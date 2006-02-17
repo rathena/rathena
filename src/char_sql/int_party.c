@@ -170,18 +170,19 @@ struct party *inter_party_fromsql(int party_id)
 	}
 
 	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res != NULL && mysql_num_rows(sql_res) > 0) {
-		sql_row = mysql_fetch_row(sql_res);
-		p->party_id = party_id;
-		memcpy(p->name, sql_row[1], NAME_LENGTH-1);
-		p->exp = atoi(sql_row[2])?1:0;
-		p->item = atoi(sql_row[3]);
-		leader_id = atoi(sql_row[4]);
-		leader_char = atoi(sql_row[5]);
-	} else {
+	if (!sql_res)
+		return NULL;
+	sql_row = mysql_fetch_row(sql_res);
+	if (!sql_row) {
 		mysql_free_result(sql_res);
 		return NULL;
 	}
+	p->party_id = party_id;
+	memcpy(p->name, sql_row[1], NAME_LENGTH-1);
+	p->exp = atoi(sql_row[2])?1:0;
+	p->item = atoi(sql_row[3]);
+	leader_id = atoi(sql_row[4]);
+	leader_char = atoi(sql_row[5]);
 	mysql_free_result(sql_res);
 
 	// Load members
@@ -193,7 +194,7 @@ struct party *inter_party_fromsql(int party_id)
 		return NULL;
 	}
 	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res != NULL && mysql_num_rows(sql_res) > 0) {
+	if (sql_res) {
 		int i;
 		for (i = 0; (sql_row = mysql_fetch_row(sql_res)); i++) {
 			struct party_member *m = &p->member[i];
@@ -205,8 +206,8 @@ struct party *inter_party_fromsql(int party_id)
 			m->map = mapindex_name2id(sql_row[4]);
 			m->online = atoi(sql_row[5])?1:0;
 		}
+		mysql_free_result(sql_res);
 	}
-	mysql_free_result(sql_res);
 
 	if (save_log)
 		ShowInfo("Party loaded (%d - %s).\n",party_id, p->name);

@@ -80,7 +80,7 @@ int storage_fromsql(int account_id, struct storage *p){
 	sql_res = mysql_store_result(&mysql_handle) ;
 
 	if (sql_res) {
-		while((sql_row = mysql_fetch_row(sql_res))) {	//start to fetch
+		while((sql_row = mysql_fetch_row(sql_res)) && i<MAX_STORAGE) {	//start to fetch
 			p->storage_[i].id= atoi(sql_row[0]);
 			p->storage_[i].nameid= atoi(sql_row[1]);
 			p->storage_[i].amount= atoi(sql_row[2]);
@@ -90,8 +90,9 @@ int storage_fromsql(int account_id, struct storage *p){
 			p->storage_[i].attribute= atoi(sql_row[6]);
 			for (j=0; j<MAX_SLOTS; j++)
 				p->storage_[i].card[j]= atoi(sql_row[7+j]);
-			p->storage_amount = ++i;
+			i++;
 		}
+		p->storage_amount = i;
 		mysql_free_result(sql_res);
 	}
 
@@ -154,7 +155,7 @@ int guild_storage_fromsql(int guild_id, struct guild_storage *p){
 	sql_res = mysql_store_result(&mysql_handle) ;
 
 	if (sql_res) {
-		while((sql_row = mysql_fetch_row(sql_res))) {	//start to fetch
+		while((sql_row = mysql_fetch_row(sql_res)) && i < MAX_GUILD_STORAGE) {	//start to fetch
 			p->storage_[i].id= atoi(sql_row[0]);
 			p->storage_[i].nameid= atoi(sql_row[1]);
 			p->storage_[i].amount= atoi(sql_row[2]);
@@ -164,10 +165,9 @@ int guild_storage_fromsql(int guild_id, struct guild_storage *p){
 			p->storage_[i].attribute= atoi(sql_row[6]);
 			for (j=0; j<MAX_SLOTS; j++)
 				p->storage_[i].card[j] = atoi(sql_row[7+j]);
-			p->storage_amount = ++i;
-			if (i >= MAX_GUILD_STORAGE)
-				break;
+			i++;
 		}
+		p->storage_amount = i;
 		mysql_free_result(sql_res);
 	}
 	ShowInfo ("guild storage load complete from DB - id: %d (total: %d)\n", guild_id, p->storage_amount);

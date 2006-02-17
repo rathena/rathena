@@ -381,8 +381,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 		return NULL;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
-		int i;
+	if (sql_res) {
 		for(i=0;((sql_row = mysql_fetch_row(sql_res))&&i<g->max_member);i++){
 			struct guild_member *m = &g->member[i];
 			m->account_id=atoi(sql_row[1]);
@@ -402,8 +401,8 @@ struct guild * inter_guild_fromsql(int guild_id)
 
 			strncpy(m->name,sql_row[14],NAME_LENGTH-1);
 		}
+		mysql_free_result(sql_res);
 	}
-	mysql_free_result(sql_res);
 
 	//printf("- Read guild_position %d from sql \n",guild_id);
 	sprintf(tmp_sql,"SELECT `guild_id`,`position`,`name`,`mode`,`exp_mode` FROM `%s` WHERE `guild_id`='%d'",guild_position_db, guild_id);
@@ -415,8 +414,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 		return NULL;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
-		int i;
+	if (sql_res) {
 		for(i=0;((sql_row = mysql_fetch_row(sql_res))&&i<MAX_GUILDPOSITION);i++){
 			int position = atoi(sql_row[1]);
 			struct guild_position *p = &g->position[position];
@@ -424,8 +422,8 @@ struct guild * inter_guild_fromsql(int guild_id)
 			p->mode=atoi(sql_row[3]);
 			p->exp_mode=atoi(sql_row[4]);
 		}
+		mysql_free_result(sql_res);
 	}
-	mysql_free_result(sql_res);
 
 	//printf("- Read guild_alliance %d from sql \n",guild_id);
 	sprintf(tmp_sql,"SELECT `guild_id`,`opposition`,`alliance_id`,`name` FROM `%s` WHERE `guild_id`='%d'",guild_alliance_db, guild_id);
@@ -436,16 +434,15 @@ struct guild * inter_guild_fromsql(int guild_id)
 		return NULL;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
-		int i;
+	if (sql_res) {
 		for(i=0;((sql_row = mysql_fetch_row(sql_res))&&i<MAX_GUILDALLIANCE);i++){
 			struct guild_alliance *a = &g->alliance[i];
 			a->opposition=atoi(sql_row[1]);
 			a->guild_id=atoi(sql_row[2]);
 			strncpy(a->name,sql_row[3],NAME_LENGTH-1);
 		}
+		mysql_free_result(sql_res);
 	}
-	mysql_free_result(sql_res);
 
 	//printf("- Read guild_expulsion %d from sql \n",guild_id);
 	sprintf(tmp_sql,"SELECT `guild_id`,`name`,`mes`,`acc`,`account_id`,`rsv1`,`rsv2`,`rsv3` FROM `%s` WHERE `guild_id`='%d'",guild_expulsion_db, guild_id);
@@ -456,8 +453,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 		return NULL;
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
-		int i;
+	if (sql_res) {
 		for(i=0;((sql_row = mysql_fetch_row(sql_res))&&i<MAX_GUILDEXPLUSION);i++){
 			struct guild_explusion *e = &g->explusion[i];
 
@@ -470,8 +466,8 @@ struct guild * inter_guild_fromsql(int guild_id)
 			e->rsv2=atoi(sql_row[6]);
 			e->rsv3=atoi(sql_row[7]);
 		}
+		mysql_free_result(sql_res);
 	}
-	mysql_free_result(sql_res);
 
 	//printf("- Read guild_skill %d from sql \n",guild_id);
 	sprintf(tmp_sql,"SELECT `guild_id`,`id`,`lv` FROM `%s` WHERE `guild_id`='%d' ORDER BY `id`",guild_skill_db, guild_id);
@@ -488,15 +484,15 @@ struct guild * inter_guild_fromsql(int guild_id)
 	}
 
 	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
+	if (sql_res) {
 		while ((sql_row = mysql_fetch_row(sql_res))){
 			int id = atoi(sql_row[1])-GD_SKILLBASE;
 			if (id >= 0 && id < MAX_GUILDSKILL)
 			//I know this seems ridiculous, but the skills HAVE to be placed on their 'correct' array slot or things break x.x [Skotlex]
 				g->skill[id].lv=atoi(sql_row[2]);
 		}
+		mysql_free_result(sql_res);
 	}
-	mysql_free_result(sql_res);
 
 	idb_put(guild_db_, guild_id, g); //Add to cache
 	g->save_flag |= GS_REMOVE; //But set it to be removed, in case it is not needed for long.
@@ -1129,7 +1125,7 @@ int mapif_guild_castle_alldataload(int fd) {
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 	}
 	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res != NULL && mysql_num_rows(sql_res) > 0) {
+	if (sql_res) {
 		for(i = 0; ((sql_row = mysql_fetch_row(sql_res)) && i < MAX_GUILDCASTLE); i++) {
 			memset(gc, 0, sizeof(struct guild_castle));
 			gc->castle_id = atoi(sql_row[0]);
@@ -1161,8 +1157,8 @@ int mapif_guild_castle_alldataload(int fd) {
 			memcpy(WFIFOP(fd,len), gc, sizeof(struct guild_castle));
 			len += sizeof(struct guild_castle);
 		}
+		mysql_free_result(sql_res);
 	}
-	mysql_free_result(sql_res);
 	WFIFOW(fd,2) = len;
 	WFIFOSET(fd,len);
 	

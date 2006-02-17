@@ -348,7 +348,7 @@ static void* create_charstatus(DBKey key, va_list args) {
 }
 
 int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
-	int i=0,j,party_exist,guild_exist;
+	int i=0,j;
 	int count = 0;
 	int diff = 0;
 	char *tmp_ptr; //Building a single query should be more efficient than running
@@ -430,38 +430,6 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		(p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom)
 	)
 	{	//Save status
-		//Check for party
-		party_exist=1;
-		sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `party_id` = '%d'",party_db, p->party_id); // TBR
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		} else { //In case of failure, don't touch the data. [Skotlex
-			sql_res = mysql_store_result(&mysql_handle);
-			sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
-			if (sql_row)
-				party_exist = atoi(sql_row[0]);
-			mysql_free_result(sql_res);
-		}
-
-		//check guild_exist
-		guild_exist=1;
-		sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `guild_id` = '%d'",guild_db, p->guild_id); // TBR
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		} else { //If we fail to confirm, don't touch the data.
-			sql_res = mysql_store_result(&mysql_handle);
-			sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
-			if (sql_row)
-				guild_exist = atoi(sql_row[0]);
-			mysql_free_result(sql_res);
-		}
-		
-		if (guild_exist==0) p->guild_id=0;
-		if (party_exist==0) p->party_id=0;
-
-		//query
 		sprintf(tmp_sql ,"UPDATE `%s` SET `base_level`='%d', `job_level`='%d',"
 			"`base_exp`='%u', `job_exp`='%u', `zeny`='%d',"
 			"`max_hp`='%d',`hp`='%d',`max_sp`='%d',`sp`='%d',`status_point`='%d',`skill_point`='%d',"
@@ -953,18 +921,13 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 		p->partner_id = atoi(sql_row[20]); p->father = atoi(sql_row[21]); p->mother = atoi(sql_row[22]); p->child = atoi(sql_row[23]);
 		p->fame = atoi(sql_row[24]);
 
-		//free mysql result.
-		mysql_free_result(sql_res);
 		strcat (t_msg, " status2");
 	} else
 		ShowError("Char load failed (%d - table %s)\n", char_id, char_db);	//Error?! ERRRRRR WHAT THAT SAY!?
-/* We shouldn't need this at all! [Skotlex]
-	if (p->last_point.x == 0 || p->last_point.y == 0 || p->last_point.map == 0)
-		memcpy(&p->last_point, &start_point, sizeof(start_point));
+	//free mysql result.
+	if (sql_res)
+		mysql_free_result(sql_res);
 
-	if (p->save_point.x == 0 || p->save_point.y == 0 || p->save_point.map == 0)
-		memcpy(&p->save_point, &start_point, sizeof(start_point));
-*/
 	//read memo data
 	//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
 	sprintf(tmp_sql, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`='%d' ORDER by `memo_id`",memo_db, char_id); // TBR
@@ -1032,7 +995,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 	sql_res = mysql_store_result(&mysql_handle);
 	if (sql_res) {
 		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++){
-		        p->cart[i].id = atoi(sql_row[0]);
+			p->cart[i].id = atoi(sql_row[0]);
 			p->cart[i].nameid = atoi(sql_row[1]);
 			p->cart[i].amount = atoi(sql_row[2]);
 			p->cart[i].equip = atoi(sql_row[3]);
@@ -1150,6 +1113,7 @@ int mmo_char_fromsql_short(int char_id, struct mmo_charstatus *p){
 		if (!sql_row)
 		{	//Just how does this happens? [Skotlex]
 			ShowError("Requested non-existant character id: %d!\n", char_id);
+		   mysql_free_result(sql_res); 
 			return 0;	
 		}
 		p->char_id = char_id;
@@ -1199,14 +1163,14 @@ int mmo_char_fromsql_short(int char_id, struct mmo_charstatus *p){
 		p->weapon = atoi(sql_row[6]);	p->shield = atoi(sql_row[7]);
 		p->head_top = atoi(sql_row[8]);	p->head_mid = atoi(sql_row[9]);	p->head_bottom = atoi(sql_row[10]);
 
-		//free mysql result.
-		mysql_free_result(sql_res);
 		strcat (t_msg, " status2");
 	} else
 		ShowError("Char load failed (%d - table %s)\n", char_id, char_db);	//Error?! ERRRRRR WHAT THAT SAY!?
-
-	if (save_log)
-		ShowInfo("Quick Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
+	//free mysql result.
+	if (sql_res)
+		mysql_free_result(sql_res);
+//	if (save_log) //Too much spam :/
+//		ShowInfo("Quick Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
 
 	return 1;
 }
@@ -1474,6 +1438,8 @@ int delete_char_sql(int char_id, int partner_id)
 	if (sql_res == NULL || sql_row == NULL)
 	{
 		ShowError("delete_char_sql: Unable to fetch character data, deletion aborted.\n");
+		if (sql_res)
+			mysql_free_result(sql_res);
 		return -1;
 	}
 	strncpy(char_name, sql_row[0], NAME_LENGTH);
@@ -1698,7 +1664,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	WFIFOW(fd, 2) = offset + found_num * 106;
 
 	if (save_log)
-		ShowInfo("Request Char Data ("CL_BOLD"%d"CL_RESET"):\n",sd->account_id);
+		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
 	for(i = 0; i < found_num; i++) {
 		mmo_char_fromsql_short(sd->found_char[i], char_dat);
@@ -1927,7 +1893,7 @@ int parse_tologin(int fd) {
 		  {
 			int acc, sex;
 			unsigned char buf[16];
-			MYSQL_RES* sql_res2; //Needed because it is used inside inter_guild_CharOffline; [Skotlex]
+			MYSQL_RES* sql_res2;
 			acc = RFIFOL(fd,2);
 			sex = RFIFOB(fd,6);
 			RFIFOSKIP(fd, 7);
@@ -2760,8 +2726,8 @@ int parse_frommap(int fd) {
 					if (++num == 10)
 						break;
 				}
+   			mysql_free_result(sql_res);
 			}
-   		mysql_free_result(sql_res);
 			WBUFW(buf, 6) = len; //Blacksmith block size
 
 			num = 0;
@@ -2781,8 +2747,8 @@ int parse_frommap(int fd) {
 					if (++num == 10)
 						break;
 				}
+				mysql_free_result(sql_res);
 			}
-			mysql_free_result(sql_res);
 			WBUFW(buf, 4) = len; //Alchemist block size
 
 			num = 0;
@@ -2802,8 +2768,8 @@ int parse_frommap(int fd) {
 					if (++num == 10)
 						break;
 				}
+				mysql_free_result(sql_res);
 			}
-			mysql_free_result(sql_res);
 			WBUFW(buf, 2) = len; //Total packet length
 
 			mapif_sendall(buf, len);
@@ -3080,7 +3046,9 @@ int parse_char(int fd) {
 			
 			if (sql_row)
 			{
-				mmo_char_fromsql(atoi(sql_row[0]), char_dat);
+				int char_id = atoi(sql_row[0]);
+				mysql_free_result(sql_res); //Free'd as soon as possible
+				mmo_char_fromsql(char_id, char_dat);
 				char_dat[0].sex = sd->sex;
 			} else {
 				mysql_free_result(sql_res);
