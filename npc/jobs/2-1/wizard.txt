@@ -85,7 +85,7 @@ L_JobMage:
 		menu "Yes, please continue.",sM_0, "No, it's ok.",sM_1, "A talking dog......",sM_2;
 
 		sM_0:
-			mes "Maria]";
+			mes "[Maria]";
 			mes "Ok then.  Let me explain the process for becoming a Wizard to you....";
 			next;
 			mes "[Maria]";

@@ -5,7 +5,7 @@
 //= eAthena Dev Team
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //===== Current Version: ===================================== 
-//= 3.2
+//= 4.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -27,6 +27,8 @@
 //= 3.0 Added special "not working teleport menu" for Einbroch Kafras [Lupus]
 //= 3.1 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 3.2 Fixed an exploit [Lupus]
+//= 4.0 Added Kafra storage password protection. [Lupus]
+//=	to block Kafra Password, read comments at 350 line
 //============================================================ 
 
 
@@ -129,6 +131,9 @@ function	script	F_KafStor	{
 	mes "[Kafra]";
 	mes "Close this window to open your storage.";
 	mes "We hope to see you again soon.";
+
+	callfunc("F_CheckKafCode");	//check your storage password, if set
+
 	close2;
 	openstorage;
 	cutin "", 255;
@@ -343,7 +348,9 @@ function	script	F_KafPass	{
 function	script	F_KafInfo	{
 
 	sM_Menu:
-	if(getarg(0) == 0) menu "-Special Reserve Check",sM_ResChk, "-Kafra Locations",sM_KafLoc, "-Cancel",sM_End;
+//Uncomment next line to block Kafra Storage Protection
+//	if(getarg(0) == 0) menu "-Special Reserve Check",sM_ResChk, "-Kafra Locations",sM_KafLoc, "-Cancel",sM_End;
+	if(getarg(0) == 0) menu "-Special Reserve Check",sM_ResChk, "-Storage Password Service",sM_KafPassword, "-Kafra Locations",sM_KafLoc, "-Cancel",sM_End;
 
 	sM_ResChk:
 		mes "[Kafra]";
@@ -371,6 +378,10 @@ function	script	F_KafInfo	{
 		viewpoint 2,@viewpX[2],@viewpY[2],3,0xFF00FF;
 		viewpoint 2,@viewpX[3],@viewpY[3],4,0xFF00FF;
 		goto sM_Menu;
+
+	sM_KafPassword:
+		callfunc("F_SetKafCode");
+
 	sM_End:
 		return;
 }
@@ -390,4 +401,125 @@ function	script	F_KafEnd	{
 	emotion 15;
 	close;
 	end;
+}
+
+// Check Storage Password Function ====================
+function	script	F_CheckKafCode	{
+	if(#kafra_code==0) return;
+	mes "Enter your storage password:";
+	set @code_,0;
+	input @code_;
+	if(@code_ != #kafra_code-getcharid(3)-1337) {
+		dispbottom "Wrong storage password.";
+		close2;
+		cutin "",255;
+		close;
+	}
+	set @kafcode_try,0;
+	set @code_,0;
+	return;
+}
+
+// Set / Change / Clear Storage Password Function ====================
+function	script	F_SetKafCode	115,{
+	mes "[Kafra]";
+	if(#kafra_code) {
+		mes "Your storage is protected with a password. What would you do now?";
+		next;
+		menu "Change old password -> 5000z",-,
+		"Remove storage password -> 1000z",M_CLEAR,
+		"Cancel",M_END;
+	} else {
+		mes "Kafra Services proudly presents you a new service:";
+		mes "Additional storage protection with a password.";
+		next;
+		menu "Set new password -> 5000z",M_SET,
+		"Cancel",M_END;
+	}
+
+	mes "[Kafra]";
+	mes "At first, please enter your ^0000FFold password^000000.";
+	set @code,callfunc("F_EntKafCode");
+	if(@code==0 || @code != #kafra_code-getcharid(3)-1337) {
+		mes "Wrong password. You can't set a new password.";
+		emotion e_hmm;
+		goto M_END;
+	}
+	next;
+
+M_SET:
+	mes "[Kafra]";
+	mes "Now enter your ^FF0000new password^000000 to protect your storage from thieves.";
+	set @code,callfunc("F_EntKafCode");
+	if(@code==0) {
+		mes "The password hasn't been changed.";
+		emotion e_hmm;
+		goto M_END;
+	}
+	next;
+	mes "[Kafra]";
+	if(Zeny < 5000) goto L_ZENY;
+	set Zeny,Zeny-5000;
+	set RESRVPTS, RESRVPTS + (5000/50);
+
+	set #kafra_code,@code+getcharid(3)+1337;
+	mes "You've protected your storage with a secret password.";
+	mes "Thank you for using Kafra Services.";
+	emotion e_thx;
+	goto M_END;	
+
+M_CLEAR:
+	mes "[Kafra]";
+	mes "Please, enter your password before its removal.";
+	set @code,callfunc("F_EntKafCode");
+	if(@code==0) {
+		mes "The password hasn't been removed.";
+		emotion e_hmm;
+		goto M_END;
+	}
+	next;
+	mes "[Kafra]";
+	if(Zeny < 1000) goto L_ZENY;
+	set Zeny,Zeny-1000;
+	set RESRVPTS, RESRVPTS + (1000/50);
+	if(@code == #kafra_code-getcharid(3)-1337) {
+		set #kafra_code,0;
+		mes "You've successfully cleared your storage password.";
+		mes "Thank you for using Kafra Services.";
+		emotion e_thx;
+	} else {
+		mes "Wrong password. We won't return your 1000z.";
+		mes "Please, next time enter correct password.";
+		emotion e_sry;
+	}
+	goto M_END;	
+
+L_ZENY:
+	mes "You don't have enough zeny.";
+	emotion e_cash;
+M_END:
+	close2;
+	cutin "",255;
+	close;
+}
+
+// Basic Password Validation Function ====================
+function	script	F_EntKafCode	{
+	mes "Enter a number 1000~10000000:";
+	set @code_,0;
+	set @kafcode_try,@kafcode_try+1;
+	if(@kafcode_try>10) {
+		set @kafcode_try,0;
+		logmes "Hack: Tried to fit storage password.";
+	}
+	input @code_;
+	if(@code_<1000) {
+		mes "You shouldn't use such short password.";
+		return 0;
+	}
+	if(@code_>10000000) {
+		mes "You can't use such big password.";
+		return 0;
+	}
+	return @code_;
 }
