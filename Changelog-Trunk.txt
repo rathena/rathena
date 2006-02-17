@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/17
+	* Applied the suggested fixes by Joshuaali to fix the compiling of the sql
+	  map server on Win32 systems. [Skotlex]
+	- note that irc.c is still uncompilable, but the rest "should be fine" now.
 	* Fixed the memory leak on opt_2str as pointed out by End of Exam [Skotlex]
 	* Fixed a few char SQL memory leaks as pointed out by End of Exam [Skotlex]
 2006/02/16

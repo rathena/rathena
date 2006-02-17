@@ -65,9 +65,11 @@ typedef unsigned int	uint;	// don't use
 typedef   signed long	slong;	// don't use (only for ie. file-io)
 typedef unsigned long	ulong;	// don't use
 
+#ifndef WIN32
 typedef char*           pchar;
-typedef const char*     cchar;
 typedef unsigned char*	puchar;
+#endif
+typedef const char*     cchar;
 typedef void*			ptr;
 typedef int*			pint;
 
