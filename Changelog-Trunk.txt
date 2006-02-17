@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 2006/02/16
+	* Now you can't close-confine and already confined mob. [Skotlex]
+	* mysql/my_global.h now includes winnt.h under Windows systems... [Skotlex]
+	* Some code cleanup of status.c [Skotlex]
+	* Removed the check that prevented mobs from walking into a basilica. [Skotlex]
 	* Added a new column in the skill_db to specify the
 	  splash-range/area-of-effect of skills.  (Work in progress) [Skotlex]
 	* Autocasted AL_TELEPORT should now automatically pick menu entry rather

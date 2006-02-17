@@ -501,6 +501,7 @@ typedef float	pfloat;		/* Mixed prototypes can take float */
 //...but what do we do about Win9X ones? [Skotlex]
 //typedef int	pchar;		/* Mixed prototypes can't take char */
 //typedef uint	puchar;		/* Mixed prototypes can't take char */
+#include <winnt.h>
 typedef int	pbool;		/* Mixed prototypes can't take char */
 typedef int	pshort;		/* Mixed prototypes can't take short int */
 typedef double	pfloat;		/* Mixed prototypes can't take float */

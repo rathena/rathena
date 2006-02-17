@@ -545,11 +545,6 @@ static int mob_walk(struct mob_data *md,unsigned int tick,int data)
 		dx = dirx[md->dir];
 		dy = diry[md->dir];
 
-		if (map_getcell(md->bl.m,x+dx,y+dy,CELL_CHKBASILICA) && !(status_get_mode(&md->bl)&MD_BOSS)) {
-			mob_stop_walking(md,1);
-			return 0;
-		}
-
 		if (map_getcell(md->bl.m,x+dx,y+dy,CELL_CHKNOPASS)) {
 			mob_walktoxy_sub(md);
 			return 0;
@@ -911,10 +906,6 @@ static int mob_walktoxy_sub(struct mob_data *md)
 		return 1;	
 	x = md->bl.x+dirx[wpd.path[0]];
 	y = md->bl.y+diry[wpd.path[0]];
-	if (map_getcell(md->bl.m,x,y,CELL_CHKBASILICA) && !(status_get_mode(&md->bl)&MD_BOSS)) {
-		md->state.change_walk_target=0;
-		return 1;
-	}
 
 	memcpy(&md->walkpath,&wpd,sizeof(wpd));
 

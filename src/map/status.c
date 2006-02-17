@@ -3627,6 +3627,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_BLEEDING:
 			case SC_DPOISON:
 			case SC_COMBO: //You aren't supposed to change the combo (and it gets turned off when you trigger it)
+			case SC_CLOSECONFINE2: //Can't be re-closed in.
 				return 0;
 			case SC_DANCING:
 			case SC_DEVOTION:
@@ -3669,7 +3670,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					tick = 60*1000;
 				if (sd && sd->status.hp<sd->status.max_hp>>2 &&
 					(sc->data[SC_PROVOKE].timer==-1 || sc->data[SC_PROVOKE].val2==0))
-					status_change_start(bl,SC_PROVOKE,10,10000,1,0,0,0,0);
+					status_change_start(bl,SC_PROVOKE,10,100,1,0,0,0,0);
 			}
 			break;
 		
@@ -4048,7 +4049,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					for (i = 0; i < 5; i++)
 					{	//Pass the status to the other affected chars. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(&tsd->bl,SC_AUTOGUARD,10000,val1,val2,0,0,tick,1);
+							status_change_start(&tsd->bl,SC_AUTOGUARD,100,val1,val2,0,0,tick,1);
 					}
 			}
 			break;
@@ -4064,7 +4065,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					for (i = 0; i < 5; i++)
 					{	//See if there are devoted characters, and pass the status to them. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(&tsd->bl,SC_DEFENDER,10000,val1,val2,0,0,tick,1);
+							status_change_start(&tsd->bl,SC_DEFENDER,100,val1,val2,0,0,tick,1);
 					}
 			}
 			break;
@@ -4089,7 +4090,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_JOINTBEAT: // Random break [DracoRPG]
 			calc_flag = 1;
 			val2 = rand()%6;
-			if (val2 == 5) status_change_start(bl,SC_BLEEDING,10000,val1,0,0,0,skill_get_time2(type,val1),0);
+			if (val2 == 5) status_change_start(bl,SC_BLEEDING,100,val1,0,0,0,skill_get_time2(StatusSkillChangeTable[type],val1),0);
 			break;
 
 		case SC_BERSERK:		/* バ?サ?ク */
@@ -4196,14 +4197,16 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			{	//Try to inherit the status from the Crusader [Skotlex]
 			//Ideally, we should calculate the remaining time and use that, but we'll trust that
 			//once the Crusader's status changes, it will reflect on the others. 
-				if (src->sc.data[SC_AUTOGUARD].timer != -1)
-					status_change_start(bl,SC_AUTOGUARD,10000,
-						src->sc.data[SC_AUTOGUARD].val1,0,0,0,
-						skill_get_time(CR_AUTOGUARD,src->sc.data[SC_AUTOGUARD].val1),0);
-				if (src->sc.data[SC_DEFENDER].timer != -1)
-					status_change_start(bl,SC_DEFENDER,10000,
-						src->sc.data[SC_DEFENDER].val1,0,0,0,
-						skill_get_time(CR_DEFENDER,src->sc.data[SC_DEFENDER].val1),0);
+				int type2 = SC_AUTOGUARD;
+				if (src->sc.data[type2].timer != -1)
+					status_change_start(bl,type2,100,
+						src->sc.data[type2].val1,0,0,0,
+						skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1),0);
+				type2 = SC_DEFENDER;
+				if (src->sc.data[type2].timer != -1)
+					status_change_start(bl,type2,100,
+						src->sc.data[type2].val1,0,0,0,
+						skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1),0);
 			}
 			break;
 		}
@@ -4227,9 +4230,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				struct status_change *sc2 = src?status_get_sc(src):NULL;
 				if (src && sc2 && sc2->count) {
 					if (sc2->data[SC_CLOSECONFINE].timer == -1) //Start lock on caster.
-						status_change_start(src,SC_CLOSECONFINE,10000,1,0,0,0,tick+1000,0);
+						status_change_start(src,SC_CLOSECONFINE,100,sc->data[type].val1,1,0,0,tick+1000,0);
 					else { //Increase count of locked enemies and refresh time.
-						sc2->data[SC_CLOSECONFINE].val1++;
+						sc2->data[SC_CLOSECONFINE].val2++;
 						delete_timer(sc2->data[SC_CLOSECONFINE].timer, status_change_timer);
 						sc2->data[SC_CLOSECONFINE].timer = add_timer(gettick()+tick+1000, status_change_timer, src->id, SC_CLOSECONFINE);
 					}
@@ -4790,7 +4793,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					DIFF_TICK(gettick(), sc->data[type].val4) <= 1000 &&
 					(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
 				)
-					status_change_start(bl,SC_SPURT,10000,sc->data[type].val1,0,0,0,skill_get_time2(TK_RUN, sc->data[type].val1),0);
+					status_change_start(bl,SC_SPURT,100,sc->data[type].val1,0,0,0,skill_get_time2(StatusSkillChangeTable[type], sc->data[type].val1),0);
 				calc_flag = 1;
 			break;
 			case SC_AUTOBERSERK:
@@ -4895,8 +4898,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				}
 				break;
 			case SC_CLOSECONFINE:
-				if (sc->data[type].val1 > 0) { //Caster has been unlocked... nearby chars need to be unlocked.
-					int range = 2*skill_get_range2(bl, RG_CLOSECONFINE, 1);
+				if (sc->data[type].val2 > 0) { //Caster has been unlocked... nearby chars need to be unlocked.
+					int range = 2*skill_get_range2(bl, StatusSkillChangeTable[type], sc->data[type].val1);
 					map_foreachinarea(status_change_timer_sub, 
 						bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,bl,sc,type,gettick());
 				}
@@ -5135,14 +5138,14 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	case SC_CHASEWALK:
 		if(sd){
-			int sp = 10+sc->data[SC_CHASEWALK].val1*2;
+			int sp = 10+sc->data[type].val1*2;
 			if (map_flag_gvg(sd->bl.m)) sp *= 5;
 			if (pc_damage_sp(sd, sp, 0) > 0) {
-				if ((++sc->data[SC_CHASEWALK].val4) == 1) {
-					status_change_start(bl, SC_INCSTR,10000,
-						1<<(sc->data[SC_CHASEWALK].val1-1), 0, 0, 0,
+				if ((++sc->data[type].val4) == 1) {
+					status_change_start(bl, SC_INCSTR,100,
+						1<<(sc->data[type].val1-1), 0, 0, 0,
 						(sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_ROGUE?10:1) //SL bonus -> x10 duration
-						*skill_get_time2(ST_CHASEWALK,sc->data[SC_CHASEWALK].val1), 0);
+						*skill_get_time2(StatusSkillChangeTable[type],sc->data[type].val1), 0);
 				}
 				sc->data[type].timer = add_timer( /* タイマ?再設定 */
 					sc->data[type].val2+tick, status_change_timer, bl->id, data);
@@ -5170,7 +5173,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_RUWACH:	/* ルアフ */
 	case SC_SIGHTBLASTER:
 		{
-			int range = skill_get_range2(bl, type==SC_SIGHT?MG_SIGHT:(type==SC_RUWACH?AL_RUWACH:WZ_SIGHTBLASTER), sc->data[type].val1);
+			int range = skill_get_range2(bl,StatusSkillChangeTable[type], sc->data[type].val1);
 			map_foreachinarea( status_change_timer_sub,
 				bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,
 				bl,sc,type,tick);
