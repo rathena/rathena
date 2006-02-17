@@ -1,12 +1,25 @@
+#include <ctype.h>
+#include <string.h>
+
+#ifdef __WIN32
+#define __USE_W32_SOCKETS
+#include <windows.h>
+#include <io.h>
+typedef int socklen_t;
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/time.h>
-#include <sys/ioctl.h>
-#include <arpa/inet.h>
-#include <netdb.h>
 #include <unistd.h>
-#include <ctype.h>
-#include <string.h>
+#include <sys/ioctl.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+
+#ifndef SIOCGIFCONF
+#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
+#endif
+
+#endif
 
 #include "../common/core.h"
 #include "../common/socket.h"
