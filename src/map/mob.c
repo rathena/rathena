@@ -722,9 +722,7 @@ static int mob_attack(struct mob_data *md,unsigned int tick,int data)
 	if (status_get_mode(&md->bl)&MD_ASSIST && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME)
 	{	// Link monsters nearby [Skotlex]
 		md->last_linktime = tick;
-		map_foreachinarea(mob_linksearch, md->bl.m,
-			md->bl.x-md->db->range2, md->bl.y-md->db->range2,
-			md->bl.x+md->db->range2, md->bl.y+md->db->range2,
+		map_foreachinrange(mob_linksearch, &md->bl, md->db->range2,
 			BL_MOB, md->class_, tbl, tick);
 	}
 
@@ -1017,7 +1015,7 @@ static int mob_count_sub(struct block_list *bl,va_list ap)
 int mob_spawn (int id)
 {
 	int x, y, i = 0;
-	unsigned int c, tick = gettick();
+	unsigned int c =0, tick = gettick();
 	struct mob_data *md;
 	struct block_list *bl;
 
@@ -1037,7 +1035,8 @@ int mob_spawn (int id)
 		}
 	}
 	md->bl.m = md->m;
-	do {
+
+	while (i < 50) {
 		if (md->x0 == 0 && md->y0 == 0) {
 			x = rand()%(map[md->bl.m].xs-2)+1;
 			y = rand()%(map[md->bl.m].ys-2)+1;
@@ -1046,14 +1045,18 @@ int mob_spawn (int id)
 			y = md->y0+rand()%(md->ys+1)-md->ys/2;
 		}
 		i++;
-		if (battle_config.no_spawn_on_player && i <= battle_config.no_spawn_on_player)
-		{	//Avoid spawning on the view-range of players. [Skotlex]
-			if (map_foreachinarea(mob_count_sub, md->bl.m,
-				x-AREA_SIZE, y-AREA_SIZE, x+AREA_SIZE, y+AREA_SIZE,
-				BL_PC) > 0)
-				continue;
-		}
-	} while(map_getcell(md->bl.m,x,y,CELL_CHKNOPASS) && i < 50);
+		if (map_getcell(md->bl.m,x,y,CELL_CHKNOPASS))
+			continue;
+
+		//Avoid spawning on the view-range of players. [Skotlex]
+		if (battle_config.no_spawn_on_player &&
+			c++ < battle_config.no_spawn_on_player &&
+			map_foreachinrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC)
+		)
+			continue;
+		//Found a spot.
+		break;
+	}
 
 	if (i >= 50) {
 		if (md->spawndelay1 != -1 || md->spawndelay2 == -1)
@@ -1682,18 +1685,12 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		(mode&MD_ANGRY && md->state.skillstate == MSS_FOLLOW)
 	) {
 		search_size = (blind_flag) ? 3 : md->db->range2;
-		map_foreachinarea (mob_ai_sub_hard_activesearch, md->bl.m,
-					md->bl.x-search_size,md->bl.y-search_size,
-					md->bl.x+search_size,md->bl.y+search_size,
-					md->special_state.ai?BL_CHAR:BL_PC,
-					md, &tbl);
+		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl,
+			search_size, md->special_state.ai?BL_CHAR:BL_PC, md, &tbl);
 	} else if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW)) {
 		search_size = (blind_flag && md->db->range>3) ? 3 : md->db->range;
-		map_foreachinarea (mob_ai_sub_hard_changechase, md->bl.m,
-					md->bl.x-search_size,md->bl.y-search_size,
-					md->bl.x+search_size,md->bl.y+search_size,
-					md->special_state.ai?BL_CHAR:BL_PC,
-					md, &tbl);
+		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl,
+				search_size, md->special_state.ai?BL_CHAR:BL_PC, md, &tbl);
 	}
 
 	// Scan area for items to loot, avoid trying to loot of the mob is full and can't consume the items.
@@ -1702,10 +1699,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	{
 		i = 0;
 		search_size = (blind_flag) ? 3 : md->db->range2;
-		map_foreachinarea (mob_ai_sub_hard_lootsearch, md->bl.m,
-					md->bl.x-search_size, md->bl.y-search_size,
-					md->bl.x+search_size, md->bl.y+search_size,
-					BL_ITEM, md, &i);
+		map_foreachinrange (mob_ai_sub_hard_lootsearch, &md->bl,
+			search_size, BL_ITEM, md, &i);
 	}
 
 	if (tbl)
@@ -1878,10 +1873,7 @@ static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 	nullpo_retr(0, ap);
 
 	tick=va_arg(ap,unsigned int);
-	map_foreachinarea(mob_ai_sub_hard,sd->bl.m,
-					  sd->bl.x-AREA_SIZE*2,sd->bl.y-AREA_SIZE*2,
-					  sd->bl.x+AREA_SIZE*2,sd->bl.y+AREA_SIZE*2,
-					  BL_MOB,tick);
+	map_foreachinrange(mob_ai_sub_hard,&sd->bl, AREA_SIZE*2, BL_MOB,tick);
 
 	return 0;
 }
@@ -3263,7 +3255,7 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 
 	inf = skill_get_inf(md->skillid);
 	if((inf&INF_ATTACK_SKILL ||
-		(inf&INF_SELF_SKILL && md->bl.id != bl->id && skill_get_nk(md->skillid) != NK_NO_DAMAGE))
+		(inf&INF_SELF_SKILL && md->bl.id != bl->id && !(skill_get_nk(md->skillid)&NK_NO_DAMAGE)))
 		&& battle_check_target(&md->bl,bl, BCT_ENEMY)<=0 ) {
 		skill_failed(md);
 		return 0;
@@ -3286,17 +3278,11 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 		ShowInfo("MOB skill castend skill=%d, class = %d\n",md->skillid,md->class_);
 //	mob_stop_wShowInfo(md,0);
 
-	switch( skill_get_nk(md->skillid) )
-	{
-	case NK_NO_DAMAGE:// éxâáån
+
+	if (skill_get_casttype(md->skillid) == CAST_NODAMAGE) 
 		skill_castend_nodamage_id(&md->bl,bl,md->skillid,md->skilllv,tick,0);
-		break;
-	// çUåÇån/êÅÇ´îÚÇŒÇµån
-	case NK_SPLASH_DAMAGE:
-	default:
+	else
 		skill_castend_damage_id(&md->bl,bl,md->skillid,md->skilllv,tick,0);
-		break;
-	}
 
 	if (md->sc.count && md->sc.data[SC_MAGICPOWER].timer != -1 && md->skillid != HW_MAGICPOWER)
 		status_change_end(&md->bl, SC_MAGICPOWER, -1);
@@ -3604,7 +3590,6 @@ int mob_getfriendhpltmaxrate_sub(struct block_list *bl,va_list ap)
 struct block_list *mob_getfriendhpltmaxrate(struct mob_data *md,int rate)
 {
 	struct block_list *fr=NULL;
-	const int r=8;
 	int type = BL_MOB;
 	
 	nullpo_retr(NULL, md);
@@ -3612,9 +3597,7 @@ struct block_list *mob_getfriendhpltmaxrate(struct mob_data *md,int rate)
 	if (md->special_state.ai) //Summoned creatures. [Skotlex]
 		type = BL_PC;
 	
-	map_foreachinarea(mob_getfriendhpltmaxrate_sub, md->bl.m,
-		md->bl.x-r ,md->bl.y-r, md->bl.x+r, md->bl.y+r,
-		type,md,rate,&fr);
+	map_foreachinrange(mob_getfriendhpltmaxrate_sub, &md->bl, 8, type,md,rate,&fr);
 	return fr;
 }
 /*==========================================
@@ -3669,12 +3652,10 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 {
 	struct mob_data *fr=NULL;
-	const int r=8;
 
 	nullpo_retr(0, md);
 
-	map_foreachinarea(mob_getfriendstatus_sub, md->bl.m,
-		md->bl.x-r ,md->bl.y-r, md->bl.x+r, md->bl.y+r,
+	map_foreachinrange(mob_getfriendstatus_sub, &md->bl, 8,
 		BL_MOB,md,cond1,cond2,&fr);
 	return fr;
 }
@@ -3772,7 +3753,8 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			continue; //Skill requisite failed to be fulfilled.
 
 		//Execute skill	
-		if (skill_get_inf(ms[i].skill_id) & INF_GROUND_SKILL) {
+		if (skill_get_casttype(ms[i].skill_id) == CAST_GROUND)
+		{
 			// èÍèäéwíË
 			struct block_list *bl = NULL;
 			int x = 0, y = 0;
@@ -4040,7 +4022,7 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 				ms[i].cond2 = 95;
 			}
 		} else if (inf&INF_SELF_SKILL) {
-			if (skill_get_nk(skill_id) != NK_NO_DAMAGE) { //Offensive skill
+			if (!(skill_get_nk(skill_id)&NK_NO_DAMAGE)) { //Offensive skill
 				ms[i].target = MST_TARGET;
 				ms[i].state = MSS_BERSERK;
 			} else //Self skill

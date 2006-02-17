@@ -628,18 +628,18 @@ struct skill_unit *map_find_skill_unit_oncell(struct block_list *target,int x,in
 }
 
 /*==========================================
- * Adapted from foreachinarea to use real ranges around a character area. [Skotlex]
+ * Adapted from foreachinarea for an easier invocation. [Skotlex]
  *------------------------------------------
  */
 
-int map_foreachinrange(int (*func)(struct block_list*,va_list),int m,struct block_list *center, int range,int type,...) {
+int map_foreachinrange(int (*func)(struct block_list*,va_list),struct block_list *center, int range,int type,...) {
 	va_list ap;
-	int bx,by;
+	int bx,by,m;
 	int returnCount =0;	//total sum of returned values of func() [Skotlex]
 	struct block_list *bl=NULL;
 	int blockcount=bl_list_count,i,c;
 	int x0,x1,y0,y1;
-	
+	m = center->m;
 	if (m < 0)
 		return 0;
 	va_start(ap,type);
@@ -661,7 +661,9 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list),int m,struct bloc
 				for(i=0;i<c && bl;i++,bl=bl->next){
 					if(bl && bl->type&type
 						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
-						&& check_distance_bl(center, bl, range)
+						//For speed purposes, it does not checks actual range by default.
+						//Feel free to uncomment if you want a more "exact" approach.
+//						&& check_distance_bl(center, bl, range)
 					  	&& bl_list_count<BL_LIST_MAX)
 						bl_list[bl_list_count++]=bl;
 				}

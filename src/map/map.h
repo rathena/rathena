@@ -1226,7 +1226,7 @@ int map_delblock_sub(struct block_list *, int);
 #define map_delblock(bl) map_delblock_sub(bl,1)
 int map_moveblock(struct block_list *, int, int, unsigned int);
 
-int map_foreachinrange(int (*)(struct block_list*,va_list),int,struct block_list *,int,int,...);
+int map_foreachinrange(int (*)(struct block_list*,va_list),struct block_list *,int,int,...);
 int map_foreachinarea(int (*)(struct block_list*,va_list),int,int,int,int,int,int,...);
 // -- moonsoul (added map_foreachincell)
 int map_foreachincell(int (*)(struct block_list*,va_list),int,int,int,int,...);

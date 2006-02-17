@@ -40,11 +40,11 @@
 116,0x93,    ,  0, 1,1000,enemy, 0x006	//HT_LANDMINE#ランドマイン
 117,0x91,    ,  0, 1,1000,enemy, 0x006	//HT_ANKLESNARE#アンクルスネア
 118,0x94,    ,  0, 1,1000,enemy, 0x006	//HT_SHOCKWAVE#ショックウェーブトラップ
-119,0x95,    ,  0, 2,1000,enemy, 0x006	//HT_SANDMAN#サンドマン
+119,0x95,    ,  0, 1,1000,enemy, 0x006	//HT_SANDMAN#サンドマン
 120,0x96,    ,  0, 1,1000,enemy, 0x006	//HT_FLASHER#フラッシャー
 121,0x97,    ,  0, 1,1000,enemy, 0x006	//HT_FREEZINGTRAP#フリージングトラップ
 122,0x8f,    ,  0, 1,1000,enemy, 0x006	//HT_BLASTMINE#ブラストマイン
-123,0x98,    ,  0, 2,1000,enemy, 0x006	//HT_CLAYMORETRAP#クレイモアトラップ
+123,0x98,    ,  0, 1,1000,enemy, 0x006	//HT_CLAYMORETRAP#クレイモアトラップ
 125,0x99,    ,  0, 1,1000,all,   0x002	//HT_TALKIEBOX#トーキーボックス
 140,0x92,    , -1, 0,1000,enemy, 0x000	//AS_VENOMDUST#ベナムダスト
 220,0xb0,    ,  0, 0,  -1,all,   0x002	//RG_GRAFFITI#グラフィティ

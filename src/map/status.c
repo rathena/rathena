@@ -3535,6 +3535,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if((elem == 7 || race == 6) && !(flag&1))
 				return 0;
 		break;
+		case SC_SIGNUMCRUCIS:
+			//Only affects demons and undead.
+			if(race != 6 && !undead_flag)
+				return 0;
+			break;
 		case SC_AETERNA:
 		  if (sc->data[SC_STONE].timer != -1 || sc->data[SC_FREEZE].timer != -1)
 			  return 0;
@@ -5173,10 +5178,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_RUWACH:	/* ルアフ */
 	case SC_SIGHTBLASTER:
 		{
-			int range = skill_get_range2(bl,StatusSkillChangeTable[type], sc->data[type].val1);
-			map_foreachinarea( status_change_timer_sub,
-				bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,
-				bl,sc,type,tick);
+			map_foreachinrange( status_change_timer_sub, bl, 
+				skill_get_splash(StatusSkillChangeTable[type], sc->data[type].val1),
+				BL_CHAR, bl,sc,type,tick);
 
 			if( (--sc->data[type].val2)>0 ){
 				sc->data[type].timer=add_timer(	/* タイマ?再設定 */
@@ -5199,8 +5203,8 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	case SC_WARM: //SG skills [Komurka]
 		if( (--sc->data[type].val2)>0){
-			map_foreachinarea( status_change_timer_sub,
-				bl->m, bl->x-sc->data[type].val4, bl->y-sc->data[type].val4, bl->x+sc->data[type].val4,bl->y+sc->data[type].val4,BL_CHAR,
+			map_foreachinrange( status_change_timer_sub, bl,
+				sc->data[type].val4,BL_CHAR,
 				bl,sc,type,tick);
 			sc->data[type].timer=add_timer(tick+100, status_change_timer,bl->id, data);
 			return 0;

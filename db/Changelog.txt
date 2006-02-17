@@ -29,6 +29,11 @@
 
 =========================
 
+20/17
+	- Updated skill_unit_db to use range 1 for all mines. The actual splash
+	range is now taken from skill_db. [Skotlex]
+	- Updated some skills who's NK should now be 3. Updated some splash ranges.
+	  [Skotlex]
 20/16
 	* Added a new column in the skill_db to specify the
 	  splash-range/area-of-effect of skills. [Skotlex]

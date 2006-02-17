@@ -694,16 +694,13 @@ int party_send_dot_remove(struct map_session_data *sd)
 // party_foreachsamemap(party_sub_count, sd, 0, &c);
 int party_sub_count(struct block_list *bl, va_list ap)
 {
-	int *c = va_arg(ap, int*);
-
-	(*c)++;
 	return 1;
 }
 
 // 同じマップのパーティメンバー全体に処理をかける
 // type==0 同じマップ
 //     !=0 画面内
-void party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_session_data *sd,int type,...)
+int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_session_data *sd,int range,...)
 {
 	struct party *p;
 	va_list ap;
@@ -711,25 +708,26 @@ void party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_ses
 	int x0,y0,x1,y1;
 	struct block_list *list[MAX_PARTY];
 	int blockcount=0;
+	int total = 0; //Return value.
 	
-	nullpo_retv(sd);
+	nullpo_retr(0,sd);
 	
 	if((p=party_search(sd->status.party_id))==NULL)
-		return;
+		return 0;
 
-	x0=sd->bl.x-AREA_SIZE;
-	y0=sd->bl.y-AREA_SIZE;
-	x1=sd->bl.x+AREA_SIZE;
-	y1=sd->bl.y+AREA_SIZE;
+	x0=sd->bl.x-range;
+	y0=sd->bl.y-range;
+	x1=sd->bl.x+range;
+	y1=sd->bl.y+range;
 
-	va_start(ap,type);
+	va_start(ap,range);
 	
 	for(i=0;i<MAX_PARTY;i++){
 		struct party_member *m=&p->member[i];
 		if(m->sd!=NULL){
 			if(sd->bl.m!=m->sd->bl.m)
 				continue;
-			if(type!=0 &&
+			if(range &&
 				(m->sd->bl.x<x0 || m->sd->bl.y<y0 ||
 				 m->sd->bl.x>x1 || m->sd->bl.y>y1 ) )
 				continue;
@@ -741,9 +739,10 @@ void party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_ses
 	
 	for(i=0;i<blockcount;i++)
 		if(list[i]->prev)	// 有効かどうかチェック
-			func(list[i],ap);
+			total += func(list[i],ap);
 
 	map_freeblock_unlock();	// 解放を許可する
 
 	va_end(ap);
+	return total;
 }

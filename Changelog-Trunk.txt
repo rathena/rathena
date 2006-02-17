@@ -5,6 +5,21 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/17
+	* Massive update on the way splash/area (non-ground) skills work. [Skotlex]
+	- the new column 'splash' in skill_db is now used to determine the area of
+	  effect of all related skills (eg: splash range of fireball, area of effect
+	  of angelus, the splash damage area of mines, etc)
+	- nk definition update. &1 is no damage skills, &2 is for splash skills. A
+	  skill can be tagged 3 to indicate it is both. This is used to indicate the
+	  type of handling the skill should use, but it also helps as all splash
+	  skills get an extra check to prevent them from hitting 'unhittable'
+	  characters (ie: hidden) while all skills not tagged as non-damage can
+	  trigger auto-spells.
+	- All self skills are automatically executed as no-damage skills and get
+	  re-routed as damage skills when the source and target do not coincide (this
+	  handles all combo skills)
+	- Some skills may have screwed up (I fixed/moved all which I could find
+	  needed updating). As usual, report any issues.
 	* Added an upgrade_svn file that should fix the party table by making the
 	  party_id auto-incremental. Apply this or new parties will always fail!
 	  [Skotlex]

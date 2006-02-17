@@ -37,14 +37,13 @@ static struct eri *delay_damage_ers; //For battle delay damage structures.
  */
 static int battle_counttargeted_sub(struct block_list *bl, va_list ap)
 {
-	int id, *c, target_lv;
+	int id, target_lv;
 	struct block_list *src;
 
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
 
 	id = va_arg(ap,int);
-	nullpo_retr(0, c = va_arg(ap, int *));
 	src = va_arg(ap,struct block_list *);
 	target_lv = va_arg(ap,int);
 
@@ -53,18 +52,18 @@ static int battle_counttargeted_sub(struct block_list *bl, va_list ap)
 	if (bl->type == BL_PC) {
 		struct map_session_data *sd = (struct map_session_data *)bl;
 		if (sd && sd->attacktarget == id && sd->attacktimer != -1 && sd->attacktarget_lv >= target_lv)
-			(*c)++;
+			return 1;
 	}
 	else if (bl->type == BL_MOB) {
 		struct mob_data *md = (struct mob_data *)bl;
 		if (md && md->target_id == id && md->timer != -1 && md->state.state == MS_ATTACK && md->target_lv >= target_lv)		
-			(*c)++;
+			return 1;
 		//printf("md->target_lv:%d, target_lv:%d\n", md->target_lv, target_lv);
 	}
 	else if (bl->type == BL_PET) {
 		struct pet_data *pd = (struct pet_data *)bl;
 		if (pd && pd->target_id == id && pd->timer != -1 && pd->state.state == MS_ATTACK && pd->target_lv >= target_lv)
-			(*c)++;
+			return 1;
 	}
 
 	return 0;
@@ -76,15 +75,9 @@ static int battle_counttargeted_sub(struct block_list *bl, va_list ap)
  */
 int battle_counttargeted(struct block_list *bl,struct block_list *src,int target_lv)
 {
-	int c = 0;
 	nullpo_retr(0, bl);
-
-	map_foreachinarea(battle_counttargeted_sub, bl->m,
-		bl->x-AREA_SIZE, bl->y-AREA_SIZE,
-		bl->x+AREA_SIZE, bl->y+AREA_SIZE, BL_CHAR,
-		bl->id, &c, src, target_lv);
-
-	return c;
+	return (map_foreachinrange(battle_counttargeted_sub, bl, AREA_SIZE, BL_CHAR,
+		bl->id, src, target_lv));
 }
 
 /*==========================================
@@ -124,7 +117,7 @@ static int battle_gettargeted_sub(struct block_list *bl, va_list ap)
 	}
 
 	bl_list[(*c)++] = bl;
-	return 0;
+	return 1;
 }
 
 int battle_getcurrentskill(struct block_list *bl)
@@ -171,10 +164,7 @@ struct block_list* battle_gettargeted(struct block_list *target)
 	nullpo_retr(NULL, target);
 
 	memset(bl_list, 0, sizeof(bl_list));
-	map_foreachinarea(battle_gettargeted_sub, target->m,
-		target->x-AREA_SIZE, target->y-AREA_SIZE,
-		target->x+AREA_SIZE, target->y+AREA_SIZE, BL_CHAR,
-		bl_list, &c, target);
+	map_foreachinrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target);
 	if (c == 0 || c > 24)
 		return NULL;
 	return bl_list[rand()%c];
@@ -1554,8 +1544,7 @@ static struct Damage battle_calc_weapon_attack(
 						ATK_ADDRATE(sd->crit_atk_rate);
 
 					if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0){
-						i = 0;
-						party_foreachsamemap(party_sub_count, sd, 0, &i);
+						i = party_foreachsamemap(party_sub_count, sd, 0);
 						ATK_ADDRATE(2*skill*i);
 					}
 				}
@@ -3122,21 +3111,16 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		if (sd) sp = skill_get_sp(skillid,skilllv) * 2 / 3;
 
 		if ((sd && sd->status.sp >= sp) || !sd) {
-			if (skill_get_inf(skillid) & INF_GROUND_SKILL)
-				f = skill_castend_pos2(src, target->x, target->y, skillid, skilllv, tick, flag);
-			else {
-				switch(skill_get_nk(skillid)) {
-					case NK_NO_DAMAGE:/* Žx‰‡Œn */
-						if((skillid == AL_HEAL || (skillid == ALL_RESURRECTION && !tsd)) && battle_check_undead(race,ele))
-							f = skill_castend_damage_id(src, target, skillid, skilllv, tick, flag);
-						else
-							f = skill_castend_nodamage_id(src, target, skillid, skilllv, tick, flag);
-						break;
-					case NK_SPLASH_DAMAGE:
-					default:
-						f = skill_castend_damage_id(src, target, skillid, skilllv, tick, flag);
-						break;
-				}
+			switch (skill_get_casttype(skillid)) {
+				case CAST_GROUND:
+					f = skill_castend_pos2(src, target->x, target->y, skillid, skilllv, tick, flag);
+					break;
+				case CAST_NODAMAGE:
+					f = skill_castend_nodamage_id(src, target, skillid, skilllv, tick, flag);
+					break;
+				case CAST_DAMAGE:
+					f = skill_castend_damage_id(src, target, skillid, skilllv, tick, flag);
+					break;
 			}
 			if (sd && !f) { pc_heal(sd, 0, -sp); }
 		}

@@ -23,9 +23,9 @@
 
 //Constants to identify a skill's nk value.
 //The NK value applies only to non INF_GROUND_SKILL skills.
-#define NK_NO_DAMAGE 1
-#define NK_SPLASH_DAMAGE 2
-
+#define NK_NO_DAMAGE 0x1
+#define NK_SPLASH 0x2
+//A skill with 3 would be no damage + splash: area of effect.
 //Constants to identify a skill's inf2 value.
 #define INF2_QUEST_SKILL 1
 //NPC skills are those that players can't have in their skill tree.
@@ -130,14 +130,19 @@ struct skill_unit_group;
 
 int do_init_skill(void);
 
+
+//Returns the cast type of the skill: ground cast, castend damage, castend no damage
+enum { CAST_GROUND, CAST_DAMAGE, CAST_NODAMAGE };
+int skill_get_casttype(int id); //[Skotlex]
 // スキルデ?タベ?スへのアクセサ
 int	skill_get_hit( int id );
 int	skill_get_inf( int id );
 int	skill_get_pl( int id );
 int	skill_get_nk( int id );
 int	skill_get_max( int id );
-int skill_get_range( int id , int lv );
-int skill_get_range2(struct block_list *bl, int id, int lv);
+int	skill_get_range( int id , int lv );
+int	skill_get_range2(struct block_list *bl, int id, int lv);
+int	skill_get_splash( int id , int lv );
 int	skill_get_hp( int id ,int lv );
 int	skill_get_mhp( int id ,int lv );
 int	skill_get_sp( int id ,int lv );

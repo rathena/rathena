@@ -318,32 +318,27 @@ static int petskill_castend(struct pet_data *pd,unsigned int tick,int data)
  */
 static int petskill_castend2(struct pet_data *pd, struct block_list *target, short skill_id, short skill_lv, short skill_x, short skill_y, unsigned int tick)
 {	//Invoked after the casting time has passed.
-	short delaytime =0;
+	int delaytime =0;
 
 	nullpo_retr(0, pd);
 
 	pd->state.state=MS_IDLE;
 	
-	if (skill_get_inf(skill_id) & INF_GROUND_SKILL)
+	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
 	{	//Area skill
 		skill_castend_pos2(&pd->bl, skill_x, skill_y, skill_id, skill_lv, tick,0);
 	} else { //Targeted Skill
-		if (!target || !status_check_skilluse(&pd->bl, target, skill_id, 1))
+	  	if (!target)
 			return 0; 
-		//Skills with inf = 4 (cast on self) have view range (assumed party skills)
 		if(!check_distance_bl(&pd->bl, target,
-			(skill_get_inf(skill_id) & INF_SELF_SKILL?battle_config.area_size:skill_get_range2(&pd->bl, skill_id, skill_lv))))
+				skill_get_range2(&pd->bl, skill_id, skill_lv)));
 			return 0;
-		switch( skill_get_nk(skill_id) )
-		{
-			case NK_NO_DAMAGE:
-				skill_castend_nodamage_id(&pd->bl,target, skill_id, skill_lv,tick, 0);
-				break;
-			case NK_SPLASH_DAMAGE:
-			default:
-				skill_castend_damage_id(&pd->bl,target,skill_id,skill_lv,tick,0);
-				break;
-		}
+		if (!status_check_skilluse(&pd->bl, target, skill_id, 1))
+			return 0;
+		if (skill_get_casttype(skill_id) == CAST_NODAMAGE)
+			skill_castend_nodamage_id(&pd->bl, target, skill_id, skill_lv, tick, 0);
+		else
+			skill_castend_damage_id(&pd->bl, target, skill_id, skill_lv, tick,0);
 	}
 
 	if (pd->timer != -1) //The above skill casting could had changed the state (Abracadabra?)
@@ -1460,12 +1455,9 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 		return 0;
 	// ペットによるルート
 	if(!pd->target_id && pd->loot && pd->loot->count < pd->loot->max && DIFF_TICK(gettick(),pd->loot->timer)>0)
-		map_foreachinarea(pet_ai_sub_hard_lootsearch,pd->bl.m,
-						  pd->bl.x-6,pd->bl.y-6, //If pet_ai_sub_hard_lootsearch limits itself to a range of 5, WHY use AREA_SIZE here? o.O [Skotlex]
-						  pd->bl.x+6,pd->bl.y+6,
-//						  pd->bl.x-AREA_SIZE*2,pd->bl.y-AREA_SIZE*2,
-//						  pd->bl.x+AREA_SIZE*2,pd->bl.y+AREA_SIZE*2,
-						  BL_ITEM,pd,&i);
+		//Use half the pet's range of sight.
+		map_foreachinrange(pet_ai_sub_hard_lootsearch,&pd->bl,
+			pd->db->range2/2, BL_ITEM,pd,&i);
 
 	if(sd->pet.intimate > 0) {
 		dist = distance_bl(&sd->bl, &pd->bl);

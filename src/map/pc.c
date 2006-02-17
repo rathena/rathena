@@ -3108,7 +3108,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 	flag = pc_additem(sd,&tmp_item,1);
 
 	if(battle_config.show_steal_in_same_party)
-		party_foreachsamemap(pc_show_steal,sd,1,sd,tmp_item.nameid,flag?1:0);
+		party_foreachsamemap(pc_show_steal,sd,AREA_SIZE,sd,tmp_item.nameid,flag?1:0);
 	if(flag)
 		clif_additem(sd,0,0,flag);
 	else
@@ -3721,8 +3721,7 @@ int pc_walktoxy (struct map_session_data *sd, int x, int y)
 		if ((skill = guild_checkskill(g, GD_SOULCOLD)) > 0) guildflag |= skill<<4;
 		if ((skill = guild_checkskill(g, GD_HAWKEYES)) > 0) guildflag |= skill;
 		if (guildflag)
-			map_foreachinarea (skill_guildaura_sub, sd->bl.m,
-				sd->bl.x-2, sd->bl.y-2, sd->bl.x+2, sd->bl.y+2, BL_PC,
+			map_foreachinrange(skill_guildaura_sub, &sd->bl,2, BL_PC,
 				sd->bl.id, sd->status.guild_id, &guildflag);
 	}
 
