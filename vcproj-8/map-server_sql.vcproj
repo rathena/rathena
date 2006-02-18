@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;MAPREGSQL"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -129,7 +129,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION;MAPREGSQL"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				RuntimeLibrary="0"
 				DefaultCharIsUnsigned="true"
 				UsePrecompiledHeader="0"
@@ -260,6 +260,10 @@
 			</File>
 			<File
 				RelativePath="..\src\zlib\iowin32.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\irc.c"
 				>
 			</File>
 			<File

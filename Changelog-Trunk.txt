@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/17
+	* Cleaned up irc.c, may it compile now on Windows? [Skotlex]
+	* Updated the VC project files by Joshuaali. [Skotlex]
 	* Fixed possible crash on pet egg select. [Skotlex]
 	* Massive update on the way splash/area (non-ground) skills work. [Skotlex]
 	- the new column 'splash' in skill_db is now used to determine the area of

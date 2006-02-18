@@ -78,8 +78,9 @@ void irc_announce(char *buf)
 
 void irc_announce_jobchange(struct map_session_data *sd)
 {
-	nullpo_retv(sd);
 	char send_string[256];
+	
+	nullpo_retv(sd);
 	memset(send_string,'\0',256);
 
 	sprintf(send_string,"PRIVMSG %s :%s has changed into a %s.",irc_channel,sd->status.name,job_name(sd->status.class_));
@@ -88,13 +89,13 @@ void irc_announce_jobchange(struct map_session_data *sd)
 
 void irc_announce_shop(struct map_session_data *sd, int flag)
 {
-	nullpo_retv(sd);
-
 	char send_string[256];
 	char mapname[16];
+	int maplen = 0;
+	nullpo_retv(sd);
+
 	memset(send_string,'\0',256);
 	memset(mapname,'\0',16);
-	int maplen = 0;
 
 	if(flag){
 		strcpy(mapname, map[sd->bl.m].name);
@@ -111,16 +112,16 @@ void irc_announce_shop(struct map_session_data *sd, int flag)
 
 void irc_announce_mvp(struct map_session_data *sd, struct mob_data *md)
 {
+	char send_string[256];
+	char mapname[16];
+	int maplen = 0;
+
 	nullpo_retv(sd);
 	nullpo_retv(md);
 
-	char send_string[256];
-	char mapname[16];
 	memset(send_string,'\0',256);
 	memset(mapname,'\0',16);
 	mapname[16]='\0';
-	int maplen = 0;
-
 	strcpy(mapname, map[md->bl.m].name);
 	maplen = strcspn(mapname,".");
 	mapname[maplen] = '\0';
@@ -175,10 +176,11 @@ void irc_send_sub(int fd, char transmit[4096])
 
 void irc_send(char *buf)
 {
+	char transmit[4096];
+	
 	if(!irc_si || !session[irc_si->fd])
 		return;
 
-	char transmit[4096];
 	memset(transmit,'\0',4096);
 
 	sprintf(transmit,buf);
@@ -196,6 +198,7 @@ void irc_parse_sub(int fd, char *incoming_string)
 	char *source_ident=NULL;
 	char *source_host=NULL;
 	char *state_mgr=NULL;
+	
 	memset(source,'\0',256);
 	memset(command,'\0',256);
 	memset(target,'\0',256);
@@ -266,11 +269,12 @@ void do_final_irc(void)
 
 void do_init_irc(void)
 {
+	struct hostent *irc_hostname;
+	
 	if(!use_irc)
 		return;
 	if (irc_ip_str[strlen(irc_ip_str)-1] == '\n') 
 		irc_ip_str[strlen(irc_ip_str)-1] = '\0'; 
-	struct hostent *irc_hostname;
 	irc_hostname=gethostbyname(irc_ip_str);
 	irc_ip_str[0]='\0';
 	sprintf(irc_ip_str, "%d.%d.%d.%d", (unsigned char)irc_hostname->h_addr[0], (unsigned char)irc_hostname->h_addr[1],
