@@ -3316,7 +3316,11 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 	if(x <0 || x >= map[m].xs || y <0 || y >= map[m].ys)
 		x=y=0;
 	if((x==0 && y==0) ||
+#ifndef CELL_NOSTACK
 		(map_getcell(m,x,y,CELL_CHKNOPASS) && !map_getcell(m, x, y, CELL_CHKICEWALL))
+#else
+		(map_getcell(m,x,y,CELL_CHKNOPASS) && !map_getcell(m, x, y, CELL_CHKICEWALL) && !map_getcell(m, x, y, CELL_CHKSTACK))
+#endif
 	){ //We allow placing players on top of an ICEWALL tile to prevent force-warping players when an ice wall is placed 
 		//at spawn points from warps and the like. [Skotlex]
 		if(x||y) {

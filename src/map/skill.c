@@ -3079,6 +3079,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				}
 				return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
 			}
+			break;
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
 		case CR_GRANDCROSS:
