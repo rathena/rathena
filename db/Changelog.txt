@@ -21,14 +21,12 @@
 	2653 Sacrifice Ring: seems eAthena doesn't have bonus option yet <- explain how this works so I can code it in. [Skotlex]
 		* * * On your death it breaks (BS can fix it), you drop all Equipment (equipped, even the ring). And revive with 1 HP / 1 SP at the place of your death.
 		* * * From where this info is? ... Mine: On your death you'll loose this ring and get 50% HP [Komurka]
-	-----
-	585 Brusti: Should Cast Level 3 Magnificat when used.
-	12136 Women's Bundle: You can get item ID 558, 529, 2668 or 7518.
-	12133 McDonald's Ice Cone: Should Restore 1/2 HP and SP and be usable only once a day.
-	1263 Unholy Touch: Critical Rate - 1
 
 =========================
 
+20/18
+	* Updated effects of 585,Brusti, 1263 Unholy Touch, 12133 McDonald's Ice Cone [Lupus]
+		& 12136 Women's Bundle 
 20/17
 	- Updated skill_unit_db to use range 1 for all mines. The actual splash
 	range is now taken from skill_db. [Skotlex]

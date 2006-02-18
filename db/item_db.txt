@@ -86,7 +86,7 @@
 582,Orange,Orange,0,,10,20,,,,,16777215,7,2,,,,,,{ itemheal rand(10,15),rand(10,15); }
 583,Ketupat_,Ketupat,0,,10,150,,,,,16777215,7,2,,,,,,{}
 584,Skewer_Soup,Skewer Soup,0,50,,60,,,,,127918079,7,2,,,,,,{ itemheal rand(45,64),0; }
-585,Brusti,Brusti,0,15,,20,,,,,127918079,7,2,,,,,,{ itemheal rand(17,20),0; }
+585,Brusti,Brusti,0,15,,20,,,,,127918079,7,2,,,,,,{ itemheal rand(17,20),0; itemskill 74,3,"Magnificat"; }
 
 // Usable Items
 //===================================================================
@@ -581,7 +581,7 @@
 1260,Sharpened_Legbone_of_Ghoul,Sharpened Legbone of Ghoul,4,52500,,1700,150,,1,0,4096,7,2,34,3,65,1,16,{ bonus bAtkEle,Ele_Undead; }
 1261,Infiltrator,Infiltrator,4,57000,,1500,140,,1,0,4096,7,2,34,4,75,1,16,{ bonus2 bAddRace,RC_DemiHuman,50; bonus bDef,3; bonus bFlee,5; bonus bFlee2,2; }
 1262,Loki's_Talon,Loki's Talon,4,,10,1200,115,,1,0,4096,7,2,34,3,55,1,16,{ bonus2 bAddEff,Eff_Bleeding,500; }
-1263,Unholy_Touch,Unholy Touch,4,,10,1250,95,,1,0,4096,7,2,34,4,70,1,16,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,500; }
+1263,Unholy_Touch,Unholy Touch,4,,10,1250,95,,1,0,4096,7,2,34,4,70,1,16,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,500; bonus bCriticalRate,-1; }
 1264,Various_Jur,Various Jur,4,,10,800,90,,1,4,4096,7,2,34,1,0,1,16,{ bonus2 bAddEff2,Eff_Bleeding,200; }
 1265,Bloody_Roar,Bloody Roar,4,,10,1000,120,,1,0,4096,7,2,34,4,75,1,16,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus bFlee,-160; bonus bFlee2,-160; bonus bNoRegen,1; bonus bNoRegen,2; }
 
@@ -2339,13 +2339,14 @@
 12127,Deluxe_Cooking_Set,Deluxe Cooking Set,2,,10,30,,,,,127918079,7,2,,,,,,{ produce 11; }
 12128,Court_Cooking_Set,Court Cooking Set,2,,10,70,,,,,127918079,7,2,,,,,,{ produce 11; }
 12129,Legendary_Cooking_Set,Legendary Cooking Set,2,,10,70,,,,,127918079,7,2,,,,,,{ produce 11; }
+//
 12130,Cookie_Bag,Cookie Bag,3,,10,70,,,,,127918079,7,2,,,,,,{}
 12131,Lucky_Potion,Lucky Potion,0,,10,100,,,,,127918079,7,2,,,,,,{}
 12132,Santa's_Bag,Santa's Bag,2,,10,200,,,,,127918079,7,2,,,,,,{ sc_start SC_Xmas,600000,0;}
-12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,127918079,7,2,,,,,,{ itemheal rand(45,64),0; }
+12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,127918079,7,2,,,,,,{ if(gettime(5)==MDiceCone)end; set MDiceCone,gettime(5); percentheal 50,50; }
 12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,127918079,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); }
 12135,Green_Ale,Green Ale,2,,10,30,,,,,127918079,7,2,,,,,,{}
-12136,Women's_Bundle,Women's Bundle,2,,10,100,,,,,127918079,7,2,,,,,,{}
+12136,Women's_Bundle,Women's Bundle,2,,10,100,,,,,127918079,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; }
 
 // More Weapons
 //===================================================================
