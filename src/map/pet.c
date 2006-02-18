@@ -1068,6 +1068,9 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 {
 	nullpo_retr(0, sd);
 
+	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
+		return 0; //Forged packet!
+
 	if(sd->status.inventory[egg_index].card[0] == (short)0xff00)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->status.inventory[egg_index].card[1], sd->status.inventory[egg_index].card[2]) );
 	else {
