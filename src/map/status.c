@@ -3305,30 +3305,25 @@ int status_get_sc_def(struct block_list *bl, int type)
 	switch (type)
 	{
 	//Note that stats that are *100/3 were simplified to *33
-	case SP_MDEF1:	// mdef
 	case SC_STONE:
 	case SC_FREEZE:
 	case SC_DECREASEAGI:
 	case SC_COMA:
 		sc_def = 300 +100*status_get_mdef(bl) +33*status_get_luk(bl);
 		break;
-	case SP_MDEF2:	// int
 	case SC_SLEEP:
 	case SC_CONFUSION:
 		sc_def = 300 +100*status_get_int(bl) +33*status_get_luk(bl);
 		break;
-	case SP_DEF1:	// def
-		sc_def = 300 +100*status_get_def(bl) +33*status_get_luk(bl);
-		break;
-	case SP_DEF2:	// vit
+// Removed since it collides with normal sc.
+//	case SP_DEF1:	// def
+//		sc_def = 300 +100*status_get_def(bl) +33*status_get_luk(bl);
+//		break;
 	case SC_STUN:
 	case SC_POISON:
 	case SC_SILENCE:
 	case SC_STOP:
 		sc_def = 300 +100*status_get_vit(bl) +33*status_get_luk(bl);
-		break;
-	case SP_LUK:	// luck
-		sc_def = 300 +100*status_get_luk(bl);
 		break;
 	case SC_BLIND:
 		sc_def = 300 +100*status_get_int(bl) +33*status_get_vit(bl);

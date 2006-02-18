@@ -7491,7 +7491,7 @@ struct map_session_data *pc_get_child (struct map_session_data *sd)
  * SP‰ñ•œ—ÊŒvŽZ
  *------------------------------------------
  */
-static int natural_heal_tick,natural_heal_prev_tick,natural_heal_diff_tick;
+static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
 static int pc_spheal(struct map_session_data *sd)
 {
 	int a = natural_heal_diff_tick;
@@ -7886,8 +7886,7 @@ static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
  */
 int pc_natural_heal(int tid,unsigned int tick,int id,int data)
 {
-	natural_heal_tick = tick;
-	natural_heal_diff_tick = DIFF_TICK(natural_heal_tick,natural_heal_prev_tick);
+	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
 	clif_foreachclient(pc_natural_heal_sub, tick);
 
 	natural_heal_prev_tick = tick;
@@ -8398,8 +8397,9 @@ int do_init_pc(void) {
 	add_timer_func_list(pc_autosave, "pc_autosave");
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");
 	add_timer_func_list(pc_blockskill_end, "pc_blockskill_end");
-	add_timer_func_list(pc_follow_timer, "pc_follow_timer");	
-	add_timer_interval((natural_heal_prev_tick = gettick() + NATURAL_HEAL_INTERVAL), pc_natural_heal, 0, 0, NATURAL_HEAL_INTERVAL);
+	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
+	natural_heal_prev_tick = gettick();
+	add_timer_interval(natural_heal_prev_tick + NATURAL_HEAL_INTERVAL, pc_natural_heal, 0, 0, NATURAL_HEAL_INTERVAL);
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 #ifndef TXT_ONLY
 	pc_read_gm_account(0);
