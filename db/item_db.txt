@@ -1347,7 +1347,7 @@
 4206,Myst_Case_Card,Myst Case Card,6,,10,10,,,,,,,,769,,,,,{ if(isequipped(4233,4281,4321,4206)==0) bonus2 bAddMonsterDropItem,644,-8; }
 4207,Mysteltainn_Card,Mysteltainn Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubSize,0,25; bonus bDef,1; }
 4208,Miyabi_Doll_Card,Miyabi Doll Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxSPrate,10; bonus2 bSkillAtk,15,5; }
-4209,Violy_Card,Violy Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,318,1+4*(getskilllv(318)==5),10; }
+4209,Violy_Card,Violy Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpell,318,1+4*(getskilllv(318)==5),10,0; }
 4210,Wanderer_Card,Wanderer Card,6,,10,10,,,,,,,,4,,,,,{ if(BaseClass == Job_Thief) bonus bFlee,20; if(isequipped(4172,4257,4230,4272)) goto THIEF_SET; bonus3 bAutoSpell,219,1,10; end; THIEF_SET: bonus bAgi,5; bonus bStr,5; bonus bAspdRate,5; bonus bSpeedRate,5; bonus2 bSPDrainValue,1,0; if(BaseClass == Job_Thief) bonus bNoGemStone,0; }
 4211,Vocal_Card,Vocal Card,6,,10,10,,,,,,,,4,,,,,{ bonus bMdef,3; if(isequipped(4021)) bonus bFlee,18; }
 4212,Bongun_Card,Bongun Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,5,1,10; bonus2 bAddSkillBlow,5,5; bonus2 bAddDamageByClass,1026,100; }

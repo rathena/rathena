@@ -24,15 +24,16 @@
 
 =========================
 
-20/18
+02/18
+	* Violy Card fix [Komurka]
 	* Updated effects of 585,Brusti, 1263 Unholy Touch, 12133 McDonald's Ice Cone [Lupus]
 		& 12136 Women's Bundle 
-20/17
+02/17
 	- Updated skill_unit_db to use range 1 for all mines. The actual splash
 	range is now taken from skill_db. [Skotlex]
 	- Updated some skills who's NK should now be 3. Updated some splash ranges.
 	  [Skotlex]
-20/16
+02/16
 	* Added a new column in the skill_db to specify the
 	  splash-range/area-of-effect of skills. [Skotlex]
 02/14
