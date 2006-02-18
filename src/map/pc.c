@@ -3728,6 +3728,13 @@ int pc_walktoxy (struct map_session_data *sd, int x, int y)
 			map_foreachinrange(skill_guildaura_sub, &sd->bl,2, BL_PC,
 				sd->bl.id, sd->status.guild_id, &guildflag);
 	}
+	//SG_MIRACLE [Komurka]
+	if (sd->sc.data && sd->sc.data[SC_MIRACLE].timer==-1 && ((sd->status.class_==JOB_STAR_GLADIATOR) || (sd->status.class_==JOB_STAR_GLADIATOR2)) && (rand()%10000 < battle_config.sg_miracle_skill_ratio) )
+	{
+		clif_displaymessage(sd->fd,"[Miracle of the Sun, Moon and Stars]");
+		status_change_start(&sd->bl,SC_MIRACLE,100,
+				1,0,0,0,battle_config.sg_miracle_skill_duration,0);
+	}
 
 	return 0;
 }

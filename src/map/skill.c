@@ -7968,36 +7968,37 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
+	//SHOULD BE OPTIMALIZED [Komurka]
 	case SG_SUN_WARM:
-		if(sd->bl.m == sd->feel_map[0].m)
+		if ((sd->bl.m == sd->feel_map[0].m) || (sd->sc.data[SC_MIRACLE].timer!=-1))
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 		break;
 	case SG_MOON_WARM:
-		if(sd->bl.m == sd->feel_map[1].m)
+		if ((sd->bl.m == sd->feel_map[1].m) || (sd->sc.data[SC_MIRACLE].timer!=-1))
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 		break;
 	case SG_STAR_WARM:
-		if(sd->bl.m == sd->feel_map[2].m)
+		if ((sd->bl.m == sd->feel_map[2].m) || (sd->sc.data[SC_MIRACLE].timer!=-1))
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 		break;
 	case SG_SUN_COMFORT:
-		if(sd->bl.m == sd->feel_map[0].m && (battle_config.allow_skill_without_day || is_day_of_sun()))
+		if ((sd->bl.m == sd->feel_map[0].m && (battle_config.allow_skill_without_day || is_day_of_sun())) || (sd->sc.data[SC_MIRACLE].timer!=-1))
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 	case SG_MOON_COMFORT:
-		if(sd->bl.m == sd->feel_map[1].m && (battle_config.allow_skill_without_day || is_day_of_moon()))
+		if ((sd->bl.m == sd->feel_map[1].m && (battle_config.allow_skill_without_day || is_day_of_moon())) || (sd->sc.data[SC_MIRACLE].timer!=-1))
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 	case SG_STAR_COMFORT:
-		if(sd->bl.m == sd->feel_map[2].m && (battle_config.allow_skill_without_day || is_day_of_star()))
+		if ((sd->bl.m == sd->feel_map[2].m && (battle_config.allow_skill_without_day || is_day_of_star())) || (sd->sc.data[SC_MIRACLE].timer!=-1))
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;

@@ -229,6 +229,7 @@ enum {
 	SC_SWOO, // [marquis007]
 	SC_SKA, // [marquis007]
 	SC_TKDORI, // [marquis007]
+	SC_MIRACLE, //SG 'hidden' skill [Komurka]
 	//
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };

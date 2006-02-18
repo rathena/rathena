@@ -1995,7 +1995,12 @@ static struct Damage battle_calc_weapon_attack(
 			{	//SG Anger bonus - ATK_ADDRATE [Komurka]
 				static int type[] = { SG_SUN_ANGER, SG_MOON_ANGER, SG_STAR_ANGER };
 				short t_class = status_get_class(target);
-				for (i = 0; i < 3; i++)
+				if (sc->data && sc->data[SC_MIRACLE].timer!=-1 && (skill = pc_checkskill(sd,type[2])))
+				{
+					skillratio = (sd->status.base_level + status_get_str(src) + status_get_dex(src)+ status_get_luk(src))/(skill<4?12-3*skill:1);
+					ATK_ADDRATE(skillratio);
+				}
+				else for (i = 0; i < 3; i++)
 				{
 					if (t_class == sd->hate_mob[i] && (skill = pc_checkskill(sd,type[i])))
 					{
@@ -3826,6 +3831,7 @@ static const struct battle_data_short {
 	{ "mob_status_def_rate",				&battle_config.mob_sc_def_rate },
 	{ "pc_max_status_def",					&battle_config.pc_max_sc_def },
 	{ "mob_max_status_def",					&battle_config.mob_max_sc_def },
+	{ "sg_miracle_skill_ratio",				&battle_config.sg_miracle_skill_ratio },
 };
 
 static const struct battle_data_int {
@@ -3861,6 +3867,8 @@ static const struct battle_data_int {
 	{ "day_duration",                      &battle_config.day_duration	}, // added by [Yor]
 	{ "night_duration",                    &battle_config.night_duration	}, // added by [Yor]
 	{ "mob_remove_delay",                  &battle_config.mob_remove_delay	},
+	{ "sg_miracle_skill_duration",				&battle_config.sg_miracle_skill_duration },
+
 };
 
 int battle_set_value(char *w1, char *w2) {
@@ -4221,6 +4229,8 @@ void battle_set_defaults() {
 	battle_config.mob_sc_def_rate = 100;
 	battle_config.pc_max_sc_def = 10000;
 	battle_config.mob_max_sc_def = 5000;
+	battle_config.sg_miracle_skill_ratio=1;
+	battle_config.sg_miracle_skill_duration=600000;
 }
 
 void battle_validate_conf() {
@@ -4413,6 +4423,9 @@ void battle_validate_conf() {
 		battle_config.pc_max_sc_def = 10000;
 	if (battle_config.mob_max_sc_def > 10000)
 		battle_config.mob_max_sc_def = 10000;
+	if (battle_config.sg_miracle_skill_ratio > 10000)
+		battle_config.sg_miracle_skill_ratio = 10000;
+
 #ifdef CELL_NOSTACK
 	if (battle_config.cell_stack_limit < 1)
 	  	battle_config.cell_stack_limit = 1;

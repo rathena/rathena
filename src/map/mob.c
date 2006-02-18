@@ -2474,7 +2474,9 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			per *= 1.15;	// pk_mode additional exp if monster >20 levels [Valaris]	
 		
 		//SG additional exp from Blessings [Komurka] - probably can be optimalized ^^;;
-		if(md->class_ == tmpsd[i]->hate_mob[0] && (battle_config.allow_skill_without_day || is_day_of_sun()))
+		if (tmpsd[i]->sc.data[SC_MIRACLE].timer!=-1)
+			per += per*20*pc_checkskill(tmpsd[i],SG_STAR_BLESS)/100.;
+		else if(md->class_ == tmpsd[i]->hate_mob[0] && (battle_config.allow_skill_without_day || is_day_of_sun()))
 			per += per*10*pc_checkskill(tmpsd[i],SG_SUN_BLESS)/100.;
 		else if(md->class_ == tmpsd[i]->hate_mob[1] && (battle_config.allow_skill_without_day || is_day_of_moon()))
 			per += per*10*pc_checkskill(tmpsd[i],SG_MOON_BLESS)/100.;

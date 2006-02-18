@@ -302,6 +302,7 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_SPEEDUP0] =    SI_SPEEDPOTION;
 	StatusIconChangeTable[SC_SPEEDUP1] =    SI_SPEEDPOTION;
+	StatusIconChangeTable[SC_MIRACLE] =    SI_SPIRIT;
 	
 	//Guild skills don't fit due to their range being beyond MAX_SKILL
 	StatusIconChangeTable[SC_GUILDAURA] =    SI_GUILDAURA;
@@ -4366,6 +4367,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_STEELBODY:			// ã‡çÑ
 		case SC_SKA:
 		case SC_TWOHANDQUICKEN:		/* 2HQ */
+		case SC_MIRACLE:
 			calc_flag = 1;
 			break;
 

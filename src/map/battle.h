@@ -427,6 +427,9 @@ extern struct Battle_Config {
 	unsigned short pc_max_sc_def;
 	unsigned short mob_max_sc_def;
 
+	unsigned short sg_miracle_skill_ratio;
+	int sg_miracle_skill_duration;
+
 } battle_config;
 
 void do_init_battle(void);
