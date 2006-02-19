@@ -9626,7 +9626,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 	n = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
 	
 	if(n <0 || n >= MAX_INVENTORY)
-		return 0;
+		return;
 	if (!pc_useitem(sd,n))
 		clif_useitemack(sd,n,0,0); //Send an empty ack packet or the client gets stuck.
 }
