@@ -24,6 +24,9 @@
 
 =========================
 
+02/20
+	* Fixed some names in mob_db.txt ('Name', not 'JName') [Komurka]
+
 02/18
 	* Updated Chung_E's drops a bit according to recent info, it had the same [MasterOfMuppets]
 	  drops as Sohees before.
