@@ -25,6 +25,8 @@
 =========================
 
 02/18
+	* Updated Chung_E's drops a bit according to recent info, it had the same [MasterOfMuppets]
+	  drops as Sohees before.
 	* Violy Card fix [Komurka]
 	* Updated effects of 585,Brusti, 1263 Unholy Touch, 12133 McDonald's Ice Cone [Lupus]
 		& 12136 Women's Bundle 
