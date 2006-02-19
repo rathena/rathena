@@ -2814,9 +2814,6 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	nullpo_retr(0, sd);
 
-	if(n <0 || n >= MAX_INVENTORY)
-		return 0;
-	
 	if(sd->status.inventory[n].nameid <= 0 ||
 		sd->status.inventory[n].amount <= 0)
 		return 0;

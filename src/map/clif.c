@@ -9593,6 +9593,7 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_UseItem(int fd, struct map_session_data *sd) {
+	int n;
 	RFIFOHEAD(fd);
 
 	if (pc_isdead(sd)) {
@@ -9622,7 +9623,11 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
-	if (!pc_useitem(sd,RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2))
+	n = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
+	
+	if(n <0 || n >= MAX_INVENTORY)
+		return 0;
+	if (!pc_useitem(sd,n))
 		clif_useitemack(sd,n,0,0); //Send an empty ack packet or the client gets stuck.
 }
 
