@@ -25,6 +25,7 @@
 =========================
 
 02/20
+	* New mob skill database from Aegis 10.2 (mobs 1001-1691) [Komurka]
 	* Fixed some names in mob_db.txt ('Name', not 'JName') [Komurka]
 
 02/18
