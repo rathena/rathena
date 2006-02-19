@@ -4,6 +4,16 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
+2006/02/19
+	* Fixed parsing of @kamic/@kamib to check for case. [Skotlex]
+	* Now you can hide from Pressure. [Skotlex]
+	* Weapon endowing will work on targets already endowed with the same
+	  element. [Skotlex]
+	* Now reseff cards will take effect even if the status change is passed
+	  with &8 flag. In short, now reseff are ALWAYS applied to the status change
+	  defense. [Skotlex]
+	* Removed a missing break that was making AM_TWILIGHT2/3 always fail.
+	  [Skotlex]
 2006/02/18
 	* Removed the SP_<stat> cases from status_get_sc_def as they were colliding
 	  with other status changes. [Skotlex]

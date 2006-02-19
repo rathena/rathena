@@ -3424,14 +3424,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SA_SEISMICWEAPON:
 		if (dstsd) {
 			if(dstsd->status.weapon == 0 ||
-				(dstsd->sc.count && (
-				dstsd->sc.data[SC_FIREWEAPON].timer != -1 ||
-				dstsd->sc.data[SC_WATERWEAPON].timer != -1 ||
-				dstsd->sc.data[SC_WINDWEAPON].timer != -1 ||
-				dstsd->sc.data[SC_EARTHWEAPON].timer != -1 ||
-				dstsd->sc.data[SC_SHADOWWEAPON].timer != -1 ||
-				dstsd->sc.data[SC_GHOSTWEAPON].timer != -1 ||
-				dstsd->sc.data[SC_ENCPOISON].timer != -1
+				(dstsd->sc.count && dstsd->sc.data[type].timer == -1 &&
+				(	//Allow re-enchanting to lenghten time. [Skotlex]
+					dstsd->sc.data[SC_FIREWEAPON].timer != -1 ||
+					dstsd->sc.data[SC_WATERWEAPON].timer != -1 ||
+					dstsd->sc.data[SC_WINDWEAPON].timer != -1 ||
+					dstsd->sc.data[SC_EARTHWEAPON].timer != -1 ||
+					dstsd->sc.data[SC_SHADOWWEAPON].timer != -1 ||
+					dstsd->sc.data[SC_GHOSTWEAPON].timer != -1 ||
+					dstsd->sc.data[SC_ENCPOISON].timer != -1
 				))
 				) {
 				if (sd) clif_skill_fail(sd,skillid,0,0);
@@ -3596,8 +3597,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				dstsd->sc.data[SC_WINDWEAPON].timer != -1 ||
 				dstsd->sc.data[SC_EARTHWEAPON].timer != -1 ||
 				dstsd->sc.data[SC_SHADOWWEAPON].timer != -1 ||
-				dstsd->sc.data[SC_GHOSTWEAPON].timer != -1 ||
-				dstsd->sc.data[SC_ENCPOISON].timer != -1) {
+				dstsd->sc.data[SC_GHOSTWEAPON].timer != -1
+			//	dstsd->sc.data[SC_ENCPOISON].timer != -1 //People say you should be able to recast to lengthen the timer. [Skotlex]
+			) {
 					clif_skill_nodamage(src,bl,skillid,skilllv,0);
 					clif_skill_fail(sd,skillid,0,0);
 					break;
@@ -7968,6 +7970,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
+		break;
 	//SHOULD BE OPTIMALIZED [Komurka]
 	case SG_SUN_WARM:
 		if ((sd->bl.m == sd->feel_map[0].m) || (sd->sc.data[SC_MIRACLE].timer!=-1))

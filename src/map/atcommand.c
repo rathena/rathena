@@ -2387,7 +2387,7 @@ int atcommand_kami(
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if(*(command + 5) != 'c') {
+	if(*(command + 5) != 'c' && *(command + 5) != 'C') {
 
 		if (!message || !*message) {
 			clif_displaymessage(fd, "Please, enter a message (usage: @kami <message>).");
@@ -2395,7 +2395,7 @@ int atcommand_kami(
 		}
 
 		sscanf(message, "%199[^\n]", atcmd_output);
-		intif_GMmessage(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b') ? 0x10 : 0);
+		intif_GMmessage(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b' || *(command + 5) == 'B') ? 0x10 : 0);
 	
 	} else {
 	

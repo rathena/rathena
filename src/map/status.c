@@ -343,9 +343,15 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	if (target && status_isdead(target) && skill_num != ALL_RESURRECTION && skill_num != PR_REDEMPTIO)
 		return 0;
 	
-	if (skill_num == PA_PRESSURE && flag)
-		return 1; //Once Gloria Domini has been casted, there's nothing you can do to stop it. [Skotlex]
-	
+	if (skill_num == PA_PRESSURE && flag) {
+	//Once Gloria Domini has been casted, there's nothing you can do to stop it. [Skotlex]
+	//- Except hiding from it.
+		tsc = target?status_get_sc(target):NULL;
+		if(tsc && tsc->option&OPTION_HIDE)
+			return 0;
+		return 1;
+	}
+
 	mode = src?status_get_mode(src):MD_CANATTACK;
 	
 	if (!skill_num && !(mode&MD_CANATTACK))
@@ -3271,7 +3277,6 @@ int status_get_sc_def(struct block_list *bl, int type)
 {
 	int sc_def;
 	struct status_change* sc;
-	struct map_session_data *sd;
 	nullpo_retr(0, bl);
 
 	//Status that are blocked by Golden Thief Bug card or Wand of Hermod
@@ -3350,12 +3355,6 @@ int status_get_sc_def(struct block_list *bl, int type)
 		else if (sc->data[SC_SIEGFRIED].timer != -1)
 			sc_def += 100*sc->data[SC_SIEGFRIED].val2; //Status resistance.
 	}
-
-	sd = bl->type==BL_PC?(struct map_session_data*)bl:NULL;
-	
-	if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX &&
-		sd->reseff[type-SC_COMMON_MIN] > 0)
-		sc_def += sd->reseff[type-SC_COMMON_MIN];
 
 	if(bl->type == BL_PC) {
 		if (sc_def > battle_config.pc_max_sc_def)
@@ -3494,12 +3493,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	//Check rate
 	if (!(flag&(4|1))) {
 		rate*=100; //Pass to 10000 = 100%
-		if (!(flag&8)) {
-			race = status_get_sc_def(bl, type);
-			if (race)
-				rate -= rate*race/10000;
-		}
-		
+		race = flag&8?0:status_get_sc_def(bl, type); //recycling race to store the sc_def value.
+		//sd resistance applies even if the flag is &8
+		if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX && sd->reseff[type-SC_COMMON_MIN] > 0)
+			race+= sd->reseff[type-SC_COMMON_MIN];
+
+		if (race)
+			rate -= rate*race/10000;
+
 		if (!(rand()%10000 < rate))
 			return 0;
 	}
