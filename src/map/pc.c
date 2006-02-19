@@ -740,7 +740,8 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->canmove_tick = tick;
 	sd->canregen_tick = tick;
 	sd->attackabletime = tick;
-
+	sd->canuseitem_tick = tick;
+	
 	for(i = 0; i < MAX_SKILL_LEVEL; i++)
 		sd->spirit_timer[i] = -1;
 	for(i = 0; i < MAX_SKILLTIMERSKILL; i++)
@@ -2811,24 +2812,22 @@ int pc_useitem(struct map_session_data *sd,int n)
 	int amount;
 	unsigned char *script;
 
-	nullpo_retr(1, sd);
+	nullpo_retr(0, sd);
 
 	if(n <0 || n >= MAX_INVENTORY)
 		return 0;
 	
-	if(!pc_isUseitem(sd,n)) {
-		clif_useitemack(sd,n,0,0);
-		return 1;
-	}
-
 	if(sd->status.inventory[n].nameid <= 0 ||
 		sd->status.inventory[n].amount <= 0)
-		return 1;
+		return 0;
+
+	if(!pc_isUseitem(sd,n))
+		return 0;
 
 	 //Prevent mass item usage. [Skotlex]
 	 if (battle_config.item_use_interval &&
 			DIFF_TICK(sd->canuseitem_tick, gettick()) > 0)
-		return 1;
+		return 0;
 
 	if (sd->sc.count && (
 		sd->sc.data[SC_BERSERK].timer!=-1 ||
@@ -2836,10 +2835,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC_GRAVITATION].timer!=-1 ||
 		//Cannot use Potions/Healing items while under Gospel.
 		(sd->sc.data[SC_GOSPEL].timer!=-1 && sd->sc.data[SC_GOSPEL].val4 != BCT_SELF && sd->inventory_data[n]->type == 0)
-	)) {
-		clif_useitemack(sd,n,0,0);
-		return 1;
-	}	
+	))
+		return 0;
 	
 	sd->itemid = sd->status.inventory[n].nameid;
 	sd->itemindex = n;
@@ -2867,7 +2864,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		sd->canuseitem_tick= gettick() + battle_config.item_use_interval; //Update item use time.
 	run_script(script,0,sd->bl.id,0);
 	potion_flag = 0;
-	return 0;
+	return 1;
 }
 
 /*==========================================

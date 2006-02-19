@@ -9622,7 +9622,8 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
-	pc_useitem(sd,RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2);
+	if (!pc_useitem(sd,RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2))
+		clif_useitemack(sd,n,0,0); //Send an empty ack packet or the client gets stuck.
 }
 
 /*==========================================

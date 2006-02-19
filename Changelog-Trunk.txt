@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/19
+	* Some fixes to the last item usage tick. Items should be working fine now.
+	  [Skotlex]
 	* Fixed parsing of @kamic/@kamib to check for case. [Skotlex]
 	* Now you can hide from Pressure. [Skotlex]
 	* Weapon endowing will work on targets already endowed with the same
