@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/20
+	* Close confine won't get the bonus range on cast as other skills do due to
+	  exploits. [Skotlex]
+	* Fixed a bug in setnpctimer. [Skotlex]
 	* Menu-based skills now use their own variables separetly from the normal
 	  skill variables. This should enable them to work even when you keep doing
 	  other stuff between the menu invocation and selection. Also gives a better

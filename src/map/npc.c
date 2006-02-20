@@ -769,7 +769,7 @@ int npc_settimerevent_tick(struct npc_data *nd,int newtimer)
 		}
 		flag= sd->npc_timer_id != -1 ;
 	} else
-		flag= nd->u.scr.timer != -1 ;
+		flag= nd->u.scr.timerid != -1 ;
 	if(flag)
 		npc_timerevent_stop(nd);
 	nd->u.scr.timer=newtimer;

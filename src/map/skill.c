@@ -8489,7 +8489,8 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 	if (!skill_check_condition(sd,0)) return 0;	
 
 	if(sd->bl.id != target_id){ // Don't check range for self skills, this is useless...
-		if(!battle_check_range(&sd->bl,bl,skill_get_range2(&sd->bl, skill_num,skill_lv)+1))
+		if(!battle_check_range(&sd->bl,bl,skill_get_range2(&sd->bl, skill_num,skill_lv)
+		+(skill_num==RG_CLOSECONFINE)?0:1)) //Close confine is expoitable thanks to this extra range "feature" of the client. [Skotlex]
 			return 0;
 	}
 
