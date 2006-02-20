@@ -159,7 +159,7 @@ bonus2 bAddRace2,n,x;			Increase damage by x% vs. enemies of race n
 
 bonus3 bHPLossRate,n,x,y;		Lose n amount of hp every x amount of time
                                         y: 0=Don't show damage 1=Show damage
-bonus3 bAutoSpellWhenHit,x,y,n;		n% chance to cast skill x of level y when
+bonus3 bAutoSpellWhenHit,x,y,n;		n/10% chance to cast skill x of level y when
                                         being hit by physical close range damage
 bonus3 bSPDrainRate,n,x,y;		When attacking there is a n% chance to either
                                         gain SP equivalent to x% of damage dealt, OR
@@ -171,10 +171,10 @@ bonus3 bSPDrainValue,n,x,y;		When attacking there is a n% chance to either
                                         (Note: setting x to -1 or below will reduce
                                         YOUR sp)
 
-bonus4 bAutoSpell,x,y,n,i;		n% chance to cast skill x of level y when
+bonus4 bAutoSpell,x,y,n,i;		n/10% chance to cast skill x of level y when
                                         being attacking
                                         i:0=cast on self  1=cast on enemy
-bonus4 bAutoSpellWhenHit,x,y,n,i;	n% chance to cast skill x of level y when
+bonus4 bAutoSpellWhenHit,x,y,n,i;	n/10% chance to cast skill x of level y when
                                         being hit by physical close range damage
                                         i:0=cast on self  1=cast on enemy
 
