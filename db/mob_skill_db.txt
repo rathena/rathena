@@ -517,7 +517,7 @@
 1112,Drake@NPC_GUIDEDATTACK,chase,172,5,50,0,20000,no,target,always,0,,,,,,
 1112,Drake@NPC_SUMMONSLAVE,attack,196,5,10000,700,10000,no,self,slavele,3,1566,,,,,
 1112,Drake@NPC_SUMMONSLAVE,idle,196,5,10000,700,10000,no,self,slavele,3,1566,,,,,
-112,Drake@NPC_SUMMONSLAVE,idle,196,4,10000,0,0,no,self,onspawn,0,1192,,,,,
+1112,Drake@NPC_SUMMONSLAVE,idle,196,4,10000,0,0,no,self,onspawn,0,1192,,,,,
 1112,Drake@NPC_WATERATTACK,attack,184,5,2000,0,5000,no,target,always,0,,,,,,29
 1112,Drake@NPC_WATERATTACK,chase,184,5,200,0,5000,no,target,always,0,,,,,,29
 1112,Drake@NPC_WATERATTACK,chase,184,5,200,0,5000,no,target,skillused,18,,,,,,29
