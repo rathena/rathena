@@ -25,6 +25,11 @@
 =========================
 
 02/20
+	* 2nd part (status % chances, coma) of item_db.txt update according to Aegis 10.2 file [Komurka]
+	- all cards, that had 20% on status change now have 6%
+	- all cards, that had 10%+20% on status change now have 3%+3%
+	- some small fixes
+	- fixed Assaulter slaves thanks to Poki#3
 	* 1st part (autospells) of item_db.txt update according to Aegis 10.2 file [Komurka]
 	- (to transtation devs) I suggest to update item descriptions
 	* New mob skill database from Aegis 10.2 (mobs 1001-1691) [Komurka]

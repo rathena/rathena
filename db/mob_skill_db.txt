@@ -1447,7 +1447,7 @@
 1315,Assaulter@NPC_EMOTION,attack,197,1,2000,0,600000,yes,self,myhpltmaxrate,20,23,,,,,
 1315,Assaulter@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
 1315,Assaulter@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,7,1173,,,,
-1315,Assaulter@NPC_SUMMONSLAVE,chase,196,1,10000,0,600000,yes,self,myhpltmaxrate,10,,,,,,
+1315,Assaulter@NPC_SUMMONSLAVE,chase,196,3,10000,0,600000,yes,self,myhpltmaxrate,10,1364,,,,,
 1315,Assaulter@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,6
 1315,Assaulter@TF_BACKSLIDING,attack,150,1,10000,500,600000,no,target,myhpltmaxrate,10,,,,,,
 1316,Solider@CR_AUTOGUARD,attack,249,2,500,0,300000,yes,self,always,0,,,,,,
@@ -3247,6 +3247,8 @@
 1685,Vesper@NPC_SUMMONSLAVE,attack,196,3,10000,2000,5000,no,self,slavele,15,1365,1669,1675,,,
 1685,Vesper@WZ_METEOR,attack,83,10,500,10000,20000,yes,target,always,0,,,,,,
 1686,Orc Baby@SM_BASH,attack,5,5,500,800,5000,no,target,always,0,,,,,,6
+//1686,Orc Baby@NPC_EMOTION,attack,197,1,10000,0,5000,no,self,slavele,0,,,,,,
+//1686,Orc Baby@NPC_EMOTION,idle,197,1,10000,0,5000,no,self,slavele,0,,,,,,
 1688,Lady Tany@AC_CHARGEARROW,attack,148,1,2000,0,5000,yes,target,always,0,,,,,,6
 1688,Lady Tany@AL_HEAL,attack,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,2
 1688,Lady Tany@AL_HEAL,idle,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,2
@@ -3283,8 +3285,6 @@
 //1505,Loli Ruri@NPC_SUMMONSLAVE,idle,196,1,50,2000,60000,no,self,slavele,0,no_sub_mob_data,,,,,
 //1645,High Wizard Katrinn@NPC_SUMMONSLAVE,attack,196,1,10000,700,30000,no,self,slavele,2,no_sub_mob_data,,,,,
 //1645,High Wizard Katrinn@NPC_SUMMONSLAVE,idle,196,1,10000,700,30000,no,self,slavele,2,no_sub_mob_data,,,,,
-//1686,Orc Baby@NPC_EMOTION,attack,197,1,10000,0,5000,no,self,slavele,0,no_sub_mob_data,,,,,
-//1686,Orc Baby@NPC_EMOTION,idle,197,1,10000,0,5000,no,self,slavele,0,no_sub_mob_data,,,,,
 //1686,Orc Baby@NPC_SUMMONSLAVE,attack,196,1,10000,0,6000000,yes,self,slavele,0,no_sub_mob_data,,,,,
 //1686,Orc Baby@NPC_SUMMONSLAVE,chase,196,1,10000,0,6000000,yes,self,slavele,0,no_sub_mob_data,,,,,
 //1686,Orc Baby@NPC_SUMMONSLAVE,idle,196,1,10000,0,6000000,yes,self,slavele,0,no_sub_mob_data,,,,,
