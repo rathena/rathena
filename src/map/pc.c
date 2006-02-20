@@ -7949,14 +7949,11 @@ int pc_autosave(int tid,unsigned int tick,int id,int data)
 
 int pc_read_gm_account(int fd)
 {
-#ifdef TXT_ONLY
 	int i = 0;
 	RFIFOHEAD(fd);
-#endif
 	if (gm_account != NULL)
 		aFree(gm_account);
 	GM_num = 0;
-#ifdef TXT_ONLY
 	gm_account = (struct gm_account *) aCallocA(((RFIFOW(fd,2) - 4) / 5), sizeof(struct gm_account));
 	for (i = 4; i < RFIFOW(fd,2); i = i + 5) {
 		gm_account[GM_num].account_id = RFIFOL(fd,i);
@@ -7964,26 +7961,6 @@ int pc_read_gm_account(int fd)
 		//printf("GM account: %d -> level %d\n", gm_account[GM_num].account_id, gm_account[GM_num].level);
 		GM_num++;
 	}
-#else
-	sprintf (tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",gm_db_account_id,gm_db_level,gm_db,gm_db_level,lowest_gm_level);
-	if(mysql_query(&lmysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&lmysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		return 0;
-	}
-	lsql_res = mysql_store_result(&lmysql_handle);
-	if (lsql_res) {
-	    gm_account = (struct gm_account *) aCallocA((size_t)mysql_num_rows(lsql_res), sizeof(struct gm_account));
-	    while ((lsql_row = mysql_fetch_row(lsql_res))) {
-	        gm_account[GM_num].account_id = atoi(lsql_row[0]);
-		    gm_account[GM_num].level = atoi(lsql_row[1]);
-		    ShowNotice("GM account: %d -> level %d\n", gm_account[GM_num].account_id, gm_account[GM_num].level);
-		    GM_num++;
-	    }
-    }
-
-    mysql_free_result(lsql_res);
-#endif /* TXT_ONLY */
 	return GM_num;
 }
 
@@ -8394,9 +8371,6 @@ int do_init_pc(void) {
 	natural_heal_prev_tick = gettick();
 	add_timer_interval(natural_heal_prev_tick + NATURAL_HEAL_INTERVAL, pc_natural_heal, 0, 0, NATURAL_HEAL_INTERVAL);
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
-#ifndef TXT_ONLY
-	pc_read_gm_account(0);
-#endif /* not TXT_ONLY */
 
 	if (battle_config.day_duration > 0 && battle_config.night_duration > 0) {
 		int day_duration = battle_config.day_duration;

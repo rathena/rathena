@@ -343,15 +343,6 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	if (target && status_isdead(target) && skill_num != ALL_RESURRECTION && skill_num != PR_REDEMPTIO)
 		return 0;
 	
-	if (skill_num == PA_PRESSURE && flag) {
-	//Once Gloria Domini has been casted, there's nothing you can do to stop it. [Skotlex]
-	//- Except hiding from it.
-		tsc = target?status_get_sc(target):NULL;
-		if(tsc && tsc->option&OPTION_HIDE)
-			return 0;
-		return 1;
-	}
-
 	mode = src?status_get_mode(src):MD_CANATTACK;
 	
 	if (!skill_num && !(mode&MD_CANATTACK))
@@ -368,6 +359,19 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		if (race&INF_GROUND_SKILL && skill_get_unit_target(skill_num)&BCT_ENEMY)
 			return 0;
 	}	
+
+	if (skill_num == PA_PRESSURE && flag) {
+	//Gloria Avoids pretty much everythng....
+		tsc = target?status_get_sc(target):NULL;
+		if(tsc) {
+			if (tsc->option&OPTION_HIDE)
+				return 0;
+			if (tsc->count && tsc->data[SC_TRICKDEAD].timer != -1)
+				return 0;
+		}
+		return 1;
+	}
+
 	if (src) sc = status_get_sc(src);
 	
 	if(sc && sc->opt1 >0)

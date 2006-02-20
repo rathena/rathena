@@ -5,6 +5,15 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/20
+	* Play-dead and Basilica now block Gospel [Skotlex]
+	* Map SQL server will no longer ignore the gm-list packets received from
+	  char. [Skotlex]
+	* Login-SQL server will not free the current GM listing if the SQL reading
+	  of it failed (prevents GM lists being lost on SQL connection problems)
+	  [Skotlex]
+	* Login-SQL will now read for the GM list ALL accounts with level above 0,
+	  not just those with level above min_gm_level (just like the TXT server
+	  does) [Skotlex]
 	* SC_NOCHAT is not dispelled on death now. [Skotlex]
 	* Cleaned up the global message function, Super Novice Explosion Spirits
 	  will not trigger on maps where said skill can't be used. [Skotlex]

@@ -122,7 +122,6 @@ char login_db_level[256] = "level";
 
 char reg_db[256] = "global_reg_value";
 
-int lowest_gm_level;
 struct gm_account *gm_account_db;
 int GM_num;
 char tmpsql[65535], tmp_sql[65535];
@@ -203,15 +202,20 @@ void read_gm_account(void) {
 	MYSQL_RES* sql_res ;
 	MYSQL_ROW sql_row;
 
-	if (gm_account_db != NULL)
-		aFree(gm_account_db);
-	GM_num = 0;
-
-	sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",login_db_account_id,login_db_level,login_db,login_db_level,lowest_gm_level);
+	sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`> '0'",login_db_account_id,login_db_level,login_db,login_db_level);
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		return; //Failed to read GM list!
 	}
+
+	if (gm_account_db != NULL)
+	{
+		aFree(gm_account_db);
+		gm_account_db = NULL;
+	}
+	GM_num = 0;
+
 	sql_res = mysql_store_result(&mysql_handle);
 	if (sql_res) {
 		gm_account_db = (struct gm_account*)aCalloc((size_t)mysql_num_rows(sql_res), sizeof(struct gm_account));
@@ -2145,9 +2149,6 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		}
 		else if (strcmpi(w1, "loginlog_db") == 0) {
 			strcpy(loginlog_db, w2);
-		}
-		else if (strcmpi(w1, "lowest_gm_level") == 0) {
-			lowest_gm_level = atoi(w2);
 		}
 		else if (strcmpi(w1, "reg_db") == 0) {
 			strcpy(reg_db, w2);
