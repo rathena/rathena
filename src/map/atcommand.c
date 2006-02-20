@@ -256,6 +256,7 @@ ACMD_FUNC(undisguiseall);
 ACMD_FUNC(disguiseall);
 ACMD_FUNC(changelook);
 ACMD_FUNC(mobinfo);	//by Lupus
+ACMD_FUNC(exp);	// by Skotlex
 ACMD_FUNC(adopt); // by Veider
 
 ACMD_FUNC(version); // by Ancyker
@@ -565,6 +566,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_MobInfo,			"@mobinfo",			 1, atcommand_mobinfo }, // [Lupus]
 	{ AtCommand_MobInfo,			"@monsterinfo",		 1, atcommand_mobinfo }, // [Lupus]
 	{ AtCommand_MobInfo,			"@mi",			 1, atcommand_mobinfo }, // [Lupus]
+	{ AtCommand_Exp,				"@exp",	0,	atcommand_exp },	// [Skotlex]
 	{ AtCommand_Adopt,            	"@adopt",			40, atcommand_adopt }, // [Veider]
 	{ AtCommand_Version,			"@version",			 1, atcommand_version },
 
@@ -6506,6 +6508,32 @@ int atcommand_undisguiseall(
 
 	return 0;
 }
+/*==========================================
+ * @exp by [Skotlex]
+ *------------------------------------------
+ */
+int atcommand_exp(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char output[200];
+	double nextb, nextj;
+	nullpo_retr(-1, sd);
+	memset(output, '\0', sizeof(output));
+	
+	nextb = pc_nextbaseexp(sd);
+	if (nextb)
+		nextb = sd->status.base_exp*100.0/nextb;
+	
+	nextj = pc_nextjobexp(sd);
+	if (nextj)
+		nextj = sd->status.job_exp*100.0/nextj;
+	
+	sprintf(output, "Base Level: %d (%.3f%%) | Job Level: %d (%.3f%%)", sd->status.base_level, nextb, sd->status.job_level, nextj);
+	clif_displaymessage(fd, output);
+	return 0;
+}
+
 
 /*==========================================
  * @broadcast by [Valaris]

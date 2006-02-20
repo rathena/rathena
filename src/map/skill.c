@@ -859,13 +859,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			// Chance to trigger Taekwon kicks [Dralnu]
 			if(sd->sc.count) {
 				if(sd->sc.data[SC_READYSTORM].timer != -1)
-					status_change_start(src,SC_COMBO, TK_STORMKICK,15,0,0,0,
+					status_change_start(src,SC_COMBO, 15, TK_STORMKICK,0,0,0,
 						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src)),0);
 				else if(sd->sc.data[SC_READYDOWN].timer != -1)
-					status_change_start(src,SC_COMBO, TK_DOWNKICK,15,0,0,0,
+					status_change_start(src,SC_COMBO, 15, TK_DOWNKICK,0,0,0,
 						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src)),0);
 				else if(sd->sc.data[SC_READYTURN].timer != -1 && sd->sc.data[SC_COMBO].timer == -1)
-					status_change_start(src,SC_COMBO, TK_TURNKICK,15,0,0,0,
+					status_change_start(src,SC_COMBO, 15, TK_TURNKICK,0,0,0,
 						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src)),0);
 				else if(sd->sc.data[SC_READYCOUNTER].timer != -1 && sd->sc.data[SC_COMBO].timer == -1) //additional chance from SG_FRIEND [Komurka]
 				{	
@@ -874,7 +874,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 						rate += rate*sd->sc.data[SC_SKILLRATE_UP].val2/100;
 						status_change_end(src,SC_SKILLRATE_UP,-1);
 					} 
-					status_change_start(src,SC_COMBO, TK_COUNTER,rate, bl->id,0,0,
+					status_change_start(src,SC_COMBO, rate, TK_COUNTER, bl->id,0,0,
 						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src)),0);
 				}
 			}
@@ -3052,7 +3052,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		return 1;
 
 	//Self skill with target changed? We assume these are offensive auto-select-target skills. [Skotlex]
-	if (skill_get_inf(skillid)&INF_SELF_SKILL && src != bl && !(skill_get_nk(skillid)&NK_NO_DAMAGE))
+	//But only do this on the first call (flag&~1)
+	if (!(flag&1) && skill_get_inf(skillid)&INF_SELF_SKILL && src != bl && !(skill_get_nk(skillid)&NK_NO_DAMAGE))
 		return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
 	
 	if (skillid > 0 && skillid < MAX_SKILL)
@@ -6758,12 +6759,14 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	switch (sg->unit_id) {
 	case UNT_FIREWALL:
 		{
-			int flag=0, t_ele = status_get_elem_type(bl);
-			if (t_ele == 3 || battle_check_undead(status_get_race(bl), t_ele))
-				flag = src->val2>battle_config.firewall_hits_on_undead?battle_config.firewall_hits_on_undead:src->val2; 
-			
-			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,flag);
-			src->val2-=flag?flag:1;
+			int count=0, t_ele = status_get_elem_type(bl);
+			if (t_ele == 3 || battle_check_undead(status_get_race(bl), t_ele)) {
+				while (count++ < battle_config.firewall_hits_on_undead && src->val2-- && !status_isdead(bl))
+					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*10,1);
+			} else {
+				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+				src->val2--;
+			}
 			if (src->val2<=0)
 				skill_delunit(src);
 		break;

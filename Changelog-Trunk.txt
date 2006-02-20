@@ -5,6 +5,15 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/20
+	* Fixed Taekwon stances not triggering. [Skotlex]
+	* Added atcommand @exp [Skotlex]
+	* Added error reporting when add_timer_interval receives a negative/0
+	  interval value. [Skotlex]
+	* Fixed a possible infinite recursion bug with splash self skills. [Skotlex]
+	* Modified the way firewall_hits_on_undead works, to loop and invoke
+	  multiple skill_attacks based on the value. Now it behaves a lot closer to
+	  how Aegis Firewall does (except a good default value for this config switch
+	  is missing) [Skotlex]
 	* Preparing eA for new mob_skill_db from Aegis 10.2 [Komurka]
 	- increased MAX_MOBSKILL 32 -> 40
 

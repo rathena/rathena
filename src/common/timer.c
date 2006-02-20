@@ -237,8 +237,15 @@ int add_timer(unsigned int tick,int (*func)(int,unsigned int,int,int), int id, i
 
 int add_timer_interval(unsigned int tick, int (*func)(int,unsigned int,int,int), int id, int data, int interval)
 {
-	int tid = acquire_timer();
+	int tid;
 
+	if (interval < 1) {
+		ShowError("add_timer_interval : function %08x(%s) has invalid interval %d!\n",
+			 (int)func, search_timer_func_list(func));
+		return -1;
+	}
+	
+	tid = acquire_timer();
 	timer_data[tid].tick	= tick;
 	timer_data[tid].func	= func;
 	timer_data[tid].id		= id;
