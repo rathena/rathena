@@ -9038,31 +9038,31 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <len>.w <str>.?B
-	char *message;
-	unsigned char *buf;
+	unsigned char *message, *buf, buf2[128];
 	RFIFOHEAD(fd);
+	WFIFOHEAD(fd, RFIFOW(fd,2) + 4);
 
-	message = (char*)RFIFOP(fd,4);
+	message = (unsigned char*)RFIFOP(fd,4);
 	if (strlen(message) < strlen(sd->status.name) || //If the incoming string is too short...
 		strncmp(message, sd->status.name, strlen(sd->status.name)) != 0) //Or the name does not matches...
 	{
+		unsigned char gm_msg[256];
 		ShowWarning("Hack on global message: character '%s' (account: %d), use an other name to send a (normal) message.\n", sd->status.name, sd->status.account_id);
-		message = (char*)aCallocA(256, sizeof(char));
 		// information is sended to all online GM
-		sprintf(message, "Hack on global message (normal message): character '%s' (account: %d) uses another name.", sd->status.name, sd->status.account_id);
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message);
+		sprintf(gm_msg, "Hack on global message (normal message): character '%s' (account: %d) uses another name.", sd->status.name, sd->status.account_id);
+		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
 		
-		if (strlen((char*)RFIFOP(fd,4)) == 0)
-			strcpy(message, " This player sends a void name and a void message.");
+		if (strlen(message) == 0)
+			strcpy(gm_msg, " This player sends a void name and a void message.");
 		else
-			snprintf(message, 255, " This player sends (name:message): '%128s'.", RFIFOP(fd,4));
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message);
+			snprintf(gm_msg, 255, " This player sends (name:message): '%128s'.", message);
+		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
 		// message about the ban
 		if (battle_config.ban_spoof_namer > 0)
-			sprintf(message, " This player has been banned for %d minute(s).", battle_config.ban_spoof_namer);
+			sprintf(gm_msg, " This player has been banned for %d minute(s).", battle_config.ban_spoof_namer);
 		else
-			sprintf(message, " This player hasn't been banned (Ban option is disabled).");
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message);
+			sprintf(gm_msg, " This player hasn't been banned (Ban option is disabled).");
+		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
 
 		// if we ban people
 		if (battle_config.ban_spoof_namer > 0) {
@@ -9071,8 +9071,6 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		}
 		else
 			session[fd]->eof = 1; //Disconnect them too, bad packets can cause problems down the road. [Skotlex]
-				
-		if(message) aFree(message);
 		return;
 	}
 	
@@ -9083,52 +9081,58 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		(sd->sc.data[SC_BERSERK].timer != -1 || sd->sc.data[SC_NOCHAT].timer != -1 ))
 		return;
 
-	buf = (unsigned char*)aCallocA(RFIFOW(fd,2) + 4, sizeof(char));
+	if (RFIFOW(fd,2)+4 < 128)
+		buf = buf2; //Use a static buffer.
+	else
+		buf = (unsigned char*)aCallocA(RFIFOW(fd,2) + 4, sizeof(char));
 
 	// send message to others
 	WBUFW(buf,0) = 0x8d;
 	WBUFW(buf,2) = RFIFOW(fd,2) + 4; // len of message - 4 + 8
 	WBUFL(buf,4) = sd->bl.id;
-	memcpy(WBUFP(buf,8), RFIFOP(fd,4), RFIFOW(fd,2) - 4);
+	memcpy(WBUFP(buf,8), message, RFIFOW(fd,2) - 4);
 	clif_send(buf, WBUFW(buf,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
 
+	if(buf != buf2) aFree(buf);
+
 	// send back message to the speaker
-	WFIFOHEAD(fd, RFIFOW(fd,2) + 4);
 	memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
 	WFIFOW(fd,0) = 0x8e;
 	WFIFOSET(fd, WFIFOW(fd,2));
 
 #ifdef PCRE_SUPPORT
-	map_foreachinarea(npc_chat_sub, sd->bl.m, sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE, sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_NPC, RFIFOP(fd,4), strlen(RFIFOP(fd,4)), &sd->bl);
+	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, message, strlen(message), &sd->bl);
 #endif
 
 	// Celest
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) { //Super Novice.
 		int next = pc_nextbaseexp(sd);
-		char *rfifo = (char*)RFIFOP(fd,4);
 		if (next > 0 && (sd->status.base_exp * 1000 / next)% 100 == 0) {
-			if (sd->state.snovice_flag == 0 && strstr(rfifo, msg_txt(504)))
-				sd->state.snovice_flag = 1;
-			else if (sd->state.snovice_flag == 1) {
-				message = (char*)aCallocA(128, sizeof(char));
-				sprintf(message, msg_txt(505), sd->status.name);
-				if (strstr(rfifo, message))
-					sd->state.snovice_flag = 2;
-				aFree(message);
-			}
-			else if (sd->state.snovice_flag == 2 && strstr(rfifo, msg_txt(506)))
-				sd->state.snovice_flag = 3;
-			else if (sd->state.snovice_flag == 3) {
-				clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,1);
-				status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],100,
-						17,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,1),0 ); //Lv17-> +50 critical (noted by Poki) [Skotlex]
+			switch (sd->state.snovice_flag) {
+			case 0:
+				if (strstr(message, msg_txt(504)))
+					sd->state.snovice_flag++;
+				break;
+			case 1:
+				sprintf(buf2, msg_txt(505), sd->status.name);
+				if (strstr(message, buf2))
+					sd->state.snovice_flag++;
+				break;
+			case 2:
+				if (strstr(message, msg_txt(506)))
+					sd->state.snovice_flag++;
+				break;
+			case 3:
+				if (skillnotok(MO_EXPLOSIONSPIRITS,sd))
+					break; //Do not override the noskill mapflag. [Skotlex]
+				clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
+					status_change_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],100,
+						17,0,0,0,skill_get_time(MO_EXPLOSIONSPIRITS,1),0 )); //Lv17-> +50 critical (noted by Poki) [Skotlex]
 				sd->state.snovice_flag = 0;
+				break;
 			}
 		}
 	}
-
-	if(buf) aFree(buf);
-
 	return;
 }
 

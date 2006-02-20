@@ -4615,7 +4615,8 @@ int status_change_clear(struct block_list *bl,int type)
 		//Type 0: PC killed -> EDP and Meltdown must not be dispelled. [Skotlex]
 		// Do not reset Xmas status when killed. [Valaris]
 		if(sc->data[i].timer == -1 ||
-			(type == 0 && (i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS)))
+			(type == 0 &&
+			(i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS || i == SC_NOCHAT)))
 			continue;
 
 		status_change_end(bl, i, -1);
