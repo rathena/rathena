@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/20
+	* Corrected the implementation of Gangster's Paradise to work as it should.
+	  [Skotlex]
+	* Fixed Close-confine not properly ending on a knockback (that includes
+	  backsliding) [Skotlex]
 	* Changed MAX_RANDITEM from 2000 to 10000 to fit new databases [Komurka]
 	* Fixed Taekwon stances not triggering. [Skotlex]
 	* Added atcommand @exp [Skotlex]

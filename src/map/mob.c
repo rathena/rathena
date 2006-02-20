@@ -1285,6 +1285,9 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	switch (bl->type)
 	{
 	case BL_PC:
+		if (((struct map_session_data*)bl)->state.gangsterparadise &&
+			!(status_get_mode(&md->bl)&MD_BOSS))
+			return 0; //Gangster paradise protection.
 	case BL_MOB:
 		if((dist=distance_bl(&md->bl, bl)) < md->db->range2
 			&& (md->db->range > 6 || mob_can_reach(md,bl,dist+1, MSS_FOLLOW))
@@ -1598,8 +1601,10 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	if (md->target_id)
 	{	//Check validity of current target. [Skotlex]
 		tbl = map_id2bl(md->target_id);
-		if (!tbl || tbl->m != md->bl.m || !status_check_skilluse(&md->bl, tbl, 0, 0))
-		{	//Unlock current target.
+		if (!tbl || tbl->m != md->bl.m || !status_check_skilluse(&md->bl, tbl, 0, 0) || (
+				tbl->type == BL_PC && !(mode&MD_BOSS) &&
+				((struct map_session_data*)tbl)->state.gangsterparadise
+		)) {	//Unlock current target.
 			if (md->state.state == MS_WALK && (battle_config.mob_ai&8 || !tbl)) //Inmediately stop chasing.
 				mob_stop_walking(md, 2);
 			mob_unlocktarget(md, tick-(battle_config.mob_ai&8?3000:0)); //Imediately do random walk.
@@ -1616,8 +1621,12 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				(dist = distance_bl(&md->bl, abl)) >= 32 ||
 				battle_check_target(bl, abl, BCT_ENEMY) <= 0 ||
 				(battle_config.mob_ai&2 && !status_check_skilluse(bl, abl, 0, 0)) ||
-				!mob_can_reach(md, abl, dist+2, MSS_RUSH)) //Some more cells of grace...
-			{	//Can't attack back
+				!mob_can_reach(md, abl, dist+2, MSS_RUSH ||
+				(	//Gangster Paradise check
+					abl->type == BL_PC && !(mode&MD_BOSS) &&
+					((struct map_session_data*)abl)->state.gangsterparadise
+				)
+			))	{	//Can't attack back
 				if (md->attacked_count++ > 3) {
 					if (mobskill_use(md, tick, MSC_RUDEATTACKED) == 0 &&
 						mode&MD_CANMOVE && mob_can_move(md))

@@ -490,6 +490,7 @@ int map_delblock_sub (struct block_list *bl, int flag)
  */
 int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 	int x0 = bl->x, y0 = bl->y;
+	struct status_change *sc = NULL;
 	int moveblock = ( x0/BLOCK_SIZE != x1/BLOCK_SIZE || y0/BLOCK_SIZE != y1/BLOCK_SIZE);
 
 	if (!bl->prev) {
@@ -499,8 +500,16 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 		return 0;	
 	}
 	//TODO: Perhaps some outs of bounds checking should be placed here?
-	if (bl->type&BL_CHAR)
+	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,tick,2);
+		sc = status_get_sc(bl);
+		if (sc && sc->count) {
+			if (sc->data[SC_CLOSECONFINE].timer != -1)
+				status_change_end(bl, SC_CLOSECONFINE, -1);
+			if (sc->data[SC_CLOSECONFINE2].timer != -1)
+				status_change_end(bl, SC_CLOSECONFINE2, -1);
+		}
+	}
 	if (moveblock) map_delblock_sub(bl,0);
 #ifdef CELL_NOSTACK
 	else map_delblcell(bl);
@@ -512,22 +521,18 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 	else map_addblcell(bl);
 #endif
 	if (bl->type&BL_CHAR) {
-		struct status_change *sc = status_get_sc(bl);
 		skill_unit_move(bl,tick,3);
 		if (sc) {
 			if (sc->option&OPTION_CLOAK)
 				skill_check_cloaking(bl);
 			if (sc->count) {
 				if (sc->data[SC_DANCING].timer != -1) {
-					if (sc->data[SC_DANCING].val1 == CG_MOONLIT) //Cancel Moonlight Petals if moved from casting position. [Skotlex]
+					//Cancel Moonlight Petals if moved from casting position. [Skotlex]
+					if (sc->data[SC_DANCING].val1 == CG_MOONLIT)
 						skill_stop_dancing(bl);
 					else
 						skill_unit_move_unit_group((struct skill_unit_group *)sc->data[SC_DANCING].val2, bl->m, x1-x0, y1-y0);
 				}
-				if (sc->data[SC_CLOSECONFINE].timer != -1)
-					status_change_end(bl, SC_CLOSECONFINE, -1);
-				if (sc->data[SC_CLOSECONFINE2].timer != -1)
-					status_change_end(bl, SC_CLOSECONFINE2, -1);
 			}
 		}
 	}

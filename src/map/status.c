@@ -457,14 +457,12 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			struct map_session_data *sd = (struct map_session_data*) target;
 			if (pc_isinvisible(sd))
 				return 0;
-			if ((tsc->option&hide_flag || sd->state.gangsterparadise)
+			if (tsc->option&hide_flag
 				&& (sd->state.perfect_hiding || !(race == 4 || race == 6 || mode&MD_DETECTOR))
 				&& !(mode&MD_BOSS))
 				return 0;
 		}
 		break;
-	case BL_PET:
-		return 0;
 	case BL_ITEM:	//Allow targetting of items to pick'em up (or in the case of mobs, to loot them).
 		//TODO: Would be nice if this could be used to judge whether the player can or not pick up the item it targets. [Skotlex]
 		if (mode&MD_LOOTER)
