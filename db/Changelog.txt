@@ -25,6 +25,18 @@
 =========================
 
 02/20
+	* Updated item_bluebox.txt, item_giftbox.txt, item_violetbox.txt, item_db.txt, mob_db.txt, [Komurka]
+	  added item_cookie_bag.txt
+	- new databases from Aegis 10.2
+	- implemented Cookie Bag item
+	- added missing mobs
+	- note: yes, I know that random item databases can be shorter (item_bluebox.txt, item_violetbox.txt,
+	  item_cookie_bag.txt, but not with current implementation of item randomizing
+	  for expamle:
+		- there are 9285 items in item_bluebox.txt, and 1000000/9285 = real value
+		- so line with Red Potion would contain rate = 1000000/9285*12 = real value (can't be)
+	  I think it's better to have bigger db, and do ONE rand check, than shorter and check it even 1000 times ~~
+	  (in function itemdb_searchrandomid) so please, don't mess with them, or change them
 	* Updated mobs mode (ID 1001-1691) according to Aegis 10.2 [Komurka]
 	* 2nd part (status % chances, coma) of item_db.txt update according to Aegis 10.2 file [Komurka]
 	- all cards, that had 20% on status change now have 6%

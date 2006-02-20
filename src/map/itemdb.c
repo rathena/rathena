@@ -15,7 +15,7 @@
 #include "script.h"
 #include "pc.h"
 
-#define MAX_RANDITEM	2000
+#define MAX_RANDITEM	10000
 #define MAX_ITEMGROUP	32
 // ** ITEMDB_OVERRIDE_NAME_VERBOSE **
 //   定義すると、itemdb.txtとgrfで名前が異なる場合、表示します.
@@ -23,9 +23,9 @@
 
 static struct dbt* item_db;
 
-static struct random_item_data blue_box[MAX_RANDITEM], violet_box[MAX_RANDITEM], card_album[MAX_RANDITEM], gift_box[MAX_RANDITEM], scroll[MAX_RANDITEM], finding_ore[MAX_RANDITEM];
-static int blue_box_count=0, violet_box_count=0, card_album_count=0, gift_box_count=0, scroll_count=0, finding_ore_count = 0;
-static int blue_box_default=0, violet_box_default=0, card_album_default=0, gift_box_default=0, scroll_default=0, finding_ore_default = 0;
+static struct random_item_data blue_box[MAX_RANDITEM], violet_box[MAX_RANDITEM], card_album[MAX_RANDITEM], gift_box[MAX_RANDITEM], scroll[MAX_RANDITEM], finding_ore[MAX_RANDITEM], cookie_bag[MAX_RANDITEM];
+static int blue_box_count=0, violet_box_count=0, card_album_count=0, gift_box_count=0, scroll_count=0, finding_ore_count = 0, cookie_bag_count=0;
+static int blue_box_default=0, violet_box_default=0, card_album_default=0, gift_box_default=0, scroll_default=0, finding_ore_default = 0, cookie_bag_default=0;
 
 static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
@@ -84,7 +84,7 @@ int itemdb_searchrandomid(int flags)
 	struct {
 		int nameid,count;
 		struct random_item_data *list;
-	} data[7];
+	} data[8];
 
 	// for BCC32 compile error
 	data[0].nameid = 0;						data[0].count = 0; 					data[0].list = NULL;
@@ -94,8 +94,9 @@ int itemdb_searchrandomid(int flags)
 	data[4].nameid = gift_box_default;		data[4].count = gift_box_count;		data[4].list = gift_box;
 	data[5].nameid = scroll_default;		data[5].count = scroll_count;		data[5].list = scroll;
 	data[6].nameid = finding_ore_default;	data[6].count = finding_ore_count;	data[6].list = finding_ore;
+	data[7].nameid = cookie_bag_default;	data[7].count = cookie_bag_count;	data[7].list = cookie_bag;
 
-	if(flags>=1 && flags<=6){
+	if(flags>=1 && flags<=7){
 		nameid=data[flags].nameid;
 		count=data[flags].count;
 		list=data[flags].list;
@@ -354,6 +355,7 @@ static int itemdb_read_randomitem(void)
 		{"item_giftbox.txt",		gift_box,	&gift_box_count, &gift_box_default	},
 		{"item_scroll.txt",		scroll,		&scroll_count, &scroll_default	},
 		{"item_findingore.txt",	finding_ore,&finding_ore_count, &finding_ore_default	},
+		{"item_cookie_bag.txt",	cookie_bag,&cookie_bag_count, &cookie_bag_default	},
 	};
 
 	for(i=0;i<sizeof(data)/sizeof(data[0]);i++){
@@ -361,6 +363,7 @@ static int itemdb_read_randomitem(void)
 		int *pc=data[i].pcount;
 		int *pdefault=data[i].pdefault;
 		char *fn=(char *) data[i].filename;
+		ln=0;
 
 		*pdefault = 0;
 		sprintf(line, "%s/%s", db_path, fn);

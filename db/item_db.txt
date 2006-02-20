@@ -2340,7 +2340,7 @@
 12128,Court_Cooking_Set,Court Cooking Set,2,,10,70,,,,,127918079,7,2,,,,,,{ produce 11; }
 12129,Legendary_Cooking_Set,Legendary Cooking Set,2,,10,70,,,,,127918079,7,2,,,,,,{ produce 11; }
 //
-12130,Cookie_Bag,Cookie Bag,3,,10,70,,,,,127918079,7,2,,,,,,{}
+12130,Cookie_Bag,Cookie Bag,2,,10,70,,,,,127918079,7,2,,,,,,{ getitem -7,1; }
 12131,Lucky_Potion,Lucky Potion,0,,10,100,,,,,127918079,7,2,,,,,,{}
 12132,Santa's_Bag,Santa's Bag,2,,10,200,,,,,127918079,7,2,,,,,,{ sc_start SC_Xmas,600000,0;}
 12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,127918079,7,2,,,,,,{ if(gettime(5)==MDiceCone)end; set MDiceCone,gettime(5); percentheal 50,50; }
