@@ -25,6 +25,7 @@
 =========================
 
 02/20
+	* Some mob_skill_db fixes [Komurka]
 	* Fixed a small typo I found while browsing through the mob skill database [MasterOfMuppets]
 	* Reverted back all 'status change' cards back to 10/20/30% (kRO website have full descs ~~) [Komurka]
 	* Updated item_bluebox.txt, item_giftbox.txt, item_violetbox.txt, item_db.txt, mob_db.txt, [Komurka]
