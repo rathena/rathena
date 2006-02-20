@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/20
+	* Made the Char-SQL server send the GM listing when the map server
+	  connects. [Skotlex]
 	* Play-dead and Basilica now block Gospel [Skotlex]
 	* Map SQL server will no longer ignore the gm-list packets received from
 	  char. [Skotlex]

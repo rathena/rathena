@@ -6764,6 +6764,8 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		{
 			int count=0, t_ele = status_get_elem_type(bl);
 			if (t_ele == 3 || battle_check_undead(status_get_race(bl), t_ele)) {
+				//This is the best Aegis approximation we can do without 
+				//changing the minimum skill unit interval. [Skotlex]
 				while (count++ < battle_config.firewall_hits_on_undead && src->val2-- && !status_isdead(bl))
 					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*10,1);
 			} else {

@@ -3352,7 +3352,7 @@ int parse_char(int fd) {
 				WFIFOB(fd,2) = 3;
 				WFIFOSET(fd, 3);
 			} else {
-//				int len;
+				int len;
 				WFIFOB(fd,2) = 0;
 				WFIFOSET(fd, 3);
 				session[fd]->func_parse = parse_frommap;
@@ -3364,7 +3364,6 @@ int parse_char(int fd) {
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 				char_mapif_init(fd);
 				// send gm acccounts level to map-servers
-/* removed by CLOWNISIUS due to isGM
 				len = 4;
 				WFIFOW(fd,0) = 0x2b15;
 				for(i = 0; i < GM_num; i++) {
@@ -3373,7 +3372,7 @@ int parse_char(int fd) {
 					len += 5;
 				}
 				WFIFOW(fd,2) = len;
-				WFIFOSET(fd,len);*/
+				WFIFOSET(fd,len);
 			}
 			RFIFOSKIP(fd,60);
 			break;

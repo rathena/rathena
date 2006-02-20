@@ -241,7 +241,7 @@ int add_timer_interval(unsigned int tick, int (*func)(int,unsigned int,int,int),
 
 	if (interval < 1) {
 		ShowError("add_timer_interval : function %08x(%s) has invalid interval %d!\n",
-			 (int)func, search_timer_func_list(func));
+			 (int)func, search_timer_func_list(func), interval);
 		return -1;
 	}
 	
