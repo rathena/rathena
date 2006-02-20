@@ -4276,12 +4276,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				// possibility to skip menu [LuzZza]
 				if(!battle_config.skip_teleport_lv1_menu &&
 					sd->skillid == AL_TELEPORT) //If skillid is not teleport, this was auto-casted! [Skotlex]
-					clif_skill_warppoint(sd,skillid,"Random","","","");
+					clif_skill_warppoint(sd,skillid,skilllv,"Random","","","");
 				else
 					pc_randomwarp(sd,3);
 			} else {
 				if (sd->skillid == AL_TELEPORT)
-					clif_skill_warppoint(sd,skillid,"Random",
+					clif_skill_warppoint(sd,skillid,skilllv,"Random",
 						mapindex_id2name(sd->status.save_point.map),"","");
 				else //Autocasted Teleport level 2??
 					pc_setpos(sd,sd->status.save_point.map,
@@ -5534,9 +5534,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SG_FEEL:
 		if (sd) {
 			if(!sd->feel_map[skilllv-1].index) {
-				sd->feel_level=skilllv-1;
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
-				clif_parse_ReqFeel(sd->fd,sd);
+				clif_parse_ReqFeel(sd->fd,sd, skilllv);
 			}
 			else
 				clif_feel_info(sd, skilllv-1);
@@ -5729,11 +5728,10 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 
 	if(sd->sc.count && sd->sc.data[SC_MAGICPOWER].timer != -1 && sd->skillid != HW_MAGICPOWER)
 		status_change_end(&sd->bl,SC_MAGICPOWER,-1);		
-		
-	if (sd->skillid != AL_TELEPORT && sd->skillid != WS_WEAPONREFINE) {
-		sd->skillid = sd->skilllv = -1; //Clean this up for future references to battle_getcurrentskill. [Skotlex]
-		sd->skilltarget = 0;
-	}
+
+	//Clean this up for future references to battle_getcurrentskill. [Skotlex]
+	sd->skillid = sd->skilllv = -1;
+	sd->skilltarget = 0;
 	return 0;
 #undef skill_failed
 }
@@ -5998,7 +5996,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 
 	case AL_WARP:				/* ƒ??ƒvƒ|?ƒ^ƒ‹ */
 		if(sd) {
-			clif_skill_warppoint(sd,skillid,mapindex_id2name(sd->status.save_point.map),
+			clif_skill_warppoint(sd,skillid,skilllv,mapindex_id2name(sd->status.save_point.map),
 				(sd->skilllv>1)?mapindex_id2name(sd->status.memo_point[0].map):"",
 				(sd->skilllv>2)?mapindex_id2name(sd->status.memo_point[1].map):"",
 				(sd->skilllv>3)?mapindex_id2name(sd->status.memo_point[2].map):"");
@@ -6145,8 +6143,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 	nullpo_retr(0, sd);
 
 //Simplify skill_failed code.
-#undef skill_failed
-#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; }
+#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->menuskill_id = sd->menuskill_lv = 0; }
 
 	if( sd->bl.prev == NULL || pc_isdead(sd) )
 		return 0;
@@ -6171,7 +6168,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 	 ))
 		return 0;
 
-	if( skill_num != sd->skillid) /* •s?³ƒpƒPƒbƒg‚ç‚µ‚¢ */
+	if( skill_num != sd->menuskill_id) /* •s?³ƒpƒPƒbƒg‚ç‚µ‚¢ */
 		return 0;
 
 	if (strlen(map) > MAP_NAME_LENGTH-1)
@@ -6197,7 +6194,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 	case AL_TELEPORT:		/* ƒeƒŒƒ|?ƒg */
 		if(strcmp(map,"Random")==0)
 			pc_randomwarp(sd,3);
-		else
+		else if (sd->menuskill_lv > 1) //Need lv2 to be able to warp here.
 			pc_setpos(sd,sd->status.save_point.map,
 				sd->status.save_point.x,sd->status.save_point.y,3);
 		break;
@@ -6206,7 +6203,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 		{
 			const struct point *p[4];
 			struct skill_unit_group *group;
-			int i;
+			int i, lv;
 			int maxcount=0;
 			unsigned short mapindex;
 			mapindex  = mapindex_name2id((char*)map);
@@ -6232,9 +6229,9 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 					return 0;
 				}
 			}
-
-			if(sd->skilllv <= 0) return 0;
-			for(i=0;i<sd->skilllv;i++){
+			lv = sd->menuskill_lv;
+			if(lv <= 0) return 0;
+			for(i=0;i<lv;i++){
 				if(mapindex == p[i]->map){
 					x=p[i]->x;
 					y=p[i]->y;
@@ -6245,19 +6242,24 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 				skill_failed(sd);
 				return 0;
 			}
-			
+			//FIXME: What is gonna be done in the case other skills are being used
+			//in the middle of this block of code? Something more robust needs be
+			//figured out. And what about when you use another ground skill? skillx
+			//and skilly are messed up already... [Skotlex]
+			sd->skillid = sd->menuskill_id;
+			sd->skilllv = sd->menuskill_lv;
 			if(!skill_check_condition(sd,3))
 			{
 				skill_failed(sd);
 				return 0;
 			}
 			
-			if(skill_check_unit_range2(&sd->bl,sd->bl.m,sd->skillx,sd->skilly,skill_num,sd->skilllv) > 0) {
+			if(skill_check_unit_range2(&sd->bl,sd->bl.m,sd->skillx,sd->skilly,skill_num,lv) > 0) {
 				clif_skill_fail(sd,0,0,0);
 				skill_failed(sd);
 				return 0;
 			}
-			if((group=skill_unitsetting(&sd->bl,skill_num,sd->skilllv,sd->skillx,sd->skilly,0))==NULL) {
+			if((group=skill_unitsetting(&sd->bl,skill_num,lv,sd->skillx,sd->skilly,0))==NULL) {
 				skill_failed(sd);
 				return 0;
 			}
@@ -6270,8 +6272,9 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 		break;
 	}
 
-	sd->skillid = sd->skilllv = -1;
+	sd->menuskill_id = sd->menuskill_lv = 0;
 	return 0;
+#undef skill_failed
 }
 
 /*==========================================
@@ -7542,7 +7545,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		return 1;
 	}
 
-	if (sd->state.produce_flag &&
+	if (sd->menuskill_id == AM_PHARMACY &&
 		(sd->skillid == AM_PHARMACY || sd->skillid == AC_MAKINGARROW || sd->skillid == BS_REPAIRWEAPON ||
 		sd->skillid == AM_TWILIGHT1 || sd->skillid == AM_TWILIGHT2  || sd->skillid == AM_TWILIGHT3 
 	)) {
@@ -8974,8 +8977,7 @@ void skill_repairweapon(struct map_session_data *sd, int idx)
 	struct map_session_data *target_sd;
 
 	nullpo_retv(sd);
-	target_sd = map_id2sd(sd->repair_target);
-	sd->repair_target = 0;
+	target_sd = map_id2sd(sd->menuskill_lv);
 	if (!target_sd) //Failed....
 		return;
 	if(idx==0xFFFF) // No item selected ('Cancel' clicked)
@@ -9106,7 +9108,7 @@ int skill_autospell(struct map_session_data *sd,int skillid)
 
 	nullpo_retr(0, sd);
 
-	skilllv = pc_checkskill(sd,SA_AUTOSPELL);
+	skilllv = sd->menuskill_lv;
 	if(skilllv <= 0) return 0;
 
 	if(skillid==MG_NAPALMBEAT)	maxlv=3;

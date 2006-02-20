@@ -5299,9 +5299,8 @@ int buildin_produce(struct script_state *st)
 	int trigger;
 	struct map_session_data *sd=script_rid2sd(st);
 
-	if(	sd->state.produce_flag == 1) return 0;
 	trigger=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	clif_skill_produce_mix_list(sd,trigger);
+	clif_skill_produce_mix_list(sd, trigger);
 	return 0;
 }
 /*==========================================

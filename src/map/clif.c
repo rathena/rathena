@@ -156,7 +156,13 @@ enum {
 
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
 #define clif_setlevel(lv) (lv<battle_config.max_lv?lv:battle_config.max_lv-(lv<battle_config.aura_lv?1:0));
-	
+
+//Quick check to know if the player shouldn't be "busy" with something else to deny action requests. [Skotlex]
+#define clif_cant_act(sd) (sd->npc_id || sd->npc_shopid || sd->vender_id || sd->chatID || (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT) || sd->trade_partner || sd->state.storage_flag)
+
+// Checks if SD is in a trade/shop (where messing with the inventory can cause problems/exploits)
+#define clif_trading(sd) (sd->npc_id || sd->npc_shopid || sd->vender_id || sd->trade_partner)
+
 static char map_ip_str[16];
 static in_addr_t map_ip;
 static in_addr_t bind_ip = INADDR_ANY;
@@ -3443,7 +3449,10 @@ int clif_arrow_create_list(struct map_session_data *sd)
 	}
 	WFIFOW(fd,2) = c*2+4;
 	WFIFOSET(fd, WFIFOW(fd,2));
-	if (c > 0) sd->state.produce_flag = 1;
+	if (c > 0) {
+		sd->menuskill_id = AC_MAKINGARROW;
+		sd->menuskill_lv = c;
+	}
 
 	return 0;
 }
@@ -5328,7 +5337,7 @@ int clif_skill_delunit(struct skill_unit *unit)
  * ワープ場所選択
  *------------------------------------------
  */
-int clif_skill_warppoint(struct map_session_data *sd,int skill_num,
+int clif_skill_warppoint(struct map_session_data *sd,int skill_num, int skill_lv,
 	const char *map1,const char *map2,const char *map3,const char *map4)
 {
 	int fd;
@@ -5344,6 +5353,8 @@ int clif_skill_warppoint(struct map_session_data *sd,int skill_num,
 	strncpy((char*)WFIFOP(fd,36),map3,MAP_NAME_LENGTH);
 	strncpy((char*)WFIFOP(fd,52),map4,MAP_NAME_LENGTH);
 	WFIFOSET(fd,packet_len_table[0x11c]);
+	sd->menuskill_id = skill_num;
+	sd->menuskill_lv = skill_lv;
 	return 0;
 }
 /*==========================================
@@ -5425,11 +5436,13 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
  * アイテム合成可能リスト
  *------------------------------------------
  */
-int clif_skill_produce_mix_list(struct map_session_data *sd,int trigger)
+int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger)
 {
 	int i,c,view,fd;
 	nullpo_retr(0, sd);
 
+	if(sd->menuskill_id == AM_PHARMACY)
+		return 0; //Avoid resending the menu twice or more times...
 	fd=sd->fd;
 	WFIFOHEAD(fd, MAX_SKILL_PRODUCE_DB * 8 + 8);
 	WFIFOW(fd, 0)=0x18d;
@@ -5447,7 +5460,11 @@ int clif_skill_produce_mix_list(struct map_session_data *sd,int trigger)
 	}
 	WFIFOW(fd, 2)=c*8+8;
 	WFIFOSET(fd,WFIFOW(fd,2));
-	if(c > 0) sd->state.produce_flag = 1;
+	if(c > 0) {
+		sd->menuskill_id = AM_PHARMACY;
+		sd->menuskill_lv = trigger;
+		return 1;
+	}
 	return 0;
 }
 
@@ -5898,6 +5915,8 @@ int clif_item_identify_list(struct map_session_data *sd)
 	if(c > 0) {
 		WFIFOW(fd,2)=c*2+4;
 		WFIFOSET(fd,WFIFOW(fd,2));
+		sd->menuskill_id = MC_IDENTIFY;
+		sd->menuskill_lv = c;
 	}
 	return 0;
 }
@@ -5951,8 +5970,8 @@ int clif_item_repair_list(struct map_session_data *sd,struct map_session_data *d
 	if(c > 0) {
 		WFIFOW(fd,2)=c*13+4;
 		WFIFOSET(fd,WFIFOW(fd,2));
-		sd->state.produce_flag = 1;
-		sd->repair_target=dstsd->bl.id;
+		sd->menuskill_id = BS_REPAIRWEAPON;
+		sd->menuskill_lv = dstsd->bl.id;
 	}else
 		clif_skill_fail(sd,sd->skillid,0,0);
 
@@ -6016,7 +6035,8 @@ int clif_item_refine_list(struct map_session_data *sd)
 	}
 	WFIFOW(fd,2)=c*13+4;
 	WFIFOSET(fd,WFIFOW(fd,2));
-	sd->state.produce_flag = 1;
+	sd->menuskill_id = WS_WEAPONREFINE;
+	sd->menuskill_lv = skilllv;
 
 	return 0;
 }
@@ -6856,6 +6876,8 @@ int clif_sendegg(struct map_session_data *sd)
 	WFIFOW(fd,2)=4+n*2;
 	WFIFOSET(fd,WFIFOW(fd,2));
 
+	sd->menuskill_id = SA_TAMINGMONSTER;
+	sd->menuskill_lv = n;
 	return 0;
 }
 
@@ -7028,6 +7050,9 @@ int clif_autospell(struct map_session_data *sd,int skilllv)
 		WFIFOL(fd,26)= 0x00000000;
 
 	WFIFOSET(fd,packet_len_table[0x1cd]);
+	sd->menuskill_id = SA_AUTOSPELL;
+	sd->menuskill_lv = skilllv;
+	
 	return 0;
 }
 
@@ -8845,13 +8870,10 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 	if (pc_issit(sd)) //No walking when you are sit!
 		return;
 	
-	if (sd->npc_id != 0 || sd->vender_id != 0 || sd->state.storage_flag)
+	if (clif_cant_act(sd))
 		return;
 
 	if (sd->skilltimer != -1 && pc_checkskill(sd, SA_FREECAST) <= 0) // フリーキャスト
-		return;
-
-	if (sd->chatID)
 		return;
 
 	if (!pc_can_move(sd))
@@ -9247,9 +9269,10 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 		clif_clearchar_area(&sd->bl, 1);
 		return;
 	}
-	if (sd->npc_id || sd->sc.opt1 || sd->sc.option&OPTION_HIDE || sd->state.storage_flag)
+
+	if (clif_cant_act(sd) || sd->sc.option&OPTION_HIDE)
 		return;
-			
+	
 	if (sd->sc.count &&
 		(sd->sc.data[SC_TRICKDEAD].timer != -1 ||
 	 	sd->sc.data[SC_AUTOCOUNTER].timer != -1 ||
@@ -9273,8 +9296,6 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 	case 0x00: // once attack
 	case 0x07: // continuous attack
 		if(sd->view_class==JOB_WEDDING || sd->view_class==JOB_XMAS)
-			return;
-		if (sd->vender_id != 0)
 			return;
 		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
 			if (DIFF_TICK(tick, sd->canact_tick) < 0) {
@@ -9548,8 +9569,10 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd) {
 	if (fitem == NULL || fitem->bl.type != BL_ITEM || fitem->bl.m != sd->bl.m)
 		return;
 	
-	if(sd->npc_id || sd->vender_id || sd->sc.opt1 || sd->trade_partner ||
-		pc_iscloaking(sd) || pc_ischasewalk(sd)) //Disable cloaking/chasewalking characters from looting [Skotlex]
+	if (clif_cant_act(sd))
+		return;
+	
+	if(pc_iscloaking(sd) || pc_ischasewalk(sd)) //Disable cloaking/chasewalking characters from looting [Skotlex]
 		return;
 	if(sd->sc.count && (
 		sd->sc.data[SC_TRICKDEAD].timer != -1 || //死んだふり
@@ -9575,8 +9598,10 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd) {
 		clif_clearchar_area(&sd->bl, 1);
 		return;
 	}
-	if (sd->npc_id || sd->vender_id || sd->sc.opt1 || sd->trade_partner)
+
+	if (clif_cant_act(sd))
 		return;
+
 	if (sd->sc.count && (
 		sd->sc.data[SC_AUTOCOUNTER].timer != -1 || //オートカウンター
 		sd->sc.data[SC_BLADESTOP].timer != -1//白刃取り
@@ -9600,13 +9625,16 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 		clif_clearchar_area(&sd->bl, 1);
 		return;
 	}
-	if (sd->vender_id || sd->trade_partner)
-		return;
+
 
 	if (sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT)
 		return;
 	
-	if (sd->npc_id && sd->npc_id != sd->npc_item_flag) //This flag enables you to use items while in an NPC. [Skotlex]
+	if (clif_trading(sd))
+		return;
+	
+	//This flag enables you to use items while in an NPC. [Skotlex]
+	if (sd->npc_id && sd->npc_id != sd->npc_item_flag)
 		return;
 	
 	if (sd->sc.count && (
@@ -9648,12 +9676,12 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	if (index < 0 || index >= MAX_INVENTORY)
 		return; //Out of bounds check.
 	
-	if(sd->npc_id!=0 && sd->npc_id != sd->npc_item_flag)
+	if(sd->npc_id) {
+		if (sd->npc_id != sd->npc_item_flag)
+			return;
+	} else if (clif_cant_act(sd))
 		return;
-	
-	if(sd->vender_id != 0 || sd->trade_partner != 0)
-		return;
-	
+		
 	if(sd->sc.data[SC_BLADESTOP].timer!=-1 || sd->sc.data[SC_BERSERK].timer!=-1 )
 		return;
 
@@ -9685,8 +9713,10 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 		clif_clearchar_area(&sd->bl,1);
 		return;
 	}
-	if(sd->npc_id!=0 || sd->vender_id != 0 || sd->sc.opt1 > 0 || sd->trade_partner != 0)
+
+	if (clif_cant_act(sd))
 		return;
+
 	index = RFIFOW(fd,2)-2;
 
 	pc_unequipitem(sd,index,1);
@@ -9704,7 +9734,11 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 		clif_clearchar_area(&sd->bl,1);
 		return;
 	}
-	if(sd->npc_id!=0 || sd->vender_id != 0 || sd->trade_partner != 0 || RFIFOL(fd,2) < 0) //Clicked on a negative ID? Player disguised as NPC! [Skotlex]
+
+	if (clif_cant_act(sd))
+		return;
+	//Clicked on a negative ID? Player disguised as NPC! [Skotlex]
+	if (RFIFOL(fd,2) < 0)
 		return;
 	npc_click(sd,RFIFOL(fd,2));
 }
@@ -9909,7 +9943,7 @@ void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
 
-	if(sd->npc_id!=0 || sd->vender_id != 0 || sd->trade_partner != 0)
+	if (clif_trading(sd))
 		return;
 	pc_putitemtocart(sd,RFIFOW(fd,2)-2,RFIFOL(fd,4));
 }
@@ -9921,7 +9955,8 @@ void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
 
-	if(sd->npc_id!=0 || sd->vender_id != 0 || sd->trade_partner != 0) return;
+	if (clif_trading(sd))
+		return;
 	pc_getitemfromcart(sd,RFIFOW(fd,2)-2,RFIFOL(fd,4));
 }
 
@@ -9973,7 +10008,9 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	unsigned int tick = gettick();
 	RFIFOHEAD(fd);
 
-	if (sd->chatID || sd->npc_id != 0 || sd->vender_id != 0 || sd->state.storage_flag || pc_issit(sd))
+	if (clif_cant_act(sd))
+		return;
+	if (pc_issit(sd))
 		return;
 
 	skilllv = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
@@ -10114,7 +10151,9 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 void clif_parse_UseSkillToPos(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
-	if (sd->npc_id != 0 || sd->vender_id != 0 || sd->chatID || sd->state.storage_flag || pc_issit(sd))
+	if (clif_cant_act(sd))
+		return;
+	if (pc_issit(sd))
 		return;
 
 	clif_parse_UseSkillToPosSub(fd, sd,
@@ -10129,8 +10168,11 @@ void clif_parse_UseSkillToPos(int fd, struct map_session_data *sd) {
 void clif_parse_UseSkillToPosMoreInfo(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
-	if (sd->npc_id != 0 || sd->vender_id != 0 || sd->chatID || sd->state.storage_flag) return;
-
+	if (clif_cant_act(sd))
+		return;
+	if (pc_issit(sd))
+		return;
+	
 	clif_parse_UseSkillToPosSub(fd, sd,
 		RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]), //Skill lv
 		RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]), //Skill num
@@ -10147,7 +10189,7 @@ void clif_parse_UseSkillMap(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
 
-	if(sd->chatID || sd->npc_id || sd->vender_id)
+	if (clif_cant_act(sd))
 		return;
 
 	if (sd->view_class==JOB_WEDDING || sd->view_class == JOB_XMAS)
@@ -10175,15 +10217,17 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
 
-	if (!sd->state.produce_flag)
+	if (sd->menuskill_id !=	AM_PHARMACY)
 		return;
-	sd->state.produce_flag = 0;
-	if (sd->npc_id) {
+
+	if (clif_trading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->skillid,0,0);
+		sd->menuskill_lv = sd->menuskill_id = 0;
 		return;
 	}
 	skill_produce_mix(sd,0,RFIFOW(fd,2),RFIFOW(fd,4),RFIFOW(fd,6),RFIFOW(fd,8), 1);
+	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 /*==========================================
  * 武器修理
@@ -10193,15 +10237,16 @@ void clif_parse_RepairItem(int fd, struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
 
-	if (!sd->state.produce_flag)
+	if (sd->menuskill_id != BS_REPAIRWEAPON)
 		return;
-	sd->state.produce_flag = 0;
-	if (sd->npc_id) {
+	if (clif_trading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->skillid,0,0);
+		sd->menuskill_lv = sd->menuskill_id = 0;
 		return;
 	}
 	skill_repairweapon(sd,RFIFOW(fd,2));
+	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 
 /*==========================================
@@ -10212,16 +10257,17 @@ void clif_parse_WeaponRefine(int fd, struct map_session_data *sd) {
 	int idx;
 	RFIFOHEAD(fd);
 
-	if (!sd->state.produce_flag) //Packet exploit?
+	if (sd->menuskill_id != WS_WEAPONREFINE) //Packet exploit?
 		return;
-	sd->state.produce_flag = 0;
-	if (sd->npc_id) {
+	if (clif_trading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->skillid,0,0);
+		sd->menuskill_lv = sd->menuskill_id = 0;
 		return;
 	}
 	idx = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	skill_weaponrefine(sd, idx-2);
+	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 
 /*==========================================
@@ -10300,7 +10346,10 @@ void clif_parse_NpcCloseClicked(int fd,struct map_session_data *sd)
 void clif_parse_ItemIdentify(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
+	if (sd->menuskill_id != MC_IDENTIFY)
+		return;
 	skill_identify(sd,RFIFOW(fd,2)-2);
+	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 /*==========================================
  * 矢作成
@@ -10309,14 +10358,16 @@ void clif_parse_ItemIdentify(int fd,struct map_session_data *sd)
 void clif_parse_SelectArrow(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
-	if (!sd->state.produce_flag)
+	if (sd->menuskill_id != AC_MAKINGARROW)
 		return;
-	sd->state.produce_flag = 0;
-	if (sd->npc_id) { //Make it fail to avoid shop exploits where you sell something different than you see.
+	if (clif_trading(sd)) {
+	//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->skillid,0,0);
+		sd->menuskill_lv = sd->menuskill_id = 0;
 		return;
 	}
 	skill_arrow_create(sd,RFIFOW(fd,2));
+	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 /*==========================================
  * オートスペル受信
@@ -10325,7 +10376,10 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd)
 void clif_parse_AutoSpell(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
+	if (sd->menuskill_id != SA_AUTOSPELL)
+		return;
 	skill_autospell(sd,RFIFOW(fd,2));
+	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 /*==========================================
  * カード使用
@@ -10406,7 +10460,7 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd) {
 	int item_index, item_amount;
 	RFIFOHEAD(fd);
 
-	if (sd->npc_id != 0 || sd->vender_id != 0 || sd->trade_partner != 0 || !sd->state.storage_flag)
+	if (clif_trading(sd))
 		return;
 	
 	item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
@@ -10428,7 +10482,7 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd) {
 	int item_index, item_amount;
 	RFIFOHEAD(fd);
 
-	if (sd->npc_id != 0 || sd->vender_id != 0 || sd->trade_partner != 0 || !sd->state.storage_flag)
+	if (clif_trading(sd))
 		return;
 	
 	item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-1;
@@ -10447,7 +10501,7 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd) {
 void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
-	if (sd->npc_id != 0 || sd->vender_id != 0 || sd->trade_partner != 0 || !sd->state.storage_flag)
+	if (clif_trading(sd))
 		return;
 
 	if (sd->state.storage_flag == 1)
@@ -10463,7 +10517,7 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd) {
 void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
-	if (sd->npc_id != 0 || sd->vender_id != 0 || sd->trade_partner != 0 || !sd->state.storage_flag)
+	if (clif_trading(sd))
 		return;
 	if (sd->state.storage_flag == 1)
 		storage_storagegettocart(sd, RFIFOW(fd,2)-1, RFIFOL(fd,4));
@@ -10600,7 +10654,7 @@ void clif_parse_VendingListReq(int fd, struct map_session_data *sd) {
  */
 void clif_parse_PurchaseReq(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	if (sd->trade_partner != 0)
+	if (clif_trading(sd))
 		return;
 	vending_purchasereq(sd, RFIFOW(fd,2), RFIFOL(fd,4), RFIFOP(fd,8));
 }
@@ -10611,7 +10665,7 @@ void clif_parse_PurchaseReq(int fd, struct map_session_data *sd) {
  */
 void clif_parse_OpenVending(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	if (sd->trade_partner != 0)
+	if (clif_trading(sd))
 		return;
 	vending_openvending(sd, RFIFOW(fd,2), (char*)RFIFOP(fd,4), RFIFOB(fd,84), RFIFOP(fd,85));
 }
@@ -10835,7 +10889,10 @@ void clif_parse_CatchPet(int fd, struct map_session_data *sd) {
 
 void clif_parse_SelectEgg(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if (sd->menuskill_id != SA_TAMINGMONSTER)
+		return;
 	pet_select_egg(sd,RFIFOW(fd,2)-2);
+	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 
 void clif_parse_SendEmotion(int fd, struct map_session_data *sd) {
@@ -11597,32 +11654,36 @@ void clif_parse_RankingPk(int fd,struct map_session_data *sd)
  */
 void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 {
-	if (sd->feel_level!=-1)
-	{
-		char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
-		sd->feel_map[sd->feel_level].index = map[sd->bl.m].index;
-		sd->feel_map[sd->feel_level].m = sd->bl.m;
-		pc_setglobalreg(sd,feel_var[sd->feel_level],map[sd->bl.m].index);
-
-		WFIFOHEAD(fd,packet_len_table[0x20e]);
-		WFIFOW(fd,0)=0x20e;
-		memcpy(WFIFOP(fd,2),map[sd->bl.m].name, MAP_NAME_LENGTH);
-		WFIFOL(fd,26)=sd->bl.id;
-		WFIFOW(fd,30)=sd->feel_level;
-		WFIFOSET(fd, packet_len_table[0x20e]);
-		sd->feel_level = -1;
-		if (pc_checkskill(sd,SG_KNOWLEDGE)) status_calc_pc(sd,0);
-	}
+	char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
+	int i;
+	if (sd->menuskill_id != SG_FEEL)
+		return;
+	i = sd->menuskill_lv-1;
+	if (i<0 || i > 2) return; //Bug?
+	sd->feel_map[i].index = map[sd->bl.m].index;
+	sd->feel_map[i].m = sd->bl.m;
+	pc_setglobalreg(sd,feel_var[i],map[sd->bl.m].index);
+	
+	WFIFOHEAD(fd,packet_len_table[0x20e]);
+	WFIFOW(fd,0)=0x20e;
+	memcpy(WFIFOP(fd,2),map[sd->bl.m].name, MAP_NAME_LENGTH);
+	WFIFOL(fd,26)=sd->bl.id;
+	WFIFOW(fd,30)=i;
+	WFIFOSET(fd, packet_len_table[0x20e]);
+	if (pc_checkskill(sd,SG_KNOWLEDGE)) status_calc_pc(sd,0);
+	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 
 /*==========================================
  * Question about Star Glaldiator save map [Komurka]
  *------------------------------------------
  */
-void clif_parse_ReqFeel(int fd, struct map_session_data *sd) {
+void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv) {
 	WFIFOHEAD(fd,packet_len_table[0x253]);
 	WFIFOW(fd,0)=0x253;
 	WFIFOSET(fd, packet_len_table[0x253]);
+	sd->menuskill_id=SG_FEEL;
+	sd->menuskill_lv=skilllv;
 }
 
 /*==========================================

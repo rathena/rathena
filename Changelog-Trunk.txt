@@ -5,6 +5,20 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/20
+	* Menu-based skills now use their own variables separetly from the normal
+	  skill variables. This should enable them to work even when you keep doing
+	  other stuff between the menu invocation and selection. Also gives a better
+	  control over packet-based exploits. Affected skill/script-commands are:
+	  [Skotlex]
+	- Arrow Crafting
+	- Warp Portal / Teleport
+	- Item producing
+	- Identify
+	- Repair weapon
+	- Pet egg selection
+	- Hindsight
+	- Weapon refine.
+	- Feel of the Stars, Moon and Stars.
 	* Corrected the implementation of Gangster's Paradise to work as it should.
 	  [Skotlex]
 	* Fixed Close-confine not properly ending on a knockback (that includes

@@ -423,7 +423,6 @@ struct map_session_data {
 		unsigned skill_flag : 1;
 		unsigned gangsterparadise : 1;
 		unsigned rest : 1;
-		unsigned produce_flag : 1;
 		unsigned storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
 		unsigned snovice_flag : 4;
 		// originally by Qamera, adapted by celest
@@ -515,6 +514,7 @@ struct map_session_data {
 	int skilltarget;
 	short skillx,skilly;
 	short skillid,skilllv;
+
 	short skillitem,skillitemlv;
 	short skillid_old,skilllv_old;
 	short skillid_dance,skilllv_dance;
@@ -525,7 +525,7 @@ struct map_session_data {
 	//unsigned int skillstatictimer[MAX_SKILL];
 	unsigned short timerskill_count; // [celest]
 	int cloneskill_id;
-	int repair_target;
+	int menuskill_id, menuskill_lv;
 
 	int invincible_timer;
 	unsigned int canact_tick;
@@ -709,7 +709,6 @@ struct map_session_data {
 		int  m; //-1 - none, other: map index corresponding to map name.
 		unsigned short index; //map index
 	}feel_map[3];// 0 - Sun; 1 - Moon; 2 - Stars
-	int feel_level;
 	short hate_mob[3];
 
 	unsigned int pvp_timer;

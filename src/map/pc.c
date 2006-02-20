@@ -840,7 +840,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	
 	//Prevent S. Novices from getting the no-death bonus just yet. [Skotlex]
 	sd->die_counter=-1;
-	sd->feel_level=-1;
 	//Until the reg values arrive, set them to not require trigger...
 	sd->state.event_death = 1;
 	sd->state.event_kill = 1;
