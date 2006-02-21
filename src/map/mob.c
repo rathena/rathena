@@ -1469,8 +1469,11 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 					struct block_list *tbl = NULL;
 					if(msd->attacktarget)
 						tbl = map_id2bl(msd->attacktarget);
-					else if (msd->skilltarget)
+					else if (msd->skilltarget) {
 						tbl = map_id2bl(msd->skilltarget);
+						if (tbl && battle_check_target(&md->bl, tbl, BCT_ENEMY) <= 0)
+							tbl = NULL; //Required check as skilltarget is not always an enemy. [Skotlex]
+					}
 					if(tbl && status_check_skilluse(&md->bl, tbl, 0, 0)) {
 						md->target_id=tbl->id;
 						md->state.targettype = ATTACKABLE;

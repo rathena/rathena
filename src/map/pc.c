@@ -3189,6 +3189,8 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		chat_leavechat(sd);
 	if(sd->trade_partner)	// æˆø‚ğ’†?‚·‚é
 		trade_tradecancel(sd);
+	if(sd->vender_id)
+		vending_closevending(sd);
 	if(sd->state.storage_flag == 1)
 		storage_storage_quit(sd,0);	// ‘qŒÉ‚ğŠJ‚¢‚Ä‚é‚È‚ç•Û‘¶‚·‚é
 	else if (sd->state.storage_flag == 2)

@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
+2006/02/21
+	* Vending is now cancelled on a pc_setpos [Skotlex]
+	* Pressure again ignores Basilica. [Skotlex]
+	* Fixed attacker's sc being nulled when the target's sc is empty (fixes
+	  most status changes not taking effect during battle) [Skotlex]
+	* Slaves now do a battle_check_target to check if the new target is an
+	  enemy when acquired through the master's skilltarget. [Skotlex]
+	* Fixed SC_SKE halving de2 twice. [Skotlex]
 2006/02/20
 	* The Super Novice Explosion Spirits skill will now trigger when the last
 	  sentence is said (not after the next sentence as it was currently) [Skotlex]

@@ -1111,7 +1111,7 @@ static struct Damage battle_calc_weapon_attack(
 	if (sc && !sc->count)
 		sc = NULL; //Skip checking as there are no status changes active.
 	if (tsc && !tsc->count)
-		sc = NULL; //Skip checking as there are no status changes active.
+		tsc = NULL; //Skip checking as there are no status changes active.
 	
 	switch (src->type)
 	{

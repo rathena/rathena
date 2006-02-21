@@ -347,18 +347,6 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	
 	if (!skill_num && !(mode&MD_CANATTACK))
 		return 0; //This mode is only needed for melee attacking.
-	
-	if (((src && map_getcell(src->m,src->x,src->y,CELL_CHKBASILICA)) ||
-		(target && target != src && map_getcell(target->m,target->x,target->y,CELL_CHKBASILICA)))
-		&& !(mode&MD_BOSS))
-	{	//Basilica Check
-		if (!skill_num) return 0;
-		race = skill_get_inf(skill_num);
-		if (race&INF_ATTACK_SKILL)
-			return 0;
-		if (race&INF_GROUND_SKILL && skill_get_unit_target(skill_num)&BCT_ENEMY)
-			return 0;
-	}	
 
 	if (skill_num == PA_PRESSURE && flag) {
 	//Gloria Avoids pretty much everythng....
@@ -371,6 +359,18 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		}
 		return 1;
 	}
+
+	if (((src && map_getcell(src->m,src->x,src->y,CELL_CHKBASILICA)) ||
+		(target && target != src && map_getcell(target->m,target->x,target->y,CELL_CHKBASILICA)))
+		&& !(mode&MD_BOSS))
+	{	//Basilica Check
+		if (!skill_num) return 0;
+		race = skill_get_inf(skill_num);
+		if (race&INF_ATTACK_SKILL)
+			return 0;
+		if (race&INF_GROUND_SKILL && skill_get_unit_target(skill_num)&BCT_ENEMY)
+			return 0;
+	}	
 
 	if (src) sc = status_get_sc(src);
 	
@@ -2058,8 +2058,6 @@ int status_calc_def2(struct block_list *bl, int def2)
 			def2 -= def2 * 50/100;
 		if(sc->data[SC_PROVOKE].timer!=-1)
 			def2 -= def2 * (5+5*sc->data[SC_PROVOKE].val1)/100;
-		if(sc->data[SC_SKE].timer!=-1)
-			def2 /= 2;
 		if(sc->data[SC_JOINTBEAT].timer!=-1){
 			if(sc->data[SC_JOINTBEAT].val2==3)
 				def2 -= def2 * 50/100;
