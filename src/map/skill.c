@@ -751,6 +751,12 @@ int skillnotok(int skillid, struct map_session_data *sd)
 		case MC_VENDING:
 		case MC_IDENTIFY:
 			return 0; // always allowed
+		case WZ_ICEWALL:
+			// noicewall flag [Valaris]
+			if (map[sd->bl.m].flag.noicewall) {
+				clif_skill_fail(sd,sd->skillid,0,0);
+				return 1;
+			}
 		default:
 			return (map[sd->bl.m].flag.noskill);
 	}
@@ -1540,9 +1546,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if (bl->type == BL_PC)
 		tsd = (struct map_session_data *)bl;
 
-//Shouldn't be needed, skillnotok's return value is highly unlikely to have changed after you started casting. [Skotlex]
-//	if(dsrc->type == BL_PC && skillnotok(skillid, (struct map_session_data *)dsrc))
-//		return 0; // [MouseJstr]
 // Is this check really needed? FrostNova won't hurt you if you step right where the caster is?
 	if(skillid == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y) //Žg—pƒXƒLƒ‹‚ªƒtƒ?ƒXƒgƒmƒ”ƒ@‚Å?Adsrc‚Æbl‚ª“¯‚¶?ê?Š‚È‚ç‰½‚à‚µ‚È‚¢
 		return 0;
@@ -3058,9 +3061,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	
 	if (skillid > 0 && skillid < MAX_SKILL)
 		type = SkillStatusChangeTable[skillid];
-//Shouldn't be needed, skillnotok's return value is highly unlikely to have changed after you started casting. [Skotlex]
-//	if (sd && skillnotok(skillid, sd)) // [MouseJstr]
-//		return 0;
 	
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skillid) {
@@ -5863,16 +5863,12 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	if (sc && !sc->count)
 		sc = NULL; //Unneeded.
 	
-	if( skillid != WZ_METEOR &&
+	if(skillid != WZ_METEOR &&
 		skillid != AM_CANNIBALIZE &&
 		skillid != AM_SPHEREMINE &&
 		skillid != CR_CULTIVATION &&
 		skillid != AC_SHOWER)
 		clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
-
-//Shouldn't be needed, skillnotok's return value is highly unlikely to have changed after you started casting. [Skotlex]
-//	if (sd && skillnotok(skillid, sd)) // [MouseJstr]
-//		return 0;
 
 	switch(skillid)
 	{
@@ -6151,10 +6147,6 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 
 	if( sd->bl.prev == NULL || pc_isdead(sd) )
 		return 0;
-
-//Shouldn't be needed, skillnotok's return value is highly unlikely to have changed after you started casting. [Skotlex]
-//	if(skillnotok(skill_num, sd))
-//		return 0;
 
 	if(sd->sc.opt1 || sd->sc.option&OPTION_HIDE ) {
 		skill_failed(sd);
@@ -8432,11 +8424,10 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 	
 	if(skillnotok(skill_num, sd)) // [MouseJstr]
 		return 0;
-	if (tsd && (skill_num == ALL_RESURRECTION || skill_num == PR_REDEMPTIO) && !pc_isdead(tsd))
-		return 0;
-
+	
 	if(skill_get_inf2(skill_num)&INF2_NO_TARGET_SELF && sd->bl.id == target_id)
 		return 0;
+	
 	if(!status_check_skilluse(&sd->bl, bl, skill_num, 0))
 	{
 		if(skill_num == PR_LEXAETERNA) //Eh.. assuming skill failed due to opponent frozen/stone-cursed. [Skotlex]
@@ -8657,18 +8648,12 @@ int skill_use_pos (struct map_session_data *sd, int skill_x, int skill_y, int sk
 
 	nullpo_retr(0, sd);
 
-	if (pc_isdead(sd))
-		return 0;
 	if (skill_lv <= 0)
 		return 0;
 	if (sd->skilltimer != -1) //Normally not needed since clif.c checks for it, but at/char/script commands don't! [Skotlex]
 		return 0;
 	if (skillnotok(skill_num, sd)) // [MouseJstr]
 		return 0;
-	if (skill_num == WZ_ICEWALL && map[sd->bl.m].flag.noicewall && !map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.gvg)  { // noicewall flag [Valaris]
-		clif_skill_fail(sd,sd->skillid,0,0);
-		return 0;
-	}
 	if (map_getcell(sd->bl.m, skill_x, skill_y, CELL_CHKNOPASS))
 	{	//prevent casting ground targeted spells on non-walkable areas. [Skotlex] 
 		
