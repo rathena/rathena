@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/21
+	* Fixed the range-check of targetted skills (was evaluating the range as 0
+	  always) [Skotlex]
 	* Now you should receive the party/guild mini-dots on map-load without the
 	  need of waiting for others to "move" for you to receive the update (fixes
 	  dead characters never showing up on the map) [Skotlex]
