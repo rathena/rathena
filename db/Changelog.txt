@@ -1,28 +1,33 @@
 ========================= Items that need fixing/implementing
-	----- These items are scrapped (for now, at least). No desc in desc on kRO website -----
-	----- I think we should move them elsewhere. They clog the Changelog up :/ [Poki#3] -----
-	1475 Cavalry Lance: Missing stats
-	2355 Angel Protection: Autospell rate is unknown
-	2417 Frico Shoes: Missing Set bonus and red, orange, yellow, white potion
-		heal rate 20% increasing bonus (if you want, edit db/item_group_db.txt, then
-		use bonus2 bAddItemHealRate) And I don't know if it's proper name.
-	2418 Boots of Vidar: Missing set bonus
-	2420 Second Advent of Angel: Item description is not right, so it needs correction through patch
-	2515 Wing of Eagle: the value is unknown, even if the bonus option is increasing speed or speed rate
-	2520 Gebneys Shoulder: maybe item name is wrong. It doesn't have its own sprite yet (though file exists)
-	5125 Angel Kiss: Description miss. This item is for Novice/Super Novice, like any other 'Angel' equipments.
-	5126 Morphicious Hood: When using magic, it cannot be dispelled (Maybe it works like Phen card)
+
+	2116 Angelic Guard:	Reduce 5% damage from Demon Monsters. (Not Fish :/ )
+	2417 Fricco's Shoes:	Increase value of Red, Orange, Yellow and White Potion by 20%.
+				If the owner is equipped with the armor set, it adds Agi+ 3, MHP/MSP + 5%.
+	2418 Boots of Vidar:	Adds VIT +5, Increase HP/SP Recovery speed by 10% if the owner is equipped with the armor set.
+	2515 Eagle Wing:	Increase Movement Speed if the owner is equipped with Wing Staff at the same time.
+	5126 Morpheus's Hood:	Magic spells cannot be dispelled.
+
+	2653 Sacrifice Ring:		NO INFO. Item not implemented....
+				[Vicious] On your death it breaks (BS can fix it), you drop all Equipment (equipped, even the ring).
+					  And revive with 1 HP / 1 SP at the place of your death.
+				[Komurka] From where this info is? ... Mine: On your death you'll loose this ring and get 50% HP.
+				[Poki#3]  Theres no official desc! <.< Although you might wanna make it a custom item or something...
+	1475 Cavalry Lance:		NO INFO. Item not implemented...
+	1475 Equestrian's Spear:	NO INFO. Item not implemented...
+	13005 Angelic Wing Dagger:	NO INFO. Item not implemented...
+	1308 Golden Axe:		NO INFO. Item not implemented...
+	1971 Electric Wire:		NO INFO. Item not implemented...
 	-----
-	4296 Cramp Card: Temporal Plug: 10z per mob-level on a 3% chance.
-	7458 Fortune Horn: It's a custom name ^^;
-	12016 Speed Increasing Potion: no bonus... Turbo Track race item
-	12017 Speed Decreasing Potion: no bonus... Turbo Track race item
+	4296 Cramp Card:	Temp Plug: 10z per mob-level on a 3% chance.
+	7458 Fortune Horn:	It's a custom name ^^;
+	12016 Speed Increasing Potion: A potion which increases the moving speed of a character for a duration.
+	12017 Speed Decreasing Potion: A potion which decreases the moving speed of a character for a duration.
 	-----
-	2653 Sacrifice Ring: seems eAthena doesn't have bonus option yet <- explain how this works so I can code it in. [Skotlex]
-		* * * On your death it breaks (BS can fix it), you drop all Equipment (equipped, even the ring). And revive with 1 HP / 1 SP at the place of your death.
-		* * * From where this info is? ... Mine: On your death you'll loose this ring and get 50% HP [Komurka]
 
 =========================
+
+02/21
+	* Changed a bunch of item names according to the upcoming iRO Lighthalzen Patch. [Poki#3]
 
 02/20
 	* Some mob_skill_db fixes [Komurka]
