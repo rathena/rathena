@@ -9897,13 +9897,13 @@ int atcommand_reject(
 {
 	if(sd->duel_invite <= 0) {
 		// "Duel: @reject without invititation."
-		clif_displaymessage(fd, msg_txt(352));
+		clif_displaymessage(fd, msg_txt(362));
 		return 0;
 	}
 
 	duel_reject(sd->duel_invite, sd);
 	// "Duel: Invitation has been rejected."
-	clif_displaymessage(fd, msg_txt(352));
+	clif_displaymessage(fd, msg_txt(363));
 	return 0;
 }
 

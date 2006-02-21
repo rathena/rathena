@@ -9471,8 +9471,8 @@ if ((strncasecmp((const char*)RFIFOP(fd,4),"NPC:",4) == 0) && (strlen((const cha
 	// Main chat [LuzZza]
 	if(strcmpi((const char*)RFIFOP(fd,4), main_chat_nick) == 0) {
 		if(!sd->state.mainchat) {
-			sd->state.mainchat = 1;
-			clif_displaymessage(fd, msg_txt(380)); // Main chat has been activated.
+			clif_displaymessage(fd, msg_txt(388)); // You should enable main chat with "@main on" command.
+			return;
 		}
 		if (sd->sc.data[SC_NOCHAT].timer != -1) {
 			clif_displaymessage(fd, msg_txt(387));

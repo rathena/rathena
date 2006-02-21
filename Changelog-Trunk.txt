@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/21
+	* Fix to prevent using main chat when it disabled in atcommand_athena. [LuzZza]
+	- Fixed message codes in duel functions.
+	- Small fix in log_refine, incorrect compare expression.
 	* Some cleaning of the warp portal code so that when it is "pre-casted" it
 	  doesn't mess up with other casted skills. [Skotlex]
 	* Some fixing on the weapon-refine code. [Skotlex]

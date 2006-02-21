@@ -357,7 +357,7 @@ int log_refine(struct map_session_data *sd, int n, int success)
 		item_level = sd->status.inventory[n].refine; //leaving there 0 wasn't informative! we have SUCCESS field anyways
 	else
 		item_level = sd->status.inventory[n].refine + 1;
-	if(!should_log_item(log_config.refine,sd->status.inventory[n].nameid,1) || log_config.refine_items_log<item_level) return 0;	//filter [Lupus]
+	if(!should_log_item(log_config.refine,sd->status.inventory[n].nameid,1) || log_config.refine_items_log>item_level) return 0;	//filter [Lupus]
 	for(i=0;i<MAX_SLOTS;i++)
 		log_card[i] = sd->status.inventory[n].card[i];
 
