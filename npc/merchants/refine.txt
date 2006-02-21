@@ -1,11 +1,9 @@
 //===== Freya Script =========================================
 //= Refining NPCs
 //===== By: ==================================================
-//= Syrus22 (1.1)
-//= dafide18 (1.4)
-//= Skotlex (1.5)
+//= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8a
 //===== Compatible With: =====================================
 //= Any Freya Version
 //===== Description: =========================================
@@ -34,6 +32,7 @@
 //= 1.6	- Replaced all breaks for ends as per the new script engine [Skotlex]
 //= 1.7 - Added Einbroch Refiners (Custom names ^^;) and a duplicated BS Shop. [Poki#3]
 //= 1.8 - Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]
+//= 1.8a fixed wrong indication thanks to NeoSaro [Lupus]
 //============================================================
 
 
@@ -800,7 +799,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR2:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken2) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
@@ -812,7 +811,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR3:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken3) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
@@ -824,7 +823,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR4:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken4) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
@@ -836,7 +835,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR5:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken5) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
@@ -848,7 +847,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR6:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken6) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
@@ -860,7 +859,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR7:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken7) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
@@ -872,7 +871,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR8:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken8) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
@@ -884,7 +883,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR9:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken9) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;
@@ -896,7 +895,7 @@ function	script	repairmain	{
 			goto L_CLOSE;
 	REPAIR10:
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
+		mes "You're gonna repair " + getitemname(@broken10) + ".";
 		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
 		mes "Continue?";
 		next;

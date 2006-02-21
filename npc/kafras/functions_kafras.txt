@@ -29,6 +29,7 @@
 //= 3.2 Fixed an exploit [Lupus]
 //= 4.0 Added Kafra storage password protection. [Lupus]
 //=	to block Kafra Password, read comments at 350 line
+//=	Note: You can change '1337' value to another to raise password protection
 //============================================================ 
 
 

@@ -28,6 +28,8 @@ Nexon
 Date		Added
 ======
 
+02/21
+	* Fixed wrong indication of Repairsman, thanks to NeoSaro [Lupus]
 02/17
 	* Added Kafra Storage Password (some official severs use it as an additional protection) [Lupus]
 	- Read functions_kafras.txt comments if you want to disable this feature
