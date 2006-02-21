@@ -9121,7 +9121,6 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 			case 2:
 				if (strstr(message, msg_txt(506)))
 					sd->state.snovice_flag++;
-				break;
 			case 3:
 				if (skillnotok(MO_EXPLOSIONSPIRITS,sd))
 					break; //Do not override the noskill mapflag. [Skotlex]

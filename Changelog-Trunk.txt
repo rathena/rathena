@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/20
+	* The Super Novice Explosion Spirits skill will now trigger when the last
+	  sentence is said (not after the next sentence as it was currently) [Skotlex]
+	* Now the default delay of amotion is applied only for BF_WEAPON, non
+	  NK_NO_DAMAGE skills (so stuff like Summon Spirit Sphere get the default
+	  skill delay rather than ASPD) [Skotlex]
 	* Made the Char-SQL server send the GM listing when the map server
 	  connects. [Skotlex]
 	* Play-dead and Basilica now block Gospel [Skotlex]

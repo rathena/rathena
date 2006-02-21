@@ -8276,7 +8276,7 @@ int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time 
 
 		// instant cast attack skills depend on aspd as delay [celest]
 		if (time == 0) {
-			if (skill_get_type(skill_id) == BF_WEAPON)
+			if (skill_get_type(skill_id) == BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_DAMAGE))
 				time = status_get_amotion(bl); //Use attack animation as default delay.
 			else
 				time = 300;	// default delay, according to official servers
