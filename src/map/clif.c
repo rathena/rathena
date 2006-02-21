@@ -2972,17 +2972,33 @@ int clif_guildstorageequiplist(struct map_session_data *sd,struct guild_storage 
 // Guild XY locators [Valaris]
 int clif_guild_xy(struct map_session_data *sd)
 {
-unsigned char buf[10];
+	unsigned char buf[10];
 
-nullpo_retr(0, sd);
+	nullpo_retr(0, sd);
 
-WBUFW(buf,0)=0x1eb;
-WBUFL(buf,2)=sd->status.account_id;
-WBUFW(buf,6)=sd->bl.x;
-WBUFW(buf,8)=sd->bl.y;
-clif_send(buf,packet_len_table[0x1eb],&sd->bl,GUILD_SAMEMAP_WOS);
+	WBUFW(buf,0)=0x1eb;
+	WBUFL(buf,2)=sd->status.account_id;
+	WBUFW(buf,6)=sd->bl.x;
+	WBUFW(buf,8)=sd->bl.y;
+	clif_send(buf,packet_len_table[0x1eb],&sd->bl,GUILD_SAMEMAP_WOS);
 
-return 0;
+	return 0;
+}
+
+/*==========================================
+ * Sends x/y dot to a single fd. [Skotlex]
+ *------------------------------------------
+ */
+
+int clif_guild_xy_single(int fd, struct map_session_data *sd)
+{
+	WFIFOHEAD(fd,packet_len_table[0x1eb]);
+	WFIFOW(fd,0)=0x1eb;
+	WFIFOL(fd,2)=sd->status.account_id;
+	WFIFOW(fd,6)=sd->bl.x;
+	WFIFOW(fd,8)=sd->bl.y;
+	WFIFOSET(fd,packet_len_table[0x1eb]);
+	return 0;
 }
 
 // Guild XY locators [Valaris]
@@ -6670,6 +6686,24 @@ int clif_party_xy(struct map_session_data *sd)
 	
 	return 0;
 }
+
+/*==========================================
+ * Sends x/y dot to a single fd. [Skotlex]
+ *------------------------------------------
+ */
+
+int clif_party_xy_single(int fd, struct map_session_data *sd)
+{
+	WFIFOHEAD(fd,packet_len_table[0x107]);
+	WFIFOW(fd,0)=0x107;
+	WFIFOL(fd,2)=sd->status.account_id;
+	WFIFOW(fd,6)=sd->bl.x;
+	WFIFOW(fd,8)=sd->bl.y;
+	WFIFOSET(fd,packet_len_table[0x107]);
+	return 0;
+}
+
+
 /*==========================================
  * パーティHP通知
  *------------------------------------------
@@ -8702,11 +8736,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 	// param all
 	clif_initialstatus(sd);
-	// party
-	party_send_movemap(sd);
-	// guild
-	guild_send_memberinfoshort(sd,1);
-
 	if(battle_config.pc_invincible_time > 0) {
 		if(map_flag_gvg(sd->bl.m))
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time<<1);
@@ -8716,6 +8745,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	map_addblock(&sd->bl);	// ブロック登録
 	clif_spawnpc(sd);	// spawn
+
+	// party
+	party_send_movemap(sd);
+	// guild
+	guild_send_memberinfoshort(sd,1);
 
 	// weight max , now
 	clif_updatestatus(sd,SP_MAXWEIGHT);

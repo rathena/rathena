@@ -470,6 +470,7 @@ int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short m
 // パーティメンバの移動
 int party_send_movemap(struct map_session_data *sd)
 {
+	int i;
 	struct party *p;
 
 	nullpo_retr(0, sd);
@@ -478,6 +479,19 @@ int party_send_movemap(struct map_session_data *sd)
 		return 0;
 	intif_party_changemap(sd,1);
 
+	
+	p=party_search(sd->status.party_id);
+	if (p && sd->fd) {
+		//Send dots of other party members to this char. [Skotlex]
+		for(i=0; i < MAX_PARTY; i++) {
+			if (!p->member[i].sd	|| p->member[i].sd == sd ||
+				p->member[i].sd->bl.m != sd->bl.m)
+				continue;
+			clif_party_xy_single(sd->fd, p->member[i].sd);
+		}
+		
+	}
+	
 	if( sd->state.party_sent )	// もうパーティデータは送信済み
 		return 0;
 
@@ -485,7 +499,7 @@ int party_send_movemap(struct map_session_data *sd)
 	party_check_conflict(sd);
 	
 	// あるならパーティ情報送信
-	if( (p=party_search(sd->status.party_id))!=NULL ){
+	if(p){
 		party_check_member(p);	// 所属を確認する
 		if(sd->status.party_id==p->party_id){
 			clif_party_main_info(p,sd->fd);

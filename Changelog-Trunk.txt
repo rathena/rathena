@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/21
+	* Now you should receive the party/guild mini-dots on map-load without the
+	  need of waiting for others to "move" for you to receive the update (fixes
+	  dead characters never showing up on the map) [Skotlex]
 	* Fix to prevent using main chat when it disabled in atcommand_athena. [LuzZza]
 	- Fixed message codes in duel functions.
 	- Small fix in log_refine, incorrect compare expression.
