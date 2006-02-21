@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/21
+	* Some cleaning of the warp portal code so that when it is "pre-casted" it
+	  doesn't mess up with other casted skills. [Skotlex]
+	* Some fixing on the weapon-refine code. [Skotlex]
+	* Cleaned up some npc_event error reporting. [Skotlex]
+	* Some cleanup of the castend routines to not clear the skill variables if
+	  for some reason the casted skill triggers another skill. [Skotlex]
 	* Vending is now cancelled on a pc_setpos [Skotlex]
 	* Pressure again ignores Basilica. [Skotlex]
 	* Fixed attacker's sc being nulled when the target's sc is empty (fixes

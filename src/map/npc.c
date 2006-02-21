@@ -208,7 +208,7 @@ int npc_timer_event(const unsigned char *eventname)	// Added by RoVeRT
 //	int xs,ys;
 
 	if((ev==NULL || (nd=ev->nd)==NULL)){
-		ShowWarning("npc_event: event not found [%s]\n",eventname);
+		ShowWarning("npc_timer_event: event not found [%s]\n",eventname);
 		return 0;
 	}
 
@@ -435,11 +435,18 @@ int npc_event_do_oninit(void)
 int npc_addeventtimer(struct npc_data *nd,int tick,const char *name)
 {
 	int i;
+	unsigned char *evname;
+	
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( nd->eventtimer[i]==-1 )
 			break;
 	if(i<MAX_EVENTTIMER){
-		unsigned char *evname=(unsigned char *) aCallocA(NAME_LENGTH, sizeof(char));
+		if (!strdb_get(ev_db,name)) {
+			if (battle_config.error_log)
+				ShowError("npc_addeventimer: Event %s does not exists.\n", name);
+			return 1; //Event does not exists!
+		}
+		evname =(unsigned char *) aCallocA(NAME_LENGTH, sizeof(char));
 		if(evname==NULL){
 			ShowFatalError("npc_addeventtimer: out of memory !\n");exit(1);
 		}
@@ -802,7 +809,7 @@ int npc_event (struct map_session_data *sd, const unsigned char *eventname, int 
 			ev = strdb_get(ev_db, mobevent);
 			if (ev == NULL || (nd = ev->nd) == NULL) {
 				if (strnicmp(eventname, "GM_MONSTER",10) != 0)
-					ShowError("npc_event: event not found [%s]\n", mobevent);
+					ShowError("npc_event: (mob_kill) event not found [%s]\n", mobevent);
 				return 0;
 			}
 		} else {

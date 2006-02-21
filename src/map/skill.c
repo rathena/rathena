@@ -5730,8 +5730,10 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 		status_change_end(&sd->bl,SC_MAGICPOWER,-1);		
 
 	//Clean this up for future references to battle_getcurrentskill. [Skotlex]
-	sd->skillid = sd->skilllv = -1;
-	sd->skilltarget = 0;
+	if (sd->skilltimer == -1) {
+		sd->skillid = sd->skilllv = -1;
+		sd->skilltarget = 0;
+	}
 	return 0;
 #undef skill_failed
 }
@@ -5831,8 +5833,10 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 
 	skill_castend_pos2(&sd->bl,sd->skillx,sd->skilly,sd->skillid,sd->skilllv,tick,0);
 
-	if (sd->skillid != AL_WARP)
-		sd->skillid = sd->skilllv = -1; //Clean this up for future references to battle_getcurrentskill. [Skotlex]
+  	//Clean this up for future references to battle_getcurrentskill. [Skotlex]
+	if (sd->skilltimer == -1) {
+		sd->skillid = sd->skilllv = -1;
+	}
 	return 0;
 #undef skill_failed
 }
@@ -6143,7 +6147,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 	nullpo_retr(0, sd);
 
 //Simplify skill_failed code.
-#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->menuskill_id = sd->menuskill_lv = 0; }
+#define skill_failed(sd) { sd->menuskill_id = sd->menuskill_lv = 0; }
 
 	if( sd->bl.prev == NULL || pc_isdead(sd) )
 		return 0;
@@ -6242,17 +6246,22 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 				skill_failed(sd);
 				return 0;
 			}
-			//FIXME: What is gonna be done in the case other skills are being used
-			//in the middle of this block of code? Something more robust needs be
-			//figured out. And what about when you use another ground skill? skillx
+			//FIXME:  What about when you use another ground skill? skillx
 			//and skilly are messed up already... [Skotlex]
+			i = sd->skillid;
+			lv = sd->skilllv;
 			sd->skillid = sd->menuskill_id;
 			sd->skilllv = sd->menuskill_lv;
-			if(!skill_check_condition(sd,3))
+			if(!skill_check_condition(sd,3)) //This checks versus skillid/skilllv...
 			{
+				sd->skillid = i;
+				sd->skilllv = lv;
 				skill_failed(sd);
 				return 0;
 			}
+			sd->skillid = i;
+			sd->skilllv = lv;
+			lv = sd->menuskill_lv;
 			
 			if(skill_check_unit_range2(&sd->bl,sd->bl.m,sd->skillx,sd->skilly,skill_num,lv) > 0) {
 				clif_skill_fail(sd,0,0,0);
@@ -9049,11 +9058,11 @@ void skill_weaponrefine(struct map_session_data *sd,int idx)
 		item = &sd->status.inventory[idx];
 
 		if(item->nameid > 0 && ditem->type == 4) {
-			if (item->refine >= sd->skilllv ||
+			if (item->refine >= sd->menuskill_lv ||
 				item->refine >= MAX_REFINE ||		// if it's no longer refineable
 				ditem->flag.no_refine ||	// if the item isn't refinable
 				(i = pc_search_inventory(sd, material [ditem->wlv])) < 0 ) { //fixed by Lupus (item pos can be = 0!)
-				clif_skill_fail(sd,sd->skillid,0,0);
+				clif_skill_fail(sd,sd->menuskill_id,0,0);
 				return;
 			}
 
