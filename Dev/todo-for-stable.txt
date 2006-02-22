@@ -1,0 +1,34 @@
+Place in this file any updates you did on trunk that should be merged into
+stable. Remove it from the list once merged.
+
+- restricted mapflag (which restricts equipment/cards from being used in
+  certain maps)
+- function battle_calc_return_damage which encapsulates damage return
+  cards/status.
+- The update to the status change structure which unifies opt values in the
+  same structure as sc_data ones. Also includes a rewrite of
+  status_change_start as well as battle options for adjusting sc-def and
+  max-sc-def.
+- Improved npc timers which enable multiple characters to be attached to a
+  timer, and each one will be executed with the attached player accordingly.
+- irc bot system (which isn't even finished yet on trunk)
+- The new implementation of NPC_POWERUP which uses SC_INKATK rather than
+  Explosion Spirits.
+- Stat window showing the added damage of both weapons for dual-wielding
+  assassins.
+- Deleting pet eggs from inventory after the pet data has arrived, not upon
+  hatching request.
+- Updated the char-SQL server to use auto-incremental IDs and retrieve them
+  from code.
+- Battle option pk_level_range, allow_es_magic_player
+- Cleanup of pc_useitem code
+- Autocasted Teleport should now show a menu.
+- Skill system update, usage of the new splash area range column in the db.
+  Code-wise lots of code cleanup.
+- Skill SG_MIRACLE
+- Gangster's Paradise behaviour update.
+- Menu-based skill update to allow menu skills to be precasted.
+- Cleanup of the global chat function.
+- Revert the map-sql handling of the gm-list retrieval.
+- Send the guild/party mini-dots on map-login.
+- Updated the path-finding routines from jA

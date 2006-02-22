@@ -1,8 +1,19 @@
-Reported Bug: It seems cards (somehow) aren't working properly. For instance, 
-		the doppelganger card does not stack properly anymore (although 
-		I think that might be a "fix") and previously I created a 
-		custom card that added 255 to all stats (after checking if the 
-		person was a GM) and this card, as well, has problems: I used 
-		to be able to do 999999 damage with Jupital Thunder and now it 
-		does approximaetly 19000 (perhaps this, too, is a stacking 
-		problem).
+- NOTE: Use this file to place BIG BAD BUGS that have been going on for a good
+  while and it seems noone can fix them (Use the forums for common everyday
+  bugs). Bugs in this file are not meant to be "fixed" as much as they are a
+  "reminder" of big bugs that have not been fixed yet. An good example would
+  be "the matrix bug" from the good old days.
+
+BUG: grf loading is broken.
+DESC: Specifying multiple grfs is badly broken, as the 'checksum' applied to
+files usually returns the wrong index, thus looking the file up on the wrong
+grf file. Users have also reported that reading from the data/ dir is messed
+up. See link for all details. 
+LINKS:
+- http://www.eathena.ws/board/index.php?showtopic=78372
+
+BUG: @reloadscript causes a crash
+DESC: Do a @reloadscript, and it will inmediately crash on the
+skill_unit_timer function. Apparently the global objects array gets messed up
+when cleaning the npcs. Valgrind doesn't seems to point at any particular
+cause. I suspect it may have to do with NPC shops.

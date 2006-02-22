@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/22
+	* Cleaned up the Dev folder. [Skotlex]
+	- Take note of the file todo-for-stable, which holds all modifications in
+	  trunk that have not yet made it into stable. Be sure to update the file
+	  as needed.
 	* Updated the path searching code with jA's current implementation.
 	  [Skotlex]
 	- There is a slight chance the CELL_NOSTACK mod broke, someone test that.
