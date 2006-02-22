@@ -1135,7 +1135,9 @@ typedef enum {
 	CELL_CHKWATER,		// 水場(セルタイプ3)
 	CELL_CHKGROUND,		// 地面障害物(セルタイプ5)
 	CELL_CHKPASS,		// 通過可能(セルタイプ1,5以外)
+	CELL_CHKREACH,		// Same as PASS, but ignores the cell-stacking mod.
 	CELL_CHKNOPASS,		// 通過不可(セルタイプ1,5)
+	CELL_CHKNOREACH,	// Same as NOPASS, but ignores the cell-stacking mod.
 	CELL_GETTYPE,		// セルタイプを返す
 	CELL_GETCELLTYPE,
 	CELL_CHKNPC=0x10,	// タッチタイプのNPC(セルタイプ0x80フラグ)
@@ -1286,8 +1288,13 @@ int map_setwaterheight(int m, char *mapname, int height);
 int map_waterheight(char *mapname);
 
 // path.cより
-int path_search(struct walkpath_data*,int,int,int,int,int,int);
-int path_search_long(struct shootpath_data *,int,int,int,int,int);
+int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,int flag2);
+#define path_search(wpd,m,x0,y0,x1,y1,flag)  path_search_real(wpd,m,x0,y0,x1,y1,flag,CELL_CHKNOPASS)
+#define path_search2(wpd,m,x0,y0,x1,y1,flag) path_search_real(wpd,m,x0,y0,x1,y1,flag,CELL_CHKWALL)
+
+int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,int flag);
+#define path_search_long(spd,m,x0,y0,x1,y1) path_search_long_real(spd,m,x0,y0,x1,y1,CELL_CHKWALL)
+
 int path_blownpos(int m,int x0,int y0,int dx,int dy,int count);
 
 // distance related functions [Skotlex]
@@ -1386,6 +1393,18 @@ extern MYSQL_ROW mapregsql_row;
 extern char mail_db[32];
 
 #endif /* not TXT_ONLY */
+//Useful typedefs from jA [Skotlex]
+typedef struct map_session_data TBL_PC;
+typedef struct npc_data         TBL_NPC;
+typedef struct mob_data         TBL_MOB;
+typedef struct flooritem_data   TBL_ITEM;
+typedef struct chat_data        TBL_CHAT;
+typedef struct skill_unit       TBL_SKILL;
+typedef struct pet_data         TBL_PET;
+
+#define BL_CAST(type_, bl , dest) \
+	(((bl) == NULL || (bl)->type != type_) ? ((dest) = NULL, 0) : ((dest) = (T ## type_ *)(bl), 1))
+
 
 extern int lowest_gm_level;
 extern char main_chat_nick[16];

@@ -95,7 +95,7 @@ static int pet_can_reach(struct pet_data *pd,int x,int y)
 	wpd.path_len=0;
 	wpd.path_pos=0;
 	wpd.path_half=0;
-	return (path_search(&wpd,pd->bl.m,pd->bl.x,pd->bl.y,x,y,0)!=-1)?1:0;
+	return (path_search_real(&wpd,pd->bl.m,pd->bl.x,pd->bl.y,x,y,0,CELL_CHKNOREACH)!=-1)?1:0;
 }
 
 static int pet_calc_pos(struct pet_data *pd,int tx,int ty,int dir)

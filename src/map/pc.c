@@ -3552,7 +3552,7 @@ int pc_can_reach(struct map_session_data *sd,int x,int y)
 	wpd.path_len=0;
 	wpd.path_pos=0;
 	wpd.path_half=0;
-	return (path_search(&wpd,sd->bl.m,sd->bl.x,sd->bl.y,x,y,0)!=-1)?1:0;
+	return (path_search_real(&wpd,sd->bl.m,sd->bl.x,sd->bl.y,x,y,0,CELL_CHKNOREACH)!=-1)?1:0;
 }
 
 //

@@ -604,11 +604,7 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 			easy = 1;
 			break;
 	}
-#ifdef CELL_NOSTACK
-	//In no stack mode, do these path searches ignoring other players as it's just
-	//for reachability judging, not the actual path used. [Skotlex]
-	easy |= 0x30000;
-#endif
+
 	if( md->bl.m != bl->m)	// ˆá‚¤ƒƒbƒv
 		return 0;
 
@@ -622,7 +618,7 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 	wpd.path_len=0;
 	wpd.path_pos=0;
 	wpd.path_half=0;
-	if(path_search(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x,bl->y,easy)!=-1)
+	if(path_search_real(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x,bl->y,easy,CELL_CHKNOREACH)!=-1)
 		return 1;
 
 	// It judges whether it can adjoin or not.
@@ -630,10 +626,10 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 	dy=abs(bl->y - md->bl.y);
 	dx=(dx>0)?1:((dx<0)?-1:0);
 	dy=(dy>0)?1:((dy<0)?-1:0);
-	if(path_search(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x-dx,bl->y-dy,easy)!=-1)
+	if(path_search_real(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x-dx,bl->y-dy,easy,CELL_CHKNOREACH)!=-1)
 		return 1;
 	for(i=0;i<9;i++){
-		if(path_search(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x-1+i/3,bl->y-1+i%3,easy)!=-1)
+		if(path_search_real(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x-1+i/3,bl->y-1+i%3,easy, CELL_CHKNOREACH)!=-1)
 			return 1;
 	}
 	return 0;
