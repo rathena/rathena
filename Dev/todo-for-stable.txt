@@ -32,3 +32,4 @@ stable. Remove it from the list once merged.
 - Revert the map-sql handling of the gm-list retrieval.
 - Send the guild/party mini-dots on map-login.
 - Updated the path-finding routines from jA
+- Replace pc_break_equip for skill_break_equip

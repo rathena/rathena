@@ -642,57 +642,6 @@ int pc_isequip(struct map_session_data *sd,int n)
 	return 1;
 }
 
-//装備破壊
-int pc_break_equip(struct map_session_data *sd, unsigned short where)
-{
-	int i, j;
-
-	nullpo_retr(-1, sd);
-	if (sd->unbreakable_equip & where)
-		return 0;
-	if (sd->unbreakable >= rand()%100)
-		return 0;
-	if (where == EQP_WEAPON && (sd->status.weapon == 0 ||	//Bare fists should not break :P
-		sd->status.weapon == 6 || sd->status.weapon == 7 || sd->status.weapon == 8 || // Axes and Maces can't be broken [DracoRPG]
-		sd->status.weapon == 10 || sd->status.weapon == 15 //Rods and Books can't be broken [Skotlex]
-		))
-		return 0;
-	switch (where) {
-		case EQP_WEAPON:
-			i = SC_CP_WEAPON;
-			break;
-		case EQP_ARMOR:
-			i = SC_CP_ARMOR;
-			break;
-		case EQP_SHIELD:
-			i = SC_CP_SHIELD;
-			break;
-		case EQP_HELM:
-			i = SC_CP_HELM;
-			break;
-		default:
-			return 0;
-	}
-	if (sd->sc.count && sd->sc.data[i].timer != -1)
-		return 0;
-
-	for (i = 0; i < 11; i++) {
-		if ((j = sd->equip_index[i]) > 0 && sd->status.inventory[j].attribute != 1 &&
-			((where == EQP_HELM && i == 6) ||
-			(where == EQP_ARMOR && i == 7) ||
-			(where == EQP_WEAPON && (i == 8 || i == 9) && sd->inventory_data[j]->type == 4) ||
-			(where == EQP_SHIELD && i == 9 && sd->inventory_data[j]->type == 5)))
-		{
-			sd->status.inventory[j].attribute = 1;
-			pc_unequipitem(sd, j, 3);
-			clif_equiplist(sd);
-			return 1;
-		}
-	}
-
-	return 1;
-}
-
 /*==========================================
  * session idに問題無し
  * char鯖から送られてきたステ?タスを設定

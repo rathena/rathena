@@ -2258,9 +2258,9 @@ static struct Damage battle_calc_weapon_attack(
 			mob_class_change(((struct mob_data *)target),class_);
 	}
 
-	if (sd && (battle_config.equip_self_break_rate || battle_config.equip_skill_break_rate) &&
-		(wd.damage > 0 || wd.damage2 > 0)) {
-		if (battle_config.equip_self_break_rate) {	// Self weapon breaking
+	if (wd.damage > 0 || wd.damage2 > 0) {
+		if (sd && battle_config.equip_self_break_rate)
+		{	// Self weapon breaking
 			int breakrate = battle_config.equip_natural_break_rate;
 			if (sc) {
 				if(sc->data[SC_OVERTHRUST].timer!=-1)
@@ -2268,35 +2268,25 @@ static struct Damage battle_calc_weapon_attack(
 				if(sc->data[SC_MAXOVERTHRUST].timer!=-1)
 					breakrate += 10;
 			}
-			if(rand() % 10000 < breakrate * battle_config.equip_self_break_rate / 100 || breakrate >= 10000)
-				pc_breakweapon(sd);
+			skill_break_equip(src, EQP_WEAPON, breakrate, BCT_SELF);
 		}
-		if (battle_config.equip_skill_break_rate) {	// Target equipment breaking
+		if (battle_config.equip_skill_break_rate)
+		{	// Target equipment breaking
 			int breakrate[2] = {0,0}; // weapon = 0, armor = 1
-			int breaktime = 5000;
-
-			breakrate[0] += sd->break_weapon_rate; // Break rate from equipment
-			breakrate[1] += sd->break_armor_rate;
+			if (sd) {	// Break rate from equipment
+				breakrate[0] += sd->break_weapon_rate;
+				breakrate[1] += sd->break_armor_rate;
+			}
 			if (sc) {
 				if (sc->data[SC_MELTDOWN].timer!=-1) {
 					breakrate[0] += 100*sc->data[SC_MELTDOWN].val1;
 					breakrate[1] += 70*sc->data[SC_MELTDOWN].val1;
-					breaktime = skill_get_time2(WS_MELTDOWN,1);
 				}
 			}	
-			if(rand() % 10000 < breakrate[0] * battle_config.equip_skill_break_rate / 100 || breakrate[0] >= 10000) {
-				if (target->type == BL_PC)
-					pc_breakweapon((struct map_session_data *)target);
-				else
-					status_change_start(target,SC_STRIPWEAPON,100,1,75,0,0,breaktime,0);
-			}
-			if(rand() % 10000 < breakrate[1] * battle_config.equip_skill_break_rate/100 || breakrate[1] >= 10000) {
-				if (target->type == BL_PC) {
-					struct map_session_data *tsd = (struct map_session_data *)target;
-					pc_breakarmor(tsd);
-				} else
-					status_change_start(target,SC_STRIPSHIELD,100,1,75,0,0,breaktime,0);
-			}
+			if (breakrate[0])
+				skill_break_equip(target, EQP_WEAPON, breakrate[0], BCT_ENEMY);
+			if (breakrate[1])
+				skill_break_equip(target, EQP_ARMOR, breakrate[1], BCT_ENEMY);
 		}
 	}
 	return wd;

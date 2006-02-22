@@ -178,6 +178,7 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 int skill_additional_effect( struct block_list* src, struct block_list *bl,int skillid,int skilllv,int attack_type,unsigned int tick);
 int skill_counter_additional_effect( struct block_list* src, struct block_list *bl,int skillid,int skilllv,int attack_type,unsigned int tick);
 int skill_blown( struct block_list *src, struct block_list *target,int count);
+int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int flag);
 // ユニットスキル
 struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,int skilllv,int x,int y,int flag);
 struct skill_unit *skill_initunit(struct skill_unit_group *group,int idx,int x,int y);

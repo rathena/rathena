@@ -47,12 +47,6 @@ int pc_reg_received(struct map_session_data *sd);
 int pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 
-int pc_break_equip(struct map_session_data *, unsigned short);
-#define pc_breakweapon(sd)	(pc_break_equip(sd, EQP_WEAPON))
-#define pc_breakarmor(sd)	(pc_break_equip(sd, EQP_ARMOR))
-#define pc_breakshield(sd)	(pc_break_equip(sd, EQP_SHIELD))
-#define pc_breakhelm(sd)	(pc_break_equip(sd, EQP_HELM))
-
 int pc_checkskill(struct map_session_data *sd,int skill_id);
 int pc_checkallowskill(struct map_session_data *sd);
 int pc_checkequip(struct map_session_data *sd,int pos);
@@ -194,7 +188,6 @@ struct map_session_data *pc_get_child(struct map_session_data *sd);
 
 int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);
-int pc_break_equip(struct map_session_data *sd, unsigned short where);
 int pc_candrop(struct map_session_data *sd,int item_id);
 
 struct pc_base_job{

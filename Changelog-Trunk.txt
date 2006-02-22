@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/22
+	* Changed the way equipment breaking works. Function pc_break_equip was
+	  removed and now skill_break_equip is used. Basicly, it's the same as
+	  before, except that when you 'break' a piece of equipment of a
+	  non-player, the corresponding strip(weapon/armor/shield/helm) status
+	  effect is induced (duration: strip skill lv 1) [Skotlex]
 	* Cleaned up the Dev folder. [Skotlex]
 	- Take note of the file todo-for-stable, which holds all modifications in
 	  trunk that have not yet made it into stable. Be sure to update the file

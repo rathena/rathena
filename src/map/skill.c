@@ -1024,15 +1024,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	case AM_ACIDTERROR:
 		status_change_start(bl,SC_BLEEDING,(skilllv*3),skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
-		if (dstsd && rand()%100 < skill_get_time(skillid,skilllv) * battle_config.equip_skill_break_rate / 100) { //fixed
-			if(pc_breakarmor(dstsd))
-				clif_emotion(bl,23);
-		}
+		if (skill_break_equip(bl, EQP_ARMOR, 100*skill_get_time(skillid,skilllv), BCT_ENEMY))
+			clif_emotion(bl,23);
 		break;
 
 	case AM_DEMONSTRATION:
-		if (dstsd && rand()%10000 < skilllv * battle_config.equip_skill_break_rate )
-			pc_breakweapon(dstsd);
+		skill_break_equip(bl, EQP_WEAPON, 100*skilllv, BCT_ENEMY);
 		break;
 		
 	case CR_SHIELDCHARGE:		/* シ?ルドチャ?ジ */
@@ -1100,23 +1097,16 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	// Equipment breaking monster skills [Celest]
 	case NPC_BREAKWEAPON:
-		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
-			pc_breakweapon(dstsd);
+		skill_break_equip(bl, EQP_WEAPON, 1000*skilllv, BCT_ENEMY);
 		break;
-
 	case NPC_BREAKARMOR:
-		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
-			pc_breakarmor(dstsd);
+		skill_break_equip(bl, EQP_ARMOR, 1000*skilllv, BCT_ENEMY);
 		break;
-
 	case NPC_BREAKHELM:
-		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
-			pc_breakhelm(dstsd);
+		skill_break_equip(bl, EQP_HELM, 1000*skilllv, BCT_ENEMY);
 		break;
-
 	case NPC_BREAKSHIELD:
-		if(dstsd && rand()%10000 < 10*skilllv*battle_config.equip_skill_break_rate)
-			pc_breakshield(dstsd);
+		skill_break_equip(bl, EQP_SHIELD, 1000*skilllv, BCT_ENEMY);
 		break;
 
 	case CH_TIGERFIST:
@@ -1185,13 +1175,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case CR_ACIDDEMONSTRATION:
-		if (dstsd) {
-			if (rand()%10000 < skilllv * battle_config.equip_skill_break_rate)
-				pc_breakweapon(dstsd);
-			// separate chances?
-			if (rand()%10000 < skilllv * battle_config.equip_skill_break_rate)
-				pc_breakarmor(dstsd);
-		}
+		skill_break_equip(bl, EQP_WEAPON|EQP_SHIELD, 100*skilllv, BCT_ENEMY);
 		break;
 
 	case TK_DOWNKICK:
@@ -1404,7 +1388,92 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 	return 0;
 }
+/*=========================================================================
+ Breaks equipment. On-non players causes the corresponding strip effect.
+ - rate goes from 0 to 10000 (100.00%)
+ - flag is a BCT_ flag to indicate which type of adjustment should be used
+   (BCT_ENEMY/BCT_PARTY/BCT_SELF) are the valid values.
+-------------------------------------------------------------------------*/
+int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int flag) {
+	static int where_list[4] = {EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM};
+	static int scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM };
+	static int scdef[4] = {SC_CP_WEAPON, SC_CP_ARMOR, SC_CP_SHIELD, SC_CP_HELM};
+	struct status_change *sc = status_get_sc(bl);
+	int i,j;
+	TBL_PC *sd;
+	BL_CAST(BL_PC, bl, sd);
+	if (sc && !sc->count)
+		sc = NULL;
+	
+	if (sd) {
+		if (sd->unbreakable_equip)
+			where &= ~sd->unbreakable_equip;
+		if (sd->unbreakable)
+			rate -= rate*sd->unbreakable/100;
+		if (where&EQP_WEAPON) {
+			switch (sd->status.weapon) {
+				case 0:	//Bare fists should not break :P
+				case 7:
+				case 8: // Axes and Maces can't be broken [DracoRPG]
+				case 10:
+				case 15: //Rods and Books can't be broken [Skotlex]
+					where &= ~EQP_WEAPON;
+			}
+		}
+	}
+	if (flag&BCT_ENEMY) {
+		if (battle_config.equip_skill_break_rate != 100)
+			rate = rate*battle_config.equip_skill_break_rate/100;
+	} else if (flag&(BCT_PARTY|BCT_SELF)) {
+		if (battle_config.equip_self_break_rate != 100)
+			rate = rate*battle_config.equip_self_break_rate/100;
+	}
 
+	for (i = 0; i < 4; i++) {
+		if (where&where_list[i]) {
+			if (sc && sc->count && sc->data[scdef[i]].timer != -1)
+				where&=~where_list[i];
+			else if (rand()%10000 > rate)
+				where&=~where_list[i];
+			else if (!sd) //Cause Strip effect.
+				status_change_start(bl,scatk[i],100,0,0,0,0,
+					skill_get_time(StatusSkillChangeTable[scatk[i]],1),0);
+		}
+	}
+	if (!where) //Nothing to break.
+		return 0;
+	if (sd) {
+		for (i = 0; i < 11; i++) {
+			j = sd->equip_index[i];
+			if (j <= 0 || sd->status.inventory[j].attribute == 1 || !sd->inventory_data[j])
+				continue;
+			flag = 0;
+			switch(i) {
+				case 6: //Upper Head
+					flag = (where&EQP_HELM);
+					break;
+				case 7: //Body
+					flag = (where&EQP_ARMOR);
+					break;
+				case 8: //Left/Right hands
+				case 9:
+					flag = (
+						(where&EQP_WEAPON && sd->inventory_data[j]->type == 4) ||
+						(where&EQP_SHIELD && sd->inventory_data[j]->type == 5));
+					break;
+				default:
+					continue;
+			}
+			if (flag) {
+				sd->status.inventory[j].attribute = 1;
+				pc_unequipitem(sd, j, 3);
+			}
+		}
+		clif_equiplist(sd);
+	}
+
+	return where; //Return list of pieces broken.
+}
 /*=========================================================================
  Used to knock back players, monsters, traps, etc
  If count&0xf00000, the direction is send in the 6th byte.
@@ -3455,10 +3524,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				skilllv,0,0,0,skill_get_time(skillid,skilllv),0);
 		if(!i) {
 			if (sd) clif_skill_fail(sd,skillid,0,0);
-			if(dstsd && battle_config.equip_self_break_rate) {
-				if(sd && sd != dstsd) clif_displaymessage(sd->fd,"You broke target's weapon");
-				pc_breakweapon(dstsd);
-			}
+			if (skill_break_equip(bl, EQP_WEAPON, 10000, BCT_PARTY) &&
+				sd && sd != dstsd)
+				clif_displaymessage(sd->fd,"You broke target's weapon");
+		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,i);
 		break;
 
@@ -3498,7 +3567,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			status_change_start(bl,type,100,skilllv,0,0,0,skill_get_time(skillid,skilllv),0));
-		}
 		break;
 
 	case PR_KYRIE:			/* キリエエレイソン */
@@ -5284,7 +5352,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						int where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
 						battle_damage(src, bl, 1000, 0);
 						clif_damage(src,bl,tick,0,0,1000,0,0,0);
-						if (dstsd && battle_config.equip_skill_break_rate) pc_break_equip(dstsd, where[rand() % 3]);
+						skill_break_equip(bl, where[rand()%3], 10000, BCT_ENEMY);
 					}
 					break;
 				case 4:	// atk halved
