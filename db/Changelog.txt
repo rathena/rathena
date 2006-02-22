@@ -27,6 +27,7 @@
 =========================
 
 02/22
+	* Fixed G_GOBLINE_XMAS mode (aggresive ~~) [Komurka]
 	* Made G_DARK_ILLUSION more ... aggressive [Komurka]
 02/21
 	* Changed a bunch of item names according to the upcoming iRO Lighthalzen Patch. [Poki#3]
