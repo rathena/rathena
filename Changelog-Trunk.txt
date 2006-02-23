@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/23
+	* Added mob skill conditions myhpinrate and friendhpinrate. [Skotlex]
+	* Added monster_ai condition 16 (enable `friend` targetted skills to heal
+	  oneself) [Skotlex]
+	* Fixed the shop id not clearing when buying/selling (which made you get
+	  stuck afterwards). [Skotlex]
 	* Modified the way autospells stack to mimic official servers. Cards of the
 	  same ID cannot stack, but different cards with the same skill can each
 	  trigger indepedently of each other. [Skotlex]
