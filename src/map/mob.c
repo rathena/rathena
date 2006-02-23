@@ -3585,19 +3585,18 @@ int mobskill_use_pos( struct mob_data *md,
  * Friendly Mob whose HP is decreasing by a nearby MOB is looked for.
  *------------------------------------------
  */
-int mob_getfriendhpltmaxrate_sub(struct block_list *bl,va_list ap)
+int mob_getfriendhprate_sub(struct block_list *bl,va_list ap)
 {
-	int rate;
+	int min_rate, max_rate,rate;
 	struct block_list **fr;
 	struct mob_data *md;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, md=va_arg(ap,struct mob_data *));
-	rate=va_arg(ap,int);
+	md = va_arg(ap,struct mob_data *);
+	min_rate=va_arg(ap,int);
+	max_rate=va_arg(ap,int);
 	fr=va_arg(ap,struct block_list **);
 
-	if( md->bl.id == bl->id )
+	if( md->bl.id == bl->id && !(battle_config.mob_ai&16))
 		return 0;
 
 	if ((*fr) != NULL) //A friend was already found.
@@ -3606,11 +3605,13 @@ int mob_getfriendhpltmaxrate_sub(struct block_list *bl,va_list ap)
 	if (battle_check_target(&md->bl,bl,BCT_ENEMY)>0)
 		return 0;
 	
-	if (status_get_hp(bl) < status_get_max_hp(bl) * rate / 100)
+	rate = 100*status_get_hp(bl)/status_get_max_hp(bl);
+	
+	if (rate >= min_rate && rate <= max_rate)
 		(*fr) = bl;
-	return 0;
+	return 1;
 }
-struct block_list *mob_getfriendhpltmaxrate(struct mob_data *md,int rate)
+static struct block_list *mob_getfriendhprate(struct mob_data *md,int min_rate,int max_rate)
 {
 	struct block_list *fr=NULL;
 	int type = BL_MOB;
@@ -3620,7 +3621,7 @@ struct block_list *mob_getfriendhpltmaxrate(struct mob_data *md,int rate)
 	if (md->special_state.ai) //Summoned creatures. [Skotlex]
 		type = BL_PC;
 	
-	map_foreachinrange(mob_getfriendhpltmaxrate_sub, &md->bl, 8, type,md,rate,&fr);
+	map_foreachinrange(mob_getfriendhprate_sub, &md->bl, 8, type,md,min_rate,max_rate,&fr);
 	return fr;
 }
 /*==========================================
@@ -3652,8 +3653,9 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 	nullpo_retr(0, md=(struct mob_data *)bl);
 	nullpo_retr(0, mmd=va_arg(ap,struct mob_data *));
 
-	if( mmd->bl.id == bl->id )
+	if( mmd->bl.id == bl->id && !(battle_config.mob_ai&16) )
 		return 0;
+
 	if (battle_check_target(&mmd->bl,bl,BCT_ENEMY)>0)
 		return 0;
 	cond1=va_arg(ap,int);
@@ -3724,10 +3726,13 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_ALWAYS:
 					flag = 1; break;
 				case MSC_MYHPLTMAXRATE:		// HP< maxhp%
-					{
-						int max_hp = status_get_max_hp(&md->bl);
-						flag = (md->hp < max_hp * c2 / 100); break;
-					}
+					flag = 100*md->hp/status_get_max_hp(&md->bl);
+					flag = (flag <= c2);
+				  	break;
+				case MSC_MYHPINRATE:
+					flag = 100*md->hp/status_get_max_hp(&md->bl);
+					flag = (flag >= c2 && flag <= ms[i].val[0]);
+					break;
 				case MSC_MYSTATUSON:		// status[num] on
 				case MSC_MYSTATUSOFF:		// status[num] off
 					if (!md->sc.count) {
@@ -3742,7 +3747,9 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					}
 					flag ^= (ms[i].cond1 == MSC_MYSTATUSOFF); break;
 				case MSC_FRIENDHPLTMAXRATE:	// friend HP < maxhp%
-					flag = ((fbl = mob_getfriendhpltmaxrate(md, ms[i].cond2)) != NULL); break;
+					flag = ((fbl = mob_getfriendhprate(md, 0, ms[i].cond2)) != NULL); break;
+				case MSC_FRIENDHPINRATE	:
+					flag = ((fbl = mob_getfriendhprate(md, ms[i].cond2, ms[i].val[0])) != NULL); break;
 				case MSC_FRIENDSTATUSON:	// friend status[num] on
 				case MSC_FRIENDSTATUSOFF:	// friend status[num] off
 					flag = ((fmd = mob_getfriendstatus(md, ms[i].cond1, ms[i].cond2)) != NULL); break;					
@@ -4545,7 +4552,9 @@ static int mob_readskilldb(void)
 	} cond1[] = {
 		{	"always",			MSC_ALWAYS				},
 		{	"myhpltmaxrate",	MSC_MYHPLTMAXRATE		},
+		{  "myhpinrate",		MSC_MYHPINRATE 		},
 		{	"friendhpltmaxrate",MSC_FRIENDHPLTMAXRATE	},
+		{	"friendhpinrate",	MSC_FRIENDHPINRATE	},
 		{	"mystatuson",		MSC_MYSTATUSON			},
 		{	"mystatusoff",		MSC_MYSTATUSOFF			},
 		{	"friendstatuson",	MSC_FRIENDSTATUSON		},

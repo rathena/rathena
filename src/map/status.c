@@ -1364,7 +1364,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	if(sd->status.max_hp > battle_config.max_hp)
 		sd->status.max_hp = battle_config.max_hp;
-	if(sd->status.max_hp <= 0) sd->status.max_hp = 1;
+	else if(sd->status.max_hp <= 0)
+		sd->status.max_hp = 1;
 	if(sd->status.hp>sd->status.max_hp)
 		sd->status.hp=sd->status.max_hp;
 
@@ -1423,9 +1424,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	
 	if(sd->status.max_sp > battle_config.max_sp)
 		sd->status.max_sp = battle_config.max_sp;
+	else if(sd->status.max_sp <= 0)
+	  	sd->status.max_sp = 1;
 	if(sd->status.sp>sd->status.max_sp)
 		sd->status.sp=sd->status.max_sp;
-	if(sd->status.max_sp <= 0) sd->status.max_sp = 1;
 
 	if(sd->sc.data[SC_DANCING].timer==-1){
 		// Basic natural SP regeneration value

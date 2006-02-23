@@ -9805,11 +9805,12 @@ void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
 	n = (RFIFOW(fd,2)-4) /4;
 	item_list = (unsigned short*)RFIFOP(fd,4);
 
-	if (sd->trade_partner != 0)
+	if (sd->trade_partner || !sd->npc_shopid)
 		fail = 1;
 	else
 		fail = npc_buylist(sd,n,item_list);
 
+	sd->npc_shopid = 0; //Clear shop data.
 	WFIFOHEAD(fd,packet_len_table[0xca]);
 	WFIFOW(fd,0)=0xca;
 	WFIFOB(fd,2)=fail;
@@ -9829,10 +9830,11 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 	n = (RFIFOW(fd,2)-4) /4;
 	item_list = (unsigned short*)RFIFOP(fd,4);
 
-	if (sd->trade_partner != 0)
+	if (sd->trade_partner || !sd->npc_shopid)
 		fail = 1;
 	else
 		fail = npc_selllist(sd,n,item_list);
+	sd->npc_shopid = 0; //Clear shop data.
 
 	WFIFOHEAD(fd,packet_len_table[0xcb]);
 	WFIFOW(fd,0)=0xcb;

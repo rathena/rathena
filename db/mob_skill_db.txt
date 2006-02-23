@@ -28,9 +28,13 @@
 //	always			unconditional
 //	onspawn			when the mob spawns/respawns.
 //	myhpltmaxrate		when the mob's hp drops to a certain %
+//	myhpinrate		when the mob's hp is in a certain % range ('a condition value'
+//                is the lower cap, while 'a value 1' is the upper cap).
 //	mystatuson		If the mob has any abnormalities in status (condition value),
 //	mystatusoff		If the mob has ended any abnormalities in status (condition value),
-//	friendhpltmaxrate	when the mobs' friend's hp drops to a certain %
+//	friendhpltmaxrate	when the mob's friend's hp drops to a certain %
+//	friendhpinrate		when the mob's friend's hp is in a certain % range (range
+//                   defined the same way as in myhpinrate)
 //	friendstatuson		If the friend has any abnormalities in status (condition value),
 //	friendstatusoff		If the friend has ended any abnormalities in status (condition value),
 //	attackpcgt		Attack PC becomes more than the  number of specification
