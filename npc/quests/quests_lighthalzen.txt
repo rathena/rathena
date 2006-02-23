@@ -33,12 +33,12 @@
 
 lighthalzen.gat,1,1,7	script	sneakAddSuber	-1,{
 OnInit:
-	set $@sneakchance, 3; // chance of successful sneak(0 = never, 10 = always)
-	set $@sneakguard, 0; // numbers of people who sneaked past guard
-	set $@threshold, 10; // numbers of sneakers before mob appears
-	set $@mob, 50; 	  // Max respawn numbers of "mobsters"
-	set $@mobcount, 0; // current numbers of "mobsters"
-	set $@lhz_alert, 0; // Alert on Lighthalzen(0 = off, 1 = on)
+	set $@sneakchance, 3;	// chance of successful sneak(0 = never, 10 = always)
+	set $@sneakguard, 0;	// numbers of people who sneaked past guard
+	set $@threshold, 10;	// numbers of sneakers before mob appears
+	set $@mob, 50;		// Max respawn numbers of "mobsters"
+	set $@mobcount, 0;	// current numbers of "mobsters"
+	set $@lhz_alert, 0;	// Alert on Lighthalzen(0 = off, 1 = on)
 	set $@i, 0;
 	
 	end;
@@ -1140,7 +1140,7 @@ L_4:
 L4_1:
 	mes "There is a small card inside of it.";
 	next;
-	mes "You acquired the 'Laboratory Key'.";
+	mes "You acquired the 'Laboratory Permit'.";
 	set @gotkey,1;
 	getitem 2657,1;
 	close;
@@ -1186,7 +1186,7 @@ L_3:
 	next;
 	input @answer$;
 
-	if (@answer$ == "Laboratory Keycard" || @answer$ == "keycard") goto L_4;
+	if (@answer$ == "Laboratory Permit" || @answer$ == "permit") goto L_4;
 	mes "Nothing happened.";
 	close;
 

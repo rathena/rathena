@@ -6,7 +6,7 @@
 // Licensed under GPL
 // http://prometheus.fnae.net/
 //===== Current Version: =====================================
-//= 1.3
+//= 1.3a
 //===== Compatible With: =====================================
 //= Any Athena
 //===== Additional Comments: =================================
@@ -22,42 +22,42 @@
 // - Bio-life Labs 1F
 //========================================================================================
 
-lhz_dun01.gat,0,0,0,0	monster	Metaling	1613,60,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Virus	1627,30,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Removal	1682,40,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Metaling	1613,50,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Anopheles	1627,25,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Removal	1682,35,0,0,0
 lhz_dun01.gat,0,0,0,0	monster	Ygnizem	1652,5,0,0,0
 lhz_dun01.gat,0,0,0,0	monster	Whikebain	1653,5,0,0,0
 lhz_dun01.gat,0,0,0,0	monster	Armaia	1654,5,0,0,0
 lhz_dun01.gat,0,0,0,0	monster	Erend	1655,5,0,0,0
 lhz_dun01.gat,0,0,0,0	monster	Kavac	1656,5,0,0,0
 lhz_dun01.gat,0,0,0,0	monster	Rawrell	1657,5,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Gemini S58	1681,2,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Gemini S58	1681,1,1800000,900000,1
 
 //========================================================================================
 // - Bio-life Labs 2F
 //========================================================================================
 
 lhz_dun02.gat,0,0,0,0	monster	Removal	1682,25,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Virus	1627,10,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Ygnizem	1652,20,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Whikebain	1653,20,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Armaia	1654,20,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Erend	1655,20,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Kavac	1656,20,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Rawrell	1657,20,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Gemini S58	1681,5,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Ygnizem	1658,1,7200000,3600000,1
+lhz_dun02.gat,0,0,0,0	monster	Anopheles	1627,10,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Ygnizem	1652,15,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Whikebain	1653,15,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Armaia	1654,15,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Erend	1655,15,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Kavac	1656,15,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Rawrell	1657,15,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Gemini S58	1681,1,1800000,900000,1
+lhz_dun02.gat,0,0,0,0	monster	General Ygnizem	1658,1,7200000,3600000,1
 
 //========================================================================================
 // - Bio-life Labs 3F
 //========================================================================================
 
-lhz_dun03.gat,0,0,0,0	monster	Seyren	1634,30,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Eremes	1635,30,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Harword	1636,30,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Magaleta	1637,30,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Shecil	1638,30,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Katrinn	1639,30,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Seyren	1634,25,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Eremes	1635,25,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Harword	1636,25,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Magaleta	1637,25,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Shecil	1638,25,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Katrinn	1639,25,0,0,0
 
 lhz_dun03.gat,1,1,0	script	Lhzdun03monster	-1,{
 OnInit:

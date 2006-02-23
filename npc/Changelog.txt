@@ -28,6 +28,11 @@ Nexon
 Date		Added
 ======
 
+02/23
+	* Fixed item name in Cube Room Quest. [Poki#3]
+	* Changed Light Dun Spawn numbers a bit (Gemini is a Mini-boss) [Poki#3]
+	* Changed "Virus" to "Anopheles" [Poki#3]
+
 02/21
 	* Fixed wrong indication of Repairsman, thanks to NeoSaro [Lupus]
 02/17

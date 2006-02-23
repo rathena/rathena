@@ -39,7 +39,7 @@ hu_fild02.gat,0,0,0,0	monster	Rafflesia	1162,20,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Metaling	1613,30,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Breeze	1692,5,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Savage Babe	1167,30,0,0,0
-hu_fild02.gat,0,0,0,0	monster	Virus	1627,15,0,0,0
+hu_fild02.gat,0,0,0,0	monster	Anopheles	1627,15,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Geographer	1368,15,0,0,0
 
 //========================================================================================
@@ -60,7 +60,7 @@ hu_fild03.gat,0,0,0,0	monster	Red Mushroom	1085,15,180000,90000,1
 hu_fild04.gat,0,0,0,0	monster	Green Iguana	1687,15,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Breeze	1692,20,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Sleeper	1386,25,0,0,0
-hu_fild04.gat,0,0,0,0	monster	Virus	1627,25,0,0,0
+hu_fild04.gat,0,0,0,0	monster	Anopheles	1627,25,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Novus	1715,15,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Novus	1718,15,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Sky Deleter	1384,10,0,0,0
@@ -76,7 +76,7 @@ hu_fild04.gat,0,0,0,0	monster	Blue Plant	1079,5,180000,90000,1
 hu_fild05.gat,0,0,0,0	monster	Green Iguana	1687,35,0,0,0
 hu_fild05.gat,0,0,0,0	monster	Novus	1715,5,0,0,0
 hu_fild05.gat,0,0,0,0	monster	Novus	1718,5,0,0,0
-hu_fild05.gat,0,0,0,0	monster	Virus	1627,25,0,0,0
+hu_fild05.gat,0,0,0,0	monster	Anopheles	1627,25,0,0,0
 hu_fild05.gat,0,0,0,0	monster	Dragon Egg	1721,10,0,0,0
 hu_fild05.gat,0,0,0,0	monster	Mutant Dragonoid	1262,1,7200000,3600000,0
 
@@ -99,7 +99,7 @@ hu_fild06.gat,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 hu_fild07.gat,0,0,0,0	monster	Green Iguana	1687,35,0,0,0
 hu_fild07.gat,0,0,0,0	monster	Novus	1715,15,0,0,0
 hu_fild07.gat,0,0,0,0	monster	Novus	1718,15,0,0,0
-hu_fild07.gat,0,0,0,0	monster	Virus	1627,15,0,0,0
+hu_fild07.gat,0,0,0,0	monster	Anopheles	1627,15,0,0,0
 hu_fild07.gat,0,0,0,0	monster	Breeze	1692,20,0,0,0
 hu_fild07.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
 hu_fild07.gat,0,0,0,0	monster	Demon Fungus	1378,20,0,0,0

@@ -27,6 +27,7 @@
 =========================
 
 02/22
+	* Fixed Summon skills, among others. [Poki#3]
 	* Fixed G_GOBLINE_XMAS mode (aggresive ~~) [Komurka]
 	* Made G_DARK_ILLUSION more ... aggressive [Komurka]
 02/21
