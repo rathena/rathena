@@ -365,6 +365,7 @@ enum {
 extern int StatusIconChangeTable[];
 
 extern int current_equip_item_index;
+extern int current_equip_card_id;
 
 //Mode definitions to clear up code reading. [Skotlex]
 #define MD_CANMOVE 0x001

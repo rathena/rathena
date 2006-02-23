@@ -1373,6 +1373,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			else
 				tbl = src;
 			
+			if (tbl != src && !battle_check_range(src, tbl, skill_get_range2(src, skillid, skilllv)))
+				continue; //Autoskills DO check for target-src range. [Skotlex]
+			
 			switch (skill_get_casttype(skillid)) {
 				case CAST_GROUND:
 					skill_castend_pos2(bl, tbl->x, tbl->y, skillid, skilllv, tick, 0);

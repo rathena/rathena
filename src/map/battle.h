@@ -429,6 +429,7 @@ extern struct Battle_Config {
 
 	unsigned short sg_miracle_skill_ratio;
 	int sg_miracle_skill_duration;
+	unsigned short autospell_stacking; //Enables autospell cards to stack. [Skotlex]
 
 } battle_config;
 

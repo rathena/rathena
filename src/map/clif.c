@@ -3033,7 +3033,7 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 	if ( !session_isActive(fd) ) // Invalid pointer fix, by sasuke [Kevin]
 		return 0;
  
-        WFIFOHEAD(fd, 14);
+	WFIFOHEAD(fd, 14);
 	WFIFOW(fd,0)=0xb0;
 	WFIFOW(fd,2)=type;
 	switch(type){

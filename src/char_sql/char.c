@@ -3217,7 +3217,7 @@ int parse_char(int fd) {
 			WFIFOL(fd,2+28) = char_dat[i].karma;
 			WFIFOL(fd,2+32) = char_dat[i].manner;
 
-			WFIFOW(fd,2+40) = 0x30; 
+			WFIFOW(fd,2+40) = 0x30;
 			WFIFOW(fd,2+42) = (char_dat[i].hp > 0x7fff) ? 0x7fff : char_dat[i].hp;
 			WFIFOW(fd,2+44) = (char_dat[i].max_hp > 0x7fff) ? 0x7fff : char_dat[i].max_hp;
 			WFIFOW(fd,2+46) = (char_dat[i].sp > 0x7fff) ? 0x7fff : char_dat[i].sp;

@@ -42,6 +42,7 @@ static int atkmods[3][20];	// 武器ATKサイズ修正(size_fix.txt)
 static char job_bonus[MAX_PC_CLASS][MAX_LEVEL];
 
 int current_equip_item_index; //Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
+int current_equip_card_id; //To prevent card-stacking (from jA) [Skotlex]
 //we need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only
 //to avoid cards exploits
 
@@ -557,8 +558,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	int b_base_atk;
 	struct skill b_skill[MAX_SKILL];
 	int i,bl,index;
-	int skill,wele,wele_,def_ele,refinedef=0;
-	int pele=0,pdef_ele=0;
+	int skill,refinedef=0;
 	int str,dstr,dex;
 
 	nullpo_retr(0, sd);
@@ -782,51 +782,35 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			continue;
 
 		if(sd->inventory_data[index]) {
-			if(sd->inventory_data[index]->type == 4) { // Weapon cards
-				if(sd->status.inventory[index].card[0]!=0x00ff && sd->status.inventory[index].card[0]!=0x00fe && sd->status.inventory[index].card[0]!=(short)0xff00) {
-					int j;
-					for(j=0;j<sd->inventory_data[index]->slot;j++){	// カ?ド
-						int c=sd->status.inventory[index].card[j];
-						if(c>0){
-							if(i == 8 && sd->status.inventory[index].equip == 0x20)
-								sd->state.lr_flag = 1;
-							run_script(itemdb_equipscript(c),0,sd->bl.id,0);
-							sd->state.lr_flag = 0;
-							if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
-								return 1;
-						}
-					}
-				}
-			}
-			else if(sd->inventory_data[index]->type==5){ // Non-weapon equipment cards
-				if(sd->status.inventory[index].card[0]!=0x00ff && sd->status.inventory[index].card[0]!=0x00fe && sd->status.inventory[index].card[0]!=(short)0xff00) {
-					int j;
-					for(j=0;j<sd->inventory_data[index]->slot;j++){	// カ?ド
-						int c=sd->status.inventory[index].card[j];
-						if(c>0) {
-							run_script(itemdb_equipscript(c),0,sd->bl.id,0);
-							if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
-								return 1;
-						}
-					}
+			int j,c;
+			//Card script execution.
+			if(sd->status.inventory[index].card[0]==0x00ff ||
+				sd->status.inventory[index].card[0]==0x00fe ||
+				sd->status.inventory[index].card[0]==(short)0xff00)
+				continue;
+			for(j=0;j<sd->inventory_data[index]->slot;j++){	// カ?ド
+				current_equip_card_id= c= sd->status.inventory[index].card[j];
+				if(c>0){
+					if(i == 8 && sd->status.inventory[index].equip == 0x20)
+					{	//Left hand status.
+						sd->state.lr_flag = 1;
+						run_script(itemdb_equipscript(c),0,sd->bl.id,0);
+						sd->state.lr_flag = 0;
+					} else
+						run_script(itemdb_equipscript(c),0,sd->bl.id,0);
+					if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
+						return 1;
 				}
 			}
 		}
 	}
-	wele = sd->right_weapon.atk_ele;
-	wele_ = sd->left_weapon.atk_ele;
-	def_ele = sd->def_ele;
-
-	if(sd->status.pet_id > 0) { // Pet
+	
+	if(sd->status.pet_id > 0 && battle_config.pet_status_support && sd->pet.intimate > 0)
+	{ // Pet
 		struct pet_data *pd=sd->pd;
-		if((pd && battle_config.pet_status_support) && (!battle_config.pet_equip_required || pd->equip > 0)) {
-			if(sd->pet.intimate > 0 && pd->state.skillbonus == 1 && pd->bonus) { //Skotlex: Readjusted for pets
-				pc_bonus(sd,pd->bonus->type, pd->bonus->val);
-			}
-			pele = sd->right_weapon.atk_ele;
-			pdef_ele = sd->def_ele;
-			sd->right_weapon.atk_ele = sd->def_ele = 0;
-		}
+		if(pd && (!battle_config.pet_equip_required || pd->equip > 0) &&
+			pd->state.skillbonus == 1 && pd->bonus) //Skotlex: Readjusted for pets
+			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
 	memcpy(sd->paramcard,sd->parame,sizeof(sd->paramcard));
 
@@ -841,60 +825,52 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			continue;
 		if(i == 6 && (sd->equip_index[5] == index || sd->equip_index[4] == index))
 			continue;
-		if(sd->inventory_data[index]) {
-			sd->def += sd->inventory_data[index]->def;
-			if(sd->inventory_data[index]->type == 4) {
-				int r,wlv = sd->inventory_data[index]->wlv;
-				if (wlv >= MAX_REFINE_BONUS) 
-					wlv = MAX_REFINE_BONUS - 1;
-				if(i == 8 && sd->status.inventory[index].equip == 0x20) { // Left-hand weapon
-					sd->left_weapon.watk += sd->inventory_data[index]->atk;
-					sd->left_weapon.watk2 = (r=sd->status.inventory[index].refine)*	// 精?攻?力
-						refinebonus[wlv][0];
-					if( (r-=refinebonus[wlv][2])>0 )	// 過?精?ボ?ナス
-						sd->left_weapon.overrefine = r*refinebonus[wlv][1];
+		if(!sd->inventory_data[index])
+			continue;
+		
+		sd->def += sd->inventory_data[index]->def;
+		if(sd->inventory_data[index]->type == 4) {
+			int r,wlv = sd->inventory_data[index]->wlv;
+			struct weapon_data *wd;
+			if (wlv >= MAX_REFINE_BONUS) 
+				wlv = MAX_REFINE_BONUS - 1;
+			if(i == 8 && sd->status.inventory[index].equip == 0x20)
+				wd = &sd->left_weapon; // Left-hand weapon
+			else
+				wd = &sd->right_weapon;
+			wd->watk += sd->inventory_data[index]->atk;
+			wd->watk2 = (r=sd->status.inventory[index].refine)*refinebonus[wlv][0];
+			if((r-=refinebonus[wlv][2])>0) //Overrefine bonus.
+				wd->overrefine = r*refinebonus[wlv][1];
 
-					if(sd->status.inventory[index].card[0]==0x00ff){	// Forged weapon
-						sd->left_weapon.star = (sd->status.inventory[index].card[1]>>8);	// 星のかけら
-						if(sd->left_weapon.star >= 15) sd->left_weapon.star = 40; // 3 Star Crumbs now give +40 dmg
-						if (pc_istop10fame( MakeDWord(sd->status.inventory[index].card[2],sd->status.inventory[index].card[3]) ,MAPID_BLACKSMITH))
-							sd->left_weapon.star += 10;
-						wele_= (sd->status.inventory[index].card[1]&0x0f);	// ? 性
-					}
+			if(sd->status.inventory[index].card[0]==0x00ff)
+			{	// Forged weapon
+				wd->star += (sd->status.inventory[index].card[1]>>8);
+				if(wd->star >= 15) wd->star = 40; // 3 Star Crumbs now give +40 dmg
+				if(pc_istop10fame( MakeDWord(sd->status.inventory[index].card[2],sd->status.inventory[index].card[3]) ,MAPID_BLACKSMITH))
+					wd->star += 10;
+				
+				if (!wd->atk_ele) //Do not overwrite element from previous bonuses.
+					wd->atk_ele = (sd->status.inventory[index].card[1]&0x0f);
+
+				if (wd == &sd->left_weapon) {
 					sd->attackrange_ += sd->inventory_data[index]->range;
 					sd->state.lr_flag = 1;
 					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 					sd->state.lr_flag = 0;
-					if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
-						return 1;
-				}
-				else {	// Right-hand weapon
-					sd->right_weapon.watk += sd->inventory_data[index]->atk;
-					sd->right_weapon.watk2 += (r=sd->status.inventory[index].refine)*	// 精?攻?力
-						refinebonus[wlv][0];
-					if( (r-=refinebonus[wlv][2])>0 )	// 過?精?ボ?ナス
-						sd->right_weapon.overrefine += r*refinebonus[wlv][1];
-
-					if(sd->status.inventory[index].card[0]==0x00ff){	// Forged weapon
-						sd->right_weapon.star += (sd->status.inventory[index].card[1]>>8);	// 星のかけら
-						if(sd->right_weapon.star >= 15) sd->right_weapon.star = 40; // 3 Star Crumbs now give +40 dmg
-						if (pc_istop10fame( MakeDWord(sd->status.inventory[index].card[2],sd->status.inventory[index].card[3]) ,MAPID_BLACKSMITH))
-							sd->right_weapon.star += 10;
-						wele = (sd->status.inventory[index].card[1]&0x0f);	// ? 性
-					}
+				} else {
 					sd->attackrange += sd->inventory_data[index]->range;
 					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
-					if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
-						return 1;
 				}
-			}
-			else if(sd->inventory_data[index]->type == 5) {
-				sd->right_weapon.watk += sd->inventory_data[index]->atk;
-				refinedef += sd->status.inventory[index].refine*refinebonus[0][0];
-				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 				if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
 					return 1;
 			}
+		}
+		else if(sd->inventory_data[index]->type == 5) {
+			refinedef += sd->status.inventory[index].refine*refinebonus[0][0];
+			run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+			if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
+				return 1;
 		}
 	}
 
@@ -915,18 +891,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->attackrange = sd->attackrange_;
 	if(sd->status.weapon == 11)
 		sd->attackrange += sd->arrow_range;
-	if(wele > 0)
-		sd->right_weapon.atk_ele = wele;
-	if(wele_ > 0)
-		sd->left_weapon.atk_ele = wele_;
-	if(def_ele > 0)
-		sd->def_ele = def_ele;
-	if(battle_config.pet_status_support) {
-		if(pele > 0 && !sd->right_weapon.atk_ele)
-			sd->right_weapon.atk_ele = pele;
-		if(pdef_ele > 0 && !sd->def_ele)
-			sd->def_ele = pdef_ele;
-	}
 	sd->double_rate += sd->double_add_rate;
 	sd->perfect_hit += sd->perfect_hit_add;
 	sd->splash_range += sd->splash_add_range;
@@ -3493,6 +3457,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	//Check rate
 	if (!(flag&(4|1))) {
 		rate*=100; //Pass to 10000 = 100%
+		if (rate > 10000) //Shouldn't let this go above 100%
+			rate = 10000;
 		race = flag&8?0:status_get_sc_def(bl, type); //recycling race to store the sc_def value.
 		//sd resistance applies even if the flag is &8
 		if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX && sd->reseff[type-SC_COMMON_MIN] > 0)

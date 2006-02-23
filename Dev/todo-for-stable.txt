@@ -18,8 +18,6 @@ stable. Remove it from the list once merged.
   assassins.
 - Deleting pet eggs from inventory after the pet data has arrived, not upon
   hatching request.
-- Updated the char-SQL server to use auto-incremental IDs and retrieve them
-  from code.
 - Battle option pk_level_range, allow_es_magic_player
 - Cleanup of pc_useitem code
 - Autocasted Teleport should now show a menu.
@@ -33,3 +31,5 @@ stable. Remove it from the list once merged.
 - Send the guild/party mini-dots on map-login.
 - Updated the path-finding routines from jA
 - Replace pc_break_equip for skill_break_equip
+- Battle function autoskill_stacking
+- The new non-stackable autospell implementation.

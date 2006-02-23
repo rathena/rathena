@@ -3821,6 +3821,7 @@ static const struct battle_data_short {
 	{ "pc_max_status_def",					&battle_config.pc_max_sc_def },
 	{ "mob_max_status_def",					&battle_config.mob_max_sc_def },
 	{ "sg_miracle_skill_ratio",				&battle_config.sg_miracle_skill_ratio },
+	{ "autospell_stacking", 				&battle_config.autospell_stacking },
 };
 
 static const struct battle_data_int {
@@ -4220,6 +4221,7 @@ void battle_set_defaults() {
 	battle_config.mob_max_sc_def = 5000;
 	battle_config.sg_miracle_skill_ratio=1;
 	battle_config.sg_miracle_skill_duration=600000;
+	battle_config.autospell_stacking = 0;
 }
 
 void battle_validate_conf() {

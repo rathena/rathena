@@ -1126,6 +1126,29 @@ int pc_checkweighticon(struct map_session_data *sd)
 	return 0;
 }
 
+static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short card_id) {
+	int i;
+	for (i = 0; i < max && spell[i].id; i++) {
+		if (spell[i].card_id == card_id &&
+			spell[i].id == id && spell[i].lv == lv)
+		{
+			if (!battle_config.autospell_stacking)
+				return 0;
+			rate += spell[i].rate;
+			break;
+		}
+	}
+	if (i == max) {
+		if (battle_config.error_log)
+			ShowWarning("pc_bonus: Reached max (%d) number of autospells per character!\n", max);
+		return 0;
+	}
+	spell[i].id = id;
+	spell[i].lv = lv;
+	spell[i].rate = rate;
+	spell[i].card_id = card_id;
+	return 1;
+}
 /*==========================================
  * ? 備品による能力等のボ?ナス設定
  *------------------------------------------
@@ -2044,34 +2067,12 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		}
 		break;
 	case SP_AUTOSPELL:
-		if(sd->state.lr_flag != 2) {
-			for (i = 0; i < MAX_PC_BONUS; i++) {
-				if (sd->autospell[i].id == 0 ||
-					(sd->autospell[i].id == type2 && sd->autospell[i].lv < type3) ||
-					(sd->autospell[i].id == type2 && sd->autospell[i].lv == type3 && sd->autospell[i].rate < val))
-				{
-					sd->autospell[i].id = type2;
-					sd->autospell[i].lv = type3;
-					sd->autospell[i].rate = val;
-					break;
-				}
-			}
-		}
+		if(sd->state.lr_flag != 2)
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, type2, type3, val, current_equip_card_id);
 		break;
 	case SP_AUTOSPELL_WHENHIT:
-		if(sd->state.lr_flag != 2) {
-			for (i = 0; i < MAX_PC_BONUS; i++) {
-				if (sd->autospell2[i].id == 0 ||
-					(sd->autospell2[i].id == type2 && sd->autospell2[i].lv < type3) ||
-					(sd->autospell2[i].id == type2 && sd->autospell2[i].lv == type3 && sd->autospell2[i].rate < val))
-				{
-					sd->autospell2[i].id = type2;
-					sd->autospell2[i].lv = type3;
-					sd->autospell2[i].rate = val;
-					break;
-				}
-			}
-		}
+		if(sd->state.lr_flag != 2)
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, type2, type3, val, current_equip_card_id);
 		break;
 	case SP_HP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
@@ -2124,39 +2125,16 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 
 int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4,int val)
 {
-	int i;
 	nullpo_retr(0, sd);
 
 	switch(type){
 	case SP_AUTOSPELL:
-		if(sd->state.lr_flag != 2) {
-			for (i = 0; i < MAX_PC_BONUS; i++) {
-				if (sd->autospell[i].id == 0 ||
-					(sd->autospell[i].id == type2 && sd->autospell[i].lv < type3) ||
-					(sd->autospell[i].id == type2 && sd->autospell[i].lv == type3 && sd->autospell[i].rate < type4))
-				{
-					sd->autospell[i].id = (val) ? type2 : -type2;		// val = 0: self, 1: enemy
-					sd->autospell[i].lv = type3;
-					sd->autospell[i].rate = type4;
-					break;
-				}
-			}
-		}			
+		if(sd->state.lr_flag != 2)
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, val?type2:-type2, type3, type4, current_equip_card_id);
 		break;
 	case SP_AUTOSPELL_WHENHIT:
-		if(sd->state.lr_flag != 2) {
-			for (i = 0; i < MAX_PC_BONUS; i++) {
-				if (sd->autospell2[i].id == 0 ||
-					(sd->autospell2[i].id == type2 && sd->autospell2[i].lv < type3) ||
-					(sd->autospell2[i].id == type2 && sd->autospell2[i].lv == type3 && sd->autospell2[i].rate < type4))
-				{
-					sd->autospell2[i].id = (val) ? type2 : -type2;		// val = 0: self, 1: enemy
-					sd->autospell2[i].lv = type3;
-					sd->autospell2[i].rate = type4;
-					break;
-				}
-			}
-		}
+		if(sd->state.lr_flag != 2)
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, val?type2:-type2, type3, type4, current_equip_card_id);
 		break;
 	default:
 		if(battle_config.error_log)

@@ -578,8 +578,8 @@ struct map_session_data {
   	short unequip_losesp[11];
  	// zeroed arrays end here.
 	// zeroed structures start here
-	struct {
-		short id, lv, rate;
+	struct s_autospell{
+		short id, lv, rate, card_id;
 	} autospell[MAX_PC_BONUS], autospell2[MAX_PC_BONUS];
 	struct { //skillatk raises bonus dmg% of skills, skillblown increases bonus blewcount for some skills.
 		short id, val;
