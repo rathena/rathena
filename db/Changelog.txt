@@ -26,6 +26,8 @@
 
 =========================
 
+02/24
+	* Changed bosses slaves in Bio Labs level 3 - they will spawn only once now [Komurka]
 02/22
 	* Fixed Summon skills, among others. [Poki#3]
 	* Fixed G_GOBLINE_XMAS mode (aggresive ~~) [Komurka]
