@@ -43,7 +43,7 @@
 	#define CL_NORMAL	CL_RESET
 	#define CL_NONE		CL_RESET
 
-	#define	CL_WHITE	"\033[1;29m"
+	#define	CL_WHITE	"\033[1;37m"
 	#define	CL_GRAY		"\033[1;30m"
 	#define	CL_RED		"\033[1;31m"
 	#define	CL_GREEN	"\033[1;32m"

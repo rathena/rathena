@@ -366,17 +366,6 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 		return 0;
 	}
 	
-#ifdef CELL_NOSTACK
-/* Should not be needed, let's try and see.
-	//If you fail by 1 cell, consider easy path successful, too. [Skotlex]
-	if (check_distance(x-x1,y-y1,1)) {
-		wpd->path_len=i;
-		wpd->path_pos=0;
-		wpd->path_half=0;
-		return 0;
-	}
-*/
-#endif
 	if(flag&1)
 		return -1;
 

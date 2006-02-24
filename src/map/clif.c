@@ -157,11 +157,12 @@ enum {
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
 #define clif_setlevel(lv) (lv<battle_config.max_lv?lv:battle_config.max_lv-(lv<battle_config.aura_lv?1:0));
 
+//Removed sd->npc_shopid because there is no packet sent from the client when you cancel a buy!
 //Quick check to know if the player shouldn't be "busy" with something else to deny action requests. [Skotlex]
-#define clif_cant_act(sd) (sd->npc_id || sd->npc_shopid || sd->vender_id || sd->chatID || (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT) || sd->trade_partner || sd->state.storage_flag)
+#define clif_cant_act(sd) (sd->npc_id || sd->vender_id || sd->chatID || (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT) || sd->trade_partner || sd->state.storage_flag)
 
 // Checks if SD is in a trade/shop (where messing with the inventory can cause problems/exploits)
-#define clif_trading(sd) (sd->npc_id || sd->npc_shopid || sd->vender_id || sd->trade_partner)
+#define clif_trading(sd) (sd->npc_id || sd->vender_id || sd->trade_partner)
 
 static char map_ip_str[16];
 static in_addr_t map_ip;

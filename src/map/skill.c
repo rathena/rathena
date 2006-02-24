@@ -1097,16 +1097,16 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	// Equipment breaking monster skills [Celest]
 	case NPC_BREAKWEAPON:
-		skill_break_equip(bl, EQP_WEAPON, 1000*skilllv, BCT_ENEMY);
+		skill_break_equip(bl, EQP_WEAPON, 150*skilllv, BCT_ENEMY);
 		break;
 	case NPC_BREAKARMOR:
-		skill_break_equip(bl, EQP_ARMOR, 1000*skilllv, BCT_ENEMY);
+		skill_break_equip(bl, EQP_ARMOR, 150*skilllv, BCT_ENEMY);
 		break;
 	case NPC_BREAKHELM:
-		skill_break_equip(bl, EQP_HELM, 1000*skilllv, BCT_ENEMY);
+		skill_break_equip(bl, EQP_HELM, 150*skilllv, BCT_ENEMY);
 		break;
 	case NPC_BREAKSHIELD:
-		skill_break_equip(bl, EQP_SHIELD, 1000*skilllv, BCT_ENEMY);
+		skill_break_equip(bl, EQP_SHIELD, 150*skilllv, BCT_ENEMY);
 		break;
 
 	case CH_TIGERFIST:

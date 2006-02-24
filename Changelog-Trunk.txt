@@ -5,6 +5,14 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/23
+	* Fixed the CL_WHITE define, thanks to FlavioJS [Skotlex]
+	* NPC break equipment stuff now has a 1.5% per skilllv success rate.
+	- This is a custom value as 20%-lv10 seems too high and 10%-lv10 seems too
+	  low. [Skotlex]
+	* pc_setpos won't random warp players if placed on top of Moonlight Petals
+	  [Skotlex]
+	* Removed the check in clif.c for npc_shopid as the client never sends a
+	  packet when the trade is cancelled... [Skotlex]
 	* Player-summoned mobs won't level up now. [Skotlex]
 	* Fixed Super Novice explosion spirits triggering no matter what you said
 	  on the third line. It now triggers on the fourth line.... [Skotlex]
