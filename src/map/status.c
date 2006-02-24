@@ -114,6 +114,7 @@ void initChangeTables(void) {
 	set_sc(BS_OVERTHRUST,           SC_OVERTHRUST,          SI_OVERTHRUST);
 	set_sc(BS_MAXIMIZE,             SC_MAXIMIZEPOWER,       SI_MAXIMIZEPOWER);
 	set_sc(HT_LANDMINE,             SC_STUN,                SI_BLANK);
+	set_sc(HT_ANKLESNARE,           SC_ANKLE,               SI_BLANK);
 	set_sc(HT_SANDMAN,              SC_SLEEP,               SI_BLANK);
 	set_sc(HT_FLASHER,              SC_BLIND,               SI_BLANK);
 	set_sc(HT_FREEZINGTRAP,         SC_FREEZE,              SI_BLANK);
@@ -3389,6 +3390,10 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 		// Changed to 3 secs and moved from skill.c [Skotlex]
 			min = 3000;
 		break;
+		case SC_SPIDERWEB:
+			if (map[bl->m].flag.pvp)
+				tick /=2;
+		break;
 		case SC_STOP:
 		// Unsure of this... but I get a feeling that agi reduces this
 		// (it was on Tiger Fist Code, but at -1 ms per 10 agi....
@@ -4409,6 +4414,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CONFUSION:
 		case SC_CLOSECONFINE:
 		case SC_CLOSECONFINE2:
+		case SC_ANKLE:
+		case SC_SPIDERWEB:
 			battle_stopwalking(bl,1);
 		break;
 		case SC_HIDING:

@@ -5,6 +5,14 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/02/23
+	* Player-summoned mobs won't level up now. [Skotlex]
+	* Fixed Super Novice explosion spirits triggering no matter what you said
+	  on the third line. It now triggers on the fourth line.... [Skotlex]
+	* Fixed GTB blocking targetted spells when gtb_pvp_only was set. [Skotlex]
+	* Merged the code of Ankle snare and Spider web. It no longer moves target
+	  if sc failed. [Skotlex]
+	* Players should stop walking as soon as they start vending or get into a
+	  chat. [Skotlex]
 	* Added mob skill conditions myhpinrate and friendhpinrate. [Skotlex]
 	* Added monster_ai condition 16 (enable `friend` targetted skills to heal
 	  oneself) [Skotlex]

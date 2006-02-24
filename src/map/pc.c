@@ -5510,7 +5510,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		}
 		if(battle_config.mobs_level_up && md && md->state.state!=MS_DEAD &&
 			md->level < pc_maxbaselv(sd) &&
-			!md->guardian_data // Guardians should not level. [Skotlex]
+			!md->guardian_data && !md->special_state.ai// Guardians/summons should not level. [Skotlex]
 		) { 	// monster level up [Valaris]
 			clif_misceffect(&md->bl,0);
 			md->level++;

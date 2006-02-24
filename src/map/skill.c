@@ -1141,16 +1141,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			skilllv,0,0,0,skill_get_time2(skillid,skilllv),0);
 		break;
 
-	case PF_SPIDERWEB:		/* ƒXƒpƒCƒ_?ƒEƒFƒbƒu */
-		{
-			int sec = skill_get_time2(skillid,skilllv);
-			if(map[src->m].flag.pvp) //PvP‚Å‚Í?S‘©ŠÔ”¼Œ¸?H
-				sec = sec/2;
-			battle_stopwalking(bl,1);
-			status_change_start(bl,SkillStatusChangeTable[skillid],100,skilllv,0,0,0,sec,0);
-		}
-		break;
-
 	case ASC_METEORASSAULT:			/* ƒ?ƒeƒIƒAƒTƒ‹ƒg */
 		//Any enemies hit by this skill will receive Stun, Darkness, or external bleeding status ailment with a 5%+5*SkillLV% chance.
 		switch(rand()%3) {
@@ -2492,7 +2482,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	if (status_isdead(src) || (src != bl && status_isdead(bl)))
 		return 1;
 
-	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl))
+	if (skillid && skill_get_type(skillid) == BF_MAGIC && 
+		!battle_config.gtb_pvp_only && status_isimmune(bl))
 		//GTB makes all targetted skills silently fail.
 		return 1;
 
@@ -6910,19 +6901,21 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		}
 		break;
 
+	case UNT_SPIDERWEB:
 	case UNT_ANKLESNARE:
-		if(sg->val2==0 && tsc && tsc->data[SC_ANKLE].timer==-1){
+		if(sg->val2==0 && (!tsc || tsc->data[type].timer==-1 )){
 		 	int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
-			battle_stopwalking(bl,1);
-			status_change_start(bl,SC_ANKLE,100,sg->skill_lv,0,0,0,sec,0);
-			map_moveblock(bl, src->bl.x, src->bl.y, tick);
-			clif_fixpos(bl);
+			if (status_change_start(bl,type,100,sg->skill_lv,0,0,0,sec,0))
+			{
+				map_moveblock(bl, src->bl.x, src->bl.y, tick);
+ 				clif_fixpos(bl);
+				sg->val2=bl->id;
+			}
 			//clif_01ac(&src->bl); //Removed? Check the openkore description of this packet: [Skotlex]
 			// 01AC: long ID
 			// Indicates that an object is trapped, but ID is not a
 			// valid monster or player ID.
-			sg->limit=DIFF_TICK(tick,sg->tick)+sec;
-			sg->val2=bl->id;
+			sg->limit = DIFF_TICK(tick,sg->tick)+sec;
 			sg->interval = -1;
 			src->range = 0;
 		}
@@ -7089,18 +7082,6 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 				    status_change_start(bl,SC_GOSPEL,100,1,0,0,BCT_ENEMY,skill_get_time2(sg->skill_id, sg->skill_lv),0);
 					break;
 			}
-		}
-		break;
-
-	case UNT_SPIDERWEB:
-		if(sg->val2==0 && (!tsc || tsc->data[type].timer==-1 )){
-			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
-			map_moveblock(bl, src->bl.x, src->bl.y, tick);
- 			clif_fixpos(bl);
-			sg->limit = DIFF_TICK(tick,sg->tick)+skill_get_time2(sg->skill_id,sg->skill_lv);
-			sg->val2=bl->id;
-			sg->interval = -1;
-			src->range = 0;
 		}
 		break;
 
