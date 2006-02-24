@@ -5283,6 +5283,8 @@ int atcommand_guildrecall(
 		for (i = 0; i < users; i++) {
 			if ((pl_sd = pl_allsd[i]) && sd->status.account_id != pl_sd->status.account_id &&
 			    pl_sd->status.guild_id == g->guild_id) {
+				if (pc_isGM(pl_sd) > pc_isGM(sd))
+					continue; //Skip GMs greater than you.
 				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
 					count++;
 				else
@@ -5339,6 +5341,8 @@ int atcommand_partyrecall(
 		for (i = 0; i < users; i++) {
 			if ((pl_sd = pl_allsd[i]) && sd->status.account_id != pl_sd->status.account_id &&
 			    pl_sd->status.party_id == p->party_id) {
+				if (pc_isGM(pl_sd) > pc_isGM(sd))
+					continue; //Skip GMs greater than you.
 				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
 					count++;
 				else
@@ -8362,6 +8366,10 @@ int atcommand_mute(
 	}
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
+		if (pc_isGM(pl_sd) > pc_isGM(sd)) {
+			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			return -1;
+		}
 		clif_GM_silence(sd, pl_sd, 0);
 		pl_sd->status.manner -= manner;
 		if(pl_sd->status.manner < 0)

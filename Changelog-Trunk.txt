@@ -6,6 +6,9 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/02/24
+	* Prevented guild/party recall to work on GMs of greater level than
+	  yourself. [Skotlex]
+	* Prevent muting players with higher GM level than yourself. [Skotlex]
 	* Fixed Lady Tanee's spawns. [Skotlex]
 2006/02/23
 	* Fixed the CL_WHITE define, thanks to FlavioJS [Skotlex]
