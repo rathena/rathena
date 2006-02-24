@@ -3347,7 +3347,7 @@
 1688,Lady Tany@NPC_STUNATTACK,attack,179,5,500,0,5000,no,target,always,0,,,,,,
 1688,Lady Tany@NPC_SUMMONSLAVE,attack,196,5,10000,2000,5000,no,self,slavele,2,1691,,,,,
 1688,Lady Tany@NPC_SUMMONSLAVE,idle,196,5,10000,2000,5000,no,self,slavele,2,1691,,,,,
-1688,Lady Tany@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,pnspawn,0,1587,,,,,
+1688,Lady Tany@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1587,,,,,
 1689,Bacsojin@AL_TELEPORT,idle,26,1,100,0,30000,yes,self,always,0,,,,,,
 1689,Bacsojin@NPC_INVISIBLE,chase,353,1,200,1000,30000,yes,self,always,0,,,,,,29
 1689,Bacsojin@NPC_STOP,attack,342,1,2000,500,15000,yes,target,always,0,,,,,,6

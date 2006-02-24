@@ -3728,9 +3728,6 @@ int pc_movepos(struct map_session_data *sd,int dst_x,int dst_y,int checkpath)
 
 	map_foreachinmovearea(clif_pcinsight,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,-dx,-dy,BL_ALL,sd);
 
-	if (pc_iscloaking(sd)) // ƒNƒ?ƒLƒ“ƒO‚ÌÁ–Å?¸
-		skill_check_cloaking(&sd->bl);
-
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
 		struct pet_data *pd = sd->pd;
 		int flag = 0;
