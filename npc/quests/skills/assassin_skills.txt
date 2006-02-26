@@ -1,0 +1,71 @@
+//===== eAthena Script ======================================= 
+//= Assassin Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// ASSASSIN - SONIC ACCELERATION + THROW VENOM KNIFE
+//============================================================
+in_moc_16.gat,14,21,3	script	Kiltin	884,{
+	mes "[Kiltin]";
+	if(BaseJob!=Job_Assassin) goto L_nosin;
+	if(getskilllv(1003) && getskilllv(1004)) goto L_alreadyhave;
+
+	mes "I'll teach you all I know, but";
+	mes "you need to steal some things";
+	mes "for me:";
+	mes "3 Sapphires";
+	mes "1 Ruby";
+	next;
+	
+	mes "[Kiltin]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(726)<3 || countitem(723)<1) goto L_noitems;//Items: Sapphire, Ruby,
+	delitem 726, 3;//Items: Sapphire,
+	delitem 723, 1;//Items: Ruby,
+
+	mes "[Kiltin]";
+	mes "I see you have what you need,";
+	mes "so I'll teach you my talent.";
+	skill 1003,1,0;
+	skill 1004,1,0;
+	close;
+	
+L_noitems:
+	mes "[Kiltin]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+		
+L_nosin:
+	mes "Sorry, but I'm on service of Shadowmen.";
+	emotion e_gasp;
+	close;
+
+L_alreadyhave:
+	mes "I've already taught you";
+	mes "everything I know...";
+	close;
+}
+

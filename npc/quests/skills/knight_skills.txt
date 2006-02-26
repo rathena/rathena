@@ -1,0 +1,67 @@
+//===== eAthena Script ======================================= 
+//= Knight Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// KNIGHT - CHARGE ATTACK
+//============================================================
+prt_in.gat,84,98,3	script	Esope	734,{
+	mes "[Esope]";
+	if(BaseJob!=Job_Knight) goto L_noknight;
+	if(getskilllv(1001)) goto L_alreadyhave;
+
+	mes "I'll teach you all I know for:";
+	mes "5 Candy canes";
+	mes "3 Witherless Roses";
+	next;
+	
+	mes "[Esope]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(530)<5 || countitem(748)<3)goto L_noitems;//Items: Candy_Cane, Witherless_Rose,
+	delitem 530, 5;//Items: Candy_Cane,
+	delitem 748, 3;//Items: Witherless_Rose,
+	
+	mes "[Esope]";
+	mes "I see you have what you need,";
+	mes "so I'll teach you my talent.";
+	skill 1001,1,0;
+	close;
+
+L_noitems:
+	mes "[Esope]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+		
+L_noknight:
+	mes "Looking for your master?";
+	emotion e_gasp;
+	close;
+
+L_alreadyhave:
+	mes "I've already taught you";
+	mes "everything I know...";
+	close;
+}

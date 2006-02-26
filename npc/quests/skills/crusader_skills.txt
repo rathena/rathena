@@ -1,0 +1,107 @@
+//===== eAthena Script ======================================= 
+//= Crusader Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// CRUSADER SKILL - SHRINK
+//============================================================
+geffen.gat,110,118,3	script	Ford	752,{
+	mes "[Ford]";
+	if(BaseJob!=Job_Crusader) goto L_nocruz;
+	if(getskilllv(1002)) goto L_alreadyhave;
+	mes "Maybe I'll teach you a little skill";
+	mes "if you bring me a few things...";
+	mes "Bring me these items and we'll";
+	mes "see if I feel like giving it to you.";
+	next;
+	mes "[Ford]";
+	mes "1 Red Potion";
+	mes "20 Sticky Mucus";
+	mes "3 Empty Bottles";
+	mes "5 Jellopies";
+	mes "1 Unripe Apple";
+	mes "1 Grape";
+	mes "1 Coal";
+	mes "3 Cyfars";
+	next;
+	
+	mes "[Ford]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(501)<1 || countitem(938)<20 || countitem(713)<3 || countitem(909)<5 || countitem(619)<1 || countitem(514)<1 || countitem(1003)<1 || countitem(7053)<3)goto L_noitems;//Items: Red_Potion, Sticky_Mucus, Empty_Bottle, Jellopy, Unripe_Apple, Grape, Coal, Cyfar,
+	delitem 501, 1;//Items: Red_Potion,
+	delitem 938, 20;//Items: Sticky_Mucus,
+	delitem 713, 3;//Items: Empty_Bottle,
+	delitem 909, 5;//Items: Jellopy,
+	delitem 619, 1;//Items: Unripe_Apple,
+	delitem 514, 1;//Items: Grape,
+	delitem 1003, 1;//Items: Coal,
+	delitem 7053, 3;//Items: Cyfar,
+	mes "[Ford]";
+	mes "Time to roll my lucky dice.";
+	mes "Good luck, I almost never lose.";
+//TODO: add DICE emotions? 8)
+	emotion 29;
+	next;
+	if(rand(1,6)!=3) goto L_lose;
+	emotion 58;
+	next;
+	
+	skill 1002,1,0;
+	mes "[Ford]";
+	mes "I can't believe I lost!";
+	mes "I NEVER lose...";
+	emotion 28;
+	close;
+	
+L_noitems:
+	mes "[Ford]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+		
+L_lose:
+	emotion 63;
+	next;
+	mes "[Ford]";
+	mes "I win again!!";
+	mes "I'm not teaching you";
+	mes "anything this time. Come";
+	mes "back if you want to Try";
+	mes "again";
+	close;
+	
+L_nocruz:
+	mes "If you are not a Crusader,";
+	mes "then you have no business";
+	mes "with me...";
+	close;
+	
+L_alreadyhave:
+	mes "Hey, you were lucky I";
+	mes "even taught you the";
+	mes "skill I did! Don't press";
+	mes "your luck.";
+	close;
+}

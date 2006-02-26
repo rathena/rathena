@@ -1,0 +1,141 @@
+//===== eAthena Script ======================================= 
+//= Blacksmith Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// BLACKSMITH SKILL - GREED + UNFAIR TRICK
+//============================================================
+//== GOODDAY - GREED SKILL ===================================
+geffen.gat,172,53,7	script	Goodday	826,{
+	mes "[Goodday]";
+	if(BaseJob!=Job_Blacksmith) goto L_nosmith;
+	if(getskilllv(1013)) goto L_alreadyhave;
+	if(Weight < 5000 || (Weight > MaxWeight-MaxWeight/10)) goto L_notstrong;
+
+	mes "You look pretty strong, so I'll";
+	mes "teach you a little trick I found";
+	mes "while watching some wizards move";
+	mes "things around without lifting a";
+	mes "finger!";
+	skill 1013,1,0;
+	close;
+
+L_notstrong:
+	mes "Come back when you're strong";
+	mes "enough to handle the weight";
+	mes "of my ability. You will need";
+	mes "to be able to carry over 5000";
+	mes "weight, and not be over 90%.";
+	close;
+
+L_nosmith:
+	mes "Geffen is such a great town.";
+	mes "Don't you think so too?";
+	next;
+	emotion 23;
+	mes "[Goodday]";
+	mes "WHAT...";
+	mes "You don't!";	
+	close;
+
+L_alreadyhave:
+	mes "I've already taught you";
+	mes "everything I know, so I";
+	mes "need to get back to my";
+	mes "work.";
+	close;
+}
+
+//== AKI - UNFAIR TRICK SKILL ==================================
+geffen.gat,178,72,7	script	Aki	726,{
+	mes "[Aki]";
+	if(BaseJob!=Job_Blacksmith) goto L_nosmith;
+	if(getskilllv(1012)) goto L_alreadyhave;
+	if(getskilllv(1013)<1) goto L_nogreed;
+	if(JobLevel<30) goto L_nojob;
+	mes "We're going to need a few things";
+	mes "for this lesson. Bring me:";
+	mes "2 Steel";
+	mes "8 Coal";
+	mes "2 Iron Hammers";
+	mes "1 Detrimindexta";
+	mes "500 Zeny";
+	next;
+	
+	mes "[Aki]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(999)<2 || countitem(1003)<8 || countitem(613)<2 || countitem(971)<1 || zeny<500) goto L_noitems;//Items: Steel, Coal, Iron_Hammer, Detrimindexta,
+	delitem 999, 2;//Items: Steel,
+	delitem 1003, 8;//Items: Coal,
+	delitem 613, 2;//Items: Iron_Hammer,
+	delitem 971, 1;//Items: Detrimindexta,
+	set zeny, zeny-500;
+	
+	mes "[Aki]";
+	mes "Good, You brought everything";
+	mes "with you already! We'll start";
+	mes "the process now.";
+	skill 1012,1,0;
+	next;
+	
+	specialeffect 183;
+	mes "Wow, you're a fast learner.";
+	mes "Enjoy your new talents!";
+	close;
+
+L_noitems:
+	mes "[Aki]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+	
+L_nosmith:
+	mes "Don't mind Goodday overthere.";
+	mes "He thinks everyone should like";
+	mes "this boring place!";
+	emotion e_laugh;
+	close;
+
+L_nogreed:
+	mes "If you're looking for more";
+	mes "to learn, then you should";
+	mes "talk to Goodday over there";
+	close;
+
+L_alreadyhave:
+	mes "WOW, I guess you've learned";
+	mes "all that the Blacksmith's of";
+	mes "Geffen can teach. Good luck";
+	mes "with your travels.";
+	close;
+	
+L_nojob:
+	mes "Come back when you've learned";
+	mes "more about being a Blacksmith.";
+	mes "You will need a Job level of at";
+	mes "least lv 30 to learn what I";
+	mes "know.";
+	close;
+}

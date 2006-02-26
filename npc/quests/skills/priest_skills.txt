@@ -1,0 +1,88 @@
+//===== eAthena Script ======================================= 
+//= Priest Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// PRIEST - REDEMPTIO
+//============================================================
+prt_church.gat,111,112,3	script	Nun Linus	79,{
+	mes "[Nun Linus]";
+	if(BaseJob!=Job_Priest) goto L_nopriest;
+	if(getskilllv(1014)) goto L_alreadyhave;
+	if(getskilllv(54)<1) goto L_norez;
+
+	mes "I can teach you the mercy of God";
+	mes "if you bring me a couple things,";
+	mes "and if God finds you worthy!";
+	mes "1 Blue Gemstone";
+	mes "1 Holy Water";
+	next;
+	
+	mes "[Nun Linus]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(717)<1 || countitem(523)<1) goto L_noitems;//Items: Blue_Gemstone, Holy_Water,
+	delitem 717, 1;//Items: Blue_Gemstone,
+	delitem 523, 1;//Items: Holy_Water,
+	
+	mes "[Nun Linus]";
+	mes "I see you have what you need,";
+	mes "so we shall see if God finds";
+	mes "you worthy yet!";
+	next;
+	if(rand(100)<JobLevel+25) goto L_bless;
+	mes "[Nun Linus]";
+	mes "Sorry, but God has not";
+	mes "shined on you as of yet.";
+	mes "Try again when you are a";
+	mes "stronger Priest.";
+	close;
+	
+L_bless:
+	mes "[Nun Linus]";
+	mes "Hum... I see god is shined on you this time";
+	skill 1014,1,0;
+	close;
+	
+L_noitems:
+	mes "[Nun Linus]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+		
+L_nopriest:
+	mes "Sorry, you need to have some faith in God.";
+	emotion e_gasp;
+	close;
+
+L_alreadyhave:
+	mes "I've already taught you";
+	mes "everything I know...";
+	close;
+
+L_norez:
+	mes "Come back when you've learned";
+	mes "more about priest and God.";
+	close;
+}

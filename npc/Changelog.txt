@@ -28,6 +28,9 @@ Nexon
 Date		Added
 ======
 
+02/26
+	* Splitted 2nd job skills quests into several files and fixed grammar [DracoRPG]
+	* Rewrote the repairmen function and removed the Steel cost [DracoRPG]
 02/23
 	* Fixed item name in Cube Room Quest. [Poki#3]
 	* Changed Light Dun Spawn numbers a bit (Gemini is a Mini-boss) [Poki#3]

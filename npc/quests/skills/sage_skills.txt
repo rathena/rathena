@@ -1,0 +1,147 @@
+//===== eAthena Script ======================================= 
+//= Sage Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// SAGE SKILL - CREATE CONVERTER + ELEMENTAL CHARGE
+//============================================================
+yuno_in03.gat,176,24,3	script	Mischna	755,{
+	mes "[Mischna]";
+	if(BaseJob!=Job_Sage) goto L_sageno;
+	if(getskilllv(1007)) goto L_elemental;
+
+	mes "I can teach you a new skill";
+	mes "that I discovered, but you";
+	mes "will need to bring me a few";
+	mes "things to complete the";
+	mes "process.";
+	next;
+	
+	mes "[Mischna]";
+	mes "We will need:";	
+	mes "10 Scorpion Tails";
+	mes "7 Horns";
+	mes "12 Rainbow Shells";
+	mes "10 Snail Shells";
+	mes "4 Blank Scrolls";
+	next;
+	
+	mes "[Mischna]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(904)<10 || countitem(947)<7 || countitem(1013)<12 || countitem(946)<10 || countitem(7433)<4) goto L_noitems;//Items: Scorpion_Tail, Horn, Rainbow_Shell, Snail's_Shell, Blank_Scroll,
+	delitem 904, 10;//Items: Scorpion_Tail,
+	delitem 947, 7;//Items: Horn,
+	delitem 1013, 12;//Items: Rainbow_Shell,
+	delitem 946, 10;//Items: Snail's_Shell,
+	delitem 7433, 4;//Items: Blank_Scroll,
+	
+	mes "[Mischna]";
+	mes "I see you have what we need,";
+	mes "so I'll teach you this new";
+	mes "talent of mine!";
+	skill 1007,1,0;
+	next;
+	
+	mes "[Mischna]";
+	mes "Do you feel more in tune";
+	mes "with nature?";
+	close;
+
+L_noitems:
+	mes "[Mischna]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+	
+L_sageno:
+	mes "Hi I'm Mischna. How are you?";
+	mes "Please enjoy your stay here";
+	mes "within the walls of the great";
+	mes "Sage's guild.";
+	close;
+
+L_sagefail:
+	mes "[Mischna]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	mes "to give you this power over";
+	mes "the elements.";
+	close;
+	
+L_alreadyhave:
+	mes "You are such a wonderful";
+	mes "student. It's too bad I have";
+	mes "nothing more to teach you.";
+	close;
+			
+L_elemental:
+	if(getskilllv(1008) || getskilllv(1017) || getskilllv(1018) || getskilllv(1019)) goto L_alreadyhave;
+	
+	mes "I have one more skill that";
+	mes "I can teach you, but you";
+	mes "will need to bring me one of";
+	mes "these sets in return...";
+	next;
+	
+	mes "[Mischna]";
+	mes "I can only except one set.";
+	mes "20 Red blood (fire)";
+	mes "20 Crystal Blue (water)";
+	mes "20 Wind of Verdure (Wind)";
+	mes "20 Green Live (Earth)";
+	next;
+	
+	mes "[Mischna]";
+	mes "Remember that I can only teach";
+	mes "you one, so choose carefully!";
+	next;
+	
+	menu "Water Charge",sage_1, "Earth Charge",sage_2, "Fire Charge",sage_3, "Wind Charge",sage_4;
+
+		sage_1:
+		if(countitem(991)<20)goto L_sagefail;//Items: Crystal_Blue,
+		delitem 991, 20;		//Items: Crystal_Blue,
+		skill 1008,1,0;
+		goto L_alreadyhave;
+
+		sage_2:
+		if(countitem(993)<20)goto L_sagefail;//Items: Green_Live,
+		delitem 993, 20;//Items: Green_Live,
+		skill 1017,1,0;
+		goto L_alreadyhave;
+
+		sage_3:
+		if(countitem(990)<20)goto L_sagefail;//Items: Red_Blood,
+		delitem 990, 20;//Items: Red_Blood,
+		skill 1018,1,0;
+		goto L_alreadyhave;
+
+		sage_4:
+		if(countitem(992)<20)goto L_sagefail;//Items: Wind_of_Verdure,
+		delitem 992, 20;//Items: Wind_of_Verdure,
+		skill 1019,1,0;
+		goto L_alreadyhave;
+}

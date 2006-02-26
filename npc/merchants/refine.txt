@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 1.8a
+//= 1.9
 //===== Compatible With: =====================================
 //= Any Freya Version
 //===== Description: =========================================
@@ -32,7 +32,8 @@
 //= 1.6	- Replaced all breaks for ends as per the new script engine [Skotlex]
 //= 1.7 - Added Einbroch Refiners (Custom names ^^;) and a duplicated BS Shop. [Poki#3]
 //= 1.8 - Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]
-//= 1.8a fixed wrong indication thanks to NeoSaro [Lupus]
+//= 1.8a - Fixed wrong indication thanks to NeoSaro [Lupus]
+//= 1.9 - Rewrote repairman, removed the Steel from repair cost [DracoRPG]
 //============================================================
 
 
@@ -769,156 +770,34 @@ function	script	repairmain	{
 	mes "[" + @name$ + "]";
 	mes "I am the Repair Smith and I can repair any Arms you want.";
 	mes "Tell me which Equipment you want to repair.";
-	set @broken1,getbrokenid(1);
-	set @broken2,getbrokenid(2);
-	set @broken3,getbrokenid(3);
-	set @broken4,getbrokenid(4);
-	set @broken5,getbrokenid(5);
-	set @broken6,getbrokenid(6);
-	set @broken7,getbrokenid(7);
-	set @broken8,getbrokenid(8);
-	set @broken9,getbrokenid(9);
-	set @broken10,getbrokenid(10);
 	next;
-	if(@broken1==NULL) goto L_CANCEL_3;
-	menu getitemname(@broken1),REPAIR1,getitemname(@broken2),REPAIR2,getitemname(@broken3),REPAIR3,
-		getitemname(@broken4),REPAIR4,getitemname(@broken5),REPAIR5,getitemname(@broken6),REPAIR6,
-		getitemname(@broken7),REPAIR7,getitemname(@broken8),REPAIR8,getitemname(@broken9),REPAIR9,
-		getitemname(@broken10),REPAIR10;
-	REPAIR1:
+	if(getbrokenid(1)==NULL) {
 		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken1) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(1);
-			goto L_CLOSE;
-	REPAIR2:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken2) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(2);
-			goto L_CLOSE;
-	REPAIR3:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken3) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(3);
-			goto L_CLOSE;
-	REPAIR4:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken4) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(4);
-			goto L_CLOSE;
-	REPAIR5:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken5) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(5);
-			goto L_CLOSE;
-	REPAIR6:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken6) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(6);
-			goto L_CLOSE;
-	REPAIR7:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken7) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(7);
-			goto L_CLOSE;
-	REPAIR8:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken8) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(8);
-			goto L_CLOSE;
-	REPAIR9:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken9) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(9);
-			goto L_CLOSE;
-	REPAIR10:
-		mes "[" + @name$ + "]";
-		mes "You're gonna repair " + getitemname(@broken10) + ".";
-		mes "To repair this, I need ^ff9999One Steel^000000, and " + @repairprice + " Zeny.";
-		mes "Continue?";
-		next;
-		menu "Yes",-,"No",L_CANCEL_2;
-		if (countitem(999) < 1 || Zeny < @repairprice) goto L_CANCEL_1;
-			delitem 999,1;
-			set Zeny,Zeny-@repairprice;
-			repair(10);
-			goto L_CLOSE;
-
-L_CANCEL_1:
+		mes "Looks like you don't need anything repaired today...";
+		close;
+	}
+	set @choice,select(getitemname(getbrokenid(1)),getitemname(getbrokenid(2)),
+		getitemname(getbrokenid(3)),getitemname(getbrokenid(4)),getitemname(getbrokenid(5)),
+		getitemname(getbrokenid(6)),getitemname(getbrokenid(7)),getitemname(getbrokenid(8)),
+		getitemname(getbrokenid(9)),getitemname(getbrokenid(10)));
 	mes "[" + @name$ + "]";
-	mes "Is it all you got?";
-	mes "Unfortunately, I have kids to feed...";
-	goto L_CLOSE;
-L_CANCEL_2:
-	mes "[" + @name$ + "]";
-	mes "Ok, but don't expect to be using that...";
-	goto L_CLOSE;
-L_CANCEL_3:
-	mes "[" + @name$ + "]";
-	mes "Looks like you don't need anything repaired today...";
-	goto L_CLOSE;
-L_CLOSE:
+	mes "You're gonna repair " + getitemname(getbrokenid(@choice)) + ".";
+	mes "To repair this, I need " + @repairprice + " Zeny.";
+	mes "Continue?";
+	next;
+	if(select("Yes","No") == 2) {
+		mes "[" + @name$ + "]";
+		mes "Ok, but don't expect to be using that...";
+		close;
+	}
+	if (Zeny < @repairprice) {
+		mes "[" + @name$ + "]";
+		mes "Is it all you got?";
+		mes "Unfortunately, I have kids to feed...";
+		close;
+	}
+	set Zeny,Zeny-@repairprice;
+	repair(@choice);
 	close;
+
 }

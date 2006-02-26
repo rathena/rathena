@@ -1,0 +1,71 @@
+//===== eAthena Script ======================================= 
+//= Rogue Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// ROGUE - CLOSE CONFINE
+//============================================================
+in_rogue.gat,387,94,3	script	Hyzaragrack	84,{
+	mes "[Hyzaragrack]";
+	if(BaseJob!=Job_Rogue) goto L_norogue;
+	if(getskilllv(1005)) goto L_alreadyhave;
+
+	mes "I'll teach you all I know, but";
+	mes "you'll have to steel some things";
+	mes "for me first...";
+	mes "5 Immortal Hearts";
+	mes "5 Stone Hearts";
+	mes "2 Burning hearts";
+	next;
+	
+	mes "[Hyzaragrack]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(929)<5 || countitem(953)<5 || countitem(7097)<2) goto L_noitems;//Items: Immortal_Heart, Stone_Heart, Burning_Heart,
+	delitem 929, 5;//Items: Immortal_Heart,
+	delitem 953, 5;//Items: Stone_Heart,
+	delitem 7097, 2;//Items: Burning_Heart,
+	
+	mes "[Hyzaragrack]";
+	mes "I see you have what you need,";
+	mes "so I'll teach you my talent.";
+	skill 1005,1,0;
+	close;
+
+L_noitems:
+	mes "[Hyzaragrack]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+	
+L_norogue:
+	mes "Looking for your master?";
+	emotion e_gasp;
+	close;
+	
+L_alreadyhave:
+	mes "I've already taught you";
+	mes "everything I know...";
+	close;
+}

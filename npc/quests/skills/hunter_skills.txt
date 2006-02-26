@@ -1,0 +1,87 @@
+//===== eAthena Script ======================================= 
+//= Hunter Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// HUNTER SKILL - PHANTASMIC ARROW
+//============================================================
+payon_in02.gat,54,13,7	script	Master Kabac	55,{
+	mes "[Master Kabac]";
+	if(BaseJob!=Job_Hunter) goto L_hunterno;
+	if(getskilllv(1009)) goto L_alreadyhave;
+	if(JobLevel<40) goto L_nojob;
+
+	mes "I can teach you a secret";
+	mes "technique pased down through";
+	mes "my family for generation. My";
+	mes "family has guarded this secret";
+	mes "for years, but I could teach";
+	mes "for a few supplies.";
+	next;
+	mes "[Master Kabac]";
+	mes "I am running low on on a few";
+	mes "things. Here is my list:";
+	mes "5 Cursed Rubys";
+	mes "5 Harpy's Feathers";
+	mes "30 Pet Food";
+	next;
+	
+	mes "[Master Kabac]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(724)<5 || countitem(7115)<5 || countitem(537)<30) goto L_noitems;//Items: Cursed_Ruby, Harpy_Feather, Pet_Food,
+	delitem 724, 5;//Items: Cursed_Ruby,
+	delitem 7115, 5;//Items: Harpy_Feather,
+	delitem 537, 30;//Items: Pet_Food,
+	
+	mes "[Master Kabac]";
+	mes "I see you have what you need,";
+	mes "so I'll teach you my talent.";
+	skill 1009,1,0;
+	close;
+
+L_noitems:
+	mes "[Master Kabac]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+		
+L_nojob:
+	mes "Come back when you've Learned";
+	mes "more about being a Hunter.";
+	mes "You need to have at least 40";
+	mes "levels as a hunter first.";
+	close;
+
+L_alreadyhave:
+	mes "Ahh, my apprentence, you";
+	mes "came to visit me...";
+	close;
+	
+L_hunterno:
+	mes "Is there something I can";
+	mes "help you with? I believe";
+	mes "you have the wrong old man.";
+	close;
+}

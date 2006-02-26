@@ -1,0 +1,71 @@
+//===== eAthena Script ======================================= 
+//= Wizard Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= eAthena Revision 3800+
+//===== Description: ========================================= 
+//= Temp quests for new skills for 2nd classes
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================
+
+
+//============================================================
+// WIZARD - SIGHTBLASTER
+//============================================================
+gef_tower.gat,116,37,1	script	Nyao	748,{
+	mes "[Nyao]";
+	if(BaseJob!=Job_Wizard) goto L_nowiz;
+	if(getskilllv(1006)) goto L_alreadyhave;
+
+	mes "I'll teach you all I know for:";
+	mes "10 Crystal Blue";
+	mes "10 Green Live";
+	mes "10 Red Blood";
+	mes "10 Wind of Verdure";
+	next;
+	
+	mes "[Nyao]";
+	mes "Let me check your items.";
+	next;
+	
+	if(countitem(990)<10 || countitem(991)<10 || countitem(992)<10 || countitem(993)<10) goto L_noitems;//Items: Red_Blood, Crystal_Blue, Wind_of_Verdure, Green_Live,
+	delitem 990, 10;//Items: Red_Blood,
+	delitem 991, 10;//Items: Crystal_Blue,
+	delitem 992, 10;//Items: Wind_of_Verdure,
+	delitem 993, 10;//Items: Green_Live,
+	
+	mes "[Nyao]";
+	mes "I see you have what you need,";
+	mes "so I'll teach you my talent.";
+	skill 1006,1,0;
+	close;
+	
+L_noitems:
+	mes "[Nyao]";
+	mes "You don't have enough items.";
+	mes "Come back when you have all";
+	mes "the required items for me.";
+	close;
+	
+L_nowiz:
+	mes "You must have the magical power.";
+	emotion e_gasp;
+	close;
+
+L_alreadyhave:
+	mes "I've already taught you";
+	mes "everything I know...";
+	close;
+}
