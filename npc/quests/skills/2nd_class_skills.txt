@@ -408,7 +408,7 @@ L_nocruz:
 	
 L_alreadyhave:
 	mes "Hey, you were lucky I";
-	mes "even tought you the";
+	mes "even taught you the";
 	mes "skill I did! Don't press";
 	mes "your luck.";
 	close;
