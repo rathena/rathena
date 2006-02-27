@@ -1077,7 +1077,7 @@ in_moc_16.gat,1,1,0	script	SinTest2	-1,{
 	monster "in_moc_16.gat",86,170,"Job target change",1031,1,"SinTest2::OnFailed";
 	monster "in_moc_16.gat",86,171,"Target",1002,1,"SinTest2::OnFailed";
 	monster "in_moc_16.gat",86,170,"Target",1113,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",86,173,"Hope you can become an assassin..",10631,"SinTest2::OnFailed";
+	monster "in_moc_16.gat",86,173,"Hope you can become an assassin..",1063,1,"SinTest2::OnFailed";
 	monster "in_moc_16.gat",85,170,"Battle Monster",1031,1,"SinTest2::OnFailed";
 	monster "in_moc_16.gat",89,156,"Target",1002,1,"SinTest2::OnFailed";
 	monster "in_moc_16.gat",89,156,"Speed182",1113,1,"SinTest2::OnFailed";

@@ -112,7 +112,7 @@ gef_fild13.gat,87,182,4	duplicate(Yesnelph2)	Yesnelph#g3-3	722
 gef_fild13.gat,73,295,7	duplicate(Yesnelph2)	Yesnelph#g3-4	722
 gef_fild13.gat,113,274,7	duplicate(Yesnelph2)	Yesnelph#g3-5	722
 gef_fild13.gat,144,235,6	duplicate(Yesnelph2)	Yesnelph#g3-6	722
-gef_fild13.gat,144,244,4	duplicate(Yesnelph2)	Yesnelph#g3-7	722
+gef_fild13.gat,144,244,6	duplicate(Yesnelph2)	Yesnelph#g3-7	722
 // In Castle =============================================
 gefg_cas03.gat,122,220,6	duplicate(Yesnelph)	Yesnelph#g3-8	722
 gefg_cas03.gat,122,229,6	duplicate(Yesnelph)	Yesnelph#g3-9	722

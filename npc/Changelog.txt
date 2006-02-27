@@ -28,6 +28,10 @@ Nexon
 Date		Added
 ======
 
+02/27
+	* Fixed a flag direction in front of Yesnelph, thanks to Playtester [DracoRPG]
+	* Fixed wrong Female Thief Bug spawns in Culvert, thanks to happylight [DracoRPG]
+	* Fixed a typo in Assassin job change test, thanks to Spiritual_Kid [DracoRPG]
 02/26
 	* Splitted 2nd job skills quests into several files and fixed grammar [DracoRPG]
 	* Rewrote the repairmen function and removed the Steel cost [DracoRPG]
@@ -35,7 +39,6 @@ Date		Added
 	* Fixed item name in Cube Room Quest. [Poki#3]
 	* Changed Light Dun Spawn numbers a bit (Gemini is a Mini-boss) [Poki#3]
 	* Changed "Virus" to "Anopheles" [Poki#3]
-
 02/21
 	* Fixed wrong indication of Repairsman, thanks to NeoSaro [Lupus]
 02/17
@@ -46,7 +49,6 @@ Date		Added
 02/14
 	* Added a new Fruit Merchant in Hugel. [Poki#3]
 	* New, updated st.Valentine Event with a nice quest and EXP bonuses ^_- [Lupus]
-
 02/13
 	* Updated the eA custom spawn sets from Playtester: Juperos lv1, Glast heim
 	  Sewers/Underground and Geffen dungeon lv3. [Skotlex]
@@ -57,7 +59,6 @@ Date		Added
 	* Added missing semicolons in the valentine's day event and disabled the Dog's year event. [Zephiris]
 	* Added a custom quest for Jewel Case for 99 Base Level Players of 2nd Class [Lupus]
 	* Fixed the spawns that where using the no exp/drop version of Male Thief Bug (Thanks to irmin) [Poki#3]
-
 02/05
 	* Lighthalzen cube quest: Fixed password bug, fixed endless item exploit, some typos [Lupus]
 	* Added yuno_in02 into noteleport/nomemo, etc map flags. It spoils the quest [Lupus]
@@ -79,7 +80,6 @@ Date		Added
 	* Fixed the Warper [Poki#3]
 	* Fixed Hugel warps (htere weren't any TABs) [Lupus]
 	* Added Event: Eastern New Year 2006 The Year Of The Fire Dog (28-29 January 2006) [Lupus]
-
 01/27
 	* Added birkiczd's Odin temple warps. Move the Saylor from hugel.txt there. [Poki#3]
 	* Rewrote Comodo Guides to use functions. Thanks to Daegaladh for pointing it out [Poki#3]
@@ -111,12 +111,10 @@ Date		Added
 	  Plus no one knows what the NPCs are talking right now :/
 	* Added Hugel Shops. [Poki#3]
 	* Removed the Custom Warper to Odin. Hugel has a more official one. [Poki#3]
-
 01/24
 	* Fixed Yuno Field 10. Mob amount sugested by Playtester, made by Poki#3 [Komurka]
 	- Moved some NPCs to Einbroch and Hugel - more info can be found here http://eathena.ws/board/index.php?showtopic=67631,
 	  made by Poki#3
-
 01/23
 	* Minor Valkirie fixes, thanks to Xeronage [Lupus]
 	- Updated Novices Guild Castles Warper NPC
