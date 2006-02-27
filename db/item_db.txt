@@ -852,7 +852,7 @@
 2111,Sacred_Mission,Sacred Mission,5,,10,1400,,5,,0,16384,7,2,32,,83,1,3,{ bonus bVit,3; bonus bInt,2; bonus bMdef,3; bonus bUnbreakableShield,0; }
 2112,Novice_Guard,Novice Guard,5,,10,1,,3,,0,8388609,7,2,32,,0,0,1,{}
 2113,Novice_Shield,Novice Shield,5,5000,,1000,,3,,1,8388609,7,2,32,,40,1,3,{ bonus2 bSubEle,Ele_Water,20; bonus2 bSubEle,Ele_Earth,20; bonus2 bSubEle,Ele_Fire,20; bonus2 bSubEle,Ele_Wind,20; bonus2 bSubEle,Ele_Poison,20; bonus2 bSubEle,Ele_Ghost,20; bonus2 bSubEle,Ele_Undead,20; }
-2114,Stone_Buckler,Stone Buckler,5,,10,1500,,4,,1,119529470,7,2,32,,65,1,2,{ bonus2 bSubEle,Ele_Neutral,5; if(BaseClass == Job_Swordman) bonus bDef,5; if (isequipped(2353,5122)==0) end; bonus bStr,2; bonus bDef,5; bonus bMdef,5; }
+2114,Stone_Buckler,Stone Buckler,5,,10,1500,,4,,1,119529470,7,2,32,,65,1,2,{ bonus2 bSubEle,Ele_Neutral,5; if (isequipped(2353,5122)==0) end; bonus bStr,2; bonus bDef,1; bonus bMdef,5; if(BaseClass == Job_Swordman) bonus bDef,5; }
 2115,Valkyrie's_Shield,Valkyrie's Shield,5,,10,500,,3,,1,119529470,7,2,32,,65,1,3,{  bonus2 bSubEle,Ele_Water,20; bonus2 bSubEle,Ele_Fire,20; bonus2 bSubEle,Ele_Dark,20; bonus2 bSubEle,Ele_Undead,20; if(isequipped(2353,5124)==0) bonus bMdef,5; end; bonus bDef,2; bonus bMdef,25; }
 2116,Angelic_Guard,Angelic Guard,5,,10,500,,3,,1,8388609,7,2,32,,20,1,3,{ bonus2 bSubRace,RC_Fish,5; }
 2199,Ahura_Mazdah,Ahura Mazdah,5,,10,100,,0,,0,127918079,7,2,32,,1,1,0,{ bonus bShortWeaponDamageReturn,100; bonus2 bSubRace,RC_DemiHuman,95; }
@@ -1090,7 +1090,7 @@
 2617,Celebrant's_Mitten,Celebrant's Mitten,5,,10,100,,1,,0,119529470,7,2,136,,35,0,0,{ bonus bInt,1; }
 2618,Matyr's_Leash,Matyr's Leash,5,,10,100,,1,,0,119529470,7,2,136,,35,0,0,{ bonus bAgi,1; }
 2619,Bow_Thimble,Bow Thimble,5,10000,,100,,0,,0,1574920,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; }
-2620,Rogue's_Treasure,Rogue's Treasure,5,30000,,100,,0,,0,135232,7,2,136,,70,0,0,{ bonus bAddStealRate,100; }
+2620,Rogue's_Treasure,Rogue's Treasure,5,30000,,100,,0,,0,135232,7,2,136,,70,0,0,{ bonus bAddStealRate,1; }
 2621,Ring_,Ring,5,30000,,200,,0,,1,119529470,7,2,136,,90,0,0,{ bonus bStr,1; }
 2622,Earring_,Earring,5,30000,,200,,0,,1,119529470,7,2,136,,90,0,0,{ bonus bInt,1; }
 2623,Necklace_,Necklace,5,30000,,200,,0,,1,119529470,7,2,136,,90,0,0,{ bonus bVit,1; }
@@ -1127,10 +1127,10 @@
 2656,Armor_Charm,Armor Charm,5,,10,1000,,0,,0,119529470,7,2,136,,0,0,0,{ if((isequipped(2312) || isequipped(2313))==0) end; bonus bDef,6; bonus bMaxHP,200; }
 2657,Laboratory_Permit,Laboratory Permit,5,,10,100,,0,,0,127918079,7,2,136,,0,0,0,{}
 2658,Nile_Rose_,Nile Rose,5,,10,100,,0,,1,127918079,7,2,136,,0,0,0,{ bonus bMaxHP,10; }
-2659,Vesper_Core_01,Vesper Core 01,5,,10,500,,1,,0,102752128,2,2,136,,0,0,0,{ bonus bDef,1; bonus bMdef,3; bonus bInt,2; bonus bMaxSPrate,5; }
-2660,Vesper_Core_02,Vesper Core 02,5,,10,500,,1,,0,102752128,2,2,136,,0,0,0,{ bonus bDef,1; bonus bMdef,3; bonus bStr,3; bonus bAtk,10; }
-2661,Vesper_Core_03,Vesper Core 03,5,,10,500,,1,,0,102752128,2,2,136,,0,0,0,{ bonus bDef,1; bonus bMdef,3; bonus bAgi,3; bonus bFlee,5; }
-2662,Vesper_Core_04,Vesper Core 04,5,,10,500,,1,,0,102752128,2,2,136,,0,0,0,{ bonus bDef,1; bonus bMdef,3; bonus bDex,3; bonus bHit,10; }
+2659,Vesper_Core_01,Vesper Core 01,5,,10,500,,1,,0,102752128,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bInt,2; bonus bMaxSPrate,5; }
+2660,Vesper_Core_02,Vesper Core 02,5,,10,500,,1,,0,102752128,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bStr,3; bonus bAtk,10; }
+2661,Vesper_Core_03,Vesper Core 03,5,,10,500,,1,,0,102752128,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bAgi,3; bonus bFlee,5; }
+2662,Vesper_Core_04,Vesper Core 04,5,,10,500,,1,,0,102752128,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bDex,3; bonus bHit,10; }
 2663,Gauntlet_of_Hit,Gauntlet of Hit,5,,10,900,,0,,0,127918079,7,2,136,,75,0,0,{ bonus bHit,15; bonus bStr,1; }
 2664,Belcarf,Belcarf,5,,10,200,,0,,0,119529470,7,2,136,,75,0,0,{ bonus bDex,2; bonus bInt,1; }
 2665,Ring_of_Exorcism,Ring of Exorcism,5,,10,500,,0,,0,33040,7,2,136,,60,0,0,{ bonus2 bExpAddRace,RC_Undead,5; bonus2 bExpAddRace,RC_Demon,5; }

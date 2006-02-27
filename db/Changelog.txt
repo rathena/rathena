@@ -26,6 +26,10 @@
 
 =========================
 
+02/27
+	* Temp plug: 2620,Rogue's_Treasure steal rate -> 1 (have to fix formula) [Lupus]
+	- Fixed all Vesper Acessories (removed doubled DEF bonus), thanks to Irmin
+	- Rearranged Stone Buckler: normally it gives +4 DEF, with CARD COMBO it gives +5 DEF, and with CARD COMBO+SWORDMAN CLASS it would give +10 DEF
 02/24
 	* Changed bosses slaves in Bio Labs level 3 - they will spawn only once now [Komurka]
 02/22
