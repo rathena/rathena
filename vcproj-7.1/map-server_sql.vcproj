@@ -171,8 +171,7 @@
 				RelativePath="..\src\common\db.c">
 			</File>
 			<File
-				RelativePath="..\src\common\ers.c"
-				>
+				RelativePath="..\src\common\ers.c">
 			</File>
 			<File
 				RelativePath="..\src\common\graph.c">
@@ -191,6 +190,9 @@
 			</File>
 			<File
 				RelativePath="..\src\zlib\iowin32.c">
+			</File>
+			<File
+				RelativePath="..\src\map\irc.c">
 			</File>
 			<File
 				RelativePath="..\src\map\itemdb.c">
@@ -287,6 +289,9 @@
 				RelativePath="..\src\map\battle.h">
 			</File>
 			<File
+				RelativePath="..\src\common\cbasetypes.h">
+			</File>
+			<File
 				RelativePath="..\src\map\charcommand.h">
 			</File>
 			<File
@@ -311,6 +316,9 @@
 				RelativePath="..\src\common\db.h">
 			</File>
 			<File
+				RelativePath="..\src\common\ers.h">
+			</File>
+			<File
 				RelativePath="..\src\common\graph.h">
 			</File>
 			<File
@@ -321,6 +329,9 @@
 			</File>
 			<File
 				RelativePath="..\src\map\intif.h">
+			</File>
+			<File
+				RelativePath="..\src\map\irc.h">
 			</File>
 			<File
 				RelativePath="..\src\map\itemdb.h">

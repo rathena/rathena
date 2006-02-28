@@ -401,6 +401,7 @@ int buildin_setd(struct script_state *st);
 // <--- [zBuffer] List of dynamic var commands
 int buildin_petstat(struct script_state *st); // [Lance] Pet Stat Rq: Dubby
 int buildin_callshop(struct script_state *st); // [Skotlex]
+int buildin_equip(struct script_state *st);
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
@@ -702,6 +703,7 @@ struct {
 	// <--- [zBuffer] List of dynamic var commands
 	{buildin_petstat,"petstat","i"},
 	{buildin_callshop,"callshop","si"}, // [Skotlex]
+	{buildin_equip,"equip","i"},
 	{buildin_setitemscript,"setitemscript","is"}, //Set NEW item bonus script. Lupus
 	{buildin_disguise,"disguise","i"}, //disguise player. Lupus
 	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
@@ -9376,6 +9378,33 @@ int buildin_unequip(struct script_state *st)
 		pc_unequipitem(sd,i,2);
 		return 0;
 	}
+	return 0;
+}
+
+int buildin_equip(struct script_state *st)
+{
+	int nameid=0,count=0,i;
+	struct map_session_data *sd;
+	struct item_data *item_data;
+
+	sd = script_rid2sd(st);
+
+	nameid=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	if(nameid>=500 && (item_data = itemdb_search(nameid)) != NULL)
+		for(i=0;i<MAX_INVENTORY;i++){
+			if(sd->status.inventory[i].nameid==nameid)
+				count+=sd->status.inventory[i].amount;
+		}
+	else{
+		if(battle_config.error_log)
+			ShowError("wrong item ID : equipitem(%i)\n",nameid);
+		return 1;
+	}
+	
+	if(count){
+		pc_equipitem(sd,nameid,item_data->equip);
+	}
+
 	return 0;
 }
 
