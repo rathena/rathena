@@ -8,7 +8,7 @@
 
 #define LOGIN_CONF_NAME	"conf/login_athena.conf"
 #define SQL_CONF_NAME "conf/inter_athena.conf"
-#define LAN_CONF_NAME     "conf/lan_support.conf"
+#define LAN_CONF_NAME "conf/subnet_athena.conf"
 
 #ifndef SQL_DEBUG
 

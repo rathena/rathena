@@ -12,7 +12,7 @@
 
 #define CHAR_CONF_NAME	"conf/char_athena.conf"
 
-#define LOGIN_LAN_CONF_NAME	"conf/lan_support.conf"
+#define LOGIN_LAN_CONF_NAME	"conf/subnet_athena.conf"
 
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 

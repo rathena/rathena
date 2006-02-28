@@ -75,10 +75,17 @@ char backup_txt_flag = 0; // The backup_txt file was created because char deleti
 char unknown_char_name[1024] = "Unknown";
 char char_log_filename[1024] = "log/char.log";
 char db_path[1024]="db";
-//Added for lan support
-char lan_map_ip[128];
-int subneti[4];
-int subnetmaski[4];
+
+// Advanced subnet check [LuzZza]
+struct _subnet {
+	long subnet;
+	long mask;
+	long char_ip;
+	long map_ip;
+} subnet[16];
+
+int subnet_count = 0;
+
 int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
 int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 //The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
@@ -3003,34 +3010,43 @@ static int char_mapif_init(int fd) {
 	return inter_mapif_init(fd);
 }
 
-//-----------------------------------------------------
-// Test to know if an IP come from LAN or WAN. by [Yor]
-//-----------------------------------------------------
-int lan_ip_check(unsigned char *p){
-	int i;
-	int lancheck = 1;
+//--------------------------------------------
+// Test to know if an IP come from LAN or WAN.
+// Rewrote: Adnvanced subnet check [LuzZza]
+//--------------------------------------------
+int lan_subnetcheck(long *p) {
 
-//	printf("lan_ip_check: to compare: %d.%d.%d.%d, network: %d.%d.%d.%d/%d.%d.%d.%d\n",
-//	       p[0], p[1], p[2], p[3],
-//	       subneti[0], subneti[1], subneti[2], subneti[3],
-//	       subnetmaski[0], subnetmaski[1], subnetmaski[2], subnetmaski[3]);
-	for(i = 0; i < 4; i++) {
-		if ((subneti[i] & subnetmaski[i]) != (p[i] & subnetmaski[i])) {
-			lancheck = 0;
-			break;
+	int i;
+	unsigned char *sbn, *msk;
+	
+	for(i=0; i<subnet_count; i++) {
+	
+		if((subnet[i].subnet & subnet[i].mask) == (*p & subnet[i].mask)) {
+			
+			sbn = (unsigned char *)&subnet[i].subnet;
+			msk = (unsigned char *)&subnet[i].mask;
+			
+			ShowStatus("Subnet check result: "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
+				sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
+			
+			return subnet[i].map_ip;
 		}
 	}
-	ShowInfo("LAN test (result): %s source"CL_RESET".\n", (lancheck) ? CL_CYAN"LAN" : CL_GREEN"WAN");
-	return lancheck;
+	
+	ShowStatus("Subnet check result: "CL_CYAN"no matches."CL_RESET"\n");
+	return 0;
 }
 
 int parse_char(int fd) {
+	
 	int i, ch;
 	unsigned short cmd;
 	char email[40];
 	int map_fd;
 	struct char_session_data *sd;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
+	long subnet_map_ip;
+	
 	RFIFOHEAD(fd);
 
 	sd = (struct char_session_data*)session[fd]->session_data;
@@ -3271,10 +3287,13 @@ int parse_char(int fd) {
 			WFIFOL(fd,2) = cd->char_id;
 			memcpy(WFIFOP(fd,6), mapindex_id2name(cd->last_point.map), MAP_NAME_LENGTH);
 			ShowInfo("Character selection '%s' (account: %d, slot: %d).\n", cd->name, sd->account_id, ch);
-			if (lan_ip_check(p))
-				WFIFOL(fd, 22) = inet_addr(lan_map_ip);
+						    
+			// Andvanced subnet check [LuzZza]
+			if((subnet_map_ip = lan_subnetcheck((long *)p)))
+				WFIFOL(fd,22) = subnet_map_ip;
 			else
-				WFIFOL(fd, 22) = server[i].ip;
+				WFIFOL(fd,22) = server[i].ip;
+
 			WFIFOW(fd,26) = server[i].port;
 			WFIFOSET(fd,28);
 			if (auth_fifo_pos >= AUTH_FIFO_SIZE)
@@ -3760,92 +3779,56 @@ int config_switch(const char *str) {
 	return atoi(str);
 }
 
-//-------------------------------------------
-// Reading Lan Support configuration by [Yor]
-//-------------------------------------------
-int lan_config_read(const char *lancfgName) {
-	int j;
-	struct hostent * h = NULL;
-	char line[1024], w1[1024], w2[1024];
+//----------------------------------
+// Reading Lan Support configuration
+// Rewrote: Anvanced subnet check [LuzZza]
+//----------------------------------
+int char_lan_config_read(const char *lancfgName) {
+
 	FILE *fp;
-
-	// set default configuration
-	strncpy(lan_map_ip, "127.0.0.1", sizeof(lan_map_ip));
-	subneti[0] = 127;
-	subneti[1] = 0;
-	subneti[2] = 0;
-	subneti[3] = 1;
-	for(j = 0; j < 4; j++)
-		subnetmaski[j] = 255;
-
-	fp = fopen(lancfgName, "r");
-
-	if (fp == NULL) {
-		ShowError("LAN support configuration file not found: %s\n", lancfgName);
+	int line_num = 0;
+	char line[1024], w1[64], w2[64], w3[64], w4[64], w5[64];
+	
+	if((fp = fopen(lancfgName, "r")) == NULL) {
+		ShowWarning("LAN Support configuration file is not found: %s\n", lancfgName);
 		return 1;
 	}
 
-	ShowInfo("reading configuration file %s...\n", lancfgName);
+	ShowInfo("Reading the configuration file %s...\n", lancfgName);
 
 	while(fgets(line, sizeof(line)-1, fp)) {
-		if (line[0] == '/' && line[1] == '/')
+
+		line_num++;		
+		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
 		line[sizeof(line)-1] = '\0';
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
+		if(sscanf(line,"%[^:]: %[^/]/%[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4, w5) != 5) {
+	
+			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);	
 			continue;
+		}
 
 		remove_control_chars((unsigned char *)w1);
 		remove_control_chars((unsigned char *)w2);
-		if (strcmpi(w1, "lan_map_ip") == 0) { // Read map-server Lan IP Address
-			h = gethostbyname(w2);
-			if (h != NULL) {
-				sprintf(lan_map_ip, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-			} else {
-				strncpy(lan_map_ip, w2, sizeof(lan_map_ip));
-				lan_map_ip[sizeof(lan_map_ip)-1] = 0;
-			}
-			ShowStatus("LAN IP of map-server: %s.\n", lan_map_ip);
-		} else if (strcmpi(w1, "subnet") == 0) { // Read Subnetwork
-			for(j = 0; j < 4; j++)
-				subneti[j] = 0;
-			h = gethostbyname(w2);
-			if (h != NULL) {
-				for(j = 0; j < 4; j++)
-					subneti[j] = (unsigned char)h->h_addr[j];
-			} else {
-				sscanf(w2, "%d.%d.%d.%d", &subneti[0], &subneti[1], &subneti[2], &subneti[3]);
-			}
-			ShowStatus("Sub-network of the map-server: %d.%d.%d.%d.\n", subneti[0], subneti[1], subneti[2], subneti[3]);
-		} else if (strcmpi(w1, "subnetmask") == 0){ // Read Subnetwork Mask
-			for(j = 0; j < 4; j++)
-				subnetmaski[j] = 255;
-			h = gethostbyname(w2);
-			if (h != NULL) {
-				for(j = 0; j < 4; j++)
-					subnetmaski[j] = (unsigned char)h->h_addr[j];
-			} else {
-				sscanf(w2, "%d.%d.%d.%d", &subnetmaski[0], &subnetmaski[1], &subnetmaski[2], &subnetmaski[3]);
-			}
-			ShowStatus("Sub-network mask of the map-server: %d.%d.%d.%d.\n", subnetmaski[0], subnetmaski[1], subnetmaski[2], subnetmaski[3]);
+		remove_control_chars((unsigned char *)w3);
+		remove_control_chars((unsigned char *)w4);
+		remove_control_chars((unsigned char *)w5);
+
+		if(strcmpi(w1, "subnet") == 0) {
+	
+			subnet[subnet_count].subnet = inet_addr(w2);
+			subnet[subnet_count].mask = inet_addr(w3);
+			subnet[subnet_count].char_ip = inet_addr(w4);
+			subnet[subnet_count].map_ip = inet_addr(w5);
+				
+			subnet_count++;
 		}
+
+		ShowStatus("Information about %d subnetworks readen.\n", subnet_count);
 	}
+
 	fclose(fp);
-
-	// sub-network check of the map-server
-	{
-		unsigned int a0, a1, a2, a3;
-		unsigned char p[4];
-		sscanf(lan_map_ip, "%d.%d.%d.%d", &a0, &a1, &a2, &a3);
-		p[0] = a0; p[1] = a1; p[2] = a2; p[3] = a3;
-		ShowInfo("LAN test of LAN IP of the map-server...\n");
-		if (lan_ip_check(p) == 0) {
-			ShowError(CL_RED" LAN IP of the map-server doesn't belong to the specified Sub-network."CL_RESET"\n");
-		}
-	}
-
-	ShowInfo("done reading %s.\n", lancfgName);
-
 	return 0;
 }
 
@@ -4083,7 +4066,7 @@ int do_init(int argc, char **argv) {
 	mapindex_init(); //Needed here for the start-point reading.
 	start_point.map = mapindex_name2id("new_1-1.gat");
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
-	lan_config_read((argc > 1) ? argv[1] : LOGIN_LAN_CONF_NAME);
+	char_lan_config_read((argc > 1) ? argv[1] : LOGIN_LAN_CONF_NAME);
 
 	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
 		ShowError("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");

@@ -102,8 +102,16 @@ int char_per_account = 0; //Maximum charas per account (default unlimited) [Siri
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
 
-char lan_map_ip[128]; // Lan map ip added by kashy
-int subnetmaski[4]; // Subnetmask added by kashy
+// Advanced subnet check [LuzZza]
+struct _subnet {
+	long subnet;
+	long mask;
+	long char_ip;
+	long map_ip;
+} subnet[16];
+
+int subnet_count = 0;
+
 char unknown_char_name[NAME_LENGTH] = "Unknown";
 char db_path[1024]="db";
 
@@ -2852,32 +2860,35 @@ int char_mapif_init(int fd) {
 	return inter_mapif_init(fd);
 }
 
-//-----------------------------------------------------
-// Test to know if an IP come from LAN or WAN. by [Yor]
-//-----------------------------------------------------
-int lan_ip_check(unsigned char *p){
+//--------------------------------------------
+// Test to know if an IP come from LAN or WAN.
+// Rewrote: Adnvanced subnet check [LuzZza]
+//--------------------------------------------
+int lan_subnetcheck(long *p) {
+
 	int i;
-	int lancheck = 1;
-	int subneti[4];
-	unsigned int k0, k1, k2, k3;
-
-	sscanf(lan_map_ip, "%d.%d.%d.%d", &k0, &k1, &k2, &k3);
-	subneti[0] = k0; subneti[1] = k1; subneti[2] = k2; subneti[3] = k3;
-
-//	printf("lan_ip_check: to compare: %d.%d.%d.%d, network: %d.%d.%d.%d/%d.%d.%d.%d\n",
-//	       p[0], p[1], p[2], p[3],
-//	       subneti[0], subneti[1], subneti[2], subneti[3],
-//	       subnetmaski[0], subnetmaski[1], subnetmaski[2], subnetmaski[3]);
-	for(i = 0; i < 4; i++) {
-		if ((subneti[i] & subnetmaski[i]) != (p[i] & subnetmaski[i])) {
-			lancheck = 0;
-			break;
+	unsigned char *sbn, *msk;
+	
+	for(i=0; i<subnet_count; i++) {
+	
+		if((subnet[i].subnet & subnet[i].mask) == (*p & subnet[i].mask)) {
+			
+			sbn = (unsigned char *)&subnet[i].subnet;
+			msk = (unsigned char *)&subnet[i].mask;
+			
+			ShowStatus("Subnet check result: "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
+				sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
+			
+			return subnet[i].char_ip;
 		}
 	}
-	return lancheck;
+	
+	ShowStatus("Subnet check result: "CL_CYAN"no matches."CL_RESET"\n");
+	return 0;
 }
 
 int parse_char(int fd) {
+
 	int i, ch = 0;
 	char email[40];	
 	unsigned char buf[64];
@@ -2885,6 +2896,7 @@ int parse_char(int fd) {
 	int map_fd;
 	struct char_session_data *sd;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
+	long subnet_map_ip;
 
 	sd = (struct char_session_data*)session[fd]->session_data;
 
@@ -3118,11 +3130,13 @@ int parse_char(int fd) {
 			WFIFOW(fd, 0) =0x71;
 			WFIFOL(fd, 2) =char_dat[0].char_id;
 			memcpy(WFIFOP(fd,6), mapindex_id2name(char_dat[0].last_point.map), MAP_NAME_LENGTH);
-			//Lan check added by Kashy
-			if (lan_ip_check(p))
-				WFIFOL(fd, 22) = inet_addr(lan_map_ip);
+
+			// Andvanced subnet check [LuzZza]
+			if((subnet_map_ip = lan_subnetcheck((long *)p)))
+				WFIFOL(fd,22) = subnet_map_ip;
 			else
-				WFIFOL(fd, 22) = server[i].ip;
+				WFIFOL(fd,22) = server[i].ip;
+
 			WFIFOW(fd,26) = server[i].port;
 			WFIFOSET(fd,28);
 			if (auth_fifo_pos >= AUTH_FIFO_SIZE) {
@@ -3669,49 +3683,56 @@ int config_switch(const char *str) {
 	return atoi(str);
 }
 
-// Lan Support conf reading added by Kashy
-int char_lan_config_read(const char *lancfgName){
-	char subnetmask[128];
-	char line[1024], w1[1024], w2[1024];
-	FILE *fp;
-	struct hostent * h = NULL;
+//----------------------------------
+// Reading Lan Support configuration
+// Rewrote: Anvanced subnet check [LuzZza]
+//----------------------------------
+int char_lan_config_read(const char *lancfgName) {
 
-	if ((fp = fopen(lancfgName, "r")) == NULL) {
-		ShowError("file not found: %s\n", lancfgName);
+	FILE *fp;
+	int line_num = 0;
+	char line[1024], w1[64], w2[64], w3[64], w4[64], w5[64];
+	
+	if((fp = fopen(lancfgName, "r")) == NULL) {
+		ShowWarning("LAN Support configuration file is not found: %s\n", lancfgName);
 		return 1;
 	}
 
-	ShowInfo("Reading file %s...\n", lancfgName);
+	ShowInfo("Reading the configuration file %s...\n", lancfgName);
 
-	while(fgets(line, sizeof(line)-1, fp)){
-		if (line[0] == '/' && line[1] == '/')
+	while(fgets(line, sizeof(line)-1, fp)) {
+
+		line_num++;		
+		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
+		line[sizeof(line)-1] = '\0';
+		if(sscanf(line,"%[^:]: %[^/]/%[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4, w5) != 5) {
+	
+			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);	
 			continue;
-
-		else if (strcmpi(w1, "lan_map_ip") == 0) {
-			h = gethostbyname(w2);
-			if (h != NULL) {
-				sprintf(lan_map_ip, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-			} else {
-				strncpy(lan_map_ip, w2, sizeof(lan_map_ip));
-				lan_map_ip[sizeof(lan_map_ip)-1] = 0;
-			}
-			ShowStatus("set Lan_map_IP : %s\n", lan_map_ip);
 		}
 
-		else if (strcmpi(w1, "subnetmask") == 0) {
-			unsigned int k0, k1, k2, k3;
-			strcpy(subnetmask, w2);
-			sscanf(subnetmask, "%d.%d.%d.%d", &k0, &k1, &k2, &k3);
-			subnetmaski[0] = k0; subnetmaski[1] = k1; subnetmaski[2] = k2; subnetmaski[3] = k3;
-			ShowStatus("set subnetmask : %s\n", w2);
+		remove_control_chars((unsigned char *)w1);
+		remove_control_chars((unsigned char *)w2);
+		remove_control_chars((unsigned char *)w3);
+		remove_control_chars((unsigned char *)w4);
+		remove_control_chars((unsigned char *)w5);
+
+		if(strcmpi(w1, "subnet") == 0) {
+	
+			subnet[subnet_count].subnet = inet_addr(w2);
+			subnet[subnet_count].mask = inet_addr(w3);
+			subnet[subnet_count].char_ip = inet_addr(w4);
+			subnet[subnet_count].map_ip = inet_addr(w5);
+				
+			subnet_count++;
 		}
+
+		ShowStatus("Information about %d subnetworks readen.\n", subnet_count);
 	}
-	fclose(fp);
 
-	ShowInfo("Done reading %s.\n", lancfgName);
+	fclose(fp);
 	return 0;
 }
 

@@ -7,7 +7,7 @@
 #define MAX_SERVERS 30
 
 #define LOGIN_CONF_NAME "conf/login_athena.conf"
-#define LAN_CONF_NAME "conf/lan_support.conf"
+#define LAN_CONF_NAME "conf/subnet_athena.conf"
 #define PASSWORDENC 3	// A definition is given when making an encryption password correspond.
                      	// It is 1 at the time of passwordencrypt.
                      	// It is made into 2 at the time of passwordencrypt2.
