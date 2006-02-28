@@ -402,6 +402,7 @@ int buildin_setd(struct script_state *st);
 int buildin_petstat(struct script_state *st); // [Lance] Pet Stat Rq: Dubby
 int buildin_callshop(struct script_state *st); // [Skotlex]
 int buildin_equip(struct script_state *st);
+int buildin_autoequip(struct script_state *st);
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
@@ -704,6 +705,7 @@ struct {
 	{buildin_petstat,"petstat","i"},
 	{buildin_callshop,"callshop","si"}, // [Skotlex]
 	{buildin_equip,"equip","i"},
+	{buildin_autoequip,"autoequip","ii"},
 	{buildin_setitemscript,"setitemscript","is"}, //Set NEW item bonus script. Lupus
 	{buildin_disguise,"disguise","i"}, //disguise player. Lupus
 	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
@@ -9405,6 +9407,17 @@ int buildin_equip(struct script_state *st)
 		pc_equipitem(sd,nameid,item_data->equip);
 	}
 
+	return 0;
+}
+
+int buildin_autoequip(struct script_state *st){
+	int nameid, flag;
+	struct item_data *item_data;
+	nameid=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	flag=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	if(nameid>=500 && (item_data = itemdb_search(nameid)) != NULL){
+		item_data->flag.autoequip = flag>0?1:0;
+	}
 	return 0;
 }
 

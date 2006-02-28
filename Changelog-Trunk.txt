@@ -9,6 +9,7 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 	  lan_support.conf to subnet_athena.conf, changed it syntax. [LuzZza]
 	* Added script command 'equip' to equip items. [Lance]
 	* Fixed dependancies in map-server compiling (VC7.1). [Lance]
+	* Added autoequip flag check for pc_takeitem. If it impacts on perfomance, please remove it. [Lance]
 2006/02/24
 	* Prevented guild/party recall to work on GMs of greater level than
 	  yourself. [Skotlex]

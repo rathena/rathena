@@ -39,6 +39,7 @@ struct item_data {
 		unsigned no_refine : 1;	// [celest]
 		unsigned delay_consume : 1;	// Signifies items that are not consumed inmediately upon double-click [Skotlex]
 		unsigned trade_restriction : 7;	//Item restrictions mask [Skotlex]
+		unsigned autoequip: 1;
 	} flag;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
 	int view_id;
@@ -71,6 +72,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_slot(n) itemdb_search(n)->slot
 #define itemdb_available(n) (itemdb_exists(n) && itemdb_search(n)->flag.available)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
+#define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
 int itemdb_group(int nameid);
 
 int itemdb_searchrandomid(int flags);

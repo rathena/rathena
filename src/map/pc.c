@@ -2654,6 +2654,9 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 
 	clif_takeitem(&sd->bl,&fitem->bl);
 	map_clearflooritem(fitem->bl.id);
+	if(itemdb_autoequip(fitem->item_data.nameid) != 0){
+		pc_equipitem(sd, fitem->item_data.nameid, fitem->item_data.equip);
+	}
 	return 0;
 }
 
