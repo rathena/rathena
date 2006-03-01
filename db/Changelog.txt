@@ -26,6 +26,8 @@
 
 =========================
 
+03/01
+	* Added temp Green Iguana skills [Lupus]
 02/27
 	* Temp plug: 2620,Rogue's_Treasure steal rate -> 1 (have to fix formula) [Lupus]
 	- Fixed all Vesper Acessories (removed doubled DEF bonus), thanks to Irmin

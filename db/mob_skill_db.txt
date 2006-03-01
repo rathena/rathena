@@ -3529,6 +3529,11 @@
 1712,Thanatos Dolor@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 
 // Abyss Lake
+1687,Green Iguana@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1687,Green Iguana@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,7,149,,,,
+1687,Green Iguana@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1687,Green Iguana@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
+1687,Green Iguana@NPC_TELEKINESISATTACK,chase,191,5,50,0,5000,yes,target,always,0,,,,,,
 1713,Acidus@WZ_FIREPILLAR,idle,80,3,50,0,5000,no,self,always,0,,,,,,
 1713,Acidus@MG_FIREBALL,chase,17,9,200,0,5000,yes,target,always,0,,,,,,
 1713,Acidus@NPC_FIREATTACK,attack,186,3,500,0,5000,no,target,always,0,,,,,,
