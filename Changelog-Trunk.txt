@@ -7,6 +7,7 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 2006/03/01
 	* Corrected a few Compiling Warnings [Codemaster]
 	* Added the ability to select GM loading via Login (default) or Char [Codemaster]
+	* Added script command 'setbattleflag'. [Lance]
 2006/02/28
 	* Rewrote LAN support code. Changed configuration file name
 	  lan_support.conf to subnet_athena.conf, changed it syntax. [LuzZza]

@@ -403,6 +403,7 @@ int buildin_petstat(struct script_state *st); // [Lance] Pet Stat Rq: Dubby
 int buildin_callshop(struct script_state *st); // [Skotlex]
 int buildin_equip(struct script_state *st);
 int buildin_autoequip(struct script_state *st);
+int buildin_setbattleflag(struct script_state *st);
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
@@ -706,6 +707,7 @@ struct {
 	{buildin_callshop,"callshop","si"}, // [Skotlex]
 	{buildin_equip,"equip","i"},
 	{buildin_autoequip,"autoequip","ii"},
+	{buildin_setbattleflag,"setbattleflag","ss"},
 	{buildin_setitemscript,"setitemscript","is"}, //Set NEW item bonus script. Lupus
 	{buildin_disguise,"disguise","i"}, //disguise player. Lupus
 	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
@@ -9421,12 +9423,26 @@ int buildin_autoequip(struct script_state *st){
 	return 0;
 }
 
+int buildin_setbattleflag(struct script_state *st){
+	char *flag, *value;
+
+	flag = conv_str(st,& (st->stack->stack_data[st->start+2]));
+	value = conv_str(st,& (st->stack->stack_data[st->start+3]));
+	
+	if (battle_set_value(flag, value) == 0)
+		ShowWarning("buildin_setbattleflag: unknown battle_config flag '%s'",flag);
+	else
+        ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.",flag,value);
+
+	return 0;
+}
+
 //=======================================================
 // strlen [Valaris]
 //-------------------------------------------------------
 int buildin_getstrlen(struct script_state *st) {
 
-	char *str = str=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	char *str = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	int len = (str) ? (int)strlen(str) : 0;
 
 	push_val(st->stack,C_INT,len);
