@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/01
+	* Added a missing mysql_init call to the mapreg sql handle. [Skotlex]
 	* Checked and fixed the script engine barking when you try to have a label
 	  with the same name as a const.txt defined parameter. [Skotlex]
 	* Turn Undead and Offensive Resurrection should now work on undead players.

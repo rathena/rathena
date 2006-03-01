@@ -3542,11 +3542,12 @@ int map_sql_init(void){
 #ifdef MAPREGSQL
 	// [zBuffer] SQL Mapreg connection start
 	ShowInfo("Connect Mapreg DB Server....\n");
-    	if(!mysql_real_connect(&mapregsql_handle, map_server_ip, map_server_id, map_server_pw,
+	mysql_init(&mapregsql_handle);
+   if(!mysql_real_connect(&mapregsql_handle, map_server_ip, map_server_id, map_server_pw,
 		map_server_db ,map_server_port, (char *)NULL, 0)) {
 	        //pointer check
-			ShowSQL("DB error - %s\n",mysql_error(&mapregsql_handle));
-			exit(1);
+		ShowSQL("DB error - %s\n",mysql_error(&mapregsql_handle));
+		exit(1);
 	} else {
 		ShowStatus ("Connect success! (Mapreg DB Connection)\n");
 		if( strlen(default_codepage) > 0 ) {
