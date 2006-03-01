@@ -89,7 +89,7 @@ int inter_party_tosql(struct party *p, int flag, int index)
 		}
 		if(mysql_field_count(&mysql_handle) == 0 &&
 			mysql_insert_id(&mysql_handle) != 0)
-			party_id = p->party_id = mysql_insert_id(&mysql_handle);
+			party_id = p->party_id = (int)mysql_insert_id(&mysql_handle);
 		else { //Failed to retrieve ID??
 			aFree(p); //Free party, couldn't create it.
 			return 0;

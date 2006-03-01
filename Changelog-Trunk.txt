@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/01
+	* Corrected a few Compiling Warnings [Codemaster]
 	* Added the ability to select GM loading via Login (default) or Char [Codemaster]
 2006/02/28
 	* Rewrote LAN support code. Changed configuration file name

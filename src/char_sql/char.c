@@ -346,7 +346,7 @@ void read_gm_account(void) {
 		}
 		lsql_res = mysql_store_result(&lmysql_handle);
 		if (lsql_res) {
-			gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * mysql_num_rows(lsql_res), 1);
+			gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * (size_t)mysql_num_rows(lsql_res), 1);
 			while ((lsql_row = mysql_fetch_row(lsql_res))) {
 				gm_account[GM_num].account_id = atoi(lsql_row[0]);
 				gm_account[GM_num].level = atoi(lsql_row[1]);
@@ -1417,7 +1417,7 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 	//Now we need the charid from sql!
 	if(mysql_field_count(&mysql_handle) == 0 &&
 		mysql_insert_id(&mysql_handle) > 0)
-		char_id = mysql_insert_id(&mysql_handle);
+		char_id = (int)mysql_insert_id(&mysql_handle);
 	else {
 		//delete the char ..(no trash in DB!) but how is this possible?
 		sprintf(tmp_sql, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' AND `name` = '%s'", char_db, sd->account_id, dat[30], t_name);

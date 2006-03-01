@@ -157,7 +157,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 		} else if (g->guild_id == -1) { //New guild
 			if(mysql_field_count(&mysql_handle) == 0 &&
 				mysql_insert_id(&mysql_handle) != 0)
-				g->guild_id = mysql_insert_id(&mysql_handle);
+				g->guild_id = (int)mysql_insert_id(&mysql_handle);
 			else
 				return 0; //Failed to get ID??
 		}

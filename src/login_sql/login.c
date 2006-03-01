@@ -499,7 +499,7 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 	if(mysql_field_count(&mysql_handle) == 0 &&
 		mysql_insert_id(&mysql_handle) < START_ACCOUNT_NUM) {
 		//Invalid Account ID! Must update it.
-		int id = mysql_insert_id(&mysql_handle);
+		int id = (int)mysql_insert_id(&mysql_handle);
 		sprintf(tmp_sql, "UPDATE `%s` SET `%s`='%d' WHERE `%s`='%d'", login_db, login_db_account_id, START_ACCOUNT_NUM, login_db_account_id, id);
 		if(mysql_query(&mysql_handle, tmp_sql)){
 			ShowError("New account %s has an invalid account ID [%d] which could not be updated (account_id must be %d or higher).", account->userid, id, START_ACCOUNT_NUM);

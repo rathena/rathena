@@ -57,7 +57,7 @@ int inter_pet_tosql(int pet_id, struct s_pet *p) {
 	} else if (pet_id == -1) { //New pet inserted.
 		if(mysql_field_count(&mysql_handle) == 0 &&
 			mysql_insert_id(&mysql_handle) != 0) {
-			p->pet_id = pet_id = mysql_insert_id(&mysql_handle);
+			p->pet_id = pet_id = (int)mysql_insert_id(&mysql_handle);
 		} else {
 			ShowError("inter_pet_tosql: Failed to retrieve new pet_id for '%s'. Pet creation aborted.\n", p->name);
 			return 0;
