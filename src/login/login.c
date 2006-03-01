@@ -2984,17 +2984,16 @@ int parse_admin(int fd) {
 int lan_subnetcheck(unsigned char *p) {
 
 	int i;
-	char *sbn, *msk;
+	unsigned char *sbn, *msk;
 	
 	for(i=0; i<subnet_count; i++) {
 	
-		printf("%ld - %ld - %ld", subnet[i].subnet, subnet[i].mask, (long)p);
 		if((subnet[i].subnet & subnet[i].mask) == ((long)p & subnet[i].mask)) {
 			
 			sbn = (char *)&subnet[i].subnet;
 			msk = (char *)&subnet[i].mask;
 			
-			ShowMessage("Subnet check result: "CL_CYAN"%d.%d.%d.%d/%d.%d.%d.%d"CL_RESET"\n",
+			ShowMessage("Subnet check result: "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
 				sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
 			
 			return subnet[i].char_ip;
@@ -3466,8 +3465,9 @@ int config_switch(const char *str) {
 int login_lan_config_read(const char *lancfgName) {
 
 	FILE *fp;
+	int line_num = 0;
 	char line[1024], w1[64], w2[64], w3[64], w4[64], w5[64];
-
+	
 	if((fp = fopen(lancfgName, "r")) == NULL) {
 		ShowWarning("LAN Support configuration file is not found: %s\n", lancfgName);
 		return 1;
@@ -3477,13 +3477,14 @@ int login_lan_config_read(const char *lancfgName) {
 
 	while(fgets(line, sizeof(line)-1, fp)) {
 
-		if (line[0] == '/' && line[1] == '/')
+		line_num++;		
+		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
 		line[sizeof(line)-1] = '\0';
 		if(sscanf(line,"%[^:]: %[^/]/%[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4, w5) != 5) {
 	
-			ShowWarning("Error syntax of configuration file %s. Line skipped.\n", lancfgName);	
+			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);	
 			continue;
 		}
 
@@ -3509,6 +3510,7 @@ int login_lan_config_read(const char *lancfgName) {
 	fclose(fp);
 	return 0;
 }
+
 
 //-----------------------------------
 // Reading general configuration file
