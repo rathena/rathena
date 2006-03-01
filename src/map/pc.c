@@ -845,6 +845,8 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 	}
 
+	if(sd->status.manner < 0) //Needed or manner will always be negative.
+		status_change_start(&sd->bl,SC_NOCHAT,100,0,0,0,0,0,0);
 	return 0;
 }
 
@@ -2590,63 +2592,15 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	}
 	first_sd = NULL; //First_sd will store who picked up the item.
 	if (p && p->item&2) { //item distribution to party members.
-		first_sd = NULL; 
-		if (battle_config.party_share_type) { //Round Robin
-			int i;
-			i = p->itemc;
-			do {
-				i++;
-				if (i >= MAX_PARTY)
-					i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
-				if ((second_sd=p->member[i].sd)==NULL || sd->bl.m != second_sd->bl.m)
-					continue;
-				
-				if (pc_additem(second_sd,&fitem->item_data,fitem->item_data.amount))
-					continue; //Chosen char can't pick up loot.
-				//Successful pick.
-				first_sd = second_sd;
-				break;
-			} while (i != p->itemc);
-			// Skip to the current receiver of an item, so the next pick should not go to him again.
-			p->itemc = i;
-		} else { //Random pick
-			struct map_session_data*psd[MAX_PARTY];
-			int i, count=0;
-			//Collect pick candidates
-			for (i = 0; i < MAX_PARTY; i++) {
-				if ((psd[count]=p->member[i].sd) && psd[count]->bl.m == sd->bl.m)
-					count++;
-			}
-			if (count > 0) { //Pick a random member.
-				do {
-					i = rand()%count;
-					if (pc_additem(psd[i],&fitem->item_data,fitem->item_data.amount))
-					{	//Discard this receiver.
-						psd[i] = psd[count-1];
-						count--;
-					} else { //Successful pick.
-						first_sd = psd[i];
-						break;
-					}
-				} while (count > 0);
-			}
-		}
-	}
-  	if (!first_sd) { //Noone has picked it up yet...
-		if ((flag = pc_additem(sd,&fitem->item_data,fitem->item_data.amount))) {
+		if ((flag = party_share_loot(p,sd,&fitem->item_data))) {
 			clif_additem(sd,0,0,flag);
 			return 1;
 		}
 		first_sd = sd;
-	}
+	} else
 	if(log_config.pick) //Logs items, taken by (P)layers [Lupus]
 		log_pick(first_sd, "P", 0, fitem->item_data.nameid, fitem->item_data.amount, (struct item*)&fitem->item_data);
-	//Logs
-	if(battle_config.party_show_share_picker && first_sd != sd){
-		char output[80];
-		sprintf(output, "%s acquired the item.",first_sd->status.name);
-		clif_disp_onlyself(sd,output,strlen(output));
-	}
+
 
 	//Display pickup animation.
 	if(sd->attacktimer != -1)
@@ -3698,7 +3652,7 @@ int pc_stop_walking (struct map_session_data *sd, int type)
 	sd->walkpath.path_len = 0;
 	sd->to_x = sd->bl.x;
 	sd->to_y = sd->bl.y;
-	if (type & 0x01)
+	if (type & 0x01 && !pc_issit(sd)) //Trying to fixpos while sitting makes you seem standing. [Skotlex]
 		clif_fixpos(&sd->bl);
 	if (sd->sc.data[SC_RUN].timer != -1)
 		status_change_end(&sd->bl, SC_RUN, -1);

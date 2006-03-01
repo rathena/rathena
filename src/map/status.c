@@ -4848,8 +4848,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_NOCHAT:	//ƒ`ƒƒƒbƒg‹ÖŽ~?‘Ô
 				if (sd) {
 					if(battle_config.manner_system){
-						if (sd->status.manner >= 0) // weeee ^^ [celest]
-							sd->status.manner = 0;
+						//Why set it to 0? Can't we use good manners for something? [Skotlex]
+//						if (sd->status.manner >= 0) // weeee ^^ [celest]
+//							sd->status.manner = 0;
 						clif_updatestatus(sd,SP_MANNER);
 					}
 				}

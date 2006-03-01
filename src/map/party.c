@@ -696,11 +696,74 @@ int party_exp_share(struct party *p,int map,unsigned int base_exp,unsigned int j
 	return 0;
 }
 
+int party_share_loot(struct party *p, TBL_PC *sd, struct item *item_data)
+{
+	TBL_PC *target=NULL;
+	int i;
+	if (p && p->item&2) {
+		//item distribution to party members.
+		if (battle_config.party_share_type) { //Round Robin
+			TBL_PC *psd;
+			i = p->itemc;
+			do {
+				i++;
+				if (i >= MAX_PARTY)
+					i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
+				if ((psd=p->member[i].sd)==NULL || sd->bl.m != psd->bl.m)
+					continue;
+				
+				if (pc_additem(psd,item_data,item_data->amount))
+					continue; //Chosen char can't pick up loot.
+				//Successful pick.
+				p->itemc = i;
+				target = psd;
+				break;
+			} while (i != p->itemc);
+		} else { //Random pick
+			TBL_PC *psd[MAX_PARTY];
+			int count=0;
+			//Collect pick candidates
+			for (i = 0; i < MAX_PARTY; i++) {
+				if ((psd[count]=p->member[i].sd) && psd[count]->bl.m == sd->bl.m)
+					count++;
+			}
+			if (count > 0) { //Pick a random member.
+				do {
+					i = rand()%count;
+					if (pc_additem(psd[i],item_data,item_data->amount))
+					{	//Discard this receiver.
+						psd[i] = psd[count-1];
+						count--;
+					} else { //Successful pick.
+						target = psd[i];
+						break;
+					}
+				} while (count > 0);
+			}
+		}
+	}
+	if (!target) { //Give it to the owner.
+		target = sd;
+		if (!(i=pc_additem(sd,item_data,item_data->amount)))
+			return i;
+	}
+
+	if(log_config.pick) //Logs items, taken by (P)layers [Lupus]
+		log_pick(target, "P", 0, item_data->nameid, item_data->amount, item_data);
+	//Logs
+	if(battle_config.party_show_share_picker && target != sd){
+		char output[80];
+		sprintf(output, "%s acquired the item.",target->status.name);
+		clif_disp_onlyself(sd,output,strlen(output));
+	}
+	return 0;
+}
+
 int party_send_dot_remove(struct map_session_data *sd)
 {
-	if (sd->status.party_id)
-		clif_party_xy_remove(sd);
-	return 0;
+if (sd->status.party_id)
+	clif_party_xy_remove(sd);
+return 0;
 }
 
 // To use for Taekwon's "Fighting Chant"

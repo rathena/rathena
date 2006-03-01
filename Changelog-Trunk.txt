@@ -5,6 +5,29 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/01
+	* Turn Undead and Offensive Resurrection should now work on undead players.
+	  [Skotlex]
+	* Fixed the range checking of Repair weapon [Skotlex]
+	* Rude attacked is now also triggered when you hit a target that can't move
+	  out of their melee attack range. [Skotlex]
+	* Mob ai will attempt to do a long-range attacked condition skill before
+	  unlocking a target when it is attacked and said target is out of melee
+	  range of a non-walking mob. [Skotlex]
+	* Corrected mobskill event to set the target_id before triggering. This
+	  should fix shortrange/longrange attacked mob skill conditions. [Skotlex]
+	* Moved MSC_SKILLUSED trigger to mobskill_event which is triggered in
+	  battle_calc_damage. It is also triggered on skill_castend_nodamage_id.
+	  [Skotlex]
+	* Added party_share_loot for handling party-share loot. it should now work
+	  with autoloot as well. [Skotlex]
+	* Fixed skill_break_rate breaking stuff even if the rate is 0. [Skotlex]
+	* pc_stopwalking will not send a fixpos packet if you are sitting. [Skotlex]
+	* mob_can_reach rude-attacked condition now uses the mob's field of view.
+	  [Skotlex]
+	* SC_NOCHAT is automatically started on pc_authok if manner is negative.
+	  [Skotlex]
+	* Map server now refuses to start if you try to define a label with the
+	  same name as some const.txt defined character parameter. [Skotlex]
 	* Corrected a few Compiling Warnings [Codemaster]
 	* Added the ability to select GM loading via Login (default) or Char [Codemaster]
 	* Added script command 'setbattleflag'. [Lance]

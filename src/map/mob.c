@@ -1620,12 +1620,12 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				(dist = distance_bl(&md->bl, abl)) >= 32 ||
 				battle_check_target(bl, abl, BCT_ENEMY) <= 0 ||
 				(battle_config.mob_ai&2 && !status_check_skilluse(bl, abl, 0, 0)) ||
-				!mob_can_reach(md, abl, dist+2, MSS_RUSH ||
+				!mob_can_reach(md, abl, md->db->range2, MSS_RUSH) ||
 				(	//Gangster Paradise check
 					abl->type == BL_PC && !(mode&MD_BOSS) &&
 					((struct map_session_data*)abl)->state.gangsterparadise
 				)
-			))	{	//Can't attack back
+			)	{	//Can't attack back
 				if (md->attacked_count++ > 3) {
 					if (mobskill_use(md, tick, MSC_RUDEATTACKED) == 0 &&
 						mode&MD_CANMOVE && mob_can_move(md))
@@ -1720,8 +1720,11 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			}
 			if (!battle_check_range (&md->bl, tbl, md->db->range))
 			{	//Out of range...
-				if (!(mode & MD_CANMOVE))
-				{	//Can't chase.
+				if (!(mode&MD_CANMOVE))
+				{	//Can't chase. Attempt to use a ranged skill at least?
+					if (mobskill_use(md, tick, MSC_LONGRANGEATTACKED) == 0)
+						md->attacked_count++; //Increase rude-attacked count as it can't attack back.
+					
 					mob_unlocktarget(md,tick);
 					return 0;
 				}
@@ -2074,13 +2077,16 @@ static void mob_item_drop(struct mob_data *md, unsigned int tick, struct delay_i
 	if (ditem->first_sd && ditem->first_sd->state.autoloot &&
 		(drop_rate <= ditem->first_sd->state.autoloot ||
 		ditem->first_sd->state.autoloot >= 10000) //Fetch 100% drops
-		&& pc_additem(ditem->first_sd,&ditem->item_data,ditem->item_data.amount) == 0)
-	{	//Autolooted.
-		if(log_config.pick > 0)
-			log_pick(ditem->first_sd, "P", 0, ditem->item_data.nameid, ditem->item_data.amount, &ditem->item_data);
-		aFree(ditem);
-	} else
-		add_timer(tick, mob_delay_item_drop, (int)ditem, 0);
+	) {	//Autoloot.
+		if (party_share_loot(
+			party_search(ditem->first_sd->status.party_id),
+			ditem->first_sd,&ditem->item_data)
+		) {
+			aFree(ditem);
+			return;
+		}
+	}
+	add_timer(tick, mob_delay_item_drop, (int)ditem, 0);
 }
 
 /*==========================================
@@ -3885,18 +3891,29 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
  * Skill use event processing
  *------------------------------------------
  */
-int mobskill_event(struct mob_data *md, int flag)
+int mobskill_event(struct mob_data *md, struct block_list *src, unsigned int tick, int flag)
 {
-	int tick = gettick();
-	nullpo_retr(0, md);
+	int target_id, res = 0;
 
-	if (flag == -1 && mobskill_use(md, tick, MSC_CASTTARGETED))
-		return 1;
-	if ((flag & BF_SHORT) && mobskill_use(md, tick, MSC_CLOSEDATTACKED))
-		return 1;
-	if ((flag & BF_LONG) && mobskill_use(md, tick, MSC_LONGRANGEATTACKED))
-		return 1;
-	return 0;
+	target_id = md->target_id;
+	if (!target_id || (battle_config.mob_changetarget_byskill &&
+		battle_check_target(&md->bl, src, BCT_ENEMY) > 0))
+		md->target_id = src->id;
+			
+	if (flag == -1)
+		res = mobskill_use(md, tick, MSC_CASTTARGETED);
+	else if ((flag&0xffff) == MSC_SKILLUSED)
+		res = mobskill_use(md,tick,flag);
+	else if (flag&BF_SHORT)
+		res = mobskill_use(md, tick, MSC_CLOSEDATTACKED);
+	else if (flag&BF_LONG)
+		res = mobskill_use(md, tick, MSC_LONGRANGEATTACKED);
+	
+	if (target_id && !res)
+	//Restore previous target only if skill condition failed to trigger. [Skotlex]
+		md->target_id = target_id;
+	
+	return res;
 }
 
 /*==========================================

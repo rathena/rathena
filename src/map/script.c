@@ -1755,6 +1755,10 @@ unsigned char* parse_syntax(unsigned char *p) {
 				// ŠÖ”–¼‚Ìƒ‰ƒxƒ‹‚ğ•t‚¯‚é
 				*p = 0;
 				l=add_str(func_name);
+				if(str_data[l].type == C_PARAM) {
+					disp_error_message("invalid label name ",p);
+					exit(1);
+				}
 				if(str_data[l].type == C_NOP) {
 					str_data[l].type = C_USERFUNC;
 				}

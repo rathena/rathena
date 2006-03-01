@@ -160,7 +160,7 @@ int mob_warp(struct mob_data *md,int m,int x,int y,int type);
 int mob_warpslave(struct block_list *bl, int range);
 
 int mobskill_use(struct mob_data *md,unsigned int tick,int event);
-int mobskill_event(struct mob_data *md,int flag);
+int mobskill_event(struct mob_data *md,struct block_list *src,unsigned int tick, int flag);
 int mobskill_castend_id( int tid, unsigned int tick, int id,int data );
 int mobskill_castend_pos( int tid, unsigned int tick, int id,int data );
 int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id);

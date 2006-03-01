@@ -755,8 +755,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			damage = div_;
 	}
 
-	if( md!=NULL && md->hp>0 && damage > 0 )	// ”½Œ‚‚È‚Ç‚ÌMOBƒXƒLƒ‹”»’è
-		mobskill_event(md,flag);
+	if( md && !status_isdead(bl) && src != bl) {
+	  if (damage > 0 )
+			mobskill_event(md,src,gettick(),flag);
+	  if (skill_num)
+			mobskill_event(md,src,gettick(),MSC_SKILLUSED|(skill_num<<16));
+	}
 
 	return damage;
 }
@@ -2268,7 +2272,8 @@ static struct Damage battle_calc_weapon_attack(
 				if(sc->data[SC_MAXOVERTHRUST].timer!=-1)
 					breakrate += 10;
 			}
-			skill_break_equip(src, EQP_WEAPON, breakrate, BCT_SELF);
+			if (breakrate)
+				skill_break_equip(src, EQP_WEAPON, breakrate, BCT_SELF);
 		}
 		if (battle_config.equip_skill_break_rate)
 		{	// Target equipment breaking
@@ -2471,7 +2476,7 @@ struct Damage battle_calc_magic_attack(
 				break;
 			case ALL_RESURRECTION:
 			case PR_TURNUNDEAD:
-				if(!tsd && battle_check_undead(t_race,t_ele)){
+				if(battle_check_undead(t_race,t_ele)){
 					int hp, mhp, thres;
 					hp = status_get_hp(target);
 					mhp = status_get_max_hp(target);

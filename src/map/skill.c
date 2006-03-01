@@ -1426,7 +1426,7 @@ int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int
 		if (where&where_list[i]) {
 			if (sc && sc->count && sc->data[scdef[i]].timer != -1)
 				where&=~where_list[i];
-			else if (rand()%10000 > rate)
+			else if (rand()%10000 >= rate)
 				where&=~where_list[i];
 			else if (!sd) //Cause Strip effect.
 				status_change_start(bl,scatk[i],100,0,0,0,0,
@@ -1894,23 +1894,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if (dmg.dmg_lv == ATK_DEF || damage > 0) //Counter status effects [Skotlex] 
 		skill_counter_additional_effect(dsrc,bl,skillid,skilllv,attack_type,tick);
 	
-	/* ƒ_ƒ??ƒW‚ª‚ ‚é‚È‚ç’Ç‰Á?‰Ê”»’è */	
-	if(!status_isdead(bl) && bl->type==BL_MOB && src!=bl)	/* ƒXƒLƒ‹Žg—p?Œ‚ÌMOBƒXƒLƒ‹ */
-	{
-		struct mob_data *md=(struct mob_data *)bl;
-//		nullpo_retr(0, md); //Just so you know.. these are useless. When you cast a pointer, the pointer still is the same, so if bl is not null, the after-casted pointer will never be nulll :/ [Skotlex]
-		if(battle_config.mob_changetarget_byskill && sd)
-		{
-			int target ;
-			target=md->target_id;
-			md->target_id=src->id;
-			mobskill_use(md,tick,MSC_SKILLUSED|(skillid<<16));
-			md->target_id=target;
-		}
-		else
-			mobskill_use(md,tick,MSC_SKILLUSED|(skillid<<16));
-	}
-
 	if(sd && dmg.flag&BF_WEAPON && src != bl && src == dsrc && damage > 0) {
 		int hp = 0,sp = 0;
 		if(sd->right_weapon.hp_drain_rate && sd->right_weapon.hp_drain_per > 0 && dmg.damage > 0 && rand()%1000 < sd->right_weapon.hp_drain_rate) {
@@ -5655,6 +5638,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		return 1;
 	}
 
+	if (dstmd) //Mob skill event for no damage skills (damage ones are handled in battle_calc_damage) [Skotlex]
+		mobskill_event(dstmd, src, tick, MSC_SKILLUSED|(skillid<<16));
+	
 	map_freeblock_unlock();
 	return 0;
 }
@@ -8640,21 +8626,26 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 		else
 			clif_skillcasting(&sd->bl,sd->bl.id, target_id, 0,0, skill_num,casttime);
 		/* ‰r?¥”½?ƒ‚ƒ“ƒXƒ^? */
-		if (bl->type == BL_MOB && (mode = status_get_mode(bl))&MD_CASTSENSOR && (md = (struct mob_data *)bl) &&
-			(!md->special_state.ai || skill_get_inf(skill_num) != INF_SUPPORT_SKILL) //Avoid having summons target master from supportive skills. [Skotlex]
-		) {
-			switch (md->state.skillstate) {
-				case MSS_ANGRY:
-				case MSS_RUSH:
-				case MSS_FOLLOW:
-					if (!(mode&(MD_AGGRESSIVE|MD_ANGRY)))
-						break; //Only Aggressive mobs change target while chasing.
-				case MSS_IDLE:
-				case MSS_WALK:
-					md->target_id = sd->bl.id;
-					md->state.targettype = ATTACKABLE;
-					md->state.aggressive = (mode&MD_ANGRY)?1:0;
-					md->min_chase = md->db->range3;
+		if (bl->type == BL_MOB)
+		{
+			md = (struct mob_data *)bl;
+			mobskill_event(md, &sd->bl, tick, -1); //Cast targetted skill event.
+			if ((mode=status_get_mode(bl))&MD_CASTSENSOR &&
+				battle_check_target(bl, &sd->bl, BCT_ENEMY) > 0)
+			{
+				switch (md->state.skillstate) {
+					case MSS_ANGRY:
+					case MSS_RUSH:
+					case MSS_FOLLOW:
+						if (!(mode&(MD_AGGRESSIVE|MD_ANGRY)))
+							break; //Only Aggressive mobs change target while chasing.
+					case MSS_IDLE:
+					case MSS_WALK:
+						md->target_id = sd->bl.id;
+						md->state.targettype = ATTACKABLE;
+						md->state.aggressive = (mode&MD_ANGRY)?1:0;
+						md->min_chase = md->db->range3;
+				}
 			}
 		}
 	}
@@ -9038,7 +9029,7 @@ void skill_repairweapon(struct map_session_data *sd, int idx)
 	if(item->nameid <= 0 || item->attribute == 0)
 		return; //Again invalid item....
 
-	if(sd!=target_sd && !battle_check_range(&sd->bl,&target_sd->bl,skill_get_range2(&sd->bl, sd->skillid,sd->skilllv))){
+	if(sd!=target_sd && !battle_check_range(&sd->bl,&target_sd->bl,skill_get_range2(&sd->bl, sd->menuskill_id,pc_checkskill(sd, sd->menuskill_id)))){
 		clif_item_repaireffect(sd,item->nameid,1);
 		return;
 	}
