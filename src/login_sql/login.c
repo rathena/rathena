@@ -120,6 +120,7 @@ int use_md5_passwds = 0;
 char login_db[256] = "login";
 int log_login=1; //Whether to log the logins or not. [Skotlex]
 char loginlog_db[256] = "loginlog";
+bool login_gm_read = true;
 
 // added to help out custom login tables, without having to recompile
 // source so options are kept in the login_athena.conf or the inter_athena.conf
@@ -127,6 +128,8 @@ char login_db_account_id[256] = "account_id";
 char login_db_userid[256] = "userid";
 char login_db_user_pass[256] = "user_pass";
 char login_db_level[256] = "level";
+
+char gm_db[256] = "gm_accounts";
 
 char reg_db[256] = "global_reg_value";
 
@@ -210,27 +213,30 @@ void read_gm_account(void) {
 	MYSQL_RES* sql_res ;
 	MYSQL_ROW sql_row;
 
-	sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`> '0'",login_db_account_id,login_db_level,login_db,login_db_level);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		return; //Failed to read GM list!
-	}
-
-	if (gm_account_db != NULL)
+	if(login_gm_read)
 	{
-		aFree(gm_account_db);
-		gm_account_db = NULL;
-	}
-	GM_num = 0;
+		sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`> '0'",login_db_account_id,login_db_level,login_db,login_db_level);
+		if (mysql_query(&mysql_handle, tmp_sql)) {
+			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return; //Failed to read GM list!
+		}
 
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
-		gm_account_db = (struct gm_account*)aCalloc((size_t)mysql_num_rows(sql_res), sizeof(struct gm_account));
-		while ((sql_row = mysql_fetch_row(sql_res))) {
-			gm_account_db[GM_num].account_id = atoi(sql_row[0]);
-			gm_account_db[GM_num].level = atoi(sql_row[1]);
-			GM_num++;
+		if (gm_account_db != NULL)
+		{
+			aFree(gm_account_db);
+			gm_account_db = NULL;
+		}
+		GM_num = 0;
+
+		sql_res = mysql_store_result(&mysql_handle);
+		if (sql_res) {
+			gm_account_db = (struct gm_account*)aCalloc((size_t)mysql_num_rows(sql_res), sizeof(struct gm_account));
+			while ((sql_row = mysql_fetch_row(sql_res))) {
+				gm_account_db[GM_num].account_id = atoi(sql_row[0]);
+				gm_account_db[GM_num].level = atoi(sql_row[1]);
+				GM_num++;
+			}
 		}
 	}
 
@@ -247,22 +253,25 @@ void send_GM_accounts(int fd) {
 	unsigned char buf[32767];
 	int len;
 
-	len = 4;
-	WBUFW(buf,0) = 0x2732;
-	for(i = 0; i < GM_num; i++)
-		// send only existing accounts. We can not create a GM account when server is online.
-		if (gm_account_db[i].level > 0) {
-			WBUFL(buf,len) = gm_account_db[i].account_id;
-			WBUFB(buf,len+4) = (unsigned char)gm_account_db[i].level;
-			len += 5;
-		}
-	WBUFW(buf,2) = len;
-	if (fd == -1)
-		charif_sendallwos(-1, buf, len);
-	else
+	if(login_gm_read)
 	{
-		memcpy(WFIFOP(fd,0), buf, len);
-		WFIFOSET(fd,len);
+		len = 4;
+		WBUFW(buf,0) = 0x2732;
+		for(i = 0; i < GM_num; i++)
+			// send only existing accounts. We can not create a GM account when server is online.
+			if (gm_account_db[i].level > 0) {
+				WBUFL(buf,len) = gm_account_db[i].account_id;
+				WBUFB(buf,len+4) = (unsigned char)gm_account_db[i].level;
+				len += 5;
+			}
+		WBUFW(buf,2) = len;
+		if (fd == -1)
+			charif_sendallwos(-1, buf, len);
+		else
+		{
+			memcpy(WFIFOP(fd,0), buf, len);
+			WFIFOSET(fd,len);
+		}
 	}
 	return;
 }
@@ -1796,8 +1805,11 @@ int parse_login(int fd) {
 					WFIFOSET(fd,3);
 					session[fd]->func_parse=parse_fromchar;
 					realloc_fifo(fd,FIFOSIZE_SERVERLINK,FIFOSIZE_SERVERLINK);
-					// send GM account to char-server
-					send_GM_accounts(fd);
+					if(login_gm_read)
+					{
+						// send GM account to char-server
+						send_GM_accounts(fd);
+					}
 				} else {
 					WFIFOW(fd, 0) =0x2711;
 					WFIFOB(fd, 2)=3;
@@ -2122,7 +2134,14 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
 		if(i!=2)
 			continue;
-		if (strcmpi(w1, "login_db") == 0) {
+		if(strcmpi(w1, "gm_read_method") == 0) {
+			if(atoi(w2) == 0)
+				login_gm_read = true;
+			else
+				login_gm_read = false;
+		} else if(strcmpi(w1, "gm_db") == 0) {
+			strcpy(gm_db, w2);
+		} else if (strcmpi(w1, "login_db") == 0) {
 			strcpy(login_db, w2);
 		}
 		//add for DB connection
@@ -2237,8 +2256,11 @@ int do_init(int argc,char **argv){
 	mmo_auth_sqldb_init();
 	ShowInfo("finished mmo_auth_sqldb_init()\n");
 	
-	//Read account information.
-	read_gm_account();
+	if(login_gm_read)
+	{
+		//Read account information.
+		read_gm_account();
+	}
 
 	//set default parser as parse_login function
 	set_defaultparse(parse_login);
