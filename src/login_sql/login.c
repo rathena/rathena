@@ -237,10 +237,9 @@ void read_gm_account(void) {
 				gm_account_db[GM_num].level = atoi(sql_row[1]);
 				GM_num++;
 			}
+			mysql_free_result(sql_res);
 		}
 	}
-
-	mysql_free_result(sql_res);
 }
 
 int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
