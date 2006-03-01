@@ -5,6 +5,13 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/01
+	* Silence will only block skills when they have begun casting, not when the
+	  cast bar is done. This also means that auto-spells will likely come-out
+	  even when silenced. [Skotlex]
+	* opt1 status will block skills when they are done casting only if the
+	  sc_castcancel option is set. [Skotlex]
+	* strcharinfo now returns blank instead of crashing the map server when
+	  there's no player attached. [Skotlex]
 	* Added a missing mysql_init call to the mapreg sql handle. [Skotlex]
 	* Checked and fixed the script engine barking when you try to have a label
 	  with the same name as a const.txt defined parameter. [Skotlex]

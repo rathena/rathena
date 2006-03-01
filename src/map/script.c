@@ -4293,6 +4293,10 @@ int buildin_strcharinfo(struct script_state *st)
 
 	sd=script_rid2sd(st);
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	if (!sd) { //Avoid crashing....
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+		return 0;
+	}
 	if(num==0){
 		char *buf;
 		buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));

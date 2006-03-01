@@ -6780,11 +6780,18 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	tsc = status_get_sc(bl);
 	type = SkillStatusChangeTable[sg->skill_id];
 
-	if (sg->interval == -1 && (sg->unit_id == UNT_ANKLESNARE || sg->unit_id == UNT_SPIDERWEB || sg->unit_id == UNT_FIREPILLAR_ACTIVE))
-		//Ok, this case only happens with Ankle Snare/Spider Web (only skills that sets its interval to -1), 
-		//and only happens when more than one target is stepping on the trap at the moment it was triggered
-		//(yet only the first mob standing on the trap will be captured) [Skotlex]
-		return 0;
+	if (sg->interval == -1) {
+		switch (sg->unit_id) {
+			case UNT_ANKLESNARE: //These happen when a trap is splash-triggered by multiple targets on the same cell.
+			case UNT_SPIDERWEB:
+			case UNT_FIREPILLAR_ACTIVE:
+				return 0;
+			default:
+				if (battle_config.error_log)
+					ShowError("skill_unit_onplace_timer: interval error (unit id %x)\n", sg->unit_id);
+				return 0;
+		}
+	}
 
 	if ((ts = skill_unitgrouptickset_search(bl,sg,tick)))
 	{	//Not all have it, eg: Traps don't have it even though they can be hit by Heaven's Drive [Skotlex]

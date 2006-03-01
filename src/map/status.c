@@ -376,7 +376,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 	if (src) sc = status_get_sc(src);
 	
-	if(sc && sc->opt1 >0)
+	if(sc && sc->opt1 >0 && (!flag || battle_config.sc_castcancel))
 		return 0;
 	
 	if(sc && sc->count)
@@ -407,7 +407,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
 				(sc->data[SC_MARIONETTE2].timer != -1 && skill_num == CG_MARIONETTE) ||
 				(sc->data[SC_HERMODE].timer != -1 && skill_get_inf(skill_num) & INF_SUPPORT_SKILL) ||
-				sc->data[SC_SILENCE].timer != -1 || sc->data[SC_STEELBODY].timer != -1 ||
+				(sc->data[SC_SILENCE].timer != -1 && !flag) || //Silence only blocks initial casting of skills.
+				sc->data[SC_STEELBODY].timer != -1 ||
 				sc->data[SC_BERSERK].timer != -1 || sc->data[SC_SKA].timer != -1 ||
 				sc->data[SC_NOCHAT].timer != -1
 			)
@@ -4188,7 +4189,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_COMA: //Coma. Sends a char to 1HP
 			battle_damage(NULL, bl, status_get_hp(bl)-1, 0);
-			return 0;
+			return 1;
 
 		case SC_CARTBOOST:		/* カ?トブ?スト */
 			if(sc->data[SC_DECREASEAGI].timer!=-1 )
