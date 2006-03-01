@@ -33,3 +33,7 @@ stable. Remove it from the list once merged.
 - Replace pc_break_equip for skill_break_equip
 - Battle function autoskill_stacking
 - The new non-stackable autospell implementation.
+- Added autoequip flag to map-server item_data structure.
+- Added autoequip flag check to pc_takeitem.
+- Added script command 'autoequip', 'equip' and 'setbattleflag'.
+- VC7.1 vcprojs updated.
