@@ -2591,16 +2591,12 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 		}
 	}
 	first_sd = NULL; //First_sd will store who picked up the item.
-	if (p && p->item&2) { //item distribution to party members.
-		if ((flag = party_share_loot(p,sd,&fitem->item_data))) {
-			clif_additem(sd,0,0,flag);
-			return 1;
-		}
-		first_sd = sd;
-	} else
-	if(log_config.pick) //Logs items, taken by (P)layers [Lupus]
-		log_pick(first_sd, "P", 0, fitem->item_data.nameid, fitem->item_data.amount, (struct item*)&fitem->item_data);
-
+	//This function takes care of giving the item to whoever should have it
+	//considering party-share options.
+	if ((flag = party_share_loot(p,sd,&fitem->item_data))) {
+		clif_additem(sd,0,0,flag);
+		return 1;
+	}
 
 	//Display pickup animation.
 	if(sd->attacktimer != -1)

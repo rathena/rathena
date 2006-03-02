@@ -4365,6 +4365,10 @@ int buildin_strcharinfo(struct script_state *st)
 	int num;
 
 	sd=script_rid2sd(st);
+	if (!sd) { //Avoid crashing....
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+		return 0;
+	}
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	if(sd){
 		switch(num){
