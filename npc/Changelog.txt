@@ -29,6 +29,7 @@ Date		Added
 ======
 
 03/02
+	* Added Skotlex's updated marriage script [Vicious]
 	* Added eACC scripts, thanks to davidchak [Vicious]
 02/27
 	* Fixed a flag direction in front of Yesnelph, thanks to Playtester [DracoRPG]
