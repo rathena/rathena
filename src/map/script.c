@@ -110,7 +110,6 @@ unsigned char* parse_syntax_close(unsigned char *p);
 unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag);
 unsigned char* parse_syntax(unsigned char *p);
 static int parse_syntax_for_flag = 0;
-static void disp_error_message(const char *mes,const unsigned char *pos);
 
 extern int current_equip_item_index; //for New CARS Scripts. It contains Inventory Index of the EQUIP_SCRIPT caller item. [Lupus]
 int potion_flag=0; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
@@ -927,17 +926,9 @@ static void add_scriptl(int l)
  * ラベルを解決する
  *------------------------------------------
  */
-void set_label(int l,int pos, unsigned char *name)
+void set_label(int l,int pos)
 {
 	int i,next;
-	if (str_data[l].label != -1) {
-		disp_error_message("dup label", name);
-		exit(1);
-	}
-	if(str_data[l].type == C_PARAM) {
-		disp_error_message("invalid label name",name);
-		exit(1);
-	}
 
 	str_data[l].type=(str_data[l].type == C_USERFUNC ? C_USERFUNC_POS : C_POS);
 	str_data[l].label=pos;
@@ -1396,7 +1387,11 @@ unsigned char* parse_curly_close(unsigned char *p) {
 		// 現在地のラベルを付ける
 		sprintf(label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 		l=add_str(label);
-		set_label(l,script_pos,p);
+		if(str_data[l].label!=-1){
+			disp_error_message("dup label ",p);
+			exit(1);
+		}
+		set_label(l,script_pos);
 
 		if(syntax.curly[pos].flag) {
 			// default が存在する
@@ -1409,7 +1404,11 @@ unsigned char* parse_curly_close(unsigned char *p) {
 		// 終了ラベルを付ける
 		sprintf(label,"__SW%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
-		set_label(l,script_pos,p);
+		if(str_data[l].label!=-1){
+			disp_error_message("dup label ",p);
+			exit(1);
+		}
+		set_label(l,script_pos);
 
 		syntax.curly_count--;
 		return p+1;
@@ -1480,7 +1479,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 					// 現在地のラベルを付ける
 					sprintf(label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 					l=add_str(label);
-					set_label(l,script_pos,p);
+					if(str_data[l].label!=-1){
+						disp_error_message("dup label ",p);
+						exit(1);
+					}
+					set_label(l,script_pos);
 				}
 				// switch 判定文
 				p = skip_word(p);
@@ -1505,7 +1508,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 					// FALLTHRU 終了後のラベル
 					sprintf(label,"__SW%x_%xJ",syntax.curly[pos].index,syntax.curly[pos].count);
 					l=add_str(label);
-					set_label(l,script_pos,p);
+					if(str_data[l].label!=-1){
+						disp_error_message("dup label ",p);
+						exit(1);
+					}
+					set_label(l,script_pos);
 				}
 				// 一時変数を消す
 				sprintf(label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
@@ -1569,7 +1576,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 				p++;
 				sprintf(label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 				l=add_str(label);
-				set_label(l,script_pos,p);
+				if(str_data[l].label!=-1){
+					disp_error_message("dup label ",p);
+					exit(1);
+				}
+				set_label(l,script_pos);
 
 				// 無条件で次のリンクに飛ばす
 				sprintf(label,"goto __SW%x_%x;",syntax.curly[pos].index,syntax.curly[pos].count+1);
@@ -1580,7 +1591,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 				// default のラベルを付ける
 				sprintf(label,"__SW%x_DEF",syntax.curly[pos].index);
 				l=add_str(label);
-				set_label(l,script_pos,p);
+				if(str_data[l].label!=-1){
+					disp_error_message("dup label ",p);
+					exit(1);
+				}
+				set_label(l,script_pos);
 
 				syntax.curly[syntax.curly_count - 1].flag = 1;
 				syntax.curly[pos].count++;
@@ -1601,7 +1616,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 			// 現在地のラベル形成する
 			sprintf(label,"__DO%x_BGN",syntax.curly[syntax.curly_count].index);
 			l=add_str(label);
-			set_label(l,script_pos,p);
+			if(str_data[l].label!=-1){
+				disp_error_message("dup label ",p);
+				exit(1);
+			}
+			set_label(l,script_pos);
 			syntax.curly_count++;
 			return p;
 		}
@@ -1634,7 +1653,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 			// 条件判断開始のラベル形成する
 			sprintf(label,"__FR%x_J",syntax.curly[pos].index);
 			l=add_str(label);
-			set_label(l,script_pos,p);
+			if(str_data[l].label!=-1){
+				disp_error_message("dup label ",p);
+				exit(1);
+			}
+			set_label(l,script_pos);
 
 			if(*p == ';') {
 				// for(;;) のパターンなので必ず真
@@ -1664,7 +1687,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 			// 次のループへのラベル形成する
 			sprintf(label,"__FR%x_NXT",syntax.curly[pos].index);
 			l=add_str(label);
-			set_label(l,script_pos,p);
+			if(str_data[l].label!=-1){
+				disp_error_message("dup label ",p);
+				exit(1);
+			}
+			set_label(l,script_pos);
 
 			// 次のループに入る時の処理
 			// for 最後の '(' を ';' として扱うフラグ
@@ -1683,7 +1710,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 			// ループ開始のラベル付け
 			sprintf(label,"__FR%x_BGN",syntax.curly[pos].index);
 			l=add_str(label);
-			set_label(l,script_pos,p);
+			if(str_data[l].label!=-1){
+				disp_error_message("dup label ",p);
+				exit(1);
+			}
+			set_label(l,script_pos);
 			return p;
 		} else if(!strncmp(p,"function",8) && !isalpha(*(p + 8))) {
 			unsigned char *func_name;
@@ -1727,7 +1758,12 @@ unsigned char* parse_syntax(unsigned char *p) {
 				if(str_data[l].type == C_NOP) {
 					str_data[l].type = C_USERFUNC;
 				}
-				set_label(l,script_pos,&c);
+				if(str_data[l].label!=-1){
+					*p=c;
+					disp_error_message("dup label ",p);
+					exit(1);
+				}
+				set_label(l,script_pos);
 				strdb_put(scriptlabel_db,func_name,(void*)script_pos);	// 外部用label db登録
 				*p = c;
 				return skip_space(p);
@@ -1794,7 +1830,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 			// 条件判断開始のラベル形成する
 			sprintf(label,"__WL%x_NXT",syntax.curly[syntax.curly_count].index);
 			l=add_str(label);
-			set_label(l,script_pos,p);
+			if(str_data[l].label!=-1){
+				disp_error_message("dup label ",p);
+				exit(1);
+			}
+			set_label(l,script_pos);
 
 			// 条件が偽なら終了地点に飛ばす
 			sprintf(label,"__WL%x_FIN",syntax.curly[syntax.curly_count].index);
@@ -1845,7 +1885,11 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 		// 現在地のラベルを付ける
 		sprintf(label,"__IF%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 		l=add_str(label);
-		set_label(l,script_pos,p);
+		if(str_data[l].label!=-1){
+			disp_error_message("dup label ",p);
+			exit(1);
+		}
+		set_label(l,script_pos);
 
 		syntax.curly[pos].count++;
 		p = skip_space(p);
@@ -1880,7 +1924,11 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 		// 最終地のラベルを付ける
 		sprintf(label,"__IF%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
-		set_label(l,script_pos,p);
+		if(str_data[l].label!=-1){
+			disp_error_message("dup label ",p);
+			exit(1);
+		}
+		set_label(l,script_pos);
 		if(syntax.curly[pos].flag == 1) {
 			// このifに対するelseじゃないのでポインタの位置は同じ
 			return p2;
@@ -1895,7 +1943,11 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 			// 現在地のラベル形成する(continue でここに来る)
 			sprintf(label,"__DO%x_NXT",syntax.curly[pos].index);
 			l=add_str(label);
-			set_label(l,script_pos,p);
+			if(str_data[l].label!=-1){
+				disp_error_message("dup label ",p);
+				exit(1);
+			}
+			set_label(l,script_pos);
 		}
 
 		// 条件が偽なら終了地点に飛ばす
@@ -1923,7 +1975,11 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 		// 条件終了地点のラベル形成する
 		sprintf(label,"__DO%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
-		set_label(l,script_pos,p);
+		if(str_data[l].label!=-1){
+			disp_error_message("dup label ",p);
+			exit(1);
+		}
+		set_label(l,script_pos);
 		p = skip_space(p);
 		if(*p != ';') {
 			disp_error_message("need ';'",p);
@@ -1942,7 +1998,11 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 		// for 終了のラベル付け
 		sprintf(label,"__FR%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
-		set_label(l,script_pos,p);
+		if(str_data[l].label!=-1){
+			disp_error_message("dup label ",p);
+			exit(1);
+		}
+		set_label(l,script_pos);
 		syntax.curly_count--;
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_WHILE) {
@@ -1955,7 +2015,11 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 		// while 終了のラベル付け
 		sprintf(label,"__WL%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
-		set_label(l,script_pos,p);
+		if(str_data[l].label!=-1){
+			disp_error_message("dup label ",p);
+			exit(1);
+		}
+		set_label(l,script_pos);
 		syntax.curly_count--;
 		return p;
 	} else if(syntax.curly[syntax.curly_count-1].type == TYPE_USERFUNC) {
@@ -1971,7 +2035,11 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 		// 現在地のラベルを付ける
 		sprintf(label,"__FN%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
-		set_label(l,script_pos,p);
+		if(str_data[l].label!=-1){
+			disp_error_message("dup label ",p);
+			exit(1);
+		}
+		set_label(l,script_pos);
 		syntax.curly_count--;
 		return p + 1;
 	} else {
@@ -2089,12 +2157,16 @@ unsigned char* parse_script(unsigned char *src,int line)
 		// labelだけ特殊処理
 		tmpp = skip_space(skip_word(p));
 		if (*tmpp == ':' && !(!strncmp(p,"default",7) && !isalpha(*(p + 7)))) {
-			int l;
-			unsigned char c;
+			int l, c;
 			c = *skip_word(p);
 			*skip_word(p) = 0;
 			l = add_str(p);
-			set_label(l, script_pos,&c);
+			if (str_data[l].label != -1) {
+				*skip_word(p) = c;
+				disp_error_message("dup label ", p);
+				exit(1);
+			}
+			set_label(l, script_pos);
 			strdb_put(scriptlabel_db, p, (void*)script_pos);	// 外部用label db登録
 			*skip_word(p) = c;
 			p = tmpp + 1;
@@ -2106,7 +2178,7 @@ unsigned char* parse_script(unsigned char *src,int line)
 		p = skip_space(p);
 		add_scriptc(C_EOL);
 
-		set_label(LABEL_NEXTLINE, script_pos,p);
+		set_label(LABEL_NEXTLINE, script_pos);
 		str_data[LABEL_NEXTLINE].type = C_NOP;
 		str_data[LABEL_NEXTLINE].backpatch = -1;
 		str_data[LABEL_NEXTLINE].label = -1;
@@ -4289,35 +4361,38 @@ int buildin_getguildmasterid(struct script_state *st)
 int buildin_strcharinfo(struct script_state *st)
 {
 	struct map_session_data *sd;
+	char *buf;
 	int num;
 
 	sd=script_rid2sd(st);
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	if (!sd) { //Avoid crashing....
+	if(sd){
+		switch(num){
+			case 0:
+				buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
+				memcpy(buf, sd->status.name, NAME_LENGTH-1);
+				push_str(st->stack,C_STR,(unsigned char *) buf);
+				break;
+			case 1:
+				buf=buildin_getpartyname_sub(sd->status.party_id);
+				if(buf!=0)
+					push_str(st->stack,C_STR,(unsigned char *) buf);
+				else
+					push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+				break;
+			case 2:
+				buf=buildin_getguildname_sub(sd->status.guild_id);
+				if(buf != NULL)
+					push_str(st->stack,C_STR,(unsigned char *) buf);
+				else
+					push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+				break;
+			default:
+				ShowWarning("buildin_strcharinfo: unknown parameter.");
+				break;
+		}
+	} else {
 		push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
-		return 0;
-	}
-	if(num==0){
-		char *buf;
-		buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
-		memcpy(buf, sd->status.name, NAME_LENGTH-1);
-		push_str(st->stack,C_STR,(unsigned char *) buf);
-	}
-	if(num==1){
-		char *buf;
-		buf=buildin_getpartyname_sub(sd->status.party_id);
-		if(buf!=0)
-			push_str(st->stack,C_STR,(unsigned char *) buf);
-		else
-			push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
-	}
-	if(num==2){
-		char *buf;
-		buf=buildin_getguildname_sub(sd->status.guild_id);
-		if(buf != NULL)
-			push_str(st->stack,C_STR,(unsigned char *) buf);
-		else
-			push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
 	}
 
 	return 0;
