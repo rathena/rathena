@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/01
+	* Made it so players that are at the max level do not receive EXP.
+	  This makes it so a player at the max level (ie - 99) cannot join a party
+	  and feed all of his or her EXP to the other party members [Codemaster]
 	* Mapregsql will now fully depend on mmysql_handle. [Lance]
 	* Optimized strcharinfo to use switch. [Lance]
 	* Some cleanup of the mob skill reading. Added error reporting for unknown
