@@ -1,0 +1,39 @@
+//===== eAthena Script ======================================= 
+//= Global functions
+//===== By: ================================================== 
+//= Skotlex 
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= eAthena SVN R3424+, RO Ep6+
+//===== Description: ========================================= 
+//= Global Functions
+//= 
+//===== Additional Comments: ================================= 
+//= GF_getJobName= function for getting a job's name
+//= GF_getJobName2= gets a jobs name modified by Type (see below)
+//= GF_getJobId=  gets a jobs number modified by Type (see below)
+//= GF_getJobLevel= identifies novices/1st/2nd among classes
+//= GF_getJobType= identifies normal/advanced/babies classes
+//= - GF_getJobClass= identifies job class (swordie, mage, etc)
+//============================================================ 
+
+function	script	GF_getJobName	{
+
+	switch (getarg(0)) {
+
+	case Job_Novice:
+		return "novice";
+	case Job_Acolyte:
+		return "acolyte";
+	case Job_Archer:
+		return "archer";
+	case Job_Mage:
+		return "mage";
+	case Job_Merchant:
+		return "merchant";
+	case Job_Swordman:
+		return "swordsman";
+	case Job_Thief:
+		return "thief";
+	case Job_Taekwon:

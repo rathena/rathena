@@ -1,0 +1,157 @@
+<html>
+<head><title>RapidShare Webhosting + Webspace</title>
+<meta name="keywords" content="hosting, webhosting, webspace, kostenlos, webserver">
+<meta name="description" content="RapidShare - Webhosting + Webspace">
+<Style>
+body {
+ font-family: Verdana;
+ font-size: 12px;
+}
+table {
+ font-family: Verdana;
+ font-size: 12px;
+}
+</Style>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" alink="#555555" vlink="#555555" link="#555555" topmargin=0 leftmargin=0 bottommargin=0 rightmargin=0>
+<script>if (self != top) { top.location.replace(window.location.href) }</script>
+
+<Table width=100% height=100% border=0 cellspacing=0 cellpadding=0>
+<TR><TD nowrap colspan=2 height=20 align=center valign=top bgcolor=#E2E6ED></TD></TR>
+
+<tr>
+<td width="50%" align="right" style="background-image:url(http://images.rapidforum.com/rapidshare/logobg.jpg); background-repeat:repeat-x;"><img src="http://images.rapidforum.com/rapidshare/logo-left.jpg"></td>
+<td width="50%" align="left" style="background-image:url(http://images.rapidforum.com/rapidshare/logobg2.jpg); background-repeat:repeat-x;"><img src="http://images.rapidforum.com/rapidshare/logo-right.jpg"></td>
+</tr>
+
+<TR><TD colspan=2 height=100% align=center valign=top bgcolor=#E2E6ED>
+<BR><BR>
+
+<!-- Inhalt !-->
+<Table width=90% height=90% border=0 cellspacing=0 cellpadding=0>
+<TR><TD nowrap colspan=5 height=1 bgcolor=#000000></TD></TR>
+
+<TR>
+<TD nowrap width=1 bgcolor=#000000></TD>
+<TD nowrap width=5 bgcolor=#FCFEFE></TD>
+<TD width=100% height=100% valign=top align=center bgcolor=#FCFEFE>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td>
+<a href="https://ssl.rapidshare.de/cgi-bin/premiumzone.cgi">PREMIUM-Zone (privileged Area)</a><br>
+<b>NEW:</b> <a href="http://rapidshare.de/en/freefolders.html">Create your own RapidShare-folders!</a> <font color="red">FREE</font>
+</td><td align="right">
+<a href="http://rapidshare.de/en/premium.html"><b>PREMIUM-Downloads</b></a> &nbsp;&nbsp;&nbsp;
+<a href="http://rapidshare.de/en/banners.html">Banners</a> &nbsp;&nbsp;&nbsp;
+<a href="http://rapidshare.de/en/faq.html">Frequently Asked Questions (FAQ)</a> &nbsp;&nbsp;&nbsp;
+<a href="http://rapidshare.de/en/impressum.html">Imprint</a><br>
+<b><a href="http://rapidshare.de/en/forgotpw.html">Forgot Premium-password?</a></b>
+</td></tr></table>
+
+<p><h2>RapidShare - The world's biggest 1-Click Webhoster</h2></p>
+
+<!-- GOOGLE PART 1 START -->
+<div id='my_g_head' ></div>
+<script language="JavaScript"><!--
+function google_ad_request_done(google_ads) {
+  if (google_ads.length < 1 ) return;
+
+  var my_g_feetback = '';
+
+  if (google_info.feedback_url) {
+    my_g_feetback += '<tr><td align="center"><a target="_blank" style="text-decoration:none;font-size:14px;color:blue;" href="' + google_info.feedback_url + '">Ads by Google</a></td></tr>';
+  } else {
+    my_g_feetback += 'Ads by Google';
+  }
+
+  var my_g_head = '<table width="720">'+my_g_feetback;
+
+  if(google_ads.length>1){ var my_g_first = '<table width="200">'+my_g_feetback } else { var my_g_first = '<table width="200">' }
+    
+  if (google_ads[0].type == 'text') { 
+    for(i = 0; i < google_ads.length; ++i) {
+      if(i==0){
+        my_g_head += '<tr><td><div align="center"><a target="_blank" href="' + google_ads[i].url + '"  style="text-decoration:none;font-size:16px;" onmouseover="window.status=\'Go to ' + google_ads[i].visible_url + '\';return true;" onmouseout="window.status=\'\'; return true;"><font color="blue">&nbsp;<b><u>' + google_ads[i].line1 + '</u></b>&nbsp;<span>' + google_ads[i].line2 + ' ' + google_ads[i].line3+'</a></span></div></td></tr><tr><td colspan=2><br><div align="center"><img src="http://images.rapidforum.com/rapidshare/line001.gif" width="100%" height="1"></br><br></font></div></td></tr>';
+      }
+
+      else if(i<3){
+        s = '<tr><td nowrap style="text-align:left;font-family:arial;padding-top:16px;">' +
+'<a target="_blank" style="cursor:pointer;cursor:hand;text-decoration:underline" href="' + google_ads[i].url + '" onmouseover="window.status=\'Go to ' + google_ads[i].visible_url + '\';return true;" onmouseout="window.status=\'\'; return true;">' +
+'<span style="text-decoration:none;font-size:16px"><font color="red"><b>' + google_ads[i].line1 + '</font></b><br></span>' +
+'<a target="_blank" style="cursor:pointer;cursor:hand;text-decoration:none" href="' + google_ads[i].url + '" onmouseover="window.status=\'Go to ' + google_ads[i].visible_url + '\';return true;" onmouseout="window.status=\'\'; return true;">' +
+'<font size="3" face="Times New Roman, Times, serif"><font color="black">'  + google_ads[i].line2 + '&nbsp;' + google_ads[i].line3 + '<br></span>' +
+'</font></td></tr>';
+        my_g_first += s;
+      }
+    }
+  }
+
+  // For an image ad, display the image; there will be only one .
+  if (google_ads[0].type == 'image') {
+     s = '<tr><td align="center"><a target="_blank" href="' + google_ads[0].url + '"style="text-decoration: none"><img src="' + google_ads[0].image_url + 
+'" height="' + google_ads[0].height + '" width="' + google_ads[0].width + '" border="0"></a></td></tr>';
+     my_g_first += s;
+  }
+
+  // Finish up anything that needs finishing up
+  my_g_head =my_g_head+'</table>';
+  my_g_first =my_g_first+ '</table>';
+    
+  document.getElementById("my_g_head").innerHTML += my_g_head;
+  document.getElementById("my_g_first").innerHTML += my_g_first;
+}
+--></script>
+<!-- GOOGLE PART 1 END -->
+
+
+<iframe src="http://dl23.rapidshare.de/en/progress.html?uploadid=139630255722573376" width="600" height="85" frameborder="0" marginwidth="0" marginheight="0" scrolling="NO"></iframe>
+<form method="post" action="http://ul23.rapidshare.de/cgi-bin/upload.cgi?rsuploadid=139630255722573376" enctype="multipart/form-data" onsubmit="this.u.value='Please wait ...';this.u.disabled=true">
+<input type="file" size="48" name="filecontent"> <input type="submit" name="u" value="Upload!"></form>
+
+
+<table><tr><td>
+<b>Upload-limit: <font color="red">Unlimited!</font></b> (Max. <b><u>100 MB</u></b> per file! Split-archives allowed!)<br>                
+<b>Download-limit: <font color="red">Unlimited!</font></b> (Some files have more than 100.000 downloads!)<br>
+</td></tr></table>
+
+<p><table><tr><td align="left">RapidShare, the world's biggest (<font color="red"><b>over 15 million files uploaded!</b></font>)
+and fastest (<font color="red"><b>45 Gigabit/s up/down!</b></font>) 1-click file-hoster.<br>
+Burning the net with 200 Terabytes of hard-drive capacity right now and growing! Millions of users just can't be wrong.<br>
+Get your own <a href="http://rapidshare.de/en/premium.html">PREMIUM-ACCOUNT</a> to use ALL advantages of RapidShare!</td></tr></table></p>
+
+<p><b>NEW:</b> Premium-users try out <a href="http://rapidshare.de/en/rapidget.html">RapidGet</a>, a free tool especially coded for RapidShare!</p>
+
+<p><hr>Access-code <b></b> wrong. Only Free-users have to enter an access-code to prevent abuse.<br>
+Premium-users don't have to! Get your own <a href="http://rapidshare.de/en/premium.html">PREMIUM-Account</a> now.</p>
+
+<!-- GOOGLE PART 2 START -->
+<div id='my_g_first'></div>
+<script type="text/javascript"><!--
+google_ad_client = "pub-4001973908297822";
+google_max_num_ads = 3;
+google_feedback = "on";
+google_ad_output = "js";
+google_ad_type  = "text_image";
+google_image_size = "728x90";
+google_encoding = "latin1";
+google_kw_type = "broad";
+google_kw = "sync folders";
+google_ad_channel = "8199693586";
+
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+<!-- GOOGLE PART 2 END -->
+
+</TD>
+<TD nowrap width=5 bgcolor=#FCFEFE></TD>
+<TD nowrap width=1 bgcolor=#000000></TD>
+</TR>
+
+<TR><TD nowrap colspan=5 height=1 bgcolor=#000000></TD></TR>
+</Table>
+
+<BR><BR>
+<!--Inhalt Ende 1-->
+</TD></TR></Table>
+
+</body></html>

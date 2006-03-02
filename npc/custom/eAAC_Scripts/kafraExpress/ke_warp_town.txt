@@ -1,0 +1,295 @@
+//===== eAthena Script ======================================= 
+//= Kafra Express - Warping Town Module
+//===== By: ================================================== 
+//= Skotlex 
+//===== Current Version: ===================================== 
+//= 1.8
+//===== Compatible With: ===================================== 
+//= eAthena SVN R3424+, RO Episode 8+ (LightHalzen)
+//===== Description: ========================================= 
+//= Part of the Kafra Express Script Package.
+//= Offers warp services to towns.
+//===== Additional Comments: ================================= 
+//= See config.txt for configuration.
+//============================================================ 
+
+-	script	keInit_warpTown	{
+OnInit:	//Load Config
+	donpcevent "keConfig::OnLoadWarpTown";
+	end;
+}
+
+function	script	F_keWarpTown	{
+
+	function SF_check;
+	function SF_warp;
+
+	set @cost,callfunc("F_keCost",$@kewt_cost,$@kewt_discount);
+	set @niflcost,callfunc("F_keCost",$@kewt_niflCost,$@kewd_discount);
+	if (@cost > Zeny && $@kewt_free)
+		set @cost, Zeny;
+	do {
+		if ($@kewt_showOnline) {
+			set @kmenu, select(
+				"- Cancel",
+				"- Alberta ("+@cost+"z/"+(getmapusers("alberta.gat")+getmapusers("alberta_in.gat"))+" "+$@ked_users$+")",
+				"- Al De Baran ("+@cost+"z/"+(getmapusers("aldebaran.gat")+getmapusers("aldeba_in.gat"))+" "+$@ked_users$+")",
+				"- Amatsu ("+@cost+"z/"+(getmapusers("amatsu.gat")+getmapusers("ama_in01.gat")+getmapusers("ama_in02.gat"))
+					+" "+$@ked_users$+")",
+				"- Ayothaya ("+@cost+"z/"+(getmapusers("ayothaya.gat")+getmapusers("ayo_in01.gat")+getmapusers("ayo_in02.gat"))
+					+" "+$@ked_users$+")",
+				"- Comodo ("+@cost+"z/"+(getmapusers("comodo.gat")+getmapusers("cmd_in01.gat")+getmapusers("cmd_in02.gat"))
+					+" "+$@ked_users$+")",
+				"- Einbech ("+@cost+"z/"+(getmapusers("einbech.gat"))+" "+$@ked_users$+")",
+				"- Einbroch ("+@cost+"z/"+(getmapusers("einbroch.gat")+getmapusers("ein_in01.gat"))+" "+$@ked_users$+")",
+				"- Geffen ("+@cost+"z/"+(getmapusers("geffen.gat")+getmapusers("geffen_in.gat")+getmapusers("gef_tower.gat"))
+					+" "+$@ked_users$+")",
+				"- Gon Ryun ("+@cost+"z/"+(getmapusers("gonryun.gat")+getmapusers("gon_in.gat"))+" "+$@ked_users$+")",
+				"- Izlude ("+@cost+"z/"+(getmapusers("izlude.gat")+getmapusers("izlude_in.gat"))+" "+$@ked_users$+")",
+				"- Jawaii ("+@cost+"z/"+(getmapusers("jawaii.gat")+getmapusers("jawaii_in.gat"))+" "+$@ked_users$+")",
+				"- LightHalzen ("+@cost+"z/"+(getmapusers("lighthalzen.gat")+getmapusers("lhz_in01.gat")
+					+getmapusers("lhz_in02.gat")+getmapusers("lhz_in03.gat"))+" "+$@ked_users$+")",
+				"- Lou Yang ("+@cost+"z/"+(getmapusers("louyang.gat")+getmapusers("lou_in01.gat")+getmapusers("lou_in02.gat"))
+					+" "+$@ked_users$+")",
+				"- Lutie ("+@cost+"z/"+(getmapusers("xmas.gat")+getmapusers("xmas_in.gat"))+" "+$@ked_users$+")",
+				"- Morroc ("+@cost+"z/"+(getmapusers("morocc.gat")+getmapusers("morocc_in.gat")+getmapusers("moc_castle.gat"))
+					+" "+$@ked_users$+")",
+				"- Niflheim ("+@niflcost+"z/"+(getmapusers("niflheim.gat")+getmapusers("nif_in.gat"))+" "+$@ked_users$+")",
+				"- Payon ("+@cost+"z/"+(getmapusers("payon.gat")+getmapusers("payon_in01.gat")+getmapusers("payon_in02.gat"))
+					+" "+$@ked_users$+")",
+				"- Prontera ("+@cost+"z/"+(getmapusers("prontera.gat")+getmapusers("prt_castle.gat")
+					+getmapusers("prt_church.gat")+getmapusers("prt_in.gat"))+" "+$@ked_users$+")",
+				"- Umbala ("+@cost+"z/"+(getmapusers("umbala.gat")+getmapusers("um_in.gat"))+" "+$@ked_users$+")",
+				"- Yuno ("+@cost+"z/"+(getmapusers("yuno.gat")+getmapusers("yuno_in01.gat")+getmapusers("yuno_in02.gat")
+					+getmapusers("yuno_in03.gat")+getmapusers("yuno_in04.gat")+getmapusers("yuno_in05.gat"))+" "+$@ked_users$+")"
+			);
+		} else {
+			set @kmenu, select(
+				"- Cancel",
+				"- Alberta ("+@cost+"z)",
+				"- Al De Baran ("+@cost+"z)",
+				"- Amatsu ("+@cost+"z)",
+				"- Ayothaya ("+@cost+"z)",
+				"- Comodo ("+@cost+"z)",
+				"- Einbech ("+@cost+"z)",
+				"- Einbroch ("+@cost+"z)",
+				"- Geffen ("+@cost+"z)",
+				"- Gon Ryun ("+@cost+"z)",
+				"- Izlude ("+@cost+"z)",
+				"- Jawaii ("+@cost+"z)",
+				"- LightHalzen ("+@cost+"z)",
+				"- Lou Yang ("+@cost+"z)",
+				"- Lutie ("+@cost+"z)",
+				"- Morroc ("+@cost+"z)",
+				"- Niflheim ("+@niflcost+"z)",
+				"- Payon ("+@cost+"z)",
+				"- Prontera ("+@cost+"z)",
+				"- Umbala ("+@cost+"z)",
+				"- Yuno ("+@cost+"z)"
+			);
+		}
+		switch (@kmenu) {
+		case 2: //Alberta
+			if (SF_check(ketw_alberta, #ketw_alberta))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"alberta.gat",117,56;
+			break;
+		case 3: //AlDeBaran
+			if (SF_check(ketw_aldebaran, #ketw_aldebaran))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"aldebaran.gat",139,124;
+			break;
+		case 4: //Amatsu
+			if (SF_check(ketw_amatsu, #ketw_amatsu))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"amatsu.gat",197,88;
+			break;
+		case 5: //Ayathoya
+			if (SF_check(ketw_ayothaya, #ketw_ayothaya))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"ayothaya.gat",202,174;
+			break;
+		case 6: //Comodo
+			if (SF_check(ketw_comodo, #ketw_comodo))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"comodo.gat",189,150;
+			break;
+		case 7: //Einbech
+			if (SF_check(ketw_einbech, #ketw_einbech))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"einbech.gat",165,127;
+			break;
+		case 8: //Einbroch
+			if (SF_check(ketw_einbroch, #ketw_einbroch))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"einbroch.gat",64,199;
+			break;
+		case 9: //Geffen
+			if (SF_check(ketw_geffen, #ketw_geffen))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"geffen.gat",120,66;
+			break;
+		case 10: //GonRyun
+			if (SF_check(ketw_gonryun, #ketw_gonryun))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"gonryun.gat",160,180;
+			break;
+		case 11: //Izlude
+			if (SF_check(ketw_izlude, #ketw_izlude))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"izlude.gat",127,97;
+			break;
+		case 12: //Jawaii
+			if (SF_check(ketw_jawaii, #ketw_jawaii))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"jawaii.gat",214,223;
+			break;
+		case 13: //LightHalzen
+			if (SF_check(ketw_lighthalzen, #ketw_lighthalzen))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"lighthalzen.gat",158,92;
+			break;
+		case 14: //LouYang
+			if (SF_check(ketw_louyang, #ketw_louyang))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"louyang.gat",218,118;
+			break;
+		case 15: //Lutie
+			if (SF_check(ketw_lutie, #ketw_lutie))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"xmas.gat",148,133;
+			break;
+		case 16: //Morroc
+			if (SF_check(ketw_morroc, #ketw_morroc))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"morocc.gat",162,91;
+			break;
+		case 17: //Niflheim
+			if (SF_check(ketw_niflheim, #ketw_niflheim)) {
+				if (nif_q_done != 1) {
+					mes "...?";
+					callfunc "F_keIntro", e_no, "For some reason I can't warp you there!";
+				} else
+					callfunc "F_keWarp",$@kewt_niflCost,$@kewd_discount,e_yawn,"niflheim.gat",194,185;
+			}
+			break;
+		case 18: //Payon
+			if (SF_check(ketw_payon, #ketw_payon))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"payon.gat",159,181;
+		case 19: //Prontera
+			if (SF_check(ketw_prontera, #ketw_prontera))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"prontera.gat",156,175;
+			break;
+		case 20: //Umbala
+			if (SF_check(ketw_umbala, #ketw_umbala))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"umbala.gat",88,153;
+			break;
+		case 21: //Yuno
+			if (SF_check(ketw_yuno, #ketw_yuno))
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"yuno.gat",158,77;
+			break;
+		}
+	} while (@kmenu > 1);
+	return;
+	
+//SubFunction SF_check(char-flag, account_flag)
+//Checks if the character can warp to that town taking into consideration
+//traveller's mode.
+function SF_check {
+	if ($@kewt_travel && getarg(0) == 0 && getarg(1) == 0) {
+		callfunc "F_keIntro", e_sry, "Sorry, but we can only warp you to towns you have saved in at least once.";
+		return 0;
+	}
+	return 1;
+}
+
+//SubFunction SF_warp (int cost, int discount, int emotion, String map, int x, int y)
+//Modded from F_keWarp to allow free warping to towns when not enough zeny.
+function SF_warp {
+	set @cost, getarg(0);
+	if (@cost > Zeny && $@kewt_free)
+		set @cost, Zeny;
+	if (!(callfunc("F_keCharge",@cost,getarg(1),1))) {
+		callfunc "F_keIntro", e_an, "You don't have enough Zeny...";
+		return;
+	}
+	emotion getarg(2);
+	warp getarg(3),getarg(4),getarg(5);
+	end;
+}
+
+}
+
+//Invoked when we want to add a map to the list of travelled-to towns
+function	script	F_keAddTravelTown	{
+	set @map$, getarg(0);
+	if ($@kewt_travel > 1) {
+		if (@map$ == "alberta.gat" || ketw_alberta)
+			set #ketw_alberta,1;
+		if (@map$ == "aldebaran.gat" || ketw_aldebaran)
+			set #ketw_aldebaran,1;
+		if (@map$ == "amatsu.gat" || ketw_amatsu)
+			set #ketw_amatsu,1;
+		if (@map$ == "ayothaya.gat" || ketw_ayothaya)
+			set #ketw_ayothaya,1;
+		if (@map$ == "comodo.gat" || ketw_comodo)
+			set #ketw_comodo,1;
+		if (@map$ == "einbech.gat" || ketw_einbech)
+			set #ketw_einbech,1;
+		if (@map$ == "einbroch.gat" || ketw_einbroch)
+			set #ketw_einbroch,1;
+		if (@map$ == "geffen.gat" || ketw_geffen)
+			set #ketw_geffen,1;
+		if (@map$ == "gonryun.gat" || ketw_gonryun)
+			set #ketw_gonryun,1;
+		if (@map$ == "izlude.gat" || ketw_izlude)
+			set #ketw_izlude,1;
+		if (@map$ == "jawaii.gat" || ketw_jawaii)
+			set #ketw_jawaii,1;
+		if (@map$ == "lighthalzen.gat" || ketw_lighthalzen)
+			set #ketw_lighthalzen,1;
+		if (@map$ == "louyang.gat" || ketw_louyang)
+			set #ketw_louyang,1;
+		if (@map$ == "xmas.gat" || ketw_lutie)
+			set #ketw_lutie,1;
+		if (@map$ == "morocc.gat" || ketw_morroc)
+			set #ketw_morroc,1;
+		if (@map$ == "niflheim.gat" || ketw_niflheim)
+			set #ketw_niflheim,1;
+		if (@map$ == "payon.gat" || ketw_payon)
+			set #ketw_payon,1;
+		if (@map$ == "prontera.gat" || ketw_prontera)
+			set #ketw_prontera,1;
+		if (@map$ == "umbala.gat" || ketw_umbala)
+			set #ketw_umbala,1;
+		if (@map$ == "yuno.gat" || ketw_yuno)
+			set #ketw_yuno,1;
+	} else {
+		if (@map$ == "alberta.gat")
+			set ketw_alberta,1;
+		if (@map$ == "aldebaran.gat")
+			set ketw_aldebaran,1;
+		if (@map$ == "amatsu.gat")
+			set ketw_amatsu,1;
+		if (@map$ == "ayothaya.gat")
+			set ketw_ayothaya,1;
+		if (@map$ == "comodo.gat")
+			set ketw_comodo,1;
+		if (@map$ == "einbech.gat")
+			set ketw_einbech,1;
+		if (@map$ == "einbroch.gat")
+			set ketw_einbroch,1;
+		if (@map$ == "geffen.gat")
+			set ketw_geffen,1;
+		if (@map$ == "gonryun.gat")
+			set ketw_gonryun,1;
+		if (@map$ == "izlude.gat")
+			set ketw_izlude,1;
+		if (@map$ == "jawaii.gat")
+			set ketw_jawaii,1;
+		if (@map$ == "lighthalzen.gat")
+			set ketw_lighthalzen,1;
+		if (@map$ == "louyang.gat")
+			set ketw_louyang,1;
+		if (@map$ == "xmas.gat")
+			set ketw_lutie,1;
+		if (@map$ == "morocc.gat")
+			set ketw_morroc,1;
+		if (@map$ == "niflheim.gat")
+			set ketw_niflheim,1;
+		if (@map$ == "payon.gat")
+			set ketw_payon,1;
+		if (@map$ == "prontera.gat")
+			set ketw_prontera,1;
+		if (@map$ == "umbala.gat")
+			set ketw_umbala,1;
+		if (@map$ == "yuno.gat")
+			set ketw_yuno,1;
+	}
+	return;
+}

@@ -1,0 +1,305 @@
+//===== eAthena Script ======================================= 
+//= Disguiser Quesr
+//===== By: ================================================== 
+//= PalasX (http://cashaan.dontexist.org)
+//===== Current Version: ===================================== 
+//= v1.10 SQL
+//===== Compatible With: ===================================== 
+//= SVN 5200+
+//===== Description: ========================================= 
+//= Baphomet disguises you if you find all his brothers.
+//===== Additional Comments: ================================= 
+//= Gotta find them all in order
+//= Dynamically edits item 2614(eye of dullahan) with
+//= 	setitemscript 2614,"{bonus bdisguise,var_disguise;}";
+//= so your SVN better support it
+//============================================================ 
+
+prt_fild05.gat,277,226,5	script	Dullahan Master	736,{
+
+	if(var_disguise > 1) goto Complete;
+	if(quest_disguise == 0) goto Quest;
+
+NotMe:
+	mes "[Baphomet]";
+	mes "You must visit us in the proper order, as is Thor's will.  Only then can we teach you the power of self-transmutation! Hunt around Morocc Next!";
+	close;
+
+Cancel:
+	mes "[Baphomet]";
+	mes "Later.";
+	close;
+
+Quest:
+	set quest_disguise,1;
+	mes "[Baphomet]";
+	mes "What am I doing here?  Find my brothers and you shall learn a great secret. Search around Morocc next!";
+	next;
+	close;
+
+Complete:
+	mes "[Baphomet]";
+	mes "Several millenia ago, Thor, the creator breathed life onto Midgar.  In the beginning, all was well, but Thor's left eye proved to be the bane of our existance. As it's gaze set upon our land, all the monsters were let loose from within Thor's soul.  Thor cast out his own eye, the only thing that could control the monsters.  Your ring is made from his eye, and will give you the same powers.";
+	next;
+	mes "[Baphomet]";
+	mes "I can change its mystical properties, which monster you wanna be?";
+	next;
+	callfunc "PXC_Disguiser",1;
+
+Close;
+}
+moc_fild10.gat,34,283,4	script	Dullahan Master	736,{
+
+	if(var_disguise > 1) goto Complete;
+	if(quest_disguise == 1) goto Quest;
+
+NotMe:
+	mes "[Baphomet]";
+	mes "You must visit us in the proper order, as is Thor's will.  Only then can we teach you the power of self-transmutation! Hunt around Geffen Next!";
+	close;
+
+Cancel:
+	mes "[Baphomet]";
+	mes "Later.";
+	close;
+
+Quest:
+	set quest_disguise,2;
+	mes "[Baphomet]";
+	mes "What am I doing here?  Find my brothers and you shall learn a great secret. Search outside Geffen next!";
+	next;
+	close;
+
+
+Complete:
+	mes "[Baphomet]";
+	mes "Several millenia ago, Thor, the creator breathed life onto Midgar.  In the beginning, all was well, but Thor's left eye proved to be the bane of our existance. As it's gaze set upon our land, all the monsters were let loose from within Thor's soul.  Thor cast out his own eye, the only thing that could control the monsters.  Your ring is made from his eye, and will give you the same powers.";
+	next;
+	mes "[Baphomet]";
+	mes "I can change its mystical properties, which monster you wanna be?";
+	next;
+	callfunc "PXC_Disguiser",2;
+
+close;
+}
+gef_fild00.gat,97,123,4	script	Dullahan Master	736,{
+
+	if(var_disguise > 1) goto Complete;
+	if(quest_disguise == 2) goto Quest;
+
+NotMe:
+	mes "[Baphomet]";
+	mes "You must visit us in the proper order, as is Thor's will.  Only then can we teach you the power of self-transmutation! Hunt around Payon Next!";
+	close;
+
+Cancel:
+	mes "[Baphomet]";
+	mes "Later.";
+	close;
+
+Quest:
+	set quest_disguise,3;
+	mes "[Baphomet]";
+	mes "What am I doing here?  Find my brothers and you shall learn a great secret. Search outside Payon next!";
+	next;
+	close;
+
+Complete:
+	mes "[Baphomet]";
+	mes "Several millenia ago, Thor, the creator breathed life onto Midgar.  In the beginning, all was well, but Thor's left eye proved to be the bane of our existance. As it's gaze set upon our land, all the monsters were let loose from within Thor's soul.  Thor cast out his own eye, the only thing that could control the monsters.  Your ring is made from his eye, and will give you the same powers.";
+	next;
+	mes "[Baphomet]";
+	mes "I can change its mystical properties, which monster you wanna be?";
+	next;
+	callfunc "PXC_Disguiser",3;
+
+close;
+}
+pay_fild01.gat,369,305,4	script	Dullahan Master	736,{
+
+	if(var_disguise > 1) goto Complete;
+	if(quest_disguise == 3) goto Quest;
+
+NotMe:
+	mes "[Baphomet]";
+	mes "You must visit us in the proper order, as is Thor's will.  Only then can we teach you the power of self-transmutation! Hunt around Alberta Next!";
+	close;
+
+Cancel:
+	mes "[Baphomet]";
+	mes "Later.";
+	close;
+
+Quest:
+	set quest_disguise,4;
+	mes "[Baphomet]";
+	mes "What am I doing here?  Find my brothers and you shall learn a great secret. Search outside Alberta next!";
+	next;
+	close;
+
+Complete:
+	mes "[Baphomet]";
+	mes "Several millenia ago, Thor, the creator breathed life onto Midgar.  In the beginning, all was well, but Thor's left eye proved to be the bane of our existance. As it's gaze set upon our land, all the monsters were let loose from within Thor's soul.  Thor cast out his own eye, the only thing that could control the monsters.  Your ring is made from his eye, and will give you the same powers.";
+	next;
+	mes "[Baphomet]";
+	mes "I can change its mystical properties, which monster you wanna be?";
+	next;
+	callfunc "PXC_Disguiser",4;
+
+close;
+}
+pay_fild03.gat,313,40,4	script	Dullahan Master	736,{
+
+	if(var_disguise > 1) goto Complete;
+	if(quest_disguise == 4) goto Quest;
+
+NotMe:
+	mes "[Baphomet]";
+	mes "You must visit us in the proper order, as is Thor's will.  Only then can we teach you the power of self-transmutation! Hunt around Izlude Next!";
+	close;
+
+Cancel:
+	mes "[Baphomet]";
+	mes "Later.";
+	close;
+
+Quest:
+	set quest_disguise,5;
+	mes "[Baphomet]";
+	mes "What am I doing here?  Find my brothers and you shall learn a great secret. Search outside Izlude next!";
+	next;
+	close;
+
+Complete:
+	mes "[Baphomet]";
+	mes "Several millenia ago, Thor, the creator breathed life onto Midgar.  In the beginning, all was well, but Thor's left eye proved to be the bane of our existance. As it's gaze set upon our land, all the monsters were let loose from within Thor's soul.  Thor cast out his own eye, the only thing that could control the monsters.  Your ring is made from his eye, and will give you the same powers.";
+	next;
+	mes "[Baphomet]";
+	mes "I can change its mystical properties, which monster you wanna be?";
+	next;
+	callfunc "PXC_Disguiser",5;
+
+close;
+}
+prt_fild08.gat,362,185,4	script	Dullahan Master	736,{
+
+	if(quest_disguise == 5) goto Quest;
+	if(countitem(2614) < 1) goto NeedRing;
+	if(var_disguise > 1) goto Complete;
+
+NotMe:
+	mes "[Baphomet]";
+	mes "You must visit us in the proper order, as is Thor's will.  Only then can we teach you the power of self-transmutation! Hunt around Culvert's Next!";
+	close;
+
+Cancel:
+	mes "[Baphomet]";
+	mes "Later.";
+	close;
+
+Quest:
+	set quest_disguise,0;
+	set var_disguise,1002;
+	mes "[Baphomet]";
+	mes "I am the last of the six.  Forgive us for giving such horrible directions, for we, too, are born from Thor's left eye, and have a terrible mean streak.  Plus, being monsters, we're complete and total idiots with a shoddy A.I.!  You shall now receive your reward.";
+	next;
+	if(countitem(2614) < 1) goto NeedRing;
+	goto Complete;
+	close;
+
+NeedRing:
+	mes "[Baphomet]";
+	mes "You will need an Eye of Dullahan ring in order to obtain our secret.  I alone can sell you one for 500,000 zeny. None of my brothers have any left to sell! Simply bring me the money, and I'll make the trade!";
+	next;
+menu "Buy Ring",-,"Forget it!",Cancel;
+	if(Zeny < 500000) goto Cancel;
+	set Zeny,Zeny-500000;
+	getitem 2614,1;
+	mes "[Baphomet]";
+	mes "Here is your ring.";
+	goto Complete;
+	close;
+
+Complete:
+	mes "[Baphomet]";
+	mes "Several millenia ago, Thor, the creator breathed life onto Midgar.  In the beginning, all was well, but Thor's left eye proved to be the bane of our existance. As it's gaze set upon our land, all the monsters were let loose from within Thor's soul.  Thor cast out his own eye, the only thing that could control the monsters.  Your ring is made from his eye, and will give you the same powers.";
+	next;
+	mes "[Baphomet]";
+	mes "I can change its mystical properties, which monster you wanna be?";
+	next;
+	callfunc "PXC_Disguiser",6;
+
+close;
+
+
+OnInit:
+	//EDIT EYE OF DULLAHAN
+	setitemscript 2614,"{ bonus bdisguise,var_disguise; }";
+	end;
+}
+
+
+function	script	PXC_Disguiser	{
+if(getarg(0)==1) goto MenuSet_A;
+if(getarg(0)==2) goto MenuSet_B;
+if(getarg(0)==3) goto MenuSet_C;
+if(getarg(0)==4) goto MenuSet_D;
+if(getarg(0)==5) goto MenuSet_E;
+if(getarg(0)==6) goto MenuSet_F;
+
+
+MenuSet_A:
+	query_sql "SELECT ID FROM `mob_db` where ((ID > 1000) AND (ID < 1126)) order by ID ASC",$@mob_IDs$;
+	query_sql "SELECT Name2 FROM `mob_db` where ((ID > 1000) AND (ID < 1126)) order by ID ASC",$@mob_names$;
+	goto DoMenu;
+
+MenuSet_B:
+	query_sql "SELECT ID FROM `mob_db` where ((ID > 1125) AND (ID < 1250)) order by ID ASC",$@mob_IDs$;
+	query_sql "SELECT Name2 FROM `mob_db` where ((ID > 1125) AND (ID < 1250)) order by ID ASC",$@mob_names$;
+	goto DoMenu;
+
+MenuSet_C:
+	query_sql "SELECT ID FROM `mob_db` where ((ID > 1250) AND (ID < 1376)) order by ID ASC",$@mob_IDs$;
+	query_sql "SELECT Name2 FROM `mob_db` where ((ID > 1250) AND (ID < 1376)) order by ID ASC",$@mob_names$;
+	goto DoMenu;
+
+MenuSet_D:
+	query_sql "SELECT ID FROM `mob_db` where ((ID > 1375) AND (ID < 1501)) order by ID ASC",$@mob_IDs$;
+	query_sql "SELECT Name2 FROM `mob_db` where ((ID > 1375) AND (ID < 1501)) order by ID ASC",$@mob_names$;
+	goto DoMenu;
+
+MenuSet_E:
+	query_sql "SELECT ID FROM `mob_db` where ((ID > 1500) AND (ID < 1626)) order by ID ASC",$@mob_IDs$;
+	query_sql "SELECT Name2 FROM `mob_db` where ((ID > 1500) AND (ID < 1626)) order by ID ASC",$@mob_names$;
+	goto DoMenu;
+
+MenuSet_F:
+	query_sql "SELECT ID FROM `mob_db` where ((ID > 1625) AND (ID < 1751)) order by ID ASC",$@mob_IDs$;
+	query_sql "SELECT Name2 FROM `mob_db` where ((ID > 1625) AND (ID < 1751)) order by ID ASC",$@mob_names$;
+	goto DoMenu;
+
+DoMenu:
+	//first menu option
+	 set $@menu$, $@mob_names$[0];
+
+	//set menu options to mob names
+	for(set $@i, 1; $@i < 125; set $@i, $@i + 1){
+	set $@menu$, $@menu$ + ":" + $@mob_names$[$@i];
+	}
+
+	//Fire our menu
+	set @menu, select($@menu$);
+
+	//Zero deliminated (off-by-one errors sux0r!!!)
+	set @menu, @menu-1;
+
+	//congratulate our user
+	mes "Behold, whilst you wear this ring, your form shall become that of a "+$@mob_names$[@menu];
+
+	//update our variable
+	set var_disguise, $@mob_IDs$[@menu];
+
+close;
+end;
+
+}

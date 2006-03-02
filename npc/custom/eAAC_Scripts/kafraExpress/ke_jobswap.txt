@@ -1,0 +1,409 @@
+//===== eAthena Script =======================================
+//= Kafra Express - Job Swapping Module
+//===== By: ==================================================
+//= Skotlex
+//===== Current Version: =====================================
+//= 3.1
+//===== Compatible With: =====================================
+//= eAthena SVN R3424+
+//===== Description: =========================================
+//= Part of the Kafra Express Script Package.
+//= Enables job changing among classes of the same 'type'
+//= (ie among 1st classes, or among 2nd classes)
+//===== Additional Comments: =================================
+//= See config.txt for configuration.
+//= * The previous Job, when enabled, is stored in:
+//= kej_prev_job (job id)
+//= kej_prev_joblv (job level)
+//= kej_prev_skills (skill count)
+//= kej_prev_dye (cloth dye)
+//============================================================
+
+-	script	keInit_jobSwap	{
+OnInit:	//Load Config
+	donpcevent "keConfig::OnLoadJobSwap";
+	end;
+}
+
+function	script	F_keJobSwap	{
+
+function SF_canRevert;
+function SF_canSwitch;
+function SF_revertJob;
+function SF_switch;
+function SF_calcSwapCost;
+function SF_testSwap;
+function SF_swapJob;
+function SF_getJobNames;
+
+	set @thisLevel, callfunc("GF_getJobLevel", Class);
+
+	set @prevId, kej_prev_job;
+	set @prevLv, kej_prev_joblv;
+	set @prevLevel, 0;
+	set @prevType, 0;
+
+	if ($@kejs_revertPolicy && @prevId && @prevLv) {
+		set @prevLevel, callfunc("GF_getJobLevel", @prevId);
+		set @prevType, callfunc("GF_getJobType", @prevId);
+	}
+
+	if (SF_canRevert())
+	{	//Qualifies for Reverting
+		do {
+			set @revertmenu, select(
+				"- Return",
+				"- Return to previous class",
+				"- Change into another class"
+			);
+			switch (@revertmenu) {
+			case 2:	//Revert
+				if (SF_revertJob())
+					return;
+				break;
+			case 3:	//Switch
+				if (SF_switch() == 0)
+					return;
+				break;
+			}
+		} while (@revertmenu > 1);
+		return;
+	}
+	if (SF_canSwitch())
+	{
+		SF_switch();
+		return;
+	}
+
+	callfunc "F_keIntro", e_swt2, "There are no available jobs of your level.";
+	return;
+
+//SubFunction SF_canRevert, specifies if the character can revert to previous job.
+function SF_canRevert {
+	if ($@kejs_revertPolicy == 0 || @prevId == 0 || (Upper == 2 && @prevType != 2))
+		return 0;
+	if((@thisLevel == @prevLevel && Upper == @prevType) || $@kejs_revertPolicy == 2)
+		return 1;
+	if ($@kejs_SNpolicy && @prevType == Upper && ((@prevLevel == 3 && @thisLevel == 1) || (@prevLevel == 1 && @thisLevel == 3)))
+		return 1;
+	return 0;
+}
+
+//SubFunction SF_canSwitch, specifies if character can change to another job.
+function SF_canSwitch {
+	if (@thisLevel == 3)
+		return $@kejs_SNpolicy;
+	if (@thisLevel == 1 || @thisLevel == 2)
+		return 1;
+	return 0;
+}
+
+//Sub Function SF_switch. Presents the switch job menu. Returns 1 only if the
+//menu was left by picking "Cancel".
+function SF_switch {
+	switch (@thisLevel) {
+	case 1:
+	case 3:	//First Classes
+		set @cost, SF_calcSwapCost($@kejs_job1ST, $@kejs_cost1ST, $@kejs_discount1ST);
+		set @preserve, $@kejs_preserve1ST;
+		if (SF_testSwap($@kejs_job1ST, @cost)) {
+			do {
+				if ($@kejs_SNpolicy && Upper != 1) {	//S. Novice Menu
+					SF_getJobNames 7,Job_Acolyte,Job_Archer,Job_Mage,Job_Merchant,Job_Swordman,Job_Thief,Job_SuperNovice;
+					set @kmenu, select(
+						"- Cancel job swap",
+						"- "+@name1$,"- "+@name2$,"- "+@name3$,"- "+@name4$,"- "+@name5$,"- "+@name6$,"- "+@name7$
+					);
+				} else {
+					SF_getJobNames 6,Job_Acolyte,Job_Archer,Job_Mage,Job_Merchant,Job_Swordman,Job_Thief;
+					set @kmenu, select(
+						"- Cancel job swap",
+						"- "+@name1$,"- "+@name2$,"- "+@name3$,"- "+@name4$,"- "+@name5$,"- "+@name6$
+					);
+				}
+				switch (@kmenu) {
+				case 2:	//Acolyte
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Acolyte, Upper),@cost,@preserve))
+						return 0;
+					break;
+				case 3:	//Archer
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Archer, Upper),@cost,@preserve))
+						return 0;
+					break;
+				case 4:	//Mage
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Mage, Upper),@cost,@preserve))
+						return 0;
+					break;
+				case 5:	//Merchant
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Merchant, Upper),@cost,@preserve))
+						return 0;
+					break;
+				case 6:	//Swordman
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Swordman, Upper),@cost,@preserve))
+						return 0;
+					break;
+				case 7:	//Thief
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Thief, Upper),@cost,@preserve))
+						return 0;
+					break;
+				case 8:	//S. Novice
+					if (SF_swapJob(callfunc("GF_getJobId", Job_SuperNovice, Upper),@cost,@preserve))
+						return 0;
+					break;
+				}
+			} while (@kmenu > 1);
+			return 1;
+		}
+		break;
+
+	case 2:	//Second Classes
+		set @cost, SF_calcSwapCost($@kejs_job2ND, $@kejs_cost2ND, $@kejs_discount2ND);
+		set @preserve, $@kejs_preserve2ND;
+		if (SF_testSwap($@kejs_job2ND, @cost)) {
+			do {
+				if (sex == 1) {
+					SF_getJobNames 12,Job_Alchem,Job_Assassin,Job_Bard,Job_Blacksmith,Job_Crusader,Job_Hunter,Job_Knight,Job_Monk,Job_Priest,Job_Rogue,Job_Sage,Job_Wizard;
+					set @kmenu, select(
+						"- Cancel job change",
+						"- "+@name1$,"- "+@name2$,"- "+@name3$,"- "+@name4$,"- "+@name5$,"- "+@name6$,
+						"- "+@name7$,"- "+@name8$,"- "+@name9$,"- "+@name10$,"- "+@name11$,"- "+@name12$
+					);
+					if (@kmenu >= 7)	//Dancer should be at pos 7.
+						set @kmenu, @kmenu+1;
+				} else { 
+					SF_getJobNames 12,Job_Alchem,Job_Assassin,Job_Blacksmith,Job_Crusader,Job_Dancer,Job_Hunter,Job_Knight,Job_Monk,Job_Priest,Job_Rogue,Job_Sage,Job_Wizard;
+					set @kmenu, select(
+						"- Cancel job change",
+						"- "+@name1$,"- "+@name2$,"- "+@name3$,"- "+@name4$,"- "+@name5$,"- "+@name6$,
+						"- "+@name7$,"- "+@name8$,"- "+@name9$,"- "+@name10$,"- "+@name11$,"- "+@name12$
+					);
+					if (@kmenu >= 4)	//Bard should be at pos 4.
+						set @kmenu, @kmenu+1;
+				}
+				switch (@kmenu)
+				{
+				case 2:	//ALCHEMIST
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Alchem, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 3:	//ASSASSIN
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Assassin, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 4:	//BARD
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Bard, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 5:	//BLACKSMITH
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Blacksmith, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 6:	//CRUSADER
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Crusader, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 7:	//DANCER
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Dancer, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 8:	//HUNTER
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Hunter, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 9:	//KNIGHT
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Knight, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 10:	//MONK
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Monk, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 11:	//PRIEST
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Priest, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 12:	//ROGUE
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Rogue, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 13:	//SAGE
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Sage, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				case 14:	//WIZARD
+					if (SF_swapJob(callfunc("GF_getJobId", Job_Wizard, Upper),@cost,@preserve) == 0)
+						return 0;
+					break;
+				}
+			} while (@kmenu > 1);
+			return 1;
+		}
+	}
+	return 0;
+}
+
+//SubFunction: SF_calcSwapCost (MinJob, BaseCost, Discount)
+//Calculates cost to swap jobs
+function SF_calcSwapCost {
+	set @cost, getarg(1);
+	set @cost, @cost - @cost*getarg(2)*(JobLevel-getarg(0))/100;
+	if (@cost < 0)
+		set @cost,0; //Free Change
+	return @cost;
+}
+
+//SubFunction: SF_testSwap(MinJobLv, Cost)
+//Checks if the player qualifies for job changing.
+function SF_testSwap {
+	if (JobLevel < getarg(0)) {
+		callfunc "F_keIntro", e_dots, "You need to be at least Job Lv "+getarg(0)+" before exchanging.";
+		return 0;
+	}
+	
+	set @cost, callfunc("F_keCost",getarg(1),$@kejs_swapDiscount);
+	if (Zeny < @cost) {
+		callfunc "F_keIntro", e_dots, "You need "+@cost+"z to be able to change.";
+		return 0;
+	}
+	return 1;
+}
+
+//SubFunction: SF_swapJob (JobNumber, Zeny, PreserveRate)
+//Attempts to swap to the Jobgiven.
+//Zeny is the money cost
+//Preserve is how much of the previous job to preserve.
+function SF_swapJob {
+	set @newjobId, getarg(0);
+	set @cost, callfunc("F_keCost",getarg(1),$@kejs_swapDiscount);
+	set @preserve, getarg(2);
+
+	if (Class == @newjobId) {
+		callfunc "F_keIntro", e_meh, "Um... you are already that class!";
+		return 0;
+	}
+
+	set @newJob$, callfunc("GF_getJobName",@newjobId);
+	set @oldJob$, callfunc("GF_getJobName",Class);
+	set @newjoblv, JobLevel*@preserve/100;
+	
+	if (@newjoblv > 1) {
+		if (select("- Cancel", "- Change to a Lv"+@newjoblv+" "+@newJob$+" ("+@cost+"z)") != 2)
+			return 0;
+	} else {
+		set @newjoblv,1;
+		if (select("- Cancel", "- Change to "+@newJob$+" ("+@cost+"z)") != 2)
+			return 0;
+	}
+
+	set @basic, getSkilllv(1);
+	set @thisJoblevel, JobLevel;
+	resetSkill;
+	//Set previous job as needed.
+	if ($@kejs_revertPolicy) {
+		set kej_prev_job, Class;
+		set kej_prev_joblv, @thisJoblevel;
+		set kej_prev_skills, SkillPoint;
+	}
+	if ($@kejs_announce)
+		announce strcharinfo(0)+" has changed from "+@oldJob$+" to "+@newJob$+"...",16;
+		
+	if ($@kejs_resetDye)
+		setlook 7,0;
+	jobchange @newjobId, 0;
+	skill 1,@basic,0;
+	set SkillPoint, SkillPoint-@thisJoblevel+1-@basic;
+
+	set JobLevel, @newjoblv;
+	setoption(0);
+	callfunc "F_keCharge",getarg(2),$@kejs_swapDiscount,1;
+	
+	emotion e_ok;	
+	return 1;
+}
+
+//SubFunction: SF_revertJob (cost)
+//Reverts to the previous job.
+function SF_revertJob {
+	if (Class == kej_prev_job) {
+		callfunc "F_keIntro", e_no, "Hmm... You can't go back, because your previous class is the same as your current one??";
+		return 0;
+	}
+	set @newjob$, callfunc ("GF_getJobName",kej_prev_job);
+	
+	set @cost,callfunc("F_keCost",$@kejs_revertCost,$@kejs_revertDiscount);
+
+	if (select("- Cancel","- Return to a Lv"+kej_prev_joblv+" "+@newjob$+" ("+@cost+"z)") != 2)
+		return 0;
+
+	if (!(callfunc("F_keCharge",$@kejs_revertCost,$@kejs_revertDiscount,1))) {
+		callfunc "F_keIntro", -1, "Sorry, you need "+@cost+"z before you can revert to a Lv"+kej_prev_joblv+" "+@newjob$+".";
+		return 0;
+	}
+	set @thisJobId, Class;
+	set @thisJobLv, JobLevel;
+
+	set @basic, getSkilllv(1);
+	resetSkill;
+	set @skill, SkillPoint;
+	if($@kejs_saveDye) {
+		set @prevDye, getlook(7);
+		setlook 7,0;
+	}
+	if ($@kejs_resetDye)
+		setlook 7,0;
+	jobchange kej_prev_job, 0;
+	if($@kejs_saveDye) {
+		setlook 7,kej_prev_dye;
+		set kej_prev_dye,@prevDye;
+	}
+	set JobLevel, kej_prev_joblv;
+	set SkillPoint, kej_prev_skills;
+
+	skill 1, @basic, 0;
+	set SkillPoint, SkillPoint-@basic;
+	
+	set kej_prev_job, @thisJobId;
+	set kej_prev_joblv, @thisJobLv;
+	set kej_prev_skills, @skill;
+	setoption(0);
+
+	if ($@kejs_announce)
+		announce strcharinfo(0)+" has changed from "+callfunc ("GF_getJobName",@thisJobId)+" to "+@newjob$+"...",16;
+	return 1;
+}	
+
+//SubFunction: SF_getJobNames(Qty, Jobid1, Jobid2,...)
+//Workaround until eA gets a fix for the bug where you can't use callfunc or
+//callsub within a menu
+function SF_getJobNames	{
+	switch (getarg(0)) {
+	case 12:
+		set @name12$, callfunc("GF_getJobName2",getarg(12),Upper);
+	case 11:
+		set @name11$, callfunc("GF_getJobName2",getarg(11),Upper);
+	case 10:
+		set @name10$, callfunc("GF_getJobName2",getarg(10),Upper);
+	case 9:
+		set @name9$, callfunc("GF_getJobName2",getarg(9),Upper);
+	case 8:
+		set @name8$, callfunc("GF_getJobName2",getarg(8),Upper);
+	case 7:
+		set @name7$, callfunc("GF_getJobName2",getarg(7),Upper);
+	case 6:
+		set @name6$, callfunc("GF_getJobName2",getarg(6),Upper);
+	case 5:
+		set @name5$, callfunc("GF_getJobName2",getarg(5),Upper);
+	case 4:
+		set @name4$, callfunc("GF_getJobName2",getarg(4),Upper);
+	case 3:
+		set @name3$, callfunc("GF_getJobName2",getarg(3),Upper);
+	case 2:
+		set @name2$, callfunc("GF_getJobName2",getarg(2),Upper);
+	case 1:
+		set @name1$, callfunc("GF_getJobName2",getarg(1),Upper);
+	default:
+		return;
+	}
+}
+
+}

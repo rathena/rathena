@@ -1,0 +1,483 @@
+09/February/2006
+* Refine v2.7
+- Fixed buying of ores being free.
+05/February/2006
+* Readme v1.8
+- Added Kafra Shop section
+* Config v1.9
+- Added Kafra Shop section
+* Shop v0.1
+- Initial release
+* Main v5.4
+- Added support for the Kafra Shop
+* Refine v2.6
+- Inverted order of item processing to prevent overweight problems (first the
+  items are charged, then you get the refined ones)
+  
+08/January/2006
+* Job Swap v3.1
+- Fixed incorrect menu entry causing crash in the 2nd job menu for female classes.
+- Fixed job names from the menu not matching the job you were about to change
+  into (bard/dancer adjust was broken)
+- Fixed job revert saying your previous class was always the same as the current.
+
+04/January/2006
+* readme.txt v1.7
+- Added information about the new stat reset variables.
+
+30/December/2005
+* Main v5.3
+- Fixed NPC dialog freezing after healing both HP/SP
+* Stats v2.2
+- Added option to charge reset based on base/job levels.
+* Config v1.8
+- Added reset by level cost options.
+
+20/December/2005
+* Stats v2.1
+- Fixed resets charging you again when selecting return.
+
+12/December/2005
+* Bank v2.7
+- Fixed inifite loop that would trigger on year change.
+
+08/November/2005
+* Dungeon Warping v3.1
+- Fixed a crash when warping to GonRyun
+
+02/November/2005
+* Config v1.7
+- Added Taekwon equipment variables
+- Added dungeon variables for Abyss/Thanatos/Juperos
+
+01/November/2005
+* Job Changer v3.5
+- Clean up and optimized to the new scripting engine.
+- Added Taekwon Class support
+- Acquired items will now display the slot count they have.
+
+31/October/2005
+* Pvp Warps v1.7, Woe Warps v1.7
+- Clean up and optimized to the new scripting engine.
+
+30/October/2005
+* Dungeon Warps v3.0
+- Added Abyss Lake, Thanatos Tower and Juperos.
+
+29/October/2005
+* Dungeon Warps v2.9
+- Clean up and optimized to the new scripting engine.
+
+28/October/2005
+* Refine v2.5, Renter v1.8, Stat Market v2.0, Stats v2.0, Uncard v1.5
+- Clean up and optimized to the new scripting engine.
+
+27/October/2005
+* Broadcast v3.0, Bank v2.6, Dye v1.9, Job Swapper v3.0, Main v5.2
+- Clean up and optimized to the new scripting engine.
+
+14/October/2005
+* Pvp Warps v1.6
+- Fixed standard pvp mode warps.
+
+07/October/2005
+* JobSwapper v2.5
+- Updated to work on the new script engine.
+
+06/October/2005
+* Broadcast v2.8
+- Fixed a bug when broadcasting to Room Four.
+
+17/September/2005
+* Pvp Warps v1.5
+- Made warps random.
+
+04/September/2005
+* Town Warps v1.6
+- Label fix.
+
+11/August/2005
+* PvP Warps v1.4
+- Removed the obtained item, the pvp maps are "no return" areas afterall.
+
+02/August/2005
+* Job Changer v3.2
+- Fixed issues with UpperPolicy = 1 and SkipNovice = 1 not working correctly.
+
+* readme.txt v1.6
+- Updated to reflect current changes.
+  
+* Bank v2.5, Broadcast v2.7, Dye v1.7, Job Changer v3,1, Job Swapper v2.4,
+  Main v5.0, Refine v2.3, Renting v1.7, StatMarket v1.9, Stats v1.8,
+  Uncarder v1.3, Warp Dungeon v2.7, Warp PvP v1.3, Warp Town v1.5, Warp WoE v1.6
+- Updated all 'emotion's to use a e_* constant instead of numbers.
+- Updated function F_keIntro to simplify code.
+- Updated headers to reflect actual script requirements.
+
+* Job Changer v3.0, Job Swapper v2.6, Config v1.6
+- Removed Upper type related code as this is not really implemented in eA.
+
+07/July/2005
+* readme v1.5
+- Updated documentation regarding traveller's mode.
+- Added descriptions for the new variables in the Stat Market.
+
+* Config v1.5
+- Updated comments for Traveller's warp mode.
+- Added variables kesm_skTradeCost, kesm_stTradeCost
+- Removed Gefenia
+
+* Stat Market v1.8
+- Added support for trading directly skills->stats or stats->skills.
+
+* Town Warps v1.4
+- Added again Einbech
+- Added Traveller's Warp mode 2
+
+* Dungeon Warps v2.6
+- Added Traveller's Warp mode 2
+- Sunken Ship Traveller mode bugfix.
+- Removed Gefenia
+
+* Kafras v1.9
+- Readded Einbech's town Kafra
+- Removed Gefenia
+
+05/July/2005
+* Town Warps v1.3
+- Fixed warps being free.
+- Some optimizations.
+
+04/July/2005
+* Job Swap v2.2
+- Fixed script 'freeze' when you don't have enough to revert to the previous job.
+- Fixed job-swapping being free if you did not have enough zeny.
+
+29/June/2005
+* Config v1.4
+- Added LightHalzen Rekkeben Cost
+
+* Dungeon Warps v2.5
+- Added LightHalzen
+- Miscellanous name corrections
+
+* Town Warps v1.2
+- Removed Einbech (it is just a Einbroch Station?)
+- Added LightHalzen
+
+* Kafras v1.8
+- Removed Einbech
+- Added LightHalzen (Town + Dungeon)
+
+* Broadcast v2.6
+- Added variable kebc_showOnline to display count of recipients.
+
+* Woe Warps v1.5, Town Warps v1.1, Pvp Warps v1.2, Dungeon Warps v1.4, Config v1.2
+- Changed variable kewd_onlineStr to ked_users
+
+* Main v4.9
+- Updated to use the new warp dungeon file.
+- Some cleanup and reorganization of menus.
+
+* Warp Dungeon v2.3
+- Merged Short Warps & Deep Warps into a single file.
+
+* Main v4.8
+- Moved the warping function here.
+- ke_warp_core.txt no longer needed (removed)
+
+* Job Changer v2.9, Job Swapper v2.1
+- Some cleaning
+
+* Config v1.1
+- Reorganized, some cleaning.
+
+28/June/2005
+* readme.txt v1.3
+- Updated and cleaned documentation.
+
+* Warp Town v1.0
+- Branched off Warp Core v3.1
+
+* Warp Core v3.2
+- Removed the Town warp code.
+
+* Main v4.7
+- Reorganized Menus
+
+* Bank v2.4, Broadcast v2.5, Dye v1.6, Job Changer v2.8, Job Swap v2.0,
+  Main v4.6, Refine v2.2, Rent v1.6, Stat Market v1.7, Stats v1.7,
+  Uncard v1.2, Warp Core v3.1, Warp Deep v2.2, Warp Short v2.1, Warp WoE v1.4 
+- Upgraded to use config.txt
+
+27/June/2005
+* Job Swap v1.9
+- Fixed another stupid bug when job-reverting
+
+14/June/2005
+* Job Changer v2.7
+- Stupid fix for changing from adv 1st class to adv 2nd...
+
+10/June/2005
+* Job Swap v1.8
+- Fixed a silly bug with the announce option.
+
+05/June/2005
+* Core Warps v3.0, Short Warps v2.0
+- Bug Fix. kewd_pyramids -> kewd_pyramid
+- kewd_turtle -> kewd_turtleIsland
+
+04/June/2005
+* Core Warps v2.9, Deep Warps v2.1
+- Bug fix related to deep warps.
+- Fixed town warp costs being always zero.
+- Fixed Niflheim cost display when online count is on.
+
+02/June/2005
+* Core Warps v2.7, Short Warps 1.9, Deep Warps 2.0, Kafras v1.7
+- Added Einbech Mines
+
+* Kafras v1.6
+- Updated Kafras with Type 2 
+
+* Deep Warp v1.9, Short Warps v1.8
+- Added support for kewd_travel
+
+* Main v4.5
+- Added kewd_travel for traveller's warp system.
+- Moved Warp Menu into this module.
+
+* Pvp Warp v1.0
+- Branched off ke_warp.txt v2.4
+
+* Core Warp v2.5:
+- Added kewt_discount for town warps discount
+- Added kewd_travel for traveller's warp system.
+- Changed cost display for towns, implemented Kafra Pass discount value
+
+1/June/2005
+* Bank v 2.3
+- Added kebk_capacity variable for limited account size.
+- Added kebk_useGlobalBank variable for enabling global counter.
+
+31/May/2005
+* Job Changer v2.5, Job Swapper v1.7
+- Modified code to work around the callfunc/menu bug
+
+* Main v2.4
+- Added SaveOnSpot option
+
+26/May/2005
+* Short Warps v1.7
+- Added option kewd_turtleCave for toggling island/cave warp (Turtle Island)
+
+* Bank v2.1, Broadcast v2.4, Dye v1.5, Main v4.2, Refine v2.1, Renting v1.5
+  StatMarket v1.6, Stats v1.6, Uncarder v1.1, Warp Core v2.3, Deep Warps v1.8
+  Short Warps v1.6, WoE Warps v1.3, JobSwapper 1.6, JobChanger 2.4
+- Label cleaning & standarization
+
+* JobChanger v2.3
+- Replaced functions with subfunctions
+- Implemented use of new global function GF_getJobId
+
+* JobSwapper v1.5
+- Replaced functions with subfunctions
+- Implemented use of new global function GF_getJobId
+- Added Support for Baby Classes
+
+25/May/2005
+* Kafras v1.5, Bank v2.0, Broadcast v2.3, Dye v1.4, JobChange v2.1,
+  JobSwapper v1.3, Main v4.1, Refine v2.0, Renting v1.4, StatMarket v1.5,
+  Stats & Resets v1.5, Warp Core v2.2, Deep Warps v1.7,  WoE Warps v1.2
+- Header Cleanup
+- Global Variables standarized
+
+* Bank v1.9, Refine v1.8, Warp Core v2.1, Deep Warps v1.6
+- Changed callfunc's to callsub where applicable.
+
+* Broadcast v2.2
+- Changed callfunc's to callsub where applicable.
+- Updated calls to global functions file new version.
+
+* Dye v1.3
+- New variable kedy_clothJWED specifies max dye count for wedding class
+- Changed callfunc's to callsub where applicable.
+- Updated calls to global functions file new version.
+
+* Rent v1.3
+- Removed cost of GrandPeco, simplified script to enable all classes to rent
+  anything (as long as they have the required skill)
+- Updated calls to global functions file new version.
+
+* Statmarket v1.4
+- Added some more overflow checks
+
+* Stats v1.4
+- Added ke_resetbasic, specifies if basic skills are reset as well.
+
+* JobChanger v2.0
+- Restructured, updated to work with Baby Classes
+
+* UnCarder v1.0
+- Initial Release
+
+01/Apr/2005
+* Kafras v1.5
+- Updated Niflheim Kafra type
+
+* Warp Core v2.0 
+- Added Nifflheim Quest Support
+- Added Ayothaya Dungeon Cost
+
+* Warp Short v1.5, Warp Deep v1.5
+- Added Ayothaya Dungeon
+- Changed callfunc's to callsub where appliable.
+
+31/Mar/2005
+* Core Module v4.0
+- Added charge functions for Kafra Pass calculations
+- Added Nifflheim Quest Support
+
+* Broadcast v2.1, JobSwaper v1.2, Renting v1.1, StatMarket v1.3,
+* Stats v1.3, Core Warping v1.9, Deep Warping v1.4, Short Warping v1.4, 
+* Woe Warping v1.1
+- Updated to new charge functions
+
+* Banker v1.8
+- Updated to new charge functions
+- Refined messages when charging monthly and not having enough
+
+* Refiner v1.8
+- Updated to new charge functions
+- Fixed bug where Kafra Pass discount was ignored when repairing equipment
+
+30/Mar/2005
+
+* Warper v1.8
+- Added Cities: Ayothaya, Einbroch, Einbech
+
+* Kafras v1.4
+- Added Kafras for towns: Ayothaya, Einbroch, Einbech
+
+26/Mar/2005
+* Job Changer v1.6
+- Shortened label lengths
+
+15/Mar/2005
+* Job Changer v1.5
+- Fixed infinite loop bug on change from High Novice to High First Class
+
+03/Mar/2005
+* Job Swapper v1.1
+- Added support for saving dye on revert
+- Added support to reset dye on swap
+
+* Job Changer v1.4
+- Added support for dye reset on change
+
+* Stylist v1.2
+- Added support for independent dye ranges per job-class
+
+24/Feb/2005
+* Job Swapper v1.0
+- Initial Release
+
+* Job Changer v1.3
+- Updated to work with the latest GF_getJob version
+
+* BroadCast Module v2.0
+- Updated to work with the latest GF_getJob version
+- Added confirmation before broadcasting
+
+* Core Module v3.8
+- Added support for the Job Swap entry
+- The Kafra image is now removed after the close
+- Added option to not expire Kafra Pass on exit
+
+23/Feb/2005
+* Job Changer v1.2
+- Added alternate weapons when changing at high job levels
+- Added "show details" to display detailed information of what will happen when you change jobs.
+- Added missing '-' on female (archer/thief) raising menu
+- Fixed a typo by which first High Classes could change regardless of job level
+
+19/Feb/2005
+* Job Changer v1.0
+- Initial Release
+
+* Core Module v3.6
+- Added support for the Job change entry
+
+18/Feb/2005
+* Dye v1.1
+- Added a missing 'end;' on the OnInit event
+
+* Stat Market v1.2
+- Added a missing 'end;' on the OnInit event
+
+* Stat/Reset System v1.2
+- Added a missing 'end;' on the OnInit event
+
+16/Feb/2005
+* Broadcasting v1.8
+- Updated use of GF_getJob
+
+11/Feb/2005
+* Warping Deep/Short v1.3
+- Updated Amatsu Entrance Warp
+
+01/Feb/2005
+* Bank Module v1.7
+- Fixed Monthly costs
+- Added overflow protection
+
+26/Jan/2005
+* Stat Market v1.1
+- Fixed overflow exploit when qty*price overflows.
+
+* Refining System v1.7
+- Fixed overflow exploit when qty*price overflows.
+
+* Banking Module v1.6
+- Added maximum transaction costs
+
+12/Jan/2005
+* Core Module v3.5
+- Fixed Negative Bug exploit on regular storage
+- Added Guild Storage Support
+
+* Banking Module v1.5
+- Fixed bug when gaining interests between years
+- Added monthly maintenance fees
+- Added minimum transaction costs
+
+* Refine Module v1.6
+- Added option to display success/failure chances
+- Item names are displayed now using getitemname()
+
+* Core Warping Module v.1.7
+- Minor name corrections
+- Added entry for Guild Wars warping
+
+* Deep Warping Module v1.2
+- Minor name corrections
+- Changed Orcs Dungeon warping location
+
+* Short Warping Module v.1.2
+- Minor name corrections
+- Changed Orcs Dungeon warping location
+
+* WoE Warping Module v1.0
+- Initial Release
+
+20/Nov/2004
+* Core Module v3.2
+- Fixed Kafra Image not being removed when opening storage
+
+* Warp Core Module v1.6
+- Expanded PvP system to use 8x5 rooms
+
+* Broadcast Module v1.7
+- Expanded to include new PvP rooms
+
+-- Too old to remember :P
