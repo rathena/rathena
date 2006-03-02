@@ -4561,7 +4561,7 @@ static int mob_readskilldb(void)
 {
 	FILE *fp;
 	char line[1024];
-	int i,tmp;
+	int i,tmp, count;
 
 	const struct {
 		char str[32];
@@ -4637,6 +4637,7 @@ static int mob_readskilldb(void)
 		return 0;
 	}
 	for(x=0;x<2;x++){
+		count = 0;
 		sprintf(line, "%s/%s", db_path, filename[x]); 
 		fp=fopen(line,"r");
 		if(fp==NULL){
@@ -4650,6 +4651,7 @@ static int mob_readskilldb(void)
 			struct mob_skill *ms, gms;
 			int j=0;
 
+			count++;
 			if(line[0] == '/' && line[1] == '/')
 				continue;
 
@@ -4659,10 +4661,15 @@ static int mob_readskilldb(void)
 				if((p=strchr(p,','))!=NULL)
 					*p++=0;
 			}
-			if(i == 0 || (mob_id=atoi(sp[0]))== 0 || (mob_id > 0 && mob_db(mob_id) == mob_dummy))
+			if(i == 0 || (mob_id=atoi(sp[0]))== 0)
 				continue;
 			if(i < 18) {
-				ShowError("Insufficient number of fields for Mob Skill (Mob ID[%s], Name[%s], Skill:[%s/Lv%s])\n", sp[0], i>1?sp[1]:"?", i>3?sp[3]:"?", i>4?sp[4]:"?");
+				ShowError("mob_skill: Insufficient number of fields for skill at %s, line %d\n", filename[x], count);
+				continue;
+			}
+			if (mob_id > 0 && mob_db(mob_id) == mob_dummy)
+			{
+				ShowError("mob_skill: Invalid mob id %d at %s, line %d\n", mob_id, filename[x], count);
 				continue;
 			}
 			if( strcmp(sp[1],"clear")==0 ){
@@ -4689,10 +4696,12 @@ static int mob_readskilldb(void)
 			}
 
 			ms->state=atoi(sp[2]);
-			for(j=0;j<sizeof(state)/sizeof(state[0]);j++){
-				if( strcmp(sp[2],state[j].str)==0)
-					ms->state=state[j].id;
-			}
+			tmp = sizeof(state)/sizeof(state[0]);
+			for(j=0;j<tmp && strcmp(sp[2],state[j].str);j++);
+			if (j < tmp)
+				ms->state=state[j].id;
+			else
+				ShowError("mob_skill: Unrecognized state %s at %s, line %d\n", sp[2], filename[x], count);
 
 			//Skill ID
 			j=atoi(sp[3]);
@@ -4731,15 +4740,19 @@ static int mob_readskilldb(void)
 					ms->target=target[j].id;
 			}
 			ms->cond1=-1;
-			for(j=0;j<sizeof(cond1)/sizeof(cond1[0]);j++){
-				if( strcmp(sp[10],cond1[j].str)==0)
-					ms->cond1=cond1[j].id;
-			}
+			tmp = sizeof(cond1)/sizeof(cond1[0]);
+			for(j=0;j<tmp && strcmp(sp[10],cond1[j].str);j++);
+			if (j < tmp)
+				ms->cond1=cond1[j].id;
+			else
+				ShowError("mob_skill: Unrecognized condition 1 %s at %s, line %d\n", sp[10], filename[x], count);
+
 			ms->cond2=atoi(sp[11]);
-			for(j=0;j<sizeof(cond2)/sizeof(cond2[0]);j++){
-				if( strcmp(sp[11],cond2[j].str)==0)
-					ms->cond2=cond2[j].id;
-			}
+			tmp = sizeof(cond2)/sizeof(cond2[0]);
+			for(j=0;j<tmp && strcmp(sp[11],cond2[j].str);j++);
+			if (j < tmp)
+				ms->cond2=cond2[j].id;
+			
 			ms->val[0]=atoi(sp[12]);
 			ms->val[1]=atoi(sp[13]);
 			ms->val[2]=atoi(sp[14]);

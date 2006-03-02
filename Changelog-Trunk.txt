@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/01
+	* Some cleanup of the mob skill reading. Added error reporting for unknown
+	  states/conditions, error reporting now specifies the file and line number.
+	  [Skotlex]
 	* Silence will only block skills when they have begun casting, not when the
 	  cast bar is done. This also means that auto-spells will likely come-out
 	  even when silenced. [Skotlex]
