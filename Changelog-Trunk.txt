@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/02
+	* status_check_skilluse cleanup. Some status will only block skills when
+	  they are first used, not on cast-end (which includes auto-spells and
+	  ground-skill checks). Now when status_castcancel is 'no', skills WILL
+	  come off after the cast bar is done. [Skotlex]
+	* Gravitation now only affects the caster, should have also fixed the skill
+	  not doing damage when skill_caster_check is set. [Skotlex]
 	* Max fame list size is now defined by MAX_FAME_LIST constant (mmo.h)
 	  [Skotlex]
 	* Individual fame lists sizes can now be specified through the char-server

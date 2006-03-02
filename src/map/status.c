@@ -329,7 +329,10 @@ int status_getrefinebonus(int lv,int type)
 /*==========================================
  * Checks whether the src can use the skill on the target,
  * taking into account status/option of both source/target. [Skotlex]
- * flag: 1 to indicate this call is done after the casting (target already selected)
+ * flag:
+ * 	0 - Trying to use skill on target.
+ * 	1 - Cast bar is done.
+ * 	2- Skill already pulled off, check is due to ground-based skills or splash-damage ones.
  * src MAY be null to indicate we shouldn't check it, this is a ground-based skill attack.
  * target MAY Be null, in which case the checks are only to see 
  * whether the source can cast or not the skill on the ground.
@@ -376,7 +379,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 	if (src) sc = status_get_sc(src);
 	
-	if(sc && sc->opt1 >0 && (!flag || battle_config.sc_castcancel))
+	if(sc && sc->opt1 >0 && (battle_config.sc_castcancel || flag != 1))
+		//When sc do not cancel casting, the spell should come out.
 		return 0;
 	
 	if(sc && sc->count)
@@ -385,7 +389,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			(sc->data[SC_TRICKDEAD].timer != -1 && skill_num != NV_TRICKDEAD)
 			|| (sc->data[SC_AUTOCOUNTER].timer != -1 && skill_num != KN_AUTOCOUNTER)
 			|| (sc->data[SC_GOSPEL].timer != -1 && sc->data[SC_GOSPEL].val4 == BCT_SELF && skill_num != PA_GOSPEL)
-			|| sc->data[SC_GRAVITATION].timer != -1
+			|| (sc->data[SC_GRAVITATION].timer != -1 && sc->data[SC_GRAVITATION].val3 == BCT_SELF)
 		)
 			return 0;
 
@@ -402,14 +406,20 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		}
 		if (skill_num)
 		{	//Skills blocked through status changes...
-			if ((sc->data[SC_VOLCANO].timer != -1 && skill_num == WZ_ICEWALL) ||
-				(sc->data[SC_ROKISWEIL].timer != -1 && skill_num != BD_ADAPTATION && !(mode&MD_BOSS)) ||
+			if (!flag && ( //Blocked only from using the skill (stuff like autospell may still go through
 				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
 				(sc->data[SC_MARIONETTE2].timer != -1 && skill_num == CG_MARIONETTE) ||
-				(sc->data[SC_HERMODE].timer != -1 && skill_get_inf(skill_num) & INF_SUPPORT_SKILL) ||
-				(sc->data[SC_SILENCE].timer != -1 && !flag) || //Silence only blocks initial casting of skills.
+				sc->data[SC_SILENCE].timer != -1 || 
 				sc->data[SC_STEELBODY].timer != -1 ||
-				sc->data[SC_BERSERK].timer != -1 || sc->data[SC_SKA].timer != -1 ||
+				sc->data[SC_BERSERK].timer != -1 ||
+				sc->data[SC_SKA].timer != -1
+			))
+				return 0;
+			//Skill blocking.
+			if (
+				(sc->data[SC_VOLCANO].timer != -1 && skill_num == WZ_ICEWALL) ||
+				(sc->data[SC_ROKISWEIL].timer != -1 && skill_num != BD_ADAPTATION && !(mode&MD_BOSS)) ||
+				(sc->data[SC_HERMODE].timer != -1 && skill_get_inf(skill_num) & INF_SUPPORT_SKILL) ||
 				sc->data[SC_NOCHAT].timer != -1
 			)
 				return 0;

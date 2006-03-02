@@ -1580,17 +1580,16 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 
 	if(src->prev == NULL || dsrc->prev == NULL || bl->prev == NULL)
 		return 0;
-	//When caster is not the src of attack, this is a ground skill, and as such, do the relevant target checking. [Skotlex]
-	if (
-		(src != dsrc || battle_config.skill_caster_check) &&
-		!status_check_skilluse(battle_config.skill_caster_check?src:NULL, bl, skillid, 1)
-	)
-		return 0;
+	if (src != dsrc) {
+		//When caster is not the src of attack, this is a ground skill, and as such, do the relevant target checking. [Skotlex]
+		if (!status_check_skilluse(battle_config.skill_caster_check?src:NULL, bl, skillid, 2))
+			return 0;
+	} else if (flag && skill_get_nk(skillid)&NK_SPLASH) {
+		//Note that splash attacks often only check versus the targetted mob, those around the splash area normally don't get checked for being hidden/cloaked/etc. [Skotlex]
+		if (!status_check_skilluse(dsrc, bl, skillid, 2))
+			return 0;
+	}
 	
-	//Note that splash attacks often only check versus the targetted mob, those around the splash area normally don't get checked for being hidden/cloaked/etc. [Skotlex]
-	if (flag && skill_get_nk(skillid)&NK_SPLASH
-		&& !status_check_skilluse(dsrc, bl, skillid, 1))
-		return 0;
 
 	//uncomment the following to do a check between caster and target. [Skotlex]
 	//eg: if you want storm gust to do no damage if the caster runs to another map after invoking the skill.
