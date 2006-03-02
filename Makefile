@@ -208,3 +208,36 @@ src/map/GNUmakefile: src/map/Makefile
 src/plugins/GNUmakefile: src/plugins/Makefile
 src/ladmin/GNUmakefile: src/ladmin/Makefile
 src/txt-converter/GNUmakefile: src/txt-converter/Makefile
+
+install:	conf/%.conf conf/%.txt
+	$(shell mkdir -p /opt/eathena/bin/)
+	$(shell mkdir -p /opt/eathena/etc/eathena/)
+	$(shell mkdir -p /opt/eathena/var/log/eathena/)
+	$(shell mv save /opt/eathena/etc/eathena/save)
+	$(shell mv db /opt/eathena/etc/eathena/db)
+	$(shell mv conf /opt/eathena/etc/eathena/conf)
+	$(shell mv npc /opt/eathena/etc/eathena/npc)
+	$(shell mv log/* /opt/eathena/var/log/eathena/)
+	$(shell cp *-server* /opt/eathena/bin/)
+	$(shell cp ladmin /opt/eathena/bin/)
+	$(shell ln -s /opt/eathena/etc/eathena/save/ /opt/eathena/bin/)
+	$(shell ln -s /opt/eathena/etc/eathena/db/ /opt/eathena/bin/)
+	$(shell ln -s /opt/eathena/etc/eathena/conf/ /opt/eathena/bin/)
+	$(shell ln -s /opt/eathena/etc/eathena/npc/ /opt/eathena/bin/)
+	$(shell ln -s /opt/eathena/var/log/eathena/ /opt/eathena/bin/log)
+
+bin-clean:
+	$(shell rm /opt/eathena/bin/login-server*)
+	$(shell rm /opt/eathena/bin/char-server*)
+	$(shell rm /opt/eathena/bin/map-server*)
+	$(shell rm /opt/eathena/bin/ladmin)
+
+uninstall:
+	bin-clean
+	$(shell rm /opt/eathena/bin/save)
+	$(shell rm /opt/eathena/bin/db)
+	$(shell rm /opt/eathena/bin/conf)
+	$(shell rm /opt/eathena/bin/npc)
+	$(shell rm /opt/eathena/bin/log)
+	$(shell rm -rf /opt/eathena/etc/eathena)
+	$(shell rm -rf /opt/eathena/var/log/eathena)

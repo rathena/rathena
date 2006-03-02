@@ -59,9 +59,13 @@
 typedef unsigned char	uchar;
 typedef   signed char	schar;
 typedef   signed short	sshort;
+#ifndef __FREEBSD__
 typedef unsigned short	ushort;
+#endif
 typedef   signed int	sint;	// don't use (only for ie. scanf)
+#ifndef __FREEBSD__
 typedef unsigned int	uint;	// don't use
+#endif
 typedef   signed long	slong;	// don't use (only for ie. file-io)
 typedef unsigned long	ulong;	// don't use
 

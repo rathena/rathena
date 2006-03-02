@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/02
+	* Applied Snufkin's patch to fix compilation on FreeBSD. [Skotlex]
 	* Fixed mobs targetting themselves after using a support skill. [Skotlex]
 	* Gospel no longer blocks item usage of whoever is in the area of effect,
 	  only the caster of Gospel can't use healing items now. [Skotlex]

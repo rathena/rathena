@@ -40,7 +40,9 @@
 	#include "../zlib/zlib.h"
 	#include "../zlib/iowin32.h"
 #else
-	#include <zlib.h>
+	#ifndef __FREEBSD__
+		#include <zlib.h>
+	#endif
 #endif
 
 typedef	unsigned char	BYTE;
