@@ -622,16 +622,22 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 		return 1;
 
 	// It judges whether it can adjoin or not.
-	dx=abs(bl->x - md->bl.x);
-	dy=abs(bl->y - md->bl.y);
+	dx=bl->x - md->bl.x;
+	dy=bl->y - md->bl.y;
 	dx=(dx>0)?1:((dx<0)?-1:0);
 	dy=(dy>0)?1:((dy<0)?-1:0);
+	if (map_getcell(md->bl.m,bl->x+dx,bl->y+dy,CELL_CHKNOREACH))
+	{	//Look for a suitable cell to place in.
+		for(i=0;i<9 && map_getcell(md->bl.m,bl->x-1+i/3,bl->y-1+i%3,CELL_CHKNOREACH);i++);
+		if (i<9) {
+			dx = 1-i/3;
+			dy = 1-i%3;
+		}
+	}
+	
 	if(path_search_real(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x-dx,bl->y-dy,easy,CELL_CHKNOREACH)!=-1)
 		return 1;
-	for(i=0;i<9;i++){
-		if(path_search_real(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x-1+i/3,bl->y-1+i%3,easy, CELL_CHKNOREACH)!=-1)
-			return 1;
-	}
+		
 	return 0;
 }
 
@@ -1563,7 +1569,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	struct mob_data *md;
 	struct block_list *tbl = NULL, *abl = NULL;
 	unsigned int tick;
-	int i, dx, dy, dist;
+	int i, j, dx, dy, dist;
 	int attack_type = 0;
 	int mode;
 	int search_size = AREA_SIZE*2;
@@ -1747,51 +1753,58 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					return 0;
 				}
 				//Target reachable. Locate suitable spot to move to.
-				i = 0;
+				i = j = 0;
 				dx = tbl->x - md->bl.x;
 				dy = tbl->y - md->bl.y;
-				if (dx < 0) dx++;
-				else if (dx > 0) dx--;
-				if (dy < 0) dy++;
-				else if (dy > 0) dy--;
+				if (dx < 0) dx=-1;
+				else if (dx > 0) dx=1;
+				if (dy < 0) dy=-1;
+				else if (dy > 0) dy=1;
+				if(mob_walktoxy(md, tbl->x -dx, tbl->y -dy, 0)) {
+					j = (dy+1) + 3*(dx+1);
+					for (i = j+1; i%9 != j; i++) {
+						dx = -1+(i%9)/3;
+						dy = -1+(i%3);
 #ifdef CELL_NOSTACK
-				while (mob_walktoxy(md, md->bl.x + dx, md->bl.y + dy, 0))
-				{	//Attempt to chase to nearby blocks
-					do {
-						if (i < 5) {
-							dx = tbl->x - md->bl.x + rand()%3 - 1;
-							dy = tbl->y - md->bl.y + rand()%3 - 1;
-						} else { //Try some more...
-							dx = tbl->x - md->bl.x + rand()%5 - 2;
-							dy = tbl->y - md->bl.y + rand()%5 - 2;
+						if (map_getcell(md->bl.m,  tbl->x-dx, tbl->y-dy, CELL_CHKSTACK))
+							continue;
+#endif
+						if (!mob_walktoxy(md, tbl->x-dx, tbl->y-dy, 0))
+							break;
+					}
+#ifdef CELL_NOSTACK
+					if (i%9 == j) 
+					{ //All adjacent cells are taken. Try roaming around on 5x5
+						for (i = j+1; i%9 != j; i++) {
+							dx = 2*(-1+(i%9)/3);
+							dy = 2*(-1+(i%3));
+							if (map_getcell(md->bl.m,  tbl->x-dx, tbl->y-dy, CELL_CHKSTACK))
+								continue;
+							if (!mob_walktoxy(md, tbl->x-dx, tbl->y-dy, 0)) {
+								md->next_walktime = tick + 1000;
+								break;
+							}
 						}
-						i++;
-					} while (i < 15 && map_getcell(md->bl.m,  md->bl.x+dx, md->bl.y+dy, CELL_CHKSTACK));
-					if (i >= 15) {
+					}
+					if (i%9 == j)
+				  	{
 						//On stacked mode, it is much more likely that you just can't reach the target. So unlock it
 						mob_unlocktarget(md, tick);
-						//Make it give up for 1 second to avoid unnecessary server load in case the target is already mobbed to death.
-						mob_changestate(md,MS_DELAY,1000);
+						md->next_walktime = tick + 1000;
 						return 0;
 					}
-				}
 #else
-				while (i < 5 && mob_walktoxy(md, md->bl.x + dx, md->bl.y + dy, 0))
-				{	//Attempt to chase to nearby blocks
-					dx = tbl->x - md->bl.x + rand()%3 - 1;
-					dy = tbl->y - md->bl.y + rand()%3 - 1;
-					i++;
-				}
-				if (i==5)
-				{	//Failed? Try going away from the target before retrying.
-					if (dx < 0) dx = 2;
-					else if (dx > 0) dx = -2;
-					if (dy < 0) dy = 2;
-					else if (dy > 0) dy = -2;
-				}
+					if (i%9 == j)
+					{	//Failed? Try going away from the target before retrying.
+						if (dx < 0) dx = 2;
+						else if (dx > 0) dx = -2;
+						if (dy < 0) dy = 2;
+						else if (dy > 0) dy = -2;
+						mob_walktoxy (md, tbl->x+dx, tbl->y+dy, 0);
+						md->next_walktime = tick + 500;
+					}
 #endif
-				md->next_walktime = tick + 500;
-				mob_walktoxy (md, md->bl.x+dx, md->bl.y+dy, 0);
+				}
 				return 0;
 			}
 			//Target within range, engage
