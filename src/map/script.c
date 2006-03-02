@@ -10582,8 +10582,8 @@ static int script_save_mapreg_intsub(DBKey key,void *data,va_list ap)
 	char *name=str_buf+str_data[num].str;
 	if ( name[1] != '@') {
 		sprintf(tmp_sql,"UPDATE `%s` SET `%s`='%d' WHERE `%s`='%s' AND `%s`='%d'",mapregsql_db,mapregsql_db_value,(int)data,mapregsql_db_varname,name,mapregsql_db_index,i);
-		if(mysql_query(&mmyregsql_handle, tmp_sql) ) {
-			ShowSQL("DB error - %s\n",mysql_error(&mmyregsql_handle));
+		if(mysql_query(&mapregsql_handle, tmp_sql) ) {
+			ShowSQL("DB error - %s\n",mysql_error(&mapregsql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
 	}
@@ -10609,8 +10609,8 @@ static int script_save_mapreg_strsub(DBKey key,void *data,va_list ap)
 	char *name=str_buf+str_data[num].str;
 	if ( name[1] != '@') {
 		sprintf(tmp_sql,"UPDATE `%s` SET `%s`='%s' WHERE `%s`='%s' AND `%s`='%d'",mapregsql_db,mapregsql_db_value,jstrescapecpy(tmp_str2,(char *)data),mapregsql_db_varname,name,mapregsql_db_index,i);
-		if(mysql_query(&mmyregsql_handle, tmp_sql) ) {
-			ShowSQL("DB error - %s\n",mysql_error(&mmyregsql_handle));
+		if(mysql_query(&mapregsql_handle, tmp_sql) ) {
+			ShowSQL("DB error - %s\n",mysql_error(&mapregsql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
 	}
