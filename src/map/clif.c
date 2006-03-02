@@ -11568,7 +11568,8 @@ void clif_parse_Blacksmith(int fd,struct map_session_data *sd)
 
 	WFIFOHEAD(fd,packet_len_table[0x219]);
 	WFIFOW(fd,0) = 0x219;
-	for (i = 0; i < 10; i++) {
+	//Packet size limits this list to 10 elements. [Skotlex]
+	for (i = 0; i < 10 && i < MAX_FAME_LIST; i++) {
 		if (smith_fame_list[i].id > 0) {
 			if (strcmp(smith_fame_list[i].name, "-") == 0 &&
 				(name = map_charid2nick(smith_fame_list[i].id)) != NULL)
@@ -11580,6 +11581,11 @@ void clif_parse_Blacksmith(int fd,struct map_session_data *sd)
 			strncpy((char *)(WFIFOP(fd, 2 + 24 * i)), "None", 5);
 		WFIFOL(fd, 242 + i * 4) = smith_fame_list[i].fame;
 	}
+	for(;i < 10; i++) { //In case the MAX is less than 10.
+		strncpy((char *)(WFIFOP(fd, 2 + 24 * i)), "Unavailable", 12);
+		WFIFOL(fd, 242 + i * 4) = 0;
+	}
+
 	WFIFOSET(fd, packet_len_table[0x219]);
 }
 
@@ -11606,7 +11612,8 @@ void clif_parse_Alchemist(int fd,struct map_session_data *sd)
 
 	WFIFOHEAD(fd,packet_len_table[0x21a]);
 	WFIFOW(fd,0) = 0x21a;
-	for (i = 0; i < 10; i++) {
+	//Packet size limits this list to 10 elements. [Skotlex]
+	for (i = 0; i < 10 && i < MAX_FAME_LIST; i++) {
 		if (chemist_fame_list[i].id > 0) {
 			if (strcmp(chemist_fame_list[i].name, "-") == 0 &&
 				(name = map_charid2nick(chemist_fame_list[i].id)) != NULL)
@@ -11618,6 +11625,11 @@ void clif_parse_Alchemist(int fd,struct map_session_data *sd)
 			memcpy(WFIFOP(fd, 2 + 24 * i), "None", NAME_LENGTH);
 		WFIFOL(fd, 242 + i * 4) = chemist_fame_list[i].fame;
 	}
+	for(;i < 10; i++) { //In case the MAX is less than 10.
+		memcpy(WFIFOP(fd, 2 + 24 * i), "Unavailable", NAME_LENGTH);
+		WFIFOL(fd, 242 + i * 4) = 0;
+	}
+
 	WFIFOSET(fd, packet_len_table[0x21a]);
 }
 
@@ -11644,7 +11656,8 @@ void clif_parse_Taekwon(int fd,struct map_session_data *sd)
 
 	WFIFOHEAD(fd,packet_len_table[0x226]);
 	WFIFOW(fd,0) = 0x226;
-	for (i = 0; i < 10; i++) {
+	//Packet size limits this list to 10 elements. [Skotlex]
+	for (i = 0; i < 10 && i < MAX_FAME_LIST; i++) {
 		if (taekwon_fame_list[i].id > 0) {
 			if (strcmp(taekwon_fame_list[i].name, "-") == 0 &&
 				(name = map_charid2nick(taekwon_fame_list[i].id)) != NULL)
@@ -11655,6 +11668,10 @@ void clif_parse_Taekwon(int fd,struct map_session_data *sd)
 		} else
 			memcpy(WFIFOP(fd, 2 + 24 * i), "None", NAME_LENGTH);
 		WFIFOL(fd, 242 + i * 4) = taekwon_fame_list[i].fame;
+	}
+	for(;i < 10; i++) { //In case the MAX is less than 10.
+		memcpy(WFIFOP(fd, 2 + 24 * i), "Unavailable", NAME_LENGTH);
+		WFIFOL(fd, 242 + i * 4) = 0;
 	}
 	WFIFOSET(fd, packet_len_table[0x226]);
 }

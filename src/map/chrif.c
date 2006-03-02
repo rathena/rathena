@@ -1122,21 +1122,21 @@ int chrif_recvfamelist(int fd)
 	memset (taekwon_fame_list, 0, sizeof(taekwon_fame_list));
 
 	size = RFIFOW(fd,6); //Blacksmith block size
-	for (num = 0; len < size && num < 10; num++) {
+	for (num = 0; len < size && num < MAX_FAME_LIST; num++) {
 		memcpy(&smith_fame_list[num], RFIFOP(fd,len), sizeof(struct fame_list));
  		len += sizeof(struct fame_list);
 	}
 	total += num;
 
 	size = RFIFOW(fd,4); //Alchemist block size
-	for (num = 0; len < size && num < 10; num++) {
+	for (num = 0; len < size && num < MAX_FAME_LIST; num++) {
 		memcpy(&chemist_fame_list[num], RFIFOP(fd,len), sizeof(struct fame_list));
  		len += sizeof(struct fame_list);
 	}
 	total += num;
 
 	size = RFIFOW(fd,2); //Total packet length
-	for (num = 0; len < size && num < 10; num++) {
+	for (num = 0; len < size && num < MAX_FAME_LIST; num++) {
 		memcpy(&taekwon_fame_list[num], RFIFOP(fd,len), sizeof(struct fame_list));
  		len += sizeof(struct fame_list);
 	}

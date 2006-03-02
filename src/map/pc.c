@@ -55,9 +55,9 @@ int night_timer_tid;
 static int dirx[8]={0,-1,-1,-1,0,1,1,1};
 static int diry[8]={1,1,0,-1,-1,-1,0,1};
 
-struct fame_list smith_fame_list[10];
-struct fame_list chemist_fame_list[10];
-struct fame_list taekwon_fame_list[10];
+struct fame_list smith_fame_list[MAX_FAME_LIST];
+struct fame_list chemist_fame_list[MAX_FAME_LIST];
+struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 static unsigned int equip_pos[11]={0x0080,0x0008,0x0040,0x0004,0x0001,0x0200,0x0100,0x0010,0x0020,0x0002,0x8000};
 
@@ -272,19 +272,19 @@ int pc_istop10fame(int char_id,int job) {
     int i;
 	switch(job){
 	case MAPID_BLACKSMITH: // Blacksmith
-	    for(i=0;i<10;i++){
+	    for(i=0;i<MAX_FAME_LIST;i++){
 			if(smith_fame_list[i].id==char_id)
 			    return smith_fame_list[i].fame;
 		}
 		break;
 	case MAPID_ALCHEMIST: // Alchemist
-	    for(i=0;i<10;i++){
+	    for(i=0;i<MAX_FAME_LIST;i++){
 	        if(chemist_fame_list[i].id==char_id)
 	            return chemist_fame_list[i].fame;
 		}
 		break;
 	case MAPID_TAEKWON: // Taekwon
-	    for(i=0;i<10;i++){
+	    for(i=0;i<MAX_FAME_LIST;i++){
 	        if(taekwon_fame_list[i].id==char_id)
 	            return taekwon_fame_list[i].fame;
 		}

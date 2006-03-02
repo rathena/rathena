@@ -106,6 +106,8 @@
 #define MAX_FRIENDS 40
 #define MAX_MEMOPOINTS 10
 
+//Size of the fame list arrays.
+#define MAX_FAME_LIST 10
 //These max values can be exceeded and the char/map servers will update them with no problems
 //These are just meant to minimize the updating needed between char/map servers as players login.
 //Room for initial 10K accounts

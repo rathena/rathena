@@ -128,6 +128,11 @@ int start_zeny = 500;
 int start_weapon = 1201;
 int start_armor = 2301;
 
+//Custom limits for the fame lists. [Skotlex]
+int fame_list_size_chemist = MAX_FAME_LIST;
+int fame_list_size_smith = MAX_FAME_LIST;
+int fame_list_size_taekwon = MAX_FAME_LIST;
+
 // Initial position (it's possible to set it in conf file)
 struct point start_point = { 0, 53, 111};
 
@@ -2888,7 +2893,7 @@ int parse_frommap(int fd) {
 			// starting to send to map
 			WBUFW(buf,0) = 0x2b1b;
 			// add list for blacksmiths
-			for (i = 0, j = 0; i < char_num && j < 10; i++) {
+			for (i = 0, j = 0; i < char_num && j < fame_list_size_smith; i++) {
 				if (char_dat[id[i]].status.fame && (char_dat[id[i]].status.class_ == 10 ||
 					char_dat[id[i]].status.class_ == 4011 ||
 					char_dat[id[i]].status.class_ == 4033))
@@ -2906,7 +2911,7 @@ int parse_frommap(int fd) {
 			WBUFW(buf, 6) = len;
 			
 			// add list for alchemists
-			for (i = 0, j = 0; i < char_num && j < 10; i++) {
+			for (i = 0, j = 0; i < char_num && j < fame_list_size_chemist; i++) {
 				if (char_dat[id[i]].status.fame && (char_dat[id[i]].status.class_ == 18 ||
 					char_dat[id[i]].status.class_ == 4019 ||
 					char_dat[id[i]].status.class_ == 4041))
@@ -2924,7 +2929,7 @@ int parse_frommap(int fd) {
 			WBUFW(buf, 4) = len;
 
 			// adding list for taekwons
-			for (i = 0, j = 0; i < char_num && j < 10; i++) {
+			for (i = 0, j = 0; i < char_num && j < fame_list_size_taekwon; i++) {
 				if (char_dat[id[i]].status.fame && char_dat[id[i]].status.class_ == 4046)
 				{
 					fame_item.id = char_dat[id[i]].status.char_id;
@@ -3997,6 +4002,24 @@ int char_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "console") == 0) {
 			if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
 				console = 1;
+		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {
+			fame_list_size_chemist = atoi(w2);
+			if (fame_list_size_chemist > MAX_FAME_LIST) {
+				ShowWarning("Max fame list size is %d (fame_list_alchemist)\n", MAX_FAME_LIST);
+				fame_list_size_chemist = MAX_FAME_LIST;
+			}
+		} else if (strcmpi(w1, "fame_list_blacksmith") == 0) {
+			fame_list_size_smith = atoi(w2);
+			if (fame_list_size_smith > MAX_FAME_LIST) {
+				ShowWarning("Max fame list size is %d (fame_list_blacksmith)\n", MAX_FAME_LIST);
+				fame_list_size_smith = MAX_FAME_LIST;
+			}
+		} else if (strcmpi(w1, "fame_list_taekwon") == 0) {
+			fame_list_size_taekwon = atoi(w2);
+			if (fame_list_size_taekwon > MAX_FAME_LIST) {
+				ShowWarning("Max fame list size is %d (fame_list_taekwon)\n", MAX_FAME_LIST);
+				fame_list_size_taekwon = MAX_FAME_LIST;
+			}
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2);
 		}
