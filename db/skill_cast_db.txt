@@ -639,7 +639,7 @@
 //-- PF_SPIDERWEB
 405,0,0,30000,8000
 //-- ASC_METEORASSAULT (Upkeep2 times are duration of: blind(lv1), stun(lv2) or bleeding (lv3)
-406,500,500,0,5000:5000:10000
+406,500,500,0,10000:5000:120000
 //-- ASC_CDP
 407,0,5000,0,0
 //==========================================

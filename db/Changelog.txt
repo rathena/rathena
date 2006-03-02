@@ -26,6 +26,7 @@
 
 =========================
 
+	* Adjusted SC durations for Meteor Assault [Skotlex]
 03/02
 	* Temp Plugs for NJ and GS items [Poki#3]
 	* Fixed some skill warnings. [Poki#3]

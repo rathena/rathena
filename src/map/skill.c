@@ -2466,10 +2466,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		return 1;
 
 	if (skillid && skill_get_type(skillid) == BF_MAGIC && 
-		!battle_config.gtb_pvp_only && status_isimmune(bl))
+		!battle_config.gtb_pvp_only && status_isimmune(bl)) {
+		if (sd) clif_skill_fail(sd,skillid,0,0);
 		//GTB makes all targetted skills silently fail.
 		return 1;
-
+	}
+	
 	sc = status_get_sc(src);	
 	if (sc && !sc->count)
 		sc = NULL; //Unneeded
@@ -5243,21 +5245,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	// Slim Pitcher
 	case CR_SLIMPITCHER:
-		{
-			if (sd && flag&1) {
-				struct block_list tbl;
-				int hp = potion_hp * (100 + pc_checkskill(sd,CR_SLIMPITCHER)*10 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)/100;
-				hp = hp * (100 + (status_get_vit(bl)<<1))/100;
-				if (dstsd) {
-					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
-				}
-				tbl.id = 0;
-				tbl.m = src->m;
-				tbl.x = src->x;
-				tbl.y = src->y;
-				clif_skill_nodamage(&tbl,bl,AL_HEAL,hp,1);
-				battle_heal(NULL,bl,hp,0,0);
+		if (potion_hp) {
+			struct block_list tbl;
+			int hp = potion_hp;
+			hp = hp * (100 + (status_get_vit(bl)<<1))/100;
+			if (dstsd) {
+				hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
 			}
+			tbl.id = 0;
+			tbl.m = src->m;
+			tbl.x = src->x;
+			tbl.y = src->y;
+			clif_skill_nodamage(&tbl,bl,AL_HEAL,hp,1);
+			battle_heal(NULL,bl,hp,0,0);
 		}
 		break;
 	// Full Chemical Protection
@@ -6120,6 +6120,12 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 				pc_delitem(sd,j,skill_db[skillid].amount[i],0);
 				potion_flag = 0;
 				clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
+				//Apply skill bonuses
+				potion_hp = potion_hp * (100
+					+ pc_checkskill(sd,CR_SLIMPITCHER)*10
+				  	+ pc_checkskill(sd,AM_POTIONPITCHER)*10
+				  	+ pc_checkskill(sd,AM_LEARNINGPOTION)*5
+					)/100;
 				if(potion_hp > 0) {
 					i = skill_get_splash(skillid, skilllv);
 					map_foreachinarea(skill_area_sub,
@@ -6634,7 +6640,8 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	nullpo_retr(0, sg=src->group);
 	nullpo_retr(0, ss=map_id2bl(sg->src_id));
 
-	if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
+	if (skill_get_type(sg->skill_id) == BF_MAGIC &&
+		map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
 		return 0; //AoE skills are ineffective. [Skotlex]
 	
 	if (battle_check_target(&src->bl,bl,sg->target_flag)<=0)
@@ -6741,13 +6748,15 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		if(src->limit + sg->tick > tick + 700)
 			src->limit = DIFF_TICK(tick+700,sg->tick);
 		break;
+/* Removed. Gospel does not blocks item usage for others. [Skotlex]
 	case UNT_GOSPEL:
 		if (sg->src_id != bl->id && sc && sc->data[type].timer==-1
 			&& battle_check_target(ss,bl,BCT_PARTY)>0)
 			//Start Gospel Effect to prevent item usage affects party only. [Skotlex]
 			status_change_start(bl,type,100,sg->skill_lv,0,0,BCT_ALL,sg->limit,0);
 		break;
-	}
+*/
+	}	
 
 	return sg->skill_id;
 }
@@ -9536,8 +9545,8 @@ int skill_landprotector(struct block_list *bl, va_list ap )
 		return 1;
 	}	
 
-	if (skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
-		return 0; //Traps cannot be removed by Land Protector/Ganbantein
+	if (skill_get_type(unit->group->skill_id) != BF_MAGIC)
+		return 0; //Only blocks out magical skills.````````
 	
 	if (skillid == SA_LANDPROTECTOR || skillid == HW_GANBANTEIN ) {
 		skill_delunit(unit);

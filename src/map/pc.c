@@ -2710,7 +2710,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC_MARIONETTE].timer!=-1 ||
 		sd->sc.data[SC_GRAVITATION].timer!=-1 ||
 		//Cannot use Potions/Healing items while under Gospel.
-		(sd->sc.data[SC_GOSPEL].timer!=-1 && sd->sc.data[SC_GOSPEL].val4 != BCT_SELF && sd->inventory_data[n]->type == 0)
+		(sd->sc.data[SC_GOSPEL].timer!=-1 && sd->sc.data[SC_GOSPEL].val4 == BCT_SELF && sd->inventory_data[n]->type == 0)
 	))
 		return 0;
 	
@@ -3134,6 +3134,14 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 				status_change_end(&sd->bl,SC_STAR_COMFORT,-1);
 		}
 	}
+
+	if (sd->mapindex != mapindex)
+	{	//Misc map-changing settings
+		party_send_dot_remove(sd); //minimap dot fix [Kevin]
+		guild_send_dot_remove(sd);
+		skill_clear_element_field(&sd->bl);
+	}
+
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
 		pet_stopattack(sd->pd);
 		pet_changestate(sd->pd,MS_IDLE,0);
@@ -3240,12 +3248,6 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
 	}
 		
-	if (sd->mapindex != mapindex) //minimap dot fix [Kevin]
-	{
-		party_send_dot_remove(sd);
-		guild_send_dot_remove(sd);
-	}
-
 	sd->mapindex =  mapindex;
 	sd->bl.m = m;
 	sd->to_x = x;

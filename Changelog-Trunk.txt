@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/02
+	* Gospel no longer blocks item usage of whoever is in the area of effect,
+	  only the caster of Gospel can't use healing items now. [Skotlex]
+	* Added the long/near attack_def_rate card effects to battle_calc_magic
+	  (horn card and the like will now work with spells) [Skotlex]
+	- Elemental fields should vanish on map-change now. [Skotlex]
+	- Land Protector only blocks magical ground skills now. [Skotlex]
 	* Fixed item pickup not picking anything unless you were in a party with
 	  item distribution set [Skotlex]
 2006/03/01

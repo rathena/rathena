@@ -2671,6 +2671,12 @@ struct Damage battle_calc_magic_attack(
 					continue;
 				}
 			}
+			//It was discovered that ranged defense also counts vs magic! [Skotlex]
+			if (ad.flag&BF_SHORT)
+				cardfix=cardfix*(100-tsd->near_attack_def_rate)/100;
+			else
+				cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
+
 			cardfix=cardfix*(100-tsd->magic_def_rate)/100;
 
 			MATK_RATE(cardfix);
