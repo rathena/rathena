@@ -3575,7 +3575,7 @@
 1720,Hydro@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
 1720,Hydro@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
 1720,Hydro@AL_HEAL,attack,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
-1729,Hydro@AL_HEAL,chase,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1720,Hydro@AL_HEAL,chase,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
 1720,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,2000,240000,no,self,slavele,1,1713,1714,1716,1717,,
 1720,Hydro@NPC_SUMMONSLAVE,attack,196,4,10000,2000,240000,no,self,slavele,1,1713,1714,1716,1717,,
 1720,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,0,0,no,self,onspawn,0,1713,1714,1716,1717,,

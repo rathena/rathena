@@ -1,9 +1,9 @@
 ========================= Items that need fixing/implementing
 
 	2116 Angelic Guard:	Reduce 5% damage from Demon Monsters. (Not Fish :/ )
-	2417 Fricco's Shoes:	Increase value of Red, Orange, Yellow and White Potion by 20%.
+	2417 Freyr's Shoes:	Increase value of Red, Orange, Yellow and White Potion by 20%.
 				If the owner is equipped with the armor set, it adds Agi+ 3, MHP/MSP + 5%.
-	2418 Boots of Vidar:	Adds VIT +5, Increase HP/SP Recovery speed by 10% if the owner is equipped with the armor set.
+	2418 Vidar's Boots:	Adds VIT +5, Increase HP/SP Recovery speed by 10% if the owner is equipped with the armor set.
 	2515 Eagle Wing:	Increase Movement Speed if the owner is equipped with Wing Staff at the same time.
 	5126 Morpheus's Hood:	Magic spells cannot be dispelled.
 
@@ -26,8 +26,14 @@
 
 =========================
 
+03/02
+	* Temp Plugs for NJ and GS items [Poki#3]
+	* Fixed some skill warnings. [Poki#3]
+	* Added back mob "Mime Monkey". [Poki#3]
+
 03/01
 	* Added temp Green Iguana skills [Lupus]
+
 02/27
 	* Temp plug: 2620,Rogue's_Treasure steal rate -> 1 (have to fix formula) [Lupus]
 	- Fixed all Vesper Acessories (removed doubled DEF bonus), thanks to Irmin
@@ -37,10 +43,12 @@
 					5122,Magni's_Cap, 5123,Ulle's_Cap, 5124,Fricca's_Circlet
 02/24
 	* Changed bosses slaves in Bio Labs level 3 - they will spawn only once now [Komurka]
+
 02/22
 	* Fixed Summon skills, among others. [Poki#3]
 	* Fixed G_GOBLINE_XMAS mode (aggresive ~~) [Komurka]
 	* Made G_DARK_ILLUSION more ... aggressive [Komurka]
+
 02/21
 	* Changed a bunch of item names according to the upcoming iRO Lighthalzen Patch. [Poki#3]
 

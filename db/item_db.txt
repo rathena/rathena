@@ -1037,7 +1037,7 @@
 2414,Novice_Slippers,Novice Slippers,5,,10,1,,2,,0,8388609,7,2,64,,0,0,0,{}
 2415,Bunny_Slipper,Bunny Slipper,5,34000,,300,,3,,1,119529470,7,0,64,,30,1,0,{ bonus bLuk,3; bonus bMdef,3; }
 2416,Novice_Shoes,Novice Shoes,5,35000,,500,,2,,1,8388609,7,2,64,,40,1,0,{ bonus bMaxHPrate,5; }
-2417,Fricco's_Shoes,Fricco's Shoes,5,,10,500,,3,,0,119529470,7,2,64,,65,1,0,{ bonus bAgi,2; }
+2417,Freyr's_Shoes,Freyr's Shoes,5,,10,500,,3,,0,119529470,7,2,64,,65,1,0,{ bonus bAgi,2; }
 2418,Vidar's_Boots,Vidar's Boots,5,,10,650,,4,,0,119529470,7,2,64,,65,1,0,{ bonus bMaxHPrate,9; bonus bMaxSPrate,9; }
 2419,Goibne's_Greaves,Goibne's Greaves,5,,10,700,,4,,0,119529470,7,2,64,,54,1,0,{ bonus bMdef,3; bonus bMaxHPrate,5; bonus bMaxSPrate,5; }
 2420,Angel's_Reincarnation,Angel's Reincarnation,5,,10,10,,0,,1,8388609,7,2,64,,0,1,0,{ bonus bMaxHP,100; }
@@ -1211,7 +1211,7 @@
 4070,Eggyra_Card,Eggyra Card,6,,10,10,,,,,,,,64,,,,,{ bonus bSPrecovRate,15; }
 4071,Orc_Zombie_Card,Orc Zombie Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Undead,30; bonus bFlee,5; }
 4072,Golem_Card,Golem Card,6,,10,10,,,,,,,,2,,,,,{ bonus bUnbreakableWeapon,0; bonus bBaseAtk,5; }
-4073,Pirate_Skel_Card,Pirate Skel Card,6,,10,10,,,,,,,,136,,,,,{ skill 37,5; }
+4073,Pirate_Skeleton_Card,Pirate Skeleton Card,6,,10,10,,,,,,,,136,,,,,{ skill 37,5; }
 4074,Bigfoot_Card,Bigfoot Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Insect,30; }
 4075,Argos_Card,Argos Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bResEff,Eff_Stone,2000; bonus bDef,1; }
 4076,Magnolia_Card,Magnolia Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddEff,Eff_Curse,500; bonus bBaseAtk,5; }
@@ -1230,7 +1230,7 @@
 4089,Swordfish_Card,Swordfish Card,6,,10,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Water; bonus bDef,1; }
 4090,Munak_Card,Munak Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bResEff,Eff_Stone,1500; bonus2 bSubEle,Ele_Earth,5; bonus bDef,1; }
 4091,Kobold_Card,Kobold Card,6,,10,10,,,,,,,,136,,,,,{ bonus bStr,1; bonus bCritical,4; }
-4092,Skel_Worker_Card,Skel Worker Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddSize,1,15; bonus bBaseAtk,5; }
+4092,Skeleton_Worker_Card,Skeleton Worker Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddSize,1,15; bonus bBaseAtk,5; }
 4093,Obeaune_Card,Obeaune Card,6,,10,10,,,,,,,,136,,,,,{ skill 35,1; }
 4094,Archer_Skeleton_Card,Archer Skeleton Card,6,,10,10,,,,,,,,2,,,,,{ bonus bLongAtkRate,10; }
 4095,Marse_Card,Marse Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Water,30; bonus bFlee,5; }
@@ -1360,7 +1360,7 @@
 4219,Sage_Worm_Card,Sage Worm Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,9,500; }
 4220,Solider_Card,Solider Card,6,,10,10,,,,,,,,16,,,,,{ bonus bDef,2; bonus bMdef,2; }
 4221,Skeleton_General_Card,Skeleton General Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Insect,-20; bonus2 bExpAddRace,RC_Insect,10; }
-4222,Skel_Prisoner_Card,Skel Prisoner Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Sleep,1000+2000*(isequipped(4025)); }
+4222,Skeleton_Prisoner_Card,Skeleton Prisoner Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Sleep,1000+2000*(isequipped(4025)); }
 4223,Stalactic_Golem_Card,Stalactic Golem Card,6,,10,10,,,,,,,,769,,,,,{ bonus bDef,1; bonus2 bResEff,Eff_Stan,2000; }
 4224,Stem_Worm_Card,Stem Worm Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12032,2,10; }
 4225,Stone_Shooter_Card,Stone Shooter Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,10; bonus bHit,10; }
@@ -1595,7 +1595,7 @@
 5121,Zherlthsh_Mask,Zherlthsh Mask,5,,10,100,,3,,0,119529470,7,2,768,,0,1,200,{ bonus2 bAddRace,RC_DemiHuman,5; bonus2 bSubRace,RC_DemiHuman,5; }
 5122,Magni's_Cap,Magni's Cap,5,,10,1000,,5,,0,119529470,7,2,256,,65,1,201,{ bonus bStr,2; }
 5123,Ulle's_Cap,Ulle's Cap,5,,10,500,,3,,1,119529470,7,2,256,,65,1,202,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && bDex>=70) bonus bUseSPrate,-10; }
-5124,Fricca's_Circlet,Fricca's Circlet,5,,10,300,,3,,0,119529470,7,2,256,,65,1,203,{ bonus bMdef,10; bonus bInt,2; bonus bMaxSP,50; }
+5124,Frigg's_Circlet,Frigg's Circlet,5,,10,300,,3,,0,119529470,7,2,256,,65,1,203,{ bonus bMdef,10; bonus bInt,2; bonus bMaxSP,50; }
 5125,Angel's_Kiss,Angel's Kiss,5,,10,300,,2,,1,8388609,7,2,256,,50,1,204,{ bonus bSPrecovRate,3; }
 5126,Morpheus's_Hood,Morpheus's Hood,5,,10,200,,3,,0,119529470,7,2,256,,33,1,205,{ bonus bInt,2; if(isequipped(2518,2648,2649)==0) end; bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; if(Upper == 1) bonus bCastrate,25; }
 5127,Morrigane's_Helm,Morrigane's Helm,5,,10,500,,4,,0,119529470,7,2,256,,61,1,206,{ bonus bLuk,2; bonus bAtk,3; if(isequipped(2519,2650,2651)==0) end; bonus bStr,2; bonus bLuk,9; bonus bCritical,13; bonus bAtk,18; bonus bFlee2,13; }
@@ -2359,14 +2359,75 @@
 13005,Angelic_Wing_Dagger,Angelic Wing Dagger,4,,10,10,0,,1,1,0,0,2,0,0,0,0,0,{}
 
 
-// Temp Plugs. Someone good with the DB's? If so, please re-check the items and place them accordingly.
-//7519,...,,,,,,,,,,,,,,,,,,{}
-//7520,...,,,,,,,,,,,,,,,,,,{}
-//5145,...,,,,,,,,,,,,,,,,,,{}
-//586,...,,,,,,,,,,,,,,,,,,{}
-//2669,...,,,,,,,,,,,,,,,,,,{}
-//12137,...,,,,,,,,,,,,,,,,,,{}
-//12138,...,,,,,,,,,,,,,,,,,,{}
-//12139,...,,,,,,,,,,,,,,,,,,{}
-//12140,...,,,,,,,,,,,,,,,,,,{}
-//12141,...,,,,,,,,,,,,,,,,,,{}
+// Temp Plugs. Someone good with the DB's? Please place them accordingly after addein the effect.
+// Info can be found here: http://opensvn.csie.org/EnglishTranslation/data/idnum2itemdesctable.txt
+//7519,,,,,,,,,,,,,,,,,,,{}
+//7520,,,,,,,,,,,,,,,,,,,{}
+//5145,Carnival_Jester,Carnival Jester,,,,,,,,,,,,,,,,,{}
+//586,Mother's_Cake,Mother's Cake,,,,,,,,,,,,,,,,,{}
+//2669,RJC_Necklace,RJC Necklace,,,,,,,,,,,,,,,,,{}
+//12137,First_Stage,First Stage,,,,,,,,,,,,,,,,,{}
+//12138,Second_Stage,Second Stage,,,,,,,,,,,,,,,,,{}
+//12139,Third_Stage,Third Stage,,,,,,,,,,,,,,,,,{}
+//12140,Fourth_Stage,Fourth Stage,,,,,,,,,,,,,,,,,{}
+//12141,Fifth_Stage,Fifth Stage,,,,,,,,,,,,,,,,,{}
+//13100,Branch,Branch,,,,,,,,,,,,,,,,,{}		//Slot: 3
+//13101,Six_Shooter,Six Shooter,,,,,,,,,,,,,,,,,{}	//Slot: 1
+//13102,Six_Shooter,Six Shooter,,,,,,,,,,,,,,,,,{}	//Slot: 2
+//13103,Crimson_Bolt,Crimson Bolt,,,,,,,,,,,,,,,,,{}	//Slot: 1
+//13104,Crimson_Bolt,Crimson Bolt,,,,,,,,,,,,,,,,,{}	//Slot: 2
+//13105,The_Garrison,The Garrison,,,,,,,,,,,,,,,,,{}	//Slot: 1
+//13106,The_Garrison,The Garrison,,,,,,,,,,,,,,,,,{}	//Slot: 2
+//13107,Gold_Lux,Gold Lux,,,,,,,,,,,,,,,,,{}		//Slot: 0
+//13108,The_Cyclone,The Cyclone,,,,,,,,,,,,,,,,,{}	//Slot: 1
+//13109,The_Cyclone,The Cyclone,,,,,,,,,,,,,,,,,{}	//Slot: 2
+//13110,Dusk,Dusk,,,,,,,,,,,,,,,,,{}			//Slot: 1
+//13111,Rolling_Stone,Rolling Stone,,,,,,,,,,,,,,,,,{}	//Slot: 1
+//13112,Black_Rose,Black Rose,,,,,,,,,,,,,,,,,{}	//Slot: 1
+//13113,Gate_Keeper,Gate Keeper,,,,,,,,,,,,,,,,,{}	//Slot: 0
+//13114,Drifter,Drifter,,,,,,,,,,,,,,,,,{}		//Slot: 1
+//13115,Butcher,Butcher,,,,,,,,,,,,,,,,,{}		//Slot: 1
+//13116,Butcher,Butcher,,,,,,,,,,,,,,,,,{}		//Slot: 2
+//13117,Destroyer,Destroyer,,,,,,,,,,,,,,,,,{}		//Slot: 0
+//13118,Destroyer,Destroyer,,,,,,,,,,,,,,,,,{}		//Slot: 1
+//13119,Inferno,Inferno,,,,,,,,,,,,,,,,,{}		//Slot: 1
+//13200,Bullet,Bullet,,,,,,,,,,,,,,,,,{}
+//13201,Silver_Bullet,Silver Bullet,,,,,,,,,,,,,,,,,{}
+//13202,Shell_of_Blood,Shell of Blood,,,,,,,,,,,,,,,,,{}
+//13203,Flare_Sphere,Flare Sphere,,,,,,,,,,,,,,,,,{}
+//13204,Lightning_Sphere,Lightning Sphere,,,,,,,,,,,,,,,,,{}
+//13205,Poison_Sphere,Poison Sphere,,,,,,,,,,,,,,,,,{}
+//13206,Blind_Sphere,Blind Sphere,,,,,,,,,,,,,,,,,{}
+//13207,Freezing_Sphere,Freezing Sphere,,,,,,,,,,,,,,,,,{}
+//13250,Shuriken,Shuriken,,,,,,,,,,,,,,,,,{}
+//13251,Raincloud_Shuriken,Raincloud Shuriken,,,,,,,,,,,,,,,,,{}
+//13252,Shuriken_of_Flash,Shuriken of Flash,,,,,,,,,,,,,,,,,{}
+//13253,Shuriken_of_Sharp_Leaf,Shuriken of Sharp Leaf,,,,,,,,,,,,,,,,,{}
+//13254,Shuriken_of_Thorn,Shuriken of Thorn,,,,,,,,,,,,,,,,,{}
+//13255,Kunai_of_Icicle,Kunai of Icicle,,,,,,,,,,,,,,,,,{}
+//13256,Kunai_of_Black_Soil,Kunai of Black Soil,,,,,,,,,,,,,,,,,{}
+//13257,Kunai_of_Strong_Wind,Kunai of Strong Wind,,,,,,,,,,,,,,,,,{}
+//13258,Kunai_of_Explosive_Flame,Kunai of Explosive Flame,,,,,,,,,,,,,,,,,{}
+//13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,,,,,,,,,,,,,,,,,{}
+//7521,Fire_Ghost_Stone,Fire Ghost Stone,,,,,,,,,,,,,,,,,{}
+//7522,Ice_Ghost_Stone,Ice Ghost Stone,,,,,,,,,,,,,,,,,{}
+//7523,Wind_Ghost_Stone,Wind Ghost Stone,,,,,,,,,,,,,,,,,{}
+//7524,Shadow_Ghost_Stone,Shadow Ghost Stone,,,,,,,,,,,,,,,,,{}
+//13006,Gokurin,Gokurin,,,,,,,,,,,,,,,,,{}
+//13007,Jitte,Jitte,,,,,,,,,,,,,,,,,{}
+//13008,Jitte,Jitte,,,,,,,,,,,,,,,,,{}
+//13009,Kamaitachi,Kamaitachi,,,,,,,,,,,,,,,,,{}
+//13010,Ashura,Ashura,,,,,,,,,,,,,,,,,{}
+//13011,Ashura,Ashura,,,,,,,,,,,,,,,,,{}
+//13012,Murasame,Murasame,,,,,,,,,,,,,,,,,{}
+//13013,Murasame,Murasame,,,,,,,,,,,,,,,,,{}
+//13014,Hakujin,Hakujin,,,,,,,,,,,,,,,,,{}
+//13015,Hakujin,Hakujin,,,,,,,,,,,,,,,,,{}
+//13300,Pyun-Ik,Pyun-Ik,,,,,,,,,,,,,,,,,{}
+//13301,Dae-Cha-Ryun,Dae-Cha-Ryun,,,,,,,,,,,,,,,,,{}
+//13302,Dae-Cha-Ryun,Dae-Cha-Ryun,,,,,,,,,,,,,,,,,{}
+//13303,Yul-Hwa,Yul-Hwa,,,,,,,,,,,,,,,,,{}
+//2117,Wrist_Muff,Wrist Muff,,,,,,,,,,,,,,,,,{}
+//2118,Wrist_Muff,Wrist Muff,,,,,,,,,,,,,,,,,{}
+//2119,Modified_Wrist_Muff,Modified Wrist Muff,,,,,,,,,,,,,,,,,{}
+//2120,Modified_Wrist_Muff,Modified Wrist Muff,,,,,,,,,,,,,,,,,{}
