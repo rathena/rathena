@@ -1860,6 +1860,7 @@ int parse_tologin(int fd) {
 			for(i = 0; i < fd_max; i++) {
 				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
 					if (sd->account_id == RFIFOL(fd,2)) {
+					memcpy(sd->email, RFIFOP(fd, 6), 40);
 					sd->connect_until_time = (time_t)RFIFOL(fd,46);
 					break;
 					}
