@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/02
+	* Fixed a typo that disabled all pet support skills from triggering (except
+	  ground-based ones) [Skotlex]
 	* status_check_skilluse cleanup. Some status will only block skills when
 	  they are first used, not on cast-end (which includes auto-spells and
 	  ground-skill checks). Now when status_castcancel is 'no', skills WILL

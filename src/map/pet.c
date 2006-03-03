@@ -331,7 +331,7 @@ static int petskill_castend2(struct pet_data *pd, struct block_list *target, sho
 	  	if (!target)
 			return 0; 
 		if(!check_distance_bl(&pd->bl, target,
-				skill_get_range2(&pd->bl, skill_id, skill_lv)));
+				skill_get_range2(&pd->bl, skill_id, skill_lv)))
 			return 0;
 		if (!status_check_skilluse(&pd->bl, target, skill_id, 1))
 			return 0;
