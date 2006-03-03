@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/03
+	* Strip status changes are now removed on logout. [Skotlex]
 	* Added a column in skill_cast_db for specifying can't walk delays. It's
 	  all set to 0 currently, so someone get updating them! [Skotlex]
 	* Removed the apply walk-delay entry from skill_cast_nodex as the new walk

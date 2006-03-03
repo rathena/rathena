@@ -9440,13 +9440,10 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 		if(gm_command) aFree(gm_command);
 		return;
 	}
+	if(gm_command) aFree(gm_command);
 	if (sd->sc.count &&
 		(sd->sc.data[SC_BERSERK].timer!=-1 || sd->sc.data[SC_NOCHAT].timer != -1))
-	{
-		if(gm_command) aFree(gm_command);
 		return;
-	}
-	if(gm_command) aFree(gm_command);
 
 	//Chat Logging type 'W' / Whisper
 	if(log_config.chat&1 //we log everything then
@@ -9459,7 +9456,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 //   Lordalfa - Paperboy - To whisper NPC commands       //
 //-------------------------------------------------------//
 if ((strncasecmp((const char*)RFIFOP(fd,4),"NPC:",4) == 0) && (strlen((const char*)RFIFOP(fd,4)) >4))   {
-		whisper_tmp = (char*) RFIFOP(fd,4) + 4;		
+		whisper_tmp = (char*) RFIFOP(fd,4) + 4;
     if ((npc = npc_name2id(whisper_tmp)))	
 	{
 		whisper_tmp=(char *)aCallocA(strlen((char *)(RFIFOP(fd,28))+1),sizeof(char));
@@ -9497,10 +9494,9 @@ if ((strncasecmp((const char*)RFIFOP(fd,4),"NPC:",4) == 0) && (strlen((const cha
 		
 		sprintf(whisper_tmp, "%s::OnWhisperGlobal", npc->name);
 		npc_event(sd,whisper_tmp,0); // Calls the NPC label 
-		return;     
 
 		aFree(whisper_tmp); //I rewrote it a little to use memory allocation, a bit more stable =P  [Kevin]
-		whisper_tmp = NULL;
+		return;     
 	} //should have just removed the one below that was a my bad =P
 }		
 	

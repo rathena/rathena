@@ -11249,8 +11249,8 @@ int skill_readdb(void)
 
 	l=0;
 	while(fgets(line,1020,fp)){
-		l++;
 		char *split[50];
+		l++;
 		memset(split,0,sizeof(split));	// [Valaris] thanks to fov
 		if(line[0]=='/' && line[1]=='/')
 			continue;
