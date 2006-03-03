@@ -950,6 +950,9 @@ struct pet_data {
 	struct skill_unit_group skillunit[MAX_MOBSKILLUNITGROUP]; // [Valaris]
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET]; // [Valaris]
 	struct map_session_data *msd;
+
+	int skilltarget;
+	short skillx,skilly,skillid,skilllv;
 };
 
 enum { MS_IDLE,MS_WALK,MS_ATTACK,MS_DEAD,MS_DELAY };

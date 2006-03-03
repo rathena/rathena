@@ -129,8 +129,7 @@ int battle_getcurrentskill(struct block_list *bl)
 		case BL_MOB:
 			return ((struct mob_data*)bl)->skillid;
 		case BL_PET:
-			return 0; //Skill data is not stored for pets...
-			break;
+			return ((struct pet_data*)bl)->skillid;
 		case BL_SKILL:
 			{
 				struct skill_unit * su = (struct skill_unit*)bl;

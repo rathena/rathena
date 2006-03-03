@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/02
+	* Some cleanup and reorganization on the way pet-skill variables are
+	  handled. [Skotlex]
 	* Fixed a typo that disabled all pet support skills from triggering (except
 	  ground-based ones) [Skotlex]
 	* status_check_skilluse cleanup. Some status will only block skills when

@@ -8863,18 +8863,8 @@ int skill_castcancel (struct block_list *bl, int type)
 			ShowError("delete timer error : skillid : %d\n", md->skillid);
 		return 0;
 	} if (bl->type == BL_PET) {
-		struct pet_data *pd = (struct pet_data*)bl;
-		pd->state.casting_flag = 0;
+		((struct pet_data*)bl)->state.casting_flag = 0;
 		clif_skillcastcancel(bl);
-		if (pd->timer != -1)
-		{	//Free the data attached to casting. [Skotlex]
-			struct TimerData *td = get_timer(pd->timer);
-			if (td && td->data)
-			{
-				aFree((struct cast_end_delay*)td->data);
-				td->data = 0;
-			}
-		}
 		//The timer is not deleted as the pet's attack will be resumed.
 		return 0;
 	}

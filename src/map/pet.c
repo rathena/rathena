@@ -206,7 +206,7 @@ static int pet_attack(struct pet_data *pd,unsigned int tick,int data)
 }
 
 static int petskill_castend(struct pet_data *pd,unsigned int tick,int data);
-static int petskill_castend2(struct pet_data *pd, struct block_list *target, short skill_id, short skill_lv, short skill_x, short skill_y, unsigned int tick);
+static int petskill_castend2(struct pet_data *pd, struct block_list *target, unsigned int tick);
 
 /*==========================================
  * Pet Attack Skill [Skotlex]
@@ -232,14 +232,6 @@ static int pet_attackskill(struct pet_data *pd, unsigned int tick, int data)
 	return 0;
 }
 
-struct castend_delay { //[Skotlex] For passing skill info after casting
-	struct pet_data *src;
-	int target;
-	short id;
-	short lv;
-	short x,y;
-};
-
 /*==========================================
  * Pet Skill Use [Skotlex]
  *------------------------------------------
@@ -247,7 +239,6 @@ struct castend_delay { //[Skotlex] For passing skill info after casting
 int petskill_use(struct pet_data *pd, struct block_list *target, short skill_id, short skill_lv, unsigned int tick)
 {
 	int casttime;
-	struct castend_delay *dat;
 	
 	nullpo_retr(0, pd);
 	Assert((pd->msd == 0) || (pd->msd->pd == pd));
@@ -272,27 +263,23 @@ int petskill_use(struct pet_data *pd, struct block_list *target, short skill_id,
 	pd->attackabletime = tick;
 	pd->state.state=MS_ATTACK;
 
+	pd->skilltarget = target->id;
+	pd->skillid = skill_id;
+	pd->skilllv = skill_lv;
+	pd->skillx = target->x;
+	pd->skilly = target->y;
 	if (casttime > 0)
 	{
 		pd->attackabletime += casttime;
-		
-		dat = (struct castend_delay *)aCalloc(1, sizeof(struct castend_delay));
-		dat->src = pd;
-		dat->target = target->id;
-		dat->id = skill_id;
-		dat->lv = skill_lv;
-		dat->x = target->x;
-		dat->y = target->y;
-
 		pd->state.casting_flag = 1;
 		if (skill_get_inf(skill_id) & INF_GROUND_SKILL)
-			clif_skillcasting( &pd->bl, pd->bl.id, 0, dat->x, dat->y, skill_id,casttime);
+			clif_skillcasting( &pd->bl, pd->bl.id, 0, pd->skillx, pd->skilly, skill_id,casttime);
 		else
-			clif_skillcasting( &pd->bl, pd->bl.id, dat->target, 0,0, skill_id,casttime);
+			clif_skillcasting( &pd->bl, pd->bl.id, target->id, 0,0, skill_id,casttime);
 		
-		pd->timer = add_timer(pd->attackabletime,pet_timer,pd->bl.id,(int)dat);
+		pd->timer = add_timer(pd->attackabletime,pet_timer,pd->bl.id,0);
 	} else {
-		petskill_castend2(pd, target, skill_id, skill_lv, target->x, target->y, tick);
+		petskill_castend2(pd, target, tick);
 	}	
 	return 0;
 }
@@ -303,12 +290,10 @@ int petskill_use(struct pet_data *pd, struct block_list *target, short skill_id,
  */
 static int petskill_castend(struct pet_data *pd,unsigned int tick,int data)
 {
-	struct castend_delay *dat = (struct castend_delay *)data;
-	struct block_list *target = map_id2bl(dat->target);
+	struct block_list *target = map_id2bl(pd->skilltarget);
 	pd->state.casting_flag = 0;
-	if (dat && pd == dat->src)
-		petskill_castend2(pd, target, dat->id, dat->lv, dat->x, dat->y, tick);
-	aFree(dat);
+	pd->skilltarget = 0;
+	petskill_castend2(pd, target, tick);
 	return 0;
 }
 
@@ -316,23 +301,24 @@ static int petskill_castend(struct pet_data *pd,unsigned int tick,int data)
  * Pet Attack Cast End2 [Skotlex]
  *------------------------------------------
  */
-static int petskill_castend2(struct pet_data *pd, struct block_list *target, short skill_id, short skill_lv, short skill_x, short skill_y, unsigned int tick)
+static int petskill_castend2(struct pet_data *pd, struct block_list *target, unsigned int tick)
 {	//Invoked after the casting time has passed.
 	int delaytime =0;
-
-	nullpo_retr(0, pd);
-
+	int skill_id = pd->skillid, skill_lv = pd->skilllv;
+	
 	pd->state.state=MS_IDLE;
 	
 	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
 	{	//Area skill
-		skill_castend_pos2(&pd->bl, skill_x, skill_y, skill_id, skill_lv, tick,0);
+		skill_castend_pos2(&pd->bl, pd->skillx, pd->skilly, pd->skillid, pd->skilllv, tick,0);
+		pd->skillx = pd->skilly = 0;
 	} else { //Targeted Skill
 	  	if (!target)
-			return 0; 
+			return 0;
 		if(!check_distance_bl(&pd->bl, target,
 				skill_get_range2(&pd->bl, skill_id, skill_lv)))
 			return 0;
+			
 		if (!status_check_skilluse(&pd->bl, target, skill_id, 1))
 			return 0;
 		if (skill_get_casttype(skill_id) == CAST_NODAMAGE)
@@ -344,10 +330,11 @@ static int petskill_castend2(struct pet_data *pd, struct block_list *target, sho
 	if (pd->timer != -1) //The above skill casting could had changed the state (Abracadabra?)
 		return 0;
 
+	pd->skillid = pd->skilllv = 0;
 	delaytime = skill_delayfix(&pd->bl,skill_id, skill_lv, 0);
 	if (delaytime < MIN_PETTHINKTIME)
 		delaytime = status_get_adelay(&pd->bl);
-	pd->attackabletime = tick + delaytime; 
+	pd->attackabletime = tick + delaytime;
 	if (pd->target_id)
 	{	//Resume attacking
 		pd->state.state=MS_ATTACK;
