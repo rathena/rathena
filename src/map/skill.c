@@ -5118,7 +5118,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				}
 				if(su->group->unit_id == UNT_ANKLESNARE && su->group->val2){
 					struct block_list *target=map_id2bl(su->group->val2);
-					if(target && (target->type == BL_PC || target->type == BL_MOB))
+					if(target)
 						status_change_end(target,SC_ANKLE,-1);
 				}
 				skill_delunit(su);

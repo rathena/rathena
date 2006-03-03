@@ -3387,8 +3387,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					state |= BCT_PARTY; //Normal mobs with no ai are friends.
 				else
 					state |= BCT_ENEMY; //However, all else are enemies.
-			} else if (t_bl->type != BL_PC)
-				state |= BCT_ENEMY; //Natural enemy for AI mobs are nonplayers.
+			} else {
+				if (t_bl->type == BL_MOB && !((struct mob_data*)t_bl)->special_state.ai)
+					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
+			}
 			if (md->master_id && (s_bl = map_id2bl(md->master_id)) == NULL)
 				s_bl = &md->bl; //Fallback on the mob itself, otherwise consider this a "from master" scenario.
 			break;

@@ -2313,12 +2313,14 @@ int npc_parse_mob2 (struct mob_list *mob, int cached)
 
 		if (strlen(mob->eventname) >= 4) {
 			memcpy(md->npc_event, mob->eventname, NAME_LENGTH-1);
-		} else if (strlen(mob->eventname) == 1) { //Portable monster big/small implementation. [Skotlex]
+		} else if (strlen(mob->eventname) <= 2) { //Portable monster big/small implementation. [Skotlex]
 			int size = atoi(mob->eventname);
 			if (size & 2)
 				md->special_state.size=1;
 			else if (size & 4)
 				md->special_state.size=2;
+			if (size & 8)
+				md->special_state.ai=1;
 		}
 
 		md->bl.type = BL_MOB;

@@ -3449,7 +3449,7 @@ int clif_arrow_create_list(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	fd = sd->fd;
-        WFIFOHEAD(fd, MAX_SKILL_ARROW_DB*2+4);
+	WFIFOHEAD(fd, MAX_SKILL_ARROW_DB*2+4);
 	WFIFOW(fd,0) = 0x1ad;
 
 	for (i = 0, c = 0; i < MAX_SKILL_ARROW_DB; i++) {
