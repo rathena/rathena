@@ -3205,7 +3205,8 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		md->y0=y;
 		md->xs=0;
 		md->ys=0;
-		if (battle_config.slaves_inherit_speed && (skill_id != NPC_METAMORPHOSIS && skill_id != NPC_TRANSFORMATION))
+		if (battle_config.slaves_inherit_speed && md2->db->mode&MD_CANMOVE 
+			&& (skill_id != NPC_METAMORPHOSIS && skill_id != NPC_TRANSFORMATION))
 			md->speed=md2->speed;
 		md->special_state.cached= battle_config.dynamic_mobs;	//[Skotlex]
 		md->spawndelay1=-1;	// ˆê“x‚Ì‚Ýƒtƒ‰ƒO
@@ -3849,7 +3850,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				do {
 					bx = x + rand() % (r*2+1) - r;
 					by = y + rand() % (r*2+1) - r;
-				} while (map_getcell(m, bx, by, CELL_CHKNOPASS) && (i++) < 1000);
+				} while (map_getcell(m, bx, by, CELL_CHKNOREACH) && (i++) < 1000);
 				if (i < 1000){
 					x = bx; y = by;
 				}
@@ -3860,7 +3861,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				do {
 					bx = x + rand() % (r*2+1) - r;
 					by = y + rand() % (r*2+1) - r;
-				} while (map_getcell(m, bx, by, CELL_CHKNOPASS) && (i++) < 1000);
+				} while (map_getcell(m, bx, by, CELL_CHKNOREACH) && (i++) < 1000);
 				if (i < 1000){
 					x = bx; y = by;
 				}
@@ -3895,6 +3896,11 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				}
 				if (bl && !mobskill_use_id(md, bl, i))
 					return 0;
+			} else {
+				if (battle_config.error_log)
+					ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s). Mob %d - %s\n",
+						ms[i].skill_id, skill_get_name(ms[i].skill_id), md->class_, md->db->jname);
+				continue;
 			}
 		}
 		return 1;
