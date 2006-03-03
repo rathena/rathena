@@ -1,18 +1,14 @@
-//<Skill id>,<Cast: 1 or 0>,<Delay (Optional): 1 or 0>,<Walk Delay(Optional): 1 or 0>
+//<Skill id>,<Cast: 1 or 0>,<Delay (Optional): 1 or 0>
 // Cast: With 1, dex does not affect the skill's cast rate
 // Cast: With 0, dex affects the skill's cast rate
 // Delay: With 1, dex does not affect the skill's delay rate
 // Delay: With 0, dex affects the skill's delay rate
-// Walk Delay: With 1, characters can't move while the skill's delay is active.
-// Walk Delay: With 0, characters can move as soon as the spell finishes casting.
 // Example - 46,1,1 = Double Strafe's casting time and delay is not affected by dex.
 // By default, dex NEVER affects after-cast delay, so no need of putting 'x,0,1' in this file
 
-136,0,0,1 //AS_SONICBLOW
 336,1	//WE_CALLPARTNER
 366,1	//HW_MAGICPOWER
 370,1	//CH_PALMSTRIKE
-394,0,0,1 //CG_ARROWVULCAN
 403,1	//PF_MEMORIZE
 408,1	//WE_BABY
 409,1	//WE_CALLPARENT

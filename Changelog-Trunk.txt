@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/03
+	* Added a column in skill_cast_db for specifying can't walk delays. It's
+	  all set to 0 currently, so someone get updating them! [Skotlex]
+	* Removed the apply walk-delay entry from skill_cast_nodex as the new walk
+	  delay column handles this now. [Skotlex]
+	* Fixed autoloot dropping the item to the ground even when it was
+	  autolooted. [Skotlex]
 	* Fixed character deletion working on SQL without an email address (Thanks to Valaris) [Zephiris]
 	* Added event 8 for mobspawns that should spawn with special ai set. This
 	  means that now in the mob_spawn files if you use 8 as the last entry, the

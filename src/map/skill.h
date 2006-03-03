@@ -48,7 +48,7 @@ struct skill_db {
 	char *desc;
 	int range[MAX_SKILL_LEVEL],hit,inf,pl,nk,splash[MAX_SKILL_LEVEL],max;
 	int num[MAX_SKILL_LEVEL];
-	int cast[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
+	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
 	int upkeep_time[MAX_SKILL_LEVEL],upkeep_time2[MAX_SKILL_LEVEL];
 	int castcancel,cast_def_rate;
 	int inf2,maxcount,skill_type;
@@ -58,7 +58,6 @@ struct skill_db {
 	int itemid[10],amount[10];
 	int castnodex[MAX_SKILL_LEVEL];
 	int delaynodex[MAX_SKILL_LEVEL];
-	int delaynowalk[MAX_SKILL_LEVEL];
 	int nocast;
 	int unit_id[2];
 	int unit_layout_type[MAX_SKILL_LEVEL];
@@ -150,6 +149,7 @@ int	skill_get_zeny( int id ,int lv );
 int	skill_get_num( int id ,int lv );
 int	skill_get_cast( int id ,int lv );
 int	skill_get_delay( int id ,int lv );
+int	skill_get_walkdelay( int id ,int lv );
 int	skill_get_time( int id ,int lv );
 int	skill_get_time2( int id ,int lv );
 int	skill_get_castdef( int id );

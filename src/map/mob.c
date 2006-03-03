@@ -2095,7 +2095,7 @@ static void mob_item_drop(struct mob_data *md, unsigned int tick, struct delay_i
 			ditem->first_sd->status.party_id?
 				party_search(ditem->first_sd->status.party_id):
 				NULL,
-			ditem->first_sd,&ditem->item_data)
+			ditem->first_sd,&ditem->item_data) == 0
 		) {
 			aFree(ditem);
 			return;
