@@ -767,6 +767,13 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 	if (!*str)
 		return AtCommand_None;
 
+	if (map[sd->bl.m].flag.nocommand &&
+		(gmlvl > 0? gmlvl:pc_isGM(sd)) < battle_config.gm_skilluncond)
+	{	//Command not allowed on this map.
+		sprintf(atcmd_output, msg_table[143]); 
+		clif_displaymessage(fd, atcmd_output);
+		return AtCommand_None;
+	}	
 	type = atcommand(sd, gmlvl > 0 ? gmlvl : pc_isGM(sd), str, &info);
 	if (type != AtCommand_None) {
 		char command[100];
@@ -5675,6 +5682,9 @@ int atcommand_mapinfo(
 		strcat(atcmd_output, "NoSkill | ");
 	if (map[m_id].flag.noicewall)
 		strcat(atcmd_output, "NoIcewall | ");
+	if (map[m_id].flag.nocommand)
+		strcat(atcmd_output, "NoCommand | ");
+		
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,"Other Flags: ");

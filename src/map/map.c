@@ -1573,6 +1573,8 @@ int map_quit(struct map_session_data *sd) {
 				status_change_end(&sd->bl,SC_SPURT,-1);
 			if(sd->sc.data[SC_BERSERK].timer!=-1)
 				status_change_end(&sd->bl,SC_BERSERK,-1);
+			if(sd->sc.data[SC_TRICKDEAD].timer!=-1)
+				status_change_end(&sd->bl,SC_TRICKDEAD,-1);
 		}
 		skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
 

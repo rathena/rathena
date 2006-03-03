@@ -2611,6 +2611,9 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	else if (strcmpi(w3,"nomvploot")==0) { // Lorky
 		map[m].flag.nomvploot=1;
 	}
+	else if (strcmpi(w3,"nocommand")==0) { // Skotlex
+		map[m].flag.nocommand=1;
+	}
 	else if (strcmpi(w3,"restricted")==0) { // Komurka
 		map[m].flag.restricted=1;
 		sscanf(w4, "%d", &map[m].zone);

@@ -725,7 +725,7 @@ int skillnotok(int skillid, struct map_session_data *sd)
 			return 1;
 	}
 
-	if (pc_isGM(sd) >= 20 && battle_config.gm_skilluncond)
+	if (battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
 		return 0;  // gm's can do anything damn thing they want
 
 	// Check skill restrictions [Celest]
@@ -7574,7 +7574,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 
 	nullpo_retr(0, sd);
 
-	if( battle_config.gm_skilluncond>0 &&
+	if( battle_config.gm_skilluncond &&
 		pc_isGM(sd)>= battle_config.gm_skilluncond &&
 		sd->skillitem != sd->skillid)
 	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]

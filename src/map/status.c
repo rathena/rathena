@@ -855,6 +855,18 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			if((r-=refinebonus[wlv][2])>0) //Overrefine bonus.
 				wd->overrefine = r*refinebonus[wlv][1];
 
+			if (wd == &sd->left_weapon) {
+				sd->attackrange_ += sd->inventory_data[index]->range;
+				sd->state.lr_flag = 1;
+				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+				sd->state.lr_flag = 0;
+			} else {
+				sd->attackrange += sd->inventory_data[index]->range;
+				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+			}
+			if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
+				return 1;
+
 			if(sd->status.inventory[index].card[0]==0x00ff)
 			{	// Forged weapon
 				wd->star += (sd->status.inventory[index].card[1]>>8);
@@ -865,17 +877,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 				if (!wd->atk_ele) //Do not overwrite element from previous bonuses.
 					wd->atk_ele = (sd->status.inventory[index].card[1]&0x0f);
 
-				if (wd == &sd->left_weapon) {
-					sd->attackrange_ += sd->inventory_data[index]->range;
-					sd->state.lr_flag = 1;
-					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
-					sd->state.lr_flag = 0;
-				} else {
-					sd->attackrange += sd->inventory_data[index]->range;
-					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
-				}
-				if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
-					return 1;
 			}
 		}
 		else if(sd->inventory_data[index]->type == 5) {
