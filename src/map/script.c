@@ -10532,28 +10532,28 @@ static int script_load_mapreg(void)
 		return -1;
 	}
 	ShowInfo("Success! Returning results ...\n");
-	mapregsql_res = mysql_store_result(&mmysql_handle);
-	if (mapregsql_res) {
-        while ((mapregsql_row = mysql_fetch_row(mapregsql_res))) {
+	sql_res = mysql_store_result(&mmysql_handle);
+	if (sql_res) {
+        while ((sql_row = mysql_fetch_row(sql_res))) {
 			char buf1[33], *p = NULL;
 			int i,v,s;
-			strcpy(buf1,mapregsql_row[0]);
+			strcpy(buf1,sql_row[0]);
 			if( buf1[strlen(buf1)-1]=='$' ){
-				i = atoi(mapregsql_row[1]);
-				p=(char *)aCallocA(strlen(mapregsql_row[2]) + 1,sizeof(char));
-				strcpy(p,mapregsql_row[2]);
+				i = atoi(sql_row[1]);
+				p=(char *)aCallocA(strlen(sql_row[2]) + 1,sizeof(char));
+				strcpy(p,sql_row[2]);
 				s= add_str((unsigned char *) buf1);
 				idb_put(mapregstr_db,(i<<24)|s,p);
 			}else{
 				s= add_str((unsigned char *) buf1);
-				v= atoi(mapregsql_row[2]);
-				i = atoi(mapregsql_row[1]);
+				v= atoi(sql_row[2]);
+				i = atoi(sql_row[1]);
 				idb_put(mapreg_db,(i<<24)|s,(void *)v);
 			}
 	    }        
 	}
 	ShowInfo("Freeing results...\n");
-	mysql_free_result(mapregsql_res);
+	mysql_free_result(sql_res);
 	mapreg_dirty=0;
 	perfomance = (gettick_nocache() - perfomance) / 1000;
 	ShowInfo("SQL Mapreg Loading Completed Under %d Seconds.\n",perfomance);
@@ -10582,7 +10582,7 @@ static int script_save_mapreg_intsub(DBKey key,void *data,va_list ap)
 	char *name=str_buf+str_data[num].str;
 	if ( name[1] != '@') {
 		sprintf(tmp_sql,"UPDATE `%s` SET `%s`='%d' WHERE `%s`='%s' AND `%s`='%d'",mapregsql_db,mapregsql_db_value,(int)data,mapregsql_db_varname,name,mapregsql_db_index,i);
-		if(mysql_query(&mmyregsql_handle, tmp_sql) ) {
+		if(mysql_query(&mmysql_handle, tmp_sql) ) {
 			ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
