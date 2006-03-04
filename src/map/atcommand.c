@@ -8383,7 +8383,7 @@ int atcommand_mute(
 		clif_GM_silence(sd, pl_sd, 0);
 		pl_sd->status.manner -= manner;
 		if(pl_sd->status.manner < 0)
-			status_change_start(&pl_sd->bl,SC_NOCHAT,100,0,0,0,0,0,0);
+			sc_start(&pl_sd->bl,SC_NOCHAT,100,0,0);
 	}
 	else {
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
@@ -9478,7 +9478,7 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 	if (id != bl->id && !pc_isGM(pl_sd)) {
 		pl_sd->status.manner -= time;
 		if (pl_sd->status.manner < 0)
-			status_change_start(&pl_sd->bl,SC_NOCHAT,100,0,0,0,0,0,0);
+			sc_start(&pl_sd->bl,SC_NOCHAT,100,0,0);
 	}
 	return 0;
 }

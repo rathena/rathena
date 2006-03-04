@@ -604,7 +604,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if (sd && pc_issit(sd)) pc_setstand(sd); //Stand it to dodge.
 			clif_skill_nodamage(bl,bl,TK_DODGE,1,1);
 			if (sc->data[SC_COMBO].timer == -1)
-				status_change_start(bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 0, 0, 2000, 0);
+				sc_start4(bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 0, 0, 2000);
 			return 0;
 		}
 
@@ -3041,9 +3041,9 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			int duration = skill_get_time2(MO_BLADESTOP,skilllv);
 			status_change_end(target, SC_BLADESTOP_WAIT, -1);
 			clif_damage(src, target, tick, status_get_amotion(src), 1, 0, 1, 0, 0); //Display MISS.
-			status_change_start(target, SC_BLADESTOP, 100, skilllv, 2, (int)target, (int)src, duration, 0);
+			sc_start4(target, SC_BLADESTOP, 100, skilllv, 2, (int)target, (int)src, duration);
 			skilllv = sd?pc_checkskill(sd, MO_BLADESTOP):1;
-			status_change_start(src, SC_BLADESTOP, 100, skilllv, 1, (int)src, (int)target, duration, 0);
+			sc_start4(src, SC_BLADESTOP, 100, skilllv, 1, (int)src, (int)target, duration);
 			return 0;
 		}
 
@@ -3098,7 +3098,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			if (sd->weapon_coma_race[boss?10:11] > 0)
 				rate += sd->weapon_coma_race[boss?10:11];
 			if (rate)
-				status_change_start(target, SC_COMA, rate/100, 0, 0, 0, 0, 0, 0);
+				status_change_start(target, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
 		}
 	}
 

@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/03
+	* status_change_start now checks on a 0->10000 scale, should fix sc-cards
+	  with very low rates never triggering (eg: some coma-inducing cards).
+	  [Skotlex]
+	* Cleaned up the active guild skills. They should be usable now by
+	  non-players as well. [Skotlex]
 	* Fixed crash on the NPC whisper system when the message's size was 1.
 	  [Skotlex]
 	* Strip status changes are now removed on logout. [Skotlex]

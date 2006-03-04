@@ -26,6 +26,13 @@
 
 =========================
 
+03/03
+	* Updated skill_cast_db time info for some skills: [Skotlex]
+	- Magnum's time2 is skill-block time
+	- St. Recovery/ Cure's time2 is the confuse/blind duration
+	- added NPC_POWERUP/NPC_AGIUP durations
+	- Napalm Vulcan's time2 is curse length
+	- Most of Tarot Card's effects last time2
 	* Adjusted SC durations for Meteor Assault [Skotlex]
 03/02
 	* Temp Plugs for NJ and GS items [Poki#3]

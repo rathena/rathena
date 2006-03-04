@@ -1630,11 +1630,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(b_sp != sd->status.sp)
 		clif_updatestatus(sd,SP_SP);
 
-	/* I don't think there's a need for this here. It should be handled in pc_damage and pc_heal. [Skotlex]
-	if(sd->status.hp<sd->status.max_hp>>2 && sd->sc.data[SC_AUTOBERSERK].timer!=-1 &&
-		(sd->sc.data[SC_PROVOKE].timer==-1 || sd->sc.data[SC_PROVOKE].val2==0) && !pc_isdead(sd))
-		status_change_start(&sd->bl,SC_PROVOKE,100,10,1,0,0,0,0);
-	*/
 	calculating = 0;
 	return 0;
 }
@@ -3435,7 +3430,7 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 /*==========================================
  * Starts a status change.
  * type = type, val1~4 depend on the type.
- * rate = base success rate. 100 = 100%
+ * rate = base success rate. 10000 = 100%
  * Tick is base duration
  * flag:
  * &1: Cannot be avoided (it has to start)
@@ -3475,7 +3470,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	//Check rate
 	if (!(flag&(4|1))) {
-		rate*=100; //Pass to 10000 = 100%
 		if (rate > 10000) //Shouldn't let this go above 100%
 			rate = 10000;
 		race = flag&8?0:status_get_sc_def(bl, type); //recycling race to store the sc_def value.
@@ -3657,7 +3651,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					tick = 60*1000;
 				if (sd && sd->status.hp<sd->status.max_hp>>2 &&
 					(sc->data[SC_PROVOKE].timer==-1 || sc->data[SC_PROVOKE].val2==0))
-					status_change_start(bl,SC_PROVOKE,10,100,1,0,0,0,0);
+					sc_start4(bl,SC_PROVOKE,100,10,1,0,0,0);
 			}
 			break;
 		
@@ -4036,7 +4030,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					for (i = 0; i < 5; i++)
 					{	//Pass the status to the other affected chars. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(&tsd->bl,SC_AUTOGUARD,100,val1,val2,0,0,tick,1);
+							status_change_start(&tsd->bl,SC_AUTOGUARD,10000,val1,val2,0,0,tick,1);
 					}
 			}
 			break;
@@ -4052,7 +4046,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					for (i = 0; i < 5; i++)
 					{	//See if there are devoted characters, and pass the status to them. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(&tsd->bl,SC_DEFENDER,100,val1,val2,0,0,tick,1);
+							status_change_start(&tsd->bl,SC_DEFENDER,10000,val1,val2,0,0,tick,1);
 					}
 			}
 			break;
@@ -4077,7 +4071,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_JOINTBEAT: // Random break [DracoRPG]
 			calc_flag = 1;
 			val2 = rand()%6;
-			if (val2 == 5) status_change_start(bl,SC_BLEEDING,100,val1,0,0,0,skill_get_time2(StatusSkillChangeTable[type],val1),0);
+			if (val2 == 5) sc_start(bl,SC_BLEEDING,100,val1,skill_get_time2(StatusSkillChangeTable[type],val1));
 			break;
 
 		case SC_BERSERK:		/* バ?サ?ク */
@@ -4186,14 +4180,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			//once the Crusader's status changes, it will reflect on the others. 
 				int type2 = SC_AUTOGUARD;
 				if (src->sc.data[type2].timer != -1)
-					status_change_start(bl,type2,100,
-						src->sc.data[type2].val1,0,0,0,
-						skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1),0);
+					sc_start(bl,type2,100,src->sc.data[type2].val1,skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1));
 				type2 = SC_DEFENDER;
 				if (src->sc.data[type2].timer != -1)
-					status_change_start(bl,type2,100,
-						src->sc.data[type2].val1,0,0,0,
-						skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1),0);
+					sc_start(bl,type2,100,src->sc.data[type2].val1,skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1));
 			}
 			break;
 		}
@@ -4217,7 +4207,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				struct status_change *sc2 = src?status_get_sc(src):NULL;
 				if (src && sc2 && sc2->count) {
 					if (sc2->data[SC_CLOSECONFINE].timer == -1) //Start lock on caster.
-						status_change_start(src,SC_CLOSECONFINE,100,sc->data[type].val1,1,0,0,tick+1000,0);
+						sc_start4(src,SC_CLOSECONFINE,100,sc->data[type].val1,1,0,0,tick+1000);
 					else { //Increase count of locked enemies and refresh time.
 						sc2->data[SC_CLOSECONFINE].val2++;
 						delete_timer(sc2->data[SC_CLOSECONFINE].timer, status_change_timer);
@@ -4784,7 +4774,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					DIFF_TICK(gettick(), sc->data[type].val4) <= 1000 &&
 					(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
 				)
-					status_change_start(bl,SC_SPURT,100,sc->data[type].val1,0,0,0,skill_get_time2(StatusSkillChangeTable[type], sc->data[type].val1),0);
+					sc_start(bl,SC_SPURT,100,sc->data[type].val1,skill_get_time2(StatusSkillChangeTable[type], sc->data[type].val1));
 				calc_flag = 1;
 			break;
 			case SC_AUTOBERSERK:
@@ -5134,10 +5124,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			if (map_flag_gvg(sd->bl.m)) sp *= 5;
 			if (pc_damage_sp(sd, sp, 0) > 0) {
 				if ((++sc->data[type].val4) == 1) {
-					status_change_start(bl, SC_INCSTR,100,
-						1<<(sc->data[type].val1-1), 0, 0, 0,
+					sc_start(bl, SC_INCSTR,100,1<<(sc->data[type].val1-1),
 						(sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_ROGUE?10:1) //SL bonus -> x10 duration
-						*skill_get_time2(StatusSkillChangeTable[type],sc->data[type].val1), 0);
+						*skill_get_time2(StatusSkillChangeTable[type],sc->data[type].val1));
 				}
 				sc->data[type].timer = add_timer( /* タイマ?再設定 */
 					sc->data[type].val2+tick, status_change_timer, bl->id, data);

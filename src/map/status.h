@@ -481,7 +481,10 @@ int status_get_sc_def(struct block_list *bl, int type);
 #define status_get_sc_def_int(bl)	(status_get_sc_def(bl, SP_MDEF2))
 #define status_get_sc_def_luk(bl)	(status_get_sc_def(bl, SP_LUK))
 
-// ó‘ÔˆÙíŠÖ˜A skill.c ‚æ‚èˆÚ“®
+//Short version, receives rate in 1->100 range, and does not uses a flag setting.
+#define sc_start(bl, type, rate, val1, tick) status_change_start(bl,type,100*(rate),val1,0,0,0,tick,0)
+#define sc_start4(bl, type, rate, val1, val2, val3, val4, tick) status_change_start(bl,type,100*(rate),val1,val2,val3,val4,tick,0)
+
 int status_change_start(struct block_list *bl,int type,int rate,int val1,int val2,int val3,int val4,int tick,int flag);
 int status_change_end( struct block_list* bl , int type,int tid );
 int status_change_timer(int tid, unsigned int tick, int id, int data);

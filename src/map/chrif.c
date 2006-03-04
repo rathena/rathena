@@ -1227,7 +1227,7 @@ int chrif_load_scdata(int fd)
 			ShowWarning("chrif_load_scdata: Received invalid duration (%d ms) for status change %d (character %s)\n", data.tick, data.type, sd->status.name);
 			continue;
 		}
-		status_change_start(&sd->bl, data.type, 100, data.val1, data.val2, data.val3, data.val4, data.tick, 15);
+		status_change_start(&sd->bl, data.type, 10000, data.val1, data.val2, data.val3, data.val4, data.tick, 15);
 	}
 #endif
 	return 0;

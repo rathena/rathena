@@ -307,7 +307,7 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 		sd->status.sp=sd->status.max_sp;
 		if (sd->state.snovice_flag == 4) {
 			sd->state.snovice_flag = 0;
-			status_change_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],100,1,0,0,0,skill_get_time(MO_STEELBODY,1),0 );
+			sc_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],100,1,skill_get_time(MO_STEELBODY,1));
 		}
 	}
 	else {
@@ -846,7 +846,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	}
 
 	if(sd->status.manner < 0) //Needed or manner will always be negative.
-		status_change_start(&sd->bl,SC_NOCHAT,100,0,0,0,0,0,0);
+		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 	return 0;
 }
 
@@ -1113,14 +1113,14 @@ int pc_checkweighticon(struct map_session_data *sd)
 
 	if(flag==1){
 		if(sd->sc.data[SC_WEIGHT50].timer==-1)
-			status_change_start(&sd->bl,SC_WEIGHT50,100,0,0,0,0,0,1);
+			sc_start(&sd->bl,SC_WEIGHT50,100,0,0);
 	}else{
 		if(sd->sc.data[SC_WEIGHT50].timer!=-1)
 			status_change_end(&sd->bl,SC_WEIGHT50,-1);
 	} 
 	if(flag==2){
 		if(sd->sc.data[SC_WEIGHT90].timer==-1)
-			status_change_start(&sd->bl,SC_WEIGHT90,100,0,0,0,0,0,1);
+			sc_start(&sd->bl,SC_WEIGHT90,100,0,0);
 	}else{
 		if(sd->sc.data[SC_WEIGHT90].timer!=-1)
 			status_change_end(&sd->bl,SC_WEIGHT90,-1);
@@ -3609,8 +3609,7 @@ int pc_walktoxy (struct map_session_data *sd, int x, int y)
 	if (sd->sc.data && sd->sc.data[SC_MIRACLE].timer==-1 && ((sd->status.class_==JOB_STAR_GLADIATOR) || (sd->status.class_==JOB_STAR_GLADIATOR2)) && (rand()%10000 < battle_config.sg_miracle_skill_ratio) )
 	{
 		clif_displaymessage(sd->fd,"[Miracle of the Sun, Moon and Stars]");
-		status_change_start(&sd->bl,SC_MIRACLE,100,
-				1,0,0,0,battle_config.sg_miracle_skill_duration,0);
+		sc_start(&sd->bl,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
 	}
 
 	return 0;
@@ -4513,11 +4512,11 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 
 		//スパノビはキリエ、イムポ、マニピ、グロ、サフラLv1がかかる
 		if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE || (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON){
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,1,0,0,0,skill_get_time(PR_KYRIE,1),0 );
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_IMPOSITIO],100,1,0,0,0,skill_get_time(PR_IMPOSITIO,1),0 );
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],100,1,0,0,0,skill_get_time(PR_MAGNIFICAT,1),0 );
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_GLORIA],100,1,0,0,0,skill_get_time(PR_GLORIA,1),0 );
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_SUFFRAGIUM],100,1,0,0,0,skill_get_time(PR_SUFFRAGIUM,1),0 );
+			sc_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,1,skill_get_time(PR_KYRIE,1));
+			sc_start(&sd->bl,SkillStatusChangeTable[PR_IMPOSITIO],100,1,skill_get_time(PR_IMPOSITIO,1));
+			sc_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],100,1,skill_get_time(PR_MAGNIFICAT,1));
+			sc_start(&sd->bl,SkillStatusChangeTable[PR_GLORIA],100,1,skill_get_time(PR_GLORIA,1));
+			sc_start(&sd->bl,SkillStatusChangeTable[PR_SUFFRAGIUM],100,1,skill_get_time(PR_SUFFRAGIUM,1));
 		}
 
 		clif_misceffect(&sd->bl,0);
@@ -5270,7 +5269,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		if(sd->status.hp<sd->status.max_hp>>2 && sd->sc.data[SC_AUTOBERSERK].timer != -1 &&
 			(sd->sc.data[SC_PROVOKE].timer==-1 || sd->sc.data[SC_PROVOKE].val2==0 ))
 			// オ?トバ?サ?ク?動
-			status_change_start(&sd->bl,SC_PROVOKE,100,10,1,0,0,0,0);
+			sc_start4(&sd->bl,SC_PROVOKE,100,10,1,0,0,0);
 
 		sd->canlog_tick = gettick();
 
@@ -5329,7 +5328,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 			if (battle_config.pk_mode && ssd->status.manner >= 0 && battle_config.manner_system) {
 				ssd->status.manner -= 5;
 				if(ssd->status.manner < 0)
-					status_change_start(src,SC_NOCHAT,100,0,0,0,0,0,0);
+					sc_start(src,SC_NOCHAT,100,0,0);
 
 			// PK/Karma system code (not enabled yet) [celest]
 			// originally from Kade Online, so i don't know if any of these is correct ^^;
@@ -5585,9 +5584,9 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		if(battle_config.pc_invincible_time)
 			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 		if (resurrect_flag)
-			status_change_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,10,0,0,0,skill_get_time2(SL_KAIZEL, resurrect_flag),0);
+			sc_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,10,skill_get_time2(SL_KAIZEL, resurrect_flag));
 		else
-			status_change_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],100,1,0,0,0,skill_get_time(MO_STEELBODY,1),0 );
+			sc_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],100,1,skill_get_time(MO_STEELBODY,1));
 		return 0;
 	}
 
