@@ -1472,12 +1472,8 @@ int npc_stop_walking(struct npc_data *nd,int type)
 	}
 	if(type&0x01)
 		clif_fixnpcpos(nd);
-	if(type&0x02) {
-		int delay=status_get_dmotion(&nd->bl);
-		unsigned int tick = gettick();
-		if(nd->canmove_tick < tick)
-			nd->canmove_tick = tick + delay;
-	}
+	if(type&0x02)
+		battle_set_walkdelay(&nd->bl, gettick(), status_get_dmotion(&nd->bl), 1);
 
 	return 0;
 }

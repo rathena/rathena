@@ -54,6 +54,7 @@ int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp,in
 int battle_stopattack(struct block_list *bl);
 int battle_iswalking(struct block_list *bl);
 int battle_stopwalking(struct block_list *bl,int type);
+int battle_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type);
 
 // ’ÊíUŒ‚ˆ—‚Ü‚Æ‚ß
 int battle_weapon_attack( struct block_list *bl,struct block_list *target,

@@ -439,34 +439,52 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 	return damage*ratio/100;
 }
 
+/*==========================================
+ * Applies walk delay to character, considering that 
+ * if type is 0, this is a damage induced delay: if previous delay is active, do not change it.
+ * if type is 1, this is a skill induced delay: walk-delay may only be increased, not decreased.
+ *------------------------------------------
+ */
+int battle_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type)
+{
+	unsigned int *canmove_tick=NULL;
+	if (delay <= 0) return 0;
+	
+	switch (bl->type) {
+		case BL_PC:
+			canmove_tick = &((TBL_PC*)bl)->canmove_tick;
+			break;
+		case BL_MOB:
+			canmove_tick = &((TBL_MOB*)bl)->canmove_tick;
+			break;
+		case BL_NPC:
+			canmove_tick = &((TBL_NPC*)bl)->canmove_tick;
+			break;
+	}
+	if (!canmove_tick)
+		return 0;
+	if (type) {
+		if (DIFF_TICK(*canmove_tick, tick+delay) > 0)
+			return 0;
+	} else {
+		if (DIFF_TICK(*canmove_tick, tick) > 0)
+			return 0;
+	}
+	*canmove_tick = tick + delay;
+	return 1;
+}
+
 static int battle_walkdelay_sub(int tid, unsigned int tick, int id, int data)
 {
 	struct block_list *bl = map_id2bl(id);
 	if (!bl || status_isdead(bl))
 		return 0;
 	
-	switch (bl->type) {
-		case BL_PC:
-			{
-				struct map_session_data *sd = (struct map_session_data*)bl;
-				if (sd->walktimer != -1)
-					pc_stop_walking (sd,3);
-				if (sd->canmove_tick < tick)
-					sd->canmove_tick = tick + data;
-			}
-			break;
-		case BL_MOB:
-			{
-				struct mob_data *md = (struct mob_data*)bl;
-				if (md->state.state == MS_WALK)
-					mob_stop_walking(md,3);
-				if (md->canmove_tick < tick)
-					md->canmove_tick = tick + data;
-			}
-			break;
-	}
+	if (battle_set_walkdelay(bl, tick, data, 0))
+		battle_stopwalking(bl,3);
 	return 0;
 }
+
 /*==========================================
  * Applies walk delay based on attack type. [Skotlex]
  *------------------------------------------
@@ -489,31 +507,10 @@ int battle_walkdelay(struct block_list *bl, unsigned int tick, int adelay, int d
 	if (delay <= 0)
 		return 0;
 	
-	//See if it makes sense to set this trigger.
-	switch (bl->type) {
-		case BL_PC:
-		{
-			struct map_session_data *sd = (struct map_session_data*)bl;
-			if (DIFF_TICK(sd->canmove_tick, tick+adelay) > 0)
-				return 0;
-			if (!adelay) //No need of timer.
-				sd->canmove_tick = tick + delay;
-			break;	
-		}
-		case BL_MOB:
-		{
-			struct mob_data *md = (struct mob_data*)bl;
-			if (DIFF_TICK(md->canmove_tick, tick+adelay) > 0)
-				return 0;
-			if (!adelay) //No need of timer.
-				md->canmove_tick = tick + delay;			
-			break;
-		}
-		default:
-			return 0;
-	}
 	if (adelay > 0)
 		add_timer(tick+adelay, battle_walkdelay_sub, bl->id, delay);
+	else 
+		battle_set_walkdelay(bl, tick, delay, 0);
 	return 1;
 }
 
@@ -580,10 +577,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 				delay = 200;
 			else
 				delay = 100;
-			if(sd)
-				sd->canmove_tick = gettick() + delay;
-			else if(md)
-				md->canmove_tick = gettick() + delay;
+			battle_set_walkdelay(bl, gettick(), delay, 1);
 
 			if(sc->data[SC_SHRINK].timer != -1 && rand()%100<5*sc->data[SC_AUTOGUARD].val1)
 				skill_blown(bl,src,skill_get_blewcount(CR_SHRINK,1));

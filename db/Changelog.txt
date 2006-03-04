@@ -27,6 +27,10 @@
 =========================
 
 03/03
+	* Fixed missing baby-dancer job in exp2.txt [Skotlex]
+	* Added GrandCross's can't move delay of 900ms to skill_cast_db and Finger
+	  Offensive's can't move delay of 200ms/lv to skill_cast_db (values taken
+	  from the code) [Skotlex]
 	* Updated skill_cast_db time info for some skills: [Skotlex]
 	- Magnum's time2 is skill-block time
 	- St. Recovery/ Cure's time2 is the confuse/blind duration

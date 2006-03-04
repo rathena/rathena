@@ -1688,7 +1688,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 					pc_checkskill(sd, MO_CHAINCOMBO) > 0)
 					delay += 300 * battle_config.combo_delay_rate / 100;
 				sc_start4(src,SC_COMBO,100,MO_TRIPLEATTACK,skilllv,0,0,delay);
-				sd->attackabletime = sd->canmove_tick = tick + delay;
+				sd->attackabletime = tick + delay;
+				battle_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src, delay);
 				
 				if (sd->status.party_id>0) //bonus from SG_FRIEND [Komurka]
@@ -1702,7 +1703,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 					(pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,MO_CHAINCOMBO,skilllv,0,0,delay);
-				sd->attackabletime = sd->canmove_tick = tick + delay;
+				sd->attackabletime = tick + delay;
+				battle_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src,delay);
 				break;
 			}
@@ -1717,7 +1719,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,MO_COMBOFINISH,skilllv,0,0,delay);
-				sd->attackabletime = sd->canmove_tick = tick + delay;
+				sd->attackabletime = tick + delay;
+				battle_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src,delay);
 				break;
 			}
@@ -1731,7 +1734,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,CH_TIGERFIST,skilllv,0,0,delay);
-				sd->attackabletime = sd->canmove_tick = tick + delay;
+				sd->attackabletime = tick + delay;
+				battle_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src,delay);
 				break;
 			}
@@ -1741,7 +1745,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				if(damage < status_get_hp(bl))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,CH_CHAINCRUSH,skilllv,0,0,delay);
-				sd->attackabletime = sd->canmove_tick = tick + delay;
+				sd->attackabletime = tick + delay;
+				battle_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src,delay);
 				break;
 			}
@@ -1765,7 +1770,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case TK_DOWNKICK:
 			case TK_TURNKICK:
 			// Delay normal attack table until skill's delay has passed. Let's make it skip one attack motion. [Skotlex]
-				sd->attackabletime = sd->canmove_tick = tick + status_get_amotion(&sd->bl);
+				sd->attackabletime = tick + status_get_amotion(&sd->bl);
+				battle_set_walkdelay(src, tick, status_get_amotion(&sd->bl), 1);
 				break;
 			case SL_STIN:
 			case SL_STUN:
@@ -2610,7 +2616,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 				int i;
 				for (i = 1; i < sd->spiritball_old; i++)
 					skill_addtimerskill(src, tick + i * 200, bl->id, 0, 0, skillid, skilllv, BF_WEAPON, flag);
-				sd->canmove_tick = tick + (sd->spiritball_old - 1) * 200;
+//				sd->canmove_tick = tick + (sd->spiritball_old - 1) * 200; Should be handled by the canmove delay on skill_cast_db [Skotlex]
 			}
 			if (sc && sc->data[SC_BLADESTOP].timer != -1)
 				status_change_end(src,SC_BLADESTOP,-1);
@@ -2666,7 +2672,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 				clif_movechar(sd);
 				if(dx < 0) dx = -dx;
 				if(dy < 0) dy = -dy;
-				sd->attackabletime = sd->canmove_tick = tick + 100 + sd->speed * ((dx > dy)? dx:dy);
+				sd->attackabletime = tick + 100 + sd->speed * ((dx > dy)? dx:dy);
+				battle_set_walkdelay(src, tick, 100 + sd->speed * ((dx > dy)? dx:dy), 1);
 				if(sd->canact_tick < sd->canmove_tick)
 					sd->canact_tick = sd->canmove_tick;
 				sd->speed = speed;
@@ -3113,10 +3120,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
 			//These two are actually ground placed.
-			if(sd)
-				sd->canmove_tick = tick + 900;
-			else if(md)
-				mob_changestate(md,MS_DELAY,900);
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
 	}
 	tsc = status_get_sc(bl);
@@ -4755,8 +4758,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				sc_start(bl,type,100,skilllv,skill_time));
 			if (md)
 				mob_changestate(md,MS_DELAY,skill_time);
-			else if (sd)
-				sd->attackabletime = sd->canmove_tick = tick + skill_time;
+			else 
+				battle_set_walkdelay(bl, tick, skill_time, 1);
 		}
 		break;
 
@@ -5547,7 +5550,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 	nullpo_retr(0, sd);
 
 //Code cleanup.
-#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->canact_tick = sd->canmove_tick = tick; sd->skilltarget = 0; }
+#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->canact_tick = tick; sd->skilltarget = 0; }
 
 	if(sd->skillid != SA_CASTCANCEL && sd->skilltimer != tid )
 	{	/* タイマIDの確認 */
@@ -5654,7 +5657,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 		sd->canact_tick = tick;
 	else
 		sd->canact_tick = tick + skill_delayfix(&sd->bl, sd->skillid, sd->skilllv, 0);
-	sd->canmove_tick = tick + skill_get_walkdelay(sd->skillid, sd->skilllv);
+	battle_set_walkdelay(&sd->bl, tick, skill_get_walkdelay(sd->skillid, sd->skilllv), 1);
 	if (skill_get_casttype(sd->skillid) == CAST_NODAMAGE)
 		skill_castend_nodamage_id(&sd->bl,bl,sd->skillid,sd->skilllv,tick,0);
 	else
@@ -5686,7 +5689,7 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 	nullpo_retr(0, sd);
 
 //Code cleanup.
-#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->canact_tick = sd->canmove_tick = tick; }
+#define skill_failed(sd) { sd->skillid = sd->skilllv = sd->skillitem = sd->skillitemlv = -1; sd->canact_tick = tick; }
 
 	if( sd->skilltimer != tid )
 	{	/* タイマIDの確認 */
@@ -5761,7 +5764,7 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 	pc_stop_walking(sd,0);
 
 	sd->canact_tick = tick + skill_delayfix(&sd->bl, sd->skillid, sd->skilllv, 0);
-	sd->canmove_tick = tick + skill_get_walkdelay(sd->skillid, sd->skilllv);
+	battle_set_walkdelay(&sd->bl, tick, skill_get_walkdelay(sd->skillid, sd->skilllv), 1);
 
 	skill_castend_pos2(&sd->bl,sd->skillx,sd->skilly,sd->skillid,sd->skilllv,tick,0);
 
@@ -7289,7 +7292,6 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	struct map_session_data *sd;
 	struct map_session_data *tsd;
 	int *p_sd;	//Contains the list of characters found.
-	unsigned int tick = gettick();
 
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
@@ -7327,7 +7329,7 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 		default: //Warning: Assuming Ensemble Dance/Songs for code speed. [Skotlex]
 			{
 				int skilllv;
-				if(pc_issit(tsd) || tsd->skilltimer!=-1 || tsd->canmove_tick > tick)
+				if(pc_issit(tsd) || !pc_can_move(tsd))
 					return 0;
 				if (sd->status.sex != tsd->status.sex &&
 						(tsd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER &&
@@ -8561,12 +8563,10 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 	sd->skillx = 0;
 	sd->skilly = 0;
 	sd->canact_tick = tick + casttime + 100;
-	//Recycling forcecast to store the skill's level. [Skotlex]
-	sd->canmove_tick = tick + (casttime>0 && (forcecast = pc_checkskill(sd,SA_FREECAST)) > 0?0:casttime);
 
 	if (casttime > 0) {
 		sd->skilltimer = add_timer (tick + casttime, skill_castend_id, sd->bl.id, 0);
-		if (forcecast > 0)
+		if ((forcecast = pc_checkskill(sd,SA_FREECAST)) > 0)
 			status_quick_recalc_speed (sd, SA_FREECAST, forcecast, 1);
 		else
 			pc_stop_walking(sd,0);
@@ -8678,11 +8678,10 @@ int skill_use_pos (struct map_session_data *sd, int skill_x, int skill_y, int sk
 
 	sd->skilltarget	= 0;
 	sd->canact_tick = tick + casttime + 100;
-	sd->canmove_tick = tick + (casttime>0 && (skill = pc_checkskill(sd,SA_FREECAST))>0?0:casttime);
 
 	if (casttime > 0) {
 		sd->skilltimer = add_timer(tick + casttime, skill_castend_pos, sd->bl.id, 0);
-		if (skill > 0)
+		if ((skill = pc_checkskill(sd,SA_FREECAST))>0)
 			status_quick_recalc_speed (sd, SA_FREECAST, skill, 1);
 		else
 			pc_stop_walking(sd,0);
@@ -8709,12 +8708,11 @@ int skill_castcancel (struct block_list *bl, int type)
 		struct map_session_data *sd = (struct map_session_data *)bl;
 		unsigned long tick = gettick();
 		nullpo_retr(0, sd);
-		sd->canact_tick = tick;
-		sd->canmove_tick = tick;
 		if (sd->skilltimer != -1) {
 			if ((ret = pc_checkskill(sd,SA_FREECAST)) > 0) {
 				status_quick_recalc_speed(sd, SA_FREECAST, ret, 0);	//Updated to use calc_speed [Skotlex]
 			}
+			sd->canact_tick = tick;
 			if (!type) {
 				if (skill_get_inf( sd->skillid ) & INF_GROUND_SKILL)
 					ret = delete_timer( sd->skilltimer, skill_castend_pos );

@@ -360,6 +360,9 @@ int pc_can_move(struct map_session_data *sd)
 	if ((sd->sc.option & OPTION_HIDE) && pc_checkskill(sd, RG_TUNNELDRIVE) <= 0)
 		return 0;
 
+	if (sd->skilltimer != -1 && pc_checkskill(sd, SA_FREECAST) <= 0)
+		return 0;
+	
 	if (pc_issit(sd))
 		return 0; //Can't move while sitting...
 	

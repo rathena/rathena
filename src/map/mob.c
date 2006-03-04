@@ -741,7 +741,7 @@ static int mob_attack(struct mob_data *md,unsigned int tick,int data)
 	//Use the attack delay for next can attack try
 	//But use the attack motion to know when it can start moving. [Skotlex]
 	md->attackabletime = tick + status_get_adelay(&md->bl);
-	md->canmove_tick = tick + status_get_amotion(&md->bl);
+	battle_set_walkdelay(&md->bl, tick, status_get_amotion(&md->bl), 1);
 
 	md->timer=add_timer(md->attackabletime,mob_timer,md->bl.id,0);
 	md->state.state=MS_ATTACK;
