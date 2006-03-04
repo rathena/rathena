@@ -2984,23 +2984,23 @@ int parse_admin(int fd) {
 int lan_subnetcheck(unsigned char *p) {
 
 	int i;
-	unsigned char *sbn, *msk;
+	unsigned char *sbn, *msk, *src = (unsigned char *)p;
 	
 	for(i=0; i<subnet_count; i++) {
 	
-		if((subnet[i].subnet & subnet[i].mask) == ((long)p & subnet[i].mask)) {
+		if((subnet[i].subnet & subnet[i].mask) == (*p & subnet[i].mask)) {
 			
 			sbn = (char *)&subnet[i].subnet;
 			msk = (char *)&subnet[i].mask;
 			
-			ShowMessage("Subnet check result: "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
-				sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
+			ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
+				src[0], src[1], src[2], src[3], sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
 			
 			return subnet[i].char_ip;
 		}
 	}
 	
-	ShowMessage("Subnet check result: "CL_CYAN"no matches."CL_RESET"\n");
+	ShowInfo("Subnet check [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", src[0], src[1], src[2], src[3]);
 	return 0;
 }
 
