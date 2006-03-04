@@ -2981,7 +2981,7 @@ int parse_admin(int fd) {
 // Test to know if an IP come from LAN or WAN.
 // Rewrote: Adnvanced subnet check [LuzZza]
 //--------------------------------------------
-int lan_subnetcheck(unsigned char *p) {
+int lan_subnetcheck(long *p) {
 
 	int i;
 	unsigned char *sbn, *msk, *src = (unsigned char *)p;
@@ -3105,11 +3105,11 @@ int parse_login(int fd) {
 					else
 						ShowInfo("Connection of the account '%s' accepted.\n", account.userid);
 					server_num = 0;
-                    WFIFOHEAD(fd, 47+32*MAX_SERVERS);
+					WFIFOHEAD(fd, 47+32*MAX_SERVERS);
 					for(i = 0; i < MAX_SERVERS; i++) {
 						if (server_fd[i] >= 0) {
 						    // Andvanced subnet check [LuzZza]
-							if((subnet_char_ip = lan_subnetcheck(p)))
+							if((subnet_char_ip = lan_subnetcheck((long*)p)))
 								WFIFOL(fd,47+server_num*32) = subnet_char_ip;
 							else
 								WFIFOL(fd,47+server_num*32) = server[i].ip;

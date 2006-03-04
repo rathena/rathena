@@ -570,7 +570,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 
 	sprintf(ip, "%d.%d.%d.%d", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
-	ShowInfo("auth start for %s...\n", ip);
+	//ShowInfo("auth start for %s...\n", ip);
 	
 	//accountreg with _M/_F .. [Sirius]
 	len = strlen(account->userid) -2;
@@ -664,11 +664,11 @@ int mmo_auth( struct mmo_account* account , int fd){
 		} else {
 			jstrescapecpy(user_password, account->passwd);
 		}
-		ShowInfo("account id ok encval:%d\n",account->passwdenc);
+		//ShowInfo("account id ok encval:%d\n",account->passwdenc);
 #ifdef PASSWORDENC
 		if (account->passwdenc > 0) {
 			int j = account->passwdenc;
-			ShowInfo("start md5calc..\n");
+			//ShowInfo("start md5calc..\n");
 			if (j > 2)
 				j = 1;
 			do {
@@ -678,13 +678,13 @@ int mmo_auth( struct mmo_account* account , int fd){
 					sprintf(md5str, "%s%s", sql_row[2], md5key);
 				} else
 					md5str[0] = 0;
-				ShowDebug("j:%d mdstr:%s\n", j, md5str);
+				//ShowDebug("j:%d mdstr:%s\n", j, md5str);
 				MD5_String2binary(md5str, md5bin);
 				encpasswdok = (memcmp(user_password, md5bin, 16) == 0);
 			} while (j < 2 && !encpasswdok && (j++) != account->passwdenc);
 			//printf("key[%s] md5 [%s] ", md5key, md5);
-			ShowInfo("client [%s] accountpass [%s]\n", user_password, sql_row[2]);
-			ShowInfo("end md5calc..\n");
+			//ShowInfo("client [%s] accountpass [%s]\n", user_password, sql_row[2]);
+			//ShowInfo("end md5calc..\n");
 		}
 #endif
 		if ((strcmp(user_password, sql_row[2]) && !encpasswdok)) {
@@ -709,7 +709,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 			}
 			return 1;
 		}
-		ShowInfo("auth ok %s %s" RETCODE, tmpstr, account->userid);
+		//ShowInfo("auth ok %s %s" RETCODE, tmpstr, account->userid);
 	}
 
 /*

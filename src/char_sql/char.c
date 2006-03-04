@@ -2919,7 +2919,7 @@ int lan_subnetcheck(long *p) {
 			ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
 				src[0], src[1], src[2], src[3], sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
 			
-			return subnet[i].char_ip;
+			return subnet[i].map_ip;
 		}
 	}
 	
