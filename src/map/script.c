@@ -7429,7 +7429,7 @@ int buildin_mapwarp(struct script_state *st)	// Added by RoVeRT
 		return 0;
 
 	map_foreachinarea(buildin_areawarp_sub,
-		m,x0,y0,x1,y1,BL_PC,	str,x,y );
+		m,x0,y0,x1,y1,BL_PC, map_mapname2mapid(str),x,y );
 	return 0;
 }
 
@@ -9038,7 +9038,7 @@ int buildin_logmes(struct script_state *st)
 
 int buildin_summon(struct script_state *st)
 {
-	int _class, id;
+	int _class, id, timeout=0;
 	char *str,*event="";
 	struct map_session_data *sd;
 	struct mob_data *md;
@@ -9049,14 +9049,16 @@ int buildin_summon(struct script_state *st)
 		str	=conv_str(st,& (st->stack->stack_data[st->start+2]));
 		_class=conv_num(st,& (st->stack->stack_data[st->start+3]));
 		if( st->end>st->start+4 )
-			event=conv_str(st,& (st->stack->stack_data[st->start+4]));
+			timeout=conv_num(st,& (st->stack->stack_data[st->start+4]));
+		if( st->end>st->start+5 )
+			event=conv_str(st,& (st->stack->stack_data[st->start+5]));
 
 		id=mob_once_spawn(sd, "this", 0, 0, str,_class,1,event);
 		if((md=(struct mob_data *)map_id2bl(id))){
 			md->master_id=sd->bl.id;
 			md->special_state.ai=1;
 			md->mode=mob_db(md->class_)->mode|0x04;
-			md->deletetimer=add_timer(tick+60000,mob_timer_delete,id,0);
+			md->deletetimer=add_timer(tick+(timeout<=0?timeout*1000:60000),mob_timer_delete,id,0);
 			clif_misceffect2(&md->bl,344);
 		}
 		clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
