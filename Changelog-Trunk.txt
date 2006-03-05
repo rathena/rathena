@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/05
+	* Set the default for display_delay_skill_fail to 'no' as it should have been
+	  for a while (the kRO patch about that was last year, long time ago) [DracoRPG]
 	* Fixed easter.txt typo. [Lance]
 	* Extended summon command to enable custom timeouts. [Lance]
 

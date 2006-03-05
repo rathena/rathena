@@ -28,6 +28,8 @@ Nexon
 Date		Added
 ======
 
+03/05
+	* Used "Laboratory Passport" everywhere in the cube room quest, else how can ppl guess the name? xD [DracoRPG]
 03/02
 	* Added Skotlex's updated marriage script [Vicious]
 	* Added eACC scripts, thanks to davidchak [Vicious]
