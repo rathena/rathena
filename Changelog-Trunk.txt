@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/05
+	* Fixed animation of Redemptio [Skotlex]
 	* Some reorganization of how the skill check functions behave
 	  (skill_get_*). Guild skills have been moved to the range 900~915 (instead
 	  of 500~519 in the code). [Skotlex]

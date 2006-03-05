@@ -3220,7 +3220,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;			/* PVP‚Å•œŠˆ•s‰Â”\?‘Ô */
 
 			if (pc_isdead(dstsd)) {	/* Ž€–S”»’è */
-				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				clif_skill_nodamage(src,bl,ALL_RESURRECTION,skilllv,1); //Both Redemption and Res show this skill-animation.
 				switch(skilllv){
 				case 1: per=10; break;
 				case 2: per=30; break;
