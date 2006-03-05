@@ -14,8 +14,7 @@
 
 //Constants to identify the skill's inf value:
 #define INF_ATTACK_SKILL 1
-//For the time being, all trap-targetted skills ARE ground based:
-#define INF_GROUND_SKILL (2|32)
+#define INF_GROUND_SKILL 2
 // Skills casted on self where target is automatically chosen:
 #define INF_SELF_SKILL 4
 #define INF_SUPPORT_SKILL 16
