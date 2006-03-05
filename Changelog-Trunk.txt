@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/05
+	* Some reorganization of how the skill check functions behave
+	  (skill_get_*). Guild skills have been moved to the range 900~915 (instead
+	  of 500~519 in the code). [Skotlex]
 	* Set the default for display_delay_skill_fail to 'no' as it should have been
 	  for a while (the kRO patch about that was last year, long time ago) [DracoRPG]
 	* Fixed easter.txt typo. [Lance]

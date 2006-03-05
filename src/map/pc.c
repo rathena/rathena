@@ -3382,9 +3382,9 @@ int pc_run(struct map_session_data *sd, int skilllv, int dir)
 	if(to_x == sd->bl.x && to_y == sd->bl.y){
 		if(sd->sc.data[SC_RUN].timer!=-1)
 			status_change_end(&sd->bl,SC_RUN,-1);
-	} else
-		pc_walktoxy(sd, to_x, to_y);
-
+		return 0;
+	}
+	pc_walktoxy(sd, to_x, to_y);
 	return 1;
 }
 /*==========================================

@@ -2062,7 +2062,7 @@ int clif_walkok(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-      WFIFOHEAD(fd, packet_len_table[0x87]);
+	WFIFOHEAD(fd, packet_len_table[0x87]);
 	WFIFOW(fd,0)=0x87;
 	WFIFOL(fd,2)=gettick();
 	WFIFOPOS2(fd,6,sd->bl.x,sd->bl.y,sd->to_x,sd->to_y);
@@ -7613,13 +7613,13 @@ int clif_guild_skillinfo(struct map_session_data *sd)
 	g=guild_search(sd->status.guild_id);
 	if(g==NULL)
 		return 0;
-        WFIFOHEAD(fd, MAX_GUILDSKILL * 37 + 6);
+	WFIFOHEAD(fd, MAX_GUILDSKILL * 37 + 6);
 	WFIFOW(fd,0)=0x0162;
 	WFIFOW(fd,4)=g->skill_point;
 	for(i=c=0;i<MAX_GUILDSKILL;i++){
 		if(g->skill[i].id>0 && guild_check_skill_require(g,g->skill[i].id)){
 			WFIFOW(fd,c*37+ 6) = id = g->skill[i].id;
-			WFIFOW(fd,c*37+ 8) = guild_skill_get_inf(id);
+			WFIFOW(fd,c*37+ 8) = skill_get_inf(id);
 			WFIFOW(fd,c*37+10) = 0;
 			WFIFOW(fd,c*37+12) = g->skill[i].lv;
 			WFIFOW(fd,c*37+14) = skill_get_sp(id,g->skill[i].lv);

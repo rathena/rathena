@@ -63,20 +63,6 @@ int guild_gvg_eliminate_timer(int tid,unsigned int tick,int id,int data);
 int guild_save_sub(int tid,unsigned int tick,int id,int data);
 static int guild_send_xy_timer(int tid,unsigned int tick,int id,int data);
 
-// ギルドスキルdbのアクセサ（今は直打ちで代用）
-// Modified for new skills [Sara]
-int guild_skill_get_inf(int id)
-{
-	switch(id) {
-		case GD_BATTLEORDER:
-		case GD_REGENERATION:
-		case GD_RESTORE:
-		case GD_EMERGENCYCALL:
-			return 4;
-	}
-	return 0;
-}
-
  // Modified [Komurka]
 int guild_skill_get_max (int id)
 {

@@ -30,6 +30,9 @@
 #include "date.h"
 
 #define SKILLUNITTIMER_INVERVAL	100
+//Guild Skills are shifted to these to make them stick into the skill array.
+#define GD_SKILLRANGEMIN 900
+#define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
 #define swap(x,y) { int t; t = x; x = y; y = t; }
 
 int skill_names_id[MAX_SKILL_DB];
@@ -577,20 +580,21 @@ struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 // for values that don't require level just put a one (putting 0 will trigger return 0; instead
 // for values that might need to use a different function just skill_chk would suffice.
 #define skill_chk(i, l) \
-	if (i >= 10000 && i < 10015) {i -= 9500;} \
-	if (i < 1 || i > MAX_SKILL_DB) {return 0;} \
+	if (i >= GD_SKILLRANGEMIN && i <= GD_SKILLRANGEMAX) { return 0; } \
+	if (i >= GD_SKILLBASE) {i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;} \
+	if (i < 1 || i >= MAX_SKILL_DB) {return 0;} \
 	if (l <= 0 || l > MAX_SKILL_LEVEL) {return 0;}
 #define skill_get(var, i, l) \
 	{ skill_chk(i, l); return var; }
 
 // Skill DB
 int	skill_get_hit( int id ){ skill_get (skill_db[id].hit, id, 1); }
-int	skill_get_inf( int id ){ skill_chk (id, 1); return (id < 500 || id > 1000) ? skill_db[id].inf : guild_skill_get_inf(id); }
+int	skill_get_inf( int id ){ skill_get (skill_db[id].inf, id, 1); }
 int	skill_get_pl( int id ){ skill_get (skill_db[id].pl, id, 1); }
 int	skill_get_nk( int id ){ skill_get (skill_db[id].nk, id, 1); }
-int	skill_get_max( int id ){ skill_chk (id, 1); return (id < 500 || id > 1000) ? skill_db[id].max : guild_skill_get_max(id); }
-int	skill_get_range( int id , int lv ){ skill_chk (id, lv); return (id < 500 || id > 1000) ? skill_db[id].range[lv-1] : 0; }
-int	skill_get_splash( int id , int lv ){ skill_chk (id, lv); return (id < 500 || id > 1000) ? (skill_db[id].splash[lv-1]>=0?skill_db[id].splash[lv-1]:AREA_SIZE) : 0; }
+int	skill_get_max( int id ){ skill_get (skill_db[id].max, id, 1); }
+int	skill_get_range( int id , int lv ){ skill_get(skill_db[id].range[lv-1], id, lv); }
+int	skill_get_splash( int id , int lv ){ skill_chk (id, lv); return (skill_db[id].splash[lv-1]>=0?skill_db[id].splash[lv-1]:AREA_SIZE); }
 int	skill_get_hp( int id ,int lv ){ skill_get (skill_db[id].hp[lv-1], id, lv); }
 int	skill_get_sp( int id ,int lv ){ skill_get (skill_db[id].sp[lv-1], id, lv); }
 int	skill_get_zeny( int id ,int lv ){ skill_get (skill_db[id].zeny[lv-1], id, lv); }
@@ -618,9 +622,13 @@ int	skill_get_unit_range( int id ){ skill_get (skill_db[id].unit_range, id, 1); 
 int	skill_get_unit_target( int id ){ skill_get ((skill_db[id].unit_target&BCT_ALL), id, 1); }
 int	skill_get_unit_bl_target( int id ){ skill_get ((skill_db[id].unit_target&BL_ALL), id, 1); }
 int	skill_get_unit_flag( int id ){ skill_get (skill_db[id].unit_flag, id, 1); }
-const char*	skill_get_name( int id ){ 
-	if (id >= 10000 && id < 10015) id -= 9500;
-	if (id < 1 || id > MAX_SKILL_DB || skill_db[id].name==NULL) return "UNKNOWN_SKILL"; //Can't use skill_chk because we return a string.
+const char*	skill_get_name( int id ){
+	if (id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX)
+		return "UNKNOWN_SKILL";
+	if (id >= GD_SKILLBASE)
+		id = GD_SKILLRANGEMIN + id - GD_SKILLBASE;
+	if (id < 1 || id > MAX_SKILL_DB || skill_db[id].name==NULL)
+		return "UNKNOWN_SKILL"; //Can't use skill_chk because we return a string.
 	return skill_db[id].name; 
 }
 
@@ -2561,13 +2569,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
 		break;
 	case TK_JUMPKICK:
-		if(sd) {
-			if (!pc_can_move(sd))
-				return 0;
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-			pc_movepos(sd,bl->x,bl->y,0); 
-			clif_slide(src,bl->x,bl->y);
+		if (sd && !pc_can_move(sd)) {
+			map_freeblock_unlock();
+			return 1;
 		}
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		if (sd) pc_movepos(sd,bl->x,bl->y,0);
+		else map_moveblock(src, bl->y, bl->y, tick);
+		clif_slide(src,bl->x,bl->y);
 		break;
 	case ASC_BREAKER:				/* ソウルブレ?カ? */	// [DracoRPG]
 		// Separate weapon and magic attacks
@@ -4552,8 +4561,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			int x,y, dir = status_get_dir(src);
 
-			if (md && !mob_can_move(md))
-				return 0;
+			if (md && !mob_can_move(md)) {
+				map_freeblock_unlock();
+				return 1;
+			}
 
 			x = src->x + dirx[dir]*skilllv*2;
 			y = src->y + diry[dir]*skilllv*2;
@@ -11006,9 +11017,13 @@ int skill_readdb(void)
 			continue;
 
 		i=atoi(split[0]);
-		if (i>=10000 && i<10015) // for guild skills [Celest]
-			i -= 9500;
-		else if(i<=0 || i>MAX_SKILL_DB)
+		if (i >= GD_SKILLRANGEMIN && i <= GD_SKILLRANGEMAX) {
+			ShowWarning("read skill_db: Can't use skill id %d as guild skills are placed there!\n");
+			continue;
+		}
+		if (i >= GD_SKILLBASE)
+			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
 		skill_split_atoi(split[1],skill_db[i].range);
