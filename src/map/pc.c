@@ -4628,44 +4628,30 @@ int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int jo
 			}
 		}
 	}
-
-	// Do not give the player any EXP if they are at the highest level
-	// Prevents them from sharing excess EXP in a party
-	if(pc_maxbaselv(sd) > sd->status.base_level)
-	{	
-		//Overflow checks... think we'll ever really need'em? [Skotlex]
-		if (base_exp > 0 && sd->status.base_exp > UINT_MAX - base_exp)
-			sd->status.base_exp = UINT_MAX;
-		else if (base_exp < 0 && sd->status.base_exp > base_exp)
-			sd->status.base_exp = 0;
-		else
-			sd->status.base_exp += base_exp;
 	
-		while(pc_checkbaselevelup(sd)) ;
+	//Overflow checks... think we'll ever really need'em? [Skotlex]
+	if (base_exp > 0 && sd->status.base_exp > UINT_MAX - base_exp)
+		sd->status.base_exp = UINT_MAX;
+	else if (base_exp < 0 && sd->status.base_exp > base_exp)
+		sd->status.base_exp = 0;
+	else
+		sd->status.base_exp += base_exp;
+	
+	while(pc_checkbaselevelup(sd)) ;
 
-		clif_updatestatus(sd,SP_BASEEXP);
-	} else {
-		base_exp = 0;
-	}
+	clif_updatestatus(sd,SP_BASEEXP);
 
-	// Do not give the player any EXP if they are at the highest level
-	// Prevents them from sharing excess EXP in a party	
-	if(pc_maxjoblv(sd) > sd->status.job_level)
-	{
-		//Overflow checks... think we'll ever really need'em? [Skotlex]
-		if (job_exp > 0 && sd->status.job_exp > UINT_MAX - job_exp)
-			sd->status.job_exp = UINT_MAX;
-		else if (job_exp < 0 && sd->status.job_exp > job_exp)
-			sd->status.job_exp = 0;
-		else
-			sd->status.job_exp += job_exp;
+	//Overflow checks... think we'll ever really need'em? [Skotlex]
+	if (job_exp > 0 && sd->status.job_exp > UINT_MAX - job_exp)
+		sd->status.job_exp = UINT_MAX;
+	else if (job_exp < 0 && sd->status.job_exp > job_exp)
+		sd->status.job_exp = 0;
+	else
+		sd->status.job_exp += job_exp;
 
-		while(pc_checkjoblevelup(sd)) ;
+	while(pc_checkjoblevelup(sd)) ;
 
-		clif_updatestatus(sd,SP_JOBEXP);
-	} else {
-		job_exp = 0;
-	}
+	clif_updatestatus(sd,SP_JOBEXP);
 
 	if(sd->state.showexp){
 		sprintf(output,
