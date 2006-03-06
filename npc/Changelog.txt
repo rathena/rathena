@@ -27,7 +27,9 @@ Nexon
 
 Date		Added
 ======
-
+03/06
+	* Fixed Thanatos warps: tha_t06,tha_t06a,tha_t06b,tha_t05a thanks to Justin84 [Lupus]
+	- Added Temp Thanatos Keys solution (more close to official than that Thanatos Statues Quest)
 03/05
 	* Used "Laboratory Passport" everywhere in the cube room quest, else how can ppl guess the name? xD [DracoRPG]
 03/02
