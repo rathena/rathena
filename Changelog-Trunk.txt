@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/06
+	* Fixed npc_event doing a map-check when the npc is not on any map.
+	  [Skotlex]
 	* Fixed a debug message showing up on skill castend nodamage id when using
 	  a guild skill. [Skotlex]
 	* Fixed #save not working on maps not in the current map server. [Skotlex]
