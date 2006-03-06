@@ -383,7 +383,7 @@
 362,4,6,4,0,1,0,5,1,yes,0,0,0,magic,2	//HP_BASILICA#Basilica#
 363,0,0,0,0,0,0,10,0,no,0,0,0,magic,0	//HP_MEDITATIO#Meditatio#
 364,0,0,0,0,0,0,10,1,no,0,0,0,magic,0	//HW_SOULDRAIN#Soul Drain#
-365,9,8,1,0,0,0,1,1,yes,0,0,0,magic,0	//HW_MAGICCRASHER#Stave Crasher#
+365,9,8,1,-1,0,0,1,1,yes,0,0,0,magic,0	//HW_MAGICCRASHER#Stave Crasher#
 366,0,6,4,0,1,0,10,1,no,0,0,0,magic,0	//HW_MAGICPOWER#Mystical Amplification#
 367,9,8,1,0,0,0,5,1,no,0,0,0,misc,0	//PA_PRESSURE#Gloria Domini#
 368,0,6,4,0,1,0,5,1,yes,0,0,0,weapon,0	//PA_SACRIFICE# Martyr's Reckoning#

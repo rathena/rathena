@@ -614,15 +614,19 @@ int charcommand_save(
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change save point only to lower or same gm level
 			m = map_mapname2mapid(map_name);
-			if (m < 0) {
+			if (m < 0 && !mapindex_name2id(map_name)) {
 				clif_displaymessage(fd, msg_table[1]); // Map not found.
 				return -1;
 			} else {
-				if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+				//FIXME: What do you do if the map is in another map server with the nowarpto flag?
+				if (m>=0 && map[m].flag.nosave && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 					clif_displaymessage(fd, "You are not authorised to set this map as a save map.");
 					return -1;
 				}
-				pc_setsavepoint(pl_sd, map[m].index, x, y);
+				if (m>=0)
+					pc_setsavepoint(pl_sd, map[m].index, x, y);
+				else
+					pc_setsavepoint(pl_sd, mapindex_name2id(map_name), x, y);
 				clif_displaymessage(fd, msg_table[57]); // Character's respawn point changed.
 			}
 		} else {

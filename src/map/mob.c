@@ -817,7 +817,8 @@ int mob_changestate(struct mob_data *md,int state,int type)
 		clif_foreachclient(mob_stopattacked,md->bl.id);
 		skill_unit_move(&md->bl,gettick(),4);
 		status_change_clear(&md->bl,2);	// ステータス異常を解除する
-		skill_clear_unitgroup(&md->bl);	// 全てのスキルユニットグループを削除する
+		if (battle_config.clear_unit_ondeath)
+			skill_clear_unitgroup(&md->bl);
 		skill_cleartimerskill(&md->bl);
 		if(md->deletetimer!=-1)
 			delete_timer(md->deletetimer,mob_timer_delete);

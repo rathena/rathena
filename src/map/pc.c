@@ -5406,6 +5406,8 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 
 	pc_setdead(sd);
 	skill_unit_move(&sd->bl,gettick(),4);
+	if (battle_config.clear_unit_ondeath)
+		skill_clear_unitgroup(&sd->bl); //orn
 	
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter); //€‚ÉƒJƒEƒ“ƒ^?‘‚«?‚İ
 	 // changed penalty options, added death by player if pk_mode [Valaris]

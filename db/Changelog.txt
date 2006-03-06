@@ -26,6 +26,8 @@
 
 =========================
 
+03/06
+	* Stave Crasher's element is now -1 (take weapon's element) [Skotlex]
 03/03
 	* Fixed missing baby-dancer job in exp2.txt [Skotlex]
 	* Added GrandCross's can't move delay of 900ms to skill_cast_db and Finger

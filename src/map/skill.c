@@ -3064,9 +3064,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	struct mob_data *dstmd = NULL;
 	int i,type=-1;
 	
-	if(skillid < 0 || skillid > MAX_SKILL) 
+	if(skillid < 0 || (skillid > MAX_SKILL || (skillid >= GD_SKILLBASE && skillid > GD_SKILLBASE + MAX_GUILDSKILL))) 
 	{	// remove the debug print when this case is finished
-		ShowDebug("skill_castend_nodamage_id: skillid=%i\ncall: %p %p %i %i %i %i",skillid,
+		ShowDebug("skill_castend_nodamage_id: skillid=%i call: %p %p %i %i %i %i\n",skillid,
 						src, bl,skillid,skilllv,tick,flag);
 		return 0;
 	}
