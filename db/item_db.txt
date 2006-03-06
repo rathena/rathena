@@ -2359,38 +2359,46 @@
 13005,Angelic_Wing_Dagger,Angelic Wing Dagger,4,,10,10,0,,1,1,0,0,2,0,0,0,0,0,{}
 
 
-// Temp Plugs. Someone good with the DB's? Please place them accordingly after addein the effect.
+// Temp Plugs. Someone good with the DB's? Please place them accordingly after adding the effect.
 // Info can be found here: http://opensvn.csie.org/EnglishTranslation/data/idnum2itemdesctable.txt
+// Structure of Database:
+// ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,{Script}
+
 //7519,,,,,,,,,,,,,,,,,,,{}
 //7520,,,,,,,,,,,,,,,,,,,{}
 //5145,Carnival_Jester,Carnival Jester,,,,,,,,,,,,,,,,,{}
 //586,Mother's_Cake,Mother's Cake,,,,,,,,,,,,,,,,,{}
 //2669,RJC_Necklace,RJC Necklace,,,,,,,,,,,,,,,,,{}
-//12137,First_Stage,First Stage,,,,,,,,,,,,,,,,,{}
-//12138,Second_Stage,Second Stage,,,,,,,,,,,,,,,,,{}
-//12139,Third_Stage,Third Stage,,,,,,,,,,,,,,,,,{}
-//12140,Fourth_Stage,Fourth Stage,,,,,,,,,,,,,,,,,{}
-//12141,Fifth_Stage,Fifth Stage,,,,,,,,,,,,,,,,,{}
+
+//12137,First_Stage,First Stage,2,,10,,,,,,127918079,7,2,,,,,,{}
+//12138,Second_Stage,Second Stage,2,,10,,,,,,127918079,7,2,,,,,,{}
+//12139,Third_Stage,Third Stage,2,,10,,,,,,127918079,7,2,,,,,,{}
+//12140,Fourth_Stage,Fourth Stage,2,,10,,,,,,127918079,7,2,,,,,,{}
+//12141,Fifth_Stage,Fifth Stage,2,,10,,,,,,127918079,7,2,,,,,,{}
+
+// Guns
 //13100,Branch,Branch,,,,,,,,,,,,,,,,,{}		//Slot: 3
 //13101,Six_Shooter,Six Shooter,,,,,,,,,,,,,,,,,{}	//Slot: 1
-//13102,Six_Shooter,Six Shooter,,,,,,,,,,,,,,,,,{}	//Slot: 2
+//13102,Six_Shooter_,Six Shooter,,,,,,,,,,,,,,,,,{}	//Slot: 2
 //13103,Crimson_Bolt,Crimson Bolt,,,,,,,,,,,,,,,,,{}	//Slot: 1
-//13104,Crimson_Bolt,Crimson Bolt,,,,,,,,,,,,,,,,,{}	//Slot: 2
-//13105,The_Garrison,The Garrison,,,,,,,,,,,,,,,,,{}	//Slot: 1
-//13106,The_Garrison,The Garrison,,,,,,,,,,,,,,,,,{}	//Slot: 2
+//13104,Crimson_Bolt_,Crimson Bolt,,,,,,,,,,,,,,,,,{}	//Slot: 2
+//13105,Garrison,Garrison,,,,,,,,,,,,,,,,,{}		//Slot: 1
+//13106,Garrison_,Garrison,,,,,,,,,,,,,,,,,{}		//Slot: 2
 //13107,Gold_Lux,Gold Lux,,,,,,,,,,,,,,,,,{}		//Slot: 0
-//13108,The_Cyclone,The Cyclone,,,,,,,,,,,,,,,,,{}	//Slot: 1
-//13109,The_Cyclone,The Cyclone,,,,,,,,,,,,,,,,,{}	//Slot: 2
+//13108,Cyclone,Cyclone,,,,,,,,,,,,,,,,,{}		//Slot: 1
+//13109,Cyclone_,Cyclone,,,,,,,,,,,,,,,,,{}		//Slot: 2
 //13110,Dusk,Dusk,,,,,,,,,,,,,,,,,{}			//Slot: 1
 //13111,Rolling_Stone,Rolling Stone,,,,,,,,,,,,,,,,,{}	//Slot: 1
 //13112,Black_Rose,Black Rose,,,,,,,,,,,,,,,,,{}	//Slot: 1
 //13113,Gate_Keeper,Gate Keeper,,,,,,,,,,,,,,,,,{}	//Slot: 0
 //13114,Drifter,Drifter,,,,,,,,,,,,,,,,,{}		//Slot: 1
 //13115,Butcher,Butcher,,,,,,,,,,,,,,,,,{}		//Slot: 1
-//13116,Butcher,Butcher,,,,,,,,,,,,,,,,,{}		//Slot: 2
+//13116,Butcher_,Butcher,,,,,,,,,,,,,,,,,{}		//Slot: 2
 //13117,Destroyer,Destroyer,,,,,,,,,,,,,,,,,{}		//Slot: 0
-//13118,Destroyer,Destroyer,,,,,,,,,,,,,,,,,{}		//Slot: 1
+//13118,Destroyer_,Destroyer,,,,,,,,,,,,,,,,,{}		//Slot: 1
 //13119,Inferno,Inferno,,,,,,,,,,,,,,,,,{}		//Slot: 1
+
+// Bullets
 //13200,Bullet,Bullet,,,,,,,,,,,,,,,,,{}
 //13201,Silver_Bullet,Silver Bullet,,,,,,,,,,,,,,,,,{}
 //13202,Shell_of_Blood,Shell of Blood,,,,,,,,,,,,,,,,,{}
@@ -2399,35 +2407,44 @@
 //13205,Poison_Sphere,Poison Sphere,,,,,,,,,,,,,,,,,{}
 //13206,Blind_Sphere,Blind Sphere,,,,,,,,,,,,,,,,,{}
 //13207,Freezing_Sphere,Freezing Sphere,,,,,,,,,,,,,,,,,{}
+
+// Shurikens & Kunais
 //13250,Shuriken,Shuriken,,,,,,,,,,,,,,,,,{}
 //13251,Raincloud_Shuriken,Raincloud Shuriken,,,,,,,,,,,,,,,,,{}
-//13252,Shuriken_of_Flash,Shuriken of Flash,,,,,,,,,,,,,,,,,{}
-//13253,Shuriken_of_Sharp_Leaf,Shuriken of Sharp Leaf,,,,,,,,,,,,,,,,,{}
-//13254,Shuriken_of_Thorn,Shuriken of Thorn,,,,,,,,,,,,,,,,,{}
-//13255,Kunai_of_Icicle,Kunai of Icicle,,,,,,,,,,,,,,,,,{}
-//13256,Kunai_of_Black_Soil,Kunai of Black Soil,,,,,,,,,,,,,,,,,{}
-//13257,Kunai_of_Strong_Wind,Kunai of Strong Wind,,,,,,,,,,,,,,,,,{}
-//13258,Kunai_of_Explosive_Flame,Kunai of Explosive Flame,,,,,,,,,,,,,,,,,{}
+//13252,Flash_Shuriken,Flash Shuriken,,,,,,,,,,,,,,,,,{}
+//13253,Pointed_Leaf_Shuriken,Pointed Leaf Shuriken,,,,,,,,,,,,,,,,,{}
+//13254,Piercing_Thorn_Shuriken,Piercing Thorn Shuriken,,,,,,,,,,,,,,,,,{}
+//13255,Kunai_of_Frozen_Icicle,Kunai of Frozen Icicle,,,,,,,,,,,,,,,,,{}
+//13256,Kunai_of_Black_Earth,Kunai of Black Earth,,,,,,,,,,,,,,,,,{}
+//13257,Kunai_of_Violent_Winds,Kunai of Violent Winds,,,,,,,,,,,,,,,,,{}
+//13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,,,,,,,,,,,,,,,,,{}
 //13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,,,,,,,,,,,,,,,,,{}
-//7521,Fire_Ghost_Stone,Fire Ghost Stone,,,,,,,,,,,,,,,,,{}
-//7522,Ice_Ghost_Stone,Ice Ghost Stone,,,,,,,,,,,,,,,,,{}
-//7523,Wind_Ghost_Stone,Wind Ghost Stone,,,,,,,,,,,,,,,,,{}
-//7524,Shadow_Ghost_Stone,Shadow Ghost Stone,,,,,,,,,,,,,,,,,{}
+
+// Ninja Stones
+//7521,Burning_Stone,Burning Stone,,,,,,,,,,,,,,,,,{}
+//7522,Freezing_Stone,Freezing Stone,,,,,,,,,,,,,,,,,{}
+//7523,Windchime_Stone,Windchime Stone,,,,,,,,,,,,,,,,,{}
+//7524,Fang_,Fang,,,,,,,,,,,,,,,,,{}
+
+// Ninja Weapons
 //13006,Gokurin,Gokurin,,,,,,,,,,,,,,,,,{}
 //13007,Jitte,Jitte,,,,,,,,,,,,,,,,,{}
-//13008,Jitte,Jitte,,,,,,,,,,,,,,,,,{}
+//13008,Jitte_,Jitte,,,,,,,,,,,,,,,,,{}
 //13009,Kamaitachi,Kamaitachi,,,,,,,,,,,,,,,,,{}
 //13010,Ashura,Ashura,,,,,,,,,,,,,,,,,{}
-//13011,Ashura,Ashura,,,,,,,,,,,,,,,,,{}
+//13011,Ashura_,Ashura,,,,,,,,,,,,,,,,,{}
 //13012,Murasame,Murasame,,,,,,,,,,,,,,,,,{}
-//13013,Murasame,Murasame,,,,,,,,,,,,,,,,,{}
+//13013,Murasame_,Murasame,,,,,,,,,,,,,,,,,{}
 //13014,Hakujin,Hakujin,,,,,,,,,,,,,,,,,{}
-//13015,Hakujin,Hakujin,,,,,,,,,,,,,,,,,{}
-//13300,Pyun-Ik,Pyun-Ik,,,,,,,,,,,,,,,,,{}
-//13301,Dae-Cha-Ryun,Dae-Cha-Ryun,,,,,,,,,,,,,,,,,{}
-//13302,Dae-Cha-Ryun,Dae-Cha-Ryun,,,,,,,,,,,,,,,,,{}
-//13303,Yul-Hwa,Yul-Hwa,,,,,,,,,,,,,,,,,{}
-//2117,Wrist_Muff,Wrist Muff,,,,,,,,,,,,,,,,,{}
-//2118,Wrist_Muff,Wrist Muff,,,,,,,,,,,,,,,,,{}
-//2119,Modified_Wrist_Muff,Modified Wrist Muff,,,,,,,,,,,,,,,,,{}
-//2120,Modified_Wrist_Muff,Modified Wrist Muff,,,,,,,,,,,,,,,,,{}
+//13015,Hakujin_,Hakujin,,,,,,,,,,,,,,,,,{}
+
+// Ninja Kazema Shurikens
+//13300,Kazemashuriken_Beneki,Kazemashuriken Beneki,,,,,,,,,,,,,,,,,{}
+//13301,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,,,,,,,,,,,,,,,,,{}
+//13302,Kazemashuriken_Daisharin_,Kazemashuriken Daisharin,,,,,,,,,,,,,,,,,{}
+//13303,Kazemashuriken_Rekka,Kazemashuriken Rekka,,,,,,,,,,,,,,,,,{}
+
+//2117,Gauntlet,Gauntlet,,,,,,,,,,,,,,,,,{}
+//2118,Gauntlet_,Gauntlet,,,,,,,,,,,,,,,,,{}
+//2119,Superior_Gauntlet,Superior Gauntlet,,,,,,,,,,,,,,,,,{}
+//2120,Superior_Gauntlet_,Superior Gauntlet,,,,,,,,,,,,,,,,,{}
