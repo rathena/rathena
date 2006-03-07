@@ -5,6 +5,16 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/07
+	* Gospel won't start taking effect until after 10 secs have passed since
+	  invocation. [Skotlex]
+	* Now if a skill has inf set to 4 (self skill) and inf2 512 (cannot target
+	  self) this skill becomes a target-auto-select skill, which targets your
+	  current attack target, and won't stop your current attack. The current
+	  attack is delayed by your aspd (except for a few skills such as the monk
+	  combo skills which readjust this delay). All Monk combo skills plus Taekwon
+	  kick skills have been updated to use this. [Skotlex]
+	* Added a check that forces self skills (inf = 4) to select yourself as
+	  target to prevent oddities from crafted packets. [Skotlex]
 	* More ground work for Ninja/Gunslinger [Vicious]
 	* status_calc_pc now assumes that if your max hp is negative, it has
 	  overflowed, and as such, it is set to the max_hp setting instead of 1. This

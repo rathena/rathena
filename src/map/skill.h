@@ -183,7 +183,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 struct skill_unit *skill_initunit(struct skill_unit_group *group,int idx,int x,int y);
 int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
-	int count,int skillid,int skilllv,int unit_id);
+	int count,int skillid,int skilllv,int unit_id, int limit, int interval);
 int skill_delunitgroup(struct skill_unit_group *group);
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_element_field(struct block_list *bl);

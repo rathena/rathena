@@ -10033,6 +10033,11 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if (skillnotok(skillnum, sd))
 		return;
 
+	if (sd->bl.id != target_id &&
+		!sd->state.skill_flag &&
+		skill_get_inf(skillnum)&INF_SELF_SKILL)
+		target_id = sd->bl.id; //What good is it to mess up the target in self skills? Wished I knew... [Skotlex]
+	
 	if (sd->skilltimer != -1) {
 		if (skillnum != SA_CASTCANCEL)
 			return;
@@ -10092,7 +10097,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 				}
 			}
 		}
-
 
 		if ((lv = pc_checkskill(sd, skillnum)) > 0) {
 			if (skilllv > lv)

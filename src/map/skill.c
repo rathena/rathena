@@ -1833,12 +1833,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				if(sd->status.party_id>0 && (level = pc_checkskill(sd,SG_FRIEND)))
 					party_skill_check(sd, sd->status.party_id, TK_COUNTER,level);
 			}
-			case TK_STORMKICK:
-			case TK_DOWNKICK:
-			case TK_TURNKICK:
-			// Delay normal attack table until skill's delay has passed. Let's make it skip one attack motion. [Skotlex]
-				sd->attackabletime = tick + status_get_amotion(&sd->bl);
-				battle_set_walkdelay(src, tick, status_get_amotion(&sd->bl), 1);
 				break;
 			case SL_STIN:
 			case SL_STUN:
@@ -6493,14 +6487,12 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		val3 = HW_MAGICPOWER; //Store the magic power flag. [Skotlex]
 		
 	nullpo_retr(NULL, group=skill_initunitgroup(src,(count > 0 ? count : layout->count),
-		skillid,skilllv,skill_get_unit_id(skillid,flag&1)));
-	group->limit=limit;
+		skillid,skilllv,skill_get_unit_id(skillid,flag&1), limit, interval));
 	group->val1=val1;
 	group->val2=val2;
 	group->val3=val3;
 	group->target_flag=target;
 	group->bl_flag= skill_get_unit_bl_target(skillid);
-	group->interval=interval;
 	if(skillid==HT_TALKIEBOX ||
 	   skillid==RG_GRAFFITI){
 		group->valstr=(char *) aCallocA(MESSAGE_SIZE, sizeof(char));
@@ -8367,44 +8359,27 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 		return 0;
 
 	sc = sd->sc.count?&sd->sc:NULL;
-	
+
+	//casttime is reused as a combo-skill checker (needed to invoke battle_stopattack) [Skotlex]
+	casttime = (target_id == sd->bl.id 
+		&& skill_get_inf(skill_num)&INF_SELF_SKILL
+		&& skill_get_inf2(skill_num)&INF2_NO_TARGET_SELF);
+	if (casttime)	
+		target_id = sd->attacktarget; //Auto-select skills. [Skotlex]
 	switch(skill_num)
 	{	//Check for skills that auto-select target
 	case MO_CHAINCOMBO:
-		target_id = sd->attacktarget;
 		if (sc && sc->data[SC_BLADESTOP].timer != -1){
 			if ((bl=(struct block_list *)sc->data[SC_BLADESTOP].val4) == NULL) //ƒ^?ƒQƒbƒg‚ª‚¢‚È‚¢H
 				return 0;
 			target_id = bl->id;
 		}
 		break;
-	case MO_COMBOFINISH:
-	case CH_CHAINCRUSH:
-	case CH_TIGERFIST:
-	case TK_STORMKICK: // Taekwon kicks [Dralnu]
-	case TK_DOWNKICK:
-	case TK_TURNKICK:
-		target_id = sd->attacktarget;
-		break;
-
 	case TK_JUMPKICK:
 	case TK_COUNTER:
 	case HT_POWER:
 		if (sc && sc->data[SC_COMBO].timer != -1 && sc->data[SC_COMBO].val1 == skill_num)
 			target_id = sc->data[SC_COMBO].val2;
-		else if (skill_num == TK_COUNTER) //This one is for Ranking TKers
-			target_id = sd->attacktarget;
-		else if (skill_num == HT_POWER)
-			return 0;
-		break;
-// -- moonsoul	(altered to allow proper usage of extremity from new champion combos)
-//
-	case MO_EXTREMITYFIST:	/*ˆ¢C—…”e–PŒ*/
-		if (sc && sc->data[SC_COMBO].timer != -1 &&
-			(sc->data[SC_COMBO].val1 == MO_COMBOFINISH ||
-			sc->data[SC_COMBO].val1 == CH_TIGERFIST ||
-			sc->data[SC_COMBO].val1 == CH_CHAINCRUSH))
-			target_id = sd->attacktarget;
 		break;
 	case WE_MALE:
 	case WE_FEMALE:
@@ -8516,17 +8491,10 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 			return 0;
 	}
 
-	if ((skill_num != MO_CHAINCOMBO &&
-		skill_num != MO_COMBOFINISH &&
-		skill_num != MO_EXTREMITYFIST &&
-		skill_num != CH_TIGERFIST &&
-		skill_num != CH_CHAINCRUSH &&
-		skill_num != TK_STORMKICK &&
-		skill_num != TK_DOWNKICK &&
-		skill_num != TK_TURNKICK &&
-		skill_num != TK_COUNTER) ||
-		(skill_num == MO_EXTREMITYFIST && sd->state.skill_flag))
+	if (!casttime) //Stop attack on non-combo skills [Skotlex]
 		pc_stopattack(sd);
+	else if(sd->attacktimer != -1) //Elsewise, delay current attack sequence
+		sd->attackabletime = tick + status_get_amotion(&sd->bl);
 
 	casttime = skill_castfix(&sd->bl, skill_num, skill_lv, 0);
 	sd->state.skillcastcancel = skill_get_castcancel(skill_num);
@@ -9832,7 +9800,7 @@ int skill_delunit(struct skill_unit *unit)
  */
 static int skill_unit_group_newid = MAX_SKILL_DB;
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
-	int count,int skillid,int skilllv,int unit_id)
+	int count,int skillid,int skilllv,int unit_id, int limit, int interval)
 {
 	int i;
 	struct skill_unit_group *group=NULL, *list=NULL;
@@ -9890,11 +9858,13 @@ struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	group->skill_lv=skilllv;
 	group->unit_id=unit_id;
 	group->map=src->m;
-	group->limit=10000;
-	group->interval=1000;
+	group->limit=limit;
+	group->interval=interval;
 	group->tick=gettick();
 	if (skillid == PR_SANCTUARY) //Sanctuary starts healing +1500ms after casted. [Skotlex]
 		group->tick += 1500;
+	else if (skillid == PA_GOSPEL) //Prevent Gospel from triggering bonuses right away. [Skotlex]
+		group->tick += interval;
 	group->valstr=NULL;
 
 	i = skill_get_unit_flag(skillid); //Reuse for faster access from here on. [Skotlex]

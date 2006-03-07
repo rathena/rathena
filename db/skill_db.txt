@@ -13,7 +13,7 @@
 // 12 inf2 (skill information 2) (1- quest skill,  2- npc skill, 4- wedding skill
 //    8- spirit skill, 16- guild skill, 32- song/dance, 64- ensemble skill
 //    128- trap (can be targetted), 256- skill that damages/targets yourself
-//    512- skill that cannot be casted on self
+//    512- cannot be casted on self (if inf = 4, auto-select target skill)
 //    1024- usable only on party-members, 2048- usable only on guild-mates)
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled.
@@ -289,9 +289,8 @@
 268,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//MO_STEELBODY#Mental Strength#
 269,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//MO_BLADESTOP#Root#
 270,0,6,4,0,1,0,5,0,no,0,0,0,weapon,0	//MO_EXPLOSIONSPIRITS#Fury#
-271,-2,6,4,0,0,0,5,1,yes,0,0,0,weapon,0	//MO_EXTREMITYFIST#Asura Strike#
-272,-2,8,4,-1,0,0,5,4,no,0,0,0,weapon,0	//MO_CHAINCOMBO#Raging Quadruple Blow#
-273,-2,6,4,-1,2,2,5,1,no,0,0,0,weapon,0	//MO_COMBOFINISH#Raging Thrust#
+271,-2,6,4,0,0,0,5,1,yes,0,512,0,weapon,0	//MO_EXTREMITYFIST#Asura Strike#
+272,-2,8,4,-1,0,0,5,4,no,0,512,0,weapon,0	//MO_CHAINCOMBO#Raging Quadruple Blow#273,-2,6,4,-1,2,2,5,1,no,0,512,0,weapon,0	//MO_COMBOFINISH#Raging Thrust#
 274,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//SA_ADVANCEDBOOK#Study#
 275,0,6,4,0,1,0,5,1,no,0,0,0,magic,0	//SA_CASTCANCEL#Cast Cancel#
 276,0,6,4,0,1,0,5,1,yes,0,0,0,magic,0	//SA_MAGICROD#Magic Rod#
@@ -389,8 +388,8 @@
 368,0,6,4,0,1,0,5,1,yes,0,0,0,weapon,0	//PA_SACRIFICE# Martyr's Reckoning#
 369,0,6,4,0,1,0,10,1,yes,0,0,0,misc,0	//PA_GOSPEL#Battle Chant#
 370,-2,6,1,-1,0,0,5,1,yes,0,0,0,weapon,3	//CH_PALMSTRIKE#Raging Palm Strike#
-371,-2,8,4,-1,0,0,5,1,no,0,0,0,weapon,0	//CH_TIGERFIST#Glacier Fist#
-372,-2,8,4,-1,0,0,10,1:1:2:2:3:3:4:4:5:5,no,0,0,0,weapon,0	//CH_CHAINCRUSH#Chain Crush Combo#
+371,-2,8,4,-1,0,0,5,1,no,0,512,0,weapon,0	//CH_TIGERFIST#Glacier Fist#
+372,-2,8,4,-1,0,0,10,1:1:2:2:3:3:4:4:5:5,no,0,512,0,weapon,0	//CH_CHAINCRUSH#Chain Crush Combo#
 373,0,6,4,0,1,0,5,1,no,0,0,0,magic,0	//PF_HPCONVERSION#Health Conversion#
 374,9,6,16,0,1,0,1,1,yes,0,3072,0,none,0	//PF_SOULCHANGE#Soul Exhale#
 375,9,6,1,0,0,0,5,1,yes,0,0,0,magic,0	//PF_SOULBURN#Soul Siphon#
@@ -431,13 +430,13 @@
 410,9,6,4,0,1,0,1,1,yes,0,4,0,none,0	//WE_CALLBABY#Call Baby#
 411,0,6,4,0,1,0,10,1,yes,0,0,0,misc,0	//TK_RUN#Running#
 412,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYSTORM#Prepare Whirlwind#
-413,0,6,4,-1,2,2,7,1,no,0,0,0,weapon,0	//TK_STORMKICK#Whirlwind Kick#
+413,0,6,4,-1,2,2,7,1,no,0,512,0,weapon,0	//TK_STORMKICK#Whirlwind Kick#
 414,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYDOWN#Prepare Axe Kick#
-415,-2,6,4,-1,0,0,7,1,no,0,0,0,weapon,0	//TK_DOWNKICK#Axe Kick#
+415,-2,6,4,-1,0,0,7,1,no,0,512,0,weapon,0	//TK_DOWNKICK#Axe Kick#
 416,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYTURN#Prepare Round Kick#
-417,-2,6,4,-1,2,1,7,1,no,0,0,0,weapon,2	//TK_TURNKICK#Round Kick#
+417,-2,6,4,-1,2,1,7,1,no,0,512,0,weapon,2	//TK_TURNKICK#Round Kick#
 418,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYCOUNTER#Prepare Counter Kick#
-419,-2,6,4,-1,0,0,7,1,no,0,0,0,weapon,0	//TK_COUNTER#Counter Kick#
+419,-2,6,4,-1,0,0,7,1,no,0,512,0,weapon,0	//TK_COUNTER#Counter Kick#
 420,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_DODGE#Break Fall#
 421,10,6,4,-1,0,0,7,1,no,0,0,0,weapon,0	//TK_JUMPKICK#Flying Side Kick#
 422,0,0,0,0,0,1,10,0,no,0,0,0,none,0	//TK_HPTIME#Peaceful Rest#
