@@ -1809,6 +1809,49 @@ static struct Damage battle_calc_weapon_attack(
 					if (sc && sc->data[SC_COMBO].timer != -1 && sc->data[SC_COMBO].val1 == skill_num)
 						skillratio += 10*status_get_lv(src)/3;
 					break;
+				case GS_TRIPLEACTION:
+					skillratio += 200;
+					break;
+				case GS_BULLSEYE:
+					skillratio += 400;
+					break;
+				case GS_TRACKING:
+					skillratio += 60*skill_lv;
+					if (skill_lv == 2) skillratio += 20;
+					if (skill_lv == 3) skillratio += 80;
+					if (skill_lv >= 4) skillratio += 60*(skill_lv-3);
+					if (skill_lv == 10) skillratio += 80;
+					break;
+				case GS_PIERCINGSHOT:
+					skillratio += 10*skill_lv;
+					break;
+				case GS_RAPIDSHOWER:
+					skillratio += 400 + 50*skill_lv;
+					break;
+				case GS_DESPERADO:
+					skillratio += 50*skill_lv-50;
+					break;
+				case GS_DUST:
+					skillratio += 50*skill_lv;
+					break;
+				case GS_FULLBUSTER:
+					skillratio += 150 + 250*skill_lv;
+					break;
+				case GS_SPREADATTACK:
+					skillratio += 20*skill_lv-20;
+					break;
+				case NJ_HUUMA:
+					skillratio += 50 + 150*skill_lv;
+					break;
+				case NJ_TATAMIGAESHI:
+					skillratio += 10*skill_lv;
+					break;
+				case NJ_KASUMIKIRI:
+					skillratio += 10*skill_lv;
+					break;
+				case NJ_KIRIKAGE:
+					skillratio += 100*skill_lv-100;
+					break;
 				case KN_CHARGEATK:
 					skillratio += wflag*15; //FIXME: How much is the actual bonus? [Skotlex]
 					break;
@@ -1818,7 +1861,7 @@ static struct Damage battle_calc_weapon_attack(
 				case MO_BALKYOUNG:
 					skillratio += 200;
 					break;
-        	}
+			}
 
 			ATK_RATE(skillratio);
 
@@ -2576,6 +2619,21 @@ struct Damage battle_calc_magic_attack(
 						break;
 					case SL_SMA:
 						skillratio += -60 + status_get_lv(src); //Base damage is 40% + lv%
+						break;
+					case NJ_KOUENKA:
+						skillratio -= 10;
+						break;
+					case NJ_BAKUENRYU:
+						skillratio += 50 + 150*skill_lv;
+						break;
+					case NJ_HYOUSYOURAKU:
+						skillratio += 50*skill_lv;
+						break;
+					case NJ_RAIGEKISAI:
+						skillratio += 60 + 40*skill_lv;
+						break;
+					case NJ_KAMAITACHI:
+						skillratio += 100*skill_lv;
 						break;
 				}
 
