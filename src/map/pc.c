@@ -3975,6 +3975,11 @@ unsigned short pc_jobid2mapid(unsigned short b_class)
 		case JOB_SUPER_NOVICE: //Super Novices are considered 2-1 novices. [Skotlex]
 			class_ |= JOBL_2_1;
 			break;
+		case JOB_GUNSLINGER:
+			class_ |= MAPID_GUNSLINGER;
+		case JOB_NINJA:
+			class_ |= MAPID_NINJA;
+			break;
 		case JOB_XMAS:
 			class_ = MAPID_XMAS;
 			break;
