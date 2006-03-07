@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 1.8a
+//= 1.8b
 //===== Compatible With: =====================================
 //= eAthena  1.0+
 //===== Description: =========================================
@@ -554,8 +554,8 @@ L_Test2:
 		mes "[Geshupenschte]";
 		mes "I'll list them again";
 		mes "^5533FF2 Coals";
-		mes "2 Shells^000000";
-		mes "2 Red Bloods";
+		mes "2 Shells";
+		mes "2 Red Bloods^000000";
 		mes "and ^5533FF1 Tsurugi^000000 from the stores.";
 		next;
 		goto L_finalword;
@@ -854,7 +854,7 @@ L_CheckTest3:
 
 		if(countitem(1073) < 1) goto sL_noreceipt;
 		mes "[Geshupenschte]";
-		mes "Great! Very good! You're definalty a honest merchant! Go see Altiregen back in Geffen!";
+		mes "Great! Very good! You're definalty a honest merchant! Go see Altiregen back in Einbroch!";
 		mes "I know you'll definately pass the test!!!";
 		set BSMITH_Q, 4;
 		set BSMITH_Q2, 0;
@@ -889,7 +889,7 @@ L_Done:
 
 L_GoChange:
 	mes "There should be nothing you want now.........";
-	mes "Maybe you're thinking of Morroc or Geffen?";
+	mes "Maybe you're thinking of Einbroch?";
 	close;
 }
 
