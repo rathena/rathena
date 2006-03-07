@@ -518,53 +518,52 @@
 497,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT2#Twilight Alchemy 2#
 498,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT3#Twilight Alchemy 3#
 499,-9,8,4,-1,0,0,1,2,no,0,8,0,weapon,0	//HT_POWER#Beast Strafing#
-
 //Temp Plugs(using bash as base)
-500,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_GLITTERING#Flip Coin#
-501,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_FLING#????#
+500,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_GLITTERING#Flip the Coin#
+501,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_FLING#Fling#
 502,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_TRIPLEACTION#Triple Action#
-503,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_BULLSEYE#Bullseye#
-504,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_MADNESSCANCEL#????????_?????»#
-505,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_ADJUSTMENT#?????·???«???«#
-506,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_INCREASING#?????«?í_???Ñ?»??#
-507,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_MAGICALBULLET#???÷??_????#
-508,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_CRACKER#???í??#
+503,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_BULLSEYE#Bulls Eye#
+504,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_MADNESSCANCEL#Madness Canceler#
+505,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_ADJUSTMENT#AdJustment#
+506,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_INCREASING#Increasing Accuracy#
+507,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_MAGICALBULLET#Magical Bullet#
+508,-1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_CRACKER#Cracker#
 509,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SINGLEACTION#Single Action#
-510,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SNAKEEYE#Snake's Eye#
-511,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_CHAINACTION#????_????#
-512,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_TRACKING#?«?í??#
-513,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#??????#
-514,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#??????_?ª#
-515,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_RAPIDSHOWER#?í????_???÷#
-516,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#?Ñ????????#
-517,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GATLINGFEVER#??????_???÷#
-518,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DUST#?????«#
-519,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_FULLBUSTER#?«_?÷????#
-520,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#????????_????#
-521,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GROUNDDRIFT#????????_???«???«#
-522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_TOBIDOUGU#?±??_?÷??#
-523,9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SYURIKEN#?÷?«??_?°?÷??#
-524,9,8,1,-1,0,0,5,3,no,0,0,0,weapon,0	//NJ_KUNAI#???¬??_?°?÷??#
-525,9,8,1,-1,2,2,5,1:2:3:4:5,no,0,0,0,weapon,0	//NJ_HUUMA#?????÷?«??_?°?÷??#
-526,9,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_ZENYNAGE#??_?°?÷??#
-527,0,6,4,3,0,0,5,1,no,0,0,0,weapon,0	//NJ_TATAMIGAESHI#??????_???²??#
-528,1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KASUMIKIRI#????_?ú??#
-529,1,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_SHADOWJUMP#??????_????#
-530,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//NJ_KIRIKAGE#??????_?ú??#
-531,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_UTSUSEMI#????????_????#
-532,0,6,4,0,1,0,10,1,no,0,0,0,none,0	//NJ_BUNSINJYUTSU#?»??????#
-533,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//NJ_NINPOU#???²_?÷??#
-534,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,no,0,0,0,magic,0	//NJ_KOUENKA#?½???¡(??µ·?ñ)#
-535,0,8,4,3,0,2,10,5:5:6:6:7:7:8:8:9:9,no,0,0,0,magic,0	//NJ_KAENSIN#?¡???°(?²µ·?µ)#
-536,9,8,2,3,0,2,5,3,no,0,0,0,magic,0	//NJ_BAKUENRYU#?°???µ(°?µ·?ú)#
-537,9,8,1,1,0,0,10,1:2:3:4:5:6:7:7:7:7,no,0,0,0,magic,0	//NJ_HYOUSENSOU#?????ó(?????µ)#
-538,2,6,2,0,1,0,10,1,no,0,0,0,magic,0	//NJ_SUITON#?÷??(????)#
-539,0,6,4,1,0,3,5,1,no,0,0,0,magic,0	//NJ_HYOUSYOURAKU#???ñ??(?????µ)#
-540,9,8,1,4,0,0,10,1:2:2:3:3:4:4:5:5:6,no,0,0,0,magic,0	//NJ_HUUJIN#????(?ª??)#
-541,0,6,4,0,1,0,5,1,no,0,0,0,magic,0	//NJ_RAIGEKISAI#?·????(???¬ß?)#
-542,9,8,1,-1,0,0,5,1,no,0,0,0,magic,0	//NJ_KAMAITACHI#????(?²?ª)#
-543,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_NEN#??(µ÷)#
-544,2,6,4,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_ISSEN#????#
+510,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SNAKEEYE#Snake Eye#
+511,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_CHAINACTION#Chain Action#
+512,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_TRACKING#Tracking#
+513,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#Disarm#
+514,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#Piercing Shot#
+515,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_RAPIDSHOWER#Rapid Shower#
+516,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
+517,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GATLINGFEVER#Gatling Fever#
+518,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DUST#Dust#
+519,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_FULLBUSTER#Full Buster#
+520,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#Spread Attack#
+521,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GROUNDDRIFT#Ground Drift#
+522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_TOBIDOUGU#NJ_TOBIDOUGU#
+523,9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SYURIKEN#NJ_SYURIKEN#
+524,9,8,1,-1,0,0,5,3,no,0,0,0,weapon,0	//NJ_KUNAI#NJ_KUNAI#
+525,9,8,1,-1,2,2,5,1:2:3:4:5,no,0,0,0,weapon,0	//NJ_HUUMA#NJ_HUUMA#
+526,9,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_ZENYNAGE#NJ_ZENYNAGE#
+527,0,6,4,3,0,0,5,1,no,0,0,0,weapon,0	//NJ_TATAMIGAESHI#NJ_TATAMIGAESHI#
+528,1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KASUMIKIRI#NJ_KASUMIKIRI#
+529,1,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_SHADOWJUMP#NJ_SHADOWJUMP#
+530,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//NJ_KIRIKAGE#NJ_KIRIKAGE#
+531,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_UTSUSEMI#NJ_UTSUSEMI#
+532,0,6,4,0,1,0,10,1,no,0,0,0,none,0	//NJ_BUNSINJYUTSU#NJ_BUNSINJYUTSU#
+533,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//NJ_NINPOU#NJ_NINPOU#
+534,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,no,0,0,0,magic,0	//NJ_KOUENKA#NJ_KOUENKA#
+535,0,8,4,3,0,2,10,5:5:6:6:7:7:8:8:9:9,no,0,0,0,magic,0	//NJ_KAENSIN#NJ_KAENSIN#
+536,9,8,2,3,0,2,5,3,no,0,0,0,magic,0	//NJ_BAKUENRYU#NJ_BAKUENRYU#
+537,9,8,1,1,0,0,10,1:2:3:4:5:6:7:7:7:7,no,0,0,0,magic,0	//NJ_HYOUSENSOU#NJ_HYOUSENSOU#
+538,2,6,2,0,1,0,10,1,no,0,0,0,magic,0	//NJ_SUITON#NJ_SUITON#
+539,0,6,4,1,0,3,5,1,no,0,0,0,magic,0	//NJ_HYOUSYOURAKU#NJ_HYOUSYOURAKU#
+540,9,8,1,4,0,0,10,1:2:2:3:3:4:4:5:5:6,no,0,0,0,magic,0	//NJ_HUUJIN#NJ_HUUJIN#
+541,0,6,4,0,1,0,5,1,no,0,0,0,magic,0	//NJ_RAIGEKISAI#NJ_RAIGEKISAI#
+542,9,8,1,-1,0,0,5,1,no,0,0,0,magic,0	//NJ_KAMAITACHI#NJ_KAMAITACHI#
+543,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_NEN#NJ_NEN#
+544,2,6,4,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_ISSEN#NJ_ISSEN#
 
 1001,9,6,1,-1,0,0,1,1,no,0,1,0,weapon,0	//KN_CHARGEATK#Charge Attack#
 1002,0,6,4,0,1,0,1,0,no,0,1,0,weapon,2	//CR_SHRINK#Shrink#
