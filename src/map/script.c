@@ -4370,33 +4370,30 @@ int buildin_strcharinfo(struct script_state *st)
 		return 0;
 	}
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	if(sd){
-		switch(num){
-			case 0:
-				buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
-				memcpy(buf, sd->status.name, NAME_LENGTH-1);
+	switch(num){
+		case 0:
+			buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
+			memcpy(buf, sd->status.name, NAME_LENGTH-1);
+			push_str(st->stack,C_STR,(unsigned char *) buf);
+			break;
+		case 1:
+			buf=buildin_getpartyname_sub(sd->status.party_id);
+			if(buf!=0)
 				push_str(st->stack,C_STR,(unsigned char *) buf);
-				break;
-			case 1:
-				buf=buildin_getpartyname_sub(sd->status.party_id);
-				if(buf!=0)
-					push_str(st->stack,C_STR,(unsigned char *) buf);
-				else
-					push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
-				break;
-			case 2:
-				buf=buildin_getguildname_sub(sd->status.guild_id);
-				if(buf != NULL)
-					push_str(st->stack,C_STR,(unsigned char *) buf);
-				else
-					push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
-				break;
-			default:
-				ShowWarning("buildin_strcharinfo: unknown parameter.");
-				break;
-		}
-	} else {
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+			else
+				push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+			break;
+		case 2:
+			buf=buildin_getguildname_sub(sd->status.guild_id);
+			if(buf != NULL)
+				push_str(st->stack,C_STR,(unsigned char *) buf);
+			else
+				push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+			break;
+		default:
+			ShowWarning("buildin_strcharinfo: unknown parameter.");
+			push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+			break;
 	}
 
 	return 0;
@@ -9058,7 +9055,7 @@ int buildin_summon(struct script_state *st)
 			md->master_id=sd->bl.id;
 			md->special_state.ai=1;
 			md->mode=mob_db(md->class_)->mode|0x04;
-			md->deletetimer=add_timer(tick+(timeout<=0?timeout*1000:60000),mob_timer_delete,id,0);
+			md->deletetimer=add_timer(tick+(timeout>0?timeout*1000:60000),mob_timer_delete,id,0);
 			clif_misceffect2(&md->bl,344);
 		}
 		clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);

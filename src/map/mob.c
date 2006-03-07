@@ -3061,7 +3061,7 @@ int mob_warp(struct mob_data *md,int m,int x,int y,int type)
 				status_change_end(&md->bl, SC_TRICKDEAD, -1);
 			if(md->sc.data[SC_BLADESTOP].timer!=-1)
 				status_change_end(&md->bl,SC_BLADESTOP,-1);
-			if(md->sc.data && md->sc.data[SC_RUN].timer!=-1)
+			if(md->sc.data[SC_RUN].timer!=-1)
 				status_change_end(&md->bl,SC_RUN,-1);
 			if(md->sc.data[SC_DANCING].timer!=-1)
 				skill_stop_dancing(&md->bl);

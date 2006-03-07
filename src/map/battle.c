@@ -1343,7 +1343,7 @@ static struct Damage battle_calc_weapon_attack(
 	} else {	//Check for Perfect Hit
 		if(sd && sd->perfect_hit > 0 && rand()%100 < sd->perfect_hit)
 			flag.hit = 1;
-		if (sc && sc->count && sc->data[SC_FUSION].timer != -1) {
+		if (sc && sc->data[SC_FUSION].timer != -1) {
 			flag.hit = 1; //SG_FUSION always hit [Komurka]
 			flag.idef = flag.idef2 = 1; //def ignore [Komurka]
 		}

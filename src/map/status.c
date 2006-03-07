@@ -3565,7 +3565,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		break;
 	}
 
-	//Check for BOSS resistnces
+	//Check for BOSS resistances
 	if(mode & MD_BOSS && !(flag&1)) {
 		 if (type>=SC_COMMON_MIN && type <= SC_COMMON_MAX)
 			 return 0;
@@ -5541,7 +5541,6 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 	 	{
 			if(tsd)
 				//Only damage SP [Skotlex]
-				//	case SG_SUN_WARM:
 				pc_damage_sp(tsd, 60, 0);
 			else { //Otherwise, Knockback attack.
 				if(sd && pc_damage_sp(sd, 2, 0) <= 0)

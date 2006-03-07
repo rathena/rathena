@@ -597,6 +597,12 @@ int	skill_get_range( int id , int lv ){ skill_get(skill_db[id].range[lv-1], id, 
 int	skill_get_splash( int id , int lv ){ skill_chk (id, lv); return (skill_db[id].splash[lv-1]>=0?skill_db[id].splash[lv-1]:AREA_SIZE); }
 int	skill_get_hp( int id ,int lv ){ skill_get (skill_db[id].hp[lv-1], id, lv); }
 int	skill_get_sp( int id ,int lv ){ skill_get (skill_db[id].sp[lv-1], id, lv); }
+int	skill_get_hp_rate(int id, int lv ){ skill_get (skill_db[id].hp_rate[lv-1], id, lv); }
+int	skill_get_sp_rate(int id, int lv ){ skill_get (skill_db[id].sp_rate[lv-1], id, lv); }
+int	skill_get_state(int id) { skill_get (skill_db[id].state, id, 1); }
+int	skill_get_spiritball(int id, int lv) { skill_get (skill_db[id].spiritball[lv-1], id, lv); }
+int	skill_get_itemid(int id, int idx) { skill_get (skill_db[id].itemid[idx], id, 1); }
+int	skill_get_itemqty(int id, int idx) { skill_get (skill_db[id].amount[idx], id, 1); }
 int	skill_get_zeny( int id ,int lv ){ skill_get (skill_db[id].zeny[lv-1], id, lv); }
 int	skill_get_num( int id ,int lv ){ skill_get (skill_db[id].num[lv-1], id, lv); }
 int	skill_get_cast( int id ,int lv ){ skill_get (skill_db[id].cast[lv-1], id, lv); }
@@ -721,14 +727,14 @@ int skillnotok(int skillid, struct map_session_data *sd)
 		//return 1;
 	// I think it was meant to be "no skills allowed when not a valid sd"
 	
-	if (!(skillid >= 10000 && skillid < 10015))
+	if (!(skillid >= GD_SKILLRANGEMIN && skillid <= GD_SKILLRANGEMAX))
 		if ((skillid > MAX_SKILL) || (skillid < 0))
 			return 1;
 
 	{
 		int i = skillid;
-		if (i >= 10000 && i < 10015)
-			i -= 9500;
+		if (i >= GD_SKILLBASE)
+			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
 		if (sd->blockskill[i] > 0)
 			return 1;
 	}
@@ -7539,21 +7545,20 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	lv = sd->skilllv;
 	if (lv <= 0) return 0;
 	// for the guild skills [celest]
-	if (skill >= 10000 && skill < 10015) skill-= 9500;
 	hp = skill_get_hp(skill, lv);	/* ?Á”ïHP */
 	sp = skill_get_sp(skill, lv);	/* ?Á”ïSP */
 	if((sd->skillid_old == BD_ENCORE) && skill == sd->skillid_dance)
 		sp=sp/2;	//ƒAƒ“ƒR?ƒ‹Žž‚ÍSP?Á”ï‚ª”¼•ª
-	hp_rate = (lv <= 0)? 0:skill_db[skill].hp_rate[lv-1];
-	sp_rate = (lv <= 0)? 0:skill_db[skill].sp_rate[lv-1];
+	hp_rate = skill_get_hp_rate(skill, lv);
+	sp_rate = skill_get_sp_rate(skill, lv);
 	zeny = skill_get_zeny(skill,lv);
-	weapon = skill_db[skill].weapon;
-	state = skill_db[skill].state;
-	spiritball = (lv <= 0)? 0:skill_db[skill].spiritball[lv-1];
+	weapon = skill_get_weapontype(skill);
+	state = skill_get_state(skill);
+	spiritball = skill_get_spiritball(skill,lv);
 	mhp = skill_get_mhp(skill, lv);	/* ?Á”ïHP */
 	for(i = 0; i < 10; i++) {
-		itemid[i] = skill_db[skill].itemid[i];
-		amount[i] = skill_db[skill].amount[i];
+		itemid[i] = skill_get_itemid(skill, i);
+		amount[i] = skill_get_itemqty(skill, i);
 	}
 	if(mhp > 0)
 		hp += (sd->status.max_hp * mhp)/100;
@@ -11077,9 +11082,9 @@ int skill_readdb(void)
 			continue;
 
 		i=atoi(split[0]);
-		if (i>=10000 && i<10015) // for guild skills [Celest]
-			i -= 9500;
-		else if(i<=0 || i>MAX_SKILL_DB)
+		if (i >= GD_SKILLBASE)
+			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
 		skill_split_atoi(split[1],skill_db[i].hp);
@@ -11168,9 +11173,9 @@ int skill_readdb(void)
 			continue;
 		}
 		i=atoi(split[0]);
-		if (i>=10000 && i<10015) // for guild skills [Celest]
-			i -= 9500;
-		else if(i<=0 || i>MAX_SKILL_DB)
+		if (i >= GD_SKILLBASE)
+			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
 		skill_split_atoi(split[1],skill_db[i].cast);
@@ -11200,9 +11205,9 @@ int skill_readdb(void)
 			continue;
 
 		i=atoi(split[0]);
-		if (i>=10000 && i<10015) // for guild skills [Celest]
-			i -= 9500;
-		else if(i<=0 || i>MAX_SKILL_DB)
+		if (i >= GD_SKILLBASE)
+			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 		skill_db[i].unit_id[0] = strtol(split[1],NULL,16);
 		skill_db[i].unit_id[1] = strtol(split[2],NULL,16);
@@ -11359,9 +11364,9 @@ int skill_readdb(void)
 		if(split[0]==0) //fixed by Lupus
 			continue;
 		i=atoi(split[0]);
-		if (i>=10000 && i<10015) // for guild skills [Celest]
-			i -= 9500;
-		else if(i<=0 || i>MAX_SKILL_DB)
+		if (i >= GD_SKILLBASE)
+			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
 		skill_split_atoi(split[1],skill_db[i].castnodex);
@@ -11388,9 +11393,9 @@ int skill_readdb(void)
 		if(split[0]==0) //fixed by Lupus
 			continue;
 		i=atoi(split[0]);
-		if (i>=10000 && i<10015) // for guild skills [Celest]
-			i -= 9500;
-		else if(i<=0 || i>MAX_SKILL_DB)
+		if (i >= GD_SKILLBASE)
+			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 		skill_db[i].nocast=atoi(split[1]);
 		k++;

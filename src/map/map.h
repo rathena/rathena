@@ -350,7 +350,6 @@ struct weapon_data {
   	short sp_drain_rate;
   	short sp_drain_per;
   	short sp_drain_value;
-
  	short add_damage_classid[MAX_PC_BONUS];
  	int add_damage_classrate[MAX_PC_BONUS];
   	int add_damage_class_count;
@@ -514,7 +513,6 @@ struct map_session_data {
 	int skilltarget;
 	short skillx,skilly;
 	short skillid,skilllv;
-
 	short skillitem,skillitemlv;
 	short skillid_old,skilllv_old;
 	short skillid_dance,skilllv_dance;
@@ -1230,7 +1228,6 @@ int map_delblock_sub(struct block_list *, int);
 #define map_addblock(bl) map_addblock_sub(bl,1)
 #define map_delblock(bl) map_delblock_sub(bl,1)
 int map_moveblock(struct block_list *, int, int, unsigned int);
-
 int map_foreachinrange(int (*)(struct block_list*,va_list),struct block_list *,int,int,...);
 int map_foreachinarea(int (*)(struct block_list*,va_list),int,int,int,int,int,int,...);
 // -- moonsoul (added map_foreachincell)
