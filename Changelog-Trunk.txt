@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/07
+	* status_calc_pc now assumes that if your max hp is negative, it has
+	  overflowed, and as such, it is set to the max_hp setting instead of 1. This
+	  'dangerous' assumptio is alright as long as there aren't equipment that can
+	  send your hp to negative values. [Skotlex]
 	- Fixed the soul linker skill tree. (Thanks to muad_dib) [Zephiris]
 	* Added Gunslinger and Ninja into @job. of course, you need latest EXE
 	  for make this work... and of course no skills yet! [Vicious]

@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <string.h>
+#include <limits.h>
 
 #include "pc.h"
 #include "map.h"
@@ -1374,11 +1375,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->status.max_hp = sd->status.max_hp * sd->hprate/100;
 	if(battle_config.hp_rate != 100)
 		sd->status.max_hp = sd->status.max_hp * battle_config.hp_rate/100;
-
-	if(sd->status.max_hp > battle_config.max_hp)
+	
+	if (sd->status.max_hp < 0) //HP overflow??
 		sd->status.max_hp = battle_config.max_hp;
-	else if(sd->status.max_hp <= 0)
+	else if(sd->status.max_hp > battle_config.max_hp)
+		sd->status.max_hp = battle_config.max_hp;
+	else if(sd->status.max_hp == 0)
 		sd->status.max_hp = 1;
+	
 	if(sd->status.hp>sd->status.max_hp)
 		sd->status.hp=sd->status.max_hp;
 
@@ -5623,7 +5627,8 @@ int status_change_clear_debuffs (struct block_list *bl)
 
 static int status_calc_sigma(void)
 {
-	int i,j,k;
+	int i,j;
+	unsigned int k;
 
 	for(i=0;i<MAX_PC_CLASS;i++) {
 		memset(hp_sigma_val[i],0,sizeof(hp_sigma_val[i]));
@@ -5631,7 +5636,11 @@ static int status_calc_sigma(void)
 			k += hp_coefficient[i]*j + 50;
 			k -= k%100;
 			hp_sigma_val[i][j-1] = k;
+			if (k >= INT_MAX)
+				break; //Overflow protection. [Skotlex]
 		}
+		for(;j<=MAX_LEVEL;j++)
+			hp_sigma_val[i][j-1] = INT_MAX;
 	}
 	return 0;
 }
