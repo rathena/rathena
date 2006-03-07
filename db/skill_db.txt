@@ -519,6 +519,53 @@
 498,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT3#Twilight Alchemy 3#
 499,-9,8,4,-1,0,0,1,2,no,0,8,0,weapon,0	//HT_POWER#Beast Strafing#
 
+//Temp Plugs(using bash as base)
+522,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_TOBIDOUGU#비도_수련#
+523,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SYURIKEN#수리검_던지기#
+524,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KUNAI#쿠나이_던지기#
+525,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_HUUMA#풍마수리검_던지기#
+526,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_ZENYNAGE#돈_던지기#
+527,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_TATAMIGAESHI#다다미_뒤집기#
+528,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KASUMIKIRI#안개_베기#
+529,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SHADOWJUMP#그림자_도약#
+530,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KIRIKAGE#그림자_베기#
+531,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_UTSUSEMI#매미허물_벗기#
+532,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_BUNSINJYUTSU#환영분신#
+533,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_NINPOU#인법_수련#
+534,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KOUENKA#홍염화(紅炎華)#
+535,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KAENSIN#화염진(火炎陣)#
+536,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_BAKUENRYU#폭염룡(爆炎龍)#
+537,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_HYOUSENSOU#빙섬창(氷閃槍)#
+538,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SUITON#수둔(水遁)#
+539,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_HYOUSYOURAKU#빙정락(氷晶落)#
+540,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_HUUJIN#풍인(風刃)#
+541,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_RAIGEKISAI#뇌격쇄(雷擊碎)#
+542,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KAMAITACHI#삭풍(朔風)#
+543,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_NEN#염(念)#
+544,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_ISSEN#일섬#
+//545,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GLITTERING#플립_더_코인#
+//546,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_FLING#플링#
+//547,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_TRIPLEACTION#트리플_액션#
+//548,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_BULLSEYE#불스_아이#
+//549,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_MADNESSCANCEL#매드니스_캔슬러#
+//550,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_ADJUSTMENT#애드저스트먼트#
+//551,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_INCREASING#인크리징_어큐러시#
+//552,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_MAGICALBULLET#매지컬_블릿#
+//553,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_CRACKER#크래커#
+//554,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SINGLEACTION#싱글_액션#
+//555,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SNAKEEYE#스네이크_아이#
+//556,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_CHAINACTION#체인_액션#
+//557,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_TRACKING#트래킹#
+//558,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DISARM#디스암#
+//559,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#피어싱_샷#
+//560,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_RAPIDSHOWER#래피드_샤워#
+//561,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#데스페라도#
+//562,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GATLINGFEVER#캐틀링_피버#
+//563,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DUST#더스트#
+//564,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_FULLBUSTER#풀_버스터#
+//565,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#스프레드_어택#
+//566,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GROUNDDRIFT#그라운드_드리프트#
+
 1001,9,6,1,-1,0,0,1,1,no,0,1,0,weapon,0	//KN_CHARGEATK#Charge Attack#
 1002,0,6,4,0,1,0,1,0,no,0,1,0,weapon,2	//CR_SHRINK#Shrink#
 1003,0,0,0,0,0,0,1,0,no,0,1,0,weapon,0	//AS_SONICACCEL#Sonic Acceleration#

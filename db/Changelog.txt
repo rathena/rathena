@@ -26,6 +26,9 @@
 
 =========================
 
+03/07
+	* Temp plug on Ninja in Skill_db. Ninja is correct on skill ID,
+	  not sure about gunslinger, so they're commented out. [Vicious]
 03/06
 	* Stave Crasher's element is now -1 (take weapon's element) [Skotlex]
 03/03
