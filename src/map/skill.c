@@ -7545,21 +7545,30 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	lv = sd->skilllv;
 	if (lv <= 0) return 0;
 	// for the guild skills [celest]
-	hp = skill_get_hp(skill, lv);	/* ?Á”ïHP */
-	sp = skill_get_sp(skill, lv);	/* ?Á”ïSP */
+	if (skill >= GD_SKILLBASE)
+		skill = GD_SKILLRANGEMIN + skill - GD_SKILLBASE;
+	if (skill < 0 || skill >= MAX_SKILL_DB)
+  		return 0;
+	//Code speedup, rather than using skill_get_* over and over again.
+	if (lv < 1 || lv > MAX_SKILL_LEVEL)
+		return 0;
+	hp = skill_db[skill].hp[lv-1];	/* ?Á”ïHP */
+	sp = skill_db[skill].sp[lv-1];	/* ?Á”ïSP */
 	if((sd->skillid_old == BD_ENCORE) && skill == sd->skillid_dance)
 		sp=sp/2;	//ƒAƒ“ƒR?ƒ‹Žž‚ÍSP?Á”ï‚ª”¼•ª
-	hp_rate = skill_get_hp_rate(skill, lv);
-	sp_rate = skill_get_sp_rate(skill, lv);
-	zeny = skill_get_zeny(skill,lv);
-	weapon = skill_get_weapontype(skill);
-	state = skill_get_state(skill);
-	spiritball = skill_get_spiritball(skill,lv);
-	mhp = skill_get_mhp(skill, lv);	/* ?Á”ïHP */
+	hp_rate = skill_db[skill].hp_rate[lv-1];
+	sp_rate = skill_db[skill].sp_rate[lv-1];
+	zeny = skill_db[skill].zeny[lv-1];
+	weapon = skill_db[skill].weapon;
+	state = skill_db[skill].state;
+	spiritball = skill_db[skill].spiritball[lv-1];
+	mhp = skill_db[skill].mhp[lv-1];	/* ?Á”ïHP */
 	for(i = 0; i < 10; i++) {
-		itemid[i] = skill_get_itemid(skill, i);
-		amount[i] = skill_get_itemqty(skill, i);
+		itemid[i] = skill_db[skill].itemid[i];
+		amount[i] = skill_db[skill].amount[i];
 	}
+	if (skill != sd->skillid)
+		skill = sd->skillid; //Restore skillid for guild skills.
 	if(mhp > 0)
 		hp += (sd->status.max_hp * mhp)/100;
 	if(hp_rate > 0)
