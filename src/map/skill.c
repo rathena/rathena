@@ -1466,6 +1466,7 @@ int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int
  If count&0xf00000, the direction is send in the 6th byte.
  If count&0x10000, the direction is to the back of the target, otherwise is away from the src.
  If count&0x20000, position update packets must not be sent.
+ IF count&0X40000, direction is random.
 -------------------------------------------------------------------------*/
 int skill_blown( struct block_list *src, struct block_list *target,int count)
 {
@@ -1482,7 +1483,9 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 
 	if (src != target && map_flag_gvg(target->m) && target->type != BL_SKILL)
 		return 0; //No knocking back in WoE, except for skills... because traps CAN be knocked back.
-
+	if (!count&0xffff)
+		return 0; //Actual knockback distance is 0.
+	
 	switch (target->type) {
 		case BL_PC:
 			sd=(struct map_session_data *)target;
@@ -1504,6 +1507,8 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 		dir = (count>>20)&0xf;
 	else if (count&0x10000 || (target->x==src->x && target->y==src->y))
 		dir = status_get_dir(target);
+	else if (count&0x40000) //Flag for random pushing.
+		dir = rand()%8;
 	else
 		dir = map_calc_dir(target,src->x,src->y);
 	if (dir>=0 && dir<8){
@@ -1520,6 +1525,9 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 	dx = nx - x;
 	dy = ny - y;
 
+	if (!dx && !dy) //Could not knockback.
+		return 0;
+	
 	if(sd)	/* ?–ÊŠO‚É?o‚½‚Ì‚Å?Á‹Ž */
 		map_foreachinmovearea(clif_pcoutsight,target->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_ALL,sd);
 	else if(md)
