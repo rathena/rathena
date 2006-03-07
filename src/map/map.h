@@ -270,11 +270,12 @@ enum {
   	BL_ITEM = 0x008,
   	BL_SKILL = 0x010,
 	BL_NPC = 0x020,
-  	BL_CHAT = 0x040
+  	BL_CHAT = 0x040,
+	BL_HOMUNCULUS = 0x080	//[blackhole89]
 };
 
 //For common mapforeach calls. Since pets cannot be affected, they aren't included here yet.
-#define BL_CHAR (BL_PC|BL_MOB)
+#define BL_CHAR (BL_PC|BL_MOB|BL_HOMUNCULUS)	//[blackhole89]
 #define BL_ALL 0xfff
 
 enum { WARP, SHOP, SCRIPT, MONS };
