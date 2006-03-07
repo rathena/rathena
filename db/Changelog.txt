@@ -27,6 +27,7 @@
 =========================
 
 03/07
+	* Temp ninja/gs skill tree. [Vicious]
 	* Temp plug on Ninja in Skill_db. Ninja is correct on skill ID,
 	  not sure about gunslinger, so they're commented out. [Vicious]
 03/06
