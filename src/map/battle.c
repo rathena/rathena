@@ -1223,7 +1223,19 @@ static struct Damage battle_calc_weapon_attack(
 				wd.flag=(wd.flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
 
-
+			//Until they're at right position - gs_arrow- [Vicious]
+			case GS_BULLSEYE:
+			case GS_CRACKER:
+			case GS_TRACKING:
+			case GS_PIERCINGSHOT:
+			case GS_RAPIDSHOWER:
+			case GS_DUST:
+			case GS_SPREADATTACK:
+			case NJ_SYURIKEN:
+			case NJ_KUNAI:
+			case NJ_HUUMA:
+				flag.arrow = 1;
+				break;
 		}
 	}
 
@@ -1296,7 +1308,7 @@ static struct Damage battle_calc_weapon_attack(
 	//Check for critical
 	if(!flag.cri &&
 		(sd || battle_config.enemy_critical_rate) &&
-		(!skill_num || skill_num == KN_AUTOCOUNTER || skill_num == SN_SHARPSHOOTING))
+		(!skill_num || skill_num == KN_AUTOCOUNTER || skill_num == SN_SHARPSHOOTING || skill_num == NJ_KIRIKAGE))
 	{
 		short cri = status_get_critical(src);
 		if (sd)
@@ -1329,6 +1341,9 @@ static struct Damage battle_calc_weapon_attack(
 				break;
 			case SN_SHARPSHOOTING:
 				cri += 200;
+				break;
+			case NJ_KIRIKAGE:
+				cri += 250 + 50*skill_lv;
 				break;
 		}
 		if(tsd && tsd->critical_def)

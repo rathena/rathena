@@ -1159,6 +1159,13 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		if(sd->status.weapon == 11)
 			sd->attackrange += skill;
 	}
+	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 && (sd->status.weapon == 11)){ //temp until we get gun id
+		sd->hit += 2*skill;
+	}
+	if((skill=pc_checkskill(sd,GS_SNAKEEYE))>0 && (sd->status.weapon == 11)){ //temp until we get gun id
+		sd->hit += skill;
+		sd->attackrange += skill;
+	}
 
 	// Absolute, then relative modifiers from status changes (shared between PC and NPC)
 	sd->hit = status_calc_hit(&sd->bl,sd->hit);
@@ -1332,6 +1339,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	if(pc_isriding(sd))
 		sd->aspd_rate += 50-10*pc_checkskill(sd,KN_CAVALIERMASTERY);
+		
+	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 && (sd->status.weapon == 11)){ //temp until we get gun id
+		sd->aspd_rate -= (int)(skill / 2);
+	}
 
 	// Relative modifiers from status changes (shared between PC and NPC)
 	sd->aspd_rate = status_calc_aspd_rate(&sd->bl,sd->aspd_rate);
@@ -1465,6 +1476,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 		// Skill-related SP recovery
 		if((skill=pc_checkskill(sd,MG_SRECOVERY)) > 0)
+			sd->nshealsp = skill*3 + (sd->status.max_sp*skill/500);
+		if((skill=pc_checkskill(sd,NJ_NINPOU)) > 0)
 			sd->nshealsp = skill*3 + (sd->status.max_sp*skill/500);
 		// Skill-related SP recovery (only when sit)
 		if((skill = pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0)
