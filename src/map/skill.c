@@ -3078,7 +3078,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		}
 		break;
 
-	//Until they're at right position [Vicious]
+	//Until they're at right position - gs_damage- [Vicious]
+	//Not implemented yet [Vicious]
 	case GS_GLITTERING:
 	case GS_FLING:
 	case GS_TRIPLEACTION:
@@ -5639,8 +5640,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	//Until they're at right position [Vicious]
+	//Until they're at right position - gs_nodamage- [Vicious]
+	//Not implemented yet [Vicious]
 	case GS_GLITTERING:
+	if(sd) {
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			pc_addspiritball(sd,skill_get_time(skillid,skilllv),skilllv);
+		}
+		break;
 	case GS_FLING:
 	case GS_TRIPLEACTION:
 	case GS_BULLSEYE:
@@ -8138,6 +8145,76 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			return 0;
 		}
 		break;
+		
+	//Until they're at right position - gs_skillcheck- [Vicious]
+	case GS_GLITTERING:
+		if(sd->spiritball >= 10) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		break;
+	case GS_FLING:
+	case GS_TRIPLEACTION:
+	case GS_MAGICALBULLET:
+	case GS_CRACKER:
+		if(sd->spiritball < 1) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		if (skill != GS_MAGICALBULLET)
+			arrow_flag = 1;
+		break;
+	case GS_BULLSEYE:
+		if(sd->spiritball < 5) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		break;
+	case GS_MADNESSCANCEL:
+		if(sd->spiritball < 4) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		break;
+	case GS_ADJUSTMENT:
+	case GS_INCREASING:
+		if(sd->spiritball < 2) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		break;
+	case GS_TRACKING:
+	case GS_DISARM:
+	case GS_PIERCINGSHOT:
+	case GS_RAPIDSHOWER:
+	case GS_DESPERADO:
+	case GS_DUST:
+	case GS_SPREADATTACK:
+	case GS_GROUNDDRIFT:
+	case NJ_SYURIKEN:
+	case NJ_KUNAI:
+	case NJ_HUUMA:
+		arrow_flag = 1;
+		break;
+
+	//Not implemented yet [Vicious]
+	case NJ_KASUMIKIRI:
+	case NJ_SHADOWJUMP:
+	case NJ_KIRIKAGE:
+	case NJ_UTSUSEMI:
+	case NJ_BUNSINJYUTSU:
+	case NJ_KOUENKA:
+	case NJ_KAENSIN:
+	case NJ_BAKUENRYU:
+	case NJ_HYOUSENSOU:
+	case NJ_SUITON:
+	case NJ_HYOUSYOURAKU:
+	case NJ_HUUJIN:
+	case NJ_RAIGEKISAI:
+	case NJ_KAMAITACHI:
+	case NJ_NEN:
+	case NJ_ISSEN:
+		break;
 	}
 
 	if(!(type&2)){
@@ -8253,7 +8330,6 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			return 0;
 		}
 		break;
-
 	}
 
 	if (checkitem_flag) {
