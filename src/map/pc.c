@@ -4011,6 +4011,10 @@ unsigned short pc_mapid2jobid(unsigned short class_, int sex) {
 			return JOB_TAEKWON;
 		case MAPID_WEDDING:
 			return JOB_WEDDING;
+		case MAPID_GUNSLINGER:
+			return JOB_GUNSLINGER;
+		case MAPID_NINJA:
+			return JOB_NINJA;
 		case MAPID_XMAS: // [Valaris]
 			return JOB_XMAS;
 	//2_1 classes
@@ -4175,8 +4179,6 @@ char * job_name(int class_) {
 		
 	case JOB_WEDDING:
 	case JOB_SUPER_NOVICE:
-	case JOB_GUNSLINGER:
-	case JOB_NINJA:
 	case JOB_XMAS:
 		return msg_txt(570 - JOB_WEDDING+class_);
 		
@@ -4254,6 +4256,11 @@ char * job_name(int class_) {
 		return msg_txt(617);
 	case JOB_SOUL_LINKER:
 		return msg_txt(618);
+		
+	case JOB_GUNSLINGER:
+		return msg_txt(619);
+	case JOB_NINJA:
+		return msg_txt(620);
 	
 	default:
 		return msg_txt(650);
@@ -6036,7 +6043,10 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 			return 1;
 		else if (upper == 2)
 			b_class = JOB_SUPER_BABY;
-	} else if (job < JOB_SUPER_BABY-JOB_NOVICE_HIGH+JOB_SUPER_NOVICE+2) {
+	} else if (job == JOB_GUNSLINGER || job == JOB_NINJA) {
+		if (upper > 0)
+			return 1;
+	} else if (job < JOB_SUPER_BABY-JOB_NOVICE_HIGH+JOB_SUPER_NOVICE+1) {
 	// Min is SuperNovice +1 -> Becomes Novice High [Skotlex]
 	// Max is SuperBaby-NoviceHigh+1 -> Becomes Super Baby
 		b_class += JOB_NOVICE_HIGH - JOB_SUPER_NOVICE -1;

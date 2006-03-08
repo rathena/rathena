@@ -267,12 +267,12 @@ enum {
 enum { 
 	BL_NUL = 0x000,
 	BL_PC = 0x001,
-  	BL_MOB = 0x002,
-  	BL_PET = 0x004,
-  	BL_ITEM = 0x008,
-  	BL_SKILL = 0x010,
+	BL_MOB = 0x002,
+	BL_PET = 0x004,
+	BL_ITEM = 0x008,
+	BL_SKILL = 0x010,
 	BL_NPC = 0x020,
-  	BL_CHAT = 0x040,
+	BL_CHAT = 0x040,
 	BL_HOMUNCULUS = 0x080	//[blackhole89]
 };
 
@@ -328,34 +328,34 @@ struct vending {
 };
 
 struct weapon_data {
- 	int atkmods[3];
- 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
+	int atkmods[3];
+	// all the variables except atkmods get zero'ed in each call of status_calc_pc
 	// NOTE: if you want to add a non-zeroed variable, you need to update the memset call
 	//  in status_calc_pc as well! All the following are automatically zero'ed. [Skotlex]
-  	int watk;
-  	int watk2;
- 	int atk_ele;
-  	int overrefine;
-  	int star;
-  	int ignore_def_ele;
-  	int ignore_def_race;
-  	int def_ratio_atk_ele;
-  	int def_ratio_atk_race;
- 	int addele[10];
- 	int addrace[12];
- 	int addrace2[12];
- 	int addsize[3];
+	int watk;
+	int watk2;
+	int atk_ele;
+	int overrefine;
+	int star;
+	int ignore_def_ele;
+	int ignore_def_race;
+	int def_ratio_atk_ele;
+	int def_ratio_atk_race;
+	int addele[10];
+	int addrace[12];
+	int addrace2[12];
+	int addsize[3];
 
-  	short ignore_def_mob;
-  	short hp_drain_rate;
-  	short hp_drain_per;
-  	short hp_drain_value;
-  	short sp_drain_rate;
-  	short sp_drain_per;
-  	short sp_drain_value;
- 	short add_damage_classid[MAX_PC_BONUS];
- 	int add_damage_classrate[MAX_PC_BONUS];
-  	int add_damage_class_count;
+	short ignore_def_mob;
+	short hp_drain_rate;
+	short hp_drain_per;
+	short hp_drain_value;
+	short sp_drain_rate;
+	short sp_drain_per;
+	short sp_drain_value;
+	short add_damage_classid[MAX_PC_BONUS];
+	int add_damage_classrate[MAX_PC_BONUS];
+	int add_damage_class_count;
 };
 
 struct skill_unit_group;
@@ -544,40 +544,40 @@ struct map_session_data {
 	struct weapon_data right_weapon;
 	struct weapon_data left_weapon;
 	
- 	int paramc[6],paramcard[6];
- 
- 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
- 
- 	int paramb[6];
- 	int parame[6];
- 	int subele[10];
- 	int subrace[12];
-  	int subrace2[12];
-  	int subsize[3];
- 	int addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
- 	int addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
- 	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
- 	int weapon_coma_ele[10];
- 	int weapon_coma_race[12];
- 	int weapon_atk[16];
- 	int weapon_atk_rate[16];
- 	int arrow_addele[10];
- 	int arrow_addrace[12];
- 	int arrow_addsize[3];
- 	int arrow_addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
- 	int arrow_addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
- 	int magic_addele[10];
- 	int magic_addrace[12];
- 	int magic_addsize[3];
-  	int critaddrace[12];
- 	int expaddrace[12];
- 	int itemhealrate[7];
-  	int addeff3[SC_COMMON_MAX-SC_COMMON_MIN+1];
-  	short addeff3_type[SC_COMMON_MAX-SC_COMMON_MIN+1];
-  	short sp_gain_race[12];
-  	short unequip_losehp[11];
-  	short unequip_losesp[11];
- 	// zeroed arrays end here.
+	int paramc[6],paramcard[6];
+
+	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
+
+	int paramb[6];
+	int parame[6];
+	int subele[10];
+	int subrace[12];
+	int subrace2[12];
+	int subsize[3];
+	int addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
+	int addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
+	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
+	int weapon_coma_ele[10];
+	int weapon_coma_race[12];
+	int weapon_atk[16];
+	int weapon_atk_rate[16];
+	int arrow_addele[10];
+	int arrow_addrace[12];
+	int arrow_addsize[3];
+	int arrow_addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
+	int arrow_addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
+	int magic_addele[10];
+	int magic_addrace[12];
+	int magic_addsize[3];
+	int critaddrace[12];
+	int expaddrace[12];
+	int itemhealrate[7];
+	int addeff3[SC_COMMON_MAX-SC_COMMON_MIN+1];
+	short addeff3_type[SC_COMMON_MAX-SC_COMMON_MIN+1];
+	short sp_gain_race[12];
+	short unequip_losehp[11];
+	short unequip_losesp[11];
+	// zeroed arrays end here.
 	// zeroed structures start here
 	struct s_autospell{
 		short id, lv, rate, card_id;
@@ -594,79 +594,79 @@ struct map_session_data {
 		int race, rate;
 	} add_drop[MAX_PC_BONUS];
 	// zeroed structures end here
- 	// zeroed vars start here.
- 	int hit;
- 	int flee, flee2;
- 	int critical;
- 	int aspd;
- 	int def, def2;
- 	int mdef, mdef2;
- 	int def_ele;
- 	int matk1, matk2;
- 	int base_atk;
- 	int arrow_atk,arrow_ele,arrow_cri,arrow_hit,arrow_range;
- 	int nhealhp,nhealsp,nshealhp,nshealsp,nsshealhp,nsshealsp;
- 	int critical_def,double_rate;
- 	int long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
- 	int near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
- 	int ignore_mdef_ele;
- 	int ignore_mdef_race;
- 	int perfect_hit;
- 	int perfect_hit_add;
- 	int get_zeny_rate;
- 	int get_zeny_num; //Added Get Zeny Rate [Skotlex]
- 	int double_add_rate;
- 	int short_weapon_damage_return,long_weapon_damage_return;
-  	int magic_damage_return; // AppleGirl Was Here
-  	int random_attack_increase_add,random_attack_increase_per; // [Valaris]
- 	int break_weapon_rate,break_armor_rate;
- 	int crit_atk_rate;
- 	int hp_loss_rate;
- 	int sp_loss_rate;
-  	int classchange; // [Valaris]
- 	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
- 
- 	short attackrange,attackrange_;
- 	short splash_range, splash_add_range;
- 	short add_steal_rate;
- 	short hp_loss_value;
- 	short sp_loss_value;
- 	short hp_loss_type;
- 	short sp_drain_type;
- 	short sp_gain_value, hp_gain_value;
+	// zeroed vars start here.
+	int hit;
+	int flee, flee2;
+	int critical;
+	int aspd;
+	int def, def2;
+	int mdef, mdef2;
+	int def_ele;
+	int matk1, matk2;
+	int base_atk;
+	int arrow_atk,arrow_ele,arrow_cri,arrow_hit,arrow_range;
+	int nhealhp,nhealsp,nshealhp,nshealsp,nsshealhp,nsshealsp;
+	int critical_def,double_rate;
+	int long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
+	int near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
+	int ignore_mdef_ele;
+	int ignore_mdef_race;
+	int perfect_hit;
+	int perfect_hit_add;
+	int get_zeny_rate;
+	int get_zeny_num; //Added Get Zeny Rate [Skotlex]
+	int double_add_rate;
+	int short_weapon_damage_return,long_weapon_damage_return;
+	int magic_damage_return; // AppleGirl Was Here
+	int random_attack_increase_add,random_attack_increase_per; // [Valaris]
+	int break_weapon_rate,break_armor_rate;
+	int crit_atk_rate;
+	int hp_loss_rate;
+	int sp_loss_rate;
+	int classchange; // [Valaris]
+	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
+
+	short attackrange,attackrange_;
+	short splash_range, splash_add_range;
+	short add_steal_rate;
+	short hp_loss_value;
+	short sp_loss_value;
+	short hp_loss_type;
+	short sp_drain_type;
+	short sp_gain_value, hp_gain_value;
 	short sp_vanish_rate;
 	short sp_vanish_per;	
 	short add_drop_count;
 	unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
- 	unsigned short unbreakable_equip; //100% break resistance on certain equipment
- 	unsigned short unstripable_equip;
- 	short no_regen;
- 	short add_def_count,add_mdef_count;
- 	short add_dmg_count,add_mdmg_count;
- 
- 	// zeroed vars end here.
- 
- 	int amotion,dmotion;
- 	int castrate,delayrate,hprate,sprate,dsprate;
- 	int atk_rate;
- 	int aspd_rate,speed_rate,hprecov_rate,sprecov_rate;
- 	int matk_rate;
- 	int critical_rate,hit_rate,flee_rate,flee2_rate,def_rate,def2_rate,mdef_rate,mdef2_rate;
- 	int speed_add_rate, aspd_add_rate;
- 
- 	int hp_loss_tick;
- 	int sp_loss_tick;
- 
- 	int itemid;
- 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
- 
+	unsigned short unbreakable_equip; //100% break resistance on certain equipment
+	unsigned short unstripable_equip;
+	short no_regen;
+	short add_def_count,add_mdef_count;
+	short add_dmg_count,add_mdmg_count;
+
+	// zeroed vars end here.
+
+	int amotion,dmotion;
+	int castrate,delayrate,hprate,sprate,dsprate;
+	int atk_rate;
+	int aspd_rate,speed_rate,hprecov_rate,sprecov_rate;
+	int matk_rate;
+	int critical_rate,hit_rate,flee_rate,flee2_rate,def_rate,def2_rate,mdef_rate,mdef2_rate;
+	int speed_add_rate, aspd_add_rate;
+
+	int hp_loss_tick;
+	int sp_loss_tick;
+
+	int itemid;
+	short itemindex;	//Used item's index in sd->inventory [Skotlex]
+
 	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
 
- 	short spiritball, spiritball_old;
- 	int spirit_timer[MAX_SKILL_LEVEL];
-  
-  	int die_counter;
-  	short doridori_counter;
+	short spiritball, spiritball_old;
+	int spirit_timer[MAX_SKILL_LEVEL];
+
+	int die_counter;
+	short doridori_counter;
 	char potion_success_counter;
 
 	int reg_num;
@@ -730,10 +730,10 @@ struct map_session_data {
 #endif
 
 	int duel_group; // duel vars [LuzZza]
-    int duel_invite;
-    
-    char away_message[128]; // [LuzZza]
-    
+	int duel_invite;
+
+	char away_message[128]; // [LuzZza]
+
 };
 
 struct {

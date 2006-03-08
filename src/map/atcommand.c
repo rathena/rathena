@@ -2263,7 +2263,7 @@ int atcommand_jobchange(
 			{ "baby bard",		4042 },
 			{ "baby dancer",	4043 },
 			{ "super baby",		4045 },
-			{ "taekwon",        4046 },
+			{ "taekwon",		4046 },
 			{ "taekwon boy",	4046 },
 			{ "taekwon girl",	4046 },
 			{ "star gladiator",	4047 },
