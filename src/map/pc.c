@@ -5626,7 +5626,7 @@ int pc_readparam(struct map_session_data *sd,int type)
 		val= sd->status.job_level;
 		break;
 	case SP_CLASS:
-		if(val>=24 && val < 45)
+		if(val>=27 && val < 45)
 			val+=3978;
 		else
 		val= sd->status.class_;
@@ -6046,7 +6046,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	} else if (job == JOB_GUNSLINGER || job == JOB_NINJA) {
 		if (upper > 0)
 			return 1;
-	} else if (job < JOB_SUPER_BABY-JOB_NOVICE_HIGH+JOB_SUPER_NOVICE+1) {
+	} else if (job < JOB_SUPER_BABY-JOB_NOVICE_HIGH+JOB_SUPER_NOVICE+2) {
 	// Min is SuperNovice +1 -> Becomes Novice High [Skotlex]
 	// Max is SuperBaby-NoviceHigh+1 -> Becomes Super Baby
 		b_class += JOB_NOVICE_HIGH - JOB_SUPER_NOVICE -1;
@@ -8133,6 +8133,7 @@ int pc_readdb(void)
 			skill_tree[atoi(split[0])][j].need[k].id=atoi(split[k*2+m]);
 			skill_tree[atoi(split[0])][j].need[k].lv=atoi(split[k*2+m+1]);
 		}
+		
 	}
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","skill_tree.txt");

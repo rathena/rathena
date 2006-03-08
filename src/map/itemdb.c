@@ -199,6 +199,10 @@ static void itemdb_jobid2mapid(unsigned short *bclass, int jobmask)
 		bclass[1] |= 1<<MAPID_TAEKWON;
 	if (jobmask & 1<<26) //Soul Linker
 		bclass[2] |= 1<<MAPID_TAEKWON;
+	if (jobmask & 1<<27) //Gunslinger
+		bclass[0] |= 1<<MAPID_GUNSLINGER;
+	if (jobmask & 1<<28) //Ninja
+		bclass[0] |= 1<<MAPID_NINJA;
 }
 
 static void create_dummy_data(void) {

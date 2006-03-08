@@ -3078,6 +3078,59 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		}
 		break;
 
+	//Until they're at right position [Vicious]
+	case GS_GLITTERING:
+	case GS_FLING:
+	case GS_TRIPLEACTION:
+	case GS_BULLSEYE:
+	case GS_MADNESSCANCEL:
+	case GS_ADJUSTMENT:
+	case GS_INCREASING:
+	case GS_MAGICALBULLET:
+	case GS_CRACKER:
+	case GS_SINGLEACTION:
+	case GS_SNAKEEYE:
+	case GS_CHAINACTION:
+	case GS_TRACKING:
+	case GS_DISARM:
+	case GS_PIERCINGSHOT:
+	case GS_RAPIDSHOWER:
+	case GS_DESPERADO:
+	case GS_GATLINGFEVER:
+	case GS_DUST:
+	case GS_SPREADATTACK:
+	case GS_GROUNDDRIFT:
+	
+	case NV_BASIC:
+	case NV_FIRSTAID:
+	case NJ_TOBIDOUGU:
+	case NJ_SYURIKEN:
+	case NJ_KUNAI:
+	case NJ_HUUMA:
+	case NJ_ZENYNAGE:
+	case NJ_TATAMIGAESHI:
+	case NJ_KASUMIKIRI:
+	case NJ_SHADOWJUMP:
+	case NJ_KIRIKAGE:
+	case NJ_UTSUSEMI:
+	case NJ_BUNSINJYUTSU:
+	case NJ_NINPOU:
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+	case NJ_KOUENKA:
+	case NJ_KAENSIN:
+	case NJ_BAKUENRYU:
+	case NJ_HYOUSENSOU:
+	case NJ_SUITON:
+	case NJ_HYOUSYOURAKU:
+	case NJ_HUUJIN:
+	case NJ_RAIGEKISAI:
+	case NJ_KAMAITACHI:
+	case NJ_NEN:
+	case NJ_ISSEN:
+		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+
 	case 0:
 		if(sd) {
 			if (flag & 3){
@@ -5586,6 +5639,58 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				}
 			}
 		}
+		break;
+
+	//Until they're at right position [Vicious]
+	case GS_GLITTERING:
+	case GS_FLING:
+	case GS_TRIPLEACTION:
+	case GS_BULLSEYE:
+	case GS_MADNESSCANCEL:
+	case GS_ADJUSTMENT:
+	case GS_INCREASING:
+	case GS_MAGICALBULLET:
+	case GS_CRACKER:
+	case GS_SINGLEACTION:
+	case GS_SNAKEEYE:
+	case GS_CHAINACTION:
+	case GS_TRACKING:
+	case GS_DISARM:
+	case GS_PIERCINGSHOT:
+	case GS_RAPIDSHOWER:
+	case GS_DESPERADO:
+	case GS_GATLINGFEVER:
+	case GS_DUST:
+	case GS_SPREADATTACK:
+	case GS_GROUNDDRIFT:
+	
+	case NV_BASIC:
+	case NV_FIRSTAID:
+	case NJ_TOBIDOUGU:
+	case NJ_SYURIKEN:
+	case NJ_KUNAI:
+	case NJ_HUUMA:
+	case NJ_ZENYNAGE:
+	case NJ_TATAMIGAESHI:
+	case NJ_KASUMIKIRI:
+	case NJ_SHADOWJUMP:
+	case NJ_KIRIKAGE:
+	case NJ_UTSUSEMI:
+	case NJ_BUNSINJYUTSU:
+	case NJ_NINPOU:
+	case NJ_KOUENKA:
+	case NJ_KAENSIN:
+	case NJ_BAKUENRYU:
+	case NJ_HYOUSENSOU:
+	case NJ_SUITON:
+	case NJ_HYOUSYOURAKU:
+	case NJ_HUUJIN:
+	case NJ_RAIGEKISAI:
+	case NJ_KAMAITACHI:
+	case NJ_NEN:
+	case NJ_ISSEN:
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
 
 	default:
@@ -11062,7 +11167,7 @@ int skill_readdb(void)
 			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
 		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
-
+		
 		skill_split_atoi(split[1],skill_db[i].range);
 		skill_db[i].hit=atoi(split[2]);
 		skill_db[i].inf=atoi(split[3]);
