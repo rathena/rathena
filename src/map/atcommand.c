@@ -266,6 +266,7 @@ ACMD_FUNC(shuffle); // by MouseJstr
 ACMD_FUNC(rates); // by MouseJstr
 
 ACMD_FUNC(iteminfo); // Lupus
+ACMD_FUNC(whodrops); //Skotlex 
 ACMD_FUNC(mapflag); // Lupus
 ACMD_FUNC(me); //added by massdriller, code by lordalfa
 ACMD_FUNC(monsterignore); // [Valaris]
@@ -577,6 +578,7 @@ static AtCommandInfo atcommand_info[] = {
 
 	{ AtCommand_ItemInfo,			"@iteminfo",		 1, atcommand_iteminfo }, // [Lupus]
 	{ AtCommand_ItemInfo,			"@ii",			 1, atcommand_iteminfo }, // [Lupus]
+	{ AtCommand_WhoDrops,			"@whodrops",	 1, atcommand_whodrops }, // [Skotlex]
 	{ AtCommand_MapFlag,			"@mapflag",			99, atcommand_mapflag }, // [Lupus]
 
 	{ AtCommand_Me,					"@me",			20, atcommand_me }, //added by massdriller, code by lordalfa
@@ -9410,6 +9412,57 @@ int atcommand_iteminfo(
 
 	clif_displaymessage(fd, "Item not found.");
 	return -1;
+}
+
+/*==========================================
+ * Show who drops the item.
+ *------------------------------------------
+ */
+int atcommand_whodrops(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct item_data *item_data, *item_array[MAX_SEARCH];
+	int i, count = 1;
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @whodrops <item_name_or_ID>).");
+		return -1;
+	}
+	if ((item_array[0] = itemdb_exists(atoi(message))) == NULL)
+		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
+
+	if (!count) {
+		clif_displaymessage(fd, "Item not found.");
+		return -1;
+	}
+
+	if (count > MAX_SEARCH) {
+		sprintf(atcmd_output, msg_table[269], MAX_SEARCH, count);
+		clif_displaymessage(fd, atcmd_output);
+		count = MAX_SEARCH;
+	}
+	for (i = 0; i < MAX_SEARCH; i++) {
+		item_data = item_array[i];
+		sprintf(atcmd_output, "Item: '%s'[%d]",
+			item_data->jname,item_data->slot);
+		clif_displaymessage(fd, atcmd_output);
+
+		if (item_data->mob[0].chance == 0) {
+			strcpy(atcmd_output, " - Item is not dropped by mobs.");
+			clif_displaymessage(fd, atcmd_output);
+		} else {
+			sprintf(atcmd_output, "- Common mobs with highest drop chance (only max %d are listed):", MAX_SEARCH);
+			clif_displaymessage(fd, atcmd_output);
+		
+			for (i=0; i < MAX_SEARCH && item_data->mob[i].chance > 0; i++)
+			{
+				sprintf(atcmd_output, "- %s (%02.02f%%)", mob_db(item_data->mob[i].id)->jname, item_data->mob[i].chance/100.);
+				clif_displaymessage(fd, atcmd_output);
+			}
+		}
+	}
+	return 0;
 }
 
 /*==========================================

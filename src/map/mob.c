@@ -4296,7 +4296,7 @@ static int mob_readdb(void)
 	FILE *fp;
 	char line[1024];
 	char *filename[]={ "mob_db.txt","mob_db2.txt" };
-	int class_, i, fi;
+	int class_, i, fi, k;
 
 	for(fi=0;fi<2;fi++){
 		sprintf(line, "%s/%s", db_path, filename[fi]);
@@ -4433,12 +4433,22 @@ static int mob_readdb(void)
 				mob_db_data[class_]->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
 
 				//calculate and store Max available drop chance of the item
-				id = itemdb_search(mob_db_data[class_]->dropitem[i].nameid);
 				if (mob_db_data[class_]->dropitem[i].p) {
+					id = itemdb_search(mob_db_data[class_]->dropitem[i].nameid);
 					if (id->maxchance==10000 || (id->maxchance < mob_db_data[class_]->dropitem[i].p) ) {
 					//item has bigger drop chance or sold in shops
 						id->maxchance = mob_db_data[class_]->dropitem[i].p;
-					}			
+					}
+					for (k = 0; k< MAX_SEARCH; k++) {
+						if (id->mob[k].chance < mob_db_data[class_]->dropitem[i].p && id->mob[k].id != class_)
+							break;
+					}
+					if (k == MAX_SEARCH)
+						continue;
+				
+					memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
+					id->mob[k].chance = mob_db_data[class_]->dropitem[i].p;
+					id->mob[k].id = class_;
 				}
 			}
 			// MVP EXP Bonus, Chance: MEXP,ExpPer
@@ -4470,8 +4480,8 @@ static int mob_readdb(void)
 					battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 
 				//calculate and store Max available drop chance of the MVP item
-				id = itemdb_search(mob_db_data[class_]->mvpitem[i].nameid);
 				if (mob_db_data[class_]->mvpitem[i].p) {
+					id = itemdb_search(mob_db_data[class_]->mvpitem[i].nameid);
 					if (id->maxchance==10000 || (id->maxchance < mob_db_data[class_]->mvpitem[i].p/10+1) ) {
 					//item has bigger drop chance or sold in shops
 						id->maxchance = mob_db_data[class_]->mvpitem[i].p/10+1; //reduce MVP drop info to not spoil common drop rate
@@ -4910,7 +4920,7 @@ static int mob_readdb_race(void)
 static int mob_read_sqldb(void)
 {
 	const char unknown_str[NAME_LENGTH] ="unknown";
-	int i, fi, class_;
+	int i, fi, class_, k;
 	double exp, maxhp;
 	long unsigned int ln = 0;
 	char *mob_db_name[] = { mob_db_db, mob_db2_db };
@@ -5039,12 +5049,22 @@ static int mob_read_sqldb(void)
 					mob_db_data[class_]->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
 
 					//calculate and store Max available drop chance of the item
-					id = itemdb_search(mob_db_data[class_]->dropitem[i].nameid);
 					if (mob_db_data[class_]->dropitem[i].p) {
+						id = itemdb_search(mob_db_data[class_]->dropitem[i].nameid);
 						if (id->maxchance==10000 || (id->maxchance < mob_db_data[class_]->dropitem[i].p) ) {
 						//item has bigger drop chance or sold in shops
 							id->maxchance = mob_db_data[class_]->dropitem[i].p;
 						}			
+						for (k = 0; k< MAX_SEARCH; k++) {
+							if (id->mob[k].chance < mob_db_data[class_]->dropitem[i].p && id->mob[k].id != class_)
+								break;
+						}
+						if (k == MAX_SEARCH)
+							continue;
+					
+						memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
+						id->mob[k].chance = mob_db_data[class_]->dropitem[i].p;
+						id->mob[k].id = class_;
 					}
 				}
 				// MVP EXP Bonus, Chance: MEXP,ExpPer

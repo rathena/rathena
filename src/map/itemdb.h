@@ -15,6 +15,11 @@ struct item_data {
 	int value_sell;
 	int type;
 	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it) [Lupus]
+	struct {
+		unsigned short chance;
+		int id;
+	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
+
 	int sex;
 	int equip;
 	int weight;
