@@ -3977,6 +3977,7 @@ unsigned short pc_jobid2mapid(unsigned short b_class)
 			break;
 		case JOB_GUNSLINGER:
 			class_ |= MAPID_GUNSLINGER;
+			break;
 		case JOB_NINJA:
 			class_ |= MAPID_NINJA;
 			break;

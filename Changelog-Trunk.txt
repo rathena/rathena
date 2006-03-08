@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/07
+	* Base for ninja/gunslinger is mostly done. need to work on skills now. [Vicious]
 	- Updated sql-files/ mob_db.sql and item_db.sql to current txt dbs. [Skotlex]
 	* @job ninja/gunslinger. No skill tree or anything yet. [Vicious]
 	* Gospel won't start taking effect until after 10 secs have passed since

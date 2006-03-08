@@ -3101,8 +3101,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_SPREADATTACK:
 	case GS_GROUNDDRIFT:
 	
-	case NV_BASIC:
-	case NV_FIRSTAID:
 	case NJ_TOBIDOUGU:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
@@ -5664,8 +5662,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_SPREADATTACK:
 	case GS_GROUNDDRIFT:
 	
-	case NV_BASIC:
-	case NV_FIRSTAID:
 	case NJ_TOBIDOUGU:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
