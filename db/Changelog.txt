@@ -26,6 +26,8 @@
 
 =========================
 
+03/08
+	* Fixed cooldown time for ASC_CDP, according to description [Foruken]
 03/07
 	* Temp ninja/gs skill tree. [Vicious]
 	* Temp plug on Ninja in Skill_db. Ninja is correct on skill ID,
