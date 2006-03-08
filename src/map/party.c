@@ -744,7 +744,7 @@ int party_share_loot(struct party *p, TBL_PC *sd, struct item *item_data)
 	}
 	if (!target) { //Give it to the owner.
 		target = sd;
-		if (!(i=pc_additem(sd,item_data,item_data->amount)))
+		if ((i=pc_additem(sd,item_data,item_data->amount)))
 			return i;
 	}
 
