@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/08
+	* Rewrote pc_jobchange to be sane by using the map internal codes instead
+	  of a mesh of complicated nested comparisons. [Skotlex]
+	* pc_authok will now change you to a novice if your class isn't identified
+	  as a valid one. BACK UP before updating, because.. well, just in case you
+	  start seeing novices filling up your city. [Skotlex]
 	* Mobs will now chase you even if you hit them from outside their range of
 	  view. [Skotlex]
 	* Fixed item disappearing from the floor when you attempted to pick it up

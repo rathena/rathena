@@ -198,8 +198,8 @@ struct pc_base_job{
 
 struct pc_base_job pc_calc_base_job(int b_class);//ì]ê∂Ç‚ó{éqêEÇÃå≥ÇÃêEã∆Çï‘Ç∑
 int pc_calc_base_job2(int b_class);	// Celest
-unsigned short pc_jobid2mapid(unsigned short b_class);	// Skotlex
-unsigned short pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
+int pc_jobid2mapid(unsigned short b_class);	// Skotlex
+int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
 
 char * job_name(int class_);
 
