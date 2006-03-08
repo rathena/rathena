@@ -80,6 +80,39 @@ int mobdb_searchname(const char *str)
 
 	return 0;
 }
+static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
+{
+	if (mob == mob_dummy)
+		return 1; //Invalid item.
+	if(strstr(mob->jname,str))
+		return 0;
+	if(strstr(mob->name,str))
+		return 0;
+	return strcmpi(mob->jname,str);
+}
+
+/*==========================================
+ * Founds up to N matches. Returns number of matches [Skotlex]
+ *------------------------------------------
+ */
+int mobdb_searchname_array(struct mob_db** data, int size, const char *str)
+{
+	int count = 0, i;
+	struct mob_db* mob;
+	for(i=0;i<=MAX_MOB_DB;i++){
+		mob = mob_db(i);
+		if (mob == mob_dummy)
+			continue;
+		if (!mobdb_searchname_array_sub(mob, str)) {
+			if (count < size)
+				data[count] = mob;
+			count++;	
+		}
+	}
+	return count;
+}
+
+
 
 /*==========================================
  * Id Mob is checked.

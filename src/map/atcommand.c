@@ -5186,7 +5186,7 @@ int atcommand_idsearch(
 {
 	char item_name[100];
 	unsigned int i, match;
-	struct item_data *item;
+	struct item_data *item_array[MAX_SEARCH];
 	nullpo_retr(-1, sd);
 
 	memset(item_name, '\0', sizeof(item_name));
@@ -5199,13 +5199,15 @@ int atcommand_idsearch(
 
 	sprintf(atcmd_output, msg_table[77], item_name); // The reference result of '%s' (name: id):
 	clif_displaymessage(fd, atcmd_output);
-	match = 0;
-	for(i = 0; i < 20000; i++) {
-		if ((item = itemdb_exists(i)) != NULL && strstr(item->jname, item_name) != NULL) {
-			match++;
-			sprintf(atcmd_output, msg_table[78], item->jname, item->nameid); // %s: %d
-			clif_displaymessage(fd, atcmd_output);
-		}
+	match = itemdb_searchname_array(item_array, MAX_SEARCH, item_name);
+	if (match > MAX_SEARCH) {
+		sprintf(atcmd_output, msg_table[269], MAX_SEARCH, match);
+		clif_displaymessage(fd, atcmd_output);
+		match = MAX_SEARCH;
+	}	
+	for(i = 0; i < match; i++) {
+		sprintf(atcmd_output, msg_table[78], item_array[i]->jname, item_array[i]->nameid); // %s: %d
+		clif_displaymessage(fd, atcmd_output);
 	}
 	sprintf(atcmd_output, msg_table[79], match); // It is %d affair above.
 	clif_displaymessage(fd, atcmd_output);
@@ -9251,9 +9253,9 @@ int atcommand_mobinfo(
 	unsigned char melement[11][8] = {"None", "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead"};
 	char atcmd_output2[200];
 	struct item_data *item_data;
-	struct mob_db *mob;
-	int mob_id;
-	int i, j;
+	struct mob_db *mob, *mob_array[MAX_SEARCH];
+	int mob_id, count;
+	int i, j, k;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_output2, '\0', sizeof(atcmd_output2));
@@ -9264,80 +9266,90 @@ int atcommand_mobinfo(
 	}
 
 	// If monster identifier/name argument is a name
-	if ((mob_id = mobdb_searchname(message)) == 0) // check name first (to avoid possible name begining by a number)
-		mob_id = mobdb_checkid(atoi(message));
+	if ((mob_id = mobdb_checkid(atoi(message))))
+	{
+		mob_array[0] = mob_db(mob_id);
+		count = 1;
+	} else
+		count = mobdb_searchname_array(mob_array, MAX_SEARCH, message);
 
-	if (mob_id == 0) {
+	if (!count) {
 		clif_displaymessage(fd, msg_table[40]); // Invalid monster ID or name.
 		return -1;
 	}
 
-	mob = mob_db(mob_id);
+	if (count > MAX_SEARCH) {
+		sprintf(atcmd_output, msg_table[269], MAX_SEARCH, count);
+		clif_displaymessage(fd, atcmd_output);
+		count = MAX_SEARCH;
+	}
+	for (k = 0; k < count; k++) {
+		mob = mob_array[k];
 
-	// stats
-	if (mob->mexp)
-		sprintf(atcmd_output, "MVP Monster: '%s'/'%s' (%d)", mob->name, mob->jname, mob_id);
-	else
-		sprintf(atcmd_output, "Monster: '%s'/'%s' (%d)", mob->name, mob->jname, mob_id);
-	clif_displaymessage(fd, atcmd_output);
-	sprintf(atcmd_output, " Level:%d  HP:%d  SP:%d  Base EXP:%d  Job EXP:%d", mob->lv, mob->max_hp, mob->max_sp, mob->base_exp, mob->job_exp);
-	clif_displaymessage(fd, atcmd_output);
-	sprintf(atcmd_output, " DEF:%d  MDEF:%d  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d", mob->def, mob->mdef, mob->str, mob->agi, mob->vit, mob->int_, mob->dex, mob->luk);
-	clif_displaymessage(fd, atcmd_output);
-	if (mob->element < 20) {
-		//Element - None, Level 0
-		i = 0;
-		j = 0;
-	} else {
-		i = mob->element % 20 + 1;
-		j = mob->element / 20;
-	}
-	sprintf(atcmd_output, " ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)", mob->atk1, mob->atk2, mob->range, mob->range2 , mob->range3, msize[mob->size], mrace[mob->race], melement[i], j);
-	clif_displaymessage(fd, atcmd_output);
-	// drops
-	clif_displaymessage(fd, " Drops:");
-	strcpy(atcmd_output, " ");
-	j = 0;
-	for (i = 0; i < 10; i++) {
-		if (mob->dropitem[i].nameid <= 0 || (item_data = itemdb_search(mob->dropitem[i].nameid)) == NULL)
-			continue;
-		if (mob->dropitem[i].p > 0) {
-			sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->name, (float)mob->dropitem[i].p / 100);
-			strcat(atcmd_output, atcmd_output2);
-			if (++j % 3 == 0) {
-				clif_displaymessage(fd, atcmd_output);
-				strcpy(atcmd_output, " ");
-			}
+		// stats
+		if (mob->mexp)
+			sprintf(atcmd_output, "MVP Monster: '%s'/'%s' (%d)", mob->name, mob->jname, mob_id);
+		else
+			sprintf(atcmd_output, "Monster: '%s'/'%s' (%d)", mob->name, mob->jname, mob_id);
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, " Level:%d  HP:%d  SP:%d  Base EXP:%d  Job EXP:%d", mob->lv, mob->max_hp, mob->max_sp, mob->base_exp, mob->job_exp);
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, " DEF:%d  MDEF:%d  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d", mob->def, mob->mdef, mob->str, mob->agi, mob->vit, mob->int_, mob->dex, mob->luk);
+		clif_displaymessage(fd, atcmd_output);
+		if (mob->element < 20) {
+			//Element - None, Level 0
+			i = 0;
+			j = 0;
+		} else {
+			i = mob->element % 20 + 1;
+			j = mob->element / 20;
 		}
-	}
-	if (j == 0)
-		clif_displaymessage(fd, "This monster has no drops.");
-	else if (j % 3 != 0)
+		sprintf(atcmd_output, " ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)", mob->atk1, mob->atk2, mob->range, mob->range2 , mob->range3, msize[mob->size], mrace[mob->race], melement[i], j);
 		clif_displaymessage(fd, atcmd_output);
-	// mvp
-	if (mob->mexp) {
-		sprintf(atcmd_output, " MVP Bonus EXP:%d  %02.02f%%", mob->mexp, (float)mob->mexpper / 100);
-		clif_displaymessage(fd, atcmd_output);
-		strcpy(atcmd_output, " MVP Items:");
+		// drops
+		clif_displaymessage(fd, " Drops:");
+		strcpy(atcmd_output, " ");
 		j = 0;
-		for (i = 0; i < 3; i++) {
-			if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_search(mob->mvpitem[i].nameid)) == NULL)
+		for (i = 0; i < 10; i++) {
+			if (mob->dropitem[i].nameid <= 0 || (item_data = itemdb_search(mob->dropitem[i].nameid)) == NULL)
 				continue;
-			if (mob->mvpitem[i].p > 0) {
-				j++;
-				if (j == 1)
-					sprintf(atcmd_output2, " %s  %02.02f%%", item_data->name, (float)mob->mvpitem[i].p / 100);
-				else
-					sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->name, (float)mob->mvpitem[i].p / 100);
+			if (mob->dropitem[i].p > 0) {
+				sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->name, (float)mob->dropitem[i].p / 100);
 				strcat(atcmd_output, atcmd_output2);
+				if (++j % 3 == 0) {
+					clif_displaymessage(fd, atcmd_output);
+					strcpy(atcmd_output, " ");
+				}
 			}
 		}
 		if (j == 0)
-			clif_displaymessage(fd, "This monster has no MVP prizes.");
-		else
+			clif_displaymessage(fd, "This monster has no drops.");
+		else if (j % 3 != 0)
 			clif_displaymessage(fd, atcmd_output);
+		// mvp
+		if (mob->mexp) {
+			sprintf(atcmd_output, " MVP Bonus EXP:%d  %02.02f%%", mob->mexp, (float)mob->mexpper / 100);
+			clif_displaymessage(fd, atcmd_output);
+			strcpy(atcmd_output, " MVP Items:");
+			j = 0;
+			for (i = 0; i < 3; i++) {
+				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_search(mob->mvpitem[i].nameid)) == NULL)
+					continue;
+				if (mob->mvpitem[i].p > 0) {
+					j++;
+					if (j == 1)
+						sprintf(atcmd_output2, " %s  %02.02f%%", item_data->name, (float)mob->mvpitem[i].p / 100);
+					else
+						sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->name, (float)mob->mvpitem[i].p / 100);
+					strcat(atcmd_output, atcmd_output2);
+				}
+			}
+			if (j == 0)
+				clif_displaymessage(fd, "This monster has no MVP prizes.");
+			else
+				clif_displaymessage(fd, atcmd_output);
+		}
 	}
-
 	return 0;
 }
 
@@ -9353,20 +9365,28 @@ int atcommand_iteminfo(
 	char *itype[12] = {"Potion/Food", "BUG!", "Usable", "Etc", "Weapon", "Protection", "Card", "Egg", "Pet Acessory", "BUG!", "Arrow"};
 	//, "Lure/Scroll"}; No need, type 11 items are converted to type 2 upon loading [Skotlex]
 
-	struct item_data *item_data;
-	int item_id=0;
+	struct item_data *item_data, *item_array[MAX_SEARCH];
+	int i, item_id=0, count = 1;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @iteminfo <item_name_or_ID>).");
 		return -1;
 	}
+	if ((item_array[0] = itemdb_exists(atoi(message))) == NULL)
+		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
 
-	if ((item_data = itemdb_searchname(message)) != NULL ||
-	    (item_data = itemdb_exists(atoi(message))) != NULL)
-		item_id = item_data->nameid;
+	if (!count) {
+		clif_displaymessage(fd, "Item not found.");
+		return -1;
+	}
 
-	if (item_id >= 500) {
-
+	if (count > MAX_SEARCH) {
+		sprintf(atcmd_output, msg_table[269], MAX_SEARCH, count);
+		clif_displaymessage(fd, atcmd_output);
+		count = MAX_SEARCH;
+	}
+	for (i = 0; i < MAX_SEARCH; i++) {
+		item_data = item_array[i];
 		sprintf(atcmd_output, "Item: '%s'/'%s'[%d] (%d) Type: %s | Extra Effect: %s",
 			item_data->name,item_data->jname,item_data->slot,item_id,
 			item_data->type < 12 ? itype[item_data->type] : "BUG!", 

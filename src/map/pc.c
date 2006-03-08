@@ -5856,11 +5856,12 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 
 	nullpo_retr(0, sd);
 
-	if(hp > 0 && pc_checkoverhp(sd))
-		hp = 0;
+//Uneeded as the hp range adjustment below will auto-adap itself and make hp = max. [Skotlex]
+//	if(hp > 0 && pc_checkoverhp(sd))
+//		hp = 0;
 
-	if(sp > 0 && pc_checkoversp(sd))
-		sp = 0;
+//	if(sp > 0 && pc_checkoversp(sd))
+//		sp = 0;
 
 	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1) //ƒo?ƒT?ƒN’†‚Í‰ñ•œ‚³‚¹‚È‚¢‚ç‚µ‚¢
 		return 0;

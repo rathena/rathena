@@ -56,6 +56,7 @@ struct item_group {
 };
 
 struct item_data* itemdb_searchname(const char *name);
+int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_load(int nameid);
 struct item_data* itemdb_search(int nameid);
 struct item_data* itemdb_exists(int nameid);

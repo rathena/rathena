@@ -61,6 +61,7 @@ int itemdb_searchjname_sub(int key,void *data,va_list ap)
 		*dst=item;
 	return 0;
 }
+
 /*==========================================
  * 名前で検索
  *------------------------------------------
@@ -71,6 +72,30 @@ struct item_data* itemdb_searchname(const char *str)
 	item_db->foreach(item_db,itemdb_searchname_sub,str,&item);
 	return item;
 }
+
+static int itemdb_searchname_array_sub(DBKey key,void * data,va_list ap)
+{
+	struct item_data *item=(struct item_data *)data;
+	char *str;
+	str=va_arg(ap,char *);
+	if (item == dummy_item)
+		return 1; //Invalid item.
+	if(strstr(item->jname,str))
+		return 0;
+	if(strstr(item->name,str))
+		return 0;
+	return strcmpi(item->jname,str);
+}
+
+/*==========================================
+ * Founds up to N matches. Returns number of matches [Skotlex]
+ *------------------------------------------
+ */
+int itemdb_searchname_array(struct item_data** data, int size, const char *str)
+{
+	return item_db->getall(item_db,(void**)data,size,itemdb_searchname_array_sub,str);
+}
+
 
 /*==========================================
  * 箱系アイテム検索
