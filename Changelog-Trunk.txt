@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/08
+	* About half-ish nj/gs skills are semi/fully-done. No effect/status yet though. [Vicious]
 	* Added atcommand @whodrops which lists mobs with the top drop-rates for a
 	  given item. List of stored mobs and their dropchances is also defined by
 	  MAX_SEARCH on map.h [Skotlex]

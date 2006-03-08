@@ -1240,6 +1240,20 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if(attack_type == BF_MISC) //70% base stun chance...
 			sc_start(bl,SC_STUN,70,skilllv,skill_get_time2(skillid,skilllv));
 		break;
+	//Until they're at right position - gs_statuschange- [Vicious]
+	case GS_BULLSEYE:
+		if(!(status_get_mode(bl)&MD_BOSS))
+			sc_start(bl,SC_COMA,0.1,skilllv,skill_get_time(skillid,skilllv));
+		break;
+	case GS_CRACKER:
+		sc_start(bl,SC_STUN,10*skilllv,skilllv,skill_get_time(skillid,skilllv)); //Temp stun rate
+		break;
+	case GS_PIERCINGSHOT:
+		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time(skillid,skilllv));
+		break;
+	case NJ_HYOUSYOURAKU:
+		sc_start(bl,SC_FREEZE,(10+10*skilllv),skilllv,skill_get_time2(skillid,skilllv));
+		break;
 	}
 
 	if (md && battle_config.summons_inherit_effects && md->master_id && md->special_state.ai)
@@ -3079,53 +3093,59 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		break;
 
 	//Until they're at right position - gs_damage- [Vicious]
-	//Not implemented yet [Vicious]
-	case GS_GLITTERING:
-	case GS_FLING:
-	case GS_TRIPLEACTION:
 	case GS_BULLSEYE:
-	case GS_MADNESSCANCEL:
-	case GS_ADJUSTMENT:
-	case GS_INCREASING:
-	case GS_MAGICALBULLET:
 	case GS_CRACKER:
-	case GS_SINGLEACTION:
-	case GS_SNAKEEYE:
-	case GS_CHAINACTION:
 	case GS_TRACKING:
-	case GS_DISARM:
 	case GS_PIERCINGSHOT:
 	case GS_RAPIDSHOWER:
-	case GS_DESPERADO:
-	case GS_GATLINGFEVER:
 	case GS_DUST:
 	case GS_SPREADATTACK:
-	case GS_GROUNDDRIFT:
-	
-	case NJ_TOBIDOUGU:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 	case NJ_HUUMA:
-	case NJ_ZENYNAGE:
-	case NJ_TATAMIGAESHI:
-	case NJ_KASUMIKIRI:
-	case NJ_SHADOWJUMP:
-	case NJ_KIRIKAGE:
-	case NJ_UTSUSEMI:
-	case NJ_BUNSINJYUTSU:
-	case NJ_NINPOU:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
+	case NJ_ZENYNAGE:
+		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
 	case NJ_KOUENKA:
-	case NJ_KAENSIN:
 	case NJ_BAKUENRYU:
 	case NJ_HYOUSENSOU:
-	case NJ_SUITON:
 	case NJ_HYOUSYOURAKU:
 	case NJ_HUUJIN:
 	case NJ_RAIGEKISAI:
+		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+	//Not implemented yet [Vicious]
+	case GS_FLING:
+	//case GS_BULLSEYE:
+	case GS_MAGICALBULLET:
+	//case GS_CRACKER:
+	//case GS_TRACKING:
+	case GS_DISARM:
+	//case GS_PIERCINGSHOT:
+	//case GS_RAPIDSHOWER:
+	case GS_DESPERADO:
+	//case GS_DUST:
+	//case GS_SPREADATTACK:
+	case GS_GROUNDDRIFT:
+	
+	//case NJ_SYURIKEN:
+	//case NJ_KUNAI:
+	//case NJ_HUUMA:
+	//case NJ_ZENYNAGE:
+	case NJ_TATAMIGAESHI:
+	case NJ_KIRIKAGE:
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+	//case NJ_KOUENKA:
+	case NJ_KAENSIN:
+	//case NJ_BAKUENRYU:
+	//case NJ_HYOUSENSOU:
+	//case NJ_HYOUSYOURAKU:
+	//case NJ_HUUJIN:
+	//case NJ_RAIGEKISAI:
 	case NJ_KAMAITACHI:
-	case NJ_NEN:
 	case NJ_ISSEN:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
@@ -5645,53 +5665,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_GLITTERING:
 	if(sd) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			pc_addspiritball(sd,skill_get_time(skillid,skilllv),skilllv);
+			if(rand()%100 < 50+10*skilllv )
+				pc_addspiritball(sd,skill_get_time(skillid,skilllv),skilllv);
 		}
 		break;
-	case GS_FLING:
-	case GS_TRIPLEACTION:
-	case GS_BULLSEYE:
 	case GS_MADNESSCANCEL:
 	case GS_ADJUSTMENT:
 	case GS_INCREASING:
-	case GS_MAGICALBULLET:
 	case GS_CRACKER:
-	case GS_SINGLEACTION:
-	case GS_SNAKEEYE:
-	case GS_CHAINACTION:
-	case GS_TRACKING:
-	case GS_DISARM:
-	case GS_PIERCINGSHOT:
-	case GS_RAPIDSHOWER:
-	case GS_DESPERADO:
 	case GS_GATLINGFEVER:
-	case GS_DUST:
-	case GS_SPREADATTACK:
 	case GS_GROUNDDRIFT:
 	
-	case NJ_TOBIDOUGU:
-	case NJ_SYURIKEN:
-	case NJ_KUNAI:
-	case NJ_HUUMA:
-	case NJ_ZENYNAGE:
 	case NJ_TATAMIGAESHI:
 	case NJ_KASUMIKIRI:
 	case NJ_SHADOWJUMP:
-	case NJ_KIRIKAGE:
 	case NJ_UTSUSEMI:
 	case NJ_BUNSINJYUTSU:
-	case NJ_NINPOU:
-	case NJ_KOUENKA:
-	case NJ_KAENSIN:
-	case NJ_BAKUENRYU:
-	case NJ_HYOUSENSOU:
-	case NJ_SUITON:
-	case NJ_HYOUSYOURAKU:
-	case NJ_HUUJIN:
-	case NJ_RAIGEKISAI:
-	case NJ_KAMAITACHI:
 	case NJ_NEN:
-	case NJ_ISSEN:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
