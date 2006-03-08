@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/08
+	* Mobs will now chase you even if you hit them from outside their range of
+	  view. [Skotlex]
 	* Fixed item disappearing from the floor when you attempted to pick it up
 	  and there was no room in your inventory. [Skotlex]
 	* About half-ish nj/gs skills are semi/fully-done. No effect/status yet though. [Vicious]

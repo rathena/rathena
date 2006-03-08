@@ -41,6 +41,8 @@
 #define MOB_LAZYWARPPERC 20	// Warp probability in the negligent mode MOB (rate of 1000 minute)
 
 #define MOB_SLAVEDISTANCE 2	//Distance that slaves should keep from their master.
+
+#define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
 //Dynamic mob database, allows saving of memory when there's big gaps in the mob_db [Skotlex]
 struct mob_db *mob_db_data[MAX_MOB_DB+1];
 struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant one is requested.
@@ -1294,8 +1296,8 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
 	if (md->state.provoke_flag)
 		md->state.provoke_flag = 0;
 	md->min_chase=dist+md->db->range2;
-	if(md->min_chase>26)
-		md->min_chase=26;
+	if(md->min_chase>MAX_MINCHASE)
+		md->min_chase=MAX_MINCHASE;
 	return 0;
 }
 
@@ -1496,6 +1498,8 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 						md->state.targettype = ATTACKABLE;
 						md->state.aggressive = (status_get_mode(&md->bl)&MD_ANGRY)?1:0;
 						md->min_chase=md->db->range2+distance_bl(&md->bl, tbl);
+						if(md->min_chase>MAX_MINCHASE)
+							md->min_chase=MAX_MINCHASE;
 					}
 				}
 			break;
@@ -1515,6 +1519,8 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 						md->state.targettype = ATTACKABLE;
 						md->state.aggressive = (status_get_mode(&md->bl)&MD_ANGRY)?1:0;
 						md->min_chase=md->db->range2+distance_bl(&md->bl, tbl);
+						if(md->min_chase>MAX_MINCHASE)
+							md->min_chase=MAX_MINCHASE;
 					}
 				}
 			break;
@@ -1660,7 +1666,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				(dist = distance_bl(&md->bl, abl)) >= 32 ||
 				battle_check_target(bl, abl, BCT_ENEMY) <= 0 ||
 				(battle_config.mob_ai&2 && !status_check_skilluse(bl, abl, 0, 0)) ||
-				!mob_can_reach(md, abl, md->db->range2, MSS_RUSH) ||
+				!mob_can_reach(md, abl, dist+2, MSS_RUSH) ||
 				(	//Gangster Paradise check
 					abl->type == BL_PC && !(mode&MD_BOSS) &&
 					((struct map_session_data*)abl)->state.gangsterparadise
@@ -1700,9 +1706,9 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					md->state.aggressive = 0; //Retaliating.
 					attack_type = 1;
 					md->attacked_count = 0;
-					md->min_chase = dist + md->db->range2;
-					if (md->min_chase > 26)
-						md->min_chase = 26;
+					md->min_chase = dist+md->db->range2;
+					if(md->min_chase>MAX_MINCHASE)
+						md->min_chase=MAX_MINCHASE;
 					tbl = abl; //Set the new target
 				}
 			}
@@ -1780,7 +1786,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				) {
 					return 0; //No need to follow, already doing it?
 				}
-				search_size = (blind_flag) ? 3 : ((md->min_chase > md->db->range2) ? md->min_chase : md->db->range2);
+				search_size = blind_flag?3: md->min_chase;
 				if (!mob_can_reach(md, tbl, search_size, MSS_RUSH))
 				{	//Can't reach
 					mob_unlocktarget(md,tick);
