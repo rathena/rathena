@@ -2414,11 +2414,11 @@
 13252,Flash_Shuriken,Flash Shuriken,10,1,,30,45,,,,268435456,7,2,32768,,1,,,{}
 13253,Pointed_Leaf_Shuriken,Pointed Leaf Shuriken,10,1,,30,70,,,,268435456,7,2,32768,,1,,,{}
 13254,Piercing_Thorn_Shuriken,Piercing Thorn Shuriken,10,1,,20,100,,,,268435456,7,2,32768,,1,,,{}
-13255,Kunai_of_Frozen_Icicle,Kunai of Frozen Icicle,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{} bonus bAtkEle,Ele_Water; }
-13256,Kunai_of_Black_Earth,Kunai of Black Earth,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{} bonus bAtkEle,Ele_Earth; }
-13257,Kunai_of_Violent_Winds,Kunai of Violent Winds,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{} bonus bAtkEle,Ele_Wind; }
-13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{} bonus bAtkEle,Ele_Fire; }
-13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{} bonus2 bAddEff,Eff_Poison,500; }
+13255,Kunai_of_Frozen_Icicle,Kunai of Frozen Icicle,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; }
+13256,Kunai_of_Black_Earth,Kunai of Black Earth,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Earth; }
+13257,Kunai_of_Violent_Winds,Kunai of Violent Winds,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Wind; }
+13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Fire; }
+13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Poison,500; }
 
 // Ninja Stones
 7521,Burning_Stone,Burning Stone,3,10,,10,,,,,,7,2,,,,,,{}
