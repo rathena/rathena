@@ -278,8 +278,18 @@ void initChangeTables(void) {
 	set_sc(WZ_SIGHTBLASTER,         SC_SIGHTBLASTER,        SI_SIGHTBLASTER);
 	set_sc(DC_WINKCHARM,            SC_WINKCHARM,           SI_WINKCHARM);
 	set_sc(MO_BALKYOUNG,            SC_STUN,                SI_BLANK);
+	//Until they're at right position - gs_set_sc- [Vicious]
+	set_sc(GS_MADNESSCANCEL,        SC_MADNESSCANCEL,       SI_BLANK);
+	set_sc(GS_ADJUSTMENT,           SC_ADJUSTMENT,          SI_BLANK);
+	set_sc(GS_INCREASING,           SC_INCREASING,          SI_BLANK);
+	set_sc(GS_GATLINGFEVER,         SC_GATLINGFEVER,        SI_BLANK);
+	set_sc(NJ_TATAMIGAESHI,         SC_TATAMIGAESHI,        SI_BLANK);
+	set_sc(NJ_UTSUSEMI,             SC_UTSUSEMI,            SI_BLANK);
+	set_sc(NJ_KAENSIN,              SC_KAENSIN,             SI_BLANK);
+	set_sc(NJ_SUITON,               SC_SUITON,              SI_BLANK);
+	set_sc(NJ_NEN,                  SC_NEN,                 SI_BLANK);
 
-  	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
+	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
 	SkillStatusChangeTable[SL_ALCHEMIST] =   MAPID_ALCHEMIST,
 	SkillStatusChangeTable[SL_MONK] =        MAPID_MONK,
 	SkillStatusChangeTable[SL_STAR] =        MAPID_STAR_GLADIATOR,
@@ -1842,6 +1852,8 @@ int status_calc_batk(struct block_list *bl, int batk)
 //Curse shouldn't effect on this? 
 //		if(sc->data[SC_BLEEDING].timer != -1)
 //			batk -= batk * 25/100;
+		if(sc->data[SC_MADNESSCANCEL].timer!=-1)
+			batk += 100;
 	}
 
 	return batk;
@@ -1977,6 +1989,10 @@ int status_calc_flee(struct block_list *bl, int flee)
 			flee -= flee * 50/100;
 		if(sc->data[SC_BLIND].timer!=-1)
 			flee -= flee * 25/100;
+		if(sc->data[SC_ADJUSTMENT].timer!=-1)
+			flee += 30;
+		if(sc->data[SC_GATLINGFEVER].timer!=-1)
+			flee -= sc->data[SC_GATLINGFEVER].val2*5;
 	}
 
 	if (bl->type == BL_PC && map_flag_gvg(bl->m)) //GVG grounds flee penalty, placed here because it's "like" a status change. [Skotlex]
@@ -2156,6 +2172,8 @@ int status_calc_speed(struct block_list *bl, int speed)
 			speed = speed * sc->data[SC_CHASEWALK].val3/100;
 		if(sc->data[SC_RUN].timer!=-1)/*駆け足による速度変化*/
 			speed -= speed * 25/100;
+		if(sc->data[SC_GATLINGFEVER].timer!=-1)
+			speed += speed * 25/100;
 	}
 
 	return speed;
@@ -2209,6 +2227,10 @@ int status_calc_aspd_rate(struct block_list *bl, int aspd_rate)
 		}
 		if(sc->data[SC_STAR_COMFORT].timer!=-1)
 			aspd_rate -= (status_get_lv(bl) + status_get_dex(bl) + status_get_luk(bl))/10;
+		if(sc->data[SC_MADNESSCANCEL].timer!=-1)
+			aspd_rate -= 20;
+		if(sc->data[SC_GATLINGFEVER].timer!=-1)
+			aspd_rate -= sc->data[SC_GATLINGFEVER].val2*2;
 	}
 
 	return aspd_rate;
@@ -4386,7 +4408,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_BENEDICTIO:			/* 聖? */
 		case SC_MAGNIFICAT:			/* マグニフィカ?ト */
 		case SC_AETERNA:			/* エ?テルナ */
-  		case SC_STRIPARMOR:
+		case SC_STRIPARMOR:
 		case SC_STRIPHELM:
 		case SC_CP_WEAPON:
 		case SC_CP_SHIELD:
@@ -4417,6 +4439,20 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_INTRAVISION:
 		case SC_BASILICA:
 			break;
+		// gs_something1 [Vicious]
+		case SC_MADNESSCANCEL:
+		case SC_ADJUSTMENT:
+		case SC_INCREASING:
+		case SC_GATLINGFEVER:
+		case SC_TATAMIGAESHI:
+		case SC_KAENSIN:
+			calc_flag = 1;
+			break;
+		case SC_UTSUSEMI:
+		case SC_SUITON:
+		case SC_NEN:
+			break;
+	
 
 		default:
 			if(battle_config.error_log)
@@ -4444,6 +4480,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CLOSECONFINE2:
 		case SC_ANKLE:
 		case SC_SPIDERWEB:
+		case SC_MADNESSCANCEL:
 			battle_stopwalking(bl,1);
 		break;
 		case SC_HIDING:
@@ -4974,6 +5011,18 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_MOONLIT: //Clear the unit effect. [Skotlex]
 				skill_setmapcell(bl,CG_MOONLIT, sc->data[SC_MOONLIT].val1, CELL_CLRMOONLIT);
 				break;
+			//gs_something2 [Vicious]
+			case SC_MADNESSCANCEL:
+			case SC_ADJUSTMENT:
+			case SC_INCREASING:
+			case SC_GATLINGFEVER:
+			case SC_TATAMIGAESHI:
+			case SC_UTSUSEMI:
+			case SC_KAENSIN:
+			case SC_SUITON:
+			case SC_NEN:
+				calc_flag = 1;
+				break;
 			}
 
 
@@ -5496,6 +5545,10 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 		}
 		break;
+	// gs_status_change_timer [Vicious]
+	case SC_NEN:
+		sc->data[type].timer=add_timer( 1000*600+tick,status_change_timer, bl->id, data );
+		return 0;
 	}
 
 	// default for all non-handled control paths

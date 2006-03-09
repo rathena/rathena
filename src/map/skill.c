@@ -3095,6 +3095,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 
 	//Until they're at right position - gs_damage- [Vicious]
 	case GS_TRIPLEACTION:
+	case GS_MAGICALBULLET:
 	case GS_CRACKER:
 	case GS_TRACKING:
 	case GS_PIERCINGSHOT:
@@ -3134,7 +3135,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_FLING:
 	//case GS_TRIPLEACTION:
 	//case GS_BULLSEYE:
-	case GS_MAGICALBULLET:
+	//case GS_MAGICALBULLET:
 	//case GS_CRACKER:
 	//case GS_TRACKING:
 	case GS_DISARM:
@@ -5683,9 +5684,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	//Until they're at right position - gs_nodamage- [Vicious]
 	//Not implemented yet [Vicious]
 	case GS_GLITTERING:
-	if(sd) {
+		if(sd) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(rand()%100 < (50+10*skilllv) )
+			if(rand()%100 < (50+10*skilllv))
 				pc_addspiritball(sd,skill_get_time(skillid,skilllv),skilllv);
 		}
 		break;
@@ -8103,20 +8104,11 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		}
 		break;
 	//SHOULD BE OPTIMALIZED [Komurka]
+	//Optimized #1. optimize comfort later. [Vicious]
 	case SG_SUN_WARM:
-		if ((sd->bl.m == sd->feel_map[0].m) || (sd->sc.data[SC_MIRACLE].timer!=-1))
-			break;
-		clif_skill_fail(sd,skill,0,0);
-		return 0;
-		break;
 	case SG_MOON_WARM:
-		if ((sd->bl.m == sd->feel_map[1].m) || (sd->sc.data[SC_MIRACLE].timer!=-1))
-			break;
-		clif_skill_fail(sd,skill,0,0);
-		return 0;
-		break;
 	case SG_STAR_WARM:
-		if ((sd->bl.m == sd->feel_map[2].m) || (sd->sc.data[SC_MIRACLE].timer!=-1))
+		if ((sd->bl.m == sd->feel_map[skill-SG_SUN_WARM].m) || (sd->sc.data[SC_MIRACLE].timer!=-1))
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
@@ -8196,12 +8188,16 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		}
 		break;
 	case GS_MADNESSCANCEL:
-		if(sd->spiritball < 4) {
+		if(sd->spiritball < 4 || sd->sc.data[SC_ADJUSTMENT].timer!=-1) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
 		break;
 	case GS_ADJUSTMENT:
+		if(sd->sc.data[SC_MADNESSCANCEL].timer == -1) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
 	case GS_INCREASING:
 		if(sd->spiritball < 2) {
 			clif_skill_fail(sd,skill,0,0);

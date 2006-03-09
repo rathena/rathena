@@ -230,7 +230,17 @@ enum {
 	SC_SKA, // [marquis007]
 	SC_TKDORI, // [marquis007]
 	SC_MIRACLE, //SG 'hidden' skill [Komurka]
-	//
+	//Ninja/GS states
+	SC_MADNESSCANCEL,
+	SC_ADJUSTMENT,
+	SC_INCREASING,  //230
+	SC_GATLINGFEVER,
+	SC_TATAMIGAESHI,
+	SC_UTSUSEMI,
+	SC_KAENSIN,
+	SC_SUITON,
+	SC_NEN,
+	
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };
 extern int SkillStatusChangeTable[MAX_SKILL];
