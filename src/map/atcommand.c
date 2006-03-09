@@ -9423,7 +9423,7 @@ int atcommand_whodrops(
 	const char* command, const char* message)
 {
 	struct item_data *item_data, *item_array[MAX_SEARCH];
-	int i, count = 1;
+	int i,j, count = 1;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @whodrops <item_name_or_ID>).");
@@ -9442,7 +9442,7 @@ int atcommand_whodrops(
 		clif_displaymessage(fd, atcmd_output);
 		count = MAX_SEARCH;
 	}
-	for (i = 0; i < MAX_SEARCH; i++) {
+	for (i = 0; i < count; i++) {
 		item_data = item_array[i];
 		sprintf(atcmd_output, "Item: '%s'[%d]",
 			item_data->jname,item_data->slot);
@@ -9455,9 +9455,9 @@ int atcommand_whodrops(
 			sprintf(atcmd_output, "- Common mobs with highest drop chance (only max %d are listed):", MAX_SEARCH);
 			clif_displaymessage(fd, atcmd_output);
 		
-			for (i=0; i < MAX_SEARCH && item_data->mob[i].chance > 0; i++)
+			for (j=0; j < MAX_SEARCH && item_data->mob[j].chance > 0; j++)
 			{
-				sprintf(atcmd_output, "- %s (%02.02f%%)", mob_db(item_data->mob[i].id)->jname, item_data->mob[i].chance/100.);
+				sprintf(atcmd_output, "- %s (%02.02f%%)", mob_db(item_data->mob[j].id)->jname, item_data->mob[j].chance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}

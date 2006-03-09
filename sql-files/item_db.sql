@@ -5,8 +5,8 @@
 DROP TABLE IF EXISTS `item_db`;
 CREATE TABLE `item_db` (
   `id` smallint(5) unsigned NOT NULL default '0',
-  `name_english` varchar(30) NOT NULL default '',
-  `name_japanese` varchar(30) NOT NULL default '',
+  `name_english` varchar(50) NOT NULL default '',
+  `name_japanese` varchar(50) NOT NULL default '',
   `type` tinyint(2) unsigned NOT NULL default '0',
   `price_buy` mediumint(10) unsigned default NULL,
   `price_sell` mediumint(10) unsigned default NULL,

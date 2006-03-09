@@ -995,7 +995,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			sd->status.skill[i].id=0; //First clear skills.
 	}
 	for(i=0;i<MAX_SKILL;i++){ 
-		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){	
+		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){ //Restore original level of skills after deleting earned skills.	
 			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;
 			sd->status.skill[i].flag=0;
 		}

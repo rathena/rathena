@@ -1596,9 +1596,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
 	}
 
-	if( memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)) || b_attackrange != sd->attackrange)
+	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
 		clif_skillinfoblock(sd);
-
 	if(b_speed != sd->speed)
 		clif_updatestatus(sd,SP_SPEED);
 	if(b_weight != sd->weight)
@@ -3317,7 +3316,9 @@ int status_get_sc_def(struct block_list *bl, int type)
 //		break;
 	case SC_STUN:
 	case SC_POISON:
+	case SC_DPOISON:
 	case SC_SILENCE:
+	case SC_BLEEDING:
 	case SC_STOP:
 		sc_def = 300 +100*status_get_vit(bl) +33*status_get_luk(bl);
 		break;
