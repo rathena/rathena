@@ -35,7 +35,7 @@ static int hp_coefficient[MAX_PC_CLASS];
 static int hp_coefficient2[MAX_PC_CLASS];
 static int hp_sigma_val[MAX_PC_CLASS][MAX_LEVEL];
 static int sp_coefficient[MAX_PC_CLASS];
-static int aspd_base[MAX_PC_CLASS][MAX_WEAPON_TYPE];
+static int aspd_base[MAX_PC_CLASS][MAX_WEAPON_TYPE+1];	//[blackhole89]
 #define MAX_REFINE_BONUS 5
 static int refinebonus[MAX_REFINE_BONUS][3];	// 精錬ボーナステーブル(refine_db.txt)
 int percentrefinery[5][MAX_REFINE+1];	// 精錬成功率(refine_db.txt)
@@ -5737,15 +5737,15 @@ int status_readdb(void) {
 		return 1;
 	}
 	while(fgets(line, sizeof(line)-1, fp)){
-		char *split[MAX_WEAPON_TYPE + 5];
+		char *split[MAX_WEAPON_TYPE + 6];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		for(j=0,p=line;j<(MAX_WEAPON_TYPE + 5) && p;j++){	//not 22 anymore [blackhole89]
+		for(j=0,p=line;j<=(MAX_WEAPON_TYPE + 5) && p;j++){	//not 22 anymore [blackhole89]
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(j<(MAX_WEAPON_TYPE + 5))
+		if(j<=(MAX_WEAPON_TYPE + 5))	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
 			continue;
        	if(atoi(split[0])>=MAX_PC_CLASS)
 		    continue;
@@ -5753,7 +5753,7 @@ int status_readdb(void) {
 		hp_coefficient[atoi(split[0])]=atoi(split[2]);
 		hp_coefficient2[atoi(split[0])]=atoi(split[3]);
 		sp_coefficient[atoi(split[0])]=atoi(split[4]);
-		for(j=0;j<MAX_WEAPON_TYPE;j++)
+		for(j=0;j<=MAX_WEAPON_TYPE;j++)
 			aspd_base[atoi(split[0])][j]=atoi(split[j+5]);
 	}
 	fclose(fp);
