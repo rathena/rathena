@@ -3413,8 +3413,8 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 		case SC_FREEZE:				/* 凍結 */
 			rate = 100*status_get_mdef(bl);
 		break;
-		case SC_STUN:				/* スタン（val2にミリ秒セット） */
-			rate = status_get_sc_def_vit(bl);
+		case SC_STUN:	//Reduction in duration is the same as reduction in rate.
+			rate = status_get_sc_def(bl, type);
 		break;
 		case SC_DPOISON:			/* 猛毒 */
 		case SC_POISON:				/* 毒 */
