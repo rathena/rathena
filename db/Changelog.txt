@@ -27,6 +27,7 @@
 =========================
 
 03/08
+	* Updated skill tree for Ninja/GS [Vicious]
 	* More work on Ninja/GS. They have joblvl 70, according to status
 	  on kRO site, so using adv. classes' job exp chart. [Vicious]
 	* Updated stat bonus, given by Muad_Dib.  [Vicious]
