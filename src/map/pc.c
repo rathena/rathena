@@ -507,20 +507,20 @@ int pc_calcweapontype(struct map_session_data *sd)
 	if(sd->weapontype1 == 0 &&	sd->weapontype2 != 0)// ¶è•Ší Only
 		sd->status.weapon = sd->weapontype2;
 	else if(sd->weapontype1 == 1 && sd->weapontype2 == 1)// ?’Z?
-		sd->status.weapon = 0x11;
+		sd->status.weapon = MAX_WEAPON_TYPE+1;
 	else if(sd->weapontype1 == 2 && sd->weapontype2 == 2)// ??è?
-		sd->status.weapon = 0x12;
+		sd->status.weapon = MAX_WEAPON_TYPE+2;
 	else if(sd->weapontype1 == 6 && sd->weapontype2 == 6)// ??è•€
-		sd->status.weapon = 0x13;
+		sd->status.weapon = MAX_WEAPON_TYPE+3;
 	else if( (sd->weapontype1 == 1 && sd->weapontype2 == 2) ||
 		(sd->weapontype1 == 2 && sd->weapontype2 == 1) ) // ’Z? - ?è?
-		sd->status.weapon = 0x14;
+		sd->status.weapon = MAX_WEAPON_TYPE+4;
 	else if( (sd->weapontype1 == 1 && sd->weapontype2 == 6) ||
 		(sd->weapontype1 == 6 && sd->weapontype2 == 1) ) // ’Z? - •€
-		sd->status.weapon = 0x15;
+		sd->status.weapon = MAX_WEAPON_TYPE+5;
 	else if( (sd->weapontype1 == 2 && sd->weapontype2 == 6) ||
 		(sd->weapontype1 == 6 && sd->weapontype2 == 2) ) // ?è? - •€
-		sd->status.weapon = 0x16;
+		sd->status.weapon = MAX_WEAPON_TYPE+6;
 	else
 		sd->status.weapon = sd->weapontype1;
 
@@ -4335,7 +4335,8 @@ int pc_attack_timer(int tid,unsigned int tick,int id,int data)
 		return 0;
 	}
 
-	if(sd->status.weapon == 11 && sd->equip_index[10] < 0)
+	if((sd->status.weapon == 11 || sd->status.weapon == 17 || sd->status.weapon == 18
+		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21)&& sd->equip_index[10] < 0)
 	{
 		clif_arrow_fail(sd,0);
 		return 0;

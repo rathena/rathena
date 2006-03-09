@@ -27,6 +27,10 @@
 =========================
 
 03/08
+	* More work on Ninja/GS. They have joblvl 70, according to status
+	  on kRO site, so using adv. classes' job exp chart. [Vicious]
+	* Updated stat bonus, given by Muad_Dib.  [Vicious]
+	* Added more columns to size_fix and job_db1.txt with temp value. [Vicious]
 	* Fixed cooldown time for ASC_CDP, according to description [Foruken]
 03/07
 	* Temp ninja/gs skill tree. [Vicious]

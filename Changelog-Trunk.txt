@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/08
+	* More work on ninja/gs. Which made me do... [Vicious]
+	- Add more weapon type(17~21 for guns) [Vicious]
+	- Included MAX_WEAPON_TYPE in status.h and updated the codes
+	  (Whose idea was it to do static number... esp dual weapon) [Vicious]
 	* Fixed a bug that was making the no_spawn_on_player setting useless.
 	  [Skotlex]
 	* Added Deadly Poison and Bleeding to status_get_sc_def, meaning that now

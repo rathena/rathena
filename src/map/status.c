@@ -35,11 +35,11 @@ static int hp_coefficient[MAX_PC_CLASS];
 static int hp_coefficient2[MAX_PC_CLASS];
 static int hp_sigma_val[MAX_PC_CLASS][MAX_LEVEL];
 static int sp_coefficient[MAX_PC_CLASS];
-static int aspd_base[MAX_PC_CLASS][20];
+static int aspd_base[MAX_PC_CLASS][MAX_WEAPON_TYPE];
 #define MAX_REFINE_BONUS 5
 static int refinebonus[MAX_REFINE_BONUS][3];	// ¸˜Bƒ{[ƒiƒXƒe[ƒuƒ‹(refine_db.txt)
 int percentrefinery[5][MAX_REFINE+1];	// ¸˜B¬Œ÷—¦(refine_db.txt)
-static int atkmods[3][20];	// •ŠíATKƒTƒCƒYC³(size_fix.txt)
+static int atkmods[3][MAX_WEAPON_TYPE];	// •ŠíATKƒTƒCƒYC³(size_fix.txt)
 static char job_bonus[MAX_PC_CLASS][MAX_LEVEL];
 
 int current_equip_item_index; //Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
@@ -1069,6 +1069,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		case 11: // Bows
 		case 13: // Musical Instruments
 		case 14: // Whips
+		case 17: // Revolver
+		case 18: // Rifle
+		case 19: // Shotgun
+		case 20: //Gatling Gun
+		case 21: //Grenade Launcher
 			str = sd->paramc[4];
 			dex = sd->paramc[0];
 			break;
@@ -1159,10 +1164,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		if(sd->status.weapon == 11)
 			sd->attackrange += skill;
 	}
-	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 && (sd->status.weapon == 11)){ //temp until we get gun id
+	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 && (sd->status.weapon == 17 || sd->status.weapon == 18
+		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21))
 		sd->hit += 2*skill;
-	}
-	if((skill=pc_checkskill(sd,GS_SNAKEEYE))>0 && (sd->status.weapon == 11)){ //temp until we get gun id
+	if((skill=pc_checkskill(sd,GS_SNAKEEYE))>0 && (sd->status.weapon == 17 || sd->status.weapon == 18
+		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21)) {
 		sd->hit += skill;
 		sd->attackrange += skill;
 	}
@@ -1323,7 +1329,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 // Unlike other stats, ASPD rate modifiers from skills/SCs/items/etc are first all added together, then the final modifier is applied
 
 	// Basic ASPD value
-	if (sd->status.weapon <= 16)
+	if (sd->status.weapon < MAX_WEAPON_TYPE)
 		sd->aspd += aspd_base[sd->status.class_][sd->status.weapon]-(sd->paramc[1]*4+sd->paramc[4])*aspd_base[sd->status.class_][sd->status.weapon]/1000;
 	else
 		sd->aspd += (
@@ -1340,9 +1346,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(pc_isriding(sd))
 		sd->aspd_rate += 50-10*pc_checkskill(sd,KN_CAVALIERMASTERY);
 		
-	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 && (sd->status.weapon == 11)){ //temp until we get gun id
+	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 && (sd->status.weapon == 17 || sd->status.weapon == 18
+		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21))
 		sd->aspd_rate -= (int)(skill / 2);
-	}
 
 	// Relative modifiers from status changes (shared between PC and NPC)
 	sd->aspd_rate = status_calc_aspd_rate(&sd->bl,sd->aspd_rate);
@@ -1830,11 +1836,12 @@ int status_calc_batk(struct block_list *bl, int batk)
 		if(sc->data[SC_SKE].timer!=-1)
 			batk += batk * 3;
 		if(sc->data[SC_JOINTBEAT].timer!=-1 && sc->data[SC_JOINTBEAT].val2==4)
-  			batk -= batk * 25/100;
-		if(sc->data[SC_CURSE].timer!=-1)
-  			batk -= batk * 25/100;
-		if(sc->data[SC_BLEEDING].timer != -1)
 			batk -= batk * 25/100;
+		if(sc->data[SC_CURSE].timer!=-1)
+			batk -= batk * 25/100;
+//Curse shouldn't effect on this? 
+//		if(sc->data[SC_BLEEDING].timer != -1)
+//			batk -= batk * 25/100;
 	}
 
 	return batk;
@@ -2191,8 +2198,9 @@ int status_calc_aspd_rate(struct block_list *bl, int aspd_rate)
 			aspd_rate += 25;
 		if(sc->data[SC_GRAVITATION].timer!=-1)
 			aspd_rate += sc->data[SC_GRAVITATION].val2;
-		if(sc->data[SC_BLEEDING].timer != -1)
-			aspd_rate += 25;
+//Curse shouldn't effect on this?
+//		if(sc->data[SC_BLEEDING].timer != -1)
+//			aspd_rate += 25;
 		if(sc->data[SC_JOINTBEAT].timer!=-1) {
 			if (sc->data[SC_JOINTBEAT].val2 == 1)
 				aspd_rate += 25;
@@ -2686,7 +2694,7 @@ int status_get_batk(struct block_list *bl)
 	
 	if(bl->type==BL_PC) {
 		batk = ((struct map_session_data *)bl)->base_atk;
-		if (((struct map_session_data *)bl)->status.weapon < 16)
+		if (((struct map_session_data *)bl)->status.weapon < MAX_WEAPON_TYPE)
 			batk += ((struct map_session_data *)bl)->weapon_atk[((struct map_session_data *)bl)->status.weapon];
 	} else {
 		int str,dstr;
@@ -5293,7 +5301,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		// - õóúìªÎªÞªÞ«µ?«Ðì¹ÔÑªä«ê«í«°ª·ªÆªâ?ÍýªÏá¼ª¨ªÊª¤
 		// To-do: bleeding effect increases damage taken?
 		if ((sc->data[type].val4 -= 10000) >= 0) {
-			int hp = rand()%300 + 400;
+			int hp = rand()%600 + 200;
 			if(sd) {
 				pc_heal(sd,-hp,0);
 			} else if(bl->type == BL_MOB) {
@@ -5671,7 +5679,7 @@ int status_readdb(void) {
 		return 1;
 	}
 	while(fgets(line, sizeof(line)-1, fp)){
-		char *split[23];
+		char *split[MAX_WEAPON_TYPE + 5];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		for(j=0,p=line;j<22 && p;j++){
@@ -5687,7 +5695,7 @@ int status_readdb(void) {
 		hp_coefficient[atoi(split[0])]=atoi(split[2]);
 		hp_coefficient2[atoi(split[0])]=atoi(split[3]);
 		sp_coefficient[atoi(split[0])]=atoi(split[4]);
-		for(j=0;j<17;j++)
+		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			aspd_base[atoi(split[0])][j]=atoi(split[j+5]);
 	}
 	fclose(fp);
@@ -5719,7 +5727,7 @@ int status_readdb(void) {
 
 	// ƒTƒCƒY•â³ƒe?ƒuƒ‹
 	for(i=0;i<3;i++)
-		for(j=0;j<20;j++)
+		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			atkmods[i][j]=100;
 	sprintf(path, "%s/size_fix.txt", db_path);
 	fp=fopen(path,"r");
@@ -5729,18 +5737,18 @@ int status_readdb(void) {
 	}
 	i=0;
 	while(fgets(line, sizeof(line)-1, fp)){
-		char *split[20];
+		char *split[MAX_WEAPON_TYPE];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		if(atoi(line)<=0)
 			continue;
 		memset(split,0,sizeof(split));
-		for(j=0,p=line;j<20 && p;j++){
+		for(j=0,p=line;j<MAX_WEAPON_TYPE && p;j++){
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		for(j=0;j<20 && split[j];j++)
+		for(j=0;j<MAX_WEAPON_TYPE && split[j];j++)
 			atkmods[i][j]=atoi(split[j]);
 		i++;
 	}

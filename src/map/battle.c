@@ -911,17 +911,18 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x11: // Place holder for guns
+		case 0x11: // Revolver
+		case 0x12: // Rifle
+		case 0x13: // Shotgun
+		case 0x14: //Gatling Gun
+		case 0x15: //Grenade Launcher
 			break;
-		case 0x12: // place holder for shrikens
-		{
-			if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
-				//Advanced Katar Research by zanetheinsane
-				damage += (skill * 3);
-			}
-			break;
-		}
 	}
+/*//need to add this on shuriken skills.
+	if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
+		damage += (skill * 3);
+	}	
+*/
 	return (damage);
 }
 /*==========================================
@@ -1159,7 +1160,8 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 	//Set miscellaneous data that needs be filled regardless of hit/miss
-	if(sd && sd->status.weapon == 11) {
+	if(sd && (sd->status.weapon == 11 || sd->status.weapon == 17 || sd->status.weapon == 18
+		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21)) {
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 		flag.arrow = 1;
 	} else if (status_get_range(src) > 3)
@@ -1246,6 +1248,10 @@ static struct Damage battle_calc_weapon_attack(
 			case NJ_HUUMA:
 				flag.arrow = 1;
 				break;
+			
+			case GS_MAGICALBULLET:
+				flag.arrow = 0;
+				break;
 		}
 	}
 
@@ -1311,7 +1317,7 @@ static struct Damage battle_calc_weapon_attack(
 				flag.rh=0;
 				flag.lh=1;
 			}
-		if(sd->status.weapon > 16)
+		if(sd->status.weapon > MAX_WEAPON_TYPE)
 			flag.rh = flag.lh = 1;
 	}
 
@@ -1559,7 +1565,7 @@ static struct Damage battle_calc_weapon_attack(
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
 				if(sd)
 				{
-					if (sd->status.weapon < 16 && (sd->atk_rate != 100 || sd->weapon_atk_rate[sd->status.weapon] != 0))
+					if (sd->status.weapon < MAX_WEAPON_TYPE && (sd->atk_rate != 100 || sd->weapon_atk_rate[sd->status.weapon] != 0))
 						ATK_RATE(sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]);
 
 					if(flag.cri && sd->crit_atk_rate)
@@ -2251,7 +2257,7 @@ static struct Damage battle_calc_weapon_attack(
 				wd.div_=skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
 				wd.type = 0x08;
 			}
-		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 && sd->weapontype1 == 0x01) ||
+		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 && sd->weapontype1 == 0x11) ||
 			sd->double_rate > 0) // Copied double attack
 			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
 			{
@@ -2275,7 +2281,7 @@ static struct Damage battle_calc_weapon_attack(
 			wd.damage2 = 0;
 			flag.rh=1;
 			flag.lh=0;
-		} else if(sd->status.weapon > 16)
+		} else if(sd->status.weapon > MAX_WEAPON_TYPE)
 		{	//Dual-wield
 			if (wd.damage > 0)
 			{
@@ -3100,7 +3106,8 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	race = status_get_race(target);
 	ele = status_get_elem_type(target);
 
-	if(sd && sd->status.weapon == 11) {
+	if(sd && (sd->status.weapon == 11 || sd->status.weapon == 17 || sd->status.weapon == 18
+		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21)) {
 		if(sd->equip_index[10] >= 0) {
 			if(battle_config.arrow_decrement)
 				pc_delitem(sd,sd->equip_index[10],1,0);
@@ -3144,7 +3151,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	}
 	//Recycled the damage variable rather than use a new one... [Skotlex]
-	if(sd && (damage = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= 16) // triple blow works with bows ^^ [celest]
+	if(sd && (damage = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= MAX_WEAPON_TYPE) // triple blow works with bows ^^ [celest]
 	{
 		int triple_rate= 30 - damage; //Base Rate
 		if (sc && sc->data[SC_SKILLRATE_UP].timer!=-1 && sc->data[SC_SKILLRATE_UP].val1 == MO_TRIPLEATTACK)
@@ -3170,7 +3177,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
 	//“ñ“?—¬?¶è‚ÆƒJƒ^?[ƒ‹’ÇŒ‚‚Ìƒ~ƒX•\¦(–³—?‚â‚è?`)
-	if(sd && sd->status.weapon >= 16 && wd.damage2 == 0)
+	if(sd && sd->status.weapon >= MAX_WEAPON_TYPE && wd.damage2 == 0)
 		clif_damage(src, target, tick+10, wd.amotion, wd.dmotion,0, 1, 0, 0);
 
 	if (sd && sd->splash_range > 0 && damage > 0)

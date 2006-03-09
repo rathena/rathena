@@ -524,6 +524,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 #define MAX_REFINE 10
 extern int percentrefinery[5][MAX_REFINE+1]; //The last slot always has a 0% success chance [Skotlex]
 
+#define MAX_WEAPON_TYPE 21
+
 int status_readdb(void);
 int do_init_status(void);
 
