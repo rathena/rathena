@@ -6272,8 +6272,12 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case NJ_KAENSIN:
 	case NJ_BAKUENRYU:
 	case NJ_HYOUSYOURAKU:
-	case NJ_RAIGEKISAI:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
+		break;
+	case NJ_RAIGEKISAI:
+		map_foreachinrange(skill_attack_area, src,
+			skill_get_splash(skillid, skilllv), BL_CHAR,
+			BF_MAGIC, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);
 		break;
 	}
 

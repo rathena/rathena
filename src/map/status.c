@@ -5740,12 +5740,12 @@ int status_readdb(void) {
 		char *split[MAX_WEAPON_TYPE + 5];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		for(j=0,p=line;j<22 && p;j++){
+		for(j=0,p=line;j<(MAX_WEAPON_TYPE + 5) && p;j++){	//not 22 anymore [blackhole89]
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(j<22)
+		if(j<(MAX_WEAPON_TYPE + 5))
 			continue;
        	if(atoi(split[0])>=MAX_PC_CLASS)
 		    continue;
