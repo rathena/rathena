@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/09
+	* Made Magic Crasher a BF_WEAPON attack. [Skotlex]
+	* Made skill_unit_range a per-level setting. meteor and Lov now have their
+	  unit range for bosses adjusted in the skill_unit_db rather than
+	  hardcoded. [Skotlex]
 	* Added Gunslinger/Ninja Status Change icons. Somebody needs to look into
 	  them though for not all SCs have a matching SI. [blackhole89]
 	* Changed ITEM_NAME_LENGTH to 50. [Skotlex]

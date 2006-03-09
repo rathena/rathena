@@ -699,7 +699,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 				if(!(skill_get_inf(skill_num)&INF_GROUND_SKILL) && rand()%100 < 75)
 					return 0;
 			} else 
-				damage /=2;
+				damage >>=1;
 		}
 	}
 	

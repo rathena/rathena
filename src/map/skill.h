@@ -60,7 +60,7 @@ struct skill_db {
 	int nocast;
 	int unit_id[2];
 	int unit_layout_type[MAX_SKILL_LEVEL];
-	int unit_range;
+	int unit_range[MAX_SKILL_LEVEL];
 	int unit_interval;
 	int unit_target;
 	int unit_flag;

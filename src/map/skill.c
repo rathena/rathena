@@ -669,7 +669,7 @@ int	skill_get_type( int id ){ skill_get (skill_db[id].skill_type, id, 1); }
 int	skill_get_unit_id ( int id, int flag ){ skill_get (skill_db[id].unit_id[flag], id, 1); }
 int	skill_get_unit_layout_type( int id ,int lv ){ skill_get (skill_db[id].unit_layout_type[lv-1], id, lv); }
 int	skill_get_unit_interval( int id ){ skill_get (skill_db[id].unit_interval, id, 1); }
-int	skill_get_unit_range( int id ){ skill_get (skill_db[id].unit_range, id, 1); }
+int	skill_get_unit_range( int id, int lv ){ skill_get (skill_db[id].unit_range[lv-1], id, lv); }
 int	skill_get_unit_target( int id ){ skill_get ((skill_db[id].unit_target&BCT_ALL), id, 1); }
 int	skill_get_unit_bl_target( int id ){ skill_get ((skill_db[id].unit_target&BL_ALL), id, 1); }
 int	skill_get_unit_flag( int id ){ skill_get (skill_db[id].unit_flag, id, 1); }
@@ -2104,7 +2104,7 @@ static int skill_check_unit_range_sub( struct block_list *bl,va_list ap )
 int skill_check_unit_range(int m,int x,int y,int skillid,int skilllv)
 {
 	int c = 0;
-	int range = skill_get_unit_range(skillid);
+	int range = skill_get_unit_range(skillid, skilllv);
 	int layout_type = skill_get_unit_layout_type(skillid,skilllv);
 	if (layout_type==-1 || layout_type>MAX_SQUARE_LAYOUT) {
 		ShowError("skill_check_unit_range: unsupported layout type %d for skill %d\n",layout_type,skillid);
@@ -2163,7 +2163,7 @@ int skill_check_unit_range2(struct block_list *bl, int m,int x,int y,int skillid
 				return 0;
 			}
 			// ‚Æ‚è‚ ‚¦‚¸?³•ûŒ`‚Ìƒ†ƒjƒbƒgƒŒƒCƒAƒEƒg‚Ì‚Ý‘Î‰ž
-			range = skill_get_unit_range(skillid) + layout_type;
+			range = skill_get_unit_range(skillid,skilllv) + layout_type;
 		}
 		break;
 	}
@@ -6448,7 +6448,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	nullpo_retr(0, src);
 
 	limit = skill_get_time(skillid,skilllv);
-	range = skill_get_unit_range(skillid);
+	range = skill_get_unit_range(skillid,skilllv);
 	interval = skill_get_unit_interval(skillid);
 	target = skill_get_unit_target(skillid);
 	unit_flag = skill_get_unit_flag(skillid);
@@ -6485,14 +6485,6 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		if((flag&1)!=0)
 			limit=1000;
 		val1=skilllv+2;
-		break;
-	case WZ_METEOR:
-		if (skilllv > skill_get_max(skillid))			//?L”ÍˆÍƒ?ƒeƒI
-			range = 10;
-		break;
-	case WZ_VERMILION:
-		if (skilllv > skill_get_max(skillid))			//?L”ÍˆÍLOV
-			range = 25;
 		break;
 	case WZ_QUAGMIRE:	//The target changes to "all" if used in a gvg map. [Skotlex]
 	case AM_DEMONSTRATION:
@@ -9507,9 +9499,9 @@ int skill_frostjoke_scream(struct block_list *bl,va_list ap)
  * ƒoƒWƒŠƒJ‚ÌƒZƒ‹‚ð?Ý’è‚·‚é
  *------------------------------------------
  */
-void skill_unitsetmapcell(struct skill_unit *src, int skill_num, int flag)
+void skill_unitsetmapcell(struct skill_unit *src, int skill_num, int skill_lv, int flag)
 {
-	int i,x,y,range = skill_get_unit_range(skill_num);
+	int i,x,y,range = skill_get_unit_range(skill_num,skill_lv);
 	int size = range*2+1;
 
 	for (i=0;i<size*size;i++) {
@@ -9951,19 +9943,19 @@ struct skill_unit *skill_initunit(struct skill_unit_group *group,int idx,int x,i
 
 	switch (group->skill_id) {
 	case AL_PNEUMA:
-		skill_unitsetmapcell(unit,AL_PNEUMA,CELL_SETPNEUMA);
+		skill_unitsetmapcell(unit,AL_PNEUMA,group->skill_lv,CELL_SETPNEUMA);
 		break;
 	case MG_SAFETYWALL:
-		skill_unitsetmapcell(unit,MG_SAFETYWALL,CELL_SETSAFETYWALL);
+		skill_unitsetmapcell(unit,MG_SAFETYWALL,group->skill_lv,CELL_SETSAFETYWALL);
 		break;
 	case SA_LANDPROTECTOR:
-		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,CELL_SETLANDPROTECTOR);
+		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_SETLANDPROTECTOR);
 		break;
 	case HP_BASILICA:
-		skill_unitsetmapcell(unit,HP_BASILICA,CELL_SETBASILICA);
+		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_SETBASILICA);
 		break;
 	case WZ_ICEWALL:
-		skill_unitsetmapcell(unit,WZ_ICEWALL,CELL_SETICEWALL);
+		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_SETICEWALL);
 		break;
 	}
 	return unit;
@@ -9993,19 +9985,19 @@ int skill_delunit(struct skill_unit *unit)
 
 	switch (group->skill_id) {
 	case AL_PNEUMA:
-		skill_unitsetmapcell(unit,AL_PNEUMA,CELL_CLRPNEUMA);
+		skill_unitsetmapcell(unit,AL_PNEUMA,group->skill_lv,CELL_CLRPNEUMA);
 		break;
 	case MG_SAFETYWALL:
-		skill_unitsetmapcell(unit,MG_SAFETYWALL,CELL_CLRSAFETYWALL);
+		skill_unitsetmapcell(unit,MG_SAFETYWALL,group->skill_lv,CELL_CLRSAFETYWALL);
 		break;
 	case SA_LANDPROTECTOR:
-		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,CELL_CLRLANDPROTECTOR);
+		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_CLRLANDPROTECTOR);
 		break;
 	case HP_BASILICA:
-		skill_unitsetmapcell(unit,HP_BASILICA,CELL_CLRBASILICA);
+		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_CLRBASILICA);
 		break;
 	case WZ_ICEWALL:
-		skill_unitsetmapcell(unit,WZ_ICEWALL,CELL_CLRICEWALL);
+		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_CLRICEWALL);
 		break;
 	}
 
@@ -11469,7 +11461,7 @@ int skill_readdb(void)
 		skill_db[i].unit_id[0] = strtol(split[1],NULL,16);
 		skill_db[i].unit_id[1] = strtol(split[2],NULL,16);
 		skill_split_atoi(split[3],skill_db[i].unit_layout_type);
-		skill_db[i].unit_range = atoi(split[4]);
+		skill_split_atoi(split[4],skill_db[i].unit_range);
 		skill_db[i].unit_interval = atoi(split[5]);
 
 		if( strcmpi(split[6],"noenemy")==0 ) skill_db[i].unit_target=BCT_NOENEMY;
