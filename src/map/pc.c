@@ -5145,6 +5145,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 					else if (sd->status.skill[i].flag > 2 && sd->status.skill[i].flag != 13)
 						sd->status.skill_point += (sd->status.skill[i].flag - 2);
 					sd->status.skill[i].lv = 0;
+					sd->status.skill[i].flag = 0;
 			}
 			else if (battle_config.quest_skill_reset && (inf2&INF2_QUEST_SKILL))
 			{

@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/09
+	* Fixed a bug in the pc_skillreset function which allowed TK rankers to
+	  accumulate skill points. [Skotlex]
 	* Fixed a major memory leak in status.c causing the last column of job_db1.txt
 	  never being read. I have no idea how long this has been there, but signs point
 	  to us using Katars at a random ASPD from somewhere in memory for ages. [blackhole89]
