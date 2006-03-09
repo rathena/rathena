@@ -911,6 +911,16 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
+		case 0x11: // Place holder for guns
+			break;
+		case 0x12: // place holder for shrikens
+		{
+			if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
+				//Advanced Katar Research by zanetheinsane
+				damage += (skill * 3);
+			}
+			break;
+		}
 	}
 	return (damage);
 }
@@ -2234,10 +2244,19 @@ static struct Damage battle_calc_weapon_attack(
 	{	//Check for double attack.
 		if(( (skill_lv = 5*pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == 0x01) ||
 			sd->double_rate > 0) //Success chance is not added, the higher one is used? [Skotlex]
+		{
 			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
 			{
 				wd.damage *=2;
 				wd.div_=skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
+				wd.type = 0x08;
+			}
+		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 && sd->weapontype1 == 0x01) ||
+			sd->double_rate > 0) // Copied double attack
+			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
+			{
+				wd.damage *=2;
+				wd.div_=skill_get_num(GS_CHAINACTION,skill_lv?skill_lv:1);
 				wd.type = 0x08;
 			}
 	}
@@ -2908,6 +2927,12 @@ struct Damage  battle_calc_misc_attack(
 		damage = int_ * (int)(sqrt(100*status_get_vit(target))) / 3;
 		if (tsd) damage/=2;
 		aflag = (aflag&~BF_RANGEMASK)|BF_LONG;
+		break;
+	case NJ_ZENYNAGE:
+		damage=1000*skill_lv;
+		if(skill_lv == 0) damage -= 1;
+		if(map_flag_vs(bl->m) || is_boss(bl))
+				damage=damage/2; //temp value
 		break;
 	}
 

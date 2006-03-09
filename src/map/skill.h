@@ -926,6 +926,9 @@ enum {
 	UNT_SPIDERWEB,
 	UNT_GRAVITATION,
 	UNT_HERMODE,
+
+	UNT_KAENSIN,
+	
 };
 
 #endif

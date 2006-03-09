@@ -1246,7 +1246,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			sc_start(bl,SC_COMA,0.1,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case GS_CRACKER:
-		sc_start(bl,SC_STUN,10*skilllv,skilllv,skill_get_time(skillid,skilllv)); //Temp stun rate
+		sc_start(bl,SC_STUN,(100 - 10*distance_bl(&sd->bl, bl)),skilllv,skill_get_time(skillid,skilllv)); //Temp stun rate
 		break;
 	case GS_PIERCINGSHOT:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time(skillid,skilllv));
@@ -1891,6 +1891,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case KN_AUTOCOUNTER: //Skills that need be passed as a normal attack for the client to display correctly.
 	case SN_SHARPSHOOTING:
 	case TF_DOUBLE:
+	case GS_CHAINACTION:
 		clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
 		break;
 	default:
@@ -3093,20 +3094,33 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		break;
 
 	//Until they're at right position - gs_damage- [Vicious]
-	case GS_BULLSEYE:
+	case GS_TRIPLEACTION:
 	case GS_CRACKER:
 	case GS_TRACKING:
 	case GS_PIERCINGSHOT:
 	case GS_RAPIDSHOWER:
 	case GS_DUST:
+	case GS_FULLBUSTER:
 	case GS_SPREADATTACK:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 	case NJ_HUUMA:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
+	case GS_BULLSEYE:
+		//race check
+				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		break;
 	case NJ_ZENYNAGE:
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+	case NJ_KASUMIKIRI:
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		sc_start(bl,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
+		break;
+	case NJ_KIRIKAGE:
+		status_change_end(src, SC_HIDING, -1);	// ƒnƒCƒfƒBƒ“ƒO‰ð?œ
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case NJ_KOUENKA:
 	case NJ_BAKUENRYU:
@@ -3118,6 +3132,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		break;
 	//Not implemented yet [Vicious]
 	case GS_FLING:
+	//case GS_TRIPLEACTION:
 	//case GS_BULLSEYE:
 	case GS_MAGICALBULLET:
 	//case GS_CRACKER:
@@ -3127,6 +3142,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	//case GS_RAPIDSHOWER:
 	case GS_DESPERADO:
 	//case GS_DUST:
+	//case GS_FULLBUSTER:
 	//case GS_SPREADATTACK:
 	case GS_GROUNDDRIFT:
 	
@@ -3135,9 +3151,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	//case NJ_HUUMA:
 	//case NJ_ZENYNAGE:
 	case NJ_TATAMIGAESHI:
-	case NJ_KIRIKAGE:
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		break;
+	//case NJ_KASUMIKIRI:
+	//case NJ_KIRIKAGE:
 	//case NJ_KOUENKA:
 	case NJ_KAENSIN:
 	//case NJ_BAKUENRYU:
@@ -3254,6 +3269,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
 			//These two are actually ground placed.
+			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
+		//Until they're at right position - gs_ground- [Vicious]
+		case NJ_KAENSIN:
+		case NJ_HYOUSYOURAKU:
+		case NJ_RAIGEKISAI:
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
 	}
 	tsc = status_get_sc(bl);
@@ -5665,7 +5685,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_GLITTERING:
 	if(sd) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(rand()%100 < 50+10*skilllv )
+			if(rand()%100 < (50+10*skilllv) )
 				pc_addspiritball(sd,skill_get_time(skillid,skilllv),skilllv);
 		}
 		break;
@@ -6226,6 +6246,13 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 					clif_skill_fail(sd,skillid,0,0);
 			}
 		}
+		break;
+	
+	//Until they're at right position - gs_unit- [Vicious]
+	case NJ_KAENSIN:
+	case NJ_HYOUSYOURAKU:
+	case NJ_RAIGEKISAI:
+		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		break;
 	}
 
@@ -8135,7 +8162,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			return 0;
 		}
 		break;
-		
+
 	//Until they're at right position - gs_skillcheck- [Vicious]
 	case GS_GLITTERING:
 		if(sd->spiritball >= 10) {
@@ -8153,10 +8180,18 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		}
 		if (skill != GS_MAGICALBULLET)
 			arrow_flag = 1;
+		if(sd->equip_index[10] < 0) {
+			clif_arrow_fail(sd,0);
+			return 0;
+		}
 		break;
 	case GS_BULLSEYE:
 		if(sd->spiritball < 5) {
 			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		if(sd->equip_index[10] < 0) {
+			clif_arrow_fail(sd,0);
 			return 0;
 		}
 		break;
@@ -8179,12 +8214,25 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case GS_RAPIDSHOWER:
 	case GS_DESPERADO:
 	case GS_DUST:
+	case GS_FULLBUSTER:
 	case GS_SPREADATTACK:
 	case GS_GROUNDDRIFT:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 	case NJ_HUUMA:
 		arrow_flag = 1;
+		if(sd->equip_index[10] < 0) {
+			clif_arrow_fail(sd,0);
+			return 0;
+		}
+		break;
+	case NJ_KAENSIN:
+	case NJ_BAKUENRYU:
+	case NJ_SUITON:
+	case NJ_HYOUSYOURAKU:
+	case NJ_RAIGEKISAI:
+	case NJ_KAMAITACHI:
+		//delitem_flag = 0; <- don't need?
 		break;
 
 	//Not implemented yet [Vicious]
@@ -8193,15 +8241,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case NJ_KIRIKAGE:
 	case NJ_UTSUSEMI:
 	case NJ_BUNSINJYUTSU:
-	case NJ_KOUENKA:
-	case NJ_KAENSIN:
-	case NJ_BAKUENRYU:
-	case NJ_HYOUSENSOU:
-	case NJ_SUITON:
-	case NJ_HYOUSYOURAKU:
-	case NJ_HUUJIN:
-	case NJ_RAIGEKISAI:
-	case NJ_KAMAITACHI:
+	
 	case NJ_NEN:
 	case NJ_ISSEN:
 		break;
