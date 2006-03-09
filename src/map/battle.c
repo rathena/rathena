@@ -1256,10 +1256,12 @@ static struct Damage battle_calc_weapon_attack(
 			case NJ_SYURIKEN:
 			case NJ_KUNAI:
 			case NJ_HUUMA:
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				flag.arrow = 1;
 				break;
 			
 			case GS_MAGICALBULLET:
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				flag.arrow = 0;
 				break;
 		}
@@ -2267,8 +2269,9 @@ static struct Damage battle_calc_weapon_attack(
 				wd.div_=skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
 				wd.type = 0x08;
 			}
-		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 && sd->weapontype1 == 0x11) ||
-			sd->double_rate > 0) // Copied double attack
+		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 &&
+			(sd->weapontype1 == 0x11 || sd->weapontype1 == 0x12 || sd->weapontype1 == 0x13
+			|| sd->weapontype1 == 0x14 || sd->weapontype1 == 0x15)) || sd->double_rate > 0) // Copied double attack
 			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
 			{
 				wd.damage *=2;
@@ -2946,7 +2949,7 @@ struct Damage  battle_calc_misc_attack(
 		break;
 	case NJ_ZENYNAGE:
 		damage=1000*skill_lv;
-		if(skill_lv == 0) damage -= 1;
+		if(skill_lv == 10) damage -= 1;
 		if(map_flag_vs(bl->m) || is_boss(bl))
 				damage=damage/2; //temp value
 		break;

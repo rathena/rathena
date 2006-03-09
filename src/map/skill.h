@@ -928,6 +928,7 @@ enum {
 	UNT_HERMODE,
 
 	UNT_KAENSIN,
+	UNT_SUITON,
 	
 };
 

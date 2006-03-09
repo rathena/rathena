@@ -3102,7 +3102,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_RAPIDSHOWER:
 	case GS_DUST:
 	case GS_FULLBUSTER:
-	case GS_SPREADATTACK:
+	
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 	case NJ_HUUMA:
@@ -3111,6 +3111,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_BULLSEYE:
 		//race check
 				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+	case GS_DESPERADO:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		map_foreachinrange(skill_attack_area, src,
+			skill_get_splash(skillid, skilllv), BL_CHAR,
+			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
+		break;
+	case GS_SPREADATTACK:
+		map_foreachinrange(skill_area_sub, bl,
+			skill_get_splash(skillid, skilllv),BL_CHAR,
+			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+			skill_castend_damage_id);
 		break;
 	case NJ_ZENYNAGE:
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
@@ -3124,12 +3136,17 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case NJ_KOUENKA:
-	case NJ_BAKUENRYU:
 	case NJ_HYOUSENSOU:
 	case NJ_HYOUSYOURAKU:
 	case NJ_HUUJIN:
 	case NJ_RAIGEKISAI:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+	case NJ_KAMAITACHI:
+		// Does it stop if touch an obstacle? it shouldn't shoot trough walls
+		map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
+			skill_get_splash(skillid, skilllv),BL_CHAR,
+			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);	// varargs
 		break;
 	//Not implemented yet [Vicious]
 	case GS_FLING:
@@ -3141,7 +3158,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_DISARM:
 	//case GS_PIERCINGSHOT:
 	//case GS_RAPIDSHOWER:
-	case GS_DESPERADO:
+	//case GS_DESPERADO:
 	//case GS_DUST:
 	//case GS_FULLBUSTER:
 	//case GS_SPREADATTACK:
@@ -3156,12 +3173,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	//case NJ_KIRIKAGE:
 	//case NJ_KOUENKA:
 	case NJ_KAENSIN:
-	//case NJ_BAKUENRYU:
 	//case NJ_HYOUSENSOU:
 	//case NJ_HYOUSYOURAKU:
 	//case NJ_HUUJIN:
 	//case NJ_RAIGEKISAI:
-	case NJ_KAMAITACHI:
+	//case NJ_KAMAITACHI:
 	case NJ_ISSEN:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
@@ -5688,6 +5704,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(rand()%100 < (50+10*skilllv))
 				pc_addspiritball(sd,skill_get_time(skillid,skilllv),skilllv);
+			else if(sd->spiritball > 0)
+				pc_delspiritball(sd,1,0);
 		}
 		break;
 	case GS_MADNESSCANCEL:
@@ -6073,6 +6091,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case SA_DELUGE:			/* ƒfƒŠƒ…?ƒW */
 	case SA_VIOLENTGALE:	/* ƒoƒCƒIƒŒƒ“ƒgƒQƒCƒ‹ */
 	case SA_LANDPROTECTOR:	/* ƒ‰ƒ“ƒhƒvƒ?ƒeƒNƒ^? */
+	case NJ_SUITON:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		break;
 
@@ -6251,6 +6270,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	
 	//Until they're at right position - gs_unit- [Vicious]
 	case NJ_KAENSIN:
+	case NJ_BAKUENRYU:
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -6760,6 +6780,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	case UNT_VOLCANO:
 	case UNT_DELUGE:
 	case UNT_VIOLENTGALE:
+	case UNT_SUITON:
 		if(sc && sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,
 				skill_get_time2(sg->skill_id,sg->skill_lv));
@@ -7286,6 +7307,7 @@ static int skill_unit_onleft(int skill_id, struct block_list *bl,unsigned int ti
 		case SA_VIOLENTGALE:
 		case CG_HERMODE:
 		case HW_GRAVITATION:
+		case NJ_SUITON:
 			if (sc && sc->data[type].timer != -1)
 				status_change_end(bl, type, -1);
 			break;
@@ -8194,7 +8216,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		}
 		break;
 	case GS_ADJUSTMENT:
-		if(sd->sc.data[SC_MADNESSCANCEL].timer == -1) {
+		if(sd->spiritball < 2 || sd->sc.data[SC_MADNESSCANCEL].timer == -1) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
@@ -8349,7 +8371,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case ST_WATER:
 		//?…?ê”»’è
 		//(!map[sd->bl.m].flag.rain) && //they have removed RAIN effect. [Lupus]
-		if ( (sd->sc.data[SC_DELUGE].timer == -1) &&
+		if ( (sd->sc.data[SC_DELUGE].timer == -1 || sd->sc.data[SC_SUITON].timer == -1) &&
 			(!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKWATER)))
 		{
 			clif_skill_fail(sd,skill,0,0);
@@ -9568,7 +9590,7 @@ int skill_clear_element_field(struct block_list *bl)
 
 	for (i=0;i<max;i++) {
 		skillid=ug[i].skill_id;
-		if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR)
+		if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR||skillid==NJ_SUITON)
 			skill_delunitgroup(&ug[i]);
 	}
 	return 0;
@@ -9598,11 +9620,11 @@ struct skill_unit_group *skill_locate_element_field(struct block_list *bl)
 	for (i=0;i<max;i++) {
 		if(sd){
 			skillid=sd->skillunit[i].skill_id;
-			if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR)
+			if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR||skillid==NJ_SUITON)
 				return &sd->skillunit[i];
 		}else if(md){
 			skillid=md->skillunit[i].skill_id;
-			if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR)
+			if(skillid==SA_DELUGE||skillid==SA_VOLCANO||skillid==SA_VIOLENTGALE||skillid==SA_LANDPROTECTOR||skillid==NJ_SUITON)
 				return &md->skillunit[i];
 		}
 	}

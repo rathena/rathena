@@ -281,10 +281,10 @@ void initChangeTables(void) {
 	//Until they're at right position - gs_set_sc- [Vicious] / some of these don't seem to have a status icon adequate [blackhole89]
 	set_sc(GS_MADNESSCANCEL,        SC_MADNESSCANCEL,       SI_MADNESSCANCEL);
 	set_sc(GS_ADJUSTMENT,           SC_ADJUSTMENT,          SI_ADJUSTMENT);
-	set_sc(GS_INCREASING,           SC_INCREASING,          SI_BLANK);
+	set_sc(GS_INCREASING,           SC_INCREASING,          SI_ACCURACY);
 	set_sc(GS_GATLINGFEVER,         SC_GATLINGFEVER,        SI_GATLINGFEVER);
 	set_sc(NJ_TATAMIGAESHI,         SC_TATAMIGAESHI,        SI_BLANK);
-	set_sc(NJ_UTSUSEMI,             SC_UTSUSEMI,            SI_BLANK);
+	set_sc(NJ_UTSUSEMI,             SC_UTSUSEMI,            SI_MAEMI);
 	set_sc(NJ_KAENSIN,              SC_KAENSIN,             SI_BLANK);
 	set_sc(NJ_SUITON,               SC_SUITON,              SI_BLANK);
 	set_sc(NJ_NEN,                  SC_NEN,                 SI_NEN);
@@ -1721,6 +1721,9 @@ int status_calc_agi(struct block_list *bl, int agi)
 			agi -= 2 + sc->data[SC_DECREASEAGI].val1;
 		if(sc->data[SC_QUAGMIRE].timer!=-1)
 			agi -= sc->data[SC_QUAGMIRE].val1*(bl->type==BL_PC?5:10);
+		int class = status_get_class(bl);
+		if(sc->data[SC_SUITON].timer!=-1 || class != JOB_NINJA)
+			agi -= (((sc->data[SC_SUITON].val1 - 1) / 3) + 1) * 3;
 	}
 
 	return agi;
@@ -1992,7 +1995,7 @@ int status_calc_flee(struct block_list *bl, int flee)
 		if(sc->data[SC_ADJUSTMENT].timer!=-1)
 			flee += 30;
 		if(sc->data[SC_GATLINGFEVER].timer!=-1)
-			flee -= sc->data[SC_GATLINGFEVER].val2*5;
+			flee -= sc->data[SC_GATLINGFEVER].val1*5;
 	}
 
 	if (bl->type == BL_PC && map_flag_gvg(bl->m)) //GVG grounds flee penalty, placed here because it's "like" a status change. [Skotlex]
@@ -2230,7 +2233,7 @@ int status_calc_aspd_rate(struct block_list *bl, int aspd_rate)
 		if(sc->data[SC_MADNESSCANCEL].timer!=-1)
 			aspd_rate -= 20;
 		if(sc->data[SC_GATLINGFEVER].timer!=-1)
-			aspd_rate -= sc->data[SC_GATLINGFEVER].val2*2;
+			aspd_rate -= sc->data[SC_GATLINGFEVER].val1*2;
 	}
 
 	return aspd_rate;
@@ -3854,6 +3857,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			calc_flag = 1;
 			val3 = val1*3;
 			break;
+		case SC_SUITON:
+			calc_flag = 1;
+			break;
 
 		case SC_SPEARSQUICKEN:		/* スピアクイッケン */
 			calc_flag = 1;
@@ -4449,7 +4455,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			calc_flag = 1;
 			break;
 		case SC_UTSUSEMI:
-		case SC_SUITON:
 		case SC_NEN:
 			break;
 	
