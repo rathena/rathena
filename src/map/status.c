@@ -278,16 +278,16 @@ void initChangeTables(void) {
 	set_sc(WZ_SIGHTBLASTER,         SC_SIGHTBLASTER,        SI_SIGHTBLASTER);
 	set_sc(DC_WINKCHARM,            SC_WINKCHARM,           SI_WINKCHARM);
 	set_sc(MO_BALKYOUNG,            SC_STUN,                SI_BLANK);
-	//Until they're at right position - gs_set_sc- [Vicious]
-	set_sc(GS_MADNESSCANCEL,        SC_MADNESSCANCEL,       SI_BLANK);
-	set_sc(GS_ADJUSTMENT,           SC_ADJUSTMENT,          SI_BLANK);
+	//Until they're at right position - gs_set_sc- [Vicious] / some of these don't seem to have a status icon adequate [blackhole89]
+	set_sc(GS_MADNESSCANCEL,        SC_MADNESSCANCEL,       SI_MADNESSCANCEL);
+	set_sc(GS_ADJUSTMENT,           SC_ADJUSTMENT,          SI_ADJUSTMENT);
 	set_sc(GS_INCREASING,           SC_INCREASING,          SI_BLANK);
-	set_sc(GS_GATLINGFEVER,         SC_GATLINGFEVER,        SI_BLANK);
+	set_sc(GS_GATLINGFEVER,         SC_GATLINGFEVER,        SI_GATLINGFEVER);
 	set_sc(NJ_TATAMIGAESHI,         SC_TATAMIGAESHI,        SI_BLANK);
 	set_sc(NJ_UTSUSEMI,             SC_UTSUSEMI,            SI_BLANK);
 	set_sc(NJ_KAENSIN,              SC_KAENSIN,             SI_BLANK);
 	set_sc(NJ_SUITON,               SC_SUITON,              SI_BLANK);
-	set_sc(NJ_NEN,                  SC_NEN,                 SI_BLANK);
+	set_sc(NJ_NEN,                  SC_NEN,                 SI_NEN);
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
 	SkillStatusChangeTable[SL_ALCHEMIST] =   MAPID_ALCHEMIST,

@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/09
+	* Added Gunslinger/Ninja Status Change icons. Somebody needs to look into
+	  them though for not all SCs have a matching SI. [blackhole89]
 	* Changed ITEM_NAME_LENGTH to 50. [Skotlex]
 	* Fixed stun's duration not getting reduced by vit + luk/3 [Skotlex]
 	* Fixed #itemlist not taking into consideration crafted/forged items and

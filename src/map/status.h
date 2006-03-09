@@ -371,6 +371,14 @@ enum {
 	SI_WINKCHARM		= 199,
 	SI_CLOSECONFINE		= 200,
 	SI_CLOSECONFINE2	= 201,
+	SI_MADNESSCANCEL	= 203,	//[blackhole89]
+	SI_GATLINGFEVER		= 204,
+	// 205 = Gloria again
+	SI_MAEMI			= 206,
+	// 207 = crash
+	SI_NEN				= 208,
+	SI_ADJUSTMENT		= 209,
+	SI_ACCURACY			= 210
 };
 extern int StatusIconChangeTable[];
 
