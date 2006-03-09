@@ -39,7 +39,7 @@ static int aspd_base[MAX_PC_CLASS][MAX_WEAPON_TYPE+1];	//[blackhole89]
 #define MAX_REFINE_BONUS 5
 static int refinebonus[MAX_REFINE_BONUS][3];	// 精錬ボーナステーブル(refine_db.txt)
 int percentrefinery[5][MAX_REFINE+1];	// 精錬成功率(refine_db.txt)
-static int atkmods[3][MAX_WEAPON_TYPE];	// 武器ATKサイズ修正(size_fix.txt)
+static int atkmods[3][MAX_WEAPON_TYPE+1];	// 武器ATKサイズ修正(size_fix.txt)
 static char job_bonus[MAX_PC_CLASS][MAX_LEVEL];
 
 int current_equip_item_index; //Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
@@ -1339,7 +1339,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 // Unlike other stats, ASPD rate modifiers from skills/SCs/items/etc are first all added together, then the final modifier is applied
 
 	// Basic ASPD value
-	if (sd->status.weapon < MAX_WEAPON_TYPE)
+	if (sd->status.weapon <= MAX_WEAPON_TYPE)
 		sd->aspd += aspd_base[sd->status.class_][sd->status.weapon]-(sd->paramc[1]*4+sd->paramc[4])*aspd_base[sd->status.class_][sd->status.weapon]/1000;
 	else
 		sd->aspd += (
@@ -2719,7 +2719,7 @@ int status_get_batk(struct block_list *bl)
 	
 	if(bl->type==BL_PC) {
 		batk = ((struct map_session_data *)bl)->base_atk;
-		if (((struct map_session_data *)bl)->status.weapon < MAX_WEAPON_TYPE)
+		if (((struct map_session_data *)bl)->status.weapon <= MAX_WEAPON_TYPE)
 			batk += ((struct map_session_data *)bl)->weapon_atk[((struct map_session_data *)bl)->status.weapon];
 	} else {
 		int str,dstr;
@@ -5740,15 +5740,15 @@ int status_readdb(void) {
 		char *split[MAX_WEAPON_TYPE + 6];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		for(j=0,p=line;j<=(MAX_WEAPON_TYPE + 5) && p;j++){	//not 22 anymore [blackhole89]
+		for(j=0,p=line;j< (MAX_WEAPON_TYPE + 6) && p;j++){	//not 22 anymore [blackhole89]
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(j<=(MAX_WEAPON_TYPE + 5))	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
+		if(j < MAX_WEAPON_TYPE + 6)	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
 			continue;
-       	if(atoi(split[0])>=MAX_PC_CLASS)
-		    continue;
+		if(atoi(split[0])>=MAX_PC_CLASS)
+			continue;
 		max_weight_base[atoi(split[0])]=atoi(split[1]);
 		hp_coefficient[atoi(split[0])]=atoi(split[2]);
 		hp_coefficient2[atoi(split[0])]=atoi(split[3]);
@@ -5785,7 +5785,7 @@ int status_readdb(void) {
 
 	// サイズ補正テ?ブル
 	for(i=0;i<3;i++)
-		for(j=0;j<MAX_WEAPON_TYPE;j++)
+		for(j=0;j<=MAX_WEAPON_TYPE;j++)
 			atkmods[i][j]=100;
 	sprintf(path, "%s/size_fix.txt", db_path);
 	fp=fopen(path,"r");
@@ -5795,18 +5795,18 @@ int status_readdb(void) {
 	}
 	i=0;
 	while(fgets(line, sizeof(line)-1, fp)){
-		char *split[MAX_WEAPON_TYPE];
+		char *split[MAX_WEAPON_TYPE+1];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		if(atoi(line)<=0)
 			continue;
 		memset(split,0,sizeof(split));
-		for(j=0,p=line;j<MAX_WEAPON_TYPE && p;j++){
+		for(j=0,p=line;j<=MAX_WEAPON_TYPE && p;j++){
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		for(j=0;j<MAX_WEAPON_TYPE && split[j];j++)
+		for(j=0;j<=MAX_WEAPON_TYPE && split[j];j++)
 			atkmods[i][j]=atoi(split[j]);
 		i++;
 	}
