@@ -4543,12 +4543,12 @@ static int mob_readdb_mobavail(void)
 		k=atoi(str[1]);
 		if(k < 0)
 			continue;
-		if (j > 3 && k > 23 && k < 69)
+		if (j >= 12 && k > 23 && k < 69)
 			k += 3977;	// advanced job/baby class
 		mob_db_data[class_]->view_class=k;
 
 		//Player sprites
-		if(pcdb_checkid(k)) {
+		if(pcdb_checkid(k) && j>=12) {
 			mob_db_data[class_]->sex=atoi(str[2]);
 			mob_db_data[class_]->hair=atoi(str[3]);
 			mob_db_data[class_]->hair_color=atoi(str[4]);
@@ -4560,7 +4560,7 @@ static int mob_readdb_mobavail(void)
 			mob_db_data[class_]->option=atoi(str[10])&~0x46;
 			mob_db_data[class_]->clothes_color=atoi(str[11]); // Monster player dye option - Valaris
 		}
-		else if(atoi(str[2]) > 0) mob_db_data[class_]->equip=atoi(str[2]); // mob equipment [Valaris]
+		else if(str[2] && atoi(str[2]) > 0) mob_db_data[class_]->equip=atoi(str[2]); // mob equipment [Valaris]
 
 		ln++;
 	}
