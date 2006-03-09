@@ -742,6 +742,7 @@ charcommand_itemlist(
 	struct item_data *item_data, *item_temp;
 	int i, j, equip, count, counter, counter2;
 	char character[NAME_LENGTH], output[200], equipstr[100], outputtmp[200];
+	struct item *i_item; //Current inventory item.
 	nullpo_retr(-1, sd);
 
 	memset(character, '\0', sizeof(character));
@@ -759,14 +760,15 @@ charcommand_itemlist(
 			counter = 0;
 			count = 0;
 			for (i = 0; i < MAX_INVENTORY; i++) {
-				if (pl_sd->status.inventory[i].nameid > 0 && (item_data = itemdb_search(pl_sd->status.inventory[i].nameid)) != NULL) {
-					counter = counter + pl_sd->status.inventory[i].amount;
+				i_item = &pl_sd->status.inventory[i];
+				if (pl_sd->status.inventory[i].nameid > 0 && (item_data = itemdb_exists(i_item->nameid)) != NULL) {
+					counter = counter + i_item->amount;
 					count++;
 					if (count == 1) {
 						sprintf(output, "------ Items list of '%s' ------", pl_sd->status.name);
 						clif_displaymessage(fd, output);
 					}
-					if ((equip = pl_sd->status.inventory[i].equip)) {
+					if ((equip = i_item->equip)) {
 						strcpy(equipstr, "| equiped: ");
 						if (equip & 4)
 							strcat(equipstr, "robe/gargment, ");
@@ -800,16 +802,31 @@ charcommand_itemlist(
 						equipstr[strlen(equipstr) - 2] = '\0';
 					} else
 						memset(equipstr, '\0', sizeof(equipstr));
-					if (sd->status.inventory[i].refine)
-						sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", pl_sd->status.inventory[i].amount, item_data->name, pl_sd->status.inventory[i].refine, item_data->jname, pl_sd->status.inventory[i].refine, pl_sd->status.inventory[i].nameid, equipstr);
+					if (i_item->refine)
+						sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", i_item->amount, item_data->name, i_item->refine, item_data->jname, i_item->refine, i_item->nameid, equipstr);
 					else
-						sprintf(output, "%d %s (%s, id: %d) %s", pl_sd->status.inventory[i].amount, item_data->name, item_data->jname, pl_sd->status.inventory[i].nameid, equipstr);
+						sprintf(output, "%d %s (%s, id: %d) %s", i_item->amount, item_data->name, item_data->jname, i_item->nameid, equipstr);
 					clif_displaymessage(fd, output);
 					memset(output, '\0', sizeof(output));
 					counter2 = 0;
+
+					if(i_item->card[0]==(short)0xff00) { //pet eggs
+						if (i_item->card[3])
+							sprintf(outputtmp, " -> (pet egg, pet id: %u, named)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
+						else
+							sprintf(outputtmp, " -> (pet egg, pet id: %u, unnamed)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
+						strcat(output, outputtmp);
+					} else
+					if(i_item->card[0]==0x00ff) { //forged items.
+						sprintf(outputtmp, " -> (crafted item, creator id: %u, star crumbs %d, element %d)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]), i_item->card[1]>>8, i_item->card[1]&0x0f);
+					} else
+					if(i_item->card[0]==0x00fe) { //created items.
+						sprintf(outputtmp, " -> (produced item, creator id: %u)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]));
+						strcat(output, outputtmp);
+					} else //Normal slots
 					for (j = 0; j < item_data->slot; j++) {
 						if (pl_sd->status.inventory[i].card[j]) {
-							if ((item_temp = itemdb_search(pl_sd->status.inventory[i].card[j])) != NULL) {
+							if ((item_temp = itemdb_exists(i_item->card[j])) != NULL) {
 								if (output[0] == '\0')
 									sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
 								else
