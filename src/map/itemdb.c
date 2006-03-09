@@ -238,8 +238,8 @@ static void create_dummy_data(void) {
 	dummy_item->nameid=500;
 	dummy_item->weight=1;
 	dummy_item->type=3; //Etc item
-	strncpy(dummy_item->name,"UNKNOWN_ITEM",ITEM_NAME_LENGTH);
-	strncpy(dummy_item->jname,"UNKNOWN_ITEM",ITEM_NAME_LENGTH);
+	strncpy(dummy_item->name,"UNKNOWN_ITEM",ITEM_NAME_LENGTH-1);
+	strncpy(dummy_item->jname,"UNKNOWN_ITEM",ITEM_NAME_LENGTH-1);
 	dummy_item->view_id = 512; //Use apple sprite.
 }
 
@@ -575,7 +575,7 @@ static int itemdb_read_itemnametable(void)
 			}
 #endif
 
-			memcpy(itemdb_search(nameid)->jname,buf2,ITEM_NAME_LENGTH-1);
+			strncpy(itemdb_search(nameid)->jname,buf2,ITEM_NAME_LENGTH-1);
 		}
 
 		p=strchr(p,10);
@@ -848,8 +848,8 @@ static int itemdb_read_sqldb(void)
 					// ----------
 					id = itemdb_load(nameid);
 					
-					memcpy(id->name, sql_row[1], ITEM_NAME_LENGTH);
-					memcpy(id->jname, sql_row[2], ITEM_NAME_LENGTH);
+					strncpy(id->name, sql_row[1], ITEM_NAME_LENGTH-1);
+					strncpy(id->jname, sql_row[2], ITEM_NAME_LENGTH-1);
 
 					id->type = atoi(sql_row[3]);
 					if (id->type == 11)
@@ -991,8 +991,8 @@ static int itemdb_readdb(void)
 
 			//ID,Name,Jname,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Job Upper,Gender,Loc,wLV,eLV,refineable,View
 			id=itemdb_load(nameid);
-			memcpy(id->name, str[1], ITEM_NAME_LENGTH);
-			memcpy(id->jname, str[2], ITEM_NAME_LENGTH);
+			strncpy(id->name, str[1], ITEM_NAME_LENGTH-1);
+			strncpy(id->jname, str[2], ITEM_NAME_LENGTH-1);
 			id->type=atoi(str[3]);
 			if (id->type == 11)
 			{	//Items that are consumed upon target confirmation

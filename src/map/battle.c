@@ -260,6 +260,16 @@ int battle_damage(struct block_list *bl,struct block_list *target,int damage, in
 			status_change_end(target,SC_SLEEP,-1);
 		if (sc->data[SC_WINKCHARM].timer != -1)
 			status_change_end(target,SC_WINKCHARM,-1);
+		if (sc->data[SC_CONFUSION].timer != -1)
+			status_change_end(target, SC_CONFUSION, -1);
+		if (sc->data[SC_TRICKDEAD].timer != -1)
+			status_change_end(target, SC_TRICKDEAD, -1);
+		if (sc->data[SC_HIDING].timer != -1)
+			status_change_end(target, SC_HIDING, -1);
+		if (sc->data[SC_CLOAKING].timer != -1)
+			status_change_end(target, SC_CLOAKING, -1);
+		if (sc->data[SC_CHASEWALK].timer != -1)
+			status_change_end(target, SC_CHASEWALK, -1);
 	}
 
 	if (target->type == BL_MOB) {	// MOB

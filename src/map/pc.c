@@ -5253,16 +5253,6 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 				status_change_end(&sd->bl, SC_GRAVITATION, -1);
 			}
 		}
-		if (sd->sc.data[SC_CONFUSION].timer != -1)
-			status_change_end(&sd->bl, SC_CONFUSION, -1);
-		if (sd->sc.data[SC_TRICKDEAD].timer != -1)
-			status_change_end(&sd->bl, SC_TRICKDEAD, -1);
-		if (sd->sc.data[SC_HIDING].timer != -1)
-			status_change_end(&sd->bl, SC_HIDING, -1);
-		if (sd->sc.data[SC_CLOAKING].timer != -1)
-			status_change_end(&sd->bl, SC_CLOAKING, -1);
-		if (sd->sc.data[SC_CHASEWALK].timer != -1)
-			status_change_end(&sd->bl, SC_CHASEWALK, -1);
 	}
 
 	// ‰‰‘t/ƒ_ƒ“ƒX‚Ì’†?

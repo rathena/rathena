@@ -2308,15 +2308,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		return 0;
 	}
 
-	if(md->sc.count) {
-		if(md->sc.data[SC_CONFUSION].timer != -1)
-			status_change_end(&md->bl, SC_CONFUSION, -1);
-		if(md->sc.data[SC_HIDING].timer != -1)
-			status_change_end(&md->bl, SC_HIDING, -1);
-		if(md->sc.data[SC_CLOAKING].timer != -1)
-			status_change_end(&md->bl, SC_CLOAKING, -1);
-	}
-
 	if(damage > max_hp>>2)
 		skill_stop_dancing(&md->bl);
 
