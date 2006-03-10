@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/09
+	* Fixed the dancer/bard soul-linked skills toggling on/off with each call
+	  to pc_calc_status. [Skotlex]
 	* Fixed a bug in the pc_skillreset function which allowed TK rankers to
 	  accumulate skill points. [Skotlex]
 	* Fixed a major memory leak in status.c causing the last column of job_db1.txt

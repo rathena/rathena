@@ -999,7 +999,6 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;
 			sd->status.skill[i].flag=0;
 		}
-		else
 		if(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_BARDDANCER && i >= DC_HUMMING && i<= DC_SERVICEFORYOU)
 		{ //Enable Bard/Dancer spirit linked skills.
 			if (sd->status.sex) { //Link dancer skills to bard.
@@ -6945,15 +6944,6 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 		sd->status.inventory[arrow].equip=32768;
 	}
 	status_calc_pc(sd,0);
-
-	if(sd->special_state.infinite_endure) {
-		if(sd->sc.data[SC_ENDURE].timer == -1)
-			status_change_start(&sd->bl,SC_ENDURE,100,10,1,0,0,0,0);
-	}
-	else {
-		if(sd->sc.count && sd->sc.data[SC_ENDURE].timer != -1 && sd->sc.data[SC_ENDURE].val2)
-			status_change_end(&sd->bl,SC_ENDURE,-1);
-	}
 
 	if(sd->sc.count) {
 		if (sd->sc.data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
