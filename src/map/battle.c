@@ -316,8 +316,9 @@ int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp,in
 	if (hp == 0 && sp == 0)
 		return 0;
 
-	if (hp < 0)
-		return battle_damage(bl,target,-hp,flag);
+//If battle_heal was invoked, HP/SP should just be reduced without damage animation. [Skotlex]
+//	if (hp < 0)
+//		return battle_damage(bl,target,-hp,flag);
 
 	if (target->type == BL_MOB)
 		return mob_heal((struct mob_data *)target,hp);

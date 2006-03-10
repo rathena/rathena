@@ -4763,13 +4763,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					sp = sp * tsc->data[SC_MAGICROD].val2 / 100;
 					if(sp > 0x7fff) sp = 0x7fff;
 					else if(sp < 1) sp = 1;
-					if(dstsd->status.sp + sp > dstsd->status.max_sp) {
-						sp = dstsd->status.max_sp - dstsd->status.sp;
-						dstsd->status.sp = dstsd->status.max_sp;
-					}
-					else
-						dstsd->status.sp += sp;
-					clif_heal(dstsd->fd,SP_SP,sp);
+					clif_heal(dstsd->fd,SP_SP,pc_heal(dstsd, 0, sp));
 				}
 				clif_skill_nodamage(bl,bl,SA_MAGICROD,tsc->data[SC_MAGICROD].val1,1);
 				if(sd) {
@@ -4777,67 +4771,47 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					if(sp < 1) sp = 1;
 					pc_heal(sd,0,-sp);
 				}
-			}
-			else {
+			} else {
 				int bl_skillid=0,bl_skilllv=0,hp = 0;
-				if(bl->type == BL_PC) {
-					if(dstsd && dstsd->skilltimer != -1) {
-						bl_skillid = dstsd->skillid;
-						bl_skilllv = dstsd->skilllv;
-						if (map_flag_vs(bl->m))
-							hp = status_get_max_hp(bl)/50; //Recover 2% HP [Skotlex]
-					}
+				if(dstsd && dstsd->skilltimer != -1) {
+					bl_skillid = dstsd->skillid;
+					bl_skilllv = dstsd->skilllv;
+					if (map_flag_vs(bl->m))
+						hp = status_get_max_hp(bl)/50; //Recover 2% HP [Skotlex]
 				}
-				else if(bl->type == BL_MOB) {
-					if(dstmd && dstmd->skilltimer != -1) {
-						if (status_get_mode(bl) & MD_BOSS)
-						{	//Only 10% success chance against bosses. [Skotlex]
-							if (rand()%100 < 90)
-							{
-								if (sd) clif_skill_fail(sd,skillid,0,0);
-								break;
-							}
-						} else
-							hp = status_get_max_hp(bl)/50; //Recover 2% HP [Skotlex]
-						bl_skillid = dstmd->skillid;
-						bl_skilllv = dstmd->skilllv;
-					}
-				}
-				if(bl_skillid > 0 /*&& bl_skillid != PA_PRESSURE && skill_db[bl_skillid].skill_type == BF_MAGIC*/) { //Reports indicate Spell Break cancels any type of skill, except Pressure. [Skotlex]
-					clif_skill_nodamage(src,bl,skillid,skilllv,1);
-					skill_castcancel(bl,0);
-					sp = skill_get_sp(bl_skillid,bl_skilllv);
-					if(dstsd)
-						pc_heal(dstsd,-hp,-sp);
-					if(sd) {
-						sp = sp*(25*(skilllv-1))/100;
-						if(skilllv > 1 && sp < 1) sp = 1;
-						if(sp > 0x7fff) sp = 0x7fff;
-						else if(sp < 1) sp = 1;
-						if(sd->status.sp + sp > sd->status.max_sp) {
-							sp = sd->status.max_sp - sd->status.sp;
-							sd->status.sp = sd->status.max_sp;
+				else if(dstmd && dstmd->skilltimer != -1) {
+					if (status_get_mode(bl) & MD_BOSS)
+					{	//Only 10% success chance against bosses. [Skotlex]
+						if (rand()%100 < 90)
+						{
+							if (sd) clif_skill_fail(sd,skillid,0,0);
+							break;
 						}
-						else
-							sd->status.sp += sp;
-
-						if (hp && skilllv > 5)
-						{	//Recover half damaged HP at levels 6-10 [Skotlex]
-							hp /=2;
-							if(sd->status.hp + hp > sd->status.max_hp) {
-								hp = sd->status.max_hp - sd->status.hp;
-								sd->status.hp = sd->status.max_hp;
-							}
-							else
-								sd->status.hp += hp;
-
-							clif_heal(sd->fd,SP_HP,hp);
-						}
-						clif_heal(sd->fd,SP_SP,sp);
-					}
+					} else
+						hp = status_get_max_hp(bl)/50; //Recover 2% HP [Skotlex]
+					bl_skillid = dstmd->skillid;
+					bl_skilllv = dstmd->skilllv;
 				}
-				else if(sd)
-					clif_skill_fail(sd,skillid,0,0);
+				if(!bl_skillid) { 
+					if(sd) clif_skill_fail(sd,skillid,0,0);
+					break;
+				}
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				skill_castcancel(bl,0);
+				sp = skill_get_sp(bl_skillid,bl_skilllv);
+				battle_heal(NULL, bl, -hp, -sp, 0);
+				if(sd && sp) {
+					sp = sp*(25*(skilllv-1))/100;
+					if(skilllv > 1 && sp < 1) sp = 1;
+					else if(sp > 0x7fff) sp = 0x7fff;
+					clif_heal(sd->fd,SP_SP,pc_heal(sd, 0, sp));
+				}
+				if (hp && skilllv >= 5)
+				{	//Recover half damaged HP at levels 6-10 [Skotlex]
+					hp = battle_heal(bl, src, hp/2, 0, 0);
+					if (sd && sd->fd)
+						clif_heal(sd->fd,SP_HP,hp);
+				}
 			}
 		}
 		break;
