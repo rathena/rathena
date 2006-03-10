@@ -8225,6 +8225,10 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			return 0;
 		}
 		break;
+	//Bullets	13200~13202
+	//Nade	13203~13207
+	//Shuriken	13250~13254
+	//Kunai	13255~14359
 	case GS_TRACKING:
 	case GS_DISARM:
 	case GS_PIERCINGSHOT:
@@ -8251,6 +8255,11 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case NJ_KAMAITACHI:
 		//delitem_flag = 0; <- don't need?
 		break;
+	
+	case NJ_ISSEN:
+		if (sd->sc.data[SC_NEN].timer!=-1)
+			return 0;
+		break;
 
 	//Not implemented yet [Vicious]
 	case NJ_KASUMIKIRI:
@@ -8260,7 +8269,6 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case NJ_BUNSINJYUTSU:
 	
 	case NJ_NEN:
-	case NJ_ISSEN:
 		break;
 	}
 

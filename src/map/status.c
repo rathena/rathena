@@ -5021,11 +5021,12 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_INCREASING:
 			case SC_GATLINGFEVER:
 			case SC_TATAMIGAESHI:
-			case SC_UTSUSEMI:
 			case SC_KAENSIN:
 			case SC_SUITON:
-			case SC_NEN:
 				calc_flag = 1;
+				break;
+			case SC_UTSUSEMI:
+			case SC_NEN:
 				break;
 			}
 

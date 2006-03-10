@@ -1246,11 +1246,12 @@ static struct Damage battle_calc_weapon_attack(
 				break;
 
 			//Until they're at right position - gs_arrow- [Vicious]
+			case GS_RAPIDSHOWER:
+				wd.div_= 5;
 			case GS_BULLSEYE:
 			case GS_CRACKER:
 			case GS_TRACKING:
 			case GS_PIERCINGSHOT:
-			case GS_RAPIDSHOWER:
 			case GS_DUST:
 			case GS_SPREADATTACK:
 			case NJ_SYURIKEN:
@@ -1921,6 +1922,13 @@ static struct Damage battle_calc_weapon_attack(
 					//TK_RUN kick damage bonus.
 					if(sd && sd->weapontype1 == 0 && sd->weapontype2 == 0)
 						ATK_ADD(10*pc_checkskill(sd, TK_RUN));
+					break;
+				case GS_MAGICALBULLET:
+					int matk1=status_get_matk1(src),matk2=status_get_matk2(src);
+					if(matk1>matk2)
+						ATK_ADD(matk2+atn_rand()%(matk1-matk2+1));
+					else
+						ATK_ADD(matk2);
 					break;
 			}
 		}
@@ -2677,16 +2685,24 @@ struct Damage battle_calc_magic_attack(
 						skillratio -= 10;
 						break;
 					case NJ_BAKUENRYU:
-						skillratio += 50 + 150*skill_lv;
+						//skillratio += 50 + 150*skill_lv;
+						// Possibly just add to matk?
+						MATK_ADD(150 + 150*skill_lv);
 						break;
 					case NJ_HYOUSYOURAKU:
-						skillratio += 50*skill_lv;
+						//skillratio += 50*skill_lv;
+						// Possibly just add to matk?
+						MATK_ADD(100 + 50*skill_lv);
 						break;
 					case NJ_RAIGEKISAI:
-						skillratio += 60 + 40*skill_lv;
+						//skillratio += 60 + 40*skill_lv;
+						// Possibly just add to matk?
+						MATK_ADD(200 + 40*skill_lv);
 						break;
 					case NJ_KAMAITACHI:
-						skillratio += 100*skill_lv;
+						//skillratio += 100*skill_lv;
+						// Possibly just add to matk?
+						MATK_ADD(100 + 100*skill_lv);
 						break;
 				}
 
