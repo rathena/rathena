@@ -28,6 +28,7 @@
 
 03/10
 	* Made G_Giant_Hornet Agressive, thanks to Blackgatomon [Lupus]
+	* Doppel's drops fix Lance 1411 -> Lance 1410 [Lupus]
 03/08
 	* Updated skill tree for Ninja/GS [Vicious]
 	* More work on Ninja/GS. They have joblvl 70, according to status
