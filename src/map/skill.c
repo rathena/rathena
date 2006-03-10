@@ -6470,7 +6470,8 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		break;
 	case WZ_QUAGMIRE:	//The target changes to "all" if used in a gvg map. [Skotlex]
 	case AM_DEMONSTRATION:
-		if (map_flag_vs(src->m) && battle_config.vs_traps_bctall)
+		if (map_flag_vs(src->m) && battle_config.vs_traps_bctall
+			&& src->type != BL_MOB)
 			target = BCT_ALL;
 		break;
 	case HT_SHOCKWAVE:			/* ショックウェ?ブトラップ */
