@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/10
+	* Changed div (multi-hit) behaviour. Skills with div above zero will get
+	  their total damage increased by the number of hits, div less than zero is
+	  just for "show", total number of hits displayed is abs(div), but damage
+	  isn't increased by number of hits. [Skotlex]
+	* Adjusted several skill damage equations to make up for the above change.
+	  [Skotlex]
 	* Fixed a overflow bug when one of the item_random* files has too many
 	  random items. [Skotlex]
 	* Fixed a variable loopback problem on NPC shop price checking routine. [Lance]

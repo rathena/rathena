@@ -1067,6 +1067,9 @@ static void battle_calc_base_damage(struct block_list *src, struct block_list *t
 		(*damage2) += baseatk_;
 	return;
 }
+
+//For quick div adjustment.
+#define damage_div_fix(dmg, div) { if (div > 1) (dmg)*=div; else if (div < 0) (div)*=-1; }
 /*==========================================
  * battle_calc_weapon_attack (by Skotlex)
  *------------------------------------------
@@ -1200,8 +1203,12 @@ static struct Damage battle_calc_weapon_attack(
 				break;
 
 			case MO_FINGEROFFENSIVE:
-				if(sd && battle_config.finger_offensive_type == 0)
-					wd.div_ = sd->spiritball_old;
+				if(sd) {
+					if (battle_config.finger_offensive_type)
+						wd.div_ = 1;
+					else
+						wd.div_ = sd->spiritball_old;
+				}
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 				
@@ -1221,7 +1228,7 @@ static struct Damage battle_calc_weapon_attack(
 				break;
 
 			case KN_PIERCE:
-				wd.div_= t_size+1;
+				wd.div_= (wd.div_>0?t_size+1:-(t_size+1));
 				break;
 
 			case TF_DOUBLE: //For NPC used skill.
@@ -1304,6 +1311,7 @@ static struct Damage battle_calc_weapon_attack(
 		{
 			wd.type=0x0b;
 			wd.dmg_lv=ATK_LUCKY;
+			if (wd.div_ < 0) wd.div_*=-1;
 			return wd;
 		}
 	}
@@ -1492,8 +1500,10 @@ static struct Damage battle_calc_weapon_attack(
 			flag.hit =1;
 	}	//End hit/miss calculation
 
-	if(tsd && tsd->special_state.no_weapon_damage)	
+	if(tsd && tsd->special_state.no_weapon_damage) {
+		if (wd.div_ < 0) wd.div_*=-1;
 		return wd;
+	}
 
 	if (flag.hit && !flag.infdef) //No need to do the math for plants
 	{	//Hitting attack
@@ -1553,8 +1563,6 @@ static struct Damage battle_calc_weapon_attack(
 							ATK_RATE(75);
 							break;
 					}
-					ATK_RATE(wd.div_*100); //Increase overall damage by number of this
-					//FIXME: (shouldn't something like this apply to ALL weapon skills?) [Skotlex]
 					break;
 				}
 			case CR_SHIELDBOOMERANG:
@@ -1627,13 +1635,10 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 50*skill_lv;
 					break;
 				case HT_POWER: //FIXME: How exactly is the STR based damage supposed to be done? [Skotlex]
-					skillratio += 10*status_get_str(src);
-					break;
-				case TF_DOUBLE: //This is the mob-used Double Attack. [Skotlex]
-					skillratio += 100;
+					skillratio += 5*status_get_str(src);
 					break;
 				case AC_DOUBLE:
-					skillratio += 80+20*skill_lv;
+					skillratio += 10*(skill_lv-1);
 					break;
 				case AC_SHOWER:
 					skillratio += 5*skill_lv-25;
@@ -1642,7 +1647,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 50;
 					break;
 				case KN_PIERCE:
-					skillratio += wd.div_*(100+10*skill_lv)-100;
+					skillratio += 10*skill_lv;
 					break;
 				case KN_SPEARSTAB:
 					skillratio += 15*skill_lv;
@@ -1677,7 +1682,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 30*skill_lv;
 					break;
 				case AS_SONICBLOW:
-					skillratio += 300+40*skill_lv;
+					skillratio += -50+5*skill_lv;
 					break;
 				case TF_SPRINKLESAND:
 					skillratio += 30;
@@ -1690,7 +1695,6 @@ static struct Damage battle_calc_weapon_attack(
 						skillratio += 150; //Max damage for non players.
 					break;
 				case NPC_COMBOATTACK:
-						skillratio += 100*wd.div_ -100;
 					break;
 				case NPC_RANDOMATTACK:
 					skillratio += rand()%150-50;
@@ -1705,10 +1709,6 @@ static struct Damage battle_calc_weapon_attack(
 				case NPC_UNDEADATTACK:
 				case NPC_TELEKINESISATTACK:
 					skillratio += 25*skill_lv;
-					break;
-				case NPC_GUIDEDATTACK:
-				case NPC_RANGEATTACK:
-				case NPC_PIERCINGATT:
 					break;
 				case RG_BACKSTAP:
 					if(sd && sd->status.weapon == 11 && battle_config.backstab_bow_penalty)
@@ -1727,8 +1727,6 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case CR_SHIELDBOOMERANG:
 					skillratio += 30*skill_lv;
-					if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_CRUSADER)
-						skillratio += 100;
 					break;
 				case NPC_DARKCROSS:
 				case CR_HOLYCROSS:
@@ -1747,10 +1745,7 @@ static struct Damage battle_calc_weapon_attack(
 					flag.cardfix = 0;
 					break;
 				case MO_FINGEROFFENSIVE:
-					if(battle_config.finger_offensive_type == 0)
-						skillratio+= wd.div_ * (100 + 50*skill_lv) -100;
-					else
-						skillratio+= 50 * skill_lv;
+					skillratio+= 50 * skill_lv;
 					break;
 				case MO_INVESTIGATE:
 					skillratio += 75*skill_lv;
@@ -1827,7 +1822,7 @@ static struct Damage battle_calc_weapon_attack(
 					flag.idef = flag.idef2 = 1;
 					break;
 				case PA_SHIELDCHAIN:
-					skillratio += wd.div_*(100+30*skill_lv)-100;
+					skillratio += 30*skill_lv;
 					break;
 				case WS_CARTTERMINATION:
 					if(sd && sd->cart_weight > 0)
@@ -1853,9 +1848,6 @@ static struct Damage battle_calc_weapon_attack(
 					if (sc && sc->data[SC_COMBO].timer != -1 && sc->data[SC_COMBO].val1 == skill_num)
 						skillratio += 10*status_get_lv(src)/3;
 					break;
-				case GS_TRIPLEACTION:
-					skillratio += 200;
-					break;
 				case GS_BULLSEYE:
 					skillratio += 400;
 					break;
@@ -1870,7 +1862,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 10*skill_lv;
 					break;
 				case GS_RAPIDSHOWER:
-					skillratio += 400 + 50*skill_lv;
+					skillratio += 10*skill_lv;
 					break;
 				case GS_DESPERADO:
 					skillratio += 50*skill_lv-50;
@@ -1934,6 +1926,8 @@ static struct Damage battle_calc_weapon_attack(
 					}
 			}
 		}
+		//Div fix.
+		damage_div_fix(wd.damage, wd.div_);
 		//Here comes a second pass for skills that stack to the previously defined % damage. [Skotlex]
 		skillratio = 100;
 		//Skill damage modifiers that affect linearly stacked damage.
@@ -1951,6 +1945,10 @@ static struct Damage battle_calc_weapon_attack(
 				if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
 					skillratio += 10;
 			break;
+			case CR_SHIELDBOOMERANG:
+				if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_CRUSADER)
+					skillratio += 100;
+				break;
 		}
 		if (sd && sd->skillatk[0].id != 0)
 		{
@@ -1962,6 +1960,7 @@ static struct Damage battle_calc_weapon_attack(
 		}
 		if (skillratio != 100)
 			ATK_RATE(skillratio);
+		
 		if(sd)
 		{
 			if (skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE
@@ -2105,6 +2104,8 @@ static struct Damage battle_calc_weapon_attack(
 			}
 		}
 	} //Here ends flag.hit section, the rest of the function applies to both hitting and missing attacks
+  	else if(wd.div_ < 0) //Since the attack missed...
+		wd.div_ *= -1; 
 
 	if(skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS)
 		return wd; //Enough, rest is not needed.
@@ -2140,7 +2141,6 @@ static struct Damage battle_calc_weapon_attack(
 			ATK_ADD(damage);
 		}
 	}
-
 
 	if ((!flag.rh || wd.damage == 0) && (!flag.lh || wd.damage2 == 0))
 		flag.cardfix = 0;	//When the attack does no damage, avoid doing %bonuses
@@ -2275,8 +2275,8 @@ static struct Damage battle_calc_weapon_attack(
 		{
 			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
 			{
-				wd.damage *=2;
 				wd.div_=skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
+				damage_div_fix(wd.damage, wd.div_);
 				wd.type = 0x08;
 			}
 		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 &&
@@ -2284,8 +2284,8 @@ static struct Damage battle_calc_weapon_attack(
 			|| sd->weapontype1 == 0x14 || sd->weapontype1 == 0x15)) || sd->double_rate > 0) // Copied double attack
 			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
 			{
-				wd.damage *=2;
 				wd.div_=skill_get_num(GS_CHAINACTION,skill_lv?skill_lv:1);
+				damage_div_fix(wd.damage, wd.div_);
 				wd.type = 0x08;
 			}
 	}
@@ -2808,9 +2808,11 @@ struct Damage battle_calc_magic_attack(
 		}
 	}
 
-	if(!flag.infdef && ad.div_>1 && skill_num != WZ_VERMILION)
-		ad.damage *= ad.div_;
-
+	damage_div_fix(ad.damage, ad.div_);
+	
+	if (flag.infdef && ad.damage > 0)
+		ad.damage = 1;
+		
 	if (tsd && status_isimmune(target)) {
 		if (sd && battle_config.gtb_pvp_only)  { // [MouseJstr]
 			MATK_RATE(100 - battle_config.gtb_pvp_only);
@@ -2942,8 +2944,14 @@ struct Damage  battle_calc_misc_attack(
 	case SN_FALCONASSAULT:			/* ファルコンアサルト */
 		if( sd==NULL || (skill = pc_checkskill(sd,HT_STEELCROW)) <= 0)
 			skill=0;
-		damage=(dex/10+int_/2+skill*3+40)*2*skill_get_num(HT_BLITZBEAT, 5);   //Blitz Beat lv5 Damage
-		damage=damage*(150+70*skill_lv)/100;	//Falcon Assault Modifier
+
+			//Blitz Beat lv5 Damage
+		damage=(dex/10+int_/2+skill*3+40)*2;
+		skill = skill_get_num(HT_BLITZBEAT, 5);
+		damage_div_fix(damage, skill); 
+
+		//Falcon Assault Modifier
+		damage=damage*(150+70*skill_lv)/100;
 		if(flag > 1)
 			damage /= flag;
 		aflag = (aflag&~BF_RANGEMASK)|BF_LONG;
@@ -3005,8 +3013,7 @@ struct Damage  battle_calc_misc_attack(
 	}
 
 	div_=skill_get_num( skill_num,skill_lv );
-	if(div_>1)
-		damage*=div_;
+	damage_div_fix(damage, div_);
 
 	if(damage > 0 && t_mode&MD_PLANT && skill_num != PA_PRESSURE) //Pressure can vaporize plants.
 		damage = 1;
