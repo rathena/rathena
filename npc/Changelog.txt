@@ -29,6 +29,8 @@ Date		Added
 ======
 03/10
 	* Fixed Turtle Island quest, got rid of 2 useless variables [Lupus]
+	* Added 3 Weapon shops, thanks to Muad_Dib. Still need SPRITES ID [Lupus]
+		^^^^^ could we just add spr ID's into CONST.txt?
 03/07
 	* Fixed some reference to old locations of the Blacksmith NPC's, Thanks to Neouni. [Poki#3]
 03/06
