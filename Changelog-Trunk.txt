@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/10
+	* Fixed a variable loopback problem on NPC shop price checking routine. [Lance]
 	* Fixed a memory overwrite crash on pc_readdb, thanks to foobar for the
 	  fix. [Skotlex]
 	* Fixed only the first TK stance triggering when you have multiple of them
