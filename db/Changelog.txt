@@ -27,6 +27,8 @@
 =========================
 
 03/10
+	* Added a few dummy duration values on skill_cast_db for some GS skills
+	  (better than leaving them on 0...) [Skotlex]
 	* Updated div of LoV, Combo Skills and other such skills whose damage
 	  equation does not really scales well with the number of hits. [Skotlex]
 	* Made G_Giant_Hornet Agressive, thanks to Blackgatomon [Lupus]

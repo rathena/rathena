@@ -91,9 +91,14 @@ typedef int*			pint;
 //////////////////////////////
 #ifdef WIN32
 //////////////////////////////
+//These three are already redefined on my_global.h on Windows systems.
+#ifdef TXT_ONLY
 typedef          __int8		int8;
-typedef          __int16	int16;
 typedef          __int32	int32;
+typedef unsigned __int32	uint32;
+#endif
+
+typedef          __int16	int16;
 
 typedef signed __int8		sint8;
 typedef signed __int16		sint16;
@@ -101,7 +106,6 @@ typedef signed __int32		sint32;
 
 typedef unsigned __int8		uint8;
 typedef unsigned __int16	uint16;
-typedef unsigned __int32	uint32;
 //////////////////////////////
 #else // GNU
 //////////////////////////////

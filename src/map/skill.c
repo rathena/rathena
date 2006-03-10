@@ -1244,15 +1244,14 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			sc_start(bl,SC_STUN,70,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	//Until they're at right position - gs_statuschange- [Vicious]
-	case GS_BULLSEYE:
-		if(!(status_get_mode(bl)&MD_BOSS))
-			sc_start(bl,SC_COMA,0.1,skilllv,skill_get_time(skillid,skilllv));
+	case GS_BULLSEYE: //0.1% coma rate.
+		status_change_start(bl,SC_COMA,10,skilllv,0,0,0,0,0);
 		break;
 	case GS_CRACKER:
-		sc_start(bl,SC_STUN,(100 - 10*distance_bl(&sd->bl, bl)),skilllv,skill_get_time(skillid,skilllv)); //Temp stun rate
+		sc_start(bl,SC_STUN,(100 - 10*distance_bl(src, bl)),skilllv,skill_get_time2(skillid,skilllv)); //Temp stun rate
 		break;
 	case GS_PIERCINGSHOT:
-		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time(skillid,skilllv));
+		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case NJ_HYOUSYOURAKU:
 		sc_start(bl,SC_FREEZE,(10+10*skilllv),skilllv,skill_get_time2(skillid,skilllv));
@@ -1285,7 +1284,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
 			//Prevents skill from retriggering themselves. [Skotlex]
-			if (skill == skillid)
+			if (skill == skillid || skillnotok(skill, sd))
 				continue;
 
 			//skill2 reused to store skilllv.
@@ -1413,6 +1412,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			rate = ((sd && !sd->state.arrow_atk) || (status_get_range(src)<=2)) ?
 				dstsd->autospell2[i].rate : dstsd->autospell2[i].rate / 2;
 			
+			if (skillnotok(skillid, dstsd))
+				continue;
 			if (rand()%1000 > rate)
 				continue;
 			if (dstsd->autospell2[i].id < 0)

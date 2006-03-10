@@ -441,7 +441,7 @@ int npc_addeventtimer(struct npc_data *nd,int tick,const char *name)
 		if( nd->eventtimer[i]==-1 )
 			break;
 	if(i<MAX_EVENTTIMER){
-		if (!strdb_get(ev_db,name)) {
+		if (!strdb_get(ev_db,(unsigned char*)name)) {
 			if (battle_config.error_log)
 				ShowError("npc_addeventimer: Event %s does not exists.\n", name);
 			return 1; //Event does not exists!

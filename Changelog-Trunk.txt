@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/10
+	* Autospells won't trigger now on maps where said skills are forbidden.
+	  [Skotlex]
 	* Changed div (multi-hit) behaviour. Skills with div above zero will get
 	  their total damage increased by the number of hits, div less than zero is
 	  just for "show", total number of hits displayed is abs(div), but damage
