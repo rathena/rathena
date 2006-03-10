@@ -106,21 +106,35 @@ int itemdb_searchrandomid(int flags)
 	int nameid=0,i,index,count;
 	struct random_item_data *list=NULL;
 
-	struct {
+	static struct {
 		int nameid,count;
 		struct random_item_data *list;
 	} data[8];
 
-	// for BCC32 compile error
-	data[0].nameid = 0;						data[0].count = 0; 					data[0].list = NULL;
-	data[1].nameid = blue_box_default;		data[1].count = blue_box_count;		data[1].list = blue_box;
-	data[2].nameid = violet_box_default;	data[2].count = violet_box_count;	data[2].list = violet_box;
-	data[3].nameid = card_album_default;	data[3].count = card_album_count;	data[3].list = card_album;
-	data[4].nameid = gift_box_default;		data[4].count = gift_box_count;		data[4].list = gift_box;
-	data[5].nameid = scroll_default;		data[5].count = scroll_count;		data[5].list = scroll;
-	data[6].nameid = finding_ore_default;	data[6].count = finding_ore_count;	data[6].list = finding_ore;
-	data[7].nameid = cookie_bag_default;	data[7].count = cookie_bag_count;	data[7].list = cookie_bag;
-
+	if (flags == 0) { //Initialize.
+		memset(data, 0, sizeof(data));
+		data[1].nameid = blue_box_default;
+	  	data[1].count = blue_box_count;
+	  	data[1].list = blue_box;
+		data[2].nameid = violet_box_default;
+	  	data[2].count = violet_box_count;
+	  	data[2].list = violet_box;
+		data[3].nameid = card_album_default;
+	  	data[3].count = card_album_count;
+	  	data[3].list = card_album;
+		data[4].nameid = gift_box_default;
+	  	data[4].count = gift_box_count;
+	  	data[4].list = gift_box;
+		data[5].nameid = scroll_default;
+	  	data[5].count = scroll_count;
+		data[5].list = scroll;
+		data[6].nameid = finding_ore_default;
+		data[6].count = finding_ore_count;
+		data[6].list = finding_ore;
+		data[7].nameid = cookie_bag_default;
+		data[7].count = cookie_bag_count;
+		data[7].list = cookie_bag;
+	}
 	if(flags>=1 && flags<=7){
 		nameid=data[flags].nameid;
 		count=data[flags].count;
@@ -129,7 +143,7 @@ int itemdb_searchrandomid(int flags)
 		if(count > 0) {
 			for(i=0;i<1000;i++) {
 				index = rand()%count;
-				if(	rand()%1000000 < list[index].per) {
+				if(rand()%1000000 < list[index].per) {
 					nameid = list[index].nameid;
 					break;
 				}
@@ -369,7 +383,6 @@ static int itemdb_read_randomitem(void)
 {
 	FILE *fp;
 	char line[1024];
-	int ln=0;
 	int nameid,i,j;
 	char *str[10],*p;
 
@@ -392,7 +405,6 @@ static int itemdb_read_randomitem(void)
 		int *pc=data[i].pcount;
 		int *pdefault=data[i].pdefault;
 		char *fn=(char *) data[i].filename;
-		ln=0;
 
 		*pdefault = 0;
 		sprintf(line, "%s/%s", db_path, fn);
@@ -428,9 +440,11 @@ static int itemdb_read_randomitem(void)
 				pd[(*pc)++].per = atoi(str[2]);
 			}
 
-			if(ln >= MAX_RANDITEM)
+			if(*pc >= MAX_RANDITEM)
+			{
+				if (battle_config.error_log)
+					ShowWarning("Reached limit of random items [%d] in file [%s]\n", MAX_RANDITEM, data[i].filename);
 				break;
-			ln++;
 		}
 		fclose(fp);
 		if (*pc > 0) {
@@ -438,6 +452,7 @@ static int itemdb_read_randomitem(void)
 		}
 	}
 
+	itemdb_searchrandomid(0); //Initialize values.
 	return 0;
 }
 
