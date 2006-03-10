@@ -1721,8 +1721,7 @@ int status_calc_agi(struct block_list *bl, int agi)
 			agi -= 2 + sc->data[SC_DECREASEAGI].val1;
 		if(sc->data[SC_QUAGMIRE].timer!=-1)
 			agi -= sc->data[SC_QUAGMIRE].val1*(bl->type==BL_PC?5:10);
-		int class = status_get_class(bl);
-		if(sc->data[SC_SUITON].timer!=-1 || class != JOB_NINJA)
+		if(sc->data[SC_SUITON].timer!=-1 || status_get_class(bl) != JOB_NINJA)
 			agi -= (((sc->data[SC_SUITON].val1 - 1) / 3) + 1) * 3;
 	}
 

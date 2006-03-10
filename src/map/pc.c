@@ -8026,7 +8026,7 @@ int pc_readdb(void)
 		int jobs[MAX_PC_CLASS], job_count, job;
 		int type;
 		unsigned int max;
-		char *split[3];
+		char *split[4];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		if (pc_split_str(line,split,4) < 4)

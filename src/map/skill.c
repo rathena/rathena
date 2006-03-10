@@ -921,18 +921,21 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					clif_skill_fail(sd,skillid,0,0);
 			}
 			// Chance to trigger Taekwon kicks [Dralnu]
-			if(sd->sc.count) {
-				if(sd->sc.data[SC_READYSTORM].timer != -1)
+			if(sd->sc.count && sd->sc.data[SC_COMBO].timer == -1) {
+				if(sd->sc.data[SC_READYSTORM].timer != -1 &&
 					sc_start4(src,SC_COMBO, 15, TK_STORMKICK,0,0,0,
-						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src)));
-				else if(sd->sc.data[SC_READYDOWN].timer != -1)
+						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src))))
+					; //Stance triggered
+				else if(sd->sc.data[SC_READYDOWN].timer != -1 &&
 					sc_start4(src,SC_COMBO, 15, TK_DOWNKICK,0,0,0,
-						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src)));
-				else if(sd->sc.data[SC_READYTURN].timer != -1 && sd->sc.data[SC_COMBO].timer == -1)
+						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src))))
+					; //Stance triggered
+				else if(sd->sc.data[SC_READYTURN].timer != -1 && 
 					sc_start4(src,SC_COMBO, 15, TK_TURNKICK,0,0,0,
-						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src)));
-				else if(sd->sc.data[SC_READYCOUNTER].timer != -1 && sd->sc.data[SC_COMBO].timer == -1) //additional chance from SG_FRIEND [Komurka]
-				{	
+						(2000 - 4 * status_get_agi(src) - 2 *  status_get_dex(src))))
+					; //Stance triggered
+				else if(sd->sc.data[SC_READYCOUNTER].timer != -1)
+				{	//additional chance from SG_FRIEND [Komurka]
 					rate = 20;
 					if (sd->sc.data[SC_SKILLRATE_UP].timer != -1 && sd->sc.data[SC_SKILLRATE_UP].val1 == TK_COUNTER) {
 						rate += rate*sd->sc.data[SC_SKILLRATE_UP].val2/100;
