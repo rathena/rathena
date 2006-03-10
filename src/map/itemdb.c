@@ -445,6 +445,7 @@ static int itemdb_read_randomitem(void)
 				if (battle_config.error_log)
 					ShowWarning("Reached limit of random items [%d] in file [%s]\n", MAX_RANDITEM, data[i].filename);
 				break;
+			}
 		}
 		fclose(fp);
 		if (*pc > 0) {
