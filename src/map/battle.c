@@ -1924,12 +1924,14 @@ static struct Damage battle_calc_weapon_attack(
 						ATK_ADD(10*pc_checkskill(sd, TK_RUN));
 					break;
 				case GS_MAGICALBULLET:
+					{
 					int matk1=status_get_matk1(src),matk2=status_get_matk2(src);
 					if(matk1>matk2)
-						ATK_ADD(matk2+atn_rand()%(matk1-matk2+1));
-					else
-						ATK_ADD(matk2);
+					{
+						ATK_ADD(matk2+rand()%(matk1-matk2+1));
+					} else ATK_ADD(matk2);
 					break;
+					}
 			}
 		}
 		//Here comes a second pass for skills that stack to the previously defined % damage. [Skotlex]
