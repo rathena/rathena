@@ -3,9 +3,9 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena SVN
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 
@@ -17,6 +17,7 @@
 //= 1.5 Fixed typo in script. [massdriller]
 //= 1.6 Fixed some typos, optimized, added Gotanblue#2 to be able to return back to Alberta [Lupus]
 //= 1.7 Fixed Phelix bugs [Lupus]
+//= 1.8 Got rid of 2 useless variables, fixed Turtle Island Quest exploit [Lupus]
 //============================================================ 
 
 
@@ -261,7 +262,7 @@ alberta.gat,190,173,4	script	Phelix	85,{
 	
 	M_Yes:
 		mes "[Phelix]";
-		mes "What do you want to exchange your jellopies for?";
+		mes "What do you want to exchange your Jellopies for?";
 		next;
 		menu "Red Potion please.",-,"Sweet Potato please.",M_1,"Cancel",M_End;
 
@@ -290,7 +291,7 @@ alberta.gat,190,173,4	script	Phelix	85,{
 			
 			L_NotEnough:
 				mes "[Phelix]";
-				mes "I'm sorry but you do not have enough jellopy.";
+				mes "I'm sorry but you do not have enough Jellopies.";
 				next;
 				goto M_Yes;
 
@@ -351,7 +352,7 @@ MEnd:
 //<====================================================== Turtle Island ========================================================>\\
 // Gotanblue --------------------------------------------------------------------------
 alberta.gat,247,123,5	script	Gotanblue	709,{
-	if(TURTLE == 1) goto L_Turtle;
+	if(TURTLE) goto L_Turtle;
 	mes "[Gotanblue]";
 	mes "Ha ha! The sea seems endless!! We cannot begin to grasp it's size merely by gazing at it from land....";
 	next;
@@ -594,8 +595,7 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 			next;
 			mes "[Turtle Grandpa]";
 			mes "Oh! One more thing... look for his '^5555FFjournal^000000'.  He usually has it close by.  It's definitely an interesting read.";
-			set TURTLE, 1;
-			set JORNADAN, 1;
+			if(TURTLE==0) set TURTLE, 1;
 			close;
 		sM_1:
 			mes "[Turtle Grandpa]";
@@ -720,7 +720,7 @@ alberta.gat,248,90,1	script	Jornadan Niliria	121,{
 
 // Jornadan's Voyage Log -------------------------------------------------
 alberta.gat,247,93,1	script	A Voyage Log	111,{
-	if(JORNADAN == 1) goto L_Treasure;
+	if(TURTLE == 1) goto L_Treasure;
 	mes "[A Voyage Log]";
 	mes "= 03:20 am =";
 	mes "The moon was dark and I couldn't even see 100m in front of me.  I had a bad feeling about the situation..... I was not the only one...";
@@ -835,14 +835,13 @@ L_Treasure:
 	mes "- with a skull mark on it -";
 	mes "- You've gained -";
 	mes "- a 'Skull Key' -^000000";
-	set SKULLKEY, 1;
-	set JORNADAN, 0;
+	set TURTLE, 2;
 	close;
 }
 
 // Burried treasure --------------------------------------------------------------------
 tur_dun01.gat,160,80,1	script	Skull Stone	111,{
-	if(SKULLKEY == 1) goto L_OpenBox;
+	if(TURTLE == 2) goto L_OpenBox;
 	mes "^5555FF(It's a frightening stone tomb with horrible skull on it.)^000000";
 	close;
 
@@ -852,9 +851,9 @@ L_OpenBox:
 	mes "^5555FF(~click!~click!~)^000000";
 	next;
 	mes "^5555FF(Suddenly the top of the stone opens with many things coming out!)^000000";
-	set SKULLKEY, 0;
+	set TURTLE, 3;
 	next;
-	mes "^5555FF(You got 5 Bananas, and 5 Banana Juices.)^000000";
+	mes "^5555FF(You got 5 Tropical Bananas and 5 Banana Juices.)^000000";
 	getitem 634, 5;
 	getitem 532, 5;
 	close;

@@ -79,7 +79,7 @@ A_No:
 	close;
 A_Cannot:
 	mes "[Oliver]";
-	mes "There is currentally an adoption inprogress, come back when it has finished.";
+	mes "There is currentlly an adoption in progress, come back when it is finished.";
 	close;
 A_Yes:
 	mes "[Oliver]";

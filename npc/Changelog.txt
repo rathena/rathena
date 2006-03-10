@@ -27,10 +27,10 @@ Nexon
 
 Date		Added
 ======
-
+03/10
+	* Fixed Turtle Island quest, got rid of 2 useless variables [Lupus]
 03/07
 	* Fixed some reference to old locations of the Blacksmith NPC's, Thanks to Neouni. [Poki#3]
-
 03/06
 	* Fixed Thanatos warps: tha_t06,tha_t06a,tha_t06b,tha_t05a thanks to Justin84 [Lupus]
 	- Added Temp Thanatos Keys solution (more close to official than that Thanatos Statues Quest)
