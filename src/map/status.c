@@ -4948,7 +4948,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				break;
 			case SC_CLOSECONFINE:
 				if (sc->data[type].val2 > 0) { //Caster has been unlocked... nearby chars need to be unlocked.
-					int range = 2*skill_get_range2(bl, StatusSkillChangeTable[type], sc->data[type].val1);
+					int range = 1
+					  	+skill_get_range2(bl, StatusSkillChangeTable[type], sc->data[type].val1)
+						+skill_get_range2(bl, TF_BACKSLIDING, 1); //Since most people use this to escape the hold....
 					map_foreachinarea(status_change_timer_sub, 
 						bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,bl,sc,type,gettick());
 				}
