@@ -3133,7 +3133,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		break;
 	case NJ_KASUMIKIRI:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		sc_start(bl,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
+		sc_start(src,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case NJ_KIRIKAGE:
 		status_change_end(src, SC_HIDING, -1);	// ƒnƒCƒfƒBƒ“ƒO‰ð?œ
@@ -8191,7 +8191,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		}
 		break;
 	case GS_ADJUSTMENT:
-		if(sd->spiritball < 2 || sd->sc.data[SC_MADNESSCANCEL].timer == -1) {
+		if(sd->spiritball < 2 || sd->sc.data[SC_MADNESSCANCEL].timer != -1) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
@@ -8216,7 +8216,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case GS_GROUNDDRIFT:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
-	case NJ_HUUMA:
+	//case NJ_HUUMA:
 		arrow_flag = 1;
 		if(sd->equip_index[10] < 0) {
 			clif_arrow_fail(sd,0);

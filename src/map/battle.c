@@ -2280,9 +2280,7 @@ static struct Damage battle_calc_weapon_attack(
 				damage_div_fix(wd.damage, wd.div_);
 				wd.type = 0x08;
 			}
-		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 &&
-			(sd->weapontype1 == 0x11 || sd->weapontype1 == 0x12 || sd->weapontype1 == 0x13
-			|| sd->weapontype1 == 0x14 || sd->weapontype1 == 0x15)) || sd->double_rate > 0) // Copied double attack
+		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 && sd->weapontype1 == 0x11) || sd->double_rate > 0)
 			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
 			{
 				wd.div_=skill_get_num(GS_CHAINACTION,skill_lv?skill_lv:1);

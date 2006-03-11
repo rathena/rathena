@@ -1713,7 +1713,7 @@ int status_calc_agi(struct block_list *bl, int agi)
 			agi += sc->data[SC_INCAGI].val1;
 		if(sc->data[SC_AGIFOOD].timer!=-1)
 			agi += sc->data[SC_AGIFOOD].val1;
-  		if(sc->data[SC_TRUESIGHT].timer!=-1)
+		if(sc->data[SC_TRUESIGHT].timer!=-1)
 			agi += 5;
 		if(sc->data[SC_INCREASEAGI].timer!=-1)
 			agi += 2 + sc->data[SC_INCREASEAGI].val1;
@@ -1721,8 +1721,14 @@ int status_calc_agi(struct block_list *bl, int agi)
 			agi -= 2 + sc->data[SC_DECREASEAGI].val1;
 		if(sc->data[SC_QUAGMIRE].timer!=-1)
 			agi -= sc->data[SC_QUAGMIRE].val1*(bl->type==BL_PC?5:10);
-		if(sc->data[SC_SUITON].timer!=-1 || status_get_class(bl) != JOB_NINJA)
-			agi -= (((sc->data[SC_SUITON].val1 - 1) / 3) + 1) * 3;
+		if(sc->data[SC_SUITON].timer!=-1 && status_get_class(bl) != JOB_NINJA)
+			if (sc->data[SC_SUITON].val1 > 7)
+				agi -= 8;
+			else if (sc->data[SC_SUITON].val1 > 4)
+				agi -= 5;
+			else if (sc->data[SC_SUITON].val1 > 1)
+				agi -= 3;
+			
 	}
 
 	return agi;
@@ -1957,6 +1963,10 @@ int status_calc_hit(struct block_list *bl, int hit)
 			hit += hit * sc->data[SC_INCHITRATE].val1/100;
 		if(sc->data[SC_BLIND].timer != -1)
 			hit -= hit * 25 / 100;
+		if(sc->data[SC_ADJUSTMENT].timer!=-1)
+			hit += 30;
+		if(sc->data[SC_INCREASING].timer!=-1)
+  		hit += 50; // RockmanEXE
 	}
 
 	return hit;
