@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Bibilol & Moryagorn
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any eAthena Version;
 //===== Description: =========================================
 //= Custom Thanatos Tower Quest
 //===== Additional Comments: =================================
-//=
+//= 1.1 Fixed wrong NPC names in their dialogues, added
+//= 	Justin84's gems check in Sox NPC [Lupus]
 //============================================================
 
 
@@ -221,7 +222,7 @@ tha_t12.gat,96,57,4	script	Hox	111,{
 	close;
 nook:
 	mes "[Hox]";
-	mes "Sorry, Go back and talk to Nox.";
+	mes "Sorry, Go back and talk to Vox.";
 	next;
 	set TSQ_CHK,0;
 	close;
@@ -235,7 +236,7 @@ tha_t12.gat,153,17,4	script	Dox	111,{
 	close;
 nook:
 	mes "[Dox]";
-	mes "Sorry, Go back and talk to Nox.";
+	mes "Sorry, Go back and talk to Hox.";
 	next;
 	set TSQ_CHK,0;
 	close;
@@ -245,15 +246,31 @@ tha_t12.gat,128,88,4	script	Sox	111,{
 	if(TSQ_CHK != 4 ) goto nook;
 	mes "[Sox]";
 	mes "You have just passed the test successfully.";
+	next;
+	mes "[Sox]";
+	mes "You have to give me Red Magic Stone, Yellow Magic Stone, Blue Magic Stone & Green Magic Stone.";
+	next;
+	if(countitem(7426) < 1 || countitem(7427) < 1 || countitem(7428) < 1 || countitem(7429) < 1) goto nostone;
+	delitem 7426,1;
+	delitem 7427,1;
+	delitem 7428,1;
+	delitem 7429,1;
+	mes "[Sox]";
 	mes "I will now warp you to steps of Fate.";
 	mes "Good-bye.";
 	next;
 	set TSQ_CHK,0;
-	warp "thana_step.gat",	186,	223;
+	warp "thana_step.gat", 186, 223;
 	close;
+
+nostone:
+	mes "[Sox]";
+	mes "Oh well, seems you don't have enough stones.";
+	close;
+
 nook:
 	mes "[Sox]";
-	mes "Sorry, Go back and talk to Nox.";
+	mes "Sorry, Go back and talk to Dox.";
 	next;
 	set TSQ_CHK,0;
 	close;

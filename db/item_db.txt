@@ -1343,8 +1343,8 @@
 4202,Civil_Servant_Card,Civil Servant Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddEle,Ele_Ghost,20; }
 4203,Mutant_Dragonoid_Card,Mutant Dragonoid Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,15; bonus3 bAutoSpell,17,3+7*(getskilllv(17)==10),50; }
 4204,Mini_Demon_Card,Mini Demon Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Brute,-20; bonus2 bExpAddRace,RC_Brute,10; }
-4205,Mimic_Card,Mimic Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItem,603,-2; }
-4206,Myst_Case_Card,Myst Case Card,6,,10,10,,,,,,,,769,,,,,{ if(isequipped(4233,4281,4321,4206)==0) bonus2 bAddMonsterDropItem,644,-8; }
+4205,Mimic_Card,Mimic Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItem,603,-6; }
+4206,Myst_Case_Card,Myst Case Card,6,,10,10,,,,,,,,769,,,,,{ if(isequipped(4233,4281,4321,4206)==0) bonus2 bAddMonsterDropItem,644,-24; }
 4207,Mysteltainn_Card,Mysteltainn Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubSize,0,25; bonus bDef,1; }
 4208,Miyabi_Doll_Card,Miyabi Doll Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxSPrate,10; bonus2 bSkillAtk,15,5; }
 4209,Violy_Card,Violy Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpell,318,1+4*(getskilllv(318)==5),20,0; }

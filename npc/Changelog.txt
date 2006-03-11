@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+03/11
+	* Updated, fixed Custom Thanatos Statues Quest, thx2Justin84 for help [Lupus]
 03/10
 	* Fixed Turtle Island quest, got rid of 2 useless variables [Lupus]
 	* Added 3 Weapon shops, thanks to Muad_Dib. Still need SPRITES ID [Lupus]

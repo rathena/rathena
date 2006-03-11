@@ -26,6 +26,8 @@
 
 =========================
 
+03/11
+	* Adjusted bonus items drop rates at Mimic Card and Myst Case Card [Lupus]
 03/10
 	* Added a few dummy duration values on skill_cast_db for some GS skills
 	  (better than leaving them on 0...) [Skotlex]
