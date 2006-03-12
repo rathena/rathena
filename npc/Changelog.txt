@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+03/12
+	* Amatsu Field. Replaced Hydras with official G_HYDRA (w/o drops) [Lupus]
 03/11
 	* Updates of eAAC scripts [MasterOfMuppets]
 	* Added another weapon dealer to Einbroch, thanks to Muad_Dib [MasterOfMuppets]
