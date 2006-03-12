@@ -536,11 +536,11 @@
 513,-5,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#Disarm#
 514,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#Piercing Shot#
 515,-5,8,1,-1,0,0,10,5,no,0,0,0,weapon,0	//GS_RAPIDSHOWER#Rapid Shower#
-516,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
+516,-5,8,4,-1,2,3,10,7,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
 517,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//GS_GATLINGFEVER#Gatling Fever#
 518,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DUST#Dust#
 519,-5,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_FULLBUSTER#Full Buster#
-520,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#Spread Attack#
+520,-5,6,4,-1,2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#Spread Attack#
 521,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GROUNDDRIFT#Ground Drift#
 522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_TOBIDOUGU#NJ_TOBIDOUGU#
 523,9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SYURIKEN#NJ_SYURIKEN#
@@ -550,7 +550,7 @@
 527,0,6,4,3,0,0,5,1,no,0,0,0,weapon,0	//NJ_TATAMIGAESHI#NJ_TATAMIGAESHI#
 528,1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KASUMIKIRI#NJ_KASUMIKIRI#
 529,1,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_SHADOWJUMP#NJ_SHADOWJUMP#
-530,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//NJ_KIRIKAGE#NJ_KIRIKAGE#
+530,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//NJ_KIRIKAGE#NJ_KIRIKAGE#
 531,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_UTSUSEMI#NJ_UTSUSEMI#
 532,0,6,4,0,1,0,10,1,no,0,0,0,none,0	//NJ_BUNSINJYUTSU#NJ_BUNSINJYUTSU#
 533,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//NJ_NINPOU#NJ_NINPOU#

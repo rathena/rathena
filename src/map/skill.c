@@ -3117,16 +3117,17 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case GS_DESPERADO:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		map_foreachinrange(skill_attack_area, src,
-			skill_get_splash(skillid, skilllv), BL_CHAR,
-			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
-		break;
 	case GS_SPREADATTACK:
-		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skillid, skilllv),BL_CHAR,
-			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-			skill_castend_damage_id);
+		if(flag&1)
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		else {
+			//If we get here, someone changed it to be a enemy targetted skill,
+			//so treat it as such.
+			map_foreachinrange(skill_area_sub, bl,
+				skill_get_splash(skillid, skilllv),BL_CHAR,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+				skill_castend_damage_id);
+		}
 		break;
 	case NJ_ZENYNAGE:
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
@@ -3136,7 +3137,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		sc_start(src,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case NJ_KIRIKAGE:
-		status_change_end(src, SC_HIDING, -1);	// ƒnƒCƒfƒBƒ“ƒO‰ð?œ
+		status_change_end(src, SC_HIDING, -1);
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case NJ_KOUENKA:
@@ -5685,6 +5686,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			else if(sd->spiritball > 0)
 				pc_delspiritball(sd,1,0);
 		}
+		break;
+	case GS_DESPERADO:
+	case GS_SPREADATTACK:
+		map_foreachinrange(skill_area_sub, src,
+			skill_get_splash(skillid, skilllv),BL_CHAR,
+			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+			skill_castend_damage_id);
 		break;
 	case GS_MADNESSCANCEL:
 	case GS_ADJUSTMENT:
