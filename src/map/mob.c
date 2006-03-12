@@ -1078,6 +1078,7 @@ int mob_spawn (int id)
 
 		//Avoid spawning on the view-range of players. [Skotlex]
 		if (battle_config.no_spawn_on_player &&
+			!(md->spawndelay1 == -1 && md->spawndelay2 == -1) &&
 			c++ < battle_config.no_spawn_on_player &&
 			map_foreachinarea(mob_count_sub, md->m,
 				x-AREA_SIZE, y-AREA_SIZE, x+AREA_SIZE, y+AREA_SIZE, BL_PC)
@@ -4124,18 +4125,25 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 				ms[i].cond2 = 95;
 			}
 		} else if (inf&INF_SELF_SKILL) {
-			if (!(skill_get_nk(skill_id)&NK_NO_DAMAGE)) { //Offensive skill
+			if (skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF) { //auto-select target skill.
 				ms[i].target = MST_TARGET;
-				ms[i].state = MSS_BERSERK;
-			} else //Self skill
+				ms[i].cond1 = MSC_ALWAYS;
+				if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) {
+					ms[i].state = MSS_RUSH;
+				} else {
+					ms[i].state = MSS_BERSERK;
+					ms[i].permillage = 2500;
+				}
+			} else { //Self skill
 				ms[i].target = MST_SELF;
-			ms[i].cond1 = MSC_MYHPLTMAXRATE;
-			ms[i].cond2 = 90;
-			ms[i].permillage = 2000;
-			//Delay: Remove the stock 5 secs and add half of the support time.
-			ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
-			if (ms[i].delay < 5000)
-				ms[i].delay = 5000; //With a minimum of 5 secs.
+				ms[i].cond1 = MSC_MYHPLTMAXRATE;
+				ms[i].cond2 = 90;
+				ms[i].permillage = 2000;
+				//Delay: Remove the stock 5 secs and add half of the support time.
+				ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+				if (ms[i].delay < 5000)
+					ms[i].delay = 5000; //With a minimum of 5 secs.
+			}
 		} else if (inf&INF_SUPPORT_SKILL) {
 			ms[i].target = MST_FRIEND;
 			ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
