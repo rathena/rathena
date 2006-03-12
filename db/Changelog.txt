@@ -27,6 +27,7 @@
 =========================
 
 03/11
+	* Update the buy/sell prices of four daggers(1247-1249 & 13000) [MasterOfMuppets]
 	* Adjusted bonus items drop rates at Mimic Card and Myst Case Card [Lupus]
 03/10
 	* Added a few dummy duration values on skill_cast_db for some GS skills

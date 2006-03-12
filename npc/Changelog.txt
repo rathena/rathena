@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 03/11
+	* Added another weapon dealer to Einbroch, thanks to Muad_Dib [MasterOfMuppets]
 	* Updated, fixed Custom Thanatos Statues Quest, thx2Justin84 for help [Lupus]
 03/10
 	* Fixed Turtle Island quest, got rid of 2 useless variables [Lupus]
