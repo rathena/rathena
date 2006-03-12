@@ -1,19 +1,16 @@
 //===== kekeRO Script =============================================
-//= Clone Arena - eAAC Script
+//= Clone Arena Script 
 //===== By: ======================================================= 
-//= Miir - For use only in kekeRO and eAthena Servers ONLY
-//  Debug Team - PX, Flo, and DarkSilence
-//  http://kekeRO.deltaanime.net 
+//= Miir - For use only in kekeRO 
 //===== Current Version: ========================================== 
-//= 1.6 
+//= 1.5 
 //===== Compatible With: ========================================== 
-//= eAthena SVN 4453+ (All SVNs that support Clone commands)
+//= Any eAthena Version 
 //===== Description: ============================================== 
-//= An Arena to fight your clone or clones
-//  [Not Implimented:]
-//  Two part quest that allows you to create the
+//= Arena to fight your clone or clones
+//  Also a two part quest that allows you to create the
 //  Stone of Sage, then to create a custom item, Homunculus
-//  Scroll, which allows you to summon a clone slave.
+//  Scroll, which allows you to summon a helpful clone.
 //===== Additional Comments: ====================================== 
 //= 1.0 - NPCs created, basic idea from Zhumos
 //= 1.1 - Moved the location to force_2-1 [Miir]
@@ -21,47 +18,21 @@
 //      - Changed the labels so they are easy to edit [Miir]
 //      - Added a point rewards system [Miir]
 //= 1.3 - Added option to fight 2 or 3 clones [Miir]
-//      - Fixed when Clone Masters were enabled [Miir]
+//	- Fixed when Clone Masters were enabled [Miir]
 //      - Added level restriction (Level 50+) [Miir]
 //      - Modified the Prizes [Miir]
 //= 1.4 - Added a check for inventory [Miir]
-//      - Added a Kafra [Miir]
-//      - Modified the Clone modes [Miir]
+//	- Added a Kafra [Miir]
+//	- Modified the Clone modes [Miir]
 //= 1.5 - Added time equipment check to stop exploitation [Miir]
-//      - Fixed OnTouch warping (oops...) [Miir]
-//      - Added a few more mapflags [Miir]
-//      - Added Chemical Protection Buffs to avoid equipment
-//        breaking (causing the violation to trigger) [Miir]
-//= 1.6 - Rewrote most of the script to make it smaller [Miir]
-//      - Changed the Gatekeeper and Masters [Miir]
-//      - Added a new check to the timer [Miir]
-//      - Added the use of force_3-1, only 2 rooms per map [Miir]
-//      - Removed ability to walk around in clone room before the
-//        actual fight (potential exploit) [Miir]
-//      - Added a debuff script to make the fight more fair [Miir]
-//      - Added a check for Skill and Stat Points [Miir]
-//      - Fixed variable names [Miir]
-//      - Added check for Taekwon (no weapon) [Miir]
-//      - Change Clone duration (3 minutes 7 seconds) [Miir]
-//      - Edited the Clone Prizes (More items, harder to get) [Miir]
-//      - Added OnPCDieEVent [Miir]
-//      - Added a new function to check Arena users [Miir]
-//      - Fixed the equip checks to detect change in cards
-//        Originally only detecting item number, not cards [Miir]
-//      - Added some mapflags (monster_noteleport, noloot, noexp) [Miir]
-//      - Added an item restriction list (some exploit items) [Miir]
-//      - Fixed the npc not spawning 1, 2 or 3 clones depending on
-//        what you chose [erKURITA]
-//      - Fixed lots of broken advanced if statements [erKURITA]
-//      - Re-arranged the item violation checks according to the
-//        advanced if [erKURITA]
-//      - Fixed announce part not displaying correctly.
-//      - Fixed a few more stuff I can't remember XD [erKURITA]
+//	- Fixed OnTouch warping (oops...) [Miir]
+//	- Added a few more mapflags [Miir]
+//	- Added Chemical Protection Buffs to avoid equipment
+//	  breaking (causing the violation to trigger) [Miir]
 //================================================================= 
 // -- Map Flags ---------------
 force_2-1.gat	mapflag	pvp
 force_2-1.gat	mapflag	noteleport
-force_2-1.gat	mapflag	monster_noteleport
 force_2-1.gat	mapflag	nosave	SavePoint
 force_2-1.gat	mapflag	nobranch
 force_2-1.gat	mapflag	nopenalty
@@ -70,1859 +41,80 @@ force_2-1.gat	mapflag	nowarp
 force_2-1.gat	mapflag	nowarpto
 force_2-1.gat	mapflag	noicewall
 force_2-1.gat	mapflag	noreturn
-force_2-1.gat	mapflag	noloot
-force_2-1.gat	mapflag	noexp
-force_3-1.gat	mapflag	pvp
-force_3-1.gat	mapflag	noteleport
-force_3-1.gat	mapflag	monster_noteleport
-//force_3-1.gat	mapflag	nosave	SavePoint
-force_3-1.gat	mapflag	nobranch
-force_3-1.gat	mapflag	nopenalty
-force_3-1.gat	mapflag	nomemo
-force_3-1.gat	mapflag	nowarp
-force_3-1.gat	mapflag	nowarpto
-force_3-1.gat	mapflag	noicewall
-force_3-1.gat	mapflag	noreturn
-force_3-1.gat	mapflag	noloot
-force_3-1.gat	mapflag	noexp
 
 // -- Clone Arena Gatekeeper ---------------
-prt_are_in.gat,97,28,4	script	Clone Arena Gatekeeper	105,{
+prt_are_in,97,28,4	script	Clone Arena Gatekeeper	105,{
 	mes "[Clone Arena Gatekeeper]";
 	mes "Welcome, warrior, to the ^0000FFClone Arena^000000!";
 	next;
 	L_Menu:
-	menu "^0000FFClone Arena Information^000000",L_Q,"^FF0000Restriction List^000000",L_Restrict,"I'd like to register!",L_Register,"No thanks",L_Quit;
+	menu "^0000FFClone Arena Information^000000",L_Q,"I'd like to sign up!",L_Room,"No thanks",L_Quit;
 
 	L_Q:
 	mes "[Clone Arena Gatekeeper]";
-	mes "The ^0000FFClone Arena^000000 allows you to test your skills by fighting a clone of yourself.";
+	mes "The ^0000FFClone Arena^000000 allows you to test your skills against yourself.";
 	next;
 	mes "[Clone Arena Gatekeeper]";
-	mes "The clone is created using your basic stats, skills, and equipment. A basic AI runs the clone.";
+	mes "A clone is created using your basic stats, skills, and weapons. A basic AI runs the clone.";
 	next;
 	mes "[Clone Arena Gatekeeper]";
 	mes "You have 3 minutes to kill your clone. If you don't, or die, you lose the match.";
 	next;
 	mes "[Clone Arena Gatekeeper]";
-	mes "You obtain points for every successful match. The points obtained can be traded in for prizes.";
+	mes "You obtain points for even successful match. You can trade them in for prizes.";
 	next;
 	mes "[Clone Arena Gatekeeper]";
 	mes "You must use all possible equipment expect Middle and Lower Headgear. You may not switch equipment during the fight. If you do, you will be kicked and points will be taken away from you.";
 	next;
 	mes "[Clone Arena Gatekeeper]";
-	mes "Finally, you can increase the difficulty by fighting more clones. In return, you can gain more bonus points upon a successful victory.";
+	mes "Finally, you can increase the difficulty by fighting more clones. In return, you can gain more bonus points.";
 	next;
 	goto L_Menu;
 
-	L_Restrict:
+	L_Room:
 	mes "[Clone Arena Gatekeeper]";
-	mes "^FF0000The following Equipment and Cards are restricted, and you cannot use them in the Clone Arena:^000000";
-	mes " ";
-	mes "^0000FFEQUIPMENT:^000000";
-	mes "- Azoth";
-	mes "- Zeny Knife";
-	mes " ";
-	mes "^0000FFCARDS:^000000";
-	mes "- Angeling Card";
-	mes "- Deviling Card";
-	mes "- Ghostring Card";
-	mes "- Raydric Card";
+	if(BaseLevel < 50) goto L_Limit;          //-- Limits anyone under level 50 from entering
+	mes "Registration confirmed. Please apply to a room. You may only appy to a room that isn't occupied.";
 	next;
-	goto L_Menu;
-
-	L_Register:
-	mes "[Clone Arena Gatekeeper]";
-	if(BaseLevel < 50) goto L_Limit;  //-- Limits anyone under level 50 from entering
-	if(statuspoint > 10) goto L_Stat;    //-- Checks stat points
-	if(skillpoint > 0) goto L_Skill;  //-- Checks skill points
-	mes "Registration Confirmed! Checking for available rooms...";
-	next;
-
-	if (getareausers("force_2-1.gat",7,192,44,155) == 0) && (getareausers("force_2-1.gat",7,44,44,7) == 0) goto L_Room1;
-	if (getareausers("force_2-1.gat",155,192,192,155) == 0) && (getareausers("force_2-1.gat",155,44,192,7) == 0) goto L_Room2;
-	if (getareausers("force_3-1.gat",7,192,44,155) == 0) && (getareausers("force_3-1.gat",7,44,44,7) == 0) goto L_Room3;
-	if (getareausers("force_3-1.gat",155,192,192,155) == 0) && (getareausers("force_3-1.gat",155,44,192,7) == 0) goto L_Room4;
-
-	mes "[Clone Arena Gatekeeper]";
-	mes "I'm sorry, but at this time all the available rooms are occupied. Please try again when an arena has been vacated.";
-	close;
+	menu "Room 1 [" + getareausers("force_2-1.gat",7,192,44,155) + " Users]",L_Room1,"Room 2 [" + getareausers("force_2-1.gat",155,192,192,155) + " Users]",L_Room2,"Room 3 [" + getareausers("force_2-1.gat",7,44,44,7) + " Users]",L_Room3,
+		"Room 4 [" + getareausers("force_2-1.gat",155,44,192,7) + " Users]",L_Room4,"Cancel",L_Quit;
 
 	L_Room1:
-	killmonster "force_2-1.gat","CloneMob 1::OnMobDead";
-	set $cloneroomn1$,"force_2-1.gat";	//-- Sets room name
-	set $clonename1$,getcharid(0);	//-- Sets the clone name
-	set cloneroom,1;			//-- Clone room
-	set $@clone1X1,7;			//-- Top-Left X Coordinate
-	set $@clone1Y1,192;			//-- Top-Left Y Coordinate
-	set $@clone1X2,44;			//-- Bottom-Right X Coordinate
-	set $@clone1Y2,155;			//-- Bottom-Right Y Coordinate
-	set $@clonemob1X,25;			//-- X of where the clone spawns
-	set $@clonemob1Y,177;			//-- Y of where the clone spawns
-	set $@wrp1X,25;				//-- X of where the player spawns
-	set $@wrp1Y,171;			//-- Y of where the player spawns
-	warp "force_2-1.gat",25,23;
-	close;	
+	if (getareausers("force_2-1.gat",7,192,44,155) >= 1) goto L_Occupied;
+	warp "force_2-1.gat",25,172;
 
 	L_Room2:
-	killmonster "force_2-1.gat","CloneMob 2::OnMobDead";
-	set $cloneroomn2$,"force_2-1.gat";	//-- Sets room name
-	set $clonename2$,getcharid(0);	//-- Sets the clone name
-	set cloneroom,2;			//-- Clone room
-	set $@clone2X1,155;			//-- Top-Left X Coordinate
-	set $@clone2Y1,192;			//-- Top-Left Y Coordinate
-	set $@clone2X2,192;			//-- Bottom-Right X Coordinate
-	set $@clone2Y2,155;			//-- Bottom-Right Y Coordinate
-	set $@clonemob2X,174;			//-- X of where the clone spawns
-	set $@clonemob2Y,177;			//-- Y of where the clone spawns
-	set $@wrp2X,174;			//-- X of where the player spawns
-	set $@wrp2Y,171;			//-- Y of where the player spawns
-	warp "force_2-1.gat",174,23;
-	close;
+	if (getareausers("force_2-1.gat",155,192,192,155) >= 1) goto L_Occupied;
+	warp "force_2-1.gat",173,172;
 
 	L_Room3:
-	killmonster "force_3-1.gat","CloneMob 3::OnMobDead";
-	set $cloneroomn3$,"force_3-1.gat";	//-- Sets room name
-	set $clonename3$,getcharid(0);	//-- Sets the clone name
-	set cloneroom,3;			//-- Clone room
-	set $@clone3X1,7;			//-- Top-Left X Coordinate
-	set $@clone3Y1,192;			//-- Top-Left Y Coordinate
-	set $@clone3X2,44;			//-- Bottom-Right X Coordinate
-	set $@clone3Y2,155;			//-- Bottom-Right Y Coordinate
-	set $@clonemob3X,25;			//-- X of where the clone spawns
-	set $@clonemob3Y,177;			//-- Y of where the clone spawns
-	set $@wrpX,25;				//-- X of where the player spawns
-	set $@wrpY,171;				//-- Y of where the player spawns
-	warp "force_3-1.gat",25,23;
-	close;	
+	if (getareausers("force_2-1.gat",7,44,44,7) >= 1) goto L_Occupied;
+	warp "force_2-1.gat",25,24;
 
 	L_Room4:
-	killmonster "force_3-1.gat","CloneMob 4::OnMobDead";
-	set $cloneroomn4$,"force_3-1.gat";	//-- Sets room name
-	set $clonename4$,getcharid(0);	//-- Sets the clone name
-	set cloneroom,4;			//-- Clone room
-	set $@clone4X1,155;			//-- Top-Left X Coordinate
-	set $@clone4Y1,192;			//-- Top-Left Y Coordinate
-	set $@clone4X2,192;			//-- Bottom-Right X Coordinate
-	set $@clone4Y2,155;			//-- Bottom-Right Y Coordinate
-	set $@clonemob4X,174;			//-- X of where the clone spawns
-	set $@clonemob4Y,177;			//-- Y of where the clone spawns
-	set $@wrp4X,174;			//-- X of where the player spawns
-	set $@wrp4Y,171;			//-- Y of where the player spawns
-	warp "force_3-1.gat",174,23;
+	if (getareausers("force_2-1.gat",155,44,192,7) >= 1) goto L_Occupied;
+	warp "force_2-1.gat",173,24;
+
+	L_Occupied:
+	mes "[Clone Arena Gatekeeper]";
+	mes "The room is currently occupied. Please apply to another room, or wait until this room is free for use.";
 	close;
 
 	L_Limit:
-	mes "I'm sorry, but you must be at least ^0000FFBase Level 50^000000 or higher to register. We cannot allow the weak to be harmed in this arena.";
-	close;
-
-	L_Stat:
-	mes "I'm sorry, but you must allocate your stat points before continuing. You may only have 10 unused stat points.";
-	close;
-
-	L_Skill:
-	mes "I'm sorry, but you must allocate all of your stat points before continuing.";
+	mes "I'm sorry, but you must be at least ^0000FFBase Level 50^000000 or higher to register.";
 	close;
 
 	L_Quit:
 	mes "[Clone Arena Gatekeeper]";
 	mes "Just speak to me if you have any further questions.";
 	close;
-
-}
-
-//=========================================================================================
-//== Clone Masters ========================================================================
-//=========================================================================================
-force_2-1.gat,25,27,4	script	Clone Master::cmasta	105,{
-	mes "[Clone Master]";
-	mes "I will arrange the settings for the arena.";
-	next;
-	mes "[Clone Master]";
-	mes "Please select the number of clones you wish to battle.";
-	next;
-	menu "1 Clone",C_1,"2 Clones",C_2,"3 Clones",C_3,"Leave Arena",L_End;
-
-	C_1:
-	if(cloneroom == 1) {
-		set $@clonemob1,1;			//-- Number of Clones
-		set $@tempclonepts1,1;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 2) {
-		set $@clonemob2,1;			//-- Number of Clones
-		set $@tempclonepts2,1;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 3) {
-		set $@clonemob3,1;			//-- Number of Clones
-		set $@tempclonepts3,1;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 4) {
-		set $@clonemob4,1;			//-- Number of Clones
-		set $@tempclonepts4,1;			//-- Number of possible points
-		goto L_Start;
-	} else 
-		close;
-
-	C_2:
-	if(cloneroom == 1) {
-		set $@clonemob1,2;			//-- Number of Clones
-		set $@tempclonepts1,3;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 2) {
-		set $@clonemob2,2;			//-- Number of Clones
-		set $@tempclonepts2,3;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 3) {
-		set $@clonemob3,2;			//-- Number of Clones
-		set $@tempclonepts3,3;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 4) {
-		set $@clonemob4,2;			//-- Number of Clones
-		set $@tempclonepts4,3;			//-- Number of possible points
-		goto L_Start;
-	} else 
-		close;
-
-	C_3:
-	if(cloneroom == 1) {
-		set $@clonemob1,3;			//-- Number of Clones
-		set $@tempclonepts1,6;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 2) {
-		set $@clonemob2,3;			//-- Number of Clones
-		set $@tempclonepts2,6;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 3) {
-		set $@clonemob3,3;			//-- Number of Clones
-		set $@tempclonepts3,6;			//-- Number of possible points
-		goto L_Start;
-	} else if(cloneroom == 4) {
-		set $@clonemob4,3;			//-- Number of Clones
-		set $@tempclonepts4,6;			//-- Number of possible points
-		goto L_Start;
-	} else
-		close;
-
-	L_Start:
-	mes "[Clone Master]";
-	callfunc "F_CloneICheck";		//-- Starts the function to check gear
-	mes "I will now lead you to the arena.";
-	next;
-	if(cloneroom == 1) {
-	initnpctimer "CloneTimer 1";
-//	attachnpctimer getcharid(0);
-	warp $cloneroomn1$,$@wrp1X,$@wrp1Y;
-	donpcevent "CloneMob 1";
-	close;
-	} else if(cloneroom == 2) {
-	initnpctimer "CloneTimer 2";
-//	attachnpctimer getcharid(0);
-	warp $cloneroomn2$,$@wrp2X,$@wrp2Y;
-	donpcevent "CloneMob 2";
-	close;
-	} else if(cloneroom == 3) {
-	initnpctimer "CloneTimer 3";
-//	attachnpctimer getcharid(0);
-	warp $cloneroomn3$,$@wrp3X,$@wrp3Y;
-	donpcevent "CloneMob 3";
-	close;
-	} else if(cloneroom == 4) {
-	initnpctimer "CloneTimer 4";
-//	attachnpctimer getcharid(0);
-	warp $cloneroomn4$,$@wrp4X,$@wrp4Y;
-	donpcevent "CloneMob 4";
-	close;
-	} else
-
-	L_End:
-	warp "prt_are_in",97,24;
-	close;
-}
-
-force_2-1.gat,174,27,4	duplicate(cmasta)	Clone Master	105
-force_3-1.gat,25,27,4	duplicate(cmasta)	Clone Master	105
-force_3-1.gat,174,27,4	duplicate(cmasta)	Clone Master	105
-
-//=========================================================================================
-//== Clone Mobs ===========================================================================
-//=========================================================================================
-// -- Clone Mob 1 ---------------
-force_2-1.gat,0,0,0	script	CloneMob 1	-1,{
-	if($@clonemob1==1) {
-		clone $cloneroomn1$,$@clonemob1X,$@clonemob1Y,"CloneMob 1::OnMobDead",$clonename1$,0,1693,0,192;
-	} else if ($@clonemob1==2) {
-		clone $cloneroomn1$,$@clonemob1X +2,$@clonemob1Y,"CloneMob 1::OnMobDead",$clonename1$,0,1693,0,192;
-		clone $cloneroomn1$,$@clonemob1X -2,$@clonemob1Y,"CloneMob 1::OnMobDead",$clonename1$,0,1693,0,192;
-	} else if ($@clonemob1==3) {
-		clone $cloneroomn1$,$@clonemob1X,$@clonemob1Y,"CloneMob 1::OnMobDead",$clonename1$,0,1693,0,192;
-		clone $cloneroomn1$,$@clonemob1X +2,$@clonemob1Y,"CloneMob 1::OnMobDead",$clonename1$,0,1693,0,192;
-		clone $cloneroomn1$,$@clonemob1X -2,$@clonemob1Y,"CloneMob 1::OnMobDead",$clonename1$,0,1693,0,192;
-	} else
-		end;
-
-OnMobDead:
-	set $@clonemob1,$@clonemob1 -1;
-	if($@clonemob1 > 1) {
-		areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have "+$@clonemob1+" clones left to defeat!",8;
-	} else if($@clonemob1 == 1) {
-		areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have "+$@clonemob1+" clone left to defeat!",8;
-	} else end;
-
-	stopnpctimer "CloneTimer 1";
-	if($@tempclonepts1 == 1 ) areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"Congratulations! You have succesfully defeated your clone!",8;
-	if($@tempclonepts1 > 1 ) areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"Congratulations! You have succesfully defeated your clones!",8;
-	set clonepts,clonepts + $@tempclonepts1;
-	addtimer 3000,"CloneTimer 1::OnTimer192000";
-	end;
-
-}
-
-// -- Clone Mob 2 ---------------
-force_2-1.gat,0,0,0	script	CloneMob 2	-1,{
-	if($@clonemob2==1) {
-		clone $cloneroomn2$,$@clonemob2X,$@clonemob2Y,"CloneMob 2::OnMobDead",$clonename2$,0,1693,0,192;
-	} else if ($@clonemob2==2) {
-		clone $cloneroomn2$,$@clonemob2X +2,$@clonemob2Y,"CloneMob 2::OnMobDead",$clonename2$,0,1693,0,192;
-		clone $cloneroomn2$,$@clonemob2X -2,$@clonemob2Y,"CloneMob 2::OnMobDead",$clonename2$,0,1693,0,192;
-	} else if ($@clonemob2==3) {
-		clone $cloneroomn2$,$@clonemob2X,$@clonemob2Y,"CloneMob 2::OnMobDead",$clonename2$,0,1693,0,192;
-		clone $cloneroomn2$,$@clonemob2X +2,$@clonemob2Y,"CloneMob 2::OnMobDead",$clonename2$,0,1693,0,192;
-		clone $cloneroomn2$,$@clonemob2X -2,$@clonemob2Y,"CloneMob 2::OnMobDead",$clonename2$,0,1693,0,192;
-	} else
-		end;
-
-OnMobDead:
-	set $@clonemob2,$@clonemob2 -1;
-	if($@clonemob2 > 1) {
-		areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have "+$@clonemob2+" clones left to defeat!",8;
-	} else if($@clonemob2 == 1) {
-		areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have "+$@clonemob2+" clone left to defeat!",8;
-	} else end;
-
-	stopnpctimer "CloneTimer 2";
-	if($@tempclonepts2 == 1 ) areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"Congratulations! You have succesfully defeated your clone!",8;
-	if($@tempclonepts2 > 1 ) areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"Congratulations! You have succesfully defeated your clones!",8;
-	set clonepts,clonepts + $@tempclonepts2;
-	addtimer 3000,"CloneTimer 2::OnTimer192000";
-	end;
-
-}
-
-// -- Clone Mob 3 ---------------
-force_3-1.gat,0,0,0	script	CloneMob 3	-1,{
-	if($@clonemob3==1) {
-		clone $cloneroomn3$,$@clonemob3X,$@clonemob3Y,"CloneMob 3::OnMobDead",$clonename3$,0,1693,0,192;
-	} else if ($@clonemob3==2) {
-		clone $cloneroomn3$,$@clonemob3X +2,$@clonemob3Y,"CloneMob 3::OnMobDead",$clonename3$,0,1693,0,192;
-		clone $cloneroomn3$,$@clonemob3X -2,$@clonemob3Y,"CloneMob 3::OnMobDead",$clonename3$,0,1693,0,192;
-	} else if ($@clonemob3==3) {
-		clone $cloneroomn3$,$@clonemob3X,$@clonemob3Y,"CloneMob 3::OnMobDead",$clonename3$,0,1693,0,192;
-		clone $cloneroomn3$,$@clonemob3X +2,$@clonemob3Y,"CloneMob 3::OnMobDead",$clonename3$,0,1693,0,192;
-		clone $cloneroomn3$,$@clonemob3X -2,$@clonemob3Y,"CloneMob 3::OnMobDead",$clonename3$,0,1693,0,192;
-	} else
-		end;
-
-OnMobDead:
-	set $@clonemob3,$@clonemob3 -1;
-	if($@clonemob3 > 1) {
-		areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have "+$@clonemob3+" clones left to defeat!",8;
-	} else if($@clonemob3 == 1) {
-		areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have "+$@clonemob3+" clone left to defeat!",8;
-	} else end;
-
-	stopnpctimer "CloneTimer 3";
-	if($@tempclonepts3 == 1 ) areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"Congratulations! You have succesfully defeated your clone!",8;
-	if($@tempclonepts3 > 1 ) areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"Congratulations! You have succesfully defeated your clones!",8;
-	set clonepts,clonepts + $@tempclonepts3;
-	addtimer 3000,"CloneTimer 3::OnTimer192000";
-	end;
-
-}
-
-// -- Clone Mob 4 ---------------
-force_3-1.gat,0,0,0	script	CloneMob 4	-1,{
-	if($@clonemob4==1){
-		clone $cloneroomn4$,$@clonemob4X,$@clonemob4Y,"CloneMob 4::OnMobDead",$clonename4$,0,1693,0,192;
-	} else if($@clonemob4==2) {
-		clone $cloneroomn4$,$@clonemob4X +2,$@clonemob4Y,"CloneMob 4::OnMobDead",$clonename4$,0,1693,0,192;
-		clone $cloneroomn4$,$@clonemob4X -2,$@clonemob4Y,"CloneMob 4::OnMobDead",$clonename4$,0,1693,0,192;
-	} else if($@clonemob4==3) {
-		clone $cloneroomn4$,$@clonemob4X,$@clonemob4Y,"CloneMob 4::OnMobDead",$clonename4$,0,1693,0,192;
-		clone $cloneroomn4$,$@clonemob4X +2,$@clonemob4Y,"CloneMob 4::OnMobDead",$clonename4$,0,1693,0,192;
-		clone $cloneroomn4$,$@clonemob4X -2,$@clonemob4Y,"CloneMob 4::OnMobDead",$clonename4$,0,1693,0,192;
-	} else
-		end;
-
-OnMobDead:
-	set $@clonemob4,$@clonemob4 -1;
-	if($@clonemob4 > 1) {
-		areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have "+$@clonemob4+" clones left to defeat!",8;
-	} else if($@clonemob4 == 1) {
-		areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have "+$@clonemob4+" clone left to defeat!",8;
-	} else end;
-
-	stopnpctimer "CloneTimer 4";
-	if($@tempclonepts4 == 1 ) areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"Congratulations! You have succesfully defeated your clone!",8;
-	if($@tempclonepts4 > 1 ) areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"Congratulations! You have succesfully defeated your clones!",8;
-	set clonepts,clonepts + $@tempclonepts4;
-	addtimer 3000,"CloneTimer 4::OnTimer192000";
-	end;
-
-}
-
-//=========================================================================================
-//== Clone Timers =========================================================================
-//=========================================================================================
-// -- Clone Timer 1 --------------- 
-force_2-1.gat,0,0,0	script	CloneTimer 1	-1,{
-OnTimer1000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"The arena has been initiated! Prepare to fight!",8;
-	callfunc "F_CloneBuff";
-	callfunc "F_CloneEquip";
-	end;
-OnTimer2000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer3000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer4000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer5000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 3 minutes to defeat your clone!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer6000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer7000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer8000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer9000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer10000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer11000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer12000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer13000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer14000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer15000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer16000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer17000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer18000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer19000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer20000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer21000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer22000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer23000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer24000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer25000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer26000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer27000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer28000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer29000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer30000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer31000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer32000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer33000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer34000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer35000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer40000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer45000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer50000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer55000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer60000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer61000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 2 minutes left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer65000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer70000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer75000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer80000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer85000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer90000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer95000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer100000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer105000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer110000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer115000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer120000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer121000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 1 minute left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer125000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer130000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer135000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer140000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer145000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer150000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer151000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 30 seconds left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer155000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer160000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer165000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer170000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer175000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer176000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 5 seconds left!",8;
-	end;
-OnTimer177000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 4 seconds left!",8;
-	end;
-OnTimer178000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 3 seconds left!",8;
-	end;
-OnTimer179000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 2 seconds left!",8;
-	end;
-OnTimer180000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have 1 second left!",8;
-	end;
-OnTimer185000:
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"Okay time's up! You failed!",8;
-	end;
-OnTimer192000:
-	stopnpctimer;
-	sc_end 72;           //-- Stops Chemical Protection Weapon
-	sc_end 73;           //-- Stops Chemical Protection Shield
-	sc_end 74;           //-- Stops Chemical Protection Armor
-	sc_end 75;           //-- Stops Chemical Protection Helm
-	areawarp $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"prt_are_in", 97, 24;
-	killmonster $cloneroomn$,"CloneMob 1::OnMobDead";
-	end;
-
-}
-
-// -- Clone Timer 2 --------------- 
-force_2-1.gat,1,1,0	script	CloneTimer 2	-1,{
-OnTimer1000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"The arena has been initiated! Prepare to fight!",8;
-	callfunc "F_CloneBuff";
-	callfunc "F_CloneEquip";
-	end;
-OnTimer2000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer3000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer4000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer5000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 3 minutes to defeat your clone!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer6000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer7000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer8000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer9000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer10000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer11000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer12000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer13000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer14000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer15000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer16000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer17000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer18000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer19000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer20000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer21000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer22000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer23000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer24000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer25000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer26000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer27000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer28000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer29000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer30000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer31000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer32000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer33000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer34000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer35000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer40000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer45000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer50000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer55000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer60000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer61000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 2 minutes left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer65000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer70000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer75000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer80000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer85000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer90000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer95000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer100000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer105000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer110000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer115000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer120000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer121000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 1 minute left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer125000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer130000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer135000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer140000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer145000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer150000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer151000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 30 seconds left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer155000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer160000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer165000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer170000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer175000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer176000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 5 seconds left!",8;
-	end;
-OnTimer177000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 4 seconds left!",8;
-	end;
-OnTimer178000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 3 seconds left!",8;
-	end;
-OnTimer179000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 2 seconds left!",8;
-	end;
-OnTimer180000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have 1 second left!",8;
-	end;
-OnTimer185000:
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"Okay time's up! You failed!",8;
-	end;
-OnTimer192000:
-	stopnpctimer;
-	sc_end 72;           //-- Stops Chemical Protection Weapon
-	sc_end 73;           //-- Stops Chemical Protection Shield
-	sc_end 74;           //-- Stops Chemical Protection Armor
-	sc_end 75;           //-- Stops Chemical Protection Helm
-	areawarp $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"prt_are_in", 97, 24;
-	killmonster $cloneroomn$,"CloneMob 2::OnMobDead";
-	end;
-
-}
-
-// -- Clone Timer 3 --------------- 
-force_2-1.gat,0,0,0	script	CloneTimer 3	-1,{
-OnTimer1000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"The arena has been initiated! Prepare to fight!",8;
-	callfunc "F_CloneBuff";
-	callfunc "F_CloneEquip";
-	end;
-OnTimer2000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer3000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer4000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer5000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 3 minutes to defeat your clone!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer6000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer7000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer8000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer9000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer10000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer11000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer12000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer13000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer14000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer15000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer16000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer17000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer18000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer19000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer20000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer21000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer22000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer23000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer24000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer25000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer26000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer27000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer28000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer29000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer30000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer31000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer32000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer33000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer34000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer35000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer40000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer45000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer50000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer55000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer60000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer61000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 2 minutes left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer65000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer70000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer75000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer80000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer85000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer90000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer95000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer100000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer105000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer110000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer115000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer120000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer121000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 1 minute left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer125000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer130000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer135000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer140000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer145000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer150000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer151000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 30 seconds left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer155000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer160000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer165000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer170000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer175000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer176000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 5 seconds left!",8;
-	end;
-OnTimer177000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 4 seconds left!",8;
-	end;
-OnTimer178000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 3 seconds left!",8;
-	end;
-OnTimer179000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 2 seconds left!",8;
-	end;
-OnTimer180000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have 1 second left!",8;
-	end;
-OnTimer185000:
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"Okay time's up! You failed!",8;
-	end;
-OnTimer192000:
-	stopnpctimer;
-	sc_end 72;           //-- Stops Chemical Protection Weapon
-	sc_end 73;           //-- Stops Chemical Protection Shield
-	sc_end 74;           //-- Stops Chemical Protection Armor
-	sc_end 75;           //-- Stops Chemical Protection Helm
-	areawarp $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"prt_are_in", 97, 24;
-	killmonster $cloneroomn$,"CloneMob 3::OnMobDead";
-	end;
-
-}
-
-// -- Clone Timer 4 --------------- 
-force_2-1.gat,0,0,0	script	CloneTimer 4	-1,{
-OnTimer1000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"The arena has been initiated! Prepare to fight!",8;
-	callfunc "F_CloneBuff";
-	callfunc "F_CloneEquip";
-	end;
-OnTimer2000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer3000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer4000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer5000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 3 minutes to defeat your clone!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer6000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer7000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer8000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer9000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer10000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer11000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer12000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer13000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer14000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer15000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer16000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer17000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer18000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer19000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer20000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer21000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer22000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer23000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer24000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer25000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer26000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer27000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer28000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer29000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer30000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer31000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer32000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer33000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer34000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer35000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer40000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer45000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer50000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer55000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer60000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer61000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 2 minutes left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer65000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer70000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer75000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer80000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer85000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer90000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer95000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer100000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer105000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer110000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer115000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer120000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer121000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 1 minute left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer125000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer130000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer135000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer140000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer145000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer150000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer151000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 30 seconds left!",8;
-	callfunc "F_CloneEquip";
-	end;
-OnTimer155000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer160000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer165000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer170000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer175000:
-	callfunc "F_CloneEquip";
-	end;
-OnTimer176000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 5 seconds left!",8;
-	end;
-OnTimer177000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 4 seconds left!",8;
-	end;
-OnTimer178000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 3 seconds left!",8;
-	end;
-OnTimer179000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 2 seconds left!",8;
-	end;
-OnTimer180000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have 1 second left!",8;
-	end;
-OnTimer185000:
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"Okay time's up! You failed!",8;
-	end;
-OnTimer192000:
-	stopnpctimer;
-	sc_end 72;           //-- Stops Chemical Protection Weapon
-	sc_end 73;           //-- Stops Chemical Protection Shield
-	sc_end 74;           //-- Stops Chemical Protection Armor
-	sc_end 75;           //-- Stops Chemical Protection Helm
-	areawarp $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"prt_are_in", 97, 24;
-	killmonster $cloneroomn$,"CloneMob 4::OnMobDead";
-	end;
-
-}
-
-//=========================================================================================
-//== Clone Functions ======================================================================
-//=========================================================================================
-// -- Clone Buff/Debuff ---------------
-function	script	F_CloneBuff	{
-	sc_end SC_PROVOKE;
-	sc_end SC_ENDURE;
-	sc_end SC_TWOHANDQUICKEN;
-	sc_end SC_CONCENTRATE;
-	sc_end SC_ENCPOISON;
-	sc_end SC_POISONREACT;
-	sc_end SC_ANGELUS;
-	sc_end SC_BLESSING;
-	sc_end SC_SIGNUMCRUCIS;
-	sc_end SC_INCREASEAGI;
-	sc_end SC_SLOWPOISON;
-	sc_end SC_IMPOSITIO;
-	sc_end SC_SUFFRAGIUM;
-	sc_end SC_ASPERSIO;
-	sc_end SC_KYRIE;
-	sc_end SC_MAGNIFICAT;
-	sc_end SC_GLORIA;
-	sc_end SC_ADRENALINE;
-	sc_end SC_WEAPONPERFECTION;
-	sc_end SC_OVERTHRUST;
-	sc_end SC_MAXIMIZEPOWER;
-	sc_end SC_LOUD;
-	sc_end SC_ENERGYCOAT;
-	sc_end SC_ASPDPOTION0;
-	sc_end SC_ASPDPOTION1;
-	sc_end SC_ASPDPOTION2;
-	sc_end SC_ASPDPOTION3;
-	sc_end SC_SPEEDUP0;
-	sc_end SC_SPEEDUP1;
-	sc_end SC_ATKPOTION;
-	sc_end SC_MATKPOTION;
-	sc_end SC_AUTOGUARD;
-	sc_end SC_REFLECTSHIELD;
-	sc_end SC_PROVIDENCE;
-	sc_end SC_DEFENDER;
-	sc_end SC_AUTOSPELL;
-	sc_end SC_SIGHTTRASHER;
-	sc_end SC_SPEARSQUICKEN;
-	sc_end SC_AUTOCOUNTER;
-	sc_end SC_SIGHT;
-	sc_end SC_RUWACH;
-	sc_end SC_EXTREMITYFIST;
-	sc_end SC_EXPLOSIONSPIRITS;
-	sc_end SC_COMBO;
-	sc_end SC_BLADESTOP_WAIT;
-	sc_end SC_BLADESTOP;
-	sc_end SC_FIREWEAPON;
-	sc_end SC_WATERWEAPON;
-	sc_end SC_WINDWEAPON;
-	sc_end SC_EARTHWEAPON;
-	sc_end SC_VIOLENTGALE;
-	sc_end SC_WATK_ELEMENT;
-	sc_end SC_ARMOR_ELEMENT;
-	sc_end SC_AURABLADE;
-	sc_end SC_PARRYING;
-	sc_end SC_CONCENTRATION;
-	sc_end SC_TENSIONRELAX;
-	sc_end SC_BERSERK;
-	sc_end SC_FURY;
-	sc_end SC_GOSPEL;
-	sc_end SC_ASSUMPTIO;
-	sc_end SC_GUILDAURA;
-	sc_end SC_MAGICPOWER;
-	sc_end SC_EDP;
-	sc_end SC_TRUESIGHT;
-	sc_end SC_WINDWALK;
-	sc_end SC_MELTDOWN;
-	sc_end SC_CARTBOOST;
-	sc_end SC_CHASEWALK;
-	sc_end SC_REJECTSWORD;
-	sc_end SC_MARIONETTE;
-	sc_end SC_MARIONETTE2;
-	sc_end SC_MOONLIT;
-	sc_end SC_JOINTBEAT;
-	sc_end SC_MINDBREAKER;
-	sc_end SC_MEMORIZE;
-	sc_end SC_DEVOTION;
-	sc_end SC_SACRIFICE;
-	sc_end SC_STEELBODY;
-	sc_end SC_READYSTORM;
-	sc_end SC_READYDOWN;
-	sc_end SC_READYTURN;
-	sc_end SC_READYCOUNTER;
-	sc_end SC_DODGE;
-	sc_end SC_RUN;
-	sc_end SC_SHADOWWEAPON;
-	sc_end SC_ADRENALINE2;
-	sc_end SC_GHOSTWEAPON;
-	sc_end SC_KAIZEL;
-	sc_end SC_KAAHI;
-	sc_end SC_KAUPE;
-	sc_end SC_ONEHAND;
-	sc_end SC_PRESERVE;
-	sc_end SC_BATTLEORDERS;
-	sc_end SC_REGENERATION;
-	sc_end SC_DOUBLECAST;
-	sc_end SC_MAXOVERTHRUST;
-	sc_end SC_LONGING;
-	sc_end SC_HERMODE;
-	sc_end SC_SHRINK;
-	sc_end SC_SIGHTBLASTER;
-	sc_end SC_CLOSECONFINE;
-	sc_end SC_CLOSECONFINE2;
-	sc_end SC_DANCING;
-	sc_end SC_LULLABY;
-	sc_end SC_RICHMANKIM;
-	sc_end SC_ETERNALCHAOS;
-	sc_end SC_DRUMBATTLE;
-	sc_end SC_NIBELUNGEN;
-	sc_end SC_ROKISWEIL;
-	sc_end SC_INTOABYSS;
-	sc_end SC_SIEGFRIED;
-	sc_end SC_WHISTLE;
-	sc_end SC_ASSNCROS;
-	sc_end SC_POEMBRAGI;
-	sc_end SC_APPLEIDUN;
-	sc_end SC_UGLYDANCE;
-	sc_end SC_HUMMING;
-	sc_end SC_DONTFORGETME;
-	sc_end SC_FORTUNE;
-	sc_end SC_SERVICE4U;
-	sc_end SC_STOP;
-	sc_end SC_SPURT;
-	sc_end SC_SPIRIT;
-	sc_end SC_COMA;
-	sc_end SC_INTRAVISION;
-	sc_end SC_INCALLSTATUS;
-	sc_end SC_INCSTR;
-	sc_end SC_INCAGI;
-	sc_end SC_INCVIT;
-	sc_end SC_INCINT;
-	sc_end SC_INCDEX;
-	sc_end SC_INCLUK;
-	sc_end SC_INCHIT;
-	sc_end SC_INCHITRATE;
-	sc_end SC_INCFLEE;
-	sc_end SC_INCFLEERATE;
-	sc_end SC_INCMHPRATE;
-	sc_end SC_INCMSPRATE;
-	sc_end SC_INCATKRATE;
-	sc_end SC_INCMATKRATE;
-	sc_end SC_INCDEFRATE;
-	sc_end SC_STRFOOD;
-	sc_end SC_AGIFOOD;
-	sc_end SC_VITFOOD;
-	sc_end SC_INTFOOD;
-	sc_end SC_DEXFOOD;
-	sc_end SC_LUKFOOD;
-	sc_end SC_HITFOOD;
-	sc_end SC_FLEEFOOD;
-	sc_end SC_BATKFOOD;
-	sc_end SC_WATKFOOD;
-	sc_end SC_MATKFOOD;
-	sc_end SC_SCRESIST;
-	sc_end SC_WARM;
-	sc_end SC_SUN_COMFORT;
-	sc_end SC_MOON_COMFORT;
-	sc_end SC_STAR_COMFORT;
-	sc_end SC_FUSION;
-	sc_end SC_SKILLRATE_UP;
-	sc_end SC_SKE;
-	sc_end SC_KAITE;
-	sc_end SC_SWOO;
-	sc_end SC_SKA;
-//	sc_end SC_TKDORI;
-//	sc_end SC_MAX;
-	sc_start 72,188000,10;            //-- Chemical Protection Weapon
-	sc_start 73,188000,10;            //-- Chemical Protection Shield
-	sc_start 74,188000,10;            //-- Chemical Protection Armor
-	sc_start 75,188000,10;            //-- Chemical Protection Helm
-	return;
-}
-
-// -- Clone Inventory Function ---------------
-function	script	F_CloneICheck	{
-	if(getequipisequiped(1)==0) {
-	mes "^FF0000You must equip a Head Gear before entering the Clone Arena!^000000";
-	close;
-	} else if(getequipisequiped(2)==0) {
-	mes "^FF0000You must equip an Armor before entering the Clone Arena!^000000";
-	close;
-	} else if(getequipisequiped(3)==0) {
-	mes "^FF0000You must equip a Weapon and/or Shield before entering the Clone Arena!^000000";
-	close;
-	} else if((getequipisequiped(4)==0) && (BaseJob != Job_Taekwon)) {
-	mes "^FF0000You must equip a Weapon and/or Shield before entering the Clone Arena!^000000";
-	close;
-	} else if((getequipid(4)==1235) || (getequipid(4)==1238)) {
-	mes "^FF0000This weapon is restricted! Please select another weapon before entering the Clone Arena!^000000";
-	close;
-	} else if(getequipisequiped(5)==0) {
-	mes "^FF0000You must equip a Garment before entering the Clone Arena!^000000";
-	close;
-	} else if(getequipisequiped(6)==0) {
-	mes "^FF0000You must equip a Foot Gear before entering the Clone Arena!^000000";
-	close;
-	} else 	if(getequipisequiped(7)==0) {
-	mes "^FF0000You must equip two Accessories before entering the Clone Arena!^000000";
-	close;
-	} else if(getequipisequiped(8)==0) {
-	mes "^FF0000You must equip two Accessories before entering the Clone Arena!^000000";
-	close;
-	} else if (cloneroom == 1) {
-	set $@equip1r1,getequipid(1);
-	set $@slot1r1n0,getequipcardid(1,0);
-	set $@slot1r1n1,getequipcardid(1,1);
-	set $@slot1r1n2,getequipcardid(1,2);
-	set $@slot1r1n3,getequipcardid(1,3);
-	set $@equip1r2,getequipid(2);
-	set $@slot1r2n0,getequipcardid(2,0);
-	set $@slot1r2n1,getequipcardid(2,1);
-	set $@slot1r2n2,getequipcardid(2,2);
-	set $@slot1r2n3,getequipcardid(2,3);
-	set $@equip1r3,getequipid(3);
-	set $@slot1r3n0,getequipcardid(3,0);
-	set $@slot1r3n1,getequipcardid(3,1);
-	set $@slot1r3n2,getequipcardid(3,2);
-	set $@slot1r3n3,getequipcardid(3,3);
-	set $@equip1r4,getequipid(4);
-	set $@slot1r4n0,getequipcardid(4,0);
-	set $@slot1r4n1,getequipcardid(4,1);
-	set $@slot1r4n2,getequipcardid(4,2);
-	set $@slot1r4n3,getequipcardid(4,3);
-	set $@equip1r5,getequipid(5);
-	set $@slot1r5n0,getequipcardid(5,0);
-	set $@slot1r5n1,getequipcardid(5,1);
-	set $@slot1r5n2,getequipcardid(5,2);
-	set $@slot1r5n3,getequipcardid(5,3);
-	set $@equip1r6,getequipid(6);
-	set $@slot1r6n0,getequipcardid(6,0);
-	set $@slot1r6n1,getequipcardid(6,1);
-	set $@slot1r6n2,getequipcardid(6,2);
-	set $@slot1r6n3,getequipcardid(6,3);
-	set $@equip1r7,getequipid(7);
-	set $@slot1r7n0,getequipcardid(7,0);
-	set $@slot1r7n1,getequipcardid(7,1);
-	set $@slot1r7n2,getequipcardid(7,2);
-	set $@slot1r7n3,getequipcardid(7,3);
-	set $@equip1r8,getequipid(8);
-	set $@slot1r8n0,getequipcardid(8,0);
-	set $@slot1r8n1,getequipcardid(8,1);
-	set $@slot1r8n2,getequipcardid(8,2);
-	set $@slot1r8n3,getequipcardid(8,3);
-	return;
-	} else if (cloneroom == 2) {
-	set $@equip2r1,getequipid(1);
-	set $@slot2r1n0,getequipcardid(1,0);
-	set $@slot2r1n1,getequipcardid(1,1);
-	set $@slot2r1n2,getequipcardid(1,2);
-	set $@slot2r1n3,getequipcardid(1,3);
-	set $@equip2r2,getequipid(2);
-	set $@slot2r2n0,getequipcardid(2,0);
-	set $@slot2r2n1,getequipcardid(2,1);
-	set $@slot2r2n2,getequipcardid(2,2);
-	set $@slot2r2n3,getequipcardid(2,3);
-	set $@equip2r3,getequipid(3);
-	set $@slot2r3n0,getequipcardid(3,0);
-	set $@slot2r3n1,getequipcardid(3,1);
-	set $@slot2r3n2,getequipcardid(3,2);
-	set $@slot2r3n3,getequipcardid(3,3);
-	set $@equip2r4,getequipid(4);
-	set $@slot2r4n0,getequipcardid(4,0);
-	set $@slot2r4n1,getequipcardid(4,1);
-	set $@slot2r4n2,getequipcardid(4,2);
-	set $@slot2r4n3,getequipcardid(4,3);
-	set $@equip2r5,getequipid(5);
-	set $@slot2r5n0,getequipcardid(5,0);
-	set $@slot2r5n1,getequipcardid(5,1);
-	set $@slot2r5n2,getequipcardid(5,2);
-	set $@slot2r5n3,getequipcardid(5,3);
-	set $@equip2r6,getequipid(6);
-	set $@slot2r6n0,getequipcardid(6,0);
-	set $@slot2r6n1,getequipcardid(6,1);
-	set $@slot2r6n2,getequipcardid(6,2);
-	set $@slot2r6n3,getequipcardid(6,3);
-	set $@equip2r7,getequipid(7);
-	set $@slot2r7n0,getequipcardid(7,0);
-	set $@slot2r7n1,getequipcardid(7,1);
-	set $@slot2r7n2,getequipcardid(7,2);
-	set $@slot2r7n3,getequipcardid(7,3);
-	set $@equip2r8,getequipid(8);
-	set $@slot2r8n0,getequipcardid(8,0);
-	set $@slot2r8n1,getequipcardid(8,1);
-	set $@slot2r8n2,getequipcardid(8,2);
-	set $@slot2r8n3,getequipcardid(8,3);
-	return;
-	} else if (cloneroom == 3) {
-	set $@equip3r1,getequipid(1);
-	set $@slot3r1n0,getequipcardid(1,0);
-	set $@slot3r1n1,getequipcardid(1,1);
-	set $@slot3r1n2,getequipcardid(1,2);
-	set $@slot3r1n3,getequipcardid(1,3);
-	set $@equip3r2,getequipid(2);
-	set $@slot3r2n0,getequipcardid(2,0);
-	set $@slot3r2n1,getequipcardid(2,1);
-	set $@slot3r2n2,getequipcardid(2,2);
-	set $@slot3r2n3,getequipcardid(2,3);
-	set $@equip3r3,getequipid(3);
-	set $@slot3r3n0,getequipcardid(3,0);
-	set $@slot3r3n1,getequipcardid(3,1);
-	set $@slot3r3n2,getequipcardid(3,2);
-	set $@slot3r3n3,getequipcardid(3,3);
-	set $@equip3r4,getequipid(4);
-	set $@slot3r4n0,getequipcardid(4,0);
-	set $@slot3r4n1,getequipcardid(4,1);
-	set $@slot3r4n2,getequipcardid(4,2);
-	set $@slot3r4n3,getequipcardid(4,3);
-	set $@equip3r5,getequipid(5);
-	set $@slot3r5n0,getequipcardid(5,0);
-	set $@slot3r5n1,getequipcardid(5,1);
-	set $@slot3r5n2,getequipcardid(5,2);
-	set $@slot3r5n3,getequipcardid(5,3);
-	set $@equip3r6,getequipid(6);
-	set $@slot3r6n0,getequipcardid(6,0);
-	set $@slot3r6n1,getequipcardid(6,1);
-	set $@slot3r6n2,getequipcardid(6,2);
-	set $@slot3r6n3,getequipcardid(6,3);
-	set $@equip3r7,getequipid(7);
-	set $@slot3r7n0,getequipcardid(7,0);
-	set $@slot3r7n1,getequipcardid(7,1);
-	set $@slot3r7n2,getequipcardid(7,2);
-	set $@slot3r7n3,getequipcardid(7,3);
-	set $@equip3r8,getequipid(8);
-	set $@slot3r8n0,getequipcardid(8,0);
-	set $@slot3r8n1,getequipcardid(8,1);
-	set $@slot3r8n2,getequipcardid(8,2);
-	set $@slot3r8n3,getequipcardid(8,3);
-	return;
-	} else if (cloneroom == 4) {
-	set $@equip4r1,getequipid(1);
-	set $@slot4r1n0,getequipcardid(1,0);
-	set $@slot4r1n1,getequipcardid(1,1);
-	set $@slot4r1n2,getequipcardid(1,2);
-	set $@slot4r1n3,getequipcardid(1,3);
-	set $@equip4r2,getequipid(2);
-	set $@slot4r2n0,getequipcardid(2,0);
-	set $@slot4r2n1,getequipcardid(2,1);
-	set $@slot4r2n2,getequipcardid(2,2);
-	set $@slot4r2n3,getequipcardid(2,3);
-	set $@equip4r3,getequipid(3);
-	set $@slot4r3n0,getequipcardid(3,0);
-	set $@slot4r3n1,getequipcardid(3,1);
-	set $@slot4r3n2,getequipcardid(3,2);
-	set $@slot4r3n3,getequipcardid(3,3);
-	set $@equip4r4,getequipid(4);
-	set $@slot4r4n0,getequipcardid(4,0);
-	set $@slot4r4n1,getequipcardid(4,1);
-	set $@slot4r4n2,getequipcardid(4,2);
-	set $@slot4r4n3,getequipcardid(4,3);
-	set $@equip4r5,getequipid(5);
-	set $@slot4r5n0,getequipcardid(5,0);
-	set $@slot4r5n1,getequipcardid(5,1);
-	set $@slot4r5n2,getequipcardid(5,2);
-	set $@slot4r5n3,getequipcardid(5,3);
-	set $@equip4r6,getequipid(6);
-	set $@slot4r6n0,getequipcardid(6,0);
-	set $@slot4r6n1,getequipcardid(6,1);
-	set $@slot4r6n2,getequipcardid(6,2);
-	set $@slot4r6n3,getequipcardid(6,3);
-	set $@equip4r7,getequipid(7);
-	set $@slot4r7n0,getequipcardid(7,0);
-	set $@slot4r7n1,getequipcardid(7,1);
-	set $@slot4r7n2,getequipcardid(7,2);
-	set $@slot4r7n3,getequipcardid(7,3);
-	set $@equip4r8,getequipid(8);
-	set $@slot4r8n0,getequipcardid(8,0);
-	set $@slot4r8n1,getequipcardid(8,1);
-	set $@slot4r8n2,getequipcardid(8,2);
-	set $@slot4r8n3,getequipcardid(8,3);
-	return;
-	} else return;
-}
-
-// -- Clone Equipment Function ---------------
-function	script	F_CloneEquip	{
-	if(cloneroom == 1) {
-	if((getequipid(1) != $@equip1r1) || (getequipcardid(1,0) != $@slot1r1n0) || (getequipcardid(1,1) != $@slot1r1n1) || (getequipcardid(1,2) != $@slot1r1n2) || (getequipcardid(1,3) != $@slot1r1n3) || (getequipcardid(1,4) != $@slot1r1n4)) goto L_Violate1;
-	if((getequipid(2) != $@equip1r2) || (getequipcardid(2,0) != $@slot1r2n0) || (getequipcardid(2,1) != $@slot1r2n1) || (getequipcardid(2,2) != $@slot1r2n2) || (getequipcardid(2,3) != $@slot1r2n3) || (getequipcardid(2,4) != $@slot1r2n4)) goto L_Violate1;
-	if((getequipid(3) != $@equip1r3) || (getequipcardid(3,0) != $@slot1r3n0) || (getequipcardid(3,1) != $@slot1r3n1) || (getequipcardid(3,2) != $@slot1r3n2) || (getequipcardid(3,3) != $@slot1r3n3) || (getequipcardid(3,4) != $@slot1r3n4)) goto L_Violate1;
-	if((getequipid(4) != $@equip1r4) || (getequipcardid(4,0) != $@slot1r4n0) || (getequipcardid(4,1) != $@slot1r4n1) || (getequipcardid(4,2) != $@slot1r4n2) || (getequipcardid(4,3) != $@slot1r4n3) || (getequipcardid(4,4) != $@slot1r4n4)) goto L_Violate1;
-	if((getequipid(5) != $@equip1r5) || (getequipcardid(5,0) != $@slot1r5n0) || (getequipcardid(5,1) != $@slot1r5n1) || (getequipcardid(5,2) != $@slot1r5n2) || (getequipcardid(5,3) != $@slot1r5n3) || (getequipcardid(5,4) != $@slot1r5n4)) goto L_Violate1;
-	if((getequipid(6) != $@equip1r6) || (getequipcardid(6,0) != $@slot1r6n0) || (getequipcardid(6,1) != $@slot1r6n1) || (getequipcardid(6,2) != $@slot1r6n2) || (getequipcardid(6,3) != $@slot1r6n3) || (getequipcardid(6,4) != $@slot1r6n4)) goto L_Violate1;
-	if((getequipid(7) != $@equip1r7) || (getequipcardid(7,0) != $@slot1r7n0) || (getequipcardid(7,1) != $@slot1r7n1) || (getequipcardid(7,2) != $@slot1r7n2) || (getequipcardid(7,3) != $@slot1r7n3) || (getequipcardid(7,4) != $@slot1r7n4)) goto L_Violate1;
-	if((getequipid(8) != $@equip1r8) || (getequipcardid(8,0) != $@slot1r8n0) || (getequipcardid(8,1) != $@slot1r8n1) || (getequipcardid(8,2) != $@slot1r8n2) || (getequipcardid(8,3) != $@slot1r8n3) || (getequipcardid(8,4) != $@slot1r8n4)) goto L_Violate1;
-	} else if(cloneroom == 2) {
-	if((getequipid(1) != $@equip2r1) || (getequipcardid(1,0) != $@slot2r1n0) || (getequipcardid(1,1) != $@slot2r1n1) || (getequipcardid(1,2) != $@slot2r1n2) || (getequipcardid(1,3) != $@slot2r1n3) || (getequipcardid(1,4) != $@slot2r1n4)) goto L_Violate2;
-	if((getequipid(2) != $@equip2r2) || (getequipcardid(2,0) != $@slot2r2n0) || (getequipcardid(2,1) != $@slot2r2n1) || (getequipcardid(2,2) != $@slot2r2n2) || (getequipcardid(2,3) != $@slot2r2n3) || (getequipcardid(2,4) != $@slot2r2n4)) goto L_Violate2;
-	if((getequipid(3) != $@equip2r3) || (getequipcardid(3,0) != $@slot2r3n0) || (getequipcardid(3,1) != $@slot2r3n1) || (getequipcardid(3,2) != $@slot2r3n2) || (getequipcardid(3,3) != $@slot2r3n3) || (getequipcardid(3,4) != $@slot2r3n4)) goto L_Violate2;
-	if((getequipid(4) != $@equip2r4) || (getequipcardid(4,0) != $@slot2r4n0) || (getequipcardid(4,1) != $@slot2r4n1) || (getequipcardid(4,2) != $@slot2r4n2) || (getequipcardid(4,3) != $@slot2r4n3) || (getequipcardid(4,4) != $@slot2r4n4)) goto L_Violate2;
-	if((getequipid(5) != $@equip2r5) || (getequipcardid(5,0) != $@slot2r5n0) || (getequipcardid(5,1) != $@slot2r5n1) || (getequipcardid(5,2) != $@slot2r5n2) || (getequipcardid(5,3) != $@slot2r5n3) || (getequipcardid(5,4) != $@slot2r5n4)) goto L_Violate2;
-	if((getequipid(6) != $@equip2r6) || (getequipcardid(6,0) != $@slot2r6n0) || (getequipcardid(6,1) != $@slot2r6n1) || (getequipcardid(6,2) != $@slot2r6n2) || (getequipcardid(6,3) != $@slot2r6n3) || (getequipcardid(6,4) != $@slot2r6n4)) goto L_Violate2;
-	if((getequipid(7) != $@equip2r7) || (getequipcardid(7,0) != $@slot2r7n0) || (getequipcardid(7,1) != $@slot2r7n1) || (getequipcardid(7,2) != $@slot2r7n2) || (getequipcardid(7,3) != $@slot2r7n3) || (getequipcardid(7,4) != $@slot2r7n4)) goto L_Violate2;
-	if((getequipid(8) != $@equip2r8) || (getequipcardid(8,0) != $@slot2r8n0) || (getequipcardid(8,1) != $@slot2r8n1) || (getequipcardid(8,2) != $@slot2r8n2) || (getequipcardid(8,3) != $@slot2r8n3) || (getequipcardid(8,4) != $@slot2r8n4)) goto L_Violate2;
-	} else if(cloneroom == 3) {
-	if((getequipid(1) != $@equip3r1) || (getequipcardid(1,0) != $@slot3r1n0) || (getequipcardid(1,1) != $@slot3r1n1) || (getequipcardid(1,2) != $@slot3r1n2) || (getequipcardid(1,3) != $@slot3r1n3) || (getequipcardid(1,4) != $@slot3r1n4)) goto L_Violate3;
-	if((getequipid(2) != $@equip3r2) || (getequipcardid(2,0) != $@slot3r2n0) || (getequipcardid(2,1) != $@slot3r2n1) || (getequipcardid(2,2) != $@slot3r2n2) || (getequipcardid(2,3) != $@slot3r2n3) || (getequipcardid(2,4) != $@slot3r2n4)) goto L_Violate3;
-	if((getequipid(3) != $@equip3r3) || (getequipcardid(3,0) != $@slot3r3n0) || (getequipcardid(3,1) != $@slot3r3n1) || (getequipcardid(3,2) != $@slot3r3n2) || (getequipcardid(3,3) != $@slot3r3n3) || (getequipcardid(3,4) != $@slot3r3n4)) goto L_Violate3;
-	if((getequipid(4) != $@equip3r4) || (getequipcardid(4,0) != $@slot3r4n0) || (getequipcardid(4,1) != $@slot3r4n1) || (getequipcardid(4,2) != $@slot3r4n2) || (getequipcardid(4,3) != $@slot3r4n3) || (getequipcardid(4,4) != $@slot3r4n4)) goto L_Violate3;
-	if((getequipid(5) != $@equip3r5) || (getequipcardid(5,0) != $@slot3r5n0) || (getequipcardid(5,1) != $@slot3r5n1) || (getequipcardid(5,2) != $@slot3r5n2) || (getequipcardid(5,3) != $@slot3r5n3) || (getequipcardid(5,4) != $@slot3r5n4)) goto L_Violate3;
-	if((getequipid(6) != $@equip3r6) || (getequipcardid(6,0) != $@slot3r6n0) || (getequipcardid(6,1) != $@slot3r6n1) || (getequipcardid(6,2) != $@slot3r6n2) || (getequipcardid(6,3) != $@slot3r6n3) || (getequipcardid(6,4) != $@slot3r6n4)) goto L_Violate3;
-	if((getequipid(7) != $@equip3r7) || (getequipcardid(7,0) != $@slot3r7n0) || (getequipcardid(7,1) != $@slot3r7n1) || (getequipcardid(7,2) != $@slot3r7n2) || (getequipcardid(7,3) != $@slot3r7n3) || (getequipcardid(7,4) != $@slot3r7n4)) goto L_Violate3;
-	if((getequipid(8) != $@equip3r8) || (getequipcardid(8,0) != $@slot3r8n0) || (getequipcardid(8,1) != $@slot3r8n1) || (getequipcardid(8,2) != $@slot3r8n2) || (getequipcardid(8,3) != $@slot3r8n3) || (getequipcardid(8,4) != $@slot3r8n4)) goto L_Violate3;
-	} else if(cloneroom == 4) {
-	if((getequipid(1) != $@equip4r1) || (getequipcardid(1,0) != $@slot4r1n0) || (getequipcardid(1,1) != $@slot4r1n1) || (getequipcardid(1,2) != $@slot4r1n2) || (getequipcardid(1,3) != $@slot4r1n3) || (getequipcardid(1,4) != $@slot4r1n4)) goto L_Violate1;
-	if((getequipid(2) != $@equip4r2) || (getequipcardid(2,0) != $@slot4r2n0) || (getequipcardid(2,1) != $@slot4r2n1) || (getequipcardid(2,2) != $@slot4r2n2) || (getequipcardid(2,3) != $@slot4r2n3) || (getequipcardid(2,4) != $@slot4r2n4)) goto L_Violate1;
-	if((getequipid(3) != $@equip4r3) || (getequipcardid(3,0) != $@slot4r3n0) || (getequipcardid(3,1) != $@slot4r3n1) || (getequipcardid(3,2) != $@slot4r3n2) || (getequipcardid(3,3) != $@slot4r3n3) || (getequipcardid(3,4) != $@slot4r3n4)) goto L_Violate1;
-	if((getequipid(4) != $@equip4r4) || (getequipcardid(4,0) != $@slot4r4n0) || (getequipcardid(4,1) != $@slot4r4n1) || (getequipcardid(4,2) != $@slot4r4n2) || (getequipcardid(4,3) != $@slot4r4n3) || (getequipcardid(4,4) != $@slot4r4n4)) goto L_Violate1;
-	if((getequipid(5) != $@equip4r5) || (getequipcardid(5,0) != $@slot4r5n0) || (getequipcardid(5,1) != $@slot4r5n1) || (getequipcardid(5,2) != $@slot4r5n2) || (getequipcardid(5,3) != $@slot4r5n3) || (getequipcardid(5,4) != $@slot4r5n4)) goto L_Violate1;
-	if((getequipid(6) != $@equip4r6) || (getequipcardid(6,0) != $@slot4r6n0) || (getequipcardid(6,1) != $@slot4r6n1) || (getequipcardid(6,2) != $@slot4r6n2) || (getequipcardid(6,3) != $@slot4r6n3) || (getequipcardid(6,4) != $@slot4r6n4)) goto L_Violate1;
-	if((getequipid(7) != $@equip4r7) || (getequipcardid(7,0) != $@slot4r7n0) || (getequipcardid(7,1) != $@slot4r7n1) || (getequipcardid(7,2) != $@slot4r7n2) || (getequipcardid(7,3) != $@slot4r7n3) || (getequipcardid(7,4) != $@slot4r7n4)) goto L_Violate1;
-	if((getequipid(8) != $@equip4r8) || (getequipcardid(8,0) != $@slot4r8n0) || (getequipcardid(8,1) != $@slot4r8n1) || (getequipcardid(8,2) != $@slot4r8n2) || (getequipcardid(8,3) != $@slot4r8n3) || (getequipcardid(8,4) != $@slot4r8n4)) goto L_Violate1;
-	} else
-	return;
-
-	L_Violate1:
-	stopnpctimer "CloneTimer 1";
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"Clone Rules Violation! Equipments changed from registration!",bc_all,0xFF0000;
-	set clonepts,clonepts - $@tempclonepts1;
-	sc_end 72;           //-- Stops Chemical Protection Weapon
-	sc_end 73;           //-- Stops Chemical Protection Shield
-	sc_end 74;           //-- Stops Chemical Protection Armor
-	sc_end 75;           //-- Stops Chemical Protection Helm
-	areawarp $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"prt_are_in",97,24;
-	killmonster $cloneroomn1$,"CloneMob 1::OnMobDead";
-	end;
-
-	L_Violate2:
-	stopnpctimer "CloneTimer 2";
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"Clone Rules Violation! Equipments changed from registration!",bc_all,0xFF0000;
-	set clonepts,clonepts - $@tempclonepts2;
-	sc_end 72;           //-- Stops Chemical Protection Weapon
-	sc_end 73;           //-- Stops Chemical Protection Shield
-	sc_end 74;           //-- Stops Chemical Protection Armor
-	sc_end 75;           //-- Stops Chemical Protection Helm
-	areawarp $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"prt_are_in",97,24;
-	killmonster $cloneroomn2$,"CloneMob 2::OnMobDead";
-	end;
-
-	L_Violate3:
-	stopnpctimer "CloneTimer 3";
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"Clone Rules Violation! Equipments changed from registration!",bc_all,0xFF0000;
-	set clonepts,clonepts - $@tempclonepts3;
-	sc_end 72;           //-- Stops Chemical Protection Weapon
-	sc_end 73;           //-- Stops Chemical Protection Shield
-	sc_end 74;           //-- Stops Chemical Protection Armor
-	sc_end 75;           //-- Stops Chemical Protection Helm
-	areawarp $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"prt_are_in",97,24;
-	killmonster $cloneroomn3$,"CloneMob 3::OnMobDead";
-	end;
-
-	L_Violate4:
-	stopnpctimer "CloneTimer 4";
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"Clone Rules Violation! Equipments changed from registration!",bc_all,0xFF0000;
-	set clonepts,clonepts - $@tempclonepts4;
-	sc_end 72;           //-- Stops Chemical Protection Weapon
-	sc_end 73;           //-- Stops Chemical Protection Shield
-	sc_end 74;           //-- Stops Chemical Protection Armor
-	sc_end 75;           //-- Stops Chemical Protection Helm
-	areawarp $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"prt_are_in",97,24;
-	killmonster $cloneroomn4$,"CloneMob 4::OnMobDead";
-	end;
-
-}
-
-// -- PC Die Event ---------------
--	script	PCDieEvent	-1,{
-	getmapxy @mapname$,@mapx,@mapy,0;
-	if((@mapname$ == "force_2-1.gat") || (@mapname$ == "force_3-1.gat")) goto L_Diestart;
-	end;
-
-	L_Diestart:
-	if(cloneroom == 1) {
-	stopnpctimer "CloneTimer 1";
-	areaannounce $cloneroomn1$,$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2,"You have died! You failed!",8;
-	set clonepts,clonepts - $@tempclonepts1;
-	killmonster $cloneroomn1$,"CloneMob 1::OnMobDead";
-	} else if(cloneroom == 2) {
-	stopnpctimer "CloneTimer 2";
-	areaannounce $cloneroomn2$,$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2,"You have died! You failed!",8;
-	set clonepts,clonepts - $@tempclonepts2;
-	killmonster $cloneroomn2$,"CloneMob 2::OnMobDead";
-	} else if(cloneroom == 3) {
-	stopnpctimer "CloneTimer 3";
-	areaannounce $cloneroomn3$,$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2,"You have died! You failed!",8;
-	set clonepts,clonepts - $@tempclonepts3;
-	killmonster $cloneroomn3$,"CloneMob 3::OnMobDead";
-	} else if(cloneroom == 4) {
-	stopnpctimer "CloneTimer 4";
-	areaannounce $cloneroomn4$,$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2,"You have died! You failed!",8;
-	set clonepts,clonepts - $@tempclonepts4;
-	killmonster $cloneroomn4$,"CloneMob 4::OnMobDead";
-	} else
-	end;
-	
 }
 
 // -- Clone Arena Prizes ---------------
 prt_are_in,108,18,2	script	Clone Arena Prizes	102,{
 	mes "[Clone Arena Prizes]";
 	mes "Hiya! I can exchange the points you earn in the arena for amazing prizes! You currently have";
-	mes "^0000FF"+ clonepts +" Points^000000!";
+	mes "^0000FF"+ $@clonepts +" Points^000000!";
 	next;
 	menu 
 
@@ -2206,9 +398,9 @@ prt_are_in,108,18,2	script	Clone Arena Prizes	102,{
 
 	P_Get:
 	mes "[Clone Arena Prizes]";
-	if (clonepts < $@cloneprizepts) goto P_No;
+	if ($@clonepts < $@cloneprizepts) goto P_No;
 	mes "Alright! Here you go!";
-	set clonepts,clonepts - $@cloneprizepts;
+	set $@clonepts, $@clonepts - $@cloneprizepts;
 	getitem $@cloneprize, 1;
 	close;
 
@@ -2230,4 +422,1631 @@ prt_are_in,108,22,2	script	Kafra	115,{
 M_Save:
 	savepoint "prt_are_in",98,15;
 	callfunc "F_KafEnd",0,1;
+}
+
+//=========================================================================================
+//== Clone Room 1 =========================================================================
+//=========================================================================================
+// -- Clone Master 1 ---------------
+force_2-1.gat,25,175,4	script	Clone Master 1	105,{
+	mes "[Clone Master 1]";
+	mes "Welcome to the Clone Room 1. Please select an option for fighting.";
+	set $@clonename, getcharid(0);  //-- Clones the character using that room
+	set $@cloneroom, 1;		//-- Clone Room number
+	set $@clone1X1, 7;              //-- Top-Left X Coordinate
+	set $@clone1Y1, 192;            //-- Top-Left Y Coordinate
+	set $@clone1X2, 44;             //-- Bottom-Right X Coordinate
+	set $@clone1Y2, 155;            //-- Bottom-Right Y Coordinate
+	set $@clonemob1X, 25;           //-- X of where the clone spawns
+	set $@clonemob1Y, 178;          //-- Y of where the clone spawns
+	set $@wrp1X, 25;                //-- X of where the player spawns
+	set $@wrp1Y, 172;               //-- Y of where the player spawns
+	next;
+	menu "Fight 1 Clone",L_1,"Fight 2 Clones",L_2,"Fight 3 Clones",L_3,"Leave Arena",L_Leave;
+
+	L_1:
+	mes "[Clone Master 1]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 1]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob1, 1;              //-- The number of clones
+	set $@tempclonepts, 1;           //-- Number of possible points
+	disablenpc "Clone Master 1";
+	donpcevent "CloneMob 1";
+	initnpctimer "CloneTimer 1";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_2:
+	mes "[Clone Master 1]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 1]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob1, 2;              //-- The number of clones
+	set $@tempclonepts, 3;           //-- Number of possible points
+	disablenpc "Clone Master 1";
+	donpcevent "CloneMob 1";
+	initnpctimer "CloneTimer 1";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_3:
+	mes "[Clone Master 1]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 1]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob1, 3;              //-- The number of clones
+	set $@tempclonepts, 9;           //-- Number of possible points
+	disablenpc "Clone Master 1";
+	donpcevent "CloneMob 1";
+	initnpctimer "CloneTimer 1";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_Inventory:
+	mes "I'm sorry, but we can only start if you have no items in your inventory.";
+	close;
+
+	L_Leave:
+	mes "[Clone Master 1]";
+	mes "Thank for you participating, you will now be warped out of the arena.";
+	next;
+	close2;
+	warp "prt_are_in", 97, 24;
+	donpcevent "Clone Master 1::OnStart";
+	end;
+
+OnStart:
+	set $@CloneUsers, getareausers("force_2-1.gat",$@clone1X1,$@clone1Y1,$@clone1X2,$@clone1Y2);
+	set $@CloneUsers, $@CloneUsers + getareausers("force_2-1.gat",$@clone1X1,$@clone1Y1,$@clone1X1,$@clone1Y2);
+	if ($@CloneUsers > 0) end;
+	killmonster "force_2-1.gat","CloneMob 1::OnMobDead";
+	enablenpc "Clone Master 1";
+	end;
+
+}
+
+// -- Clone Mob 1 ---------------
+force_2-1.gat,1,1,1	script	CloneMob 1	-1,{
+	if ($@clonemob1 == 1) clone "force_2-1.gat",$@clonemob1X,$@clonemob1Y,"CloneMob 1::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob1 == 2) clone "force_2-1.gat",$@clonemob1X +2,$@clonemob1Y,"CloneMob 1::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob1 == 2) clone "force_2-1.gat",$@clonemob1X -2,$@clonemob1Y,"CloneMob 1::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob1 == 3) clone "force_2-1.gat",$@clonemob1X,$@clonemob1Y,"CloneMob 1::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob1 == 3) clone "force_2-1.gat",$@clonemob1X +2,$@clonemob1Y,"CloneMob 1::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob1 == 3) clone "force_2-1.gat",$@clonemob1X -2,$@clonemob1Y,"CloneMob 1::OnMobDead",$@clonename,0,1693,0,185000;
+	areawarp "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "force_2-1.gat", $@wrp1X, $@wrp1Y;
+	end;
+
+OnMobDead:
+	set $@clonemob1, $@clonemob1 -1;
+	if($@clonemob1 > 1) areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have " + $@clonemob1 + " clones left to defeat!",8;
+	if($@clonemob1 == 1) areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have " + $@clonemob1 + " clone left to defeat!",8;
+	if($@clonemob1 > 0) end;
+
+	stopnpctimer "CloneTimer 1";
+	if($@tempclonepts == 1 ) areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "Congratulations! You have succesfully defeated your clone!",8;
+	if($@tempclonepts > 1 ) areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "Congratulations! You have succesfully defeated your clones!",8;
+	set $@clonepts,$@clonepts + $@tempclonepts;
+	addtimer 3000, "CloneTimer 1::OnTimer188000";
+	end;
+
+}
+
+// -- Clone Timer 1 --------------- 
+force_2-1.gat,1,1,0	script	CloneTimer 1	-1,{
+OnTimer1000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 3 minutes to defeat your clone!",8;
+	callfunc "F_CloneEquip";
+	end;
+OnTimer2000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer3000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer4000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer5000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer6000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer7000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer8000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer9000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer10000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer11000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer12000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer13000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer14000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer15000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer16000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer17000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer18000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer19000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer20000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer21000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer22000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer23000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer24000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer25000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer26000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer27000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer28000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer29000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer30000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer31000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer32000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer33000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer34000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer35000:
+	donpcevent "Clone Master 1::OnStart";
+	callfunc "F_CloneEquip";
+	end;
+OnTimer40000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer45000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer50000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer55000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer60000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer61000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 2 minutes left!",8;
+	donpcevent "Clone Master 1::OnStart";
+	end;
+OnTimer65000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer70000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer75000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer80000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer85000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer90000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer95000:
+	donpcevent "Clone Master 1::OnStart";
+	end;
+OnTimer100000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer105000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer110000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer115000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer120000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer121000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 1 minute left!",8;
+	donpcevent "Clone Master 1::OnStart";
+	end;
+OnTimer125000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer130000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer135000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer140000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer145000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer150000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer151000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 30 seconds left!",8;
+	donpcevent "Clone Master 1::OnStart";
+	end;
+OnTimer155000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer160000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer165000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer170000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer175000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer176000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 5 seconds left!",8;
+	end;
+OnTimer177000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 4 seconds left!",8;
+	end;
+OnTimer178000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 3 seconds left!",8;
+	end;
+OnTimer179000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 2 seconds left!",8;
+	end;
+OnTimer180000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "You have 1 second left!",8;
+	end;
+OnTimer181000:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "Okay time's up! You failed!",8;
+	end;
+OnTimer188000:
+	stopnpctimer;
+	sc_end 72;           //-- Stops Chemical Protection Weapon
+	sc_end 73;           //-- Stops Chemical Protection Shield
+	sc_end 74;           //-- Stops Chemical Protection Armor
+	sc_end 75;           //-- Stops Chemical Protection Helm
+	areawarp "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "prt_are_in", 97, 24;
+	killmonster "force_2-1.gat","CloneMob 1::OnMobDead";
+	donpcevent "Clone Master 1::OnStart";
+	end;
+}
+
+//=========================================================================================
+//== Clone Room 2 =========================================================================
+//=========================================================================================
+// -- Clone Master 2 ---------------
+force_2-1.gat,173,175,4	script	Clone Master 2	105,{
+	mes "[Clone Master 2]";
+	mes "Welcome to the Clone Room 2. Please select an option for fighting.";
+	set $@clonename, getcharid(0);  //-- Clones the character using that room
+	set $@cloneroom, 2;		//-- Clone Room number
+	set $@clone2X1, 155;            //-- Top-Left X Coordinate
+	set $@clone2Y1, 192;            //-- Top-Left Y Coordinate
+	set $@clone2X2, 192;            //-- Bottom-Right X Coordinate
+	set $@clone2Y2, 155;            //-- Bottom-Right Y Coordinate
+	set $@clonemob2X, 173;          //-- X of where the clone spawns
+	set $@clonemob2Y, 178;          //-- Y of where the clone spawns
+	set $@wrp2X, 173;               //-- X of where the player spawns
+	set $@wrp2Y, 172;               //-- Y of where the player spawns
+	next;
+	menu "Fight 1 Clone",L_1,"Fight 2 Clones",L_2,"Fight 3 Clones",L_3,"Leave Arena",L_Leave;
+
+	L_1:
+	mes "[Clone Master 2]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 2]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob2, 1;              //-- The number of clones
+	set $@tempclonepts, 1;           //-- Number of possible points
+	disablenpc "Clone Master 2";
+	donpcevent "CloneMob 2";
+	initnpctimer "CloneTimer 2";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_2:
+	mes "[Clone Master 2]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 2]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob2, 2;              //-- The number of clones
+	set $@tempclonepts, 3;           //-- Number of possible points
+	disablenpc "Clone Master 2";
+	donpcevent "CloneMob 2";
+	initnpctimer "CloneTimer 2";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_3:
+	mes "[Clone Master 2]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 2]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob2, 3;              //-- The number of clones
+	set $@tempclonepts, 9;           //-- Number of possible points
+	disablenpc "Clone Master 2";
+	donpcevent "CloneMob 2";
+	initnpctimer "CloneTimer 2";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_Leave:
+	mes "[Clone Master 2]";
+	mes "Thank for you participating, you will now be warped out of the arena.";
+	next;
+	close2;
+	warp "prt_are_in", 97, 24;
+	donpcevent "Clone Master 2::OnStart";
+	end;
+
+OnStart:
+	set $@CloneUsers, getareausers("force_2-1.gat",$@clone2X1,$@clone2Y1,$@clone2X2,$@clone2Y2);
+	set $@CloneUsers, $@CloneUsers + getareausers("force_2-1.gat",$@clone2X1,$@clone2Y1,$@clone2X1,$@clone2Y2);
+	if ($@CloneUsers > 0) end;
+	killmonster "force_2-1.gat","CloneMob 2::OnMobDead";
+	enablenpc "Clone Master 2";
+	end;
+
+}
+
+// -- Clone Mob 2 ---------------
+force_2-1.gat,1,1,1	script	CloneMob 2	-1,{
+	if ($@clonemob2 == 1) clone "force_2-1.gat",$@clonemob2X,$@clonemob2Y,"CloneMob 2::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob2 == 2) clone "force_2-1.gat",$@clonemob2X +2,$@clonemob2Y,"CloneMob 2::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob2 == 2) clone "force_2-1.gat",$@clonemob2X -2,$@clonemob2Y,"CloneMob 2::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob2 == 3) clone "force_2-1.gat",$@clonemob2X,$@clonemob2Y,"CloneMob 2::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob2 == 3) clone "force_2-1.gat",$@clonemob2X +2,$@clonemob2Y,"CloneMob 2::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob2 == 3) clone "force_2-1.gat",$@clonemob2X -2,$@clonemob2Y,"CloneMob 2::OnMobDead",$@clonename,0,1693,0,185000;
+	areawarp "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "force_2-1.gat", $@wrp2X, $@wrp2Y;
+	end;
+
+OnMobDead:
+	set $@clonemob2, $@clonemob2 -1;
+	if($@clonemob2 > 1) areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have " + $@clonemob2 + " clones left to defeat!",8;
+	if($@clonemob2 == 1) areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have " + $@clonemob2 + " clone left to defeat!",8;
+	if($@clonemob2 > 0) end;
+
+	stopnpctimer "CloneTimer 2";
+	if($@tempclonepts == 1 ) areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "Congratulations! You have succesfully defeated your clone!",8;
+	if($@tempclonepts > 1 ) areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "Congratulations! You have succesfully defeated your clones!",8;
+	set $@clonepts,$@clonepts + $@tempclonepts;
+	addtimer 3000, "CloneTimer 2::OnTimer188000";
+	end;
+
+}
+
+// -- Clone Timer 2 --------------- 
+force_2-1.gat,1,1,0	script	CloneTimer 2	-1,{
+OnTimer1000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 3 minutes to defeat your clone!",8;
+	callfunc "F_CloneEquip";
+	end;
+OnTimer2000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer3000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer4000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer5000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer6000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer7000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer8000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer9000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer10000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer11000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer12000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer13000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer14000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer15000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer16000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer17000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer18000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer19000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer20000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer21000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer22000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer23000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer24000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer25000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer26000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer27000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer28000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer29000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer30000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer31000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer32000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer33000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer34000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer35000:
+	donpcevent "Clone Master 2::OnStart";
+	callfunc "F_CloneEquip";
+	end;
+OnTimer40000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer45000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer50000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer55000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer60000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer61000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 2 minutes left!",8;
+	donpcevent "Clone Master 2::OnStart";
+	end;
+OnTimer65000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer70000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer75000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer80000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer85000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer90000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer95000:
+	donpcevent "Clone Master 2::OnStart";
+	end;
+OnTimer100000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer105000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer110000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer115000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer120000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer121000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 1 minute left!",8;
+	donpcevent "Clone Master 2::OnStart";
+	end;
+OnTimer125000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer130000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer135000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer140000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer145000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer150000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer151000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 30 seconds left!",8;
+	donpcevent "Clone Master 2::OnStart";
+	end;
+OnTimer155000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer160000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer165000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer170000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer175000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer176000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 5 seconds left!",8;
+	end;
+OnTimer177000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 4 seconds left!",8;
+	end;
+OnTimer178000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 3 seconds left!",8;
+	end;
+OnTimer179000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 2 seconds left!",8;
+	end;
+OnTimer180000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "You have 1 second left!",8;
+	end;
+OnTimer181000:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "Okay time's up! You failed!",8;
+	end;
+OnTimer188000:
+	stopnpctimer;
+	sc_end 72;           //-- Stops Chemical Protection Weapon
+	sc_end 73;           //-- Stops Chemical Protection Shield
+	sc_end 74;           //-- Stops Chemical Protection Armor
+	sc_end 75;           //-- Stops Chemical Protection Helm
+	areawarp "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "prt_are_in", 97, 24;
+	killmonster "force_2-1.gat","CloneMob 2::OnMobDead";
+	donpcevent "Clone Master 2::OnStart";
+	end;
+}
+
+//=========================================================================================
+//== Clone Room 3 =========================================================================
+//=========================================================================================
+// -- Clone Master 3 ---------------
+force_2-1.gat,25,27,4	script	Clone Master 3	105,{
+	mes "[Clone Master 3]";
+	mes "Welcome to the Clone Room 3. Please select an option for fighting.";
+	set $@clonename, getcharid(0);  //-- Clones the character using that room
+	set $@cloneroom, 3;		//-- Clone Room number
+	set $@clone3X1, 7;              //-- Top-Left X Coordinate
+	set $@clone3Y1, 44;             //-- Top-Left Y Coordinate
+	set $@clone3X2, 44;             //-- Bottom-Right X Coordinate
+	set $@clone3Y2, 7;              //-- Bottom-Right Y Coordinate
+	set $@clonemob3X, 25;           //-- X of where the clone spawns
+	set $@clonemob3Y, 30;           //-- Y of where the clone spawns
+	set $@wrp3X, 25;                //-- X of where the player spawns
+	set $@wrp3Y, 24;                //-- Y of where the player spawns
+	next;
+	menu "Fight 1 Clone",L_1,"Fight 2 Clones",L_2,"Fight 3 Clones",L_3,"Leave Arena",L_Leave;
+
+	L_1:
+	mes "[Clone Master 3]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 3]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob3, 1;              //-- The number of clones
+	set $@tempclonepts, 1;           //-- Number of possible points
+	disablenpc "Clone Master 3";
+	donpcevent "CloneMob 3";
+	initnpctimer "CloneTimer 3";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_2:
+	mes "[Clone Master 3]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 3]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob3, 2;              //-- The number of clones
+	set $@tempclonepts, 3;           //-- Number of possible points
+	disablenpc "Clone Master 3";
+	donpcevent "CloneMob 3";
+	initnpctimer "CloneTimer 3";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_3:
+	mes "[Clone Master 3]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 3]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob3, 3;              //-- The number of clones
+	set $@tempclonepts, 9;           //-- Number of possible points
+	disablenpc "Clone Master 3";
+	donpcevent "CloneMob 3";
+	initnpctimer "CloneTimer 3";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_Leave:
+	mes "[Clone Master 3]";
+	mes "Thank for you participating, you will now be warped out of the arena.";
+	next;
+	close2;
+	warp "prt_are_in", 97, 24;
+	donpcevent "Clone Master 3::OnStart";
+	end;
+
+OnStart:
+	set $@CloneUsers, getareausers("force_2-1.gat",$@clone3X1,$@clone3Y1,$@clone3X2,$@clone3Y2);
+	set $@CloneUsers, $@CloneUsers + getareausers("force_2-1.gat",$@clone3X1,$@clone3Y1,$@clone3X1,$@clone3Y2);
+	if ($@CloneUsers > 0) end;
+	killmonster "force_2-1.gat","CloneMob 3::OnMobDead";
+	enablenpc "Clone Master 3";
+	end;
+
+}
+
+// -- Clone Mob 3 ---------------
+force_2-1.gat,1,1,1	script	CloneMob 3	-1,{
+	if ($@clonemob3 == 1) clone "force_2-1.gat",$@clonemob3X,$@clonemob3Y,"CloneMob 3::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob3 == 2) clone "force_2-1.gat",$@clonemob3X +2,$@clonemob3Y,"CloneMob 3::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob3 == 2) clone "force_2-1.gat",$@clonemob3X -2,$@clonemob3Y,"CloneMob 3::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob3 == 3) clone "force_2-1.gat",$@clonemob3X,$@clonemob3Y,"CloneMob 3::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob3 == 3) clone "force_2-1.gat",$@clonemob3X +2,$@clonemob3Y,"CloneMob 3::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob3 == 3) clone "force_2-1.gat",$@clonemob3X -2,$@clonemob3Y,"CloneMob 3::OnMobDead",$@clonename,0,1693,0,185000;
+	areawarp "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "force_2-1.gat", $@wrp3X, $@wrp3Y;
+	end;
+
+OnMobDead:
+	set $@clonemob3, $@clonemob3 -1;
+	if($@clonemob3 > 1) areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have " + $@clonemob3 + " clones left to defeat!",8;
+	if($@clonemob3 == 1) areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have " + $@clonemob3 + " clone left to defeat!",8;
+	if($@clonemob3 > 0) end;
+
+	stopnpctimer "CloneTimer 3";
+	if($@tempclonepts == 1 ) areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "Congratulations! You have succesfully defeated your clone!",8;
+	if($@tempclonepts > 1 ) areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "Congratulations! You have succesfully defeated your clones!",8;
+	set $@clonepts,$@clonepts + $@tempclonepts;
+	addtimer 3000, "CloneTimer 3::OnTimer188000";
+	end;
+
+}
+
+// -- Clone Timer 3 --------------- 
+force_2-1.gat,1,1,0	script	CloneTimer 3	-1,{
+OnTimer1000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 3 minutes to defeat your clone!",8;
+	callfunc "F_CloneEquip";
+	end;
+OnTimer2000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer3000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer4000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer5000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer6000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer7000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer8000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer9000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer10000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer11000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer12000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer13000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer14000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer15000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer16000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer17000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer18000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer19000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer20000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer21000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer22000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer23000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer24000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer25000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer26000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer27000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer28000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer29000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer30000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer31000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer32000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer33000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer34000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer35000:
+	donpcevent "Clone Master 3::OnStart";
+	callfunc "F_CloneEquip";
+	end;
+OnTimer40000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer45000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer50000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer55000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer60000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer61000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 2 minutes left!",8;
+	donpcevent "Clone Master 3::OnStart";
+	end;
+OnTimer65000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer70000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer75000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer80000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer85000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer90000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer95000:
+	donpcevent "Clone Master 3::OnStart";
+	end;
+OnTimer100000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer105000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer110000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer115000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer120000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer121000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 1 minute left!",8;
+	donpcevent "Clone Master 3::OnStart";
+	end;
+OnTimer125000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer130000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer135000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer140000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer145000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer150000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer151000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 30 seconds left!",8;
+	donpcevent "Clone Master 3::OnStart";
+	end;
+OnTimer155000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer160000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer165000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer170000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer175000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer176000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 5 seconds left!",8;
+	end;
+OnTimer177000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 4 seconds left!",8;
+	end;
+OnTimer178000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 3 seconds left!",8;
+	end;
+OnTimer179000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 2 seconds left!",8;
+	end;
+OnTimer180000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "You have 1 second left!",8;
+	end;
+OnTimer181000:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "Okay time's up! You failed!",8;
+	end;
+OnTimer188000:
+	stopnpctimer;
+	sc_end 72;           //-- Stops Chemical Protection Weapon
+	sc_end 73;           //-- Stops Chemical Protection Shield
+	sc_end 74;           //-- Stops Chemical Protection Armor
+	sc_end 75;           //-- Stops Chemical Protection Helm
+	areawarp "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "prt_are_in", 97, 24;
+	killmonster "force_2-1.gat","CloneMob 3::OnMobDead";
+	donpcevent "Clone Master 3::OnStart";
+	end;
+}
+
+//=========================================================================================
+//== Clone Room 4 =========================================================================
+//=========================================================================================
+// -- Clone Master 4 ---------------
+force_2-1.gat,173,27,4	script	Clone Master 4	105,{
+	mes "[Clone Master 4]";
+	mes "Welcome to the Clone Room 4. Please select an option for fighting.";
+	set $@clonename, getcharid(0);  //-- Clones the character using that room
+	set $@cloneroom, 4;		//-- Clone Room number
+	set $@clone4X1, 155;            //-- Top-Left X Coordinate
+	set $@clone4Y1, 44;             //-- Top-Left Y Coordinate
+	set $@clone4X2, 192;            //-- Bottom-Right X Coordinate
+	set $@clone4Y2, 7;              //-- Bottom-Right Y Coordinate
+	set $@clonemob4X, 173;          //-- X of where the clone spawns
+	set $@clonemob4Y, 30;           //-- Y of where the clone spawns
+	set $@wrp4X, 173;               //-- X of where the player spawns
+	set $@wrp4Y, 24;                //-- Y of where the player spawns
+	next;
+	menu "Fight 1 Clone",L_1,"Fight 2 Clones",L_2,"Fight 3 Clones",L_3,"Leave Arena",L_Leave;
+
+	L_1:
+	mes "[Clone Master 4]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 4]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob4, 1;              //-- The number of clones
+	set $@tempclonepts, 1;           //-- Number of possible points
+	disablenpc "Clone Master 4";
+	donpcevent "CloneMob 4";
+	initnpctimer "CloneTimer 4";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_2:
+	mes "[Clone Master 4]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 4]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob4, 2;              //-- The number of clones
+	set $@tempclonepts, 3;           //-- Number of possible points
+	disablenpc "Clone Master 4";
+	donpcevent "CloneMob 4";
+	initnpctimer "CloneTimer 4";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_3:
+	mes "[Clone Master 4]";
+	mes "Alright... Get ready!!!";
+	next;
+	mes "[Clone Master 4]";
+	callfunc "F_CloneCheck";
+	sc_start 72,188000,10;           //-- Chemical Protection Weapon
+	sc_start 73,188000,10;           //-- Chemical Protection Shield
+	sc_start 74,188000,10;           //-- Chemical Protection Armor
+	sc_start 75,188000,10;           //-- Chemical Protection Helm
+	set $@clonemob4, 3;              //-- The number of clones
+	set $@tempclonepts, 9;           //-- Number of possible points
+	disablenpc "Clone Master 4";
+	donpcevent "CloneMob 4";
+	initnpctimer "CloneTimer 4";
+	attachnpctimer getcharid(0);
+	close;
+
+	L_Leave:
+	mes "[Clone Master 4]";
+	mes "Thank for you participating, you will now be warped out of the arena.";
+	next;
+	close2;
+	warp "prt_are_in", 97, 24;
+	donpcevent "Clone Master 4::OnStart";
+	end;
+
+OnStart:
+	set $@CloneUsers, getareausers("force_2-1.gat",$@clone4X1,$@clone4Y1,$@clone4X2,$@clone4Y2);
+	set $@CloneUsers, $@CloneUsers + getareausers("force_2-1.gat",$@clone4X1,$@clone4Y1,$@clone4X1,$@clone4Y2);
+	if ($@CloneUsers > 0) end;
+	killmonster "force_2-1.gat","CloneMob 4::OnMobDead";
+	enablenpc "Clone Master 4";
+	end;
+
+}
+
+// -- Clone Mob 4 ---------------
+force_2-1.gat,1,1,1	script	CloneMob 4	-1,{
+	if ($@clonemob4 == 1) clone "force_2-1.gat",$@clonemob4X,$@clonemob4Y,"CloneMob 4::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob4 == 2) clone "force_2-1.gat",$@clonemob4X +2,$@clonemob4Y,"CloneMob 4::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob4 == 2) clone "force_2-1.gat",$@clonemob4X -2,$@clonemob4Y,"CloneMob 4::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob4 == 3) clone "force_2-1.gat",$@clonemob4X,$@clonemob4Y,"CloneMob 4::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob4 == 3) clone "force_2-1.gat",$@clonemob4X +2,$@clonemob4Y,"CloneMob 4::OnMobDead",$@clonename,0,1693,0,185000;
+	if ($@clonemob4 == 3) clone "force_2-1.gat",$@clonemob4X -2,$@clonemob4Y,"CloneMob 4::OnMobDead",$@clonename,0,1693,0,185000;
+	areawarp "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "force_2-1.gat", $@wrp4X, $@wrp4Y;
+	end;
+
+OnMobDead:
+	set $@clonemob4, $@clonemob4 -1;
+	if($@clonemob4 > 1) areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have " + $@clonemob4 + " clones left to defeat!",8;
+	if($@clonemob4 == 1) areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have " + $@clonemob4 + " clone left to defeat!",8;
+	if($@clonemob4 > 0) end;
+
+	stopnpctimer "CloneTimer 4";
+	if($@tempclonepts == 1 ) areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "Congratulations! You have succesfully defeated your clone!",8;
+	if($@tempclonepts > 1 ) areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "Congratulations! You have succesfully defeated your clones!",8;
+	set $@clonepts,$@clonepts + $@tempclonepts;
+	addtimer 3000, "CloneTimer 4::OnTimer188000";
+	end;
+
+}
+
+
+// -- Clone Timer 4 --------------- 
+force_2-1.gat,1,1,0	script	CloneTimer 4	-1,{
+OnTimer1000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 3 minutes to defeat your clone!",8;
+	callfunc "F_CloneEquip";
+	end;
+OnTimer2000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer3000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer4000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer5000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer6000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer7000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer8000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer9000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer10000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer11000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer12000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer13000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer14000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer15000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer16000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer17000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer18000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer19000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer20000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer21000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer22000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer23000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer24000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer25000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer26000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer27000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer28000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer29000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer30000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer31000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer32000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer33000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer34000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer35000:
+	donpcevent "Clone Master 4::OnStart";
+	callfunc "F_CloneEquip";
+	end;
+OnTimer40000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer45000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer50000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer55000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer60000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer61000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 2 minutes left!",8;
+	donpcevent "Clone Master 4::OnStart";
+	end;
+OnTimer65000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer70000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer75000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer80000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer85000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer90000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer95000:
+	donpcevent "Clone Master 4::OnStart";
+	end;
+OnTimer100000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer105000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer110000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer115000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer120000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer121000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 1 minute left!",8;
+	donpcevent "Clone Master 4::OnStart";
+	end;
+OnTimer125000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer130000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer135000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer140000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer145000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer150000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer151000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 30 seconds left!",8;
+	donpcevent "Clone Master 4::OnStart";
+	end;
+OnTimer155000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer160000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer165000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer170000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer175000:
+	callfunc "F_CloneEquip";
+	end;
+OnTimer176000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 5 seconds left!",8;
+	end;
+OnTimer177000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 4 seconds left!",8;
+	end;
+OnTimer178000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 3 seconds left!",8;
+	end;
+OnTimer179000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 2 seconds left!",8;
+	end;
+OnTimer180000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "You have 1 second left!",8;
+	end;
+OnTimer181000:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "Okay time's up! You failed!",8;
+	end;
+OnTimer188000:
+	stopnpctimer;
+	sc_end 72;           //-- Stops Chemical Protection Weapon
+	sc_end 73;           //-- Stops Chemical Protection Shield
+	sc_end 74;           //-- Stops Chemical Protection Armor
+	sc_end 75;           //-- Stops Chemical Protection Helm
+	areawarp "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "prt_are_in", 97, 24;
+	killmonster "force_2-1.gat","CloneMob 4::OnMobDead";
+	donpcevent "Clone Master 4::OnStart";
+	end;
+}
+
+//=========================================================================================
+//== Clone Functions ======================================================================
+//=========================================================================================
+// -- Clone Inventory Function ---------------
+function	script	F_CloneCheck	{
+	if(getequipisequiped(1)==0) goto L_Head;
+	if(getequipisequiped(2)==0) goto L_Armor;
+	if(getequipisequiped(3)==0) goto L_Hand;
+	if(getequipisequiped(4)==0) goto L_Hand;
+	if(getequipisequiped(5)==0) goto L_Garment;
+	if(getequipisequiped(6)==0) goto L_Foot;
+	if(getequipisequiped(7)==0) goto L_Acc;
+	if(getequipisequiped(8)==0) goto L_Acc;
+
+	if($@cloneroom == 1) goto L_Check1;
+	if($@cloneroom == 2) goto L_Check2;
+	if($@cloneroom == 3) goto L_Check3;
+	if($@cloneroom == 4) goto L_Check4;
+
+	L_Check1:
+	set $@equip11, getequipid(1);
+	set $@equip12, getequipid(2);
+	set $@equip13, getequipid(3);
+	set $@equip14, getequipid(4);
+	set $@equip15, getequipid(5);
+	set $@equip16, getequipid(6);
+	set $@equip17, getequipid(7);
+	set $@equip18, getequipid(8);
+	return;
+
+	L_Check2:
+	set $@equip21, getequipid(1);
+	set $@equip22, getequipid(2);
+	set $@equip23, getequipid(3);
+	set $@equip24, getequipid(4);
+	set $@equip25, getequipid(5);
+	set $@equip26, getequipid(6);
+	set $@equip27, getequipid(7);
+	set $@equip28, getequipid(8);
+	return;
+
+	L_Check3:
+	set $@equip31, getequipid(1);
+	set $@equip32, getequipid(2);
+	set $@equip33, getequipid(3);
+	set $@equip34, getequipid(4);
+	set $@equip35, getequipid(5);
+	set $@equip36, getequipid(6);
+	set $@equip37, getequipid(7);
+	set $@equip38, getequipid(8);
+	return;
+
+	L_Check4:
+	set $@equip41, getequipid(1);
+	set $@equip42, getequipid(2);
+	set $@equip43, getequipid(3);
+	set $@equip44, getequipid(4);
+	set $@equip45, getequipid(5);
+	set $@equip46, getequipid(6);
+	set $@equip47, getequipid(7);
+	set $@equip48, getequipid(8);
+	return;
+
+	L_Head:
+	mes "^FF0000You must equip a Head Gear before continuing!^000000";
+	next;
+	warp "prt_are_in", 97, 24;
+	end;
+
+	L_Armor:
+	mes "^FF0000You must equip an Armor before continuing!^000000";
+	next;
+	warp "prt_are_in", 97, 24;
+	end;
+
+	L_Hand:
+	mes "^FF0000You must equip a Weapon and/or Shield before continuing!^000000";
+	next;
+	warp "prt_are_in", 97, 24;
+	end;
+
+	L_Garment:
+	mes "^FF0000You must equip a Garment before continuing!^000000";
+	next;
+	warp "prt_are_in", 97, 24;
+	end;
+
+	L_Foot:
+	mes "^FF0000You must equip a Foot Gear before continuing!^000000";
+	next;
+	warp "prt_are_in", 97, 24;
+	end;
+
+	L_Acc:
+	mes "^FF0000You must equip two Accessories before continuing!^000000";
+	next;
+	warp "prt_are_in", 97, 24;
+	end;
+
+}
+
+// -- Clone Equipment Function ---------------
+function	script	F_CloneEquip	{
+	if($@cloneroom == 1) goto L_Equip1;
+	if($@cloneroom == 2) goto L_Equip2;
+	if($@cloneroom == 3) goto L_Equip3;
+	if($@cloneroom == 4) goto L_Equip4;
+
+	L_Equip1:
+	if(getequipid(1) != $@equip11) goto L_Violate1;
+	if(getequipid(2) != $@equip12) goto L_Violate1;
+	if(getequipid(3) != $@equip13) goto L_Violate1;
+	if(getequipid(4) != $@equip14) goto L_Violate1;
+	if(getequipid(5) != $@equip15) goto L_Violate1;
+	if(getequipid(6) != $@equip16) goto L_Violate1;
+	if(getequipid(7) != $@equip17) goto L_Violate1;
+	if(getequipid(8) != $@equip18) goto L_Violate1;
+	return;
+
+	L_Equip2:
+	if(getequipid(1) != $@equip21) goto L_Violate2;
+	if(getequipid(2) != $@equip22) goto L_Violate2;
+	if(getequipid(3) != $@equip23) goto L_Violate2;
+	if(getequipid(4) != $@equip24) goto L_Violate2;
+	if(getequipid(5) != $@equip25) goto L_Violate2;
+	if(getequipid(6) != $@equip26) goto L_Violate2;
+	if(getequipid(7) != $@equip27) goto L_Violate2;
+	if(getequipid(8) != $@equip28) goto L_Violate2;
+	return;
+
+	L_Equip3:
+	if(getequipid(1) != $@equip31) goto L_Violate3;
+	if(getequipid(2) != $@equip32) goto L_Violate3;
+	if(getequipid(3) != $@equip33) goto L_Violate3;
+	if(getequipid(4) != $@equip34) goto L_Violate3;
+	if(getequipid(5) != $@equip35) goto L_Violate3;
+	if(getequipid(6) != $@equip36) goto L_Violate3;
+	if(getequipid(7) != $@equip37) goto L_Violate3;
+	if(getequipid(8) != $@equip38) goto L_Violate3;
+	return;
+
+	L_Equip4:
+	if(getequipid(1) != $@equip41) goto L_Violate4;
+	if(getequipid(2) != $@equip42) goto L_Violate4;
+	if(getequipid(3) != $@equip43) goto L_Violate4;
+	if(getequipid(4) != $@equip44) goto L_Violate4;
+	if(getequipid(5) != $@equip45) goto L_Violate4;
+	if(getequipid(6) != $@equip46) goto L_Violate4;
+	if(getequipid(7) != $@equip47) goto L_Violate4;
+	if(getequipid(8) != $@equip48) goto L_Violate4;
+	return;
+
+	L_Violate1:
+	areaannounce "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "Clone Rules Violation! Equipments Changed!",bc_all,0xFF0000;
+	set $@clonepts,$@clonepts - $@tempclonepts;
+	sc_end 72;           //-- Stops Chemical Protection Weapon
+	sc_end 73;           //-- Stops Chemical Protection Shield
+	sc_end 74;           //-- Stops Chemical Protection Armor
+	sc_end 75;           //-- Stops Chemical Protection Helm
+	stopnpctimer;
+	areawarp "force_2-1.gat", $@clone1X1, $@clone1Y1, $@clone1X2, $@clone1Y2, "prt_are_in", 97, 24;
+	killmonster "force_2-1.gat","CloneMob 1::OnMobDead";
+	donpcevent "Clone Master 1::OnStart";
+	end;
+
+	L_Violate2:
+	areaannounce "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "Clone Rules Violation! Equipments Changed!",bc_all,0xFF0000;
+	set $@clonepts,$@clonepts - $@tempclonepts;
+	sc_end 72;           //-- Stops Chemical Protection Weapon
+	sc_end 73;           //-- Stops Chemical Protection Shield
+	sc_end 74;           //-- Stops Chemical Protection Armor
+	sc_end 75;           //-- Stops Chemical Protection Helm
+	stopnpctimer;
+	areawarp "force_2-1.gat", $@clone2X1, $@clone2Y1, $@clone2X2, $@clone2Y2, "prt_are_in", 97, 24;
+	killmonster "force_2-1.gat","CloneMob 2::OnMobDead";
+	donpcevent "Clone Master 2::OnStart";
+	end;
+
+	L_Violate3:
+	areaannounce "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "Clone Rules Violation! Equipments Changed!",bc_all,0xFF0000;
+	set $@clonepts,$@clonepts - $@tempclonepts;
+	sc_end 72;           //-- Stops Chemical Protection Weapon
+	sc_end 73;           //-- Stops Chemical Protection Shield
+	sc_end 74;           //-- Stops Chemical Protection Armor
+	sc_end 75;           //-- Stops Chemical Protection Helm
+	stopnpctimer;
+	areawarp "force_2-1.gat", $@clone3X1, $@clone3Y1, $@clone3X2, $@clone3Y2, "prt_are_in", 97, 24;
+	killmonster "force_2-1.gat","CloneMob 3::OnMobDead";
+	donpcevent "Clone Master 3::OnStart";
+	end;
+
+	L_Violate4:
+	areaannounce "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "Clone Rules Violation! Equipments Changed!",bc_all,0xFF0000;
+	set $@clonepts,$@clonepts - $@tempclonepts;
+	sc_end 72;           //-- Stops Chemical Protection Weapon
+	sc_end 73;           //-- Stops Chemical Protection Shield
+	sc_end 74;           //-- Stops Chemical Protection Armor
+	sc_end 75;           //-- Stops Chemical Protection Helm
+	stopnpctimer;
+	areawarp "force_2-1.gat", $@clone4X1, $@clone4Y1, $@clone4X2, $@clone4Y2, "prt_are_in", 97, 24;
+	killmonster "force_2-1.gat","CloneMob 4::OnMobDead";
+	donpcevent "Clone Master 4::OnStart";
+	end;
+
 }
