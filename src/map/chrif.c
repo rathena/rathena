@@ -1155,6 +1155,8 @@ int chrif_save_scdata(struct map_session_data *sd)
 	struct status_change_data data;
 	struct TimerData *timer;
 
+	if (sd->state.finalsave) //Character was already saved?
+		return -1;
 #ifndef TXT_ONLY
 	if(charsave_method) //New 'Local' save
 	{

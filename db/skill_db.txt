@@ -274,7 +274,7 @@
 252,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0	//CR_REFLECTSHIELD#Shield Reflect#
 253,-2,8,1,6,0,0,10,-2,no,0,0,0,weapon,0	//CR_HOLYCROSS#Holy Cross#
 254,0,6,4,6,0,0,10,1,no,33,256,0,magic,0	//CR_GRANDCROSS#Grand Cross#
-255,7:8:9:10:11,6,16,0,1,0,5,1,yes,0,3584,0,none,0	//CR_DEVOTION#Sacrifice#
+255,7:8:9:10:11,6,16,0,1,0,5,1,yes,0,1536,0,none,0	//CR_DEVOTION#Sacrifice#
 256,9,6,16,0,1,0,5,1,yes,0,512,0,none,0	//CR_PROVIDENCE#Resistant Souls#
 257,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//CR_DEFENDER#Defending Aura#
 258,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//CR_SPEARQUICKEN#Spear Quicken#
@@ -503,7 +503,7 @@
 481,0,0,0,0,0,0,5,0,no,0,0,0,none,0	//HP_MANARECHARGE#Mana Recharge#
 482,0,6,4,0,1,0,5,1,no,0,0,0,magic,0	//PF_DOUBLECASTING#Double Casting#
 483,9,6,2,0,1,0,1,1,no,0,0,0,none,0	//HW_GANBANTEIN#Ganbantein#
-484,9,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//HW_GRAVITATION#Gravity Field#
+484,9,6,2,2,1,0,5,1,yes,0,0,0,magic,0	//HW_GRAVITATION#Gravity Field#
 485,-2,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//WS_CARTTERMINATION#Cart Termination#
 486,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//WS_OVERTHRUSTMAX#Maximum Power Thrust#
 487,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//CG_LONGINGFREEDOM#Longing for Freedom#

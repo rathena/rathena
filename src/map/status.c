@@ -1717,14 +1717,8 @@ int status_calc_agi(struct block_list *bl, int agi)
 			agi -= 2 + sc->data[SC_DECREASEAGI].val1;
 		if(sc->data[SC_QUAGMIRE].timer!=-1)
 			agi -= sc->data[SC_QUAGMIRE].val1*(bl->type==BL_PC?5:10);
-		if(sc->data[SC_SUITON].timer!=-1 && status_get_class(bl) != JOB_NINJA)
-			if (sc->data[SC_SUITON].val1 > 7)
-				agi -= 8;
-			else if (sc->data[SC_SUITON].val1 > 4)
-				agi -= 5;
-			else if (sc->data[SC_SUITON].val1 > 1)
-				agi -= 3;
-			
+		if(sc->data[SC_SUITON].timer!=-1)
+			agi -= sc->data[SC_SUITON].val2;
 	}
 
 	return agi;
@@ -3639,7 +3633,113 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0;
 		}
 	}
-
+	//Before overlapping fail, one must check for status cured.
+	switch (type) {
+	case SC_BLESSING:
+		if (!undead_flag && race!=6) {
+			if (sc->data[SC_CURSE].timer!=-1)
+				status_change_end(bl,SC_CURSE,-1);
+			if (sc->data[SC_STONE].timer!=-1 && sc->data[SC_STONE].val2==0)
+				status_change_end(bl,SC_STONE,-1);
+		}
+		break;
+	case SC_INCREASEAGI:
+		if(sc->data[SC_DECREASEAGI].timer!=-1 )
+			status_change_end(bl,SC_DECREASEAGI,-1);
+		break;
+	case SC_DONTFORGETME:
+		//is this correct? Maybe all three should stop the same subset of SCs...
+		if(sc->data[SC_ASSNCROS].timer!=-1 )
+			status_change_end(bl,SC_ASSNCROS,-1);
+	case SC_QUAGMIRE:
+		if(sc->data[SC_CONCENTRATE].timer!=-1 )
+			status_change_end(bl,SC_CONCENTRATE,-1);
+		if(sc->data[SC_TRUESIGHT].timer!=-1 )
+			status_change_end(bl,SC_TRUESIGHT,-1);
+		if(sc->data[SC_WINDWALK].timer!=-1 )
+			status_change_end(bl,SC_WINDWALK,-1);
+		//Also blocks the ones below...
+	case SC_DECREASEAGI:
+		if(sc->data[SC_INCREASEAGI].timer!=-1 )
+			status_change_end(bl,SC_INCREASEAGI,-1);
+		if(sc->data[SC_ADRENALINE].timer!=-1 )
+			status_change_end(bl,SC_ADRENALINE,-1);
+		if(sc->data[SC_ADRENALINE2].timer!=-1 )
+			status_change_end(bl,SC_ADRENALINE2,-1);
+		if(sc->data[SC_SPEARSQUICKEN].timer!=-1 )
+			status_change_end(bl,SC_SPEARSQUICKEN,-1);
+		if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 )
+			status_change_end(bl,SC_TWOHANDQUICKEN,-1);
+		if(sc->data[SC_CARTBOOST].timer!=-1 )
+			status_change_end(bl,SC_CARTBOOST,-1);
+		if(sc->data[SC_ONEHAND].timer!=-1 )
+			status_change_end(bl,SC_ONEHAND,-1);
+		break;
+	case SC_ONEHAND:
+	  	//Removes the Aspd potion effect, as reported by Vicious. [Skotlex]
+		if(sc->data[SC_ASPDPOTION0].timer!=-1)
+			status_change_end(bl,SC_ASPDPOTION0,-1);
+		if(sc->data[SC_ASPDPOTION1].timer!=-1)
+			status_change_end(bl,SC_ASPDPOTION1,-1);
+		if(sc->data[SC_ASPDPOTION2].timer!=-1)
+			status_change_end(bl,SC_ASPDPOTION2,-1);
+		if(sc->data[SC_ASPDPOTION3].timer!=-1)
+			status_change_end(bl,SC_ASPDPOTION3,-1);
+		break;
+	case SC_MAXOVERTHRUST:
+	  	//Cancels Normal Overthrust. [Skotlex]
+		if (sc->data[SC_OVERTHRUST].timer != -1)
+			status_change_end(bl, SC_OVERTHRUST, -1);
+		break;
+	case SC_KYRIE:
+		// -- moonsoul (added to undo assumptio status if target has it)
+		if(sc->data[SC_ASSUMPTIO].timer!=-1 )
+			status_change_end(bl,SC_ASSUMPTIO,-1);
+		break;
+	case SC_DELUGE:
+		if (sc->data[SC_FOGWALL].timer != -1 && sc->data[SC_BLIND].timer != -1)
+			status_change_end(bl,SC_BLIND,-1);
+		break;
+	case SC_SILENCE:
+		if (sc->data[SC_GOSPEL].timer!=-1 && sc->data[SC_GOSPEL].val4 == BCT_SELF)
+		  	//Clear Gospel [Skotlex]
+			status_change_end(bl,SC_GOSPEL,-1);
+		break;
+	case SC_HIDING:
+		if(sc->data[SC_CLOSECONFINE].timer != -1)
+			status_change_end(bl, SC_CLOSECONFINE, -1);
+		if(sc->data[SC_CLOSECONFINE2].timer != -1)
+			status_change_end(bl, SC_CLOSECONFINE2, -1);
+		break;
+	case SC_BERSERK:		/* バ?サ?ク */
+		if(battle_config.berserk_cancels_buffs)
+		{
+			if (sc->data[SC_ONEHAND].timer != -1)
+				status_change_end(bl,SC_ONEHAND,-1);
+			if (sc->data[SC_TWOHANDQUICKEN].timer != -1)
+				status_change_end(bl,SC_TWOHANDQUICKEN,-1);
+			if (sc->data[SC_CONCENTRATION].timer != -1)
+				status_change_end(bl,SC_CONCENTRATION,-1);
+			if (sc->data[SC_PARRYING].timer != -1)
+				status_change_end(bl,SC_PARRYING,-1);
+			if (sc->data[SC_ENDURE].timer != -1)
+				status_change_end(bl,SC_ENDURE,-1);
+			if (sc->data[SC_AURABLADE].timer != -1)
+				status_change_end(bl,SC_AURABLADE,-1);
+		}
+		break;
+	case SC_ASSUMPTIO:
+		if(sc->data[SC_KYRIE].timer!=-1)
+			status_change_end(bl,SC_KYRIE,-1);
+		break;
+	case SC_CARTBOOST:		/* カ?トブ?スト */
+		if(sc->data[SC_DECREASEAGI].timer!=-1 )
+		{	//Cancel Decrease Agi, but take no further effect [Skotlex]
+			status_change_end(bl,SC_DECREASEAGI,-1);
+			return 0;
+		}
+		break;
+	}
 	//Check for overlapping fails
 	if(sc->data[type].timer != -1){
 		switch (type) {
@@ -3677,7 +3777,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				break;
 			default:
 				if(sc->data[type].val1 > val1)
-					return 0;
+					return 1; //Return true to not mess up skill animations. [Skotlex
 			}
 		(sc->count)--;
 		delete_timer(sc->data[type].timer, status_change_timer);
@@ -3711,49 +3811,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 			break;
 		
-		case SC_INCREASEAGI:		/* 速度上昇 */
-			calc_flag = 1;
-			if(sc->data[SC_DECREASEAGI].timer!=-1 )
-				status_change_end(bl,SC_DECREASEAGI,-1);
-			break;
-		case SC_DECREASEAGI:		/* 速度減少 */
-			calc_flag = 1;
-			if(sc->data[SC_INCREASEAGI].timer!=-1 )
-				status_change_end(bl,SC_INCREASEAGI,-1);
-			if(sc->data[SC_ADRENALINE].timer!=-1 )
-				status_change_end(bl,SC_ADRENALINE,-1);
-			if(sc->data[SC_ADRENALINE2].timer!=-1 )
-				status_change_end(bl,SC_ADRENALINE2,-1);
-			if(sc->data[SC_SPEARSQUICKEN].timer!=-1 )
-				status_change_end(bl,SC_SPEARSQUICKEN,-1);
-			if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 )
-				status_change_end(bl,SC_TWOHANDQUICKEN,-1);
-			if(sc->data[SC_CARTBOOST].timer!=-1 )
-				status_change_end(bl,SC_CARTBOOST,-1);
-			if(sc->data[SC_ONEHAND].timer!=-1 )
-				status_change_end(bl,SC_ONEHAND,-1);
-			break;
 		case SC_SIGNUMCRUCIS:		/* シグナムクルシス */
 			calc_flag = 1;
 			val2 = 10 + val1*2;
 			if (!(flag&4))
 				tick = 600*1000;
 			clif_emotion(bl,4);
-			break;
-		case SC_ONEHAND: //Removes the Aspd potion effect, as reported by Vicious. [Skotlex]
-			if(sc->data[SC_ASPDPOTION0].timer!=-1)
-				status_change_end(bl,SC_ASPDPOTION0,-1);
-			if(sc->data[SC_ASPDPOTION1].timer!=-1)
-				status_change_end(bl,SC_ASPDPOTION1,-1);
-			if(sc->data[SC_ASPDPOTION2].timer!=-1)
-				status_change_end(bl,SC_ASPDPOTION2,-1);
-			if(sc->data[SC_ASPDPOTION3].timer!=-1)
-				status_change_end(bl,SC_ASPDPOTION3,-1);
-			calc_flag = 1;
-			break;
-		case SC_MAXOVERTHRUST: //Cancels Normal Overthrust. [Skotlex]
-			if (sc->data[SC_OVERTHRUST].timer != -1)
-				status_change_end(bl, SC_OVERTHRUST, -1);
 			break;
 		case SC_MAXIMIZEPOWER:		/* マキシマイズパワ?(SPが1減る時間,val2にも) */
 			if (!(flag&4))
@@ -3780,36 +3843,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val2 = status_get_max_hp(bl) * (val1 * 2 + 10) / 100;/* 耐久度 */
 				val3 = (val1 / 2 + 5);	/* 回? */
 			}
-// -- moonsoul (added to undo assumptio status if target has it)
-			if(sc->data[SC_ASSUMPTIO].timer!=-1 )
-				status_change_end(bl,SC_ASSUMPTIO,-1);
 			break;
 		case SC_MINDBREAKER:
 			calc_flag = 1;
 			if(tick <= 0) tick = 1000;	/* (オ?トバ?サ?ク) */
-			break;
-		case SC_QUAGMIRE:			/* クァグマイア */
-			calc_flag = 1;
-			if(sc->data[SC_CONCENTRATE].timer!=-1 )	/* 集中力向上解除 */
-				status_change_end(bl,SC_CONCENTRATE,-1);
-			if(sc->data[SC_INCREASEAGI].timer!=-1 )	/* 速度上昇解除 */
-				status_change_end(bl,SC_INCREASEAGI,-1);
-			if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 )
-				status_change_end(bl,SC_TWOHANDQUICKEN,-1);
-			if(sc->data[SC_ONEHAND].timer!=-1 )
-				status_change_end(bl,SC_ONEHAND,-1);
-			if(sc->data[SC_SPEARSQUICKEN].timer!=-1 )
-				status_change_end(bl,SC_SPEARSQUICKEN,-1);
-			if(sc->data[SC_ADRENALINE].timer!=-1 )
-				status_change_end(bl,SC_ADRENALINE,-1);
-			if(sc->data[SC_ADRENALINE2].timer!=-1 )
-				status_change_end(bl,SC_ADRENALINE2,-1);
-			if(sc->data[SC_TRUESIGHT].timer!=-1 )	/* トゥル?サイト */
-				status_change_end(bl,SC_TRUESIGHT,-1);
-			if(sc->data[SC_WINDWALK].timer!=-1 )	/* ウインドウォ?ク */
-				status_change_end(bl,SC_WINDWALK,-1);
-			if(sc->data[SC_CARTBOOST].timer!=-1 )	/* カ?トブ?スト */
-				status_change_end(bl,SC_CARTBOOST,-1);
 			break;
 		case SC_MAGICPOWER:
 			calc_flag = 1;
@@ -3853,17 +3890,34 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			calc_flag = 1;
 			val3 = val1*10;
 			break;
-		case SC_DELUGE:
-			calc_flag = 1;
-			if (sc->data[SC_FOGWALL].timer != -1 && sc->data[SC_BLIND].timer != -1)
-				status_change_end(bl,SC_BLIND,-1);
-			break;
 		case SC_VIOLENTGALE:
 			calc_flag = 1;
 			val3 = val1*3;
 			break;
 		case SC_SUITON:
 			calc_flag = 1;
+			if (flag&4)
+				break;
+			if (status_get_class(bl) != JOB_NINJA) {
+				//Is there some kind of formula behind this?
+				switch ((val1+1)/3) {
+				case 3:
+					val2 = 8;
+				break;
+				case 2:
+					val2 = 5;
+				break;
+				case 1:
+					val2 = 3;
+				break;
+				case 0: 
+					val2 = 0;
+				break;
+				default:
+					val2 = 3*((val1+1)/3);
+				break;
+				}
+			} else val2 = 0;
 			break;
 
 		case SC_SPEARSQUICKEN:		/* スピアクイッケン */
@@ -3875,29 +3929,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if(val2==2) clif_bladestop((struct block_list *)val3,(struct block_list *)val4,1);
 			break;
 
-		case SC_DONTFORGETME:		/* 私を忘れないで */
-			calc_flag = 1;
-			if(sc->data[SC_INCREASEAGI].timer!=-1 )	/* 速度上昇解除 */
-				status_change_end(bl,SC_INCREASEAGI,-1);
-			if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 )
-				status_change_end(bl,SC_TWOHANDQUICKEN,-1);
-			if(sc->data[SC_ONEHAND].timer!=-1 )
-				status_change_end(bl,SC_ONEHAND,-1);
-			if(sc->data[SC_SPEARSQUICKEN].timer!=-1 )
-				status_change_end(bl,SC_SPEARSQUICKEN,-1);
-			if(sc->data[SC_ADRENALINE].timer!=-1 )
-				status_change_end(bl,SC_ADRENALINE,-1);
-			if(sc->data[SC_ADRENALINE2].timer!=-1 )
-				status_change_end(bl,SC_ADRENALINE2,-1);
-			if(sc->data[SC_ASSNCROS].timer!=-1 )
-				status_change_end(bl,SC_ASSNCROS,-1);
-			if(sc->data[SC_TRUESIGHT].timer!=-1 )	/* トゥル?サイト */
-				status_change_end(bl,SC_TRUESIGHT,-1);
-			if(sc->data[SC_WINDWALK].timer!=-1 )	/* ウインドウォ?ク */
-				status_change_end(bl,SC_WINDWALK,-1);
-			if(sc->data[SC_CARTBOOST].timer!=-1 )	/* カ?トブ?スト */
-				status_change_end(bl,SC_CARTBOOST,-1);
-			break;
 		case SC_MOONLIT:
 			val2 = bl->id;
 			skill_setmapcell(bl,CG_MOONLIT, val1, CELL_SETMOONLIT);
@@ -4016,14 +4047,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		
 		}
 		break;
-		case SC_SILENCE:			/* 沈?（レックスデビ?ナ） */
-			if (sc->data[SC_GOSPEL].timer!=-1) {
-				if (sc->data[SC_GOSPEL].val4 == BCT_SELF) { //Clear Gospel [Skotlex]
-					status_change_end(bl,SC_GOSPEL,-1);
-				}
-				break;
-			}
-			break;
 		case SC_CONFUSION:
 			clif_emotion(bl,1);
 			break;
@@ -4034,10 +4057,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		/* option */
 		case SC_HIDING:		/* ハイディング */
 			calc_flag = 1;
-			if(sc->data[SC_CLOSECONFINE].timer != -1)
-				status_change_end(bl, SC_CLOSECONFINE, -1);
-			if(sc->data[SC_CLOSECONFINE2].timer != -1)
-				status_change_end(bl, SC_CLOSECONFINE2, -1);
 			if(bl->type == BL_PC && !(flag&4)) {
 				val2 = tick / 1000;		/* 持?時間 */
 				tick = 1000;
@@ -4134,21 +4153,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_BERSERK:		/* バ?サ?ク */
-			if(battle_config.berserk_cancels_buffs)
-			{
-				if (sc->data[SC_ONEHAND].timer != -1)
-					status_change_end(bl,SC_ONEHAND,-1);
-				if (sc->data[SC_TWOHANDQUICKEN].timer != -1)
-					status_change_end(bl,SC_TWOHANDQUICKEN,-1);
-				if (sc->data[SC_CONCENTRATION].timer != -1)
-					status_change_end(bl,SC_CONCENTRATION,-1);
-				if (sc->data[SC_PARRYING].timer != -1)
-					status_change_end(bl,SC_PARRYING,-1);
-				if (sc->data[SC_ENDURE].timer != -1)
-					status_change_end(bl,SC_ENDURE,-1);
-				if (sc->data[SC_AURABLADE].timer != -1)
-					status_change_end(bl,SC_AURABLADE,-1);
-			}
 			if(sd && !(flag&4)){
 				sd->status.hp = sd->status.max_hp * 3;
 				sd->status.sp = 0;
@@ -4159,11 +4163,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (!(flag&4))
 				tick = 10000;
 			calc_flag = 1;
-			break;
-
-		case SC_ASSUMPTIO:		/* アスムプティオ */
-			if(sc->data[SC_KYRIE].timer!=-1)
-				status_change_end(bl,SC_KYRIE,-1);
 			break;
 
 		case SC_WARM: //SG skills [Komurka]
@@ -4243,6 +4242,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				type2 = SC_DEFENDER;
 				if (src->sc.data[type2].timer != -1)
 					sc_start(bl,type2,100,src->sc.data[type2].val1,skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1));
+				type2 = SC_REFLECTSHIELD;
+				if (src->sc.data[type2].timer != -1)
+					sc_start(bl,type2,100,src->sc.data[type2].val1,skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1));
+
 			}
 			break;
 		}
@@ -4250,15 +4253,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_COMA: //Coma. Sends a char to 1HP
 			battle_damage(NULL, bl, status_get_hp(bl)-1, 0);
 			return 1;
-
-		case SC_CARTBOOST:		/* カ?トブ?スト */
-			if(sc->data[SC_DECREASEAGI].timer!=-1 )
-			{	//Cancel Decrease Agi, but take no further effect [Skotlex]
-				status_change_end(bl,SC_DECREASEAGI,-1);
-				return 0;
-			}
-			calc_flag = 1;
-			break;
 
 		case SC_CLOSECONFINE2:
 			{
@@ -4324,12 +4318,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			calc_flag = 1;
 			break;
 		case SC_BLESSING:
-			if (bl->type==BL_PC || (!undead_flag && race!=6)) {
-				if (sc->data[SC_CURSE].timer!=-1)
-					status_change_end(bl,SC_CURSE,-1);
-				if (sc->data[SC_STONE].timer!=-1 && sc->data[SC_STONE].val2==0)
-					status_change_end(bl,SC_STONE,-1);
-			}
 		case SC_CONCENTRATION:	/* コンセントレ?ション */case SC_ETERNALCHAOS:		/* エタ?ナルカオス */
 		case SC_DRUMBATTLE:			/* ?太鼓の響き */
 		case SC_NIBELUNGEN:			/* ニ?ベルングの指輪 */
@@ -4398,9 +4386,15 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_SKA:
 		case SC_TWOHANDQUICKEN:		/* 2HQ */
 		case SC_MIRACLE:
+		case SC_INCREASEAGI:		/* 速度上昇 */
+		case SC_DECREASEAGI:		/* 速度減少 */
+		case SC_ONEHAND:
+		case SC_DONTFORGETME:		/* 私を忘れないで */
+		case SC_DELUGE:
+		case SC_CARTBOOST:		/* カ?トブ?スト */
+		case SC_QUAGMIRE:			/* クァグマイア */
 			calc_flag = 1;
 			break;
-
 		case SC_LULLABY:			/* 子守唄 */
 		case SC_RICHMANKIM:
 		case SC_ROKISWEIL:			/* ロキの叫び */
@@ -4449,6 +4443,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_KAAHI:
 		case SC_INTRAVISION:
 		case SC_BASILICA:
+		case SC_MAXOVERTHRUST:
+		case SC_SILENCE:			/* 沈?（レックスデビ?ナ） */
+		case SC_ASSUMPTIO:		/* アスムプティオ */
 			break;
 		// gs_something1 [Vicious]
 		case SC_MADNESSCANCEL:
@@ -4857,6 +4854,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 
 			case SC_DEFENDER:
 				calc_flag = 1;
+			case SC_REFLECTSHIELD:
 			case SC_AUTOGUARD:
 			if (sd) {
 				struct map_session_data *tsd;

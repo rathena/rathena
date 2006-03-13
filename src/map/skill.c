@@ -1000,7 +1000,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	case AS_GRIMTOOTH:
 		{
-			int type = sd?SC_SLOWDOWN:SC_STOP;
+			int type = dstsd?SC_SLOWDOWN:SC_STOP;
 			if (tsc->data[type].timer == -1)
 				sc_start(bl,type,100,skilllv,skill_get_time2(skillid, skilllv));
 			break;

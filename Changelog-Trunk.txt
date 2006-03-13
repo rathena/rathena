@@ -5,6 +5,15 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/13
+	* Shield Reflect is now passed through Devotion as well. [Skotlex]
+	- Devoted characters lose the devotion effect when the Crusader is at less
+	  than 25% Hp. [Skotlex]
+	* chrif_scdata_save will not send a save scdata request when the char has
+	  been already tagged as in the final save. [Skotlex]
+	* Some status_change_start cleanups, stuff like blessing should now remove
+	  stone/curse even if the status does not begins because the character is
+	  already blessed. [Skotlex]
+	* Cleaned SC_SUITON a bit to get rid of that compile warning. [Skotlex]
 	* Added function battle_calc_gvg_damage for gvg related damage reductions.
 	  Fixes Gravitation being reduced as well as Pressure overriding max-castles
 	  restriction. [Skotlex]

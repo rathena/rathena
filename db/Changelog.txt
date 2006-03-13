@@ -26,6 +26,9 @@
 
 =========================
 03/13
+	* Devotion won't work on guildmates now (only party-members) [Skotlex]
+	* Changed Gravity Field's element to earth so that it may hit hidden chars.
+	  [Skotlex]
 	* Added missing mob skills to G_HYDRA, G_PARASITE [Lupus]
 	* Fixed TK and Soul Linker's position of their job entry in exp2.txt,
 	  thanks to Coltaro. [Skotlex]

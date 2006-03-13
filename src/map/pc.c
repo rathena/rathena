@@ -2145,11 +2145,11 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 	switch(type){
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, val?type2:-type2, type3, type4, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, (val?type2:-type2), type3, type4, current_equip_card_id);
 		break;
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, val?type2:-type2, type3, type4, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, (val?type2:-type2), type3, type4, current_equip_card_id);
 		break;
 	default:
 		if(battle_config.error_log)
@@ -5272,14 +5272,21 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 
 	clif_updatestatus(sd,SP_HP);
 
-	if(sd->status.hp>0){
-		if(sd->status.hp<sd->status.max_hp>>2 && sd->sc.data[SC_AUTOBERSERK].timer != -1 &&
+ 
+	if (sd->status.hp<sd->status.max_hp>>2) { //25% HP left effects.
+		if(sd->status.hp>0 && sd->sc.data[SC_AUTOBERSERK].timer != -1 &&
 			(sd->sc.data[SC_PROVOKE].timer==-1 || sd->sc.data[SC_PROVOKE].val2==0 ))
-			// オ?トバ?サ?ク?動
 			sc_start4(&sd->bl,SC_PROVOKE,100,10,1,0,0,0);
 
-		sd->canlog_tick = gettick();
+		for(i = 0; i < 5; i++)
+			if (sd->devotion[i]){
+				struct map_session_data *devsd = map_id2sd(sd->devotion[i]);
+				if (devsd) status_change_end(&devsd->bl,SC_DEVOTION,-1);
+			}
+	}
 
+	if(sd->status.hp>0){
+		sd->canlog_tick = gettick();
 		return damage;
 	}
 
@@ -5416,12 +5423,6 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 			sd->state.snovice_flag = 4;
 	}
 	
-	for(i = 0; i < 5; i++)
-		if (sd->devotion[i]){
-			struct map_session_data *devsd = map_id2sd(sd->devotion[i]);
-			if (devsd) status_change_end(&devsd->bl,SC_DEVOTION,-1);
-		}
-
 	pc_setdead(sd);
 	skill_unit_move(&sd->bl,gettick(),4);
 	if (battle_config.clear_unit_ondeath)
