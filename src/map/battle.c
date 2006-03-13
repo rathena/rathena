@@ -535,15 +535,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	struct mob_data *md = NULL;
 	struct status_change *sc;
 	struct status_change_entry *sci;
-	int class_;
 
 	nullpo_retr(0, bl);
 
 	if (damage <= 0)
 		return 0;
 	
-	class_ = status_get_class(bl);
-
 	if (bl->type == BL_MOB) {
 		md=(struct mob_data *)bl;
 	} else if (bl->type == BL_PC) {
@@ -704,49 +701,17 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 	}
 	
-	if(md && md->guardian_data) {
-		if(class_ == MOBID_EMPERIUM && (flag&BF_SKILL && //Only a few skills can hit the Emperium.
-			skill_num != PA_PRESSURE && skill_num != MO_TRIPLEATTACK && skill_num != HW_GRAVITATION)) 
-			return 0;
-		if(src->type == BL_PC) {
-			struct guild *g=guild_search(((struct map_session_data *)src)->status.guild_id);
-			if (g && class_ == MOBID_EMPERIUM && guild_checkskill(g,GD_APPROVAL) <= 0)
-				return 0;
-			if (g && battle_config.guild_max_castles && guild_checkcastles(g)>=battle_config.guild_max_castles)
-				return 0; // [MouseJstr]
+	if (battle_config.pk_mode && bl->type == BL_PC && damage > 0) {
+		if (flag & BF_WEAPON) {
+			if (flag & BF_SHORT)
+				damage = damage * 80/100;
+			if (flag & BF_LONG)
+				damage = damage * 70/100;
 		}
-	}
-
-	if (skill_num != PA_PRESSURE) { // Gloria Domini ignores WoE damage reductions
-		if (map_flag_gvg(bl->m)) { //GvG
-			if (md && md->guardian_data)
-				damage -= damage * (md->guardian_data->castle->defense/100) * (battle_config.castle_defense_rate/100);
-
-			if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-				if (flag&BF_WEAPON)
-					damage = damage * battle_config.gvg_weapon_damage_rate/100;
-				if (flag&BF_MAGIC)
-					damage = damage * battle_config.gvg_magic_damage_rate/100;
-				if (flag&BF_MISC)
-					damage = damage * battle_config.gvg_misc_damage_rate/100;
-			} else { //Normal attacks get reductions based on range.
-				if (flag & BF_SHORT)
-					damage = damage * battle_config.gvg_short_damage_rate/100;
-				if (flag & BF_LONG)
-					damage = damage * battle_config.gvg_long_damage_rate/100;
-			}
-		} else if (battle_config.pk_mode && bl->type == BL_PC) {
-			if (flag & BF_WEAPON) {
-				if (flag & BF_SHORT)
-					damage = damage * 80/100;
-				if (flag & BF_LONG)
-					damage = damage * 70/100;
-			}
-			if (flag & BF_MAGIC)
-				damage = damage * 60/100;
-			if(flag & BF_MISC)
-				damage = damage * 60/100;
-		}
+		if (flag & BF_MAGIC)
+			damage = damage * 60/100;
+		if(flag & BF_MISC)
+			damage = damage * 60/100;
 		if(damage < 1) damage  = 1;
 	}
 
@@ -766,6 +731,74 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			mobskill_event(md,src,gettick(),MSC_SKILLUSED|(skill_num<<16));
 	}
 
+	return damage;
+}
+
+/*==========================================
+ * Calculates GVG related damage adjustments.
+ *------------------------------------------
+ */
+int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag)
+{
+	struct mob_data *md = NULL;
+	int class_;
+
+	if (damage <= 0)
+		return 0;
+	
+	class_ = status_get_class(bl);
+
+	if (bl->type == BL_MOB)
+		md=(struct mob_data *)bl;
+	
+	if(md && md->guardian_data) {
+		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL)
+		//SKill inmunity.
+			switch (skill_num) {
+			case PA_PRESSURE:
+			case MO_TRIPLEATTACK:
+			case HW_GRAVITATION:
+				break;
+			default:
+				return 0;
+		}
+		if(src->type != BL_MOB) {
+			struct guild *g=guild_search(status_get_guild_id(src));
+			if (!g) return 0;
+			if (class_ == MOBID_EMPERIUM && guild_checkskill(g,GD_APPROVAL) <= 0)
+				return 0;
+			if (battle_config.guild_max_castles &&
+				guild_checkcastles(g)>=battle_config.guild_max_castles)
+				return 0; // [MouseJstr]
+		}
+	}
+
+	switch (skill_num) {
+	//Skills with no damage reduction.
+	case PA_PRESSURE:
+	case HW_GRAVITATION:
+		break;
+	default:
+		if (md && md->guardian_data) {
+			damage -= damage
+			  	* (md->guardian_data->castle->defense/100)
+				* (battle_config.castle_defense_rate/100);
+		}
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.gvg_weapon_damage_rate/100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.gvg_magic_damage_rate/100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.gvg_misc_damage_rate/100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.gvg_short_damage_rate/100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.gvg_long_damage_rate/100;
+		}
+		if(damage < 1) damage  = 1;
+	}
 	return damage;
 }
 
@@ -2329,14 +2362,21 @@ static struct Damage battle_calc_weapon_attack(
 	
 	if(wd.damage > 0 || wd.damage2 > 0)
 	{
-		if(wd.damage2<1)
+		if(wd.damage2<1) {
 			wd.damage=battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-		else if(wd.damage<1)
+		if (map_flag_gvg(target->m))
+			wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+		} else if(wd.damage<1) {
 			wd.damage2=battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
+			if (map_flag_gvg(target->m))
+				wd.damage2=battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
+		}
 		else
 		{
 			int d1=wd.damage+wd.damage2,d2=wd.damage2;
 			wd.damage=battle_calc_damage(src,target,d1,wd.div_,skill_num,skill_lv,wd.flag);
+			if (map_flag_gvg(target->m))
+				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			wd.damage2=(d2*100/d1)*wd.damage/100;
 			if(wd.damage > 1 && wd.damage2 < 1) wd.damage2=1;
 			wd.damage-=wd.damage2;
@@ -2820,6 +2860,8 @@ struct Damage battle_calc_magic_attack(
 	}
 
 	ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
+	if (map_flag_gvg(target->m))
+		ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
 	if (ad.damage == 0) //Magic attack blocked? Consider it a miss so it doesn't invokes additional effects. [Skotlex]
 		ad.dmg_lv = ATK_FLEE;
 	return ad;
@@ -3036,7 +3078,8 @@ struct Damage  battle_calc_misc_attack(
 
 	if (skill_num != PA_PRESSURE) //Pressure ignores all these things...
 		damage=battle_calc_damage(bl,target,damage,div_,skill_num,skill_lv,aflag);	// ÅIC³
-
+	if (map_flag_gvg(target->m))
+		damage=battle_calc_gvg_damage(bl,target,damage,div_,skill_num,skill_lv,aflag);
 	md.damage=damage;
 	md.div_=div_;
 	md.blewcount=blewcount;

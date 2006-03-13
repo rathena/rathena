@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/13
+	* Added function battle_calc_gvg_damage for gvg related damage reductions.
+	  Fixes Gravitation being reduced as well as Pressure overriding max-castles
+	  restriction. [Skotlex]
 	* Corrected char-server parameters so that the subnet config file is the
 	  third parameter, not the second (which was conflicting with
 	  inter_athena.conf's argument), thanks to foobar. [Skotlex]
