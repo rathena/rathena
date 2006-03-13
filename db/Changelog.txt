@@ -26,6 +26,7 @@
 
 =========================
 03/13
+	* Added missing mob skills to G_HYDRA, G_PARASITE [Lupus]
 	* Fixed TK and Soul Linker's position of their job entry in exp2.txt,
 	  thanks to Coltaro. [Skotlex]
 	* Fixed NPC_GRANDDARKNESS targetting the enemy instead of yourself in
