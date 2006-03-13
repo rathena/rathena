@@ -26,6 +26,8 @@
 
 =========================
 03/13
+	* Changed the mode of the crystals to 193 (can move, can attack, plants)
+	  [Skotlex]
 	* Devotion won't work on guildmates now (only party-members) [Skotlex]
 	* Changed Gravity Field's element to earth so that it may hit hidden chars.
 	  [Skotlex]
