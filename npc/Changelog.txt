@@ -27,6 +27,10 @@ Nexon
 
 Date		Added
 ======
+03/13
+	* Updated the jobmaster custom script to properly use Job_* constants
+	  rather than hardcoded numbers. Thanks to Pxxx for doing the update.
+	  [Skotlex]
 03/12
 	* Amatsu Field. Replaced Hydras with official G_HYDRA (w/o drops) [Lupus]
 03/11
