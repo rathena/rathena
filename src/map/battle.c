@@ -2571,8 +2571,11 @@ struct Damage battle_calc_magic_attack(
 		case WZ_FIREPILLAR:
 			flag.imdef = 1;
 			break;
-		case PR_ASPERSIO:
 		case HW_GRAVITATION:
+			flag.imdef = 1;
+			flag.elefix = 0;
+			break;
+		case PR_ASPERSIO:
 		case ASC_BREAKER:
 			flag.imdef = 1;
 		case PF_SOULBURN: //Does not ignores mdef
