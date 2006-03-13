@@ -4002,9 +4002,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
 			break;
 		}
-		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKLANDPROTECTOR))
-			break; //Land Protector blocks Hammer Fall [Skotlex]
-		
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,SC_STUN,(20 + 10 * skilllv),skilllv,skill_get_time2(skillid,skilllv)));
 		break;
@@ -4709,8 +4706,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if(i==SC_HALLUCINATION || i==SC_WEIGHT50 || i==SC_WEIGHT90
 					|| i==SC_STRIPWEAPON || i==SC_STRIPSHIELD || i==SC_STRIPARMOR || i==SC_STRIPHELM
 					|| i==SC_CP_WEAPON || i==SC_CP_SHIELD || i==SC_CP_ARMOR || i==SC_CP_HELM
-					|| i==SC_COMBO || i==SC_DANCING || i==SC_GUILDAURA || i==SC_STEELBODY || i==SC_EDP
-					|| i==SC_CARTBOOST || i==SC_MELTDOWN || i==SC_MOONLIT
+					|| i==SC_COMBO || i==SC_DANCING || i==SC_GUILDAURA || i==SC_EDP
+					|| i==SC_AUTOBERSERK  || i==SC_CARTBOOST || i==SC_MELTDOWN || i==SC_MOONLIT
 					)
 					continue;
 				if(i==SC_BERSERK) tsc->data[i].val4=1; //Mark a dispelled berserk to avoid setting hp to 100.
@@ -10257,7 +10254,8 @@ int skill_unit_timer_sub_onplace( struct block_list *bl, va_list ap )
 
 	nullpo_retr(0, group=unit->group);
 
-	if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
+	if (skill_get_type(group->skill_id)==BF_MAGIC
+		&& map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
 		return 0; //AoE skills are ineffective. [Skotlex]
 
 	if (battle_check_target(&unit->bl,bl,group->target_flag)<=0)
