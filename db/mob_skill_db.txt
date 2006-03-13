@@ -1613,7 +1613,7 @@
 1373,Lord of Death@NPC_CHANGEUNDEAD,attack,348,1,2000,0,5000,no,self,always,0,,,,,,
 1373,Lord of Death@NPC_DARKSTRIKE,chase,340,10,10000,0,5000,yes,target,skillused,18,,,,,,
 1373,Lord of Death@NPC_DARKSTRIKE,chase,340,10,200,0,5000,yes,target,always,0,,,,,,
-1373,Lord of Death@NPC_GRANDDARKNESS,attack,339,10,1000,700,5000,no,target,myhpltmaxrate,30,,,,,,
+1373,Lord of Death@NPC_GRANDDARKNESS,attack,339,10,1000,700,5000,no,self,myhpltmaxrate,30,,,,,,
 1373,Lord of Death@NPC_STUNATTACK,attack,179,5,2000,0,0,no,target,always,0,,,,,,
 1373,Lord of Death@NPC_SUMMONSLAVE,attack,196,5,10000,700,10000,no,self,slavele,3,1490,1490,1509,1508,1179,
 1373,Lord of Death@NPC_SUMMONSLAVE,idle,196,5,10000,700,10000,no,self,slavele,3,1490,1490,1509,1508,1179,
@@ -2632,8 +2632,8 @@
 1626,Dark Priest@NPC_DARKCROSS,attack,338,10,5000,0,10000,yes,target,always,0,,,,,,9
 1626,Dark Priest@NPC_DARKNESSATTACK,attack,190,5,500,500,5000,yes,target,always,0,,,,,,
 1626,Dark Priest@NPC_DARKSTRIKE,chase,340,10,200,700,5000,yes,target,always,0,,,,,,9
-1626,Dark Priest@NPC_GRANDDARKNESS,attack,339,5,2000,2000,30000,no,target,attackpcgt,2,,,,,,9
-1626,Dark Priest@NPC_GRANDDARKNESS,attack,339,5,500,2000,30000,no,target,attackpcgt,2,,,,,,9
+1626,Dark Priest@NPC_GRANDDARKNESS,attack,339,5,2000,2000,30000,no,self,attackpcgt,2,,,,,,9
+1626,Dark Priest@NPC_GRANDDARKNESS,attack,339,5,500,2000,30000,no,self,attackpcgt,2,,,,,,9
 1627,Virus@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,30
 1627,Virus@NPC_BLOODDRAIN,chase,199,1,50,0,5000,yes,target,always,0,,,,,,30
 1627,Virus@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,
@@ -3433,7 +3433,7 @@
 1701,Shelter@NPC_BLINDATTACK,angry,177,3,500,0,5000,yes,target,always,0,,,,,,
 1701,Shelter@NPC_BLINDATTACK,attack,177,3,500,0,5000,yes,target,always,0,,,,,,
 1701,Shelter@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1702,Retribution@NPC_GRANDDARKNESS,attack,339,1,2000,0,0,yes,target,always,0,,,,,,
+1702,Retribution@NPC_GRANDDARKNESS,attack,339,1,2000,0,0,yes,self,always,0,,,,,,
 1702,Retribution@NPC_DARKCROSS,attack,338,5,500,1500,5000,no,target,always,0,,,,,,
 1702,Retribution@NPC_DARKNESSATTACK,attack,190,3,500,0,5000,yes,target,always,0,,,,,,
 1702,Retribution@NPC_DARKBREATH,attack,202,2,500,800,5000,no,target,always,0,,,,,,

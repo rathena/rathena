@@ -273,7 +273,7 @@
 251,3:5:7:9:11,6,1,0,0,0,5,1,no,0,0,0,weapon,0	//CR_SHIELDBOOMERANG#Shield Boomerang#
 252,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0	//CR_REFLECTSHIELD#Shield Reflect#
 253,-2,8,1,6,0,0,10,-2,no,0,0,0,weapon,0	//CR_HOLYCROSS#Holy Cross#
-254,9,5,4,6,0,0,10,1,no,33,256,0,magic,0	//CR_GRANDCROSS#Grand Cross#
+254,0,6,4,6,0,0,10,1,no,33,256,0,magic,0	//CR_GRANDCROSS#Grand Cross#
 255,7:8:9:10:11,6,16,0,1,0,5,1,yes,0,3584,0,none,0	//CR_DEVOTION#Sacrifice#
 256,9,6,16,0,1,0,5,1,yes,0,512,0,none,0	//CR_PROVIDENCE#Resistant Souls#
 257,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//CR_DEFENDER#Defending Aura#

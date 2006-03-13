@@ -25,7 +25,13 @@
 	-----
 
 =========================
-
+03/13
+	* Fixed TK and Soul Linker's position of their job entry in exp2.txt,
+	  thanks to Coltaro. [Skotlex]
+	* Fixed NPC_GRANDDARKNESS targetting the enemy instead of yourself in
+	  mob_skill_db. [Skotlex]
+	* Fixed Grandcross's hit and range entries in the skill_db (it had hit 5?
+	  that wasn't even a valid value from the description) [Skotlex]
 03/11
 	* Update the buy/sell prices of four daggers(1247-1249 & 13000) [MasterOfMuppets]
 	* Adjusted bonus items drop rates at Mimic Card and Myst Case Card [Lupus]

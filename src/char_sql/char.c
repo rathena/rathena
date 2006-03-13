@@ -4109,7 +4109,7 @@ int do_init(int argc, char **argv){
 	start_point.map = mapindex_name2id("new_1-1.gat");
 	
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
-	char_lan_config_read((argc > 1) ? argv[1] : LAN_CONF_NAME);
+	char_lan_config_read((argc > 3) ? argv[3] : LAN_CONF_NAME);
 	sql_config_read(SQL_CONF_NAME);
 
 	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {

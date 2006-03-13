@@ -214,8 +214,8 @@ CREATE TABLE `chatlog` (
   `src_charid` int(11) NOT NULL default '0',
   `src_accountid` int(11) NOT NULL default '0',
   `src_map` varchar(17) NOT NULL default 'prontera.gat',
-  `src_map_x` tinyint(4) NOT NULL default '0',
-  `src_map_y` tinyint(4) NOT NULL default '0',
+  `src_map_x` smallint(4) NOT NULL default '0',
+  `src_map_y` smallint(4) NOT NULL default '0',
   `dst_charname` varchar(25) NOT NULL default '',
   `message` varchar(150) NOT NULL default '',
   PRIMARY KEY  (`id`)

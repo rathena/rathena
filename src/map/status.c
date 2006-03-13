@@ -354,11 +354,6 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	int mode, race, hide_flag;
 	struct status_change *sc=NULL, *tsc;
 
-	if (src && status_isdead(src))
-		return 0;
-	if (target && status_isdead(target) && skill_num != ALL_RESURRECTION && skill_num != PR_REDEMPTIO)
-		return 0;
-	
 	mode = src?status_get_mode(src):MD_CANATTACK;
 	
 	if (!skill_num && !(mode&MD_CANATTACK))

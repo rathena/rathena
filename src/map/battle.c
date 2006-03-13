@@ -2527,6 +2527,7 @@ struct Damage battle_calc_magic_attack(
 		case PR_SANCTUARY:
 			ad.blewcount|=0x10000;
 		case AL_HEAL:
+		case PR_BENEDICTIO:
 		case WZ_FIREPILLAR:
 			flag.imdef = 1;
 			break;

@@ -4097,7 +4097,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			skill_get_splash(skillid, skilllv), BL_CHAR,
 			src, skillid, skilllv, tick, flag|BCT_ENEMY,
 			skill_castend_damage_id);
-		battle_damage(src, src, skill_area_temp[2], 0);
+		battle_damage(src, src, status_get_max_hp(src), 0);
 		break;
 
 	/* パ?ティスキル */
@@ -5977,6 +5977,9 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 
 	nullpo_retr(0, src);
+
+	if(status_isdead(src))
+		return 0;
 
 	if(src->type==BL_PC)
 		sd=(struct map_session_data *)src;
