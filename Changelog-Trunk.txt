@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/13
+	* Fixed script command warpparty looking for an attached player even when
+	  it is not needed. [Skotlex]
 	* Shield Reflect is now passed through Devotion as well. [Skotlex]
 	- Devoted characters lose the devotion effect when the Crusader is at less
 	  than 25% Hp. [Skotlex]

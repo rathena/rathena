@@ -2930,31 +2930,25 @@ int buildin_warpparty(struct script_state *st)
 {
 	int x,y;
 	char *str;
-	int p;
+	int p_id;
 	int i;
 	unsigned short mapindex;
-	struct map_session_data *pl_sd, **pl_allsd;
-	struct map_session_data *sd;
-	int users;
+	struct map_session_data *pl_sd;
+	struct party *p=NULL;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	x=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	y=conv_num(st,& (st->stack->stack_data[st->start+4]));
-	p=conv_num(st,& (st->stack->stack_data[st->start+5]));
-	sd=script_rid2sd(st);
-	if(map[sd->bl.m].flag.noreturn || map[sd->bl.m].flag.nowarpto)
+	p_id=conv_num(st,& (st->stack->stack_data[st->start+5]));
+	if(p_id < 1)
 		return 0;
-
-	if(p < 1)
+	p = party_search(p_id);
+	if (!p)
 		return 0;
-
-	pl_allsd = map_getallusers(&users);
-
 	if(strcmp(str,"Random")==0)
 	{
-		
-		for (i = 0; i < users; i++)
+		for (i = 0; i < MAX_PARTY; i++)
 		{
-			if ((pl_sd = pl_allsd[i]) && pl_sd->status.party_id == p)
+			if ((pl_sd = p->member[i].sd))
 			{
 				if(map[pl_sd->bl.m].flag.nowarp)
 					continue;
@@ -2964,12 +2958,9 @@ int buildin_warpparty(struct script_state *st)
 	}
 	else if(strcmp(str,"SavePointAll")==0)
 	{
-		if(map[sd->bl.m].flag.noreturn)
-			return 0;
-		
-		for (i = 0; i < users; i++)
+		for (i = 0; i < MAX_PARTY; i++)
 		{
-			if ((pl_sd = pl_allsd[i]) && pl_sd->status.party_id == p)
+			if ((pl_sd = p->member[i].sd))
 			{
 				if(map[pl_sd->bl.m].flag.noreturn)
 					continue;
@@ -2979,15 +2970,16 @@ int buildin_warpparty(struct script_state *st)
 	}
 	else if(strcmp(str,"SavePoint")==0)
 	{
-		if(map[sd->bl.m].flag.noreturn)
-			return 0;
+		pl_sd=script_rid2sd(st);
+		if (!pl_sd) return 0;
 	
-		mapindex=sd->status.save_point.map;
-		x=sd->status.save_point.x;
-		y=sd->status.save_point.y;
-		for (i = 0; i < users; i++)
+		mapindex=pl_sd->status.save_point.map;
+		x=pl_sd->status.save_point.x;
+		y=pl_sd->status.save_point.y;
+		
+		for (i = 0; i < MAX_PARTY; i++)
 		{
-			if ((pl_sd = pl_allsd[i]) && pl_sd->status.party_id == p)
+			if ((pl_sd = p->member[i].sd))
 			{
 				if(map[pl_sd->bl.m].flag.noreturn)
 					continue;			
@@ -2998,9 +2990,11 @@ int buildin_warpparty(struct script_state *st)
 	else
 	{
 		mapindex = mapindex_name2id(str);
-		for (i = 0; i < users; i++)
+		if (!mapindex) //Show source of npc error.
+			return 1;
+		for (i = 0; i < MAX_PARTY; i++)
 		{
-			if ((pl_sd = pl_allsd[i]) && pl_sd->status.party_id == p)
+			if ((pl_sd = p->member[i].sd))
 			{
 				if(map[pl_sd->bl.m].flag.noreturn || map[pl_sd->bl.m].flag.nowarp)
 					continue;
