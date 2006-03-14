@@ -2054,13 +2054,9 @@ int skill_area_sub( struct block_list *bl,va_list ap )
 static int skill_check_unit_range_sub( struct block_list *bl,va_list ap )
 {
 	struct skill_unit *unit;
-	int *c;
 	int skillid,g_skillid;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, unit = (struct skill_unit *)bl);
-	nullpo_retr(0, c = va_arg(ap,int *));
+	unit = (struct skill_unit *)bl;
 
 	if(bl->prev == NULL || bl->type != BL_SKILL)
 		return 0;
@@ -2100,14 +2096,11 @@ static int skill_check_unit_range_sub( struct block_list *bl,va_list ap )
 			break;
 	}
 
-	(*c)++;
-
 	return 1;
 }
 
 int skill_check_unit_range(int m,int x,int y,int skillid,int skilllv)
 {
-	int c = 0;
 	int range = skill_get_unit_range(skillid, skilllv);
 	int layout_type = skill_get_unit_layout_type(skillid,skilllv);
 	if (layout_type==-1 || layout_type>MAX_SQUARE_LAYOUT) {
@@ -2117,10 +2110,8 @@ int skill_check_unit_range(int m,int x,int y,int skillid,int skilllv)
 
 	// とりあえず?ｳ方形のユニットレイアウトのみ対応
 	range += layout_type;
-	map_foreachinarea(skill_check_unit_range_sub,m,
-			x-range,y-range,x+range,y+range,BL_SKILL,&c,skillid);
-
-	return c;
+	return map_foreachinarea(skill_check_unit_range_sub,m,
+			x-range,y-range,x+range,y+range,BL_SKILL,skillid);
 }
 
 static int skill_check_unit_range2_sub( struct block_list *bl,va_list ap )

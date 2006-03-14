@@ -5311,6 +5311,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 			duel_reject(sd->duel_invite, sd);
 	}
 
+	pc_stopattack(sd);
 	pc_stop_walking(sd,0);
 	skill_castcancel(&sd->bl,0);	// ‰r¥‚Ì’†Ž~
 	skill_stop_dancing(&sd->bl); //You should stop dancing when dead... [Skotlex]
