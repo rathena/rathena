@@ -1421,7 +1421,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			else
 				tbl = src;
 			
-			if (tbl != src && !battle_check_range(src, tbl, skill_get_range2(src, skillid, skilllv)))
+			if (tbl != bl && !battle_check_range(bl, tbl, skill_get_range2(bl, skillid, skilllv)))
 				continue; //Autoskills DO check for target-src range. [Skotlex]
 			
 			switch (skill_get_casttype(skillid)) {
@@ -1743,6 +1743,9 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 
 	damage = dmg.damage + dmg.damage2;
 
+	if (damage > 0 && src != bl && src == dsrc)
+		rdamage = battle_calc_return_damage(bl, &damage, dmg.flag);
+		
 	if(lv==15)
 		lv=-1;
 
@@ -1859,9 +1862,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				break;
 		}	//Switch End
 	}
-
-	if (damage > 0 && src != bl && src == dsrc)
-		rdamage = battle_calc_return_damage(bl, damage, dmg.flag);
 
 //•ŠíƒXƒLƒ‹H‚±‚±‚Ü‚Å
 	switch(skillid){
@@ -1987,7 +1987,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			battle_heal(NULL,bl,0,-sp,0);
 	}
 
-	if (/*(skillid || flag) &&*/ rdamage>0) { //Is the skillid/flag check really necessary? [Skotlex]
+	if (rdamage>0) {
 		if (attack_type&BF_WEAPON)
 			battle_delay_damage(tick+dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0);
 		else
@@ -2541,7 +2541,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case MC_MAMMONITE:		/* ƒ?ƒ}?ƒiƒCƒg */
 	case TF_DOUBLE:
 	case AC_DOUBLE:			/* ƒ_ƒuƒ‹ƒXƒgƒŒƒCƒtƒBƒ“ƒO */
-	case AC_SHOWER:			/* ƒAƒ??ƒVƒƒƒ?? */
 	case AS_SONICBLOW:		/* ƒ\ƒjƒbƒNƒuƒ?? */
 	case KN_PIERCE:			/* ƒsƒA?ƒX */
 	case KN_SPEARBOOMERANG:	/* ƒXƒsƒAƒu?ƒ?ƒ‰ƒ“ */
@@ -2770,6 +2769,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case AS_GRIMTOOTH:		/* ƒOƒŠƒ€ƒgƒD?ƒX */
 	case MC_CARTREVOLUTION:	/* ƒJ?ƒgƒŒƒ”ƒHƒŠƒ…?ƒVƒ‡ƒ“ */
 	case NPC_SPLASHATTACK:	/* ƒXƒvƒ‰ƒbƒVƒ…ƒAƒ^ƒbƒN */
+	case AC_SHOWER:	//Targetted skill implementation.
 		if(flag&1){
 			/* ŒÂ•Ê‚Éƒ_ƒ??ƒW‚ğ?‚¦‚é */
 			if(bl->id!=skill_area_temp[1]){
@@ -2778,15 +2778,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			}
 		} else {
 			skill_area_temp[1]=bl->id;
-			skill_area_temp[2]=bl->x;
-			skill_area_temp[3]=bl->y;
-			/* ‚Ü‚¸ƒ^?ƒQƒbƒg‚É?U?‚ğ‰Á‚¦‚é */
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
-			/* ‚»‚ÌŒãƒ^?ƒQƒbƒgˆÈŠO‚Ì”Í??‚Ì“G‘S?‚É?—?‚ğ?s‚¤ */
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv), BL_CHAR,
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
+			//Skill-attack at the end in case it has knockback. [Skotlex]
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
 		}
 		break;
 
@@ -3279,10 +3276,26 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
+		case WE_CALLPARTNER:
+		case WE_CALLPARENT:
+		case WE_CALLBABY: 
+		{	//Find a random spot to place the skill. [Skotlex]
+			short x,y;
+			i = skill_get_splash(skillid, skilllv);
+			x = src->x + i;
+			y = src->y + i;
+			if (map_random_dir(src, &x, &y))
+				return skill_castend_pos2(src,x,y,skillid,skilllv,tick,0);
+			else {
+				if (sd) clif_skill_fail(sd,skillid,0,0);
+				return 0;
+			}
+		}
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
-			//These two are actually ground placed.
+			//These are actually ground placed.
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
+
 		//Until they're at right position - gs_ground- [Vicious]
 		case NJ_KAENSIN:
 		case NJ_HYOUSYOURAKU:
@@ -5070,23 +5083,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	case WE_CALLPARTNER:			/* ‚ ‚È‚½‚É?‚¢‚½‚¢ */
-		if(sd){
-			if((dstsd = pc_get_partner(sd)) == NULL){
-				clif_skill_fail(sd,skillid,0,0);
-				map_freeblock_unlock();
-				return 0;
-			}
-			if(map[sd->bl.m].flag.nomemo || map[sd->bl.m].flag.nowarpto || map[dstsd->bl.m].flag.nowarp){
-				clif_skill_teleportmessage(sd,1);
-				map_freeblock_unlock();
-				return 0;
-			}
-			skill_unitsetting(src,skillid,skilllv,sd->bl.x,sd->bl.y,0);
-			pc_blockskill_start (sd, skillid, skill_get_time(skillid, skilllv));
-		}
-		break;
-
 // parent-baby skills
 	case WE_BABY:
 		if(sd){
@@ -5101,49 +5097,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			status_change_start(bl,SC_STUN,10000,skilllv,0,0,0,skill_get_time2(skillid,skilllv),8);
 			if (f_sd) sc_start(&f_sd->bl,type,100,skilllv,skill_get_time(skillid,skilllv));
 			if (m_sd) sc_start(&m_sd->bl,type,100,skilllv,skill_get_time(skillid,skilllv));
-		}
-		break;
-
-	case WE_CALLPARENT:
-		if(sd){
-			struct map_session_data *f_sd = pc_get_father(sd);
-			struct map_session_data *m_sd = pc_get_mother(sd);
-			// if neither was found
-			if(!f_sd && !m_sd){
-				clif_skill_fail(sd,skillid,0,0);
-				map_freeblock_unlock();
-				return 0;
-			}
-			if(map[sd->bl.m].flag.nomemo || map[sd->bl.m].flag.nowarpto)
-			{
-				clif_skill_teleportmessage(sd,1);
-				map_freeblock_unlock();
-				return 0;
-			}
-			if((!f_sd && m_sd && map[m_sd->bl.m].flag.nowarp) ||
-				(!m_sd && f_sd && map[f_sd->bl.m].flag.nowarp))
-			{	//Case where neither one can be warped.
-				clif_skill_teleportmessage(sd,1);
-				map_freeblock_unlock();
-				return 0;
-			}
-			//Warp those that can be warped.
-			if (f_sd && !map[f_sd->bl.m].flag.nowarp)
-				pc_setpos(f_sd,map[sd->bl.m].index,sd->bl.x,sd->bl.y,3);
-			if (m_sd && !map[m_sd->bl.m].flag.nowarp)
-				pc_setpos(m_sd,map[sd->bl.m].index,sd->bl.x,sd->bl.y,3);
-		}
-		break;
-
-	case WE_CALLBABY:
-		if(sd && dstsd)
-		{
-			if(map[sd->bl.m].flag.nomemo || map[sd->bl.m].flag.nowarpto || map[dstsd->bl.m].flag.nowarp){
-				clif_skill_teleportmessage(sd,1);
-				map_freeblock_unlock();
-				return 0;
-			}
-			pc_setpos(dstsd,map[sd->bl.m].index,sd->bl.x,sd->bl.y,3);
 		}
 		break;
 
@@ -5979,8 +5932,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	if(skillid != WZ_METEOR &&
 		skillid != AM_CANNIBALIZE &&
 		skillid != AM_SPHEREMINE &&
-		skillid != CR_CULTIVATION &&
-		skillid != AC_SHOWER)
+		skillid != CR_CULTIVATION)
 		clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 
 	switch(skillid)
@@ -5996,17 +5948,6 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 			src->m, x-i, y-i, x+i, y+i, BL_CHAR,
 			src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
-		break;
-
-	case AC_SHOWER:
-		{	//One of the few skills that can attack traps.
-			i = skill_get_splash(skillid, skilllv);
-			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
-			map_foreachinarea (skill_area_sub,
-				src->m, x-i, y-i, x+i, y+i, BL_CHAR|BL_SKILL,
-				src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
-				skill_castend_damage_id);
-		}
 		break;
 
 	case BS_HAMMERFALL:
@@ -6052,6 +5993,10 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case PF_FOGWALL:			/* ƒtƒHƒOƒEƒH?ƒ‹ */
 	case PF_SPIDERWEB:			/* ƒXƒpƒCƒ_?ƒEƒFƒbƒu */
 	case HT_TALKIEBOX:			/* ƒg?ƒL?ƒ{ƒbƒNƒX */
+	case WE_CALLPARTNER:
+	case WE_CALLPARENT:
+	case WE_CALLBABY:
+	case AC_SHOWER:	//Ground-placed skill implementation.
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		break;
 
@@ -6423,6 +6368,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	int count=0;
 	int target,interval,range,unit_flag;
 	struct skill_unit_layout *layout;
+	struct map_session_data *sd;
 	struct status_change *sc;
 	int active_flag=1;
 
@@ -6435,6 +6381,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	unit_flag = skill_get_unit_flag(skillid);
 	layout = skill_get_unit_layout(skillid,skilllv,src,x,y);
 
+	BL_CAST(BL_PC, src, sd);
 	sc= status_get_sc(src);	// for traps, firewall and fogwall - celest
 	if (sc && !sc->count)
 		sc = NULL;
@@ -6592,14 +6539,39 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		val1 = 55 + skilllv*5;	//Elemental Resistance
 		val2 = skilllv*10;	//Status ailment resistance
 		break;
-	case BD_ETERNALCHAOS:
-		break;
 	case PF_FOGWALL:	/* ƒtƒHƒOƒEƒH?ƒ‹ */
 		if(sc && sc->data[SC_DELUGE].timer!=-1) limit *= 2;
 		break;
-
 	case RG_GRAFFITI:			/* Graffiti */
 		count=1;	// Leave this at 1 [Valaris]
+		break;
+	case WE_CALLPARTNER:
+		if (!sd)
+			return NULL;
+		if (map[src->m].flag.nowarpto) {
+			clif_skill_teleportmessage(sd,1);
+			return NULL;
+		}
+		val1 = sd->status.partner_id;
+		break;
+	case WE_CALLPARENT:
+		if (!sd)
+			return NULL;
+		if (map[src->m].flag.nowarpto) {
+			clif_skill_teleportmessage(sd,1);
+			return NULL;
+		}
+		val1 = sd->status.father;
+	 	val2 = sd->status.mother;
+		break;
+	case WE_CALLBABY:
+		if (!sd)
+			return NULL;
+		if (map[src->m].flag.nowarpto) {
+			clif_skill_teleportmessage(sd,1);
+			return NULL;
+		}
+		val1 = sd->status.child;
 		break;
 	}
 
@@ -6933,6 +6905,10 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			break;
 		}
 
+	case UNT_ARROWSHOWER:
+		skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+		break;
+		
 	case UNT_MAGIC_SKILLS:
 		skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 		break;
@@ -7386,15 +7362,15 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 	case UNT_ICEWALL:	/* ƒAƒCƒXƒEƒH?ƒ‹ */
 		clif_changemapcell(src->bl.m,src->bl.x,src->bl.y,src->val2,1);
 		break;
-	case UNT_CALLPARTNER:	/* ‚ ‚È‚½‚É?‚¢‚½‚¢ */
+	case UNT_CALLFAMILY:	/* ‚ ‚È‚½‚É?‚¢‚½‚¢ */
 		{
 			struct map_session_data *sd = NULL;
-			if((sd = map_id2sd(sg->src_id)) == NULL)
-				return 0;
-			if((sd = pc_get_partner(sd)) == NULL)
-				return 0;
-
-			pc_setpos(sd,map[src->bl.m].index,src->bl.x,src->bl.y,3);
+			if(src->val1 && (sd = map_charid2sd(src->val1))
+				&& !map[sd->bl.m].flag.nowarp)
+				pc_setpos(sd,map[src->bl.m].index,src->bl.x,src->bl.y,3);
+			if(src->val2 && (sd = map_charid2sd(src->val2))
+				&& !map[sd->bl.m].flag.nowarp)
+				pc_setpos(sd,map[src->bl.m].index,src->bl.x,src->bl.y,3);
 		}
 		break;
 	}
@@ -7938,12 +7914,6 @@ int skill_check_condition(struct map_session_data *sd,int type)
 				//Should I repeat the check? If so, it would be best to only do this on cast-ending. [Skotlex]
 				skill_check_pc_partner(sd, skill, &lv, 1, 1);
 			}
-		}
-		break;
-	case WE_CALLPARTNER:		/* ‚ ‚È‚½‚Éˆ§‚¢‚½‚¢ */
-		if(!sd->status.partner_id){
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
 		}
 		break;
 	case AM_CANNIBALIZE:		/* ƒoƒCƒIƒvƒ‰ƒ“ƒg */
@@ -8602,17 +8572,6 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 			return 0;
 		}
 		break;
-	case WE_CALLBABY:
-		tsd = pc_get_child(sd);
-		bl = (struct block_list *)tsd;
-		if (bl)
-			target_id = bl->id;
-		else
-		{
-			clif_skill_fail(sd,skill_num,0,0);
-			return 0;
-		}
-		break;
 	}
 	if (bl == NULL && (bl = map_id2bl(target_id)) == NULL)
 		return 0;
@@ -8738,19 +8697,6 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 		casttime *= distance_bl(&sd->bl, bl);
 		break;
 
-	// parent-baby skills
-	case WE_BABY:
-	case WE_CALLPARENT:
-		{
-			struct map_session_data *f_sd = pc_get_father(sd);
-			struct map_session_data *m_sd = pc_get_mother(sd);
-			
-			// set target as any one of the parent
-			if (f_sd) target_id = f_sd->bl.id;
-			else if (m_sd) target_id = m_sd->bl.id;
-			else return 0;	// neither are found
-		}
-		break;
 	case HP_BASILICA:		/* ƒoƒWƒŠƒJ */
 		{
 			// cancel Basilica if already in effect

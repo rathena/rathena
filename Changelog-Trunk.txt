@@ -5,6 +5,14 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/14
+	* Fixed incorrect range check in autospell-when-hit triggers. [Skotlex]
+	* Modified Wedding recall skills to behave as in official [Skotlex]
+	* Modified Arrow Shower to be a ground-based skill and work as it should on
+	  officials. However, the unit_id is still unknown. [Skotlex]
+	* Fixed skill_additional_effect triggering every time you were being hit
+	  even if no damage was returned. [Skotlex]
+	* Fixed battle_calc_damage_return to make magic damage be returned by 100%,
+	  and received damage nullified. [Skotlex]
 	* Changed a bit status_check_skilluse to check for dead characters, should
 	  fix all the weird attack/attacked while dead bugs. [Skotlex]
 	* Fixed player auto-attack not cancelling when dead. [Skotlex]

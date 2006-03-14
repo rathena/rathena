@@ -3116,7 +3116,7 @@ struct Damage battle_calc_attack(	int attack_type,
 	return d;
 }
 
-int battle_calc_return_damage(struct block_list *bl, int damage, int flag) {
+int battle_calc_return_damage(struct block_list *bl, int *damage, int flag) {
 	struct map_session_data *sd=NULL;
 	struct status_change *sc;
 	int rdamage = 0;
@@ -3125,21 +3125,22 @@ int battle_calc_return_damage(struct block_list *bl, int damage, int flag) {
 	sc = status_get_sc(bl);
 
 	if(flag&BF_WEAPON) {
+		//Bounces back part of the damage.
 		if (flag & BF_SHORT) {
 			if (sd && sd->short_weapon_damage_return)
 			{
-				rdamage += damage * sd->short_weapon_damage_return / 100;
+				rdamage += *damage * sd->short_weapon_damage_return / 100;
 				if(rdamage < 1) rdamage = 1;
 			}
 			if (sc && sc->data[SC_REFLECTSHIELD].timer != -1)
 		  	{
-				rdamage += damage * sc->data[SC_REFLECTSHIELD].val2 / 100;
+				rdamage += *damage * sc->data[SC_REFLECTSHIELD].val2 / 100;
 				if (rdamage < 1) rdamage = 1;
 			}
 		} else if (flag & BF_LONG) {
 			if (sd && sd->long_weapon_damage_return)
 			{
-				rdamage += damage * sd->long_weapon_damage_return / 100;
+				rdamage += *damage * sd->long_weapon_damage_return / 100;
 				if (rdamage < 1) rdamage = 1;
 			}
 		}
@@ -3147,10 +3148,10 @@ int battle_calc_return_damage(struct block_list *bl, int damage, int flag) {
 	// magic_damage_return by [AppleGirl] and [Valaris]
 	if(flag&BF_MAGIC)
 	{
-		if(sd && sd->magic_damage_return > 0 )
-		{
-			rdamage += damage * sd->magic_damage_return / 100;
-			if(rdamage < 1) rdamage = 1;
+		if(sd && sd->magic_damage_return && rand()%100 < sd->magic_damage_return)
+		{	//Bounces back full damage, you take none.
+			rdamage = *damage;
+		 	*damage = 0;
 		}
 	}
 	return rdamage;
@@ -3252,11 +3253,12 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	damage = wd.damage + wd.damage2;
 	if (damage > 0 && src != target) {
-		rdamage = battle_calc_return_damage(target, damage, wd.flag);
-		if (rdamage > 0)
+		rdamage = battle_calc_return_damage(target, &damage, wd.flag);
+		if (rdamage > 0) {
 			clif_damage(src, src, tick, wd.amotion, wd.dmotion, rdamage, 1, 4, 0);
-		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
-		skill_additional_effect(target,src,CR_REFLECTSHIELD, 1,BF_WEAPON,tick);
+			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
+			skill_additional_effect(target,src,CR_REFLECTSHIELD, 1,BF_WEAPON,tick);
+		}
 	}
 
 	clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);

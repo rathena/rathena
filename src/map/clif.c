@@ -4609,7 +4609,7 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 	WFIFOW(fd,12)=unit->bl.y;
 	WFIFOB(fd,14)=unit->group->unit_id;
 	WFIFOB(fd,15)=1;
-	if(unit->group->unit_id==0xb0)	{ // Graffiti [Valaris]
+	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
 		WFIFOB(fd,16)=1;
 		memcpy(WFIFOP(fd,17),unit->group->valstr,MESSAGE_SIZE);
 	} else {

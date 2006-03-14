@@ -26,6 +26,7 @@
  21,0x86,    ,  0, 2,1000,enemy, 0x008	//MG_THUNDERSTORM#サンダーストーム
  25,0x85,    ,  1, 0,  -1,all,   0x003	//AL_PNEUMA#ニューマ
  27,0x81,0x80,  0, 0,  -1,all,   0x006	//AL_WARP#ワープポータル
+ 47,0x86,    ,  0, 2,1000,enemy, 0x080	//AC_SHOWER
  70,0x83,    , -1, 1,1000,all,   0x008	//PR_SANCTUARY#サンクチュアリ
  79,0x84,    , -1, 1,3000,enemy, 0x008	//PR_MAGNUS#マグヌスエクソシズム
  80,0x87,0x88,  0, 1,2000,enemy, 0x002	//WZ_FIREPILLAR#ファイアーピラー
@@ -78,6 +79,8 @@
 369,0xb3,    , -1, 0,10000,all,  0x000	//PA_GOSPEL#ゴスペル
 404,0xb6,    , -1, 0,  -1,all,   0x000	//PF_FOGWALL#フォグウォール
 405,0xb7,    ,  0, 1,1000,enemy, 0x000	//PF_SPIDERWEB#スパイダーウェッブ
+409,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLBABY
+410,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARENT
 484,0xb8,    ,  2, 0,1000,enemy, 0x808	//HW_GRAVITATION
 488,0xb9,    ,  3, 0,  -1,all,   0x000	//CG_HERMODE
 535,0xba,    ,  2, 0,1000,enemy, 0x008	//NJ_KAENSIN#NJ_KAENSIN#

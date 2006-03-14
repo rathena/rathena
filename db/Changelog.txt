@@ -25,6 +25,10 @@
 	-----
 
 =========================
+03/14
+	* Modified skill entries for the Wedding recall skills. Updated their
+	  splash value to signal the area around the caster where the warp will be
+	  placed. [Skotlex]
 03/13
 	* Changed the mode of the crystals to 193 (can move, can attack, plants)
 	  [Skotlex]
