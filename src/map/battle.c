@@ -1605,7 +1605,7 @@ static struct Damage battle_calc_weapon_attack(
 					short index = sd->equip_index[8];
 					
 					wd.damage = status_get_batk(src);
-					if (flag.lh) wd.damage2 = status_get_batk(src);
+					if (flag.lh) wd.damage2 = wd.damage;
 
 					if (index >= 0 &&
 						sd->inventory_data[index] &&

@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/14
+	* Changed a bit status_check_skilluse to check for dead characters, should
+	  fix all the weird attack/attacked while dead bugs. [Skotlex]
 	* Fixed player auto-attack not cancelling when dead. [Skotlex]
 2006/03/13
 	* Finished some checks to make sure Land Protector Only blocks BF_MAGIC

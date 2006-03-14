@@ -355,12 +355,20 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	struct status_change *sc=NULL, *tsc;
 
 	mode = src?status_get_mode(src):MD_CANATTACK;
-	
-	if (!skill_num && !(mode&MD_CANATTACK))
-		return 0; //This mode is only needed for melee attacking.
+
+	if (!skill_num) { //Normal attack checks.
+		if (!(mode&MD_CANATTACK))
+			return 0; //This mode is only needed for melee attacking.
+		//Dead state is not checked for skills as some skills can be used 
+		//by/on dead characters, said checks are left to skill.c [Skotlex]
+		if (src && status_isdead(src))
+			return 0;
+		if (target && status_isdead(target))
+			return 0;
+	}
 
 	if (skill_num == PA_PRESSURE && flag) {
-	//Gloria Avoids pretty much everythng....
+	//Gloria Avoids pretty much everything....
 		tsc = target?status_get_sc(target):NULL;
 		if(tsc) {
 			if (tsc->option&OPTION_HIDE)
