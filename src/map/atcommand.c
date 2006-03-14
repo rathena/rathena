@@ -290,6 +290,7 @@ ACMD_FUNC(away); // LuzZza
 ACMD_FUNC(main); // LuzZza
 
 ACMD_FUNC(clone); // [Valaris]
+ACMD_FUNC(tonpc); // LuzZza
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -603,6 +604,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Clone,				"@clone",			50, atcommand_clone },
 	{ AtCommand_Clone,				"@slaveclone",		50, atcommand_clone },
 	{ AtCommand_Clone,				"@evilclone",		50, atcommand_clone }, // [Valaris]
+	{ AtCommand_ToNPC,				"@tonpc",			40, atcommand_tonpc }, // LuzZza
 
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
@@ -1224,9 +1226,12 @@ int atcommand_rura(
 
 	memset(map_name, '\0', sizeof(map_name));
 
-	if (!message || !*message || sscanf(message, "%15s %d %d", map_name, &x, &y) < 1) {
-		clif_displaymessage(fd, "Please, enter a map (usage: @warp/@rura/@mapmove <mapname> <x> <y>).");
-		return -1;
+	if (!message || !*message ||
+		(sscanf(message, "%15s %d %d", map_name, &x, &y) < 3 &&
+		 sscanf(message, "%15[^,],%d,%d", map_name, &x, &y) < 1)) {
+		 
+			clif_displaymessage(fd, "Please, enter a map (usage: @warp/@rura/@mapmove <mapname> <x> <y>).");
+			return -1;
 	}
 
 	if (x <= 0)
@@ -1292,7 +1297,7 @@ int atcommand_where(
 	if (pl_sd == NULL) 
 		return -1;
 
-	if(strncmp(sd->status.name,atcmd_player_name,NAME_LENGTH)==0)
+	if(strncmp(sd->status.name,atcmd_player_name,NAME_LENGTH)!=0)
 		return -1;
 		
 	GM_level = pc_isGM(sd);//also hide gms depending on settings in battle_athena.conf, show if they are aid [Kevin]
@@ -5982,6 +5987,38 @@ int atcommand_nuke(
 	return 0;
 }
 
+/*==========================================
+ * @tonpc
+ *------------------------------------------
+ */
+int atcommand_tonpc(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+
+	char npcname[NAME_LENGTH];
+	struct npc_data *nd;
+
+	nullpo_retr(-1, sd);
+
+	memset(npcname, 0, sizeof(npcname));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", npcname) < 1) {
+		clif_displaymessage(fd, "Please, enter a NPC name (usage: @tonpc <NPC_name>).");
+		return -1;
+	}
+
+	if ((nd = npc_name2id(npcname)) != NULL) {
+		if (pc_setpos(sd, map[nd->bl.m].index, nd->bl.x, nd->bl.y, 3) == 0)
+			clif_displaymessage(fd, msg_table[0]); // Warped.
+		else
+			return -1;
+	} else {
+		clif_displaymessage(fd, msg_table[111]); // This NPC doesn't exist.
+		return -1;
+	}
+
+	return 0;
+}
 
 /*==========================================
  *

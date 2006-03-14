@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/14
+	* Updated @rura/@warp. Now you can use both "@warp mapname x y" and
+	  "@warp mapname,x,y". [LuzZza]
+	* Added at-command @tonpc <NPC_name> (warp to NPC). [LuzZza]
+	* Fixed @where at-command. [LuzZza]
 	* Fixed WZ_WATERBALL + HW_MAGICPOWER [Skotlex]
 	* Fixed incorrect range check in autospell-when-hit triggers. [Skotlex]
 	* Modified Wedding recall skills to behave as in official [Skotlex]
