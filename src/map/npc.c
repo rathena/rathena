@@ -2800,17 +2800,17 @@ int npc_reload (void)
 	int busy = 0, npc_new_min = npc_id;
 	char c = '-';
 
+	//Remove all npcs/mobs. [Skotlex]
+	map_foreachiddb(npc_cleanup_dbsub);
 	for (m = 0; m < map_num; m++) {
-		map_foreachinmap(npc_cleanup_sub, m, 0);
 		if(battle_config.dynamic_mobs) {	//dynamic check by [random]
 			for (i = 0; i < MAX_MOB_LIST_PER_MAP; i++)
 				if (map[m].moblist[i]) aFree(map[m].moblist[i]);
 			memset (map[m].moblist, 0, sizeof(map[m].moblist));
 		}
-		map[m].npc_num = 0;
+		if (map[m].npc_num > 0 && battle_config.error_log)
+			ShowWarning("npc_reload: %d npcs weren't removed at map %s!\n", map[m].npc_num, map[m].name);
 	}
-	//Remove any npcs/mobs that weren't caught by the previous loop. [Skotlex]
-	map_foreachiddb(npc_cleanup_dbsub);
 
 	// anything else we should cleanup?
 	// Reloading npc's now

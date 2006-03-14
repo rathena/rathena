@@ -5519,7 +5519,6 @@ int atcommand_reloadscript(
 	//do_init_npc();
 	script_reload();
 	npc_reload();
-	npc_event_do_oninit();
 
 	clif_displaymessage(fd, msg_table[100]); // Scripts reloaded.
 
