@@ -2299,7 +2299,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 			return 0;
 		if(status_isdead(src))
 			return 0;
-		if(status_isdead(target) && skl->skill_id != RG_INTIMIDATE)
+		if(status_isdead(target) && skl->skill_id != RG_INTIMIDATE && skl->skill_id != WZ_WATERBALL)
 			return 0;
 
 		switch(skl->skill_id) {
@@ -2356,17 +2356,15 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 				break;
 
 			case WZ_WATERBALL:
-				if (skl->type>1) {
-					skl->timer = 0;	// skill_addtimerskill‚ÅŽg—p‚³‚ê‚È‚¢‚æ‚¤‚É
+				if (!status_isdead(target))
+					skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+				if (skl->type>1 && !status_isdead(target)) {
+					skl->timer = 0;
 					skill_addtimerskill(src,tick+150,target->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
 					skl->timer = -1;
-				}
-				skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
-				if (skl->type <= 1) {	// partial fix: it still doesn't end if the target dies
-					// should put outside of the switch, but since this is the only
-					// mage targetted spell for now,
+				} else {
 					struct status_change *sc = status_get_sc(src);
-					if(sc && sc->data[SC_MAGICPOWER].timer != -1)	//ƒ}ƒWƒbƒNƒpƒ??‚Ì?‰Ê?I—¹
+					if(sc && sc->data[SC_MAGICPOWER].timer != -1)
 						status_change_end(src,SC_MAGICPOWER,-1);
 				}
 				break;
@@ -5791,7 +5789,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 	else
 		skill_castend_damage_id(&sd->bl,bl,sd->skillid,sd->skilllv,tick,0);
 
-	if(sd->sc.count && sd->sc.data[SC_MAGICPOWER].timer != -1 && sd->skillid != HW_MAGICPOWER)
+	if(sd->sc.count && sd->sc.data[SC_MAGICPOWER].timer != -1 && sd->skillid != HW_MAGICPOWER && sd->skillid != WZ_WATERBALL)
 		status_change_end(&sd->bl,SC_MAGICPOWER,-1);		
 
 	//Clean this up for future references to battle_getcurrentskill. [Skotlex]

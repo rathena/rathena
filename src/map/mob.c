@@ -3362,7 +3362,7 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data )
 	else
 		skill_castend_damage_id(&md->bl,bl,md->skillid,md->skilllv,tick,0);
 
-	if (md->sc.count && md->sc.data[SC_MAGICPOWER].timer != -1 && md->skillid != HW_MAGICPOWER)
+	if (md->sc.count && md->sc.data[SC_MAGICPOWER].timer != -1 && md->skillid != HW_MAGICPOWER && md->skillid != WZ_WATERBALL)
 		status_change_end(&md->bl, SC_MAGICPOWER, -1);
 		
 	if (md->db->skill[md->skillidx].emotion >= 0)
