@@ -5090,7 +5090,10 @@ int pc_resetstate(struct map_session_data* sd)
 		add += sumsp(sd->status.int_);
 		add += sumsp(sd->status.dex);
 		add += sumsp(sd->status.luk);
-		sd->status.status_point+=add;
+		if (add > SHRT_MAX - sd->status.status_point)
+			sd->status.status_point = SHRT_MAX;
+		else
+			sd->status.status_point+=add;
 	}
 
 	sd->status.str=1;

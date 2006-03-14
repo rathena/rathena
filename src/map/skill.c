@@ -766,23 +766,24 @@ int can_copy(struct map_session_data *sd, int skillid)
 // [MouseJstr] - skill ok to cast? and when?
 int skillnotok(int skillid, struct map_session_data *sd)
 {	
+	int i = skillid;
 	nullpo_retr (1, sd);
 	//if (sd == 0)
 		//return 0; 
 		//return 1;
 	// I think it was meant to be "no skills allowed when not a valid sd"
 	
-	if (!(skillid >= GD_SKILLRANGEMIN && skillid <= GD_SKILLRANGEMAX))
-		if ((skillid > MAX_SKILL) || (skillid < 0))
-			return 1;
+	if (skillid >= GD_SKILLRANGEMIN && skillid <= GD_SKILLRANGEMAX)
+		return 1;
 
-	{
-		int i = skillid;
-		if (i >= GD_SKILLBASE)
-			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-		if (sd->blockskill[i] > 0)
-			return 1;
-	}
+	if (i >= GD_SKILLBASE)
+		i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+	
+	if (sd->blockskill[i] > 0)
+		return 1;
+	
+	if (i > MAX_SKILL || i < 0)
+		return 1;
 
 	if (battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
 		return 0;  // gm's can do anything damn thing they want
@@ -2494,12 +2495,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	struct map_session_data *sd = NULL, *tsd = NULL;
 	struct status_change *sc;
 
-	if(skillid < 0)	
-	{	// remove the debug print when this case is finished
-		ShowDebug("skill_castend_damage_id: skillid=%i\ncall: %p %p %i %i %i %i",skillid,
-						src, bl,skillid,skilllv,tick,flag);
-		return 0;
-	}
 	if (skillid > 0 && skilllv <= 0) return 0;
 
 	nullpo_retr(1, src);
@@ -3212,12 +3207,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	struct mob_data *dstmd = NULL;
 	int i,type=-1;
 	
-	if(skillid < 0 || (skillid > MAX_SKILL || (skillid >= GD_SKILLBASE && skillid > GD_SKILLBASE + MAX_GUILDSKILL))) 
-	{	// remove the debug print when this case is finished
-		ShowDebug("skill_castend_nodamage_id: skillid=%i call: %p %p %i %i %i %i\n",skillid,
-						src, bl,skillid,skilllv,tick,flag);
-		return 0;
-	}
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 
 	nullpo_retr(1, src);
