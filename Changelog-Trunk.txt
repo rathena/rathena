@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/15
+	* gm_skill_unconditional setting now also overrides skill_partner_check
+	  setting. [Skotlex]
 	* Emulated strtok_r functions to work strictly with ANSI compilers. [Lance]
 	* Added battle config options item_rate_adddrop, item_drop_add_min and
 	  item_drop_add_max to control drop rate of card-acquired loot bonuses.

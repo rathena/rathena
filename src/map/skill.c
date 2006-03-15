@@ -3751,7 +3751,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case CG_MOONLIT:		/* 月明りの泉に落ちる花びら */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if (sd && battle_config.player_skill_partner_check) {
+		if (sd && battle_config.player_skill_partner_check &&
+			(!battle_config.gm_skilluncond || pc_isGM(sd) < battle_config.gm_skilluncond)) {
 			skill_check_pc_partner(sd, skillid, &skilllv, 1, 1);
 		} else
 			skill_moonlit(bl, NULL, skilllv); //The knockback must be invoked before starting the effect which places down the map cells. [Skotlex]
@@ -7887,7 +7888,9 @@ int skill_check_condition(struct map_session_data *sd,int type)
 		break;
 	case PR_BENEDICTIO:				/* ?ｹ??~福 */
 		{
-			if (!battle_config.player_skill_partner_check)
+			if (!battle_config.player_skill_partner_check ||
+				(battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
+			)
 				break; //No need to do any partner checking [Skotlex]
 			if (!(type&1))
 			{	//Started casting.
@@ -8623,8 +8626,9 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 	case BD_SIEGFRIED:				/* 不死?gのジ?クフリ?ド */
 	case CG_MOONLIT:				/* 月明りの?ﾉ落ちる花びら */
 		{
-			if (battle_config.player_skill_partner_check)
-			{
+			if (battle_config.player_skill_partner_check &&
+				(!battle_config.gm_skilluncond || pc_isGM(sd) < battle_config.gm_skilluncond)
+			) {
 				if (skill_check_pc_partner(sd, skill_num, &skill_lv, 1, 0) < 1) //Note that skill_lv is automatically updated.
 				{
 					clif_skill_fail(sd,skill_num,0,0);
@@ -10018,7 +10022,9 @@ struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 		sc_start4(src,SC_DANCING,100,skillid,(int)group,0,(i&UF_ENSEMBLE?BCT_SELF:0),skill_get_time(skillid,skilllv)+1000);
 		//?≡tスキルは相方をダンス?ﾔにする
 		if (sd && i&UF_ENSEMBLE &&
-			battle_config.player_skill_partner_check) {
+			battle_config.player_skill_partner_check &&
+			(!battle_config.gm_skilluncond || pc_isGM(sd) < battle_config.gm_skilluncond)
+			) {
 				skill_check_pc_partner(sd, skillid, &skilllv, 1, 1);
 		}
 	}
