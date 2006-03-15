@@ -9617,7 +9617,10 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd) {
 
 	item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
 	item_amount = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
-	pc_dropitem(sd, item_index, item_amount);
+	if (!pc_dropitem(sd, item_index, item_amount))
+	//Because the client does not likes being ignored.
+		clif_delitem(sd, item_index,0);
+
 }
 
 /*==========================================

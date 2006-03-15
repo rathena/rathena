@@ -5689,6 +5689,8 @@ int atcommand_mapinfo(
 		strcat(atcmd_output, "NoBranch | ");
 	if (map[m_id].flag.notrade)
 		strcat(atcmd_output, "NoTrade | ");
+	if (map[m_id].flag.nodrop)
+		strcat(atcmd_output, "NoDrop | ");
 	if (map[m_id].flag.noskill)
 		strcat(atcmd_output, "NoSkill | ");
 	if (map[m_id].flag.noicewall)

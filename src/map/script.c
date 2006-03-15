@@ -6566,7 +6566,7 @@ enum {  MF_NOMEMO,MF_NOTELEPORT,MF_NOSAVE,MF_NOBRANCH,MF_NOPENALTY,MF_NOZENYPENA
 	MF_NOWARP,MF_NOPVP,MF_NOICEWALL,MF_SNOW,MF_FOG,MF_SAKURA,MF_LEAVES,MF_RAIN,
 	MF_INDOORS,MF_NOGO,MF_CLOUDS,MF_CLOUDS2,MF_FIREWORKS,MF_GVG_CASTLE,MF_GVG_DUNGEON,MF_NIGHTENABLED,
 	MF_NOBASEEXP, MF_NOJOBEXP, MF_NOMOBLOOT, MF_NOMVPLOOT, MF_NORETURN, MF_NOWARPTO, MF_NIGHTMAREDROP,
-	MF_RESTRICTED, MF_NOCOMMAND };
+	MF_RESTRICTED, MF_NOCOMMAND, MF_NODROP };
 
 int buildin_setmapflagnosave(struct script_state *st)
 {
@@ -6639,6 +6639,9 @@ int buildin_setmapflag(struct script_state *st)
 				break;
 			case MF_NOTRADE:
 				map[m].flag.notrade=1;
+				break;
+			case MF_NODROP:
+				map[m].flag.nodrop=1;
 				break;
 			case MF_NOSKILL:
 				map[m].flag.noskill=1;
@@ -6766,6 +6769,12 @@ int buildin_removemapflag(struct script_state *st)
 				break;
 			case MF_NOZENYPENALTY:
 				map[m].flag.nozenypenalty=0;
+				break;
+			case MF_NOTRADE:
+				map[m].flag.notrade=0;
+				break;
+			case MF_NODROP:
+				map[m].flag.nodrop=0;
 				break;
 			case MF_NOSKILL:
 				map[m].flag.noskill=0;

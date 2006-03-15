@@ -29,6 +29,11 @@ void trade_traderequest(struct map_session_data *sd, int target_id) {
 
 	nullpo_retv(sd);
 
+	if (map[sd->bl.m].flag.notrade) {
+		clif_displaymessage (sd->fd, msg_txt(272));
+		return; //Can't trade in notrade mapflag maps.
+	}
+
 	if ((target_sd = map_id2sd(target_id)) != NULL) {
 		if (!battle_config.invite_request_check) {
 			if (target_sd->guild_invite > 0 || target_sd->party_invite > 0) {

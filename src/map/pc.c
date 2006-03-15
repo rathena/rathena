@@ -2502,35 +2502,37 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	nullpo_retr(1, sd);
 
 	if(n < 0 || n >= MAX_INVENTORY)
-		return 1;
+		return 0;
 
 	if(amount <= 0)
-		return 1;
+		return 0;
 
 	if (sd->status.inventory[n].nameid <= 0 ||
 	    sd->status.inventory[n].amount < amount ||
 	    sd->trade_partner != 0 || sd->vender_id != 0 ||
 	    sd->status.inventory[n].amount <= 0)
-		return 1;
-	
-	if (!pc_candrop(sd,sd->status.inventory[n].nameid))
-	{	//The client does not likes being silently ignored, so we send it a del of 0 qty
-		clif_delitem(sd,n,0);
-		clif_displaymessage (sd->fd, msg_txt(263));
-		return 1;
-	}
+		return 0;
 
+	if (map[sd->bl.m].flag.nodrop) {
+		clif_displaymessage (sd->fd, msg_txt(271));
+		return 0; //Can't drop items in nodrop mapflag maps.
+	}
+	
+	if (!pc_candrop(sd,sd->status.inventory[n].nameid)) {
+		clif_displaymessage (sd->fd, msg_txt(263));
+		return 0;
+	}
+	
 	//Logs items, dropped by (P)layers [Lupus]
 	if(log_config.pick > 0 )
 		log_pick(sd, "P", 0, sd->status.inventory[n].nameid, -amount, (struct item*)&sd->status.inventory[n]);
 	//Logs
 
-	if (map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, NULL, NULL, NULL, 2) != 0)
-		pc_delitem(sd, n, amount, 0);
-	else
-		clif_delitem(sd,n,0);
-
-	return 0;
+	if (!map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, NULL, NULL, NULL, 2))
+		return 0;
+	
+	pc_delitem(sd, n, amount, 0);
+	return 1;
 }
 
 /*==========================================

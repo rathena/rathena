@@ -124,6 +124,7 @@ mf_nowarpto	33
 mf_nonightmaredrop	34
 mf_restricted	35
 mf_nocommand	36
+mf_nodrop	37
 
 cell_wall	1
 cell_water	3

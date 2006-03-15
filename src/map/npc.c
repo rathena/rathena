@@ -2546,6 +2546,9 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	else if (strcmpi(w3,"notrade")==0) {
 		map[m].flag.notrade=1;
 	}
+	else if (strcmpi(w3,"nodrop")==0) {
+		map[m].flag.nodrop=1;
+	}
 	else if (strcmpi(w3,"noskill")==0) {
 		map[m].flag.noskill=1;
 	}
