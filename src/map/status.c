@@ -5503,8 +5503,8 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	case SC_SPLASHER:
 		if (sc->data[type].val4 % 1000 == 0) {
-			char timer[2];
-			sprintf (timer, "%d", sc->data[type].val4/1000);
+			char timer[10];
+			snprintf (timer, 10, "%d", sc->data[type].val4/1000);
 			clif_message(bl, timer);
 		}
 		if((sc->data[type].val4 -= 500) > 0) {

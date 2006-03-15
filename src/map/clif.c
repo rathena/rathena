@@ -320,7 +320,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 				//it's being received by everyone. [Skotlex]
 				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 ) && bl != src_bl) {
 					struct status_change *sc = status_get_sc(src_bl);
-					if(sc && (sc->option)&(OPTION_HIDE|OPTION_CLOAK))
+					if(sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK)))
 					{	//optionÇÃèCê≥
 						switch(((unsigned short*)buf)[0])
 						{

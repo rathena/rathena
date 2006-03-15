@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/14
+	* Fixed a possible crash in Venom Splasher if the countdown is too high.
+	  [Skotlex]
 	* Fixed skill_notok blocking guild skills [Skotlex]
 	* Fixed Napalm vulcan's time2 entry in the skill_cast_db [Skotlex]
 	* Fixed the average_lv column size specification for levels above 255.
