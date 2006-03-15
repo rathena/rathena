@@ -10078,12 +10078,12 @@ int atcommand_clone(
 	}
 
 	if((pl_sd=map_nick2sd((char *)message)) == NULL && (pl_sd=map_charid2sd(atoi(message))) == NULL) {
-		clif_displaymessage(fd, "Player not found.");
+		clif_displaymessage(fd, msg_txt(3));
 		return 0;
 	}
 
 	if(pc_isGM(pl_sd) > pc_isGM(sd)) {
-		clif_displaymessage(fd, "Cannot clone a player of higher GM level than yourself.");
+		clif_displaymessage(fd, msg_txt(126));
 		return 0;
 	}
 		
@@ -10094,7 +10094,7 @@ int atcommand_clone(
 		master = sd->bl.id;
 		if (battle_config.atc_slave_clone_limit
 			&& mob_countslave(&sd->bl) >= battle_config.atc_slave_clone_limit) {
-			clif_displaymessage(fd, "You've reached your slave clones limit.");
+			clif_displaymessage(fd, "");
 			return 0;
 		}
 	}
@@ -10108,13 +10108,12 @@ int atcommand_clone(
 		x = sd->bl.x;
 		y = sd->bl.y;
 	}
-
 		
 	if((x = mob_clone_spawn(pl_sd, (char*)mapindex_id2name(sd->mapindex), x, y, "", master, 0, flag?1:0, 0)) > 0) {
-		clif_displaymessage(fd, msg_txt(126+flag*2));
+		clif_displaymessage(fd, msg_txt(128+flag*2));
 		return 0;
 	}
-	clif_displaymessage(fd, msg_txt(127+flag*2));
+	clif_displaymessage(fd, msg_txt(129+flag*2));
 	return 0;
 }
 

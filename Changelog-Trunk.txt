@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/15
+	* Added item_db2.sql and mob_db2.sql, thanks to Joshuaali [Skotlex]
+	* Added more usage of msg_athena on the slave atcommands messages. [Skotlex]
 	* Fixed twilight pharmacy dropping 1 item to the ground instead of the qty
 	  produced. Thanks to k3dt [Skotlex]
 	* Fixed Plagiarism not working unless you had some sc active. [Skotlex]
