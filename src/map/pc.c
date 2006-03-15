@@ -1164,6 +1164,56 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 	spell[i].card_id = card_id;
 	return 1;
 }
+
+static int pc_bonus_item_drop(struct s_add_drop *drop, short *count, short id, short group, int race, int rate) {
+	int i;
+	//Apply config rate adjustment settings.
+	if (rate >= 0) { //Absolute drop.
+		if (battle_config.item_rate_adddrop != 100)
+			rate = rate*battle_config.item_rate_adddrop/100;
+		if (rate < battle_config.item_drop_adddrop_min)
+			rate = battle_config.item_drop_adddrop_min;
+		else if (rate > battle_config.item_drop_adddrop_max)
+			rate = battle_config.item_drop_adddrop_max;
+	} else { //Relative drop, max/min limits are applied at drop time.
+		if (battle_config.item_rate_adddrop != 100)
+			rate = rate*battle_config.item_rate_adddrop/100;
+		if (rate > -1)
+			rate = -1;
+	}
+	for(i = 0; i < *count; i++) {
+		if(
+			(id && drop[i].id == id) ||
+			(group && drop[i].group == group)
+		) {
+			drop[i].race |= race;
+			if(drop[i].rate > 0 && rate > 0)
+			{	//Both are absolute rates.
+				if (drop[i].rate < rate)
+					drop[i].rate = rate;
+			} else
+			if(drop[i].rate < 0 && rate < 0) {
+				//Both are relative rates.
+				if (drop[i].rate > rate)
+					drop[i].rate = rate;
+			} else if (rate < 0) //Give preference to relative rate.
+					drop[i].rate = rate;
+			return 1;
+		}
+	}
+	if(*count >= MAX_PC_BONUS) {
+		if (battle_config.error_log)
+			ShowWarning("pc_bonus: Reached max (%d) number of added drops per character!\n", MAX_PC_BONUS);
+		return 0;
+	}
+	drop[*count].id = id;
+	drop[*count].group = group;
+	drop[*count].race |= race;
+	drop[*count].rate = rate;
+	(*count)++;
+	return 1;
+}
+
 /*==========================================
  * ? 備品による能力等のボ?ナス設定
  *------------------------------------------
@@ -2003,44 +2053,12 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->sp_gain_race[type2]+=val;
 		break;
 	case SP_ADD_MONSTER_DROP_ITEM:
-		if (sd->state.lr_flag != 2) {
-			for(i = 0; i < sd->add_drop_count; i++) {
-				if(sd->add_drop[i].id == type2) {
-					sd->add_drop[i].race |= (1<<10)|(1<<11);
-					if(sd->add_drop[i].rate < val)
-						sd->add_drop[i].rate = val;
-					break;
-				}
-			}
-			if(i >= sd->add_drop_count && sd->add_drop_count < MAX_PC_BONUS) {
-				sd->add_drop[sd->add_drop_count].id = type2;
-				// all monsters, including boss and non boss monsters
-				sd->add_drop[sd->add_drop_count].race |= (1<<10)|(1<<11);
-				sd->add_drop[sd->add_drop_count].rate = val;
-				sd->add_drop_count++;
-			}
-		}
+		if (sd->state.lr_flag != 2)
+			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, type2, 0, (1<<10)|(1<<11), val);
 		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
-		if (sd->state.lr_flag != 2) {
-			for(i = 0; i < sd->add_drop_count; i++) {
-				if(sd->add_drop[i].group == type2) {
-					sd->add_drop[i].id = 0;
-					sd->add_drop[i].race |= (1<<10)|(1<<11);
-					if(sd->add_drop[i].rate < val)
-						sd->add_drop[i].rate = val;
-					break;
-				}
-			}
-			if(i >= sd->add_drop_count && sd->add_drop_count < MAX_PC_BONUS) {
-				sd->add_drop[sd->add_drop_count].group = type2;
-				sd->add_drop[sd->add_drop_count].id = 0;
-				// all monsters, including boss and non boss monsters
-				sd->add_drop[sd->add_drop_count].race |= (1<<10)|(1<<11);
-				sd->add_drop[sd->add_drop_count].rate = val;
-				sd->add_drop_count++;
-			}
-		}
+		if (sd->state.lr_flag != 2)
+			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, 0, type2, (1<<10)|(1<<11), val);
 		break;
 	case SP_SP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
@@ -2059,27 +2077,12 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 
 int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 {
-	int i;
 	nullpo_retr(0, sd);
 
 	switch(type){
 	case SP_ADD_MONSTER_DROP_ITEM:
-		if(sd->state.lr_flag != 2) {
-			for(i=0;i<sd->add_drop_count;i++) {
-				if(sd->add_drop[i].id == type2) {
-					sd->add_drop[i].race |= 1<<type3;
-					if(sd->add_drop[i].rate < val)
-						sd->add_drop[i].rate = val;
-					break;
-				}
-			}
-			if(i >= sd->add_drop_count && sd->add_drop_count < MAX_PC_BONUS) {
-				sd->add_drop[sd->add_drop_count].id = type2;
-				sd->add_drop[sd->add_drop_count].race |= 1<<type3;
-				sd->add_drop[sd->add_drop_count].rate = val;
-				sd->add_drop_count++;
-			}
-		}
+		if(sd->state.lr_flag != 2)
+			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, type2, 0, 1<<type3, val);
 		break;
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
@@ -2108,25 +2111,8 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		sd->sp_drain_type = val;
 		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
-		if (sd->state.lr_flag != 2) {
-			for(i = 0; i < sd->add_drop_count; i++) {
-				if(sd->add_drop[i].group == type2) {
-					sd->add_drop[i].id = 0;
-					sd->add_drop[i].race |= 1<<type3;
-					if(sd->add_drop[i].rate < val)
-						sd->add_drop[i].rate = val;
-					break;
-				}
-			}
-			if(i >= sd->add_drop_count && sd->add_drop_count < 10) {
-				sd->add_drop[sd->add_drop_count].group = type2;
-				sd->add_drop[sd->add_drop_count].id = 0;
-				// all monsters, including boss and non boss monsters
-				sd->add_drop[sd->add_drop_count].race |= 1<<type3;
-				sd->add_drop[sd->add_drop_count].rate = val;
-				sd->add_drop_count++;
-			}
-		}
+		if (sd->state.lr_flag != 2)
+			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, 0, type2, 1<<type3, val);
 		break;
 
 	default:

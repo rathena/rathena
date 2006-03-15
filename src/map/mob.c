@@ -2712,10 +2712,15 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 					sd->add_drop[i].race & 1<<(mode&MD_BOSS?10:11))
 				{
 					//check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
-					if(sd->add_drop[i].rate<0)
+					if(sd->add_drop[i].rate<0) {
 						//it's negative, then it should be multiplied. e.g. for Mimic,Myst Case Cards, etc
 						// rate = base_rate * (mob_level/10) + 1
 						drop_rate = -sd->add_drop[i].rate*(md->level/10)+1;
+						if (drop_rate < battle_config.item_drop_adddrop_min)
+							drop_rate = battle_config.item_drop_adddrop_min;
+						else if (drop_rate > battle_config.item_drop_adddrop_max)
+							drop_rate = battle_config.item_drop_adddrop_max;
+					}
 					else
 						//it's positive, then it goes as it is
 						drop_rate = sd->add_drop[i].rate;

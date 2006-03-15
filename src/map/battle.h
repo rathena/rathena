@@ -284,7 +284,8 @@ extern struct Battle_Config {
 	unsigned short mob_ghostring_fix;
 	unsigned short pc_attack_attr_none;
 	int item_rate_mvp, item_rate_common,item_rate_card,item_rate_equip,
-		item_rate_heal, item_rate_use, item_rate_treasure;	// Added by RoVeRT, Additional Heal and Usable item rate by Val
+		item_rate_heal, item_rate_use, item_rate_treasure,	// Added by RoVeRT, Additional Heal and Usable item rate by Val
+		item_rate_adddrop;
 	
 	unsigned short logarithmic_drops;
 	unsigned short item_drop_common_min,item_drop_common_max;	// Added by TyrNemesis^
@@ -294,7 +295,7 @@ extern struct Battle_Config {
 	unsigned short item_drop_heal_min,item_drop_heal_max;	// Added by Valatris
 	unsigned short item_drop_use_min,item_drop_use_max;	//End
 	unsigned short item_drop_treasure_min,item_drop_treasure_max; //by [Skotlex]
-
+	unsigned short item_drop_adddrop_min,item_drop_adddrop_max; //[Skotlex]
 	unsigned short prevent_logout;	// Added by RoVeRT
 
 	unsigned short alchemist_summon_reward;	// [Valaris]

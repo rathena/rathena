@@ -591,7 +591,7 @@ struct map_session_data {
 		short class_, rate;
 	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS],
 		add_dmg[MAX_PC_BONUS], add_mdmg[MAX_PC_BONUS];
-	struct { 
+	struct s_add_drop { 
 		short id, group;
 		int race, rate;
 	} add_drop[MAX_PC_BONUS];
