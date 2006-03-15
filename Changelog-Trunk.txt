@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/15
+	* Likely fixed Gravitation not hitting except for the last hit. [Skotlex]
 	* Removed the hardcoded duration of 30 seconds for sleep. [Skotlex]
 	* Fixed rangecheck for pet skill usage of INF_SELF_SKILL type of skills
 	  [Skotlex]
