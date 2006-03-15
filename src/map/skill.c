@@ -1906,7 +1906,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	map_freeblock_lock();
 
 	if(damage > 0 && dmg.flag&BF_SKILL && tsd
-		&& pc_checkskill(tsd,RG_PLAGIARISM) && sc && sc->data[SC_PRESERVE].timer == -1
+		&& pc_checkskill(tsd,RG_PLAGIARISM)
+	  	&& (!sc || sc->data[SC_PRESERVE].timer == -1) 
 		&& damage < tsd->status.hp)
 	{	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
 		if ((!tsd->status.skill[skillid].id || tsd->status.skill[skillid].flag >= 13) &&
@@ -10831,7 +10832,7 @@ int skill_produce_mix( struct map_session_data *sd, int skill_id,
 		if (tmp_item.amount) { //Success
 			if((flag = pc_additem(sd,&tmp_item,tmp_item.amount))) {
 				clif_additem(sd,0,0,flag);
-				map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
+				map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 			}
 			return 1;
 		}
