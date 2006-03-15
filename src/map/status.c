@@ -4009,10 +4009,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if(val3 < 1) val3 = 1;
 			tick = 5000;
 			break;
-		case SC_SLEEP:				/* 睡眠 */
-			if(!(flag&4))
-				tick = 30000;//睡眠はステ?タス耐性に?わらず30秒
-			break;
 
 			/* option2 */
 		case SC_DPOISON:			/* 猛毒 */
@@ -4454,7 +4450,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_MAXOVERTHRUST:
 		case SC_SILENCE:			/* 沈?（レックスデビ?ナ） */
 		case SC_ASSUMPTIO:		/* アスムプティオ */
-			break;
+		case SC_SLEEP:
 		// gs_something1 [Vicious]
 		case SC_MADNESSCANCEL:
 		case SC_ADJUSTMENT:

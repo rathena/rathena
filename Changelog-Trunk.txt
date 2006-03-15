@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/15
+	* Removed the hardcoded duration of 30 seconds for sleep. [Skotlex]
+	* Fixed rangecheck for pet skill usage of INF_SELF_SKILL type of skills
+	  [Skotlex]
+	* Removed inall/exall from atcommand.conf since those two do not exist!
+	  (pointed out by Ancyker) [Skotlex]
+	* @me now uses entry 270 in msg_athena as output format. [Skotlex]
 	* gm_skill_unconditional setting now also overrides skill_partner_check
 	  setting. [Skotlex]
 	* Emulated strtok_r functions to work strictly with ANSI compilers. [Lance]

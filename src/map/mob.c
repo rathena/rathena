@@ -3513,7 +3513,7 @@ int mobskill_use_id(struct mob_data *md,struct block_list *target,int skill_idx)
 
 	switch(skill_id){	/* 何か特殊な処理が必要 */
 	case ALL_RESURRECTION:	/* リザレクション */
-		if(target->type != BL_PC && battle_check_undead(status_get_race(target),status_get_elem_type(target))){	/* 敵がアンデッドなら */
+		if(battle_check_undead(status_get_race(target),status_get_elem_type(target))){	/* 敵がアンデッドなら */
 			forcecast=1;	/* ターンアンデットと同じ詠唱時間 */
 			casttime=skill_castfix(&md->bl, PR_TURNUNDEAD,skill_lv, 0);
 		}

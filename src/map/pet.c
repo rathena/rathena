@@ -315,7 +315,8 @@ static int petskill_castend2(struct pet_data *pd, struct block_list *target, uns
 	} else { //Targeted Skill
 	  	if (!target)
 			return 0;
-		if(!check_distance_bl(&pd->bl, target,
+		if(!skill_get_inf(skill_id)&INF_SELF_SKILL && //No range check for self skills.
+			!check_distance_bl(&pd->bl, target,
 				skill_get_range2(&pd->bl, skill_id, skill_lv)))
 			return 0;
 			
