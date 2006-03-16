@@ -3095,8 +3095,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case GS_BULLSEYE:
-		//race check
-				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		{
+		int race = status_get_race(bl);
+		if(race == 2 || race == 7)
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		else
+			clif_skill_fail(sd,skillid,0,0);
+		}
 		break;
 	case GS_DESPERADO:
 	case GS_SPREADATTACK:
