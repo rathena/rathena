@@ -3117,7 +3117,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		}
 		break;
 	case NJ_ZENYNAGE:
-		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+		if(sd->status.zeny < skilllv*1000)
+			clif_skill_fail(sd,skillid,5,0);
+		else
+			skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case NJ_KASUMIKIRI:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
