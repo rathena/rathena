@@ -450,6 +450,7 @@ struct map_session_data {
 		unsigned size :2; // for tiny/large types
 		unsigned night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
 		unsigned finalsave :1; //Signals whether the final save for the char was done or not yet. Meant to prevent exploits and the like. [Skotlex]
+		unsigned blockedmove :1;
 		unsigned short autoloot;
 		struct guild *gmaster_flag;
 	} state;

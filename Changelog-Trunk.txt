@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/15
+	* mob_chat_sub fix. Added buildin_pcblockmove. [Lance]
 	* BL_PC and BL_MOB control script commands (experimental) [Lance]
 	* Made an adjustment to addspiritball() to allow Gunslingers to summon up to 10 spheres [reddozen]
 	* Fixed Tarot Card of Fate using time instead of time2 which is the one

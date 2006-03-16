@@ -410,6 +410,7 @@ int buildin_pctalk(struct script_state *st);
 int buildin_pcemote(struct script_state *st);
 int buildin_pcfollow(struct script_state *st);
 int buildin_pcstopfollow(struct script_state *st);
+int buildin_pcblockmove(struct script_state *st);
 // <--- [zBuffer] List of player cont commands
 // [zBuffer] List of mob control commands --->
 int buildin_spawnmob(struct script_state *st);
@@ -737,6 +738,7 @@ struct {
 	{buildin_pcemote,"pcemote","ii"},
 	{buildin_pcfollow,"pcfollow","ii"},
 	{buildin_pcstopfollow,"pcstopfollow","i"},
+	{buildin_pcblockmove,"pcblockmove","ii"},
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of mob control commands --->
 	{buildin_spawnmob,"spawnmob","*"},
@@ -9843,6 +9845,24 @@ int buildin_pcwalkxy(struct script_state *st){
 
 	if(sd)
 		pc_walktoxy(sd, x, y);
+
+	return 0;
+}
+
+int buildin_pcblockmove(struct script_state *st){
+	int id, flag;
+	struct map_session_data *sd = NULL;
+
+	id = conv_num(st, & (st->stack->stack_data[st->start + 2]));
+	flag = conv_num(st, & (st->stack->stack_data[st->start + 3]));
+
+	if(id)
+		sd = map_id2sd(id);
+	else
+		sd = script_rid2sd(st);
+
+	if(sd)
+		sd->state.blockedmove = flag > 0;
 
 	return 0;
 }

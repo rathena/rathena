@@ -8874,8 +8874,9 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 		return;
 	}
 
-	if (pc_issit(sd)) //No walking when you are sit!
-		return;
+	// Redundancy, used in pc_can_move already
+	//if (pc_issit(sd)) //No walking when you are sit!
+	//	return;
 	
 	if (clif_cant_act(sd))
 		return;
@@ -8884,6 +8885,9 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 		return;
 
 	if (!pc_can_move(sd))
+		return;
+
+	if(sd->state.blockedmove)
 		return;
 
 	if(sd->sc.count && sd->sc.data[SC_RUN].timer != -1)

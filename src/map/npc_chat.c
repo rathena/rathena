@@ -372,20 +372,6 @@ void npc_chat_finalize(struct npc_data *nd)
 	aFree(npcParse);
 }
 
-int mob_chat_sub(struct block_list *bl, va_list ap){
-	int len;
-	unsigned char *msg = NULL;
-	struct map_session_data *sd = NULL;
-	struct mob_data *md = (struct mob_data *)bl;
-	if(md->nd){
-		msg = va_arg(ap,unsigned char*);
-		len = va_arg(ap,int);
-		sd = va_arg(ap,struct map_session_data *);
-		npc_chat_sub(&md->nd->bl, msg, len, sd);
-	}
-	return 0;
-}
-
 /**
  * Handler called whenever a global message is spoken in a NPC's area
  */
@@ -489,6 +475,14 @@ int npc_chat_sub(struct block_list *bl, va_list ap)
     }
 
     return 0;
+}
+
+int mob_chat_sub(struct block_list *bl, va_list ap){
+	struct mob_data *md = (struct mob_data *)bl;
+	if(md->nd){
+		npc_chat_sub(&md->nd->bl, ap);
+	}
+	return 0;
 }
 
 // Various script builtins used to support these functions
