@@ -1929,7 +1929,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	{
 		if (DIFF_TICK(md->next_walktime, tick) > 7000 &&
 			(md->walkpath.path_len == 0 || md->walkpath.path_pos >= md->walkpath.path_len))
-			md->next_walktime = tick + 3000 * rand() % 2000;
+			md->next_walktime = tick + 3000 + rand() % 2000;
 		// Random movement
 		if (mob_randomwalk(md,tick))
 			return 0;

@@ -779,10 +779,10 @@ int skillnotok(int skillid, struct map_session_data *sd)
 	if (i >= GD_SKILLBASE)
 		i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
 	
-	if (sd->blockskill[i] > 0)
+	if (i > MAX_SKILL || i < 0)
 		return 1;
 	
-	if (i > MAX_SKILL || i < 0)
+	if (sd->blockskill[i] > 0)
 		return 1;
 
 	if (battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
