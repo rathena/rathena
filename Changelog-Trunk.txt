@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/16
+	* @kill_monster/@kill_monster2 won't touch Guardians/Emperium now. [Skotlex]
 	* Small change in the random item reading function, may fix @itemdbreload
 	  messing up random item searches. [Skotlex]
 	* Restricted GS_BULLSEYE to only be used on demi-human or brute monster targets [MasterOfMuppets]

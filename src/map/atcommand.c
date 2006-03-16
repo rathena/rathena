@@ -3633,12 +3633,15 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap) {
 	nullpo_retr(0, md=(struct mob_data *)bl);
 	flag = va_arg(ap, int);
 
+	if (md->guardian_data)
+		return 0; //Do not touch WoE mobs!
+	
 	if (flag)
 		mob_damage(NULL, md, md->hp, 2);
 	else
 		mob_delete(md);
 	
-	return 0;
+	return 1;
 }
 void atcommand_killmonster_sub(
 	const int fd, struct map_session_data* sd, const char* message,
