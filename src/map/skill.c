@@ -5338,7 +5338,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					if (dstsd) pc_heal(dstsd,0,-dstsd->status.sp);
 					break;
 				case 1:	// matk halved
-					sc_start(bl,SC_INCMATKRATE,100,-50,skill_get_time(skillid,skilllv));
+					sc_start(bl,SC_INCMATKRATE,100,-50,skill_get_time2(skillid,skilllv));
 					break;
 				case 2:	// all buffs removed
 					status_change_clear_buffs(bl);
@@ -5352,7 +5352,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					}
 					break;
 				case 4:	// atk halved
-					sc_start(bl,SC_INCATKRATE,100,-50,skill_get_time(skillid,skilllv));
+					sc_start(bl,SC_INCATKRATE,100,-50,skill_get_time2(skillid,skilllv));
 					break;
 				case 5:	// 2000HP heal, random teleported
 					battle_heal(src, src, 2000, 0, 0);
@@ -5368,23 +5368,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case 7:	// stop freeze or stoned
 					{
 						int sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
-						sc_start(bl,sc[rand()%3],100,skilllv,skill_get_time(skillid,skilllv));
+						sc_start(bl,sc[rand()%3],100,skilllv,skill_get_time2(skillid,skilllv));
 					}
 					break;
 				case 8:	// curse coma and poison
-					sc_start(bl,SC_COMA,100,skilllv,skill_get_time(skillid,skilllv));
-					sc_start(bl,SC_CURSE,100,skilllv,skill_get_time(skillid,skilllv));
-					sc_start(bl,SC_POISON,100,skilllv,skill_get_time(skillid,skilllv));
+					sc_start(bl,SC_COMA,100,skilllv,skill_get_time2(skillid,skilllv));
+					sc_start(bl,SC_CURSE,100,skilllv,skill_get_time2(skillid,skilllv));
+					sc_start(bl,SC_POISON,100,skilllv,skill_get_time2(skillid,skilllv));
 					break;
 				case 9:	// chaos
-					sc_start(bl,SC_CONFUSION,100,skilllv,skill_get_time(skillid,skilllv));
+					sc_start(bl,SC_CONFUSION,100,skilllv,skill_get_time2(skillid,skilllv));
 					break;
 				case 10:	// 6666 damage, atk matk halved, cursed
 					battle_damage(src, bl, 6666, 0);
 					clif_damage(src,bl,tick,0,0,6666,0,0,0);
-					sc_start(bl,SC_INCATKRATE,100,-50,skill_get_time(skillid,skilllv));
-					sc_start(bl,SC_INCMATKRATE,100,-50,skill_get_time(skillid,skilllv));
-					sc_start(bl,SC_CURSE,skilllv,100,skill_get_time(skillid,skilllv));
+					sc_start(bl,SC_INCATKRATE,100,-50,skill_get_time2(skillid,skilllv));
+					sc_start(bl,SC_INCMATKRATE,100,-50,skill_get_time2(skillid,skilllv));
+					sc_start(bl,SC_CURSE,skilllv,100,skill_get_time2(skillid,skilllv));
 					break;
 				case 11:	// 4444 damage
 					battle_damage(src, bl, 4444, 0);
@@ -5394,11 +5394,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					sc_start(bl,SC_STUN,100,skilllv,5000);
 					break;
 				case 13:	// atk,matk,hit,flee,def reduced
-					sc_start(bl,SC_INCATKRATE,100,-20,skill_get_time(skillid,skilllv));
-					sc_start(bl,SC_INCMATKRATE,100,-20,skill_get_time(skillid,skilllv));
-					sc_start(bl,SC_INCHITRATE,100,-20,skill_get_time(skillid,skilllv));
-					sc_start(bl,SC_INCFLEERATE,100,-20,skill_get_time(skillid,skilllv));
-					sc_start(bl,SC_INCDEFRATE,100,-20,skill_get_time(skillid,skilllv));
+					sc_start(bl,SC_INCATKRATE,100,-20,skill_get_time2(skillid,skilllv));
+					sc_start(bl,SC_INCMATKRATE,100,-20,skill_get_time2(skillid,skilllv));
+					sc_start(bl,SC_INCHITRATE,100,-20,skill_get_time2(skillid,skilllv));
+					sc_start(bl,SC_INCFLEERATE,100,-20,skill_get_time2(skillid,skilllv));
+					sc_start(bl,SC_INCDEFRATE,100,-20,skill_get_time2(skillid,skilllv));
 					break;
 				default:
 					break;			

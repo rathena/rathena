@@ -3542,6 +3542,13 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			return 0;
 	}
 	
+	//SC duration reduction.
+	if(!(flag&(2|4)) && tick) {
+		tick = status_get_sc_tick(bl, type, tick);
+		if (tick <= 0)
+			return 0;
+	}
+
 	race=status_get_race(bl);
 	mode=status_get_mode(bl);
 	elem=status_get_elem_type(bl);
@@ -3790,13 +3797,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		(sc->count)--;
 		delete_timer(sc->data[type].timer, status_change_timer);
 		sc->data[type].timer = -1;
-	}
-
-	//SC duration reduction.
-	if(!(flag&(2|4)) && tick) {
-		tick = status_get_sc_tick(bl, type, tick);
-		if (tick < 0)
-			return 0;
 	}
 
 	switch(type){	/* ˆÙí‚ÌŽí—Þ‚²‚Æ‚Ì?— */

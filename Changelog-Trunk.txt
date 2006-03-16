@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/15
+	* Fixed Tarot Card of Fate using time instead of time2 which is the one
+	  that actually holds the effect duration. [Skotlex]
 	* Fixed mob random walk interval being set to up to 6K seconds in some
 	  instances. [Skotlex]
 	* Added mapflag nodrop (prevents droping items to the ground). [Skotlex]
