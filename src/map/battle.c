@@ -3019,10 +3019,14 @@ struct Damage  battle_calc_misc_attack(
 		aflag = (aflag&~BF_RANGEMASK)|BF_LONG;
 		break;
 	case NJ_ZENYNAGE:
-		damage=1000*skill_lv;
-		if(skill_lv == 10) damage -= 1;
+		{
+		int dmgnage = (500*skill_lv)+rand()%(500*skill_lv);
+		damage=dmgnage;
+		sd->status.zeny -= dmgnage;
+		clif_updatestatus(sd,SP_ZENY);
 		if(map_flag_vs(bl->m) || is_boss(bl))
 				damage=damage/2; //temp value
+		}
 		break;
 	}
 
