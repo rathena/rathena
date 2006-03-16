@@ -407,6 +407,8 @@ static int itemdb_read_randomitem(void)
 		char *fn=(char *) data[i].filename;
 
 		*pdefault = 0;
+		*pc = 0; //zero the count in case we are reloading. [Skotlex]
+		
 		sprintf(line, "%s/%s", db_path, fn);
 		if( (fp=fopen(line,"r"))==NULL ){
 			ShowError("can't read %s\n",line);
