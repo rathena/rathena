@@ -9109,6 +9109,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 
 #ifdef PCRE_SUPPORT
 	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, message, strlen(message), &sd->bl);
+	map_foreachinrange(mob_chat_sub, &sd->bl, AREA_SIZE, BL_MOB, message, strlen(message), &sd->bl);
 #endif
 
 	// Celest

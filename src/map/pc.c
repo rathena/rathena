@@ -4491,7 +4491,7 @@ int pc_stop_following (struct map_session_data *sd)
 int pc_follow(struct map_session_data *sd,int target_id)
 {
 	struct block_list *bl = map_id2bl(target_id);
-	if (bl == NULL || bl->type != BL_PC)
+	if (bl == NULL /*|| bl->type != BL_PC*/)
 		return 1;
 	if (sd->followtimer != -1)
 		pc_stop_following(sd);

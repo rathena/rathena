@@ -872,6 +872,8 @@ struct mob_data {
 	int skilltarget;
 	int def_ele;
 	int master_id,master_dist;
+
+	struct npc_data *nd;
 	
 	short skillx,skilly,skillid,skilllv,skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];

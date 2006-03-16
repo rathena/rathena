@@ -16,6 +16,7 @@
 
 #ifdef PCRE_SUPPORT
 void npc_chat_finalize(struct npc_data *nd);
+int mob_chat_sub(struct block_list *bl, va_list ap);
 #endif
 int npc_chat_sub(struct block_list *bl, va_list ap);
 int npc_event_dequeue(struct map_session_data *sd);

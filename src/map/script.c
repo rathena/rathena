@@ -404,6 +404,26 @@ int buildin_callshop(struct script_state *st); // [Skotlex]
 int buildin_equip(struct script_state *st);
 int buildin_autoequip(struct script_state *st);
 int buildin_setbattleflag(struct script_state *st);
+// [zBuffer] List of player cont commands --->
+int buildin_pcwalkxy(struct script_state *st);
+int buildin_pctalk(struct script_state *st);
+int buildin_pcemote(struct script_state *st);
+int buildin_pcfollow(struct script_state *st);
+int buildin_pcstopfollow(struct script_state *st);
+// <--- [zBuffer] List of player cont commands
+// [zBuffer] List of mob control commands --->
+int buildin_spawnmob(struct script_state *st);
+int buildin_removemob(struct script_state *st);
+int buildin_mobwalk(struct script_state *st);
+int buildin_getmobdata(struct script_state *st);
+int buildin_setmobdata(struct script_state *st);
+int buildin_mobattack(struct script_state *st);
+int buildin_mobstop(struct script_state *st);
+int buildin_mobassist(struct script_state *st);
+int buildin_mobtalk(struct script_state *st);
+int buildin_mobemote(struct script_state *st);
+int buildin_mobattach(struct script_state *st);
+// <--- [zBuffer] List of mob control commands
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
@@ -711,6 +731,26 @@ struct {
 	{buildin_setitemscript,"setitemscript","is"}, //Set NEW item bonus script. Lupus
 	{buildin_disguise,"disguise","i"}, //disguise player. Lupus
 	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
+	// [zBuffer] List of player cont commands --->
+	{buildin_pcwalkxy,"pcwalkxy","iii"},
+	{buildin_pctalk,"pctalk","is"},
+	{buildin_pcemote,"pcemote","ii"},
+	{buildin_pcfollow,"pcfollow","ii"},
+	{buildin_pcstopfollow,"pcstopfollow","i"},
+	// <--- [zBuffer] List of player cont commands
+	// [zBuffer] List of mob control commands --->
+	{buildin_spawnmob,"spawnmob","*"},
+	{buildin_removemob,"removemob","*"},
+	{buildin_mobwalk,"mobwalk","*"},
+	{buildin_getmobdata,"getmobdata","*"},
+	{buildin_setmobdata,"setmobdata","*"},
+	{buildin_mobattack,"mobattack","*"},
+	{buildin_mobstop,"mobstop","*"},
+	{buildin_mobassist,"mobassist","*"},
+	{buildin_mobtalk,"mobtalk","*"},
+	{buildin_mobemote,"mobemote","*"},
+	{buildin_mobattach,"mobattach","*"},
+// <--- [zBuffer] List of mob control commands
 	{NULL,NULL,NULL},
 };
 
@@ -9787,6 +9827,353 @@ int buildin_delmonsterdrop(struct script_state *st)
 }
 */
 
+// [zBuffer] List of player cont commands --->
+int buildin_pcwalkxy(struct script_state *st){
+	int id, x, y;
+	struct map_session_data *sd = NULL;
+
+	id = conv_num(st, & (st->stack->stack_data[st->start + 2]));
+	x = conv_num(st, & (st->stack->stack_data[st->start + 3]));
+	y = conv_num(st, & (st->stack->stack_data[st->start + 4]));
+
+	if(id)
+		sd = map_id2sd(id);
+	else
+		sd = script_rid2sd(st);
+
+	if(sd)
+		pc_walktoxy(sd, x, y);
+
+	return 0;
+}
+
+int buildin_pctalk(struct script_state *st){
+	int id;
+	char *str;
+	char message[255];
+	struct map_session_data *sd = NULL;
+
+	id = conv_num(st, & (st->stack->stack_data[st->start + 2]));
+	str = conv_str(st, & (st->stack->stack_data[st->start + 3]));
+
+	if(id)
+		sd = map_id2sd(id);
+	else
+		sd = script_rid2sd(st);
+
+	if(sd){
+		memcpy(message, sd->status.name, NAME_LENGTH);
+		strcat(message," : ");
+		strncat(message,str, 254); //Prevent overflow possibility. [Skotlex]
+		clif_message(&(sd->bl), message);
+		clif_displaymessage(sd->fd, message);
+	}
+
+	return 0;
+}
+
+int buildin_pcemote(struct script_state *st) {
+	int id, emo;
+	struct map_session_data *sd = NULL;
+
+	id = conv_num(st, & (st->stack->stack_data[st->start + 2]));
+	emo = conv_num(st, & (st->stack->stack_data[st->start + 3]));
+
+	if(id)
+		sd = map_id2sd(id);
+	else
+		sd = script_rid2sd(st);
+
+	if(sd)
+		clif_emotion(&sd->bl,emo);
+
+	return 0;
+
+}
+
+int buildin_pcfollow(struct script_state *st) {
+	int id, targetid;
+	struct map_session_data *sd = NULL;
+
+
+	id = conv_num(st, & (st->stack->stack_data[st->start + 2]));
+	targetid = conv_num(st, & (st->stack->stack_data[st->start + 3]));
+
+	if(id)
+		sd = map_id2sd(id);
+	else
+		sd = script_rid2sd(st);
+
+	if(sd)
+		pc_follow(sd, targetid);
+
+    return 0;
+}
+
+int buildin_pcstopfollow(struct script_state *st) {
+	int id;
+	struct map_session_data *sd = NULL;
+
+
+	id = conv_num(st, & (st->stack->stack_data[st->start + 2]));
+
+	if(id)
+		sd = map_id2sd(id);
+	else
+		sd = script_rid2sd(st);
+
+	if(sd)
+		pc_stop_following(sd);
+
+	return 0;
+}
+// <--- [zBuffer] List of player cont commands
+// [zBuffer] List of mob control commands --->
+int buildin_spawnmob(struct script_state *st){
+	int class_,x,y,id;
+	char *str,*map,*event="";
+	struct mob_data *md = NULL;
+
+	// Who?
+	str		=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	// What?
+	class_	=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	// Where?
+	map		=conv_str(st,& (st->stack->stack_data[st->start+4]));
+	x		=conv_num(st,& (st->stack->stack_data[st->start+5]));
+	y		=conv_num(st,& (st->stack->stack_data[st->start+6]));
+	// When?
+	if( st->end > st->start+8 )
+		event=conv_str(st,& (st->stack->stack_data[st->start+7]));
+		
+	id = mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,1,event);
+	if(id){
+		md = (struct mob_data *)map_id2bl(id);
+		if(md){
+			md->mode = md->db->mode;
+		}
+		push_val(st->stack,C_INT,id);
+	}
+
+	return 0;
+}
+
+int buildin_removemob(struct script_state *st) {
+	int id;
+	struct mob_data *md = NULL;
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+
+	md = (struct mob_data *)map_id2bl(id);
+	if(md)
+		mob_delete(md);
+
+	return 0;
+}
+
+int buildin_mobwalk(struct script_state *st){
+	int id,x,y;
+	struct mob_data *md = NULL;
+
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	x = conv_num(st, & (st->stack->stack_data[st->start+3]));
+	y = conv_num(st, & (st->stack->stack_data[st->start+4]));
+
+	md = (struct mob_data *)map_id2bl(id);
+	if(md)
+		push_val(st->stack,C_INT,mob_walktoxy(md,x,y,0)); // We'll use harder calculations.
+
+	return 0;
+}
+
+int buildin_getmobdata(struct script_state *st) {
+	int num, id;
+	char *name;
+	struct mob_data *md = NULL;
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	if(!(md = (struct mob_data *)map_id2bl(id)) || st->stack->stack_data[st->start+3].type!=C_NAME ){
+		ShowWarning("buildin_getmobdata: Error in argiment!\n");
+	} else {
+		num=st->stack->stack_data[st->start+2].u.num;
+		name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+		setd_sub(map_id2sd(st->rid),name,0,(void *)md->class_);
+		setd_sub(map_id2sd(st->rid),name,1,(void *)md->level);
+		setd_sub(map_id2sd(st->rid),name,2,(void *)md->hp);
+		setd_sub(map_id2sd(st->rid),name,3,(void *)md->max_hp);
+		setd_sub(map_id2sd(st->rid),name,4,(void *)md->master_id);
+		setd_sub(map_id2sd(st->rid),name,5,(void *)md->bl.m);
+		setd_sub(map_id2sd(st->rid),name,6,(void *)md->bl.x);
+		setd_sub(map_id2sd(st->rid),name,7,(void *)md->bl.y);
+		setd_sub(map_id2sd(st->rid),name,8,(void *)md->speed);
+		setd_sub(map_id2sd(st->rid),name,9,(void *)md->mode);
+		setd_sub(map_id2sd(st->rid),name,10,(void *)md->state.state);
+		setd_sub(map_id2sd(st->rid),name,11,(void *)md->special_state.ai);
+		setd_sub(map_id2sd(st->rid),name,12,(void *)md->db->option);
+		setd_sub(map_id2sd(st->rid),name,13,(void *)md->db->sex);
+		setd_sub(map_id2sd(st->rid),name,14,(void *)md->db->view_class);
+		setd_sub(map_id2sd(st->rid),name,15,(void *)md->db->hair);
+		setd_sub(map_id2sd(st->rid),name,16,(void *)md->db->hair_color);
+		setd_sub(map_id2sd(st->rid),name,17,(void *)md->db->head_buttom);
+		setd_sub(map_id2sd(st->rid),name,18,(void *)md->db->head_mid);
+		setd_sub(map_id2sd(st->rid),name,19,(void *)md->db->head_top);
+		setd_sub(map_id2sd(st->rid),name,20,(void *)md->db->clothes_color);
+		setd_sub(map_id2sd(st->rid),name,21,(void *)md->db->equip);
+		setd_sub(map_id2sd(st->rid),name,22,(void *)md->db->weapon);
+		setd_sub(map_id2sd(st->rid),name,23,(void *)md->db->shield);
+		setd_sub(map_id2sd(st->rid),name,24,(void *)md->dir);
+	}
+	return 0;
+}
+
+int buildin_setmobdata(struct script_state *st){
+	int num, id, i = 0;
+	char *name;
+	struct script_data dat;
+	struct mob_data *md = NULL;
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	if(!(md = (struct mob_data *)map_id2bl(id)) || st->stack->stack_data[st->start+3].type!=C_NAME ){
+		ShowWarning("buildin_setmobdata: Error in argiment!\n");
+	} else {
+#define INCREMENT dat.type=C_NAME; dat.u.num=add_str((unsigned char *) name)+(i<<24); get_val(st,&dat); i++
+#define VALUE(x) x = (dat.u.num == -1)? x : dat.u.num
+		num=st->stack->stack_data[st->start+2].u.num;
+		name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+		INCREMENT; VALUE(md->class_);			INCREMENT; VALUE(md->level);
+		INCREMENT; VALUE(md->hp);				INCREMENT; VALUE(md->max_hp);
+		INCREMENT; VALUE(md->hp);				INCREMENT; VALUE(md->master_id);
+		INCREMENT; VALUE(md->bl.m);				INCREMENT; VALUE(md->bl.x);
+		INCREMENT; VALUE(md->bl.y);				INCREMENT; VALUE(md->speed);
+		INCREMENT; VALUE(md->mode);				INCREMENT; VALUE(md->state.state);
+		INCREMENT; VALUE(md->special_state.ai);	INCREMENT; VALUE(md->db->option);
+		INCREMENT; VALUE(md->db->sex);			INCREMENT; VALUE(md->db->view_class);
+		INCREMENT; VALUE(md->db->hair);			INCREMENT; VALUE(md->db->hair_color);
+		INCREMENT; VALUE(md->db->head_buttom);	INCREMENT; VALUE(md->db->head_mid);
+		INCREMENT; VALUE(md->db->head_top);		INCREMENT; VALUE(md->db->clothes_color);
+		INCREMENT; VALUE(md->db->equip);		INCREMENT; VALUE(md->db->weapon);
+		INCREMENT; VALUE(md->dir);
+	}
+	return 0;
+}
+
+int buildin_mobattack(struct script_state *st) {
+	int id;
+	char *target;
+	struct mob_data *md = NULL;
+	struct map_session_data *sd = NULL;
+	struct block_list *bl = NULL;
+	
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	target = conv_str(st, & (st->stack->stack_data[st->start+3]));
+
+	if((sd = map_nick2sd(target)) != NULL || (bl = map_id2bl(atoi(target))) != NULL) {
+		if(sd) {
+			md = (struct mob_data *)map_id2bl(id);
+			if(md) {
+				md->target_id = sd->bl.id;
+				md->state.targettype = ATTACKABLE;
+				md->special_state.ai = 1;
+				md->min_chase = distance_bl(bl,&md->bl) + md->db->range2;
+			}
+		} else {
+			if(bl->type == BL_MOB || bl->type == BL_PC) {
+				md = (struct mob_data *)map_id2bl(id);
+				if(md) {
+					md->target_id = bl->id;
+					md->state.targettype = ATTACKABLE;
+					md->special_state.ai = 1;
+					md->min_chase = distance_bl(bl,&md->bl) + md->db->range2;
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+int buildin_mobstop(struct script_state *st) {
+	int id;
+	struct mob_data *md = NULL;
+
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+
+	md = (struct mob_data *)map_id2bl(id);
+	if(md){
+		mob_stopattack(md);
+		mob_stop_walking(md,0);
+		md->master_id = md->bl.id; // Quick hack to stop random walking.
+	}
+
+	return 0;
+}
+
+int buildin_mobassist(struct script_state *st) {
+	int id;
+	char *target;
+	struct mob_data *md = NULL;
+	struct block_list *bl = NULL;
+
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	target = conv_str(st, & (st->stack->stack_data[st->start+3]));
+
+	if((bl =&(map_nick2sd(target)->bl)) || (bl = map_id2bl(atoi(target)))) {
+		md = (struct mob_data *)map_id2bl(id);
+		if(md) {
+			md->master_id = bl->id;
+			if(bl->type == BL_PC)
+				md->target_id = map_id2sd(bl->id)->attacktarget;
+			else if(bl->type == BL_MOB)
+				md->target_id = ((struct mob_data *)bl)->target_id;
+			if(map_id2bl(md->target_id)){
+				md->state.targettype = ATTACKABLE;
+				md->min_chase = distance_bl(&md->bl,map_id2bl(md->target_id)) + md->db->range2;
+			}
+		}
+	}
+	
+	return 0;
+}
+
+int buildin_mobtalk(struct script_state *st)
+{
+	char *str;
+	int id;
+	char message[255];
+
+	struct mob_data *md = NULL;
+
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	str=conv_str(st,& (st->stack->stack_data[st->start+3]));
+
+	md = (struct mob_data *)map_id2bl(id);
+	if(md) {
+		memcpy(message, md->name, NAME_LENGTH);
+		strcat(message," : ");
+		strncat(message,str, 254); //Prevent overflow possibility. [Skotlex]
+		clif_message(&(md->bl), message);
+	}
+
+	return 0;
+}
+
+int buildin_mobemote(struct script_state *st) {
+	int id, emo;
+	struct mob_data *md = NULL;
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	emo = conv_num(st, & (st->stack->stack_data[st->start+3]));
+	if((md = (struct mob_data *)map_id2bl(id)))
+		clif_emotion(&md->bl,emo);
+	return 0;
+}
+
+int buildin_mobattach(struct script_state *st){
+	int id;
+	struct mob_data *md = NULL;
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	if((md = (struct mob_data *)map_id2bl(id)))
+		md->nd = (struct npc_data *)map_id2bl(st->oid);
+	return 0;
+}
+
+// <--- [zBuffer] List of mob control commands
 //
 // ŽÀs•”main
 //

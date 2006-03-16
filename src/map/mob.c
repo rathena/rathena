@@ -2281,15 +2281,27 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	int drop_rate;
 	int base_drop_delay;
 	int race;
+	char buffer[64];
 	
 	nullpo_retr(0, md); //srcはNULLで呼ばれる場合もあるので、他でチェック
 
 	max_hp = status_get_max_hp(&md->bl);
 	race = status_get_race(&md->bl);
 
-	if(src && src->type == BL_PC) {
-		sd = (struct map_session_data *)src;
-		mvp_sd = sd;
+	if(src){
+		if(md->nd){
+			sprintf(buffer, "$@%d_attacker", md->bl.id);
+			set_var(NULL, buffer, src->id);
+			sprintf(buffer, "$@%d_attacktype", md->bl.id);
+			set_var(NULL, buffer, src->type);
+			sprintf(buffer, "%s::OnDamage", md->nd->exname);
+			npc_event_do(buffer);
+			return 0;
+		}
+		if(src->type == BL_PC) {
+			sd = (struct map_session_data *)src;
+			mvp_sd = sd;
+		}
 	}
 
 	if(md->bl.prev==NULL){
