@@ -1445,7 +1445,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
  - rate goes from 0 to 10000 (100.00%)
  - flag is a BCT_ flag to indicate which type of adjustment should be used
    (BCT_ENEMY/BCT_PARTY/BCT_SELF) are the valid values.
--------------------------------------------------------------------------*/
+--------------------------------------------------------------------------*/
 int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int flag) {
 	static int where_list[4] = {EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM};
 	static int scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM };
@@ -1531,7 +1531,7 @@ int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int
  If count&0x10000, the direction is to the back of the target, otherwise is away from the src.
  If count&0x20000, position update packets must not be sent.
  IF count&0X40000, direction is random.
--------------------------------------------------------------------------*/
+--------------------------------------------------------------------------*/
 int skill_blown( struct block_list *src, struct block_list *target,int count)
 {
 	int dx=0,dy=0,nx,ny;
@@ -1913,7 +1913,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		if ((!tsd->status.skill[skillid].id || tsd->status.skill[skillid].flag >= 13) &&
 			can_copy(tsd,skillid))	// Split all the check into their own function [Aru]
 		{
-			//?‚É?‚ñ‚Å‚¢‚éƒXƒLƒ‹‚ª‚ ‚ê‚ÎŠY?ƒXƒLƒ‹‚ğÁ‚·
+			//?‚É?‚ñ‚Å‚¢‚éƒXƒLƒ‹‚ª‚ ‚ê‚ÎŠY?ƒXƒLƒ‹‚ğÁ‚·
 			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == 13){
 				tsd->status.skill[tsd->cloneskill_id].id = 0;
 				tsd->status.skill[tsd->cloneskill_id].lv = 0;
@@ -2110,7 +2110,7 @@ int skill_check_unit_range(int m,int x,int y,int skillid,int skilllv)
 		return 0;
 	}
 
-	// ‚Æ‚è‚ ‚¦‚¸?³•ûŒ`‚Ìƒ†ƒjƒbƒgƒŒƒCƒAƒEƒg‚Ì‚İ‘Î‰
+	// ‚Æ‚è‚ ‚¦‚¸?³•ûŒ`‚Ìƒ†ƒjƒbƒgƒŒƒCƒAƒEƒg‚Ì‚İ‘Î‰
 	range += layout_type;
 	return map_foreachinarea(skill_check_unit_range_sub,m,
 			x-range,y-range,x+range,y+range,BL_SKILL,skillid);
@@ -2159,7 +2159,7 @@ int skill_check_unit_range2(struct block_list *bl, int m,int x,int y,int skillid
 				ShowError("skill_check_unit_range2: unsupported layout type %d for skill %d\n",layout_type,skillid);
 				return 0;
 			}
-			// ‚Æ‚è‚ ‚¦‚¸?³•ûŒ`‚Ìƒ†ƒjƒbƒgƒŒƒCƒAƒEƒg‚Ì‚İ‘Î‰
+			// ‚Æ‚è‚ ‚¦‚¸?³•ûŒ`‚Ìƒ†ƒjƒbƒgƒŒƒCƒAƒEƒg‚Ì‚İ‘Î‰
 			range = skill_get_unit_range(skillid,skilllv) + layout_type;
 		}
 		break;
@@ -5063,7 +5063,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,gain_hp,1);
 		}
 		break;
-	case WE_FEMALE:				/* ‚ ‚È‚½‚Ì?‚É??µ‚É‚È‚è‚Ü‚· */
+	case WE_FEMALE:				/* ‚ ‚È‚½‚Ì?‚É??µ‚É‚È‚è‚Ü‚· */
 		if(sd && dstsd){
 			int sp_rate=(skilllv <= 0)? 0:skill_db[skillid].sp_rate[skilllv-1];
 			int gain_sp=dstsd->status.max_sp*abs(sp_rate)/100;// The earned is the same % of the target SP than it costed the caster. [Skotlex]
@@ -7351,7 +7351,7 @@ int skill_unit_onlimit(struct skill_unit *src,unsigned int tick)
 	case UNT_ICEWALL:	/* ƒAƒCƒXƒEƒH?ƒ‹ */
 		clif_changemapcell(src->bl.m,src->bl.x,src->bl.y,src->val2,1);
 		break;
-	case UNT_CALLFAMILY:	/* ‚ ‚È‚½‚É?‚¢‚½‚¢ */
+	case UNT_CALLFAMILY:	/* ‚ ‚È‚½‚É?‚¢‚½‚¢ */
 		{
 			struct map_session_data *sd = NULL;
 			if(src->val1 && (sd = map_charid2sd(src->val1))
@@ -8118,15 +8118,14 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
+		zeny = 1;
 		break;
+
 	case GS_FLING:
 	case GS_TRIPLEACTION:
 	case GS_MAGICALBULLET:
 	case GS_CRACKER:
-		if(sd->spiritball < 1) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
+		spiritball = 1;
 		if (skill != GS_MAGICALBULLET)
 			arrow_flag = 1;
 		if(sd->equip_index[10] < 0) {
@@ -8134,33 +8133,31 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			return 0;
 		}
 		break;
+
 	case GS_BULLSEYE:
-		if(sd->spiritball < 5) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
+		spiritball = 5;
 		if(sd->equip_index[10] < 0) {
 			clif_arrow_fail(sd,0);
 			return 0;
 		}
 		break;
+
 	case GS_MADNESSCANCEL:
-		if(sd->spiritball < 4 || sd->sc.data[SC_ADJUSTMENT].timer!=-1) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
+		spiritball = 4;
+		if(sd->spiritball >= 4 && sd->sc.data[SC_ADJUSTMENT].timer!=-1)
+			sd->sc.data[SC_ADJUSTMENT].timer = -1;
 		break;
+
 	case GS_ADJUSTMENT:
-		if(sd->spiritball < 2 || sd->sc.data[SC_MADNESSCANCEL].timer != -1) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
-	case GS_INCREASING:
-		if(sd->spiritball < 2) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
+		spiritball = 2;
+		if(sd->spiritball >= 2 && sd->sc.data[SC_MADNESSCANCEL].timer != -1)
+			sd->sc.data[SC_MADNESSCANCEL].timer = -1;
 		break;
+
+	case GS_INCREASING:
+		spiritball = 2;
+		break;
+
 	//Bullets	13200~13202
 	//Nade	13203~13207
 	//Shuriken	13250~13254
@@ -8592,7 +8589,7 @@ int skill_use_id (struct map_session_data *sd, int target_id, int skill_num, int
 		return 0;
 	}
 	
-	//’¼‘O‚ÌƒXƒLƒ‹‚ª‰½‚©?‚¦‚é•K—v‚Ì‚ ‚éƒXƒLƒ‹
+	//’¼‘O‚ÌƒXƒLƒ‹‚ª‰½‚©?‚¦‚é•K—v‚Ì‚ ‚éƒXƒLƒ‹
 	switch (skill_num) {
 	case SA_CASTCANCEL:
 		if (sd->skillid != skill_num){ //ƒLƒƒƒXƒgƒLƒƒƒ“ƒZƒ‹©?‚Í?‚¦‚È‚¢
@@ -8948,6 +8945,7 @@ int skill_castcancel (struct block_list *bl, int type)
 
 	return 1;
 }
+
 /*=========================================
  * ƒuƒ‰ƒ“ƒfƒBƒbƒVƒ…ƒXƒsƒA ?‰Šú”Í?Œˆ’è
  *----------------------------------------
@@ -9755,7 +9753,7 @@ int skill_enchant_elemental_end (struct block_list *bl, int type)
 	return 0;
 }
 
-/* ƒNƒ??ƒLƒ“ƒO??¸?iü‚è‚ÉˆÚ“®•s‰Â”\’n?‚ª‚ ‚é‚©?j */
+/* ƒNƒ??ƒLƒ“ƒO??¸?iü‚è‚ÉˆÚ“®•s‰Â”\’n?‚ª‚ ‚é‚©?j */
 int skill_check_cloaking(struct block_list *bl)
 {
 	struct map_session_data *sd = NULL;
@@ -10748,6 +10746,7 @@ int skill_produce_mix( struct map_session_data *sd, int skill_id,
 				case AM_PHARMACY:
 				case AM_TWILIGHT1:
 				case AM_TWILIGHT2:
+
 				case AM_TWILIGHT3:
 					flag = battle_config.produce_potion_name_input;
 					break;

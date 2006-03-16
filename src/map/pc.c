@@ -193,6 +193,8 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max) {
 
 	if(max > MAX_SKILL_LEVEL)
 		max = MAX_SKILL_LEVEL;
+	if((sd->class_&MAPID_BASEMASK)==MAPID_GUNSLINGER)
+		max = 10;
 	if(sd->spiritball < 0)
 		sd->spiritball = 0;
 
@@ -623,6 +625,7 @@ int pc_isequip(struct map_session_data *sd,int n)
 			//Spirit of Super Novice equip bonuses. [Skotlex]
 			if (sd->status.base_level > 90 && item->equip & 0x301)
 				return 1; //Can equip all helms
+
 			if (sd->status.base_level > 96 && item->equip & 0x022 && item->type == 4)
 				switch(item->look) { //In weapons, the look determines type of weapon.
 					case 0x01: //Level 4 Knives are equippable.. this means all knives, I'd guess?
@@ -1305,6 +1308,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.atk_ele=val;
 		else if(sd->state.lr_flag == 2)
+
 			sd->arrow_ele=val;
 		break;
 	case SP_DEFELE:
@@ -2133,6 +2137,7 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, (val?type2:-type2), type3, type4, current_equip_card_id);
 		break;
+
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, (val?type2:-type2), type3, type4, current_equip_card_id);
@@ -2245,7 +2250,7 @@ int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip)
 	}
 	for(i=0;i<sd->inventory_data[idx_equip]->slot;i++){
 		if( sd->status.inventory[idx_equip].card[i] == 0){
-		// ‹ó‚«ƒXƒƒbƒg‚ª‚ ‚Á‚½‚Ì‚Å·‚µ?‚Þ
+		// ‹ó‚«ƒXƒƒbƒg‚ª‚ ‚Á‚½‚Ì‚Å·‚µ?‚Þ
 			sd->status.inventory[idx_equip].card[i]=cardid;
 
 		// ƒJ?ƒh‚ÍŒ¸‚ç‚·
@@ -3152,6 +3157,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		if(sd->mapindex){
 			int ip,port;
 			if(map_mapname2ipport(mapindex,&ip,&port)==0){
+
 				skill_stop_dancing(&sd->bl);
 				skill_unit_move(&sd->bl,gettick(),4);
 				clif_clearchar_area(&sd->bl,clrtype&0xffff);
@@ -3701,6 +3707,7 @@ int pc_movepos(struct map_session_data *sd,int dst_x,int dst_y,int checkpath)
 			pd->to_x = dst_x;
 			pd->to_y = dst_y;
 			if (flag == 2) clif_fixpos(&pd->bl);
+
 			else clif_slide(&pd->bl,pd->bl.x,pd->bl.y);
 		}
 	}
@@ -4565,6 +4572,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		if(!battle_config.multi_level_up && sd->status.job_exp > next-1)
 			sd->status.job_exp = next-1;
 
+
 		sd->status.job_level ++;
 		  
 		clif_updatestatus(sd,SP_JOBLEVEL);
@@ -5163,6 +5171,7 @@ int pc_resetfeel(struct map_session_data* sd)
 {
 	int i;
 	char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
+
 	nullpo_retr(0, sd);
 
 	for (i=0; i<3; i++)
@@ -5871,6 +5880,7 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 	if(sp > sd->status.max_sp - sd->status.sp)
 		sp = sd->status.max_sp - sd->status.sp;
 	sd->status.sp+=sp;
+
 
 	if(sd->status.hp <= 0) {
 		sd->status.hp = 0;
@@ -6800,6 +6810,7 @@ int pc_cleareventtimer(struct map_session_data *sd)
 			sd->eventtimer[i]=-1;
 			if (p) aFree(p);
 		}
+
 
 	return 0;
 }
