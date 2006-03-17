@@ -37,7 +37,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 	if(Class ==Job_Swordman) goto L_iSword;
 	if(Class ==Job_Mage) goto L_iMage;
 	if(Class ==Job_Archer) goto L_iArcher;
-	if(Class ==Job_Acolytle) goto L_iAcolyte;
+	if(Class ==Job_Acolyte) goto L_iAcolyte;
 	if(Class ==Job_Merchant) goto L_iMerchant;
 	if(Class ==Job_Thief) goto L_iThief;
 	if(Class ==Job_Taekwon) goto L_iTaekwon;
