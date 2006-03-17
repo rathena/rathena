@@ -66,8 +66,8 @@ juperos_02.gat,129,150,0	script	Juperos	111,{
 }
 
 jupe_ele.gat,41,45,0	script	detectionUnit	-1,10,10{
-	if(@jupe_ele_timer == 0){
-		set @jupe_ele_timer, 1;
+	if(jupe_ele_timer == 0){
+		set jupe_ele_timer, 1;
 		initnpctimer;
 	}
 	end;
