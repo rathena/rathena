@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/17
+	* Fixed compiler warning in script.c get_mob_data. [Lance]
 	* Temperory resolved issues on Juperos until I get the exact description on the behaviour
 	  in retail servers. [Lance]
 
