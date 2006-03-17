@@ -1575,14 +1575,18 @@ int map_quit(struct map_session_data *sd) {
 				status_change_end(&sd->bl,SC_BERSERK,-1);
 			if(sd->sc.data[SC_TRICKDEAD].timer!=-1)
 				status_change_end(&sd->bl,SC_TRICKDEAD,-1);
-			if(sd->sc.data[SC_STRIPWEAPON].timer!=-1)
-				status_change_end(&sd->bl,SC_STRIPWEAPON,-1);
-			if(sd->sc.data[SC_STRIPARMOR].timer!=-1)
-				status_change_end(&sd->bl,SC_STRIPARMOR,-1);
-			if(sd->sc.data[SC_STRIPSHIELD].timer!=-1)
-				status_change_end(&sd->bl,SC_STRIPSHIELD,-1);
-			if(sd->sc.data[SC_STRIPHELM].timer!=-1)
-				status_change_end(&sd->bl,SC_STRIPHELM,-1);
+			if (battle_config.debuff_on_logout) {
+				if(sd->sc.data[SC_STRIPWEAPON].timer!=-1)
+					status_change_end(&sd->bl,SC_STRIPWEAPON,-1);
+				if(sd->sc.data[SC_STRIPARMOR].timer!=-1)
+					status_change_end(&sd->bl,SC_STRIPARMOR,-1);
+				if(sd->sc.data[SC_STRIPSHIELD].timer!=-1)
+					status_change_end(&sd->bl,SC_STRIPSHIELD,-1);
+				if(sd->sc.data[SC_STRIPHELM].timer!=-1)
+					status_change_end(&sd->bl,SC_STRIPHELM,-1);
+				if(sd->sc.data[SC_EXTREMITYFIST].timer!=-1)
+					status_change_end(&sd->bl,SC_EXTREMITYFIST,-1);
+			}
 		}
 		skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
 

@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/17
+	* Fixed handling of the char_gm_read config for packet 0x2af7 (reloadgmdb)
+	  [Skotlex]
+	* Added battle_config debuff_on_logout which removes Asura's SP regen delay
+	  and Strip-Equip effects on logout when set to yes (default,
+	  conf/battle/skill.conf). [Skotlex]
 	* removed auto-attaching of player-run scripts in initnpctimer. You must
 	  use attachnpctimer instead! [Skotlex]
 	* Final fix on Juperos NPC. [Lance]

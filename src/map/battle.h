@@ -385,7 +385,7 @@ extern struct Battle_Config {
 
 	unsigned short copyskill_restrict; // [Aru]
 	unsigned short berserk_cancels_buffs; // [Aru]
-
+	unsigned short debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	unsigned short mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
 	unsigned short dynamic_mobs; // Dynamic Mobs [Wizputer] - battle_athena flag implemented by [random]
 	unsigned short mob_remove_damaged; // Dynamic Mobs - Remove mobs even if damaged [Wizputer]

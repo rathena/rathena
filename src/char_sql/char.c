@@ -2254,19 +2254,17 @@ int parse_frommap(int fd) {
 
 		// map-server alive packet
 		case 0x2718:
-			if (RFIFOREST(fd) < 2)
-				return 0;
 			RFIFOSKIP(fd,2);
 			break;
 
 		case 0x2af7:
-			if(char_gm_read)
-			{
-				RFIFOSKIP(fd,2);
-				if (login_fd > 0) { // don't send request if no login-server
-					WFIFOW(login_fd,0) = 0x2709;
-					WFIFOSET(login_fd, 2);
-				}
+			RFIFOSKIP(fd,2);
+			if(char_gm_read) //Re-read gm accounts.
+				read_gm_account();
+			//Send to login request to reload gm accounts.
+			else if (login_fd > 0) { // don't send request if no login-server
+				WFIFOW(login_fd,0) = 0x2709;
+				WFIFOSET(login_fd, 2);
 			}
 			break;
 

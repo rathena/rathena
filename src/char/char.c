@@ -2429,7 +2429,7 @@ int parse_frommap(int fd) {
 		// request from map-server to reload GM accounts. Transmission to login-server (by Yor)
 		case 0x2af7:
 			if (login_fd > 0) { // don't send request if no login-server
-                                WFIFOHEAD(login_fd, 2);
+				WFIFOHEAD(login_fd, 2);
 				WFIFOW(login_fd,0) = 0x2709;
 				WFIFOSET(login_fd, 2);
 //				printf("char : request from map-server to reload GM accounts -> login-server.\n");

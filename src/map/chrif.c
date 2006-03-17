@@ -1079,7 +1079,7 @@ int chrif_reloadGMdb(void)
 {
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 2);
+	WFIFOHEAD(char_fd, 2);
 	WFIFOW(char_fd,0) = 0x2af7;
 	WFIFOSET(char_fd, 2);
 
