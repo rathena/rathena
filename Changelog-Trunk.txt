@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/17
+	* Fixed npc_cleanup_dbsub not removing key and caused pointer being freed problem. [Lance]
 	* Fixed handling of the char_gm_read config for packet 0x2af7 (reloadgmdb)
 	  [Skotlex]
 	* Added battle_config debuff_on_logout which removes Asura's SP regen delay

@@ -2794,6 +2794,7 @@ static int npc_cleanup_sub (struct block_list *bl, va_list ap) {
 }
 
 static int npc_cleanup_dbsub(DBKey key,void * data,va_list app) {
+	map_deliddb((struct block_list*)data);
 	return npc_cleanup_sub((struct block_list*)data, 0);
 }
 
