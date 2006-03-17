@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Reddozen
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.5a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -502,10 +502,10 @@ prt_castle.gat,45,35,4	script	Sharle	886,{
 	b_4:
 		mes "[Sharle]";
 		mes "You will need:";
-		mes "5 Dumplings";
+		mes "5 Baos";
 		next;
-		if(countitem(553) < 5) goto L_No_Items;//Items: Dumpling,
-		delitem 553, 5;//Items: Dumpling,
+		if(countitem(553) < 5) goto L_No_Items;//Items: Bao,
+		delitem 553, 5;//Items: Bao,
 		set @checkout, 7475;
 		mes "And I see you have";
 		mes "what you need!";

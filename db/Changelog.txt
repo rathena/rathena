@@ -26,6 +26,7 @@
 
 =========================
 03/15
+	* Alice Doll hat fixed effect, thanks2 Sir_Loon [Lupus]
 	- Fixed Moonlit's inf2 not being set to ensemble skill. Thanks to Haplo.
 	  [Skotlex]
 03/14
