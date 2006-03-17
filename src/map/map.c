@@ -1279,7 +1279,7 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...) {
 
 	for(i=2;i<=last_object_id;i++){
 		if(objects[i]){
-			if(!(objects[i]->type&type))
+			if(!(objects[i]->type==type)) // Fixed [Lance]
 				continue;
 			if(bl_list_count>=BL_LIST_MAX) {
 				if(battle_config.error_log)

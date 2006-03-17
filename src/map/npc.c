@@ -777,6 +777,7 @@ int npc_settimerevent_tick(struct npc_data *nd,int newtimer)
 		flag= sd->npc_timer_id != -1 ;
 	} else
 		flag= nd->u.scr.timerid != -1 ;
+
 	if(flag)
 		npc_timerevent_stop(nd);
 	nd->u.scr.timer=newtimer;
@@ -1556,6 +1557,7 @@ int npc_unload (struct npc_data *nd)
 			}
 		}
 	}
+
 	aFree(nd);
 
 	return 0;
@@ -2033,7 +2035,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		if (xs >= 0) xs = xs * 2 + 1;
 		if (ys >= 0) ys = ys * 2 + 1;
 
-		if (class_ >= 0) {
+		if (class_ >= -1) { // -1 NPCs use OnTouch [Lance]
 			for (i = 0; i < ys; i++) {
 				for (j = 0; j < xs; j++) {
 					if (map_getcell(m, x - xs/2 + j, y - ys/2 + i, CELL_CHKNOPASS))

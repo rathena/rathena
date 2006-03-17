@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/17
+	* Final fix on Juperos NPC. [Lance]
+	* Fix on initnpctimer not attaching rid. [Lance]
+	* Fix on OnTouch ignoring -1 NPCs. [Lance]
+	* Fix on @reloadscript crashing due to passing non BL_SKILL bl to a function that accepts only BL_SKILL bl. 
+	  [Lance]
+	* Added area NPC detection in clif_parseLoadEndAck. [Lance]
 	* Fixed compiler warning in script.c get_mob_data. [Lance]
 	* Temperory resolved issues on Juperos until I get the exact description on the behaviour
 	  in retail servers. [Lance]

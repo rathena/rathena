@@ -8846,6 +8846,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
 	
 	map_foreachinarea(clif_getareachar,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,BL_ALL,sd);
+	
+	// For automatic triggering of NPCs after map loading (so you don't need to walk 1 step first)
+	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
+		npc_touch_areanpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
+	else
+		sd->areanpc_id = 0;
 }
 
 /*==========================================

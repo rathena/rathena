@@ -55,21 +55,19 @@ juperos_02.gat,129,150,0	script	Juperos	111,{
 	mes "Are you sure you want to enter?";
 	next;
 	if(select("Yes","No") == 1){
-		close2;
-		set jupe_destination$, "jupe_ele.gat";
+		set jupe_destination$, "jupe_ele_r.gat";
 		set jupe_destination_x, 50;
 		set jupe_destination_y, 94;
+		close2;
 		warp "jupe_ele.gat",41,45;
 		end;
 	}
 	close;
 }
 
-jupe_ele.gat,41,45,0	script	detectionUnit	-1,10,10{
-	if(jupe_ele_timer == 0){
-		set jupe_ele_timer, 1;
-		initnpctimer;
-	}
+jupe_ele.gat,41,45,0	script	detectionUnit	-1,20,20{
+OnTouch:
+	initnpctimer;	
 	end;
 
 OnTimer1000:
@@ -80,11 +78,10 @@ OnTimer1000:
 OnTimer15000:
 	stopnpctimer;
 	setnpctimer 0;
-	set jupe_ele_timer, 0;
+	warp jupe_destination$,jupe_destination_x,jupe_destination_y;
 	set jupe_destination$, "";
 	set jupe_destination_x, 0;
 	set jupe_destination_y, 0;
-	warp jupe_destination$,jupe_destination_x,jupe_destination_y;
 	end;
 }
 
@@ -92,10 +89,10 @@ jupe_ele_r.gat,50,98,0	script	Juperos Elevator	111,{
 	mes "Are you sure you want to go up?";
 	next;
 	if(select("Yes","No") == 1){
-		close2;
 		set jupe_destination$, "juperos_02.gat";
 		set jupe_destination_x, 129;
 		set jupe_destination_y, 147;
+		close2;
 		warp "jupe_ele.gat",41,45;
 	}
 	close;
