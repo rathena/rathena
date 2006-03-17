@@ -1532,7 +1532,10 @@ static int npc_unload_ev(DBKey key,void *data,va_list ap) {
 
 int npc_unload (struct npc_data *nd)
 {
+	nullpo_retv(nd);
+
 	npc_remove_map (nd);
+	map_deliddb(&nd->bl);
 
 	if (nd->chat_id) {
 		struct chat_data *cd = (struct chat_data*)map_id2bl(nd->chat_id);
@@ -2794,7 +2797,6 @@ static int npc_cleanup_sub (struct block_list *bl, va_list ap) {
 }
 
 static int npc_cleanup_dbsub(DBKey key,void * data,va_list app) {
-	map_deliddb((struct block_list*)data);
 	return npc_cleanup_sub((struct block_list*)data, 0);
 }
 
