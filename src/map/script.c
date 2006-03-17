@@ -5659,7 +5659,7 @@ int buildin_initnpctimer(struct script_state *st)
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	nd->u.scr.rid = st->rid;
+	//nd->u.scr.rid = st->rid; //NO, use npcattachtimer if you want a player-attached timer! [Skotlex]
 	npc_settimerevent_tick(nd,0);
 	npc_timerevent_start(nd, st->rid);
 	return 0;

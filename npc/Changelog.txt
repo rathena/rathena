@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+03/17
+	* Added attachnpctimer to the Juperos elevator script. [Skotlex]
 03/13
 	* Updated the jobmaster custom script to properly use Job_* constants
 	  rather than hardcoded numbers. Thanks to Pxxx for doing the update.
