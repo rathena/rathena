@@ -1532,7 +1532,7 @@ static int npc_unload_ev(DBKey key,void *data,va_list ap) {
 
 int npc_unload (struct npc_data *nd)
 {
-	nullpo_retv(nd);
+	nullpo_ret(nd);
 
 	npc_remove_map (nd);
 	map_deliddb(&nd->bl);
