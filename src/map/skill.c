@@ -7665,6 +7665,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			sd->skillitem = sd->skillitemlv = -1;
 		return 1;
 	}
+	/* These two are part of status_check_skilluse now.
 	if( sd->sc.opt1 ){
 		clif_skill_fail(sd,sd->skillid,0,0);
 		return 0;
@@ -7677,10 +7678,10 @@ int skill_check_condition(struct map_session_data *sd,int type)
 			sd->sc.data[SC_BERSERK].timer != -1 ||
 			(sd->sc.data[SC_MARIONETTE].timer != -1 && sd->skillid != CG_MARIONETTE)){
 			clif_skill_fail(sd,sd->skillid,0,0);
-			return 0;	/* ?‘ÔˆÙ?í‚â’¾?‚È‚Ç */
+			return 0;
 		}
 	}
-
+	*/
 	skill = sd->skillid;
 	lv = sd->skilllv;
 	if (lv <= 0) return 0;

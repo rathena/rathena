@@ -703,7 +703,7 @@ int npc_timerevent_stop(struct npc_data *nd)
 	*tid = -1;
 	//Set the timer tick to the time that has passed since the beginning of the timers and now.
 	nd->u.scr.timer = DIFF_TICK(gettick(),nd->u.scr.timertick);
-	nd->u.scr.rid = 0;
+//	nd->u.scr.rid = 0; //Eh? why detach?
 	return 0;
 }
 /*==========================================

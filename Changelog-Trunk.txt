@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/17
+	* Removed a block of code from skill_check_condition that actually belongs
+	  to status_check_skilluse. Should fix silence/stun blocking skills
+	  regardless of settings. [Skotlex]
 	* Fixed misleading and inaccurately documented events and added a missing flag. [Lance]
 	* Fixed npc_cleanup_dbsub not removing key and caused pointer being freed problem. [Lance]
 	* Fixed handling of the char_gm_read config for packet 0x2af7 (reloadgmdb)
