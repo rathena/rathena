@@ -2293,7 +2293,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			sprintf(buffer, "$@%d_attacker", md->bl.id);
 			set_var(NULL, buffer, (void *)src->id);
 			sprintf(buffer, "$@%d_attacktype", md->bl.id);
-			set_var(NULL, buffer, (void *)src->type);
+			set_var(NULL, buffer, (void *)(int)src->type);
 			sprintf(buffer, "%s::OnDamage", md->nd->exname);
 			npc_event_do(buffer);
 			return 0;
