@@ -11140,10 +11140,15 @@ int script_config_read_sub(char *cfgName)
 			if (strlen(script_config.die_event_name) != strlen(w2))
 				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.die_event_name);
 		}
-		else if(strcmpi(w1,"kill_event_name")==0) {
-			strncpy(script_config.kill_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.kill_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.kill_event_name);
+		else if(strcmpi(w1,"kill_pc_event_name")==0) {
+			strncpy(script_config.kill_pc_event_name, w2, NAME_LENGTH-1);
+			if (strlen(script_config.kill_pc_event_name) != strlen(w2))
+				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.kill_pc_event_name);
+		}
+		else if(strcmpi(w1,"kill_mob_event_name")==0) {
+			strncpy(script_config.kill_mob_event_name, w2, NAME_LENGTH-1);
+			if (strlen(script_config.kill_mob_event_name) != strlen(w2))
+				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.kill_mob_event_name);
 		}
 		else if(strcmpi(w1,"login_event_name")==0) {
 			strncpy(script_config.login_event_name, w2, NAME_LENGTH-1);

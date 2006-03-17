@@ -431,8 +431,9 @@ struct map_session_data {
 		unsigned snovice_flag : 4;
 		// originally by Qamera, adapted by celest
 		unsigned event_death : 1;
-		unsigned event_kill : 1;
+		unsigned event_kill_pc : 1;
 		unsigned event_disconnect : 1;
+		unsigned event_kill_mob : 1;
 		// Abracadabra bugfix by Aru
 		unsigned abra_flag : 1;
 		unsigned autotrade : 1;	//By Fantik

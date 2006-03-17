@@ -2848,16 +2848,18 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	} else if (mvp_sd) {
 //lordalfa
-		pc_setglobalreg(mvp_sd,"killedrid",(md->class_));
-	if (script_config.event_script_type == 0) {
-		struct npc_data *npc;
-	if ((npc = npc_name2id("NPCKillEvent"))) {
-	run_script(npc->u.scr.script,0,mvp_sd->bl.id,npc->bl.id); // NPCKillNPC
-	 ShowStatus("Event '"CL_WHITE"NPCKillEvent"CL_RESET"' executed.\n");
-	}
+	pc_setglobalreg(mvp_sd,"killedrid",(md->class_));
+	if(sd->state.event_kill_mob){
+		if (script_config.event_script_type == 0) {
+			struct npc_data *npc;
+			if ((npc = npc_name2id(script_config.kill_mob_event_name))) {
+				run_script(npc->u.scr.script,0,mvp_sd->bl.id,npc->bl.id); // PCKillNPC [Lance]
+				ShowStatus("Event '"CL_WHITE"%s"CL_RESET"' executed.\n",script_config.kill_mob_event_name);
+			}
 		} else {
-	ShowStatus("%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",	
-		npc_event_doall_id("NPCKillEvent", mvp_sd->bl.id), "NPCKillEvent");
+			ShowStatus("%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",	
+			npc_event_doall_id(script_config.kill_mob_event_name, mvp_sd->bl.id), script_config.kill_mob_event_name);
+		}
 	}
 }
 //[lordalfa]

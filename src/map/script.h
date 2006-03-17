@@ -20,7 +20,8 @@ extern struct Script_Config {
 	unsigned event_script_type : 1;
 	unsigned event_requires_trigger : 1;
 	char die_event_name[NAME_LENGTH];
-	char kill_event_name[NAME_LENGTH];
+	char kill_pc_event_name[NAME_LENGTH];
+	char kill_mob_event_name[NAME_LENGTH];
 	char login_event_name[NAME_LENGTH];
 	char logout_event_name[NAME_LENGTH];
 	char loadmap_event_name[NAME_LENGTH];
