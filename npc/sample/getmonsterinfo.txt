@@ -1,0 +1,18 @@
+//by Lupus
+
+prontera.gat,156,179,6	script	test_getmonsterinfo	117,{
+	mes "Please enter a monster ID (1001 ... 2000)";
+	input @value;
+	if(getmonsterinfo(@value,MOB_LV)<0 || getmonsterinfo(@value,MOB_NAME)=="Dummy") {
+		mes "Wrong MOB ID.";
+		close;
+	}
+	mes "Monster ID: "+@value+" '"+getmonsterinfo(@value,MOB_NAME)+"'";
+	mes "Current Monster info:";
+	set @id,0;
+L_LOOP:
+	mes " getmonsterinfo("+@value+","+@id+") = "+getmonsterinfo(@value,@id);
+	set @id,@id+1;
+	if(@id<22) goto L_LOOP;
+	close;
+}

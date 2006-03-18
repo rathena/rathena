@@ -434,6 +434,7 @@ int mapreg_setregstr(int num,const char *str);
 int buildin_setitemscript(struct script_state *st);
 int buildin_disguise(struct script_state *st);
 int buildin_undisguise(struct script_state *st);
+int buildin_getmonsterinfo(struct script_state *st); // [Lupus]
 
 #ifdef PCRE_SUPPORT
 int buildin_defpattern(struct script_state *st); // MouseJstr
@@ -732,6 +733,7 @@ struct {
 	{buildin_setitemscript,"setitemscript","is"}, //Set NEW item bonus script. Lupus
 	{buildin_disguise,"disguise","i"}, //disguise player. Lupus
 	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
+	{buildin_getmonsterinfo,"getmonsterinfo","ii"}, //Lupus
 	// [zBuffer] List of player cont commands --->
 	{buildin_pcwalkxy,"pcwalkxy","iii"},
 	{buildin_pctalk,"pctalk","is"},
@@ -9829,6 +9831,96 @@ int buildin_delmonsterdrop(struct script_state *st)
 	}
 }
 */
+/*==========================================
+ * Returns some values of a monster [Lupus]
+ * Name, Level, race, size, etc...
+	getmonsterinfo(monsterID,queryIndex);
+ *------------------------------------------
+ */
+int buildin_getmonsterinfo(struct script_state *st)
+{
+	struct mob_db *mob;
+	int mob_id;
+
+	mob_id	= conv_num(st,& (st->stack->stack_data[st->start+2]));
+	if (mob_id <= 1000 || (mob = mob_db(mob_id))==NULL) {
+		ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i", mob_id);
+		push_val(st->stack, C_INT, -1);
+		return -1;
+	}
+		
+	switch ( conv_num(st,& (st->stack->stack_data[st->start+3])) ) {
+		case 0: //Name
+			push_str(st->stack,C_CONSTSTR, (unsigned char *) mob->jname);
+			break;
+		case 1: //Lvl
+			push_val(st->stack,C_INT, mob->lv);
+			break;
+		case 2: //MaxHP
+			push_val(st->stack,C_INT, mob->max_hp);
+			break;
+		case 3: //Base EXP
+			push_val(st->stack,C_INT, mob->base_exp);
+			break;
+		case 4: //Job EXP
+			push_val(st->stack,C_INT, mob->job_exp);
+			break;
+		case 5: //Atk1
+			push_val(st->stack,C_INT, mob->atk1);
+			break;
+		case 6: //Atk2
+			push_val(st->stack,C_INT, mob->atk2);
+			break;
+		case 7: //Def
+			push_val(st->stack,C_INT, mob->def);
+			break;
+		case 8: //Mdef
+			push_val(st->stack,C_INT, mob->mdef);
+			break;
+		case 9: //Str
+			push_val(st->stack,C_INT, mob->str);
+			break;
+		case 10: //Agi
+			push_val(st->stack,C_INT, mob->agi);
+			break;
+		case 11: //Vit
+			push_val(st->stack,C_INT, mob->vit);
+			break;
+		case 12: //Int
+			push_val(st->stack,C_INT, mob->int_);
+			break;
+		case 13: //Dex
+			push_val(st->stack,C_INT, mob->dex);
+			break;
+		case 14: //Luk
+			push_val(st->stack,C_INT, mob->luk);
+			break;
+		case 15: //Range
+			push_val(st->stack,C_INT, mob->range);
+			break;
+		case 16: //Range2
+			push_val(st->stack,C_INT, mob->range2);
+			break;
+		case 17: //Range3
+			push_val(st->stack,C_INT, mob->range3);
+			break;
+		case 18: //Size
+			push_val(st->stack,C_INT, mob->size);
+			break;
+		case 19: //Race
+			push_val(st->stack,C_INT, mob->race);
+			break;
+		case 20: //Element
+			push_val(st->stack,C_INT, mob->element);
+			break;
+		case 21: //Mode
+			push_val(st->stack,C_INT, mob->mode);
+			break;
+		default: //wrong Index
+			push_val(st->stack,C_INT,-1);
+	}
+	return 0;
+}
 
 // [zBuffer] List of player cont commands --->
 int buildin_pcwalkxy(struct script_state *st){
