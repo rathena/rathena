@@ -2377,74 +2377,74 @@
 //12141,Fifth_Stage,Fifth Stage,2,,10,,,,,,127918079,7,2,,,,,,{}
 
 // Guns
-13150,Branch,Branch,4,10,,500,20,,9,3,134217728,7,2,2,1,1,1,18,{}
-13100,Six_Shooter,Six Shooter,4,10,,400,30,,9,1,134217728,7,2,2,1,10,1,17,{ bonus bHit,-10; }
-13101,Six_Shooter,Six Shooter,4,10,,400,30,,9,2,134217728,7,2,2,1,10,1,17,{ bonus bHit,-10; }
-13102,Crimson_Bolt,Crimson Bolt,4,10,,450,45,,9,1,134217728,7,2,2,2,35,1,17,{ bonus bHit,-10; }
-13103,Crimson_Bolt_,Crimson Bolt,4,10,,450,45,,9,2,134217728,7,2,2,2,35,1,17,{ bonus bHit,-10; }
-13104,Garrison,Garrison,4,10,,500,70,,9,1,134217728,7,2,2,2,55,1,,{ bonus bHit,-10; }
-13105,Garrison_,Garrison,4,10,,500,70,,9,2,134217728,7,2,2,2,55,1,17,{ bonus bHit,-10; }
-13106,Gold_Lux,Gold Lux,4,10,,500,20,,9,0,134217728,7,2,2,3,12,1,17,{ bonus bHit,-10; }
-13151,Cyclone,Cyclone,4,10,,700,130,,9,1,134217728,7,2,2,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; }
-13152,Cyclone_,Cyclone,4,10,,700,130,,9,2,134217728,7,2,2,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; }
-13153,Dusk,Dusk,4,10,,750,160,,9,1,134217728,7,2,2,2,56,1,18,{ bonus bHit,10; bonus bCritical,10; }
-13154,Rolling_Stone,Rolling Stone,4,10,,900,135,,9,1,134217728,7,2,2,1,14,1,19,{ bonus bSplashRange,1; }
-13155,Black_Rose,Black Rose,4,10,,900,180,,9,1,134217728,7,2,2,2,35,1,19,{ bonus bSplashRange,1; }
-13156,Gate_Keeper,Gate Keeper,4,10,,1000,195,,9,0,134217728,7,2,2,2,55,1,19,{ bonus bSplashRange,1; }
-13157,Drifter,Drifter,4,10,,2300,50,,9,1,134217728,7,2,2,2,55,1,20,{}
-13158,Butcher,Butcher,4,10,,2500,75,,9,1,134217728,7,2,2,3,68,1,20,{ bonus2 bCriticalAddRace,RC_Brute,5; }
-13159,Butcher_,Butcher,4,10,,2500,75,,9,2,134217728,7,2,2,3,68,1,20,{ bonus2 bCriticalAddRace,RC_Brute,5; }
-13160,Destroyer,Destroyer,4,10,,1200,220,,9,0,134217728,7,2,2,2,52,1,21,{ bonus bHit,-10; } //break armor at close range
-13161,Destroyer_,Destroyer,4,10,,1200,220,,9,1,134217728,7,2,2,2,52,1,21,{ bonus bHit,-10; } //break armor at close range
-13162,Inferno,Inferno,4,10,,1250,280,,9,1,134217728,7,2,2,2,65,1,21,{}
+13150,Branch,Branch,4,3000,,500,50,,9,3,134217728,7,2,2,1,1,1,18,{}
+13100,Six_Shooter,Six Shooter,4,4500,,400,30,,9,1,134217728,7,2,2,1,10,1,17,{ bonus bHit,-10; }
+13101,Six_Shooter,Six Shooter,4,4500,,400,30,,9,2,134217728,7,2,2,1,10,1,17,{ bonus bHit,-10; }
+13102,Crimson_Bolt,Crimson Bolt,4,20000,,450,45,,9,1,134217728,7,2,2,2,35,1,17,{ bonus bHit,-10; }
+13103,Crimson_Bolt_,Crimson Bolt,4,20000,,450,45,,9,2,134217728,7,2,2,2,35,1,17,{ bonus bHit,-10; }
+13104,Garrison,Garrison,4,48000,,500,70,,9,1,134217728,7,2,2,2,55,1,,{ bonus bHit,-10; }
+13105,Garrison_,Garrison,4,48000,,500,70,,9,2,134217728,7,2,2,2,55,1,17,{ bonus bHit,-10; }
+13106,Gold_Lux,Gold Lux,4,100000,,500,20,,9,0,134217728,7,2,2,3,12,1,17,{ bonus bHit,-10; } // Auto flip the coin
+13151,Cyclone,Cyclone,4,17500,,700,120,,9,1,134217728,7,2,2,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; }
+13152,Cyclone_,Cyclone,4,17500,,700,120,,9,2,134217728,7,2,2,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; }
+13153,Dusk,Dusk,4,23500,,750,150,,9,1,134217728,7,2,2,2,56,1,18,{ bonus bHit,10; bonus bCritical,10; }
+13154,Rolling_Stone,Rolling Stone,4,12000,,900,135,,9,1,134217728,7,2,2,1,14,1,19,{ bonus bSplashRange,1; }
+13155,Black_Rose,Black Rose,4,32000,,900,180,,9,1,134217728,7,2,2,2,35,1,19,{ bonus bSplashRange,1; }
+13156,Gate_Keeper,Gate Keeper,4,56000,,1000,210,,9,0,134217728,7,2,2,2,55,1,19,{ bonus bSplashRange,1; } // spread shot 6 at low rate
+13157,Drifter,Drifter,4,80000,,2300,50,,9,1,134217728,7,2,2,2,55,1,20,{}
+13158,Butcher,Butcher,4,130000,,2500,75,,9,0,134217728,7,2,2,3,68,1,20,{ bonus2 bCriticalAddRace,RC_Brute,5; }
+13159,Butcher_,Butcher,4,130000,,2500,75,,9,1,134217728,7,2,2,3,68,1,20,{ bonus2 bCriticalAddRace,RC_Brute,5; }
+13160,Destroyer,Destroyer,4,110000,,1200,220,,9,0,134217728,7,2,2,2,52,1,21,{ bonus bHit,-10; } //break armor at close range
+13161,Destroyer_,Destroyer,4,110000,,1200,220,,9,1,134217728,7,2,2,2,52,1,21,{ bonus bHit,-10; } //break armor at close range
+13162,Inferno,Inferno,4,230000,,1250,280,,9,1,134217728,7,2,2,2,65,1,21,{}
 
 // Bullets
 13200,Bullet,Bullet,10,1,,2,10,,,,134217728,7,2,32768,,1,,,{}
-13201,Silver_Bullet,Silver Bullet,10,1,,2,15,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Holy; }
-13202,Shell_of_Blood,Shell of Blood,10,1,,2,30,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Bleeding,500; }
-13203,Flare_Sphere,Flare Sphere,10,1,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Fire; }
-13204,Lightning_Sphere,Lightning Sphere,10,1,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Wind; }
-13205,Poison_Sphere,Poison Sphere,10,1,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Poison,500; }
-13206,Blind_Sphere,Blind Sphere,10,1,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Blind,500; }
-13207,Freezing_Sphere,Freezing Sphere,10,1,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; }
+13201,Silver_Bullet,Silver Bullet,10,15,,2,15,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Holy; }
+13202,Shell_of_Blood,Shell of Blood,10,30,,2,30,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Bleeding,500; }
+13203,Flare_Sphere,Flare Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Fire; }
+13204,Lightning_Sphere,Lightning Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Wind; }
+13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Poison,500; }
+13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Blind,500; }
+13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; }
 
 // Shurikens & Kunais
-13250,Shuriken,Shuriken,10,1,,10,10,,,,268435456,7,2,32768,,1,,,{}
-13251,Raincloud_Shuriken,Raincloud Shuriken,10,1,,20,30,,,,268435456,7,2,32768,,20,,,{}
-13252,Flash_Shuriken,Flash Shuriken,10,1,,30,45,,,,268435456,7,2,32768,,40,,,{}
-13253,Pointed_Leaf_Shuriken,Pointed Leaf Shuriken,10,1,,30,70,,,,268435456,7,2,32768,,60,,,{}
-13254,Piercing_Thorn_Shuriken,Piercing Thorn Shuriken,10,1,,20,100,,,,268435456,7,2,32768,,80,,,{}
-13255,Kunai_of_Frozen_Icicle,Kunai of Frozen Icicle,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; }
-13256,Kunai_of_Black_Earth,Kunai of Black Earth,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Earth; }
-13257,Kunai_of_Violent_Winds,Kunai of Violent Winds,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Wind; }
-13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Fire; }
-13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,1,,50,30,,,,268435456,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Poison,500; }
+13250,Shuriken,Shuriken,10,4,,5,10,,,,268435456,7,2,32768,,1,,,{}
+13251,Raincloud_Shuriken,Raincloud Shuriken,10,10,,5,30,,,,268435456,7,2,32768,,20,,,{}
+13252,Flash_Shuriken,Flash Shuriken,10,20,,5,45,,,,268435456,7,2,32768,,40,,,{}
+13253,Pointed_Leaf_Shuriken,Pointed Leaf Shuriken,10,40,,5,70,,,,268435456,7,2,32768,,60,,,{}
+13254,Piercing_Thorn_Shuriken,Piercing Thorn Shuriken,10,100,,5,100,,,,268435456,7,2,32768,,80,,,{}
+13255,Kunai_of_Frozen_Icicle,Kunai of Frozen Icicle,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; }
+13256,Kunai_of_Black_Earth,Kunai of Black Earth,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Earth; }
+13257,Kunai_of_Violent_Winds,Kunai of Violent Winds,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Wind; }
+13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Fire; }
+13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Poison,500; }
 
 // Ninja Stones
-7521,Burning_Stone,Burning Stone,3,10,,10,,,,,,7,2,,,,,,{}
-7522,Freezing_Stone,Freezing Stone,3,10,,10,,,,,,7,2,,,,,,{}
-7523,Windchime_Stone,Windchime Stone,3,10,,10,,,,,,7,2,,,,,,{}
-7524,Fang_,Fang,3,10,,20,,,,,,7,2,,,,,,{}
+7521,Burning_Stone,Burning Stone,3,70,,10,,,,,,7,2,,,,,,{}
+7522,Freezing_Stone,Freezing Stone,3,70,,10,,,,,,7,2,,,,,,{}
+7523,Windchime_Stone,Windchime Stone,3,70,,10,,,,,,7,2,,,,,,{}
+7524,Fang_,Fang,3,70,,20,,,,,,7,2,,,,,,{}
 
 // Ninja Weapons
-13006,Gokurin,Gokurin,4,10,,600,140,,1,0,268435456,7,2,2,3,65,1,1,{ bonus2 bAddEff,Eff_Curse,500; }
-13007,Jitte,Jitte,4,10,,400,140,,1,0,268435456,7,2,2,2,35,1,1,{ bonus bBreakWeaponRate,500; }
-13008,Jitte_,Jitte,4,10,,400,140,,1,0,268435456,7,2,2,2,35,1,1,{ bonus bBreakWeaponRate,500; }
-13009,Kamaitachi,Kamaitachi,4,10,,900,140,,1,0,268435456,7,2,2,4,70,1,1,{ bonus bCritical,1; }
-13010,Ashura,Ashura,4,0,,600,140,,1,0,268435456,7,2,2,1,12,1,1,{}
-13011,Ashura_,Ashura,4,0,,600,140,,1,0,268435456,7,2,2,1,12,1,1,{}
-13012,Murasame,Murasame,4,10,,700,140,,1,0,268435456,7,2,2,2,24,1,2,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; }
-13013,Murasame_,Murasame,4,10,,700,140,,1,0,268435456,7,2,2,2,24,1,2,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; }
-13014,Hakujin,Hakujin,4,10,,800,140,,1,0,268435456,7,2,2,3,42,1,2,{ bonus4 bAutoSpell,28,10,20,0; }
-13015,Hakujin_,Hakujin,4,10,,800,140,,1,0,268435456,7,2,2,3,42,1,2,{ bonus4 bAutoSpell,28,10,20,0; }
+13006,Gokurin,Gokurin,4,240000,,600,140,,1,0,268435456,7,2,2,3,65,1,1,{ bonus2 bAddEff,Eff_Curse,500; }
+13007,Jitte,Jitte,4,20000,,400,70,,1,0,268435456,7,2,2,2,35,1,1,{ bonus bBreakWeaponRate,500; }
+13008,Jitte_,Jitte,4,20000,,400,70,,1,0,268435456,7,2,2,2,35,1,1,{ bonus bBreakWeaponRate,500; }
+13009,Kamaitachi,Kamaitachi,4,48000,,900,140,,1,0,268435456,7,2,2,4,70,1,1,{ bonus bCritical,1; }
+13010,Ashura,Ashura,4,32000,,600,50,,1,0,268435456,7,2,2,1,12,1,1,{ bonus bMatkRate,10; }
+13011,Ashura_,Ashura,4,32000,,600,50,,1,0,268435456,7,2,2,1,12,1,1,{ bonus bMatkRate,10; }
+13012,Murasame,Murasame,4,48000,,700,140,,1,0,268435456,7,2,2,2,24,1,2,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; }
+13013,Murasame_,Murasame,4,48000,,700,140,,1,0,268435456,7,2,2,2,24,1,2,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; }
+13014,Hakujin,Hakujin,4,120000,,800,140,,1,0,268435456,7,2,2,3,42,1,2,{ bonus4 bAutoSpell,28,10,20,0; }
+13015,Hakujin_,Hakujin,4,120000,,800,140,,1,0,268435456,7,2,2,3,42,1,2,{ bonus4 bAutoSpell,28,10,20,0; }
 
 // Ninja Kazema Shurikens
-13300,Kazemashuriken_Beneki,Kazemashuriken Beneki,4,10,,3000,80,,1,0,268435456,7,2,2,4,65,1,,{}
-13301,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,10,,2500,80,,1,0,268435456,7,2,2,4,42,1,,{bonus2 bAddEff,Eff_Bleeding,500; }
-13302,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,10,,2500,80,,1,0,268435456,7,2,2,4,42,1,,{ bonus2 bAddEff,Eff_Bleeding,500; }
-13303,Kazemashuriken_Rekka,Kazemashuriken Rekka,4,10,,1500,80,,1,0,268435456,7,2,2,4,55,1,,{ bonus3 bAutoSpell,19,10,100; }
+13300,Kazemashuriken_Beneki,Kazemashuriken Beneki,4,90000,,3000,80,,1,0,268435456,7,2,2,4,65,1,,{}
+13301,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,40000,,2500,80,,1,0,268435456,7,2,2,4,42,1,,{bonus2 bAddEff,Eff_Bleeding,500; }
+13302,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,40000,,2500,80,,1,0,268435456,7,2,2,4,42,1,,{ bonus2 bAddEff,Eff_Bleeding,500; }
+13303,Kazemashuriken_Rekka,Kazemashuriken Rekka,4,78000,,1500,80,,1,0,268435456,7,2,2,4,55,1,,{ bonus3 bAutoSpell,19,10,100; }
 
-2117,Gauntlet,Gauntlet,5,10,,150,,4,,0,268435456,7,2,32,,20,1,,{}
-2118,Gauntlet_,Gauntlet,5,10,,150,,4,,1,268435456,7,2,32,,20,1,,{}
-2119,Superior_Gauntlet,Superior Gauntlet,5,10,,150,,7,,0,268435456,7,2,32,,50,1,,{}
-2120,Superior_Gauntlet_,Superior Gauntlet,5,10,,150,,7,,0,268435456,7,2,32,,50,1,,{}
+2117,Gauntlet,Gauntlet,5,10000,,150,,4,,0,268435456,7,2,32,,20,1,,{}
+2118,Gauntlet_,Gauntlet,5,10000,,150,,4,,1,268435456,7,2,32,,20,1,,{}
+2119,Superior_Gauntlet,Superior Gauntlet,5,40000,,150,,7,,0,268435456,7,2,32,,50,1,,{}
+2120,Superior_Gauntlet_,Superior Gauntlet,5,40000,,150,,7,,0,268435456,7,2,32,,50,1,,{}
