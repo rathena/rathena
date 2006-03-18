@@ -779,8 +779,13 @@ typedef void	*gptr;		/* Generic pointer */
 typedef char	*gptr;		/* Generic pointer */
 #endif
 #ifndef HAVE_INT_8_16_32
+#ifndef WIN32
 typedef signed char int8;       /* Signed integer >= 8  bits */
 typedef short	int16;		/* Signed integer >= 16 bits */
+#else
+typedef          __int8		int8;
+typedef          __int16	int16;
+#endif
 #endif
 #ifndef HAVE_UCHAR
 typedef unsigned char	uchar;	/* Short for unsigned char */
@@ -795,9 +800,17 @@ typedef int		int32;
 typedef unsigned int	uint32; /* Short for unsigned integer >= 32 bits */
 #elif SIZEOF_LONG == 4
 #ifndef HAVE_INT_8_16_32
+#ifndef WIN32
 typedef long		int32;
+#else
+typedef          __int32	int32;
 #endif
+#endif
+#ifndef WIN32
 typedef unsigned long	uint32; /* Short for unsigned integer >= 32 bits */
+#else
+typedef unsigned __int32	uint32;
+#endif
 #else
 #error "Neither int or long is of 4 bytes width"
 #endif

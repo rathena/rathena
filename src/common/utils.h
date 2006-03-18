@@ -15,7 +15,7 @@
 /* strcasecmp -> stricmp -> str_cmp */
 #if defined(_WIN32) && !defined(MINGW)
 	int	strcasecmp(const char *arg1, const char *arg2);
-	int	strncasecmp(const char *arg1, const char *arg2, int n);
+	int	strncasecmp(const char *arg1, const char *arg2, size_t n);
 	void str_upper(char *name);
 	void str_lower(char *name);
     char *rindex(char *str, char c);

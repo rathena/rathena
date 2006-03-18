@@ -101,7 +101,7 @@ int strcasecmp(const char *arg1, const char *arg2)
   return (0);
 }
 
-int strncasecmp(const char *arg1, const char *arg2, int n)
+int strncasecmp(const char *arg1, const char *arg2, size_t n)
 {
   int chk, i;
 
