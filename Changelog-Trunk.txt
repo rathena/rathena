@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/17
+	* Fixed the mob_skill_db by commenting out lines with targeted skills
+	  being cast during an idle state.  (Thanks to LittleWolf) [Zephiris]
 	* Removed a block of code from skill_check_condition that actually belongs
 	  to status_check_skilluse. Should fix silence/stun blocking skills
 	  regardless of settings. [Skotlex]
