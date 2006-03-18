@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= RedxSwordxHero, Lupus
 //===== Current Version: =====================================
-//= 1.4a
+//= 1.4b
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
@@ -30,7 +30,7 @@ prt_in.gat,130,66,5	script	Zac	704,{
 	mes "I am the oldest and strongest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
 	next;
 	mes "[Zac]";
-	mes "I provide 8 hats and my brothers provides the other 24.";
+	mes "I provide 1 hat and my brothers provides the other 5.";
 	next;
 	menu "Join",L1,"Information",L2,"Cancel",L3;
 L1:	
@@ -90,7 +90,7 @@ prt_in.gat,162,131,5	script	Blac	732,{
 	mes "I am the youngest and sexiest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
 	next;
 	mes "[Blac]";
-	mes "I provide 8 hats and my brothers provides the other 24.";
+	mes "I provide 1 hat and my brothers provides the other 5.";
 	next;
 	menu "Join",L1,"Information",L2,"Cancel",L3;
 L1:	
@@ -144,7 +144,7 @@ prt_in.gat,53,56,5	script	Jac	107,{
 	mes "I am the 2nd oldest and calmest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
 	next;
 	mes "[Jac]";
-	mes "I provide 8 hats and my brothers provides the other 24.";
+	mes "I provide 2 hats and my brothers provides the other 4.";
 	next;
 	menu "Join",L1,"Information",L2,"Cancel",L3;
 L1:	
@@ -228,7 +228,7 @@ prt_in.gat,45,113,5	script	Pac	705,{
 	mes "I am 3rd oldest and wisest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat so I can make them.";
 	next;
 	mes "[Pac]";
-	mes "I provide 8 hats and my brothers provides the other 24.";
+	mes "I provide 2 hats and my brothers provides the other 4.";
 	next;
 	menu "Join",L1,"Information",L2,"Cancel",L3;
 L1:	

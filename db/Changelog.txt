@@ -25,6 +25,8 @@
 	-----
 
 =========================
+03/18
+	* Fixed tons of wrong weight, wep lvlm req level items. Big thanks to KarLaeda and Haplo [Lupus]
 03/15
 	* Alice Doll hat fixed effect, thanks2 Sir_Loon [Lupus]
 	- Fixed Moonlit's inf2 not being set to ensemble skill. Thanks to Haplo.
