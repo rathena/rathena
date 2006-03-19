@@ -3512,12 +3512,12 @@ new_3-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
 new_4-3.gat,0,0,0,0	monster	Spore	1014,10,0,0,0
 new_4-3.gat,0,0,0,0	monster	Thief Bug Larva	1051,10,0,0,0
 new_4-3.gat,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_4-3.gat,0,0,0,0	monster	Thief Bug Female	1053,10,0,0,0
+new_4-3.gat,0,0,0,0	monster	Thief Bug Female	1017,10,0,0,0
 new_4-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
 
 // new_5-3.gat
 new_5-3.gat,0,0,0,0	monster	Spore	1014,10,0,0,0
 new_5-3.gat,0,0,0,0	monster	Thief Bug Larva	1051,10,0,0,0
 new_5-3.gat,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_5-3.gat,0,0,0,0	monster	Thief Bug Female	1053,10,0,0,0
+new_5-3.gat,0,0,0,0	monster	Thief Bug Female	1017,10,0,0,0
 new_5-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0

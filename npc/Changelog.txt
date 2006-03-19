@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+03/19
+	* Fixed Female Thief Bug in novice land. [Vicious]
 03/17
 	* Added attachnpctimer to the Juperos elevator script. [Skotlex]
 03/13
