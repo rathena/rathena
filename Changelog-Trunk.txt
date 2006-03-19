@@ -5,7 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/18
-	* Recoded getmobdata script function. Fixed mob_damage typo sd -> mvp_sd. [Lance]
+	* Recoded setmobdata script function. Fixed mob_damage typo sd -> mvp_sd. [Lance]
 	* Added 'GetMonsterInfo(MobID,Idx)' script function. [Lupus]
 	  You can get monsters name,level,race, etc by its Id. Check npc\sample\getmonsterinfo.txt
 	* Fixed warnings on compilers again. [Lance]
