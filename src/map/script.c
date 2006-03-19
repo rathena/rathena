@@ -405,6 +405,7 @@ int buildin_equip(struct script_state *st);
 int buildin_autoequip(struct script_state *st);
 int buildin_setbattleflag(struct script_state *st);
 // [zBuffer] List of player cont commands --->
+int buildin_rid2name(struct script_state *st);
 int buildin_pcwalkxy(struct script_state *st);
 int buildin_pctalk(struct script_state *st);
 int buildin_pcemote(struct script_state *st);
@@ -735,6 +736,7 @@ struct {
 	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
 	{buildin_getmonsterinfo,"getmonsterinfo","ii"}, //Lupus
 	// [zBuffer] List of player cont commands --->
+	{buildin_rid2name,"rid2name","i"},
 	{buildin_pcwalkxy,"pcwalkxy","iii"},
 	{buildin_pctalk,"pctalk","is"},
 	{buildin_pcemote,"pcemote","ii"},
@@ -9923,6 +9925,28 @@ int buildin_getmonsterinfo(struct script_state *st)
 }
 
 // [zBuffer] List of player cont commands --->
+int buildin_rid2name(struct script_state *st){
+	struct block_list *bl = NULL;
+	int rid = conv_num(st, & (st->stack->stack_data[st->start + 2]));
+	if((bl = map_id2bl(rid))){
+		switch(bl->type){
+			case BL_MOB:
+				push_str(st->stack,C_STR,((struct mob_data *)bl)->name);
+				break;
+			case BL_PC:
+				push_str(st->stack,C_STR,((struct map_session_data *)bl)->status.name);
+				break;
+			case BL_NPC:
+				push_str(st->stack,C_STR,((struct npc_data *)bl)->exname);
+				break;
+			default:
+				ShowError("buildin_rid2name: BL type unknown.\n");
+				break;
+		}
+	}
+	return 0;
+}
+
 int buildin_pcwalkxy(struct script_state *st){
 	int id, x, y;
 	struct map_session_data *sd = NULL;
@@ -10138,9 +10162,7 @@ int buildin_getmobdata(struct script_state *st) {
 }
 
 int buildin_setmobdata(struct script_state *st){
-	int num, id, value;
-	char *name;
-	struct script_data dat;
+	int id, value;
 	struct mob_data *md = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	value = conv_num(st, & (st->stack->stack_data[st->start+3]));

@@ -5332,15 +5332,16 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 			if (sd->state.event_death)
 				pc_setglobalreg(sd,"killerrid",(ssd->status.account_id));
 			if (ssd->state.event_kill_pc) {
+				pc_setglobalreg(ssd, "killedrid", sd->bl.id);
 				if (script_config.event_script_type == 0) {
 					struct npc_data *npc;
 					if ((npc = npc_name2id(script_config.kill_pc_event_name))) {
-						run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCKillPC [Lance]
+						run_script(npc->u.scr.script,0,ssd->bl.id,npc->bl.id); // PCKillPC [Lance]
 						ShowStatus("Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.kill_pc_event_name);
 					}
 				} else {
 					ShowStatus("%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
-						npc_event_doall_id(script_config.kill_pc_event_name, sd->bl.id), script_config.kill_pc_event_name);
+						npc_event_doall_id(script_config.kill_pc_event_name, ssd->bl.id), script_config.kill_pc_event_name);
 				}
 			}
 			if (battle_config.pk_mode && ssd->status.manner >= 0 && battle_config.manner_system) {
@@ -5367,6 +5368,8 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 				// To-do: Receive exp on certain occasions
 			}
 		}
+	} else {
+		pc_setglobalreg(sd, "killerrid", 0);
 	}
 
 	if (sd->state.event_death) {
