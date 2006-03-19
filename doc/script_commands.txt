@@ -3384,7 +3384,8 @@ You can see the full list of available effect types you can possibly inflict in
 
 It is pretty certain that addressing the target by an ID number will not 
 currently work due to a bug.
----------------------------------------
+
+---------------------------------------
 
 *callshop "<shop name>",<flag>;
 
@@ -4962,3 +4963,11 @@ It is not required to do this when changing jobs since 'jobchange' will unequip
 everything not equippable by the new job class anyway.
 
 ---------------------------------------
+
+*rid2name(rid)
+
+Converts rid to name. Note: The player/monster/NPC must be online/enabled.
+Good for PCKillEvent where you can convert 'killedrid' to the name of the player.
+
+Note: rid2name may not produce correct character names since rid = account id.
+      It will return the current online character of the account only.

@@ -11,7 +11,7 @@ You whisper to NPCCommander in Game with formatted instructions like these:
 
 //============================================================
 
-[To NPCCommander]       Report,Killstealing,Lordalfa
+[To NPC:Commander]       Report#Killstealing#Lordalfa
 
 //============================================================
 
