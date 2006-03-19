@@ -26,4 +26,4 @@ In the example above:
 
 so you might prepare the NPC Label to process these Variables and give Executing Character a Feedback ( via dispbottom "message" for example )
 
-Now , it's allowed to use up to 10 commands in a Row, separed by "," character, they will be splitted and passed to the NPC Label in their respective variables, for you to process them.
+Now , it's allowed to use up to 10 commands in a Row, separed by "#" character, they will be splitted and passed to the NPC Label in their respective variables, for you to process them.
