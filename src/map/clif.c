@@ -9435,53 +9435,53 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 		log_chat("W", 0, sd->status.char_id, sd->status.account_id, (char*)mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, (char*)RFIFOP(fd, 4), (char*)RFIFOP(fd, 28));
 
 
-//-------------------------------------------------------//
-//   Lordalfa - Paperboy - To whisper NPC commands       //
-//-------------------------------------------------------//
-if ((strncasecmp((const char*)RFIFOP(fd,4),"NPC:",4) == 0) && (strlen((const char*)RFIFOP(fd,4)) >4))   {
-	whisper_tmp = (char*) RFIFOP(fd,4) + 4;
-    if ((npc = npc_name2id(whisper_tmp)))	
-	{
-		whisper_tmp=(char *)aCallocA(strlen((char *)(RFIFOP(fd,28)))+1,sizeof(char));
-		whisper_tmp[0]=0;
-	   
-		sprintf(whisper_tmp, "%s", (const char*)RFIFOP(fd,28));  
-		for( j=0;whisper_tmp[j]!='\0';j++)
+	//-------------------------------------------------------//
+	//   Lordalfa - Paperboy - To whisper NPC commands       //
+	//-------------------------------------------------------//
+	if ((strncasecmp((const char*)RFIFOP(fd,4),"NPC:",4) == 0) && (strlen((const char*)RFIFOP(fd,4)) >4))   {
+		whisper_tmp = (char*) RFIFOP(fd,4) + 4;
+		if ((npc = npc_name2id(whisper_tmp)))	
 		{
-			if(whisper_tmp[j]!='#')
+			whisper_tmp=(char *)aCallocA(strlen((char *)(RFIFOP(fd,28)))+1,sizeof(char));
+			whisper_tmp[0]=0;
+		   
+			sprintf(whisper_tmp, "%s", (const char*)RFIFOP(fd,28));  
+			for( j=0;whisper_tmp[j]!='\0';j++)
 			{
-				split_data[i][j-k]=whisper_tmp[j];
-			}
-			else
+				if(whisper_tmp[j]!='#')
+				{
+					split_data[i][j-k]=whisper_tmp[j];
+				}
+				else
+				{
+					split_data[i][j-k]='\0';
+					k=j+1;
+					i++;
+				}
+			} // Splits the message using '#' as separators
+			split_data[i][j-k]='\0';
+			
+			aFree(whisper_tmp);
+			whisper_tmp=(char *)aCallocA(15,sizeof(char));
+			whisper_tmp[0]=0;
+			
+			for (j=0;j<=10;j++)
 			{
-				split_data[i][j-k]='\0';
-				k=j+1;
-				i++;
-			}
-		} // Splits the message using '#' as separators
-		split_data[i][j-k]='\0';
-		
-		aFree(whisper_tmp);
-		whisper_tmp=(char *)aCallocA(15,sizeof(char));
-		whisper_tmp[0]=0;
-		
-		for (j=0;j<=10;j++)
-		{
-			sprintf(whisper_tmp, "@whispervar%d$", j);
-			set_var(sd,whisper_tmp,(char *) split_data[j]);        
-		}//You don't need to zero them, just reset them [Kevin]
-		
-		aFree(whisper_tmp);
-		whisper_tmp=(char *)aCallocA(strlen(npc->name)+18,sizeof(char));
-		whisper_tmp[0]=0;
-		
-		sprintf(whisper_tmp, "%s::OnWhisperGlobal", npc->name);
-		npc_event(sd,whisper_tmp,0); // Calls the NPC label 
+				sprintf(whisper_tmp, "@whispervar%d$", j);
+				set_var(sd,whisper_tmp,(char *) split_data[j]);        
+			}//You don't need to zero them, just reset them [Kevin]
+			
+			aFree(whisper_tmp);
+			whisper_tmp=(char *)aCallocA(strlen(npc->name)+18,sizeof(char));
+			whisper_tmp[0]=0;
+			
+			sprintf(whisper_tmp, "%s::OnWhisperGlobal", npc->name);
+			npc_event(sd,whisper_tmp,0); // Calls the NPC label 
 
-		aFree(whisper_tmp); //I rewrote it a little to use memory allocation, a bit more stable =P  [Kevin]
-		return;     
-	} //should have just removed the one below that was a my bad =P
-}		
+			aFree(whisper_tmp); //I rewrote it a little to use memory allocation, a bit more stable =P  [Kevin]
+			return;     
+		} //should have just removed the one below that was a my bad =P
+	}		
 	
 	// Main chat [LuzZza]
 	if(strcmpi((const char*)RFIFOP(fd,4), main_chat_nick) == 0) {

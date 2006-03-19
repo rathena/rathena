@@ -10138,31 +10138,95 @@ int buildin_getmobdata(struct script_state *st) {
 }
 
 int buildin_setmobdata(struct script_state *st){
-	int num, id, i = 0;
+	int num, id, value;
 	char *name;
 	struct script_data dat;
 	struct mob_data *md = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	value = conv_num(st, & (st->stack->stack_data[st->start+3]));
 	if(!(md = (struct mob_data *)map_id2bl(id)) || st->stack->stack_data[st->start+3].type!=C_NAME ){
-		ShowWarning("buildin_setmobdata: Error in argiment!\n");
+		ShowWarning("buildin_setmobdata: Error in argument!\n");
 	} else {
-#define INCREMENT dat.type=C_NAME; dat.u.num=add_str((unsigned char *) name)+(i<<24); get_val(st,&dat); i++
-#define VALUE(x) x = (dat.u.num == -1)? x : dat.u.num
-		num=st->stack->stack_data[st->start+2].u.num;
-		name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-		INCREMENT; VALUE(md->class_);			INCREMENT; VALUE(md->level);
-		INCREMENT; VALUE(md->hp);				INCREMENT; VALUE(md->max_hp);
-		INCREMENT; VALUE(md->hp);				INCREMENT; VALUE(md->master_id);
-		INCREMENT; VALUE(md->bl.m);				INCREMENT; VALUE(md->bl.x);
-		INCREMENT; VALUE(md->bl.y);				INCREMENT; VALUE(md->speed);
-		INCREMENT; VALUE(md->mode);				INCREMENT; VALUE(md->state.state);
-		INCREMENT; VALUE(md->special_state.ai);	INCREMENT; VALUE(md->db->option);
-		INCREMENT; VALUE(md->db->sex);			INCREMENT; VALUE(md->db->view_class);
-		INCREMENT; VALUE(md->db->hair);			INCREMENT; VALUE(md->db->hair_color);
-		INCREMENT; VALUE(md->db->head_buttom);	INCREMENT; VALUE(md->db->head_mid);
-		INCREMENT; VALUE(md->db->head_top);		INCREMENT; VALUE(md->db->clothes_color);
-		INCREMENT; VALUE(md->db->equip);		INCREMENT; VALUE(md->db->weapon);
-		INCREMENT; VALUE(md->dir);
+		switch(id){
+			case 0:
+				md->class_ = (short)value;
+				break;
+			case 1:
+				md->level = (unsigned short)value;
+				break;
+			case 2:
+				md->hp = value;
+				break;
+			case 3:
+				md->max_hp = value;
+				break;
+			case 4:
+				md->master_id = value;
+				break;
+			case 5:
+				md->bl.m = (short)value;
+				break;
+			case 6:
+				md->bl.x = (short)value;
+				break;
+			case 7:
+				md->bl.y = (short)value;
+				break;
+			case 8:
+				md->speed = (short)value;
+				break;
+			case 9:
+				md->mode = (short)value;
+				break;
+			case 10:
+				md->state.state = (unsigned int)value;
+				break;
+			case 11:
+				md->special_state.ai = (unsigned int)value;
+				break;
+			case 12:
+				md->db->option = (short)value;
+				break;
+			case 13:
+				md->db->sex = value;
+				break;
+			case 14:
+				md->db->view_class = value;
+				break;
+			case 15:
+				md->db->hair = (short)value;
+				break;
+			case 16:
+				md->db->hair_color = (short)value;
+				break;
+			case 17:
+				md->db->head_buttom = (short)value;
+				break;
+			case 18:
+				md->db->head_mid = (short)value;
+				break;
+			case 19:
+				md->db->head_top = (short)value;
+				break;
+			case 20:
+				md->db->clothes_color = (short)value;
+				break;
+			case 21:
+				md->db->equip = value;
+				break;
+			case 22:
+				md->db->weapon = (short)value;
+				break;
+			case 23:
+				md->db->shield = (short)value;
+				break;
+			case 24:
+				md->dir = (short)value;
+				break;
+			default:
+				ShowError("buildin_setmobdata: argument id is not identified.");
+				break;
+		}
 	}
 	return 0;
 }
