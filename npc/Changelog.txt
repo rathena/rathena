@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 03/20
+	* Fixed endless warping loops, thanks to Manipulator [Lupus]
 	* Fixed possible Castle Economy investment overflow with Emsolute Develop learnt [Lupus]
 	* Removed Berserk Potions from all shops, but Comodo [Lupus]
 03/19
