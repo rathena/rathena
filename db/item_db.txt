@@ -2427,24 +2427,24 @@
 7524,Fang_,Fang,3,70,,20,,,,,,7,2,,,,,,{}
 
 // Ninja Weapons
-13006,Gokurin,Gokurin,4,240000,,600,140,,1,0,268435456,7,2,2,3,65,1,1,{ bonus2 bAddEff,Eff_Curse,500; }
+13006,Gokurin,Gokurin,4,240000,,600,150,,1,0,268435456,7,2,2,3,65,1,1,{ bonus2 bAddEff,Eff_Curse,500; }
 13007,Jitte,Jitte,4,20000,,400,70,,1,0,268435456,7,2,2,2,35,1,1,{ bonus bBreakWeaponRate,500; }
 13008,Jitte_,Jitte,4,20000,,400,70,,1,0,268435456,7,2,2,2,35,1,1,{ bonus bBreakWeaponRate,500; }
-13009,Kamaitachi,Kamaitachi,4,48000,,900,140,,1,0,268435456,7,2,2,4,70,1,1,{ bonus bCritical,1; }
+13009,Kamaitachi,Kamaitachi,4,48000,,900,125,,1,0,268435456,7,2,2,4,70,1,1,{ bonus bCritical,1; }
 13010,Ashura,Ashura,4,32000,,600,50,,1,0,268435456,7,2,2,1,12,1,1,{ bonus bMatkRate,10; }
 13011,Ashura_,Ashura,4,32000,,600,50,,1,0,268435456,7,2,2,1,12,1,1,{ bonus bMatkRate,10; }
-13012,Murasame,Murasame,4,48000,,700,140,,1,0,268435456,7,2,2,2,24,1,2,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; }
-13013,Murasame_,Murasame,4,48000,,700,140,,1,0,268435456,7,2,2,2,24,1,2,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; }
-13014,Hakujin,Hakujin,4,120000,,800,140,,1,0,268435456,7,2,2,3,42,1,2,{ bonus4 bAutoSpell,28,10,20,0; }
-13015,Hakujin_,Hakujin,4,120000,,800,140,,1,0,268435456,7,2,2,3,42,1,2,{ bonus4 bAutoSpell,28,10,20,0; }
+13012,Murasame,Murasame,4,48000,,700,95,,1,0,268435456,7,2,2,2,24,1,2,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; }
+13013,Murasame_,Murasame,4,48000,,700,95,,1,0,268435456,7,2,2,2,24,1,2,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; }
+13014,Hakujin,Hakujin,4,120000,,800,120,,1,0,268435456,7,2,2,3,42,1,2,{ bonus4 bAutoSpell,28,10,20,0; }
+13015,Hakujin_,Hakujin,4,120000,,800,120,,1,0,268435456,7,2,2,3,42,1,2,{ bonus4 bAutoSpell,28,10,20,0; }
 
 // Ninja Kazema Shurikens
-13300,Kazemashuriken_Beneki,Kazemashuriken Beneki,4,90000,,3000,80,,1,0,268435456,7,2,2,4,65,1,,{}
-13301,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,40000,,2500,80,,1,0,268435456,7,2,2,4,42,1,,{bonus2 bAddEff,Eff_Bleeding,500; }
-13302,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,40000,,2500,80,,1,0,268435456,7,2,2,4,42,1,,{ bonus2 bAddEff,Eff_Bleeding,500; }
-13303,Kazemashuriken_Rekka,Kazemashuriken Rekka,4,78000,,1500,80,,1,0,268435456,7,2,2,4,55,1,,{ bonus3 bAutoSpell,19,10,100; }
+13300,Kazemashuriken_Beneki,Kazemashuriken Beneki,4,90000,,3000,150,,1,0,268435456,7,2,2,4,65,1,,{}
+13301,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,40000,,2500,50,,1,0,268435456,7,2,2,4,42,1,,{bonus2 bAddEff,Eff_Bleeding,500; }
+13302,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,40000,,2500,50,,1,0,268435456,7,2,2,4,42,1,,{ bonus2 bAddEff,Eff_Bleeding,500; }
+13303,Kazemashuriken_Rekka,Kazemashuriken Rekka,4,78000,,1500,185,,1,0,268435456,7,2,2,4,55,1,,{ bonus3 bAutoSpell,19,10,100; }
 
-2117,Gauntlet,Gauntlet,5,10000,,150,,4,,0,268435456,7,2,32,,20,1,,{}
-2118,Gauntlet_,Gauntlet,5,10000,,150,,4,,1,268435456,7,2,32,,20,1,,{}
-2119,Superior_Gauntlet,Superior Gauntlet,5,40000,,150,,7,,0,268435456,7,2,32,,50,1,,{}
-2120,Superior_Gauntlet_,Superior Gauntlet,5,40000,,150,,7,,0,268435456,7,2,32,,50,1,,{}
+2117,Gauntlet,Gauntlet,5,10000,,150,,5,,0,268435456,7,2,32,,20,1,,{}
+2118,Gauntlet_,Gauntlet,5,10000,,150,,5,,1,268435456,7,2,32,,20,1,,{}
+2119,Superior_Gauntlet,Superior Gauntlet,5,40000,,150,,4,,0,268435456,7,2,32,,50,1,,{ bonus bMdef,5; }
+2120,Superior_Gauntlet_,Superior Gauntlet,5,40000,,150,,4,,0,268435456,7,2,32,,50,1,,{ bonus bMdef,5; }

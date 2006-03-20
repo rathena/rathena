@@ -4836,6 +4836,32 @@ Valid types are:
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
 	10 - slot; 11 - look; 12 - elv; 13 - wlv;
 
+Check sample in nps\sample\getiteminfo.txt
+
+---------------------------------------
+
+*getmonsterinfo(<item ID>,<type>)
+
+This function will look up the monster with the specified ID number in the database 
+and return the info set by TYPE argument.
+It will return -1 if there is no such item. Due to specific of MOB DB routines,
+it's better to check monster name. It'd return "Dummy" for a non-existing monster.
+
+Valid types are listed in const.txt:
+	MOB_NAME	0		MOB_LV	1
+	MOB_MAXHP	2		MOB_BASEEXP	3
+	MOB_JOBEXP	4		MOB_ATK1	5
+	MOB_ATK2	6		MOB_DEF	7
+	MOB_MDEF	8		MOB_STR	9
+	MOB_AGI		10		MOB_VIT		11
+	MOB_INT		12		JOB_DEX		13
+	MOB_LUK		14		MOB_RANGE	15
+	MOB_RANGE2	16		MOB_RANGE3	17
+	MOB_SIZE	18		MOB_RACE	19
+	MOB_ELEMENT	20		MOB_MODE	21
+
+Check sample in nps\sample\getmonsterinfo.txt
+
 ---------------------------------------
 
 *pow(<number>,<power>)
