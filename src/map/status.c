@@ -2142,6 +2142,8 @@ int status_calc_speed(struct block_list *bl, int speed)
 			speed += 450;
 		if(sc->data[SC_SWOO].timer != -1) // [marquis007]
 			speed += 450; //Let's use Curse's slow down momentarily (exact value unknown)
+		if(sc->data[SC_WEDDING].timer!=-1)
+			speed += speed;
 		if(sc->data[SC_SPEEDUP1].timer!=-1)
 			speed -= speed*50/100;
 		else if(sc->data[SC_SPEEDUP0].timer!=-1)
@@ -2154,8 +2156,6 @@ int status_calc_speed(struct block_list *bl, int speed)
 			speed -= speed * 20/100;
 		else if(sc->data[SC_WINDWALK].timer!=-1)
 			speed -= speed * 4*sc->data[SC_WINDWALK].val2/100;
-		if(sc->data[SC_WEDDING].timer!=-1)
-			speed += speed * 50/100;
 		if(sc->data[SC_SLOWDOWN].timer!=-1)
 			speed += speed * 50/100;
 		if(sc->data[SC_DECREASEAGI].timer!=-1)
@@ -3973,6 +3973,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_WEDDING:	//Œ‹¥—p(Œ‹¥ˆßÖ‚É‚È‚Á‚Ä?‚­‚Ì‚ª?‚¢‚Æ‚©)
 		if (sd)
 		{	//Change look.
+			pc_stopattack(sd);
 			if(type==SC_WEDDING)
 				sd->view_class = JOB_WEDDING;
 			else if(type==SC_XMAS)
