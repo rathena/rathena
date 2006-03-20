@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+03/20
+	* Removed Berserk Potions from all shops, but Comodo [Lupus]
 03/19
 	* Fixed Female Thief Bug in novice land. [Vicious]
 03/17
