@@ -6,6 +6,8 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/03/18
+	* Added monster_ai&16 setting for executing the hard ai on ALL mobs in maps
+	  with players instead of just mobs in the vecinity of players. [Skotlex]
 	* Cleaned up some guild functions. [LuzZza]
 	- Now guild leaving/explusion packets sends correctly.
 	- Fix to prevent creation alliance/opposition with same guilds.

@@ -1958,17 +1958,6 @@ static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 }
 
 /*==========================================
- * Serious processing for mob in PC field of view   (interval timer function)
- *------------------------------------------
- */
-static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
-{
-	clif_foreachclient(mob_ai_sub_foreachclient,tick);
-
-	return 0;
-}
-
-/*==========================================
  * Negligent mode MOB AI (PC is not in near)
  *------------------------------------------
  */
@@ -1986,6 +1975,10 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
 		return 0;
 
 	ap = va_arg(app, va_list);
+
+	if (battle_config.mob_ai&32 && map[md->bl.m].users>0)
+		return mob_ai_sub_hard(&md->bl, ap);
+
 	tick=va_arg(ap,unsigned int);
 
 	if(DIFF_TICK(tick,md->last_thinktime)<MIN_MOBTHINKTIME*10)
@@ -2044,6 +2037,21 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
 static int mob_ai_lazy(int tid,unsigned int tick,int id,int data)
 {
 	map_foreachiddb(mob_ai_sub_lazy,tick);
+
+	return 0;
+}
+
+/*==========================================
+ * Serious processing for mob in PC field of view   (interval timer function)
+ *------------------------------------------
+ */
+static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
+{
+
+	if (battle_config.mob_ai&32)
+		map_foreachiddb(mob_ai_sub_lazy,tick);
+	else
+		clif_foreachclient(mob_ai_sub_foreachclient,tick);
 
 	return 0;
 }
