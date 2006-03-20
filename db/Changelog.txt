@@ -26,8 +26,8 @@
 
 =========================
 03/20
-	* Updated atk,def,mfed of рн items, thanks to Haplo [Lupus]
-	- also re-fixed few blackhole89 bits
+	* Updated atk,def,mdef of NJ/GS items, thanks to Haplo [Lupus]
+	- also re-fixed few blackhole89 (def, atk) values
 	* Uploaded Kargha's updated item_db.txt with the Gunslinger/Ninja usage bits set.
 	  Looked correct to me, if there should still be errors, feel free to revert. [blackhole89]
 03/18
