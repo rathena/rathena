@@ -413,7 +413,7 @@ int check_ipmask(unsigned int ip, const unsigned char *str) {
 int check_ip(unsigned int ip) {
 	int i;
 	unsigned char *p = (unsigned char *)&ip;
-	char buf[16];
+	char buf[20];
 	char * access_ip;
 	enum { ACF_DEF, ACF_ALLOW, ACF_DENY } flag = ACF_DEF;
 
@@ -462,7 +462,7 @@ int check_ip(unsigned int ip) {
 int check_ladminip(unsigned int ip) {
 	int i;
 	unsigned char *p = (unsigned char *)&ip;
-	char buf[16];
+	char buf[20];
 	char * access_ip;
 
 	if (access_ladmin_allownum == 0)
@@ -1034,6 +1034,10 @@ void send_GM_accounts(void) {
 			WBUFL(buf,len) = gm_account_db[i].account_id;
 			WBUFB(buf,len+4) = (unsigned char)gm_account_db[i].level;
 			len += 5;
+			if (len >= 32000) {
+				ShowWarning("send_GM_accounts: Too many accounts! Only %d out of %d were sent.\n", i, GM_num);
+				break;
+			}
 		}
 	WBUFW(buf,2) = len;
 	charif_sendallwos(-1, buf, len);

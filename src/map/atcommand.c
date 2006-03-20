@@ -9596,6 +9596,8 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 		pl_sd->status.manner -= time;
 		if (pl_sd->status.manner < 0)
 			sc_start(&pl_sd->bl,SC_NOCHAT,100,0,0);
+		else if (pl_sd->sc.count && pl_sd->sc.data[SC_NOCHAT].timer != -1)
+			status_change_end(&pl_sd->bl, SC_NOCHAT, -1);
 	}
 	return 0;
 }
@@ -9617,7 +9619,7 @@ int atcommand_mutearea(
 	}
 
 	time = atoi(message);
-	if (time <= 0)
+	if (!time)
 		time = 15; // 15 minutes default
 	map_foreachinarea(atcommand_mutearea_sub,sd->bl.m, 
 		sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE, 

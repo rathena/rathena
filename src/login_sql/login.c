@@ -262,7 +262,11 @@ void send_GM_accounts(int fd) {
 				WBUFL(buf,len) = gm_account_db[i].account_id;
 				WBUFB(buf,len+4) = (unsigned char)gm_account_db[i].level;
 				len += 5;
+				if (len >= 32000) {
+				ShowWarning("send_GM_accounts: Too many accounts! Only %d out of %d were sent.\n", i, GM_num);
+				break;
 			}
+		}
 		WBUFW(buf,2) = len;
 		if (fd == -1)
 			charif_sendallwos(-1, buf, len);
