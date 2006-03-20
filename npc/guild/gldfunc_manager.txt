@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.31
+//= 1.41
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -29,7 +29,8 @@
 //= v1.2c Fixed issue of guardians hp not increasing upon defense
 //= investment.[kobra_k88]
 //= v1.3 Now you can't install Guardians during WOE [Lupus]
-//= v1.4 Reomve surrender abbility (Was 100% custom as far as I can tell) [Kayla]
+//= v1.4 Remove surrender abbility (Was 100% custom as far as I can tell) [Kayla]
+//= v1.41 Fixed possible Economy investment overflow with Emsolute Develop learnt [Lupus]
 //============================================================
 
 
@@ -118,8 +119,7 @@ L_Start:
 			set Zeny,Zeny-@eco_invest;
 			SetCastleData getarg(1)+".gat",4,@TriggerE+1;
 			// if we learnt Emsolute Develop there's 50% chance to get +1 investment again
-			if (getgdskilllv(@GID,10014) > 0 && rand(100)>50) set @Economy, @Economy + 1;
-			SetCastleData getarg(1)+".gat",2,@Economy+1;
+			SetCastleData getarg(1)+".gat",2,@Economy + 1 + (getgdskilllv(@GID,10014)>0 && rand(100)>50 && @Economy<99);
 			mes "[ "+getarg(0)+" ]";
 			mes "You have invested successfully.";
 			return 0;
