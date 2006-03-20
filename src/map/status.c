@@ -441,7 +441,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			if (sc->data[SC_DANCING].timer != -1)
 			{
 				if (skill_num != BD_ADAPTATION && skill_num != CG_LONGINGFREEDOM
-					&& skill_num != BA_MUSICALSTRIKE && skill_num != DC_THROWARROW)
+					&& skill_num != BA_MUSICALSTRIKE && skill_num != DC_THROWARROW
+					&& skill_num != BA_DISSONANCE && skill_num != DC_UGLYDANCE)	//[blackhole89] - these hit even (only, in fact) if you are dancing too
 					return 0;
 				if (sc->data[SC_DANCING].val1 == CG_HERMODE && skill_num == BD_ADAPTATION)
 					return 0;	//Can't amp out of Wand of Hermode :/ [Skotlex]
