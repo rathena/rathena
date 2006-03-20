@@ -1,0 +1,53 @@
+//===== eAthena Script ======================================= 
+//= Gunslinger Job Quest
+//===== By: ================================================== 
+//= Lord Gywall
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Temp Gunslinger Quest
+//===== Additional Comments: ================================= 
+//= 1.0 Fixed minor things [Lupus]
+//============================================================ 
+
+
+einbroch.gat,244,110,1	script	Gunslinger	859,{
+	mes "[Gunslinger]";
+	mes "*cough* Uh, Who's there?";
+	if(Class==Job_Novice) goto N_Novice;
+	mes "Hey! You're no novice!";
+	close;
+N_Novice:
+	mes "Oh, A novice.. I guess you want to shoot things.";
+	next;
+	menu "I wish to become a Gunslinger",N_Question,"What are the requirements",N_Require,"Leave",-;
+	close;
+N_Question:
+	mes "[Gunslinger]";
+	if(JobLevel<10 || SkillPoint) goto N_Bad;
+	mes "Where is needed to fire a gun?";
+	next;
+	menu "Bullets",N_C,"Arrows",N_W,"Bolts",N_W,"Something.. I dunno",N_W;
+N_C:
+	mes "[Gunslinger]";
+	mes "..Yep, Your right.";
+	mes "You know what goes in guns, so hey.. Use them!.";
+	next;
+	jobchange Job_Gunslinger;
+	mes "[Gunslinger]";
+	mes "Congratulations. Now go train.";
+	close;
+N_W:
+	mes "Argh.. Dammit, you idiot!";
+	close;
+N_Bad:
+	mes "Wait a second.. Your either too low in job level or you have Skill Points.";
+	close;
+N_Require:
+	mes "[Gunslinger]";
+	mes "Get the simple question right..";
+	mes "Your job level must be at least 10 before trying.";
+	close;
+}
