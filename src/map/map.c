@@ -1586,6 +1586,8 @@ int map_quit(struct map_session_data *sd) {
 					status_change_end(&sd->bl,SC_STRIPHELM,-1);
 				if(sd->sc.data[SC_EXTREMITYFIST].timer!=-1)
 					status_change_end(&sd->bl,SC_EXTREMITYFIST,-1);
+				if(sd->sc.data[SC_EXPLOSIONSPIRITS].timer!=-1)
+					status_change_end(&sd->bl,SC_EXPLOSIONSPIRITS,-1);
 			}
 		}
 		skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除

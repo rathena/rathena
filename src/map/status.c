@@ -156,7 +156,7 @@ void initChangeTables(void) {
 	set_sc(AM_CP_ARMOR,             SC_CP_ARMOR,            SI_CP_ARMOR);
 	set_sc(AM_CP_HELM,              SC_CP_HELM,             SI_CP_HELM);
 	set_sc(CR_AUTOGUARD,            SC_AUTOGUARD,           SI_AUTOGUARD);
-	set_sc(CR_SHIELDCHARGE,         SC_STUN,                SI_AUTOGUARD);
+	set_sc(CR_SHIELDCHARGE,         SC_STUN,                SI_BLANK);
 	set_sc(CR_REFLECTSHIELD,        SC_REFLECTSHIELD,       SI_REFLECTSHIELD);
 	set_sc(CR_HOLYCROSS,            SC_BLIND,               SI_BLANK);
 	set_sc(CR_GRANDCROSS,           SC_BLIND,               SI_BLANK);

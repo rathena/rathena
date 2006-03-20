@@ -1225,7 +1225,7 @@ void guild_block_skill(struct map_session_data *sd, int time) {
 	int skill_num[] = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
 	int i;
 	for (i = 0; i < 4; i++)
-		pc_blockskill_start(sd, skill_num[i], time);
+		skill_blockpc_start(sd, skill_num[i], time);
 }
 
 // 同盟関係かどうかチェック

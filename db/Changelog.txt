@@ -25,7 +25,9 @@
 	-----
 
 =========================
+
 03/20
+	* Fixed splash area of Ganbantein [Skotlex]
 	* Updated atk,def,mdef of NJ/GS items, thanks to Haplo [Lupus]
 	- also re-fixed few blackhole89 (def, atk) values
 	* Uploaded Kargha's updated item_db.txt with the Gunslinger/Ninja usage bits set.

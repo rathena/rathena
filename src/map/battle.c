@@ -3489,7 +3489,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return -1; //Cannot be targeted yet.
 			if (sd->state.monster_ignore && src->type == BL_MOB)
 				return 0; //option to have monsters ignore GMs [Valaris]
-			if (sd->special_state.killable)
+			if (sd->special_state.killable && t_bl != s_bl)
 			{
 				state |= BCT_ENEMY; //Universal Victim
 				strip_enemy = 0;
@@ -3544,7 +3544,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_PC:
 		{
 			struct map_session_data *sd = (struct map_session_data *) s_bl;
-			if (sd->special_state.killer)
+			if (sd->special_state.killer && s_bl != t_bl)
 			{
 				state |= BCT_ENEMY; //Is on a killing rampage :O
 				strip_enemy = 0;

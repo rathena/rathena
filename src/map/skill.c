@@ -1211,7 +1211,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case CR_ACIDDEMONSTRATION:
-		skill_break_equip(bl, EQP_WEAPON|EQP_SHIELD, 100*skilllv, BCT_ENEMY);
+		skill_break_equip(bl, EQP_WEAPON|EQP_ARMOR, 100*skilllv, BCT_ENEMY);
 		break;
 
 	case TK_DOWNKICK:
@@ -2816,7 +2816,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			clif_skill_nodamage (src,bl,skillid,skilllv,
 				sc_start4(src,SC_WATK_ELEMENT,100,
 					3,20,0,0,skill_get_time2(skillid, skilllv)));
-			if (sd) pc_blockskill_start (sd, skillid, skill_get_time(skillid, skilllv));
+			if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
 		}
 		break;
 
@@ -3057,7 +3057,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 				clif_updatestatus(sd,SP_SP);
 			}
 		}		
-		if (sd) pc_blockskill_start (sd, skillid, (skilllv < 5 ? 10000: 15000));
+		if (sd) skill_blockpc_start (sd, skillid, (skilllv < 5 ? 10000: 15000));
 		break;
 
 	/* HP吸?/HP吸?魔法 */
@@ -3711,7 +3711,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
  //Initiate 10% of your damage becomes fire element.
 		clif_skill_nodamage (src,src,skillid,skilllv,
 			sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv)));
-		if (sd) pc_blockskill_start (sd, skillid, skill_get_time(skillid, skilllv));
+		if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
 		break;
 	case LK_BERSERK:		/* バ?サ?ク */
 	case KN_AUTOCOUNTER:		/* オ?トカウンタ? */
@@ -3784,7 +3784,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		if (sd)
-			pc_blockskill_start (sd, skillid, skill_get_time2(skillid,skilllv));
+			skill_blockpc_start (sd, skillid, skill_get_time2(skillid,skilllv));
 		break;
 
 	case AS_ENCHANTPOISON: // Prevent spamming [Valaris]
@@ -5282,6 +5282,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
 			}
 			tbl.id = 0;
+			tbl.type = BL_NUL;
 			tbl.m = src->m;
 			tbl.x = src->x;
 			tbl.y = src->y;
@@ -6062,7 +6063,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case MO_BODYRELOCATION:
 		if (sd) {
 			pc_movepos(sd, x, y, 1);
-			pc_blockskill_start (sd, MO_EXTREMITYFIST, 2000);
+			skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
 		} else if (src->type == BL_MOB) {
 			struct mob_data *md = (struct mob_data *)src;
 			mob_warp(md, -1, x, y, 0);
@@ -6935,14 +6936,17 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 
 	case UNT_SPIDERWEB:
 	case UNT_ANKLESNARE:
-		if(sg->val2==0 && (!tsc || tsc->data[type].timer==-1 )){
+		if(sg->val2==0 && tsc && tsc->data[type].timer==-1){
 		 	int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
 			if (sc_start(bl,type,100,sg->skill_lv,sec))
 			{
+				struct TimerData* td = get_timer(tsc->data[type].timer); 
+				if (td) sec = DIFF_TICK(td->tick, tick);
 				map_moveblock(bl, src->bl.x, src->bl.y, tick);
  				clif_fixpos(bl);
 				sg->val2=bl->id;
-			}
+			} else
+				sec = 3000; //Couldn't trap it?
 			//clif_01ac(&src->bl); //Removed? Check the openkore description of this packet: [Skotlex]
 			// 01AC: long ID
 			// Indicates that an object is trapped, but ID is not a
@@ -8005,6 +8009,7 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case HW_GANBANTEIN:
 		force_gem_flag = 1;
 		break;
+	case AM_BERSERKPITCHER:
 	case AM_POTIONPITCHER:
 	case CR_SLIMPITCHER:
 	case MG_STONECURSE:
@@ -10926,6 +10931,33 @@ int skill_arrow_create( struct map_session_data *sd,int nameid)
 	return 0;
 }
 
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int skill_blockpc_end(int tid,unsigned int tick,int id,int data)
+{
+	struct map_session_data *sd = map_id2sd(id);
+	if (data <= 0 || data >= MAX_SKILL)
+		return 0;
+	if (sd) sd->blockskill[data] = 0;
+	
+	return 1;
+}
+int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
+{
+	nullpo_retr (-1, sd);
+
+	if (skillid >= GD_SKILLBASE)
+		skillid = GD_SKILLRANGEMIN + skillid - GD_SKILLBASE;
+	if (skillid < 1 || skillid > MAX_SKILL)
+		return -1;
+
+	sd->blockskill[skillid] = 1;
+	return add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid);
+}
+
+
 /*----------------------------------------------------------------------------
  * ?炎匀ｻ系
  */
@@ -11661,6 +11693,7 @@ int do_init_skill(void)
 	add_timer_func_list(skill_castend_id,"skill_castend_id");
 	add_timer_func_list(skill_castend_pos,"skill_castend_pos");
 	add_timer_func_list(skill_timerskill,"skill_timerskill");
+	add_timer_func_list(skill_blockpc_end, "skill_blockpc_end");
 	
 	add_timer_interval(gettick()+SKILLUNITTIMER_INVERVAL,skill_unit_timer,0,0,SKILLUNITTIMER_INVERVAL);
 

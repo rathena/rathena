@@ -1519,8 +1519,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->special_state.no_gemstone = 1;
 		break;
 	case SP_INFINITE_ENDURE:
-		if(sd->state.lr_flag != 2)
+		if(sd->state.lr_flag != 2) {
 			sd->special_state.infinite_endure = 1;
+			sc_start(&sd->bl, SC_ENDURE,100,1,0);
+		}
 		break;
 	case SP_INTRAVISION: // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
 		if(sd->state.lr_flag != 2)
@@ -2189,33 +2191,6 @@ int pc_skill(struct map_session_data *sd,int id,int level,int flag)
 
 	return 0;
 }
-
-/*==========================================
- *
- *------------------------------------------
- */
-int pc_blockskill_end(int tid,unsigned int tick,int id,int data)
-{
-	struct map_session_data *sd = map_id2sd(id);
-	if (data <= 0 || data >= MAX_SKILL)
-		return 0;
-	if (sd) sd->blockskill[data] = 0;
-	
-	return 1;
-}
-int pc_blockskill_start (struct map_session_data *sd, int skillid, int tick)
-{
-	nullpo_retr (-1, sd);
-
-	if (skillid >= 10000 && skillid < 10015)
-		skillid -= 9500;
-	else if (skillid < 1 || skillid > MAX_SKILL)
-		return -1;
-
-	sd->blockskill[skillid] = 1;
-	return add_timer(gettick()+tick,pc_blockskill_end,sd->bl.id,skillid);
-}
-
 /*==========================================
  * ƒJ?ƒh?“ü
  *------------------------------------------
@@ -8276,7 +8251,6 @@ int do_init_pc(void) {
 	add_timer_func_list(pc_calc_pvprank_timer, "pc_calc_pvprank_timer");
 	add_timer_func_list(pc_autosave, "pc_autosave");
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");
-	add_timer_func_list(pc_blockskill_end, "pc_blockskill_end");
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
 	natural_heal_prev_tick = gettick();
 	add_timer_interval(natural_heal_prev_tick + NATURAL_HEAL_INTERVAL, pc_natural_heal, 0, 0, NATURAL_HEAL_INTERVAL);
