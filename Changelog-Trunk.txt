@@ -6,6 +6,9 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/03/18
+	* Cleaned up some guild functions. [LuzZza]
+	- Now guild leaving/explusion packets sends correctly.
+	- Fix to prevent creation alliance/opposition with same guilds.
 	* @stfu now allows negative intervals to be specified. [Skotlex]
 	* Added overflow check to the login-server when sending GM accounts to
 	  char. [Skotlex]

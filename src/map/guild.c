@@ -813,55 +813,58 @@ int guild_explusion(struct map_session_data *sd,int guild_id,
 		if(	g->member[i].account_id==account_id &&
 			g->member[i].char_id==char_id ){
 			intif_guild_leave(g->guild_id,account_id,char_id,1,mes);
-			memset(&g->member[i],0,sizeof(struct guild_member));
+			//It's wrong way, member info will erased later
+			//see guild_member_leaved [LuzZza]
+			//memset(&g->member[i],0,sizeof(struct guild_member));
 			return 0;
 		}
 	}
 	return 0;
 }
-// ギルドメンバが脱退した
-int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
-	const char *name,const char *mes)
-{
-	struct map_session_data *sd=map_charid2sd(char_id);
-	struct guild *g=guild_search(guild_id);
 
-	if(g!=NULL){
-		int i;
-		for(i=0;i<g->max_member;i++) {
-			if(	g->member[i].account_id==account_id &&
-				g->member[i].char_id==char_id ){
-				struct map_session_data *sd2=sd;
-				if(sd2==NULL)
-					sd2=guild_getavailablesd(g);
-				else
-				{
-					if(flag==0)
-						clif_guild_leave(sd2,name,mes);
-					else
-						clif_guild_explusion(sd2,name,mes,account_id);
-				}
-				memset(&g->member[i],0,sizeof(struct guild_member));
-			}
-			// メンバーリストを全員に再通知
-			for(i=0;i<g->max_member;i++){
-				if( g->member[i].sd!=NULL )
-					clif_guild_memberlist(g->member[i].sd);
-			}
-		}
-	}
-	if(sd!=NULL) {
-		if (sd->status.guild_id==guild_id){
-			guild_send_dot_remove(sd);
-			sd->status.guild_id=0;
-			sd->guild_emblem_id=0;
-			sd->state.guild_sent=0;
-			clif_charnameupdate(sd); //Update display name [Skotlex]
-		}
-	}
+int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
+	const char *name,const char *mes) // rewrote [LuzZza]
+{
+	int i;
+	struct guild *g = guild_search(guild_id);
+	struct map_session_data *sd = map_charid2sd(char_id);
+	struct map_session_data *online_member_sd;
+
+	if(g == NULL)
+		return 0;
 	
+	for(i=0;i<g->max_member;i++) {
+		if( g->member[i].account_id == account_id &&
+			g->member[i].char_id == char_id ){
+
+				if((online_member_sd = guild_getavailablesd(g)) == NULL)
+					return 0;
+
+				if(!flag)
+					clif_guild_leave(online_member_sd, name, mes);
+				else
+					clif_guild_explusion(online_member_sd, name, mes, account_id);
+
+				memset(&g->member[i],0,sizeof(struct guild_member));
+				clif_guild_memberlist(online_member_sd);
+
+				if(sd != NULL && sd->status.guild_id == guild_id) {
+	
+					sd->status.guild_id=0;
+					sd->guild_emblem_id=0;
+					sd->state.guild_sent=0;
+					
+					guild_send_dot_remove(sd);
+					clif_charnameupdate(sd); //Update display name [Skotlex]
+				}
+				return 0;
+		}
+					
+	}
+
 	return 0;
 }
+
 // ギルドメンバのオンライン状態/Lv更新送信
 int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 {
@@ -1269,6 +1272,10 @@ int guild_reqalliance(struct map_session_data *sd,int account_id)
 	if(g[0]==NULL || g[1]==NULL)
 		return 0;
 
+	// Prevent creation alliance with same guilds [LuzZza]
+	if(sd->status.guild_id == tsd->status.guild_id)
+		return 0;
+
 	if( guild_get_alliance_count(g[0],0)>=3 )	// 同盟数確認
 		clif_guild_allianceack(sd,4);
 	if( guild_get_alliance_count(g[1],0)>=3 )
@@ -1372,6 +1379,10 @@ int guild_opposition(struct map_session_data *sd,int char_id)
 
 	g=guild_search(sd->status.guild_id);
 	if(g==NULL || tsd==NULL)
+		return 0;
+
+	// Prevent creation opposition with same guilds [LuzZza]
+	if(sd->status.guild_id == tsd->status.guild_id)
 		return 0;
 
 	if( guild_get_alliance_count(g,1)>=3 )	// 敵対数確認
