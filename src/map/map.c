@@ -1538,7 +1538,7 @@ int map_quit(struct map_session_data *sd) {
 			guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
 	    
 		// Force exiting from duel and rejecting
-   	 // all duel invitations when player quit [LuzZza]
+		// all duel invitations when player quit [LuzZza]
 		if(sd->duel_group > 0)
 			duel_leave(sd->duel_group, sd);
 	   

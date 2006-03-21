@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/21
+	* Fix on not showing guildmembers logins/logouts messages. [LuzZza]
 	* Fixed SC_SWOO's opt3 value. Small monsters should stay small for skill's
 	  duration now. [Skotlex]
 	* Fixed allowing multiple recast of Dissonance/Ugly-Dance [Skotlex]

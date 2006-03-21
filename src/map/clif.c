@@ -7337,6 +7337,47 @@ int clif_guild_memberlogin_notice(struct guild *g,int idx,int flag)
 		clif_send(buf,packet_len_table[0x16d],&g->member[idx].sd->bl,GUILD_WOS);
 	return 0;
 }
+
+// Function `clif_guild_memberlogin_notice` sends info about
+// logins and logouts of a guild member to the rest members.
+// But at the 1st time (after a player login or map changing)
+// the client won't show the message.
+// So I suggest use this function for sending "first-time-info"
+// to some player on entering the game or changing location. 
+// At next time the client would always show the message.
+// The function sends all the statuses in the single packet 
+// to economize traffic. [LuzZza]
+int clif_guild_send_onlineinfo(struct map_session_data *sd) {
+
+	struct guild *g;
+	char buf[14*128];
+	int i, count=0, p_len;
+	
+	nullpo_retr(0, sd);
+
+	p_len = packet_len_table[0x16d];
+
+	if(!(g = guild_search(sd->status.guild_id)))
+		return 0;
+	
+	for(i=0; i<g->max_member; i++) {
+
+		if(g->member[i].account_id > 0 &&
+			g->member[i].account_id != sd->status.account_id) {
+
+			WBUFW(buf,count*p_len) = 0x16d;
+			WBUFL(buf,count*p_len+2) = g->member[i].account_id;
+			WBUFL(buf,count*p_len+6) = g->member[i].char_id;
+			WBUFL(buf,count*p_len+10) = g->member[i].online;
+			count++;
+		}
+	}
+	
+	clif_send(buf,p_len*count,&sd->bl,SELF);
+
+	return 0;
+}
+
 /*==========================================
  * ギルドマスター通知(14dへの応答)
  *------------------------------------------
@@ -8765,6 +8806,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_set0199(fd, 1);
 		//clif_misceffect2(&sd->bl, 159);
 	}
+
+	//[LuzZza]
+	clif_guild_send_onlineinfo(sd);
 
 	// pvp
 	//if(sd->pvp_timer!=-1 && !battle_config.pk_mode) /PVP Client crash fix* Removed timer deletion

@@ -865,61 +865,52 @@ int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
 	return 0;
 }
 
-// ギルドメンバのオンライン状態/Lv更新送信
 int guild_send_memberinfoshort(struct map_session_data *sd,int online)
-{
+{ // cleaned up [LuzZza]
+	
 	struct guild *g;
-	int  i;
 	
 	nullpo_retr(0, sd);
-
-	if(sd->status.guild_id<=0)
+		
+	if(!(g = guild_search(sd->status.guild_id)))
 		return 0;
-	g=guild_search(sd->status.guild_id);
-	if(g==NULL)
+
+	//Moved to place before intif_guild_memberinfoshort because
+	//If it's not a member, needn't send it's info to intif. [LuzZza]
+	guild_check_member(g);
+	
+	if(sd->status.guild_id <= 0)
 		return 0;
 
 	intif_guild_memberinfoshort(g->guild_id,
 		sd->status.account_id,sd->status.char_id,online,sd->status.base_level,sd->status.class_);
 
-	if( !online ){	// ログアウトするならsdをクリアして終了
-		i=guild_getindex(g,sd->status.account_id,sd->status.char_id);
-		if(i>=0)
-			g->member[i].sd=NULL;
-		return 0;
-	} else if (sd->fd) {
-		//Send XY dot updates. [Skotlex]
-		for(i=0; i < MAX_GUILD; i++) {
-			if (!g->member[i].sd || g->member[i].sd == sd ||
-				g->member[i].sd->bl.m != sd->bl.m)
-				continue;
-			clif_guild_xy_single(sd->fd, g->member[i].sd);
-		}
-	}
-
-	if( sd->state.guild_sent!=0 )	// ギルド初期送信データは送信済み
+	if(sd->state.guild_sent)
 		return 0;
 
-	// 競合確認
-	guild_check_conflict(sd);
-
-	// あるならギルド初期送信データ送信
-	guild_check_member(g);	// 所属を確認する
-	if(sd->status.guild_id==g->guild_id){
+	guild_check_conflict(sd); // mystery check
+		
+	if(sd->status.guild_id == g->guild_id){
+	
 		clif_guild_belonginfo(sd,g);
 		clif_guild_notice(sd,g);
-		sd->state.guild_sent=1;
-		sd->guild_emblem_id=g->emblem_id;
+		
+		sd->state.guild_sent = 1;
+		sd->guild_emblem_id = g->emblem_id;
 	}
+	
 	return 0;
 }
-// ギルドメンバのオンライン状態/Lv更新通知
+
 int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int online,int lv,int class_)
-{
+{ // cleaned up [LuzZza]
+	
 	int i,alv,c,idx=-1,om=0,oldonline=-1;
-	struct guild *g=guild_search(guild_id);
-	if(g==NULL)
+	struct guild *g = guild_search(guild_id);
+	
+	if(g == NULL)
 		return 0;
+	
 	for(i=0,alv=0,c=0,om=0;i<g->max_member;i++){
 		struct guild_member *m=&g->member[i];
 		if(m->account_id==account_id && m->char_id==char_id ){
@@ -936,6 +927,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 		if(m->online)
 			om++;
 	}
+	
 	if(idx == -1 || c == 0) {
 		// ギルドのメンバー外なので追放扱いする
 		struct map_session_data *sd = map_id2sd(account_id);
@@ -948,22 +940,33 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 			ShowWarning("guild: not found member %d,%d on %d[%s]\n",	account_id,char_id,guild_id,g->name);
 		return 0;
 	}
+	
 	g->average_lv=alv/c;
 	g->connect_member=om;
 
-	if(oldonline!=online)	// オンライン状態が変わったので通知
-		clif_guild_memberlogin_notice(g,idx,online);
-
-	for(i=0;i<g->max_member;i++){	// sd再設定
+	for(i=0;i<g->max_member;i++) {
 		struct map_session_data *sd= map_id2sd(g->member[i].account_id);
-		if (sd && sd->status.char_id == g->member[i].char_id &&
-			sd->status.guild_id == g->guild_id &&
-			!sd->state.waitingdisconnect)
-			g->member[i].sd = sd;
-		else sd = NULL;
+		g->member[i].sd = (sd && sd->status.char_id == g->member[i].char_id &&
+			sd->status.guild_id == g->guild_id && !sd->state.waitingdisconnect) ? sd : NULL;
 	}
+	
+	if(oldonline!=online) 
+		clif_guild_memberlogin_notice(g, idx, online);
+	
 
-	// ここにクライアントに送信処理が必要
+	if(!g->member[idx].sd)
+		return 0;
+
+	//Send XY dot updates. [Skotlex]
+	//Moved from guild_send_memberinfoshort [LuzZza]
+	for(i=0; i < MAX_GUILD; i++) {
+		
+		if(!g->member[i].sd || i == idx ||
+			g->member[i].sd->bl.m != g->member[idx].sd->bl.m)
+			continue;
+
+		clif_guild_xy_single(g->member[idx].sd->fd, g->member[i].sd);
+	}			
 
 	return 0;
 }
