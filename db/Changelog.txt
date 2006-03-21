@@ -26,6 +26,8 @@
 
 =========================
 
+03/21
+	* Myst Case Card will drop GB even if the card combo's on [Lupus]
 03/20
 	* Fixed splash area of Ganbantein [Skotlex]
 	* Updated atk,def,mdef of NJ/GS items, thanks to Haplo [Lupus]
