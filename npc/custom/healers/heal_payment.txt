@@ -19,9 +19,10 @@
 
 prontera.gat,150,184,5	script	Healer#h1-1::Healer	742,{
 	set @tempHp, MaxHp-Hp;
+	set @tempSpReal, MaxSp-Sp;
 	set @tempSp, ((MaxSp-Sp) * BaseLevel) / 5;
 	if (@tempHp > 0) goto WOUNDED;
-	if (@tempSp > 0) goto ONLY_REGENERATION;
+	if (@tempSpReal > 0) goto ONLY_REGENERATION;
 
 	mes "[Healer]";
 	mes "Oh?";
@@ -55,19 +56,19 @@ prontera.gat,150,184,5	script	Healer#h1-1::Healer	742,{
 	HEALINGS:
 		if (Zeny < @tempHp) goto NO_ZENYS;
 		set Zeny, Zeny-@tempHp;
-		heal 30000,0;
+		heal @tempHp,0;
 		goto FIN;
 
 	REGENERATION:
 		if (Zeny < @tempSp) goto NO_ZENYS;
 		set Zeny, Zeny-@tempSp;
-		heal 0,30000;
+		heal 0,@tempSpReal;
 		goto FIN;
 
 	HEALINGS_AND_REGEN:
 		if (Zeny < (@tempHp+@tempSp)) goto NO_ZENYS;
 		set Zeny, Zeny-(@tempHp+@tempSp);
-		heal 30000,30000;
+		heal @tempHp,@tempSpReal;
 		goto FIN;
 
 	NO_ZENYS:

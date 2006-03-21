@@ -26,7 +26,8 @@ Nexon
 == Changelog ==
 
 Date		Added
-======
+03/21
+	* Improved payment healer. [Lance]
 03/20
 	* Added temp Job quests of Ninja and Gunslinger, thx2 Gywall [Lupus]
 	* Fixed endless warping loops, thanks to Manipulator [Lupus]
