@@ -336,7 +336,7 @@
 //314,0,0,0,0,0,0,1,1,no,0,64,0,misc,0	//BD_RAGNAROK#Ragnarok#
 315,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//BA_MUSICALLESSON#Music Lesson#
 316,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//BA_MUSICALSTRIKE#Melody Strike#
-317,0,8,4,0,1,0,5,1,no,0,0,0,misc,0	//BA_DISSONANCE#Unchained Serenade#
+317,0,8,4,0,1,0,5,1,no,0,32,0,misc,0	//BA_DISSONANCE#Unchained Serenade#
 318,0,6,4,0,3,-1,5,1,no,0,0,0,misc,0	//BA_FROSTJOKE#Unbarring Octave#
 319,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//BA_WHISTLE#Perfect Tablature#
 320,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//BA_ASSASSINCROSS#Impressive Riff#

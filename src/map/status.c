@@ -343,7 +343,7 @@ int status_getrefinebonus(int lv,int type)
  * flag:
  * 	0 - Trying to use skill on target.
  * 	1 - Cast bar is done.
- * 	2- Skill already pulled off, check is due to ground-based skills or splash-damage ones.
+ * 	2 - Skill already pulled off, check is due to ground-based skills or splash-damage ones.
  * src MAY be null to indicate we shouldn't check it, this is a ground-based skill attack.
  * target MAY Be null, in which case the checks are only to see 
  * whether the source can cast or not the skill on the ground.
@@ -439,11 +439,10 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			)
 				return 0;
 
-			if (sc->data[SC_DANCING].timer != -1)
+			if (flag!=2 && sc->data[SC_DANCING].timer != -1)
 			{
 				if (skill_num != BD_ADAPTATION && skill_num != CG_LONGINGFREEDOM
-					&& skill_num != BA_MUSICALSTRIKE && skill_num != DC_THROWARROW
-					&& skill_num != BA_DISSONANCE && skill_num != DC_UGLYDANCE)	//[blackhole89] - these hit even (only, in fact) if you are dancing too
+					&& skill_num != BA_MUSICALSTRIKE && skill_num != DC_THROWARROW)
 					return 0;
 				if (sc->data[SC_DANCING].val1 == CG_HERMODE && skill_num == BD_ADAPTATION)
 					return 0;	//Can't amp out of Wand of Hermode :/ [Skotlex]
@@ -4549,6 +4548,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_MAXOVERTHRUST:
 		case SC_OVERTHRUST:			/* オ?バ?スラスト */
+		case SC_SWOO:	//Why does it shares the same opt as Overthrust? Perhaps we'll never know...
 			sc->opt3 |= 2;
 			opt_flag = 0;
 			break;
@@ -4592,9 +4592,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			sc->opt3 |= 4096;
 			opt_flag = 0;
 			break;
-//		case SC_SWOO: // [marquis007]
-//			sc->opt3 |= 8192; //We haven't figured out this value yet...
-//			break;
 			
 		//OPTION
 		case SC_HIDING:
@@ -5119,6 +5116,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			sc->opt3 &= ~1;
 			break;
 		case SC_OVERTHRUST:			/* オ?バ?スラスト */
+		case SC_MAXOVERTHRUST:
+		case SC_SWOO:
 			sc->opt3 &= ~2;
 			break;
 		case SC_ENERGYCOAT:			/* エナジ?コ?ト */
