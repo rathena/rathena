@@ -2809,7 +2809,8 @@ struct Damage battle_calc_magic_attack(
 			short cardfix=100;
 
 			cardfix=cardfix*(100+sd->magic_addrace[t_race])/100;
-			cardfix=cardfix*(100+sd->magic_addele[t_ele])/100;
+			if (flag.elefix)
+				cardfix=cardfix*(100+sd->magic_addele[t_ele])/100;
 			cardfix=cardfix*(100+sd->magic_addsize[t_size])/100;
 			cardfix=cardfix*(100+sd->magic_addrace[is_boss(target)?10:11])/100;
 			for(i=0;i<sd->add_mdmg_count;i++) {
@@ -2828,7 +2829,8 @@ struct Damage battle_calc_magic_attack(
 			short s_class= status_get_class(src);
 			short cardfix=100;
 
-			cardfix=cardfix*(100-tsd->subele[s_ele])/100;
+			if (flag.elefix)
+				cardfix=cardfix*(100-tsd->subele[s_ele])/100;
 			cardfix=cardfix*(100-tsd->subsize[s_size])/100;
 			cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 			cardfix=cardfix*(100-tsd->subrace[s_race])/100;

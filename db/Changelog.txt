@@ -27,6 +27,7 @@
 =========================
 
 03/22
+	* Changed Soul Breaker's cast time to 700ms. [Skotlex]
 	* Updated Elemental Converter ingredients. Thanks2 Haplo [Lupus]
 03/21
 	* Fixed the inf2 for BA_DISSONANCE to be dance-skill. [Skotlex]

@@ -135,6 +135,10 @@ int irc_parse(int fd)
 {
 	if (session[fd]->eof){
 		do_close(fd);
+		if (irc_si) {
+		  	aFree(irc_si);
+			irc_si = NULL;
+		}
 		add_timer(gettick() + 15000, irc_connect_timer, 0, 0);
       	return 0;
 	}
@@ -143,8 +147,10 @@ int irc_parse(int fd)
 		irc_si->fd = fd;
 		irc_si->state = 0;
 		session[fd]->session_data = irc_si;
+	} else if  (!irc_si) {
+		irc_si = (struct IRC_Session_Info*)session[fd]->session_data;
+		irc_si->fd = fd;
 	}
-	irc_si = (struct IRC_Session_Info*)session[fd]->session_data;
 	if(RFIFOREST(fd) > 0){
 		char *incoming_string=aCalloc(RFIFOREST(fd),sizeof(char));
 		memcpy(incoming_string,RFIFOP(fd,0),RFIFOREST(fd));
