@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/22
+	* Fixed compiler warnings in battle.c [Lance]
 	* Changes by [reddozen] -->
 		- Updated Full Buster's damage, status effects, and skill levels
 		- Bullseye now only uses 1 coin

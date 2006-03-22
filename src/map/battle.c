@@ -3015,7 +3015,7 @@ struct Damage  battle_calc_misc_attack(
 		//This equation is not official, but it's the closest to the official one 
 		//that Viccious Pucca and the other folks at the forums could come up with. [Skotlex]
 		// updated the formula based on a Japanese formula found to be exact [Reddozen]
-		damage = (0.7 * status_get_vit(target) * (int_ * int_)) / (status_get_vit(target) + int_);
+		damage = (int)((0.7 * status_get_vit(target) * (int_ * int_)) / (status_get_vit(target) + int_));
 		if (tsd) damage/=2;
 		aflag = (aflag&~BF_RANGEMASK)|BF_LONG;
 		break;
