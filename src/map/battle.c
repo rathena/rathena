@@ -1893,19 +1893,19 @@ static struct Damage battle_calc_weapon_attack(
 					if (skill_lv == 10) skillratio += 80;
 					break;
 				case GS_PIERCINGSHOT:
-					skillratio += 10*skill_lv;
+					skillratio += 100 + 20*skill_lv;
 					break;
 				case GS_RAPIDSHOWER:
 					skillratio += 10*skill_lv;
 					break;
 				case GS_DESPERADO:
-					skillratio += 50*skill_lv-50;
+					skillratio += 50*skill_lv+50;
 					break;
 				case GS_DUST:
 					skillratio += 50*skill_lv;
 					break;
 				case GS_FULLBUSTER:
-					skillratio += 150 + 250*skill_lv;
+					skillratio += 300 + 100*skill_lv;
 					break;
 				case GS_SPREADATTACK:
 					skillratio += 20*skill_lv-20;
@@ -3014,7 +3014,8 @@ struct Damage  battle_calc_misc_attack(
 	case CR_ACIDDEMONSTRATION:
 		//This equation is not official, but it's the closest to the official one 
 		//that Viccious Pucca and the other folks at the forums could come up with. [Skotlex]
-		damage = int_ * (int)(sqrt(100*status_get_vit(target))) / 3;
+		// updated the formula based on a Japanese formula found to be exact [Reddozen]
+		damage = (0.7 * status_get_vit(target) * (int_ * int_)) / (status_get_vit(target) + int_);
 		if (tsd) damage/=2;
 		aflag = (aflag&~BF_RANGEMASK)|BF_LONG;
 		break;
@@ -3668,7 +3669,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	} else { //Non pvp/gvg, check party/guild settings.
 		if (flag&BCT_PARTY || state&BCT_ENEMY) {
 			int s_party = status_get_party_id(s_bl);
-			if(!is_duel s_party && s_party ==status_get_party_id(t_bl)) // +check for duel [LuzZza]
+			if(!is_duel && s_party && s_party == status_get_party_id(t_bl)) // +check for duel [LuzZza]
 				state |= BCT_PARTY;
 		}
 		if (flag&BCT_GUILD || state&BCT_ENEMY) {

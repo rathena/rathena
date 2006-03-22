@@ -1728,6 +1728,8 @@ int status_calc_agi(struct block_list *bl, int agi)
 			agi -= sc->data[SC_QUAGMIRE].val1*(bl->type==BL_PC?5:10);
 		if(sc->data[SC_SUITON].timer!=-1)
 			agi -= sc->data[SC_SUITON].val2;
+		if(sc->data[SC_INCREASING].timer!=-1)
+			agi += 4;	// added based on skill updates [Reddozen]
 	}
 
 	return agi;
@@ -1806,6 +1808,8 @@ int status_calc_dex(struct block_list *bl, int dex)
 				dex >>= 1;
 			else dex += sc->data[SC_BLESSING].val1;
 		}
+		if(sc->data[SC_INCREASING].timer!=-1)
+			dex += 4;	// added based on skill updates [Reddozen]
 	}
 
 	return dex;
@@ -1965,7 +1969,7 @@ int status_calc_hit(struct block_list *bl, int hit)
 		if(sc->data[SC_ADJUSTMENT].timer!=-1)
 			hit += 30;
 		if(sc->data[SC_INCREASING].timer!=-1)
-  		hit += 50; // RockmanEXE
+  		hit += 20; // RockmanEXE; changed based on updated [Reddozen]
 	}
 
 	return hit;

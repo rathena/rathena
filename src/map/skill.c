@@ -1254,6 +1254,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case GS_PIERCINGSHOT:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
 		break;
+	case GS_FULLBUSTER:
+		sc_start(bl,SC_BLIND,(2*skilllv),skilllv,skill_get_time2(skillid,1));
+		break;
 	case NJ_HYOUSYOURAKU:
 		sc_start(bl,SC_FREEZE,(10+10*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
@@ -3952,29 +3955,29 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case MO_ABSORBSPIRITS:	// ?’D
 		i = 0;
-		if (dstsd && dstsd->spiritball > 0 &&
-			((sd && sd == dstsd) || map_flag_vs(src->m)))
+		if (dstsd && dstsd->spiritball > 0)
 		{
-			i = dstsd->spiritball * 7;
-			pc_delspiritball(dstsd,dstsd->spiritball,0);
-		} else if (dstmd && //??Û‚ªƒ‚ƒ“ƒXƒ^?‚Ì?ê?‡
-			//20%‚ÌŠm—¦‚Å??Û‚ÌLv*2‚ÌSP‚ð‰ñ•œ‚·‚é?B?¬Œ÷‚µ‚½‚Æ‚«‚Íƒ^?ƒQƒbƒg(ƒÐ?„D?)ƒÐ????!!
-			!(status_get_mode(bl)&MD_BOSS) && rand() % 100 < 20)
-		{
-			i = 2 * dstmd->db->lv;
-			mob_target(dstmd,src,0);
-		}
-		if (sd){
-			if (i > 0x7FFF)
-				i = 0x7FFF;
-			if (sd->status.sp + i > sd->status.max_sp)
-				i = sd->status.max_sp - sd->status.sp;
-			if (i) {
-				sd->status.sp += i;
-				clif_heal(sd->fd,SP_SP,i);
+			if (((sd && sd == dstsd) || map_flag_vs(src->m)) && ((dstsd->class_&MAPID_BASEMASK)!=MAPID_GUNSLINGER))
+			{	// split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
+				i = dstsd->spiritball * 7;
+				pc_delspiritball(dstsd,dstsd->spiritball,0);
+			} else if (dstmd && !(status_get_mode(bl)&MD_BOSS) && rand() % 100 < 20)
+			{	// check if target is a monster and not a Boss, for the 20% chance to absorb 2 SP per monster's level [Reddozen]
+				i = 2 * dstmd->db->lv;
+				mob_target(dstmd,src,0);
+			}
+			if (sd){
+				if (i > 0x7FFF)
+					i = 0x7FFF;
+				if (sd->status.sp + i > sd->status.max_sp)
+					i = sd->status.max_sp - sd->status.sp;
+				if (i) {
+					sd->status.sp += i;
+					clif_heal(sd->fd,SP_SP,i);
+				}
 			}
 		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,0);
+			clif_skill_nodamage(src,bl,skillid,skilllv,0);
 		break;
 
 	case AC_MAKINGARROW:			/* –î?ì?¬ */
@@ -8139,17 +8142,10 @@ int skill_check_condition(struct map_session_data *sd,int type)
 	case GS_TRIPLEACTION:
 	case GS_MAGICALBULLET:
 	case GS_CRACKER:
+	case GS_BULLSEYE:
 		spiritball = 1;
 		if (skill != GS_MAGICALBULLET)
 			arrow_flag = 1;
-		if(sd->equip_index[10] < 0) {
-			clif_arrow_fail(sd,0);
-			return 0;
-		}
-		break;
-
-	case GS_BULLSEYE:
-		spiritball = 5;
 		if(sd->equip_index[10] < 0) {
 			clif_arrow_fail(sd,0);
 			return 0;
