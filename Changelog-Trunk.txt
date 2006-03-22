@@ -5,6 +5,16 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/22
+	* status_check_skilluse won't block skill-specific checks (silence,
+	  berserk, steel-body, etc) when the skill in use is an item-invoked skill.
+	  [Skotlex]
+	* Merged LittleWolf's function to read the map-height directly from the rsw
+	  file. Now when building the map-cache, the water-heights should be
+	  automatically read as well directly from the rsw's. [Skotlex]
+	  WARNING: Not tested yet!
+	  The water-height config file now is for aliases. When the rsw for a
+	  certain map is not found, and this map exists in the water_height list,
+	  then the water height of the second map listed in that file is used.
 	* Some cleanups in irc.c [Skotlex]
 	* Magic skills that ignore element now also don't take into account
 	  elemental cards. [Skotlex]

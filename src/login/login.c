@@ -3515,7 +3515,6 @@ int login_lan_config_read(const char *lancfgName) {
 	return 0;
 }
 
-
 //-----------------------------------
 // Reading general configuration file
 //-----------------------------------

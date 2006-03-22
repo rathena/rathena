@@ -997,6 +997,7 @@ struct map_data {
 	int m;
 	short xs,ys;
 	short bxs,bys;
+	int water_height;
 	int npc_num;
 	int users;
 	struct {

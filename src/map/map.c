@@ -2351,21 +2351,22 @@ int map_eraseipport(unsigned short mapindex,unsigned long ip,int port)
  *------------------------------------------
  */
 static struct waterlist_ {
-	char mapname[MAP_NAME_LENGTH];
-	int waterheight;
+	char mapname[MAP_NAME_LENGTH], clonemapname[MAP_NAME_LENGTH];
 } *waterlist=NULL;
 
 #define NO_WATER 1000000
 
-static int map_setwaterheight_sub(int m, int wh) {
+static int map_setwaterheight_sub(int m) {
 	char fn[256];
 	char *gat;
 	int x,y;
+	int wh;
 	struct gat_1cell {float high[4]; int type;} *p = NULL;
 	
 	if (m < 0)
 		return 0;
-	
+	wh = map[m].water_height;
+		
 	sprintf(fn,"data\\%s",mapindex_id2name(map[m].index));
 
 	// read & convert fn
@@ -2388,34 +2389,56 @@ static int map_setwaterheight_sub(int m, int wh) {
 	return 1;
 }
 int map_setwaterheight(int m, char *mapname, int height) {
-	int i=0;
 	if (height < 0)
 		height = NO_WATER;
-	if(waterlist){
-		for(i=0;waterlist[i].mapname[0] && i < MAX_MAP_PER_SERVER;i++)
-			if(strcmp(waterlist[i].mapname,mapname)==0) {
-				waterlist[i].waterheight = height;
-			}
-	}
-	if (i < MAX_MAP_PER_SERVER) {
-		memcpy(waterlist[i].mapname,mapname, MAP_NAME_LENGTH-1);
-		waterlist[i].waterheight = height;
-	}
-	return map_setwaterheight_sub(m, height);
+	map[m].water_height = height;
+	return map_setwaterheight_sub(m);
 }
 
+/* map_readwaterheight
+ * Reads from the .rsw for each map
+ * Returns water height (or NO_WATER if file doesn't exist)
+ * or other error is encountered.
+ * This receives a map-name, and changes the extension to rsw if it isn't set already.
+ * assumed path for file is data/mapname.rsw
+ * Credits to LittleWolf
+ */
 int map_waterheight(char *mapname) {
+	char fn[256];
+ 	char *rsw;
+	float whtemp;
+	int wh;
+#ifdef _WIN32
+	sprintf(fn,"data\\%s",mapname);
+#else
+	sprintf(fn,"data/%s",mapname);
+#endif
+	rsw = strstr(fn, ".");
+	if (rsw && strstr(fn, ".rsw") == NULL)
+		strcat (rsw, "rsw");
+
+	// read & convert fn
+	// again, might not need to be unsigned char
+	rsw = (char *) grfio_read (fn);
+	if (rsw)
+	{	//Load water height from file
+		whtemp = *(float*)(rsw+166);
+		wh = (int) whtemp;
+		aFree(rsw);
+		return wh;
+	}
+	//Look up for clone map.
 	if(waterlist){
 		int i;
 		for(i=0;waterlist[i].mapname[0] && i < MAX_MAP_PER_SERVER;i++)
 			if(strcmp(waterlist[i].mapname,mapname)==0)
-				return waterlist[i].waterheight;
+				return map_waterheight(waterlist[i].clonemapname);
 	}
 	return NO_WATER;
 }
 
 static void map_readwater(char *watertxt) {
-	char line[1024],w1[1024];
+	char line[1024],w1[1024],w2[1024];
 	FILE *fp=NULL;
 	int n=0;
 
@@ -2427,17 +2450,13 @@ static void map_readwater(char *watertxt) {
 	if(waterlist==NULL)
 		waterlist = (struct waterlist_*)aCallocA(MAX_MAP_PER_SERVER,sizeof(*waterlist));
 	while(fgets(line,1020,fp) && n < MAX_MAP_PER_SERVER){
-		int wh,count;
 		if(line[0] == '/' && line[1] == '/')
 			continue;
-		if((count=sscanf(line,"%s%d",w1,&wh)) < 1){
+		if(sscanf(line,"%s %s",w1,w2) < 2){
 			continue;
 		}
 		memcpy(waterlist[n].mapname,w1, MAP_NAME_LENGTH-1);
-		if(count >= 2)
-			waterlist[n].waterheight = wh;
-		else
-			waterlist[n].waterheight = 3;
+		memcpy(waterlist[n].clonemapname, w2, MAP_NAME_LENGTH-1);
 		n++;
 	}
 	fclose(fp);
@@ -2538,14 +2557,12 @@ int map_cache_read(struct map_data *m)
 	if(!map_cache.fp) { return 0; }
 	for(i = 0;i < map_cache.head.nmaps ; i++) {
 		if(!strcmp(m->name,map_cache.map[i].fn)) {
-			if(map_cache.map[i].water_height != map_waterheight(m->name)) {
-				// …ê‚Ì‚‚³‚ªˆá‚¤‚Ì‚Å“Ç‚Ý’¼‚µ
-				return 0;
-			} else if(map_cache.map[i].compressed == 0) {
+			if(map_cache.map[i].compressed == 0) {
 				// ”ñˆ³kƒtƒ@ƒCƒ‹
 				int size = map_cache.map[i].xs * map_cache.map[i].ys;
 				m->xs = map_cache.map[i].xs;
 				m->ys = map_cache.map[i].ys;
+				m->water_height = map_cache.map[i].water_height;
 				m->gat = (unsigned char *)aCalloc(m->xs * m->ys,sizeof(unsigned char));
 				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
 				if(fread(m->gat,1,size,map_cache.fp) == size) {
@@ -2563,6 +2580,7 @@ int map_cache_read(struct map_data *m)
 				int size_compress = map_cache.map[i].compressed_len;
 				m->xs = map_cache.map[i].xs;
 				m->ys = map_cache.map[i].ys;
+				m->water_height = map_cache.map[i].water_height;
 				m->gat = (unsigned char *)aMalloc(m->xs * m->ys * sizeof(unsigned char));
 				buf = (unsigned char*)aMalloc(size_compress);
 				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
@@ -2633,7 +2651,7 @@ static int map_cache_write(struct map_data *m)
 			}
 			map_cache.map[i].xs  = m->xs;
 			map_cache.map[i].ys  = m->ys;
-			map_cache.map[i].water_height = map_waterheight(m->name);
+			map_cache.map[i].water_height = m->water_height;
 			map_cache.dirty = 1;
 			if(map_read_flag == 2) {
 				aFree(write_buf);
@@ -2663,7 +2681,7 @@ static int map_cache_write(struct map_data *m)
 			map_cache.map[i].pos = map_cache.head.filesize;
 			map_cache.map[i].xs  = m->xs;
 			map_cache.map[i].ys  = m->ys;
-			map_cache.map[i].water_height = map_waterheight(m->name);
+			map_cache.map[i].water_height = m->water_height;
 			map_cache.head.filesize += len_new;
 			map_cache.dirty = 1;
 			if(map_read_flag == 2) {
@@ -2803,7 +2821,8 @@ static int map_loadafm (struct map_data *m, char *fn)
 
 		xs = m->xs = afm_size[0];
 		ys = m->ys = afm_size[1];
-		// check this, unsigned where it might not need to be
+		m->water_height = map_waterheight(m->name);
+
 		m->gat = (unsigned char*)aCallocA(xs * ys, 1);
 
 		for (y = 0; y < ys; y++) {
@@ -2911,11 +2930,19 @@ int map_readgat (struct map_data *m)
 	if ((pt = strstr(m->name,"<")) != NULL) { // [MouseJstr]
 		char buf[64];
 		*pt++ = '\0';
+#ifdef _WIN32
 		sprintf(buf,"data\\%s", pt);
+#else
+		sprintf(buf,"data/%s", pt);
+#endif
 		m->alias = aStrdup(buf);
 	}
 
+#ifdef _WIN32
 	sprintf(fn,"data\\%s",m->name);
+#else
+	sprintf(fn,"data/%s",m->name);
+#endif
 
 	// read & convert fn
 	// again, might not need to be unsigned char
@@ -2927,7 +2954,7 @@ int map_readgat (struct map_data *m)
 	ys = m->ys = *(int*)(gat+10);
 	m->gat = (unsigned char *)aCallocA(m->xs * m->ys, sizeof(unsigned char));
 
-	wh = map_waterheight(m->name);
+	m->water_height = wh = map_waterheight(m->name);
 	for (y = 0; y < ys; y++) {
 		p = (struct gat_1cell*)(gat+y*xs*20+14);
 		for (x = 0; x < xs; x++) {

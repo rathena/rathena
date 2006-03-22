@@ -419,8 +419,9 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				default: return 0;
 			}
 		}
-		if (skill_num)
-		{	//Skills blocked through status changes...
+		if (skill_num && //Do not block item-casted skills.
+			(src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_num)
+		) {	//Skills blocked through status changes...
 			if (!flag && ( //Blocked only from using the skill (stuff like autospell may still go through
 				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
 				(sc->data[SC_MARIONETTE2].timer != -1 && skill_num == CG_MARIONETTE) ||
