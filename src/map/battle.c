@@ -1893,19 +1893,19 @@ static struct Damage battle_calc_weapon_attack(
 					if (skill_lv == 10) skillratio += 80;
 					break;
 				case GS_PIERCINGSHOT:
-					skillratio += 100 + 20*skill_lv;
+					skillratio += 20*skill_lv;
 					break;
 				case GS_RAPIDSHOWER:
 					skillratio += 10*skill_lv;
 					break;
 				case GS_DESPERADO:
-					skillratio += 50*skill_lv+50;
+					skillratio += 50*skill_lv - 50;
 					break;
 				case GS_DUST:
 					skillratio += 50*skill_lv;
 					break;
 				case GS_FULLBUSTER:
-					skillratio += 300 + 100*skill_lv;
+					skillratio += 200 + 100*skill_lv;
 					break;
 				case GS_SPREADATTACK:
 					skillratio += 20*skill_lv-20;
