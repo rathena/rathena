@@ -5,6 +5,29 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/22
+	* Merged the unit_data structure from jA for handling unit-related data
+	  (attack times, walking, auto-attack timers, skill related data). This is a
+	  huge change that affects walking, attacking, auto-attacking, skill usage
+	  and character clean up from maps. I spent the last two days clearing out
+	  bugs, and even though I couldn't find any more, I wouldn't be surprised for
+	  a corner-case or two I missed. [Skotlex]
+	* Modified unit_skillcastcancel to receive flag&2, which stands for "cancel
+	  casting only if current skill is cancellable" [Skotlex]
+	* Battle config options changed from yes/no to BL_TYPE settings:
+	  skillrange_by_distance, skill_noreiteration, skill_nofootset,
+	  gvg_traps_target_all, skill_log, attack_direction_change,
+	  auto_counter_type. See (Note 4) in the relevant battle config files.
+	  [Skotlex]
+	* Clif.c will disconnect sessions that send an unknown command packet above
+	  0x30000 instead of just ignoring it. [Skotlex]
+	* Cleaned up error reporting during mob-skill loading to be less spamy with
+	  non-loaded mobs. [Skotlex]
+	* Corrected water_height reading. It works now, with the exception that
+	  cloned maps don't get their water-level read because they don't have a rsw
+	  file. The solution is to add all cloned maps to water_level.txt (ie:
+	  "new_1-1.gat new_zone01.rsw" makes the new_zone01.rsw stored water-level be
+	  applied to map new_1-1.gat).
+	  Anyone can help collect all the clone maps to fill up water_height?
 	* status_check_skilluse won't block skill-specific checks (silence,
 	  berserk, steel-body, etc) when the skill in use is an item-invoked skill.
 	  [Skotlex]

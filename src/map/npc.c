@@ -27,6 +27,7 @@
 #include "pet.h"
 #include "battle.h"
 #include "skill.h"
+#include "unit.h"
 
 #ifdef _WIN32
 #undef isspace
@@ -61,8 +62,6 @@ struct event_data {
 static struct tm ev_tm_b;	// 時計イベント用
 
 static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
-static int npc_walktimer(int,unsigned int,int,int); // [Valaris]
-static int npc_walktoxy_sub(struct npc_data *nd); // [Valaris]
 
 /*==========================================
  * NPCの無効化/有効化
@@ -1258,227 +1257,6 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 
 }
 
-// [Valaris] NPC Walking
-
-/*==========================================
- * Time calculation concerning one step next to npc
- *------------------------------------------
- */
-static int calc_next_walk_step(struct npc_data *nd)
-{
-	nullpo_retr(0, nd);
-
-	if(nd->walkpath.path_pos>=nd->walkpath.path_len)
-		return -1;
-	if(nd->walkpath.path[nd->walkpath.path_pos]&1)
-		return status_get_speed(&nd->bl)*14/10;
-	return status_get_speed(&nd->bl);
-}
-
-
-/*==========================================
- * npc Walk processing
- *------------------------------------------
- */
-static int npc_walk(struct npc_data *nd,unsigned int tick,int data)
-{
-	int i;
-	static int dirx[8]={0,-1,-1,-1,0,1,1,1};
-	static int diry[8]={1,1,0,-1,-1,-1,0,1};
-	int x,y,dx,dy;
-
-	nullpo_retr(0, nd);
-
-	nd->state.state=MS_IDLE;
-	if(nd->walkpath.path_pos>=nd->walkpath.path_len || nd->walkpath.path_pos!=data)
-		return 0;
-
-	nd->walkpath.path_half ^= 1;
-	if(nd->walkpath.path_half==0){
-		nd->walkpath.path_pos++;
-		if(nd->state.change_walk_target){
-			npc_walktoxy_sub(nd);
-			return 0;
-		}
-	}
-	else {
-		if(nd->walkpath.path[nd->walkpath.path_pos]>=8)
-			return 1;
-
-		x = nd->bl.x;
-		y = nd->bl.y;
-		if(map_getcell(nd->bl.m,x,y,CELL_CHKNOPASS)) {
-			npc_stop_walking(nd,1);
-			return 0;
-		}
-		nd->dir=nd->walkpath.path[nd->walkpath.path_pos];
-		dx = dirx[nd->dir];
-		dy = diry[nd->dir];
-
-		if(map_getcell(nd->bl.m,x+dx,y+dy,CELL_CHKNOPASS)) {
-			npc_walktoxy_sub(nd);
-			return 0;
-		}
-
-		nd->state.state=MS_WALK;
-		map_foreachinmovearea(clif_npcoutsight,nd->bl.m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_PC,nd);
-
-		x += dx;
-		y += dy;
-		map_moveblock(&nd->bl, x, y, tick);
-
-		map_foreachinmovearea(clif_npcinsight,nd->bl.m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,BL_PC,nd);
-		nd->state.state=MS_IDLE;
-	}
-	if((i=calc_next_walk_step(nd))>0){
-		i = i>>1;
-		if(i < 1 && nd->walkpath.path_half == 0)
-			i = 1;
-		nd->walktimer=add_timer(tick+i,npc_walktimer,nd->bl.id,nd->walkpath.path_pos);
-		nd->state.state=MS_WALK;
-
-		if(nd->walkpath.path_pos>=nd->walkpath.path_len)
-			clif_fixnpcpos(nd);	// When npc stops, retransmission current of a position.
-
-	}
-	return 0;
-}
-
-int npc_changestate(struct npc_data *nd,int state,int type)
-{
-	int i;
-
-	nullpo_retr(0, nd);
-
-	if(nd->walktimer != -1)
-		delete_timer(nd->walktimer,npc_walktimer);
-	nd->walktimer=-1;
-	nd->state.state=state;
-
-	switch(state){
-	case MS_WALK:
-		if((i=calc_next_walk_step(nd))>0){
-			i = i>>2;
-			nd->walktimer=add_timer(gettick()+i,npc_walktimer,nd->bl.id,0);
-		}
-		else
-			nd->state.state=MS_IDLE;
-		break;
-	case MS_DELAY:
-		nd->walktimer=add_timer(gettick()+type,npc_walktimer,nd->bl.id,0);
-		break;
-
-	}
-
-	return 0;
-}
-
-static int npc_walktimer(int tid,unsigned int tick,int id,int data)
-{
-	struct npc_data *nd;
-
-	nd=(struct npc_data*)map_id2bl(id);
-	if(nd == NULL || nd->bl.type != BL_NPC)
-		return 1;
-
-	if(nd->walktimer != tid){
-		return 0;
-	}
-
-	nd->walktimer=-1;
-
-	if(nd->bl.prev == NULL)
-		return 1;
-
-	switch(nd->state.state){
-		case MS_WALK:
-			npc_walk(nd,tick,data);
-			break;
-		case MS_DELAY:
-			npc_changestate(nd,MS_IDLE,0);
-			break;
-		default:
-			break;
-	}
-	return 0;
-}
-
-
-static int npc_walktoxy_sub(struct npc_data *nd)
-{
-	struct walkpath_data wpd;
-
-	nullpo_retr(0, nd);
-
-	if(path_search(&wpd,nd->bl.m,nd->bl.x,nd->bl.y,nd->to_x,nd->to_y,nd->state.walk_easy))
-		return 1;
-	memcpy(&nd->walkpath,&wpd,sizeof(wpd));
-
-	nd->state.change_walk_target=0;
-	npc_changestate(nd,MS_WALK,0);
-
-	clif_movenpc(nd);
-
-	return 0;
-}
-
-int npc_walktoxy(struct npc_data *nd,int x,int y,int easy)
-{
-	struct walkpath_data wpd;
-
-	nullpo_retr(0, nd);
-
-	if(nd->state.state == MS_WALK && path_search(&wpd,nd->bl.m,nd->bl.x,nd->bl.y,x,y,0) )
-		return 1;
-
-	nd->state.walk_easy = easy;
-	nd->to_x=x;
-	nd->to_y=y;
-	if(nd->state.state == MS_WALK) {
-		nd->state.change_walk_target=1;
-	} else {
-		return npc_walktoxy_sub(nd);
-	}
-
-	return 0;
-}
-
-int npc_stop_walking(struct npc_data *nd,int type)
-{
-	nullpo_retr(0, nd);
-
-	if(nd->state.state == MS_WALK || nd->state.state == MS_IDLE) {
-		int dx=0,dy=0;
-
-		nd->walkpath.path_len=0;
-		if(type&4){
-			dx=nd->to_x-nd->bl.x;
-			if(dx<0)
-				dx=-1;
-			else if(dx>0)
-				dx=1;
-			dy=nd->to_y-nd->bl.y;
-			if(dy<0)
-				dy=-1;
-			else if(dy>0)
-				dy=1;
-		}
-		nd->to_x=nd->bl.x+dx;
-		nd->to_y=nd->bl.y+dy;
-		if(dx!=0 || dy!=0){
-			npc_walktoxy_sub(nd);
-			return 0;
-		}
-		npc_changestate(nd,MS_IDLE,0);
-	}
-	if(type&0x01)
-		clif_fixnpcpos(nd);
-	if(type&0x02)
-		battle_set_walkdelay(&nd->bl, gettick(), status_get_dmotion(&nd->bl), 1);
-
-	return 0;
-}
-
 int npc_remove_map (struct npc_data *nd)
 {
 	int m,i;
@@ -1775,7 +1553,6 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 	nd->bl.x = x;
 	nd->bl.y = y;
 	nd->bl.id = npc_get_new_npc_id();
-	nd->dir = dir;
 	nd->flag = 0;
 	memcpy(nd->name, w3, NAME_LENGTH-1);
 	nd->name[NAME_LENGTH-1] = '\0';
@@ -1788,6 +1565,8 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 	npc_shop++;
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = SHOP;
+	unit_dataset(&nd->bl);
+	nd->ud.dir = dir;
 	if (m >= 0) {
 		nd->n = map_addnpc(m,nd);
 		map_addblock(&nd->bl);
@@ -2077,26 +1856,18 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	nd->bl.x = x;
 	nd->bl.y = y;
 	nd->bl.id = npc_get_new_npc_id();
-	nd->dir = dir;
 //	nd->flag = 0;
 	nd->class_ = class_;
 	nd->speed = 200;
 	nd->u.scr.script = script;
 	nd->u.scr.src_id = src_id;
-/* Cleaned up above with memset...
-	nd->chat_id = 0;
-	nd->sc.option = 0;
-	nd->sc.opt1 = 0;
-	nd->sc.opt2 = 0;
-	nd->sc.opt3 = 0;
-*/
-	nd->walktimer = -1;
 
 	npc_script++;
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = SCRIPT;
-//	Cleaned up above...
-//	memset (nd->eventqueue, 0, sizeof(nd->eventqueue));
+	unit_dataset(&nd->bl);
+	nd->ud.dir = dir;
+
 	for (i = 0; i < MAX_EVENTTIMER; i++)
 		nd->eventtimer[i] = -1;
 	if (m >= 0) {
@@ -2266,111 +2037,80 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
  * Parse Mob 2 - Actually Spawns Mob
  * [Wizputer]
  * If cached =1, it is a dynamic cached mob
+ * index points to the index in the mob_list of the map_data cache.
+ * -1 indicates that it is not stored on the map.
  *------------------------------------------
  */
-int npc_parse_mob2 (struct mob_list *mob, int cached)
+int npc_parse_mob2 (struct spawn_data *mob, int index)
 {
 	int i;
 	struct mob_data *md;
 
 	for (i = 0; i < mob->num; i++) {
-		md = (struct mob_data *) aCalloc (1, sizeof(struct mob_data));
-
-		md->bl.prev = NULL;
-		md->bl.next = NULL;
-		md->bl.m = mob->m;
-		md->bl.x = mob->x;
-		md->bl.y = mob->y;
-		md->level = mob->level;
-		memcpy(md->name, mob->mobname, NAME_LENGTH-1);
-		md->n = i;
-		//FIXME: This implementation is not stable, npc scripts will stop working once MAX_MOB_DB changes value! [Skotlex]
-		if(mob->class_ > 2*MAX_MOB_DB){ // large/tiny mobs [Valaris]
-			md->special_state.size=2;
-			md->base_class = md->class_ = mob->class_-2*MAX_MOB_DB;
-		} else if (mob->class_ > MAX_MOB_DB) {
-			md->special_state.size=1;
-			md->base_class = md->class_ = mob->class_-MAX_MOB_DB;
-		} else
-			md->base_class = md->class_ = mob->class_;
-		md->bl.id = npc_get_new_npc_id();
-		md->db = mob_db(mob->class_);
-		md->m = mob->m;
-		md->x0 = mob->x;
-		md->y0 = mob->y;
-		md->xs = mob->xs;
-		md->ys = mob->ys;
-		md->spawndelay1 = mob->delay1;
-		md->spawndelay2 = mob->delay2;
-
-		md->special_state.cached = cached;	//If cached, mob is dynamically removed
-		md->timer = -1;
-		md->speed = mob_db(mob->class_)->speed;
-
-		if (mob_db(mob->class_)->mode & MD_LOOTER)
-			md->lootitem = (struct item *)aCalloc(LOOTITEM_SIZE, sizeof(struct item));
-		else
-			md->lootitem = NULL;
-
-		if (strlen(mob->eventname) >= 4) {
-			memcpy(md->npc_event, mob->eventname, NAME_LENGTH-1);
-		} else if (strlen(mob->eventname) <= 2) { //Portable monster big/small implementation. [Skotlex]
-			int size = atoi(mob->eventname);
-			if (size & 2)
-				md->special_state.size=1;
-			else if (size & 4)
-				md->special_state.size=2;
-			if (size & 8)
-				md->special_state.ai=1;
-		}
-
-		md->bl.type = BL_MOB;
-		map_addiddb(&md->bl);
-		mob_spawn(md->bl.id);
+		md = mob_spawn_dataset(mob);
+		md->spawn = mob;
+		md->spawn_n = index;
+		md->special_state.cached = (index>=0);	//If mob is cached on map, it is dynamically removed
+		mob_spawn(md);
 	}
 
-	return 0;
+	return 1;
 }
 
 int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 {
-	int level, mode;
+	int level, num, class_, mode, x,y,xs,ys;
 	char mapname[MAP_NAME_LENGTH];
 	char mobname[NAME_LENGTH];
-	struct mob_list mob;
+	struct spawn_data mob, *data;
 
-	memset(&mob, 0, sizeof(struct mob_list));
+	memset(&mob, 0, sizeof(struct spawn_data));
 
 	// 引数の個数チェック
-	if (sscanf(w1, "%15[^,],%d,%d,%d,%d", mapname, &mob.x, &mob.y, &mob.xs, &mob.ys) < 3 ||
-		sscanf(w4, "%d,%d,%d,%d,%23s", &mob.class_, &mob.num, &mob.delay1, &mob.delay2, mob.eventname) < 2 ) {
+	if (sscanf(w1, "%15[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 3 ||
+		sscanf(w4, "%d,%d,%u,%u,%23s", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname) < 2 ) {
 		ShowError("bad monster line : %s %s %s (file %s)\n", w1, w3, w4, current_file);
 		return 1;
 	}
-
-	mob.m = map_mapname2mapid(mapname);
-	if (mob.m < 0) {
+	if (!mapindex_name2id(mapname)) {
 		ShowError("wrong map name : %s %s (file %s)\n", w1,w3, current_file);
+		return 1;
+	}
+	mode =  map_mapname2mapid(mapname);
+	if (mode < 0) //Not loaded on this map-server instance.
+		return 1;
+	mob.m = (unsigned short)mode;
+
+	if (x < 0 || map[mob.m].xs <= x || y < 0 || map[mob.m].ys <= y) {
+		ShowError("Out of range spawn coordinates: %s (%d,%d), map size is (%d,%d) - %s %s (file %s)\n", map[mob.m].name, x, y, map[mob.m].xs-1, map[mob.m].ys-1, w1,w3, current_file);
 		return 1;
 	}
 
 	// check monster ID if exists!
-	if (mobdb_checkid(mob.class_)==0) {
+	if (mobdb_checkid(class_)==0) {
 		ShowError("bad monster ID : %s %s (file %s)\n", w3, w4, current_file);
 		return 1;
 	}
 
-	if (mob.num < 1 || mob.num>1000 ) {
+	if (num < 1 || num>1000 ) {
 		ShowError("wrong number of monsters : %s %s (file %s)\n", w3, w4, current_file);
 		return 1;
 	}
+
+	mob.num = (unsigned short)num;
+	mob.class_ = (short) class_;
+	mob.x = (unsigned short)x;
+	mob.y = (unsigned short)y;
+	mob.xs = (unsigned short)xs;
+	mob.ys = (unsigned short)ys;
+
 	if (mob.num > 1 && battle_config.mob_count_rate != 100) {
 		if ((mob.num = mob.num * battle_config.mob_count_rate / 100) < 1)
 			mob.num = 1;
 	}
 
 	//Apply the spawn delay fix [Skotlex]
-	mode = mob_db(mob.class_)->mode;
+	mode = mob_db(class_)->mode;
 	if (mode & MD_BOSS) {	//Bosses
 		if (battle_config.boss_spawn_delay != 100)
 		{
@@ -2393,35 +2133,38 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 	if (sscanf(w3, "%23[^,],%d", mobname, &level) > 1)
 		mob.level = level;
 
-	if (strcmp(mobname, "--en--") == 0)
-		memcpy(mob.mobname, mob_db(mob.class_)->name, NAME_LENGTH-1);
-	else if (strcmp(mobname, "--ja--") == 0)
-		memcpy(mob.mobname, mob_db(mob.class_)->jname, NAME_LENGTH-1);
-	else memcpy(mob.mobname, mobname, NAME_LENGTH-1);
-
 	if( mob.delay1<0 || mob.delay2<0 || mob.delay1>0xfffffff || mob.delay2>0xfffffff) {
 		ShowError("wrong monsters spawn delays : %s %s (file %s)\n", w3, w4, current_file);
 		return 1;
 	}
 
+	strncpy(mob.name, mobname, NAME_LENGTH-1);
+	if (!mob_parse_dataset(&mob)) //Verify dataset.
+		return 1;
+
+	//Now that all has been validated. We allocate the actual memory
+	//that the re-spawn data will use.
+	data = aMalloc(sizeof(struct spawn_data));
+	memcpy(data, &mob, sizeof(struct spawn_data));
+	
 	if( !battle_config.dynamic_mobs || mob.delay1 || mob.delay2 ) {
-		npc_parse_mob2(&mob,0);
+		npc_parse_mob2(data,-1);
 		npc_delay_mob += mob.num;
 	} else {
-		struct mob_list *dynmob = map_addmobtolist(mob.m);
-		if( dynmob ) {
-			memcpy(dynmob, &mob, sizeof(struct mob_list));
+		int index = map_addmobtolist(data->m, data);
+		if( index >= 0 ) {
 			// check if target map has players
 			// (usually shouldn't occur when map server is just starting,
 			// but not the case when we do @reloadscript
 			if (map[mob.m].users > 0)
-				npc_parse_mob2(&mob,1);
+				npc_parse_mob2(data,index);
 			npc_cache_mob += mob.num;
 		} else {
 			// mobcache is full
 			// create them as delayed with one second
 			mob.delay1 = 1000;
-			npc_parse_mob2(&mob,0);
+			mob.delay2 = 1000;
+			npc_parse_mob2(data,-1);
 			npc_delay_mob += mob.num;
 		}
 	}
@@ -2789,7 +2532,7 @@ static int npc_cleanup_sub (struct block_list *bl, va_list ap) {
 		npc_unload((struct npc_data *)bl);
 		break;
 	case BL_MOB:
-		mob_unload((struct mob_data *)bl);
+		unit_free(bl);
 		break;
 	}
 
@@ -2954,7 +2697,6 @@ int do_init_npc(void)
 		CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - START_NPC_NUM, "", npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
-	add_timer_func_list(npc_walktimer,"npc_walktimer"); // [Valaris]
 	add_timer_func_list(npc_event_timer,"npc_event_timer");
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");

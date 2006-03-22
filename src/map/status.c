@@ -20,11 +20,12 @@
 #include "battle.h"
 #include "chrif.h"
 #include "status.h"
-
-#include "timer.h"
-#include "nullpo.h"
 #include "script.h"
-#include "showmsg.h"
+#include "unit.h"
+
+#include "../common/timer.h"
+#include "../common/nullpo.h"
+#include "../common/showmsg.h"
 
 int SkillStatusChangeTable[MAX_SKILL]; //Stores the status that should be associated to this skill.
 int StatusIconChangeTable[SC_MAX]; //Stores the icon that should be associated to this status change.
@@ -408,6 +409,12 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		)
 			return 0;
 
+		if (sc->data[SC_WINKCHARM].timer != -1 && target && target->type == BL_PC && !flag)
+		{	//Prevents skill usage against players?
+			clif_emotion(src, 3);
+			return 0;
+		}
+			
 		if (sc->data[SC_BLADESTOP].timer != -1) {
 			switch (sc->data[SC_BLADESTOP].val1)
 			{
@@ -1319,7 +1326,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->speed += sd->speed * (100-16*skill)/100;
 	if(pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)
 		sd->speed += sd->speed * (100-10*skill)/100;
- 	if(sd->skilltimer != -1 && (skill=pc_checkskill(sd,SA_FREECAST))>0) {
+ 	if(sd->ud.skilltimer != -1 && (skill=pc_checkskill(sd,SA_FREECAST))>0) {
 		sd->prev_speed = sd->speed; //Store previous speed to correctly restore it. [Skotlex]
 		sd->speed += sd->speed * (75-5*skill)/100;
 	}
@@ -2354,22 +2361,6 @@ int status_get_class(struct block_list *bl)
 	return 0;
 }
 /*==========================================
- * ‘ÎÛ‚Ì•ûŒü‚ğ•Ô‚·(”Ä—p)
- * –ß‚è‚Í®”‚Å0ˆÈã
- *------------------------------------------
- */
-int status_get_dir(struct block_list *bl)
-{
-	nullpo_retr(0, bl);
-	if(bl->type==BL_MOB)
-		return ((struct mob_data *)bl)->dir;
-	if(bl->type==BL_PC)
-		return ((struct map_session_data *)bl)->dir;
-	if(bl->type==BL_PET)
-		return ((struct pet_data *)bl)->dir;
-	return 0;
-}
-/*==========================================
  * ‘ÎÛ‚ÌƒŒƒxƒ‹‚ğ•Ô‚·(”Ä—p)
  * –ß‚è‚Í®”‚Å0ˆÈã
  *------------------------------------------
@@ -2878,22 +2869,26 @@ int status_get_matk2(struct block_list *bl)
  */
 int status_get_def(struct block_list *bl)
 {
+	struct unit_data *ud;
 	int def=0;
 	nullpo_retr(0, bl);
 
 	if(bl->type==BL_PC){
 		def = ((struct map_session_data *)bl)->def;
-		if(((struct map_session_data *)bl)->skilltimer != -1)
-			def -= def * skill_get_castdef(((struct map_session_data *)bl)->skillid)/100;
 	} else if(bl->type==BL_MOB) {
 		def = ((struct mob_data *)bl)->db->def;
-		def -= def * skill_get_castdef(((struct mob_data *)bl)->skillid)/100;
 	} else if(bl->type==BL_PET)
 		def = ((struct pet_data *)bl)->db->def;
 
-	def = status_calc_def(bl,def);
+	
+	if (bl->type != BL_PC) //Players already had this one done.
+		def = status_calc_def(bl,def);
+	
+	ud = unit_bl2ud(bl);
+	if (ud && ud->skilltimer != -1)
+		def -= def * skill_get_castdef(ud->skillid)/100;
+	
 	if(def < 0) def = 0;
-
 	return def;
 }
 /*==========================================
@@ -3281,7 +3276,7 @@ int status_isdead(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
 	if(bl->type == BL_MOB)
-		return ((struct mob_data *)bl)->state.state == MS_DEAD;
+		return ((struct mob_data *)bl)->hp <= 0;
 	if(bl->type==BL_PC)
 		return pc_isdead((struct map_session_data *)bl);
 	return 0;
@@ -3977,7 +3972,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_WEDDING:	//Œ‹¥—p(Œ‹¥ˆßÖ‚É‚È‚Á‚Ä?‚­‚Ì‚ª?‚¢‚Æ‚©)
 		if (sd)
 		{	//Change look.
-			pc_stopattack(sd);
+			pc_stop_attack(sd);
 			if(type==SC_WEDDING)
 				sd->view_class = JOB_WEDDING;
 			else if(type==SC_XMAS)
@@ -4215,12 +4210,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_GRAVITATION:
-			if (sd) {
-				if (val3 == BCT_SELF) {
-					sd->canmove_tick += tick;
-					sd->canact_tick += tick;
-				} else calc_flag = 1;
-			}
+			if (val3 == BCT_SELF) {
+				struct unit_data *ud = unit_bl2ud(bl);
+				if (ud) {
+					ud->canmove_tick += tick;
+					ud->canact_tick += tick;
+				}
+			} else
+				calc_flag = 1;
 			break;
 
 		case SC_HERMODE:
@@ -4301,24 +4298,27 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 			break;
 		case SC_COMBO:
+		{
+			struct unit_data *ud = unit_bl2ud(bl);
 			switch (val1) { //Val1 contains the skill id
 				case TK_STORMKICK:
 					clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
-					if (sd) sd->attackabletime = gettick()+tick;
+					if (ud) ud->attackabletime = gettick()+tick;
 					break;
 				case TK_DOWNKICK:
 					clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
-					if (sd) sd->attackabletime = gettick()+tick;
+					if (ud) ud->attackabletime = gettick()+tick;
 					break;
 				case TK_TURNKICK:
 					clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
-					if (sd) sd->attackabletime = gettick()+tick;
+					if (ud) ud->attackabletime = gettick()+tick;
 					break;
 				case TK_COUNTER:
 					clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
-					if (sd) sd->attackabletime = gettick()+tick;
+					if (ud) ud->attackabletime = gettick()+tick;
 					break;
 			}
+		}
 			break;
 		case SC_TKDORI:
 			val2 = 11-val1; //Chance to consume: 11-skilllv%
@@ -4489,11 +4489,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (sd && pc_issit(sd)) //Avoid sprite sync problems.
 				pc_setstand(sd);
 		case SC_TRICKDEAD:
-			battle_stopattack(bl);
+			unit_stop_attack(bl);
 			skill_stop_dancing(bl);	/* ‰‰‘t/ƒ_ƒ“ƒX‚Ì’†? */
 			// Cancel cast when get status [LuzZza]
 			if (battle_config.sc_castcancel)
-				skill_castcancel(bl, 0);
+				unit_skillcastcancel(bl, 0);
 		case SC_STOP:
 		case SC_CONFUSION:
 		case SC_CLOSECONFINE:
@@ -4501,12 +4501,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_ANKLE:
 		case SC_SPIDERWEB:
 		case SC_MADNESSCANCEL:
-			battle_stopwalking(bl,1);
+			unit_stop_walking(bl,1);
 		break;
 		case SC_HIDING:
 		case SC_CLOAKING:
 		case SC_CHASEWALK:
-			battle_stopattack(bl);	/* U?’â~ */
+			unit_stop_attack(bl);	/* U?’â~ */
 		break;
 	}
 
@@ -4666,9 +4666,9 @@ int status_change_clear(struct block_list *bl,int type)
 	struct status_change* sc;
 	int i;
 
-	nullpo_retr(0, sc = status_get_sc(bl));
+	sc = status_get_sc(bl);
 
-	if (sc->count == 0)
+	if (!sc || sc->count == 0)
 		return 0;
 	for(i = 0; i < SC_MAX; i++)
 	{
@@ -4696,7 +4696,7 @@ int status_change_clear(struct block_list *bl,int type)
 	if(!type || type&2)
 		clif_changeoption(bl);
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -4849,8 +4849,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			}
 			break;
 			case SC_RUN://‹ì‚¯‘«
-				if (sd && sd->walktimer != -1)
-						pc_stop_walking(sd,1);
+				unit_stop_walking(bl,1);
 				if (sc->data[type].val1 >= 7 &&
 					DIFF_TICK(gettick(), sc->data[type].val4) <= 1000 &&
 					(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
@@ -5006,14 +5005,12 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				break;
 				
 			case SC_GRAVITATION:
-				if (sd) {
-					if (sc->data[type].val3 == BCT_SELF) {
-						unsigned int tick = gettick();
-						sd->canmove_tick = tick;
-						sd->canact_tick = tick;
-					} else calc_flag = 1;
-				}
-				break;
+				if (sc->data[type].val3 == BCT_SELF) {
+					struct unit_data *ud = unit_bl2ud(bl);
+					if (ud)
+						ud->canmove_tick = ud->canact_tick = gettick();
+				} else
+					calc_flag = 1;
 			
 			case SC_GOSPEL: //Clear the buffs from other chars.
 				if(sc->data[type].val4 != BCT_SELF)
@@ -5306,7 +5303,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		if(sc->data[type].val2 != 0) {
 			sc->data[type].val2 = 0;
 			sc->data[type].val4 = 0;
-			battle_stopwalking(bl,1);
+			unit_stop_walking(bl,1);
 			sc->opt1 = OPT1_STONE;
 			clif_changeoption(bl);
 			sc->data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
@@ -5317,14 +5314,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			if((++sc->data[type].val4)%5 == 0 && status_get_hp(bl) > hp>>2) {
 				hp = hp/100;
 				if(hp < 1) hp = 1;
-				if(sd)
-					pc_heal(sd,-hp,0);
-				else if(bl->type == BL_MOB){
-					struct mob_data *md;
-					if((md=((struct mob_data *)bl)) == NULL)
-						break;
-					md->hp -= hp;
-				}
+				battle_heal(NULL, bl, -hp, 0, 0);
 			}
 			sc->data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
 			return 0;
@@ -5335,16 +5325,8 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		if (status_get_hp(bl) <= status_get_max_hp(bl)>>2) //Stop damaging after 25% HP left.
 			break;
 	case SC_DPOISON:
-		if ((--sc->data[type].val3) > 0 && sc->data[SC_SLOWPOISON].timer == -1) {
-			if(sd) {
-				pc_heal(sd, -sc->data[type].val4, 0);
-			} else if (bl->type == BL_MOB) {
-				((struct mob_data*)bl)->hp -= sc->data[type].val4;
-				if (battle_config.show_mob_hp)
-					clif_charnameack (0, bl);
-			} else 
-				battle_heal(NULL, bl, -sc->data[type].val4, 0, 1);
-		}
+		if ((--sc->data[type].val3) > 0 && sc->data[SC_SLOWPOISON].timer == -1)
+			battle_heal(NULL, bl, -sc->data[type].val4, 0, 1);
 		if (sc->data[type].val3 > 0 && !status_isdead(bl))
 		{
 			sc->data[type].timer = add_timer (1000 + tick, status_change_timer, bl->id, data );
@@ -5375,16 +5357,11 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		// To-do: bleeding effect increases damage taken?
 		if ((sc->data[type].val4 -= 10000) >= 0) {
 			int hp = rand()%600 + 200;
-			if(sd) {
-				pc_heal(sd,-hp,0);
-			} else if(bl->type == BL_MOB) {
-				struct mob_data *md = (struct mob_data *)bl;
-				if (md) md->hp -= hp;
-			}
+			battle_heal(NULL,bl,-hp,0,1);
 			if (!status_isdead(bl)) {
 				// walking and casting effect is lost
-				battle_stopwalking (bl, 1);
-				skill_castcancel (bl, 0);
+				unit_stop_walking (bl, 1);
+				unit_skillcastcancel (bl, 2);
 				sc->data[type].timer = add_timer(10000 + tick, status_change_timer, bl->id, data );
 			}
 			return 0;

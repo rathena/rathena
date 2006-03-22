@@ -1,0 +1,69 @@
+// Copyright (c) jAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+// Merged originally from jA by Skotlex
+#ifndef _UNIT_H_
+#define _UNIT_H_
+
+#include "map.h"
+
+// PC, MOB, PET に共通する処理を１つにまとめる計画
+
+// 歩行開始
+//     戻り値は、0 ( 成功 ), 1 ( 失敗 )
+int unit_walktoxy( struct block_list *bl, int x, int y, int easy);
+
+// 歩行停止
+// typeは以下の組み合わせ : 
+//     1: 位置情報の送信( この関数の後に位置情報を送信する場合は不要 )
+//     2: ダメージディレイ有り
+//     4: 不明(MOBのみ？)
+int unit_stop_walking(struct block_list *bl,int type);
+int unit_can_move(struct block_list *bl);
+int unit_is_walking(struct block_list *bl);
+int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type);
+int unit_walkdelay(struct block_list *bl, unsigned int tick, int adelay, int delay, int div_);
+
+
+// 位置の強制移動(吹き飛ばしなど)
+int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkpath);
+int unit_warp(struct block_list *bl, int map, int x, int y, int type);
+int unit_setdir(struct block_list *bl,unsigned short dir);
+int unit_getdir(struct block_list *bl);
+
+// そこまで歩行でたどり着けるかの判定
+int unit_can_reach(struct block_list *bl,int x,int y);
+
+// 攻撃関連
+int unit_stop_attack(struct block_list *bl);
+int unit_attack(struct block_list *src,int target_id,int type);
+
+// int unit_setpos( struct block_list *bl, const char* map, int x, int y);
+
+// スキル使用
+int unit_skilluse_id(struct block_list *src, int target_id, int skill_num, int skill_lv);
+int unit_skilluse_pos(struct block_list *src, int skill_x, int skill_y, int skill_num, int skill_lv);
+
+// スキル使用( 補正済みキャスト時間、キャンセル不可設定付き )
+int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int skill_lv, int casttime, int castcancel);
+int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int skill_num, int skill_lv, int casttime, int castcancel);
+
+// 詠唱キャンセル
+int unit_skillcastcancel(struct block_list *bl,int type);
+
+int unit_counttargeted(struct block_list *bl,int target_lv);
+
+// unit_data の初期化処理
+void unit_dataset(struct block_list *bl);
+
+int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2);
+// その他
+struct unit_data* unit_bl2ud(struct block_list *bl);
+int unit_remove_map(struct block_list *bl, int clrtype);
+int unit_free(struct block_list *bl);
+int unit_changeviewsize(struct block_list *bl,short size);
+
+// 初期化ルーチン
+int do_init_unit(void);
+int do_final_unit(void);
+
+#endif /* _UNIT_H_ */

@@ -116,7 +116,7 @@ int log_pick(struct map_session_data *sd, char *type, int mob_id, int nameid, in
 	if(mob_id) {
 		struct mob_data *md = (struct mob_data*)sd;
 		obj_id = mob_id;
-		mapname = map[md->m].name;
+		mapname = map[md->bl.m].name;
 	} else {
 		obj_id = sd->char_id;
 		mapname = (char*)mapindex_id2name(sd->mapindex);

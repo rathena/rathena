@@ -155,6 +155,7 @@ int	skill_get_castdef( int id );
 int	skill_get_weapontype( int id );
 int	skill_get_unit_id(int id,int flag);
 int	skill_get_inf2( int id );
+int	skill_get_castcancel( int id );
 int	skill_get_maxcount( int id );
 int	skill_get_blewcount( int id ,int lv );
 int	skill_get_unit_flag( int id );
@@ -162,12 +163,8 @@ int	skill_get_unit_target( int id );
 int	skill_tree_get_max( int id, int b_class );	// Celest
 const char*	skill_get_name( int id ); 	// [Skotlex]
 
-// スキルの使用
-int skill_use_id( struct map_session_data *sd, int target_id,
-	int skill_num,int skill_lv);
-int skill_use_pos( struct map_session_data *sd,
-	int skill_x, int skill_y, int skill_num, int skill_lv);
-
+int skill_castend_id( int tid, unsigned int tick, int id,int data );
+int skill_castend_pos( int tid, unsigned int tick, int id,int data );
 int skill_castend_map( struct map_session_data *sd,int skill_num, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);
@@ -193,6 +190,8 @@ int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,
 
 int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time);
 int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time);
+int skill_check_condition( struct map_session_data *sd,int skill, int lv, int type);
+int skill_check_pc_partner(struct map_session_data *sd, int skill_id, int* skill_lv, int range, int cast_flag);
 int skill_check_unit_range(int m,int x,int y,int skillid, int skilllv);
 int skill_check_unit_range2(struct block_list *bl,int m,int x,int y,int skillid, int skilllv);
 // -- moonsoul	(added skill_check_unit_cell)

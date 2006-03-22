@@ -32,6 +32,7 @@
 #include "script.h"
 #include "npc.h"
 #include "trade.h"
+#include "unit.h"
 
 #ifndef TXT_ONLY
 #include "mail.h"
@@ -3639,7 +3640,7 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap) {
 	if (flag)
 		mob_damage(NULL, md, md->hp, 2);
 	else
-		mob_delete(md);
+		unit_remove_map(&md->bl,1);
 	
 	return 1;
 }
@@ -5733,7 +5734,7 @@ int atcommand_mapinfo(
 		clif_displaymessage(fd, "----- NPCs in Map -----");
 		for (i = 0; i < map[m_id].npc_num;) {
 			nd = map[m_id].npc[i];
-			switch(nd->dir) {
+			switch(nd->ud.dir) {
 			case 0:  strcpy(direction, "North"); break;
 			case 1:  strcpy(direction, "North West"); break;
 			case 2:  strcpy(direction, "West"); break;
@@ -7288,10 +7289,10 @@ atcommand_useskill(const int fd, struct map_session_data* sd,
 		return -1;
 	}
 
-	if (skill_get_inf(skillnum) & INF_GROUND_SKILL)
-		skill_use_pos(sd, pl_sd->bl.x, pl_sd->bl.y, skillnum, skilllv);
+	if (skill_get_inf(skillnum)&INF_GROUND_SKILL)
+		unit_skilluse_pos(&sd->bl, pl_sd->bl.x, pl_sd->bl.y, skillnum, skilllv);
 	else
-		skill_use_id(sd, pl_sd->bl.id, skillnum, skilllv);
+		unit_skilluse_id(&sd->bl, pl_sd->bl.id, skillnum, skilllv);
 
 	return 0;
 }
@@ -7531,9 +7532,9 @@ atcommand_grind(const int fd, struct map_session_data* sd,
 		inf = skill_get_inf(skillnum);
 
 		if (inf & INF_GROUND_SKILL)
-			skill_use_pos(sd, pl_sd->bl.x+5, pl_sd->bl.y+5, skillnum, 1);
+			unit_skilluse_pos(&sd->bl, pl_sd->bl.x, pl_sd->bl.y, skillnum, 1);
 		else if (!(inf & INF_SUPPORT_SKILL))
-			skill_use_id(sd, pl_sd->bl.id, skillnum, 1);
+			unit_skilluse_id(&sd->bl, pl_sd->bl.id, skillnum, 1);
 	}
 
 	return 0;

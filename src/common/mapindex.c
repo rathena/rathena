@@ -123,6 +123,7 @@ void mapindex_init(void) {
 		}
 		last_index = index;
 	}
+	fclose(fp);
 }
 
 void mapindex_final(void) {

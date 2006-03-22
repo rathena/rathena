@@ -47,23 +47,16 @@ enum {	// ÅIŒvZ‚Ìƒtƒ‰ƒO
 };
 
 // ÀÛ‚ÉHP‚ğ‘Œ¸
-int battle_walkdelay(struct block_list *bl, unsigned int tick, int adelay, int delay, int div_); //Calcs walk delay based on attack type. [Skotlex]
 int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, int dmg_lv, int flag);
 int battle_damage(struct block_list *bl,struct block_list *target,int damage,int flag);
 int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp,int flag);
 
-// UŒ‚‚âˆÚ“®‚ğ~‚ß‚é
-int battle_stopattack(struct block_list *bl);
-int battle_iswalking(struct block_list *bl);
-int battle_stopwalking(struct block_list *bl,int type);
-int battle_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type);
 
 // ’ÊíUŒ‚ˆ—‚Ü‚Æ‚ß
 int battle_weapon_attack( struct block_list *bl,struct block_list *target,
 	 unsigned int tick,int flag);
 
 // Šeíƒpƒ‰ƒ[ƒ^‚ğ“¾‚é
-int battle_counttargeted(struct block_list *bl,struct block_list *src,int target_lv);
 struct block_list* battle_gettargeted(struct block_list *target);
 int battle_gettarget(struct block_list *bl);
 int battle_getcurrentskill(struct block_list *bl);
@@ -109,9 +102,8 @@ extern struct Battle_Config {
 	unsigned short cast_rate,delay_rate,delay_dependon_dex;
 	unsigned short sdelay_attack_enable;
 	unsigned short left_cardfix_to_right;
-	unsigned short pc_skill_add_range;
+	unsigned short skill_add_range;
 	unsigned short skill_out_range_consume;
-	unsigned short mob_skill_add_range;
 	unsigned short skillrange_by_distance; //[Skotlex]
 	unsigned short use_weapon_skill_range; //[Skotlex]
 	unsigned short pc_damage_delay_rate;
@@ -222,8 +214,7 @@ extern struct Battle_Config {
 	unsigned short max_lv, aura_lv;
 	unsigned short max_parameter, max_baby_parameter;
 	int max_cart_weight;
-	unsigned short pc_skill_log;
-	unsigned short mob_skill_log;
+	unsigned short skill_log;
 	unsigned short battle_log;
 	unsigned short save_log;
 	unsigned short error_log;
@@ -244,10 +235,8 @@ extern struct Battle_Config {
 	unsigned short monster_defense_type;
 	unsigned short pet_defense_type;
 	unsigned short magic_defense_type;
-	unsigned short pc_skill_reiteration;
-	unsigned short monster_skill_reiteration;
-	unsigned short pc_skill_nofootset;
-	unsigned short monster_skill_nofootset;
+	unsigned short skill_reiteration;
+	unsigned short skill_nofootset;
 	unsigned short pc_cloak_check_type;
 	unsigned short monster_cloak_check_type;
 	unsigned short estimation_type;
@@ -259,10 +248,8 @@ extern struct Battle_Config {
 	unsigned short gvg_flee_penalty;
 	int gvg_eliminate_time;
 	unsigned short mob_changetarget_byskill;
-	unsigned short pc_attack_direction_change;
-	unsigned short monster_attack_direction_change;
-	unsigned short pc_land_skill_limit;
-	unsigned short monster_land_skill_limit;
+	unsigned short attack_direction_change;
+	unsigned short land_skill_limit;
 	unsigned short party_skill_penalty;
 	unsigned short monster_class_change_full_recover;
 	unsigned short produce_item_name_input;

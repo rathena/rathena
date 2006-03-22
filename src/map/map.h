@@ -32,11 +32,9 @@
 #define SC_COMMON_MAX 10
 
 #define MAX_SKILL_LEVEL 100
-#define MAX_SKILLUNITGROUP 32
-#define MAX_MOBSKILLUNITGROUP 8
-#define MAX_SKILLUNITGROUPTICKSET 32
-#define MAX_SKILLTIMERSKILL 32
-#define MAX_MOBSKILLTIMERSKILL 10
+#define MAX_SKILLUNITGROUP 16
+#define MAX_SKILLUNITGROUPTICKSET 16
+#define MAX_SKILLTIMERSKILL 16
 #define MAX_MOBSKILL 50
 #define MAX_MOB_LIST_PER_MAP 128
 #define MAX_EVENTQUEUE 2
@@ -271,15 +269,15 @@ enum {
 	BL_PC = 0x001,
 	BL_MOB = 0x002,
 	BL_PET = 0x004,
-	BL_ITEM = 0x008,
-	BL_SKILL = 0x010,
-	BL_NPC = 0x020,
-	BL_CHAT = 0x040,
-	BL_HOMUNCULUS = 0x080	//[blackhole89]
+	BL_HOMUNCULUS = 0x008,	//[blackhole89]
+	BL_ITEM = 0x010,
+	BL_SKILL = 0x020,
+	BL_NPC = 0x040,
+	BL_CHAT = 0x080,
 };
 
 //For common mapforeach calls. Since pets cannot be affected, they aren't included here yet.
-#define BL_CHAR (BL_PC|BL_MOB|BL_HOMUNCULUS)	//[blackhole89]
+#define BL_CHAR (BL_PC|BL_MOB|BL_HOMUNCULUS)
 #define BL_ALL 0xfff
 
 enum { WARP, SHOP, SCRIPT, MONS };
@@ -300,6 +298,78 @@ struct shootpath_data {
 	int rx,ry,len;
 	int x[MAX_WALKPATH];
 	int y[MAX_WALKPATH];
+};
+
+struct skill_timerskill {
+	int timer;
+	int src_id;
+	int target_id;
+	int map;
+	short x,y;
+	short skill_id,skill_lv;
+	int type;
+	int flag;
+};
+
+struct skill_unit_group;
+struct skill_unit {
+	struct block_list bl;
+
+	struct skill_unit_group *group;
+
+	int limit;
+	int val1,val2;
+	short alive,range;
+};
+
+struct skill_unit_group {
+	int src_id;
+	int party_id;
+	int guild_id;
+	int map;
+	int target_flag; //Holds BCT_* flag for battle_check_target
+	int bl_flag;	//Holds BL_* flag for map_foreachin* functions
+	unsigned int tick;
+	int limit,interval;
+
+	int skill_id,skill_lv;
+	int val1,val2,val3;
+	char *valstr;
+	int unit_id;
+	int group_id;
+	int unit_count,alive_count;
+	struct skill_unit *unit;
+};
+struct skill_unit_group_tickset {
+	unsigned int tick;
+	int id;
+};
+
+struct unit_data {
+	struct block_list *bl;
+	int walktimer;
+	struct walkpath_data walkpath;
+	short to_x,to_y;
+	unsigned char dir;
+	short skillx,skilly;
+	short skillid,skilllv;
+	int   skilltarget;
+	int   skilltimer;
+	struct skill_timerskill skilltimerskill[MAX_SKILLTIMERSKILL];
+	struct skill_unit_group skillunit[MAX_SKILLUNITGROUP];
+	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
+	int   attacktimer;
+	int   attacktarget;
+	short attacktarget_lv;
+	unsigned int attackabletime;
+	unsigned int canact_tick;
+	unsigned int canmove_tick;
+	struct {
+		unsigned change_walk_target : 1 ;
+		unsigned skillcastcancel : 1 ;
+		unsigned attack_continue : 1 ;
+		unsigned walk_easy : 1 ;
+	} state;
 };
 
 struct script_reg {
@@ -360,49 +430,6 @@ struct weapon_data {
 	int add_damage_class_count;
 };
 
-struct skill_unit_group;
-struct skill_unit {
-	struct block_list bl;
-
-	struct skill_unit_group *group;
-
-	int limit;
-	int val1,val2;
-	short alive,range;
-};
-struct skill_unit_group {
-	int src_id;
-	int party_id;
-	int guild_id;
-	int map;
-	int target_flag; //Holds BCT_* flag for battle_check_target
-	int bl_flag;	//Holds BL_* flag for map_foreachin* functions
-	unsigned int tick;
-	int limit,interval;
-
-	int skill_id,skill_lv;
-	int val1,val2,val3;
-	char *valstr;
-	int unit_id;
-	int group_id;
-	int unit_count,alive_count;
-	struct skill_unit *unit;
-};
-struct skill_unit_group_tickset {
-	unsigned int tick;
-	int id;
-};
-struct skill_timerskill {
-	int timer;
-	int src_id;
-	int target_id;
-	int map;
-	short x,y;
-	short skill_id,skill_lv;
-	int type;
-	int flag;
-};
-
 struct npc_data;
 struct pet_db;
 struct item_data;
@@ -410,15 +437,14 @@ struct square;
 
 struct map_session_data {
 	struct block_list bl;
+	struct unit_data ud;
+	struct status_change sc;
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct {
 		unsigned auth : 1;
-		unsigned change_walk_target : 1;
-		unsigned attack_continue : 1;
 		unsigned menu_or_input : 1;
 		unsigned dead_sit : 2;
-		unsigned skillcastcancel : 1;
 		unsigned waitingdisconnect : 1;
 		unsigned lr_flag : 2;
 		unsigned connect_new : 1;
@@ -483,10 +509,8 @@ struct map_session_data {
 	unsigned short mapindex;
 	short to_x,to_y;
 	short speed,prev_speed;
-	unsigned char dir,head_dir;
+	unsigned char head_dir;
 	unsigned int client_tick,server_tick;
-	struct walkpath_data walkpath;
-	int walktimer;
 	int npc_id,areanpc_id,npc_shopid;
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_pos;
@@ -505,36 +529,19 @@ struct map_session_data {
 	} ignore[MAX_IGNORE_LIST];
 	int ignoreAll;
 
-	int attacktimer;
-
-	int attacktarget;
-	short attacktarget_lv;
-	unsigned int attackabletime;
-
 	int followtimer; // [MouseJstr]
 	int followtarget;
 
 	time_t emotionlasttime; // to limit flood with emotion packets
 
-	int skilltimer;
-	int skilltarget;
-	short skillx,skilly;
-	short skillid,skilllv;
 	short skillitem,skillitemlv;
 	short skillid_old,skilllv_old;
 	short skillid_dance,skilllv_dance;
-	struct skill_unit_group skillunit[MAX_SKILLUNITGROUP];
-	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
-	struct skill_timerskill skilltimerskill[MAX_SKILLTIMERSKILL];
 	char blockskill[MAX_SKILL];	// [celest]
-	//unsigned int skillstatictimer[MAX_SKILL];
-	unsigned short timerskill_count; // [celest]
 	int cloneskill_id;
 	int menuskill_id, menuskill_lv;
 
 	int invincible_timer;
-	unsigned int canact_tick;
-	unsigned int canmove_tick;
 	unsigned int canlog_tick;
 	unsigned int canregen_tick;
 	unsigned int canuseitem_tick;	// [Skotlex]
@@ -678,7 +685,6 @@ struct map_session_data {
 	int regstr_num;
 	struct script_regstr *regstr;
 
-	struct status_change sc;
 	short mission_mobid; //Stores the target mob_id for TK_MISSION
 	short mission_count; //Stores the bounty kill count for TK_MISSION
 	int devotion[5]; //Stores the char IDs of chars devoted to.
@@ -760,24 +766,19 @@ struct npc_item_list {
 };
 struct npc_data {
 	struct block_list bl;
+	struct unit_data  ud; //Because they need to be able to move....
+	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	short n;
-	short class_,dir;
+	short class_;
 	short speed;
 	unsigned char name[NAME_LENGTH];
 	unsigned char exname[NAME_LENGTH];
 	int chat_id;
 	short flag;
-	int walktimer; // [Valaris]
-	short to_x,to_y; // [Valaris]
-	struct walkpath_data walkpath;
 	unsigned int next_walktime;
-	unsigned int canmove_tick;
-	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 
 	struct { // [Valaris]
 		unsigned state : 8;
-		unsigned change_walk_target : 1;
-		unsigned walk_easy : 1;
 	} state;
 
 	char eventqueue[MAX_EVENTQUEUE][50];
@@ -818,8 +819,26 @@ struct guardian_data {
 	struct guild_castle* castle;
 };
 
+// Mob List Held in memory for Dynamic Mobs [Wizputer]
+// Expanded to specify all mob-related spawn data by [Skotlex]
+struct spawn_data {
+	short class_; //Class, used because a mob can change it's class
+	unsigned short m,x,y,xs,ys;	//Spawn information (map, point, spawn-area around point)
+	unsigned short num; //Number of mobs using this structure.
+	unsigned int level; //Custom level.
+	unsigned int delay1,delay2; //Min delay before respawning after spawn/death
+	struct {
+		unsigned size :2; //Holds if mob has to be tiny/large
+		unsigned ai :1;	//Holds if mob is special ai.
+	} state;
+	char name[NAME_LENGTH],eventname[50]; //Name/event
+};
+
+
 struct mob_data {
 	struct block_list bl;
+	struct unit_data  ud;
+	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->class_) all the time) [Skotlex]
 	char name[NAME_LENGTH];
 	struct {
@@ -828,85 +847,63 @@ struct mob_data {
 		unsigned ai : 3; //Special ai for summoned monsters.
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
 	struct {
-		unsigned state : 8;
 		unsigned skillstate : 8;
 		unsigned aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
-		unsigned targettype : 1;
 		unsigned steal_flag : 1;
 		unsigned steal_coin_flag : 1;
-		unsigned skillcastcancel : 1;
-		unsigned change_walk_target : 1;
-		unsigned walk_easy : 1;
 		unsigned soul_change_flag : 1; // Celest
 		unsigned alchemist: 1;
 		int provoke_flag; // Celest
 	} state;
-	struct status_change sc;
-	struct walkpath_data walkpath;
 	struct guardian_data* guardian_data; 
-	struct item *lootitem;
 	struct {
 		int id;
 		int dmg;
 	} dmglog[DAMAGELOG_SIZE];
-	short n;
-	short base_class,class_,dir,mode;
-	short m,x0,y0,xs,ys;
-	short to_x,to_y;
-	short target_dir;
+	struct spawn_data *spawn; //Spawn data.
+	struct item *lootitem;
+	short spawn_n;	//Spawn data index on the map server.
+	short class_,mode;
 	short speed;
 	short attacked_count;
-	short target_lv;
 	unsigned short level;
-	unsigned long tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
-	int timer;
+	unsigned short attacked_players;
+	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int hp, max_hp;
 	int target_id,attacked_id;
-	int spawndelay1,spawndelay2;
-	unsigned int attackabletime, canmove_tick, next_walktime;
+	unsigned int next_walktime;
 	unsigned int last_deadtime,last_spawntime,last_thinktime,last_linktime;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;
 	
 	int deletetimer;
-	int skilltimer;
-	int skilltarget;
 	int def_ele;
 	int master_id,master_dist;
 
 	struct npc_data *nd;
 	
-	short skillx,skilly,skillid,skilllv,skillidx;
+	short skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];
-	struct skill_timerskill skilltimerskill[MAX_MOBSKILLTIMERSKILL];
-	struct skill_unit_group skillunit[MAX_MOBSKILLUNITGROUP];
-	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	char npc_event[50];
 };
 
 struct pet_data {
 	struct block_list bl;
-	short n;
-	short class_,dir;
+	struct unit_data  ud;
 	struct mob_db *db;
+	int target_id;
+	short n;
+	short class_;
 	short speed;
 	char name[NAME_LENGTH];
 	struct {
-		unsigned state : 8 ;
 		unsigned skillstate : 8 ;
-		unsigned change_walk_target : 1 ;
-		unsigned casting_flag :1 ;//Skotlex: Used to identify when we are casting.
 		short skillbonus;
 	} state;
-	int timer;
-	short to_x,to_y;
 	short equip;
-	struct walkpath_data walkpath;
-	int target_id;
-	short target_lv;
 	int move_fail_count;
-	unsigned int attackabletime,next_walktime,last_thinktime;
+	unsigned int next_walktime,last_thinktime;
 	short rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
 	struct pet_status { //Pet Status data
 		short level;
@@ -950,21 +947,10 @@ struct pet_data {
 		unsigned short count;
 		unsigned short weight;
 		unsigned short max;
-		int timer;
 	} *loot; //[Valaris] / Rewritten by [Skotlex]
 
-	struct skill_timerskill skilltimerskill[MAX_MOBSKILLTIMERSKILL]; // [Valaris]
-	struct skill_unit_group skillunit[MAX_MOBSKILLUNITGROUP]; // [Valaris]
-	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET]; // [Valaris]
 	struct map_session_data *msd;
-
-	int skilltarget;
-	short skillx,skilly,skillid,skilllv;
 };
-
-enum { MS_IDLE,MS_WALK,MS_ATTACK,MS_DEAD,MS_DELAY };
-
-enum { NONE_ATTACKABLE,ATTACKABLE };
 
 enum { ATK_LUCKY=1,ATK_FLEE,ATK_DEF};	// 囲まれペナルティ計算用
 
@@ -974,12 +960,6 @@ enum {
 	EQP_ARMOR		= 2,		// Armor
 	EQP_SHIELD		= 4,		// Shield
 	EQP_HELM		= 8,		// Top-head headgear
-};
-
-// Mob List Held in memory for Dynamic Mobs [Wizputer]
-struct mob_list {
-    int m,x,y,xs,ys,class_,num,delay1,delay2,level;
-    char mobname[NAME_LENGTH],eventname[NAME_LENGTH];
 };
 
 struct map_data {
@@ -1051,7 +1031,8 @@ struct map_data {
 		int drop_type;
 		int drop_per;
 	} drop_list[MAX_DROP_PER_MAP];
-	struct mob_list *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
+
+	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int mob_delete_timer;	// [Skotlex]
 	int zone;	// [Komurka]
 };
@@ -1325,7 +1306,7 @@ int cleanup_sub(struct block_list *bl, va_list ap);
 void map_helpscreen(int flag); // [Valaris]
 int map_delmap(char *mapname);
 
-struct mob_list* map_addmobtolist(unsigned short m);	// [Wizputer]
+int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int); // [Wizputer]
 void map_removemobs(int); // [Wizputer]
 

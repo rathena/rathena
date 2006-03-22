@@ -373,7 +373,7 @@
 351,0,0,0,0,1,0,0,0,no,0,2,0,none,0	//NPC_SIEGEMODE
 352,2,0,4,0,1,0,1,0,no,0,2,0,none,0	//NPC_CALLSLAVE
 353,0,0,0,0,1,0,0,0,no,0,2,0,none,0	//NPC_INVISIBLE
-354,2,6,4,0,1,0,20,0,no,0,2,0,magic,0	//NPC_RUN
+354,2,6,4,0,1,0,20,0,no,0,2,0,misc,0	//NPC_RUN
 355,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//LK_AURABLADE#Aura Blade#
 356,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//LK_PARRYING#Parrying#
 357,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//LK_CONCENTRATION#Concentration#

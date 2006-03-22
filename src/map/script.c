@@ -22,6 +22,7 @@
 #include "../common/malloc.h"
 #include "../common/lock.h"
 #include "../common/nullpo.h"
+#include "../common/showmsg.h"
 
 #include "map.h"
 #include "clif.h"
@@ -43,7 +44,8 @@
 #include "atcommand.h"
 #include "charcommand.h"
 #include "log.h"
-#include "showmsg.h"
+#include "unit.h"
+
 #if !defined(TXT_ONLY) && defined(MAPREGSQL)
 #include "strlib.h"
 #endif
@@ -5336,7 +5338,7 @@ int buildin_itemskill(struct script_state *st)
 	str=conv_str(st,& (st->stack->stack_data[st->start+4]));
 
 	// 詠唱中にスキルアイテムは使用できない
-	if(sd->skilltimer != -1)
+	if(sd->ud.skilltimer != -1)
 		return 0;
 
 	sd->skillitem=id;
@@ -5500,16 +5502,17 @@ int buildin_areamonster(struct script_state *st)
  */
 int buildin_killmonster_sub(struct block_list *bl,va_list ap)
 {
+	TBL_MOB* md = (TBL_MOB*)bl;
 	char *event=va_arg(ap,char *);
 	int allflag=va_arg(ap,int);
 
 	if(!allflag){
-		if(strcmp(event,((struct mob_data *)bl)->npc_event)==0)
-			mob_delete((struct mob_data *)bl);
+		if(strcmp(event,md->npc_event)==0)
+			unit_remove_map(bl,1);
 		return 0;
-	}else if(allflag){
-		if(((struct mob_data *)bl)->spawndelay1==-1 && ((struct mob_data *)bl)->spawndelay2==-1)
-			mob_delete((struct mob_data *)bl);
+	}else{
+		if(!md->spawn)
+			unit_remove_map(bl,1);
 		return 0;
 	}
 	return 0;
@@ -5531,7 +5534,7 @@ int buildin_killmonster(struct script_state *st)
 
 int buildin_killmonsterall_sub(struct block_list *bl,va_list ap)
 {
-	mob_delete((struct mob_data *)bl);
+	unit_remove_map(bl,1);
 	return 0;
 }
 int buildin_killmonsterall(struct script_state *st)
@@ -7044,7 +7047,7 @@ int buildin_maprespawnguildid_sub(struct block_list *bl,va_list ap)
 	}
 	if(md && flag&4){
 		if(!md->guardian_data && md->class_ != MOBID_EMPERIUM)
-			mob_delete(md);
+			unit_remove_map(bl,1);
 	}
 	return 0;
 }
@@ -7961,7 +7964,6 @@ int buildin_petloot(struct script_state *st)
 	pd->loot->max=max;
 	pd->loot->count = 0;
 	pd->loot->weight = 0;
-	pd->loot->timer = gettick();
 
 	return 0;
 }
@@ -8783,7 +8785,7 @@ int buildin_npcwalkto(struct script_state *st)
 	y=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
 	if(nd) {
-		npc_walktoxy(nd,x,y,0);
+		unit_walktoxy(&nd->bl,x,y,0);
 	}
 
 	return 0;
@@ -8794,8 +8796,7 @@ int buildin_npcstop(struct script_state *st)
 	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 
 	if(nd) {
-		if(nd->state.state==MS_WALK)
-			npc_stop_walking(nd,1);
+		unit_stop_walking(&nd->bl,1);
 	}
 
 	return 0;
@@ -9046,7 +9047,8 @@ int buildin_skilluseid (struct script_state *st)
    skid=conv_num(st,& (st->stack->stack_data[st->start+2]));
    sklv=conv_num(st,& (st->stack->stack_data[st->start+3]));
    sd=script_rid2sd(st);
-   skill_use_id(sd,sd->status.account_id,skid,sklv);
+	if (sd)
+	   unit_skilluse_id(&sd->bl,sd->bl.id,skid,sklv);
 
    return 0;
 }
@@ -9066,7 +9068,8 @@ int buildin_skillusepos(struct script_state *st)
    y=conv_num(st,& (st->stack->stack_data[st->start+5]));
 
    sd=script_rid2sd(st);
-   skill_use_pos(sd,x,y,skid,sklv);
+	if (sd)
+	   unit_skilluse_pos(&sd->bl,x,y,skid,sklv);
 
    return 0;
 }
@@ -9961,7 +9964,7 @@ int buildin_pcwalkxy(struct script_state *st){
 		sd = script_rid2sd(st);
 
 	if(sd)
-		pc_walktoxy(sd, x, y);
+		unit_walktoxy(&sd->bl, x, y, 0);
 
 	return 0;
 }
@@ -10097,27 +10100,29 @@ int buildin_spawnmob(struct script_state *st){
 
 int buildin_removemob(struct script_state *st) {
 	int id;
-	struct mob_data *md = NULL;
+	struct block_list *bl = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 
-	md = (struct mob_data *)map_id2bl(id);
-	if(md)
-		mob_delete(md);
+	bl = map_id2bl(id);
+	if (bl && bl->type == BL_MOB)
+		unit_free(bl);
 
 	return 0;
 }
 
 int buildin_mobwalk(struct script_state *st){
 	int id,x,y;
-	struct mob_data *md = NULL;
+	struct block_list *bl = NULL;
 
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	x = conv_num(st, & (st->stack->stack_data[st->start+3]));
 	y = conv_num(st, & (st->stack->stack_data[st->start+4]));
 
-	md = (struct mob_data *)map_id2bl(id);
-	if(md)
-		push_val(st->stack,C_INT,mob_walktoxy(md,x,y,0)); // We'll use harder calculations.
+	bl = map_id2bl(id);
+	if(bl && bl->type == BL_MOB)
+		push_val(st->stack,C_INT,unit_walktoxy(bl,x,y,0)); // We'll use harder calculations.
+	else
+		push_val(st->stack,C_INT,0);
 
 	return 0;
 }
@@ -10142,21 +10147,20 @@ int buildin_getmobdata(struct script_state *st) {
 		setd_sub(map_id2sd(st->rid),name,7,(void *)(int)md->bl.y);
 		setd_sub(map_id2sd(st->rid),name,8,(void *)(int)md->speed);
 		setd_sub(map_id2sd(st->rid),name,9,(void *)(int)md->mode);
-		setd_sub(map_id2sd(st->rid),name,10,(void *)(int)md->state.state);
-		setd_sub(map_id2sd(st->rid),name,11,(void *)(int)md->special_state.ai);
-		setd_sub(map_id2sd(st->rid),name,12,(void *)(int)md->db->option);
-		setd_sub(map_id2sd(st->rid),name,13,(void *)(int)md->db->sex);
-		setd_sub(map_id2sd(st->rid),name,14,(void *)(int)md->db->view_class);
-		setd_sub(map_id2sd(st->rid),name,15,(void *)(int)md->db->hair);
-		setd_sub(map_id2sd(st->rid),name,16,(void *)(int)md->db->hair_color);
-		setd_sub(map_id2sd(st->rid),name,17,(void *)(int)md->db->head_buttom);
-		setd_sub(map_id2sd(st->rid),name,18,(void *)(int)md->db->head_mid);
-		setd_sub(map_id2sd(st->rid),name,19,(void *)(int)md->db->head_top);
-		setd_sub(map_id2sd(st->rid),name,20,(void *)(int)md->db->clothes_color);
-		setd_sub(map_id2sd(st->rid),name,21,(void *)(int)md->db->equip);
-		setd_sub(map_id2sd(st->rid),name,22,(void *)(int)md->db->weapon);
-		setd_sub(map_id2sd(st->rid),name,23,(void *)(int)md->db->shield);
-		setd_sub(map_id2sd(st->rid),name,24,(void *)(int)md->dir);
+		setd_sub(map_id2sd(st->rid),name,10,(void *)(int)md->special_state.ai);
+		setd_sub(map_id2sd(st->rid),name,11,(void *)(int)md->db->option);
+		setd_sub(map_id2sd(st->rid),name,12,(void *)(int)md->db->sex);
+		setd_sub(map_id2sd(st->rid),name,13,(void *)(int)md->db->view_class);
+		setd_sub(map_id2sd(st->rid),name,14,(void *)(int)md->db->hair);
+		setd_sub(map_id2sd(st->rid),name,15,(void *)(int)md->db->hair_color);
+		setd_sub(map_id2sd(st->rid),name,16,(void *)(int)md->db->head_buttom);
+		setd_sub(map_id2sd(st->rid),name,17,(void *)(int)md->db->head_mid);
+		setd_sub(map_id2sd(st->rid),name,18,(void *)(int)md->db->head_top);
+		setd_sub(map_id2sd(st->rid),name,19,(void *)(int)md->db->clothes_color);
+		setd_sub(map_id2sd(st->rid),name,20,(void *)(int)md->db->equip);
+		setd_sub(map_id2sd(st->rid),name,21,(void *)(int)md->db->weapon);
+		setd_sub(map_id2sd(st->rid),name,22,(void *)(int)md->db->shield);
+		setd_sub(map_id2sd(st->rid),name,23,(void *)(int)md->ud.dir);
 	}
 	return 0;
 }
@@ -10201,49 +10205,46 @@ int buildin_setmobdata(struct script_state *st){
 				md->mode = (short)value;
 				break;
 			case 10:
-				md->state.state = (unsigned int)value;
-				break;
-			case 11:
 				md->special_state.ai = (unsigned int)value;
 				break;
-			case 12:
+			case 11:
 				md->db->option = (short)value;
 				break;
-			case 13:
+			case 12:
 				md->db->sex = value;
 				break;
-			case 14:
+			case 13:
 				md->db->view_class = value;
 				break;
-			case 15:
+			case 14:
 				md->db->hair = (short)value;
 				break;
-			case 16:
+			case 15:
 				md->db->hair_color = (short)value;
 				break;
-			case 17:
+			case 16:
 				md->db->head_buttom = (short)value;
 				break;
-			case 18:
+			case 17:
 				md->db->head_mid = (short)value;
 				break;
-			case 19:
+			case 18:
 				md->db->head_top = (short)value;
 				break;
-			case 20:
+			case 19:
 				md->db->clothes_color = (short)value;
 				break;
-			case 21:
+			case 20:
 				md->db->equip = value;
 				break;
-			case 22:
+			case 21:
 				md->db->weapon = (short)value;
 				break;
-			case 23:
+			case 22:
 				md->db->shield = (short)value;
 				break;
-			case 24:
-				md->dir = (short)value;
+			case 23:
+				md->ud.dir = (short)value;
 				break;
 			default:
 				ShowError("buildin_setmobdata: argument id is not identified.");
@@ -10264,24 +10265,12 @@ int buildin_mobattack(struct script_state *st) {
 	target = conv_str(st, & (st->stack->stack_data[st->start+3]));
 
 	if((sd = map_nick2sd(target)) != NULL || (bl = map_id2bl(atoi(target))) != NULL) {
-		if(sd) {
-			md = (struct mob_data *)map_id2bl(id);
-			if(md) {
-				md->target_id = sd->bl.id;
-				md->state.targettype = ATTACKABLE;
-				md->special_state.ai = 1;
-				md->min_chase = distance_bl(bl,&md->bl) + md->db->range2;
-			}
-		} else {
-			if(bl->type == BL_MOB || bl->type == BL_PC) {
-				md = (struct mob_data *)map_id2bl(id);
-				if(md) {
-					md->target_id = bl->id;
-					md->state.targettype = ATTACKABLE;
-					md->special_state.ai = 1;
-					md->min_chase = distance_bl(bl,&md->bl) + md->db->range2;
-				}
-			}
+		if (sd) bl = &sd->bl;
+		md = (struct mob_data *)map_id2bl(id);
+		if (md && md->bl.type == BL_MOB) {
+			md->target_id = sd->bl.id;
+			md->special_state.ai = 1;
+			md->min_chase = distance_bl(bl,&md->bl) + md->db->range2;
 		}
 	}
 
@@ -10290,15 +10279,15 @@ int buildin_mobattack(struct script_state *st) {
 
 int buildin_mobstop(struct script_state *st) {
 	int id;
-	struct mob_data *md = NULL;
+	struct block_list *bl = NULL;
 
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 
-	md = (struct mob_data *)map_id2bl(id);
-	if(md){
-		mob_stopattack(md);
-		mob_stop_walking(md,0);
-		md->master_id = md->bl.id; // Quick hack to stop random walking.
+	bl = map_id2bl(id);
+	if(bl && bl->type == BL_MOB){
+		unit_stop_attack(bl);
+		unit_stop_walking(bl,0);
+		((TBL_MOB*)bl)->master_id = bl->id; // Quick hack to stop random walking.
 	}
 
 	return 0;
@@ -10309,25 +10298,25 @@ int buildin_mobassist(struct script_state *st) {
 	char *target;
 	struct mob_data *md = NULL;
 	struct block_list *bl = NULL;
-
+	struct unit_data *ud;
+	
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	target = conv_str(st, & (st->stack->stack_data[st->start+3]));
 
 	if((bl =&(map_nick2sd(target)->bl)) || (bl = map_id2bl(atoi(target)))) {
 		md = (struct mob_data *)map_id2bl(id);
-		if(md) {
+		if(md && md->bl.type == BL_MOB) {
+			ud = unit_bl2ud(bl);
 			md->master_id = bl->id;
-			if(bl->type == BL_PC)
-				md->target_id = map_id2sd(bl->id)->attacktarget;
-			else if(bl->type == BL_MOB)
-				md->target_id = ((struct mob_data *)bl)->target_id;
-			if(map_id2bl(md->target_id)){
-				md->state.targettype = ATTACKABLE;
+			if (ud) {
+				if (ud->attacktarget)
+					md->target_id = ud->attacktarget;
+				else if (ud->skilltarget)
+					md->target_id = ud->skilltarget;
 				md->min_chase = distance_bl(&md->bl,map_id2bl(md->target_id)) + md->db->range2;
 			}
 		}
 	}
-	
 	return 0;
 }
 
@@ -10343,7 +10332,7 @@ int buildin_mobtalk(struct script_state *st)
 	str=conv_str(st,& (st->stack->stack_data[st->start+3]));
 
 	md = (struct mob_data *)map_id2bl(id);
-	if(md) {
+	if(md && md->bl.type == BL_MOB) {
 		memcpy(message, md->name, NAME_LENGTH);
 		strcat(message," : ");
 		strncat(message,str, 254); //Prevent overflow possibility. [Skotlex]
@@ -10358,7 +10347,7 @@ int buildin_mobemote(struct script_state *st) {
 	struct mob_data *md = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	emo = conv_num(st, & (st->stack->stack_data[st->start+3]));
-	if((md = (struct mob_data *)map_id2bl(id)))
+	if((md = (struct mob_data *)map_id2bl(id)) && md->bl.type == BL_MOB)
 		clif_emotion(&md->bl,emo);
 	return 0;
 }
@@ -10367,7 +10356,7 @@ int buildin_mobattach(struct script_state *st){
 	int id;
 	struct mob_data *md = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	if((md = (struct mob_data *)map_id2bl(id)))
+	if((md = (struct mob_data *)map_id2bl(id)) && md->bl.type == BL_MOB)
 		md->nd = (struct npc_data *)map_id2bl(st->oid);
 	return 0;
 }

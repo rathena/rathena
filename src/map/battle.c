@@ -31,53 +31,16 @@ int attr_fix_table[4][10][10];
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
-/*==========================================
- * Ž©•ª‚ðƒ?ƒbƒN‚µ‚Ä‚¢‚éMOB‚Ì?‚ð?‚¦‚é(foreachclient)
- *------------------------------------------
- */
-static int battle_counttargeted_sub(struct block_list *bl, va_list ap)
-{
-	int id, target_lv;
-	struct block_list *src;
+int battle_getcurrentskill(struct block_list *bl)
+{	//Returns the current/last skill in use by this bl.
+	struct unit_data *ud;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-
-	id = va_arg(ap,int);
-	src = va_arg(ap,struct block_list *);
-	target_lv = va_arg(ap,int);
-
-	if (id == bl->id || (src && id == src->id))
-		return 0;
-	if (bl->type == BL_PC) {
-		struct map_session_data *sd = (struct map_session_data *)bl;
-		if (sd && sd->attacktarget == id && sd->attacktimer != -1 && sd->attacktarget_lv >= target_lv)
-			return 1;
+	if (bl->type == BL_SKILL) {
+		struct skill_unit * su = (struct skill_unit*)bl;
+		return su->group?su->group->skill_id:0;
 	}
-	else if (bl->type == BL_MOB) {
-		struct mob_data *md = (struct mob_data *)bl;
-		if (md && md->target_id == id && md->timer != -1 && md->state.state == MS_ATTACK && md->target_lv >= target_lv)		
-			return 1;
-		//printf("md->target_lv:%d, target_lv:%d\n", md->target_lv, target_lv);
-	}
-	else if (bl->type == BL_PET) {
-		struct pet_data *pd = (struct pet_data *)bl;
-		if (pd && pd->target_id == id && pd->timer != -1 && pd->state.state == MS_ATTACK && pd->target_lv >= target_lv)
-			return 1;
-	}
-
-	return 0;
-}
-/*==========================================
- * Ž©•ª‚ðƒ?ƒbƒN‚µ‚Ä‚¢‚é‘Î?Û‚Ì?”‚ð•Ô‚·(”Ä—p)
- * –ß‚è‚Í?®?”‚Å0ˆÈ?ã
- *------------------------------------------
- */
-int battle_counttargeted(struct block_list *bl,struct block_list *src,int target_lv)
-{
-	nullpo_retr(0, bl);
-	return (map_foreachinrange(battle_counttargeted_sub, bl, AREA_SIZE, BL_CHAR,
-		bl->id, src, target_lv));
+	ud = unit_bl2ud(bl);
+	return ud?ud->skillid:0;
 }
 
 /*==========================================
@@ -87,73 +50,30 @@ int battle_counttargeted(struct block_list *bl,struct block_list *src,int target
 static int battle_gettargeted_sub(struct block_list *bl, va_list ap)
 {
 	struct block_list **bl_list;
-	struct block_list *target;
+	struct unit_data *ud;
+	int target_id;
 	int *c;
 
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
 
 	bl_list = va_arg(ap, struct block_list **);
-	nullpo_retr(0, c = va_arg(ap, int *));
-	nullpo_retr(0, target = va_arg(ap, struct block_list *));
+	c = va_arg(ap, int *);
+	target_id = va_arg(ap, int);
 
-	if (bl->id == target->id)
+	if (bl->id == target_id)
 		return 0;
 	if (*c >= 24)
 		return 0;
 
-	if (bl->type == BL_PC) {
-		struct map_session_data *sd = (struct map_session_data *)bl;
-		if (!sd || sd->attacktarget != target->id || sd->attacktimer == -1)
-			return 0;
-	} else if (bl->type == BL_MOB) {
-		struct mob_data *md = (struct mob_data *)bl;
-		if (!md || md->target_id != target->id || md->timer == -1 || md->state.state != MS_ATTACK)
-			return 0;
-	} else if (bl->type == BL_PET) {
-		struct pet_data *pd = (struct pet_data *)bl;
-		if (!pd || pd->target_id != target->id || pd->timer == -1 || pd->state.state != MS_ATTACK)
-			return 0;
-	}
+	ud = unit_bl2ud(bl);
+	if (!ud) return 0;
 
-	bl_list[(*c)++] = bl;
-	return 1;
-}
-
-int battle_getcurrentskill(struct block_list *bl)
-{	//Returns the current/last skill in use by this bl.
-	switch (bl->type)
-	{
-		case BL_PC:
-			return ((struct map_session_data*)bl)->skillid;
-		case BL_MOB:
-			return ((struct mob_data*)bl)->skillid;
-		case BL_PET:
-			return ((struct pet_data*)bl)->skillid;
-		case BL_SKILL:
-			{
-				struct skill_unit * su = (struct skill_unit*)bl;
-				if (su->group)
-					return su->group->skill_id;
-			}
-			break;
+	if (ud->attacktarget == target_id || ud->skilltarget == target_id) {
+		bl_list[(*c)++] = bl;
+		return 1;
 	}
-	return 0;
-}
-
-//Returns the id of the current targetted character of the passed bl. [Skotlex]
-int battle_gettarget(struct block_list *bl)
-{
-	switch (bl->type)
-	{
-		case BL_PC:
-			return ((struct map_session_data*)bl)->attacktarget;
-		case BL_MOB:
-			return ((struct mob_data*)bl)->target_id;
-		case BL_PET:
-			return ((struct pet_data*)bl)->target_id;
-	}
-	return 0;
+	return 0;	
 }
 
 struct block_list* battle_gettargeted(struct block_list *target)
@@ -163,12 +83,27 @@ struct block_list* battle_gettargeted(struct block_list *target)
 	nullpo_retr(NULL, target);
 
 	memset(bl_list, 0, sizeof(bl_list));
-	map_foreachinrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target);
+	map_foreachinrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target->id);
 	if (c == 0 || c > 24)
 		return NULL;
 	return bl_list[rand()%c];
 }
 
+
+//Returns the id of the current targetted character of the passed bl. [Skotlex]
+int battle_gettarget(struct block_list *bl)
+{
+	switch (bl->type)
+	{
+		case BL_PC:
+			return ((struct map_session_data*)bl)->ud.attacktarget;
+		case BL_MOB:
+			return ((struct mob_data*)bl)->target_id;
+		case BL_PET:
+			return ((struct pet_data*)bl)->target_id;
+	}
+	return 0;
+}
 // ƒ_ƒ??[ƒW‚Ì’x‰„
 struct delay_damage {
 	struct block_list *src;
@@ -271,35 +206,23 @@ int battle_damage(struct block_list *bl,struct block_list *target,int damage, in
 		if (sc->data[SC_CHASEWALK].timer != -1)
 			status_change_end(target, SC_CHASEWALK, -1);
 	}
-
-	if (target->type == BL_MOB) {	// MOB
-		struct mob_data *md = (struct mob_data *)target;
-		if (md && md->skilltimer != -1 && md->state.skillcastcancel)	// ‰r?¥–WŠQ
-			skill_castcancel(target,0);
-		return mob_damage(bl,md,damage,0);
-	} else if (target->type == BL_PC) {	// PC
-		struct map_session_data *tsd = (struct map_session_data *)target;
-		if (!tsd)
+	
+	if (sc && sc->count && sc->data[SC_DEVOTION].val1 && bl && battle_getcurrentskill(bl) != PA_PRESSURE)
+	{	//Devotion only works on attacks from a source (to prevent it from absorbing coma) [Skotlex]
+		struct map_session_data *sd2 = map_id2sd(sc->data[SC_DEVOTION].val1);
+		if (sd2 && sd2->devotion[sc->data[SC_DEVOTION].val2] == target->id)
+		{
+			clif_damage(bl, &sd2->bl, gettick(), 0, 0, damage, 0, 0, 0);
+			pc_damage(&sd2->bl, sd2, damage);
 			return 0;
-		if (sc->count && sc->data[SC_DEVOTION].val1 && bl && battle_getcurrentskill(bl) != PA_PRESSURE)
-		{	//Devotion only works on attacks from a source (prevent it from absorbing coma) [Skotlex]
-			struct map_session_data *sd2 = map_id2sd(tsd->sc.data[SC_DEVOTION].val1);
-			if (sd2 && sd2->devotion[sc->data[SC_DEVOTION].val2] == target->id)
-			{
-				clif_damage(bl, &sd2->bl, gettick(), 0, 0, damage, 0, 0, 0);
-				pc_damage(&sd2->bl, sd2, damage);
-				return 0;
-			} else
-				status_change_end(target, SC_DEVOTION, -1);
-		}
-
-		if (tsd->skilltimer != -1) {	// ‰r?¥–WŠQ
-			// ƒtƒFƒ“ƒJ?[ƒh‚â–WŠQ‚³‚ê‚È‚¢ƒXƒLƒ‹‚©‚ÌŒŸ?¸
-			if ((!tsd->special_state.no_castcancel || map_flag_gvg(target->m)) && tsd->state.skillcastcancel &&
-				!tsd->special_state.no_castcancel2)
-				skill_castcancel(target,0);
-		}
-		return pc_damage(bl,tsd,damage);
+		} else
+			status_change_end(target, SC_DEVOTION, -1);
+	}
+	unit_skillcastcancel(target, 2);
+	if (target->type == BL_MOB) {
+		return mob_damage(bl,(TBL_MOB*)target, damage,0);
+	} else if (target->type == BL_PC) {
+		return pc_damage(bl,(TBL_PC*)target,damage);
 	} else if (target->type == BL_SKILL)
 		return skill_unit_ondamaged((struct skill_unit *)target, bl, damage, gettick());
 	return 0;
@@ -309,16 +232,9 @@ int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp,in
 {
 	nullpo_retr(0, target); //bl‚ÍNULL‚ÅŒÄ‚Î‚ê‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‘¼‚Åƒ`ƒFƒbƒN
 
-	if (target->type == BL_PET)
-		return 0;
-	if (target->type == BL_PC && pc_isdead((struct map_session_data *)target) )
-		return 0;
-	if (hp == 0 && sp == 0)
-		return 0;
 
-//If battle_heal was invoked, HP/SP should just be reduced without damage animation. [Skotlex]
-//	if (hp < 0)
-//		return battle_damage(bl,target,-hp,flag);
+	if (status_isdead(target))
+		return 0;
 
 	if (target->type == BL_MOB)
 		return mob_heal((struct mob_data *)target,hp);
@@ -326,47 +242,6 @@ int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp,in
 		return pc_heal((struct map_session_data *)target,hp,sp);
 	return 0;
 }
-
-// ?UŒ‚’âŽ~
-int battle_stopattack(struct block_list *bl)
-{
-	nullpo_retr(0, bl);
-	if (bl->type == BL_MOB)
-		return mob_stopattack((struct mob_data*)bl);
-	else if (bl->type == BL_PC)
-		return pc_stopattack((struct map_session_data*)bl);
-	else if (bl->type == BL_PET)
-		return pet_stopattack((struct pet_data*)bl);
-	return 0;
-}
-
-// Returns whether the given object is moving or not.
-int battle_iswalking(struct block_list *bl) {
-	switch (bl->type)
-	{
-		case BL_PC:
-			return (((struct map_session_data*)bl)->walktimer != -1);
-		case BL_MOB:
-			return (((struct mob_data*)bl)->state.state == MS_WALK);
-		case BL_PET:
-			return (((struct pet_data*)bl)->state.state == MS_WALK);
-		default:
-			return 0;
-	}
-}
-// ˆÚ“®’âŽ~
-int battle_stopwalking(struct block_list *bl,int type)
-{
-	nullpo_retr(0, bl);
-	if (bl->type == BL_MOB)
-		return mob_stop_walking((struct mob_data*)bl,type);
-	else if (bl->type == BL_PC)
-		return pc_stop_walking((struct map_session_data*)bl,type);
-	else if (bl->type == BL_PET)
-		return pet_stop_walking((struct pet_data*)bl,type);
-	return 0;
-}
-
 
 /*==========================================
  * Does attribute fix modifiers. 
@@ -451,81 +326,6 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 }
 
 /*==========================================
- * Applies walk delay to character, considering that 
- * if type is 0, this is a damage induced delay: if previous delay is active, do not change it.
- * if type is 1, this is a skill induced delay: walk-delay may only be increased, not decreased.
- *------------------------------------------
- */
-int battle_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type)
-{
-	unsigned int *canmove_tick=NULL;
-	if (delay <= 0) return 0;
-	
-	switch (bl->type) {
-		case BL_PC:
-			canmove_tick = &((TBL_PC*)bl)->canmove_tick;
-			break;
-		case BL_MOB:
-			canmove_tick = &((TBL_MOB*)bl)->canmove_tick;
-			break;
-		case BL_NPC:
-			canmove_tick = &((TBL_NPC*)bl)->canmove_tick;
-			break;
-	}
-	if (!canmove_tick)
-		return 0;
-	if (type) {
-		if (DIFF_TICK(*canmove_tick, tick+delay) > 0)
-			return 0;
-	} else {
-		if (DIFF_TICK(*canmove_tick, tick) > 0)
-			return 0;
-	}
-	*canmove_tick = tick + delay;
-	return 1;
-}
-
-static int battle_walkdelay_sub(int tid, unsigned int tick, int id, int data)
-{
-	struct block_list *bl = map_id2bl(id);
-	if (!bl || status_isdead(bl))
-		return 0;
-	
-	if (battle_set_walkdelay(bl, tick, data, 0))
-		battle_stopwalking(bl,3);
-	return 0;
-}
-
-/*==========================================
- * Applies walk delay based on attack type. [Skotlex]
- *------------------------------------------
- */
-int battle_walkdelay(struct block_list *bl, unsigned int tick, int adelay, int delay, int div_) {
-
-	if (status_isdead(bl))
-		return 0;
-	
-	if (bl->type == BL_PC) {
-		if (battle_config.pc_walk_delay_rate != 100)
-			delay = delay*battle_config.pc_walk_delay_rate/100;
-	} else
-		if (battle_config.walk_delay_rate != 100)
-			delay = delay*battle_config.walk_delay_rate/100;
-	
-	if (div_ > 1) //Multi-hit skills mean higher delays.
-		delay += battle_config.multihit_delay*(div_-1);
-
-	if (delay <= 0)
-		return 0;
-	
-	if (adelay > 0)
-		add_timer(tick+adelay, battle_walkdelay_sub, bl->id, delay);
-	else 
-		battle_set_walkdelay(bl, tick, delay, 0);
-	return 1;
-}
-
-/*==========================================
  * ƒ_ƒ??[ƒW?Å?IŒvŽZ
  *------------------------------------------
  */
@@ -585,7 +385,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 				delay = 200;
 			else
 				delay = 100;
-			battle_set_walkdelay(bl, gettick(), delay, 1);
+			unit_set_walkdelay(bl, gettick(), delay, 1);
 
 			if(sc->data[SC_SHRINK].timer != -1 && rand()%100<5*sc->data[SC_AUTOGUARD].val1)
 				skill_blown(bl,src,skill_get_blewcount(CR_SHRINK,1));
@@ -1309,17 +1109,13 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 
-	if (skill_num && battle_config.skillrange_by_distance)
-	{ //Skill range based on distance between src/target [Skotlex]
-		if ((sd && battle_config.skillrange_by_distance&1)
-			|| (md && battle_config.skillrange_by_distance&2)
-			|| (pd && battle_config.skillrange_by_distance&4)
-		) {
-			if (check_distance_bl(src, target, 3))
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
-			else
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-		}
+	if (skill_num && battle_config.skillrange_by_distance &&
+		(src->type&battle_config.skillrange_by_distance)
+	) { //Skill range based on distance between src/target [Skotlex]
+		if (check_distance_bl(src, target, 3))
+			wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
+		else
+			wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 	}
 	
 	if(is_boss(target)) //Bosses can't be knocked-back
@@ -1405,7 +1201,8 @@ static struct Damage battle_calc_weapon_attack(
 		switch (skill_num)
 		{
 			case KN_AUTOCOUNTER:
-				if(!(battle_config.pc_auto_counter_type&1))
+				if(battle_config.auto_counter_type &&
+					(battle_config.auto_counter_type&src->type))
 					flag.cri = 1;
 				else
 					cri <<= 1;
@@ -1476,7 +1273,7 @@ static struct Damage battle_calc_weapon_attack(
 		if(battle_config.agi_penalty_type)
 		{	
 			unsigned char target_count; //256 max targets should be a sane max
-			target_count = 1+battle_counttargeted(target,src,battle_config.agi_penalty_count_lv);
+			target_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
 			if(target_count >= battle_config.agi_penalty_count)
 			{
 				if (battle_config.agi_penalty_type == 1)
@@ -2052,7 +1849,7 @@ static struct Damage battle_calc_weapon_attack(
 			if(battle_config.vit_penalty_type)
 			{
 				unsigned char target_count; //256 max targets should be a sane max
-				target_count = 1 + battle_counttargeted(target,src,battle_config.vit_penalty_count_lv);
+				target_count = unit_counttargeted(target,battle_config.vit_penalty_count_lv);
 				if(target_count >= battle_config.vit_penalty_count) {
 					if(battle_config.vit_penalty_type == 1) {
 						def1 = (def1 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
@@ -2537,17 +2334,13 @@ struct Damage battle_calc_magic_attack(
 		}
 	}
 
-	if (battle_config.skillrange_by_distance)
-	{ //Skill range based on distance between src/target [Skotlex]
-		if ((sd && battle_config.skillrange_by_distance&1)
-			|| (md && battle_config.skillrange_by_distance&2)
-			|| (pd && battle_config.skillrange_by_distance&4)
-		) {
-			if (check_distance_bl(src, target, 3))
-				ad.flag=(ad.flag&~BF_RANGEMASK)|BF_SHORT;
-			else
-				ad.flag=(ad.flag&~BF_RANGEMASK)|BF_LONG;
-		}
+	if (battle_config.skillrange_by_distance &&
+		(src->type&battle_config.skillrange_by_distance)
+	)	{ //Skill range based on distance between src/target [Skotlex]
+		if (check_distance_bl(src, target, 3))
+			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_SHORT;
+		else
+			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_LONG;
 	}
 
 	flag.infdef=(t_mode&MD_PLANT?1:0);
@@ -3073,17 +2866,13 @@ struct Damage  battle_calc_misc_attack(
 	if(is_boss(target))
 		blewcount = 0;
 
-	if (battle_config.skillrange_by_distance)
-	{ //Skill range based on distance between src/target [Skotlex]
-		if ((bl->type == BL_PC && battle_config.skillrange_by_distance&1)
-			|| (bl->type == BL_MOB && battle_config.skillrange_by_distance&2)
-			|| (bl->type == BL_PET && battle_config.skillrange_by_distance&4)
-		) {
-			if (check_distance_bl(bl, target, 3))
-				aflag=(aflag&~BF_RANGEMASK)|BF_SHORT;
-			else
-				aflag=(aflag&~BF_RANGEMASK)|BF_LONG;
-		}
+	if (battle_config.skillrange_by_distance &&
+		(bl->type&battle_config.skillrange_by_distance)
+	) { //Skill range based on distance between src/target [Skotlex]
+		if (check_distance_bl(bl, target, 3))
+			aflag=(aflag&~BF_RANGEMASK)|BF_SHORT;
+		else
+			aflag=(aflag&~BF_RANGEMASK)|BF_LONG;
 	}
 
 	if (skill_num != PA_PRESSURE) //Pressure ignores all these things...
@@ -3218,7 +3007,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			status_check_skilluse(target, src, KN_AUTOCOUNTER, 0)
 		)	{
 			int dir = map_calc_dir(target,src->x,src->y);
-			int t_dir = status_get_dir(target);
+			int t_dir = unit_getdir(target);
 			int dist = distance_bl(src, target);
 			if(dist <= 0 || (!map_check_dir(dir,t_dir) && dist <= status_get_range(target)+1))
 			{
@@ -3738,9 +3527,8 @@ static const struct battle_data_short {
 	{ "delay_dependon_dex",                &battle_config.delay_dependon_dex		},
 	{ "skill_delay_attack_enable",         &battle_config.sdelay_attack_enable		},
 	{ "left_cardfix_to_right",             &battle_config.left_cardfix_to_right	},
-	{ "player_skill_add_range",            &battle_config.pc_skill_add_range		},
+	{ "skill_add_range",            			&battle_config.skill_add_range		},
 	{ "skill_out_range_consume",           &battle_config.skill_out_range_consume	},
-	{ "monster_skill_add_range",           &battle_config.mob_skill_add_range		},
 	{ "skillrange_by_distance",            &battle_config.skillrange_by_distance	},
 	{ "skillrange_from_weapon",            &battle_config.use_weapon_skill_range  },
 	{ "player_damage_delay_rate",          &battle_config.pc_damage_delay_rate		},
@@ -3844,16 +3632,14 @@ static const struct battle_data_short {
 	{ "max_baby_parameter",                &battle_config.max_baby_parameter	},
 	{ "max_def",                           &battle_config.max_def					},
 	{ "over_def_bonus",                    &battle_config.over_def_bonus			},
-	{ "player_skill_log",                  &battle_config.pc_skill_log			},
-	{ "monster_skill_log",                 &battle_config.mob_skill_log			},
+	{ "skill_log",                         &battle_config.skill_log			},
 	{ "battle_log",                        &battle_config.battle_log				},
 	{ "save_log",                          &battle_config.save_log					},
 	{ "error_log",                         &battle_config.error_log				},
 	{ "etc_log",                           &battle_config.etc_log					},
 	{ "save_clothcolor",                   &battle_config.save_clothcolor			},
 	{ "undead_detect_type",                &battle_config.undead_detect_type		},
-	{ "player_auto_counter_type",          &battle_config.pc_auto_counter_type		},
-	{ "monster_auto_counter_type",         &battle_config.monster_auto_counter_type},
+	{ "auto_counter_type",                 &battle_config.auto_counter_type		},
 	{ "min_hitrate",                       &battle_config.min_hitrate	},
 	{ "max_hitrate",                       &battle_config.max_hitrate	},
 	{ "agi_penalty_type",                  &battle_config.agi_penalty_type			},
@@ -3868,10 +3654,8 @@ static const struct battle_data_short {
 	{ "monster_defense_type",              &battle_config.monster_defense_type		},
 	{ "pet_defense_type",                  &battle_config.pet_defense_type			},
 	{ "magic_defense_type",                &battle_config.magic_defense_type		},
-	{ "player_skill_reiteration",          &battle_config.pc_skill_reiteration		},
-	{ "monster_skill_reiteration",         &battle_config.monster_skill_reiteration},
-	{ "player_skill_nofootset",            &battle_config.pc_skill_nofootset		},
-	{ "monster_skill_nofootset",           &battle_config.monster_skill_nofootset	},
+	{ "skill_reiteration",                 &battle_config.skill_reiteration		},
+	{ "skill_nofootset",                   &battle_config.skill_nofootset		},
 	{ "player_cloak_check_type",           &battle_config.pc_cloak_check_type		},
 	{ "monster_cloak_check_type",          &battle_config.monster_cloak_check_type	},
 	{ "sense_type",                        &battle_config.estimation_type },
@@ -3882,10 +3666,8 @@ static const struct battle_data_short {
 	{ "gvg_misc_attack_damage_rate",       &battle_config.gvg_misc_damage_rate		},
 	{ "gvg_flee_penalty",                  &battle_config.gvg_flee_penalty			},
 	{ "mob_changetarget_byskill",          &battle_config.mob_changetarget_byskill},
-	{ "player_attack_direction_change",    &battle_config.pc_attack_direction_change },
-	{ "monster_attack_direction_change",   &battle_config.monster_attack_direction_change },
-	{ "player_land_skill_limit",           &battle_config.pc_land_skill_limit		},
-	{ "monster_land_skill_limit",          &battle_config.monster_land_skill_limit},
+	{ "attack_direction_change",           &battle_config.attack_direction_change },
+	{ "land_skill_limit",                  &battle_config.land_skill_limit		},
 	{ "party_skill_penalty",               &battle_config.party_skill_penalty		},
 	{ "monster_class_change_full_recover", &battle_config.monster_class_change_full_recover },
 	{ "produce_item_name_input",           &battle_config.produce_item_name_input	},
@@ -4117,14 +3899,13 @@ void battle_set_defaults() {
 	battle_config.delay_dependon_dex=0;
 	battle_config.sdelay_attack_enable=0;
 	battle_config.left_cardfix_to_right=0;
-	battle_config.pc_skill_add_range=0;
+	battle_config.skill_add_range=0;
 	battle_config.skill_out_range_consume=1;
-	battle_config.mob_skill_add_range=0;
-	battle_config.skillrange_by_distance=6;
+	battle_config.skillrange_by_distance=BL_MOB|BL_PET;
 	battle_config.use_weapon_skill_range=0;
 	battle_config.pc_damage_delay_rate=100;
 	battle_config.defnotenemy=0;
-	battle_config.vs_traps_bctall=1;
+	battle_config.vs_traps_bctall=BL_PC;
 	battle_config.clear_unit_ondeath=1;
 	battle_config.random_monster_checklv=1;
 	battle_config.attr_recover=1;
@@ -4168,7 +3949,6 @@ void battle_set_defaults() {
 	battle_config.monster_active_enable=1;
 	battle_config.monster_damage_delay_rate=100;
 	battle_config.monster_loot_type=0;
-//	battle_config.mob_skill_use=1;
 	battle_config.mob_skill_rate=100;
 	battle_config.mob_skill_delay=100;
 	battle_config.mob_count_rate=100;
@@ -4193,7 +3973,7 @@ void battle_set_defaults() {
 	battle_config.pet_friendly_rate=100;
 	battle_config.pet_hungry_delay_rate=100;
 	battle_config.pet_hungry_friendly_decrease=5;
-	battle_config.pet_str=1;
+	battle_config.pet_str=0;
 	battle_config.pet_status_support=0;
 	battle_config.pet_attack_support=0;
 	battle_config.pet_damage_support=0;
@@ -4239,18 +4019,16 @@ void battle_set_defaults() {
 	battle_config.max_cart_weight = 8000;
 	battle_config.max_def = 99;	// [Skotlex]
 	battle_config.over_def_bonus = 0;	// [Skotlex]
-	battle_config.pc_skill_log = 0;
-	battle_config.mob_skill_log = 0;
+	battle_config.skill_log = 0;
 	battle_config.battle_log = 0;
 	battle_config.save_log = 0;
 	battle_config.error_log = 1;
 	battle_config.etc_log = 1;
 	battle_config.save_clothcolor = 0;
 	battle_config.undead_detect_type = 0;
-	battle_config.pc_auto_counter_type = 1;
-	battle_config.monster_auto_counter_type = 1;
+	battle_config.auto_counter_type = 0;
 	battle_config.min_hitrate = 5;
-	battle_config.max_hitrate = 95;
+	battle_config.max_hitrate = 100;
 	battle_config.agi_penalty_type = 1;
 	battle_config.agi_penalty_count = 3;
 	battle_config.agi_penalty_num = 10;
@@ -4263,10 +4041,8 @@ void battle_set_defaults() {
 	battle_config.monster_defense_type = 0;
 	battle_config.pet_defense_type = 0;
 	battle_config.magic_defense_type = 0;
-	battle_config.pc_skill_reiteration = 0;
-	battle_config.monster_skill_reiteration = 0;
-	battle_config.pc_skill_nofootset = 0;
-	battle_config.monster_skill_nofootset = 0;
+	battle_config.skill_reiteration = 0;
+	battle_config.skill_nofootset = BL_PC;
 	battle_config.pc_cloak_check_type = 1;
 	battle_config.monster_cloak_check_type = 0;
 	battle_config.estimation_type = 3;
@@ -4278,10 +4054,8 @@ void battle_set_defaults() {
 	battle_config.gvg_flee_penalty = 20;
 	battle_config.gvg_eliminate_time = 7000;
 	battle_config.mob_changetarget_byskill = 0;
-	battle_config.pc_attack_direction_change = 1;
-	battle_config.monster_attack_direction_change = 1;
-	battle_config.pc_land_skill_limit = 1;
-	battle_config.monster_land_skill_limit = 1;
+	battle_config.attack_direction_change = BL_ALL;
+	battle_config.land_skill_limit = BL_ALL;
 	battle_config.party_skill_penalty = 1;
 	battle_config.monster_class_change_full_recover = 0;
 	battle_config.produce_item_name_input = 1;
@@ -4684,7 +4458,6 @@ int battle_config_read(const char *cfgName)
 	if (--count == 0) {
 		battle_validate_conf();
 		add_timer_func_list(battle_delay_damage_sub, "battle_delay_damage_sub");
-		add_timer_func_list(battle_walkdelay_sub, "battle_walkdelay_sub");
 	}
 
 	return 0;

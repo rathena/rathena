@@ -32,7 +32,7 @@ int npc_buysellsel(struct map_session_data *,int,int);
 int npc_buylist(struct map_session_data *,int,unsigned short *);
 int npc_selllist(struct map_session_data *,int,unsigned short *);
 int npc_parse_mob(char *w1,char *w2,char *w3,char *w4);
-int npc_parse_mob2 (struct mob_list *, int cached); // [Wizputer]
+int npc_parse_mob2 (struct spawn_data*, int index); // [Wizputer]
 int npc_parse_warp(char *w1,char *w2,char *w3,char *w4);
 int npc_globalmessage(const char *name,char *mes);
 
@@ -40,8 +40,6 @@ int npc_enable(const char *name,int flag);
 int npc_changename(const char *name, const char *newname, short look); // [Lance]
 struct npc_data* npc_name2id(const char *name);
 
-int npc_walktoxy(struct npc_data *nd,int x,int y,int easy); // npc walking [Valaris]
-int npc_stop_walking(struct npc_data *nd,int type);
 int npc_changestate(struct npc_data *nd,int state,int type);
 
 int npc_get_new_npc_id(void);

@@ -36,6 +36,7 @@
 #include "skill.h"
 #include "trade.h"
 #include "party.h"
+#include "unit.h"
 #include "battle.h"
 #include "script.h"
 #include "guild.h"
@@ -1506,7 +1507,6 @@ int map_quit(struct map_session_data *sd) {
 	//nullpo_retr(0, sd); //Utterly innecessary, all invokations to this function already have an SD non-null check.
 	//Learn to use proper coding and stop relying on nullpo_'s for safety :P [Skotlex]
 
-
 	if(!sd->state.waitingdisconnect) {
 		if (sd->npc_timer_id != -1) //Cancel the event timer.
 			npc_timerevent_quit(sd);
@@ -1522,158 +1522,37 @@ int map_quit(struct map_session_data *sd) {
 					npc_event_doall_id(script_config.logout_event_name, sd->bl.id), script_config.logout_event_name);
 			}
 		}
-
-		if(sd->chatID)	// チャットから出る
-			chat_leavechat(sd);
-
-		if(sd->trade_partner)	// 取引を中?する
-			trade_tradecancel(sd);
-
-		if(sd->party_invite>0)	// パ?ティ?誘を拒否する
-			party_reply_invite(sd,sd->party_invite_account,0);
-
-		if(sd->guild_invite>0)	// ギルド?誘を拒否する
-			guild_reply_invite(sd,sd->guild_invite,0);
-		if(sd->guild_alliance>0)	// ギルド同盟?誘を拒否する
-			guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
-	    
-		// Force exiting from duel and rejecting
-		// all duel invitations when player quit [LuzZza]
-		if(sd->duel_group > 0)
-			duel_leave(sd->duel_group, sd);
-	   
-		if(sd->duel_invite > 0)
-			duel_reject(sd->duel_invite, sd);
-
-		party_send_logout(sd);	// パ?ティのログアウトメッセ?ジ送信
-
-		party_send_dot_remove(sd);//minimap dot fix [Kevin]
-
-		guild_send_memberinfoshort(sd,0);	// ギルドのログアウトメッセ?ジ送信
-
-		guild_send_dot_remove(sd);
-		 
-		pc_cleareventtimer(sd);	// イベントタイマを破棄する
-
-		// check if we've been authenticated [celest]
-		if (sd->state.auth)
-			skill_castcancel(&sd->bl,0);	// 詠唱を中?する
-
-		skill_stop_dancing(&sd->bl);// ダンス/演奏中?
-
-		//Status that are not saved...
-		if(sd->sc.count) {
-			if(sd->sc.data[SC_HIDING].timer!=-1)
-				status_change_end(&sd->bl,SC_HIDING,-1);
-			if(sd->sc.data[SC_CLOAKING].timer!=-1)
-				status_change_end(&sd->bl,SC_CLOAKING,-1);
-			if(sd->sc.data[SC_RUN].timer!=-1)
-				status_change_end(&sd->bl,SC_RUN,-1);
-			if(sd->sc.data[SC_SPURT].timer!=-1)
-				status_change_end(&sd->bl,SC_SPURT,-1);
-			if(sd->sc.data[SC_BERSERK].timer!=-1)
-				status_change_end(&sd->bl,SC_BERSERK,-1);
-			if(sd->sc.data[SC_TRICKDEAD].timer!=-1)
-				status_change_end(&sd->bl,SC_TRICKDEAD,-1);
-			if (battle_config.debuff_on_logout) {
-				if(sd->sc.data[SC_STRIPWEAPON].timer!=-1)
-					status_change_end(&sd->bl,SC_STRIPWEAPON,-1);
-				if(sd->sc.data[SC_STRIPARMOR].timer!=-1)
-					status_change_end(&sd->bl,SC_STRIPARMOR,-1);
-				if(sd->sc.data[SC_STRIPSHIELD].timer!=-1)
-					status_change_end(&sd->bl,SC_STRIPSHIELD,-1);
-				if(sd->sc.data[SC_STRIPHELM].timer!=-1)
-					status_change_end(&sd->bl,SC_STRIPHELM,-1);
-				if(sd->sc.data[SC_EXTREMITYFIST].timer!=-1)
-					status_change_end(&sd->bl,SC_EXTREMITYFIST,-1);
-				if(sd->sc.data[SC_EXPLOSIONSPIRITS].timer!=-1)
-					status_change_end(&sd->bl,SC_EXPLOSIONSPIRITS,-1);
-			}
-		}
-		skill_clear_unitgroup(&sd->bl);	// スキルユニットグル?プの削除
-
-		// check if we've been authenticated [celest]
-		if (sd->state.auth) {
-			skill_cleartimerskill(&sd->bl);
-			pc_stop_walking(sd,0);
-			pc_stopattack(sd);
-			pc_stop_following(sd);
-			pc_delinvincibletimer(sd);
-		}
-		pc_delspiritball(sd,sd->spiritball,1);
-		skill_gangsterparadise(sd,0);
-		skill_unit_move(&sd->bl,gettick(),4);
-
-		if (sd->state.auth)
-			status_calc_pc(sd,4);
-	//	skill_clear_unitgroup(&sd->bl);	// [Sara-chan]
-
-		if (!(sd->sc.option & OPTION_INVISIBLE))
-			clif_clearchar_area(&sd->bl,2);
-
-		chrif_save_scdata(sd); //Save status changes, then clear'em out from memory. [Skotlex]
-		status_change_clear(&sd->bl,1);
-		
-		if(sd->status.pet_id && sd->pd) {
-			pet_lootitem_drop(sd->pd,sd);
-			pet_remove_map(sd);
-			if(sd->pet.intimate <= 0) {
-				intif_delete_petdata(sd->status.pet_id);
-				sd->status.pet_id = 0;
-				sd->pd = NULL;
-				sd->petDB = NULL;
-			}
-			else
-				intif_save_petdata(sd->status.account_id,&sd->pet);
-		}
-
-		if(pc_isdead(sd))
-			pc_setrestartvalue(sd,2);
-
+		if (sd->pd) unit_free(&sd->pd->bl);
+		unit_free(&sd->bl);
 		pc_clean_skilltree(sd);
-
-		//The storage closing routines will save the char if needed. [Skotlex]
-		if (!sd->state.storage_flag)
-			chrif_save(sd,1);
-		else if (sd->state.storage_flag == 1)
-			storage_storage_quit(sd,1);
-		else if (sd->state.storage_flag == 2)
-			storage_guild_storage_quit(sd,1);
-
-		map_delblock(&sd->bl);
+		status_calc_pc(sd,4);
+		if(sd->pet.intimate > 0)
+			intif_save_petdata(sd->status.account_id,&sd->pet);
+		chrif_save(sd,1);
 	} else { //Try to free some data, without saving anything (this could be invoked on map server change. [Skotlex]
 		if (sd->bl.prev != NULL)
 		{	//Remove from map...
-			if (!(sd->sc.option & OPTION_INVISIBLE))
-				clif_clearchar_area(&sd->bl,2);
-			map_delblock(&sd->bl);
+			unit_remove_map(&sd->bl, 0);
+			if (sd->pd && sd->pd->bl.prev != NULL)
+				unit_remove_map(&sd->pd->bl, 0);
 		}
-		if (sd->pd)
-			pet_remove_map(sd);
 	}
-
 	if (sd->stack) {
 		script_free_stack(sd->stack);
 		sd->stack= NULL;
 	}
-	
-//	chrif_char_offline(sd); //chrif_save handles this now.
 
 	//Do we really need to remove the name?
 	idb_remove(charid_db,sd->status.char_id);
 	idb_remove(id_db,sd->bl.id);
 	idb_remove(pc_db,sd->bl.id);
 
-	// Notify friends that this char logged out. [Skotlex]
-	clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
-	
 	if(sd->reg)
 	{	//Double logout already freed pointer fix... [Skotlex]
 		aFree(sd->reg);
 		sd->reg = NULL;
 		sd->reg_num = 0;
 	}
-
 	if(sd->regstr)
 	{
 		aFree(sd->regstr);
@@ -1685,6 +1564,7 @@ int map_quit(struct map_session_data *sd) {
 		aFree(sd);
 	return 0;
 }
+
 
 /*==========================================
  * id番?のPCを探す。居なければNULL
@@ -1894,16 +1774,16 @@ void map_removenpc(void) {
 // allocates a struct when it there is place free in the cache,
 // and returns NULL otherwise
 // -- i'll just leave the old code in case it's needed ^^;
-struct mob_list* map_addmobtolist(unsigned short m)
+int map_addmobtolist(unsigned short m, struct spawn_data *spawn)
 {
 	size_t i;
 	for (i = 0; i < MAX_MOB_LIST_PER_MAP; i++) {
 		if (map[m].moblist[i] == NULL) {
-			map[m].moblist[i] = (struct mob_list *) aMalloc (sizeof(struct mob_list));
-			return map[m].moblist[i];
+			map[m].moblist[i] = spawn;
+			return i;
 		}
 	}
-	return NULL;
+	return -1;
 }
 
 void map_spawnmobs(int m)
@@ -1919,7 +1799,7 @@ void map_spawnmobs(int m)
 		if(map[m].moblist[i]!=NULL)
 		{
 			k+=map[m].moblist[i]->num;
-			npc_parse_mob2(map[m].moblist[i],1);
+			npc_parse_mob2(map[m].moblist[i],i);
 		}
 
 	if (battle_config.etc_log && k > 0)
@@ -1940,10 +1820,7 @@ int mob_cache_cleanup_sub(struct block_list *bl, va_list ap) {
 		md->hp < md->db->max_hp) //don't use status_get_maxhp for speed (by the time you have to remove a mob, their status changes should have expired anyway)
 		return 0; //Do not remove damaged mobs.
 	
-	mob_remove_map(md, 0);
-	map_deliddb(&md->bl);
-	aFree(md);
-	md = NULL;
+	unit_free(&md->bl);
 
 	return 1;
 }
@@ -2408,15 +2285,20 @@ int map_waterheight(char *mapname) {
  	char *rsw;
 	float whtemp;
 	int wh;
-#ifdef _WIN32
+
+	//Look up for clone map.
+	if(waterlist){
+		int i;
+		for(i=0;waterlist[i].mapname[0] && i < MAX_MAP_PER_SERVER;i++)
+			if(strcmp(waterlist[i].mapname,mapname)==0)
+				return map_waterheight(waterlist[i].clonemapname);
+	}
+	//Look up for the rsw
 	sprintf(fn,"data\\%s",mapname);
-#else
-	sprintf(fn,"data/%s",mapname);
-#endif
+	
 	rsw = strstr(fn, ".");
 	if (rsw && strstr(fn, ".rsw") == NULL)
-		strcat (rsw, "rsw");
-
+		sprintf(rsw,".rsw");
 	// read & convert fn
 	// again, might not need to be unsigned char
 	rsw = (char *) grfio_read (fn);
@@ -2427,13 +2309,7 @@ int map_waterheight(char *mapname) {
 		aFree(rsw);
 		return wh;
 	}
-	//Look up for clone map.
-	if(waterlist){
-		int i;
-		for(i=0;waterlist[i].mapname[0] && i < MAX_MAP_PER_SERVER;i++)
-			if(strcmp(waterlist[i].mapname,mapname)==0)
-				return map_waterheight(waterlist[i].clonemapname);
-	}
+	ShowWarning("Failed to find water level for (%s)\n", mapname, fn);
 	return NO_WATER;
 }
 
@@ -2930,19 +2806,11 @@ int map_readgat (struct map_data *m)
 	if ((pt = strstr(m->name,"<")) != NULL) { // [MouseJstr]
 		char buf[64];
 		*pt++ = '\0';
-#ifdef _WIN32
 		sprintf(buf,"data\\%s", pt);
-#else
-		sprintf(buf,"data/%s", pt);
-#endif
 		m->alias = aStrdup(buf);
 	}
 
-#ifdef _WIN32
 	sprintf(fn,"data\\%s",m->name);
-#else
-	sprintf(fn,"data/%s",m->name);
-#endif
 
 	// read & convert fn
 	// again, might not need to be unsigned char
@@ -3675,11 +3543,10 @@ int cleanup_sub(struct block_list *bl, va_list ap) {
 			npc_unload((struct npc_data *)bl);
 			break;
 		case BL_MOB:
-			mob_unload((struct mob_data *)bl);
+			unit_free(bl);
 			break;
 		case BL_PET:
-			//There is no need for this, the pet is removed together with the player. [Skotlex]
-//			pet_remove_map(((struct pet_data *)bl)->msd);
+		//There is no need for this, the pet is removed together with the player. [Skotlex]
 			break;
 		case BL_ITEM:
 			map_clearflooritem(bl->id);
@@ -3689,7 +3556,11 @@ int cleanup_sub(struct block_list *bl, va_list ap) {
 			break;
 	}
 
-	return 0;
+	return 1;
+}
+
+static int cleanup_db_sub(DBKey key,void *data,va_list va) {
+	return cleanup_sub((struct block_list*)data, NULL);
 }
 
 /*==========================================
@@ -3715,6 +3586,7 @@ void do_final(void) {
 	for (i = 0; i < j; i++)
 		map_quit(pl_allsd[i]);
 		
+	i = id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
 	chrif_flush_fifo();
 

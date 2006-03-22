@@ -4,12 +4,17 @@
 #ifndef _MOB_H_
 #define _MOB_H_
 
+#include "unit.h"
+
 #define MAX_RANDOMMONSTER 3
 #define MAX_MOB_RACE_DB 6
 #define MAX_MOB_DB 10000
 	/* Change this to increase the table size in your mob_db to accomodate
 		a larger mob database. Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
 	*/
+
+//Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
+#define MIN_MOBLINKTIME 1000
 
 // These define the range of available IDs for clones. [Valaris]
 #define MOB_CLONE_START 9001
@@ -92,6 +97,7 @@ enum {
 
 //Mob skill states.
 enum {
+	MSS_ANY = -1,
 	MSS_IDLE,
 	MSS_WALK,
 	MSS_LOOT,
@@ -116,20 +122,19 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,	// Spawning Gu
 	int x,int y,const char *mobname,int class_,int amount,const char *event,int guardian);	// Spawning Guardians [Valaris]
 int mob_guardian_guildchange(struct block_list *bl,va_list ap); //Change Guardian's ownership. [Skotlex]
 
-int mob_walktoxy(struct mob_data *md,int x,int y,int easy);
 int mob_randomwalk(struct mob_data *md,int tick);
-int mob_can_move(struct mob_data *md);
 
 int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_unlocktarget(struct mob_data *md,int tick);
-int mob_stop_walking(struct mob_data *md,int type);
-int mob_stopattack(struct mob_data *);
-int mob_spawn(int);
-int mob_setdelayspawn(int);
+struct mob_data* mob_spawn_dataset(struct spawn_data *data);
+int mob_spawn(struct mob_data *md);
+int mob_setdelayspawn(struct mob_data *md);
+int mob_parse_dataset(struct spawn_data *data);
 int mob_damage(struct block_list *,struct mob_data*,int,int);
-int mob_changestate(struct mob_data *md,int state,int type);
 int mob_heal(struct mob_data*,int);
 
+#define mob_stop_walking(md, type) { if (md->ud.walktimer != -1) unit_stop_walking(&md->bl, type); }
+#define mob_stop_attack(md) { if (md->ud.attacktimer != -1) unit_stop_attack(&md->bl); }
 //Defines to speed up search.
 #define mob_get_viewclass(class_) mob_db(class_)->view_class
 #define mob_get_sex(class_) mob_db(class_)->sex
@@ -146,9 +151,6 @@ int mob_heal(struct mob_data*,int);
 int do_init_mob(void);
 int do_final_mob(void);
 
-void mob_unload(struct mob_data *md);
-int mob_remove_map(struct mob_data *md, int type);
-int mob_delete(struct mob_data *md);
 int mob_timer_delete(int tid, unsigned int tick, int id, int data);
 
 int mob_deleteslave(struct mob_data *md);
@@ -157,8 +159,8 @@ int mob_deleteslave(struct mob_data *md);
 int mob_random_class (int *value, size_t count);
 int mob_get_random_id(int type, int flag, int lv);
 int mob_class_change(struct mob_data *md,int class_);
-int mob_warp(struct mob_data *md,int m,int x,int y,int type);
 int mob_warpslave(struct block_list *bl, int range);
+int mob_linksearch(struct block_list *bl,va_list ap);
 
 int mobskill_use(struct mob_data *md,unsigned int tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,unsigned int tick, int flag);
