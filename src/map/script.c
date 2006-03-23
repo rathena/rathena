@@ -10244,7 +10244,7 @@ int buildin_setmobdata(struct script_state *st){
 				md->db->shield = (short)value;
 				break;
 			case 23:
-				md->ud.dir = (short)value;
+				md->ud.dir = (unsigned char)value;
 				break;
 			default:
 				ShowError("buildin_setmobdata: argument id is not identified.");

@@ -366,7 +366,7 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 	return 1;
 }
 
-int unit_setdir(struct block_list *bl,unsigned short dir)
+int unit_setdir(struct block_list *bl,unsigned char dir)
 {
 	struct unit_data *ud;
 	nullpo_retr( 0, bl );
