@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/23
+	* Fixed Potion Pitcher sometimes crashing the server. [Skotlex]
+	* Fixed a compile warning by adjusting the acid demonstration formula.
+	  [Skotlex]
+	* Added flag 2 to the skill_castnodex_db file for skills that shouldn't be
+	  affected by delay/cast reducing skills/effects. [Skotlex]
 	* Added SantaPoring's water_height.txt modifications. [Lance]
 	* Minor cleanups. [Lance]
 

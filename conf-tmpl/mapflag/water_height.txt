@@ -3,6 +3,8 @@
 // map_name map_water_level_to_use
 // Example: Use geffen's water level for prontera when prontera.rsw isn't found in the grf.
 // prontera.gat	geffen.gat
+// You can also directly specify the rsw file:
+// prontera.gat	geffen.rsw
 
 force_1-1.gat	force_map1.gat
 force_2-1.gat	force_map1.gat

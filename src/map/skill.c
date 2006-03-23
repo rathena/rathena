@@ -4544,6 +4544,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 			}
 			tbl.id = 0;
+			tbl.type = BL_NUL;
 			tbl.m = src->m;
 			tbl.x = src->x;
 			tbl.y = src->y;
@@ -8224,6 +8225,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time)
 {
 	struct status_change *sc;
+	int castnodex = skill_get_castnodex(skill_id, skill_lv);
 	
 	nullpo_retr(0, bl);
 
@@ -8232,7 +8234,7 @@ int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time)
 		nullpo_retr(0, sd);
 
 		// calculate base cast time (reduced by dex)
-		if (!skill_get_castnodex(skill_id, skill_lv) > 0) {
+		if (castnodex&~1) {
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 			if (scale > 0)	// not instant cast
 				time = time * scale / battle_config.castrate_dex_scale;
@@ -8247,28 +8249,30 @@ int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time)
 		if (sd->castrate != 100)
 			time -= time * (100 - sd->castrate) / 100;
 	} else if (bl->type == BL_PET) { //Skotlex: Simple scaling
-		int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-		if (scale > 0)	// not instant cast
-			time = time * scale / battle_config.castrate_dex_scale;
-		else return 0;	// instant cast
-		
+		if (castnodex&~1) {
+			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+			if (scale > 0)	// not instant cast
+				time = time * scale / battle_config.castrate_dex_scale;
+			else return 0;	// instant cast
+		}
 		if (battle_config.cast_rate != 100)
 			time = time * battle_config.cast_rate / 100;
 	}
 
-	// calculate cast time reduced by skill bonuses
-	sc = status_get_sc(bl);
-	/* ƒTƒtƒ‰ƒMƒEƒ€ */
-	if (sc && sc->count) {
-		if (sc->data[SC_SUFFRAGIUM].timer != -1) {
-			time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
-			status_change_end(bl, SC_SUFFRAGIUM, -1);
+	if (castnodex&~2)
+  	{	// calculate cast time reduced by skill bonuses
+		sc = status_get_sc(bl);
+		/* ƒTƒtƒ‰ƒMƒEƒ€ */
+		if (sc && sc->count) {
+			if (sc->data[SC_SUFFRAGIUM].timer != -1) {
+				time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
+				status_change_end(bl, SC_SUFFRAGIUM, -1);
+			}
+			/* ƒuƒ‰ƒM‚ÌŽ? */
+			if (sc->data[SC_POEMBRAGI].timer != -1)
+				time -= time * sc->data[SC_POEMBRAGI].val2 / 100;
 		}
-		/* ƒuƒ‰ƒM‚ÌŽ? */
-		if (sc->data[SC_POEMBRAGI].timer != -1)
-			time -= time * sc->data[SC_POEMBRAGI].val2 / 100;
 	}
-
 	// return final cast time
 	return (time > 0) ? time : 0;
 }
@@ -8278,7 +8282,8 @@ int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time)
  */
 int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time )
 {
-	struct status_change *sc;	
+	struct status_change *sc;
+	int delaynodex = skill_get_delaynodex(skill_id, skill_lv);
 
 	nullpo_retr(0, bl);
 
@@ -8295,13 +8300,13 @@ int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time 
 		} else if (time < 0)
 			time = -time + status_get_amotion(bl);	// if set to <0, the attack motion is added.
 
-		if (battle_config.delay_dependon_dex &&	/* dex‚Ì‰e‹¿‚ðŒvŽZ‚·‚é */
-			!skill_get_delaynodex(skill_id, skill_lv))	// if skill casttime is allowed to be reduced by dex
-		{
+		if (battle_config.delay_dependon_dex && delaynodex&~1)
+		{	// if skill casttime is allowed to be reduced by dex
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-			if (scale < 0)
-				scale = 0;
-			time = time * scale / battle_config.castrate_dex_scale;
+			if (scale > 0)
+				time = time * scale / battle_config.castrate_dex_scale;
+			else
+				time = battle_config.min_skill_delay_limit;
 		}
 
 		if (battle_config.delay_rate != 100)
@@ -8314,12 +8319,13 @@ int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time 
 			time = battle_config.min_skill_delay_limit;
 	}
 
-	/* ƒuƒ‰ƒM‚ÌŽ? */
-	sc= status_get_sc(bl);
-	if (sc && sc->count) {
-		if (sc->data[SC_POEMBRAGI].timer != -1)
-			time -= time * sc->data[SC_POEMBRAGI].val3 / 100;
-		if (sc->data[SC_SPIRIT].timer != -1)
+	if (delaynodex&~2)
+	{	/* ƒuƒ‰ƒM‚ÌŽ? */
+		sc= status_get_sc(bl);
+		if (sc && sc->count) {
+			if (sc->data[SC_POEMBRAGI].timer != -1)
+				time -= time * sc->data[SC_POEMBRAGI].val3 / 100;
+			if (sc->data[SC_SPIRIT].timer != -1)
 			switch (skill_id) {
 				case CR_SHIELDBOOMERANG:
 					if (sc->data[SC_SPIRIT].val2 == SL_CRUSADER)
@@ -8330,6 +8336,7 @@ int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time 
 						time /= 2;
 					break;
 			}
+		}
 	}
 
 	return (time > 0) ? time : 0;

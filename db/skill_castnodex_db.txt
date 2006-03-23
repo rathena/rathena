@@ -1,7 +1,10 @@
 //<Skill id>,<Cast: 1 or 0>,<Delay (Optional): 1 or 0>
 // Cast: With 1, dex does not affect the skill's cast rate
+// Cast: With 2, cast-rate cannot be reduced by Suffragium and the like
+// Cast: With 3, same effect as 1 + 2
 // Cast: With 0, dex affects the skill's cast rate
 // Delay: With 1, dex does not affect the skill's delay rate
+// Delay: With 2, delay cannot be reduced by Suffragium and the like
 // Delay: With 0, dex affects the skill's delay rate
 // Example - 46,1,1 = Double Strafe's casting time and delay is not affected by dex.
 // By default, dex NEVER affects after-cast delay, so no need of putting 'x,0,1' in this file
@@ -34,7 +37,7 @@
 468,1 //SL_STUN
 469,1 //SL_SMA
 1014,1	//PR_REDEMPTIO
-10010,1	//GD_BATTLEORDER
-10011,1	//GD_REGENERATION
-10012,1	//GD_RESTORE
-10013,1	//GD_EMERGENCYCALL
+10010,3	//GD_BATTLEORDER
+10011,3	//GD_REGENERATION
+10012,3	//GD_RESTORE
+10013,3	//GD_EMERGENCYCALL
