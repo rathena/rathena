@@ -4890,6 +4890,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 						status_change_end(bl,SC_AUTOGUARD,-1);
 					if (sc->data[SC_DEFENDER].timer != -1)
 						status_change_end(bl,SC_DEFENDER,-1);
+					if (sc->data[SC_REFLECTSHIELD].timer != -1)
+						status_change_end(bl,SC_REFLECTSHIELD,-1);
 				}
 				break;
 			case SC_BLADESTOP:

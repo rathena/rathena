@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/23
+	* Fixed Devotion not properly being cleared on death/near death in some
+	  cases. [Skotlex]
+	* Fixed Shield-Reflect not being correctly ended when devotion does.
+	  [Skotlex]
 	* Fixed DEX-based casting time and delay reduction. [blackhole89]
 	* Modified the function pc_percent_heal to prevent overflow problems. [Skotlex]
 	* Changed the second entry in the water_height.txt listing to specify
