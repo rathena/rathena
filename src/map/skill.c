@@ -6793,12 +6793,8 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			break;
 		}
 
-	case UNT_ARROWSHOWER:
-		skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-		break;
-		
-	case UNT_MAGIC_SKILLS:
-		skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+	case UNT_ATTACK_SKILLS:
+		skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 		break;
 
 	case UNT_FIREPILLAR_WAITING:

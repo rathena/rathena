@@ -1314,7 +1314,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 							dy = 2*(-1+(i%3));
 							if (map_getcell(md->bl.m,  tbl->x-dx, tbl->y-dy, CELL_CHKSTACK))
 								continue;
-							if (unit_walktoxy(md, tbl->x-dx, tbl->y-dy, 0)) {
+							if (unit_walktoxy(&md->bl, tbl->x-dx, tbl->y-dy, 0)) {
 								unit_set_walkdelay(&md->bl, tick, 1000, 1);
 								break;
 							}

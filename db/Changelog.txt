@@ -27,6 +27,7 @@
 =========================
 
 03/22
+	* Changed preserve's cost to 30 sp. [Skotlex]
 	* Changed Soul Breaker's cast time to 700ms. [Skotlex]
 	* Updated Elemental Converter ingredients. Thanks2 Haplo [Lupus]
 03/21

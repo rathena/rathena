@@ -873,11 +873,10 @@ enum {
 	UNT_FIREWALL,
 	UNT_WARP_WAITING,
 	UNT_WARP_ACTIVE,
-	UNT_ARROWSHOWER = 0x82, //TODO: Get actual unit id.
 	UNT_SANCTUARY = 0x83,
 	UNT_MAGNUS,
 	UNT_PNEUMA,
-	UNT_MAGIC_SKILLS,
+	UNT_ATTACK_SKILLS, //These show no effect on the client, therefore can be used for attack skills.
 	UNT_FIREPILLAR_WAITING,
 	UNT_FIREPILLAR_ACTIVE,
 
