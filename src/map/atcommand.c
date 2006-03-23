@@ -10102,7 +10102,7 @@ int atcommand_clone(
 		master = sd->bl.id;
 		if (battle_config.atc_slave_clone_limit
 			&& mob_countslave(&sd->bl) >= battle_config.atc_slave_clone_limit) {
-			clif_displaymessage(fd, "");
+			clif_displaymessage(fd, msg_txt(127));
 			return 0;
 		}
 	}

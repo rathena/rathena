@@ -221,8 +221,7 @@ extern struct Battle_Config {
 	unsigned short etc_log;
 	unsigned short save_clothcolor;
 	unsigned short undead_detect_type;
-	unsigned short pc_auto_counter_type;
-	unsigned short monster_auto_counter_type;
+	unsigned short auto_counter_type;
 	unsigned short min_hitrate;	//[Skotlex]
 	unsigned short max_hitrate;	//[Skotlex]
 	unsigned short agi_penalty_type;
