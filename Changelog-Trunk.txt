@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/23
+	* Changed the second entry in the water_height.txt listing to specify
+	  directly the .rsw file (instead of .gat). [Skotlex]
 	* Fixed Potion Pitcher sometimes crashing the server. [Skotlex]
 	* Fixed a compile warning by adjusting the acid demonstration formula.
 	  [Skotlex]
