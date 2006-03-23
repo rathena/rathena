@@ -5224,7 +5224,7 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 //	if(sp > 0 && pc_checkoversp(sd))
 //		sp = 0;
 
-	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1) //ƒo?ƒT?ƒN’†‚Í‰ñ•œ‚³‚¹‚È‚¢‚ç‚µ‚¢
+	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1 && hp+sp>0)
 		return 0;
 
 	if(hp > sd->status.max_hp - sd->status.hp)
@@ -5324,7 +5324,7 @@ int pc_itemheal(struct map_session_data *sd,int hp,int sp)
 int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 {
 	nullpo_retr(0, sd);
-
+/*	Shouldn't be needed, these functions are proof of bad coding xP
 	if(pc_checkoverhp(sd)) {
 		if(hp > 0)
 			hp = 0;
@@ -5333,38 +5333,47 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 		if(sp > 0)
 			sp = 0;
 	}
+*/
 	if(hp) {
-		if(hp >= 100) {
+		if(hp >= 100)
 			sd->status.hp = sd->status.max_hp;
-		}
 		else if(hp <= -100) {
 			sd->status.hp = 0;
 			pc_damage(NULL,sd,1);
 		}
-		else {
-			sd->status.hp += sd->status.max_hp*hp/100;
-			if(sd->status.hp > sd->status.max_hp)
+		else if (hp > 0) {
+			hp = sd->status.max_hp*hp/100;
+			if (sd->status.max_hp - sd->status.hp < hp)
 				sd->status.hp = sd->status.max_hp;
-			if(sd->status.hp <= 0) {
+			else
+				sd->status.hp += hp;
+		}
+		else { //hp < 0
+			hp = sd->status.max_hp*hp/100;
+			if (sd->status.hp <= hp) {
 				sd->status.hp = 0;
 				pc_damage(NULL,sd,1);
-				hp = 0;
-			}
+			} else
+				sd->status.hp -= hp;
 		}
 	}
 	if(sp) {
-		if(sp >= 100) {
+		if(sp >= 100)
 			sd->status.sp = sd->status.max_sp;
-		}
-		else if(sp <= -100) {
+		else if(sp <= -100)
 			sd->status.sp = 0;
-		}
-		else {
-			sd->status.sp += sd->status.max_sp*sp/100;
-			if(sd->status.sp > sd->status.max_sp)
+		else if(sp > 0) {
+			sp = sd->status.max_sp*sp/100;
+			if (sd->status.max_sp - sd->status.sp < sp)
 				sd->status.sp = sd->status.max_sp;
-			if(sd->status.sp < 0)
+			else
+				sd->status.sp += sp;
+		} else { //sp < 0
+			sp = sd->status.max_sp*sp/100;
+			if (sd->status.sp <= sp)
 				sd->status.sp = 0;
+			else
+				sd->status.sp -= sp;
 		}
 	}
 	if(hp)
