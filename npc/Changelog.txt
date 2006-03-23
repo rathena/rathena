@@ -26,6 +26,8 @@ Nexon
 == Changelog ==
 
 Date		Added
+03/23
+	* Updated Rebirth NPC/functions to use constant. Might have broken it, so do report [Vicious]
 03/21
 	* Improved payment healer. [Lance]
 03/20

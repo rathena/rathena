@@ -4,7 +4,7 @@
 //= Nana, fixes by Poki
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.0b
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -25,6 +25,7 @@
 //= 1.9 Added support for Job NPC Fase pics, sorrected one dialogue stuff [Lupus]
 //= 2.0 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 2.0b Fixed. TODO: add new Quest Skills [Lupus]
+//= 2.1 Changed all numbers into constants. [Vicious]
 //============================================================ 
 
 
@@ -35,7 +36,7 @@ valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
 // -== Book of Ymir (Heavens Door) ==-
 yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 	mes "[Book of Ymir]";
-	if(Upper==2 || baseClass == Job_Taekwon) goto L_BABY; //don't allow Taekwondo classes, Baby Classes
+	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_BABY; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
 	if(valkyrie_Q == 1) goto L_FADED;
 	if(valkyrie_Q == 2) goto L_START;
 L_BABY:
@@ -77,8 +78,8 @@ L_START:
 // -== The Librarian that watches the "Book of Ymir" ==-
 yuno_in02.gat,91,176,5	script	Librarian	754,{
 	mes "[Librarian]";
-	if(valkyrie_Q>0) goto L_DONE;
-	if(BaseJob >= 7 && Upper==0) goto L_PAY;
+	if(valkyrie_Q > 0) goto L_DONE;
+	if(BaseJob >= Job_Knight && Upper==0) goto L_PAY;
 	mes "Have a look around, but don't touch the book. Only a few chosen ones can read its wise words.";
 	close;
 
@@ -95,11 +96,11 @@ L_PAY:
 	menu "Pay now",-,"Close",M_EXIT;
 
 	if(Zeny != 1285000) goto L_WRONGZ;
+	set Zeny,0;
+	set valkyrie_Q,1;
 	mes "[Librarian]";
 	mes "Go now, into Heart of Ymir";
 	mes "There, you'll find the last piece of information before you can open the book.";
-	set valkyrie_Q,1;
-	set Zeny,0;
 	close;
 
 L_WRONGZ:
@@ -146,7 +147,7 @@ yuno_in02.gat,90,77,4	script	Researcher	744,{
 	mes "Argh, where is it!?";
 	mes "They said that it would be around here somewhere...";
 	mes "Maybe I have to look deeper into this castle...";
-	emotion 1;
+	emotion e_what;
 	close;
 }
 
@@ -159,12 +160,12 @@ yuno_in02.gat,90,77,4	script	Researcher	744,{
 // -== Valhallana ==-
 valkyrie.gat,48,86,6	script	Valkyrie	811,{
 	mes "[Valhallana]";
-	if(BaseJob == 23) goto L_SN;
-	if(baseClass == Job_Taekwon ) goto L_TAEKWON; //sent back any Taekwondo classes
-	if(Upper == 2 ) goto L_BABY;
-	if(Upper > 0 ) goto L_ALREADY;
+	if(BaseJob == Job_SuperNovice) goto L_SN;
+	if(baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_TAEKWON; //sent back any Taekwondo/GS/NJ classes
+	if(Upper == 2) goto L_BABY;
+	if(Upper > 0) goto L_ALREADY;
 	if(BaseLevel >= 99 && JobLevel >= 50 && BaseJob >= 7) goto L_CHANGE;
-	if(BaseJob < 7) goto L_NOTHING;
+	if(BaseJob <= Job_Thief) goto L_NOTHING;
 
 	mes "You need 99 Base Level and 50 Job Level.";
 	mes "Also you must get rid of all of your money and items.";
@@ -182,7 +183,7 @@ L_Y:
 
 L_TAEKWON:
 	mes "How did you get here?";
-	emotion 1;
+	emotion e_what;
 	next;
 	goto L_Y;
 
@@ -192,14 +193,14 @@ L_SN:
 	next;
 	mes "[Valhallana]";
 	mes "I am sorry, but I can't help you.";
-	emotion 17;
+	emotion e_sry;
 	next;
 	goto L_NOTHING;
 
 L_ALREADY:
 	mes "I can't help you anymore.";
-	if(Class == 4001) mes "You have been reborn already.";
-	if(Class > 4001 && Class < 4008 ) mes "Go and ask these people in the hall.";
+	if(Class == Job_Novice_High) mes "You have been reborn already.";
+	if(Class >= Job_Swordman_High && Class <= Job_Thief_High) mes "Go and ask these people in the hall.";
 	next;
 
 L_NOTHING:
@@ -247,17 +248,17 @@ L_CHANGE:
 	mes "[Valhallana]";
 	mes "Done...";
 	mes "Good luck.";
-	jobchange 24; //Novice High
+	jobchange Job_Novice_High;
 	resetlvl(1);
 	callfunc "F_ClearJobVar";
 	set RES_SKILL,0; //we reset Reset Skills NPC counter
 	next;
-	if(ADVJOB == Job_Assassin + 4001 || ADVJOB == Job_Rogue + 4001 ) goto L_Mor;
-	if(ADVJOB == Job_Blacksmith + 4001 || ADVJOB == Job_Alchem + 4001 ) goto L_Alb;
-	if(ADVJOB == Job_Hunter + 4001 || ADVJOB == Job_Bard + 4001 || ADVJOB == Job_Dancer + 4001 ) goto L_Pay;
-	if(ADVJOB == Job_Knight + 4001 || ADVJOB == Job_Crusader + 4001 ) goto L_Izl;
-	if(ADVJOB == Job_Priest + 4001 || ADVJOB == Job_Monk + 4001 ) goto L_Pro;
-	if(ADVJOB == Job_Wizard + 4001 || ADVJOB == Job_Sage + 4001 ) goto L_Gef;
+	if(ADVJOB == Job_Lord_Knight || ADVJOB == Job_Paladin) goto L_Izl;
+	if(ADVJOB == Job_High_Priest || ADVJOB == Job_Champion) goto L_Pro;
+	if(ADVJOB == Job_High_Wizard || ADVJOB == Job_Professor) goto L_Gef;
+	if(ADVJOB == Job_Whitesmith || ADVJOB == Job_Creator) goto L_Alb;
+	if(ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy) goto L_Pay;
+	if(ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) goto L_Mor;
 
 L_Pro:
 	savepoint "prontera.gat",273,354;
@@ -325,18 +326,18 @@ L_SKILLPNTS:
 function	script	F_ToHigh	{
 	if(Upper == 2) return; //Baby Class - skip it
 	set @fjob,ADVJOB; //alternative classes should pass, too
-	if(@fjob == Job_Rogue + 4001 ) set @fjob,Job_Assassin+4001;
-	if(@fjob == Job_Alchem + 4001 ) set @fjob,Job_Blacksmith+4001;
-	if(@fjob == Job_Bard + 4001 || @fjob == Job_Dancer + 4001 ) set @fjob,Job_Hunter+4001;
-	if(@fjob == Job_Crusader + 4001 ) set @fjob,Job_Knight+4001;
-	if(@fjob == Job_Monk + 4001 ) set @fjob,Job_Priest+4001;
-	if(@fjob == Job_Sage + 4001 ) set @fjob,Job_Wizard+4001;
+	if(@fjob == Job_Stalker) set @fjob,Job_Assassin_Cross;
+	if(@fjob == Job_Creator) set @fjob,Job_Whitesmith;
+	if(@fjob == Job_Clown || @fjob == Job_Gypsy) set @fjob,Job_Sniper;
+	if(@fjob == Job_Paladin) set @fjob,Job_Lord_Knight;
+	if(@fjob == Job_Champion) set @fjob,Job_High_Priest;
+	if(@fjob == Job_Professor) set @fjob,Job_High_Wizard;
 
-	if(Class == 3977+getarg(0) ) goto L_WELCOME; //3rd Job
-	if(Class >= 4008) goto L_ALREADY; //already advanced class
-	if(Class == 4001 && @fjob == 3977+getarg(2) ) goto L_GETHIGH; //High Novice -> High XXXX
-	if(Class == 4001) mes "Hello, Novice High! If you are going to became a "+getarg(1)+", then go visit your very first job teacher.";
-	if(Class == 4001) close;
+	if(Class == 3977+getarg(0)) goto L_WELCOME; //3rd Job
+	if(Class >= Job_Lord_Knight) goto L_ALREADY; //already advanced class
+	if(Class == Job_Novice_High && @fjob == 3977+getarg(2)) goto L_GETHIGH; //High Novice -> High XXXX
+	if(Class == Job_Novice_High) mes "Hello, Novice High! If you are going to became a "+getarg(1)+", then go visit your very first job teacher.";
+	if(Class == Job_Novice_High) close;
 	return; //this char doesn't want to get HIGH class
 
 L_GETHIGH:
@@ -373,33 +374,33 @@ L_GETHIGH:
 L_NO_QSKILL:
 	mes "["+getarg(8)+"]";
 	mes "I wish you good fortune in the near future!";
-	emotion 46;
+	emotion e_grat;
 	close;
 
 L_NOTREADY:
 	mes "You are not ready to become a "+getarg(1)+".";
 	mes "You have to raise your Job Level to 10.";
-	emotion 0;
+	emotion e_gasp;
 	close;
 
 L_SKILLPNTS:
 	mes "You will need to use up all of your skill points if you want me to continue.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_CART:
 	mes "Please, drop your cart and we'll continue.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_FALCON:
 	mes "Please, free your Falcon and we'll continue.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_PECO:
 	mes "Please, free your Pecopeco and we'll continue.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_WELCOME:
@@ -412,7 +413,7 @@ L_ALREADY:
 	mes "["+getarg(8)+"]";
 	mes "It's such a big honor to salute envoys of Valhalla.";
 	mes "Come again.";
-	emotion 2;
+	emotion e_ho;
 	close;
 }
 
@@ -424,10 +425,10 @@ L_ALREADY:
 function	script	F_Rebirth	{
 	mes "["+getarg(3)+"]";
 	if(Upper == 2) goto L_BABY; //Baby Class - skip it
-	if(Class >= 4008) goto L_ALREADY; //already advanced class
+	if(Class >= Job_Lord_Knight goto L_ALREADY; //already advanced class
 	if(Class == (3977+getarg(0)) && ADVJOB == (3977+getarg(2))) goto L_GET3RD; //Hight XXXX -> 3rd Job
 	mes "Go talk to either Valhallana or one of my collegues...";
-	emotion 17;
+	emotion e_sry;
 	close;
 
 L_GET3RD:
@@ -446,38 +447,38 @@ L_GET3RD:
 L_NOTREADY:
 	mes "You have went so far to get here. But I am sorry, you aren't quite ready to become a "+getarg(3)+".";
 	mes "You need at least Job Level 45 or higher.";
-	emotion 0;
+	emotion e_gasp;
 	close;
 
 L_SKILLPNTS:
 	mes "You will need to use up all of your skill points if you want me to continue.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_CART:
 	mes "Please, drop your cart and we'll continue.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_FALCON:
 	mes "Please, free your Falcon and we'll continue.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_PECO:
 	mes "Please, free your Pecopeco and we'll continue.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_ALREADY:
 	mes "Well, hello there! You have been reborn once, there is no second chance.";
-	emotion 2;
+	emotion e_ho;
 	close;
 
 L_BABY:
 	mes "What a lively baby!";
 	mes "How did you get here? Go to aunt Valhallana and ask her to take your home.";
-	emotion 41;
+	emotion e_pat;
 	close;
 }
 
@@ -493,35 +494,35 @@ function	script	F_BlockHigh	{
 	mes "["+getarg(4)+"]";
 	if(Class == (3977+getarg(0)) && ADVJOB == (3977+getarg(2))) goto L_RIGHTHIGH;
 	if(Class == (3977+getarg(2))) goto L_RIGHT3RD;
-	if(Class >= 4008) goto L_ALREADY3RD; //already advanced class, but from wrong guild
+	if(Class >= Job_Lord_Knight) goto L_ALREADY3RD; //already advanced class, but from wrong guild
 //this player is a High Novice
-	if(Class == 4001) mes "Hello, Novice High! If you are going to became a "+getarg(1)+", then go visit your very first job teacher.";
+	if(Class == Job_Novice_High) mes "Hello, Novice High! If you are going to became a "+getarg(1)+", then go visit your very first job teacher.";
 //this player has 1st advanced job, but from wrong guild
 	if(Class == (3977+getarg(0))) mes "A "+getarg(1)+"?";
-	if(Class != 4001) mes "Rumors say only Valhallana knows your way...";
-	emotion 17;
+	if(Class != Job_Novice_High) mes "Rumors say only Valhallana knows your way...";
+	emotion e_sry;
 	close;
 
 L_RIGHT3RD:
 	mes "Well, hello there! You look... younger.";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "["+getarg(4)+"]";
 	mes "You are always welcome here, "+strcharinfo(0)+"!";
 	mes "Our good old guild is your second home, isn't it?";
-	emotion 21;
+	emotion e_no1;
 	close;
 
 L_RIGHTHIGH:
 	mes "Hello, "+strcharinfo(0)+"!";
 	mes "If you are going to become a "+getarg(3)+", then you should visit Valhalla again.";
 	if(JobLevel < 45) mes "But you need at least Job Level 45 or higher.";
-	emotion 0;
+	emotion e_gasp;
 	close;
 
 L_ALREADY3RD:
 	mes "A "+getarg(3)+"?";
 	mes "You don't belong to our guild. Begone!";
-	emotion 23;
+	emotion e_omg;
 	close;
 }
