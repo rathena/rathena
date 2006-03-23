@@ -528,15 +528,22 @@ int pc_setequipindex(struct map_session_data *sd)
 
 int pc_isAllowedCardOn(struct map_session_data *sd,int s,int eqindex,int flag)  {
 	int i;
+	struct item *item = &sd->status.inventory[eqindex];
 	struct item_data *data;
-	if (s>0)     {
-			for (i=0;i<s;i++)       {    
-				if ((data = itemdb_search(sd->status.inventory[eqindex].card[i])))    {
-					if (data->flag.no_equip&flag)
-					return 0;
-					}
-			}  
-		}
+	if (	//Crafted/made/hatched items.
+		item->card[0]==0x00ff ||
+		item->card[0]==0x00fe ||
+		item->card[0]==(short)0xff00
+	)
+		return 1;
+	
+	for (i=0;i<s;i++)	{
+		if (item->card[i] &&
+			(data = itemdb_exists(item->card[i])) &&
+			data->flag.no_equip&flag
+		)
+			return 0;
+	}
 	return 1;              
 }
 
@@ -2931,7 +2938,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		if(md->db->dropitem[i].p<=battle_config.rare_drop_announce) {
 			struct item_data *i_data;
 			char message[128];
-			i_data = itemdb_exists(itemid);
+			i_data = itemdb_search(itemid);
 			sprintf (message, msg_txt(542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
 			//MSG: "'%s' stole %s's %s (chance: %%%0.02f)"
 			intif_GMmessage(message,strlen(message)+1,0);
@@ -6466,12 +6473,12 @@ int pc_checkitem(struct map_session_data *sd)
 		}
 		//?備制限チェック
 		if(sd->status.inventory[i].equip && (map[sd->bl.m].flag.pvp||map[sd->bl.m].flag.gvg) &&
-                 	(it->flag.no_equip&1  || !pc_isAllowedCardOn(sd,it->slot,i,1)))
+			(it->flag.no_equip&1  || !pc_isAllowedCardOn(sd,it->slot,i,1)))
 		{  //PVP check for forbiden items. optimized by [Lupus]
 			sd->status.inventory[i].equip=0;
 			calc_flag = 1;
 		} else if(sd->status.inventory[i].equip && map_flag_gvg(sd->bl.m) &&
-                       (it->flag.no_equip&2   || !pc_isAllowedCardOn(sd,it->slot,i,2)))
+			(it->flag.no_equip&2   || !pc_isAllowedCardOn(sd,it->slot,i,2)))
 		{  //GvG optimized by [Lupus]
 			sd->status.inventory[i].equip=0;
 			calc_flag = 1;

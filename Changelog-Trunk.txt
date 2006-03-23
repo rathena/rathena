@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/22
+	* Fixed function pc_isCardAllowedOn causing searches for non-existant item
+	  id 0. [Skotlex]
 	* Fixed Arrow Shower. [Skotlex]
 	* Merged the unit_data structure from jA for handling unit-related data
 	  (attack times, walking, auto-attack timers, skill related data). This is a
