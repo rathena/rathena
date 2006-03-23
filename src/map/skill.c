@@ -8234,7 +8234,7 @@ int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time)
 		nullpo_retr(0, sd);
 
 		// calculate base cast time (reduced by dex)
-		if (castnodex&~1) {
+		if (!(castnodex&1)) {			// castnodex&~1? wtf. [blackhole89]
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 			if (scale > 0)	// not instant cast
 				time = time * scale / battle_config.castrate_dex_scale;
@@ -8249,7 +8249,7 @@ int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time)
 		if (sd->castrate != 100)
 			time -= time * (100 - sd->castrate) / 100;
 	} else if (bl->type == BL_PET) { //Skotlex: Simple scaling
-		if (castnodex&~1) {
+		if (!(castnodex&1)) {
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 			if (scale > 0)	// not instant cast
 				time = time * scale / battle_config.castrate_dex_scale;
@@ -8259,7 +8259,7 @@ int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time)
 			time = time * battle_config.cast_rate / 100;
 	}
 
-	if (castnodex&~2)
+	if (!(castnodex&2))
   	{	// calculate cast time reduced by skill bonuses
 		sc = status_get_sc(bl);
 		/* ƒTƒtƒ‰ƒMƒEƒ€ */
@@ -8300,7 +8300,7 @@ int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time 
 		} else if (time < 0)
 			time = -time + status_get_amotion(bl);	// if set to <0, the attack motion is added.
 
-		if (battle_config.delay_dependon_dex && delaynodex&~1)
+		if (battle_config.delay_dependon_dex && !(delaynodex&1))
 		{	// if skill casttime is allowed to be reduced by dex
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 			if (scale > 0)
@@ -8319,7 +8319,7 @@ int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time 
 			time = battle_config.min_skill_delay_limit;
 	}
 
-	if (delaynodex&~2)
+	if (!(delaynodex&2))
 	{	/* ƒuƒ‰ƒM‚ÌŽ? */
 		sc= status_get_sc(bl);
 		if (sc && sc->count) {
