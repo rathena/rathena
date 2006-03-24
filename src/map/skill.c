@@ -1248,7 +1248,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		status_change_start(bl,SC_COMA,10,skilllv,0,0,0,0,0);
 		break;
 	case GS_CRACKER:
-		sc_start(bl,SC_STUN,(100 - 10*distance_bl(src, bl)),skilllv,skill_get_time2(skillid,skilllv)); //Temp stun rate
+		if (!dstsd)	// according to latest patch, should not work on players [Reddozen]
+			sc_start(bl,SC_STUN,(100 - 10*distance_bl(src, bl)),skilllv,skill_get_time2(skillid,skilllv)); //Temp stun rate 
 		break;
 	case GS_PIERCINGSHOT:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
@@ -3032,18 +3033,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		break;
 	//Not implemented yet [Vicious]
 	case GS_FLING:
-	//case GS_TRIPLEACTION:
-	//case GS_BULLSEYE:
-	//case GS_MAGICALBULLET:
-	//case GS_CRACKER:
-	//case GS_TRACKING:
-	case GS_DISARM:
-	//case GS_PIERCINGSHOT:
-	//case GS_RAPIDSHOWER:
-	//case GS_DESPERADO:
-	//case GS_DUST:
-	//case GS_FULLBUSTER:
-	//case GS_SPREADATTACK:
 	case GS_GROUNDDRIFT:
 	
 	//case NJ_SYURIKEN:
@@ -3843,7 +3832,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case MO_KITRANSLATION:
-		if(dstsd) {
+		if(dstsd && (dstsd->class_&MAPID_BASEMASK)!=MAPID_GUNSLINGER) {
 			pc_addspiritball(dstsd,skill_get_time(skillid,skilllv),5);
 		}
 		break;
@@ -4410,11 +4399,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case RG_STRIPARMOR:			/* ストリップア?[マ?[ */
 	case RG_STRIPHELM:			/* ストリップヘルム */
 	case ST_FULLSTRIP:			// Rewritten most of the code [DracoRPG]
+	case GS_DISARM:				// Added disarm. [Reddozen]
 		{
 		int strip_fix, equip = 0;
 		int sclist[4] = {0,0,0,0};
 
-		if (skillid == RG_STRIPWEAPON || skillid == ST_FULLSTRIP)
+		if (skillid == RG_STRIPWEAPON || skillid == ST_FULLSTRIP || skillid == GS_DISARM)
 		   equip |= EQP_WEAPON;
 		if (skillid == RG_STRIPSHIELD || skillid == ST_FULLSTRIP)
 		   equip |= EQP_SHIELD;
@@ -5535,6 +5525,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NJ_UTSUSEMI:
 	case NJ_BUNSINJYUTSU:
 	case NJ_NEN:
+
+		if (skillid == GS_GATLINGFEVER && sd->sc.data[SC_GATLINGFEVER].timer!=-1){	// added to allow you to toggle skill on/off [Reddozen]
+			status_change_end(bl,SC_GATLINGFEVER,-1);
+			break;
+		}
+
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
@@ -7967,13 +7963,13 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	case GS_MADNESSCANCEL:
 		spiritball = 4;
 		if(sd->spiritball >= 4 && sd->sc.data[SC_ADJUSTMENT].timer!=-1)
-			sd->sc.data[SC_ADJUSTMENT].timer = -1;
+			status_change_end(&sd->bl,SC_ADJUSTMENT,-1);
 		break;
 
 	case GS_ADJUSTMENT:
 		spiritball = 2;
 		if(sd->spiritball >= 2 && sd->sc.data[SC_MADNESSCANCEL].timer != -1)
-			sd->sc.data[SC_MADNESSCANCEL].timer = -1;
+			status_change_end(&sd->bl,SC_MADNESSCANCEL,-1);
 		break;
 
 	case GS_INCREASING:

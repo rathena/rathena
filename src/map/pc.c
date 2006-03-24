@@ -595,6 +595,10 @@ int pc_isequip(struct map_session_data *sd,int n)
 						return 1;
 				}
 		}
+
+		if((item->equip & 0x0002 || item->equip & 0x0020) && item->type == 4 && sd->status.weapon != 20 && sd->sc.data[SC_GATLINGFEVER].timer != -1)
+			status_change_end(&sd->bl,SC_GATLINGFEVER,-1);	// added to disable effects if new wepaon is not a Gatlin gun [Reddozen]
+
 	}
 	//Not equipable by class. [Skotlex]
 	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))

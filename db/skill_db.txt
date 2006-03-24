@@ -527,21 +527,21 @@
 504,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//GS_MADNESSCANCEL#Madness Canceler#
 505,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//GS_ADJUSTMENT#AdJustment#
 506,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//GS_INCREASING#Increasing Accuracy#
-507,-5,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_MAGICALBULLET#Magical Bullet#
+507,-5,6,1,7,0,0,1,1,no,0,0,0,weapon,0	//GS_MAGICALBULLET#Magical Bullet#
 508,-5,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//GS_CRACKER#Cracker#
-509,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//GS_SINGLEACTION#Single Action#
+509,-5,0,0,0,0,0,10,0,no,0,0,0,none,0	//GS_SINGLEACTION#Single Action#
 510,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//GS_SNAKEEYE#Snake Eye#
 511,-5,8,0,-1,0,0,10,2,no,0,0,0,weapon,0	//GS_CHAINACTION#Chain Action#
 512,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_TRACKING#Tracking#
 513,-5,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#Disarm#
-514,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#Piercing Shot#
+514,-5,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#Piercing Shot#
 515,-5,8,1,-1,0,0,10,5,no,0,0,0,weapon,0	//GS_RAPIDSHOWER#Rapid Shower#
-516,-5,8,4,-1,2,2,10,10,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
-517,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//GS_GATLINGFEVER#Gatling Fever#
+516,-5,8,4,-1,2,2,10,-10,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
+517,-5,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//GS_GATLINGFEVER#Gatling Fever#
 518,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_DUST#Dust#
 519,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_FULLBUSTER#Full Buster#
-520,-5,6,4,-1,2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#Spread Attack#
-521,-5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GROUNDDRIFT#Ground Drift#
+520,-5,6,1,-1,2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#Spread Attack#
+521,5,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_GROUNDDRIFT#Ground Drift#
 522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_TOBIDOUGU#NJ_TOBIDOUGU#
 523,9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SYURIKEN#NJ_SYURIKEN#
 524,9,8,1,-1,0,0,5,3,no,0,0,0,weapon,0	//NJ_KUNAI#NJ_KUNAI#

@@ -1594,7 +1594,7 @@
 5120,Bucket_Hat_,Bucket Hat,5,6000,,300,,3,,1,532676607,7,2,256,,0,1,195,{}
 5121,Zherlthsh_Mask,Zherlthsh Mask,5,,10,400,,3,,0,119529470,7,2,768,,70,1,200,{ bonus2 bAddRace,RC_DemiHuman,5; bonus2 bSubRace,RC_DemiHuman,5; }
 5122,Magni's_Cap,Magni's Cap,5,,10,1000,,5,,0,119529470,7,2,256,,65,1,201,{ bonus bStr,2; }
-5123,Ulle's_Cap,Ulle's Cap,5,,10,500,,3,,1,119529470,7,2,256,,65,1,202,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && readparam(bDex)>=70) bonus bUseSPrate,-10; }
+5123,Ulle's_Cap,Ulle's Cap,5,,10,500,,3,,1,119529470,7,2,256,,65,1,202,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && bDex>=70) bonus bUseSPrate,-10; }
 5124,Frigg's_Circlet,Frigg's Circlet,5,,10,300,,3,,0,119529470,7,2,256,,65,1,203,{ bonus bMdef,10; bonus bInt,2; bonus bMaxSP,50; }
 5125,Angel's_Kiss,Angel's Kiss,5,,10,300,,2,,1,8388609,7,2,256,,50,1,204,{ bonus bSPrecovRate,3; }
 5126,Morpheus's_Hood,Morpheus's Hood,5,,10,200,,3,,0,119529470,7,2,256,,33,1,205,{ bonus bInt,2; if(isequipped(2518,2648,2649)==0) end; bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; if(Upper == 1) bonus bCastrate,25; }
@@ -2404,9 +2404,9 @@
 13202,Shell_of_Blood,Shell of Blood,10,30,,2,30,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Bleeding,50; }
 13203,Flare_Sphere,Flare Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Fire; }
 13204,Lightning_Sphere,Lightning Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Wind; }
-13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Poison,50; }
-13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Blind,50; }
-13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; }
+13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Poision; bonus2 bAddEff,Eff_Poison,50; }
+13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,50; }
+13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,50; }
 
 // Shurikens & Kunais
 13250,Shuriken,Shuriken,10,4,,5,10,,,,268435456,7,2,32768,,1,,,{}
