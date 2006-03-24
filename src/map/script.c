@@ -8423,28 +8423,53 @@ int buildin_nude(struct script_state *st)
 
 int buildin_atcommand(struct script_state *st)
 {
-	struct map_session_data *sd;
+	struct map_session_data *sd=NULL;
 	char *cmd;
 
-	sd = script_rid2sd(st);
-	if (!sd)
-		return 0;
 	cmd = conv_str(st,& (st->stack->stack_data[st->start+2]));
-	is_atcommand(sd->fd, sd, cmd, 99);
+	if (st->rid)
+		sd = script_rid2sd(st);
+
+	if (sd) is_atcommand(sd->fd, sd, cmd, 99);
+	else { //Use a dummy character.
+		struct map_session_data dummy_sd;
+		struct block_list *bl = NULL;
+		memset(&dummy_sd, 0, sizeof(struct map_session_data));
+		if (st->oid) bl = map_id2bl(st->oid);
+		if (bl) {
+			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
+			if (bl->type == BL_NPC)
+				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
+		}
+		is_atcommand(0, &dummy_sd, cmd, 99);
+	}
 
 	return 0;
 }
 
 int buildin_charcommand(struct script_state *st)
 {
-	struct map_session_data *sd;
+	struct map_session_data *sd=NULL;
 	char *cmd;
-
-	sd = script_rid2sd(st);
-	if (!sd)
-		return 0;
+	
 	cmd = conv_str(st,& (st->stack->stack_data[st->start+2]));
-	is_charcommand(sd->fd, sd, cmd, 99);
+
+	if (st->rid)
+		sd = script_rid2sd(st);
+	
+	if (sd) is_charcommand(sd->fd, sd, cmd, 99);
+	else { //Use a dummy character.
+		struct map_session_data dummy_sd;
+		struct block_list *bl = NULL;
+		memset(&dummy_sd, 0, sizeof(struct map_session_data));
+		if (st->oid) bl = map_id2bl(st->oid);
+		if (bl) {
+			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
+			if (bl->type == BL_NPC)
+				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
+		}
+		is_charcommand(0, &dummy_sd, cmd, 99);
+	}
 
 	return 0;
 }

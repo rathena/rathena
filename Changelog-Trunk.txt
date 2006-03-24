@@ -5,6 +5,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/24
+	* Modified script commands atcommand/charcommand to execute even if there
+	  isn't a player attached. They'll use a dummy player data with the same
+	  position/name as the script's owner (usually an npc). Be careful when using
+	  this as the result of some @/# commands may be unexpected! [Skotlex]
 	* Some cleaning around the return to egg code. Pets should stop duplicating
 	  now. [Skotlex]
 	* Some cleaning of the egg hatching routine to prevent spawning the pet if
