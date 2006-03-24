@@ -425,7 +425,7 @@ L_ALREADY:
 function	script	F_Rebirth	{
 	mes "["+getarg(3)+"]";
 	if(Upper == 2) goto L_BABY; //Baby Class - skip it
-	if(Class >= Job_Lord_Knight goto L_ALREADY; //already advanced class
+	if(Class >= Job_Lord_Knight) goto L_ALREADY; //already advanced class
 	if(Class == (3977+getarg(0)) && ADVJOB == (3977+getarg(2))) goto L_GET3RD; //Hight XXXX -> 3rd Job
 	mes "Go talk to either Valhallana or one of my collegues...";
 	emotion e_sry;
