@@ -3226,7 +3226,7 @@ int pc_walktodir(struct map_session_data *sd,int step)
 		to_x += dir_x;
 		to_y += dir_y;
 	}
-	unit_walktoxy(&sd->bl, sd->to_x, sd->to_y, 1);
+	unit_walktoxy(&sd->bl, to_x, to_y, 1);
 
 	return 1;
 }

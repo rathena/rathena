@@ -507,7 +507,6 @@ struct map_session_data {
 	int cart_weight,cart_max_weight,cart_num,cart_max_num;
 	int fd;
 	unsigned short mapindex;
-	short to_x,to_y;
 	short speed,prev_speed;
 	unsigned char head_dir;
 	unsigned int client_tick,server_tick;

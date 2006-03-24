@@ -5353,7 +5353,7 @@ int clif_skill_delunit(struct skill_unit *unit)
  * ƒ[ƒvêŠ‘I‘ğ
  *------------------------------------------
  */
-int clif_skill_warppoint(struct map_session_data *sd,int skill_num, int skill_lv,
+int clif_skill_warppoint(struct map_session_data *sd,int skill_num,int skill_lv,
 	const char *map1,const char *map2,const char *map3,const char *map4)
 {
 	int fd;
@@ -5370,7 +5370,10 @@ int clif_skill_warppoint(struct map_session_data *sd,int skill_num, int skill_lv
 	strncpy((char*)WFIFOP(fd,52),map4,MAP_NAME_LENGTH);
 	WFIFOSET(fd,packet_len_table[0x11c]);
 	sd->menuskill_id = skill_num;
-	sd->menuskill_lv = skill_lv;
+	if (skill_num == AL_WARP)
+		sd->menuskill_lv = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.
+	else
+		sd->menuskill_lv = skill_lv;
 	return 0;
 }
 /*==========================================

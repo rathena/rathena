@@ -6153,7 +6153,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 		{
 			const struct point *p[4];
 			struct skill_unit_group *group;
-			int i, lv;
+			int i, lv, wx, wy;
 			int maxcount=0;
 			unsigned short mapindex;
 			mapindex  = mapindex_name2id((char*)map);
@@ -6178,7 +6178,11 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 					return 0;
 				}
 			}
-			lv = sd->menuskill_lv;
+			
+			lv = sd->skillitem==skill_num?sd->menuskill_lv:pc_checkskill(sd,skill_num);
+			wx = sd->menuskill_lv>>16;
+			wy = sd->menuskill_lv&0xffff;
+			
 			if(lv <= 0) return 0;
 			for(i=0;i<lv;i++){
 				if(mapindex == p[i]->map){
@@ -6191,28 +6195,25 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 				skill_failed(sd);
 				return 0;
 			}
-			//FIXME:  What about when you use another ground skill? skillx
-			//and skilly are messed up already... [Skotlex]
-			if(!skill_check_condition(sd, sd->menuskill_id, sd->menuskill_lv,3)) //This checks versus skillid/skilllv...
+
+			if(!skill_check_condition(sd, sd->menuskill_id, lv,3)) //This checks versus skillid/skilllv...
 			{
 				skill_failed(sd);
 				return 0;
 			}
 			
-			if(skill_check_unit_range2(&sd->bl,sd->bl.m,sd->ud.skillx,sd->ud.skilly,skill_num,lv) > 0) {
+			if(skill_check_unit_range2(&sd->bl,sd->bl.m,wx,wy,skill_num,lv) > 0) {
 				clif_skill_fail(sd,0,0,0);
 				skill_failed(sd);
 				return 0;
 			}
-			if((group=skill_unitsetting(&sd->bl,skill_num,lv,sd->ud.skillx,sd->ud.skilly,0))==NULL) {
+			if((group=skill_unitsetting(&sd->bl,skill_num,lv,wx,wy,0))==NULL) {
 				skill_failed(sd);
 				return 0;
 			}
 			//Now that there's a mapindex, use that in val3 rather than a string. [Skotlex]
-			group->val3 = mapindex;
-//			group->valstr=(char *)aCallocA(MAP_NAME_LENGTH,sizeof(char));
-//			memcpy(group->valstr,map,MAP_NAME_LENGTH-1);
 			group->val2=(x<<16)|y;
+			group->val3 = mapindex;
 		}
 		break;
 	}
@@ -6572,7 +6573,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		if(bl->type==BL_PC){
 			struct map_session_data *sd = (struct map_session_data *)bl;
 			if((!sd->chatID || battle_config.chat_warpportal)
-				&& sd->to_x == src->bl.x && sd->to_y == src->bl.y) {
+				&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y) {
 				if (pc_setpos(sd,sg->val3,sg->val2>>16,sg->val2&0xffff,3) == 0) {
 					if (--sg->val1<=0 || sg->src_id == bl->id)
 						skill_delunitgroup(sg);

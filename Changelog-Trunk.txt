@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/24
+	* Fixed Warp Portal. [Skotlex]
 	* Modified script commands atcommand/charcommand to execute even if there
 	  isn't a player attached. They'll use a dummy player data with the same
 	  position/name as the script's owner (usually an npc). Be careful when using
