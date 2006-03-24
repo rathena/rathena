@@ -4793,7 +4793,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_PROVOCATION:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(md)
+		if(md && md->skillidx >= 0)
 			clif_pet_performance(src,md->db->skill[md->skillidx].val[0]);
 		break;
 

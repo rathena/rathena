@@ -198,6 +198,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 		md->lootitem = (struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 	md->spawn_n = -1;
 	md->deletetimer = -1;
+	md->skillidx = -1;
 	for (i = 0; i < MAX_STATUSCHANGE; i++)
 		md->sc.data[i].timer = -1;
 
@@ -2822,8 +2823,11 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					(ms[i].target-MST_AROUND5) +1;
 				map_search_freecell(&md->bl, md->bl.m, &x, &y, r, r, 3);
 			}
-			return unit_skilluse_pos2(&md->bl, x, y, ms[i].skill_id, ms[i].skill_lv,
+			md->skillidx = i;
+			flag = unit_skilluse_pos2(&md->bl, x, y, ms[i].skill_id, ms[i].skill_lv,
 				skill_castfix(&md->bl,ms[i].skill_id, ms[i].skill_lv, ms[i].casttime), ms[i].cancel);
+			if (!flag) md->skillidx = -1; //Skill failed.
+			return flag;
 		} else {
 			// IDŽw’è
 			if (ms[i].target <= MST_MASTER) {
@@ -2850,8 +2854,11 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 						bl = &md->bl;
 						break;
 				}
-				return (bl && unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv,
+				md->skillidx = i;
+				flag = (bl && unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv,
 					skill_castfix(&md->bl,ms[i].skill_id, ms[i].skill_lv, ms[i].casttime),	ms[i].cancel));
+				if (!flag) md->skillidx = -1;
+				return flag;
 			} else {
 				if (battle_config.error_log)
 					ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s). Mob %d - %s\n",

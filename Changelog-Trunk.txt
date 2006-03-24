@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/24
+	* Fixed skillidx not being set whenever a mob uses a skill. This explains
+	  skills like metamorphosis/summon_slaves not working at all. [Skotlex]
 	* Fixed unit_skillcastcancel reading the nocastcancel flags the exact
 	  wrong way around [blackhole89]
 	* Added function map_search_freecell to locate an available cell around an
