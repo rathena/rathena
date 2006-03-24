@@ -2502,7 +2502,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 	data.m = md2->bl.m;
 	data.x = md2->bl.x;
 	data.y = md2->bl.y;
-	
+	data.num = 1;
 
 	if(mobdb_checkid(value[0]) == 0)
 		return 0;
