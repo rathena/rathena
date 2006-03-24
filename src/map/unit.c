@@ -1250,8 +1250,8 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 		if (!ud->state.skillcastcancel)
 			return 0;
 
-		if (sd && !sd->special_state.no_castcancel2 &&
-			!(sd->special_state.no_castcancel && !map_flag_gvg(bl->m)))
+		if (sd && (sd->special_state.no_castcancel2 ||
+			(sd->special_state.no_castcancel && !map_flag_gvg(bl->m)))) //fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 	
