@@ -1868,7 +1868,11 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 
 //ïêäÌÉXÉLÉãÅHÇ±Ç±Ç‹Ç≈
 	switch(skillid){
+	//Skills who's damage should't show any skill-animation.
+	case SM_MAGNUM:
 	case AS_SPLASHER:
+	case CR_GRANDCROSS:
+	case NPC_GRANDDARKNESS:
 	case ASC_METEORASSAULT:
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
