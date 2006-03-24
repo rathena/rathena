@@ -2044,9 +2044,6 @@ int skill_area_sub( struct block_list *bl,va_list ap )
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
 
-	if(bl->type!=BL_PC && bl->type!=BL_MOB && bl->type!=BL_SKILL)
-		return 0;
-
 	src=va_arg(ap,struct block_list *); //‚±‚±‚Å‚Ísrc‚Ì’l‚ð??Æ‚µ‚Ä‚¢‚È‚¢‚Ì‚ÅNULLƒ`ƒFƒbƒN‚Í‚µ‚È‚¢
 	skill_id=va_arg(ap,int);
 	skill_lv=va_arg(ap,int);
@@ -2292,18 +2289,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 		switch(skl->skill_id) {
 			case RG_INTIMIDATE:
 				if (unit_warp(src,-1,-1,-1,3) == 0) {
-					int x,y,i,j;
-					for(i=0;i<16;i++) {
-						j = rand()%8;
-						x = src->x + dirx[j];
-						y = src->y + diry[j];
-						if(map_getcell(src->m,x,y,CELL_CHKPASS))
-							break;
-					}
-					if(i >= 16) {
-						x = src->x;
-						y = src->y;
-					}
+					int x,y;
+					map_search_freecell(src, 0, &x, &y, 1, 1, 0);
 					if (!status_isdead(target))
 					unit_warp(target, -1, x, y, 3);
 				}
@@ -4854,7 +4841,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_SUMMONSLAVE:		/* Žè‰º?¢Š« */
 	case NPC_SUMMONMONSTER:		/* MOB?¢Š« */
-		if(md)
+		if(md && md->skillidx >= 0)
 			mob_summonslave(md,md->db->skill[md->skillidx].val,skilllv,skillid);
 		break;
 
@@ -4904,11 +4891,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_TRANSFORMATION:
 	case NPC_METAMORPHOSIS:
-		if(md) {
+		if(md && md->skillidx >= 0) {
 			if (skilllv > 1)
 			{	//Multiply skilllv times, the original instance must be silently killed. [Skotlex] 
 				mob_summonslave(md,md->db->skill[md->skillidx].val,skilllv,skillid);
-				unit_free(src);
+				unit_remove_map(src,1);
 			}
 			else
 			{	//Transform into another class.
@@ -5523,7 +5510,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if(sd) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(rand()%100 < (50+10*skilllv))
-				pc_addspiritball(sd,skill_get_time(skillid,skilllv),skilllv);
+				pc_addspiritball(sd,skill_get_time(skillid,skilllv),10);
 			else if(sd->spiritball > 0)
 				pc_delspiritball(sd,1,0);
 		}
@@ -5822,7 +5809,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 {
 	struct map_session_data *sd=NULL;
 	struct status_change *sc;
-	int i,tmpx = 0,tmpy = 0, x1 = 0, y1 = 0;
+	int i;
 
 	//if(skilllv <= 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
@@ -5930,25 +5917,13 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case WZ_METEOR:				//ƒ?ƒeƒIƒXƒg?ƒ€
 		{
 			int flag=0, area = skill_get_splash(skillid, skilllv);
+			int tmpx, tmpy, x1 = 0, y1 = 0;
 			if (sc && sc->data[SC_MAGICPOWER].timer != -1)
 				flag = flag|2; //Store the magic power flag for future use. [Skotlex]
 			for(i=0;i<2+(skilllv>>1);i++) {
-				int j=0;
-				do {
-					
-					tmpx = x + (rand()%area - area/2);
-					tmpy = y + (rand()%area - area/2);
-					if(tmpx < 0)
-						tmpx = 0;
-					else if(tmpx >= map[src->m].xs)
-						tmpx = map[src->m].xs - 1;
-					if(tmpy < 0)
-						tmpy = 0;
-					else if(tmpy >= map[src->m].ys)
-						tmpy = map[src->m].ys - 1;
-					j++;
-				} while((map_getcell(src->m,tmpx,tmpy,CELL_CHKNOPASS)) && j<100);
-				if(j >= 100)
+				tmpx = x;
+				tmpy = y;
+				if (!map_search_freecell(NULL, src->m, &tmpx, &tmpy, area, area, 1))
 					continue;
 				if(!(flag&1)){
 					clif_skill_poseffect(src,skillid,skilllv,tmpx,tmpy,tick);

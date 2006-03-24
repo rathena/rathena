@@ -193,8 +193,6 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max) {
 
 	if(max > MAX_SKILL_LEVEL)
 		max = MAX_SKILL_LEVEL;
-	if((sd->class_&MAPID_BASEMASK)==MAPID_GUNSLINGER)
-		max = 10;
 	if(sd->spiritball < 0)
 		sd->spiritball = 0;
 
@@ -3696,6 +3694,7 @@ char * job_name(int class_) {
 		
 	case JOB_WEDDING:
 	case JOB_SUPER_NOVICE:
+
 	case JOB_XMAS:
 		return msg_txt(570 - JOB_WEDDING+class_);
 		

@@ -1364,6 +1364,73 @@ int map_searchrandfreecell(int m,int *x,int *y,int stack) {
 	return 1;
 }
 
+
+static int map_count_sub(struct block_list *bl,va_list ap)
+{
+	return 1;
+}
+
+/*==========================================
+ * Locates a random spare cell around the object given, using range as max 
+ * distance from that spot. Used for warping functions. Use range < 0 for 
+ * whole map range.
+ * Returns 1 on success. when it fails and src is available, x/y are set to src's
+ * src can be null as long as flag&1
+ * when ~flag&1, m is not needed.
+ * Flag values:
+ * &1 = random cell must be around given m,x,y, not around src
+ * &2 = the target should be able to walk to the target tile.
+ * &4 = there shouldn't be any players around the target tile (use the no_spawn_on_player setting)
+ *------------------------------------------
+ */
+int map_search_freecell(struct block_list *src, int m, int *x,int *y, int rx, int ry, int flag) {
+	int tries, spawn=0;
+	int bx, by;
+	int rx2 = 2*rx+1;
+	int ry2 = 2*ry+1;
+
+	if (!src && (!(flag&1) || flag&2))
+	{
+		ShowDebug("map_search_freecell: Incorrect usage! When src is NULL, flag has to be &1 and can't have &2\n");
+		return 0;
+	}
+
+	if (flag&1) {
+		bx = *x;
+		by = *y;
+	} else {
+		bx = src->x;
+		by = src->y;
+		m = src->m;
+	}
+	if (rx >= 0 && ry >= 0) {
+		tries = rx2*ry2;
+		if (tries > 50) tries = 50;
+	} else
+		tries = 50;
+	
+	while(tries--) {
+		*x = (rx >= 0)?(rand()%rx2-rx+bx):(rand()%(map[m].xs-2)+1);
+		*y = (ry >= 0)?(rand()%rx2-ry+by):(rand()%(map[m].ys-2)+1);
+		
+		if (map_getcell(m,*x,*y,CELL_CHKREACH))
+		{
+			if(flag&2 && !unit_can_reach(src, *x, *y))
+				continue;
+			if(flag&4 && spawn++ < battle_config.no_spawn_on_player &&
+				map_foreachinarea(map_count_sub, m,
+					*x-AREA_SIZE, *y-AREA_SIZE, *x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
+			)
+				continue;
+
+			return 1;
+		}
+	}
+	*x = bx;
+	*y = by;
+	return 0;
+}
+
 /*==========================================
  * (m,x,y)を中心に3x3以?に床アイテム設置
  *

@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/24
+	* Added function map_search_freecell to locate an available cell around an
+	  area (for recall/warping skills). UNTESTED. [Skotlex]
 	* Added unit.c to the VC8 project files. Thanks to Joshuaali [Skotlex]
 	* Fixed Magnum-break/GrandCross displaying multiple times the skill effect
 	  (once per target) [Skotlex]

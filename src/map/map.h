@@ -1236,6 +1236,7 @@ int map_addobject(struct block_list *);
 int map_delobject(int);
 int map_delobjectnofree(int id);
 void map_foreachobject(int (*)(struct block_list*,va_list),int,...);
+int map_search_freecell(struct block_list *src, int m, int *x,int *y, int rx, int ry, int flag);
 //
 int map_quit(struct map_session_data *);
 // npc

@@ -393,7 +393,6 @@ int unit_getdir(struct block_list *bl)
 //it respects the no warp flags, so it is safe to call this without doing nowarpto/nowarp checks.
 int unit_warp(struct block_list *bl,int m,int x,int y,int type)
 {
-	int i=0,xs=9,ys=9,bx=x,by=y;
 	struct unit_data *ud;
 	nullpo_retr(0, bl);
 	ud = unit_bl2ud(bl);
@@ -419,25 +418,28 @@ int unit_warp(struct block_list *bl,int m,int x,int y,int type)
 			break;
 	}
 	
-	if(bx>0 && by>0)
-		xs=ys=9;
-
-	while( ( x<0 || y<0 || map_getcell(m,x,y,CELL_CHKNOPASS)) && (i++)<1000 ){
-		if( xs>0 && ys>0 && i<250 ){
-			x=bx+rand()%xs-xs/2;
-			y=by+rand()%ys-ys/2;
-		}else{
-			x=rand()%(map[m].xs-2)+1;
-			y=rand()%(map[m].ys-2)+1;
+	if (x<0 || y<0)
+  	{	//Random map position.
+		
+		if (!map_search_freecell(NULL, m, &x, &y, -1, -1, 1)) {
+			if(battle_config.error_log)
+				ShowWarning("unit_warp failed. Unit Id:%d/Type:%d, target position map %d (%s) at [%d,%d]\n", bl->id, bl->type, m, map[m].name, x, y);
+			return 2;
+			
+		}
+	} else if (map_getcell(m,x,y,CELL_CHKNOREACH))
+	{	//Invalid target cell
+		if(battle_config.error_log)
+			ShowWarning("unit_warp: Specified non-walkable target cell: %d (%s) at [%d,%d]\n", m, map[m].name, x,y);
+		
+		if (!map_search_freecell(NULL, m, &x, &y, 4, 4, 1))
+	 	{	//Can't find a nearby cell
+			if(battle_config.error_log)
+				ShowWarning("unit_warp failed. Unit Id:%d/Type:%d, target position map %d (%s) at [%d,%d]\n", bl->id, bl->type, m, map[m].name, x, y);
+			return 2;
 		}
 	}
-
-	if(i>=1000){
-		if(battle_config.error_log)
-			ShowWarning("unit_warp failed. Unit Id:%d/Type:%d, target position map %d (%s) at [%d,%d]\n", bl->id, bl->type, m, map[m].name, bx,by);
-		return 2;
-	}
-
+			
 	if (bl->type == BL_PC) //Use pc_setpos
 		return pc_setpos((TBL_PC*)bl, map[m].index, x, y, type);
 	

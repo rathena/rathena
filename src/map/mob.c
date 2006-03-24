@@ -248,7 +248,6 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
 	struct mob_data *md = NULL;
 	struct spawn_data data;
 	int m, count, lv = 255;
-	int i, j;
 	
 	if(sd) lv = sd->status.base_level;
 
@@ -272,25 +271,12 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
 	}
 	strncpy(data.eventname, event, 50);
 	
-	if (sd) { //even if the coords were wrong, spawn mob anyways (but look for most suitable coords first) Got from Freya [Lupus]
-		if (x <= 0 || y <= 0) {
-			if (x <= 0) x = sd->bl.x + rand() % 3 - 1;
-			if (y <= 0) y = sd->bl.y + rand() % 3 - 1;
-			if (map_getcell(m, x, y, CELL_CHKNOPASS)) {
-				x = sd->bl.x;
-				y = sd->bl.y;
-			}
-		}
-	} else if (x <= 0 || y <= 0) {
-		i = j = 0;
-		do {
-			x = rand() % (map[m].xs - 2) + 1;
-			y = rand() % (map[m].ys - 2) + 1;
-		} while ((i = map_getcell(m, x, y, CELL_CHKNOPASS)) && j++ < 64);
-		if (i) { // not solved?
-			x = 0;
-			y = 0;
-		}
+	if (x <= 0 || y <= 0) {
+		if (sd)
+			map_search_freecell(&sd->bl, 0, &x, &y, 1, 1, 0);
+		else
+		if (!map_search_freecell(NULL, m, &x, &y, -1, -1, 1))
+			return 0;	//Not solved?
 	}
 	data.x = x;
 	data.y = y;
@@ -642,11 +628,6 @@ int mob_setdelayspawn(struct mob_data *md)
 	return 0;
 }
 
-static int mob_count_sub(struct block_list *bl,va_list ap)
-{
-	return 1;
-}
-
 /*==========================================
  * Mob spawning. Initialization is also variously here.
  *------------------------------------------
@@ -674,30 +655,16 @@ int mob_spawn (struct mob_data *md)
 
 		if ((md->spawn->x == 0 && md->spawn->y == 0) || md->spawn->xs || md->spawn->ys)
 		{	//Monster can be spawned on an area.
-			int x, y;
-			while (i < 50) {
-				if (md->spawn->x == 0 && md->spawn->y == 0) {
-					x = rand()%(map[md->bl.m].xs-2)+1;
-					y = rand()%(map[md->bl.m].ys-2)+1;
-				} else {
-					x = md->spawn->x+rand()%(md->spawn->xs+1)-md->spawn->xs/2;
-					y = md->spawn->y+rand()%(md->spawn->ys+1)-md->spawn->ys/2;
-				}
-				i++;
-				if (map_getcell(md->bl.m,x,y,CELL_CHKNOPASS))
-					continue;
-
-				//Avoid spawning on the view-range of players. [Skotlex]
-				if (battle_config.no_spawn_on_player &&
-					c++ < battle_config.no_spawn_on_player &&
-					map_foreachinarea(mob_count_sub, md->bl.m,
-						x-AREA_SIZE, y-AREA_SIZE, x+AREA_SIZE, y+AREA_SIZE, BL_PC)
-				)
-					continue;
-				//Found a spot.
-				break;
+			int x, y, xs, ys;
+			if (md->spawn->x == 0 && md->spawn->y == 0)
+				xs = ys = -1;
+			else {
+				x = md->spawn->x;
+				y = md->spawn->y;
+				xs = md->spawn->xs/2;
+				ys = md->spawn->ys/2;
 			}
-			if (i >= 50) {
+			if (!map_search_freecell(NULL, md->spawn->m, &x, &y, xs, ys, battle_config.no_spawn_on_player?5:1)) {
 				// retry again later
 				add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
 				return 1;
@@ -2467,23 +2434,15 @@ int mob_warpslave_sub(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md=(struct mob_data *)bl;
 	struct block_list *master;
-	int x,y,range,i=0;
+	int x,y,range=0;
 	master = va_arg(ap, struct block_list*);
 	range = va_arg(ap, int);
 	
 	if(md->master_id!=master->id)
 		return 0;
 
-	do {
-		x = master->x - range/2 + rand()%range;
-		y = master->y - range/2 + rand()%range;
-	} while (map_getcell(master->m,x,y,CELL_CHKNOPASS) && i<25);
-	
-	if (i == 100)
-		unit_warp(&md->bl, master->m, master->x, master->y,2);
-	else
-		unit_warp(&md->bl, master->m, x, y,2);
-
+	map_search_freecell(master, 0, &x, &y, range, range, 0);
+	unit_warp(&md->bl, master->m, x, y,2);
 	return 1;
 }
 
@@ -2533,7 +2492,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 {
 	struct mob_data *md;
 	struct spawn_data data;
-	int bx,by,count = 0,k=0;
+	int count = 0,k=0;
 
 	nullpo_retr(0, md2);
 	nullpo_retr(0, value);
@@ -2543,8 +2502,6 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 	data.x = md2->bl.x;
 	data.y = md2->bl.y;
 	
-	bx=md2->bl.x;
-	by=md2->bl.y;
 
 	if(mobdb_checkid(value[0]) == 0)
 		return 0;
@@ -2556,22 +2513,18 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		amount+=k; //Increase final value by same amount to preserve total number to summon.
 	}
 	for(;k<amount;k++) {
-		int x=0,y=0,i=0;
+		int x,y;
 		data.class_ = value[k%count]; //Summon slaves in round-robin fashion. [Skotlex]
 		if (mobdb_checkid(data.class_) == 0)
 			continue;
 
-		while((x<=0 || y<=0 || map_getcell(data.m,x,y,CELL_CHKNOPASS)) && (i++)<100){
-			x=rand()%9-4+bx;
-			y=rand()%9-4+by;
+		if (map_search_freecell(&md2->bl, 0, &x, &y, 4, 4, 0)) {
+			data.x = x;
+			data.y = y;
+		} else {
+			data.x = md2->bl.x;
+			data.y = md2->bl.y;
 		}
-		if(i>=100){
-			x=bx;
-			y=by;
-		}
-		data.x = x;
-		data.y = y;
-
 		strcpy(data.name, "--ja--");	//These two need to be loaded from the db for each slave.
 		data.level = 0;
 		if (!mob_parse_dataset(&data))
@@ -2862,27 +2815,12 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			}
 			if (x <= 0 || y <= 0)
 				continue;
-			// Ž©•ª‚ÌŽüˆÍ
-			if (ms[i].target >= MST_AROUND1) {
-				int bx = x, by = y, i = 0, m = bl->m, r = (ms[i].target-MST_AROUND1) +1;
-				do {
-					bx = x + rand() % (r*2+1) - r;
-					by = y + rand() % (r*2+1) - r;
-				} while (map_getcell(m, bx, by, CELL_CHKNOREACH) && (i++) < 1000);
-				if (i < 1000){
-					x = bx; y = by;
-				}
-			}
-			// ‘ŠŽè‚ÌŽüˆÍ
-			if (ms[i].target >= MST_AROUND5) {
-				int bx = x, by = y, i = 0, m = bl->m, r = (ms[i].target-MST_AROUND5) + 1;
-				do {
-					bx = x + rand() % (r*2+1) - r;
-					by = y + rand() % (r*2+1) - r;
-				} while (map_getcell(m, bx, by, CELL_CHKNOREACH) && (i++) < 1000);
-				if (i < 1000){
-					x = bx; y = by;
-				}
+			// Look for an area to cast the spell around...
+			if (ms[i].target >= MST_AROUND1 || ms[i].target >= MST_AROUND5) {
+				int r = ms[i].target >= MST_AROUND1?
+					(ms[i].target-MST_AROUND1) +1:
+					(ms[i].target-MST_AROUND5) +1;
+				map_search_freecell(&md->bl, md->bl.m, &x, &y, r, r, 3);
 			}
 			return unit_skilluse_pos2(&md->bl, x, y, ms[i].skill_id, ms[i].skill_lv,
 				skill_castfix(&md->bl,ms[i].skill_id, ms[i].skill_lv, ms[i].casttime), ms[i].cancel);
