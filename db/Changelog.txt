@@ -26,6 +26,8 @@
 
 =========================
 
+03/24
+	* Fixed 5123,Ulle's_Cap bug [Lupus]
 03/22
 	* Changed preserve's cost to 30 sp. [Skotlex]
 	* Changed Soul Breaker's cast time to 700ms. [Skotlex]
