@@ -846,7 +846,7 @@ static void grfio_resourcecheck(void)
 	FILE *fp;
 
 	// read resnametable from data directory and return if successful
-	sprintf(restable, "%sdata\\resnametable.txt", data_dir);
+	sprintf(restable, "%sresnametable.txt", data_dir);
 	for (ptr = &restable[0]; *ptr != 0; ptr++)
 		if (*ptr == '\\') *ptr = '/';
 
@@ -857,8 +857,8 @@ static void grfio_resourcecheck(void)
 				// we only need the map names and text files
 				(strstr(w2, ".gat") || strstr(w2, ".txt")))
 			{
-				sprintf(src, "data\\%s", w1);
-				sprintf(dst, "data\\%s", w2);
+				sprintf(src, "%s", w1);
+				sprintf(dst, "%s", w2);
 				entry = filelist_find(dst);
 				// create new entries reusing the original's info
 				if (entry != NULL) {

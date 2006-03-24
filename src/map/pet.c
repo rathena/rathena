@@ -361,7 +361,6 @@ int pet_return_egg(struct map_session_data *sd)
 	if(sd->status.pet_id && sd->pd) {
 		// ƒ‹[ƒg‚µ‚½Item‚ð—Ž‚Æ‚³‚¹‚é
 		pet_lootitem_drop(sd->pd,sd);
-		unit_free(&sd->pd->bl);
 		if(sd->petDB == NULL)
 			return 1;
 		memset(&tmp_item,0,sizeof(tmp_item));
@@ -375,18 +374,12 @@ int pet_return_egg(struct map_session_data *sd)
 			clif_additem(sd,0,0,flag);
 			map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 		}
-		sd->pet.incuvate = 1;
-		sd->pet.pet_id = 0;
-		sd->pet.rename_flag = 0; //Prevents future captured pets from starting as "beloved" [Skotlex]
-		if(battle_config.pet_status_support && sd->pet.intimate > 0) {
-			if(sd->bl.prev != NULL)
-				status_calc_pc(sd,0);
-			else
-				status_calc_pc(sd,2);
-		}
 		intif_save_petdata(sd->status.account_id,&sd->pet);
-		chrif_save(sd,0); //FIXME: Do we really need to save the char when returning to pet? Seems like a waste, and unexploitable as the pet data is just moved to an item in the inventory. [Skotlex]
-
+		unit_free(&sd->pd->bl);
+		if(battle_config.pet_status_support && sd->pet.intimate > 0)
+			status_calc_pc(sd,0);
+		memset(&sd->pet, 0, sizeof(struct s_pet));
+		sd->pet.incuvate = 1;
 		sd->petDB = NULL;
 	}
 
@@ -508,21 +501,21 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 	}
 	memcpy(&sd->pet,p,sizeof(struct s_pet));
 	if(sd->pet.incuvate == 1) {
-		if (!pet_birth_process(sd))
-	  	{
-			int i;
-			//Delete egg from inventory. [Skotlex]
-			for (i = 0; i < MAX_INVENTORY; i++) {
-				if(sd->status.inventory[i].card[0] == (short)0xff00 &&
-					p->pet_id == MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2]))
-			  	{
-					pc_delitem(sd,i,1,0);
-					break;
-				}
-			}
-			if(i >= MAX_INVENTORY && battle_config.error_log)
-				ShowError("pet_recv_petdata: Hatched pet (%d:%s), but couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
+		int i;
+		//Delete egg from inventory. [Skotlex]
+		for (i = 0; i < MAX_INVENTORY; i++) {
+			if(sd->status.inventory[i].card[0] == (short)0xff00 &&
+				p->pet_id == MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2]))
+				break;
 		}
+		if(i >= MAX_INVENTORY) {
+		  	if (battle_config.error_log)
+				ShowError("pet_recv_petdata: Hatching pet (%d:%s) aborted, couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
+			sd->status.pet_id = 0;
+			return 1;
+		}
+		if (!pet_birth_process(sd)) //Pet hatched. Delete egg.
+			pc_delitem(sd,i,1,0);
 	} else {
 		pet_data_init(sd);
 		if(sd->pd && sd->bl.prev != NULL) {
