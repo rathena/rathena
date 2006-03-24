@@ -1530,10 +1530,14 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 			value = id->value_buy;
 		nd->u.shop_item[pos].value = value;
 		// check for bad prices that can possibly cause exploits
-		if (value/100*75 < id->value_sell/100*124) { // Modified to prevent loopbacks, divide before multiplying [Lance]
+		if (value/124. < id->value_sell/75.) {  //Clened up formula to prevent overflows.
 			printf("\r"); //Carriage return to clear the 'loading..' line. [Skotlex]
-			ShowWarning ("Item %s [%d] buying price (%d) is less than selling price (%d)\n",
-				id->name, id->nameid, value*75/100, id->value_sell*124/100);
+			if (value < id->value_sell)
+				ShowWarning ("Item %s [%d] buying price (%d) is less than selling price (%d)\n",
+					id->name, id->nameid, value, id->value_sell);
+			else
+				ShowWarning ("Item %s [%d] discounted buying price (%d) is less than overcharged selling price (%d)\n",
+					id->name, id->nameid, value/100*75, id->value_sell/100*124);
 		}
 		//for logs filters, atcommands and iteminfo script command
 		if (id->maxchance<=0)
