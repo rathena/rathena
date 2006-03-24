@@ -1546,34 +1546,32 @@ int unit_free(struct block_list *bl) {
 
 	if( bl->type == BL_PC ) {
 		struct map_session_data *sd = (struct map_session_data*)bl;
-
-		if(status_isdead(&sd->bl))
+		if(status_isdead(bl))
 			pc_setrestartvalue(sd,2);
 
 		//Status that are not saved...
 		if(sd->sc.count) {
 			if(sd->sc.data[SC_SPURT].timer!=-1)
-				status_change_end(&sd->bl,SC_SPURT,-1);
+				status_change_end(bl,SC_SPURT,-1);
 			if(sd->sc.data[SC_BERSERK].timer!=-1)
-				status_change_end(&sd->bl,SC_BERSERK,-1);
+				status_change_end(bl,SC_BERSERK,-1);
 			if(sd->sc.data[SC_TRICKDEAD].timer!=-1)
-				status_change_end(&sd->bl,SC_TRICKDEAD,-1);
+				status_change_end(bl,SC_TRICKDEAD,-1);
 			if (battle_config.debuff_on_logout) {
 				if(sd->sc.data[SC_STRIPWEAPON].timer!=-1)
-					status_change_end(&sd->bl,SC_STRIPWEAPON,-1);
+					status_change_end(bl,SC_STRIPWEAPON,-1);
 				if(sd->sc.data[SC_STRIPARMOR].timer!=-1)
-					status_change_end(&sd->bl,SC_STRIPARMOR,-1);
+					status_change_end(bl,SC_STRIPARMOR,-1);
 				if(sd->sc.data[SC_STRIPSHIELD].timer!=-1)
-					status_change_end(&sd->bl,SC_STRIPSHIELD,-1);
+					status_change_end(bl,SC_STRIPSHIELD,-1);
 				if(sd->sc.data[SC_STRIPHELM].timer!=-1)
-					status_change_end(&sd->bl,SC_STRIPHELM,-1);
+					status_change_end(bl,SC_STRIPHELM,-1);
 				if(sd->sc.data[SC_EXTREMITYFIST].timer!=-1)
-					status_change_end(&sd->bl,SC_EXTREMITYFIST,-1);
+					status_change_end(bl,SC_EXTREMITYFIST,-1);
 				if(sd->sc.data[SC_EXPLOSIONSPIRITS].timer!=-1)
-					status_change_end(&sd->bl,SC_EXPLOSIONSPIRITS,-1);
+					status_change_end(bl,SC_EXPLOSIONSPIRITS,-1);
 			}
 		}
-
 		// Notify friends that this char logged out. [Skotlex]
 		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
 		party_send_logout(sd);
@@ -1631,15 +1629,12 @@ int unit_free(struct block_list *bl) {
 			aFree(pd->status);
 			pd->status = NULL;
 		}
-		map_deliddb(&pd->bl);
-		map_freeblock(&pd->bl);
 		if (sd) sd->pd = NULL;
 	} else if(bl->type == BL_MOB) {
 		struct mob_data *md = (struct mob_data*)bl;
 		if(md->deletetimer!=-1)
 			delete_timer(md->deletetimer,mob_timer_delete);
 		md->deletetimer=-1;
-		map_deliddb(&md->bl);
 		if(md->lootitem) {
 			aFree(md->lootitem);
 			md->lootitem=NULL;
@@ -1659,9 +1654,13 @@ int unit_free(struct block_list *bl) {
 		}
 		if(mob_is_clone(md->class_))
 			mob_clone_delete(md->class_);
-		map_freeblock(bl);
 	}
 	status_change_clear(bl,1);
+	if (bl->type != BL_PC)
+  	{	//Players are handled by map_quit
+		map_deliddb(bl);
+		map_freeblock(bl);
+	}
 	map_freeblock_unlock();
 	return 0;
 }
