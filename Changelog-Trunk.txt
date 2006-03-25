@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/24
+	* Fixed iteminfo only displaying first result when there were many. [Skotlex]
 	* Fixed pet hatching. [Skotlex]
 	* Small change that SHOULD fix the pet duplication issue. [Skotlex]
 	* Fixed Warp Portal. [Skotlex]

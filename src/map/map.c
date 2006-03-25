@@ -1407,7 +1407,7 @@ int map_search_freecell(struct block_list *src, int m, int *x,int *y, int rx, in
 		tries = rx2*ry2;
 		if (tries > 50) tries = 50;
 	} else
-		tries = 50;
+		tries = 100;
 	
 	while(tries--) {
 		*x = (rx >= 0)?(rand()%rx2-rx+bx):(rand()%(map[m].xs-2)+1);

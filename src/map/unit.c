@@ -420,7 +420,6 @@ int unit_warp(struct block_list *bl,int m,int x,int y,int type)
 	
 	if (x<0 || y<0)
   	{	//Random map position.
-		
 		if (!map_search_freecell(NULL, m, &x, &y, -1, -1, 1)) {
 			if(battle_config.error_log)
 				ShowWarning("unit_warp failed. Unit Id:%d/Type:%d, target position map %d (%s) at [%d,%d]\n", bl->id, bl->type, m, map[m].name, x, y);

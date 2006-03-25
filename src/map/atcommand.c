@@ -9429,7 +9429,7 @@ int atcommand_iteminfo(
 		clif_displaymessage(fd, atcmd_output);
 		count = MAX_SEARCH;
 	}
-	for (i = 0; i < MAX_SEARCH; i++) {
+	for (i = 0; i < count; i++) {
 		item_data = item_array[i];
 		sprintf(atcmd_output, "Item: '%s'/'%s'[%d] (%d) Type: %s | Extra Effect: %s",
 			item_data->name,item_data->jname,item_data->slot,item_id,
@@ -9449,11 +9449,8 @@ int atcommand_iteminfo(
 			strcpy(atcmd_output, " - Monsters don't drop this item");
 		clif_displaymessage(fd, atcmd_output);
 
-		return 0;
 	}
-
-	clif_displaymessage(fd, "Item not found.");
-	return -1;
+	return 0;
 }
 
 /*==========================================
