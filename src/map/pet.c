@@ -374,13 +374,13 @@ int pet_return_egg(struct map_session_data *sd)
 			clif_additem(sd,0,0,flag);
 			map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 		}
+		sd->pet.incuvate = 1;
 		intif_save_petdata(sd->status.account_id,&sd->pet);
 		unit_free(&sd->pd->bl);
 		if(battle_config.pet_status_support && sd->pet.intimate > 0)
 			status_calc_pc(sd,0);
 		memset(&sd->pet, 0, sizeof(struct s_pet));
 		sd->status.pet_id = 0;
-		sd->pet.incuvate = 1;
 		sd->petDB = NULL;
 	}
 
@@ -396,12 +396,22 @@ int pet_data_init(struct map_session_data *sd)
 
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd); 
 
-	if(sd->status.account_id != sd->pet.account_id || sd->status.char_id != sd->pet.char_id ||
-		sd->status.pet_id != sd->pet.pet_id) {
+	if(sd->status.account_id != sd->pet.account_id || sd->status.char_id != sd->pet.char_id) {
 		sd->status.pet_id = 0;
 		return 1;
 	}
-
+	if (sd->status.pet_id != sd->pet.pet_id) {
+		if (sd->status.pet_id) {
+			//Wrong pet?? Set incuvate to no and send it back for saving.
+			sd->pet.incuvate = 1;
+			intif_save_petdata(sd->status.account_id,&sd->pet);
+			sd->status.pet_id = 0;
+			return 1;
+		}
+		//The pet_id value was lost? odd... restore it.
+		sd->status.pet_id = sd->pet.pet_id;
+	}
+	
 	i = search_petDB_index(sd->pet.class_,PET_CLASS);
 	if(i < 0) {
 		sd->status.pet_id = 0;
