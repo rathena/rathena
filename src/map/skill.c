@@ -717,8 +717,13 @@ int skill_get_casttype(int id)
 	int inf = skill_get_inf(id);
 	if (inf&(INF_GROUND_SKILL))
 		return CAST_GROUND;
-	if (inf&(INF_SELF_SKILL|INF_SUPPORT_SKILL))
+	if (inf&INF_SUPPORT_SKILL)
 		return CAST_NODAMAGE;
+	if (inf&INF_SELF_SKILL) {
+		if(skill_get_inf2(id)&INF2_NO_TARGET_SELF)
+			return CAST_DAMAGE; //Combo skill.
+		return CAST_NODAMAGE;
+	}
 	if (skill_get_nk(id)&NK_NO_DAMAGE)
 		return CAST_NODAMAGE;
 	return CAST_DAMAGE;
@@ -1872,8 +1877,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	//Skills who's damage should't show any skill-animation.
 	case SM_MAGNUM:
 	case AS_SPLASHER:
-	case CR_GRANDCROSS:
-	case NPC_GRANDDARKNESS:
 	case ASC_METEORASSAULT:
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
@@ -1906,6 +1909,13 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case GS_CHAINACTION:
 		clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
 		break;
+	case CR_GRANDCROSS:
+	case NPC_GRANDDARKNESS:
+		//Only show animation when hitting yourself. [Skotlex]
+		if (src!=bl) {
+			clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
+			break;
+		}
 	default:
 		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, (skillid==0)? 5:type );
 	}
@@ -3119,14 +3129,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	if(status_isdead(bl) && skillid != NPC_REBIRTH && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO)
 		return 1;
 
-	//Self skill with target changed? We assume these are offensive auto-select-target skills. [Skotlex]
-	//But only do this on the first call (flag&~1)
-	if (!(flag&1) && skill_get_inf(skillid)&INF_SELF_SKILL && src != bl && !(skill_get_nk(skillid)&NK_NO_DAMAGE))
-		return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
-	
-	if (skillid > 0 && skillid < MAX_SKILL)
-		type = SkillStatusChangeTable[skillid];
-	
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skillid) {
 		case AL_HEAL:
@@ -3174,6 +3176,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		case NJ_RAIGEKISAI:
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
 	}
+
+	//Self skill with target changed? We assume these are offensive auto-select-target skills. [Skotlex]
+	//But only do this on the first call (flag&~1)
+	if (!(flag&1) && skill_get_inf(skillid)&INF_SELF_SKILL && src != bl && !(skill_get_nk(skillid)&NK_NO_DAMAGE))
+		return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
+	
+	if (skillid > 0 && skillid < MAX_SKILL)
+		type = SkillStatusChangeTable[skillid];
+	
 	tsc = status_get_sc(bl);
 
 	map_freeblock_lock();
