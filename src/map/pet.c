@@ -379,6 +379,7 @@ int pet_return_egg(struct map_session_data *sd)
 		if(battle_config.pet_status_support && sd->pet.intimate > 0)
 			status_calc_pc(sd,0);
 		memset(&sd->pet, 0, sizeof(struct s_pet));
+		sd->status.pet_id = 0;
 		sd->pet.incuvate = 1;
 		sd->petDB = NULL;
 	}
@@ -512,6 +513,8 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 		  	if (battle_config.error_log)
 				ShowError("pet_recv_petdata: Hatching pet (%d:%s) aborted, couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
 			sd->status.pet_id = 0;
+			memset(&sd->pet,0,sizeof(struct s_pet));
+			sd->pet.incuvate = 1;
 			return 1;
 		}
 		if (!pet_birth_process(sd)) //Pet hatched. Delete egg.
