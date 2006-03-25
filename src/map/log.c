@@ -705,6 +705,7 @@ int log_npc(struct map_session_data *sd, const char *message)
 
 int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, int x, int y, char *dst_charname, char *message){
 #ifndef TXT_ONLY
+	char t_charname[NAME_LENGTH*2];
 	char t_msg[MESSAGE_SIZE*2+1]; //Chat line fully escaped, with an extra space just in case.
 #else
 	FILE *logfp;
@@ -717,7 +718,7 @@ int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, 
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0){
 		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%s')", 
-		 	log_config.log_chat_db, type, type_id, src_charid, src_accid, map, x, y, dst_charname, jstrescapecpy(t_msg, (char *)message));
+		 	log_config.log_chat_db, type, type_id, src_charid, src_accid, map, x, y, jstrescapecpy(t_charname, dst_charname), jstrescapecpy(t_msg, message));
 	
 		if(mysql_query(&logmysql_handle, tmp_sql)){
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
