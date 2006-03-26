@@ -48,6 +48,11 @@ char* jstrescapecpy (char* pt,char* spt) {
 	//a escape character is found, the target's final length increases! [Skotlex]
 	int i =0, j=0;
 
+	if (!spt) {	//Return an empty string [Skotlex]
+		pt[0] = '\0';
+		return &pt[0];
+	}
+	
 	while (spt[i] != '\0') {
 		switch (spt[i]) {
 			case '\'':
