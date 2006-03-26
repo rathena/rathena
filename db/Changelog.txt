@@ -27,6 +27,7 @@
 =========================
 
 03/26
+	* 5136,Louise's Santa_Hat lost its bonus. Gosh!! There are so many other EVEN items left with BONUSES [Lupus]
 	* Added missing slots to Alice Doll, Marionette Doll, Kabuki Mask & Kawaii_Ribbon [Lupus]
 03/24
 	* Fixed 5123,Ulle's_Cap bug [Lupus]
