@@ -42,6 +42,7 @@ int itemdb_searchname_sub(DBKey key,void *data,va_list ap)
 	char *str;
 	str=va_arg(ap,char *);
 	dst=va_arg(ap,struct item_data **);
+	if(item == dummy_item) return 0;
 	if( strcmpi(item->name,str)==0 ) //by lupus
 		*dst=item;
 	return 0;
@@ -183,7 +184,9 @@ int itemdb_searchrandomgroup (int groupid)
  */
 struct item_data* itemdb_exists(int nameid)
 {
-	return idb_get(item_db,nameid);
+	struct item_data* id = idb_get(item_db,nameid);
+	if (id == dummy_item) return NULL;
+	return id;
 }
 
 /*==========================================

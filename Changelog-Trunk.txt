@@ -6,6 +6,7 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/03/26
+	* itemdb_exists and itemdb_searchname should now ignore dummy_item matches. [Skotlex]
 	* Fixed jstrescapecpy crashing when you pass a null string to parse. [Skotlex]
 2006/03/25
 	* Fixed the map-server freeze/crash on Warp Portal. [Skotlex]
