@@ -6,6 +6,7 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/03/25
+	* Fixed the map-server freeze/crash on Warp Portal. [Skotlex]
 	* Fixed Grandcross/Granddarkness showing no skill animation. [Skotlex]
 	* Fixed mob-casted grandcross doing nothing unless the target was "self" [Skotlex]
 2006/03/24

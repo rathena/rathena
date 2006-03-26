@@ -154,7 +154,6 @@ int pc_delinvincibletimer(struct map_session_data *sd) {
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
 		sd->invincible_timer = -1;
 	}
-	skill_unit_move(&sd->bl,gettick(),1);
 	return 0;
 }
 
@@ -3065,7 +3064,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		} while(map_getcell(m,x,y,CELL_CHKNOPASS));
 	}
 
-	if(sd->mapindex && sd->bl.prev != NULL){
+	if(sd->bl.prev != NULL){
 		unit_remove_map(&sd->bl, 0);
 		if(sd->status.pet_id > 0 && sd->pd)
 			unit_remove_map(&sd->pd->bl, 0);

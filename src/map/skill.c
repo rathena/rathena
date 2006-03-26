@@ -6590,7 +6590,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 						skill_delunitgroup(sg);
 				}
 			}
-		} else if(battle_config.mob_warpportal)
+		} else if(battle_config.mob_warpportal && bl->type != BL_PET)
 			unit_warp(bl,map_mapindex2mapid(sg->val3),sg->val2>>16,sg->val2&0xffff,3);
 		break;
 
