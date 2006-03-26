@@ -193,9 +193,11 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		ud->walktimer = -1;
 		
 		if(sd) {
-			if(map_getcell(bl->m,x,y,CELL_CHKNPC))
+			if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {
 				npc_touch_areanpc(sd,bl->m,x,y);
-			else
+				if (bl->prev == NULL) //Script could have warped char, abort remaining of the function.
+					return 0;
+			} else
 				sd->areanpc_id=0;
 			if (sd->state.gmaster_flag)
 			{ //Guild Aura: Likely needs to be recoded, this method seems inefficient.
@@ -343,9 +345,11 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 	ud->walktimer = -1;
 		
 	if(sd) {
-		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
+		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
 			npc_touch_areanpc(sd,bl->m,bl->x,bl->y);
-		else
+			if (bl->prev == NULL) //Script could have warped char, abort remaining of the function.
+				return 0;
+		} else
 			sd->areanpc_id=0;
 		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0)
 		{	//Check if pet needs to be teleported. [Skotlex]
