@@ -14,6 +14,7 @@
 #endif
 #include <sys/types.h>
 #include <time.h>
+#include "../common/limits.h"
 
 #include "../common/malloc.h"
 #include "socket.h"
@@ -34,10 +35,6 @@
 //Updated table (only doc^^) [Sirius]
 //Used Packets: U->2af8
 //Free Packets: F->2af8
-
-#ifndef USHRT_MAX
-	#define USHRT_MAX 65535
-#endif
 
 struct dbt *auth_db;
 

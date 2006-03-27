@@ -13,6 +13,7 @@
 #include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/showmsg.h"
+#include "../common/limits.h"
 
 #include "log.h"
 #include "clif.h"

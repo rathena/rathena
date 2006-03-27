@@ -6,12 +6,18 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/03/26
+	* Refixed the fix with a constant list for Win32 users - limits.h (imported from MSVC) [Lance]
 	* Fixed a problem in chrif.c where USHRT_MAX was undefined. [Codemaster]
 	* Added jAthena's new start and athena-start shell scripts. [Lance]
 	* Changed status_point/skill_point to unsigned short. Adjusted the code as
+
 	  necessary to prevent overflows. [Skotlex]
+
 	* itemdb_exists and itemdb_searchname should now ignore dummy_item matches. [Skotlex]
+
 	* Fixed jstrescapecpy crashing when you pass a null string to parse. [Skotlex]
+
+
 2006/03/25
 	* Fixed the map-server freeze/crash on Warp Portal. [Skotlex]
 	* Fixed Grandcross/Granddarkness showing no skill animation. [Skotlex]
