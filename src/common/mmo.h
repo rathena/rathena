@@ -181,7 +181,7 @@ struct mmo_charstatus {
 	int zeny;
 
 	short class_;
-	short status_point,skill_point;
+	unsigned short status_point,skill_point;
 	int hp,max_hp,sp,max_sp;
 	short option,manner;
 	unsigned char karma;

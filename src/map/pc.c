@@ -3871,13 +3871,13 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		if (battle_config.pet_lv_rate && sd->pd)	//<Skotlex> update pet's level
 			status_calc_pet(sd,0);
 		if (battle_config.use_statpoint_table)
-		{	// Taken from pc_resetstate. [Skotlex]
-			int lv = sd->status.base_level;
-		  	if (lv >= MAX_LEVEL) lv = MAX_LEVEL - 1;
-			else if (lv < 1) lv = 1;
-			sd->status.status_point += statp[lv] - statp[lv-1];
-		} else //Estimated way.
-			sd->status.status_point += (sd->status.base_level+14) / 5 ;
+			next = statp[sd->status.base_level] - statp[sd->status.base_level-1];
+		else //Estimated way.
+			next = (sd->status.base_level+14) / 5 ;
+		if (sd->status.status_point > USHRT_MAX - next)
+			sd->status.status_point = USHRT_MAX;
+		else	
+			sd->status.status_point += next;
 		clif_updatestatus(sd,SP_STATUSPOINT);
 		clif_updatestatus(sd,SP_BASELEVEL);
 		clif_updatestatus(sd,SP_NEXTBASEEXP);
@@ -4422,13 +4422,14 @@ int pc_resetstate(struct map_session_data* sd)
 	
 	if (battle_config.use_statpoint_table)
 	{	// New statpoint table used here - Dexity
-		int lv;
-		// allow it to just read the last entry [celest]
-		lv = sd->status.base_level < MAX_LEVEL ? sd->status.base_level : MAX_LEVEL - 1;
-		
-		sd->status.status_point = statp[lv];
+		int stat;
+		stat = statp[sd->status.base_level];
 		if (sd->class_&JOBL_UPPER)
 			sd->status.status_point+=52;	// extra 52+48=100 stat points
+		if (stat > USHRT_MAX)
+			sd->status.status_point = USHRT_MAX;
+		else
+			sd->status.status_point = stat;
 	} else { //Use new stat-calculating equation [Skotlex]
 #define sumsp(a) (((a-1)/10 +2)*(5*((a-1)/10 +1) + (a-1)%10) -10)
 		int add=0;
@@ -4438,8 +4439,8 @@ int pc_resetstate(struct map_session_data* sd)
 		add += sumsp(sd->status.int_);
 		add += sumsp(sd->status.dex);
 		add += sumsp(sd->status.luk);
-		if (add > SHRT_MAX - sd->status.status_point)
-			sd->status.status_point = SHRT_MAX;
+		if (add > USHRT_MAX - sd->status.status_point)
+			sd->status.status_point = USHRT_MAX;
 		else
 			sd->status.status_point+=add;
 	}
@@ -4478,7 +4479,7 @@ int pc_resetstate(struct map_session_data* sd)
  */
 int pc_resetskill(struct map_session_data* sd, int flag)
 {
-	int i, skill, inf2;
+	int i, skill, inf2, skill_point=0;
 	nullpo_retr(0, sd);
 
 	if (pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd))
@@ -4491,9 +4492,9 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 				!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL))) //Avoid reseting wedding/linker skills.
 			{
 					if (!sd->status.skill[i].flag)
-						sd->status.skill_point += skill;
+						skill_point += skill;
 					else if (sd->status.skill[i].flag > 2 && sd->status.skill[i].flag != 13)
-						sd->status.skill_point += (sd->status.skill[i].flag - 2);
+						skill_point += (sd->status.skill[i].flag - 2);
 					sd->status.skill[i].lv = 0;
 					sd->status.skill[i].flag = 0;
 			}
@@ -4506,6 +4507,12 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 			sd->status.skill[i].lv = 0;
 		}
 	}
+	
+	if (sd->status.skill_point > USHRT_MAX - skill_point)
+		sd->status.skill_point = USHRT_MAX;
+	else
+		sd->status.skill_point += skill_point;
+	
 	if (flag) {
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_skillinfoblock(sd);
@@ -5085,8 +5092,14 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		if ((unsigned int)val > pc_maxbaselv(sd)) //Capping to max
 			val = pc_maxbaselv(sd);
 		if ((unsigned int)val > sd->status.base_level) {
+			int stat=0;
 			for (i = 1; i <= (int)((unsigned int)val - sd->status.base_level); i++)
-				sd->status.status_point += (sd->status.base_level + i + 14) / 5 ;
+				stat += (sd->status.base_level + i + 14) / 5 ;
+			if (sd->status.status_point > USHRT_MAX - stat)
+				
+				sd->status.status_point = USHRT_MAX;
+			else
+				sd->status.status_point += stat;
 		}
 		sd->status.base_level = (unsigned int)val;
 		sd->status.base_exp = 0;
@@ -5100,7 +5113,10 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_JOBLEVEL:
 		if ((unsigned int)val >= sd->status.job_level) {
 			if ((unsigned int)val > pc_maxjoblv(sd)) val = pc_maxjoblv(sd);
-			sd->status.skill_point += ((unsigned int)val-sd->status.job_level);
+			if (sd->status.skill_point > USHRT_MAX - val + sd->status.job_level)
+				sd->status.skill_point = USHRT_MAX;
+			else
+				sd->status.skill_point += val-sd->status.job_level;
 			clif_updatestatus(sd, SP_SKILLPOINT);
 			clif_misceffect(&sd->bl, 1);
 		}

@@ -1276,7 +1276,7 @@ int charcommand_baselevel(
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
-	int level = 0, i;
+	int level = 0, i, status_point=0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %23[^\n]", &level, player) < 2 || level == 0) {
@@ -1296,7 +1296,11 @@ int charcommand_baselevel(
 					pl_sd->status.base_level > pc_maxbaselv(pl_sd) -level)
 					level = pc_maxbaselv(pl_sd) - pl_sd->status.base_level;
 				for (i = 1; i <= level; i++)
-					pl_sd->status.status_point += (pl_sd->status.base_level + i + 14) / 5;
+					status_point += (pl_sd->status.base_level + i + 14) / 5;
+				if (pl_sd->status.status_point > USHRT_MAX -  status_point)
+					pl_sd->status.status_point = USHRT_MAX;
+				else
+					pl_sd->status.status_point += status_point;
 				pl_sd->status.base_level += (unsigned int)level;
 				clif_updatestatus(pl_sd, SP_BASELEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
@@ -1315,9 +1319,11 @@ int charcommand_baselevel(
 					level = pl_sd->status.base_level -1;
 				if (pl_sd->status.status_point > 0) {
 					for (i = 0; i > -level; i--)
-						pl_sd->status.status_point -= (pl_sd->status.base_level +i + 14) / 5;
-					if (pl_sd->status.status_point < 0)
+						status_point -= (pl_sd->status.base_level +i + 14) / 5;
+					if (pl_sd->status.status_point < status_point)
 						pl_sd->status.status_point = 0;
+					else
+						pl_sd->status.status_point -= status_point;
 					clif_updatestatus(pl_sd, SP_STATUSPOINT);
 				} // to add: remove status points from stats
 				pl_sd->status.base_level -= (unsigned int)level;
@@ -1371,7 +1377,11 @@ int charcommand_joblevel(
 				pl_sd->status.job_level += (unsigned int)level;
 				clif_updatestatus(pl_sd, SP_JOBLEVEL);
 				clif_updatestatus(pl_sd, SP_NEXTJOBEXP);
-				pl_sd->status.skill_point += level;
+
+				if (pl_sd->status.skill_point > USHRT_MAX - level)
+					pl_sd->status.skill_point = USHRT_MAX;
+				else
+					pl_sd->status.skill_point += level;
 				clif_updatestatus(pl_sd, SP_SKILLPOINT);
 				status_calc_pc(pl_sd, 0);
 				clif_misceffect(&pl_sd->bl, 1);
@@ -1389,9 +1399,10 @@ int charcommand_joblevel(
 				clif_updatestatus(pl_sd, SP_NEXTJOBEXP);
 				if (pl_sd->status.skill_point < level)
 					pc_resetskill(pl_sd, 0); //Need more skill points to substract
-				pl_sd->status.skill_point -= level;
-				if (pl_sd->status.skill_point < 0)
+				if (pl_sd->status.skill_point < level)
 					pl_sd->status.skill_point = 0;
+				else
+					pl_sd->status.skill_point -= level;
 				clif_updatestatus(pl_sd, SP_SKILLPOINT);
 				status_calc_pc(pl_sd, 0);
 				clif_displaymessage(fd, msg_table[69]); // Character's job level lowered.
@@ -1642,11 +1653,12 @@ int charcommand_skpoint(
 	}
 
 	if ((pl_sd = map_nick2sd(player)) != NULL) {
-		new_skill_point = (int)pl_sd->status.skill_point + point;
-		if (point > 0 && (point > 0x7FFF || new_skill_point > 0x7FFF)) // fix positiv overflow
-			new_skill_point = 0x7FFF;
-		else if (point < 0 && (point < -0x7FFF || new_skill_point < 0)) // fix negativ overflow
+		if (point > 0 && pl_sd->status.skill_point > USHRT_MAX - point)
+			new_skill_point = USHRT_MAX;
+		else if (point < 0 && pl_sd->status.skill_point < -point)
 			new_skill_point = 0;
+		else
+			new_skill_point = pl_sd->status.skill_point + point;
 		if (new_skill_point != (int)pl_sd->status.skill_point) {
 			pl_sd->status.skill_point = new_skill_point;
 			clif_updatestatus(pl_sd, SP_SKILLPOINT);
@@ -1686,11 +1698,12 @@ int charcommand_stpoint(
 	}
 
 	if ((pl_sd = map_nick2sd(player)) != NULL) {
-		new_status_point = (int)pl_sd->status.status_point + point;
-		if (point > 0 && (point > 0x7FFF || new_status_point > 0x7FFF)) // fix positiv overflow
-			new_status_point = 0x7FFF;
-		else if (point < 0 && (point < -0x7FFF || new_status_point < 0)) // fix negativ overflow
+		if (point > 0 && pl_sd->status.status_point > USHRT_MAX - point)
+			new_status_point = USHRT_MAX;
+		else if (point < 0 && pl_sd->status.status_point < -point)
 			new_status_point = 0;
+		else
+			new_status_point = pl_sd->status.status_point + point;
 		if (new_status_point != (int)pl_sd->status.status_point) {
 			pl_sd->status.status_point = new_status_point;
 			clif_updatestatus(pl_sd, SP_STATUSPOINT);

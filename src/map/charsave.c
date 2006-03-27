@@ -74,8 +74,8 @@ struct mmo_charstatus *charsave_loadchar(int charid){
          c->hp = atoi(charsql_row[17]);
          c->max_sp = atoi(charsql_row[18]);
          c->sp = atoi(charsql_row[19]);
-         c->status_point = atoi(charsql_row[20]);
-         c->skill_point = atoi(charsql_row[21]);
+         c->status_point = atoi(charsql_row[20]) > USHRT_MAX? USHRT_MAX : atoi(charsql_row[20]);
+         c->skill_point = atoi(charsql_row[21]) > USHRT_MAX? USHRT_MAX : atoi(charsql_row[21]);
          c->option = atoi(charsql_row[22]);
          c->karma = atoi(charsql_row[23]);
          c->manner = atoi(charsql_row[24]);

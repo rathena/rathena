@@ -2686,7 +2686,7 @@ int atcommand_baselevelup(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int level=0, i=0;
+	int level=0, i=0, status_point=0;
 	nullpo_retr(-1, sd);
 	level = atoi(message);
 
@@ -2703,7 +2703,12 @@ int atcommand_baselevelup(
 		if ((unsigned int)level > pc_maxbaselv(sd) || (unsigned int)level > pc_maxbaselv(sd) - sd->status.base_level) // fix positiv overflow
 			level = pc_maxbaselv(sd) - sd->status.base_level;
 		for (i = 1; i <= level; i++)
-			sd->status.status_point += (sd->status.base_level + i + 14) / 5;
+			status_point += (sd->status.base_level + i + 14) / 5;
+
+		if (sd->status.status_point > USHRT_MAX - status_point)
+			sd->status.status_point = USHRT_MAX;
+		else
+			sd->status.status_point += status_point;
 		sd->status.base_level += (unsigned int)level;
 		clif_updatestatus(sd, SP_BASELEVEL);
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
@@ -2722,9 +2727,11 @@ int atcommand_baselevelup(
 			level = sd->status.base_level-1;
 		if (sd->status.status_point > 0) {
 			for (i = 0; i > -level; i--)
-				sd->status.status_point -= (sd->status.base_level + i + 14) / 5;
-			if (sd->status.status_point < 0)
+				status_point -= (sd->status.base_level + i + 14) / 5;
+			if (sd->status.status_point < status_point)
 				sd->status.status_point = 0;
+			else
+				sd->status.status_point -= status_point;
 			clif_updatestatus(sd, SP_STATUSPOINT);
 		} /* to add: remove status points from stats */
 		sd->status.base_level -= (unsigned int)level;
@@ -2764,7 +2771,10 @@ int atcommand_joblevelup(
 		sd->status.job_level += (unsigned int)level;
 		clif_updatestatus(sd, SP_JOBLEVEL);
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
-		sd->status.skill_point += level;
+		if (sd->status.skill_point > USHRT_MAX - level)
+			sd->status.skill_point = USHRT_MAX;
+		else
+			sd->status.skill_point += level;
 		clif_updatestatus(sd, SP_SKILLPOINT);
 		status_calc_pc(sd, 0);
 		clif_misceffect(&sd->bl, 1);
@@ -2782,9 +2792,10 @@ int atcommand_joblevelup(
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
 		if (sd->status.skill_point < level)
 			pc_resetskill(sd,0);	//Reset skills since we need to substract more points.
-		sd->status.skill_point -= level;
-		if (sd->status.skill_point < 0)
+		if (sd->status.skill_point < level)
 			sd->status.skill_point = 0;
+		else
+			sd->status.skill_point -= level;
 		clif_updatestatus(sd, SP_SKILLPOINT);
 		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_table[25]); // Job level lowered.
@@ -4020,14 +4031,15 @@ int atcommand_statuspoint(
 		return -1;
 	}
 
-	new_status_point = (int)sd->status.status_point + point;
-	if (point > 0 && (point > 0x7FFF || new_status_point > 0x7FFF)) // fix positiv overflow
-		new_status_point = 0x7FFF;
-	else if (point < 0 && (point < -0x7FFF || new_status_point < 0)) // fix negativ overflow
+	if (point > 0 && sd->status.status_point > USHRT_MAX - point)
+		new_status_point = USHRT_MAX;
+	else
+	if (point < 0 && sd->status.status_point < -point)
 		new_status_point = 0;
-
+	else
+		new_status_point = sd->status.status_point + point;
 	if (new_status_point != (int)sd->status.status_point) {
-		sd->status.status_point = (short)new_status_point;
+		sd->status.status_point = (unsigned short)new_status_point;
 		clif_updatestatus(sd, SP_STATUSPOINT);
 		clif_displaymessage(fd, msg_table[174]); // Number of status points changed!
 	} else {
@@ -4057,14 +4069,15 @@ int atcommand_skillpoint(
 		return -1;
 	}
 
-	new_skill_point = (int)sd->status.skill_point + point;
-	if (point > 0 && (point > 0x7FFF || new_skill_point > 0x7FFF)) // fix positiv overflow
-		new_skill_point = 0x7FFF;
-	else if (point < 0 && (point < -0x7FFF || new_skill_point < 0)) // fix negativ overflow
+	if (point > 0 && sd->status.skill_point > USHRT_MAX - point)
+		new_skill_point = USHRT_MAX;
+	else if (point < 0 && sd->status.skill_point < -point)
 		new_skill_point = 0;
-
+	else
+		new_skill_point = sd->status.skill_point + point;
+	
 	if (new_skill_point != (int)sd->status.skill_point) {
-		sd->status.skill_point = (short)new_skill_point;
+		sd->status.skill_point = (unsigned short)new_skill_point;
 		clif_updatestatus(sd, SP_SKILLPOINT);
 		clif_displaymessage(fd, msg_table[175]); // Number of skill points changed!
 	} else {

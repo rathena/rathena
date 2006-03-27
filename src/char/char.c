@@ -580,8 +580,8 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->int_ = tmp_int[16];
 	p->dex = tmp_int[17];
 	p->luk = tmp_int[18];
-	p->status_point = tmp_int[19];
-	p->skill_point = tmp_int[20];
+	p->status_point = tmp_int[19] > USHRT_MAX ? USHRT_MAX : tmp_int[19];
+	p->skill_point = tmp_int[20] > USHRT_MAX ? USHRT_MAX : tmp_int[20];
 	p->option = tmp_int[21];
 	p->karma = tmp_int[22];
 	p->manner = tmp_int[23];
@@ -1637,11 +1637,11 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOL(fd,j+32) = p->karma;
 		WFIFOL(fd,j+36) = p->manner;
 
-		WFIFOW(fd,j+40) = p->status_point;
-		WFIFOW(fd,j+42) = (p->hp > 0x7fff) ? 0x7fff : p->hp;
-		WFIFOW(fd,j+44) = (p->max_hp > 0x7fff) ? 0x7fff : p->max_hp;
-		WFIFOW(fd,j+46) = (p->sp > 0x7fff) ? 0x7fff : p->sp;
-		WFIFOW(fd,j+48) = (p->max_sp > 0x7fff) ? 0x7fff : p->max_sp;
+		WFIFOW(fd,j+40) = (p->status_point>SHRT_MAX) ? SHRT_MAX : p->status_point;
+		WFIFOW(fd,j+42) = (p->hp > SHRT_MAX) ? SHRT_MAX : p->hp;
+		WFIFOW(fd,j+44) = (p->max_hp > SHRT_MAX) ? SHRT_MAX : p->max_hp;
+		WFIFOW(fd,j+46) = (p->sp > SHRT_MAX) ? SHRT_MAX : p->sp;
+		WFIFOW(fd,j+48) = (p->max_sp > SHRT_MAX) ? SHRT_MAX : p->max_sp;
 		WFIFOW(fd,j+50) = DEFAULT_WALK_SPEED; // p->speed;
 		WFIFOW(fd,j+52) = p->class_;
 		WFIFOW(fd,j+54) = p->hair;
@@ -1654,7 +1654,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		else WFIFOW(fd,j+56) = p->weapon;
 
 		WFIFOW(fd,j+58) = p->base_level;
-		WFIFOW(fd,j+60) = p->skill_point;
+		WFIFOW(fd,j+60) = (p->skill_point>SHRT_MAX)? SHRT_MAX : p->skill_point;
 		WFIFOW(fd,j+62) = p->head_bottom;
 		WFIFOW(fd,j+64) = p->shield;
 		WFIFOW(fd,j+66) = p->head_top;
@@ -1989,7 +1989,10 @@ int parse_tologin(int fd) {
 							// remove specifical skills of classes 19, 4020 and 4042
 							for(j = 315; j <= 322; j++) {
 								if (char_dat[i].status.skill[j].id > 0 && !char_dat[i].status.skill[j].flag) {
-									char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
+									if (char_dat[i].status.skill_point > USHRT_MAX - char_dat[i].status.skill[j].lv)
+										char_dat[i].status.skill_point = USHRT_MAX;
+									else
+										char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
 									char_dat[i].status.skill[j].id = 0;
 									char_dat[i].status.skill[j].lv = 0;
 								}
@@ -1997,7 +2000,11 @@ int parse_tologin(int fd) {
 							// remove specifical skills of classes 20, 4021 and 4043
 							for(j = 323; j <= 330; j++) {
 								if (char_dat[i].status.skill[j].id > 0 && !char_dat[i].status.skill[j].flag) {
-									char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
+									if (char_dat[i].status.skill_point > USHRT_MAX - char_dat[i].status.skill[j].lv)
+										char_dat[i].status.skill_point = USHRT_MAX;
+									else
+										char_dat[i].status.skill_point += char_dat[i].status.skill[j].lv;
+
 									char_dat[i].status.skill[j].id = 0;
 									char_dat[i].status.skill[j].lv = 0;
 								}
@@ -3390,16 +3397,16 @@ int parse_char(int fd) {
 			WFIFOL(fd,2+32) = char_dat[i].status.manner;
 
 			WFIFOW(fd,2+40) = 0x30;
-			WFIFOW(fd,2+42) = (char_dat[i].status.hp > 0x7fff) ? 0x7fff : char_dat[i].status.hp;
-			WFIFOW(fd,2+44) = (char_dat[i].status.max_hp > 0x7fff) ? 0x7fff : char_dat[i].status.max_hp;
-			WFIFOW(fd,2+46) = (char_dat[i].status.sp > 0x7fff) ? 0x7fff : char_dat[i].status.sp;
-			WFIFOW(fd,2+48) = (char_dat[i].status.max_sp > 0x7fff) ? 0x7fff : char_dat[i].status.max_sp;
+			WFIFOW(fd,2+42) = (char_dat[i].status.hp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.hp;
+			WFIFOW(fd,2+44) = (char_dat[i].status.max_hp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.max_hp;
+			WFIFOW(fd,2+46) = (char_dat[i].status.sp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.sp;
+			WFIFOW(fd,2+48) = (char_dat[i].status.max_sp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.max_sp;
 			WFIFOW(fd,2+50) = DEFAULT_WALK_SPEED; // char_dat[i].status.speed;
 			WFIFOW(fd,2+52) = char_dat[i].status.class_;
 			WFIFOW(fd,2+54) = char_dat[i].status.hair;
 
 			WFIFOW(fd,2+58) = char_dat[i].status.base_level;
-			WFIFOW(fd,2+60) = char_dat[i].status.skill_point;
+			WFIFOW(fd,2+60) = (char_dat[i].status.skill_point > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.skill_point;
 
 			WFIFOW(fd,2+64) = char_dat[i].status.shield;
 			WFIFOW(fd,2+66) = char_dat[i].status.head_top;
@@ -3408,12 +3415,12 @@ int parse_char(int fd) {
 
 			memcpy(WFIFOP(fd,2+74), char_dat[i].status.name, NAME_LENGTH);
 
-			WFIFOB(fd,2+98) = (char_dat[i].status.str > 255) ? 255 : char_dat[i].status.str;
-			WFIFOB(fd,2+99) = (char_dat[i].status.agi > 255) ? 255 : char_dat[i].status.agi;
-			WFIFOB(fd,2+100) = (char_dat[i].status.vit > 255) ? 255 : char_dat[i].status.vit;
-			WFIFOB(fd,2+101) = (char_dat[i].status.int_ > 255) ? 255 : char_dat[i].status.int_;
-			WFIFOB(fd,2+102) = (char_dat[i].status.dex > 255) ? 255 : char_dat[i].status.dex;
-			WFIFOB(fd,2+103) = (char_dat[i].status.luk > 255) ? 255 : char_dat[i].status.luk;
+			WFIFOB(fd,2+98) = (char_dat[i].status.str > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.str;
+			WFIFOB(fd,2+99) = (char_dat[i].status.agi > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.agi;
+			WFIFOB(fd,2+100) = (char_dat[i].status.vit > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.vit;
+			WFIFOB(fd,2+101) = (char_dat[i].status.int_ > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.int_;
+			WFIFOB(fd,2+102) = (char_dat[i].status.dex > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.dex;
+			WFIFOB(fd,2+103) = (char_dat[i].status.luk > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.luk;
 			WFIFOB(fd,2+104) = char_dat[i].status.char_num;
 
 			WFIFOSET(fd,108);

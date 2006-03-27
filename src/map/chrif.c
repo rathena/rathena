@@ -861,7 +861,10 @@ int chrif_changedsex(int fd)
 				// remove specifical skills of Bard classes 
 				for(i = 315; i <= 322; i++) {
 					if (sd->status.skill[i].id > 0 && !sd->status.skill[i].flag) {
-						sd->status.skill_point += sd->status.skill[i].lv;
+						if (sd->status.skill_point > USHRT_MAX - sd->status.skill[i].lv)
+							sd->status.skill_point = USHRT_MAX;
+						else
+							sd->status.skill_point += sd->status.skill[i].lv;
 						sd->status.skill[i].id = 0;
 						sd->status.skill[i].lv = 0;
 					}
@@ -869,7 +872,10 @@ int chrif_changedsex(int fd)
 				// remove specifical skills of Dancer classes 
 				for(i = 323; i <= 330; i++) {
 					if (sd->status.skill[i].id > 0 && !sd->status.skill[i].flag) {
-						sd->status.skill_point += sd->status.skill[i].lv;
+						if (sd->status.skill_point > USHRT_MAX - sd->status.skill[i].lv)
+							sd->status.skill_point = USHRT_MAX;
+						else
+							sd->status.skill_point += sd->status.skill[i].lv;
 						sd->status.skill[i].id = 0;
 						sd->status.skill[i].lv = 0;
 					}
