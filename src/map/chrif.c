@@ -35,6 +35,10 @@
 //Used Packets: U->2af8
 //Free Packets: F->2af8
 
+#ifndef USHRT_MAX
+	#define USHRT_MAX 65535
+#endif
+
 struct dbt *auth_db;
 
 static const int packet_len_table[0x3d] = {

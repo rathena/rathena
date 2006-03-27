@@ -6,6 +6,7 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/03/26
+	* Fixed a problem in chrif.c where USHRT_MAX was undefined. [Codemaster]
 	* Added jAthena's new start and athena-start shell scripts. [Lance]
 	* Changed status_point/skill_point to unsigned short. Adjusted the code as
 	  necessary to prevent overflows. [Skotlex]
