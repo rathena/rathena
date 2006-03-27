@@ -240,6 +240,7 @@ enum {
 	SC_KAENSIN,
 	SC_SUITON,
 	SC_NEN,
+	SC_KNOWLEDGE,
 	
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };
@@ -362,7 +363,7 @@ enum {
 	SI_STAR_COMFORT		= 171,	
 	SI_PRESERVE		= 181,
 	SI_BATTLEORDERS		= 182,
-// 184 = WTF?? creates the black shape of 4_m_02 NPC, with NPC talk cursor
+	SI_INTRAVISION	= 184, //WTF?? creates the black shape of 4_m_02 NPC, with NPC talk cursor. Supposedly intravision shows this.
 	SI_DOUBLECAST		= 186,
 	SI_MAXOVERTHRUST	= 188,
 	SI_TAROT		= 191, // the icon allows no doubt... but what is it really used for ?? [DracoRPG]

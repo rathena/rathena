@@ -320,7 +320,20 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 				//Check if hidden, better to modify the char's buffer than the
 				//given buffer to prevent intravision affecting the packet as 
 				//it's being received by everyone. [Skotlex]
+				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 )
+					&& bl != src_bl && WFIFOW(sd->fd,0) == 0x0196)
+			  	{	//New intravision method, just modify the status change/start packet. [Skotlex]
+					switch (WFIFOW(sd->fd,2)) {
+					case SI_HIDING:
+					case SI_CLOAKING:
+					case SI_CHASEWALK:
+						WFIFOW(sd->fd,2) = SI_INTRAVISION;
+					}
+				}
+					
+				/* Previous implementation.
 				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 ) && bl != src_bl) {
+
 					struct status_change *sc = status_get_sc(src_bl);
 					if(sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK)))
 					{	//option‚ÌC³
@@ -342,6 +355,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 						}
 					}
 				}
+				*/
 				WFIFOSET(sd->fd,len);
 			}
 		}
@@ -8763,6 +8777,8 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
  */
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 {
+	int i;
+	
 	if(sd->bl.prev != NULL)
 		return;
 
@@ -8889,7 +8905,14 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		ShowStatus("%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
 			npc_event_doall_id(script_config.loadmap_event_name, sd->bl.id), script_config.loadmap_event_name);
 	}
-	if (pc_checkskill(sd,SG_KNOWLEDGE)    || 
+	if ((i = pc_checkskill(sd,SG_KNOWLEDGE)) > 0) {
+		if(sd->bl.m == sd->feel_map[0].m
+			|| sd->bl.m == sd->feel_map[1].m
+			|| sd->bl.m == sd->feel_map[2].m)
+			sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
+	}
+
+	if (
 	    pc_checkskill(sd,SG_SUN_COMFORT)  ||
 	    pc_checkskill(sd,SG_MOON_COMFORT) ||
 	    pc_checkskill(sd,SG_STAR_COMFORT))
@@ -11758,7 +11781,11 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 	WFIFOL(fd,26)=sd->bl.id;
 	WFIFOW(fd,30)=i;
 	WFIFOSET(fd, packet_len_table[0x20e]);
-	if (pc_checkskill(sd,SG_KNOWLEDGE)) status_calc_pc(sd,0);
+	
+	if (sd->bl.m == sd->feel_map[i].m && 
+		(i = pc_checkskill(sd,SG_KNOWLEDGE)) > 0)
+		sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
+
 	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 

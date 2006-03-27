@@ -254,6 +254,7 @@ void initChangeTables(void) {
 	set_sc(SG_SUN_COMFORT,          SC_SUN_COMFORT,         SI_SUN_COMFORT);
 	set_sc(SG_MOON_COMFORT,         SC_MOON_COMFORT,        SI_MOON_COMFORT);
 	set_sc(SG_STAR_COMFORT,         SC_STAR_COMFORT,        SI_STAR_COMFORT);
+	set_sc(SG_KNOWLEDGE,            SC_KNOWLEDGE,           SI_BLANK);
 	set_sc(SG_FUSION,               SC_FUSION,              SI_BLANK);
 	set_sc(BS_ADRENALINE2,          SC_ADRENALINE2,         SI_ADRENALINE2);
 	set_sc(SL_KAIZEL,               SC_KAIZEL,              SI_KAIZEL);
@@ -1531,10 +1532,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->max_weight += 2000*skill;
 	if(pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0)
 		sd->max_weight += 10000;
-	if( (skill=pc_checkskill(sd,SG_KNOWLEDGE))>0) //SG skill [Komurka]
-		if(sd->bl.m == sd->feel_map[0].m || sd->bl.m == sd->feel_map[1].m || sd->bl.m == sd->feel_map[2].m)
-			sd->max_weight += sd->max_weight*skill/10;
-
+	if(sd->sc.data[SC_KNOWLEDGE].timer != -1)
+		sd->max_weight += sd->max_weight*sd->sc.data[SC_KNOWLEDGE].val1/10;
+	
 	// Skill SP cost
 	if((skill=pc_checkskill(sd,HP_MANARECHARGE))>0 )
 		sd->dsprate -= 4*skill;
@@ -4297,6 +4297,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					break;
 			}
 			break;
+
 		case SC_COMBO:
 		{
 			struct unit_data *ud = unit_bl2ud(bl);
@@ -4404,6 +4405,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_DELUGE:
 		case SC_CARTBOOST:		/* カ?トブ?スト */
 		case SC_QUAGMIRE:			/* クァグマイア */
+		case SC_KNOWLEDGE:
 			calc_flag = 1;
 			break;
 
@@ -4829,6 +4831,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_SKE:
 			case SC_SWOO: // [marquis007]
 			case SC_SKA: // [marquis007]
+			case SC_KNOWLEDGE:
 				calc_flag = 1;
 				break;
 
@@ -5370,6 +5373,13 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		break;
 
+	case SC_KNOWLEDGE:
+	if (sd) {
+		if(bl->m != sd->feel_map[0].m
+			&& bl->m != sd->feel_map[1].m
+			&& bl->m != sd->feel_map[2].m)
+			break; //End it
+	} //Otherwise continue.
 	// Status changes that don't have a time limit
 	case SC_AETERNA:
 	case SC_TRICKDEAD:
@@ -5388,6 +5398,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_RUN:
 	case SC_DODGE:
 	case SC_AUTOBERSERK: //continues until triggered off manually. [Skotlex]
+	case SC_NEN:
 		sc->data[type].timer=add_timer( 1000*600+tick,status_change_timer, bl->id, data );
 		return 0;
 
@@ -5548,10 +5559,6 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 		}
 		break;
-	// gs_status_change_timer [Vicious]
-	case SC_NEN:
-		sc->data[type].timer=add_timer( 1000*600+tick,status_change_timer, bl->id, data );
-		return 0;
 	}
 
 	// default for all non-handled control paths

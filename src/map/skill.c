@@ -2024,7 +2024,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		sc->count && sc->data[SC_DOUBLECAST].timer != -1 &&
 		rand() % 100 < 40+10*sc->data[SC_DOUBLECAST].val1)
 	{
-		skill_addtimerskill(src, tick + dmg.div_*dmg.amotion, bl->id, 0, 0, skillid, skilllv, BF_MAGIC, flag|1);
+//		skill_addtimerskill(src, tick + dmg.div_*dmg.amotion, bl->id, 0, 0, skillid, skilllv, BF_MAGIC, flag|1);
+		skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skillid, skilllv, BF_MAGIC, flag|1);
 	}
 
 	map_freeblock_unlock();
@@ -9005,8 +9006,9 @@ int skill_ganbatein(struct block_list *bl, va_list ap )
 	if ((unit = (struct skill_unit *)bl) == NULL || unit->group == NULL)
 		return 0;
 
-	if (skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
-		return 0; //Do not remove traps.
+// Apparently, it REMOVES traps.
+//	if (skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
+//		return 0; //Do not remove traps.
 	
 	if (unit->group->skill_id == SA_LANDPROTECTOR)
 		skill_delunit(unit);

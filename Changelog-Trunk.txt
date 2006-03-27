@@ -6,6 +6,14 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/03/27
+	* HW_GANBANTEIN now also removes traps. [Skotlex]
+	* PF_DOUBLECASTING takes effect amotion time after the initial cast instead
+	  of amotion*div [Skotlex]
+	* SG_KNOWLEDGE now lasts time1 after you quit a map before it clears out
+	  (defaults to 10 mins currently) [Skotlex]
+	* Modified Intravision to modify the status-change packet to specify
+	  SI_INTRAVISION instead of cloaking/hiding/chasewalk. I believe this is how
+	  intravision actually works. [Skotlex]
 	* Pet catching now uses the menuskill variables to prevent item usage from
 	  disrupting the catch process. [Skotlex]
 	* Added Safetywall to the list not blocked by Dispell. [Skotlex]

@@ -3020,6 +3020,10 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 				status_change_end(&sd->bl,SC_MOON_COMFORT,-1);
 			if (sd->sc.data[SC_STAR_COMFORT].timer != -1)
 				status_change_end(&sd->bl,SC_STAR_COMFORT,-1);
+			if (sd->sc.data[SC_KNOWLEDGE].timer != -1) {
+				delete_timer(sd->sc.data[SC_KNOWLEDGE].timer, status_change_timer);
+				sd->sc.data[SC_KNOWLEDGE].timer = add_timer(gettick() + skill_get_time(SG_KNOWLEDGE, sd->sc.data[SC_KNOWLEDGE].val1), status_change_timer, sd->bl.id, SC_KNOWLEDGE);
+			}
 		}
 	}
 
