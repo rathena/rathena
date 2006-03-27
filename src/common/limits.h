@@ -19,7 +19,7 @@
 #ifndef _INC_LIMITS
 #define _INC_LIMITS
 
-#if     defined(_WIN32)
+#if defined(_WIN32) || defined(CYGWIN)
 	#define CHAR_BIT      8         /* number of bits in a char */
 	#define SCHAR_MIN   (-128)      /* minimum signed char value */
 	#define SCHAR_MAX     127       /* maximum signed char value */
