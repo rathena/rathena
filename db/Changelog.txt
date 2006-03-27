@@ -26,8 +26,13 @@
 
 =========================
 
+03/27	* Removed EVENT bonuses from event items: [Lupus]
+	  2646,Bunch_of_Carnations, 2647,Nile_Rose, 2668,Woman_Glory, 5097,2_Years_Anniversary_Hat
+	  NOTE: If you want to use these or other EVENT BONUSES, set them via 'setitemscript' command
+		in your scripts. Check X-Mas Rings Event as example.
+	  Poki#3, please, update the item desc. Or explain that the bonuses are gone just after the events
 03/26
-	* 5136,Louise's Santa_Hat lost its bonus. Gosh!! There are so many other EVEN items left with BONUSES [Lupus]
+	* 5136,Louise's Santa_Hat lost its EVENT autocast bonus. [Lupus]
 	* Added missing slots to Alice Doll, Marionette Doll, Kabuki Mask & Kawaii_Ribbon [Lupus]
 03/24
 	* Fixed 5123,Ulle's_Cap bug [Lupus]

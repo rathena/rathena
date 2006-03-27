@@ -1114,8 +1114,8 @@
 2643,Serin's_Gold_Ring_,Serin's Gold Ring,5,,10,100,,0,,0,532676607,7,2,136,,0,0,0,{}
 2644,The_Sign,The Sign,5,,10,0,,0,,0,532676607,7,2,136,,0,0,0,{ bonus bMatkRate,5; bonus bAtkRate,5; }
 2645,Moonlight_Ring,Moonlight Ring,5,,10,200,,0,,0,337600238,7,2,136,,60,0,0,{}
-2646,Bunch_of_Carnations,Bunch of Carnations,5,,10,100,,0,,0,532676607,7,2,136,,0,0,0,{ bonus bAllStats,3; }
-2647,Nile_Rose,Nile Rose,5,,10,100,,0,,0,532676607,7,2,136,,0,0,0,{ bonus bAllStats,5; }
+2646,Bunch_of_Carnations,Bunch of Carnations,5,,10,100,,0,,0,532676607,7,2,136,,0,0,0,{}
+2647,Nile_Rose,Nile Rose,5,,10,100,,0,,0,532676607,7,2,136,,0,0,0,{ bonus bMaxHP,10; }
 2648,Morpheus's_Ring,Morpheus's Ring,5,,10,100,,0,,0,119529470,7,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; }
 2649,Morpheus's_Bracelet,Morpheus's Bracelet,5,,10,100,,0,,0,119529470,7,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; }
 2650,Morrigane's_Belt,Morrigane's Belt,5,,10,200,,0,,0,119529470,7,2,136,,61,0,0,{ bonus bAtk,5; bonus bCritical,3; }
@@ -1136,7 +1136,7 @@
 2665,Ring_of_Exorcism,Ring of Exorcism,5,,10,500,,0,,0,33040,7,2,136,,60,0,0,{ bonus2 bExpAddRace,RC_Undead,5; bonus2 bExpAddRace,RC_Demon,5; }
 2666,Lamp_of_Hope,Lamp of Hope,5,,,100,,0,,0,532676607,7,2,136,,0,0,0,{ bonus bStr,2; bonus2 bResEff,Eff_Blind,10; }
 2667,Glove_of_Archer,Gloves of Archer,5,,10,300,,0,,0,532676607,7,2,136,,60,0,0,{ bonus bHit,5; bonus bCritical,5; bonus bDex,1; }
-2668,Woman_Glory,Woman Glory,5,,10,1500,,1,,0,532676607,7,2,136,,94,,,{ bonus bAllStats,3; bonus bSPrecovRate,20; }
+2668,Woman_Glory,Woman Glory,5,,10,1500,,1,,0,532676607,7,2,136,,94,,,{}
 // Cards
 //===================================================================
 4001,Poring_Card,Poring Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bFlee2,1; }
@@ -1568,7 +1568,7 @@
 5093,Coif_,Coif,5,12000,,300,,5,,1,4352,7,0,768,,65,1,177,{ bonus bMaxSP,100; }
 5094,Helmet_of_Orc_Hero,Helmet of Orc Hero,5,,10,900,,5,,0,119529470,7,2,768,,55,1,178,{ bonus bStr,2; bonus bVit,1; }
 5096,Assassin_Mask_,Assassin Mask,5,,10,100,,0,,0,4352,7,2,1,,70,0,180,{}
-5097,2_Years_Anniversary_Hat,2 Years Anniversary Hat,5,,10,300,,3,,0,532676607,7,2,256,,0,1,144,{ bonus bAllStats,3; bonus bMdef,3; }
+5097,2_Years_Anniversary_Hat,2 Years Anniversary Hat,5,,10,300,,3,,0,532676607,7,2,256,,0,1,144,{ bonus bMdef,3; }
 5098,Tiger_Mask,Tiger Mask,5,,10,400,,2,,0,532676607,7,2,768,,50,0,181,{ bonus bStr,3; bonus bMaxHP,100; }
 5099,Neko_Mimi,Neko Mimi,5,,10,300,,1,,0,532676607,7,2,256,,0,1,182,{ bonus bLuk,2; bonus bMdef,10; bonus2 bSubRace,RC_Brute,5; }
 5100,Sales_Banner,Sales Banner,5,,10,800,,1,,0,532676607,7,2,256,,75,1,183,{ bonus bStr,1; bonus bAgi,1; bonus bLuk,1; }
