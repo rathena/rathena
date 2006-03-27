@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted
 //===== Current Version: ===================================== 
-//= 1.6
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena Final
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.6 Added a func which prevent advanced classes passing
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================
 
 //= Warning Warp to escape the quest if need be
@@ -35,7 +36,7 @@ L_Can:
 }
 //= Warp man, takes you to the quest map (Comodo Theater)
 comodo.gat,193,151,4	script	Bor Robin	86,{
-	callfunc "F_BlockHigh",27,"High Archer",44,"Gypsy","Bor Robin";
+	callfunc "F_BlockHigh",Job_Archer_High,"High Archer",Job_Gypsy,"Gypsy","Bor Robin";
 
 	mes "[Bor Robin]";
 	mes "Well...... alot of people seem to be coming here lately.";
@@ -311,7 +312,7 @@ LUpper1:
 	mes "[Aire]";
 	mes "It's such a big honor to salute envoys of Valhalla.";
 	mes "Come again.";
-	emotion 2;
+	emotion e_ho;
 	close;
 
 }
@@ -864,7 +865,7 @@ OnDE1:
 	emotion	21;
 	end;
 OnDE2:
-	emotion 23;
+	emotion e_omg;
 	end;
 }
 job_duncer.gat,66,113,4	script	Back dancer #2::jdt2	724,{
@@ -880,7 +881,7 @@ OnDE1:
 	emotion	21;
 	end;
 OnDE2:
-	emotion 23;
+	emotion e_omg;
 	end;
 }
 job_duncer.gat,72,113,4	script	Back dancer #3::jdt3	724,{
@@ -896,7 +897,7 @@ OnDE1:
 	emotion	21;
 	end;
 OnDE2:
-	emotion 23;
+	emotion e_omg;
 	end;
 }
 job_duncer.gat,75,110,4	script	Back dancer #4::jdt4	724,{
@@ -912,7 +913,7 @@ OnDE1:
 	emotion	21;
 	end;
 OnDE2:
-	emotion 23;
+	emotion e_omg;
 	end;
 }
 job_duncer.gat,75,110,4	script	jdt5	139,{

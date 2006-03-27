@@ -4,7 +4,7 @@
 //= nestor_zulueta (Fusion)
 //= converted by Darkchild
 //===== Current Version: ===================================== 
-//= 1.6a
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
 //= 1.6a fixed some wrong answers, thanks to zlider for info [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================ 
 
 
@@ -29,7 +30,7 @@
 //					Registration and First Test
 //==================================================================================================//
 alde_alche.gat,27,185,4	script	Parmry Gianino	744,{
-	callfunc "F_BlockHigh",29,"Merchant High",42,"Creator","Parmry Gianino";
+	callfunc "F_BlockHigh",Job_Merchant_High,"Merchant High",Job_Creator,"Creator","Parmry Gianino";
 
 	mes "[Parmry Gianino]";
 	if(BaseJob == 5) goto L_Merc;
@@ -1058,7 +1059,7 @@ L_Change:
 	mes "Ooh, Ok. You joined and learned the basics, too. Well done.";
 	next;
 	callfunc "Job_Change",Job_Alchem;
-	emotion 46;
+	emotion e_grat;
 	mes "[Vincent Carsciallo]";
 	mes "From now on, you are also a member of the Union as an Alchemist.";
 	mes "I hope you learn a lot...";

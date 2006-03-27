@@ -20,7 +20,7 @@
 
 // -- Father Mareusis --
 prt_church.gat,184,41,4	script	Father Mareusis	60,{
-	callfunc "F_ToHigh",28,"Acolyte High",32,"High Priest",156,0,0,0,"Father Mareusis";
+	callfunc "F_ToHigh",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"High Priest",156,0,0,0,"Father Mareusis";
 	mes "[Father Mareusis]";
 	if(BaseJob==Job_Novice && job_acolyte_q > 0) goto L_Check;
 	mes "What is it you are looking for?";
@@ -73,7 +73,7 @@ prt_church.gat,184,41,4	script	Father Mareusis	60,{
 			mes "[Father Mareusis]";
 			mes "Lying is a sin my child!";
 			mes "Please come back when you are ready";
-			emotion 19;
+			emotion e_swt2;
 			close;
 
 	M_1:
@@ -162,7 +162,7 @@ L_Novice:
 	if(job_acolyte_q==4) goto QuestOver;
 	if(job_acolyte_q > 0) goto L_Start;
 	mes "Huh..? What brings you here? This is a Very dangerous place for a Novice like you. Please Go back quickly.";
-	emotion 0;
+	emotion e_gasp;
 	close;
 
 L_Start:
@@ -180,7 +180,7 @@ L_Start:
 	next;
 	mes "[Father Rubalkabara]";
 	mes "Besides, I know your generation doesn't like to be lectured by old men like myself. Hahaha...";
-	emotion 18;
+	emotion e_heh;
 	next;
 	mes "[Father Rubalkabara]";
 	mes "But you might have to learn to endure what your elders say, because God loves to teach his children. You will see.";
@@ -199,7 +199,7 @@ L_Start:
 
 	Goback:
 		mes "Hmmm... I do not think you name is on my list of candidates.";
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Father Rubalkabara]";
 		mes "...... Why don't you go back to the Santuary and check again.";
@@ -221,7 +221,7 @@ L_Novice:
 	if(job_acolyte_q == 5) goto QuestOver;
 	if(job_acolyte_q > 0) goto L_Start;
 	mes "My!! Aren't you a little far from your town?  A novice like you could get hurt.  Please be safe.";
-	emotion 0;
+	emotion e_gasp;
 	close;
 L_Start:
 	mes "Ah, You are one of the Acolyte Applicants. I sincerely welcome you.";
@@ -250,7 +250,7 @@ L_Start:
 		mes "[Mother Marthilda]";
 		mes "Hmm....let's see....";
 		mes "..Well... I can't find your name on the List ....";
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Mother Marthilda]";
 		mes "I recommend that you to return to the Santuary and Check again.";
@@ -296,14 +296,14 @@ L_Start:
 	next;
 	mes "[Father Yosuke]";
 	mes "Now go back to the Sanctuary and don't forget to carry God's teachings with you where ever you go!";
-	emotion 27;
+	emotion e_go;
 	set job_acolyte_q,6;
 	close;
 
 	Goback:
 		mes "[Father Yosuke]";
 		mes "Interesting.. I can't find your name on my list..";
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Father Yosuke]";
 		mes "I think you've come here by mistake.";
@@ -312,11 +312,11 @@ L_Start:
 
 	QuestOver:
 		mes "What ? You Have more Business with me?";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Father Yosuke]";
 		mes "Your Divine Quest is complete.  Go back to the Sanctuary Now!";
-		emotion 27;
+		emotion e_go;
 		close;
 }
 

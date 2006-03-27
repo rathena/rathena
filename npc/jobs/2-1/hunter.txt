@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.7
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -26,11 +26,12 @@
 //= 1.6a Infinite Arrows exploit fix (thanx to Lorky, that
 //= reported the bug) [Lupus]
 //= 1.7 Moved the Job QUest to Hugel [Poki#3]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
 hu_in01.gat,386,374,4	script	Hunter Sharon	727,{
-	callfunc "F_BlockHigh",27,"High Archer",35,"Sniper","Hunter Sharon";
+	callfunc "F_BlockHigh",Job_Archer_High,"High Archer",Job_Sniper,"Sniper","Hunter Sharon";
 
 	if(BaseJob==Job_Archer) goto L_Start;
 	callfunc "Hun_check";
@@ -74,7 +75,7 @@ L_Start:
 			close;
 		sL_HighLvl:
 			mes "Well, well now!  A high level archer.... very nice!  You must have trained really hard.";
-			emotion 5;
+			emotion e_ic;
 			next;
 			mes "[Hunter Sharon]";
 			mes "My name is Sharon, nice to meet you.  Before I explain the process of becoming a Hunter, I'd like to do a short interview with you.";
@@ -225,7 +226,7 @@ L_Start:
 		sL_100:
 			mes "[Hunter Sharon]";
 			mes "Great! Based on the answers you gave, you seem to be just the type of person we're looking for.";
-			emotion 21;
+			emotion e_no1;
 			next;
 			mes "[Hunter Sharon]";
 			mes "With your kind of additude and values, you should have no problems becoming a Hunter.";
@@ -242,7 +243,7 @@ L_Start:
 		sL_Failed:
 			mes "[Hunter Sharon]";
 			mes "I.......don't think I can pass you..... The way you live your life is...... well... unexecptable for a Hunter candidate.";
-			emotion 4;
+			emotion e_swt;
 			next;
 			mes "[Hunter Sharon]";
 			mes "Think carefully about my questions and your answers.  Working well with people is just as important as loving nature.";
@@ -260,7 +261,7 @@ L_Test2:
 
 L_Test3:
 	mes "Hmmm? The guild master? Oh, he's out right now.";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Hunter Sharon]";
 	mes "If I remember correctly, he should be somewhere in Archer Village.  I think he had to talk with someone in the ^5533FFArcher Guild^000000.";
@@ -273,7 +274,7 @@ L_Change:
 	next;
 	mes "[Hunter Sharon]";
 	mes "Congratulations!!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Hunter Sharon]";
 	mes "Now I can change you into a Hunter!";
@@ -282,7 +283,7 @@ L_Change:
 	mes "There you go! You look great in the hunter outfit";
 
 	callfunc "Job_Change",Job_Hunter;
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Hunter Sharon]";
 	mes "Now, for working so hard, the guild has a small reward for you.";
@@ -301,7 +302,7 @@ L_Change:
 	sL_NotRdy:
 		mes "[Hunter Sharon]";
 	       	mes "Hmmm, I received news of your success.... But you don't seem to have the ^5533FFNecklace of Wisdom^000000 as proof.";
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Hunter Sharon]";
 	       	mes "You will need the Necklace of Wisdom to become a Hunter.  If you don't have it you will have to start the test over.";
@@ -310,12 +311,12 @@ L_Change:
 
 			mes "[Hunter Sharon]";
 			mes "Well then go get it!";
-			emotion 6;
+			emotion e_an;
 			close;
 		sM_ReStart:
 			mes "[Hunter Sharon]";
 			mes "..... That's just pathetic....... Have fun re-doing the ENTIRE TEST!";
-			emotion 32;
+			emotion e_pif;
 			set HNTR_Q, 0;
 			set HNTR_Q2, 0;
 	       		close;
@@ -336,13 +337,13 @@ L_Other:
 	next;
 	mes "[Demon Hunter]";
 	mes "For your safety... it's best that you DON'T find out.....";
-	emotion 29;
+	emotion e_gg;
 	close;
 
 L_Hnt:
 	mes "[Demon Hunter]";
 	mes "Look at you! Nice and spiffy in that Hunter's outfit.  How does it feel?  Good I bet.  Well good luck to you.";
-	emotion 0;
+	emotion e_gasp;
 	close;
 
 L_Arc:
@@ -364,7 +365,7 @@ L_Start:
 		next;
 		mes "[Demon Hunter]";
 		mes "If you haven't noticed already, our guild is NOT as wealthy as some of the others.  I mean we're in the middle of the freaking forest for pete sake....";
-		emotion 7;
+		emotion e_ag;
 		next;
 		mes "[Demon Hunter]";
 		mes "Ehem... Like I was saying earlier we need certain materials to make our arrows.  That is where Hunter wanna be's like you come in handy.";
@@ -423,7 +424,7 @@ L_Start:
 		sM_End:
 			mes "[Demon Hunter]";
 			mes "DON'T you mess around with me! If you're gonna fool around then LEAVE!";
-			emotion 32;
+			emotion e_pif;
 			warp "hugel.gat", 207, 222;
 			end;
 
@@ -476,7 +477,7 @@ L_Check:
 
 L_Test3:
 	mes "Huh? Can't you find the guild master? He should be in the ^5533FFArcher Guild in Archer village^000000. Go find him.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_Done:
@@ -494,7 +495,7 @@ payon_in02.gat,21,31,1	script	Guild Master	59,{
 L_Other:
 	mes "[Hunter]";
 	mes "Is there something you want of me? I'm have some buisiness to take care of, so please be quiet.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_Hnt:
@@ -580,7 +581,7 @@ L_ReTest:
 
 L_Passed:
 	mes "I see you suceeded. Great job! Now I will give you the proof of your success, the ^5533FFNecklace of Wisdom^000000.";
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Guild Master]";
 	mes "Here you go.  Make sure you show this to Hunter Sharon or you WON'T be able to become a Hunter.";

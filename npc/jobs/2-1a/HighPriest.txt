@@ -4,16 +4,17 @@
 //= Nana
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= Advance Class jobchanger after kRO Normals.
 //===== Additional Comments: ================================= 
 //= v1.1 Made all into functions, additional checks, etc. [Lupus]
+//= v1.2 Made numbers into constants. [Vicious]
 //============================================================ 
 
 // -== High Priest ==-
 valkyrie.gat,44,42,6	script	High Priest	60,{
-	callfunc "F_Rebirth",28,"Acolyte High",32,"High Priest",156,0,0,0;
+	callfunc "F_Rebirth",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"High Priest",156,0,0,0;
 }

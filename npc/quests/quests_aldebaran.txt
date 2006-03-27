@@ -40,7 +40,7 @@ aldeba_in.gat,152,166,4	script	Trader	86,{
 		delitem 733,1;//Items: Cracked deamond
 		set Zeny,Zeny - 3500;
 		mes "Hmm.... Do you have a.... MEDICAL LICENSE?!";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Trader]";
 		mes "I've heard about a well-known unlicensed physician 'Cuwaki'... I hope you don't get caught....";
@@ -54,7 +54,7 @@ aldeba_in.gat,152,166,4	script	Trader	86,{
 		delitem 916,300;//Items: Feather of Birds,
 		set Zeny,Zeny - 500;
 		mes "Umhahaha. You have good fashion sense.  I know you had a hard time collecting these items, but this bonnet is definately worth it.  Take it.";
-		emotion 18;
+		emotion e_heh;
 		getitem 5018,1;//Items: Feather Bonnet,
 		close;
 	M_2:
@@ -87,6 +87,6 @@ aldeba_in.gat,152,166,4	script	Trader	86,{
 
 	L_CantMake:
 		mes "You, fool! Check the requirements again..... you're not some kinda idiot are you? C'mon..... give me a break.";
-		emotion 6;
+		emotion e_an;
 		close;
 }

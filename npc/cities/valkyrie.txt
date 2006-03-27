@@ -175,7 +175,7 @@ valkyrie.gat,48,86,6	script	Valkyrie	811,{
 L_BABY:
 	mes "A Baby?! How did you get here?";
 	mes "I'm passing you back to your parents.";
-	emotion 1;
+	emotion e_what;
 	next;
 L_Y:
 	warp "yuno_in02.gat",93,204;
@@ -333,10 +333,9 @@ function	script	F_ToHigh	{
 	if(@fjob == Job_Champion) set @fjob,Job_High_Priest;
 	if(@fjob == Job_Professor) set @fjob,Job_High_Wizard;
 
-	set @jobdiff, Job_Novice_High - 24;
-	if(Class == @jobdiff+getarg(0)) goto L_WELCOME; //3rd Job
+	if(Class == getarg(0)) goto L_WELCOME; //3rd Job
 	if(Class >= Job_Lord_Knight && Class <= Job_Paladin2) goto L_ALREADY; //already advanced class
-	if(Class == Job_Novice_High && @fjob == @jobdiff+getarg(2)) goto L_GETHIGH; //High Novice -> High XXXX
+	if(Class == Job_Novice_High && @fjob == getarg(2)) goto L_GETHIGH; //High Novice -> High XXXX
 	if(Class == Job_Novice_High) mes "Hello, Novice High! If you are going to became a "+getarg(1)+", then go visit your very first job teacher.";
 	if(Class == Job_Novice_High) close;
 	return; //this char doesn't want to get HIGH class
@@ -424,11 +423,10 @@ L_ALREADY:
 //getarg(2) - 3rd Job ID
 //getarg(3) - 3rd Job Name
 function	script	F_Rebirth	{
-	set @jobdiff, Job_Novice_High - 24;
 	mes "["+getarg(3)+"]";
 	if(Upper == 2) goto L_BABY; //Baby Class - skip it
 	if(Class >= Job_Lord_Knight && Class <= Job_Paladin2) goto L_ALREADY; //already advanced class
-	if(Class == (@jobdiff+getarg(0)) && ADVJOB == (@jobdiff+getarg(2))) goto L_GET3RD; //Hight XXXX -> 3rd Job
+	if(Class == getarg(0) && ADVJOB == getarg(2)) goto L_GET3RD; //Hight XXXX -> 3rd Job
 	mes "Go talk to either Valhallana or one of my collegues...";
 	emotion e_sry;
 	close;
@@ -492,16 +490,15 @@ L_BABY:
 //getarg(3) - 3rd Job Name
 //getarg(4) - NPC Name
 function	script	F_BlockHigh	{
-	set @jobdiff, Job_Novice_High - 24;
 	if(Upper != 1) return; //This func should interact with Advanced classes only
 	mes "["+getarg(4)+"]";
-	if(Class == (@jobdiff+getarg(0)) && ADVJOB == (@jobdiff+getarg(2))) goto L_RIGHTHIGH;
-	if(Class == (@jobdiff+getarg(2))) goto L_RIGHT3RD;
+	if(Class == getarg(0) && ADVJOB == getarg(2)) goto L_RIGHTHIGH;
+	if(Class == getarg(2)) goto L_RIGHT3RD;
 	if(Class >= Job_Lord_Knight && Class <= Job_Paladin2) goto L_ALREADY3RD; //already advanced class, but from wrong guild
 //this player is a High Novice
 	if(Class == Job_Novice_High) mes "Hello, Novice High! If you are going to became a "+getarg(1)+", then go visit your very first job teacher.";
 //this player has 1st advanced job, but from wrong guild
-	if(Class == (@jobdiff+getarg(0))) mes "A "+getarg(1)+"?";
+	if(Class == getarg(0)) mes "A "+getarg(1)+"?";
 	if(Class != Job_Novice_High) mes "Rumors say only Valhallana knows your way...";
 	emotion e_sry;
 	close;

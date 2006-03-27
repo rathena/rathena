@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.8 Fixed bugs. Fixed Green Potion exploit. Getting rid of Jfunc mess [Lupus]
 //= 1.9 Added a missing check in Fuhai and fixed a LOT of Engrish. [Zephiris]
 //= 1.9b Fixed another bug in Fuhai. [Zephiris]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================ 
 
 
@@ -33,7 +34,7 @@ prt_monk.gat,55,249,4	script	Tohobu the Guarding Monk	139,0,5,{
 	close;
 }
 prt_monk.gat,59,247,4	script	Master	120,{
-	callfunc "F_BlockHigh",28,"Acolyte High",39,"Champion","Tohobu";
+	callfunc "F_BlockHigh",Job_Acolyte_High,"Acolyte High",Job_Champion,"Champion","Tohobu";
 
 	if(MONK_Q == 1 ) goto Part1;
 	if(MONK_Q == 2 ) goto Part2;

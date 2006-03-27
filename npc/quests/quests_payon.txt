@@ -36,7 +36,7 @@ payon.gat,154,170,4	script	Granny	78,{
 	mes "[Granny]";
 	mes "What was I saying before? Oh yes! I need some special cloth to make clothes for my family.";
 	mes "If you happen to come across some ^5555FF'Skirt of Virgin'^000000, please let me know.";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Granny]";
 	mes "I need ^5555FF'4 Skirt of Virgin'^000000 to make the clothes.  I will be very greatfull if you could bring me some.";
@@ -50,7 +50,7 @@ L_Get:
 		if(countitem(1049) < 4) goto M_No;
 		mes "[Granny]";
 		mes "Bless your kind heart.  Now I can make some special clothes for my family.  Let me give you a reward for being so genrous dear.";
-		emotion 14;
+		emotion e_lv2;
 		next;
 		getitem 2293,1;
 		delitem 1049,4;
@@ -65,7 +65,7 @@ L_Get:
 	M_No:
 		mes "[Granny]";
 		mes "Well I never!!! Kids these days just have no respect or compasion for their elders!";
-		emotion 32;
+		emotion e_pif;
 		close;
 
 }
@@ -135,7 +135,7 @@ payon_in02.gat,25,71,4	script	Young Man	86,{
 	mes "[Young Man]";
 	if(countitem(701) >= 5) goto L_GotOra;
 	mes "Blahhhhhh! I... I... I JUST CAN'T take it anymore!! You little stinky, filthy, BASTARDS!!!";
-	emotion 6;
+	emotion e_an;
 	next;
 	menu "Continue.",M_Cont, "End Conversation.",M_End;
 	
@@ -152,7 +152,7 @@ payon_in02.gat,25,71,4	script	Young Man	86,{
 		next;
 		mes "[Young Man]";
 		mes "Jeez was that a mistake...... The house turned out to be a HAVEN for THIEF BUGS!!!";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Young Man]";
 		mes "I tried EVERYTHING to get rid of them! I sprayed them, I smashed them, I lured them out with food.........";
@@ -160,7 +160,7 @@ payon_in02.gat,25,71,4	script	Young Man	86,{
 		next;
 		mes "[Young Man]";
 		mes "Grrr! What will it take to get rid of these vile creatures???";
-		emotion 32;
+		emotion e_pif;
 		next;
 		mes "[Young Man]";
 		mes "I've heard there is something called ^3355FF'Ora Ora'^000000, that people in other countries use to fight bugs.....";
@@ -174,12 +174,12 @@ payon_in02.gat,25,71,4	script	Young Man	86,{
 	M_End:
 		mes "[Young Man]";
 		mes "I'm just so tired of fighting this never ending battle against these bugs...... those dirty scumbags!!";
-		emotion 32;
+		emotion e_pif;
 		close;
 
 L_GotOra:
 		mes "ArrrGgghhh!! No!... It can't be!..... I think I'm going mad... they're starting to look so cute... ArrrGgghhh!!... Nooooooo!!";
-		emotion 23;
+		emotion e_omg;
 	M_Menu:
 		next;
 		menu "Continue",M_Cont, "Show Ora Ora",-, "Give Ora Ora",M_Give, "Cancel",M_End2;
@@ -194,11 +194,11 @@ L_GotOra:
 		delitem 701,5;
 		mes "[Young Man]";
 		mes "Muhahahahah!!! Finally, I have it.... Ora Ora! Stupid and distgusting Thief Bugs.... you'll pay for invading MY HOME!!!";
-		emotion 29;
+		emotion e_gg;
 		next;
 		mes "[Young Man]";
 		mes "..... Eh em... sorry.  I was a little outa control there.... Ah, let me give you my valuable treasure......";	
-		emotion 4;
+		emotion e_swt;
 		next;
 		getitem 5004,1;
 		mes "[Young Man]";
@@ -216,7 +216,7 @@ L_GotOra:
 	M_End2:
 		mes "[Young Man]";
 		mes "What if I CAN'T get rid of these thief bugs???... I guess the only other thing I could do is fall in love with them...... heh... heh... heh....";
-		emotion 4;
+		emotion e_swt;
 		close;
 
 }

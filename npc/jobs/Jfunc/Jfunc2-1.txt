@@ -27,36 +27,36 @@ function	script	Ass_check	{
 
 L_JobNov:
 	mes "....HEY Novice!!! GET out of here now!! I won't be held responsible if anything bad happens to you.......";
-	emotion 0;
+	emotion e_gasp;
 	close;
 L_JobSwo:
 	mes "....What are you doing here???";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Angry looking man]";
 	mes "Doing what you're ordered to do eh?........ You guys are nothing more than dogs that listen to their owners.............";
-	emotion 32;
+	emotion e_pif;
 	close;
 L_JobMag:
 	mes "...What's a mage like you doing here? You should be paying more attention to your training.....";
-	emotion 20;
+	emotion e_hmm;
 	close;
 L_JobArch:
 	mes "Uh.... you're one of those people with bows right? Sorry but there are no cute pets here for u to kill..........";
-	emotion 4;
+	emotion e_swt;
 	next;
 	mes "[Angry looking man]";
 	mes "Wait...... You're not here to create trouble eh!!? ....LEAVE AT ONCE!!";
-	emotion 0;
+	emotion e_gasp;
 	close;
 L_JobAco:
 	mes "...Oh God's little helper..... What are you doing down in a dreadful place like this?";
 	mes "Trust me, you're not going to find any salvation here........ why don't you just run along ok?........";
-	emotion 20;
+	emotion e_hmm;
 	close;
 L_JobMerc:
 	mes ".... What the??? Do you have any idea where you are??...... GREEDY SCAMMERS like you are not welcome here!!";
-	emotion 29;
+	emotion e_gg;
 	close;
 L_JobOther:
 	mes ".... Hmm.... although you're not an Assassin or Thief... I have to say I like your sense of style.";
@@ -123,7 +123,7 @@ function	script	Hun_check	{
 L_Nov:
 	mes "[Hunter Sharon]";
 	mes "What's a novice like you doing here? Leave, we have nothing for you.";
-	emotion 1;
+	emotion e_what;
 	close;
 L_Swo:
 	mes "[Hunter Sharon]";
@@ -144,12 +144,12 @@ L_Merc:
 L_Thf:
 	mes "[Hunter Sharon]";
 	mes "Eeep! There's nothing to steal here!! Leave us alone..... go rob an old lady or something......";
-	emotion 23;
+	emotion e_omg;
 	close;
 L_Hunt:
 	mes "[Hunter Sharon]";
 	mes "What up! "+strcharinfo(0)+" Why did you come back? Falcon run away or something? Te hehe.";
-	emotion 18;
+	emotion e_heh;
 	next;
 	mes "[Hunter Sharon]";
 	mes "I hope you didn't think you could get free stuff from us just because your part of our guild now......";
@@ -157,7 +157,7 @@ L_Hunt:
 L_Other:
 	mes "[Hunter Sharon]";
 	mes "What are YOU doing here? Did you come to do a little song and dance... ke.. keke....kekekeHahahahhaha!!!";
-	emotion 18;
+	emotion e_heh;
 	close;
 
 }
@@ -190,12 +190,12 @@ function	script	Kni_check	{
 
 			sL_JobKni:
 				mes "...(sighs)...what are you doing here WASTING my time??  GO FORTH!!, and continue protecting Rune Midgard my young Knight.";
-				emotion 32;
+				emotion e_pif;
 				close;
 
 			sL_JobNov:
 				mes "Hahahaha!!  You have no job experience what so ever and yet you stumble in here asking to be a knight.  Hahahaha!!";
-				emotion 18;
+				emotion e_heh;
 				next;
 				mes "[Chivalry Captain Herman]";
 				mes "You must first become a Swordsman before even thinking about becoming a Knight.  Now scurry along little novice.  Hahahahaha!!!";
@@ -263,7 +263,7 @@ L_Priest:
 	M_1b:
 		mes "[Father Thomas]";
 		mes "Oh...thats a great idea! Since you're a priest, you can't forget that you have to help the Acolytes when they need it.";
-		emotion 5;
+		emotion e_ic;
 		next;
 		mes "[Father Thomas]";
 		mes "Even so, you must be carefull not to do everyting for them.  It is important that they gain their own experiences through training ";
@@ -335,11 +335,11 @@ L_Other:
 	next;
 	mes "[Dog]";
 	mes "If you're that bored, do the world a favor and climb to the top of this building from the outside, then do some acrobatics....";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Dog]";
 	mes "~WOOF~ Get lost! I don't have time for people like you!!";
-	emotion 27;
+	emotion e_go;
 	close;
 L_Holy:
 	mes "[Dog]";
@@ -368,7 +368,7 @@ L_Other:
 	close;
 L_Novice:
 	mes "Awwww, a little novice!  How cute! This place is for Wizards only though.";
-	emotion 14;
+	emotion e_lv2;
 	next;
 	mes "[Catherine Medichi]";
 	mes "If you're interested in magic, the ^0000FFMagician's Guild^000000 is the place for you.";
@@ -379,7 +379,7 @@ L_Wizard:
 	mes "[Catherine Medichi]";
 	if(sex==1) mes "... Of course, if your here to ask me out... (*giggles*)....";
 	if(sex==0) mes "If you get yourself a boyfriend, feel free to drop by and show him off. XD";
-	emotion 3;
+	emotion e_lv;
 	close;
 
 }

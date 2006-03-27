@@ -41,7 +41,7 @@ L_Start:
 	if (CRAZYROAR == 1) goto L_GetSkill;
 	mes "Oh! Did you come here because you were intrigued by my boisterous voice? My voice is quite loud, isn't it?";
 	mes "Afterall you did hear it from a far off distance.";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Necko]";
 	mes "I'll let you in on something....... My voice is more than just loud..... it's actually quite unique......";
@@ -49,7 +49,7 @@ L_Start:
 	mes "[Necko]";
 	if(BaseJob==Job_Merchant && JobLevel < 15) goto L_JobLvl;
 	mes "You see, I know a skill that lets me shout in a way that actually helps me.... It is the ^3355FFCrazy Uproar^000000 skill!!!";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Necko]";
 	mes "Crazy Uproar uses your loud voice to boost your battle spirit!";
@@ -101,7 +101,7 @@ L_GetSkill:
 	mes "Raaaaaawwwwrrrrrrrrrrr!....... Ha ha!! Execellent.  Your voice is now finely tuned for ^3355FFCrazy Uproar^000000.  Good job.";
 	skill 155,1,0;
 	set CRAZYROAR, 0;
-	emotion 21;
+	emotion e_no1;
 	close;
 
 	L_Items:
@@ -192,7 +192,7 @@ L_Start:
 	if (CARTREVO == 1) goto L_GetSkill;
 	mes "[Gershaun]";
 	mes "Hmm... a young merchant.  You must use carts too right? Since to have to do all of that vending.....  But is that all you use your cart for?";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Gershaun]";
 	mes "I researched some ways of using the cart differently.  One way involved cooking ramen and another involved jump-roping (don't ask).";
@@ -203,7 +203,7 @@ L_Start:
 	M_0:
 		mes "[Gershuan]";
 		mes "You KNOW what I MEAN!! HOW the HECK would YOU KNOW what I MEAN????";
-		emotion 23;
+		emotion e_omg;
 		close;
 	M_1:
 		mes "[Gershuan]";
@@ -212,15 +212,15 @@ L_Start:
 		mes "[Gershuan]";
 		mes "Then I crossed paths with a very strong monster! I knew immediately that my life was in danger!";
 		mes "I thought to myself, 'Why me! A weaponless, amorless merchant!?'";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Gershuan]";
 		mes "I was scared to death... hoping that this would not be the end of me.  With what strength I had left, I tried a desperation move.....";
-		emotion 19;
+		emotion e_swt2;
 		next;
 		mes "[Gershuan]";
 		mes "I used my cart to attack the monster!!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Gershuan]";
 		mes "Just like that the monster was defeated!! Finally I had found another exellent use for the cart! A WEAPON!!!";
@@ -228,7 +228,7 @@ L_Start:
 		mes "[Gershuan]";
 		mes "I called my new found discovery ^3355FF'Cart Revolution'^000000!";
 		mes "By using ^FF553312 sp^000000 you can spin your cart around your body doing major damage to an enemy!";
-		emotion 5;
+		emotion e_ic;
 		next;
 		mes "[Gershuan]";
 		mes "The heavier your cart is, the more damage it will do.  Would you like to learn this skill?";
@@ -259,7 +259,7 @@ L_Start:
 		sM_1:
 			mes "[Sushi King Gershuan]";
 			mes "Stupid!! You're waaay to young to even try your hand at sushi!!";
-			emotion 6;
+			emotion e_an;
 			close;
 
 L_GetSkill:
@@ -280,20 +280,20 @@ L_GetSkill:
 	next;
 	mes "[Gershuan]";
 	mes "Eh....... that was terrible.... Okay, lets try again.....";
-	emotion 4;
+	emotion e_swt;
 	next;
 	mes "~many hours later~";
 	next;
 	mes "[Gershuan]";
 	mes "YES!!! FINALLY! I could REALLY FEEL the power in that swing!";
 	mes "Give yourself a good pat on the back becuase you have just mastered Cart Revolution!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	skill 153,1,0;
 	set CARTREVO, 0;
 	mes "[Gershuan]";
 	mes "Take care of yourself and remember to fill that cart up so that it can do some major damage.";
-	emotion 29;
+	emotion e_gg;
 	close;
 
 L_GotSkill:

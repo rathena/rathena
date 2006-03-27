@@ -5,7 +5,7 @@
 //= Converted by: Shin
 //=
 //===== Current Version: ===================================== 
-//= 1.7a
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -26,11 +26,12 @@
 //=     to go. [Lupus]
 //= 1.7 Updated names and required items, Chivalry Emblem +
 //=     Hand of God allow to skip item gathering [DracoRPG]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================
 
 
 prt_castle.gat,45,169,4	script	Senior Crusader	752,{
-	callfunc "F_BlockHigh",25,"Swordman High",38,"Paladin","^000080Michael Halig^000000";
+	callfunc "F_BlockHigh",Job_Swordman_High,"Swordman High",Job_Paladin,"Paladin","^000080Michael Halig^000000";
 
 	mes "[^000080Michael Halig^000000]";
 	if (BaseJob > 0) goto NEXT_0;

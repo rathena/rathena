@@ -234,7 +234,7 @@ s_Take:
 	if(Zeny < 11000) goto s_NoZeny;
 	set Zeny, Zeny - 11000;
 	getitem 567,20;
-	emotion 21;
+	emotion e_no1;
 	mes "[Thongpool]";
 	mes "Good, now you have the freshest Shrimp in this village!";
 	mes "It's time for you to go back and ask Ms. Mali to cook them for you.";
@@ -1005,7 +1005,7 @@ s_EnoughShrimp:
 	next;
 	set ayopause,1;
 	set ayoshrimps,0;
-	emotion 21;
+	emotion e_no1;
 	mes "[Mali the Spicy]";
 	mes "The freshest Shrimp that";
 	mes "I've been looking for!";
@@ -1057,7 +1057,7 @@ s_Lemons:
 	close;
 s_EnoughLemon:
 	delitem 568,10;
-	emotion 0;
+	emotion e_gasp;
 	mes "[Mali the Spicy]";
 	mes "Welcome back!";
 	mes "Wow, you came back";
@@ -1137,7 +1137,7 @@ s_EnoughChilee:
 	mes "^486354chop chop";
 	mes "^BA0010Tup tup tup ^28842FPu pu";
 	next;
-	emotion 23;
+	emotion e_omg;
 	misceffect 99;
 	misceffect 90;
 	mes "Wah^050158ah^241999ahhh^0F48CBhaaaahhh^000000!";
@@ -1150,7 +1150,7 @@ s_EnoughChilee:
 	set tomyumgoong,5;
 	set ayoshrimps,0;
 	getitem 566,10;
-	emotion 21;
+	emotion e_no1;
 	mes "[Mali the Spicy]";
 	mes "Here's your";
 	mes "Tom Yum Goong!";
@@ -1186,7 +1186,7 @@ s_EnoughChilee:
 	mes "take care now~";
 	close;
 s_Busy:
-	emotion 16;
+	emotion e_wah;
 	mes "[Mali the Spicy]";
 	mes "Ah...!";
 	mes "So busy, so busy!";
@@ -1251,7 +1251,7 @@ s_Take:
 
 s_NoZeny:
 //custom dialogues
-	emotion 16;
+	emotion e_wah;
 	mes "[Merchant Thongdum]";
 	mes "Aw, you don't have enough zeny.";
 	mes "Please come back when you do!";
@@ -1268,7 +1268,7 @@ OnTouch:
 	if(tomyumgoong == 3)goto s_Lemon;
 	end;
 s_Lemon:
-	emotion 20;
+	emotion e_hmm;
 	mes "[Mr. Jun]";
 	mes "Hello, there?";
 	mes "Did you need";
@@ -1406,39 +1406,39 @@ s_Play:
 	if(@playervar == 3 && @npcvar == 2)goto s_ScissorsPaper;
 	if(@playervar == 3 && @npcvar == 3)goto s_ScissorsScissors;
 s_RockRock:
-	emotion 11;
+	emotion e_rock;
 	emotion 11,1;
 	goto s_Draw;
 s_RockPaper:
-	emotion 12;
+	emotion e_paper;
 	emotion 11,1;
 	goto s_Lose;
 s_RockScissors:
-	emotion 10;
+	emotion e_scissors;
 	emotion 11,1;
 	goto s_Win;
 s_PaperRock:
-	emotion 11;
+	emotion e_rock;
 	emotion 12,1;
 	goto s_Win;
 s_PaperPaper:
-	emotion 12;
+	emotion e_paper;
 	emotion 12,1;
 	goto s_Draw;
 s_PaperScissors:
-	emotion 10;
+	emotion e_scissors;
 	emotion 12,1;
 	goto s_Lose;
 s_ScissorsRock:
-	emotion 11;
+	emotion e_rock;
 	emotion 10,1;
 	goto s_Lose;
 s_ScissorsPaper:
-	emotion 12;
+	emotion e_paper;
 	emotion 10,1;
 	goto s_Win;
 s_ScissorsScissors:
-	emotion 10;
+	emotion e_scissors;
 	emotion 10,1;
 	goto s_Draw;
 s_Draw:
@@ -1495,7 +1495,7 @@ s_Win2:
 	mes "^3C2EE6You have plucked";
 	mes "^3C2EE610 Lemons from the tree.";
 	next;
-	emotion 9;
+	emotion e_dots;
 	mes "[Mr. Jun]";
 	mes "Hmm...";
 	mes "Looks like you need a lot of them.";

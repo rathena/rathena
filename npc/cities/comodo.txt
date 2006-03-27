@@ -67,7 +67,7 @@ comodo.gat,221,310,4	script	Rinta	89,{
 	next;
 	mes "[Rinta]";
 	mes "If this is true, then this means that they can have as much meat and seasoning as they want......";
-	emotion 5;
+	emotion e_ic;
 	close;
 }
 
@@ -130,15 +130,15 @@ cmd_in02.gat,178,92,4	script	Shalone	101,{
 cmd_in02.gat,178,86,4	script	Stonae	98,{
 	mes "[Stonae]";
 	mes "WHAT!! Dang it!! AGAIN!! Arghhhhhhh!!!............";
-	emotion 23;
+	emotion e_omg;
 	next;
 	mes "[Stonae]";
 	mes "Sheesh! I can't quit after losing this badly! I won't quit until I win!";
-	emotion 7;
+	emotion e_ag;
 	next;
 	mes "[Stonae]";
 	mes "Let's go!!";
-	emotion 27;
+	emotion e_go;
 	close;
 }
 
@@ -148,7 +148,7 @@ cmd_in02.gat,174,126,4	script	Loyar	83,{
 	mes "[Loyar]";
 	mes "The Comodo Casino has a very pleasing decor... It's quite clean and simple!";
 	mes "The atmosphere is perfect and makes you really want to play more!";
-	emotion 33;
+	emotion e_ok;
 	next;
 	mes "[Loyar]";
 	mes "Atmosphere is everything when it comes to gaming.";
@@ -168,7 +168,7 @@ cmd_in02.gat,73,81,4	script	Martine	48,{
 	set @temp, 2;
 	mes "[Martine]";
 	mes "Gambling? Oh no, it's NOT gambling! Don't say that the Comodo 'CASINO' houses gambling.....";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Martine]";
 	mes "We provide some of the greatest 'GAMES' in the world. It's much more of a sophisticated form of 'GAMING' than it is 'GAMBLING'.....";
@@ -176,11 +176,11 @@ cmd_in02.gat,73,81,4	script	Martine	48,{
 	next;
 	mes "[Martine]";
 	mes "What?......... Don't look at me like that!...";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Martine]";
 	mes "..... Ok, FINE! I see how it is.  I don't care what you think.  I've lost all my zeny playing in this casino and I have NO regrets whatsoever!";
-	emotion 7;
+	emotion e_ag;
 	next;
 	mes "[Martine]";
 	mes "Today's competition is over! I'll have to go to the ^5555FFComodo Dungeon^000000 and kill some monsters to earn back the zeny I lost.";
@@ -188,7 +188,7 @@ cmd_in02.gat,73,81,4	script	Martine	48,{
 	next;
 	mes "[Martine]";
 	mes "WOO HOO!! I'm going to have a blast!! HAHAHA!";
-	emotion 29;
+	emotion e_gg;
 	close;
 }
 
@@ -196,11 +196,11 @@ cmd_in02.gat,73,81,4	script	Martine	48,{
 cmd_in02.gat,64,43,4	script	Roberto	709,{
 	mes "[Roberto]";
 	mes "Muhahaha... What a stupid man! Now that's easy money! (~counts his money~)";
-	emotion 29;
+	emotion e_gg;
 	next;
 	mes "[Roberto]";
 	mes "Hey you! What are you looking at!? Get out of here!! What... you've never seen someone count money before??";
-	emotion 1;
+	emotion e_what;
 	close;
 }
 
@@ -208,14 +208,14 @@ cmd_in02.gat,64,43,4	script	Roberto	709,{
 cmd_in02.gat,89,72,4	script	Deniroz	89,{
 	mes "[Deniroz]";
 	mes "If the bead falls in this time, I'll hit the JACKPOT!! All I have to do is put this small bead into that little hole.";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Deniroz]";
 	mes "Most people give up after a few tries, but not me..... *whispers*(the can of beer in my hand is actually a powerful magnet)...";
 	next;
 	mes "[Deniroz]";
 	mes "Keee hee hee hee!! I'm going to get rich with my secret plan!!";
-	emotion 29;
+	emotion e_gg;
 	close;
 }
 
@@ -241,14 +241,14 @@ cmd_in02.gat,57,62,4	script	Casino Manager Moo	109,{
 cmd_in02.gat,48,55,4	script	Scoursege	51,{
 	mes "[Scoursege]";
 	mes "Darn it, where is that guy who borrowed my zeny? He better not be hiding from me, he told me he would double my money!";
-	emotion 19;
+	emotion e_swt2;
 	next;
 	mes "[Scoursege]";
 	mes "He was positive that he could double my money and make a little for himself! Where is he!...";
 	next;
 	mes "[Scoursege]";
 	mes "Have I been scammed!?? On no! What should I do?? My zeny..... (~sob~sob~)";
-	emotion 28;
+	emotion e_sob;
 	close;
 }
 
@@ -267,7 +267,7 @@ comodo.gat,206,310,4	script	Rochito	48,{
 L_0:
 	mes "[Rochito]";
 	mes "Meat, meat, meat... I LOVE MEAT!! Eat, eat, eat... ALL I eat is MEAT!! I'm sooo obsessed with meat..... I'm... I.. I... I'm a MEAT MAN!!";
-	emotion 3;
+	emotion e_lv;
 	next;
 	mes "[Rochito]";
 	mes "Comodo is meat heaven!! That's why BBQ camping in Comodo is sooooo AWESOME!!!"; 
@@ -278,11 +278,11 @@ L_0:
 		mes "[Rochito]";
 		mes "The Komodoru, a native animal of Comodo, is famous because of it's delicious meat.  Every part of the animal is tasty.";
 		mes "However the tastiest part of the Komodoru, is the area around the spine.  It's number one!";
-		emotion 21;
+		emotion e_no1;
 		next;
 		mes "[Rochito]";
 		mes "Look at all of this meat in front of me! I don't know what to do with all of this meat! What should I do?? Oh no!...";
-		emotion 19;
+		emotion e_swt2;
 		next;
 		mes "[Rochito]";
 		mes "Oh, I almost forgot!! You must try this Komodoru spine meat with Comodo's authentic BBQ seasoning.";
@@ -324,11 +324,11 @@ L_2:
 	next;
 	mes "[Rochito]";
 	mes "Oh my!! This is the special Comodo seasoning.... Koserahserah!! How did you manage to get this precious delicacy?";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Rochito]";
 	mes "Oh... I see, I see.  So it was given to you by my long time friend.  Well, thank you so much.... thank you...";
-	emotion 15;
+	emotion e_thx;
 	next;
 	mes "[Rochito]";
 	mes "Hey everybody! Tausupa has sent us some Koserahserah seasoning!!";
@@ -365,7 +365,7 @@ L_2:
 L_3:
 	mes "[Rochito]";
 	mes "You've returned..... Oh! Thank you for the delivering the wine for us.";
-	emotion 15;
+	emotion e_thx;
 	set dmdswrd_Q, 5;
 	next;
 
@@ -423,7 +423,7 @@ L_1:
 L_2:
 	mes "[Rockha]";
 	mes "Ha ha ha..... aaaahhh.... THIS is FRIENDSHIP!!";
-	emotion 18;
+	emotion e_heh;
 	next;
 	mes "[Rockha]";
 	mes "Let us take a moment to make a toast to our good friend.  Let us eat and drink until we can eat no more!!";
@@ -458,13 +458,13 @@ L_0:
 	next;
 	mes "[Rotute]";
 	mes "...... We MUST SUCCEED!!!!";
-	emotion 27;
+	emotion e_go;
 	close;
 
 L_1:
 	mes "[Rotute]";
 	mes "Wow!! This is Comodo's famous seasoning!! The Captain's friend is truly a good person.  To be this generous is unbelievable!";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Rotute]";
 	mes "I can only hope that I find a friend that is as loyal as he on this quest.....";
@@ -479,7 +479,7 @@ L_2:
 	next;
 	mes "[Rotute]";
 	mes "Oh, and thanks so much for helping our captain.";
-	emotion 15;
+	emotion e_thx;
 	close;
 }
 
@@ -491,7 +491,7 @@ comodo.gat,209,305,4	script	Emralhandas	70,{
 	mes "[Emralhandas]";
 	mes "Many years ago, during the War with the Witch, we dreamed of the day when we could live in peace.";
 	mes "Today that dream has come true and it's all because of you my friends!!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	menu "Ask about her friends....",M_0, "End Conversation",M_End;
 
@@ -526,7 +526,7 @@ comodo.gat,209,305,4	script	Emralhandas	70,{
 		mes "[Emralhandas]";
 		mes "Her goal was to take over the world and plunge into a dark chaos!! We had to defend not only ourselves, but the future of humanity!!";
 		mes "So it was here that me made our stand against this terrible evil!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Emralhandas]";
 		mes "A tremendous battle took place and many of our comrades fell that day... but their efforts were not in vain.";
@@ -642,7 +642,7 @@ L_2:
 	next;
 	mes "[Chief Tausupa]";
 	mes "I have made up my mind!";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Chief Tausupa]";
 	mes "Mureuchieligu Wine is made as soon as the grapes are picked.  It is then bottled in the very same place and is left there to age.";
@@ -735,11 +735,11 @@ M_Menu:
 			next;
 			mes "[TORUNA]";
 			mes "The world famous..... Comodo ^5533FFCheese^000000!!!";
-			emotion 5;
+			emotion e_ic;
 			next;
 			mes "[TORUNA]";
 			mes "This special Cheese is simply DELICIOUS! You will understand how good the Cheese is once you try it.";
-			emotion 14;
+			emotion e_lv2;
 			set dmdswrd_Q, 7;
 			next;
 		sL_2:
@@ -751,7 +751,7 @@ M_Menu:
 		mes "[TORUNA]";
 		mes "The taste of Comodo Cheese is simply out of this world!!  Just one taste and I guarantee that you won't be able to stop!";
 		mes "It's so good you may even go GRAZY without it!";
-		emotion 3;
+		emotion e_lv;
 		next;
 		mes "[TORUNA]";
 		mes "Oh if I could just have one piece.... I'd be so happy I'd dance all night on that ^5555FFHula Dancing Stage^000000!!";
@@ -805,7 +805,7 @@ comodo.gat,169,284,4	script	Kichiri	99,{
 	close;
 L_1:
 	mes "The guy sitting near me just won't stop talking about Comodo ^5533FFCheese^000000...... It's going to drive me insane!";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Kichiri]";
 	mes "Yeah, right over there, the guy named ^3355FFMagatu^000000.  Can you do something about it?";
@@ -814,7 +814,7 @@ L_1:
 L_2:
 	mes "I just want to have a quit time and have a few drinks, is this too much to ask for?";
 	mes "Stupid drunk ^3355FF' Magatu '^000000..... always talking about ^5533FFCheese^000000......";
-	emotion 7;
+	emotion e_ag;
 	close;
 }
 
@@ -825,20 +825,20 @@ comodo.gat,163,280,4	script	Magatu	55,{
 	if(dmdswrd_Q == 10) goto L_2;
 
 	mes "Yes! That's it!! The irresistible smell of that amazing ^5533FFCheese^000000!! It's so delicious!.... Oh, I can't wait any longer......";
-	emotion 3;
+	emotion e_lv;
 	next;
 	mes "[Magatu]";
 	mes "No matter what anyone else says..... Comodo Cheese is truly the BEST!!! Kekekeke!!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Magatu]";
 	mes "Cheese! CHEESE!! WONDERFULL Comodo CHEESE!!!.... so.... tas... ty.... (~drooools~)";
-	emotion 3;
+	emotion e_lv;
 	close;
 L_1:
 	mes "What? You want to know some information regarding Comodo's special ^5533FFCheese^000000?";
 	mes "I guess I could give you some inside information............";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Magatu]";
 	mes "Okay, go to the ^009500Casino^000000 and look for a guy named ^5533FFManzi^000000.  He should be somewhere on the first floor.";
@@ -855,7 +855,7 @@ L_2:
 	next;
 	mes "[Magatu]";
 	mes "O? I already told you? Bah, I am so drunk....... ^5533FFManzi^000000... He’s in the ^009500Casino^000000, got it?";
-	emotion 20;
+	emotion e_hmm;
 	close;
 }
 
@@ -886,7 +886,7 @@ L_1:
 	mes "[Mazi]";
 	mes "Whoa! This is from my friend Magatu, you must be someone of great importance to him.";
 	mes "Otherwise, he wouldn't have given you the Bottle Cap.";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Manzi]";
 	mes "I made a promise to Magatu that I'd help anybody who had one of his bottle caps find out more about the ^5533FFCheese^000000.........";
@@ -922,7 +922,7 @@ comodo.gat,187,153,4	script	Hullaris	701,{
 
 	mes "Hula Dance? Who says it's merely a hula dance?? It is much more than just some dance.";
 	mes "To refer to Comodo's unique form of dancing as simply a hula dance, is just insulting!";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Hullaris]";
 	mes "The Comodo Hula Dance was developed long ago.  Legend has it that the dance was used to control the minds and bodies of others!";
@@ -934,7 +934,7 @@ comodo.gat,187,153,4	script	Hullaris	701,{
 	mes "[Hullaris]";
 	mes "Hehehehehe...... If anyone can dance better than me.... LET EM COME OUT!! It is more than just dancing..........";
 	mes "It is a form of 'COMMUNICATION'!!!";
-	emotion 29;
+	emotion e_gg;
 	close;
 
 L_1:
@@ -946,7 +946,7 @@ L_1:
 		next;
 		mes "[Hullaris]";
 		mes "Hmm, that coin.... How did you know to come and look for me? Ah, I got it.  Manzi must have told you about me.";
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Hullaris]";
 		mes "I presume you are also interested in the famous Comodo ^5533FFCheese^000000.";
@@ -984,7 +984,7 @@ L_1:
 	M_End:
 		mes "[Hullaris]";
 		mes "Hey! Don't look at me like that, get out of here!";
-		emotion 0;
+		emotion e_gasp;
 		close;
 
 L_2:
@@ -1136,7 +1136,7 @@ L_2:
 		next;
 		mes "[Nigirboran]";
 		mes "Hahaha... pink elephants.... reminds me of a bad acid trip I once had... er..... forget what I just said.";
-		emotion 18;
+		emotion e_heh;
 		next;
 		mes "[Nigirboran]";
 		mes "If you cannot handle a little piece of cheese, there is absolutely no way you will be able to handle the Stone of Awakening.";
@@ -1166,7 +1166,7 @@ L_2:
 		mes "[Nigirboran]";
 		mes "Hmm?.... Wow! Now that's rare!! You don't seem to have any ill effects from the posion.";
 		mes "You must be in top shape both mentally and physically.";
-		emotion 5;
+		emotion e_ic;
 		next;
 		mes "[Nigirboran]";
 		mes "You have proved that you are worthy of the ^5533FFStone of Awakening^000000.  Take this.......";

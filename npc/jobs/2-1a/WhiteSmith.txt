@@ -4,16 +4,17 @@
 //= Nana
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= Advance Class jobchanger after kRO Normals.
 //===== Additional Comments: ================================= 
 //= v1.1 Made all into functions, additional checks, etc. [Lupus]
+//= v1.2 Made numbers into constants. [Vicious]
 //============================================================ 
 
 // -== White Smith ==-
 valkyrie.gat,44,51,6	script	White Smith	726,{
-	callfunc "F_Rebirth",29,"Merchant High",34,"White Smith",153,154,155,0;
+	callfunc "F_Rebirth",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith",153,154,155,0;
 }

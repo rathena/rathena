@@ -62,11 +62,11 @@ aldebaran.gat,60,70,4	script	Senorita Sylvia	69,{
 	next;
 	mes "[Senorita Sylvia]";
 	mes "B-B-But... *sob*... It's been 5 hours since I started looking for it.....";
-	emotion 28;
+	emotion e_sob;
 	next;
 	mes "[Senorita Sylvia]";
 	mes "Where the hell is it~~~?!";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Senorita Sylvia]";
 	mes "I may look smart, but I am TERRIBLE with directions.....";
@@ -86,7 +86,7 @@ aldebaran.gat,60,70,4	script	Senorita Sylvia	69,{
 	M_End:
 		mes "[Senorita Sylvia]";
 		mes "Whatever.....";
-		emotion 32;
+		emotion e_pif;
 		close;
 }
 
@@ -140,7 +140,7 @@ M_Menu:
 		next;
 		mes "[Isenberg]";
 		mes "You did a good job to get here.";
-		emotion 21;
+		emotion e_no1;
 		goto M_Menu;
 	M_1:
 		mes "[Isenberg]";
@@ -205,7 +205,7 @@ M_Menu:
 		next;
 		mes "[Bebe]";
 		mes "Anyways, I was walking up this narrow path when... out of nowhere, this GIANT, UGLY, PLANT attacked me and my Savage Babe!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Bebe]";
 		mes "I was so frightened that I ran as far away from it as I could.  When I stopped running I noticed that it hadn't followed me.";
@@ -215,7 +215,7 @@ M_Menu:
 		next;
 		mes "[Bebe]";
 		mes "I then noticed something else.  The plant had a human looking face!! EEEWWW!!!";
-		emotion 19;
+		emotion e_swt2;
 		next;
 		mes "[Bebe]";
 		mes "If you every see one, don't even think about going near it.  It may just bite you to death!";
@@ -235,7 +235,7 @@ M_Menu:
 	M_End:
 		mes "[Bebe]";
 		mes "Ah?! Where is my Savage Babe..? Savage Babe, where are you!";
-		emotion 20;
+		emotion e_hmm;
 		close;
 }
 
@@ -279,12 +279,12 @@ aldebaran.gat,93,80,4	script	Daniel	48,{
 	next;
 	mes "[Daniel]";
 	mes "B-U-T!.....";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Daniel]";
 	mes "Last night on the way to see my girl friend, I fell into one of those waterways and sprang my ankle.";
 	mes "I couldn't enjoy my date with my girl friend which sucked big time!";
-	emotion 7;
+	emotion e_ag;
 	next;
 	menu "Gosh, that's too bad.",-,".....",M_1;
 
@@ -298,7 +298,7 @@ aldebaran.gat,93,80,4	script	Daniel	48,{
 	M_1:
 		mes "[Daniel]";
 		mes "Huh? *~Sob sob~* You think I'm a stupid idiot, right? ";
-		emotion 28;
+		emotion e_sob;
 		close;
 }
 
@@ -430,7 +430,7 @@ aldebaran.gat,146,124,4	script	Anastasia	101,{
 	next;
 	mes "[Nastasia]";
 	mes "But... is that.... legal.....??";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Nastasia]";
 	mes "And do they collect tuition....??";
@@ -490,11 +490,11 @@ aldebaran.gat,180,46,4	script	Joo Jahk	88,{
 	next;
 	mes "[Joo Jahk]";
 	mes "But.... Do you think I could drink the water in these waterways?";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Joo Jahk]";
 	mes "Actually I already did, but I am still concerned.....";
-	emotion 4;
+	emotion e_swt;
 	next;
 	menu "Continue.",-,"End conversation.",M_End;
 
@@ -530,7 +530,7 @@ aldebaran.gat,212,122,4	script	Gavin	97,{
 		next;
 		mes "[Gavin]";
 		mes "I swear it!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Gavin]";
 		mes "It was jumping around with the other ordinary Porings.  Angeling... is that what it was...?";
@@ -546,24 +546,24 @@ aldebaran.gat,212,122,4	script	Gavin	97,{
 aldeba_in.gat,152,47,4	script	Giddy Fellow	97,{
 	mes "[Giddy Fellow]";
 	mes "E..E..E..Emergenc----y!!! I CAN'T find my pet chicken anywhere!!";
-	emotion 23;
+	emotion e_omg;
 	next;
 	menu "What's its name?",-,". . . . .",M_1;
 
 		mes "[Giddy Fellow]";
 		mes "It's 'The Great Picky ' ... SOB SOB SOB... gosh... what am I gonna do?!~ Please find my cutey for meee~~~";
-		emotion 28;
+		emotion e_sob;
 		next;
 		menu "Dude! It's such a common name...",-,". . . . .",M_1;
 
 			mes "[Giddy Fellow]";
 			mes "Wha-What are you talking about!! My 'The Great Picky' is the one and only cutest chicken in this whole wide WORLD for Christ's sake~!";
-			emotion 1;
+			emotion e_what;
 			close;
 	M_1:
 		mes "[Giddy Fellow]";
 		mes "Don't you laugh at me~! I don't have any siblings so my cute chicken is like a younger brother to me! SOB SOB SOB SOB";
-		emotion 28;
+		emotion e_sob;
 		close;
 }
 
@@ -621,7 +621,7 @@ aldeba_in.gat,156,179,4	script	Master	61,{
 		M_01:
 			mes "[Master]";
 			mes "Wake up~! Do you really think you'd have a shot with a girl like that?? Be realistic! She's out of your league....";
-			emotion 0;
+			emotion e_gasp;
 			close;
 		M_02:
 			mes "[Master]";
@@ -633,7 +633,7 @@ aldeba_in.gat,156,179,4	script	Master	61,{
 			next;
 			mes "[Master]";
 			mes "You'd cause a LOT of trouble for the neighbors, if ya know what I mean.... Hahahaha!!";
-			emotion 18;
+			emotion e_heh;
 			close;
 		M_04:
 			mes "[Master]";
@@ -642,11 +642,11 @@ aldeba_in.gat,156,179,4	script	Master	61,{
 		M_05:
 			mes "[Master]";
 			mes "Wha-what!";
-			emotion 0;
+			emotion e_gasp;
 			next;
 			mes "[Master]"; 
 			mes "A thirst for young girls~~! It's a c-c-crime!!!!";
-			emotion 19;
+			emotion e_swt2;
 			close;
 	M_1:
 		mes "[Master]";
@@ -717,11 +717,11 @@ aldeba_in.gat,219,61,4	script	Nice Looking Guy	109,{
 aldeba_in.gat,223,121,2	script	Evil looking Guy	63,{
 	mes "[Evil Looking Guy]";
 	mes "Hey dude! Don't you think it's rude for a stranger to enter someone else's house?";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Evil Looking Guy]";
 	mes "Now I'm upset! What reason do you have to come in here and bother me??";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Evil Looking Guy]";
 	mes "Ah alright, alright.  No more fooling around... you're here because I'm an NPC and you think I'm supposed to help you right?";
@@ -755,7 +755,7 @@ aldeba_in.gat,223,121,2	script	Evil looking Guy	63,{
 		mes "[Evil Looking Guy]";
 		mes "Whattt!!! Get the heck out of my house!! If you're a cop, show me a search warrant.";
 		mes "If you're a member of my family then pull down your pants so I can look at our family mark!";
-		emotion 0;
+		emotion e_gasp;
 		close;
 }
 
@@ -777,24 +777,24 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 		mes "[Kafra Jasmine]";
 		mes "HEY! Just SHUT-UP and LISTEN! It took me a whole week to memorize this!";
 		mes "I've got a poor memory unlike the other Kafra agents!";
-		emotion 6;
+		emotion e_an;
 		next;
 		mes "[Kafra Jasmine]";
 		mes "..... Eh!... heh... heh... um...";
-		emotion 19;
+		emotion e_swt2;
 		next;
 		mes "[Kafra Jasmine]";
 		mes "I'm verrrryyy sorry about that... I didn't mean to startle you... you see....";
 		next;
 		mes "[Kafra Jasmine]";
 		mes "That... that... that was just an act.... YEAH! An act I put on for the customers. Heh.. heh....";
-		emotion 4;
+		emotion e_swt;
 		cutin "kafra_03",255;
 		close;
 	M_1:
 		mes "[Kafra Jasmine]";
 		mes ". . . . .";
-		emotion 6;
+		emotion e_an;
 		next;
 		mes "[Kafra Jasmine]";
 		mes "Just so you know, I was a member of Kafra Garrison before I joined the Kafra Service Team.";
@@ -802,7 +802,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 		next;
 		mes "[Kafra Jasmine]";
 		mes "So please, DON'T TEMPT ME...!!";
-		emotion 32;
+		emotion e_pif;
 		cutin "kafra_03",255;
 		close;
 	M_2:
@@ -811,7 +811,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 		next;
 		mes "[Kafra Jasmine]";
 		mes "Just kidding~~ Tehehe";
-		emotion 18;
+		emotion e_heh;
 		cutin "kafra_03",255;
 		close;
 }
@@ -1160,7 +1160,7 @@ aldeba_in.gat,81,166,4	script	Kafra Pavianee	117,{
 		mes "Thank you for using our Kafra Service! Have a Nice Day!";
 		getitem 1084,1;
 		set Zeny, Zeny-2000;
-		emotion 15;
+		emotion e_thx;
 		cutin "kafra_01",255;
 		close;
 
@@ -1184,7 +1184,7 @@ aldeba_in.gat,81,166,4	script	Kafra Pavianee	117,{
 	M_3:
 		mes "[Kafra Pavianne]";
 		mes "Thank you for using Kafra Services! I'm Kafra Pavianne, and it was a pleasure to assist you.";
-		emotion 15;
+		emotion e_thx;
 		cutin "kafra_01",255;
 		close;
 
@@ -1207,7 +1207,7 @@ aldeba_in.gat,83,244,4	script	Kafra Blossom	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Blossom]";
 	mes "..... Pavianne is soooo old school! She's too stubborn is what it is...";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Kafra Blossom]";
 	mes "We should be trying to make our customers' experience more unique, with new and creative ideas...";
@@ -1220,17 +1220,17 @@ aldeba_in.gat,83,244,4	script	Kafra Blossom	116,{
 	
 		mes "[Kafra Blossom]";
 		mes "Really! Thank you sooo much!! Here is... my... autograph...";
-		emotion 15;
+		emotion e_thx;
 		next;
 		mes "[Kafra Blossom]";
 		mes "Don't bother to look in your Item Inventory for it.  It won't be there... tehehe... for my autograph will remain within your heart.";
-		emotion 33;
+		emotion e_ok;
 		cutin "kafra_02",255;
 		close;
 	M_1:
 		mes "[Kafra Blossom]";
 		mes "Huh? . . . . . That's all? Phew~ such a dull customer...";
-		emotion 1;
+		emotion e_what;
 		cutin "kafra_02",255;
 		close;
 }
@@ -1251,7 +1251,7 @@ aldeba_in.gat,91,244,4	script	Kafra Curly Sue	112,{
 	
 		mes "[Kafra Curly Sue]";
 		mes ".... Sob~sob~... WHAT?? I'm NOT some KID!!";
-		emotion 28;
+		emotion e_sob;
 		next;
 		cutin "kafra_06",255;
 		close;
@@ -1290,7 +1290,7 @@ aldeba_in.gat,148,244,4	script	Kafra Roxie	114,{
 	next;
 	mes "[Kafra Roxie]";
 	mes "Uh... please ignore what I was talking about earlier. Hahaha.....heh...";
-	emotion 4;
+	emotion e_swt;
 	cutin "kafra_04",255;
 	close;
 }

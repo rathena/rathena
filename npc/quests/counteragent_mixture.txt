@@ -71,11 +71,11 @@ M_Menu2:
 geffen.gat,181,114,4	script	Aure Dupon	55,{
 	mes "[Aure Dupon]";
 	mes "TIME never WAITS for you!! Even MAGIC cannot SLOW it down!  I can feel it passing me by even as we speak!!....";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Aure Dupon]";
 	mes "So... why did you stop me??";
-	emotion 20;
+	emotion e_hmm;
 	if(MORGEN >= 1) goto M_Menu2;
 M_Menu:
 	next;
@@ -120,7 +120,7 @@ geffen_in.gat,141,140,2	script	Morgenstein	121,{
 	mes "[Chemist Morgenstein]";
 	mes "Heheheheheh... Sniff Sniff... I can smell something appetizing here.";
 	mes "It is a Human Being... living one... umm yummy... Heheheheheh";
-	emotion 38;
+	emotion e_awsm;
 	close;
 
 L_0:
@@ -134,7 +134,7 @@ M_Menu:
 		mes "[Chemist Morgenstein]";
 		mes "Heheheheheh... You probably already heard about what I do ...";
 		mes "Okay.. I will tell you everything... there is nothing left for me to hide.... Heheheheheh...";
-		emotion 29;
+		emotion e_gg;
 		next;
 		mes "[Chemist Morgenstein]";
 		mes "As far as I'm concerned my research has already been completed.....";
@@ -142,7 +142,7 @@ M_Menu:
 		next;
 		mes "[Chemist Morgenstein]";
 		mes "You know what I mean..... time?.... Hehehehehehehya....";
-		emotion 29;
+		emotion e_gg;
 		next;
 		mes "[Chemist Morgenstein]";
 		mes "Um.... did you say you want to know about my Research?... Oh it's all very simple.... I'm just trying to find ways to combine different materials...";
@@ -153,7 +153,7 @@ M_Menu:
 		next;
 		mes "[Chemist Morgenstein]";
 		mes "~~~~ !! Hehe!!!...Heheheheheh!!!...squash squash!!!..Kekekekekelll!!!!";
-		emotion 43;
+		emotion e_slur;
 		next;
 		mes "[Chemist Morgenstein]";
 		mes "Ack!~cough~cough~ Ahem.... Though it is not yet possible, I did figure out something else incredible.";
@@ -176,7 +176,7 @@ M_Menu2:
 		mes "[Chemist Morgenstein]";
 		mes "Heheheheheheh.... So I see you are interested in my creations?..... Who woudn't.... Kekekekekekeke!!!";
 		mes "So what do you want me to make for you?? Huh? Heheheheheh.............";
-		emotion 29;
+		emotion e_gg;
 		next;
 		menu "-Counteragent",-, "-Mixture",sM_Mixture, "-Forget it",M_End;
 		

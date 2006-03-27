@@ -505,7 +505,7 @@ lou_fild01.gat,175,174,4	script	Jiu Lian Bu	819,{
 	mes "[Jiu Lian Bu]";
 	mes "So...";
 	mes "Whaddya want to do?";
-	emotion 18;
+	emotion e_heh;
 	next;
 	menu "Shout.",-,"Leave.",M_LEAVE;
 
@@ -938,7 +938,7 @@ lou_in02.gat,58,183,4	script	Chef Assistant	823,{
 	donpcevent "Lounpc::OnEffect";	
 	next;
 	mes "[Jin Wei Ling]";
-	emotion 21;
+	emotion e_no1;
 	mes "Hahahaha! Look at these perfect";
 	mes "vegetable slices! Muhahahaha!!";
 	mes "I will continue to hone my martial";
@@ -1039,7 +1039,7 @@ L_POOR:
 	mes "Good lord,";
 	mes "What are you thinking? What am I, a beggar?! That's a poor excuse for a bribe!";
 	next;
-	emotion 32;
+	emotion e_pif;
 	mes "[Jin Chiyuan]";
 	mes "I mean...";
 	mes "How dare you bribe an officer of the law! I hope other outsiders are not like you! Please leave immediately.";
@@ -1071,7 +1071,7 @@ L_OFFICER:
 	close;
 
 L_BEENTOHIM:
-	emotion 18;
+	emotion e_heh;
 	mes "[Jin Chiyuan]";
 	mes "Ah~";
 	mes "You met him,";
@@ -1129,7 +1129,7 @@ L_BRIBED:
 	mes "Hmmm....";
 	mes "Oh I see, I see...";
 	next;
-	emotion 0;
+	emotion e_gasp;
 	mes "^3131FF*Rummage rummage...*";
 	mes "^3131FF..........";
 	close;	
@@ -1187,7 +1187,7 @@ L_WHAT:
 	close;
 
 L_RANT2:
-	emotion 33;
+	emotion e_ok;
 	mes "[Huang Zhishu]";
 	mes "Hmmm...?";
 	mes "Do you think I need to go outside more often? Well, I guess for some reason, I don't feel well. I guess I really should get some fresh air.";
@@ -1213,7 +1213,7 @@ L_QUEST:
 	mes "I hate this";
 	mes "weather...!";
 	next;
-	emotion 1;
+	emotion e_what;
 	mes "[Wang Chuiyi]";
 	mes "Um? Can I help";
 	mes "you with anything?";
@@ -1269,7 +1269,7 @@ M_HOT:
 
 M_ERRAND:
 	mes "[Jiang Xiayou]";
-	emotion 0;
+	emotion e_gasp;
 	mes "Oh yeah?";
 	mes "Well, why didn't you say so? Let's see.";
 	mes "Hmmm...";
@@ -1560,7 +1560,7 @@ L_QUEST:
 	mes "Hmmm...";
 	mes "I'm in trouble";
 	next;
-	emotion 19;
+	emotion e_swt2;
 	mes "[Hua Tuo]";
 	mes "I cannot do anything without my medicine. But one of my patients needs immediate treatment and I can't leave the office...";
 	next;
@@ -1581,7 +1581,7 @@ L_QUEST:
 	mes "much for saying that.";
 	mes "I feel very uncomfortable asking a favor of someone I have only just met.";
 	next;
-	emotion 15;
+	emotion e_thx;
 	mes "[Hua Tuo]";
 	mes "However, I will ask you if we meet another time. Now, if you'll excuse me...";
 	close;

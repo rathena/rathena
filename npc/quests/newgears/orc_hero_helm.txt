@@ -18,7 +18,7 @@ gef_fild10.gat,131,274,4	script	Orc Warrior	1023,{
 	if(ORC_HERO_HELM_Q==2) goto Q2;
 	if(ORC_HERO_HELM_Q==3) goto Q3;
 	if(ORC_HERO_HELM_Q==4) goto Q4;
-	emotion 6;
+	emotion e_an;
 	mes "[Orc Warrior]";
 	mes "What does an human here? Cheeit!";
 	mes "Here are only true Orc Warriors! Get out of our village!";
@@ -57,7 +57,7 @@ Q1_allitem:
 	set ORC_HERO_HELM_Q2,0;
 	close;
 Q1_noitem:
-	emotion 6;
+	emotion e_an;
 	mes "Cheeit! I told ya to bring me back 10,000 Jellopies, and you don't have even one!";
 	close;
 Q2:
@@ -70,7 +70,7 @@ Q2:
 	set ORC_HERO_HELM_Q2,0;
 	close;
 Q2_noitem:
-	emotion 6;
+	emotion e_an;
 	mes "Ya couldn't win against my brother warriors ? Stay away until ya find those 100 Orcish Vouchers! Cheeit!";
 	close;
 Q3:
@@ -95,7 +95,7 @@ Q3_allitem:
 	mes "Now, ya'll have to fight our best warlords and heroes! Bring me 100 Heroic Emblems and I'll give ya your helm.";
 	close;
 Q3_noitem:
-	emotion 6;
+	emotion e_an;
 	mes "Bringing me back at least one of those 10,000 Orcish Vouchers is too hard for ya, poor human? Go out of there, then! Cheeit!";
 	close;
 Q4:
@@ -117,7 +117,7 @@ Q4:
 	mes "Here ya are! Wear it and be proud to be one of the mightiest Orc Heroes! Cheeit!";
 	close;
 Q4_noitem:
-	emotion 6;
+	emotion e_an;
 	mes "No? Ya miss items... I was sure that ya weren't really a hero!";
 	close;
 }

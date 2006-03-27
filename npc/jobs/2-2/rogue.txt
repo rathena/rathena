@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.6 Added a func which prevent advanced classes passing
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================ 
 
 
@@ -24,7 +25,7 @@
 //					Markie: Test 1 and Jobchange						//
 //***********************************************************************************************************************************************************//
 in_rogue.gat,363,123,3	script	Markie	747,{
-	callfunc "F_BlockHigh",30,"Thief High",41,"Stalker","Markie";
+	callfunc "F_BlockHigh",Job_Thief_High,"Thief High",Job_Stalker,"Stalker","Markie";
 
 	mes "[Markie]";
 	if(BaseJob == Job_Thief) goto L_Thief;
@@ -114,7 +115,7 @@ L_Test1:
 		sL_Failed:
 			mes "*sigh*..... this is not the type of score I was expecting......";
 			mes "What can I say excecpt, with a score like this you're definitely not cut out to be a Rogue..........";
-			emotion 4;
+			emotion e_swt;
 			next;
 			mes "[Markie]";
 			mes "Why don't you go do some more training shuga..... you need it..... *mumbles ( what a waste of my time...)*";
@@ -134,7 +135,7 @@ L_Test3:
 	close;
 L_Test4:
 	mes "What are you doing here? I hope your not trying to skip the last test?.........";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Markie]";
 	mes "Your almost finished so just keep trying.  I know you can do it.";
@@ -146,14 +147,14 @@ L_Change:
 //===========
 	mes "Oh, you're back and your in one piece! It looks like you've passed all of the tests sweetie.";
 	mes "You have proven that you are ready to become a Rogue!";
-	emotion 5;
+	emotion e_ic;
 	next;
 	if(SkillPoint != 0) goto L_SkillP;
 	mes "[Markie]";
 	mes "Tada! Congratulations on becoming a Rogue.  You showed a lot of effort and deserve a reward for it......";
 	setlook 7,0;
 	callfunc "Job_Change",Job_Rogue;
-	emotion 46;
+	emotion e_grat;
 	next;
 	mes "[Markie]";
 	mes "Now that you are a Rogue you are free to go where ever you want to and do what ever you want.";
@@ -208,7 +209,7 @@ L_Thief:
 	next;
 	mes "[Mr. Smith]";
 	mes "...... CRAP! I forgot what I was counting!!";
-	emotion 16;
+	emotion e_wah;
 	close;
 
 //----------------------------------------------------------------------------------------------------
@@ -300,7 +301,7 @@ L_Check2:
 
 	L_NotEnuf:
 		mes ".... What the f@&#!?!? You don't have all of the items? Then why did you come back?? Don't tell me you forgot what to get.....";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Mr. Smith]";
 		mes "Write this down! You need ^5533FF10,000^000000 zeny and:";
@@ -310,7 +311,7 @@ L_Check2:
 		next;
 		mes "[Mr. Smith]";
 		mes "Got it? DON'T come back until you have everything.........";
-		emotion 32;
+		emotion e_pif;
 		close;
 
 
@@ -319,11 +320,11 @@ L_Test3:
 //---------------
 	if(ROGUE_Q2 > 0) goto L_Check3;
 	mes "Let me see..... Who should I have you go find........ hmm.........";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Mr. Smith]";
 	mes "Ah I know! Alright, in the previous test I had you go find some items.  For this test you will need to find a specific person.";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Mr. Smith]";
 	set ROGUE_Q2, rand(1,3);
@@ -396,11 +397,11 @@ L_Test3:
 
 L_Check3:
 	mes "What!?! Did you just say you forgot where to go?........";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Mr. Smith]";
 	mes "GRRRR!!! That's why you need to WRITE down important things! Geez......";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Mr. Smith]";
 	if(ROGUE_Q2 == 1) callsub sF3_R1;
@@ -424,15 +425,15 @@ L_Done:
 in_rogue.gat,272,136,3	script	Hermanthorn Jr.	85,{
 	mes "[Hermanthorn Jr.]";
 	mes "Huh? Wha.... who are you?! You're not from the Rogue guild!! Get out of here!";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Hermanthorn Jr.]";
 	mes "You're..... I see! You're one of them!!! You've come here to kill me haven't you??!! No... NO!! I'm not ready to die yet!";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Hermanthorn Jr.]";
 	mes "Aaaaaaaaaaaaaahhhh!! Go away! Get lost! Otherwise I am gonna KILL YOU!!!";
-	emotion 16;
+	emotion e_wah;
 	close;
 }
 
@@ -584,7 +585,7 @@ function	script	F_RogueTest4	{
 	next;
 	mes "[" + getarg(0) + "]";
 	mes "Aww who am I kidding...... Let's cut the crap.  So are you ready to become a rogue?";
-	emotion 4;
+	emotion e_swt;
 	next;
 	mes "[" + getarg(0) + "]";
 	mes "You see, the Rogue motto is...... ^5533FF'Avoid the strong! Be malicious to the weak!'^000000";
@@ -624,7 +625,7 @@ function	script	F_RogueTest4	{
 L_Restart:
 	mes "[" + getarg(0) + "]";
 	mes "....... Looks like you got creamed.......";
-	emotion 4;
+	emotion e_swt;
 	next;
 	mes "[" + getarg(0) + "]";
 	mes "If you're up for it, I'll send you back in.  Failure has a way of teaching success.... yada yada yada....";

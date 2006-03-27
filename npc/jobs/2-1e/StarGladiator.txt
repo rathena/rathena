@@ -24,7 +24,7 @@ job_star.gat,166,37,2	script	Star Gladiator	764,{
 		close;
 	}
 	mes "Are you a Taekwon? No?! Get lost.";
-	emotion 1;
+	emotion e_what;
 	close;
 
 L_Check:

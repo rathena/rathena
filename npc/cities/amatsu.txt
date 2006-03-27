@@ -1316,7 +1316,7 @@ amatsu.gat,269,221,1	script	Proposing Girl	758,{
 	mes "Furthermore, the proposal has to be answered";
 	mes "prior to Sunday night after";
 	next;
-	emotion 3;
+	emotion e_lv;
 	mes "[Hutari Sioko]";
 	mes "If you have a secret admirer...";
 	mes "why not meet under that tree";
@@ -1396,7 +1396,7 @@ amatsu.gat,274,178,0	script	Vet	735,{
 	mes "Anyway, do you believe me or not";
 	mes "want to make a bet...?";
 	next;
-	emotion 9;
+	emotion e_dots;
 	mes "[Sakura Seiichi]";
 	mes "What if I...";
 	mes "............";
@@ -1414,7 +1414,7 @@ L2:
 	mes "be careful, one day that kind of things";
 	mes "Will happen to you as well..";
 	next;
-	Emotion 9;
+	emotion e_dots;
 	mes "[Sakura Seiichi]";
 	mes "Hahaha... Hahahaha.....";
 	mes "...............";
@@ -1429,19 +1429,19 @@ L2:
 }
 
 amatsu.gat,283,203,1	script	PokePoke	738,{
-	Emotion 19;
+	emotion e_swt2;
 	mes "[Pokepoke]";
 	mes "The tree on this hill";
 	mes "has existed for a long time, a deep-rooted";
 	mes "and ever-blooming Sakura Tree King";
 	next;
-	Emotion 19;
+	emotion e_swt2;
 	mes "[Pokepoke]";
 	mes "And I am very thankful of this tree,";
 	mes "whenever I feel any sorrow or sadness";
 	mes "I always go sit under that tree";
 	next;
-	Emotion 19;
+	emotion e_swt2;
 	mes "[Pokepoke]";
 	mes "That way no matter what happened";
 	mes "I can forget it all....";
@@ -1449,7 +1449,7 @@ amatsu.gat,283,203,1	script	PokePoke	738,{
 	mes "and make us forget sad things";
 	mes "a magic tree";
 	next;
-	Emotion 19;
+	emotion e_swt2;
 	mes "[Pokepoke]";
 	mes "If you feel any sadness or sorrow";
 	mes "you can try to sit under this tree";

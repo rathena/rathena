@@ -46,7 +46,7 @@ prt_in.gat,235,133,4	script	Nurse Aid	90,{
 		next;
 		mes "[Nurse Aid]";
 		mes "That's why I've decided to teach people how to heal themselves!  Would you like me to teach you?";
-		emotion 5;
+		emotion e_ic;
 		next;
 		menu "Would you??",sM_Yes, "(...she's nuts!...run!!!)",sM_No;
 
@@ -66,7 +66,7 @@ prt_in.gat,235,133,4	script	Nurse Aid	90,{
 		sM_No:
 			mes "[Nurse Aid]";
 			mes "Hey!...Where are you running too??...";
-			emotion 4;
+			emotion e_swt;
 			close;
 
 L_GetAid:
@@ -83,7 +83,7 @@ L_GetAid:
 	set got_bandage,0;
 	mes "[Nurse Aid]";
 	mes "YES! You finally got it.  Now you can heal yourself and continue fighting those bad monsters.  Well, take care.";
-	emotion 21;
+	emotion e_no1;
 	close;
 
 L_GotAid:
@@ -100,11 +100,11 @@ prt_in.gat,73,87,2	script	Bulma	98,{
 
 L_Other:
 	mes "Yeah... I look great.... Afterall, I'm a Knight of the Prontera Chivalry.  Kuhahahaha!";
-	emotion 18;
+	emotion e_heh;
 	next;
 	mes "[Bulma]";
 	mes "It hasn't been that long since I became a Knight, but I still look good as one right? What do you think???";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_Novice:
@@ -129,7 +129,7 @@ L_Start:
 	next;
 	mes "[Bulma]";
 	mes "Hmm..... actually I might be able to help you out........";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Bulma]";
 	mes "What's this? Ha ha, don't look so surprised.  What I have to offer will be very useful to you.";
@@ -163,11 +163,11 @@ L_Start:
 	next;
 	mes "[Bulma]";
 	mes "Kekekeke..... Just kidding!  The pill actually helps you stay calm, nothing more.";
-	emotion 18;
+	emotion e_heh;
 	next;
 	mes "[Bulma]";
 	mes "Well get going... GO! GO! GO! RUN!!!";
-	emotion 27;
+	emotion e_go;
 	set PLAYDEAD, 1;
 	close;
 
@@ -194,11 +194,11 @@ L_GetSkill:
 	mes "[Bulma]";
 	mes "Ok, lights, camera, ACTION! Yes... yes... YES!! That's it!! As I watch you laying there I TRULLY believe that you are dead.";
 	mes "What a wonderful performance! BRAVO! BRAVO!";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Bulma]";
 	mes "With the right motivation and focus you will be able to play dead anywhere at any given moment.  Congratulations on mastering this skill.";
-	emotion 21;
+	emotion e_no1;
 	skill 143,1,0;
 	set PLAYDEAD, 0;
 	set got_novnametag,0;
@@ -206,11 +206,11 @@ L_GetSkill:
 
 	sL_NotRdy:
 		mes "HEY! What are you doing here?  It's irresponsible of you to still be here while your time is running out.........";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Bulma]";
 		mes "Now GO! Run! Run! RUN!!";
-		emotion 27;
+		emotion e_go;
 		close;
 
 L_GotSkill:
@@ -230,7 +230,7 @@ prt_castle.gat,174,147,2	script	Newbie Assistant	84,{
 
 L_NonNov:
 	mes "What am I doing here?  I'm just trying to help out young newbies.  You remember how it was to be a newbie... confused.... lost.... heh heh.";
-	emotion 1;
+	emotion e_what;
 	close;
 L_Start:
 	if(FIRSTAID==1 && countitem(930)==0 && got_bandage!=1) goto L_Aid;
@@ -250,7 +250,7 @@ L_Aid:
 	next;
 	mes "[Newbie Assistant]";
 	mes "Her beauty, her grace, sometimes I wish........ (blushes).......... um.... well...err... tell her I said hello.";
-	emotion 3;
+	emotion e_lv;
 	close;
 L_Play:
 	mes "So Bulma sent you uh.... okay here you go.";

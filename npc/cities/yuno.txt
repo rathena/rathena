@@ -200,12 +200,12 @@ yuno.gat,162,328,4	script	Sage Eskla	735,{
 	next;
 	mes "[Eskla]";
 	mes "Then... without warning.... the piece of paper attacked me!! ME! One of the GREATEST Sages in Yuno!!";
-	emotion 23;
+	emotion e_omg;
 	next;
 	mes "[Eskla]";
 	mes "I said to the piece of paper, 'How dare you attack me you little piece of paper!!' and struck it with my trusty sword.";
 	mes "But that piece of paper was persistent and annoying at that.";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Eskla]";
 	mes "Using its paper thin body it dodged my sword simply by turning itself.  The way it was turned I couldn't even tell if it was still there.";
@@ -314,7 +314,7 @@ L_Stang:
 L_Kato:
 	mes "What??!! That fool Stangckle said he doesn't want to help me?? This is not good...... My research will slow down considerably.";
 	mes "......... What will I do now?!?!?";
-	emotion 19;
+	emotion e_swt2;
 	next;
 	mes "[Metto]";
 	mes "Luckily I have a backup plan.  I'm certain that my friend and colleague ^5533FFKato^000000 will lend me a hand.";
@@ -328,15 +328,15 @@ L_Kato:
 	mes "[Metto]";
 	mes "Expect great things from me young friend..... MUHAHAHAHAH!!!!";
 	set metto_q, 4;
-	emotion 29;
+	emotion e_gg;
 	close;
 L_Cici:
 	mes "WHAT!?!? You're telling me that the very thing I need to continue my research with... the Great Z.... has been DESTROYED!?!?";
-	emotion 16;
+	emotion e_wah;
 	next;
 	mes "[Metto]";
 	mes "NOOOOOOO!!! Why?? How?? Why would he do that? Are the Gods cursing me?!?";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Metto]";
 	mes "Wait.... I need to calm down...";
@@ -345,7 +345,7 @@ L_Cici:
 	mes "[Metto]";
 	mes "*sigggghhhh* I still have hope...... YES I DO!! HAHAHA!!!";
 	set metto_q, 6;
-	emotion 29;
+	emotion e_gg;
 	close;
 L_Check:
 	mes "I better get going so I can check this new thing out..... What are you still doing here?";
@@ -357,12 +357,12 @@ L_Ruined:
 	mes "[Metto]";
 	mes "How could something like this happen?? All 3 of my colleagues abandoning me all at once?!?!";
 	mes "It's true....... the Gods HAVE forsaken me..... I'm ruined...... RUINED!!!";
-	emotion 28;
+	emotion e_sob;
 	next;
 	mes "[Metto]";
 	mes "What else can I do now? Has the time really come for me to let go of all of my research?....";
 	mes "Those many, many years of research?........";
-	emotion 28;
+	emotion e_sob;
 	next;
 	mes "[Metto]";
 	mes "You must be disappointed...... but please, forget about all of this... forget about me........";
@@ -404,12 +404,12 @@ L_Start:
 		mes "[Stangckle]";
 		mes "Is this true?? Metto doesn't think of me as a colleague, and is only USING me?";
 		mes "He sees me as a lowly assistant and is going to STEAL all the CREDIT for our discoveries?!!";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Stangckle]";
 		mes "I can't believe I trusted him..... the rumors were true.... he IS a selfish mad man!!!.......";
 		mes "And to think I respected a scumbag like that!!";
-		emotion 32;
+		emotion e_pif;
 		next;
 		mes "[Stangckle]";
 		mes "I don't think I can even bear to see his disgusting face anymore.....";
@@ -425,7 +425,7 @@ L_Start:
 	M_End:
 		mes "[Stangckle]";
 		mes "What are you doing here then? Stop wasting my time.";
-		emotion 4;
+		emotion e_swt;
 		close;
 L_Done:
 	mes "So Metto was truly a mad scientist after all...... I guess he will be the one who will ultimately pay for that choice.......";
@@ -449,12 +449,12 @@ L_Start:
 		mes "[Kato]";
 		mes "WHAT!!?? Metto said my Great Z is INFERIOR to Stangckles research!!??";
 		mes "He.... he said I should rename it to 'LAME Z'??.......";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Kato]";
 		mes "*Sniff* I... I don't believe it.... *sob* how could he say that?..... If... if my invention is no good.....";
 		mes "Then I guess I should destroy it.... my Great Z.... *sigh*";
-		emotion 28;
+		emotion e_sob;
 		next;
 		mes "[Kato]";
 		mes "How could that Metto be such a heartless bastard?? Thank you for letting me know Metto's TRUE feelings about my work.";
@@ -492,11 +492,11 @@ L_Start:
 
 		mes "[CiCi]";
 		mes "Hmm?? Metto said that he doesn't need my Riding Engine Theory?? Hmphf! How dare he!!!";
-		emotion 32;
+		emotion e_pif;
 		next;
 		mes "[CiCi]";
 		mes "I have half a mind to teach him a little something about TRUE science and INTELLIGENT research!!";
-		emotion 7;
+		emotion e_ag;
 		next;
 		mes "[CiCi]";
 		mes "... Whatever.... I don't have the necessary equipment to help him anyways.";
@@ -511,7 +511,7 @@ L_Start:
 	M_End:
 		mes "[CiCi]";
 		mes "What? That's it? You just wanted to waste some time?...........";
-		emotion 4;
+		emotion e_swt;
 		close;
 
 L_Done:
@@ -536,7 +536,7 @@ yuno_in01.gat,18,30,3	script	Wagan	85,{
 	next;
 	mes "[Wagan]";
 	mes "These people just drive me crazy!";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Wagan]";
 	mes "They think only of themselves and their crazy actions make it much more difficult for everyone else.";
@@ -548,7 +548,7 @@ yuno_in01.gat,18,30,3	script	Wagan	85,{
 	mes "[Wagan]";
 	mes "..... the list goes on and on.  What's worse..... He tries to justify his dreadful actions by calling it 'research'!!!!";
 	mes "He has definitely lost his sanity and has gone too far!!";
-	emotion 7;
+	emotion e_ag;
 	next;
 	mes "[Wagan]";
 	mes "If only there was a way to stop this mad man from destroying our community......";
@@ -559,7 +559,7 @@ yuno_in01.gat,18,30,3	script	Wagan	85,{
 		mes "[Wagan]";
 		mes "Oh?? Are you really going to help us stop Metto? Our city would be very grateful if you could do this.......";
 		mes "But how exactly do you plan on accomplishing this rather difficult task?";
-		emotion 1;
+		emotion e_what;
 		next;
 		menu "Yeah it's pretty hard....",M_End, "Well, I guess I need to think of a plan now.....",-;
 
@@ -589,7 +589,7 @@ L_Check:
 L_Thank:
 	mes "Is this true? You were able to shut down Metto's research? Thank you sooo much for your help.";
 	mes "Without Metto causing trouble we have a lot less to worry about.";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Wagan]";
 	mes "The people of this city are grateful to you.  Here is a little token of our appreciation......";
@@ -597,11 +597,11 @@ L_Thank:
 	mes "[Wagan]";
 	mes "Thank you once again for your assistance! I wish you the best of luck in all of your future endeavors!!!";
 	getitem 715,10;
-	emotion 15;
+	emotion e_thx;
 	set metto_q, 9;
 	close;
 L_Done:
 	mes "Things have been much more peaceful around here now that Metto has been shut down.  Thank you once again for your help.";
-	emotion 15;
+	emotion e_thx;
 	close;
 }

@@ -28,7 +28,7 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 
 	mes "Wahhhhh!!! Wahh... NO more! NO more!";
 	mes "I won't... eat anymore stupid ^0000ffFruit^000000 things!!";
-	emotion 28;
+	emotion e_sob;
 	next;
 	menu "Talk",M_Talk,"Cancel",M_End;
 
@@ -39,7 +39,7 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 		mes "Arhhggg!! I'VE HAD ENOUGH!!! I can't eat anymore ^0000ffFruits^000000! They";
 		mes "taste so SOUR..... I have to PEEL them before I can eat them.....";
 		mes "they feel sticky and squishy...... it's really ANNOYING!!!!";
-		emotion 16;
+		emotion e_wah;
 		next;
 		mes "[LIttle Morrison]";
 		mes "I just HATE FRUIT! I can't even get full off of the stuff.(~sigh~)";
@@ -49,16 +49,16 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 		L_Meat:
 		mes "[Little Morrison]";
 		mes "...(sniff)....(sniff)(sniff).... Oh! Is that ^ff0000Meat^000000???";
-		emotion 5;
+		emotion e_ic;
 		next;
 		mes "[Little Morrison]";
 		mes "Do you have some ^ff0000Meat^000000?!!!~(drools)~";
 		mes "Umm... that yummy smell is making me SOOO HUNGRYYYY!!!l";
-		emotion 37;
+		emotion e_rice;
 		next;
 		mes "[Little Morrison]";
 		mes "... Umm... excuse me..... could you give me some of that meat PLEEAASSSE?";
-		emotion 28;
+		emotion e_sob;
 		next;
 		menu "Give him some",sM_Give,"Ignore him",sM_Ignore;
 		
@@ -71,7 +71,7 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 			mes "Whoah~!!! It's real Meat, Meat!";
 			mes "Mmmm! It makes my mouth water.";
 			mes "Oh thank you. Now I feel happy. Yum Yum...";
-			emotion 38;
+			emotion e_awsm;
 			close;
 
 		sM_Ignore:
@@ -79,19 +79,19 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 			mes "[Little Morrison]";
 			mes "Boo...";
 			mes "Boo... Fine... Alright, Alright~!!! Selfish meanie!";
-			emotion 36;
+			emotion e_bzz;
 			close;
 	M_End:
 		mes "[Little Morrison]";
 		mes "Wahhhh!!! No matter how hard I try, I just can't eat Vegetables";
 		mes "or ^0000ffFruit^000000! They're plain disgusting!!";
-		emotion 28;
+		emotion e_sob;
 		close;
 
 L_GoAway:
 	mes "Pffff... Leave me alone! You DON'T CARE about me! I'm gonna DIE";
 	mes "because of these stupid Veggies and Fuits so MIND your own business!";
-	emotion 32;
+	emotion e_pif;
 	close;
 
 L_Candy:
@@ -119,7 +119,7 @@ prt_in.gat,49,172,2	script	Housewife Marianne	53,{
 
 	mes "Morrison!! Please eat some fruit will ya? Fruit~!";
 	mes "*Sob*~!! Like father like son...";
-	emotion 28;
+	emotion e_sob;
 	next;
 	menu "Talk",M_Talk,"Cancel",M_Cancel;
 	close;	
@@ -129,7 +129,7 @@ prt_in.gat,49,172,2	script	Housewife Marianne	53,{
 		mes "(~Sigh~)...This is Morrison... My one and only son. He's going";
 		mes "through some kinda faze and doesn't want to eat any ^0000ffFruits^000000 or";
 		mes "vegetables.";
-		emotion 40;
+		emotion e_shy;
 		next;
 		mes "[Housewife Marianne]";
 		mes "Look at his face..., it turns sour just hearing about ^0000ffFruit^000000...";
@@ -142,20 +142,20 @@ prt_in.gat,49,172,2	script	Housewife Marianne	53,{
 	M_Cancel:
 		mes "[Housewife Marianne]";
 		mes "Morrison!! I will get mad at you if you keep doing this!";
-		emotion 36;
+		emotion e_bzz;
 		close;
 	
 L_GaveMeat:
 	set MORRISON,0;
 	mes "Oh MY GOD!!... Oh lord...";
-	emotion 23;
+	emotion e_omg;
 	next;
 	mes "[Housewife Marianne]";
 	mes "WHAT ARE YOU DOING!! HOW DARE YOU feed my son!! And ^ff0000MEAT^000000 of all things!!!";
 	next;
 	mes "[Housewife Marianne]";
 	mes "Arrrgh~~!! Get Lost right now!!!!!!";
-	emotion 32;
+	emotion e_pif;
 	close;
 
 L_Juice:
@@ -168,16 +168,16 @@ L_Juice:
 	mes "[Housewife Marianne]";
 	mes "What if I could turn ^0000ffFruits^000000 into a ^0000ffJuice^000000... for example...Orange";
 	mes "juice... Would my child like it?";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Housewife Marianne]";
 	mes "Ah! Now I remember..There is a town where you can get a variety of";
 	mes "^0000ffFruit^000000 turned into ^0000ffFruit Juices^000000.";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Housewife Marianne]";
 	mes "... Was is it...^ff0000Payon^000000...or ^ff0000Morroc^000000...?";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	close;
 
@@ -264,7 +264,7 @@ sF_Make:
 		if(@amount > 0) goto L_Make;
 		mes "[Juicer Marx Hansen]";
 		mes "Doh! You don't have enough ingredients for a single bottle of juice.";
-		emotion 0;
+		emotion e_gasp;
 		close;
 
 	M_Tell:

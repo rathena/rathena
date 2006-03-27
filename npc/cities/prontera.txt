@@ -69,11 +69,11 @@ prontera.gat,106,117,6	script	Merideth	91,{
 	mes "[Merideth]";
 	mes "A HUGE swarm of hornets!! I never saw anything like it! But what was even more surprising was the Queen Bee.";
 	mes "The fact that she could control all of them with such ease....";
-	emotion 23;
+	emotion e_omg;
 	next;
 	mes "[Merideth]";
 	mes "If only a girl like myself had that much power over guys.... NOW THAT, would be really cool!!";
-	emotion 29;
+	emotion e_gg;
 	close;
 }
 
@@ -88,14 +88,14 @@ prontera.gat,146,204,2	script	YuNa	700,{
 	next;
 	mes "[YuNa]";
 	mes "HE DID IT ALL WRONG!!";
-	emotion 7;
+	emotion e_ag;
 	next;
 	mes "[YuNa]";
 	mes "The statue is just totally different from the Odin we all know! He insisted that it was his artistic view or something....";
 	next;
 	mes "[YuNa]";
 	mes "Look~ He doesn't have a broad brimmed hat.... he's not even riding Sleipnir.... this is just totally unacceptable~!";
-	emotion 32;
+	emotion e_pif;
 	close;
 }
 
@@ -157,7 +157,7 @@ prt_in.gat,88,105,2	script	Recruiter	105,{
 		mes "[Recruiter]";
 		mes "Didn't you hear yet? The Culvert is infested with noxious insects. We found bugs, maggots, and other creatures there.";
 		mes "They've become a huge problem... You've Never heard of this?";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Recruiter]";
 		mes "Because of the severity of these 'issues',it is forbidden for the people to use the water supply for the time being.";
@@ -170,7 +170,7 @@ prt_in.gat,88,105,2	script	Recruiter	105,{
 		next;
 		mes "[Recruiter]";
 		mes "Mighty Warrior!! The People NEED YOU!! Let's EXPEL these VILE creatures from our land!!!";
-		emotion 27;
+		emotion e_go;
 		next;
 		mes "[Recruiter]";
 		mes "WILL YOU volunteer????";
@@ -179,7 +179,7 @@ prt_in.gat,88,105,2	script	Recruiter	105,{
 		
 			mes "[Recruiter]";
 			mes "..............";
-			emotion 4;
+			emotion e_swt;
 			close;
 	M_VOL:
 		mes "[Recruiter]";
@@ -381,7 +381,7 @@ prt_in.gat,26,30,1	script	Sir Michael	54,{
 	next;
 	mes "[Sir Michael]";
 	mes "I saw a GIAGANTIC, SHIMMERING, ^FF5555GOLDEN THIEF BUG^000000.";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Sir Michael]";
 	mes "I all my years I've never seen a thief bug as LARGE or as SHINY!!! What an amazing sight!";
@@ -412,7 +412,7 @@ prt_in.gat,173,24,2	script	Shevild	85,{
 		next;
 		mes "[Shevild]";
 		mes "Hm... Now... I'm suddenly reminded of a mysterious dungeon and a dangerous forest....";
-		emotion 20;
+		emotion e_hmm;
 		next;
 	L_MENU:
 		menu "The mysterious Dungeon?",-,"The dangerous forest?",M_L01,"End conversation",M_END0;
@@ -433,7 +433,7 @@ prt_in.gat,173,24,2	script	Shevild	85,{
 				mes "[Shevild]";
 				mes "Huh? What? haven't you even wandered around just outside of Prontera yet, man?";
 				mes "Alright, alright. I'll tell you. If you go north from the castle of Prontera, the dungeon is at the edge of the north-west side of the forest.";
-				emotion 1;
+				emotion e_what;
 				next;
 				goto L_MENU;
 
@@ -479,7 +479,7 @@ prt_in.gat,181,21,2	script	Bartender	61,{
 	next;
 	mes "[Bartender]";
 	mes "If things don't change... my special menu of 'Sour Crunches' and 'Tasty Yum-Yum' will disappear from people's memories, sob... sob...";
-	emotion 28;
+	emotion e_sob;
 	next;
 L_MENU:
 	menu "'Sour Crunches'?",-,"'Tasty Yum-Yum?'",L1,"Better let him be....",L_END;
@@ -537,7 +537,7 @@ prt_in.gat,177,20,2	script	TenSue	97,{
 		mes "What? You're sick and tired of killing monsters in fields and dungeons?";
 		mes "Hahaha, it seems like you are very confident in your training. If you think so...";
 		mes "Why don't you visit Izlude, the satellite of Prontera.";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[TenSue]";
 		mes "Cool Event Corp. has opened up the arena called Time Limit Fight and Battle Ordeal, to full fill the young people's thirst for more excitement...";

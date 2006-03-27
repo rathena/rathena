@@ -23,7 +23,7 @@ function	script	Aco_check	{
 
 		JobAco:
 			mes "Are you feeling okay?....";
-			emotion 20;
+			emotion e_hmm;
 			next;
 			mes "[Father Mareusis]";
 			mes "...your attire...";
@@ -33,7 +33,7 @@ function	script	Aco_check	{
 			next;
 			mes "[Father Mareusis]";
 			mes "You are not joking with me, are you? Hoho!!..kids these days.";
-			emotion 18;
+			emotion e_heh;
 			close;
 			
 
@@ -70,7 +70,7 @@ function	script	Arc_check	{
 
 		sL_Archer:
 			mes "Your free spirited nature tells me that you're already an archer....that and the bow and arrow in your hands...Haha";
-			emotion 18;
+			emotion e_heh;
 			close;
 			
 
@@ -105,21 +105,21 @@ function	script	Mag_check	{
 		L_JobMage:
 			mes "You should really get yourself a mirror.  Then you could see that you are ^ff0000already a Mage^000000.";
 			mes "It may even help you fix up your hair do.";
-			emotion 4;
+			emotion e_swt;
 			close;
 			
 
 		L_JobOther:
 			mes "Oh...I'm sorry.  I know they say 2 is always better than 1, but when it comes to Jobs, it's a No No.";
 			mes "Try to stay positive.  Your current job can't be that bad.";
-			emotion 22;
+			emotion e_no;
 			close;
 			
 
 		L_JobLvl:
 			mes "Oh...I'm sorry.  You need ^ff0000Job level 9^000000 and all of the ^0000ffBasic Skills^000000 before you can become a Mage.";
 			mes "Go out and kill some more Fabres okays.";
-			emotion 22;
+			emotion e_no;
 			close;
 			
 
@@ -145,8 +145,8 @@ function	script	Mer_check	{
 		L_JobMer:
 			mes "[Chief Mahnsoo]";
 			mes "Huh? What did you say? You noodle head! Take a good look at yourself.  Your ALREADY A MERCHANT!  Good lord!";
-			emotion 1;
-			emotion 0;
+			emotion e_what;
+			emotion e_gasp;
 			close;
 			
 
@@ -181,7 +181,7 @@ function	script	Swo_check	{
 
 		O_1b:
 			mes "Muhahaha! You must be kidding me! You're already a swordsman.";
-			emotion 18;
+			emotion e_heh;
 			close;
 
 		O_1c:
@@ -189,7 +189,7 @@ function	script	Swo_check	{
 			next;
 			mes "[Master Swordsman]";
 			mes "Try picking up a hobby to make use of your spare time. Muhahahahah!!";
-			emotion 18;
+			emotion e_heh;
 			close;
 
 		O_1d:
@@ -210,7 +210,7 @@ function	script	Thi_check	{
 	if(BaseClass == Job_Merchant) goto L_Merchant;
 
 		mes "You already have a job.  Stop bothering me and go help out some newbies or something.";
-		emotion 21;
+		emotion e_no1;
 		close;
 
 	L_Acolyte:
@@ -220,28 +220,28 @@ function	script	Thi_check	{
 
 	L_Archer:
 		mes "What the heck...? Hahahaha~are you a 'Kill Stealing' Archer...?";
-		emotion 18;
+		emotion e_heh;
 		close;
 
 	L_Mage:
 		mes "What the heck...? Ehhh??? A Circus Sideshow? Make a fire without a Matchstick, will ya?";
-		emotion 19;
+		emotion e_swt2;
 		close;
 
 	L_Merchant:
 		mes "What the heck...? Eeeeeek~Merchant Scammer here...!!!! I am gonna report you to the GM!!!";
-		emotion 0;
+		emotion e_gasp;
 		close;
 
 	L_Swordman:
 		mes "What the heck...? Meh!~Here's another 'Bash' head.  Do me a favor... why don't you go 'BASH', yourself in the head.  Ha!";
-		emotion 29;
+		emotion e_gg;
 		close;
 
 L_JobThief:
 	mes "[Thief Guide]";
 	mes "You're already a thief.....  What do you want from me... go away!";
-	emotion 4;
+	emotion e_swt;
 	close;
 
 }

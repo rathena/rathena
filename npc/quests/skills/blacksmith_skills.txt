@@ -51,7 +51,7 @@ L_nosmith:
 	mes "Geffen is such a great town.";
 	mes "Don't you think so too?";
 	next;
-	emotion 23;
+	emotion e_omg;
 	mes "[Goodday]";
 	mes "WHAT...";
 	mes "You don't!";	

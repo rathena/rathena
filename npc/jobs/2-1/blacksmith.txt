@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 1.8b
+//= 2.0
 //===== Compatible With: =====================================
 //= eAthena  1.0+
 //===== Description: =========================================
@@ -24,13 +24,14 @@
 //= to go. [Lupus]
 //= 1.7 item quantity/ids typos fix
 //= 1.8 Moved the Quest to Einbroch [Poki#3]
+//= 2.0 Changed numbers to constants. [Vicious]
 ==============================================================
 
 
 
 //<==================================================== Blacksmith Altiregen (Job changer)==================================================>\\
 ein_in01.gat,18,28,4	script	Guildsman Altiregen	731,{
-	callfunc "F_BlockHigh",29,"Merchant High",34,"White Smith","Blacksmith Altiregen";
+	callfunc "F_BlockHigh",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith","Blacksmith Altiregen";
 
 	if (BaseJob == 5) goto L_Merc;
 	mes "[Blacksmith Altiregen]";
@@ -87,7 +88,7 @@ L_Merc:
 		sL_HighLvl:
 			mes "[Blacksmith Altiregen]";
 			mes "Wow! I'm impressed! You've done a lot of training there.  You know what they say, with hard work comes great rewards.";
-			emotion 1;
+			emotion e_what;
 			next;
 			mes "[Blacksmith Altiregen]";
 			mes "Well, first things first..... The guildsman ^5533FFGeshupenschte in Einbech^000000, is a bit short on help.";
@@ -114,7 +115,7 @@ L_Merc:
 
 L_Test1:
 	mes "You didn't leave yet? I told you to go see Geshupenschte in Einbech. See you then.";
-	emotion 1;
+	emotion e_what;
 	close;
 
 L_Test2and3:
@@ -141,16 +142,16 @@ L_Test4:
 	M_dontgo:
 		mes "[Blacksmith Altiregen]";
 		mes "What!? You're giving up!?!.........";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Blacksmith Altiregen]";
 		mes "HOW DARE YOU INSULT OUR GUILD LIKE THAT!";
 		mes "Leave now! Don't you dare even DREAM about becoming a blacksmith!";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Blacksmith Altiregen]";
 		mes "Can't endure ANYTHING can you!? How do you plan to become a blacksmith if you can't do these simple tasks!?";
-		emotion 6;
+		emotion e_an;
 		close;
 
 	L_NotDone:	
@@ -175,7 +176,7 @@ L_Change:
 	if(JBLVL != 50) getitem 999,5;
 	if(JBLVL == 50) getitem 999,10;
 	callfunc "F_ClearJobVar";		// clears all job variables for the current player
-	emotion 21;
+	emotion e_no1;
 	close;
 
 	L_NoHam:
@@ -188,7 +189,7 @@ L_Change:
 
 			mes "[Blacksmith Altiregen]";
 			mes "....... grrrrrrr.......";
-			emotion 7;
+			emotion e_ag;
 			close;
 		sM_What:
 			mes "[Blacksmith Altiregen]";
@@ -198,7 +199,7 @@ L_Change:
 			mes "YOU GET TO START ALL OVER!!!!";
 			set BSMITH_Q, 0;
 			set BSMITH_Q2, 0;
-			emotion 32;
+			emotion e_pif;
 		close;
 }
 
@@ -212,7 +213,7 @@ ein_in01.gat,201,27,4	script	Geshupenschte	63,{
 	next;
 	mes "[Geshupenschte]";
 	mes "Blacksmith is such a great job!! Don't you think so? Hahahahahahah!";
-	emotion 18;
+	emotion e_heh;
 	close;
 
 L_merchant:
@@ -232,7 +233,7 @@ L_merchant:
 	next;
 	mes "[Geshupenschte]";
 	mes "What? Why are you still here?";
-	emotion 1;
+	emotion e_what;
 	close;
 
 // Test 1-----------------------------------------------------------------
@@ -834,7 +835,7 @@ L_Test3:
 
 	L_LostItem:
 		mes "WHAT!!! YOU LOST THE ITEM I GAVE YOU TO DELIVER!!!!";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Geshupenschte]";
 		mes "........... Well then.... I gues you'll just have too.....";
@@ -843,7 +844,7 @@ L_Test3:
 		mes "START ALL OVER!! Now get out of my sight!!";
 		set BSMITH_Q, 0;
 		set BSMITH_Q2, 0;
-		emotion 7;
+		emotion e_ag;
 		close;
 
 L_CheckTest3:
@@ -868,7 +869,7 @@ L_CheckTest3:
 			next;
 			mes "[Geshupenschte]";
 			mes "WHAT'S THIS?! YOU LOST IT!? DId you SELL it or something!?";
-			emotion 23;
+			emotion e_omg;
 			next;
 			mes "[Geshupenschte]";
 			mes "The receipt is the soul of merchants! The life line of blacksmiths!";
@@ -876,7 +877,7 @@ L_CheckTest3:
 			set BSMITH_Q, 0;
 			set BSMITH_Q2, 0;
 			set BSMITH_Q3, 0;
-			emotion 32;
+			emotion e_pif;
 			close;
 	M_Wait:
 		mes "[Geshupenschte]";
@@ -907,7 +908,7 @@ geffen.gat,46,164,4	script	Baisulitst	69,{
 	next;
 	mes "[Baisulitst]";
 	mes "Hmmm....., I wonder when I will recieve my special order ^5555FFArc Wand^000000.....";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_Start:
@@ -940,11 +941,11 @@ L_Start:
 	L_NoItem:
 		mes "[Baisulitst]";
 		mes "..... Hmm?.... What's this?..... You here to deliver something to me but you don't have the actual item??";
-		emotion 32;
+		emotion e_pif;
 	L_Wrong:
 		mes "[Baisulitst]";
 		mes "..... Hmm?.... What's this?..... This is not what I ordered.....";
-		emotion 32;
+		emotion e_pif;
 	L_Done:
 		mes "[Baisulitst]";
 		mes "Thanks again for the delivery.  I really appreciate it!";
@@ -958,11 +959,11 @@ morocc.gat,27,112,4	script	Wickebine	725,{
 	mes "[Wickebine]";
 	mes "..........";
 	mes ".....When will my order be here?";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Wickebine]";
 	mes "The Geffen Blacksmith Guild and Geshupenschte are both CHRONICALLY LATE!";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Wickebine]";
 	mes "This is very upsetting......";
@@ -998,12 +999,12 @@ L_Start:
 	L_NoItem:
 		mes "[Wickebine]";
 		mes "Ung! You came all this way to deliver my item and you lost it??!!";
-		emotion 6;
+		emotion e_an;
 		close;
 	L_Wrong:
 		mes "[Wickebine]";
 		mes "I think you're supposed to deliver this somewhere else.....";
-		emotion 4;
+		emotion e_swt;
 		close;
 	L_Done:	
 		mes "[Wickebine]";
@@ -1058,7 +1059,7 @@ L_Start:
 	L_NoItem:
 		mes "[Gromgast]";
 		mes "Hmm... I don't understand.... where is the item I ordered???....";
-		emotion 20;
+		emotion e_hmm;
 	L_Wrong:
 		mes "[Gromgast]";
 		mes "Sorry, but you've got the wrong person.";
@@ -1115,16 +1116,16 @@ L_Start:
 	L_NoItem:
 		mes "[Tilpitz]";
 		mes "Oooh! The delivery is here? What?..... You don't have anything???.....";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Tilpitz]";
 		mes "Don't play bad jokes on people!";
-		emotion 7;
+		emotion e_ag;
 		close;
 	L_Wrong:
 		mes "[Tilpitz]";
 		mes "What's this? You have a delivery.... for someone else..... Then why not deliver it to that person instead???........";
-		emotion 4;
+		emotion e_swt;
 		close;
 	L_Done:
 		mes "[Tilpitz]";
@@ -1182,12 +1183,12 @@ L_Start:
 	L_NoItem:
 		mes "[Bismarck]";
 		mes "ARE YOU TRYING TO TOY WITH ME!!?? How.... ~cough~... could....~ung~.... you....~ack~.....";
-		emotion 23;
+		emotion e_omg;
 		close;
 	L_Wrong:
 		mes "[Bismarck]";
 		mes "I NEED AN ANTIDOTE DAMMIT!! Not this stuff ~ack~........";
-		emotion 23;
+		emotion e_omg;
 		close;
 	L_Done:
 		mes "[Bismarck]";
@@ -1203,7 +1204,7 @@ ein_in01.gat,24,41,4	script	Mitmayer	726,{
 	if (BSMITH_Q == 5) goto L_Done;
 	mes "[Mitmayer]";
 	mes "Whew.... the sun in Morroc is just too strong.... I guess it will gie me tougher skin... Oh well......";
-	emotion 19;
+	emotion e_swt2;
 	next;
 	mes "[Mitmayer]";
 	mes "Afteralll, we Blacksmiths are used to high temperatures since we work with fire everyday!";
@@ -1395,7 +1396,7 @@ L_Result:
 
 	L_Pass:
 		mes "Great! Congrats! You pass!";
-		emotion 21;
+		emotion e_no1;
 		next;
 		mes "[Mitmayer]";
 		mes "You'll need to return to the guild.  Here is proof that you passed the test.... the ^5533FFHammer of Blacksmiths^000000.";
@@ -1405,7 +1406,7 @@ L_Result:
 		next;
 		mes "[Mitmayer]";
 		mes "DON'T LOOSE THIS!!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Mitmayer]";
 		mes "Well, good luck!!!!";

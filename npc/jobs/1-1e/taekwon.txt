@@ -42,7 +42,7 @@ payon.gat,146,87,7	script	Taekwon	764,{
 		
 	}
 	mes "Good day. I'm a Taekwon Guild Master.";
-	emotion 1;
+	emotion e_what;
 	close;
 
 L_Check:

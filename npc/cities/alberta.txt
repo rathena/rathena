@@ -47,7 +47,7 @@ alberta.gat,97,51,7	script	Merchant	84,{
 alberta.gat,53,39,8	script	Merchant	74,{
 	mes "[Merchant]";
 	mes "Oh, you look like a stranger.  Welcome to Alberta.";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Merchant]";
 	mes "I was just brainstorming on some ideas I have for my business.";
@@ -58,7 +58,7 @@ alberta.gat,53,39,8	script	Merchant	74,{
 	next;
 	mes "[Merchant]";
 	mes "Cha-Ching! (you see dollar signs in her eyes)";
-	emotion 8;
+	emotion e_cash;
 	close;
 }
 
@@ -93,7 +93,7 @@ alberta.gat,62,156,2	script	Phina	102,{
 		next;
 		mes "[Phina]";
 		mes "I was startled and so I backed off a bit.  I then realized that it was not grass but a very small creature.";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Phina]";
 		mes "Even calm monsters can be very dangerous when they feel threatened.  So don't startle them by mistake.";
@@ -107,7 +107,7 @@ alberta.gat,62,156,2	script	Phina	102,{
 		next;
 		mes "[Phina]";
 		mes "I was SOOOO scared!! I quickly jumped to the side to avoid it.  Then BAMB!!! It hit a huge tree and crushed it into pieces.";
-		emotion 16;
+		emotion e_wah;
 		next;
 		mes "[Phina]";
 		mes "I sure learned my lesson that day.  NEVER taught any creature cause if they get angry, you'll be in a world of hurt.";
@@ -168,7 +168,7 @@ alberta.gat,131,139,4	script	Drunken old man	709,{
 		
 			mes "[Drunken old man]";
 			mes "What? Ya never heard of it? Stupid! Everybody knows the notorious pirate ship `Going Mary'! (~hiccup~)";
-			emotion 1;
+			emotion e_what;
 			next;
 		sM_1:
 			mes "[Drunken old man]";
@@ -183,12 +183,12 @@ alberta.gat,131,139,4	script	Drunken old man	709,{
 			next;
 			mes "[Drunken old man]";
 			mes "(~sigh!~) (~sob, sob~)... God I miss everyone... Now I'm depressed.  Just go away and leave me be.....";
-			emotion 28;
+			emotion e_sob;
 			close;
 	M_1:
 		mes "[Drunken old man]";
 		mes "That's right! Go AWAY~";
-		emotion 32;
+		emotion e_pif;
 		close;
 }
 
@@ -196,7 +196,7 @@ alberta.gat,131,139,4	script	Drunken old man	709,{
 alberta.gat,90,71,3	script	Soda Man	89,{
 	mes "[Soda Man]";
 	mes "Ummm.... delicious....";
-	emotion 33;
+	emotion e_ok;
 	next;
 	mes "[Soda Man]";
 	mes "Wait! Don't bother me right now.  Hmm? What am I doing you ask?  Well isn't it obvious what I'm doing?";
@@ -314,7 +314,7 @@ alberta.gat,195,151,3	script	Paul	86,{
 	next;
 	mes "[Paul]";
 	mes "Oh! I better warn you, this event is only suitable for HIGH LEVEL warriors.";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Paul]";
 	mes "So what do you say?  It only cost 200 zeny to participate and you'll get a ton of experience, guaranteed.";
@@ -375,7 +375,7 @@ M_Menu:
 		next;
 		mes "[Gotanblue]";
 		mes "TURTLE ISLAND TOOK THE LIVES OF MY CLOSEST FRIENDS!!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Gotanblue]";
 		mes "Can you POSSIBLY understand??.........";
@@ -410,7 +410,7 @@ M_Menu:
 		mes "[Gotanblue]";
 		mes "Then what we feared most happened.  A huge rock formation pierced through the fog right in front of us!";
 		mes "There was no way to avoid it and we crashed violently into it, severely damaging our ship!!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Gotanblue]";
 		mes "Amazingly the ship held together and we were able to continue on.";
@@ -452,7 +452,7 @@ M_Menu:
 		next;
 		mes "[Gotanblue]";
 		mes "IT WAS TURTLE ISLAND!!! We had landed on the other side of the island! We had no idea how it happened but we immediately cast off once again.";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Gotanblue]";
 		mes "And as if some foul curse and been placed on our group, we again found ourselves on the shores of Turtle Island.";
@@ -464,19 +464,19 @@ M_Menu:
 		next;
 		mes "[Gotanblue]";
 		mes "CURSED ISLAND!!!!!";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Gotanblue]";
 		mes "As you can see only I and Jornadan were able to make it out alive.  By pure luck we made back to Alberta....";
 		next;
 		mes "[Gotanblue]";
 		mes "(~sob~sob~sob)... I apologize. I'm am still very emotional about it after all these years... well that is all I have to say about Turtle Island.";
-		emotion 28;
+		emotion e_sob;
 		goto M_Menu;
 	M_2:
 		mes "[Gotanblue]";
 		mes "What's this? After my terrifying story about Turtle Island you still want to got there? You're not at all scared??";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Gotanblue]";
 		mes "So be it... but you will need me as your guide and that will cost 10,000 zeny!";
@@ -501,7 +501,7 @@ M_Menu:
 		sL_Zeny:
 			mes "[Gotanblue]";
 			mes "What's this? I said 10000 zeny.  I will not guide you for less.  Good day!";
-			emotion 1;
+			emotion e_what;
 			close;
 		sM_End:
 			mes "[Gotanblue]";
@@ -537,16 +537,16 @@ M_End:
 alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 	mes "[Turtle Grandpa]";
 	mes "~Buuurrrpp!!!~ Oops...";
-	emotion 4;
+	emotion e_swt;
 	next;
 	mes "[Turtle Grandpa]";
 	mes "It's beyond me why people seem to think that Alberta is the center of world trade.";
 	mes "I mean, this place doesn't even have a decent bar for crying out loud!!";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Turtle Grandpa]";
 	mes "Why is it that I have to resort to drinking in a place like this??";
-	emotion 1;
+	emotion e_what;
 	next;
 	menu "-Tell me about Turtle Island.",-, "-How can I get there?",M_1, "-End conversation.",M_End;
 
@@ -559,7 +559,7 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 		next;
 		mes "[Turtle Grandpa]";
 		mes "I for one believe it does.... it HAS TOO!!......";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Turtle Grandpa]";
 		mes "If you are any sort of seaman, if you have a spirit for adventure, and if you have the heart to become a great treasure hunter....";
@@ -600,15 +600,15 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 		sM_1:
 			mes "[Turtle Grandpa]";
 			mes "No way! I have no interest in speaking with someone with greed in his/her heart!";
-			emotion 0;
+			emotion e_gasp;
 			next;
 			mes "[Turtle Grandpa]";
 			mes "Get OUT of my sight!!! GO HOME!";
-			emotion 6;
+			emotion e_an;
 			next;
 			mes "[Turtle Grandpa]";
 			mes "What's this?? You're still here?..... GO! GO AWAY!!............";
-			emotion 27;
+			emotion e_go;
 			close;
 	M_1:
 		mes "[Turtle Grandpa]";
@@ -616,11 +616,11 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 		next;
 		mes "[Turtle Grandpa]";
 		mes "Actually..... IT'S IMPOSSIBLE!!!!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Turtle Grandpa]";
 		mes "Yet you still want to go there??";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Turtle Grandpa]";
 		mes "I want to warn you about the dangers of going there.... but.... I feel so dizzy..... wooah..... it must be the Vodka....";

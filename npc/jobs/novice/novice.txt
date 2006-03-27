@@ -409,7 +409,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			close2;
 			warp "new_1-2.gat",28,178;
 			end;
-		case 3:	emotion 19;
+		case 3:	emotion e_swt2;
 			close;
 		}
 	}
@@ -444,7 +444,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 				warp "new_1-2.gat",28,178;
 				end;
 			}
-		case 3:	emotion 19;
+		case 3:	emotion e_swt2;
 			close;
 		}
 	}
@@ -480,7 +480,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 				warp "new_1-2.gat",28,178;
 				end;
 			}
-		case 3:	emotion 19;
+		case 3:	emotion e_swt2;
 			close;
 		}
 	}
@@ -612,11 +612,11 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 				mes "Cheer Up!";
 				close;
 			case 2:	goto L_battle;
-			case 3:	emotion 23;
+			case 3:	emotion e_omg;
 			}
 			close;
 		case 2:	goto L_battle;
-		case 3:	emotion 23;
+		case 3:	emotion e_omg;
 		}
 		close;
 	}
@@ -637,7 +637,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 			mes "It is easy to find him.";
 			close;
 		case 2:	goto L_battle;
-		case 3:	emotion 23;
+		case 3:	emotion e_omg;
 		}
 		close;
 	}
@@ -659,7 +659,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 			warp "new_1-2.gat",115,107;
 			break;
 		case 2:	goto L_battle;
-		case 3:	emotion 23;
+		case 3:	emotion e_omg;
 		}
 		close;
 	}
@@ -1569,7 +1569,7 @@ new_1-2.gat,184,172,4	script	Skill Assistant	47,{
 	mes "your performance,";
 	mes "I will be teaching you with my";
 	mes "best effort.";
-	emotion 30;
+	emotion e_kis;
 L_loop:
 	next;
 	switch( select("Passive and Active Skills.","Passive, Basic Skills.","Use of Emoticons","Cancel") ) {
@@ -1781,7 +1781,7 @@ L_loop1:
 			mes "Anyhow, I really thank to God.";
 			mes "Let's shout";
 			mes "'Praise the Creator!'";
-			emotion 30;
+			emotion e_kis;
 			break;
 		case 3:	mes "[Pitch Judas]";
 			mes "You can ^4d4dffopen a chat room^000000";
@@ -1923,7 +1923,7 @@ L_loop1:
 		mes "commands by typing ^4d4dff/emotion^000000 on your";
 		mes "chat windows.";
 		mes "............HuHu";
-		emotion 3;
+		emotion e_lv;
 		break;
 	case 4:	mes "[Pitch Judas]";
 		mes "Don't you need anything else?";

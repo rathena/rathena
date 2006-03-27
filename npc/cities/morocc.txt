@@ -48,7 +48,7 @@ morocc.gat,44,180,8	script	Drunk Man	89,{
 	mes "[Drunk Man]";
 	mes "How about you? Why don't you Look for it? It shouldn't be a problem for someone as brave as yourself?";
 	mes "Kekeke keke(Hiccup)! Buy me a drink later if you ever find that dagger.  Promise me, alright?(Hiccup!)";
-	emotion 20;
+	emotion e_hmm;
 	close;
 }
 
@@ -83,7 +83,7 @@ M_Menu:
 		next;
 		mes "[Ant Man Akira]";
 		mes "Attack an ant by mistake, and you'll find yourself surrounded by a swarm of them before you can even use a fly wing!";
-		emotion 0;
+		emotion e_gasp;
 		goto M_Menu;
 	M_Ants:
 		mes "[Ant Man Akira]";
@@ -152,14 +152,14 @@ M_Menu:
 	M_Quit:
 		mes "[Poring Lady Syvia]";
 		mes "OMG!";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Poring Lady Syvia]";
 		mes "You dare dismiss a poring expert such as myself? I am proud of my knowledge about all things poring!!";
 		next;
 		mes "[Poring Lady Syvia]";
 		mes "Hmf!";
-		emotion 32;
+		emotion e_pif;
 		close;
 }
 
@@ -266,7 +266,7 @@ morocc.gat,208,85,7	script	Trader Joe	83,{
 	next;
 	mes "[Trader Joe]";
 	mes "ALL OF THE SUDDEN!!! The cactus let out this LOUD SCREAM and started to SHOOT its NEEDLES at me!!";
-	emotion 23;
+	emotion e_omg;
 	next;
 	mes "[Trader Joe]";
 	mes "It was THE WORST experience of my ENTIRE LIFE.";
@@ -283,7 +283,7 @@ morocc.gat,208,85,7	script	Trader Joe	83,{
 morocc.gat,234,273,3	script	Fly Man Armani	54,{
 	mes "[Fly Man Armani]";
 	mes "I SAW IT!! I SAW IT!!!";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Fly Man Armani]";
 	mes "I saw the rare ^ff0000Dragon Fly^000000 just North of here! It was incredible!!";
@@ -305,16 +305,16 @@ morocc.gat,234,273,3	script	Fly Man Armani	54,{
 		next;
 		mes "[Fly Man Armani]";
 		mes "Say.... why don't YOU challenge the Dragon Fly?";
-		emotion 20;
+		emotion e_hmm;
 		close;
 	M_1:
 		mes "[Fly Man Armani]";
 		mes "SO WHAT!!??";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Fly Man Armani]";
 		mes "Do you dare underestimate the Dragon Fly??  Bleh! It may be a fly, but I guarantee you THIS FLY is more than you can handle!";
-		emotion 32;
+		emotion e_pif;
 		next;
 		mes "[Fly Man Armani]";
 		mes "No matter.  If you ARE fortunate enough to run into it, you'll quickly see what I mean.  After all, it IS the FLY of ALL FLIES!!!!";
@@ -350,14 +350,14 @@ M_Menu:
 	M_End:
 		mes "[Uncle Phlanette]";
 		mes "Sand HERE! Sand THERE! Sand EVERYWHERE!!!!";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Uncle Phlanette]";
 		mes "(~Sigh~) I'm SICK and TIRED of this sand and desert...";
 		next;
 		mes "[Uncle Phlantette]";
 		mes "Morroc......!! I HATE YOU!!!!!!";
-		emotion 32;
+		emotion e_pif;
 		close;
 }
 

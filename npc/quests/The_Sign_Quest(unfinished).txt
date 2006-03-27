@@ -411,7 +411,7 @@ s_5W:
 	else if(ariantest < 8)
 {
 
-	emotion 19;
+	emotion e_swt2;
 	mes "[Gaanan]";
 	mes "The weather here in";
 	mes "Morroc is too hot for me.";
@@ -440,7 +440,7 @@ morocc_in.gat,115,154,5	script	Rogue	810,{
 
 	else if(signquest < 3 || signquest > 5)
 {
-	emotion 9;
+	emotion e_dots;
 	end;
 }
 	else if(signquest == 3)
@@ -860,7 +860,7 @@ payon_in03.gat,11,31,4	script	Daewoon	808,{
 	mes "you and reveal it to";
 	mes "Daewoon's roving eyes.";
 	next;
-	emotion 0;
+	emotion e_gasp;
 	mes "[Daewoon]";
 	mes "Eh? Why that's...";
 	mes "I see now, Arian must";
@@ -893,7 +893,7 @@ payon_in03.gat,11,31,4	script	Daewoon	808,{
 	next;
 	menu "It's handy.",-,"I actually don't know...",s_Honest;
 
-	emotion 9;
+	emotion e_dots;
 	mes "[Daewoon]";
 	mes "Mmm...?";
 	mes "Handy? If you truly";
@@ -903,7 +903,7 @@ payon_in03.gat,11,31,4	script	Daewoon	808,{
 	next;
 	goto s_Cont;
 s_Honest:
-	emotion 32;
+	emotion e_pif;
 	mes "[Daewoon]";
 	mes "Really?";
 	mes "Mm. At least you";
@@ -911,7 +911,7 @@ s_Honest:
 	next;
 	goto s_Cont;
 s_How:
-	emotion 9;
+	emotion e_dots;
 	mes "[Daewoon]";
 	mes "...";
 	mes "A rather crass way";
@@ -964,7 +964,7 @@ s_Cont:
 	goto s_Question;
 
 s_Best:
-	emotion 33;
+	emotion e_ok;
 	mes "[Daewoon]";
 	mes "Mwah ah hah";
 	mes "That's exactly what";
@@ -991,7 +991,7 @@ s_Rude:
 	goto s_Question;
 
 s_GetOver:
-	emotion 9;
+	emotion e_dots;
 	mes "[Daewoon]";
 	mes "Hmm. That kind of half-hearted";
 	mes "attitude won't get you very far on";
@@ -1001,7 +1001,7 @@ s_GetOver:
 	mes "surviving your challenges.";
 	next;
 s_Question:
-	emotion 20;
+	emotion e_hmm;
 	set @DaewoonTest,0;
 	mes "[Daewoon]";
 	mes "Now, metz expects me to ask";
@@ -1020,7 +1020,7 @@ s_Question:
 	menu "Yes, I do",-,"I prefer soloing.",s_Solo,"I am lonely.",s_Lonely;
 
 	set @DaewoonTest,1;
-	emotion 23;
+	emotion e_omg;
 	mes "[Daewoon]";
 	mes "Oh, that's great~!";
 	mes "To have many friends";
@@ -1076,7 +1076,7 @@ s_Mobtrain:
 	next;
 	menu "Awesome~!",-,"I hate people who do that.",s_Hate,"I do it sometime...",s_Sometimes;
 	
-	emotion 32;
+	emotion e_pif;
 	mes "[Daewoon]";
 	mes "But...";
 	mes "Wouldn't that be really";
@@ -1115,7 +1115,7 @@ s_Hate:
 	mes "myself irked when encountering";
 	mes "such troublemakers.";
 	next;
-	emotion 21;
+	emotion e_no1;
 	mes "[Daewoon]";
 	mes "When you face obstacles";
 	mes "in your own training, never give in";
@@ -1295,7 +1295,7 @@ s_Life:
 	menu "Yes",-,"No",s_No;
 
 	set @DaewoonTest,@DaewoonTest + 1;
-	emotion 18;
+	emotion e_heh;
 	mes "[Daewoon]";
 	mes "I'm glad.";
 	mes "When you don't live";
@@ -1338,7 +1338,7 @@ s_No:
 	mes "why I think it's good to experience";
 	mes "new things as well as reflect.";
 	next;
-	emotion 21;
+	emotion e_no1;
 	mes "[Daewoon]";
 	mes "Now, what's precious to me?";
 	mes "Three things, actually...";
@@ -1453,7 +1453,7 @@ OnTouch:
 	
 aldeba_in.gat,156,118,4	script	Piru Piru	700,{
 
-	emotion 28;
+	emotion e_sob;
 	mes "[Piru Piru]";
 	mes "Oh, I'm sooo tired~";
 	mes "But we can't sleep yet.";
@@ -1554,7 +1554,7 @@ aldeba_in.gat,155,101,2	script	Jore#SignAldeNpc	805,{
 	delitem 511,10;
 	delitem 610,2;
 	set signquest,7;
-	emotion 15;
+	emotion e_thx;
 	mes "[Sir Jore]";
 	mes "Ah! Th-thank you for";
 	mes "bringing what I need.";
@@ -1593,7 +1593,7 @@ aldeba_in.gat,155,101,2	script	Jore#SignAldeNpc	805,{
 	mes "[" + strcharinfo(0) + "]";
 	mes "Excuse me...";
 	next;
-	emotion 23;
+	emotion e_omg;
 	mes "^3131FF*Clink*";
 	next;
 	mes "[Sir Jore]";
@@ -1607,7 +1607,7 @@ aldeba_in.gat,155,101,2	script	Jore#SignAldeNpc	805,{
 	mes "Look what you";
 	mes "made me do!";
 	next;
-	emotion 28;
+	emotion e_sob;
 	mes "[Sir Jore]";
 	mes "I've been fiddling";
 	mes "with this sample for";
@@ -1634,7 +1634,7 @@ aldeba_in.gat,155,101,2	script	Jore#SignAldeNpc	805,{
 	close;
 
 s_Daewoon:
-	emotion 4;
+	emotion e_swt;
 	mes "[Sir Jore]";
 	mes "O-oh!";
 	mes "That's right.";
@@ -1700,7 +1700,7 @@ s_Daewoon:
 	mes "Yggdrasil. They can be used";
 	mes "to revive the dead, after all.";
 	next;
-	emotion 4;
+	emotion e_swt;
 	mes "[Sir Jore]";
 	mes "Oh, and make sure to";
 	mes "bring those things to me";
@@ -1775,12 +1775,12 @@ s_Again:
 OnPotion:
 	if(rand(0,1) == 1)
 {
-	emotion 5;
+	emotion e_ic;
 	misceffect 305;
 }
 else
 {
-	emotion 23;
+	emotion e_omg;
 	misceffect 306;
 }
 	end;
@@ -1846,16 +1846,16 @@ else
 	end;
 }
 OnHo:
-	emotion 2;
+	emotion e_ho;
 	end;
 OnKis2:
-	emotion 31;
+	emotion e_kis2;
 	end;
 OnExclamation:
-	emotion 0;
+	emotion e_gasp;
 	end;
 OnOmg:
-	emotion 23;
+	emotion e_omg;
 	end;
 }
 
@@ -1874,7 +1874,7 @@ prt_maze02.gat,14,183,3	script	Gordon	51,{
 	mes "with a white bear and a";
 	mes "blue bear, father.";
 	next;
-	emotion 2;
+	emotion e_ho;
 	mes "[Gordon]";
 	mes "Darling...";
 	mes "Aren't you tired";
@@ -1890,7 +1890,7 @@ prt_maze02.gat,14,183,3	script	Gordon	51,{
 	mes "in peace. I think we deserve to rest";
 	mes "after accomplishing our goals...";
 	next;
-	emotion 28;
+	emotion e_sob;
 	mes "[Gordon]";
 	mes "Thank you, Pluer.";
 	mes "I have no regrets about";
@@ -1901,7 +1901,7 @@ prt_maze02.gat,14,183,3	script	Gordon	51,{
 	menu "Roar~!",-,"Excuse me.",s_Excuse;
 
 	callfunc "Sign_Alch_Summon";
-	emotion 23;
+	emotion e_omg;
 	donpcevent "Pleur::OnOmg";
 	set ScareAlchSign,1;
 	mes "[Pleur]";
@@ -1914,7 +1914,7 @@ prt_maze02.gat,14,183,3	script	Gordon	51,{
 	close;
 	
 s_Excuse:
-	emotion 0;
+	emotion e_gasp;
 	donpcevent "Pleur::OnExclamation";
 	mes "[Gordon]";
 	mes "Eh?! Don't you know";

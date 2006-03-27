@@ -23,7 +23,7 @@
 payon.gat,190,115,0	script	Lady	90,{
 	mes "[Lady]";
 	mes "Did you know that in the past Payon was not as prosperous as it is now? Back then we had difficulty making a living for ourselves.";
-	   emotion 0;
+	   emotion e_gasp;
 	next;
 	mes "[Lady]";
 	mes "The towns people were so poor that they could not even afford to properly bury their deceased family members.";
@@ -69,7 +69,7 @@ payon.gat,104,62,5	script	Young Man	88,{
 	next;
 	mes "[Young Man]";
 	mes "Eeeeeeeeekkkkk?! Grampa? I-I-Is-Is t-t-th-that you?? ...";
-	   emotion 16;
+	   emotion e_wah;
 	next;
 	mes "(you notice that his pants have become wet... eeeewwwwwwwwww!!!....)";
 	close;
@@ -79,7 +79,7 @@ payon_in01.gat,180,7,0	script	Waitress	90,{
 	mes "[Waitress]";
 	mes "People in this place seem to be busy all the time, they come and go to be Archers or to buy arrows, I have to stick with this small shop.";
 	mes "I feel so melancholy and bored.";
-	   emotion 28;
+	   emotion e_sob;
  	next;
 	mes "[Waitress]";
 	mes "I am sick and tired of noodle soup. I have to take too many showers to get rid of the smell.";
@@ -100,12 +100,12 @@ L_Start:
 	mes "Grandma the fortuneteller told me that I would meet great luck in the near future!"; 
 	mes "But look at me, what's wrong with me!! I am leaving a manageable life everyday!!";
 	mes "Oh.. boy. What a dumb wishy-washy person I am.";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Waitress]";
 	mes "I am so sorry, I should haven't said this to you. Now I am acting like i'm stupid.";  
  	mes "I am sorry dear, please forgive my misbehavior.";
-	emotion 4;
+	emotion e_swt;
 	next;
 	mes "[Waitress]";
 	mes "So, how may I help you? ";
@@ -128,7 +128,7 @@ L_Menu1:
 L_Menu2:
 	mes "[Waitress]";
 	mes "Oh! I must say she is really an extraordinary person. Well, it could be your luck, she doesn't hang around here much as she used to do.";
-	   emotion 5;
+	   emotion e_ic;
  	next;
 	mes "[Waitress]";
 	mes "On the first place, she stayed here to mind her business, but ever since the chief recognized her talent, she's stayed in the central palace.";
@@ -144,13 +144,13 @@ L_Menu3:
 	next;
 	mes "[Waitress]";
 	mes "Sorry for your inconvenience.";
-	   emotion 17;
+	   emotion e_sry;
 	close;
 L_Menu4:
 	mes "[Waitress]";
 	mes "Have a nice day, dear.";
 	mes "Sob...I wish I could be in bed of roses.";
-	   emotion 28;
+	   emotion e_sob;
  	close;
 }
 
@@ -171,12 +171,12 @@ payon.gat,193,116,1	script	Woman	66,{
 	  if(Sex == 0) goto LStartF;
 	mes "Hmm... you look as strong as a Rocker! How many monsters have you killed?";
 	mes "Let me tell you about a place where you can go train and become even stronger.";
-	   emotion 20;
+	   emotion e_hmm;
 	goto L_Start;
 LStartF:
 	mes "Miss, how many monsters have you killed?";
 	mes "I know a very good place for you to go train and get good monster drops.";
-	   emotion 20;
+	   emotion e_hmm;
 L_Start:
     	next;
     	mes "[Woman]";
@@ -190,7 +190,7 @@ L_Menu1:
 	next;
 	mes "[Woman]";
 	mes "Of course... there are the zombies... and Munaks... and Bonguns... which can be VERY DEADLY.....";
-	   emotion 20;
+	   emotion e_hmm;
 	close;
 L_Menu2:
 	mes "[Woman]";
@@ -198,23 +198,23 @@ L_Menu2:
 	next;
 	mes "[Woman]";
 	mes "I know because he's my husband... oops... I mean an acquaintance of mine... heh heh..";
-	   emotion 4;
+	   emotion e_swt;
 	close;
 L_Menu3:
 	mes "[Woman]";
 	mes "Oh hohohoho! SO you noticed! This is what's in-style in Prontera these days! The women in this town don't know anything about fashion!";
-	   emotion 5;
+	   emotion e_ic;
 	next;
 	mes "[Woman]";
 	mes "My husband buys me these clothes with the money he makes selling overpriced items to foolish young people... oh ho oh hoho...";
-	   emotion 18;
+	   emotion e_heh;
 	close;
 }
 
 payon.gat,190,119,5	script	Woman	66,{
 	mes "[Jim's Mother]";
 	mes "Oh boy there she goes again.  She is a confirmed gossip.  Please don't mistake her for being a typical Payon citizen.";
-	   emotion 9;
+	   emotion e_dots;
 	next;
 	mes "[Jim's Mother]";
 	mes "Believe me, she's an exception.  Not all of us here in Payon have big mouths.  She gets too exited with fortune telling.";
@@ -225,7 +225,7 @@ payon.gat,190,119,5	script	Woman	66,{
 	mes "[Jim's Mother]";
 	if(Sex == 0) goto LStartF;
 	mes "... Oh, you have broad shoulders ... tehehe! Will you go out with me? I'd like to make you a nice dinner...(bats eyelashes)";
-	emotion 30;
+	emotion e_kis;
 	goto L_Menu;
 LStartF:
 	mes "Don't you think your dress is too lousy?";
@@ -243,7 +243,7 @@ L_Menu1:
 	  if(Sex == 0) goto L_2;
  	mes ".......... tehehe. (winks at you)";
 L_2:
-	   emotion 3;
+	   emotion e_lv;
 	close;
 L_Menu2:
 	mes "[Jim's Mother]";
@@ -256,11 +256,11 @@ payon.gat,210,110,4	script	Drunk	120,{
 	mes "[Drunk]";
 	mes "Hey hey! I am wondering how stupid archers who don't know how to aim targets could drink alcohol. Hahaha~!";
 	mes "Do you want to buy me a drink?";
-	   emotion 18;
+	   emotion e_heh;
 L_Menu1_F1:
 	mes "[Drunk]";
 	mes "Yoyo! Archer brother! Salute to your fingers stretching bowstring!";
-	   emotion 2;
+	   emotion e_ho;
 	next;
 	mes "[Drunk]";
 	mes "Do you want to buy me a drink?";
@@ -275,7 +275,7 @@ L1L:
       mes "Thanksh brothaaa!... archerrrzzz are alwayssszz a generoushhh bunch!...(hicup!)";
 	goto L2L;
 L2L:
-	   emotion 15;
+	   emotion e_thx;
 	   if(Zeny < 200) goto L_SUB_1;
 	   set Zeny,Zeny-200;
 	mes "[Drunk]";
@@ -286,7 +286,7 @@ L2L:
 	next;
 	mes "[Drunk]";
 	mes "Gulp~Gulp~Man! This is great! Thank you may man! Thank you! Muhahahahaha!";
-	   emotion 21;
+	   emotion e_no1;
 	close;
 L_SUB_1:
 	mes "[Drunk]";
@@ -296,12 +296,12 @@ L_Menu2:
 	mes "[Drunk]";
 	mes "Blah. Young people don't know how to respect elderly people!";
 	mes "Fine! I won't beg you anymore! I won't...";
-	   emotion 32;
+	   emotion e_pif;
 	close;
 L_Menu3:
 	mes "[Drunk]";
 	mes "Umm, oookay. Fine by me...";
-	   emotion 21;
+	   emotion e_no1;
 	close;
 }
 
@@ -310,7 +310,7 @@ payon_in01.gat,47,59,5	script	Archer Zakk	88,{
 	mes "I am so worried about one of my pals. He speaks about much crap.";
 	mes "Well he is an expert of archery, but I hate his big mouth...";
 	mes "Our chief is also fed up with him.";
-	   emotion 7;
+	   emotion e_ag;
 	next;
 	menu "Archer?",L_Menu1,"Chief?",L_Menu2,"Big Mouth?",L_Menu3;
 L_Menu1:
@@ -366,7 +366,7 @@ L_Menu1:
 	next;
 	mes "[Archer Wolt]";
 	mes "Are you curious about HOW we practice?";
-	   emotion 1;
+	   emotion e_what;
 	next;
 	mes "[Archer Wolt]";
 	mes "From sunrise to sunset the Archers of Payon search the surrounding forest for monsters.";
@@ -382,11 +382,11 @@ L_Menu1:
 L_sub1:
 	mes "[Archer Wolt]";
 	mes "....Well YES!! A well crafted Bow is essential to the success of an archer!";
-	   emotion 5;
+	   emotion e_ic;
 	next;
 	mes "[Archer Wolt]";
 	mes "Bows constructed in Payon are the greatest bows you can find in Rune-Midgard! They are light yet, strong and very durable.";
-	   emotion 21;
+	   emotion e_no1;
 	next;
 	mes "[Archer Wolt]";
 	mes "This is because they are made out of high quality wood found only in the Payon Forest!";
@@ -430,7 +430,7 @@ L_para2:
 	next;
 	mes "[Archer Wolt]";
 	mes "... uh... anyways... back to the Chief...";
-	   emotion 4;
+	   emotion e_swt;
 	next;
 	mes "[Archer Wolt]";
 	mes "In the past he bravely protected Payon with his Gakung Bow.  Now he is elderly, though he still worries about the safety of the town.";
@@ -496,7 +496,7 @@ L_temp3:
 pay_arche.gat,77,131,2	script	Archer Joe	88,{
 	mes "[Archer Joe]";
 	mes "Payon! What a wonderful place! Superb Bows! Excellent Archers!";
-	   emotion 21;
+	   emotion e_no1;
 	next;
 	mes "[Archer Joe]";
 	mes "Hay you! Have you heard of our fame?";
@@ -505,7 +505,7 @@ pay_arche.gat,77,131,2	script	Archer Joe	88,{
 L_Menu1:
 	mes "[Archer Joe]";
 	mes "Oh! You my man buddy! Archers of Payon! You know who we are!";
-	   emotion 33;
+	   emotion e_ok;
 	next;
 	mes "[Archer Joe]";
 	mes "Arrows of Payon Archers never miss the targets! Even it can aim at the heart of the enemy from a long distance!";
@@ -515,7 +515,7 @@ L_Msub1:
 	mes "[Archer Joe]";
 	mes "Yes! I love this place! So now I am researching Payon!";
 	mes "If you have any questions, please ask me!";
-	   emotion 33;
+	   emotion e_ok;
 	next;
 	menu "People are wearing unique costumes in here.",L_Mpara1,"Can you tell me what the building is in the middle of town?",L_Mpara2,"Who is the guy drinking...Over there?",L_Mpara3,"Talk to you later.",L_Mpara4;
 L_Mpara1:
@@ -533,7 +533,7 @@ L_Mpara2:
 L_Mpara3:
 	mes "[Archer Joe]";
 	mes "Oh! He is a notorious guy in this town! Don't treat him to drinks! You will regret that!";
-	   emotion 0;
+	   emotion e_gasp;
 	close;
 L_Mpara4:
 	mes "[Archer Joe]";
@@ -544,7 +544,7 @@ L_Msub2:
 L_Menu2:
 	mes "[Archer Joe]";
 	mes "Oh boy, what a shame! How on earth can't you know there is something about archers of Payon!";
-	   emotion 23;
+	   emotion e_omg;
 	next;
 	mes "[Archer Joe]";
 	mes "Please come back later when you become more skillful! Let's talk about what makes archers of Payon so attractive later!";
@@ -553,7 +553,7 @@ L_Menu3:
 	mes "[Archer Joe]";
 	mes "What makes you zip your mouth? Are you shy?";
 	mes "Ummm... you don't have to be shy before me..";
-	   emotion 20;
+	   emotion e_hmm;
 	close;	
 }
 
@@ -608,7 +608,7 @@ L_Menu3:
 	next;
 	mes "[Monster Scholar Vuicokk]";
 	mes "However NOTHING can stop us!  We will continue to persevere for the benefit of the people of RUNE MIDGARD!!!";
-	   emotion 0;
+	   emotion e_gasp;
 	next;
 	mes "[Monster Scholar Vuicokk]";
 	mes "... Eh em... please excuse my emotional outburst... I am very passionate about this work.....";

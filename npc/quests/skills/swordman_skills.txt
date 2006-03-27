@@ -31,7 +31,7 @@ prt_in.gat,75,88,5	script	Leon	85,{
 	next;
 	mes "[Leon]";
 	mes "Are you here to learn more about the Chivalry, or are you hear to bask in the glory of us Knights? Hahahaha!";
-	emotion 18;
+	emotion e_heh;
 	close;
 
 L_Novice:
@@ -52,7 +52,7 @@ L_Start:
 	next;
 	mes "[Leon]";
 	mes "You must enjoy using ^0000ff'Bash'^000000, huh? Hahaha!";
-	emotion 18;
+	emotion e_heh;
 	next;
 	mes "[Leon]";
 	if(sex==1)mes "I like a Swordsman who isn't afraid to use a powerfull skill such as that.";
@@ -109,7 +109,7 @@ L_Start:
 		next;
 		mes "[*Sushi King* Leon]";
 		mes "Mmmmm..... I love sushi!!!";
-		emotion 33;
+		emotion e_ok;
 		close;
 
 L_Check:
@@ -134,7 +134,7 @@ L_Check:
 	next;
 	mes "[Leon]";
 	mes "Yes! That's it! You have just mastered Fatal Blow!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	skill 145,1,0;
 	set FATALBLOW,0;
@@ -155,7 +155,7 @@ L_Done:
 	next;
 	mes "[Leon]";
 	mes "Go on and Bash the heck out of those monsters! Hahaha.";
-	emotion 18;
+	emotion e_heh;
 	close;
 
 }
@@ -175,7 +175,7 @@ L_Start:
 	if (getskilllv(144)>0) goto L_GotSkill;
 	mes "Oh no! You must have been hurt in battle! Are you ok?";
 	mes "It must have been a hard fought battle for you to recieve such serious injuries....";
-	emotion 19;
+	emotion e_swt2;
 	next;
 	mes "[Knight De Thomas]";
 	mes "Being a Swordsman or Knight comes with a lot of responsiblity and requires a great deal of self sacrifice.";
@@ -208,17 +208,17 @@ L_Start:
 		mes "[Knight De Thomas]";
 		mes "Don't you think it's sad that I have to stay in once place everyday without even being able to go outside??";
 		mes "Please.... find a pair of Moth Wings for my niece?.... (~sniff~sniff~)....";
-		emotion 28;
+		emotion e_sob;
 		next;
 		mes "[Knight De Thomas]";
 		mes "If you don't..... I won't teach you anything!! Muahahahaha!!";
-		emotion 29;
+		emotion e_gg;
 		set MOVHPREC, 1;
 		close;
 	M_End:
 		mes "[Knight De Thomas]";
 		mes "What?? What did you say?.....";
-		emotion 1;
+		emotion e_what;
 		close;
 
 L_Check:
@@ -243,7 +243,7 @@ L_Check:
 	next;
 	mes "[Knight De Thomas]";
 	mes "Congratulations on learning the new skill and thank you for the Moth Wings! ^_^";
-	emotion 21;
+	emotion e_no1;
 	close;
 
 	L_NoItems:
@@ -273,7 +273,7 @@ L_Other:
 	next;
 	mes "[Juan]";
 	mes "Who am I? Oh, I'm just a kind knight named Juan.  Don't mind me.  Hahahaha....";
-	emotion 18;
+	emotion e_heh;
 	close;
 
 L_Start:
@@ -320,7 +320,7 @@ L_Start:
 	M_1:
 		mes "[Juan]";
 		mes "Bleh! Have you been a fool all of your life?? Go away and don't talk to me.";
-		emotion 32;
+		emotion e_pif;
 		close;
 	M_3:
 		mes "[Juan]";
@@ -334,7 +334,7 @@ L_Start:
 		next;
 		mes "[Juan]";
 		mes "You can go on your way now.";
-		emotion 33;
+		emotion e_ok;
 		close;
 
 L_Check:
@@ -353,7 +353,7 @@ L_Check:
 	next;
 	mes "[Juan]";
 	mes "Muhahahaha!! Don't hold back young warrior, fight without any fears or regrets!!";
-	emotion 29;
+	emotion e_gg;
 	close;
 
 	L_NoItems:
@@ -368,6 +368,6 @@ L_GotSkill:
 
 	mes "You have the eyes of a person who has seen death first hand!!";
 	mes "But, because of Berserk, I'm sure you have been able to escape it many times as well.";
-	emotion 0;
+	emotion e_gasp;
 	close;
 }

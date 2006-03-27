@@ -20,7 +20,7 @@
 // == Guild NPCs == 
 // -- Mahnsoo --
 alberta_in.gat,53,43,6	script	Chief Mahnsoo	86,{
-	callfunc "F_ToHigh",29,"Merchant High",34,"White Smith",153,154,155,0,"Chief Mahnsoo";
+	callfunc "F_ToHigh",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith",153,154,155,0,"Chief Mahnsoo";
 	mes "[Chief Mahnsoo]";
 	if(BaseJob==Job_Novice && job_merchant_q3 == 4) goto L_MakeMerc;
 	if(BaseJob==Job_Novice && job_merchant_q3 == 3) goto L_GiveRecpt;
@@ -55,7 +55,7 @@ M_Menu:
 				sl_Short1k:	
 					mes "Looks like your a little short on zeny.  Why not make a minimal payment of 500 Zeny first?";
 					mes "You can worry about the rest later.";
-					emotion 4;
+					emotion e_swt;
 					goto sM_Menu;
 					close;
 
@@ -69,7 +69,7 @@ M_Menu:
 				
 				sl_Short500z:
 					mes "Looks like your a little short on zeny.  Come back when you have enough.";
-					emotion 4;
+					emotion e_swt;
 					close;
 
 			m_0End:
@@ -245,7 +245,7 @@ L_GiveRecpt:
 
 L_Back:
 	mes "What are you doing back here?";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Chief Mahnsoo]";
 	mes "You didn't leave yet?";
@@ -289,7 +289,7 @@ L_MakeMerc:
 
 	mes "[Chief Mahnsoo]";
 	mes "Congratulations! You are now one of us, A PROUD MERCHANT!!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Chief Mahnsoo]";
 	mes "I am very pleased that you decided to join the Merchant Guild and I hope you will play an active role in Rune Midgards' economy!  The best of luck to you!!";
@@ -306,7 +306,7 @@ L_MakeMerc:
 	L_MemFee:
 		mes "[Chief Mahnsoo]";
 		mes "Um... before I go on... there was the little issue of the Membership Fee if you recall.  I will need the rest of it before I can proceed with your initiation.";
-		emotion 20;
+		emotion e_hmm;
 		next;		           			
 		menu "Pay the remaining 500 Zeny",sM_1a,"...(run away!)...",sM_1b;
 
@@ -322,13 +322,13 @@ L_MakeMerc:
 			sL_NotEnough:
 				mes "[Chief Mahnsoo]";
 				mes "Eh em.... you seem to be a little short.  Now that you've come this far, don't let a little fee impede your progress.  Go forth and do something about it!";
-				emotion 4;
+				emotion e_swt;
 				close;
 
 		sM_1b:
 			mes "[Chief Mahnsoo]";
 			mes "WHAT THE??? Hey come back here! YOU STILL HAVE TO PAY THE FEE!!!!!";
-			emotion 19;
+			emotion e_swt2;
 			close;
 
 L_Failed:
@@ -339,7 +339,7 @@ L_Failed:
 	next;
 	mes "[Chief Mahnsoo]";
 	mes "What a shame, what a shame! HOW could you be so CARLESS??!!  I'm sure Wharehouse Manager Kay has already given you an earfull so I will not go on with anymore critizism.";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Chief Mahnsoo]";
 	mes "^ff0000"+strcharinfo(0) + "^000000, you have failed in the Merchant License Test!  However...... if you are TRUELY interested in becoming a Merchant, and will work EXTREMELY HARD to do so....";
@@ -357,7 +357,7 @@ L_Failed:
 	M_NoThanks:
 		mes "[Chief Mahnsoo]";
 		mes "Remeber these words: In life, failure is NOT an option!!!";
-		emotion 0;
+		emotion e_gasp;
 		set job_merchant_q,0;
 		set job_merchant_q2,0;
 		set job_merchant_q3,0;
@@ -528,7 +528,7 @@ L_Check:
 		mes "[Wharehouse Manager Kay]";
 		mes "Great! Everything went perfectly! I will send my evaluation of your performance to 'Chief Mahnsoo' imiediately.";
 		mes "Go ahead and speak with Chief Mahnsoo so that he can finalize the process to make you a Merchant.";
-		emotion 21;
+		emotion e_no1;
 		set job_merchant_q3,4;
 		close;
 	L_LostRecpt:
@@ -536,17 +536,17 @@ L_Check:
 		next;
 		mes  "[Wharehouse Manager Kay]";
 		mes "YOU HAVE NO RECIEPT?????";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Wharehouse Manager Kay]";
 		mes "HOW the HECK am I gonna know that you delievered it then?  This was an ABSOLUTE FAILURE!!";
 		mes "Your evaluation is not going to look good.  I suggest you find some good excuses by the time you speak with Chief Mahnsoo.";
-		emotion 32;
+		emotion e_pif;
 		set job_merchant_q3,5;
 		close;
 	L_WrongProd:
 		mes "You delivered the WRONG PRODUCT??? DO YOU know how much TIME you've WASTED???? UCK! This was a total failure!";
-		emotion 6;
+		emotion e_an;
 		next;
 		mes "[Wharehouse Manager Kay]";
 		mes "Your evaluation is not going to look good.  I suggest you find some good excuses when you go to speak with Chief Mahnsoo.";
@@ -560,14 +560,14 @@ L_Check:
 L_Back:
 	if((countitem(1081) != 1) && (countitem(1082) != 1) && (countitem(1083) != 1)) goto L_LostProd;//Items: Delivery_Box, Delivery_Box_, Delivery_Box__,
 	mes "Huh? Back so soon? Don't tell me you ran into problems already....";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	menu "Please Exchange the Product.",M_Exch,"Nope, never mind.",M_Nvmnd;
 
 	M_Exch:
 		mes "[Wharehouse Manager Kay]";
 		mes "Sigh... this is not a good way to start your test you know.  Make sure you get the RIGHT Product this time!  ";
-		emotion 32;
+		emotion e_pif;
 		if(countitem(1081) ==1) delitem 1081,1;//Items: Delivery_Box,
 		if(countitem(1082) ==1) delitem 1082,1;//Items: Delivery_Box_,
 		if(countitem(1083) ==1) delitem 1083,1;//Items: Delivery_Box__,
@@ -583,15 +583,15 @@ L_Back:
 		next;
 		mes "[Wharehouse Manager Kay]";
 		mes "WHAT???";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Wharehouse Manager Kay]";
 		mes "Holy crap!! YOU LOST the product??!! What have you done, you moron!!!";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Wharehouse Manager Kay]";
 		mes "Your evaluation is not going to look good.  I suggest you find some good excuses when you go to speak with Chief Mahnsoo.";
-		emotion 7;
+		emotion e_ag;
 		set job_merchant_q3,5;
 		close;
 
@@ -638,7 +638,7 @@ function	script	F_MercKafra	{
 		if(countitem(1072) == 1) goto L_Msg;//Items: Delivery_Message,
 		mes "[Kafra]";
 		mes "Thanks so much for comming all this way to deliver the product to me.  Take care now.  By bye.";
-		emotion 15;
+		emotion e_thx;
 		cutin "kafra_03",255;
 		close;
 
@@ -646,11 +646,11 @@ function	script	F_MercKafra	{
 			mes "[Kafra]";
      			mes "Oh,My good Lord! Mr. Mansoo wrote me a Letter? Thank you, Thank you~";
      			mes "I though he would send one, one of these days, but I've never expected it would be at a time like this.....";
-			emotion 1;
+			emotion e_what;
 			next;
 			mes "[Kafra]";
 			mes "I really appreciate what you've done for me.  Here is a small gift to show you my thanks.";
-			emotion 15;
+			emotion e_thx;
 			delitem 1072,1;//Items: Delivery_Message,
 			set @TEMP,rand(2);
 			if(@TEMP !=0) goto R1;
@@ -667,20 +667,20 @@ function	script	F_MercKafra	{
 
 L_NoProd:
 	mes ".... I thought we what we ordered was OVERSIZED and HEAVY.... but.... you seem to carry it on without any difficulty.........";
-	emotion 1;
+	emotion e_what;
 	cutin "kafra_03",255;
 	close;
 
 L_WrongProd:
 	mes "......? Excuse me! I think you gave me the wrong item.  Our order should have the serial number 3318702 or 3543625...";
-	emotion 4;
+	emotion e_swt;
 	set job_merchant_q3,2;
 	cutin "kafra_03",255;
 	close;
 
 L_WrongDest:
 	mes "......? Excuse me.... I think you have the wrong person.... our order should have the serial number 3318702 or 3543625...";
-	emotion 4;
+	emotion e_swt;
 	cutin "kafra_03",255;
 	close;
 }
@@ -726,7 +726,7 @@ L_Other:
 	M_End:
 		mes "[Kafra]";
 		mes "Thank you for using Kafra Corp. Services.  We will be with you wherever you go.";
-		emotion 15;
+		emotion e_thx;
 		cutin "kafra_03",255;
 		close;
 
@@ -765,27 +765,27 @@ L_Start:
 	L_3:
 		mes "[Kafra]";
 		mes "Thank you again for the delivery.";
-		emotion 15;
+		emotion e_thx;
 		cutin "kafra_03",255;
 		close;
 
 L_NoProd:
 	mes "Umm......... excuse me... but where is the Product  your supposed to give me....?";
-	emotion 20;
+	emotion e_hmm;
 	cutin "kafra_03",255;
 	close;
 
 L_WrongProd:
 	mes "Oh, Dear... this isn't what I ordered.  It should have a serial number of either ^ff00002485741 or 2328137^000000.";
 	mes "It looks like there was a mix up at the wharehouse and you got the wrong product.  I'd appreciate it if you could sort this out.";
-	emotion 4;
+	emotion e_swt;
 	set job_merchant_q3,2;
 	cutin "kafra_03",255;
 	close;
 
 L_WrongDest:
 	mes "Oh, Dear... this isn't what I ordered.  You see here, it's addressed to someone else.  It looks like this Product is supposed to go to someone else.";
-	emotion 4;
+	emotion e_swt;
 	cutin "kafra_03",255;
 	close;
 }
@@ -841,23 +841,23 @@ L_Start:
 	L_3:
 		mes "[Guild Staff]";
 		mes "Heheh~ Thank you, Bye Bye.";
-		emotion 15;
+		emotion e_thx;
 		close;
 L_NoProd:
 	mes "Huh? Where? Where is the Box?";
-	emotion 1;
+	emotion e_what;
 	close;
 
 L_WrongDest:
 	mes "Hey wait a Minute! This is not what we ordered! The Serial Number should either be 2989396 or 2191737.";
 	mes "It looks like this is addressed to someone else.  I think you got the wrong delivery destination.";
-	emotion 19;
+	emotion e_swt2;
 	close;
 
 L_WrongProd:
 	mes "Hey wait a Minute! This is not what we ordered! The Serial Number should either be 2989396 or 2191737.";
 	mes "I don't know how you could make this mistake but please correct it.  I really need that Product.";
-	emotion 19;
+	emotion e_swt2;
 	set job_merchant_q3,2;
 	close;
 }
@@ -909,31 +909,31 @@ L_Start:
 	L_3:
 		mes "[Dyer's Student]";
 		mes "Thank you, See you next time~";
-		emotion 15;
+		emotion e_thx;
 		close;
 
 L_NoProd:
 	mes "But where's the Product?";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_WrongProd:
 	mes "Um..... excuse me? I don't think this is what we ordered? The Serial Number should be either 3012685 or 3487372.";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Dyer's Student]";
 	mes "I see.  There was a mix up at the wharehouse and you got the wrong product.";
 	next;
 	mes "[Dyer's Student]";
 	mes "Well this sucks.  Please come back with the correct Product.";
-	emotion 32;
+	emotion e_pif;
 	set job_merchant_q3,2;
 	close;	
 
 L_WrongDest:
 	mes "Um.... excuse me? I don't think this is what we ordered? The Serial Number should be either 3012685 or 3487372.";
 	mes "I think you have the wrong delivery destination.  Maybe you should try someone else.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 

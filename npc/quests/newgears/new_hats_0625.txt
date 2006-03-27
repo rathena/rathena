@@ -117,14 +117,14 @@ lighthalzen.gat,180,88,4	script	Rich Girl	818,{
 	next;
 	mes "[Rich Girl]";
 	mes "Do you have a grandma?";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Rich Girl]";
 	mes "Really? I'm sorry. Do you like wolves?";
 	next;
 	mes "[Rich Girl]";
 	mes "Ha! I knew it! And... my last question. Would you like to put on something reddish?";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Rich Girl]";
 	mes "Just kidding, Have you ever read 'Red-Hood'? I can make to you the very same ^FF3300Red Bonnet^000000.";
@@ -166,7 +166,7 @@ L_EXIT:
 lighthalzen.gat,360,310,4	script	Boy	818,{  
 	mes "[Boy]";
 	mes "...MA...Ma..ma...";
-	emotion 43;
+	emotion e_slur;
 	next;
 	menu "Wow! Give me a Baby Pacifier!",-,"Nice Boy!",L_EXIT;
 
@@ -184,14 +184,14 @@ lighthalzen.gat,360,310,4	script	Boy	818,{
 	delitem 941,1;	// Nose Ring
 	mes "[Boy]";
 	mes "Th-anke...";
-	emotion 43;
+	emotion e_slur;
 	getitem 5110,1;	// Baby Pacifier
 	next;
 
 L_EXIT:
 	mes "[Boy]";
 	mes "...B...Bye...";
-	emotion 28;
+	emotion e_sob;
 	close;
 	
 }

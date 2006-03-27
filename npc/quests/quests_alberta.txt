@@ -31,7 +31,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 	next;
 	mes "[Elin]";
 	mes "I LOVE dolls!!";
-	emotion 14;
+	emotion e_lv2;
 	next;
 	mes "[Elin]";
 	mes "Ya know..... I REALLY, REALLY, want a new doll.  I hope daddy is going to buy me one for my birthday.....";
@@ -40,13 +40,13 @@ alberta.gat,117,134,8	script	Elin	96,{
 
 		mes "[Elin]";
 		mes "Yeah, this time I'm hoping for a Yoyo doll.  Hehe, they're so cute! They're my FAVORITE!";
-		emotion 33;
+		emotion e_ok;
 		close;
 	M_2:
 		mes "[Elin]";
 		mes "Oh my goodness! Really?? You're such a sweetie.... gimme, gimme!!";
 		mes "What kinda doll are you going to give me? Are you really gonna give me one?";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		menu "Puppet",-,"Poring doll",sM_2,"Chonchon doll",sM_3,"Rocker doll",sM_4, "Spore doll",sM_5,
 		           "Osiris doll",sM_6,"Baphomet doll",sM_7,"Racoon doll",sM_8,"Yoyo doll",sM_9, "I am as adorable as a doll!",sM_10;
@@ -55,7 +55,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			delitem 740,1;
 			mes "[Elin]";
 			mes "Wow--! It's a rabbit! It's SOOOO cute!! Thank you SOOO much!";
-			emotion 14;
+			emotion e_lv2;
 			next;
 			mes "[Elin]";
 			mes "It's SOOO fluffy... Oh yeah! Let me give you a present too!";
@@ -71,7 +71,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			next;
 			mes "[Elin]";
 			mes "Thanks again for the rabbit doll! I'm gonna HUG this to sleep EVERY night~";
-			emotion 15;
+			emotion e_thx;
 			close;
 
 		sM_2:
@@ -79,12 +79,12 @@ alberta.gat,117,134,8	script	Elin	96,{
 			delitem 741,1;
 			mes "[Elin]";
 			mes "Yay! It's a poring doll! It's SOOOO cute! Since you gave me a doll I'll give you this....";
-			emotion 14;
+			emotion e_lv2;
 			next;
 			getitem 529,1;
 			mes "[Elin]";
 			mes "Thank you for the doll!";
-			emotion 15;
+			emotion e_thx;
 			close;
 
 		sM_3:
@@ -92,7 +92,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			delitem 742,1;
 			mes "[Elin]";
 			mes "Ew whats this?.... a Chonchon ... doll? ...";
-			emotion 16;
+			emotion e_wah;
 			next;
 			mes "[Elin]";
 			mes "Oh well, since you're giving it to me, I guess it's ok ....";
@@ -103,7 +103,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			next;
 			mes "[Elin]";
 			mes ".... chonchon.... (~grumble, grumble~)";
-			emotion 7;
+			emotion e_ag;
 			close;
 
 		sM_4:
@@ -124,7 +124,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			next;
 			mes "[Elin]";
 			mes "Thanks again for the doll!";
-			emotion 15;
+			emotion e_thx;
 			close;
 
 		sM_5:
@@ -132,7 +132,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			delitem 743,1;
 			mes "[Elin]";
 			mes "Blehh .... It's a mushroom... Mom's always scolding me for not eating mushrooms ...";
-			emotion 4;
+			emotion e_swt;
 			next;
 			mes "[Elin]";
 			mes "I'll take it anyway, since the doll looks cute.  But I still won't eat mushrooms though ...";
@@ -146,7 +146,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			next;
 			mes "[Litte Kid]";
 			mes "Thank you for the doll~";
-			emotion 15;
+			emotion e_thx;
 			close;
 
 		sM_6:
@@ -173,7 +173,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			getitem 525,5;
 			mes "[Elin]";
 			mes "Thank you for the doll!";
-			emotion 15;
+			emotion e_thx;
 			close;
 
 		sM_8:
@@ -181,7 +181,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			delitem 754,1;
 			mes "[Elin]";
 			mes "Ah, it's a Smokie doll.  I hate Smokies, but the doll's really cute! Thank you!";
-			emotion 33;
+			emotion e_ok;
 			next;
 			mes "[Elin]";
 			mes "Let me give you some of Grandma's home-made cake!";
@@ -192,7 +192,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			next;
 			mes "[Elin]";
 			mes "Thanks again for this cute doll!";
-			emotion 15;
+			emotion e_thx;
 			close;
 
 		sM_9:
@@ -200,7 +200,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 			delitem 753,1;
 			mes "[Elin]";
 			mes "WOW--!!! OH MY GOSH! It's a Yoyo doll! This is what I REALLY wanted!! It's SOOOO cute......";
-			emotion 14;
+			emotion e_lv2;
 			next;
 			mes "[Elin]";
 			mes "As a thank you, I'll give you this.";
@@ -212,13 +212,13 @@ alberta.gat,117,134,8	script	Elin	96,{
 			next;
 			mes "[Elin]";
 			mes "Anyway, thank you SOOO MUCH for the Yoyo doll!!!!";
-			emotion 15;
+			emotion e_thx;
 			close;
 
 		sM_10:
 			mes "[Elin]";
 			mes "BLAAAAAAAAHHH!! Don't make fun of me cuz I'm young!";
-			emotion 32;
+			emotion e_pif;
 			next;
 			mes "[Elin]";
 			mes "(mumbles) .....'stupid'.....";
@@ -227,11 +227,11 @@ alberta.gat,117,134,8	script	Elin	96,{
 		L_Liar:
 			mes "[Elin]";
 			mes "HEY!! You don't have any dolls... I can't believe you would lie to a little kid!!!";
-			emotion 0;
+			emotion e_gasp;
 			next;
 			mes "[Elin]";
 			mes "You're a MEANIE!! I HATE YOU!!!..... sniff... sniff.... Waaaaaaaaaaaaaaaaaaaahhhhhh!!";
-			emotion 28;
+			emotion e_sob;
 			close;
 }
 
@@ -268,11 +268,11 @@ alberta_in.gat,28,145,4	script	Grampa	120,{
 		next;
 		mes "[Grampa]";
 		mes "It is the ^3355FFTiger's Footskin^000000, the legendary king of rejuvination!!"; 
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Grampa]";
 		mes "Have you heard of the Tiger's Footskin???.....";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Grampa]";
 		mes "Just by LOOKING at it, your white hair turns Black again! By SMELLING it, your reflexes become 10x faster!";
@@ -303,7 +303,7 @@ alberta_in.gat,28,145,4	script	Grampa	120,{
 			delitem 1030,10;
 			getitem 5016,1;
 			mes "T-Thank YOU!! Thank you SO VERY MUCH!!";
-			emotion 15;
+			emotion e_thx;
 			next;
 			mes "[Grampa]";
 			mes "Now my body can be reinvigorated!!! I will eat it right away!";
@@ -356,11 +356,11 @@ alberta_in.gat,122,53,4	script	Cherokee	47,{
 		if(countitem(923) < 20) goto L_NotEnuf;
 		delitem 923,20;
 		mes "Whoah~! This is the first time I've ever seen a real ^3355FF'Evil Horn'^000000!!";
-		emotion 5;
+		emotion e_ic;
 		next;
 		mes "[Cherokee]";
 		mes "Thank you! Here are the Antlers just as I promised you!";
-		emotion 15;
+		emotion e_thx;
 		getitem 2284,1;
 		next;
 		mes "[Cherokee]";
@@ -384,11 +384,11 @@ alberta_in.gat,122,53,4	script	Cherokee	47,{
 alberta.gat,120,53,3	script	Zic	51,{
 	mes "[Zic]";
 	mes "Yay! A cool breeze! That's why I love the sea!!";
-	emotion 2;
+	emotion e_ho;
 	next;
 	mes "[Zic]";
 	mes "Huh?... Do you have any business with me? You came to me because I'm a merchant right?";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	mes "[Zic]";
 	mes "~Sigh!~ I get tired of my reputation.... I can't get any peace or quite around here.....";
@@ -464,7 +464,7 @@ alberta.gat,120,53,3	script	Zic	51,{
 		mes "[Zic]";
 		mes "Are you sure you want a simple item like this? Oh well... To make a Heart Hairpin I will need:";	//5041
 		mes "- ^5555FF1200 Coral Reefs^000000.";	//7013
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Zic]";
 		mes "Would you like me to make you one?";
@@ -499,7 +499,7 @@ alberta.gat,120,53,3	script	Zic	51,{
 alberta.gat,135,79,3	script	Tempestra	71,{
 	mes "[Tempestra]";
 	mes "Ah...... Such a cool breeze.  It's good to be next to the sea.  I think it was the right choice for me to take a break from my business and come here.";
-	emotion 2;
+	emotion e_ho;
 	if(TEMPESTRA == 1) goto sM_Menu;
 	next;
 	mes "[Tempestra]";
@@ -515,7 +515,7 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 		set TEMPESTRA, 1;
 		mes "[Tempestra]";
 		mes "Oooh! Thank you so much.  I'm so glad to meet such a friendly person here....";
-		emotion 15;
+		emotion e_thx;
 		next;
 		mes "[Tempestra]";
 		mes "(~gulp~gulp~)";
@@ -563,7 +563,7 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 					getitem 5032, 1;
 					mes "[Tempestra]";
 					mes "All done... one Sunday Hat just for you.  Thank you and come back any time.";
-					emotion 15;
+					emotion e_thx;
 					close;
 			ssM_0b:
 				mes "[Tempestra]";
@@ -587,7 +587,7 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 					getitem 5027, 1;
 					mes "[Tempestra]";
 					mes "All done... one Mage Hat just for you.  Thank you and come back any time.";
-					emotion 15;
+					emotion e_thx;
 					close;
 			ssM_0c:
 				mes "[Tempestra]";
@@ -609,7 +609,7 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 					getitem 5045, 1;
 					mes "[Tempestra]";
 					mes "All done... one Magician just for you.  Thank you and come back any time.";
-					emotion 15;
+					emotion e_thx;
 					close;
 			ssM_End:
 				close;
@@ -646,13 +646,13 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 				getitem 5022, 1;
 				mes "[Tempestra]";
 				mes "All done... one Hat of the Sun God just for you.  Thank you again for the potion, and please come back any time.";
-				emotion 15;
+				emotion e_thx;
 				close;
 
 				ssL_NotEnuf:
 					mes "[Tempestra]";
 					mes "Um.... where are those items exactly???";
-					emotion 20;
+					emotion e_hmm;
 					close;
 			ssM_1b:
 				mes "[Tempestra]";
@@ -662,12 +662,12 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 		L_NoPot:
 			mes "[Tempestra]";
 			mes "Umm... excuse me but.... where is the potion??";
-			emotion 20;
+			emotion e_hmm;
 			close;
 
 	M_1:
 		mes "[Tempestra]";
 		mes "..... How RUDE!!";
-		emotion 0;
+		emotion e_gasp;
 		close;
 }

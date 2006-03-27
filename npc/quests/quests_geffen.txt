@@ -20,12 +20,12 @@
 geffen_in.gat,144,166,4	script	Blacksmith	63,{
 	mes "[Blacksmith]";
 	mes "Who am I?!........";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	mes "[Blacksmith]";
 	mes "Iam the one and only Veteran Blacksmith here!! Haven't you heard???";
 	mes "I've been working for 30 years in this hot, bloody, Hellfire!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Blacksmith]";
 	mes "Since I became a Blacksmith, I invented something really incredible..... wanna hear about it?";
@@ -35,11 +35,11 @@ geffen_in.gat,144,166,4	script	Blacksmith	63,{
 		mes "[Blacksmith]";
 		mes "Blacksmiths are always welding metals under the HOTEST and must grueling conditions!";
 		mes "The tremendous heat from the metals is so intense that it almost feels as if your face is going to burn off....";
-		emotion 23;
+		emotion e_omg;
 		next;
 		mes "[Blacksmith]";
 		mes "But with my great invention, Blacksmiths no longer have to fear their faces catching on fire! I call it the ^3355FF' Welding Mask'^000000!!";
-		emotion 5;
+		emotion e_ic;
 		next;
 		mes "[Blacksmith]";
 		mes "By wearing this over ones face, one will be fully protected from scorching heat and flying debirs.";
@@ -64,7 +64,7 @@ geffen_in.gat,144,166,4	script	Blacksmith	63,{
 
 			sL_NotEnuf:
 				mes "Listen here.... I said I needed ^4455FF'50 Steels'^000000 and ^4455FF2000 Zeny^000000 to make you a Welding Mask.";
-				emotion 4;
+				emotion e_swt;
 				close;
 
 		sM_No:
@@ -76,7 +76,7 @@ geffen_in.gat,144,166,4	script	Blacksmith	63,{
 	M_No:
 		mes "[Blacksmith]";
 		mes "Well then, stop wasting my time!";
-		emotion 32;
+		emotion e_pif;
 		close;
 }
 
@@ -87,7 +87,7 @@ geffen_in.gat,144,166,4	script	Blacksmith	63,{
 geffen_in.gat,30,71,4	script	Eric	83,{
 	mes "[Eric]";
 	mes "Please listen to the story of my blessed grand father...";
-	emotion 28;
+	emotion e_sob;
 	next;
 	menu "Listen.",-, "Ask about Items needed.",M_Ask, "Make.",M_Make, "End Conversation.",M_End;
 
@@ -132,11 +132,11 @@ geffen_in.gat,30,71,4	script	Eric	83,{
 		next;
 		mes "[Eric]";
 		mes "My only goal in life is to realize my grand fathers ideas and pay tribute to the man I hold so dear to my heart.......";
-		emotion 28;
+		emotion e_sob;
 		next;
 		mes "[Eric]";
 		mes "If only I had those materials.... Hmm... would you be iterested in this project? All I ask is that you gather the right items for me....";
-		emotion 20;
+		emotion e_hmm;
 		close;
 
 	M_Ask:
@@ -156,7 +156,7 @@ geffen_in.gat,30,71,4	script	Eric	83,{
 		delitem 970,1;
 		delitem 1003,1;
 		mes "Oh this is GREAT!! You have all of the materials I need to make my grandfather's Headset!";
-		emotion 5;
+		emotion e_ic;
 		next;
 		mes "[Eric]";
 		mes "Give me a few minutes to assemble it...............";
@@ -164,20 +164,20 @@ geffen_in.gat,30,71,4	script	Eric	83,{
 		getitem 5001,1;
 		mes "[Eric]";
 		mes "FINALLY!! It's complete! My grand father's Headset! Please take them... without your help this wouldn't have been possible.";
-		emotion 0;
+		emotion e_gasp;
 		next;
 		mes "[Eric]";
 		mes "Thank so very much! Because of you, I could fullfill my grand father's wish.  I just know he's smiling down on me from Heaven.....";
-		emotion 15;
+		emotion e_thx;
 		close;
 
 		L_NotEnuf:
 			mes "Thank you for trying to help me but..... you don't seem to have all of the items I need.....";
-			emotion 4;
+			emotion e_swt;
 			close;
 	M_End:
 		mes "[Eric]";
 		mes "Farewell..... boo hoo....";
-		emotion 28;
+		emotion e_sob;
 		close;
 }

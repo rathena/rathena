@@ -24,7 +24,7 @@ job_star.gat,99,33,2	script	Soul Linker	764,{
 		close;
 	}
 	mes "I speak to Taekwons only...";
-	emotion 1;
+	emotion e_what;
 	close;
 
 L_Check:

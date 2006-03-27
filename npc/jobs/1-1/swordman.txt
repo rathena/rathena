@@ -55,7 +55,7 @@ izlude_in.gat,62,170,0	script	w1039	45,1,1,{
 // == Npcs ==
 // -- Master Swordsman --
 izlude_in.gat,74,172,5	script	Master Swordsman	119,{
-	callfunc "F_ToHigh",25,"Swordman High",31,"Lord Knight",144,145,146,0,"Master Swordsman";
+	callfunc "F_ToHigh",Job_Swordman_High,"Swordman High",Job_Lord_Knight,"Lord Knight",144,145,146,0,"Master Swordsman";
 	mes "[Master Swordsman]";
 	if(BaseJob==Job_Novice && job_sword_q == 2) goto L_Done;
 	mes "Welcome to the Swordsman Association! So.. What business brings you to us?";
@@ -119,7 +119,7 @@ L_Menu:
 		mes "[Master Swordsman]";
 		mes "Aside from this, in my personal opinion, being a 'Swordsman' is greatest job in all the land!";
 		mes "Muhahahah!!!";
-		emotion 18;
+		emotion e_heh;
 		goto L_Menu;
 
 	M_2:
@@ -149,13 +149,13 @@ L_Menu:
 		O_2b:
 			mes "[Master Swordsman]";
 			mes "....but you're already a Swordsman...????";
-			emotion 20;
+			emotion e_hmm;
 			close;
 					
 	M_End:
 		mes "[Master Swordsman]";
 		mes "Enjoy your youth before you lose it~~ Muhahahaha!!!!";
-		emotion 18;
+		emotion e_heh;
 		close;
 
 L_Done:
@@ -197,11 +197,11 @@ OnStart:
 
 L_Other:
 	mes "Who might you be?! Those who are not Novices are not permitted to go in! Please leave.";
-	emotion 1;
+	emotion e_what;
 	close;
 L_Sword:
 	mes "You're already a Swordsman!! You don't need to take this silly test!";
-	emotion 0;
+	emotion e_gasp;
 	close;
 
 L_Novice:
@@ -211,7 +211,7 @@ L_Novice:
 		mes "Halt! Do you want to take the Swordsman Test?";
 		mes "If so, please fill out the swordsman application first.";
 		mes "Speak with the 'Master Swordsman' for more information.";
-		emotion 0;
+		emotion e_gasp;
 		close;
 
 	L_Start:

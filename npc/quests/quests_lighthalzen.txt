@@ -1140,7 +1140,7 @@ L_4:
 L4_1:
 	mes "There is a small card inside of it.";
 	next;
-	mes "You acquired the 'Laboratory Passport'.";
+	mes "You acquired the 'Laboratory Permit'.";
 	set @gotkey,1;
 	getitem 2657,1;
 	close;
@@ -1186,12 +1186,12 @@ L_3:
 	next;
 	input @answer$;
 
-	if (@answer$ == "Laboratory Passport" || @answer$ == "laboratory passport" || @answer$ == "passport") goto L_4;
+	if (@answer$ == "Laboratory Permit" || @answer$ == "permit") goto L_4;
 	mes "Nothing happened.";
 	close;
 
 L_4:
-	mes "You inserted the 'Laboratory Passport' in the hole,";
+	mes "You inserted the 'Laboratory Keycard' in the hole,";
 	mes "and the stair leading down appeared on the floor.";
 	next;
 	menu "Go down.",L4_1,"Do not go down.",-;

@@ -80,7 +80,7 @@ L_Start:
 		delitem 708,1;//Items: Ment,
 		mes "[Teacher]";
 		mes "I really, really appreciate what you've done for me!! I trully am grateful! I will give you a very special item as I promised.";
-		emotion 15;
+		emotion e_thx;
 		next;
 		mes "[Teacher]";
 		mes "This is the hat I wore at my Graduation Ceremony.  It is a reminder of my joyfull school days at the University.";

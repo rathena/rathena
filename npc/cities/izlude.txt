@@ -179,7 +179,7 @@ izlude.gat,150,118,3	script	Dega	84,{
 izlude.gat,150,143,4	script	Kylick	97,{
 	mes "[Kylick]";
 	mes "Don't you think Binoculars are really COOL?! YOU can see SUPER FAR AWAY...";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Kylick]";
 	mes "... Ahem~! We, here at Izlude, are responsible for maintaining peace, not only on land, but also at sea.";
@@ -189,7 +189,7 @@ izlude.gat,150,143,4	script	Kylick	97,{
 	next;
 	mes "[Kylick]";
 	mes "After all, being well prepared is always better than being unprepared.";
-	emotion 33;
+	emotion e_ok;
 	close;
 }
 
@@ -199,7 +199,7 @@ izlude.gat,124,178,4	script	Soldier	105,{
 	mes "HeHeHeHe... HaHaHaHa";
 	mes "Huh? Why am I so happy?";
 	mes "you want to know?";
-	emotion 18;
+	emotion e_heh;
 	next;
 	menu "Sure, why?",-, "Not really, I don't care.",M_1;
 	
@@ -215,7 +215,7 @@ izlude.gat,124,178,4	script	Soldier	105,{
 			next;
 			mes "[Soldier]";
 			mes "We had to work over time every day.  Ah~~~ that was a nightmare!!!...~~~";
-			emotion 16;
+			emotion e_wah;
 			next;
 			mes "[Soldier]";
 			mes "Anyways, the government made a smart move and created the Registration System.";
@@ -233,12 +233,12 @@ izlude.gat,124,178,4	script	Soldier	105,{
 			next;
 			mes "[Soldier]";
 			mes "HaHaHaHaHa!";
-			emotion 18;
+			emotion e_heh;
 			close;
 		sM_1:
 			mes "[Soldier]";
 			mes "What?! What do you mean you didn't know?!";
-			emotion 1;
+			emotion e_what;
 			next;
 			mes "[Soldier]";
 			mes "Hm... well... you know you could get items by killing monsters right?";
@@ -256,11 +256,11 @@ izlude.gat,58,126,1	script	Red	98,{
 	mes "[Red]";
 	mes "The only skill that a Swordsman needs is 'Bash'! 'Bash'! 'Bash'! ONLY 'Bash'!";
 	mes "There's no need to waste any time and effort on other minor skills ~~ unless you're some kind of wuss!";
-	emotion 29;
+	emotion e_gg;
 	next;
 	mes "[Cebalis]";
 	mes "What are you talking about?";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Cebalis]";
 	mes "The mark of a true Swordsman is the ability to bravely stand alone against a mob of enemies and SQUASH them ALL!";
@@ -274,7 +274,7 @@ izlude.gat,58,126,1	script	Red	98,{
 	next;
 	mes "[Red]";
 	mes "That's exactly why you're a dumb, idiot! The mark of a true Swordsman?! I still remember the last time you used 'Magnum Break'....";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Red]";
 	mes "You were just busy running away from all of those Porings that got hit by that stupid skill! You weakling!";
@@ -289,7 +289,7 @@ izlude.gat,58,126,1	script	Red	98,{
 	next;
 	mes "[Red]";
 	mes "Ooohhh maaaann.....";
-	emotion 9;
+	emotion e_dots;
 	next;
 	mes "[Red]";
 	mes "Hey! You there! which do you think is better? 'Bash', a powerful and precise blow used on a single enemy. ";
@@ -301,12 +301,12 @@ izlude.gat,58,126,1	script	Red	98,{
 		if( baseClass == Job_Swordman ) goto L00;
 		mes "Hahahaha!! See!? Someone who pursues a different job agrees with me~! You really are a great person!";
 		mes "Hahaha!! Undoubtedly only 'Bash' is suitable for a Swordsman.  Please tell that to this BONEHEAD over here!! Hahaha.";
-		emotion 21;
+		emotion e_no1;
 		close;
 		
 		L00:
 			mes "Hahahaha!!! I knew you'd choose 'Bash'!! Without a doubt only 'Bash' suits a Swordsman.  Please tell that to the BONEHEAD over there!! Hahaha.";
-			emotion 21;
+			emotion e_no1;
 			next;
 			mes "[Red]";
 			mes "Hm, Let me give you a bit of advice.  After you achieve level 5 'Bash', the amount of SP the skill consumes doubles, so keep an eye on your SP gauge.";
@@ -333,7 +333,7 @@ izlude.gat,58,126,1	script	Red	98,{
 izlude.gat,56,126,7	script	Cebalis	85,{
 	mes "[Cebalis]";
 	mes "The mark of a true Swordsman is the ability to bravely stand alone against a mob of enemies and SQUASH them ALL!!";
-	emotion 29;
+	emotion e_gg;
 	next;
 	mes "[Cebalis]";
 	mes "AND the only skill that can do that is 'Magnum Break'!!";
@@ -359,7 +359,7 @@ izlude.gat,56,126,7	script	Cebalis	85,{
 	mes "[Cebalis]";
 	mes "Ahem... Why do you always have to bring up insignificant incidents that have long since passed?";
 	mes "I'm TELLING YOU, 'Magnum Break' is the skill for a SWORDSMAN~!!";
-	emotion 4;
+	emotion e_swt;
 	next;
 	mes "[Cebalis]";
 	mes "'Bash' is just a stepping stone to getting 'Magnum Break'.  After all you need 5 levels of 'Bash before you can get level 1 'Magnum Break'.";
@@ -389,12 +389,12 @@ izlude.gat,56,126,7	script	Cebalis	85,{
 		mes "[Cebalis]";
 		if( baseClass == Job_Swordman ) goto L01;
 		mes "Right! 'Magnum Break' is THE BEST!!! You know what you're talking about, huh? I don't know why this bonehead is so stubborn.";
-		emotion 21;
+		emotion e_no1;
 		close;
 
 		L01:
 			mes "Darn Right!! 'Magnum Break' IS the BETTER skill!! You know what your talking about friend. HaHaHa.";
-			emotion 21;
+			emotion e_no1;
 			next;
 			mes "[Cebalis]";
 			mes "You want some useful information? Okay, let me tell ya! 'Magnum Break' has the elemental Property of 'Fire'.";
@@ -409,7 +409,7 @@ izlude.gat,56,126,7	script	Cebalis	85,{
 izlude_in.gat,125,164,5	script	Aaron	65,{
 	mes "[Aaron]";
 	mes "Hm? A Swordsman?..........";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Aaron]";
 	mes "Do you think strong VIT and a highly trained and unique breathing method enabling quick HP recovery, are the greatest advantages of a Swordsman?";
@@ -431,7 +431,7 @@ izlude_in.gat,125,164,5	script	Aaron	65,{
 	next;
 	mes "[Aaron]";
 	mes "Hm... Are you bored? Want me to go on?";
-	emotion 20;
+	emotion e_hmm;
 	next;
 	menu "Tell me more please.",-,"End conversation",LEnd;
 	
@@ -450,7 +450,7 @@ izlude_in.gat,125,164,5	script	Aaron	65,{
 	LEnd:
 		mes "[Aaron]";
 		mes "OK, train hard~~";
-		emotion 21;
+		emotion e_no1;
 		close;
 }
 
@@ -485,7 +485,7 @@ M_Menu:
 		sM_1:
 			mes "[Edgar]";
 			mes "Hmm..., you hate to walk and are low on money, but you want to go there...(sigh)...Oh boy...";
-			emotion 4;
+			emotion e_swt;
 			next;
 			mes "[Edgar]";
 			mes "Well I am the captain of a small ship so I could bring you there at the low price of 250 Zeny.";
@@ -505,7 +505,7 @@ M_Menu:
 			sm_1b:
 				mes "[Edgar]";
 				mes "What!!... ahg... bah... guh... I'm NOT ripping you off!!!...";
-				emotion 23;
+				emotion e_omg;
 				close;
 
 	M_End:

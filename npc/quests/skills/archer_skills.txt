@@ -30,7 +30,7 @@ L_Other:
 	mes "Eh?... First time seeing an archer of something? Why don't you just";
 	mes "go about your business and leave me be.  I only talk to high level";
 	mes "Archer types........";
-	emotion 1;
+	emotion e_what;
 	close;
 L_Start:
 	if (BaseJob==Job_Archer && JobLevel<35) goto L_LowLvl;
@@ -74,17 +74,17 @@ L_Start:
 		mes "13 Trunks,";
 		mes "1 Red potion^000000";
 		set ARWCRFT, 1;
-		emotion 5;
+		emotion e_ic;
 		close;
 	M_1:
 		mes "[Roberto]";
 		mes "................................................................";
-		emotion 7;
+		emotion e_ag;
 		next;
 		mes "[Roberto]";
 		mes "Let me teach you this special skill.... It's called, my boot up";
 		mes "your A........";
-		emotion 32;
+		emotion e_pif;
 		next;
 		mes "!!!!SMACK!!!!";
 		percentheal -5,0;
@@ -134,7 +134,7 @@ L_GotSkill:
 L_LowLvl:
 	mes "Hmm?... Do you have something to say to me? Unfortunately I have";
 	mes "nothing to say to you.....";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Roberto]";
 	mes "It's sad but conversations with people who have ^5533FFlow job levels^000000 such";

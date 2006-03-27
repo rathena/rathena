@@ -24,7 +24,7 @@ geffen_in.gat,151,119,4	script	BLIZZARDRISS	71,{
 
 L_Other:
 	mes "What new magic spells will I discover today......??";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_Start:
@@ -70,7 +70,7 @@ L_Start:
 		sM_End:
 			mes "[BLIZZARDRISS]";
 			mes "Hmf! Suit yourself.  Don't come complaining to me when get beat up by a bunch of spores!!";
-			emotion 6;
+			emotion e_an;
 			close;
 
 	M_End:
@@ -93,12 +93,12 @@ L_GetSkill:
 	set ENRGYCOAT,0;
  	mes "[BLIZZARDRISS]";
  	mes "You can now use the spell, 'Energy Coat'!! Use it wisely my friend!";
-	emotion 21;
+	emotion e_no1;
  	close;
 
 	L_JobLvl:
 		mes "Didn't you listen to my explanation? You need a job level of at least 35 to learn 'Energy Coat'.";
-		emotion 1;
+		emotion e_what;
 		close;
 
 	L_Items:
@@ -107,7 +107,7 @@ L_GetSkill:
 		mes " 1 One Carat Diamond,";
 		mes " 5 Shells,^000000";
 		mes " and ^5533FF1 Solid shell^000000.";
-		emotion 1;
+		emotion e_what;
 		close;
 
 L_GotSkill:

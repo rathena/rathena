@@ -4,16 +4,17 @@
 //= Nana
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= Advance Class jobchanger after kRO Normals.
 //===== Additional Comments: ================================= 
 //= v1.1 Made all into functions, additional checks, etc. [Lupus]
+//= v1.2 Made numbers into constants. [Vicious]
 //============================================================ 
 
 // -== Clown ==-
 valkyrie.gat,53,54,4z	script	Clown	741,{
-	callfunc "F_Rebirth",27,"High Archer",43,"Clown",147,148,0,0;
+	callfunc "F_Rebirth",Job_Archer_High,"High Archer",Job_Clown,"Clown",147,148,0,0;
 }

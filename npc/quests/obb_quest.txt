@@ -119,7 +119,7 @@ L_YES:
 	if(countitem(636)<2) goto L_NOITM;//Items: No_Recipient,
 	delitem 636,2;//Items: No_Recipient,
 	mes "Thank you, that's all I need.";
-	emotion 15;
+	emotion e_thx;
 	next;
 	mes "[Jacob]";
 	set obb_quest, 2;
@@ -130,7 +130,7 @@ L_DONE:
 
 L_NOITM:
 	mes "Pardon, but I do really need these two ^0000FFNo Recipients^000000.";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 L_END:
@@ -181,7 +181,7 @@ L_CREATE2:
 	getitem 603,1;//Items: Old_Blue_Box,
 	mes "[Old Greek]";
 	mes "Here's your Box!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	menu "Make another!",L_CREATE2, "It's enough.",-;
 

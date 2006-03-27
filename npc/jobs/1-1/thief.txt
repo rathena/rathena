@@ -49,7 +49,7 @@ M_Menu:
 		next;
 		mes "[Thief Guide]";
 		mes "Hahahaha... I can still remember the look on that guy's face...";
-		emotion 18;
+		emotion e_heh;
 		next;
 		mes "[Thief Guide]";
 		mes "But anyways... I assume you're here to become a thief...";
@@ -61,7 +61,7 @@ M_Menu:
 		sM_0b:
 			mes "[Thief Guide]";
 			mes "Wow... thanks... now get the HELL OUTA HERE!!";
-			emotion 6;
+			emotion e_an;
 			close;
 		sM_0c:
 			mes "[Thief Guide]";
@@ -77,7 +77,7 @@ M_Menu:
 	M_End:
 		mes "[Thief Guide]";
 		mes "Must you people keep wasting my time!!?";
-		emotion 32;
+		emotion e_pif;
 		close;
 
 	L_Test:
@@ -129,7 +129,7 @@ M_Menu:
 		next;
 		mes "[Thief Guide]";
 		mes "   If you don't have any questions... then GET moving!";
-		emotion 27;
+		emotion e_go;
 		set job_thief_q,1;
 		close;
 
@@ -145,32 +145,32 @@ M_Menu:
 			mes "[Thief Guide]";
 			mes "..... What are you doing here? You're supposed to be gathering mushrooms remember??";
 			mes "Don't tell me you forget what to do??? Jeeze... do you want me to explain it to you one more time?......";
-			emotion 20;
+			emotion e_hmm;
 			next;
 			menu "Heh.. yeah I guess..",sM_1a, "Nope.",sM_1b;
 
 			sM_1a:
 				mes "[Thief Guide]";
 				mes "(~sigh~) There's always someone who gets left behind.... This is the last time so listen CAREFULLY!!....";
-				emotion 32;
+				emotion e_pif;
 				next;
 				goto L_Explain;
 			sM_1b:
 				mes "[Thief Guide]";
 				mes ".... Then what is it??? Do you have something to tell me? YOUR the one who came TO ME...";
 				mes "What... you wanna a piece of me?? HUH!!??";
-				emotion 7;
+				emotion e_ag;
 				close;
 
 		sL_1:
 			mes "[Thief Guide]";
 			mes "What? You actually went and stole some mushrooms?? Are you some kinda idiot?";
 			mes "Haha... I can't believe you listened to me..... ";
-			emotion 1;
+			emotion e_what;
 			next;
 			mes "[Thief Guide]";
 			mes ".... Psych!! Just kidding... heheheh! Speak with the guy next to me about rating the mushrooms you swiped.";
-			emotion 18;
+			emotion e_heh;
 			close;
 
 	L_1:
@@ -185,7 +185,7 @@ M_Menu:
 			next;
 			mes "[Thief Guide]";
 			mes "...... You won't take my place, will you? If you have any ambition like that, I will kick your ^ff0000'ASS OUT OF YOUR BUTT'^000000!";	//this is just too much lol.
-			emotion 0;
+			emotion e_gasp;
 			next;
 			mes "[Thief Guide]";
 			mes "   Still, in order to pass the test you need to go get some mushrooms.";
@@ -196,21 +196,21 @@ M_Menu:
 			next;
 			mes "[Thief Guide]";
 			mes "   Eeewww! Yuuuckk! Still, in order to pass the test you need to go get some mushrooms.";
-			emotion 16;
+			emotion e_wah;
 			close;
 }
 
 
 // -- Test Grader --
 moc_prydb1.gat,42,133,2	script	Comrade Brad	118,{
-	callfunc "F_ToHigh",30,"Thief High",36,"Assassin Cross",149,150,151,152,"Brad";
+	callfunc "F_ToHigh",Job_Thief_High,"Thief High",Job_Assassin_Cross,"Assassin Cross",149,150,151,152,"Brad";
 	if(BaseJob == 0) goto L_Novice;
 	if(BaseJob == 6) goto L_Thief;
 
 L_Other:
 	mes "[Brad]";
 	mes "Hey~ Hey~!! You don't look like a Thief.  What the heck? You'd BETTER NOT be trying to start someting on THIEF TERRITORY!!";
-	emotion 23;
+	emotion e_omg;
 	close;
 L_Thief:
 	mes "[Brad]";
@@ -263,7 +263,7 @@ L_4:
 	L_Final:
 		mes "[Comrade Brad]";
 		mes "Congratulations ^ff0000"+strcharinfo(0)+"^000000, you passed the official Thief Test!  You can now become a Thief!!";
-		emotion 21;
+		emotion e_no1;
 		next;
 		if(SkillPoint > 0) goto sL_SkPoint;
 		delitem 1069, countitem(1069);//Items: Orange_Net_Mushroom,
@@ -283,7 +283,7 @@ L_4:
 		mes "[Comrade Brad]";
 		mes "However, If you bring disgrace to our Guild, or ever betray us, we will not hesitate to have you......";
 		mes "how shall I say..... ^ff0000'REMOVED'^000000 from the Thief Guild.";
-		emotion 29;
+		emotion e_gg;
 		next;
 		mes "[Comrade Brad]";
 		mes "Good luck and always remeber the ^0000cc'Thief Motto'^000000: ^ff0000DON'T Get Caught^000000l!";
@@ -333,18 +333,18 @@ L_Other:
 		mes "[Irrelevent Man]";
 		mes "Hey!! DON'T LOOK AT ME like that! I'M NOT some WACKO okay!!!";
 		set @s_flag, @s_flag+1;
-		emotion 6;
+		emotion e_an;
 		close;
 	L_1e:
 		mes "[Irrelevant Man]";
 		mes "Dude! I got nothin to say with you!  Mind your own business!  Sheesh!!";
-		emotion 32;
+		emotion e_pif;
 		close;
 
 L_Thief:
 	mes "[Irrelevant Man]";
 	mes "Yah Hoo! Look at you! You became a Kool Thief!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Irrelevant Man]";
 	mes "Don't worry about Shibu's Farm.  Let the newbies handle that.  Why don't ya go out and kill some stronger monsters.";
@@ -396,7 +396,7 @@ L_2:
 L_3:
 	mes "[Irrelevant Man]";
 	mes "Muhahahaha~~ WHAT???~~ You HAVEN'T PASSED the Test yet? Are you some sort of Idiot!! Kakakaka!!";
-	emotion 18;
+	emotion e_heh;
 	next;
 	mes "[Irrelevant Man]";
 	mes "Just kidding..... NOT!!.  Anywho I'll let ya back in!";

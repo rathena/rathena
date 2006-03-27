@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.6
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena  1.0
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.6 Added a func which prevent advanced classes passing
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
 ==========================================================
 
 
@@ -25,7 +26,7 @@
 //============================================ Father Thomas: Job changer, Test 1 =============================================\\
 //*********************************************************************************************************************************************************************************\\
 prt_church.gat,16,41,4	script	Father Thomas	60,{
-	callfunc "F_BlockHigh",28,"Acolyte High",32,"High Priest","Father Thomas";
+	callfunc "F_BlockHigh",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"High Priest","Father Thomas";
 
 	mes "[Father Thomas]";
 	if (BaseJob == Job_Acolyte) goto L_Start;
@@ -83,7 +84,7 @@ L_Start:
 
 		sL_HighLvl:
 			mes "Wow, your already at job lvl 50.  I'm amazed at your dedication and hard work!";
-			emotion 0;
+			emotion e_gasp;
 			next;
 			mes "[Father Thomas]";
 			mes "Because of this I will allow you to skip the first task.  How about we start the second task instead?";
@@ -172,7 +173,7 @@ L_Test1:
 			close;
 	L_NotDone1b:
 		mes "Hmmm??";
-		emotion 1;
+		emotion e_what;
 		next;
 		mes "[Father Thomas]";
 		mes "Have you gone to see ^5533FFMother Marthilda^000000 yet?  She can be found near Morroc in the Sogart Desert.";
@@ -246,7 +247,7 @@ L_Change:
 	if (SkillPoint > 0) mes "Wait.  You must use up your skill points in order to become a Priest.";
 	if (SkillPoint > 0) close;
 	mes "Congratulations! You have just completed all of the tests.  I can now turn you into a Priest.";
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Father Thomas]";
 	mes "God, please endow "+strcharinfo(0)+" with the strength and courage to fight evil and help mankind.";
@@ -283,13 +284,13 @@ L_Test:
 	next;
 	mes "[Father Rubalkabara]";
 	mes "What's this? You're here because you wish to serve God in an even greater capacity?";
-	emotion 1;
+	emotion e_what;
 	next;
 	menu "Yes, I believe Priesthood is the right path.",-, "No, not really.... just came to say hi.",M_No;
 
 		mes "[Father Rubalkabara]";
 		mes "Haha! Very good.  We need more people like yourself in order for this world to survive the evils that haunt it.";
-		emotion 21;
+		emotion e_no1;
 		next;
 		mes "[Father Rubalkabara]";
 		mes "Because of your pure heart I will give you my blessing child.  Please meet with ^5533FFMother Marthilda^000000 next.";
@@ -301,7 +302,7 @@ L_Test:
 	M_No:
 		mes "[Father Rubalkabara]";
 		mes "Oh... well then... hello to you too.  Although it is nice to see a servant of God such as yourself, I'm a little busy right now so if you don't mind.....";
-		emotion 4;
+		emotion e_swt;
 		close;
 
 L_Done:
@@ -344,7 +345,7 @@ function	script	F_FatherYos	{
 
 L_Test:
 	mes "Hmm...? Did you need something? Oh the Priest test..... are you sure you're up for that?";
-	emotion 1;
+	emotion e_what;
 	next;
 	mes "[Father Yosuke]";
 	mes "Meh, very well.  I will let you pass.  Go back to the church and speak with Father Thomas.  Your duty here as been fulfilled";
@@ -353,7 +354,7 @@ L_Test:
 
 L_Done:
 	mes "Ugh? What are you still doing here...? I said to go back to the church.... I'm very busy right now....";
-	emotion 1;
+	emotion e_what;
 	close;
 }
 

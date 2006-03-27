@@ -19,7 +19,7 @@
 
 // -- Expert Mage -- 
 geffen_in.gat,164,124,4	script	Expert Mage	123,{
-	callfunc "F_ToHigh",26,"High Mage",33,"High Wizard",157,0,0,0,"Expert Mage";
+	callfunc "F_ToHigh",Job_Mage_High,"High Mage",Job_High_Wizard,"High Wizard",157,0,0,0,"Expert Mage";
 	if(BaseJob==Job_Novice && job_magician_q >= 1) goto L_BeMage;
 
 	mes "[Expert Mage]";
@@ -83,7 +83,7 @@ L_BeMage:
 	next;
 	mes "[Expert Mage]";
 	mes "Well it's not perfect but it seems you worked very hard on this so...... alright! I'll let you pass!  You are now officialy qualified to become a mage!";
-	emotion 21;
+	emotion e_no1;
 	next;
 	mes "[Expert Mage]";
 	mes "Abra-kadabra and hocus pocus, turn this young novice into a ^00aa00MAGE^000000!!";
@@ -99,7 +99,7 @@ L_BeMage:
 	callfunc "F_ClearJobVar";		// clears all job variables for the current player
 	mes "[Expert Mage]";
 	mes "'Welcome to My World~ teh hehe.  I've always wanted to say that.  Anyways, congratulations!.  You're one of us now so let's be friends okays!";
-	emotion 18;
+	emotion e_heh;
 	next;
 	mes "[Expert Mage]";
 	mes "Good luck to ya and take care!";
@@ -108,14 +108,14 @@ L_BeMage:
 	L_Retry:
 		mes "I'm sorry but the solution you have is no good.  I'm afraid that you didn't pass the test.  You can try again though.";
 		mes "Let me exlpain the test for you once more okays.";
-		emotion 4;
+		emotion e_swt;
 		next;
 		delitem 1090,1;//Items: Unknown_Test_Tube,
 		goto L_Explain;
 
 	L_NoSol:
 		mes "Where is the solution I asked for?  I'm sorry but I can't check the solution when you don't have it.  Let me remind you what solution you need.";
-		emotion 1;
+		emotion e_what;
 		next;
 		goto L_Explain;
 
@@ -409,7 +409,7 @@ moc_ruins.gat,91,150,5	script	Ponka-Hontas	93,{
 		getitem 1088,1;//Items: Morroc_Solution,
 		mes "Thank you, I think you will be a great mage, you are so generous.";
 		mes "I hope i'll see you soon again here";
-		emotion 21;
+		emotion e_no1;
 		close;
 
 		L0NoT:
@@ -448,7 +448,7 @@ pay_arche.gat,122,100,5	script	Dollshoi	88,{
 		getitem 1089,1;//Items: Payon_Solution,
 		mes "Thank you, I think you will be a great mage, you are so generous.";
 		mes "I hope i'll see you soon again here";
-		emotion 21;
+		emotion e_no1;
 		close;
 
 		L0NoT:

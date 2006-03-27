@@ -187,18 +187,18 @@ L_Sand:
 	next;
 	mes "[Alcouskou]";
 	mes "THROW IT AT ME!!!";
-	emotion 27;
+	emotion e_go;
 	next;
 	mes "[Alcouskou]";
 	mes "(AHHH!! My EYES!!! Son of a)......... ya see how effective that was........ (JEEZE that STINGS!!).......";
-	emotion 23;
+	emotion e_omg;
 	next;
 	mes "[Alcouskou]";
 	mes "Anyways that's all there is too it....... (CRAP that's a lot of sand!!).... So yeah, Sand Attack, use it as a last resort...... (AWW MAN!!)";
 	next;
 	mes "[Alcouskou]";
 	mes "Oh and it does Earth Property damage....... (I gota finda better way to teach this).........";
-	emotion 4;
+	emotion e_swt;
 	skill 149,1,0;
 	set SANDATTACK, 0;
 	set BAGNFNTY, 0;
@@ -216,7 +216,7 @@ L_Sand:
 		close;
 	L_GotSand:
 		mes "Oh your back... hopefully not to throw anymore sand in my eyes, heh heh.... heh........ heh..............";
-		emotion 4;
+		emotion e_swt;
 		close;
 
 L_Back:
@@ -271,7 +271,7 @@ L_Find:
 	next;
 	mes "[Alcouskou]";
 	mes "Very good.  You have chosen some fine stones.  This tells me that you have now perfected the Find Stone skill.";
-	emotion 21;
+	emotion e_no1;
 	skill 151,1,0;
 	set FINDSTONE, 0;
 	next;
@@ -306,13 +306,13 @@ L_Fling:
 	next;
 	mes "[Alcouskou]";
 	mes "Open your eyes! SEE THE TARGET!! Throw the stone at the target as if you were hurrling yourself towards it! DO IT NOW!!";
-	emotion 27;
+	emotion e_go;
 	next;
 	mes "!!Whooooossshh!!................. !!Thwack!!";
 	next;
 	mes "[Alcouskou]";
 	mes "Haha! Excellent! It's a bullseye.  You have now masterd Stone Fling, congratulations.";
-	emotion 21;
+	emotion e_no1;
 	skill 152,1,0;
 	set STONEFLING, 0;
 	next;

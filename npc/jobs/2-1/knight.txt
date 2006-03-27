@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.6
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -24,13 +24,14 @@
 //= 1.6 Added a func which prevent advanced classes passing
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================ 
 
 
 
 //<------------------------------------------------------------------------------------ Chivalry Captain Herman------------------------------------------------------------------------------------------>\\
 prt_in.gat,88,101,3	script	Chivalry Captain Herman	56,{
-	callfunc "F_BlockHigh",25,"Swordman High",31,"Lord Knight","Chivalry Captain Herman";
+	callfunc "F_BlockHigh",Job_Swordman_High,"Swordman High",Job_Lord_Knight,"Lord Knight","Chivalry Captain Herman";
 
 	if (BaseJob == Job_Swordman && KNIGHT_Q > 0) goto L_Check;
 
@@ -185,12 +186,12 @@ L_Check:
 		callfunc "F_ClearJobVar";		// clears all job variables for the current player
 		mes "[Chivalry Captain Herman]";
 		mes "Congratulations!! You are now a fellow Knight and protector of Rune-Midgard! Now go forth and make Rune-Midgard a better place to live!";
-		emotion 21;
+		emotion e_no1;
 		close;
 
 		sL_SKpoint:
 			mes "Please use up all of your skill points so that I can make you a Knight.";
-			emotion 5;
+			emotion e_ic;
 			close;
 }
 
@@ -340,7 +341,7 @@ L_Check:
 	L_NotDone:
 		mes "[Sir Andrew Syloc]";
 		mes "What? You don't have everything I asked for?";
-		emotion 4;
+		emotion e_swt;
 		next;
 		mes "[Sir Andrew Syloc]";
 		mes "This is what you were SUPPOSED to collect....";
@@ -713,7 +714,7 @@ L_Novice:
 	close;
 L_Knight:
 	mes "Don't talk to me......";
-	emotion 9;
+	emotion e_dots;
 	close;
 
 
@@ -1010,7 +1011,7 @@ L_Other:
 	close;
 L_Novice:
 	mes "Wow... A cute novice... soooo cute...";
-	emotion 14;
+	emotion e_lv2;
 	next;
 	mes "[Lady Amy Beatris]";
 	mes "Do you want to become a Knight?";
@@ -1026,7 +1027,7 @@ L_Knight:
 	
 	L_Female:
 		mes "Oh my! Aren't you just the prettiest Knight.  I love how your sword matches with your shoes.";
-		emotion 14;
+		emotion e_lv2;
 		next;
 		mes "[Lady Amy Beatris]";
 		mes "Anyway, I'm glad you came back to see me.  I'm always curious about how a Knight turns out.";
@@ -1035,7 +1036,7 @@ L_Knight:
 
 	L_Male:
 		mes "Well hello handsome.  There's just something about men in armor....";
-		emotion 3;
+		emotion e_lv;
 		next;
 		mes "[Lady Amy Beatris]";
 		mes "So, did you come back for some fun...?";
@@ -1044,7 +1045,7 @@ L_Knight:
 
 		M_Yes:
 			mes "^FF0000(SLAPP!! SMACK!! BASH!!)^000000";
-			emotion 6;
+			emotion e_an;
 			percentheal (-10),0;
 			next;
 			mes "[Lady Amy Beatris]";
@@ -1053,18 +1054,18 @@ L_Knight:
 			mes "[Lady Amy Beatris]";
 			mes "Allways remember that a Knight's a Knight, no matter what gender they are.";
 			mes "Also remember to be respectfull to women at all times!";
-			emotion 32;
+			emotion e_pif;
 			close;
  
 		M_No:
 			mes "[Lady Amy Beatris]";
 			mes "Teh he he.  Silly, I'm just playing with you.  You may be good looking, but I'm NOT that kind of girl.";
-			emotion 18;
+			emotion e_heh;
 			next;
 			mes "[Lady Amy Beatris]";
 			mes "Anyway, I'm glad you came back to see me.  I'm always curious about how a Knight turns out.";
 			mes "You look like you're doing fine so continue the good work okay?";
-			emotion 21;
+			emotion e_no1;
 			close;
 
 
@@ -1485,7 +1486,7 @@ L_Novice:
 	next;
 	mes "[Sir Grey]";
 	mes "And somehow after all these years, I ended up becoming one.  Imagine that.... Hahaha.";
-	emotion 18;
+	emotion e_heh;
 	close;
 L_Knight:
 	mes "I don't know if I can even properly describe the ^00aa00Claymore^000000, but I know this... it's the greatest weapon a Knight can wield!!";

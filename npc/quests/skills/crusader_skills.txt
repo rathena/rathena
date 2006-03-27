@@ -61,7 +61,7 @@ geffen.gat,110,118,3	script	Ford	752,{
 	mes "Time to roll my lucky dice.";
 	mes "Good luck, I almost never lose.";
 //TODO: add DICE emotions? 8)
-	emotion 29;
+	emotion e_gg;
 	next;
 	if(rand(1,6)!=3) goto L_lose;
 	emotion 58;
@@ -71,7 +71,7 @@ geffen.gat,110,118,3	script	Ford	752,{
 	mes "[Ford]";
 	mes "I can't believe I lost!";
 	mes "I NEVER lose...";
-	emotion 28;
+	emotion e_sob;
 	close;
 	
 L_noitems:

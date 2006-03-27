@@ -5,7 +5,7 @@
 //= converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.8
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -26,12 +26,13 @@
 //= to go. [Lupus]
 //= 1.7 Replaced 2 Hodes with 2 Horong's (according to the official guide) [Lupus]
 //= 1.8 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================ 
 
 
 //<=================== Some dog =========================>
 gef_tower.gat,107,35,5	script	Some Dog	81,{
-	callfunc "F_BlockHigh",26,"High Mage",33,"High Wizard","Dog";
+	callfunc "F_BlockHigh",Job_Mage_High,"High Mage",Job_High_Wizard,"High Wizard","Dog";
 	if(BaseJob == Job_Mage) goto L_JobMage;
 	callfunc "Wiz1_check";
 
@@ -50,13 +51,13 @@ L_JobMage:
 	M_0:
 		mes "[Dog]";
 		mes "~Woof~ What is it? Why are you looking at me like that?? Is this the first time you've seen a dog talk?";
-		emotion 1;
+		emotion e_what;
 		mes "[Dog]";
 		mes "~Woof~ I suppose it's not that common to see a talking dog..... ~Woof~..... Yeah, it is a rare site actually.....";
 		next;
 		mes "[Dog]";
 		mes "~GRRRR!!~.... Hey! Stop GAWKING at me for goodness sake!! ~WOOOF~";
-		emotion 6;
+		emotion e_an;
 		next;
 
 		L_Cont:
@@ -72,7 +73,7 @@ L_JobMage:
 		next;
 		mes "[Maria]";
 		mes "Uh, anyways..... where were we?";
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Maria]";
 		mes "Like I said before, if you want to become a Wizard you must first speak with Catherine.";
@@ -118,18 +119,18 @@ L_JobMage:
 		sM_2:
 			mes "[Maria]";
 			mes "I'M NOT A DOG!!! ~ ARROOOOOOOOOWWWWW!!!! ~";
-			emotion 6;
+			emotion e_an;
 			next;
 			mes "[Maria]";
 			mes "Dang it! I hope you FAIL!! Now go get lost!";
-			emotion 27;
+			emotion e_go;
 			next;
 			warp "gef_dun00.gat",54,23;
 			end;
 	M_1:
 		mes "[Dog]";
 		mes "~WOOF~Woof~woof~ You DON'T have to state the obvious! I KNOW I'm a dog!";
-		emotion 32;
+		emotion e_pif;
 		next;
 		goto L_Cont;
 
@@ -249,7 +250,7 @@ L_Mage:
 	M_0End:
 		mes "[Catherine Medichi]";
 		mes "What? You came up here for nothing!?";
-		emotion 1;
+		emotion e_what;
 		close;
 
 
@@ -282,7 +283,7 @@ L_Mage:
 				mes "[Catherine Medichi]";
 				mes "Congrats, you passed the first test.";
 				mes "Don't relax yet, you still got 2 tests left.";
-				emotion 21;
+				emotion e_no1;
 				next;
 				mes "[Catherine Medichi]";
 				mes "Now talk to the man in the corner for the tests.";
@@ -313,11 +314,11 @@ L_Mage:
 
 		sL_Failed2:
 			mes "Huh?? You failed the Q&A test!?";
-			emotion 1;
+			emotion e_what;
 			next;
 			mes "[Catherine Medichi]";
 			mes "You want to be a wizard and you can't answer a couple of questions?? Sheesh.";
-			emotion 4;
+			emotion e_swt;
 			next;
 			mes "[Catherine Medichi]";
 			mes "Well, do you want big sis to give you a hint? If you do, go buy me ^0099001 apple juice^000000.  I'm a bit thirsty. =P";
@@ -424,7 +425,7 @@ L_Mage:
 		if(SkillPoint > 0) close;
 
 		mes "Great! You finished all of the tests! Congrats, congrats, congrats!!";
-		emotion 21;
+		emotion e_no1;
 		next;
 		mes "[Catherine Medichi]";
 		mes "Ack, I'm wasting time, I better change you!";
@@ -470,11 +471,11 @@ L_Other:
 	next;
 	mes "[Raul Expagarus]";
 	mes "Who're you?! Leave!";
-	emotion 0;
+	emotion e_gasp;
 	close;
 L_Novice:
 	mes "What's a little kid like you doing here? Get out!!";
-	emotion 0;
+	emotion e_gasp;
 	next;
 	warp "geffen.gat",120,110;
 	close;
@@ -532,7 +533,7 @@ L_Mage:
 
 	L_Done:
 		mes "Congratulations on finishing the final test!  You have now finished all of the Wizards tests and are ready to become a Wizard!";
-		emotion 21;
+		emotion e_no1;
 		next;
 		mes "[Raul Expagarus]";
 		mes "Go speak to Catherine to become a Wizard.  But be careful! Magic is a powerfull force and can easily destroy you!!";
@@ -559,7 +560,7 @@ L_Mage:
 			next;
 			mes "[Raul Expagarus]";
 			mes "Be that way! If you miss one question, you fail! What do you say!?";
-			emotion 32;
+			emotion e_pif;
 			next;
 			menu "I want to live in peace..........",M_0a, "I want to try again.",M_0b;
 
@@ -577,7 +578,7 @@ L_Mage:
 			next;
 			mes "[Raul Expagarus]";
 			mes "Lets start the test! If you miss one question, you're screwed! HA!";
-			emotion 29;
+			emotion e_gg;
 			next;
 			mes "[Raul Expagarus]";
 			mes "10 questions, get them right! I won't tell you the correct answer for the ones you miss.";
@@ -949,7 +950,7 @@ L_Mage:
 		M_1a:
 			mes "[Raul Expagarus]";
 			mes "Ignorant fool! Fine, go die if you wish! Your corpse will be left as food for the monsters.";
-			emotion 23;
+			emotion e_omg;
 			next;
 			mes "[Raul Expagarus]";
 			mes "I'll send you now... By the way, have fun getting slaughtered!";
@@ -998,7 +999,7 @@ L_Mage:
 
 		sL_ReTest3:
 			mes "You want to take the test AGAIN!? You love magic THAT much!?";
-			emotion 1;
+			emotion e_what;
 			next;
 			mes "[Raul Expagarus]";
 			mes "You failed last time, so it's time for a quiz! If you don't want to take it, TOO BAD!.";

@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 1.7a
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 2nd Job Quests again. It also guides adv classes where to go. [Lupus]
 //= 1.7 Fixed tuition fee. Fixed some answers, names & typos, added missing labels [Lupus]
 //= 1.7a Moved JFunc back in the main file, fixed typos [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
 //============================================================ 
 
 
@@ -28,7 +29,7 @@
 //Sage Castle
 //==================================
 yuno_in02.gat,38,61,4	script	Magic Academy Headmaster 	743,{
-	callfunc "F_BlockHigh",26,"High Mage",40,"Professor","Keiron";
+	callfunc "F_BlockHigh",Job_Mage_High,"High Mage",Job_Professor,"Professor","Keiron";
 	if(BaseJob == 16) goto L_Menu3_3;
 	if(BaseJob != 2) goto L_Menu2_1;
 	if(SAGE_Q == 11) goto L_Menu3_1;

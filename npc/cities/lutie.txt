@@ -522,7 +522,7 @@ xmas.gat,134,112,4	script	Jack Frost	710,{
 	if(xmas_npc==11) goto Xmas11;
 	mes "*sob*sob*........ I'm so lonely..... I can't go anywhere! I";
 	mes "am stuck here day and night... frozen to this cold earth....";
-	emotion 28;
+	emotion e_sob;
 	next;
 	menu "^0000FFJack Frost?^000000",L0, "A secret Toy Factory?",L1, "...............",LEnd;
 	
@@ -550,7 +550,7 @@ xmas.gat,134,112,4	script	Jack Frost	710,{
 		next;
 		mes "[Jack Frost]";
 		mes "But my friends were not...... I have lost all of my friends.......... I feel so lonely.......";
-		emotion 28;
+		emotion e_sob;
 		close;
 	L1:
 		mes "[Jack Frost]";
@@ -587,7 +587,7 @@ Xmas2:
 	next;
 	mes "[Jack Frost]";
 	mes "I don't have any legs so I can't go anywhere..... ";
-	emotion 28;
+	emotion e_sob;
 	next;
 	mes "[Jack Frost]";
 	mes "How did I get here...? Why can I communicate with humans...?";
@@ -810,7 +810,7 @@ xmas.gat,146,136,4	script	Howie the Clown	715,{
 		next;
 		mes "[Howie]";
 		mes "How could he not like an amazing show like mine??";
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Howie]";
 		mes "There's something strange about Jack Frost.... anyways...";
@@ -908,7 +908,7 @@ xmas.gat,208,168,4	script	Marsha	703,{
 	mes "Oh by the way..... Have you met ^5533FFSanta Claus^000000 yet? He";
 	mes "carries TONS and tons of gifts is his BIG bag! I heard that the Snowman";
 	mes "also does that.... Isn't that AMAZING!?? So exciting!!";
-	emotion 5;
+	emotion e_ic;
 	next;
 	mes "[Marsha]";
 	mes "I mean he has a big bag full of gifts too.... those how have been";
@@ -917,7 +917,7 @@ xmas.gat,208,168,4	script	Marsha	703,{
 	mes "[Marsha]";
 	mes "..... Well at least that's what people say... but still.... isn't it";
 	mes "AMAZING!!";
-	emotion 20;
+	emotion e_hmm;
 	close;
 
 Xmas9a:

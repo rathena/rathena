@@ -116,11 +116,11 @@ geffen_in.gat,70,67,5	script	Waitress	80,{
 	mes "[Waitress]";
 	mes "Ugh!! SO annoying! Why would you drink here when you could drink at the pub!? This is an Inn, not a pub!!";
 	mes "That man!... every time he drinks... he gets like that! Ugh!!";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Waitress]";
 	mes "(~yells to the man~)'Hey mister! I TOLD you... THIS.. IS.. AN INN, NOT A BAR!!'";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Waitress]";
 	mes "(~sighs~) That old man in the front corner there gives me a headache.";
@@ -128,7 +128,7 @@ geffen_in.gat,70,67,5	script	Waitress	80,{
 	next;
 	mes "[Waitress]";
 	mes "To think that there are 2 of them in one city... It's JUST ABSURD!!";
-	emotion 32;
+	emotion e_pif;
 	next;
 	mes "[Waitress]";
 	mes "(~mumbles~)... I wish they would both just leave this town and be forgotten forever... that would be nice....";
@@ -203,21 +203,21 @@ M_Menu:
 	M_2:
 		mes "[Merchant Daven]";
 		mes "Me?.... Oh I'm the world's PRETTIEST street merchant!!..... the he he...";
-		emotion 30;
+		emotion e_kis;
 		next;
 		menu "..... I'm going to puke....",sM_0, ".... SLAPP him upside his head!!!",sM_1;		
 
 		sM_0:
 			mes "[Merchant Daven]";
 			mes "Hehehe.... it was a joke.... a joke ok..... hehehe....";
-			emotion 18;
+			emotion e_heh;
 			goto M_Menu;
 		sM_1:
 			mes "~^FF8000!!!^FF0000THWAAACCCKKK^FF8000!!!^000000~";
 			next;
 			mes "[Merchant Daven]";
 			mes "OW!! Ok! Ok! I was just kidding.... sheesh....";
-			emotion 16;
+			emotion e_wah;
 			goto M_Menu;
 	M_End:
 		close;
@@ -241,7 +241,7 @@ geffen_in.gat,59,62,2	script	Drunkard	120,{
 		next;
 		mes "[Drunkard]";
 		mes "If you're interested you should go talk to him.  From the looks of it, you two would probably get along really well... HAHAHA!";
-		emotion 18;
+		emotion e_heh;
 		close;
 	M_2:
 		mes "[Drunkard]";
@@ -250,7 +250,7 @@ geffen_in.gat,59,62,2	script	Drunkard	120,{
 		next;
 		mes "[Drunkard]";
 		mes "(~sob~sob~).... oh what happened to my life!!!....(~baaaahhhh~)";
-		emotion 28;
+		emotion e_sob;
 		next;
 		mes "[Waitress]";
 		mes "ARGH!! STOP being so noisy!";
@@ -288,7 +288,7 @@ geffen_in.gat,113,73,4	script	Schubaltzwald Merchant	709,{
 geffen_in.gat,28,134,4	script	Waitress	69,{
 	mes "[Waitress]";
 	mes "Meh! ALWAYS drinking and ALWAYS fighting..... HEY Mister! This is a place of BUSINESS!!";
-	emotion 6;
+	emotion e_an;
 	next;
 	mes "[Waitress]";
 	mes "That man gives me a headache.  My sister at the Inn says that there is another IDIOT just LIKE HIM there!";
@@ -296,7 +296,7 @@ geffen_in.gat,28,134,4	script	Waitress	69,{
 	next;
 	mes "[Waitress]";
 	mes "(~sighs~)";
-	emotion 32;
+	emotion e_pif;
 M_Menu:
 	next;
 	menu "Could I get drink?",M_0, "Anything interesting going on lately?",M_1, "End Conversation",M_End;
@@ -328,7 +328,7 @@ M_Menu:
 geffen_in.gat,21,125,5	script	Drunkard	52,{
 	mes "[Drunkard]";
 	mes "You want to be an idiotic magician? Is that why you came here??";
-	emotion 1;
+	emotion e_what;
 	close;
 }
 
@@ -425,7 +425,7 @@ M_Menu:
 		R0_End:
 			mes "[Friend of Youth]";
 			mes "Now, have the questions about your life been answered? Feel free to ask me again.  I am always on your side friend!";
-			emotion 21;
+			emotion e_no1;
 			goto M_Menu;
 
 	M_1:
@@ -436,14 +436,14 @@ M_Menu:
 		R1_0:
 			mes "[Friend of Youth]";
 			mes "Tsk tsk.... Are you looking for another love?";
-			emotion 1;
+			emotion e_what;
 			next;
 			mes "[Friend of Youth]";
 			mes "So you're not satisfied with the relationship your in now.... you want one that is new, better, more exciting.......";
 			next;
 			mes "[Friend of Youth]";
 			mes "Don't be a fool!! Treasure the love you have now! You never no where a wandering heart will lead you....";
-			emotion 0;
+			emotion e_gasp;
 			next;
 			goto R1_End;
 		R1_1:
@@ -455,7 +455,7 @@ M_Menu:
 			next;
 			mes "[Friend of Youth]";
 			mes "With that confidence and a little bit of luck, you're sure to find love.  Always!!";
-			emotion 21;
+			emotion e_no1;
 			next;
 			goto R1_End;
 		R1_2:
@@ -465,7 +465,7 @@ M_Menu:
 			next;
 			mes "[Friend of Youth]";
 			mes "So BRANDISH your sword in the name of LOVE!!";
-			emotion 21;
+			emotion e_no1;
 			next;
 			goto R1_End;
 		R1_3:
@@ -477,13 +477,13 @@ M_Menu:
 			next;
 			mes "[Friend of Youth]";
 			mes "Now if I could only find someone to love.......";
-			emotion 20;
+			emotion e_hmm;
 			next;
 			goto R1_End;
 		R1_End:
 			mes "[Friend of Youth]";
 			mes "Even in this bleak world, love is all around you! Love can be fun so treasure the heart and come back for another reading!";
-			emotion 22;
+			emotion e_no;
 			goto M_Menu;
 
 	M_2:
@@ -579,7 +579,7 @@ M_Menu:
 			next;
 			mes "[Friend of Youth]";
 			mes "Break free and move towards the future and be prepared to face what lies ahead!";	
-			emotion 21;
+			emotion e_no1;
 			next;
 			goto R4_End;
 		R4_End:
@@ -602,7 +602,7 @@ M_Menu:
 		R5_1:
 			mes "[Friend of Youth]";
 			mes "Wah! A Sakkat hat with that type of outfit is a bad idea!!";
-			emotion 23;
+			emotion e_omg;
 			next;
 			mes "[Friend of Youth]";
 			mes "Wow, now that I think about it, it's unbearable!!";
@@ -615,7 +615,7 @@ M_Menu:
 			next;
 			mes "[Friend of Youth]";
 			mes "Why is that??";
-			emotion 1;
+			emotion e_what;
 			next;
 			goto R5_End;
 		R5_3:
@@ -624,7 +624,7 @@ M_Menu:
 			next;
 			mes "[Friend of Youth]";
 			mes "But wear a pair of Red Sandals with it.... and that becomes just TOOOO much to bear!!";
-			emotion 19;
+			emotion e_swt2;
 			next;
 			goto R5_End;
 		R5_4:

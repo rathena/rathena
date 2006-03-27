@@ -65,7 +65,7 @@ alberta.gat,23,232,1	script	Kafra Corp. Rep.#1::KCRep	83,{
 		delitem 722,1;
 		delitem 2213,1;
 		mes "Wow! Well-done, well-done! You've got every single item! I will make the Bunny Band for you right away...";
-		emotion 21;
+		emotion e_no1;
 		next;
 		mes "[Kafra Corp. Rep.]";
 		mes "Tah dah!!! Here is your ^FF0000Bunny Band^000000... Please take it!";

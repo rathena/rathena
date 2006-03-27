@@ -4,16 +4,17 @@
 //= Nana
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= Advance Class jobchanger after kRO Normals.
 //===== Additional Comments: ================================= 
 //= v1.1 Made all into functions, additional checks, etc. [Lupus]
+//= v1.2 Made numbers into constants. [Vicious]
 //============================================================ 
 
 // -== Lord Knight ==-
 valkyrie.gat,44,39,6	script	Lord Knight	56,{
-	callfunc "F_Rebirth",25,"Swordman High",31,"Lord Knight",144,145,146,0;
+	callfunc "F_Rebirth",Job_Swordman_High,"Swordman High",Job_Lord_Knight,"Lord Knight",144,145,146,0;
 }

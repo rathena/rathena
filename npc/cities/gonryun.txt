@@ -139,7 +139,7 @@ gon_in.gat,165,16,4	script	Drunkard	748,{
 	mes "[Sorubun]";
 	mes "Oh my head! I had too much to drink yesterday and passed out right here on the table.";
 	mes "The manager told me that I shouldn't drink anymore and I should have listened.";
-	emotion 19;
+	emotion e_swt2;
 	next;
 	mes "[Sorubun]";
 	mes "Wow, the drinks here are strong! Much stronger than anything we have back home.";
@@ -155,7 +155,7 @@ gonryun.gat,139,142,6	script	Girl	772,{
 	next;
 	mes "[Sanfayon]";
 	mes "I have been so afraid of the foreigners.....";
-	emotion 16;
+	emotion e_wah;
 	close;
 }
 
@@ -211,7 +211,7 @@ gon_in.gat,18,27,4	script	Elder's Wife	771,{
 
 gon_in.gat,17,93,4	script	Village Elder	775,{
 	mes "[Sayoumun]";
-	emotion 45;
+	emotion e_yawn;
 	mes "Zzzzzzzzzzz.......";
 	next;
 	mes "[Sayoumun]";
@@ -242,7 +242,7 @@ gonryun.gat,119,111,4	script	Chen Wan Sok	89,{
 //===============================================================================
 
 gonryun.gat,100,241,5	script	Unsociable Man	733,{
-	emotion 9;
+	emotion e_dots;
 	mes "[Saunso]";
 	mes "I am too busy to talk, come back later!";
 	close;
@@ -286,7 +286,7 @@ gonryun.gat,237,225,4	script	Hanyon Kyou	776,{
 
 gonryun.gat,51,101,4	script	Gaiysonchoru	778,{
 	mes "[Gaiysonchoru]";
-	emotion 4;
+	emotion e_swt;
 	mes "..............";
 	next;
 	mes "[Gaiysonchoru]";

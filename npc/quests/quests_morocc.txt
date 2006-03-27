@@ -52,7 +52,7 @@ morocc_in.gat,142,100,4	script	William	89,{
 			mes "[William]";
 			mes "Here you are! A hand made, one of a kind, ^3355FF'Stop Post '^000000! Thank you for your patronage!";
 			getitem 2272,1;
-			emotion 15;
+			emotion e_thx;
 			close;
 
 	M_End:
@@ -79,7 +79,7 @@ morocc_in.gat,76,163,4	script	Alchemist	64,{
 		next;
 		mes "[Marius]";
 		mes "............... What's this? You don't seem interested in what I have to say?? I don't think you realize what I'm talking about!";
-		emotion 20;
+		emotion e_hmm;
 		next;
 		mes "[Marius]";
 		mes "For us to make you a ^3355FF'Binoculars'^000000, we will need:";
@@ -112,12 +112,12 @@ morocc_in.gat,76,163,4	script	Alchemist	64,{
 		sL_NotEnuf:
 			mes "Argggghhhhhhh !! You didn't bring enough items!! You need:";
 			mes "^3355FF1 pair of Geek Glasses, 50,000 Zeny and 100 Steel^000000.";
-			emotion 6;
+			emotion e_an;
 			close;
 
 	M_End:
 		mes "[Marius]";
 		mes "Hey you! You DARE IGNORE ME!! I am MARIUS the alchemist of ALCHEMISTS!!!!!";
-		emotion 23;
+		emotion e_omg;
 		close;
 }

@@ -104,7 +104,7 @@ L_Check:
 	set HOLYLIGHT, 0;
 	mes "[Priest]";
 	mes "You have done well.  May God bless you!";
-	emotion 21;
+	emotion e_no1;
 	close;
 
 	L_LowLvl:
