@@ -10,7 +10,6 @@
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
-#include "../common/limits.h"
 
 #include "log.h"
 #include "clif.h"

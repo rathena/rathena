@@ -27,7 +27,6 @@
 #include "../common/version.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
-#include "../common/limits.h"
 
 #include "map.h"
 #include "chrif.h"

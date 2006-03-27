@@ -15,6 +15,8 @@
 #endif
 #define ALC_MARK __FILE__, __LINE__, __func__
 
+#include "limits.h"
+
 //////////////////////////////////////////////////////////////////////
 // Whether to use Athena's built-in Memory Manager (enabled by default)
 // To disable just comment the following line
