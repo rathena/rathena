@@ -1708,6 +1708,8 @@ int status_calc_str(struct block_list *bl, int str)
 				str >>= 1;
 			else str += sc->data[SC_BLESSING].val1;
 		}
+		if(sc->data[SC_NEN].timer!=-1)
+			str += sc->data[SC_NEN].val1;
 	}
 
 	return str;
@@ -1788,6 +1790,8 @@ int status_calc_int(struct block_list *bl, int int_)
 		}
 		if(sc->data[SC_STRIPHELM].timer!=-1 && bl->type != BL_PC)
 			int_ -= int_ * 8*sc->data[SC_STRIPHELM].val1/100;
+		if(sc->data[SC_NEN].timer!=-1)
+			int_ += sc->data[SC_NEN].val1;
 	}
 
 	return int_;
