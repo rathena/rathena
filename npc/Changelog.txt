@@ -26,6 +26,8 @@ Nexon
 == Changelog ==
 
 Date		Added
+03/27
+	* Fixed the infinite warp looping between Lutie and Lutie field 01 [Skotlex]
 03/23
 	* Updated Rebirth NPC/functions to use constant. Might have broken it, so do report [Vicious]
 03/21

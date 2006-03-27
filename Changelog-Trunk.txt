@@ -6,6 +6,8 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 
 
 2006/03/27
+	* Removed the limits.h file which just breaks compilation on *nix systems
+	  [Skotlex]
 	* Updated some DB work from jA [Vicious]
 	* HW_GANBANTEIN now also removes traps. [Skotlex]
 	* PF_DOUBLECASTING takes effect amotion time after the initial cast instead
