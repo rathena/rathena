@@ -1,32 +1,77 @@
-#!/bin/bash
+#!/bin/sh
 
-./athena-start start
-sleep 30
+# Athena自動再起動スクリプト
+#
+#  [USAGE] ./start
+#
+#  既にAthenaを起動した状態では実行しないで下さい。
+#  サーバーの状態を確認するスクリプトが動作するので、シェルに戻りません。
+#  Athenaを止めたいときは Ctrl+C で終了してください。
+#　
+#  もしくは ./start & としてバックグラウンドで起動すると
+#  シェルに戻ってきますが、サーバーの停止が少し面倒です。
 
-while [ true ] ; do
-if [ "      0" = "$(ps | grep -e login | wc -l)" ] ||
-	[ "      0" = "$(ps | grep -e char | wc -l)" ] ||
-	[ "      0" = "$(ps | grep -e map  | wc -l)" ]; then
-printf "Error:"
-date
-	sleep 10
-	printf "Checking:"
-	date
-	if [ "      0" = "$(ps | grep -e login | wc -l)" ] ||
-		[ "      0" = "$(ps | grep -e char | wc -l)" ] ||
-		[ "      0" = "$(ps | grep -e map  | wc -l)" ]; then
-	printf "Error Confirmation:"
-	date
-	printf "Restoration:"
-	date
-	./athena-start start
+L_SRV=./bin/login-server
+C_SRV=./bin/char-server
+M_SRV=./bin/map-server
+
+process_check() {
+	# check login server
+	if [ ! -f ${L_SRV}.pid ]; then
+		login=0
 	else
-	printf "Check Miss Sorry:"
-	date
+		login=`cat ${L_SRV}.pid`
+		login=$(ps ax | grep "${L_SRV}" | grep "${login}" | wc -l)
 	fi
-#else
-#printf "Check OK:"
-#date
+
+	# check char server
+	if [ ! -f ${C_SRV}.pid ]; then
+		char=0
+	else
+		char=`cat ${C_SRV}.pid`
+		char=$(ps ax | grep "${C_SRV}" | grep "${char}" | wc -l)
+	fi
+
+	# check map server
+	if [ ! -f ${M_SRV}.pid ]; then
+		map=0
+	else
+		map=`cat ${M_SRV}.pid`
+		map=$(ps ax | grep "${M_SRV}" | grep "${map}" | wc -l)
+	fi
+
+	# echo "check: ${login} ${char} ${map}"
+	echo `expr ${login} + ${char} + ${map}`
+}
+
+if [ `process_check` -ne 0 ]; then
+	echo "Athena is already running..."
+else
+	./athena-start start
+	sleep 30
+
+	while true
+	do
+		if [ `process_check` -lt 3 ]; then
+			printf "Error:"
+			date
+			sleep 10
+			printf "Checking:"
+			date
+			if [ `process_check` -lt 3 ]; then
+				printf "Error Confirmation:"
+				date
+				printf "Restoration:"
+				date
+				./athena-start restart
+				else
+				printf "Check Miss Sorry:"
+				date
+			fi
+		#else
+		#	printf "Check OK:"
+		#	date
+		fi
+		sleep 10
+	done
 fi
-sleep 10
-done
