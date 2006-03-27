@@ -3172,7 +3172,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
 
 		//Until they're at right position - gs_ground- [Vicious]
-		case NJ_KAENSIN:
+		case NJ_KAENSIN:	/*火炎陣*/
+		case GS_DESPERADO:	/*デスペラード*/
+			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
+			break;
+		
 		case NJ_HYOUSYOURAKU:
 		case NJ_RAIGEKISAI:
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
@@ -6081,8 +6085,13 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 		break;
 	
 	//Until they're at right position - gs_unit- [Vicious]
-	case NJ_KAENSIN:
-	case NJ_BAKUENRYU:
+	case GS_DESPERADO:			/* デスペラード*/
+	case GS_GROUNDDRIFT:		/* グラウンドドリフト*/
+	case NJ_KAENSIN:			/* 火炎陣*/
+	case NJ_BAKUENRYU:			/* 爆炎龍*/
+		skill_unitsetting(src,skillid,skilllv,x,y,0);
+		break;
+		
 	case NJ_HYOUSYOURAKU:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		break;

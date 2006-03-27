@@ -82,8 +82,9 @@
 409,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLBABY
 410,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARENT
 484,0xb8,    ,  2, 0,1000,enemy, 0x808	//HW_GRAVITATION
-488,0xb9,    ,  3, 0,  -1,all,   0x000	//CG_HERMODE
-535,0xba,    ,  2, 0,1000,enemy, 0x008	//NJ_KAENSIN#NJ_KAENSIN#
-538,0x9b,    ,  1:1:1:2:2:2:3:3:3:4, 0,  -1,all,   0x000	//NJ_SUITON#NJ_SUITON#
-539,0x86,    ,  3, 0,1000,enemy, 0x008	//NJ_HYOUSYOURAKU#NJ_HYOUSYOURAKU#
-541,0x86,,2:2:3:3:4,0,1000,enemy,0x008	//NJ_RAIGEKISAI#NJ_RAIGEKISAI#
+488,0xb9,    ,  3, 0,  -1,all,   0x100	//CG_HERMODE
+516,0xbc,    ,  0, 3,1000,enemy,0x000,GS_DESPERADO#デスペラード
+521,0xbd,    ,  0, 1,1000,enemy,0x006,GS_GROUNDDRIFT#グラウンドドリフト
+535,0x86,    ,  0, 2,2000,enemy,0x008,NJ_KAENSIN#火炎陣#
+536,0x86,    ,  0, 2, 300,enemy,0x008,NJ_BAKUENRYU#爆炎龍#
+538,0xbb,,1:1:1:2:2:2:3:3:3:4,0, -1,all,0x010,NJ_SUITON#水遁#
