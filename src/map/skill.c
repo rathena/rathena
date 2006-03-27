@@ -4616,6 +4616,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					|| i==SC_CP_WEAPON || i==SC_CP_SHIELD || i==SC_CP_ARMOR || i==SC_CP_HELM
 					|| i==SC_COMBO || i==SC_DANCING || i==SC_GUILDAURA || i==SC_EDP
 					|| i==SC_AUTOBERSERK  || i==SC_CARTBOOST || i==SC_MELTDOWN || i==SC_MOONLIT
+					|| i==SC_SAFETYWALL
 					)
 					continue;
 				if(i==SC_BERSERK) tsc->data[i].val4=1; //Mark a dispelled berserk to avoid setting hp to 100.

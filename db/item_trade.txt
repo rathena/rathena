@@ -4,7 +4,7 @@
 //Trading mask values:
 //1:Item can't be drop
 //2:Item can't be traded (nor vended)
-//4:Item can only be traded with wedded partner
+//4:Wedded partner can override restriction 2.
 //8:Item can't be sold to npcs
 //16:Item can't be placed in the cart
 //32:Item can't be placed in the storage
@@ -12,8 +12,8 @@
 //Example:
 //1161,67,50 //Balmung: No drop, No trade, No Guild Store (1+2+64 =67),
 //only GMs of GM-level 50 and up can override the setting.
-2634,109,100
-2635,109,100
+2634,111,100
+2635,111,100
 2644,99,100
 //Novice Red Potion
 569,8,100

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <limits.h>
 #ifdef __WIN32
 #define __USE_W32_SOCKETS
 #include <windows.h>
@@ -6863,7 +6864,11 @@ int clif_catch_process(struct map_session_data *sd)
 	WFIFOHEAD(fd,packet_len_table[0x19e]);
 	WFIFOW(fd,0)=0x19e;
 	WFIFOSET(fd,packet_len_table[0x19e]);
-
+	sd->menuskill_id = SA_TAMINGMONSTER;
+	if (sd->ud.skillid == SA_TAMINGMONSTER)
+		sd->menuskill_lv = 0;	//Free catch
+	else
+		sd->menuskill_lv = sd->itemid;	//Consume catch
 	return 0;
 }
 
@@ -6915,7 +6920,7 @@ int clif_sendegg(struct map_session_data *sd)
 	WFIFOSET(fd,WFIFOW(fd,2));
 
 	sd->menuskill_id = SA_TAMINGMONSTER;
-	sd->menuskill_lv = n;
+	sd->menuskill_lv = -1;
 	return 0;
 }
 
@@ -10955,7 +10960,7 @@ void clif_parse_CatchPet(int fd, struct map_session_data *sd) {
 
 void clif_parse_SelectEgg(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	if (sd->menuskill_id != SA_TAMINGMONSTER)
+	if (sd->menuskill_id != SA_TAMINGMONSTER || sd->menuskill_lv != -1)
 		return;
 	pet_select_egg(sd,RFIFOW(fd,2)-2);
 	sd->menuskill_lv = sd->menuskill_id = 0;

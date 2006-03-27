@@ -5191,7 +5191,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	if(sc->data[type].timer != tid) {
 		if(battle_config.error_log)
-			ShowError("status_change_timer: Mismatch for type %d: %d != %d\n",type,tid,sc->data[type].timer);
+			ShowError("status_change_timer: Mismatch for type %d: %d != %d (bl id %d)\n",type,tid,sc->data[type].timer, bl->id);
 		return 0;
 	}
 

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include <limits.h>
 
 #include "../common/socket.h"
 #include "../common/timer.h"

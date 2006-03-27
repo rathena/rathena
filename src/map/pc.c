@@ -1474,7 +1474,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_INFINITE_ENDURE:
 		if(sd->state.lr_flag != 2) {
 			sd->special_state.infinite_endure = 1;
-			sc_start(&sd->bl, SC_ENDURE,100,1,0);
+			if (sd->sc.data[SC_ENDURE].timer == -1)
+				sc_start(&sd->bl, SC_ENDURE,100,1,0);
 		}
 		break;
 	case SP_INTRAVISION: // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]

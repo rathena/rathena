@@ -5,6 +5,12 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 
+2006/03/27
+	* Pet catching now uses the menuskill variables to prevent item usage from
+	  disrupting the catch process. [Skotlex]
+	* Added Safetywall to the list not blocked by Dispell. [Skotlex]
+	* Added some include limits.h required by window compiles. [Skotlex]
+	* Corrected Wedding rings being trade-able.  [Skotlex]
 2006/03/26
 	* GCC on Cygwin still complaining, resorted to including limits.h in malloc.h [Lance]
 	* Refixed the fix with a constant list for Win32 users - limits.h (imported from MSVC) [Lance]

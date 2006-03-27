@@ -591,20 +591,26 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 		return 1;
 	}
 	
-	if (sd->itemid > 0)
+	if (sd->menuskill_id != SA_TAMINGMONSTER) 
+	{	//Exploit?
+		clif_pet_rulet(sd,0);
+		sd->catch_target_class = -1;
+		return 1;
+	}
+	
+	if (sd->menuskill_lv > 0)
 	{	//Consume the pet lure [Skotlex]
-		if ((i = sd->itemindex) == -1 ||
-			sd->status.inventory[i].nameid != sd->itemid ||
-			!sd->inventory_data[i]->flag.delay_consume ||
-			sd->status.inventory[i].amount < 1	
-			)
-		{	//Something went wrong, items moved or they tried an exploit.
+		i=pc_search_inventory(sd,sd->menuskill_lv);
+		if (i < 0)
+		{	//they tried an exploit?
 			clif_pet_rulet(sd,0);
 			sd->catch_target_class = -1;
 			return 1;
 		}
 		//Delete the item
-		sd->itemid = sd->itemindex = -1;
+		if (sd->itemid == sd->menuskill_lv)
+			sd->itemid = sd->itemindex = -1;
+		sd->menuskill_id = sd->menuskill_lv = 0;
 		pc_delitem(sd,i,1,0);
 	}
 
