@@ -4430,7 +4430,8 @@ int pc_resetstate(struct map_session_data* sd)
 		int stat;
 		stat = statp[sd->status.base_level];
 		if (sd->class_&JOBL_UPPER)
-			sd->status.status_point+=52;	// extra 52+48=100 stat points
+			stat+=52;	// extra 52+48=100 stat points
+		
 		if (stat > USHRT_MAX)
 			sd->status.status_point = USHRT_MAX;
 		else
@@ -5374,11 +5375,11 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 		}
 		else { //hp < 0
 			hp = sd->status.max_hp*hp/100;
-			if (sd->status.hp <= hp) {
+			if (sd->status.hp <= -hp) {
 				sd->status.hp = 0;
 				pc_damage(NULL,sd,1);
 			} else
-				sd->status.hp -= hp;
+				sd->status.hp += hp;
 		}
 	}
 	if(sp) {
@@ -5394,10 +5395,10 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 				sd->status.sp += sp;
 		} else { //sp < 0
 			sp = sd->status.max_sp*sp/100;
-			if (sd->status.sp <= sp)
+			if (sd->status.sp <= -sp)
 				sd->status.sp = 0;
 			else
-				sd->status.sp -= sp;
+				sd->status.sp += sp;
 		}
 	}
 	if(hp)

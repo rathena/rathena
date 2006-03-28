@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK. 
 
 2006/03/28
+	* Fixed the Family recall warp skills. [Skotlex]
+	* Fixed pc_percentheal giving life when the rates are negative. [Skotlex]
+	* Fixed resetting stats losing the +52 bonus on high classes. [Skotlex]
 	* Fixed Wedding support skills healing yourself instead of partner.
 	  [Skotlex]
 	* Added a check to prevent knocking back the Emperium at all costs.
