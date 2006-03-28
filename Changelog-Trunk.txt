@@ -1,12 +1,11 @@
 Date	Added
 
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
-IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EVERYTHING ELSE
-GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
+IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK. 
 
 2006/03/28
-	* Added a debug function to locate all "looping warps" (not quite tested
-	  yet) [Skotlex]
+	* Added a debug function to locate all "looping warps". [Skotlex]
+	- Now will someone help cleanup those warps?
 	* Some cleanup of the skill-use functions in clif.c [Skotlex]
 	* Fixed Gunslinger and Ninja skills not showing up and not working due to an error
 	  in skill_require_db
