@@ -696,7 +696,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 			if (sc && sc->data[SC_BLADESTOP].timer != -1){
 				if ((target=(struct block_list *)sc->data[SC_BLADESTOP].val4) == NULL)
 					return 0;
-				target_id = target->id;
 			}
 			break;
 		case TK_JUMPKICK:
@@ -710,13 +709,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 			if (!sd->status.partner_id)
 				return 0;
 			target = (struct block_list*)map_charid2sd(sd->status.partner_id);
-			if (!target)
-			{
+			if (!target) {
 				clif_skill_fail(sd,skill_num,0,0);
 				return 0;
 			}
 			break;
 		}
+		if (target)
+			target_id = target->id;
 	}
 	if(!target && (target=map_id2bl(target_id)) == NULL )
 		return 0;

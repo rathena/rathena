@@ -1587,6 +1587,8 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 			break;
 		case BL_MOB:
 			md=(struct mob_data *)target;
+			if (md->class_ == MOBID_EMPERIUM)
+				return 0;
 			break;
 		case BL_PET:
 			pd=(struct pet_data *)target;
