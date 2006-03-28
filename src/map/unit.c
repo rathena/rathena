@@ -773,6 +773,15 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		if (!skill_check_condition(sd, skill_num, skill_lv, 0))
 			return 0;	
 	}
+	//TODO: Add type-independant skill_check_condition function.
+	if (src->type == BL_MOB) {
+		switch (skill_num) {
+			case NPC_SUMMONSLAVE:
+			case NPC_SUMMONMONSTER:
+				if (((TBL_MOB*)src)->master_id)
+					return 0;
+		}
+	}
 
 	if(src->id != target_id &&
 		!battle_check_range(src,target,skill_get_range2(src, skill_num,skill_lv)
