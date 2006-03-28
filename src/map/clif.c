@@ -4188,31 +4188,34 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 	nullpo_retv(sd);
 	nullpo_retv(dstsd);
 
-	if(dstsd->ud.walktimer != -1){
-#if PACKETVER < 4
-                WFIFOHEAD(sd->fd, packet_len_table[0x7b]);
-#else
-                WFIFOHEAD(sd->fd, packet_len_table[0x1da]);
-#endif
-		len = clif_set007b(dstsd,WFIFOP(sd->fd,0));
-		WFIFOSET(sd->fd,len);
-		if(dstsd->disguise) {
-                        WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
-			len = clif_dis007b(dstsd,WFIFOP(sd->fd,0));
+	// Hidden GMs will not be revealed by bots :) [Lance]
+	if((!dstsd->status.option&OPTION_INVISIBLE || !pc_isGM(dstsd)) || pc_isGM(sd)){
+		if(dstsd->ud.walktimer != -1){
+	#if PACKETVER < 4
+					WFIFOHEAD(sd->fd, packet_len_table[0x7b]);
+	#else
+					WFIFOHEAD(sd->fd, packet_len_table[0x1da]);
+	#endif
+			len = clif_set007b(dstsd,WFIFOP(sd->fd,0));
 			WFIFOSET(sd->fd,len);
-		}
-	} else {
+			if(dstsd->disguise) {
+							WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
+				len = clif_dis007b(dstsd,WFIFOP(sd->fd,0));
+				WFIFOSET(sd->fd,len);
+			}
+		} else {
 #if PACKETVER < 4
-		WFIFOHEAD(sd->fd,packet_len_table[0x78]);
+			WFIFOHEAD(sd->fd,packet_len_table[0x78]);
 #else
-		WFIFOHEAD(sd->fd,packet_len_table[0x1d8]);
+			WFIFOHEAD(sd->fd,packet_len_table[0x1d8]);
 #endif
-		len = clif_set0078(dstsd,WFIFOP(sd->fd,0));
-		WFIFOSET(sd->fd,len);
-		if(dstsd->disguise) {
-                        WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
-			len = clif_dis0078(dstsd,WFIFOP(sd->fd,0));
+			len = clif_set0078(dstsd,WFIFOP(sd->fd,0));
 			WFIFOSET(sd->fd,len);
+			if(dstsd->disguise) {
+							WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
+				len = clif_dis0078(dstsd,WFIFOP(sd->fd,0));
+				WFIFOSET(sd->fd,len);
+			}
 		}
 	}
 
