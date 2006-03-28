@@ -745,6 +745,16 @@ int skill_get_range2(struct block_list *bl, int id, int lv) {
 		else
 			range += 10; //Assume level 10?
 	}
+
+	// added to allow GS skills to be effected by the range of Snake Eyes [Reddozen]
+	if (id == GS_RAPIDSHOWER || id == GS_TRACKING || id == GS_PIERCINGSHOT || id == GS_FULLBUSTER
+		|| id == GS_SPREADATTACK || id == GS_GROUNDDRIFT) {
+		if (bl->type == BL_PC)
+			range += pc_checkskill((struct map_session_data *)bl, GS_SNAKEEYE);
+		else
+			range += 10; //Assume level 10?
+	}
+
 	return range;
 }
 
@@ -1265,6 +1275,19 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NJ_HYOUSYOURAKU:
 		sc_start(bl,SC_FREEZE,(10+10*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
+
+	//case GS_FLING:	// this needs to be looked at [Reddozen]
+	//	if (skill == GS_FLING) { // gunslinger [marquis007]
+	//		int spiritball = (sd->spiritball > 5 ? 5 : sd->spiritball);
+	//	} else {
+	//		int spiritball = 1;
+	//	}
+	//
+	//	if (spiritball <= sd->spiritball && sd->spiritball != 0){
+	//		pc_delspiritball(sd,spiritball,0);
+	//		status_change_start(bl,SC_FLING,10000,spiritball*5,0,0,0,skill_get_time(skillid,skilllv)));
+	//	}
+	//	break;
 	}
 
 	if (md && battle_config.summons_inherit_effects && md->master_id && md->special_state.ai)
@@ -2987,6 +3010,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_RAPIDSHOWER:
 	case GS_DUST:
 	case GS_FULLBUSTER:
+	case GS_FLING:
 	
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
@@ -3043,7 +3067,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);	// varargs
 		break;
 	//Not implemented yet [Vicious]
-	case GS_FLING:
 	case GS_GROUNDDRIFT:
 	
 	//case NJ_SYURIKEN:
@@ -7970,6 +7993,10 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		break;
 
 	case GS_FLING:
+		if(sd->spiritball == 0)
+			clif_skill_fail(sd,skill,0,0);
+		break;
+	
 	case GS_TRIPLEACTION:
 	case GS_MAGICALBULLET:
 	case GS_CRACKER:

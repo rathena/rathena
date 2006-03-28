@@ -5,6 +5,13 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/28
+	* Fixed Gunslinger and Ninja skills not showing up and not working due to an error
+	  in skill_require_db
+	  - also commited a commented block for GS_FLING that needs to be looked at and posiably
+	    cleaned before it's uncommented.
+	  - fixed exp2 not accepting Gunslingers and ninjas
+	  - fixed the "jobmaster" having the same problem as rebirth
+	  - added the Gunslinger shops for guns and ammo [Reddozen]
 	* Modified clif_getareachar_pc to hide hidden GMs from normal players (players with GM
           level > 0 still able to view) by NOT sending the coordinates. [Lance]
 
@@ -44,6 +51,16 @@ GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALAR
 	* Fixed Grandcross/Granddarkness showing no skill animation. [Skotlex]
 	* Fixed mob-casted grandcross doing nothing unless the target was "self" [Skotlex]
 2006/03/24
+	* Fixed / finished most of Gunslinger [Reddozen]
+	  - fixed some bullets in the item DB
+	  - adjusted a few rates in skill_cast_db.txt for Gunslingers
+	  - adjusted a couple skills in skill_db.txt to act correctly
+	  - adjusted all the SP values for Gunslinger skills
+	  - changed piercing shot to lv 5 from lv 10
+	  - made ki Translation fail giving coins to Gunslingers
+	  - equipping a weapon other than a gatlin gun should cancel SC_GATLINGING. Also made Gatlinfeaver on/off togelable
+	  - GS_CRACKER will no longer stun players
+	  - added GS_Disarm
 	* Fixed iteminfo only displaying first result when there were many. [Skotlex]
 	* Fixed pet hatching. [Skotlex]
 	* Small change that SHOULD fix the pet duplication issue. [Skotlex]

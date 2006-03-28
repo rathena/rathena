@@ -1,23 +1,19 @@
 //===== eAthena Script =======================================
 //= eAthena Jobchanger AKA Job Master
 //===== By: ==================================================
-//= eAthena Dev Team [LunatikBunnie] (Editted by Amada`)
+//= eAthena Dev Team [LunatikBunnie] (Editted by Amada`) (editted again by lilaznkilla)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.2d
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Changes your job without asking too much
 //= For other info, please contact me at Lunatikbunnie@gmail.com 
 //= Editted menu to avoid button mashing.
-//= 1.3 Added TK/SL/SG, thanks to Haplo. Fixed minor bugs [Lupus]
-//=    script leaves grabage variable: 'lastJob'
-//= 1.4 Added NJ/GS, changed all job numbers to Job_* constants. 
-//=    All credits go to pxxx [Skotlex]
 //============================================================
 
 // ------------------------------ Start ------------------------------
-prontera.gat,153,193,6	script	Job Master	123,{
+lighthalzen.gat,85,148,6	script	Job Master	833,{
 // Variable Setup
 	set @MinimumJB, 40; //Minimum job level for changing between 2nd and advance Class (Default : 40)
 	set @GivePlat, 1; //Give Platinum skills on Jobchange (Default : 1-yes)
@@ -27,35 +23,36 @@ prontera.gat,153,193,6	script	Job Master	123,{
 	if(SkillPoint != 0) goto L_skillUsed;
 	if(Class == Job_Novice) goto L_novice;
 	if(JobLevel <10) goto L_notEn;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Knight) || (lastJob ==Job_Crusader))) goto L_cHsword;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Wizard) || (lastJob ==Job_Sage))) goto L_cHmage;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Hunter) || (lastJob ==Job_Bard) || (lastJob ==Job_Dancer))) goto L_cHarcher;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Priest) || (lastJob ==Job_Monk))) goto L_cHacolyte;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Blacksmith) || (lastJob ==Job_Alchem))) goto L_cHmerchant;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Assassin) || (lastJob ==Job_Rogue))) goto L_cHthief;
+	if((Class ==Job_Novice_High) && ((lastJob ==7) || (lastJob ==14))) goto L_cHsword;
+	if((Class ==Job_Novice_High) && ((lastJob ==9) || (lastJob ==16))) goto L_cHmage;
+	if((Class ==Job_Novice_High) && ((lastJob ==11) || (lastJob ==19) || (lastJob ==20))) goto L_cHarcher;
+	if((Class ==Job_Novice_High) && ((lastJob ==8) || (lastJob ==15))) goto L_cHacolyte;
+	if((Class ==Job_Novice_High) && ((lastJob ==10) || (lastJob ==18))) goto L_cHmerchant;
+	if((Class ==Job_Novice_High) && ((lastJob ==12) || (lastJob ==17))) goto L_cHthief;
 	if(JobLevel <@MinimumJB) goto L_notEn;
-	if(Class ==Job_Swordman) goto L_iSword;
-	if(Class ==Job_Mage) goto L_iMage;
-	if(Class ==Job_Archer) goto L_iArcher;
-	if(Class ==Job_Acolyte) goto L_iAcolyte;
-	if(Class ==Job_Merchant) goto L_iMerchant;
-	if(Class ==Job_Thief) goto L_iThief;
-	if(Class ==Job_Taekwon) goto L_iTaekwon;
-	if(checkfalcon(0) || checkcart(0) || checkriding(0)) goto L_remove;
-	if(lastJob ==Job_Knight) goto L_iKnight;
-	if(lastJob ==Job_Priest) goto L_iPriest;
-	if(lastJob ==Job_Wizard) goto L_iWizard;
-	if(lastJob ==Job_Blacksmith) goto L_iBlacksmith;
-	if(lastJob ==Job_Hunter) goto L_iHunter;
-	if(lastJob ==Job_Assassin) goto L_iAssassin;
-	if(lastJob ==Job_Crusader) goto L_iCrusader;
-	if(lastJob ==Job_Monk) goto L_iMonk;
-	if(lastJob ==Job_Sage) goto L_iSage;
-	if(lastJob ==Job_Rogue) goto L_iRogue;
-	if(lastJob ==Job_Alchem) goto L_iAlchemist;
-	if(lastJob ==Job_Bard) goto L_iBard;
-	if(lastJob ==Job_Dancer) goto L_iDancer;
-	if((Class >=Job_Knight) && (Class <=Job_Dancer)) goto L_rebirth;
+	if(Class ==1) goto L_iSword;
+	if(Class ==2) goto L_iMage;
+	if(Class ==3) goto L_iArcher;
+	if(Class ==4) goto L_iAcolyte;
+	if(Class ==5) goto L_iMerchant;
+	if(Class ==6) goto L_iThief;
+	if(Class ==4046) goto L_iTKD;
+	if(Class ==24) goto L_GS;
+	if(checkfalcon(0) == 1 || checkcart(0) == 1 || checkriding(0) == 1) goto L_remove;
+	if(lastJob ==7) goto L_iKnight;
+	if(lastJob ==8) goto L_iPriest;
+	if(lastJob ==9) goto L_iWizard;
+	if(lastJob ==10) goto L_iBlacksmith;
+	if(lastJob ==11) goto L_iHunter;
+	if(lastJob ==12) goto L_iAssassin;
+	if(lastJob ==14) goto L_iCrusader;
+	if(lastJob ==15) goto L_iMonk;
+	if(lastJob ==16) goto L_iSage;
+	if(lastJob ==17) goto L_iRogue;
+	if(lastJob ==18) goto L_iAlchemist;
+	if(lastJob ==19) goto L_iBard;
+	if(lastJob ==20) goto L_iDancer;
+	if((Class >=7) && (Class <=20)) goto L_rebirth;
 	close;
 
 // Novice
@@ -65,77 +62,69 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		if(JobLevel<10) goto L_notEn;
 		mes "^ff0000[Job Master]^000000";
 		mes "Welcome, please select the job you wish to change into";
-		menu "Swordsman",L_sword,"Mage",L_mage,"Archer",L_archer,"Acolyte",L_acolyte,"Merchant",L_merchant,"Thief",L_thief,"Super Novice",L_superN,"Taekwon",L_taekwon,"Gunslinger",L_gun,"Ninja",L_ninja;
+		menu "Swordsman",L_sword,"Mage",L_mage,"Archer",L_archer,"Acolyte",L_acolyte,"Merchant",L_merchant,"Thief",L_thief,"Super Novice",L_superN,"Learn Taekwondo",L_TKD,"Gunslinger",L_GS;
 // Change to Swordsman
 			L_sword:
-				mes "Are you SURE?";
+				mes "Are you SURE you want to become a ^ff0000Swordsman^000000?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Swordman;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 1;
+				if(GivePlat ==1) goto L_givePlat;
+				close;
+// Change to Gunslinger
+			L_GS:
+				mes "Are you SURE you want to be a ^ff0000Gunslinger^000000?";
+				menu "No",L_quit,"Yes",-;
+				jobchange 24;
 				close;
 // Change to Mage
 			L_mage:
-				mes "Are you SURE?";
+				mes "Are you SURE you want to become a ^ff0000Mage^000000?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Mage;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 2;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Archer
 			L_archer:
-				mes "Are you SURE?";
+				mes "Are you SURE you want to become a ^ff0000Archer^000000?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Archer;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 3;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Acolyte
 			L_acolyte:
-				mes "Are you SURE?";
+				mes "Are you SURE you want to become a ^ff0000Acolyte^000000?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Acolyte;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 4;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Merchant
 			L_merchant:
-				mes "Are you SURE?";
+				mes "Are you SURE you want to become a ^ff0000Merchant^000000?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Merchant;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 5;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Thief
 			L_thief:
-				mes "Are you SURE?";
+				mes "Are you SURE you want to become a ^ff0000Thief^000000?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Thief;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 6;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Super Novice
 			L_superN:
-				mes "Are you SURE?";
+				mes "Are you SURE you want to become a ^ff0000Super Novice^000000?";
 				menu "No",L_quit,"Yes",-;
 				if(BaseLevel<@SupNovM) goto L_notSup;
-				jobchange Job_SuperNovice;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 23;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
-// Change to Taekwon
-			L_taekwon:
-				mes "Are you SURE?";
+
+//Change to Taekwondo
+			L_TKD:
+				mes "Are you SURE you want to learn a ^ff0000Taekwondo^000000?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Taekwon;
-				callfunc "F_ClearJobVar";
-				close;
-// Change to Gunslinger
-			L_gun:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Gunslinger;
-				callfunc "F_ClearJobVar";
-				close;
-// Change to Ninja
-			L_ninja:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Ninja;
-				callfunc "F_ClearJobVar";
+				jobchange 4046;
 				close;
 
 // Change to Knight/Crusader
@@ -146,14 +135,14 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			L_knight:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Knight;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 7;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 			L_crusader:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Crusader;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 14;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Wizard/Sage
 	L_iMage:
@@ -163,14 +152,14 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			L_wizard:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Wizard;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 9;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 			L_sage:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Sage;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 16;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Hunter/Bard/Dancer
 	L_iArcher:
@@ -180,8 +169,8 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			L_hunter:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Hunter;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 11;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 			L_bandd:
 				if(sex==0) goto L_dancer;
@@ -189,14 +178,14 @@ prontera.gat,153,193,6	script	Job Master	123,{
 				L_bard:
 					mes "Are you SURE?";
 					menu "No",L_quit,"Yes",-;
-					jobchange Job_Bard;
-					if(@GivePlat) goto L_GivePlat;
+					jobchange 19;
+					if(GivePlat ==1) goto L_givePlat;
 					close;
 				L_dancer:
 					mes "Are you SURE?";
 					menu "No",L_quit,"Yes",-;
-					jobchange Job_Dancer;
-					if(@GivePlat) goto L_GivePlat;
+					jobchange 20;
+					if(GivePlat ==1) goto L_givePlat;
 					close;
 // Change to Priest/Monk
 	L_iAcolyte:
@@ -206,14 +195,14 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			L_priest:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Priest;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 8;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 			L_monk:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Monk;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 15;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Blacksmith/Alchemist
 	L_iMerchant:
@@ -223,14 +212,14 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			L_blacksmith:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Blacksmith;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 10;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 			L_alchemist:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Alchem;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 18;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 // Change to Assassin/Rogue
 	L_iThief:
@@ -240,32 +229,36 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			L_assassin:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Assassin;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 12;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
 			L_rogue:
 				mes "Are you SURE?";
 				menu "No",L_quit,"Yes",-;
-				jobchange Job_Rogue;
-				if(@GivePlat) goto L_GivePlat;
+				jobchange 17;
+				if(GivePlat ==1) goto L_givePlat;
 				close;
-// Change to Star Gladiator/Soul Linker
-	L_iTaekwon:
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Star Gladiator",L_SG,"Soul Linker",L_SL;
-			L_SG:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Star_Gladiator;
-				callfunc "F_ClearJobVar";
-				close;
-			L_SL:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Soul_Linker;
-				callfunc "F_ClearJobVar";
-				close;
+// Change to Star Knight/Soul Linker
+		L_iTKD:
+			if(JobLevel <40) goto L_NRTKD;
+				mes "^ff0000[Job Master]^000000";
+    				mes "Welcome, please select the job you wish to change into";
+    				menu "Soul linker",L_SL,"Star Knight",L_SK;
+    		L_SL:
+    			mes "Do want to become a Soul linker?";
+    			menu "No",L_quit,"Yes",-;
+    			jobchange 4049;
+    			close;
+    		L_SK:
+    			mes "Do yo want to be a Star knight?";
+    			menu "No",L_quit,"Yes",-;
+    			jobchange 4047;
+    			close;
+    		L_NRTKD:
+    			mes "You are not ready to learn the secret arts of taekwondo";
+    			next;
+    			mes "Come back here when you are stronger";
+    			close;
 // Rebirth
 	L_rebirth:
 		mes "^ff0000[Job Master]^000000";
@@ -280,15 +273,15 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		skill 142,1,0;
 		skill 143,1,0;
 		mes "^ff0000[Job Master]^000000";
-		mes "You are now reborn.";
-		mes "Please come again soon.";
+		mes "You are now reborn";
+		mes "Please come again soon";
 		close;
 	L_cHsword:
 		mes "^ff0000[Job Master]^000000";
 		mes "Do you want to change into a High Swordsman?";
 		next;
 		menu "No",L_quit,"Yes",-;
-		jobchange Job_Swordman_High;
+		jobchange Job_swordsman_High;
 		mes "^ff0000[Job Master]^000000";
 		mes "Thank you, please come again soon!";
 		close;
@@ -297,7 +290,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a High Mage?";
 		next;
 		menu "No",L_quit,"Yes",-;
-		jobchange Job_Mage_High;
+		jobchange Job_mage_High;
 		mes "^ff0000[Job Master]^000000";
 		mes "Thank you, please come again soon!";
 		close;
@@ -306,7 +299,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a High Archer?";
 		next;
 		menu "No",L_quit,"Yes",-;
-		jobchange Job_Archer_High;
+		jobchange Job_archer_High;
 		mes "^ff0000[Job Master]^000000";
 		mes "Thank you, please come again soon!";
 		close;
@@ -315,7 +308,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a High Acolyte?";
 		next;
 		menu "No",L_quit,"Yes",-;
-		jobchange Job_Acolyte_High;
+		jobchange Job_acolyte_High;
 		mes "^ff0000[Job Master]^000000";
 		mes "Thank you, please come again soon!";
 		close;
@@ -324,7 +317,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a High Merchant?";
 		next;
 		menu "No",L_quit,"Yes",-;
-		jobchange Job_Merchant_High;
+		jobchange Job_merchant_High;
 		mes "^ff0000[Job Master]^000000";
 		mes "Thank you, please come again soon!";
 		close;
@@ -333,7 +326,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a High Thief?";
 		next;
 		menu "No",L_quit,"Yes",-;
-		jobchange Job_Thief_High;
+		jobchange Job_thief_High;
 		mes "^ff0000[Job Master]^000000";
 		mes "Thank you, please come again soon!";
 		close;	
@@ -343,7 +336,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Lord Knight?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Lord_Knight;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Paladin
 	L_iCrusader:
@@ -351,7 +344,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Paladin?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Paladin;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to High Priest
 	L_iPriest:
@@ -359,7 +352,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a High Priest?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_High_Priest;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Champion
 	L_iMonk:
@@ -367,7 +360,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Champion?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Champion;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Whitesmith
 	L_iBlacksmith:
@@ -375,7 +368,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Whitesmith?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Whitesmith;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Creator
 	L_iAlchemist:
@@ -383,7 +376,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Creator?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Creator;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to High Wizard
 	L_iWizard:
@@ -391,7 +384,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a High Wizard?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_High_Wizard;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Professor
 	L_iSage:
@@ -399,7 +392,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Professor?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Professor;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Sniper
 	L_iHunter:
@@ -407,7 +400,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Sniper?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Sniper;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Clown
 	L_iBard:
@@ -415,7 +408,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Clown?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Clown;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Gypsy
 	L_iDancer:
@@ -423,7 +416,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Gypsy?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Gypsy;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Assassin Cross
 	L_iAssassin:
@@ -431,7 +424,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into an Assassin Cross?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Assassin_Cross;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Change to Stalker
 	L_iRogue:
@@ -439,18 +432,17 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		mes "Do you want to change into a Stalker?";
 		menu "No",L_quit,"Yes",-;
 			jobchange Job_Stalker;
-			if(@GivePlat) goto L_GivePlat;
+			if(GivePlat ==1) goto L_givePlat;
 			close;
 // Giving Platinum Skills
-	L_GivePlat:
-		if (BaseClass==Job_SuperNovice) goto L_sSuperN;
-		if (BaseClass==Job_Swordman) goto L_sSword;
-		if (BaseClass==Job_Mage) goto L_sMage;
-		if (BaseClass==Job_Archer) goto L_sArcher;
-		if (BaseClass==Job_Acolyte) goto L_sAcolyte;
-		if (BaseClass==Job_Merchant) goto L_sMerchant;
-		if (BaseClass==Job_Thief) goto L_sThief;
-			close;
+	L_givePlat:
+		if (BaseJob==Job_SuperNovice) goto L_sSuperN;
+		if ((Class==Job_Swordman) || (Class==7) || (Class==13) || (Class==14)|| (Class==21) || (Class==4002) || (Class==4008)) goto L_sSword;
+		if ((Class==Job_Mage) || (Class==9) || (Class==16) || (Class==4003) || (Class==4010) || (Class==4017)) goto L_sMage;
+		if ((Class==Job_Archer) || (Class==11) || (Class==19) || (Class==20) || (Class==4004) || (Class==4012) || (Class==4020) || (Class==4021)) goto L_sArcher;
+		if ((Class==Job_Acolyte) || (Class==8) || (Class==15) || (Class==50) || (Class==54) || (Class==61) || (Class==4005) || (Class==4009) || (Class==4016)) goto L_sAcolyte;
+		if ((Class==Job_Merchant) || (Class==10) || (Class==18) || (Class==51) || (Class==56) || (Class==64) || (Class==4006) || (Class==4011) || (Class==4019)) goto L_sMerchant;
+		if ((Class==Job_Thief) || (Class==12) || (Class==17) || (Class==52) || (Class==58) || (Class==63) || (Class==4007) || (Class==4013) || (Class==4018)) goto L_sThief;
 		L_sSuperN:
 			skill 142,1,0;
 			close;

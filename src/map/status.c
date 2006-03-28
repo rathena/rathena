@@ -2070,6 +2070,8 @@ int status_calc_def(struct block_list *bl, int def)
 			def -= def * (5+5*sc->data[SC_PROVOKE].val1)/100;
 		if(sc->data[SC_STRIPSHIELD].timer!=-1 && bl->type != BL_PC)
 			def -= def * 3*sc->data[SC_STRIPSHIELD].val1/100;
+		//if (sd->data[SC_FLING].timer!=-1 && bl->type != BL_PC)
+		//	def -= (def * sd->data[SC_FLING].val1) / 100;
 	}
 
 	return def;
@@ -2104,6 +2106,8 @@ int status_calc_def2(struct block_list *bl, int def2)
 			else if(sc->data[SC_JOINTBEAT].val2==4)
 				def2 -= def2 * 25/100;
 		}
+		//if (sd->data[SC_FLING].timer!=-1)
+		//	def2 -= (def2 * sd->data[SC_FLING].val1) / 100;
 	}
 
 	return def2;
