@@ -14,6 +14,7 @@
 #endif
 #include <sys/types.h>
 #include <time.h>
+#include <limits.h>
 
 #include "../common/malloc.h"
 #include "socket.h"
