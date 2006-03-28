@@ -13,7 +13,7 @@
 //============================================================
 
 // ------------------------------ Start ------------------------------
-lighthalzen.gat,85,148,6	script	Job Master	833,{
+prontera.gat,152,192,6	script	Job Master	833,{
 // Variable Setup
 	set @MinimumJB, 40; //Minimum job level for changing between 2nd and advance Class (Default : 40)
 	set @GivePlat, 1; //Give Platinum skills on Jobchange (Default : 1-yes)
