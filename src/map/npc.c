@@ -2647,6 +2647,33 @@ int do_final_npc(void)
 	return 0;
 }
 
+static void npc_debug_warps_sub(struct npc_data *nd)
+{
+	int m;
+	if (nd->bl.type != BL_NPC || nd->bl.subtype != WARP || nd->bl.m < 0)
+		return;
+
+	m = map_mapindex2mapid(nd->u.warp.mapindex);
+	if (m < 0) return; //Warps to another map, nothing to do about it.
+
+	if (!map_getcell(m, nd->u.warp.x, nd->u.warp.y, CELL_CHKNPC))
+		return;
+
+	ShowWarning("Warp %s/%s at %s(%d,%d) warps directly on top of an area npc at %s(%d,%d)\n",
+		nd->name, nd->exname,
+	  	map[nd->bl.m].name, nd->bl.x, nd->bl.y,
+	  	map[m].name, nd->u.warp.x, nd->u.warp.y
+		);
+	
+}
+static void npc_debug_warps()
+{
+	int m, i;
+	for (m = 0; m < map_num; m++)
+		for (i = 0; i < map[m].npc_num; i++)
+			npc_debug_warps_sub(map[m].npc[i]);
+}
+
 /*==========================================
  * npc‰Šú‰»
  *------------------------------------------
@@ -2701,6 +2728,10 @@ int do_init_npc(void)
 		CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - START_NPC_NUM, "", npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
+
+	//Debug function to locate all endless loop warps.
+	npc_debug_warps();
+	
 	add_timer_func_list(npc_event_timer,"npc_event_timer");
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");

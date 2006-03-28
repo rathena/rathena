@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.  EV
 GOES INTO TRUNK AND WILL BE MERGED INTO STABLE BY VALARIS AND WIZPUTER. -- VALARIS
 
 2006/03/28
+	* Added a debug function to locate all "looping warps" (not quite tested
+	  yet) [Skotlex]
+	* Some cleanup of the skill-use functions in clif.c [Skotlex]
 	* Fixed Gunslinger and Ninja skills not showing up and not working due to an error
 	  in skill_require_db
 	  - also commited a commented block for GS_FLING that needs to be looked at and posiably

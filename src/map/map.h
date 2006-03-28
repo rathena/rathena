@@ -776,10 +776,6 @@ struct npc_data {
 	short flag;
 	unsigned int next_walktime;
 
-	struct { // [Valaris]
-		unsigned state : 8;
-	} state;
-
 	char eventqueue[MAX_EVENTQUEUE][50];
 	int eventtimer[MAX_EVENTTIMER];
 	short arenaflag;
