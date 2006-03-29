@@ -26,6 +26,8 @@
 
 =========================
 
+03/28
+	* Changed droprate of Einbroch/Lighthalzen monsters. [Vicious]
 03/27	* Removed EVENT bonuses from event items: [Lupus]
 	  2646,Bunch_of_Carnations, 2647,Nile_Rose, 2668,Woman_Glory, 5097,2_Years_Anniversary_Hat
 	  NOTE: If you want to use these or other EVENT BONUSES, set them via 'setitemscript' command
