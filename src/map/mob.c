@@ -8,11 +8,13 @@
 #include <math.h>
 #include <limits.h>
 
-#include "timer.h"
-#include "socket.h"
-#include "db.h"
-#include "nullpo.h"
-#include "malloc.h"
+#include "../common/timer.h"
+#include "../common/db.h"
+#include "../common/nullpo.h"
+#include "../common/malloc.h"
+#include "../common/showmsg.h"
+#include "../common/ers.h"
+
 #include "map.h"
 #include "clif.h"
 #include "intif.h"
@@ -26,11 +28,9 @@
 #include "party.h"
 #include "npc.h"
 #include "log.h"
-#include "showmsg.h"
 #include "script.h"
 #include "atcommand.h"
 #include "date.h"
-
 #include "irc.h"
 
 #define MIN_MOBTHINKTIME 100
@@ -48,6 +48,7 @@ struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant 
 
 struct mob_db *mob_db(int index) { if (index < 0 || index > MAX_MOB_DB || mob_db_data[index] == NULL) return mob_dummy; return mob_db_data[index]; }
 
+static struct eri *delay_drop_ers; //For loot drops delay structures.
 #define CLASSCHANGE_BOSS_NUM 21
 
 /*==========================================
@@ -1527,7 +1528,7 @@ struct delay_item_drop {
 static struct delay_item_drop* mob_setdropitem(int nameid, int qty, int m, int x, int y, 
 	struct map_session_data* first_sd, struct map_session_data* second_sd, struct map_session_data* third_sd)
 {
-	struct delay_item_drop *drop = aCalloc(1, sizeof (struct delay_item_drop));
+	struct delay_item_drop *drop = ers_alloc(delay_drop_ers, struct delay_item_drop);
 	drop->item_data.nameid = nameid;
 	drop->item_data.amount = qty;
 	drop->item_data.identify = !itemdb_isequip3(nameid);
@@ -1547,7 +1548,7 @@ static struct delay_item_drop* mob_setdropitem(int nameid, int qty, int m, int x
 static struct delay_item_drop* mob_setlootitem(struct item* item, int m, int x, int y,
 	struct map_session_data* first_sd, struct map_session_data* second_sd, struct map_session_data* third_sd)
 {
-	struct delay_item_drop *drop = aCalloc(1, sizeof (struct delay_item_drop));
+	struct delay_item_drop *drop = ers_alloc(delay_drop_ers, struct delay_item_drop);
 	memcpy(&drop->item_data, item, sizeof(struct item));
 	drop->m = m;
 	drop->x = x;
@@ -1568,7 +1569,7 @@ static int mob_delay_item_drop(int tid,unsigned int tick,int id,int data)
 	ditem=(struct delay_item_drop *)id;
 
 	map_addflooritem(&ditem->item_data,1,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
-	aFree(ditem);
+	ers_free(delay_drop_ers, ditem);
 	return 0;
 }
 
@@ -1599,7 +1600,7 @@ static void mob_item_drop(struct mob_data *md, unsigned int tick, struct delay_i
 				NULL,
 			ditem->first_sd,&ditem->item_data) == 0
 		) {
-			aFree(ditem);
+			ers_free(delay_drop_ers, ditem);
 			return;
 		}
 	}
@@ -4086,6 +4087,7 @@ int do_init_mob(void)
 	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
 	mob_db_data[0] = aCalloc(1, sizeof (struct mob_data));	//This mob is used for random spawns
 	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
+	delay_drop_ers = ers_new((uint32)sizeof(struct delay_item_drop));
 
 #ifndef TXT_ONLY
     if(db_use_sqldbs)
@@ -4132,6 +4134,6 @@ int do_final_mob(void)
 			mob_db_data[i] = NULL;
 		}
 	}
-
+	ers_destroy(delay_drop_ers);
 	return 0;
 }

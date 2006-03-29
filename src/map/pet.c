@@ -361,7 +361,8 @@ int pet_return_egg(struct map_session_data *sd)
 	if(sd->status.pet_id && sd->pd) {
 		// ƒ‹[ƒg‚µ‚½Item‚ð—Ž‚Æ‚³‚¹‚é
 		pet_lootitem_drop(sd->pd,sd);
-		if(sd->petDB == NULL)
+		//Avoid returning to egg those pets that already ran away. [Skotlex]
+		if(sd->petDB == NULL || sd->pet.intimate <= 0)
 			return 1;
 		memset(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.nameid = sd->petDB->EggID;
