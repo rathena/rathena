@@ -361,8 +361,7 @@ int pet_return_egg(struct map_session_data *sd)
 	if(sd->status.pet_id && sd->pd) {
 		// ƒ‹[ƒg‚µ‚½Item‚ð—Ž‚Æ‚³‚¹‚é
 		pet_lootitem_drop(sd->pd,sd);
-		//Avoid returning to egg those pets that already ran away. [Skotlex]
-		if(sd->petDB == NULL || sd->pet.intimate <= 0)
+		if(sd->petDB == NULL)
 			return 1;
 		memset(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.nameid = sd->petDB->EggID;
@@ -693,6 +692,10 @@ int pet_menu(struct map_session_data *sd,int menunum)
 	if (sd->pd == NULL)
 		return 1;
 	
+	//You lost the pet already.
+	if(sd->pet.intimate <= 0)
+		return 1;
+	
 	switch(menunum) {
 		case 0:
 			clif_send_petstatus(sd);
@@ -823,7 +826,7 @@ int pet_unequipitem(struct map_session_data *sd)
 
 int pet_food(struct map_session_data *sd)
 {
-	int i,k,t;
+	int i,k;
 
 	nullpo_retr(1, sd);
 
@@ -835,24 +838,19 @@ int pet_food(struct map_session_data *sd)
 		return 1;
 	}
 	pc_delitem(sd,i,1,0);
-	t = sd->pet.intimate;
+
 	if(sd->pet.hungry > 90)
 		sd->pet.intimate -= sd->petDB->r_full;
-	else if(sd->pet.hungry > 75) {
-		if(battle_config.pet_friendly_rate != 100)
-			k = (sd->petDB->r_hungry * battle_config.pet_friendly_rate)/100;
-		else
-			k = sd->petDB->r_hungry;
-		k = k >> 1;
-		if(k <= 0)
-			k = 1;
-		sd->pet.intimate += k;
-	}
 	else {
 		if(battle_config.pet_friendly_rate != 100)
 			k = (sd->petDB->r_hungry * battle_config.pet_friendly_rate)/100;
 		else
 			k = sd->petDB->r_hungry;
+		if(sd->pet.hungry > 75) {
+			k = k >> 1;
+			if(k <= 0)
+				k = 1;
+		}
 		sd->pet.intimate += k;
 	}
 	if(sd->pet.intimate <= 0) {
@@ -860,7 +858,7 @@ int pet_food(struct map_session_data *sd)
 		pet_stop_attack(sd->pd);
 		sd->pd->speed = sd->pd->db->speed;
 	
-		if(battle_config.pet_status_support && t > 0) {
+		if(battle_config.pet_status_support) {
 			if(sd->bl.prev != NULL)
 				status_calc_pc(sd,0);
 			else
