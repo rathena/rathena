@@ -800,7 +800,7 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
 	md->target_id = bl->id;	// Since there was no disturbance, it locks on to target.
 	if (md->state.provoke_flag && bl->id != md->state.provoke_flag)
 		md->state.provoke_flag = 0;
-	md->min_chase=dist+md->db->range2;
+	md->min_chase=dist+md->db->range3;
 	if(md->min_chase>MAX_MINCHASE)
 		md->min_chase=MAX_MINCHASE;
 	return 0;
@@ -839,7 +839,9 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			(*target) = bl;
 			md->target_id=bl->id;
 			md->state.aggressive = (status_get_mode(&md->bl)&MD_ANGRY)?1:0;
-			md->min_chase= md->db->range3;
+			md->min_chase= dist + md->db->range3;
+			if(md->min_chase>MAX_MINCHASE)
+				md->min_chase=MAX_MINCHASE;
 			return 1;
 		}
 		break;
@@ -1001,7 +1003,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			if (tbl && status_check_skilluse(&md->bl, tbl, 0, 0)) {
 				md->target_id=tbl->id;
 				md->state.aggressive = (status_get_mode(&md->bl)&MD_ANGRY)?1:0;
-				md->min_chase=md->db->range2+distance_bl(&md->bl, tbl);
+				md->min_chase=md->db->range3+distance_bl(&md->bl, tbl);
 				if(md->min_chase>MAX_MINCHASE)
 					md->min_chase=MAX_MINCHASE;
 			}
@@ -1130,10 +1132,17 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	}
 			
 	// Check for target change.
-	if (md->attacked_id && mode&MD_CANATTACK && md->attacked_id != md->target_id)
+	if (md->attacked_id && mode&MD_CANATTACK)
 	{
-		abl = map_id2bl(md->attacked_id);
-		if (abl && (!tbl || mob_can_changetarget(md, abl, mode))) {
+		if (md->attacked_id == md->target_id)
+		{
+			if (!can_move && !battle_check_range (&md->bl, tbl, md->db->range))
+			{	//Rude-attacked.
+				if (md->attacked_count++ > 3)
+					mobskill_use(md, tick, MSC_RUDEATTACKED);
+			}
+		} else
+		if ((abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode))) {
 			if (md->bl.m != abl->m || abl->prev == NULL ||
 				(dist = distance_bl(&md->bl, abl)) >= 32 ||
 				battle_check_target(bl, abl, BCT_ENEMY) <= 0 ||
@@ -1141,7 +1150,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				!mob_can_reach(md, abl, dist+2, MSS_RUSH) ||
 				(	//Gangster Paradise check
 					abl->type == BL_PC && !(mode&MD_BOSS) &&
-					((struct map_session_data*)abl)->state.gangsterparadise
+					((TBL_PC*)abl)->state.gangsterparadise
 				)
 			)	{	//Can't attack back
 				if (md->attacked_count++ > 3) {
@@ -1178,15 +1187,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				}
 			}
 		}
-	}
-	
-	if (md->attacked_id) {
 		if (md->state.aggressive && md->attacked_id == md->target_id)
 			md->state.aggressive = 0; //No longer aggressive, change to retaliate AI.
+		//Clear it since it's been checked for already.
 		md->attacked_players = 0;
-		md->attacked_id = 0;	//Clear it since it's been checked for already.
+		md->attacked_id = 0;
 	}
-
+	
 	if (md->ud.attacktimer != -1 && tbl && md->ud.attacktarget == tbl->id)
 		return 0; //Already attacking the current target.
 
@@ -1217,42 +1224,43 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		if (tbl->type != BL_ITEM)
 		{	//Attempt to attack.
 			//At this point we know the target is attackable, we just gotta check if the range matches.
-			if (!check_distance_bl(&md->bl, tbl, view_range))
-			{	//Run towards the enemy when out of range?
-				if (!can_move) {
-					mob_unlocktarget(md, tick);
-					return 0;
-				}
-				dx = tbl->x - md->bl.x -1;
-				dy = tbl->y - md->bl.y -1;
-				unit_walktoxy(&md->bl, md->bl.x+dx, md->bl.y+dy, 0);
-				return 0;
-			}
+
 			if (!battle_check_range (&md->bl, tbl, md->db->range))
 			{	//Out of range...
 				mob_stop_attack(md);
 				if (!(mode&MD_CANMOVE))
 				{	//Can't chase. Attempt to use a ranged skill at least?
-					if (mobskill_use(md, tick, MSC_LONGRANGEATTACKED) == 0)
-						md->attacked_count++; //Increase rude-attacked count as it can't attack back.
+					mobskill_use(md, tick, MSC_LONGRANGEATTACKED);
 					mob_unlocktarget(md,tick);
 					return 0;
 				}
-				if (!can_move) //Wait until you can move?
-					return 0;
 				//Follow up
+				if (!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH))
+				{	//Give up.
+					mob_unlocktarget(md,tick);
+					return 0;
+				}
+				if (!check_distance_bl(&md->bl, tbl, view_range))
+				{	//Run towards the enemy when out of range?
+					if (!can_move)
+					{	//Give it up.
+						mob_unlocktarget(md,tick);
+						return 0;
+					}
+					dx = tbl->x - md->bl.x -1;
+					dy = tbl->y - md->bl.y -1;
+					unit_walktoxy(&md->bl, md->bl.x+dx, md->bl.y+dy, 0);
+					return 0;
+				}
 				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
 				mobskill_use (md, tick, -1);
+				if (!can_move) //Wait until you can move?
+					return 0;
 				if (md->ud.walktimer != -1 &&
 					(!battle_config.mob_ai&1 ||
 					check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->db->range)) //Current target tile is still within attack range.
 				) {
 					return 0; //No need to follow, already doing it?
-				}
-				if (!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH))
-				{	//Can't reach
-					mob_unlocktarget(md,tick);
-					return 0;
 				}
 				//Target reachable. Locate suitable spot to move to.
 				i = j = 0;

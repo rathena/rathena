@@ -3490,7 +3490,7 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 		if (rate >0)
 			tick -= tick*rate/10000;
 		else
-			tick -= rate;
+			tick += rate;
 	}
 	return tick<min?min:tick;
 }
@@ -5195,7 +5195,11 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 #ifndef _WIN32
 	nullpo_retr_f(0, bl, "id=%d data=%d",id,data);
 #endif
-	nullpo_retr(0, sc=status_get_sc(bl));
+	sc=status_get_sc(bl);
+	if (!sc)
+	{	//Temporal debug until case is resolved. [Skotlex]
+		ShowDebug("status_change_timer: Null pointer id: %d data: %d bl-type: %d\n", id, data, bl?bl->type:-1);
+	}
 
 	if(bl->type==BL_PC)
 		sd=(struct map_session_data *)bl;

@@ -26,6 +26,9 @@
 
 =========================
 
+03/29
+	* Fixed inf2 of Jump-Kick to make it a "combo-skill" so that it may do a
+	  BCT_ENEMY check. [Skotlex]
 03/28
 	* Changed droprate of Einbroch/Lighthalzen monsters. [Vicious]
 03/27	* Removed EVENT bonuses from event items: [Lupus]

@@ -241,8 +241,8 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	{	//Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
-		if (bl->type == BL_NPC) //Original eA code had this one only for BL_NPCs
-			clif_fixpos(bl);
+//		if (bl->type == BL_NPC) //Original eA code had this one only for BL_NPCs
+//			clif_fixpos(bl);
 	}
 	return 0;
 }
@@ -680,7 +680,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	if (sc && !sc->count)
 		sc = NULL; //Unneeded
 	//temp: used to signal combo-skills right now.
-	temp = (target_id == src->id 
+	temp = (target_id == src->id && !(sd && sd->state.skill_flag)
 		&& skill_get_inf(skill_num)&INF_SELF_SKILL
 		&& skill_get_inf2(skill_num)&INF2_NO_TARGET_SELF);
 	if (temp)	

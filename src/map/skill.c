@@ -737,22 +737,32 @@ int skill_get_range2(struct block_list *bl, int id, int lv) {
 			return status_get_range(bl);
 		range *=-1;
 	}
-	//TODO: Find a way better than hardcoding the list of skills affected by AC_VULTURE.
-	if (id == AC_SHOWER || id == AC_DOUBLE || id == HT_BLITZBEAT || id == AC_CHARGEARROW
-		|| id == SN_FALCONASSAULT || id == SN_SHARPSHOOTING || id == HT_POWER) {
+	//TODO: Find a way better than hardcoding the list of skills affected by AC_VULTURE
+	switch (id) {
+	case AC_SHOWER:
+	case AC_DOUBLE:
+	case HT_BLITZBEAT:
+	case AC_CHARGEARROW:
+	case SN_FALCONASSAULT:
+	case SN_SHARPSHOOTING:
+	case HT_POWER:
 		if (bl->type == BL_PC)
 			range += pc_checkskill((struct map_session_data *)bl, AC_VULTURE);
 		else
 			range += 10; //Assume level 10?
-	}
-
+		break;
 	// added to allow GS skills to be effected by the range of Snake Eyes [Reddozen]
-	if (id == GS_RAPIDSHOWER || id == GS_TRACKING || id == GS_PIERCINGSHOT || id == GS_FULLBUSTER
-		|| id == GS_SPREADATTACK || id == GS_GROUNDDRIFT) {
+	case GS_RAPIDSHOWER:
+	case GS_TRACKING:
+	case GS_PIERCINGSHOT:
+	case GS_FULLBUSTER:
+	case GS_SPREADATTACK:
+	case GS_GROUNDDRIFT:
 		if (bl->type == BL_PC)
 			range += pc_checkskill((struct map_session_data *)bl, GS_SNAKEEYE);
 		else
 			range += 10; //Assume level 10?
+		break;
 	}
 
 	return range;
@@ -5483,6 +5493,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SG_FEEL:
 		if (sd) {
 			if(!sd->feel_map[skilllv-1].index) {
+				for (i = 0; i<3 && sd->feel_map[i].index != sd->mapindex; i++);
+				if (i < 3) {	//Avoid memorizing already known maps. [Skotlex]
+					clif_skill_fail(sd, skillid, 0, 0);
+					break;
+				}
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 				clif_parse_ReqFeel(sd->fd,sd, skilllv);
 			}

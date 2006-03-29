@@ -440,7 +440,7 @@
 418,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYCOUNTER#Prepare Counter Kick#
 419,-2,6,4,-1,0,0,7,1,no,0,512,0,weapon,0	//TK_COUNTER#Counter Kick#
 420,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_DODGE#Break Fall#
-421,10,6,4,-1,0,0,7,1,no,0,0,0,weapon,0	//TK_JUMPKICK#Flying Side Kick#
+421,10,6,4,-1,0,0,7,1,no,0,512,0,weapon,0	//TK_JUMPKICK#Flying Side Kick#
 422,0,0,0,0,0,1,10,0,no,0,0,0,none,0	//TK_HPTIME#Peaceful Rest#
 423,0,0,0,0,0,1,10,0,no,0,0,0,none,0	//TK_SPTIME#Enjoyable Rest#
 424,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//TK_POWER#Fighting Chant#
