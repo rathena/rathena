@@ -1958,17 +1958,17 @@
 7338,One-way_Ticket,One-way Ticket,3,,10,10,,,,,,,,,,,,,{}
 7339,Commemorative_Travel_Card,Commemorative Travel Card,3,,10,10,,,,,,,,,,,,,{}
 7340,Will_of_the_Darkness,Will of the Darkness,3,,367,50,,,,,,,,,,,,,{}
-7341,Old_Pendant,Old Pendant,3,,10,10,,,,,,,,,,,,,{}
-7342,File_Folder,File Folder,3,,10,10,,,,,,,,,,,,,{}
-7343,Sealed_File_Folder,Sealed File Folder,3,,10,10,,,,,,,,,,,,,{}
-7344,Cinocas_Case_File,Cinocas Case File,3,,10,10,,,,,,,,,,,,,{}
+7341,Old_Pendant,Old Pendant,3,,10,0,,,,,,,,,,,,,{}
+7342,File_Folder,File Folder,3,,10,0,,,,,,,,,,,,,{}
+7343,Sealed_File_Folder,Sealed File Folder,3,,10,0,,,,,,,,,,,,,{}
+7344,Cinocas_Case_File,Cinocas Case File,3,,10,0,,,,,,,,,,,,,{}
 7345,Handcuffs,Handcuffs,3,,362,10,,,,,,,,,,,,,{}
-7346,Ymir's_Heart_Piece,Ymir's Heart Piece,3,,10,10,,,,,,,,,,,,,{}
+7346,Ymir's_Heart_Piece,Ymir's Heart Piece,3,,10,0,,,,,,,,,,,,,{}
 7347,Research_Chart,Research Chart,3,,10,10,,,,,,,,,,,,,{}
 7348,Membership_Card,Membership Card,3,,10,10,,,,,,,,,,,,,{}
-7349,Archive_Permit,Archive Permit,3,,10,10,,,,,,,,,,,,,{}
+7349,Archive_Permit,Archive Permit,3,,10,0,,,,,,,,,,,,,{}
 7350,Pass,Pass,3,,10,10,,,,,,,,,,,,,{}
-7351,Friend's_Diary,Friend's Diary,3,,10,10,,,,,,,,,,,,,{}
+7351,Friend's_Diary,Friend's Diary,3,,10,0,,,,,,,,,,,,,{}
 7352,Transparent_Plate,Transparent Plate,3,,10,10,,,,,,,,,,,,,{}
 7353,Transparent_Plate_,Transparent Plate,3,,10,10,,,,,,,,,,,,,{}
 7354,Transparent_Plate__,Transparent Plate,3,,10,10,,,,,,,,,,,,,{}

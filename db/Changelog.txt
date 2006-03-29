@@ -27,6 +27,8 @@
 =========================
 
 03/29
+	* Updated changed weight of some items according to Haplo's note [Lupus]
+	* Updated some SP cost of some skills. Added SP COST info for Homunculi skills. Thanks to Haplo [Lupus]
 	* Fixed inf2 of Jump-Kick to make it a "combo-skill" so that it may do a
 	  BCT_ENEMY check. [Skotlex]
 03/28
