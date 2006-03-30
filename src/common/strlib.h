@@ -11,6 +11,11 @@ char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt,char* spt);
 int jmemescapecpy (char* pt,char* spt, int size);
 
+#if !defined(HAVE_mit_thread) && !defined(HAVE_STRTOK_R)
+#define strtok_r(s,delim,save_ptr) athena_strtok_r(s,delim,save_ptr)
+char *athena_strtok_r (char *s, const char *delim, char **save_ptr);
+#endif
+
 // custom functions
 int remove_control_chars(unsigned char *);
 char *trim(char *str, const char *delim);
