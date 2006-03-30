@@ -17,6 +17,7 @@
 	13005 Angelic Wing Dagger:	NO INFO. Item not implemented...
 	1308 Golden Axe:		NO INFO. Item not implemented...
 	1971 Electric Wire:		NO INFO. Item not implemented...
+	13160, 13161 Destroyer:	Can break target's armor when fired at close range.
 	-----
 	4296 Cramp Card:	Temp Plug: 10z per mob-level on a 3% chance.
 	7458 Fortune Horn:	It's a custom name ^^;
@@ -25,6 +26,9 @@
 	-----
 
 =========================
+
+03/30
+	* Fixed a lot of Jnames [Poki#3]
 
 03/29
 	* Updated FULL BUSTER aftercast delays, thanks to Haplo [Lupus]
