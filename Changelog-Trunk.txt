@@ -6,6 +6,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/03/30
 	* Added execution of OnInterIfInit, OnCharIfInit and OnInterIfInitOnce on script
 	  reload. [Lance] 
+	* Cleaned up mistakes in irc.c [Lance]
 
 2006/03/29
 	* Now none of the pet-menu options will have any effect when the pet's

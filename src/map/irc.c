@@ -203,7 +203,7 @@ void irc_parse_sub(int fd, char *incoming_string)
 	char *source_nick=NULL;
 	char *source_ident=NULL;
 	char *source_host=NULL;
-//	char *state_mgr=NULL;
+	char *state_mgr=NULL;
 	
 	memset(source,'\0',256);
 	memset(command,'\0',256);
@@ -214,10 +214,9 @@ void irc_parse_sub(int fd, char *incoming_string)
 	sscanf(incoming_string, ":%255s %255s %255s :%4095[^\n]", source, command, target, message);
 	if (source != NULL) {
 		if (strstr(source,"!") != NULL) {
-			sscanf(source,"%s!%s@%s",source_nick, source_ident, source_host);
-			//source_nick = strtok_r(source,"!",&state_mgr);
-			//source_ident = strtok_r(NULL,"@",&state_mgr);
-			//source_host = strtok_r(NULL,"%%",&state_mgr);
+			source_nick = strtok_r(source,"!",&state_mgr);
+			source_ident = strtok_r(NULL,"@",&state_mgr);
+			source_host = strtok_r(NULL,"%%",&state_mgr);
 		}
 	}
 	if (irc_si->state == 0){
@@ -256,20 +255,15 @@ void irc_parse_sub(int fd, char *incoming_string)
 
 int send_to_parser(int fd, char *input,char key[2])
 {
-	char format[4];
 	char *temp_string=NULL;
-	char *next_string=NULL;
-//	char *state_mgr=NULL;
+	char *state_mgr=NULL;
 	int total_loops=0;
 
-	//temp_string = strtok_r(input,key,&state_mgr);
-	sprintf(format,"%s%s%s","%s",key,"%s");
-	sscanf(input, format, temp_string, next_string);
+	temp_string = strtok_r(input,key,&state_mgr);
 	while (temp_string != NULL){
 		total_loops = total_loops+1;
 		irc_parse_sub(fd,temp_string);
-		//temp_string = strtok_r(NULL,key,&state_mgr);
-		sscanf(next_string, format, temp_string, next_string);
+		temp_string = strtok_r(NULL,key,&state_mgr);
 	}
 	return total_loops;
 }

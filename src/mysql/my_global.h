@@ -658,7 +658,7 @@ typedef SOCKET_SIZE_TYPE size_socket;
 #define SET_STACK_SIZE(X)	/* Not needed on real machines */
 
 #if !defined(HAVE_mit_thread) && !defined(HAVE_STRTOK_R)
-#define strtok_r(A,B,C) strtok((A),(B))
+#include "../common/strlib.h"
 #endif
 
 /* Remove some things that mit_thread break or doesn't support */
