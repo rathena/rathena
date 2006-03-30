@@ -165,7 +165,7 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 	struct map_session_data *sd = NULL;
 	struct status_change *sc;
 
-	nullpo_retr(0, target); //stcはNULLで呼ばれることがあるので他でチェック
+	nullpo_retr(0, target); //srcはNULLで呼ばれることがあるので他でチェック
 	
 	sc = status_get_sc(target);
 
@@ -2175,8 +2175,8 @@ static struct Damage battle_calc_weapon_attack(
 	{
 		if(wd.damage2<1) {
 			wd.damage=battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-		if (map_flag_gvg(target->m))
-			wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+			if (map_flag_gvg(target->m))
+				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 		} else if(wd.damage<1) {
 			wd.damage2=battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 			if (map_flag_gvg(target->m))

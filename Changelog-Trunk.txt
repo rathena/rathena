@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/03/30
+	* Added a missing return that fixes crashes on status_change_timer when
+	  source is not found. [Skotlex]
 	* Added year day return in gettime function. gettime(8) returns 1~366
 	  [Foruken]
 	* the auth function in login.c won't jstrescapecpy passwords that were

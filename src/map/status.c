@@ -5204,6 +5204,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	if (!sc)
 	{	//Temporal debug until case is resolved. [Skotlex]
 		ShowDebug("status_change_timer: Null pointer id: %d data: %d bl-type: %d\n", id, data, bl?bl->type:-1);
+		return 0;
 	}
 
 	if(bl->type==BL_PC)
