@@ -128,7 +128,7 @@ void initChangeTables(void) {
 	set_sc(AS_VENOMDUST,            SC_POISON,              SI_BLANK);
 	set_sc(AS_SPLASHER,             SC_SPLASHER,            SI_BLANK);
 	set_sc(NV_TRICKDEAD,            SC_TRICKDEAD,           SI_TRICKDEAD);
-	set_sc(SM_AUTOBERSERK,          SC_AUTOBERSERK,         SI_BLANK);
+	set_sc(SM_AUTOBERSERK,          SC_AUTOBERSERK,         SI_STEELBODY);
 	set_sc(TF_SPRINKLESAND,         SC_BLIND,               SI_BLANK);
 	set_sc(TF_THROWSTONE,           SC_STUN,                SI_BLANK);
 	set_sc(MC_LOUD,                 SC_LOUD,                SI_LOUD);
@@ -404,7 +404,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	{
 		if (
 			(sc->data[SC_TRICKDEAD].timer != -1 && skill_num != NV_TRICKDEAD)
-			|| (sc->data[SC_AUTOCOUNTER].timer != -1 && skill_num != KN_AUTOCOUNTER)
+			|| sc->data[SC_AUTOCOUNTER].timer != -1
 			|| (sc->data[SC_GOSPEL].timer != -1 && sc->data[SC_GOSPEL].val4 == BCT_SELF && skill_num != PA_GOSPEL)
 			|| (sc->data[SC_GRAVITATION].timer != -1 && sc->data[SC_GRAVITATION].val3 == BCT_SELF && skill_num != HW_GRAVITATION)
 		)
@@ -3081,9 +3081,11 @@ int status_get_dmotion(struct block_list *bl)
 	else
 		return 2000;
 
-	if(sc && sc->count && (sc->data[SC_ENDURE].timer!=-1 || sc->data[SC_CONCENTRATION].timer!=-1 || sc->data[SC_BERSERK].timer!=-1))
-		if (!map_flag_gvg(bl->m)) //Only works on non-gvg grounds. [Skotlex]
-			return 0;
+	if(sc && sc->count
+		&& (sc->data[SC_ENDURE].timer!=-1 || sc->data[SC_CONCENTRATION].timer!=-1)
+		&& !map_flag_gvg(bl->m) //Only works on non-gvg grounds. [Skotlex]
+	)
+		return 0;
 
 	return ret;
 }
@@ -4176,6 +4178,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 			if (!(flag&4))
 				tick = 10000;
+			if (sc->data[SC_ENDURE].timer == -1 || sc->data[SC_ENDURE].val1 <= 10)
+				sc_start(bl, SC_ENDURE, 100, 11, tick);
 			calc_flag = 1;
 			break;
 
@@ -5014,9 +5018,10 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					sd->status.hp = 100;
 					clif_updatestatus(sd,SP_HP);
 				}
+				if(sc->data[SC_ENDURE].timer != -1)
+					status_change_end(bl, SC_ENDURE, -1);
 				calc_flag = 1;
 				break;
-				
 			case SC_GRAVITATION:
 				if (sc->data[type].val3 == BCT_SELF) {
 					struct unit_data *ud = unit_bl2ud(bl);
@@ -5310,8 +5315,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 
 	case SC_ENDURE:	/* ƒCƒ“ƒfƒ…ƒA */
-		if(sd && sd->special_state.infinite_endure) {
-			sc->data[type].timer=add_timer( 1000*60+tick,status_change_timer, bl->id, data );
+		if(sc->data[type].val1 > 10 || (sd && sd->special_state.infinite_endure))
+	  	{
+			sc->data[type].timer=add_timer(1000*60+tick,status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;

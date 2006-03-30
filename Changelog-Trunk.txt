@@ -4,6 +4,23 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/03/30
+	* the auth function in login.c won't jstrescapecpy passwords that were
+	  encrypted. Thanks to foobar. (but are still more cases to check for? Dunno,
+	  the code is kinda long...) [Skotlex]
+	* Endure level 11 and above are now considered infinite-endure, and invoked
+	  when Berserk is active. [Skotlex]
+	* Set the minimum pet hungry delay to 10 [Skotlex]
+	* modified functions skill_delayfix and skill_castfix to reduce number of
+	  arguments. Added function skill_castfix_sc for mobs (who only get status
+	  change cast reductions, not dex based ones). Also, skill_delayfix will
+	  never return a value below min_skill_delay_limit. [Skotlex]
+	* Modified brandish spear so you won't see the skill-animation for every
+	  targetted mob. [Skotlex]
+	* Added the Steel Body icon to auto-berserk. [Skotlex]
+	* Now you can't cast auto-counter while the previous one is active.
+	  [Skotlex]
+	* Added Veider's suggestion to do a hack-report when players request the
+	  name of an invisible/cloaked character. [Skotlex]
 	* Added execution of OnInterIfInit, OnCharIfInit and OnInterIfInitOnce on script
 	  reload. [Lance] 
 	* Cleaned up mistakes in irc.c [Lance]

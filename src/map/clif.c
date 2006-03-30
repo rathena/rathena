@@ -9109,6 +9109,7 @@ void check_fake_id(int fd, struct map_session_data *sd, int target_id) {
 void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 	int account_id;
 	struct block_list* bl;
+	struct status_change *sc;
 	RFIFOHEAD(fd);
 	
 	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
@@ -9116,8 +9117,23 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 		account_id-=account_id*2;
 
 	//Is this possible? Lagged clients could request names of already gone mobs/players. [Skotlex]
-	if ((bl = map_id2bl(account_id)) != NULL)	
+	if ((bl = map_id2bl(account_id)) != NULL) {	
+		sc = status_get_sc(bl);
+		if (sc && (
+			(sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) && !sd->special_state.intravision) ||
+			sc->option&OPTION_INVISIBLE)
+		) {
+			//Asked name of invisible player, this shouldn't be possible!
+			//Possible bot? Thanks to veider and qspirit
+    			unsigned char gm_msg[256];
+    			sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requests name of invisible chars.", sd->status.name, sd->status.account_id);
+				ShowWarning(gm_msg);
+			    // information is sended to all online GM
+			    intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
+			return;
+		}
 		clif_charnameack(fd, bl);
+	}
 }
 
 /*==========================================

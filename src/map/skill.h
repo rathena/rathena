@@ -188,8 +188,9 @@ int skill_clear_element_field(struct block_list *bl);
 int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,
 	int damage,unsigned int tick);
 
-int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time);
-int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time);
+int skill_castfix( struct block_list *bl, int skill_id, int skill_lv);
+int skill_castfix_sc( struct block_list *bl, int time);
+int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv);
 int skill_check_condition( struct map_session_data *sd,int skill, int lv, int type);
 int skill_check_pc_partner(struct map_session_data *sd, int skill_id, int* skill_lv, int range, int cast_flag);
 int skill_check_unit_range(int m,int x,int y,int skillid, int skilllv);

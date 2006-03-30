@@ -1779,7 +1779,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			else //âÒïúSP+åªç›ÇÃSPÇ™MSPÇÊÇËè¨Ç≥Ç¢èÍçáÇÕâÒïúSPÇâ¡éZ
 				tsd->status.sp += sp;
 			clif_heal(tsd->fd,SP_SP,sp); //SPâÒïúÉGÉtÉFÉNÉgÇÃï\é¶
-			tsd->ud.canact_tick = tick + skill_delayfix(bl, SA_MAGICROD, sc->data[SC_MAGICROD].val1, skill_get_delay(SA_MAGICROD, sc->data[SC_MAGICROD].val1));
+			tsd->ud.canact_tick = tick + skill_delayfix(bl, SA_MAGICROD, sc->data[SC_MAGICROD].val1);
 		}
 		clif_skill_nodamage(bl,bl,SA_MAGICROD,sc->data[SC_MAGICROD].val1,1); //É}ÉWÉbÉNÉçÉbÉhÉGÉtÉFÉNÉgÇï\é¶
 	}
@@ -1911,6 +1911,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	switch(skillid){
 	//Skills who's damage should't show any skill-animation.
 	case SM_MAGNUM:
+	case KN_BRANDISHSPEAR:
 	case AS_SPLASHER:
 	case ASC_METEORASSAULT:
 	case SG_SUN_WARM:
@@ -3978,11 +3979,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			ar=skilllv/3;
 			skill_brandishspear_first(&tc,dir,x,y);
 			skill_brandishspear_dir(&tc,dir,4);
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			/* îÕ?áC */
 			if(skilllv == 10){
 				for(c=1;c<4;c++){
-					map_foreachinarea(skill_area_sub,
-						bl->m,tc.val1[c],tc.val2[c],tc.val1[c],tc.val2[c],BL_CHAR,
+					map_foreachincell(skill_area_sub,
+						bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
 						src,skillid,skilllv,tick, flag|BCT_ENEMY|n,
 						skill_castend_damage_id);
 				}
@@ -3998,8 +4000,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 			if(skilllv > 3){
 				for(c=0;c<5;c++){
-					map_foreachinarea(skill_area_sub,
-						bl->m,tc.val1[c],tc.val2[c],tc.val1[c],tc.val2[c],BL_CHAR,
+					map_foreachincell(skill_area_sub,
+						bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
 						src,skillid,skilllv,tick, flag|BCT_ENEMY|n,
 						skill_castend_damage_id);
 					if(skilllv > 6 && n==3 && c==4){
@@ -4011,8 +4013,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			/* îÕ?á@ */
 			for(c=0;c<10;c++){
 				if(c==0||c==5) skill_brandishspear_dir(&tc,dir,-1);
-				map_foreachinarea(skill_area_sub,
-					bl->m,tc.val1[c%5],tc.val2[c%5],tc.val1[c%5],tc.val2[c%5],BL_CHAR,
+				map_foreachincell(skill_area_sub,
+					bl->m,tc.val1[c%5],tc.val2[c%5],BL_CHAR,
 					src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 					skill_castend_damage_id);
 			}
@@ -5723,7 +5725,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 		if (ud->skillid == SA_MAGICROD)
 			ud->canact_tick = tick;
 		else
-			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv, skill_get_delay(ud->skillid, ud->skilllv));
+			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
@@ -5831,7 +5833,7 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 			ShowInfo("Type %d, ID %d skill castend pos [id =%d, lv=%d, (%d,%d)]\n",
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
 		unit_stop_walking(src,0);
-		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv, skill_get_delay(ud->skillid, ud->skilllv));
+		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
 
@@ -8264,105 +8266,97 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
  * âr?•éûä‘åvéZ
  *------------------------------------------
  */
-int skill_castfix( struct block_list *bl, int skill_id, int skill_lv, int time)
+int skill_castfix( struct block_list *bl, int skill_id, int skill_lv)
 {
 	struct status_change *sc;
 	int castnodex = skill_get_castnodex(skill_id, skill_lv);
-	
+	int time = skill_get_cast(skill_id, skill_lv);	
+	struct map_session_data *sd;
+
 	nullpo_retr(0, bl);
-
-	if (bl->type == BL_PC){
-		struct map_session_data *sd = (struct map_session_data*)bl;
-		nullpo_retr(0, sd);
-
-		// calculate base cast time (reduced by dex)
-		if (!(castnodex&1)) {			// castnodex&~1? wtf. [blackhole89]
-			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-			if (scale > 0)	// not instant cast
-				time = time * scale / battle_config.castrate_dex_scale;
-			else return 0;	// instant cast
-		}
-
-		// config cast time multiplier
-		if (battle_config.cast_rate != 100)
-			time = time * battle_config.cast_rate / 100;
-
-		// calculate cast time reduced by card bonuses
-		if (sd->castrate != 100)
-			time -= time * (100 - sd->castrate) / 100;
-	} else if (bl->type == BL_PET) { //Skotlex: Simple scaling
-		if (!(castnodex&1)) {
-			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-			if (scale > 0)	// not instant cast
-				time = time * scale / battle_config.castrate_dex_scale;
-			else return 0;	// instant cast
-		}
-		if (battle_config.cast_rate != 100)
-			time = time * battle_config.cast_rate / 100;
+	BL_CAST(BL_PC, bl, sd);
+	
+	// calculate base cast time (reduced by dex)
+	if (!(castnodex&1)) {			// castnodex&~1? wtf. [blackhole89]
+		int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+		if (scale > 0)	// not instant cast
+			time = time * scale / battle_config.castrate_dex_scale;
+		else return 0;	// instant cast
 	}
 
+	// calculate cast time reduced by card bonuses
+	if (sd && sd->castrate != 100)
+		time = time * sd->castrate / 100;
+
+	// config cast time multiplier
+	if (battle_config.cast_rate != 100)
+		time = time * battle_config.cast_rate / 100;
+
+  	// calculate cast time reduced by skill bonuses
 	if (!(castnodex&2))
-  	{	// calculate cast time reduced by skill bonuses
-		sc = status_get_sc(bl);
-		/* ÉTÉtÉâÉMÉEÉÄ */
-		if (sc && sc->count) {
-			if (sc->data[SC_SUFFRAGIUM].timer != -1) {
-				time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
-				status_change_end(bl, SC_SUFFRAGIUM, -1);
-			}
-			/* ÉuÉâÉMÇÃé? */
-			if (sc->data[SC_POEMBRAGI].timer != -1)
-				time -= time * sc->data[SC_POEMBRAGI].val2 / 100;
-		}
-	}
+		time = skill_castfix_sc(bl, time);
+
 	// return final cast time
 	return (time > 0) ? time : 0;
 }
+
+/*==========================================
+ * Does cast-time reductions based on sc data.
+ *------------------------------------------
+ */
+int skill_castfix_sc(struct block_list *bl, int time)
+{
+	struct status_change *sc = status_get_sc(bl);
+
+	if (time <= 0) return 0;
+	
+	if (sc && sc->count) {
+		if (sc->data[SC_SUFFRAGIUM].timer != -1) {
+			time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
+			status_change_end(bl, SC_SUFFRAGIUM, -1);
+		}
+		if (sc->data[SC_POEMBRAGI].timer != -1)
+			time -= time * sc->data[SC_POEMBRAGI].val2 / 100;
+	}
+	return (time > 0) ? time : 0;
+}
+
 /*==========================================
  * ÉfÉBÉåÉCåvéZ
  *------------------------------------------
  */
-int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time )
+int skill_delayfix(struct block_list *bl, int skill_id, int skill_lv)
 {
-	struct status_change *sc;
 	int delaynodex = skill_get_delaynodex(skill_id, skill_lv);
-
+	int time = skill_get_delay(skill_id, skill_lv);
+	
 	nullpo_retr(0, bl);
 
-	if (bl->type == BL_PC){
-		struct map_session_data *sd = (struct map_session_data*)bl;
-		nullpo_retr(0, sd);
+	// instant cast attack skills depend on aspd as delay [celest]
+	if (time == 0) {
+		if (skill_get_type(skill_id) == BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_DAMAGE))
+			time = status_get_amotion(bl); //Use attack animation as default delay.
+		else
+			time = 300;	// default delay, according to official servers
+	} else if (time < 0)
+		time = -time + status_get_amotion(bl);	// if set to <0, the attack motion is added.
 
-		// instant cast attack skills depend on aspd as delay [celest]
-		if (time == 0) {
-			if (skill_get_type(skill_id) == BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_DAMAGE))
-				time = status_get_amotion(bl); //Use attack animation as default delay.
-			else
-				time = 300;	// default delay, according to official servers
-		} else if (time < 0)
-			time = -time + status_get_amotion(bl);	// if set to <0, the attack motion is added.
-
-		if (battle_config.delay_dependon_dex && !(delaynodex&1))
-		{	// if skill casttime is allowed to be reduced by dex
-			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-			if (scale > 0)
-				time = time * scale / battle_config.castrate_dex_scale;
-			else
-				time = battle_config.min_skill_delay_limit;
-		}
-
-		if (battle_config.delay_rate != 100)
-			time = time * battle_config.delay_rate / 100;
-
-		if (sd->delayrate != 100)
-			time = time * sd->delayrate / 100;
-
-		if (time < battle_config.min_skill_delay_limit)	// check minimum skill delay
-			time = battle_config.min_skill_delay_limit;
+	if (battle_config.delay_dependon_dex && !(delaynodex&1))
+	{	// if skill casttime is allowed to be reduced by dex
+		int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+		if (scale > 0)
+			time = time * scale / battle_config.castrate_dex_scale;
 	}
+
+	if (bl->type == BL_PC && ((TBL_PC*)bl)->delayrate != 100)
+		time = time * ((TBL_PC*)bl)->delayrate / 100;
+
+	if (battle_config.delay_rate != 100)
+		time = time * battle_config.delay_rate / 100;
 
 	if (!(delaynodex&2))
 	{	/* ÉuÉâÉMÇÃé? */
+		struct status_change *sc;
 		sc= status_get_sc(bl);
 		if (sc && sc->count) {
 			if (sc->data[SC_POEMBRAGI].timer != -1)
@@ -8381,7 +8375,8 @@ int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv, int time 
 		}
 	}
 
-	return (time > 0) ? time : 0;
+	return (time < battle_config.min_skill_delay_limit)?
+		battle_config.min_skill_delay_limit:time;
 }
 
 /*=========================================

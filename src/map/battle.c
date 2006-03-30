@@ -160,12 +160,12 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 }
 
 // ŽÀ?Û‚ÉHP‚ð‘€?ì
-int battle_damage(struct block_list *bl,struct block_list *target,int damage, int flag)
+int battle_damage(struct block_list *src,struct block_list *target,int damage, int flag)
 {
 	struct map_session_data *sd = NULL;
 	struct status_change *sc;
 
-	nullpo_retr(0, target); //bl‚ÍNULL‚ÅŒÄ‚Î‚ê‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‘¼‚Åƒ`ƒFƒbƒN
+	nullpo_retr(0, target); //stc‚ÍNULL‚ÅŒÄ‚Î‚ê‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‘¼‚Åƒ`ƒFƒbƒN
 	
 	sc = status_get_sc(target);
 
@@ -174,16 +174,14 @@ int battle_damage(struct block_list *bl,struct block_list *target,int damage, in
 		target->type == BL_PET)
 		return 0;
 
-	if (bl) {
-		if (bl->prev == NULL)
+	if (src) {
+		if (src->prev == NULL)
 			return 0;
-		if (bl->type == BL_PC) {
-			nullpo_retr(0, sd = (struct map_session_data *)bl);
-		}
+		BL_CAST(BL_PC, src, sd);
 	}
 
 	if (damage < 0)
-		return battle_heal(bl,target,-damage,0,flag);
+		return battle_heal(src,target,-damage,0,flag);
 
 	if (!flag && sc && sc->count) {
 		// “€Œ‹?A?Î‰»?A?‡–°‚ð?Á‹Ž
@@ -205,14 +203,30 @@ int battle_damage(struct block_list *bl,struct block_list *target,int damage, in
 			status_change_end(target, SC_CLOAKING, -1);
 		if (sc->data[SC_CHASEWALK].timer != -1)
 			status_change_end(target, SC_CHASEWALK, -1);
+		if (sc->data[SC_ENDURE].timer != -1 && sc->data[SC_ENDURE].val1 <= 10) {
+			//Endure count is only reduced by non-players on non-gvg maps.
+			//if val1 is greater than 10, this is infinite endure. [Skotlex]
+			if (src && src->type != BL_PC && !map_flag_gvg(target->m)
+				&& --(sc->data[SC_ENDURE].val2) < 0)
+				status_change_end(target, SC_ENDURE, -1);
+		}
+		if (sc->data[SC_GRAVITATION].timer != -1 &&
+			sc->data[SC_GRAVITATION].val3 == BCT_SELF) {
+			struct skill_unit_group *sg = (struct skill_unit_group *)sc->data[SC_GRAVITATION].val4;
+			if (sg) {
+				skill_delunitgroup(sg);
+				sc->data[SC_GRAVITATION].val4 = 0;
+				status_change_end(target, SC_GRAVITATION, -1);
+			}
+		}
 	}
-	
-	if (sc && sc->count && sc->data[SC_DEVOTION].val1 && bl && battle_getcurrentskill(bl) != PA_PRESSURE)
+
+	if (sc && sc->count && sc->data[SC_DEVOTION].val1 && src && battle_getcurrentskill(src) != PA_PRESSURE)
 	{	//Devotion only works on attacks from a source (to prevent it from absorbing coma) [Skotlex]
 		struct map_session_data *sd2 = map_id2sd(sc->data[SC_DEVOTION].val1);
 		if (sd2 && sd2->devotion[sc->data[SC_DEVOTION].val2] == target->id)
 		{
-			clif_damage(bl, &sd2->bl, gettick(), 0, 0, damage, 0, 0, 0);
+			clif_damage(src, &sd2->bl, gettick(), 0, 0, damage, 0, 0, 0);
 			pc_damage(&sd2->bl, sd2, damage);
 			return 0;
 		} else
@@ -220,11 +234,11 @@ int battle_damage(struct block_list *bl,struct block_list *target,int damage, in
 	}
 	unit_skillcastcancel(target, 2);
 	if (target->type == BL_MOB) {
-		return mob_damage(bl,(TBL_MOB*)target, damage,0);
+		return mob_damage(src,(TBL_MOB*)target, damage,0);
 	} else if (target->type == BL_PC) {
-		return pc_damage(bl,(TBL_PC*)target,damage);
+		return pc_damage(src,(TBL_PC*)target,damage);
 	} else if (target->type == BL_SKILL)
-		return skill_unit_ondamaged((struct skill_unit *)target, bl, damage, gettick());
+		return skill_unit_ondamaged((struct skill_unit *)target, src, damage, gettick());
 	return 0;
 }
 
@@ -4304,6 +4318,9 @@ void battle_validate_conf() {
 	
 	if(battle_config.pet_support_min_friendly > 950) //Capped to 950/1000 [Skotlex]
 		battle_config.pet_support_min_friendly = 950;
+	
+	if(battle_config.pet_hungry_delay_rate < 10)
+		battle_config.pet_hungry_delay_rate=10;
 	
 	if(battle_config.pet_max_atk1 > battle_config.pet_max_atk2)	//Skotlex
 		battle_config.pet_max_atk1 = battle_config.pet_max_atk2;

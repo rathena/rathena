@@ -1475,7 +1475,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2) {
 			sd->special_state.infinite_endure = 1;
 			if (sd->sc.data[SC_ENDURE].timer == -1)
-				sc_start(&sd->bl, SC_ENDURE,100,1,0);
+				sc_start(&sd->bl,SC_ENDURE,100,11,600000);
 		}
 		break;
 	case SP_INTRAVISION: // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
@@ -4606,22 +4606,6 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 		pc_setstand(sd);
 		skill_gangsterparadise(sd,0);
 		skill_rest(sd,0);
-	}
-
-	// ? ‚¢‚Ä‚¢‚½‚ç‘«‚ðŽ~‚ß‚é
-	if (sd->sc.count) {
-		if (sd->sc.data[SC_ENDURE].timer != -1 && (src != NULL && src->type == BL_MOB) && !map_flag_gvg(sd->bl.m)) {
-			if (!sd->special_state.infinite_endure && (--sd->sc.data[SC_ENDURE].val2) < 0) 
-				status_change_end(&sd->bl, SC_ENDURE, -1);
-		}
-		if (sd->sc.data[SC_GRAVITATION].timer != -1 &&
-			sd->sc.data[SC_GRAVITATION].val3 == BCT_SELF) {
-			struct skill_unit_group *sg = (struct skill_unit_group *)sd->sc.data[SC_GRAVITATION].val4;
-			if (sg) {
-				skill_delunitgroup(sg);
-				status_change_end(&sd->bl, SC_GRAVITATION, -1);
-			}
-		}
 	}
 
 	// ‰‰‘t/ƒ_ƒ“ƒX‚Ì’†?

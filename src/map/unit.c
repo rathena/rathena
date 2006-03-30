@@ -524,7 +524,7 @@ int unit_skilluse_id(struct block_list *src, int target_id, int skill_num, int s
 
 	return unit_skilluse_id2(
 		src, target_id, skill_num, skill_lv,
-		skill_castfix(src, skill_num, skill_lv, skill_get_cast(skill_num, skill_lv)),
+		skill_castfix(src, skill_num, skill_lv),
 		skill_get_castcancel(skill_num)
 	);
 }
@@ -803,7 +803,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	case ALL_RESURRECTION:	/* リザレクション */
 		if(battle_check_undead(status_get_race(target),status_get_elem_type(target))){	/* 敵がアンデッドなら */
 			temp=1;	/* ターンアンデットと同じ詠唱時間 */
-			casttime = skill_castfix(src, PR_TURNUNDEAD, skill_lv,  skill_get_cast(PR_TURNUNDEAD, skill_lv));
+			casttime = skill_castfix(src, PR_TURNUNDEAD, skill_lv);
 		}
 		break;
 	case MO_FINGEROFFENSIVE:	/* 指弾 */
@@ -906,7 +906,7 @@ int unit_skilluse_pos(struct block_list *src, int skill_x, int skill_y, int skil
 		return 0;
 	return unit_skilluse_pos2(
 		src, skill_x, skill_y, skill_num, skill_lv,
-		skill_castfix(src, skill_num, skill_lv, skill_get_cast(skill_num, skill_lv)),
+		skill_castfix(src, skill_num, skill_lv),
 		skill_get_castcancel(skill_num)
 	);
 }

@@ -2836,7 +2836,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			}
 			md->skillidx = i;
 			flag = unit_skilluse_pos2(&md->bl, x, y, ms[i].skill_id, ms[i].skill_lv,
-				skill_castfix(&md->bl,ms[i].skill_id, ms[i].skill_lv, ms[i].casttime), ms[i].cancel);
+				skill_castfix_sc(&md->bl, ms[i].casttime), ms[i].cancel);
 			if (!flag) md->skillidx = -1; //Skill failed.
 			return flag;
 		} else {
@@ -2867,7 +2867,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				}
 				md->skillidx = i;
 				flag = (bl && unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv,
-					skill_castfix(&md->bl,ms[i].skill_id, ms[i].skill_lv, ms[i].casttime),	ms[i].cancel));
+					skill_castfix_sc(&md->bl,ms[i].casttime),	ms[i].cancel));
 				if (!flag) md->skillidx = -1;
 				return flag;
 			} else {
@@ -3016,8 +3016,8 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 		ms[i].permillage = 500; //Default chance for moving/idle skills.
 		ms[i].emotion = -1;
 		ms[i].cancel = 0;
-		ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv, 0);
-		ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv, 0);
+		ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv);
+		ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
 
 		inf = skill_get_inf(skill_id);
 		if (inf&INF_ATTACK_SKILL) {

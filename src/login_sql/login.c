@@ -598,7 +598,12 @@ int mmo_auth( struct mmo_account* account , int fd){
 	strftime(tmpstr, 24, "%Y-%m-%d %H:%M:%S",localtime(&raw_time));
 
 	jstrescapecpy(t_uid,account->userid);
-	jstrescapecpy(t_pass, account->passwd);
+
+	if (account.passwdenc==PASSWORDENC) {
+		memset(t_pass, 0, sizeof(t_pass));
+		memcpy(t_pass, account->passwd, strlen(account->passwd));
+	} else
+		jstrescapecpy(t_pass, account->passwd);
 
 
 	// make query
