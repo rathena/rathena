@@ -599,7 +599,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	jstrescapecpy(t_uid,account->userid);
 
-	if (account.passwdenc==PASSWORDENC) {
+	if (account->passwdenc==PASSWORDENC) {
 		memset(t_pass, 0, sizeof(t_pass));
 		memcpy(t_pass, account->passwd, strlen(account->passwd));
 	} else
