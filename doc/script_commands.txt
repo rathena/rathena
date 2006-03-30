@@ -2731,8 +2731,9 @@ This function will return specified information about the current system time.
 3 - Hour (of a day)
 4 - Week day (0 for Sunday, 6 is Saturday)
 5 - Day of the month.
-6 - Number of the month
-7 - Year
+6 - Number of the month.
+7 - Year.
+8 - Day of the year.
 
 It will only return numbers.
 

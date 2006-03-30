@@ -5275,6 +5275,9 @@ int buildin_gettime(struct script_state *st)	/* Asgard Version */
 	case 7://Year(20xx)
 		push_val(st->stack,C_INT,t->tm_year+1900);
 		break;
+	case 8://Year Day(01~366)
+		push_val(st->stack,C_INT,t->tm_yday+1);
+		break;
 	default://(format error)
 		push_val(st->stack,C_INT,-1);
 		break;
