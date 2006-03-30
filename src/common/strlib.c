@@ -137,35 +137,23 @@ char *trim(char *str, const char *delim)
 	return str;
 }
 
-#ifdef _WIN32
-char *athena_strtok_r (char *s, const char *delim, char **save_ptr)
+#if !defined(HAVE_mit_thread) && !defined(HAVE_STRTOK_R)
+char *athena_strtok_r(char *s1, const char *s2, char **lasts)
 {
-	char *token;
+	char *ret;
 
-	if (s == NULL)
-		s = *save_ptr;
-
-	/* Scan leading delimiters.  */
-	s += strspn (s, delim);
-	if (*s == '\0')
-	{
-		*save_ptr = s;
+	if (s1 == NULL)
+		s1 = *lasts;
+	while(*s1 && strchr(s2, *s1))
+		++s1;
+	if(*s1 == '\0')
 		return NULL;
-	}
-
-	/* Find the end of the token.  */
-	token = s;
-	s = strpbrk (token, delim);
-	if (s == NULL)
-		/* This token finishes the string.  */
-		/* *save_ptr = __rawmemchr (token, '\0'); */
-		*save_ptr = token + strlen (token);
-	else
-	{
-		/* Terminate the token and make *SAVE_PTR point past it.  */
-		*s = '\0';
-		*save_ptr = s + 1;
-	}
-	return token;
+	ret = s1;
+	while(*s1 && !strchr(s2, *s1))
+		++s1;
+	if(*s1)
+		*s1++ = '\0';
+	*lasts = s1;
+	return ret;
 }
 #endif
