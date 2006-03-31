@@ -1911,7 +1911,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	switch(skillid){
 	//Skills who's damage should't show any skill-animation.
 	case SM_MAGNUM:
-	case KN_BRANDISHSPEAR:
 	case AS_SPLASHER:
 	case ASC_METEORASSAULT:
 	case SG_SUN_WARM:
@@ -1919,6 +1918,15 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case SG_STAR_WARM:
 		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
+	case KN_BRANDISHSPEAR:
+	case SN_SHARPSHOOTING:
+		{	//Only display skill animation for skill's target.
+			struct unit_data *ud = unit_bl2ud(src);
+			if (ud && ud->skilltarget == bl->id)
+				clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, type);
+			else
+				clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, type);
+		}
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
 		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
 		break;
@@ -1940,7 +1948,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			dmg.blewcount = 10;
 		break;
 	case KN_AUTOCOUNTER: //Skills that need be passed as a normal attack for the client to display correctly.
-	case SN_SHARPSHOOTING:
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
 		clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
@@ -8268,7 +8275,6 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
  */
 int skill_castfix( struct block_list *bl, int skill_id, int skill_lv)
 {
-	struct status_change *sc;
 	int castnodex = skill_get_castnodex(skill_id, skill_lv);
 	int time = skill_get_cast(skill_id, skill_lv);	
 	struct map_session_data *sd;
