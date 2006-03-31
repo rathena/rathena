@@ -1036,7 +1036,7 @@ static struct Damage battle_calc_weapon_attack(
 	} else if (status_get_range(src) > 3)
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 
-	if(skill_num && skill_get_arrowtype(skill_num)) {
+	if(skill_num && skill_get_ammotype(skill_num)) {
 		//Skills that require a consumable are also long-ranged arrow-types
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 		flag.arrow = 1;

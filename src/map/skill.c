@@ -658,7 +658,7 @@ int	skill_get_time( int id ,int lv ){ skill_get (skill_db[id].upkeep_time[lv-1],
 int	skill_get_time2( int id ,int lv ){ skill_get (skill_db[id].upkeep_time2[lv-1], id, lv); }
 int	skill_get_castdef( int id ){ skill_get (skill_db[id].cast_def_rate, id, 1); }
 int	skill_get_weapontype( int id ){ skill_get (skill_db[id].weapon, id, 1); }
-int	skill_get_arrowtype( int id ){ skill_get (skill_db[id].arrow, id, 1); }
+int	skill_get_ammotype( int id ){ skill_get (skill_db[id].ammo, id, 1); }
 int	skill_get_inf2( int id ){ skill_get (skill_db[id].inf2, id, 1); }
 int	skill_get_castcancel( int id ){ skill_get (skill_db[id].castcancel, id, 1); }
 int	skill_get_maxcount( int id ){ skill_get (skill_db[id].maxcount, id, 1); }
@@ -7543,7 +7543,7 @@ static int skill_check_condition_hermod_sub(struct block_list *bl,va_list ap)
  */
 int skill_check_condition(struct map_session_data *sd,int skill, int lv, int type)
 {
-	int i,j,hp,sp,hp_rate,sp_rate,zeny,weapon,arrow,state,spiritball,mhp;
+	int i,j,hp,sp,hp_rate,sp_rate,zeny,weapon,ammo,state,spiritball,mhp;
 	int index[10],itemid[10],amount[10];
 	int force_gem_flag = 0;
 	int delitem_flag = 1, checkitem_flag = 1;
@@ -7629,7 +7629,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	sp_rate = skill_db[j].sp_rate[lv-1];
 	zeny = skill_db[j].zeny[lv-1];
 	weapon = skill_db[j].weapon;
-	arrow = skill_db[j].arrow;
+	ammo = skill_db[j].ammo;
 	state = skill_db[j].state;
 	spiritball = skill_db[j].spiritball[lv-1];
 	mhp = skill_db[j].mhp[lv-1];	/* ?Á”ïHP */
@@ -7648,11 +7648,11 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	else
 		sp += (sd->status.max_sp * abs(sp_rate))/100;
 
-	if (!arrow && sd->status.weapon == 11 && skill &&
+	if (!ammo && sd->status.weapon == 11 && skill &&
 		skill != HT_PHANTASMIC && skill != GS_MAGICALBULLET &&
 		skill_get_type(skill) == BF_WEAPON && !(skill_get_nk(skill)&NK_NO_DAMAGE) 
 	)	//Assume this skill is using the weapon, therefore it requires arrows.
-		arrow = 2;  //1<<1 <- look 1 (arrows) moved right 1 times.
+		ammo = 2;  //1<<1 <- look 1 (arrows) moved right 1 times.
 
 	switch(skill) { // Check for cost reductions due to skills & SCs
 		case MC_MAMMONITE:
@@ -7874,7 +7874,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		if(sd->sc.data[SC_COMBO].timer == -1 || sd->sc.data[SC_COMBO].val1 != skill)
 			return 0;
 		break;	
-	// skills require arrows as of 12/07 [celest]
+
 	case HT_POWER:
 		if(sd->sc.data[SC_COMBO].timer == -1 || sd->sc.data[SC_COMBO].val1 != skill)
 			return 0;
@@ -8078,10 +8078,10 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 			clif_skill_fail(sd,skill,6,0);
 			return 0;
 		}
-		if(arrow) { //Skill requires arrow.
+		if(ammo) { //Skill requires stuff equipped in the arrow slot.
 			if((i=sd->equip_index[10]) < 0 ||
 				!sd->inventory_data[i] ||
-			  	!(arrow&1<<sd->inventory_data[i]->look)
+			  	!(ammo&1<<sd->inventory_data[i]->look)
 			) {
 				clif_arrow_fail(sd,0);
 				return 0;
@@ -8216,7 +8216,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 			if(index[i] >= 0)
 				pc_delitem(sd,index[i],amount[i],0);		// ƒAƒCƒeƒ€?Á”ï
 		}
-		if (arrow && battle_config.arrow_decrement)
+		if (ammo && battle_config.arrow_decrement)
 			pc_delitem(sd,sd->equip_index[10],1,0);
 	}
 
