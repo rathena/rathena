@@ -1,5 +1,7 @@
 #include "map.h"
 
+#define MAX_ADMINS	25 // [Zido]
+
 extern short use_irc;
 
 extern short irc_announce_flag;
@@ -24,4 +26,8 @@ struct IRC_Session_Info {
     char username[30];
     char password[33];
 };
+
+/*struct IRC_Authed {
+	char host[256];
+};*/ //(WIP, Don't remove) [Zido]
 typedef struct IRC_Session_Info IRC_SI;

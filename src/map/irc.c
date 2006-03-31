@@ -35,6 +35,7 @@ typedef int socklen_t;
 #include "map.h"
 #include "pc.h"
 #include "irc.h"
+#include "intif.h" //For GM Broadcast [Zido]
 
 short use_irc=0;
 
@@ -47,6 +48,9 @@ IRC_SI *irc_si=NULL;
 
 char irc_nick[30]="";
 char irc_password[32]="";
+
+// #define AUTH_PASS	"setpasshere" //(WIP, don't remove) Password to use commands) [Zido]
+#define ALLOWED_NICK	"" //Allowed nickname to use commands [Zido]
 
 char irc_channel[32]="";
 char irc_trade_channel[32]="";
@@ -195,6 +199,9 @@ void irc_send(char *buf)
 
 void irc_parse_sub(int fd, char *incoming_string)
 {
+	int i=0;
+	int authed=0;
+	char kami[256]; //[Zido]
 	char source[256];
 	char command[256];
 	char target[256];
@@ -248,6 +255,15 @@ void irc_parse_sub(int fd, char *incoming_string)
 	        	sprintf(send_string, "PONG %s", command);
 			irc_send(send_string);
 		}
+	}
+
+	//if((strcmpi(command,"privmsg")==0)&&(strcmpi(message,"pass "AUTH_PASS"")==0)&&(target[0]!='#'))
+
+	// Broadcast [Zido] (Work in Progress)
+	if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"!eakami %s",kami)>0)&&(strcmp(ALLOWED_NICK,source_nick)==0)) {
+		intif_GMmessage(kami,strlen(kami)+1,0);
+		sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
+		irc_send(send_string);
 	}
 
 	return;
