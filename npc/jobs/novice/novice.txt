@@ -144,7 +144,7 @@ new_1-1.gat,53,114,4	script	Shion	727,{
 		mes "You can even gain";
 		mes "experience like this!";
 		set NEW_MES_FLAG0,3;
-		set BaseExp,BaseExp+NextBaseExp;
+		set BaseExp,BaseExp+9;
 		next;
 		mes "[Shion]";
 		mes "Everything you'll learn here in the";
@@ -180,7 +180,7 @@ new_1-1.gat,53,114,4	script	Shion	727,{
 		mes "you need to be a little more polite.";
 		mes "This is a gift for you.";
 		set NEW_MES_FLAG0,3;
-		set BaseExp,BaseExp+NextBaseExp;
+		set BaseExp,BaseExp+9;
 		close;
 	case 3:	mes "[Shion]";
 		mes "The Training Grounds";
@@ -359,7 +359,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "I will increase your EXP.";
 			mes "watch how the EXP will change in the basic Information window.";
 			set NEW_MES_FLAG1,1;
-			set BaseExp,BaseExp+NextBaseExp;
+			set BaseExp,BaseExp+155;
 			next;
 			mes "[Chris]";
 			mes "Did you see it?";
@@ -391,7 +391,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "[Chris]";
 			mes "You might have gotten bored event hough I tried to teach you briefly.";
 			mes "It is Job EXP this time.";
-			set JobExp,JobExp+NextJobExp;
+			set JobExp,JobExp+151;
 			next;
 			mes "[Chris]";
 			mes "Increase Basic Skill with it.";
@@ -554,7 +554,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 			mes "Short key is ^0000FFS when holding down alt^000000.";
 			mes "From now we will say like 'alt+s'.";
 			set NEW_MES_FLAG2,1;
-			set JobExp,JobExp+NextJobExp;
+			set JobExp,JobExp+151;
 			next;
 			mes "[Shecil]";
 			mes "Did you open it?";	
@@ -583,7 +583,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 			mes "Try to double-click to use it!";
 			next;
 			mes "^0000FF-You received some Job Exp.-^000000";
-			set JobExp,JobExp+NextJobExp;
+			set JobExp,JobExp+151;
 			next;
 			mes "[Shecil]";
 			mes "How was it?";	
@@ -596,7 +596,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 			mes "Oh, I am feeling so good.";
 			mes "I will give you a Plus-Exp!";
 			mes "Since I am a cool guy!";
-			set BaseExp,BaseExp+NextBaseExp;
+			set BaseExp,BaseExp+155;
 			next;
 			mes "[Shecil]";
 			mes "My lecture ends here.";	
@@ -760,7 +760,7 @@ disable_items;
 				mes "And here's";
 				mes "a little reward";
 				mes "just for listening.";
-				set BaseExp,BaseExp+NextBaseExp;
+				set BaseExp,BaseExp+155;
 				next;
 			}
 			disable_items;	
@@ -792,7 +792,7 @@ disable_items;
 				mes "Hooray~!";
 				mes "You did it!";
 				mes "You deserve a reward!";
-				set BaseExp,BaseExp+NextBaseExp;
+				set BaseExp,BaseExp+155;
 				next;
 			}
 			disable_items;
@@ -812,7 +812,7 @@ disable_items;
 			mes "Do you understand ?";
 			mes "To use skills, you need some skill point,";
 			mes "and anyway, you cannot put passive skills in the 'Short key window'.";
-			set JobExp,JobExp+NextJobExp;
+			set JobExp,JobExp+151;
 			next;
 			mes "[Alice]";
 			mes "'Alice' simple and good quality lecture ends here.";
@@ -828,7 +828,7 @@ disable_items;
 			mes "And lastly...";
 			mes "I will give";
 			mes "you some Job experience!";
-			set JobExp,JobExp+NextJobExp;
+			set JobExp,JobExp+151;
 			next;
 			menu "What do I have to do?",-,"Then, Practical Course!",L_battle,"Cancel.",L_bye;
 				mes "[Alice]";
@@ -1061,7 +1061,7 @@ L_loop:
 			next;
 			if (!(NEW_LVUP0)) {
 				set NEW_LVUP0,1;
-				set BaseExp,BaseExp+NextBaseExp;
+				set BaseExp,BaseExp+155;
 			}
 			mes "[Kafra Employee]";
 			mes "The save Service";
@@ -1097,7 +1097,7 @@ L_loop:
 			mes "[Kafra Employee]";
 			if (!(NEW_JOBLVUP)) {
 				set NEW_JOBLVUP,1;
-				set JobExp,JobExp+NextJobExp;
+				set JobExp,JobExp+151;
 			}
 			mes "Remember though, that in the case of Equipment, each item takes up one Inventory Slot. The maximum number of items that can be placed in Kafra Storage is 30,000.";
 			break;
@@ -1147,6 +1147,8 @@ L_prewarp:
 		getitem 2112,1;
 		getitem 601,10;
 		getitem 602,2;
+		getitem 7059,5;
+		getitem 7060,5;
 	}
 	set NEW_MES_FLAG0,0;
 	set NEW_MES_FLAG1,0;
@@ -2010,7 +2012,7 @@ new_1-2.gat,38,182,4	script	Helper	92,{
 			mes "Then, I will give you some additional help.";
 			mes "Please be careful.";
 				set NEW_LVUP1,1;
-				set BaseExp,BaseExp+NextBaseExp;
+				set BaseExp,BaseExp+155;
 				getitem 569,50;
 		} else {
 			mes "[Kane]";
@@ -2079,7 +2081,7 @@ new_1-2.gat,17,182,6	script	Helper	84,{
 			mes "[Elmeen]";
 			mes "Haaaaaaa~!";
 			set NEW_MES_FLAG4,1;
-			set BaseExp,BaseExp+NextBaseExp;
+			set BaseExp,BaseExp+155;
 			next;
 			mes "[Elmeen]";
 			mes "Which subject";
@@ -2875,7 +2877,7 @@ L_cancel:
 	switch ( select("Yes.","No") ) {
 	case 1:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
 	case 2:	set NOV_3_THIEF,NOV_3_THIEF+1;
-		set NOV_3_MERCHAN,NOV_3_MERCHAN+1;
+		set NOV_3_MERCHANT,NOV_3_MERCHANT+1;
 	}
 	mes "[Hanson]";
 	mes "You are often upset to see someone";

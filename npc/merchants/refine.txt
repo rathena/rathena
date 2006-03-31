@@ -471,7 +471,7 @@ Lnosafe:
 	if(@refinecheck > 10) goto Lcancel3;
 	set @fullprice,@price * @refinecnt;
 	mes "[" + @name$ + "]";
-	mes "This will cost you " + @refinecnt + " " + @matname$ + " and " + @price + " Zeny... Is that ok?";
+	mes "This will cost you " + @refinecnt + " " + @matname$ + " and " + @fullprice + " Zeny... Is that ok?";
 	next;
 	menu "Yes...",-,"No...",Lcancel;
 		if(@refinecheck > @safe) goto Lwarn;
