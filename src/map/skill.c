@@ -659,6 +659,7 @@ int	skill_get_time2( int id ,int lv ){ skill_get (skill_db[id].upkeep_time2[lv-1
 int	skill_get_castdef( int id ){ skill_get (skill_db[id].cast_def_rate, id, 1); }
 int	skill_get_weapontype( int id ){ skill_get (skill_db[id].weapon, id, 1); }
 int	skill_get_ammotype( int id ){ skill_get (skill_db[id].ammo, id, 1); }
+int	skill_get_ammo_qty( int id, int lv ){ skill_get (skill_db[id].ammo_qty[lv-1], id, lv); }
 int	skill_get_inf2( int id ){ skill_get (skill_db[id].inf2, id, 1); }
 int	skill_get_castcancel( int id ){ skill_get (skill_db[id].castcancel, id, 1); }
 int	skill_get_maxcount( int id ){ skill_get (skill_db[id].maxcount, id, 1); }
@@ -7543,7 +7544,7 @@ static int skill_check_condition_hermod_sub(struct block_list *bl,va_list ap)
  */
 int skill_check_condition(struct map_session_data *sd,int skill, int lv, int type)
 {
-	int i,j,hp,sp,hp_rate,sp_rate,zeny,weapon,ammo,state,spiritball,mhp;
+	int i,j,hp,sp,hp_rate,sp_rate,zeny,weapon,ammo,ammo_qty,state,spiritball,mhp;
 	int index[10],itemid[10],amount[10];
 	int force_gem_flag = 0;
 	int delitem_flag = 1, checkitem_flag = 1;
@@ -7630,6 +7631,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	zeny = skill_db[j].zeny[lv-1];
 	weapon = skill_db[j].weapon;
 	ammo = skill_db[j].ammo;
+	ammo_qty = skill_db[j].ammo_qty[lv-1];
 	state = skill_db[j].state;
 	spiritball = skill_db[j].spiritball[lv-1];
 	mhp = skill_db[j].mhp[lv-1];	/* ?Á”ïHP */
@@ -7651,8 +7653,12 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	if (!ammo && sd->status.weapon == 11 && skill &&
 		skill != HT_PHANTASMIC && skill != GS_MAGICALBULLET &&
 		skill_get_type(skill) == BF_WEAPON && !(skill_get_nk(skill)&NK_NO_DAMAGE) 
-	)	//Assume this skill is using the weapon, therefore it requires arrows.
+	)
+	{	//Assume this skill is using the weapon, therefore it requires arrows.
 		ammo = 2;  //1<<1 <- look 1 (arrows) moved right 1 times.
+		ammo_qty = skill_get_num(skill, lv);
+		if (ammo_qty < 0) ammo_qty *= -1;
+	}
 
 	switch(skill) { // Check for cost reductions due to skills & SCs
 		case MC_MAMMONITE:
@@ -8081,6 +8087,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		if(ammo) { //Skill requires stuff equipped in the arrow slot.
 			if((i=sd->equip_index[10]) < 0 ||
 				!sd->inventory_data[i] ||
+				sd->status.inventory[i].amount < ammo_qty ||
 			  	!(ammo&1<<sd->inventory_data[i]->look)
 			) {
 				clif_arrow_fail(sd,0);
@@ -8217,7 +8224,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 				pc_delitem(sd,index[i],amount[i],0);		// ƒAƒCƒeƒ€?Á”ï
 		}
 		if (ammo && battle_config.arrow_decrement)
-			pc_delitem(sd,sd->equip_index[10],1,0);
+			pc_delitem(sd,sd->equip_index[10],ammo_qty,0);
 	}
 
 	if(type&2)
@@ -10653,8 +10660,8 @@ int skill_readdb(void)
 		char *split[50];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		j = skill_split_str(line,split,30);
-		if(j < 30 || split[29]==NULL)
+		j = skill_split_str(line,split,32);
+		if(j < 32 || split[31]==NULL)
 			continue;
 
 		i=atoi(split[0]);
@@ -10685,42 +10692,38 @@ int skill_readdb(void)
 			p++;
 		}
 
-		if( strcmpi(split[8],"hiding")==0 ) skill_db[i].state=ST_HIDING;
-		else if( strcmpi(split[8],"cloaking")==0 ) skill_db[i].state=ST_CLOAKING;
-		else if( strcmpi(split[8],"hidden")==0 ) skill_db[i].state=ST_HIDDEN;
-		else if( strcmpi(split[8],"riding")==0 ) skill_db[i].state=ST_RIDING;
-		else if( strcmpi(split[8],"falcon")==0 ) skill_db[i].state=ST_FALCON;
-		else if( strcmpi(split[8],"cart")==0 ) skill_db[i].state=ST_CART;
-		else if( strcmpi(split[8],"shield")==0 ) skill_db[i].state=ST_SHIELD;
-		else if( strcmpi(split[8],"sight")==0 ) skill_db[i].state=ST_SIGHT;
-		else if( strcmpi(split[8],"explosionspirits")==0 ) skill_db[i].state=ST_EXPLOSIONSPIRITS;
-		else if( strcmpi(split[8],"cartboost")==0 ) skill_db[i].state=ST_CARTBOOST;
-		else if( strcmpi(split[8],"recover_weight_rate")==0 ) skill_db[i].state=ST_RECOV_WEIGHT_RATE;
-		else if( strcmpi(split[8],"move_enable")==0 ) skill_db[i].state=ST_MOVE_ENABLE;
-		else if( strcmpi(split[8],"water")==0 ) skill_db[i].state=ST_WATER;
+		p = split[8];
+		for(j=0;j<32;j++){
+			l = atoi(p);
+			if (l)
+				skill_db[i].ammo |= 1<<l;
+			p=strchr(p,':');
+			if(!p)
+				break;
+			p++;
+		}
+		skill_split_atoi(split[9],skill_db[i].ammo_qty);
+
+		if( strcmpi(split[10],"hiding")==0 ) skill_db[i].state=ST_HIDING;
+		else if( strcmpi(split[10],"cloaking")==0 ) skill_db[i].state=ST_CLOAKING;
+		else if( strcmpi(split[10],"hidden")==0 ) skill_db[i].state=ST_HIDDEN;
+		else if( strcmpi(split[10],"riding")==0 ) skill_db[i].state=ST_RIDING;
+		else if( strcmpi(split[10],"falcon")==0 ) skill_db[i].state=ST_FALCON;
+		else if( strcmpi(split[10],"cart")==0 ) skill_db[i].state=ST_CART;
+		else if( strcmpi(split[10],"shield")==0 ) skill_db[i].state=ST_SHIELD;
+		else if( strcmpi(split[10],"sight")==0 ) skill_db[i].state=ST_SIGHT;
+		else if( strcmpi(split[10],"explosionspirits")==0 ) skill_db[i].state=ST_EXPLOSIONSPIRITS;
+		else if( strcmpi(split[10],"cartboost")==0 ) skill_db[i].state=ST_CARTBOOST;
+		else if( strcmpi(split[10],"recover_weight_rate")==0 ) skill_db[i].state=ST_RECOV_WEIGHT_RATE;
+		else if( strcmpi(split[10],"move_enable")==0 ) skill_db[i].state=ST_MOVE_ENABLE;
+		else if( strcmpi(split[10],"water")==0 ) skill_db[i].state=ST_WATER;
 		else skill_db[i].state=ST_NONE;
 
-		skill_split_atoi(split[9],skill_db[i].spiritball);
-		skill_db[i].itemid[0]=atoi(split[10]);
-		skill_db[i].amount[0]=atoi(split[11]);
-		skill_db[i].itemid[1]=atoi(split[12]);
-		skill_db[i].amount[1]=atoi(split[13]);
-		skill_db[i].itemid[2]=atoi(split[14]);
-		skill_db[i].amount[2]=atoi(split[15]);
-		skill_db[i].itemid[3]=atoi(split[16]);
-		skill_db[i].amount[3]=atoi(split[17]);
-		skill_db[i].itemid[4]=atoi(split[18]);
-		skill_db[i].amount[4]=atoi(split[19]);
-		skill_db[i].itemid[5]=atoi(split[20]);
-		skill_db[i].amount[5]=atoi(split[21]);
-		skill_db[i].itemid[6]=atoi(split[22]);
-		skill_db[i].amount[6]=atoi(split[23]);
-		skill_db[i].itemid[7]=atoi(split[24]);
-		skill_db[i].amount[7]=atoi(split[25]);
-		skill_db[i].itemid[8]=atoi(split[26]);
-		skill_db[i].amount[8]=atoi(split[27]);
-		skill_db[i].itemid[9]=atoi(split[28]);
-		skill_db[i].amount[9]=atoi(split[29]);
+		skill_split_atoi(split[11],skill_db[i].spiritball);
+		for (j = 0; j < 10; j++) {
+			skill_db[i].itemid[j]=atoi(split[12+ 2*j]);
+			skill_db[i].amount[j]=atoi(split[13+ 2*j]);
+		}
 	}
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
