@@ -1821,31 +1821,34 @@ int clif_spawnpc(struct map_session_data *sd) {
 
 	nullpo_retr(0, sd);
 
-	clif_set0078(sd, buf);
+	// Avoid bots/modified clients to view hidden GMs. [Lance]
+	if(!pc_isGM(sd) || !sd->status.option&OPTION_INVISIBLE){
+		clif_set0078(sd, buf);
 
 #if PACKETVER < 4
-	WBUFW(buf, 0) = 0x79;
-	WBUFW(buf,51) = clif_setlevel(sd->status.base_level);
-	clif_send(buf, packet_len_table[0x79], &sd->bl, AREA_WOS);
+		WBUFW(buf, 0) = 0x79;
+		WBUFW(buf,51) = clif_setlevel(sd->status.base_level);
+		clif_send(buf, packet_len_table[0x79], &sd->bl, AREA_WOS);
 #else
-	WBUFW(buf, 0) = 0x1d9;
-	WBUFW(buf,51) = clif_setlevel(sd->status.base_level);
-	clif_send(buf, packet_len_table[0x1d9], &sd->bl, AREA_WOS);
+		WBUFW(buf, 0) = 0x1d9;
+		WBUFW(buf,51) = clif_setlevel(sd->status.base_level);
+		clif_send(buf, packet_len_table[0x1d9], &sd->bl, AREA_WOS);
 #endif
 
-	if(sd->disguise > 0) {
-		int len;
-		memset(buf,0,packet_len_table[0x7c]);
-		WBUFW(buf,0)=0x7c;
-		WBUFL(buf,2)=-sd->bl.id;
-		WBUFW(buf,6)=sd->speed;
-		WBUFW(buf,12)=sd->sc.option;
-		WBUFW(buf,20)=sd->disguise;
-		WBUFPOS(buf,36,sd->bl.x,sd->bl.y);
-		clif_send(buf,packet_len_table[0x7c],&sd->bl,AREA);
+		if(sd->disguise > 0) {
+			int len;
+			memset(buf,0,packet_len_table[0x7c]);
+			WBUFW(buf,0)=0x7c;
+			WBUFL(buf,2)=-sd->bl.id;
+			WBUFW(buf,6)=sd->speed;
+			WBUFW(buf,12)=sd->sc.option;
+			WBUFW(buf,20)=sd->disguise;
+			WBUFPOS(buf,36,sd->bl.x,sd->bl.y);
+			clif_send(buf,packet_len_table[0x7c],&sd->bl,AREA);
 
-		len = clif_dis0078(sd,buf);
-		clif_send(buf,len,&sd->bl,AREA);
+			len = clif_dis0078(sd,buf);
+			clif_send(buf,len,&sd->bl,AREA);
+		}
 	}
 
 	if (sd->spiritball > 0)
@@ -4189,7 +4192,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 	nullpo_retv(dstsd);
 
 	// Hidden GMs will not be revealed by bots :) [Lance]
-	if((!dstsd->status.option&OPTION_INVISIBLE || !pc_isGM(dstsd)) || pc_isGM(sd)){
+	if(!pc_isGM(dstsd) || !dstsd->status.option&OPTION_INVISIBLE){
 		if(dstsd->ud.walktimer != -1){
 	#if PACKETVER < 4
 					WFIFOHEAD(sd->fd, packet_len_table[0x7b]);
@@ -4199,7 +4202,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 			len = clif_set007b(dstsd,WFIFOP(sd->fd,0));
 			WFIFOSET(sd->fd,len);
 			if(dstsd->disguise) {
-							WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
+				WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
 				len = clif_dis007b(dstsd,WFIFOP(sd->fd,0));
 				WFIFOSET(sd->fd,len);
 			}
@@ -4212,7 +4215,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 			len = clif_set0078(dstsd,WFIFOP(sd->fd,0));
 			WFIFOSET(sd->fd,len);
 			if(dstsd->disguise) {
-							WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
+				WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
 				len = clif_dis0078(dstsd,WFIFOP(sd->fd,0));
 				WFIFOSET(sd->fd,len);
 			}
@@ -4348,10 +4351,15 @@ int clif_fixpcpos(struct map_session_data *sd)
 
 	if(sd->ud.walktimer != -1){
 		len = clif_set007b(sd,buf);
-		clif_send(buf,len,&sd->bl,AREA);
 	} else {
 		len = clif_set0078(sd,buf);
+	}
+
+	// Prevent bots/modified clients to view hidden GMs [Lance]
+	if(!pc_isGM(sd) || !sd->status.option&OPTION_INVISIBLE){
 		clif_send(buf,len,&sd->bl,AREA);
+	} else {
+		clif_send(buf,len,&sd->bl,SELF);
 	}
 
 	return 0;

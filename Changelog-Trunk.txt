@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/03/31
+	* Should fix a bug in GM stealth mode (@hide). [Lance]
+
 2006/03/30
 	* Updated char name option. [Vicious]
 	* Added a missing return that fixes crashes on status_change_timer when
