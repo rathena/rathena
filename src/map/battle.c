@@ -3242,7 +3242,6 @@ int battle_check_undead(int race,int element)
 int battle_check_target( struct block_list *src, struct block_list *target,int flag)
 {
 	int m,state = 0; //Initial state none
-	int is_duel = 0; //Duel flag (see pk-mode checks)
 	int strip_enemy = 1; //Flag which marks whether to remove the BCT_ENEMY status if it's also friend/ally.
 	struct block_list *s_bl= src, *t_bl= target;
 
@@ -3291,7 +3290,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	{
 		case BL_PC:
 		{
-			struct map_session_data *sd = (struct map_session_data *)t_bl;
+			TBL_PC *sd = (TBL_PC*)t_bl;
 			if (sd->invincible_timer != -1 || pc_isinvisible(sd))
 				return -1; //Cannot be targeted yet.
 			if (sd->state.monster_ignore && src->type == BL_MOB)
@@ -3305,7 +3304,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 		case BL_MOB:
 		{
-			struct mob_data *md = (struct mob_data *)t_bl;
+			TBL_MOB *md = (TBL_MOB*)t_bl;
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperiums owned by Guilds on non-woe times.
 			if (md->special_state.ai == 2)
@@ -3350,28 +3349,27 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	{
 		case BL_PC:
 		{
-			struct map_session_data *sd = (struct map_session_data *) s_bl;
+			TBL_PC *sd = (TBL_PC*) s_bl;
 			if (sd->special_state.killer && s_bl != t_bl)
 			{
 				state |= BCT_ENEMY; //Is on a killing rampage :O
 				strip_enemy = 0;
 			} else
-			if (sd->duel_group && // Duel [LuzZza]
-				!((!battle_config.duel_allow_pvp && map[m].flag.pvp) ||
-				(!battle_config.duel_allow_gvg && map_flag_gvg(m)))) {
-				if (t_bl->type == BL_PC && t_bl != s_bl &&
-					(sd->duel_group == ((struct map_session_data *)t_bl)->duel_group))
-				{
-					state |= BCT_ENEMY;
-					strip_enemy = 0;
-					is_duel = 1;
-				} else if (t_bl != s_bl) {
-					// You can't target anything out of your duel
+			if (sd->duel_group && t_bl != s_bl && // Duel [LuzZza]
+				!(
+					(!battle_config.duel_allow_pvp && map[m].flag.pvp) ||
+					(!battle_config.duel_allow_gvg && map_flag_gvg(m))
+				))
+		  	{
+				if (t_bl->type == BL_PC &&
+					(sd->duel_group == ((TBL_PC*)t_bl)->duel_group))
+					//Duel targets can ONLY be your enemy, nothing else.
+					return (BCT_ENEMY&flag)?1:-1;
+				else // You can't target anything out of your duel
 					return 0;
-				}
 			}
 			if (map_flag_gvg(m) && !sd->status.guild_id &&
-				t_bl->type == BL_MOB && ((struct mob_data *)t_bl)->guardian_data)
+				t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data)
 				return 0; //If you don't belong to a guild, can't target guardians/emperium.
 			if (t_bl->type != BL_PC)
 				state |= BCT_ENEMY; //Natural enemy.
@@ -3379,16 +3377,16 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 		case BL_MOB:
 		{
-			struct mob_data *md = (struct mob_data *)s_bl;
+			TBL_MOB*md = (TBL_MOB*)s_bl;
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
 			if (!md->special_state.ai) { //Normal mobs.
-				if (t_bl->type == BL_MOB && !((struct mob_data*)t_bl)->special_state.ai)
+				if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
 					state |= BCT_PARTY; //Normal mobs with no ai are friends.
 				else
 					state |= BCT_ENEMY; //However, all else are enemies.
 			} else {
-				if (t_bl->type == BL_MOB && !((struct mob_data*)t_bl)->special_state.ai)
+				if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
 					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
 			}
 			if (md->master_id && (s_bl = map_id2bl(md->master_id)) == NULL)
@@ -3397,10 +3395,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 		case BL_PET:
 		{
-			struct pet_data *pd = (struct pet_data *)s_bl;
+			TBL_PET *pd = (TBL_PET*)s_bl;
 			if (t_bl->type != BL_MOB && flag&BCT_ENEMY)
 				return 0; //Pet may not attack non-mobs/items.
-			if (t_bl->type == BL_MOB && ((struct mob_data *)t_bl)->guardian_data && flag&BCT_ENEMY)
+			if (t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data && flag&BCT_ENEMY)
 				return 0; //pet may not attack Guardians/Emperium
 			if (t_bl->type != BL_PC)
 				state |= BCT_ENEMY; //Stock enemy type.
@@ -3454,10 +3452,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				state |= BCT_ENEMY;
 		}
 		if (state&BCT_ENEMY && battle_config.pk_mode && !map_flag_gvg(m) &&
-			s_bl->type == BL_PC && t_bl->type == BL_PC && !is_duel) //+check for duel [LuzZza]
+			s_bl->type == BL_PC && t_bl->type == BL_PC)
 		{	//Prevent novice engagement on pk_mode (feature by Valaris)
-			struct map_session_data* sd = (struct map_session_data*)s_bl,
-			  	*sd2 = (struct map_session_data*)t_bl;
+			TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
 			if (
 				(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
 				(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
@@ -3474,13 +3471,13 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	} else { //Non pvp/gvg, check party/guild settings.
 		if (flag&BCT_PARTY || state&BCT_ENEMY) {
 			int s_party = status_get_party_id(s_bl);
-			if(!is_duel && s_party && s_party == status_get_party_id(t_bl)) // +check for duel [LuzZza]
+			if(s_party && s_party == status_get_party_id(t_bl))
 				state |= BCT_PARTY;
 		}
 		if (flag&BCT_GUILD || state&BCT_ENEMY) {
 			int s_guild = status_get_guild_id(s_bl);
 			int t_guild = status_get_guild_id(t_bl);
-			if(!is_duel && s_guild && t_guild && (s_guild == t_guild || guild_idisallied(s_guild, t_guild))) //+check for duel [LuzZza]
+			if(s_guild && t_guild && (s_guild == t_guild || guild_idisallied(s_guild, t_guild)))
 				state |= BCT_GUILD;
 		}
 	}
