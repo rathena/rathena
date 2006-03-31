@@ -1021,32 +1021,33 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 	//Set miscellaneous data that needs be filled regardless of hit/miss
-	if(sd && (sd->status.weapon == 11 || sd->status.weapon == 17 || sd->status.weapon == 18
-		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21)) {
-		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-		flag.arrow = 1;
+	if(sd) {
+		switch (sd->status.weapon) {
+			case 11:
+			case 17:
+			case 18:
+			case 19:
+			case 20:
+			case 21:
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
+				flag.arrow = 1;
+				break;
+		}
 	} else if (status_get_range(src) > 3)
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 
-	
+	if(skill_num && skill_get_arrowtype(skill_num)) {
+		//Skills that require a consumable are also long-ranged arrow-types
+		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
+		flag.arrow = 1;
+	}
+
 	if(skill_num){
 		wd.flag=(wd.flag&~BF_SKILLMASK)|BF_SKILL;
 		switch(skill_num)
 		{
-			case AC_DOUBLE:
-			case AC_SHOWER:
-			case AC_CHARGEARROW:
-			case BA_MUSICALSTRIKE:
-			case DC_THROWARROW:
-			case CG_ARROWVULCAN:
-			case AS_VENOMKNIFE:
-			case HT_POWER:
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-				flag.arrow = 1;
-				break;
-
 			case HT_PHANTASMIC:
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
+			case GS_MAGICALBULLET:
 				flag.arrow = 0;
 				break;
 
@@ -1103,22 +1104,6 @@ static struct Damage battle_calc_weapon_attack(
 			//Until they're at right position - gs_arrow- [Vicious]
 			case GS_RAPIDSHOWER:
 				wd.div_= 5;
-			case GS_BULLSEYE:
-			case GS_CRACKER:
-			case GS_TRACKING:
-			case GS_PIERCINGSHOT:
-			case GS_DUST:
-			case GS_SPREADATTACK:
-			case NJ_SYURIKEN:
-			case NJ_KUNAI:
-			case NJ_HUUMA:
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-				flag.arrow = 1;
-				break;
-			
-			case GS_MAGICALBULLET:
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-				flag.arrow = 0;
 				break;
 		}
 	}

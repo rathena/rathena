@@ -28,6 +28,17 @@
 =========================
 
 03/31
+	* Changed the look field of all arrows to 1. [Skotlex]
+	* Added column "RequiredArrowType" to skill_require_db, set to 1 all
+	  arrow-based skills. The rest of skills need to be set up! For example,
+	  let's say that throwable knives are type 2. On the item_db set up the
+	  item's look/view to be 2, and then in skill_require_db for the skill
+	  AS_VENOMKNIFE, set the required Arrow to 2 as well. This needs be done for
+	  all GS/NJ skills with throwable type requirements (bullets/darts/etc). I
+	  don't do it because I don't really know how many types there really are (I
+	  could have just added bullet/dagger and leave it at that, but I do not know
+	  if different skills require different types of "ammo". [Skotlex]
+
 	* Adjusted the range of Wall of Fog to 9 and Spider Web to 7 [Skotlex]
 03/30
 	* Fixed a lot of Jnames [Poki#3]

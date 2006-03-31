@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/03/31
+	* Added support for ArrowType requirement on skills. It checks for having
+	  an item equipped on the arrow-slot who's view has to match with the
+	  required arrow-type (works the same way it does for weapons). [Skotlex]
+	* Skills will automatically be ranged and arrow-types when they have a
+	  arrow-requirement in battle_calc_weapon_attack [Skotlex]
+	* Skills will automatically consume arrows if used with a bow and the skill
+	  is an attack weapon-based skill even if the skill_require_db doesn't
+	  specifies arrow requirements (this is for stuff like backstab used with
+	  bows) [Skotlex]
 	* Fixed an infinite recursion in the Wedding Recall skills. [Skotlex]
 	* UNT_ATTACK_SKILLS unit packets won't be sent to the client as they are
 	  supposed to be invisible anyway. [Skotlex]
