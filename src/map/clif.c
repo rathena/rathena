@@ -5311,6 +5311,9 @@ int clif_skill_setunit(struct skill_unit *unit)
 
 	bl=map_id2bl(unit->group->src_id);
 
+	if (unit->group->unit_id == UNT_ATTACK_SKILLS)
+		return 0;	//These are invisible client-side. [Skotlex]
+		
 #if PACKETVER < 3
 	memset(WBUFP(buf, 0),0,packet_len_table[0x11f]);
 	WBUFW(buf, 0)=0x11f;
