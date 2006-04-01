@@ -645,7 +645,7 @@ struct {
 	{buildin_classchange,"classchange","ii"},
 	{buildin_misceffect,"misceffect","i"},
 	{buildin_soundeffect,"soundeffect","si"},
-	{buildin_soundeffectall,"soundeffectall","si"},	// SoundEffectAll [Codemaster]
+	{buildin_soundeffectall,"soundeffectall","*"},	// SoundEffectAll [Codemaster]
 	{buildin_strmobinfo,"strmobinfo","ii"},	// display mob data [Valaris]
 	{buildin_guardian,"guardian","siisii*i"},	// summon guardians
 	{buildin_guardianinfo,"guardianinfo","i"},	// display guardian data [Valaris]
@@ -8148,23 +8148,55 @@ int buildin_soundeffect(struct script_state *st)
 	return 0;
 }
 
+int soundeffect_sub(struct block_list* bl,va_list ap)
+{
+	char *name;
+	int type;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, ap);
+
+	name = va_arg(ap,char *);
+	type = va_arg(ap,int);
+
+	clif_soundeffect((struct map_session_data *)bl, bl, name, type);
+
+    return 0;	
+}
+
 int buildin_soundeffectall(struct script_state *st)
 {
 	// [Lance] - Improved.
 	struct map_session_data *sd=NULL;
-	char *name;
-	int type=0;
+	char *name, *map = NULL;
+	struct block_list *bl;
+	int type, coverage, x0, y0, x1, y1;
 
 	name=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	type=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	//if(sd)
-	//{
-		if(st->oid)
-			clif_soundeffectall(map_id2bl(st->oid),name,type);
-		else
-			if((sd=script_rid2sd(st)))
-				clif_soundeffectall(&sd->bl,name,type);
-	//}
+	coverage=conv_num(st,& (st->stack->stack_data[st->start+4]));
+
+	if(st->oid)
+		bl = map_id2bl(st->oid);
+	else
+		bl = &(script_rid2sd(st)->bl);
+
+	if(bl){
+		if(coverage < 23){
+			clif_soundeffectall(bl,name,type,coverage);
+		}else {
+			if(st->end > st->start+9){
+				map=conv_str(st,& (st->stack->stack_data[st->start+5]));
+				x0 = conv_num(st,& (st->stack->stack_data[st->start+6]));
+				y0 = conv_num(st,& (st->stack->stack_data[st->start+7]));
+				x1 = conv_num(st,& (st->stack->stack_data[st->start+8]));
+				y1 = conv_num(st,& (st->stack->stack_data[st->start+9]));
+				map_foreachinarea(soundeffect_sub,map_mapname2mapid(map),x0,y0,x1,y1,BL_PC,name,type);
+			} else {
+				ShowError("buildin_soundeffectall: insufficient arguments for specific area broadcast.\n");
+			}
+		}
+	}
 	return 0;
 }
 /*==========================================

@@ -8317,10 +8317,15 @@ void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *na
 	return;
 }
 
-int clif_soundeffectall(struct block_list *bl, char *name, int type)
+int clif_soundeffectall(struct block_list *bl, char *name, int type, int coverage)
 {
 	unsigned char buf[40];
 	memset(buf, 0, packet_len_table[0x1d3]);
+
+	if(coverage < 0 || coverage > 22){
+		ShowError("clif_soundeffectall: undefined coverage.\n");
+		return 0;
+	}
 
 	nullpo_retr(0, bl);
 
@@ -8329,7 +8334,7 @@ int clif_soundeffectall(struct block_list *bl, char *name, int type)
 	WBUFB(buf,26)=type;
 	WBUFL(buf,27)=0;
 	WBUFL(buf,31)=bl->id;
-	clif_send(buf, packet_len_table[0x1d3], bl, AREA);
+	clif_send(buf, packet_len_table[0x1d3], bl, coverage);
 
 	return 0;
 }

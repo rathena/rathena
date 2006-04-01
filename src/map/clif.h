@@ -121,7 +121,7 @@ void clif_divorced(struct map_session_data *sd, char *);
 void clif_adopt_process(struct map_session_data *sd);
 void clif_sitting(struct map_session_data *sd);
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *name,int type);
-int clif_soundeffectall(struct block_list *bl, char *name, int type);
+int clif_soundeffectall(struct block_list *bl, char *name, int type, int coverage);
 
 // trade
 int clif_traderequest(struct map_session_data *sd,char *name);
