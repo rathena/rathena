@@ -2715,6 +2715,36 @@ int clif_changelook(struct block_list *bl,int type,int val)
 	return 0;
 }
 
+//Sends a change-base-look packet required for traps as they are triggered.
+void clif_changetraplook(struct block_list *bl,int val)
+{
+	unsigned char buf[32];
+#if PACKETVER < 4
+	WBUFW(buf,0)=0xc3;
+	WBUFL(buf,2)=bl->id;
+	WBUFB(buf,6)=LOOK_BASE;
+	WBUFB(buf,7)=val;
+	clif_send(buf,packet_len_table[0xc3],bl,AREA);
+#else
+	if (val > 255)
+	{
+		WBUFW(buf,0)=0x1d7;
+		WBUFL(buf,2)=bl->id;
+		WBUFB(buf,6)=LOOK_BASE;
+		WBUFW(buf,7)=val;
+		WBUFW(buf,9)=0;
+		clif_send(buf,packet_len_table[0x1d7],bl,AREA);
+	} else {
+		WBUFW(buf,0)=0xc3;
+		WBUFL(buf,2)=bl->id;
+		WBUFB(buf,6)=LOOK_BASE;
+		WBUFB(buf,7)=val;
+		clif_send(buf,packet_len_table[0xc3],bl,AREA);
+	}
+#endif
+
+	
+}
 //For the stupid cloth-dye bug. Resends the given view data
 //to the area specified by bl.
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area)

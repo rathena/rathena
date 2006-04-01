@@ -5107,7 +5107,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					case UNT_CLAYMORETRAP:
 					case UNT_TALKIEBOX:
 						su->group->unit_id = UNT_USED_TRAPS;
-						clif_changelook(bl,LOOK_BASE,su->group->unit_id);
+						clif_changetraplook(bl, UNT_USED_TRAPS);
 						su->group->limit=DIFF_TICK(tick+1500,su->group->tick);
 						su->limit=DIFF_TICK(tick+1500,su->group->tick);
 				}
@@ -6845,7 +6845,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		{
 			skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv)|0x10000);
 			sg->unit_id = UNT_USED_TRAPS;
-			clif_changelook(&src->bl,LOOK_BASE,sg->unit_id);
+			clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
 			sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 		}
@@ -6882,7 +6882,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	case UNT_LANDMINE:
 		skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 		sg->unit_id = UNT_USED_TRAPS;
-		clif_changelook(&src->bl,LOOK_BASE,UNT_FIREPILLAR_ACTIVE);
+		clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
 		sg->limit=DIFF_TICK(tick,sg->tick)+1500;
 		sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 		break;
@@ -6900,7 +6900,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
 			&src->bl,tick,splash_count);
 		sg->unit_id = UNT_USED_TRAPS;
-		clif_changelook(&src->bl,LOOK_BASE,sg->unit_id);
+		clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 		sg->limit=DIFF_TICK(tick,sg->tick)+1500;
 		sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 		break;
@@ -6911,7 +6911,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		if (sg->val2 == 0){
 			clif_talkiebox(&src->bl, sg->valstr);
 			sg->unit_id = UNT_USED_TRAPS;
-			clif_changelook(&src->bl, LOOK_BASE, sg->unit_id);
+			clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 			sg->limit = DIFF_TICK(tick, sg->tick) + 5000;
 			sg->val2 = -1; //“¥‚ñ‚¾
 			sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
@@ -9592,7 +9592,7 @@ int skill_unit_timer_sub( struct block_list *bl, va_list ap )
 		switch(group->unit_id){
 			case UNT_BLASTMINE:
 				group->unit_id = UNT_USED_TRAPS;
-				clif_changelook(bl,LOOK_BASE,group->unit_id);
+				clif_changetraplook(bl, UNT_USED_TRAPS);
 				group->limit=DIFF_TICK(tick+1500,group->tick);
 				unit->limit=DIFF_TICK(tick+1500,group->tick);
 				break;

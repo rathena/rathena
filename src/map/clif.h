@@ -77,6 +77,7 @@ int clif_changestatus(struct block_list*,int,int);	//area
 int clif_damage(struct block_list *,struct block_list *,unsigned int,int,int,int,int,int,int);	// area
 #define clif_takeitem(src,dst) clif_damage(src,dst,0,0,0,0,0,1,0)
 int clif_changelook(struct block_list *,int,int);	// area
+void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area); //area specified in 'area'
 int clif_arrowequip(struct map_session_data *sd,int val); //self
 int clif_arrow_fail(struct map_session_data *sd,int type); //self
