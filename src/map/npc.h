@@ -10,14 +10,17 @@
 #define WARP_DEBUG_CLASS 722
 #define INVISIBLE_CLASS 32767
 
+#define MAX_NPC_CLASS 1000
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
-#define npcdb_checkid(id) ((id >=  46 && id <= 125) || (id >= 700 && id <= 1000))
+#define npcdb_checkid(id) ((id >=  46 && id <= 125) || id == 139 || (id >= 700 && id <= MAX_NPC_CLASS))
 
 #ifdef PCRE_SUPPORT
 void npc_chat_finalize(struct npc_data *nd);
 int mob_chat_sub(struct block_list *bl, va_list ap);
 #endif
+
+struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list *bl, va_list ap);
 int npc_event_dequeue(struct map_session_data *sd);
 int npc_event_timer(int tid,unsigned int tick,int id,int data);
@@ -39,8 +42,6 @@ int npc_globalmessage(const char *name,char *mes);
 int npc_enable(const char *name,int flag);
 int npc_changename(const char *name, const char *newname, short look); // [Lance]
 struct npc_data* npc_name2id(const char *name);
-
-int npc_changestate(struct npc_data *nd,int state,int type);
 
 int npc_get_new_npc_id(void);
 

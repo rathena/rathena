@@ -4,6 +4,19 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/01
+	* Added structure view_data to handle sprite information for all characters
+	  (equipment, weapons, hair, dyes, etc). [Skotlex]
+	* Rewrote several clif functions to adapt to the new view_data class.
+	  [Skotlex]
+	* Rewrote the way cloth dye packets are resent to optimize bandwidth usage.
+	  [Skotlex]
+	* Fixed the npc_item_flag thing (enable_items/disable_items script command)
+	  [Skotlex]
+	* Rewrote the disguise implementation to be bandwidth friendly. [Skotlex]
+	* Modified the hide options to change your class to INVISIBLE_CLASS, since
+	  such classes don't even get their view packets sent around. [Skotlex]
+	* Added class 139 to npcdb_checkid which was required by some npcs in the
+	  swordman quest. [Skotlex]
 	* April fool! Improved soundeffectall script command. (No, this is not a lie) [Lance]
 
 2006/03/31

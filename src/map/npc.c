@@ -63,6 +63,15 @@ static struct tm ev_tm_b;	// 時計イベント用
 
 static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
 
+//For holding the view data of npc classes. [Skotlex]
+static struct view_data npc_viewdb[MAX_NPC_CLASS];
+
+struct view_data* npc_get_viewdata(int class_)
+{	//Returns the viewdata for normal npc classes.
+	if (npcdb_checkid(class_) || class_ == WARP_CLASS)
+		return &npc_viewdb[class_];
+	return NULL;
+}
 /*==========================================
  * NPCの無効化/有効化
  * npc_enable
@@ -102,7 +111,7 @@ int npc_enable(const char *name,int flag)
 
 	if (flag&1) {	// 有効化
 		nd->flag&=~1;
-		clif_spawnnpc(nd);
+		clif_spawn(&nd->bl);
 	}else if (flag&2){
 		nd->flag&=~1;
 		nd->sc.option = 0x0000;
@@ -1341,7 +1350,6 @@ int npc_unload (struct npc_data *nd)
 			}
 		}
 	}
-
 	aFree(nd);
 
 	return 0;
@@ -1487,7 +1495,9 @@ int npc_parse_warp (char *w1,char *w2,char *w3,char *w4)
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = WARP;
 	map_addblock(&nd->bl);
-	clif_spawnnpc(nd);
+	unit_dataset(&nd->bl);
+	status_set_viewdata(&nd->bl, nd->class_);
+	clif_spawn(&nd->bl);
 	strdb_put(npcname_db, nd->name, nd);
 
 	return 0;
@@ -1577,7 +1587,8 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 	if (m >= 0) {
 		nd->n = map_addnpc(m,nd);
 		map_addblock(&nd->bl);
-		clif_spawnnpc(nd);
+		status_set_viewdata(&nd->bl, nd->class_);
+		clif_spawn(&nd->bl);
 	} else
 		// we skip map_addnpc, but still add it to the list of ID's
 		map_addiddb(&nd->bl);
@@ -1880,14 +1891,15 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	if (m >= 0) {
 		nd->n = map_addnpc(m, nd);
 		map_addblock(&nd->bl);
-
 		if (evflag) {	// イベント型
 			struct event_data *ev = (struct event_data *)aCalloc(1, sizeof(struct event_data));
 			ev->nd = nd;
 			ev->pos = 0;
 			strdb_put(ev_db, nd->exname, ev);
-		} else
-			clif_spawnnpc(nd);
+		} else {
+			status_set_viewdata(&nd->bl, nd->class_);
+			clif_spawn(&nd->bl);
+		}
 	} else {
 		// we skip map_addnpc, but still add it to the list of ID's
 		map_addiddb(&nd->bl);
@@ -2675,6 +2687,7 @@ static void npc_debug_warps_sub(struct npc_data *nd)
 		);
 	
 }
+
 static void npc_debug_warps()
 {
 	int m, i;
@@ -2691,9 +2704,14 @@ int do_init_npc(void)
 {
 	struct npc_src_list *nsl;
 	time_t last_time = time(0);
-	int busy = 0;
+	int busy;
 	char c = '-';
 
+	//Stock view data for normal npcs.
+	memset(&npc_viewdb, 0, sizeof(npc_viewdb));
+	for (busy = 0; busy < MAX_NPC_CLASS; busy++) 
+		npc_viewdb[busy].class_ = busy;
+	busy = 0;
 	// indoorrswtable.txt and etcinfo.txt [Celest]
 	if (battle_config.indoors_override_grffile)
 		npc_read_indoors();

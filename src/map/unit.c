@@ -57,21 +57,9 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 
-	switch (bl->type) {
-	case BL_PC:
+	if (bl->type == BL_PC)
 		clif_walkok((TBL_PC*)bl);
-		clif_movechar((TBL_PC*)bl);
-		break;
-	case BL_MOB:
-		clif_movemob((TBL_MOB*)bl);
-		break;
-	case BL_PET:
-		clif_movepet((TBL_PET*)bl);
-		break;
-	case BL_NPC:
-		clif_movenpc((TBL_NPC*)bl);
-		break;
-	}
+	clif_move(bl);
 
 	ud->state.change_walk_target=0;
 
@@ -151,22 +139,9 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		
 		// バシリカ判定
 
-		ud->walktimer = 1;
-		switch (bl->type) {
-		case BL_PC:
-			map_foreachinmovearea(clif_pcoutsight,bl->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_ALL,sd);
-			break;
-		case BL_MOB:
-			map_foreachinmovearea(clif_moboutsight,bl->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_PC,md);
-			break;
-		case BL_PET:
-			map_foreachinmovearea(clif_petoutsight,bl->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_PC,(TBL_PET*)bl);
-			break;
-		case BL_NPC:
-			map_foreachinmovearea(clif_npcoutsight,bl->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_PC,(TBL_NPC*)bl);
-			break;	
-		}
-		ud->walktimer = -1;
+		map_foreachinmovearea(clif_outsight,bl->m,
+			x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,
+			dx,dy,sd?BL_ALL:BL_PC,bl);
 
 		if(md && md->min_chase > md->db->range2)
 			md->min_chase--;
@@ -176,20 +151,9 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		map_moveblock(bl, x, y, tick);
 
 		ud->walktimer = 1;
-		switch (bl->type) {
-		case BL_PC:
-			map_foreachinmovearea(clif_pcinsight,bl->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,BL_ALL,sd);
-			break;
-		case BL_MOB:
-			map_foreachinmovearea(clif_mobinsight,bl->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,BL_PC,md);
-			break;
-		case BL_PET:
-			map_foreachinmovearea(clif_petinsight,bl->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,BL_PC,(TBL_PET*)bl);
-			break;
-		case BL_NPC:
-			map_foreachinmovearea(clif_npcinsight,bl->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,-dx,-dy,BL_PC,(TBL_NPC*)bl);
-			break;
-		}
+		map_foreachinmovearea(clif_insight,bl->m,
+			x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,
+			-dx,-dy,sd?BL_ALL:BL_PC,bl);
 		ud->walktimer = -1;
 		
 		if(sd) {
@@ -219,7 +183,6 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 				clif_displaymessage(sd->fd,"[Miracle of the Sun, Moon and Stars]");
 				sc_start(&sd->bl,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
 			}
-
 		}
 	}
 
@@ -285,14 +248,11 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 	int dx,dy,dir;
 	struct unit_data        *ud = NULL;
 	struct map_session_data *sd = NULL;
-	struct mob_data         *md = NULL;
 	struct walkpath_data wpd;
 
 	nullpo_retr(0, bl);
 	if( BL_CAST( BL_PC,  bl, sd ) ) {
 		ud = &sd->ud;
-	} else if( BL_CAST( BL_MOB, bl, md ) ) {
-		ud = &md->ud;
 	} else
 		ud = unit_bl2ud(bl);
 	
@@ -311,37 +271,16 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
 
-	switch (bl->type) {
-		case BL_PC:
-		map_foreachinmovearea(clif_pcoutsight,bl->m,bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,dx,dy,BL_ALL,sd);
-		break;
-		case BL_MOB:
-		map_foreachinmovearea(clif_moboutsight,bl->m,bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,dx,dy,BL_PC,md);
-		break;
-		case BL_PET:
-		map_foreachinmovearea(clif_petoutsight,bl->m,bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,dx,dy,BL_PC,(TBL_PET*)bl);
-		break;
-		case BL_NPC:
-		map_foreachinmovearea(clif_petoutsight,bl->m,bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,dx,dy,BL_PC,(TBL_NPC*)bl);
-		break;
-	}
+	map_foreachinmovearea(clif_outsight,bl->m,
+		bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,
+		dx,dy,sd?BL_ALL:BL_PC,bl);
 
 	map_moveblock(bl, dst_x, dst_y, gettick());
+	
 	ud->walktimer = 1;
-	switch (bl->type) {
-	case BL_PC:
-		map_foreachinmovearea(clif_pcinsight,bl->m,bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,-dx,-dy,BL_ALL,sd);
-		break;
-	case BL_MOB:
-		map_foreachinmovearea(clif_mobinsight,bl->m,bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,-dx,-dy,BL_PC,md);
-		break;
-	case BL_PET:
-		map_foreachinmovearea(clif_petinsight,bl->m,bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,-dx,-dy,BL_PC,(TBL_PET*)bl);
-		break;
-	case BL_NPC:
-		map_foreachinmovearea(clif_npcinsight,bl->m,bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,-dx,-dy,BL_PC,(TBL_NPC*)bl);
-		break;
-	}
+	map_foreachinmovearea(clif_insight,bl->m,
+		bl->x-AREA_SIZE,bl->y-AREA_SIZE,bl->x+AREA_SIZE,bl->y+AREA_SIZE,
+		-dx,-dy,sd?BL_ALL:BL_PC,bl);
 	ud->walktimer = -1;
 		
 	if(sd) {
@@ -454,21 +393,11 @@ int unit_warp(struct block_list *bl,int m,int x,int y,int type)
 	bl->m=m;
 
 	map_addblock(bl);
-	switch (bl->type) {
-	case BL_PC:
-		clif_spawnpc((TBL_PC*)bl);
-	break;
-	case BL_MOB:
-		clif_spawnmob((TBL_MOB*)bl);
-		mob_warpslave(bl,AREA_SIZE);
-	break;
-	case BL_PET:
-		clif_spawnpet((TBL_PET*)bl);
-	break;
-	case BL_NPC:
-		clif_spawnnpc((TBL_NPC*)bl);
-	break;
-	}
+	clif_spawn(bl);
+//This is broken because the mob already was changed from map.
+//Fortunately, the slave ai will make them chase their master automatically
+//	if (bl->type == BL_MOB)
+//		mob_warpslave(bl,AREA_SIZE);
 	skill_unit_move(bl,gettick(),1);
 	return 0;
 }
@@ -836,11 +765,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	}
 
 	if( casttime>0 || temp){ /* 詠唱が必要 */
-		if(sd && sd->disguise) { // [Valaris]
-			clif_skillcasting(src, src->id, target_id, 0,0, skill_num,0);
-			clif_skillcasting(src,-src->id, target_id, 0,0, skill_num,casttime);
-		} else
-			clif_skillcasting(src, src->id, target_id, 0,0, skill_num,casttime);
+
+		clif_skillcasting(src, src->id, target_id, 0,0, skill_num,casttime);
 
 		/* 詠唱反応モンスター */
 		if (sd && target->type == BL_MOB)
@@ -973,12 +899,7 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 	if( casttime>0 ) {
 		/* 詠唱が必要 */
 		unit_stop_walking( src, 1);		// 歩行停止
-		if(sd && sd->disguise) { // [Valaris]
-			clif_skillcasting(src, src->id, 0, skill_x,skill_y, skill_num,0);
-			clif_skillcasting(src,-src->id, 0, skill_x,skill_y, skill_num,casttime);
-		}
-		else
-			clif_skillcasting(src, src->id, 0, skill_x,skill_y, skill_num,casttime);
+		clif_skillcasting(src, src->id, 0, skill_x,skill_y, skill_num,casttime);
 	}
 
 	if( casttime<=0 )	/* 詠唱の無いものはキャンセルされない */
@@ -1502,7 +1423,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 				delete_timer(md->deletetimer,mob_timer_delete);
 			md->deletetimer=-1;
 			md->hp=0;
-			if(pcdb_checkid(mob_get_viewclass(md->class_))) //Player mobs are not removed automatically by the client.
+			if(pcdb_checkid(md->vd->class_)) //Player mobs are not removed automatically by the client.
 				clif_clearchar_delay(gettick()+3000,bl,0);
 			mob_deleteslave(md);
 

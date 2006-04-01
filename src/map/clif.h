@@ -50,24 +50,15 @@ int clif_clearchar(struct block_list*,int);	// area or fd
 int clif_clearchar_delay(unsigned int,struct block_list *,int);
 #define clif_clearchar_area(bl,type) clif_clearchar(bl,type)
 int clif_clearchar_id(int,int,int);
-int clif_spawnpc(struct map_session_data*);	//area
-int clif_spawnnpc(struct npc_data*);	// area
-int clif_spawnmob(struct mob_data*);	// area
-int clif_spawnpet(struct pet_data*);	// area
+int clif_spawn(struct block_list*);	//area
 int clif_walkok(struct map_session_data*);	// self
-int clif_movechar(struct map_session_data*);	// area
-int clif_movemob(struct mob_data*);	//area
-int clif_movepet(struct pet_data *pd);	//area
-int clif_movenpc(struct npc_data *nd);	// [Valaris]
+int clif_move(struct block_list*);	// area
 int clif_changemap(struct map_session_data*,short,int,int);	//self
 int clif_changemapserver(struct map_session_data*,char*,int,int,int,int);	//self
 int clif_blown(struct block_list *); // area
 int clif_slide(struct block_list *,int,int); // area
 int clif_fixpos(struct block_list *);	// area
-int clif_fixmobpos(struct mob_data *md);
-int clif_fixpcpos(struct map_session_data *sd);
-int clif_fixpetpos(struct pet_data *pd);
-int clif_fixnpcpos(struct npc_data *nd); // [Valaris]
+int clif_fixpos2(struct block_list *);	// area
 int clif_npcbuysell(struct map_session_data*,int);	//self
 int clif_buylist(struct map_session_data*,struct npc_data*);	//self
 int clif_selllist(struct map_session_data*);	//self
@@ -86,6 +77,7 @@ int clif_changestatus(struct block_list*,int,int);	//area
 int clif_damage(struct block_list *,struct block_list *,unsigned int,int,int,int,int,int,int);	// area
 #define clif_takeitem(src,dst) clif_damage(src,dst,0,0,0,0,0,1,0)
 int clif_changelook(struct block_list *,int,int);	// area
+void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area); //area specified in 'area'
 int clif_arrowequip(struct map_session_data *sd,int val); //self
 int clif_arrow_fail(struct map_session_data *sd,int type); //self
 int clif_arrow_create_list(struct map_session_data *sd);	//self
@@ -145,17 +137,11 @@ int clif_guildstorageequiplist(struct map_session_data *sd,struct guild_storage 
 int clif_updateguildstorageamount(struct map_session_data *sd,struct guild_storage *stor);
 int clif_guildstorageitemadded(struct map_session_data *sd,struct guild_storage *stor,int index,int amount);
 
-int clif_pcinsight(struct block_list *,va_list);	// map_forallinmovearea callback
-int clif_pcoutsight(struct block_list *,va_list);	// map_forallinmovearea callback
-int clif_mobinsight(struct block_list *,va_list);	// map_forallinmovearea callback
-int clif_moboutsight(struct block_list *,va_list);	// map_forallinmovearea callback
-int clif_petoutsight(struct block_list *bl,va_list ap);
-int clif_petinsight(struct block_list *bl,va_list ap);
-int clif_npcoutsight(struct block_list *bl,va_list ap);
-int clif_npcinsight(struct block_list *bl,va_list ap);
+int clif_insight(struct block_list *,va_list);	// map_forallinmovearea callback
+int clif_outsight(struct block_list *,va_list);	// map_forallinmovearea callback
 
 int clif_class_change(struct block_list *bl,int class_,int type);
-int clif_mob_class_change(struct mob_data *md,int class_);
+#define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
 int clif_mob_equip(struct mob_data *md,int nameid); // [Valaris]
 
 int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range);
@@ -334,6 +320,8 @@ int clif_disp_overhead(struct map_session_data *sd, char* mes);
 
 int do_final_clif(void);
 int do_init_clif(void);
+
+void clif_get_weapon_view(TBL_PC* sd, short *rhand, short *lhand);
 
 
 int clif_party_xy_remove(struct map_session_data *sd); //Fix for minimap [Kevin]

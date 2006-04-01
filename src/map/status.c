@@ -12,6 +12,7 @@
 #include "pc.h"
 #include "map.h"
 #include "pet.h"
+#include "npc.h"
 #include "mob.h"
 #include "clif.h"
 #include "guild.h"
@@ -626,8 +627,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	b_matk2 = sd->matk2;
 	b_mdef = sd->mdef;
 	b_mdef2 = sd->mdef2;
-	b_class = sd->view_class;
-	sd->view_class = sd->status.class_;
+	b_class = sd->vd.class_;
 	b_base_atk = sd->base_atk;
 
 	pc_calc_skilltree(sd);	// スキルツリ?の計算
@@ -798,14 +798,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->add_dmg_count)
 		+ sizeof(sd->add_mdmg_count)
 		);
-
-	if(!sd->state.disguised && sd->disguise) {
-		pc_stop_walking(sd,0);
-		clif_clearchar(&sd->bl, 0);
-		sd->disguise=0;
-		clif_changeoption(&sd->bl);
-		clif_spawnpc(sd);
-	}
 
 	for(i=0;i<10;i++) {
 		current_equip_item_index = index = sd->equip_index[i]; //We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
@@ -1601,28 +1593,12 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		calculating = 0;
 		return 0;
 	}
-
 	
-	if(sd->sc.data[SC_WEDDING].timer != -1 && sd->view_class != JOB_WEDDING)
-		sd->view_class=JOB_WEDDING;
-	
-	if(sd->sc.data[SC_XMAS].timer != -1 && sd->view_class != JOB_XMAS)
-		sd->view_class=JOB_XMAS;
-
-	if(b_class != sd->view_class) {
-		clif_changelook(&sd->bl,LOOK_BASE,sd->view_class);
-#if PACKETVER < 4
-		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
-#else
-		clif_changelook(&sd->bl,LOOK_WEAPON,0);
-#endif
-	//Restoring cloth dye color after the view class changes. [Skotlex]
-	// Added Xmas Suit [Valaris]
-	if(battle_config.save_clothcolor && sd->status.clothes_color > 0 &&
-		((sd->view_class != JOB_WEDDING && sd->view_class !=JOB_XMAS) || (sd->view_class==JOB_WEDDING && !battle_config.wedding_ignorepalette) ||
-			 (sd->view_class==JOB_XMAS && !battle_config.xmas_ignorepalette)))
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+	if(b_class != sd->vd.class_) {
+		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+		clif_changelook(&sd->bl,LOOK_WEAPON,sd->vd.weapon);
+		clif_changelook(&sd->bl,LOOK_SHIELD,sd->vd.shield);
+		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 	}
 
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
@@ -2991,7 +2967,7 @@ int status_get_speed(struct block_list *bl)
 			speed-=((struct mob_data *)bl)->level - ((struct mob_data *)bl)->db->lv;
 	}
 	else if(bl->type==BL_PET)
-		speed = ((struct pet_data *)bl)->msd->petDB->speed;
+		speed = ((struct pet_data *)bl)->speed;
 	else if(bl->type==BL_NPC)	//Added BL_NPC (Skotlex)
 		speed = ((struct npc_data *)bl)->speed;
 
@@ -3208,6 +3184,8 @@ int status_get_guild_id(struct block_list *bl)
 			return msd->status.guild_id; //Alchemist's mobs [Skotlex]
 		return 0; //No guild.
 	}
+	if (bl->type == BL_NPC && bl->subtype == SCRIPT)
+		return ((TBL_NPC*)bl)->u.scr.guild_id;
 	if(bl->type==BL_SKILL)
 		return ((struct skill_unit *)bl)->group->guild_id;
 	return 0;
@@ -3300,6 +3278,98 @@ int status_isimmune(struct block_list *bl)
 	if (sc && sc->count && sc->data[SC_HERMODE].timer != -1)
 		return 1;
 	return 0;
+}
+
+struct view_data *status_get_viewdata(struct block_list *bl)
+{
+	nullpo_retr(NULL, bl);
+	switch (bl->type)
+	{
+		case BL_PC:
+			return &((TBL_PC*)bl)->vd;
+		case BL_MOB:
+			return ((TBL_MOB*)bl)->vd;
+		case BL_PET:
+			return &((TBL_PET*)bl)->vd;
+		case BL_NPC:
+			return ((TBL_NPC*)bl)->vd;
+	}
+	return NULL;
+}
+
+void status_set_viewdata(struct block_list *bl, int class_)
+{
+	struct view_data* vd;
+	nullpo_retv(bl);
+	if (mobdb_checkid(class_) || mob_is_clone(class_))
+		vd =  mob_get_viewdata(class_);
+	else if (npcdb_checkid(class_) || (bl->type == BL_NPC && class_ == WARP_CLASS))
+		vd = npc_get_viewdata(class_);
+	else
+		vd = NULL;
+
+	switch (bl->type) {
+	case BL_PC:
+		{
+			TBL_PC* sd = (TBL_PC*)bl;
+			if (pcdb_checkid(class_)) {
+				sd->vd.class_ = class_;
+				clif_get_weapon_view(sd, &sd->vd.weapon, &sd->vd.shield);
+				sd->vd.head_top = sd->status.head_top;
+				sd->vd.head_mid = sd->status.head_mid;
+				sd->vd.head_bottom = sd->status.head_bottom;
+				sd->vd.hair_style = sd->status.hair;
+				sd->vd.hair_color = sd->status.hair_color;
+				sd->vd.cloth_color = sd->status.clothes_color;
+				sd->vd.sex = sd->status.sex;
+			} else if (vd)
+				memcpy(&sd->vd, vd, sizeof(struct view_data));
+			else if (battle_config.error_log)
+				ShowError("status_set_viewdata (PC): No view data for class %d\n", class_);
+		}
+	break;
+	case BL_MOB:
+		{
+			TBL_MOB* md = (TBL_MOB*)bl;
+			if (vd)
+				md->vd = vd;
+			else if (battle_config.error_log)
+				ShowError("status_set_viewdata (MOB): No view data for class %d\n", class_);
+		}
+	break;
+	case BL_PET:
+		{
+			TBL_PET* pd = (TBL_PET*)bl;
+			if (vd) {
+				memcpy(&pd->vd, vd, sizeof(struct view_data));
+				if (!pcdb_checkid(vd->class_)) {
+					pd->vd.hair_style = battle_config.pet_hair_style;
+					if(pd->equip) {
+						pd->vd.shield = itemdb_viewid(pd->equip);
+						if (!pd->vd.shield)
+							pd->vd.shield = pd->equip;
+					}
+				}
+			} else if (battle_config.error_log)
+				ShowError("status_set_viewdata (PET): No view data for class %d\n", class_);
+		}
+	break;
+	case BL_NPC:
+		{
+			TBL_NPC* nd = (TBL_NPC*)bl;
+			if (vd)
+				nd->vd = vd;
+			else if (battle_config.error_log)
+				ShowError("status_set_viewdata (NPC): No view data for class %d\n", class_);
+		}
+	break;
+	}
+	vd = status_get_viewdata(bl);
+	if (vd && vd->cloth_color && (
+		(vd->class_==JOB_WEDDING && !battle_config.wedding_ignorepalette)
+		|| (vd->class_==JOB_XMAS && !battle_config.xmas_ignorepalette)
+	))
+		vd->cloth_color = 0;
 }
 
 struct status_change *status_get_sc(struct block_list *bl)
@@ -3980,24 +4050,20 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_XMAS: // Xmas Suit [Valaris]
 		case SC_WEDDING:	//結婚用(結婚衣裳になって?くのが?いとか)
-		if (sd)
-		{	//Change look.
-			pc_stop_attack(sd);
-			if(type==SC_WEDDING)
-				sd->view_class = JOB_WEDDING;
-			else if(type==SC_XMAS)
-				sd->view_class = JOB_XMAS;
-			clif_changelook(&sd->bl,LOOK_BASE,sd->view_class);
-#if PACKETVER < 4
-			clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-			clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
-#else
-			clif_changelook(&sd->bl,LOOK_WEAPON,0);
-#endif
-			if(battle_config.save_clothcolor && sd->status.clothes_color > 0 && 
-				((type==SC_WEDDING && !battle_config.wedding_ignorepalette) || 
-					(type==SC_XMAS && !battle_config.xmas_ignorepalette)))
-				clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+		{
+			struct view_data *vd = status_get_viewdata(bl);
+			if (vd) {
+				//Store previous values as they could be removed.
+				val1 = vd->class_;
+				val2 = vd->weapon;
+				val3 = vd->shield;
+				val4 = vd->cloth_color;
+				unit_stop_attack(bl);
+				clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:JOB_XMAS);
+				clif_changelook(bl,LOOK_WEAPON,0);
+				clif_changelook(bl,LOOK_SHIELD,0);
+				clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
+			}
 		}
 			break;
 		case SC_NOCHAT:	//チャット禁止?態
@@ -4341,6 +4407,13 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val4 = gettick(); //Store time at which you started running.
 			calc_flag = 1;
 			break;
+
+		case SC_TRICKDEAD:			/* 死んだふり */
+		{
+			struct view_data *vd = status_get_viewdata(bl);
+			if (vd) vd->dead_sit = 1;
+			break;
+		}
 		case SC_BLESSING:
 		case SC_CONCENTRATION:	/* コンセントレ?ション */case SC_ETERNALCHAOS:		/* エタ?ナルカオス */
 		case SC_DRUMBATTLE:			/* ?太鼓の響き */
@@ -4428,7 +4501,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_POEMBRAGI:			/* ブラギの詩 */
 		case SC_UGLYDANCE:			/* 自分勝手なダンス */
 		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
-		case SC_TRICKDEAD:			/* 死んだふり */
 		case SC_FREEZE:				/* 凍結 */
 		case SC_STUN:				/* スタン（val2にミリ秒セット） */
 		case SC_ENERGYCOAT:			/* エナジ?コ?ト */
@@ -4849,18 +4921,23 @@ int status_change_end( struct block_list* bl , int type,int tid )
 
 			case SC_XMAS: // Xmas Suit [Valaris]
 			case SC_WEDDING:	//結婚用(結婚衣裳になって?くのが?いとか)
-			if (sd) {
-				//Restore look
-				sd->view_class = sd->status.class_;
-				clif_changelook(&sd->bl,LOOK_BASE,sd->view_class);
-#if PACKETVER < 4
-				clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-				clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
-#else
-				clif_changelook(&sd->bl,LOOK_WEAPON,0);
-#endif
-				if(battle_config.save_clothcolor && sd->status.clothes_color > 0)
-					clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+			{
+				struct view_data *vd = status_get_viewdata(bl);
+				if (vd) {
+					if (sd) {
+						//Load data from sd->status.* as the stored values could have changed.
+						status_set_viewdata(bl, sd->status.class_);
+					} else {
+						vd->class_ = sc->data[type].val1;
+						vd->weapon = sc->data[type].val2;
+						vd->shield = sc->data[type].val3;
+						vd->cloth_color = sc->data[type].val4;
+					}
+					clif_changelook(bl,LOOK_BASE,vd->class_);
+					clif_changelook(bl,LOOK_WEAPON,vd->weapon);
+					clif_changelook(bl,LOOK_SHIELD,vd->shield);
+					clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
+				}
 			}
 			break;
 			case SC_RUN://駆け足
@@ -5047,6 +5124,13 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_MOONLIT: //Clear the unit effect. [Skotlex]
 				skill_setmapcell(bl,CG_MOONLIT, sc->data[SC_MOONLIT].val1, CELL_CLRMOONLIT);
 				break;
+			case SC_TRICKDEAD:			/* 死んだふり */
+			{
+				struct view_data *vd = status_get_viewdata(bl);
+				if (vd) vd->dead_sit = 0;
+				break;
+			}
+
 			//gs_something2 [Vicious]
 			case SC_MADNESSCANCEL:
 			case SC_ADJUSTMENT:

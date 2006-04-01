@@ -166,6 +166,8 @@ enum {
 // Checks if SD is in a trade/shop (where messing with the inventory can cause problems/exploits)
 #define clif_trading(sd) (sd->npc_id || sd->vender_id || sd->trade_partner)
 
+//To idenfity disguised characters.
+#define disguised(bl) (bl->type==BL_PC && ((TBL_PC*)bl)->disguise)
 static char map_ip_str[16];
 static in_addr_t map_ip;
 static in_addr_t bind_ip = INADDR_ANY;
@@ -234,7 +236,7 @@ int clif_countusers(void)
 
 	for(i = 0; i < fd_max; i++) {
 		if (session[i] && (sd = (struct map_session_data*)session[i]->session_data) && sd->state.auth &&
-		    !(battle_config.hide_GM_session && pc_isGM(sd)))
+				!(battle_config.hide_GM_session && pc_isGM(sd)))
 			users++;
 	}
 	return users;
@@ -244,7 +246,7 @@ int clif_countusers(void)
  * 全てのclientに対してfunc()実行
  *------------------------------------------
  */
- 
+
 int clif_foreachclient(int (*func)(struct map_session_data*, va_list),...) //recoded by sasuke, bug when player count gets higher [Kevin]
 {
 	int i;
@@ -257,7 +259,7 @@ int clif_foreachclient(int (*func)(struct map_session_data*, va_list),...) //rec
 		if ( session[i] ) {
 			sd = (struct map_session_data*)session[i]->session_data;
 			if ( sd && session[i]->func_parse == clif_parse &&
-				sd->state.auth && !sd->state.waitingdisconnect )
+					sd->state.auth && !sd->state.waitingdisconnect )
 				func(sd, ap);
 		}
 	}
@@ -276,14 +278,14 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	struct map_session_data *sd;
 	unsigned char *buf;
 	int len, type;
-	
+
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
 	nullpo_retr(0, sd = (struct map_session_data *)bl);
 
 	if (!sd->fd) //Avoid attempting to send to disconnected chars (may prevent buffer overrun errors?) [Skotlex]
 		return 0;
-	
+
 	buf = va_arg(ap,unsigned char*);
 	len = va_arg(ap,int);
 	nullpo_retr(0, src_bl = va_arg(ap,struct block_list*));
@@ -321,18 +323,18 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 				//given buffer to prevent intravision affecting the packet as 
 				//it's being received by everyone. [Skotlex]
 				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 )
-					&& bl != src_bl && WFIFOW(sd->fd,0) == 0x0196)
-			  	{	//New intravision method, just modify the status change/start packet. [Skotlex]
+						&& bl != src_bl && WFIFOW(sd->fd,0) == 0x0196)
+				{	//New intravision method, just modify the status change/start packet. [Skotlex]
 					switch (WFIFOW(sd->fd,2)) {
-					case SI_HIDING:
-					case SI_CLOAKING:
-					case SI_CHASEWALK:
-						WFIFOW(sd->fd,2) = SI_INTRAVISION;
+						case SI_HIDING:
+						case SI_CLOAKING:
+						case SI_CHASEWALK:
+							WFIFOW(sd->fd,2) = SI_INTRAVISION;
 					}
 				}
-					
+
 				/* Previous implementation.
-				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 ) && bl != src_bl) {
+					if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 ) && bl != src_bl) {
 
 					struct status_change *sc = status_get_sc(src_bl);
 					if(sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK)))
@@ -591,7 +593,7 @@ int clif_authok(struct map_session_data *sd) {
 		return 0;
 	fd = sd->fd;
 
-        WFIFOHEAD(fd, packet_len_table[0x73]);
+	WFIFOHEAD(fd, packet_len_table[0x73]);
 	WFIFOW(fd, 0) = 0x73;
 	WFIFOL(fd, 2) = gettick();
 	WFIFOPOS(fd, 6, sd->bl.x, sd->bl.y);
@@ -610,7 +612,7 @@ int clif_authfail_fd(int fd, int type) {
 	if (!fd || !session[fd] || session[fd]->func_parse != clif_parse) //clif_authfail should only be invoked on players!
 		return 0;
 
-        WFIFOHEAD(fd, packet_len_table[0x81]);
+	WFIFOHEAD(fd, packet_len_table[0x81]);
 	WFIFOW(fd,0) = 0x81;
 	WFIFOB(fd,2) = type;
 	WFIFOSET(fd,packet_len_table[0x81]);
@@ -643,7 +645,7 @@ int clif_charselectok(int id) {
 		return 1;
 
 	fd = sd->fd;
-        WFIFOHEAD(fd, packet_len_table[0xb3]);
+	WFIFOHEAD(fd, packet_len_table[0xb3]);
 	WFIFOW(fd,0) = 0xb3;
 	WFIFOB(fd,2) = 1;
 	WFIFOSET(fd,packet_len_table[0xb3]);
@@ -709,7 +711,7 @@ int clif_clearflooritem(struct flooritem_data *fitem, int fd) {
 	if (fd == 0) {
 		clif_send(buf, packet_len_table[0xa1], &fitem->bl, AREA);
 	} else {
-                WFIFOHEAD(fd,packet_len_table[0xa1]);
+		WFIFOHEAD(fd,packet_len_table[0xa1]);
 		memcpy(WFIFOP(fd,0), buf, 6);
 		WFIFOSET(fd,packet_len_table[0xa1]);
 	}
@@ -729,11 +731,11 @@ int clif_clearchar(struct block_list *bl, int type) {
 	WBUFW(buf,0) = 0x80;
 	WBUFL(buf,2) = bl->id;
 	WBUFB(buf,6) = type;
-	clif_send(buf, packet_len_table[0x80], bl, type == 1 ? AREA : AREA_WOS);
 
-	if(bl->type==BL_PC && ((struct map_session_data *)bl)->disguise) {
+	clif_send(buf, packet_len_table[0x80], bl, type == 1 ? AREA : AREA_WOS);
+	if(disguised(bl)) {
 		WBUFL(buf,2) = -bl->id;
-		clif_send(buf, packet_len_table[0x80], bl, AREA);
+		clif_send(buf, packet_len_table[0x80], bl, SELF);
 	}
 
 	return 0;
@@ -773,131 +775,190 @@ int clif_clearchar_id(int id, int type, int fd) {
 	return 0;
 }
 
-//Small define to specify the weapon view sprite, makes code easier to read down below... [Skotlex]
-#define clif_weapon_viewid(sd, n) ((sd->equip_index[n] >= 0 && sd->inventory_data[sd->equip_index[n]])?(\
-	(sd->inventory_data[sd->equip_index[n]]->view_id > 0)?sd->inventory_data[sd->equip_index[n]]->view_id: \
-	sd->status.inventory[sd->equip_index[n]].nameid):0)
+void clif_get_weapon_view(TBL_PC* sd, short *rhand, short *lhand)
+{
+#if PACKETVER > 3
+	struct item_data *id;
+#endif
+	if (sd->vd.class_ == JOB_XMAS || sd->vd.class_ == JOB_WEDDING)
+	{
+		*rhand = *lhand = 0;
+		return;
+	}
 
-#define clif_deadsit(sd) (((sd)->sc.count && (sd)->sc.data[SC_TRICKDEAD].timer != -1)?1:sd->state.dead_sit)
+#if PACKETVER < 4
+	*rhand = sd->status.weapon;
+	*lhand = sd->status.shield;
+#else
+	if (sd->equip_index[9] >= 0 && sd->inventory_data[sd->equip_index[9]]) 
+	{
+		id = sd->inventory_data[sd->equip_index[9]];
+		if (id->view_id > 0)
+			*rhand = id->view_id;
+		else
+			*rhand = id->nameid;
+	} else
+		*rhand = 0;
+
+	if (sd->equip_index[8] >= 0 && sd->equip_index[8] != sd->equip_index[9]
+			&& sd->inventory_data[sd->equip_index[8]]) 
+	{
+		id = sd->inventory_data[sd->equip_index[8]];
+		if (id->view_id > 0)
+			*lhand = id->view_id;
+		else
+			*lhand = id->nameid;
+	} else
+		*lhand = 0;
+#endif
+}	
+
+static void clif_get_guild_data(struct block_list *bl, long *guild_id, long *emblem_id) 
+{
+	//TODO: There has to be a way to clean this up.
+	switch (bl->type) {
+		case BL_PC:
+			*guild_id = ((TBL_PC*)bl)->status.guild_id;
+			*emblem_id = ((TBL_PC*)bl)->guild_emblem_id;
+			break;
+		case BL_MOB:
+			if (((TBL_MOB*)bl)->guardian_data) {
+				*guild_id =((TBL_MOB*)bl)->guardian_data->guild_id;
+				*emblem_id =((TBL_MOB*)bl)->guardian_data->emblem_id;
+			}
+			break;
+		case BL_NPC:
+			if (bl->subtype == SCRIPT && ((TBL_NPC*)bl)->u.scr.guild_id > 0) {
+				struct guild *g = guild_search(((TBL_NPC*)bl)->u.scr.guild_id);
+				if (g) {
+					*guild_id =g->guild_id;
+					*emblem_id =g->emblem_id;
+				}
+			}
+			break;
+		default:
+			*guild_id = status_get_guild_id(bl);
+	}
+	return;
+}
 /*==========================================
  *
  *------------------------------------------
  */
-static int clif_set0078(struct map_session_data *sd, unsigned char *buf) {
-	int sdoption;
-	
-	nullpo_retr(0, sd);
-	
-	// Disable showing Falcon when player is hide [LuzZza]
-	if(sd->disguise)
-		sdoption = OPTION_INVISIBLE;
-	else {
-		sdoption = sd->sc.option;
-		if(sdoption&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE))
-			sdoption &= ~OPTION_FALCON;
-	}
-#if PACKETVER < 4
-	memset(buf,0,packet_len_table[0x78]);
+static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned char *buf) {
+	struct status_change *sc;
+	struct map_session_data *sd;
+	long guild_id=0, emblem_id=0, lv;
+	unsigned short dir;
 
-	WBUFW(buf,0)=0x78;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=sd->speed;
-	WBUFW(buf,8)=sd->sc.opt1;
-	WBUFW(buf,10)=sd->sc.opt2;
-	WBUFW(buf,12)=sdoption;
-	WBUFW(buf,14)=sd->view_class;
-	WBUFW(buf,16)=sd->status.hair;
-	if (sd->view_class != JOB_WEDDING && sd->view_class !=JOB_XMAS)
-		WBUFW(buf,18) = sd->status.weapon;
-	else
-		WBUFW(buf,18)=0;
-	WBUFW(buf,20)=sd->status.head_bottom;
-	WBUFW(buf,22)=sd->status.shield;
-	WBUFW(buf,24)=sd->status.head_top;
-	WBUFW(buf,26)=sd->status.head_mid;
-	WBUFW(buf,28)=sd->status.hair_color;
-	WBUFW(buf,30)=sd->status.clothes_color;
-	WBUFW(buf,32)=sd->head_dir;
-	WBUFL(buf,34)=sd->status.guild_id;
-	WBUFL(buf,38)=sd->guild_emblem_id;
-	WBUFW(buf,42)=sd->status.manner;
-	WBUFB(buf,44)=sd->status.karma;
-	WBUFB(buf,45)=sd->sex;
-	WBUFPOS(buf,46,sd->bl.x,sd->bl.y);
-	WBUFB(buf,48)|=sd->ud.dir&0x0f;
-	WBUFB(buf,49)=5;
-	WBUFB(buf,50)=5;
-	WBUFB(buf,51)=clif_deadsit(sd);
-	WBUFW(buf,52)=clif_setlevel(sd->status.base_level);
+	nullpo_retr(0, bl);
+	BL_CAST(BL_PC, bl, sd);
+	sc = status_get_sc(bl);
 
-	return packet_len_table[0x78];
+	clif_get_guild_data(bl, &guild_id, &emblem_id);
+	dir = unit_getdir(bl);
+	lv = status_get_lv(bl);
+	if(pcdb_checkid(vd->class_)) { 
+#if PACKETVER > 3
+		memset(buf,0,packet_len_table[0x1d8]);
+
+		WBUFW(buf,0)=0x1d8;
+		WBUFL(buf,2)=bl->id;
+		WBUFW(buf,6)=status_get_speed(bl);
+		if (sc) {
+			WBUFW(buf,8)=sc->opt1;
+			WBUFW(buf,10)=sc->opt2;
+			WBUFW(buf,12)=sc->option;
+			WBUFW(buf,42)=sc->opt3;
+		}
+		WBUFW(buf,14)=vd->class_;
+		WBUFW(buf,16)=vd->hair_style;
+		WBUFW(buf,18)=vd->weapon;
+		WBUFW(buf,20)=vd->shield;
+		WBUFW(buf,22)=vd->head_bottom;
+		WBUFW(buf,24)=vd->head_top;
+		WBUFW(buf,26)=vd->head_mid;
+		WBUFW(buf,28)=vd->hair_color;
+		WBUFW(buf,30)=vd->cloth_color;
+		WBUFW(buf,32)=sd?sd->head_dir:dir;
+		WBUFL(buf,34)=guild_id;
+		WBUFL(buf,38)=emblem_id;
+		if (sd) {
+			WBUFW(buf,40)=sd->status.manner;
+			WBUFB(buf,44)=sd->status.karma;
+		}
+		WBUFB(buf,45)=vd->sex;
+		WBUFPOS(buf,46,bl->x,bl->y);
+		WBUFB(buf,48)|=dir & 0x0f;
+		WBUFB(buf,49)=5;
+		WBUFB(buf,50)=5;
+		WBUFB(buf,51)=vd->dead_sit;
+		WBUFW(buf,52)=clif_setlevel(lv);
+		return packet_len_table[0x1d8];
 #else
-	memset(buf,0,packet_len_table[0x1d8]);
+		memset(buf,0,packet_len_table[0x78]);
 
-	WBUFW(buf,0)=0x1d8;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=sd->speed;
-	WBUFW(buf,8)=sd->sc.opt1;
-	WBUFW(buf,10)=sd->sc.opt2;
-	WBUFW(buf,12)=sdoption;
-	WBUFW(buf,14)=sd->view_class;
-	WBUFW(buf,16)=sd->status.hair;
-	if (sd->view_class != JOB_WEDDING && sd->view_class !=JOB_XMAS)
-		WBUFW(buf,18) = clif_weapon_viewid(sd,9);
-	else
-		WBUFW(buf,18) = 0;
-	if (sd->equip_index[8] != sd->equip_index[9] && sd->view_class != JOB_WEDDING && sd->view_class != JOB_XMAS)
-		WBUFW(buf,20) = clif_weapon_viewid(sd,8);
-	else
-		WBUFW(buf,20) = 0;
-	WBUFW(buf,22)=sd->status.head_bottom;
-	WBUFW(buf,24)=sd->status.head_top;
-	WBUFW(buf,26)=sd->status.head_mid;
-	WBUFW(buf,28)=sd->status.hair_color;
-	WBUFW(buf,30)=sd->status.clothes_color;
-	WBUFW(buf,32)=sd->head_dir;
-	WBUFL(buf,34)=sd->status.guild_id;
-	WBUFW(buf,38)=sd->guild_emblem_id;
-	WBUFW(buf,40)=sd->status.manner;
-	WBUFW(buf,42)=sd->sc.opt3;
-	WBUFB(buf,44)=sd->status.karma;
-	WBUFB(buf,45)=sd->sex;
-	WBUFPOS(buf,46,sd->bl.x,sd->bl.y);
-	WBUFB(buf,48)|=sd->ud.dir & 0x0f;
-	WBUFB(buf,49)=5;
-	WBUFB(buf,50)=5;
-	WBUFB(buf,51)=clif_deadsit(sd);
-	WBUFW(buf,52)=clif_setlevel(sd->status.base_level);
-
-	return packet_len_table[0x1d8];
+		WBUFW(buf,0)=0x78;
+		WBUFL(buf,2)=bl->id;
+		WBUFW(buf,6)=status_get_speed(bl);
+		if (sc) {
+			WBUFW(buf,8)=sc->opt1;
+			WBUFW(buf,10)=sc->opt2;
+			WBUFW(buf,12)=sc->option;
+		}
+		WBUFW(buf,14)=vd->class_;
+		WBUFW(buf,16)=vd->hair_style;
+		WBUFW(buf,18)=vd->weapon;
+		WBUFW(buf,20)=vd->head_bottom;
+		WBUFW(buf,22)=vd->shield;
+		WBUFW(buf,24)=vd->head_top;
+		WBUFW(buf,26)=vd->head_mid;
+		WBUFW(buf,28)=vd->hair_color;
+		WBUFW(buf,30)=vd->cloth_color;
+		WBUFW(buf,32)=sd?sd->head_dir:dir;
+		WBUFL(buf,34)=guild_id;
+		WBUFL(buf,38)=emblem_id;
+		if (sd) {
+			WBUFW(buf,42)=sd->status.manner;
+			WBUFB(buf,44)=sd->status.karma;
+		}
+		WBUFB(buf,45)=vd->sex;
+		WBUFPOS(buf,46,bl->x,bl->y);
+		WBUFB(buf,48)|=dir&0x0f;
+		WBUFB(buf,49)=5;
+		WBUFB(buf,50)=5;
+		WBUFB(buf,51)=vd->dead_sit;
+		WBUFW(buf,52)=clif_setlevel(lv);
+		return packet_len_table[0x78];
 #endif
-}
-
-// non-moving function for disguises [Valaris]
-static int clif_dis0078(struct map_session_data *sd, unsigned char *buf) {
-
-	nullpo_retr(0, sd);
-
+	}
+	//Non-player sprites need just a few fields filled.
 	memset(buf,0,packet_len_table[0x78]);
 
 	WBUFW(buf,0)=0x78;
-	WBUFL(buf,2)=-sd->bl.id;
-	WBUFW(buf,6)=sd->speed;
-	WBUFW(buf,8)=0;
-	WBUFW(buf,10)=0;
-	WBUFW(buf,12)=sd->sc.option;
-	WBUFW(buf,14)=sd->disguise;
-	//WBUFL(buf,34)=sd->status.guild_id;
-	//WBUFL(buf,38)=sd->guild_emblem_id;
-	WBUFW(buf,42)=0;
-	WBUFB(buf,44)=0;
-	WBUFPOS(buf,46,sd->bl.x,sd->bl.y);
-	WBUFB(buf,48)|=sd->ud.dir&0x0f;
+	WBUFL(buf,2)=bl->id;
+	WBUFW(buf,6)=status_get_speed(bl);
+	if (sc) {
+		WBUFW(buf,8)=sc->opt1;
+		WBUFW(buf,10)=sc->opt2;
+		WBUFW(buf,12)=sc->option;
+	}
+	WBUFW(buf,14)=vd->class_;
+	WBUFW(buf,16)=vd->hair_style;  //Required for pets.
+	WBUFW(buf,22)=vd->shield;	//Pet armor
+	if (bl->type == BL_NPC && vd->class_ == 722)
+	{	//The hell, why flags work like this?
+		WBUFL(buf,22)=emblem_id;
+		WBUFL(buf,26)=guild_id;
+	}
+	WBUFW(buf,32)=dir;
+	WBUFL(buf,34)=guild_id;
+	WBUFL(buf,38)=emblem_id;
+	WBUFPOS(buf,46,bl->x,bl->y);
+	WBUFB(buf,48)|=dir&0x0f;
 	WBUFB(buf,49)=5;
 	WBUFB(buf,50)=5;
-	WBUFB(buf,51)=clif_deadsit(sd);
-	WBUFW(buf,52)=0;
-
+	WBUFW(buf,52)=clif_setlevel(lv);
 	return packet_len_table[0x78];
 }
 
@@ -905,122 +966,134 @@ static int clif_dis0078(struct map_session_data *sd, unsigned char *buf) {
  *
  *------------------------------------------
  */
-static int clif_set007b(struct map_session_data *sd,unsigned char *buf) {
+static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit_data *ud, unsigned char *buf) {
+	struct status_change *sc;
+	struct map_session_data *sd;
+	long guild_id=0, emblem_id=0, lv;
 
-	int sdoption;
+	nullpo_retr(0, bl);
+	BL_CAST(BL_PC, bl, sd);
+	sc = status_get_sc(bl);
 	
-	nullpo_retr(0, sd);
+	clif_get_guild_data(bl, &guild_id, &emblem_id);
+	lv = status_get_lv(bl);
 	
-	// Disable showing Falcon when player is hide [LuzZza]
-	if(sd->disguise)
-		sdoption = OPTION_INVISIBLE;
-	else {
-		sdoption = sd->sc.option;
-		if(sdoption&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE))
-			sdoption &= ~OPTION_FALCON;
+	if(pcdb_checkid(vd->class_)) { 
+#if PACKETVER > 3
+		memset(buf,0,packet_len_table[0x1da]);
+
+		WBUFW(buf,0)=0x1da;
+		WBUFL(buf,2)=bl->id;
+		WBUFW(buf,6)=status_get_speed(bl);
+		if (sc) {
+			WBUFW(buf,8)=sc->opt1;
+			WBUFW(buf,10)=sc->opt2;
+			WBUFW(buf,12)=sc->option;
+			WBUFW(buf,46)=sc->opt3;
+		}
+		WBUFW(buf,14)=vd->class_;
+		WBUFW(buf,16)=vd->hair_style;
+		WBUFW(buf,18)=vd->weapon;
+		WBUFW(buf,20)=vd->shield;
+		WBUFW(buf,22)=vd->head_bottom;
+		WBUFL(buf,24)=gettick();
+		WBUFW(buf,28)=vd->head_top;
+		WBUFW(buf,30)=vd->head_mid;
+		WBUFW(buf,32)=vd->hair_color;
+		WBUFW(buf,34)=vd->cloth_color;
+		WBUFW(buf,36)=sd?sd->head_dir:unit_getdir(bl);
+		WBUFL(buf,38)=guild_id;
+		WBUFW(buf,42)=emblem_id;
+		if (sd) {
+			WBUFW(buf,44)=sd->status.manner;
+			WBUFB(buf,48)=sd->status.karma;
+		}
+		WBUFB(buf,49)=vd->sex;
+		WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y);
+		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
+		WBUFB(buf,56)=5;
+		WBUFB(buf,57)=5;
+		WBUFW(buf,58)=clif_setlevel(lv);
+
+		return packet_len_table[0x1da];
+#else
+		memset(buf,0,packet_len_table[0x7b]);
+
+		WBUFW(buf,0)=0x7b;
+		WBUFL(buf,2)=bl->id;
+		WBUFW(buf,6)=status_get_speed(bl);
+		if (sc) {
+			WBUFW(buf,8)=sc->opt1;
+			WBUFW(buf,10)=sc->opt2;
+			WBUFW(buf,12)=sc->option;
+			WBUFW(buf,46)=sc->opt3;
+		}
+		WBUFW(buf,14)=vd->class_;
+		WBUFW(buf,16)=vd->hair_style;
+		WBUFW(buf,18)=vd->weapon;
+		WBUFW(buf,20)=vd->head_bottom;
+		WBUFL(buf,22)=gettick();
+		WBUFW(buf,26)=vd->shield;
+		WBUFW(buf,28)=vd->head_top;
+		WBUFW(buf,30)=vd->head_mid;
+		WBUFW(buf,32)=vd->hair_color;
+		WBUFW(buf,34)=vd->cloth_color;
+		WBUFW(buf,36)=sd?sd->head_dir:unit_getdir(bl);
+		WBUFL(buf,38)=guild_id;
+		WBUFL(buf,42)=emblem_id;
+		if (sd)
+			WBUFB(buf,48)=sd->status.karma;
+		WBUFB(buf,49)=vd->sex;
+		WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y);
+		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
+		WBUFB(buf,56)=5;
+		WBUFB(buf,57)=5;
+		WBUFW(buf,58)=clif_setlevel(lv);
+
+		return packet_len_table[0x7b];
+#endif
 	}
-
-#if PACKETVER < 4
+	//Non-player sprites only require a few fields.
 	memset(buf,0,packet_len_table[0x7b]);
 
 	WBUFW(buf,0)=0x7b;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=sd->speed;
-	WBUFW(buf,8)=sd->sc.opt1;
-	WBUFW(buf,10)=sd->sc.opt2;
-	WBUFW(buf,12)=sdoption;
-	WBUFW(buf,14)=sd->view_class;
-	WBUFW(buf,16)=sd->status.hair;
-	if(sd->view_class != JOB_WEDDING && sd->view_class != JOB_XMAS)
-		WBUFW(buf,18)=sd->status.weapon;
-	else
-		WBUFW(buf,18)=0;
-	WBUFW(buf,20)=sd->status.head_bottom;
+	WBUFL(buf,2)=bl->id;
+	WBUFW(buf,6)=status_get_speed(bl);
+	if (sc) {
+		WBUFW(buf,8)=sc->opt1;
+		WBUFW(buf,10)=sc->opt2;
+		WBUFW(buf,12)=sc->option;
+		WBUFW(buf,46)=sc->opt3;
+	}
+	WBUFW(buf,14)=vd->class_;
+	WBUFW(buf,16)=vd->hair_style; //For pets
 	WBUFL(buf,22)=gettick();
-	WBUFW(buf,26)=sd->status.shield;
-	WBUFW(buf,28)=sd->status.head_top;
-	WBUFW(buf,30)=sd->status.head_mid;
-	WBUFW(buf,32)=sd->status.hair_color;
-	WBUFW(buf,34)=sd->status.clothes_color;
-	WBUFW(buf,36)=sd->head_dir;
-	WBUFL(buf,38)=sd->status.guild_id;
-	WBUFL(buf,42)=sd->guild_emblem_id;
-	WBUFW(buf,46)=sd->sc.opt3;
-	WBUFB(buf,48)=sd->status.karma;
-	WBUFB(buf,49)=sd->sex;
-	WBUFPOS2(buf,50,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
+	WBUFW(buf,26)=vd->shield;	//Pet armor
+	WBUFW(buf,36)=unit_getdir(bl);
+	WBUFL(buf,38)=guild_id;
+	WBUFL(buf,42)=emblem_id;
+	WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y);
 	WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
 	WBUFB(buf,56)=5;
 	WBUFB(buf,57)=5;
-	WBUFW(buf,58)=clif_setlevel(sd->status.base_level);
+	WBUFW(buf,58)=clif_setlevel(lv);
 
 	return packet_len_table[0x7b];
-#else
-	memset(buf,0,packet_len_table[0x1da]);
-
-	WBUFW(buf,0)=0x1da;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=sd->speed;
-	WBUFW(buf,8)=sd->sc.opt1;
-	WBUFW(buf,10)=sd->sc.opt2;
-	WBUFW(buf,12)=sdoption;
-	WBUFW(buf,14)=sd->view_class;
-	WBUFW(buf,16)=sd->status.hair;
-	if(sd->view_class != JOB_WEDDING && sd->view_class != JOB_XMAS)
-		WBUFW(buf,18)= clif_weapon_viewid(sd, 9);
-	else
-		WBUFW(buf,18)=0;
-	if(sd->equip_index[8] != sd->equip_index[9] && sd->view_class != JOB_WEDDING && sd->view_class != JOB_XMAS)
-		WBUFW(buf,20)= clif_weapon_viewid(sd, 8);
-	else
-		WBUFW(buf,20)=0;
-	WBUFW(buf,22)=sd->status.head_bottom;
-	WBUFL(buf,24)=gettick();
-	WBUFW(buf,28)=sd->status.head_top;
-	WBUFW(buf,30)=sd->status.head_mid;
-	WBUFW(buf,32)=sd->status.hair_color;
-	WBUFW(buf,34)=sd->status.clothes_color;
-	WBUFW(buf,36)=sd->head_dir;
-	WBUFL(buf,38)=sd->status.guild_id;
-	WBUFW(buf,42)=sd->guild_emblem_id;
-	WBUFW(buf,44)=sd->status.manner;
-	WBUFW(buf,46)=sd->sc.opt3;
-	WBUFB(buf,48)=sd->status.karma;
-	WBUFB(buf,49)=sd->sex;
-	WBUFPOS2(buf,50,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
-	WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-	WBUFB(buf,56)=5;
-	WBUFB(buf,57)=5;
-	WBUFW(buf,58)=clif_setlevel(sd->status.base_level);
-
-	return packet_len_table[0x1da];
-#endif
 }
 
-// moving function for disguises [Valaris]
-static int clif_dis007b(struct map_session_data *sd,unsigned char *buf) {
-
-	nullpo_retr(0, sd);
-
-	memset(buf,0,packet_len_table[0x7b]);
-
-	WBUFW(buf,0)=0x7b;
-	WBUFL(buf,2)=-sd->bl.id;
-	WBUFW(buf,6)=sd->speed;
-	WBUFW(buf,8)=0;
-	WBUFW(buf,10)=0;
-	WBUFW(buf,12)=sd->sc.option;
-	WBUFW(buf,14)=sd->disguise;
-	WBUFL(buf,22)=gettick();
-	//WBUFL(buf,38)=sd->status.guild_id;
-	//WBUFL(buf,42)=sd->guild_emblem_id;
-	WBUFPOS2(buf,50,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
-	WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-	WBUFB(buf,56)=5;
-	WBUFB(buf,57)=5;
-	WBUFW(buf,58)=0;
-
-	return packet_len_table[0x7b];
+//Modifies the buffer for disguise characters and sends it to self.
+//Flag = 0: change id to negative, buf will have disguise data.
+//Flag = 1: change id to positive, class and option to make your own char invisible.
+//Luckily, the offsets that need to be changed are the same in packets 0x78, 0x7b, 0x1d8 and 0x1da
+static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int len, int flag) {
+	if (flag) {
+		WBUFL(buf,2)=sd->bl.id;
+		WBUFW(buf,12)=OPTION_INVISIBLE;
+		WBUFW(buf,14)=sd->status.class_;
+	} else {
+		WBUFL(buf,2)=-sd->bl.id;
+	}
+	clif_send(buf, len, &sd->bl, SELF);
 }
 
 /*==========================================
@@ -1033,689 +1106,14 @@ int clif_class_change(struct block_list *bl,int class_,int type)
 
 	nullpo_retr(0, bl);
 
-	if(class_ >= MAX_PC_CLASS) {
+	if(!pcdb_checkid(class_)) {
 		WBUFW(buf,0)=0x1b0;
 		WBUFL(buf,2)=bl->id;
 		WBUFB(buf,6)=type;
 		WBUFL(buf,7)=class_;
-
 		clif_send(buf,packet_len_table[0x1b0],bl,AREA);
 	}
 	return 0;
-}
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_mob_class_change(struct mob_data *md, int class_) {
-	unsigned char buf[16];
-	int view = mob_get_viewclass(class_);
-
-	nullpo_retr(0, md);
-
-	if(view >= MAX_PC_CLASS) {
-		WBUFW(buf,0)=0x1b0;
-		WBUFL(buf,2)=md->bl.id;
-		WBUFB(buf,6)=1;
-		WBUFL(buf,7)=view;
-
-		clif_send(buf,packet_len_table[0x1b0],&md->bl,AREA);
-	}
-	return 0;
-}
-// mob equipment [Valaris]
-
-int clif_mob_equip(struct mob_data *md, int nameid) {
-	unsigned char buf[16];
-
-	nullpo_retr(0, md);
-
-	memset(buf,0,packet_len_table[0x1a4]);
-
-	WBUFW(buf,0)=0x1a4;
-	WBUFB(buf,2)=3;
-	WBUFL(buf,3)=md->bl.id;
-	WBUFL(buf,7)=nameid;
-
-	clif_send(buf,packet_len_table[0x1a4],&md->bl,AREA);
-
-	return 0;
-}
-
-/*==========================================
- * MOB表示1
- *------------------------------------------
- */
-static int clif_mob0078(struct mob_data *md, unsigned char *buf)
-{
-	int level, view_class;
-
-	nullpo_retr(0, md);
-
-	level=status_get_lv(&md->bl);
-	view_class = mob_get_viewclass(md->class_);
-	if(pcdb_checkid(view_class)) { 
-#if PACKETVER < 4
-		memset(buf,0,packet_len_table[0x78]);
-
-		WBUFW(buf,0)=0x78;
-		WBUFL(buf,2)=md->bl.id;
-		WBUFW(buf,6)=status_get_speed(&md->bl);
-		WBUFW(buf,8)=md->sc.opt1;
-		WBUFW(buf,10)=md->sc.opt2;
-		WBUFW(buf,12)=md->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(md->class_);
-		WBUFW(buf,18)=mob_get_weapon(md->class_);
-		WBUFW(buf,20)=mob_get_head_buttom(md->class_);
-		WBUFW(buf,22)=mob_get_shield(md->class_);
-		WBUFW(buf,24)=mob_get_head_top(md->class_);
-		WBUFW(buf,26)=mob_get_head_mid(md->class_);
-		WBUFW(buf,28)=mob_get_hair_color(md->class_);
-		WBUFW(buf,30)=mob_get_clothes_color(md->class_);
-		WBUFW(buf,32)|=md->ud.dir&0x0f; // head direction
-		if (md->guardian_data && md->guardian_data->guild_id) { // Added guardian emblems [Valaris]
-			WBUFL(buf,34)=md->guardian_data->guild_id;
-			WBUFL(buf,38)=md->guardian_data->emblem_id;
-		}
-		WBUFW(buf,42)=md->sc.opt3;
-		WBUFB(buf,44)=0; // karma
-		WBUFB(buf,45)=mob_get_sex(md->class_);
-		WBUFPOS(buf,46,md->bl.x,md->bl.y);
-		WBUFB(buf,48)|=md->ud.dir&0x0f;
-		WBUFB(buf,49)=5;
-		WBUFB(buf,50)=5;
-		WBUFB(buf,51)=0; // dead or sit state
-		WBUFW(buf,52)=clif_setlevel(level);
-		
-		return packet_len_table[0x78];
-#else
-		// Use 0x1d8 packet for monsters with player sprites [Valaris]
-		memset(buf,0,packet_len_table[0x1d8]);
-
-		WBUFW(buf,0)=0x1d8;
-		WBUFL(buf,2)=md->bl.id;
-		WBUFW(buf,6)=status_get_speed(&md->bl);
-		WBUFW(buf,8)=md->sc.opt1;
-		WBUFW(buf,10)=md->sc.opt2;
-		WBUFW(buf,12)=md->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(md->class_);
-		WBUFW(buf,18)=mob_get_weapon(md->class_);
-		WBUFW(buf,20)=mob_get_shield(md->class_);
-		WBUFW(buf,22)=mob_get_head_buttom(md->class_);
-		WBUFW(buf,24)=mob_get_head_top(md->class_);
-		WBUFW(buf,26)=mob_get_head_mid(md->class_);
-		WBUFW(buf,28)=mob_get_hair_color(md->class_);
-		WBUFW(buf,30)=mob_get_clothes_color(md->class_);
-		WBUFW(buf,32)|=md->ud.dir&0x0f; // head direction
-		WBUFL(buf,34)=0; // guild id
-		WBUFW(buf,38)=0; // emblem id
-		WBUFW(buf,40)=0; // manner
-		WBUFW(buf,42)=md->sc.opt3;
-		WBUFB(buf,44)=0; // karma
-		WBUFB(buf,45)=mob_get_sex(md->class_);
-		WBUFPOS(buf,46,md->bl.x,md->bl.y);
-		WBUFB(buf,48)|=md->ud.dir&0x0f;
-		WBUFB(buf,49)=5;
-		WBUFB(buf,50)=5;
-		WBUFB(buf,51)=0; // dead or sit state
-		WBUFW(buf,52)=clif_setlevel(level);
-		
-		return packet_len_table[0x1d8];
-#endif 
-	} else {
-		// Use 0x78 packet for monsters sprites [Valaris]
-		memset(buf,0,packet_len_table[0x78]);
-
-		WBUFW(buf,0)=0x78;
-		WBUFL(buf,2)=md->bl.id;
-		WBUFW(buf,6)=status_get_speed(&md->bl);
-		WBUFW(buf,8)=md->sc.opt1;
-		WBUFW(buf,10)=md->sc.opt2;
-		WBUFW(buf,12)=md->sc.option;
-		WBUFW(buf,14)=view_class;
-		if (md->guardian_data && md->guardian_data->guild_id) { // Added guardian emblems [Valaris]
-			WBUFL(buf,34)=md->guardian_data->guild_id;
-			WBUFL(buf,38)=md->guardian_data->emblem_id;
-		}	// End addition
-		WBUFPOS(buf,46,md->bl.x,md->bl.y);
-		WBUFB(buf,48)|=md->ud.dir&0x0f;
-		WBUFB(buf,49)=5;
-		WBUFB(buf,50)=5;
-		WBUFW(buf,52)=clif_setlevel(level);
-
-		return packet_len_table[0x78];
-	}
-}
-
-/*==========================================
- * MOB表示2
- *------------------------------------------
- */
-static int clif_mob007b(struct mob_data *md, unsigned char *buf) {
-	int level, view_class;
-
-	nullpo_retr(0, md);
-
-	level=status_get_lv(&md->bl);
-	view_class = mob_get_viewclass(md->class_);
-	if(pcdb_checkid(view_class)) {
-#if PACKETVER < 4
-		memset(buf,0,packet_len_table[0x7b]);
-	
-		WBUFW(buf,0)=0x7b;
-		WBUFL(buf,2)=md->bl.id;
-		WBUFW(buf,6)=status_get_speed(&md->bl);
-		WBUFW(buf,8)=md->sc.opt1;
-		WBUFW(buf,10)=md->sc.opt2;
-		WBUFW(buf,12)=md->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(md->class_);
-		WBUFW(buf,18)=mob_get_weapon(md->class_);
-		WBUFW(buf,20)=mob_get_head_buttom(md->class_);
-		WBUFL(buf,22)=gettick();
-		WBUFW(buf,26)=mob_get_shield(md->class_);
-		WBUFW(buf,28)=mob_get_head_top(md->class_);
-		WBUFW(buf,30)=mob_get_head_mid(md->class_);
-		WBUFW(buf,32)=mob_get_hair_color(md->class_);
-		WBUFW(buf,34)=mob_get_clothes_color(md->class_);
-		WBUFW(buf,36)=md->ud.dir&0x0f; // head direction
-		if (md->guardian_data && md->guardian_data->guild_id) { // Added guardian emblems [Valaris]
-			WBUFL(buf,38)=md->guardian_data->guild_id;
-			WBUFL(buf,42)=md->guardian_data->emblem_id;
-		}
-		WBUFW(buf,46)=md->sc.opt3;
-		WBUFB(buf,48)=0; // karma
-		WBUFB(buf,49)=mob_get_sex(md->class_);
-		WBUFPOS2(buf,50,md->bl.x,md->bl.y,md->ud.to_x,md->ud.to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-		WBUFB(buf,56)=5;
-		WBUFB(buf,57)=5;
-		WBUFW(buf,58)=clif_setlevel(level);
-
-		return packet_len_table[0x7b];
-#else
-		// Use 0x1da packet for monsters with player sprites [Valaris]
-		memset(buf,0,packet_len_table[0x1da]);
-
-		WBUFW(buf,0)=0x1da;
-		WBUFL(buf,2)=md->bl.id;
-		WBUFW(buf,6)=status_get_speed(&md->bl);
-		WBUFW(buf,8)=md->sc.opt1;
-		WBUFW(buf,10)=md->sc.opt2;
-		WBUFW(buf,12)=md->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(md->class_);
-		WBUFW(buf,18)=mob_get_weapon(md->class_);
-		WBUFW(buf,20)=mob_get_shield(md->class_);
-		WBUFW(buf,22)=mob_get_head_buttom(md->class_);
-		WBUFL(buf,24)=gettick();
-		WBUFW(buf,28)=mob_get_head_top(md->class_);
-		WBUFW(buf,30)=mob_get_head_mid(md->class_);
-		WBUFW(buf,32)=mob_get_hair_color(md->class_);
-		WBUFW(buf,34)=mob_get_clothes_color(md->class_);
-		WBUFW(buf,36)=md->ud.dir&0x0f; // head direction
-		if (md->guardian_data && md->guardian_data->guild_id) { // Added guardian emblems [Valaris]
-			WBUFL(buf,38)=md->guardian_data->guild_id;
-			WBUFW(buf,42)=md->guardian_data->emblem_id;
-		}
-		WBUFW(buf,44)=0; // manner
-		WBUFW(buf,46)=md->sc.opt3;
-		WBUFB(buf,48)=0; // karma
-		WBUFB(buf,49)=mob_get_sex(md->class_);
-		WBUFPOS2(buf,50,md->bl.x,md->bl.y,md->ud.to_x,md->ud.to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-		WBUFB(buf,56)=5;
-		WBUFB(buf,57)=5;
-		WBUFW(buf,58)=clif_setlevel(level);
-
-		return packet_len_table[0x1da];
-#endif
-	} else {
-		// Use 0x7b packet for monsters sprites [Valaris]
-		memset(buf,0,packet_len_table[0x7b]);
-	
-		WBUFW(buf,0)=0x7b;
-		WBUFL(buf,2)=md->bl.id;
-		WBUFW(buf,6)=status_get_speed(&md->bl);
-		WBUFW(buf,8)=md->sc.opt1;
-		WBUFW(buf,10)=md->sc.opt2;
-		WBUFW(buf,12)=md->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFL(buf,22)=gettick();
-		if (md->guardian_data && md->guardian_data->guild_id) { // Added guardian emblems [Valaris]
-			WBUFL(buf,38)=md->guardian_data->guild_id;
-			WBUFL(buf,42)=md->guardian_data->emblem_id;
-		}	// End addition
-		WBUFPOS2(buf,50,md->bl.x,md->bl.y,md->ud.to_x,md->ud.to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-		WBUFB(buf,56)=5;
-		WBUFB(buf,57)=5;
-		level = status_get_lv(&md->bl);
-		WBUFW(buf,58)=clif_setlevel(level);
-
-		return packet_len_table[0x7b];
-	}
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-static int clif_npc0078(struct npc_data *nd, unsigned char *buf) {
-	struct guild *g=NULL;
-	int view_class;
-
-	nullpo_retr(0, nd);
-
-	memset(buf,0,packet_len_table[0x78]);
-
-	if (nd->class_ == 722 && nd->u.scr.guild_id > 0)
-		g=guild_search(nd->u.scr.guild_id);
-	
-	if(mobdb_checkid(nd->class_) &&
-		pcdb_checkid((view_class = mob_get_viewclass(nd->class_)))) {
-		//Disguised player sprite
-#if PACKETVER < 4
-		memset(buf,0,packet_len_table[0x78]);
-
-		WBUFW(buf,0)=0x78;
-		WBUFL(buf,2)=nd->bl.id;
-		WBUFW(buf,6)=nd->speed;
-		WBUFW(buf,8)=nd->sc.opt1;
-		WBUFW(buf,10)=nd->sc.opt2;
-		WBUFW(buf,12)=nd->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(nd->class_);
-		WBUFW(buf,18)=mob_get_weapon(nd->class_);
-		WBUFW(buf,20)=mob_get_head_buttom(nd->class_);
-		WBUFW(buf,22)=mob_get_shield(nd->class_);
-		WBUFW(buf,24)=mob_get_head_top(nd->class_);
-		WBUFW(buf,26)=mob_get_head_mid(nd->class_);
-		WBUFW(buf,28)=mob_get_hair_color(nd->class_);
-		WBUFW(buf,30)=mob_get_clothes_color(nd->class_);
-		WBUFW(buf,32)|=nd->ud.dir&0x0f; // head direction
-		if (g) {
-			WBUFL(buf,34)=g->guild_id;
-			WBUFL(buf,38)=g->emblem_id;
-		}
-		WBUFW(buf,42)=nd->sc.opt3;
-		WBUFB(buf,44)=0; // karma
-		WBUFB(buf,45)=mob_get_sex(nd->class_);
-		WBUFPOS(buf,46,nd->bl.x,nd->bl.y);
-		WBUFB(buf,48)|=nd->ud.dir&0x0f;
-		WBUFB(buf,49)=5;
-		WBUFB(buf,50)=5;
-		WBUFB(buf,51)=0; // dead or sit state
-		WBUFW(buf,52)=50; // No level info.
-		
-		return packet_len_table[0x78];
-#else
-		// Use 0x1d8 packet for monsters with player sprites [Valaris]
-		memset(buf,0,packet_len_table[0x1d8]);
-
-		WBUFW(buf,0)=0x1d8;
-		WBUFL(buf,2)=nd->bl.id;
-		WBUFW(buf,6)=nd->speed;
-		WBUFW(buf,8)=nd->sc.opt1;
-		WBUFW(buf,10)=nd->sc.opt2;
-		WBUFW(buf,12)=nd->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(nd->class_);
-		WBUFW(buf,18)=mob_get_weapon(nd->class_);
-		WBUFW(buf,20)=mob_get_shield(nd->class_);
-		WBUFW(buf,22)=mob_get_head_buttom(nd->class_);
-		WBUFW(buf,24)=mob_get_head_top(nd->class_);
-		WBUFW(buf,26)=mob_get_head_mid(nd->class_);
-		WBUFW(buf,28)=mob_get_hair_color(nd->class_);
-		WBUFW(buf,30)=mob_get_clothes_color(nd->class_);
-		WBUFW(buf,32)|=nd->ud.dir&0x0f; // head direction
-		WBUFL(buf,34)=0; // guild id
-		WBUFW(buf,38)=0; // emblem id
-		WBUFW(buf,40)=0; // manner
-		WBUFW(buf,42)=nd->sc.opt3;
-		WBUFB(buf,44)=0; // karma
-		WBUFB(buf,45)=mob_get_sex(nd->class_);
-		WBUFPOS(buf,46,nd->bl.x,nd->bl.y);
-		WBUFB(buf,48)|=nd->ud.dir&0x0f;
-		WBUFB(buf,49)=5;
-		WBUFB(buf,50)=5;
-		WBUFB(buf,51)=0; // dead or sit state
-		WBUFW(buf,52)=50; //No level data.
-		
-		return packet_len_table[0x1d8];
-#endif 
-	}
-	WBUFW(buf,0)=0x78;
-	WBUFL(buf,2)=nd->bl.id;
-	WBUFW(buf,6)=nd->speed;
-	WBUFW(buf,14)=nd->class_;
-	if (g) {
-		WBUFL(buf,22)=g->emblem_id;
-		WBUFL(buf,26)=g->guild_id;
-	//	pc packet says the actual location of these are, but they are not. Why the discordance? [Skotlex]
-	//	WBUFL(buf,34)=g->emblem_id;
-	//	WBUFL(buf,38)=g->guild_id;
-	}
-	WBUFPOS(buf,46,nd->bl.x,nd->bl.y);
-	WBUFB(buf,48)|=nd->ud.dir&0x0f;
-	WBUFB(buf,49)=5;
-	WBUFB(buf,50)=5;
-
-	return packet_len_table[0x78];
-}
-
-// NPC Walking [Valaris]
-static int clif_npc007b(struct npc_data *nd, unsigned char *buf) {
-	struct guild *g=NULL;
-	int view_class;
-
-	nullpo_retr(0, nd);
-
-	memset(buf,0,packet_len_table[0x7b]);
-
-	if (nd->class_ == 722 && nd->u.scr.guild_id > 0)
-		g=guild_search(nd->u.scr.guild_id);
-	
-	if(mobdb_checkid(nd->class_) &&
-		pcdb_checkid((view_class = mob_get_viewclass(nd->class_)))) {
-		//Disguised player sprite
-#if PACKETVER < 4
-		memset(buf,0,packet_len_table[0x7b]);
-	
-		WBUFW(buf,0)=0x7b;
-		WBUFL(buf,2)=nd->bl.id;
-		WBUFW(buf,6)=nd->speed;
-		WBUFW(buf,8)=nd->sc.opt1;
-		WBUFW(buf,10)=nd->sc.opt2;
-		WBUFW(buf,12)=nd->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(nd->class_);
-		WBUFW(buf,18)=mob_get_weapon(nd->class_);
-		WBUFW(buf,20)=mob_get_head_buttom(nd->class_);
-		WBUFL(buf,22)=gettick();
-		WBUFW(buf,26)=mob_get_shield(nd->class_);
-		WBUFW(buf,28)=mob_get_head_top(nd->class_);
-		WBUFW(buf,30)=mob_get_head_mid(nd->class_);
-		WBUFW(buf,32)=mob_get_hair_color(nd->class_);
-		WBUFW(buf,34)=mob_get_clothes_color(nd->class_);
-		WBUFW(buf,36)=nd->ud.dir&0x0f; // head direction
-		if (g) {
-			WBUFL(buf,38)=g->guild_id;
-			WBUFL(buf,42)=g->emblem_id;
-		}
-		WBUFW(buf,46)=nd->sc.opt3;
-		WBUFB(buf,48)=0; // karma
-		WBUFB(buf,49)=mob_get_sex(nd->class_);
-		WBUFPOS2(buf,50,nd->bl.x,nd->bl.y,nd->ud.to_x,nd->ud.to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-		WBUFB(buf,56)=5;
-		WBUFB(buf,57)=5;
-		WBUFW(buf,58)=50; //Ehm.. no level data.
-		
-		return packet_len_table[0x7b];
-#else
-		// Use 0x1da packet for monsters with player sprites [Valaris]
-		memset(buf,0,packet_len_table[0x1da]);
-
-		WBUFW(buf,0)=0x1da;
-		WBUFL(buf,2)=nd->bl.id;
-		WBUFW(buf,6)=nd->speed;
-		WBUFW(buf,8)=nd->sc.opt1;
-		WBUFW(buf,10)=nd->sc.opt2;
-		WBUFW(buf,12)=nd->sc.option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(nd->class_);
-		WBUFW(buf,18)=mob_get_weapon(nd->class_);
-		WBUFW(buf,20)=mob_get_shield(nd->class_);
-		WBUFW(buf,22)=mob_get_head_buttom(nd->class_);
-		WBUFL(buf,24)=gettick();
-		WBUFW(buf,28)=mob_get_head_top(nd->class_);
-		WBUFW(buf,30)=mob_get_head_mid(nd->class_);
-		WBUFW(buf,32)=mob_get_hair_color(nd->class_);
-		WBUFW(buf,34)=mob_get_clothes_color(nd->class_);
-		WBUFW(buf,36)=nd->ud.dir&0x0f; // head direction
-		if (g) {
-			WBUFL(buf,38)=g->guild_id;
-			WBUFW(buf,42)=g->emblem_id;
-		}
-		WBUFW(buf,44)=0; // manner
-		WBUFW(buf,46)=nd->sc.opt3;
-		WBUFB(buf,48)=0; // karma
-		WBUFB(buf,49)=mob_get_sex(nd->class_);
-		WBUFPOS2(buf,50,nd->bl.x,nd->bl.y,nd->ud.to_x,nd->ud.to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-		WBUFB(buf,56)=5;
-		WBUFB(buf,57)=5;
-		WBUFW(buf,58)=50; //No level data.
-
-		return packet_len_table[0x1da];
-#endif
-	}
-
-	WBUFW(buf,0)=0x7b;
-	WBUFL(buf,2)=nd->bl.id;
-	WBUFW(buf,6)=nd->speed;
-	WBUFW(buf,14)=nd->class_;
-	if (g) {
-		WBUFL(buf,22)=g->emblem_id;
-		WBUFL(buf,26)=g->guild_id;
-	//	pc packet says the actual location of these are, but they are not. Why the discordance? [Skotlex]
-	//	WBUFL(buf,38)=g->emblem_id;
-	//	WBUFL(buf,42)=g->guild_id;
-	}
-	WBUFL(buf,22)=gettick();
-	WBUFPOS2(buf,50,nd->bl.x,nd->bl.y,nd->ud.to_x,nd->ud.to_y);
-	WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-	WBUFB(buf,56)=5;
-	WBUFB(buf,57)=5;
-
-	return packet_len_table[0x7b];
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-static int clif_pet0078(struct pet_data *pd, unsigned char *buf) {
-	int view_class,level;
-
-	nullpo_retr(0, pd);
-
-	level = status_get_lv(&pd->bl);
-	view_class = mob_get_viewclass(pd->class_);
-	if(pcdb_checkid(view_class)) {
-#if PACKETVER < 4
-		memset(buf,0,packet_len_table[0x78]);
-
-		WBUFW(buf,0)=0x78;
-		WBUFL(buf,2)=pd->bl.id;
-		WBUFW(buf,6)=pd->speed;
-		WBUFW(buf,8)= 0; //opt1
-		WBUFW(buf,10)= 0; //opt2
-		WBUFW(buf,12)=pd->db->option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(pd->class_);
-		WBUFW(buf,18)=mob_get_weapon(pd->class_);
-		WBUFW(buf,20)=mob_get_head_buttom(pd->class_);
-		WBUFW(buf,22)=mob_get_shield(pd->class_);
-		WBUFW(buf,24)=mob_get_head_top(pd->class_);
-		WBUFW(buf,26)=mob_get_head_mid(pd->class_);
-		WBUFW(buf,28)=mob_get_hair_color(pd->class_);
-		WBUFW(buf,30)=mob_get_clothes_color(pd->class_);
-		WBUFW(buf,32)|=pd->ud.dir&0x0f; // head direction
-		WBUFL(buf,34)=0; //Guild id
-		WBUFL(buf,38)=0; //Guild emblem
-		WBUFW(buf,42)=0; //opt3;
-		WBUFB(buf,44)=0; // karma
-		WBUFB(buf,45)=mob_get_sex(pd->class_);
-		WBUFPOS(buf,46,pd->bl.x,pd->bl.y);
-		WBUFB(buf,48)|=pd->ud.dir&0x0f;
-		WBUFB(buf,49)=5;
-		WBUFB(buf,50)=5;
-		WBUFB(buf,51)=0; // dead or sit state
-		WBUFW(buf,52)=clif_setlevel(level);
-		
-		return packet_len_table[0x78];
-#else
-		// Use 0x1d8 packet for pets with player sprites [Valaris]
-		memset(buf,0,packet_len_table[0x1d8]);
-
-		WBUFW(buf,0)=0x1d8;
-		WBUFL(buf,2)=pd->bl.id;
-		WBUFW(buf,6)=pd->speed;
-		WBUFW(buf,8)=0; // opt1
-		WBUFW(buf,10)=0; // opt2
-		WBUFW(buf,12)=pd->db->option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(pd->class_);
-		WBUFW(buf,18)=mob_get_weapon(pd->class_);
-		WBUFW(buf,20)=mob_get_shield(pd->class_);
-		WBUFW(buf,22)=mob_get_head_buttom(pd->class_);
-		WBUFW(buf,24)=mob_get_head_top(pd->class_);
-		WBUFW(buf,26)=mob_get_head_mid(pd->class_);
-		WBUFW(buf,28)=mob_get_hair_color(pd->class_);
-		WBUFW(buf,30)=mob_get_clothes_color(pd->class_);
-		WBUFW(buf,32)|=pd->ud.dir&0x0f; // head direction
-		WBUFL(buf,34)=0; // guild id
-		WBUFW(buf,38)=0; // emblem id
-		WBUFW(buf,40)=0; // manner
-		WBUFW(buf,42)=0; // opt3
-		WBUFB(buf,44)=0; // karma
-		WBUFB(buf,45)=mob_get_sex(pd->class_);
-		WBUFPOS(buf,46,pd->bl.x,pd->bl.y);
-		WBUFB(buf,48)|=pd->ud.dir&0x0f;
-		WBUFB(buf,49)=5;
-		WBUFB(buf,50)=5;
-		WBUFB(buf,51)=0; // dead or sit state
-		WBUFW(buf,52)=clif_setlevel(level);
-
-		return packet_len_table[0x1d8];
-#endif
-	} else {
-		memset(buf,0,packet_len_table[0x78]);
-
-		WBUFW(buf,0)=0x78;
-		WBUFL(buf,2)=pd->bl.id;
-		WBUFW(buf,6)=pd->speed;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=battle_config.pet_hair_style;
-		if(pd->equip && (view_class = itemdb_viewid(pd->equip)) > 0)
-			WBUFW(buf,20)=view_class;
-		else
-			WBUFW(buf,20)=pd->equip;
-		WBUFPOS(buf,46,pd->bl.x,pd->bl.y);
-		WBUFB(buf,48)|=pd->ud.dir&0x0f;
-		WBUFB(buf,49)=0;
-		WBUFB(buf,50)=0;
-		WBUFW(buf,52)=clif_setlevel(level);
-
-		return packet_len_table[0x78];
-	}
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-static int clif_pet007b(struct pet_data *pd, unsigned char *buf) {
-	int view_class,level;
-
-	nullpo_retr(0, pd);
-
-	level = status_get_lv(&pd->bl);
-	view_class = mob_get_viewclass(pd->class_);
-	if(pcdb_checkid(view_class)) {
-#if PACKETVER < 4
-		memset(buf,0,packet_len_table[0x7b]);
-	
-		WBUFW(buf,0)=0x7b;
-		WBUFL(buf,2)=pd->bl.id;
-		WBUFW(buf,6)=pd->speed;
-		WBUFW(buf,8)= 0; //opt1;
-		WBUFW(buf,10)= 0; //opt2;
-		WBUFW(buf,12)=pd->db->option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(pd->class_);
-		WBUFW(buf,18)=mob_get_weapon(pd->class_);
-		WBUFW(buf,20)=mob_get_head_buttom(pd->class_);
-		WBUFL(buf,22)=gettick();
-		WBUFW(buf,26)=mob_get_shield(pd->class_);
-		WBUFW(buf,28)=mob_get_head_top(pd->class_);
-		WBUFW(buf,30)=mob_get_head_mid(pd->class_);
-		WBUFW(buf,32)=mob_get_hair_color(pd->class_);
-		WBUFW(buf,34)=mob_get_clothes_color(pd->class_);
-		WBUFW(buf,36)=pd->ud.dir&0x0f; // head direction
-		WBUFL(buf,38)=0; // guild id
-		WBUFL(buf,42)=0; // emblem id
-		WBUFW(buf,46)=0; // opt3;
-		WBUFB(buf,48)=0; // karma
-		WBUFB(buf,49)=mob_get_sex(pd->class_);
-		WBUFPOS2(buf,50,pd->bl.x,pd->bl.y,pd->ud.to_x,pd->ud.to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-		WBUFB(buf,56)=0; //0? These are always five for mobs and pets, /hmm [Skotlex]
-		WBUFB(buf,57)=0;
-		WBUFW(buf,58)=clif_setlevel(level);
-
-		return packet_len_table[0x7b];
-#else
-		// Use 0x1da packet for monsters with player sprites [Valaris]
-		memset(buf,0,packet_len_table[0x1da]);
-
-		WBUFW(buf,0)=0x1da;
-		WBUFL(buf,2)=pd->bl.id;
-		WBUFW(buf,6)=pd->speed;
-		WBUFW(buf,8)=0; // opt1
-		WBUFW(buf,10)=0; // opt2
-		WBUFW(buf,12)=pd->db->option;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=mob_get_hair(pd->class_);
-		WBUFW(buf,18)=mob_get_weapon(pd->class_);
-		WBUFW(buf,20)=mob_get_shield(pd->class_);
-		WBUFW(buf,22)=mob_get_head_buttom(pd->class_);
-		WBUFL(buf,24)=gettick();
-		WBUFW(buf,28)=mob_get_head_top(pd->class_);
-		WBUFW(buf,30)=mob_get_head_mid(pd->class_);
-		WBUFW(buf,32)=mob_get_hair_color(pd->class_);
-		WBUFW(buf,34)=mob_get_clothes_color(pd->class_);
-		WBUFW(buf,36)=pd->ud.dir&0x0f; // head direction
-		WBUFL(buf,38)=0; // guild id
-		WBUFW(buf,42)=0; // emblem id
-		WBUFW(buf,44)=0; // manner
-		WBUFW(buf,46)=0; // opt3
-		WBUFB(buf,48)=0; // karma
-		WBUFB(buf,49)=mob_get_sex(pd->class_);
-		WBUFPOS2(buf,50,pd->bl.x,pd->bl.y,pd->ud.to_x,pd->ud.to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-		WBUFB(buf,56)=0;
-		WBUFB(buf,57)=0;
-		WBUFW(buf,58)=clif_setlevel(level);
-
-		return packet_len_table[0x1da];
-#endif
-	} else {
-		// Use 0x7b packet for pets sprites [Valaris]
-		memset(buf,0,packet_len_table[0x7b]);
-
-		WBUFW(buf,0)=0x7b;
-		WBUFL(buf,2)=pd->bl.id;
-		WBUFW(buf,6)=pd->speed;
-		WBUFW(buf,14)=view_class;
-		WBUFW(buf,16)=battle_config.pet_hair_style;
-		if (pd->equip && (view_class = itemdb_viewid(pd->equip)) > 0)
-			WBUFW(buf,20)=view_class;
-		else
-			WBUFW(buf,20)=pd->equip;
-		WBUFL(buf,22)=gettick();
-		WBUFPOS2(buf,50,pd->bl.x,pd->bl.y,pd->ud.to_x,pd->ud.to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
-		WBUFB(buf,56)=0;
-		WBUFB(buf,57)=0;
-		WBUFW(buf,58)=clif_setlevel(level);
-
-		return packet_len_table[0x7b];
-	}
 }
 
 /*==========================================
@@ -1737,7 +1135,7 @@ static int clif_set01e1(struct map_session_data *sd, unsigned char *buf) {
  *------------------------------------------
  */
 static int clif_set0192(int fd, int m, int x, int y, int type) {
-        WFIFOHEAD(fd, packet_len_table[0x192]);
+	WFIFOHEAD(fd, packet_len_table[0x192]);
 	WFIFOW(fd,0) = 0x192;
 	WFIFOW(fd,2) = x;
 	WFIFOW(fd,4) = y;
@@ -1750,7 +1148,7 @@ static int clif_set0192(int fd, int m, int x, int y, int type) {
 
 // new and improved weather display [Valaris]
 int clif_weather_sub(int fd, int type) {
-        WFIFOHEAD(fd, packet_len_table[0x1f3]);
+	WFIFOHEAD(fd, packet_len_table[0x1f3]);
 	WFIFOW(fd,0) = 0x1f3;
 	WFIFOL(fd,2) = -10;
 	WFIFOL(fd,6) = type;
@@ -1766,15 +1164,22 @@ int clif_weather(int m) {
 
 	for(i = 0; i < fd_max; i++) {
 		if (session[i] && (sd = session[i]->session_data) != NULL && sd->state.auth && sd->bl.m == m) {
-                        WFIFOHEAD(sd->fd, packet_len_table[0x80]);
+			WFIFOHEAD(sd->fd, packet_len_table[0x80]);
 			WFIFOW(sd->fd,0) = 0x80;
 			WFIFOL(sd->fd,2) = -10;
 			WFIFOB(sd->fd,6) = 0;
 			WFIFOSET(sd->fd,packet_len_table[0x80]);
 
-			if (map[sd->bl.m].flag.snow || map[sd->bl.m].flag.clouds || map[sd->bl.m].flag.fog || map[sd->bl.m].flag.fireworks ||
-			    map[sd->bl.m].flag.sakura || map[sd->bl.m].flag.leaves || map[sd->bl.m].flag.rain || map[sd->bl.m].flag.clouds2) {
-                                WFIFOHEAD(sd->fd, packet_len_table[0x7c]);
+			if (map[sd->bl.m].flag.snow
+					|| map[sd->bl.m].flag.clouds
+					|| map[sd->bl.m].flag.fog
+					|| map[sd->bl.m].flag.fireworks
+					|| map[sd->bl.m].flag.sakura
+					|| map[sd->bl.m].flag.leaves
+					|| map[sd->bl.m].flag.rain
+					|| map[sd->bl.m].flag.clouds2
+				) {
+				WFIFOHEAD(sd->fd, packet_len_table[0x7c]);
 				WFIFOW(sd->fd,0)=0x7c;
 				WFIFOL(sd->fd,2)=-10;
 				WFIFOW(sd->fd,6)=0;
@@ -1817,51 +1222,27 @@ int clif_weather(int m) {
  *------------------------------------------
  */
 int clif_spawnpc(struct map_session_data *sd) {
-	unsigned char buf[128];
-
-	nullpo_retr(0, sd);
-
-	// Avoid bots/modified clients to view hidden GMs. [Lance]
-	if(!pc_isGM(sd) || !sd->status.option&OPTION_INVISIBLE){
-		clif_set0078(sd, buf);
-
-#if PACKETVER < 4
-		WBUFW(buf, 0) = 0x79;
-		WBUFW(buf,51) = clif_setlevel(sd->status.base_level);
-		clif_send(buf, packet_len_table[0x79], &sd->bl, AREA_WOS);
-#else
-		WBUFW(buf, 0) = 0x1d9;
-		WBUFW(buf,51) = clif_setlevel(sd->status.base_level);
-		clif_send(buf, packet_len_table[0x1d9], &sd->bl, AREA_WOS);
-#endif
-
-		if(sd->disguise > 0) {
-			int len;
-			memset(buf,0,packet_len_table[0x7c]);
-			WBUFW(buf,0)=0x7c;
-			WBUFL(buf,2)=-sd->bl.id;
-			WBUFW(buf,6)=sd->speed;
-			WBUFW(buf,12)=sd->sc.option;
-			WBUFW(buf,20)=sd->disguise;
-			WBUFPOS(buf,36,sd->bl.x,sd->bl.y);
-			clif_send(buf,packet_len_table[0x7c],&sd->bl,AREA);
-
-			len = clif_dis0078(sd,buf);
-			clif_send(buf,len,&sd->bl,AREA);
-		}
-	}
 
 	if (sd->spiritball > 0)
 		clif_spiritball(sd);
-
-	if (sd->status.guild_id > 0) { // force display of guild emblem [Valaris]
+ 
+	//Why most it be forced? Doesn't the client ever requests it?
+	//This sounds like more bandwidth wasted than necessary... [Skotlex]
+	if (sd->status.guild_id > 0)
+	{	// force display of guild emblem [Valaris]
 		struct guild *g = guild_search(sd->status.guild_id);
-		if (g)
-			clif_guild_emblem(sd,g);
-	}	// end addition [Valaris]
+		if (g) clif_guild_emblem(sd,g);
+	}
 
-	if (map[sd->bl.m].flag.snow || map[sd->bl.m].flag.clouds || map[sd->bl.m].flag.fog || map[sd->bl.m].flag.fireworks ||
-	    map[sd->bl.m].flag.sakura || map[sd->bl.m].flag.leaves || map[sd->bl.m].flag.rain || map[sd->bl.m].flag.clouds2) {
+	if (map[sd->bl.m].flag.snow
+		|| map[sd->bl.m].flag.clouds
+		|| map[sd->bl.m].flag.fog
+		|| map[sd->bl.m].flag.fireworks
+		|| map[sd->bl.m].flag.sakura
+		|| map[sd->bl.m].flag.leaves
+		|| map[sd->bl.m].flag.rain
+		|| map[sd->bl.m].flag.clouds2)
+	{
 		WFIFOHEAD(sd->fd, packet_len_table[0x7c]);
 		WFIFOW(sd->fd,0)=0x7c;
 		WFIFOL(sd->fd,2)=-10;
@@ -1906,151 +1287,64 @@ int clif_spawnpc(struct map_session_data *sd) {
 		clif_status_load(&sd->bl, SI_NIGHT, 0);
 		sd->state.night = 0;
 	}
-
-	if(sd->state.size==2) // tiny/big players [Valaris]
-		clif_specialeffect(&sd->bl,423,0);
-	else if(sd->state.size==1)
-		clif_specialeffect(&sd->bl,421,0);
-	
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_spawnnpc(struct npc_data *nd)
+int clif_spawn(struct block_list *bl)
 {
-	unsigned char buf[64];
-	int len;
-
-	nullpo_retr(0, nd);
-
-	if(nd->class_ < 0 || nd->flag&1 || nd->class_ == INVISIBLE_CLASS)
+	unsigned char buf[128];
+	struct view_data *vd;
+	nullpo_retr(0, bl);
+	vd = status_get_viewdata(bl);
+	if (!vd || vd->class_ == INVISIBLE_CLASS)
 		return 0;
+	clif_set0078(bl, vd, buf);
 
-	if(!mobdb_checkid(nd->class_) ||
-		!pcdb_checkid(mob_get_viewclass(nd->class_))) {
-		//Normal npcs.
-		memset(buf,0,packet_len_table[0x7c]);
+#if PACKETVER > 3
+	if (WBUFW(buf,0)==0x78) {
+		WBUFW(buf, 0) = 0x79;
+		WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
+		clif_send(buf, packet_len_table[0x79], bl, AREA_WOS);
+		if (disguised(bl))
+			clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x79], 0);
+	} else {
+#endif
+		WBUFW(buf, 0) = 0x1d9;
+		WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
+		clif_send(buf, packet_len_table[0x1d9], bl, AREA_WOS);
+		if (disguised(bl))
+			clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x1d9], 0);
+#if PACKETVER > 3
+	}
+#endif
+
+	if (vd->cloth_color)
+		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
 		
-		WBUFW(buf,0)=0x7c;
-		WBUFL(buf,2)=nd->bl.id;
-		WBUFW(buf,6)=nd->speed;
-		WBUFW(buf,20)=nd->class_;
-		WBUFPOS(buf,36,nd->bl.x,nd->bl.y);
-
-		clif_send(buf,packet_len_table[0x7c],&nd->bl,AREA);
+	switch (bl->type)
+	{
+	case BL_PC:
+		{
+			TBL_PC *sd = ((TBL_PC*)bl);
+			clif_spawnpc(sd);
+			if(sd->state.size==2) // tiny/big players [Valaris]
+				clif_specialeffect(bl,423,0);
+			else if(sd->state.size==1)
+				clif_specialeffect(bl,421,0);
+		}
+	break;
+	case BL_MOB:
+		{
+			TBL_MOB *md = ((TBL_MOB*)bl);
+			if(md->special_state.size==2) // tiny/big mobs [Valaris]
+				clif_specialeffect(&md->bl,423,0);
+			else if(md->special_state.size==1)
+				clif_specialeffect(&md->bl,421,0);
+		}
+	break;
 	}
-	len = clif_npc0078(nd,buf);
-	clif_send(buf,len,&nd->bl,AREA);
-
 	return 0;
 }
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_spawnmob(struct mob_data *md)
-{
-	unsigned char buf[64];
-	int len;
-	int viewclass = mob_get_viewclass(md->class_);
-
-	if (!pcdb_checkid(viewclass)) {
-		memset(buf,0,packet_len_table[0x7c]);
-
-		WBUFW(buf,0)=0x7c;
-		WBUFL(buf,2)=md->bl.id;
-		WBUFW(buf,6)=md->speed;
-		WBUFW(buf,8)=md->sc.opt1;
-		WBUFW(buf,10)=md->sc.opt2;
-		WBUFW(buf,12)=md->sc.option;
-		WBUFW(buf,20)=viewclass;
-		WBUFPOS(buf,36,md->bl.x,md->bl.y);
-		clif_send(buf,packet_len_table[0x7c],&md->bl,AREA);
-	}
-
-	len = clif_mob0078(md,buf);
-	clif_send(buf,len,&md->bl,AREA);
-
-	if(battle_config.save_clothcolor && pcdb_checkid(viewclass) && mob_get_clothes_color(md->class_) > 0) // [Valaris]
-		clif_changelook(&md->bl, LOOK_CLOTHES_COLOR, mob_get_clothes_color(md->class_));
-
-	if (mob_get_equip(md->class_) > 0) // mob equipment [Valaris]
-		clif_mob_equip(md,mob_get_equip(md->class_));
-
-	if(md->special_state.size==2) // tiny/big mobs [Valaris]
-		clif_specialeffect(&md->bl,423,0);
-	else if(md->special_state.size==1)
-		clif_specialeffect(&md->bl,421,0);
-
-	return 0;
-}
-
-// pet
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_spawnpet(struct pet_data *pd)
-{
-	unsigned char buf[64];
-	int len;
-	int viewclass = mob_get_viewclass(pd->class_);
-
-	if (!pcdb_checkid(viewclass)) {
-		memset(buf,0,packet_len_table[0x7c]);
-
-		WBUFW(buf,0)=0x7c;
-		WBUFL(buf,2)=pd->bl.id;
-		WBUFW(buf,6)=pd->speed;
-		WBUFW(buf,20)=viewclass;
-		WBUFPOS(buf,36,pd->bl.x,pd->bl.y);
-
-		clif_send(buf,packet_len_table[0x7c],&pd->bl,AREA);
-	}
-
-	len = clif_pet0078(pd,buf);
-	clif_send(buf,len,&pd->bl,AREA);
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_movepet(struct pet_data *pd) {
-	unsigned char buf[256];
-	int len;
-
-	nullpo_retr(0, pd);
-
-	len = clif_pet007b(pd,buf);
-	clif_send(buf,len,&pd->bl,AREA);
-
-	return 0;
-}
-
-/*==========================================
- * npc walking [Valaris]
- *------------------------------------------
- */
-int clif_movenpc(struct npc_data *nd) {
-	unsigned char buf[256];
-	int len;
-
-	nullpo_retr(0, nd);
-
-	len = clif_npc007b(nd,buf);
-	clif_send(buf,len,&nd->bl,AREA);
-
-	return 0;
-}
-
 /*==========================================
  *
  *------------------------------------------
@@ -2062,7 +1356,7 @@ int clif_servertick(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, packet_len_table[0x7f]);
+	WFIFOHEAD(fd, packet_len_table[0x7f]);
 	WFIFOW(fd,0)=0x7f;
 	WFIFOL(fd,2)=sd->server_tick;
 	WFIFOSET(fd,packet_len_table[0x7f]);
@@ -2095,20 +1389,20 @@ int clif_walkok(struct map_session_data *sd)
  *
  *------------------------------------------
  */
-int clif_movechar(struct map_session_data *sd) {
-	int fd;
-	int len;
+int clif_movepc(struct map_session_data *sd) {
 	unsigned char buf[256];
 
 	nullpo_retr(0, sd);
 
-	fd = sd->fd;
-
-	len = clif_set007b(sd, buf);
-	clif_send(buf, len, &sd->bl, AREA_WOS);
-
-	if (map[sd->bl.m].flag.snow || map[sd->bl.m].flag.clouds || map[sd->bl.m].flag.fog || map[sd->bl.m].flag.fireworks ||
-	    map[sd->bl.m].flag.sakura || map[sd->bl.m].flag.leaves || map[sd->bl.m].flag.rain || map[sd->bl.m].flag.clouds2) {
+	if (map[sd->bl.m].flag.snow
+		|| map[sd->bl.m].flag.clouds
+		|| map[sd->bl.m].flag.fog
+		|| map[sd->bl.m].flag.fireworks
+		|| map[sd->bl.m].flag.sakura
+		|| map[sd->bl.m].flag.leaves
+		|| map[sd->bl.m].flag.rain
+		|| map[sd->bl.m].flag.clouds2
+	) {
 		memset(buf,0,packet_len_table[0x7b]);
 		WBUFW(buf,0)=0x7b;
 		WBUFL(buf,2)=-10;
@@ -2121,29 +1415,65 @@ int clif_movechar(struct map_session_data *sd) {
 		WBUFPOS2(buf,50,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
 		WBUFB(buf,56)=5;
 		WBUFB(buf,57)=5;
-		clif_send(buf, len, &sd->bl, SELF);
+		clif_send(buf, packet_len_table[0x7b], &sd->bl, SELF);
 	}
-
-	if(sd->disguise) {
-		memset(buf,0,packet_len_table[0x7b]);
-		len = clif_dis007b(sd, buf);
-		clif_send(buf, len, &sd->bl, AREA);
-		return 0;
-	}
-
-	//Stupid client that needs this resent every time someone walks :X
-	if(battle_config.save_clothcolor && sd->status.clothes_color > 0 && ((sd->view_class != JOB_WEDDING && sd->view_class !=JOB_XMAS) ||
-	   (sd->view_class==JOB_WEDDING && !battle_config.wedding_ignorepalette) || (sd->view_class==JOB_XMAS && !battle_config.xmas_ignorepalette)))
-		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
-
-
-	if(sd->state.size==2) // tiny/big players [Valaris]
-		clif_specialeffect(&sd->bl,423,0);
-	else if(sd->state.size==1)
-		clif_specialeffect(&sd->bl,421,0);
 
 	return 0;
 }
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int clif_move(struct block_list *bl) {
+	struct view_data *vd;
+	struct unit_data *ud;
+	unsigned char buf[256];
+	int len;
+
+	nullpo_retr(0, bl);
+	
+	vd = status_get_viewdata(bl);
+	if (!vd || vd->class_ == INVISIBLE_CLASS)
+		return 0;
+	
+	ud = unit_bl2ud(bl);
+	nullpo_retr(0, ud);
+	
+	len = clif_set007b(bl,vd,ud,buf);
+	clif_send(buf,len,bl,AREA_WOS);
+	if (disguised(bl))
+		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
+		
+	//Stupid client that needs this resent every time someone walks :X
+	if(vd->cloth_color)
+		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
+
+	switch(bl->type)
+	{
+	case BL_PC:
+		{
+			TBL_PC *sd = ((TBL_PC*)bl);
+			clif_movepc(sd);
+			if(sd->state.size==2) // tiny/big players [Valaris]
+				clif_specialeffect(&sd->bl,423,0);
+			else if(sd->state.size==1)
+				clif_specialeffect(&sd->bl,421,0);
+		}
+		break;
+	case BL_MOB:
+		{
+			TBL_MOB *md = ((TBL_MOB*)bl);
+			if(md->special_state.size==2) // tiny/big mobs [Valaris]
+				clif_specialeffect(&md->bl,423,0);
+			else if(md->special_state.size==1)
+				clif_specialeffect(&md->bl,421,0);
+		}
+		break;
+	}
+	return 0;
+}
+
 
 /*==========================================
  * Delays the map_quit of a player after they are disconnected. [Skotlex]
@@ -2269,16 +1599,14 @@ int clif_fixpos(struct block_list *bl) {
 	nullpo_retr(0, bl);
 
 	WBUFW(buf,0)=0x88;
-
-	if (bl->type ==BL_PC && ((struct map_session_data *)bl)->disguise)
-		WBUFL(buf,2)=-bl->id;
-	else
-		WBUFL(buf,2)=bl->id;
-
+	WBUFL(buf,2)=bl->id;
 	WBUFW(buf,6)=bl->x;
 	WBUFW(buf,8)=bl->y;
 	clif_send(buf, packet_len_table[0x88], bl, AREA);
-	
+	if (disguised(bl)) {
+		WBUFL(buf,2)=-bl->id;
+		clif_send(buf, packet_len_table[0x88], bl, SELF);
+	}
 	return 0;
 }
 
@@ -2312,7 +1640,7 @@ int clif_buylist(struct map_session_data *sd, struct npc_data *nd) {
 	nullpo_retr(0, nd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, 200 * 11 + 4);
+ 	WFIFOHEAD(fd, 200 * 11 + 4);
 	WFIFOW(fd,0)=0xc6;
 	for(i=0;nd->u.shop_item[i].nameid > 0;i++){
 		id = itemdb_search(nd->u.shop_item[i].nameid);
@@ -2398,7 +1726,7 @@ int clif_scriptnext(struct map_session_data *sd,int npcid) {
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, packet_len_table[0xb5]);
+	WFIFOHEAD(fd, packet_len_table[0xb5]);
 	WFIFOW(fd,0)=0xb5;
 	WFIFOL(fd,2)=npcid;
 	WFIFOSET(fd,packet_len_table[0xb5]);
@@ -2455,7 +1783,7 @@ int clif_scriptinput(struct map_session_data *sd, int npcid) {
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, packet_len_table[0x142]);
+   WFIFOHEAD(fd, packet_len_table[0x142]);
 	WFIFOW(fd,0)=0x142;
 	WFIFOL(fd,2)=npcid;
 	WFIFOSET(fd,packet_len_table[0x142]);
@@ -2473,7 +1801,7 @@ int clif_scriptinputstr(struct map_session_data *sd, int npcid) {
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, packet_len_table[0x1d4]);
+	WFIFOHEAD(fd, packet_len_table[0x1d4]);
 	WFIFOW(fd,0)=0x1d4;
 	WFIFOL(fd,2)=npcid;
 	WFIFOSET(fd,packet_len_table[0x1d4]);
@@ -2491,7 +1819,7 @@ int clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, int
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, packet_len_table[0x144]);
+	WFIFOHEAD(fd, packet_len_table[0x144]);
 	WFIFOW(fd,0)=0x144;
 	WFIFOL(fd,2)=npc_id;
 	WFIFOL(fd,6)=type;
@@ -2514,7 +1842,7 @@ int clif_cutin(struct map_session_data *sd, char *image, int type) {
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, packet_len_table[0x1b3]);
+	WFIFOHEAD(fd, packet_len_table[0x1b3]);
 	WFIFOW(fd,0)=0x1b3;
 	strncpy((char*)WFIFOP(fd,2),image,64);
 	WFIFOB(fd,66)=type;
@@ -3025,17 +2353,17 @@ int clif_guild_xy_single(int fd, struct map_session_data *sd)
 // Guild XY locators [Valaris]
 int clif_guild_xy_remove(struct map_session_data *sd)
 {
-unsigned char buf[10];
+	unsigned char buf[10];
 
-nullpo_retr(0, sd);
+	nullpo_retr(0, sd);
 
-WBUFW(buf,0)=0x1eb;
-WBUFL(buf,2)=sd->status.account_id;
-WBUFW(buf,6)=-1;
-WBUFW(buf,8)=-1;
-clif_send(buf,packet_len_table[0x1eb],&sd->bl,GUILD_SAMEMAP_WOS);
+	WBUFW(buf,0)=0x1eb;
+	WBUFL(buf,2)=sd->status.account_id;
+	WBUFW(buf,6)=-1;
+	WBUFW(buf,8)=-1;
+	clif_send(buf,packet_len_table[0x1eb],&sd->bl,GUILD_SAMEMAP_WOS);
 
-return 0;
+	return 0;
 }
 
 /*==========================================
@@ -3283,60 +2611,91 @@ int clif_changestatus(struct block_list *bl,int type,int val)
  */
 int clif_changelook(struct block_list *bl,int type,int val)
 {
-
 	unsigned char buf[32];
 	struct map_session_data *sd = NULL;
-
+	struct view_data *vd;
 	nullpo_retr(0, bl);
-
+	vd = status_get_viewdata(bl);
+	nullpo_retr(0, vd);
+	
 	if(bl->type == BL_PC)
 		sd = (struct map_session_data *)bl;
 
+	switch(type) {
+		case LOOK_WEAPON:
+			if (sd) clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
+			else vd->weapon = val;
+		break;
+		case LOOK_SHIELD:
+			if (sd) clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
+			else vd->shield = val;
+		break;
+		case LOOK_BASE:
+			vd->class_ = val;
+			if (vd->class_ == JOB_WEDDING || vd->class_ == JOB_XMAS)
+				vd->weapon = vd->shield = 0;
+			if (
+				(vd->class_ == JOB_WEDDING && battle_config.wedding_ignorepalette) ||
+				(vd->class_ == JOB_XMAS && battle_config.xmas_ignorepalette)
+			)
+				vd->cloth_color = 0;
+		break;
+		case LOOK_HAIR:
+			vd->hair_style = val;
+		break;
+		case LOOK_HEAD_BOTTOM:
+			vd->head_bottom = val;
+		break;
+		case LOOK_HEAD_TOP:
+			vd->head_top = val;
+		break;	
+		case LOOK_HEAD_MID:
+			vd->head_mid = val;
+		break;
+		case LOOK_HAIR_COLOR:
+			vd->hair_color = val;
+		break;
+		case LOOK_CLOTHES_COLOR:
+			if (
+				(vd->class_ == JOB_WEDDING && battle_config.wedding_ignorepalette) ||
+				(vd->class_ == JOB_XMAS && battle_config.xmas_ignorepalette)
+			)
+				val = 0;
+			vd->cloth_color = val;
+		break;
+		case LOOK_SHOES:
+#if PACKETVER > 3
+			if (sd) {
+				int n;
+				if((n = sd->equip_index[2]) >= 0 && sd->inventory_data[n]) {
+					if(sd->inventory_data[n]->view_id > 0)
+						val = sd->inventory_data[n]->view_id;
+					else
+						val = sd->status.inventory[n].nameid;
+					}
+				val = 0;
+			}
+#endif
+			//Shoes? No packet uses this....
+		break;
+	}
 #if PACKETVER < 4
-	if(sd && (type == LOOK_WEAPON || type == LOOK_SHIELD) && (sd->view_class == JOB_WEDDING || sd->view_class == JOB_XMAS))
-		val =0;
 	WBUFW(buf,0)=0xc3;
 	WBUFL(buf,2)=bl->id;
 	WBUFB(buf,6)=type;
 	WBUFB(buf,7)=val;
 	clif_send(buf,packet_len_table[0xc3],bl,AREA);
 #else
-	if(sd && (type == LOOK_WEAPON || type == LOOK_SHIELD || type == LOOK_SHOES)) {
+	if(type == LOOK_WEAPON || type == LOOK_SHIELD) {
 		WBUFW(buf,0)=0x1d7;
 		WBUFL(buf,2)=bl->id;
-		if(type == LOOK_SHOES) {
-			WBUFB(buf,6)=9;
-			if(sd->equip_index[2] >= 0 && sd->inventory_data[sd->equip_index[2]]) {
-				if(sd->inventory_data[sd->equip_index[2]]->view_id > 0)
-					WBUFW(buf,7)=sd->inventory_data[sd->equip_index[2]]->view_id;
-				else
-					WBUFW(buf,7)=sd->status.inventory[sd->equip_index[2]].nameid;
-			} else
-				WBUFW(buf,7)=0;
-			WBUFW(buf,9)=0;
-		}
-		else {
-			WBUFB(buf,6)=2;
-			if(sd->equip_index[9] >= 0 && sd->inventory_data[sd->equip_index[9]] && sd->view_class != JOB_WEDDING && sd->view_class != JOB_XMAS) {
-				if(sd->inventory_data[sd->equip_index[9]]->view_id > 0)
-					WBUFW(buf,7)=sd->inventory_data[sd->equip_index[9]]->view_id;
-				else
-					WBUFW(buf,7)=sd->status.inventory[sd->equip_index[9]].nameid;
-			} else
-				WBUFW(buf,7)=0;
-			if(sd->equip_index[8] >= 0 && sd->equip_index[8] != sd->equip_index[9] && sd->inventory_data[sd->equip_index[8]] &&
-				sd->view_class != JOB_WEDDING && sd->view_class != JOB_XMAS) {
-				if(sd->inventory_data[sd->equip_index[8]]->view_id > 0)
-					WBUFW(buf,9)=sd->inventory_data[sd->equip_index[8]]->view_id;
-				else
-					WBUFW(buf,9)=sd->status.inventory[sd->equip_index[8]].nameid;
-			} else
-				WBUFW(buf,9)=0;
-		}
+		WBUFB(buf,6)=LOOK_WEAPON;
+		WBUFW(buf,7)=vd->weapon;
+		WBUFW(buf,9)=vd->shield;
 		clif_send(buf,packet_len_table[0x1d7],bl,AREA);
 	}
-	else if(sd && (type == LOOK_BASE) && (val > 255))
-		{
+	else if(type == LOOK_BASE && val > 255)
+	{
 		WBUFW(buf,0)=0x1d7;
 		WBUFL(buf,2)=bl->id;
 		WBUFB(buf,6)=type;
@@ -3352,6 +2711,37 @@ int clif_changelook(struct block_list *bl,int type,int val)
 	}
 #endif
 	return 0;
+}
+
+//For the stupid cloth-dye bug. Resends the given view data
+//to the area specified by bl.
+void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area)
+{
+	unsigned char buf[32];
+#if PACKETVER < 4
+	WBUFW(buf,0)=0xc3;
+	WBUFL(buf,2)=id;
+	WBUFB(buf,6)=type;
+	WBUFB(buf,7)=val;
+	clif_send(buf,packet_len_table[0xc3],bl,area);
+#else
+	if(type == LOOK_BASE && val > 255)
+	{
+		WBUFW(buf,0)=0x1d7;
+		WBUFL(buf,2)=id;
+		WBUFB(buf,6)=type;
+		WBUFW(buf,7)=val;
+		WBUFW(buf,9)=0;
+		clif_send(buf,packet_len_table[0x1d7],bl,area);
+	} else {
+		WBUFW(buf,0)=0xc3;
+		WBUFL(buf,2)=id;
+		WBUFB(buf,6)=type;
+		WBUFB(buf,7)=val;
+		clif_send(buf,packet_len_table[0xc3],bl,area);
+	}
+#endif
+	return;
 }
 
 /*==========================================
@@ -3447,7 +2837,7 @@ int clif_arrow_fail(struct map_session_data *sd,int type)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, packet_len_table[0x013b]);
+	WFIFOHEAD(fd, packet_len_table[0x013b]);
 	WFIFOW(fd,0)=0x013b;
 	WFIFOW(fd,2)=type;
 
@@ -3504,7 +2894,7 @@ int clif_statusupack(struct map_session_data *sd,int type,int ok,int val)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd,packet_len_table[0xbc]);
+	WFIFOHEAD(fd,packet_len_table[0xbc]);
 	WFIFOW(fd,0)=0xbc;
 	WFIFOW(fd,2)=type;
 	WFIFOB(fd,4)=ok;
@@ -3603,27 +2993,20 @@ int clif_changeoption(struct block_list* bl)
 	sc = status_get_sc(bl);
 
 	WBUFW(buf,0) = 0x119;
-	if(bl->type==BL_PC && ((struct map_session_data *)bl)->disguise) {
-		WBUFL(buf,2) = bl->id;
-		WBUFW(buf,6) = 0;
-		WBUFW(buf,8) = 0;
-		WBUFW(buf,10) = OPTION_INVISIBLE;
-		WBUFB(buf,12) = 0;
-		clif_send(buf,packet_len_table[0x119],bl,AREA);
+	WBUFL(buf,2) = bl->id;
+	WBUFW(buf,6) = sc?sc->opt1:0;
+	WBUFW(buf,8) = sc?sc->opt2:0;
+	WBUFW(buf,10) = sc?sc->option:0;
+	WBUFB(buf,12) = 0;	// ??
+	if(disguised(bl)) {
+		clif_send(buf,packet_len_table[0x119],bl,AREA_WOS);
 		WBUFL(buf,2) = -bl->id;
-		WBUFW(buf,6) = 0;
-		WBUFW(buf,8) = 0;
-		WBUFW(buf,10) = sc?sc->option:0;
-		WBUFB(buf,12) = 0;
-		clif_send(buf,packet_len_table[0x119],bl,AREA);
-	} else {
+		clif_send(buf,packet_len_table[0x119],bl,SELF);
 		WBUFL(buf,2) = bl->id;
-		WBUFW(buf,6) = sc?sc->opt1:0;
-		WBUFW(buf,8) = sc?sc->opt2:0;
-		WBUFW(buf,10) = sc?sc->option:0;
-		WBUFB(buf,12) = 0;	// ??
+		WBUFW(buf,10) = OPTION_INVISIBLE;
+		clif_send(buf,packet_len_table[0x119],bl,SELF);
+	} else
 		clif_send(buf,packet_len_table[0x119],bl,AREA);
-	}
 
 	return 0;
 }
@@ -3638,7 +3021,7 @@ int clif_useitemack(struct map_session_data *sd,int index,int amount,int ok)
 
 	if(!ok) {
 		int fd=sd->fd;
-                WFIFOHEAD(fd,packet_len_table[0xa8]);
+  		WFIFOHEAD(fd,packet_len_table[0xa8]);
 		WFIFOW(fd,0)=0xa8;
 		WFIFOW(fd,2)=index+2;
 		WFIFOW(fd,4)=amount;
@@ -3648,7 +3031,7 @@ int clif_useitemack(struct map_session_data *sd,int index,int amount,int ok)
 	else {
 #if PACKETVER < 3
 		int fd=sd->fd;
-                WFIFOHEAD(fd,packet_len_table[0xa8]);
+		WFIFOHEAD(fd,packet_len_table[0xa8]);
 		WFIFOW(fd,0)=0xa8;
 		WFIFOW(fd,2)=index+2;
 		WFIFOW(fd,4)=amount;
@@ -3712,7 +3095,7 @@ int clif_dispchat(struct chat_data *cd,int fd)
 	WBUFB(buf,16)=cd->pub;
 	strcpy((char*)WBUFP(buf,17),(const char*)cd->title);
 	if(fd){
-                WFIFOHEAD(fd, WBUFW(buf,2));
+		WFIFOHEAD(fd, WBUFW(buf,2));
 		memcpy(WFIFOP(fd,0),buf,WBUFW(buf,2));
 		WFIFOSET(fd,WBUFW(buf,2));
 	} else {
@@ -4187,73 +3570,29 @@ int clif_storageclose(struct map_session_data *sd)
 void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* dstsd)
 {
 	int len;
-
-	nullpo_retv(sd);
-	nullpo_retv(dstsd);
-
-	// Hidden GMs will not be revealed by bots :) [Lance]
-	if(!pc_isGM(dstsd) || !dstsd->status.option&OPTION_INVISIBLE){
-		if(dstsd->ud.walktimer != -1){
-	#if PACKETVER < 4
-					WFIFOHEAD(sd->fd, packet_len_table[0x7b]);
-	#else
-					WFIFOHEAD(sd->fd, packet_len_table[0x1da]);
-	#endif
-			len = clif_set007b(dstsd,WFIFOP(sd->fd,0));
-			WFIFOSET(sd->fd,len);
-			if(dstsd->disguise) {
-				WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
-				len = clif_dis007b(dstsd,WFIFOP(sd->fd,0));
-				WFIFOSET(sd->fd,len);
-			}
-		} else {
-#if PACKETVER < 4
-			WFIFOHEAD(sd->fd,packet_len_table[0x78]);
-#else
-			WFIFOHEAD(sd->fd,packet_len_table[0x1d8]);
-#endif
-			len = clif_set0078(dstsd,WFIFOP(sd->fd,0));
-			WFIFOSET(sd->fd,len);
-			if(dstsd->disguise) {
-				WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
-				len = clif_dis0078(dstsd,WFIFOP(sd->fd,0));
-				WFIFOSET(sd->fd,len);
-			}
-		}
-	}
-
 	if(dstsd->chatID){
 		struct chat_data *cd;
 		cd=(struct chat_data*)map_id2bl(dstsd->chatID);
-		if(cd->usersd[0]==dstsd)
+		if(cd && cd->usersd[0]==dstsd)
 			clif_dispchat(cd,sd->fd);
 	}
-	if(dstsd->vender_id){
+	if(dstsd->vender_id)
 		clif_showvendingboard(&dstsd->bl,dstsd->message,sd->fd);
-	}
+
 	if(dstsd->spiritball > 0) {
-                WFIFOHEAD(sd->fd, packet_len_table[0x1e1]);
+      WFIFOHEAD(sd->fd, packet_len_table[0x1e1]);
 		clif_set01e1(dstsd,WFIFOP(sd->fd,0));
 		WFIFOSET(sd->fd,packet_len_table[0x1e1]);
 	}
-
-	if(battle_config.save_clothcolor && dstsd->status.clothes_color > 0 && ((dstsd->view_class != JOB_WEDDING && dstsd->view_class !=JOB_XMAS) ||
-	   (dstsd->view_class==JOB_WEDDING && !battle_config.wedding_ignorepalette) || (dstsd->view_class==JOB_XMAS && !battle_config.xmas_ignorepalette)))
-		clif_changelook(&dstsd->bl, LOOK_CLOTHES_COLOR, dstsd->status.clothes_color);
 
 	if((sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(battle_config.disp_hpmeter && (len = pc_isGM(sd)) >= battle_config.disp_hpmeter && len >= pc_isGM(dstsd))
 		)
 		clif_hpmeter_single(sd->fd, dstsd);
 
-	if(sd->status.manner < 0 && battle_config.manner_system)
-		clif_changestatus(&sd->bl,SP_MANNER,sd->status.manner);
+	if(dstsd->status.manner < 0 && battle_config.manner_system)
+		clif_changestatus(&dstsd->bl,SP_MANNER,dstsd->status.manner);
 		
-	if(sd->state.size==2) // tiny/big players [Valaris]
-		clif_specialeffect(&sd->bl,423,0);
-	else if(sd->state.size==1)
-		clif_specialeffect(&sd->bl,421,0);
-
 	// pvp circle for duel [LuzZza]
 	/*
 	if(dstsd->duel_group)
@@ -4261,150 +3600,101 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 	*/
 
 }
-
-/*==========================================
- * NPC表示
- *------------------------------------------
- */
-//fixed by Valaris
-void clif_getareachar_npc(struct map_session_data* sd,struct npc_data* nd)
+void clif_getareachar_char(struct map_session_data* sd,struct block_list *bl)
 {
+	struct unit_data *ud;
+	struct view_data *vd;
 	int len;
-	nullpo_retv(sd);
-	nullpo_retv(nd);
-	if(nd->class_ < 0 || nd->flag&1 || nd->class_ == INVISIBLE_CLASS)
+	
+	vd = status_get_viewdata(bl);
+
+	if (!vd || vd->class_ == INVISIBLE_CLASS)
 		return;
-	if(nd->ud.walktimer != -1){
-                WFIFOHEAD(sd->fd, packet_len_table[0x7b]);
-		len = clif_npc007b(nd,WFIFOP(sd->fd,0));
+
+	ud = unit_bl2ud(bl);
+	if (ud && ud->walktimer != -1)
+	{
+#if PACKETVER < 4
+		WFIFOHEAD(sd->fd, packet_len_table[0x7b]);
+#else
+		WFIFOHEAD(sd->fd, packet_len_table[0x1da]);
+#endif
+		len = clif_set007b(bl,vd,ud,WFIFOP(sd->fd,0));
 		WFIFOSET(sd->fd,len);
 	} else {
-                WFIFOHEAD(sd->fd, packet_len_table[0x78]);
-                len = clif_npc0078(nd,WFIFOP(sd->fd,0));
-                WFIFOSET(sd->fd,len);
+#if PACKETVER < 4
+		WFIFOHEAD(sd->fd,packet_len_table[0x78]);
+#else
+		WFIFOHEAD(sd->fd,packet_len_table[0x1d8]);
+#endif
+		len = clif_set0078(bl,vd,WFIFOP(sd->fd,0));
+		WFIFOSET(sd->fd,len);
 	}
-	if(nd->chat_id){
-		clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
+
+	if (vd->cloth_color)
+		clif_refreshlook(&sd->bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,SELF);
+
+	switch (bl->type)
+	{
+	case BL_PC:
+		{
+			TBL_PC* tsd = (TBL_PC*)bl;
+			clif_getareachar_pc(sd, tsd);
+			if(tsd->state.size==2) // tiny/big players [Valaris]
+				clif_specialeffect(bl,423,0);
+			else if(tsd->state.size==1)
+				clif_specialeffect(bl,421,0);
+		}
+		break;
+	case BL_NPC:
+		{
+			if(((TBL_NPC*)bl)->chat_id)
+				clif_dispchat((struct chat_data*)map_id2bl(((TBL_NPC*)bl)->chat_id),sd->fd);
+		}
+		break;
+	case BL_MOB:
+		{
+			TBL_MOB* md = (TBL_MOB*)bl;
+			if(md->special_state.size==2) // tiny/big mobs [Valaris]
+				clif_specialeffect(bl,423,0);
+			else if(md->special_state.size==1)
+				clif_specialeffect(bl,421,0);
+		}
+		break;
 	}
 }
 
 /*==========================================
- * 移動停止
+ * Older fix pos packet.
  *------------------------------------------
  */
-int clif_movemob(struct mob_data *md)
+int clif_fixpos2(struct block_list* bl)
 {
+	struct unit_data *ud;
+	struct view_data *vd;
 	unsigned char buf[256];
 	int len;
 
-	nullpo_retr(0, md);
+	nullpo_retr(0, bl);
+	ud = unit_bl2ud(bl);
+	vd = status_get_viewdata(bl);
+	if (!vd || vd->class_ == INVISIBLE_CLASS)
+		return 0;
+	
+	if(ud && ud->walktimer != -1)
+		len = clif_set007b(bl,vd,ud,buf);
+	else
+		len = clif_set0078(bl,vd,buf);
 
-	len = clif_mob007b(md,buf);
-	clif_send(buf,len,&md->bl,AREA);
-
-	if(battle_config.save_clothcolor && pcdb_checkid(mob_get_viewclass(md->class_)) && mob_get_clothes_color(md->class_)) // [Valaris]
-			clif_changelook(&md->bl, LOOK_CLOTHES_COLOR, mob_get_clothes_color(md->class_));
-
-	if(mob_get_equip(md->class_) > 0) // mob equipment [Valaris]
-		clif_mob_equip(md,mob_get_equip(md->class_));
-
-	if(md->special_state.size==2) // tiny/big mobs [Valaris]
-		clif_specialeffect(&md->bl,423,0);
-	else if(md->special_state.size==1)
-		clif_specialeffect(&md->bl,421,0);
-
+	if (disguised(bl)) {
+		clif_send(buf,len,bl,AREA_WOS);
+		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
+		clif_setdisguise((TBL_PC*)bl, buf, len, 1);
+	} else
+		clif_send(buf,len,bl,AREA);
 	return 0;
 }
 
-/*==========================================
- * モンスターの位置修正
- *------------------------------------------
- */
-int clif_fixmobpos(struct mob_data *md)
-{
-	unsigned char buf[256];
-	int len;
-
-	nullpo_retr(0, md);
-
-	if(md->ud.walktimer != -1){
-		len = clif_mob007b(md,buf);
-		clif_send(buf,len,&md->bl,AREA);
-	} else {
-		len = clif_mob0078(md,buf);
-		clif_send(buf,len,&md->bl,AREA);
-	}
-
-	return 0;
-}
-
-/*==========================================
- * PCの位置修正
- *------------------------------------------
- */
-int clif_fixpcpos(struct map_session_data *sd)
-{
-	unsigned char buf[256];
-	int len;
-
-	nullpo_retr(0, sd);
-
-	if(sd->ud.walktimer != -1){
-		len = clif_set007b(sd,buf);
-	} else {
-		len = clif_set0078(sd,buf);
-	}
-
-	// Prevent bots/modified clients to view hidden GMs [Lance]
-	if(!pc_isGM(sd) || !sd->status.option&OPTION_INVISIBLE){
-		clif_send(buf,len,&sd->bl,AREA);
-	} else {
-		clif_send(buf,len,&sd->bl,SELF);
-	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_fixpetpos(struct pet_data *pd)
-{
-	unsigned char buf[256];
-	int len;
-
-	nullpo_retr(0, pd);
-
-	if(pd->ud.walktimer != -1){
-		len = clif_pet007b(pd,buf);
-		clif_send(buf,len,&pd->bl,AREA);
-	} else {
-		len = clif_pet0078(pd,buf);
-		clif_send(buf,len,&pd->bl,AREA);
-	}
-
-	return 0;
-}
-
-// npc walking [Valaris]
-int clif_fixnpcpos(struct npc_data *nd)
-{
-	unsigned char buf[256];
-	int len;
-
-	nullpo_retr(0, nd);
-
-	if(nd->ud.walktimer != -1){
-		len = clif_npc007b(nd,buf);
-		clif_send(buf,len,&nd->bl,AREA);
-	} else {
-		len = clif_npc0078(nd,buf);
-		clif_send(buf,len,&nd->bl,AREA);
-	}
-
-	return 0;
-}
 /*==========================================
  * Modifies the type of damage according to status changes [Skotlex]
  *------------------------------------------
@@ -4445,131 +3735,42 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	}
 
 	WBUFW(buf,0)=0x8a;
-	if(src->type==BL_PC && ((struct map_session_data *)src)->disguise)
-		WBUFL(buf,2)=-src->id;
-	else 
-		WBUFL(buf,2)=src->id;
-	if(dst->type==BL_PC && ((struct map_session_data *)dst)->disguise)
-		WBUFL(buf,6)=-dst->id;
-	else
-		WBUFL(buf,6)=dst->id;
+	WBUFL(buf,2)=src->id;
+	WBUFL(buf,6)=dst->id;
 	WBUFL(buf,10)=tick;
 	WBUFL(buf,14)=sdelay;
 	WBUFL(buf,18)=ddelay;
-	WBUFW(buf,22)=(damage > 0x7fff)? 0x7fff:damage;
+	WBUFW(buf,22)=(damage > SHRT_MAX)?SHRT_MAX:damage;
 	WBUFW(buf,24)=div;
 	WBUFB(buf,26)=type;
 	WBUFW(buf,27)=damage2;
 	clif_send(buf,packet_len_table[0x8a],src,AREA);
 
-	if((src->type==BL_PC && ((struct map_session_data *)src)->disguise) || (dst->type==BL_PC && ((struct map_session_data *)dst)->disguise)) {
-		memset(buf,0,packet_len_table[0x8a]);
-		WBUFW(buf,0)=0x8a;
-		if(src->type==BL_PC && ((struct map_session_data *)src)->disguise)
-			WBUFL(buf,2)=src->id;
-		else 
-			WBUFL(buf,2)=-src->id;
-		if(dst->type==BL_PC && ((struct map_session_data *)dst)->disguise)
-			WBUFL(buf,6)=dst->id;
-		else 
-			WBUFL(buf,2)=-dst->id;
-		WBUFL(buf,10)=tick;
-		WBUFL(buf,14)=sdelay;
-		WBUFL(buf,18)=ddelay;
+	if(disguised(src)) {
+		WBUFL(buf,2)=-src->id;
 		if(damage > 0)
 			WBUFW(buf,22)=-1;
-		else
-			WBUFW(buf,22)=0;
-		WBUFW(buf,24)=div;
-		WBUFB(buf,26)=type;
-		WBUFW(buf,27)=0;
-		clif_send(buf,packet_len_table[0x8a],src,AREA);
+		if(damage2 > 0)
+			WBUFW(buf,27)=-1;
+		clif_send(buf,packet_len_table[0x8a],src,SELF);
+	}
+	if (disguised(dst)) {
+		WBUFL(buf,6)=-dst->id;
+		if (disguised(src))
+			WBUFL(buf,2)=src->id;
+		else {
+			if(damage > 0)
+				WBUFW(buf,22)=-1;
+			if(damage2 > 0)
+				WBUFW(buf,27)=-1;
+		}
+		clif_send(buf,packet_len_table[0x8a],dst,SELF);
 	}
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
 	if (type != 4 && type != 9 && damage+damage2 > 0) //Non-endure/Non-flinch attack, update walk delay.
 		unit_walkdelay(dst, tick, sdelay, ddelay, div);
 
-	// [Valaris]
-	if(battle_config.save_clothcolor && src->type==BL_MOB &&
-		pcdb_checkid(mob_get_viewclass(((struct mob_data *)src)->class_)) && mob_get_clothes_color(((struct mob_data *)src)->class_) > 0)
-			clif_changelook(src, LOOK_CLOTHES_COLOR, mob_get_clothes_color(((struct mob_data *)src)->class_));
-
 	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-void clif_getareachar_mob(struct map_session_data* sd,struct mob_data* md)
-{
-	int len;
-	nullpo_retv(sd);
-	nullpo_retv(md);
-
-	if (session[sd->fd] == NULL)
-		return;
-
-	if(md->ud.walktimer != -1){
-#if PACKETVER < 4
-		WFIFOHEAD(sd->fd,packet_len_table[0x78]);
-#else
-		WFIFOHEAD(sd->fd,packet_len_table[0x1d8]);
-#endif
-		len = clif_mob007b(md,WFIFOP(sd->fd,0));
-		WFIFOSET(sd->fd,len);
-	} else {
-#if PACKETVER < 4
-		WFIFOHEAD(sd->fd,packet_len_table[0x78]);
-#else
-		WFIFOHEAD(sd->fd,packet_len_table[0x1d8]);
-#endif
-		len = clif_mob0078(md,WFIFOP(sd->fd,0));
-		WFIFOSET(sd->fd,len);
-	}
-
-	if(battle_config.save_clothcolor && pcdb_checkid(mob_get_viewclass(md->class_)) && mob_get_clothes_color(md->class_)) // [Valaris]
-			clif_changelook(&md->bl, LOOK_CLOTHES_COLOR, mob_get_clothes_color(md->class_));
-
-	if(mob_get_equip(md->class_) > 0) // mob equipment [Valaris]
-		clif_mob_equip(md,mob_get_equip(md->class_));
-
-	if(md->special_state.size==2) // tiny/big mobs [Valaris]
-		clif_specialeffect(&md->bl,423,0);
-	else if(md->special_state.size==1)
-		clif_specialeffect(&md->bl,421,0);
-
-
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-void clif_getareachar_pet(struct map_session_data* sd,struct pet_data* pd)
-{
-	int len;
-
-	nullpo_retv(sd);
-	nullpo_retv(pd);
-
-	if(pd->ud.walktimer != -1){
-#if PACKETVER < 4
-		WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
-#else
-		WFIFOHEAD(sd->fd,packet_len_table[0x1da]);
-#endif
-		len = clif_pet007b(pd,WFIFOP(sd->fd,0));
-		WFIFOSET(sd->fd,len);
-	} else {
-#if PACKETVER < 4
-		WFIFOHEAD(sd->fd,packet_len_table[0x7b]);
-#else
-		WFIFOHEAD(sd->fd,packet_len_table[0x1da]);
-#endif
-		len = clif_pet0078(pd,WFIFOP(sd->fd,0));
-		WFIFOSET(sd->fd,len);
-	}
 }
 
 /*==========================================
@@ -4579,10 +3780,6 @@ void clif_getareachar_pet(struct map_session_data* sd,struct pet_data* pd)
 void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fitem)
 {
 	int view,fd;
-
-	nullpo_retv(sd);
-	nullpo_retv(fitem);
-
 	fd=sd->fd;
 	//009d <ID>.l <item ID>.w <identify flag>.B <X>.w <Y>.w <amount>.w <subX>.B <subY>.B
 	WFIFOHEAD(fd,packet_len_table[0x9d]);
@@ -4599,7 +3796,6 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
 	WFIFOW(fd,13)=fitem->item_data.amount;
 	WFIFOB(fd,15)=fitem->subx;
 	WFIFOB(fd,16)=fitem->suby;
-
 	WFIFOSET(fd,packet_len_table[0x9d]);
 }
 /*==========================================
@@ -4723,20 +3919,6 @@ int clif_01ac(struct block_list *bl)
 		return 0;
 
 	switch(bl->type){
-	case BL_PC:
-		if(sd==(struct map_session_data*)bl)
-			break;
-		clif_getareachar_pc(sd,(struct map_session_data*) bl);
-		break;
-	case BL_NPC:
-		clif_getareachar_npc(sd,(struct npc_data*) bl);
-		break;
-	case BL_MOB:
-		clif_getareachar_mob(sd,(struct mob_data*) bl);
-		break;
-	case BL_PET:
-		clif_getareachar_pet(sd,(struct pet_data*) bl);
-		break;
 	case BL_ITEM:
 		clif_getareachar_item(sd,(struct flooritem_data*) bl);
 		break;
@@ -4744,227 +3926,94 @@ int clif_01ac(struct block_list *bl)
 		clif_getareachar_skillunit(sd,(struct skill_unit *)bl);
 		break;
 	default:
-		if(battle_config.error_log)
-			ShowError("clif_getareachar: Unrecognized type %d.\n",bl->type);
+		if(&sd->bl == bl)
+			break;
+		clif_getareachar_char(sd,bl);
 		break;
 	}
 	return 0;
 }
 
 /*==========================================
- *
+ * tbl has gone out of view-size of bl
  *------------------------------------------
  */
-int clif_pcoutsight(struct block_list *bl,va_list ap)
+int clif_outsight(struct block_list *bl,va_list ap)
 {
-	struct map_session_data *sd,*dstsd;
+	struct block_list *tbl;
+	TBL_PC *sd, *tsd;
+	tbl=va_arg(ap,struct block_list*);
+	if(bl == tbl) return 0;
+	BL_CAST(BL_PC, bl, sd);
+	BL_CAST(BL_PC, tbl, tsd);
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, sd=va_arg(ap,struct map_session_data*));
-
-	switch(bl->type){
-	case BL_PC:
-		dstsd = (struct map_session_data*) bl;
-		if(sd != dstsd) {
-			clif_clearchar_id(dstsd->bl.id,0,sd->fd);
-			clif_clearchar_id(sd->bl.id,0,dstsd->fd);
-			if(dstsd->disguise || sd->disguise) {
-				clif_clearchar_id(-dstsd->bl.id,0,sd->fd);
-				clif_clearchar_id(-sd->bl.id,0,dstsd->fd);
-			}
-			if(dstsd->chatID){
+	if (tsd && tsd->fd)
+	{	//tsd has lost sight of the bl object.
+		switch(bl->type){
+		case BL_PC:
+			clif_clearchar_id(bl->id,0,tsd->fd);
+			if(sd->chatID){
 				struct chat_data *cd;
-				cd=(struct chat_data*)map_id2bl(dstsd->chatID);
-				if(cd->usersd[0]==dstsd)
-					clif_dispchat(cd,sd->fd);
+				cd=(struct chat_data*)map_id2bl(sd->chatID);
+				if(cd->usersd[0]==sd)
+					clif_dispchat(cd,tsd->fd);
 			}
-			if(dstsd->vender_id){
-				clif_closevendingboard(&dstsd->bl,sd->fd);
-			}
+			if(sd->vender_id)
+				clif_closevendingboard(bl,tsd->fd);
+			break;
+		case BL_ITEM:
+			clif_clearflooritem((struct flooritem_data*)bl,tsd->fd);
+			break;
+		case BL_SKILL:
+			clif_clearchar_skillunit((struct skill_unit *)bl,tsd->fd);
+			break;
+		default:
+			if (status_get_viewdata(bl))
+				clif_clearchar_id(bl->id,0,tsd->fd);
+			break;
 		}
-		break;
-	case BL_NPC:
-		if( ((struct npc_data *)bl)->class_ != INVISIBLE_CLASS )
-			clif_clearchar_id(bl->id,0,sd->fd);
-		break;
-	case BL_MOB:
-	case BL_PET:
-		clif_clearchar_id(bl->id,0,sd->fd);
-		break;
-	case BL_ITEM:
-		clif_clearflooritem((struct flooritem_data*)bl,sd->fd);
-		break;
-	case BL_SKILL:
-		clif_clearchar_skillunit((struct skill_unit *)bl,sd->fd);
-		break;
+	}
+	if (sd && sd->fd)
+	{	//sd is watching tbl go out of view.
+		if (status_get_viewdata(tbl))
+			clif_clearchar_id(tbl->id,0,sd->fd);
 	}
 	return 0;
 }
 
 /*==========================================
- *
+ * tbl has come into view of bl
  *------------------------------------------
  */
-int clif_pcinsight(struct block_list *bl,va_list ap)
+int clif_insight(struct block_list *bl,va_list ap)
 {
-	struct map_session_data *sd,*dstsd;
+	struct block_list *tbl;
+	TBL_PC *sd, *tsd;
+	tbl=va_arg(ap,struct block_list*);
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, sd=va_arg(ap,struct map_session_data*));
+	if (bl == tbl) return 0;
+	
+	BL_CAST(BL_PC, bl, sd);
+	BL_CAST(BL_PC, tbl, tsd);
 
-	switch(bl->type){
-	case BL_PC:
-		dstsd = (struct map_session_data *)bl;
-		if(sd != dstsd) {
-			clif_getareachar_pc(sd,dstsd);
-			clif_getareachar_pc(dstsd,sd);
+	if (tsd && tsd->fd)
+	{	//Tell tsd that bl entered into his view
+		switch(bl->type){
+		case BL_ITEM:
+			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
+			break;
+		case BL_SKILL:
+			clif_getareachar_skillunit(tsd,(struct skill_unit *)bl);
+			break;
+		default:
+			clif_getareachar_char(tsd,bl);
+			break;
 		}
-		break;
-	case BL_NPC:
-		clif_getareachar_npc(sd,(struct npc_data*)bl);
-		break;
-	case BL_MOB:
-		clif_getareachar_mob(sd,(struct mob_data*)bl);
-		break;
-	case BL_PET:
-		clif_getareachar_pet(sd,(struct pet_data*)bl);
-		break;
-	case BL_ITEM:
-		clif_getareachar_item(sd,(struct flooritem_data*)bl);
-		break;
-	case BL_SKILL:
-		clif_getareachar_skillunit(sd,(struct skill_unit *)bl);
-		break;
 	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_moboutsight(struct block_list *bl,va_list ap)
-{
-	struct map_session_data *sd;
-	struct mob_data *md;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, md=va_arg(ap,struct mob_data*));
-
-	if(bl->type==BL_PC
-	  && ((sd = (struct map_session_data*) bl) != NULL)
-	  && session[sd->fd] != NULL) {
-		clif_clearchar_id(md->bl.id,0,sd->fd);
+	if (sd && sd->fd)
+	{	//Tell sd that tbl walked into his view
+		clif_getareachar_char(sd,tbl);
 	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_mobinsight(struct block_list *bl,va_list ap)
-{
-	struct map_session_data *sd;
-	struct mob_data *md;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-
-	md=va_arg(ap,struct mob_data*);
-	if(bl->type==BL_PC
-	  && ((sd = (struct map_session_data*) bl) != NULL)
-	  && session[sd->fd] != NULL) {
-		clif_getareachar_mob(sd,md);
-	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_petoutsight(struct block_list *bl,va_list ap)
-{
-	struct map_session_data *sd;
-	struct pet_data *pd;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, pd=va_arg(ap,struct pet_data*));
-
-	if(bl->type==BL_PC
-	  && ((sd = (struct map_session_data*) bl) != NULL)
-	  && session[sd->fd] != NULL) {
-		clif_clearchar_id(pd->bl.id,0,sd->fd);
-	}
-
-	return 0;
-}
-
-// npc walking [Valaris]
-int clif_npcoutsight(struct block_list *bl,va_list ap)
-{
-	struct map_session_data *sd;
-	struct npc_data *nd;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, nd=va_arg(ap,struct npc_data*));
-
-	if(bl->type==BL_PC
-	  && ((sd = (struct map_session_data*) bl) != NULL)
-	  && session[sd->fd] != NULL) {
-		clif_clearchar_id(nd->bl.id,0,sd->fd);
-	}
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_petinsight(struct block_list *bl,va_list ap)
-{
-	struct map_session_data *sd;
-	struct pet_data *pd;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-
-	pd=va_arg(ap,struct pet_data*);
-	if(bl->type==BL_PC
-	  && ((sd = (struct map_session_data*) bl) != NULL)
-	  && session[sd->fd] != NULL) {
-		clif_getareachar_pet(sd,pd);
-	}
-
-	return 0;
-}
-
-// npc walking [Valaris]
-int clif_npcinsight(struct block_list *bl,va_list ap)
-{
-	struct map_session_data *sd;
-	struct npc_data *nd;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-
-	nd=va_arg(ap,struct npc_data*);
-	if(bl->type==BL_PC
-	  && ((sd = (struct map_session_data*) bl) != NULL)
-	  && session[sd->fd] != NULL) {
-		clif_getareachar_npc(sd,nd);
-	}
-
 	return 0;
 }
 
@@ -5092,6 +4141,11 @@ int clif_skillcasting(struct block_list* bl,
 	WBUFL(buf,16) = pl<0?0:pl; //Avoid sending negatives as element [Skotlex]
 	WBUFL(buf,20) = casttime;
 	clif_send(buf,packet_len_table[0x13e], bl, AREA);
+	if (disguised(bl)) {
+		WBUFL(buf,2) = -src_id;
+		WBUFL(buf,20) = 0;
+		clif_send(buf,packet_len_table[0x13e], bl, SELF);
+	}
 
 	return 0;
 }
@@ -5168,14 +4222,8 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 #if PACKETVER < 3
 	WBUFW(buf,0)=0x114;
 	WBUFW(buf,2)=skill_id;
-	if(src->type==BL_PC && ((struct map_session_data *)src)->disguise)
-		WBUFL(buf,4)=-src->id;
-	else 
-		WBUFL(buf,4)=src->id;
-	if(dst->type==BL_PC && ((struct map_session_data *)dst)->disguise)
-		WBUFL(buf,8)=-dst->id;
-	else
-		WBUFL(buf,8)=dst->id;
+	WBUFL(buf,4)=src->id;
+	WBUFL(buf,8)=dst->id;
 	WBUFL(buf,12)=tick;
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
@@ -5184,17 +4232,25 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFW(buf,28)=div;
 	WBUFB(buf,30)=type;
 	clif_send(buf,packet_len_table[0x114],src,AREA);
+	if(disguised(src)) {
+		WBUFL(buf,4)=-src->id;
+		if(damage > 0)
+			WBUFW(buf,24)=-1;
+		clif_send(buf,packet_len_table[0x114],src,SELF);
+	}
+	if (disguised(dst)) {
+		WBUFL(buf,8)=-dst->id;
+		if (disguised(src))
+			WBUFL(buf,4)=src->id;
+		else if(damage > 0)
+			WBUFW(buf,24)=-1;
+		clif_send(buf,packet_len_table[0x114],dst,SELF);
+	}
 #else
 	WBUFW(buf,0)=0x1de;
 	WBUFW(buf,2)=skill_id;
-	if(src->type==BL_PC && ((struct map_session_data *)src)->disguise)
-		WBUFL(buf,4)=-src->id;
-	else 
-		WBUFL(buf,4)=src->id;
-	if(dst->type==BL_PC && ((struct map_session_data *)dst)->disguise)
-		WBUFL(buf,8)=-dst->id;
-	else
-		WBUFL(buf,8)=dst->id;
+	WBUFL(buf,4)=src->id;
+	WBUFL(buf,8)=dst->id;
 	WBUFL(buf,12)=tick;
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
@@ -5203,6 +4259,20 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFW(buf,30)=div;
 	WBUFB(buf,32)=type;
 	clif_send(buf,packet_len_table[0x1de],src,AREA);
+	if(disguised(src)) {
+		WBUFL(buf,4)=-src->id;
+		if(damage > 0)
+			WBUFW(buf,24)=-1;
+		clif_send(buf,packet_len_table[0x1de],src,SELF);
+	}
+	if (disguised(dst)) {
+		WBUFL(buf,8)=-dst->id;
+		if (disguised(src))
+			WBUFL(buf,4)=src->id;
+		else if(damage > 0)
+			WBUFW(buf,24)=-1;
+		clif_send(buf,packet_len_table[0x1de],dst,SELF);
+	}
 #endif
 
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
@@ -5246,6 +4316,20 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	WBUFW(buf,32)=div;
 	WBUFB(buf,34)=type;
 	clif_send(buf,packet_len_table[0x115],src,AREA);
+	if(disguised(src)) {
+		WBUFL(buf,4)=-src->id;
+		if(damage > 0)
+			WBUFW(buf,28)=-1;
+		clif_send(buf,packet_len_table[0x115],src,SELF);
+	}
+	if (disguised(dst)) {
+		WBUFL(buf,8)=-dst->id;
+		if (disguised(src))
+			WBUFL(buf,4)=src->id;
+		else if(damage > 0)
+			WBUFW(buf,28)=-1;
+		clif_send(buf,packet_len_table[0x115],dst,SELF);
+	}
 
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
 	if (type != 4 && type != 9 && damage > 0) //Non-endure/Non-flinch attack, update walk delay.
@@ -5267,11 +4351,22 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,
 
 	WBUFW(buf,0)=0x11a;
 	WBUFW(buf,2)=skill_id;
-	WBUFW(buf,4)=(heal > 0x7fff)? 0x7fff:heal;
+	WBUFW(buf,4)=(heal > SHRT_MAX)? SHRT_MAX:heal;
 	WBUFL(buf,6)=dst->id;
 	WBUFL(buf,10)=src->id;
 	WBUFB(buf,14)=fail;
 	clif_send(buf,packet_len_table[0x11a],src,AREA);
+
+	if(disguised(src)) {
+		WBUFL(buf,10)=-src->id;
+		clif_send(buf,packet_len_table[0x115],src,SELF);
+	}
+	if (disguised(dst)) {
+		WBUFL(buf,6)=-dst->id;
+		if (disguised(src))
+			WBUFL(buf,10)=src->id;
+		clif_send(buf,packet_len_table[0x115],dst,SELF);
+	}
 
 	return fail;
 }
@@ -5294,6 +4389,10 @@ int clif_skill_poseffect(struct block_list *src,int skill_id,int val,int x,int y
 	WBUFW(buf,12)=y;
 	WBUFL(buf,14)=tick;
 	clif_send(buf,packet_len_table[0x117],src,AREA);
+	if(disguised(src)) {
+		WBUFL(buf,4)=-src->id;
+		clif_send(buf,packet_len_table[0x117],src,SELF);
+	}
 
 	return 0;
 }
@@ -5457,7 +4556,7 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 		return 0;
 
 	WBUFW(buf, 0)=0x18c;
-	WBUFW(buf, 2)=mob_get_viewclass(md->class_);
+	WBUFW(buf, 2)=md->vd->class_;
 	WBUFW(buf, 4)=md->level;
 	WBUFW(buf, 6)=md->db->size;
 	WBUFL(buf, 8)=md->hp;
@@ -5718,9 +4817,8 @@ int clif_resurrection(struct block_list *bl,int type)
 	WBUFW(buf,6)=type;
 
 	clif_send(buf,packet_len_table[0x148],bl,type==1 ? AREA : AREA_WOS);
-
-	if(bl->type==BL_PC && ((struct map_session_data *)bl)->disguise)
-		clif_spawnpc(((struct map_session_data *)bl));
+	if (disguised(bl))
+		clif_spawn(bl);
 
 	return 0;
 }
@@ -5751,7 +4849,7 @@ int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 		return 0;
 
 	if(type == 2) {
-                WFIFOHEAD(sd->fd,packet_len_table[0x19a]);
+		WFIFOHEAD(sd->fd,packet_len_table[0x19a]);
 		WFIFOW(sd->fd,0) = 0x19a;
 		WFIFOL(sd->fd,2) = sd->bl.id;
 		if(pvprank<=0)
@@ -5805,7 +4903,7 @@ int clif_send0199(int map,int type)
  */
 int clif_refine(int fd,struct map_session_data *sd,int fail,int index,int val)
 {
-        WFIFOHEAD(fd,packet_len_table[0x188]);
+	WFIFOHEAD(fd,packet_len_table[0x188]);
 	WFIFOW(fd,0)=0x188;
 	WFIFOW(fd,2)=fail;
 	WFIFOW(fd,4)=index+2;
@@ -7043,7 +6141,6 @@ int clif_pet_performance(struct block_list *bl,int param)
 int clif_pet_equip(struct pet_data *pd,int nameid)
 {
 	unsigned char buf[16];
-	int view;
 
 	nullpo_retr(0, pd);
 
@@ -7052,11 +6149,7 @@ int clif_pet_equip(struct pet_data *pd,int nameid)
 	WBUFW(buf,0)=0x1a4;
 	WBUFB(buf,2)=3;
 	WBUFL(buf,3)=pd->bl.id;
-	if(nameid && (view = itemdb_viewid(nameid)) > 0)
-		WBUFL(buf,7)=view;
-	else
-		WBUFL(buf,7)=nameid;
-
+	WBUFL(buf,7)=pd->vd.shield;
 	clif_send(buf,packet_len_table[0x1a4],&pd->bl,AREA);
 
 	return 0;
@@ -8149,11 +7242,6 @@ void clif_sitting(struct map_session_data *sd)
 	WBUFL(buf, 2) = sd->bl.id;
 	WBUFB(buf,26) = 2;
 	clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
-
-	if(sd->disguise) {
-		WBUFL(buf, 2) = -sd->bl.id;
-		clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
-	}
 }
 
 /*==========================================
@@ -8831,7 +7919,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	map_addblock(&sd->bl);	// ブロック登録
-	clif_spawnpc(sd);	// spawn
+	clif_spawn(&sd->bl);	// spawn
 
 	// party
 	party_send_movemap(sd);
@@ -8878,7 +7966,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// pet
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
 		map_addblock(&sd->pd->bl);
-		clif_spawnpet(sd->pd);
+		clif_spawn(&sd->pd->bl);
 		clif_send_petdata(sd,0,0);
 		clif_send_petdata(sd,5,battle_config.pet_hair_style);
 		clif_send_petstatus(sd);
@@ -8886,8 +7974,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if(sd->state.connect_new) {
 		sd->state.connect_new = 0;
-		if(sd->status.class_ != sd->view_class)
-			clif_changelook(&sd->bl,LOOK_BASE,sd->view_class);
+//		if(sd->status.class_ != sd->vd.class_)
+//			clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
 		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 900)
 			clif_pet_emotion(sd->pd,(sd->pd->class_ - 100)*100 + 50 + pet_hungry_val(sd));
 
@@ -8907,9 +7995,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #else
 	clif_changelook(&sd->bl,LOOK_WEAPON,0);
 #endif
-	if(battle_config.save_clothcolor && sd->status.clothes_color > 0 && ((sd->view_class != JOB_WEDDING && sd->view_class !=JOB_XMAS) ||
-	   (sd->view_class==JOB_WEDDING && !battle_config.wedding_ignorepalette) || (sd->view_class==JOB_XMAS && !battle_config.xmas_ignorepalette)))
-		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+
+	if(sd->vd.cloth_color)
+		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 
 	if(battle_config.muting_players && sd->status.manner < 0 && battle_config.manner_system)
 		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
@@ -8948,6 +8036,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		npc_touch_areanpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	else
 		sd->areanpc_id = 0;
+
+	if (pc_isdead(sd)) //In case you warped dead.
+		clif_clearchar_area(&sd->bl, 1);
 }
 
 /*==========================================
@@ -9007,9 +8098,6 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_QuitGame(int fd, struct map_session_data *sd) {
-//	unsigned int tick=gettick();
-//	struct skill_unit_group* sg;
-
 	WFIFOHEAD(fd,packet_len_table[0x18b]);
 	WFIFOW(fd,0) = 0x18b;
 
@@ -9300,24 +8388,17 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd) {
  */
 void clif_changed_dir(struct block_list *bl) {
 	unsigned char buf[64];
-	struct map_session_data *sd = NULL;
-
-	if (bl->type == BL_PC)
-		nullpo_retv (sd=(struct map_session_data *)bl);
 
 	WBUFW(buf,0) = 0x9c;
 	WBUFL(buf,2) = bl->id;
-	if (sd)
-		WBUFW(buf,6) = sd->head_dir;
+	WBUFW(buf,6) = bl->type==BL_PC?((TBL_PC*)bl)->head_dir:0;
 	WBUFB(buf,8) = unit_getdir(bl);
 
 	clif_send(buf, packet_len_table[0x9c], bl, AREA_WOS);
-
-	if(sd && sd->disguise) {
+	if (disguised(bl)) {
 		WBUFL(buf,2) = -bl->id;
 		WBUFW(buf,6) = 0;
-		WBUFB(buf,8) = unit_getdir(bl);
-		clif_send(buf, packet_len_table[0x9c], bl, AREA);
+		clif_send(buf, packet_len_table[0x9c], bl, SELF);
 	}
 
 	return;
@@ -9419,7 +8500,7 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 	switch(action_type) {
 	case 0x00: // once attack
 	case 0x07: // continuous attack
-		if(sd->view_class==JOB_WEDDING || sd->view_class==JOB_XMAS)
+		if(sd->vd.class_ ==JOB_WEDDING || sd->vd.class_==JOB_XMAS)
 			return;
 		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
 			if (DIFF_TICK(tick, sd->ud.canact_tick) < 0) {
@@ -9457,7 +8538,7 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 		clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
 		if(sd->disguise) {
 			WBUFL(buf, 2) = -sd->bl.id;
-			clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
+			clif_send(buf, packet_len_table[0x8a], &sd->bl, SELF);
 		}
 		break;
 	}
@@ -9747,15 +8828,15 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 		return;
 	}
 
-
 	if (sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT)
 		return;
 	
-	if (clif_trading(sd))
-		return;
-	
 	//This flag enables you to use items while in an NPC. [Skotlex]
-	if (sd->npc_id && sd->npc_id != sd->npc_item_flag)
+	if (sd->npc_id) {
+		if (sd->npc_id != sd->npc_item_flag)
+			return;
+	} else
+	if (clif_trading(sd))
 		return;
 	
 	if (sd->sc.count && (
@@ -10168,14 +9249,14 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 		return;
 	}
 
-	if (sd->view_class == JOB_WEDDING || sd->view_class == JOB_XMAS)
+	if (sd->vd.class_ == JOB_WEDDING || sd->vd.class_ == JOB_XMAS)
 		return;
 	
 	if (sd->invincible_timer != -1)
 		pc_delinvincibletimer(sd);
 	
 	if(target_id<0) // for disguises [Valaris]
-		target_id-=target_id*2;
+		target_id*=-1;
 		
 	if (sd->skillitem >= 0 && sd->skillitem == skillnum) {
 		if (skilllv != sd->skillitemlv)
@@ -10258,7 +9339,7 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 		return;
 	}
 
-	if (sd->view_class == JOB_WEDDING || sd->view_class == JOB_XMAS)
+	if (sd->vd.class_ == JOB_WEDDING || sd->vd.class_ == JOB_XMAS)
 		return;
 	
 	if (sd->invincible_timer != -1)
@@ -10322,7 +9403,7 @@ void clif_parse_UseSkillMap(int fd,struct map_session_data *sd)
 	if (clif_cant_act(sd))
 		return;
 
-	if (sd->view_class==JOB_WEDDING || sd->view_class == JOB_XMAS)
+	if (sd->vd.class_==JOB_WEDDING || sd->vd.class_ == JOB_XMAS)
 		return;
 	
 	if(sd->invincible_timer != -1)
@@ -11147,9 +10228,15 @@ void clif_parse_GMHide(int fd, struct map_session_data *sd) {	// Modified by [Yo
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_Hide))) {
 		if (sd->sc.option & OPTION_INVISIBLE) {
 			sd->sc.option &= ~OPTION_INVISIBLE;
+			if (sd->disguise)
+				status_set_viewdata(&sd->bl, sd->disguise);
+			else
+				status_set_viewdata(&sd->bl, sd->status.class_);
 			clif_displaymessage(fd, "Invisible: Off.");
 		} else {
 			sd->sc.option |= OPTION_INVISIBLE;
+			//Experimental hidden mode, changes your view class to invisible [Skotlex]
+			sd->vd.class_ = INVISIBLE_CLASS;
 			clif_displaymessage(fd, "Invisible: On.");
 		}
 		clif_changeoption(&sd->bl);

@@ -13,10 +13,10 @@
 //Update this max as necessary. 53 is the value needed for Super Baby currently
 #define MAX_SKILL_TREE 53
 
-#define pc_setdead(sd) ((sd)->state.dead_sit = 1)
-#define pc_setsit(sd) ((sd)->state.dead_sit = 2)
+#define pc_setdead(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 1)
+#define pc_setsit(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 2)
 #define pc_isdead(sd) ((sd)->state.dead_sit == 1)
-#define pc_issit(sd) ((sd)->state.dead_sit == 2)
+#define pc_issit(sd) ((sd)->vd.dead_sit == 2)
 #define pc_setdir(sd,b,h) ((sd)->ud.dir = (b) ,(sd)->head_dir = (h) )
 #define pc_setchatid(sd,n) ((sd)->chatID = n)
 #define pc_ishiding(sd) ((sd)->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK))
@@ -237,5 +237,5 @@ int map_day_timer(int,unsigned int,int,int); // by [yor]
 int map_night_timer(int,unsigned int,int,int); // by [yor]
 
 int pc_read_motd(void); // [Valaris]
-
+int pc_disguise(struct map_session_data *sd, int class_);
 #endif

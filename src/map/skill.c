@@ -1580,13 +1580,9 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 	int dx=0,dy=0,nx,ny;
 	int x=target->x,y=target->y;
 	int dir,ret;
-	struct map_session_data *sd=NULL;
-	struct mob_data *md=NULL;
-	struct pet_data *pd=NULL;
 	struct skill_unit *su=NULL;
 
 	nullpo_retr(0, src);
-	nullpo_retr(0, target);
 
 	if (src != target && map_flag_gvg(target->m) && target->type != BL_SKILL)
 		return 0; //No knocking back in WoE, except for skills... because traps CAN be knocked back.
@@ -1594,22 +1590,13 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 		return 0; //Actual knockback distance is 0.
 	
 	switch (target->type) {
-		case BL_PC:
-			sd=(struct map_session_data *)target;
-			break;
 		case BL_MOB:
-			md=(struct mob_data *)target;
-			if (md->class_ == MOBID_EMPERIUM)
+			if (((TBL_MOB*)target)->class_ == MOBID_EMPERIUM)
 				return 0;
-			break;
-		case BL_PET:
-			pd=(struct pet_data *)target;
 			break;
 		case BL_SKILL:
 			su=(struct skill_unit *)target;
 			break;
-		default:
-			return 0;
 	}
 
 	if (count&0xf00000)
@@ -1628,8 +1615,9 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 	ret=path_blownpos(target->m,x,y,dx,dy,count&0xffff);
 	nx=ret>>16;
 	ny=ret&0xffff;
-	
-	unit_stop_walking(target,0); 
+
+	if (!su)
+		unit_stop_walking(target,0); 
 
 	dx = nx - x;
 	dy = ny - y;
@@ -1637,26 +1625,19 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 	if (!dx && !dy) //Could not knockback.
 		return 0;
 	
-	if(sd)	/* ?–ÊŠO‚É?o‚½‚Ì‚Å?Á‹Ž */
-		map_foreachinmovearea(clif_pcoutsight,target->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_ALL,sd);
-	else if(md)
-		map_foreachinmovearea(clif_moboutsight,target->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_PC,md);
-	else if(pd)
-		map_foreachinmovearea(clif_petoutsight,target->m,x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,dx,dy,BL_PC,pd);
+	map_foreachinmovearea(clif_outsight,target->m,
+		x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,
+		dx,dy,target->type==BL_PC?BL_ALL:BL_PC,target);
 		
-	if(su){
+	if(su)
 		skill_unit_move_unit_group(su->group,target->m,dx,dy);
-	}else{
+	else
 		map_moveblock(target, nx, ny, gettick());
-	}
 
-	if(sd)	/* ?–Ê?‚É“ü‚Á‚Ä‚«‚½‚Ì‚Å•\Ž¦ */
-		map_foreachinmovearea(clif_pcinsight,target->m,nx-AREA_SIZE,ny-AREA_SIZE,nx+AREA_SIZE,ny+AREA_SIZE,-dx,-dy,BL_ALL,sd);
-	else if(md)
-		map_foreachinmovearea(clif_mobinsight,target->m,nx-AREA_SIZE,ny-AREA_SIZE,nx+AREA_SIZE,ny+AREA_SIZE,-dx,-dy,BL_PC,md);
-	else if(pd)
-		map_foreachinmovearea(clif_petinsight,target->m,nx-AREA_SIZE,ny-AREA_SIZE,nx+AREA_SIZE,ny+AREA_SIZE,-dx,-dy,BL_PC,pd);
-
+	map_foreachinmovearea(clif_insight,target->m,
+		nx-AREA_SIZE,ny-AREA_SIZE,nx+AREA_SIZE,ny+AREA_SIZE,
+		-dx,-dy,target->type==BL_PC?BL_ALL:BL_PC,target);
+	
 	if(!(count&0x20000)) 
 		clif_blown(target);
 
@@ -8826,7 +8807,7 @@ int skill_frostjoke_scream(struct block_list *bl,va_list ap)
 		return 0;
 	if (bl->type == BL_PC) {
 		struct map_session_data *sd = (struct map_session_data *)bl;
-		if (sd && sd->sc.option & OPTION_INVISIBLE && pc_isGM(sd) > 0)
+		if (sd && sd->sc.option&OPTION_INVISIBLE)
 			return 0;
 	}
 	//It has been reported that Scream/Joke works the same regardless of woe-setting. [Skotlex]

@@ -649,7 +649,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	// 基本的な初期化
 	sd->state.connect_new = 1;
 
-	sd->view_class = sd->status.class_;
 	sd->speed = DEFAULT_WALK_SPEED;
 	sd->followtimer = -1; // [MouseJstr]
 	sd->skillitem = -1;
@@ -679,7 +678,9 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	// アイテムチェック
 	pc_setinventorydata(sd);
 	pc_checkitem(sd);
-
+	
+	//Set here because we need the inventory data for weapon sprite parsing.
+	status_set_viewdata(&sd->bl, sd->status.class_);
 	// pet
 	sd->pet_hungry_timer = -1;
 
@@ -1098,6 +1099,26 @@ int pc_checkweighticon(struct map_session_data *sd)
 			status_change_end(&sd->bl,SC_WEIGHT90,-1);
 	}
 	return 0;
+}
+
+int pc_disguise(struct map_session_data *sd, int class_) {
+	if (!class_ && !sd->disguise)
+		return 0;
+	if (class_ && (sd->disguise || pc_isriding(sd)))
+		return 0;
+	
+	if (!class_) {
+		sd->disguise = 0;
+		class_ = sd->status.class_;
+	} else
+		sd->disguise=class_;
+
+	pc_stop_walking(sd, 0);
+	clif_clearchar(&sd->bl, 0);
+	status_set_viewdata(&sd->bl, class_);
+	clif_changeoption(&sd->bl);
+	clif_spawn(&sd->bl);
+	return 1;
 }
 
 static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short card_id) {
@@ -1531,12 +1552,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		}
 		break;
 	case SP_DISGUISE: // Disguise script for items [Valaris]
-		if(sd->state.lr_flag!=2 && !sd->state.disguised && !pc_isriding(sd)) {
-			clif_clearchar(&sd->bl, 0);
-			sd->disguise=val;
-			clif_changeoption(&sd->bl);
-			clif_spawnpc(sd);
-		}
+		if(sd->state.lr_flag!=2)
+			pc_disguise(sd, val);
 		break;
 	case SP_UNBREAKABLE:
 		if(sd->state.lr_flag!=2) {
@@ -5440,7 +5457,8 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 
 	pc_setglobalreg (sd, "jobchange_level", sd->change_level);
 
-	sd->status.class_ = sd->view_class = job;
+	sd->status.class_ = job;
+	status_set_viewdata(&sd->bl, job);
 	fame_flag = pc_istop10fame(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	sd->class_ = (unsigned short)b_class;
 	sd->status.job_level=1;
@@ -5455,14 +5473,10 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 				pc_unequipitem(sd,sd->equip_index[i],2);	// ?備外し
 	}
 
-	clif_changelook(&sd->bl,LOOK_BASE,sd->view_class); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
+	clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
 
-	if(battle_config.save_clothcolor &&
-		sd->status.clothes_color > 0 &&
-		((sd->view_class != JOB_WEDDING && sd->view_class !=JOB_XMAS) ||
-		(sd->view_class==JOB_WEDDING && !battle_config.wedding_ignorepalette) ||
-		(sd->view_class==JOB_XMAS && !battle_config.xmas_ignorepalette)))
-		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+	if(sd->vd.cloth_color)
+		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 	
 	if(battle_config.muting_players && sd->status.manner < 0 && battle_config.manner_system)
 		clif_changestatus(&sd->bl,SP_MANNER,sd->status.manner);
@@ -5577,13 +5591,7 @@ int pc_changelook(struct map_session_data *sd,int type,int val)
 	case LOOK_SHOES:
 		break;
 	}
-
-	if((type==LOOK_CLOTHES_COLOR) && ((sd->view_class==JOB_WEDDING && battle_config.wedding_ignorepalette) ||
-	 (sd->view_class==JOB_XMAS && battle_config.xmas_ignorepalette)))
-		return 0;
-
 	clif_changelook(&sd->bl,type,val);
-
 	return 0;
 }
 
@@ -5599,22 +5607,22 @@ int pc_setoption(struct map_session_data *sd,int type)
 		switch (sd->status.class_)
 		{
 			case JOB_KNIGHT:
-				sd->status.class_ = sd->view_class = JOB_KNIGHT2;
+				sd->status.class_ = sd->vd.class_ = JOB_KNIGHT2;
 				break;
 			case JOB_CRUSADER:
-				sd->status.class_ = sd->view_class = JOB_CRUSADER2;
+				sd->status.class_ = sd->vd.class_ = JOB_CRUSADER2;
 				break;
 			case JOB_LORD_KNIGHT:
-				sd->status.class_ = sd->view_class = JOB_LORD_KNIGHT2;
+				sd->status.class_ = sd->vd.class_ = JOB_LORD_KNIGHT2;
 				break;
 			case JOB_PALADIN:
-				sd->status.class_ = sd->view_class = JOB_PALADIN2;
+				sd->status.class_ = sd->vd.class_ = JOB_PALADIN2;
 				break;
 			case JOB_BABY_KNIGHT:
-				sd->status.class_ = sd->view_class = JOB_BABY_KNIGHT2;
+				sd->status.class_ = sd->vd.class_ = JOB_BABY_KNIGHT2;
 				break;
 			case JOB_BABY_CRUSADER:
-				sd->status.class_ = sd->view_class = JOB_BABY_CRUSADER2;
+				sd->status.class_ = sd->vd.class_ = JOB_BABY_CRUSADER2;
 				break;
 		}
 		clif_status_load(&sd->bl,SI_RIDING,1);
@@ -5625,22 +5633,22 @@ int pc_setoption(struct map_session_data *sd,int type)
 		switch (sd->status.class_)
 		{
 			case JOB_KNIGHT2:
-				sd->status.class_ = sd->view_class = JOB_KNIGHT;
+				sd->status.class_ = sd->vd.class_ = JOB_KNIGHT;
 				break;
 			case JOB_CRUSADER2:
-				sd->status.class_ = sd->view_class = JOB_CRUSADER;
+				sd->status.class_ = sd->vd.class_ = JOB_CRUSADER;
 				break;
 			case JOB_LORD_KNIGHT2:
-				sd->status.class_ = sd->view_class = JOB_LORD_KNIGHT;
+				sd->status.class_ = sd->vd.class_ = JOB_LORD_KNIGHT;
 				break;
 			case JOB_PALADIN2:
-				sd->status.class_ = sd->view_class = JOB_PALADIN;
+				sd->status.class_ = sd->vd.class_ = JOB_PALADIN;
 				break;
 			case JOB_BABY_KNIGHT2:
-				sd->status.class_ = sd->view_class = JOB_BABY_KNIGHT;
+				sd->status.class_ = sd->vd.class_ = JOB_BABY_KNIGHT;
 				break;
 			case JOB_BABY_CRUSADER2:
-				sd->status.class_ = sd->view_class = JOB_BABY_CRUSADER;
+				sd->status.class_ = sd->vd.class_ = JOB_BABY_CRUSADER;
 				break;
 		}
 		clif_status_load(&sd->bl,SI_RIDING,0);
@@ -5654,11 +5662,13 @@ int pc_setoption(struct map_session_data *sd,int type)
 	//SG flying [Komurka]
 	if (type&OPTION_FLYING && !(sd->sc.option&OPTION_FLYING)) //Flying ON
 	{
-		if (sd->status.class_==JOB_STAR_GLADIATOR) sd->status.class_ = sd->view_class = JOB_STAR_GLADIATOR2;
+		if (sd->status.class_==JOB_STAR_GLADIATOR)
+			sd->status.class_ = sd->vd.class_ = JOB_STAR_GLADIATOR2;
 	}
 	else if (!(type&OPTION_FLYING) && sd->sc.option&OPTION_FLYING) //Flying OFF
 	{
-		if (sd->status.class_==JOB_STAR_GLADIATOR2) sd->status.class_ = sd->view_class = JOB_STAR_GLADIATOR;
+		if (sd->status.class_==JOB_STAR_GLADIATOR2)
+			sd->status.class_ = sd->vd.class_ = JOB_STAR_GLADIATOR;
 	}
 
 	sd->sc.option=type;

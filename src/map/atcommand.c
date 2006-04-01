@@ -2178,9 +2178,14 @@ int atcommand_hide(
 	nullpo_retr(-1, sd);
 	if (sd->sc.option & OPTION_INVISIBLE) {
 		sd->sc.option &= ~OPTION_INVISIBLE;
+		if (sd->disguise)
+			status_set_viewdata(&sd->bl, sd->disguise);
+		else
+			status_set_viewdata(&sd->bl, sd->status.class_);
 		clif_displaymessage(fd, msg_table[10]); // Invisible: Off
 	} else {
 		sd->sc.option |= OPTION_INVISIBLE;
+		sd->vd.class_ = INVISIBLE_CLASS;
 		clif_displaymessage(fd, msg_table[11]); // Invisible: On
 	}
 	clif_changeoption(&sd->bl);
@@ -6473,21 +6478,7 @@ int atcommand_disguise(
 		return -1;
 	}
 
-	/* The previous way.... 
-	if ((mob_id = mobdb_searchname(message)) == 0) // check name first (to avoid possible name begining by a number)
-		mob_id = atoi(message);
-
-	if ((mob_id >=  46 && mob_id <= 125) || (mob_id >= 700 && mob_id <= 718) || // NPC
-	    (mob_id >= 721 && mob_id <= 755) || (mob_id >= 757 && mob_id <= 811) || // NPC
-	    (mob_id >= 813 && mob_id <= 858) || // NPC
-	    (mob_id > 1000 && mob_id < 1582)) { // monsters
-	*/
-	pc_stop_walking(sd,0);
-	clif_clearchar(&sd->bl, 0);
-	sd->disguise = id;
-	sd->state.disguised = 1; // set to override items with disguise script [Valaris]
-	clif_changeoption(&sd->bl);
-	clif_spawnpc(sd);
+	pc_disguise(sd, id);
 	clif_displaymessage(fd, msg_table[122]); // Disguise applied.
 
 	return 0;
@@ -6517,14 +6508,8 @@ int atcommand_disguiseall(
 	if (mobdb_checkid(mob_id) || npcdb_checkid(mob_id)) { //if mob or npc...
 		pl_allsd = map_getallusers(&users);
 		for(i=0; i < users; i++) {
-			if((pl_sd = pl_allsd[i])) {
-				pc_stop_walking(pl_sd,0);
-				clif_clearchar(&pl_sd->bl, 0);
-				pl_sd->disguise = mob_id;
-				pl_sd->state.disguised = 1; // set to override items with disguise script [Valaris]
-				clif_changeoption(&pl_sd->bl);
-				clif_spawnpc(pl_sd);
-			}
+			if((pl_sd = pl_allsd[i]))
+				pc_disguise(pl_sd, mob_id);
 		}
 		clif_displaymessage(fd, msg_table[122]); // Disguise applied.
 	} else {
@@ -6544,11 +6529,7 @@ int atcommand_undisguise(
 {
 	nullpo_retr(-1, sd);
 	if (sd->disguise) {
-		pc_stop_walking(sd,0);
-		clif_clearchar(&sd->bl, 0);
-		sd->disguise = 0;
-		clif_changeoption(&sd->bl);
-		clif_spawnpc(sd);
+		pc_disguise(sd, 0);
 		clif_displaymessage(fd, msg_table[124]); // Undisguise applied.
 	} else {
 		clif_displaymessage(fd, msg_table[125]); // You're not disguised.
@@ -6573,13 +6554,8 @@ int atcommand_undisguiseall(
 	pl_allsd = map_getallusers(&users);
 	
 	for(i=0; i < users; i++) {
-		if((pl_sd = pl_allsd[i]) && pl_sd->disguise) {
-				pc_stop_walking(pl_sd,0);
-				clif_clearchar(&pl_sd->bl, 0);
-				pl_sd->disguise = 0;
-				clif_changeoption(&pl_sd->bl);
-				clif_spawnpc(pl_sd);
-		}
+		if((pl_sd = pl_allsd[i]) && pl_sd->disguise)
+			pc_disguise(pl_sd, 0);
 	}
 	clif_displaymessage(fd, msg_table[124]); // Undisguise applied.
 
@@ -6701,12 +6677,7 @@ int atcommand_chardisguise(
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can disguise only lower or same level
-			pc_stop_walking(pl_sd,0);
-			clif_clearchar(&pl_sd->bl, 0);
-			pl_sd->disguise = mob_id;
-			pl_sd->state.disguised = 1; // set to override items with disguise script [Valaris]
-			clif_changeoption(&pl_sd->bl);
-			clif_spawnpc(pl_sd);
+			pc_disguise(pl_sd, mob_id);
 			clif_displaymessage(fd, msg_table[140]); // Character's disguise applied.
 		} else {
 			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
@@ -6740,14 +6711,9 @@ int atcommand_charundisguise(
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can undisguise only lower or same level
-			if (pl_sd->disguise) {
-				pc_stop_walking(pl_sd,0);
-				clif_clearchar(&pl_sd->bl, 0);
-				pl_sd->disguise = 0;
-				clif_changeoption(&pl_sd->bl);
-				clif_spawnpc(pl_sd);
-				clif_displaymessage(fd, msg_table[141]); // Character's undisguise applied.
-			} else {
+			if (pl_sd->disguise)
+				pc_disguise(pl_sd, 0);
+			else {
 				clif_displaymessage(fd, msg_table[142]); // Character is not disguised.
 				return -1;
 			}

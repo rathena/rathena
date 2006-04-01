@@ -347,23 +347,23 @@ struct skill_unit_group_tickset {
 
 struct unit_data {
 	struct block_list *bl;
-	int walktimer;
 	struct walkpath_data walkpath;
+	struct skill_timerskill skilltimerskill[MAX_SKILLTIMERSKILL];
+	struct skill_unit_group skillunit[MAX_SKILLUNITGROUP];
+	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
+	short attacktarget_lv;
 	short to_x,to_y;
-	unsigned char dir;
 	short skillx,skilly;
 	short skillid,skilllv;
 	int   skilltarget;
 	int   skilltimer;
-	struct skill_timerskill skilltimerskill[MAX_SKILLTIMERSKILL];
-	struct skill_unit_group skillunit[MAX_SKILLUNITGROUP];
-	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
-	int   attacktimer;
 	int   attacktarget;
-	short attacktarget_lv;
+	int   attacktimer;
+	int   walktimer;
 	unsigned int attackabletime;
 	unsigned int canact_tick;
 	unsigned int canmove_tick;
+	unsigned char dir;
 	struct {
 		unsigned change_walk_target : 1 ;
 		unsigned skillcastcancel : 1 ;
@@ -430,6 +430,19 @@ struct weapon_data {
 	int add_damage_class_count;
 };
 
+struct view_data {
+	short class_;
+	short weapon;
+	short shield; //Or left-hand weapon.
+	short head_top;
+	short head_mid;
+	short head_bottom;
+	short hair_style;
+	short hair_color;
+	short cloth_color;
+	char sex;
+	unsigned dead_sit : 2;
+};
 struct npc_data;
 struct pet_db;
 struct item_data;
@@ -438,6 +451,7 @@ struct square;
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
+	struct view_data vd;
 	struct status_change sc;
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
@@ -469,7 +483,6 @@ struct map_session_data {
 		unsigned showexp :1;
 		unsigned showzeny :1;
 		unsigned mainchat :1; //[LuzZza] 
-		unsigned disguised :1; //[Valaris]
 		unsigned deal_locked :2;
 		unsigned party_sent :1;
 		unsigned guild_sent :1;
@@ -547,7 +560,6 @@ struct map_session_data {
 	int hp_sub,sp_sub;
 	int inchealhptick,inchealsptick,inchealspirithptick,inchealspiritsptick;
 
-	short view_class;
 	short weapontype1,weapontype2;
 	short disguise; // [Valaris]
 
@@ -766,6 +778,7 @@ struct npc_item_list {
 struct npc_data {
 	struct block_list bl;
 	struct unit_data  ud; //Because they need to be able to move....
+	struct view_data *vd;
 	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	short n;
 	short class_;
@@ -833,6 +846,7 @@ struct spawn_data {
 struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;
+	struct view_data *vd;
 	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->class_) all the time) [Skotlex]
 	char name[NAME_LENGTH];
@@ -885,7 +899,8 @@ struct mob_data {
 
 struct pet_data {
 	struct block_list bl;
-	struct unit_data  ud;
+	struct unit_data ud;
+	struct view_data vd;
 	struct mob_db *db;
 	int target_id;
 	short n;

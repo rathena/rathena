@@ -434,6 +434,7 @@ int pet_data_init(struct map_session_data *sd)
 	pd->bl.subtype = MONS;
 	pd->bl.type = BL_PET;
 	pd->msd = sd;
+	status_set_viewdata(&pd->bl,pd->class_);
 	unit_dataset(&sd->pd->bl);
 	pd->ud.dir = sd->ud.dir;
 
@@ -488,7 +489,7 @@ int pet_birth_process(struct map_session_data *sd)
 	chrif_save(sd,0); //FIXME: As before, is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
 	map_addblock(&sd->pd->bl);
-	clif_spawnpet(sd->pd);
+	clif_spawn(&sd->pd->bl);
 	clif_send_petdata(sd,0,0);
 	clif_send_petdata(sd,5,battle_config.pet_hair_style);
 	clif_pet_equip(sd->pd,sd->pet.equip);
@@ -533,7 +534,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 		pet_data_init(sd);
 		if(sd->pd && sd->bl.prev != NULL) {
 			map_addblock(&sd->pd->bl);
-			clif_spawnpet(sd->pd);
+			clif_spawn(&sd->pd->bl);
 			clif_send_petdata(sd,0,0);
 			clif_send_petdata(sd,5,battle_config.pet_hair_style);
 //			clif_pet_equip(sd->pd,sd->pet.equip);
@@ -736,7 +737,7 @@ int pet_change_name(struct map_session_data *sd,char *name)
 	memcpy(sd->pd->name, name, NAME_LENGTH-1);
 	
 	clif_clearchar_area(&sd->pd->bl,0);
-	clif_spawnpet(sd->pd);
+	clif_spawn(&sd->pd->bl);
 	clif_send_petdata(sd,0,0);
 	clif_send_petdata(sd,5,battle_config.pet_hair_style);
 	sd->pet.rename_flag = 1;
@@ -971,8 +972,8 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 	}
 
 	//Return speed to normal.
-	if (pd->speed == 1 || pd->speed == sd->speed>>1);
-		pd->speed = status_get_speed(&pd->bl);
+	if (pd->speed != sd->petDB->speed)
+		pd->speed == sd->petDB->speed;
 	
 	if (pd->target_id) {
 		target= map_id2bl(pd->target_id);

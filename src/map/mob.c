@@ -125,6 +125,16 @@ int mobdb_checkid(const int id)
 }
 
 /*==========================================
+ * Returns the view data associated to this mob class.
+ *------------------------------------------
+ */
+struct view_data * mob_get_viewdata(class_) 
+{
+	if (mob_db(class_) == mob_dummy)
+		return 0;
+	return &mob_db(class_)->vd;
+}
+/*==========================================
  * Cleans up mob-spawn data to make it "valid"
  *------------------------------------------
  */
@@ -202,7 +212,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->skillidx = -1;
 	for (i = 0; i < MAX_STATUSCHANGE; i++)
 		md->sc.data[i].timer = -1;
-
+	status_set_viewdata(&md->bl, md->class_);
 	map_addiddb(&md->bl);
 	return md;
 }
@@ -719,22 +729,9 @@ int mob_spawn (struct mob_data *md)
 		memset(md->lootitem, 0, sizeof(md->lootitem));
 	md->lootitem_count = 0;
 
-	if(md->db->option){ // Added for carts, falcons and pecos for cloned monsters. [Valaris]
-		if(md->db->option & 0x0008)
-			md->sc.option |= 0x0008;
-		if(md->db->option & 0x0080)
-			md->sc.option |= 0x0080;
-		if(md->db->option & 0x0100)
-			md->sc.option |= 0x0100;
-		if(md->db->option & 0x0200)
-			md->sc.option |= 0x0200;
-		if(md->db->option & 0x0400)
-			md->sc.option |= 0x0400;
-		if(md->db->option & OPTION_FALCON)
-			md->sc.option |= OPTION_FALCON;
-		if(md->db->option & OPTION_RIDING)
-			md->sc.option |= OPTION_RIDING;
-	}
+	if(md->db->option)
+		// Added for carts, falcons and pecos for cloned monsters. [Valaris]
+		md->sc.option = md->db->option;
 
 	md->max_hp = md->db->max_hp;
 	if(md->special_state.size==1) // change for sized monsters [Valaris]
@@ -744,10 +741,8 @@ int mob_spawn (struct mob_data *md)
 	md->hp = md->max_hp;
 
 	map_addblock(&md->bl);
+	clif_spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
-
-	clif_spawnmob(md);
-
 	mobskill_use(md, tick, MSC_SPAWN);
 	return 0;
 }
@@ -960,6 +955,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			unit_can_move(&md->bl))
 		{
 			int i=0,dx,dy;
+			mob_stop_attack(md);
 			do {
 				if(i<=5){
 					dx=bl->x - md->bl.x;
@@ -1664,8 +1660,8 @@ int mob_respawn(int tid, unsigned int tick, int id,int data )
 	unit_dataset(&md->bl);
 	map_addblock(&md->bl);
 	mob_heal(md,data*status_get_max_hp(&md->bl)/100);
+	clif_spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
-	clif_spawnmob(md);
 	mobskill_use(md, tick, MSC_SPAWN);
 	return 1;
 }
@@ -2374,31 +2370,19 @@ int mob_class_change (struct mob_data *md, int class_)
 	else if(md->hp < 1) md->hp = 1;
 
 	memcpy(md->name,md->db->jname,NAME_LENGTH-1);
-	memset(&md->state,0,sizeof(md->state));
-	md->attacked_id = 0;
-	md->attacked_players = 0;
-	md->target_id = 0;
-	md->move_fail_count = 0;
-
 	md->speed = md->db->speed;
 	md->def_ele = md->db->element;
 
-	md->state.skillstate = MSS_IDLE;
-	md->last_thinktime = tick;
-	md->next_walktime = tick+rand()%50+5000;
-	md->last_linktime = tick;
 	mob_stop_attack(md);
 	mob_stop_walking(md, 0);
 	unit_skillcastcancel(&md->bl, 0);
-	unit_dataset(&md->bl);
+	status_set_viewdata(&md->bl, class_);
+	
 	for(i=0,c=tick-1000*3600*10;i<MAX_MOBSKILL;i++)
 		md->skilldelay[i] = c;
 
 	if(md->lootitem == NULL && md->db->mode&MD_LOOTER)
 		md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
-
-	clif_clearchar_area(&md->bl,0);
-	clif_spawnmob(md);
 
 	if (battle_config.show_mob_hp)
 		clif_charnameack(0, &md->bl);
@@ -2945,7 +2929,6 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 		return 0;
 
 	mob_db_data[class_]=(struct mob_db*)aCalloc(1, sizeof(struct mob_db));
-	mob_db_data[class_]->view_class=sd->status.class_;
 	sprintf(mob_db_data[class_]->name,sd->status.name);
 	sprintf(mob_db_data[class_]->jname,sd->status.name);
 	mob_db_data[class_]->lv=status_get_lv(&sd->bl);
@@ -2974,33 +2957,8 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 	mob_db_data[class_]->adelay=status_get_adelay(&sd->bl);
 	mob_db_data[class_]->amotion=status_get_amotion(&sd->bl);
 	mob_db_data[class_]->dmotion=status_get_dmotion(&sd->bl);
-	mob_db_data[class_]->sex=sd->status.sex;
-	mob_db_data[class_]->hair=sd->status.hair;
-	mob_db_data[class_]->hair_color=sd->status.hair_color;
-#if PACKETVER < 4
-	mob_db_data[class_]->weapon =	sd->status.weapon;
-	mob_db_data[class_]->shield = sd->status.shield;
-#else 
-	if (sd->equip_index[9] >= 0 && sd->inventory_data[sd->equip_index[9]] && sd->view_class != JOB_WEDDING && sd->view_class != JOB_XMAS) {
-		if (sd->inventory_data[sd->equip_index[9]]->view_id > 0)
-			mob_db_data[class_]->weapon=sd->inventory_data[sd->equip_index[9]]->view_id;
-		else
-			mob_db_data[class_]->weapon=sd->status.inventory[sd->equip_index[9]].nameid;
-	} else
-		mob_db_data[class_]->shield=0;
-	if (sd->equip_index[8] >= 0 && sd->equip_index[8] != sd->equip_index[9] && sd->inventory_data[sd->equip_index[8]] && sd->view_class != JOB_WEDDING && sd->view_class != JOB_XMAS) {
-		if (sd->inventory_data[sd->equip_index[8]]->view_id > 0)
-			mob_db_data[class_]->shield=sd->inventory_data[sd->equip_index[8]]->view_id;
-		else
-			mob_db_data[class_]->shield=sd->status.inventory[sd->equip_index[8]].nameid;
-	} else
-		mob_db_data[class_]->shield=0;
-#endif
-	mob_db_data[class_]->head_top=sd->status.head_top;
-	mob_db_data[class_]->head_mid=sd->status.head_mid;
-	mob_db_data[class_]->head_buttom=sd->status.head_bottom;
+	memcpy(&mob_db_data[class_]->vd, &sd->vd, sizeof(struct view_data));
 	mob_db_data[class_]->option=sd->sc.option;
-	mob_db_data[class_]->clothes_color=sd->status.clothes_color;
 
 	//Skill copy [Skotlex]
 	ms = &mob_db_data[class_]->skill[0];
@@ -3266,7 +3224,7 @@ static int mob_readdb(void)
 			if (mob_db_data[class_] == NULL)
 				mob_db_data[class_] = aCalloc(1, sizeof (struct mob_data));
 
-			mob_db_data[class_]->view_class = class_;
+			mob_db_data[class_]->vd.class_ = class_;
 			memcpy(mob_db_data[class_]->name, str[1], NAME_LENGTH-1);
 			memcpy(mob_db_data[class_]->jname, str[2], NAME_LENGTH-1);
 			mob_db_data[class_]->lv = atoi(str[3]);
@@ -3475,22 +3433,25 @@ static int mob_readdb_mobavail(void)
 			continue;
 		if (j >= 12 && k > 23 && k < 69)
 			k += 3977;	// advanced job/baby class
-		mob_db_data[class_]->view_class=k;
+
+		memset(&mob_db_data[class_]->vd, 0, sizeof(struct view_data));
+		mob_db_data[class_]->vd.class_=k;
 
 		//Player sprites
 		if(pcdb_checkid(k) && j>=12) {
-			mob_db_data[class_]->sex=atoi(str[2]);
-			mob_db_data[class_]->hair=atoi(str[3]);
-			mob_db_data[class_]->hair_color=atoi(str[4]);
-			mob_db_data[class_]->weapon=atoi(str[5]);
-			mob_db_data[class_]->shield=atoi(str[6]);
-			mob_db_data[class_]->head_top=atoi(str[7]);
-			mob_db_data[class_]->head_mid=atoi(str[8]);
-			mob_db_data[class_]->head_buttom=atoi(str[9]);
+			mob_db_data[class_]->vd.sex=atoi(str[2]);
+			mob_db_data[class_]->vd.hair_style=atoi(str[3]);
+			mob_db_data[class_]->vd.hair_color=atoi(str[4]);
+			mob_db_data[class_]->vd.weapon=atoi(str[5]);
+			mob_db_data[class_]->vd.shield=atoi(str[6]);
+			mob_db_data[class_]->vd.head_top=atoi(str[7]);
+			mob_db_data[class_]->vd.head_mid=atoi(str[8]);
+			mob_db_data[class_]->vd.head_bottom=atoi(str[9]);
 			mob_db_data[class_]->option=atoi(str[10])&~0x46;
-			mob_db_data[class_]->clothes_color=atoi(str[11]); // Monster player dye option - Valaris
+			mob_db_data[class_]->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
 		}
-		else if(str[2] && atoi(str[2]) > 0) mob_db_data[class_]->equip=atoi(str[2]); // mob equipment [Valaris]
+		else if(str[2] && atoi(str[2]) > 0)
+			mob_db_data[class_]->vd.shield=atoi(str[2]); // mob equipment [Valaris]
 
 		ln++;
 	}
@@ -3889,7 +3850,7 @@ static int mob_read_sqldb(void)
 				
 				ln++;
 
-				mob_db_data[class_]->view_class = class_;
+				mob_db_data[class_]->vd.class_ = class_;
 				memcpy(mob_db_data[class_]->name, TO_STR(1), NAME_LENGTH-1);
 				memcpy(mob_db_data[class_]->jname, TO_STR(2), NAME_LENGTH-1);
 				mob_db_data[class_]->lv = TO_INT(3);

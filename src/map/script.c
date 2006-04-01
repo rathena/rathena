@@ -6333,11 +6333,9 @@ int buildin_changebase(struct script_state *st)
 		return 0;
 	}
 
-//	if(vclass==22) {
-//		pc_unequipitem(sd,sd->equip_index[9],0);	// ‘•”õŠO
-//	}
-
-	sd->view_class = vclass;
+	//If you are already using a special view (disguises?) prevent overriding it. [Skotlex]
+	if (sd->vd.class_ == sd->status.class_)
+		status_set_viewdata(&sd->bl, vclass);
 
 	return 0;
 }
@@ -8054,13 +8052,7 @@ int buildin_disguise(struct script_state *st)
 		return 0;
 	}
 
-	pc_stop_walking(sd,0);
-	clif_clearchar(&sd->bl, 0);
-	sd->disguise = id;
-	sd->state.disguised = 1; // set to override items with disguise script [Valaris]
-	clif_changeoption(&sd->bl);
-	clif_spawnpc(sd);
-
+	pc_disguise(sd, id);
 	push_val(st->stack,C_INT,id);
 	return 0;
 }
@@ -8074,11 +8066,7 @@ int buildin_undisguise(struct script_state *st)
 	struct map_session_data *sd=script_rid2sd(st);
 
 	if (sd->disguise) {
-		pc_stop_walking(sd,0);
-		clif_clearchar(&sd->bl, 0);
-		sd->disguise = 0;
-		clif_changeoption(&sd->bl);
-		clif_spawnpc(sd);
+		pc_disguise(sd, 0);
 		push_val(st->stack,C_INT,0);
 	} else {
 		push_val(st->stack,C_INT,1);
@@ -10209,17 +10197,17 @@ int buildin_getmobdata(struct script_state *st) {
 		setd_sub(map_id2sd(st->rid),name,9,(void *)(int)md->mode);
 		setd_sub(map_id2sd(st->rid),name,10,(void *)(int)md->special_state.ai);
 		setd_sub(map_id2sd(st->rid),name,11,(void *)(int)md->db->option);
-		setd_sub(map_id2sd(st->rid),name,12,(void *)(int)md->db->sex);
-		setd_sub(map_id2sd(st->rid),name,13,(void *)(int)md->db->view_class);
-		setd_sub(map_id2sd(st->rid),name,14,(void *)(int)md->db->hair);
-		setd_sub(map_id2sd(st->rid),name,15,(void *)(int)md->db->hair_color);
-		setd_sub(map_id2sd(st->rid),name,16,(void *)(int)md->db->head_buttom);
-		setd_sub(map_id2sd(st->rid),name,17,(void *)(int)md->db->head_mid);
-		setd_sub(map_id2sd(st->rid),name,18,(void *)(int)md->db->head_top);
-		setd_sub(map_id2sd(st->rid),name,19,(void *)(int)md->db->clothes_color);
-		setd_sub(map_id2sd(st->rid),name,20,(void *)(int)md->db->equip);
-		setd_sub(map_id2sd(st->rid),name,21,(void *)(int)md->db->weapon);
-		setd_sub(map_id2sd(st->rid),name,22,(void *)(int)md->db->shield);
+		setd_sub(map_id2sd(st->rid),name,12,(void *)(int)md->vd->sex);
+		setd_sub(map_id2sd(st->rid),name,13,(void *)(int)md->vd->class_);
+		setd_sub(map_id2sd(st->rid),name,14,(void *)(int)md->vd->hair_style);
+		setd_sub(map_id2sd(st->rid),name,15,(void *)(int)md->vd->hair_color);
+		setd_sub(map_id2sd(st->rid),name,16,(void *)(int)md->vd->head_bottom);
+		setd_sub(map_id2sd(st->rid),name,17,(void *)(int)md->vd->head_mid);
+		setd_sub(map_id2sd(st->rid),name,18,(void *)(int)md->vd->head_top);
+		setd_sub(map_id2sd(st->rid),name,19,(void *)(int)md->vd->cloth_color);
+		setd_sub(map_id2sd(st->rid),name,20,(void *)(int)md->vd->shield);
+		setd_sub(map_id2sd(st->rid),name,21,(void *)(int)md->vd->weapon);
+		setd_sub(map_id2sd(st->rid),name,22,(void *)(int)md->vd->shield);
 		setd_sub(map_id2sd(st->rid),name,23,(void *)(int)md->ud.dir);
 	}
 	return 0;
@@ -10271,37 +10259,37 @@ int buildin_setmobdata(struct script_state *st){
 				md->db->option = (short)value;
 				break;
 			case 12:
-				md->db->sex = value;
+				md->vd->sex = value;
 				break;
 			case 13:
-				md->db->view_class = value;
+				md->vd->class_ = value;
 				break;
 			case 14:
-				md->db->hair = (short)value;
+				md->vd->hair_style = (short)value;
 				break;
 			case 15:
-				md->db->hair_color = (short)value;
+				md->vd->hair_color = (short)value;
 				break;
 			case 16:
-				md->db->head_buttom = (short)value;
+				md->vd->head_bottom = (short)value;
 				break;
 			case 17:
-				md->db->head_mid = (short)value;
+				md->vd->head_mid = (short)value;
 				break;
 			case 18:
-				md->db->head_top = (short)value;
+				md->vd->head_top = (short)value;
 				break;
 			case 19:
-				md->db->clothes_color = (short)value;
+				md->vd->cloth_color = (short)value;
 				break;
 			case 20:
-				md->db->equip = value;
+				md->vd->shield = value;
 				break;
 			case 21:
-				md->db->weapon = (short)value;
+				md->vd->weapon = (short)value;
 				break;
 			case 22:
-				md->db->shield = (short)value;
+				md->vd->shield = (short)value;
 				break;
 			case 23:
 				md->ud.dir = (unsigned char)value;
