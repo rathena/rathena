@@ -10527,7 +10527,7 @@ void skill_init_unit_layout(void)
 		if (i&1) {	/* ŽÎ‚ß”z’u */
 			if (i&0x2) {
 				int dx[] = {-2,-1, 0, 1, 2};
-				int dy[] = { 2,-1, 0,-1,-2};
+				int dy[] = { 2, 1, 0,-1,-2};
 				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
 				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
 			} else {
