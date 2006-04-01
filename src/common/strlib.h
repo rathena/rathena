@@ -11,9 +11,9 @@ char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt,char* spt);
 int jmemescapecpy (char* pt,char* spt, int size);
 
-#if !defined(HAVE_mit_thread) && !defined(HAVE_STRTOK_R)
-#define strtok_r(s,delim,save_ptr) athena_strtok_r((s),(delim),(save_ptr))
-char *athena_strtok_r(char *s1, const char *s2, char **lasts);
+#ifdef __WIN32
+#define strtok_r(s,delim,save_ptr) _strtok_r((s),(delim),(save_ptr))
+char *_strtok_r(char *s1, const char *s2, char **lasts);
 #endif
 
 // custom functions

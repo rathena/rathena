@@ -137,8 +137,8 @@ char *trim(char *str, const char *delim)
 	return str;
 }
 
-#if !defined(HAVE_mit_thread) && !defined(HAVE_STRTOK_R)
-char *athena_strtok_r(char *s1, const char *s2, char **lasts)
+#ifdef __WIN32
+char *_strtok_r(char *s1, const char *s2, char **lasts)
 {
 	char *ret;
 
