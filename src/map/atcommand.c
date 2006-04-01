@@ -1285,8 +1285,9 @@ int atcommand_where(
 	const char* command, const char* message)
 {
 	struct map_session_data *pl_sd = NULL;
-	
 	int GM_level, pl_GM_level;
+
+	nullpo_retr(-1, sd);
 	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
@@ -1294,27 +1295,28 @@ int atcommand_where(
 		return -1;
 	}
 	pl_sd = map_nick2sd(atcmd_player_name);
-	nullpo_retr(-1, sd);
 
+	pl_sd = map_nick2sd(atcmd_player_name);
+	
 	if (pl_sd == NULL) 
 		return -1;
 
-	if(strncmp(sd->status.name,atcmd_player_name,NAME_LENGTH)!=0)
+	if(strncmp(pl_sd->status.name,atcmd_player_name,NAME_LENGTH)!=0)
 		return -1;
 		
 	GM_level = pc_isGM(sd);//also hide gms depending on settings in battle_athena.conf, show if they are aid [Kevin]
 	pl_GM_level = pc_isGM(pl_sd);
 	
 	if (battle_config.hide_GM_session) {
-		if(!(GM_level >= pl_GM_level)) {
-			if (!(battle_config.who_display_aid > 0 && pc_isGM(sd) >= battle_config.who_display_aid)) {
+		if(GM_level < pl_GM_level) {
+			if (!(battle_config.who_display_aid && GM_level >= battle_config.who_display_aid)) {
 				return -1;
 			}
 		}
 	}
 
 	snprintf(atcmd_output, sizeof atcmd_output, "%s %s %d %d",
-		atcmd_player_name, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
+		pl_sd->status.name, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
