@@ -4235,6 +4235,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_BERSERK:		/* ƒo?ƒT?ƒN */
+			if (sc->data[SC_ENDURE].timer == -1 || sc->data[SC_ENDURE].val1 <= 10)
+				sc_start(bl, SC_ENDURE, 100, 11, tick);
 			if(sd && !(flag&4)){
 				sd->status.hp = sd->status.max_hp * 3;
 				sd->status.sp = 0;
@@ -4244,8 +4246,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 			if (!(flag&4))
 				tick = 10000;
-			if (sc->data[SC_ENDURE].timer == -1 || sc->data[SC_ENDURE].val1 <= 10)
-				sc_start(bl, SC_ENDURE, 100, 11, tick);
 			calc_flag = 1;
 			break;
 

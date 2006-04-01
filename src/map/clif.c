@@ -4412,8 +4412,10 @@ int clif_skill_setunit(struct skill_unit *unit)
 
 	bl=map_id2bl(unit->group->src_id);
 
-	if (unit->group->unit_id == UNT_ATTACK_SKILLS)
-		return 0;	//These are invisible client-side. [Skotlex]
+// These are invisible client-side, but are necessary because
+// otherwise the client will not know who caused the attack.
+//	if (unit->group->unit_id == UNT_ATTACK_SKILLS)
+//		return 0;
 		
 #if PACKETVER < 3
 	memset(WBUFP(buf, 0),0,packet_len_table[0x11f]);
