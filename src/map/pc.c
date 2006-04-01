@@ -7321,7 +7321,7 @@ void pc_setstand(struct map_session_data *sd){
 	if(sd->sc.count && sd->sc.data[SC_TENSIONRELAX].timer!=-1)
 		status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
 
-	sd->state.dead_sit = 0;
+	sd->state.dead_sit = sd->vd.dead_sit = 0;
 }
 
 int pc_split_str(char *str,char **val,int num)
