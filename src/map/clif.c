@@ -813,7 +813,7 @@ void clif_get_weapon_view(TBL_PC* sd, short *rhand, short *lhand)
 #endif
 }	
 
-static void clif_get_guild_data(struct block_list *bl, long *guild_id, long *emblem_id) 
+static void clif_get_guild_data(struct block_list *bl, long *guild_id, short *emblem_id) 
 {
 	//TODO: There has to be a way to clean this up.
 	switch (bl->type) {
@@ -848,7 +848,8 @@ static void clif_get_guild_data(struct block_list *bl, long *guild_id, long *emb
 static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned char *buf) {
 	struct status_change *sc;
 	struct map_session_data *sd;
-	long guild_id=0, emblem_id=0, lv;
+	long guild_id=0;
+	unsigned short emblem_id=0, lv;
 	unsigned short dir;
 
 	nullpo_retr(0, bl);
@@ -969,7 +970,8 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit_data *ud, unsigned char *buf) {
 	struct status_change *sc;
 	struct map_session_data *sd;
-	long guild_id=0, emblem_id=0, lv;
+	long guild_id=0;
+	unsigned short emblem_id=0, lv;
 
 	nullpo_retr(0, bl);
 	BL_CAST(BL_PC, bl, sd);

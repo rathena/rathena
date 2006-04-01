@@ -8155,7 +8155,6 @@ int soundeffect_sub(struct block_list* bl,va_list ap)
 int buildin_soundeffectall(struct script_state *st)
 {
 	// [Lance] - Improved.
-	struct map_session_data *sd=NULL;
 	char *name, *map = NULL;
 	struct block_list *bl;
 	int type, coverage, x0, y0, x1, y1;

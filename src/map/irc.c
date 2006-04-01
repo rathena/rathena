@@ -199,8 +199,6 @@ void irc_send(char *buf)
 
 void irc_parse_sub(int fd, char *incoming_string)
 {
-	int i=0;
-	int authed=0;
 	char kami[256]; //[Zido]
 	char source[256];
 	char command[256];
