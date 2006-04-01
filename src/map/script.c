@@ -9871,7 +9871,7 @@ int buildin_npcshopitem(struct script_state *st)
 		}
 
 		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
-			sizeof(nd->u.shop_item[0]) * (n+1));
+			sizeof(nd->u.shop_item[0]) * n);
 
 		map_addiddb(&nd->bl);
 

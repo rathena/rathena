@@ -2436,7 +2436,7 @@ void npc_parsesrcfile (char *name)
 	FILE *fp = fopen (name,"r");
 	if (fp == NULL) {
 		ShowError ("File not found : %s\n", name);
-		exit(1);
+		return;
 	}
 	current_file = name;
 
