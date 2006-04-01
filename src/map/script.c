@@ -9848,7 +9848,7 @@ int buildin_npcshopitem(struct script_state *st)
 	#define MAX_SHOPITEM 100
 #endif
 
-	if(nd && nd->bl.subtype=SHOP){
+	if(nd && nd->bl.subtype==SHOP){
 		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
 			sizeof(nd->u.shop_item[0]) * (MAX_SHOPITEM + 1));
 
