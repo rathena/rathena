@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/01
+	* Fixes to the mob_ai routines. Prevent casting rude-attacked skills in
+	  situations that shouldn't be considered as so. Fixed mobs failing to chase
+	  after enemies when attacked from out of their view_range. [Skotlex]
 	* Should not exit when you can't find an NPC file.. [Lance]
 	* Dynamic shops support with script callback. (needs testing) [Lance]
 	* Cleaned up and fixed @where command. [Skotlex]

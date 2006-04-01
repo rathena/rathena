@@ -1084,7 +1084,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	int i, j, dx, dy, dist;
 	int mode;
 	int search_size;
-	int view_range, can_move;
+	int view_range, can_move, can_walk;
 
 	md = (struct mob_data*)bl;
 	tick = va_arg(ap, unsigned int);
@@ -1107,11 +1107,15 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		return 0;
 
 	if (md->sc.count && md->sc.data[SC_BLIND].timer != -1)
-		view_range = 1;
+		view_range = 3;
 	else
 		view_range = md->db->range2;
 	mode = status_get_mode(&md->bl);
-	can_move = (mode&MD_CANMOVE) && unit_can_move(&md->bl);
+
+	can_move = (mode&MD_CANMOVE)&&unit_can_move(&md->bl);
+	//Since can_move is false when you are casting or the damage-delay kicks in, some special considerations
+	//must be taken to avoid unlocking the target or triggering rude-attacked skills in said cases. [Skotlex]
+	can_walk = DIFF_TICK(tick, md->ud.canmove_tick) > 0;
 
 	if (md->target_id)
 	{	//Check validity of current target. [Skotlex]
@@ -1129,7 +1133,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	}
 			
 	// Check for target change.
-	if (md->attacked_id && mode&MD_CANATTACK)
+	if (md->attacked_id && mode&MD_CANATTACK && can_walk)
 	{
 		if (md->attacked_id == md->target_id)
 		{
@@ -1141,7 +1145,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		} else
 		if ((abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode))) {
 			if (md->bl.m != abl->m || abl->prev == NULL ||
-				(dist = distance_bl(&md->bl, abl)) >= 32 ||
+				(dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE ||
 				battle_check_target(bl, abl, BCT_ENEMY) <= 0 ||
 				(battle_config.mob_ai&2 && !status_check_skilluse(bl, abl, 0, 0)) ||
 				!mob_can_reach(md, abl, dist+2, MSS_RUSH) ||
@@ -1162,6 +1166,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			} else if (!(battle_config.mob_ai&2) && !status_check_skilluse(bl, abl, 0, 0)) {
 				//Can't attack back, but didn't invoke a rude attacked skill...
 				md->attacked_id = 0; //Simply unlock, shouldn't attempt to run away when in dumb_ai mode.
+/* Unneeded. Mobs use the min_chase parameter to chase back enemies once hit.
 			} else if (dist > view_range) { //Out of view range, but can reach 
 				//Attempt to follow new target
 				if (!md->target_id && can_move) {	// why is it moving to the target when the mob can't see the player? o.o
@@ -1169,6 +1174,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					dy = abl->y - md->bl.y -1;
 					unit_walktoxy(&md->bl, md->bl.x+dx, md->bl.y+dy, 0);
 				}
+*/
 			} else { //Attackable
 				if (!tbl || dist < md->db->range || !check_distance_bl(&md->bl, tbl, dist)
 					|| battle_gettarget(tbl) != md->bl.id)
@@ -1241,12 +1247,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				{	//Run towards the enemy when out of range?
 					if (!can_move)
 					{	//Give it up.
-						mob_unlocktarget(md,tick);
+						if (can_walk)
+							mob_unlocktarget(md,tick);
 						return 0;
 					}
-					dx = tbl->x - md->bl.x -1;
-					dy = tbl->y - md->bl.y -1;
-					unit_walktoxy(&md->bl, md->bl.x+dx, md->bl.y+dy, 0);
+					dx = tbl->x+(tbl->x > md->bl.x?-1:+1);
+					dy = tbl->y+(tbl->y > md->bl.y?-1:+1);
+					unit_walktoxy(&md->bl, dx, dy, 0);
 					return 0;
 				}
 				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
