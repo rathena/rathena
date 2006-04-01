@@ -403,6 +403,7 @@ int buildin_setd(struct script_state *st);
 // <--- [zBuffer] List of dynamic var commands
 int buildin_petstat(struct script_state *st); // [Lance] Pet Stat Rq: Dubby
 int buildin_callshop(struct script_state *st); // [Skotlex]
+int buildin_npcshopitem(struct script_state *st); // [Lance]
 int buildin_equip(struct script_state *st);
 int buildin_autoequip(struct script_state *st);
 int buildin_setbattleflag(struct script_state *st);
@@ -730,6 +731,7 @@ struct {
 	// <--- [zBuffer] List of dynamic var commands
 	{buildin_petstat,"petstat","i"},
 	{buildin_callshop,"callshop","si"}, // [Skotlex]
+	{buildin_npcshopitem,"npcshopitem","*"}, // [Lance]
 	{buildin_equip,"equip","i"},
 	{buildin_autoequip,"autoequip","ii"},
 	{buildin_setbattleflag,"setbattleflag","ss"},
@@ -8127,7 +8129,7 @@ int buildin_soundeffect(struct script_state *st)
 	name=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	type=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	if(sd){
-		if(st->oid)
+		if(!st->rid)
 			clif_soundeffect(sd,map_id2bl(st->oid),name,type);
 		else{
 			clif_soundeffect(sd,&sd->bl,name,type);
@@ -8163,7 +8165,7 @@ int buildin_soundeffectall(struct script_state *st)
 	type=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	coverage=conv_num(st,& (st->stack->stack_data[st->start+4]));
 
-	if(st->oid)
+	if(!st->rid)
 		bl = map_id2bl(st->oid);
 	else
 		bl = &(script_rid2sd(st)->bl);
@@ -9831,6 +9833,54 @@ int buildin_callshop(struct script_state *st)
 	push_val(st->stack,C_INT,1);
 	return 0;
 }
+
+int buildin_npcshopitem(struct script_state *st)
+{
+	struct npc_data *nd= NULL;
+	int n = 0;
+	int i = 3;
+	int itemid, value;
+
+	char* npcname = conv_str(st, & (st->stack->stack_data[st->start + 2]));
+	nd = npc_name2id(npcname);
+
+#ifndef MAX_SHOPITEM
+	#define MAX_SHOPITEM 100
+#endif
+
+	if(nd){
+		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
+			sizeof(nd->u.shop_item[0]) * (MAX_SHOPITEM + 1));
+
+		// Reset sell list.
+		for(;nd->u.shop_item[n].nameid && n < MAX_SHOPITEM; n++){
+			nd->u.shop_item[n].nameid = 0;
+			nd->u.shop_item[n].value = 0;
+		}
+
+		n = 0;
+
+		while (st->end > st->start + i) {
+			itemid = conv_num(st, & (st->stack->stack_data[st->start+i]));
+			nd->u.shop_item[n].nameid = itemid;
+			i++;
+			value = conv_num(st, & (st->stack->stack_data[st->start+i]));
+			nd->u.shop_item[n].value = value;
+			i++;
+			n++;
+		}
+
+		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
+			sizeof(nd->u.shop_item[0]) * n);
+
+		nd->master_nd = ((struct npc_data *)map_id2bl(st->oid));
+	} else {
+		ShowError("buildin_npcshopitem: shop not found.\n");
+	}
+
+	return 0;
+}
+
 /*==========================================
  * Returns some values of an item [Lupus]
  * Price, Weight, etc...

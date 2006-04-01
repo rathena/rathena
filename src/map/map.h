@@ -794,6 +794,7 @@ struct npc_data {
 	short arenaflag;
 
 	void *chatdb;
+	struct npc_data *master_nd;
 
 	union {
 		struct {

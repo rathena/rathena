@@ -58,6 +58,7 @@ int run_script(unsigned char *,int,int,int);
 int set_var(struct map_session_data *sd, char *name, void *val);
 int conv_num(struct script_state *st,struct script_data *data);
 char* conv_str(struct script_state *st,struct script_data *data);
+void setd_sub(struct map_session_data *sd, char *varname, int elem, void *value);
 
 struct dbt* script_get_label_db(void);
 struct dbt* script_get_userfunc_db(void);
