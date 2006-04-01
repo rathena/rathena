@@ -3071,7 +3071,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 	if((x==0 && y==0) ||
 		(map_getcell(m, x, y, CELL_CHKNOPASS) &&
 		!map_getcell(m, x, y, CELL_CHKICEWALL) &&
-#ifndef CELL_NOSTACK
+#ifdef CELL_NOSTACK
 		!map_getcell(m, x, y, CELL_CHKSTACK) &&
 #endif
 		!map_getcell(m, x, y, CELL_CHKMOONLIT))
