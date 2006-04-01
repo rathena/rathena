@@ -7439,10 +7439,7 @@ int clif_specialeffect(struct block_list *bl, int type, int flag)
 	memset(buf, 0, packet_len_table[0x1f3]);
 
 	WBUFW(buf,0) = 0x1f3;
-	if(bl->type==BL_PC && ((struct map_session_data *)bl)->disguise)
-		WBUFL(buf,2) = -bl->id;
-	else
-		WBUFL(buf,2) = bl->id;
+	WBUFL(buf,2) = bl->id;
 	WBUFL(buf,6) = type;
 
 	switch (flag) {
@@ -7461,7 +7458,10 @@ int clif_specialeffect(struct block_list *bl, int type, int flag)
 	default:
 		clif_send(buf, packet_len_table[0x1f3], bl, AREA);
 	}
-
+	if (disguised(bl)) {
+		WBUFL(buf,2) = -bl->id;
+		clif_send(buf, packet_len_table[0x1f3], bl, SELF);
+	}
 	return 0;
 }
 
@@ -7482,11 +7482,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 	nullpo_retr(0, bl);
 
 	WBUFW(buf,0) = cmd;
-
-	if(bl->type==BL_PC && ((struct map_session_data *)bl)->disguise)
-		WBUFL(buf,2) = -bl->id;
-	else
-		WBUFL(buf,2) = bl->id;
+	WBUFL(buf,2) = bl->id;
 
 	switch(bl->type) {
 	case BL_PC:
@@ -7609,11 +7605,7 @@ int clif_charnameupdate (struct map_session_data *ssd)
 		return 0; //No need to update as the party/guild was not displayed anyway.
 
 	WBUFW(buf,0) = cmd;
-
-	if(ssd->disguise)
-		WBUFL(buf,2) = -(ssd->bl.id);
-	else
-		WBUFL(buf,2) = ssd->bl.id;
+	WBUFL(buf,2) = ssd->bl.id;
 
 	memcpy(WBUFP(buf,6), ssd->status.name, NAME_LENGTH);
 			
@@ -8231,11 +8223,12 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 		) {
 			//Asked name of invisible player, this shouldn't be possible!
 			//Possible bot? Thanks to veider and qspirit
+			//FIXME: Still isn't perfected as clients keep asking for this on legitimate situations.
     			unsigned char gm_msg[256];
     			sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requests name of invisible chars.", sd->status.name, sd->status.account_id);
 				ShowWarning(gm_msg);
 			    // information is sended to all online GM
-			    intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
+			  //  intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
 			return;
 		}
 		clif_charnameack(fd, bl);
@@ -8538,10 +8531,6 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 		WBUFL(buf, 2) = sd->bl.id;
 		WBUFB(buf,26) = 3;
 		clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
-		if(sd->disguise) {
-			WBUFL(buf, 2) = -sd->bl.id;
-			clif_send(buf, packet_len_table[0x8a], &sd->bl, SELF);
-		}
 		break;
 	}
 }
@@ -8621,8 +8610,9 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	//-------------------------------------------------------//
 	//   Lordalfa - Paperboy - To whisper NPC commands       //
 	//-------------------------------------------------------//
-	if ((strncasecmp((const char*)RFIFOP(fd,4),"NPC:",4) == 0) && (strlen((const char*)RFIFOP(fd,4)) >4))   {
-		whisper_tmp = (char*) RFIFOP(fd,4) + 4;
+	whisper_tmp = (char*) RFIFOP(fd,4);
+	if (whisper_tmp[0] && (strncasecmp(whisper_tmp,"NPC:",4) == 0) && (strlen(whisper_tmp) >4))   {
+		whisper_tmp += 4; //Skip the NPC: string part.
 		if ((npc = npc_name2id(whisper_tmp)))	
 		{
 			whisper_tmp=(char *)aCallocA(strlen((char *)(RFIFOP(fd,28)))+1,sizeof(char));
