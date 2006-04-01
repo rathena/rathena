@@ -8974,7 +8974,6 @@ void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
 	n = (RFIFOW(fd,2)-4) /4;
 	item_list = (unsigned short*)RFIFOP(fd,4);
 
-
 	if (sd->trade_partner || !sd->npc_shopid){
 		fail = 1;
 	}else{
@@ -8983,8 +8982,8 @@ void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
 			for(i=0;i<n;i++){
 				setd_sub(sd, "@bought_nameid", i, (void *)item_list[i*2+1]);
 				setd_sub(sd, "@bought_quantity", i, (void *)item_list[i*2]);
-				npc_event(sd, npc_ev, 0);
 			}
+			npc_event(sd, npc_ev, 0);
 			fail = 0;
 		}else{
 			fail = npc_buylist(sd,n,item_list);
@@ -9019,10 +9018,10 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 		if((nd = ((struct npc_data *)map_id2bl(sd->npc_shopid))->master_nd)){
 			sprintf(npc_ev, "%s::OnSellItem", nd->exname);
 			for(i=0;i<n;i++){
-				setd_sub(sd, "@sold_nameid", i, (void *)item_list[i*2+1]);
-				setd_sub(sd, "@sold_quantity", i, (void *)item_list[i*2]);
-				npc_event(sd, npc_ev, 0);
+				setd_sub(sd, "@sold_nameid", i, (void *)sd->status.inventory[item_list[i*2]-2].nameid);
+				setd_sub(sd, "@sold_quantity", i, (void *)item_list[i*2+1]);
 			}
+			npc_event(sd, npc_ev, 0);
 			fail = 0;
 		}else{
 			fail = npc_selllist(sd,n,item_list);
