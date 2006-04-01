@@ -633,6 +633,12 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 	} else {
 		inter_party_tosql(p,PS_DELMEMBER,i);
 		memset(&p->member[i], 0, sizeof(struct party_member));
+		//Normally unneeded except when a family is even-sharing
+		//and one of the three leaves the party.
+		if(p->exp && !party_check_exp_share(p) ){
+			p->exp=0;
+			mapif_party_optionchanged(fd,p,0,0);
+		}
 	}
 		
 	if (party_check_empty(p) == 0)
