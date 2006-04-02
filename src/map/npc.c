@@ -756,10 +756,10 @@ int npc_gettimerevent_tick(struct npc_data *nd)
 	//If within a timer, set the tick value to the time passed since the beginning of the timer.
 	if (sd) {
 		if(sd->npc_timer_id != -1)
-			tick = DIFF_TICK(gettick(), nd->u.scr.timertick);
+			tick += DIFF_TICK(gettick(), nd->u.scr.timertick);
 	} else {
 		if(nd->u.scr.timerid!=-1)
-			tick = DIFF_TICK(gettick(), nd->u.scr.timertick);
+			tick += DIFF_TICK(gettick(), nd->u.scr.timertick);
 	}
 
 	return tick;
