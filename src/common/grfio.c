@@ -933,7 +933,7 @@ static int grfio_add(char *fname)
 	return grfio_entryread(fname, gentry_entrys - 1);
 }
 
-static char *grfio_alloc_ptr(char *fname)
+char *grfio_alloc_ptr(char *fname)
 {
 	int len;
 	char *buf;
