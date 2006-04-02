@@ -7844,8 +7844,10 @@ static int clif_nighttimer(int tid, unsigned int tick, int id, int data)
 	if (!sd) return 0;
 
 	//Check if character didn't instant-warped after logging in.
-	if (sd->bl.prev!=NULL)
+	if (sd->bl.prev!=NULL) {
+		sd->state.night = 1;
  		clif_status_load(&sd->bl, SI_NIGHT, 1);
+	}
 	return 0;
 }
 
