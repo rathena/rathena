@@ -10,23 +10,25 @@
 //= 1.0 spawn N and spawn delays aren't yet correct, so I set
 //=     respawn delays quite big for now [Lupus]
 //= 1.1 Fixed monsters spawn places
-//= 1.1a Reduced RSX's respawn delay value []
-//= 1.2 Update monster spawn numbers according to info on [MasterOfMuppets]
-//=	emperium.org
+//= 1.2 Update monster spawn numbers according to info on emperium.org [MasterOfMuppets]
 //============================================================
 
-//(ein_dun01.gat)*
-ein_dun01.gat,0,0,0,0	monster	Noxious	1620,40,10000,10000,0
-ein_dun01.gat,0,0,0,0	monster	Venomous	1621,20,10000,10000,0
-ein_dun01.gat,0,0,0,0	monster	Waste Stove	1617,5,60000,120000,0
-ein_dun01.gat,0,0,0,0	monster	Porcellio	1619,30,0,0,0
+//==================================================
+// ein_dun01 - Mine Dungeon F1
+//==================================================
 ein_dun01.gat,0,0,0,0	monster	Pitman	1616,55,0,0,0
-ein_dun01.gat,0,0,0,0	monster	Ungoliant	1618,1,3600000,3600000,0
+ein_dun01.gat,0,0,0,0	monster	Noxious	1620,40,0,0,0
+ein_dun01.gat,0,0,0,0	monster	Porcellio	1619,30,0,0,0
+ein_dun01.gat,0,0,0,0	monster	Venomous	1621,20,0,0,0
+ein_dun01.gat,0,0,0,0	monster	Waste Stove	1617,5,60000,30000,0
+ein_dun01.gat,0,0,0,0	monster	Ungoliant	1618,1,3600000,1800000,0
 
-//(ein_dun02.gat)*
-ein_dun02.gat,0,0,0,0	monster	Teddy Bear	1622,30,0,0
-ein_dun02.gat,0,0,0,0	monster	Obsidian	1615,40,0,0,0
+//==================================================
+// ein_dun02 - Mine Dungeon F2
+//==================================================
 ein_dun02.gat,0,0,0,0	monster	Mineral	1614,50,0,0,0
+ein_dun02.gat,0,0,0,0	monster	Obsidian	1615,40,0,0,0
 ein_dun02.gat,0,0,0,0	monster	Waste Stove	1617,30,0,0,0
+ein_dun02.gat,0,0,0,0	monster	Teddy Bear	1622,30,0,0
 ein_dun02.gat,0,0,0,0	monster	Venomous	1621,20,0,0,0
-ein_dun02.gat,163,137,50,50	monster	RSX 0806	1623,1,14400000,14400000,0
+ein_dun02.gat,163,137,50,50	monster	RSX 0806	1623,1,7200000,3600000,0

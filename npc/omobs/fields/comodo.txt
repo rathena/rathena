@@ -183,7 +183,7 @@ cmd_fild08.gat,0,0,0,0	monster	Gryphon	1259,1,3600000,1800000,1
 //==================================================
 cmd_fild09.gat,0,0,0,0	monster	Condor	1009,40,0,0,0
 cmd_fild09.gat,0,0,0,0	monster	Anacondaq	1030,20,0,0,0
-cmd_fild09.gat,0,0,0,0	monster	Steel ChonChon	1042,20,0,0,0
+cmd_fild09.gat,0,0,0,0	monster	Steel Chonchon	1042,20,0,0,0
 cmd_fild09.gat,0,0,0,0	monster	Drops	1113,20,0,0,0
 cmd_fild09.gat,142,325,40,50	monster	Hode	1127,3,150000,0,0
 cmd_fild09.gat,140,323,40,50	monster	Gargoyle	1253,2,150000,0,0

@@ -40,14 +40,11 @@ alde_dun03.gat,126,53,20,20	monster	Drainliar	1111,5,300000,150000,0
 alde_dun03.gat,130,220,40,40	monster	Drainliar	1111,10,300000,150000,0
 alde_dun03.gat,120,157,8,8	monster	Drainliar	1111,10,300000,150000,0
 alde_dun03.gat,0,0,0,0	monster	Penomena	1216,35,600000,300000,0
-alde_dun03.gat,0,0,0,0	monster	Penomena	1216,15,300000,150000,0
-alde_dun03.gat,0,0,0,0	monster	Penomena	1216,5,300000,150000,0
+alde_dun03.gat,0,0,0,0	monster	Penomena	1216,45,300000,150000,0
 alde_dun03.gat,163,56,10,10	monster	Penomena	1216,3,600000,300000,0
 alde_dun03.gat,168,42,6,6	monster	Penomena	1216,2,600000,300000,0
 alde_dun03.gat,147,30,8,8	monster	Penomena	1216,2,600000,300000,0
-alde_dun03.gat,0,0,0,0	monster	Penomena	1216,10,300000,150000,0
 alde_dun03.gat,102,40,10,10	monster	Penomena	1216,4,600000,300000,0
-alde_dun03.gat,0,0,0,0	monster	Penomena	1216,15,300000,150000,0
 alde_dun03.gat,155,201,25,25	monster	Penomena	1216,7,600000,300000,0
 alde_dun03.gat,160,181,8,8	monster	Penomena	1216,2,600000,300000,0
 alde_dun03.gat,179,166,6,6	monster	Penomena	1216,4,600000,300000,0

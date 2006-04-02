@@ -562,8 +562,8 @@
 1242,Dagger_of_Counter,Dagger of Counter,4,,10,550,140,,1,0,67174916,7,2,2,4,55,1,1,{ bonus bCritical,90; bonus3 bAutoSpell,61,1,250; }
 1243,Novice_Main_Gauche,Novice Main Gauche,4,,10,1,45,,1,0,8388609,7,2,2,1,1,0,1,{}
 1244,Holy_Dagger,Holy Dagger,4,,10,800,100,,1,0,337600238,7,2,2,4,55,1,1,{ bonus bAtkEle,Ele_Holy; }
-1245,Cinquedia,Cinquedia,4,40000,,700,110,,1,1,8388609,7,2,2,3,30,1,1,{}
-1246,Cinquedia_,Cinquedia,4,40000,,700,110,,1,2,8388609,7,2,2,3,30,1,1,{}
+1245,Cinquedea,Cinquedea,4,40000,,700,110,,1,1,8388609,7,2,2,3,30,1,1,{}
+1246,Cinquedea_,Cinquedea,4,40000,,700,110,,1,2,8388609,7,2,2,3,30,1,1,{}
 1247,Kindle_Dagger,Kindle Dagger,4,,5000,600,39,,1,0,77553391,7,2,2,1,0,1,1,{ bonus bAtkEle,Ele_Fire; }
 1248,Obsidian_Dagger,Obsidian Dagger,4,,5000,600,39,,1,0,77553391,7,2,2,1,0,1,1,{ bonus bAtkEle,Ele_Earth; }
 1249,Fisherman's_Dagger,Fisherman's Dagger,4,,5000,600,39,,1,0,77553391,7,2,2,1,0,1,1,{ bonus bAtkEle,Ele_Water; }
@@ -1064,7 +1064,7 @@
 2517,Vali's_Manteau,Vali's Manteau,5,,10,600,,4,,0,119529470,7,2,4,,65,1,0,{ bonus2 bSubEle,Ele_Neutral,15; }
 2518,Morpheus's_Shawl,Morpheus's Shawl,5,,10,600,,3,,0,119529470,7,2,4,,33,1,0,{ bonus bMaxSPrate,10; bonus bMdef,3; }
 2519,Morrigane's_Manteau,Morrigane's Manteau,5,,10,600,,3,,0,119529470,7,2,4,,61,1,0,{ bonus bLuk,2; bonus bFlee2,8; }
-2520,Goibne's_Shoulders,Goibne's Shoulders,5,,10,700,,3,,0,119529470,7,2,4,,54,1,0,{ bonus bLongAtkDef,10; bonus bMdef,2; }
+2520,Goibne's_Spaulders,Goibne's Spaulders,5,,10,700,,3,,0,119529470,7,2,4,,54,1,0,{ bonus bLongAtkDef,10; bonus bMdef,2; }
 2521,Angelic_Cardigan,Angelic Cardigan,5,,10,400,,2,,0,8388609,7,2,4,,20,1,0,{ bonus bHPrecovRate,5; }
 2522,Undershirt,Undershirt,5,,10,150,,2,,0,532676607,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)==0) end; bonus bAgi,5; bonus bFlee,10; }
 2523,Undershirt_,Undershirt,5,,10,150,,2,,1,532676607,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)==0) end; bonus bAgi,5; bonus bFlee,10; }
@@ -1977,7 +1977,7 @@
 7357,Crest_Piece_,Crest Piece,3,,2500,10,,,,,,,,,,,,,{}
 7358,Crest_Piece__,Crest Piece,3,,2500,10,,,,,,,,,,,,,{}
 7359,Crest_Piece___,Crest Piece,3,,2500,10,,,,,,,,,,,,,{}
-7360,RO_Festival_Invitation_Ticket,RO Festival Invitation Ticket,3,,10,10,,,,,,,,,,,,,{}
+7360,RO_Festival_Invitation,RO Festival Invitation,3,,10,10,,,,,,,,,,,,,{}
 7361,Number_01_Ball,Number 01 Ball,3,,10,10,,,,,,,,,,,,,{}
 7362,Number_02_Ball,Number 02 Ball,3,,10,10,,,,,,,,,,,,,{}
 7363,Number_03_Ball,Number 03 Ball,3,,10,10,,,,,,,,,,,,,{}

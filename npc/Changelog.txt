@@ -26,7 +26,9 @@ Nexon
 == Changelog ==
 
 Date		Added
+======
 04/02
+	* Moved the spawn update to eamobs (of course the custom spawns where not changed... much :P) [Poki#3]
 	* Fixed sage script? [Vicious]
 	* Fixed more of wrong female thief bug spawn [Vicious]
 	* Umbala Bungee Jump - Warps you to Niff with 1HP no watter what [Lance] 
