@@ -2294,9 +2294,9 @@ int map_eraseipport(unsigned short mapindex,unsigned long ip,int port)
  * 水場高さ設定
  *------------------------------------------
  */
-static struct waterlist_ {
-	char mapname[MAP_NAME_LENGTH], clonemapname[MAP_NAME_LENGTH];
-} *waterlist=NULL;
+//static struct waterlist_ {
+//	char mapname[MAP_NAME_LENGTH], clonemapname[MAP_NAME_LENGTH];
+//} *waterlist=NULL;
 
 #define NO_WATER 1000000
 
@@ -2354,14 +2354,16 @@ int map_waterheight(char *mapname) {
 	int wh;
 
 	//Look up for clone map.
-	if(waterlist){
-		int i;
-		for(i=0;waterlist[i].mapname[0] && i < MAX_MAP_PER_SERVER;i++)
-			if(strcmp(waterlist[i].mapname,mapname)==0)
-				return map_waterheight(waterlist[i].clonemapname);
-	}
+	//if(waterlist){
+	//	int i;
+	//	for(i=0;waterlist[i].mapname[0] && i < MAX_MAP_PER_SERVER;i++)
+	//		if(strcmp(waterlist[i].mapname,mapname)==0)
+	//			return map_waterheight(waterlist[i].clonemapname);
+	//}
 	//Look up for the rsw
 	sprintf(fn,"data\\%s",mapname);
+
+	strcpy(fn,grfio_find_file(fn));
 	
 	rsw = strstr(fn, ".");
 	if (rsw && strstr(fn, ".rsw") == NULL)
@@ -2380,30 +2382,30 @@ int map_waterheight(char *mapname) {
 	return NO_WATER;
 }
 
-static void map_readwater(char *watertxt) {
-	char line[1024],w1[1024],w2[1024];
-	FILE *fp=NULL;
-	int n=0;
-
-	fp=fopen(watertxt,"r");
-	if(fp==NULL){
-		ShowError("file not found: %s\n",watertxt);
-		return;
-	}
-	if(waterlist==NULL)
-		waterlist = (struct waterlist_*)aCallocA(MAX_MAP_PER_SERVER,sizeof(*waterlist));
-	while(fgets(line,1020,fp) && n < MAX_MAP_PER_SERVER){
-		if(line[0] == '/' && line[1] == '/')
-			continue;
-		if(sscanf(line,"%s %s",w1,w2) < 2){
-			continue;
-		}
-		memcpy(waterlist[n].mapname,w1, MAP_NAME_LENGTH-1);
-		memcpy(waterlist[n].clonemapname, w2, MAP_NAME_LENGTH-1);
-		n++;
-	}
-	fclose(fp);
-}
+//static void map_readwater(char *watertxt) {
+//	char line[1024],w1[1024],w2[1024];
+//	FILE *fp=NULL;
+//	int n=0;
+//
+//	fp=fopen(watertxt,"r");
+//	if(fp==NULL){
+//		ShowError("file not found: %s\n",watertxt);
+//		return;
+//	}
+//	if(waterlist==NULL)
+//		waterlist = (struct waterlist_*)aCallocA(MAX_MAP_PER_SERVER,sizeof(*waterlist));
+//	while(fgets(line,1020,fp) && n < MAX_MAP_PER_SERVER){
+//		if(line[0] == '/' && line[1] == '/')
+//			continue;
+//		if(sscanf(line,"%s %s",w1,w2) < 2){
+//			continue;
+//		}
+//		memcpy(waterlist[n].mapname,w1, MAP_NAME_LENGTH-1);
+//		memcpy(waterlist[n].clonemapname, w2, MAP_NAME_LENGTH-1);
+//		n++;
+//	}
+//	fclose(fp);
+//}
 /*==========================================
 * マップキャッシュに追加する
 *===========================================*/
@@ -3126,7 +3128,7 @@ int map_readallmaps (void)
 	}
 
 	// finished map loading
-	aFree(waterlist);
+	//aFree(waterlist);
 	printf("\r");
 	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps.%30s\n",map_num,"");
 
@@ -3286,8 +3288,8 @@ int map_config_read(char *cfgName) {
 			} else if (strcmpi(w1, "map_port") == 0) {
 				clif_setport(atoi(w2));
 				map_port = (atoi(w2));
-			} else if (strcmpi(w1, "water_height") == 0) {
-				map_readwater(w2);
+			//} else if (strcmpi(w1, "water_height") == 0) {
+			//	map_readwater(w2);
 			} else if (strcmpi(w1, "map") == 0) {
 				map_addmap(w2);
 			} else if (strcmpi(w1, "delmap") == 0) {

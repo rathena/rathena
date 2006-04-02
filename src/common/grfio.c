@@ -66,6 +66,7 @@ typedef struct {
 	int	cycle;
 	char	type;
 	char	fn[128-4*5];		// file name
+	char	*fnd;
 	char	gentry;				// read grf file select
 } FILELIST;
 //gentry ... 0    : It acquires from a local file.
@@ -76,7 +77,7 @@ typedef struct {
 
 //Since char defines *FILELIST.gentry, the maximum which can be added by grfio_add becomes by 127 pieces.
 
-#define	GENTRY_LIMIT	127
+#define	GENTRY_LIMIT	512
 #define	FILELIST_LIMIT	1048576	// temporary maximum, and a theory top maximum are 2G.
 
 static FILELIST *filelist		= NULL;
@@ -454,6 +455,10 @@ static FILELIST *filelist_find(char *fname)
 	return (hash >= 0) ? &filelist[hash] : NULL;
 }
 
+char *grfio_find_file(char *fname){
+	return ((filelist_find(fname)->fnd == NULL)? filelist_find(fname)->fn: filelist_find(fname)->fnd);
+}
+
 /*==========================================
  *	File List : Filelist add
  *------------------------------------------
@@ -540,6 +545,7 @@ int grfio_size(char *fname)
 
 		if (stat(lfname, &st) == 0) {
 			strncpy(lentry.fn, fname, sizeof(lentry.fn) - 1);
+			lentry.fnd = NULL;
 			lentry.declen = st.st_size;
 			lentry.gentry = 0;	// 0:LocalFile
 			entry = filelist_modify(&lentry);
@@ -586,6 +592,7 @@ void* grfio_reads(char *fname, int *size)
 			fread(buf2, 1, lentry.declen, in);
 			fclose(in);
 			strncpy(lentry.fn, fname, sizeof(lentry.fn) - 1);
+			lentry.fnd = NULL;
 			lentry.gentry = 0;	// 0:LocalFile
 			entry = filelist_modify(&lentry);
 		} else {
@@ -733,6 +740,7 @@ static int grfio_entryread(char *gfname,int gentry)
 				aentry.cycle          = srccount;
 				aentry.type           = type;
 				strncpy(aentry.fn, fname,sizeof(aentry.fn)-1);
+				aentry.fnd			  = NULL;
 #ifdef	GRFIO_LOCAL
 				aentry.gentry         = -(gentry+1);	// As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
@@ -811,6 +819,7 @@ static int grfio_entryread(char *gfname,int gentry)
 				aentry.cycle          = srccount;
 				aentry.type           = type;
 				strncpy(aentry.fn,fname,sizeof(aentry.fn)-1);
+				aentry.fnd			  = NULL;
 #ifdef	GRFIO_LOCAL
 				aentry.gentry         = -(gentry+1);	// As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
@@ -865,6 +874,7 @@ static void grfio_resourcecheck(void)
 					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
+					fentry.fnd = grfio_alloc_ptr(w2);
 					filelist_modify(&fentry);
 					i++;
 				}
@@ -893,6 +903,7 @@ static void grfio_resourcecheck(void)
 					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
+					fentry.fnd = grfio_alloc_ptr(w2);
 					filelist_modify(&fentry);
 					i++;
 				}
@@ -917,6 +928,13 @@ static void grfio_resourcecheck(void)
 
 static int grfio_add(char *fname)
 {
+	grfio_alloc_ptr(fname);
+
+	return grfio_entryread(fname, gentry_entrys - 1);
+}
+
+static char *grfio_alloc_ptr(char *fname)
+{
 	int len;
 	char *buf;
 
@@ -935,7 +953,7 @@ static int grfio_add(char *fname)
 	strcpy(buf, fname);
 	gentry_table[gentry_entrys++] = buf;
 
-	return grfio_entryread(fname, gentry_entrys - 1);
+	return buf;
 }
 
 /*==========================================
@@ -946,6 +964,7 @@ void grfio_final(void)
 {
 	if (filelist != NULL)
 		aFree(filelist);
+
 	filelist_entrys = filelist_maxentry = 0;
 
 	if (gentry_table != NULL) {

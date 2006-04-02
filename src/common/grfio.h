@@ -7,6 +7,8 @@
 void grfio_init(char*);			// GRFIO Initialize
 void grfio_final(void);			// GRFIO Finalize
 void* grfio_reads(char*,int*);	// GRFIO data file read & size get
+char *grfio_find_file(char *fname);
+char *grfio_alloc_ptr(char *fname);
 
 #define grfio_read(fn) grfio_reads(fn, NULL)
 
