@@ -3088,7 +3088,7 @@ int parse_login(int fd) {
                                 WFIFOHEAD(fd, 23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
-				WFIFOSET(fd,3);
+				WFIFOSET(fd,23);
 				RFIFOSKIP(fd,(RFIFOW(fd,0) == 0x64) ? 55 : 47);
 				break;
 			}
