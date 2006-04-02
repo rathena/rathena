@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 04/02
+	* Fixed sage script? [Vicious]
+	* Fixed more of wrong female thief bug spawn [Vicious]
 	* Umbala Bungee Jump - Warps you to Niff with 1HP no watter what [Lance] 
 03/30
 	* Fixed refiner full price display, thanks to S4Sly [Vicious]

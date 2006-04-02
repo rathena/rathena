@@ -1956,9 +1956,9 @@ OnReset:
 OnKilled:
 	set $@jobsage_m,$@jobsage_m-1;
 	if( $@jobsage_m > 0 )goto L_NotWin;
-	if(getnpctimer(1,"jobsage_1st") < 60000 ) set sagecheck,sagecheck+1;
-	if((getnpctimer(1,"jobsage_1st") >= 120000 ) && (getnpctimer(1,"jobsage_1st") <= 170000 )) set sagecheck,sagecheck-1;
-	if(getnpctimer(1,"jobsage_1st") > 170000 ) set sagecheck,sagecheck-2;
+	if(getnpctimer(0) < 60000 ) set sagecheck,sagecheck+1;
+	if((getnpctimer(0) >= 120000 ) && (getnpctimer(0) <= 170000 )) set sagecheck,sagecheck-1;
+	if(getnpctimer(0) > 170000 ) set sagecheck,sagecheck-2;
 		stopnpctimer;
 		mapannounce "job_sage.gat","Examiner: " + $@jobsage_pname$ + " killed all the monsters!",8;
 		donpcevent "jobsage_2nd::OnStart";
@@ -2047,9 +2047,9 @@ OnKilled:
 	set $@jobsage_m,$@jobsage_m-1;
 	if( $@jobsage_m > 0 )goto L_NotWin;
 		stopnpctimer;
-		if(getnpctimer(1,"jobsage_2nd") < 60000 ) set sagecheck,sagecheck+1;
-		if((getnpctimer(1,"jobsage_2nd") >= 120000 ) && (getnpctimer(1,"jobsage_2nd") <= 170000 )) set sagecheck,sagecheck-1;
-		if(getnpctimer(1,"jobsage_2nd") > 170000 ) set sagecheck,sagecheck-2;
+		if(getnpctimer(0) < 60000 ) set sagecheck,sagecheck+1;
+		if((getnpctimer(0) >= 120000 ) && (getnpctimer(0) <= 170000 )) set sagecheck,sagecheck-1;
+		if(getnpctimer(0) > 170000 ) set sagecheck,sagecheck-2;
 		mapannounce "job_sage.gat","Examiner: " + $@jobsage_pname$ + " killed all the monsters!",8;
 		donpcevent "jobsage_3rd::OnStart";
 	L_NotWin:
@@ -2117,9 +2117,9 @@ OnKilled:
 		stopnpctimer;
 		killmonster "job_sage.gat","All";
 		set SAGE_Q,7;
-		if(getnpctimer(1,"jobsage_3rd") < 20000 ) set sagecheck,sagecheck+1;
-		if((getnpctimer(1,"jobsage_3rd") >= 30000 ) && (getnpctimer(1,"jobsage_2nd") <= 50000 )) set sagecheck,sagecheck-1;
-		if(getnpctimer(1,"jobsage_3rd") > 50000 ) set sagecheck,sagecheck-2;
+		if(getnpctimer(0) < 20000 ) set sagecheck,sagecheck+1;
+		if((getnpctimer(0) >= 30000 ) && (getnpctimer(0) <= 50000 )) set sagecheck,sagecheck-1;
+		if(getnpctimer(0) > 50000 ) set sagecheck,sagecheck-2;
 		mapannounce "job_sage.gat","Examiner: Congratulations. " + $@jobsage_pname$ + "passed the test!",8;
 		donpcevent "jobsage_success::OnSuccess";
 	L_NotWin:

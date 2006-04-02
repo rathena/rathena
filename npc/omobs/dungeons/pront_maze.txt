@@ -39,7 +39,7 @@ prt_maze01.gat,179,140,21,21	monster	Mantis	1139,3,120000,40000,1
 prt_maze01.gat,99,140,21,21	monster	Side Winder	1037,3,120000,40000,1
 prt_maze01.gat,139,100,21,21	monster	Argos	1100,3,120000,40000,1
 prt_maze01.gat,179,100,21,21	monster	Argiope	1099,3,120000,40000,1
-prt_maze01.gat,19,180,21,21	monster	Savage Babe	1067,3,120000,40000,1
+prt_maze01.gat,19,180,21,21	monster	Savage Babe	1167,3,120000,40000,1
 prt_maze01.gat,59,140,21,21	monster	Choco	1214,2,120000,40000,1
 prt_maze01.gat,99,20,21,21	monster	Creamy	1018,1,120000,40000,1
 prt_maze01.gat,0,0,0,0	monster	White Plant	1082,5,180000,90000,1
