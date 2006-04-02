@@ -1235,26 +1235,45 @@ int clif_spawn(struct block_list *bl)
 	vd = status_get_viewdata(bl);
 	if (!vd || vd->class_ == INVISIBLE_CLASS)
 		return 0;
-	clif_set0078(bl, vd, buf);
 
+	if (pcdb_checkid(vd->class_))
+	{	//Player spawn packet.
+		clif_set0078(bl, vd, buf);
 #if PACKETVER > 3
-	if (WBUFW(buf,0)==0x78) {
-		WBUFW(buf, 0) = 0x79;
-		WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
-		clif_send(buf, packet_len_table[0x79], bl, AREA_WOS);
-		if (disguised(bl))
-			clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x79], 0);
-	} else {
+		if (WBUFW(buf,0)==0x78) {
+			WBUFW(buf, 0) = 0x79;
+			WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
+			clif_send(buf, packet_len_table[0x79], bl, AREA_WOS);
+			if (disguised(bl))
+				clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x79], 0);
+		} else {
 #endif
-		WBUFW(buf, 0) = 0x1d9;
-		WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
-		clif_send(buf, packet_len_table[0x1d9], bl, AREA_WOS);
-		if (disguised(bl))
-			clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x1d9], 0);
+			WBUFW(buf, 0) = 0x1d9;
+			WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
+			clif_send(buf, packet_len_table[0x1d9], bl, AREA_WOS);
+			if (disguised(bl))
+				clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x1d9], 0);
 #if PACKETVER > 3
+		}
+#endif
+
+	} else {	//Mob spawn packet.
+		struct status_change *sc = status_get_sc(bl);
+		WBUFW(buf,0)=0x7c;
+		WBUFL(buf,2)=bl->id;
+		WBUFW(buf,6)=status_get_speed(bl);
+		WBUFW(buf,8)=sc?sc->opt1:0;
+		WBUFW(buf,10)=sc?sc->opt2:0;
+		WBUFW(buf,12)=sc?sc->option:0;
+		WBUFW(buf,20)=vd->class_;
+		WBUFPOS(buf,36,bl->x,bl->y);
+		clif_send(buf,packet_len_table[0x7c],bl,AREA_WOS);
+		if (disguised(bl)) {
+			WBUFL(buf,2)=-bl->id;
+			clif_send(buf,packet_len_table[0x7c],bl,SELF);
+		}
 	}
-#endif
-
+	
 	if (vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
 		
@@ -3906,6 +3925,7 @@ int clif_01ac(struct block_list *bl)
 int clif_outsight(struct block_list *bl,va_list ap)
 {
 	struct block_list *tbl;
+	struct view_data *vd;
 	TBL_PC *sd, *tsd;
 	tbl=va_arg(ap,struct block_list*);
 	if(bl == tbl) return 0;
@@ -3916,7 +3936,8 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	{	//tsd has lost sight of the bl object.
 		switch(bl->type){
 		case BL_PC:
-			clif_clearchar_id(bl->id,0,tsd->fd);
+			if (((TBL_PC*)bl)->vd.class_ != INVISIBLE_CLASS)
+				clif_clearchar_id(bl->id,0,tsd->fd);
 			if(sd->chatID){
 				struct chat_data *cd;
 				cd=(struct chat_data*)map_id2bl(sd->chatID);
@@ -3933,14 +3954,14 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			clif_clearchar_skillunit((struct skill_unit *)bl,tsd->fd);
 			break;
 		default:
-			if (status_get_viewdata(bl))
+			if ((vd=status_get_viewdata(bl)) && vd->class_ != INVISIBLE_CLASS)
 				clif_clearchar_id(bl->id,0,tsd->fd);
 			break;
 		}
 	}
 	if (sd && sd->fd)
 	{	//sd is watching tbl go out of view.
-		if (status_get_viewdata(tbl))
+		if ((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS)
 			clif_clearchar_id(tbl->id,0,sd->fd);
 	}
 	return 0;
