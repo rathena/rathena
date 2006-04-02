@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/02
+	* Changed arrows View ID to 22 since daggers were already View ID 1.
+	  The server was looking for daggers to be in your arrow slot.  [Reddozen]
 	* Loading waterheight aliases from resnametable.txt. [Lance]
 	* Workround the warnings for clif.c (what to do? the original codes are ugly.. passing
 	  values as pointers omgwtfbbq). [Lance]
