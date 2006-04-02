@@ -3,7 +3,7 @@
 //===== By: =========================
 //= eAthena Dev Team
 //===== Current Version: ===================
-//= 2.6
+//= 2.7c
 //===== Compatible With: =====================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -25,6 +25,7 @@
 //= 2.6 Added the Einbech Kafra [MasterOfMuppets]
 //= 2.7 Added the Lighthalzen Kafras [MasterOfMuppets]
 //= 2.7b Chanced the Sprite of the Einbech Kafra. [Poki#3]
+//= 2.7c Added missing kafra in Lighthalzen, thanks to Muad_Dib [Vicious]
 //==========================================================================
 
 // Amatsu ------------------------------------------------------------------
@@ -94,6 +95,16 @@ gonryun.gat,159,122,4	script	Kafra	116,{
 //Outside the hotel
 lighthalzen.gat,164,100,3	script	Kafra	860,{
 	cutin "kafra_08",2;
+	callfunc "F_Kafra",0,4,1;
+
+	M_Save:
+		savepoint "lighthalzen.gat",162,82;
+		callfunc "F_KafEnd",0,1;
+}
+
+// Entrance
+lighthalzen.gat,191,320,4	script	Kafra	861,{
+	cutin "kafra_09",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
