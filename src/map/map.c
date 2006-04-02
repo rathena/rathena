@@ -3588,10 +3588,9 @@ int log_sql_init(void){
 
 int map_db_final(DBKey k,void *d,va_list ap)
 {
-	// Not needed actually, these are already freed. [Lance]
-	//struct map_data_other_server *mdos = (struct map_data_other_server*)d;
-	//if(mdos->gat == NULL)
-	//	aFree(mdos);
+	struct map_data_other_server *mdos = (struct map_data_other_server*)d;
+	if(mdos && mdos->gat == NULL)
+		aFree(mdos);
 	return 0;
 }
 int nick_db_final(void *k,void *d,va_list ap)
