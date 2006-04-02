@@ -1908,7 +1908,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			if (ud && ud->skilltarget == bl->id)
 				clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, type);
 			else
-				clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, type);
+				clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
+			break;
 		}
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
 		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);

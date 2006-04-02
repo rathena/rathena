@@ -1532,6 +1532,7 @@ static struct delay_item_drop* mob_setdropitem(int nameid, int qty, int m, int x
 	struct map_session_data* first_sd, struct map_session_data* second_sd, struct map_session_data* third_sd)
 {
 	struct delay_item_drop *drop = ers_alloc(delay_drop_ers, struct delay_item_drop);
+	memset(&drop->item_data, 0, sizeof(struct item));
 	drop->item_data.nameid = nameid;
 	drop->item_data.amount = qty;
 	drop->item_data.identify = !itemdb_isequip3(nameid);
