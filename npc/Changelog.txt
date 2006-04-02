@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/02
+	* Fixed baby job change, thanks to Larry [Vicious]
 	* Moved the spawn update to eamobs (of course the custom spawns where not changed... much :P) [Poki#3]
 	* Fixed sage script? [Vicious]
 	* Fixed more of wrong female thief bug spawn [Vicious]
