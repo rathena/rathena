@@ -7152,6 +7152,7 @@ static int skill_unit_onleft(int skill_id, struct block_list *bl,unsigned int ti
 				status_change_end(bl, type, -1);
 			break;
 
+		case BD_LULLABY:
 		case BD_RICHMANKIM:
 		case BD_ETERNALCHAOS:
 		case BD_DRUMBATTLEFIELD:

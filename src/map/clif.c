@@ -1122,14 +1122,13 @@ int clif_class_change(struct block_list *bl,int class_,int type)
  *
  *------------------------------------------
  */
-static int clif_set01e1(struct map_session_data *sd, unsigned char *buf) {
-	nullpo_retr(0, sd);
-
-	WBUFW(buf,0)=0x1e1;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=sd->spiritball;
-
-	return packet_len_table[0x1e1];
+static void clif_spiritball_single(int fd, struct map_session_data *sd)
+{
+	WFIFOHEAD(fd, packet_len_table[0x1e1]);
+	WFIFOW(fd,0)=0x1e1;
+	WFIFOL(fd,2)=sd->bl.id;
+	WFIFOW(fd,6)=sd->spiritball;
+	WFIFOSET(fd, packet_len_table[0x1e1]);
 }
 
 /*==========================================
@@ -1146,6 +1145,55 @@ static int clif_set0192(int fd, int m, int x, int y, int type) {
 	WFIFOSET(fd,packet_len_table[0x192]);
 
 	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+static void clif_weather_check(struct map_session_data *sd) {
+	int m = sd->bl.m, fd = sd->fd;
+	
+	if (map[m].flag.snow
+		|| map[m].flag.clouds
+		|| map[m].flag.fog
+		|| map[m].flag.fireworks
+		|| map[m].flag.sakura
+		|| map[m].flag.leaves
+		|| map[m].flag.rain
+		|| map[m].flag.clouds2)
+	{
+		WFIFOHEAD(fd, packet_len_table[0x7c]);
+		WFIFOW(fd,0)=0x7c;
+		WFIFOL(fd,2)=-10;
+		WFIFOW(fd,6)=0;
+		WFIFOW(fd,8)=0;
+		WFIFOW(fd,10)=0;
+		WFIFOW(fd,12)=OPTION_INVISIBLE;
+		WFIFOW(fd,20)=100;
+		WFIFOPOS(fd,36,sd->bl.x,sd->bl.y);
+		WFIFOSET(fd,packet_len_table[0x7c]);
+
+		if (map[m].flag.snow)
+			clif_weather_sub(fd, 162);
+		if (map[m].flag.clouds)
+			clif_weather_sub(fd, 233);
+		if (map[m].flag.clouds2)
+			clif_weather_sub(fd, 516);
+		if (map[m].flag.fog)
+			clif_weather_sub(fd, 515);
+		if (map[m].flag.fireworks) {
+			clif_weather_sub(fd, 297);
+			clif_weather_sub(fd, 299);
+			clif_weather_sub(fd, 301);
+		}
+		if (map[m].flag.sakura)
+			clif_weather_sub(fd, 163);
+		if (map[m].flag.leaves)
+			clif_weather_sub(fd, 333);
+		if (map[m].flag.rain)
+			clif_weather_sub(fd, 161);
+	}
 }
 
 // new and improved weather display [Valaris]
@@ -1172,123 +1220,10 @@ int clif_weather(int m) {
 			WFIFOB(sd->fd,6) = 0;
 			WFIFOSET(sd->fd,packet_len_table[0x80]);
 
-			if (map[sd->bl.m].flag.snow
-					|| map[sd->bl.m].flag.clouds
-					|| map[sd->bl.m].flag.fog
-					|| map[sd->bl.m].flag.fireworks
-					|| map[sd->bl.m].flag.sakura
-					|| map[sd->bl.m].flag.leaves
-					|| map[sd->bl.m].flag.rain
-					|| map[sd->bl.m].flag.clouds2
-				) {
-				WFIFOHEAD(sd->fd, packet_len_table[0x7c]);
-				WFIFOW(sd->fd,0)=0x7c;
-				WFIFOL(sd->fd,2)=-10;
-				WFIFOW(sd->fd,6)=0;
-				WFIFOW(sd->fd,8)=0;
-				WFIFOW(sd->fd,10)=0;
-				WFIFOW(sd->fd,12)=OPTION_INVISIBLE;
-				WFIFOW(sd->fd,20)=100;
-				WFIFOPOS(sd->fd,36,sd->bl.x,sd->bl.y);
-				WFIFOSET(sd->fd,packet_len_table[0x7c]);
-
-				if (map[sd->bl.m].flag.snow)
-					clif_weather_sub(sd->fd, 162);
-				if (map[sd->bl.m].flag.clouds)
-					clif_weather_sub(sd->fd, 233);
-				if (map[sd->bl.m].flag.clouds2)
-					clif_weather_sub(sd->fd, 516);
-				if (map[sd->bl.m].flag.fog)
-					clif_weather_sub(sd->fd, 515);
-				if (map[sd->bl.m].flag.fireworks) {
-					clif_weather_sub(sd->fd, 297);
-					clif_weather_sub(sd->fd, 299);
-					clif_weather_sub(sd->fd, 301);
-				}
-				if (map[sd->bl.m].flag.sakura)
-					clif_weather_sub(sd->fd, 163);
-				if (map[sd->bl.m].flag.leaves)
-					clif_weather_sub(sd->fd, 333);
-				if (map[sd->bl.m].flag.rain)
-					clif_weather_sub(sd->fd, 161);
-			}
+			clif_weather_check(sd);
 		}
 	}
 
-	return 0;
-}
-
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_spawnpc(struct map_session_data *sd) {
-
-	if (sd->spiritball > 0)
-		clif_spiritball(sd);
- 
-	//Why most it be forced? Doesn't the client ever requests it?
-	//This sounds like more bandwidth wasted than necessary... [Skotlex]
-	if (sd->status.guild_id > 0)
-	{	// force display of guild emblem [Valaris]
-		struct guild *g = guild_search(sd->status.guild_id);
-		if (g) clif_guild_emblem(sd,g);
-	}
-
-	if (map[sd->bl.m].flag.snow
-		|| map[sd->bl.m].flag.clouds
-		|| map[sd->bl.m].flag.fog
-		|| map[sd->bl.m].flag.fireworks
-		|| map[sd->bl.m].flag.sakura
-		|| map[sd->bl.m].flag.leaves
-		|| map[sd->bl.m].flag.rain
-		|| map[sd->bl.m].flag.clouds2)
-	{
-		WFIFOHEAD(sd->fd, packet_len_table[0x7c]);
-		WFIFOW(sd->fd,0)=0x7c;
-		WFIFOL(sd->fd,2)=-10;
-		WFIFOW(sd->fd,6)=0;
-		WFIFOW(sd->fd,8)=0;
-		WFIFOW(sd->fd,10)=0;
-		WFIFOW(sd->fd,12)=OPTION_INVISIBLE;
-		WFIFOW(sd->fd,20)=100;
-		WFIFOPOS(sd->fd,36,sd->bl.x,sd->bl.y);
-		WFIFOSET(sd->fd,packet_len_table[0x7c]);
-
-		if (map[sd->bl.m].flag.snow)
-			clif_weather_sub(sd->fd, 162);
-		if (map[sd->bl.m].flag.clouds)
-			clif_weather_sub(sd->fd, 233);
-		if (map[sd->bl.m].flag.clouds2)
-			clif_weather_sub(sd->fd, 516);
-		if (map[sd->bl.m].flag.fog)
-			clif_weather_sub(sd->fd, 515);
-		if (map[sd->bl.m].flag.fireworks) {
-			clif_weather_sub(sd->fd, 297);
-			clif_weather_sub(sd->fd, 299);
-			clif_weather_sub(sd->fd, 301);
-		}
-		if (map[sd->bl.m].flag.sakura)
-			clif_weather_sub(sd->fd, 163);
-		if (map[sd->bl.m].flag.leaves)
-			clif_weather_sub(sd->fd, 333);
-		if (map[sd->bl.m].flag.rain)
-			clif_weather_sub(sd->fd, 161);
-	}
-
-	//New 'night' effect by dynamix [Skotlex]
-	if (night_flag && map[sd->bl.m].flag.nightenabled)
-	{	//Display night.
-		if (sd->state.night) //It must be resent because otherwise players get this annoying aura...
-			clif_status_load(&sd->bl, SI_NIGHT, 0);
-		else
-			sd->state.night = 1;
-		clif_status_load(&sd->bl, SI_NIGHT, 1);
-	} else if (sd->state.night) { //Clear night display.
-		clif_status_load(&sd->bl, SI_NIGHT, 0);
-		sd->state.night = 0;
-	}
 	return 0;
 }
 
@@ -1328,7 +1263,8 @@ int clif_spawn(struct block_list *bl)
 	case BL_PC:
 		{
 			TBL_PC *sd = ((TBL_PC*)bl);
-			clif_spawnpc(sd);
+			if (sd->spiritball > 0)
+				clif_spiritball(sd);
 			if(sd->state.size==2) // tiny/big players [Valaris]
 				clif_specialeffect(bl,423,0);
 			else if(sd->state.size==1)
@@ -3611,11 +3547,8 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 	if(dstsd->vender_id)
 		clif_showvendingboard(&dstsd->bl,dstsd->message,sd->fd);
 
-	if(dstsd->spiritball > 0) {
-      WFIFOHEAD(sd->fd, packet_len_table[0x1e1]);
-		clif_set01e1(dstsd,WFIFOP(sd->fd,0));
-		WFIFOSET(sd->fd,packet_len_table[0x1e1]);
-	}
+	if(dstsd->spiritball > 0)
+		clif_spiritball_single(sd->fd, dstsd);
 
 	if((sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(battle_config.disp_hpmeter && (len = pc_isGM(sd)) >= battle_config.disp_hpmeter && len >= pc_isGM(dstsd))
@@ -7904,6 +7837,18 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 	return;
 }
 
+static int clif_nighttimer(int tid, unsigned int tick, int id, int data)
+{
+	TBL_PC *sd;
+	sd=map_id2sd(id);
+	if (!sd) return 0;
+
+	//Check if character didn't instant-warped after logging in.
+	if (sd->bl.prev!=NULL)
+ 		clif_status_load(&sd->bl, SI_NIGHT, 1);
+	return 0;
+}
+
 /*==========================================
  * 007d クライアント側マップ読み込み完了
  * map侵入時に必要なデータを全て送りつける
@@ -7960,12 +7905,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->status.party_id)
 	    clif_party_hp(sd);
 
-	// set flag, if it's a duel [LuzZza]
-	if(sd->duel_group) {
-		clif_set0199(fd, 1);
-		//clif_misceffect2(&sd->bl, 159);
-	}
-
 	//[LuzZza]
 	clif_guild_send_onlineinfo(sd);
 
@@ -7982,12 +7921,15 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->pvp_won=0;
 			sd->pvp_lost=0;
 		}
-		clif_set0199(sd->fd,1);
+		clif_set0199(fd,1);
 	} else {
 		sd->pvp_timer=-1;
+		// set flag, if it's a duel [LuzZza]
+		if(sd->duel_group)
+			clif_set0199(fd, 1);
 	}
 	if(map_flag_gvg(sd->bl.m))
-		clif_set0199(sd->fd,3);
+		clif_set0199(fd,3);
 
 	// pet
 	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
@@ -8000,6 +7942,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if(sd->state.connect_new) {
 		sd->state.connect_new = 0;
+		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
+		if (night_flag && map[sd->bl.m].flag.nightenabled)
+			add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
+
 //		if(sd->status.class_ != sd->vd.class_)
 //			clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
 		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 900)
@@ -8011,7 +7957,18 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			if (gc)
 				pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,2);
 			}
-/*						End Addition [Valaris]			*/
+	} else
+	//New 'night' effect by dynamix [Skotlex]
+	if (night_flag && map[sd->bl.m].flag.nightenabled)
+	{	//Display night.
+		if (sd->state.night) //It must be resent because otherwise players get this annoying aura...
+			clif_status_load(&sd->bl, SI_NIGHT, 0);
+		else
+			sd->state.night = 1;
+		clif_status_load(&sd->bl, SI_NIGHT, 1);
+	} else if (sd->state.night) { //Clear night display.
+		sd->state.night = 0;
+		clif_status_load(&sd->bl, SI_NIGHT, 0);
 	}
 
 	// view equipment item
@@ -8054,8 +8011,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
+
+	clif_weather_check(sd);
 	
-	map_foreachinarea(clif_getareachar,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,BL_ALL,sd);
+	map_foreachinarea(clif_getareachar,sd->bl.m,
+		sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,
+		BL_ALL,sd);
 	
 	// For automatic triggering of NPCs after map loading (so you don't need to walk 1 step first)
 	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
@@ -11507,6 +11468,7 @@ int do_init_clif(void) {
 	add_timer_func_list(clif_waitclose, "clif_waitclose");
 	add_timer_func_list(clif_clearchar_delay_sub, "clif_clearchar_delay_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
+	add_timer_func_list(clif_nighttimer, "clif_nighttimer");
 
 	return 0;
 }
