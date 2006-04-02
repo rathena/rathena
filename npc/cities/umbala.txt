@@ -27,7 +27,8 @@
 //= 1.4 - Fixed some wrong item names [Lupus]
 //= 1.5 – Spell Checked [massdriller]
 //= 1.6 - Fixed item names, added a chance to get to Niflheim via Jumping Bungy Area [Lupus]
-//= 1.7 Fixed bugs and exploits [Lupus]
+//= 1.7 - Fixed bugs and exploits [Lupus]
+//= 1.8 - Warps you to Niff with 1HP [Lance]
 //============================================================
 
 
@@ -1663,9 +1664,9 @@ L3:
 	end;
 
 L4:
-//HP99% Damage, warp to Niflheim
+//1 HP left, warp to Niflheim
 	mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : No-o!",8;
-	percentheal -99,0;
+	heal -HP+1,0;
 	warp "nif_in.gat",69,15;
 	end;
 }

@@ -26,6 +26,8 @@ Nexon
 == Changelog ==
 
 Date		Added
+04/02
+	* Umbala Bungee Jump - Warps you to Niff with 1HP no watter what [Lance] 
 03/30
 	* Fixed refiner full price display, thanks to S4Sly [Vicious]
 	* Training ground giving 5 kafra storage/teleport pass [Vicious]
