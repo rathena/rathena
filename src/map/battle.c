@@ -3014,7 +3014,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	{
 		if(tsc->data[SC_AUTOCOUNTER].timer != -1 &&
 			(!sc || sc->data[SC_AUTOCOUNTER].timer == -1) &&
-			status_check_skilluse(target, src, KN_AUTOCOUNTER, 0)
+			status_check_skilluse(target, src, KN_AUTOCOUNTER, 1)
 		)	{
 			int dir = map_calc_dir(target,src->x,src->y);
 			int t_dir = unit_getdir(target);
