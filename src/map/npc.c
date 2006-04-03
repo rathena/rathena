@@ -90,7 +90,7 @@ int npc_enable_sub( struct block_list *bl, va_list ap )
 	if(bl->type == BL_PC && (sd=(struct map_session_data *)bl)){
 		char name[50]; // need 24 + 9 for the "::OnTouch"
 
-		if (nd->flag&1)	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
+		if (nd->sc.option&OPTION_INVISIBLE)	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
 			return 1;
 
 		if(sd->areanpc_id==nd->bl.id)
@@ -110,19 +110,17 @@ int npc_enable(const char *name,int flag)
 		return 0;
 
 	if (flag&1) {	// —LŒø‰»
-		nd->flag&=~1;
-		clif_spawn(&nd->bl);
+		nd->sc.option&=~OPTION_INVISIBLE;
+		clif_changeoption(&nd->bl);
 	}else if (flag&2){
-		nd->flag&=~1;
-		nd->sc.option = 0x0000;
+		nd->sc.option&=~OPTION_HIDE;
 		clif_changeoption(&nd->bl);
 	}else if (flag&4){
-		nd->flag|=1;
-		nd->sc.option = 0x0002;
+		nd->sc.option = OPTION_HIDE;
 		clif_changeoption(&nd->bl);
-	}else{		// –³Œø‰»
-		nd->flag|=1;
-		clif_clearchar(&nd->bl,0);
+	}else{	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
+		nd->sc.option = OPTION_INVISIBLE;
+		clif_changeoption(&nd->bl);
 	}
 	if(flag&3 && (nd->u.scr.xs > 0 || nd->u.scr.ys >0))
 		map_foreachinarea( npc_enable_sub,nd->bl.m,nd->bl.x-nd->u.scr.xs,nd->bl.y-nd->u.scr.ys,nd->bl.x+nd->u.scr.xs,nd->bl.y+nd->u.scr.ys,BL_PC,nd);
@@ -859,7 +857,7 @@ int npc_event (struct map_session_data *sd, const unsigned char *eventname, int 
 		}
 		return 1;
 	}
-	if (nd->flag&1) {	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
+	if (nd->sc.option&OPTION_INVISIBLE) {	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
 		npc_event_dequeue(sd);
 		return 0;
 	}
@@ -909,7 +907,7 @@ int npc_touch_areanpc(struct map_session_data *sd,int m,int x,int y)
 		return 1;
 
 	for(i=0;i<map[m].npc_num;i++) {
-		if (map[m].npc[i]->flag&1) {	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
+		if (map[m].npc[i]->sc.option&OPTION_INVISIBLE) {	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
 			f=0;
 			continue;
 		}
@@ -1034,7 +1032,8 @@ int npc_click(struct map_session_data *sd,int id)
 
 	nd=(struct npc_data *)map_id2bl(id);
 
-	if (nd->flag&1)	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
+	//Disabled npc.
+	if (nd->sc.option&OPTION_INVISIBLE)
 		return 1;
 
 	sd->npc_id=id;
@@ -1093,7 +1092,7 @@ int npc_buysellsel(struct map_session_data *sd,int id,int type)
 		sd->npc_id=0;
 		return 1;
 	}
-	if (nd->flag&1)	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
+	if (nd->sc.option&OPTION_INVISIBLE)	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
 		return 1;
 
 	sd->npc_shopid=id;
@@ -1570,7 +1569,6 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 	nd->bl.x = x;
 	nd->bl.y = y;
 	nd->bl.id = npc_get_new_npc_id();
-	nd->flag = 0;
 	memcpy(nd->name, w3, NAME_LENGTH-1);
 	nd->name[NAME_LENGTH-1] = '\0';
 	nd->class_ = m==-1?-1:atoi(w4);
@@ -1874,7 +1872,6 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	nd->bl.x = x;
 	nd->bl.y = y;
 	nd->bl.id = npc_get_new_npc_id();
-//	nd->flag = 0;
 	nd->class_ = class_;
 	nd->speed = 200;
 	nd->u.scr.script = script;

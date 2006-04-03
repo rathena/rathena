@@ -786,7 +786,6 @@ struct npc_data {
 	unsigned char name[NAME_LENGTH];
 	unsigned char exname[NAME_LENGTH];
 	int chat_id;
-	short flag;
 	unsigned int next_walktime;
 
 	char eventqueue[MAX_EVENTQUEUE][50];
