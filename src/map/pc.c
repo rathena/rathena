@@ -3054,7 +3054,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		if(sd->mapindex){
 			int ip,port;
 			if(map_mapname2ipport(mapindex,&ip,&port)==0){
-				unit_remove_map(&sd->bl,0);
+				unit_remove_map(&sd->bl,3);
 				sd->mapindex = mapindex;
 				sd->bl.x=x;
 				sd->bl.y=y;
@@ -3093,9 +3093,9 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 	}
 
 	if(sd->bl.prev != NULL){
-		unit_remove_map(&sd->bl, 0);
+		unit_remove_map(&sd->bl, 3);
 		if(sd->status.pet_id > 0 && sd->pd)
-			unit_remove_map(&sd->pd->bl, 0);
+			unit_remove_map(&sd->pd->bl, 3);
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
 	}
 		
