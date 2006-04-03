@@ -8070,10 +8070,15 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		if(ammo) { //Skill requires stuff equipped in the arrow slot.
 			if((i=sd->equip_index[10]) < 0 ||
 				!sd->inventory_data[i] ||
-				sd->status.inventory[i].amount < ammo_qty ||
-			  	!(ammo&1<<sd->inventory_data[i]->look)
+				sd->status.inventory[i].amount < ammo_qty
 			) {
 				clif_arrow_fail(sd,0);
+				return 0;
+			}
+			if (!(ammo&1<<sd->inventory_data[i]->look))
+			{	//Ammo type check. Send the "wrong weapon type" message
+				//which is the closest we have to wrong ammo type. [Skotlex]
+				clif_skill_fail(sd,skill,6,0);
 				return 0;
 			}
 		}

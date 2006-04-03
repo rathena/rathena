@@ -3345,9 +3345,9 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				if (!pcdb_checkid(vd->class_)) {
 					pd->vd.hair_style = battle_config.pet_hair_style;
 					if(pd->equip) {
-						pd->vd.shield = itemdb_viewid(pd->equip);
-						if (!pd->vd.shield)
-							pd->vd.shield = pd->equip;
+						pd->vd.head_bottom = itemdb_viewid(pd->equip);
+						if (!pd->vd.head_bottom)
+							pd->vd.head_bottom = pd->equip;
 					}
 				}
 			} else if (battle_config.error_log)

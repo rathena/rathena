@@ -946,7 +946,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 	}
 	WBUFW(buf,14)=vd->class_;
 	WBUFW(buf,16)=vd->hair_style;  //Required for pets.
-	WBUFW(buf,22)=vd->shield;	//Pet armor
+	WBUFW(buf,20)=vd->head_bottom;	//Pet armor
 	if (bl->type == BL_NPC && vd->class_ == 722)
 	{	//The hell, why flags work like this?
 		WBUFL(buf,22)=emblem_id;
@@ -1069,8 +1069,8 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	}
 	WBUFW(buf,14)=vd->class_;
 	WBUFW(buf,16)=vd->hair_style; //For pets
+	WBUFW(buf,20)=vd->head_bottom;	//Pet armor
 	WBUFL(buf,22)=gettick();
-	WBUFW(buf,26)=vd->shield;	//Pet armor
 	WBUFW(buf,36)=unit_getdir(bl);
 	WBUFL(buf,38)=guild_id;
 	WBUFL(buf,42)=emblem_id;

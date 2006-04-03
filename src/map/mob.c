@@ -3459,7 +3459,7 @@ static int mob_readdb_mobavail(void)
 			mob_db_data[class_]->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
 		}
 		else if(str[2] && atoi(str[2]) > 0)
-			mob_db_data[class_]->vd.shield=atoi(str[2]); // mob equipment [Valaris]
+			mob_db_data[class_]->vd.head_bottom=atoi(str[2]); // mob equipment [Valaris]
 
 		ln++;
 	}

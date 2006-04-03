@@ -2622,11 +2622,17 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 
 	//Not equipable by class. [Skotlex]
-	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
+	if (!(
+		(1<<(sd->class_&MAPID_BASEMASK)) &
+		(item->class_base[sd->class_&JOBL_2_1?1:(sd->class_&JOBL_2_2?2:0)])
+	))
 		return 0;
 	
 	//Not usable by upper class. [Skotlex]
-	if(!(1<<((sd->class_&JOBL_UPPER)?1:((sd->class_&JOBL_BABY)?2:0))&item->class_upper))
+	if(!(
+		(1<<(sd->class_&JOBL_UPPER?1:(sd->class_&JOBL_BABY?2:0))) &
+		item->class_upper
+	))
 		return 0;
 
 	//Dead Branch & Bloody Branch & Porings Box
