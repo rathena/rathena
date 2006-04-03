@@ -32,7 +32,7 @@ struct item_data {
 	int wlv;
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
-	unsigned short class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
+	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	unsigned class_upper : 3; //Specifies if the upper-type can equip it (1: normal, 2: upper, 3: baby)
 	unsigned char *script;	// UŒ‚,–hŒä‚Ì‘®«İ’è‚à‚±‚Ì’†‚Å‰Â”\‚©‚È?
 	struct {

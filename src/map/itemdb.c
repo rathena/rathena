@@ -194,7 +194,7 @@ struct item_data* itemdb_exists(int nameid)
  * to the format used by the map server. [Skotlex]
  *------------------------------------------
  */
-static void itemdb_jobid2mapid(unsigned short *bclass, int jobmask)
+static void itemdb_jobid2mapid(unsigned int *bclass, int jobmask)
 {
 	int i;
 	bclass[0]= bclass[1]= bclass[2]= 0;
