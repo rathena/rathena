@@ -852,7 +852,7 @@ static void battle_calc_base_damage(struct block_list *src, struct block_list *t
 		
 		atkmax = status_get_atk(src);
 		if (damage2)
-			atkmax_ = status_get_atk(src);
+			atkmax_ = status_get_atk_(src);
 
 		if (!(flag&1) || (flag&2))
 		{	//Normal attacks
