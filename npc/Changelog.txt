@@ -27,6 +27,10 @@ Nexon
 
 Date		Added
 ======
+04/03
+	* Fixed Treasure Chest bug (They used to disappear on each reboot) [Lupus]
+	- Updated Novices Castles Warper restrictions: TK,High Classes over 89 lvl;
+		Added more buffs restrictions
 04/02
 	* Added missing kafra in Lighthalzen, thanks to Muad_Dib [Vicious]
 	* Fixed baby job change, thanks to Larry [Vicious]

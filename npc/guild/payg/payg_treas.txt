@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -19,9 +19,11 @@
 // Treasure Spawn ----------------------------------------------------------
 payg_cas01.gat,1,1,0	script	Treasure_Py01	-1,{
 OnRecvCastlePy01:
+	end;
+OnInit:
 	if($boxNumPy01 == 0) end;
 	set $@bxPy01, $boxNumPy01;
-//	callfunc "F_GldTreas","payg_cas01","Py01",$boxNumPy01,$@bxPy01,$@boxIdPy01,1344,286,4,295,13,1;
+	callfunc "F_GldTreas","payg_cas01","Py01",$boxNumPy01,$@bxPy01,$@boxIdPy01,1344,286,4,295,13,1;
 	end;
 
 OnDied:
@@ -42,9 +44,11 @@ payg_cas01.gat,295,8,0	script	Switch#TresPy01	111,{
 // Treasure Spawn ----------------------------------------------------------
 payg_cas02.gat,1,1,0	script	Treasure_Py02	-1,{
 OnRecvCastlePy02:
+	end;
+OnInit:
 	if($boxNumPy02 == 0) end;
 	set $@bxPy02, $boxNumPy02;
-//	callfunc "F_GldTreas","payg_cas02","Py02",$boxNumPy02,$@bxPy02,$@boxIdPy02,1346,140,140,148,149,1;
+	callfunc "F_GldTreas","payg_cas02","Py02",$boxNumPy02,$@bxPy02,$@boxIdPy02,1346,140,140,148,149,1;
 	end;
 
 OnDied:
@@ -65,9 +69,11 @@ payg_cas02.gat,149,148,0	script	Switch#TresPy02	111,{
 // Treasure Spawn ----------------------------------------------------------
 payg_cas03.gat,158,168,0	script	Treasure_Py03	-1,{
 OnRecvCastlePy03:
+	end;
+OnInit:
 	if($boxNumPy03 == 0) end;
 	set $@bxPy03, $boxNumPy03;
-//	callfunc "F_GldTreas","payg_cas03","Py03",$boxNumPy03,$@bxPy03,$@boxIdPy03,1348,154,164,162,173,1;
+	callfunc "F_GldTreas","payg_cas03","Py03",$boxNumPy03,$@bxPy03,$@boxIdPy03,1348,154,164,162,173,1;
 	end;
 
 OnDied:
@@ -88,9 +94,11 @@ payg_cas03.gat,163,167,0	script	Switch#TresPy03	111,{
 // Treasure Spawn ----------------------------------------------------------
 payg_cas04.gat,146,48,0	script	Treasure_Py04	-1,{
 OnRecvCastlePy04:
+	end;
+OnInit:
 	if($boxNumPy04 == 0) end;
 	set $@bxPy04, $boxNumPy04;
-//	callfunc "F_GldTreas","payg_cas04","Py04",$boxNumPy04,$@bxPy04,$@boxIdPy04,1350,142,44,151,51,1;
+	callfunc "F_GldTreas","payg_cas04","Py04",$boxNumPy04,$@bxPy04,$@boxIdPy04,1350,142,44,151,51,1;
 	end;
 
 OnDied:
@@ -111,9 +119,11 @@ payg_cas04.gat,151,47,0	script	Switch#TresPy04	111,{
 // Treasure Spawn ----------------------------------------------------------
 payg_cas05.gat,156,131,0	script	Treasure_Py05	-1,{
 OnRecvCastlePy05:
+	end;
+OnInit:
 	if($boxNumPy05 == 0) end;
 	set $@bxPy05, $boxNumPy05;
-//	callfunc "F_GldTreas","payg_cas05","Py05",$boxNumPy05,$@bxPy05,$@boxIdPy05,1352,152,128,160,135,1;
+	callfunc "F_GldTreas","payg_cas05","Py05",$boxNumPy05,$@bxPy05,$@boxIdPy05,1352,152,128,160,135,1;
 	end;
 
 OnDied:
