@@ -125,8 +125,14 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 		target->m == dat->src->m && check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
 	{
 		battle_damage(dat->src, target, dat->damage, dat->flag);
-		if (!status_isdead(target) && (dat->dmg_lv == ATK_DEF || dat->damage > 0) && dat->attack_type)
-			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type, tick);
+		if ((dat->dmg_lv == ATK_DEF || dat->damage > 0) && dat->attack_type)
+		{
+			if (!status_isdead(target))
+				skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type, tick);
+
+			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
+		}
+
 	}
 	ers_free(delay_damage_ers, dat);
 	return 0;
@@ -140,8 +146,13 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 
 	if (!battle_config.delay_battle_damage) {
 		battle_damage(src, target, damage, flag);
-		if (!status_isdead(target) && (damage > 0 || dmg_lv == ATK_DEF) && attack_type)
-			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
+		if ((damage > 0 || dmg_lv == ATK_DEF) && attack_type)
+		{
+			if (!status_isdead(target))
+				skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
+
+			skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
+		}
 		return 0;
 	}
 	dat = ers_alloc(delay_damage_ers, struct delay_damage);
@@ -3068,8 +3079,6 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	battle_delay_damage(tick+wd.amotion, src, target, BF_WEAPON, 0, 0, damage, wd.dmg_lv, 0);
 
-	if (wd.dmg_lv == ATK_DEF || damage > 0) //Added counter effect [Skotlex]
-		skill_counter_additional_effect(src, target, 0, 0, BF_WEAPON, tick);
 	if (!status_isdead(target) && damage > 0) {
 		if (sd) {
 			int boss = status_get_mode(target)&MD_BOSS;

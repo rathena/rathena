@@ -1981,8 +1981,12 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	}
 	if ((skillid || flag) && !(attack_type&BF_WEAPON)) {  // do not really deal damage for ASC_BREAKER's 1st attack
 		battle_damage(src,bl,damage, 0); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
-		if (!status_isdead(bl) && (dmg.dmg_lv == ATK_DEF || damage > 0))
-			skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
+		if (dmg.dmg_lv == ATK_DEF || damage > 0) {
+			if (!status_isdead(bl))
+				skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
+			//Counter status effects [Skotlex] 
+			skill_counter_additional_effect(dsrc,bl,skillid,skilllv,attack_type,tick);
+		}
 	}
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
@@ -2002,9 +2006,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			skill_addtimerskill(src,tick + 800,bl->id,0,0,skillid,skilllv,0,flag);
 	}
 
-	if (dmg.dmg_lv == ATK_DEF || damage > 0) //Counter status effects [Skotlex] 
-		skill_counter_additional_effect(dsrc,bl,skillid,skilllv,attack_type,tick);
-	
 	if(sd && dmg.flag&BF_WEAPON && src != bl && src == dsrc && damage > 0) {
 		int hp = 0,sp = 0;
 		if(sd->right_weapon.hp_drain_rate && sd->right_weapon.hp_drain_per > 0 && dmg.damage > 0 && rand()%1000 < sd->right_weapon.hp_drain_rate) {
