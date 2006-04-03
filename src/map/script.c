@@ -7467,13 +7467,8 @@ int buildin_mapwarp(struct script_state *st)	// Added by RoVeRT
 	int x,y,m;
 	char *str;
 	char *mapname;
-	int x0,y0,x1,y1;
-
+	unsigned int index;
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
-	x0=0;
-	y0=0;
-	x1=map[map_mapname2mapid(mapname)].xs;
-	y1=map[map_mapname2mapid(mapname)].ys;
 	str=conv_str(st,& (st->stack->stack_data[st->start+3]));
 	x=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	y=conv_num(st,& (st->stack->stack_data[st->start+5]));
@@ -7481,8 +7476,10 @@ int buildin_mapwarp(struct script_state *st)	// Added by RoVeRT
 	if( (m=map_mapname2mapid(mapname))< 0)
 		return 0;
 
-	map_foreachinarea(buildin_areawarp_sub,
-		m,x0,y0,x1,y1,BL_PC, map_mapname2mapid(str),x,y );
+	if(!(index=mapindex_name2id(str)))
+		return 0;
+	map_foreachinmap(buildin_areawarp_sub,
+		m,BL_PC,index,x,y);
 	return 0;
 }
 
