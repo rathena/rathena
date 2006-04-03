@@ -3580,6 +3580,7 @@ static const struct battle_data_short {
 	{ "no_spawn_on_player",                &battle_config.no_spawn_on_player	},
 	{ "plant_spawn_delay",                 &battle_config.plant_spawn_delay			},
 	{ "boss_spawn_delay",                  &battle_config.boss_spawn_delay			},
+	{ "slaves_inherit_mode",               &battle_config.slaves_inherit_mode	},
 	{ "slaves_inherit_speed",              &battle_config.slaves_inherit_speed		},
 	{ "summons_inherit_effects",           &battle_config.summons_inherit_effects	},
 	{ "pc_damage_walk_delay_rate",         &battle_config.pc_walk_delay_rate		},
@@ -3961,6 +3962,7 @@ void battle_set_defaults() {
 	battle_config.no_spawn_on_player=0;
 	battle_config.plant_spawn_delay=100;
 	battle_config.boss_spawn_delay=100;
+	battle_config.slaves_inherit_mode=1;
 	battle_config.slaves_inherit_speed=1;
  	battle_config.summons_inherit_effects=1; 
 	battle_config.pc_walk_delay_rate=20;

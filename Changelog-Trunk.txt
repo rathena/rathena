@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/03
+	* Modified Rude-Attacked behaviour so that such skills only triggers when
+	  the rude-attacked count is greater than 3. [Skotlex]
+	* Added config setting slaves_inherit_mode to determine whether slaves take
+	  on their master's aggressive/passive status (defaults to yes) [Skotlex]
 	* Disabled NPCs are now handled through nd->sc.option&OPTION_INVISIBLE
 	  checks. Should fix disable/enablenpc calls not working. [Skotlex]
 	* Moved skill_counter_additional_effect calls to trigger right after

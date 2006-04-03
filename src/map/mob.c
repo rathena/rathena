@@ -2494,7 +2494,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 {
 	struct mob_data *md;
 	struct spawn_data data;
-	int count = 0,k=0;
+	int count = 0,k=0,mode;
 
 	nullpo_retr(0, md2);
 	nullpo_retr(0, value);
@@ -2509,6 +2509,8 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 
 	if(mobdb_checkid(value[0]) == 0)
 		return 0;
+
+	mode = status_get_mode(&md2->bl);
 
 	while(count < 5 && mobdb_checkid(value[count])) count++;
 	if(count < 1) return 0;
@@ -2536,9 +2538,21 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		
 		md= mob_spawn_dataset(&data);
 
-		if (battle_config.slaves_inherit_speed && md2->db->mode&MD_CANMOVE 
+		if (battle_config.slaves_inherit_speed && mode&MD_CANMOVE 
 			&& (skill_id != NPC_METAMORPHOSIS && skill_id != NPC_TRANSFORMATION))
 			md->speed=md2->speed;
+
+		//Inherit the aggressive mode of the master.
+		if (battle_config.slaves_inherit_mode) {
+			md->mode = md->db->mode;
+			if (mode&MD_AGGRESSIVE)
+				md->mode |= MD_AGGRESSIVE;
+			else
+				md->mode &=~MD_AGGRESSIVE;
+			if (md->mode == md->db->mode)
+				md->mode = 0; //No change.
+		}
+		
 		md->special_state.cached= battle_config.dynamic_mobs;	//[Skotlex]
 
 		if (!battle_config.monster_class_change_full_recover &&
@@ -2763,7 +2777,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_SKILLUSED:		// specificated skill used
 					flag = ((event & 0xffff) == MSC_SKILLUSED && ((event >> 16) == c2 || c2 == 0)); break;
 				case MSC_RUDEATTACKED:
-					flag = (!md->attacked_id && md->attacked_count > 0);
+					flag = (md->attacked_count >= 3);
 					if (flag) md->attacked_count = 0;	//Rude attacked count should be reset after the skill condition is met. Thanks to Komurka [Skotlex]
 					break;
 				case MSC_MASTERHPLTMAXRATE:
