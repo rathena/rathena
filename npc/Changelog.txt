@@ -29,6 +29,8 @@ Date		Added
 ======
 04/04
 	* Re-fixed looping warps of Lutie village, thanks to Dr.Evil [Lupus]
+	* Added missing Warpra Agent to Hugel. Thanks to Justin84
+	* Fixed typo in Falcon Renter. Thanks to Larry
 04/03
 	* Fixed Treasure Chest bug (They used to disappear on each reboot) [Lupus]
 	- Updated Novices Castles Warper restrictions: TK,High Classes over 89 lvl;

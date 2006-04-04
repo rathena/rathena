@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Darkchild
 //===== Current Version: =====================================
-//= 1.6
+//= 1.6a
 //===== Compatible With: =====================================
 //= Any eAthena Version;
 //===== Description: =========================================
@@ -104,6 +104,7 @@ einbech.gat,135,249,4	duplicate(warpra)	Warp Agent	859
 geffen.gat,115,66,4	duplicate(warpra)	Warp Agent	859
 gonryun.gat,151,130,4	duplicate(warpra)	Warp Agent	859
 izlude.gat,133,117,4	duplicate(warpra)	Warp Agent	859
+hugel.gat,88,151,5	duplicate(warpra)	Warp Agent	859
 lighthalzen.gat,155,79,6	duplicate(warpra)	Warp Agent	859
 louyang.gat,210,106,4	duplicate(warpra)	Warp Agent	859
 morocc.gat,156,95,4	duplicate(warpra)	Warp Agent	859

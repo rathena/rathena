@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88, mod by Lupus
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.6a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -139,9 +139,9 @@ hu_in01.gat,375,318,5	script	Falcon Master	59,{
 
 	M_0:
 		mes "[Falcon Master]";
-		if(Upper==0)mes "I can train a Falcon for you, but you need "+@prize+"z and be a Hunter with mastered ^5555FF'Falcon Mastery'^000000 skill.";
-		if(Upper==1)mes "I can train a Scarf Falcon for you, but you need "+@prize+"z and be a Sniper with mastered ^5555FF'Falcon Mastery'^000000 skill.";
-		if(Upper==2)mes "I can train a Baby Falcon for you, but you need "+@prize+"z and be a Baby Hunter with mastered ^5555FF'Falcon Mastery'^000000 skill.";
+		if(Upper==0)mes "I can train a Falcon for you, but you need "+@price+"z and be a Hunter with mastered ^5555FF'Falcon Mastery'^000000 skill.";
+		if(Upper==1)mes "I can train a Scarf Falcon for you, but you need "+@price+"z and be a Sniper with mastered ^5555FF'Falcon Mastery'^000000 skill.";
+		if(Upper==2)mes "I can train a Baby Falcon for you, but you need "+@price+"z and be a Baby Hunter with mastered ^5555FF'Falcon Mastery'^000000 skill.";
 		next;
 		menu "Ok",sM_0, "No thanks",M_End;
 
