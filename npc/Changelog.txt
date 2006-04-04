@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+04/04
+	* Re-fixed looping warps of Lutie village, thanks to Dr.Evil [Lupus]
 04/03
 	* Fixed Treasure Chest bug (They used to disappear on each reboot) [Lupus]
 	- Updated Novices Castles Warper restrictions: TK,High Classes over 89 lvl;
