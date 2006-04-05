@@ -915,6 +915,30 @@ static void battle_calc_base_damage(struct block_list *src, struct block_list *t
 	return;
 }
 
+/*==========================================
+ * Consumes ammo for the given skill.
+ *------------------------------------------
+ */
+static void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
+{
+	int qty=1;
+	if (!battle_config.arrow_decrement)
+		return;
+	
+	if (skill)
+	{
+		qty = skill_get_ammo_qty(skill, lv);
+		if (!qty) {	//Generic skill that consumes ammo?
+			qty = skill_get_num(skill, lv);
+			if (qty < 0) qty *= -1;
+			else
+			if (qty == 0) qty = 1;
+		}
+	}
+	if(sd->equip_index[10]>=0) //Qty check should have been done in skill_check_condition
+		pc_delitem(sd,sd->equip_index[10],qty,0);
+}
+
 //For quick div adjustment.
 #define damage_div_fix(dmg, div) { if (div > 1) (dmg)*=div; else if (div < 0) (div)*=-1; }
 /*==========================================
@@ -1021,6 +1045,7 @@ static struct Damage battle_calc_weapon_attack(
 	}
 	//Set miscellaneous data that needs be filled regardless of hit/miss
 	if(sd) {
+		if (!skill_num) //Ammo condition for weapons is lower below.
 		switch (sd->status.weapon) {
 			case W_BOW:
 			case W_REVOLVER:
@@ -1035,7 +1060,10 @@ static struct Damage battle_calc_weapon_attack(
 	} else if (status_get_range(src) > 3)
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 
-	if(skill_num && skill_get_ammotype(skill_num)) {
+	if(skill_num && 
+		(skill_get_ammotype(skill_num) ||
+		(sd && skill_isammotype(sd, skill_num)))
+	){
 		//Skills that require a consumable are also long-ranged arrow-types
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 		flag.arrow = 1;
@@ -1045,11 +1073,6 @@ static struct Damage battle_calc_weapon_attack(
 		wd.flag=(wd.flag&~BF_SKILLMASK)|BF_SKILL;
 		switch(skill_num)
 		{
-			case HT_PHANTASMIC:
-			case GS_MAGICALBULLET:
-				flag.arrow = 0;
-				break;
-
 			case MO_FINGEROFFENSIVE:
 				if(sd) {
 					if (battle_config.finger_offensive_type)
@@ -1140,6 +1163,8 @@ static struct Damage battle_calc_weapon_attack(
 			wd.type=0x0b;
 			wd.dmg_lv=ATK_LUCKY;
 			if (wd.div_ < 0) wd.div_*=-1;
+			if (sd && flag.arrow)
+				battle_consume_ammo(sd, skill_num, skill_lv);
 			return wd;
 		}
 	}
@@ -1331,6 +1356,8 @@ static struct Damage battle_calc_weapon_attack(
 
 	if(tsd && tsd->special_state.no_weapon_damage) {
 		if (wd.div_ < 0) wd.div_*=-1;
+		if (sd && flag.arrow)
+			battle_consume_ammo(sd, skill_num, skill_lv);
 		return wd;
 	}
 
@@ -2093,8 +2120,12 @@ static struct Damage battle_calc_weapon_attack(
 			wd.damage = 1;
 		if (flag.lh && (flag.hit || wd.damage2>0))
 			wd.damage2 = 1;
-		if (!(battle_config.skill_min_damage&1)) //Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
+		if (!(battle_config.skill_min_damage&1)) 
+		{	//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
+			if (sd && flag.arrow)
+				battle_consume_ammo(sd, skill_num, skill_lv);
 			return wd;
+		}
 	}
 	
 	if(sd && !skill_num && !flag.cri)
@@ -2153,6 +2184,8 @@ static struct Damage battle_calc_weapon_attack(
 			if(wd.damage > 0 && wd.damage2 < 1) wd.damage2 = 1;
 			flag.lh = 1;
 		}
+		if (flag.arrow) //Consume the arrow.
+			battle_consume_ammo(sd, skill_num, skill_lv);
 	}
 	
 	if(wd.damage > 0 || wd.damage2 > 0)
@@ -2227,6 +2260,7 @@ static struct Damage battle_calc_weapon_attack(
 				skill_break_equip(target, EQP_ARMOR, breakrate[1], BCT_ENEMY);
 		}
 	}
+
 	return wd;
 }
 
@@ -2985,16 +3019,11 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	race = status_get_race(target);
 	ele = status_get_elem_type(target);
 
-	if(sd && (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
-	) {
-		if(sd->equip_index[10] >= 0) {
-			if(battle_config.arrow_decrement)
-				pc_delitem(sd,sd->equip_index[10],1,0);
-		}
-		else {
-			clif_arrow_fail(sd,0);
-			return 0;
-		}
+	if (sd && (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
+		&& sd->equip_index[10] < 0)
+  	{
+		clif_arrow_fail(sd,0);
+		return 0;
 	}
 
 	//Check for counter attacks that block your attack. [Skotlex]

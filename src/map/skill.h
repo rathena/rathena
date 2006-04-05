@@ -154,6 +154,7 @@ int	skill_get_time2( int id ,int lv );
 int	skill_get_castdef( int id );
 int	skill_get_weapontype( int id );
 int	skill_get_ammotype( int id );
+int	skill_get_ammo_qty( int id, int lv );
 int	skill_get_unit_id(int id,int flag);
 int	skill_get_inf2( int id );
 int	skill_get_castcancel( int id );
@@ -164,6 +165,7 @@ int	skill_get_unit_target( int id );
 int	skill_tree_get_max( int id, int b_class );	// Celest
 const char*	skill_get_name( int id ); 	// [Skotlex]
 
+void skill_isammoy_type(TBL_PC *sd, int skill);
 int skill_castend_id( int tid, unsigned int tick, int id,int data );
 int skill_castend_pos( int tid, unsigned int tick, int id,int data );
 int skill_castend_map( struct map_session_data *sd,int skill_num, const char *map);

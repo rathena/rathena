@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/05
+	* Modified the ammo checks so that ammo is consumed at the end of
+	  battle_calc_weapon_attack (should fix element being lost on final arrow).
+	  [Skotlex]
 	* Added a define list for weapon types in pc.h [Skotlex]
 	* Cleaned up pc_checkallowskill and moved the Gatling fever check to it.
 	  [Skotlex]

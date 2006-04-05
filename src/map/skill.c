@@ -7524,6 +7524,20 @@ static int skill_check_condition_hermod_sub(struct block_list *bl,va_list ap)
 }
 
 /*==========================================
+ * Determines if a given skill should be made to consume ammo 
+ * when used by the player. [Skotlex]
+ *------------------------------------------
+ */
+int skill_isammotype(TBL_PC *sd, int skill)
+{
+	return (
+		(sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)) &&
+		skill != HT_PHANTASMIC && skill != GS_MAGICALBULLET &&
+		skill_get_type(skill) == BF_WEAPON && !(skill_get_nk(skill)&NK_NO_DAMAGE) 
+	)
+}
+
+/*==========================================
  * ƒXƒLƒ‹Žg—p?Œ??i?‚ÅŽg—pŽ¸”s?j
  *------------------------------------------
  */
@@ -7635,10 +7649,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	else
 		sp += (sd->status.max_sp * abs(sp_rate))/100;
 
-	if (!ammo && sd->status.weapon == W_BOW && skill &&
-		skill != HT_PHANTASMIC && skill != GS_MAGICALBULLET &&
-		skill_get_type(skill) == BF_WEAPON && !(skill_get_nk(skill)&NK_NO_DAMAGE) 
-	)
+	if (!ammo && skill && skill_isammotype(sd, skill))
 	{	//Assume this skill is using the weapon, therefore it requires arrows.
 		ammo = 2;  //1<<1 <- look 1 (arrows) moved right 1 times.
 		ammo_qty = skill_get_num(skill, lv);
@@ -8213,8 +8224,9 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 			if(index[i] >= 0)
 				pc_delitem(sd,index[i],amount[i],0);		// ƒAƒCƒeƒ€?Á”ï
 		}
-		if (ammo && battle_config.arrow_decrement)
-			pc_delitem(sd,sd->equip_index[10],ammo_qty,0);
+//	Ammo is now reduced in battle_calc_weapon_attack. [Skotlex]		
+//		if (ammo && battle_config.arrow_decrement)
+//			pc_delitem(sd,sd->equip_index[10],ammo_qty,0);
 	}
 
 	if(type&2)
