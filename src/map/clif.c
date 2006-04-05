@@ -7970,7 +7970,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
 
 //		if(sd->status.class_ != sd->vd.class_)
-//			clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+//			clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BASE,sd->vd.class_,SELF);
+
+		if (sd->sc.option&OPTION_FALCON)
+			clif_status_load(&sd->bl, SI_FALCON, 1);
+		if (sd->sc.option&OPTION_RIDING)
+			clif_status_load(&sd->bl, SI_RIDING, 1);
+
 		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 900)
 			clif_pet_emotion(sd->pd,(sd->pd->class_ - 100)*100 + 50 + pet_hungry_val(sd));
 
@@ -10592,9 +10598,11 @@ void clif_friendslist_send(struct map_session_data *sd) {
 		memcpy(WFIFOP(sd->fd, 4 + 32 * i + 8), &sd->status.friends[i].name, NAME_LENGTH);
 	}
 
-	WFIFOW(sd->fd,2) = 4 + 32 * i;
-	WFIFOSET(sd->fd, WFIFOW(sd->fd,2));
-
+	if (i) {
+		WFIFOW(sd->fd,2) = 4 + 32 * i;
+		WFIFOSET(sd->fd, WFIFOW(sd->fd,2));
+	}
+	
 	for (n = 0; n < i; n++)
 	{	//Sending the online players
 		if (map_charid2sd(sd->status.friends[n].char_id))

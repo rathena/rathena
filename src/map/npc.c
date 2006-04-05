@@ -116,10 +116,10 @@ int npc_enable(const char *name,int flag)
 		nd->sc.option&=~OPTION_HIDE;
 		clif_changeoption(&nd->bl);
 	}else if (flag&4){
-		nd->sc.option = OPTION_HIDE;
+		nd->sc.option|= OPTION_HIDE;
 		clif_changeoption(&nd->bl);
 	}else{	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
-		nd->sc.option = OPTION_INVISIBLE;
+		nd->sc.option|= OPTION_INVISIBLE;
 		clif_changeoption(&nd->bl);
 	}
 	if(flag&3 && (nd->u.scr.xs > 0 || nd->u.scr.ys >0))

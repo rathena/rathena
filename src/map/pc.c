@@ -5613,49 +5613,33 @@ int pc_setoption(struct map_session_data *sd,int type)
 		switch (sd->status.class_)
 		{
 			case JOB_KNIGHT:
-				sd->status.class_ = sd->vd.class_ = JOB_KNIGHT2;
+				clif_changelook(&sd->bl,LOOK_BASE,JOB_KNIGHT2);
 				break;
 			case JOB_CRUSADER:
-				sd->status.class_ = sd->vd.class_ = JOB_CRUSADER2;
+				clif_changelook(&sd->bl,LOOK_BASE,JOB_CRUSADER2);
 				break;
 			case JOB_LORD_KNIGHT:
-				sd->status.class_ = sd->vd.class_ = JOB_LORD_KNIGHT2;
+				clif_changelook(&sd->bl,LOOK_BASE,JOB_LORD_KNIGHT2);
 				break;
 			case JOB_PALADIN:
-				sd->status.class_ = sd->vd.class_ = JOB_PALADIN2;
+				clif_changelook(&sd->bl,LOOK_BASE,JOB_PALADIN2);
 				break;
 			case JOB_BABY_KNIGHT:
-				sd->status.class_ = sd->vd.class_ = JOB_BABY_KNIGHT2;
+				clif_changelook(&sd->bl,LOOK_BASE,JOB_BABY_KNIGHT2);
 				break;
 			case JOB_BABY_CRUSADER:
-				sd->status.class_ = sd->vd.class_ = JOB_BABY_CRUSADER2;
+				clif_changelook(&sd->bl,LOOK_BASE,JOB_BABY_CRUSADER2);
 				break;
 		}
+		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 		clif_status_load(&sd->bl,SI_RIDING,1);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
 	else if (!(type&OPTION_RIDING) && sd->sc.option&OPTION_RIDING && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to dismount.
-		switch (sd->status.class_)
-		{
-			case JOB_KNIGHT2:
-				sd->status.class_ = sd->vd.class_ = JOB_KNIGHT;
-				break;
-			case JOB_CRUSADER2:
-				sd->status.class_ = sd->vd.class_ = JOB_CRUSADER;
-				break;
-			case JOB_LORD_KNIGHT2:
-				sd->status.class_ = sd->vd.class_ = JOB_LORD_KNIGHT;
-				break;
-			case JOB_PALADIN2:
-				sd->status.class_ = sd->vd.class_ = JOB_PALADIN;
-				break;
-			case JOB_BABY_KNIGHT2:
-				sd->status.class_ = sd->vd.class_ = JOB_BABY_KNIGHT;
-				break;
-			case JOB_BABY_CRUSADER2:
-				sd->status.class_ = sd->vd.class_ = JOB_BABY_CRUSADER;
-				break;
+		if (sd->vd.class_ != sd->status.class_) {
+			clif_changelook(&sd->bl,LOOK_BASE,sd->status.class_);
+			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 		}
 		clif_status_load(&sd->bl,SI_RIDING,0);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
@@ -5669,13 +5653,11 @@ int pc_setoption(struct map_session_data *sd,int type)
 	if (type&OPTION_FLYING && !(sd->sc.option&OPTION_FLYING)) //Flying ON
 	{
 		if (sd->status.class_==JOB_STAR_GLADIATOR)
-			sd->status.class_ = sd->vd.class_ = JOB_STAR_GLADIATOR2;
+			clif_changelook(&sd->bl,LOOK_BASE,JOB_STAR_GLADIATOR2);
 	}
 	else if (!(type&OPTION_FLYING) && sd->sc.option&OPTION_FLYING) //Flying OFF
-	{
-		if (sd->status.class_==JOB_STAR_GLADIATOR2)
-			sd->status.class_ = sd->vd.class_ = JOB_STAR_GLADIATOR;
-	}
+		if (sd->vd.class_ != sd->status.class_)
+			clif_changelook(&sd->bl,LOOK_BASE,sd->status.class_);
 
 	sd->sc.option=type;
 	clif_changeoption(&sd->bl);
@@ -5727,7 +5709,7 @@ int pc_setcart(struct map_session_data *sd,int type)
 int pc_setfalcon(struct map_session_data *sd)
 {
 	if(pc_checkskill(sd,HT_FALCON)>0){	// ファルコンマスタリ?スキル所持
-		pc_setoption(sd,sd->sc.option|0x0010);
+		pc_setoption(sd,sd->sc.option|OPTION_FALCON);
 	}
 
 	return 0;

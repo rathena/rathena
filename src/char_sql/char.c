@@ -64,6 +64,7 @@ char pet_db[256] = "pet";
 char gm_db[256] = "gm_accounts";
 char friend_db[256] = "friends";
 int db_use_sqldbs;
+int connection_ping_interval = 0;
 
 char login_db_account_id[32] = "account_id";
 char login_db_level[32] = "level";
@@ -1735,14 +1736,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOW(fd,j+50) = DEFAULT_WALK_SPEED; // p->speed;
 		WFIFOW(fd,j+52) = p->class_;
 		WFIFOW(fd,j+54) = p->hair;
-
-		// pecopeco knights/crusaders crash fix
-		if (p->class_ == 13 || p->class_ == 21 ||
-			p->class_ == 4014 || p->class_ == 4022 ||
-				p->class_ == 4036 || p->class_ == 4044)
-			WFIFOW(fd,j+56) = 0;
-		else WFIFOW(fd,j+56) = p->weapon;
-
+		WFIFOW(fd,j+56) = p->option&0x20?0:p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
 		WFIFOW(fd,j+58) = p->base_level;
 		WFIFOW(fd,j+60) = (p->skill_point > SHRT_MAX) ? SHRT_MAX : p->skill_point;
 		WFIFOW(fd,j+62) = p->head_bottom;
@@ -3813,7 +3807,8 @@ void do_final(void) {
 	online_char_db->destroy(online_char_db, NULL);
 
 	mysql_close(&mysql_handle);
-	mysql_close(&lmysql_handle);
+	if(char_gm_read)
+		mysql_close(&lmysql_handle);
 
 	ShowInfo("ok! all done...\n");
 }
@@ -3891,6 +3886,8 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		}else if(strcmpi(w1,"use_sql_db")==0){ // added for sql item_db read for char server [Valaris]
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus("Using SQL dbs: %s\n",w2);
+		} else if(strcmpi(w1,"connection_ping_interval")==0) {
+			connection_ping_interval = config_switch(w2);
 		//custom columns for login database
 		}else if(strcmpi(w1,"login_db_level")==0){
 			strcpy(login_db_level,w2);

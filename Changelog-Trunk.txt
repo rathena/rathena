@@ -3,6 +3,21 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/04/04
+	* Added inter config connection_ping_interval which specifies interval in
+	  hours at which mysql_ping's must be done on all connection handles to keep
+	  the mysql connection alive. Defaults to 0 (disabled) [Skotlex]
+	* Made the login sql handle on the char-sql server be used only when
+	  gm_read_method 1 is enabled. [Skotlex]
+	* Small fixes to npc_enable, added BL_NPC handling on status_get_sc.
+	  [Skotlex]
+	- Some changes to close-confine, status start will fail when the source is
+	  not found or it doesn't has sc-data. [Skotlex]
+	- pc_setoption no longer changes the character's class when
+	  mounting/dismounting, it only changes the view-class. [Skotlex]
+	* Modified the char-txt server to modify the class of mounted characters to
+	  their non-mounted version. Added an upgrade_svn5902 file to handle the
+	  class update on the sql tables. [Skotlex]
 2006/04/03
 	* Fixed pc_setpos using unit_remove_map with type 0 instead of 3, which
 	  confuses clients and makes them think the character in question is still

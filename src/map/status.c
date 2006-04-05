@@ -1572,12 +1572,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	}
 
 // ----- CLIENT-SIDE REFRESH -----
-	if(first&1) { //Since this is the initial loading, the Falcon and Peco icons must be loaded. [Skotlex]
-		if (sd->sc.option&OPTION_FALCON)
-			clif_status_load(&sd->bl, SI_FALCON, 1);
-		if (sd->sc.option&OPTION_RIDING)
-			clif_status_load(&sd->bl, SI_RIDING, 1);
-	}
 	if(first&4) {
 		calculating = 0;
 		return 0;
@@ -3313,6 +3307,28 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		{
 			TBL_PC* sd = (TBL_PC*)bl;
 			if (pcdb_checkid(class_)) {
+				if (sd->sc.option&OPTION_RIDING)
+				switch (class_)
+				{	//Adapt class to a Mounted one.
+				case JOB_KNIGHT:
+					class_ = JOB_KNIGHT2;
+					break;
+				case JOB_CRUSADER:
+					class_ = JOB_CRUSADER2;
+					break;
+				case JOB_LORD_KNIGHT:
+					class_ = JOB_LORD_KNIGHT2;
+					break;
+				case JOB_PALADIN:
+					class_ = JOB_PALADIN2;
+					break;
+				case JOB_BABY_KNIGHT:
+					class_ = JOB_BABY_KNIGHT2;
+					break;
+				case JOB_BABY_CRUSADER:
+					class_ = JOB_BABY_CRUSADER2;
+					break;
+				}
 				sd->vd.class_ = class_;
 				clif_get_weapon_view(sd, &sd->vd.weapon, &sd->vd.shield);
 				sd->vd.head_top = sd->status.head_top;
@@ -3375,10 +3391,14 @@ void status_set_viewdata(struct block_list *bl, int class_)
 struct status_change *status_get_sc(struct block_list *bl)
 {
 	nullpo_retr(NULL, bl);
-	if(bl->type==BL_MOB)
-		return &((struct mob_data*)bl)->sc;
-	if(bl->type==BL_PC)
-		return &((struct map_session_data*)bl)->sc;
+	switch (bl->type) {
+	case BL_MOB:
+		return &((TBL_MOB*)bl)->sc;
+	case BL_PC:
+		return &((TBL_PC*)bl)->sc;
+	case BL_NPC:
+		return &((TBL_NPC*)bl)->sc;
+	}
 	return NULL;
 }
 
@@ -4344,7 +4364,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			{
 				struct block_list *src = val2?map_id2bl(val2):NULL;
 				struct status_change *sc2 = src?status_get_sc(src):NULL;
-				if (src && sc2 && sc2->count) {
+				if (src && sc2) {
 					if (sc2->data[SC_CLOSECONFINE].timer == -1) //Start lock on caster.
 						sc_start4(src,SC_CLOSECONFINE,100,sc->data[type].val1,1,0,0,tick+1000);
 					else { //Increase count of locked enemies and refresh time.
@@ -4352,7 +4372,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 						delete_timer(sc2->data[SC_CLOSECONFINE].timer, status_change_timer);
 						sc2->data[SC_CLOSECONFINE].timer = add_timer(gettick()+tick+1000, status_change_timer, src->id, SC_CLOSECONFINE);
 					}
-				}
+				} else //Status failed.
+					return 0;
 			}
 			break;
 		case SC_KAITE:

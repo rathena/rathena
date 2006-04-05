@@ -59,6 +59,7 @@ int char_child(int parent_id, int child_id);
 int request_accreg2(int account_id, int char_id);
 int save_accreg2(unsigned char* buf, int len);
 
+extern bool char_gm_read;
 extern int autosave_interval;
 extern int save_log;
 extern int charsave_method;
@@ -85,6 +86,8 @@ extern char party_db[256];
 extern char pet_db[256];
 
 extern int db_use_sqldbs; // added for sql item_db read for char server [Valaris]
+extern int connection_ping_interval;
+
 extern char login_db_level[32];
 extern char login_db_account_id[32];
 

@@ -121,6 +121,7 @@ char login_db[256] = "login";
 int log_login=1; //Whether to log the logins or not. [Skotlex]
 char loginlog_db[256] = "loginlog";
 bool login_gm_read = true;
+int connection_ping_interval = 0;
 
 // added to help out custom login tables, without having to recompile
 // source so options are kept in the login_athena.conf or the inter_athena.conf
@@ -352,6 +353,16 @@ int e_mail_check(char *email) {
 	return 1;
 }
 
+/*======================================================
+ * Does a mysql_ping to all connection handles. [Skotlex]
+ *------------------------------------------------------
+ */
+int login_sql_ping(int tid, unsigned int tick, int id, int data) 
+{
+	mysql_ping(&mysql_handle);
+	return 0;
+}
+
 //-----------------------------------------------------
 // Read Account database - mysql db
 //-----------------------------------------------------
@@ -391,6 +402,12 @@ int mmo_auth_sqldb_init(void) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
+	}
+
+	if (connection_ping_interval) {
+		add_timer_func_list(login_sql_ping, "login_sql_ping");
+		add_timer_interval(gettick()+connection_ping_interval*60*1000,
+				login_sql_ping, 0, 0, connection_ping_interval*60*1000);
 	}
 	return 0;
 }
@@ -2172,6 +2189,9 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		else if(strcmpi(w1,"login_server_db")==0){
 			strcpy(login_server_db, w2);
 			ShowStatus ("set login_server_db : %s\n",w2);
+		} 
+		else if(strcmpi(w1,"connection_ping_interval")==0) {
+			connection_ping_interval = atoi(w2);
 		}
 		else if(strcmpi(w1,"default_codepage")==0){
 			strcpy(default_codepage, w2);

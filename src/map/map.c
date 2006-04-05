@@ -62,10 +62,6 @@ MYSQL_RES* 	sql_res ;
 MYSQL_ROW	sql_row ;
 char tmp_sql[65535]="";
 
-MYSQL lmysql_handle;
-MYSQL_RES* lsql_res ;
-MYSQL_ROW  lsql_row ;
-
 MYSQL logmysql_handle; //For the log database - fix by [Maeki]
 MYSQL_RES* logsql_res ;
 MYSQL_ROW  logsql_row ;
@@ -81,6 +77,7 @@ char map_server_pw[32] = "ragnarok";
 char map_server_db[32] = "ragnarok";
 char default_codepage[32] = ""; //Feature by irmin.
 int db_use_sqldbs = 0;
+int connection_ping_interval = 0;
 
 int login_server_port = 3306;
 char login_server_ip[16] = "127.0.0.1";
@@ -2054,6 +2051,7 @@ int map_calc_dir( struct block_list *src,int x,int y) {
  *------------------------------------------
  */
 int map_random_dir(struct block_list *bl, short *x, short *y) {
+	struct walkpath_data wpd;
 	short xi = *x-bl->x;
 	short yi = *y-bl->y;
 	short i=0, j;
@@ -2069,7 +2067,11 @@ int map_random_dir(struct block_list *bl, short *x, short *y) {
 		xi = bl->x + segment*dirx[j];
 		segment = (short)sqrt(dist2 - segment*segment); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];
-	} while (map_getcell(bl->m,xi,yi,CELL_CHKNOPASS) && (++i)<100);
+	} while ((
+		map_getcell(bl->m,xi,yi,CELL_CHKNOPASS)  ||
+		path_search_real(&wpd,bl->m,bl->x,bl->y,xi,yi,1,CELL_CHKNOREACH) == -1)
+		&& (++i)<100);
+	
 	if (i < 100) {
 		*x = xi;
 		*y = yi;
@@ -3414,6 +3416,8 @@ int inter_config_read(char *cfgName)
 		} else if(strcmpi(w1,"use_sql_db")==0){
 			db_use_sqldbs = battle_config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
+		} else if(strcmpi(w1,"connection_ping_interval")==0) {
+			connection_ping_interval = battle_config_switch(w2);
 		//Login Server SQL DB
 		} else if(strcmpi(w1,"login_server_ip")==0){
 			strcpy(login_server_ip, w2);
@@ -3498,20 +3502,6 @@ int map_sql_init(void){
 		ShowStatus("connect success! (Map Server Connection)\n");
 	}
 
-    mysql_init(&lmysql_handle);
-
-    //DB connection start
-    ShowInfo("Connecting to the Login DB Server....\n");
-    if(!mysql_real_connect(&lmysql_handle, login_server_ip, login_server_id, login_server_pw,
-        login_server_db ,login_server_port, (char *)NULL, 0)) {
-	        //pointer check
-			ShowSQL("DB error - %s\n",mysql_error(&lmysql_handle));
-			exit(1);
-	}
-	 else {
-		ShowStatus ("connect success! (Login Server Connection)\n");
-	 }
-
 	if(mail_server_enable) { // mail system [Valaris]
 		mysql_init(&mail_handle);
 	        ShowInfo("Connecting to the Mail DB Server....\n");
@@ -3534,10 +3524,6 @@ int map_sql_init(void){
 			ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
-		if (mysql_query(&lmysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&lmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
 	}
 	return 0;
 }
@@ -3545,9 +3531,6 @@ int map_sql_init(void){
 int map_sql_close(void){
 	mysql_close(&mmysql_handle);
 	ShowStatus("Close Map DB Connection....\n");
-
-	mysql_close(&lmysql_handle);
-	ShowStatus("Close Login DB Connection....\n");
 
 	if (log_config.sql_logs)
 //Updating this if each time there's a log_config addition is too much of a hassle.	[Skotlex]
@@ -3753,6 +3736,23 @@ void map_versionscreen(int flag) {
 	if (flag) exit(1);
 }
 
+
+#ifndef TXT_ONLY
+/*======================================================
+ * Does a mysql_ping to all connection handles. [Skotlex]
+ *------------------------------------------------------
+ */
+int map_sql_ping(int tid, unsigned int tick, int id, int data) 
+{
+	mysql_ping(&mmysql_handle);
+	if (log_config.sql_logs)
+		mysql_ping(&logmysql_handle);
+	if(mail_server_enable)
+		mysql_ping(&mail_handle);
+	return 0;
+}
+#endif
+
 /*======================================================
  * Map-Server Init and Command-line Arguments [Valaris]
  *------------------------------------------------------
@@ -3894,6 +3894,12 @@ int do_init(int argc, char *argv[]) {
 	if (log_config.sql_logs)
 	{
 		log_sql_init();
+	}
+	
+	if (connection_ping_interval) {
+		add_timer_func_list(map_sql_ping, "map_sql_ping");
+		add_timer_interval(gettick()+connection_ping_interval*60*1000,
+				map_sql_ping, 0, 0, connection_ping_interval*60*1000);
 	}
 #endif /* not TXT_ONLY */
 
