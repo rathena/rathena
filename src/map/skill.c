@@ -7534,7 +7534,7 @@ int skill_isammotype(TBL_PC *sd, int skill)
 		(sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)) &&
 		skill != HT_PHANTASMIC && skill != GS_MAGICALBULLET &&
 		skill_get_type(skill) == BF_WEAPON && !(skill_get_nk(skill)&NK_NO_DAMAGE) 
-	)
+	);
 }
 
 /*==========================================
@@ -7818,7 +7818,16 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		if(sd->sc.data[SC_COMBO].timer != -1 && sd->sc.data[SC_COMBO].val1 == skill)
 			break; //Combo ready.
 		if (pc_istop10fame(sd->char_id,MAPID_TAEKWON))
-			break; //Unlimited Combo
+		{	//Unlimited Combo
+			if (skill == sd->skillid_old)
+				return 0; //Can't repeat previous combo skill.
+			if (type&1) {
+				//On cast-end, set this skill as previous one.
+				sd->skillid_old = skill;
+				sd->skilllv_old = lv;
+			}
+			break;
+		}
 		return 0;
 	case BD_ADAPTATION:				/* ƒAƒhƒŠƒu */
 		{
