@@ -36,6 +36,7 @@ enum {
 	W_SHOTGUN,	//19
 	W_GATLING,	//20
 	W_GRENADE,	//21
+	W_HUUMA,	//22
 	MAX_WEAPON_TYPE
 } weapon_type;
 
