@@ -2,7 +2,7 @@
 //= Map flags that disable auto saving
 //===== By: ==================================================
 //= eAthena Dev Team
-//= 1.3 [Lupus]
+//= 1.4 [Lupus]
 //===== Current Version: =====================================
 
 // Job Quests ====================
@@ -128,3 +128,29 @@ pvp_n_8-5.gat	mapflag	nosave	SavePoint
 pvp_2vs2.gat	mapflag	nosave	SavePoint
 
 //gon_test.gat	mapflag	nosave	prontera.gat,150,180
+
+//WoE Castles =================================
+aldeg_cas01.gat	mapflag	nosave	SavePoint
+aldeg_cas02.gat	mapflag	nosave	SavePoint
+aldeg_cas03.gat	mapflag	nosave	SavePoint
+aldeg_cas04.gat	mapflag	nosave	SavePoint
+aldeg_cas05.gat	mapflag	nosave	SavePoint
+gefg_cas01.gat	mapflag	nosave	SavePoint
+gefg_cas02.gat	mapflag	nosave	SavePoint
+gefg_cas03.gat	mapflag	nosave	SavePoint
+gefg_cas04.gat	mapflag	nosave	SavePoint
+gefg_cas05.gat	mapflag	nosave	SavePoint
+payg_cas01.gat	mapflag	nosave	SavePoint
+payg_cas02.gat	mapflag	nosave	SavePoint
+payg_cas03.gat	mapflag	nosave	SavePoint
+payg_cas04.gat	mapflag	nosave	SavePoint
+payg_cas05.gat	mapflag	nosave	SavePoint
+prtg_cas01.gat	mapflag	nosave	SavePoint
+prtg_cas02.gat	mapflag	nosave	SavePoint
+prtg_cas03.gat	mapflag	nosave	SavePoint
+prtg_cas04.gat	mapflag	nosave	SavePoint
+prtg_cas05.gat	mapflag	nosave	SavePoint
+nguild_alde.gat	mapflag	nosave	SavePoint
+nguild_gef.gat	mapflag	nosave	SavePoint
+nguild_pay.gat	mapflag	nosave	SavePoint
+nguild_prt.gat	mapflag	nosave	SavePoint

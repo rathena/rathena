@@ -7928,9 +7928,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->status.party_id)
 	    clif_party_hp(sd);
 
-	//[LuzZza]
-	clif_guild_send_onlineinfo(sd);
-
 	// pvp
 	//if(sd->pvp_timer!=-1 && !battle_config.pk_mode) /PVP Client crash fix* Removed timer deletion
 	//	delete_timer(sd->pvp_timer,pc_calc_pvprank_timer);
@@ -7966,8 +7963,14 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->state.connect_new) {
 		sd->state.connect_new = 0;
 		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
-		if (night_flag && map[sd->bl.m].flag.nightenabled)
-			add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
+		if (night_flag) {
+			char tmpstr[1024];
+			strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
+			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
+			
+			if (map[sd->bl.m].flag.nightenabled)
+				add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
+		}
 
 //		if(sd->status.class_ != sd->vd.class_)
 //			clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BASE,sd->vd.class_,SELF);
@@ -7979,13 +7982,17 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 900)
 			clif_pet_emotion(sd->pd,(sd->pd->class_ - 100)*100 + 50 + pet_hungry_val(sd));
+		//[LuzZza]
+		clif_guild_send_onlineinfo(sd);
 
-/*						Stop players from spawning inside castles [Valaris]					*/
+/* Unneccesary due to mapflag "nosave" [Skotlex]
+//		Stop players from spawning inside castles [Valaris]
 		{
 			struct guild_castle *gc=guild_mapname2gc(map[sd->bl.m].name);
 			if (gc)
 				pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,2);
 			}
+*/
 	} else
 	//New 'night' effect by dynamix [Skotlex]
 	if (night_flag && map[sd->bl.m].flag.nightenabled)

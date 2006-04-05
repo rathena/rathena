@@ -761,13 +761,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->state.event_disconnect = 1;
 	sd->state.event_kill_mob = 1;
 
-	if (night_flag) {
-		char tmpstr[1024];
-		strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
-		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-		//Night packet is sent when it finishes loading the map. [Skotlex]
-	}
-
 	// ステ?タス初期計算など
 	status_calc_pc(sd,1);
 			
