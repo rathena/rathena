@@ -66,7 +66,7 @@ OnInit:
 	debugmes "[Hall of Fame] Last Update is Year " + $@HoF_TimeUpdateY + " Month " + $@HoF_TimeUpdateM + " Day " + $@HoF_TimeUpdateD;
 	debugmes "[Hall of Fame] Today is Year " + $@TimeNowY + " Month " + $@TimeNowM + " Day " + $@TimeNowD;
 	if(($@TimeNowD - $@HoF_TimeUpdateD) < 0){
-		set $@TimeNowD, $@TimeNowD + $@MonthDayThing[@TimeNowM];
+		set $@TimeNowD, $@TimeNowD + $@MonthDayThing[$@TimeNowM];
 		set $@TimeNowM, $@TimeNowM - 1;
 	}
 	set $@GapD, $@TimeNowD - $@HoF_TimeUpdateD;
