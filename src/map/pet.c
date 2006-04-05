@@ -1091,20 +1091,19 @@ int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 {
 	struct pet_data* pd;
 	struct flooritem_data *fitem = (struct flooritem_data *)bl;
-	struct map_session_data *sd = NULL;
+	int sd_id =0;
 	int *itc;
 
 	pd=va_arg(ap,struct pet_data *);
 	itc=va_arg(ap,int *);
 
-	// ƒ‹[ƒgŒ –³‚µ
-	if(fitem && fitem->first_get_id)
-	sd = map_id2sd(fitem->first_get_id);
+	sd_id = fitem->first_get_id;
 	// Removed [Valaris]
 	//if((pd->lootitem_weight + (itemdb_search(fitem->item_data.))->weight * fitem->item_data.amount) > battle_config.pet_weight)
 	//	return 0;
 
-	if(pd->loot == NULL || pd->loot->item == NULL || (pd->loot->count >= pd->loot->max) || (sd && sd->pd != pd))
+	if(pd->loot == NULL || pd->loot->item == NULL || (pd->loot->count >= pd->loot->max) ||
+	 	(sd_id && pd->msd && pd->msd->bl.id != sd_id))
 		return 0;
 	if(bl->m == pd->bl.m && check_distance_bl(&pd->bl, bl, pd->db->range2) &&
 		unit_can_reach(&pd->bl,bl->x,bl->y) && rand()%1000<1000/(++(*itc)))
