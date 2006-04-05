@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/04/05
+	* Added support for the 2006/04/04a Sakexe packet version. [Zephiris]
+
 2006/04/04
 	* Added inter config connection_ping_interval which specifies interval in
 	  hours at which mysql_ping's must be done on all connection handles to keep
