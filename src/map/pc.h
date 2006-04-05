@@ -13,6 +13,32 @@
 //Update this max as necessary. 53 is the value needed for Super Baby currently
 #define MAX_SKILL_TREE 53
 
+enum {
+	W_FIST,	//Bare hands
+	W_DAGGER,	//1
+	W_1HSWORD,	//2
+	W_2HSWORD,	//3
+	W_1HSPEAR,	//4
+	W_2HSPEAR,	//5
+	W_1HAXE,	//6
+	W_2HAXE,	//7
+	W_MACE,	//8
+	W_UNKNOWN,	//View 9 seems unused anywhere
+	W_STAFF,	//10
+	W_BOW,	//11
+	W_KNUCKLE,	//12	
+	W_MUSICAL,	//13
+	W_WHIP,	//14
+	W_BOOK,	//15
+	W_KATAR,	//16
+	W_REVOLVER,	//17
+	W_RIFLE,	//18
+	W_SHOTGUN,	//19
+	W_GATLING,	//20
+	W_GRENADE,	//21
+	MAX_WEAPON_TYPE
+} weapon_type;
+
 #define pc_setdead(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 1)
 #define pc_setsit(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 2)
 #define pc_isdead(sd) ((sd)->state.dead_sit == 1)

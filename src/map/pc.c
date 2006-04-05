@@ -455,24 +455,24 @@ int pc_calcweapontype(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
-	if(sd->weapontype1 != 0 &&	sd->weapontype2 == 0)
+	if(sd->weapontype1 != W_FIST &&	sd->weapontype2 == W_FIST)
 		sd->status.weapon = sd->weapontype1;
-	if(sd->weapontype1 == 0 &&	sd->weapontype2 != 0)// ¶Žè•Ší Only
+	else if(sd->weapontype1 == W_FIST &&	sd->weapontype2 != W_FIST)// ¶Žè•Ší Only
 		sd->status.weapon = sd->weapontype2;
-	else if(sd->weapontype1 == 1 && sd->weapontype2 == 1)// ?’Z?
+	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_DAGGER)// ?’Z?
 		sd->status.weapon = MAX_WEAPON_TYPE+1;
-	else if(sd->weapontype1 == 2 && sd->weapontype2 == 2)// ??Žè?
+	else if(sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_1HSWORD)// ??Žè?
 		sd->status.weapon = MAX_WEAPON_TYPE+2;
-	else if(sd->weapontype1 == 6 && sd->weapontype2 == 6)// ??Žè•€
+	else if(sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_1HAXE)// ??Žè•€
 		sd->status.weapon = MAX_WEAPON_TYPE+3;
-	else if( (sd->weapontype1 == 1 && sd->weapontype2 == 2) ||
-		(sd->weapontype1 == 2 && sd->weapontype2 == 1) ) // ’Z? - ?Žè?
+	else if( (sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_1HSWORD) ||
+		(sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_DAGGER) ) // ’Z? - ?Žè?
 		sd->status.weapon = MAX_WEAPON_TYPE+4;
-	else if( (sd->weapontype1 == 1 && sd->weapontype2 == 6) ||
-		(sd->weapontype1 == 6 && sd->weapontype2 == 1) ) // ’Z? - •€
+	else if( (sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_1HAXE) ||
+		(sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_DAGGER) ) // ’Z? - •€
 		sd->status.weapon = MAX_WEAPON_TYPE+5;
-	else if( (sd->weapontype1 == 2 && sd->weapontype2 == 6) ||
-		(sd->weapontype1 == 6 && sd->weapontype2 == 2) ) // ?Žè? - •€
+	else if( (sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_1HAXE) ||
+		(sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_1HSWORD) ) // ?Žè? - •€
 		sd->status.weapon = MAX_WEAPON_TYPE+6;
 	else
 		sd->status.weapon = sd->weapontype1;
@@ -586,18 +586,14 @@ int pc_isequip(struct map_session_data *sd,int n)
 
 			if (sd->status.base_level > 96 && item->equip & 0x022 && item->type == 4)
 				switch(item->look) { //In weapons, the look determines type of weapon.
-					case 0x01: //Level 4 Knives are equippable.. this means all knives, I'd guess?
-					case 0x02: //All 1H swords
-					case 0x06: //All 1H Axes
-					case 0x08: //All Maces
-					case 0x0a: //All Staffs
+					case W_DAGGER: //Level 4 Knives are equippable.. this means all knives, I'd guess?
+					case W_1HSWORD: //All 1H swords
+					case W_1HAXE: //All 1H Axes
+					case W_MACE: //All Maces
+					case W_STAFF: //All Staffs
 						return 1;
 				}
 		}
-
-		if((item->equip & 0x0002 || item->equip & 0x0020) && item->type == 4 && sd->status.weapon != 20 && sd->sc.data[SC_GATLINGFEVER].timer != -1)
-			status_change_end(&sd->bl,SC_GATLINGFEVER,-1);	// added to disable effects if new wepaon is not a Gatlin gun [Reddozen]
-
 	}
 	//Not equipable by class. [Skotlex]
 	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
@@ -3286,39 +3282,41 @@ int pc_checkskill(struct map_session_data *sd,int skill_id)
  */
 int pc_checkallowskill(struct map_session_data *sd)
 {
+	const int scw_list[] = {
+		SC_TWOHANDQUICKEN,
+		SC_ONEHAND,
+		SC_AURABLADE,
+		SC_PARRYING,
+		SC_SPEARSQUICKEN,
+		SC_ADRENALINE,
+		SC_ADRENALINE2,
+		SC_GATLINGFEVER
+	};
+	const int scs_list[] = {
+		SC_AUTOGUARD,
+		SC_DEFENDER,
+		SC_REFLECTSHIELD
+	};
+	int i;
 	nullpo_retr(0, sd);
 
 	if(!sd->sc.count)
 		return 0;
 	
-	// Skills requiring specific weapon types
-	if(sd->sc.data[SC_TWOHANDQUICKEN].timer!=-1 && !(skill_get_weapontype(KN_TWOHANDQUICKEN)&(1<<sd->status.weapon)))
-		status_change_end(&sd->bl,SC_TWOHANDQUICKEN,-1);
-	if(sd->sc.data[SC_ONEHAND].timer!=-1 && !(skill_get_weapontype(KN_ONEHAND)&(1<<sd->status.weapon)))
-		status_change_end(&sd->bl,SC_ONEHAND,-1);
-	if(sd->sc.data[SC_AURABLADE].timer!=-1 && !(skill_get_weapontype(LK_AURABLADE)&(1<<sd->status.weapon)))
-		// Aura Blade requires any weapon but bare fists
-		status_change_end(&sd->bl,SC_AURABLADE,-1);
-	if(sd->sc.data[SC_PARRYING].timer!=-1 && !(skill_get_weapontype(LK_PARRYING)&(1<<sd->status.weapon)))
-		status_change_end(&sd->bl,SC_PARRYING,-1);
-	if(sd->sc.data[SC_SPEARSQUICKEN].timer!=-1 && !(skill_get_weapontype(CR_SPEARQUICKEN)&(1<<sd->status.weapon)))
-		// Spear Quicken requires a Two-handed spear
-		status_change_end(&sd->bl,SC_SPEARSQUICKEN,-1);
-	if(sd->sc.data[SC_ADRENALINE].timer!=-1 && !(skill_get_weapontype(BS_ADRENALINE)&(1<<sd->status.weapon)))
-		status_change_end(&sd->bl,SC_ADRENALINE,-1);
-	if(sd->sc.data[SC_ADRENALINE2].timer!=-1 && !(skill_get_weapontype(BS_ADRENALINE2)&(1<<sd->status.weapon)))
-		status_change_end(&sd->bl,SC_ADRENALINE2,-1);
-	if( sd->sc.data[SC_SPURT].timer!=-1 && sd->status.weapon)
+	for (i = 0; i < sizeof(scw_list)/sizeof(scw_list[0]); i++)
+	{	// Skills requiring specific weapon types
+		if(sd->sc.data[scw_list[i]].timer!=-1 && !(skill_get_weapontype(StatusSkillChangeTable[scw_list[i]])&(1<<sd->status.weapon)))
+		status_change_end(&sd->bl,scw_list[i],-1);
+	}
+	
+	if(sd->sc.data[SC_SPURT].timer!=-1 && sd->status.weapon)
 		// Spurt requires bare hands (feet, in fact xD)
 		status_change_end(&sd->bl,SC_SPURT,-1);
-
+	
 	if(sd->status.shield <= 0) { // Skills requiring a shield
-		if(sd->sc.data[SC_AUTOGUARD].timer!=-1)	// Guard
-			status_change_end(&sd->bl,SC_AUTOGUARD,-1);
-		if(sd->sc.data[SC_DEFENDER].timer!=-1)	// Defending Aura
-			status_change_end(&sd->bl,SC_DEFENDER,-1);
-		if(sd->sc.data[SC_REFLECTSHIELD].timer!=-1) // Shield Reflect
-			status_change_end(&sd->bl,SC_REFLECTSHIELD,-1);
+		for (i = 0; i < sizeof(scs_list)/sizeof(scs_list[0]); i++)
+			if(sd->sc.data[scs_list[i]].timer!=-1)	// Guard
+				status_change_end(&sd->bl,scs_list[i],-1);
 	}
 	return 0;
 }

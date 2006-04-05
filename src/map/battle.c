@@ -485,9 +485,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if(sc->data[SC_REJECTSWORD].timer!=-1 && flag&BF_WEAPON &&
 			// Fixed the condition check [Aalye]
-			(src->type==BL_MOB || (src->type==BL_PC && (((struct map_session_data *)src)->status.weapon == 1 ||
-			((struct map_session_data *)src)->status.weapon == 2 ||
-			((struct map_session_data *)src)->status.weapon == 3)))){
+			(src->type==BL_MOB || (src->type==BL_PC && (((struct map_session_data *)src)->status.weapon == W_DAGGER ||
+			((struct map_session_data *)src)->status.weapon == W_1HSWORD ||
+			((struct map_session_data *)src)->status.weapon == W_2HSWORD)))){
 			if(rand()%100 < (15*sc->data[SC_REJECTSWORD].val1)){
 				damage = damage*50/100;
 				clif_damage(bl,src,gettick(),0,0,damage,0,0,0);
@@ -685,8 +685,8 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 		weapon = sd->weapontype2;
 	switch(weapon)
 	{
-		case 0x01:	// Knife
-		case 0x02:	// 1HS
+		case W_DAGGER:
+		case W_1HSWORD:
 		{
 			// Œ•?C—û(+4 ?` +40) •ÐŽèŒ• ’ZŒ•ŠÜ‚Þ
 			if((skill = pc_checkskill(sd,SM_SWORD)) > 0) {
@@ -694,7 +694,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x03:	// 2HS
+		case W_2HSWORD:
 		{
 			// —¼ŽèŒ•?C—û(+4 ?` +40) —¼ŽèŒ•
 			if((skill = pc_checkskill(sd,SM_TWOHAND)) > 0) {
@@ -702,8 +702,8 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x04:	// 1HL
-		case 0x05:	// 2HL
+		case W_1HSPEAR:
+		case W_2HSPEAR:
 		{
 			// ‘„?C—û(+4 ?` +40,+5 ?` +50) ‘„
 			if((skill = pc_checkskill(sd,KN_SPEARMASTERY)) > 0) {
@@ -714,36 +714,30 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x06: // 1H Axe
-		case 0x07: // 2H Axe by Tato
+		case W_1HAXE:
+		case W_2HAXE:
 		{
 			if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0) {
 				damage += (skill * 3);
 			}
 			break;
 		}
-		case 0x08:	// Maces
+		case W_MACE:
 		{
 			if((skill = pc_checkskill(sd,PR_MACEMASTERY)) > 0) {
 				damage += (skill * 3);
 			}
 			break;
 		}
-		case 0x09:	// ‚È‚µ?
-			break;
-		case 0x0a:	// Staffs
-			break;
-		case 0x0b:	// Bows
-			break;
-		case 0x00:	// Bare Hands
-		case 0x0c:	// Knuckles
+		case W_FIST:
+		case W_KNUCKLE:
 		{
 			if((skill = pc_checkskill(sd,MO_IRONHAND)) > 0) {
 				damage += (skill * 3);
 			}
 			break;
 		}
-		case 0x0d:	// Musical Instrument
+		case W_MUSICAL:
 		{
 			// ŠyŠí‚Ì—û?K(+3 ?` +30) ŠyŠí
 			if((skill = pc_checkskill(sd,BA_MUSICALLESSON)) > 0) {
@@ -751,7 +745,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x0e:	// Whips
+		case W_WHIP:
 		{
 			// Dance Lesson Skill Effect(+3 damage for every lvl = +30) •Ú
 			if((skill = pc_checkskill(sd,DC_DANCINGLESSON)) > 0) {
@@ -759,7 +753,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x0f:	// Book
+		case W_BOOK:
 		{
 			// Advance Book Skill Effect(+3 damage for every lvl = +30) {
 			if((skill = pc_checkskill(sd,SA_ADVANCEDBOOK)) > 0) {
@@ -767,7 +761,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x10:	// Katars
+		case W_KATAR:
 		{
 			if((skill = pc_checkskill(sd,ASC_KATAR)) > 0) {
 				//Advanced Katar Research by zanetheinsane
@@ -780,12 +774,6 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			}
 			break;
 		}
-		case 0x11: // Revolver
-		case 0x12: // Rifle
-		case 0x13: // Shotgun
-		case 0x14: //Gatling Gun
-		case 0x15: //Grenade Launcher
-			break;
 	}
 /*//need to add this on shuriken skills.
 	if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
@@ -910,7 +898,7 @@ static void battle_calc_base_damage(struct block_list *src, struct block_list *t
 		if (!(
 			sd->special_state.no_sizefix ||
 			(sc && sc->data[SC_WEAPONPERFECTION].timer!=-1) ||
-			(pc_isriding(sd) && (sd->status.weapon==4 || sd->status.weapon==5) && t_size==1) ||
+			(pc_isriding(sd) && (sd->status.weapon==W_1HSPEAR || sd->status.weapon==W_2HSPEAR) && t_size==1) ||
 			(flag&8)
 			))
 		{
@@ -1034,12 +1022,12 @@ static struct Damage battle_calc_weapon_attack(
 	//Set miscellaneous data that needs be filled regardless of hit/miss
 	if(sd) {
 		switch (sd->status.weapon) {
-			case 11:
-			case 17:
-			case 18:
-			case 19:
-			case 20:
-			case 21:
+			case W_BOW:
+			case W_REVOLVER:
+			case W_RIFLE:
+			case W_SHOTGUN:
+			case W_GATLING:
+			case W_GRENADE:
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				flag.arrow = 1;
 				break;
@@ -1427,7 +1415,7 @@ static struct Damage battle_calc_weapon_attack(
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
 				if(sd)
 				{
-					if (sd->status.weapon <= MAX_WEAPON_TYPE && (sd->atk_rate != 100 || sd->weapon_atk_rate[sd->status.weapon] != 0))
+					if (sd->status.weapon < MAX_WEAPON_TYPE && (sd->atk_rate != 100 || sd->weapon_atk_rate[sd->status.weapon] != 0))
 						ATK_RATE(sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]);
 
 					if(flag.cri && sd->crit_atk_rate)
@@ -1552,7 +1540,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 25*skill_lv;
 					break;
 				case RG_BACKSTAP:
-					if(sd && sd->status.weapon == 11 && battle_config.backstab_bow_penalty)
+					if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
 						skillratio += (200+40*skill_lv)/2;
 					else
 						skillratio += 200+40*skill_lv;
@@ -1753,7 +1741,7 @@ static struct Damage battle_calc_weapon_attack(
 				case TK_COUNTER:
 				case TK_JUMPKICK:
 					//TK_RUN kick damage bonus.
-					if(sd && sd->weapontype1 == 0 && sd->weapontype2 == 0)
+					if(sd && sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST)
 						ATK_ADD(10*pc_checkskill(sd, TK_RUN));
 					break;
 				case GS_MAGICALBULLET:
@@ -2111,7 +2099,7 @@ static struct Damage battle_calc_weapon_attack(
 	
 	if(sd && !skill_num && !flag.cri)
 	{	//Check for double attack.
-		if(( (skill_lv = 5*pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == 0x01) ||
+		if(( (skill_lv = 5*pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == W_DAGGER) ||
 			sd->double_rate > 0) //Success chance is not added, the higher one is used? [Skotlex]
 		{
 			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
@@ -2120,7 +2108,7 @@ static struct Damage battle_calc_weapon_attack(
 				damage_div_fix(wd.damage, wd.div_);
 				wd.type = 0x08;
 			}
-		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 && sd->weapontype1 == 0x11) || sd->double_rate > 0)
+		} else if (( (skill_lv = 5*pc_checkskill(sd,GS_CHAINACTION)) > 0 && sd->weapontype1 == W_REVOLVER) || sd->double_rate > 0)
 			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
 			{
 				wd.div_=skill_get_num(GS_CHAINACTION,skill_lv?skill_lv:1);
@@ -2157,7 +2145,7 @@ static struct Damage battle_calc_weapon_attack(
 				wd.damage2 = wd.damage2 * (30 + (skill * 10))/100;
 				if(wd.damage2 < 1) wd.damage2 = 1;
 			}
-		} else if(sd->status.weapon == 16)
+		} else if(sd->status.weapon == W_KATAR)
 		{ //Katars
 			skill = pc_checkskill(sd,TF_DOUBLE);
 			wd.damage2 = wd.damage * (1 + (skill * 2))/100;
@@ -2997,8 +2985,8 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	race = status_get_race(target);
 	ele = status_get_elem_type(target);
 
-	if(sd && (sd->status.weapon == 11 || sd->status.weapon == 17 || sd->status.weapon == 18
-		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21)) {
+	if(sd && (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
+	) {
 		if(sd->equip_index[10] >= 0) {
 			if(battle_config.arrow_decrement)
 				pc_delitem(sd,sd->equip_index[10],1,0);
@@ -3042,7 +3030,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	}
 	//Recycled the damage variable rather than use a new one... [Skotlex]
-	if(sd && (damage = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0 && sd->status.weapon <= MAX_WEAPON_TYPE) // triple blow works with bows ^^ [celest]
+	if(sd && (damage = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0) // triple blow works with bows ^^ [celest]
 	{
 		int triple_rate= 30 - damage; //Base Rate
 		if (sc && sc->data[SC_SKILLRATE_UP].timer!=-1 && sc->data[SC_SKILLRATE_UP].val1 == MO_TRIPLEATTACK)

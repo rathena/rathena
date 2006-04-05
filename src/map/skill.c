@@ -934,13 +934,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	{
 		if(sd) {
 			// Automatic trigger of Blitz Beat
-			if (pc_isfalcon(sd) && sd->status.weapon == 11 && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
+			if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
 				rand()%1000 <= sd->paramc[5]*10/3+1 ) {
 				int lv=(sd->status.job_level+9)/10;
 				skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<lv)?skill:lv,tick,0xf00000);
 			}
 			// Gank
-			if(dstmd && !dstmd->state.steal_flag && sd->status.weapon != 11 && (skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
+			if(dstmd && !dstmd->state.steal_flag && sd->status.weapon != W_BOW && (skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
 				(skill*15 + 55) + (skill2 = pc_checkskill(sd,TF_STEAL))*10 > rand()%1000) {
 				if(pc_steal_item(sd,bl))
 					clif_skill_nodamage(src,bl,TF_STEAL,skill2,1);
@@ -1507,11 +1507,12 @@ int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int
 			rate -= rate*sd->unbreakable/100;
 		if (where&EQP_WEAPON) {
 			switch (sd->status.weapon) {
-				case 0:	//Bare fists should not break :P
-				case 7:
-				case 8: // Axes and Maces can't be broken [DracoRPG]
-				case 10:
-				case 15: //Rods and Books can't be broken [Skotlex]
+				case W_FIST:	//Bare fists should not break :P
+				case W_1HAXE:
+				case W_2HAXE:
+				case W_MACE: // Axes and Maces can't be broken [DracoRPG]
+				case W_STAFF:
+				case W_BOOK: //Rods and Books can't be broken [Skotlex]
 					where &= ~EQP_WEAPON;
 			}
 		}
@@ -3567,7 +3568,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SA_LIGHTNINGLOADER:
 	case SA_SEISMICWEAPON:
 		if (dstsd) {
-			if(dstsd->status.weapon == 0 ||
+			if(dstsd->status.weapon == W_FIST ||
 				(dstsd->sc.count && dstsd->sc.data[type].timer == -1 &&
 				(	//Allow re-enchanting to lenghten time. [Skotlex]
 					dstsd->sc.data[SC_FIREWEAPON].timer != -1 ||
@@ -4526,7 +4527,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					return 1;
 				}
 				if(skillid == AM_BERSERKPITCHER) { //Does not override use-level, and cannot be used on bows.
-					if (dstsd && (dstsd->status.base_level<(unsigned int)sd->inventory_data[i]->elv || dstsd->weapontype1 == 11)) {
+					if (dstsd && (dstsd->status.base_level<(unsigned int)sd->inventory_data[i]->elv || dstsd->weapontype1 == W_BOW)) {
 						clif_skill_fail(sd,skillid,0,0);
 						map_freeblock_unlock();
 						return 1;
@@ -7421,7 +7422,7 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 				if (sd->status.sex != tsd->status.sex &&
 						(tsd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER &&
 						(skilllv = pc_checkskill(tsd, skillid)) > 0 &&
-						(tsd->weapontype1==13 || tsd->weapontype1==14) &&
+						(tsd->weapontype1==W_MUSICAL || tsd->weapontype1==W_WHIP) &&
 						sd->status.party_id && tsd->status.party_id &&
 						sd->status.party_id == tsd->status.party_id &&
 						tsd->sc.data[SC_DANCING].timer == -1)
@@ -7634,7 +7635,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	else
 		sp += (sd->status.max_sp * abs(sp_rate))/100;
 
-	if (!ammo && sd->status.weapon == 11 && skill &&
+	if (!ammo && sd->status.weapon == W_BOW && skill &&
 		skill != HT_PHANTASMIC && skill != GS_MAGICALBULLET &&
 		skill_get_type(skill) == BF_WEAPON && !(skill_get_nk(skill)&NK_NO_DAMAGE) 
 	)

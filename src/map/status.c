@@ -919,7 +919,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(sd->attackrange_ < 1) sd->attackrange_ = 1;
 	if(sd->attackrange < sd->attackrange_)
 		sd->attackrange = sd->attackrange_;
-	if(sd->status.weapon == 11)
+	if(sd->status.weapon == W_BOW)
 		sd->attackrange += sd->arrow_range;
 	sd->double_rate += sd->double_add_rate;
 	sd->perfect_hit += sd->perfect_hit_add;
@@ -1082,14 +1082,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	// Basic Base ATK value
 	switch(sd->status.weapon){
-		case 11: // Bows
-		case 13: // Musical Instruments
-		case 14: // Whips
-		case 17: // Revolver
-		case 18: // Rifle
-		case 19: // Shotgun
-		case 20: //Gatling Gun
-		case 21: //Grenade Launcher
+		case W_BOW:
+		case W_MUSICAL: 
+		case W_WHIP:
+		case W_REVOLVER:
+		case W_RIFLE:
+		case W_SHOTGUN:
+		case W_GATLING:
+		case W_GRENADE:
 			str = sd->paramc[4];
 			dex = sd->paramc[0];
 			break;
@@ -1177,16 +1177,17 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->hit += skill*2;
 	if((skill=pc_checkskill(sd,AC_VULTURE))>0){
 		sd->hit += skill;
-		if(sd->status.weapon == 11)
+		if(sd->status.weapon == W_BOW)
 			sd->attackrange += skill;
 	}
-	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 && (sd->status.weapon == 17 || sd->status.weapon == 18
-		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21))
-		sd->hit += 2*skill;
-	if((skill=pc_checkskill(sd,GS_SNAKEEYE))>0 && (sd->status.weapon == 17 || sd->status.weapon == 18
-		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21)) {
-		sd->hit += skill;
-		sd->attackrange += skill;
+	if(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)
+  	{
+		if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0)
+			sd->hit += 2*skill;
+		if((skill=pc_checkskill(sd,GS_SNAKEEYE))>0) {
+			sd->hit += skill;
+			sd->attackrange += skill;
+		}
 	}
 
 	// Absolute, then relative modifiers from status changes (shared between PC and NPC)
@@ -1345,7 +1346,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 // Unlike other stats, ASPD rate modifiers from skills/SCs/items/etc are first all added together, then the final modifier is applied
 
 	// Basic ASPD value
-	if (sd->status.weapon <= MAX_WEAPON_TYPE)
+	if (sd->status.weapon < MAX_WEAPON_TYPE)
 		sd->aspd += aspd_base[sd->status.class_][sd->status.weapon]-(sd->paramc[1]*4+sd->paramc[4])*aspd_base[sd->status.class_][sd->status.weapon]/1000;
 	else
 		sd->aspd += (
@@ -1354,18 +1355,16 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			) *2/3; //From what I read in rodatazone, 2/3 should be more accurate than 0.7 -> 140 / 200; [Skotlex]
 
 	// Relative modifiers from passive skills
-	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0)
+	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
 		sd->aspd_rate -= (skill/2);
 	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && !pc_nextjobexp(sd))
 		sd->aspd_rate -= (skill*3);
-
+	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
+		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
+		sd->aspd_rate -= (skill/2);
 	if(pc_isriding(sd))
 		sd->aspd_rate += 50-10*pc_checkskill(sd,KN_CAVALIERMASTERY);
-		
-	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 && (sd->status.weapon == 17 || sd->status.weapon == 18
-		|| sd->status.weapon == 19 || sd->status.weapon == 20 || sd->status.weapon == 21))
-		sd->aspd_rate -= (int)(skill / 2);
-
+	
 	// Relative modifiers from status changes (shared between PC and NPC)
 	sd->aspd_rate = status_calc_aspd_rate(&sd->bl,sd->aspd_rate);
 
@@ -2198,7 +2197,7 @@ int status_calc_aspd_rate(struct block_list *bl, int aspd_rate)
 				aspd_rate -= (sc->data[SC_ADRENALINE].val2 || !battle_config.party_skill_penalty)?30:20;
 			else if(sc->data[SC_SPEARSQUICKEN].timer!=-1)
 				aspd_rate -= sc->data[SC_SPEARSQUICKEN].val2;
-			else if(sc->data[SC_ASSNCROS].timer!=-1 && (bl->type!=BL_PC || ((struct map_session_data*)bl)->status.weapon != 11))
+			else if(sc->data[SC_ASSNCROS].timer!=-1 && (bl->type!=BL_PC || ((struct map_session_data*)bl)->status.weapon != W_BOW))
 				aspd_rate -= sc->data[SC_ASSNCROS].val2;
 		}
 		if(sc->data[SC_BERSERK].timer!=-1)
@@ -2701,7 +2700,7 @@ int status_get_batk(struct block_list *bl)
 	
 	if(bl->type==BL_PC) {
 		batk = ((struct map_session_data *)bl)->base_atk;
-		if (((struct map_session_data *)bl)->status.weapon <= MAX_WEAPON_TYPE)
+		if (((struct map_session_data *)bl)->status.weapon < MAX_WEAPON_TYPE)
 			batk += ((struct map_session_data *)bl)->weapon_atk[((struct map_session_data *)bl)->status.weapon];
 	} else {
 		int str,dstr;
