@@ -5788,6 +5788,7 @@ int status_change_clear_buffs (struct block_list *bl)
 			|| i == SC_COMBO || i == SC_DANCING || i == SC_GUILDAURA
 			)
 			continue;
+		if(i==SC_BERSERK) sc->data[i].val4 = 1;
 		if(sc->data[i].timer != -1)
 			status_change_end(bl,i,-1);
 	}
