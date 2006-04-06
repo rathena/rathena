@@ -1,4 +1,4 @@
-The "O Mobs" folder contains the official spawns
+The "Mobs" folder contains the official spawns
 The "eA Mobs" folder is modified for eAthena in an attempt to have more balanced/fair spawns.
 
 This is a list of what files are modified, and what are not, just so you don't have to go searching all the files for that info.
