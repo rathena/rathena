@@ -977,9 +977,12 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 	
 	if (pd->target_id) {
 		target= map_id2bl(pd->target_id);
-		if (!target || pd->bl.m != target->m || target->prev == NULL ||
+		if (!target || pd->bl.m != target->m || status_isdead(target) ||
 			!check_distance_bl(&pd->bl, target, pd->db->range3))
+		{
+			target = NULL;
 			pet_unlocktarget(pd);
+		}
 	}
 	
 	// ペットによるルート
