@@ -4,14 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+
+#include "../common/timer.h"
+#include "../common/nullpo.h"
+#include "../common/malloc.h"
+#include "../common/showmsg.h"
+#include "../common/ers.h"
 
 #include "map.h"
 #include "guild.h"
 #include "storage.h"
-#include "timer.h"
-#include "socket.h"
-#include "nullpo.h"
-#include "malloc.h"
 #include "battle.h"
 #include "npc.h"
 #include "pc.h"
@@ -20,7 +23,6 @@
 #include "intif.h"
 #include "clif.h"
 #include "skill.h"
-#include "showmsg.h"
 #include "log.h"
 
 static struct guild* guild_cache; //For fast retrieval of the same guild over and over. [Skotlex]
@@ -42,8 +44,10 @@ struct eventlist {
 
 // ギルドのEXPキャッシュ
 struct guild_expcache {
-	int guild_id, account_id, char_id, exp;
+	int guild_id, account_id, char_id;
+	unsigned int exp;
 };
+static struct eri *expcache_ers; //For handling of guild exp payment.
 
 struct{
 	int id;
@@ -200,7 +204,7 @@ void do_init_guild(void)
 {
 	guild_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	castle_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	guild_expcache_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	guild_expcache_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 	guild_infoevent_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 	guild_castleinfoevent_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 
@@ -348,43 +352,36 @@ int guild_check_conflict(struct map_session_data *sd)
 // ギルドのEXPキャッシュをinter鯖にフラッシュする
 int guild_payexp_timer_sub(DBKey dataid, void *data, va_list ap)
 {
-	int i, *dellist, *delp;
+	int i;
 	struct guild_expcache *c;
 	struct guild *g;
-	double exp2;
 
 	c = (struct guild_expcache *)data;
-	dellist = va_arg(ap,int *);
-	delp = va_arg(ap,int *);
-
-	if (*delp >= GUILD_PAYEXP_LIST ||
-		(g = guild_search(c->guild_id)) == NULL ||
-		(i = guild_getindex(g, c->account_id, c->char_id)) < 0)
-		return 0;
-
-	// It is *already* fixed... this would be more appropriate ^^; [celest]
-	exp2 = g->member[i].exp + c->exp;
-	g->member[i].exp = (exp2 > 0x7FFFFFFF) ? 0x7FFFFFFF : (int)exp2;
-
-	//fixed a bug in exp overflow [Kevin]
-	//g->member[i].exp += c->exp;
-	//if(g->member[i].exp < 0)
-		//g->member[i].exp = 0x7FFFFFFF;
 	
+	if (
+		(g = guild_search(c->guild_id)) == NULL ||
+		(i = guild_getindex(g, c->account_id, c->char_id)) < 0
+	) {
+		ers_free(expcache_ers, data);
+		return 0;
+	}
+
+	if (g->member[i].exp > INT_MAX - c->exp)
+		g->member[i].exp = INT_MAX;
+	else
+		g->member[i].exp+= c->exp;
+
 	intif_guild_change_memberinfo(g->guild_id,c->account_id,c->char_id,
 		GMI_EXP,&g->member[i].exp,sizeof(g->member[i].exp));
 	c->exp=0;
 
-	dellist[(*delp)++]=dataid.i;
+	ers_free(expcache_ers, data);
 	return 0;
 }
 
 int guild_payexp_timer(int tid, unsigned int tick, int id, int data)
 {
-	int dellist[GUILD_PAYEXP_LIST], delp = 0, i;
-	guild_expcache_db->foreach(guild_expcache_db, guild_payexp_timer_sub, dellist, &delp);
-	for (i = 0; i < delp; i++)
-		idb_remove(guild_expcache_db, dellist[i]);
+	guild_expcache_db->clear(guild_expcache_db,guild_payexp_timer_sub);
 	return 0;
 }
 
@@ -1116,18 +1113,22 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data)
 static void* create_expcache(DBKey key, va_list args) {
 	struct guild_expcache *c;
 	struct map_session_data *sd = va_arg(args, struct map_session_data*);
-	c = (struct guild_expcache *)aCallocA(1, sizeof(struct guild_expcache));
+
+	c = ers_alloc(expcache_ers, struct guild_expcache);
 	c->guild_id = sd->status.guild_id;
 	c->account_id = sd->status.account_id;
 	c->char_id = sd->status.char_id;
+	c->exp = 0;
 	return c;
 }
+
 // ギルドのEXP上納
-int guild_payexp(struct map_session_data *sd,int exp)
+unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp)
 {
 	struct guild *g;
 	struct guild_expcache *c;
-	int per, exp2;
+	int per;
+	unsigned int exp2;
 	double tmp;
 	
 	nullpo_retr(0, sd);
@@ -1136,19 +1137,27 @@ int guild_payexp(struct map_session_data *sd,int exp)
 		(g = guild_search(sd->status.guild_id)) == NULL ||
 		(per = g->position[guild_getposition(sd,g)].exp_mode) <= 0)
 		return 0;
+	
 
 	if (per > 100) per = 100;
+	else
+	if (per < 1) return 0;
 
-	if ((exp2 = exp * per / 100) <= 0)
+	if ((tmp = exp * per / 100) <= 0)
 		return 0;
+	
+	exp2 = (unsigned int)tmp;
+	
+	if (battle_config.guild_exp_rate != 100)
+		tmp = tmp*battle_config.guild_exp_rate/100;
 
 	c = guild_expcache_db->ensure(guild_expcache_db, i2key(sd->status.char_id), create_expcache, sd);
-	tmp = c->exp;
-	if (battle_config.guild_exp_rate != 100)
-		tmp += battle_config.guild_exp_rate*exp2/100;
+
+	if (c->exp > UINT_MAX - (unsigned int)tmp)
+		c->exp = UINT_MAX;
 	else
-		tmp += exp2;
-	c->exp = (tmp > 0x7fffffff) ? 0x7fffffff : (int)tmp;
+		c->exp += (unsigned int)tmp;
+	
 	return exp2;
 }
 
@@ -1157,15 +1166,16 @@ int guild_getexp(struct map_session_data *sd,int exp)
 {
 	struct guild *g;
 	struct guild_expcache *c;
-	double tmp;
 	nullpo_retr(0, sd);
 
 	if (sd->status.guild_id == 0 || (g = guild_search(sd->status.guild_id)) == NULL)
 		return 0;
 
 	c = guild_expcache_db->ensure(guild_expcache_db, i2key(sd->status.char_id), create_expcache, sd);
-	tmp = c->exp + exp;
-	c->exp = (tmp > 0x7fffffff) ? 0x7fffffff : (int)tmp;
+	if (c->exp > UINT_MAX - exp)
+		c->exp = UINT_MAX;
+	else
+		c->exp += exp;
 	return exp;
 }
 
@@ -1975,11 +1985,18 @@ static int guild_infoevent_db_final(DBKey key,void *data,va_list ap)
 	aFree(data);
 	return 0;
 }
+
+static int guild_expcache_db_final(DBKey key,void *data,va_list ap)
+{
+	ers_free(expcache_ers, data);
+	return 0;
+}
+
 void do_final_guild(void)
 {
 	guild_db->destroy(guild_db,NULL);
 	castle_db->destroy(castle_db,NULL);
-	guild_expcache_db->destroy(guild_expcache_db,NULL);
+	guild_expcache_db->destroy(guild_expcache_db,guild_expcache_db_final);
 	guild_infoevent_db->destroy(guild_infoevent_db,guild_infoevent_db_final);
 	guild_castleinfoevent_db->destroy(guild_castleinfoevent_db,guild_infoevent_db_final);
 }
