@@ -1470,7 +1470,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
 			else if( rand()%1000<MOB_LAZYWARPPERC
 				&& (md->spawn && !md->spawn->x && !md->spawn->y)
 				&& !md->target_id && !(mode&MD_BOSS))
-				mob_spawn(md);
+				unit_warp(&md->bl,-1,-1,-1,0);
 		}else{
 			// Since PC is not even in the same map, suitable processing is carried out even if it takes.
 
