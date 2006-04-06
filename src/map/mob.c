@@ -1867,7 +1867,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		{	//Soul Drain should only work on targetted spells [Skotlex]
 			if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
 			clif_skill_nodamage(src,&md->bl,HW_SOULDRAIN,i,1);
-			sp += (status_get_lv(&md->bl))*(65+15*i)/100;
+			sp += (status_get_lv(&md->bl))*(95+15*i)/100;
 		}
 		sp += sd->sp_gain_value;
 		sp += sd->sp_gain_race[race];
