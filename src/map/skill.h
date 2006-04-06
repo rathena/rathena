@@ -165,7 +165,7 @@ int	skill_get_unit_target( int id );
 int	skill_tree_get_max( int id, int b_class );	// Celest
 const char*	skill_get_name( int id ); 	// [Skotlex]
 
-void skill_isammoy_type(TBL_PC *sd, int skill);
+int skill_isammotype(TBL_PC *sd, int skill);
 int skill_castend_id( int tid, unsigned int tick, int id,int data );
 int skill_castend_pos( int tid, unsigned int tick, int id,int data );
 int skill_castend_map( struct map_session_data *sd,int skill_num, const char *map);

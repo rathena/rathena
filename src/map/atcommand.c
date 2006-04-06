@@ -4205,7 +4205,7 @@ int atcommand_stat_all(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int index, count, value = 0, new_value;
+	int index, count, value = 0, max, new_value;
 	short* status[] = {
 		&sd->status.str,  &sd->status.agi, &sd->status.vit,
 		&sd->status.int_, &sd->status.dex, &sd->status.luk
@@ -4216,14 +4216,16 @@ int atcommand_stat_all(
 		value = pc_maxparameter(sd);
 
 	count = 0;
+	max = pc_maxparameter(sd);
 	for (index = 0; index < (int)(sizeof(status) / sizeof(status[0])); index++) {
 
-		new_value = (int)*status[index] + value;
-		if (value > 0 && (value > pc_maxparameter(sd) || new_value > pc_maxparameter(sd))) // fix positiv overflow
-			new_value = pc_maxparameter(sd);
-		else if (value < 0 && (value < -(int)pc_maxparameter(sd) || new_value < 1)) // fix negative overflow
+		if (value > 0 && *status[index] > max - value)
+			new_value = max;
+		else if (value < 0 && *status[index] <= -value)
 			new_value = 1;
-
+		else
+			new_value = *status[index] +value;
+		
 		if (new_value != (int)*status[index]) {
 			*status[index] = new_value;
 			clif_updatestatus(sd, SP_STR + index);

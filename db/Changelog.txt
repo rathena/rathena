@@ -27,6 +27,8 @@
 
 =========================
 
+04/06
+	* Fixed HP/SP requirements for WE_MALE/WE_FEMALE [Skotlex]
 04/05
 	* Modified the item_db and added view_types to ammo: 1 arrows, 2 dagger
 	  (venom knife), 3 bullets, 4 shells, 5 grenades, 6 shurikens, 7 kunais.
