@@ -38,7 +38,7 @@ typedef int socklen_t;
 #include "irc.h"
 #include "intif.h" //For GM Broadcast [Zido]
 
-short use_irc=1;
+short use_irc=0;
 
 short irc_announce_flag=1;
 short irc_announce_mvp_flag=1;
@@ -47,13 +47,13 @@ short irc_announce_shop_flag=1;
 
 IRC_SI *irc_si=NULL;
 
-char irc_nick[30]="Zido[eABot]";
+char irc_nick[30]="";
 char irc_password[32]="";
 
-char irc_channel[32]="#ROsucks";
+char irc_channel[32]="";
 char irc_trade_channel[32]="";
 
-unsigned char irc_ip_str[128]="irc.deltaanime.net";
+unsigned char irc_ip_str[128]="";
 unsigned long irc_ip=6667;
 unsigned short irc_port = 6667;
 int irc_fd=0;
