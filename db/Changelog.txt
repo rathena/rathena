@@ -28,8 +28,13 @@
 =========================
 
 04/05
-	Updated item givers with ACTUAL items. ~10 Ep [Lupus]
-		item_cookie_bag.txt,item_cardalbum.txt,item_violetbox.txt,item_giftbox.txt,item_bluebox.txt
+	* Modified the item_db and added view_types to ammo: 1 arrows, 2 dagger
+	  (venom knife), 3 bullets, 4 shells, 5 grenades, 6 shurikens, 7 kunais.
+	  [Skotlex]
+	* Updated skill_require_db to specify the ammo types required for GS/NJ
+	  skills (as best as I could understand them) [Skotlex]
+	* Updated item givers with ACTUAL items. ~10 Ep [Lupus]
+	  item_cookie_bag.txt,item_cardalbum.txt,item_violetbox.txt,item_giftbox.txt,item_bluebox.txt
 03/31
 	* Changed the look field of all arrows to 1. [Skotlex]
 	* Added column "RequiredArrowType" to skill_require_db, set to 1 all

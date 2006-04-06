@@ -756,28 +756,28 @@
 1724,Dragon_Wing,Dragon Wing,4,,10,1200,100,,5,0,1706056,7,2,34,4,60,1,11,{ bonus3 bAddMonsterDropItem,1765,9,300; bonus bIgnoreDefRace,RC_Dragon; }
 1725,Wandering_Bard's_Bow,Wandering Bard's Bow,4,,10,1700,120,,5,1,1574912,7,2,34,4,70,1,11,{ bonus bInt,2; bonus bSPrecovRate,10; }
 // Arrows
-1750,Arrow,Arrow,10,1,,1,25,,,,1706056,7,2,32768,,1,,22,{}
-1751,Silver_Arrow,Silver Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Holy; }
-1752,Fire_Arrow,Fire Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Fire; }
-1753,Steel_Arrow,Steel Arrow,10,2,,2,40,,,,1706056,7,2,32768,,1,,22,{}
-1754,Crystal_Arrow,Crystal Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Water; }
-1755,Arrow_of_Wind,Arrow of Wind,10,3,,2,30,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Wind; }
-1756,Stone_Arrow,Stone Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Earth; }
-1757,Immaterial_Arrow,Immaterial Arrow,10,3,,1,30,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Ghost; }
-1758,Stun_Arrow,Stun Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,22,{ bonus2 bAddEff,Eff_Stan,1000; }
-1759,Frozen_Arrow,Frozen Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,1000; }
-1760,Flash_Arrow,Flash Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,22,{ bonus2 bAddEff,Eff_Blind,1000; }
-1761,Cursed_Arrow,Cursed Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,22,{ bonus2 bAddEff,Eff_Curse,1000; }
-1762,Rusty_Arrow,Rusty Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Poison; }
-1763,Poison_Arrow,Poison Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,2000; }
-1764,Sharp_Arrow,Sharp Arrow,10,3,,3,10,,,,1706056,7,2,32768,,1,,22,{ bonus bCritical,10; }
-1765,Oridecon_Arrow,Oridecon Arrow,10,3,,3,50,,,,1706056,7,2,32768,,1,,22,{}
-1766,Arrow_of_Counter_Evil,Arrow of Counter Evil,10,40,,3,50,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Holy; }
-1767,Arrow_of_Shadow,Shadow Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,22,{ bonus bAtkEle,Ele_Dark; }
-1768,Sleep_Arrow,Sleep Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,22,{ bonus2 bAddEff,Eff_Sleep,2000; }
-1769,Mute_Arrow,Mute Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,22,{ bonus2 bAddEff,Eff_Silence,1000; }
-1770,Iron_Arrow,Iron Arrow,10,2,,1,30,,,,1706056,7,2,32768,,1,,22,{}
-1771,Venom_Knife,Venom Knife,10,50,,5,30,,,,4096,7,2,32768,,1,,22,{}
+1750,Arrow,Arrow,10,1,,1,25,,,,1706056,7,2,32768,,1,,1,{}
+1751,Silver_Arrow,Silver Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Holy; }
+1752,Fire_Arrow,Fire Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Fire; }
+1753,Steel_Arrow,Steel Arrow,10,2,,2,40,,,,1706056,7,2,32768,,1,,1,{}
+1754,Crystal_Arrow,Crystal Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Water; }
+1755,Arrow_of_Wind,Arrow of Wind,10,3,,2,30,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Wind; }
+1756,Stone_Arrow,Stone Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Earth; }
+1757,Immaterial_Arrow,Immaterial Arrow,10,3,,1,30,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Ghost; }
+1758,Stun_Arrow,Stun Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,1,{ bonus2 bAddEff,Eff_Stan,1000; }
+1759,Frozen_Arrow,Frozen Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,1000; }
+1760,Flash_Arrow,Flash Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,1,{ bonus2 bAddEff,Eff_Blind,1000; }
+1761,Cursed_Arrow,Cursed Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,1,{ bonus2 bAddEff,Eff_Curse,1000; }
+1762,Rusty_Arrow,Rusty Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Poison; }
+1763,Poison_Arrow,Poison Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,2000; }
+1764,Sharp_Arrow,Sharp Arrow,10,3,,3,10,,,,1706056,7,2,32768,,1,,1,{ bonus bCritical,10; }
+1765,Oridecon_Arrow,Oridecon Arrow,10,3,,3,50,,,,1706056,7,2,32768,,1,,1,{}
+1766,Arrow_of_Counter_Evil,Arrow of Counter Evil,10,40,,3,50,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Holy; }
+1767,Arrow_of_Shadow,Shadow Arrow,10,3,,2,30,,,,1706056,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Dark; }
+1768,Sleep_Arrow,Sleep Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,1,{ bonus2 bAddEff,Eff_Sleep,2000; }
+1769,Mute_Arrow,Mute Arrow,10,3,,3,1,,,,1706056,7,2,32768,,1,,1,{ bonus2 bAddEff,Eff_Silence,1000; }
+1770,Iron_Arrow,Iron Arrow,10,2,,1,30,,,,1706056,7,2,32768,,1,,1,{}
+1771,Venom_Knife,Venom Knife,10,50,,5,30,,,,4096,7,2,32768,,1,,2,{}
 // Knuckles
 1801,Waghnak,Waghnak,4,8000,,400,30,,1,3,33024,7,2,2,1,1,1,12,{}
 1802,Waghnak_,Waghnak,4,8000,,400,30,,1,4,33024,7,2,2,1,1,1,12,{}
@@ -2399,26 +2399,26 @@
 13162,Inferno,Inferno,4,230000,,1250,280,,9,1,134217728,7,2,34,2,65,1,21,{}
 
 // Bullets
-13200,Bullet,Bullet,10,1,,2,10,,,,134217728,7,2,32768,,1,,,{}
-13201,Silver_Bullet,Silver Bullet,10,15,,2,15,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Holy; }
-13202,Shell_of_Blood,Shell of Blood,10,30,,2,30,,,,134217728,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Bleeding,50; }
-13203,Flare_Sphere,Flare Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Fire; }
-13204,Lightning_Sphere,Lightning Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Wind; }
-13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Poision; bonus2 bAddEff,Eff_Poison,50; }
-13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,50; }
-13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,50; }
+13200,Bullet,Bullet,10,1,,2,10,,,,134217728,7,2,32768,,1,,3,{}
+13201,Silver_Bullet,Silver Bullet,10,15,,2,15,,,,134217728,7,2,32768,,1,,3,{ bonus bAtkEle,Ele_Holy; }
+13202,Shell_of_Blood,Shell of Blood,10,30,,2,30,,,,134217728,7,2,32768,,1,,4,{ bonus2 bAddEff,Eff_Bleeding,50; }
+13203,Flare_Sphere,Flare Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Fire; }
+13204,Lightning_Sphere,Lightning Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Wind; }
+13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poision; bonus2 bAddEff,Eff_Poison,50; }
+13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,50; }
+13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,134217728,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,50; }
 
 // Shurikens & Kunais
-13250,Shuriken,Shuriken,10,4,,5,10,,,,268435456,7,2,32768,,1,,,{}
-13251,Raincloud_Shuriken,Raincloud Shuriken,10,10,,5,30,,,,268435456,7,2,32768,,20,,,{}
-13252,Flash_Shuriken,Flash Shuriken,10,20,,5,45,,,,268435456,7,2,32768,,40,,,{}
-13253,Pointed_Leaf_Shuriken,Pointed Leaf Shuriken,10,40,,5,70,,,,268435456,7,2,32768,,60,,,{}
-13254,Piercing_Thorn_Shuriken,Piercing Thorn Shuriken,10,100,,5,100,,,,268435456,7,2,32768,,80,,,{}
-13255,Kunai_of_Frozen_Icicle,Kunai of Frozen Icicle,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Water; }
-13256,Kunai_of_Black_Earth,Kunai of Black Earth,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Earth; }
-13257,Kunai_of_Violent_Winds,Kunai of Violent Winds,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Wind; }
-13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus bAtkEle,Ele_Fire; }
-13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,10,,20,30,,,,268435456,7,2,32768,,1,,,{ bonus2 bAddEff,Eff_Poison,50; }
+13250,Shuriken,Shuriken,10,4,,5,10,,,,268435456,7,2,32768,,1,,6,{}
+13251,Raincloud_Shuriken,Raincloud Shuriken,10,10,,5,30,,,,268435456,7,2,32768,,20,,6,{}
+13252,Flash_Shuriken,Flash Shuriken,10,20,,5,45,,,,268435456,7,2,32768,,40,,6,{}
+13253,Pointed_Leaf_Shuriken,Pointed Leaf Shuriken,10,40,,5,70,,,,268435456,7,2,32768,,60,,6,{}
+13254,Piercing_Thorn_Shuriken,Piercing Thorn Shuriken,10,100,,5,100,,,,268435456,7,2,32768,,80,,6,{}
+13255,Kunai_of_Frozen_Icicle,Kunai of Frozen Icicle,10,10,,20,30,,,,268435456,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Water; }
+13256,Kunai_of_Black_Earth,Kunai of Black Earth,10,10,,20,30,,,,268435456,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Earth; }
+13257,Kunai_of_Violent_Winds,Kunai of Violent Winds,10,10,,20,30,,,,268435456,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Wind; }
+13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,10,10,,20,30,,,,268435456,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Fire; }
+13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,10,,20,30,,,,268435456,7,2,32768,,1,,7,{ bonus2 bAddEff,Eff_Poison,50; }
 
 // Ninja Stones
 7521,Burning_Stone,Burning Stone,3,70,,10,,,,,,7,2,,,,,,{}

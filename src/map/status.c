@@ -5864,28 +5864,34 @@ int status_readdb(void) {
 		ShowError("can't read %s\n", path);
 		return 1;
 	}
+	i = 0;
 	while(fgets(line, sizeof(line)-1, fp)){
-		char *split[MAX_WEAPON_TYPE + 6];
+		char *split[MAX_WEAPON_TYPE + 5];
+		i++;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		for(j=0,p=line;j< (MAX_WEAPON_TYPE + 6) && p;j++){	//not 22 anymore [blackhole89]
+		for(j=0,p=line;j<(MAX_WEAPON_TYPE + 5) && p;j++){	//not 22 anymore [blackhole89]
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(j < MAX_WEAPON_TYPE + 6)	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
+		if(j < MAX_WEAPON_TYPE + 5)
+		{	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
+			ShowDebug("%s: Not enough columns at line %d\n", i, j);
 			continue;
+		}
 		if(atoi(split[0])>=MAX_PC_CLASS)
 			continue;
+		
 		max_weight_base[atoi(split[0])]=atoi(split[1]);
 		hp_coefficient[atoi(split[0])]=atoi(split[2]);
 		hp_coefficient2[atoi(split[0])]=atoi(split[3]);
 		sp_coefficient[atoi(split[0])]=atoi(split[4]);
-		for(j=0;j<=MAX_WEAPON_TYPE;j++)
+		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			aspd_base[atoi(split[0])][j]=atoi(split[j+5]);
 	}
 	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","job_db1.txt");
+	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
 	memset(job_bonus,0,sizeof(job_bonus)); // Job-specific stats bonus
 	sprintf(path, "%s/job_db2.txt", db_path);
