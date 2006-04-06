@@ -2,9 +2,10 @@
 //= Map flags that disable warp
 //===== By: ==================================================
 //= eAthena Dev Team
-//= v 1.1
+//= v 1.1a
 //===== Current Version: =====================================
 
+aldeg_cas01.gat	mapflag	nowarp
 aldeg_cas02.gat	mapflag	nowarp
 aldeg_cas03.gat	mapflag	nowarp
 aldeg_cas04.gat	mapflag	nowarp

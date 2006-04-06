@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/06
+	* Addded missing aldeg_cas01 to NOWARP mapflags, thanks to Justin84 [Lupus]
+		- And we set lhz_dun03 nowarpto mapflag by default till check it on eRO/kRO
 	* Changed the random warping of mobs with no players from mob_spawn to
 	  unit_warp, which prevents MSC_SPAWN skills from being retriggered for
 	  already spawned mobs. [Skotlex]
