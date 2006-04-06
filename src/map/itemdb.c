@@ -339,7 +339,7 @@ int itemdb_cantrade(int nameid, int gmlv, int gmlv2)
 int itemdb_canpartnertrade(int nameid, int gmlv, int gmlv2)
 {
 	struct item_data* item = itemdb_exists(nameid);
-	return (item && (!(item->flag.trade_restriction&(2|4)) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
+	return (item && (item->flag.trade_restriction&4 || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
 int itemdb_cansell(int nameid, int gmlv)
