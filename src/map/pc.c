@@ -1095,15 +1095,16 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 		return 0;
 	if (class_ && (sd->disguise || pc_isriding(sd)))
 		return 0;
-	
+
+	pc_stop_walking(sd, 0);
+	clif_clearchar(&sd->bl, 0);
+
 	if (!class_) {
 		sd->disguise = 0;
 		class_ = sd->status.class_;
 	} else
 		sd->disguise=class_;
 
-	pc_stop_walking(sd, 0);
-	clif_clearchar(&sd->bl, 0);
 	status_set_viewdata(&sd->bl, class_);
 	clif_changeoption(&sd->bl);
 	clif_spawn(&sd->bl);

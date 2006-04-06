@@ -5877,7 +5877,7 @@ int status_readdb(void) {
 		}
 		if(j < MAX_WEAPON_TYPE + 5)
 		{	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
-			ShowDebug("%s: Not enough columns at line %d\n", i, j);
+			ShowDebug("%s: Not enough columns at line %d\n", path, i);
 			continue;
 		}
 		if(atoi(split[0])>=MAX_PC_CLASS)
