@@ -14,6 +14,7 @@ typedef int socklen_t;
 #include <sys/ioctl.h>
 #include <netdb.h>
 #include <arpa/inet.h>
+#include <ctype.h>
 
 #ifndef SIOCGIFCONF
 #include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
@@ -37,7 +38,7 @@ typedef int socklen_t;
 #include "irc.h"
 #include "intif.h" //For GM Broadcast [Zido]
 
-short use_irc=0;
+short use_irc=1;
 
 short irc_announce_flag=1;
 short irc_announce_mvp_flag=1;
@@ -46,19 +47,19 @@ short irc_announce_shop_flag=1;
 
 IRC_SI *irc_si=NULL;
 
-char irc_nick[30]="";
+char irc_nick[30]="Zido[eABot]";
 char irc_password[32]="";
 
-// #define AUTH_PASS	"setpasshere" //(WIP, don't remove) Password to use commands) [Zido]
-#define ALLOWED_NICK	"" //Allowed nickname to use commands [Zido]
-
-char irc_channel[32]="";
+char irc_channel[32]="#ROsucks";
 char irc_trade_channel[32]="";
 
-unsigned char irc_ip_str[128]="";
-unsigned long irc_ip=0;
+unsigned char irc_ip_str[128]="irc.deltaanime.net";
+unsigned long irc_ip=6667;
 unsigned short irc_port = 6667;
 int irc_fd=0;
+
+struct channel_data cd;
+int last_cd_user=0;
 
 int irc_connect_timer(int tid, unsigned int tick, int id, int data)
 {
@@ -199,7 +200,6 @@ void irc_send(char *buf)
 
 void irc_parse_sub(int fd, char *incoming_string)
 {
-	char kami[256]; //[Zido]
 	char source[256];
 	char command[256];
 	char target[256];
@@ -210,13 +210,19 @@ void irc_parse_sub(int fd, char *incoming_string)
 	char *source_host=NULL;
 	char *state_mgr=NULL;
 	
+	char cmd1[256];
+	char cmd2[256];
+	
 	memset(source,'\0',256);
 	memset(command,'\0',256);
 	memset(target,'\0',256);
 	memset(message,'\0',8192);
 	memset(send_string,'\0',8192);
 
-	sscanf(incoming_string, ":%255s %255s %255s :%4095[^\n]", source, command, target, message);
+	memset(cmd1,'\0',256);
+	memset(cmd2,'\0',256);
+
+	sscanf(incoming_string, ":%255s %255s %255s :%4095[^\r\n]", source, command, target, message);
 	if (source != NULL) {
 		if (strstr(source,"!") != NULL) {
 			source_nick = strtok_r(source,"!",&state_mgr);
@@ -255,13 +261,21 @@ void irc_parse_sub(int fd, char *incoming_string)
 		}
 	}
 
-	//if((strcmpi(command,"privmsg")==0)&&(strcmpi(message,"pass "AUTH_PASS"")==0)&&(target[0]!='#'))
-
 	// Broadcast [Zido] (Work in Progress)
-	if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"!eakami %s",kami)>0)&&(strcmp(ALLOWED_NICK,source_nick)==0)) {
-		intif_GMmessage(kami,strlen(kami)+1,0);
-		sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
+	if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"@kami %255[^\r\n]",cmd1)>0)&&(target[0]=='#')) {
+		if(get_access(source_nick)<ACCESS_OP)
+			sprintf(send_string,"NOTICE %s :Access Denied",source_nick);
+		else {
+			sprintf(send_string,"%s: %s",source_nick,cmd1);
+			intif_GMmessage(send_string,strlen(send_string)+1,0);
+			sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
+		}
 		irc_send(send_string);
+	}
+
+	// Names Reply [Zido]
+	if((strcmpi(command,"353")==0)) {
+		parse_names_packet(incoming_string);
 	}
 
 	return;
@@ -309,3 +323,114 @@ void do_init_irc(void)
 	add_timer(gettick() + 30000, irc_keepalive_timer, 0, 0);
 }
 
+//NAMES Packet(353) parser [Zido]
+int parse_names_packet(char *str) {
+	char *tok;
+	char source[256];
+	char numeric[10];
+	char target[256];
+	char channel[256];
+	char names[1024];
+
+	memset(source,'\0',256);
+	memset(numeric,'\0',10);
+	memset(target,'\0',256);
+	memset(channel,'\0',256);
+	memset(names,'\0',1024);
+
+	tok=strtok(str,"\r\n");
+	sscanf(tok,":%255s %10s %255s = %255s :%1023[^\r\n]",source,numeric,target,channel,names);
+	if(strcmpi(numeric,"353")==0)
+		parse_names(names);
+
+	while((tok=strtok(NULL,"\r\n"))!=NULL) {
+		sscanf(tok,":%255s %10s %255s = %255s :%1023[^\r\n]",source,numeric,target,channel,names);
+		if(strcmpi(numeric,"353")==0)
+			parse_names(names);
+	}
+
+	return 0;
+}
+
+//User access level prefix parser [Zido]
+int parse_names(char *str) {
+	char *tok;
+	
+	tok=strtok(str," ");
+	switch(tok[0]) {
+			case '~':
+				set_access(tok+1,ACCESS_OWNER);
+				break;
+			case '&':
+				set_access(tok+1,ACCESS_SOP);
+				break;
+			case '@':
+				set_access(tok+1,ACCESS_OP);
+				break;
+			case '%':
+				set_access(tok+1,ACCESS_HOP);
+				break;
+			case '+':
+				set_access(tok+1,ACCESS_VOICE);
+				break;
+			default:
+				set_access(tok,ACCESS_NORM);
+				break;	
+	}
+
+	while((tok=strtok(NULL," "))!=NULL) {
+		switch(tok[0]) {
+			case '~':
+				set_access(tok+1,ACCESS_OWNER);
+				break;
+			case '&':
+				set_access(tok+1,ACCESS_SOP);
+				break;
+			case '@':
+				set_access(tok+1,ACCESS_OP);
+				break;
+			case '%':
+				set_access(tok+1,ACCESS_HOP);
+				break;
+			case '+':
+				set_access(tok+1,ACCESS_VOICE);
+				break;
+			default:
+				set_access(tok,ACCESS_NORM);
+				break;	
+		}
+	}
+	
+	return 0;
+}
+
+//Store user's access level [Zido]
+int set_access(char *nick,int newlevel) {
+	int i=0;
+	
+	for(i=0;i<=MAX_CHANNEL_USERS;i++) {
+		if(strcmpi(cd.user[i].name,nick)==0) {
+			cd.user[i].level=newlevel;
+			return 1;
+		}
+	}
+
+	strcpy(cd.user[last_cd_user].name,nick);
+	cd.user[last_cd_user].level=newlevel;
+	last_cd_user++;
+
+	return 0;
+}
+
+//Returns users access level [Zido]
+int get_access(char *nick) {
+	int i=0;
+	
+	for(i=0;i<=MAX_CHANNEL_USERS;i++) {
+		if(strcmpi(cd.user[i].name,nick)==0) {
+			return (cd.user[i].level);
+		}
+	}
+
+	return -1;
+}

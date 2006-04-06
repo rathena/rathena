@@ -1,6 +1,14 @@
 #include "map.h"
 
-#define MAX_ADMINS	25 // [Zido]
+// IRC Access levels [Zido]
+#define	ACCESS_OWNER	5
+#define	ACCESS_SOP		4
+#define	ACCESS_OP		3
+#define	ACCESS_HOP		2
+#define	ACCESS_VOICE	1
+#define ACCESS_NORM		0
+
+#define MAX_CHANNEL_USERS	500
 
 extern short use_irc;
 
@@ -27,7 +35,17 @@ struct IRC_Session_Info {
     char password[33];
 };
 
-/*struct IRC_Authed {
-	char host[256];
-};*/ //(WIP, Don't remove) [Zido]
 typedef struct IRC_Session_Info IRC_SI;
+
+struct channel_data {
+	struct {
+		char name[256];
+		int level;
+	}user[MAX_CHANNEL_USERS];
+};
+
+int parse_names_packet(char *str);
+int parse_names(char *str);
+int set_access(char *nick,int level);
+int get_access(char *nick);
+int parse_mode(char *mode,char *nick);
