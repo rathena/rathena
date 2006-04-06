@@ -5700,7 +5700,8 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 				break;
 		}
 
-		if(src != target && !check_distance_bl(src, target, skill_get_range2(src,ud->skillid,ud->skilllv)+battle_config.skill_add_range))
+		if(src != target && battle_config.skill_add_range &&
+			!check_distance_bl(src, target, skill_get_range2(src,ud->skillid,ud->skilllv)+battle_config.skill_add_range))
 		{
 			if (sd) {
 				clif_skill_fail(sd,ud->skillid,0,0);
@@ -5812,7 +5813,8 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 		{	//Avoid double checks on instant cast skills. [Skotlex]
 			if (!status_check_skilluse(src, NULL, ud->skillid, 1))
 				break;
-			if(!check_distance_blxy(src, ud->skillx, ud->skilly, skill_get_range2(src,ud->skillid,ud->skilllv)+battle_config.skill_add_range)) {
+			if(battle_config.skill_add_range &&
+				!check_distance_blxy(src, ud->skillx, ud->skilly, skill_get_range2(src,ud->skillid,ud->skilllv)+battle_config.skill_add_range)) {
 				if (sd && battle_config.skill_out_range_consume) //Consume items anyway.
 					skill_check_condition(sd,ud->skillid, ud->skilllv,1);
 				break;
