@@ -2412,6 +2412,10 @@ int mob_heal(struct mob_data *md,int heal)
 	md->hp += heal;
 	if( max_hp < md->hp )
 		md->hp = max_hp;
+	else if (md->hp <= 0) {
+		md->hp = 1;
+		return mob_damage(NULL, md, 1, 0);
+	}
 
 	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS) { // guardian hp update [Valaris] (updated by [Skotlex])
 		if ((md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->hp) <= 0)

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -1165,7 +1166,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if(dstsd) {
 			int sp = dstsd->status.max_sp*(10+skilllv)/100;
 			if(sp < 1) sp = 1;
-			pc_heal(dstsd,0,-sp);
+			pc_damage_sp(dstsd,sp,0);
 		}
 		break;
 	// Equipment breaking monster skills [Celest]
@@ -2031,8 +2032,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		}
 		if(hp || sp)
 			pc_heal(sd,hp,sp);
-		if (sd->sp_drain_type && bl->type == BL_PC)
-			battle_heal(NULL,bl,0,-sp,0);
+		if (sd->sp_drain_type && tsd)
+			pc_damage_sp(tsd,sp,0);
 	}
 
 	if (rdamage>0) {
@@ -3448,8 +3449,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if (status_isimmune(bl))
 			break;
-		if (dstsd) pc_heal (dstsd, dstsd->status.max_hp, dstsd->status.max_sp);
-		else if (dstmd) dstmd->hp = status_get_max_hp(bl);
+		battle_heal(src, bl, status_get_max_hp(bl), dstsd?dstsd->status.max_sp:0,0);
 		break;
 	case SA_SUMMONMONSTER:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -3461,7 +3461,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case SA_INSTANTDEATH:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		battle_damage(NULL,src,status_get_hp(src)-1,0);
+		battle_damage(NULL,src,status_get_hp(src)-1,1);
 		break;
 	case SA_QUESTION:
 	case SA_GRAVITY:
@@ -4036,7 +4036,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			skill_get_splash(skillid, skilllv), BL_CHAR,
 			src, skillid, skilllv, tick, flag|BCT_ENEMY,
 			skill_castend_damage_id);
-		battle_damage(src, src, status_get_max_hp(src), 0);
+		battle_damage(src, src, status_get_max_hp(src), 1);
 		break;
 
 	/* パ?ティスキル */
@@ -4703,7 +4703,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if(dstsd) {
 					sp = skill_get_sp(skillid,skilllv);
 					sp = sp * tsc->data[SC_MAGICROD].val2 / 100;
-					if(sp > 0x7fff) sp = 0x7fff;
+					if(sp > SHRT_MAX) sp = SHRT_MAX;
 					else if(sp < 1) sp = 1;
 					clif_heal(dstsd->fd,SP_SP,pc_heal(dstsd, 0, sp));
 				}
@@ -4711,7 +4711,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if(sd) {
 					sp = sd->status.max_sp/5;
 					if(sp < 1) sp = 1;
-					pc_heal(sd,0,-sp);
+					pc_damage_sp(sd,sp,0);
 				}
 			} else {
 				struct unit_data *ud = unit_bl2ud(bl);
@@ -4732,11 +4732,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 				unit_skillcastcancel(bl,0);
 				sp = skill_get_sp(bl_skillid,bl_skilllv);
-				battle_heal(NULL, bl, -hp, -sp, 0);
+				if (dstsd)
+					pc_damage_sp(dstsd, sp, 0);
+				battle_damage(NULL, bl, hp, 1);
 				if(sd && sp) {
 					sp = sp*(25*(skilllv-1))/100;
 					if(skilllv > 1 && sp < 1) sp = 1;
-					else if(sp > 0x7fff) sp = 0x7fff;
+					else if(sp > SHRT_MAX) sp = SHRT_MAX;
 					clif_heal(sd->fd,SP_SP,pc_heal(sd, 0, sp));
 				}
 				if (hp && skilllv >= 5)
@@ -4865,7 +4867,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_nodamage(src,bl,skillid,skilllv,0);
 				break;
 			}
-			pc_heal(dstsd,0,-100);
+			pc_damage_sp(dstsd,100,0);
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,(skilllv*5),skilllv,skill_get_time2(skillid,skilllv)));
@@ -4873,7 +4875,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_SUICIDE:			/* 自決 */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		battle_damage(NULL,src,status_get_hp(bl),3); //Suicidal Mobs should give neither exp (flag&1) not items (flag&2) [Skotlex]
+		battle_damage(NULL, src,status_get_hp(src),3); //Suicidal Mobs should give neither exp (flag&1) not items (flag&2) [Skotlex]
 		break;
 
 	case NPC_SUMMONSLAVE:		/* 手下?｢喚 */
@@ -5271,7 +5273,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				switch (eff)
 				{
 				case 0:	// heals SP to 0
-					if (dstsd) pc_heal(dstsd,0,-dstsd->status.sp);
+					if (dstsd) pc_damage_sp(dstsd,0,100);
 					break;
 				case 1:	// matk halved
 					sc_start(bl,SC_INCMATKRATE,100,-50,skill_get_time2(skillid,skilllv));
@@ -10242,7 +10244,7 @@ int skill_produce_mix( struct map_session_data *sd, int skill_id,
 	} else {
 		switch (skill_id) {
 			case ASC_CDP: //Damage yourself, and display same effect as failed potion.
-				pc_heal(sd,-(sd->status.max_hp>>2),0);
+				battle_damage(NULL, &sd->bl, sd->status.max_hp>>2, 1);
 			case AM_PHARMACY:
 			case AM_TWILIGHT1:
 			case AM_TWILIGHT2:

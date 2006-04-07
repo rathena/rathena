@@ -1269,7 +1269,7 @@ int pet_heal_timer(int tid,unsigned int tick,int id,int data)
 	pet_stop_attack(pd);
 	pet_stop_walking(pd,1);
 	clif_skill_nodamage(&pd->bl,&sd->bl,AL_HEAL,pd->s_skill->lv,1);
-	pc_heal(sd,pd->s_skill->lv,0);
+	battle_heal(&pd->bl, &sd->bl, pd->s_skill->lv,0, 0);
 	pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
 	return 0;
 }

@@ -5248,9 +5248,6 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 //	if(sp > 0 && pc_checkoversp(sd))
 //		sp = 0;
 
-	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1 && hp+sp>0)
-		return 0;
-
 	if(hp > sd->status.max_hp - sd->status.hp)
 		hp = sd->status.max_hp - sd->status.hp;
 	sd->status.hp+=hp;
@@ -6407,7 +6404,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 			hp = sd->status.hp;
 		if (sp > sd->status.sp)
 			sp = sd->status.sp;
-		pc_heal(sd,-hp,-sp);
+		pc_heal(sd, -hp, -sp);
 	}
 
 	return 0;

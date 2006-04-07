@@ -178,21 +178,19 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 
 	nullpo_retr(0, target); //srcはNULLで呼ばれることがあるので他でチェック
 	
+	if (damage == 0 || status_isdead(target))
+		return 0;
+	
 	sc = status_get_sc(target);
 
-	if (damage == 0 ||
-		target->prev == NULL ||
-		target->type == BL_PET)
-		return 0;
-
+	if (damage < 0)
+		return battle_heal(src,target,-damage,0,flag);
+	
 	if (src) {
 		if (src->prev == NULL)
 			return 0;
 		BL_CAST(BL_PC, src, sd);
 	}
-
-	if (damage < 0)
-		return battle_heal(src,target,-damage,0,flag);
 
 	if (!flag && sc && sc->count) {
 		// 凍結?A?ﾎ化?A?⊥ｰを?ﾁ去
@@ -230,20 +228,22 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 				status_change_end(target, SC_GRAVITATION, -1);
 			}
 		}
+		if (sc->data[SC_DEVOTION].val1 && src && battle_getcurrentskill(src) != PA_PRESSURE)
+		{
+			struct map_session_data *sd2 = map_id2sd(sc->data[SC_DEVOTION].val1);
+			if (sd2 && sd2->devotion[sc->data[SC_DEVOTION].val2] == target->id)
+			{
+				clif_damage(src, &sd2->bl, gettick(), 0, 0, damage, 0, 0, 0);
+				pc_damage(&sd2->bl, sd2, damage);
+				return 0;
+			} else
+				status_change_end(target, SC_DEVOTION, -1);
+		}
 	}
 
-	if (sc && sc->count && sc->data[SC_DEVOTION].val1 && src && battle_getcurrentskill(src) != PA_PRESSURE)
-	{	//Devotion only works on attacks from a source (to prevent it from absorbing coma) [Skotlex]
-		struct map_session_data *sd2 = map_id2sd(sc->data[SC_DEVOTION].val1);
-		if (sd2 && sd2->devotion[sc->data[SC_DEVOTION].val2] == target->id)
-		{
-			clif_damage(src, &sd2->bl, gettick(), 0, 0, damage, 0, 0, 0);
-			pc_damage(&sd2->bl, sd2, damage);
-			return 0;
-		} else
-			status_change_end(target, SC_DEVOTION, -1);
-	}
-	unit_skillcastcancel(target, 2);
+	if (!flag)
+		unit_skillcastcancel(target, 2);
+	
 	if (target->type == BL_MOB) {
 		return mob_damage(src,(TBL_MOB*)target, damage,0);
 	} else if (target->type == BL_PC) {
@@ -253,13 +253,28 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 	return 0;
 }
 
-int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp,int flag)
+int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp, int flag)
 {
-	nullpo_retr(0, target); //blはNULLで呼ばれることがあるので他でチェック
-
+	struct status_change *sc;
+	nullpo_retr(0, target); 
 
 	if (status_isdead(target))
 		return 0;
+
+	if (!flag) {
+		sc = status_get_sc(target);
+		if (sc && sc->count) {
+			if (sc->data[SC_BERSERK].timer!=-1)
+				hp = 0;
+		}
+	}
+	
+	if (sp == 0) {
+		if (hp < 0) //Use flag 1 because heal-damage shouldn't make you flinch. 
+			return battle_damage(bl, target, -hp, 1);
+		if (hp == 0)
+			return 0;
+	}
 
 	if (target->type == BL_MOB)
 		return mob_heal((struct mob_data *)target,hp);
@@ -1383,7 +1398,7 @@ static struct Damage battle_calc_weapon_attack(
 			case PA_SACRIFICE:
 			{
 				int hp_dmg = status_get_max_hp(src)* 9/100;
-				battle_damage(src, src, hp_dmg, 0); //Damage to self is always 9%
+				battle_damage(src, src, hp_dmg, 1); //Damage to self is always 9%
 				clif_damage(src,src, gettick(), 0, 0, hp_dmg, 0 , 0, 0);
 				
 				wd.damage = hp_dmg;
@@ -2261,6 +2276,19 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 
+	//SG_FUSION hp penalty [Komurka]
+	if (sc && sc->data[SC_FUSION].timer!=-1)
+	{
+		int hp= status_get_max_hp(src);
+		if (sd && tsd) {
+			hp = 8*hp/100;
+			if (100*sd->status.hp <= 20*sd->status.max_hp)
+				hp = sd->status.hp;
+		} else
+			hp = 5*hp/1000;
+		battle_damage(NULL, src, hp, 1);
+	}
+
 	return wd;
 }
 
@@ -3135,7 +3163,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 					f = skill_castend_damage_id(src, target, skillid, skilllv, tick, flag);
 					break;
 			}
-			if (sd && !f) { pc_heal(sd, 0, -sp); }
+			if (sd && !f) { pc_damage_sp(sd, sp, 0); }
 		}
 	}
 	if (sd) {
@@ -3173,15 +3201,10 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			}
 
 			if (tsd && sd->sp_drain_type)
-				pc_heal(tsd, 0, -sp);
+				pc_damage_sp(tsd, sp, 0);
 
 			if (tsd && rand()%1000 < sd->sp_vanish_rate)
-			{
-				sp = tsd->status.sp * sd->sp_vanish_per/100;
-				if (sp > 0)
-					pc_heal(tsd, 0, -sp);
-
-			}
+				pc_damage_sp(tsd, 0, sd->sp_vanish_per);
 		}
 	}
 	if (rdamage > 0) //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
@@ -3203,21 +3226,6 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				status_change_end(target, SC_POISONREACT, -1);
 		}
 	}
-
-	//SG_FUSION hp penalty [Komurka]
-	if (sd && sc && sc->data[SC_FUSION].timer!=-1)
-	{
-		int hp=0;
-		if(target->type == BL_PC)
-		{
-			hp = sd->status.max_hp * 8 / 100;
-			if((sd->status.hp * 100/sd->status.max_hp) <= 20)
-				hp = sd->status.hp;
-		}else
-			hp = sd->status.max_hp * 5 / 1000;
-		pc_heal(sd,-hp,0);
-	}
-
 	map_freeblock_unlock();
 	return wd.dmg_lv;
 }
