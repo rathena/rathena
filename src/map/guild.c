@@ -641,11 +641,14 @@ int guild_invite(struct map_session_data *sd,int account_id)
 			return 0;
 		}
 	}
-	if( tsd->status.guild_id>0 || tsd->guild_invite>0 ){	// 相手の所属確認
+	if(tsd->status.guild_id>0 ||
+		tsd->guild_invite>0 ||
+		map[tsd->bl.m].flag.gvg_castle)
+	{	//Can't invite people inside castles. [Skotlex]
 		clif_guild_inviteack(sd,0);
 		return 0;
 	}
-
+	
 	// 定員確認
 	for(i=0;i<g->max_member;i++)
 		if(g->member[i].account_id==0)

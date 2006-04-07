@@ -3044,14 +3044,14 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		if(sd->mapindex){
 			int ip,port;
 			if(map_mapname2ipport(mapindex,&ip,&port)==0){
-				unit_remove_map(&sd->bl,3);
+				unit_remove_map(&sd->bl,clrtype);
 				sd->mapindex = mapindex;
 				sd->bl.x=x;
 				sd->bl.y=y;
 				sd->state.waitingdisconnect=1;
 				pc_clean_skilltree(sd);
 				if(sd->status.pet_id > 0 && sd->pd) {
-					unit_remove_map(&sd->pd->bl, 0);
+					unit_remove_map(&sd->pd->bl, clrtype);
 					intif_save_petdata(sd->status.account_id,&sd->pet);
 				}
 				chrif_save(sd,1);
@@ -3083,9 +3083,9 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 	}
 
 	if(sd->bl.prev != NULL){
-		unit_remove_map(&sd->bl, 3);
+		unit_remove_map(&sd->bl, clrtype);
 		if(sd->status.pet_id > 0 && sd->pd)
-			unit_remove_map(&sd->pd->bl, 3);
+			unit_remove_map(&sd->pd->bl, clrtype);
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
 	}
 		

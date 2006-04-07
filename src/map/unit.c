@@ -1476,8 +1476,8 @@ int unit_free(struct block_list *bl) {
 	nullpo_retr(0, ud);
 
 	map_freeblock_lock();
-	if( bl->prev )
-		unit_remove_map(bl, 0);
+	if( bl->prev )	//Players are supposed to logout with a "warp" effect.
+		unit_remove_map(bl, bl->type==BL_PC?3:0);
 
 	if( bl->type == BL_PC ) {
 		struct map_session_data *sd = (struct map_session_data*)bl;
