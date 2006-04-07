@@ -1,53 +1,252 @@
 //===== eAthena Script ======================================= 
 //= Gunslinger Job Quest
 //===== By: ================================================== 
-//= Lord Gywall
+//= erKURITA & RockmanEXE
+//= Direct credits quote from RockmanExe: 
+//= "info provided by RockmanEXE cause he pwnz0rz yer arse"
+//= DON'T REMOVE THIS! (by request of him, he provided all
+//= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
-//= Temp Gunslinger Quest
+//= "Semi" Official Gunslinger Quest ~ The text isn't the same
+//= but it does the things it has to do :P
 //===== Additional Comments: ================================= 
-//= 1.0 Fixed minor things [Lupus]
+//= 1.0 Made the NPC [erKURITA]
 //============================================================ 
 
+que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
 
-einbroch.gat,244,110,1	script	Gunslinger	859,{
-	mes "[Gunslinger]";
-	mes "*cough* Uh, Who's there?";
-	if(Class==Job_Novice) goto N_Novice;
-	mes "Hey! You're no novice!";
-	close;
-N_Novice:
-	mes "Oh, A novice.. I guess you want to shoot things.";
+set @npcname$,"[Armsmith]";
+
+if (Class == Job_Novice) {
+
+	if (gs_quest >= 1) {
+		mes @npcname$;
+		mes "So, you've comeback?";
+		next;
+		if (gs_quest == 3) {
+			if (SkillPoint > 0) {
+				mes @npcname$;
+				mes "Err, excuse me, but you still have Skill Points left. You have to use them all first before I can turn you into a Gunslinger";
+				close2;
+				set @npcname$,0;
+				end;
+			} else if (JobLevel < 10) {
+				mes @npcname$;
+				mes "Err, excuse me, but you don't have Level 10 Job. You need to have 10 level job in order to change to Gunslinger";
+				close2;
+				set @npcname$,0;
+				end;
+			}
+			mes @npcname$;
+			mes "Glad to know you did what Mr. Tanieh asked you to do, makes me know you're worthy of being..";
+			next;
+			mes @npcname$;
+			mes "A gunslinger!!!";
+			jobchange 24;
+			next;
+			mes @npcname$;
+			mes "Oh, I forgot, here's a token of my appreciation";
+			getitem 13150,1;
+			close2;
+			set gs_quest,0;
+			set @npcname$,0;
+			end;
+		} else
+		mes @npcname$;
+		mes "But you still haven't done what I told you, need me to repeat it?";
+		switch (select ("Yes, Please:No, Thanks")) {
+			case 1:
+				mes @npcname$;
+				mes "You need to go to Payon. At the small wooden wall and in the south exit, Mr. Tanieh will be there waiting to ask you a few things. Go now then";
+				close2;
+				set @npcname$,0;
+				end;
+			case 2:
+				mes @npcname$;
+				mes "Then GET GOING! Don't you want to become a gunslinger, do you?";
+				close2;
+				set @npcname$,0;
+				end;
+			}
+	} else
+
+	mes @npcname$;
+	mes "Hi ^0000CC"+strcharinfo(0)+"^000000,I need you to do something for me first, will you?";
+	switch (select ("Yes:No")) {
+			case 1:
+			mes @npcname$;
+			mes "Good, I need you to go to Payon and do a few things from Mr. Tanieh";
+			next;
+			mes @npcname$;
+			mes "He'll be waiting for you next to the small wooden wall of the south exit. See you later then";
+			close2;
+			set gs_quest,1;
+			set @npcname$,0;
+			end;
+		case 2:
+			mes @npcname$;
+			mes "Too bad for you son";
+			close2;
+			set @npcname$,0;
+			end;
+		} 
+
+	} else 
+		mes @npcname$;
+		mes "Hi son, how's life threathing you?";
+		close;
+}
+
+payon.gat,184,65,3	script	Mr. Tanieh	866,{
+
+set @npcname$,"[Mr. Tanieh]";
+
+if (gs_quest == 1) {
+	mes @npcname$;
+	mes "Oh, you're ^0000CC"+strcharinfo(0)+"^000000, right? Einbroch's Armsmith told me you were going to help me in a few things";
 	next;
-	menu "I wish to become a Gunslinger",N_Question,"What are the requirements",N_Require,"Leave",-;
-	close;
-N_Question:
-	mes "[Gunslinger]";
-	if(JobLevel<10 || SkillPoint) goto N_Bad;
-	mes "Where is needed to fire a gun?";
+	mes @npcname$;
+	mes "I need to make a special soup for my wife, but, as you can see, I am not in conditions to look for the items, she's sick you know?";
 	next;
-	menu "Bullets",N_C,"Arrows",N_W,"Bolts",N_W,"Something.. I dunno",N_W;
-N_C:
-	mes "[Gunslinger]";
-	mes "..Yep, Your right.";
-	mes "You know what goes in guns, so hey.. Use them!.";
-	next;
-	jobchange Job_Gunslinger;
-	mes "[Gunslinger]";
-	mes "Congratulations. Now go train.";
-	close;
-N_W:
-	mes "Argh.. Dammit, you idiot!";
-	close;
-N_Bad:
-	mes "Wait a second.. Your either too low in job level or you have Skill Points.";
-	close;
-N_Require:
-	mes "[Gunslinger]";
-	mes "Get the simple question right..";
-	mes "Your job level must be at least 10 before trying.";
-	close;
+	mes @npcname$;
+	mes "So, will you do it, please?";
+	switch (select ("Yes, I will:Sorry I can't now")) {
+		case 1:
+			mes @npcname$;
+			mes "Thanks very much!! Ok, here's what I need:";
+			mes "^33CCFF 3 Feathers^000000";
+			mes "^009933 3 Zargons^000000";
+			mes "^660066 3 Rainbow Shells^000000";
+			set @randtrunk,rand(1,5);
+			if (@randtrunk == 1) {
+				mes "^663300 1 Trunk^000000";
+				set trunk,1019;
+			} else if (@randtrunk == 2) {
+				mes "^663300 1 Fine-Grained Trunk^000000";
+				set trunk,1066;
+			} else if (@randtrunk == 3) {
+				mes "^663300 1 Solid Trunk^000000";
+				set trunk,1067;
+			} else if (@randtrunk == 4) {
+				mes "^663300 1 Barren Trunk^000000";
+				set trunk,1068;
+			} else if (@randtrunk == 5) {
+				mes "^663300 1 Thin Trunk";
+				set trunk,7186;
+			} 
+			mes "^FF6600 10 Shells^000000";
+			next;
+			mes @npcname$;
+			mes "Hurry please, I am not sure if my wife will last any longer... oh dear";
+			close2;
+			set @npcname$,0;
+			set gs_quest,2;
+			end;
+		case 2:
+			mes @npcname$;
+			mes "Oh, what am I going to do now...";
+			close2;
+			set @npcname$,0;
+			end;
+		}
+
+	} else if (gs_quest == 2) {
+		mes @npcname$;
+		mes "Oh, you've come back! Have you brought the items?";
+		next;
+		switch (select("Yes I did:No I forgot which items I had to bring")) {
+			case 1:
+				if (countitem(949) < 3) {
+				mes @npcname$;
+				mes "Sorry, you're missing a few Feathers";
+				close2;
+				set @npcname$,0;
+				end;
+			} else if (countitem(912) < 3) {
+				mes @npcname$;
+				mes "Sorry, you're missing a few Zargons";
+				close2;
+				set @npcname$,0;
+				end;
+			} else if (countitem(1013) < 3) {
+				mes @npcname$;
+				mes "Sorry, you're missing a few Rainbow Shells";
+				close2;
+				set @npcname$,0;
+				end;
+			} else if (countitem(trunk) < 1) {
+				mes @npcname$;
+				mes "Sorry, you don't have the exact Trunk";
+				close2;
+				set @npcname$,0;
+				end;
+			} else if (countitem(935) < 10) {
+				mes @npcname$;
+				mes "Sorry, you're missing a few Shells";
+				close2;
+				set @npcname$,0;
+				end;
+			} else
+				mes @npcname$;
+				mes "GREAT! You brought them all! Thanks very much!";
+				delitem 949,3;
+				delitem 912,3;
+				delitem 1013,3;
+				delitem trunk,1;
+				delitem 935,10;
+				next;
+				mes @npcname$;
+				mes "Oh my~~ You've been of great help. I'll recommend you to the Einbroch Armory for your job change. Go talk again with the Einbroch Armsmith. He'll change you. Thanks again and see you.";
+				close2;
+				set gs_quest,3;
+				set @npcname$,0;
+				set trunk,0;
+				end;
+			case 2:
+				mes @npcname$;
+				mes "Ok, I'll tell you again, so please take note!:";
+				mes "^33CCFF 3 Feathers^000000";
+				mes "^009933 3 Zargons^000000";
+				mes "^660066 3 Rainbow Shells^000000";
+				set @randtrunk,rand(1,5);
+			if (@randtrunk == 1) {
+				mes "^663300 1 Trunk^000000";
+				set trunk,1019;
+			} else if (@randtrunk == 2) {
+				mes "^663300 1 Fine-Grained Trunk^000000";
+				set trunk,1066;
+			} else if (@randtrunk == 3) {
+				mes "^663300 1 Solid Trunk^000000";
+				set trunk,1067;
+			} else if (@randtrunk == 4) {
+				mes "^663300 1 Barren Trunk^000000";
+				set trunk,1068;
+			} else if (@randtrunk == 5) {
+				mes "^663300 1 Thin Trunk";
+				set trunk,7186;
+			} 
+				mes "^FF6600 10 Shells^000000";
+				next;
+				mes @npcname$;
+				mes "Hurry please, I am not sure if my wife will last any longer... oh dear";
+				close2;
+				set @npcname$,0;
+				end;
+			}
+	} else if (Class == 24) || (gs_quest == 3) {
+	mes @npcname$;
+	mes "Hi ^0000CC"+strcharinfo(0)+"^000000!, how have you been doing? My wife sends you regards and thanks for the ingredients";
+	close2;
+	set @npcname$,0;
+	end;
+	}
+mes @npcname$;
+mes "Hi son, how you doing? Nice day eh?";
+close2;
+set @npcname$,0;
+end;
 }

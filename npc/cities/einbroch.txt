@@ -14,6 +14,8 @@
 //= 0.4 Added a crappy quest, have fun guys... [MasterOfMuppets]
 //= 0.4a Added exp bonus for the factory quest, borrowed from a Korean fansite.
 //= 0.4b Added missing close [Komurka]
+//= 0.5 Added Temporal Locations of Gunslinger Job Change map.
+//=	Info provided by RockmanEXE [erKURITA]
 //============================================================
 
 
@@ -1511,3 +1513,29 @@ einbroch.gat,188,72,3	script	Keneshiotz	855,{
 	mes "the world go 'round?";
 	close;
 }
+
+//| Temporal NPC locations until the text inside it has been obtained
+
+//que_ng.gat,182,85,2	script	TempNPC0	109,{
+//end;
+//}
+
+//que_ng.gat,187,149,3	script	TempNPC1	83,{
+//end;
+//}
+
+//que_ng.gat,187,154,3	script	TempNPC2	86,{
+//end;
+//}
+
+//que_ng.gat,187,161,3	script	TempNPC3	744,{
+//end;
+//}
+
+//que_ng.gat,185,180,3	script	TempNPC4	726,{
+//end;
+//}
+
+//que_ng.gat,149,178,5	script	TempNPC5	744,{
+//end;
+//}
