@@ -87,6 +87,7 @@
 583,Ketupat_,Ketupat,0,,10,150,,,,,16777215,7,2,,,,,,{}//unsure if all classes would use them
 584,Skewer_Soup,Skewer Soup,0,50,,60,,,,,532676607,7,2,,,,,,{ itemheal rand(45,64),0; }
 585,Brusti,Brusti,0,15,,40,,,,,532676607,7,2,,,,,,{ itemheal rand(17,20),0; itemskill 74,3,"Magnificat"; }
+586,Mother's_Cake,Mother's Cake,0,,,10,,,,,532676607,7,2,,,,,,{ itemheal rand(325,404),0; }
 
 // Usable Items
 //===================================================================
@@ -153,7 +154,7 @@
 665,Gift_Box__,Gift Box,2,1000,,200,,,,,532676607,7,2,,,,,,{ getitem -4,1; }
 666,Gift_Box___,Gift Box,2,1000,,200,,,,,532676607,7,2,,,,,,{ getitem -4,1; }
 667,Gift_Box____,Gift Box,2,1000,,200,,,,,532676607,7,2,,,,,,{ getitem -4,1; }
-668,Red_Envelope,Red_Envelope,2,1,,20,,,,,532676607,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); }
+668,Red_Envelope,Red_Envelope,2,1,,20,,,,,532676607,7,2,,,,,,{ set Zeny,Zeny+rand(100,10000); }
 669,Rice-Cake_Soup,Rice-Cake Soup,0,,10,100,,,,,532676607,7,2,,,,,,{ percentheal -100,-100; }
 // Coins
 670,Bag_of_Gold_Coins,Bag of Gold Coins,2,,10,400,,,,,532676607,7,3,,,,,,{}
@@ -1137,6 +1138,7 @@
 2666,Lamp_of_Hope,Lamp of Hope,5,,,100,,0,,0,532676607,7,2,136,,0,0,0,{ bonus bStr,2; bonus2 bResEff,Eff_Blind,10; }
 2667,Glove_of_Archer,Gloves of Archer,5,,10,300,,0,,0,532676607,7,2,136,,60,0,0,{ bonus bHit,5; bonus bCritical,5; bonus bDex,1; }
 2668,Woman_Glory,Woman Glory,5,,10,1500,,1,,0,532676607,7,2,136,,94,,,{}
+2669,RJC_Necklace,RJC Necklace,5,,,10,,0,,,532676607,7,2,136,,,,,{}
 // Cards
 //===================================================================
 4001,Poring_Card,Poring Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bFlee2,1; }
@@ -2344,7 +2346,7 @@
 12131,Lucky_Potion,Lucky Potion,0,,10,100,,,,,532676607,7,2,,,,,,{}
 12132,Santa's_Bag,Santa's Bag,2,,10,200,,,,,532676607,7,2,,,,,,{ sc_start SC_Xmas,600000,0;}
 12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,532676607,7,2,,,,,,{ if(gettime(5)==MDiceCone)end; set MDiceCone,gettime(5); percentheal 50,50; }
-12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,532676607,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); }
+12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,532676607,7,2,,,,,,{ set Zeny,Zeny+rand(100,10000); }
 12135,Green_Ale,Green Ale,2,,10,30,,,,,532676607,7,2,,,,,,{}
 12136,Women's_Bundle,Women's Bundle,2,,10,100,,,,,532676607,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; }
 
@@ -2357,24 +2359,6 @@
 13003,Cowardice_Blade,Cowardice Blade,4,52000,,700,80,,1,1,345988847,7,2,2,3,55,1,1,{ bonus bDef,5; }
 13004,Cowardice_Blade_,Cowardice Blade,4,52000,,700,80,,1,2,345988847,7,2,2,3,55,1,1,{ bonus bDef,5; }
 13005,Angelic_Wing_Dagger,Angelic Wing Dagger,4,,10,10,0,,1,1,0,0,2,0,0,0,0,0,{}
-
-
-// Temp Plugs. Someone good with the DB's? Please place them accordingly after adding the effect.
-// Info can be found here: http://opensvn.csie.org/EnglishTranslation/data/idnum2itemdesctable.txt
-// Structure of Database:
-// ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,{Script}
-
-//7519,,,,,,,,,,,,,,,,,,,{}
-//7520,,,,,,,,,,,,,,,,,,,{}
-//5145,Carnival_Jester,Carnival Jester,,,,10,,,,,532676607,7,2,,,,,,{}
-//586,Mother's_Cake,Mother's Cake,0,,,10,,,,,532676607,7,2,,,,,,{ itemheal rand(325,404),0; }
-//2669,RJC_Necklace,RJC Necklace,,,,10,,0,,,532676607,7,2,,,,,,{}
-
-//12137,First_Stage,First Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
-//12138,Second_Stage,Second Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
-//12139,Third_Stage,Third Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
-//12140,Fourth_Stage,Fourth Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
-//12141,Fifth_Stage,Fifth Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
 
 // Guns
 13100,Six_Shooter,Six Shooter,4,4500,,400,30,,9,1,134217728,7,2,34,1,10,1,17,{ bonus bHit,-10; }
@@ -2449,3 +2433,37 @@
 2118,Gauntlet_,Gauntlet,5,10000,,150,,5,,1,268435456,7,2,32,,20,1,,{}
 2119,Superior_Gauntlet,Superior Gauntlet,5,40000,,150,,4,,0,268435456,7,2,32,,50,1,,{ bonus bMdef,5; }
 2120,Superior_Gauntlet_,Superior Gauntlet,5,40000,,150,,4,,1,268435456,7,2,32,,50,1,,{ bonus bMdef,5; }
+
+// Temp Plugs. Someone good with the DB's? Please place them accordingly after adding the effect.
+// Info can be found here: http://opensvn.csie.org/EnglishTranslation/data/idnum2itemdesctable.txt
+// Structure of Database:
+// ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,{Script}
+
+12137,First_Stage,First Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
+12138,Second_Stage,Second Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
+12139,Third_Stage,Third Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
+12140,Fourth_Stage,Fourth Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
+12141,Fifth_Stage,Fifth Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
+
+//7519,,,,,,,,,,,,,,,,,,,{}
+//7520,,,,,,,,,,,,,,,,,,,{}
+5145,Carnival_Jester,Carnival Jester,5,,10,100,,1,,0,119529470,7,2,256,,0,1,89,{}
+5146,Elephant_Hat,Elephant Hat,5,,,500,,,,0,127918079,7,2,256,,,1,,{ bonus bVit,1; bonus2 bSubRace,2,7; skill 86,1; }
+7538,Sand_for_work,Sand for work,3,,,10,,,,,,,,,,,,,{}
+7539,Poring_Coin,Poring Coin,3,,,10,,,,,,,,,,,,,{}
+7540,No39_Ball,39?_?,3,,,10,,,,,,,,,,,,,{}
+7541,No40_Ball,40?_?,3,,,10,,,,,,,,,,,,,{}
+7542,No41_Ball,41?_?,3,,,10,,,,,,,,,,,,,{}
+7543,No42_Ball,42?_?,3,,,10,,,,,,,,,,,,,{}
+7544,No43_Ball,43?_?,3,,,10,,,,,,,,,,,,,{}
+7545,No44_Ball,44?_?,3,,,10,,,,,,,,,,,,,{}
+7546,No45_Ball,45?_?,3,,,10,,,,,,,,,,,,,{}
+
+12144,SpherePack_Lightning,Sphere Pack Lightning,2,,,0,,,,,1000333311,7,2,,,,,,{ getitem 13204,500; },{}
+12145,SpherePack_Blind,Sphere Pack Blind,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13206,500; }
+12146,SpherePack_Poison,Sphere Pack Poison,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13205,500; }
+12147,SpherePack_Ice,Sphere Pack Ice,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13207,500; }
+12148,SpherePack_Flare,Sphere Pack Flare,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13203,500; }
+12149,Ammo_Box,Ammunition Box,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13200,500; }
+12150,Ammo_Box_Blood,Ammunition Box Blood,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13202,500; }
+12151,Ammo_Box_Silver,Ammunition Box Silver,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13201,500; }

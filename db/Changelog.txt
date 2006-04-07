@@ -28,6 +28,8 @@
 =========================
 
 04/06
+	* Added some Landarma's new items plugs [Lupus]
+	* Lowered min zeny amount that give Red Envelopes, thanks to kyoki [Lupus]
 	* Removed mapflag noreturn from pvp maps. [Skotlex]
 	* Fixed HP/SP requirements for WE_MALE/WE_FEMALE [Skotlex]
 04/05
