@@ -140,10 +140,7 @@ int irc_parse(int fd)
 {
 	if (session[fd]->eof){
 		do_close(fd);
-		if (irc_si) {
-		  	aFree(irc_si);
-			irc_si = NULL;
-		}
+		irc_si = NULL;
 		add_timer(gettick() + 15000, irc_connect_timer, 0, 0);
       	return 0;
 	}
