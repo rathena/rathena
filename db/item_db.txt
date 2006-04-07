@@ -2439,26 +2439,40 @@
 // Structure of Database:
 // ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,{Script}
 
+5145,Carnival_Jester,Carnival Jester,5,,10,100,,1,,0,119529470,7,2,256,,0,1,89,{}
+5146,Elephant_Hat,Elephant Hat,5,,,500,,,,0,127918079,7,2,256,,,1,,{ bonus bVit,1; bonus2 bSubRace,2,7; skill 86,1; }
+5147,Baseball_Hat,Baseball Hat,5,,,,,,,0,127918079,7,2,256,,,1,,{}
+
+//7519,,,,,,,,,,,,,,,,,,,{}
+//7520,,,,,,,,,,,,,,,,,,,{}
+7527,Unknown,Unknown7527,3,,,10,,,,,,,,,,,,,{}
+7528,Lottery_Ticket,Lottery Ticket,3,,,10,,,,,,,,,,,,,{}
+7529,Stolen_Sandal,Stolen Sandal,3,,,10,,,,,,,,,,,,,{}
+7530,Amatsu_Tour_Guide,Amatsu Tour Guide,3,,,10,,,,,,,,,,,,,{}
+7531,Kunlun_Tour_Guide,Gonryun Tour Guide,3,,,10,,,,,,,,,,,,,{}
+7532,Louyang_Tour_Guide,Louyang Tour Guide,3,,,10,,,,,,,,,,,,,{}
+7533,Ayothaya_Tour_Guide,Ayothaya Tour Guide,3,,,10,,,,,,,,,,,,,{}
+7534,Amatsu_Album,Amatsu Album,3,,,10,,,,,,,,,,,,,{}
+7535,Kunlun_Album,Gonryun Album,3,,,10,,,,,,,,,,,,,{}
+7536,Louyang_Album,Louyang Album,3,,,10,,,,,,,,,,,,,{}
+7537,Ayothaya_Album,AyothayacAlbum,3,,,10,,,,,,,,,,,,,{}
+7538,Sand_For_Work,Sand For Work,3,,,10,,,,,,,,,,,,,{}
+7539,Poring_Coin,Poring Coin,3,,,10,,,,,,,,,,,,,{}
+7540,No39_Ball,Ball 39,3,,,10,,,,,,,,,,,,,{}
+7541,No40_Ball,Ball 40,3,,,10,,,,,,,,,,,,,{}
+7542,No41_Ball,Ball 41,3,,,10,,,,,,,,,,,,,{}
+7543,No42_Ball,Ball 42,3,,,10,,,,,,,,,,,,,{}
+7544,No43_Ball,Ball 43,3,,,10,,,,,,,,,,,,,{}
+7545,No44_Ball,Ball 44,3,,,10,,,,,,,,,,,,,{}
+7546,No45_Ball,Ball 45,3,,,10,,,,,,,,,,,,,{}
+
 12137,First_Stage,First Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
 12138,Second_Stage,Second Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
 12139,Third_Stage,Third Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
 12140,Fourth_Stage,Fourth Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
 12141,Fifth_Stage,Fifth Stage,2,,10,,,,,,532676607,7,2,,,,,,{}
-
-//7519,,,,,,,,,,,,,,,,,,,{}
-//7520,,,,,,,,,,,,,,,,,,,{}
-5145,Carnival_Jester,Carnival Jester,5,,10,100,,1,,0,119529470,7,2,256,,0,1,89,{}
-5146,Elephant_Hat,Elephant Hat,5,,,500,,,,0,127918079,7,2,256,,,1,,{ bonus bVit,1; bonus2 bSubRace,2,7; skill 86,1; }
-7538,Sand_for_work,Sand for work,3,,,10,,,,,,,,,,,,,{}
-7539,Poring_Coin,Poring Coin,3,,,10,,,,,,,,,,,,,{}
-7540,No39_Ball,39?_?,3,,,10,,,,,,,,,,,,,{}
-7541,No40_Ball,40?_?,3,,,10,,,,,,,,,,,,,{}
-7542,No41_Ball,41?_?,3,,,10,,,,,,,,,,,,,{}
-7543,No42_Ball,42?_?,3,,,10,,,,,,,,,,,,,{}
-7544,No43_Ball,43?_?,3,,,10,,,,,,,,,,,,,{}
-7545,No44_Ball,44?_?,3,,,10,,,,,,,,,,,,,{}
-7546,No45_Ball,45?_?,3,,,10,,,,,,,,,,,,,{}
-
+12142,Book_of_Magic,Book of Magic,2,,,100,,,,,127918079,7,2,,,,,,{} //Agi+10, for 30 minutes
+12143,Red_Can,Red Can,2,,,300,,,,,127918079,7,2,,,,,,{ percentheal 25,25; }
 12144,SpherePack_Lightning,Sphere Pack Lightning,2,,,0,,,,,1000333311,7,2,,,,,,{ getitem 13204,500; },{}
 12145,SpherePack_Blind,Sphere Pack Blind,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13206,500; }
 12146,SpherePack_Poison,Sphere Pack Poison,2,,,350,,,,,1000333311,7,2,,,,,,{ getitem 13205,500; }
