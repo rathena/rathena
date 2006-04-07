@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/07
+	* Added missing creation/destruction of the expcache_ers in guild.c
+	  [Skotlex]
+	* Unified status_remove_buffs/status_remove_debuffs into a single function.
+	  [Skotlex]
 	* Fixed pc_setpos ignoring the clrtype sent to it. [Skotlex]
 	* unit_free will now use clear type 3 for players (warping out effect)
 	  [Skotlex]

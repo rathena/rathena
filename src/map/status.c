@@ -4281,8 +4281,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					break;
 				val2 = tick;
 				tick = 1000;
-				status_change_clear_buffs(bl);
-				status_change_clear_debuffs(bl); //Gospel clears both types.
+				status_change_clear_buffs(bl,3); //Remove buffs/debuffs
 			} else
 				calc_flag = 1;
 			break;
@@ -4318,7 +4317,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_HERMODE:
-			status_change_clear_buffs(bl);
+			status_change_clear_buffs(bl,1);
 			break;
 
 		case SC_REGENERATION:
@@ -5772,65 +5771,77 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 	return 0;
 }
 
-int status_change_clear_buffs (struct block_list *bl)
+/*==========================================
+ * Clears buffs/debuffs of a character.
+ * type&1 -> buffs, type&2 -> debuffs
+ *------------------------------------------
+ */
+int status_change_clear_buffs (struct block_list *bl, int type)
 {
 	int i;
 	struct status_change *sc= status_get_sc(bl);
-	if (!sc || !sc->count)
-		return 0;		
-	for (i = 20; i < SC_MAX; i++) {
-		if(i==SC_HALLUCINATION || i==SC_WEIGHT50 || i==SC_WEIGHT90
-			|| i == SC_QUAGMIRE || i == SC_SIGNUMCRUCIS || i == SC_DECREASEAGI 
-			|| i == SC_SLOWDOWN || i == SC_ANKLE|| i == SC_BLADESTOP
-			|| i == SC_MINDBREAKER || i == SC_WINKCHARM 
-			|| i == SC_STOP || i == SC_NOCHAT || i == SC_ORCISH
-			|| i == SC_STRIPWEAPON || i == SC_STRIPSHIELD || i == SC_STRIPARMOR || i == SC_STRIPHELM
-			|| i == SC_COMBO || i == SC_DANCING || i == SC_GUILDAURA
-			)
-			continue;
-		if(i==SC_BERSERK) sc->data[i].val4 = 1;
-		if(sc->data[i].timer != -1)
-			status_change_end(bl,i,-1);
-	}
-	return 0;
-}
-int status_change_clear_debuffs (struct block_list *bl)
-{
-	int i;
-	struct status_change *sc = status_get_sc(bl);
+
 	if (!sc || !sc->count)
 		return 0;
+
+	if (type&2) //Debuffs
 	for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++) {
 		if(sc->data[i].timer != -1)
 			status_change_end(bl,i,-1);
 	}
-	//Other ailments not in the common range.
-	if(sc->data[SC_HALLUCINATION].timer != -1)
-		status_change_end(bl,SC_HALLUCINATION,-1);
-	if(sc->data[SC_QUAGMIRE].timer != -1)
-		status_change_end(bl,SC_QUAGMIRE,-1);
-	if(sc->data[SC_SIGNUMCRUCIS].timer != -1)
-		status_change_end(bl,SC_SIGNUMCRUCIS,-1);
-	if(sc->data[SC_DECREASEAGI].timer != -1)
-		status_change_end(bl,SC_DECREASEAGI,-1);
-	if(sc->data[SC_SLOWDOWN].timer != -1)
-		status_change_end(bl,SC_SLOWDOWN,-1);
-	if(sc->data[SC_MINDBREAKER].timer != -1)
-		status_change_end(bl,SC_MINDBREAKER,-1);
-	if(sc->data[SC_WINKCHARM].timer != -1)
-		status_change_end(bl,SC_WINKCHARM,-1);
-	if(sc->data[SC_STOP].timer != -1)
-		status_change_end(bl,SC_STOP,-1);
-	if(sc->data[SC_ORCISH].timer != -1)
-		status_change_end(bl,SC_ORCISH,-1);
-	if(sc->data[SC_STRIPWEAPON].timer != -1)
-		status_change_end(bl,SC_STRIPWEAPON,-1);
-	if(sc->data[SC_STRIPSHIELD].timer != -1)
-		status_change_end(bl,SC_STRIPSHIELD,-1);
-	if(sc->data[SC_STRIPARMOR].timer != -1)
-		status_change_end(bl,SC_STRIPARMOR,-1);
-	if(sc->data[SC_STRIPHELM].timer != -1)
-		status_change_end(bl,SC_STRIPHELM,-1);
+
+	for (i = SC_COMMON_MAX+1; i < SC_MAX; i++) {
+
+		if(sc->data[i].timer == -1)
+			continue;
+		
+		switch (i) {
+			//Stuff that cannot be removed
+			case SC_WEIGHT50:
+			case SC_WEIGHT90:
+			case SC_COMBO:
+			case SC_DANCING:
+			case SC_GUILDAURA:
+			case SC_SAFETYWALL:
+			case SC_NOCHAT:
+			case SC_ANKLE:
+			case SC_BLADESTOP:
+			case SC_CP_WEAPON:
+			case SC_CP_SHIELD:
+			case SC_CP_ARMOR:
+			case SC_CP_HELM:
+				continue;
+				
+			//Debuffs that can be removed.
+			case SC_HALLUCINATION:
+			case SC_QUAGMIRE:
+			case SC_SIGNUMCRUCIS:
+			case SC_DECREASEAGI:
+			case SC_SLOWDOWN:
+			case SC_MINDBREAKER:
+			case SC_WINKCHARM:
+			case SC_STOP:
+			case SC_ORCISH:
+			case SC_STRIPWEAPON:
+			case SC_STRIPSHIELD:
+			case SC_STRIPARMOR:
+			case SC_STRIPHELM:
+				if (!(type&2))
+					continue;
+				break;
+			//The rest are buffs that can be removed.
+			case SC_BERSERK:
+				if (!(type&1))
+					continue;
+			  	sc->data[i].val4 = 1;
+				break;
+			default:
+				if (!(type&1))
+					continue;
+				break;
+		}
+		status_change_end(bl,i,-1);
+	}
 	return 0;
 }
 

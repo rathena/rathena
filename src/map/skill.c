@@ -5277,7 +5277,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					sc_start(bl,SC_INCMATKRATE,100,-50,skill_get_time2(skillid,skilllv));
 					break;
 				case 2:	// all buffs removed
-					status_change_clear_buffs(bl);
+					status_change_clear_buffs(bl,1);
 					break;
 				case 3:	// 1000 damage, random armor destroyed
 					{
@@ -6970,7 +6970,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 					}
 					break;
 				case 1: // End all negative status
-					status_change_clear_debuffs (bl);
+					status_change_clear_buffs(bl,2);
 					break;
 				case 2: // Level 10 Blessing
 					sc_start(bl,SC_BLESSING,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
