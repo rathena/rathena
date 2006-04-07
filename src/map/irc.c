@@ -275,6 +275,13 @@ void irc_parse_sub(int fd, char *incoming_string)
 		parse_names_packet(incoming_string);
 	}
 
+	// Refresh Names [Zido]
+	if((strcmpi(command,"join")==0)||(strcmpi(command,"part")==0)||(strcmpi(command,"mode")==0)) {
+		irc_rmnames();
+		sprintf(send_string,"NAMES %s",irc_channel);
+		irc_send(send_string);
+	}
+
 	return;
 }
 
@@ -430,4 +437,16 @@ int get_access(char *nick) {
 	}
 
 	return -1;
+}
+
+int irc_rmnames() {
+	int i=0;
+	
+	for(i=0;i<=MAX_CHANNEL_USERS;i++) {
+		memset(cd.user[i].name,'\0',256);
+		cd.user[i].level=0;
+	}
+	last_cd_user=0;
+
+	return 0;
 }
