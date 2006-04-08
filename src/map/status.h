@@ -483,6 +483,7 @@ int status_get_race2(struct block_list *bl);
 
 struct view_data *status_get_viewdata(struct block_list *bl);
 void status_set_viewdata(struct block_list *bl, int class_);
+void status_change_init(struct block_list *bl);
 struct status_change *status_get_sc(struct block_list *bl);
 
 int status_get_matk1(struct block_list *bl);

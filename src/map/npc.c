@@ -1494,8 +1494,9 @@ int npc_parse_warp (char *w1,char *w2,char *w3,char *w4)
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = WARP;
 	map_addblock(&nd->bl);
-	unit_dataset(&nd->bl);
 	status_set_viewdata(&nd->bl, nd->class_);
+	status_change_init(&nd->bl);
+	unit_dataset(&nd->bl);
 	clif_spawn(&nd->bl);
 	strdb_put(npcname_db, nd->name, nd);
 
@@ -1580,12 +1581,13 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 	npc_shop++;
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = SHOP;
-	unit_dataset(&nd->bl);
-	nd->ud.dir = dir;
 	if (m >= 0) {
 		nd->n = map_addnpc(m,nd);
 		map_addblock(&nd->bl);
 		status_set_viewdata(&nd->bl, nd->class_);
+		status_change_init(&nd->bl);
+		unit_dataset(&nd->bl);
+		nd->ud.dir = dir;
 		clif_spawn(&nd->bl);
 	} else
 		// we skip map_addnpc, but still add it to the list of ID's
@@ -1880,13 +1882,15 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	npc_script++;
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = SCRIPT;
-	unit_dataset(&nd->bl);
-	nd->ud.dir = dir;
 
 	for (i = 0; i < MAX_EVENTTIMER; i++)
 		nd->eventtimer[i] = -1;
 	if (m >= 0) {
 		nd->n = map_addnpc(m, nd);
+		status_set_viewdata(&nd->bl, nd->class_);
+		status_change_init(&nd->bl);
+		unit_dataset(&nd->bl);
+		nd->ud.dir = dir;
 		map_addblock(&nd->bl);
 		if (evflag) {	// ƒCƒxƒ“ƒgŒ^
 			struct event_data *ev = (struct event_data *)aCalloc(1, sizeof(struct event_data));
@@ -1894,7 +1898,6 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 			ev->pos = 0;
 			strdb_put(ev_db, nd->exname, ev);
 		} else {
-			status_set_viewdata(&nd->bl, nd->class_);
 			clif_spawn(&nd->bl);
 		}
 	} else {

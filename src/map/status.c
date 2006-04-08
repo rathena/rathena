@@ -3401,6 +3401,16 @@ struct status_change *status_get_sc(struct block_list *bl)
 	return NULL;
 }
 
+void status_change_init(struct block_list *bl)
+{
+	struct status_change *sc = status_get_sc(bl);
+	int i;
+	nullpo_retv(sc);
+	memset(sc, 0, sizeof (struct status_change));
+	for (i=0; i< SC_MAX; i++)
+		sc->data[i].timer = -1;
+}
+
 //Returns defense against the specified status change.
 //Return range is 0 (no resist) to 10000 (inmunity)
 int status_get_sc_def(struct block_list *bl, int type)

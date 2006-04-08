@@ -186,7 +186,6 @@ int mob_parse_dataset(struct spawn_data *data) {
 struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 {
 	struct mob_data *md = aCalloc(1, sizeof(struct mob_data));
-	int i;
 	md->bl.id= npc_get_new_npc_id();
 	md->bl.type = BL_MOB;
 	md->bl.subtype = MONS;
@@ -210,9 +209,10 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->spawn_n = -1;
 	md->deletetimer = -1;
 	md->skillidx = -1;
-	for (i = 0; i < MAX_STATUSCHANGE; i++)
-		md->sc.data[i].timer = -1;
 	status_set_viewdata(&md->bl, md->class_);
+	status_change_init(&md->bl);
+	unit_dataset(&md->bl);
+	
 	map_addiddb(&md->bl);
 	return md;
 }
@@ -708,7 +708,6 @@ int mob_spawn (struct mob_data *md)
 	md->state.skillstate = MSS_IDLE;
 	md->next_walktime = tick+rand()%5000+1000;
 	md->last_linktime = tick;
-	unit_dataset(&md->bl);
 
 	/* Guardians should be spawned using mob_spawn_guardian! [Skotlex]
 	 * and the Emperium is spawned using mob_once_spawn.

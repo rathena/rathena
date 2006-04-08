@@ -439,7 +439,7 @@ int get_access(char *nick) {
 	return -1;
 }
 
-int irc_rmnames() {
+int irc_rmnames(void) {
 	int i=0;
 	
 	for(i=0;i<=MAX_CHANNEL_USERS;i++) {

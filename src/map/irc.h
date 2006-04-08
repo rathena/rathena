@@ -48,4 +48,4 @@ int parse_names_packet(char *str);
 int parse_names(char *str);
 int set_access(char *nick,int level);
 int get_access(char *nick);
-int irc_rmnames();
+int irc_rmnames(void);

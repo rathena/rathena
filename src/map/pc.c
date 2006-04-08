@@ -415,7 +415,6 @@ int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int lo
 	sd->state.auth   = 0;
 	sd->bl.type      = BL_PC;
 	sd->canlog_tick  = gettick();
-	unit_dataset(&sd->bl);
 	sd->state.waitingdisconnect = 0;
 
 	return 0;
@@ -677,14 +676,12 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	
 	//Set here because we need the inventory data for weapon sprite parsing.
 	status_set_viewdata(&sd->bl, sd->status.class_);
+	status_change_init(&sd->bl);
+	unit_dataset(&sd->bl);
+	
 	// pet
 	sd->pet_hungry_timer = -1;
 
-	// ステ?タス異常の初期化
-	for(i = 0; i < MAX_STATUSCHANGE; i++) {
-		sd->sc.data[i].timer=-1;
-	}
-	sd->sc.count=0;
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_Hide)))
 		sd->status.option &= (OPTION_MASK | OPTION_INVISIBLE);
