@@ -27,6 +27,12 @@
 
 =========================
 
+04/07
+	* Modified the equip_job field in the item_db to be a hexadecimal value for
+	  easier handling. [Skotlex]
+	* Modified/optimized the distribution of the values for jobs in the
+	  job_equip field; added doc/item_db.txt to explain each of the fields in
+	  db/item_db.txt as well as the possible values for them. [Skotlex]
 04/06
 	* Added some Landarma's new items plugs [Lupus]
 	* Lowered min zeny amount that give Red Envelopes, thanks to kyoki [Lupus]

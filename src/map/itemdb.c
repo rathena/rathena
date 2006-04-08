@@ -194,12 +194,17 @@ struct item_data* itemdb_exists(int nameid)
  * to the format used by the map server. [Skotlex]
  *------------------------------------------
  */
-static void itemdb_jobid2mapid(unsigned int *bclass, int jobmask)
+static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 {
 	int i;
 	bclass[0]= bclass[1]= bclass[2]= 0;
 	//Base classes
-	for (i = JOB_NOVICE; i <= JOB_THIEF; i++)
+	if (jobmask & 1<<JOB_NOVICE)
+	{	//Both Novice/Super-Novice are counted with the same ID
+		bclass[0] |= 1<<MAPID_NOVICE;
+		bclass[1] |= 1<<MAPID_NOVICE;
+	}
+	for (i = JOB_NOVICE+1; i <= JOB_THIEF; i++)
 	{
 		if (jobmask & 1<<i)
 			bclass[0] |= 1<<(MAPID_NOVICE+i);
@@ -233,17 +238,15 @@ static void itemdb_jobid2mapid(unsigned int *bclass, int jobmask)
 	if (jobmask & 1<<JOB_ROGUE)
 		bclass[2] |= 1<<MAPID_THIEF;
 	//Special classes that don't fit above.
-	if (jobmask & 1<<JOB_SUPER_NOVICE)
-		bclass[1] |= 1<<MAPID_NOVICE;
-	if (jobmask & 1<<24) //Taekwon boy
+	if (jobmask & 1<<21) //Taekwon boy
 		bclass[0] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<25) //Star Gladiator
+	if (jobmask & 1<<22) //Star Gladiator
 		bclass[1] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<26) //Soul Linker
+	if (jobmask & 1<<23) //Soul Linker
 		bclass[2] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<27) //Gunslinger
+	if (jobmask & 1<<JOB_GUNSLINGER)
 		bclass[0] |= 1<<MAPID_GUNSLINGER;
-	if (jobmask & 1<<28) //Ninja
+	if (jobmask & 1<<JOB_NINJA)
 		bclass[0] |= 1<<MAPID_NINJA;
 }
 
@@ -911,7 +914,7 @@ static int itemdb_read_sqldb(void)
 						ShowWarning("itemdb_read_sqldb: Item %d (%s) specifies %d slots, but the server only supports up to %d\n", nameid, id->jname, id->slot, MAX_SLOTS);
 						id->slot = MAX_SLOTS;
 					}
-					itemdb_jobid2mapid(id->class_base, (sql_row[11] != NULL) ? atoi(sql_row[11]) : 0);
+					itemdb_jobid2mapid(id->class_base, (sql_row[11] != NULL) ? (unsigned int)strtol(sql_row[11], NULL, 0) : 0);
 					id->class_upper= (sql_row[12] != NULL) ? atoi(sql_row[12]) : 0;
 					id->sex		= (sql_row[13] != NULL) ? atoi(sql_row[13]) : 0;
 					id->equip	= (sql_row[14] != NULL) ? atoi(sql_row[14]) : 0;
@@ -1054,7 +1057,7 @@ static int itemdb_readdb(void)
 				ShowWarning("itemdb_readdb: Item %d (%s) specifies %d slots, but the server only supports up to %d\n", nameid, id->jname, id->slot, MAX_SLOTS);
 				id->slot = MAX_SLOTS;
 			}
-			itemdb_jobid2mapid(id->class_base, atoi(str[11]));
+			itemdb_jobid2mapid(id->class_base, (unsigned int)strtol(str[11],NULL,0));
 			id->class_upper = atoi(str[12]);
 			id->sex	= atoi(str[13]);
 			if(id->equip != atoi(str[14])){
