@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/08
+	* Fixed skill_nocast_db reading so that when the same skill is specified
+	  multiple times, the blocked effects add up instead of replacing each other.
+	  [Skotlex]
 	* Fixed @movenpc [Skotlex]
 	* Cleaned up and improved the lootsearch routine to pick nearest item.
 	  [Skotlex]

@@ -10991,7 +10991,7 @@ int skill_readdb(void)
 			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
 		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
-		skill_db[i].nocast=atoi(split[1]);
+		skill_db[i].nocast|=atoi(split[1]);
 		k++;
 	}
 	fclose(fp);
