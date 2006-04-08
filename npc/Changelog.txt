@@ -27,6 +27,9 @@ Nexon
 
 Date		Added
 ======
+04/08
+	* Fixed lighthalzen mobster a bit? [Vicious]
+	* Fixed job changer? [Vicious]
 04/04
 	* Re-fixed looping warps of Lutie village, thanks to Dr.Evil [Lupus]
 	* Added missing Warpra Agent to Hugel. Thanks to Justin84

@@ -77,7 +77,7 @@ MakeMob:
 	mapannounce "lighthalzen.gat","Maintenance Organization of the Public Order: Currently the security of the city has been compromized, We ask the citizens to be more careful. I repeat. We ask the citizens to be more careful.", 1;
 	
 	for( set $@i, 0; $@i < $@mob; set $@i, $@i + 1 ) {
-		monster "lighthalzen.gat",0,0,"Mobster",1592,1,"Mobs::MobKilled";
+		monster "lighthalzen.gat",0,0,"Mobster",1592,1,"AlertChk::MobKilled";
 	}
 
 	set $@lhz_alert, 1;	
@@ -89,7 +89,7 @@ ClearMob:
 	if($@lhz_alert == 0) goto ChkEnd;
 	set $@mobcount, 0;
 	mapannounce "lighthalzen.gat","Maintenance organization of the Public Order: We were able to get rid of all the trouble makers in the city. You may relax now.", 1;	
-	killmonster "lighthalzen.gat","Mobs::MobKilled";
+	killmonster "lighthalzen.gat","AlertChk::MobKilled";
 	set $@lhz_alert, 0;
 	set $@sneakguard, 0;
 	setnpctimer 0;
