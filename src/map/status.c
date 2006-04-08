@@ -2329,8 +2329,8 @@ int status_quick_recalc_speed(struct map_session_data *sd, int skill_num, int sk
 int status_get_class(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
-	if(bl->type==BL_MOB)
-		return ((struct mob_data *)bl)->class_;
+	if(bl->type==BL_MOB)	//Class used on all code should be the view class of the mob.
+		return ((struct mob_data *)bl)->vd->class_;
 	if(bl->type==BL_PC)
 		return ((struct map_session_data *)bl)->status.class_;
 	if(bl->type==BL_PET)

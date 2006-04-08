@@ -652,8 +652,8 @@ int mob_spawn (struct mob_data *md)
 	md->last_spawntime = tick;
 	if (md->bl.prev != NULL)
 		unit_remove_map(&md->bl,2);
-	else if (md->spawn && md->class_ != md->spawn->class_) {
-		md->class_ = md->spawn->class_;
+	else if (md->vd->class_ != md->class_) {
+		status_set_viewdata(&md->bl, md->class_);
 		md->db = mob_db(md->class_);
 		md->speed=md->db->speed;
 		if (md->spawn)
@@ -2364,8 +2364,6 @@ int mob_class_change (struct mob_data *md, int class_)
 		return 0;
 
 	hp_rate = md->hp*100/status_get_max_hp(&md->bl);
-	clif_mob_class_change(md,class_);
-	md->class_ = class_;
 	md->db = mob_db(class_);
 	md->max_hp = md->db->max_hp; //Update the mob's max HP
 	if (battle_config.monster_class_change_full_recover) {
@@ -2385,6 +2383,7 @@ int mob_class_change (struct mob_data *md, int class_)
 	mob_stop_walking(md, 0);
 	unit_skillcastcancel(&md->bl, 0);
 	status_set_viewdata(&md->bl, class_);
+	clif_mob_class_change(md,class_);
 	
 	for(i=0,c=tick-1000*3600*10;i<MAX_MOBSKILL;i++)
 		md->skilldelay[i] = c;
