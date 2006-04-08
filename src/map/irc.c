@@ -256,30 +256,38 @@ void irc_parse_sub(int fd, char *incoming_string)
 	        	sprintf(send_string, "PONG %s", command);
 			irc_send(send_string);
 		}
-	}
 
-	// Broadcast [Zido] (Work in Progress)
-	if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"@kami %255[^\r\n]",cmd1)>0)&&(target[0]=='#')) {
-		if(get_access(source_nick)<ACCESS_OP)
-			sprintf(send_string,"NOTICE %s :Access Denied",source_nick);
-		else {
-			sprintf(send_string,"%s: %s",source_nick,cmd1);
-			intif_GMmessage(send_string,strlen(send_string)+1,0);
-			sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
+		else if((strcmpi(target,irc_channel)==0)||(strcmpi(target,irc_channel+1)==0)) {
+
+			// Broadcast [Zido] (Work in Progress)
+			if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"@kami %255[^\r\n]",cmd1)>0)&&(target[0]=='#')) {
+				if(get_access(source_nick)<ACCESS_OP)
+					sprintf(send_string,"NOTICE %s :Access Denied",source_nick);
+				else {
+					sprintf(send_string,"%s: %s",source_nick,cmd1);
+					intif_GMmessage(send_string,strlen(send_string)+1,0);
+					sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
+				}
+				irc_send(send_string);
+			}
+
+			// Refresh Names [Zido]
+			else if((strcmpi(command,"join")==0)||(strcmpi(command,"part")==0)||(strcmpi(command,"mode")==0)||(strcmpi(command,"nick")==0)) {
+				ShowInfo("IRC: Refreshing User List");
+				irc_rmnames();
+				printf("...");
+				sprintf(send_string,"NAMES %s",irc_channel);
+				printf("...");
+				irc_send(send_string);
+				printf("Done\n");
+			}
 		}
-		irc_send(send_string);
-	}
 
-	// Names Reply [Zido]
-	if((strcmpi(command,"353")==0)) {
-		parse_names_packet(incoming_string);
-	}
-
-	// Refresh Names [Zido]
-	if((strcmpi(command,"join")==0)||(strcmpi(command,"part")==0)||(strcmpi(command,"mode")==0)) {
-		irc_rmnames();
-		sprintf(send_string,"NAMES %s",irc_channel);
-		irc_send(send_string);
+		// Names Reply [Zido]
+		else if((strcmpi(command,"353")==0)) {
+			ShowInfo("IRC: NAMES recieved\n");
+			parse_names_packet(incoming_string);
+		}
 	}
 
 	return;
@@ -439,14 +447,16 @@ int get_access(char *nick) {
 	return -1;
 }
 
-int irc_rmnames(void) {
+int irc_rmnames() {
 	int i=0;
 	
 	for(i=0;i<=MAX_CHANNEL_USERS;i++) {
-		memset(cd.user[i].name,'\0',256);
+		//memset(cd.user[i].name,'\0',256);
 		cd.user[i].level=0;
 	}
+
 	last_cd_user=0;
+	
 
 	return 0;
 }
