@@ -15,6 +15,7 @@ typedef int socklen_t;
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 #ifndef SIOCGIFCONF
 #include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
@@ -54,7 +55,7 @@ char irc_channel[32]="";
 char irc_trade_channel[32]="";
 
 unsigned char irc_ip_str[128]="";
-unsigned long irc_ip=6667;
+unsigned long irc_ip=0;
 unsigned short irc_port = 6667;
 int irc_fd=0;
 
@@ -240,6 +241,8 @@ void irc_parse_sub(int fd, char *incoming_string)
 			sprintf(send_string, "PRIVMSG nickserv :identify %s", irc_password);
 			irc_send(send_string);
 			sprintf(send_string, "JOIN %s", irc_channel);
+			irc_send(send_string);
+			sprintf(send_string,"NAMES %s",irc_channel);
 			irc_send(send_string);
 			irc_si->state = 2;
 		}
@@ -459,4 +462,54 @@ int irc_rmnames() {
 	
 
 	return 0;
+}
+
+int irc_read_conf(char *file) {
+	FILE *fp=NULL;
+	char w1[256];
+	char w2[256];
+	char path[256];
+	char row[1024];
+
+	memset(w1,'\0',256);
+	memset(w2,'\0',256);
+	memset(path,'\0',256);
+	memset(row,'\0',256);
+
+	sprintf(path,"conf/%s",file);
+
+	if(!(fp=fopen(path,"r"))) {
+		ShowError("Cannot find file: %s\n",path);
+		return 0;
+	}
+
+	while(fgets(row,1023,fp)!=NULL) {
+		if(row[0]=='/'&&row[1]=='/')
+			continue;
+		sscanf(row,"%[^:]: %255[^\r\n]",w1,w2);
+		if(strcmpi(w1,"use_irc")==0) {
+			if(strcmpi(w2,"on")==0)
+				use_irc=1;
+			else
+				use_irc=0;
+		}
+		else if(strcmpi(w1,"irc_server")==0)
+			strcpy(irc_ip_str,w2);
+		else if(strcmpi(w1,"irc_port")==0)
+			irc_port=atoi(w2);
+		else if(strcmpi(w1,"irc_channel")==0)
+			strcpy(irc_channel,w2);
+		else if(strcmpi(w1,"irc_trade_channel")==0)
+			strcpy(irc_trade_channel,w2);
+		else if(strcmpi(w1,"irc_nick")==0)
+			strcpy(irc_nick,w2);
+		else if(strcmpi(w1,"irc_pass")==0) {
+			if(strcmpi(w2,"0")!=0)
+				strcpy(irc_password,w2);
+		}
+	}
+
+	ShowInfo("IRC Config read successfully\n");
+
+	return 1;
 }

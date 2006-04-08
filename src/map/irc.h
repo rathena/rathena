@@ -1,5 +1,8 @@
 #include "map.h"
 
+// IRC .conf file [Zido]
+#define IRC_CONF	"irc_athena.conf"
+
 // IRC Access levels [Zido]
 #define	ACCESS_OWNER	5
 #define	ACCESS_SOP		4
@@ -44,8 +47,9 @@ struct channel_data {
 	}user[MAX_CHANNEL_USERS];
 };
 
-int parse_names_packet(char *str);
-int parse_names(char *str);
-int set_access(char *nick,int level);
-int get_access(char *nick);
-int irc_rmnames(void);
+int parse_names_packet(char *str); // [Zido]
+int parse_names(char *str); // [Zido]
+int set_access(char *nick,int level); // [Zido]
+int get_access(char *nick); // [Zido]
+int irc_rmnames(void); // [Zido]
+int irc_read_conf(char *file); // [Zido]
