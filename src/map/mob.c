@@ -888,19 +888,17 @@ static int mob_ai_sub_hard_changechase(struct block_list *bl,va_list ap)
 static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 {
 	struct mob_data* md;
-	int dist,*itc;
+	struct block_list **target;
+	int dist;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, md=va_arg(ap,struct mob_data *));
-	nullpo_retr(0, itc=va_arg(ap,int *));
+	md=va_arg(ap,struct mob_data *);
+	target= va_arg(ap,struct block_list**);
 
-	if(!md->lootitem || (battle_config.monster_loot_type == 1 && md->lootitem_count >= LOOTITEM_SIZE))
-		return 0;
-	
 	if((dist=distance_bl(&md->bl, bl)) < md->db->range2 &&
-		mob_can_reach(md,bl,dist, MSS_LOOT) && rand()%1000<1000/(++(*itc)))
-	{	// It is made a probability, such as within the limits PC.
+		mob_can_reach(md,bl,dist, MSS_LOOT) && 
+		((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) //New target closer than previous one.
+	) {
+		(*target) = bl;
 		md->target_id=bl->id;
 		md->min_chase=md->db->range3;
 		md->next_walktime = gettick() + 500; //So that the mob may go after the item inmediately.
@@ -1216,9 +1214,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	} else if (!tbl && mode&MD_LOOTER && md->lootitem && 
 		(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
 	{	// Scan area for items to loot, avoid trying to loot of the mob is full and can't consume the items.
-		i = 0;
 		map_foreachinrange (mob_ai_sub_hard_lootsearch, &md->bl,
-			view_range, BL_ITEM, md, &i);
+			view_range, BL_ITEM, md, &tbl);
 	}
 
 	if (tbl)

@@ -6999,7 +6999,7 @@ int
 atcommand_npcmove(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int x = 0, y = 0;
+	int x = 0, y = 0, m;
 	struct npc_data *nd = 0;
 	nullpo_retr(-1, sd);
 
@@ -7020,9 +7020,15 @@ atcommand_npcmove(const int fd, struct map_session_data* sd,
 	if ((nd = npc_name2id(atcmd_player_name)) == NULL)
 		return -1;
 
+	if ((m=nd->bl.m) < 0 || nd->bl.prev == NULL)
+		return -1;	//Not on a map.
+	
 	npc_enable(atcmd_player_name, 0);
-	nd->bl.x = x;
-	nd->bl.y = y;
+	if (x < 0) x = 0;
+	else if (x >= map[m].xs) x = map[m].xs-1;
+	if (y < 0) y = 0;
+	else if (y >= map[m].ys) y = map[m].ys-1;
+	map_moveblock(&nd->bl, x, y, gettick());
 	npc_enable(atcmd_player_name, 1);
 
 	return 0;

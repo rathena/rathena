@@ -68,6 +68,8 @@ static struct view_data npc_viewdb[MAX_NPC_CLASS];
 
 struct view_data* npc_get_viewdata(int class_)
 {	//Returns the viewdata for normal npc classes.
+	if (class_ == INVISIBLE_CLASS)
+		return &npc_viewdb[0];
 	if (npcdb_checkid(class_) || class_ == WARP_CLASS)
 		return &npc_viewdb[class_];
 	return NULL;
@@ -1887,7 +1889,8 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		nd->eventtimer[i] = -1;
 	if (m >= 0) {
 		nd->n = map_addnpc(m, nd);
-		status_set_viewdata(&nd->bl, nd->class_);
+		if (class_ >= 0)
+			status_set_viewdata(&nd->bl, nd->class_);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
 		nd->ud.dir = dir;
@@ -2688,7 +2691,7 @@ static void npc_debug_warps_sub(struct npc_data *nd)
 	
 }
 
-static void npc_debug_warps()
+static void npc_debug_warps(void)
 {
 	int m, i;
 	for (m = 0; m < map_num; m++)
@@ -2709,7 +2712,8 @@ int do_init_npc(void)
 
 	//Stock view data for normal npcs.
 	memset(&npc_viewdb, 0, sizeof(npc_viewdb));
-	for (busy = 0; busy < MAX_NPC_CLASS; busy++) 
+	npc_viewdb[0].class_ = INVISIBLE_CLASS; //Invisible class is stored here.
+	for (busy = 1; busy < MAX_NPC_CLASS; busy++) 
 		npc_viewdb[busy].class_ = busy;
 	busy = 0;
 	// indoorrswtable.txt and etcinfo.txt [Celest]
