@@ -1195,7 +1195,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		mob_ai_sub_hard_slavemob(md, tick);
 
 	// Scan area for targets
-	if ((mode&MD_AGGRESSIVE && battle_config.monster_active_enable && !tbl) ||
+	if ((!tbl && mode&MD_AGGRESSIVE && battle_config.monster_active_enable) ||
 		(mode&MD_ANGRY && md->state.skillstate == MSS_FOLLOW)
 	) {
 		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl,
@@ -1204,7 +1204,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		search_size = view_range<md->db->range ? view_range:md->db->range;
 		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl,
 				search_size, (md->special_state.ai?BL_CHAR:BL_PC), md, &tbl);
-	} else if (!tbl && mode&MD_LOOTER && md->lootitem && 
+	}
+	if (!tbl && mode&MD_LOOTER && md->lootitem && 
 		(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
 	{	// Scan area for items to loot, avoid trying to loot of the mob is full and can't consume the items.
 		map_foreachinrange (mob_ai_sub_hard_lootsearch, &md->bl,

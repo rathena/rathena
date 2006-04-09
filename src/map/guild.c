@@ -778,7 +778,8 @@ int guild_leave(struct map_session_data *sd,int guild_id,
 		return 0;
 
 	if(	sd->status.account_id!=account_id ||
-		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id)
+		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id ||
+		map[sd->bl.m].flag.gvg_castle) //Can't leave inside guild castles.
 		return 0;
 
 	for(i=0;i<g->max_member;i++){	// Š‘®‚µ‚Ä‚¢‚é‚©
@@ -804,7 +805,7 @@ int guild_explusion(struct map_session_data *sd,int guild_id,
 	if(g==NULL)
 		return 0;
 
-	if(	sd->status.guild_id!=guild_id)
+	if(sd->status.guild_id!=guild_id || map[sd->bl.m].flag.gvg_castle) //Can't leave inside guild castles.
 		return 0;
 
 	if( (ps=guild_getposition(sd,g))<0 || !(g->position[ps].mode&0x0010) )
