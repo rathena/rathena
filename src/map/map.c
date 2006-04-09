@@ -2351,7 +2351,7 @@ int map_setwaterheight(int m, char *mapname, int height) {
  */
 int map_waterheight(char *mapname) {
 	char fn[256];
- 	char *rsw;
+ 	char *rsw, *found;
 	float whtemp;
 	int wh;
 
@@ -2365,7 +2365,11 @@ int map_waterheight(char *mapname) {
 	//Look up for the rsw
 	sprintf(fn,"data\\%s",mapname);
 
-	sprintf(fn,"data\\%s",grfio_find_file(fn));
+	found = grfio_find_file(fn);
+	if(!strstr(found,"data\\"))
+		sprintf(fn,"data\\%s", found);
+	else
+		strcpy(fn, found);
 	
 	rsw = strstr(fn, ".");
 	if (rsw && strstr(fn, ".rsw") == NULL)
