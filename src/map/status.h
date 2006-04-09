@@ -55,7 +55,7 @@ enum {
 	SC_BROKENARMOR, //50 - NOTE: These two aren't used anywhere, and they have an icon...
 	SC_BROKENWEAPON,
 	SC_HALLUCINATION,
-	SC_WEIGHT50 ,
+	SC_WEIGHT50,
 	SC_WEIGHT90,
 	SC_ASPDPOTION0,
 	SC_ASPDPOTION1,

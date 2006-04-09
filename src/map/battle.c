@@ -3992,7 +3992,7 @@ void battle_set_defaults() {
  	battle_config.summons_inherit_effects=1; 
 	battle_config.pc_walk_delay_rate=20;
 	battle_config.walk_delay_rate=100;
-	battle_config.multihit_delay=230;
+	battle_config.multihit_delay=80;
 	battle_config.quest_skill_learn=0;
 	battle_config.quest_skill_reset=1;
 	battle_config.basic_skill_check=1;

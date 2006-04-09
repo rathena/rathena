@@ -3847,8 +3847,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				status_change_end(bl,SC_CONCENTRATION,-1);
 			if (sc->data[SC_PARRYING].timer != -1)
 				status_change_end(bl,SC_PARRYING,-1);
-			if (sc->data[SC_ENDURE].timer != -1)
-				status_change_end(bl,SC_ENDURE,-1);
 			if (sc->data[SC_AURABLADE].timer != -1)
 				status_change_end(bl,SC_AURABLADE,-1);
 		}

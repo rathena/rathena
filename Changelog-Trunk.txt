@@ -3,6 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/04/09
+	* Changed the default of multi_hit_delay from 230 to 80 which seems more
+	  official. [Skotlex]
+	* Wedding recall skills are now blocked by the nomemo mapflag instead of
+	  nowarpto. [Skotlex]
+	* Skill delay for weapon types is now based on adelay (ASPD) rather than
+	  amotion (ASPD/2) [Skotlex]
+	* Removed ending Endure when casting Berserk, may fix the timer mismatch
+	  issues. [Skotlex
 2006/04/08
 	* Fixed skill_nocast_db reading so that when the same skill is specified
 	  multiple times, the blocked effects add up instead of replacing each other.

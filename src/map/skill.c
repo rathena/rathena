@@ -6476,7 +6476,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case WE_CALLPARTNER:
 		if (!sd)
 			return NULL;
-		if (map[src->m].flag.nowarpto) {
+		if (map[src->m].flag.nomemo) {
 			clif_skill_teleportmessage(sd,1);
 			return NULL;
 		}
@@ -6485,7 +6485,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case WE_CALLPARENT:
 		if (!sd)
 			return NULL;
-		if (map[src->m].flag.nowarpto) {
+		if (map[src->m].flag.nomemo) {
 			clif_skill_teleportmessage(sd,1);
 			return NULL;
 		}
@@ -6495,7 +6495,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case WE_CALLBABY:
 		if (!sd)
 			return NULL;
-		if (map[src->m].flag.nowarpto) {
+		if (map[src->m].flag.nomemo) {
 			clif_skill_teleportmessage(sd,1);
 			return NULL;
 		}
@@ -8334,11 +8334,11 @@ int skill_delayfix(struct block_list *bl, int skill_id, int skill_lv)
 	// instant cast attack skills depend on aspd as delay [celest]
 	if (time == 0) {
 		if (skill_get_type(skill_id) == BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_DAMAGE))
-			time = status_get_amotion(bl); //Use attack animation as default delay.
+			time = status_get_adelay(bl); //Use attack delay as default delay.
 		else
 			time = 300;	// default delay, according to official servers
 	} else if (time < 0)
-		time = -time + status_get_amotion(bl);	// if set to <0, the attack motion is added.
+		time = -time + status_get_adelay(bl);	// if set to <0, the attack delay is added.
 
 	if (battle_config.delay_dependon_dex && !(delaynodex&1))
 	{	// if skill casttime is allowed to be reduced by dex
