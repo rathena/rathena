@@ -1130,15 +1130,17 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	}
 			
 	// Check for target change.
-	if (md->attacked_id && mode&MD_CANATTACK && can_walk)
+	if (md->attacked_id && mode&MD_CANATTACK)
 	{
 		if (md->attacked_id == md->target_id)
 		{
+			/* Currently being unable to move shouldn't trigger rude-attacked conditions.
 			if (!can_move && !battle_check_range (&md->bl, tbl, md->db->range))
 			{	//Rude-attacked.
 				if (md->attacked_count++ > 3)
 					mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
+			*/
 		} else
 		if ((abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode))) {
 			if (md->bl.m != abl->m || abl->prev == NULL ||
@@ -1163,15 +1165,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			} else if (!(battle_config.mob_ai&2) && !status_check_skilluse(bl, abl, 0, 0)) {
 				//Can't attack back, but didn't invoke a rude attacked skill...
 				md->attacked_id = 0; //Simply unlock, shouldn't attempt to run away when in dumb_ai mode.
-/* Unneeded. Mobs use the min_chase parameter to chase back enemies once hit.
-			} else if (dist > view_range) { //Out of view range, but can reach 
-				//Attempt to follow new target
-				if (!md->target_id && can_move) {	// why is it moving to the target when the mob can't see the player? o.o
-					dx = abl->x - md->bl.x -1;
-					dy = abl->y - md->bl.y -1;
-					unit_walktoxy(&md->bl, md->bl.x+dx, md->bl.y+dy, 0);
-				}
-*/
 			} else { //Attackable
 				if (!tbl || dist < md->db->range || !check_distance_bl(&md->bl, tbl, dist)
 					|| battle_gettarget(tbl) != md->bl.id)
