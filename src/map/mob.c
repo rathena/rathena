@@ -650,6 +650,7 @@ int mob_spawn (struct mob_data *md)
 	unsigned int c =0, tick = gettick();
 
 	md->last_spawntime = tick;
+	md->last_thinktime = tick -MIN_MOBTHINKTIME;
 	if (md->bl.prev != NULL)
 		unit_remove_map(&md->bl,2);
 	else if (md->vd->class_ != md->class_) {

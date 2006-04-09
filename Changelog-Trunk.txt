@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/09
+	* Modified @warp/@rura to prevent causing pc_setpos position error
+	  messages. [Skotlex]
+	* Fixed the mob's last_thinktime not being updated on mob_spawn, causing
+	  them to not "think". [Skotlex]
 	* Fixed @npcmove not sending the correct packets to make the moving refresh
 	  client-side. [Skotlex]
 	* Fixed mobs with aggressive + looter mode never looting. [Skotlex]

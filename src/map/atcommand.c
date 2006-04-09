@@ -1236,11 +1236,6 @@ int atcommand_rura(
 			return -1;
 	}
 
-	if (x <= 0)
-		x = rand() % 399 + 1;
-	if (y <= 0)
-		y = rand() % 399 + 1;
-
 	if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
 		strcat(map_name, ".gat");
 
@@ -1252,24 +1247,22 @@ int atcommand_rura(
 		clif_displaymessage(fd, msg_table[1]); // Map not found.
 		return -1;
 	}
-	
-	if (x > 0 && x < 400 && y > 0 && y < 400) {
-		if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, msg_table[247]);
-			return -1;
-		}
-		if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, msg_table[248]);
-			return -1;
-		}
-		if (pc_setpos(sd, mapindex, x, y, 3) == 0)
-			clif_displaymessage(fd, msg_table[0]); // Warped.
-		else {
-			clif_displaymessage(fd, msg_table[1]); // Map not found.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[2]); // Coordinates out of range.
+
+	if (map_getcell(m, x, y, CELL_CHKNOPASS))
+		x = y = 0; //Invalid cell, use random spot.
+
+	if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+		clif_displaymessage(fd, msg_table[247]);
+		return -1;
+	}
+	if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+		clif_displaymessage(fd, msg_table[248]);
+		return -1;
+	}
+	if (pc_setpos(sd, mapindex, x, y, 3) == 0)
+		clif_displaymessage(fd, msg_table[0]); // Warped.
+	else {
+		clif_displaymessage(fd, msg_table[1]); // Map not found.
 		return -1;
 	}
 
