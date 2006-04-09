@@ -1296,8 +1296,6 @@ int atcommand_where(
 	}
 	pl_sd = map_nick2sd(atcmd_player_name);
 
-	pl_sd = map_nick2sd(atcmd_player_name);
-	
 	if (pl_sd == NULL) 
 		return -1;
 

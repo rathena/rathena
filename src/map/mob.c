@@ -1419,7 +1419,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
 	nullpo_retr(0, md);
 	nullpo_retr(0, app);
 
-	if(md->bl.type!=BL_MOB)
+	if(md->bl.type!=BL_MOB || md->bl.prev == NULL)
 		return 0;
 
 	ap = va_arg(app, va_list);
