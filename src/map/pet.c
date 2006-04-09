@@ -437,6 +437,7 @@ int pet_data_init(struct map_session_data *sd)
 	status_set_viewdata(&pd->bl,pd->class_);
 	unit_dataset(&sd->pd->bl);
 	pd->ud.dir = sd->ud.dir;
+	pd->last_thinktime = gettick();
 
 	map_addiddb(&pd->bl);
 
