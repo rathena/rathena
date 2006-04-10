@@ -57,11 +57,11 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 
+	ud->state.change_walk_target=0;
+
 	if (bl->type == BL_PC)
 		clif_walkok((TBL_PC*)bl);
 	clif_move(bl);
-
-	ud->state.change_walk_target=0;
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		i = -1;
@@ -143,9 +143,6 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,
 			dx,dy,sd?BL_ALL:BL_PC,bl);
 
-		if(md && md->min_chase > md->db->range2)
-			md->min_chase--;
-		
 		x += dx;
 		y += dy;
 		map_moveblock(bl, x, y, tick);
@@ -178,10 +175,18 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			if (
 				(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
 				sd->sc.data[SC_MIRACLE].timer==-1 &&
-				rand()%100000 < battle_config.sg_miracle_skill_ratio
+				!ud->walkpath.path_pos%WALK_SKILL_INTERVAL &&
+				rand()%10000 < battle_config.sg_miracle_skill_ratio
 			) {	//SG_MIRACLE [Komurka]
 				clif_displaymessage(sd->fd,"[Miracle of the Sun, Moon and Stars]");
 				sc_start(&sd->bl,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
+			}
+		} else if (md) {
+			if (ud->attacktarget) {
+				if(md->min_chase > md->db->range2) md->min_chase--;
+				if(!ud->walkpath.path_pos%WALK_SKILL_INTERVAL &&
+					mobskill_use(md, tick, -1))
+					return 0;
 			}
 		}
 	}
@@ -200,8 +205,23 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,ud->walkpath.path_pos);
 	} else if(sd && sd->sc.count && sd->sc.data[SC_RUN].timer!=-1) //Keep trying to run.
 		pc_run(sd, sd->sc.data[SC_RUN].val1, sd->sc.data[SC_RUN].val2);
-	else
-	{	//Stopped walking. Update to_x and to_y to current location [Skotlex]
+	else if (ud->walktarget) {
+		//Update target trajectory.
+		struct block_list *tbl = map_id2bl(ud->walktarget);
+		if (!tbl) {	//Cancel chase.
+			ud->to_x = bl->x;
+			ud->to_y = bl->y;
+			return 0;
+		}
+		if (tbl->m == bl->m && check_distance_bl(bl, tbl, ud->chaserange))
+		{	//Reached destination.
+			if (ud->attacktarget == tbl->id)
+				unit_attack(bl, tbl->id, ud->state.attack_continue);
+		} else { //Update chase-path
+			unit_walktobl(bl, tbl, ud->chaserange, ud->state.walk_easy);
+			return 0;
+		}
+	} else {	//Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 //		if (bl->type == BL_NPC) //Original eA code had this one only for BL_NPCs
@@ -221,10 +241,11 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
 	if( ud == NULL) return 0;
 
 	// ˆÚ“®o—ˆ‚È‚¢ƒ†ƒjƒbƒg‚Í’e‚­
-	if(!unit_can_move(bl) || !(status_get_mode(bl)&MD_CANMOVE) )
+	if(!(status_get_mode(bl)&MD_CANMOVE) || !unit_can_move(bl))
 		return 0;
 
 	ud->state.walk_easy = easy;
+	ud->walktarget	= 0;
 	ud->to_x = x;
 	ud->to_y = y;
 	
@@ -240,6 +261,87 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
 	} else {
 		return unit_walktoxy_sub(bl);
 	}
+}
+
+static int unit_walktobl_sub(int tid,unsigned int tick,int id,int data)
+{
+	struct block_list *bl = map_id2bl(id);
+	struct unit_data *ud = bl?unit_bl2ud(bl):NULL;
+
+	if (ud && ud->walktimer == -1 && ud->walktarget == data)
+	{
+		if (DIFF_TICK(ud->canmove_tick, tick) > 0) //Keep waiting?
+			add_timer(ud->canmove_tick+1, unit_walktobl_sub, id, data);
+		else if (unit_can_move(bl))
+			unit_walktoxy_sub(bl);
+	}
+	return 0;	
+}
+
+// Chases a tbl. If the flag&1, use hard-path seek,
+// if flag&2, start attacking upon arrival within range.
+int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int flag) {
+	struct unit_data        *ud = NULL;
+	struct status_change		*sc = NULL;
+	int i;
+	nullpo_retr(0, bl);
+	nullpo_retr(0, tbl);
+	
+	ud = unit_bl2ud(bl);
+	if( ud == NULL) return 0;
+
+	if (!(status_get_mode(bl)&MD_CANMOVE))
+		return 0;
+	
+	i = distance_bl(bl, tbl)+1;
+	if (!unit_can_reach_bl(bl, tbl, i, flag&1, &ud->to_x, &ud->to_y)) {
+		ud->to_x = bl->x;
+		ud->to_y = bl->y;
+		return 0;
+	}
+
+	ud->state.walk_easy = flag&1;
+	ud->walktarget	= tbl->id;
+	ud->chaserange = range;
+
+	if (range) {
+		//Adjust target cell 
+		if (i < range) {
+			//We are already within required distance!
+			if (flag&2) //Attack
+				unit_attack(bl, tbl->id, 1);
+			return 1;
+		}
+		//Trim the last part of the path to account for range.
+		for (i = 1; i <= range && ud->walkpath.path_len>0; i++) {
+			int dir;
+		   ud->walkpath.path_len--;
+			dir = ud->walkpath.path[ud->walkpath.path_len];
+			ud->to_x -= dirx[dir];
+			ud->to_y -= diry[dir];
+		}
+	}
+	sc = status_get_sc(bl);
+	if (sc && sc->count && sc->data[SC_CONFUSION].timer != -1) //Randomize the target position
+		map_random_dir(bl, &ud->to_x, &ud->to_y);
+
+	if (flag&2) { //Chase to attack.
+		ud->attacktarget = tbl->id;
+		ud->state.attack_continue = 1;
+	}
+	
+	if(ud->walktimer != -1) {
+		ud->state.change_walk_target = 1;
+		return 1;
+	}
+	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
+	{	//Can't move, wait a bit before invoking the movement.
+		add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->walktarget);
+		return 1;
+	} else if (!unit_can_move(bl))
+		return 0;
+	
+	return unit_walktoxy_sub(bl);
 }
 
 //Instant warp function.
@@ -543,6 +645,13 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 			return 0;
 	}
 	ud->canmove_tick = tick + delay;
+	if (ud->walktimer != -1)
+	{	//Stop walking, if chasing, readjust timers.
+		delete_timer(ud->walktimer, unit_walktoxy_timer);
+		clif_fixpos(bl);
+		if(ud->walktarget)
+			add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->walktarget);
+	}
 	return 1;
 }
 
@@ -552,8 +661,7 @@ static int unit_walkdelay_sub(int tid, unsigned int tick, int id, int data)
 	if (!bl || status_isdead(bl))
 		return 0;
 	
-	if (unit_set_walkdelay(bl, tick, data, 0))
-		unit_stop_walking(bl,3);
+	unit_set_walkdelay(bl, tick, data, 0);
 	return 0;
 }
 
@@ -954,7 +1062,11 @@ int unit_stop_attack(struct block_list *bl)
 //Means current target is unattackable. For now only unlocks mobs.
 int unit_unattackable(struct block_list *bl) {
 	struct unit_data *ud = unit_bl2ud(bl);
-	if (ud) ud->attacktarget = 0;
+	if (ud) {
+		ud->attacktarget = 0;
+		ud->walktarget = 0;
+	}
+	
 	if(bl->type == BL_MOB)
 		mob_unlocktarget((struct mob_data*)bl, gettick()) ;
 	else if(bl->type == BL_PET)
@@ -995,6 +1107,11 @@ int unit_attack(struct block_list *src,int target_id,int type)
 
 	ud->attacktarget = target_id;
 	ud->state.attack_continue = type;
+	if (type) {	//If you re to attack continously, set to auto-case character
+		ud->walktarget = target_id;
+		ud->chaserange = status_get_range(src);
+	}
+	
 	//Just change target/type. [Skotlex]
 	if(ud->attacktimer != -1)
 		return 0;
@@ -1012,7 +1129,7 @@ int unit_attack(struct block_list *src,int target_id,int type)
  *
  *------------------------------------------
  */
-int unit_can_reach(struct block_list *bl,int x,int y)
+int unit_can_reach_pos(struct block_list *bl,int x,int y, int easy)
 {
 	struct walkpath_data wpd;
 
@@ -1025,8 +1142,62 @@ int unit_can_reach(struct block_list *bl,int x,int y)
 	wpd.path_len=0;
 	wpd.path_pos=0;
 	wpd.path_half=0;
-	return (path_search_real(&wpd,bl->m,bl->x,bl->y,x,y,0,CELL_CHKNOREACH)!=-1)?1:0;
+	return (path_search_real(&wpd,bl->m,bl->x,bl->y,x,y,easy,CELL_CHKNOREACH)!=-1);
 }
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y)
+{
+	struct walkpath_data wpd;
+	int i;
+	short dx,dy;
+	nullpo_retr(0, bl);
+	nullpo_retr(0, tbl);
+
+	if( bl->m != tbl->m)
+		return 0;
+	
+	if( bl->x==tbl->x && bl->y==tbl->y )
+		return 1;
+
+	if(range>0 && !check_distance_bl(bl, tbl, range))
+		return 0;
+
+	wpd.path_len=0;
+	wpd.path_pos=0;
+	wpd.path_half=0;
+	
+#ifndef CELL_NOSTACK
+	//Skip direct path seeking when in nostacking mode.
+	if(path_search_real(&wpd,bl->m,bl->x,bl->y,tbl->x,tbl->y,easy,CELL_CHKNOREACH)!=-1) {
+		if (x) *x = tbl->x;
+		if (y) *y = tbl->y;
+		return 1;
+	}
+#endif
+	
+	// It judges whether it can adjoin or not.
+	dx=tbl->x - bl->x;
+	dy=tbl->y - bl->y;
+	dx=(dx>0)?1:((dx<0)?-1:0);
+	dy=(dy>0)?1:((dy<0)?-1:0);
+	
+	if (map_getcell(tbl->m,tbl->x+dx,tbl->y+dy,CELL_CHKNOREACH))
+	{	//Look for a suitable cell to place in.
+		for(i=0;i<9 && map_getcell(tbl->m,tbl->x-dirx[i],tbl->y-diry[i],CELL_CHKNOREACH);i++);
+		if (i==9) return 0; //No valid cells.
+		dx = dirx[i];
+		dy = diry[i];
+	}
+
+	if (x) *x = tbl->x-dx;
+	if (y) *y = tbl->y-dy;
+	return (path_search_real(&wpd,bl->m,bl->x,bl->y,tbl->x-dx,tbl->y-dy,easy,CELL_CHKNOREACH)!=-1);
+}
+
 
 /*==========================================
  * PC‚ÌUŒ‚ (timerŠÖ”)
@@ -1078,23 +1249,29 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		return 1;
 	}
 
-	range = status_get_range( src );
+	range = status_get_range(src);
 	
 	if(ud->walktimer != -1) range++; //Extra range when walking.
 	if(!sd || sd->status.weapon != 11) range++; //Dunno why everyone but bows gets this extra range...
 	if(unit_is_walking(target)) range++; //Extra range when chasing
 
 	if(!check_distance_bl(src,target,range) ) {
-		if(!unit_can_reach(src,target->x,target->y))
-			return 0;
-		if(sd) clif_movetoattack(sd,target);
-			return 1;
+		//Chase if required.
+		if(ud->state.attack_continue && ud->walktarget == target->id) {
+			if(sd)
+				clif_movetoattack(sd,target);
+			else
+				unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy);
+		}
+		return 1;
 	}
-	if(!battle_check_range(src,target,range)) { //Within range, but no direct line of attack
-		if(unit_can_reach(src,target->x,target->y))
-			unit_walktoxy(src,target->x,target->y, ud->state.walk_easy);
-		if(ud->state.attack_continue)
+	if(!battle_check_range(src,target,range)) {
+	  	//Within range, but no direct line of attack
+		if(ud->state.attack_continue && ud->walktarget == target->id) {
+			if(ud->chaserange > 2) ud->chaserange-=2;
+			unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy);
 			ud->attacktimer = add_timer(tick + status_get_adelay(src),unit_attack_timer,src->id,0);
+		}
 		return 1;
 	}
 
@@ -1141,7 +1318,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 
 //		You can't move if you can't attack neither.
 //		Only for non-players, since it makes it near impossible to run away when you are on auto-attack.
-		if (src->type != BL_PC)		
+		if (src->type != BL_PC)	
 			unit_set_walkdelay(src, tick, status_get_amotion(src), 1);
 	}
 
@@ -1604,6 +1781,8 @@ int do_init_unit(void) {
 	add_timer_func_list(unit_attack_timer,  "unit_attack_timer");
 	add_timer_func_list(unit_walktoxy_timer,"unit_walktoxy_timer");
 	add_timer_func_list(unit_walkdelay_sub, "unit_walkdelay_sub");
+	add_timer_func_list(unit_walktobl_sub, "unit_walktobl_sub");
+
 	return 0;
 }
 

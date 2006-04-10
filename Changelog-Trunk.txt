@@ -4,9 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/10
-	- Updated the subnet support to not require specifying the subnet mask, it
+	* Modified the unit_data structure to handle automatically switching
+	  between chasing and attacking a character. Note that it's a work in
+	  progress and not yet properly tested/finished... [Skotlex]
+	- DON'T USE THIS YET. There's much testing that needs be done, but I had to
+	  commit now so I may continue work on it later....
+	* Updated the subnet support to not require specifying the subnet mask, it
 	  is auto-acquired from the char/map IP and the subnet-mask. [Skotlex]
-	- skill_wall_check defaults to yes now. [Skotlex]
+	* skill_wall_check defaults to yes now. [Skotlex]
 2006/04/09
 	* Added the missing last_thinktime initialization to pets. [Skotlex]
 	* Reverted the change in skill_wall_check to let skills go over pits.

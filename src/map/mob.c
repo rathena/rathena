@@ -515,9 +515,7 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
  */
 int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state)
 {
-	int dx,dy;
-	struct walkpath_data wpd;
-	int i, easy = 0;
+	int easy = 0;
 
 	nullpo_retr(0, md);
 	nullpo_retr(0, bl);
@@ -531,41 +529,7 @@ int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state
 			easy = 1;
 			break;
 	}
-
-	if( md->bl.m != bl->m)	// 違うャbプ
-		return 0;
-
-	if( md->bl.x==bl->x && md->bl.y==bl->y )	// 同じマス
-		return 1;
-		
-	if( range>0 && !check_distance_bl(&md->bl, bl, range))
-		return 0;
-
-	// Obstacle judging
-	wpd.path_len=0;
-	wpd.path_pos=0;
-	wpd.path_half=0;
-	if(path_search_real(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x,bl->y,easy,CELL_CHKNOREACH)!=-1)
-		return 1;
-
-	// It judges whether it can adjoin or not.
-	dx=bl->x - md->bl.x;
-	dy=bl->y - md->bl.y;
-	dx=(dx>0)?1:((dx<0)?-1:0);
-	dy=(dy>0)?1:((dy<0)?-1:0);
-	if (map_getcell(md->bl.m,bl->x+dx,bl->y+dy,CELL_CHKNOREACH))
-	{	//Look for a suitable cell to place in.
-		for(i=0;i<9 && map_getcell(md->bl.m,bl->x-1+i/3,bl->y-1+i%3,CELL_CHKNOREACH);i++);
-		if (i<9) {
-			dx = 1-i/3;
-			dy = 1-i%3;
-		}
-	}
-	
-	if(path_search_real(&wpd,md->bl.m,md->bl.x,md->bl.y,bl->x-dx,bl->y-dy,easy,CELL_CHKNOREACH)!=-1)
-		return 1;
-		
-	return 0;
+	return unit_can_reach_bl(&md->bl, bl, range, easy, NULL, NULL);
 }
 
 /*==========================================
@@ -952,24 +916,8 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			(md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
 			unit_can_move(&md->bl))
 		{
-			int i=0,dx,dy;
 			mob_stop_attack(md);
-			do {
-				if(i<=5){
-					dx=bl->x - md->bl.x;
-					dy=bl->y - md->bl.y;
-						
-					if(dx<0) dx+=rand()%MOB_SLAVEDISTANCE +1;
-					else if(dx>0) dx-=rand()%MOB_SLAVEDISTANCE +1;
-					if(dy<0) dy+=rand()%MOB_SLAVEDISTANCE +1;
-					else if(dy>0) dy-=rand()%MOB_SLAVEDISTANCE +1;
-						
-				}else{
-					old_dist = MOB_SLAVEDISTANCE*2+1;
-					dx=bl->x - md->bl.x + rand()%old_dist - MOB_SLAVEDISTANCE;
-					dy=bl->y - md->bl.y + rand()%old_dist - MOB_SLAVEDISTANCE;
-				}
-			} while(!unit_walktoxy(&md->bl,md->bl.x+dx,md->bl.y+dy,0)&& ++i<10);
+			unit_walktobl(&md->bl, bl, MOB_SLAVEDISTANCE, 0);
 		}
 	} else if (bl->m != md->bl.m && map_flag_gvg(md->bl.m)) {
 		//Delete the summoned mob if it's in a gvg ground and the master is elsewhere. [Skotlex]
@@ -1033,7 +981,7 @@ int mob_randomwalk(struct mob_data *md,int tick)
 	nullpo_retr(0, md);
 
 	speed=status_get_speed(&md->bl);
-	if(DIFF_TICK(md->next_walktime,tick)<0){
+	if(DIFF_TICK(md->next_walktime,tick)<0 && unit_can_move(&md->bl)){
 		int i,x,y,c,d=12-md->move_fail_count;
 		if(d<5) d=5;
 		for(i=0;i<retrycount;i++){	// Search of a movable place
@@ -1079,7 +1027,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	struct mob_data *md;
 	struct block_list *tbl = NULL, *abl = NULL;
 	unsigned int tick;
-	int i, j, dx, dy, dist;
+	int dist;
 	int mode;
 	int search_size;
 	int view_range, can_move, can_walk;
@@ -1123,7 +1071,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				tbl->type == BL_PC && !(mode&MD_BOSS) &&
 				((struct map_session_data*)tbl)->state.gangsterparadise
 		)) {	//Unlock current target.
-			if (md->ud.walktimer != -1 && (battle_config.mob_ai&8 || !tbl)) //Inmediately stop chasing.
+			if (battle_config.mob_ai&8) //Inmediately stop chasing.
 				mob_stop_walking(md,2);
 			mob_unlocktarget(md, tick-(battle_config.mob_ai&8?3000:0)); //Imediately do random walk.
 			tbl = NULL;
@@ -1234,91 +1182,27 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					mob_unlocktarget(md,tick);
 					return 0;
 				}
-				if (!check_distance_bl(&md->bl, tbl, view_range))
-				{	//Run towards the enemy when out of range?
-					if (!can_move)
-					{	//Give it up.
-						if (can_walk)
-							mob_unlocktarget(md,tick);
-						return 0;
-					}
-					dx = tbl->x+(tbl->x > md->bl.x?-1:+1);
-					dy = tbl->y+(tbl->y > md->bl.y?-1:+1);
-					unit_walktoxy(&md->bl, dx, dy, 0);
-					return 0;
-				}
-				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
-				mobskill_use (md, tick, -1);
 				if (!can_move) //Wait until you can move?
 					return 0;
-				if (md->ud.walktimer != -1 &&
-					(!battle_config.mob_ai&1 ||
-					check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->db->range)) //Current target tile is still within attack range.
-				) {
-					return 0; //No need to follow, already doing it?
-				}
+				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
+				if (md->ud.walktimer != -1 && md->ud.walktarget == tbl->id &&
+					(
+						!battle_config.mob_ai&1 ||
+						check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->db->range)
+				)) //Current target tile is still within attack range.
+					return 0;
 				//Target reachable. Locate suitable spot to move to.
-				i = j = 0;
-				dx = tbl->x - md->bl.x;
-				dy = tbl->y - md->bl.y;
-				if (dx < 0) dx=-1;
-				else if (dx > 0) dx=1;
-				if (dy < 0) dy=-1;
-				else if (dy > 0) dy=1;
-				if(!unit_walktoxy(&md->bl, tbl->x -dx, tbl->y -dy, 0)) {
-					j = (dy+1) + 3*(dx+1);
-					for (i = j+1; i%9 != j; i++) {
-						dx = -1+(i%9)/3;
-						dy = -1+(i%3);
-#ifdef CELL_NOSTACK
-						if (map_getcell(md->bl.m,  tbl->x-dx, tbl->y-dy, CELL_CHKSTACK))
-							continue;
-#endif
-						if (unit_walktoxy(&md->bl, tbl->x-dx, tbl->y-dy, 0))
-							break;
-					}
-#ifdef CELL_NOSTACK
-					if (i%9 == j) 
-					{ //All adjacent cells are taken. Try roaming around on 5x5
-						for (i = j+1; i%9 != j; i++) {
-							dx = 2*(-1+(i%9)/3);
-							dy = 2*(-1+(i%3));
-							if (map_getcell(md->bl.m,  tbl->x-dx, tbl->y-dy, CELL_CHKSTACK))
-								continue;
-							if (unit_walktoxy(&md->bl, tbl->x-dx, tbl->y-dy, 0)) {
-								unit_set_walkdelay(&md->bl, tick, 1000, 1);
-								break;
-							}
-						}
-					}
-					if (i%9 == j)
-				  	{
-						//On stacked mode, it is much more likely that you just can't reach the target. So unlock it
-						mob_unlocktarget(md, tick);
-						unit_set_walkdelay(&md->bl, tick, 1000, 1);
-						return 0;
-					}
-#else
-					if (i%9 == j)
-					{	//Failed? Try going to the other side of the target before retrying.
-						if (dx < 0) dx = 2;
-						else if (dx > 0) dx = -2;
-						if (dy < 0) dy = 2;
-						else if (dy > 0) dy = -2;
-						unit_walktoxy (&md->bl, tbl->x+dx, tbl->y+dy, 0);
-					}
-#endif
-				}
+				unit_walktobl(&md->bl, tbl, md->db->range, !battle_config.mob_ai&1);
 				return 0;
 			}
 			//Target within range, engage
-			md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
 			mob_stop_walking(md,1);
+			md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
 			unit_attack(&md->bl,tbl->id,1);
 			return 0;
 		} else {	//Target is BL_ITEM, attempt loot.
 			struct flooritem_data *fitem;
-			
+			int i;	
 			if (md->lootitem == NULL)
 			{	//Can't loot...
 				mob_unlocktarget (md, tick);
@@ -1335,15 +1219,10 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				if (!can_move)	// 動けない状態にある
 					return 0;
 				md->state.skillstate = MSS_LOOT;	// ルート時スキル使用
-				mobskill_use(md, tick, -1);
-				if (md->ud.walktimer != -1 &&
-					check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, 0))
-				{	//Already on the way to looting.
+				if (md->ud.walktimer != -1 && md->ud.walktarget == tbl->id)
+					//Already on the way to looting.
 					return 0;
-				}
-				dx = tbl->x - md->bl.x;
-				dy = tbl->y - md->bl.y;
-				if (!unit_walktoxy(&md->bl, md->bl.x+dx, md->bl.y+dy, 0))
+				if (!unit_walktobl(&md->bl, tbl, 0, 1))
 					mob_unlocktarget(md, tick); //Can't loot...
 				return 0;
 			}
@@ -1357,9 +1236,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				memcpy (&md->lootitem[md->lootitem_count++], &fitem->item_data, sizeof(md->lootitem[0]));
 				if(log_config.pick > 0)	//Logs items, taken by (L)ooter Mobs [Lupus]
 					log_pick((struct map_session_data*)md, "L", md->class_, md->lootitem[md->lootitem_count-1].nameid, md->lootitem[md->lootitem_count-1].amount, &md->lootitem[md->lootitem_count-1]);
-			} else if (battle_config.monster_loot_type == 1) { //Can't loot, stuffed!
-				mob_unlocktarget(md,tick);
-				return 0;
 			} else {	//Destroy first looted item...
 				if (md->lootitem[0].card[0] == (short)0xff00)
 					intif_delete_petdata( MakeDWord(md->lootitem[0].card[1],md->lootitem[0].card[2]) );
@@ -1458,10 +1334,11 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
 			else if(rand()%1000<MOB_LAZYSKILLPERC) //Chance to do a mob's idle skill.
 				mobskill_use(md, tick, -1);
 			// MOB which is not not the summons MOB but BOSS, either sometimes reboils.
-			else if( rand()%1000<MOB_LAZYWARPPERC
-				&& (md->spawn && !md->spawn->x && !md->spawn->y)
-				&& !md->target_id && !(mode&MD_BOSS))
-				unit_warp(&md->bl,-1,-1,-1,0);
+			// People don't want this, it seems custom, noone can prove it....
+//			else if( rand()%1000<MOB_LAZYWARPPERC
+//				&& (md->spawn && !md->spawn->x && !md->spawn->y)
+//				&& !md->target_id && !(mode&MD_BOSS))
+//				unit_warp(&md->bl,-1,-1,-1,0);
 		}else{
 			// Since PC is not even in the same map, suitable processing is carried out even if it takes.
 

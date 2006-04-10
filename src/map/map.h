@@ -359,7 +359,9 @@ struct unit_data {
 	int   skilltimer;
 	int   attacktarget;
 	int   attacktimer;
+	int	walktarget;
 	int   walktimer;
+	int	chaserange;
 	unsigned int attackabletime;
 	unsigned int canact_tick;
 	unsigned int canmove_tick;

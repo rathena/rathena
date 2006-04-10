@@ -3821,26 +3821,23 @@ int pc_follow_timer(int tid,unsigned int tick,int id,int data)
 	if (pc_isdead(sd))
 		return 0;
 
-	if ((tsd = map_id2sd(sd->followtarget)) != NULL)
-	{
-		if (pc_isdead(tsd))
-			return 0;
+	if ((tsd = map_id2sd(sd->followtarget)) == NULL || pc_isdead(tsd))
+		return 0;
 
-		// either player or target is currently detached from map blocks (could be teleporting),
-		// but still connected to this map, so we'll just increment the timer and check back later
-		if (sd->bl.prev != NULL && tsd->bl.prev != NULL &&
-			sd->ud.skilltimer == -1 && sd->ud.attacktimer == -1 && sd->ud.walktimer == -1)
-		{
-			if((sd->bl.m == tsd->bl.m) && unit_can_reach(&sd->bl,tsd->bl.x,tsd->bl.y)) {
-				if (!check_distance_bl(&sd->bl, &tsd->bl, 5) && unit_can_move(&sd->bl))
-					unit_walktoxy(&sd->bl,tsd->bl.x,tsd->bl.y, 0);
-			} else
-				pc_setpos(sd, tsd->mapindex, tsd->bl.x, tsd->bl.y, 3);
-		}
-		sd->followtimer = add_timer(
-			tick + sd->aspd + rand() % 1000,	// increase time a bit to loosen up map's load
-			pc_follow_timer, sd->bl.id, 0);
+	// either player or target is currently detached from map blocks (could be teleporting),
+	// but still connected to this map, so we'll just increment the timer and check back later
+	if (sd->bl.prev != NULL && tsd->bl.prev != NULL &&
+		sd->ud.skilltimer == -1 && sd->ud.attacktimer == -1 && sd->ud.walktimer == -1)
+	{
+		if((sd->bl.m == tsd->bl.m) && unit_can_reach_bl(&sd->bl,&tsd->bl, AREA_SIZE, 0, NULL, NULL)) {
+			if (!check_distance_bl(&sd->bl, &tsd->bl, 5))
+				unit_walktobl(&sd->bl, &tsd->bl, 5, 0);
+		} else
+			pc_setpos(sd, tsd->mapindex, tsd->bl.x, tsd->bl.y, 3);
 	}
+	sd->followtimer = add_timer(
+		tick + sd->aspd + rand() % 1000,	// increase time a bit to loosen up map's load
+		pc_follow_timer, sd->bl.id, 0);
 	return 0;
 }
 

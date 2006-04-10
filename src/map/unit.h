@@ -11,6 +11,7 @@
 // 歩行開始
 //     戻り値は、0 ( 成功 ), 1 ( 失敗 )
 int unit_walktoxy( struct block_list *bl, int x, int y, int easy);
+int unit_walktobl( struct block_list *bl, struct block_list *target, int range, int easy);
 
 // 歩行停止
 // typeは以下の組み合わせ : 
@@ -31,7 +32,8 @@ int unit_setdir(struct block_list *bl,unsigned char dir);
 int unit_getdir(struct block_list *bl);
 
 // そこまで歩行でたどり着けるかの判定
-int unit_can_reach(struct block_list *bl,int x,int y);
+int unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);
+int unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y);
 
 // 攻撃関連
 int unit_stop_attack(struct block_list *bl);

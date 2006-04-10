@@ -1412,7 +1412,7 @@ int map_search_freecell(struct block_list *src, int m, int *x,int *y, int rx, in
 		
 		if (map_getcell(m,*x,*y,CELL_CHKREACH))
 		{
-			if(flag&2 && !unit_can_reach(src, *x, *y))
+			if(flag&2 && !unit_can_reach_pos(src, *x, *y, 1))
 				continue;
 			if(flag&4 && spawn++ < battle_config.no_spawn_on_player &&
 				map_foreachinarea(map_count_sub, m,

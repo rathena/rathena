@@ -41,6 +41,10 @@
 #define INF2_PARTY_ONLY 1024
 #define INF2_GUILD_ONLY 2048
 
+//Walk intervals at which chase-skills are attempted to be triggered.
+//Note that every 2 is an actual cell walked.
+#define WALK_SKILL_INTERVAL 6
+
 // スキルデ?タベ?ス
 struct skill_db {
 	char *name;

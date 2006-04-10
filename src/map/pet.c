@@ -81,33 +81,33 @@ static int pet_calc_pos(struct pet_data *pd,int tx,int ty,int dir)
 	dy = -diry[dir]*2;
 	x = tx + dx;
 	y = ty + dy;
-	if(!unit_can_reach(&pd->bl,x,y)) {
+	if(!unit_can_reach_pos(&pd->bl,x,y,0)) {
 		if(dx > 0) x--;
 		else if(dx < 0) x++;
 		if(dy > 0) y--;
 		else if(dy < 0) y++;
-		if(!unit_can_reach(&pd->bl,x,y)) {
+		if(!unit_can_reach_pos(&pd->bl,x,y,0)) {
 			for(i=0;i<12;i++) {
 				k = rand()%8;
 				dx = -dirx[k]*2;
 				dy = -diry[k]*2;
 				x = tx + dx;
 				y = ty + dy;
-				if(unit_can_reach(&pd->bl,x,y))
+				if(unit_can_reach_pos(&pd->bl,x,y,0))
 					break;
 				else {
 					if(dx > 0) x--;
 					else if(dx < 0) x++;
 					if(dy > 0) y--;
 					else if(dy < 0) y++;
-					if(unit_can_reach(&pd->bl,x,y))
+					if(unit_can_reach_pos(&pd->bl,x,y,0))
 						break;
 				}
 			}
 			if(i>=12) {
 				x = tx;
 				y = ty;
-				if(!unit_can_reach(&pd->bl,x,y))
+				if(!unit_can_reach_pos(&pd->bl,x,y,0))
 					return 1;
 			}
 		}
@@ -892,7 +892,7 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
 
 	speed = status_get_speed(&pd->bl);
 
-	if(DIFF_TICK(pd->next_walktime,tick) < 0){
+	if(DIFF_TICK(pd->next_walktime,tick) < 0 && unit_can_move(&pd->bl)) {
 		int i,x,y,c,d=12-pd->move_fail_count;
 		if(d<5) d=5;
 		for(i=0;i<retrycount;i++){
@@ -931,7 +931,6 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 {
 	struct map_session_data *sd;
 	struct block_list *target = NULL;
-	int i=0,dx,dy;
 
 	sd = pd->msd;
 
@@ -960,14 +959,13 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 		//Master too far, chase.
 		if(pd->target_id)
 			pet_unlocktarget(pd);
-		if(pd->ud.walktimer != -1 && check_distance_blxy(&sd->bl, pd->ud.to_x,pd->ud.to_y, 3))
+		if(pd->ud.walktimer != -1 && pd->ud.walktarget == sd->bl.id)
 			return 0; //Already walking to him
 		
 		pd->speed = (sd->speed>>1);
 		if(pd->speed <= 0)
 			pd->speed = 1;
-		pet_calc_pos(pd,sd->bl.x,sd->bl.y,sd->ud.dir);
-		if(!unit_walktoxy(&pd->bl,pd->ud.to_x,pd->ud.to_y,0))
+		if (!unit_walktobl(&pd->bl, &sd->bl, 3, 0));
 			pet_randomwalk(pd,tick);
 		return 0;
 	}
@@ -987,11 +985,12 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 	}
 	
 	// ペットによるルート
-	if(!pd->target_id && pd->loot && pd->loot->count < pd->loot->max && DIFF_TICK(tick,pd->ud.canact_tick)>0)
+	if(!target && pd->loot && pd->loot->count < pd->loot->max && DIFF_TICK(tick,pd->ud.canact_tick)>0) {
 		//Use half the pet's range of sight.
+		int itc=0;
 		map_foreachinrange(pet_ai_sub_hard_lootsearch,&pd->bl,
-			pd->db->range2/2, BL_ITEM,pd,&i);
-
+			pd->db->range2/2, BL_ITEM,pd,&itc);
+	}
 	if (!target) {
 	//Just walk around.
 		if (check_distance_bl(&sd->bl, &pd->bl, 3))
@@ -1014,51 +1013,26 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 			if(pd->ud.walktimer != -1 && check_distance_blxy(target, pd->ud.to_x,pd->ud.to_y, pd->db->range))
 				return 0;
 			
-			if(!unit_can_reach(&pd->bl, target->x, target->y))
+			if(!unit_walktobl(&pd->bl, target, pd->db->range, 2))
 			{	//Unreachable target.
 				pet_unlocktarget(pd);
-				return 0;
-			}
-			i=0;
-			do {
-				if(i==0) {	// 最初はAEGISと同じ方法で検索
-					dx=target->x - pd->bl.x;
-					dy=target->y - pd->bl.y;
-					if(dx<0) dx++;
-					else if(dx>0) dx--;
-					if(dy<0) dy++;
-					else if(dy>0) dy--;
-				}
-				else {	// だめならAthena式(ランダム)
-					dx=target->x - pd->bl.x + rand()%3 - 1;
-					dy=target->y - pd->bl.y + rand()%3 - 1;
-				}
-			} while(!unit_walktoxy(&pd->bl,pd->bl.x+dx,pd->bl.y+dy,0) && ++i<5);
-
-			if(i>=5) {
-				if(dx<0) dx=2;
-				else if(dx>0) dx=-2;
-				if(dy<0) dy=2;
-				else if(dy>0) dy=-2;
-				unit_walktoxy(&pd->bl,pd->bl.x+dx,pd->bl.y+dy,0);
 			}
 			return 0;
 		}	//End Chase
 		pet_stop_walking(pd,1);
+		if (pd->ud.attacktimer != -1 && pd->ud.attacktarget == pd->target_id)
+			return 0;	//Already attacking.
 		//Continuous attack.
 		unit_attack(&pd->bl, pd->target_id, 1);
 	} else {	//Item Targeted, attempt loot
 		if (!check_distance_bl(&pd->bl, target, 1))
 		{	//Out of range
-			if(pd->ud.walktimer != -1 && check_distance_blxy(target, pd->ud.to_x, pd->ud.to_y, 0))
-				return 0; // 既に移動中
-
-			if(!unit_can_reach(&pd->bl, target->x, target->y))
-			{	//Unreachable target.
-				pet_unlocktarget(pd);
+			if(pd->ud.walktimer != -1 && pd->ud.walktarget == pd->target_id)
 				return 0;
-			}
-			unit_walktoxy(&pd->bl, target->x, target->y, 1);
+
+			if(!unit_walktobl(&pd->bl, target, 0, 1)) //Unreachable target.
+				pet_unlocktarget(pd);
+			return 0;
 		} else{	// アイテムまでたどり着いた
 			struct flooritem_data *fitem = (struct flooritem_data *)target;
 			pet_stop_walking(pd,1);
@@ -1109,8 +1083,8 @@ int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	if(pd->loot == NULL || pd->loot->item == NULL || (pd->loot->count >= pd->loot->max) ||
 	 	(sd_id && pd->msd && pd->msd->bl.id != sd_id))
 		return 0;
-	if(bl->m == pd->bl.m && check_distance_bl(&pd->bl, bl, pd->db->range2) &&
-		unit_can_reach(&pd->bl,bl->x,bl->y) && rand()%1000<1000/(++(*itc)))
+	if(bl->m == pd->bl.m && unit_can_reach_bl(&pd->bl,bl, pd->db->range2, 1, NULL, NULL)
+		&& rand()%1000<1000/(++(*itc)))
 		pd->target_id=bl->id;
 	return 0;
 }
