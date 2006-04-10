@@ -3051,7 +3051,7 @@ int lan_subnetcheck(long *p) {
 	
 	for(i=0; i<subnet_count; i++) {
 	
-		if((subnet[i].subnet & subnet[i].mask) == (*p & subnet[i].mask)) {
+		if(subnet[i].subnet == (*p & subnet[i].mask)) {
 			
 			sbn = (unsigned char *)&subnet[i].subnet;
 			msk = (unsigned char *)&subnet[i].mask;
@@ -3817,7 +3817,7 @@ int char_lan_config_read(const char *lancfgName) {
 
 	FILE *fp;
 	int line_num = 0;
-	char line[1024], w1[64], w2[64], w3[64], w4[64], w5[64];
+	char line[1024], w1[64], w2[64], w3[64], w4[64];
 	
 	if((fp = fopen(lancfgName, "r")) == NULL) {
 		ShowWarning("LAN Support configuration file is not found: %s\n", lancfgName);
@@ -3833,7 +3833,7 @@ int char_lan_config_read(const char *lancfgName) {
 			continue;
 
 		line[sizeof(line)-1] = '\0';
-		if(sscanf(line,"%[^:]: %[^/]/%[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4, w5) != 5) {
+		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4) {
 	
 			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);	
 			continue;
@@ -3843,19 +3843,22 @@ int char_lan_config_read(const char *lancfgName) {
 		remove_control_chars((unsigned char *)w2);
 		remove_control_chars((unsigned char *)w3);
 		remove_control_chars((unsigned char *)w4);
-		remove_control_chars((unsigned char *)w5);
 
 		if(strcmpi(w1, "subnet") == 0) {
 	
-			subnet[subnet_count].subnet = inet_addr(w2);
-			subnet[subnet_count].mask = inet_addr(w3);
-			subnet[subnet_count].char_ip = inet_addr(w4);
-			subnet[subnet_count].map_ip = inet_addr(w5);
+			subnet[subnet_count].mask = inet_addr(w2);
+			subnet[subnet_count].char_ip = inet_addr(w3);
+			subnet[subnet_count].map_ip = inet_addr(w4);
+			subnet[subnet_count].subnet = subnet[subnet_count].char_ip&subnet[subnet_count].mask;
+			if (subnet[subnet_count].subnet != (subnet[subnet_count].map_ip&subnet[subnet_count].mask)) {
+				ShowError("%s: Configuration Error: The char server (%s) and map server (%s) belong to different subnetworks!\n", lancfgName, w3, w4);
+				continue;
+			}
 				
 			subnet_count++;
 		}
 
-		ShowStatus("Information about %d subnetworks readen.\n", subnet_count);
+		ShowStatus("Read information about %d subnetworks.\n", subnet_count);
 	}
 
 	fclose(fp);

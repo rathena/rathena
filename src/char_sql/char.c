@@ -3761,7 +3761,7 @@ int char_lan_config_read(const char *lancfgName) {
 			subnet_count++;
 		}
 
-		ShowStatus("Information about %d subnetworks readen.\n", subnet_count);
+		ShowStatus("Read information about %d subnetworks.\n", subnet_count);
 	}
 
 	fclose(fp);

@@ -3840,7 +3840,7 @@ int do_init(int argc, char *argv[]) {
 		if (char_ip_set_ == 0)
 				chrif_setip(buf);
 		if (ptr[0] == 192 && ptr[1] == 168)
-			ShowError("\nFirewall detected.. \n    edit subnet_athena.conf and map_athena.conf\n\n");
+			ShowNotice("\nFirewall detected.. \n    edit subnet_athena.conf and map_athena.conf\n\n");
 	}
 
 	if (SHOW_DEBUG_MSG)
