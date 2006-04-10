@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= Any Freya Version
 //===== Description: =========================================
@@ -34,6 +34,7 @@
 //= 1.8 - Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]
 //= 1.8a - Fixed wrong indication thanks to NeoSaro [Lupus]
 //= 1.9 - Rewrote repairman, removed the Steel from repair cost [DracoRPG]
+//= 2.0 - Fixed missed equppment presence check. Thx2 Coltaro [Lupus]
 //============================================================
 
 
@@ -517,6 +518,8 @@ L_refinesafe:
 		
 // SubFunction: Refine 
 L_refinenumber:
+	if (getequipisequiped(@part) == 0) goto LNoItem; // hacker has removed the item (no changed, why?)
+	if (getequipid(@part) != @refineitemid) goto LNoFake; // hacker has changed the item
 	mes "Clang, clang!!!";
 	if (getequippercentrefinery(@part)<=rand(100)) goto Lfail_number;
 	successrefitem @part;
