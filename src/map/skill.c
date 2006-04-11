@@ -612,6 +612,8 @@ static const int diry[8]={1,1,0,-1,-1,-1,0,1};
 
 
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
+static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
+
 /* スキルデ?タベ?ス */
 struct skill_db skill_db[MAX_SKILL_DB];
 
@@ -2299,86 +2301,82 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, ud);
-	skl = &ud->skilltimerskill[data];
+	skl = ud->skilltimerskill[data];
 	nullpo_retr(0, skl);
-	skl->timer = -1;
+	ud->skilltimerskill[data] = NULL;
 
-	//Check moved here because otherwise the timer is not reset to -1 and later on we'll see problems when clearing. [Skotlex]
-	if(src->prev == NULL)
-		return 0;
-
-	if(skl->target_id) {
-		struct block_list tbl;
-		target = map_id2bl(skl->target_id);
-		if(skl->skill_id == RG_INTIMIDATE) {
-			if(target == NULL) {
-				target = &tbl; //?炎匀ｻしてないのにアドレス突っ?んでいいのかな?H
+	do {
+		if(src->prev == NULL)
+			break;
+		if(skl->target_id) {
+			struct block_list tbl;
+			target = map_id2bl(skl->target_id);
+			if(!target && skl->skill_id == RG_INTIMIDATE) {
+				target = &tbl; //Required since it has to warp.
 				target->type = BL_NUL;
 				target->m = src->m;
 				target->prev = target->next = NULL;
 			}
-		}
-		if(target == NULL)
-			return 0;
+			if(target == NULL)
+				break;	
+			if(target->prev == NULL && skl->skill_id != RG_INTIMIDATE)
+				break;
+			if(src->m != target->m)
+				break;
+			if(status_isdead(src))
+				break;
+			if(status_isdead(target) && skl->skill_id != RG_INTIMIDATE && skl->skill_id != WZ_WATERBALL)
+				break;
 
-		if(target->prev == NULL && skl->skill_id != RG_INTIMIDATE)
-			return 0;
-		if(src->m != target->m)
-			return 0;
-		if(status_isdead(src))
-			return 0;
-		if(status_isdead(target) && skl->skill_id != RG_INTIMIDATE && skl->skill_id != WZ_WATERBALL)
-			return 0;
+			switch(skl->skill_id) {
+				case RG_INTIMIDATE:
+					if (unit_warp(src,-1,-1,-1,3) == 0) {
+						int x,y;
+						map_search_freecell(src, 0, &x, &y, 1, 1, 0);
+						if (!status_isdead(target))
+						unit_warp(target, -1, x, y, 3);
+					}
+					break;
+				case BA_FROSTJOKE:			/* 寒いジョ?ク */
+				case DC_SCREAM:				/* スクリ?ム */
+					range= skill_get_splash(skl->skill_id, skl->skill_lv);
+					map_foreachinarea(skill_frostjoke_scream,skl->map,skl->x-range,skl->y-range,
+						skl->x+range,skl->y+range,BL_CHAR,src,skl->skill_id,skl->skill_lv,tick);
+					break;
 
-		switch(skl->skill_id) {
-			case RG_INTIMIDATE:
-				if (unit_warp(src,-1,-1,-1,3) == 0) {
-					int x,y;
-					map_search_freecell(src, 0, &x, &y, 1, 1, 0);
+				case WZ_WATERBALL:
 					if (!status_isdead(target))
-					unit_warp(target, -1, x, y, 3);
-				}
-				break;
-			case BA_FROSTJOKE:			/* 寒いジョ?ク */
-			case DC_SCREAM:				/* スクリ?ム */
-				range= skill_get_splash(skl->skill_id, skl->skill_lv);
-				map_foreachinarea(skill_frostjoke_scream,skl->map,skl->x-range,skl->y-range,
-					skl->x+range,skl->y+range,BL_CHAR,src,skl->skill_id,skl->skill_lv,tick);
-				break;
-
-			case WZ_WATERBALL:
-				if (!status_isdead(target))
-					skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
-				if (skl->type>1 && !status_isdead(target)) {
-					skl->timer = 0;
-					skill_addtimerskill(src,tick+150,target->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
-					skl->timer = -1;
-				} else {
-					struct status_change *sc = status_get_sc(src);
-					if(sc && sc->data[SC_MAGICPOWER].timer != -1)
-						status_change_end(src,SC_MAGICPOWER,-1);
-				}
-				break;
-			default:
-				skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
-				break;
+						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+					if (skl->type>1 && !status_isdead(target)) {
+						skill_addtimerskill(src,tick+150,target->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
+					} else {
+						struct status_change *sc = status_get_sc(src);
+						if(sc && sc->data[SC_MAGICPOWER].timer != -1)
+							status_change_end(src,SC_MAGICPOWER,-1);
+					}
+					break;
+				default:
+					skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+					break;
+			}
 		}
-	}
-	else {
-		if(src->m != skl->map)
-			return 0;
-		switch(skl->skill_id) {
-			case WZ_METEOR:
-				if(skl->type >= 0) {
-					skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->type>>16,skl->type&0xFFFF,skl->flag);
-					clif_skill_poseffect(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,tick);
-				}
-				else
-					skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,skl->flag);
+		else {
+			if(src->m != skl->map)
 				break;
+			switch(skl->skill_id) {
+				case WZ_METEOR:
+					if(skl->type >= 0) {
+						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->type>>16,skl->type&0xFFFF,skl->flag);
+						clif_skill_poseffect(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,tick);
+					}
+					else
+						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,skl->flag);
+					break;
+			}
 		}
-	}
-
+	} while (0);
+	//Free skl now that it is no longer needed.
+	ers_free(skill_timer_ers, skl);
 	return 0;
 }
 
@@ -2394,19 +2392,20 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 	ud = unit_bl2ud(src);
 	nullpo_retr(1, ud);
 	
-	for(i=0;i<MAX_SKILLTIMERSKILL && ud->skilltimerskill[i].timer != -1;i++);
-	if (i>=MAX_SKILLTIMERSKILL) return 1;
-
-	ud->skilltimerskill[i].timer = add_timer(tick, skill_timerskill, src->id, i);
-	ud->skilltimerskill[i].src_id = src->id;
-	ud->skilltimerskill[i].target_id = target;
-	ud->skilltimerskill[i].skill_id = skill_id;
-	ud->skilltimerskill[i].skill_lv = skill_lv;
-	ud->skilltimerskill[i].map = src->m;
-	ud->skilltimerskill[i].x = x;
-	ud->skilltimerskill[i].y = y;
-	ud->skilltimerskill[i].type = type;
-	ud->skilltimerskill[i].flag = flag;
+	for(i=0;i<MAX_SKILLTIMERSKILL && ud->skilltimerskill[i]; i++);
+	if (i==MAX_SKILLTIMERSKILL) return 1;
+	
+	ud->skilltimerskill[i] = ers_alloc(skill_timer_ers, struct skill_timerskill);
+	ud->skilltimerskill[i]->timer = add_timer(tick, skill_timerskill, src->id, i);
+	ud->skilltimerskill[i]->src_id = src->id;
+	ud->skilltimerskill[i]->target_id = target;
+	ud->skilltimerskill[i]->skill_id = skill_id;
+	ud->skilltimerskill[i]->skill_lv = skill_lv;
+	ud->skilltimerskill[i]->map = src->m;
+	ud->skilltimerskill[i]->x = x;
+	ud->skilltimerskill[i]->y = y;
+	ud->skilltimerskill[i]->type = type;
+	ud->skilltimerskill[i]->flag = flag;
 	return 0;
 }
 
@@ -2423,9 +2422,10 @@ int skill_cleartimerskill(struct block_list *src)
 	nullpo_retr(0, ud);
 		
 	for(i=0;i<MAX_SKILLTIMERSKILL;i++) {
-		if(ud->skilltimerskill[i].timer != -1) {
-			delete_timer(ud->skilltimerskill[i].timer, skill_timerskill);
-			ud->skilltimerskill[i].timer = -1;
+		if(ud->skilltimerskill[i]) {
+			delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
+			ers_free(skill_timer_ers, ud->skilltimerskill[i]);
+			ud->skilltimerskill[i]=NULL;
 		}
 	}
 	return 1;
@@ -11066,6 +11066,7 @@ int do_init_skill(void)
 	skill_readdb();
 	
 	skill_unit_ers = ers_new((uint32)sizeof(struct skill_unit_group));
+	skill_timer_ers  = ers_new((uint32)sizeof(struct skill_timerskill));
 	
 	if (battle_config.skill_sp_override_grffile)
 		skill_read_skillspamount();
@@ -11083,5 +11084,6 @@ int do_init_skill(void)
 
 int do_final_skill(void) {
 	ers_destroy(skill_unit_ers);
+	ers_destroy(skill_timer_ers);
 	return 0;
 }

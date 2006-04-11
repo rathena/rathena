@@ -1384,8 +1384,6 @@ void unit_dataset(struct block_list *bl) {
 	ud->attackabletime = 
 	ud->canact_tick    = 
 	ud->canmove_tick   = gettick();
-	for(i=0;i<MAX_SKILLTIMERSKILL;i++)
-		ud->skilltimerskill[i].timer=-1;
 }
 
 /*==========================================
