@@ -131,13 +131,13 @@ sF_Make:
 		if(Zeny < (getarg(2)*@amount)) goto L_NdZeny;
 
 	L_End:
-		mes "[Grampa Pharmacist]";
-		mes "Here are your " +getarg(4)+ " potions.";
+		set Zeny, Zeny - (getarg(2)*@amount);
 		delitem getarg(0), (@amount*@herbnum);
 		if(getarg(1) != 0) delitem getarg(1), (@amount*@herbnum);
 		delitem 713, @amount;
-		set Zeny, Zeny - (getarg(2)*@amount);
 		getitem getarg(3), @amount;
+		mes "[Grampa Pharmacist]";
+		mes "Here are your " +getarg(4)+ " potions.";
 		close;
 
 	L_NdBottle:

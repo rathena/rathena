@@ -107,8 +107,8 @@ alde_alche.gat,24,188,3	script	Gever AI Sharp	740,{
 			mes "[Gever AI Sharp]";
 			if(Zeny < @price) goto sL_NoZeny;	
 			if (checkweight(@itemid,1) == 0) goto sL_OverW;
-			getitem @itemid,1;
 			set Zeny,Zeny-@price;
+			getitem @itemid,1;			
 		L_Bye:
 			mes "Thank you for buying!";
 			mes "Come again.";

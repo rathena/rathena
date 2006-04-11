@@ -27,6 +27,15 @@ Nexon
 
 Date		Added
 ======
+4/11
+	* Updated a couple shops of Hugel, plus added the firecracker shop on Hugel. [erKURITA]
+	* Added Gunslinger quest npc and shops on que_ng.gat. Same map for Ninja's
+	  job quest. [erKURITA]
+	* Added warps for que_ng.gat. [erKURITA]
+	* Also added temporal locations for the npcs inside. [erKURITA]
+	* Fixed an back warp on hu_in01,15,70 (walk to the warp, then warps you back) [erKURITA]
+	* Moved and finished Hugel's guard (who happens to be a granny) [erKURITa]
+	~ All info given by RockmanEXE :P
 04/10
 	* Updated refiner, thx2 Coltaro [Lupus]
 04/08

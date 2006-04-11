@@ -57,25 +57,25 @@ geffen_in.gat,110,172,2	script	Christopher#1::Chris	63,{
 
 		sM_Anvil:
 			if(Zeny < 30000) goto L_NoZeny;
-			mes "[Christopher Guillenrow]";
-			mes "This is the cheapest one but it's very efficient.";
 			set Zeny, Zeny - 30000;
 			getitem 986,1;
+			mes "[Christopher Guillenrow]";
+			mes "This is the cheapest one but it's very efficient.";
 			next;
 			goto L_Thanks;
 		sM_OriAnvil:
 			if(Zeny < 120000) goto L_NoZeny;
-			mes "[Christopher Guillenrow]";
-			mes "Ah! Ye have a good eye for anvils. This here is the proper anvil for a Blacksmith.";
 			set Zeny, Zeny - 120000;
 			getitem 987,1;
+			mes "[Christopher Guillenrow]";
+			mes "Ah! Ye have a good eye for anvils. This here is the proper anvil for a Blacksmith.";
 			next;
 			goto L_Thanks;
 		sM_GolAnvil:
 			if(Zeny < 300000) goto L_NoZeny;
+			set Zeny, Zeny - 300000;
 			mes "[Christopher Guillenrow]";
 			mes "This is the best anvil in my workshop! With this ye'll be the best Blasksmith in no time.";
-			set Zeny, Zeny - 300000;
 			getitem 988,1;
 			next;
 			goto L_Thanks;
@@ -381,8 +381,8 @@ L_refinenormal:
 
 		L_Sub:
 			if ((countitem(@material) < 1) || (Zeny < @price)) goto Lcancel2;
-			delitem @material,1;
 			set Zeny,Zeny-@price;
+			delitem @material,1;
 
 Lrefine:
 	if (getequipisequiped(@part) == 0) goto LNoItem; // hacker has removed the item (not changed, why?)
@@ -458,8 +458,8 @@ Lsafe:
 	next;
 	menu "Yes",-,"No...",Lcancel;
 	if((countitem(@material) < @refinecnt) || (Zeny < @fullprice)) goto Lcancel2;
-	delitem @material,@refinecnt;
 	set Zeny,Zeny - @fullprice;
+	delitem @material,@refinecnt;
 	goto L_refinesafe;
 
 Lnosafe:
@@ -477,8 +477,8 @@ Lnosafe:
 	menu "Yes...",-,"No...",Lcancel;
 		if(@refinecheck > @safe) goto Lwarn;
 		if((countitem(@material) < @refinecnt) || (Zeny < @fullprice)) goto Lcancel2;
-		delitem @material,@refinecnt;
 		set Zeny,Zeny - @fullprice;
+		delitem @material,@refinecnt;
 		goto L_refinenumber;
 		end;
 
@@ -489,8 +489,8 @@ Lnosafe:
 			next;
 			menu "Yes",-,"No...",Lcancel1;
 				if((countitem(@material) < @refinecnt) || (Zeny < @fullprice)) goto Lcancel2;
-				delitem @material,@refinecnt;
 				set Zeny,Zeny - @fullprice;
+				delitem @material,@refinecnt;
 				goto L_refinenumber;
 
 Lcancel3:
@@ -618,8 +618,8 @@ CONTINUE:
 	if (@ammount > 999) goto L_ABOVE;
 	if (zeny < @value * @ammount) goto L_NOZENY;
 	if (checkweight(@itemid,@ammount) == 0) goto L_WEIGHT;
-	getitem @itemid,@ammount;
 	set Zeny,Zeny-@value*@ammount;
+	getitem @itemid,@ammount;
 	mes "[" + @name$ + "]";
 	mes "Here you go.";
 	close;

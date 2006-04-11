@@ -112,12 +112,12 @@ sF_Make:
 		if(Zeny < (getarg(1)*@amount)) goto L_NdZeny;
 
 	L_End:
+		set Zeny, Zeny - (getarg(1)*@amount);
+		delitem getarg(0), (@amount*@arrownum);
+		getitem getarg(2), @amount;
 		mes "[Inventor Jaax]";
 		mes "There you go~!";
 		mes "Here are your " +getarg(3)+ ".";
-		delitem getarg(0), (@amount*@arrownum);
-		set Zeny, Zeny - (getarg(1)*@amount);
-		getitem getarg(2), @amount;
 		close;
 
 	L_NdArrows:

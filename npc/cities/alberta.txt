@@ -495,6 +495,7 @@ M_Menu:
 			next;
 			mes "^5555FF(~choo~choooo~)^000000";
 			next;
+			if(Zeny < 10000) goto sL_Zeny;
 			set Zeny, Zeny - 10000;
 			warp "tur_dun01.gat",154,39;
 			close;

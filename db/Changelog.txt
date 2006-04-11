@@ -26,7 +26,10 @@
 	-----
 
 =========================
-
+04/11
+	* Modified Mastela Fruit price to 8500, according to RockmanEXE. [erKURITA]
+	* Modified Goggles and Goggles_ price to... 20z, according to RockmanEXE. [erKURITA]
+	* Made Anopheles aggressive [erKURITA]
 04/07
 	* Modified the equip_job field in the item_db to be a hexadecimal value for
 	  easier handling. [Skotlex]

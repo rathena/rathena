@@ -277,73 +277,73 @@ L_Dye_Orange:
 	mes "[Dyer Ginedin Rephere]";
 	if(countitem(980) < 1) goto sL_NoDye;
 	if(Zeny < 10000) goto sL_Zeny;
-	mes "Ok. I will dye you clothes orange.";
-	setlook 7,@orange;
 	delitem 980,1;
 	set Zeny, Zeny - 10000;
+	mes "Ok. I will dye you clothes orange.";
+	setlook 7,@orange;
 	close;
 L_Dye_Violet:
 	mes "[Dyer Ginedin Rephere]";
 	if(countitem(981) < 1) goto  sL_NoDye;
 	if(Zeny < 10000) goto sL_Zeny;
-	mes "Ok. I will dye you clothes Violet.";
-	setlook 7,@violet;
 	delitem 981,1;
 	set Zeny, Zeny - 10000;
+	mes "Ok. I will dye you clothes Violet.";
+	setlook 7,@violet;
 	close;
 L_Dye_Red:
 	mes "[Dyer Ginedin Rephere]";
 	if(countitem(975) < 1) goto sL_NoDye;
 	if(Zeny < 10000) goto sL_Zeny;
-	mes "Ok. I will dye you clothes red.";
-	setlook 7,@red;
 	delitem 975,1;
 	set Zeny, Zeny - 10000;
+	mes "Ok. I will dye you clothes red.";
+	setlook 7,@red;
 	close;
 L_Dye_Black:
 	mes "[Dyer Ginedin Rephere]";
 	if(countitem(983) < 1) goto sL_NoDye;
 	if(Zeny < 10000) goto sL_Zeny;
-	mes "Ok. I will dye you clothes black.";
-	setlook 7,@black;
 	delitem 983,1;
 	set Zeny, Zeny - 10000;
+	mes "Ok. I will dye you clothes black.";
+	setlook 7,@black;
 	close;
 L_Dye_Green:
 	mes "[Dyer Ginedin Rephere]";
 	if(countitem(979) < 1) goto sL_NoDye;
 	if(Zeny < 10000) goto sL_Zeny;
-	mes "Ok. I will dye you clothes green.";
-	setlook 7,@green;
 	delitem 979,1;
 	set Zeny, Zeny - 10000;
+	mes "Ok. I will dye you clothes green.";
+	setlook 7,@green;
 	close;
 L_Dye_Blue:
 	mes "[Dyer Ginedin Rephere]";
 	if(countitem(978) < 1) goto sL_NoDye;
 	if(Zeny < 10000) goto sL_Zeny;
-	mes "Ok. I will dye you clothes blue.";
-	setlook 7,@blue;
 	delitem 978,1;
 	set Zeny, Zeny - 10000;
+	mes "Ok. I will dye you clothes blue.";
+	setlook 7,@blue;
 	close;
 L_Dye_White:
 	mes "[Dyer Ginedin Rephere]";
 	if(countitem(982) < 1) goto sL_NoDye;
 	if(Zeny < 10000) goto sL_Zeny;
-	mes "Ok. I will dye you clothes white.";
-	setlook 7,@white;
 	delitem 982,1;
 	set Zeny, Zeny - 10000;
+	mes "Ok. I will dye you clothes white.";
+	setlook 7,@white;
 	close;
 L_Dye_Yellow:
 	mes "[Dyer Ginedin Rephere]";
 	if(countitem(976) < 1) goto sL_NoDye;
 	if(Zeny < 10000) goto sL_Zeny;
-	mes "Ok. I will dye you clothes yellow.";
-	setlook 7,@yellow;
 	delitem 976,1;
 	set Zeny, Zeny - 10000;
+	mes "Ok. I will dye you clothes yellow.";
+	setlook 7,@yellow;
 	close;
 
 sL_Sorry:

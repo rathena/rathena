@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sara-chan (1.1)
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 10+
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.2 fixed hugel10 [Lupus]
 //= 1.3 Rewrote all warps to relate houses, and fixed it to kRO. [Er_Maqui]
 //= 1.3a Replaced all spaces with TABs [Lupus]
+//= 1.4 Fixed an back warp on hu_in01,15,70 (walk to the warp, then warps you back) [erKURITA]
 //============================================================
 
 //= Hugel City ================================================
@@ -66,10 +67,10 @@ hu_in01.gat,231,107,0	warp	hugel32	1,1,hugel.gat,99,77
 hu_in01.gat,268,123,0	warp	hugel33	1,1,hu_in01.gat,265,36
 hu_in01.gat,265,42,0	warp	hugel34	1,1,hu_in01.gat,265,123
 
-//House
+//Library
 hugel.gat,52,90,0	warp	hugel35	1,1,hu_in01.gat,33,90
 hu_in01.gat,37,90,0	warp	hugel36	1,1,hugel.gat,54,96
-hu_in01.gat,15,70,0	warp	hugel37	1,1,hu_in01.gat,15,28
+hu_in01.gat,15,70,0	warp	hugel37	1,1,hu_in01.gat,15,27
 hu_in01.gat,15,29,0	warp	hugel38	1,1,hu_in01.gat,16,74
 hu_in01.gat,15,108,0	warp	hugel39	1,1,hu_in01.gat,15,155
 hu_in01.gat,15,151,0	warp	hugel40	1,1,hu_in01.gat,16,104

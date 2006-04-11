@@ -1,9 +1,9 @@
 //===== eAthena Script =======================================
 //= Hugel City
 //===== By: ==================================================
-//= vicious_pucca, Poki#3
+//= vicious_pucca, Poki#3, erKURITA
 //===== Current Version: =====================================
-//= 0.1
+//= 1.0
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
@@ -11,20 +11,90 @@
 //===== Additional Comments: =================================
 //= Cords and Sprites are 100% Correct, but the names are not.
 //= Plus no one knows what the NPCs are talking right now :/ [Poki#3]
+//= Note: Not all the sprites were correct :P [erKURITA]
+//= 1.0 Added the first shop, firecrackers. Thanks RockmanEXE for the info [erKURITA]
+//=	Added more missing npc, but again, only locations and temp names =/ [erKURITA]
+//=	Started the basis of Poring Track. [erKURITA]
+//=	Moved the old lady to npc\guides\guides_hu.txt, since it's Hugel's guard [erKURITA]
+//=	Special thanks to RockmanEXE who provided all necesary info =3
 //============================================================
+
+hu_in01.gat,23,311,4	script	Johsh	898,{
+set @npcname$"[Josh]";
+
+mes @npcname$;
+mes "Hi ho~ I sell some awesome firecrackers, would you like to buy one?";
+mes "Only 500z and you get 5 ^FF0000firecrackers^000000!";
+select(switch("Yes Please:No thanks")) {
+	case 1:
+		if (Zeny < 500) {
+			mes @npcname$;
+			mes "Err sir, you don't have 500z zeny. I can't sell you anything";
+			close2;
+			set @npcname$,NULL;
+			end;
+		} else 
+		set Zeny,Zeny-500;
+		getitem 12018,5;
+		mes @npcname$;
+		mes "Good! here you go! Have fun with them!";
+		close2;
+		set @npcname$,NULL;
+		end;
+	case 2:
+		mes @npcname$;
+		mes "Aww~~ you miss it";
+		close2;
+		set @npcname$,NULL;
+		end;
+	}
+}
 
 //Should be moved later on to Bulletin Boards.txt
 hugel.gat,91,152,4	script	Bulletin Board	837,{end;}
 
+
+//= New Npcs
+hugel.gat,76,134,4	script	Yahna	101,{end;}
+hugel.gat,71,137,5	script	Jamira	879,{end;}
+hugel.gat,58,72,5	script	Yan	86,{
+//ask for 500z to enter, poring track nº1
+end;}
+hugel.gat,62,68,1	script	Yalmire	86,{
+//ask for 500z to enter, poring track nº2
+end;
+}
+hugel.gat,175,115,5	script	Anhi Anh	897,{end;}
+hugel.gat,191,172,4	script	Yanhe	895,{end;}
+hugel.gat,196,164,3	script	Amnot	50,{end;}
+hugel.gat,203,166,0	script	Star#1	111,{
+//invisible but clickeable npc
+end;
+}
+hugel.gat,209,164,0	script	Star#2	111,{
+//invisible but clickeable npc
+end;
+}
+hugel.gat,216,158,0	script	Shellfish	111,{
+//invisible but clickeable npc
+end;
+}
+hugel.gat,168,183,5	script	Thief	118,{end;}
+hugel.gat,126,151,4	script	Tanyee	90,{end;}
+hugel.gat,88,168,4	script	Zondaman	874,{end;}
+hugel.gat,71,198,3	script	Kampia	90,{end;}
+hugel.gat,84,125,4	script	Anzian	700,{end;}
+//= End of new npcs
+
 hugel.gat,102,161,3	script	Young Sailor	100,{end;}
-hugel.gat,85,139,3	script	Yoko	893,{end;}
+hugel.gat,85,139,3	script	Yoko	86,{end;}
 hugel.gat,100,102,3	script	Grandpa Hohi	866,{end;}
 hugel.gat,85,93,3	script	Grandpa Hiho	866,{end;}
 hugel.gat,85,165,5	script	Cudy	896,{end;}
 hugel.gat,107,67,3	script	Kiddy the Kid	706,{end;}
-hugel.gat,98,57,3	script	Old Lady	863,{end;}
-hugel.gat,71,82,3	script	Hon Kiki	900,{end;}
-hugel.gat,56,103,2	script	Sarko	709,{end;}
+
+hugel.gat,71,83,4	script	Hon Kiki	900,{end;}
+hugel.gat,56,103,4	script	Sarko	709,{end;}
 hugel.gat,68,99,2	script	Billy the Bull	889,{end;}
 hugel.gat,169,112,5	script	Sani	892,{end;}
 hu_in01.gat,26,77,4	script	Bokie	50,{end;}
@@ -35,6 +105,7 @@ hu_in01.gat,19,161,2	script	Matilda	803,{end;}
 hu_in01.gat,18,167,4	script	Gin	86,{end;}
 hu_in01.gat,381,304,5	script	Soldier	105,{end;}
 hu_in01.gat,111,386,4	script	Jino	86,{end;}
-hu_in01.gat,23,311,4	script	Johsh	868,{end;}
+//Johsh was here!
 hu_in01.gat,246,107,2	script	Receptionist	53,{end;}
 hu_in01.gat,256,40,2	script	Garud	897,{end;}
+

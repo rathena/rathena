@@ -41,10 +41,11 @@ prt_in.gat,243,168,4	script	HairDyer Jovovich	91,{
 			mes "[HairDyer Jovovich]";
 			if(countitem(975) < 1) goto sL_NoDye;
 			if(Zeny < 1000) goto sL_Zeny;
+			set Zeny, Zeny - 1000;
+			delitem 975,1;
 			mes "Ok. I will dye you hair red.";
 			setlook 6,8;
-			delitem 975,1;
-			set Zeny, Zeny - 1000;
+
 			close;
 
 		sM_b:

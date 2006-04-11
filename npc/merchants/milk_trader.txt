@@ -39,9 +39,9 @@ prontera.gat,71,131,7	script	Milk Trader	86,{
 		if(zeny < (@amount*20)) goto L_NoZeny;
 
 	L_Milk:
-		getitem 519, @amount;
-		delitem 713, @amount;
 		set zeny, zeny - (@amount*20);
+		delitem 713, @amount;
+		getitem 519, @amount;
 
 	M_End:
 		mes "[Milk Trader]";

@@ -98,13 +98,13 @@ morocc_in.gat,146,99,2	script	Dye Maker JavaDullihan	122,{
 				mes "[Dye Maker JavaDullihan]";
 				if((countitem(507) < 30) || (countitem(973) < 1) || (countitem(713) < 1)) goto sl_LowItems;
 				if(Zeny < 3000) goto sl_LowZeny;
-				mes "Missing text.";
-				mes "Under development";
+				set Zeny, Zeny - 3000;
 				delitem 507,30;
 				delitem 973,1;
 				delitem 713,1;
-				set Zeny, Zeny - 3000;
 				getitem 975,1;
+				mes "Missing text.";
+				mes "Under development";
 				close;
 
 		sM_Lemon:

@@ -417,7 +417,8 @@ mhair1:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,1;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -425,7 +426,7 @@ mhair1:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,1;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (1) style.";
@@ -458,7 +459,8 @@ mhair2:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,2;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -466,7 +468,7 @@ mhair2:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,2;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (2) style.";
@@ -499,7 +501,8 @@ mhair3:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,3;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -507,7 +510,7 @@ mhair3:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,3;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (3) style.";
@@ -540,7 +543,8 @@ mhair4:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,4;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -548,7 +552,7 @@ mhair4:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,4;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (4) style.";
@@ -581,7 +585,8 @@ mhair5:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,5;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -589,7 +594,7 @@ mhair5:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,5;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (5) style.";
@@ -622,7 +627,8 @@ mhair6:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,6;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -630,7 +636,7 @@ mhair6:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,6;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (6) style.";
@@ -663,7 +669,8 @@ mhair7:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,7;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -671,7 +678,7 @@ mhair7:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,7;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (7) style.";
@@ -704,7 +711,8 @@ mhair8:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,8;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -712,7 +720,7 @@ mhair8:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,8;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (8) style.";
@@ -745,7 +753,8 @@ mhair9:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,9;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -753,7 +762,7 @@ mhair9:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,9;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (9) style.";
@@ -786,7 +795,8 @@ mhair10:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,10;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -794,7 +804,7 @@ mhair10:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,10;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (10) style.";
@@ -827,7 +837,8 @@ mhair11:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,11;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -835,7 +846,7 @@ mhair11:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,11;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (11) style.";
@@ -868,7 +879,8 @@ mhair12:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,12;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -876,7 +888,7 @@ mhair12:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,12;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (12) style.";
@@ -909,7 +921,8 @@ mhair13:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,13;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -917,7 +930,7 @@ mhair13:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,13;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (13) style.";
@@ -950,7 +963,8 @@ mhair14:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,14;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -958,7 +972,7 @@ mhair14:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,14;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (14) style.";
@@ -991,7 +1005,8 @@ mhair15:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,15;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -999,7 +1014,7 @@ mhair15:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,15;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (15) style.";
@@ -1032,7 +1047,8 @@ mhair16:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,16;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1040,7 +1056,7 @@ mhair16:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,16;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (16) style.";
@@ -1073,7 +1089,8 @@ mhair17:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,17;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1081,7 +1098,7 @@ mhair17:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,17;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (17) style.";
@@ -1114,7 +1131,8 @@ mhair18:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,18;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1122,7 +1140,7 @@ mhair18:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,18;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (18) style.";
@@ -1155,7 +1173,8 @@ mhair19:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,19;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1163,7 +1182,7 @@ mhair19:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,19;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (19) style.";
@@ -1220,7 +1239,8 @@ fhair1:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,1;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1228,7 +1248,7 @@ fhair1:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,1;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (1) style.";
@@ -1261,7 +1281,8 @@ fhair2:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,2;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1269,7 +1290,7 @@ fhair2:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,2;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (2) style.";
@@ -1302,7 +1323,8 @@ fhair3:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,3;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1310,7 +1332,7 @@ fhair3:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,3;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (3) style.";
@@ -1343,7 +1365,8 @@ fhair4:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,4;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1351,7 +1374,7 @@ fhair4:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,4;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (4) style.";
@@ -1384,7 +1407,8 @@ fhair5:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,5;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1392,7 +1416,7 @@ fhair5:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,5;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (5) style.";
@@ -1425,7 +1449,8 @@ fhair6:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,6;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1433,7 +1458,7 @@ fhair6:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,6;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (6) style.";
@@ -1466,7 +1491,8 @@ fhair7:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,7;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1474,7 +1500,7 @@ fhair7:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,7;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (7) style.";
@@ -1507,7 +1533,8 @@ fhair8:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,8;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1515,7 +1542,7 @@ fhair8:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,8;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (8) style.";
@@ -1548,7 +1575,8 @@ fhair9:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,9;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1556,7 +1584,7 @@ fhair9:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,9;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (9) style.";
@@ -1589,7 +1617,8 @@ fhair10:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,10;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1597,7 +1626,7 @@ fhair10:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,10;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (10) style.";
@@ -1630,7 +1659,8 @@ fhair11:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,11;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1638,7 +1668,7 @@ fhair11:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,11;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (11) style.";
@@ -1671,7 +1701,8 @@ fhair12:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,12;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1679,7 +1710,7 @@ fhair12:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,12;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (12) style.";
@@ -1712,7 +1743,8 @@ fhair13:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,13;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1720,7 +1752,7 @@ fhair13:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,13;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (13) style.";
@@ -1753,7 +1785,8 @@ fhair14:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,14;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1761,7 +1794,7 @@ fhair14:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,14;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (14) style.";
@@ -1794,7 +1827,8 @@ fhair15:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,15;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1802,7 +1836,7 @@ fhair15:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,15;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (15) style.";
@@ -1835,7 +1869,8 @@ fhair16:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,16;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1843,7 +1878,7 @@ fhair16:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,16;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (16) style.";
@@ -1876,7 +1911,8 @@ fhair17:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,17;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1884,7 +1920,7 @@ fhair17:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,17;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (17) style.";
@@ -1917,7 +1953,8 @@ fhair18:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,18;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1925,7 +1962,7 @@ fhair18:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,18;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (18) style.";
@@ -1958,7 +1995,8 @@ fhair19:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		setlook 1,19;
+		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+		set Zeny,Zeny-99800;
 		delitem 973,3;
 		delitem 974,3;
 		delitem 901,100;
@@ -1966,7 +2004,7 @@ fhair19:
 		delitem 1020,100;
 		delitem 1060,100;
 		delitem 7152,100;
-		set Zeny,Zeny-99800;
+		setlook 1,19;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (19) style.";

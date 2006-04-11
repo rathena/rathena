@@ -650,6 +650,9 @@ prt_vilg02.gat
 tank_test.gat
 tank_test2.gat
 test.gat
+poring_c01.gat
+poring_c02.gat
+que_ng.gat
 //Place your custom maps with a starting ID here. Example:
 //mymap.gat	1250
 //mymap-2.gat

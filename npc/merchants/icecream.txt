@@ -33,8 +33,8 @@ alberta.gat,120,45,2	script	Ice Cream Maker::IceCreamer	85,{
 		if(@input<1) goto L_inpC;
 		if(@input>5) goto L_inpM;
 		if(Zeny< @input*100) goto L_NoZ;
-		getitem 536,@input;
 		set Zeny,Zeny-100*@input;
+		getitem 536,@input;
 		mes "Here you go  " +@input+ "  Ice Cream for you.";
 		close;
 		

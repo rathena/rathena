@@ -1,0 +1,149 @@
+//===== eAthena Script =======================================
+//= Guard of Hugel City
+//===== By: ==================================================
+//= erKURITA
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena 1.0
+//===== Description: =========================================
+//= Guard/Guide NPC of City of Hugel.
+//===== Additional Comments: =================================
+//= 1.0 Started the script. [erKURITA]
+//============================================================
+hugel.gat,98,57,3	script	Old Lady	863,{
+
+	mes "[Old Lady]";
+	mes "Welcome to Hugel, the Power Source City.";
+	next;
+	mes "[Old Lady]";
+	mes "I am here to help you find your way.  Please feel free to speak to me anytime you need help.";
+M_Menu:
+	next;
+	menu "View Buildings",-, "Notice",M_2, "Cancel",M_End;
+
+		mes "[Old Lady]";
+		mes "Do you want me to leave indications on the Mini-Map?";
+		next;
+		menu "No Thanks",-,"Yes Please",sM_1b;
+		
+			set @COMPASS_CHECK,0;
+			goto L_Cont;
+
+		sM_1b:
+			set @COMPASS_CHECK,1;
+
+		L_Cont:
+		mes "[Old Lady]";
+		mes "Please choose a building to view.";
+		next;
+	sM_Menu:
+		menu "Church",-,
+			"Hotel",M_1_2,
+			"Pub",M_1_3,
+			"Airship",M_1_4,
+			"Weapon/Armor Shop",M_1_5,
+			"Grocery/Tool shop",M_1_6,
+			"Firecrackers Shop",M_1_7,
+			"Hunter Guild",M_1_8a,
+			"^000066Poring Track 1^000000",M_1_9,
+			"^000066Poring Track 2^000000",M_1_10,
+			"^000066Bingo House^000000",M_1_11,
+			"Wipe all indications from mini-map",M_1_8,
+			"Cancel", M_End;
+
+			mes "[Old Lady]";
+			mes "'The 'Church' here in Hugel will grant your wedding's day a lot of happiness.";
+			mes "It's located at the east of Hugel, south of the Airship";
+			viewpoint 1,157,112,1,0xFF5555;
+			goto sL_Wipe;
+		M_1_2:
+			mes "[Old Lady]";
+			mes "The 'Hotel' is a few steps close here. Just go north through this road.";
+			mes "It is a good place to rest and replenish your hp and sp.";
+			viewpoint 1,101,78,2,0x44FF44;
+			goto sL_Wipe;
+		M_1_3:
+			mes "[Old Lady]";
+			mes "The 'Pub' is east of here, go and pass by for some rest! It is a great place to meet people and have fun.";
+			viewpoint 1,126,65,3,0x5555FF;
+			goto sL_Wipe;
+		M_1_4:
+			mes "[Old Lady]";
+			mes "Head over to the 'Airship' to fly to other cities.";
+			viewpoint 1,189,166,4,0xFF00FF;
+			goto sL_Wipe;
+		M_1_5:
+			mes "[Old Lady]";
+			mes "The 'Weapon/Armor shop' is the place to go when you need something to defend yourself from the other monsters";
+			viewpoint 1,72,155,5,0xFF00FF;
+			goto sL_Wipe;
+		M_1_6:
+			mes "[Old Lady]";
+			mes "The 'Grocery/Tool shop' is the place to go when you need to stock up on things like potions and fly-wings.";
+			viewpoint 1,92,164,6,0xF0C40F;
+			goto sL_Wipe;
+		M_1_7:
+			mes "[Old Lady]";
+			mes "The 'Firecracker shop' will provide you with some flashy fireworks to lit up your night";
+			viewpoint 1,94,104,7,0xFF8000;
+			goto sL_Wipe;
+		M_1_8a:
+			mes "[Old Lady]";
+			mes "The 'Hunter Guild' is located at the northeast of Hugel. Sharpen your eyes!";
+			viewpoint 1,208,225,7,0xFF8000;
+			goto sL_Wipe; 
+
+		m_1-9:
+			mes "[Old Lady]";
+			mes "The '^000066Poring Track Nº1^000000' is new and exciting entertaintment, make sure to check it!";
+			viewpoint 1,58,72,7,0xFF8000;
+			goto sL_Wipe;
+		m_1-10:
+			mes "[Old Lady]";
+			mes "The '^000066Poring Track Nº2^000000' is new and exciting entertaintment, make sure to check it!";
+			viewpoint 1,62,68,7,0xFF8000;
+			goto sL_Wipe;
+		m_1-11:
+			mes "[Old Lady]";
+			mes "The 'Bingo House' is located at the northwest of Hugel. Lay your bet ladies and gentlements!";
+			viewpoint 1,57,207,7,0xFF8000;
+		M_1_8:
+			set @COMPASS_CHECK, 2;
+
+		sL_Wipe:
+			if(@COMPASS_CHECK != 2) next;	// avoids a double 'next' when 'wipe indications' is chosen
+			if(@COMPASS_CHECK == 1) goto sM_Menu;
+			viewpoint 2,157,112,1,0xFF5555;
+			viewpoint 2,101,78,2,0x44FF44;
+			viewpoint 2,126,65,3,0x5555FF;
+			viewpoint 2,189,166,4,0xFF00FF;
+			viewpoint 2,72,155,5,0xFF00FF;
+			viewpoint 2,92,164,6,0xF0C40F;
+			viewpoint 2,94,104,7,0xFF8000;
+			viewpoint 2,208,225,7,0xFF8000;
+			viewpoint 2,58,72,7,0xFF8000;
+			viewpoint 2,62,68,7,0xFF8000;
+			viewpoint 2,57,207,7,0xFF8000;
+			if (@COMPASS_CHECK == 0) goto sM_Menu;
+			mes "[Old Lady]";
+			mes "All indications have been removed";
+			close;
+
+	M_2:
+		mes "[Old Lady]";
+		mes "We upgraded the Location Guide to the Newest Digital Style.  We hope you like this gorgeous new system.";
+		next;
+		mes "[Old Lady]";
+		mes "Don't forget to refer to the Mini-Map on the Upper-Right corner of your screen.";
+		next;
+		mes "[Old Lady]";
+		mes "If you can't see the Mini-Map, just hit ^0000ff'ctrl+tab'^000000 or Click the ^0000ff'map'^000000 button in the Basic Information Window";
+		mes "Remeber to use the ^ff0000+,-^000000 buttons to adjust the map to your liking.";
+		goto M_Menu;
+
+	M_End:
+		mes "[Old Lady]";
+		mes "Have a nice day, deary~";
+		close;
+}
