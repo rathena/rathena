@@ -3524,7 +3524,7 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 	if (!check_distance_bl(src, bl, range))
 		return 0;
 
-	if(distance_bl(src, bl) < 3) //No need for path checking.
+	if(distance_bl(src, bl) < 2) //No need for path checking.
 		return 1;
 
 	// ?áŠQ•¨”»’è

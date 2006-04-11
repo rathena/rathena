@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/11
+	* Modified battle_check_range to do a path-check on distances less than 2
+	  (rather than 3) to avoid being able to hit through walls. [Skotlex]
 	* Modified unit_walktoxy_sub to always move at least one cell when a large
 	  chaserange is specified to prevent possible infinite loops where
 	  attack_timer says you are not within range, but unit_walktoxy says you are.
