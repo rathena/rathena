@@ -1162,6 +1162,7 @@ static struct Damage battle_calc_weapon_attack(
 		sd->state.arrow_atk = flag.arrow;
 	}
 
+/* Apparently counter attack no longer causes you to be critical'ed by mobs. [Skotlex]
 	//Check for counter 
 	if(!skill_num)
 	{
@@ -1169,7 +1170,7 @@ static struct Damage battle_calc_weapon_attack(
 		//If it got here and you had autocounter active, then the direction/range does not matches: critical
 			flag.cri = 1;
 	}	//End counter-check
-
+*/
 	if (!skill_num && (tsd || battle_config.enemy_perfect_flee))
 	{	//Check for Lucky Dodge
 		short flee2 = status_get_flee2(target);
@@ -4058,7 +4059,7 @@ void battle_set_defaults() {
 	battle_config.etc_log = 1;
 	battle_config.save_clothcolor = 0;
 	battle_config.undead_detect_type = 0;
-	battle_config.auto_counter_type = 0;
+	battle_config.auto_counter_type = BL_ALL;
 	battle_config.min_hitrate = 5;
 	battle_config.max_hitrate = 100;
 	battle_config.agi_penalty_type = 1;
