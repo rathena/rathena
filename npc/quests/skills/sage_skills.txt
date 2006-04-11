@@ -42,19 +42,19 @@ yuno_in03.gat,176,24,3	script	Mischna	755,{
 	mes "7 Horns";
 	mes "12 Rainbow Shells";
 	mes "10 Snail Shells";
-	mes "4 Blank Scrolls";
+	mes "4 Empty Scrolls";
 	next;
 	
 	mes "[Mischna]";
 	mes "Let me check your items.";
 	next;
 	
-	if(countitem(904)<10 || countitem(947)<7 || countitem(1013)<12 || countitem(946)<10 || countitem(7433)<4) goto L_noitems;//Items: Scorpion_Tail, Horn, Rainbow_Shell, Snail's_Shell, Blank_Scroll,
+	if(countitem(904)<10 || countitem(947)<7 || countitem(1013)<12 || countitem(946)<10 || countitem(7433)<4) goto L_noitems;//Items: Scorpion_Tail, Horn, Rainbow_Shell, Snail's_Shell, Empty_Scroll,
 	delitem 904, 10;//Items: Scorpion_Tail,
 	delitem 947, 7;//Items: Horn,
 	delitem 1013, 12;//Items: Rainbow_Shell,
 	delitem 946, 10;//Items: Snail's_Shell,
-	delitem 7433, 4;//Items: Blank_Scroll,
+	delitem 7433, 4;//Items: Empty_Scroll,
 	
 	mes "[Mischna]";
 	mes "I see you have what we need,";

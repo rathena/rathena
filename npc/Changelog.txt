@@ -28,6 +28,8 @@ Nexon
 Date		Added
 ======
 4/11
+	* Changed item description in Sage Skills Quest (Blank Script -> Empty
+	  Script) thanks to MeL [Foruken]
 	* Updated a couple shops of Hugel, plus added the firecracker shop on Hugel. [erKURITA]
 	* Added Gunslinger quest npc and shops on que_ng.gat. Same map for Ninja's
 	  job quest. [erKURITA]
