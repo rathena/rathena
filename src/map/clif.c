@@ -3679,20 +3679,34 @@ int clif_fixpos2(struct block_list* bl)
 	return 0;
 }
 
+//Modifies the type of damage according to status changes [Skotlex]
+#define clif_calc_delay(type,delay) (type==1||type==4||type==0x0a)?type:(delay==0?9:type)
+
 /*==========================================
- * Modifies the type of damage according to status changes [Skotlex]
+ * Estimates walk delay based on the damage criteria. [Skotlex]
  *------------------------------------------
  */
-static int clif_calc_delay(struct block_list *dst, int type, int delay)
-{
-	if (type == 1 || type == 4 || type == 0x0a) //Type 1 is the crouching animation, type 4 are non-flinching attacks, 0x0a - crits. 
-		return type;
+static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int damage, int div_) {
+
+	if (type == 4 || type == 9 || damage <=0)
+		return 0;
 	
-	if (delay == 0)
-		return 9; //Endure type attack (damage delay is 0)
+	if (bl->type == BL_PC) {
+		if (battle_config.pc_walk_delay_rate != 100)
+			delay = delay*battle_config.pc_walk_delay_rate/100;
+	} else
+		if (battle_config.walk_delay_rate != 100)
+			delay = delay*battle_config.walk_delay_rate/100;
 	
-	return type;
+	if (div_ > 1) //Multi-hit skills mean higher delays.
+		delay += battle_config.multihit_delay*(div_-1);
+
+	if (delay <= 0)
+		return 0;
+
+	return delay>0?delay:0;
 }
+
 /*==========================================
  * 通常攻撃エフェクト＆ダメージ
  *------------------------------------------
@@ -3705,7 +3719,7 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	type = clif_calc_delay(dst, type, ddelay); //Type defaults to 0 for normal attacks.
+	type = clif_calc_delay(type, ddelay); //Type defaults to 0 for normal attacks.
 
 	sc = status_get_sc(dst);
 
@@ -3750,11 +3764,8 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 		}
 		clif_send(buf,packet_len_table[0x8a],dst,SELF);
 	}
-	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
-	if (type != 4 && type != 9 && damage+damage2 > 0) //Non-endure/Non-flinch attack, update walk delay.
-		unit_walkdelay(dst, tick, sdelay, ddelay, div);
-
-	return 0;
+	//Return adjusted can't walk delay for further processing.
+	return clif_calc_walkdelay(dst,ddelay,type,damage+damage2,div);
 }
 
 /*==========================================
@@ -3782,6 +3793,7 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
 	WFIFOB(fd,16)=fitem->suby;
 	WFIFOSET(fd,packet_len_table[0x9d]);
 }
+
 /*==========================================
  * 場所スキルエフェクトが視界に入る
  *------------------------------------------
@@ -3851,6 +3863,56 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 
 	return 0;
 }
+
+int clif_reveal_skillunit(struct skill_unit *unit) {
+	struct block_list *bl;
+	unsigned char buf[97];
+	bl=map_id2bl(unit->group->src_id);
+#if PACKETVER < 3
+	memset(buf,0,packet_len_table[0x11f]);
+	WBUFW(buf, 0)=0x11f;
+	WBUFL(buf, 2)=unit->bl.id;
+	WBUFL(buf, 6)=unit->group->src_id;
+	WBUFW(buf,10)=unit->bl.x;
+	WBUFW(buf,12)=unit->bl.y;
+	WBUFB(buf,14)=unit->group->unit_id;
+	WBUFB(buf,15)=0;
+	clif_send(buf,packet_len_table[0x11f],&unit->bl,AREA);
+#else
+	memset(buf,0,packet_len_table[0x1c9]);
+	WBUFW(buf, 0)=0x1c9;
+	WBUFL(buf, 2)=unit->bl.id;
+	WBUFL(buf, 6)=unit->group->src_id;
+	WBUFW(buf,10)=unit->bl.x;
+	WBUFW(buf,12)=unit->bl.y;
+	WBUFB(buf,14)=unit->group->unit_id;
+	WBUFB(buf,15)=1;
+	WBUFL(buf,15+1)=0;
+	WBUFL(buf,15+5)=0;
+
+	WBUFL(buf,15+13)=unit->bl.y - 0x12;
+	WBUFL(buf,15+17)=0x004f37dd;
+	WBUFL(buf,15+21)=0x0012f674;
+	WBUFL(buf,15+25)=0x0012f664;
+	WBUFL(buf,15+29)=0x0012f654;
+	WBUFL(buf,15+33)=0x77527bbc;
+
+	WBUFB(buf,15+40)=0x2d;
+	WBUFL(buf,15+41)=0;
+	WBUFL(buf,15+45)=0;
+	WBUFL(buf,15+49)=0;
+	WBUFL(buf,15+53)=0x0048d919;
+	WBUFL(buf,15+57)=0x0000003e;
+	WBUFL(buf,15+61)=0x0012f66c;
+
+	if(bl) WBUFL(buf,15+73)=bl->y;
+	WBUFL(buf,15+77)=unit->bl.m;
+	WBUFB(buf,15+81)=0xaa;
+
+	clif_send(buf,packet_len_table[0x1c9],&unit->bl,AREA);
+#endif
+	return 0;
+}
 /*==========================================
  * 場所スキルエフェクトが視界から消える
  *------------------------------------------
@@ -3907,7 +3969,9 @@ int clif_01ac(struct block_list *bl)
 		clif_getareachar_item(sd,(struct flooritem_data*) bl);
 		break;
 	case BL_SKILL:
-		clif_getareachar_skillunit(sd,(struct skill_unit *)bl);
+		//Only reveal non-traps. [Skotlex]
+		if (!skill_get_inf2(((TBL_SKILL*)bl)->group->skill_id)&INF2_TRAP)
+			clif_getareachar_skillunit(sd,(TBL_SKILL*)bl);
 		break;
 	default:
 		if(&sd->bl == bl)
@@ -3989,7 +4053,9 @@ int clif_insight(struct block_list *bl,va_list ap)
 			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
 			break;
 		case BL_SKILL:
-			clif_getareachar_skillunit(tsd,(struct skill_unit *)bl);
+			//Only reveal non-traps. [Skotlex]
+			if (!skill_get_inf2(((TBL_SKILL*)bl)->group->skill_id)&INF2_TRAP)
+				clif_getareachar_skillunit(tsd,(TBL_SKILL*)bl);
 			break;
 		default:
 			clif_getareachar_char(tsd,bl);
@@ -4196,8 +4262,9 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
-	
-	type = clif_calc_delay(dst, (type>0)?type:skill_get_hit(skill_id), ddelay);
+
+	type = (type>0)?type:skill_get_hit(skill_id);
+	type = clif_calc_delay(type, ddelay);
 	sc = status_get_sc(dst);
 
 	if(sc && sc->count) {
@@ -4262,9 +4329,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 #endif
 
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
-	if (type != 4 && type != 9 && damage > 0) //Non-endure/Non-flinch attack, update walk delay.
-		unit_walkdelay(dst, tick, sdelay, ddelay, div);
-	return 0;
+	return clif_calc_walkdelay(dst,ddelay,type,damage,div);
 }
 
 /*==========================================
@@ -4280,7 +4345,8 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	type = clif_calc_delay(dst, (type>0)?type:skill_get_hit(skill_id), ddelay);
+	type = (type>0)?type:skill_get_hit(skill_id);
+	type = clif_calc_delay(type, ddelay);
 	sc = status_get_sc(dst);
 
 	if(sc && sc->count) {
@@ -4318,9 +4384,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	}
 
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
-	if (type != 4 && type != 9 && damage > 0) //Non-endure/Non-flinch attack, update walk delay.
-		unit_walkdelay(dst, tick, sdelay, ddelay, div);
-	return 0;
+	return clif_calc_walkdelay(dst,ddelay,type,damage,div);
 }
 
 /*==========================================

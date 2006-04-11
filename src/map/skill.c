@@ -1905,20 +1905,20 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
 	case SG_STAR_WARM:
-		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
+		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
 	case KN_BRANDISHSPEAR:
 	case SN_SHARPSHOOTING:
 		{	//Only display skill animation for skill's target.
 			struct unit_data *ud = unit_bl2ud(src);
 			if (ud && ud->skilltarget == bl->id)
-				clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, type);
+				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, type);
 			else
-				clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
+				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 			break;
 		}
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
-		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
+		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
 		break;
 
 	case ASC_BREAKER:	// [celest]
@@ -1930,7 +1930,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			damage += tmpdmg;	// add weapon and magic damage
 			tmpdmg = 0;	// clear the temporary weapon damage
 			if (damage > 0)	// if both attacks missed, do not display a 2nd 'miss'
-				clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, skilllv, type);
+				dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, skilllv, type);
 		}
 		break;
 	case NPC_SELFDESTRUCTION:
@@ -1940,17 +1940,17 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case KN_AUTOCOUNTER: //Skills that need be passed as a normal attack for the client to display correctly.
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
-		clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
+		dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
 		break;
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
 		//Only show animation when hitting yourself. [Skotlex]
 		if (src!=bl) {
-			clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
+			dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 			break;
 		}
 	default:
-		clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, (skillid==0)? 5:type );
+		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, (skillid==0)? 5:type );
 	}
 	
 	map_freeblock_lock();
@@ -1986,7 +1986,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			damage = 0; //Only Heaven's drive may damage traps. [Skotlex]
 	}
 	if ((skillid || flag) && !(attack_type&BF_WEAPON)) {  // do not really deal damage for ASC_BREAKER's 1st attack
-		battle_damage(src,bl,damage, 0); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
+		battle_damage(src,bl,damage,dmg.dmotion,0); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
 		if (dmg.dmg_lv == ATK_DEF || damage > 0) {
 			if (!status_isdead(bl))
 				skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
@@ -2001,7 +2001,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if ((skillid || flag) && attack_type&BF_WEAPON && skillid != ASC_BREAKER) {  // do not really deal damage for ASC_BREAKER's 1st attack
-		battle_delay_damage(tick+dmg.amotion,src,bl,attack_type,skillid,skilllv,damage,dmg.dmg_lv,0);
+		battle_delay_damage(tick+dmg.amotion,src,bl,attack_type,skillid,skilllv,damage,dmg.dmg_lv,dmg.dmotion,0);
 	}
 
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(status_get_mode(bl)&MD_BOSS)/* && !map_flag_gvg(src->m)*/) {
@@ -2042,9 +2042,9 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 
 	if (rdamage>0) {
 		if (attack_type&BF_WEAPON)
-			battle_delay_damage(tick+dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0);
+			battle_delay_damage(tick+dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0,0);
 		else
-			battle_damage(bl,src,rdamage,0);
+			battle_damage(bl,src,rdamage,0,0);
 		clif_damage(src,src,tick, dmg.amotion,0,rdamage,1,4,0);
 		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
 		skill_additional_effect(bl,src,CR_REFLECTSHIELD, 1,BF_WEAPON,tick);
@@ -2429,6 +2429,17 @@ int skill_cleartimerskill(struct block_list *src)
 		}
 	}
 	return 1;
+}
+
+static int skill_reveal_trap( struct block_list *bl,va_list ap )
+{
+	TBL_SKILL *su = (TBL_SKILL*)bl;
+	if (su->alive && su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
+	{	//Reveal trap.
+		clif_reveal_skillunit(su);
+		return 1;
+	}
+	return 0;
 }
 
 /*==========================================
@@ -3463,7 +3474,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case SA_INSTANTDEATH:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		battle_damage(NULL,src,status_get_hp(src)-1,1);
+		battle_damage(NULL,src,status_get_hp(src)-1,0,1);
 		break;
 	case SA_QUESTION:
 	case SA_GRAVITY:
@@ -3489,7 +3500,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case SA_DEATH:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		battle_damage(NULL,bl,status_get_max_hp(bl),1);
+		battle_damage(NULL,bl,status_get_max_hp(bl),0,1);
 		break;
 	case SA_REVERSEORCISH:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
@@ -4038,7 +4049,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			skill_get_splash(skillid, skilllv), BL_CHAR,
 			src, skillid, skilllv, tick, flag|BCT_ENEMY,
 			skill_castend_damage_id);
-		battle_damage(src, src, status_get_max_hp(src), 1);
+		battle_damage(src, src, status_get_max_hp(src),0,1);
 		break;
 
 	/* パ?ティスキル */
@@ -4736,7 +4747,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				sp = skill_get_sp(bl_skillid,bl_skilllv);
 				if (dstsd)
 					pc_damage_sp(dstsd, sp, 0);
-				battle_damage(NULL, bl, hp, 1);
+				battle_damage(NULL, bl, hp, 0, 1);
 				if(sd && sp) {
 					sp = sp*(25*(skilllv-1))/100;
 					if(skilllv > 1 && sp < 1) sp = 1;
@@ -4877,7 +4888,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_SUICIDE:			/* 自決 */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		battle_damage(NULL, src,status_get_hp(src),3); //Suicidal Mobs should give neither exp (flag&1) not items (flag&2) [Skotlex]
+		battle_damage(NULL, src,status_get_hp(src),0,3); //Suicidal Mobs should give neither exp (flag&1) not items (flag&2) [Skotlex]
 		break;
 
 	case NPC_SUMMONSLAVE:		/* 手下?｢喚 */
@@ -5286,7 +5297,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case 3:	// 1000 damage, random armor destroyed
 					{
 						int where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
-						battle_damage(src, bl, 1000, 0);
+						battle_damage(src, bl, 1000, 0, 0);
 						clif_damage(src,bl,tick,0,0,1000,0,0,0);
 						skill_break_equip(bl, where[rand()%3], 10000, BCT_ENEMY);
 					}
@@ -5319,14 +5330,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					sc_start(bl,SC_CONFUSION,100,skilllv,skill_get_time2(skillid,skilllv));
 					break;
 				case 10:	// 6666 damage, atk matk halved, cursed
-					battle_damage(src, bl, 6666, 0);
+					battle_damage(src, bl, 6666, 0, 0);
 					clif_damage(src,bl,tick,0,0,6666,0,0,0);
 					sc_start(bl,SC_INCATKRATE,100,-50,skill_get_time2(skillid,skilllv));
 					sc_start(bl,SC_INCMATKRATE,100,-50,skill_get_time2(skillid,skilllv));
 					sc_start(bl,SC_CURSE,skilllv,100,skill_get_time2(skillid,skilllv));
 					break;
 				case 11:	// 4444 damage
-					battle_damage(src, bl, 4444, 0);
+					battle_damage(src, bl, 4444, 0, 0);
 					clif_damage(src,bl,tick,0,0,4444,0,0,0);
 					break;
 				case 12:	// stun
@@ -5914,6 +5925,8 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 		map_foreachinarea( status_change_timer_sub,
 			src->m, x-i, y-i, x+i,y+i,BL_CHAR,
 			src,status_get_sc(src),SC_SIGHT,tick);
+		map_foreachinarea( skill_reveal_trap,
+			src->m, x-i, y-i, x+i,y+i,BL_SKILL);
 		break;
 
 	case MG_SAFETYWALL:			/* セイフティウォ?ル */
@@ -10249,7 +10262,7 @@ int skill_produce_mix( struct map_session_data *sd, int skill_id,
 	} else {
 		switch (skill_id) {
 			case ASC_CDP: //Damage yourself, and display same effect as failed potion.
-				battle_damage(NULL, &sd->bl, sd->status.max_hp>>2, 1);
+				battle_damage(NULL, &sd->bl, sd->status.max_hp>>2, 0, 1);
 			case AM_PHARMACY:
 			case AM_TWILIGHT1:
 			case AM_TWILIGHT2:

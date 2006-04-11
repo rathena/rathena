@@ -109,6 +109,7 @@ struct delay_damage {
 	struct block_list *src;
 	int target;
 	int damage;
+	int delay;
 	unsigned short distance;
 	unsigned short skill_lv;
 	unsigned short skill_id;
@@ -124,12 +125,11 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 	if (target && dat && map_id2bl(id) == dat->src && target->prev != NULL && !status_isdead(target) &&
 		target->m == dat->src->m && check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
 	{
-		battle_damage(dat->src, target, dat->damage, dat->flag);
+		battle_damage(dat->src, target, dat->damage, dat->delay, dat->flag);
 		if ((dat->dmg_lv == ATK_DEF || dat->damage > 0) && dat->attack_type)
 		{
 			if (!status_isdead(target))
 				skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type, tick);
-
 			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 		}
 
@@ -138,19 +138,18 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
-int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, int dmg_lv, int flag)
+int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, int dmg_lv, int ddelay, int flag)
 {
 	struct delay_damage *dat;
 	nullpo_retr(0, src);
 	nullpo_retr(0, target);
 
 	if (!battle_config.delay_battle_damage) {
-		battle_damage(src, target, damage, flag);
+		battle_damage(src, target, damage, ddelay, flag);
 		if ((damage > 0 || dmg_lv == ATK_DEF) && attack_type)
 		{
 			if (!status_isdead(target))
 				skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
-
 			skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
 		}
 		return 0;
@@ -163,6 +162,7 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 	dat->attack_type = attack_type;
 	dat->damage = damage;
 	dat->dmg_lv = dmg_lv;
+	dat->delay = ddelay;
 	dat->flag = flag;
 	dat->distance = distance_bl(src, target)+10; //Attack should connect regardless unless you teleported.
 	add_timer(tick, battle_delay_damage_sub, src->id, (int)dat);
@@ -171,26 +171,24 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 }
 
 // ŽÀ?Û‚ÉHP‚ð‘€?ì
-int battle_damage(struct block_list *src,struct block_list *target,int damage, int flag)
+int battle_damage(struct block_list *src,struct block_list *target,int damage, int walkdelay, int flag)
 {
 	struct map_session_data *sd = NULL;
 	struct status_change *sc;
-
+	int r_damage=0;
+	
 	nullpo_retr(0, target); //src‚ÍNULL‚ÅŒÄ‚Î‚ê‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‘¼‚Åƒ`ƒFƒbƒN
 	
 	if (damage == 0 || status_isdead(target))
 		return 0;
-	
-	sc = status_get_sc(target);
 
 	if (damage < 0)
 		return battle_heal(src,target,-damage,0,flag);
 	
-	if (src) {
-		if (src->prev == NULL)
-			return 0;
+	if (src)
 		BL_CAST(BL_PC, src, sd);
-	}
+	
+	sc = status_get_sc(target);
 
 	if (!flag && sc && sc->count) {
 		// “€Œ‹?A?Î‰»?A?‡–°‚ð?Á‹Ž
@@ -244,13 +242,23 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 	if (!flag)
 		unit_skillcastcancel(target, 2);
 	
-	if (target->type == BL_MOB) {
-		return mob_damage(src,(TBL_MOB*)target, damage,0);
-	} else if (target->type == BL_PC) {
-		return pc_damage(src,(TBL_PC*)target,damage);
-	} else if (target->type == BL_SKILL)
-		return skill_unit_ondamaged((struct skill_unit *)target, src, damage, gettick());
-	return 0;
+	switch (target->type)
+	{
+		case BL_MOB:
+			r_damage =  mob_damage(src,(TBL_MOB*)target, damage,0);
+			break;
+		case BL_PC:
+			r_damage = pc_damage(src,(TBL_PC*)target,damage);
+			break;
+		case BL_SKILL:
+			r_damage =  skill_unit_ondamaged((struct skill_unit *)target, src, damage, gettick());
+			break;
+	}
+	
+	if (walkdelay && !status_isdead(target))
+		unit_set_walkdelay(target, gettick(), walkdelay, 0);
+	
+	return r_damage;
 }
 
 int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp, int flag)
@@ -271,7 +279,7 @@ int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp, i
 	
 	if (sp == 0) {
 		if (hp < 0) //Use flag 1 because heal-damage shouldn't make you flinch. 
-			return battle_damage(bl, target, -hp, 1);
+			return battle_damage(bl, target, -hp, 0, 1);
 		if (hp == 0)
 			return 0;
 	}
@@ -505,8 +513,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			((struct map_session_data *)src)->status.weapon == W_2HSWORD)))){
 			if(rand()%100 < (15*sc->data[SC_REJECTSWORD].val1)){
 				damage = damage*50/100;
-				clif_damage(bl,src,gettick(),0,0,damage,0,0,0);
-				battle_damage(bl,src,damage,0);
+				battle_damage(bl,src,damage,clif_damage(bl,src,gettick(),0,0,damage,0,0,0),0);
 				clif_skill_nodamage(bl,bl,ST_REJECTSWORD,sc->data[SC_REJECTSWORD].val1,1);
 				if((--sc->data[SC_REJECTSWORD].val2)<=0)
 					status_change_end(bl, SC_REJECTSWORD, -1);
@@ -1399,7 +1406,7 @@ static struct Damage battle_calc_weapon_attack(
 			case PA_SACRIFICE:
 			{
 				int hp_dmg = status_get_max_hp(src)* 9/100;
-				battle_damage(src, src, hp_dmg, 1); //Damage to self is always 9%
+				battle_damage(src, src, hp_dmg, 0, 1); //Damage to self is always 9%
 				clif_damage(src,src, gettick(), 0, 0, hp_dmg, 0 , 0, 0);
 				
 				wd.damage = hp_dmg;
@@ -2287,7 +2294,7 @@ static struct Damage battle_calc_weapon_attack(
 				hp = sd->status.hp;
 		} else
 			hp = 5*hp/1000;
-		battle_damage(NULL, src, hp, 1);
+		battle_damage(NULL, src, hp, 0, 1);
 	}
 
 	return wd;
@@ -3022,7 +3029,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 {
 	struct map_session_data *sd = NULL, *tsd = NULL;
 	struct status_change *sc, *tsc;
-	int race, ele, damage,rdamage=0;
+	int race, ele, damage,rdamage=0,rdelay=0;
 	struct Damage wd;
 
 	nullpo_retr(0, src);
@@ -3107,13 +3114,13 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	if (damage > 0 && src != target) {
 		rdamage = battle_calc_return_damage(target, &damage, wd.flag);
 		if (rdamage > 0) {
-			clif_damage(src, src, tick, wd.amotion, wd.dmotion, rdamage, 1, 4, 0);
+			rdelay = clif_damage(src, src, tick, wd.amotion, status_get_dmotion(src), rdamage, 1, 4, 0);
 			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
 			skill_additional_effect(target,src,CR_REFLECTSHIELD, 1,BF_WEAPON,tick);
 		}
 	}
 
-	clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
+	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
 	//“ñ“?—¬?¶Žè‚ÆƒJƒ^?[ƒ‹’ÇŒ‚‚Ìƒ~ƒX•\Ž¦(–³—?‚â‚è?`)
 	if(sd && sd->status.weapon >= MAX_WEAPON_TYPE && wd.damage2 == 0)
 		clif_damage(src, target, tick+10, wd.amotion, wd.dmotion,0, 1, 0, 0);
@@ -3123,7 +3130,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	map_freeblock_lock();
 
-	battle_delay_damage(tick+wd.amotion, src, target, BF_WEAPON, 0, 0, damage, wd.dmg_lv, 0);
+	battle_delay_damage(tick+wd.amotion, src, target, BF_WEAPON, 0, 0, damage, wd.dmg_lv, wd.dmotion, 0);
 
 	if (!status_isdead(target) && damage > 0) {
 		if (sd) {
@@ -3209,7 +3216,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		}
 	}
 	if (rdamage > 0) //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
-		battle_delay_damage(tick+wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, 0);
+		battle_delay_damage(tick+wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay, 0);
 
 	if (tsc) {
 		if (tsc->data[SC_POISONREACT].timer != -1 && 

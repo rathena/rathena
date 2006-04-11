@@ -100,6 +100,7 @@ int clif_clearchat(struct chat_data*,int);	// area or fd
 int clif_leavechat(struct chat_data*,struct map_session_data*);	// chat
 int clif_changechatstatus(struct chat_data*);	// chat
 int clif_refresh(struct map_session_data*);	// self
+int clif_reveal_skillunit(struct skill_unit *unit); //Area
 
 int clif_fame_blacksmith(struct map_session_data *, int);
 int clif_fame_alchemist(struct map_session_data *, int);

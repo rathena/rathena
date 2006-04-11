@@ -4126,7 +4126,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				int diff = mhp*(bl->type==BL_PC?10:15)/100;
 				if (hp - diff < mhp>>2)
 					diff = hp - (mhp>>2);
-				battle_damage(NULL, bl, diff, 1);
+				battle_damage(NULL, bl, diff, 0, 1);
 			}
 		}	// fall through
 		case SC_POISON:				/* “Å */
@@ -4354,7 +4354,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		}
 
 		case SC_COMA: //Coma. Sends a char to 1HP
-			battle_damage(NULL, bl, status_get_hp(bl)-1, 1);
+			battle_damage(NULL, bl, status_get_hp(bl)-1, 0, 1);
 			return 1;
 
 		case SC_CLOSECONFINE2:
@@ -5440,7 +5440,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			if((++sc->data[type].val4)%5 == 0 && status_get_hp(bl) > hp>>2) {
 				hp = hp/100;
 				if(hp < 1) hp = 1;
-				battle_damage(NULL, bl, hp, 1);
+				battle_damage(NULL, bl, hp, 0, 1);
 			}
 			sc->data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
 			return 0;
@@ -5452,7 +5452,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			break;
 	case SC_DPOISON:
 		if ((--sc->data[type].val3) > 0 && sc->data[SC_SLOWPOISON].timer == -1)
-			battle_damage(NULL, bl, sc->data[type].val4, 1);
+			battle_damage(NULL, bl, sc->data[type].val4, 0, 1);
 		if (sc->data[type].val3 > 0 && !status_isdead(bl))
 		{
 			sc->data[type].timer = add_timer (1000 + tick, status_change_timer, bl->id, data );
@@ -5483,7 +5483,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		// To-do: bleeding effect increases damage taken?
 		if ((sc->data[type].val4 -= 10000) >= 0) {
 			int hp = rand()%600 + 200;
-			battle_damage(NULL,bl,hp,0);
+			battle_damage(NULL,bl,hp,0,0);
 			if (!status_isdead(bl))
 				sc->data[type].timer = add_timer(10000 + tick, status_change_timer, bl->id, data );
 			return 0;
@@ -5651,7 +5651,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			{
 				if (sd)
 					pc_damage_sp(sd, sp, 0);
-				battle_damage(NULL, bl, hp, 1);
+				battle_damage(NULL, bl, hp, 0, 1);
 				if ((sc->data[type].val2 -= 10000) > 0) {
 					sc->data[type].timer = add_timer(
 					10000+tick, status_change_timer,

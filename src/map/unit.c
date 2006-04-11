@@ -642,45 +642,10 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	return 1;
 }
 
-static int unit_walkdelay_sub(int tid, unsigned int tick, int id, int data)
-{
-	struct block_list *bl = map_id2bl(id);
-	if (!bl || status_isdead(bl))
-		return 0;
-	
-	unit_set_walkdelay(bl, tick, data, 0);
-	return 0;
-}
-
 /*==========================================
  * Applies walk delay based on attack type. [Skotlex]
  *------------------------------------------
  */
-int unit_walkdelay(struct block_list *bl, unsigned int tick, int adelay, int delay, int div_) {
-
-	if (status_isdead(bl))
-		return 0;
-	
-	if (bl->type == BL_PC) {
-		if (battle_config.pc_walk_delay_rate != 100)
-			delay = delay*battle_config.pc_walk_delay_rate/100;
-	} else
-		if (battle_config.walk_delay_rate != 100)
-			delay = delay*battle_config.walk_delay_rate/100;
-	
-	if (div_ > 1) //Multi-hit skills mean higher delays.
-		delay += battle_config.multihit_delay*(div_-1);
-
-	if (delay <= 0)
-		return 0;
-	
-	if (adelay > 0)
-		add_timer(tick+adelay, unit_walkdelay_sub, bl->id, delay);
-	else 
-		unit_set_walkdelay(bl, tick, delay, 0);
-	return 1;
-}
-
 
 int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int skill_lv, int casttime, int castcancel) {
 	struct unit_data *ud;
@@ -1373,7 +1338,6 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 // unit_data ‚Ì‰Šú‰»ˆ—
 void unit_dataset(struct block_list *bl) {
 	struct unit_data *ud;
-	int i;
 	nullpo_retv(ud = unit_bl2ud(bl));
 
 	memset( ud, 0, sizeof( struct unit_data) );
@@ -1413,14 +1377,12 @@ static int unit_counttargeted_sub(struct block_list *bl, va_list ap)
  */
 int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2)
 {
-
 	nullpo_retr(0, target);
 
 	if(damage+damage2 <= 0)
 		return 0;
 	
-	clif_damage(target,target,tick,sdelay,ddelay,damage,div,type,damage2);
-	return battle_damage(src,target,damage+damage2,0);
+	return battle_damage(src,target,damage+damage2,clif_damage(target,target,tick,sdelay,ddelay,damage,div,type,damage2),0);
 }
 /*==========================================
  * ©•ª‚ğƒƒbƒN‚µ‚Ä‚¢‚é‘ÎÛ‚Ì”‚ğ•Ô‚·
@@ -1484,7 +1446,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 
 	map_freeblock_lock();
 
-	unit_stop_walking(bl,1);			// •às’†’f
+	unit_stop_walking(bl,0);			// •às’†’f
 	unit_stop_attack(bl);				// UŒ‚’†’f
 	unit_skillcastcancel(bl,0);			// ‰r¥’†’f
 	clif_clearchar_area(bl,clrtype);
@@ -1760,7 +1722,6 @@ int unit_free(struct block_list *bl) {
 int do_init_unit(void) {
 	add_timer_func_list(unit_attack_timer,  "unit_attack_timer");
 	add_timer_func_list(unit_walktoxy_timer,"unit_walktoxy_timer");
-	add_timer_func_list(unit_walkdelay_sub, "unit_walkdelay_sub");
 	add_timer_func_list(unit_walktobl_sub, "unit_walktobl_sub");
 
 	return 0;
