@@ -1434,7 +1434,7 @@ static int mob_delay_item_drop(int tid,unsigned int tick,int id,int data)
 	struct delay_item_drop *ditem;
 	ditem=(struct delay_item_drop *)id;
 
-	map_addflooritem(&ditem->item_data,1,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
+	map_addflooritem(&ditem->item_data,ditem->item_data.amount,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
 	ers_free(delay_drop_ers, ditem);
 	return 0;
 }

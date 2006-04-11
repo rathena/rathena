@@ -6827,7 +6827,6 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			if (!battle_check_undead(race,status_get_elem_type(bl)) && race!=6)
 				break;
 			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			src->val2++;
 			break;
 		}
 
@@ -9615,11 +9614,13 @@ int skill_unit_timer_sub( struct block_list *bl, va_list ap )
 			group->bl_flag,bl,tick);
 		if (!unit->alive)
 			return 0;
+	/*Apparently magnus shouldn't get it's cells deleted like this. [Skotlex]
 		// ƒ}ƒOƒkƒX‚Í”­“®‚µ‚½ƒ†ƒjƒbƒg‚Í?í?œ‚·‚é
 		if (group->skill_id==PR_MAGNUS && unit->val2) {
 			skill_delunit(unit);
 			return 0;
 		}
+	*/
 	}
 	/* ŠÔ?Ø‚ê?í?œ */
 	if((DIFF_TICK(tick,group->tick)>=group->limit || DIFF_TICK(tick,group->tick)>=unit->limit)){
