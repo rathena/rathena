@@ -11,6 +11,7 @@
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
+#include "../common/showmsg.h"
 
 #include "log.h"
 #include "clif.h"
@@ -26,7 +27,6 @@
 #include "battle.h"
 #include "charcommand.h"
 #include "atcommand.h"
-#include "showmsg.h"
 
 static char command_symbol = '#';
 

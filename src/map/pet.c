@@ -5,11 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "db.h"
-#include "timer.h"
-#include "socket.h"
-#include "nullpo.h"
-#include "malloc.h"
+#include "../common/db.h"
+#include "../common/timer.h"
+#include "../common/nullpo.h"
+#include "../common/malloc.h"
+#include "../common/showmsg.h"
+
 #include "pc.h"
 #include "status.h"
 #include "map.h"
@@ -23,7 +24,6 @@
 #include "npc.h"
 #include "script.h"
 #include "skill.h"
-#include "showmsg.h"
 
 #define MIN_PETTHINKTIME 100
 

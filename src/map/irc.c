@@ -32,8 +32,8 @@ typedef int socklen_t;
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/version.h"
+#include "../common/nullpo.h"
 
-#include "nullpo.h"
 #include "map.h"
 #include "pc.h"
 #include "irc.h"
