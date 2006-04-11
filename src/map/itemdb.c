@@ -914,7 +914,7 @@ static int itemdb_read_sqldb(void)
 						ShowWarning("itemdb_read_sqldb: Item %d (%s) specifies %d slots, but the server only supports up to %d\n", nameid, id->jname, id->slot, MAX_SLOTS);
 						id->slot = MAX_SLOTS;
 					}
-					itemdb_jobid2mapid(id->class_base, (sql_row[11] != NULL) ? (unsigned int)strtoll(sql_row[11], NULL, 0) : 0);
+					itemdb_jobid2mapid(id->class_base, (sql_row[11] != NULL) ? (unsigned int)strtoul(sql_row[11], NULL, 0) : 0);
 					id->class_upper= (sql_row[12] != NULL) ? atoi(sql_row[12]) : 0;
 					id->sex		= (sql_row[13] != NULL) ? atoi(sql_row[13]) : 0;
 					id->equip	= (sql_row[14] != NULL) ? atoi(sql_row[14]) : 0;
@@ -1057,7 +1057,7 @@ static int itemdb_readdb(void)
 				ShowWarning("itemdb_readdb: Item %d (%s) specifies %d slots, but the server only supports up to %d\n", nameid, id->jname, id->slot, MAX_SLOTS);
 				id->slot = MAX_SLOTS;
 			}
-			itemdb_jobid2mapid(id->class_base, (unsigned int)strtoll(str[11],NULL,0));
+			itemdb_jobid2mapid(id->class_base, (unsigned int)strtoul(str[11],NULL,0));
 			id->class_upper = atoi(str[12]);
 			id->sex	= atoi(str[13]);
 			if(id->equip != atoi(str[14])){
