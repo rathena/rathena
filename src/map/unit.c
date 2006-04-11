@@ -59,12 +59,22 @@ int unit_walktoxy_sub(struct block_list *bl)
 	
 	if (ud->walktarget && ud->chaserange >0) {
 		//Trim the last part of the path to account for range.
-		for (i = 1; i <= ud->chaserange && ud->walkpath.path_len>0; i++) {
+		for (i = ud->chaserange*10; i > 0 && ud->walkpath.path_len>0;) {
 			int dir;
 		   ud->walkpath.path_len--;
 			dir = ud->walkpath.path[ud->walkpath.path_len];
+			if(dir&1)
+				i-=14;
+			else
+				i-=10;
 			ud->to_x -= dirx[dir];
 			ud->to_y -= diry[dir];
+		}
+		if (!ud->walkpath.path_len) {
+			//Already within requested range.
+			if (ud->attacktarget == ud->walktarget)
+				unit_attack(bl, ud->attacktarget, ud->state.attack_continue);
+			return 0;
 		}
 	}
 
@@ -80,7 +90,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 		i = status_get_speed(bl)*14/10;
 	else
 		i = status_get_speed(bl);
-	if( i  > 0) {
+	if( i > 0) {
 		i = i>>1;
 		ud->walktimer = add_timer(gettick()+i,unit_walktoxy_timer,bl->id,0);
 	}
@@ -131,7 +141,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			unit_walktoxy_sub(bl);
 			return 0;
 		}
-	} else { // ƒ}ƒX–Ú‹«ŠE‚Ö“ž’…
+	} else {
 		if(ud->walkpath.path[ud->walkpath.path_pos]>=8)
 			return 1;
 		x = bl->x;

@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/10
+	* Finished fixing the unit_data auto-chase update. Still need to do some
+	  optimizations... but the current code-base should be usable. [Skotlex]
 	* Fixes to the unit_data update that lets characters auto-chase while
 	  attacking. It seems to work mostly now, but there's still a few issues to
 	  be resolved with ranged-attackers. [Skotlex]
