@@ -3659,6 +3659,7 @@ void do_final(void) {
 	do_final_pet();
 	do_final_mob();
 	do_final_msg();
+	do_final_skill();
 	do_final_unit();
 	if(use_irc)
 		do_final_irc();

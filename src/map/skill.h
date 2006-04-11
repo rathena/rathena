@@ -130,7 +130,7 @@ struct skill_unit;
 struct skill_unit_group;
 
 int do_init_skill(void);
-
+int do_final_skill(void);
 
 //Returns the cast type of the skill: ground cast, castend damage, castend no damage
 enum { CAST_GROUND, CAST_DAMAGE, CAST_NODAMAGE };
@@ -187,7 +187,7 @@ struct skill_unit *skill_initunit(struct skill_unit_group *group,int idx,int x,i
 int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	int count,int skillid,int skilllv,int unit_id, int limit, int interval);
-int skill_delunitgroup(struct skill_unit_group *group);
+int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group);
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_element_field(struct block_list *bl);
 

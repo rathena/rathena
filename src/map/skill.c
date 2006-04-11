@@ -12,6 +12,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/grfio.h"
+#include "../common/ers.h"
 
 #include "skill.h"
 #include "map.h"
@@ -35,7 +36,6 @@
 //Guild Skills are shifted to these to make them stick into the skill array.
 #define GD_SKILLRANGEMIN 900
 #define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
-#define swap(x,y) { int t; t = x; x = y; y = t; }
 
 int skill_names_id[MAX_SKILL_DB];
 const struct skill_name_db skill_names[] = {
@@ -610,6 +610,8 @@ const struct skill_name_db skill_names[] = {
 static const int dirx[8]={0,-1,-1,-1,0,1,1,1};
 static const int diry[8]={1,1,0,-1,-1,-1,0,1};
 
+
+static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 /* ƒXƒLƒ‹ƒf?ƒ^ƒx?ƒX */
 struct skill_db skill_db[MAX_SKILL_DB];
 
@@ -5803,8 +5805,8 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 			(maxcount = skill_get_maxcount(ud->skillid)) > 0
 		  ) {
 			int i;
-			for(i=0;i<MAX_SKILLUNITGROUP && maxcount;i++) {
-				if(ud->skillunit[i].alive_count > 0 && ud->skillunit[i].skill_id == ud->skillid)
+			for(i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i] && maxcount;i++) {
+				if(ud->skillunit[i]->skill_id == ud->skillid)
 					maxcount--;
 			}
 			if(!maxcount)
@@ -6229,8 +6231,8 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 			p[3] = &sd->status.memo_point[2];
 
 			if((maxcount = skill_get_maxcount(skill_num)) > 0) {
-				for(i=0;i<MAX_SKILLUNITGROUP && maxcount;i++) {
-					if(sd->ud.skillunit[i].alive_count > 0 && sd->ud.skillunit[i].skill_id == skill_num)
+				for(i=0;i<MAX_SKILLUNITGROUP && sd->ud.skillunit[i] && maxcount;i++) {
+					if(sd->ud.skillunit[i]->skill_id == skill_num)
 						maxcount--;
 				}
 				if(!maxcount) {
@@ -6598,7 +6600,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	struct skill_unit_group *sg;
 	struct block_list *ss;
 	struct status_change *sc;
-	int type;
+	int type,skillid;
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
@@ -6622,7 +6624,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		return 0; //Hidden characters are inmune to AoE skills except Heaven's Drive. [Skotlex]
 	
 	type = SkillStatusChangeTable[sg->skill_id];
-
+	skillid = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.
 	switch (sg->unit_id) {
 	case UNT_SAFETYWALL:
 		//TODO: Find a more reliable way to handle the link to sg, this could cause dangling pointers. [Skotlex]
@@ -6637,7 +6639,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 				&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y) {
 				if (pc_setpos(sd,sg->val3,sg->val2>>16,sg->val2&0xffff,3) == 0) {
 					if (--sg->val1<=0 || sg->src_id == bl->id)
-						skill_delunitgroup(sg);
+						skill_delunitgroup(NULL, sg);
 				}
 			}
 		} else if(battle_config.mob_warpportal && bl->type != BL_PET)
@@ -6686,12 +6688,12 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		if (sc && sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
 		break;
-
+/* Basilica does not knocks back...
 	case UNT_BASILICA:
 		if (!(status_get_mode(bl)&MD_BOSS) && battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
 			skill_blown(&src->bl,bl,1);
 		break;
-
+*/
 	case UNT_FOGWALL:
 		if (sc && sc->data[type].timer==-1)
 		{
@@ -6713,7 +6715,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		break;
 	}	
 
-	return sg->skill_id;
+	return skillid;
 }
 
 /*==========================================
@@ -6728,7 +6730,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	int splash_count=0;
 	struct status_change *tsc, *sc;
 	struct skill_unit_group_tickset *ts;
-	int type;
+	int type, skillid;
 	int diff=0;
 
 	nullpo_retr(0, src);
@@ -6743,6 +6745,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	sc = status_get_sc(ss); //For magic power. 
 	tsc = status_get_sc(bl);
 	type = SkillStatusChangeTable[sg->skill_id];
+	skillid = sg->skill_id;
 
 	if (sg->interval == -1) {
 		switch (sg->unit_id) {
@@ -6765,7 +6768,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		ts->tick = tick+sg->interval;
 		
 		// GX‚Í?d‚È‚Á‚Ä‚¢‚½‚ç3HIT‚µ‚È‚¢
-		if ((sg->skill_id==CR_GRANDCROSS || sg->skill_id==NPC_GRANDDARKNESS) && !battle_config.gx_allhit)
+		if ((skillid==CR_GRANDCROSS || skillid==NPC_GRANDDARKNESS) && !battle_config.gx_allhit)
 			ts->tick += sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,0)-1);
 	}
 	//Temporarily set magic power to have it take effect. [Skotlex]
@@ -6817,7 +6820,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 					sg->val1--;	// ?V‹K‚É“ü‚Á‚½ƒ†ƒjƒbƒg‚¾‚¯ƒJƒEƒ“ƒg
 			}
 			if (sg->val1 <= 0)
-				skill_delunitgroup(sg);
+				skill_delunitgroup(NULL,sg);
 			break;
 		}
 
@@ -6835,8 +6838,8 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		break;
 
 	case UNT_FIREPILLAR_WAITING:
-		skill_delunit(src);
 		skill_unitsetting(ss,sg->skill_id,sg->skill_lv,src->bl.x,src->bl.y,1);
+		skill_delunit(src);
 		break;
 
 	case UNT_FIREPILLAR_ACTIVE:
@@ -7066,13 +7069,13 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			int target = md->target_id;
 			if (ss->type == BL_PC)
 				md->target_id = ss->id;
-			mobskill_use(md, tick, MSC_SKILLUSED|(sg->skill_id << 16));
+			mobskill_use(md, tick, MSC_SKILLUSED|(skillid << 16));
 			md->target_id = target;
 		} else
-			mobskill_use(md, tick, MSC_SKILLUSED|(sg->skill_id << 16));
+			mobskill_use(md, tick, MSC_SKILLUSED|(skillid << 16));
 	}
 
-	return sg->skill_id;
+	return skillid;
 }
 /*==========================================
  * ƒXƒLƒ‹ƒ†ƒjƒbƒg‚©‚ç—£?‚·‚é(‚à‚µ‚­‚Í‚µ‚Ä‚¢‚é)?ê?‡
@@ -7321,7 +7324,7 @@ int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,
 	nullpo_retr(0, sg=src->group);
 
 	if (skill_get_inf2(sg->skill_id)&INF2_TRAP && damage > 0)
-		skill_delunitgroup(sg);
+		skill_delunitgroup(NULL,sg);
 	else 
 	switch(sg->unit_id){
 	case UNT_ICEWALL:
@@ -8926,14 +8929,14 @@ int skill_clear_element_field(struct block_list *bl)
 	nullpo_retr(0, bl);
 	if (!ud) return 0;
 	
-	for (i=0;i<MAX_SKILLUNITGROUP;i++) {
-		switch (ud->skillunit[i].skill_id) {
+	for (i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++) {
+		switch (ud->skillunit[i]->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
 			case SA_VIOLENTGALE:
 			case SA_LANDPROTECTOR:
 			case NJ_SUITON:
-				skill_delunitgroup(&ud->skillunit[i]);
+				skill_delunitgroup(bl, ud->skillunit[i]);
 		}
 	}
 	return 1;
@@ -8950,14 +8953,14 @@ struct skill_unit_group *skill_locate_element_field(struct block_list *bl)
 	nullpo_retr(0, bl);
 	if (!ud) return NULL;
 
-	for (i=0;i<MAX_SKILLUNITGROUP;i++) {
-		switch (ud->skillunit[i].skill_id) {
+	for (i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++) {
+		switch (ud->skillunit[i]->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
 			case SA_VIOLENTGALE:
 			case SA_LANDPROTECTOR:
 			case NJ_SUITON:
-				return &ud->skillunit[i];
+				return ud->skillunit[i];
 		}
 	}
 	return NULL;
@@ -9058,7 +9061,7 @@ int skill_ganbatein(struct block_list *bl, va_list ap )
 	
 	if (unit->group->skill_id == SA_LANDPROTECTOR)
 		skill_delunit(unit);
-	else skill_delunitgroup(unit->group);
+	else skill_delunitgroup(NULL, unit->group);
 
 	return 1;
 }
@@ -9246,7 +9249,7 @@ void skill_stop_dancing(struct block_list *src)
 	}
 
 	if (group)
-		skill_delunitgroup(group);
+		skill_delunitgroup(NULL, group);
 		
 	if (dsd)
 	{
@@ -9348,7 +9351,7 @@ int skill_delunit(struct skill_unit *unit)
 	unit->alive=0;
 	map_delobjectnofree(unit->bl.id);
 	if(--group->alive_count==0)
-		skill_delunitgroup(group);
+		skill_delunitgroup(NULL, group);
 
 	return 0;
 }
@@ -9369,30 +9372,23 @@ struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	nullpo_retr(NULL, src);
 	nullpo_retr(NULL, ud);
 	
-	if(ud->skillunit){
-		for(i=0;i<MAX_SKILLUNITGROUP;i++)	/* ‹ó‚¢‚Ä‚¢‚é‚à‚Ì??õ */
-			if(ud->skillunit[i].group_id==0){
-				group=&ud->skillunit[i];
-				break;
+	for(i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i]; i++);
+	
+	if(i == MAX_SKILLUNITGROUP) {
+		int j=0;
+		unsigned maxdiff=0,x,tick=gettick();
+		for(i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++)
+			if((x=DIFF_TICK(tick,ud->skillunit[i]->tick))>maxdiff){
+				maxdiff=x;
+				j=i;
 			}
-
-		if(group==NULL){	/* ‹ó‚¢‚Ä‚È‚¢‚Ì‚ÅŒÃ‚¢‚à‚Ì??õ */
-			int j=0;
-			unsigned maxdiff=0,x,tick=gettick();
-			for(i=0;i<MAX_SKILLUNITGROUP;i++)
-				if((x=DIFF_TICK(tick,ud->skillunit[i].tick))>maxdiff){
-					maxdiff=x;
-					j=i;
-				}
-			skill_delunitgroup(&ud->skillunit[j]);
-			group=&ud->skillunit[j];
-		}
+		skill_delunitgroup(src, ud->skillunit[j]);
+		//Since elements must have shifted, we use the last slot.
+		i = MAX_SKILLUNITGROUP-1;
 	}
-
-	if(group==NULL){
-		ShowFatalError("skill_initunitgroup: error unit group !\n");
-		exit(1);
-	}
+	if (!ud->skillunit[i])
+		ud->skillunit[i] = ers_alloc(skill_unit_ers, struct skill_unit_group);
+	group=ud->skillunit[i];
 
 	group->src_id=src->id;
 	group->party_id=status_get_party_id(src);
@@ -9439,34 +9435,36 @@ struct skill_unit_group *skill_initunitgroup(struct block_list *src,
  * ƒXƒLƒ‹ƒ†ƒjƒbƒgƒOƒ‹?ƒv?í?œ
  *------------------------------------------
  */
-int skill_delunitgroup(struct skill_unit_group *group)
+int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group)
 {
-	struct block_list *src;
-	int i;
+	struct unit_data *ud;
+	int i,j;
 
 	nullpo_retr(0, group);
 	if(group->unit_count<=0)
 		return 0;
 
-	src=map_id2bl(group->src_id);
-	//ƒ_ƒ“ƒXƒXƒLƒ‹‚Íƒ_ƒ“ƒX?ó‘Ô‚ð‰ð?œ‚·‚é
-	if(src) {
-		if (skill_get_unit_flag(group->skill_id)&UF_DANCE)
+	if (!src) src=map_id2bl(group->src_id);
+	ud = unit_bl2ud(src);	
+	if(!src || !ud) {
+		ShowError("skill_delunitgroup: Group's source not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
+		return 0;	
+	}
+	if (skill_get_unit_flag(group->skill_id)&UF_DANCE)
+	{
+		struct status_change* sc = status_get_sc(src);
+		if (sc && sc->data[SC_DANCING].timer != -1)
 		{
-			struct status_change* sc = status_get_sc(src);
-			if (sc && sc->data[SC_DANCING].timer != -1)
-			{
-				sc->data[SC_DANCING].val2 = 0 ; //This prevents status_change_end attempting to redelete the group. [Skotlex]
-				status_change_end(src,SC_DANCING,-1);
-			}
+			sc->data[SC_DANCING].val2 = 0 ; //This prevents status_change_end attempting to redelete the group. [Skotlex]
+			status_change_end(src,SC_DANCING,-1);
 		}
+	}
 
-		if (group->unit_id == UNT_GOSPEL) { //Clear Gospel [Skotlex]
-			struct status_change *sc = status_get_sc(src);
-			if(sc && sc->data[SC_GOSPEL].timer != -1) {
-				sc->data[SC_GOSPEL].val3 = 0; //Remove reference to this group. [Skotlex]
-				status_change_end(src,SC_GOSPEL,-1);
-			}
+	if (group->unit_id == UNT_GOSPEL) { //Clear Gospel [Skotlex]
+		struct status_change *sc = status_get_sc(src);
+		if(sc && sc->data[SC_GOSPEL].timer != -1) {
+			sc->data[SC_GOSPEL].val3 = 0; //Remove reference to this group. [Skotlex]
+			status_change_end(src,SC_GOSPEL,-1);
 		}
 	}
 
@@ -9484,10 +9482,20 @@ int skill_delunitgroup(struct skill_unit_group *group)
 
 	map_freeblock((struct block_list*)group->unit);	/* aFree()‚Ì‘Ö‚í‚è */
 	group->unit=NULL;
-	group->src_id=0;
 	group->group_id=0;
 	group->unit_count=0;
-	return 0;
+
+	//Locate and clear this unit from the array.
+	for (i=0; i<MAX_SKILLUNITGROUP && ud->skillunit[i]!=group; i++);
+	for (j=i; j<MAX_SKILLUNITGROUP && ud->skillunit[j]; j++);
+	j--;
+	if (i<MAX_SKILLUNITGROUP) {
+		ud->skillunit[i] = ud->skillunit[j];
+		ud->skillunit[j] = NULL;
+		ers_free(skill_unit_ers, group);
+	} else
+		ShowError("skill_delunitgroup: Group not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
+	return 1;
 }
 
 /*==========================================
@@ -9497,16 +9505,11 @@ int skill_delunitgroup(struct skill_unit_group *group)
 int skill_clear_unitgroup(struct block_list *src)
 {
 	struct unit_data *ud = unit_bl2ud(src);
-	int i;
 
-	nullpo_retr(0, src);
 	nullpo_retr(0, ud);
 
-	if(!ud) return 0;
-
-	for(i=0;i<MAX_SKILLUNITGROUP;i++)
-		if(ud->skillunit[i].group_id>0 && ud->skillunit[i].src_id == src->id)
-			skill_delunitgroup(&ud->skillunit[i]);
+	while (ud->skillunit[0])
+		skill_delunitgroup(src, ud->skillunit[0]);
 	return 1;
 }
 
@@ -9744,6 +9747,7 @@ int skill_unit_move_sub( struct block_list *bl, va_list ap )
 	}
 	if (flag&4)
 		skill_unit_onleft(skill_id,target,tick);
+
 	return 1;
 }
 
@@ -11060,7 +11064,9 @@ void skill_reload(void)
 int do_init_skill(void)
 {
 	skill_readdb();
-
+	
+	skill_unit_ers = ers_new((uint32)sizeof(struct skill_unit_group));
+	
 	if (battle_config.skill_sp_override_grffile)
 		skill_read_skillspamount();
 
@@ -11072,5 +11078,10 @@ int do_init_skill(void)
 	
 	add_timer_interval(gettick()+SKILLUNITTIMER_INVERVAL,skill_unit_timer,0,0,SKILLUNITTIMER_INVERVAL);
 
+	return 0;
+}
+
+int do_final_skill(void) {
+	ers_destroy(skill_unit_ers);
 	return 0;
 }

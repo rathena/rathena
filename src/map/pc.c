@@ -4679,7 +4679,7 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	{	//Remove Gospel [Skotlex]
 		struct skill_unit_group *sg = (struct skill_unit_group *)sd->sc.data[SC_GOSPEL].val3;
 		if (sg)
-			skill_delunitgroup(sg);
+			skill_delunitgroup(&sd->bl, sg);
 	}
 	clif_clearchar_area(&sd->bl,1);
 

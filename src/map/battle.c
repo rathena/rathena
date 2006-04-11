@@ -223,7 +223,7 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 			sc->data[SC_GRAVITATION].val3 == BCT_SELF) {
 			struct skill_unit_group *sg = (struct skill_unit_group *)sc->data[SC_GRAVITATION].val4;
 			if (sg) {
-				skill_delunitgroup(sg);
+				skill_delunitgroup(target,sg);
 				sc->data[SC_GRAVITATION].val4 = 0;
 				status_change_end(target, SC_GRAVITATION, -1);
 			}
@@ -404,7 +404,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			struct skill_unit_group *group = (struct skill_unit_group *)sc->data[SC_SAFETYWALL].val3;
 			if (group) {
 				if (--group->val2<=0)
-					skill_delunitgroup(group);
+					skill_delunitgroup(NULL,group);
 				return 0;
 			} else {
 				status_change_end(bl,SC_SAFETYWALL,-1);

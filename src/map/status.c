@@ -5021,7 +5021,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					struct status_change *dsc;
 					if(sc->data[type].val2)
 					{
-						skill_delunitgroup((struct skill_unit_group *)sc->data[type].val2);
+						skill_delunitgroup(bl, (struct skill_unit_group *)sc->data[type].val2);
 						sc->data[type].val2 = 0;
 					}
 					if(sc->data[type].val4 && sc->data[type].val4 != BCT_SELF && (dsd=map_id2sd(sc->data[type].val4))){
@@ -5131,7 +5131,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				else if (sc->data[type].val3) { //Clear the group.
 					struct skill_unit_group *group = (struct skill_unit_group *)sc->data[type].val3;
 					sc->data[type].val3 = 0;
-					skill_delunitgroup(group);
+					skill_delunitgroup(bl, group);
 				}
 				break;
 			case SC_HERMODE: 
