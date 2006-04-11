@@ -3418,8 +3418,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					if (!bl) bl = src;
 					unit_skilluse_id(src, bl->id, abra_skillid, abra_skilllv); 
 				} else {	//Assume offensive skills
-					if (ud->attacktarget)
-						target_id = ud->attacktarget;
+					if (ud->target)
+						target_id = ud->target;
 					else switch (src->type) {
 						case BL_MOB:
 							target_id = ((TBL_MOB*)src)->target_id;

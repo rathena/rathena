@@ -69,7 +69,7 @@ static int battle_gettargeted_sub(struct block_list *bl, va_list ap)
 	ud = unit_bl2ud(bl);
 	if (!ud) return 0;
 
-	if (ud->attacktarget == target_id || ud->skilltarget == target_id) {
+	if (ud->target == target_id || ud->skilltarget == target_id) {
 		bl_list[(*c)++] = bl;
 		return 1;
 	}
@@ -96,7 +96,7 @@ int battle_gettarget(struct block_list *bl)
 	switch (bl->type)
 	{
 		case BL_PC:
-			return ((struct map_session_data*)bl)->ud.attacktarget;
+			return ((struct map_session_data*)bl)->ud.target;
 		case BL_MOB:
 			return ((struct mob_data*)bl)->target_id;
 		case BL_PET:

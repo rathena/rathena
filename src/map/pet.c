@@ -123,7 +123,7 @@ int pet_unlocktarget(struct pet_data *pd)
 
 	pd->target_id=0;
 	pet_stop_attack(pd);
-	pd->ud.attacktarget = pd->ud.walktarget = 0;
+	pet_stop_walking(pd,1);
 	return 0;
 }
 
@@ -960,7 +960,7 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 		//Master too far, chase.
 		if(pd->target_id)
 			pet_unlocktarget(pd);
-		if(pd->ud.walktimer != -1 && pd->ud.walktarget == sd->bl.id)
+		if(pd->ud.walktimer != -1 && pd->ud.target == sd->bl.id)
 			return 0; //Already walking to him
 		
 		pd->speed = (sd->speed>>1);
@@ -1007,36 +1007,28 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 		return 0;
 	}
 	
+	if(pd->ud.target == target->id &&
+		(pd->ud.attacktimer != -1 || pd->ud.walktimer != -1))
+		return 0; //Target already locked.
+
 	if (target->type != BL_ITEM) 
 	{ //enemy targetted
 		if(!battle_check_range(&pd->bl,target,pd->db->range))
 		{	//Chase
-			if(pd->ud.walktimer != -1 && check_distance_blxy(target, pd->ud.to_x,pd->ud.to_y, pd->db->range))
-				return 0;
-			
 			if(!unit_walktobl(&pd->bl, target, pd->db->range, 2))
-			{	//Unreachable target.
-				pet_unlocktarget(pd);
-			}
+				pet_unlocktarget(pd); //Unreachable target.
 			return 0;
-		}	//End Chase
-		pet_stop_walking(pd,1);
-		if (pd->ud.attacktimer != -1 && pd->ud.attacktarget == pd->target_id)
-			return 0;	//Already attacking.
+		}
 		//Continuous attack.
 		unit_attack(&pd->bl, pd->target_id, 1);
 	} else {	//Item Targeted, attempt loot
 		if (!check_distance_bl(&pd->bl, target, 1))
 		{	//Out of range
-			if(pd->ud.walktimer != -1 && pd->ud.walktarget == pd->target_id)
-				return 0;
-
 			if(!unit_walktobl(&pd->bl, target, 0, 1)) //Unreachable target.
 				pet_unlocktarget(pd);
 			return 0;
-		} else{	// ƒAƒCƒeƒ€‚Ü‚Å‚½‚Ç‚è’…‚¢‚½
+		} else{
 			struct flooritem_data *fitem = (struct flooritem_data *)target;
-			pet_stop_walking(pd,1);
 			if(pd->loot->count < pd->loot->max){
 				memcpy(&pd->loot->item[pd->loot->count++],&fitem->item_data,sizeof(pd->loot->item[0]));
 				pd->loot->weight += itemdb_search(fitem->item_data.nameid)->weight*fitem->item_data.amount;

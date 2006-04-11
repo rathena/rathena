@@ -357,9 +357,8 @@ struct unit_data {
 	short skillid,skilllv;
 	int   skilltarget;
 	int   skilltimer;
-	int   attacktarget;
+	int   target;
 	int   attacktimer;
-	int	walktarget;
 	int   walktimer;
 	int	chaserange;
 	unsigned int attackabletime;

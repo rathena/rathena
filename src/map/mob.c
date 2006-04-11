@@ -935,8 +935,8 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		
 		if (ud) {
 			struct block_list *tbl=NULL;
-			if (ud->attacktarget && ud->attacktimer != -1)
-				tbl=map_id2bl(ud->attacktarget);
+			if (ud->target && ud->attacktimer != -1)
+				tbl=map_id2bl(ud->target);
 			else if (ud->skilltarget) {
 				tbl = map_id2bl(ud->skilltarget);
 				//Required check as skilltarget is not always an enemy. [Skotlex]
@@ -967,7 +967,6 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 	md->state.skillstate=MSS_IDLE;
 	md->next_walktime=tick+rand()%3000+3000;
 	mob_stop_attack(md);
-	md->ud.attacktarget = md->ud.walktarget = 0;
 	return 0;
 }
 /*==========================================
@@ -1068,7 +1067,9 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	{	//Check validity of current target. [Skotlex]
 		tbl = map_id2bl(md->target_id);
 		if (!tbl || tbl->m != md->bl.m ||
-			(md->ud.attacktimer == -1 && !status_check_skilluse(&md->bl, tbl, 0, 0)) || (
+			(md->ud.attacktimer == -1 && !status_check_skilluse(&md->bl, tbl, 0, 0)) ||
+			(md->ud.walktimer != -1 && !check_distance_bl(&md->bl, tbl, md->min_chase)) ||
+			(
 				tbl->type == BL_PC && !(mode&MD_BOSS) &&
 				((struct map_session_data*)tbl)->state.gangsterparadise
 		)) {	//Unlock current target.
@@ -1137,9 +1138,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		md->attacked_id = 0;
 	}
 	
-	if (md->ud.attacktimer != -1 && tbl && md->ud.attacktarget == tbl->id)
-		return 0; //Already attacking the current target.
-
 	// Processing of slave monster, is it needed when there's a target to deal with?
 	if (md->master_id > 0 && !tbl)
 		mob_ai_sub_hard_slavemob(md, tick);
@@ -1167,47 +1165,48 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		if (tbl->type != BL_ITEM)
 		{	//Attempt to attack.
 			//At this point we know the target is attackable, we just gotta check if the range matches.
-
+			if (md->ud.target == tbl->id && md->ud.attacktimer != -1)
+				return 0; //Already locked.
+			
 			if (!battle_check_range (&md->bl, tbl, md->db->range))
 			{	//Out of range...
-				mob_stop_attack(md);
 				if (!(mode&MD_CANMOVE))
 				{	//Can't chase. Attempt to use a ranged skill at least?
 					mobskill_use(md, tick, MSC_LONGRANGEATTACKED);
 					mob_unlocktarget(md,tick);
 					return 0;
 				}
-				//Follow up
-				if (!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH))
-				{	//Give up.
-					mob_unlocktarget(md,tick);
-					return 0;
-				}
 				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
-				if (md->ud.walktimer != -1 && md->ud.walktarget == tbl->id &&
+				if (md->ud.walktimer != -1 && md->ud.target == tbl->id &&
 					(
 						!battle_config.mob_ai&1 ||
 						check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->db->range)
 				)) //Current target tile is still within attack range.
 					return 0;
-				//Target reachable. Locate suitable spot to move to.
-				unit_walktobl(&md->bl, tbl, md->db->range, 2|(!battle_config.mob_ai&1));
+
+				//Follow up
+				if (!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) ||
+					!unit_walktobl(&md->bl, tbl, md->db->range, 2|(!battle_config.mob_ai&1)))
+					//Give up.
+					mob_unlocktarget(md,tick);
 				return 0;
 			}
 			//Target within range, engage
-			mob_stop_walking(md,1);
 			md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
 			unit_attack(&md->bl,tbl->id,1);
 			return 0;
 		} else {	//Target is BL_ITEM, attempt loot.
 			struct flooritem_data *fitem;
 			int i;	
+			if (md->ud.target == tbl->id && md->ud.walktimer != -1)
+				return 0; //Already locked.
 			if (md->lootitem == NULL)
 			{	//Can't loot...
 				mob_unlocktarget (md, tick);
 				mob_stop_walking(md,0);
 				return 0;
 			}
+
 			if (!check_distance_bl(&md->bl, tbl, 1))
 			{	//Still not within loot range.
 				if (!(mode&MD_CANMOVE))
@@ -1218,9 +1217,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				if (!can_move)	// 動けない状態にある
 					return 0;
 				md->state.skillstate = MSS_LOOT;	// ルート時スキル使用
-				if (md->ud.walktimer != -1 && md->ud.walktarget == tbl->id)
-					//Already on the way to looting.
-					return 0;
 				if (!unit_walktobl(&md->bl, tbl, 0, 1))
 					mob_unlocktarget(md, tick); //Can't loot...
 				return 0;
@@ -1228,7 +1224,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			//Within looting range.
 			if (md->ud.attacktimer != -1)
 				return 0; //Busy attacking?
-			mob_stop_walking(md,0);
 
 			fitem = (struct flooritem_data *)tbl;
 			if (md->lootitem_count < LOOTITEM_SIZE) {

@@ -10405,8 +10405,8 @@ int buildin_mobassist(struct script_state *st) {
 			ud = unit_bl2ud(bl);
 			md->master_id = bl->id;
 			if (ud) {
-				if (ud->attacktarget)
-					md->target_id = ud->attacktarget;
+				if (ud->target)
+					md->target_id = ud->target;
 				else if (ud->skilltarget)
 					md->target_id = ud->skilltarget;
 				md->min_chase = distance_bl(&md->bl,map_id2bl(md->target_id)) + md->db->range2;
