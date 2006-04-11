@@ -58,9 +58,10 @@ int unit_walktoxy_sub(struct block_list *bl)
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 	
 	if (ud->target && ud->chaserange >0) {
-		//Trim the last part of the path to account for range.
-		for (i = ud->chaserange*10; i > 0 && ud->walkpath.path_len>0;) {
-			int dir;
+		int dir;
+		//Trim the last part of the path to account for range,
+		//but always move at least one cell when requested to move.
+		for (i = ud->chaserange*10; i > 0 && ud->walkpath.path_len>1;) {
 		   ud->walkpath.path_len--;
 			dir = ud->walkpath.path[ud->walkpath.path_len];
 			if(dir&1)
@@ -69,12 +70,6 @@ int unit_walktoxy_sub(struct block_list *bl)
 				i-=10;
 			ud->to_x -= dirx[dir];
 			ud->to_y -= diry[dir];
-		}
-		if (!ud->walkpath.path_len) {
-			//Already within requested range.
-			if (ud->target && ud->state.attack_continue)
-				unit_attack(bl, ud->target, 1);
-			return 0;
 		}
 	}
 
@@ -314,7 +309,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 
 	ud->state.walk_easy = flag&1;
 	ud->target = tbl->id;
-	ud->chaserange = range;
+	ud->chaserange = range; //Note that if flag&2, this SHOULD be attack-range
 	ud->state.attack_continue = flag&2?1:0; //Chase to attack.
 
 	sc = status_get_sc(bl);
