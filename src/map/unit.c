@@ -46,7 +46,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 {
 	int i;
 	struct walkpath_data wpd;
-	struct unit_data        *ud = NULL;
+	struct unit_data *ud = NULL;
 
 	nullpo_retr(1, bl);
 	ud = unit_bl2ud(bl);
@@ -56,6 +56,17 @@ int unit_walktoxy_sub(struct block_list *bl)
 		return 0;
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
+	
+	if (ud->walktarget && ud->chaserange >0) {
+		//Trim the last part of the path to account for range.
+		for (i = 1; i <= ud->chaserange && ud->walkpath.path_len>0; i++) {
+			int dir;
+		   ud->walkpath.path_len--;
+			dir = ud->walkpath.path[ud->walkpath.path_len];
+			ud->to_x -= dirx[dir];
+			ud->to_y -= diry[dir];
+		}
+	}
 
 	ud->state.change_walk_target=0;
 
@@ -175,7 +186,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			if (
 				(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
 				sd->sc.data[SC_MIRACLE].timer==-1 &&
-				!ud->walkpath.path_pos%WALK_SKILL_INTERVAL &&
+				ud->walkpath.path_pos && ud->walkpath.path_pos%WALK_SKILL_INTERVAL == 0 &&
 				rand()%10000 < battle_config.sg_miracle_skill_ratio
 			) {	//SG_MIRACLE [Komurka]
 				clif_displaymessage(sd->fd,"[Miracle of the Sun, Moon and Stars]");
@@ -184,7 +195,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		} else if (md) {
 			if (ud->attacktarget) {
 				if(md->min_chase > md->db->range2) md->min_chase--;
-				if(!ud->walkpath.path_pos%WALK_SKILL_INTERVAL &&
+				if(ud->walkpath.path_pos && ud->walkpath.path_pos%WALK_SKILL_INTERVAL == 0 &&
 					mobskill_use(md, tick, -1))
 					return 0;
 			}
@@ -283,7 +294,6 @@ static int unit_walktobl_sub(int tid,unsigned int tick,int id,int data)
 int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int flag) {
 	struct unit_data        *ud = NULL;
 	struct status_change		*sc = NULL;
-	int i;
 	nullpo_retr(0, bl);
 	nullpo_retr(0, tbl);
 	
@@ -293,8 +303,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 	if (!(status_get_mode(bl)&MD_CANMOVE))
 		return 0;
 	
-	i = distance_bl(bl, tbl)+1;
-	if (!unit_can_reach_bl(bl, tbl, i, flag&1, &ud->to_x, &ud->to_y)) {
+	if (!unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, flag&1, &ud->to_x, &ud->to_y)) {
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 		return 0;
@@ -304,23 +313,6 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 	ud->walktarget	= tbl->id;
 	ud->chaserange = range;
 
-	if (range) {
-		//Adjust target cell 
-		if (i < range) {
-			//We are already within required distance!
-			if (flag&2) //Attack
-				unit_attack(bl, tbl->id, 1);
-			return 1;
-		}
-		//Trim the last part of the path to account for range.
-		for (i = 1; i <= range && ud->walkpath.path_len>0; i++) {
-			int dir;
-		   ud->walkpath.path_len--;
-			dir = ud->walkpath.path[ud->walkpath.path_len];
-			ud->to_x -= dirx[dir];
-			ud->to_y -= diry[dir];
-		}
-	}
 	sc = status_get_sc(bl);
 	if (sc && sc->count && sc->data[SC_CONFUSION].timer != -1) //Randomize the target position
 		map_random_dir(bl, &ud->to_x, &ud->to_y);
@@ -625,7 +617,6 @@ int unit_can_move(struct block_list *bl)
 	return 1;
 }
 
-
 /*==========================================
  * Applies walk delay to character, considering that 
  * if type is 0, this is a damage induced delay: if previous delay is active, do not change it.
@@ -648,6 +639,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	if (ud->walktimer != -1)
 	{	//Stop walking, if chasing, readjust timers.
 		delete_timer(ud->walktimer, unit_walktoxy_timer);
+		ud->walktimer = -1;
 		clif_fixpos(bl);
 		if(ud->walktarget)
 			add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->walktarget);
@@ -1055,7 +1047,6 @@ int unit_stop_attack(struct block_list *bl)
 
 	delete_timer( ud->attacktimer, unit_attack_timer );
 	ud->attacktimer = -1;
-	ud->state.attack_continue = 0;
 	return 0;
 }
 

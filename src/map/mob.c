@@ -967,6 +967,7 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 	md->state.skillstate=MSS_IDLE;
 	md->next_walktime=tick+rand()%3000+3000;
 	mob_stop_attack(md);
+	md->ud.attacktarget = md->ud.walktarget = 0;
 	return 0;
 }
 /*==========================================
@@ -1182,8 +1183,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					mob_unlocktarget(md,tick);
 					return 0;
 				}
-				if (!can_move) //Wait until you can move?
-					return 0;
 				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
 				if (md->ud.walktimer != -1 && md->ud.walktarget == tbl->id &&
 					(
@@ -1192,7 +1191,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				)) //Current target tile is still within attack range.
 					return 0;
 				//Target reachable. Locate suitable spot to move to.
-				unit_walktobl(&md->bl, tbl, md->db->range, !battle_config.mob_ai&1);
+				unit_walktobl(&md->bl, tbl, md->db->range, 2|(!battle_config.mob_ai&1));
 				return 0;
 			}
 			//Target within range, engage

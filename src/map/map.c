@@ -3659,6 +3659,7 @@ void do_final(void) {
 	do_final_pet();
 	do_final_mob();
 	do_final_msg();
+	do_final_unit();
 	if(use_irc)
 		do_final_irc();
 
@@ -3892,6 +3893,7 @@ int do_init(int argc, char *argv[]) {
 	do_init_skill();
 	do_init_pet();
 	do_init_npc();
+	do_init_unit();
 #ifndef TXT_ONLY /* mail system [Valaris] */
 	if(mail_server_enable)
 		do_init_mail();

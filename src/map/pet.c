@@ -123,6 +123,7 @@ int pet_unlocktarget(struct pet_data *pd)
 
 	pd->target_id=0;
 	pet_stop_attack(pd);
+	pd->ud.attacktarget = pd->ud.walktarget = 0;
 	return 0;
 }
 
