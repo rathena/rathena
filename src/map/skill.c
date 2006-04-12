@@ -6740,7 +6740,6 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	struct skill_unit_group *sg;
 	struct block_list *ss;
 	struct map_session_data *sd = NULL;
-	int splash_count=0;
 	struct status_change *tsc, *sc;
 	struct skill_unit_group_tickset *ts;
 	int type, skillid;
@@ -6915,12 +6914,13 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	case UNT_FLASHER:
 	case UNT_FREEZINGTRAP:
 	case UNT_CLAYMORETRAP:
-		map_foreachinrange(skill_count_target,&src->bl,
-			skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
-			&src->bl,&splash_count);
+// This ain't used anymore....
+//		map_foreachinrange(skill_count_target,&src->bl,
+//			skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
+//			&src->bl,&splash_count);
 		map_foreachinrange(skill_trap_splash,&src->bl,
 			skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
-			&src->bl,tick,splash_count);
+			&src->bl,tick);
 		sg->unit_id = UNT_USED_TRAPS;
 		clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 		sg->limit=DIFF_TICK(tick,sg->tick)+1500;
@@ -9107,26 +9107,16 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 {
 	struct block_list *src;
 	int tick;
-	int splash_count;
 	struct skill_unit *unit;
 	struct skill_unit_group *sg;
 	struct block_list *ss;
-	int i;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, src = va_arg(ap,struct block_list *));
-	nullpo_retr(0, unit = (struct skill_unit *)src);
-	nullpo_retr(0, sg = unit->group);
-//	nullpo_retr(0, ss = map_id2bl(sg->src_id));
-	if ((ss = map_id2bl(sg->src_id)) == NULL)
-	{	//Temporal debug until this case is solved. [Skotlex]
-		ShowDebug("skill_trap_splash: Trap's source (id: %d) not found!\n", sg->src_id);
-		return 0;
-	}
-
+	src = va_arg(ap,struct block_list *);
+	unit = (struct skill_unit *)src;
 	tick = va_arg(ap,int);
-	splash_count = va_arg(ap,int);
+	
+	nullpo_retr(0, sg = unit->group);
+	nullpo_retr(0, ss = map_id2bl(sg->src_id));
 
 	if(battle_check_target(src,bl,BCT_ENEMY) > 0){
 		switch(sg->unit_id){
@@ -9137,14 +9127,10 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 				break;
 			case UNT_BLASTMINE:
 			case UNT_CLAYMORETRAP:
-				for(i=0;i<splash_count;i++){
-					skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,(sg->val2)?0x0500:0);
-				}
+				skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
 				break;
 			case UNT_FREEZINGTRAP:
-					skill_attack(BF_WEAPON,	ss,src,bl,sg->skill_id,sg->skill_lv,tick,(sg->val2)?0x0500:0);
-				break;
-			default:
+				skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
 				break;
 		}
 	}

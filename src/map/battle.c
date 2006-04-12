@@ -1144,11 +1144,6 @@ static struct Damage battle_calc_weapon_attack(
 			case KN_AUTOCOUNTER:
 				wd.flag=(wd.flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
-
-			//Until they're at right position - gs_arrow- [Vicious]
-			case GS_RAPIDSHOWER:
-				wd.div_= 5;
-				break;
 		}
 	}
 
@@ -1284,6 +1279,7 @@ static struct Damage battle_calc_weapon_attack(
 						break;
 				case NPC_GUIDEDATTACK:
 				case RG_BACKSTAP:
+				case HT_FREEZINGTRAP:
 				case AM_ACIDTERROR:
 				case MO_INVESTIGATE:
 				case MO_EXTREMITYFIST:
@@ -1524,6 +1520,9 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case AC_CHARGEARROW:
 					skillratio += 50;
+					break;
+				case HT_FREEZINGTRAP:
+					skillratio += -50+10*skill_lv;
 					break;
 				case KN_PIERCE:
 					skillratio += 10*skill_lv;
@@ -2853,7 +2852,7 @@ struct Damage  battle_calc_misc_attack(
 		if( sd==NULL || (skill = pc_checkskill(sd,HT_STEELCROW)) <= 0)
 			skill=0;
 
-			//Blitz Beat lv5 Damage
+		//Blitz Beat lv5 Damage
 		damage=(dex/10+int_/2+skill*3+40)*2;
 		skill = skill_get_num(HT_BLITZBEAT, 5);
 		damage_div_fix(damage, skill); 
