@@ -28,6 +28,9 @@ Nexon
 Date		Added
 ======
 04/12
+	* Fixed Bio Lab spawns to official jRO [Playtester]
+	- Also included custom spawns for Bio Labs
+	  (Floor 1 can't be accessed directly so it should be harder)
 	* Added some Kiel building warps thanks to Celestria [Playtester]
 	* Implemented the Juperos quest partially. [MasterOfMuppets]
 	- Also fixed the spawns there and in biolabs a bit.
