@@ -4,13 +4,13 @@
 //= Athena (1.0)
 //= Nana (1.1)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
 //= Warp Points for Amatsu
 //===== Additional Comments: =================================
-//= No Comments!
+//= 1.3 Fixed a warp-back [erKURITA]
 //============================================================
 
 //= Amatsu ===================================================
@@ -50,4 +50,4 @@ amatsu.gat,52,148,0	warp	warp1994	1,1,ama_in01.gat,88,97
 amatsu.gat,85,235,0	warp	warp1972	1,1,ama_in02.gat,224,45
 //removed
 //amatsu.gat,95,148,0	warp	warp1990	1,1,ama_in01.gat,88,97
-amatsu.gat,96,118,0	warp	warp1962	1,1,ama_in01.gat,31,23
+amatsu.gat,96,117,0	warp	warp1962	1,1,ama_in01.gat,29,23

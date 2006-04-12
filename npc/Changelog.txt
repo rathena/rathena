@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/12
+	* Fixed a few warps warping you back (they've been there for long =X). [erKURITA]
 	* Corrected some errors in cities/hugel.txt and guides/guides_hu.txt
 	  [Foruken]
 04/11

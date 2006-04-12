@@ -21,9 +21,10 @@
 //= 1.6 Updated entrances, added Cube room warps, thanx 2 Justin84
 //= 1.6a Disabled the "Entrance" to lhz_dun01 [Poki#3]
 //= 1.6b Updated Sewer Pipe [Vicious]
+//= 1.7 Fixed a warp-back
 //============================================================
 
-lhz_dun03.gat,140,139,0	warp	lhz003	1,1,lhz_dun02.gat,150,147
+lhz_dun03.gat,140,139,0	warp	lhz003	1,1,lhz_dun02.gat,150,145
 lhz_dun02.gat,18,150,0	warp	lhz004	1,1,lhz_dun01.gat,18,148
 lhz_dun01.gat,18,146,0	warp	lhz004a	1,1,lhz_dun02.gat,18,148
 lhz_dun02.gat,282,155,0	warp	lhz005	1,1,lhz_dun01.gat,281,152
