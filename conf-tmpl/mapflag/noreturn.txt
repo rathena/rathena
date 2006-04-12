@@ -176,7 +176,7 @@ pvp_y_room.gat	mapflag	noreturn
 //pvp_y_8-3.gat	mapflag	noreturn
 //pvp_y_8-4.gat	mapflag	noreturn
 //pvp_y_8-5.gat	mapflag	noreturn
-//pvp_n_room.gat	mapflag	noreturn
+pvp_n_room.gat	mapflag	noreturn
 //pvp_n_1-1.gat	mapflag	noreturn
 //pvp_n_1-2.gat	mapflag	noreturn
 //pvp_n_1-3.gat	mapflag	noreturn

@@ -27,6 +27,7 @@
 
 =========================
 04/11
+	* Corrected some items bonus, weight. Thanks 2 Haplo [Lupus]
 	* Modified Mastela Fruit price to 8500, according to RockmanEXE. [erKURITA]
 	* Modified Goggles and Goggles_ price to... 20z, according to RockmanEXE. [erKURITA]
 	* Made Anopheles aggressive [erKURITA]

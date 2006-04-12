@@ -87,7 +87,7 @@
 583,Ketupat_,Ketupat,0,,10,150,,,,,0x000FDFFF,7,2,,,,,,{}
 584,Skewer_Soup,Skewer Soup,0,50,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; }
 585,Brusti,Brusti,0,15,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,20),0; itemskill 74,3,"Magnificat"; }
-586,Mother's_Cake,Mother's Cake,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,404),0; }
+586,Mother's_Cake,Mother's Cake,0,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,404),0; }
 // Usable Items
 //===================================================================
 601,Fly_Wing,Fly Wing,2,60,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "Random",0,0; }
@@ -1132,7 +1132,7 @@
 2666,Lamp_of_Hope,Lamp of Hope,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bStr,2; bonus2 bResEff,Eff_Blind,10; }
 2667,Glove_of_Archer,Gloves of Archer,5,,10,300,,0,,0,0xFFFFFFFF,7,2,136,,60,0,0,{ bonus bHit,5; bonus bCritical,5; bonus bDex,1; }
 2668,Woman_Glory,Woman Glory,5,,10,1500,,1,,0,0xFFFFFFFF,7,2,136,,94,0,0,{}
-2669,RJC_Necklace,RJC Necklace,5,,10,10,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{}
+2669,RJC_Necklace,RJC Necklace,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxSP,10; }
 // Cards
 //===================================================================
 4001,Poring_Card,Poring Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bFlee2,1; }
@@ -1611,7 +1611,7 @@
 5142,Crescent_Helm,Crescent Helm,5,,10,3000,,8,,0,0x000444A2,7,2,768,,50,1,213,{ bonus bVit,1; bonus2 bSubRace,RC_DemiHuman,5; }
 5143,Kabuki_Mask,Kabuki Mask,5,,10,1000,,5,,1,0xFFFFFFFE,7,2,769,,10,1,214,{ bonus2 bResEff,EFf_Silence,3000; }
 5144,Gamble_Hat,Gambler Hat,5,,10,200,,2,,0,0xFFFFFFFF,7,2,256,,0,1,16,{ bonus bLuk,5; }
-5145,Carnival_Jester,Carnival Jester,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,89,{}
+5145,Carnival_Jester,Carnival Jester,5,,10,100,,,,0,0xFFFFFFFF,7,2,256,,0,1,89,{}
 5146,Elephant_Hat,Elephant Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{ bonus bVit,1; bonus2 bSubRace,2,7; skill 86,1; }
 5147,Baseball_Hat,Baseball Hat,5,,10,1,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{}
 // More Etc Items
@@ -2152,15 +2152,15 @@
 7535,Kunlun_Album,Gonryun Album,3,,10,10,,,,,,,,,,,,,{}
 7536,Louyang_Album,Louyang Album,3,,10,10,,,,,,,,,,,,,{}
 7537,Ayothaya_Album,AyothayacAlbum,3,,10,10,,,,,,,,,,,,,{}
-7538,Sand_For_Work,Sand For Work,3,,10,10,,,,,,,,,,,,,{}
-7539,Poring_Coin,Poring Coin,3,,10,10,,,,,,,,,,,,,{}
-7540,No39_Ball,Ball 39,3,,10,10,,,,,,,,,,,,,{}
-7541,No40_Ball,Ball 40,3,,10,10,,,,,,,,,,,,,{}
-7542,No41_Ball,Ball 41,3,,10,10,,,,,,,,,,,,,{}
-7543,No42_Ball,Ball 42,3,,10,10,,,,,,,,,,,,,{}
-7544,No43_Ball,Ball 43,3,,10,10,,,,,,,,,,,,,{}
-7545,No44_Ball,Ball 44,3,,10,10,,,,,,,,,,,,,{}
-7546,No45_Ball,Ball 45,3,,10,10,,,,,,,,,,,,,{}
+7538,Sand_For_Work,Sand For Work,3,,10,0,,,,,,,,,,,,,{}
+7539,Poring_Coin,Poring Coin,3,,10,0,,,,,,,,,,,,,{}
+7540,Number_39_Ball,Number 39 Ball,3,,10,10,,,,,,,,,,,,,{}
+7541,Number_40_Ball,Number 40 Ball,3,,10,10,,,,,,,,,,,,,{}
+7542,Number_41_Ball,Number 41 Ball,3,,10,10,,,,,,,,,,,,,{}
+7543,Number_42_Ball,Number 42 Ball,3,,10,10,,,,,,,,,,,,,{}
+7544,Number_43_Ball,Number 43 Ball,3,,10,10,,,,,,,,,,,,,{}
+7545,Number_44_Ball,Number 44 Ball,3,,10,10,,,,,,,,,,,,,{}
+7546,Number_45_Ball,Number 45 Ball,3,,10,10,,,,,,,,,,,,,{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{}

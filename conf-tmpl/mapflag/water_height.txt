@@ -141,7 +141,7 @@ pvp_y_8-1.gat	prontera.rsw
 pvp_y_8-2.gat	izlude.rsw
 pvp_y_8-3.gat	payon.rsw
 pvp_y_8-4.gat	alberta.rsw
-pvp_y_8-5.gat	morocc.gat		
+pvp_y_8-5.gat	morocc.rsw
 pvp_y_room.gat	pvp_room.rsw
 pvp_c_room.gat	pvp_room.rsw
 pvp_n_room.gat	pvp_room.rsw
