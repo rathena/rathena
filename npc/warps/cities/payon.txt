@@ -25,7 +25,7 @@ payon.gat,16,142,0		warp	payonwarp001	1,1,pay_gld.gat,370,149
 pay_gld.gat,374,149,0		warp	payonwarp002	1,1,payon.gat,20,142
 payon.gat,122,27,0		warp	payonwarp003	5,3,pay_fild01.gat,333,356
 pay_fild01.gat,333,360,0	warp	payonwarp004	5,3,payon.gat,122,31
-payon.gat,267,90,0		warp	payonwarp005	2,4,pay_fild08.gat,20,74
+payon.gat,267,89,0		warp	payonwarp005	2,4,pay_fild08.gat,20,74
 payon.gat,228,330,0		warp	payonwarp007	4,2,pay_arche.gat,81,22
 pay_arche.gat,81,18,0		warp	payonwarp008	5,2,payon.gat,228,326
 
@@ -58,8 +58,8 @@ payon.gat,151,127,0		warp	payonwarp028	2,2,payon_in01.gat,56,53
 payon_in01.gat,56,50,0		warp	payonwarp029	2,2,payon.gat,151,124
 
 // -- Middle Castle --
-payon.gat,156,247,0		warp	payonwarp030	4,1,payon_in03.gat,98,116
-payon_in03.gat,98,114,0		warp	payonwarp031	5,1,payon.gat,156,245
+payon.gat,152,248,0		warp	payonwarp030	4,1,payon_in03.gat,95,112
+payon_in03.gat,97,114,0		warp	payonwarp031	5,1,payon.gat,154,245
 payon_in03.gat,90,124,0		warp	payonwarp032	2,2,payon_in03.gat,80,124
 payon_in03.gat,83,124,0		warp	payonwarp033	2,2,payon_in03.gat,93,124
 payon_in03.gat,99,133,0		warp	payonwarp034	2,2,payon_in03.gat,99,151

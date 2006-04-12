@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/12
+	* Fixes the remaining warps, no more warnings [Playtester]
 	* Some typo fixes by IVBela [MasterOfMuppets]
 	* Fixed a typo in quests/juperos.txt [Playtester]
 	* Fixed Bio Lab spawns to official jRO [Playtester]

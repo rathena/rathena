@@ -30,7 +30,7 @@ force_1-1.gat,44,26,0	warp	fc103	1,1,force_1-1.gat,66,26
 force_1-1.gat,62,26,0	warp	fc103-1	1,1,force_1-1.gat,40,26
 force_1-1.gat,44,174,0	warp	fc104	1,1,force_1-1.gat,69,174
 force_1-1.gat,65,174,0	warp	fc104-1	1,1,force_1-1.gat,40,174
-force_1-1.gat,99,54,0	warp	fc105	1,1,force_1-1.gat,99,82
+force_1-1.gat,99,54,0	warp	fc105	1,1,force_1-1.gat,96,82
 force_1-1.gat,100,81,0	warp	fc105-1	1,1,force_1-1.gat,99,51
 force_1-1.gat,134,174,0	warp	fc106	1,1,force_1-1.gat,159,174
 force_1-1.gat,155,174,0	warp	fc106-1	1,1,force_1-1.gat,130,174

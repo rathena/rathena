@@ -28,7 +28,7 @@ izlude_in.gat,171,97,0	warp	iz06	3,2,izlude_in.gat,172,119
 izlude_in.gat,172,116,0	warp	iz06-1	3,2,izlude_in.gat,172,94
 izlude_in.gat,172,139,0	warp	iz07	3,2,izlude_in.gat,172,161
 izlude_in.gat,172,158,0	warp	iz07-1	3,2,izlude_in.gat,172,136
-izlude_in.gat,43,169,0	warp	w219	2,3,izlude_in.gat,63,169
+izlude_in.gat,43,169,0	warp	w219	2,3,izlude_in.gat,64,169
 izlude_in.gat,65,84,0	warp	iz01-1	5,2,izlude.gat,113,147
 izlude_in.gat,74,158,0	warp	iz04-1	3,2,izlude.gat,52,136
 izlude_in.gat,87,169,0	warp	iz05-1	2,3,izlude_in.gat,111,169

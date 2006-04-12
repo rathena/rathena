@@ -32,7 +32,7 @@ pay_dun03.gat,127,62,4	script	payd04r	45,2,2,{
 	w3:	warp "pay_dun04.gat",43,40; end;
 	w4:	warp "pay_dun04.gat",34,202; end;
 }		
-pay_dun04.gat,191,41,0	warp	payd04-2	1,1,pay_dun03.gat,125,62	
-pay_dun04.gat,202,206,0	warp	payd04-3	1,1,pay_dun03.gat,125,62	
-pay_dun04.gat,32,204,0	warp	payd04-4	2,1,pay_dun03.gat,125,62	
-pay_dun04.gat,40,37,0	warp	payd04-1	2,2,pay_dun03.gat,125,62	
+pay_dun04.gat,191,41,0	warp	payd04-2	1,1,pay_dun03.gat,124,62	
+pay_dun04.gat,202,206,0	warp	payd04-3	1,1,pay_dun03.gat,124,62	
+pay_dun04.gat,32,204,0	warp	payd04-4	2,1,pay_dun03.gat,124,62	
+pay_dun04.gat,40,37,0	warp	payd04-1	2,2,pay_dun03.gat,124,62	
