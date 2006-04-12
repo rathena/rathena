@@ -1136,7 +1136,7 @@ static struct Damage battle_calc_weapon_attack(
 				break;
 
 			case CR_SHIELDCHARGE:
-				flag.weapon = 0;
+//				flag.weapon = 0;
 			case NPC_PIERCINGATT:
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
 				break;
@@ -1924,11 +1924,12 @@ static struct Damage battle_calc_weapon_attack(
 				vit_def = def2 + (vit_def>0?rand()%vit_def:0);
 			}
 			
-			if ((sd && battle_config.player_defense_type)
-				|| (md && battle_config.monster_defense_type)
-				|| (pd && battle_config.pet_defense_type)
-			)
+			if (sd && battle_config.player_defense_type)
 				vit_def += def1*battle_config.player_defense_type;
+			else if (md && battle_config.monster_defense_type)
+				vit_def += def1*battle_config.monster_defense_type;
+			else if(pd && battle_config.pet_defense_type)
+				vit_def += def1*battle_config.pet_defense_type;
 			else
 				ATK_RATE2(flag.idef?100:100-def1, flag.idef2?100:100-def1);
 			ATK_ADD2(flag.idef?0:-vit_def, flag.idef2?0:-vit_def);

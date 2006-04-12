@@ -48,7 +48,8 @@ struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant 
 
 struct mob_db *mob_db(int index) { if (index < 0 || index > MAX_MOB_DB || mob_db_data[index] == NULL) return mob_dummy; return mob_db_data[index]; }
 
-static struct eri *delay_drop_ers; //For loot drops delay structures.
+static struct eri *item_drop_ers; //For loot drops delay structures.
+static struct eri *item_drop_list_ers;
 #define CLASSCHANGE_BOSS_NUM 21
 
 /*==========================================
@@ -1380,30 +1381,29 @@ static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
  * Data is put in and passed to this structure object.
  *------------------------------------------
  */
-struct delay_item_drop {
-	int m,x,y;
+struct item_drop {
 	struct item item_data;
+	struct item_drop *next;
+};
+
+struct item_drop_list {
+	int m,x,y;
 	struct map_session_data *first_sd,*second_sd,*third_sd;
+	struct item_drop *item;
 };
 
 /*==========================================
  * Initializes the delay drop structure for mob-dropped items.
  *------------------------------------------
  */
-static struct delay_item_drop* mob_setdropitem(int nameid, int qty, int m, int x, int y, 
-	struct map_session_data* first_sd, struct map_session_data* second_sd, struct map_session_data* third_sd)
+static struct item_drop* mob_setdropitem(int nameid, int qty)
 {
-	struct delay_item_drop *drop = ers_alloc(delay_drop_ers, struct delay_item_drop);
+	struct item_drop *drop = ers_alloc(item_drop_ers, struct item_drop);
 	memset(&drop->item_data, 0, sizeof(struct item));
 	drop->item_data.nameid = nameid;
 	drop->item_data.amount = qty;
 	drop->item_data.identify = !itemdb_isequip3(nameid);
-	drop->m = m;
-	drop->x = x;
-	drop->y = y;
-	drop->first_sd = first_sd;
-	drop->second_sd = second_sd;
-	drop->third_sd = third_sd;
+	drop->next = NULL;
 	return drop;
 };
 
@@ -1411,17 +1411,11 @@ static struct delay_item_drop* mob_setdropitem(int nameid, int qty, int m, int x
  * Initializes the delay drop structure for mob-looted items.
  *------------------------------------------
  */
-static struct delay_item_drop* mob_setlootitem(struct item* item, int m, int x, int y,
-	struct map_session_data* first_sd, struct map_session_data* second_sd, struct map_session_data* third_sd)
+static struct item_drop* mob_setlootitem(struct item* item)
 {
-	struct delay_item_drop *drop = ers_alloc(delay_drop_ers, struct delay_item_drop);
+	struct item_drop *drop = ers_alloc(item_drop_ers, struct item_drop);
 	memcpy(&drop->item_data, item, sizeof(struct item));
-	drop->m = m;
-	drop->x = x;
-	drop->y = y;
-	drop->first_sd = first_sd;
-	drop->second_sd = second_sd;
-	drop->third_sd = third_sd;
+	drop->next = NULL;
 	return drop;
 };
 
@@ -1431,22 +1425,30 @@ static struct delay_item_drop* mob_setlootitem(struct item* item, int m, int x, 
  */
 static int mob_delay_item_drop(int tid,unsigned int tick,int id,int data)
 {
-	struct delay_item_drop *ditem;
-	ditem=(struct delay_item_drop *)id;
-
-	map_addflooritem(&ditem->item_data,ditem->item_data.amount,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
-	ers_free(delay_drop_ers, ditem);
+	struct item_drop_list *list;
+	struct item_drop *ditem, *ditem_prev;
+	list=(struct item_drop_list *)id;
+	ditem = list->item;
+	while (ditem) {
+		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
+			list->m,list->x,list->y,
+			list->first_sd,list->second_sd,list->third_sd,0);
+		ditem_prev = ditem;
+		ditem = ditem->next;
+		ers_free(item_drop_ers, ditem_prev);
+	}
+	ers_free(item_drop_list_ers, list);
 	return 0;
 }
 
 /*==========================================
- * Sets a timer to drop an item on the ground
+ * Sets the item_drop into the item_drop_list.
  * Also performs logging and autoloot if enabled.
  * rate is the drop-rate of the item, required for autoloot.
  *------------------------------------------
  * by [Skotlex]
  */
-static void mob_item_drop(struct mob_data *md, unsigned int tick, struct delay_item_drop * ditem, int loot, int drop_rate)
+static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate)
 {
 	if(log_config.pick > 0)
 	{	//Logs items, dropped by mobs [Lupus]
@@ -1456,21 +1458,21 @@ static void mob_item_drop(struct mob_data *md, unsigned int tick, struct delay_i
 			log_pick((struct map_session_data*)md, "M", md->class_, ditem->item_data.nameid, -ditem->item_data.amount, NULL);
 	}
 
-	if (ditem->first_sd && ditem->first_sd->state.autoloot &&
-		(drop_rate <= ditem->first_sd->state.autoloot ||
-		ditem->first_sd->state.autoloot >= 10000) //Fetch 100% drops
+	if (dlist->first_sd && dlist->first_sd->state.autoloot &&
+		(drop_rate <= dlist->first_sd->state.autoloot)
 	) {	//Autoloot.
 		if (party_share_loot(
-			ditem->first_sd->status.party_id?
-				party_search(ditem->first_sd->status.party_id):
+			dlist->first_sd->status.party_id?
+				party_search(dlist->first_sd->status.party_id):
 				NULL,
-			ditem->first_sd,&ditem->item_data) == 0
+			dlist->first_sd,&ditem->item_data) == 0
 		) {
-			ers_free(delay_drop_ers, ditem);
+			ers_free(item_drop_ers, ditem);
 			return;
 		}
 	}
-	add_timer(tick, mob_delay_item_drop, (int)ditem, 0);
+	ditem->next = dlist->item;
+	dlist->item = ditem;
 }
 
 int mob_timer_delete(int tid, unsigned int tick, int id, int data)
@@ -1557,7 +1559,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	struct item item;
 	int ret, mode;
 	int drop_rate;
-	int base_drop_delay;
 	int race;
 	char buffer[64];
 	
@@ -1720,11 +1721,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	if(src && src->type == BL_MOB)
 		mob_unlocktarget((struct mob_data *)src,tick);
 
-	base_drop_delay = battle_config.delay_battle_damage?0:500;
 	if(sd) {
 		int sp = 0, hp = 0;
-		if (sd->state.attack_type == BF_MAGIC)
-			base_drop_delay = 500;
 		if (sd->state.attack_type == BF_MAGIC && sd->ud.skilltarget == md->bl.id && (i=pc_checkskill(sd,HW_SOULDRAIN))>0)
 		{	//Soul Drain should only work on targetted spells [Skotlex]
 			if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
@@ -1914,21 +1912,27 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	// item drop
 	if (!(type&1)) {
+		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
+		struct item_drop *ditem;
 		int drop_ore = -1, drop_items = 0; //slot N for DROP LOG, number of dropped items
 		int log_item[10]; //8 -> 10 Lupus
 		memset(&log_item,0,sizeof(log_item));
+		dlist->m = md->bl.m;
+		dlist->x = md->bl.x;
+		dlist->y = md->bl.y;
+		dlist->first_sd = mvp_sd;
+		dlist->second_sd = second_sd;
+		dlist->third_sd = third_sd;
+		dlist->item = NULL;
+	
+		if (map[md->bl.m].flag.nomobloot ||
+			(md->master_id && md->special_state.ai && (
+			battle_config.alchemist_summon_reward == 0 || //Noone gives items
+			(md->class_ != 1142 && battle_config.alchemist_summon_reward == 1) //Non Marine spheres don't drop items
+		)))
+			;	//No normal loot.
+		else
 		for (i = 0; i < 10; i++) { // 8 -> 10 Lupus
-			struct delay_item_drop *ditem;
-
-			if (md->master_id && md->special_state.ai && (
-				battle_config.alchemist_summon_reward == 0 || //Noone gives items
-				(md->class_ != 1142 && battle_config.alchemist_summon_reward == 1) //Non Marine spheres don't drop items
-			))
-				break;	// End
-			//mapflag: noloot check [Lorky]
-			if (map[md->bl.m].flag.nomobloot) break;; 
-			//end added [Lorky]
-
 			if (md->db->dropitem[i].nameid <= 0)
 				continue;
 			drop_rate = md->db->dropitem[i].p;
@@ -1954,41 +1958,39 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			}
 			drop_items++; //we count if there were any drops
 
-			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1, md->bl.m, md->bl.x, md->bl.y, mvp_sd, second_sd, third_sd);
+			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
 			log_item[i] = ditem->item_data.nameid;
 
 			//A Rare Drop Global Announce by Lupus
 			if(drop_rate<=battle_config.rare_drop_announce) {
 				struct item_data *i_data;
 				char message[128];
-				i_data = itemdb_exists(ditem->item_data.nameid);
+				i_data = itemdb_search(ditem->item_data.nameid);
 				sprintf (message, msg_txt(541), (mvp_sd?mvp_sd->status.name:"???"), md->db->jname, i_data->jname, (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %%%0.02f)"
 				intif_GMmessage(message,strlen(message)+1,0);
 			}
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
-			mob_item_drop(md, tick+base_drop_delay+i, ditem, 0, md->db->dropitem[i].p);
+			mob_item_drop(md, dlist, ditem, 0, md->db->dropitem[i].p);
 		}
 
 		// Ore Discovery [Celest]
-		if (sd == mvp_sd && map[md->bl.m].flag.nomobloot==0 && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/10 >= rand()%10000) {
-			struct delay_item_drop *ditem;
-			ditem = mob_setdropitem(itemdb_searchrandomid(6), 1, md->bl.m, md->bl.x, md->bl.y, mvp_sd, second_sd, third_sd);
+		if (sd == mvp_sd && !map[md->bl.m].flag.nomobloot && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/10 >= rand()%10000) {
+			ditem = mob_setdropitem(itemdb_searchrandomid(6), 1);
 			if (drop_ore<0) drop_ore=8; //we have only 10 slots in LOG, there's a check to not overflow (9th item usually a card, so we use 8th slot)
 			log_item[drop_ore] = ditem->item_data.nameid; //it's for logging only
 			drop_items++; //we count if there were any drops
-			mob_item_drop(md, tick+base_drop_delay+drop_ore, ditem, 0, battle_config.finding_ore_rate/10);
+			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10);
 		}
 
 		//this drop log contains ALL dropped items + ORE (if there was ORE Recovery) [Lupus]
 		if(sd && log_config.drop > 0 && drop_items) //we check were there any drops.. and if not - don't write the log
 			log_drop(sd, md->class_, log_item); //mvp_sd
 
-		if(sd/* && sd->state.attack_type == BF_WEAPON*/) { //Player reports indicate this SHOULD work with all skills. [Skotlex]
+		if(sd) {
 			int itemid = 0;
 			for (i = 0; i < sd->add_drop_count; i++) {
-				struct delay_item_drop *ditem;
 				if (sd->add_drop[i].id < 0)
 					continue;
 				if (sd->add_drop[i].race & (1<<race) ||
@@ -2012,21 +2014,22 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 					itemid = (sd->add_drop[i].id > 0) ? sd->add_drop[i].id :
 						itemdb_searchrandomgroup(sd->add_drop[i].group);
 
-					ditem = mob_setdropitem(itemid, 1, md->bl.m, md->bl.x, md->bl.y, mvp_sd, second_sd, third_sd);
-					mob_item_drop(md, tick+base_drop_delay+20+i, ditem, 0, drop_rate);
+					mob_item_drop(md, dlist, mob_setdropitem(itemid,1), 0, drop_rate);
 				}
 			}
+				
 			if(sd->get_zeny_num && rand()%100 < sd->get_zeny_rate) //Gets get_zeny_num per level +/-10% [Skotlex]
 				pc_getzeny(sd,md->db->lv*sd->get_zeny_num*(90+rand()%21)/100);
 		}
 		if(md->lootitem) {
-			for(i=0;i<md->lootitem_count;i++) {
-				struct delay_item_drop *ditem;
-
-				ditem = mob_setlootitem(&md->lootitem[i], md->bl.m, md->bl.x, md->bl.y, mvp_sd, second_sd, third_sd);
-				mob_item_drop(md, tick+base_drop_delay+40+i, ditem, 1, 10000);
-			}
+			for(i=0;i<md->lootitem_count;i++)
+				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000);
 		}
+		if (dlist->item) //There are drop items.
+			add_timer(tick + ((!battle_config.delay_battle_damage || (sd && sd->state.attack_type == BF_MAGIC))?500:0),
+				mob_delay_item_drop, (int)dlist, 0);
+		else //No drops
+			ers_free(item_drop_list_ers, dlist);
 	}
 
 	// mvpèàóù
@@ -3933,7 +3936,8 @@ int do_init_mob(void)
 	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
 	mob_db_data[0] = aCalloc(1, sizeof (struct mob_data));	//This mob is used for random spawns
 	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
-	delay_drop_ers = ers_new((uint32)sizeof(struct delay_item_drop));
+	item_drop_ers = ers_new((uint32)sizeof(struct item_drop));
+	item_drop_list_ers = ers_new((uint32)sizeof(struct item_drop_list));
 
 #ifndef TXT_ONLY
     if(db_use_sqldbs)
@@ -3980,6 +3984,7 @@ int do_final_mob(void)
 			mob_db_data[i] = NULL;
 		}
 	}
-	ers_destroy(delay_drop_ers);
+	ers_destroy(item_drop_ers);
+	ers_destroy(item_drop_list_ers);
 	return 0;
 }
