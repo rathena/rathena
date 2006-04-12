@@ -1952,6 +1952,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			if (sd && battle_config.pk_mode == 1 && (md->db->lv - sd->status.base_level >= 20))
 				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
+//			if (10000 < rand()%10000+drop_rate) { //May be better if MAX_RAND is too low?
 			if (drop_rate < rand() % 10000 + 1) { //fixed 0.01% impossible drops bug [Lupus]
 				drop_ore = i; //we remember an empty slot to put there ORE DISCOVERY drop later.
 				continue;

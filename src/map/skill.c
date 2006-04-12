@@ -1324,10 +1324,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	//Reports say that autospell effects get triggered on skills and pretty much everything including splash attacks. [Skotlex]
-	//Here we use the nk value to trigger spells only on damage causing skills (otherwise stuff like AL_HEAL will trigger them)
-	if(sd && !status_isdead(bl) && src != bl &&
-		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) {
+	//No need to check the NK value as this function is only called on attacks
+	//(or stuff that should invoke these things.
+	if(sd && !status_isdead(bl) && src != bl/* &&
+		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)*/) {
 		struct block_list *tbl;
+		struct unit_data *ud;
 		int i;
 		for (i = 0; i < MAX_PC_BONUS && sd->autospell[i].id; i++) {
 
@@ -1360,6 +1362,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				case CAST_DAMAGE:
 					skill_castend_damage_id(src, tbl, skill, skill2, tick, 0);
 					break;
+			}
+			//Set canact delay. [Skotlex]
+			ud = unit_bl2ud(src);
+			if (ud) {
+				rate = skill_delayfix(src, skill, skill2);
+				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0)
+					ud->canact_tick = tick+rate;
 			}
 			break; //Only one auto skill comes off at a time.
 		}
@@ -1450,6 +1459,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	if(dstsd && !status_isdead(bl) && src != bl && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
 	{
 		struct block_list *tbl;
+		struct unit_data *ud;
 		int i, skillid, skilllv, rate;
 
 		for (i = 0; i < MAX_PC_BONUS; i++) {
@@ -1484,6 +1494,14 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					skill_castend_damage_id(bl, tbl, skillid, skilllv, tick, 0);
 					break;
 			}
+			//Set canact delay. [Skotlex]
+			ud = unit_bl2ud(bl);
+			if (ud) {
+				rate = skill_delayfix(bl, skillid, skilllv);
+				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0)
+					ud->canact_tick = tick+rate;
+			}
+			break; //trigger only one auto-spell per hit.
 		}
 	}
 	return 0;
@@ -3702,6 +3720,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SG_MOON_COMFORT:
 	case SG_STAR_COMFORT:
 	case NPC_HALLUCINATION:
+	case HP_ASSUMPTIO:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
@@ -3723,7 +3742,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			skill_moonlit(bl, NULL, skilllv); //The knockback must be invoked before starting the effect which places down the map cells. [Skotlex]
 		
 		break;
-	
+/* Was modified to only affect targetted char.	[Skotlex]
 	case HP_ASSUMPTIO:
 		if (flag&1)
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
@@ -3736,7 +3755,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
 		break;
-
+*/
 	case SM_ENDURE:			/* ƒCƒ“ƒfƒ…ƒA */
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
@@ -7061,8 +7080,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		break;
 
 	case UNT_GRAVITATION:
-		if (skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0))
-			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MAGIC,tick);
+		skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 		break;
 	}
 	if (sg->val3 == HW_MAGICPOWER && sc && sc->data[SC_MAGICPOWER].timer < 0 && sc->data[SC_MAGICPOWER].val1 > 0)

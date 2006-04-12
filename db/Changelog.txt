@@ -27,6 +27,7 @@
 
 =========================
 04/12
+	* Added cast time to pick stone of 3 secs and 500ms delay. [Skotlex]
 	* Fixed produce_db for Halberd 3-->12 Oridecons [Playtester]
 	* Fixed Violy's Violin[4] drop rate. It is 2%. [Playtester]
 	* Fixed a typo and sorted skill_cast_db by skill id. [Playtester]
