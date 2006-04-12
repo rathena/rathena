@@ -2047,7 +2047,7 @@
 7430,Black_Magic_Stone,Black Magic Stone,3,,10,10,,,,,,,,,,,,,{}
 7431,Books,Books,3,,10,10,,,,,,,,,,,,,{}
 7432,Leather_Pouch,Leather Pouch,3,,10,10,,,,,,,,,,,,,{}
-7433,Empty_Scroll,Empty Scroll,3,,10,10,,,,,,,,,,,,,{}
+7433,Empty_Scroll,Empty Scroll,3,,2000,10,,,,,,,,,,,,,{}
 7434,Elemental_Potion_Creation_Guide,Elemental Potion Creation Guide,3,,10,10,,,,,,,,,,,,,{}
 7435,Golden_Accessory,Golden Accessory,3,,953,10,,,,,,,,,,,,,{}
 7436,Fragment_of_Agony,Fragment of Agony,3,,753,10,,,,,,,,,,,,,{}

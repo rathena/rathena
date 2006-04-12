@@ -27,6 +27,8 @@
 
 =========================
 04/12
+	* Fixed the price of empty scrolls, thanks to rockmanEXE [MasterOfMuppets]
+	  for the info. He doesn't pwnz0rz so much :(
 	* Some Lighthalzen mob updates [MasterOfMuppets]
 	* Added cast time to pick stone of 3 secs and 500ms delay. [Skotlex]
 	* Fixed produce_db for Halberd 3-->12 Oridecons [Playtester]
