@@ -112,13 +112,13 @@ OnTimer130000:
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
 	disablenpc "#AirshipWarp-2";
-	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Lighthalzen.",1,0xFF6347;
+	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Lighthalzen.",1,0xFF8600;
 	end;
 OnTimer145000:
-	mapannounce "airplane.gat","We are heading to Lighthalzen.",1,0xFF6347;
+	mapannounce "airplane.gat","We are heading to Lighthalzen.",1,0xFF8600;
 	end;
 OnTimer160000:
-	mapannounce "airplane.gat","We will arrive in Lighthalzen shortly.",1,0xFF6347;
+	mapannounce "airplane.gat","We will arrive in Lighthalzen shortly.",1,0xFF8600;
 	end;
 OnTimer175000:
 	set $airplanelocation,3;
@@ -126,10 +126,10 @@ OnTimer175000:
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane.gat","Welcome to Lighthalzen. Have a safe trip.",1,0xFF6347;
+	mapannounce "airplane.gat","Welcome to Lighthalzen. Have a safe trip.",1,0xFF8600;
 	end;
 OnTimer185000:
-	mapannounce "airplane.gat","Currently we are in Lighthalzen. The Airship will leave shortly.",1,0xFF6347;
+	mapannounce "airplane.gat","Currently we are in Lighthalzen. The Airship will leave shortly.",1,0xFF8600;
 	end;
 OnTimer195000:
 	set $airplanelocation,0;

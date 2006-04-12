@@ -12,36 +12,44 @@
 //===== Additional Comments: =================================
 //= 08/24/05 : Added 1st version. [Muad_Dib]
 //= 01/29/05 : Updated the spawns according to current info [MasterOfMuppets]
+//= 04/12/06 : Updated the spawns according to own info from iRO [MasterOfMuppets]
 //============================================================
 
-//==================================================
-// juperos_01 - The Ruins of Juperos F1
-//==================================================
-juperos_01.gat,0,0,0,0	monster	Venatu	1676,35,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1677,35,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1678,35,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1679,35,0,0,0
+//========================================================================================
+// - Juperos 01
+//========================================================================================
 
-//==================================================
-// juperos_02 - The Ruins of Juperos F2
-//==================================================
+juperos_01.gat,0,0,0,0	monster	Venatu	1676,60,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1677,60,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1678,60,0,0,0
+juperos_01.gat,0,0,0,0	monster	Venatu	1679,60,0,0,0
+
+//========================================================================================
+// - Juperos 02
+//========================================================================================
+
+juperos_02.gat,75,91,200,212	monster	Venatu	1676,40,0,0,0
+juperos_02.gat,75,91,200,212	monster	Venatu	1677,40,0,0,0
+juperos_02.gat,75,91,200,212	monster	Venatu	1678,40,0,0,0
+juperos_02.gat,75,91,200,212	monster	Venatu	1679,40,0,0,0
 juperos_02.gat,0,0,0,0	monster	Venatu	1676,20,0,0,0
 juperos_02.gat,0,0,0,0	monster	Venatu	1677,20,0,0,0
 juperos_02.gat,0,0,0,0	monster	Venatu	1678,20,0,0,0
 juperos_02.gat,0,0,0,0	monster	Venatu	1679,20,0,0,0
-juperos_02.gat,0,0,0,0	monster	Apocalypse	1365,40,0,0,0
+juperos_02.gat,0,0,0,0	monster	Apocalypse	1365,25,0,0,0
 
-//==================================================
-// juperos_core - Juperos Dungeon Entrance
-//==================================================
+//========================================================================================
+// - Juperos Core
+//========================================================================================
+
 jupe_core.gat,0,0,0,0	monster	Archdam	1668,20,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1670,12,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1671,12,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1672,12,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1673,12,0,0,0
+jupe_core.gat,0,0,0,0	monster	Dimik	1670,15,0,0,0
+jupe_core.gat,0,0,0,0	monster	Dimik	1671,15,0,0,0
+jupe_core.gat,0,0,0,0	monster	Dimik	1672,15,0,0,0
+jupe_core.gat,0,0,0,0	monster	Dimik	1673,15,0,0,0
 jupe_core.gat,0,0,0,0	monster	Venatu	1676,5,0,0,0
 jupe_core.gat,0,0,0,0	monster	Venatu	1677,5,0,0,0
 jupe_core.gat,0,0,0,0	monster	Venatu	1678,5,0,0,0
 jupe_core.gat,0,0,0,0	monster	Venatu	1679,5,0,0,0
-jupe_core.gat,0,0,0,0	monster	Apocalypse	1365,20,0,0,0
+jupe_core.gat,0,0,0,0	monster	Apocalypse	1365,15,0,0,0
 jupe_core.gat,0,0,0,0	monster	Vesper	1685,1,3600000,1800000,1
