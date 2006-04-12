@@ -27,7 +27,10 @@ Nexon
 
 Date		Added
 ======
-4/11
+04/12
+	* Corrected some errors in cities/hugel.txt and guides/guides_hu.txt
+	  [Foruken]
+04/11
 	* Changed item description in Sage Skills Quest (Blank Script -> Empty
 	  Script) thanks to MeL [Foruken]
 	* Updated a couple shops of Hugel, plus added the firecracker shop on Hugel. [erKURITA]

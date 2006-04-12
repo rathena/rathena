@@ -94,17 +94,17 @@ M_Menu:
 			viewpoint 1,208,225,7,0xFF8000;
 			goto sL_Wipe; 
 
-		m_1-9:
+		M_1_9:
 			mes "[Old Lady]";
 			mes "The '^000066Poring Track Nº1^000000' is new and exciting entertaintment, make sure to check it!";
 			viewpoint 1,58,72,7,0xFF8000;
 			goto sL_Wipe;
-		m_1-10:
+		M_1_10:
 			mes "[Old Lady]";
 			mes "The '^000066Poring Track Nº2^000000' is new and exciting entertaintment, make sure to check it!";
 			viewpoint 1,62,68,7,0xFF8000;
 			goto sL_Wipe;
-		m_1-11:
+		M_1_11:
 			mes "[Old Lady]";
 			mes "The 'Bingo House' is located at the northwest of Hugel. Lay your bet ladies and gentlements!";
 			viewpoint 1,57,207,7,0xFF8000;
