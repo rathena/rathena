@@ -22,12 +22,19 @@ geffen.gat	mapflag	nopvp
 geffen_in.gat	mapflag	nopvp
 gon_in.gat	mapflag	nopvp
 gonryun.gat	mapflag	nopvp
+gon_test.gat	mapflag	nopvp
 in_hunter.gat	mapflag	nopvp
 in_moc_16.gat	mapflag	nopvp
 in_orcs01.gat	mapflag	nopvp
 izlude_in.gat	mapflag	nopvp
 izlude.gat	mapflag	nopvp
+hugel.gat	mapflag	nopvp
+hu_in01.gat	mapflag	nopvp
 lighthalzen.gat	mapflag	nopvp
+lhz_airport.gat	mapflag	nopvp
+lhz_in01.gat	mapflag	nopvp
+lhz_in02.gat	mapflag	nopvp
+lhz_in03.gat	mapflag	nopvp
 louyang.gat	mapflag	nopvp
 lou_in01.gat	mapflag	nopvp
 lou_in02.gat	mapflag	nopvp
@@ -60,12 +67,5 @@ yuno_in03.gat	mapflag	nopvp
 yuno_in04.gat	mapflag	nopvp
 yuno_in05.gat	mapflag	nopvp
 yuno.gat	mapflag	nopvp
-gon_test.gat	mapflag	nopvp
-
-// New areas
 yuno_pre.gat	mapflag	nopvp
 y_airport.gat	mapflag	nopvp
-lhz_airport.gat	mapflag	nopvp
-lhz_in01.gat	mapflag	nopvp
-lhz_in02.gat	mapflag	nopvp
-lhz_in03.gat	mapflag	nopvp

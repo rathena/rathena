@@ -5,7 +5,7 @@
 //=============================================================
 //= noicewall: Disables Icewall skill.
 //= To disable Icewall on a specific map add the mapname here.
-//= 1.4 [Lupus]
+//= 1.5 [Lupus]
 //============================================================
 
 ayo_in01.gat	mapflag	noicewall
@@ -34,6 +34,7 @@ in_moc_16.gat	mapflag	noicewall
 in_orcs01.gat	mapflag	noicewall
 izlude_in.gat	mapflag	noicewall
 izlude.gat	mapflag	noicewall
+hugel.gat	mapflag	noicewall
 jawaii.gat	mapflag	noicewall
 moc_castle.gat	mapflag	noicewall
 monk_in.gat	mapflag	noicewall

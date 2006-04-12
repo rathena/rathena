@@ -111,13 +111,17 @@ monk_test.gat	mapflag	noteleport
 monk_in.gat	mapflag	noteleport
 in_rogue.gat	mapflag	noteleport
 job_sage.gat	mapflag	noteleport
-
 job_star.gat	mapflag	noteleport
 job_soul.gat	mapflag	noteleport
+que_ng.gat	mapflag	noteleport
 
 // Special Quests Places =========
 que_god01.gat	mapflag	noteleport
 que_god02.gat	mapflag	noteleport
+que_bingo.gat	mapflag	noteleport
+que_hugel.gat	mapflag	noteleport
+poring_c01.gat	mapflag	noteleport
+poring_c02.gat	mapflag	noteleport
 
 // Guild Castles =================
 aldeg_cas01.gat	mapflag	noteleport

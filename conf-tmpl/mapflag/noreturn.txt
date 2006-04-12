@@ -25,6 +25,7 @@ gon_test.gat	mapflag	noreturn
 gon_in.gat	mapflag	noreturn
 in_orcs01.gat	mapflag	noreturn
 izlude_in.gat	mapflag	noreturn
+hu_in01.gat	mapflag	noreturn
 jawaii_in.gat	mapflag	noreturn
 lou_in01.gat	mapflag	noreturn
 lou_in02.gat	mapflag	noreturn
@@ -84,10 +85,15 @@ monk_test.gat	mapflag	noreturn
 monk_in.gat	mapflag	noreturn
 in_rogue.gat	mapflag	noreturn
 job_sage.gat	mapflag	noreturn
+que_ng.gat	mapflag	noreturn
 
 // Special Quests Places =========
 que_god01.gat	mapflag	noreturn
 que_god02.gat	mapflag	noreturn
+que_bingo.gat	mapflag	noreturn
+que_hugel.gat	mapflag	noreturn
+poring_c01.gat	mapflag	noreturn
+poring_c02.gat	mapflag	noreturn
 
 // Guild Castles =================
 //= 1.3 According to the kRO patch, enabled Butterfly wings in the Castles

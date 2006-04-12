@@ -107,13 +107,15 @@ monk_in.gat	mapflag	nomemo
 in_rogue.gat	mapflag	nomemo
 job_sage.gat	mapflag	nomemo
 job_soul.gat	mapflag	nomemo
+que_ng.gat	mapflag	nomemo
 
 // Special Quests Places =====
 que_god01.gat	mapflag	nomemo
 que_god02.gat	mapflag	nomemo
 que_bingo.gat	mapflag	nomemo
 que_hugel.gat	mapflag	nomemo
-
+poring_c01.gat	mapflag	nomemo
+poring_c02.gat	mapflag	nomemo
 // Dungeons =================
 alde_dun01.gat	mapflag	nomemo
 alde_dun02.gat	mapflag	nomemo

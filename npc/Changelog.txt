@@ -31,6 +31,7 @@ Date		Added
 	* Corrected some errors in cities/hugel.txt and guides/guides_hu.txt
 	  [Foruken]
 04/11
+	* Updated mapflags (missing hugel, job quest map, etc)
 	* Changed item description in Sage Skills Quest (Blank Script -> Empty
 	  Script) thanks to MeL [Foruken]
 	* Updated a couple shops of Hugel, plus added the firecracker shop on Hugel. [erKURITA]
