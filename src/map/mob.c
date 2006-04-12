@@ -3318,8 +3318,6 @@ static int mob_readdb_mobavail(void)
 		k=atoi(str[1]);
 		if(k < 0)
 			continue;
-		if (j >= 12 && k > 23 && k < 69)
-			k += 3977;	// advanced job/baby class
 
 		memset(&mob_db_data[class_]->vd, 0, sizeof(struct view_data));
 		mob_db_data[class_]->vd.class_=k;
