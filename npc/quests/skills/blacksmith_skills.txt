@@ -112,7 +112,7 @@ L_noitems:
 	close;
 	
 L_nosmith:
-	mes "Don't mind Goodday overthere.";
+	mes "Don't mind Goodday over there.";
 	mes "He thinks everyone should like";
 	mes "this boring place!";
 	emotion e_laugh;
@@ -126,7 +126,7 @@ L_nogreed:
 
 L_alreadyhave:
 	mes "WOW, I guess you've learned";
-	mes "all that the Blacksmith's of";
+	mes "all that the Blacksmiths of";
 	mes "Geffen can teach. Good luck";
 	mes "with your travels.";
 	close;

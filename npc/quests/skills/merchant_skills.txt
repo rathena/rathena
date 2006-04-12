@@ -16,6 +16,7 @@
 //= 1.2 Added Baby Class Support [Lupus]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploits [Lupus]
+//= 1.4a Fixed some typos [IVBela]
 //============================================================
 
 
@@ -40,7 +41,7 @@ L_Start:
 	if (getskilllv(155)>0) goto L_GotSkill;
 	if (CRAZYROAR == 1) goto L_GetSkill;
 	mes "Oh! Did you come here because you were intrigued by my boisterous voice? My voice is quite loud, isn't it?";
-	mes "Afterall you did hear it from a far off distance.";
+	mes "After all you heared it from a far off distance.";
 	emotion e_what;
 	next;
 	mes "[Necko]";
@@ -53,22 +54,22 @@ L_Start:
 	next;
 	mes "[Necko]";
 	mes "Crazy Uproar uses your loud voice to boost your battle spirit!";
-	mes "The skill requires ^FF55338 sp^000000 to use and inturn you will recieve an additional ^3355FF4 STR for 5 min^000000!!";
+	mes "The skill requires ^FF55338 sp^000000 to use and in turn you will receive an additional ^3355FF4 STR for 5 min^000000!!";
 	next;
 	mes "[Necko]";
-	mes "This skill is very usefull.  To learn it you must learn the essentials of sound.  There was a singer in Payon that taught sound theory.......";
+	mes "This skill is very useful.  To learn it you must learn the essentials of sound.  There was a singer in Payon that taught sound theory.......";
 	next;
 	mes "[Necko]";
 	mes "Unfortunately that person passed away so you can no longer learn those essentials..............";
 	mes "Aww.... you look disappointed.... Do you really want to learn Crazy Uproar??";
 	next;
 	mes "[Necko]";
-	mes "Hmm..... I will teach you then, that is, if you trully wish to learn.  You will have to train your vocal cords.";
+	mes "Hmm..... I will teach you then, that is, if you truly wish to learn.  You will have to train your vocal cords.";
 	mes "You will also need to gather these items:";
 	next;
 	mes "[Necko]";
 	mes "- ^3355FF7 Pearls,";
-	mes "- 1Banana juice,";
+	mes "- 1 Banana juice,";
 	mes "- 50 Mushroom spores^000000.";
 	next;
 	mes "[Necko]";
@@ -78,7 +79,7 @@ L_Start:
 	close;
 
 	L_JobLvl:
-		mes "Once you've reached a ^3355FFjob level of 15^000000 come back and see me.  I'll tell you all about the secrect to my voice.....";
+		mes "Once you've reached a ^3355FFjob level of 15^000000 come back and see me.  I'll tell you all about the secret to my voice.....";
 		next;
 		mes "[Necko]";
 		mes "Uahahahahahahhahahahahahaha!";
@@ -98,7 +99,7 @@ L_GetSkill:
 	mes "~several hours later~";
 	next;
 	mes "[Necko]";
-	mes "Raaaaaawwwwrrrrrrrrrrr!....... Ha ha!! Execellent.  Your voice is now finely tuned for ^3355FFCrazy Uproar^000000.  Good job.";
+	mes "Raaaaaawwwwrrrrrrrrrrr!....... Ha ha!! Excellent.  Your voice is now finely tuned for ^3355FFCrazy Uproar^000000.  Good job.";
 	skill 155,1,0;
 	set CRAZYROAR, 0;
 	emotion e_no1;
@@ -107,7 +108,7 @@ L_GetSkill:
 	L_Items:
 	 	mes "You need to get these items for Crazy Uproar:";
 		mes "- ^3355FF7 Pearls,";
-		mes "- 1Banana juice,";
+		mes "- 1 Banana juice,";
 		mes "- 50 Mushroom spores^000000.";
 		close;
 
@@ -122,7 +123,7 @@ alberta.gat,119,221,6	script	Charlron	107,{
 	mes "[Charlron]";
 	if (baseClass == Job_Merchant) goto L_Start;
 L_Other:
-	mes "I am a merchant that deals in many things.  My name is Charlron.  If you ever find anything interesting, come back and try to negotiate a deal with me.";
+	mes "I am a merchant that deals with many things.  My name is Charlron.  If you ever find anything interesting, come back and try to negotiate a deal with me.";
 	close;
 L_Start:
 	if (getskilllv(154)>0) goto L_GotSkill;
@@ -155,7 +156,7 @@ L_Start:
 L_GetSkill:
 	if ((countitem(1019)<50) || (countitem(998)<10) || (countitem(919)<20)) goto L_Items;
 	mes "Oh good, you have all of the items.  Well here you are..... Hmm?... Oh these are the design sheets for your cart.";
-	mes "Now that you have the proper materials, just follow these guides to make your cart look spectactular.";
+	mes "Now that you have the proper materials, just follow these guides to make your cart look spectacular.";
 // Note: It is not supposed to take these items, just check you have collected them
 	skill 154,1,0;
 	set CHANGECART, 0;
@@ -191,7 +192,7 @@ L_Start:
 	if (getskilllv(153)>0) goto L_GotSkill;
 	if (CARTREVO == 1) goto L_GetSkill;
 	mes "[Gershaun]";
-	mes "Hmm... a young merchant.  You must use carts too right? Since to have to do all of that vending.....  But is that all you use your cart for?";
+	mes "Hmm... a young merchant.  You must use carts too right? Since you have to do all of that vending.....  But is that all you use your cart for?";
 	emotion e_hmm;
 	next;
 	mes "[Gershaun]";
@@ -211,7 +212,7 @@ L_Start:
 		next;
 		mes "[Gershuan]";
 		mes "Then I crossed paths with a very strong monster! I knew immediately that my life was in danger!";
-		mes "I thought to myself, 'Why me! A weaponless, amorless merchant!?'";
+		mes "I thought to myself, 'Why me! A weaponless, armorless merchant!?'";
 		emotion e_gasp;
 		next;
 		mes "[Gershuan]";
@@ -223,10 +224,10 @@ L_Start:
 		emotion e_gasp;
 		next;
 		mes "[Gershuan]";
-		mes "Just like that the monster was defeated!! Finally I had found another exellent use for the cart! A WEAPON!!!";
+		mes "Just like that the monster was defeated!! Finally I had found another excellent use for the cart! A WEAPON!!!";
 		next;
 		mes "[Gershuan]";
-		mes "I called my new found discovery ^3355FF'Cart Revolution'^000000!";
+		mes "I called my newly found discovery ^3355FF'Cart Revolution'^000000!";
 		mes "By using ^FF553312 sp^000000 you can spin your cart around your body doing major damage to an enemy!";
 		emotion e_ic;
 		next;
@@ -238,7 +239,7 @@ L_Start:
 		sM_0:
 			mes "[Gershuan]";
 			if (BaseJob==Job_Merchant && JobLevel < 35) goto ssL_LowLvl;
-			mes "Ok! I will give you the special training for Cart Revolution.  The first thing you will have to do is bring me these items:";
+			mes "OK! I will give you the special training for Cart Revolution.  The first thing you will have to do is bring me these items:";
 			mes "^3355FF30 Sticky Mucus,";
 			mes "20 Fly wings,";
 			mes "15 Iron,";
@@ -252,7 +253,7 @@ L_Start:
 
 			ssL_LowLvl:
 				mes "[Gershuan]";
-				mes "Ok! I will give you the special training for Cart Revolution.";
+				mes "OK! I will give you the special training for Cart Revolution.";
 				mes "But first you will have to get yourself to a ^3355FFjob level of 35^000000! After you've done that, then we can talk.";
 				close;
 
@@ -270,7 +271,7 @@ L_GetSkill:
 	delitem 601,20;
 	delitem 962,5;
 	mes "[Gershaun]";
-	mes "It's Good to see you again.  I'm glad you were able to get all of the items.  Take a minute to prepare, for your training is about to take place....";
+	mes "It's good to see you again.  I'm glad you were able to get all of the items.  Take a minute to prepare, for your training is about to take place....";
 	next;
 	mes "[Gershuan]";
 	mes "First make sure your feet are shoulder width apart.  Balance is key! Now get into a good crouch... grasp the handles of the cart firmly but not too tight...";
@@ -286,7 +287,7 @@ L_GetSkill:
 	next;
 	mes "[Gershuan]";
 	mes "YES!!! FINALLY! I could REALLY FEEL the power in that swing!";
-	mes "Give yourself a good pat on the back becuase you have just mastered Cart Revolution!";
+	mes "Give yourself a good pat on the back because you have just mastered Cart Revolution!";
 	emotion e_no1;
 	next;
 	skill 153,1,0;
@@ -298,7 +299,7 @@ L_GetSkill:
 
 L_GotSkill:
 	mes "[Gershaun]";
-	mes "So how do you like cart revolution? Remeber, the ^3355FFheavier^000000 the cart, the ^3355FFgreater^000000 the damge.";
+	mes "So how do you like cart revolution? Remember, the ^3355FFheavier^000000 the cart, the ^3355FFgreater^000000 the damage.";
 	close;
 
 }

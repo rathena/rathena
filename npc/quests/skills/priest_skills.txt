@@ -60,7 +60,7 @@ prt_church.gat,111,112,3	script	Nun Linus	79,{
 	
 L_bless:
 	mes "[Nun Linus]";
-	mes "Hum... I see god is shined on you this time";
+	mes "Hum... I see God has shined on you this time";
 	skill 1014,1,0;
 	close;
 	

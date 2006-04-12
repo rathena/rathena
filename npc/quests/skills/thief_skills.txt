@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -11,13 +11,14 @@
 //===== Additional Comments: ================================= 
 //= v1.0 Fully working
 //= v1.1 Changed Sand Attack requirements from 5 Grit to 5 Fine Grit and a
-//= Leather Bag of Infinity.  These are the official RO requirments
+//= Leather Bag of Infinity.  These are the official RO requirements
 //= Added npc RuRumuni, maker of Leather Bag of Infinity. [kobra_k88]
 //= v1.1a Now using functions found in "Global_Functions.txt" for
 //= class checks.[kobra_k88]
 //= 1.2 Added Baby Class Support [Lupus]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploit [Lupus]
+//= 1.4a Fixed some typos [IVBela]
 //============================================================ 
 
 
@@ -33,7 +34,7 @@ L_Other:
 	close;
 
 L_Novice:
-	mes "Although thieves and assasins have basic skills which aid them in their jobs, most don't have the 'special' skills which can make them truly great!";
+	mes "Although thieves and assassins have basic skills which aid them in their jobs, most don't have the 'special' skills which can make them truly great!";
 	next;
 	mes "[Alcouskou]";
 	mes "I just happen to be the ONLY one who can teach them these skills!";
@@ -48,7 +49,7 @@ L_Start:
 	mes "You many have trouble understanding the importance of some of these experiences, and may even consider them to be useless to you.";
 	next;
 	mes "[Alcouskou]";
-	mes "But do not be to hastey with your judgement of them, for some of these experience may actually prove to be benificial for you.";
+	mes "But do not be to hasty with your judgement of them, for some of these experience may actually prove to be beneficial for you.";
 	next;
 	mes "[Alcouskou]";
 	mes "Let me explain:";
@@ -60,7 +61,7 @@ M_Menu:
 		mes "[Alcouskou]";
 		if(SANDATTACK == 1) goto L_Sand;
 		if(getskilllv(149) > 0) goto L_GotSand;
-		mes "The most important aspect of being a good Thief/Assassin is stealth.  One should never be seen our touched unless he/she wants to be";
+		mes "The most important aspect of being a good Thief/Assassin is stealth.  One should never be seen or touched unless he/she wants to be";
 		next;
 		mes "[Alcouskou]";
 		mes "Some may consider this cowardly but I don't see it that way.";
@@ -71,7 +72,7 @@ M_Menu:
 		next;
 		mes "[Alcouskou]";
 		mes "This skill allows the user to throw and kick sand in the eyes of an opponent, temporarily blinding them.";
-		mes "This effectively impares the opponent's ability to defend or attack giving the user a brief but great advantage.";
+		mes "This effectively impairs the opponent's ability to defend or attack giving the user a brief but great advantage.";
 		next;
 		mes "[Alcouskou]";
 		mes "In order to learn this skill you will need to gather ^5555FF5 Fine Grit^000000 and a ^FF3355'Leather Bag of Infinity'^000000.";
@@ -93,7 +94,7 @@ M_Menu:
 		next;
 		mes "[Alcouskou]";
 		mes "We thieves/assassins pride ourselves on our speed and ability to quickly dodge.";
-		mes "Of course I'm sure you've noticed that there is a down side to that speed and quickness.....";
+		mes "Of course I'm sure you've noticed that there is a downside to that speed and quickness.....";
 		next;
 		mes "[Alcouskou]";
 		mes "If we DO get hit, depending on the monster, that single hit could put us in serious danger!";
@@ -105,11 +106,11 @@ M_Menu:
 		mes "If you get attacked by a large group of monsters..... you may not even have room to dodge and that won't be at all funny.";
 		next;
 		mes "[Alcouskou]";
-		mes "That's why most Thiefs/Assassins fear large mobs and will flee at the first sign of them.";
+		mes "That's why most Thieves/Assassins fear large mobs and will flee at the first sign of them.";
 		mes "There are those however, that do not fear being overwhelmed by a large mob.";
 		next;
 		mes "[Alcouskou]";
-		mes "These are the people who have learned a unique skill that allows them to deal with mob situatuions.";
+		mes "These are the people who have learned a unique skill that allows them to deal with mob situations.";
 		mes "The skill enables the user to quickly 'back' out of the way of a mob, putting a great deal of distance between the two.";
 		next;
 		mes "[Alcouskou]";
@@ -141,11 +142,11 @@ M_Menu:
 		mes "Think about it... the ability to use a long range weapon without spending any zeny.... isn't it great?";
 		next;
 		mes "[Alcouskou]";
-		mes "If you wan't to learn this skill you must do a little training first.  Start by picking up ^5555FF1 Bear's Footskin^000000.";
+		mes "If you want to learn this skill you must do a little training first.  Start by picking up ^5555FF1 Bear's Footskin^000000.";
 		mes "Then try to find ^5555FF1 Zargon^000000.  Next pick out ^5555FF5 Spawn^000000.  Once you've done all this come back and see me.";
 		next;
 		mes "[Alcouskou]";
-		mes "Collecting those items will help you develop the skills neccessary to learn Find Stone.";
+		mes "Collecting those items will help you develop the skills necessary to learn Find Stone.";
 		set FINDSTONE, 1;
 		goto M_Menu;
 	M_Fling:
@@ -156,11 +157,11 @@ M_Menu:
 		mes "They can turn something as common as a rock on the ground into a very effective weapon.";
 		next;
 		mes "[Alcouskou]";
-		mes "They can throw a stone at a far away target with great accuracy and strength.";
+		mes "They can throw a stone at a target far away with great accuracy and strength.";
 		mes "They can throw it so powerfully that sometimes an enemy will become stunned by it.";
 		next;
 		mes "[Alcouskou]";
-		mes "These guild members call this skill ^5555FFStone Fling^000000.  It is extrememly useful and doesn't cost any zeny.";
+		mes "These guild members call this skill ^5555FFStone Fling^000000.  It is extremely useful and doesn't cost any zeny.";
 		next;
 		mes "[Alcouskou]";
 		mes "If you wish to learn Stone Fling you must first bring me ^5555FF2 Garlet and 2 Scell^000000.";
@@ -177,13 +178,13 @@ L_Sand:
 	if (BaseJob==Job_Thief && JobLevel<25) goto L_LowLvl1;
 	delitem 7041, 5;
 	delitem 7042, 1;
-	mes "Alright, you've got all the items.  Now its time to learn.... the... ultimate.... attack.... Sand Attack!!!";
+	mes "Alright, you've got all the items.  Now it's time to learn.... the... ultimate.... attack.... Sand Attack!!!";
 	next;
 	mes "[Alcouskou]";
-	mes "Look down at your feet.  See that? The very thing your stepping on is the secrect behind this skill.........  SAND!!";
+	mes "Look down at your feet.  See that? The very thing your stepping on is the secret behind this skill.........  SAND!!";
 	next;
 	mes "[Alcouskou]";
-	mes "Okay, grab a handfull....... yep, that much will do....... now.........";
+	mes "Okay, grab a handful....... yep, that much will do....... now.........";
 	next;
 	mes "[Alcouskou]";
 	mes "THROW IT AT ME!!!";
@@ -197,7 +198,7 @@ L_Sand:
 	mes "Anyways that's all there is too it....... (CRAP that's a lot of sand!!).... So yeah, Sand Attack, use it as a last resort...... (AWW MAN!!)";
 	next;
 	mes "[Alcouskou]";
-	mes "Oh and it does Earth Property damage....... (I gota finda better way to teach this).........";
+	mes "Oh and it does Earth Property damage....... (I gotta find a better way to teach this).........";
 	emotion e_swt;
 	skill 149,1,0;
 	set SANDATTACK, 0;
@@ -215,7 +216,7 @@ L_Sand:
 		mes "You need to have a ^5555FFJob level of 25^000000 to learn Sand Attack.";
 		close;
 	L_GotSand:
-		mes "Oh your back... hopefully not to throw anymore sand in my eyes, heh heh.... heh........ heh..............";
+		mes "Oh you're back... hopefully not to throw any more sand in my eyes, heh heh.... heh........ heh..............";
 		emotion e_swt;
 		close;
 
@@ -250,7 +251,7 @@ L_Back:
 		mes "You need a ^5555FFJob level of 35^000000 to learn Back Slide.";
 		close;
 	L_GotBack:
-		mes "Seeing as you already have Back Slide..... why don't you 'Back' on outa here.....";
+		mes "Seeing as you already have Back Slide..... why don't you 'Back' on outta here.....";
 		close;
 
 L_Find:
@@ -283,7 +284,7 @@ L_Find:
 		mes "You need ^5555FF1 Bear's Footskin, 1 Zargon, and 5 Spawns^000000 to learn Find Stone.";
 		close;
 	L_GotFind:
-		mes "Picking up stones can be fun but...... don't spend all day doing it ok?.....";
+		mes "Picking up stones can be fun but...... don't spend all day doing it OK?.....";
 		close;
 
 L_Fling:
@@ -291,7 +292,7 @@ L_Fling:
 	if ((countitem(910)<2) || (countitem(911)<2)) goto L_NotRdy4;
 	delitem 910,2;
 	delitem 911,2;
-	mes "Good! You look like your ready for me to teach you the Stone Fling skill.  Let us begin....";
+	mes "Good! You look like you're ready for me to teach you the Stone Fling skill.  Let us begin....";
 	next;
 	mes "[Alcouskou]";
 	mes "First, loosen up your arm.  Next, find a good quality stone using Find Stone.  Now close your eyes and visualize the target in your mind.";
@@ -305,13 +306,13 @@ L_Fling:
 	mes "Think of the stone as an extension of your body.  Keep the target clear in your mind! You are one with the stone, the stone is one with you.....";
 	next;
 	mes "[Alcouskou]";
-	mes "Open your eyes! SEE THE TARGET!! Throw the stone at the target as if you were hurrling yourself towards it! DO IT NOW!!";
+	mes "Open your eyes! SEE THE TARGET!! Throw the stone at the target as if you were hurling yourself towards it! DO IT NOW!!";
 	emotion e_go;
 	next;
 	mes "!!Whooooossshh!!................. !!Thwack!!";
 	next;
 	mes "[Alcouskou]";
-	mes "Haha! Excellent! It's a bullseye.  You have now masterd Stone Fling, congratulations.";
+	mes "Haha! Excellent! It's a bullseye.  You have now mastered Stone Fling, congratulations.";
 	emotion e_no1;
 	skill 152,1,0;
 	set STONEFLING, 0;
@@ -325,7 +326,7 @@ L_Fling:
 		mes "You need ^5555FF2 Scell and 2 Garlet^000000, and the ability to use ^5555FFFind Stone^000000 to learn Stone Fling.";
 		close;
 	L_GotFling:
-		mes "So Stone Fling is comming in handy huh? Just make sure you don't hit the wrong moster.";
+		mes "So Stone Fling is coming in handy huh? Just make sure you don't hit the wrong monster";
 		close;
 }
 
@@ -345,7 +346,7 @@ payon.gat,91,77,4	script	RuRumuni	99,{
 
 L_Start:
 	if(BAGNFNTY == 1) goto L_Check;
-	mes "Hello.  So you were sent by Alcouskou to obtain a ^5533FF'Leather Bag of Inifinity'^000000........";
+	mes "Hello.  So you were sent by Alcouskou to obtain a ^5533FF'Leather Bag of Infinity'^000000........";
 	mes "I will be more than happy to make one for you............";
 	next;
 	mes "[RuRumuni]";
@@ -376,7 +377,7 @@ L_Check:
 	mes "[RuRumuni]";
 	mes "Great you have everything I asked for.  Let me start making the bag right away.......";
 	next;
-	mes "~( 30 minutes later)~";
+	mes "~( 30 minutes later )~";
 	next;
 	mes "[RuRumuni]";
 	mes "Here you go, one Leather Bag of Infinity.  Enjoy!";

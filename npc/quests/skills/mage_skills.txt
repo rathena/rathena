@@ -14,6 +14,7 @@
 //= 1.2 Added Baby Class Support [Lupus]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploit [Lupus]
+//= 1.4a Fixed some typos [IVBela]
 //============================================================
 
 
@@ -36,14 +37,14 @@ L_Start:
 
 	M_0:
 		mes "[BLIZZARDRISS]";
-		mes "For many years I studied the ancient magic of Geffen, and I recently re-discovered a forgotten magic spell that is quite usefull.";
+		mes "For many years I studied the ancient magic of Geffen, and I recently re-discovered a forgotten magic spell that is quite useful.";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "The spell uses your 'pyscho-kenetic energy' to 'coat' your body in a magical shield, protecting you from enemy attacks.";
+		mes "The spell uses your 'pyschokinetic energy' to 'coat' your body in a magical shield, protecting you from enemy attacks.";
 		next;
 		mes "[BLIZZARDRISS]";
 		mes "Only highly trained magic users can learn this amazing spell.";
-		mes "Those who want to use this spell must tap into the hidden energies and abilities burried deep within!";
+		mes "Those who want to use this spell must tap into the hidden energies and abilities buried deep within!";
 		next;
 		mes "[BLIZZARDRISS]";
 		mes "The spell is called ^5555FF'Energy Coat'^000000!.  Would you like me to teach it to you?";
@@ -111,6 +112,6 @@ L_GetSkill:
 		close;
 
 L_GotSkill:
-	mes "Well hello there.  The 'Energy Coat' skill is great isn't it? Anyway, good luck with your journey.";
+	mes "Well hello there.  The 'Energy Coat' skill is great, isn't it? Anyway, good luck with your journey.";
 	close;
 }

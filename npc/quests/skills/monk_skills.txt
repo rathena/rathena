@@ -60,8 +60,8 @@ L_noitems:
 	close;
 	
 L_nomonk:
-	mes "It's seems that your soul is disagree with your body";
-	mes "come back when your body and your soul will be like Ying and Yang.";
+	mes "It seems that your soul is disagree with your body.";
+	mes "Come back when your body and your soul will be like Yin and Yang.";
 	emotion e_gasp;
 	close;
 	
@@ -72,6 +72,6 @@ L_alreadyhave:
 
 L_heavymonk:
 	mes "Come back when you've cleansed";
-	mes "youself of your worldly possesions.";
+	mes "yourself of your worldly possessions.";
 	close;
 }

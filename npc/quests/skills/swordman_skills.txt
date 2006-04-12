@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.5
+//= 1.5a
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Updated the NPC to allow subclasses of swordsman to learn the skills, [MasterOfMuppets]
 //=	1.5 Fixed exploits [Lupus]
+//= 1.5a Fixed some typos [IVBela]
 //============================================================
 
 
@@ -55,20 +56,20 @@ L_Start:
 	emotion e_heh;
 	next;
 	mes "[Leon]";
-	if(sex==1)mes "I like a Swordsman who isn't afraid to use a powerfull skill such as that.";
-	if(sex==0)mes "Now, now, don't be shy.  It's ok for girls to like Bash.";
-	if(sex==0)mes "Afterall, whether your a Swordsman or Swordswoman, there's no denying the power of Bash!";
+	if(sex==1)mes "I like a Swordsman who isn't afraid to use a powerful skill such as that.";
+	if(sex==0)mes "Now, now, don't be shy.  It's OK for girls to like Bash.";
+	if(sex==0)mes "After all, whether your a Swordsman or Swordswoman, there's no denying the power of Bash!";
 	next;
 	mes "[Leon]";
-	mes "As great as Bash is though, I often felt that it could be even better if there was someway to stun an opponent with it.";
-	mes "I decided to withdraw from the battlefield and research ways of making bash more powerfull.";
+	mes "As great as Bash is though, I often felt that it could be even better if there was some way to stun an opponent with it.";
+	mes "I decided to withdraw from the battlefield and research ways of making bash more powerful.";
 	next;
 	mes "[Leon]";
-	mes "I discovered that if one could strike an enemy's weak point with a precisely placed Bash, an opponent would be left utterly parralyzed!!";
+	mes "I discovered that if one could strike an enemy's weak point with a precisely placed Bash, an opponent would be left utterly paralyzed!!";
 	next;
 	mes "[Leon]";
 	mes "I then went on to develop the skill, ^ff0000'Fatal Blow'^000000, which allows you to do just that!";
-	mes "Will rigorous training, one can learn to stun an opponent with a mighty Bash.";
+	mes "With rigorous training, one can learn to stun an opponent with a mighty Bash.";
 	next;
 	mes "[Leon]";
 	mes "Since you seem to be so fond of Bash, I'd be willing to teach you the skill.";
@@ -113,7 +114,7 @@ L_Start:
 		close;
 
 L_Check:
-	mes "So your back.  Did you get what I asked for?";
+	mes "So you're back.  Did you get what I asked for?";
 	next;
 	mes "[Leon]";
 	if(countitem(1752)<10 || countitem(1751)<10 || countitem(532)<1 || countitem(962)<30 || countitem(526)<5) goto L_NoItems;
@@ -126,7 +127,7 @@ L_Check:
 	mes "Great work.  You have everything I need for me to teach you Fatal Blow.";
 	next;
 	mes "[Leon]";
-	mes "Ok, lets get started.";
+	mes "OK, lets get started.";
 	next;
 	mes "!SMACK!~!CRACK!~!THWACK!~!BASH!.......... !SMACK!~!CRACK!~!THWACK!~!BASH!..........";
 	next;
@@ -173,13 +174,13 @@ L_Other:
 L_Start:
 	if (MOVHPREC == 1) goto L_Check;
 	if (getskilllv(144)>0) goto L_GotSkill;
-	mes "Oh no! You must have been hurt in battle! Are you ok?";
-	mes "It must have been a hard fought battle for you to recieve such serious injuries....";
+	mes "Oh no! You must have been hurt in battle! Are you OK?";
+	mes "It must have been a hard fought battle for you to receive such serious injuries....";
 	emotion e_swt2;
 	next;
 	mes "[Knight De Thomas]";
-	mes "Being a Swordsman or Knight comes with a lot of responsiblity and requires a great deal of self sacrifice.";
-	mes "For Swordsmen and Knights there is a wonderfull skill that can aid in the recovery of HP.";
+	mes "Being a Swordsman or Knight comes with a lot of responsibility and requires a great deal of self sacrifice.";
+	mes "For Swordsmen and Knights there is a wonderful skill that can aid in the recovery of HP.";
 	next;
 	mes "[Knight De Thomas]";
 	mes "I present to you..... ^5555FF'Moving HP Recovery'^000000!! This skill allows you to recover HP while moving!";
@@ -199,8 +200,8 @@ L_Start:
 		mes "and ^5555FF1 Moth Wings^000000.";
 		next;
 		mes "[Knight De Thomas]";
-		mes "The bottles are proof that you have fought feircely and have used many potions.  The Padded Armor is proof of an experienced fighter.";
-		mes "The Moth Wings..... well... really aren't necessary.  It's just that my niece recieved a bug hunting assignment for summer vacation.......";
+		mes "The bottles are proof that you have fought fiercely and have used many potions.  The Padded Armor is proof of an experienced fighter.";
+		mes "The Moth Wings..... well... really aren't necessary.  It's just that my niece received a bug hunting assignment for summer vacation.......";
 		next;
 		mes "[Knight De Thomas]";
 		mes "I would get them myself... it's just... I must work here all day long so I don't have any time to go out and get them.......";
@@ -256,7 +257,7 @@ L_Check:
 		mes "You are not yet experienced enough to learn this skill.  Come back when you have a job level of at least 35.";
 		close;
 	L_GotSkill:
-		mes "Ah, you're looking well.  That HP Moving Recovery skill must be very helpfull.";
+		mes "Ah, you're looking well.  That HP Moving Recovery skill must be very helpful.";
 		mes "Well, continued success on your adventure!";
 		close;
 
@@ -299,8 +300,8 @@ L_Start:
 		mes "When your health is low, you can call upon your hidden potential by provoking yourself.";
 		next;
 		mes "[Juan]";
-		mes "A surge of energy will flow through your body giving you a greater attack prowess at the cost of defensive strength.";
-		mes "With this you will be able to fight on with a FIREY RAGE and an absolute disregard to your own safety!!";
+		mes "A surge of energy will flow through your body giving you greater attack power at the cost of defensive strength.";
+		mes "With this you will be able to fight on with a FIERY RAGE and an absolute disregard to your own safety!!";
 		next;
 		mes "[Juan]";
 		mes "The enemy will be shocked by your new found strength!!";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.3c
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -18,11 +18,12 @@
 //= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
 //= 1.3a fixed an item ID typo, thx 2Spiritual Kid
 //= 1.3b Splitted into different files [DracoRPG]
+//= 1.3c Fixed some typos [IVBela]
 //============================================================
 
 
 //============================================================
-// SAGE SKILL - CREATE CONVERTER + ELEMENTAL CHARGE
+// SAGE SKILL - CREATE CONVERTER + ELEMENTAL CHANGE
 //============================================================
 yuno_in03.gat,176,24,3	script	Mischna	755,{
 	mes "[Mischna]";
@@ -42,19 +43,19 @@ yuno_in03.gat,176,24,3	script	Mischna	755,{
 	mes "7 Horns";
 	mes "12 Rainbow Shells";
 	mes "10 Snail Shells";
-	mes "4 Empty Scrolls";
+	mes "4 Blank Scrolls";
 	next;
 	
 	mes "[Mischna]";
 	mes "Let me check your items.";
 	next;
 	
-	if(countitem(904)<10 || countitem(947)<7 || countitem(1013)<12 || countitem(946)<10 || countitem(7433)<4) goto L_noitems;//Items: Scorpion_Tail, Horn, Rainbow_Shell, Snail's_Shell, Empty_Scroll,
+	if(countitem(904)<10 || countitem(947)<7 || countitem(1013)<12 || countitem(946)<10 || countitem(7433)<4) goto L_noitems;//Items: Scorpion_Tail, Horn, Rainbow_Shell, Snail's_Shell, Blank_Scroll,
 	delitem 904, 10;//Items: Scorpion_Tail,
 	delitem 947, 7;//Items: Horn,
 	delitem 1013, 12;//Items: Rainbow_Shell,
 	delitem 946, 10;//Items: Snail's_Shell,
-	delitem 7433, 4;//Items: Empty_Scroll,
+	delitem 7433, 4;//Items: Blank_Scroll,
 	
 	mes "[Mischna]";
 	mes "I see you have what we need,";
@@ -86,7 +87,7 @@ L_sagefail:
 	mes "[Mischna]";
 	mes "You don't have enough items.";
 	mes "Come back when you have all";
-	mes "the required items for me.";
+	mes "the required items for me";
 	mes "to give you this power over";
 	mes "the elements.";
 	close;
@@ -107,7 +108,7 @@ L_elemental:
 	next;
 	
 	mes "[Mischna]";
-	mes "I can only except one set.";
+	mes "I can only accept one set.";
 	mes "20 Red blood (fire)";
 	mes "20 Crystal Blue (water)";
 	mes "20 Wind of Verdure (Wind)";
@@ -119,7 +120,7 @@ L_elemental:
 	mes "you one, so choose carefully!";
 	next;
 	
-	menu "Water Charge",sage_1, "Earth Charge",sage_2, "Fire Charge",sage_3, "Wind Charge",sage_4;
+	menu "Elemental Change Water",sage_1, "Elemental Change Earth",sage_2, "Elemental Change Fire",sage_3, "Elemental Change Wind",sage_4;
 
 		sage_1:
 		if(countitem(991)<20)goto L_sagefail;//Items: Crystal_Blue,
