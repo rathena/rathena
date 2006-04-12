@@ -83,7 +83,7 @@ while(1)
 
 		monster "juperos_02.gat",24,276,"1st Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate1Dead";
 		monster "juperos_02.gat",240,29,"2nd Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate2Dead";
-		monster "juperos_02.gat",282,183,"3d Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate3Dead";
+		monster "juperos_02.gat",282,183,"3rd Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate3Dead";
 		end;
 
 OnGate1Dead:

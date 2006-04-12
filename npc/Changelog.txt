@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/12
+	* Fixed a typo in quests/juperos.txt [Playtester]
 	* Fixed Bio Lab spawns to official jRO [Playtester]
 	- Also included custom spawns for Bio Labs
 	  (Floor 1 can't be accessed directly so it should be harder)
