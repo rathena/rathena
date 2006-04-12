@@ -81,7 +81,7 @@ pay_fild05.gat,86,90,5,5	monster	Green Plant	1080,4,900000,450000,1
 // pay_fild06 - Payon Forest
 //==================================================
 pay_fild06.gat,0,0,0,0	monster	Wormtail	1024,100,0,0,0
-pay_fild06.gat,0,0,0,0	monster	Thief Bug Female	1053,40,0,0,0
+pay_fild06.gat,0,0,0,0	monster	Thief Bug Female	1017,40,0,0,0
 pay_fild06.gat,0,0,0,0	monster	Spore	1014,40,0,0,0
 pay_fild06.gat,0,0,0,0	monster	Poporing	1031,20,0,0,0
 pay_fild06.gat,211,191,2,10	monster	Red Mushroom	1085,8,180000,90000,1

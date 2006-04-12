@@ -63,7 +63,7 @@ hu_fild04.gat,0,0,0,0	monster	Deleter	1384,10,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Deleter	1385,10,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 hu_fild04.gat,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1
-hu_fild04.gat,0,0,0,0	monster	Blue Plant	1079,5,180000,90000,1
+hu_fild04.gat,0,0,0,0	monster	Blue Plant	1079,5,360000,180000,1
 
 //==================================================
 // hu_fild05 - Hugel Field

@@ -21,7 +21,7 @@ lou_dun01.gat,0,0,0,0	monster	Grizzly	1381,15,0,0,0
 lou_dun01.gat,0,0,0,0	monster	Increase Soil	1516,15,0,0,0
 lou_dun01.gat,215,159,40,80	monster	Side Winder	1037,10,300000,150000,0
 lou_dun01.gat,197,77,10,10	monster	Black Mushroom	1084,5,0,0,0
-lou_dun01.gat,0,0,0,0	monster	Shining Plant	1083,5,0,0,0
+lou_dun01.gat,0,0,0,0	monster	Shining Plant	1083,5,1800000,900000,1
 lou_dun01.gat,0,0,0,0	monster	Leib Olmai	1306,1,300000,150000,0
 
 //==================================================

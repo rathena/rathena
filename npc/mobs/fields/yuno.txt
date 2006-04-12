@@ -45,7 +45,7 @@ yuno_fild02.gat,0,0,0,0	monster	The Paper	1375,1,0,0,0
 yuno_fild02.gat,0,0,0,0	monster	Arc Angeling	1388,1,3600000,1800000,1
 yuno_fild02.gat,0,0,0,0	monster	Red Plant	1078,20,180000,90000,1
 yuno_fild02.gat,0,0,0,0	monster	Yellow Plant	1081,20,180000,90000,1
-yuno_fild02.gat,0,0,0,0	monster	Blue Plant	1079,3,180000,90000,1
+yuno_fild02.gat,0,0,0,0	monster	Blue Plant	1079,3,360000,180000,1
 yuno_fild02.gat,0,0,0,0	monster	Shining Plant	1083,1,180000,90000,1
 
 //==================================================
@@ -88,7 +88,7 @@ yuno_fild05.gat,0,0,0,0	monster	Arc Angeling	1388,1,3600000,1800000,1
 yuno_fild05.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
 yuno_fild05.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
 yuno_fild05.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
-yuno_fild05.gat,0,0,0,0	monster	Blue Plant	1079,4,180000,90000,1
+yuno_fild05.gat,0,0,0,0	monster	Blue Plant	1079,4,360000,180000,1
 
 //==================================================
 // yuno_fild06 - Yuno Field

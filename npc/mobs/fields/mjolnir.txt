@@ -20,7 +20,7 @@ mjolnir_01.gat,0,0,0,0	monster	Creamy	1018,20,0,0,0
 mjolnir_01.gat,0,0,0,0	monster	Stainer	1174,20,0,0,0
 mjolnir_01.gat,75,85,25,25	monster	Green Plant	1080,5,180000,90000,1
 mjolnir_01.gat,78,219,25,25	monster	Green Plant	1080,5,180000,90000,1
-mjolnir_01.gat,311,271,25,25	monster	Blue Plant	1079,5,90000,45000,1
+mjolnir_01.gat,311,271,25,25	monster	Blue Plant	1079,5,360000,180000,1
 mjolnir_01.gat,75,85,25,25	monster	Shining Plant	1083,1,1800000,900000,1
 mjolnir_01.gat,78,219,25,25	monster	Shining Plant	1083,1,1800000,900000,1
 
@@ -246,5 +246,5 @@ mjolnir_11.gat,332,327,0,0	monster	Blue Plant	1079,1,360000,180000,1
 // mjolnir_12 - Mt.Mjolnir
 //==================================================
 mjolnir_12.gat,0,0,0,0	monster	Dustiness	1114,50,0,0,0
-mjolnir_12.gat,0,0,0,0	monster	Thief Bug Female	1053,20,0,0,0
+mjolnir_12.gat,0,0,0,0	monster	Thief Bug Female	1017,20,0,0,0
 mjolnir_12.gat,0,0,0,0	monster	Stem Worm	1215,20,0,0,0

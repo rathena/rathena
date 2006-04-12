@@ -20,7 +20,7 @@ orcsdun01.gat,0,0,0,0	monster	Steel Chonchon	1042,10,0,0,0
 orcsdun01.gat,0,0,0,0	monster	Drainliar	1111,5,0,0,0
 orcsdun01.gat,83,50,5,5	monster	White Plant	1082,2,180000,90000,1
 orcsdun01.gat,58,67,10,10	monster	White Plant	1082,3,180000,90000,1
-orcsdun01.gat,167,133,5,5	monster	Black Mushroom	1084,5,
+orcsdun01.gat,167,133,5,5	monster	Black Mushroom	1084,5,360000,180000,1
 orcsdun01.gat,67,34,5,5	monster	Black Mushroom	1084,5,360000,180000,1
 
 //==================================================

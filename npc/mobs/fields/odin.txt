@@ -22,7 +22,7 @@ odin_tem01.gat,0,0,0,0	monster	Plasma	1694,5,0,0,0
 odin_tem01.gat,0,0,0,0	monster	Plasma	1695,5,0,0,0
 odin_tem01.gat,0,0,0,0	monster	Plasma	1696,5,0,0,0
 odin_tem01.gat,0,0,0,0	monster	Plasma	1697,5,0,0,0
-odin_tem01.gat,0,0,0,0	monster	Blue Plant	1079,10,180000,90000,1
+odin_tem01.gat,0,0,0,0	monster	Blue Plant	1079,10,360000,180000,1
 odin_tem01.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 
 //==================================================
@@ -34,7 +34,7 @@ odin_tem02.gat,0,0,0,0	monster	Skeggiold	1754,10,0,0,0
 odin_tem02.gat,0,0,0,0	monster	Skeggiold	1755,10,0,0,0
 odin_tem02.gat,0,0,0,0	monster	Plasma	1693,30,0,0,0
 odin_tem02.gat,0,0,0,0	monster	Retribution	1702,10,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Blue Plant	1079,10,180000,90000,1
+odin_tem02.gat,0,0,0,0	monster	Blue Plant	1079,10,360000,180000,1
 
 //==================================================
 // odin_tem03 - Odin Temple F3
@@ -47,5 +47,5 @@ odin_tem03.gat,0,0,0,0	monster	Frus	1753,20,0,0,0
 odin_tem03.gat,0,0,0,0	monster	Skeggiold	1754,5,0,0,0
 odin_tem03.gat,0,0,0,0	monster	Skeggiold	1755,5,0,0,0
 odin_tem03.gat,0,0,0,0	monster	White Plant	1082,10,180000,90000,1
-odin_tem03.gat,0,0,0,0	monster	Blue Plant	1079,10,180000,90000,1
+odin_tem03.gat,0,0,0,0	monster	Blue Plant	1079,10,360000,180000,1
 odin_tem03.gat,0,0,0,0	monster	Valkyrie Randgris	1751,1,3600000,1800000,1
