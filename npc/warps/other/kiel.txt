@@ -1,0 +1,61 @@
+//===== Athena Script ========================================
+//= Kiel Warp Script (Kiel Buildings)
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points for all Kiel Buildings
+//===== Additional Comments: =================================
+//= 1.0 Added Kiel Warps thanks to Celestria [Playtester]
+//============================================================
+
+
+//Entrance Level
+kh_school.gat,77,155,0	warp	school01	1,1,yuno_fild08.gat,154,189
+kh_school.gat,30,184,0	warp	school02	1,1,kh_school.gat,63,75
+kh_school.gat,30,125,0	warp	school03	1,1,kh_school.gat,63,14
+kh_school.gat,34,177,0	warp	school04	1,1,kh_school.gat,147,57
+kh_school.gat,34,133,0	warp	school05	1,1,kh_school.gat,147,17
+//Basement Level
+kh_school.gat,153,57,0	warp	school06	1,1,kh_school.gat,39,177
+kh_school.gat,153,17,0	warp	school07	1,1,kh_school.gat,39,133
+//Upper Level
+kh_school.gat,71,75,0	warp	school08	1,1,kh_school.gat,39,184
+kh_school.gat,71,14,0	warp	school09	1,1,kh_school.gat,39,125
+kh_school.gat,12,48,0	warp	school10	1,1,kh_school.gat,182,117
+kh_school.gat,187,117,0	warp	school11	1,1,kh_school.gat,17,48
+//Detention Room
+kh_school.gat,63,80,0	warp	school12	1,1,kh_school.gat,118,144
+kh_school.gat,118,139,0	warp	school13	1,1,kh_school.gat,63,75
+//Yuno Field
+yuno_fild08.gat,148,189,0	warp	school14	1,1,kh_school.gat,71,158
+
+
+//Entrance
+yuno_fild02.gat,92,213,0	warp	vila18	1,1,kh_vila.gat,79,14
+//Entrance Hall
+kh_vila.gat,79,10,0	warp	vila01	1,1,yuno_fild02.gat,92,208
+kh_vila.gat,70,38,0	warp	vila02	1,1,kh_vila.gat,43,38
+kh_vila.gat,70,54,0	warp	vila03	1,1,kh_vila.gat,43,55
+kh_vila.gat,91,49,0	warp	vila04	1,1,kh_vila.gat,118,47
+kh_vila.gat,84,67,0	warp	vila05	1,1,kh_vila.gat,45,106
+//Lounge and Atrium
+kh_vila.gat,47,39,0	warp	vila06	1,1,kh_vila.gat,74,38
+kh_vila.gat,47,55,0	warp	vila07	1,1,kh_vila.gat,74,54
+kh_vila.gat,34,67,0	warp	vila08	1,1,kh_vila.gat,20,106
+//Dining Room, Kitchen, Store Room
+kh_vila.gat,20,102,0	warp	vila09	1,1,kh_vila.gat,34,63
+kh_vila.gat,45,102,0	warp	vila10	1,1,kh_vila.gat,84,63
+kh_vila.gat,32,129,0	warp	vila11	1,1,kh_vila.gat,22,170
+kh_vila.gat,22,166,0	warp	vila12	1,1,kh_vila.gat,32,125
+kh_vila.gat,27,189,0	warp	vila13	1,1,kh_vila.gat,185,18
+kh_vila.gat,191,18,0	warp	vila14	1,1,kh_vila.gat,27,185
+//Stairwell and Upstairs
+kh_vila.gat,114,47,0	warp	vila15	1,1,kh_vila.gat,86,49
+kh_vila.gat,126,76,0	warp	vila16	1,1,kh_vila.gat,180,175
+kh_vila.gat,180,170,0	warp	vila17	1,1,kh_vila.gat,127,71
+
+kh_vila.gat,174,72,0	warp	vila19	1,1,kh_vila.gat,181,125

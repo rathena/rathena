@@ -26,6 +26,8 @@
 	-----
 
 =========================
+04/12
+	* Fixed Violy's Violin[4] drop rate. It is 2%. [Playtester]
 04/11
 	* Corrected some items bonus, weight. Thanks 2 Haplo [Lupus]
 	* Modified Mastela Fruit price to 8500, according to RockmanEXE. [erKURITA]
