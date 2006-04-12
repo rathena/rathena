@@ -2680,15 +2680,20 @@ static void npc_debug_warps_sub(struct npc_data *nd)
 	m = map_mapindex2mapid(nd->u.warp.mapindex);
 	if (m < 0) return; //Warps to another map, nothing to do about it.
 
-	if (!map_getcell(m, nd->u.warp.x, nd->u.warp.y, CELL_CHKNPC))
-		return;
-
-	ShowWarning("Warp %s/%s at %s(%d,%d) warps directly on top of an area npc at %s(%d,%d)\n",
-		nd->name, nd->exname,
-	  	map[nd->bl.m].name, nd->bl.x, nd->bl.y,
-	  	map[m].name, nd->u.warp.x, nd->u.warp.y
-		);
-	
+	if (map_getcell(m, nd->u.warp.x, nd->u.warp.y, CELL_CHKNPC)) {
+		ShowWarning("Warp %s at %s(%d,%d) warps directly on top of an area npc at %s(%d,%d)\n",
+			nd->name,
+			map[nd->bl.m].name, nd->bl.x, nd->bl.y,
+			map[m].name, nd->u.warp.x, nd->u.warp.y
+			);
+	}
+	if (map_getcell(m, nd->u.warp.x, nd->u.warp.y, CELL_CHKNOPASS)) {
+		ShowWarning("Warp %s at %s(%d,%d) warps to a non-walkable tile at %s(%d,%d)\n",
+			nd->name,
+			map[nd->bl.m].name, nd->bl.x, nd->bl.y,
+			map[m].name, nd->u.warp.x, nd->u.warp.y
+			);
+	}
 }
 
 static void npc_debug_warps(void)
