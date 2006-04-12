@@ -130,8 +130,8 @@
 1457,2,104,999,55
 //-- Trident <-- BS_SPEAR & 8 Oridecon, 10 Steel, 5 Aquamarine
 1460,3,104,984,8,999,10,720,5
-//-- Halberd <-- BS_SPEAR & 3 Oridecon, 10 Steel
-1463,3,104,984,3,999,10
+//-- Halberd <-- BS_SPEAR & 12 Oridecon, 10 Steel
+1463,3,104,984,12,999,10
 //-- Lance <-- BS_SPEAR & 12 Oridecon, 3 Ruby, 2 Evil Horn
 1410,3,104,984,12,723,3,923,2
 //----------------------------------------------
