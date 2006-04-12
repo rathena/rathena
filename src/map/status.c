@@ -627,9 +627,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	b_matk2 = sd->matk2;
 	b_mdef = sd->mdef;
 	b_mdef2 = sd->mdef2;
-	b_class = sd->vd.class_;
 	b_base_atk = sd->base_atk;
-
+	b_class = sd->vd.class_;
+	if (sd->special_state.changebase) //Clear suit. (if equipment is still on, vd.class_ will revert back to b_class's value)
+		sd->vd.class_ = sd->status.class_;
+	
 	pc_calc_skilltree(sd);	// スキルツリ?の計算
 	
 	sd->max_weight = max_weight_base[sd->status.class_]+sd->status.str*300;

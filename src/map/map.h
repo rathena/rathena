@@ -507,6 +507,7 @@ struct map_session_data {
 		unsigned no_gemstone : 1;
 		unsigned infinite_endure : 1;
 		unsigned intravision : 1; // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
+		unsigned changebase : 1; //Specifies when you are wearing a change-base piece of equipment.
 	} special_state;
 	int char_id, login_id1, login_id2, sex;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]

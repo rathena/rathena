@@ -6335,9 +6335,10 @@ int buildin_changebase(struct script_state *st)
 		return 0;
 	}
 
-	//If you are already using a special view (disguises?) prevent overriding it. [Skotlex]
-	if (sd->vd.class_ == sd->status.class_)
+	if(!sd->disguise && !sd->special_state.changebase) {
 		status_set_viewdata(&sd->bl, vclass);
+		sd->special_state.changebase =1; //Character on suit.
+	}
 
 	return 0;
 }
