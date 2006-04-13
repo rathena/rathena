@@ -25,7 +25,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 
 // ˆÊ’u‚Ì‹­§ˆÚ“®(‚«”ò‚Î‚µ‚È‚Ç)
 int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkpath);
-int unit_warp(struct block_list *bl, int map, int x, int y, int type);
+int unit_warp(struct block_list *bl, int map, short x, short y, int type);
 int unit_setdir(struct block_list *bl,unsigned char dir);
 int unit_getdir(struct block_list *bl);
 

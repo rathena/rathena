@@ -114,7 +114,7 @@ int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int class_);
 int mob_once_spawn(struct map_session_data *sd,char *mapname,
-	int x,int y,const char *mobname,int class_,int amount,const char *event);
+	short x,short y,const char *mobname,int class_,int amount,const char *event);
 int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
 	int x0,int y0,int x1,int y1,
 	const char *mobname,int class_,int amount,const char *event);

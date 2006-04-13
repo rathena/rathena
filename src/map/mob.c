@@ -256,7 +256,7 @@ int mob_get_random_id(int type, int flag, int lv) {
  *------------------------------------------
  */
 int mob_once_spawn (struct map_session_data *sd, char *mapname,
-	int x, int y, const char *mobname, int class_, int amount, const char *event)
+	short x, short y, const char *mobname, int class_, int amount, const char *event)
 {
 	struct mob_data *md = NULL;
 	struct spawn_data data;
@@ -633,7 +633,7 @@ int mob_spawn (struct mob_data *md)
 
 		if ((md->spawn->x == 0 && md->spawn->y == 0) || md->spawn->xs || md->spawn->ys)
 		{	//Monster can be spawned on an area.
-			int x, y, xs, ys;
+			short x, y, xs, ys;
 			if (md->spawn->x == 0 && md->spawn->y == 0)
 				xs = ys = -1;
 			else {
@@ -917,9 +917,11 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			(md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
 			unit_can_move(&md->bl))
 		{
+			short x = bl->x, y = bl->y;
 			mob_stop_attack(md);
-			unit_walktobl(&md->bl, bl, MOB_SLAVEDISTANCE, 0);
-		}
+			if (map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1))
+				unit_walktoxy(&md->bl, x, y, 0);
+		}	
 	} else if (bl->m != md->bl.m && map_flag_gvg(md->bl.m)) {
 		//Delete the summoned mob if it's in a gvg ground and the master is elsewhere. [Skotlex]
 		if(md->special_state.ai>0)
@@ -2305,7 +2307,7 @@ int mob_warpslave_sub(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md=(struct mob_data *)bl;
 	struct block_list *master;
-	int x,y,range=0;
+	short x,y,range=0;
 	master = va_arg(ap, struct block_list*);
 	range = va_arg(ap, int);
 	
@@ -2388,7 +2390,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		amount+=k; //Increase final value by same amount to preserve total number to summon.
 	}
 	for(;k<amount;k++) {
-		int x,y;
+		short x,y;
 		data.class_ = value[k%count]; //Summon slaves in round-robin fashion. [Skotlex]
 		if (mobdb_checkid(data.class_) == 0)
 			continue;
@@ -2667,7 +2669,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		{
 			// êŠŽw’è
 			struct block_list *bl = NULL;
-			int x = 0, y = 0;
+			short x = 0, y = 0;
 			if (ms[i].target <= MST_AROUND) {
 				switch (ms[i].target) {
 					case MST_TARGET:

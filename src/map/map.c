@@ -1380,7 +1380,7 @@ static int map_count_sub(struct block_list *bl,va_list ap)
  * &4 = there shouldn't be any players around the target tile (use the no_spawn_on_player setting)
  *------------------------------------------
  */
-int map_search_freecell(struct block_list *src, int m, int *x,int *y, int rx, int ry, int flag) {
+int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx, int ry, int flag) {
 	int tries, spawn=0;
 	int bx, by;
 	int rx2 = 2*rx+1;

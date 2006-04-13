@@ -2349,7 +2349,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 			switch(skl->skill_id) {
 				case RG_INTIMIDATE:
 					if (unit_warp(src,-1,-1,-1,3) == 0) {
-						int x,y;
+						short x,y;
 						map_search_freecell(src, 0, &x, &y, 1, 1, 0);
 						if (!status_isdead(target))
 						unit_warp(target, -1, x, y, 3);
@@ -6003,7 +6003,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case WZ_METEOR:				//ƒ?ƒeƒIƒXƒg?ƒ€
 		{
 			int flag=0, area = skill_get_splash(skillid, skilllv);
-			int tmpx, tmpy, x1 = 0, y1 = 0;
+			short tmpx, tmpy, x1 = 0, y1 = 0;
 			if (sc && sc->data[SC_MAGICPOWER].timer != -1)
 				flag = flag|2; //Store the magic power flag for future use. [Skotlex]
 			for(i=0;i<2+(skilllv>>1);i++) {

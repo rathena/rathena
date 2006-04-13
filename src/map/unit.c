@@ -423,7 +423,7 @@ int unit_getdir(struct block_list *bl)
 //Warps a unit/ud to a given map/position. 
 //In the case of players, pc_setpos is used.
 //it respects the no warp flags, so it is safe to call this without doing nowarpto/nowarp checks.
-int unit_warp(struct block_list *bl,int m,int x,int y,int type)
+int unit_warp(struct block_list *bl,int m,short x,short y,int type)
 {
 	struct unit_data *ud;
 	nullpo_retr(0, bl);
