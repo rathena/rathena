@@ -1399,7 +1399,7 @@ int parse_fromchar(int fd) {
 		session[fd]->eof = 1;
 	if(session[fd]->eof) {
 		if (id < MAX_SERVERS) {
-			ShowWarning("Char-server '%s' has disconnected.\n", server[id].name);
+			ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
 			login_log("Char-server '%s' has disconnected (ip: %s)." RETCODE,
 			          server[id].name, ip);
 			server_fd[id] = -1;
