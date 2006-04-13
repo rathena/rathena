@@ -27,6 +27,7 @@ geffen_in.gat	mapflag	nopenalty
 gonryun.gat	mapflag	nopenalty
 gon_in.gat	mapflag	nopenalty
 gon_test.gat	mapflag	nopenalty
+hugel.gat	mapflag	nopenalty
 in_orcs01.gat	mapflag	nopenalty
 izlude.gat	mapflag	nopenalty
 izlude_in.gat	mapflag	nopenalty

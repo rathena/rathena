@@ -67,8 +67,6 @@ lhz_cube.gat	mapflag	noteleport
 lhz_in01.gat	mapflag	noteleport
 lhz_in02.gat	mapflag	noteleport
 lhz_in03.gat	mapflag	noteleport
-juperos_01.gat	mapflag	noteleport
-juperos_02.gat	mapflag	noteleport
 jupe_area1.gat	mapflag	noteleport
 jupe_area2.gat	mapflag	noteleport
 jupe_core.gat	mapflag	noteleport
