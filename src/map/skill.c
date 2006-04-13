@@ -1334,8 +1334,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		for (i = 0; i < MAX_PC_BONUS && sd->autospell[i].id; i++) {
 
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
-			//Prevents skill from retriggering themselves. [Skotlex]
-			if (skill == skillid || skillnotok(skill, sd))
+			
+			if (skillnotok(skill, sd))
 				continue;
 
 			//skill2 reused to store skilllv.
@@ -1366,7 +1366,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			//Set canact delay. [Skotlex]
 			ud = unit_bl2ud(src);
 			if (ud) {
-				rate = skill_delayfix(src, skill, skill2);
+				rate = skill_delayfix(src, skill, skill2)/2;
 				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0)
 					ud->canact_tick = tick+rate;
 			}
@@ -1497,7 +1497,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			//Set canact delay. [Skotlex]
 			ud = unit_bl2ud(bl);
 			if (ud) {
-				rate = skill_delayfix(bl, skillid, skilllv);
+				rate = skill_delayfix(bl, skillid, skilllv)/2;
 				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0)
 					ud->canact_tick = tick+rate;
 			}
