@@ -564,6 +564,7 @@ lighthalzen.gat,312,234,2	script	Beggar	777,{
 	close;
 
 L_give:
+	if(Zeny < 50)goto L_zeny;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Here you go,";
 	mes "take this.";
@@ -635,6 +636,13 @@ L_give:
 	mes "It might be a lot";
 	mes "to take in, I know.";
 	close;
+
+L_zeny:
+	mes "[Beggar]";
+	mes "You don't seem to have";
+	mes "enough zeny.";
+	close;
+
 }
 
 // ---------------------------------------------------------------------------
