@@ -27,13 +27,13 @@ PLUGIN_EVENTS_TABLE = {
 
 #if defined(_WIN32) || defined(MINGW)
 	int sig_init() {
-		printf("This plugin is not supported - Enable 'exchndl' instead!");
+		ShowError("sig: This plugin is not supported - Enable 'exchndl' instead!");
 		return 0;
 	}
 	int sig_final() { return 0; }
 #elif defined (__NETBSD__) || defined (__FREEBSD__)
 	int sig_init() {
-		printf("This plugin is not supported!");
+		ShowError("sig: This plugin is not supported!");
 		return 0;
 	}
 	int sig_final() { return 0; }
@@ -114,7 +114,7 @@ void sig_dump(int sn)
 		size_t size;
 	#endif
 
-		printf ("Dumping stack to '"CL_WHITE"%s"CL_RESET"'... ", file);
+		ShowNotice ("Dumping stack to '"CL_WHITE"%s"CL_RESET"'...\n", file);
 		if ((revision = getrevision()) != NULL)
 			fprintf(fp, "Version: svn%s \n", revision);
 		else
@@ -135,7 +135,7 @@ void sig_dump(int sn)
 		free(stack);
 	#endif
 
-		printf ("Done.\n");
+		ShowNotice("%s Saved.\n", file);
 		fflush(stdout);
 		fclose(fp);
 	}

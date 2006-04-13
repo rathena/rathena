@@ -42,5 +42,9 @@ clean:
 
 sample.$(PLUGINEXT): sample.c $(COMMON_H)
 sig.$(PLUGINEXT): sig.c $(COMMON_H)
+	$(CC) $(CFLAGS) -shared -o ../../plugins/$@ $< \
+	../common/obj/showmsg.o
+	@touch $@
+
 pid.$(PLUGINEXT): pid.c $(COMMON_H)
 gui.$(PLUGINEXT): gui.c $(COMMON_H)
