@@ -27,6 +27,9 @@ Nexon
 
 Date		Added
 ======
+04/13
+	* Fixed SOME bugs in Hugel.txt, hu_guide.txt. thanks to joshuaali [Lupus]
+		Guys, do always check the scripts before committing V_V'
 04/12
 	* Added up the locations but temporal names of Poring track npcs. Will be worked
 	  on over time. [erKURITA]

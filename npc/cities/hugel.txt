@@ -17,12 +17,10 @@
 //=	Started the basis of Poring Track. [erKURITA]
 //=	Moved the old lady to npc\guides\guides_hu.txt, since it's Hugel's guard [erKURITA]
 //=	Special thanks to RockmanEXE who provided all necesary info =3
-//= 1.1 Abducted/Moved Yan and Yalmire to npc\events\custom\p_track. [erKURITA]
-//= 1.2 Fixed the switch/select stuff. [erKURITA]
 //============================================================
 
 hu_in01.gat,23,311,4	script	Johsh	898,{
-set @npcname$,"[Josh]";
+set @npcname$, "[Josh]";
 
 mes @npcname$;
 mes "Hi ho~ I sell some awesome firecrackers, would you like to buy one?";
@@ -59,7 +57,13 @@ hugel.gat,91,152,4	script	Bulletin Board	837,{end;}
 //= New Npcs
 hugel.gat,76,134,4	script	Yahna	101,{end;}
 hugel.gat,71,137,5	script	Jamira	879,{end;}
-
+hugel.gat,58,72,5	script	Yan	86,{
+//ask for 500z to enter, poring track nº1
+end;}
+hugel.gat,62,68,1	script	Yalmire	86,{
+//ask for 500z to enter, poring track nº2
+end;
+}
 hugel.gat,175,115,5	script	Anhi Anh	897,{end;}
 hugel.gat,191,172,4	script	Yanhe	895,{end;}
 hugel.gat,196,164,3	script	Amnot	50,{end;}
