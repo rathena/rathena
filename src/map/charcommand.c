@@ -480,21 +480,35 @@ int charcommand_stats(
 			const char* format;
 			int value;
 		} output_table[] = {
-			{ "Base Level - %d", pl_sd->status.base_level },
-			{ job_jobname, pl_sd->status.job_level },
-			{ "Hp - %d",    pl_sd->status.hp },
-			{ "MaxHp - %d", pl_sd->status.max_hp },
-			{ "Sp - %d",    pl_sd->status.sp },
-			{ "MaxSp - %d", pl_sd->status.max_sp },
-			{ "Str - %3d",  pl_sd->status.str },
-			{ "Agi - %3d",  pl_sd->status.agi },
-			{ "Vit - %3d",  pl_sd->status.vit },
-			{ "Int - %3d",  pl_sd->status.int_ },
-			{ "Dex - %3d",  pl_sd->status.dex },
-			{ "Luk - %3d",  pl_sd->status.luk },
-			{ "Zeny - %d",  pl_sd->status.zeny },
+			{ "Base Level - %d", 0 },
+			{ job_jobname, 0 },
+			{ "Hp - %d", 0 },
+			{ "MaxHp - %d", 0 },
+			{ "Sp - %d", 0 },
+			{ "MaxSp - %d", 0 },
+			{ "Str - %3d", 0 },
+			{ "Agi - %3d", 0 },
+			{ "Vit - %3d", 0 },
+			{ "Int - %3d", 0 },
+			{ "Dex - %3d", 0 },
+			{ "Luk - %3d", 0 },
+			{ "Zeny - %d", 0 },
 			{ NULL, 0 }
 		};
+		//direct array initialization with variables is not standard C compliant.
+		output_table[0].value = pl_sd->status.base_level;
+		output_table[1].value = pl_sd->status.job_level;
+		output_table[2].value = pl_sd->status.hp;
+		output_table[3].value = pl_sd->status.max_hp;
+		output_table[4].value = pl_sd->status.sp;
+		output_table[5].value = pl_sd->status.max_sp;
+		output_table[6].value = pl_sd->status.str;
+		output_table[7].value = pl_sd->status.agi;
+		output_table[8].value = pl_sd->status.vit;
+		output_table[9].value = pl_sd->status.int_;
+		output_table[10].value = pl_sd->status.dex;
+		output_table[11].value = pl_sd->status.luk;
+		output_table[12].value = pl_sd->status.zeny;
 		sprintf(job_jobname, "Job - %s %s", job_name(pl_sd->status.class_), "(level %d)");
 		sprintf(output, msg_table[53], pl_sd->status.name); // '%s' stats:
 		clif_displaymessage(fd, output);

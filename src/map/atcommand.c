@@ -4135,13 +4135,18 @@ int atcommand_param(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int i, index, value = 0, new_value;
+	int index, value = 0, new_value, max;
 	const char* param[] = { "@str", "@agi", "@vit", "@int", "@dex", "@luk", NULL };
-	short* status[] = {
-		&sd->status.str,  &sd->status.agi, &sd->status.vit,
-		&sd->status.int_, &sd->status.dex, &sd->status.luk
-	};
+	short* status[6];
+ 	//We don't use direct initialization because it isn't part of the C standard.
 	nullpo_retr(-1, sd);
+	
+	status[0] = &sd->status.str;
+	status[1] = &sd->status.agi;
+	status[2] = &sd->status.vit;
+	status[3] = &sd->status.int_;
+	status[4] = &sd->status.dex;
+	status[5] = &sd->status.luk;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
@@ -4152,24 +4157,28 @@ int atcommand_param(
 	}
 
 	index = -1;
-	for (i = 0; param[i] != NULL; i++) {
-		if (strcmpi(command, param[i]) == 0) {
-			index = i;
+	for (index = 0; index < sizeof(param)/sizeof(param[0]); index++) {
+		if (strcmpi(command, param[index]) == 0)
 			break;
-		}
 	}
-	if (index < 0 || index > MAX_STATUS_TYPE) { // normaly impossible...
+	if (index == sizeof(param)/sizeof(param[0]) || index > MAX_STATUS_TYPE) {
+		// normaly impossible...
 		sprintf(atcmd_output, "Please, enter a valid value (usage: @str,@agi,@vit,@int,@dex,@luk <+/-adjustement>).");
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
-
-	new_value = (int)*status[index] + value;
-	if (value > 0 && (value > pc_maxparameter(sd) || new_value > pc_maxparameter(sd))) // fix positiv overflow
-		new_value = pc_maxparameter(sd); 
-	else if (value < 0 && (value < -(int)pc_maxparameter(sd) || new_value < 1)) // fix negativ overflow
-		new_value = 1;
-
+	if (value >0) {
+		max = pc_maxparameter(sd);
+		if (*status[index] > max - value)
+			new_value = max;
+		else
+			new_value = *status[index] + value;
+	} else {
+		if (*status[index] <= -value)
+			new_value = 1;
+		else
+			new_value = *status[index] + value;
+	}
 	if (new_value != (int)*status[index]) {
 		*status[index] = new_value;
 		clif_updatestatus(sd, SP_STR + index);
