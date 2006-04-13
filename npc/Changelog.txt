@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/13
+	* Added a few missing warps in Lighthalzen, thanks to Kargha. [MasterOfMuppets]
 	* Some more crap NPCs implemented in Lighthalzen, thanks to Kargha [MasterOfMuppets]
 	  for scripting them.
 	* Implemented some crap NPCs in Lighthalzen [MasterOfMuppets]
