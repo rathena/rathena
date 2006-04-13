@@ -1,0 +1,16 @@
+//===== eAthena Script ======================================= 
+//= Lighthalzen City
+//===== By: ================================================== 
+//=  erKURITA
+//===== Current Version: ===================================== 
+//= 0.1
+//===== Compatible With: ===================================== 
+//= eAthena 1.0
+//===== Description: ========================================= 
+//= Lighthalzen NPCs (Temporal names for now) [erKURITA]
+//===== Additional Comments: ================================= 
+//= Placed temporal names, why there weren't on the SVN before? [erKURITA]
+//============================================================
+
+lighthalzen.gat,154,100,5	script	Lighthalzen Guard#1	852,{end;}
+lighthalzen.gat,207,310,5	script	Lighthalzen Guard#2	852,{end;}

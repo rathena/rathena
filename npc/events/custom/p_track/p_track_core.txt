@@ -1,0 +1,43 @@
+//===== eAthena Script =======================================
+//= Poring Track Main NPCs
+//===== By: ==================================================
+//= erKURITA
+//===== Current Version: =====================================
+//= 0.0000000000000001
+//===== Compatible With: =====================================
+//= eAthena 1.0
+//===== Description: =========================================
+//= NPCs that has nothing to do with the race itself, but
+//= has important functions on the race itself.
+//===== Additional Comments: =================================
+//=
+//============================================================
+p_track01.gat,41,57,5	script	Lady::P_track	845,{
+end;
+}
+
+p_track01.gat,67,34,6	script	Erudite::P_Spectator1		107,{
+end;
+}
+
+p_track01.gat,44,49,3	script	Edward	881,{
+end;
+}
+
+p_track01.gat,27,47,3	script	Yuri#P_track	853,{
+end;
+}
+
+p_track02.gat,30,45,3	script	Nagya	755,{
+end;
+}
+
+p_track02.gat,42,49,3	script	Asgahrd	733,{
+end;
+}
+
+p_track02.gat,67,33,1	script	Blacksmith	726,{
+end;
+}
+
+p_track02.gat,41,57,5	duplicate(P_track)	Lady	845

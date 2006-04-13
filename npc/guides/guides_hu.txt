@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
-//= 1.0
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
 //= Guard/Guide NPC of City of Hugel.
 //===== Additional Comments: =================================
 //= 1.0 Started the script. [erKURITA]
+//= 1.5 Minor fixes ._. [erKURITA]
 //============================================================
 hugel.gat,98,57,3	script	Old Lady	863,{
 
@@ -48,7 +49,7 @@ M_Menu:
 			"Hunter Guild",M_1_8a,
 			"^000066Poring Track 1^000000",M_1_9,
 			"^000066Poring Track 2^000000",M_1_10,
-			"^000066Bingo House^000000",M_1_11,
+			"Bingo House",M_1_11,
 			"Wipe all indications from mini-map",M_1_8,
 			"Cancel", M_End;
 
@@ -108,6 +109,7 @@ M_Menu:
 			mes "[Old Lady]";
 			mes "The 'Bingo House' is located at the northwest of Hugel. Lay your bet ladies and gentlements!";
 			viewpoint 1,57,207,7,0xFF8000;
+			goto sL_Wipe;
 		M_1_8:
 			set @COMPASS_CHECK, 2;
 

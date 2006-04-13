@@ -103,3 +103,48 @@ OnPCLoadMapEvent:
      you want to repeatedly use this script, to use a sort of filter.
 
 -----------------------------------------------------------------------------
+
++ PCCommand: PCDieEvent
++ Code by: Unknown
++ How it works:
+When a player dies, the event will be run as if a npc were clicked. The RID of the person killed
+will be attached. Simple. It can to be used as a floating npc or as a npc placed on a map.
+Notice that this event is server-wide if used as a floating npc, so if you try running it for
+more than one map, and want to make a single npc, you'll have to use some sort of filter, which
+can be getmapxy, something like this:
+
+-	script	PCDieEvent	-1,{
+if (getmapxy(@mapname$,@mapx,@mapy,0) == -1) goto L_Finish;
+if (@mapname$ == "valkyrie.gat") || (@mapname$ == "amatsu.gat") {
+killmonster "valkyrie.gat","All";	
+announce "Deep Voice: You have failed.... you have another opportunity though...",bc_self,0x660033;
+if (killtest != 0) enablenpc "Outern Voices";
+if (killedonce == 1) end;
+set killedonce,1;
+} else
+end;
+
+L_Finish:
+	end;
+}
+
+----or---->
+
+OnPCDieEvent: 
+if (getmapxy(@mapname$,@mapx,@mapy,0) == -1) goto L_Finish;
+if (@mapname$ == "valkyrie.gat") || (@mapname$ == "amatsu.gat") {
+killmonster "valkyrie.gat","All";	
+announce "Deep Voice: You have failed.... you have another opportunity though...",bc_self,0x660033;
+if (killtest != 0) enablenpc "Outern Voices";
+if (killedonce == 1) end;
+set killedonce,1;
+} else
+end;
+
+L_Finish:
+	end;
+
+We're using getmapxy to obtain the mapname, then adjust our commands and actions depending on the
+map. We could also use the command to find if the player died inside a wished area.
+
+-----------------------------------------------------------------------------

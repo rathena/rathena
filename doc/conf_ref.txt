@@ -15,7 +15,22 @@ although it is not a HowTo, it not Those who cannot use Athena even if they see 
  char_athena.conf	A setup of char-server
  inter_athena.conf	A setup of inter-server
  map_athena.conf	A setup of map-server
- battle_athena.conf	A setup of map-server (setup of a special rule etc.)
+ battle_athena.conf	This file has been splitted into 13 files, separating them
+			depending on their function. Those files are:
+
+	*battle.conf	Regarding battle system configuration.
+	*client.conf	Regarding client configuration.
+	*drops.conf	Regarding mob drops configuration
+	*guild.conf	Regarding guild configuration.
+	*monster.conf	Regarding monsters guidance and settings.
+	*player.conf	Regarding player and/or character settings.
+	*exp.conf	Regarding exp settings.
+	*items.conf	Regarding items settings.
+	*party.conf	Regarding party settings.
+	*skill.conf	Regarding skill settings
+	*gm.conf	Regarding GM settings (not GM commands).
+	*misc.conf	Regarding various settings (such as PK)
+	*pet.conf	Regarding pet settings.
  atcommand_athena.conf	A setup of map-server (setup of the GM command or @ command)
  ladmin_athena.conf	A setup of ladmin ('c' version)
 

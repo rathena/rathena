@@ -33,6 +33,10 @@
 //= 2.7a - delitem2, countitems2 commands [Lupus]
 //= 2.7b - clone command [Skotlex]
 //= 2.7c - disguise / undisguise, query_sql commands [Lupus]
+
+//= 2.8 - Deleted a copy of the nude command. Added axtoi command (needing a clearer
+//=	  explanation of atoi.Gave a better explanation of OnLabels and modified
+//=	  monster explanation due that L_Label isn't working with monster.
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -670,6 +674,28 @@ when those will get triggered. For more information, see
 Only the special labels which are not associated with any script command are 
 listed here. There are other kinds of labels which may be triggered in a similar 
 manner, but they are described with their associated commands.
+
+On<label name>:
+
+These special labels are used with Mob scripts mostly, and script commands
+that requires you to point/link a command to a mob or another npc, giving a label
+name to start from. The label name can be any of your liking, but must be
+
+Example:
+
+monster "prontera.gat",123,42,"Poringz0rd",2341,23,"Master::OnThisMobDeath";
+
+amatsu.gat,13,152,4	script	Master	767,{
+
+mes "Hi there";
+close;
+
+OnThisMobDeath:
+	announce "Hey, "+strcharinfo(0)+" just killed a Poringz0rd!",bc_blue|bc_all;
+	end;
+}
+
+Each time you kill one, that announce will appear in blue to everyone.
 
 Scripting commands and functions
 --------------------------------
@@ -2593,6 +2619,10 @@ Without the use if 'end' it would travel through the labels until the end of the
 script. If you were lvl 10 or less, you would see all the speech lines, the use 
 of 'end' stops this, and ends the script.
 
+Note: Break won't work anymore, it has been commented out in src/map/script.c:
+
+//	{buildin_end,"break",""}, this might confuse advanced scripting support [Eoe]
+
 ---------------------------------------
 
 *checkoption(<option number>)
@@ -2851,7 +2881,7 @@ and upon the monster being killed, it will execute the script inside of the
 specified NPC object starting from the label given. The RID of the player 
 attached at this execution will be the RID of the killing character.
 
-    monster "place.gat",60,100,"Poring",1002,1,"NPCNAME::Label";
+    monster "place.gat",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
 If you do not specify any event label, a label in the NPC object that ran this 
 command, called 'OnMyMobDead:' will execute anyway, if present.
@@ -2873,7 +2903,7 @@ Simple monster killing script:
         mes "Come back later";
         close;
     L_Yes:
-        monster "prontera.gat",0,0,"Quest Poring",1002,10,"NPCNAME::L_PoringKilled";
+        monster "prontera.gat",0,0,"Quest Poring",1002,10,"NPCNAME::OnPoringKilled";
         // By using 0,0 it will spawn them in a random place.
         mes "[Summon Man]";
         mes "Now go and kill all the Poring I summoned";
@@ -3320,6 +3350,8 @@ unfortunately, not detectable by Ruwach or Sight.
 As they are now, these commands are pointless, it is suggested to use 
 'disablenpc'/'enablenpc', because these two commands actually unload the NPC 
 sprite location and other accompanying data from memory when it is not used.
+However, you can use these for some quest ideas (such as cloaking npcs talking 
+while hidden then revealing.... you can wonder around =P
 
 ---------------------------------------
 
@@ -3497,7 +3529,7 @@ the job number of the wedding sprites.
 
 It would be entered in the equip bonus section of an item
 
-2338,Wedding_Dress,Wedding Dress,5,43000,0,500,,0,,0,2088958,0,16,,0,0,{(This is for use bonus)},{ bonus bMdef,15; changebase 22; },
+2338,Wedding_Dress,Wedding Dress,5,43000,,500,,0,,0,119529470,7,0,16,,0,1,0,{ bonus bMdef,15; changebase 22; }
 
 This command only works when inside item scripts.
 
@@ -3724,7 +3756,7 @@ even though WoE itself may or may not actually be in effect.
 
 ---------------------------------------
 
-*emotion <emotion number> <, target>;
+*emotion <emotion number>{, target};
 
 This command makes an object display an emoticon sprite above their own as 
 if they were doing that emotion. For a full list of emotion numbers, 
@@ -4892,7 +4924,6 @@ set @i, distance(100,200,101,202);
 
 ---------------------------------------
 *query_sql "your MySQL query", <array name>
-
 Returns up to 127 values into array.
 
 Example:
@@ -4950,8 +4981,6 @@ PET_INTIMATE
 Example:
 set @i, petstat(PET_CLASS);
 
-Whew.
-What's about all of them.
 
 ---------------------------------------
 
@@ -4960,6 +4989,7 @@ What's about all of them.
 Set a new script bonus to the Item. Very useful for game events.
 
 Example:
+
 setitemscript 2637,"{ bonus bDamageWhenUnequip,40; if(isequipped(2236)==0)end; if(getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";
 
 ---------------------------------------
@@ -4982,12 +5012,33 @@ undisquise; //Yay!!!! You're a human again!!
 
 ---------------------------------------
 
-*nude; 
+*axtoi(<hexadecimal_value>);
 
-This command will unequip anything equipped on the invoking character.
+This command will convert an hexadecimal value into integers (numbers).
+The inputted value must not have neither # or 0x in it, just 6 numbers and/or letters.
+The variable registering this value, if so, must be a string (letter) variable, due that
+it contains letters in some cases.
 
-It is not required to do this when changing jobs since 'jobchange' will unequip 
-everything not equippable by the new job class anyway.
+This is mostly used for the new announce command, which uses hexadecimal values for announce
+colors, using the Ragnarok coloring system.
+
+Example:
+
+amatsu.gat,171,166,4	script	Testing npc	767,{
+
+mes "Input hex color";
+input @trying$;
+next;
+set @try2$,axtoi(@trying$);
+announce "zOMG TEH PWNZ0RDZ",bc_all,@try2$;
+close;
+}
+
+If you want a list of hexadecimal colors, check these two links:
+
+http://webmonkey.wired.com/webmonkey/reference/color_codes/
+
+http://www.december.com/html/spec/color.html
 
 ---------------------------------------
 
@@ -4998,3 +5049,99 @@ Good for PCKillEvent where you can convert 'killedrid' to the name of the player
 
 Note: rid2name may not produce correct character names since rid = account id.
       It will return the current online character of the account only.
+
+---------------------------------------
+
+*function <function name>;
+*<function name>();
+*function <function name> {
+<code>
+}
+
+(Skotlex stop being so selfish and give us all the commands T~T! J/k lol :P)
+
+This works like callfunc, but doesn't support arguments like callfunc. It's used for cleaner
+and fast script that doesn't require arguments for it to work. Labels must start with SF_
+(SubFunctions I guess). Also they must be inside a script. They're not separated scripts
+and they work more like labels.
+
+Note it looks like the normal declaration
+
+Usage:
+
+You first Declare the function with function <function name>;.
+
+Put the rest of your code. You can use then <function name>(); to call the function. If it returns a value is unsure,
+test it if you want and give us some comments ;3
+
+And at least, but inside the script itself, put the function <function name> {<code>}.
+
+Example:
+
+prontera.gat,154,189,4	script	Item seller	767,{
+
+function SF_Selling;
+
+mes "I'll open this now if you have more than 50z and you are level 50 or bigger";
+next;
+
+if (Zeny > 50) && (BaseLevel > 50) {
+	mes "Welcome";
+	next;
+	SF_Selling();
+	close;
+} else
+
+set @needed,50-BaseLevel;
+mes "You either are Level "+BaseLevel+", thus you need "+@needed+" more levels to be able to use this npc; or you don't have enough zeny, so get some please";
+close;
+
+function SF_Selling {
+
+	mes "Would you like to buy a phracon for 50z?";
+	switch(select("Yes","No, thanks")) {
+
+	case 1:
+		mes "Ok, how many?";
+		input @quantity;
+		set @check,Zeny/50;
+		if (@quantity > @check) {
+			mes "Sorry but you can only have "+@check+" Phracons with "+Zeny;
+			close;
+		} else
+		next;
+		mes "here you have";
+		set Zeny,Zeny-@quantity*50;
+		getitem 1010,@quantity;
+		close;
+	case 2:
+		mes "Good bye then";
+		close;
+		}
+	}
+}
+
+
+---------------------------------------
+
+*getequipcardid (<equipment slot>,<card slot>);
+
+Returns value from equipped item slot in the indicated slot:
+
+getequipcardid(num,slot)
+
+where:
+	num = eqip position slot
+	slot = 0,1,2,3 (Card Slot N)
+
+This func returns CARD ID, 255,254,-255 (for card 0, if the item is produced) it's useful 
+when you want to check item cards or if it's signed. Useful for such quests as 
+"Sign this refined item with players name" etc;
+	Hat[0] +4 -> Player's Hat[0] +4
+
+By Lupus
+
+---------------------------------------
+
+Whew.
+What's about all of them.

@@ -30,3 +30,12 @@ Codemaster
 - Go Crazy :D, help with random questions, coding, scripting, documentation
 - Merged in with omniAthena ^_^
 - Been programming and scripting since age 9 :)
+
+erKURITA
+- José Alejandro
+- 18
+- Galicia, Spain
+- Mainly fix scripts and a few db typos :P No coding yet.
+- Well, some of the devs were too lazy/busy to commit my fixes, so I asked
+  massdriller for some access, and bam I am here :o
+- http://eathena.deltaanime.net/wiki/index.php/User:ErKURITA
