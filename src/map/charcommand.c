@@ -481,7 +481,7 @@ int charcommand_stats(
 			int value;
 		} output_table[] = {
 			{ "Base Level - %d", 0 },
-			{ job_jobname, 0 },
+			{ NULL, 0 },
 			{ "Hp - %d", 0 },
 			{ "MaxHp - %d", 0 },
 			{ "Sp - %d", 0 },
@@ -497,6 +497,7 @@ int charcommand_stats(
 		};
 		//direct array initialization with variables is not standard C compliant.
 		output_table[0].value = pl_sd->status.base_level;
+		output_table[1].format = job_jobname;
 		output_table[1].value = pl_sd->status.job_level;
 		output_table[2].value = pl_sd->status.hp;
 		output_table[3].value = pl_sd->status.max_hp;

@@ -4138,7 +4138,7 @@ int atcommand_param(
 	int index, value = 0, new_value, max;
 	const char* param[] = { "@str", "@agi", "@vit", "@int", "@dex", "@luk", NULL };
 	short* status[6];
- 	//We don't use direct initialization because it isn't part of the C standard.
+ 	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 	
 	status[0] = &sd->status.str;
@@ -4167,18 +4167,15 @@ int atcommand_param(
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
-	if (value >0) {
-		max = pc_maxparameter(sd);
-		if (*status[index] > max - value)
-			new_value = max;
-		else
-			new_value = *status[index] + value;
-	} else {
-		if (*status[index] <= -value)
-			new_value = 1;
-		else
-			new_value = *status[index] + value;
-	}
+
+	max = pc_maxparameter(sd);
+	if (value > 0 && *status[index] > max - value)
+		new_value = max;
+	else if (value < 0 && *status[index] <= -value)
+		new_value = 1;
+	else
+		new_value = *status[index] + value;
+	
 	if (new_value != (int)*status[index]) {
 		*status[index] = new_value;
 		clif_updatestatus(sd, SP_STR + index);
@@ -4206,11 +4203,16 @@ int atcommand_stat_all(
 	const char* command, const char* message)
 {
 	int index, count, value = 0, max, new_value;
-	short* status[] = {
-		&sd->status.str,  &sd->status.agi, &sd->status.vit,
-		&sd->status.int_, &sd->status.dex, &sd->status.luk
-	};
+	short* status[6];
+ 	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
+	
+	status[0] = &sd->status.str;
+	status[1] = &sd->status.agi;
+	status[2] = &sd->status.vit;
+	status[3] = &sd->status.int_;
+	status[4] = &sd->status.dex;
+	status[5] = &sd->status.luk;
 
 	if (!message || !*message || sscanf(message, "%d", &value) < 1 || value == 0)
 		value = pc_maxparameter(sd);

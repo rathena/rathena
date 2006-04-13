@@ -1966,7 +1966,7 @@ static struct Damage battle_calc_weapon_attack(
 			{	//SG Anger bonus - ATK_ADDRATE [Komurka]
 				static int type[] = { SG_SUN_ANGER, SG_MOON_ANGER, SG_STAR_ANGER };
 				short t_class = status_get_class(target);
-				if (sc->data && sc->data[SC_MIRACLE].timer!=-1 && (skill = pc_checkskill(sd,type[2])))
+				if (sc && sc->data[SC_MIRACLE].timer!=-1 && (skill = pc_checkskill(sd,type[2])))
 				{
 					skillratio = (sd->status.base_level + status_get_str(src) + status_get_dex(src)+ status_get_luk(src))/(skill<4?12-3*skill:1);
 					ATK_ADDRATE(skillratio);
