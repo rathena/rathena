@@ -27,6 +27,7 @@
 
 =========================
 04/13
+	* Updated 1675,VENATU (some columns were shifted) [Lupus]
 	* Updated items weight, names. Thanks 2 Haplo [Lupus]
 	- 12142,Book_of_Magic effect updated +20 Agi for 30 min (d0n't list it in the items desc)
 		Stopped updating Stable Item Db till the merge ^_-

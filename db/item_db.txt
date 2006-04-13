@@ -2370,7 +2370,7 @@
 12139,Third_Stage,Third Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{}
 12140,Fourth_Stage,Fourth Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{}
 12141,Fifth_Stage,Fifth Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{}
-12142,Book_of_Magic,Book of Magic,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_AGIFood, 1800000, 20; }
+12142,Book_of_Magic,Book of Magic,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_AGIFood, 1800000, 10; }
 12143,Red_Can,Red Can,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,25; }
 12144,Lightning_Sphere_Pack,Lightning Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13204,500; }
 12145,Blind_Sphere_Pack,Blind Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13206,500; }
