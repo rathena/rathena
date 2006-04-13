@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA
 //===== Current Version: ===================================== 
-//= 0.2
+//= 0.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 0.1 Placed temporal names, why there weren't on the SVN before? [erKURITA]
 //= 0.2 Implemented some crap NPCs [MasterOfMuppets]
+//= 0.3 Another load of NPCs. Scripted by Kargha [MasterOfMuppets]
 //============================================================
 
 lighthalzen.gat,154,100,5	script	Lighthalzen Guard#1	852,{end;}
@@ -453,6 +454,879 @@ lhz_in02.gat,287,282,4	script	Customer	853,{
 	mes "I'll win. I mean, that's";
 	mes "the way the odds work, right?";
 	mes "Even when they're against me...";
+	close;
+
+}
+
+lighthalzen.gat,123,212,4	script	Merpi	700,{
+
+	mes "[Merpi]";
+	mes "Isn't the weather nice";
+	mes "today? All this sunlight";
+	mes "will dry these clothes";
+	mes "quickly and give them";
+	mes "a fresh, lovely scent.";
+	next;
+	mes "[Merpi]";
+	mes "Oh, an adventurer from";
+	mes "Rune-Midgarts, are you?";
+	mes "How do you like our city?";
+	mes "If you have any questions,";
+	mes "feel free to ask me anything.";
+	next;
+	menu "Well, I have nothing to ask...",-,"Any news or rumors?",L_rumors,"I like laundry too.",L_laundry;
+	mes "[Merpi]";
+	mes "Oh, really?";
+	mes "Well, if you've traveled";
+	mes "all over the world, maybe";
+	mes "you've found a place just";
+	mes "like Lighthalzen, so maybe";
+	mes "you're already comfortable?";
+	close;
+	
+L_rumors:
+	mes "[Merpi]";
+	mes "Well, things have";
+	mes "been pretty peaceful";
+	mes "for the past few years.";
+	mes "The only rumor floating";
+	mes "around is about some";
+	mes "weird axe murderer...";
+	close;
+
+L_laundry:
+	mes "[Merpi]";
+	mes "Oh, that's wonderful!";
+	mes "I so love doing hand";
+	mes "laundry, though I'm not";
+	mes "quite sure why. Oh well~";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,297,239,3	script	Pilia	818,{
+
+	mes "[Pilia]";
+	mes "Hmm? Oh, I'm sorry,";
+	mes "but my little brother";
+	mes "just won't stop crying.";
+	mes "I'm sorry if we're loud...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,296,239,3	script	Berru	706,{
+
+	mes "[Berru]";
+	mes "Daddy...! Waaaaah~!";
+	mes "I wanna see my daddy!";
+	emotion 28;
+	next;
+	mes "[Pilia]";
+	mes "Berru, I don't";
+	mes "think Daddy's coming";
+	mes "home tonight. Come on,";
+	mes "we should go to bed.";
+	next;
+	mes "[Berru]";
+	mes "No, I'm not gonna";
+	mes "sleep 'til Daddy gets";
+	mes "home! He said he'll";
+	mes "bring us candy tonight!";
+	mes "You go sleep first, Pilia!";
+	emotion 7;
+	next;
+	mes "[Pilia]";
+	mes "*Sigh...*";
+	mes "Where's out Daddy?";
+	mes "He said he found a";
+	mes "good job, but we haven't";
+	mes "heard from him since then...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,312,234,2	script	Beggar	777,{
+
+	mes "[Beggar]";
+	mes "Please...";
+	mes "My child is starving...";
+	mes "Would you give me";
+	mes "some money?";
+	next;
+	menu "Give him some money.",L_give,"Ignore him.",-;
+	mes "[" + strcharinfo(0) + "]";
+	mes "...";
+	mes "......";
+	close;
+
+L_give:
+	mes "[" + strcharinfo(0) + "]";
+	mes "Here you go,";
+	mes "take this.";
+	set Zeny,Zeny-50;
+	next;
+	mes "[Beggar]";
+	mes "Thank you so much.";
+	mes "I have nothing to offer you";
+	mes "in exchange, but I can share";
+	mes "a story with you and impart";
+	mes "some of the wisdom I've";
+	mes "learned over the years.";
+	emotion 15;
+	next;
+	mes "[Beggar]";
+	mes "Anger. People deal with";
+	mes "it in different ways. Some";
+	mes "suppress it. Some relish it.";
+	mes "Some fear being angry. Now,";
+	mes "to be simple, let's say there";
+	mes "are two kinds of anger.";
+	next;
+	mes "[Beggar]";
+	mes "The first is the kind that";
+	mes "isn't so productive. More of";
+	mes "a frustration that you can let";
+	mes "go. Someone cut you off on the";
+	mes "freeway or a friend innocently";
+	mes "forgot your birthday? No Biggie.";
+	next;
+	mes "[Beggar]";
+	mes "Don't let this kind of";
+	mes "anger get to you or you'll";
+	mes "look like a looser. Think of";
+	mes "the big picture and if you're";
+	mes "still upset, vent appropriatly.";
+	mes "Be honest without hurting anyone.";
+	next;
+	mes "[Beggar]";
+	mes "The second kind of anger is";
+	mes "righteous anger. You've been";
+	mes "wronged and need some form";
+	mes "of retribution. Remember to";
+	mes "make appropriate confontrations";
+	mes "and don't misdirect your rage.";
+	next;
+	mes "[Beggar]";
+	mes "Getting into a fight with";
+	mes "righteous anger, say to protect";
+	mes "someone dear to you, will make";
+	mes "you a hero. Fighting with anger";
+	mes "born of frustration will make you";
+	mes "a bully. Know the difference.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes ". . . . . . . . . . . .";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes ". . . . . . . . . . . .";
+	mes ". . . . . . . . . . . .";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes ". . . . . . . . . . . .";
+	mes ". . . . . . . . . . . .";
+	mes ". . . . . . . . . . . .";
+	next;
+	mes "[Beggar]";
+	mes "What's wrong?";
+	mes "It might be a lot";
+	mes "to take in, I know.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,311,194,3	script	Reuben	870,{
+
+	mes "[Reuben]";
+	mes "Someday...";
+	mes "Someday I just gotta";
+	mes "become a train conductor";
+	mes "and just get outta here.!";
+	mes "I really hate this place!";
+	next;
+	mes "[Reuben]";
+	mes "Wh-whoa...!";
+	mes "Did you just hear";
+	mes "me talk to myself?";
+	mes "Crud! Don't be so nosy!";
+	emotion 6;
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,306,324,3	script	Shengwen	870,{
+
+	mes "[Shengwen]";
+	mes "Am I just getting";
+	mes "paranoid? I really";
+	mes "think that some of";
+	mes "the people I know";
+	mes "are dissapearing";
+	mes "for no good reason!";
+	next;
+	mes "[Shengwen]";
+	mes "I mean, all of my close";
+	mes "friend are all right,";
+	mes "but I'm starting not to see";
+	mes "certain acquaintances and";
+	mes "familiar faces. Maybe I'm";
+	mes "just thinking too much...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,26,167,4	script	Shayna	850,{
+
+	mes "[Shayna]";
+	mes "*Sigh...*";
+	mes "Oh, you poor";
+	mes "darling girl...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,134,45,2	script	Cenku Dekdam#Cenku_Dekdam	869,{
+
+	mes "[Cenku Dekdam]";
+	mes "Man, if you were";
+	mes "gonna take this whole";
+	mes "city and sell it, what";
+	mes "do you think Lighthalzen's";
+	mes "price tag would be, eh?";
+	next;
+	mes "[Cenku Dekdam]";
+	mes "I mean, this city";
+	mes "is basically just made";
+	mes "of money. Money is what";
+	mes "makes this city such a nice";
+	mes "and pleasant place to live.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,330,276,3	script	Nun	79,{
+
+	mes "[Angela]";
+	mes "Greetings, adventurer.";
+	mes "I'm Angela, a social";
+	mes "worker for the Poor";
+	mes "Relief Organization.";
+	next;
+	mes "[Angela]";
+	mes "I've noticed that the";
+	mes "people living here have";
+	mes "extremely bad health and";
+	mes "it's not just because of";
+	mes "their circumstances.";
+	next;
+	mes "[Angela]";
+	mes "I've filed a report";
+	mes "to my superiors, but";
+	mes "they haven't sent me";
+	mes "a response yet for some";
+	mes "reason. I'm starting to get";
+	mes "a little worried about this...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,337,296,3	script	Employee	867,{
+
+	mes "[Rekenber Employee]";
+	mes "Greetings. As part of our";
+	mes "effort to relieve the poor,";
+	mes "Rekenber is providing job";
+	mes "opportunities targeted for";
+	mes "citizens of the slum areas.";
+	next;
+	mes "[Rekenber Employee]";
+	mes "You can choose to work";
+	mes "from home, or undergo a";
+	mes "little bit of training for more";
+	mes "professional positions. This";
+	mes "is a great chance to make a";
+	mes "difference... and some money~";
+	emotion 21;
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,134,38,2	script	Bankri Kun#Bankri_Kun	86,{
+
+	mes "[Bankri Kun]";
+	mes "Must work...";
+	mes "Must focus...";
+	mes "Resist sleepiness...";
+	mes "Why do I keep coming";
+	mes "here? ugh, h-horrible.";
+	next;
+	mes "[Bankri Kun]";
+	mes "hey youngster. You wanted";
+	mes "adventuring advice? Okay.";
+	mes "Um. Hm. Always. Brush.";
+	mes "Your teeth. Brush them";
+	mes "everyday. Oh, and don't";
+	mes "forget to floss, either.";
+	next;
+	mes "[Bankri Kun]";
+	mes "Now it's time for me";
+	mes "to head back to work.";
+	mes "I'll see you later, kid.";
+	mes "Sorry my advice was so";
+	mes "lame-- I couldn't think of";
+	mes "anything else to tell you.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,139,40,2	script	Enoz	53,{
+
+	mes "[Enoz]";
+	mes "So, the novel I ordered from";
+	mes "the Rune-Midgarts Kingdom";
+	mes "just recently arrived. It's real";
+	mes "good, by the guy who wrote";
+	mes "\"Roda Frog Adventure\"";
+	mes "years ago. Remember?";
+	next;
+	mes "[Enoz]";
+	mes "Anyway, this new book,";
+	mes "\"Where the Red Plant Grows\"";
+	mes "is up for the Yggdrasilberry";
+	mes "Award. I... I don't know why";
+	mes "I was compelled to share that";
+	mes "with you. Seriously, I don't...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,124,28,2	script	Ellette	66,{
+
+	mes "[Ellette]";
+	mes "...";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Excuse me.";
+	next;
+	mes "[Ellette]";
+	mes "...";
+	mes "......";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Hello?";
+	next;
+	mes "[Ellette]";
+	mes "...Oh! Everyone!";
+	mes "I just completed";
+	mes "another one! Hooray!";
+	next;
+	mes "[All other Employees]";
+	mes "Wh-what?!";
+	mes "No way, not again!";
+	next;
+	mes "[Leekal]";
+	mes "Are you even human?";
+	mes "You must have some";
+	mes "secret for that much";
+	mes "productivity. It's weird...";
+	next;
+	mes "[Ellette]";
+	mes "Oh, come on.";
+	mes "Maybe I'm a little";
+	mes "good at this, but there's";
+	mes "no way I can beat Cenku.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,125,40,2	script	Dowbow Ryuei#Dowbow_Ryuei	843,{
+
+	mes "[Dowbow Ryuei]";
+	mes "Just out of, oh I dunno,";
+	mes "curiosity, which word do";
+	mes "you like better?\"Uber-Cool\"";
+	mes "or \"Reality?\" Pick one~";
+	next;
+	menu "Uber-Cool",-,"Reality",L_reality;
+	mes "[Dowbow Ryuei]";
+	mes "Oh yeah? Me too!";
+	mes "Yeah, we got the same";
+	mes "outlook on life. If you don't";
+	mes "mind, I'd like to shake";
+	mes "your hand, adventurer.";
+	emotion 21;
+	close;
+
+L_reality:
+	mes "[Dowbow Ryuei]";
+	mes "Reality, eh?";
+	mes "Well, I agree that";
+	mes "being realistic has its";
+	mes "perks, I'm more of a dreamer.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,125,46,2	script	Leekal	849,{
+
+	mes "[Leekal]";
+	mes "So... Very broke.";
+	mes "Why did I spend so much";
+	mes "money on wine, women and";
+	mes "song? I regret it all, all the";
+	mes "pleasure I've had this month.";
+	mes "Yes, it was too much pleasure.";
+	next;
+	mes "[Ninjose]";
+	mes "That's what happens";
+	mes "when you're irresponsible";
+	mes "with your money. You really";
+	mes "should read this \"Anybody";
+	mes "Can Be Rich\" book.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,116,53,6	script	Ninjose	841,{
+
+	mes "[Ninjose]";
+	mes "At long last, I've finally";
+	mes "bought my own home. You";
+	mes "should invest your money for";
+	mes "your future too! Read this,";
+	mes "\"Anybody Can Be Rich!\"";
+	mes "It's such a great book.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,116,39,6	script	Kejulle Rekenber#Kejulle_Rekenber	822,{
+
+	mes "[Kejulle Rekenber]";
+	mes "Hm? Sure, my last name";
+	mes "is Rekenber and that's the";
+	mes "same name as our chairman,";
+	mes "but that's just a coincidence.";
+	mes "I'm merely a normal employee.";
+	mes "Yeah, no special treatment...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+lhz_in01.gat,110,40,2	script	Jorjerro	89,{
+
+	mes "^0000AAThis man here";
+	mes "is motionless,";
+	mes "and for all intents";
+	mes "and purposes, is";
+	mes "soundly asleep.^000000";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,116,45,6	script	Joshua	704,{
+
+	mes "[Joshua]";
+	mes "What am I doing here?";
+	mes "Waiting for my dream";
+	mes "woman to fall into my lap,";
+	mes "what else does it look like?";
+	next;
+	mes "[Joshua]";
+	mes "Tall, blond, creamy";
+	mes "complexion and smooth";
+	mes "skin. That's right. Come";
+	mes "right to Joshua, babes.";
+	mes "I got my pheremone spray";
+	mes "on and I'm ready to cruise~";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,93,45,4	script	Researcher	865,{
+
+	mes "[Researcher]";
+	mes "You know what's weird?";
+	mes "Why do they use blue and";
+	mes "red wires when they make";
+	mes "bombs? There's so many";
+	mes "others you could use, like";
+	mes "pink or yellow or or green...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,286,226,2	script	Secretary Slierre#Secretary_Slierre	831,{
+
+	mes "[Sueii Slierre]";
+	mes "Excuse me, but you are";
+	mes "not allowed to be in here.";
+	mes "Please visit the Help Desk";
+	mes "if you have any questions about";
+	mes "the Rekenber Corporation.";
+	mes "Thank you for cooperating.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,32,162,2	script	Crippled Girl#Crippled_Girl	53,{
+
+	mes "[Crippled Girl]";
+	mes "...";
+	mes "......";
+	mes "*Sigh...*";
+	next;
+	menu "Hello, how are you?",-;
+	mes "[Crippled Girl]";
+	mes "Oh, I'm fine,";
+	mes "thanks for asking.";
+	mes "I'm just waiting for";
+	mes "somebody, that's all.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,346,263,2	script	Elder	846,{
+
+	mes "[Elder]";
+	mes "Predators are always";
+	mes "on the lookout for easy";
+	mes "prey. Be careful, youngster!";
+	mes "You look innocent enough";
+	mes "to become a victim in the city.";
+	next;
+	menu "About Lighthalzen",L_lighthalzen,"About the Slum",L_slum,"????",-;
+	mes "[Elder]";
+	mes "Well, if you need any";
+	mes "help around here or have";
+	mes "any questions, come back";
+	mes "and ask me. I get the feeling";
+	mes "that we'll probably meet again.";
+	close;
+
+L_lighthalzen:
+	mes "[Elder]";
+	mes "Lighthalzen might seem";
+	mes "like a splendid city at first,";
+	mes "but you'll learn quickly that";
+	mes "the poor are segregated from";
+	mes "the rich and treated as less";
+	mes "than second class citizens.";
+	next;
+	mes "[Elder]";
+	mes "At first, separation between";
+	mes "the rich and poor districts was";
+	mes "subtly enforced. They built the";
+	mes "railroad right between the two";
+	mes "districts to make it easier for";
+	mes "the rich to ignore the poor.";
+	next;
+	mes "[Elder]";
+	mes "But now they even have";
+	mes "guards to make sure that";
+	mes "the poor can't bother the";
+	mes "rich. I'm pretty sure that";
+	mes "this segregation won't be";
+	mes "ending anytime soon...";
+	next;
+	mes "[Elder]";
+	mes "Now, I've heard that the";
+	mes "Rekenber Corporation is";
+	mes "actually providing jobs for";
+	mes "people in the slums. Beggars";
+	mes "can't be choosers, so I'm sure";
+	mes "these jobs aren't that great.";
+	close;
+
+L_slum:
+	mes "[Elder]";
+	mes "To live in the slum is to";
+	mes "be familiar with poverty,";
+	mes "disease, condemnation";
+	mes "and contempt. But we're all";
+	mes "still people, you know, so let";
+	mes "go of any of your misgivings.";
+	next;
+	mes "[Elder]";
+	mes "We're struggling just";
+	mes "to survive here. At the";
+	mes "very least, please respect";
+	mes "that. It's a fact that the";
+	mes "people in the rich district";
+	mes "seem to keep forgetting.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lighthalzen.gat,326,249,5	script	Grinnel	870,{
+
+	mes "[Grinnel]";
+	mes "You know the men in";
+	mes "black suits? Boy, did";
+	mes "I get a scare! They actually";
+	mes "tracked me down to ask me";
+	mes "all these weird questions!";
+	next;
+	mes "[Grinnel]";
+	mes "They kept wanting to";
+	mes "know if I had ever met";
+	mes "anyone from the Rekenber";
+	mes "Corporation, if I've ever been";
+	mes "Uptown, that sort of thing. They";
+	mes "really scared the crap out of me.";
+	next;
+	mes "[Grinnel]";
+	mes "Man, living in the";
+	mes "slums is such a drag.";
+	mes "Not only is life rough,";
+	mes "but all sorts of people";
+	mes "think they can push you";
+	mes "around. I hate Lighthalzen...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,192,19,2	script	Haggar	855,{
+
+	mes "[Haggar]";
+	mes "Whiskey!";
+	mes "I need me some";
+	mes "hard liquor now!";
+	next;
+	mes "[Haggar]";
+	mes "Wha--? I didn't";
+	mes "order this stinkin'";
+	mes "rum! I want a man's";
+	mes "drink! Gimme whisky!";
+	Close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,193,25,2	script	Bartender	61,{
+
+	mes "[Tony]";
+	mes "Hey man, I know this";
+	mes "joint is a dive, pretty much";
+	mes "on the verge of bein' totally";
+	mes "ghetto, but we're proud to";
+	mes "have the best rum in all of";
+	mes "Rune-Midgard. It's true~";
+	next;
+	mes "[Tony]";
+	mes "Just a sip of this";
+	mes "beautiful drink and";
+	mes "you're on top of the";
+	mes "world! But it's best";
+	mes "for helpin' yah relax";
+	mes "and forget your worries.";
+	next;
+	mes "[Tony]";
+	mes "I don't take to bein'";
+	mes "a poet, but I do know";
+	mes "this. Our rum has the";
+	mes "sweet sweet flavor of";
+	mes "loneliness. You really";
+	mes "oughta try it when you can	.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,185,20,6	script	Bad Drunk#Bad_Drunk	869,{
+
+	mes "[Garry]";
+	mes "Hey! Hey you...!";
+	mes "D'you wanna, you";
+	mes "wanna hear me tell";
+	mes "you a joke?! It goes...";
+	mes "Um, it goes like this...";
+	next;
+	mes "[Garry]";
+	mes "Hey riddle middle,";
+	mes "the cat and th--";
+	mes "No! No, damn it!";
+	mes "That's a song!";
+	mes "No, wait, that's";	
+	mes "not a song either...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,186,29,6	script	Bad Drunk#Bad_Drunk2	869,{
+
+	mes "[Bonse]";
+	mes "*Hiccup* I loooove";
+	mes "this rum! I caught a cold";
+	mes "once and one glass made";
+	mes "it go away! 'Course, I slept";
+	mes "for a week too, but that doesn't";
+	mes "matter! Pshaw! Science...";
+	next;
+	mes "[Bonse]";
+	mes "Oh, the flavor is just";
+	mes "so clean, but it's also";
+	mes "got a bit of a kick. I don't";
+	mes "know how to describe it.";
+	mes "Its the taste of happiness?";
+	mes "I'm too drunk to even tell!";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,192,93,2	script	City Girl#City_Girl	862,{
+
+	mes "[Lanko]";
+	mes "Oh, I'm only here";
+	mes "working as a waitress";
+	mes "to help my father.";
+	mes "This job is so tiring, but";
+	mes "it's nice to see people so";
+	mes "relaxed and having a good time.";
+	next;
+	mes "[Lanko]";
+	mes "When I get some time";
+	mes "off, I'm going to explore";
+	mes "Lighthalzen and see all that";
+	mes "there is to see. But for now,";
+	mes "it doesn't look like we've got";
+	mes "any real shortage of drunks...";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,189,87,4	script	Drunken Man#Drunken_Man	869,{
+
+	mes "[Enku]";
+	mes "*Sob* I just got";
+	mes "dumped! Yeah, I thought";
+	mes "we were gonna get married,";
+	mes "but obviously I was wrong!";
+	mes "Damn it Sheryline! I loved you!";
+	next;
+	mes "[Enku]";
+	mes "I usually don't care for";
+	mes "drinking, especiallys stuff";
+	mes "like gin or rum, but today,";
+	mes "this stuff tastes just like";
+	mes "my misery. This is all the";
+	mes "comfort I need, you hear?!";
+	close;
+
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,183,82,6	script	Drunken Man#Drunken_Man2	870,{
+
+	mes "[Linus]";
+	mes "After ten years";
+	mes "of marriage. My";
+	mes "wife divorced me...";
+	next;
+	mes "[Linus]";
+	mes "So I guess there's no";
+	mes "place for me but here for";
+	mes "now. I don't know what it is,";
+	mes "but the rum is really good";
+	mes "today. Like, it's the flavor";
+	mes "of relaxing, joyous relief~";
+	close;
+
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_dun03.gat,180,83,6	script	Citizen	86,{
+
+	mes "[Mitchell]";
+	mes "You know, everyone";
+	mes "is different, but I think";
+	mes "humans are similar enough";
+	mes "that we can all meaningfully";
+	mes "connect on some level, right?";
+	next;
+	mes "[Mitchell]";
+	mes "Sure, a rich person might";
+	mes "have different problem than";
+	mes "a poor person, but the point";
+	mes "is, they've both got problems!";
+	mes "Pain, pleasure, sadness, joy.";
+	mes "Those link us all together.";
+	next;
+	mes "[Mitchell]";
+	mes "So try not to be picky";
+	mes "about who's your pal and";
+	mes "who's not. We all need";
+	mes "somebody to be with, right?";
+	close;
+
+}
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,176,85,4	script	Citizen#Citizen2	869,{
+
+	mes "[Dique]";
+	mes "One of the things I look";
+	mes "forward to during my day";
+	mes "is the drink I enjoy right";
+	mes "after work. It's the most";
+	mes "relaxing thing in the world.";
+	next;
+	mes "[Dique]";
+	mes "Of course, there's";
+	mes "more to life than just";
+	mes "hanging out in pubs and";
+	mes "bars. The thing is, in my";
+	mes "case, pubs and bars are";
+	mes "all I happen to need~";
+	close;
+
+}
+
+
+// ---------------------------------------------------------------------------
+
+lhz_in03.gat,184,38,2	script	Loudmouth	55,{
+
+	mes "[Loudmouth]";
+	mes "Do you know who I am?!";
+	mes "Just look at this peg leg.";
+	mes "I was in the Comodo War,";
+	mes "Ski Troop division! I lost my";
+	mes "leg to earn your freedom!";
+	next;
+	mes "[Loudmouth]";
+	mes "H-hey! What's that";
+	mes "look for? What, you";
+	mes "don't believe me?!";
 	close;
 
 }
