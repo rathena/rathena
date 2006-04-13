@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/13
+	* Implemented some crap NPCs in Lighthalzen [MasterOfMuppets]
 	* Fixed SOME bugs in Hugel.txt, hu_guide.txt. thanks to joshuaali [Lupus]
 		Guys, do always check the scripts before committing V_V'
 04/12

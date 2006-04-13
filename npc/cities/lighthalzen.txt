@@ -3,14 +3,456 @@
 //===== By: ================================================== 
 //=  erKURITA
 //===== Current Version: ===================================== 
-//= 0.1
+//= 0.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
 //= Lighthalzen NPCs (Temporal names for now) [erKURITA]
 //===== Additional Comments: ================================= 
-//= Placed temporal names, why there weren't on the SVN before? [erKURITA]
+//= 0.1 Placed temporal names, why there weren't on the SVN before? [erKURITA]
+//= 0.2 Implemented some crap NPCs [MasterOfMuppets]
 //============================================================
 
 lighthalzen.gat,154,100,5	script	Lighthalzen Guard#1	852,{end;}
 lighthalzen.gat,207,310,5	script	Lighthalzen Guard#2	852,{end;}
+
+lighthalzen.gat,239,64,5	script	Jade	862,{
+
+	mes "[Jade]";
+	mes "I've heard that there's a";
+	mes "strange kingdom out there";
+	mes "that's basically ruled by";
+	mes "magic and swords, where";
+	mes "adventurers are enlisted";
+	mes "for the greater good.";
+	next;
+	mes "[Jade]";
+	mes "So are you from";
+	mes "Rune-Midgard?";
+	mes "What do you think";
+	mes "of our city with its";
+	mes "advanced technology";
+	mes "and economy? Huh...";
+	next;
+	mes "[Jade]";
+	mes "Someday, I'd like";
+	mes "to go visit the land";
+	mes "where you came from.";
+	mes "It sounds so fantastic";
+	mes "and romantic in a way...";
+	close;	
+
+}
+
+lighthalzen.gat,205,208,3	script	Greedy Looking Man	853,{
+
+	mes "[Khramptd]";
+	mes "The land around here";
+	mes "is some pretty expensive";
+	mes "property. Yes, it's perfect";
+	mes "for building my awesome palace!";
+	mes "I don't have enough funds at the";
+	mes "moment, but the day will come~";
+	close;
+
+}
+
+lhz_in02.gat,34,213,4	script	Maggie	91,{
+
+	mes "[Maggie]";
+	mes "Sure, I sell a lot";
+	mes "of flowers here, but";
+	mes "the lease that this city";
+	mes "makes me pay cuts into";
+	mes "my profits. It's almost not";
+	mes "worth renting this property.";
+	next;
+	mes "[Maggie]";
+	mes "I pay such a ridiculous";
+	mes "amount for the lease and the";
+	mes "laws here won't let me raise";
+	mes "the price of my flowers. Why";
+	mes "are the city officials so greedy?";
+	close;
+
+}
+
+lighthalzen.gat,202,94,5	script	Wallace	847,{
+
+	mes "[Wallace]";
+	mes ".....";
+	mes "That lady, working";
+	mes "for that one company";
+	mes "Kafra, Mafra or whatever";
+	mes "She certainly is very charming.";
+	next;
+	mes "[Wallace]";
+	mes "Now, if I were";
+	mes "thirty years younger...";
+	mes "Wait! I'm a rich and powerful";
+	mes "man. I could ask her out now.";
+	mes "Hm? What's that look for?";
+	close;
+
+}
+
+lighthalzen.gat,182,102,3	script	Lucius	866,{
+
+	mes "[Lucius]";
+	mes "Hello youngster~";
+	mes "Would you like to";
+	mes "make a donation";
+	mes "to help the hungry?";
+	next;
+	menu "Sure.",s_Sure,"No, thanks.",-;
+
+s_Cancel:
+	mes "[Lucius]";
+	mes "I understand. Still,";
+	mes "keep in mind that when";
+	mes "you give from your heart,";
+	mes "you will be rewarded tenfold.";
+	mes "Though I admit, the benefits";
+	mes "aren't always readily apparent.";
+	close;
+
+s_Sure:
+	mes "[Lucius]";
+	mes "Now, you can donate 1 to";
+	mes "30,000 zeny that will be used";
+	mes "to support the poor and feed";
+	mes "starving children. If you wish";
+	mes "to cancel, please enter '0'.";
+	next;
+	input @zenydonate;
+		if(@zenydonate > 30000)goto s_Much;
+		if(!@zenydonate)goto s_Cancel;
+		if(Zeny < @zenydonate)goto s_NEnoughZ;
+		set Zeny,Zeny - @zenydonate;
+		set $donatedzeny,$donatedzeny + @zenydonate;
+	mes "[Lucius]";
+	mes "Thank you so much";
+	mes "for your " + @zenydonate + " zeny donation.";
+	mes "I promise that your money";
+	mes "will be put to good use in";
+	mes "benefiting the poor and needy.";
+	next;
+	mes "[Lucius]";
+	mes "So far, I've received";
+	mes "a total of " + $donatedzeny + " zeny in";
+	mes "donations. I'm glad to see";
+	mes "that there are still kinda and";
+	mes "generous people in the world.";
+	close;
+
+s_Much:
+	mes "[Lucius]";
+	mes "I'm sorry but you can't";
+	mes "donate more than 30,000";
+	mes "zeny. Please choose another";
+	mes "number.";
+	close;
+
+s_NEnoughZ:
+	mes "[Lucius]";
+	mes "I'm sorry but you do";
+	mes "not have as much zeny";
+	mes "as you wish to donate.";
+	mes "Please come back when you";
+	mes "do!";
+	close;
+
+}
+
+lighthalzen.gat,147,105,3	script	Laqumet	869,{
+
+	mes "[Laqumet]";
+	mes "Sure, manliness is quite";
+	mes "attractive, but I think women";
+	mes "appreciate a guy who could";
+	mes "sympathize and talk with them";
+	mes "a little more. Don't you agree?";
+	next;
+	mes "[Laqumet]";
+	mes "I might not be like Sefith,";
+	mes "but I guess I've got a cute";
+	mes "smile, a good personality and";
+	mes "I'm a dandy to boo. Hopefull,";
+	mes "my honesty and loyalty will";
+	mes "help me find someone good.";
+	close;
+
+}
+
+lhz_in02.gat,230,284,4	script	Hotel Employee	86,{
+
+	mes "[Hotel Employee]";
+	mes "Welcome to";
+	mes "the Royal Dragon,";
+	mes "where you can find the";
+	mes "finest accomodations";
+	mes "and the best service.";
+	next;
+	menu "Save Point",s_Save,"Rest - 5,000 zeny",s_Rest,"Cancel",-;
+
+	mes "[Hotel Employee]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
+
+s_Save:
+	savepoint "lhz_in02.gat",209,275;
+	mes "[Hotel Employee]";
+	mes "Thank you, your";
+	mes "Respawn Point has";
+	mes "been saved here in";
+	mes "the Royal Dragon.";
+	close;
+
+s_Rest:
+	if(Zeny < 5000)goto s_NEnoughZ;
+	set Zeny,Zeny - 5000;
+	mes "[Hotel Employee]";
+	mes "Thank you~";
+	mes "I hope you enjoy";
+	mes "your stay in the";
+	mes "Royal Dragon.";
+	close2;
+	warp "lhz_in02.gat",219,150;
+	percentheal 100,100;
+	sc_start SC_BLESSING,240000,10;
+	skilleffect AL_BLESSING,0;
+	end;
+
+s_NEnoughZ:
+	mes "[Hotel Employee]";
+	mes "I'm sorry but you do not";
+	mes "have enough zeny, please";
+	mes "come back when you do!";
+	close;
+}
+
+lhz_in02.gat,241,172,8	script	Hotel Employee	868,{
+
+	mes "[Hotel Employee]";
+	mes "Please use the stairs";
+	mes "at the northern end to";
+	mes "go downstairs so that you";
+	mes "can go to the Front Desk.";
+	mes "Thank you and I hope that";
+	mes "you enjoy your stay here.";
+	close;
+
+}
+
+lhz_in02.gat,210,189,2	script	Christopher Michael	849,{
+
+	mes "[Christopher Michael]";
+	mes "OoooOoh~";
+	mes "Soooo comfortable";
+	mes "Don't want to wake up.";
+	mes "Don't want to get up.";
+	mes "Ever again. OoOoooh...";
+	close;
+
+}
+
+lhz_in02.gat,201,181,6	script	Safwat Fahmy	853,{
+
+	mes "[Safwat Fahmy]";
+	mes "This hotel is nice";
+	mes "and comfortable, but";
+	mes "to be quite frank, the";
+	mes "drinks here are horrible.";
+	mes "They're unfit for being";
+	mes "drunk by men such as myself.";
+	next;
+	mes "[Safwat Fahmy]";
+	mes "If this is the best hotel,";
+	mes "I expect them to provide me";
+	mes "with the best alcohol. When";
+	mes "I stay at a hotel, that's what";
+	mes "I want. To spend the entire";
+	mes "day not being sober.";
+	next;
+	mes "[Safwat Fahmy]";
+	mes "It looks like that";
+	mes "today I'll be heading";
+	mes "out ot to the bar again...";
+	mes "I just wish there were";
+	mes "some place quieter to drink.";
+	close;
+
+}
+
+lhz_in02.gat,251,212,2	script	Hotel Employee	868,{
+
+	mes "[Hotel Employee]";
+	mes "This is the Couple Suite.";
+	mes "A single can also check";
+	mes "in here, but our hotel will";
+	mes "prioritize couples when";
+	mes "assigning this room.";
+	close;
+
+}
+
+lhz_in02.gat,229,217,2	script	Tanoue	863,{
+
+	mes "[Tanoue]";
+	mes "This chair looks";
+	mes "very nice, but it really";
+	mes "chills my bottom. Brr...!";
+	mes "It's mighty uncomfortable!";
+	next;
+	mes "[Tanoue]";
+	mes "You know what the";
+	mes "perfect chair would";
+	mes "be like? It would be";
+	mes "plush and have electronic";
+	mes "massage and heating controls...";
+	close;
+
+}
+
+lhz_in02.gat,209,277,4	script	Ben Allen	84,{
+
+	mes "[Ben Allen]";
+	mes "Aaahhh Oooooh~";
+	mes "It's sooooo comfy~";
+	mes "The air's so fresh and";
+	mes "this couch is so plush...";
+	mes "Why can't home be like this?";
+	next;
+	mes "[Ben Allen]";
+	mes "I've been in those other";
+	mes "hotels and let me tell you,";
+	mes "this place is the best ever.";
+	mes "After a night's sleep over";
+	mes "here, I feel like a new man!";
+	close;
+
+}
+
+lhz_in02.gat,221,276,4	script	Harp	869,{
+
+	mes "[Harp]";
+	mes "Oh sweet jiminy...";
+	mes "That Kafra Lady is so hot.";
+	mes "What a body. And those glasses.";
+	mes "I just gotta ask her out somehow.";
+	next;
+	mes "[Harp]";
+	mes "Hm, but what should";
+	mes "I do? A love letter? Naw,";
+	mes "that's kind of outdated.";
+	mes "Argh, I can't think! Just";
+	mes "looking at her makes me feel";
+	mes "so happy! Praise be to Kafra!";
+	close;
+
+}
+
+lhz_in02.gat,238,275,4	script	Hotel Employee	869,{
+
+	mes "[Hotel Employee]";
+	mes "\"Hospitality with a smile";
+	mes "and total devotion to your";
+	mes "comfort.\" That's our motto";
+	mes "in the Royal Dragon Hotel.";
+	mes "Please inquire at the front";
+	mes "desk if you wish to check in.";
+	close;
+
+}
+
+lhz_in02.gat,247,275,4	script	Hotel Employee	868,{
+
+	mes "[Hotel Employee]";
+	mes "Welcome to the";
+	mes "Royal Dragon Hotel Bar.";
+	mes "How about a nice night";
+	mes "cap before going to bed?";
+	next;
+	mes "[Hotel Employee]";
+	mes "If you're looking";
+	mes "for a friend, you";
+	mes "can almost always";
+	mes "make one in this bar.";
+	mes "Alcohol certainly is the";
+	mes "grease for social gears.";
+	close;
+
+}
+
+lhz_in02.gat,271,281,2	script	Citizen	47,{
+
+	mes "[Hachi]";
+	mes "Oh yeah. I love-love-love";
+	mes "bars. If I don't come here";
+	mes "for the booze, then I'm here";
+	mes "for all these beautiful ladies.";
+	next;
+	mes "[Hachi]";
+	mes "Weird. It's the very first";
+	mes "time I've tried this place's";
+	mes "rum, but doesn't it taste like";
+	mes "pure sexiness to you? Huh...";
+	mes "Oh well, back to schmoozin'";
+	mes "with all the hot chicks~";
+	close;
+
+}
+
+lhz_in02.gat,277,285,4	script	Bartender	61,{
+
+	mes "[Duff]";
+	mes "Hey, you're from";
+	mes "Rune-Midgard, right?";
+	mes "Please make yourself";
+	mes "at home while you're here";
+	mes "in Lighthalzen and have";
+	mes "yourself a good time.";
+	close;
+
+}
+
+lhz_in02.gat,281,280,6	script	Customer	816,{
+
+	mes "[Rona]";
+	mes "I hate it when guys";
+	mes "just sidle up and sort";
+	mes "of just skip Steps One";
+	mes "and Two. And before you";
+	mes "get all weird, Step Three";
+	mes "is \"Ask for my phone number.\"";
+	next;
+	mes "[Rona]";
+	mes "I would just really";
+	mes "appreciate it if one";
+	mes "nice boy would just";
+	mes "talk to me for real.";
+	close;
+
+}
+
+lhz_in02.gat,287,282,4	script	Customer	853,{
+
+	mes "[Greenfield]";
+	mes "I don't believe it...";
+	mes "This unluck streak";
+	mes "will never end, will it?";
+	mes "I lost all my Apples";
+	mes "playing Dice today.";
+	mes "Again. Oh man...";
+	next;
+	mes "[Greenfield]";
+	mes "Okay. Okay.";
+	mes "If I just keep";
+	mes "playing, eventually";
+	mes "I'll win. I mean, that's";
+	mes "the way the odds work, right?";
+	mes "Even when they're against me...";
+	close;
+
+}
