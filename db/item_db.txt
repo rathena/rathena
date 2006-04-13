@@ -2141,17 +2141,17 @@
 //
 7525,Summer_Festival_Ticket,Summer Festival Ticket,3,,10,10,,,,,,,,,,,,,{}
 7526,Application,Application,3,,10,0,,,,,,,,,,,,,{}
-7527,Unknown,Unknown7527,3,,10,10,,,,,,,,,,,,,{}
-7528,Lottery_Ticket,Lottery Ticket,3,,10,10,,,,,,,,,,,,,{}
-7529,Stolen_Sandal,Stolen Sandal,3,,10,10,,,,,,,,,,,,,{}
-7530,Amatsu_Tour_Guide,Amatsu Tour Guide,3,,10,10,,,,,,,,,,,,,{}
-7531,Kunlun_Tour_Guide,Gonryun Tour Guide,3,,10,10,,,,,,,,,,,,,{}
-7532,Louyang_Tour_Guide,Louyang Tour Guide,3,,10,10,,,,,,,,,,,,,{}
-7533,Ayothaya_Tour_Guide,Ayothaya Tour Guide,3,,10,10,,,,,,,,,,,,,{}
-7534,Amatsu_Album,Amatsu Album,3,,10,10,,,,,,,,,,,,,{}
-7535,Kunlun_Album,Gonryun Album,3,,10,10,,,,,,,,,,,,,{}
-7536,Louyang_Album,Louyang Album,3,,10,10,,,,,,,,,,,,,{}
-7537,Ayothaya_Album,AyothayacAlbum,3,,10,10,,,,,,,,,,,,,{}
+7527,Unknown,Unknown7527,3,,10,100,,,,,,,,,,,,,{}
+7528,Lottery_Ticket,Lottery Ticket,3,,10,0,,,,,,,,,,,,,{}
+7529,Stolen_Sandal,Stolen Sandal,3,,10,0,,,,,,,,,,,,,{}
+7530,Amatsu_Tour_Guide,Amatsu Tour Guide,3,,10,0,,,,,,,,,,,,,{}
+7531,Kunlun_Tour_Guide,Gonryun Tour Guide,3,,10,0,,,,,,,,,,,,,{}
+7532,Louyang_Tour_Guide,Louyang Tour Guide,3,,10,0,,,,,,,,,,,,,{}
+7533,Ayothaya_Tour_Guide,Ayothaya Tour Guide,3,,10,0,,,,,,,,,,,,,{}
+7534,Amatsu_Album,Amatsu Album,3,,10,0,,,,,,,,,,,,,{}
+7535,Kunlun_Album,Gonryun Album,3,,10,0,,,,,,,,,,,,,{}
+7536,Louyang_Album,Louyang Album,3,,10,0,,,,,,,,,,,,,{}
+7537,Ayothaya_Album,Ayothaya Album,3,,10,0,,,,,,,,,,,,,{}
 7538,Sand_For_Work,Sand For Work,3,,10,0,,,,,,,,,,,,,{}
 7539,Poring_Coin,Poring Coin,3,,10,0,,,,,,,,,,,,,{}
 7540,Number_39_Ball,Number 39 Ball,3,,10,10,,,,,,,,,,,,,{}
@@ -2370,16 +2370,16 @@
 12139,Third_Stage,Third Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{}
 12140,Fourth_Stage,Fourth Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{}
 12141,Fifth_Stage,Fifth Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{}
-12142,Book_of_Magic,Book of Magic,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ //Agi+10 }
+12142,Book_of_Magic,Book of Magic,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_AGIFood, 1800000, 20; }
 12143,Red_Can,Red Can,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,25; }
-12144,SpherePack_Lightning,Sphere Pack Lightning,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13204,500; }
-12145,SpherePack_Blind,Sphere Pack Blind,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13206,500; }
-12146,SpherePack_Poison,Sphere Pack Poison,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13205,500; }
-12147,SpherePack_Ice,Sphere Pack Ice,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13207,500; }
-12148,SpherePack_Flare,Sphere Pack Flare,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13203,500; }
-12149,Ammo_Box,Ammunition Box,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13200,500; }
-12150,Ammo_Box_Blood,Ammunition Box Blood,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13202,500; }
-12151,Ammo_Box_Silver,Ammunition Box Silver,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13201,500; }
+12144,Lightning_Sphere_Pack,Lightning Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13204,500; }
+12145,Blind_Sphere_Pack,Blind Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13206,500; }
+12146,Poison_Sphere_Pack,Poison Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13205,500; }
+12147,Freezing_Sphere_Pack,Freezing Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13207,500; }
+12148,Flare_Sphere_Pack,Flare Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13203,500; }
+12149,Bullet_Casing,Bullet Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13200,500; }
+12150,Shell_of_Blood_Casing,Shell of Blood Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13202,500; }
+12151,Silver_Bullet_Casing,Silver Bullet Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13201,500; }
 // More Weapons
 //===================================================================
 // Daggers
