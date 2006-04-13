@@ -3,8 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
-
 2006/04/13
+	* Added an Info message when pinging the SQL servers. [Skotlex]
 	* Fixed crash when looking for SC_MIRACLE in battle_calc_weapon_attack
 	  [Skotlex]
 	* Some more standard C code cleanups. [Skotlex]

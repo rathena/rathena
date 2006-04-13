@@ -2785,4 +2785,3 @@ int npc_changename(const char *name, const char *newname, short look){
 	npc_enable(newname,1);
 	return 0;
 }
-

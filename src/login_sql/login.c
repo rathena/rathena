@@ -359,6 +359,7 @@ int e_mail_check(char *email) {
  */
 int login_sql_ping(int tid, unsigned int tick, int id, int data) 
 {
+	ShowInfo("Pinging SQL server to keep connection alive...\n");
 	mysql_ping(&mysql_handle);
 	return 0;
 }

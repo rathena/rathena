@@ -1629,7 +1629,6 @@ int map_quit(struct map_session_data *sd) {
 	return 0;
 }
 
-
 /*==========================================
  * idî‘?ÇÃPCÇíTÇ∑ÅBãèÇ»ÇØÇÍÇŒNULL
  *------------------------------------------
@@ -3750,6 +3749,7 @@ void map_versionscreen(int flag) {
  */
 int map_sql_ping(int tid, unsigned int tick, int id, int data) 
 {
+	ShowInfo("Pinging SQL server to keep connection alive...\n");
 	mysql_ping(&mmysql_handle);
 	if (log_config.sql_logs)
 		mysql_ping(&logmysql_handle);
