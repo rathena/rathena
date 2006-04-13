@@ -2145,11 +2145,11 @@
 7528,Lottery_Ticket,Lottery Ticket,3,,10,0,,,,,,,,,,,,,{}
 7529,Stolen_Sandal,Stolen Sandal,3,,10,0,,,,,,,,,,,,,{}
 7530,Amatsu_Tour_Guide,Amatsu Tour Guide,3,,10,0,,,,,,,,,,,,,{}
-7531,Kunlun_Tour_Guide,Gonryun Tour Guide,3,,10,0,,,,,,,,,,,,,{}
+7531,Gonryun_Tour_Guide,Gonryun Tour Guide,3,,10,0,,,,,,,,,,,,,{}
 7532,Louyang_Tour_Guide,Louyang Tour Guide,3,,10,0,,,,,,,,,,,,,{}
 7533,Ayothaya_Tour_Guide,Ayothaya Tour Guide,3,,10,0,,,,,,,,,,,,,{}
 7534,Amatsu_Album,Amatsu Album,3,,10,0,,,,,,,,,,,,,{}
-7535,Kunlun_Album,Gonryun Album,3,,10,0,,,,,,,,,,,,,{}
+7535,Gonryun_Album,Gonryun Album,3,,10,0,,,,,,,,,,,,,{}
 7536,Louyang_Album,Louyang Album,3,,10,0,,,,,,,,,,,,,{}
 7537,Ayothaya_Album,Ayothaya Album,3,,10,0,,,,,,,,,,,,,{}
 7538,Sand_For_Work,Sand For Work,3,,10,0,,,,,,,,,,,,,{}
