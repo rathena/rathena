@@ -27,6 +27,9 @@ Nexon
 
 Date		Added
 ======
+04/14
+	* Added a temporary script to enter Gefenia for some Zeny [Playtester]
+	- will be replaced once we have finished The Sign Quest
 04/13
 	* Finally added the missing Xmas spawns in Geffen Field [Playtester]
 	* Added a few missing warps in Lighthalzen, thanks to Kargha. [MasterOfMuppets]
