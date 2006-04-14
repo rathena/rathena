@@ -26,6 +26,9 @@
 	-----
 
 =========================
+04/14
+	* Fixed various Job Fields in the item_db.txt thanks to Haplo and KarLaeda [Playtester]
+	- they should all fit to the descriptions now
 04/13
 	- fixed pick stone ID [Lupus]
 	* Updated 1675,VENATU (some columns were shifted) [Lupus]
