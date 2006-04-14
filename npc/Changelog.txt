@@ -28,6 +28,9 @@ Nexon
 Date		Added
 ======
 04/14
+	* Cleaned up eamobs [Playtester]
+	- deleted all files that have no difference to mobs
+	- scripts_eamonsters.conf now links to mobs for those cases
 	* Added a temporary script to enter Gefenia for some Zeny [Playtester]
 	- will be replaced once we have finished The Sign Quest
 04/13

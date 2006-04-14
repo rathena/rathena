@@ -24,7 +24,7 @@ niflheim     - [Not Approved]
 odin         - [Not Approved]
 payon        - [Not Approved]
 prontera     - [Not Approved]
-umbala       - [Not Approved]
+umbala       - [Modified]
 yuno         - [Not Approved]
 
 --== Dungeons ==--
