@@ -3,11 +3,11 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.1a
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
-//=
+//= 1.1a replaced lootless Thief Bug Female with normal
 //============================================================
 
 //==================================================
@@ -246,5 +246,5 @@ mjolnir_11.gat,332,327,0,0	monster	Blue Plant	1079,1,360000,180000,1
 // mjolnir_12 - Mt.Mjolnir
 //==================================================
 mjolnir_12.gat,0,0,0,0	monster	Dustiness	1114,50,0,0,0
-mjolnir_12.gat,0,0,0,0	monster	Thief Bug Female	1053,20,0,0,0
+mjolnir_12.gat,0,0,0,0	monster	Thief Bug Female	1017,20,0,0,0
 mjolnir_12.gat,0,0,0,0	monster	Stem Worm	1215,20,0,0,0
