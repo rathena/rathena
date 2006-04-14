@@ -23,6 +23,4 @@ update item_db set equip_jobs = 0xFFFFFFFF where equip_jobs = 0x3EFDFFF;
 #Make items usable by everyone but novice into 0xFFFFFFFE
 update item_db set equip_jobs = 0xFFFFFFFE where equip_jobs = 0x0EFDFFE;
 #Update items usable by everyone except acolyte/priest/monk/gunslinger
-update item_db set equip_jobs = 0xDFFF7EEF where equip_jobs = 0x28F5EEF;
-
-
+update item_db set equip_jobs = 0xFDFF7EEF where equip_jobs = 0x28F5EEF;
