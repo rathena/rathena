@@ -161,7 +161,7 @@ enum {
 
 //Removed sd->npc_shopid because there is no packet sent from the client when you cancel a buy!
 //Quick check to know if the player shouldn't be "busy" with something else to deny action requests. [Skotlex]
-#define clif_cant_act(sd) (sd->npc_id || sd->vender_id || sd->chatID || (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT) || sd->trade_partner || sd->state.storage_flag)
+#define clif_cant_act(sd) (sd->npc_id || sd->vender_id || sd->chatID || sd->sc.opt1 || sd->trade_partner || sd->state.storage_flag)
 
 // Checks if SD is in a trade/shop (where messing with the inventory can cause problems/exploits)
 #define clif_trading(sd) (sd->npc_id || sd->vender_id || sd->trade_partner)
@@ -8154,7 +8154,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 		return;
 	}
 
-	if (clif_cant_act(sd))
+	if (clif_cant_act(sd) && sd->sc.opt1 != OPT1_STONEWAIT)
 		return;
 
 	if (!unit_can_move(&sd->bl))
