@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/14
+	* Added some more Kiel warps thanks to Celestria [Playtester]
 	* Cleaned up eamobs [Playtester]
 	- deleted all files that have no difference to mobs
 	- scripts_eamonsters.conf now links to mobs for those cases

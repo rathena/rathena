@@ -3,16 +3,20 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
 //= Warp Points for all Kiel Buildings
 //===== Additional Comments: =================================
-//= 1.0 Added Kiel Warps thanks to Celestria [Playtester]
+//= 1.0 Added Kiel warps thanks to Celestria [Playtester]
+//= 1.1 Added more warps thanks to Celestria [Playtester]
 //============================================================
 
 
+//============================================================
+// kh_school
+//============================================================
 //Entrance Level
 kh_school.gat,77,155,0	warp	school01	1,1,yuno_fild08.gat,154,189
 kh_school.gat,30,184,0	warp	school02	1,1,kh_school.gat,63,75
@@ -33,7 +37,9 @@ kh_school.gat,118,139,0	warp	school13	1,1,kh_school.gat,63,75
 //Yuno Field
 yuno_fild08.gat,148,189,0	warp	school14	1,1,kh_school.gat,71,158
 
-
+//============================================================
+// kh_vila
+//============================================================
 //Entrance
 yuno_fild02.gat,92,213,0	warp	vila18	1,1,kh_vila.gat,79,14
 //Entrance Hall
@@ -59,3 +65,49 @@ kh_vila.gat,126,76,0	warp	vila16	1,1,kh_vila.gat,180,175
 kh_vila.gat,180,170,0	warp	vila17	1,1,kh_vila.gat,127,71
 
 kh_vila.gat,174,72,0	warp	vila19	1,1,kh_vila.gat,181,125
+
+
+//============================================================
+// kh_rossi - House of the Losimier family
+//============================================================
+//Entrance Level
+//???.gat,???,???,0	warp	rossi01	1,1,kh_rossi.gat,17,93
+//kh_rossi.gat,12,93,0	warp	rossi02	1,1,???.gat,???,???
+kh_rossi.gat,35,99,0	warp	rossi03	1,1,kh_rossi.gat,27,146
+kh_rossi.gat,27,142,0	warp	rossi04	1,1,kh_rossi.gat,35,95
+kh_rossi.gat,35,86,0	warp	rossi05	1,1,kh_rossi.gat,27,39
+kh_rossi.gat,27,43,0	warp	rossi06	1,1,kh_rossi.gat,35,90
+kh_rossi.gat,63,86,0	warp	rossi07	1,1,kh_rossi.gat,99,39
+kh_rossi.gat,99,43,0	warp	rossi08	1,1,kh_rossi.gat,63,90
+kh_rossi.gat,90,86,0	warp	rossi09	1,1,kh_rossi.gat,168,31
+kh_rossi.gat,168,35,0	warp	rossi10	1,1,kh_rossi.gat,90,90
+kh_rossi.gat,43,26,0	warp	rossi11	1,1,kh_rossi.gat,90,25
+kh_rossi.gat,86,25,0	warp	rossi12	1,1,kh_rossi.gat,37,26
+kh_rossi.gat,91,101,0	warp	rossi13	1,1,kh_rossi.gat,282,65
+
+//Upper Level
+kh_rossi.gat,282,60,0	warp	rossi14	1,1,kh_rossi.gat,91,95
+kh_rossi.gat,222,24,0	warp	rossi15	1,1,kh_rossi.gat,22,219
+kh_rossi.gat,22,223,0	warp	rossi16	1,1,kh_rossi.gat,222,28
+kh_rossi.gat,248,24,0	warp	rossi17	1,1,kh_rossi.gat,88,219
+kh_rossi.gat,88,223,0	warp	rossi18	1,1,kh_rossi.gat,248,28
+kh_rossi.gat,258,46,0	warp	rossi19	1,1,kh_rossi.gat,225,235
+kh_rossi.gat,222,69,0	warp	rossi20	1,1,kh_rossi.gat,22,276
+kh_rossi.gat,22,272,0	warp	rossi21	1,1,kh_rossi.gat,222,65
+kh_rossi.gat,248,69,0	warp	rossi21	1,1,kh_rossi.gat,88,276
+kh_rossi.gat,88,272,0	warp	rossi23	1,1,kh_rossi.gat,248,65
+
+//Hallway
+kh_rossi.gat,229,235,0	warp	rossi24	1,1,kh_rossi.gat,263,46
+kh_rossi.gat,188,239,0	warp	rossi25	1,1,kh_rossi.gat,148,281
+kh_rossi.gat,148,278,0	warp	rossi26	1,1,kh_rossi.gat,188,235
+kh_rossi.gat,204,239,0	warp	rossi27	1,1,kh_rossi.gat,204,281
+kh_rossi.gat,204,278,0	warp	rossi28	1,1,kh_rossi.gat,204,235
+kh_rossi.gat,220,239,0	warp	rossi29	1,1,kh_rossi.gat,260,281
+kh_rossi.gat,260,278,0	warp	rossi30	1,1,kh_rossi.gat,220,235
+kh_rossi.gat,188,230,0	warp	rossi31	1,1,kh_rossi.gat,148,187
+kh_rossi.gat,148,191,0	warp	rossi32	1,1,kh_rossi.gat,188,234
+kh_rossi.gat,204,230,0	warp	rossi33	1,1,kh_rossi.gat,204,187
+kh_rossi.gat,204,191,0	warp	rossi34	1,1,kh_rossi.gat,204,234
+kh_rossi.gat,220,230,0	warp	rossi35	1,1,kh_rossi.gat,260,187
+kh_rossi.gat,260,191,0	warp	rossi36	1,1,kh_rossi.gat,220,234
