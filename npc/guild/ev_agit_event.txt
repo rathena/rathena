@@ -23,7 +23,7 @@
 //= Now they appear in castles from 00:01 to 00:24. [Lupus]
 //= 1.5 Fixed WOE end messages on non-WOE days, by Avaj
 //============================================================
-
+//| To know how to set up WoE times, go to doc\woe_time_explanation.txt
 // WoE Start/Stop times
 //======================================
 - script Agit_Event -1,{

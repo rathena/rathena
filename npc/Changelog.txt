@@ -28,6 +28,9 @@ Nexon
 Date		Added
 ======
 04/14
+	* Added quest_warper.txt to eAAC_Scripts. Deleted the sql and txt versions
+	  of the disguiser and added a merge of both. Deleted clone_arena.txt.
+	  Updated global_functionsKE.txt of Skotlex. [erKURITA]
 	* Added some more Kiel warps thanks to Celestria [Playtester]
 	* Cleaned up eamobs [Playtester]
 	- deleted all files that have no difference to mobs

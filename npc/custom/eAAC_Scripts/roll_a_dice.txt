@@ -14,7 +14,8 @@
 //	    1.3 - added more emoticons,made an Info menu 
 //		    option which contains explanations and rules,
 //		    added the amount of lost/won zeny on the end 
-//		    of each game,added more colors             
+//		    of each game,added more colors
+//	    1.4 - some small code optimization thanks to Myzter             
 //==========================================================
 
 
@@ -120,22 +121,17 @@ L_gamec:
 	if(@numg>18) message strcharinfo(0),"Number is too high, input again.";
 	if(@numg<3||@numg>18) goto L_gamec;
 	set Zeny, Zeny - @betnum;
+	next;
 	goto L_gameb;
 
 L_gameb:
-	next;
-	set @number1,rand(1,6);
-	set @number2,rand(1,6);
-	set @number3,rand(1,6);
-	set @number4,rand(1,6);
-	set @number5,rand(1,6);
-	set @number6,rand(1,6);
-	set @dea1, @number1;
-	set @dea2, @number2;
-	set @dea3, @number3;
-	set @pla1, @number4;
-	set @pla2, @number5;
-	set @pla3, @number6;
+
+	set @dea1, rand(1,6);
+	set @dea2, rand(1,6);
+	set @dea3, rand(1,6);
+	set @pla1, rand(1,6);
+	set @pla2, rand(1,6);
+	set @pla3, rand(1,6);
 	set @deatot, @dea1+@dea2+@dea3;
 	set @platot, @pla1+@pla2+@pla3;
 
@@ -208,7 +204,6 @@ L_lose:
 	mes "You lost ^0080FF"+@bet+"^000000 Zeny.";
 	next;
 	goto L_againa;
-	close;
 	
 L_again:
 	mes "[Dicer]";
@@ -227,7 +222,6 @@ L_win1:
 	mes "You won ^0080FF"+@wona+"^000000 Zeny.";
 	next;
 	goto L_againa;
-	close;
 
 L_win2:
 	mes "[Dicer]";

@@ -1,0 +1,1946 @@
+//===== eAthena Script ============================================
+//= Quest Warper Script
+//===== By: =======================================================
+//= Old Warper 2 by Darkchild - Remade with quest format by DZeroX
+//= Huge Rewrite by Neouni
+//===== Current Version: ==========================================
+//= 1.5
+//===== Compatible With: ==========================================
+//= Any eAthena Version
+//===== Description: ==============================================
+//= Warper that works only after locations are unlocked
+//===== Warning: ==================================================
+// you have to set the securitycode value [1337] the same as in
+// functions_kafras.txt if you changed it !!
+//===== Additional Comments: ======================================
+//= 1.0 - NPCs created
+//= 1.1 - Add Dungeons by sturm
+//= 1.2 - Add All char in account unlocked by ace_killer
+//= 1.3 - Add new 7 towns and 7 dungeons by escoteiro
+// - Correct bug jawaii town by escoteiro
+// - Remove some excessive warpras by escoteiro
+//= 1.4 - Rewrite of the Warpa system [Neouni]
+// - Corrected some bugs caused by autoconverting the old script
+//= 1.4a - Rewrite of menu to be custom for each player [Neouni]
+// - Dungeon listing rewrite
+// - Town listing rewrite
+// - GameMaster can Customise Main menu
+//= 1.4b - Pricing round [Neouni]
+// - GM menu added for pricing
+// - Town Warp pricing tags added
+// - Dungeon Warp pricing tags added
+//= 1.5 - storage functions pricing [Neouni]
+// - storage pricing added
+// - kafra points setting added
+// - kafra storage code security added
+// - Healing scripts pricing added
+// - Heal Part script added
+//=================================================================
+
+//========================Function=&=Script========================
+
+
+function	script	Q_Warpra	{
+	mes "[Warpra]";
+	mes "Hello,";
+	mes "I can warp you to any town or dungeon, but you need to unlock them first.";
+	mes "To unlock them, you have to visit us.";
+	mes "What do you need?";
+	
+	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
+	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
+	
+	menu @Mmenulist$[0],-,@Mmenulist$[1],-,@Mmenulist$[2],-,@Mmenulist$[3],-,@Mmenulist$[4],-,@Mmenulist$[5],-,@Mmenulist$[6],-,@Mmenulist$[7],-,@Mmenulist$[8],-,@Mmenulist$[9],-;
+	
+	if (@pMmenuitems$[@Mmenuref[@menu-1]] == "GameMaster Menu") goto GM_Menu;
+	if (@pMmenuitems$[@Mmenuref[@menu-1]] == "Warp to Towns") goto L_town;
+	if (@pMmenuitems$[@Mmenuref[@menu-1]] == "Warp to Dungeons") goto L_dungeon;
+	if (@pMmenuitems$[@Mmenuref[@menu-1]] == "Why so few Warps ?") goto L_FewWarps;
+	if (@pMmenuitems$[@Mmenuref[@menu-1]] == "Why don't you Unlock this location ?") goto L_NoUnlock;
+	if (@Mmenuref[@menu-1] == 5) goto L_heal_Full;
+	if (@Mmenuref[@menu-1] == 6) goto L_heal_Part;
+	if (@pMmenuitems$[@Mmenuref[@menu-1]] == "Storage") goto L_Storage;
+	if (@pMmenuitems$[@Mmenuref[@menu-1]] == "Guild Storage") goto L_GStorage;
+	if (@pMmenuitems$[@Mmenuref[@menu-1]] == "Cancel") goto L_end;
+	goto L_end;
+
+
+//=====================GM-Menu=Functions===========================
+
+GM_Menu:
+next;
+//----------------Town-Warp
+	if ($QW_TW_OFF == 0) mes "Town warping = ^00FF00 On ^000000";
+	if ($QW_TW_OFF == 1) mes "Town warping = ^FF0000 Off ^000000";
+//----------------Dungeon-Warp
+	if ($QW_DW_OFF == 0) mes "Dungeon warping = ^00FF00 On ^000000";
+	if ($QW_DW_OFF == 1) mes "Dungeon warping = ^FF0000 Off ^000000";
+//----------------Healfull
+	if ($QW_HF == 1) mes "Healing full = ^00FF00 On ^000000";
+//----------------Healpart
+	if ($QW_HP == 1) mes "Healing partly = ^00FF00 On ^000000";
+	if (($QW_HF == 0)&&($QW_HP == 0)) mes "Healing = ^FF0000 Off ^000000";
+//----------------Storage
+	if ($QW_Stor == 1) mes "Storage = ^00FF00 On ^000000";
+	if ($QW_Stor == 0) mes "Storage = ^FF0000 Off ^000000";
+//----------------GuildStorage
+	if ($QW_GStor == 1) mes "Guild Storage = ^00FF00 On ^000000";
+	if ($QW_GStor == 0) mes "Guild Storage = ^FF0000 Off ^000000";
+//----------------GMmenu
+	if ($QW_KPoint == 1) mes "Kafra points collect = ^00FF00 On ^000000";
+	if ($QW_KPoint == 0) mes "Kafra points collect = ^FF0000 Off ^000000";
+set @GMmenu,select("Town Warping","Dungeon Warping","Healing full","Healing partly","Storage","Guild Storage","Kafra points collect","Set Prices","Exit");
+
+// Using callsub and a small check to not make 1 part of the script set it on and the other turning it off again
+// why not use TWSETON & TWSETOFF ?, this saves lines
+
+	if ((@GMmenu == 1)&&($QW_TW_OFF == 0)) callsub TWSET,0;
+	if ((@GMmenu == 1)&&($QW_TW_OFF == 1)) callsub TWSET,1;
+	if ((@GMmenu == 2)&&($QW_DW_OFF == 0)) callsub DWSET,0;
+	if ((@GMmenu == 2)&&($QW_DW_OFF == 1)) callsub DWSET,1;
+	if (@GMmenu == 3)&&($QW_HF == 0) callsub HFSET,0;
+	if (@GMmenu == 3)&&($QW_HF == 1) callsub HFSET,1;
+	if (@GMmenu == 4)&&($QW_HP == 0) callsub HPSET,0;
+	if (@GMmenu == 4)&&($QW_HP == 1) callsub HPSET,1;
+	if (@GMmenu == 5)&&($QW_Stor == 0) callsub SSET,0;
+	if (@GMmenu == 5)&&($QW_Stor == 1) callsub SSET,1;
+	if (@GMmenu == 6)&&($QW_GStor == 0) callsub GSSET,0;
+	if (@GMmenu == 6)&&($QW_GStor == 1) callsub GSSET,1;
+	if (@GMmenu == 7)&&($QW_Kpoint == 0) callsub Kpoint,0;
+	if (@GMmenu == 7)&&($QW_Kpoint == 1) callsub Kpoint,1;
+	if (@GMmenu == 8) goto Setprice;
+	close;
+	end;
+
+TWSET:
+if (getarg(0) == 0) set $QW_TW_OFF,1;
+if (getarg(0) == 1) set $QW_TW_OFF,0;
+goto GM_Menu;
+DWSET:
+if (getarg(0) == 0) set $QW_DW_OFF,1;
+if (getarg(0) == 1) set $QW_DW_OFF,0;
+goto GM_Menu;
+HFSET:
+if (getarg(0) == 0) set $QW_HF,1;
+if (getarg(0) == 0) set $QW_HP,0;
+if (getarg(0) == 1) set $QW_HF,0;
+goto GM_Menu;
+HPSET:
+if (getarg(0) == 0) set $QW_HP,1;
+if (getarg(0) == 0) set $QW_HF,0;
+if (getarg(0) == 1) set $QW_HP,0;
+goto GM_Menu;
+SSET:
+if (getarg(0) == 0) set $QW_Stor,1;
+if (getarg(0) == 1) set $QW_Stor,0;
+goto GM_Menu;
+GSSET:
+if (getarg(0) == 0) set $QW_GStor,1;
+if (getarg(0) == 1) set $QW_GStor,0;
+goto GM_Menu;
+Kpoint:
+if (getarg(0) == 0) set $QW_Kpoint,1;
+if (getarg(0) == 1) set $QW_Kpoint,0;
+goto GM_Menu;
+
+
+//======================GM-Menu=Pricing============================
+
+Setprice:
+	next;
+	mes "Scroll thru the list to see all the options";
+//----------------Warp-Basic-Price
+	if ($QW_BW_PRICE != 0) mes "Basic - Warps are = ^00FF00 "+$QW_BW_PRICE+" ^000000";
+	if ($QW_BW_PRICE == 0) mes "Basic - Warps are = ^FF0000 Free ^000000";
+//----------------Warp-Advanced-Price
+	if ($QW_AW_PRICE != 0) mes "Advanced - Warps are = ^00FF00 "+$QW_AW_PRICE+" ^000000";
+	if ($QW_AW_PRICE == 0) mes "Advanced - Warps are = ^FF0000 Free ^000000";
+//----------------Warp-Oversea-Price
+	if ($QW_OW_PRICE != 0) mes "Overseas - Warps are = ^00FF00 "+$QW_OW_PRICE+" ^000000";
+	if ($QW_OW_PRICE == 0) mes "Overseas - Warps are = ^FF0000 Free ^000000";
+//----------------Heal-Full
+	if ($QW_HF_PRICE != 0) mes "Full Healing = ^00FF00 "+$QW_HF_PRICE+" ^000000";
+	if ($QW_HF_PRICE == 0) mes "Full Healing = ^FF0000 Free ^000000";
+//----------------Heal-Part
+	if ($QW_HP_H_PRICE != 0) mes "^FF0000HP ^000000Part Healing = ^00FF00 "+$QW_HP_H_PRICE+" ^000000 a point";
+	if ($QW_HP_H_PRICE == 0) mes "^FF0000HP ^000000Part Healing = ^FF0000 Free ^000000";
+	if ($QW_HP_S_PRICE != 0) mes "^0000FFSP ^000000Part Healing = ^00FF00 "+$QW_HP_S_PRICE+" ^000000 a point";
+	if ($QW_HP_S_PRICE == 0) mes "^0000FFSP ^000000Part Healing = ^FF0000 Free ^000000";
+//----------------Storage
+	if (($QW_S_PRICE != 0)&&($QW_S_PRICE != 60)) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
+	if ($QW_S_PRICE == 0) mes "Storage = ^FF0000 Free ^000000";
+	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
+//----------------Guild-Storage
+	if ($QW_GS_PRICE != 0) mes "Guild Storage = ^00FF00 "+$QW_GS_PRICE+" ^000000";
+	if ($QW_GS_PRICE == 0) mes "Guild Storage = ^FF0000 Free ^000000";
+set @GMmenu2,select("Basic - Warps","Advanced - Warps","Overseas - Warps","Full Healing","Part Healing","Storage","Guild Storage","Back","Exit");
+	if (@GMmenu2 == 1) goto BWprice;
+	if (@GMmenu2 == 2) goto AWprice;
+	if (@GMmenu2 == 3) goto OWprice;
+	if (@GMmenu2 == 4) goto FHprice;
+	if (@GMmenu2 == 5) goto PHprice;
+	if (@GMmenu2 == 6) goto Sprice;
+	if (@GMmenu2 == 7) goto GSprice;
+	if (@GMmenu2 == 8) goto GM_Menu;
+	close;
+	end;
+
+BWprice:
+	next;
+	if ($QW_BW_PRICE != 0) mes "Basic - Warps are = ^00FF00 "+$QW_BW_PRICE+" ^000000";
+	if ($QW_BW_PRICE == 0) mes "Basic - Warps are = ^FF0000 Free ^000000";
+	mes "Basic - Warps are starter towns and related dungeons";
+	input $QW_BW_PRICE;
+	goto Setprice;
+
+AWprice:
+	next;
+	if ($QW_AW_PRICE != 0) mes "Advanced - Warps are = ^00FF00 "+$QW_AW_PRICE+" ^000000";
+	if ($QW_AW_PRICE == 0) mes "Advanced - Warps are = ^FF0000 Free ^000000";
+	mes "Advanced - Warps are towns on the same island but not close to any starter town";
+	input $QW_AW_PRICE;
+	goto Setprice;
+
+OWprice:
+	next;
+	if ($QW_OW_PRICE != 0) mes "Overseas - Warps are = ^00FF00 "+$QW_OW_PRICE+" ^000000";
+	if ($QW_OW_PRICE == 0) mes "Overseas - Warps are = ^FF0000 Free ^000000";
+	mes "Overseas - Warps are towns and dungeons overseas reachable by boat from alberta";
+	input $QW_OW_PRICE;
+	goto Setprice;
+
+FHprice:
+	next;
+	if ($QW_HF_PRICE != 0) mes "Full Healing = ^00FF00 "+$QW_HF_PRICE+" ^000000";
+	if ($QW_HF_PRICE == 0) mes "Full Healing = ^FF0000 Free ^000000";
+	mes "Instant full healing 1 price";
+	input $QW_HF_PRICE;
+	goto Setprice;
+
+PHprice:
+	next;
+	if ($QW_HP_H_PRICE != 0) mes "^FF0000HP ^000000Part Healing = ^00FF00 "+$QW_HP_H_PRICE+" ^000000 a point";
+	if ($QW_HP_H_PRICE == 0) mes "^FF0000HP ^000000Part Healing = ^FF0000 Free ^000000";
+	if ($QW_HP_S_PRICE != 0) mes "^0000FFSP ^000000Part Healing = ^00FF00 "+$QW_HP_S_PRICE+" ^000000 a point";
+	if ($QW_HP_S_PRICE == 0) mes "^0000FFSP ^000000Part Healing = ^FF0000 Free ^000000";
+	mes "Healing price per 1 HP";
+	mes "Healing price per 1 SP";
+	mes "2 inputs, first HP then SP";
+	input $QW_HP_H_PRICE;
+	input $QW_HP_S_PRICE;
+	goto Setprice;
+
+Sprice:
+	next;
+	if (($QW_S_PRICE != 0)&&($QW_S_PRICE != 60)) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
+	if ($QW_S_PRICE == 0) mes "Storage = ^FF0000 Free ^000000";
+	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
+	mes "Storage cost, if set to 60 Kafra pricing will be handled";
+	input $QW_S_PRICE;
+	goto Setprice;
+
+GSprice:
+	next;
+	if ($QW_GS_PRICE != 0) mes "Guild Storage = ^00FF00 "+$QW_GS_PRICE+" ^000000";
+	if ($QW_GS_PRICE == 0) mes "Guild Storage = ^FF0000 Free ^000000";
+	mes "Guild Storage, free on Guild Kafras";
+	input $QW_GS_PRICE;
+	goto Setprice;
+
+//===========================Towns=================================
+
+L_town:
+	callfunc "QWS_Tarray";
+
+// Expected maximum is set to 22, if you add  more options add a more ",@Tmenulist$[xx],-"
+
+	menu @Tmenulist$[0],-,@Tmenulist$[1],-,@Tmenulist$[2],-,@Tmenulist$[3],-,@Tmenulist$[4],-,@Tmenulist$[5],-,@Tmenulist$[6],-,@Tmenulist$[7],-,@Tmenulist$[8],-,@Tmenulist$[9],-,@Tmenulist$[10],-,@Tmenulist$[11],-,@Tmenulist$[12],-,@Tmenulist$[13],-,@Tmenulist$[14],-,@Tmenulist$[15],-,@Tmenulist$[16],-,@Tmenulist$[17],-,@Tmenulist$[18],-,@Tmenulist$[19],-,@Tmenulist$[20],-,@Tmenulist$[21],-,@Tmenulist$[22],-;
+	if (@pTmap$[@Tmenuref[@menu-1]] == "L_End") goto L_end;
+	if(Zeny<@pTprice[@Tmenuref[@menu-1]]) callsub L_Short_on_zeny,0;
+	set Zeny, Zeny-@pTprice[@Tmenuref[@menu-1]];
+	warp @pTmap$[@Tmenuref[@menu-1]],@pTXcoords[@Tmenuref[@menu-1]],@pTYcoords[@Tmenuref[@menu-1]];
+	close2;		// this part safegaurds against errors/typos
+	set Zeny, Zeny+@pTprice[@Tmenuref[@menu-1]];
+	close;
+	end;
+
+//=========================Dungeons================================
+
+L_dungeon:
+	callfunc "QWS_Darray";
+	
+// Expected maximum is set to 27, if you add  more options add a more ",@Dmenulist$[xx],-"
+
+	menu @Dmenulist$[0],-,@Dmenulist$[1],-,@Dmenulist$[2],-,@Dmenulist$[3],-,@Dmenulist$[4],-,@Dmenulist$[5],-,@Dmenulist$[6],-,@Dmenulist$[7],-,@Dmenulist$[8],-,@Dmenulist$[9],-,@Dmenulist$[10],-,@Dmenulist$[11],-,@Dmenulist$[12],-,@Dmenulist$[13],-,@Dmenulist$[14],-,@Dmenulist$[15],-,@Dmenulist$[16],-,@Dmenulist$[17],-,@Dmenulist$[18],-,@Dmenulist$[19],-,@Dmenulist$[20],-,@Dmenulist$[21],-,@Dmenulist$[22],-,@Dmenulist$[23],-,@Dmenulist$[24],-,@Dmenulist$[25],-,@Dmenulist$[26],-,@Dmenulist$[27],-;
+
+// if statement made because goto & callsub doesn't accept string
+// should rewrite after loading dungeon levels into an array
+
+	if (Zeny<@pDprice[@Dmenuref[@menu-1]]) callsub L_Short_on_zeny,1;
+	set Zeny, Zeny-@pDprice[@Dmenuref[@menu-1]];	
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "abyss") goto abyss;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "ama_dun") goto ama_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "anthell") goto anthell;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "ayotaya_dun") goto ayotaya_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "iz_dun") goto iz_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "c_tower") goto c_tower;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "mjo_dun") goto mjo_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "prt_sewb") goto prt_sewb;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "einbech_dun") goto einbech_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "gefenia") goto gefenia;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "gef_dun") goto gef_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "gl_dun") goto gl_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "gon_dun") goto gon_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "hid_dun") goto hid_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "juperos") goto juperos;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "lighthalzen_dun") goto lighthalzen_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "mag_dun") goto mag_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "odintemple") goto odintemple;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "orcsdun") goto orcsdun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "pay_dun") goto pay_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "moc_pryd") goto moc_pryd;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "in_sphinx") goto in_sphinx;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "treasure") goto treasure;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "xmas_dun") goto xmas_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "tur_dun") goto tur_dun;
+	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "um_dun") goto um_dun;
+	close2;		// this part safegaurds against errors/typos
+	set Zeny, Zeny+@pDprice[@Dmenuref[@menu-1]];
+	close;
+	end;
+
+//=========================Dungeons================================
+
+//----------------ABYSS LAKE
+abyss:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_abyss_1,
+ "Level 2",d_abyss_2,
+ "Level 3",d_abyss_3;
+d_abyss_1:
+warp "abyss_01.gat", 265, 273; close;
+d_abyss_2:
+warp "abyss_02.gat", 275, 270; close;
+d_abyss_3:
+warp "abyss_03.gat", 116, 27; close;
+
+
+//----------------AMATSU DUNGEON
+ama_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_amatsu_1,
+ "Level 2",d_amatsu_2,
+ "Level 3",d_amatsu_3;
+d_amatsu_1:
+warp "ama_dun01.gat", 227, 10; close;
+d_amatsu_2:
+warp "ama_dun02.gat", 32, 43; close;
+d_amatsu_3:
+warp "ama_dun03.gat", 119, 15; close;
+
+
+//----------------ANT HELL
+anthell:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_anthell_1,
+ "Level 2",d_anthell_2;
+d_anthell_1:
+warp "anthell01.gat", 32, 262; close;
+d_anthell_2:
+warp "anthell02.gat", 34, 263; close;
+
+
+//----------------AYOTAYA
+ayotaya_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_ayotaya_1,
+ "Level 2",d_ayotaya_2;
+d_ayotaya_1:
+warp "ayo_dun01.gat", 275, 17; close;
+d_ayotaya_2:
+warp "ayo_dun02.gat", 150, 13; close;
+
+
+//----------------BYALAN
+iz_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_bylan_1,
+ "Level 2",d_bylan_2,
+ "Level 3",d_bylan_3,
+ "Level 4",d_bylan_4,
+ "Level 5",d_bylan_5;
+d_bylan_1:
+warp "iz_dun00.gat", 168, 168; close;
+d_bylan_2:
+warp "iz_dun01.gat", 41, 37; close;
+d_bylan_3:
+warp "iz_dun02.gat", 236, 204; close;
+d_bylan_4:
+warp "iz_dun03.gat", 32, 63; close;
+d_bylan_5:
+warp "iz_dun04.gat", 26, 27; close;
+
+
+//----------------CLOCK TOWER
+c_tower:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Clock Tower Level 1",d_ct_1,
+ "Clock Tower Level 2",d_ct_2,
+ "Clock Tower Level 3",d_ct_3,
+ "Clock Tower Level 4",d_ct_4,
+ "Basement 1F",d_alde_1,
+ "Basement 2F",d_alde_2,
+ "Basement 3F",d_alde_3,
+ "Basement 4F",d_alde_4;
+d_ct_1:
+warp "c_tower1.gat", 200, 163; close;
+d_ct_2:
+warp "c_tower2.gat", 268, 26; close;
+d_ct_3:
+warp "c_tower3.gat", 64, 148; close;
+d_ct_4:
+warp "c_tower4.gat", 32, 63; close;
+d_alde_1:
+warp "alde_dun01.gat", 197, 25; close;
+d_alde_2:
+warp "alde_dun02.gat", 262, 41; close;
+d_alde_3:
+warp "alde_dun03.gat", 276, 53; close;
+d_alde_4:
+warp "alde_dun04.gat", 130, 130; close;
+
+
+
+//----------------COAL MINE
+mjo_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_coal_1,
+ "Level 2",d_coal_2,
+ "Level 3",d_coal_3;
+d_coal_1:
+warp "mjo_dun01.gat", 52, 17; close;
+d_coal_2:
+warp "mjo_dun02.gat", 381, 343; close;
+d_coal_3:
+warp "mjo_dun03.gat", 302, 261; close;
+
+
+//----------------CULVERT
+prt_sewb:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_culvert_1,
+ "Level 2",d_culvert_2,
+ "Level 3",d_culvert_3,
+ "Level 4",d_culvert_4,
+ "Level 5",d_culvert_5;
+d_culvert_1:
+warp "prt_sewb1.gat", 132, 248; close;
+d_culvert_2:
+warp "prt_sewb2.gat", 19, 19; close;
+d_culvert_3:
+warp "prt_sewb3.gat", 180, 169; close;
+d_culvert_4:
+warp "prt_sewb4.gat", 100, 92; close;
+
+
+//----------------EINBECH DUNGEON
+einbech_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_einbech_1,
+ "Level 2",d_einbech_2;
+d_einbech_1:
+warp "ein_dun01.gat", 22, 14; close;
+d_einbech_2:
+warp "ein_dun02.gat", 292, 290; close;
+
+
+//----------------GEFENIA DUNGEON
+gefenia:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_gefenia_1,
+ "Level 2",d_gefenia_2,
+ "Level 3",d_gefenia_3,
+ "Level 4",d_gefenia_4;
+d_gefenia_1:
+warp "gefenia01.gat", 59, 167; close;
+d_gefenia_2:
+warp "gefenia02.gat", 201, 35; close;
+d_gefenia_3:
+warp "gefenia03.gat", 264, 236; close;
+d_gefenia_4:
+warp "gefenia04.gat", 33, 270; close;
+
+
+//----------------GEFFEN DUNGEON
+gef_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_geffen_1,
+ "Level 2",d_geffen_2,
+ "Level 3",d_geffen_3,
+ "Level 3",d_geffen_4;
+d_gefen_1:
+warp "gef_dun00.gat", 104, 100; close;
+d_geffen_2:
+warp "gef_dun01.gat", 115, 236; close;
+d_geffen_3:
+warp "gef_dun02.gat", 106, 132; close;
+d_geffen_4:
+warp "gef_dun03.gat", 203, 200; close;
+
+
+//----------------GLAST HEIM
+gl_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "St. Abbey",d_glast_1,
+ "Churchyard",d_glast_2,
+ "Inside Glast Heim",d_glast_3,
+ "Castle 1",d_glast_4,
+ "Castle 2",d_glast_5,
+ "Chivalry 1",d_glast_6,
+ "Chivalry 2",d_glast_7,
+ "Prison 1",d_glast_8,
+ "Prison 2",d_glast_9,
+ "Steps",d_glast_10,
+ "Sewers 1",d_glast_11,
+ "Sewers 2",d_glast_12,
+ "Sewers 3",d_glast_13,
+ "Sewers 4",d_glast_14,
+ "Lowest Cave 1",d_glast_15,
+ "Lowest Cave 2",d_glast_16;
+d_glast_1:
+warp "gl_church.gat", 156, 8; close;
+d_glast_2:
+warp "gl_chyard.gat", 147, 15; close;
+d_glast_3:
+warp "gl_in01.gat", 121, 59; close;
+d_glast_4:
+warp "gl_cas01.gat", 199, 29; close;
+d_glast_5:
+warp "gl_cas02.gat", 104, 25; close;
+d_glast_6:
+warp "gl_knt01.gat", 150, 10; close;
+d_glast_7:
+warp "gl_knt02.gat", 157, 287; close;
+d_glast_8:
+warp "gl_prison.gat", 14, 70; close;
+d_glast_9:
+warp "gl_prison1.gat", 150, 14; close;
+d_glast_10:
+warp "gl_step.gat", 117, 124; close;
+d_glast_11:
+warp "gl_sew01.gat", 258, 255; close;
+d_glast_12:
+warp "gl_sew02.gat", 108, 291; close;
+d_glast_13:
+warp "gl_sew03.gat", 171, 273; close;
+d_glast_14:
+warp "gl_sew04.gat", 68, 277; close;
+d_glast_15:
+warp "gl_dun01.gat", 133, 271; close;
+d_glast_16:
+warp "gl_dun02.gat", 224, 274; close;
+
+//----------------HIDDEN DUNGEON
+hid_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_hid_1,
+ "Level 2",d_hid_2,
+ "Level 3",d_hid_3;
+d_hid_1:
+warp "prt_maze01.gat", 176, 6; close;
+d_hid_2:
+warp "prt_maze02.gat", 94, 19; close;
+d_hid_3:
+warp "prt_maze03.gat", 23, 8; close;
+
+
+//----------------JUPEROS CAVE
+juperos:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_juperos_1,
+ "Level 2",d_juperos_2;
+d_juperos_1:
+warp "juperos_01.gat", 53, 247; close;
+d_juperos_2:
+warp "juperos_02.gat", 36, 60; close;
+
+
+//----------------GONRYUN DUNGEON
+gon_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_gon_1,
+ "Level 2",d_gon_2,
+ "Level 3",d_gon_3;
+d_gon_1:
+warp "gon_dun01.gat", 143, 59; close;
+d_gon_2:
+warp "gon_dun02.gat", 17, 114; close;
+d_gon_3:
+warp "gon_dun03.gat", 68, 9; close;
+
+
+//----------------LIGHTHALZEN BIO LAB
+lighthalzen_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_lighthalzen_1,
+ "Level 2",d_lighthalzen_2,
+ "Level 3",d_lighthalzen_3;
+d_lighthalzen_1:
+warp "lhz_dun01.gat", 150, 287; close;
+d_lighthalzen_2:
+warp "lhz_dun02.gat", 150, 18; close;
+d_lighthalzen_3:
+warp "lhz_dun03.gat", 140, 137; close;
+
+
+//----------------MAGMA DUNGEON
+mag_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_magma_1,
+ "Level 2",d_magma_2;
+d_magma_1:
+warp "mag_dun01.gat", 126, 69; close;
+d_magma_2:
+warp "mag_dun02.gat", 47, 32; close;
+
+
+//----------------ODIN TEMPLE
+odintemple:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_odintemple_1;
+d_odintemple_1:
+warp "odin_tem01.gat", 96, 145; close;
+
+//----------------ORC DUNGEON
+orcsdun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_orc_1,
+ "Level 2",d_orc_2;
+d_orc_1:
+warp "orcsdun01.gat", 32, 169; close;
+d_orc_2:
+warp "orcsdun02.gat", 21, 185; close;
+
+
+//----------------PAYON DUNGEON
+pay_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_payon_1,
+ "Level 2",d_payon_2,
+ "Level 3",d_payon_3,
+ "Level 4",d_payon_4,
+ "Level 5",d_payon_5;
+d_payon_1:
+warp "pay_dun00.gat", 22, 180; close;
+d_payon_2:
+warp "pay_dun01.gat", 19, 33; close;
+d_payon_3:
+warp "pay_dun02.gat", 19, 63; close;
+d_payon_4:
+warp "pay_dun03.gat", 155, 159; close;
+d_payon_5:
+warp "pay_dun04.gat", 201, 204; close;
+
+
+//----------------PYRAMIDS
+moc_pryd:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_pyr_1,
+ "Level 2",d_pyr_2,
+ "Level 3",d_pyr_3,
+ "Level 4",d_pyr_4,
+ "Basement 1",d_pyr_5,
+ "Basement 2",d_pyr_6;
+d_pyr_1:
+warp "moc_pryd01.gat", 192, 9; close;
+d_pyr_2:
+warp "moc_pryd02.gat", 10, 192; close;
+d_pyr_3:
+warp "moc_pryd03.gat", 100, 92; close;
+d_pyr_4:
+warp "moc_pryd04.gat", 181, 11; close;
+d_pyr_5:
+warp "moc_pryd05.gat", 94, 96; close;
+d_pyr_6:
+warp "moc_pryd06.gat", 192, 8; close;
+
+
+//----------------SPHINX
+in_sphinx:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_sph_1,
+ "Level 2",d_sph_2,
+ "Level 3",d_sph_3,
+ "Level 4",d_sph_4,
+ "Level 5",d_sph_5;
+d_sph_1:
+warp "in_sphinx1.gat", 192, 9; close;
+d_sph_2:
+warp "in_sphinx2.gat", 149, 81; close;
+d_sph_3:
+warp "in_sphinx3.gat", 210, 54; close;
+d_sph_4:
+warp "in_sphinx4.gat", 10, 222; close;
+d_sph_5:
+warp "in_sphinx5.gat", 100, 99; close;
+
+
+//----------------SUNKEN SHIP
+treasure:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Level 1",d_treasure_1,
+ "Level 2",d_treasure_2;
+d_treasure_1:
+warp "treasure01.gat", 69, 24; close;
+d_treasure_2:
+warp "treasure02.gat", 102, 27; close;
+
+
+//----------------TOY FACTORY
+xmas_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Factory Warehouse",d_xmas_1,
+ "Classifying Room",d_xmas_2;
+d_xmas_1:
+warp "xmas_dun01.gat", 205, 16; close;
+d_xmas_2:
+warp "xmas_dun02.gat", 129, 133; close;
+
+
+//----------------TURTLE ISTLAND
+tur_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Outside",d_tur_1,
+ "Level 1",d_tur_2,
+ "Level 2",d_tur_3,
+ "Level 3",d_tur_4;
+d_tur_1:
+warp "tur_dun01.gat", 161, 34; close;
+d_tur_2:
+warp "tur_dun02.gat", 148, 256; close;
+d_tur_3:
+warp "tur_dun03.gat", 132, 190; close;
+d_tur_4:
+warp "tur_dun04.gat", 100, 192; close;
+
+
+//----------------UMBALA
+um_dun:
+	next;
+	mes "[Warpra]";
+	mes "Please select the level:";
+next;
+menu  "Carpender's Shop in The Tree",d_um_1,
+ "Passage to a Foreign World",d_um_2,
+ "Hvergelmir's Fountain",d_ygg_1;
+
+d_um_1:
+warp "um_dun01.gat", 205, 16; close;
+d_um_2:
+warp "um_dun02.gat", 48, 30; close;
+d_ygg_1:
+warp "yggdrasil01.gat", 40, 63; close;
+
+
+//=============================Healing=============================
+
+L_heal_Full:
+	set @healfee, $QW_HF_PRICE;
+	if(Zeny<@healfee) callsub L_Short_on_zeny,4;
+	set Zeny, Zeny-@healfee;
+//	if ($QW_Kpoint == 1) set RESRVPTS, RESRVPTS + (@healfee/50); //commented out because kafra's don't offer this
+	next;
+	mes "[Warpra]";
+	mes "Close this window and I will Heal you.";
+	close2;
+	percentheal 100,100;
+	close;
+	end;
+
+L_heal_Part:
+	set @healchoice,select("Full heal","Health Points only","Skill Points only","Exit");
+	if (@healchoice == 1) callsub PHeal,1,1;
+	if (@healchoice == 2) callsub PHeal,1,0;
+	if (@healchoice == 3) callsub PHeal,0,1;
+	goto L_end;
+	
+PHeal:
+	next;
+	set @Hp, MaxHp-Hp;
+	set @Sp, MaxSp-Sp;
+	set @HpPrice, @hp*$QW_HP_H_PRICE;
+	set @SpPrice, @sp*$QW_HP_S_PRICE;
+	mes "[Warpra]";
+	if(getarg(0) == 1) mes ""+@HpPrice+" Zeny for "+@Hp+" health points";
+	if(getarg(1) == 1) mes ""+@SpPrice+" Zeny for "+@Sp+" skill points";
+	set @total, @HpPrice+@SpPrice;
+	mes "for a total of "+@total+" zeny";
+    	if (select("Heal me","Let me see the choices again")==2) goto L_heal_Part;
+    	
+    	if(getarg(0) == 1)set @HpPrice, (MaxHp-Hp)*$QW_HP_H_PRICE;
+	if(getarg(1) == 1)set @SpPrice, (MaxSp-Sp)*$QW_HP_S_PRICE;
+	set @healfee, @HpPrice+@SpPrice;
+	if (getarg(0) == 1)&&(getarg(1) == 1)&&(Zeny<@healfee) goto Zeny_Short_Both;
+	if (getarg(0) == 1)&&(Zeny<@healfee) goto Zeny_short_HP;
+	if (getarg(1) == 1)&&(Zeny<@healfee) goto Zeny_short_SP;
+	set Zeny, Zeny-@healfee;
+	if (getarg(0) == 1)&&(getarg(1) == 1) percentheal 100,100;
+	if (getarg(0) == 1) percentheal 100,0;
+	if (getarg(1) == 1) percentheal 0,100;
+	close;
+	end;
+
+Zeny_Short_Both:
+	mes "[Warpra]";
+	mes "choose another option, you can afford both.";
+	mes "I can heal as much as you can afford too.";
+	if (select("OK","Exit") == 2) goto L_end;
+	goto PHeal;
+
+Zeny_short_HP:
+	mes "[Warpra]";
+	mes "do you want me to partly heal your HP ?";
+	if (select("Yes","No") == 2) goto L_end;
+	set @Hp, Zeny/$QW_HP_H_PRICE;
+    	set @HpPrice, @Hp*$QW_HP_H_PRICE;
+    	if (@Hp == 1) mes "your not worth the effort";
+    	if (@Hp == 1) goto L_end;
+    	set Zeny, Zeny-@HpPrice;
+	heal @Hp,0;
+	close;
+	end;
+    	
+	
+Zeny_short_SP:
+	mes "[Warpra]";
+	mes "do you want me to partly heal your SP ?";
+	if (select("Yes","No") == 2) goto L_end;
+	set @Sp, Zeny/$QW_HP_S_PRICE;
+    	set @SpPrice, @Sp*$QW_HP_S_PRICE;
+    	if (@Sp == 1) mes "your not worth the effort";
+    	if (@Sp == 1) goto L_end;
+    	set Zeny, Zeny-@SpPrice;
+	heal 0,@Sp;
+	close;
+	end;
+
+
+//=============================Storage=============================
+
+L_Storage:
+	next;
+	if(basicskillcheck(0) > 0 && getskilllv(1) < 6) goto L_StorageJBlow;
+	set @fee, $QW_S_PRICE;
+	if ($QW_S_PRICE == 60)&&(BaseJob == Job_Novice) set @fee, 30;
+	if ($QW_S_PRICE == 60)&&(BaseJob != Job_Novice) set @fee, 60;
+	if(Zeny<@fee) callsub L_Short_on_zeny,2;
+	set Zeny, Zeny-@fee;
+	if ($QW_Kpoint == 1) set RESRVPTS, RESRVPTS + (@fee/5);
+
+	mes "[Warpra]";
+	mes "Close this window and i will open your storage.";
+
+	callsub F_CheckKafCode;	//check your storage password thru kafra coding, if set
+
+	close2;
+	openstorage;
+	close;
+	end;
+
+F_CheckKafCode:
+// you have to set the 1337 value the same as in functions_kafras.txt if you changed it !!
+	if(#kafra_code==0) return;
+	mes "Enter your storage password:";
+	set @code_,0;
+	input @code_;
+	if(@code_ != #kafra_code-getcharid(3)-1337) {
+		dispbottom "Wrong storage password.";
+		close2;
+		close;
+	}
+	set @kafcode_try,0;
+	set @code_,0;
+	return;
+
+L_StorageJBlow:
+	mes "[Warpra]";
+	mes "I am sorry but you have to be at least Novice level 6 if you want to use the storage.";
+	return;
+
+L_GStorage:
+	if(@GID==0) goto L_NoGuild;
+	if(Zeny<$QW_GS_PRICE) callsub L_Short_on_zeny,3;
+	set Zeny, Zeny-$QW_GS_PRICE;
+	if ($QW_Kpoint == 1) set RESRVPTS, RESRVPTS + ($QW_GS_PRICE/5);
+	next;
+	mes "[Warpra]";
+	mes "Close this window and i will open the ^5533FF" + GetGuildName(@GID) + "^000000 storage.";
+	close2;
+	guildopenstorage;
+	close;
+	end;
+
+L_NoGuild:
+	next;
+	mes "[Warpra]";
+	mes "You are not a part of a guild I can't help you.";
+	close;
+	end;
+	
+L_end:
+	close;
+	end;
+
+//============================Few=Warp=============================
+L_FewWarps:
+	next;
+	mes "[Warpra ]";
+	mes "You need to unlock locations before they come available to you.";
+	mes "To unlock a location talk to my colleagues all over the world.";
+	mes "Each account got it's own stamp card.";
+	mes "Want me to check what stamps you have collected so far ?.";
+	if (select("Yes","No")==1) callsub stampcard;
+	close;
+	end;
+
+
+//============================No=Unlock============================
+
+L_NoUnlock:
+	next;
+	mes "[Warpra ]";
+	mes "I don't unlock this location, my assistant deeper in the dungeon will unlock this place.";
+	close;
+	end;
+	
+//=========================Short=On=Zeny===========================
+L_Short_on_zeny:
+	next;
+	if (getarg(0) == 0) mes "you don't seem to have "+@pTprice[@Tmenuref[@menu-1]]+" zeny, to pay for the warp fee to "+@pTmenuitems$[@Tmenuref[@menu-1]]+"";
+	if (getarg(0) == 1) mes "you don't seem to have "+@pDprice[@Dmenuref[@menu-1]]+" zeny, to pay for the warp fee to "+@pDmenuitems$[@Dmenuref[@menu-1]]+"";
+	if (getarg(0) == 2) mes "you don't seem to have "+@fee+" zeny, to pay for the storage fee";
+	if (getarg(0) == 3) mes "you don't seem to have "+$QW_GS_PRICE+" zeny, to pay for the guild storage fee";
+	if (getarg(0) == 4) mes "you don't seem to have "+@healfee+" zeny, to pay for your healing";
+	close;
+	end;
+	
+//===========================Stamp=Card============================
+stampcard:
+// Counting of the ammount of places you have unlocked
+	next;
+	mes "Let me check what Towns you have";
+	set @Tstamp,0;
+	
+//----------------Prontera:
+	if (#prontera == 1) set @Tstamp,@Tstamp+1;
+//----------------Alberta
+	if (#alberta == 1) set @Tstamp,@Tstamp+1;
+//----------------Aldebaran
+	if (#aldebaran == 1) set @Tstamp,@Tstamp+1;
+//----------------Amatsu:
+	if (#amatsu == 1) set @Tstamp,@Tstamp+1;
+//----------------Ayotaya:
+	if (#ayotaya == 1) set @Tstamp,@Tstamp+1;
+//----------------Comodo:
+	if (#comodo == 1) set @Tstamp,@Tstamp+1;
+//----------------Einbech:
+	if (#einbech == 1) set @Tstamp,@Tstamp+1;
+//----------------Einbroch:
+	if (#einbroch == 1) set @Tstamp,@Tstamp+1;
+//----------------Geffen:
+	if (#geffen == 1) set @Tstamp,@Tstamp+1;
+//----------------Gonryun:
+	if (#gonryun == 1) set @Tstamp,@Tstamp+1;
+//----------------Hugel:
+	if (#hugel == 1) set @Tstamp,@Tstamp+1;
+//----------------Izlude:
+	if (#izlude == 1) set @Tstamp,@Tstamp+1;
+//----------------Jawaii:
+	if (#jawaii == 1) set @Tstamp,@Tstamp+1;
+//----------------Lighthalzen:
+	if (#lighthalzen == 1) set @Tstamp,@Tstamp+1;
+//----------------Louyang:
+	if (#louyang == 1) set @Tstamp,@Tstamp+1;
+//----------------Lutie
+	if (#xmas == 1) set @Tstamp,@Tstamp+1;
+//----------------Morroc:
+	if (#morocc == 1) set @Tstamp,@Tstamp+1;
+//----------------Niflheim:
+	if (#niflheim == 1) set @Tstamp,@Tstamp+1;
+//----------------Payon:
+	if (#payon == 1) set @Tstamp,@Tstamp+1;
+//----------------Umbala:
+	if (#umbala == 1) set @Tstamp,@Tstamp+1;
+//----------------Yuno:
+	if (#yuno == 1) set @Tstamp,@Tstamp+1;
+	
+	mes "you collected^00FF00 "+@Tstamp+" of 21 ^000000Towns.";
+	if (@Tstamp == 15) mes "They say there is an island you can only get to when married";
+	if (@Tstamp == 15) emotion 18;
+	next;
+	
+	mes "Let me check what dungeons you have";
+	set @Dstamp,0;
+	
+//----------------ABYSS LAKE
+	if (#abyss == 1) set @Dstamp,@Dstamp+1;
+//----------------AMATSU DUNGEON
+	if (#ama_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------ANT HELL
+	if (#anthell == 1) set @Dstamp,@Dstamp+1;
+//----------------AYOTAYA
+	if (#ayotaya_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------BYALAN
+	if (#iz_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------CLOCK TOWER
+	if (#c_tower == 1) set @Dstamp,@Dstamp+1;
+//----------------COAL MINE
+	if (#mjo_dun== 1) set @Dstamp,@Dstamp+1;
+//----------------CULVERT
+	if (#prt_sewb == 1) set @Dstamp,@Dstamp+1;
+//----------------EINBECH DUNGEON
+	if (#einbech_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------GEFENIA DUNGEON
+	if (#gefenia == 1) set @Dstamp,@Dstamp+1;
+//----------------GEFFEN DUNGEON
+	if (#gef_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------GLAST HEIM
+	if (#gl_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------GONRYUN DUNGEON
+	if (#gon_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------HIDDEN DUNGEON
+	if (#hid_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------JUPEROS CAVE
+	if (#juperos == 1) set @Dstamp,@Dstamp+1;
+//----------------LIGHTHALZEN BIO LAB
+	if (#lighthalzen_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------MAGMA DUNGEON
+	if (#mag_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------ODIN TEMPLE
+	if (#odintemple == 1) set @Dstamp,@Dstamp+1;
+//----------------ORC DUNGEON
+	if (#orcsdun == 1) set @Dstamp,@Dstamp+1;
+//----------------PAYON DUNGEON
+	if (#pay_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------PYRAMIDS
+	if (#moc_pryd == 1) set @Dstamp,@Dstamp+1;
+//----------------SPHINX
+	if (#in_sphinx == 1) set @Dstamp,@Dstamp+1;
+//----------------SUNKEN SHIP
+	if (#treasure == 1) set @Dstamp,@Dstamp+1;
+//----------------TOY FACTORY
+	if (#xmas_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------TURTLE ISTLAND
+	if (#tur_dun == 1) set @Dstamp,@Dstamp+1;
+//----------------UMBALA
+	if (#um_dun == 1) set @Dstamp,@Dstamp+1;
+	mes "you collected^00FF00 "+@Dstamp+" of 26 ^000000Dungeons";
+	mes "To unlock a dungeon, search for my colleague.";
+	mes "You can usually find him near the end or middle of the dungeon";
+	return;
+}
+
+//======================Main=Menu=Array============================
+
+function	script	QWS_MMarray	{
+
+// Currently 9 items
+
+	setarray @pMmenuitems$[0], "GameMaster Menu", "Warp to Towns", "Warp to Dungeons", "Why so few Warps ?", "Why don't you Unlock this location ?", "Heal", "Heal", "Storage", "Guild Storage", "Cancel";
+	set @Mi,0; // That's our loop counter.
+	set @Mj,0; // That's the menu lines counter.
+//----------------GameMaster-Menu
+	if (getgmlevel(80)) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if (getgmlevel(80)) set @Mmenuref[@Mj],@Mi;
+	if (getgmlevel(80)) set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------Town-Warp
+	if ($QW_TW_OFF == 0) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if ($QW_TW_OFF == 0) set @Mmenuref[@Mj],@Mi;
+	if ($QW_TW_OFF == 0) set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------Dungeon-Warp
+	if ($QW_DW_OFF == 0) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if ($QW_DW_OFF == 0) set @Mmenuref[@Mj],@Mi;
+	if ($QW_DW_OFF == 0) set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------Why-So-Few-Warps
+	set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	set @Mmenuref[@Mj],@Mi;
+	set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------No-Unlock
+	if (getarg(0) == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if (getarg(0) == 1) set @Mmenuref[@Mj],@Mi;
+	if (getarg(0) == 1) set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------Healfull
+	if ($QW_HF == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if ($QW_HF == 1) set @Mmenuref[@Mj],@Mi;
+	if ($QW_HF == 1) set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------Healpart
+	if ($QW_HP == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if ($QW_HP == 1) set @Mmenuref[@Mj],@Mi;
+	if ($QW_HP == 1) set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------Storage
+	if ($QW_Stor == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if ($QW_Stor == 1) set @Mmenuref[@Mj],@Mi;
+	if ($QW_Stor == 1) set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------GuildStorage
+	if ($QW_GStor == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if ($QW_GStor == 1) set @Mmenuref[@Mj],@Mi;
+	if ($QW_GStor == 1) set @Mj,@Mj+1;
+	set @Mi,@Mi+1;
+//----------------Cancel
+	set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	set @Mmenuref[@Mj],@Mi;
+	return;
+	}
+
+
+
+//======================Town=Menu=Array============================
+
+function	script	QWS_Tarray	{
+
+// Currently 22 items
+
+	setarray @pTmenuitems$[0], "Prontera", "Alberta", "Aldebaran", "Amatsu", "Ayothaya", "Comodo", "Einbech", "Einbroch", "Geffen", "Gonryun", "Hugel", "Izlude", "Jawaii", "Lighthalzen", "Louyang", "Lutie", "Morroc", "Niflheim", "Payon", "Umbala", "Yuno", "Cancel"; // townnames
+	setarray @pTmap$[0], "prontera.gat", "alberta.gat", "aldebaran.gat", "amatsu.gat", "ayothaya.gat", "comodo.gat", "einbech.gat", "einbroch.gat", "geffen.gat", "gonryun.gat", "hugel.gat", "izlude.gat", "jawaii.gat", "lighthalzen.gat", "louyang.gat", "xmas.gat", "morocc.gat", "niflheim.gat", "payon.gat", "umbala.gat", "yuno.gat", "L_End"; // mapfile
+	setarray @pTXcoords[0], 156, 27, 145, 197, 150, 188, 172, 230, 119, 150, 95, 128, 243, 158, 210, 148, 159, 195, 152, 130, 160, "Cancel"; // all X coords
+	setarray @pTYcoords[0], 187, 236, 120, 86, 57, 161, 126, 191, 66, 130, 121, 111, 115, 110, 108, 131, 93, 186, 75, 130, 168, "Cancel"; // all Y coords
+	setarray @pTprice[0], $QW_BW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_OW_PRICE, $QW_OW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_OW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_OW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, 0;
+	set @Ti,0; // That's our loop counter.
+	set @Tj,0; // That's the menu lines counter.
+//----------------Prontera
+	if (#prontera == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#prontera == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#prontera== 1) set @Tmenuref[@Tj],@Ti;
+	if (#prontera == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Alberta
+	if (#alberta == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#alberta == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#alberta == 1) set @Tmenuref[@Tj],@Ti;
+	if (#alberta == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Aldebaran
+	if (#aldebaran == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#aldebaran == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#aldebaran == 1) set @Tmenuref[@Tj],@Ti;
+	if (#aldebaran == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Amatsu:
+	if (#amatsu == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#amatsu == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#amatsu == 1) set @Tmenuref[@Tj],@Ti;
+	if (#amatsu == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Ayothaya:
+	if (#ayotaya == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#ayotaya == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#ayotaya == 1) set @Tmenuref[@Tj],@Ti;
+	if (#ayotaya == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Comodo:
+	if (#comodo == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#comodo == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#comodo == 1) set @Tmenuref[@Tj],@Ti;
+	if (#comodo == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Einbech:
+	if (#einbech == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#einbech == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#einbech == 1) set @Tmenuref[@Tj],@Ti;
+	if (#einbech == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Einbroch:
+	if (#einbroch == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#einbroch == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#einbroch == 1) set @Tmenuref[@Tj],@Ti;
+	if (#einbroch == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Geffen:
+	if (#geffen == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#geffen == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#geffen == 1) set @Tmenuref[@Tj],@Ti;
+	if (#geffen == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Gonryun:
+	if (#gonryun == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#gonryun == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#gonryun == 1) set @Tmenuref[@Tj],@Ti;
+	if (#gonryun == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Hugel:
+	if (#hugel == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#hugel == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#hugel == 1) set @Tmenuref[@Tj],@Ti;
+	if (#hugel == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Izlude:
+	if (#izlude == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#izlude == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#izlude == 1) set @Tmenuref[@Tj],@Ti;
+	if (#izlude == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Jawaii:
+	if (#jawaii == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#jawaii == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#jawaii == 1) set @Tmenuref[@Tj],@Ti;
+	if (#jawaii == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Lighthalzen:
+	if (#lighthalzen == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#lighthalzen == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#lighthalzen == 1) set @Tmenuref[@Tj],@Ti;
+	if (#lighthalzen == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Louyang:
+	if (#louyang == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#louyang == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#louyang == 1) set @Tmenuref[@Tj],@Ti;
+	if (#louyang == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Lutie
+	if (#xmas == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#xmas == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#xmas == 1) set @Tmenuref[@Tj],@Ti;
+	if (#xmas == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Morroc:
+	if (#morocc == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#morocc == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#morocc == 1) set @Tmenuref[@Tj],@Ti;
+	if (#morocc == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Niflheim:
+	if (#niflheim == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#niflheim == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#niflheim == 1) set @Tmenuref[@Tj],@Ti;
+	if (#niflheim == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Payon:
+	if (#payon == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#payon == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#payon == 1) set @Tmenuref[@Tj],@Ti;
+	if (#payon == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Umbala:
+	if (#umbala == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#umbala == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#umbala == 1) set @Tmenuref[@Tj],@Ti;
+	if (#umbala == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Yuno:
+	if (#yuno == 1)&&(@pTprice[@Ti] != 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (#yuno == 1)&&(@pTprice[@Ti] == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (#yuno == 1) set @Tmenuref[@Tj],@Ti;
+	if (#yuno == 1) set @Tj,@Tj+1;
+	set @Ti,@Ti+1;
+//----------------Cancel
+	set @Tmenulist$[@Tj],@pTmenuitems$[@Ti];
+	set @Tmenuref[@Tj],@Ti;
+	return;
+	}
+
+
+//====================Dungeon=Menu=Array===========================
+
+function	script	QWS_Darray	{
+	setarray @pDmenuitems$[0], "Abyss Lake", "Amatsu Dungeon", "Ant Hell Dungeon", "Ayotaya Dungeon", "Byalan Dungeon", "Clock Tower Dungeon", "Coal Mine Dungeon", "Culvert Dungeon", "Einbech Dungeon", "Gefenia Dungeon", "Geffen Dungeon", "Glast Heim Dungeon", "Gonryun Dungeon", "Hidden Dungeon", "Juperos Cave", "Lighthalzen Bio Lab", "Magma Dungeon", "Odin Temple", "Orc Dungeon", "Payon Dungeon", "Pyramids Dungeon", "Sphinx Dungeon", "Sunken Ship Dungeon", "Toy Factory Dungeon", "Turtle Island Dungeon", "Umbala Dungeon", "Cancel";
+	setarray @pDmenugoto$[0], "abyss", "ama_dun", "anthell", "ayotaya_dun", "iz_dun", "c_tower", "mjo_dun", "prt_sewb", "einbech_dun", "gefenia", "gef_dun", "gl_dun", "gon_dun", "hid_dun", "juperos", "lighthalzen_dun", "mag_dun", "odintemple", "orcsdun", pay_dun, "moc_pryd", "in_sphinx", "treasure", "xmas_dun", "tur_dun", "um_dun", "L_End";
+	setarray @pDprice[0], $QW_AW_PRICE, $QW_OW_PRICE, $QW_BW_PRICE, $QW_OW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_OW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_OW_PRICE, 0;
+	set @Di,0; // That's our loop counter.
+	set @Dj,0; // That's the menu lines counter.
+//----------------ABYSS LAKE
+	if (#abyss == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#abyss == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#abyss == 1) set @Dmenuref[@Dj],@Di;
+	if (#abyss == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------AMATSU DUNGEON
+	if (#ama_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#ama_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#ama_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#ama_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------ANT HELL
+	if (#anthell == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#anthell == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#anthell == 1) set @Dmenuref[@Dj],@Di;
+	if (#anthell == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------AYOTAYA
+	if (#ayotaya_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#ayotaya_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#ayotaya_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#ayotaya_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------BYALAN
+	if (#iz_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#iz_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#iz_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#iz_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------CLOCK TOWER
+	if (#c_tower == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#c_tower == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#c_tower == 1) set @Dmenuref[@Dj],@Di;
+	if (#c_tower == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------COAL MINE
+	if (#mjo_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#mjo_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#mjo_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#mjo_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------CULVERT
+	if (#prt_sewb == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#prt_sewb == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#prt_sewb == 1) set @Dmenuref[@Dj],@Di;
+	if (#prt_sewb == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------EINBECH DUNGEON
+	if (#einbech_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#einbech_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#einbech_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#einbech_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------GEFENIA DUNGEON
+	if (#gefenia == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#gefenia == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#gefenia == 1) set @Dmenuref[@Dj],@Di;
+	if (#gefenia == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------GEFFEN DUNGEON
+	if (#gef_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#gef_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#gef_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#gef_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------GLAST HEIM
+	if (#gl_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#gl_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#gl_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#gl_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------GONRYUN DUNGEON
+	if (#gon_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#gon_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#gon_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#gon_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------HIDDEN DUNGEON
+	if (#hid_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#hid_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#hid_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#hid_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------JUPEROS CAVE
+	if (#juperos == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#juperos == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#juperos == 1) set @Dmenuref[@Dj],@Di;
+	if (#juperos == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------LIGHTHALZEN BIO LAB
+	if (#lighthalzen_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#lighthalzen_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#lighthalzen_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#lighthalzen_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------MAGMA DUNGEON
+	if (#mag_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#mag_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#mag_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#mag_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------ODIN TEMPLE
+	if (#odintemple == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#odintemple == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#odintemple == 1) set @Dmenuref[@Dj],@Di;
+	if (#odintemple == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------ORC DUNGEON
+	if (#orcsdun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#orcsdun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#orcsdun == 1) set @Dmenuref[@Dj],@Di;
+	if (#orcsdun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------PAYON DUNGEON
+	if (#pay_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#pay_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#pay_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#pay_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------PYRAMIDS
+	if (#moc_pryd == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#moc_pryd == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#moc_pryd == 1) set @Dmenuref[@Dj],@Di;
+	if (#moc_pryd == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------SPHINX
+	if (#in_sphinx == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#in_sphinx == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#in_sphinx == 1) set @Dmenuref[@Dj],@Di;
+	if (#in_sphinx == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------SUNKEN SHIP
+	if (#treasure == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#treasure == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#treasure == 1) set @Dmenuref[@Dj],@Di;
+	if (#treasure == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------TOY FACTORY
+	if (#xmas_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#xmas_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#xmas_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#xmas_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------TURTLE ISTLAND
+	if (#tur_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#tur_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#tur_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#tur_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------UMBALA
+	if (#um_dun == 1)&&(@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
+	if (#um_dun == 1)&&(@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
+	if (#um_dun == 1) set @Dmenuref[@Dj],@Di;
+	if (#um_dun == 1) set @Dj,@Dj+1;
+	set @Di,@Di+1;
+//----------------Cancel
+	set @Dmenulist$[@Dj],@pDmenuitems$[@Di];
+	set @Dmenuref[@Dj],@Di;
+	return;
+	}
+
+
+//============================Warpras==============================
+
+alb2trea.gat,73,101,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+ama_fild01.gat,178,325,1	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+gef_fild10.gat,71,339,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+izlu2dun.gat,104,82,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+mjolnir_02.gat,85,363,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+moc_fild04.gat,207,331,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+moc_fild19.gat,106,97,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+moc_ruins.gat,64,166,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+niflheim.gat,197,192,3	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+pay_arche.gat,39,135,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+prt_fild05.gat,273,215,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+tur_dun01.gat,148,239,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+valkyrie.gat,48,35,8	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+yuno_fild03.gat,37,135,4	script	Warpra	113,{
+	callfunc "Q_Warpra",1;
+}
+
+
+alberta.gat,32,240,4	script	Warpra	113,{
+	if (#alberta != 0) callfunc "Q_Warpra",0;
+	set #alberta,1;
+	mes "[Warpra]";
+	mes "Alberta Town unlocked!";
+	close;
+}
+aldebaran.gat,146,118,4	script	Warpra	113,{
+	if (#aldebaran != 0) callfunc "Q_Warpra",0;
+	set #aldebaran,1;
+	mes "[Warpra]";
+	mes "Aldebaran Town unlocked!";
+	close;
+}
+ayothaya.gat,216,171,5	script	Warpra	113,{
+	if (#ayotaya != 0) callfunc "Q_Warpra",0;
+	set #ayotaya,1;
+	mes "[Warpra]";
+	mes "Ayotaya Town unlocked!";
+	close;
+}
+amatsu.gat,193,81,1	script	Warpra	113,{
+	if (#amatsu != 0) callfunc "Q_Warpra",0;
+	set #amatsu,1;
+	mes "[Warpra]";
+	mes "Amatsu Town unlocked!";
+	close;
+}
+comodo.gat,195,158,4	script	Warpra	113,{
+	if (#comodo != 0) callfunc "Q_Warpra",0;
+	set #comodo,1;
+	mes "[Warpra]";
+	mes "Comodo Town unlocked!";
+	close;
+}
+einbroch.gat,229,196,5	script	Warpra	113,{
+	if (#einbroch != 0) callfunc "Q_Warpra",0;
+	set #einbroch,1;
+	mes "[Warpra]";
+	mes "Einbroch Town unlocked!";
+	close;
+}
+einbech.gat,173,131,5	script	Warpra	113,{
+	if (#einbech != 0) callfunc "Q_Warpra",0;
+	set #einbech,1;
+	mes "[Warpra]";
+	mes "Einbech Town unlocked!";
+	close;
+}
+geffen.gat,116,66,4	script	Warpra	113,{
+	if (#geffen != 0) callfunc "Q_Warpra",0;
+	set #geffen,1;
+	mes "[Warpra]";
+	mes "Geffen Town unlocked!";
+	close;
+}
+gonryun.gat,152,130,4	script	Warpra	113,{
+	if (#gonryun != 0) callfunc "Q_Warpra",0;
+	set #gonryun,1;
+	mes "[Warpra]";
+	mes "Gonryun Town unlocked!";
+	close;
+}
+hugel.gat,90,127,5	script	Warpra	113,{
+	if (#hugel != 0) callfunc "Q_Warpra",0;
+	set #hugel,1;
+	mes "[Warpra]";
+	mes "Hugel Town unlocked!";
+	close;
+}
+jawaii.gat,107,182,5	script	Warpra	113,{
+	if (#jawaii != 0) callfunc "Q_Warpra",0;
+	set #jawaii,1;
+	mes "[Warpra]";
+	mes "Jawaii Town unlocked!";
+	close;
+}
+izlude.gat,132,116,4	script	Warpra	113,{
+	if (#izlude != 0) callfunc "Q_Warpra",0;
+	set #izlude,1;
+	mes "[Warpra]";
+	mes "Izlude Town unlocked!";
+	close;
+}
+lighthalzen.gat,153,100,5	script	Warpra	113,{
+	if (#lighthalzen != 0) callfunc "Q_Warpra",0;
+	set #lighthalzen,1;
+	mes "[Warpra]";
+	mes "Lighthalzen Town unlocked!";
+	close;
+}
+louyang.gat,211,106,4	script	Warpra	113,{
+	if (#louyang != 0) callfunc "Q_Warpra",0;
+	set #louyang,1;
+	mes "[Warpra]";
+	mes "Louyang Town unlocked!";
+	close;
+}
+morocc.gat,157,95,4	script	Warpra	113,{
+	if (#morocc != 0) callfunc "Q_Warpra",0;
+	set #morocc,1;
+	mes "[Warpra]";
+	mes "Morroc Town unlocked!";
+	close;
+}
+nif_fild01.gat,319,77,1	script	Warpra	113,{
+	if (#niflheim != 0) callfunc "Q_Warpra",0;
+	set #niflheim,1;
+	mes "[Warpra]";
+	mes "Niflheim Town unlocked!";
+	close;
+}
+payon.gat,183,110,4	script	Warpra	113,{
+	if (#payon != 0) callfunc "Q_Warpra",0;
+	set #payon,1;
+	mes "[Warpra]";
+	mes "Payon Town unlocked!";
+	close;
+}
+prontera.gat,147,172,5	script	Warpra	113,{
+	if (#prontera != 0) callfunc "Q_Warpra",0;
+	set #prontera,1;
+	mes "[Warpra]";
+	mes "Prontera Town unlocked!";
+	close;
+}
+umbala.gat,133,130,4	script	Warpra	113,{
+	if (#umbala != 0) callfunc "Q_Warpra",0;
+	set #umbala,1;
+	mes "[Warpra]";
+	mes "Umbala Town unlocked!";
+	close;
+}
+xmas.gat,151,136,4	script	Warpra	113,{
+	if (#xmas != 0) callfunc "Q_Warpra",0;
+	set #xmas,1;
+	mes "[Warpra]";
+	mes "Lutie Town unlocked!";
+	close;
+}
+yuno.gat,138,162,4	script	Warpra	113,{
+	if (#yuno != 0) callfunc "Q_Warpra",0;
+	set #yuno,1;
+	mes "[Warpra]";
+	mes "Yuno Town unlocked!";
+	close;
+}
+abyss_02.gat,274,266,1	script	Warpra	113,{
+	if (#abyss == 1) mes "[Warpra]";
+	if (#abyss == 1) mes "Sorry I can only unlock this location.";
+	if (#abyss == 1) close;
+	set #abyss,1;
+	mes "[Warpra]";
+	mes "Abyss Lake unlocked!";
+	close;
+}
+ama_dun02.gat,192,118,5	script	Warpra Helper	112,{
+	if (#ama_dun == 1) mes "[Warpra]";
+	if (#ama_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#ama_dun == 1) close;
+	set #ama_dun,1;
+	mes "[Warpra]";
+	mes "Amatsu Dungeon unlocked!";
+	close;
+}
+
+anthell02.gat,170,165,3	script	Warpra Helper	112,{
+	if (#anthell == 1) mes "[Warpra]";
+	if (#anthell == 1) mes "Sorry I can only unlock this location.";
+	if (#anthell == 1) close;
+	set #anthell,1;
+	mes "[Warpra]";
+	mes "Ant Hell Dungeon unlocked!";
+	close;
+}
+
+ayo_dun02.gat,258,193,5	script	Warpra Helper	112,{
+	if (#ayotaya_dun == 1) mes "[Warpra]";
+	if (#ayotaya_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#ayotaya_dun == 1) close;
+	set #ayotaya_dun,1;
+	mes "[Warpra]";
+	mes "Ayotaya Dungeon unlocked!";
+	close;
+}
+
+ein_dun02.gat,292,282,1	script	Warpra Helper	112,{
+	if (#einbech_dun == 1) mes "[Warpra]";
+	if (#einbech_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#einbech_dun == 1) close;
+	set #einbech_dun,1;
+	mes "[Warpra]";
+	mes "Einbech Dungeon unlocked!";
+	close;
+}
+
+iz_dun03.gat,202,47,2	script	Warpra Helper	112,{
+	if (#iz_dun == 1) mes "[Warpra]";
+	if (#iz_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#iz_dun == 1) close;
+	set #iz_dun,1;
+	mes "[Warpra]";
+	mes "Byalan Dungeon unlocked!";
+	close;
+}
+
+c_tower3.gat,129,106,4	script	Warpra Helper	112,{
+	if (#c_tower == 1) mes "[Warpra]";
+	if (#c_tower == 1) mes "Sorry I can only unlock this location.";
+	if (#c_tower == 1) close;
+	set #c_tower,1;
+	mes "[Warpra]";
+	mes "Clock Tower Dungeon unlocked!";
+	close;
+}
+
+mjo_dun02.gat,39,25,4	script	Warpra Helper	112,{
+	if (#mjo_dun == 1) mes "[Warpra]";
+	if (#mjo_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#mjo_dun == 1) close;
+	set #mjo_dun,1;
+	mes "[Warpra]";
+	mes "Coal Mine Dungeon unlocked!";
+	close;
+}
+
+prt_sewb2.gat,176,30,3	script	Warpra Helper	112,{
+	if (#prt_sewb == 1) mes "[Warpra]";
+	if (#prt_sewb == 1) mes "Sorry I can only unlock this location.";
+	if (#prt_sewb == 1) close;
+	set #prt_sewb,1;
+	mes "[Warpra]";
+	mes "Culvert Dungeon unlocked!";
+	close;
+}
+
+gefenia03.gat,137,34,0	script	Warpra Helper	112,{
+	if (#gefenia == 1) mes "[Warpra]";
+	if (#gefenia == 1) mes "Sorry I can only unlock this location.";
+	if (#gefenia == 1) close;
+	set #gefenia,1;
+	mes "[Warpra]";
+	mes "Gefenia Dungeon unlocked!";
+	close;
+}
+
+gef_dun02.gat,217,61,2	script	Warpra Helper	112,{
+	if (#gef_dun == 1) mes "[Warpra]";
+	if (#gef_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#gef_dun == 1) close;
+	set #gef_dun,1;
+	mes "[Warpra]";
+	mes "Gefen Dungeon unlocked!";
+	close;
+}
+
+glast_01.gat,371,308,3	script	Warpra Helper	112,{
+	if (#gl_dun == 1) mes "[Warpra]";
+	if (#gl_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#gl_dun == 1) close;
+	set #gl_dun,1;
+	mes "[Warpra]";
+	mes "Glast Heim Dungeon unlocked!";
+	close;
+}
+
+gon_dun01.gat,167,273,4	script	Warpra Helper	112,{
+	if (#gon_dun == 1) mes "[Warpra]";
+	if (#gon_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#gon_dun == 1) close;
+	set #gon_dun,1;
+	mes "[Warpra]";
+	mes "Gonryun Dungeon unlocked!";
+	close;
+}
+
+juperos_02.gat,127,154,5	script	Warpra Helper	112,{
+	if (#juperos == 1) mes "[Warpra]";
+	if (#juperos == 1) mes "Sorry I can only unlock this location.";
+	if (#juperos == 1) close;
+	set #juperos,1;
+	mes "[Warpra]";
+	mes "Juperos Cave unlocked!";
+	close;
+}
+
+lhz_dun02.gat,156,151,3	script	Warpra Helper	112,{
+	if (#lighthalzen_dun == 1) mes "[Warpra]";
+	if (#lighthalzen_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#lighthalzen_dun == 1) close;
+	set #lighthalzen_dun,1;
+	mes "[Warpra]";
+	mes "Lighthalzen Bio Lab unlocked!";
+	close;
+}
+
+mag_dun02.gat,46,41,3	script	Warpra Helper	112,{
+	if (#mag_dun == 1) mes "[Warpra]";
+	if (#mag_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#mag_dun == 1) close;
+	set #mag_dun,1;
+	mes "[Warpra]";
+	mes "Magma Dungeon unlocked!";
+	close;
+}
+
+odin_tem01.gat,115,148,3	script	Warpra Helper	112,{
+	if (#odintemple == 1) mes "[Warpra]";
+	if (#odintemple == 1) mes "Sorry I can only unlock this location.";
+	if (#odintemple == 1) close;
+	set #odintemple,1;
+	mes "[Warpra]";
+	mes "Odin Temple unlocked!";
+	close;
+}
+
+orcsdun01.gat,185,11,3	script	Warpra Helper	112,{
+	if (#orcsdun == 1) mes "[Warpra]";
+	if (#orcsdun == 1) mes "Sorry I can only unlock this location.";
+	if (#orcsdun == 1) close;
+	set #orcsdun,1;
+	mes "[Warpra]";
+	mes "Orc Dungeon unlocked!";
+	close;
+}
+
+pay_dun03.gat,162,143,3	script	Warpra Helper	112,{
+	if (#pay_dun== 1) mes "[Warpra]";
+	if (#pay_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#pay_dun == 1) close;
+	set #pay_dun,1;
+	mes "[Warpra]";
+	mes "Payon Dungeon unlocked!";
+	close;
+}
+
+moc_pryd02.gat,101,95,3	script	Warpra Helper	112,{
+	if (#moc_pryd == 1) mes "[Warpra]";
+	if (#moc_pryd == 1) mes "Sorry I can only unlock this location.";
+	if (#moc_pryd == 1) close;
+	set #moc_pryd,1;
+	mes "[Warpra]";
+	mes "Pyramides Dungeon unlocked!";
+	close;
+}
+
+in_sphinx2.gat,274,268,1	script	Warpra Helper	112,{
+	if (#in_sphinx == 1) mes "[Warpra]";
+	if (#in_sphinx == 1) mes "Sorry I can only unlock this location.";
+	if (#in_sphinx == 1) close;
+	set #in_sphinx,1;
+	mes "[Warpra]";
+	mes "Sphinx Dungeon unlocked!";
+	close;
+}
+
+treasure02.gat,104,40,3	script	Warpra Helper	112,{
+	if (#treasure == 1) mes "[Warpra]";
+	if (#treasure == 1) mes "Sorry I can only unlock this location.";
+	if (#treasure == 1) close;
+	set #treasure,1;
+	mes "[Warpra]";
+	mes "Sunken Ship Dungeon unlocked!";
+	close;
+}
+
+xmas_dun02.gat,124,131,3	script	Warpra Helper	112,{
+	if (#xmas_dun == 1) mes "[Warpra]";
+	if (#xmas_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#xmas_dun == 1) close;
+	set #xmas_dun,1;
+	mes "[Warpra]";
+	mes "Toy Factory Dungeon unlocked!";
+	close;
+}
+
+um_dun02.gat,44,28,3	script	Warpra Helper	112,{
+	if (#um_dun == 1) mes "[Warpra]";
+	if (#um_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#um_dun == 1) close;
+	set #um_dun,1;
+	mes "[Warpra]";
+	mes "Umbala Dungeon unlocked!";
+	close;
+}
+
+tur_dun02.gat,162,23,3	script	Warpra Helper	112,{
+	if (#tur_dun == 1) mes "[Warpra]";
+	if (#tur_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#tur_dun == 1) close;
+	set #tur_dun,1;
+	mes "[Warpra]";
+	mes "Turtle Island Dungeon unlocked!";
+	close;
+}
+prt_maze02.gat,102,69,4	script	Warpra Helper	112,{
+	if (#hid_dun == 1) mes "[Warpra]";
+	if (#hid_dun == 1) mes "Sorry I can only unlock this location.";
+	if (#hid_dun == 1) close;
+	set #hid_dun,1;
+	mes "[Warpra]";
+	mes "Hidden Dungeon unlocked!";
+	close;
+}
