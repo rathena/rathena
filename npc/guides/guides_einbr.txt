@@ -24,7 +24,7 @@ einbroch.gat,72,202,4	script	Guide#1::Einbroch_Guide	852,{
 
 M_Menu:
 	next;
-	menu "City Guide",-, "Remove Marks from Mini-Map",M_2, "Notice",M_3, "Cancel",M_End;
+	menu "City Guide",-, "Remove Marks from Mini-Map",M_2, "Notice",L_NOTICE, "Cancel",M_End;
 
 	mes "[Einbroch Guide]";
 	mes "Please select a location from the following menu.";
