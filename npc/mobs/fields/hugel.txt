@@ -82,7 +82,7 @@ hu_fild06.gat,0,0,0,0	monster	Poring	1002,30,0,0,0
 hu_fild06.gat,0,0,0,0	monster	Poporing	1031,20,0,0,0
 hu_fild06.gat,0,0,0,0	monster	Metaling	1613,20,0,0,0
 hu_fild06.gat,0,0,0,0	monster	Caramel	1103,15,0,0,0
-hu_fild06.gat,0,0,0,0	monster	Mole	1628,15,0,0,0
+hu_fild06.gat,0,0,0,0	monster	Holden	1628,15,0,0,0
 hu_fild06.gat,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1
 hu_fild06.gat,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 

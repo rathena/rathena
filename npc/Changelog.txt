@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/15
+	* Fixed names of Lighthalzen mobs in spawn files [Playtester]
 	* Changed Juperos spawns according to info provided by Tharis [Playtester]
 04/14
 	* Added quest_warper.txt to eAAC_Scripts. Deleted the sql and txt versions

@@ -26,6 +26,8 @@
 	-----
 
 =========================
+04/15
+	* Fixed names of Lighthalzen Mobs, using iRO names now [Playtester]
 04/14
 	* Fixed various Job Fields in the item_db.txt thanks to Haplo and KarLaeda [Playtester]
 	- they should all fit to the descriptions now

@@ -44,7 +44,7 @@ ein_fild03.gat,0,0,0,0	monster	Metaling	1613,30,0,0,0
 ein_fild03.gat,0,0,0,0	monster	Geographer	1368,5,0,0,0
 ein_fild03.gat,0,0,0,0	monster	Caramel	1103,20,0,0,0
 ein_fild03.gat,0,0,0,0	monster	Horn	1128,20,0,0,0
-ein_fild03.gat,0,0,0,0	monster	Mole	1628,10,0,0,0
+ein_fild03.gat,0,0,0,0	monster	Holden	1628,10,0,0,0
 ein_fild03.gat,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 ein_fild03.gat,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1
 
@@ -55,7 +55,7 @@ ein_fild04.gat,0,0,0,0	monster	Metaling	1613,15,0,0,0
 ein_fild04.gat,0,0,0,0	monster	Mineral	1614,30,0,0,0
 ein_fild04.gat,0,0,0,0	monster	Geographer	1368,10,0,0,0
 ein_fild04.gat,0,0,0,0	monster	Giearth	1121,20,0,0,0
-ein_fild04.gat,0,0,0,0	monster	Mole	1628,10,0,0,0
+ein_fild04.gat,0,0,0,0	monster	Holden	1628,10,0,0,0
 ein_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 ein_fild04.gat,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
 ein_fild04.gat,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1

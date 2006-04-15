@@ -16,7 +16,7 @@
 //= 1.3: Some fixes based on kRO's "RO Map" [Poki#3]
 //=	 I also made the place more Moby ^^
 //= 1.4: Adjusted spawns according to own info from iRO [MasterOfMuppets]
-//= 1.5: Changed spawn numbers to jRO's [Playtester]
+//= 1.5: More accurate spawn numbers and iRO names thanks to Tharis [Playtester]
 //============================================================
 
 
@@ -26,39 +26,45 @@
 
 lhz_dun01.gat,0,0,0,0	monster	Metaling	1613,50,0,0,0
 lhz_dun01.gat,0,0,0,0	monster	Anopheles	1627,70,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Removal	1682,100,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Ygnizem	1652,15,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Whikebain	1653,15,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Armaia	1654,15,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Erend	1655,15,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Kavac	1656,15,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Rawrell	1657,15,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Gemini S58	1681,1,1800000,900000,1
+lhz_dun01.gat,0,0,0,0	monster	Remover	1682,100,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Egnigem Cenia	1652,15,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Wikebine Tres	1653,15,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Armeyer Dinze	1654,15,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Errende Ebecee	1655,15,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Kavach Icarus	1656,15,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Laurell Weinder	1657,15,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Gemini-S58	1681,1,1800000,900000,1
 
 //========================================================================================
 // lhz_dun02 - Bio-life Labs 2F
 //========================================================================================
 
-lhz_dun02.gat,0,0,0,0	monster	Removal	1682,20,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Ygnizem	1652,50,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Whikebain	1653,50,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Armaia	1654,50,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Erend	1655,50,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Kavac	1656,50,0,0,0
-lhz_dun02.gat,0,0,0,0	monster	Rawrell	1657,50,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Gemini S58	1681,10,1800000,900000,1
-lhz_dun02.gat,0,0,0,0	monster	General Ygnizem	1658,1,7200000,3600000,1
+lhz_dun02.gat,0,0,0,0	monster	Remover	1682,20,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Egnigem Cenia	1652,50,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Wikebine Tres	1653,50,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Armeyer Dinze	1654,50,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Errende Ebecee	1655,50,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Kavach Icarus	1656,50,0,0,0
+lhz_dun02.gat,0,0,0,0	monster	Laurell Weinder	1657,50,0,0,0
+lhz_dun01.gat,0,0,0,0	monster	Gemini-S58	1681,10,1800000,900000,1
+lhz_dun02.gat,0,0,0,0	monster	Egnigem Cenia	1658,1,7200000,3600000,1
 
 //========================================================================================
 // lhz_dun03 - Bio-life Labs 3F
 //========================================================================================
 
-lhz_dun03.gat,0,0,0,0	monster	Seyren	1634,50,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Eremes	1635,50,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Harword	1636,50,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Magaleta	1637,50,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Shecil	1638,50,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Katrinn	1639,50,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Seyren Windsor	1634,50,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Eremes Guile	1635,50,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Howard Alt-Eisen	1636,50,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Margaretha Solin	1637,50,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Cecil Damon	1638,50,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Kathryne Keyron	1639,50,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Lord Knight Seyren	1640,1,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Assassin Cross Eremes	1641,1,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Mastersmith Howard	1642,1,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	High Priest Margaretha	1643,1,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Sniper Cecil	1644,1,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	High Wizard Kathryne	1645,1,0,0,0
 
 lhz_dun03.gat,1,1,0	script	Lhzdun03monster	-1,{
 OnInit:
@@ -68,10 +74,10 @@ while(1)
 		set $@metaspawn,rand(1,6);
 		if($@metaspawn == 1)areamonster "lhz_dun03.gat",1,1,300,300,"Lord Knight Seyren",1646,1,"Lhzdun03monster::OnMonsterDead";
 		if($@metaspawn == 2)areamonster "lhz_dun03.gat",1,1,300,300,"Assassin Cross Eremes",1647,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 3)areamonster "lhz_dun03.gat",1,1,300,300,"Whitesmith Harword",1648,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 4)areamonster "lhz_dun03.gat",1,1,300,300,"High Priest Magaleta",1649,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 5)areamonster "lhz_dun03.gat",1,1,300,300,"Sniper Shecil",1650,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 6)areamonster "lhz_dun03.gat",1,1,300,300,"High Wizard Katrinn",1651,1,"Lhzdun03monster::OnMonsterDead";
+		if($@metaspawn == 3)areamonster "lhz_dun03.gat",1,1,300,300,"Mastersmith Horward",1648,1,"Lhzdun03monster::OnMonsterDead";
+		if($@metaspawn == 4)areamonster "lhz_dun03.gat",1,1,300,300,"High Priest Margaretha",1649,1,"Lhzdun03monster::OnMonsterDead";
+		if($@metaspawn == 5)areamonster "lhz_dun03.gat",1,1,300,300,"Sniper Cecil",1650,1,"Lhzdun03monster::OnMonsterDead";
+		if($@metaspawn == 6)areamonster "lhz_dun03.gat",1,1,300,300,"High Wizard Kathryne",1651,1,"Lhzdun03monster::OnMonsterDead";
 		end;
 OnMonsterDead:
 	initnpctimer;
