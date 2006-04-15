@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/15
+	* Implemented Musashiden's Lighthalzen npcs - Part 2 [Shadow]
 	* Renamed Mastersmith Howard to Whitesmith Howard in the spawn files [Playtester]
 	* Implemented Musashiden's Lighthalzen npcs [MasterOfMuppets]
 	* Fixed Einbroch & Archer Village Guide bugs, thanks to NeatElves 4 pointing the bug [Lupus]

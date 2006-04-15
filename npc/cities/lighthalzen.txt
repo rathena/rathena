@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA
 //===== Current Version: ===================================== 
-//= 0.3
+//= 0.5
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,10 +13,394 @@
 //= 0.2 Implemented some crap NPCs [MasterOfMuppets]
 //= 0.3 Another load of NPCs. Scripted by Kargha [MasterOfMuppets]
 //= 0.4 More Town NPCs. [Musashiden]
+//= 0.5 Added a BIG load of Lighthalzen NPCs. [musashiden]
 //============================================================
 
 lighthalzen.gat,154,100,5	script	Lighthalzen Guard#1	852,{end;}
 lighthalzen.gat,207,310,5	script	Lighthalzen Guard#2	852,{end;}
+
+
+lighthalzen.gat,198,285,5	script	Jiwon	862,{
+
+	mes "[Jiwon]";
+	mes "I think we're really";
+	mes "fortunate to be able to";
+	mes "live in such a beautiful";
+	mes "and peaceful city like this.";
+	next;
+	mes "[Jiwon]";
+	mes "It's just so nice to";
+	mes "have this pleasant weather,";
+	mes "these lush gardens and to";
+	mes "meet all of these kind people.";
+	mes "Lighthalzen is like Asgard";
+	mes "in Midgard, heaven on earth~";
+	close;
+}
+
+
+
+lighthalzen.gat,220,244,3	script	Samnang	863,{
+
+	mes "[Samnang]";
+	mes "*Sigh...*";
+	mes "It gets harder for me";
+	mes "to move around as I get";
+	mes "older. That's understandable";
+	mes "for an elderly person, right?";
+	next;
+	mes "[Samnang]";
+	mes "Just the other day, these";
+	mes "hoodlums in black suits";
+	mes "were yelling at me to get out";
+	mes "of their way. But of course,";
+	mes "I didn't move quickly enough.";
+	mes "So what did they do to me?";
+	next;
+	mes "[Samnang]";
+	mes "They punched me.";
+	mes "Right in the womb!";
+	mes "I know that i'm not";
+	mes "pregnant, but that's";
+	mes "besides the point. Never hit";
+	mes "a lady, especially an old one!";
+	close;
+}
+
+
+lighthalzen.gat,261,112,3	script	Ruth	862,{
+
+	mes "[Ruth]";
+	mes "Sweety, isn't it";
+	mes "nice to be together";
+	mes "under this beautiful";
+	mes "sunlight? It's perfect";
+	mes "for our date. Ahhhh~";
+	next;
+	mes "[Ruth]";
+	mes "I'm so happy to be";
+	mes "with you. I feel like";
+	mes "I'm just melting with";
+	mes "happiness. Ohm I love";
+	mes "you so much, Oyoung.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Whoa...";
+	mes "This couple is";
+	mes "really headed for";
+	mes "Cloud 9, aren't they?";
+	close;
+}
+
+
+lighthalzen.gat,259,108,7	script	Oyoung	869,{
+
+	mes "[Oyoung]";
+	mes "Girl, you look like";
+	mes "you're comin' down with";
+	mes "the love bug. But there's";
+	mes "only one prescription for";
+	mes "this ailment, ooooh yeah...";
+	next;
+	mes "[Oyoung]";
+	mes "You need yo'self";
+	mes "your daily dose of";
+	mes "vitamin O-YOUNG.";
+	mes "And your lips look like";
+	mes "they got vitamin deficiency.";
+	mes "i better take care of that~";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Sweet Sister!";
+	mes "I don't know what's";
+	mes "more mind boggling--";
+	mes "The fact that he used";
+	mes "that line or the fact that";
+	mes "it's actually working...";
+	close;
+}
+
+lighthalzen.gat,233,121,4	script	Kariya	72,{
+
+	mes "[Kariya]";
+	mes "I think \"Lighthalzen\" is";
+	mes "supposed to mean \"crest of";
+	mes "light\", though i hear that this";
+	mes "city was actually named after";
+	mes "somebody. Who knows for sure?";
+	next;
+	mes "[Kariya]";
+	mes "Still, It's a fitting";
+	mes "name for the wealthiest";
+	mes "and most luxurious city in";
+	mes "all the Schwaltzvalt Republic.";
+	mes "So how do you like this place?";
+	close;
+}
+
+
+lighthalzen.gat,233,82,5	script	Sung	716,{
+
+	mes "[Sung]";
+	mes "When i grow up, I want";
+	mes "to become such a great";
+	mes "person that they'll make";
+	mes "a statue of me, just like";
+	mes "those statues over there.";
+	next;
+	mes "[Sung]";
+	mes "Then people would be like,";
+	mes "\"Hey yo. That statue. That";
+	mes "guy must have been great!\"";
+	mes "Just thinking about that";
+	mes "makes me feel so good!";
+	next;
+	mes "[Sung]";
+	mes "That's it. I'm gonna";
+	mes "grow up as soon as i can.";
+	mes "Ooh, and i better grow tall";
+	mes "and handsome so my statue";
+	mes "will be even more awesome.";
+	mes "Yeah. Yeah, good idea, Sung...";
+	close;
+}
+
+
+lighthalzen.gat,89,73,5	script	Sameer	854,{
+
+	mes "[Sameer]";
+	mes "There are too many";
+	mes "loving couples in this city.";
+	mes "Cuddling and kissing and";
+	mes "hugging and necking. It's...";
+	mes "It's utterly distasteful.";
+	next;
+	mes "[Sameer]";
+	mes "I can't believe the";
+	mes "indencenct I see everyday";
+	mes "near my own home. Don't";
+	mes "they know better than to be";
+	mes "so affectionate in places";
+	mes "where the public can see them?!";
+	next;
+	mes "[Sameer]";
+	mes "Fortunately for the";
+	mes "world, i'm a bulwark";
+	mes "of morality. In fact, I have";
+	mes "no need for a woman. All";
+	mes "I need are my ship models,";
+	mes "teen novels and dominos.";
+	next;
+	mes "[Sameer]";
+	mes "I'm a completely well";
+	mes "adjusted individual, which";
+	mes "is why the authorities should";
+	mes "listen to me when i tell them";
+	mes "to arrest couples for indecency!";
+	mes "Hand holding. Have they no shame!?";
+	close;
+}
+
+
+
+lighthalzen.gat,45,59,8	script	Janice	863,{
+
+	mes "[Janice]";
+	mes "Oh no, I think i got";
+	mes "lost again. The roads";
+	mes "here are so confusing!";
+	mes "I've lived here for such";
+	mes "a long time and I still";
+	mes "can't find my way around...";
+	close;
+}
+
+
+lighthalzen.gat,66,94,4	script	Elmer Keays	866,{
+
+	mes "[Elmer Keays]";
+	mes "Walking side by side";
+	mes "with you like this reminds";
+	mes "me of the old days. Back";
+	mes "then, everyone was jealous";
+	mes "that i had such a beautiful";
+	mes "woman by my side. Heh heh~";
+	next;
+	mes "[Elmer Keays]";
+	mes "You're still the most";
+	mes "precious sight to these";
+	mes "old eyes, my dear. I'm";
+	mes "really lucky to be with you.";
+	close;
+}
+
+lighthalzen.gat,65,94,4	script	Margie Keays	863,{
+
+	mes "[Margie Keays]";
+	mes "Oh darling, the";
+	mes "weather is so nice";
+	mes "and pleasant today.";
+	mes "I'm really glad we";
+	mes "decided to go take";
+	mes "a walk together~";
+	close;
+}
+
+lighthalzen.gat,78,120,3	script	Maivi	862,{
+
+	mes "[Maivi]";
+	mes "...";
+	next;
+	mes "[Maivi]";
+	mes "...";
+	mes ".....";
+	next;
+	mes "[Maivi]";
+	mes "Ah...";
+	mes "I just had the nicest";
+	mes "nap, This nice weather";
+	mes "never fails to relax me.";
+	mes "The air here is so clean,";
+	mes "not like that Einbroch~";
+	next;
+	mes "[Maivi]";
+	mes "This clean, pristine";
+	mes "environment is all thanks";
+	mes "to the Rekenber Corporation.";
+	mes "It's incredible what they can";
+	mes "do with technology now, isn't";
+	mes "it? Ahhh, it's so peaceful~";
+	close;
+}
+
+
+lighthalzen.gat,226,210,3	script	Nannan	86,{
+
+	mes "[Nannan]";
+	mes "You know, I always thought";
+	mes "that all Alchemists were bookish,";
+	mes "scholarly types, their faces always";
+	mes "buried in books and studying. But";
+	mes "I managed to find one who doesn't";
+	mes "fit that nerdy stereotype at all.";
+	next;
+	mes "[Nannan]";
+	mes "This guy, What's-his-face,";
+	mes "Broncher, is always wasting";
+	mes "his time drinking. I guess he";
+	mes "discovered the secret of turning";
+	mes "water into Grade A booze. But";
+	mes "at least he's not the stuffy type.";
+	next;
+	mes "[Nannan]";
+	mes "I don't know how much";
+	mes "help he'd be to an aspiring";
+	mes "Alchemist, but in my opinion,";
+	mes "the man is a fully fledged";
+	mes "genius! At least, compared";
+	mes "to a street guy like me...";
+	close;
+}
+
+lighthalzen.gat,230,182,4	script	Klaubis	866,{
+
+	mes "[Klaubis]";
+	mes "Excuse me, but are you";
+	mes "a tourist? Well, welcome";
+	mes "to Lighthalzen! This city";
+	mes "has everything we need,";
+	mes "but it can be a little too";
+	mes "quiet and uneventful here.";
+	next;
+	menu "Have you lived in here long?",live,"I agree.",agree,"Have you heard about the serial killer?",killer;
+
+
+live:
+	mes "[Klaubis]";
+	mes "Yes, our family has";
+	mes "lived in this city for a";
+	mes "long time, starting with";
+	mes "my great grandfather. Let's";
+	mes "see, my family's been here";
+	mes "for about two hundred years.";
+	next;
+	mes "[Klaubis]";
+	mes "You'd be surprised how";
+	mes "many people stay in their";
+	mes "hometowns. Even if you do";
+	mes "leave, though, you can always";
+	mes "come back. It wouldn't be your";
+	mes "hometown if you couldn't, right?";
+	close;
+
+agree: 
+	mes "[Klaubis]";
+	mes "Yes, the atmosphere";
+	mes "can get pretty listless";
+	mes "around here. But still,";
+	mes "there are plenty of nice";
+	mes "sights to enjoy here in";
+	mes "Lighthalzen, so look around~";
+	close;
+
+killer:
+	mes "[Klaubis]";
+	mes "You mean the Serial";
+	mes "Axe Murderer? I thought";
+	mes "that was an old ghost story.";
+	mes "Hm. I think that lady inside";
+	mes "the Weapon Shop would";
+	mes "know more about that tale...";
+	close;
+
+}
+
+
+lighthalzen.gat,232,156,4	script	Sigmund	866,{
+
+	mes "[Sigmund Ting]";
+	mes "You know what i noticed?";
+	mes "The guards at the border";
+	mes "to the slum seem distracted";
+	mes "sometimes. I made use of one";
+	mes "of their less attentive moments";
+	mes "and basically jumped the fence!";
+	next;
+	mes "[Sigmund Ting]";
+	mes "But once i was in the";
+	mes "Slums, I was pretty bored.";
+	mes "There really isn't much to";
+	mes "do there. Which makes me";
+	mes "Wonder... Why guard it?";
+	close;	
+
+}
+
+lighthalzen.gat,190,134,5	script	Joyce	862,{
+
+	mes "[Joyce]";
+	mes "I can sense your";
+	mes "longing look within";
+	mes "the depths of my heart,";
+	mes "beating faster and faster";
+	mes "with a feverish passion~";
+	close;	
+
+}
+
+
+lighthalzen.gat,191,134,5	script	Dan Song	869,{
+
+	mes "[Dan Song]";
+	mes "Those eyes of yours...";
+	mes "So pure and so deep,";
+	mes "like glimmering pools";
+	mes "of light. So, so beautiful...";
+	close;	
+
+}
+
+
 
 lighthalzen.gat,115,159,5	script	Collins	866,{
 
@@ -113,6 +497,7 @@ lighthalzen.gat,132,103,5	script	Sefith	734,{
 	close;	
 
 }
+
 
 lighthalzen.gat,239,64,5	script	Jade	862,{
 
