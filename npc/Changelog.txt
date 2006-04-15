@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/15
+	* Fixed Archer Village Guide bugs, thanks to NeatElves 4 pointing the bug [Lupus]
 	* Modified the Cloth Dyer so that he refuses to dye your clothes [Playtester]
 	* Added weight checks to merchants/refine.txt thanks to Neouni [Playtester]
 	* Fixed names of Lighthalzen mobs in spawn files [Playtester]

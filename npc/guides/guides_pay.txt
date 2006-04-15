@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //=     to Muad_Dib
 //= 1.3a Fixed some problems with duplicated text, thanks to muad_dib [MasterOfMuppets]
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
+//= 1.4a Tixed Archer Village Guide [Lupus] 
 //============================================================
 
 
@@ -26,8 +27,8 @@ payon.gat,162,67,4	script	Guide	708,{
 	mes "If you're unfammiliar with this area, I can help you find what you're looking for around here.";
 L_MENU:
 	next;
-	menu "City Guide",L_CITY,"Remove Marks from Mini-Map",L_REMOVE,"Notice",L_NOTICE,"Cancel",L_END;
-L_CITY:
+	menu "City Guide",-,"Remove Marks from Mini-Map",L_REMOVE,"Notice",L_NOTICE,"Cancel",L_END;
+
 	mes "[Payon Guide]";
   	mes "Please select a location from the following menu.";
   	mes "Would you like me to mark locations on your Mini-Map?";
@@ -99,7 +100,7 @@ L_FORGE:
 	mes "The Forge is situaded near the center of Payon.";
 	viewpoint 1,142,172,9,0xFFFF00;
 	next;
-	goto L_WIPE;	
+//	goto L_WIPE;	
 L_WIPE:
  	if(@COMPASS_CHECK == 1)goto L_MENU_2;
 	viewpoint 2,228,326,1,0xFF0000;
@@ -139,19 +140,19 @@ L_NOTICE:
 L_END:
  	mes "[Payon Guide]";
  	mes "Be safe in your travels, brave adventurer.";
-		cutin "pay_soldier",255; 
+	cutin "pay_soldier",255; 
  	close;
 }
 
 pay_arche.gat,85,30,2	script	Guide	708,{
 	cutin "pay_soldier",2;
 	mes "[Payon Guide]";
-	mes "Welcome to the mountain city of Payon.";
+	mes "Welcome to the Archer Village.";
 	mes "If you're unfammiliar with this area, I can help you find what you're looking for around here.";
 L_MENU:
 	next;
-	menu "City Guide",L_CITY,"Remove Marks from Mini-Map",L_REMOVE,"Notice",L_NOTICE,"Cancel",L_END;
-L_CITY:
+	menu "Village Guide",-,"Remove Marks from Mini-Map",L_REMOVE,"Notice",L_NOTICE,"Cancel",L_END;
+
 	mes "[Payon Guide]";
   	mes "Please select a location from the following menu.";
   	mes "Would you like me to mark locations on your Mini-Map?";
@@ -164,7 +165,7 @@ L_YES:
   	set @COMPASS_CHECK,1;
 L_CONT:
 L_MENU_2:
-	menu "^FF0000Archer Guild^000000",L_ARCHER,"Weapon Shop",L_WEAPON,"Tool Shop",L_TOOL,"Pub",L_PUB,"Central Palace",L_PALACE,"The Empress",L_EMPRESS,"Palace Annex",L_ANNEX,"Royal Kitchen",L_KITCHEN,"Forge",L_FORGE,"Cancel",-;
+	menu "^FF0000Archer Guild^000000",L_ARCHER,"Tool Shop",L_TOOL,"Payon Dungeon",L_DUNGEON,"Cancel",-;
 	mes "[Payon Guide]";
  	mes "Please ask me to remove marks from Mini-Map if you no longer wish to have the location marks displayed on your Mini-Map.";
  	goto L_MENU;
@@ -176,7 +177,7 @@ L_ARCHER:
 	goto L_WIPE;
 L_TOOL:
 	mes "[Payon Guide]";
-	mes "The Tool Shop is located near the northwest corner of Payon.";
+	mes "The Tool Shop is located near the northwest corner of the village.";
 	viewpoint 1,71,156,2,0xFF00FF;
 	next; 
 	goto L_WIPE;
@@ -185,7 +186,7 @@ L_DUNGEON:
 	mes "The entrance to the Payon Dungeon is located at the west end of the village.";
 	viewpoint 1,34,132,3,0xFFFFFF;
 	next; 
-	goto L_WIPE;
+//	goto L_WIPE;
 L_WIPE:
  	if(@COMPASS_CHECK == 1)goto L_MENU_2;
 	viewpoint 2,144,164,1,0xFF0000;
@@ -216,4 +217,3 @@ L_END:
 	cutin "pay_soldier",255; 
  	close;
 }
-
