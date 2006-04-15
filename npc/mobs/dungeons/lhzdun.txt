@@ -61,7 +61,7 @@ lhz_dun03.gat,0,0,0,0	monster	Cecil Damon	1638,50,0,0,0
 lhz_dun03.gat,0,0,0,0	monster	Kathryne Keyron	1639,50,0,0,0
 lhz_dun03.gat,0,0,0,0	monster	Lord Knight Seyren	1640,1,0,0,0
 lhz_dun03.gat,0,0,0,0	monster	Assassin Cross Eremes	1641,1,0,0,0
-lhz_dun03.gat,0,0,0,0	monster	Mastersmith Howard	1642,1,0,0,0
+lhz_dun03.gat,0,0,0,0	monster	Whitesmith Howard	1642,1,0,0,0
 lhz_dun03.gat,0,0,0,0	monster	High Priest Margaretha	1643,1,0,0,0
 lhz_dun03.gat,0,0,0,0	monster	Sniper Cecil	1644,1,0,0,0
 lhz_dun03.gat,0,0,0,0	monster	High Wizard Kathryne	1645,1,0,0,0
@@ -74,7 +74,7 @@ while(1)
 		set $@metaspawn,rand(1,6);
 		if($@metaspawn == 1)areamonster "lhz_dun03.gat",1,1,300,300,"Lord Knight Seyren",1646,1,"Lhzdun03monster::OnMonsterDead";
 		if($@metaspawn == 2)areamonster "lhz_dun03.gat",1,1,300,300,"Assassin Cross Eremes",1647,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 3)areamonster "lhz_dun03.gat",1,1,300,300,"Mastersmith Horward",1648,1,"Lhzdun03monster::OnMonsterDead";
+		if($@metaspawn == 3)areamonster "lhz_dun03.gat",1,1,300,300,"Whitesmith Horward",1648,1,"Lhzdun03monster::OnMonsterDead";
 		if($@metaspawn == 4)areamonster "lhz_dun03.gat",1,1,300,300,"High Priest Margaretha",1649,1,"Lhzdun03monster::OnMonsterDead";
 		if($@metaspawn == 5)areamonster "lhz_dun03.gat",1,1,300,300,"Sniper Cecil",1650,1,"Lhzdun03monster::OnMonsterDead";
 		if($@metaspawn == 6)areamonster "lhz_dun03.gat",1,1,300,300,"High Wizard Kathryne",1651,1,"Lhzdun03monster::OnMonsterDead";
