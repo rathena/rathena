@@ -25,6 +25,7 @@
 //= 1.4 Fixed password abuse. When people don't read the password under the picture
 //= 	and enter Zero shit 8) (TODO: I saw some "Sticks" abuses, too.. where you couls skip
 //=	a part of quest...)
+//= 1.5 Fixed Mobster's OnDead event(it has to start with "On"!) [Playtester]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -77,7 +78,7 @@ MakeMob:
 	mapannounce "lighthalzen.gat","Maintenance Organization of the Public Order: Currently the security of the city has been compromized, We ask the citizens to be more careful. I repeat. We ask the citizens to be more careful.", 1;
 	
 	for( set $@i, 0; $@i < $@mob; set $@i, $@i + 1 ) {
-		monster "lighthalzen.gat",0,0,"Mobster",1592,1,"AlertChk::MobKilled";
+		monster "lighthalzen.gat",0,0,"Mobster",1592,1,"AlertChk::OnMobKilled";
 	}
 
 	set $@lhz_alert, 1;	
@@ -89,13 +90,13 @@ ClearMob:
 	if($@lhz_alert == 0) goto ChkEnd;
 	set $@mobcount, 0;
 	mapannounce "lighthalzen.gat","Maintenance organization of the Public Order: We were able to get rid of all the trouble makers in the city. You may relax now.", 1;	
-	killmonster "lighthalzen.gat","AlertChk::MobKilled";
+	killmonster "lighthalzen.gat","AlertChk::OnMobKilled";
 	set $@lhz_alert, 0;
 	set $@sneakguard, 0;
 	setnpctimer 0;
 	end;
 		
-MobKilled:
+OnMobKilled:
 	set $@mobcount, $@mobcount - 1;
 	if($@mobcount == 0) goto ClearMob;
 	setnpctimer 0;
