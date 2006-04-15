@@ -26,6 +26,8 @@
 	-----
 
 =========================
+04/16
+	* Fixed wrong effect 4175,Poisonous_Toad_Card [Lupus]
 04/15
 	* Fixed Vesper's HP and implemented Monemus properly [Playtester]
 	* Renamed Mastersmith Howard to Whitesmith Howard [Playtester]
