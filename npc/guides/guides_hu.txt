@@ -11,8 +11,9 @@
 //===== Additional Comments: =================================
 //= 1.0 Started the script. [erKURITA]
 //============================================================
-hugel.gat,98,57,3	script	Old Lady	863,{
 
+
+hugel.gat,98,57,3	script	Old Lady	863,{
 	mes "[Old Lady]";
 	mes "Welcome to Hugel, the Power Source City.";
 	next;
@@ -107,6 +108,7 @@ M_Menu:
 			mes "[Old Lady]";
 			mes "The 'Bingo House' is located at the northwest of Hugel. Lay your bet ladies and gentlements!";
 			viewpoint 1,57,207,7,0xFF8000;
+			goto sL_Wipe;
 		M_1_8:
 			set @COMPASS_CHECK, 2;
 
