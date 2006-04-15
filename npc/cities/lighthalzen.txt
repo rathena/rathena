@@ -12,10 +12,107 @@
 //= 0.1 Placed temporal names, why there weren't on the SVN before? [erKURITA]
 //= 0.2 Implemented some crap NPCs [MasterOfMuppets]
 //= 0.3 Another load of NPCs. Scripted by Kargha [MasterOfMuppets]
+//= 0.4 More Town NPCs. [Musashiden]
 //============================================================
 
 lighthalzen.gat,154,100,5	script	Lighthalzen Guard#1	852,{end;}
 lighthalzen.gat,207,310,5	script	Lighthalzen Guard#2	852,{end;}
+
+lighthalzen.gat,115,159,5	script	Collins	866,{
+
+	mes "[Collins]";
+	mes "I really wish that my";
+	mes "son will be able to join";
+	mes "the Rekenber Corporation.";
+	mes "They certainly provide the";
+	mes "best jobs in Lighthalzen.";
+	next;
+	mes "[Collins]";
+	mes "Although they're a large,";
+	mes "major corporation, it's";
+	mes "almost impossible to get";
+	mes "emplyed by them. How";
+	mes "do people get hired there";
+	mes "in the first place anyway?";
+	close;	
+
+}
+
+
+
+lighthalzen.gat,77,157,5	script	Villagomez	866,{
+
+	mes "[Mauro]";
+	mes "I just step out to get";
+	mes "a haircut and now i'm";
+	mes "lost. Boy oh boy, I hope";
+	mes "i don't keep my family";
+	mes "waiting. *Sigh...*";
+	close;	
+
+}
+
+
+lighthalzen.gat,125,68,5	script	Kemp	97,{
+
+	mes "[Kemp]";
+	mes "Have you ever seen the";
+	mes "people who work in that big";
+	mes "corporation over there? I think";
+	mes "their employees are all a bit";
+	mes "off kilter for some reason.";
+	next;
+	mes "[Kemp]";
+	mes "I haven't been there";
+	mes "myself, but something";
+	mes "strange is happening with";
+	mes "all the people who work there.";
+	close;	
+
+}
+
+
+lighthalzen.gat,138,50,5	script	Mauro	847,{
+
+	mes "[Mauro]";
+	mes "The youth in this city";
+	mes "have no appreciation for";
+	mes "their elders. i've worked";
+	mes "so hard to help build this";
+	mes "city for so many years and";
+	mes "this is the thanks i get?";
+	next;
+	mes "[Mauro]";
+	mes "Bah! If it weren't for";
+	mes "us, Lighthalzen wouldn't";
+	mes "be as prosperous as it is";
+	mes "today! Those kids don't";
+	mes "know that they owe their";
+	mes "lives of luxury to us...";
+	close;	
+
+}
+
+
+lighthalzen.gat,132,103,5	script	Sefith	734,{
+
+	mes "[Sefith]";
+	mes "Good looks. Intelligence.";
+	mes "Excellent manners. A strong,";
+	mes "manly chin and overpowering,";
+	mes "piercing eyes. Perfectly balanced";
+	mes "passion and charisma. All the";
+	mes "good things that ladies want.";
+	next;
+	mes "[Sefith]";
+	mes "But Enough about me. Let's";
+	mes "discuss how sorry i should";
+	mes "feel for any other man living";
+	mes "in Lighthalzen. They don't hold";
+	mes "a candle to my studliness~";
+	close;	
+
+}
 
 lighthalzen.gat,239,64,5	script	Jade	862,{
 
