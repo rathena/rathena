@@ -27,6 +27,7 @@
 
 =========================
 04/15
+	* Renamed Mastersmith Howard to Whitesmith Howard [Playtester]
 	* Fixed Halo(id 2282) having 10% resistance instead of 15% thanks to KarLaeda [Playtester]
 	* Fixed movement and attack speed of Lighthalzen Mobs thanks to Tharis [Playtester]
 	* Fixed names of Lighthalzen Mobs, using iRO names now [Playtester]
