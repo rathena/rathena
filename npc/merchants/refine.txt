@@ -35,6 +35,7 @@
 //= 1.8a - Fixed wrong indication thanks to NeoSaro [Lupus]
 //= 1.9 - Rewrote repairman, removed the Steel from repair cost [DracoRPG]
 //= 2.0 - Fixed missed equppment presence check. Thx2 Coltaro [Lupus]
+//= 2.0a - Added weight checks thanks to Neouni [Playtester]
 //============================================================
 
 
