@@ -2532,7 +2532,6 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 			}
 		}
 	}
-	first_sd = NULL; //First_sd will store who picked up the item.
 	//This function takes care of giving the item to whoever should have it
 	//considering party-share options.
 	if ((flag = party_share_loot(p,sd,&fitem->item_data))) {

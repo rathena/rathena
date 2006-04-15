@@ -3800,14 +3800,28 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
  */
 int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *unit)
 {
-	int fd;
+	int fd, unit_id;
 	struct block_list *bl;
-
-	nullpo_retr(0, unit);
 
 	fd=sd->fd;
 	bl=map_id2bl(unit->group->src_id);
-#if PACKETVER < 3
+#if PACKETVER >= 3
+	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
+		WFIFOHEAD(fd,packet_len_table[0x1c9]);
+		memset(WFIFOP(fd,0),0,packet_len_table[0x1c9]);
+		WFIFOW(fd, 0)=0x1c9;
+		WFIFOL(fd, 2)=unit->bl.id;
+		WFIFOL(fd, 6)=unit->group->src_id;
+		WFIFOW(fd,10)=unit->bl.x;
+		WFIFOW(fd,12)=unit_id;
+		WFIFOB(fd,14)=unit->group->unit_id;
+		WFIFOB(fd,15)=1;
+		WFIFOB(fd,16)=1;
+		memcpy(WFIFOP(fd,17),unit->group->valstr,MESSAGE_SIZE);
+		WFIFOSET(fd,packet_len_table[0x1c9]);
+		return 0;
+	}
+#endif
 	WFIFOHEAD(fd,packet_len_table[0x11f]);
 	memset(WFIFOP(fd,0),0,packet_len_table[0x11f]);
 	WFIFOW(fd, 0)=0x11f;
@@ -3815,17 +3829,22 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 	WFIFOL(fd, 6)=unit->group->src_id;
 	WFIFOW(fd,10)=unit->bl.x;
 	WFIFOW(fd,12)=unit->bl.y;
-	WFIFOB(fd,14)=unit->group->unit_id;
+	//Use invisible unit id for traps.
+	WFIFOB(fd,14)=(skill_get_inf2(unit->group->skill_id)&INF2_TRAP?UNT_ATTACK_SKILLS:unit->group->unit_id);
 	WFIFOB(fd,15)=0;
 	WFIFOSET(fd,packet_len_table[0x11f]);
-#else
+
+	if(unit->group->skill_id == WZ_ICEWALL)
+		clif_set0192(fd,unit->bl.m,unit->bl.x,unit->bl.y,5);
+	return 0;
+/* Previous implementation guess of packet 0x1c9, who can understand what all those fields are for? [Skotlex]
 	WFIFOHEAD(fd,packet_len_table[0x1c9]);
 	memset(WFIFOP(fd,0),0,packet_len_table[0x1c9]);
 	WFIFOW(fd, 0)=0x1c9;
 	WFIFOL(fd, 2)=unit->bl.id;
 	WFIFOL(fd, 6)=unit->group->src_id;
 	WFIFOW(fd,10)=unit->bl.x;
-	WFIFOW(fd,12)=unit->bl.y;
+	WFIFOW(fd,12)=unit_id;
 	WFIFOB(fd,14)=unit->group->unit_id;
 	WFIFOB(fd,15)=1;
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
@@ -3862,57 +3881,9 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 		clif_set0192(fd,unit->bl.m,unit->bl.x,unit->bl.y,5);
 
 	return 0;
+*/
 }
 
-int clif_reveal_skillunit(struct skill_unit *unit) {
-	struct block_list *bl;
-	unsigned char buf[97];
-	bl=map_id2bl(unit->group->src_id);
-#if PACKETVER < 3
-	memset(buf,0,packet_len_table[0x11f]);
-	WBUFW(buf, 0)=0x11f;
-	WBUFL(buf, 2)=unit->bl.id;
-	WBUFL(buf, 6)=unit->group->src_id;
-	WBUFW(buf,10)=unit->bl.x;
-	WBUFW(buf,12)=unit->bl.y;
-	WBUFB(buf,14)=unit->group->unit_id;
-	WBUFB(buf,15)=0;
-	clif_send(buf,packet_len_table[0x11f],&unit->bl,AREA);
-#else
-	memset(buf,0,packet_len_table[0x1c9]);
-	WBUFW(buf, 0)=0x1c9;
-	WBUFL(buf, 2)=unit->bl.id;
-	WBUFL(buf, 6)=unit->group->src_id;
-	WBUFW(buf,10)=unit->bl.x;
-	WBUFW(buf,12)=unit->bl.y;
-	WBUFB(buf,14)=unit->group->unit_id;
-	WBUFB(buf,15)=1;
-	WBUFL(buf,15+1)=0;
-	WBUFL(buf,15+5)=0;
-
-	WBUFL(buf,15+13)=unit->bl.y - 0x12;
-	WBUFL(buf,15+17)=0x004f37dd;
-	WBUFL(buf,15+21)=0x0012f674;
-	WBUFL(buf,15+25)=0x0012f664;
-	WBUFL(buf,15+29)=0x0012f654;
-	WBUFL(buf,15+33)=0x77527bbc;
-
-	WBUFB(buf,15+40)=0x2d;
-	WBUFL(buf,15+41)=0;
-	WBUFL(buf,15+45)=0;
-	WBUFL(buf,15+49)=0;
-	WBUFL(buf,15+53)=0x0048d919;
-	WBUFL(buf,15+57)=0x0000003e;
-	WBUFL(buf,15+61)=0x0012f66c;
-
-	if(bl) WBUFL(buf,15+73)=bl->y;
-	WBUFL(buf,15+77)=unit->bl.m;
-	WBUFB(buf,15+81)=0xaa;
-
-	clif_send(buf,packet_len_table[0x1c9],&unit->bl,AREA);
-#endif
-	return 0;
-}
 /*==========================================
  * 場所スキルエフェクトが視界から消える
  *------------------------------------------
@@ -3969,9 +3940,7 @@ int clif_01ac(struct block_list *bl)
 		clif_getareachar_item(sd,(struct flooritem_data*) bl);
 		break;
 	case BL_SKILL:
-		//Only reveal non-traps. [Skotlex]
-		if (!skill_get_inf2(((TBL_SKILL*)bl)->group->skill_id)&INF2_TRAP)
-			clif_getareachar_skillunit(sd,(TBL_SKILL*)bl);
+		clif_getareachar_skillunit(sd,(TBL_SKILL*)bl);
 		break;
 	default:
 		if(&sd->bl == bl)
@@ -4053,9 +4022,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
 			break;
 		case BL_SKILL:
-			//Only reveal non-traps. [Skotlex]
-			if (!skill_get_inf2(((TBL_SKILL*)bl)->group->skill_id)&INF2_TRAP)
-				clif_getareachar_skillunit(tsd,(TBL_SKILL*)bl);
+			clif_getareachar_skillunit(tsd,(TBL_SKILL*)bl);
 			break;
 		default:
 			clif_getareachar_char(tsd,bl);
@@ -4465,7 +4432,22 @@ int clif_skill_setunit(struct skill_unit *unit)
 //	if (unit->group->unit_id == UNT_ATTACK_SKILLS)
 //		return 0;
 		
-#if PACKETVER < 3
+#if PACKETVER >= 3
+	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
+		memset(WBUFP(buf, 0),0,packet_len_table[0x1c9]);
+		WBUFW(buf, 0)=0x1c9;
+		WBUFL(buf, 2)=unit->bl.id;
+		WBUFL(buf, 6)=unit->group->src_id;
+		WBUFW(buf,10)=unit->bl.x;
+		WBUFW(buf,12)=unit->bl.y;
+		WBUFB(buf,14)=unit->group->unit_id;
+		WBUFB(buf,15)=1;
+		WBUFB(buf,16)=1;
+		memcpy(WBUFP(buf,17),unit->group->valstr,MESSAGE_SIZE);
+		clif_send(buf,packet_len_table[0x1c9],&unit->bl,AREA);
+		return 0;
+	}
+#endif
 	memset(WBUFP(buf, 0),0,packet_len_table[0x11f]);
 	WBUFW(buf, 0)=0x11f;
 	WBUFL(buf, 2)=unit->bl.id;
@@ -4475,7 +4457,9 @@ int clif_skill_setunit(struct skill_unit *unit)
 	WBUFB(buf,14)=unit->group->unit_id;
 	WBUFB(buf,15)=0;
 	clif_send(buf,packet_len_table[0x11f],&unit->bl,AREA);
-#else
+	return 0;
+	
+/* Previous mysterious implementation noone really understands. [Skotlex]
 		memset(WBUFP(buf, 0),0,packet_len_table[0x1c9]);
 		WBUFW(buf, 0)=0x1c9;
 		WBUFL(buf, 2)=unit->bl.id;
@@ -4514,6 +4498,7 @@ int clif_skill_setunit(struct skill_unit *unit)
 		clif_send(buf,packet_len_table[0x1c9],&unit->bl,AREA);
 #endif
 	return 0;
+*/
 }
 /*==========================================
  * 場所スキルエフェクト削除

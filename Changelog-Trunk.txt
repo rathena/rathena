@@ -4,9 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/15
+	* Updated skill_attack to allow characters not on a map to attack (enables
+	  traps and the like to work when they aren't cleared on the character's
+	  death) [Skotlex]
+	* Removed use of packet 0x1c9 for skill_unit display, except for Graffiti
+	  (which is the only unit which requires the much larger packet) [Skotlex]
+	* clif_getareachar_skillunit will send the unit_id of UNT_ATTACK_SKILLS for
+	  traps (this is to prevent them from displaying on the client) [Skotlex]
 	* Updated libs, Updated vc project files, And deleted uneeded DLLs.
 	  Credits to ALZ. [Zido]
-
 2006/04/14
 	* Updated sql-files/mob_db.sql to current. [Skotlex]
 	* Fixed being able to do all the stuff you shouldn't be able to during the

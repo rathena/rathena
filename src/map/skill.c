@@ -1695,8 +1695,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	nullpo_retr(0, dsrc); //dsrc is the actual originator of the damage, can be the same as src, or a skill casted by src.
 	nullpo_retr(0, bl); //Target to be attacked.
 
-	if(src->prev == NULL || dsrc->prev == NULL || bl->prev == NULL)
-		return 0;
+//	if(src->prev == NULL || dsrc->prev == NULL || bl->prev == NULL)
+//		return 0;
 	if (src != dsrc) {
 		//When caster is not the src of attack, this is a ground skill, and as such, do the relevant target checking. [Skotlex]
 		if (!status_check_skilluse(battle_config.skill_caster_check?src:NULL, bl, skillid, 2))
@@ -2454,7 +2454,7 @@ static int skill_reveal_trap( struct block_list *bl,va_list ap )
 	TBL_SKILL *su = (TBL_SKILL*)bl;
 	if (su->alive && su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
 	{	//Reveal trap.
-		clif_reveal_skillunit(su);
+		clif_changetraplook(bl, su->group->unit_id);
 		return 1;
 	}
 	return 0;
