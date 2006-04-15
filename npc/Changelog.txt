@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+04/15
+	* Changed Juperos spawns according to info provided by Tharis [Playtester]
 04/14
 	* Added quest_warper.txt to eAAC_Scripts. Deleted the sql and txt versions
 	  of the disguiser and added a merge of both. Deleted clone_arena.txt.
