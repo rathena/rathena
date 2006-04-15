@@ -21,7 +21,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_WIN32;PACKETVER=6;NEW_006b;__WIN32;LOCALZLIB;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="FALSE"
 				BasicRuntimeChecks="0"
@@ -38,7 +38,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib mysqlclient.lib zdll.lib"
+				AdditionalDependencies="WSOCK32.lib libmysql.lib zdll.lib"
 				OutputFile="../char-server_sql.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
@@ -88,7 +88,7 @@
 				OptimizeForProcessor="3"
 				OptimizeForWindowsApplication="TRUE"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_WIN32;PACKETVER=6;NEW_006b;__WIN32;LOCALZLIB;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				RuntimeLibrary="0"
 				DefaultCharIsUnsigned="TRUE"
 				UsePrecompiledHeader="0"
@@ -100,7 +100,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib mysqlclient.lib zdll.lib"
+				AdditionalDependencies="WSOCK32.lib libmysql.lib zdll.lib"
 				OutputFile="../char-server_sql.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"

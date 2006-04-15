@@ -127,6 +127,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
+				EnableFiberSafeOptimizations="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				RuntimeLibrary="0"

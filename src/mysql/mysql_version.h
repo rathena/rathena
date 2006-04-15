@@ -9,15 +9,15 @@
 #include <custom_conf.h>
 #else
 #define PROTOCOL_VERSION		10
-#define MYSQL_SERVER_VERSION		"5.0.16"
+#define MYSQL_SERVER_VERSION		"5.0.20"
 #define MYSQL_BASE_VERSION		"mysqld-5.0"
-#define MYSQL_SERVER_SUFFIX_DEF	""
+#define MYSQL_SERVER_SUFFIX_DEF	"-community-max-nt"
 #define FRM_VER				6
-#define MYSQL_VERSION_ID		50016
+#define MYSQL_VERSION_ID		50020
 #define MYSQL_PORT			3306
 #define MYSQL_UNIX_ADDR			"/tmp/mysql.sock"
 #define MYSQL_CONFIG_NAME		"my"
-#define MYSQL_COMPILATION_COMMENT	"Official MySQL binary"
+#define MYSQL_COMPILATION_COMMENT	"MySQL Community Edition - Max (GPL)"
 
 /* mysqld compile time options */
 #endif /* _CUSTOMCONFIG_ */

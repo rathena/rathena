@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib mysqlclient.lib pcre.lib"
+				AdditionalDependencies="WSOCK32.lib libmysql.lib zdll.lib pcre.lib"
 				OutputFile="..\map-server_sql.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
@@ -128,6 +128,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
+				EnableFiberSafeOptimizations="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				RuntimeLibrary="0"
@@ -149,7 +150,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib mysqlclient.lib pcre.lib"
+				AdditionalDependencies="WSOCK32.lib libmysql.lib zdll.lib pcre.lib"
 				OutputFile="..\map-server_sql.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"

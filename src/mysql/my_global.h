@@ -43,6 +43,15 @@
 #define HAVE_ERRNO_AS_DEFINE
 #endif /* __CYGWIN__ */
 
+#if defined(__QNXNTO__) && !defined(FD_SETSIZE)
+#define FD_SETSIZE 1024         /* Max number of file descriptor bits in
+                                   fd_set, used when calling 'select'
+                                   Must be defined before including
+                                   "sys/select.h" and "sys/time.h"
+                                 */
+#endif
+
+
 /* to make command line shorter we'll define USE_PRAGMA_INTERFACE here */
 #ifdef USE_PRAGMA_IMPLEMENTATION
 #define USE_PRAGMA_INTERFACE
@@ -453,6 +462,17 @@ typedef unsigned short ushort;
 #define __attribute__(A)
 #endif
 
+/*
+  Wen using the embedded library, users might run into link problems,
+  dupicate declaration of __cxa_pure_virtual, solved by declaring it a
+  weak symbol.
+*/
+#ifdef USE_MYSYS_NEW
+C_MODE_START
+int __cxa_pure_virtual () __attribute__ ((weak));
+C_MODE_END
+#endif
+
 /* From old s-system.h */
 
 /*
@@ -574,11 +594,7 @@ typedef SOCKET_SIZE_TYPE size_socket;
 #define FN_LEN		256	/* Max file name len */
 #define FN_HEADLEN	253	/* Max length of filepart of file name */
 #define FN_EXTLEN	20	/* Max length of extension (part of FN_LEN) */
-#ifdef PATH_MAX
-#define FN_REFLEN       PATH_MAX/* Max length of full path-name */
-#else
 #define FN_REFLEN	512	/* Max length of full path-name */
-#endif
 #define FN_EXTCHAR	'.'
 #define FN_HOMELIB	'~'	/* ~/ is used as abbrev for home dir */
 #define FN_CURLIB	'.'	/* ./ is used as abbrev for current dir */
@@ -658,11 +674,7 @@ typedef SOCKET_SIZE_TYPE size_socket;
 #define SET_STACK_SIZE(X)	/* Not needed on real machines */
 
 #if !defined(HAVE_mit_thread) && !defined(HAVE_STRTOK_R)
-	#ifdef __WIN32
-		#include "../common/strlib.h"
-	#else
-		#define strtok_r(A,B,C) strtok((A),(B))
-	#endif
+#define strtok_r(A,B,C) strtok((A),(B))
 #endif
 
 /* Remove some things that mit_thread break or doesn't support */
@@ -783,13 +795,8 @@ typedef void	*gptr;		/* Generic pointer */
 typedef char	*gptr;		/* Generic pointer */
 #endif
 #ifndef HAVE_INT_8_16_32
-#ifndef WIN32
 typedef signed char int8;       /* Signed integer >= 8  bits */
 typedef short	int16;		/* Signed integer >= 16 bits */
-#else
-typedef          __int8		int8;
-typedef          __int16	int16;
-#endif
 #endif
 #ifndef HAVE_UCHAR
 typedef unsigned char	uchar;	/* Short for unsigned char */
@@ -804,17 +811,9 @@ typedef int		int32;
 typedef unsigned int	uint32; /* Short for unsigned integer >= 32 bits */
 #elif SIZEOF_LONG == 4
 #ifndef HAVE_INT_8_16_32
-#ifndef WIN32
 typedef long		int32;
-#else
-typedef          __int32	int32;
 #endif
-#endif
-#ifndef WIN32
 typedef unsigned long	uint32; /* Short for unsigned integer >= 32 bits */
-#else
-typedef unsigned __int32	uint32;
-#endif
 #else
 #error "Neither int or long is of 4 bytes width"
 #endif
@@ -872,6 +871,7 @@ typedef off_t os_off_t;
 #define SOCKET_EAGAIN	WSAEINPROGRESS
 #define SOCKET_ETIMEDOUT WSAETIMEDOUT
 #define SOCKET_EWOULDBLOCK WSAEWOULDBLOCK
+#define SOCKET_EADDRINUSE WSAEADDRINUSE
 #define SOCKET_ENFILE	ENFILE
 #define SOCKET_EMFILE	EMFILE
 #elif defined(OS2)
@@ -880,6 +880,7 @@ typedef off_t os_off_t;
 #define SOCKET_EAGAIN	SOCEINPROGRESS
 #define SOCKET_ETIMEDOUT SOCKET_EINTR
 #define SOCKET_EWOULDBLOCK SOCEWOULDBLOCK
+#define SOCKET_EADDRINUSE SOCEADDRINUSE
 #define SOCKET_ENFILE	SOCENFILE
 #define SOCKET_EMFILE	SOCEMFILE
 #define closesocket(A)	soclose(A)
@@ -890,6 +891,7 @@ typedef off_t os_off_t;
 #define SOCKET_EAGAIN	EAGAIN
 #define SOCKET_ETIMEDOUT SOCKET_EINTR
 #define SOCKET_EWOULDBLOCK EWOULDBLOCK
+#define SOCKET_EADDRINUSE EADDRINUSE
 #define SOCKET_ENFILE	ENFILE
 #define SOCKET_EMFILE	EMFILE
 #endif
