@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Usnul
 //===== Current Version: ===================================== 
-//= 2.2b
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -15,6 +15,11 @@
 //= 2.1a - added adv classes + abby class support [Lupus]
 //= 2.2 – Spell checked. [Nexon]
 //= 2.3 - Fixed dis $hit! [Poki#3]
+//= 2.4 - Disabled cloth dyeing since it's not implemented
+//	  on official servers and cause your client to crash
+//	  [Playtester]
+//============================================================
+//Note: To enable it, replace L_Busy with L_Dye
 //============================================================ 
 
 
@@ -24,7 +29,7 @@ prt_in.gat,284,168,2	script	Dyer Ginedin Rephere	55,{
 	mes "11... 12... Mmm... good. I think I'll be able to finish before tonight’s party. Oh! I didn't notice that you were here. Anyway how may I assist you?";
 M_Menu:
 	next;
-	menu "-Talk",L_Talk,"-Dye Clothing",L_Dye,"-Price list",L_PriceList,"-Cancel",L_End;
+	menu "-Talk",L_Talk,"-Dye Clothing",L_Busy,"-Price list",L_PriceList,"-Cancel",L_End;
 	
 L_Talk:
 	mes "[Dyer Ginedin Rephere]";
@@ -357,6 +362,10 @@ sL_Zeny:
 sL_NoDye:
 	mes "For me to dye your clothes, I'll need the appropriate Dyestuff. Please check my price list for the information.";
 	next;
+
+L_Busy:
+	mes "Sorry, I'm too busy with other jobs to dye your clothes.";
+	goto M_Menu;
 
 L_PriceList:
 	mes "[Dyer Ginedin Rephere]";
