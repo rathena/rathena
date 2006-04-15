@@ -57,6 +57,7 @@ geffen_in.gat,110,172,2	script	Christopher#1::Chris	63,{
 
 		sM_Anvil:
 			if(Zeny < 30000) goto L_NoZeny;
+			if(checkweight(986,1) == 0 ) goto L_OverWeight;
 			set Zeny, Zeny - 30000;
 			getitem 986,1;
 			mes "[Christopher Guillenrow]";
@@ -65,6 +66,7 @@ geffen_in.gat,110,172,2	script	Christopher#1::Chris	63,{
 			goto L_Thanks;
 		sM_OriAnvil:
 			if(Zeny < 120000) goto L_NoZeny;
+			if(checkweight(987,1) == 0 ) goto L_OverWeight;
 			set Zeny, Zeny - 120000;
 			getitem 987,1;
 			mes "[Christopher Guillenrow]";
@@ -73,6 +75,7 @@ geffen_in.gat,110,172,2	script	Christopher#1::Chris	63,{
 			goto L_Thanks;
 		sM_GolAnvil:
 			if(Zeny < 300000) goto L_NoZeny;
+			if(checkweight(988,1) == 0 ) goto L_OverWeight;
 			set Zeny, Zeny - 300000;
 			mes "[Christopher Guillenrow]";
 			mes "This is the best anvil in my workshop! With this ye'll be the best Blasksmith in no time.";
@@ -104,21 +107,25 @@ geffen_in.gat,110,172,2	script	Christopher#1::Chris	63,{
 			if(@input < 1 ) goto sM_Menu1;
 			if(@input > 1000 ) goto sM_Max;
 			if(Zeny < 150 * @input) goto L_NoZeny;
+			if(checkweight(612,@input) == 0 ) goto L_OverWeight;
 			set Zeny, Zeny - (150 * @input);
 			getitem 612, @input;
 			goto L_Thanks;
 		sM_IrHam:
 			if(Zeny < 1000) goto L_NoZeny;
+			if(checkweight(613,1) == 0 ) goto L_OverWeight;
 			set Zeny, Zeny - 1000;
 			getitem 613,1;
 			goto L_Thanks;
 		sM_GldHam:
 			if(Zeny < 3000) goto L_NoZeny;
+			if(checkweight(614,1) == 0 ) goto L_OverWeight;
 			set Zeny, Zeny - 3000;
 			getitem 614,1;
 			goto L_Thanks;
 		sM_OriHam:
 			if(Zeny < 5000) goto L_NoZeny;
+			if(checkweight(615,1) == 0 ) goto L_OverWeight;
 			set Zeny, Zeny - 5000;
 			getitem 615,1;
 			goto L_Thanks;
@@ -149,6 +156,11 @@ geffen_in.gat,110,172,2	script	Christopher#1::Chris	63,{
 		mes "[Christopher Guillenrow]";
 		mes "I don't think I can let ye have this at a lower price. I can't afford ta loose profits because of ye.";
 		emotion 4;
+		close;
+
+	L_OverWeight:
+		mes "[Christopher Guillenrow]";
+		mes "You don't seem to have enough strength to carry this.";
 		close;
 
 	L_Thanks:

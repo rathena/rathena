@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/15
+	* Added weight checks to merchants/refine.txt thanks to Neouni [Playtester]
 	* Fixed names of Lighthalzen mobs in spawn files [Playtester]
 	* Changed Juperos spawns according to info provided by Tharis [Playtester]
 04/14
