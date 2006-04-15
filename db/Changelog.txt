@@ -27,6 +27,7 @@
 
 =========================
 04/15
+	* Fixed Vesper's HP and implemented Monemus properly [Playtester]
 	* Renamed Mastersmith Howard to Whitesmith Howard [Playtester]
 	* Fixed Halo(id 2282) having 10% resistance instead of 15% thanks to KarLaeda [Playtester]
 	* Fixed movement and attack speed of Lighthalzen Mobs thanks to Tharis [Playtester]
