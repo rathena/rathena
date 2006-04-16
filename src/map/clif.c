@@ -1715,7 +1715,7 @@ void send_fake_npc(struct map_session_data *sd, int npcid){
 	WFIFOW(fd,0)=0x78;
 	WFIFOL(fd,2)=npcid;
 	WFIFOW(fd,12)=OPTION_HIDE;
-	WFIFOW(fd,14)=111;
+	WFIFOW(fd,14)=123;
 	WFIFOPOS(fd,46,sd->bl.x,sd->bl.y);
 	WFIFOB(fd,49)=5;
 	WFIFOB(fd,50)=5;
