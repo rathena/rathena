@@ -102,7 +102,7 @@ sF_Make:
 	set @herbnum, 2;
 	if(getarg(1) != 0) set @herbnum, 1;
 	if(countitem(getarg(0)) < @herbnum) goto L_NdHerbs;
-	if((countitem(getarg(1)) < @herbnum) && (getarg(1) != 0)) goto L_NdHerbs;
+	if((getarg(1) != 0) && (countitem(getarg(1)) < @herbnum)) goto L_NdHerbs;
 	if(countitem(713) < 1) goto L_NdBottle;
 	if(Zeny < getarg(2)) goto L_NdZeny;
 

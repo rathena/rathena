@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/16
+	* Fixed merchants/grandpa_pharmacist.txt thanks to KarLaeda [Playtester]
 	* Removed Cube room warps from the quest script [Lupus]
 04/15
 	* Fixed Mobster's OnDead event [Playtester]
