@@ -6,6 +6,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/16
 	* Temperory fixed compiler warnings/errors. Please compile before commiting.
 	  [Lance]
+	* Added pcre3.dll, zlib1.dll and libmysql.dll. DO NOT DELETE THEM.
+	  (Required by systems without these DLLs preinstalled) [Lance]
 
 2006/04/15
 	* Fixed upgrade_svn5902.sql, thanks to Koshiro for pointing it out.
