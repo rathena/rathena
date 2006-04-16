@@ -20,6 +20,7 @@
  * 2003/10/21 ... The data of alpha client was read.
  *	2003/11/10 ... Ready new grf format.
  *	2003/11/11 ... version check fix & bug fix
+ * 2006/04/16 ... fixed crash grfio_find_file when file is not found.
  */
 
 #include <stdio.h>
@@ -456,7 +457,9 @@ static FILELIST *filelist_find(char *fname)
 }
 
 char *grfio_find_file(char *fname){
-	return ((filelist_find(fname)->fnd == NULL)? filelist_find(fname)->fn: filelist_find(fname)->fnd);
+	FILELIST *filelist = filelist_find(fname);
+	if (!filelist) return NULL;
+	return (!filelist->fnd?filelist->fn:filelist->fnd);
 }
 
 /*==========================================
