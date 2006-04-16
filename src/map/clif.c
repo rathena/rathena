@@ -1711,6 +1711,7 @@ int clif_scriptclose(struct map_session_data *sd, int npcid) {
 
 void send_fake_npc(struct map_session_data *sd, int npcid){
 	int fd = sd->fd;
+	memset(WFIFOP(fd,0), 0, packet_len_table[0x78]);
 	WFIFOW(fd,0)=0x78;
 	WFIFOL(fd,2)=npcid;
 	WFIFOW(fd,12)=OPTION_HIDE;
