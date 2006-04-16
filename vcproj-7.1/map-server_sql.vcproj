@@ -38,7 +38,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib mysqlclient.lib pcre.lib zdll.lib"
+				AdditionalDependencies="WSOCK32.lib libmysql.lib pcre.lib zdll.lib"
 				OutputFile="..\map-server_sql.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
@@ -101,7 +101,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib mysqlclient.lib pcre.lib zdll.lib"
+				AdditionalDependencies="WSOCK32.lib libmysql.lib pcre.lib zdll.lib"
 				OutputFile="..\map-server_sql.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"

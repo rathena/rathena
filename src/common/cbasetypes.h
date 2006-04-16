@@ -56,6 +56,7 @@
 //////////////////////////////////////////////////////////////////////////
 // useful typedefs
 //////////////////////////////////////////////////////////////////////////
+#define HAVE_UCHAR
 typedef unsigned char	uchar;
 typedef   signed char	schar;
 typedef   signed short	sshort;
@@ -91,6 +92,9 @@ typedef int*			pint;
 //////////////////////////////
 #ifdef WIN32
 //////////////////////////////
+#define SIZEOF_LONG 4
+#define SIZEOF_INT 4
+#define HAVE_INT_8_16_32
 typedef          __int8		int8;
 typedef          __int16	int16;
 typedef          __int32	int32;

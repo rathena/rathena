@@ -12,6 +12,7 @@ char* jstrescapecpy (char* pt,char* spt);
 int jmemescapecpy (char* pt,char* spt, int size);
 
 #ifdef __WIN32
+#define HAVE_STRTOK_R
 #define strtok_r(s,delim,save_ptr) _strtok_r((s),(delim),(save_ptr))
 char *_strtok_r(char *s1, const char *s2, char **lasts);
 #endif

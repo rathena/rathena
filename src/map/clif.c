@@ -3800,7 +3800,7 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
  */
 int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *unit)
 {
-	int fd, unit_id;
+	int fd/*, unit_id*/; // Unused? [Lance]
 	struct block_list *bl;
 
 	fd=sd->fd;
@@ -3813,7 +3813,7 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 		WFIFOL(fd, 2)=unit->bl.id;
 		WFIFOL(fd, 6)=unit->group->src_id;
 		WFIFOW(fd,10)=unit->bl.x;
-		WFIFOW(fd,12)=unit_id;
+		WFIFOW(fd,12)=unit->bl.y; // might be typo? [Lance]
 		WFIFOB(fd,14)=unit->group->unit_id;
 		WFIFOB(fd,15)=1;
 		WFIFOB(fd,16)=1;
