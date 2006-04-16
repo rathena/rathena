@@ -16,6 +16,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  [Lance]
 	* Added warnings to npc_scriptcont for easier debugging. [Lance]
 	* Missing lines in npc_parse_script! [Lance]
+	* Sending fake npc for inputs and menus for NPC without map coordinates. [Lance]
 
 2006/04/15
 	* Fixed upgrade_svn5902.sql, thanks to Koshiro for pointing it out.

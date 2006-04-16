@@ -38,7 +38,7 @@ int npc_parse_mob(char *w1,char *w2,char *w3,char *w4);
 int npc_parse_mob2 (struct spawn_data*, int index); // [Wizputer]
 int npc_parse_warp(char *w1,char *w2,char *w3,char *w4);
 int npc_globalmessage(const char *name,char *mes);
-int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsigned char *eventname); //[Lance]
+int npc_event_sub(struct map_session_data *, struct event_data *, const unsigned char *); //[Lance]
 
 int npc_enable(const char *name,int flag);
 int npc_changename(const char *name, const char *newname, short look); // [Lance]
