@@ -320,7 +320,10 @@ int npc_event_doall_sub(DBKey key,void *data,va_list ap)
 	rid=va_arg(ap, int);
 
 	if( (p=strchr(p,':')) && p && strcmpi(name,p)==0 ){
-		run_script(ev->nd->u.scr.script,ev->pos,rid,ev->nd->bl.id);
+		if(rid)
+			npc_event_sub(((struct map_session_data *)map_id2bl(rid)),ev,key.str);
+		else
+			run_script(ev->nd->u.scr.script,ev->pos,rid,ev->nd->bl.id);
 		(*c)++;
 	}
 
@@ -794,6 +797,35 @@ int npc_settimerevent_tick(struct npc_data *nd,int newtimer)
 	return 0;
 }
 
+int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsigned char *eventname){
+
+	if ( sd->npc_id!=0) {
+//		if (battle_config.error_log)
+//			printf("npc_event: npc_id != 0\n");
+		int i;
+		for(i=0;i<MAX_EVENTQUEUE;i++)
+			if (!sd->eventqueue[i][0])
+				break;
+		if (i==MAX_EVENTQUEUE) {
+			if (battle_config.error_log)
+				ShowWarning("npc_event: event queue is full !\n");
+		}else{
+//			if (battle_config.etc_log)
+//				printf("npc_event: enqueue\n");
+			memcpy(sd->eventqueue[i],eventname,50);
+		}
+		return 1;
+	}
+	if (ev->nd->sc.option&OPTION_INVISIBLE) {	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
+		npc_event_dequeue(sd);
+		return 0;
+	}
+
+	sd->npc_id=ev->nd->bl.id;
+	sd->npc_pos=run_script(ev->nd->u.scr.script,ev->pos,sd->bl.id,ev->nd->bl.id);
+	return 0;
+}
+
 /*==========================================
  * ƒCƒxƒ“ƒgŒ^‚ÌNPCˆ—
  *------------------------------------------
@@ -841,32 +873,8 @@ int npc_event (struct map_session_data *sd, const unsigned char *eventname, int 
 				return 1;
 		}
 	}
-
-	if ( sd->npc_id!=0) {
-//		if (battle_config.error_log)
-//			printf("npc_event: npc_id != 0\n");
-		int i;
-		for(i=0;i<MAX_EVENTQUEUE;i++)
-			if (!sd->eventqueue[i][0])
-				break;
-		if (i==MAX_EVENTQUEUE) {
-			if (battle_config.error_log)
-				ShowWarning("npc_event: event queue is full !\n");
-		}else{
-//			if (battle_config.etc_log)
-//				printf("npc_event: enqueue\n");
-			memcpy(sd->eventqueue[i],eventname,50);
-		}
-		return 1;
-	}
-	if (nd->sc.option&OPTION_INVISIBLE) {	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
-		npc_event_dequeue(sd);
-		return 0;
-	}
-
-	sd->npc_id=nd->bl.id;
-	sd->npc_pos=run_script(nd->u.scr.script,ev->pos,sd->bl.id,nd->bl.id);
-	return 0;
+	
+	return npc_event_sub(sd,ev,eventname);
 }
 
 
@@ -1062,10 +1070,14 @@ int npc_scriptcont(struct map_session_data *sd,int id)
 
 	nullpo_retr(1, sd);
 
-	if (id!=sd->npc_id)
+	if (id!=sd->npc_id){
+		ShowWarning("npc_scriptcont: sd->npc_id is not id.\n");
 		return 1;
-	if (npc_checknear(sd,id))
+	}
+	if (npc_checknear(sd,id)){
+		ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
 		return 1;
+	}
 
 	nd=(struct npc_data *)map_id2bl(id);
 

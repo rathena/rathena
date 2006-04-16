@@ -5,13 +5,16 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/16
 	* Fixed wrong check of Deluge + Suiton which broke the water-requirement
-	  check for skills. [Skotlex\
+	  check for skills. [Skotlex]
 	* Cleared ud->target on remove-map, it should fix the phantom mob sprite
 	  issue. [Skotlex]
 	* Temperory fixed compiler warnings/errors. Please compile before commiting.
 	  [Lance]
 	* Added pcre3.dll, zlib1.dll and libmysql.dll. DO NOT DELETE THEM.
 	  (Required by systems without these DLLs preinstalled) [Lance]
+	* Experimental npc_event_doall_sub with queue and npc_id allocation when needed.
+	  [Lance]
+	* Added warnings to npc_scriptcont for easier debugging. [Lance]
 
 2006/04/15
 	* Fixed upgrade_svn5902.sql, thanks to Koshiro for pointing it out.
