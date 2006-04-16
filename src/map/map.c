@@ -3257,8 +3257,6 @@ int map_config_read(char *cfgName) {
 			} else if (strcmpi(w1, "map_port") == 0) {
 				clif_setport(atoi(w2));
 				map_port = (atoi(w2));
-			//} else if (strcmpi(w1, "water_height") == 0) {
-			//	map_readwater(w2);
 			} else if (strcmpi(w1, "map") == 0) {
 				map_addmap(w2);
 			} else if (strcmpi(w1, "delmap") == 0) {

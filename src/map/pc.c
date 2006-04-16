@@ -3835,7 +3835,7 @@ int pc_follow_timer(int tid,unsigned int tick,int id,int data)
 			pc_setpos(sd, tsd->mapindex, tsd->bl.x, tsd->bl.y, 3);
 	}
 	sd->followtimer = add_timer(
-		tick + sd->aspd + rand() % 1000,	// increase time a bit to loosen up map's load
+		tick + 1000,	// increase time a bit to loosen up map's load
 		pc_follow_timer, sd->bl.id, 0);
 	return 0;
 }

@@ -2773,9 +2773,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
 			//Initiate 10% of your damage becomes fire element.
-			clif_skill_nodamage (src,bl,skillid,skilllv,
-				sc_start4(src,SC_WATK_ELEMENT,100,
-					3,20,0,0,skill_get_time2(skillid, skilllv)));
+			clif_skill_nodamage (src,bl,skillid,skilllv,1);
+			sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
 			if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
 		}
 		break;
@@ -3684,8 +3683,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
  //Initiate 10% of your damage becomes fire element.
-		clif_skill_nodamage (src,src,skillid,skilllv,
-			sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv)));
+		clif_skill_nodamage (src,src,skillid,skilllv,1);
+		sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
 		if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
 		break;
 	case LK_BERSERK:		/* Éo?ÉT?ÉN */
