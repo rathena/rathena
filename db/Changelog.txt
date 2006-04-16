@@ -27,6 +27,7 @@
 
 =========================
 04/16
+	* Adjusted more delays/speed of Lighthalzen mobs thanks to Tharis [Playtester]
 	* Fixed Job_Equip values for all one-handed-swords thanks to Haplo [Playtester]
 	* Fixed wrong effect 4175,Poisonous_Toad_Card [Lupus]
 04/15
