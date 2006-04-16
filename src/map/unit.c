@@ -1446,9 +1446,13 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 
 	map_freeblock_lock();
 
-	unit_stop_walking(bl,0);			// •às’†’f
-	unit_stop_attack(bl);				// UŒ‚’†’f
-	unit_skillcastcancel(bl,0);			// ‰r¥’†’f
+	ud->target = 0; //Unlock walk/attack target.
+	if (ud->walktimer != -1)
+		unit_stop_walking(bl,0);
+	if (ud->attacktimer != -1)
+		unit_stop_attack(bl);
+	if (ud->skilltimer != -1)
+		unit_skillcastcancel(bl,0);
 	clif_clearchar_area(bl,clrtype);
 	
 	if (clrtype == 1) //Death. Remove all status changes.
