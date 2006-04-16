@@ -3906,8 +3906,8 @@ int do_init(int argc, char *argv[]) {
 	
 	if (connection_ping_interval) {
 		add_timer_func_list(map_sql_ping, "map_sql_ping");
-		add_timer_interval(gettick()+connection_ping_interval*60*1000,
-				map_sql_ping, 0, 0, connection_ping_interval*60*1000);
+		add_timer_interval(gettick()+connection_ping_interval*60*60*1000,
+				map_sql_ping, 0, 0, connection_ping_interval*60*60*1000);
 	}
 #endif /* not TXT_ONLY */
 

@@ -374,8 +374,8 @@ int inter_init(const char *file)
 
 	if (connection_ping_interval) {
 		add_timer_func_list(inter_sql_ping, "inter_sql_ping");
-		add_timer_interval(gettick()+connection_ping_interval*60*1000,
-				inter_sql_ping, 0, 0, connection_ping_interval*60*1000);
+		add_timer_interval(gettick()+connection_ping_interval*60*60*1000,
+				inter_sql_ping, 0, 0, connection_ping_interval*60*60*1000);
 	}
 	return 0;
 }

@@ -1248,9 +1248,10 @@ int atcommand_rura(
 		return -1;
 	}
 
-	if (map_getcell(m, x, y, CELL_CHKNOPASS))
+	if ((x || y) && map_getcell(m, x, y, CELL_CHKNOPASS)) {
+		clif_displaymessage(fd, msg_table[2]);
 		x = y = 0; //Invalid cell, use random spot.
-
+	}
 	if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 		clif_displaymessage(fd, msg_table[247]);
 		return -1;
@@ -6004,6 +6005,7 @@ int atcommand_nuke(
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same GM level
+			clif_skill_nodamage(&pl_sd->bl, &pl_sd->bl, NPC_SELFDESTRUCTION, -1, 1);
 			skill_castend_damage_id(&pl_sd->bl, &pl_sd->bl, NPC_SELFDESTRUCTION, 99, gettick(), 0);
 			clif_displaymessage(fd, msg_table[109]); // Player has been nuked!
 		} else {

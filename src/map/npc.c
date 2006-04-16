@@ -302,6 +302,7 @@ int npc_event_export(char *lname,void *data,va_list ap)
 	return 0;
 }
 
+int npc_event_sub(struct map_session_data *, struct event_data *, const unsigned char *); //[Lance]
 /*==========================================
  * 全てのNPCのOn*イベント実行
  *------------------------------------------

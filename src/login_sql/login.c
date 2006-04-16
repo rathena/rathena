@@ -407,8 +407,8 @@ int mmo_auth_sqldb_init(void) {
 
 	if (connection_ping_interval) {
 		add_timer_func_list(login_sql_ping, "login_sql_ping");
-		add_timer_interval(gettick()+connection_ping_interval*60*1000,
-				login_sql_ping, 0, 0, connection_ping_interval*60*1000);
+		add_timer_interval(gettick()+connection_ping_interval*60*60*1000,
+				login_sql_ping, 0, 0, connection_ping_interval*60*60*1000);
 	}
 	return 0;
 }

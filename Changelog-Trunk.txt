@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/16
+	* Fixed mysql ping setting being in minutes rather than hours. [Skotlex]
+	* Removed npc_event_sub from npc.h and moved it to npc.c [Skotlex]
+	* Cleaned up #warp to prevent spitting non-walkable tile warnings. [Skotlex]
+	* Changed the meaning of msg_athena 2, it is now "invalid target cell,
+	  randomizing". [Skotlex]
 	* Fixed wrong check of Deluge + Suiton which broke the water-requirement
 	  check for skills. [Skotlex]
 	* Cleared ud->target on remove-map, it should fix the phantom mob sprite

@@ -1143,46 +1143,41 @@ int charcommand_warp(
 		return -1;
 	}
 
-	if (x <= 0)
-		x = rand() % 399 + 1;
-	if (y <= 0)
-		y = rand() % 399 + 1;
 	if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
 		strcat(map_name, ".gat");
 
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can rura+ only lower or same GM level
-			if (x > 0 && x < 400 && y > 0 && y < 400) {
-				m = map_mapname2mapid(map_name);
-				if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-					clif_displaymessage(fd, "You are not authorised to warp someone to this map.");
-					return -1;
-				}
-				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-					clif_displaymessage(fd, "You are not authorised to warp this player from its actual map.");
-					return -1;
-				}
-				if (pc_setpos(pl_sd, map[m].index, x, y, 3) == 0) {
-					clif_displaymessage(pl_sd->fd, msg_table[0]); // Warped.
-					clif_displaymessage(fd, msg_table[15]); // Player warped (message sends to player too).
-				} else {
-					clif_displaymessage(fd, msg_table[1]); // Map not found.
-					return -1;
-				}
-			} else {
-				clif_displaymessage(fd, msg_table[2]); // Coordinates out of range.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
+	if ((pl_sd = map_nick2sd(character)) == NULL) {
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
 	}
-
-	return 0;
+	if (pc_isGM(sd) < pc_isGM(pl_sd)) { // you can rura+ only lower or same GM level
+		clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	m = map_mapname2mapid(map_name);
+	if (m < 0) {
+		clif_displaymessage(fd, msg_table[1]); // Map not found.
+		return -1;
+	}
+	if ((x || y) && map_getcell(m, x, y, CELL_CHKNOREACH)) {
+		clif_displaymessage(fd, msg_table[2]); // Coordinates out of range.
+		x = y = 0;
+	}
+	if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+		clif_displaymessage(fd, "You are not authorised to warp someone to this map.");
+		return -1;
+	}
+	if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+		clif_displaymessage(fd, "You are not authorised to warp this player from its actual map.");
+		return -1;
+	}
+	if (pc_setpos(pl_sd, map[m].index, x, y, 3) == 0) {
+		clif_displaymessage(pl_sd->fd, msg_table[0]); // Warped.
+		clif_displaymessage(fd, msg_table[15]); // Player warped (message sends to player too).
+		return 0;
+	}
+	//No error message specified...?
+	return -1;
 }
 
 /*==========================================
