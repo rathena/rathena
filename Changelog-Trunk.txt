@@ -15,6 +15,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Experimental npc_event_doall_sub with queue and npc_id allocation when needed.
 	  [Lance]
 	* Added warnings to npc_scriptcont for easier debugging. [Lance]
+	* Missing lines in npc_parse_script! [Lance]
 
 2006/04/15
 	* Fixed upgrade_svn5902.sql, thanks to Koshiro for pointing it out.
