@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+04/16
+	* Removed Cube room warps from the quest script [Lupus]
 04/15
 	* Fixed Mobster's OnDead event [Playtester]
 	* Implemented Musashiden's Lighthalzen npcs - Part 2 [Shadow]

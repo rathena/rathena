@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -1211,13 +1211,3 @@ L4_1:
 	warp "lhz_cube.gat",177,13;
 	end;
 }
-
-//--------------------------Warps--------------------------
-
-//Cube room <-> Lighthalzen
-lhz_cube.gat,231,96,0	warp	cube	1,1,lhz_dun02.gat,220,6
-lhz_dun02.gat,224,6,0	warp	cube	1,1,lhz_cube.gat,231,90
-
-//Cube room -> Lighthalzen
-lhz_cube.gat,231,12,0	warp	cube	1,1,lighthalzen.gat,310,302
-lhz_cube.gat,177,96,0	warp	cube	1,1,lighthalzen.gat,310,302
