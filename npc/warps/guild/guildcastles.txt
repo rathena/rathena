@@ -94,14 +94,16 @@ aldeg_cas04.gat,121,168,0	warp	aldg406-1	1,1,aldeg_cas04.gat,25,123
 aldeg_cas04.gat,132,209,0	warp	aldg407	1,1,aldeg_cas04.gat,14,196
 aldeg_cas04.gat,17,196,0	warp	aldg407-1	1,1,aldeg_cas04.gat,132,228
 aldeg_cas04.gat,132,231,4	script	aldg408r	45,1,1,{
-	set @l0,rand(4);
+	set @l0,rand(5);
 	if(@l0==1) goto w2;
 	if(@l0==2) goto w3;
 	if(@l0==3) goto w4;
-	warp "aldeg_cas04.gat",170,100; end;
-w2:	warp "aldeg_cas04.gat",186,88; end;
+	if(@l0==4) goto w5;
+	warp "aldeg_cas04.gat",152,210; end;
+w2:	warp "aldeg_cas04.gat",111,210; end;
 w3:	warp "aldeg_cas04.gat",129,212; end;
-w4:	warp "aldeg_cas04.gat",132,209; end;
+w4:	warp "aldeg_cas04.gat",129,212; end;
+w5:	warp "aldeg_cas04.gat",14,192; end;
 }
 aldeg_cas05.gat,194,71,0	warp	aldg501	1,1,aldeg_cas05.gat,129,194
 aldeg_cas05.gat,125,194,0	warp	aldg501-1	1,1,aldeg_cas05.gat,199,70
