@@ -8223,7 +8223,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	case ST_WATER:
 		//?…?ê”»’è
 		//(!map[sd->bl.m].flag.rain) && //they have removed RAIN effect. [Lupus]
-		if ( (sd->sc.data[SC_DELUGE].timer == -1 || sd->sc.data[SC_SUITON].timer == -1) &&
+		if (sd->sc.data[SC_DELUGE].timer == -1 && sd->sc.data[SC_SUITON].timer == -1 &&
 			(!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKWATER)))
 		{
 			clif_skill_fail(sd,skill,0,0);
