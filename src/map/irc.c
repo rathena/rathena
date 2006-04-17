@@ -210,6 +210,10 @@ void irc_parse_sub(int fd, char *incoming_string)
 	
 	char cmd1[256];
 	char cmd2[256];
+	char cmdname[256];
+	char cmdargs[256];
+
+	int users=0;
 	
 	memset(source,'\0',256);
 	memset(command,'\0',256);
@@ -219,6 +223,8 @@ void irc_parse_sub(int fd, char *incoming_string)
 
 	memset(cmd1,'\0',256);
 	memset(cmd2,'\0',256);
+	memset(cmdname,'\0',256);
+	memset(cmdargs,'\0',256);
 
 	sscanf(incoming_string, ":%255s %255s %255s :%4095[^\r\n]", source, command, target, message);
 	if (source != NULL) {
@@ -263,15 +269,22 @@ void irc_parse_sub(int fd, char *incoming_string)
 		else if((strcmpi(target,irc_channel)==0)||(strcmpi(target,irc_channel+1)==0)) {
 
 			// Broadcast [Zido] (Work in Progress)
-			if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"@kami %255[^\r\n]",cmd1)>0)&&(target[0]=='#')) {
-				if(get_access(source_nick)<ACCESS_OP)
-					sprintf(send_string,"NOTICE %s :Access Denied",source_nick);
-				else {
-					sprintf(send_string,"%s: %s",source_nick,cmd1);
-					intif_GMmessage(send_string,strlen(send_string)+1,0);
-					sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
+			if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"@%s[^ ] %255[^\r\n]",cmdname,cmdargs)>0)&&(target[0]=='#')) {
+				if(strcmpi(cmdname,"kami")==0) {
+					if(get_access(source_nick)<ACCESS_OP)
+						sprintf(send_string,"NOTICE %s :Access Denied",source_nick);
+					else {
+						sscanf(cmdargs,"%255[^\r\n]",cmd1);
+						sprintf(send_string,"%s: %s",source_nick,cmd1);
+						intif_GMmessage(send_string,strlen(send_string)+1,0);
+						sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
+					}
+					irc_send(send_string);
+				} else if(strcmpi(cmdname,"users")==0) {
+					map_getallusers(&users);
+					sprintf(send_string,"PRIVMSG %s :Users Online: %d",irc_channel,users);
+					irc_send(send_string);
 				}
-				irc_send(send_string);
 			}
 
 			// Refresh Names [Zido]
