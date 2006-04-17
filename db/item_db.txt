@@ -458,9 +458,9 @@
 1110,Rapier,Rapier,4,10000,,500,70,,1,2,0x000654E3,7,2,2,2,14,1,2,{}
 1111,Rapier_,Rapier,4,10000,,500,70,,1,3,0x000654E3,7,2,2,2,14,1,2,{}
 1112,Rapier__,Rapier,4,10000,,500,70,,1,0,0x000654E3,7,2,2,2,14,1,2,{}
-1113,Scimiter,Scimiter,4,17000,,700,85,,1,2,0x000654E3,7,2,2,2,14,1,2,{}
-1114,Scimiter_,Scimiter,4,17000,,700,85,,1,3,0x000654E3,7,2,2,2,14,1,2,{}
-1115,Scimiter__,Scimiter,4,17000,,700,85,,1,0,0x000654E3,7,2,2,2,14,1,2,{}
+1113,Scimitar,Scimitar,4,17000,,700,85,,1,2,0x000654E3,7,2,2,2,14,1,2,{}
+1114,Scimitar_,Scimitar,4,17000,,700,85,,1,3,0x000654E3,7,2,2,2,14,1,2,{}
+1115,Scimitar__,Scimitar,4,17000,,700,85,,1,0,0x000654E3,7,2,2,2,14,1,2,{}
 1116,Katana,Katana,4,2000,,1000,60,,1,3,0x00004082,7,2,34,1,4,1,3,{}
 1117,Katana_,Katana,4,2000,,1000,60,,1,4,0x00004082,7,2,34,1,4,1,3,{}
 1118,Katana__,Katana,4,2000,,1000,60,,1,0,0x00004082,7,2,34,1,4,1,3,{}
@@ -501,9 +501,9 @@
 1154,Bastard_Sword,Bastard Sword,4,22500,,1600,115,,1,2,0x00004082,7,2,34,2,18,1,3,{}
 1155,Bastard_Sword_,Bastard Sword,4,22500,,1600,115,,1,3,0x00004082,7,2,34,2,18,1,3,{}
 1156,Bastard_Sword__,Bastard Sword,4,22500,,1600,115,,1,0,0x00004082,7,2,34,2,18,1,3,{}
-1157,Two-handed_Sword,Two-handed Sword,4,60000,,2200,160,,1,1,0x00004082,7,2,34,3,33,1,3,{}
-1158,Two-handed_Sword_,Two-handed Sword,4,60000,,2200,160,,1,2,0x00004082,7,2,34,3,33,1,3,{}
-1159,Two-handed_Sword__,Two-handed Sword,4,60000,,2200,160,,1,0,0x00004082,7,2,34,3,33,1,3,{}
+1157,Two-Handed_Sword,Two-Handed Sword,4,60000,,2200,160,,1,1,0x00004082,7,2,34,3,33,1,3,{}
+1158,Two-Handed_Sword_,Two-Handed Sword,4,60000,,2200,160,,1,2,0x00004082,7,2,34,3,33,1,3,{}
+1159,Two-Handed_Sword__,Two-Handed Sword,4,60000,,2200,160,,1,0,0x00004082,7,2,34,3,33,1,3,{}
 1160,Broad_Sword,Broad Sword,4,65000,,2000,140,,1,1,0x00004082,7,2,34,3,33,1,3,{ bonus bDef,5; }
 1161,Balmung,Balmung,4,,10,1000,250,,2,0,0xFFFFFFFF,7,2,2,4,48,1,1,{ bonus bInt,20; bonus bLuk,20; }
 1162,Broad_Sword_,Broad Sword,4,65000,,2000,140,,1,2,0x00004082,7,2,34,3,33,1,3,{ bonus bDef,5; }
@@ -601,9 +601,9 @@
 1357,Buster,Buster,4,34000,,2200,155,,1,1,0x000444A2,7,2,34,3,30,1,7,{}
 1358,Buster_,Buster,4,34000,,2200,155,,1,2,0x000444A2,7,2,34,3,30,1,7,{}
 1359,Buster__,Buster,4,34000,,2200,155,,1,0,0x000444A2,7,2,34,3,30,1,7,{}
-1360,Two-handed_Axe,Two-handed Axe,4,55000,,2500,185,,1,1,0x000444A2,7,2,34,3,30,1,7,{}
-1361,Two-handed_Axe_,Two-handed Axe,4,55000,,2500,185,,1,2,0x000444A2,7,2,34,3,30,1,7,{}
-1362,Two-handed_Axe__,Two-handed Axe,4,55000,,2500,185,,1,0,0x000444A2,7,2,34,3,30,1,7,{}
+1360,Two-Handed_Axe,Two-Handed Axe,4,55000,,2500,185,,1,1,0x000444A2,7,2,34,3,30,1,7,{}
+1361,Two-Handed_Axe_,Two-Handed Axe,4,55000,,2500,185,,1,2,0x000444A2,7,2,34,3,30,1,7,{}
+1362,Two-Handed_Axe__,Two-Handed Axe,4,55000,,2500,185,,1,0,0x000444A2,7,2,34,3,30,1,7,{}
 1363,Bloody_Axe,Bloody Axe,4,,10,4000,170,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bStr,10; bonus bSpeedRate,25; }
 1364,Great_Axe,Great Axe,4,,10,1800,187,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus2 bAddSkillBlow,42,5; bonus2 bAddEff,Eff_Stan,1500; }
 1365,Sabbath,Sabbath,4,,10,2300,120,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus2 bWeaponComaRace,RC_Demon,50; bonus bAtkEle,Ele_Dark; bonus2 bCriticalAddRace,RC_Undead,50; }
@@ -2342,7 +2342,7 @@
 12114,Flame_Element_Converter,Flame Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FIREWEAPON,180000,1; }
 12115,Frost_Element_Converter,Frost Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WATERWEAPON,180000,1; }
 12116,Seismic_Element_Converter,Seismic Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EARTHWEAPON,180000,1; }
-12117,Lighting_Element_Converter,Lighting Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WINDWEAPON,180000,1; }
+12117,Lightning_Element_Converter,Lightning Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WINDWEAPON,180000,1; }
 // Elemental Resistance Potions
 12118,Resist_Fire_Potion,Resist Fire Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Fire,20,Ele_Water,-15; }
 12119,Resist_Cold_Potion,Resist Cold Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Water,20,Ele_Wind,-15; }
