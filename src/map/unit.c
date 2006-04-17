@@ -503,10 +503,6 @@ int unit_stop_walking(struct block_list *bl,int type)
 	if(!ud || ud->walktimer == -1)
 		return 0;
 
-	sc = status_get_sc(bl);
-	if (sc && sc->count && sc->data[SC_RUN].timer != -1)
-		status_change_end(bl, SC_RUN, -1);
-	
 //	if(md) { md->state.skillstate = MSS_IDLE; }
 	if(type&0x01) // 位置補正送信が必要
 		clif_fixpos(bl);
@@ -531,6 +527,10 @@ int unit_stop_walking(struct block_list *bl,int type)
 		if(type&~0xff)
 			ud->canmove_tick = gettick() + (type>>8);
 	}
+	sc = status_get_sc(bl);
+	if (sc && sc->count && sc->data[SC_RUN].timer != -1)
+		status_change_end(bl, SC_RUN, -1);
+
 	return 1;
 }
 
@@ -815,6 +815,10 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 			sc->data[SC_COMBO].val1 == CH_CHAINCRUSH))
 			casttime = 0;
 		temp = 1;
+		break;
+	case TK_RUN:
+		if (sc && sc->data[SC_RUN].timer != -1)
+			casttime = 0;
 		break;
 	case SA_MAGICROD:
 	case SA_SPELLBREAKER:

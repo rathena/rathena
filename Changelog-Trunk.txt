@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/17
+	* Fixed TK_RUN having a cast-bar when attempting to stop-running and
+	  generating timer_delete errors when halting as well. [Skotlex]
 	* Clearing the dummy npc after fooling the client. [Lance]
 	* Updated DLLS. Please DO NOT update the libs from now on 
 	  (except if mySQL has newer builds which are not compatible 

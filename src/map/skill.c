@@ -5747,7 +5747,8 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv,1))		/* 使用条件チェック */
 			break;
 			
-		unit_stop_walking(src,0);
+		if (ud->walktimer != -1 && ud->skillid != TK_RUN)
+			unit_stop_walking(src,0);
 		
 		if (ud->skillid == SA_MAGICROD)
 			ud->canact_tick = tick;
