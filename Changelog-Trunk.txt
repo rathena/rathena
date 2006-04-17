@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/17
 	* Clearing the dummy npc after fooling the client. [Lance]
+	* Updated DLLS. Please DO NOT update the libs from now on 
+	  (except if mySQL has newer builds which are not compatible 
+	   with client DLL). [Lance]
 
 2006/04/16
 	* Fixed the first call to the walk timers having the tick interval halved,
