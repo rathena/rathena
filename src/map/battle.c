@@ -3945,7 +3945,7 @@ void battle_set_defaults() {
 	battle_config.pc_damage_delay_rate=100;
 	battle_config.defnotenemy=0;
 	battle_config.vs_traps_bctall=BL_PC;
-	battle_config.clear_unit_ondeath=1;
+	battle_config.clear_unit_ondeath=BL_ALL;
 	battle_config.random_monster_checklv=1;
 	battle_config.attr_recover=1;
 	battle_config.flooritem_lifetime=LIFETIME_FLOORITEM*1000;

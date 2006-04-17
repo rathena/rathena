@@ -1695,8 +1695,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	nullpo_retr(0, dsrc); //dsrc is the actual originator of the damage, can be the same as src, or a skill casted by src.
 	nullpo_retr(0, bl); //Target to be attacked.
 
-//	if(src->prev == NULL || dsrc->prev == NULL || bl->prev == NULL)
-//		return 0;
 	if (src != dsrc) {
 		//When caster is not the src of attack, this is a ground skill, and as such, do the relevant target checking. [Skotlex]
 		if (!status_check_skilluse(battle_config.skill_caster_check?src:NULL, bl, skillid, 2))
@@ -1707,17 +1705,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			return 0;
 	}
 	
-
-	//uncomment the following to do a check between caster and target. [Skotlex]
-	//eg: if you want storm gust to do no damage if the caster runs to another map after invoking the skill.
-//	if(src->m != bl->m) 
-//		return 0;
-
-	//Uncomment the following to disable trap-ground skills from hitting when the caster is dead [Skotlex]
-	//eg: You cast meteor and then are killed, if you uncomment the following the meteors that fall afterwards cause no damage.
-//	if(src != dsrc && status_isdead(src))
-//		return 0;
-
 	if (dsrc->type == BL_PC)
 		sd = (struct map_session_data *)dsrc;
 	if (bl->type == BL_PC)
@@ -3923,26 +3910,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case MO_ABSORBSPIRITS:	// ?’D
 		i = 0;
-		if (dstsd && dstsd->spiritball > 0)
-		{
-			if (((sd && sd == dstsd) || map_flag_vs(src->m)) && ((dstsd->class_&MAPID_BASEMASK)!=MAPID_GUNSLINGER))
-			{	// split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
-				i = dstsd->spiritball * 7;
-				pc_delspiritball(dstsd,dstsd->spiritball,0);
-			} else if (dstmd && !(status_get_mode(bl)&MD_BOSS) && rand() % 100 < 20)
-			{	// check if target is a monster and not a Boss, for the 20% chance to absorb 2 SP per monster's level [Reddozen]
-				i = 2 * dstmd->db->lv;
-				mob_target(dstmd,src,0);
-			}
-			if (sd){
-				if (i > 0x7FFF)
-					i = 0x7FFF;
-				if (sd->status.sp + i > sd->status.max_sp)
-					i = sd->status.max_sp - sd->status.sp;
-				if (i) {
-					sd->status.sp += i;
-					clif_heal(sd->fd,SP_SP,i);
-				}
+		if (dstsd && dstsd->spiritball && (sd == dstsd || map_flag_vs(src->m)) && (dstsd->class_&MAPID_BASEMASK)!=MAPID_GUNSLINGER)
+		{	// split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
+			i = dstsd->spiritball * 7;
+			pc_delspiritball(dstsd,dstsd->spiritball,0);
+		} else if (dstmd && !(status_get_mode(bl)&MD_BOSS) && rand() % 100 < 20)
+		{	// check if target is a monster and not a Boss, for the 20% chance to absorb 2 SP per monster's level [Reddozen]
+			i = 2 * dstmd->db->lv;
+			mob_target(dstmd,src,0);
+		}
+		if (sd){
+			if (i > 0x7FFF)
+				i = 0x7FFF;
+			if (sd->status.sp + i > sd->status.max_sp)
+				i = sd->status.max_sp - sd->status.sp;
+			if (i) {
+				sd->status.sp += i;
+				clif_heal(sd->fd,SP_SP,i);
 			}
 		}
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);

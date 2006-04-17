@@ -3081,7 +3081,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 			unit_remove_map(&sd->pd->bl, clrtype);
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
 	}
-		
+	
 	sd->mapindex =  mapindex;
 	sd->bl.m = m;
 	sd->bl.x = sd->ud.to_x = x;

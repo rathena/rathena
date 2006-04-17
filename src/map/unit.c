@@ -1526,7 +1526,8 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			status_change_end(bl, SC_GOSPEL, -1);
 	}
 
-	if (battle_config.clear_unit_ondeath || clrtype != 1) //Clrtype 1 = died.
+	if (clrtype == 1 && battle_config.clear_unit_ondeath && //Clrtype 1 = died.
+		battle_config.clear_unit_ondeath&bl->type)
 		skill_clear_unitgroup(bl);			// スキルユニットグループの削除
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,gettick(),4);
@@ -1639,7 +1640,7 @@ int unit_free(struct block_list *bl) {
 	map_freeblock_lock();
 	if( bl->prev )	//Players are supposed to logout with a "warp" effect.
 		unit_remove_map(bl, bl->type==BL_PC?3:0);
-
+	
 	if( bl->type == BL_PC ) {
 		struct map_session_data *sd = (struct map_session_data*)bl;
 		if(status_isdead(bl))
@@ -1751,6 +1752,8 @@ int unit_free(struct block_list *bl) {
 		if(mob_is_clone(md->class_))
 			mob_clone_delete(md->class_);
 	}
+
+	skill_clear_unitgroup(bl);
 	status_change_clear(bl,1);
 	if (bl->type != BL_PC)
   	{	//Players are handled by map_quit

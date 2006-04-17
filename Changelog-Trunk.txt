@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/17
+	* skill_clear_unitgroup is now invoked in unit_remove_map only on death if
+	  the applicable battle setting is set. [Skotlex]
+	* Changed setting clear_unit_ondeath to a type 4 (bl-based) which defaults
+	  to BL_ALL. [Skotlex]
+	* Fixed Absorb spirit sphere not working on mobs, thanks to Vividd.
+	  [Skotlex]
+	* Cleared the ud->target on pc_stop_attack to prevent attack resuming an
+	  other such oddities. [Skotlex]
 	* I seem to have broken @kami with my last commit, fixed. [Zido]
 	* Added @users to the IRC Bot, outputs the # of users online. [Zido]
 	* The baby check when wearing a tuxedo/dress now works [Zido]
