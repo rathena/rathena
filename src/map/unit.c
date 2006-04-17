@@ -85,8 +85,8 @@ int unit_walktoxy_sub(struct block_list *bl)
 		i = status_get_speed(bl)*14/10;
 	else
 		i = status_get_speed(bl);
-	if( i > 0) //First time data is sent as 0 to always enable moving one tile when hit.
-		ud->walktimer = add_timer(gettick()+i,unit_walktoxy_timer,bl->id,0);
+	if( i > 0)
+		ud->walktimer = add_timer(gettick()+i,unit_walktoxy_timer,bl->id,i);
 	return 1;
 }
 
@@ -153,6 +153,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	x += dx;
 	y += dy;
 	map_moveblock(bl, x, y, tick);
+	ud->walk_count++; //walked cell counter, to be used for walk-triggered skills. [Skotlex]
 
 	ud->walktimer = 1;
 	map_foreachinmovearea(clif_insight,bl->m,
@@ -182,7 +183,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		if (
 			(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
 			sd->sc.data[SC_MIRACLE].timer==-1 &&
-			ud->walkpath.path_pos && ud->walkpath.path_pos%WALK_SKILL_INTERVAL == 0 &&
+			!(ud->walk_count%WALK_SKILL_INTERVAL) &&
 			rand()%10000 < battle_config.sg_miracle_skill_ratio
 		) {	//SG_MIRACLE [Komurka]
 			clif_displaymessage(sd->fd,"[Miracle of the Sun, Moon and Stars]");
@@ -191,7 +192,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	} else if (md) {
 		if (ud->target && ud->state.attack_continue) {
 			if(md->min_chase > md->db->range2) md->min_chase--;
-			if(ud->walkpath.path_pos && ud->walkpath.path_pos%WALK_SKILL_INTERVAL == 0 &&
+			if(!(ud->walk_count%WALK_SKILL_INTERVAL) &&
 				mobskill_use(md, tick, -1))
 				return 0;
 		}
@@ -210,9 +211,11 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 
 	if(i > 0)
 		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
-	else if(sd && sd->sc.count && sd->sc.data[SC_RUN].timer!=-1) //Keep trying to run.
-		pc_run(sd, sd->sc.data[SC_RUN].val1, sd->sc.data[SC_RUN].val2);
-	else if (ud->target) {
+	else if(ud->state.running) {
+		//Keep trying to run.
+		if (!unit_run(bl))
+			ud->state.running = 0;
+	} else if (ud->target) {
 		//Update target trajectory.
 		struct block_list *tbl = map_id2bl(ud->target);
 		if (!tbl) {	//Cancel chase.
@@ -327,6 +330,41 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 		return 0;
 	
 	return unit_walktoxy_sub(bl);
+}
+
+int unit_run(struct block_list *bl)
+{
+	struct status_change *sc = status_get_sc(bl);
+	int i,to_x,to_y,dir_x,dir_y;
+
+	if (!sc || !sc->count || sc->data[SC_RUN].timer == -1)
+		return 0;
+	
+	if (!unit_can_move(bl)) {
+		if(sc->data[SC_RUN].timer!=-1)
+			status_change_end(bl,SC_RUN,-1);
+		return 0;
+	}
+	
+	to_x = bl->x;
+	to_y = bl->y;
+	dir_x = dirx[sc->data[SC_RUN].val2];
+	dir_y = diry[sc->data[SC_RUN].val2];
+
+	for(i=0;i<AREA_SIZE;i++)
+	{
+		if(!map_getcell(bl->m,to_x+dir_x,to_y+dir_y,CELL_CHKPASS))
+			break;
+		to_x += dir_x;
+		to_y += dir_y;
+	}
+
+	if(to_x == bl->x && to_y == bl->y) {
+		status_change_end(bl,SC_RUN,-1);
+		return 0;
+	}
+	unit_walktoxy(bl, to_x, to_y, 1);
+	return 1;
 }
 
 //Instant warp function.
@@ -495,42 +533,42 @@ int unit_warp(struct block_list *bl,int m,short x,short y,int type)
  */
 int unit_stop_walking(struct block_list *bl,int type)
 {
-	struct unit_data        *ud;
-	struct status_change		*sc;
+	struct unit_data *ud;
+	struct TimerData *data;
+	unsigned int tick;
 	nullpo_retr(0, bl);
 
 	ud = unit_bl2ud(bl);
 	if(!ud || ud->walktimer == -1)
 		return 0;
-
-//	if(md) { md->state.skillstate = MSS_IDLE; }
-	if(type&0x01) // 位置補正送信が必要
-		clif_fixpos(bl);
-	
-	if(type&0x02 && unit_can_move(bl)) {
-		int dx=ud->to_x-bl->x;
-		int dy=ud->to_y-bl->y;
-		if(dx<0) dx=-1; else if(dx>0) dx=1;
-		if(dy<0) dy=-1; else if(dy>0) dy=1;
-		if(dx || dy) {
-			return unit_walktoxy( bl, bl->x+dx, bl->y+dy, 1);
-		}
+	//NOTE: We are using timer data after deleting it because we know the 
+	//delete_timer function does not messes with it. If the function's 
+	//behaviour changes in the future, this code could break!
+	data = get_timer(ud->walktimer);
+	delete_timer(ud->walktimer, unit_walktoxy_timer);
+	ud->walktimer = -1;
+	ud->state.change_walk_target = 0;
+	tick = gettick();
+	if ((type&0x02 && !ud->walkpath.path_pos) //Force moving at least one cell.
+		|| (data && DIFF_TICK(data->tick, tick) <= data->data/2)) //Enough time has passed to cover half-cell
+	{	
+		ud->walkpath.path_len = ud->walkpath.path_pos+1;
+		unit_walktoxy_timer(-1, tick, bl->id, ud->walkpath.path_pos);
 	}
 
+//	if(md) { md->state.skillstate = MSS_IDLE; }
+	if(type&0x01)
+		clif_fixpos(bl);
+	
 	ud->walkpath.path_len = 0;
 	ud->walkpath.path_pos = 0;
 	ud->to_x = bl->x;
 	ud->to_y = bl->y;
-	delete_timer(ud->walktimer, unit_walktoxy_timer);
-	ud->walktimer = -1;
-	if(bl->type == BL_PET) {
-		if(type&~0xff)
-			ud->canmove_tick = gettick() + (type>>8);
-	}
-	sc = status_get_sc(bl);
-	if (sc && sc->count && sc->data[SC_RUN].timer != -1)
-		status_change_end(bl, SC_RUN, -1);
+	if(bl->type == BL_PET && type&~0xff)
+		ud->canmove_tick = gettick() + (type>>8);
 
+	if (ud->state.running)
+		status_change_end(bl, SC_RUN, -1);
 	return 1;
 }
 
@@ -631,20 +669,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	ud->canmove_tick = tick + delay;
 	if (ud->walktimer != -1)
 	{	//Stop walking, if chasing, readjust timers.
-		struct TimerData *data = get_timer(ud->walktimer);
-		//NOTE: We are using timer data after deleting it because we know the 
-		//delete_timer function does not messes with it. If the function's 
-		//behaviour changes in the future, this code could break!
-		delete_timer(ud->walktimer, unit_walktoxy_timer);
-		ud->walktimer = -1;
-		ud->state.change_walk_target = 0;
-		if (data && (!data->data || DIFF_TICK(data->tick, tick) <= data->data/2))
-		{	//Enough time has elapsed to allow for one more tile,
-			//Or this is the first iteration of the walk
-			ud->walkpath.path_len = ud->walkpath.path_pos+1;
-			unit_walktoxy_timer(-1, tick, bl->id, ud->walkpath.path_pos);
-		}
-		clif_fixpos(bl);
+		unit_stop_walking(bl,3);
 		if(ud->target)
 			add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
 	}

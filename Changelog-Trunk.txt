@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/17
+	* Some cleanup in the TK_RUN related code. [Skotlex]
+	* Added variable walk_count to unit_data to be use as a counter for cells
+	  walked for walk-triggered skills, on-chase skill triggers are now done
+	  every 5 cells (it is the closest value that makes the average mob trigger a
+	  chase skill every second). [Skotlex]
+	* mob_skill_db needs updating since it's current use rates for chase-skills
+	  assume the trigger is every 100ms rather than every second.
 	* Fixed TK_RUN having a cast-bar when attempting to stop-running and
 	  generating timer_delete errors when halting as well. [Skotlex]
 	* Clearing the dummy npc after fooling the client. [Lance]

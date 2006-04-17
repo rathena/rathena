@@ -4758,8 +4758,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			clif_updatestatus(sd,updateflag);	/* ステ?タスをクライアントに送る */
 		if (sd->pd)
 			pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
-		if (type==SC_RUN)
-			pc_run(sd,val1,val2);
+	}
+
+	if (type==SC_RUN) {
+		struct unit_data *ud = unit_bl2ud(bl);
+		if (ud)
+			ud->state.running = unit_run(bl);
 	}
 	return 1;
 }
@@ -4961,13 +4965,20 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			}
 			break;
 			case SC_RUN://駆け足
-				unit_stop_walking(bl,1);
+			{
+				struct unit_data *ud = unit_bl2ud(bl);
+				if (ud) {
+					ud->state.running = 0;
+					if (ud->walktimer != -1)
+						unit_stop_walking(bl,1);
+				}
 				if (sc->data[type].val1 >= 7 &&
 					DIFF_TICK(gettick(), sc->data[type].val4) <= 1000 &&
 					(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
 				)
 					sc_start(bl,SC_SPURT,100,sc->data[type].val1,skill_get_time2(StatusSkillChangeTable[type], sc->data[type].val1));
 				calc_flag = 1;
+			}
 			break;
 			case SC_AUTOBERSERK:
 				if (sc->data[SC_PROVOKE].timer != -1 && sc->data[SC_PROVOKE].val2 == 1)

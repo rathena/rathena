@@ -1049,7 +1049,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		return 0;
 
 	if( md->ud.walktimer != -1 && md->ud.walkpath.path_pos <= 3)
-		return 0; //Prevent ai when it just started walking.
+		return 0;
 
 	// Abnormalities
 	if((md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT) || md->sc.data[SC_BLADESTOP].timer != -1)
@@ -1077,7 +1077,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				((struct map_session_data*)tbl)->state.gangsterparadise
 		)) {	//Unlock current target.
 			if (battle_config.mob_ai&8) //Inmediately stop chasing.
-				mob_stop_walking(md,2);
+				mob_stop_walking(md,1);
 			mob_unlocktarget(md, tick-(battle_config.mob_ai&8?3000:0)); //Imediately do random walk.
 			tbl = NULL;
 		}

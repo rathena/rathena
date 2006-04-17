@@ -42,7 +42,7 @@
 #define INF2_GUILD_ONLY 2048
 
 //Walk intervals at which chase-skills are attempted to be triggered.
-#define WALK_SKILL_INTERVAL 2
+#define WALK_SKILL_INTERVAL 5
 
 // スキルデ?タベ?ス
 struct skill_db {

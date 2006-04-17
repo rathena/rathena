@@ -12,6 +12,7 @@
 //     戻り値は、0 ( 成功 ), 1 ( 失敗 )
 int unit_walktoxy( struct block_list *bl, int x, int y, int easy);
 int unit_walktobl( struct block_list *bl, struct block_list *target, int range, int easy);
+int unit_run(struct block_list *bl);
 
 // 歩行停止
 // typeは以下の組み合わせ : 

@@ -365,11 +365,13 @@ struct unit_data {
 	unsigned int canact_tick;
 	unsigned int canmove_tick;
 	unsigned char dir;
+	unsigned char walk_count;
 	struct {
 		unsigned change_walk_target : 1 ;
 		unsigned skillcastcancel : 1 ;
 		unsigned attack_continue : 1 ;
 		unsigned walk_easy : 1 ;
+		unsigned running : 1;
 	} state;
 };
 

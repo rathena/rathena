@@ -52,9 +52,6 @@ struct skill_tree_entry skill_tree[MAX_PC_CLASS][MAX_SKILL_TREE];
 int day_timer_tid;
 int night_timer_tid;
 
-static int dirx[8]={0,-1,-1,-1,0,1,1,1};
-static int diry[8]={1,1,0,-1,-1,-1,0,1};
-
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
@@ -3173,73 +3170,6 @@ int pc_memo(struct map_session_data *sd, int i) {
 	sd->status.memo_point[i].y = sd->bl.y;
 
 	clif_skill_memo(sd, 0);
-
-	return 1;
-}
-
-/*==========================================
- * pc駆け足要求
- *------------------------------------------
- */
-int pc_run(struct map_session_data *sd, int skilllv, int dir)
-{
-	int i,to_x,to_y,dir_x,dir_y;
-
-	nullpo_retr(0, sd);
-
-	if (!unit_can_move(&sd->bl)) {
-		if(sd->sc.data[SC_RUN].timer!=-1)
-			status_change_end(&sd->bl,SC_RUN,-1);
-		return 0;
-	}
-	
-	to_x = sd->bl.x;
-	to_y = sd->bl.y;
-	dir_x = dirx[dir];
-	dir_y = diry[dir];
-
-	for(i=0;i<AREA_SIZE;i++)
-	{
-		if(!map_getcell(sd->bl.m,to_x+dir_x,to_y+dir_y,CELL_CHKPASS))
-			break;
-
-		to_x += dir_x;
-		to_y += dir_y;
-	}
-
-	//進めない場合　駆け足終了　障害物で止まった場合スパート状態解除
-	if(to_x == sd->bl.x && to_y == sd->bl.y){
-		if(sd->sc.data[SC_RUN].timer!=-1)
-			status_change_end(&sd->bl,SC_RUN,-1);
-		return 0;
-	}
-	unit_walktoxy(&sd->bl, to_x, to_y, 1);
-	return 1;
-}
-/*==========================================
- * PCの向居ているほうにstep分歩く
- *------------------------------------------
- */
-int pc_walktodir(struct map_session_data *sd,int step)
-{
-	int i,to_x,to_y,dir_x,dir_y;
-
-	nullpo_retr(0, sd);
-
-	to_x = sd->bl.x;
-	to_y = sd->bl.y;
-	dir_x = dirx[(int)sd->ud.dir];
-	dir_y = diry[(int)sd->ud.dir];
-
-	for(i=0;i<step;i++)
-	{
-		if(map_getcell(sd->bl.m,to_x+dir_x,to_y+dir_y,CELL_CHKNOPASS))
-			break;
-
-		to_x += dir_x;
-		to_y += dir_y;
-	}
-	unit_walktoxy(&sd->bl, to_x, to_y, 1);
 
 	return 1;
 }
