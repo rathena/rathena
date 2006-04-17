@@ -1,0 +1,19 @@
+//===== Athena Script ========================================
+//= Kiel Dungeon Warp Script
+//===== By: ==================================================
+//= Lost Kakashi
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena 1.0
+//===== Description: =========================================
+//= Warp Points for the Kiel Dungeon
+//===== Additional Comments: =================================
+//=
+//===========================================================
+
+//= Kiel Dungeon ============================================
+kh_dun01.gat,3,234,0	warp	warp01	1,1,kh_dun02.gat,42,197
+kh_dun02.gat,45,194,0	warp	warp02	1,1,kh_dun01.gat,4,229
+kh_kiehl02.gat,49,52,0	warp	warp05	1,1,kh_dun01.gat,63,10
+kh_dun01.gat,64,7,0	warp	warp06	1,1,kh_kiehl02.gat,51,49
