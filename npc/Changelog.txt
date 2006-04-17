@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/16
+	* Commited musashiden's Lighthalzen fixes [MasterOfMuppets]
 	* Fixed aldeg_cas04 random warp [Playtester]
 	* Fixed merchants/grandpa_pharmacist.txt thanks to KarLaeda [Playtester]
 	* Removed Cube room warps from the quest script [Lupus]

@@ -8,13 +8,14 @@
 //= eAthena 1.0
 //===== Description: ========================================= 
 //= Lighthalzen NPCs (Temporal names for now) [erKURITA]
-//===== Additional Comments: ================================= 
+//===== Additional Comments: ==================================
 //= 0.1 Placed temporal names, why there weren't on the SVN before? [erKURITA]
 //= 0.2 Implemented some crap NPCs [MasterOfMuppets]
 //= 0.3 Another load of NPCs. Scripted by Kargha [MasterOfMuppets]
 //= 0.4 More Town NPCs. [Musashiden]
 //= 0.5 Added a BIG load of Lighthalzen NPCs. [musashiden]
-//============================================================
+//= 0.6 Fixed some typos+Coordinates. [Musashiden]
+//=============================================================
 
 lighthalzen.gat,154,100,5	script	Lighthalzen Guard#1	852,{end;}
 lighthalzen.gat,207,310,5	script	Lighthalzen Guard#2	852,{end;}
@@ -139,7 +140,7 @@ lighthalzen.gat,233,121,4	script	Kariya	72,{
 }
 
 
-lighthalzen.gat,233,82,5	script	Sung	716,{
+lighthalzen.gat,233,82,4	script	Sung	716,{
 
 	mes "[Sung]";
 	mes "When i grow up, I want";
@@ -166,7 +167,7 @@ lighthalzen.gat,233,82,5	script	Sung	716,{
 }
 
 
-lighthalzen.gat,89,73,5	script	Sameer	854,{
+lighthalzen.gat,89,73,4	script	Sameer	854,{
 
 	mes "[Sameer]";
 	mes "There are too many";
@@ -216,7 +217,7 @@ lighthalzen.gat,45,59,8	script	Janice	863,{
 }
 
 
-lighthalzen.gat,66,94,4	script	Elmer Keays	866,{
+lighthalzen.gat,66,94,5	script	Elmer Keays	866,{
 
 	mes "[Elmer Keays]";
 	mes "Walking side by side";
@@ -456,7 +457,7 @@ lighthalzen.gat,125,68,5	script	Kemp	97,{
 }
 
 
-lighthalzen.gat,138,50,5	script	Mauro	847,{
+lighthalzen.gat,138,50,8	script	Mauro	847,{
 
 	mes "[Mauro]";
 	mes "The youth in this city";
