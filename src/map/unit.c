@@ -1606,7 +1606,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			map_freeblock_unlock();
 			return 0;
 		}
-		if (sd->bl.m != bl->m && sd->pet.intimate <= 0)
+		if (sd->pet.intimate <= 0)
 		{	//Remove pet.
 			intif_delete_petdata(sd->status.pet_id);
 			sd->status.pet_id = 0;

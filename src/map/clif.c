@@ -8044,7 +8044,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_set0199(fd,3);
 
 	// pet
-	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
+	if(sd->status.pet_id > 0 && sd->pd) {
 		map_addblock(&sd->pd->bl);
 		clif_spawn(&sd->pd->bl);
 		clif_send_petdata(sd,0,0);
