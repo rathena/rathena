@@ -1072,7 +1072,7 @@ int npc_scriptcont(struct map_session_data *sd,int id)
 	nullpo_retr(1, sd);
 
 	if (id!=sd->npc_id){
-		ShowWarning("npc_scriptcont: sd->npc_id is not id.\n");
+		ShowWarning("npc_scriptcont: sd->npc_id (%d) is not id (%d).\n", sd->npc_id, id);
 		return 1;
 	}
 	if (npc_checknear(sd,id)){

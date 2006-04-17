@@ -3386,10 +3386,9 @@ int atcommand_monster(
 	char monster[NAME_LENGTH];
 	int mob_id;
 	int number = 0;
-	int x = 0, y = 0;
 	int count;
-	int i, j, k;
-	int mx, my, range;
+	int i, k, range;
+	short mx, my;
 	nullpo_retr(-1, sd);
 
 	memset(name, '\0', sizeof(name));
@@ -3400,14 +3399,14 @@ int atcommand_monster(
 			clif_displaymessage(fd, msg_table[80]); // Give a display name and monster name/id please.
 			return -1;
 	}
-	if (sscanf(message, "\"%23[^\"]\" %23s %d %d %d", name, monster, &number, &x, &y) > 1 ||
-		sscanf(message, "%23s \"%23[^\"]\" %d %d %d", monster, name, &number, &x, &y) > 1) {
+	if (sscanf(message, "\"%23[^\"]\" %23s %d", name, monster, &number) > 1 ||
+		sscanf(message, "%23s \"%23[^\"]\" %d", monster, name, &number) > 1) {
 		//All data can be left as it is.
-	} else if ((count=sscanf(message, "%23s %d %23s %d %d", monster, &number, name, &x, &y)) > 1) {
+	} else if ((count=sscanf(message, "%23s %d %23s", monster, &number, name)) > 1) {
 		//Here, it is possible name was not given and we are using monster for it.
 		if (count < 3) //Blank mob's name.
 			name[0] = '\0';
-	} else if (sscanf(message, "%23s %23s %d %d %d", name, monster, &number, &x, &y) > 1) {
+	} else if (sscanf(message, "%23s %23s %d", name, monster, &number) > 1) {
 		//All data can be left as it is.
 	} else if (sscanf(message, "%23s", monster) > 0) {
 		//As before, name may be already filled.
@@ -3437,29 +3436,17 @@ int atcommand_monster(
 		strcpy(name, "--ja--");
 
 	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
-	if (battle_config.atc_spawn_quantity_limit >= 1 && number > battle_config.atc_spawn_quantity_limit)
+	if (battle_config.atc_spawn_quantity_limit && number > battle_config.atc_spawn_quantity_limit)
 		number = battle_config.atc_spawn_quantity_limit;
 
 	if (battle_config.etc_log)
-		ShowInfo("%s monster='%s' name='%s' id=%d count=%d (%d,%d)\n", command, monster, name, mob_id, number, x, y);
+		ShowInfo("%s monster='%s' name='%s' id=%d count=%d (%d,%d)\n", command, monster, name, mob_id, number, sd->bl.x, sd->bl.y);
 
 	count = 0;
-	range = (int)sqrt(number) / 2;
-	range = range * 2 + 5; // calculation of an odd number (+ 4 area around)
+	range = (int)sqrt(number) +2; // calculation of an odd number (+ 4 area around)
 	for (i = 0; i < number; i++) {
-		j = 0;
-		k = 0;
-		while(j++ < 8 && k == 0) { // try 8 times to spawn the monster (needed for close area)
-			if (x <= 0)
-				mx = sd->bl.x + (rand() % range - (range / 2));
-			else
-				mx = x;
-			if (y <= 0)
-				my = sd->bl.y + (rand() % range - (range / 2));
-			else
-				my = y;
-			k = mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id, 1, "");
-		}
+		map_search_freecell(&sd->bl, 0, &mx,  &my, range, range, 0);
+		k = mob_once_spawn(sd, "this", mx, my, name, mob_id, 1, "");
 		count += (k != 0) ? 1 : 0;
 	}
 
@@ -6005,8 +5992,7 @@ int atcommand_nuke(
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same GM level
-			clif_skill_nodamage(&pl_sd->bl, &pl_sd->bl, NPC_SELFDESTRUCTION, -1, 1);
-			skill_castend_damage_id(&pl_sd->bl, &pl_sd->bl, NPC_SELFDESTRUCTION, 99, gettick(), 0);
+			skill_castend_nodamage_id(&pl_sd->bl, &pl_sd->bl, NPC_SELFDESTRUCTION, 99, gettick(), 0);
 			clif_displaymessage(fd, msg_table[109]); // Player has been nuked!
 		} else {
 			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
