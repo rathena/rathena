@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/16
+	* Fixed the first call to the walk timers having the tick interval halved,
+	  which made all walking timers be off by half cell with the actual position
+	  displayed client-side (so everyone reaches destination cell server-side
+	  half-cell before the client). [Skotlex]
+	* Fixed being halted when you are walking so that: 1. Your position
+	  refreshed on the screen is correct (the current tile if you haven't reached
+	  at least half path between the current and next tile and the next tile
+	  otherwise) and 2. If you are halted before walking even one cell, you will
+	  be moved to the next cell (to effectively prevent stun-locking). [Skotlex]
 	* Modified @monster command to use map_search_freecell (prevents mobs
 	  spawning on non-walkable tiles) [Skotlex]
 	* Modified @nuke to invoke skill_cast_nodamage_id instead of the damage_id

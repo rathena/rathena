@@ -85,10 +85,8 @@ int unit_walktoxy_sub(struct block_list *bl)
 		i = status_get_speed(bl)*14/10;
 	else
 		i = status_get_speed(bl);
-	if( i > 0) {
-		i = i>>1;
+	if( i > 0) //First time data is sent as 0 to always enable moving one tile when hit.
 		ud->walktimer = add_timer(gettick()+i,unit_walktoxy_timer,bl->id,0);
-	}
 	return 1;
 }
 
@@ -121,7 +119,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	ud->walktimer=-1;
 	if( bl->prev == NULL ) return 0; // block_list から抜けているので移動停止する
 
-	if(ud->walkpath.path_pos>=ud->walkpath.path_len || ud->walkpath.path_pos!=data)
+	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
 
 	//歩いたので息吹のタイマーを初期化
@@ -211,7 +209,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		i = status_get_speed(bl);
 
 	if(i > 0)
-		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,ud->walkpath.path_pos);
+		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
 	else if(sd && sd->sc.count && sd->sc.data[SC_RUN].timer!=-1) //Keep trying to run.
 		pc_run(sd, sd->sc.data[SC_RUN].val1, sd->sc.data[SC_RUN].val2);
 	else if (ud->target) {
@@ -633,8 +631,19 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	ud->canmove_tick = tick + delay;
 	if (ud->walktimer != -1)
 	{	//Stop walking, if chasing, readjust timers.
+		struct TimerData *data = get_timer(ud->walktimer);
+		//NOTE: We are using timer data after deleting it because we know the 
+		//delete_timer function does not messes with it. If the function's 
+		//behaviour changes in the future, this code could break!
 		delete_timer(ud->walktimer, unit_walktoxy_timer);
 		ud->walktimer = -1;
+		ud->state.change_walk_target = 0;
+		if (data && (!data->data || DIFF_TICK(data->tick, tick) <= data->data/2))
+		{	//Enough time has elapsed to allow for one more tile,
+			//Or this is the first iteration of the walk
+			ud->walkpath.path_len = ud->walkpath.path_pos+1;
+			unit_walktoxy_timer(-1, tick, bl->id, ud->walkpath.path_pos);
+		}
 		clif_fixpos(bl);
 		if(ud->target)
 			add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
