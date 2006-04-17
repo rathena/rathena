@@ -27,6 +27,7 @@
 
 =========================
 04/16
+	* Fixed Mjolnir's ASPD bonus [Playtester]
 	* Fixed moving speed of Bio Lab 3 mobs [Playtester]
 	* Corrected Venom Knife's requiring two knives per use. [Skotlex]
 	* Adjusted more delays/speed of Lighthalzen mobs thanks to Tharis [Playtester]
