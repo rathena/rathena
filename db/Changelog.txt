@@ -27,6 +27,7 @@
 
 =========================
 04/16
+	* Fixed jname of Photon Cannon [Playtester]
 	* Fixed slots of Butcher thanks to gyunwoo23 [Playtester]
 	* Fixed some item names in the item_db thanks to Haplo [Playtester]
 	* Fixed Mjolnir's ASPD bonus [Playtester]
