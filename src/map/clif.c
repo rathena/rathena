@@ -1734,15 +1734,23 @@ int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
 
 	nullpo_retr(0, sd);
 
-	if(map_id2bl(npcid)->m < 0)
-		send_fake_npc(sd, npcid);
-
 	fd=sd->fd;
-	WFIFOW(fd,0)=0xb7;
-	WFIFOW(fd,2)=slen;
-	WFIFOL(fd,4)=npcid;
-	strcpy((char*)WFIFOP(fd,8),mes);
-	WFIFOSET(fd,WFIFOW(fd,2));
+
+	if(map_id2bl(npcid)->m < 0){
+		send_fake_npc(sd, npcid);
+		WFIFOW(fd,0)=0xb7;
+		WFIFOW(fd,2)=slen;
+		WFIFOL(fd,4)=npcid;
+		strcpy((char*)WFIFOP(fd,8),mes);
+		WFIFOSET(fd,WFIFOW(fd,2));
+		clif_clearchar_id(npcid, 0, fd);
+	} else {
+		WFIFOW(fd,0)=0xb7;
+		WFIFOW(fd,2)=slen;
+		WFIFOL(fd,4)=npcid;
+		strcpy((char*)WFIFOP(fd,8),mes);
+		WFIFOSET(fd,WFIFOW(fd,2));
+	}
 
 	return 0;
 }
@@ -1755,15 +1763,21 @@ int clif_scriptinput(struct map_session_data *sd, int npcid) {
 	int fd;
 
 	nullpo_retr(0, sd);
-
-	if(map_id2bl(npcid)->m < 0)
-		send_fake_npc(sd, npcid);
-
 	fd=sd->fd;
-   WFIFOHEAD(fd, packet_len_table[0x142]);
-	WFIFOW(fd,0)=0x142;
-	WFIFOL(fd,2)=npcid;
-	WFIFOSET(fd,packet_len_table[0x142]);
+
+	if(map_id2bl(npcid)->m < 0){
+		send_fake_npc(sd, npcid);
+		WFIFOHEAD(fd, packet_len_table[0x142]);
+		WFIFOW(fd,0)=0x142;
+		WFIFOL(fd,2)=npcid;
+		WFIFOSET(fd,packet_len_table[0x142]);
+		clif_clearchar_id(npcid, 0, fd);
+	} else {
+		WFIFOHEAD(fd, packet_len_table[0x142]);
+		WFIFOW(fd,0)=0x142;
+		WFIFOL(fd,2)=npcid;
+		WFIFOSET(fd,packet_len_table[0x142]);
+	}
 
 	return 0;
 }
@@ -1776,15 +1790,21 @@ int clif_scriptinputstr(struct map_session_data *sd, int npcid) {
 	int fd;
 
 	nullpo_retr(0, sd);
-
-	if(map_id2bl(npcid)->m < 0)
-		send_fake_npc(sd, npcid);
-
 	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len_table[0x1d4]);
-	WFIFOW(fd,0)=0x1d4;
-	WFIFOL(fd,2)=npcid;
-	WFIFOSET(fd,packet_len_table[0x1d4]);
+
+	if(map_id2bl(npcid)->m < 0){
+		send_fake_npc(sd, npcid);
+		WFIFOHEAD(fd, packet_len_table[0x1d4]);
+		WFIFOW(fd,0)=0x1d4;
+		WFIFOL(fd,2)=npcid;
+		WFIFOSET(fd,packet_len_table[0x1d4]);
+		clif_clearchar_id(npcid, 0, fd);
+	} else {
+		WFIFOHEAD(fd, packet_len_table[0x1d4]);
+		WFIFOW(fd,0)=0x1d4;
+		WFIFOL(fd,2)=npcid;
+		WFIFOSET(fd,packet_len_table[0x1d4]);
+	}
 
 	return 0;
 }
