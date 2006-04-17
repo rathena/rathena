@@ -27,6 +27,7 @@
 
 =========================
 04/16
+	* Fixed knives being equipable by Taekwon and Star Gladiator [Playtester]
 	* Fixed jname of Photon Cannon [Playtester]
 	* Fixed slots of Butcher thanks to gyunwoo23 [Playtester]
 	* Fixed some item names in the item_db thanks to Haplo [Playtester]
