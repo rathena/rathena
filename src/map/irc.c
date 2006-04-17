@@ -269,13 +269,12 @@ void irc_parse_sub(int fd, char *incoming_string)
 		else if((strcmpi(target,irc_channel)==0)||(strcmpi(target,irc_channel+1)==0)) {
 
 			// Broadcast [Zido] (Work in Progress)
-			if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"@%s[^ ] %255[^\r\n]",cmdname,cmdargs)>0)&&(target[0]=='#')) {
+			if((strcmpi(command,"privmsg")==0)&&(sscanf(message,"@%255s %255[^\r\n]",cmdname,cmdargs)>0)&&(target[0]=='#')) {
 				if(strcmpi(cmdname,"kami")==0) {
 					if(get_access(source_nick)<ACCESS_OP)
 						sprintf(send_string,"NOTICE %s :Access Denied",source_nick);
 					else {
-						sscanf(cmdargs,"%255[^\r\n]",cmd1);
-						sprintf(send_string,"%s: %s",source_nick,cmd1);
+						sprintf(send_string,"%s: %s",source_nick,cmdargs);
 						intif_GMmessage(send_string,strlen(send_string)+1,0);
 						sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
 					}
