@@ -27,6 +27,7 @@
 
 =========================
 04/16
+	* Fixed slots of Butcher thanks to gyunwoo23 [Playtester]
 	* Fixed some item names in the item_db thanks to Haplo [Playtester]
 	* Fixed Mjolnir's ASPD bonus [Playtester]
 	* Fixed moving speed of Bio Lab 3 mobs [Playtester]
