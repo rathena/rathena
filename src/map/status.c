@@ -814,6 +814,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 		if(sd->inventory_data[index]) {
 			int j,c;
+			struct item_data *data;
+	
 			//Card script execution.
 			if(sd->status.inventory[index].card[0]==0x00ff ||
 				sd->status.inventory[index].card[0]==0x00fe ||
@@ -821,17 +823,28 @@ int status_calc_pc(struct map_session_data* sd,int first)
 				continue;
 			for(j=0;j<sd->inventory_data[index]->slot;j++){	// ƒJ?ƒh
 				current_equip_card_id= c= sd->status.inventory[index].card[j];
-				if(c>0){
-					if(i == 8 && sd->status.inventory[index].equip == 0x20)
-					{	//Left hand status.
-						sd->state.lr_flag = 1;
-						run_script(itemdb_equipscript(c),0,sd->bl.id,0);
-						sd->state.lr_flag = 0;
-					} else
-						run_script(itemdb_equipscript(c),0,sd->bl.id,0);
-					if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
-						return 1;
+				if(!c)
+					continue;
+				data = itemdb_exists(c);
+				if (!data || !data->script)
+					continue;
+				if(data->flag.no_equip) { //Card restriction checks.
+					if(map[sd->bl.m].flag.restricted && data->flag.no_equip&map[sd->bl.m].zone)
+						continue;
+					if(map[sd->bl.m].flag.pvp && data->flag.no_equip&1)
+						continue;
+					if(map_flag_gvg(sd->bl.m) && data->flag.no_equip&2) 
+						continue;
 				}
+				if(i == 8 && sd->status.inventory[index].equip == 0x20)
+				{	//Left hand status.
+					sd->state.lr_flag = 1;
+					run_script(data->script,0,sd->bl.id,0);
+					sd->state.lr_flag = 0;
+				} else
+					run_script(data->script,0,sd->bl.id,0);
+				if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
+					return 1;
 			}
 		}
 	}

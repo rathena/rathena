@@ -2971,7 +2971,7 @@ int atcommand_pvpon(
 		return -1;
 	}
 
-	if (!map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.nopvp) {
+	if (!map[sd->bl.m].flag.pvp) {
 		map[sd->bl.m].flag.pvp = 1;
 		clif_send0199(sd->bl.m, 1);
 		pl_allsd = map_getallusers(&users);
@@ -5626,8 +5626,6 @@ int atcommand_mapinfo(
 	strcpy(atcmd_output,"PvP Flags: ");
 	if (map[m_id].flag.pvp)
 		strcat(atcmd_output, "Pvp ON | ");
-	if (map[m_id].flag.nopvp)
-		strcat(atcmd_output, "NoPvp | ");
 	if (map[m_id].flag.pvp_noguild)
 		strcat(atcmd_output, "NoGuild | ");
 	if (map[m_id].flag.pvp_noparty)

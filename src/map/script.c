@@ -6617,7 +6617,7 @@ int buildin_isloggedin(struct script_state *st)
  */
 enum {  MF_NOMEMO,MF_NOTELEPORT,MF_NOSAVE,MF_NOBRANCH,MF_NOPENALTY,MF_NOZENYPENALTY,
 	MF_PVP,MF_PVP_NOPARTY,MF_PVP_NOGUILD,MF_GVG,MF_GVG_NOPARTY,MF_NOTRADE,MF_NOSKILL,
-	MF_NOWARP,MF_NOPVP,MF_NOICEWALL,MF_SNOW,MF_FOG,MF_SAKURA,MF_LEAVES,MF_RAIN,
+	MF_NOWARP,MF_FREE,MF_NOICEWALL,MF_SNOW,MF_FOG,MF_SAKURA,MF_LEAVES,MF_RAIN,
 	MF_INDOORS,MF_NOGO,MF_CLOUDS,MF_CLOUDS2,MF_FIREWORKS,MF_GVG_CASTLE,MF_GVG_DUNGEON,MF_NIGHTENABLED,
 	MF_NOBASEEXP, MF_NOJOBEXP, MF_NOMOBLOOT, MF_NOMVPLOOT, MF_NORETURN, MF_NOWARPTO, MF_NIGHTMAREDROP,
 	MF_RESTRICTED, MF_NOCOMMAND, MF_NODROP };
@@ -6702,9 +6702,6 @@ int buildin_setmapflag(struct script_state *st)
 				break;
 			case MF_NOWARP:
 				map[m].flag.nowarp=1;
-				break;
-			case MF_NOPVP:
-				map[m].flag.nopvp=1;
 				break;
 			case MF_NOICEWALL: // [Valaris]
 				map[m].flag.noicewall=1;
@@ -6836,9 +6833,6 @@ int buildin_removemapflag(struct script_state *st)
 			case MF_NOWARP:
 				map[m].flag.nowarp=0;
 				break;
-			case MF_NOPVP:
-				map[m].flag.nopvp=0;
-				break;
 			case MF_NOICEWALL: // [Valaris]
 				map[m].flag.noicewall=0;
 				break;
@@ -6916,7 +6910,7 @@ int buildin_pvpon(struct script_state *st)
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	m = map_mapname2mapid(str);
-	if(m >= 0 && !map[m].flag.pvp && !map[m].flag.nopvp) {
+	if(m >= 0 && !map[m].flag.pvp) {
 		map[m].flag.pvp = 1;
 		clif_send0199(m,1);
 
@@ -6949,7 +6943,7 @@ int buildin_pvpoff(struct script_state *st)
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	m = map_mapname2mapid(str);
-	if(m >= 0 && map[m].flag.pvp && !map[m].flag.nopvp) { //fixed Lupus
+	if(m >= 0 && map[m].flag.pvp) { //fixed Lupus
 		map[m].flag.pvp = 0;
 		clif_send0199(m,0);
 

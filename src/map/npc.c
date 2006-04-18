@@ -2218,6 +2218,7 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 {
 	int m;
 	char mapname[MAP_NAME_LENGTH];
+	int state = 1;
 
 	// 引数の個数チェック
 	if (sscanf(w1, "%15[^,]",mapname) != 1)
@@ -2226,12 +2227,16 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	m = map_mapname2mapid(mapname);
 	if (m < 0)
 		return 1;
-
+	if (w4 && strcmpi(w4, "off") == 0)
+		state = 0;	//Disable mapflag rather than enable it. [Skotlex]
+	
 //マップフラグ
 	if (strcmpi(w3, "nosave") == 0) {
 		char savemap[MAP_NAME_LENGTH];
 		int savex, savey;
-		if (strcmp(w4, "SavePoint") == 0) {
+		if (state == 0)
+			; //Map flag disabled.
+		else if (strcmp(w4, "SavePoint") == 0) {
 			map[m].save.map = 0;
 			map[m].save.x = -1;
 			map[m].save.y = -1;
@@ -2245,40 +2250,40 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 				map[m].save.y = -1;
 			}
 		}
-		map[m].flag.nosave = 1;
+		map[m].flag.nosave = state;
 	}
 	else if (strcmpi(w3,"nomemo")==0) {
-		map[m].flag.nomemo=1;
+		map[m].flag.nomemo=state;
 	}
 	else if (strcmpi(w3,"noteleport")==0) {
-		map[m].flag.noteleport=1;
+		map[m].flag.noteleport=state;
 	}
 	else if (strcmpi(w3,"nowarp")==0) {
-		map[m].flag.nowarp=1;
+		map[m].flag.nowarp=state;
 	}
 	else if (strcmpi(w3,"nowarpto")==0) {
-		map[m].flag.nowarpto=1;
+		map[m].flag.nowarpto=state;
 	}
 	else if (strcmpi(w3,"noreturn")==0) {
-		map[m].flag.noreturn=1;
+		map[m].flag.noreturn=state;
 	}
 	else if (strcmpi(w3,"monster_noteleport")==0) {
-		map[m].flag.monster_noteleport=1;
+		map[m].flag.monster_noteleport=state;
 	}
 	else if (strcmpi(w3,"nobranch")==0) {
-		map[m].flag.nobranch=1;
+		map[m].flag.nobranch=state;
 	}
 	else if (strcmpi(w3,"nopenalty")==0) {
-		map[m].flag.nopenalty=1;
+		map[m].flag.nopenalty=state;
 	}
 	else if (strcmpi(w3,"pvp")==0) {
-		map[m].flag.pvp=1;
+		map[m].flag.pvp=state;
 	}
 	else if (strcmpi(w3,"pvp_noparty")==0) {
-		map[m].flag.pvp_noparty=1;
+		map[m].flag.pvp_noparty=state;
 	}
 	else if (strcmpi(w3,"pvp_noguild")==0) {
-		map[m].flag.pvp_noguild=1;
+		map[m].flag.pvp_noguild=state;
 	}
 	else if (strcmpi(w3, "pvp_nightmaredrop") == 0) {
 		char drop_arg1[16], drop_arg2[16];
@@ -2307,103 +2312,104 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 				}
 				map[m].flag.pvp_nightmaredrop = 1;
 			}
-		}
+		} else if (!state) //Disable
+			map[m].flag.pvp_nightmaredrop = 0;
 	}
 	else if (strcmpi(w3,"pvp_nocalcrank")==0) {
-		map[m].flag.pvp_nocalcrank=1;
+		map[m].flag.pvp_nocalcrank=state;
 	}
 	else if (strcmpi(w3,"gvg")==0) {
-		map[m].flag.gvg=1;
+		map[m].flag.gvg=state;
 	}
 	else if (strcmpi(w3,"gvg_noparty")==0) {
-		map[m].flag.gvg_noparty=1;
+		map[m].flag.gvg_noparty=state;
 	}
 	else if (strcmpi(w3,"gvg_dungeon")==0) {
-		map[m].flag.gvg_dungeon=1;
+		map[m].flag.gvg_dungeon=state;
 	}
 	else if (strcmpi(w3,"gvg_castle")==0) {
-		map[m].flag.gvg_castle=1;
+		map[m].flag.gvg_castle=state;
 	}
 	else if (strcmpi(w3,"nozenypenalty")==0) {
-		map[m].flag.nozenypenalty=1;
+		map[m].flag.nozenypenalty=state;
 	}
 	else if (strcmpi(w3,"notrade")==0) {
-		map[m].flag.notrade=1;
+		map[m].flag.notrade=state;
 	}
 	else if (strcmpi(w3,"nodrop")==0) {
-		map[m].flag.nodrop=1;
+		map[m].flag.nodrop=state;
 	}
 	else if (strcmpi(w3,"noskill")==0) {
-		map[m].flag.noskill=1;
-	}
-	else if (battle_config.pk_mode && strcmpi(w3,"nopvp")==0) { // nopvp for pk mode [Valaris]
-		map[m].flag.nopvp=1;
-		map[m].flag.pvp=0;
+		map[m].flag.noskill=state;
 	}
 	else if (strcmpi(w3,"noicewall")==0) { // noicewall [Valaris]
-		map[m].flag.noicewall=1;
+		map[m].flag.noicewall=state;
 	}
 	else if (strcmpi(w3,"snow")==0) { // snow [Valaris]
-		map[m].flag.snow=1;
+		map[m].flag.snow=state;
 	}
 	else if (strcmpi(w3,"clouds")==0) {
-		map[m].flag.clouds=1;
+		map[m].flag.clouds=state;
 	}
 	else if (strcmpi(w3,"clouds2")==0) { // clouds2 [Valaris]
-		map[m].flag.clouds2=1;
+		map[m].flag.clouds2=state;
 	}
 	else if (strcmpi(w3,"fog")==0) { // fog [Valaris]
-		map[m].flag.fog=1;
+		map[m].flag.fog=state;
 	}
 	else if (strcmpi(w3,"fireworks")==0) {
-		map[m].flag.fireworks=1;
+		map[m].flag.fireworks=state;
 	}
 	else if (strcmpi(w3,"sakura")==0) { // sakura [Valaris]
-		map[m].flag.sakura=1;
+		map[m].flag.sakura=state;
 	}
 	else if (strcmpi(w3,"leaves")==0) { // leaves [Valaris]
-		map[m].flag.leaves=1;
+		map[m].flag.leaves=state;
 	}
 	else if (strcmpi(w3,"rain")==0) { // rain [Valaris]
-		map[m].flag.rain=1;
+		map[m].flag.rain=state;
 	}
 	else if (strcmpi(w3,"indoors")==0) { // celest
-		map[m].flag.indoors=1;
+		map[m].flag.indoors=state;
 	}
 	else if (strcmpi(w3,"nightenabled")==0) { // Skotlex
-		map[m].flag.nightenabled=1;
+		map[m].flag.nightenabled=state;
 	}
 	else if (strcmpi(w3,"nogo")==0) { // celest
-		map[m].flag.nogo=1;
+		map[m].flag.nogo=state;
 	}
 	else if (strcmpi(w3,"noexp")==0) { // Lorky
-		map[m].flag.nobaseexp=1;
-		map[m].flag.nojobexp=1;
+		map[m].flag.nobaseexp=state;
+		map[m].flag.nojobexp=state;
 	}
 	else if (strcmpi(w3,"nobaseexp")==0) { // Lorky
-		map[m].flag.nobaseexp=1;
+		map[m].flag.nobaseexp=state;
 	}
 	else if (strcmpi(w3,"nojobexp")==0) { // Lorky
-		map[m].flag.nojobexp=1;
+		map[m].flag.nojobexp=state;
 	}
 	else if (strcmpi(w3,"noloot")==0) { // Lorky
-		map[m].flag.nomobloot=1;
-		map[m].flag.nomvploot=1;
+		map[m].flag.nomobloot=state;
+		map[m].flag.nomvploot=state;
 	}
 	else if (strcmpi(w3,"nomobloot")==0) { // Lorky
-		map[m].flag.nomobloot=1;
+		map[m].flag.nomobloot=state;
 	}
 	else if (strcmpi(w3,"nomvploot")==0) { // Lorky
-		map[m].flag.nomvploot=1;
+		map[m].flag.nomvploot=state;
 	}
 	else if (strcmpi(w3,"nocommand")==0) { // Skotlex
-		map[m].flag.nocommand=1;
+		map[m].flag.nocommand=state;
 	}
 	else if (strcmpi(w3,"restricted")==0) { // Komurka
-		map[m].flag.restricted=1;
-		sscanf(w4, "%d", &map[m].zone);
-		//map[m].zone = pow(2,map[m].zone+1);
-		map[m].zone = 1<<(map[m].zone+1);
+		if (state) {
+			map[m].flag.restricted=1;
+			sscanf(w4, "%d", &state);
+			map[m].zone |= 1<<(state+1);
+		} else {
+			map[m].flag.restricted=0;
+			map[m].zone = 0;
+		}
 	}
 
 	return 0;

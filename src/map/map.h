@@ -1018,7 +1018,6 @@ struct map_data {
 		unsigned noskill : 1;
 		unsigned nowarp : 1;
 		unsigned nowarpto : 1;
-		unsigned nopvp : 1; // [Valaris]
 		unsigned noicewall : 1; // [Valaris]
 		unsigned snow : 1; // [Valaris]
 		unsigned clouds : 1;

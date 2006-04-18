@@ -4901,9 +4901,6 @@ int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 {
 	nullpo_retr(0, sd);
 
-	if(map[sd->bl.m].flag.nopvp)
-		return 0;
-
 	if(type == 2) {
 		WFIFOHEAD(sd->fd,packet_len_table[0x19a]);
 		WFIFOW(sd->fd,0) = 0x19a;
@@ -9662,7 +9659,8 @@ void clif_parse_NpcStringInput(int fd,struct map_session_data *sd)
 void clif_parse_NpcCloseClicked(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
-	npc_scriptcont(sd,RFIFOL(fd,2));
+	if (sd->npc_id) //Avoid parsing anything when the script was done with. [Skotlex]
+		npc_scriptcont(sd,RFIFOL(fd,2));
 }
 
 /*==========================================

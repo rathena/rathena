@@ -204,11 +204,8 @@ int trade_check(struct map_session_data *sd) {
 						if (inventory2[i].nameid == inventory[n].nameid &&
 							inventory2[i].card[0] == inventory[n].card[0] && inventory2[i].card[1] == inventory[n].card[1] &&
 							inventory2[i].card[2] == inventory[n].card[2] && inventory2[i].card[3] == inventory[n].card[3]) {
-							if (inventory2[i].amount + amount > MAX_AMOUNT) {
-								clif_displaymessage(sd->fd, msg_txt(592)); // Trade can not be done, because one of your doesn't have enough free slots in its inventory.
-								clif_displaymessage(target_sd->fd, msg_txt(592)); // Trade can not be done, because one of your doesn't have enough free slots in its inventory.
+							if (inventory2[i].amount + amount > MAX_AMOUNT)
 								return 0;
-							}
 							inventory2[i].amount += amount;
 							inventory[n].amount -= amount;
 							if (inventory[n].amount <= 0)
@@ -228,11 +225,8 @@ int trade_check(struct map_session_data *sd) {
 							break;
 						}
 					}
-					if (i == MAX_INVENTORY) {
-						clif_displaymessage(sd->fd, msg_txt(592)); // Trade can not be done, because one of your doesn't have enough free slots in its inventory.
-						clif_displaymessage(target_sd->fd, msg_txt(592)); // Trade can not be done, because one of your doesn't have enough free slots in its inventory.
+					if (i == MAX_INVENTORY)
 						return 0;
-					}
 				}
 			}
 		}
@@ -251,11 +245,8 @@ int trade_check(struct map_session_data *sd) {
 						if (inventory[i].nameid == inventory2[n].nameid &&
 							inventory[i].card[0] == inventory2[n].card[0] && inventory[i].card[1] == inventory2[n].card[1] &&
 							inventory[i].card[2] == inventory2[n].card[2] && inventory[i].card[3] == inventory2[n].card[3]) {
-							if (inventory[i].amount + amount > MAX_AMOUNT) {
-								clif_displaymessage(sd->fd, msg_txt(592)); // Trade can not be done, because one of your doesn't have enough free slots in its inventory.
-								clif_displaymessage(target_sd->fd, msg_txt(592)); // Trade can not be done, because one of your doesn't have enough free slots in its inventory.
+							if (inventory[i].amount + amount > MAX_AMOUNT)
 								return 0;
-							}
 							inventory[i].amount += amount;
 							inventory2[n].amount -= amount;
 							if (inventory2[n].amount <= 0)
@@ -274,11 +265,8 @@ int trade_check(struct map_session_data *sd) {
 							break;
 						}
 					}
-					if (i == MAX_INVENTORY) {
-						clif_displaymessage(sd->fd, msg_txt(592)); // Trade can not be done, because one of your doesn't have enough free slots in its inventory.
-						clif_displaymessage(target_sd->fd, msg_txt(592)); // Trade can not be done, because one of your doesn't have enough free slots in its inventory.
+					if (i == MAX_INVENTORY)
 						return 0;
-					}
 				}
 			}
 		}

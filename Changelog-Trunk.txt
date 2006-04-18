@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/18
+	* Removed message 592 from trade.c [Skotlex]
+	* Added support for disabling mapflags on a mapflag line: [Skotlex]
+	  comodo.gat	mapflag	nomemo <- turns on nomemo mapflag
+	  comodo.gat	mapflag	nomemo	off <- turns off nomemo mapflag
+	* Removed mapflag nopvp due to the above change. [Skotlex]
+	* Cleaned up and optimized the restricted/zones mapflag. Restricted cards
+	  will just not work in disallowed maps rather than blocking the compounded
+	  equipement from being used. [Skotlex]
 	* Converted the format of the battle conf files to windows format [Playtester]
 	* Shinomori's method (kinda) of remote script execution with interaction. [Lance]
 

@@ -39,7 +39,7 @@
 26,32 //Teleport
 27,32 //Warp portal
 51,32 //Hiding
-135,32 //Cloacking
+135,32 //Cloaking
 389,32 //Stealth
 35,32 //Cure
 87,32 //Ice Wall
