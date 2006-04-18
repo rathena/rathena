@@ -41,6 +41,8 @@ typedef int socklen_t;
 
 short use_irc=0;
 
+short irc_autojoin=0;
+
 short irc_announce_flag=1;
 short irc_announce_mvp_flag=1;
 short irc_announce_jobchange_flag=1;
@@ -313,6 +315,12 @@ void irc_parse_sub(int fd, char *incoming_string)
 				irc_send(send_string);
 				printf("Done\n");
 			}
+
+			// Autojoin on kick [Zido]
+			else if((strcmpi(command,"kick")==0)&&(irc_autojoin==1)) {
+				sprintf(send_string,"JOIN %s",target);
+				irc_send(send_string);
+			}
 		}
 
 		// Names Reply [Zido]
@@ -526,6 +534,8 @@ int irc_read_conf(char *file) {
 			strcpy(irc_ip_str,w2);
 		else if(strcmpi(w1,"irc_port")==0)
 			irc_port=atoi(w2);
+		else if(strcmpi(w1,"irc_autojoin")==0)
+			irc_autojoin=atoi(w2);
 		else if(strcmpi(w1,"irc_channel")==0)
 			strcpy(irc_channel,w2);
 		else if(strcmpi(w1,"irc_trade_channel")==0)
