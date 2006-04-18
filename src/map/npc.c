@@ -985,6 +985,9 @@ int npc_checknear(struct map_session_data *sd,int id)
 
 	nullpo_retr(0, sd);
 
+	if(sd->state.using_fake_npc)
+		return 0;
+
 	nd=(struct npc_data *)map_id2bl(id);
 	if (nd==NULL || nd->bl.type!=BL_NPC) {
 		if (battle_config.error_log)
@@ -992,8 +995,8 @@ int npc_checknear(struct map_session_data *sd,int id)
 		return 1;
 	}
 
-	if (nd->class_<0)	// イベント系は常にOK
-		return 0;
+	//if (nd->class_<0)	// イベント系は常にOK
+	//	return 0;
 
 	// エリア判定
 	if (nd->bl.m!=sd->bl.m ||
@@ -2782,6 +2785,9 @@ int do_init_npc(void)
 	add_timer_func_list(npc_event_timer,"npc_event_timer");
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
+
+	// Init dummy NPC
+	dummy_npc_id = npc_get_new_npc_id();
 
 	return 0;
 }

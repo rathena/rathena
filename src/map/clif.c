@@ -1705,9 +1705,6 @@ int clif_scriptclose(struct map_session_data *sd, int npcid) {
 	WFIFOW(fd,0)=0xb6;
 	WFIFOL(fd,2)=npcid;
 	WFIFOSET(fd,packet_len_table[0xb6]);
-	
-	if(map_id2bl(npcid)->m < 0)
-		clif_clearchar_id(npcid, 0, fd);
 
 	return 0;
 }
@@ -1718,11 +1715,12 @@ int clif_scriptclose(struct map_session_data *sd, int npcid) {
  */
 void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 	int fd = sd->fd;
+	sd->npc_id = npcid;
+	sd->state.using_fake_npc = 1;
 	memset(WFIFOP(fd,0), 0, packet_len_table[0x78]);
 	WFIFOW(fd,0)=0x78;
 	WFIFOL(fd,2)=npcid;
-	WFIFOW(fd,12)=OPTION_HIDE;
-	WFIFOW(fd,14)=123;
+	WFIFOW(fd,14)=111;
 	WFIFOPOS(fd,46,sd->bl.x,sd->bl.y);
 	WFIFOB(fd,49)=5;
 	WFIFOB(fd,50)=5;
@@ -1740,9 +1738,6 @@ int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
 	WFIFOHEAD(fd, slen);
 
 	nullpo_retr(0, sd);
-
-	if(map_id2bl(npcid)->m < 0)
-		clif_sendfakenpc(sd, npcid);
 
 	fd=sd->fd;
 	WFIFOW(fd,0)=0xb7;
@@ -1763,9 +1758,6 @@ int clif_scriptinput(struct map_session_data *sd, int npcid) {
 
 	nullpo_retr(0, sd);
 	
-	if(map_id2bl(npcid)->m < 0)
-		clif_sendfakenpc(sd, npcid);
-	
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len_table[0x142]);
 	WFIFOW(fd,0)=0x142;
@@ -1783,9 +1775,6 @@ int clif_scriptinputstr(struct map_session_data *sd, int npcid) {
 	int fd;
 
 	nullpo_retr(0, sd);
-	
-	if(map_id2bl(npcid)->m < 0)
-		clif_sendfakenpc(sd, npcid);
 
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len_table[0x1d4]);
