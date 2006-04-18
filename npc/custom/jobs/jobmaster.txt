@@ -55,7 +55,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 	if(lastJob ==Job_Alchem) goto L_iAlchemist;
 	if(lastJob ==Job_Bard) goto L_iBard;
 	if(lastJob ==Job_Dancer) goto L_iDancer;
-	if((Class >=Job_Knight) && (Class <=Job_Dancer)) goto L_rebirth;
+	if((Class >=Job_Knight) && (Class <=Job_Crusader2)) goto L_rebirth;
 	close;
 
 // Novice
