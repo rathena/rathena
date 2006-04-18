@@ -27,6 +27,8 @@
 
 =========================
 04/18
+	* Fixed elements/race/size of all Juperos mobs [Playtester]
+	- still working on the correct stats
 	* Fixed element of Gemini and Monemus [Playtester]
 	* Fixed Butcher's weapon level thanks to gyunwoo23 [Playtester]
 	- also fixed Event Nile Rose missing a slot
