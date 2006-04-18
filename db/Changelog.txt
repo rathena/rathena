@@ -27,6 +27,7 @@
 
 =========================
 04/18
+	* Fixed element of Gemini and Monemus [Playtester]
 	* Fixed Butcher's weapon level thanks to gyunwoo23 [Playtester]
 	- also fixed Event Nile Rose missing a slot
 	* Fixed new healing items not being usuable by new classes [Playtester]
