@@ -27,6 +27,7 @@
 
 =========================
 04/18
+	* Fixed Laurell's mode [Playtester]
 	* Updated Juperos Mobs, they now have correct kRO Sakray stats [Playtester]
 	* Fixed elements/race/size of all Juperos mobs [Playtester]
 	- still working on the correct stats
