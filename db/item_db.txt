@@ -1110,7 +1110,7 @@
 2644,The_Sign,The Sign,5,,10,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMatkRate,5; bonus bAtkRate,5; }
 2645,Moonlight_Ring,Moonlight Ring,5,,10,200,,0,,0,0x028F5EEE,7,2,136,,60,0,0,{}
 2646,Bunch_of_Carnations,Bunch of Carnations,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{}
-2647,Nile_Rose,Nile Rose,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHPrate,10; }
+2647,Nile_Rose,Nile Rose,5,,10,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHPrate,10; }
 2648,Morpheus's_Ring,Morpheus's Ring,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; }
 2649,Morpheus's_Bracelet,Morpheus's Bracelet,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; }
 2650,Morrigane's_Belt,Morrigane's Belt,5,,10,200,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bAtk,5; bonus bCritical,3; }
