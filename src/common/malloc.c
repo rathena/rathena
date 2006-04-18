@@ -257,7 +257,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func ) {
 			*(int*)((char*)p + sizeof(struct unit_head_large) - sizeof(int) + size) = 0xdeadbeaf;
 			return (char *)p + sizeof(struct unit_head_large) - sizeof(int);
 		} else {
-			ShowFatalError("Memory manager::memmgr_alloc failed.\n");
+			ShowFatalError("Memory manager::memmgr_alloc failed (allocating %d+%d bytes at %s:%d).\n", sizeof(struct unit_head_large), size, file, line);
 			exit(1);
 		}
 	}
@@ -317,7 +317,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func ) {
 		}
 	}
 	// Ç±Ç±Ç…óàÇƒÇÕÇ¢ÇØÇ»Ç¢ÅB
-	ShowFatalError("Memory manager::memmgr_malloc() serious error.\n");
+	ShowFatalError("Memory manager::memmgr_malloc() serious error (allocating %d+%d bytes at %s:%d)\n", sizeof(struct unit_head_large), size, file, line);
 	memmgr_info();
 	exit(1);
 	return NULL;
