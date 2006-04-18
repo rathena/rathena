@@ -27,6 +27,7 @@
 
 =========================
 04/18
+	* Some more fixes on the Bio Lab mobs [Playtester]
 	* Fixed Laurell's mode [Playtester]
 	* Updated Juperos Mobs, they now have correct kRO Sakray stats [Playtester]
 	* Fixed elements/race/size of all Juperos mobs [Playtester]
