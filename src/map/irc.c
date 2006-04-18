@@ -279,6 +279,7 @@ void irc_parse_sub(int fd, char *incoming_string)
 					if(get_access(source_nick)<ACCESS_OP)
 						sprintf(send_string,"NOTICE %s :Access Denied",source_nick);
 					else {
+						sprintf(send_string,"%s: %s",source_nick,cmdargs);
 						intif_GMmessage(send_string,strlen(send_string)+1,0);
 						sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
 					}
