@@ -10872,7 +10872,6 @@ int run_script_main(struct script_state *st)
 		if(st->oid && st->rid && (bl = map_id2bl(st->oid))){
 			if(bl->type == BL_PC){
 				clif_sendfakenpc(((TBL_PC *)bl),dummy_npc_id);
-				st->oid = dummy_npc_id;
 			} else if(bl->type == BL_NPC){
 				if(npc_checknear(((TBL_PC *)bl), bl->id))
 					clif_sendfakenpc(((struct map_session_data *)bl),st->oid);
@@ -10975,7 +10974,7 @@ int run_script_main(struct script_state *st)
 		{
 			struct map_session_data *sd=map_id2sd(st->rid);
 			st->pos=-1;
-			if(sd && sd->npc_id==st->oid){
+			if(sd && (sd->npc_id==st->oid || sd->state.using_fake_npc)){
 				if(sd->state.using_fake_npc){
 					clif_clearchar_id(sd->npc_id, 0, sd->fd);
 					sd->state.using_fake_npc = 0;
