@@ -1484,7 +1484,9 @@ int mob_timer_delete(int tid, unsigned int tick, int id, int data)
 	if (bl->type != BL_MOB)
 		return 0; //??
 //for Alchemist CANNIBALIZE [Lupus]
+	((TBL_MOB*)bl)->deletetimer = -1;
 	unit_remove_map(bl, 3);
+	unit_free(bl);
 	return 0;
 }
 

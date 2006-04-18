@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/18
+	* Fixed the delete_timer (@summons, alchemist plants) not invoking
+	  unit_free, hence causing memory leaks and the like. [Skotlex]
+	* Applied jA's patch to fix a bug in the scripting engine in regards to
+	  priority of operators. Thanks to End of Exam for the information. [Skotlex]
 	* Removed message 592 from trade.c [Skotlex]
 	* Added support for disabling mapflags on a mapflag line: [Skotlex]
 	  comodo.gat	mapflag	nomemo <- turns on nomemo mapflag
