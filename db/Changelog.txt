@@ -26,10 +26,11 @@
 	-----
 
 =========================
-04/16
+04/18
 	* Fixed Butcher's weapon level thanks to gyunwoo23 [Playtester]
 	- also fixed Event Nile Rose missing a slot
 	* Fixed new healing items not being usuable by new classes [Playtester]
+04/16
 	* Fixed knives being equipable by Taekwon and Star Gladiator [Playtester]
 	* Fixed jname of Photon Cannon [Playtester]
 	* Fixed slots of Butcher thanks to gyunwoo23 [Playtester]

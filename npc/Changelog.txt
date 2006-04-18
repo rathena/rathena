@@ -27,8 +27,9 @@ Nexon
 
 Date		Added
 ======
-04/16
+04/18
 	* Fixed custom Jobmaster not rebirthing Crusaders on a Pecopeco [Playtester]
+04/16
 	* Updated lhz_fild03 according to info from kRO thanks to RockmanEXE [Playtester]
 	* Whoops, forgot to remove clone_arena from the scripts_eaac.conf. [erKURITA]
 	* Enabled import: line on scripts_main.conf for scritps_eaac.conf. The scripts
