@@ -214,6 +214,9 @@ void irc_parse_sub(int fd, char *incoming_string)
 	char cmdargs[256];
 
 	int users=0;
+	int i=0;
+
+	struct map_session_data **allsd;
 	
 	memset(source,'\0',256);
 	memset(command,'\0',256);
@@ -274,15 +277,29 @@ void irc_parse_sub(int fd, char *incoming_string)
 					if(get_access(source_nick)<ACCESS_OP)
 						sprintf(send_string,"NOTICE %s :Access Denied",source_nick);
 					else {
-						sprintf(send_string,"%s: %s",source_nick,cmdargs);
 						intif_GMmessage(send_string,strlen(send_string)+1,0);
 						sprintf(send_string,"NOTICE %s :Message Sent",source_nick);
 					}
 					irc_send(send_string);
+				// Number of users online [Zido]
 				} else if(strcmpi(cmdname,"users")==0) {
 					map_getallusers(&users);
 					sprintf(send_string,"PRIVMSG %s :Users Online: %d",irc_channel,users);
 					irc_send(send_string);
+				// List all users online [Zido]
+				} else if(strcmpi(cmdname,"who")==0) {
+					allsd=map_getallusers(&users);
+					if(users>0) {
+					sprintf(send_string,"NOTICE %s :%d Users Online",source_nick,users);
+					irc_send(send_string);
+						for(i=0;i<users;i++) {
+							sprintf(send_string,"NOTICE %s :Name: \"%s\"",source_nick,allsd[i]->status.name);
+							irc_send(send_string);
+						}
+					} else {
+						sprintf(send_string,"NOTICE %s :No Users Online",source_nick);
+						irc_send(send_string);
+					}
 				}
 			}
 
