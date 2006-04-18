@@ -27,6 +27,7 @@
 
 =========================
 04/16
+	* Fixed Butcher's weapon level thanks to gyunwoo23 [Playtester]
 	* Fixed new healing items not being usuable by new classes [Playtester]
 	* Fixed knives being equipable by Taekwon and Star Gladiator [Playtester]
 	* Fixed jname of Photon Cannon [Playtester]
