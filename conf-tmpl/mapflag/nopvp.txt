@@ -47,13 +47,13 @@ payon_in01.gat	mapflag	pvp	off
 payon_in02.gat	mapflag	pvp	off
 payon_in03.gat	mapflag	pvp	off
 payon.gat	mapflag	pvp	off
-pay_arche.gat	mapflag pvp	off
+pay_arche.gat	mapflag	pvp	off
 prt_are_in.gat	mapflag	pvp	off
 prt_are01.gat	mapflag	pvp	off
 prt_castle.gat	mapflag	pvp	off
 prt_church.gat	mapflag	pvp	off
 prt_in.gat	mapflag	pvp	off
-prontera.gat	mapflag pvp	off
+prontera.gat	mapflag	pvp	off
 sec_in01.gat	mapflag	pvp	off
 sword_1-1.gat	mapflag	pvp	off
 sword_2-1.gat	mapflag	pvp	off
