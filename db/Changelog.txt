@@ -27,6 +27,7 @@
 
 =========================
 04/19
+	* Fixed a zeny exploit by lowering price of fire cracker [Playtester]
 	* Fixed Attack of Niflheim Mobs being way too low [Playtester]
 	* Reverted the delay for Arrow Shower and Double Strafe to 100ms [Skotlex]
 	* Reverted the cast time for pick stone to 500ms, no delay. [Skotlex]
