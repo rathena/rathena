@@ -69,16 +69,16 @@ Gender: Gender restriction. 0 is female, 1 is male, 2 for both.
 
 Loc: Equipment's placement. Values are:
 
-	2^0 001 = Lower Head
-	2^9 512 = Middle Head
-	2^8 256 = Top head
-	2^1 002 = Right hand
-	2^5 032 = Left hand
-	2^2 004 = mantle
-	2^4 016 = armor
-	2^6 064 = boots
-	2^3 008 = Acc 1
-	2^7 128 = Acc 2
+	2^8 256 = Upper Headgear
+	2^9 512 = Middle Headgear
+	2^0 001 = Lower Headgear
+	2^4 016 = Armor
+	2^1 002 = Weapon
+	2^5 032 = Shield
+	2^2 004 = Garment
+	2^6 064 = Footgear
+	2^3 008 = Accessory 1
+	2^7 128 = Accessory 2
 
 wLV: Weapon level.
 eLV: Base level required to be able to equip.

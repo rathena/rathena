@@ -2141,7 +2141,7 @@
 //
 7525,Summer_Festival_Ticket,Summer Festival Ticket,3,,10,10,,,,,,,,,,,,,{}
 7526,Application,Application,3,,10,0,,,,,,,,,,,,,{}
-7527,Unknown,Unknown7527,3,,10,100,,,,,,,,,,,,,{}
+7527,Unknown7527,Unknown7527,3,,10,100,,,,,,,,,,,,,{}
 7528,Lottery_Ticket,Lottery Ticket,3,,10,0,,,,,,,,,,,,,{}
 7529,Stolen_Sandal,Stolen Sandal,3,,10,0,,,,,,,,,,,,,{}
 7530,Amatsu_Tour_Guide,Amatsu Tour Guide,3,,10,0,,,,,,,,,,,,,{}
@@ -2442,7 +2442,99 @@
 13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Fire; }
 13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus2 bAddEff,Eff_Poison,50; }
 // Ninja Kazema Shurikens
-13300,Kazemashuriken_Beneki,Kazemashuriken Beneki,4,90000,,3000,150,,1,0,0x02000000,7,2,2,4,65,1,22,{ bonus bAtkEle,Ele_Wind; bonus bAgi,-1; bonus bDex,-2; }
-13301,Kazemashuriken_Daisharin,Kazemashuriken Daisharin,4,40000,,2500,50,,1,3,0x02000000,7,2,2,4,42,1,22,{ bonus2 bAddEff,Eff_Bleeding,500; }
-13302,Kazemashuriken_Daisharin_,Kazemashuriken Daisharin,4,40000,,2500,50,,1,4,0x02000000,7,2,2,4,42,1,22,{ bonus2 bAddEff,Eff_Bleeding,500; }
-13303,Kazemashuriken_Rekka,Kazemashuriken Rekka,4,78000,,1500,185,,1,0,0x02000000,7,2,2,4,55,1,22,{ bonus bDex,-2; bonus bAtkEle,3; bonus4 bAutoSpell,19,5,20,1; }
+13300,Kazema_Shuriken_Beneki,Kazema Shuriken Beneki,4,90000,,3000,150,,1,0,0x02000000,7,2,2,4,65,1,22,{ bonus bAtkEle,Ele_Wind; bonus bAgi,-1; bonus bDex,-2; }
+13301,Kazema_Shuriken_Daisharin,Kazema Shuriken Daisharin,4,40000,,2500,50,,1,3,0x02000000,7,2,2,4,42,1,22,{ bonus2 bAddEff,Eff_Bleeding,500; }
+13302,Kazema_Shuriken_Daisharin_,Kazema Shuriken Daisharin,4,40000,,2500,50,,1,4,0x02000000,7,2,2,4,42,1,22,{ bonus2 bAddEff,Eff_Bleeding,500; }
+13303,Kazema_Shuriken_Rekka,Kazema Shuriken Rekka,4,78000,,1500,185,,1,0,0x02000000,7,2,2,4,55,1,22,{ bonus bDex,-2; bonus bAtkEle,3; bonus4 bAutoSpell,19,5,20,1; }
+
+
+
+// Temp Plugs. Please check http://opensvn.csie.org/EnglishTranslation/data/ for info about the items.
+
+5148,Unknown5148,Unknown5148,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{}
+5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{}
+5150,Event_Hat,Event Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,0,{}
+
+7547,Soccer_Ball,Soccer Ball,3,,10,10,,,,,,,,,,,,,{}
+7548,Soccer_Shoes,Soccer Shoes,3,,10,10,,,,,,,,,,,,,{}
+7549,Brazilian_Flag,Brazilian Flag,3,,10,10,,,,,,,,,,,,,{}
+7550,6.13_Ticket,6.13 Ticket,3,,10,10,,,,,,,,,,,,,{}
+7551,6.18_Ticket,6.18 Ticket,3,,10,10,,,,,,,,,,,,,{}
+7552,6.22_Ticket,6.22 Ticket,3,,10,10,,,,,,,,,,,,,{}
+
+4332,Waste_Stove_Card,Waste Stove Card,6,,10,10,,,,,,,,16,,,,,{}
+4333,Venomous_Card,Venomous Card,6,,10,10,,,,,,,,16,,,,,{}
+4334,Noxious_Card,Noxious Card,6,,10,10,,,,,,,,4,,,,,{}
+4335,Pitman_Card,Pitman Card,6,,10,10,,,,,,,,16,,,,,{}
+4336,Ungoliant_Card,Ungoliant Card,6,,10,10,,,,,,,,769,,,,,{}
+4337,Porcellio_Card,Porcellio Card,6,,10,10,,,,,,,,16,,,,,{}
+4338,Obsidian_Card,Obsidian Card,6,,10,10,,,,,,,,16,,,,,{}
+4339,Mineral_Card,Mineral Card,6,,10,10,,,,,,,,16,,,,,{}
+4340,Teddy_Bear_Card,Teddy Bear Card,6,,10,10,,,,,,,,32,,,,,{}
+4341,Metaling_Card,Metaling Card,6,,10,10,,,,,,,,2,,,,,{}
+4342,RSX_0806_Card,RSX 0806 Card,6,,10,10,,,,,,,,16,,,,,{}
+4343,Holden_Card,Holden Card,6,,10,10,,,,,,,,769,,,,,{}
+4344,Anopheles_Card,Anopheles Card,6,,10,10,,,,,,,,136,,,,,{}
+4345,Hill_Wind_Card,Hill Wind Card,6,,10,10,,,,,,,,16,,,,,{}
+4346,Egnigem_Cenia_Card,Egnigem Cenia Card,6,,10,10,,,,,,,,16,,,,,{}
+4347,Armeyer_Dinze_Card,Armeyer Dinze Card,6,,10,10,,,,,,,,16,,,,,{}
+4348,Wikebine_Tres_Card,Wikebine Tres Card,6,,10,10,,,,,,,,136,,,,,{}
+4349,Errende_Ebecee_Card,Errende Ebecee Card,6,,10,10,,,,,,,,136,,,,,{}
+4350,Laurell_Weinder_Card,Laurell Weinder Card,6,,10,10,,,,,,,,16,,,,,{}
+4351,Kavach_Icarus_Card,Kavach Icarus Card,6,,10,10,,,,,,,,16,,,,,{}
+4352,General_Egnigem_Cenia_Card,General Egnigem Cenia Card,6,,10,10,,,,,,,,16,,,,,{}
+4353,Remover_Card,Remover Card,6,,10,10,,,,,,,,16,,,,,{}
+4354,Gemini-S58_Card,Gemini-S58 Card,6,,10,10,,,,,,,,769,,,,,{}
+4355,Gremlin_Card,Gremlin Card,6,,10,10,,,,,,,,136,,,,,{}
+4356,Beholder_Card,Beholder Card,6,,10,10,,,,,,,,136,,,,,{}
+4357,Lord_Knight_Card,Lord Knight Card,6,,10,10,,,,,,,,769,,,,,{}
+4358,Seyren_Windsor_Card,Seyren Windsor Card,6,,10,10,,,,,,,,32,,,,,{}
+4359,Assassin_Cross_Card,Assassin Cross Card,6,,10,10,,,,,,,,2,,,,,{}
+4360,Eremes_Guile_Card,Eremes Guile Card,6,,10,10,,,,,,,,2,,,,,{}
+4361,Whitesmith_Card,Whitesmith Card,6,,10,10,,,,,,,,2,,,,,{}
+4362,Howard_Alt-Eisen_Card,Howard Alt-Eisen Card,6,,10,10,,,,,,,,2,,,,,{}
+4363,High_Priest_Card,High Priest Card,6,,10,10,,,,,,,,136,,,,,{}
+4364,Margaretha_Solin_Card,Margaretha Solin Card,6,,10,10,,,,,,,,769,,,,,{}
+4365,High_Wizard_Card,High Wizard Card,6,,10,10,,,,,,,,769,,,,,{}
+4366,Kathryne_Keyron_Card,Kathryne Keyron Card,6,,10,10,,,,,,,,769,,,,,{}
+4367,Sniper_Card,Sniper Card,6,,10,10,,,,,,,,2,,,,,{}
+4368,Cecil_Damon_Card,Cecil Damon Card,6,,10,10,,,,,,,,2,,,,,{}
+4369,Venatu_Card,Venatu Card,6,,10,10,,,,,,,,16,,,,,{}
+4370,Dimik_Card,Dimik Card,6,,10,10,,,,,,,,32,,,,,{}
+4371,Archdam_Card,Archdam Card,6,,10,10,,,,,,,,16,,,,,{}
+4372,Bacsojin_Card,Bacsojin Card,6,,10,10,,,,,,,,2,,,,,{}
+4373,Chung_E_Card,Chung E Card,6,,10,10,,,,,,,,32,,,,,{}
+4374,Vesper_Card,Vesper Card,6,,10,10,,,,,,,,2,,,,,{}
+4375,Orc_Baby_Card,Orc Baby Card,6,,10,10,,,,,,,,4,,,,,{}
+4376,Lady_Tany_Card,Lady Tany Card,6,,10,10,,,,,,,,64,,,,,{}
+4377,Grove_Card,Grove Card,6,,10,10,,,,,,,,136,,,,,{}
+4378,Gold_Acidus_Card,Gold Acidus Card,6,,10,10,,,,,,,,64,,,,,{}
+4379,Blue_Acidus_Card,Blue Acidus Card,6,,10,10,,,,,,,,769,,,,,{}
+4380,Red_Ferus_Card,Red Ferus Card,6,,10,10,,,,,,,,4,,,,,{}
+4381,Green_Ferus_Card,Green Ferus Card,6,,10,10,,,,,,,,64,,,,,{}
+4382,Yellow_Novus_Card,Yellow Novus Card,6,,10,10,,,,,,,,16,,,,,{}
+4383,Red_Novus_Card,Red Novus Card,6,,10,10,,,,,,,,16,,,,,{}
+4384,Hydro_Card,Hydro Card,6,,10,10,,,,,,,,136,,,,,{}
+4385,Dragon_Egg_Card,Dragon Egg Card,6,,10,10,,,,,,,,136,,,,,{}
+4386,Detale_Card,Detale Card,6,,10,10,,,,,,,,16,,,,,{}
+4387,Ancient_Mimic_Card,Ancient Mimic Card,6,,10,10,,,,,,,,16,,,,,{}
+4388,Deathword_Card,Deathword Card,6,,10,10,,,,,,,,16,,,,,{}
+4389,Plasma_Card,Plasma Card,6,,10,10,,,,,,,,136,,,,,{}
+4390,Breeze_Card,Breeze Card,6,,10,10,,,,,,,,2,,,,,{}
+4391,Retribution_Card,Retribution Card,6,,10,10,,,,,,,,136,,,,,{}
+4392,Observation_Card,Observation Card,6,,10,10,,,,,,,,136,,,,,{}
+4393,Shelter_Card,Shelter Card,6,,10,10,,,,,,,,136,,,,,{}
+4394,Solace_Card,Solace Card,6,,10,10,,,,,,,,2,,,,,{}
+4395,Thanatos_Maero_Card,Thanatos Maero Card,6,,10,10,,,,,,,,2,,,,,{}
+4396,Thanatos_Odium_Card,Thanatos Odium Card,6,,10,10,,,,,,,,32,,,,,{}
+4397,Thanatos_Despero_Card,Thanatos Despero Card,6,,10,10,,,,,,,,32,,,,,{}
+4398,Thanatos_Dolor_Card,Thanatos Dolor Card,6,,10,10,,,,,,,,2,,,,,{}
+4399,Thanatos_Card,Thanatos Card,6,,10,10,,,,,,,,2,,,,,{}
+4400,Aliza_Card,Aliza Card,6,,10,10,,,,,,,,16,,,,,{}
+4401,Alicel_Card,Alicel Card,6,,10,10,,,,,,,,16,,,,,{}
+4402,Aliot_Card,Aliot Card,6,,10,10,,,,,,,,2,,,,,{}
+4403,Kiel_D-01_Card,Kiel D-01 Card,6,,10,10,,,,,,,,2,,,,,{}
+4404,Skogul_Card,Skogul Card,6,,10,10,,,,,,,,16,,,,,{}
+4405,Frus_Card,Frus Card,6,,10,10,,,,,,,,2,,,,,{}
+4406,Skeggiold_Card,Skeggiold Card,6,,10,10,,,,,,,,2,,,,,{}
+4407,Valkyrie_Randgris_Card,Valkyrie Randgris Card,6,,10,10,,,,,,,,2,,,,,{}
