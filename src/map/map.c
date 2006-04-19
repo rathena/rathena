@@ -1402,13 +1402,13 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 	}
 	if (rx >= 0 && ry >= 0) {
 		tries = rx2*ry2;
-		if (tries > 50) tries = 50;
+		if (tries > 100) tries = 100;
 	} else
 		tries = 100;
 	
 	while(tries--) {
 		*x = (rx >= 0)?(rand()%rx2-rx+bx):(rand()%(map[m].xs-2)+1);
-		*y = (ry >= 0)?(rand()%rx2-ry+by):(rand()%(map[m].ys-2)+1);
+		*y = (ry >= 0)?(rand()%ry2-ry+by):(rand()%(map[m].ys-2)+1);
 		
 		if (map_getcell(m,*x,*y,CELL_CHKREACH))
 		{
