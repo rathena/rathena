@@ -1,0 +1,400 @@
+//| ~~~~~~~~~~~ Information ~~~~~~~~~~~
+//| | This is a simple banking npc,   |
+//| | which uses coins to store zeny  |
+//| | instead of using those global   |
+//| | variables :P 		      |
+//| |				      |
+//| | It's fully customizable, you    |
+//| | can exchange the coin ID used   |
+//| | at will, it won't affect the    |
+//| | script whatsoever =3	      |
+//| |				      |
+//| | The prices can also be set, the |
+//| | way you like the most, as they  |
+//| | won't affect the script either  |
+//| | 				      |
+//| | No db/client files modification |
+//| | needed, just "Plug&Play" ;P     |
+//| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//| Revision:
+//| v.1.0: Released script. No problems or bugs found, at least :P
+//| 	It's your duty to find them now if there are.
+//|	@minvalue must contain the coin price of the lowest coin value
+//|	in order for the script to work correctly. By default it's set
+//|	to the bronze coin
+
+//| Revision:
+//| v.2.0: Added a Mix option in the Zeny to Coin function,
+//| 	where it allows you to split your desired Zeny into
+//| 	the coins you wish to obtain, without having to go 
+//| 	through the other functions to obtain them all. That way
+//|	you can get them all at once ;3
+//|
+//|	It also displays the total zeny being exchanged,
+//|	the total coins obtained and the difference between
+//|	the amount of zeny you've inputted and the sum of
+//| 	the coin's values.
+
+//| Upcomming possible updates:
+//| v.3.0: Adding a refining system, so you can gather ore and the likes
+//| 	to make your own coins. They will have a failure chance
+//| 	of course. You will need, for now: 10 ores of the type of 
+//| 	coin you wish, a mini furnace, an anvil depending on what
+//|	You're crafting, and a hammer according to it.
+
+//| Copyright © 2006 erKURITA. All Rights Reserved
+
+prontera.gat,155,188,3	script	Zacariath Madhat	872,{
+
+
+//|~~~~~~~~~ Settings of the NPC: ~~~~~~~~~
+set @npcname$,"^999999[Zach]^000000";	//|
+set @bronzeprice,10000;			//|
+set @silverprice,100000;		//|
+set @goldprice,1000000;			//|
+set @mithrilprice,10000000;		//|
+set @bronzecoinid,673;			//|
+set @silvercoinid,677;			//|
+set @goldcoinid,671;			//|
+set @mithrilcoinid,674;			//|
+set @minvalue,@bronzeprice;		//|		
+//|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mes @npcname$;
+mes "Hi "+strcharinfo(0)+", I'm this town's banker";
+mes "I can allow you to exchange your zeny into useful and handy coins, which you can use to make trades between players, or just save them";
+next;
+mes @npcname$;
+mes "^996600Bronze^000000 Coins are worth "+@bronzeprice+"z, ^999999Silver^000000 Coins are worth "+@silverprice+"z, ^FFCC00Gold^000000 Coins "+@goldprice+"z, ^CCCCCCMithril^000000 Coins are worth "+@mithrilprice+"z";
+next;
+goto L_Menu;
+
+L_Menu:
+mes @npcname$;
+mes "What do you want to do then?";
+menu "Exchange my coins into zeny",L_CoinZeny,"Exchange my zeny into coins",L_ZenyCoin,"Nothing for now, sorry",L_End;
+
+//| Here starts the Coin to Zeny Exchange
+
+L_CoinZeny:
+
+	next;
+	mes @npcname$;
+	mes "First than anything, what kind of coins are you going to exchange?";
+	menu "Bronze Coins",L_Bronze,"Silver Coins",L_Silver,"Gold Coins",L_Gold,"Mithril Coins",L_Mithril,"None for now",L_Menu;
+
+
+	L_Bronze:
+		callsub L_Coincheckout,@bronzecoinid,@bronzeprice;
+		goto L_CoinZeny;
+
+	L_Silver:
+		callsub L_Coincheckout,@silvercoinid,@silverprice;
+		goto L_CoinZeny;
+
+	L_Gold:
+		callsub L_Coincheckout,@goldcoinid,@goldprice;
+		goto L_CoinZeny;
+
+	L_Mithril:
+		callsub L_Coincheckout,@mithrilcoinid,@mithrilprice;
+		goto L_CoinZeny;
+
+L_Coincheckout:
+
+	set @itemid,getarg(0);
+	if (@itemid == @bronzecoinid) {
+		set @coinname$,"^996600Bronze^000000";
+		goto L_PreInputing;
+	} else if (@itemid == @silvercoinid) {
+		set @coinname$,"^999999Silver^000000";
+		goto L_PreInputing;
+	} else if (@itemid == @goldcoinid) {
+		set @coinname$,"^FFCC00Gold^000000";
+		goto L_PreInputing;
+	} else if (@itemid == @mithrilcoinid) {
+		set @coinname$,"^CCCCCCMithril^000000";
+		goto L_PreInputing;
+	} else
+	next;
+
+L_PreInputing:
+
+	mes @npcname$;
+	mes "Let's see, how many coins do you want to exchange?";
+	next;
+	goto L_Inputing;
+
+	L_Inputing:
+		input @coinamount;
+
+		if (@coinamount == 0) {
+			mes @npcname$;
+			mes "You didn't input any amount, please retry";
+			next;
+			goto L_Inputing;
+		} else if (countitem(@itemid) < @coinamount) {
+			mes @npcname$;
+			mes "You don't have enough coins, please get some";
+			next;
+			goto L_Menu;
+		} else
+
+		next;
+		mes @npcname$;
+		mes "So, you want to exchange "+@coinamount+" "+@coinname$+" ?";
+		menu "Yes, I want to exchange this much",L_Proceed,"No, I want to exchange something else",L_CoinZeny,"No, I want to input another number",L_Inputing,"No, I dont want to exchange anything",L_Menu;
+
+	L_Proceed:
+		next;
+		set @price,getarg(1)*@coinamount;
+		set Zeny,Zeny+@price;
+		delitem @itemid,@coinamount;
+		mes @npcname$;
+		mes "There we go, here's your money";
+		next;
+		return;
+
+//| Here starts the Zeny to Coin exchange.
+
+L_ZenyCoin:
+	next;
+	if (MaxWeight*50/100 < Weight) {
+		if (MaxWeight*90/100 < Weight) {
+			mes @npcname;
+			mes "Sorry but you have more than 90% weight. Your coins might drop. I can't give you anything.";
+			next;
+			goto L_Menu;
+		} else
+		mes @npcname$;
+		mes "You have 50% or more weight, do you still want to continue?";
+		menu "Yes",L_ContinueZenyCoin,"No, thanks",L_Menu;
+	}
+L_ContinueZenyCoin:
+	mes @npcname$;
+	mes "First, how much zeny do you want to exchange";
+	callsub L_Inputingzeny;
+	callsub L_Zenycoins;
+	next;
+	mes @npcname$;
+	mes "You can have, with "+@zenyamount+":";
+	mes "^996600"+@bronzezeny+"^000000 Bronze coins";
+	mes "^999999"+@silverzeny+"^000000 Silver coins";
+	mes "^FFCC00"+@goldzeny+"^000000 Gold coins";
+	mes "or";
+	mes "^CCCCCC"+@mithrilzeny+"^000000 Mithril coins";
+	next;
+	if (@zenyamount < @minvalue) goto L_Moremoney;
+	goto L_ZenyCoin2;
+
+	L_ZenyCoin2:
+		mes @npcname$;
+		mes "Which ones do you want? Or do you want a mix of them?";
+		menu "I want the bronze ones",L_Bronzes,"I want the silver ones",L_Silvers,"I want the gold ones",L_Golds,"I want the mithril ones",L_Mithrils,"I want a mix of them",L_Mix,"Nothing for now, sorry",L_Menu;
+
+		L_Bronzes:
+			if (@bronzezeny == 0) goto L_Moremoney;
+			callsub L_Zenycheckout,@bronzecoinid,@bronzeprice,@bronzezeny;
+			goto L_Menu;
+
+		L_Silvers:
+			if (@silverzeny == 0) goto L_Moremoney;
+			callsub L_Zenycheckout,@silvercoinid,@silverprice,@silverzeny;
+			goto L_Menu;
+
+		L_Golds:
+			if (@goldzeny == 0) goto L_Moremoney;
+			callsub L_Zenycheckout,@goldcoinid,@goldprice,@goldzeny;
+			goto L_Menu;
+
+		L_Mithrils:
+			if (@mithrilzeny == 0) goto L_Moremoney;
+			callsub L_Zenycheckout,@mithrilcoinid,@mithrilprice,@mithrilzeny;
+			goto L_Menu;
+
+L_Zenycheckout:
+	next;
+	set @itemid,getarg(0);
+	set @pricea,getarg(1)*getarg(2);
+	getitem @itemid,getarg(2);
+	set Zeny,Zeny-@pricea;
+	mes @npcname$;
+	mes "There you go, here's your coins";
+	next;
+	return;
+
+L_Zenycoins:
+	set @bronzezeny,@zenyamount/@bronzeprice;
+	set @silverzeny,@zenyamount/@silverprice;
+	set @goldzeny,@zenyamount/@goldprice;
+	set @mithrilzeny,@zenyamount/@mithrilprice;
+	return;
+
+L_Inputingzeny:
+
+	input @zenyamount;
+	if (Zeny == 0) {
+		mes @npcname$;
+		mes "You don't have any Zeny left. I can't do anything. Get some Zeny first";
+		next;
+		goto L_Menu;
+	} else if (@zenyamount == 0) {
+		mes @npcname$;
+		mes "You didn't input any amount, please retry";
+		next;
+		goto L_Inputingzeny;
+	} else if (@zenyamount > Zeny) {
+		mes @npcname$;
+		mes "The inputted zeny amount is bigger than your actual zeny amount";
+		mes "Please re-entry another amount";
+		next;
+		goto L_Inputingzeny;
+
+	} else return;
+
+//| Other labels
+
+L_Moremoney:
+	mes @npcname$;
+	mes "You need to get more zeny, I can't give you anything with "+@zenyamount+"z, sorry";
+	next;
+	goto L_Menu;
+
+L_End:
+	next;
+	mes @npcname$;
+	mes "Good to see you and hope to see you again. Bye";
+	close;
+
+
+//| Mix function
+
+L_Mix:
+	next;
+	mes @npcname$;
+	mes "Ok, let's start with ^996600Bronze^000000 coins";
+	next;
+	mes @npcname$;
+	mes "How many coins do you want?";
+	input @bronzecoins;
+	next;
+	set @totalzeny,@bronzecoins*@bronzeprice;
+	set @totalcoins,@bronzecoins;
+	mes "Zeny Amount Inputted:   ^000066"+@zenyamount+"^000000";
+	mes "Coins:";
+	mes "   ^996600Bronze^000000:   "+@bronzecoins+"             ^CC0000"+@bronzecoins*@bronzeprice+"^000000";
+	mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
+	if (@totalzeny > @zenyamount) {
+		mes "TOTAL Zeny: "+@totalcoins+"           - ^CC0000"+@totalzeny+"^000000";
+		mes "Zeny Left:  "+@zenyammount-@totalzeny;
+		goto L_Overzeny;
+	} else 
+	mes "TOTAL Zeny: "+@totalcoins+"         ^00CC00"+@totalzeny+"^000000";
+	mes "Zeny Left:  "+@zenyammount-@totalzeny;
+	next;
+	if (@totalzeny > @zenyamount) 
+	mes @npcname$;
+	mes "Is this enough or do you want more?";
+	menu "It's enough, thanks",L_Payoff,"No, I want some more",-;
+	next;
+	mes @npcname$;
+	mes "Now ^999999Silver^000000 coins. How many coins do you want?";
+	next;
+	input @silvercoins;
+	next;
+	set @totalzeny,@bronzecoins*@bronzeprice+@silvercoins*@silverprice;
+	set @totalcoins,@bronzecoins+@silvercoins;
+	mes "Zeny Amount Inputted:   ^000066"+@zenyamount+"^000000";
+	mes "Coins:";
+	mes "   ^996600Bronze^000000:   "+@bronzecoins+"             ^CC0000"+@bronzecoins*@bronzeprice+"^000000";
+	mes "   ^999999Silver^000000:   "+@silvercoins+"	     ^CC0000"+@silvercoins*@silverprice+"^000000";
+	mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
+	if (@totalzeny > @zenyamount) {
+		mes "TOTAL Zeny: "+@totalcoins+"        - ^CC0000"+@totalzeny+"^000000";
+		mes "Zeny Left:  "+@zenyammount-@totalzeny;
+		goto L_Overzeny;
+	} else 
+	mes "TOTAL Zeny: "+@totalcoins+"           ^00CC00"+@totalzeny+"^000000";
+	mes "Zeny Left:  "+@zenyammount-@totalzeny;
+	next;
+	if (@totalzeny > @zenyamount) goto L_Overzeny;
+	mes @npcname$;
+	mes "Is this enough or do you want more?";
+	menu "It's enough, thanks",L_Payoff,"No, I want some more",-;
+	next;
+	mes @npcname$;
+	mes "Now ^FFCC00Gold^000000 coins. How many coins do you want?";
+	input @goldcoins;
+	next;
+	set @totalzeny,@bronzecoins*@bronzeprice+@silvercoins*@silverprice+@goldcoins*@goldprice;
+	set @totalcoins,@bronzecoins+@silvercoins+@goldcoins;
+	mes "Zeny Amount Inputted:      ^000066"+@zenyamount+"^000000";
+	mes "Coins:";
+	mes "   ^996600Bronze^000000:   "+@bronzecoins+"               ^CC0000"+@bronzecoins*@bronzeprice+"^000000";
+	mes "   ^999999Silver^000000:   "+@silvercoins+"	       ^CC0000"+@silvercoins*@silverprice+"^000000";
+	mes "   ^FFCC00Gold^000000:     "+@goldcoins+"                 ^CC0000"+@goldcoins*@goldprice+"^000000";
+	mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
+	if (@totalzeny > @zenyamount) {
+		mes "TOTAL Zeny: "+@totalcoins+"          - ^CC0000"+@totalzeny+"^000000";
+		mes "Zeny Left:  "+@zenyammount-@totalzeny;
+		goto L_Overzeny;
+	} else 
+	mes "TOTAL Zeny: "+@totalcoins+"         ^00CC00"+@totalzeny+"^000000";
+	mes "Zeny Left:  "+@zenyammount-@totalzeny;
+	next;
+	if (@totalzeny > @zenyamount) goto L_Overzeny;
+	mes @npcname$;
+	mes "Is this enough or do you want more?";
+	menu "It's enough, thanks",L_Payoff,"No, I want some more",-;
+	next;
+	mes @npcname$;
+	mes "Now ^CCCCCCMithril^000000 Coins. How many coins do you want?";
+	input @mithrilcoins;
+	next;
+	set @totalzeny,@bronzecoins*@bronzeprice+@silvercoins*@silverprice+@goldcoins*@goldprice+@mithrilcoins*@mithrilprice;
+	set @totalcoins,@bronzecoins+@silvercoins+@goldcoins+@mithrilcoins;
+	mes "Zeny Amount Inputted:      ^000066"+@zenyamount+"^000000";
+	mes "Coins:";
+	mes "   ^996600Bronze^000000:   "+@bronzecoins+"               ^CC0000"+@bronzecoins*@bronzeprice+"^000000";
+	mes "   ^999999Silver^000000:   "+@silvercoins+"               ^CC0000"+@silvercoins*@silverprice+"^000000";
+	mes "   ^FFCC00Gold^000000:     "+@goldcoins+"                 ^CC0000"+@goldcoins*@goldprice+"^000000";
+	mes "   ^CCCCCCMithril^000000:  "+@mithrilcoins+"              ^CC0000"+@mithrilcoins*@mithrilprice+"^000000";
+	mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
+	if (@totalzeny > @zenyamount) {
+		mes "TOTAL Zeny: "+@totalcoins+"       - ^CC0000"+@totalzeny+"^000000";
+		mes "Zeny Left:  "+@zenyammount-@totalzeny;
+		goto L_Overzeny;
+	} else 
+	mes "TOTAL: "+@totalcoins+"         ^00CC00"+@totalzeny+"^000000";
+	mes "Zeny Left:  "+@zenyammount-@totalzeny;
+	next;
+	if (@totalzeny > @zenyamount) goto L_Overzeny;
+	mes @npcname$;
+	mes "Is this ok?: "+@bronzecoins+" bronze, "+@silvercoins+" silver, "+@goldcoins+" gold, "+@mithrilcoins+" mithril coins, for a total amount of "+@totalzeny;
+	menu "Yes, it's ok",L_Payoff,"No, I want to re-intro them",L_Mix,"Sorry, I dont want anything",L_Menu;
+
+L_Payoff:
+	next;
+	if (@zenyamount > Zeny) goto L_Overzeny;
+	set Zeny,Zeny-@totalzeny;
+	getitem 673,@bronzecoins;
+	getitem 677,@silvercoins;
+	getitem 671,@goldcoins;
+	getitem 674,@mithrilcoins;
+	mes @npcname$;
+	mes "There you go, here's your coins";
+	next;
+	set @bronzecoins,0;
+	set @silvercoins,0;
+	set @goldcoins,0;
+	set @mithrilcoins,0;
+	goto L_End;
+
+L_Overzeny:
+	next;
+	mes @npcname$;
+	mes "Sorry, I can't do anything else. Either the sum of all the coins you inputted is bigger than the zeny amount inputted, or the inputted amout of zeny is bigger that your total Zeny. Please retry";
+	next;
+	goto L_Menu;
+}
