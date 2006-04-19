@@ -27,6 +27,8 @@
 
 =========================
 04/19
+	* Reverted the delay for Arrow Shower and Double Strafe to 100ms [Skotlex]
+	* Reverted the cast time for pick stone to 500ms, no delay. [Skotlex]
 	* Fixed Roguemaster's Bow being equipable by Rogues [Playtester]
 04/18
 	* Some more fixes on the Bio Lab mobs [Playtester]
