@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/19
+	* Whoops, eAAC members made a mistake with scripts and I didn't notice => Quest Warper.txt [erKURITA]
 	* Added quest_warper.txt and banker.txt to npc\customs\eAAC_Scripts. [erKURITA]
 04/18
 	* Fixed custom Jobmaster not rebirthing Crusaders on a Pecopeco [Playtester]

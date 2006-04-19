@@ -4,7 +4,7 @@
 //= Old Warper 2 by Darkchild - Remade with quest format by DZeroX
 //= Huge Rewrite by Neouni
 //===== Current Version: ==========================================
-//= 1.5
+//= 1.6a
 //===== Compatible With: ==========================================
 //= Any eAthena Version
 //===== Description: ==============================================
@@ -35,6 +35,11 @@
 // - kafra storage code security added
 // - Healing scripts pricing added
 // - Heal Part script added
+//= 1.6 - Unfinished Dungeon variable menu's see *BETA* 1.6a comments
+//= 1.6a - Dungeon warp [Neouni]
+// - added option to add a extra fee for going down deeper into dungeon
+// partly by rebuilding the dungeon warping into variable menu's
+
 //=================================================================
 
 //========================Function=&=Script========================
@@ -106,8 +111,8 @@ set @GMmenu,select("Town Warping","Dungeon Warping","Healing full","Healing part
 	if (@GMmenu == 5)&&($QW_Stor == 1) callsub SSET,1;
 	if (@GMmenu == 6)&&($QW_GStor == 0) callsub GSSET,0;
 	if (@GMmenu == 6)&&($QW_GStor == 1) callsub GSSET,1;
-	if (@GMmenu == 7)&&($QW_Kpoint == 0) callsub Kpoint,0;
-	if (@GMmenu == 7)&&($QW_Kpoint == 1) callsub Kpoint,1;
+	if (@GMmenu == 7)&&($QW_KPoint == 0) callsub KPoint,0;
+	if (@GMmenu == 7)&&($QW_KPoint == 1) callsub KPoint,1;
 	if (@GMmenu == 8) goto Setprice;
 	close;
 	end;
@@ -138,9 +143,9 @@ GSSET:
 if (getarg(0) == 0) set $QW_GStor,1;
 if (getarg(0) == 1) set $QW_GStor,0;
 goto GM_Menu;
-Kpoint:
-if (getarg(0) == 0) set $QW_Kpoint,1;
-if (getarg(0) == 1) set $QW_Kpoint,0;
+KPoint:
+if (getarg(0) == 0) set $QW_KPoint,1;
+if (getarg(0) == 1) set $QW_KPoint,0;
 goto GM_Menu;
 
 
@@ -158,6 +163,9 @@ Setprice:
 //----------------Warp-Oversea-Price
 	if ($QW_OW_PRICE != 0) mes "Overseas - Warps are = ^00FF00 "+$QW_OW_PRICE+" ^000000";
 	if ($QW_OW_PRICE == 0) mes "Overseas - Warps are = ^FF0000 Free ^000000";
+//----------------Warp-Oversea-Price
+	if ($QW_DW_FEE != 0) mes "Dungeon level warp fee = ^00FF00 "+$QW_DW_FEE+" ^000000 zeny per level";
+	if ($QW_DW_FEE == 0) mes "Dungeon level warp fee = ^FF0000 NO ^000000 zeny per level";
 //----------------Heal-Full
 	if ($QW_HF_PRICE != 0) mes "Full Healing = ^00FF00 "+$QW_HF_PRICE+" ^000000";
 	if ($QW_HF_PRICE == 0) mes "Full Healing = ^FF0000 Free ^000000";
@@ -173,15 +181,16 @@ Setprice:
 //----------------Guild-Storage
 	if ($QW_GS_PRICE != 0) mes "Guild Storage = ^00FF00 "+$QW_GS_PRICE+" ^000000";
 	if ($QW_GS_PRICE == 0) mes "Guild Storage = ^FF0000 Free ^000000";
-set @GMmenu2,select("Basic - Warps","Advanced - Warps","Overseas - Warps","Full Healing","Part Healing","Storage","Guild Storage","Back","Exit");
+set @GMmenu2,select("Basic - Warps","Advanced - Warps","Overseas - Warps","Dungeon level warp fee","Full Healing","Part Healing","Storage","Guild Storage","Back","Exit");
 	if (@GMmenu2 == 1) goto BWprice;
 	if (@GMmenu2 == 2) goto AWprice;
 	if (@GMmenu2 == 3) goto OWprice;
-	if (@GMmenu2 == 4) goto FHprice;
-	if (@GMmenu2 == 5) goto PHprice;
-	if (@GMmenu2 == 6) goto Sprice;
-	if (@GMmenu2 == 7) goto GSprice;
-	if (@GMmenu2 == 8) goto GM_Menu;
+	if (@GMmenu2 == 4) goto DWfee;
+	if (@GMmenu2 == 5) goto FHprice;
+	if (@GMmenu2 == 6) goto PHprice;
+	if (@GMmenu2 == 7) goto Sprice;
+	if (@GMmenu2 == 8) goto GSprice;
+	if (@GMmenu2 == 9) goto GM_Menu;
 	close;
 	end;
 
@@ -207,6 +216,14 @@ OWprice:
 	if ($QW_OW_PRICE == 0) mes "Overseas - Warps are = ^FF0000 Free ^000000";
 	mes "Overseas - Warps are towns and dungeons overseas reachable by boat from alberta";
 	input $QW_OW_PRICE;
+	goto Setprice;
+
+DWfee:
+	if ($QW_DW_FEE != 0) mes "Dungeon level warp fee = ^00FF00 "+$QW_DW_FEE+" ^000000 zeny per level";
+	if ($QW_DW_FEE == 0) mes "Dungeon level warp fee = ^FF0000 NO ^000000 zeny per level";
+	mes "Dungeon warp fees are calculated by maps away from entrance of the dungeon times Dungeon warp fee";
+	mes "These costs are on top of the regular Warp costs";
+	input $QW_DW_FEE;
 	goto Setprice;
 
 FHprice:
@@ -268,554 +285,28 @@ L_town:
 
 L_dungeon:
 	callfunc "QWS_Darray";
-	
-// Expected maximum is set to 27, if you add  more options add a more ",@Dmenulist$[xx],-"
 
-	menu @Dmenulist$[0],-,@Dmenulist$[1],-,@Dmenulist$[2],-,@Dmenulist$[3],-,@Dmenulist$[4],-,@Dmenulist$[5],-,@Dmenulist$[6],-,@Dmenulist$[7],-,@Dmenulist$[8],-,@Dmenulist$[9],-,@Dmenulist$[10],-,@Dmenulist$[11],-,@Dmenulist$[12],-,@Dmenulist$[13],-,@Dmenulist$[14],-,@Dmenulist$[15],-,@Dmenulist$[16],-,@Dmenulist$[17],-,@Dmenulist$[18],-,@Dmenulist$[19],-,@Dmenulist$[20],-,@Dmenulist$[21],-,@Dmenulist$[22],-,@Dmenulist$[23],-,@Dmenulist$[24],-,@Dmenulist$[25],-,@Dmenulist$[26],-,@Dmenulist$[27],-;
+	set @DWMenu,select(@Dmenulist$[0],@Dmenulist$[1],@Dmenulist$[2],@Dmenulist$[3],@Dmenulist$[4],@Dmenulist$[5],@Dmenulist$[6],@Dmenulist$[7],@Dmenulist$[8],@Dmenulist$[9],@Dmenulist$[10],@Dmenulist$[11],@Dmenulist$[12],@Dmenulist$[13],@Dmenulist$[14],@Dmenulist$[15],@Dmenulist$[16],@Dmenulist$[17],@Dmenulist$[18],@Dmenulist$[19],@Dmenulist$[20],@Dmenulist$[21],@Dmenulist$[22],@Dmenulist$[23],@Dmenulist$[24],@Dmenulist$[25],@Dmenulist$[26],@Dmenulist$[27]);
 
-// if statement made because goto & callsub doesn't accept string
-// should rewrite after loading dungeon levels into an array
+	if (@pDmenuitems$[@Dmenuref[DWMenu-1]] == "Cancel") goto L_end;
+	set @DwarpMenu, (@Dmenuref[@DWMenu-1]);
 
-	if (Zeny<@pDprice[@Dmenuref[@menu-1]]) callsub L_Short_on_zeny,1;
-	set Zeny, Zeny-@pDprice[@Dmenuref[@menu-1]];	
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "abyss") goto abyss;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "ama_dun") goto ama_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "anthell") goto anthell;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "ayotaya_dun") goto ayotaya_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "iz_dun") goto iz_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "c_tower") goto c_tower;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "mjo_dun") goto mjo_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "prt_sewb") goto prt_sewb;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "einbech_dun") goto einbech_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "gefenia") goto gefenia;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "gef_dun") goto gef_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "gl_dun") goto gl_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "gon_dun") goto gon_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "hid_dun") goto hid_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "juperos") goto juperos;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "lighthalzen_dun") goto lighthalzen_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "mag_dun") goto mag_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "odintemple") goto odintemple;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "orcsdun") goto orcsdun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "pay_dun") goto pay_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "moc_pryd") goto moc_pryd;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "in_sphinx") goto in_sphinx;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "treasure") goto treasure;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "xmas_dun") goto xmas_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "tur_dun") goto tur_dun;
-	if (@pDmenugoto$[@Dmenuref[@menu-1]] == "um_dun") goto um_dun;
+	callfunc "QWS_DLarray";
+
+	next;
+	mes "[Warpra]";
+	mes "Please select where you want to go";
+	set @DWLMenu,select(@DWLmenulist$[0], @DWLmenulist$[1], @DWLmenulist$[2], @DWLmenulist$[3], @DWLmenulist$[4], @DWLmenulist$[5], @DWLmenulist$[6], @DWLmenulist$[7], @DWLmenulist$[8], @DWLmenulist$[9], @DWLmenulist$[10], @DWLmenulist$[11], @DWLmenulist$[12], @DWLmenulist$[13], @DWLmenulist$[14], @DWLmenulist$[15], @DWLmenulist$[16], @DWLmenulist$[17]);
+	if (@DWLmenuref[@DWLMenu-1] == 1337) goto L_end;
+	set @Darrayref, @DWLmenuref[@DWLMenu-1];
+	set @warpprice, (@pDprice[@Dmenuref[@DWMenu-1]]+$QW_DW_FEE*@DDepth[@Darrayref]);
+	if(Zeny<@warpprice) callsub L_Short_on_zeny,1;
+	set Zeny, Zeny-(@warpprice);
+	warp @DGat$[@Darrayref],@DXcoords[@Darrayref],@DYcoords[@Darrayref];
 	close2;		// this part safegaurds against errors/typos
-	set Zeny, Zeny+@pDprice[@Dmenuref[@menu-1]];
+	set Zeny, Zeny+@pTprice[@Tmenuref[@DWMenu-1]];
 	close;
 	end;
-
-//=========================Dungeons================================
-
-//----------------ABYSS LAKE
-abyss:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_abyss_1,
- "Level 2",d_abyss_2,
- "Level 3",d_abyss_3;
-d_abyss_1:
-warp "abyss_01.gat", 265, 273; close;
-d_abyss_2:
-warp "abyss_02.gat", 275, 270; close;
-d_abyss_3:
-warp "abyss_03.gat", 116, 27; close;
-
-
-//----------------AMATSU DUNGEON
-ama_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_amatsu_1,
- "Level 2",d_amatsu_2,
- "Level 3",d_amatsu_3;
-d_amatsu_1:
-warp "ama_dun01.gat", 227, 10; close;
-d_amatsu_2:
-warp "ama_dun02.gat", 32, 43; close;
-d_amatsu_3:
-warp "ama_dun03.gat", 119, 15; close;
-
-
-//----------------ANT HELL
-anthell:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_anthell_1,
- "Level 2",d_anthell_2;
-d_anthell_1:
-warp "anthell01.gat", 32, 262; close;
-d_anthell_2:
-warp "anthell02.gat", 34, 263; close;
-
-
-//----------------AYOTAYA
-ayotaya_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_ayotaya_1,
- "Level 2",d_ayotaya_2;
-d_ayotaya_1:
-warp "ayo_dun01.gat", 275, 17; close;
-d_ayotaya_2:
-warp "ayo_dun02.gat", 150, 13; close;
-
-
-//----------------BYALAN
-iz_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_bylan_1,
- "Level 2",d_bylan_2,
- "Level 3",d_bylan_3,
- "Level 4",d_bylan_4,
- "Level 5",d_bylan_5;
-d_bylan_1:
-warp "iz_dun00.gat", 168, 168; close;
-d_bylan_2:
-warp "iz_dun01.gat", 41, 37; close;
-d_bylan_3:
-warp "iz_dun02.gat", 236, 204; close;
-d_bylan_4:
-warp "iz_dun03.gat", 32, 63; close;
-d_bylan_5:
-warp "iz_dun04.gat", 26, 27; close;
-
-
-//----------------CLOCK TOWER
-c_tower:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Clock Tower Level 1",d_ct_1,
- "Clock Tower Level 2",d_ct_2,
- "Clock Tower Level 3",d_ct_3,
- "Clock Tower Level 4",d_ct_4,
- "Basement 1F",d_alde_1,
- "Basement 2F",d_alde_2,
- "Basement 3F",d_alde_3,
- "Basement 4F",d_alde_4;
-d_ct_1:
-warp "c_tower1.gat", 200, 163; close;
-d_ct_2:
-warp "c_tower2.gat", 268, 26; close;
-d_ct_3:
-warp "c_tower3.gat", 64, 148; close;
-d_ct_4:
-warp "c_tower4.gat", 32, 63; close;
-d_alde_1:
-warp "alde_dun01.gat", 197, 25; close;
-d_alde_2:
-warp "alde_dun02.gat", 262, 41; close;
-d_alde_3:
-warp "alde_dun03.gat", 276, 53; close;
-d_alde_4:
-warp "alde_dun04.gat", 130, 130; close;
-
-
-
-//----------------COAL MINE
-mjo_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_coal_1,
- "Level 2",d_coal_2,
- "Level 3",d_coal_3;
-d_coal_1:
-warp "mjo_dun01.gat", 52, 17; close;
-d_coal_2:
-warp "mjo_dun02.gat", 381, 343; close;
-d_coal_3:
-warp "mjo_dun03.gat", 302, 261; close;
-
-
-//----------------CULVERT
-prt_sewb:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_culvert_1,
- "Level 2",d_culvert_2,
- "Level 3",d_culvert_3,
- "Level 4",d_culvert_4,
- "Level 5",d_culvert_5;
-d_culvert_1:
-warp "prt_sewb1.gat", 132, 248; close;
-d_culvert_2:
-warp "prt_sewb2.gat", 19, 19; close;
-d_culvert_3:
-warp "prt_sewb3.gat", 180, 169; close;
-d_culvert_4:
-warp "prt_sewb4.gat", 100, 92; close;
-
-
-//----------------EINBECH DUNGEON
-einbech_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_einbech_1,
- "Level 2",d_einbech_2;
-d_einbech_1:
-warp "ein_dun01.gat", 22, 14; close;
-d_einbech_2:
-warp "ein_dun02.gat", 292, 290; close;
-
-
-//----------------GEFENIA DUNGEON
-gefenia:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_gefenia_1,
- "Level 2",d_gefenia_2,
- "Level 3",d_gefenia_3,
- "Level 4",d_gefenia_4;
-d_gefenia_1:
-warp "gefenia01.gat", 59, 167; close;
-d_gefenia_2:
-warp "gefenia02.gat", 201, 35; close;
-d_gefenia_3:
-warp "gefenia03.gat", 264, 236; close;
-d_gefenia_4:
-warp "gefenia04.gat", 33, 270; close;
-
-
-//----------------GEFFEN DUNGEON
-gef_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_geffen_1,
- "Level 2",d_geffen_2,
- "Level 3",d_geffen_3,
- "Level 3",d_geffen_4;
-d_gefen_1:
-warp "gef_dun00.gat", 104, 100; close;
-d_geffen_2:
-warp "gef_dun01.gat", 115, 236; close;
-d_geffen_3:
-warp "gef_dun02.gat", 106, 132; close;
-d_geffen_4:
-warp "gef_dun03.gat", 203, 200; close;
-
-
-//----------------GLAST HEIM
-gl_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "St. Abbey",d_glast_1,
- "Churchyard",d_glast_2,
- "Inside Glast Heim",d_glast_3,
- "Castle 1",d_glast_4,
- "Castle 2",d_glast_5,
- "Chivalry 1",d_glast_6,
- "Chivalry 2",d_glast_7,
- "Prison 1",d_glast_8,
- "Prison 2",d_glast_9,
- "Steps",d_glast_10,
- "Sewers 1",d_glast_11,
- "Sewers 2",d_glast_12,
- "Sewers 3",d_glast_13,
- "Sewers 4",d_glast_14,
- "Lowest Cave 1",d_glast_15,
- "Lowest Cave 2",d_glast_16;
-d_glast_1:
-warp "gl_church.gat", 156, 8; close;
-d_glast_2:
-warp "gl_chyard.gat", 147, 15; close;
-d_glast_3:
-warp "gl_in01.gat", 121, 59; close;
-d_glast_4:
-warp "gl_cas01.gat", 199, 29; close;
-d_glast_5:
-warp "gl_cas02.gat", 104, 25; close;
-d_glast_6:
-warp "gl_knt01.gat", 150, 10; close;
-d_glast_7:
-warp "gl_knt02.gat", 157, 287; close;
-d_glast_8:
-warp "gl_prison.gat", 14, 70; close;
-d_glast_9:
-warp "gl_prison1.gat", 150, 14; close;
-d_glast_10:
-warp "gl_step.gat", 117, 124; close;
-d_glast_11:
-warp "gl_sew01.gat", 258, 255; close;
-d_glast_12:
-warp "gl_sew02.gat", 108, 291; close;
-d_glast_13:
-warp "gl_sew03.gat", 171, 273; close;
-d_glast_14:
-warp "gl_sew04.gat", 68, 277; close;
-d_glast_15:
-warp "gl_dun01.gat", 133, 271; close;
-d_glast_16:
-warp "gl_dun02.gat", 224, 274; close;
-
-//----------------HIDDEN DUNGEON
-hid_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_hid_1,
- "Level 2",d_hid_2,
- "Level 3",d_hid_3;
-d_hid_1:
-warp "prt_maze01.gat", 176, 6; close;
-d_hid_2:
-warp "prt_maze02.gat", 94, 19; close;
-d_hid_3:
-warp "prt_maze03.gat", 23, 8; close;
-
-
-//----------------JUPEROS CAVE
-juperos:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_juperos_1,
- "Level 2",d_juperos_2;
-d_juperos_1:
-warp "juperos_01.gat", 53, 247; close;
-d_juperos_2:
-warp "juperos_02.gat", 36, 60; close;
-
-
-//----------------GONRYUN DUNGEON
-gon_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_gon_1,
- "Level 2",d_gon_2,
- "Level 3",d_gon_3;
-d_gon_1:
-warp "gon_dun01.gat", 143, 59; close;
-d_gon_2:
-warp "gon_dun02.gat", 17, 114; close;
-d_gon_3:
-warp "gon_dun03.gat", 68, 9; close;
-
-
-//----------------LIGHTHALZEN BIO LAB
-lighthalzen_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_lighthalzen_1,
- "Level 2",d_lighthalzen_2,
- "Level 3",d_lighthalzen_3;
-d_lighthalzen_1:
-warp "lhz_dun01.gat", 150, 287; close;
-d_lighthalzen_2:
-warp "lhz_dun02.gat", 150, 18; close;
-d_lighthalzen_3:
-warp "lhz_dun03.gat", 140, 137; close;
-
-
-//----------------MAGMA DUNGEON
-mag_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_magma_1,
- "Level 2",d_magma_2;
-d_magma_1:
-warp "mag_dun01.gat", 126, 69; close;
-d_magma_2:
-warp "mag_dun02.gat", 47, 32; close;
-
-
-//----------------ODIN TEMPLE
-odintemple:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_odintemple_1;
-d_odintemple_1:
-warp "odin_tem01.gat", 96, 145; close;
-
-//----------------ORC DUNGEON
-orcsdun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_orc_1,
- "Level 2",d_orc_2;
-d_orc_1:
-warp "orcsdun01.gat", 32, 169; close;
-d_orc_2:
-warp "orcsdun02.gat", 21, 185; close;
-
-
-//----------------PAYON DUNGEON
-pay_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_payon_1,
- "Level 2",d_payon_2,
- "Level 3",d_payon_3,
- "Level 4",d_payon_4,
- "Level 5",d_payon_5;
-d_payon_1:
-warp "pay_dun00.gat", 22, 180; close;
-d_payon_2:
-warp "pay_dun01.gat", 19, 33; close;
-d_payon_3:
-warp "pay_dun02.gat", 19, 63; close;
-d_payon_4:
-warp "pay_dun03.gat", 155, 159; close;
-d_payon_5:
-warp "pay_dun04.gat", 201, 204; close;
-
-
-//----------------PYRAMIDS
-moc_pryd:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_pyr_1,
- "Level 2",d_pyr_2,
- "Level 3",d_pyr_3,
- "Level 4",d_pyr_4,
- "Basement 1",d_pyr_5,
- "Basement 2",d_pyr_6;
-d_pyr_1:
-warp "moc_pryd01.gat", 192, 9; close;
-d_pyr_2:
-warp "moc_pryd02.gat", 10, 192; close;
-d_pyr_3:
-warp "moc_pryd03.gat", 100, 92; close;
-d_pyr_4:
-warp "moc_pryd04.gat", 181, 11; close;
-d_pyr_5:
-warp "moc_pryd05.gat", 94, 96; close;
-d_pyr_6:
-warp "moc_pryd06.gat", 192, 8; close;
-
-
-//----------------SPHINX
-in_sphinx:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_sph_1,
- "Level 2",d_sph_2,
- "Level 3",d_sph_3,
- "Level 4",d_sph_4,
- "Level 5",d_sph_5;
-d_sph_1:
-warp "in_sphinx1.gat", 192, 9; close;
-d_sph_2:
-warp "in_sphinx2.gat", 149, 81; close;
-d_sph_3:
-warp "in_sphinx3.gat", 210, 54; close;
-d_sph_4:
-warp "in_sphinx4.gat", 10, 222; close;
-d_sph_5:
-warp "in_sphinx5.gat", 100, 99; close;
-
-
-//----------------SUNKEN SHIP
-treasure:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Level 1",d_treasure_1,
- "Level 2",d_treasure_2;
-d_treasure_1:
-warp "treasure01.gat", 69, 24; close;
-d_treasure_2:
-warp "treasure02.gat", 102, 27; close;
-
-
-//----------------TOY FACTORY
-xmas_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Factory Warehouse",d_xmas_1,
- "Classifying Room",d_xmas_2;
-d_xmas_1:
-warp "xmas_dun01.gat", 205, 16; close;
-d_xmas_2:
-warp "xmas_dun02.gat", 129, 133; close;
-
-
-//----------------TURTLE ISTLAND
-tur_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Outside",d_tur_1,
- "Level 1",d_tur_2,
- "Level 2",d_tur_3,
- "Level 3",d_tur_4;
-d_tur_1:
-warp "tur_dun01.gat", 161, 34; close;
-d_tur_2:
-warp "tur_dun02.gat", 148, 256; close;
-d_tur_3:
-warp "tur_dun03.gat", 132, 190; close;
-d_tur_4:
-warp "tur_dun04.gat", 100, 192; close;
-
-
-//----------------UMBALA
-um_dun:
-	next;
-	mes "[Warpra]";
-	mes "Please select the level:";
-next;
-menu  "Carpender's Shop in The Tree",d_um_1,
- "Passage to a Foreign World",d_um_2,
- "Hvergelmir's Fountain",d_ygg_1;
-
-d_um_1:
-warp "um_dun01.gat", 205, 16; close;
-d_um_2:
-warp "um_dun02.gat", 48, 30; close;
-d_ygg_1:
-warp "yggdrasil01.gat", 40, 63; close;
-
 
 //=============================Healing=============================
 
@@ -823,7 +314,7 @@ L_heal_Full:
 	set @healfee, $QW_HF_PRICE;
 	if(Zeny<@healfee) callsub L_Short_on_zeny,4;
 	set Zeny, Zeny-@healfee;
-//	if ($QW_Kpoint == 1) set RESRVPTS, RESRVPTS + (@healfee/50); //commented out because kafra's don't offer this
+//	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@healfee/50); //commented out because kafra's don't offer this
 	next;
 	mes "[Warpra]";
 	mes "Close this window and I will Heal you.";
@@ -910,7 +401,7 @@ L_Storage:
 	if ($QW_S_PRICE == 60)&&(BaseJob != Job_Novice) set @fee, 60;
 	if(Zeny<@fee) callsub L_Short_on_zeny,2;
 	set Zeny, Zeny-@fee;
-	if ($QW_Kpoint == 1) set RESRVPTS, RESRVPTS + (@fee/5);
+	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@fee/5);
 
 	mes "[Warpra]";
 	mes "Close this window and i will open your storage.";
@@ -946,7 +437,7 @@ L_GStorage:
 	if(@GID==0) goto L_NoGuild;
 	if(Zeny<$QW_GS_PRICE) callsub L_Short_on_zeny,3;
 	set Zeny, Zeny-$QW_GS_PRICE;
-	if ($QW_Kpoint == 1) set RESRVPTS, RESRVPTS + ($QW_GS_PRICE/5);
+	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + ($QW_GS_PRICE/5);
 	next;
 	mes "[Warpra]";
 	mes "Close this window and i will open the ^5533FF" + GetGuildName(@GID) + "^000000 storage.";
@@ -992,7 +483,7 @@ L_NoUnlock:
 L_Short_on_zeny:
 	next;
 	if (getarg(0) == 0) mes "you don't seem to have "+@pTprice[@Tmenuref[@menu-1]]+" zeny, to pay for the warp fee to "+@pTmenuitems$[@Tmenuref[@menu-1]]+"";
-	if (getarg(0) == 1) mes "you don't seem to have "+@pDprice[@Dmenuref[@menu-1]]+" zeny, to pay for the warp fee to "+@pDmenuitems$[@Dmenuref[@menu-1]]+"";
+	if (getarg(0) == 1) mes "you don't seem to have "+@warpprice+" zeny, to pay for the warp fee to "+@DLevelName$[@DWLmenuref[@DWLMenu-1]]+" at "+@pDmenuitems$[@Dmenuref[@DWMenu-1]]+"";
 	if (getarg(0) == 2) mes "you don't seem to have "+@fee+" zeny, to pay for the storage fee";
 	if (getarg(0) == 3) mes "you don't seem to have "+$QW_GS_PRICE+" zeny, to pay for the guild storage fee";
 	if (getarg(0) == 4) mes "you don't seem to have "+@healfee+" zeny, to pay for your healing";
@@ -1323,11 +814,16 @@ function	script	QWS_Tarray	{
 	}
 
 
-//====================Dungeon=Menu=Array===========================
+//====================Dungeon=Menu=Arrays==========================
+
+// arrays:
+// @pDmenuitems$, dungeons names
+// @pDmenugoto$, dungeon variable names
+// @pDprice, warp prices (Basic, Advanced, Overseas)
 
 function	script	QWS_Darray	{
 	setarray @pDmenuitems$[0], "Abyss Lake", "Amatsu Dungeon", "Ant Hell Dungeon", "Ayotaya Dungeon", "Byalan Dungeon", "Clock Tower Dungeon", "Coal Mine Dungeon", "Culvert Dungeon", "Einbech Dungeon", "Gefenia Dungeon", "Geffen Dungeon", "Glast Heim Dungeon", "Gonryun Dungeon", "Hidden Dungeon", "Juperos Cave", "Lighthalzen Bio Lab", "Magma Dungeon", "Odin Temple", "Orc Dungeon", "Payon Dungeon", "Pyramids Dungeon", "Sphinx Dungeon", "Sunken Ship Dungeon", "Toy Factory Dungeon", "Turtle Island Dungeon", "Umbala Dungeon", "Cancel";
-	setarray @pDmenugoto$[0], "abyss", "ama_dun", "anthell", "ayotaya_dun", "iz_dun", "c_tower", "mjo_dun", "prt_sewb", "einbech_dun", "gefenia", "gef_dun", "gl_dun", "gon_dun", "hid_dun", "juperos", "lighthalzen_dun", "mag_dun", "odintemple", "orcsdun", pay_dun, "moc_pryd", "in_sphinx", "treasure", "xmas_dun", "tur_dun", "um_dun", "L_End";
+	setarray @pDmenugoto$[0], "abyss", "ama_dun", "anthell", "ayotaya_dun", "iz_dun", "c_tower", "mjo_dun", "prt_sewb", "einbech_dun", "gefenia", "gef_dun", "gl_dun", "gon_dun", "hid_dun", "juperos", "lighthalzen_dun", "mag_dun", "odintemple", "orcsdun", "pay_dun", "moc_pryd", "in_sphinx", "treasure", "xmas_dun", "tur_dun", "um_dun", "L_End";
 	setarray @pDprice[0], $QW_AW_PRICE, $QW_OW_PRICE, $QW_BW_PRICE, $QW_OW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_OW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_BW_PRICE, $QW_AW_PRICE, $QW_AW_PRICE, $QW_OW_PRICE, 0;
 	set @Di,0; // That's our loop counter.
 	set @Dj,0; // That's the menu lines counter.
@@ -1493,6 +989,53 @@ function	script	QWS_Darray	{
 	return;
 	}
 
+//====================Dungeon=Warp=Arrays==========================
+
+// @DLevels, amount of levels in dungeon - 1 
+// @DLocRef, reference to locate where the first
+// level of the dungeon warp information is in the other arrays
+// @DGat$, mapname of dungeon level
+// @DLevelName$, areaname of dungeon level
+// @DXcoords && @DYcoords, warp coords
+// @DDepth, relative depth to entrance to calculate extra warp fee
+// If your wondering why i cut my lines, there seems to be a problem with a maximum line length
+
+function	script	QWS_DLarray	{
+	setarray @DLevels[0], 2, 2, 1, 1, 4, 7, 2, 3, 1, 3, 3, 15, 2, 2, 1, 2, 1, 0, 1, 4, 5, 4, 1, 1, 3, 2;
+	setarray @DLocRef[0], 0, 3, 6, 8, 10, 15, 23, 26, 30, 32, 36, 40, 56, 59, 62, 64, 67, 69, 70, 72, 77, 83, 88, 90, 92, 96, 99;
+	setarray @DGat$[0], "abyss_01.gat", "abyss_02.gat", "abyss_03.gat", "ama_dun01.gat", "ama_dun02.gat", "ama_dun03.gat", "anthell01.gat", "anthell02.gat", "ayo_dun01.gat", "ayo_dun02.gat", "iz_dun00.gat", "iz_dun01.gat", "iz_dun02.gat", "iz_dun03.gat", "iz_dun04.gat", "c_tower1.gat", "c_tower2.gat", "c_tower3.gat", "c_tower4.gat", "alde_dun01.gat", "alde_dun02.gat", "alde_dun03.gat", "alde_dun04.gat", "mjo_dun01.gat", "mjo_dun02.gat", "mjo_dun03.gat", "prt_sewb1.gat", "prt_sewb2.gat", "prt_sewb3.gat", "prt_sewb4.gat", "ein_dun01.gat",
+ "ein_dun02.gat", "gefenia01.gat", "gefenia02.gat", "gefenia03.gat", "gefenia04.gat", "gef_dun00.gat", "gef_dun01.gat", "gef_dun02.gat", "gef_dun03.gat", "gl_church.gat", "gl_chyard.gat", "gl_in01.gat", "gl_cas01.gat", "gl_cas02.gat", "gl_knt01.gat", "gl_knt02.gat", "gl_prison.gat", "gl_prison1.gat", "gl_step.gat", "gl_sew01.gat", "gl_sew02.gat", "gl_sew03.gat", "gl_sew04.gat", "gl_dun01.gat", "gl_dun02.gat", "prt_maze01.gat", "prt_maze02.gat", "prt_maze03.gat", "juperos_01.gat", "juperos_02.gat", "gon_dun01.gat",
+ "gon_dun02.gat", "gon_dun03.gat", "lhz_dun01.gat", "lhz_dun02.gat", "lhz_dun03.gat", "mag_dun01.gat", "mag_dun02.gat", "odin_tem01.gat", "orcsdun01.gat", "orcsdun02.gat", "pay_dun00.gat", "pay_dun01.gat", "pay_dun02.gat", "pay_dun03.gat", "pay_dun04.gat", "moc_pryd01.gat", "moc_pryd02.gat", "moc_pryd03.gat", "moc_pryd04.gat", "moc_pryd05.gat", "moc_pryd06.gat", "in_sphinx1.gat", "in_sphinx2.gat", "in_sphinx3.gat", "in_sphinx4.gat", "in_sphinx5.gat", "treasure01.gat", "treasure02.gat", "xmas_dun01.gat", "xmas_dun02.gat", "tur_dun01.gat", "tur_dun02.gat", "tur_dun03.gat", "tur_dun04.gat", "um_dun01.gat", "um_dun02.gat", "yggdrasil01.gat";
+	setarray @DLevelName$[0], "Level 1", "Level 2", "Level 3", "Level 1", "Level 2", "Level 3", "Level 1", "Level 2", "Level 1", "Level 2", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Clock Tower Level 1", "Clock Tower Level 2", "Clock Tower Level 3", "Clock Tower Level 4", "Basement 1F", "Basement 2F", "Basement 3F", "Basement 4F", "Level 1", "Level 2", "Level 3", "Level 1", "Level 2", "Level 3", "Level 4", "Level 1", "Level 2", "Level 1", "Level 2", "Level 3", "Level 4", "Level 1", "Level 2",
+ "Level 3", "Level 4", "St. Abbey", "Churchyard", "Inside Glast Heim", "Castle 1", "Castle 2",
+ "Chivalry 1", "Chivalry 2", "Prison 1", "Prison 2", "Steps", "Sewers 1", "Sewers 2", "Sewers 3", "Sewers 4", "Lowest Cave 1", "Lowest Cave 2", "Level 1", "Level 2", "Level 3", "Level 1", "Level 2", "Level 1", "Level 2", "Level 3", "Level 1", "Level 2", "Level 3", "Level 1", "Level 2", "Level 1", "Level 1", "Level 2", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 1", "Level 2", "Level 3", "Level 4", "Basement 1",
+ "Basement 2", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 1", "Level 2", "Factory Warehouse", "Classifying Room", "Outside", "Level 1", "Level 2", "Level 3", "Carpenter's Shop in The Tree", "Passage to a Foreign World", "Hvergelmir's Fountain";
+	setarray @DXcoords[0], 265, 275, 116, 227, 32, 119, 32, 34, 275, 150, 168, 41, 236, 32, 26, 200, 268, 64, 32, 197, 262, 276, 130, 52, 381, 302, 132, 19, 180, 100, 22, 292, 59, 201, 264, 33, 104, 115, 106, 203, 156, 147, 121, 199, 104, 150, 157, 14, 150, 117, 258, 108, 171, 68, 133, 224, 176, 94, 23, 53, 36, 143, 17, 68, 150, 150, 140, 126, 47, 96, 32, 21, 22, 19, 19, 155, 201, 192, 10, 100, 181, 94, 192, 192, 149, 210, 10, 100, 69, 102, 205, 129, 161, 148, 132, 100, 205, 48, 40;
+	setarray @DYcoords[0], 273, 270, 27, 10, 43, 15, 262, 263, 17, 13, 168, 37, 204, 63, 27, 163, 26, 148, 63, 25, 41, 53, 130, 17, 343, 261, 248, 19, 169, 92, 14, 290, 167, 35, 236, 270, 100, 236, 132, 200, 8, 15, 59, 29, 25, 10, 287, 70, 14, 124, 255, 291, 273, 277, 271, 274, 6, 19, 8, 247, 60, 59, 114, 9, 287, 18, 137, 69, 32, 145, 169, 185, 180, 33, 63, 159, 204, 9, 192, 92, 11, 96, 8, 9, 81, 54, 222, 99, 24, 27, 16, 133, 34, 256, 190, 192, 16, 30, 63;
+	setarray @DDepth[0], 0, 1, 2, 0, 1, 2, 0, 1, 0, 1, 0, 1, 2, 3, 4, 1, 2, 3, 4, 0, 1, 2, 3, 0, 1, 2, 0, 1, 2, 3, 0, 1, 0, 1, 2, 3, 0, 1, 2, 3, 1, 2, 1, 1, 2, 1, 2, 2, 3, 1, 4, 2, 3, 4, 5, 6, 0, 1, 2, 0, 1, 0, 1, 2, 0, 1, 2, 0, 1, 0, 0, 1, 0, 1, 2, 3, 4, 0, 1, 2, 3, 1, 2, 0, 1, 2, 3, 4, 0, 1, 0, 1, 0, 0, 1, 2, 0, 1, 2;
+	set @DWi,@DLocRef[@DwarpMenu]; // That's our loop counter.
+	set @DWj,0; // That's the menu lines counter.
+	cleararray @DWLmenulist$[0],"",20; // Clearing the array to get rid off ghost items in menu
+Loop:
+// Main Loop
+	set @warpprice, (@pDprice[@DwarpMenu]+$QW_DW_FEE*@DDepth[@DWi]);
+	if (@warpprice != 0) set @DWLmenulist$[@DWj], @DLevelName$[@DWi]+" -> "+@warpprice;
+	if (@warpprice == 0) set @DWLmenulist$[@DWj], @DLevelName$[@DWi];
+	set @DWLmenuref[@DWj],@DWi;
+
+	if (@DWj == @DLevels[@DwarpMenu]) goto make_exit;
+	
+	set @DWj,@DWj+1;
+	set @DWi,@DWi+1;
+	
+	goto Loop;
+
+make_exit:
+	set @DWj,@DWj+1;
+	set @DWLmenulist$[@DWj], "Exit";
+	set @DWLmenuref[@DWj],1337; //impossible number easy to track back
+	return;
+	}
 
 //============================Warpras==============================
 
@@ -1786,7 +1329,7 @@ gefenia03.gat,137,34,0	script	Warpra Helper	112,{
 	close;
 }
 
-gef_dun02.gat,217,61,2	script	Warpra Helper	112,{
+gef_dun02.gat,218,61,2	script	Warpra Helper	112,{
 	if (#gef_dun == 1) mes "[Warpra]";
 	if (#gef_dun == 1) mes "Sorry I can only unlock this location.";
 	if (#gef_dun == 1) close;
