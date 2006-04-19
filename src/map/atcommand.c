@@ -7711,8 +7711,7 @@ atcommand_autoloot(
 		drate = atof(message);
 		rate = (int)(drate*100);
 	}
-	if (rate > 10000) rate = 10000;
-	else if (rate < 0) rate = 0;
+	if (rate < 0) rate = 0;
 	
 	sd->state.autoloot = rate;
 	if (sd->state.autoloot) { 

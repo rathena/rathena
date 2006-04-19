@@ -1988,19 +1988,30 @@ Lets say the ID of a party was saved as a global variable:
 
 ---------------------------------------
 
-*getpartymember <party id>;
+*getpartymember <party id>,[<type>];
 
 Thank you to HappyDenn for all this information.
 
 This command will finds all members of a specified party and returns their names 
-into an array of temporary global variables. There's actually quite a few 
-commands like this which will fill a special variable with data upon execution 
-and not do anything else.
+(or character id or account id depending on the value of "type") into an array
+of temporary global variables. There's actually quite a few commands like this
+which will fill a special variable with data upon execution and not do anything
+else.
 
 Upon executing this,
 
 $@partymembername$[] is a global temporary stringarray which contains all the 
-                     names of these party members.
+                     names of these party members
+                     (only set when type is 0 or not specified)
+
+$@partymembercid[]   is a global temporary number array which contains the 
+                     character id of these party members.
+                     (only set when type is 1)
+
+$@partymemberaid[]   is a global temporary number array which contains the 
+                     account id of these party members.
+                     (only set when type is 2)
+
 $@partymembercount   is the number of party members that were found.
 
 The party members will (apparently) be found regardless of whether they are 
@@ -2014,7 +2025,7 @@ server will not clear the array for you, overwriting the values instead. So in
 addition to returning the 5 member names, the 6th and 7th elements from the last 
 call remain, and you will get 5+2 members, of which the last 2 don't belong to 
 the new guy's party. $@partymembercount will always contain the correct number, 
-(5) unlike 'getarraysise()' which will return 7 in this case.
+(5) unlike 'getarraysize()' which will return 7 in this case.
 
 Example:
 

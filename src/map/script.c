@@ -504,7 +504,7 @@ struct {
 	{buildin_readparam,"readparam","i*"},
 	{buildin_getcharid,"getcharid","i*"},
 	{buildin_getpartyname,"getpartyname","i"},
-	{buildin_getpartymember,"getpartymember","i"},
+	{buildin_getpartymember,"getpartymember","i*"},
 	{buildin_getguildname,"getguildname","i"},
 	{buildin_getguildmaster,"getguildmaster","i"},
 	{buildin_getguildmasterid,"getguildmasterid","i"},
@@ -4303,16 +4303,27 @@ int buildin_getpartyname(struct script_state *st)
 int buildin_getpartymember(struct script_state *st)
 {
 	struct party *p;
-	int i,j=0;
+	int i,j=0,type=0;
 
 	p=NULL;
 	p=party_search(conv_num(st,& (st->stack->stack_data[st->start+2])));
 
+	if( st->end>st->start+3 )
+ 		type=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	
 	if(p!=NULL){
 		for(i=0;i<MAX_PARTY;i++){
 			if(p->member[i].account_id){
-//				printf("name:%s %d\n",p->member[i].name,i);
-				mapreg_setregstr(add_str((unsigned char *) "$@partymembername$")+(i<<24),p->member[i].name);
+				switch (type) {
+				case 2:
+					mapreg_setreg(add_str((unsigned char *) "$@partymemberaid")+(j<<24),p->member[i].account_id);
+					break;
+				case 1:
+					mapreg_setreg(add_str((unsigned char *) "$@partymembercid")+(j<<24),p->member[i].char_id);
+					break;
+				default:
+					mapreg_setregstr(add_str((unsigned char *) "$@partymembername$")+(j<<24),p->member[i].name);
+				}
 				j++;
 			}
 		}

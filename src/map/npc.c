@@ -2484,6 +2484,9 @@ void npc_parsesrcfile (char *name)
 		}
 		line[j] = '\0'; //Forget to terminate the string. From [jA 1091]
 		// 最初はタブ区切りでチェックしてみて、ダメならスペース区切りで確認
+		w1[0] = w2[0] = w3[0] = w4[0] = '\0'; //It's best to initialize values
+		//to prevent passing previously parsed values to the parsers when not all
+		//fields are specified. [Skotlex]
 		if ((count = sscanf(line,"%[^\t]\t%[^\t]\t%[^\t\r\n]\t%n%[^\t\r\n]", w1, w2, w3, &w4pos, w4)) < 3 &&
 		   (count = sscanf(line,"%s%s%s%n%s", w1, w2, w3, &w4pos, w4)) < 3) {
 			continue;
