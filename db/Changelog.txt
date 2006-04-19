@@ -26,6 +26,8 @@
 	-----
 
 =========================
+04/19
+	* Fixed Roguemaster's Bow being equipable by Rogues [Playtester]
 04/18
 	* Some more fixes on the Bio Lab mobs [Playtester]
 	* Fixed Laurell's mode [Playtester]

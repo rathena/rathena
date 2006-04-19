@@ -745,7 +745,7 @@
 1715,Arbalest_,Arbalest,4,48000,,1000,90,,5,2,0x000A0848,7,2,34,3,33,1,11,{ bonus bDex,2; }
 1716,Gakkung_Bow_,Gakkung Bow,4,42000,,1100,100,,5,2,0x000A0848,7,2,34,3,33,1,11,{}
 1718,Hunter_Bow,Hunter Bow,4,64000,,1500,125,,5,0,0x00000800,7,2,34,3,33,1,11,{}
-1719,Roguemaster's_Bow,Roguemaster's Bow,4,,10,500,75,,11,0,0x00020040,7,2,34,4,48,1,11,{ bonus bAtkRange,11; }
+1719,Roguemaster's_Bow,Roguemaster's Bow,4,,10,500,75,,11,0,0x00000040,7,2,34,4,48,1,11,{ bonus bAtkRange,11; }
 1720,Rudra_Bow,Rudra Bow,4,,10,1200,150,,5,0,0x000A0808,7,2,34,4,48,1,11,{ bonus bAtkEle,Ele_Holy; bonus bInt,5; skill 35,1; skill 28,1; bonus2 bResEff,Eff_Poison,5000; bonus2 bResEff,Eff_Curse,5000; bonus2 bResEff,Eff_Silence,5000; bonus2 bResEff,Eff_Confusion,5000; bonus2 bResEff,Eff_Blind,5000; }
 1721,Repeating_Crossbow,Repeating Crossbow,4,89000,,2000,95,,9,1,0x00020840,7,2,34,3,65,1,11,{ bonus bAtkRange,4; }
 1722,Ballista,Ballista,4,,10,3500,145,,5,0,0x00080800,7,2,34,4,77,1,11,{}
