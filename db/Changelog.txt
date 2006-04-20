@@ -27,6 +27,7 @@
 
 =========================
 04/20
+	* Fixer range of meteor (from 14x14 to 7x7) [Skotlex]
 	* Fixed Nile Rose bonus [Playtester]
 	* Fixed Violy's Arc Wand drop [Playtester]
 	* Changed "Event Hat" to "Brazil Event Hat" [Playtester]
