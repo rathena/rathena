@@ -66,7 +66,7 @@ int npc_remove_map(struct npc_data *nd);
 int npc_unload(struct npc_data *nd);
 int npc_reload(void);
 
-static int dummy_npc_id;
+extern int dummy_npc_id;
 
 extern char *current_file;
 

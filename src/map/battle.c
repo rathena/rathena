@@ -1899,10 +1899,11 @@ static struct Damage battle_calc_weapon_attack(
 				target_count = unit_counttargeted(target,battle_config.vit_penalty_count_lv);
 				if(target_count >= battle_config.vit_penalty_count) {
 					if(battle_config.vit_penalty_type == 1) {
-						def1 = (def1 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
+// armor defense shouldn't be reduced from what people are saying. [Skotlex]						
+//						def1 = (def1 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
 						def2 = (def2 * (100 - (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num))/100;
 					} else { //Assume type 2
-						def1 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
+//						def1 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 						def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 					}
 				}
@@ -4131,7 +4132,7 @@ void battle_set_defaults() {
 	battle_config.gm_cant_drop_min_lv = 1;
 	battle_config.gm_cant_drop_max_lv = 0;
 	battle_config.disp_hpmeter = 60;
-	battle_config.skill_wall_check = 0;
+	battle_config.skill_wall_check = 1;
 	battle_config.cell_stack_limit = 1;
 	battle_config.bone_drop = 0;
 	battle_config.buyer_name = 1;

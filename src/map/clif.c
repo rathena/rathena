@@ -161,10 +161,10 @@ enum {
 
 //Removed sd->npc_shopid because there is no packet sent from the client when you cancel a buy!
 //Quick check to know if the player shouldn't be "busy" with something else to deny action requests. [Skotlex]
-#define clif_cant_act(sd) (sd->npc_id || sd->vender_id || sd->chatID || sd->sc.opt1 || sd->trade_partner || sd->state.storage_flag)
+#define clif_cant_act(sd) (sd->npc_id || sd->vender_id || sd->chatID || sd->sc.opt1 || sd->state.trading || sd->state.storage_flag)
 
 // Checks if SD is in a trade/shop (where messing with the inventory can cause problems/exploits)
-#define clif_trading(sd) (sd->npc_id || sd->vender_id || sd->trade_partner)
+#define clif_trading(sd) (sd->npc_id || sd->vender_id || sd->state.trading )
 
 //To idenfity disguised characters.
 #define disguised(bl) (bl->type==BL_PC && ((TBL_PC*)bl)->disguise)

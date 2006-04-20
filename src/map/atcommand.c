@@ -4625,7 +4625,7 @@ int atcommand_char_ban(
 			if (modif_p[0] == 's') {
 				second = value;
 				modif_p++;
-			} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
+			} else if (modif_p[0] == 'n' || (modif_p[0] == 'm' && modif_p[1] == 'n')) {
 				minute = value;
 				modif_p = modif_p + 2;
 			} else if (modif_p[0] == 'h') {
