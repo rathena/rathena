@@ -226,8 +226,8 @@ L_CHANGE:
 	next;
 
 	set ADVJOB,Class+4001; //memo the target 3rd Job ID
-	if(ADVJOB == 4014) set ADVJOB,4002;
-	if(ADVJOB == 4022) set ADVJOB,4015;
+	if(ADVJOB == Job_Lord_Knight2) set ADVJOB,Job_Lord_Knight;
+	if(ADVJOB == Job_Paladin2) set ADVJOB,Job_Paladin;
 
 //	callfunc "F_ToHigh",25,"Swordman High",31,"Lord Knight",144,145,146,0;
 //	callfunc "F_ToHigh",28,"Acolyte High",32,"High Priest",156,0,0,0;
@@ -327,8 +327,8 @@ L_SKILLPNTS:
 
 function	script	F_ToHigh	{
 	if(Upper == 2) return; //Baby Class - skip it
-	if(ADVJOB == 4014) set ADVJOB,4002;
-	if(ADVJOB == 4022) set ADVJOB,4015;
+	if(ADVJOB == Job_Lord_Knight2) set ADVJOB,Job_Lord_Knight;
+	if(ADVJOB == Job_Paladin2) set ADVJOB,Job_Paladin;
 	set @fjob,ADVJOB; //alternative classes should pass, too
 	if(@fjob == Job_Stalker) set @fjob,Job_Assassin_Cross;
 	if(@fjob == Job_Creator) set @fjob,Job_Whitesmith;
