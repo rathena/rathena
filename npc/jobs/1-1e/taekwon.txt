@@ -72,7 +72,7 @@ L_No:
 	close;
 
 L_Continue:
-	if(TAEK_Q<=BaseLevel) goto L_Nolvl;
+	if(TAEK_Q==BaseLevel) goto L_Nolvl;
 	if(SkillPoint){
 		mes "[Monk]";
 		mes "You definately seem to have walked enough, but you still have skill points left over.";
