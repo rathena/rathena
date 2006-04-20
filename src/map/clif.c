@@ -4802,14 +4802,17 @@ void clif_GlobalMessage(struct block_list *bl,char *message)
  */
 void clif_MainChatMessage(char* message) {
 
-	char buf[100];
+	char buf[128];
 	int len;
 	
 	if(!message)
 		return;
 		
 	len = strlen(message)+1;
-	
+	if (len+8 > sizeof(buf)) {
+		ShowDebug("clif_MainChatMessage: Received message too long (len %d): %s\n", len, message);
+		len = sizeof(buf)-8;
+	}
 	WBUFW(buf,0)=0x8d;
 	WBUFW(buf,2)=len+8;
 	WBUFL(buf,4)=0;
