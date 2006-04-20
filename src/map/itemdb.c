@@ -854,13 +854,30 @@ static int itemdb_read_sqldb(void)
 			if (sql_res) {
 				// Parse each row in the query result into sql_row
 				while ((sql_row = mysql_fetch_row(sql_res)))
-				{
-					/* +----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+---------------+-----------------+--------------+-------------+------+------------+--------------+
-					   |  0 |            1 |             2 |    3 |         4 |          5 |      6 |      7 |       8 |     9 |    10 |         11 |          12 |            13 |              14 |           15 |   16        |         17 |   18 |     19 |
-					   +----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+---------------+-----------------+--------------+-------------+------+------------+--------------+
-					   | id | name_english | name_japanese | type | price_buy | price_sell | weight | attack | defence | range | slots | equip_jobs | equip_upper | equip_genders | equip_locations | weapon_level | equip_level | refineable | view | script |
-					   +----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+---------------+-----------------+--------------+-------------+------+------------+--------------+ */
-
+				{	/*Table structure is:
+					00  id
+					01  name_english
+					02  name_japanese
+					03  type
+					04  price_buy
+					05  price_sell
+					06  weight
+					07  attack
+					08  defence
+					09  range
+					10  slots
+					11  equip_jobs
+					12  equip_upper
+					13  equip_genders
+					14  equip_locations
+					15  weapon_level
+					16  equip_level
+					17  refineable
+					18  view
+					19  script
+					20  equip_script
+					21  unequip_script
+					*/
 					nameid = atoi(sql_row[0]);
 
 					// If the identifier is not within the valid range, process the next row
@@ -937,7 +954,29 @@ static int itemdb_read_sqldb(void)
 							id->script = parse_script((unsigned char *) script, 0);
 						}
 					} else id->script = NULL;
-
+	
+					if (id->equip_script)
+						aFree(id->equip_script);
+					if (sql_row[20] != NULL) {
+						if (sql_row[20][0] == '{')
+							id->equip_script = parse_script((unsigned char *) sql_row[20], 0);
+						else {
+							sprintf(script, "{%s}", sql_row[20]);
+							id->equip_script = parse_script((unsigned char *) script, 0);
+						}
+					} else id->equip_script = NULL;
+	
+					if (id->unequip_script)
+						aFree(id->unequip_script);
+					if (sql_row[21] != NULL) {
+						if (sql_row[21][0] == '{')
+							id->unequip_script = parse_script((unsigned char *) sql_row[21], 0);
+						else {
+							sprintf(script, "{%s}", sql_row[21]);
+							id->unequip_script = parse_script((unsigned char *) script, 0);
+						}
+					} else id->unequip_script = NULL;
+				
 					// ----------
 
 					id->flag.available	= 1;
@@ -1077,9 +1116,54 @@ static int itemdb_readdb(void)
 				aFree(id->script);
 				id->script=NULL;
 			}
+			if (id->equip_script) {
+				aFree(id->equip_script);
+				id->equip_script=NULL;
+			}
+			if (id->unequip_script) {
+				aFree(id->unequip_script);
+				id->unequip_script=NULL;
+			}
+
 			if((p=strchr(np,'{'))==NULL)
 				continue;
-			id->script = parse_script((unsigned char *) p,lines);
+			
+			str[19] = p; //Script
+			np = strchr(p,'}');
+			
+			while (np && np[1] && np[1] != ',')
+				np = strchr(np+1,'}'); //Jump close brackets until the next field is found.
+			if (!np || !np[1]) {
+				//Couldn't find the end of the script field.
+				id->script = parse_script((unsigned char *) str[19],lines);
+				continue;
+			}
+			np[1] = '\0'; //Set end of script
+			id->script = parse_script((unsigned char *) str[19],lines);
+			np+=2; //Skip to next field
+			
+			if(!np || (p=strchr(np,'{'))==NULL)
+				continue;
+			
+			str[20] = p; //Equip Script
+			np = strchr(p,'}');
+			
+			while (np && np[1] && np[1] != ',')
+				np = strchr(np+1,'}'); //Jump close brackets until the next field is found.
+			if (!np || !np[1]) {
+				//Couldn't find the end of the script field.
+				id->equip_script = parse_script((unsigned char *) str[20],lines);
+				continue;
+			}
+			
+			np[1] = '\0'; //Set end of script
+			id->equip_script = parse_script((unsigned char *) str[20],lines);
+			np+=2; //Skip comma, to next field
+			
+			if(!np || (p=strchr(np,'{'))==NULL)
+				continue;
+			//Unequip script, last column.
+			id->unequip_script = parse_script((unsigned char *) p,lines);
 		}
 		fclose(fp);
 		if (ln > 0) {
@@ -1133,6 +1217,16 @@ static int itemdb_final_sub (DBKey key,void *data,va_list ap)
 		aFree(id->script);
 		id->script = NULL;
 	}
+	if (id->equip_script)
+	{
+		aFree(id->equip_script);
+		id->equip_script = NULL;
+	}
+	if (id->unequip_script)
+	{
+		aFree(id->unequip_script);
+		id->unequip_script = NULL;
+	}
 	// Whether to clear the item data (exception: do not clear the dummy item data
 	if (flag && id != dummy_item) 
 		aFree(id);
@@ -1153,6 +1247,10 @@ void do_final_itemdb(void)
 	if (dummy_item) {
 		if (dummy_item->script)
 			aFree(dummy_item->script);
+		if (dummy_item->equip_script)
+			aFree(dummy_item->equip_script);
+		if (dummy_item->unequip_script)
+			aFree(dummy_item->unequip_script);
 		aFree(dummy_item);
 		dummy_item = NULL;
 	}

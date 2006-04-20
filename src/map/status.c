@@ -701,8 +701,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->addeff3)
 		+ sizeof(sd->addeff3_type)
 		+ sizeof(sd->sp_gain_race)
-		+ sizeof(sd->unequip_losehp)
-		+ sizeof(sd->unequip_losesp)
 		);
 
 

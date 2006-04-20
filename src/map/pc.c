@@ -1184,7 +1184,6 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, short *count, short id, s
  */
 int pc_bonus(struct map_session_data *sd,int type,int val)
 {
-	int i;
 	nullpo_retr(0, sd);
 
 	switch(type){
@@ -1641,30 +1640,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_HP_GAIN_VALUE:
 		if(!sd->state.lr_flag)
 			sd->hp_gain_value += val;
-		break;
-	case SP_DAMAGE_WHEN_UNEQUIP:
-		if(!sd->state.lr_flag) {
-			for (i=0; i<11; i++) {
-				//I think this one is bugged, notice how it uses the item_db info rather
-				// than inventory equipped position index [Skotlex]
-//				if (sd->inventory_data[current_equip_item_index]->equip & equip_pos[i]) {
-				if(sd->status.inventory[current_equip_item_index].equip & equip_pos[i]) {
-					sd->unequip_losehp[i] += val;
-					break;
-				}
-			}
-		}
-		break;
-	case SP_LOSESP_WHEN_UNEQUIP:
-		if(!sd->state.lr_flag) {
-			for (i=0; i<11; i++) {
-//				if (sd->inventory_data[current_equip_item_index]->equip & equip_pos[i]) {
-				if(sd->status.inventory[current_equip_item_index].equip & equip_pos[i]) {
-					sd->unequip_losesp[i] += val;
-					break;
-				}
-			}
-		}
 		break;
 	default:
 		if(battle_config.error_log)
@@ -6231,7 +6206,10 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 		sd->status.inventory[arrow].equip=32768;
 	}
 	status_calc_pc(sd,0);
-
+	//OnEquip script [Skotlex]
+	if (sd->inventory_data[n] && sd->inventory_data[n]->equip_script)
+		run_script(sd->inventory_data[n]->equip_script,0,sd->bl.id,0);
+	
 	if(sd->sc.count) {
 		if (sd->sc.data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 			status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
@@ -6250,7 +6228,6 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
  */
 int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 {
-	short hp = 0, sp = 0;
 	nullpo_retr(0, sd);
 
 // -- moonsoul	(if player is berserk then cannot unequip)
@@ -6262,73 +6239,53 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 	if(battle_config.battle_log)
 		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),sd->status.inventory[n].equip);
-	if(sd->status.inventory[n].equip){
-		int i;
-		for(i=0;i<11;i++) {
-			if(sd->status.inventory[n].equip & equip_pos[i]) {
-				sd->equip_index[i] = -1;
-				if(sd->unequip_losehp[i] > 0) {
-					hp += sd->unequip_losehp[i];
-					sd->unequip_losehp[i] = 0;
-				}
-				if(sd->unequip_losesp[i] > 0) {
-					sp += sd->unequip_losesp[i];
-					sd->unequip_losesp[i] = 0;
-				}
-			}
-		}
-		if(sd->status.inventory[n].equip & 0x0002) {
-			sd->weapontype1 = 0;
-			sd->status.weapon = sd->weapontype2;
-			pc_calcweapontype(sd);
-			clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-			if(sd->sc.data[SC_DANCING].timer!=-1) //When unequipping, stop dancing. [Skotlex]
-				skill_stop_dancing(&sd->bl);
-		}
-		if(sd->status.inventory[n].equip & 0x0020) {
-			sd->status.shield = sd->weapontype2 = 0;
-			pc_calcweapontype(sd);
-			clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
-		}
-		if(sd->status.inventory[n].equip & 0x0001) {
-			sd->status.head_bottom = 0;
-			clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
-		}
-		if(sd->status.inventory[n].equip & 0x0100) {
-			sd->status.head_top = 0;
-			clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
-		}
-		if(sd->status.inventory[n].equip & 0x0200) {
-			sd->status.head_mid = 0;
-			clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
-		}
-		if(sd->status.inventory[n].equip & 0x0040)
-			clif_changelook(&sd->bl,LOOK_SHOES,0);
-
-		clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
-		sd->status.inventory[n].equip=0;
-		if(flag&1)
-			pc_checkallowskill(sd);
-		if(sd->weapontype1 == 0 && sd->weapontype2 == 0)
-			skill_enchant_elemental_end(&sd->bl,-1);  //•Ší‚¿¾‚¦‚Í–³?Œ‚Å?«•t?‰ğœ
-	} else {
+	if(!sd->status.inventory[n].equip){ //Nothing to unequip
 		clif_unequipitemack(sd,n,0,0);
+		return 0;
 	}
 
+	if(sd->status.inventory[n].equip & 0x0002) {
+		sd->weapontype1 = 0;
+		sd->status.weapon = sd->weapontype2;
+		pc_calcweapontype(sd);
+		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
+		if(sd->sc.data[SC_DANCING].timer!=-1) //When unequipping, stop dancing. [Skotlex]
+			skill_stop_dancing(&sd->bl);
+	}
+	if(sd->status.inventory[n].equip & 0x0020) {
+		sd->status.shield = sd->weapontype2 = 0;
+		pc_calcweapontype(sd);
+		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
+	}
+	if(sd->status.inventory[n].equip & 0x0001) {
+		sd->status.head_bottom = 0;
+		clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
+	}
+	if(sd->status.inventory[n].equip & 0x0100) {
+		sd->status.head_top = 0;
+		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
+	}
+	if(sd->status.inventory[n].equip & 0x0200) {
+		sd->status.head_mid = 0;
+		clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
+	}
+	if(sd->status.inventory[n].equip & 0x0040)
+		clif_changelook(&sd->bl,LOOK_SHOES,0);
+
+	clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
+	sd->status.inventory[n].equip=0;
+	if(flag&1)
+		pc_checkallowskill(sd);
+	if(sd->weapontype1 == 0 && sd->weapontype2 == 0)
+		skill_enchant_elemental_end(&sd->bl,-1);  //•Ší‚¿¾‚¦‚Í–³?Œ‚Å?«•t?‰ğœ
 	if(flag&1) {
 		status_calc_pc(sd,0);
 		if(sd->sc.count && sd->sc.data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 			status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 	}
-
-	if (hp > 0 || sp > 0) {
-		if (hp > sd->status.hp)
-			hp = sd->status.hp;
-		if (sp > sd->status.sp)
-			sp = sd->status.sp;
-		pc_heal(sd, -hp, -sp);
-	}
-
+	//OnUnEquip script [Skotlex]
+	if (sd->inventory_data[n] && sd->inventory_data[n]->unequip_script)
+		run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,0);
 	return 0;
 }
 
