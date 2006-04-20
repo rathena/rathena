@@ -27,6 +27,7 @@
 
 =========================
 04/20
+	* Fixed Nile Rose bonus [Playtester]
 	* Fixed Violy's Arc Wand drop [Playtester]
 	* Changed "Event Hat" to "Brazil Event Hat" [Playtester]
 04/19
