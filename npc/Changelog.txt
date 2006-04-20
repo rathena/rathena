@@ -28,6 +28,8 @@ Nexon
 Date		Added
 ======
 04/20
+	* Fixed Rebirth script not working for some Knights and Crusaders [Playtester]
+	- needs some testing!
 	* Fixed Taekwon quest obviously never working [Playtester]
 	* Updated Job Quests of Taekwon, SG, SL (all thanks to Celestria) [Lupus]
 		They have oficial sprites, actions. But some dialogs are made up. ^_-
