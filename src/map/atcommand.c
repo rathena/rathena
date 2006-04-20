@@ -10110,9 +10110,6 @@ int atcommand_main(
 {
 	if(strlen(message) > 0) {
 
-		if(strlen(message) > 128)
-			return -1;
-
 		if(strcmpi(message, "on") == 0) {
 			if(!sd->state.mainchat) {
 				sd->state.mainchat = 1;

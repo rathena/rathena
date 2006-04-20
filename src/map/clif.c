@@ -4802,7 +4802,7 @@ void clif_GlobalMessage(struct block_list *bl,char *message)
  */
 void clif_MainChatMessage(char* message) {
 
-	char buf[128];
+	char buf[200];
 	int len;
 	
 	if(!message)
