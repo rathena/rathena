@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/20
+	* Hopefully also fixed the custom job master [Playtester]
 	* Fixed it again, better use constants [Playtester]
 	* Fixed Rebirth script not working for some Knights and Crusaders [Playtester]
 	- needs some testing!

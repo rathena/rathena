@@ -275,6 +275,8 @@ prontera.gat,153,193,6	script	Job Master	123,{
 		menu "No",L_quit,"Yes",-;
 		if ((BaseLevel < 99) || (JobLevel < 50)) goto L_cantCh;
 		set lastJob, readparam(19);
+		if(lastJob == Job_Knight2) set lastJob,Job_Knight;
+		if(lastJob == Job_Crusader2) set lastJob,Job_Crusader;
 		jobchange Job_Novice_High;
 		resetlvl(1);
 		skill 142,1,0;
