@@ -1302,9 +1302,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 			ud->attackabletime = tick + status_get_adelay(src);
 
 //		You can't move if you can't attack neither.
-//		Only for non-players, since it makes it near impossible to run away when you are on auto-attack.
-		if (src->type != BL_PC)	
-			unit_set_walkdelay(src, tick, status_get_amotion(src), 1);
+		unit_set_walkdelay(src, tick, status_get_amotion(src), 1);
 	}
 
 	if(ud->state.attack_continue)

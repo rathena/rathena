@@ -8158,16 +8158,15 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 	if (clif_cant_act(sd) && sd->sc.opt1 != OPT1_STONEWAIT)
 		return;
 
-	if (!unit_can_move(&sd->bl))
+	if(sd->sc.count && sd->sc.data[SC_RUN].timer != -1)
 		return;
 
-	if(sd->sc.count && sd->sc.data[SC_RUN].timer != -1)
+	pc_stop_attack(sd);
+	if (!unit_can_move(&sd->bl))
 		return;
 
 	if (sd->invincible_timer != -1)
 		pc_delinvincibletimer(sd);
-
-	pc_stop_attack(sd);
 
 	cmd = RFIFOW(fd,0);
 	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 +
