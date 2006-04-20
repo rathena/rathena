@@ -168,13 +168,14 @@ explanation, see 'setmapflag'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x1>,<y1>,<x2>,<y2>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>,<delay1>,<delay2>,<event>
+<map name>,<x>,<y>,<xs>,<ys>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>,<delay1>,<delay2>,<event>
 
-Map name is the name of the map the monsters will spawn on. x1/y1-y1/y2 is a 
-square of map coordinates which will limit where they will initially spawn. 
-Putting zeros instead of these coordinates will spawn the monsters randomly. 
-It's not certain whether monsters will later be able to venture out of this 
-square when randomly moving or not. (Can anyone confirm?)
+Map name is the name of the map the monsters will spawn on. x,y are the
+coordinates where the mob should spawn. If xs and ys are non-zero, they
+specify the diameters of a spawn-rectangle area who's center is x,y.
+Putting zeros instead of these coordinates will spawn the monsters randomly.
+Note this is only the initial spawn zone, as mobs random-walk, they are free
+to move away from their specified spawn region.
 
 Monster name is the name the monsters will have on screen, and has no relation 
 whatsoever to their names anywhere else. It's the mob id that counts, which 
@@ -184,12 +185,14 @@ used, (which, in eAthena, actually contains an english name) if it's "--en--",
 it's the 'english name' from the monster database (which contains an uppercase 
 name used to summon the monster with a GM command).
 
-If you add 4000 to the monster ID, the monster will be spawned in a 'big 
-version', (monster size class will increase) and if you add 2000, the 'tiny 
-version' of the monster will be created. This will not, however, make the 
-monster spawn with a bigger or smaller sprite, like with 
-@monstersmall/@monsterbig GM commands. Monster size class relates only to the 
-damage calculation.
+If you add 20000 to the monster ID, the monster will be spawned in a 'big 
+version', (monster size class will increase) and if you add 10000, the 'tiny 
+version' of the monster will be created. However, this method is deprecated
+and not recommended, as the values to add can change at a later time (20000
+and 10000 actually stand for 2*MAX_MOB_DB and MAX_MOB_DB respectively, which
+is defined on mob.h, and can change in the future as more mobs are created).
+The recommended way to change a mob's size is to use the event-field (see
+below).
 
 Amount is the amount of monsters that will be spawned when this command is 
 executed, it is affected by spawn rates in 'battle_athena.conf'.
@@ -199,12 +202,24 @@ since a monster defined in this spawn was last respawned and the second one
 counts the time since the monster of this spawn was last killed. Whichever turns 
 out to be higher will be used. If the resulting number is smaller than a random 
 value between 5 and 10 seconds, this value will be used instead. (Which is 
-normally the case if both delay values are zero.) If both delay values are -1, 
-the monster will never respawn upon death until the server restarts. The times 
-are given in 1/1000ths of a second.
+normally the case if both delay values are zero.) The times are given in
+1/1000ths of a second.
 
-Level overrides the monster's level from the monster id database, if it is 0, 
-the level from the database is used. 
+You can specify a custom level to use for the mob different from the one of
+the database by adjoining the level after the name with a comma. eg:
+"Poring,50" for a name will spawn a monster with name Poring and level 50.
+
+Event is a script event to be executed when the mob is killed. The event must
+be in the form "NPCName::OnEventName" to execute, and the event name label
+should start with "On". As with all events, if the NPC is an on-touch npc, the
+player who triggers the script must be within 'trigger' range for the event to
+work.
+
+The Event field can be used alternatively to specify other mob properties. Use
+2 to specify that the mob should be small, 4 for big monsters, and 8 for
+special ai mobs (which by default attack other monsters instead of players).
+You can add these, so using 10 will spawn small monsters that attack other
+mobs (if you specify both 2 and 4, the small version takes priority).
 
 ** Define a warp point
 
