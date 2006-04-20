@@ -26,6 +26,8 @@
 	-----
 
 =========================
+04/20
+	* Changed "Event Hat" to "Brazil Event Hat" [Playtester]
 04/19
 	* Fixed a zeny exploit by lowering price of fire cracker [Playtester]
 	* Fixed Attack of Niflheim Mobs being way too low [Playtester]

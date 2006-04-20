@@ -2453,7 +2453,7 @@
 
 5148,Unknown5148,Unknown5148,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{}
 5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{}
-5150,Event_Hat,Event Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,0,{}
+5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,0,{}
 
 7547,Soccer_Ball,Soccer Ball,3,,10,10,,,,,,,,,,,,,{}
 7548,Soccer_Shoes,Soccer Shoes,3,,10,10,,,,,,,,,,,,,{}
