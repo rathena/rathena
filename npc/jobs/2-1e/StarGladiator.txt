@@ -1,56 +1,289 @@
 //===== eAthena Script ======================================= 
 //= Star Gladiator Job Quest
 //===== By: ================================================== 
-//= Lupus
+//= Celestria
 //===== Current Version: ===================================== 
-//= 0.1a
+//= 1.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= 
 //===== Additional Comments: ================================= 
-//= 0.1 Now it's just a temp job quest NPC [Lupus]
-//= 0.1a Small fix in warp [Komurka]
+//= A temp Star Gladiator Job Changer based on the kRO quest.
+//= Quest info from RagnaInfo.
+//= Sprites from kRO screenshots, bar two which I just had to guess at.
+//= 1.0 Optimized, updated [Lupus]
 //============================================================ 
 
 
-job_star.gat,166,15,0	warp	startopay	1,1,payon.gat,151,85
-
-job_star.gat,166,37,2	script	Star Gladiator	764,{
-	mes "[Star Gladiator]";
-	if(Class==Job_Taekwon) goto L_Check;
-	if(Class==Job_Star_Gladiator){
-		mes "You've chosen the hardest way... But it's your faith...";
-		close;
-	}
-	mes "Are you a Taekwon? No?! Get lost.";
-	emotion e_what;
+payon.gat,215,102,2	script	MooHyun	828,{
+	mes "[MooHyun]";
+	if(Class==Job_Taekwon && JobLevel>=40 && STGL_Q==0) goto L_Taekwon;
+	if(STGL_Q) goto L_Quest;
+	mes "Aaaah, it's such lovely weather today, don't you think?";
 	close;
 
-L_Check:
-	mes "Hello!";
-	mes "Are you strong enough to protect your sisters and brothers? Do you want to be a Star Gladiator?";
+L_Taekwon:
+	mes "Oooh, a Taekwon!";
+	mes "I don't see many of those around.";
+	mes "I don't suppose you're interested in becoming even stronger?";
+	menu "Oh..?",-,"No, not really.",L_No;
+
+	mes "[MooHyun]";
+	mes "Well, there are these dedicated";
+	mes "fighters who are known as Star Gladiators.";
+	mes "I just so happen to know someone who";
+	mes "can warp to their meditation spot.";
 	next;
-	menu "I want to be a Star Gladiator",-,"Not yet.",M_NOTHING;
+	menu "Oooo.. I wanna be a SK.",-,"So?",L_No;
+	mes "[MooHyun]";
+	mes "What a coincidence!";
+	mes "However he does need some rare";
+	mes "materials to form the warp.";
+	set STGL_Q,1;
+	next;
+	mes "[MooHyun]";
+L_Quest:
+	mes "You will need to take him:";
+	mes "^0000FF- 1 Flame Heart^000000";
+	mes "^0000FF- 1 Mystic Frozen^000000";
+	mes "^0000FF- 1 Rough Wind^000000";
+	mes "^0000FF- 1 Great Nature^000000";
+	next;
+	mes "[MooHyun]";
+	mes "You can find him in Comodo.";
+	mes "He normally like to hang out at";
+	mes "the top of the mountain there.";
+	//mes "Write this down, because I won't tell you again.";
+	close;
+L_No:
+	mes "[MooHyun]";
+	mes "I see. Well, if that's how you feel...";
+	close;
+}
 
-	mes "[Star Gladiator]";
-	if(JobLevel<40 || SkillPoint) {
-		mes "I'm sorry, my friend. You need 40 Job Level and no skill points left.";
-		close;
-	}
-	if(Weight<MaxWeight) {
-		mes "You have strong feet... Bring me as much ores, gems and gold as you can... Much More Heavier Than Now!";
-		emotion e_sry;
-		close;
-	}
+comodo.gat,172,231,2	script	Man#SKTest	730,{
+	if(STGL_Q==1) goto L_Talk;
+	if(STGL_Q>=2) goto L_Needwarp;
+	mes "[Man]";
+	mes "...";
+	close;
 
+L_Talk:
+	mes "[Man]";
+	mes "...";
+	next;
+	mes "[Warper Man]";
+	mes "Oh, a Taekwon. I guess MooHyun sent you here then.";
+	mes "Did you want me to warp you?";
+	next;
+	menu "Yes",L_Warp,"No",-;
+	mes "[Warper Man]";
+	mes "Hmph, wasting my time...";
+	mes "Come back when you actually";
+	mes "DO want me to warp you.";
+	close;
+
+L_Warp:
+	if(countitem(994) < 1 || countitem(995) < 1 || countitem(996) < 1 || countitem(997) < 1) goto L_Noitem;
+	delitem 994,1;
+	delitem 995,1;
+	delitem 996,1;
+	delitem 997,1;
+	set STGL_Q,2;
+	mes "[Warper Man]";
+	mes "Great! With these items I can create a warp at any time.";
+	mes "so if you need to warp again just ask me, okay?";;
+	next;
+	warp "job_star.gat",33,41;
+	close;
+
+L_Noitem:
+	mes "[Warper Man]";
+	mes "In order to warp you, I need rare magical items.";
+	next;
+	mes "[Warper Man]";
+	mes "Bring me:";
+	mes "^0000FF- 1 Flame Heart^000000";
+	mes "^0000FF- 1 Mystic Frozen^000000";
+	mes "^0000FF- 1 Rough Wind^000000";
+	mes "^0000FF- 1 Great Nature^000000";
+	close;
+
+L_Needwarp:
+	mes "[Warper Man]";
+	mes "Did you need me to warp you again?";
+	next;
+	menu "Yes",L_Again,"No",-;
+	close;
+
+L_Again:
+	warp "job_star.gat",33,41;
+	close;
+}
+
+job_star.gat,29,33,4	script	Gladiator of the Sun	823,{
+	if(STGL_Q==3) goto L_Warpnow1;
+	if(Class==Job_Taekwon && JobLevel>=40) goto L_Talk1;
+	mes "[Gladiator of the Sun]";
+	mes "How did you get in here!?";
+	mes "Get out at once!";
+	next;
+	warp "payon.gat",256,242;
+	close;
+
+L_Talk1:
+	mes "[Gladiator of the Sun]";
+	mes "Ah. A Taekwon.";
+	mes "It is always good to see a follower of a disciplined art.";
+	next;
+	mes "[Gladiator of the Sun]";
+	mes "I assume you came here to become a Star Gladiator.";
+	mes "So allow me to explain...";
+	next;
+	mes "[Gladiator of the Sun]";
+	mes "The Sun, the Moon, and the Stars.";
+	mes "All have their own subtle";
+	mes "energies. We Star Gladiators use";
+	mes "these energies in addition";
+	mes "to our own strength to aid us";
+	mes "in combat.";
+	next;
+	mes "[Gladiator of the Sun]";
+	mes "In here I teach Taekwons how to";
+	mes "tap into the energy of the sun.";
+	mes "I shall teach you this now.";
+	next;
+	mes "^0000FFYou spend several hours meditating^000000";
+	mes "^0000FFtogehther under the sun.^000000";
+	mes "^0000FFYou do start to feel warm, although^000000";
+	mes "^0000FFthat's probably because you aren't^000000";
+	mes "^0000FFwearing any suncream.^000000";
+	next;
+	mes "[Gladiator of the Sun]";
+	mes "You have learnt all I can teach you.";
+	mes "I shall now send you to your";
+	mes "next instructor.";
+	next;
+
+L_Warpnow1:
+	warp "job_star.gat",99,41;
+	close;
+}
+
+job_star.gat,95,34,4	script	Gladiator of the Moon	758,{
+	if(STGL_Q==3) goto L_Warpnow2;
+	if(Class==Job_Taekwon && JobLevel>=40) goto L_Talk2;
+	mes "[Gladiator of the Moon]";
+	mes "How did you get in here!?";
+	mes "Get out at once!";
+	next;
+	warp "payon.gat",256,242;
+	close;
+
+L_Talk2:
+	mes "[Gladiator of the Moon]";
+	mes "Ah. A Taekwon.";
+	mes "It is good that you have";
+	mes "managed to come this far.";
+	next;
+	mes "[Gladiator of the Moon]";
+	mes "My job here is to help";
+	mes "Taekwons become more in";
+	mes "touch with the energies of the Moon.";
+	next;
+	mes "[Gladiator of the Moon]";
+	mes "The Moon has calming energies.";
+	mes "So you must be careful not";
+	mes "to fall asleep while meditating";
+	next;
+	mes "[Gladiator of the Moon]";
+	mes "Now, sit down.";
+	mes "Stare into the Moon and feel.";
+	mes "it's light flow through you.";
+	next;
+	mes "^0000FFAfter a few minutes of meditation^000000";
+	mes "^0000FFyour eyes start to grow heavy.^000000";
+	mes "^0000FFcomposing yourself you force^000000";
+	mes "^0000FFyourself awake, and feel a^000000";
+	mes "^0000FFrenewed vigour.^000000";
+	next;
+	mes "[Gladiator of the Moon]";
+	mes "You have learnt all I can teach you.";
+	mes "I shall now send you to the";
+	mes "final instructor.";
+	next;
+
+L_Warpnow2:
+	warp "job_star.gat",165,39;
+	close;
+}
+
+job_star.gat,161,34,4	script	Gladiator of the Stars	77,{
+	if(Class==Job_Taekwon && JobLevel>=40) goto L_Talk3;
+	if(STGL_Q==3) goto L_Itemcheck;
+	mes "[Gladiator of the Stars]";
+	mes "How did you get in here!?";
+	mes "Get out at once!";
+	next;
+	warp "payon.gat",256,242;
+	close;
+
+L_Talk3:
+	mes "[Gladiator of the Stars]";
+	mes "Greetings Taekwon.";
+	mes "I am here to teach you about";
+	mes "the multiple energies that";
+	mes "come from the stars.";
+	//goto L_Itemcheck;
+
+L_Itemcheck:
+	if(countitem(1000) < 1 || countitem(1001) < 1) goto L_Noitem3;
+	if(SkillPoint) goto L_Skill;
+	delitem 1000,1;
+	delitem 1001,1;
+	mes "[Gladiator of the Stars]";
+	mes "Since you have the required items,";
+	mes "we shall now begin.";
+	next;
+	mes "^0000FFAs you meditate you feel a^000000";
+	mes "^0000FFpower growing within you.^000000";
+	mes "^0000FFThis power does not feel like^000000";
+	mes "^0000FFyour own, but like something^000000";
+	mes "^0000FFout there is giving you a hand.^000000";
+	next;
 	jobchange Job_Star_Gladiator;
 	callfunc "F_ClearJobVar";
-	mes "You did it! You are worth!";
+	mes "[Gladiator of the Stars]";
+	mes "It seems that you are indeed";
+	mes "in touch with the sun, moon, and stars.";
+	next;
+	mes "[Gladiator of the Stars]";
+	mes "I wish you luck on your journey.";
+	next;
+	warp "payon.gat",256,242;
 	close;
 
-M_NOTHING:
-	mes "[Star Gladiator]";
-	mes "I'll wait here forever. We need more protectors for our people.";
-	close;	
+L_Skill:
+	mes "[Gladiator of the Stars]";
+	mes "It would seem you still have";
+	mes "some unused skill points.";
+	mes "Use these all up, then come";
+	mes "talk to me again.";
+	close;
+
+L_Noitem3:
+	mes "[Gladiator of the Stars]";
+	mes "In order to become one with";
+	mes "the stars, you will need to bring me:";
+	mes "^0000FF- 1 Star Crumb^000000";
+	mes "^0000FF- 1 Star Dust^000000";
+	next;
+	mes "[Gladiator of the Stars]";
+	mes "I will now send you back to";
+	mes "look for these items.";
+	next;
+	set STGL_Q,3;
+	warp "payon.gat",256,242;
+	close;
 }

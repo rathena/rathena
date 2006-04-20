@@ -27,6 +27,10 @@ Nexon
 
 Date		Added
 ======
+04/20
+	* Updated Job Quests of Taekwon, SG, SL (all thanks to Celestria) [Lupus]
+		They have oficial sprites, actions. But some dialogs are made up. ^_-
+	- Don't forget to update your Global_Functions.txt !
 04/19
 	* Whoops, eAAC members made a mistake with scripts and I didn't notice => Quest Warper.txt [erKURITA]
 	* Added quest_warper.txt and banker.txt to npc\customs\eAAC_Scripts. [erKURITA]

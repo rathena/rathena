@@ -1,71 +1,113 @@
 //===== eAthena Script ======================================= 
 //= Taekwon Job Quest
 //===== By: ================================================== 
-//= Lupus
+//= Celestria
 //===== Current Version: ===================================== 
-//= 0.3
+//= 1.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= 
 //===== Additional Comments: ================================= 
-//= 0.1 Now it's just a questless temp NPC 
-//= We use CLASS instead of BASEJOB to protect from Advanced/Baby Classes
-//= 0.3 Updated The Job Qusts due to SG / SL Job Quests [Lupus]
+//= A temp Taekwon Job Changer based on the kRO quest.
+//= Quest info from RagnaInfo. Sprites from kRO screenshots
+//= 1.0 Optimized, updated [Lupus]
 //============================================================ 
 
 
-payon.gat,146,87,7	script	Taekwon	764,{
-	mes "[Taekwon]";
-	if(Class==Job_Novice) goto L_Check;
-	if(Class==Job_Soul_Linker || Class==Job_Star_Gladiator){
-		mes "That's all for now. You know your way. Be brave!";
-		mes "I'm staying here and looking forward to the new hope of the Rune-Midgart Kingdom.";
+payon.gat,157,141,5	script	Monk#tktest	753,{
+	if(Class==Job_Novice && TAEK_Q) goto L_Continue;
+	if(Class==Job_Taekwon || Class==Job_Star_Gladiator) {
+		mes "[Monk]";
+		mes "So, how goes the kicking?";
 		close;
 	}
-	if(Class==Job_Taekwon){
-		mes "Hello, my brother Taekwon!";
-		if(JobLevel<40) {
-			mes "On achieving Job Level 40 visit me again...";
-			emotion e_go;
-			close;
-		}
-		mes "You've became much stronger... Now tell me your way?";
+	mes "[Monk]";
+	mes "All my life I've been punching and punching things.";
+	mes "As such I've developed quite a lot of muscles in my arms.";
+	next;
+	mes "[Monk]";
+	mes "However in my travels I have also walked a lot, and have";
+	mes "developed strong muscles in my legs.";
+	next;
+	if(Class==Job_Novice && JobLevel==10) {
+		mes "[Monk]";
+		mes "Hmmm... You seem to be the kind to walk around a lot.";
+		mes "Perhaps you would be interested in helping me with an experiment?";
 		next;
-		menu "I choose the way of Stars...",-,"I prefer the way of Soul...",M_SOUL,"I've none.",M_NOTHING;
+		menu "What sort of experiment?",-,"Umm... no.",L_No;
 
-		warp "job_star.gat",166,21;	//SG
-		end;
-	M_SOUL:
-		warp "job_star.gat",99,22;	//SL
-		end;
-		
+		mes "[Monk]";
+		mes "Well you see, I've thought that since one is always";
+		mes "strengthening their legs by walking, if one were to";
+		mes "fight by kicking they would be even stronger than punching.";
+		next;
+		mes "[Monk]";
+		mes "I've already practiced a little myself, but I need";
+		mes "someone young to teach, who can further improve these skills.";
+		next;
+		mes "[Monk]";
+		mes "I was hoping that maybe you could help me test this theory.";
+		next;
+		menu "Sure, I'd love to.",-,"Sorry, but no.",L_No;
+
+		set TAEK_Q,BaseLevel;
+		mes "[Monk]";
+		mes "Great!";
+		mes "Now, before I teach what moves I've learnt, I need to ask you";
+		mes "to prove that you actually do walk around a lot.";
+		next;
+		mes "[Monk]";
+		mes "So go get ^0000FFone more base level^000000 and then I will teach you what I know.";
+		close;
 	}
-	mes "Good day. I'm a Taekwon Guild Master.";
-	emotion e_what;
+	mes "[Monk]";
+	mes "Hmmm... I wonder...";
 	close;
 
-L_Check:
-	mes "Hi, brave Novice!";
-	mes "Waht do you want?";
-	next;
-	menu "I want to be a Taekwon",-,"Nothing.",M_NOTHING;
+L_No:
+	mes "[Monk]";
+	mes "I see...";
+	mes "Well, If you change your mind, I'll still be here.";
+	close;
 
-	mes "[Taekwon]";
-	if(JobLevel<10 || SkillPoint) {
-		mes "You have to learn all the basic skills and reach 10 Job Level.";
-		emotion e_sry;
+L_Continue:
+	if(TAEK_Q<=BaseLevel) goto L_Nolvl;
+	if(SkillPoint){
+		mes "[Monk]";
+		mes "You definately seem to have walked enough, but you still have skill points left over.";
+		next;
+		mes "[Monk]";
+		mes "Use them all up, then you can come talk to me again.";
 		close;
 	}
-
+	mes "[Monk]";
+	mes "I see that you have walked far.";
+	next;
+	mes "[Monk]";
+	mes "Very well, I shall teach you all that I know.";
+	next;
+	mes "You and the monk spend several hours practicing various kicks.";
+	mes "It soon becomes apparant why he needed you to help him.";
+	next;
+	mes "Wow. You're really good.";
+	mes "I hope you continue to go on fighting with your feet,";
+	mes "I'd really like to see how well that works for you.";
+	if(BaseLevel>TAEK_Q+1) { //u get bonus if leveled up more than a level
+		//in jRO you get a Guard[0]... have to prove it later
+		getitem 2101,1;	//Guard[0]
+	}
 	jobchange Job_Taekwon;
 	callfunc "F_ClearJobVar";
-	mes "Congratulations!";
+	next;
+	mes "Well, you should go practice some more now.";
+	mes "Take care.";
 	close;
 
-M_NOTHING:
-	mes "[Taekwon]";
-	mes "Then... see you soon.";
-	close;	
-
+L_Nolvl:
+	mes "[Monk]";
+	mes "Hmm...";
+	mes "I don't think you have walked far enough yet.";
+	mes "Go train some more.";
+	close;
 }

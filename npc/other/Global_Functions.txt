@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.6 Added F_RandMes, F_SexMes, F_Hi, F_Bye functions [Lupus]
 //= Moved here useful function 'getJobName'
 //= 1.7 Added "F_ItemName" function, added a great sample for "F_ItemName"
+//= 1.8 Added Job Vars clear for Extended classes: TK,SL,SG [Lupus]
 //============================================================ 
 
 
@@ -52,6 +53,10 @@ function	script	F_ClearJobVar	{
 	set SAGE_Q,0; set SAGE_Q2,0;
 	set DANC_Q,0;
 	set BARD_Q,0;
+	// Extended Classes
+	set TAEK_Q,0;
+	set STGL_Q,0;
+	set SOUL_Q,0;
 	return;
 }
 
