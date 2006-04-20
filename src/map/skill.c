@@ -1905,6 +1905,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case SM_MAGNUM:
 	case AS_SPLASHER:
 	case ASC_METEORASSAULT:
+	case GS_DESPERADO:
+	case GS_SPREADATTACK:
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
 	case SG_STAR_WARM:
@@ -3705,6 +3707,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SG_STAR_COMFORT:
 	case NPC_HALLUCINATION:
 	case HP_ASSUMPTIO:
+	case GS_MADNESSCANCEL:
+	case GS_ADJUSTMENT:
+	case GS_INCREASING:
+	case GS_CRACKER:
+	case GS_GROUNDDRIFT:
+	case NJ_TATAMIGAESHI:
+	case NJ_KASUMIKIRI:
+	case NJ_SHADOWJUMP:
+	case NJ_UTSUSEMI:
+	case NJ_BUNSINJYUTSU:
+	case NJ_NEN:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
@@ -3969,8 +3982,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case ASC_METEORASSAULT:	/* ƒ?ƒeƒIƒAƒTƒ‹ƒg */
+	case GS_DESPERADO:
+	case GS_SPREADATTACK:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		map_foreachinrange(skill_area_sub, bl,
+		map_foreachinrange(skill_area_sub, src,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
@@ -4098,6 +4113,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case CR_SHRINK:
 	case ST_PRESERVE:
 	case SG_FUSION:
+	case GS_GATLINGFEVER:
 		if (tsc && tsc->data[type].timer != -1)
 			i = status_change_end(bl, type, -1);
 		else
@@ -5572,36 +5588,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				pc_delspiritball(sd,1,0);
 		}
 		break;
-	case GS_DESPERADO:
-	case GS_SPREADATTACK:
-		map_foreachinrange(skill_area_sub, src,
-			skill_get_splash(skillid, skilllv),BL_CHAR,
-			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-			skill_castend_damage_id);
-		break;
-	case GS_MADNESSCANCEL:
-	case GS_ADJUSTMENT:
-	case GS_INCREASING:
-	case GS_CRACKER:
-	case GS_GATLINGFEVER:
-	case GS_GROUNDDRIFT:
-	
-	case NJ_TATAMIGAESHI:
-	case NJ_KASUMIKIRI:
-	case NJ_SHADOWJUMP:
-	case NJ_UTSUSEMI:
-	case NJ_BUNSINJYUTSU:
-	case NJ_NEN:
-
-		if (skillid == GS_GATLINGFEVER && sd->sc.data[SC_GATLINGFEVER].timer!=-1){	// added to allow you to toggle skill on/off [Reddozen]
-			status_change_end(bl,SC_GATLINGFEVER,-1);
-			break;
-		}
-
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-		break;
-
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		map_freeblock_unlock();
