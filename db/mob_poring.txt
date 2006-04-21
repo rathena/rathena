@@ -14,4 +14,4 @@
 1120,Ghostring,50000
 1096,Angeling,25000
 1582,Deviling,25000
-1388,Archangeling,10000
+1388,Arc Angeling,10000

@@ -27,6 +27,9 @@
 
 =========================
 04/21
+	* Fixed some mob skills that where missing an [Enter]... (Windows format... AGAIN!) [Poki#3]
+	  ...why co we have uncommented Attack skills under an iddle state? Oo
+	* Added a lot of G_Mobs and changed some slave spawns to them. Please use the newest exe release. [Poki#3]
 	* Fixed selling price of research chart(ID 7347) thanks to Muad_Dib [Playtester]
 	* Fixed some drops of the Bio Lab 1&2 mobs [Playtester]
 	* Fixed more elements of Bio Lab mobs [Playtester]

@@ -1085,8 +1085,8 @@
 1250,Chepet@AM_DEMONSTRATION,attack,229,5,500,500,5000,no,target,always,0,,,,,,17
 1250,Chepet@AM_DEMONSTRATION,chase,229,5,50,500,5000,no,target,always,0,,,,,,17
 1250,Chepet@NPC_EMOTION,attack,197,1,2000,0,5000,yes,self,always,0,17,,,,,
-1250,Chepet@NPC_SUMMONSLAVE,attack,196,3,10000,2000,60000,no,self,slavele,0,1249,,,,,27
-1250,Chepet@NPC_SUMMONSLAVE,idle,196,3,10000,2000,60000,no,self,slavele,0,1249,,,,,27
+1250,Chepet@NPC_SUMMONSLAVE,attack,196,3,10000,2000,60000,no,self,slavele,0,1743,,,,,27
+1250,Chepet@NPC_SUMMONSLAVE,idle,196,3,10000,2000,60000,no,self,slavele,0,1743,,,,,27
 1250,Chepet@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1249,,,,,
 1250,Chepet@PR_STRECOVERY,attack,72,1,2000,700,5000,yes,friend,friendstatuson,anybad,,,,,,3
 1250,Chepet@PR_STRECOVERY,chase,72,1,200,700,5000,yes,friend,friendstatuson,anybad,,,,,,3
@@ -1241,8 +1241,8 @@
 1275,Alice@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1275,Alice@CR_SHIELDCHARGE,attack,250,3,2000,0,5000,no,target,always,0,,,,,,6
 1275,Alice@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,2,,,,,
-1275,Alice@NPC_SUMMONSLAVE,attack,196,1,50,2000,60000,no,self,slavele,0,1261,,,,,
-1275,Alice@NPC_SUMMONSLAVE,idle,196,1,50,2000,60000,no,self,slavele,0,1261,,,,,
+1275,Alice@NPC_SUMMONSLAVE,attack,196,1,50,2000,60000,no,self,slavele,0,1744,,,,,
+1275,Alice@NPC_SUMMONSLAVE,idle,196,1,50,2000,60000,no,self,slavele,0,1744,,,,,
 1275,Alice@NPC_SUMMONSLAVE,idle,196,1,50,0,0,no,self,onspawn,0,1261,,,,,
 1275,Alice@SA_DISPELL,attack,289,5,500,0,30000,yes,target,always,0,,,,,,
 1275,Alice@SA_DISPELL,chase,289,5,50,0,30000,yes,target,always,0,,,,,,
@@ -1739,24 +1739,24 @@
 1387,Gig@TF_HIDING,attack,51,1,2000,500,5000,no,self,myhpltmaxrate,30,,,,,,19
 1387,Gig@TF_POISON,angry,52,10,500,1000,5000,no,target,always,0,,,,,,
 1387,Gig@TF_POISON,attack,52,10,500,1000,5000,no,target,always,0,,,,,,
-1388,Archangeling@AL_HEAL,attack,28,11,10000,0,1000,no,friend,friendhpltmaxrate,50,,,,,,18
-1388,Archangeling@AL_HEAL,attack,28,11,10000,0,10000,no,self,myhpltmaxrate,50,,,,,,18
-1388,Archangeling@AL_HEAL,chase,28,11,10000,0,1000,no,friend,friendhpltmaxrate,50,,,,,,18
-1388,Archangeling@AL_HEAL,chase,28,11,10000,0,10000,no,self,myhpltmaxrate,50,,,,,,18
-1388,Archangeling@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1388,Archangeling@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,18
-1388,Archangeling@CR_GRANDCROSS,attack,254,1,2000,0,0,yes,target,always,0,,,,,,
-1388,Archangeling@NPC_BARRIER,attack,204,1,500,1000,5000,no,self,myhpltmaxrate,30,,,,,,18
-1388,Archangeling@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
-1388,Archangeling@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
-1388,Archangeling@NPC_HOLYATTACK,attack,189,5,500,0,5000,no,target,always,0,,,,,,18
-1388,Archangeling@NPC_HOLYATTACK,chase,189,5,50,0,5000,no,target,always,0,,,,,,18
-1388,Archangeling@NPC_SUMMONSLAVE,attack,196,7,10000,700,60000,no,self,slavele,3,1443,1246,1267,1249,1261,18
-1388,Archangeling@NPC_SUMMONSLAVE,idle,196,7,10000,700,60000,no,self,slavele,3,1443,1246,1267,1249,1261,18
-1388,Archangeling@NPC_SUMMONSLAVE,idle,196,7,10000,0,0,no,self,onspawn,3,1248,1246,1267,1249,1261,
-1388,Archangeling@PR_SANCTUARY,attack,70,10,10000,500,30000,no,self,always,0,,,,,,18
-1388,Archangeling@PR_SANCTUARY,chase,70,10,10000,500,30000,no,self,always,0,,,,,,18
-1388,Archangeling@RG_INTIMIDATE,attack,219,5,2000,0,5000,yes,target,always,0,,,,,,
+1388,Arc Angeling@AL_HEAL,attack,28,11,10000,0,1000,no,friend,friendhpltmaxrate,50,,,,,,18
+1388,Arc Angeling@AL_HEAL,attack,28,11,10000,0,10000,no,self,myhpltmaxrate,50,,,,,,18
+1388,Arc Angeling@AL_HEAL,chase,28,11,10000,0,1000,no,friend,friendhpltmaxrate,50,,,,,,18
+1388,Arc Angeling@AL_HEAL,chase,28,11,10000,0,10000,no,self,myhpltmaxrate,50,,,,,,18
+1388,Arc Angeling@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1388,Arc Angeling@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,18
+1388,Arc Angeling@CR_GRANDCROSS,attack,254,1,2000,0,0,yes,target,always,0,,,,,,
+1388,Arc Angeling@NPC_BARRIER,attack,204,1,500,1000,5000,no,self,myhpltmaxrate,30,,,,,,18
+1388,Arc Angeling@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1388,Arc Angeling@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1388,Arc Angeling@NPC_HOLYATTACK,attack,189,5,500,0,5000,no,target,always,0,,,,,,18
+1388,Arc Angeling@NPC_HOLYATTACK,chase,189,5,50,0,5000,no,target,always,0,,,,,,18
+1388,Arc Angeling@NPC_SUMMONSLAVE,attack,196,7,10000,700,60000,no,self,slavele,3,1443,1246,1742,1743,1744,18
+1388,Arc Angeling@NPC_SUMMONSLAVE,idle,196,7,10000,700,60000,no,self,slavele,3,1443,1246,1742,1743,1744,18
+1388,Arc Angeling@NPC_SUMMONSLAVE,idle,196,7,10000,0,0,no,self,onspawn,3,1248,1246,1267,1249,1261,
+1388,Arc Angeling@PR_SANCTUARY,attack,70,10,10000,500,30000,no,self,always,0,,,,,,18
+1388,Arc Angeling@PR_SANCTUARY,chase,70,10,10000,500,30000,no,self,always,0,,,,,,18
+1388,Arc Angeling@RG_INTIMIDATE,attack,219,5,2000,0,5000,yes,target,always,0,,,,,,
 1389,Dracula@AL_DECAGI,chase,30,10,200,0,5000,no,target,always,0,,,,,,
 1389,Dracula@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1389,Dracula@AL_TELEPORT,idle,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,
@@ -1799,8 +1799,8 @@
 1399,Event Baphomet@KN_TWOHANDQUICKEN,attack,60,10,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,6
 1399,Event Baphomet@NPC_BARRIER,attack,204,1,2000,3000,60000,no,self,always,0,,,,,,
 1399,Event Baphomet@NPC_GUIDEDATTACK,attack,172,5,2000,0,20000,yes,target,always,0,,,,,,29
-1399,Event Baphomet@NPC_SUMMONSLAVE,attack,196,10,10000,2000,20000,no,self,slavele,3,1026,1170,1029,1044,1148,
-1399,Event Baphomet@NPC_SUMMONSLAVE,idle,196,10,10000,2000,20000,no,self,slavele,3,1026,1170,1029,1044,1148,
+1399,Event Baphomet@NPC_SUMMONSLAVE,attack,196,10,10000,2000,20000,no,self,slavele,3,1026,1170,1029,1044,1749,
+1399,Event Baphomet@NPC_SUMMONSLAVE,idle,196,10,10000,2000,20000,no,self,slavele,3,1026,1170,1029,1044,1749,
 1399,Event Baphomet@NPC_SUMMONSLAVE,idle,196,10,10000,0,0,no,self,onspawn,0,1026,1170,1029,1044,1148,
 1399,Event Baphomet@WZ_METEOR,attack,83,10,2000,0,5000,yes,target,always,0,,,,,,29
 1399,Event Baphomet@WZ_METEOR,chase,83,10,200,0,5000,yes,target,always,0,,,,,,29
@@ -2771,11 +2771,11 @@
 1639,Katrinn@MG_FIREBALL,chase,17,10,10000,500,10000,no,target,skillused,18,,,,,,
 1639,Katrinn@MG_FIREBALL,chase,17,10,10000,500,20000,no,target,always,0,,,,,,
 //1639,Katrinn@MG_FIREBALL,idle,17,10,10000,500,7000,no,self,always,0,,,,,,
-1639,Katrinn@MG_FROSTDIVER,attack,15,10,10000,1000,20000,no,target,always,0,,,,,,
+1639,Katrinn@MG_FROSTDIVER,attack,15,10,10000,1000,20000,no,target,always,0,,,,,,
 1639,Katrinn@MG_FROSTDIVER,chase,15,10,10000,1000,10000,no,target,skillused,18,,,,,,
 1639,Katrinn@MG_FROSTDIVER,chase,15,10,10000,1000,20000,no,target,always,0,,,,,,
 //1639,Katrinn@MG_FROSTDIVER,idle,15,10,10000,1000,7000,no,target,always,0,,,,,,
-1639,Katrinn@MG_SAFETYWALL,attack,12,10,2000,0,5000,yes,self,always,0,,,,,,
+1639,Katrinn@MG_SAFETYWALL,attack,12,10,2000,0,5000,yes,self,always,0,,,,,,
 1639,Katrinn@MG_SIGHT,idle,10,1,10000,0,30000,yes,self,skillused,137,,,,,,
 1639,Katrinn@MG_SIGHT,idle,10,1,200,0,30000,yes,self,always,0,,,,,,
 1639,Katrinn@MG_THUNDERSTORM,attack,21,10,10000,1000,20000,no,target,always,0,,,,,,
@@ -2784,7 +2784,7 @@
 1639,Katrinn@WZ_JUPITEL,chase,84,10,10000,1000,10000,no,target,skillused,18,,,,,,
 1639,Katrinn@WZ_JUPITEL,chase,84,10,10000,1000,20000,no,target,always,0,,,,,,
 //1639,Katrinn@WZ_JUPITEL,idle,84,10,10000,1000,7000,no,self,always,0,,,,,,
-1639,Katrinn@WZ_QUAGMIRE,chase,92,5,200,0,5000,yes,target,always,0,,,,,,
+1639,Katrinn@WZ_QUAGMIRE,chase,92,5,200,0,5000,yes,target,always,0,,,,,,
 1639,Katrinn@WZ_SIGHTRASHER,attack,81,10,2000,0,5000,yes,target,always,0,,,,,,
 1640,Lord Knight Seyren@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1640,Lord Knight Seyren@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,
@@ -2792,7 +2792,7 @@
 1640,Lord Knight Seyren@KN_BOWLINGBASH,attack,62,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,
 1640,Lord Knight Seyren@KN_SPEARBOOMERANG,chase,59,5,10000,0,0,yes,target,skillused,18,,,,,,6
 //1640,Lord Knight Seyren@KN_SPEARBOOMERANG,idle,59,5,10000,0,0,yes,self,always,0,,,,,,6
-1640,Lord Knight Seyren@KN_TWOHANDQUICKEN,attack,60,10,10000,0,300000,yes,self,always,0,,,,,,2
+1640,Lord Knight Seyren@KN_TWOHANDQUICKEN,attack,60,10,10000,0,300000,yes,self,always,0,,,,,,2
 1640,Lord Knight Seyren@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
 1640,Lord Knight Seyren@NPC_FIREATTACK,attack,186,10,1000,0,5000,yes,target,always,0,,,,,,
 1640,Lord Knight Seyren@NPC_POWERUP,attack,349,5,2000,0,100000,yes,self,always,0,,,,,,
@@ -2811,7 +2811,7 @@
 1641,Assassin Cross Eremes@AS_GRIMTOOTH,chase,137,5,10000,0,0,yes,target,skillused,18,,,,,,6
 1641,Assassin Cross Eremes@AS_GRIMTOOTH,chase,137,5,200,0,0,yes,target,always,0,,,,,,
 //1641,Assassin Cross Eremes@AS_GRIMTOOTH,idle,137,5,10000,0,0,yes,self,always,0,,,,,,6
-1641,Assassin Cross Eremes@AS_SONICBLOW,attack,136,10,2000,0,5000,yes,target,always,0,,,,,,6
+1641,Assassin Cross Eremes@AS_SONICBLOW,attack,136,10,2000,0,5000,yes,target,always,0,,,,,,6
 1641,Assassin Cross Eremes@AS_SONICBLOW,attack,136,10,3000,0,0,yes,target,myhpltmaxrate,30,,,,,,6
 1641,Assassin Cross Eremes@AS_VENOMDUST,attack,140,1,2000,0,10000,yes,target,always,0,,,,,,29
 //1641,Assassin Cross Eremes@AS_VENOMDUST,idle,140,1,200,0,10000,yes,self,always,0,,,,,,29
@@ -2872,7 +2872,7 @@
 1643,High Priest Magaleta@PR_LEXDIVINA,chase,76,10,200,0,5000,yes,target,always,0,,,,,,18
 1643,High Priest Magaleta@PR_LEXDIVINA,chase,76,10,500,0,5000,yes,target,casttargeted,,,,,,,18
 //1643,High Priest Magaleta@PR_LEXDIVINA,idle,76,10,10000,0,5000,yes,self,casttargeted,,,,,,,18
-1643,High Priest Magaleta@PR_SANCTUARY,attack,70,10,1000,0,10000,yes,self,always,0,,,,,,14
+1643,High Priest Magaleta@PR_SANCTUARY,attack,70,10,1000,0,10000,yes,self,always,0,,,,,,14
 1643,High Priest Magaleta@PR_SANCTUARY,idle,70,10,100,0,10000,yes,self,always,0,,,,,,14
 1643,High Priest Magaleta@RG_INTIMIDATE,attack,219,10,100,0,5000,yes,target,always,0,,,,,,
 1644,Sniper Shecil@AC_CHARGEARROW,attack,148,1,2000,0,3000,yes,target,always,0,,,,,,6
@@ -3150,7 +3150,7 @@
 1657,Rawrel@MG_LIGHTNINGBOLT,attack,20,7,10000,1000,20000,no,target,always,0,,,,,,
 1657,Rawrel@MG_LIGHTNINGBOLT,chase,20,7,10000,1000,20000,no,target,always,0,,,,,,
 //1657,Rawrel@MG_LIGHTNINGBOLT,idle,20,9,100,1000,5000,no,target,always,0,,,,,,
-1657,Rawrel@MG_SAFETYWALL,attack,12,10,2000,1000,5000,no,self,myhpltmaxrate,30,,,,,,26
+1657,Rawrel@MG_SAFETYWALL,attack,12,10,2000,1000,5000,no,self,myhpltmaxrate,30,,,,,,26
 1657,Rawrel@MG_SOULSTRIKE,attack,13,3,2000,0,1000,yes,target,always,0,,,,,,
 1657,Rawrel@MG_SOULSTRIKE,attack,13,5,3000,0,1000,yes,target,always,0,,,,,,
 1657,Rawrel@MG_SOULSTRIKE,attack,13,9,5000,0,1000,yes,target,always,0,,,,,,
@@ -3308,16 +3308,16 @@
 1680,Hill Wind@NPC_WINDATTACK,chase,187,3,50,500,5000,no,target,always,0,,,,,,
 1680,Hill Wind@WZ_JUPITEL,attack,84,3,500,1500,5000,yes,target,always,0,,,,,,6
 1680,Hill Wind@WZ_JUPITEL,chase,84,3,50,1500,5000,yes,target,always,0,,,,,,6
-1681,Gemini S58@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1681,Gemini S58@AS_GRIMTOOTH,chase,137,5,200,0,5000,yes,target,always,0,,,,,,29
-1681,Gemini S58@KN_PIERCE,attack,56,5,1000,700,5000,no,target,always,0,,,,,,
-1681,Gemini S58@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
-1681,Gemini S58@NPC_COMBOATTACK,chase,171,1,50,700,5000,no,target,always,0,,,,,,
-1681,Gemini S58@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,30,,,,,
-1681,Gemini S58@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,31,,,,,
-1681,Gemini S58@NPC_PIERCINGATT,attack,158,10,1000,0,5000,yes,target,always,0,,,,,,
-1682,Removal@NPC_UNDEADATTACK,attack,347,3,500,0,5000,yes,target,always,0,,,,,,
-1682,Removal@SM_BASH,attack,5,5,500,800,5000,no,target,always,0,,,,,,
+1681,Gemini-S58@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1681,Gemini-S58@AS_GRIMTOOTH,chase,137,5,200,0,5000,yes,target,always,0,,,,,,29
+1681,Gemini-S58@KN_PIERCE,attack,56,5,1000,700,5000,no,target,always,0,,,,,,
+1681,Gemini-S58@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
+1681,Gemini-S58@NPC_COMBOATTACK,chase,171,1,50,700,5000,no,target,always,0,,,,,,
+1681,Gemini-S58@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,30,,,,,
+1681,Gemini-S58@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,31,,,,,
+1681,Gemini-S58@NPC_PIERCINGATT,attack,158,10,1000,0,5000,yes,target,always,0,,,,,,
+1682,Remover@NPC_UNDEADATTACK,attack,347,3,500,0,5000,yes,target,always,0,,,,,,
+1682,Remover@SM_BASH,attack,5,5,500,800,5000,no,target,always,0,,,,,,
 1684,Archdam@KN_SPEARSTAB,attack,58,5,500,800,5000,no,target,always,0,,,,,,
 1684,Archdam@NPC_GUIDEDATTACK,attack,172,2,500,1000,20000,no,target,always,0,,,,,,29
 1684,Archdam@NPC_PIERCINGATT,attack,158,5,1000,0,5000,yes,target,always,0,,,,,,
@@ -3568,8 +3568,8 @@
 1719,Detale@WZ_WATERBALL,chase,86,5,500,0,5000,yes,target,always,0,,,,,,
 1719,Detale@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1719,Detale@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
-1719,Detale@NPC_SUMMONSLAVE,attack,196,3,10000,700,10000,no,self,slavele,1,1720,,,,,
-1719,Detale@NPC_SUMMONSLAVE,idle,196,3,10000,700,10000,no,self,slavele,1,1720,,,,,
+1719,Detale@NPC_SUMMONSLAVE,attack,196,3,10000,700,10000,no,self,slavele,1,1756,,,,,
+1719,Detale@NPC_SUMMONSLAVE,idle,196,3,10000,700,10000,no,self,slavele,1,1756,,,,,
 1719,Detale@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1720,,,,,
 1719,Detale@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1720,Hydro@NPC_RANDOMATTACK,attack,183,5,500,500,5000,no,target,always,0,,,,,,
@@ -3582,12 +3582,94 @@
 1720,Hydro@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
 1720,Hydro@AL_HEAL,attack,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
 1720,Hydro@AL_HEAL,chase,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
-1720,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,2000,240000,no,self,slavele,1,1713,1714,1716,1717,,
-1720,Hydro@NPC_SUMMONSLAVE,attack,196,4,10000,2000,240000,no,self,slavele,1,1713,1714,1716,1717,,
+1720,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,2000,240000,no,self,slavele,1,1757,1758,1759,1760,,
+1720,Hydro@NPC_SUMMONSLAVE,attack,196,4,10000,2000,240000,no,self,slavele,1,1757,1758,1759,1760,,
 1720,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,0,0,no,self,onspawn,0,1713,1714,1716,1717,,
 1720,Hydro@NPC_CALLSLAVE,attack,352,1,2000,0,10000,yes,target,always,0,,,,,,
 1720,Hydro@NPC_CALLSLAVE,idle,352,1,2000,0,10000,yes,self,always,0,,,,,,
 1721,Dragon Egg@NPC_METAMORPHOSIS,idle,193,1,1,2000,5000,no,self,always,0,1715,1718,,,,
+1722,Jakk@NPC_BLINDATTACK,angry,177,3,500,0,5000,yes,target,always,0,,,,,,
+1722,Jakk@NPC_BLINDATTACK,attack,177,3,500,0,5000,yes,target,always,0,,,,,,
+1722,Jakk@NPC_CURSEATTACK,angry,181,3,500,800,5000,no,target,always,0,,,,,,
+1722,Jakk@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,
+1722,Jakk@NPC_CURSEATTACK,chase,181,3,50,800,5000,no,target,always,0,,,,,,
+1722,Jakk@NPC_CURSEATTACK,follow,181,3,50,800,5000,no,target,always,0,,,,,,
+1722,Jakk@NPC_FIREATTACK,angry,186,3,500,500,5000,no,target,always,0,,,,,,
+1722,Jakk@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,
+1723,Shecil@AC_CHARGEARROW,attack,148,1,2000,0,3000,yes,target,always,0,,,,,,6
+1723,Shecil@AC_DOUBLE,attack,46,10,2000,0,3000,yes,target,always,0,,,,,,6
+1723,Shecil@AC_SHOWER,attack,47,10,2000,0,3000,yes,target,always,0,,,,,,6
+1723,Shecil@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1723,Shecil@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,
+1723,Shecil@HT_FLASHER,attack,120,5,500,0,5000,yes,target,always,0,,,,,,
+1723,Shecil@HT_FLASHER,idle,120,5,200,0,60000,yes,self,always,0,,,,,,
+1723,Shecil@HT_FREEZINGTRAP,attack,121,5,500,0,5000,yes,target,always,0,,,,,,
+1723,Shecil@HT_FREEZINGTRAP,idle,121,5,200,0,60000,yes,self,always,0,,,,,,
+1723,Shecil@HT_SKIDTRAP,attack,115,5,500,0,5000,yes,target,always,0,,,,,,
+1723,Shecil@HT_SKIDTRAP,idle,115,5,200,0,60000,yes,self,always,0,,,,,,
+1723,Shecil@NPC_AGIUP,attack,350,5,2000,0,100000,yes,self,always,0,,,,,,
+1723,Shecil@NPC_AGIUP,attack,350,5,2000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
+1723,Shecil@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
+1723,Shecil@NPC_POWERUP,attack,349,5,2000,0,100000,yes,self,always,0,,,,,,
+1723,Shecil@NPC_POWERUP,attack,349,5,2000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
+1723,Shecil@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
+1723,Shecil@NPC_WINDATTACK,attack,187,5,1000,0,5000,yes,target,always,0,,,,,,
+1724,Photon Canon (Red)@NPC_WINDATTACK,attack,187,1,10000,0,0,yes,target,always,0,,,,,,
+1724,Photon Canon (Red)@NPC_WINDATTACK,attack,187,3,2000,500,5000,yes,target,always,0,,,,,,
+1724,Photon Canon (Red)@NPC_WINDATTACK,attack,187,5,1000,1000,10000,yes,target,always,0,,,,,,
+1725,Poring@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1725,Poring@NPC_WATERATTACK,attack,184,1,2000,0,5000,yes,target,always,0,,,,,,
+1726,Lunatic@AL_HEAL,idle,28,1,10,2000,60000,yes,self,always,0,,,,,,
+1726,Lunatic@NPC_PROVOCATION,idle,194,1,2,0,0,yes,self,always,0,,,,,,
+1727,Savage Babe@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,19,,,,,
+1727,Savage Babe@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
+1728,Baby Desert Wolf@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1728,Baby Desert Wolf@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
+1729,Baphomet Jr.@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1729,Baphomet Jr.@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,29
+1729,Baphomet Jr.@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,6
+1729,Baphomet Jr.@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1729,Baphomet Jr.@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,6,1173,,,,
+1729,Baphomet Jr.@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1729,Baphomet Jr.@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,29
+1729,Baphomet Jr.@NPC_HALLUCINATION,chase,207,1,50,500,5000,yes,target,always,0,,,,,,29
+1729,Baphomet Jr.@SA_DISPELL,attack,289,1,0,0,30000,yes,target,always,0,,,,,,29
+1730,Deviruchi@NPC_BLINDATTACK,angry,177,3,500,0,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_BLINDATTACK,attack,177,3,500,0,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_BLINDATTACK,chase,177,3,50,0,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_BLINDATTACK,follow,177,3,50,0,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_DARKNESSATTACK,angry,190,1,2000,0,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_DARKTHUNDER,angry,341,3,500,1500,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_DARKTHUNDER,attack,341,3,500,1500,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_DARKTHUNDER,chase,341,3,50,1500,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_DARKTHUNDER,follow,341,3,50,1500,5000,yes,target,always,0,,,,,,
+1730,Deviruchi@NPC_ENERGYDRAIN,angry,200,1,500,0,5000,yes,target,myhpltmaxrate,30,,,,,,
+1730,Deviruchi@NPC_ENERGYDRAIN,attack,200,1,500,0,5000,yes,target,myhpltmaxrate,30,,,,,,
+1730,Deviruchi@NPC_ENERGYDRAIN,chase,200,1,50,0,5000,yes,target,myhpltmaxrate,30,,,,,,
+1730,Deviruchi@NPC_ENERGYDRAIN,follow,200,1,50,0,5000,yes,target,myhpltmaxrate,30,,,,,,
+1731,Doppelganger@AL_DECAGI,attack,30,10,500,0,20000,no,target,always,0,,,,,,5
+1731,Doppelganger@AL_DECAGI,chase,30,10,50,0,20000,no,target,always,0,,,,,,5
+1731,Doppelganger@AL_HEAL,attack,28,11,10000,0,5000,yes,friend,friendhpltmaxrate,60,,,,,,2
+1731,Doppelganger@AL_HEAL,attack,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,2
+1731,Doppelganger@AL_HEAL,chase,28,11,10000,0,5000,yes,friend,friendhpltmaxrate,60,,,,,,2
+1731,Doppelganger@AL_HEAL,chase,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,2
+1731,Doppelganger@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1731,Doppelganger@AL_TELEPORT,idle,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,
+1731,Doppelganger@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,
+1731,Doppelganger@BS_HAMMERFALL,attack,110,11,2000,0,5000,yes,target,always,0,,,,,,
+1731,Doppelganger@BS_HAMMERFALL,chase,110,11,10000,0,5000,yes,target,skillused,18,,,,,,
+1731,Doppelganger@BS_HAMMERFALL,chase,110,11,200,0,5000,yes,target,always,0,,,,,,
+1731,Doppelganger@CR_AUTOGUARD,attack,249,10,2000,500,300000,no,self,always,0,,,,,,29
+1731,Doppelganger@CR_AUTOGUARD,chase,249,10,200,500,300000,no,self,longrangeattacked,,,,,,,29
+1731,Doppelganger@KN_TWOHANDQUICKEN,attack,60,10,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,6
+1731,Doppelganger@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,yes,target,always,0,,,,,,
+1731,Doppelganger@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1731,Doppelganger@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1731,Doppelganger@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,yes,target,always,0,,,,,,
+1731,Doppelganger@NPC_SUMMONSLAVE,attack,196,1,10000,700,10000,no,self,slavele,3,1427,,,,,
+1731,Doppelganger@NPC_SUMMONSLAVE,idle,196,1,10000,700,10000,no,self,slavele,3,1427,,,,,
+1731,Doppelganger@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1427,,,,,
 
 // Kiel dungeon
 1733,Kiel@PR_LEXDIVINA,attack,76,5,500,1000,5000,yes,target,always,0,,,,,,
@@ -3652,11 +3734,46 @@
 1740,Aliot@CR_AUTOGUARD,attack,249,5,500,0,300000,yes,self,always,0,,,,,,
 1740,Aliot@CR_AUTOGUARD,chase,249,5,200,0,300000,yes,self,always,0,,,,,,
 1740,Aliot@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
-1741,Aliza@AL_HEAL,idle,28,9,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
-1741,Aliza@SM_BASH,angry,5,5,500,0,5000,yes,target,always,0,,,,,,
-1741,Aliza@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,
-//1741,Aliza@?
-1742,Constant@NPC_SELFDESTRUCTION,attack,173,1,500,2000,5000,no,self,myhpltmaxrate,50,,,,,,
+1741,Christmas Cookie@MG_COLDBOLT,attack,14,3,500,1500,5000,yes,target,always,0,,,,,,21
+1741,Christmas Cookie@MG_COLDBOLT,chase,14,3,50,1500,5000,yes,target,always,0,,,,,,21
+1741,Christmas Cookie@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1741,Christmas Cookie@NPC_HOLYATTACK,attack,189,1,2000,0,5000,yes,target,always,0,,,,,,
+1741,Christmas Cookie@PR_LEXAETERNA,attack,78,1,500,1000,5000,yes,target,always,0,,,,,,6
+1741,Christmas Cookie@PR_LEXAETERNA,chase,78,1,50,1000,5000,yes,target,always,0,,,,,,6
+1741,Christmas Cookie@SA_REVERSEORCISH,attack,294,1,50,0,30000,yes,target,always,0,,,,,,18
+1741,Christmas Cookie@SA_REVERSEORCISH,chase,294,1,5,0,30000,yes,target,always,0,,,,,,18
+1742,Carat@AL_TELEPORT,attack,26,1,500,0,5000,yes,self,myhpltmaxrate,30,,,,,,
+1742,Carat@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1742,Carat@AL_TELEPORT,idle,26,1,50,0,5000,yes,self,always,0,,,,,,
+1742,Carat@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,2,,,,,
+1742,Carat@NPC_HALLUCINATION,chase,207,1,50,500,5000,yes,target,always,0,,,,,,18
+1742,Carat@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
+1742,Carat@SA_REVERSEORCISH,attack,294,1,50,0,30000,yes,target,always,0,,,,,,18
+1742,Carat@SA_REVERSEORCISH,chase,294,1,5,0,30000,yes,target,always,0,,,,,,18
+1742,Carat@SM_PROVOKE,chase,6,10,200,600,5000,no,target,always,0,,,,,,18
+1743,Myst Case@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1743,Myst Case@KN_SPEARSTAB,attack,58,5,500,800,5000,no,target,always,0,,,,,,
+1743,Myst Case@MC_MAMMONITE,attack,42,5,500,800,5000,no,target,always,0,,,,,,8
+1743,Myst Case@NPC_EMOTION,walk,197,1,200,0,5000,yes,self,always,0,3,,,,,
+1743,Myst Case@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,6
+1743,Myst Case@NPC_HALLUCINATION,chase,207,1,50,500,5000,yes,target,always,0,,,,,,6
+1744,Wild Rose@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,0,,,,,,6
+1744,Wild Rose@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1744,Wild Rose@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
+1745,Constant@NPC_SELFDESTRUCTION,attack,173,1,500,2000,5000,no,self,myhpltmaxrate,50,,,,,,
+1746,Aliza@AL_HEAL,idle,28,9,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1746,Aliza@SM_BASH,angry,5,5,500,0,5000,yes,target,always,0,,,,,,
+1746,Aliza@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,
+//1746,Aliza@?
+1747,Snake@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
+1747,Snake@NPC_POISON,attack,176,2,500,800,5000,no,target,always,0,,,,,,
+1748,Anacondaq@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,
+1748,Anacondaq@NPC_POISONATTACK,attack,188,1,2000,0,5000,yes,target,always,0,,,,,,
+1749,Medusa@MG_STONECURSE,attack,16,10,500,1500,5000,no,target,always,0,,,,,,3
+1749,Medusa@NPC_EMOTION,chase,197,1,20,0,5000,yes,self,always,0,19,129,,,,
+1749,Medusa@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,6,1173,,,,
+1749,Medusa@NPC_PETRIFYATTACK,attack,180,5,500,500,5000,no,target,always,0,,,,,,3
+1749,Medusa@NPC_PETRIFYATTACK,chase,180,5,50,500,5000,no,target,always,0,,,,,,3
 1751,Valkyrie Randgris@CR_GRANDCROSS,attack,254,1,2000,0,0,yes,target,always,0,,,,,,
 1751,Valkyrie Randgris@SA_DISPELL,attack,289,5,500,0,30000,yes,target,always,0,,,,,,
 1751,Valkyrie Randgris@WZ_VERMILION,attack,85,10,2000,0,5000,yes,target,always,0,,,,,,
@@ -3666,9 +3783,9 @@
 1751,Valkyrie Randgris@MG_THUNDERSTORM,chase,21,10,5000,1000,5000,no,target,always,0,,,,,,
 1751,Valkyrie Randgris@NPC_HOLYATTACK,attack,189,5,500,500,5000,no,target,always,0,,,,,,
 1751,Valkyrie Randgris@AS_SONICBLOW,attack,136,10,2000,0,5000,no,target,always,0,,,,,,
-1751,Valkyrie Randgris@NPC_SUMMONSLAVE,attack,196,3,10000,700,60000,no,self,slavele,3,1756,,,,,
-1751,Valkyrie Randgris@NPC_SUMMONSLAVE,chase,196,3,10000,700,60000,no,self,slavele,3,1756,,,,,
-1751,Valkyrie Randgris@NPC_SUMMONSLAVE,chase,196,3,10000,0,0,no,self,onspawn,0,1756,,,,,
+1751,Valkyrie Randgris@NPC_SUMMONSLAVE,attack,196,3,10000,700,60000,no,self,slavele,3,1765,,,,,
+1751,Valkyrie Randgris@NPC_SUMMONSLAVE,chase,196,3,10000,700,60000,no,self,slavele,3,1765,,,,,
+1751,Valkyrie Randgris@NPC_SUMMONSLAVE,chase,196,3,10000,0,0,no,self,onspawn,0,1765,,,,,
 1751,Valkyrie Randgris@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1751,Valkyrie Randgris@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1751,Valkyrie Randgris@AL_INCAGI,chase,29,10,250,700,300000,no,self,always,0,,,,,,
@@ -3708,15 +3825,102 @@
 1755,Skeggiold(Blue)@CR_HOLYCROSS,attack,253,5,1000,500,5000,no,target,always,0,,,,,,
 1755,Skeggiold(Blue)@NPC_SUMMONSLAVE,attack,196,2,10000,700,60000,no,self,onspawn,0,1755,,,,,
 1755,Skeggiold(Blue)@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1756,Valkyrie@CR_GRANDCROSS,attack,254,1,2000,0,0,yes,target,always,0,,,,,,
-1756,Valkyrie@SA_DISPELL,attack,289,5,500,0,30000,yes,target,always,0,,,,,,
-1756,Valkyrie@WZ_VERMILION,attack,85,10,2000,0,5000,yes,target,always,0,,,,,,
-1756,Valkyrie@WZ_VERMILION,chase,85,10,2000,0,5000,yes,target,always,0,,,,,,
-1756,Valkyrie@KN_BRANDISHSPEAR,attack,57,5,1000,1000,5000,no,target,always,0,,,,,,
-1756,Valkyrie@MG_THUNDERSTORM,attack,21,10,2000,1000,5000,no,target,always,0,,,,,,
-1756,Valkyrie@MG_THUNDERSTORM,chase,21,10,5000,1000,5000,no,target,always,0,,,,,,
-1756,Valkyrie@NPC_HOLYATTACK,attack,189,5,500,500,5000,no,target,always,0,,,,,,
-1756,Valkyrie@AS_SONICBLOW,attack,136,10,2000,0,5000,no,target,always,0,,,,,,
-1756,Valkyrie@AL_INCAGI,chase,29,10,250,700,300000,no,self,always,0,,,,,,
-1756,Valkyrie@NPC_POWERUP,attack,349,5,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,
-1756,Valkyrie@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1756,Hydro@NPC_RANDOMATTACK,attack,183,5,500,500,5000,no,target,always,0,,,,,,
+1756,Hydro@WZ_METEOR,attack,83,3,500,1500,5000,yes,target,always,0,,,,,,
+1756,Hydro@WZ_METEOR,chase,83,3,500,1500,5000,yes,target,always,0,,,,,,
+1756,Hydro@AS_SONICBLOW,attack,136,5,500,1000,30000,no,target,always,0,,,,,,
+1756,Hydro@NPC_DARKBREATH,attack,202,3,500,800,5000,no,target,always,0,,,,,,
+1756,Hydro@NPC_COMBOATTACK,attack,171,5,2000,0,5000,yes,target,always,0,,,,,,
+1756,Hydro@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
+1756,Hydro@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
+1756,Hydro@AL_HEAL,attack,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1756,Hydro@AL_HEAL,chase,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1756,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,2000,240000,no,self,slavele,1,1757,1758,1759,1760,,
+1756,Hydro@NPC_SUMMONSLAVE,attack,196,4,10000,2000,240000,no,self,slavele,1,1757,1758,1759,1760,,
+1756,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,0,0,no,self,onspawn,0,1757,1758,1759,1760,,
+1756,Hydro@NPC_CALLSLAVE,attack,352,1,2000,0,10000,yes,target,always,0,,,,,,
+1756,Hydro@NPC_CALLSLAVE,idle,352,1,2000,0,10000,yes,self,always,0,,,,,,
+1757,Acidus@WZ_FIREPILLAR,idle,80,3,50,0,5000,no,self,always,0,,,,,,
+1757,Acidus@MG_FIREBALL,chase,17,9,200,0,5000,yes,target,always,0,,,,,,
+1757,Acidus@NPC_FIREATTACK,attack,186,3,500,0,5000,no,target,always,0,,,,,,
+1757,Acidus@SM_MAGNUM,attack,7,5,500,500,5000,no,target,always,0,,,,,,
+1757,Acidus@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
+1757,Acidus@NPC_STUNATTACK,attack,179,5,500,1500,5000,no,target,always,0,,,,,,
+1757,Acidus@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1758,Ferus@NPC_CRITICALSLASH,attack,170,1,1000,0,30000,no,target,always,0,,,,,,
+1758,Ferus@KN_BRANDISHSPEAR,attack,57,10,2000,0,10000,yes,target,always,0,,,,,,29
+1759,Acidus@MG_THUNDERSTORM,attack,21,5,500,1500,5000,no,target,always,0,,,,,,
+1759,Acidus@MG_LIGHTNINGBOLT,attack,20,5,500,1500,5000,yes,target,always,0,,,,,,
+1759,Acidus@MG_LIGHTNINGBOLT,chase,20,5,500,1500,5000,yes,target,always,0,,,,,,
+1759,Acidus@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,
+1759,Acidus@NPC_STOP,attack,342,1,500,500,5000,no,target,always,0,,,,,,
+1759,Acidus@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1760,Ferus@KN_BRANDISHSPEAR,attack,57,10,2000,0,10000,yes,target,always,0,,,,,,29
+1760,Ferus@KN_BRANDISHSPEAR,attack,170,1,1000,0,30000,no,target,always,0,,,,,,
+1761,Skogul@AS_GRIMTOOTH,chase,137,5,250,0,5000,yes,target,always,0,,,,,,
+1761,Skogul@MG_SOULSTRIKE,chase,13,9,500,500,5000,yes,target,always,0,,,,,,
+1761,Skogul@NPC_DARKNESSATTACK,attack,190,5,500,500,5000,no,target,always,0,,,,,,
+1761,Skogul@NPC_CURSEATTACK,attack,181,5,500,800,5000,no,target,always,0,,,,,,
+1761,Skogul@TF_HIDING,idle,51,3,2000,500,5000,no,self,always,0,,,,,,
+1762,Frus@NPC_POISONATTACK,attack,188,5,500,500,5000,no,target,always,0,,,,,,
+1762,Frus@RG_STRIPARMOR,attack,217,5,500,0,30000,yes,target,always,0,,,,,,
+1762,Frus@NPC_DARKNESSATTACK,attack,190,5,500,500,5000,no,target,always,0,,,,,,
+1762,Frus@NPC_CHANGEUNDEAD,attack,348,1,10000,2000,600000,no,self,myhpltmaxrate,30,,,,,,
+1762,Frus@MG_FIREWALL,chase,18,5,100,500,5000,yes,target,always,0,,,,,,
+1762,Frus@MG_FIREWALL,follow,18,5,100,500,5000,yes,target,always,0,,,,,,
+1763,Skeggiold(Brown)@SA_REVERSEORCISH,attack,294,1,5,0,30000,yes,target,always,0,,,,,,
+1763,Skeggiold(Brown)@SA_REVERSEORCISH,chase,294,1,5,0,30000,yes,target,always,0,,,,,,
+1763,Skeggiold(Brown)@AL_DECAGI,attack,30,10,100,1000,5000,no,target,always,0,,,,,,
+1763,Skeggiold(Brown)@AL_DECAGI,chase,30,10,100,1000,5000,no,target,always,0,,,,,,
+1763,Skeggiold(Brown)@NPC_PETRIFYATTACK,chase,180,5,100,500,5000,no,target,always,0,,,,,,
+1763,Skeggiold(Brown)@MG_THUNDERSTORM,attack,21,10,1000,2500,5000,no,target,always,0,,,,,,
+1763,Skeggiold(Brown)@MG_THUNDERSTORM,chase,21,10,1000,2500,5000,no,target,always,0,,,,,,
+1763,Skeggiold(Brown)@NPC_HOLYATTACK,attack,189,3,500,500,5000,no,target,always,0,,,,,,
+1763,Skeggiold(Brown)@MG_SAFETYWALL,attack,12,5,1000,1000,5000,no,self,always,0,,,,,,
+1763,Skeggiold(Brown)@AM_ACIDTERROR,chase,230,5,50,0,5000,yes,target,always,0,,,,,,
+1763,Skeggiold(Brown)@AL_HEAL,attack,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1763,Skeggiold(Brown)@AL_HEAL,chase,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1763,Skeggiold(Brown)@AL_HEAL,idle,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1763,Skeggiold(Brown)@NPC_SUMMONSLAVE,attack,196,2,10000,700,60000,no,self,onspawn,0,1754,,,,,
+1763,Skeggiold(Brown)@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1764,Skeggiold(Blue)@SA_REVERSEORCISH,attack,294,1,5,0,30000,yes,target,always,0,,,,,,
+1764,Skeggiold(Blue)@SA_REVERSEORCISH,chase,294,1,5,0,30000,yes,target,always,0,,,,,,
+1764,Skeggiold(Blue)@MG_SAFETYWALL,attack,12,5,1000,1000,5000,no,self,always,0,,,,,,
+1764,Skeggiold(Blue)@NPC_HOLYATTACK,attack,189,3,500,500,5000,no,target,always,0,,,,,,
+1764,Skeggiold(Blue)@MG_SOULSTRIKE,chase,13,9,1000,500,5000,yes,target,always,0,,,,,,
+1764,Skeggiold(Blue)@CR_HOLYCROSS,attack,253,5,1000,500,5000,no,target,always,0,,,,,,
+1764,Skeggiold(Blue)@NPC_SUMMONSLAVE,attack,196,2,10000,700,60000,no,self,onspawn,0,1755,,,,,
+1764,Skeggiold(Blue)@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1765,Valkyrie@CR_GRANDCROSS,attack,254,1,2000,0,0,yes,target,always,0,,,,,,
+1765,Valkyrie@SA_DISPELL,attack,289,5,500,0,30000,yes,target,always,0,,,,,,
+1765,Valkyrie@WZ_VERMILION,attack,85,10,2000,0,5000,yes,target,always,0,,,,,,
+1765,Valkyrie@WZ_VERMILION,chase,85,10,2000,0,5000,yes,target,always,0,,,,,,
+1765,Valkyrie@KN_BRANDISHSPEAR,attack,57,5,1000,1000,5000,no,target,always,0,,,,,,
+1765,Valkyrie@MG_THUNDERSTORM,attack,21,10,2000,1000,5000,no,target,always,0,,,,,,
+1765,Valkyrie@MG_THUNDERSTORM,chase,21,10,5000,1000,5000,no,target,always,0,,,,,,
+1765,Valkyrie@NPC_HOLYATTACK,attack,189,5,500,500,5000,no,target,always,0,,,,,,
+1765,Valkyrie@AS_SONICBLOW,attack,136,10,2000,0,5000,no,target,always,0,,,,,,
+1765,Valkyrie@AL_INCAGI,chase,29,10,250,700,300000,no,self,always,0,,,,,,
+1765,Valkyrie@NPC_POWERUP,attack,349,5,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,
+1765,Valkyrie@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1766,Angeling@AL_HEAL,attack,28,9,10000,500,5000,no,friend,friendhpltmaxrate,60,,,,,,18
+1766,Angeling@AL_HEAL,attack,28,9,10000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
+1766,Angeling@AL_HEAL,chase,28,9,10000,500,5000,no,friend,friendhpltmaxrate,60,,,,,,18
+1766,Angeling@AL_HEAL,chase,28,9,10000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
+1766,Angeling@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1766,Angeling@MG_SAFETYWALL,attack,12,5,1000,1000,5000,no,self,always,0,,,,,,18
+1766,Angeling@NPC_EMOTION,idle,197,1,200,0,5000,yes,self,always,0,22,,,,,
+1766,Angeling@NPC_HOLYATTACK,attack,189,5,500,500,5000,no,target,always,0,,,,,,18
+1766,Angeling@NPC_HOLYATTACK,chase,189,5,50,500,5000,no,target,always,0,,,,,,18
+1766,Angeling@NPC_SUMMONSLAVE,attack,196,5,10000,2000,60000,no,self,slavele,3,1031,1062,,,,18
+1766,Angeling@NPC_SUMMONSLAVE,idle,196,5,10000,2000,60000,no,self,slavele,3,1031,1062,,,,18
+1766,Angeling@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1031,,,,,
+1766,Angeling@SA_REVERSEORCISH,attack,294,1,500,0,30000,yes,target,always,0,,,,,,18
+1766,Angeling@SA_REVERSEORCISH,chase,294,1,50,0,30000,yes,target,always,0,,,,,,18
+1767,Deviling@AL_DECAGI,chase,30,1,200,1000,5000,no,target,always,0,,,,,,29
+1767,Deviling@NPC_DARKNESSATTACK,attack,190,2,2000,0,5000,no,target,always,0,,,,,,6
+1767,Deviling@NPC_DARKSTRIKE,attack,340,5,3000,700,0,no,target,always,0,,,,,,32
+1767,Deviling@NPC_DARKSTRIKE,chase,340,5,300,700,0,no,target,always,0,,,,,,32
+1767,Deviling@NPC_SUMMONSLAVE,attack,196,7,10000,2000,10000,no,self,slavele,3,1595,1595,1595,1433,,6
+1767,Deviling@NPC_SUMMONSLAVE,idle,196,7,10000,2000,10000,no,self,slavele,3,1595,1595,1595,1433,,6
+1767,Deviling@NPC_SUMMONSLAVE,idle,196,7,10000,0,0,no,self,onspawn,0,1242,1242,1242,1109,,

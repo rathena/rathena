@@ -41,7 +41,7 @@
 //1649,High Priest Magaleta,1000000
 //1650,Sniper Shecil,1000000
 //1651,High Wizard Katrinn,1000000
+//1658,Egnigem Cenia,1000000
 //1708,Thanatos,1000000
-//1733,Kiel,1000000
 //1734,Kiel D-01,1000000
 //1751,Valkyrie Randgris,1000000
