@@ -6245,6 +6245,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
  */
 int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 {
+	int i;
 	nullpo_retr(0, sd);
 
 // -- moonsoul	(if player is berserk then cannot unequip)
@@ -6260,6 +6261,10 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	if(!sd->status.inventory[n].equip){ //Nothing to unequip
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
+	}
+	for(i=0;i<11;i++) {
+		if(sd->status.inventory[n].equip & equip_pos[i])
+			sd->equip_index[i] = -1;
 	}
 
 	if(sd->status.inventory[n].equip & 0x0002) {
@@ -6303,7 +6308,6 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	}
 	//OnUnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
-		int i;
 		struct item_data *data;
 		if (sd->inventory_data[n]->unequip_script)
 			run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,0);
