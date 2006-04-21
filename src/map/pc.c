@@ -6207,9 +6207,26 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 	}
 	status_calc_pc(sd,0);
 	//OnEquip script [Skotlex]
-	if (sd->inventory_data[n] && sd->inventory_data[n]->equip_script)
-		run_script(sd->inventory_data[n]->equip_script,0,sd->bl.id,0);
-	
+	if (sd->inventory_data[n]) {
+		int i;
+		struct item_data *data;
+		if (sd->inventory_data[n]->equip_script)
+			run_script(sd->inventory_data[n]->equip_script,0,sd->bl.id,0);
+		if(sd->status.inventory[n].card[0]==0x00ff ||
+			sd->status.inventory[n].card[0]==0x00fe ||
+			sd->status.inventory[n].card[0]==(short)0xff00)
+			; //No cards
+		else
+		for(i=0;i<sd->inventory_data[n]->slot; i++)
+		{
+			if (!sd->status.inventory[n].card[i])
+				continue;
+			data = itemdb_exists(sd->status.inventory[n].card[i]);
+			if (data && data->equip_script)
+				run_script(data->equip_script,0,sd->bl.id,0);
+		}
+	}
+
 	if(sd->sc.count) {
 		if (sd->sc.data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(7,sd->def_ele))
 			status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
@@ -6239,6 +6256,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 	if(battle_config.battle_log)
 		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),sd->status.inventory[n].equip);
+
 	if(!sd->status.inventory[n].equip){ //Nothing to unequip
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
@@ -6284,8 +6302,25 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 			status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 	}
 	//OnUnEquip script [Skotlex]
-	if (sd->inventory_data[n] && sd->inventory_data[n]->unequip_script)
-		run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,0);
+	if (sd->inventory_data[n]) {
+		int i;
+		struct item_data *data;
+		if (sd->inventory_data[n]->unequip_script)
+			run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,0);
+		if(sd->status.inventory[n].card[0]==0x00ff ||
+			sd->status.inventory[n].card[0]==0x00fe ||
+			sd->status.inventory[n].card[0]==(short)0xff00)
+			; //No cards
+		else
+		for(i=0;i<sd->inventory_data[n]->slot; i++)
+		{
+			if (!sd->status.inventory[n].card[i])
+				continue;
+			data = itemdb_exists(sd->status.inventory[n].card[i]);
+			if (data && data->unequip_script)
+				run_script(data->unequip_script,0,sd->bl.id,0);
+		}
+	}
 	return 0;
 }
 
