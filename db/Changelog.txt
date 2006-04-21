@@ -27,6 +27,7 @@
 
 =========================
 04/21
+	* Finally implemented Dragon Egg thanks to Tharis [Playtester]
 	* Fixed some mob skills that where missing an [Enter]... (Windows format... AGAIN!) [Poki#3]
 	  ...why co we have uncommented Attack skills under an iddle state? Oo
 	* Added a lot of G_Mobs and changed some slave spawns to them. Please use the newest exe release. [Poki#3]
