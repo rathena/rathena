@@ -901,13 +901,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	ud->skillid      = skill_num;
 	ud->skilllv      = skill_lv;
 
-	if(
-		(sd && !(battle_config.pc_cloak_check_type&2) ) ||
-		(src->type == BL_MOB && !(battle_config.monster_cloak_check_type&2) )
-	) {
-	 	if( sc && sc->data[SC_CLOAKING].timer != -1 && skill_num != AS_CLOAKING)
-			status_change_end(src,SC_CLOAKING,-1);
-	}
+ 	if(sc && sc->data[SC_CLOAKING].timer != -1 && !sc->data[SC_CLOAKING].val4 && skill_num != AS_CLOAKING)
+		status_change_end(src,SC_CLOAKING,-1);
 
 	if(casttime > 0) {
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_id, src->id, 0 );
@@ -1010,12 +1005,8 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 	ud->skilly       = skill_y;
 	ud->skilltarget  = 0;
 
-	if((sd && !(battle_config.pc_cloak_check_type&2)) ||
-		(src->type==BL_MOB && !(battle_config.monster_cloak_check_type&2))
-	) {
-		if (sc && sc->data[SC_CLOAKING].timer != -1)
-			status_change_end(src,SC_CLOAKING,-1);
-	}
+	if (sc && sc->data[SC_CLOAKING].timer != -1 && !sc->data[SC_CLOAKING].val4)
+		status_change_end(src,SC_CLOAKING,-1);
 
 	if(casttime > 0) {
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
@@ -1283,14 +1274,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		
 		map_freeblock_lock();
 		ud->attacktarget_lv = battle_weapon_attack(src,target,tick,0);
-		if(
-			(sd && !(battle_config.pc_cloak_check_type&2)) ||
-			(!sd && !(battle_config.monster_cloak_check_type&2))
-		) {
-			struct status_change *sc = status_get_sc(src);
-			if (sc && sc->count && sc->data[SC_CLOAKING].timer != -1)
-				status_change_end(src,SC_CLOAKING,-1);
-		}
 
 		if(sd && sd->status.pet_id > 0 && sd->pd && sd->petDB && battle_config.pet_attack_support)
 			pet_target_check(sd,target,0);

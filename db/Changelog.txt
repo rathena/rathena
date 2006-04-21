@@ -27,6 +27,7 @@
 
 =========================
 04/21
+	* Set NPC_INVISIBLE's duration to 30 secs. [Skotlex]
 	* Finally implemented Dragon Egg thanks to Tharis [Playtester]
 	* Fixed some mob skills that where missing an [Enter]... (Windows format... AGAIN!) [Poki#3]
 	  ...why co we have uncommented Attack skills under an iddle state? Oo

@@ -206,6 +206,7 @@ void initChangeTables(void) {
 	set_sc(NPC_STOP,                SC_STOP,                SI_BLANK);
 	set_sc(NPC_BREAKWEAPON,         SC_BROKENWEAPON,        SI_BROKENWEAPON);
 	set_sc(NPC_BREAKARMOR,          SC_BROKENARMOR,         SI_BROKENARMOR);
+	set_sc(NPC_INVISIBLE,           SC_CLOAKING,            SI_CLOAKING);
 	set_sc(LK_AURABLADE,            SC_AURABLADE,           SI_AURABLADE);
 	set_sc(LK_PARRYING,             SC_PARRYING,            SI_PARRYING);
 	set_sc(LK_CONCENTRATION,        SC_CONCENTRATION,       SI_CONCENTRATION);
@@ -4178,11 +4179,17 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CLOAKING:		/* クロ?キング */
 			if (flag&4)
 				break;
-			if(bl->type != BL_PC)
-				tick = 5000*val1;
 			calc_flag = 1; // [Celest]
 			val2 = tick;
 			val3 = type==SC_CLOAKING ? 130-val1*3 : 135-val1*5;
+			if (!val4)
+			{ //val4 signals eternal cloaking (not cancelled on attack) [Skotlex]
+				//Standard cloaking.
+				if (bl->type == BL_PC)
+					val4 = battle_config.pc_cloak_check_type&2?1:0;
+				else
+					val4 = battle_config.monster_cloak_check_type&2?1:0;
+			}
 			break;
 		case SC_SIGHT:			/* サイト/ルアフ */
 		case SC_RUWACH:
