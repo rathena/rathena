@@ -85,6 +85,17 @@ prontera.gat,282,200,4	script	Kafra	115,{
 			callfunc "F_KafEnd",0,1;
 }
 
+// Center ===========================================
+prontera.gat,146,86,6	script	Kafra	117,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSetPront";
+	callfunc "F_Kafra",0,0,0;
+
+M_Save:
+	savepoint "prontera.gat",116,73;
+	callfunc "F_KafEnd",0,1;
+}
+
 
 // Function: Sets variables for Prontera Kafras ----------------------------
 function	script	F_KafSetPront	{
