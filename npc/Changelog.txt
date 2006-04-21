@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+04/21
+	* Fixed Chung E / Green Maiden spawn in Louyang [Playtester]
 04/20
 	* Added missing Kafra in Prontera [Playtester]
 	* Hopefully also fixed the custom job master [Playtester]
