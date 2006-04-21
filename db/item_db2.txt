@@ -1,7 +1,7 @@
 // Items Additional Database
 //
 // Structure of Database:
-// ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,{Script}
+// ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,{ Script },{ OnEquip_Script },{ OnUnequip_Script }
 //
 // Legend for 'Type' field:
 //  0 = Usable : healing
@@ -18,8 +18,8 @@
 // Custom Items go here
 //=============================================================
 //THQ Quest Items
-//7950,THG_Membership,THG Membership,3,,10,10,,,,,,,,,,,,,{}
-//7951,Token_Bag,Token Bag,3,,10,10,,,,,,,,,,,,,{}
-//1998,Jeramiah's_Jur,Jeramiah's Jur,3,,10,10,,,,,,,,,,,,,{}
-//1999,Zed's_Staff,Zed's Staff,3,,10,10,,,,,,,,,,,,,{}
+//7950,THG_Membership,THG Membership,3,,10,10,,,,,,,,,,,,,{},{},{}
+//7951,Token_Bag,Token Bag,3,,10,10,,,,,,,,,,,,,{},{},{}
+//1998,Jeramiah's_Jur,Jeramiah's Jur,3,,10,10,,,,,,,,,,,,,{},{},{}
+//1999,Zed's_Staff,Zed's Staff,3,,10,10,,,,,,,,,,,,,{},{},{}
                                  
