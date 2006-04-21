@@ -653,12 +653,9 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
  * HP/SP‹zŽû‚ÌŒvŽZ
  *------------------------------------------
  */
-int battle_calc_drain(int damage, int rate, int per, int val)
+static int battle_calc_drain(int damage, int rate, int per)
 {
 	int diff = 0;
-
-	if (damage <= 0)
-		return 0;
 
 	if (per && rand()%1000 < rate) {
 		diff = (damage * per) / 100;
@@ -668,10 +665,6 @@ int battle_calc_drain(int damage, int rate, int per, int val)
 			else
 				diff = -1;
 		}
-	}
-
-	if (val /*&& rand()%1000 < rate*/) { //Absolute leech/penalties have 100% chance. [Skotlex]
-		diff += val;
 	}
 	return diff;
 }
@@ -690,12 +683,12 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 	nullpo_retr(0, sd);
 
 	// ƒf?[ƒ‚ƒ“ƒxƒCƒ“(+3 ?` +30) vs •sŽ€ or ˆ«–‚ (Ž€?l‚ÍŠÜ‚ß‚È‚¢?H)
-	if((skill = pc_checkskill(sd,AL_DEMONBANE)) > 0 && (battle_check_undead(race,status_get_elem_type(target)) || race==6) )
+	if((skill = pc_checkskill(sd,AL_DEMONBANE)) > 0 && (battle_check_undead(race,status_get_elem_type(target)) || race==RC_DEMON) )
 		damage += (skill*(int)(3+(sd->status.base_level+1)*0.05));	// submitted by orn
 		//damage += (skill * 3);
 
 	// ƒr?[ƒXƒgƒxƒCƒ“(+4 ?` +40) vs “®•¨ or ?©’Ž
-	if((skill = pc_checkskill(sd,HT_BEASTBANE)) > 0 && (race==2 || race==4) ) {
+	if((skill = pc_checkskill(sd,HT_BEASTBANE)) > 0 && (race==RC_BRUTE || race==RC_INSECT) ) {
 		damage += (skill * 4);
 		if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_HUNTER)
 			damage += sd->status.str;
@@ -1916,7 +1909,7 @@ static struct Damage battle_calc_weapon_attack(
 				vit_def = def2*(def2-15)/150;
 				vit_def = def2/2 + (vit_def>0?rand()%vit_def:0);
 				
-				if((battle_check_undead(s_race,status_get_elem_type(src)) || s_race==6) &&
+				if((battle_check_undead(s_race,status_get_elem_type(src)) || s_race==RC_DEMON) &&
 					(skill=pc_checkskill(tsd,AL_DP)) >0)
 					vit_def += skill*(int)(3 +(tsd->status.base_level+1)*0.04);   // submitted by orn
 			} else { //Mob-Pet vit-eq
@@ -3021,6 +3014,69 @@ int battle_calc_return_damage(struct block_list *bl, int *damage, int flag) {
 	}
 	return rdamage;
 }
+
+void battle_drain(TBL_PC *sd, TBL_PC* tsd, int rdamage, int ldamage, int race, int boss)
+{
+	struct weapon_data *wd;
+	int type, thp = 0, tsp = 0, rhp = 0, rsp = 0, hp, sp, i, *damage;
+	for (i = 0; i < 4; i++) {
+		//First two iterations: Right hand
+		if (i < 2) { wd = &sd->right_weapon; damage = &rdamage; }
+		else { wd = &sd->left_weapon; damage = &ldamage; }
+		if (*damage <= 0) continue;
+		//First and Third iterations: race, other two boss/nonboss state
+		if (i == 0 || i == 2) 
+			type = race;
+		else
+			type = boss?RC_BOSS:RC_NONBOSS;
+		
+		hp = wd->hp_drain[type].value;
+		if (wd->hp_drain[type].rate)
+			hp += battle_calc_drain(*damage,
+				wd->hp_drain[type].rate,
+		  		wd->hp_drain[type].per);
+
+		sp = wd->sp_drain[type].value;
+		if (wd->sp_drain[type].rate)
+			sp += battle_calc_drain(*damage,
+				wd->sp_drain[type].rate,
+			  	wd->sp_drain[type].per);
+
+		if (hp) {
+			if (wd->hp_drain[type].type)
+				rhp += hp;
+			thp += hp;
+		}
+		if (sp) {
+			if (wd->sp_drain[type].type)
+				rsp += sp;
+			tsp += sp;
+		}
+	}
+	if (!thp && !tsp) return;
+	
+	pc_heal(sd, thp, tsp);
+	
+	if (battle_config.show_hp_sp_drain && sd->fd)
+	{	//Display gained values only when they are positive [Skotlex]
+		if (thp && thp > sd->status.max_hp - sd->status.hp)
+			thp = sd->status.max_hp - sd->status.hp;
+		if (tsp && tsp > sd->status.max_sp - sd->status.sp)
+			tsp = sd->status.max_sp - sd->status.sp;
+		
+		if (thp > 0)
+			clif_heal(sd->fd, SP_HP, thp);
+		if (tsp > 0)
+			clif_heal(sd->fd, SP_SP, tsp);
+	}
+
+	if (tsd) {
+		if (rhp || rsp)
+			pc_heal(tsd, -rhp, -rsp);
+		if (rand()%1000 < sd->sp_vanish_rate)
+			pc_damage_sp(tsd, 0, sd->sp_vanish_per);
+	}
+}
 /*==========================================
  * ’Ê?í?UŒ‚?ˆ—?‚Ü‚Æ‚ß
  *------------------------------------------
@@ -3123,7 +3179,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
 	//“ñ“?—¬?¶Žè‚ÆƒJƒ^?[ƒ‹’ÇŒ‚‚Ìƒ~ƒX•\Ž¦(–³—?‚â‚è?`)
-	if(sd && sd->status.weapon >= MAX_WEAPON_TYPE && wd.damage2 == 0)
+	if(sd && sd->status.weapon > MAX_WEAPON_TYPE && wd.damage2 == 0)
 		clif_damage(src, target, tick+10, wd.amotion, wd.dmotion,0, 1, 0, 0);
 
 	if (sd && sd->splash_range > 0 && damage > 0)
@@ -3141,8 +3197,8 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				rate += sd->weapon_coma_ele[ele];
 			if (sd->weapon_coma_race[race] > 0)
 				rate += sd->weapon_coma_race[race];
-			if (sd->weapon_coma_race[boss?10:11] > 0)
-				rate += sd->weapon_coma_race[boss?10:11];
+			if (sd->weapon_coma_race[boss?RC_BOSS:RC_NONBOSS] > 0)
+				rate += sd->weapon_coma_race[boss?RC_BOSS:RC_NONBOSS];
 			if (rate)
 				status_change_start(target, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
 		}
@@ -3177,43 +3233,10 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	}
 	if (sd) {
 		if (wd.flag & BF_WEAPON && src != target && damage > 0) {
-			int hp = 0, sp = 0;
-			if (!battle_config.left_cardfix_to_right) { // “ñ“?—¬?¶ŽèƒJ?[ƒh‚Ì‹zŽûŒnŒø‰Ê‚ð‰EŽè‚É’Ç‰Á‚µ‚È‚¢?ê?‡
-				hp += battle_calc_drain(wd.damage, sd->right_weapon.hp_drain_rate, sd->right_weapon.hp_drain_per, sd->right_weapon.hp_drain_value);
-				hp += battle_calc_drain(wd.damage2, sd->left_weapon.hp_drain_rate, sd->left_weapon.hp_drain_per, sd->left_weapon.hp_drain_value);
-				sp += battle_calc_drain(wd.damage, sd->right_weapon.sp_drain_rate, sd->right_weapon.sp_drain_per, sd->right_weapon.sp_drain_value);
-				sp += battle_calc_drain(wd.damage2, sd->left_weapon.sp_drain_rate, sd->left_weapon.sp_drain_per, sd->left_weapon.sp_drain_value);
-			} else { // “ñ“?—¬?¶ŽèƒJ?[ƒh‚Ì‹zŽûŒnŒø‰Ê‚ð‰EŽè‚É’Ç‰Á‚·‚é?ê?‡
-				int hp_drain_rate = sd->right_weapon.hp_drain_rate + sd->left_weapon.hp_drain_rate;
-				int hp_drain_per = sd->right_weapon.hp_drain_per + sd->left_weapon.hp_drain_per;
-				int hp_drain_value = sd->right_weapon.hp_drain_value + sd->left_weapon.hp_drain_value;
-				int sp_drain_rate = sd->right_weapon.sp_drain_rate + sd->left_weapon.sp_drain_rate;
-				int sp_drain_per = sd->right_weapon.sp_drain_per + sd->left_weapon.sp_drain_per;
-				int sp_drain_value = sd->right_weapon.sp_drain_value + sd->left_weapon.sp_drain_value;
-				hp += battle_calc_drain(wd.damage, hp_drain_rate, hp_drain_per, hp_drain_value);
-				sp += battle_calc_drain(wd.damage, sp_drain_rate, sp_drain_per, sp_drain_value);
-			}
-			if (hp && hp + sd->status.hp > sd->status.max_hp)
-				hp = sd->status.max_hp - sd->status.hp;
-			if (sp && sp + sd->status.sp > sd->status.max_sp)
-				sp = sd->status.max_sp - sd->status.sp;
-			
-			if (hp || sp)
-				pc_heal(sd, hp, sp);
-
-			if (battle_config.show_hp_sp_drain)
-			{	//Display gained values only when they are positive [Skotlex]
-				if (hp > 0)
-					clif_heal(sd->fd, SP_HP, hp);
-				if (sp > 0)
-					clif_heal(sd->fd, SP_SP, sp);
-			}
-
-			if (tsd && sd->sp_drain_type)
-				pc_damage_sp(tsd, sp, 0);
-
-			if (tsd && rand()%1000 < sd->sp_vanish_rate)
-				pc_damage_sp(tsd, 0, sd->sp_vanish_per);
+			if (battle_config.left_cardfix_to_right)
+				battle_drain(sd, tsd, wd.damage, wd.damage, race, is_boss(target));
+			else
+				battle_drain(sd, tsd, wd.damage, wd.damage2, race, is_boss(target));
 		}
 	}
 	if (rdamage > 0) //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
@@ -3246,11 +3269,11 @@ int battle_check_undead(int race,int element)
 			return 1;
 	}
 	else if(battle_config.undead_detect_type == 1) {
-		if(race == 1)
+		if(race == RC_UNDEAD)
 			return 1;
 	}
 	else {
-		if(element == 9 || race == 1)
+		if(element == 9 || race == RC_UNDEAD)
 			return 1;
 	}
 	return 0;

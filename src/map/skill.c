@@ -1099,7 +1099,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NPC_GRANDDARKNESS:	/*ˆÅƒOƒ‰ƒ“ƒhƒNƒ?ƒX*/
 		{
 			int race = status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race == 6)
+			if(battle_check_undead(race,status_get_elem_type(bl)) || race == RC_DEMON)
 				sc_start(bl,SC_BLIND,100,skilllv,skill_get_time2(skillid,skilllv));
 		}
 		break;
@@ -1206,7 +1206,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		{
 			//?Œ?‚ª—Ç‚­•ª‚©‚ç‚È‚¢‚Ì‚Å“K?‚É
 			int race = status_get_race(bl);
-			if (!(battle_check_undead(race, status_get_elem_type(bl)) || race == 6))
+			if (!(battle_check_undead(race, status_get_elem_type(bl)) || race == RC_DEMON))
 				sc_start(bl, SC_BLEEDING,50, skilllv, skill_get_time2(skillid,skilllv));
 		}
 		break;
@@ -1877,7 +1877,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case AC_DOUBLE:
 			{
 				int race = status_get_race(bl);
-				if((race == 2 || race == 4) && damage < status_get_hp(bl) && pc_checkskill(sd, HT_POWER)) {
+				if((race == RC_BRUTE || race == RC_INSECT) && damage < status_get_hp(bl) && pc_checkskill(sd, HT_POWER)) {
 					//TODO: This code was taken from Triple Blows,is this even how it should be? [Skotlex]
 					sc_start4(src,SC_COMBO,100,HT_POWER,bl->id,0,0,2000);
 					clif_combo_delay(src,2000);
@@ -2018,31 +2018,10 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	}
 
 	if(sd && dmg.flag&BF_WEAPON && src != bl && src == dsrc && damage > 0) {
-		int hp = 0,sp = 0;
-		if(sd->right_weapon.hp_drain_rate && sd->right_weapon.hp_drain_per > 0 && dmg.damage > 0 && rand()%1000 < sd->right_weapon.hp_drain_rate) {
-			hp += (dmg.damage * sd->right_weapon.hp_drain_per)/100;
-			if(sd->right_weapon.hp_drain_rate > 0 && hp < 1) hp = 1;
-			else if(sd->right_weapon.hp_drain_rate < 0 && hp > -1) hp = -1;
-		}
-		if(sd->left_weapon.hp_drain_rate && sd->left_weapon.hp_drain_per > 0 && dmg.damage2 > 0 && rand()%1000 < sd->left_weapon.hp_drain_rate) {
-			hp += (dmg.damage2 * sd->left_weapon.hp_drain_per)/100;
-			if(sd->left_weapon.hp_drain_rate > 0 && hp < 1) hp = 1;
-			else if(sd->left_weapon.hp_drain_rate < 0 && hp > -1) hp = -1;
-		}
-		if(sd->right_weapon.sp_drain_rate > 0 && sd->right_weapon.sp_drain_per > 0 && dmg.damage > 0 && rand()%1000 < sd->right_weapon.sp_drain_rate) {
-			sp += (dmg.damage * sd->right_weapon.sp_drain_per)/100;
-			if(sd->right_weapon.sp_drain_rate > 0 && sp < 1) sp = 1;
-			else if(sd->right_weapon.sp_drain_rate < 0 && sp > -1) sp = -1;
-		}
-		if(sd->left_weapon.sp_drain_rate > 0 && sd->left_weapon.sp_drain_per > 0 && dmg.damage2 > 0 && rand()%1000 < sd->left_weapon.sp_drain_rate) {
-			sp += (dmg.damage2 * sd->left_weapon.sp_drain_per)/100;
-			if(sd->left_weapon.sp_drain_rate > 0 && sp < 1) sp = 1;
-			else if(sd->left_weapon.sp_drain_rate < 0 && sp > -1) sp = -1;
-		}
-		if(hp || sp)
-			pc_heal(sd,hp,sp);
-		if (sd->sp_drain_type && tsd)
-			pc_damage_sp(tsd,sp,0);
+		if (battle_config.left_cardfix_to_right)
+			battle_drain(sd, tsd, dmg.damage, dmg.damage, status_get_race(bl), status_get_mode(bl)&MD_BOSS);
+		else
+			battle_drain(sd, tsd, dmg.damage, dmg.damage2, status_get_race(bl), status_get_mode(bl)&MD_BOSS);
 	}
 
 	if (rdamage>0) {
@@ -2881,7 +2860,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case PR_BENEDICTIO:			/* ?¹??~•Ÿ */
 	{	//Should attack undead and demons. [Skotlex]
 		int race = status_get_race(bl);
-		if (battle_check_undead(race, status_get_elem_type(bl)) || race == 6)
+		if (battle_check_undead(race, status_get_elem_type(bl)) || race == RC_DEMON)
 			skill_attack(BF_MAGIC, src, src, bl, skillid, skilllv, tick, flag);
 	}
 	break;
@@ -3044,7 +3023,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_BULLSEYE:
 		{
 		int race = status_get_race(bl);
-		if(race == 2 || race == 7)
+		if(race == RC_BRUTE || race == RC_DEMIHUMAN)
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		else
 			clif_skill_fail(sd,skillid,0,0);
@@ -4259,7 +4238,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}else if(dstmd)
 		{
 			int race = status_get_race(bl);
-			if(status_get_lv(src)>status_get_lv(bl) && (race == 6 || race == 7 || race == 8)) {
+			if(status_get_lv(src)>status_get_lv(bl) && (race == RC_DEMON || race == RC_DEMIHUMAN || race == RC_ANGEL)) {
 				clif_skill_nodamage(src,bl,skillid,skilllv,
 					sc_start(bl,type,70,skilllv,skill_get_time(skillid,skilllv)));
 			} else{
@@ -6802,7 +6781,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		{
 			int race = status_get_race(bl);
 
-			if (battle_check_undead(race, status_get_elem_type(bl)) || race==6) {
+			if (battle_check_undead(race, status_get_elem_type(bl)) || race==RC_DEMON) {
 				if (skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0)) {
 					// reduce healing count if this was meant for damaging [hekate]
 					sg->val1 -= 2;
@@ -6826,7 +6805,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	case UNT_MAGNUS:
 		{
 			int race = status_get_race(bl);
-			if (!battle_check_undead(race,status_get_elem_type(bl)) && race!=6)
+			if (!battle_check_undead(race,status_get_elem_type(bl)) && race!=RC_DEMON)
 				break;
 			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;

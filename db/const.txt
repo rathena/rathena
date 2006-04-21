@@ -264,6 +264,8 @@ bSPDrainValue	1080
 bWeaponAtk	1081
 bWeaponAtkRate	1082
 bDelayrate	1083
+bHPDrainRateRace	1084
+bSPDrainRateRace	1085
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
@@ -292,9 +294,9 @@ bHPLossRate	2023
 bAddRace2	2024
 bHPGainValue	2025
 bSubSize	2026
-
+bHPDrainValueRace	2027
 bAddItemHealRate	2028
-
+bSPDrainValueRace	2029
 bExpAddRace	2030
 bSPGainRace	2031
 bSPSubRace2	2032

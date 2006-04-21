@@ -37,11 +37,11 @@ static int hp_coefficient[MAX_PC_CLASS];
 static int hp_coefficient2[MAX_PC_CLASS];
 static int hp_sigma_val[MAX_PC_CLASS][MAX_LEVEL];
 static int sp_coefficient[MAX_PC_CLASS];
-static int aspd_base[MAX_PC_CLASS][MAX_WEAPON_TYPE+1];	//[blackhole89]
+static int aspd_base[MAX_PC_CLASS][MAX_WEAPON_TYPE];	//[blackhole89]
 #define MAX_REFINE_BONUS 5
 static int refinebonus[MAX_REFINE_BONUS][3];	// 精錬ボーナステーブル(refine_db.txt)
 int percentrefinery[5][MAX_REFINE+1];	// 精錬成功率(refine_db.txt)
-static int atkmods[3][MAX_WEAPON_TYPE+1];	// 武器ATKサイズ修正(size_fix.txt)
+static int atkmods[3][MAX_WEAPON_TYPE];	// 武器ATKサイズ修正(size_fix.txt)
 static char job_bonus[MAX_PC_CLASS][MAX_LEVEL];
 
 int current_equip_item_index; //Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
@@ -501,7 +501,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			if (pc_isinvisible(sd))
 				return 0;
 			if (tsc->option&hide_flag
-				&& (sd->state.perfect_hiding || !(race == 4 || race == 6 || mode&MD_DETECTOR))
+				&& (sd->state.perfect_hiding || !(race == RC_INSECT || race == RC_DEMON || mode&MD_DETECTOR))
 				&& !(mode&MD_BOSS))
 				return 0;
 		}
@@ -516,7 +516,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		//Check for chase-walk/hiding/cloaking opponents.
 		if (tsc && !(mode&MD_BOSS))
 		{
-			if (tsc->option&hide_flag && !(race == 4 || race == 6 || mode&MD_DETECTOR))
+			if (tsc->option&hide_flag && !(race == RC_INSECT || race == RC_DEMON || mode&MD_DETECTOR))
 				return 0;
 		}
 	}
@@ -785,7 +785,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->hp_loss_value)
 		+ sizeof(sd->sp_loss_value)
 		+ sizeof(sd->hp_loss_type)
-		+ sizeof(sd->sp_drain_type)
 		+ sizeof(sd->hp_gain_value)
 		+ sizeof(sd->sp_gain_value)
 		+ sizeof(sd->add_drop_count)
@@ -1559,10 +1558,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0 ){
 		skill = skill*4;
-		sd->right_weapon.addrace[9]+=skill;
-		sd->left_weapon.addrace[9]+=skill;
-		sd->magic_addrace[9]+=skill;
-		sd->subrace[9]+=skill;
+		sd->right_weapon.addrace[RC_DRAGON]+=skill;
+		sd->left_weapon.addrace[RC_DRAGON]+=skill;
+		sd->magic_addrace[RC_DRAGON]+=skill;
+		sd->subrace[RC_DRAGON]+=skill;
 	}
 
 	if(sd->sc.count){
@@ -1579,7 +1578,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 		if(sd->sc.data[SC_PROVIDENCE].timer!=-1){
 			sd->subele[6] += sd->sc.data[SC_PROVIDENCE].val2;
-			sd->subrace[6] += sd->sc.data[SC_PROVIDENCE].val2;
+			sd->subrace[RC_DEMON] += sd->sc.data[SC_PROVIDENCE].val2;
 		}
 	}
 
@@ -1686,7 +1685,7 @@ int status_calc_str(struct block_list *bl, int str)
 			str += 10; //Bonus is +!0 regardless of skill level
 		if(sc->data[SC_BLESSING].timer != -1){
 			int race = status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race == 6)
+			if(battle_check_undead(race,status_get_elem_type(bl)) || race == RC_DEMON)
 				str >>= 1;
 			else str += sc->data[SC_BLESSING].val1;
 		}
@@ -1766,7 +1765,7 @@ int status_calc_int(struct block_list *bl, int int_)
 			int_ += 5;
 		if(sc->data[SC_BLESSING].timer != -1){
 			int race = status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race == 6)
+			if(battle_check_undead(race,status_get_elem_type(bl)) || race == RC_DEMON)
 				int_ >>= 1;
 			else int_ += sc->data[SC_BLESSING].val1;
 		}
@@ -1798,7 +1797,7 @@ int status_calc_dex(struct block_list *bl, int dex)
 			dex -= sc->data[SC_QUAGMIRE].val1*(bl->type==BL_PC?5:10);
 		if(sc->data[SC_BLESSING].timer != -1){
 			int race = status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race == 6)
+			if(battle_check_undead(race,status_get_elem_type(bl)) || race == RC_DEMON)
 				dex >>= 1;
 			else dex += sc->data[SC_BLESSING].val1;
 		}
@@ -3202,7 +3201,7 @@ int status_get_race(struct block_list *bl)
 	if(bl->type==BL_MOB)
 		return ((struct mob_data *)bl)->db->race;
 	if(bl->type==BL_PC)
-		return 7;
+		return RC_DEMIHUMAN;
 	if(bl->type==BL_PET)
 		return ((struct pet_data *)bl)->db->race;
 	return 0;
@@ -3696,12 +3695,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		break;
 		case SC_COMA:
 			//Dark elementals and Demons are inmune to coma.
-			if((elem == 7 || race == 6) && !(flag&1))
+			if((elem == 7 || race == RC_DEMON) && !(flag&1))
 				return 0;
 		break;
 		case SC_SIGNUMCRUCIS:
 			//Only affects demons and undead.
-			if(race != 6 && !undead_flag)
+			if(race != RC_DEMON && !undead_flag)
 				return 0;
 			break;
 		case SC_AETERNA:
@@ -3759,7 +3758,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			 return 0;
 		 switch (type) {
 			case SC_BLESSING:
-			  if (!undead_flag || race != 6)
+			  if (!undead_flag || race != RC_DEMON)
 				  break;
 			case SC_QUAGMIRE:
 			case SC_DECREASEAGI:
@@ -3774,7 +3773,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	//Before overlapping fail, one must check for status cured.
 	switch (type) {
 	case SC_BLESSING:
-		if (!undead_flag && race!=6) {
+		if (!undead_flag && race!=RC_DEMON) {
 			if (sc->data[SC_CURSE].timer!=-1)
 				status_change_end(bl,SC_CURSE,-1);
 			if (sc->data[SC_STONE].timer!=-1 && sc->data[SC_STONE].val2==0)
@@ -5412,16 +5411,6 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		break;
 
-	case SC_SIGNUMCRUCIS:		/* シグナムクルシス */
-		{
-			int race = status_get_race(bl);
-			if(race == 6 || battle_check_undead(race,status_get_elem_type(bl))) {
-				sc->data[type].timer=add_timer(1000*600+tick,status_change_timer, bl->id, data );
-				return 0;
-			}
-		}
-		break;
-
 	case SC_WARM: //SG skills [Komurka]
 		if( (--sc->data[type].val2)>0){
 			map_foreachinrange( status_change_timer_sub, bl,
@@ -5540,6 +5529,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_DODGE:
 	case SC_AUTOBERSERK: //continues until triggered off manually. [Skotlex]
 	case SC_NEN:
+	case SC_SIGNUMCRUCIS:		/* シグナムクルシス */
 		sc->data[type].timer=add_timer( 1000*600+tick,status_change_timer, bl->id, data );
 		return 0;
 
@@ -5948,7 +5938,7 @@ int status_readdb(void) {
 
 	// サイズ補正テ?ブル
 	for(i=0;i<3;i++)
-		for(j=0;j<=MAX_WEAPON_TYPE;j++)
+		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			atkmods[i][j]=100;
 	sprintf(path, "%s/size_fix.txt", db_path);
 	fp=fopen(path,"r");
@@ -5958,19 +5948,18 @@ int status_readdb(void) {
 	}
 	i=0;
 	while(fgets(line, sizeof(line)-1, fp)){
-		char *split[MAX_WEAPON_TYPE+1];
+		char *split[MAX_WEAPON_TYPE];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		if(atoi(line)<=0)
 			continue;
 		memset(split,0,sizeof(split));
-		for(j=0,p=line;j<=MAX_WEAPON_TYPE && p;j++){
+		for(j=0,p=line;j<MAX_WEAPON_TYPE && p;j++){
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
-		}
-		for(j=0;j<=MAX_WEAPON_TYPE && split[j];j++)
 			atkmods[i][j]=atoi(split[j]);
+		}
 		i++;
 	}
 	fclose(fp);

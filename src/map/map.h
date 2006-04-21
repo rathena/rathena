@@ -282,6 +282,22 @@ enum {
 
 enum { WARP, SHOP, SCRIPT, MONS };
 
+enum {
+	RC_FORMLESS=0,
+	RC_UNDEAD,
+	RC_BRUTE,
+	RC_PLANT,
+	RC_INSECT,
+	RC_FISH,
+	RC_DEMON,
+	RC_DEMIHUMAN,
+	RC_ANGEL,
+	RC_DRAGON,
+	RC_BOSS,
+	RC_NONBOSS,
+	RC_MAX
+};
+
 struct block_list {
 	struct block_list *next,*prev;
 	int id;
@@ -417,17 +433,18 @@ struct weapon_data {
 	int def_ratio_atk_ele;
 	int def_ratio_atk_race;
 	int addele[10];
-	int addrace[12];
-	int addrace2[12];
+	int addrace[RC_MAX];
+	int addrace2[RC_MAX];
 	int addsize[3];
 
 	short ignore_def_mob;
-	short hp_drain_rate;
-	short hp_drain_per;
-	short hp_drain_value;
-	short sp_drain_rate;
-	short sp_drain_per;
-	short sp_drain_value;
+	struct drain_data {
+		short rate;
+		short per;
+		short value;
+		unsigned type:1;
+	} hp_drain[RC_MAX], sp_drain[RC_MAX];
+
 	short add_damage_classid[MAX_PC_BONUS];
 	int add_damage_classrate[MAX_PC_BONUS];
 	int add_damage_class_count;
@@ -579,30 +596,30 @@ struct map_session_data {
 	int paramb[6];
 	int parame[6];
 	int subele[10];
-	int subrace[12];
-	int subrace2[12];
+	int subrace[RC_MAX];
+	int subrace2[RC_MAX];
 	int subsize[3];
 	int addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int weapon_coma_ele[10];
-	int weapon_coma_race[12];
+	int weapon_coma_race[RC_MAX];
 	int weapon_atk[16];
 	int weapon_atk_rate[16];
 	int arrow_addele[10];
-	int arrow_addrace[12];
+	int arrow_addrace[RC_MAX];
 	int arrow_addsize[3];
 	int arrow_addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int arrow_addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int magic_addele[10];
-	int magic_addrace[12];
+	int magic_addrace[RC_MAX];
 	int magic_addsize[3];
-	int critaddrace[12];
-	int expaddrace[12];
+	int critaddrace[RC_MAX];
+	int expaddrace[RC_MAX];
 	int itemhealrate[7];
 	int addeff3[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	short addeff3_type[SC_COMMON_MAX-SC_COMMON_MIN+1];
-	short sp_gain_race[12];
+	short sp_gain_race[RC_MAX];
 	// zeroed arrays end here.
 	// zeroed structures start here
 	struct s_autospell{
@@ -658,7 +675,6 @@ struct map_session_data {
 	short hp_loss_value;
 	short sp_loss_value;
 	short hp_loss_type;
-	short sp_drain_type;
 	short sp_gain_value, hp_gain_value;
 	short sp_vanish_rate;
 	short sp_vanish_per;	
@@ -1105,8 +1121,8 @@ enum {
 	SP_DISGUISE,SP_CLASSCHANGE, // 1077-1078
 	SP_HP_DRAIN_VALUE,SP_SP_DRAIN_VALUE, // 1079-1080
 	SP_WEAPON_ATK,SP_WEAPON_ATK_RATE, // 1081-1082
-	SP_DELAYRATE,	// 1083
-
+	SP_DELAYRATE,SP_HP_DRAIN_RATE_RACE,SP_SP_DRAIN_RATE_RACE, // 1083-1085
+	
 	SP_RESTART_FULL_RECOVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
 	SP_NO_CASTCANCEL2,SP_INFINITE_ENDURE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
 	SP_UNBREAKABLE_SHIELD, SP_LONG_ATK_RATE, // 2011-2012
@@ -1114,12 +1130,11 @@ enum {
 	SP_CRIT_ATK_RATE, SP_CRITICAL_ADDRACE, SP_NO_REGEN, SP_ADDEFF_WHENHIT, SP_AUTOSPELL_WHENHIT, // 2013-2017
 	SP_SKILL_ATK, SP_UNSTRIPABLE, SP_ADD_DAMAGE_BY_CLASS, // 2018-2020
 	SP_SP_GAIN_VALUE, SP_IGNORE_DEF_MOB, SP_HP_LOSS_RATE, SP_ADDRACE2, SP_HP_GAIN_VALUE, // 2021-2025
-	SP_SUBSIZE, SP_FREE, SP_ADD_ITEM_HEAL_RATE, SP_FREE2, SP_EXP_ADDRACE,	// 2026-2030
+	SP_SUBSIZE, SP_HP_DRAIN_VALUE_RACE, SP_ADD_ITEM_HEAL_RATE, SP_SP_DRAIN_VALUE_RACE, SP_EXP_ADDRACE,	// 2026-2030
 	SP_SP_GAIN_RACE, SP_SUBRACE2, SP_ADDEFF_WHENHIT_SHORT,	// 2031-2033
 	SP_UNSTRIPABLE_WEAPON,SP_UNSTRIPABLE_ARMOR,SP_UNSTRIPABLE_HELM,SP_UNSTRIPABLE_SHIELD,  // 2034-2037
 	SP_INTRAVISION, SP_ADD_MONSTER_DROP_ITEMGROUP, SP_SP_LOSS_RATE, // 2038-2040
 	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE //2041
-	//Before you add more here, notice that 2027&2029 are available.
 };
 
 enum {
