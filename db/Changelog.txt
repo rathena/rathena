@@ -27,6 +27,7 @@
 
 =========================
 04/21
+	* Fixed some drops of the Bio Lab 1&2 mobs [Playtester]
 	* Fixed more elements of Bio Lab mobs [Playtester]
 04/20
 	* Changed item_db2.txt to new format thanks to joshuaali [Playtester]
