@@ -1876,7 +1876,7 @@ int parse_tologin(int fd) {
 			for(i = 0; i < fd_max; i++) {
 				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2)) {
 					if (RFIFOB(fd,6) != 0) {
-                                                WFIFOHEAD(i, 3);
+						WFIFOHEAD(i, 3);
 						WFIFOW(i,0) = 0x6c;
 						WFIFOB(i,2) = 0x42;
 						WFIFOSET(i,3);
@@ -3137,13 +3137,18 @@ int parse_char(int fd) {
 //				memset(sd, 0, sizeof(struct char_session_data)); aCalloc does this [Skotlex]
 				strncpy(sd->email, "no mail", 40); // put here a mail without '@' to refuse deletion if we don't receive the e-mail
 				sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
+			} else {
+				//Received again auth packet for already authentified account?? Discard it.
+				//TODO: Perhaps log this as a hack attempt?
+				RFIFOSKIP(fd,17);
+				break;
 			}
 			sd->account_id = RFIFOL(fd,2);
 			sd->login_id1 = RFIFOL(fd,6);
 			sd->login_id2 = RFIFOL(fd,10);
 			sd->sex = RFIFOB(fd,16);
 			// send back account_id
-                        WFIFOHEAD(fd, 4);
+			WFIFOHEAD(fd, 4);
 			WFIFOL(fd,0) = RFIFOL(fd,2);
 			WFIFOSET(fd,4);
 			// search authentification

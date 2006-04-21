@@ -2981,7 +2981,13 @@ int parse_char(int fd) {
 				CREATE(session[fd]->session_data, struct char_session_data, 1);
 				sd = (struct char_session_data*)session[fd]->session_data;
 				sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
+			} else {
+				//Received again auth packet for already authentified account?? Discard it.
+				//TODO: Perhaps log this as a hack attempt?
+				RFIFOSKIP(fd,17);
+				break;
 			}
+
 			sd->account_id = RFIFOL(fd, 2);
 			sd->login_id1 = RFIFOL(fd, 6);
 			sd->login_id2 = RFIFOL(fd, 10);
