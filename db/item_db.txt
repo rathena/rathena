@@ -1961,7 +1961,7 @@
 7344,Cinocas_Case_File,Cinocas Case File,3,,10,0,,,,,,,,,,,,,{},{},{}
 7345,Handcuffs,Handcuffs,3,,362,10,,,,,,,,,,,,,{},{},{}
 7346,Ymir's_Heart_Piece,Ymir's Heart Piece,3,,10,0,,,,,,,,,,,,,{},{},{}
-7347,Research_Chart,Research Chart,3,,10,10,,,,,,,,,,,,,{},{},{}
+7347,Research_Chart,Research Chart,3,,420,10,,,,,,,,,,,,,{},{},{}
 7348,Membership_Card,Membership Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 7349,Archive_Permit,Archive Permit,3,,10,0,,,,,,,,,,,,,{},{},{}
 7350,Pass,Pass,3,,10,10,,,,,,,,,,,,,{},{},{}

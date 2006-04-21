@@ -27,6 +27,7 @@
 
 =========================
 04/21
+	* Fixed selling price of research chart(ID 7347) thanks to Muad_Dib [Playtester]
 	* Fixed some drops of the Bio Lab 1&2 mobs [Playtester]
 	* Fixed more elements of Bio Lab mobs [Playtester]
 04/20
