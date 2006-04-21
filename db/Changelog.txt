@@ -26,6 +26,8 @@
 	-----
 
 =========================
+04/21
+	* Fixed more elements of Bio Lab mobs [Playtester]
 04/20
 	* Changed item_db2.txt to new format thanks to joshuaali [Playtester]
 	* Fixed range of meteor (from 14x14 to 7x7) [Skotlex]
