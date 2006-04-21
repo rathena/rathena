@@ -27,6 +27,7 @@
 
 =========================
 04/21
+	* Fixed stats of Chung E / Green Maiden [Playtester]
 	* Set NPC_INVISIBLE's duration to 30 secs. [Skotlex]
 	* Finally implemented Dragon Egg thanks to Tharis [Playtester]
 	* Fixed some mob skills that where missing an [Enter]... (Windows format... AGAIN!) [Poki#3]
