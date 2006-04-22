@@ -26,6 +26,9 @@
 	-----
 
 =========================
+04/22
+	* Major fix to the Einbroch mobs [Playtester]
+	- stats and drops should now be to 99% official
 04/21
 	* Fixed stats of Chung E / Green Maiden [Playtester]
 	* Set NPC_INVISIBLE's duration to 30 secs. [Skotlex]
