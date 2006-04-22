@@ -3276,16 +3276,16 @@
 1674,Monemus@NPC_FIREATTACK,attack,186,1,10000,0,0,yes,target,always,0,,,,,,
 1674,Monemus@NPC_FIREATTACK,attack,186,10,500,1000,30000,yes,target,always,0,,,,,,
 1674,Monemus@NPC_FIREATTACK,attack,186,3,1000,0,10000,yes,target,always,0,,,,,,
-1675,Venatu@NPC_AGIUP,attack,350,5,500,0,10000,yes,self,always,0,,,,,,18
-1675,Venatu@NPC_FIREATTACK,attack,186,3,1000,0,5000,yes,target,always,0,,,,,,
-1675,Venatu@NPC_GUIDEDATTACK,attack,172,3,500,1000,20000,no,target,always,0,,,,,,6
-1675,Venatu@NPC_SILENCEATTACK,attack,178,4,1000,700,5000,no,target,always,0,,,,,,
-1675,Venatu@NPC_STUNATTACK,attack,179,4,500,1500,5000,no,target,always,0,,,,,,11
-1676,Venatu (Fire)@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1676,Venatu (Fire)@NPC_AGIUP,attack,350,2,500,0,10000,yes,self,always,0,,,,,,18
-1676,Venatu (Fire)@NPC_GUIDEDATTACK,attack,172,3,500,1000,20000,no,target,always,0,,,,,,6
-1676,Venatu (Fire)@NPC_SLEEPATTACK,attack,182,3,1000,0,5000,yes,target,always,0,,,,,,
-1676,Venatu (Fire)@NPC_STUNATTACK,attack,179,2,500,1500,5000,no,target,always,0,,,,,,11
+1675,Venatu (Fire)@NPC_AGIUP,attack,350,5,500,0,10000,yes,self,always,0,,,,,,18
+1675,Venatu (Fire)@NPC_FIREATTACK,attack,186,3,1000,0,5000,yes,target,always,0,,,,,,
+1675,Venatu (Fire)@NPC_GUIDEDATTACK,attack,172,3,500,1000,20000,no,target,always,0,,,,,,6
+1675,Venatu (Fire)@NPC_SILENCEATTACK,attack,178,4,1000,700,5000,no,target,always,0,,,,,,
+1675,Venatu (Fire)@NPC_STUNATTACK,attack,179,4,500,1500,5000,no,target,always,0,,,,,,11
+1676,Venatu@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1676,Venatu@NPC_AGIUP,attack,350,2,500,0,10000,yes,self,always,0,,,,,,18
+1676,Venatu@NPC_GUIDEDATTACK,attack,172,3,500,1000,20000,no,target,always,0,,,,,,6
+1676,Venatu@NPC_SLEEPATTACK,attack,182,3,1000,0,5000,yes,target,always,0,,,,,,
+1676,Venatu@NPC_STUNATTACK,attack,179,2,500,1500,5000,no,target,always,0,,,,,,11
 1677,Venatu (Wind)@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1677,Venatu (Wind)@NPC_AGIUP,attack,350,2,500,0,10000,yes,self,always,0,,,,,,18
 1677,Venatu (Wind)@NPC_BLINDATTACK,attack,177,3,1000,0,5000,yes,target,always,0,,,,,,
